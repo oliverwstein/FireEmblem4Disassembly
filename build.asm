@@ -86,6 +86,14 @@
   .include "engine/battle/battle_stats.asm"
   .include "engine/battle/effects.asm"
   .include "engine/battle/scripted_crits.asm"
+  .include "engine/ai/actions.asm"
+  .include "engine/ai/attack.asm"
+  .include "engine/ai/engine.asm"
+  .include "engine/ai/groups.asm"
+  .include "engine/ai/lists.asm"
+  .include "engine/ai/maps.asm"
+  .include "engine/ai/scripts.asm"
+  .include "engine/ai/threat.asm"
   .include "engine/dialogue/death_quotes.asm"
   .include "engine/dialogue/dialogue.asm"
   .include "engine/dialogue/dialogue_box.asm"
@@ -737,6 +745,51 @@
 
     .here
 
+    * = $069D1B
+    .logical $869D1B
+
+      .dsection AIEngineCycleSection
+      .dsection AIAttackSection
+      .dsection AIMovementMapSection
+
+    .here
+
+    * = $06AF39
+    .logical $86AF39
+
+      .dsection AIThreatSection
+
+    .here
+
+    * = $06B421
+    .logical $86B421
+
+      .dsection AIActionSection
+
+    .here
+
+    * = $06BA86
+    .logical $86BA86
+
+      .dsection AIAction86BA86Section
+
+    .here
+
+    * = $06BCE3
+    .logical $86BCE3
+
+      .dsection AIClosestTileSection
+
+    .here
+
+    * = $06C0AF
+    .logical $86C0AF
+
+      .dsection AILowHPSection
+      .dsection AIUnitMapSection
+
+    .here
+
     * = $06C4C4
     .logical $86C4C4
 
@@ -796,6 +849,31 @@
       .dsection ScriptedCritsSection
 
       ; 87/BE98
+
+    .here
+
+    * = $07C003
+    .logical $87C003
+
+      .dsection AICleverModeSection
+
+    .here
+
+    * = $07CBC6
+    .logical $87CBC6
+
+      .dsection AITargetListSection
+      .dsection AIScriptSection
+      .dsection AIRangeMapSection
+
+    .here
+
+    * = $07D711
+    .logical $87D711
+
+      .dsection AITargetMapSection
+      .dsection AIUnitListSection
+      .dsection AIGroupSection
 
     .here
 

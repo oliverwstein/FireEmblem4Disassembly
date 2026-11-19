@@ -1113,7 +1113,7 @@
     wAIGroupLeaderDeploymentOffset .word ?  ; $7E2020
     wAIUnitCounter .word ?                  ; $7E2022
     aAIUnitList .brept 24                   ; $7E2024
-      .structAIUnitEntry
+      .dstruct structAIUnitEntry
     .endrept
     ; $7E2174
   .endvirtual
@@ -1291,7 +1291,7 @@
 
     wAITargetCounter .word ?          ; $7E5025
     aAITargetList .brept 48           ; $7E5027
-      .structAITargetEntry
+      .dstruct structAITargetEntry
     .endrept
 
     aPermanentEventFlags .fill len(bytes(%1 x 256)) ; $7E5297

@@ -52,6 +52,7 @@ You need:
 | `map/` | Map scrolling, deployment and map locations such as castles and villages. |
 | `units/` | Units and their data, classes, stats, level-ups, skills, factions, lovers, and the move to generation 2 with inheritance. |
 | `items/` | Item data and unit inventories. |
+| `ai/` | The enemy AI: its main cycle, AI scripts, groups and formations, and choosing targets, attacks and movement. |
 | `battle/` | Battle calculations, weapon traits and staff effects, battle stats and scripted special attacks. |
 | `dialogue/` | The dialogue engine, dialogue boxes, portraits and death quotes. |
 | `events/` | The chapter event engine and conditions, the event script interpreter and commands, and procs used by events. |
