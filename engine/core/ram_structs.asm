@@ -1357,7 +1357,7 @@
         rep #$20
         plb
 
-        jsr rlUnknown82F19A
+        jsr rsUnknown82F19A
         bcs _EDB6
 
         sta $02
@@ -2316,7 +2316,7 @@
 
         .databank 0
 
-      rlUnknown82F19A ; 82/F19A
+      rsUnknown82F19A ; 82/F19A
 
         .al
         .autsiz

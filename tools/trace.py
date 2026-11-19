@@ -70,6 +70,33 @@ def built_routines():
     return sorted(out)
 
 
+def table_entries():
+    """(address, m8, x8, table) for raw entries in pointer tables in the build whose
+    other entries are routines. Widths come from the labelled entries."""
+    starts = {name: (m8, x8) for _, name, m8, x8 in built_routines()}
+    entry = re.compile(r'^\s+\.(addr|word|long) (?:<>)?(\$[0-9A-F]{6}|[A-Za-z]\w*)\s*(;.*)?$')
+    for f in glob.glob('engine/**/*.asm', recursive=True):
+        lines = open(f, encoding='utf-8').read().split('\n') + ['']
+        block, table = [], None
+        for l in lines:
+            m = entry.match(l)
+            if m:
+                block.append(m.group(2))
+                continue
+            if l.strip() == '' and block:
+                continue
+            if block:
+                named = [starts[x] for x in block if x in starts]
+                raw = [int(x[1:], 16) for x in block if x.startswith('$')]
+                if named and raw:
+                    m8, x8 = max(set(named), key=named.count)
+                    for a in raw:
+                        yield a, m8, x8, table
+            block = []
+            t = re.match(r'^ {6}([A-Za-z]\w*)', l)
+            table = t.group(1) if t else table
+
+
 def is_rom_code_address(a):
     bank, addr = a >> 16, a & 0xFFFF
     if 0x80 <= bank <= 0xBF:
@@ -153,6 +180,14 @@ def trace(rom, labels, mask):
         insns, _ = d.decode()
         visit(insns, name)
 
+    for a, m8, x8, table in table_entries():
+        if is_rom_code_address(a) and not mask[offset(a)]:
+            entry[a].add((m8, x8))
+            callers[a].append((table, a, 'table entry'))
+            if a not in found:
+                found[a] = None
+                queue.append((a, m8, x8))
+
     while queue:
         a, m8, x8 = queue.pop()
         d = Disassembler(rom, labels, a, None, m8, x8)
@@ -226,7 +261,11 @@ def main():
         parts = ['; Routines found by tools/trace.py. Each was reached from code in the build.\n']
         for x, info in found:
             d = Disassembler(rom, labels, x, info['end'] if info['clipped'] else None, info['m8'], info['x8'])
-            text = d.render(f'rlUnknown{x:06X}')
+            insns, _ = d.decode()
+            # The project names routines that return with rts rs..., and rtl rl...
+            mns = {i['mn'] for i in insns}
+            prefix = 'rs' if 'rts' in mns and 'rtl' not in mns else 'rl'
+            text = d.render(f'{prefix}Unknown{x:06X}')
             if info['clipped']:
                 text = text.replace('\n', '\n\n        ; Runs on into built code at the end.', 1)
             if info['warn']:

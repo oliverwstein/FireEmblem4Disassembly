@@ -1453,11 +1453,11 @@
         .word <>rsUnknown848A8E
         .word <>rsUnknown848A9E
         .word <>rsUnknown848AB8
-        .word <>$848AED
-        .word <>$848B1B
-        .word <>$848B49
-        .word <>$848B88
-        .word <>$848BC9
+        .word <>rsUnknown848AED
+        .word <>rsUnknown848B1B
+        .word <>rsUnknown848B49
+        .word <>rsUnknown848B88
+        .word <>rsUnknown848BC9
 
       rsUnknown848A29 ; 84/8A29
 
@@ -1661,3 +1661,219 @@
         ; 84/8AED
 
     .endsection LoadUNITGroupMapSpritesSection
+
+
+    .section UnitsTable848A0DEntriesSection
+
+      .al
+      .xl
+
+      rsUnknown848AED ; 84/8AED
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tax
+        lda @l wSelectedUnitDataRAMPointer
+        tay
+        lda $7E46EB,x
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetSelectedUnitStatus
+        cmp #$0000
+        bne _8B0E
+        tya
+        sta @l wSelectedUnitDataRAMPointer
+        clc
+        bra _8B18
+
+
+        _8B0E
+        tya
+        sta @l wSelectedUnitDataRAMPointer
+        txa
+        jsl rlCheckIfTargetFoeOfOwnFaction
+
+        _8B18
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 84/8B1B
+
+      rsUnknown848B1B ; 84/8B1B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tax
+        lda @l wSelectedUnitDataRAMPointer
+        tay
+        lda $7E46EB,x
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetSelectedUnitMoney
+        cmp #$C350
+        bcc _8B3C
+        tya
+        sta @l wSelectedUnitDataRAMPointer
+        clc
+        bra _8B46
+
+
+        _8B3C
+        tya
+        sta @l wSelectedUnitDataRAMPointer
+        txa
+        jsl rlCheckIfTargetBelongsToOwnFaction
+
+        _8B46
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 84/8B49
+
+      rsUnknown848B49 ; 84/8B49
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tax
+        jsl rlGetSelectedUnitLoverGenerationID
+        sta $442C,b
+        lda @l wSelectedUnitDataRAMPointer
+        tay
+        lda $7E477B,x
+        bne _8B78
+        lda $7E46EB,x
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetSelectedUnitMoney
+        cmp #$C350
+        bcs _8B78
+        jsl rlGetSelectedUnitGenerationID
+        cmp $442C,b
+        beq _8B80
+
+        _8B78
+        tya
+        sta @l wSelectedUnitDataRAMPointer
+        clc
+        bra _8B85
+
+
+        _8B80
+        tya
+        sta @l wSelectedUnitDataRAMPointer
+
+        _8B85
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 84/8B88
+
+      rsUnknown848B88 ; 84/8B88
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tax
+        lda @l wSelectedUnitDataRAMPointer
+        tay
+        lda $7E46EB,x
+        sta @l wSelectedUnitDataRAMPointer
+        lda #$0004
+        sta $442C,b
+
+        _8B9E
+        lda $442C,b
+        jsl rlGetSelectedUnitWeaponRank
+        cmp #$0003
+        bcc _8BBD
+        inc $442C,b
+        lda $442C,b
+        cmp #$000A
+        bcc _8B9E
+        tya
+        sta @l wSelectedUnitDataRAMPointer
+        clc
+        bra _8BC6
+
+
+        _8BBD
+        tya
+        sta @l wSelectedUnitDataRAMPointer
+        txa
+        jsr $848BC9
+
+        _8BC6
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 84/8BC9
+
+      rsUnknown848BC9 ; 84/8BC9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tax
+        lda @l wSelectedUnitDataRAMPointer
+        tay
+        jsl rlGetSelectedUnitTotalMagic
+        sta $442C,b
+        lda $7E46EB,x
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetSelectedUnitTotalResistance
+        cmp $442C,b
+        bcc _8BF1
+        tya
+        sta @l wSelectedUnitDataRAMPointer
+        clc
+        bra _8BFB
+
+
+        _8BF1
+        tya
+        sta @l wSelectedUnitDataRAMPointer
+        txa
+        jsl rlUnknown84D52E
+
+        _8BFB
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 84/8BFE
+
+    .endsection UnitsTable848A0DEntriesSection

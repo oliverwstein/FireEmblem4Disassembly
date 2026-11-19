@@ -419,7 +419,7 @@
       .al
       .xl
 
-      rlUnknown9E832C ; 9E/832C
+      rsUnknown9E832C ; 9E/832C
 
         .al
         .xl
@@ -3394,7 +3394,7 @@
         lda $455E,b
         sta wR0
         lda #0
-        jsr rlUnknown9E832C
+        jsr rsUnknown9E832C
         stx $4589,b
         sty $4586,b
         plx

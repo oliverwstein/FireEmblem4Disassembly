@@ -392,28 +392,28 @@
         bit #$0200
         beq +
 
-          jsr rlUnknown818EAB
+          jsr rsUnknown818EAB
           bcs _SEC
 
         +
         bit #$0100
         beq +
 
-          jsr rlUnknown818EB3
+          jsr rsUnknown818EB3
           bcs _SEC
 
         +
         bit #$0800
         beq +
 
-          jsr rlUnknown818EBB
+          jsr rsUnknown818EBB
           bcs _SEC
 
         +
         bit #$0400
         beq +
 
-          jsr rlUnknown818EC3
+          jsr rsUnknown818EC3
           bcs _SEC
 
         +

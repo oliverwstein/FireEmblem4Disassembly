@@ -641,7 +641,7 @@
         and #$FF00
         bne +
 
-          jsr rlUnknown818D23
+          jsr rsUnknown818D23
           bra _End
 
         +
@@ -685,7 +685,7 @@
       .al
       .xl
 
-      rlUnknown818D23 ; 81/8D23
+      rsUnknown818D23 ; 81/8D23
 
         .al
         .xl
@@ -887,7 +887,7 @@
       .al
       .xl
 
-      rlUnknown818EAB ; 81/8EAB
+      rsUnknown818EAB ; 81/8EAB
 
         .al
         .xl
@@ -904,7 +904,7 @@
 
         ; 81/8EB3
 
-      rlUnknown818EB3 ; 81/8EB3
+      rsUnknown818EB3 ; 81/8EB3
 
         .al
         .xl
@@ -921,7 +921,7 @@
 
         ; 81/8EBB
 
-      rlUnknown818EBB ; 81/8EBB
+      rsUnknown818EBB ; 81/8EBB
 
         .al
         .xl
@@ -938,7 +938,7 @@
 
         ; 81/8EC3
 
-      rlUnknown818EC3 ; 81/8EC3
+      rsUnknown818EC3 ; 81/8EC3
 
         .al
         .xl
@@ -1151,7 +1151,7 @@
         .word <>rsUnknown81A93B ; 1
         .word <>rsUnknown81A968 ; 2
         .word <>rsUnknown81A9A6 ; 3
-        .word <>rlUnknown81AB6B ; 4
+        .word <>rsUnknown81AB6B ; 4
         .word <>rsUnknown81AB90 ; 5
         .word <>rsUnknown81AC4E ; 6
         .word <>rsUnknown81AC9C ; 7

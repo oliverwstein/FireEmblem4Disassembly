@@ -387,7 +387,7 @@
       .al
       .xl
 
-      rlUnknown84B9D4 ; 84/B9D4
+      rsUnknown84B9D4 ; 84/B9D4
 
         .al
         .xl
@@ -428,7 +428,7 @@
 
         ; 84/BA09
 
-      rlUnknown84BA09 ; 84/BA09
+      rsUnknown84BA09 ; 84/BA09
 
         .al
         .xl
@@ -545,7 +545,7 @@
       .al
       .xl
 
-      rlUnknown84C398 ; 84/C398
+      rsUnknown84C398 ; 84/C398
 
         .al
         .xl
@@ -581,7 +581,7 @@
 
         ; 84/C3C1
 
-      rlUnknown84C3C1 ; 84/C3C1
+      rsUnknown84C3C1 ; 84/C3C1
 
         .al
         .xl
@@ -1742,7 +1742,7 @@
         jsl rlGetSelectedUnitStates
         bit #$0800
         bne _F7DA
-        jsr rlUnknown84F7F5
+        jsr rsUnknown84F7F5
         jsr $84F815
         jsr $84F845
         jsr $84F865
@@ -1772,7 +1772,7 @@
 
         ; 84/F7F5
 
-      rlUnknown84F7F5 ; 84/F7F5
+      rsUnknown84F7F5 ; 84/F7F5
 
         .al
         .xl

@@ -115,7 +115,7 @@
         stz wMapScrollDirectionIdentifier,b
         jsl rlUnknown8883C8
         jsl rlUnknown88DE1B
-        jsr rlUnknown8881B8
+        jsr rsUnknown8881B8
         jsl rlUnknown88CD4C
         jsl rlUnknown88CD5A
         jsl rlUnknown88D073
@@ -161,7 +161,7 @@
       .al
       .xl
 
-      rlUnknown8881B8 ; 88/81B8
+      rsUnknown8881B8 ; 88/81B8
 
         .al
         .xl
@@ -392,7 +392,7 @@
         lda #$000F
         jsl rlUnknown88CC75
         jsl rlUnknown88CD68
-        jsr rlUnknown8881B8
+        jsr rsUnknown8881B8
         jsl rlUnknown88CD4C
         jsl rlUnknown88CD5A
         jsl rlUnknown88D073
@@ -506,7 +506,7 @@
           -
           jsr rsMapScrollUpSetBGOFS
           jsl rlUnknown8887AD
-          jsr rlUnknown88847D
+          jsr rsUnknown88847D
 
           lda wUnknown000736,b
           cmp wMapScrollYPixels,b
@@ -536,7 +536,7 @@
       .al
       .xl
 
-      rlUnknown88847D ; 88/847D
+      rsUnknown88847D ; 88/847D
 
         .al
         .xl
@@ -645,13 +645,13 @@
         and #$0008
         bne _8531
         lda #$0000
-        jsr rlUnknown888A14
+        jsr rsUnknown888A14
         bra _8537
 
 
         _8531
         lda #$0000
-        jsr rlUnknown888C5F
+        jsr rsUnknown888C5F
 
         _8537
         ldx $0724,b
@@ -1259,7 +1259,7 @@
           beq _End
 
             lda #$00E0
-            jsr rlUnknown888A14
+            jsr rsUnknown888A14
             bra _End
 
         +
@@ -1269,7 +1269,7 @@
         beq _End
 
           lda #$00E0
-          jsr rlUnknown888C5F
+          jsr rsUnknown888C5F
 
         _End
         rts
@@ -1310,7 +1310,7 @@
           beq _End
 
             lda #0
-            jsr rlUnknown888A14
+            jsr rsUnknown888A14
             bra _End
 
         +
@@ -1320,7 +1320,7 @@
         beq _End
 
           lda #0
-          jsr rlUnknown888C5F
+          jsr rsUnknown888C5F
 
         _End
         rts
@@ -1416,7 +1416,7 @@
       .al
       .xl
 
-      rlUnknown888A14 ; 88/8A14
+      rsUnknown888A14 ; 88/8A14
 
         .al
         .xl
@@ -1440,7 +1440,7 @@
         lsr a
         lsr a
         sta $078C,b
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         stz wUnknown00072A,b
         ldy wR8
 
@@ -1455,11 +1455,11 @@
         bcc _8A66
         cmp $0720,b
         bcs _8A66
-        jsr rlUnknown888D47
+        jsr rsUnknown888D47
         lda aMovementMap,x
         and #$00FF
         beq _8A66
-        jsr rlUnknown888A93
+        jsr rsUnknown888A93
         bra _8A6F
 
 
@@ -1502,7 +1502,7 @@
 
         ; 88/8A93
 
-      rlUnknown888A93 ; 88/8A93
+      rsUnknown888A93 ; 88/8A93
 
         .al
         .xl
@@ -1590,7 +1590,7 @@
 
         ; 88/8B87
 
-      rlUnknown888B87 ; 88/8B87
+      rsUnknown888B87 ; 88/8B87
 
         .al
         .xl
@@ -1614,7 +1614,7 @@
 
         ; 88/8B9D
 
-      rlUnknown888B9D ; 88/8B9D
+      rsUnknown888B9D ; 88/8B9D
 
         .al
         .xl
@@ -1771,7 +1771,7 @@
       .al
       .xl
 
-      rlUnknown888C5F ; 88/8C5F
+      rsUnknown888C5F ; 88/8C5F
 
         .al
         .xl
@@ -1795,7 +1795,7 @@
         lsr a
         lsr a
         sta $078C,b
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         stz wR9
         stz wUnknown00072A,b
         ldy wR8
@@ -1811,7 +1811,7 @@
         bcc _8CD2
         cmp $0720,b
         bcs _8CD2
-        jsr rlUnknown888D47
+        jsr rsUnknown888D47
         lda aMovementMap,x
         and #$00FF
         beq _8CED
@@ -1827,7 +1827,7 @@
         ldy #$0000
 
         _8CC1
-        jsr rlUnknown888D47
+        jsr rsUnknown888D47
         lda aMovementMap,x
         and #$00FF
         beq _8CF5
@@ -1896,7 +1896,7 @@
 
         ; 88/8D23
 
-      rlUnknown888D23 ; 88/8D23
+      rsUnknown888D23 ; 88/8D23
 
         .al
         .xl
@@ -1928,7 +1928,7 @@
 
         ; 88/8D47
 
-      rlUnknown888D47 ; 88/8D47
+      rsUnknown888D47 ; 88/8D47
 
         .al
         .xl
@@ -2083,18 +2083,18 @@
           beq _End
 
             lda #$00F8
-            jsr rlUnknown888F32
+            jsr rsUnknown888F32
             bra _End
 
         +
         lda #4
-        jsr rlUnknown889108
+        jsr rsUnknown889108
 
         lda wUnknown000770,b
         beq _End
 
           lda #$00F8
-          jsr rlUnknown8891BC
+          jsr rsUnknown8891BC
 
         _End
         rts
@@ -2135,18 +2135,18 @@
           beq _End
 
             lda #0
-            jsr rlUnknown888F32
+            jsr rsUnknown888F32
             bra _End
 
         +
         lda #0
-        jsr rlUnknown889108
+        jsr rsUnknown889108
 
         lda wUnknown000770,b
         beq _End
 
           lda #0
-          jsr rlUnknown8891BC
+          jsr rsUnknown8891BC
 
         _End
         rts
@@ -2321,7 +2321,7 @@
       .al
       .xl
 
-      rlUnknown888F32 ; 88/8F32
+      rsUnknown888F32 ; 88/8F32
 
         .al
         .xl
@@ -2345,7 +2345,7 @@
         lsr a
         lsr a
         sta $078E,b
-        jsr rlUnknown8890CF
+        jsr rsUnknown8890CF
         stz wR9
         stz wUnknown00072A,b
         lda wR3
@@ -2363,11 +2363,11 @@
         bcc _8F89
         cmp $0720,b
         bcs _8F89
-        jsr rlUnknown8890F2
+        jsr rsUnknown8890F2
         lda aMovementMap,x
         and #$00FF
         beq _8F89
-        jsr rlUnknown888FAF
+        jsr rsUnknown888FAF
         bra _8F92
 
 
@@ -2401,7 +2401,7 @@
 
         ; 88/8FAF
 
-      rlUnknown888FAF ; 88/8FAF
+      rsUnknown888FAF ; 88/8FAF
 
         .al
         .xl
@@ -2489,7 +2489,7 @@
 
         ; 88/90A3
 
-      rlUnknown8890A3 ; 88/90A3
+      rsUnknown8890A3 ; 88/90A3
 
         .al
         .xl
@@ -2513,7 +2513,7 @@
 
         ; 88/90B9
 
-      rlUnknown8890B9 ; 88/90B9
+      rsUnknown8890B9 ; 88/90B9
 
         .al
         .xl
@@ -2537,7 +2537,7 @@
 
         ; 88/90CF
 
-      rlUnknown8890CF ; 88/90CF
+      rsUnknown8890CF ; 88/90CF
 
         .al
         .xl
@@ -2568,7 +2568,7 @@
 
         ; 88/90F2
 
-      rlUnknown8890F2 ; 88/90F2
+      rsUnknown8890F2 ; 88/90F2
 
         .al
         .xl
@@ -2594,7 +2594,7 @@
 
         ; 88/9108
 
-      rlUnknown889108 ; 88/9108
+      rsUnknown889108 ; 88/9108
 
         .al
         .xl
@@ -2710,7 +2710,7 @@
 
         ; 88/91BC
 
-      rlUnknown8891BC ; 88/91BC
+      rsUnknown8891BC ; 88/91BC
 
         .al
         .xl
@@ -2734,7 +2734,7 @@
         lsr a
         lsr a
         sta $078E,b
-        jsr rlUnknown8890CF
+        jsr rsUnknown8890CF
         stz wR9
         stz wUnknown00072A,b
         lda wR3
@@ -2752,7 +2752,7 @@
         bcc _9232
         cmp $0720,b
         bcs _9232
-        jsr rlUnknown8890F2
+        jsr rsUnknown8890F2
         lda aMovementMap,x
         and #$00FF
         beq _9242
@@ -2768,7 +2768,7 @@
         ldy #$0000
 
         _9221
-        jsr rlUnknown8890F2
+        jsr rsUnknown8890F2
         lda aMovementMap,x
         and #$00FF
         beq _924A
@@ -3103,7 +3103,7 @@
 
 
         _978E
-        jsr rlUnknown889A41
+        jsr rsUnknown889A41
         lda wJoy1Input
         and #$0F00
         sta wMapScrollDirectionIdentifier,b
@@ -3193,7 +3193,7 @@
 
 
         _9841
-        jsr rlUnknown88986C
+        jsr rsUnknown88986C
         lda $087D,b
         asl a
         clc
@@ -3217,7 +3217,7 @@
 
         ; 88/986C
 
-      rlUnknown88986C ; 88/986C
+      rsUnknown88986C ; 88/986C
 
         .al
         .xl
@@ -3471,7 +3471,7 @@
 
         ; 88/9A41
 
-      rlUnknown889A41 ; 88/9A41
+      rsUnknown889A41 ; 88/9A41
 
         .al
         .xl
@@ -3516,7 +3516,7 @@
 
 
         _9A80
-        jsr rlUnknown88C1BF
+        jsr rsUnknown88C1BF
         bra _9A5E
 
         .databank 0
@@ -3798,7 +3798,7 @@
           lda $086F,b
           bpl +
 
-            jsr rlUnknown88C71C
+            jsr rsUnknown88C71C
           
           +
           jml rlUnknown88C4D9
@@ -3925,7 +3925,7 @@
             bra _A2BD
           
           +
-          jsr rlUnknown88A551
+          jsr rsUnknown88A551
           bcc _A2BD
 
             stz wMapScrollCurrentPixelDistance,b
@@ -3966,7 +3966,7 @@
         cmp wMapScrollSpeed,b
         bne _A2BD
 
-          jsr rlUnknown88BEEF
+          jsr rsUnknown88BEEF
 
         _A2BD
         sep #$20
@@ -4148,7 +4148,7 @@
       .al
       .xl
 
-      rlUnknown88A551 ; 88/A551
+      rsUnknown88A551 ; 88/A551
 
         .al
         .xl
@@ -4326,7 +4326,7 @@
         bcc _A696
         cmp $0720,b
         bcs _A696
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
         beq _A696
@@ -4434,7 +4434,7 @@
 
                     lda #16
                     sta wMapPixelScrollDistance,b
-                    jsr rlUnknown88A9B4
+                    jsr rsUnknown88A9B4
                     beq _End
 
                       lda #8
@@ -4443,10 +4443,10 @@
           
           _A788
           stz wMapPixelScrollDistance,b
-          jsr rlUnknown88AA1E
+          jsr rsUnknown88AA1E
           beq _End
 
-            jsr rlUnknown88A7F5
+            jsr rsUnknown88A7F5
             bra +
 
           _A795
@@ -4512,7 +4512,7 @@
       .al
       .xl
 
-      rlUnknown88A7F5 ; 88/A7F5
+      rsUnknown88A7F5 ; 88/A7F5
 
         .al
         .xl
@@ -4618,7 +4618,7 @@
         _A8A3
         lda #$0005
         jsl rlUnknown808FAD
-        jsr rlUnknown88AB47
+        jsr rsUnknown88AB47
         lda $0772,b
         sta wR0
         lda $0774,b
@@ -4746,7 +4746,7 @@
 
         ; 88/A9B4
 
-      rlUnknown88A9B4 ; 88/A9B4
+      rsUnknown88A9B4 ; 88/A9B4
 
         .al
         .xl
@@ -4813,7 +4813,7 @@
 
         ; 88/AA1E
 
-      rlUnknown88AA1E ; 88/AA1E
+      rsUnknown88AA1E ; 88/AA1E
 
         .al
         .xl
@@ -4867,7 +4867,7 @@
         cmp wMapScrollDirectionIdentifier,b
         bne _AA7A
         sta wMapScrollDirectionIdentifier,b
-        jsr rlUnknown88AB13
+        jsr rsUnknown88AB13
         lda #$0001
         rts
 
@@ -4876,7 +4876,7 @@
         sta wMapScrollDirectionIdentifier,b
         stz $07DC,b
         stz $07DE,b
-        jsr rlUnknown88AB13
+        jsr rsUnknown88AB13
         lda #$0001
         rts
 
@@ -4954,7 +4954,7 @@
 
         ; 88/AB13
 
-      rlUnknown88AB13 ; 88/AB13
+      rsUnknown88AB13 ; 88/AB13
 
         .al
         .xl
@@ -4988,7 +4988,7 @@
       .al
       .xl
 
-      rlUnknown88AB47 ; 88/AB47
+      rsUnknown88AB47 ; 88/AB47
 
         .al
         .xl
@@ -5456,7 +5456,7 @@
       .al
       .xl
 
-      rlUnknown88B028 ; 88/B028
+      rsUnknown88B028 ; 88/B028
 
         .al
         .xl
@@ -5465,7 +5465,7 @@
 
         lda wUnknown000770,b
         bne _B03F
-        jsr rlUnknown88B701
+        jsr rsUnknown88B701
         bcs _B037
         lda wUnknown000770,b
         beq _B06F
@@ -5486,7 +5486,7 @@
         jsl rlGetSelectedUnitFactionSlot
         cmp wActiveFactionSlot,b
         bne _B081
-        jsr rlUnknown88B8E9
+        jsr rsUnknown88B8E9
         bcs _B067
         lda #$000A
         jsl rlUnknown808FAD
@@ -5502,12 +5502,12 @@
         _B06F
         jsl rlUnknown88B249
         bcc _B080
-        jsr rlUnknown88B10B
+        jsr rsUnknown88B10B
         rts
 
 
         _B079
-        jsr rlUnknown88B096
+        jsr rsUnknown88B096
         rts
 
         .byte $20, $33, $B1
@@ -5523,14 +5523,14 @@
         stz $07DA,b
         ldx $0772,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
-        jsr rlUnknown88BBD3
+        jsr rsUnknown88BBD3
         rts
 
         .databank 0
 
         ; 88/B096
 
-      rlUnknown88B096 ; 88/B096
+      rsUnknown88B096 ; 88/B096
 
         .al
         .xl
@@ -5540,7 +5540,7 @@
         lda #$0000
         sta wUnknown0007D8,b
         stz $07DA,b
-        jsr rlUnknown88BBD3
+        jsr rsUnknown88BBD3
         lda $0772,b
         sta wR0
         lda $0774,b
@@ -5596,7 +5596,7 @@
 
         ; 88/B10B
 
-      rlUnknown88B10B ; 88/B10B
+      rsUnknown88B10B ; 88/B10B
 
         .al
         .xl
@@ -5622,7 +5622,7 @@
 
         ; 88/B133
 
-      rlUnknown88B133 ; 88/B133
+      rsUnknown88B133 ; 88/B133
 
         .al
         .xl
@@ -5642,7 +5642,7 @@
         lda $0772,b
         jsl rlUnknown88B4DB
         jsl rlDeployedUnitUnsetHiddenIfAlive
-        jsr rlUnknown88BBD3
+        jsr rsUnknown88BBD3
         lda $07E0,b
         cmp #$0001
         beq _B16D
@@ -5682,7 +5682,7 @@
         sta $077A,b
         lda #$0005
         jsl rlUnknown808FAD
-        jsr rlUnknown88BBD3
+        jsr rsUnknown88BBD3
         stz wUnknown0007D8,b
         jsl rlUnknown85E85D
         lda #$0008
@@ -5695,7 +5695,7 @@
 
         ; 88/B1C2
 
-      rlUnknown88B1C2 ; 88/B1C2
+      rsUnknown88B1C2 ; 88/B1C2
 
         .al
         .xl
@@ -5740,7 +5740,7 @@
 
         ; 88/B20C
 
-      rlUnknown88B20C ; 88/B20C
+      rsUnknown88B20C ; 88/B20C
 
         .al
         .xl
@@ -6101,7 +6101,7 @@
       .al
       .xl
 
-      rlUnknown88B51A ; 88/B51A
+      rsUnknown88B51A ; 88/B51A
 
         .al
         .xl
@@ -6125,7 +6125,7 @@
         lsr a
         sta $078E,b
         ldy #$0090
-        jsr rlUnknown88B5CA
+        jsr rsUnknown88B5CA
         bcs _B561
         lda $0790,b
         bne _B54F
@@ -6146,7 +6146,7 @@
         ldx #$0000
 
         _B55C
-        jsr rlUnknown88B5DD
+        jsr rsUnknown88B5DD
         bcs _B5C9
 
         _B561
@@ -6208,7 +6208,7 @@
 
         ; 88/B5CA
 
-      rlUnknown88B5CA ; 88/B5CA
+      rsUnknown88B5CA ; 88/B5CA
 
         .al
         .xl
@@ -6233,7 +6233,7 @@
 
         ; 88/B5DD
 
-      rlUnknown88B5DD ; 88/B5DD
+      rsUnknown88B5DD ; 88/B5DD
 
         .al
         .xl
@@ -6255,7 +6255,7 @@
         jsl rlGetFactionSlotLocationID
         jsl rlGetLocationEventDataEntry
         jsl rlBuildDeadPlayerCharacterList
-        jsr rlUnknown88B627
+        jsr rsUnknown88B627
         bcc _B625
         jsl rlGetEventLocationEntryEffectiveXCoordinate
         sec
@@ -6281,7 +6281,7 @@
 
         ; 88/B627
 
-      rlUnknown88B627 ; 88/B627
+      rsUnknown88B627 ; 88/B627
 
         .al
         .xl
@@ -6388,7 +6388,7 @@
         stz wUnknown00073A,b
         stz wMapScrollScriptOffset,b
         stz wUnknown0007D8,b
-        jsr rlUnknown88B701
+        jsr rsUnknown88B701
         lda #0
         rts
 
@@ -6413,7 +6413,7 @@
         bit #$0008
         bne +
 
-          jsr rlUnknown88B701
+          jsr rsUnknown88B701
           lda #0
           rts
 
@@ -6444,14 +6444,14 @@
         .autsiz
         .databank ?
 
-        jsr rlUnknown88B701
+        jsr rsUnknown88B701
         rtl
 
         .databank 0
 
         ; 88/B701
 
-      rlUnknown88B701 ; 88/B701
+      rsUnknown88B701 ; 88/B701
 
         .al
         .xl
@@ -6519,7 +6519,7 @@
         bcs _B7A9
 
         _B794
-        jsr rlUnknown88B873
+        jsr rsUnknown88B873
         bra _B7A4
 
 
@@ -6647,7 +6647,7 @@
 
         ; 88/B873
 
-      rlUnknown88B873 ; 88/B873
+      rsUnknown88B873 ; 88/B873
 
         .al
         .xl
@@ -6664,14 +6664,14 @@
         lda #$41
         sta bBufferCGADSUB
         rep #$20
-        jsr rlUnknown88B88B
+        jsr rsUnknown88B88B
         rts
 
         .databank 0
 
         ; 88/B88B
 
-      rlUnknown88B88B ; 88/B88B
+      rsUnknown88B88B ; 88/B88B
 
         .al
         .xl
@@ -6731,7 +6731,7 @@
 
         ; 88/B8E9
 
-      rlUnknown88B8E9 ; 88/B8E9
+      rsUnknown88B8E9 ; 88/B8E9
 
         .al
         .xl
@@ -6775,17 +6775,17 @@
         bcc _B95E
         cmp $0720,b
         bcs _B95E
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         lda aMovementMap,x
         bit #$0080
         bne _B95E
         and #$007F
         beq _B95E
         sta $0792,b
-        jsr rlUnknown88B960
+        jsr rsUnknown88B960
         bmi _B95E
-        jsr rlUnknown88BBD3
-        jsr rlUnknown88B992
+        jsr rsUnknown88BBD3
+        jsr rsUnknown88B992
         clc
         rts
 
@@ -6798,7 +6798,7 @@
 
         ; 88/B960
 
-      rlUnknown88B960 ; 88/B960
+      rsUnknown88B960 ; 88/B960
 
         .al
         .xl
@@ -6837,7 +6837,7 @@
 
         ; 88/B992
 
-      rlUnknown88B992 ; 88/B992
+      rsUnknown88B992 ; 88/B992
 
         .al
         .xl
@@ -6876,7 +6876,7 @@
         sec
         sbc #$0001
         sta $078E,b
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -6898,7 +6898,7 @@
         clc
         adc #$0001
         sta $078E,b
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -6920,7 +6920,7 @@
         sta $078C,b
         lda wR3
         sta $078E,b
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -6942,7 +6942,7 @@
         sta $078C,b
         lda wR3
         sta $078E,b
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7003,7 +7003,7 @@
         sta $078C,b
         lda wR3
         sta $078E,b
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7025,7 +7025,7 @@
         sta $078C,b
         lda wR3
         sta $078E,b
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7047,7 +7047,7 @@
         sec
         sbc #$0001
         sta $078E,b
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7069,7 +7069,7 @@
         clc
         adc #$0001
         sta $078E,b
-        jsr rlUnknown888D23
+        jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7107,7 +7107,7 @@
 
         ; 88/BBD3
 
-      rlUnknown88BBD3 ; 88/BBD3
+      rsUnknown88BBD3 ; 88/BBD3
 
         .al
         .xl
@@ -7196,31 +7196,31 @@
         rtl
         
         _0800
-        jsr rlUnknown88BDA1
+        jsr rsUnknown88BDA1
         rtl
         
         _0400
-        jsr rlUnknown88BE57
+        jsr rsUnknown88BE57
         rtl
         
         _0A00
         jsr rsUnknown88BC63
-        jsr rlUnknown88BDA1
+        jsr rsUnknown88BDA1
         rtl
         
         _0600
         jsr rsUnknown88BC63
-        jsr rlUnknown88BE57
+        jsr rsUnknown88BE57
         rtl
         
         _0900
         jsr rsUnknown88BD09
-        jsr rlUnknown88BDA1
+        jsr rsUnknown88BDA1
         rtl
         
         _0500
         jsr rsUnknown88BD09
-        jsr rlUnknown88BE57
+        jsr rsUnknown88BE57
         rtl
 
         .databank 0
@@ -7420,7 +7420,7 @@
       .al
       .xl
 
-      rlUnknown88BDA1 ; 88/BDA1
+      rsUnknown88BDA1 ; 88/BDA1
 
         .al
         .xl
@@ -7520,7 +7520,7 @@
 
         ; 88/BE57
 
-      rlUnknown88BE57 ; 88/BE57
+      rsUnknown88BE57 ; 88/BE57
 
         .al
         .xl
@@ -7609,7 +7609,7 @@
 
         ; 88/BEEF
 
-      rlUnknown88BEEF ; 88/BEEF
+      rsUnknown88BEEF ; 88/BEEF
 
         .al
         .xl
@@ -7970,7 +7970,7 @@
       .al
       .xl
 
-      rlUnknown88C1BF ; 88/C1BF
+      rsUnknown88C1BF ; 88/C1BF
 
         .al
         .xl
@@ -8288,7 +8288,7 @@
         and #$00FF
         bit #$0002
         bne _C52E
-        jsr rlUnknown88C67D
+        jsr rsUnknown88C67D
         jml _C658
 
 
@@ -8302,7 +8302,7 @@
         _C53B
         jsl rlUnknown88C0B3
         stz wMapPixelScrollDistance,b
-        jsr rlUnknown88AA1E
+        jsr rsUnknown88AA1E
         beq _C564
         jsl rlUnknown87BF1B
         cmp #$0000
@@ -8463,7 +8463,7 @@
       .al
       .xl
 
-      rlUnknown88C67D ; 88/C67D
+      rsUnknown88C67D ; 88/C67D
 
         ; TRACE: odd-opcode
         .al
@@ -8471,7 +8471,7 @@
         .autsiz
         .databank ?
 
-        jsr rlUnknown88C733
+        jsr rsUnknown88C733
         lda wMapScrollXPixels,b
         sta wUnknown000734,b
         lda wMapScrollYPixels,b
@@ -8488,7 +8488,7 @@
         sta wCursorYOffset,b
         lda $0877,b
         sta wMapScrollYPixels,b
-        jsr rlUnknown88B8E9
+        jsr rsUnknown88B8E9
         bcc _C6B6
         .byte $00 ; brk
 
@@ -8526,7 +8526,7 @@
       .al
       .xl
 
-      rlUnknown88C71C ; 88/C71C
+      rsUnknown88C71C ; 88/C71C
 
         .al
         .xl
@@ -8546,7 +8546,7 @@
 
         ; 88/C733
 
-      rlUnknown88C733 ; 88/C733
+      rsUnknown88C733 ; 88/C733
 
         .al
         .xl
@@ -8607,7 +8607,7 @@
         lda $7E46EB,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown87B541
-        jsr rlUnknown88B873
+        jsr rsUnknown88B873
         bra _C7CA
 
 
@@ -8752,12 +8752,12 @@
         beq _CC97
         cmp #$000A
         bcc _CC93
-        jsr rlUnknown88CE81
+        jsr rsUnknown88CE81
         rtl
 
 
         _CC93
-        jsr rlUnknown88CC98
+        jsr rsUnknown88CC98
         rtl
 
 
@@ -8768,7 +8768,7 @@
 
         ; 88/CC98
 
-      rlUnknown88CC98 ; 88/CC98
+      rsUnknown88CC98 ; 88/CC98
 
         .al
         .xl
@@ -9095,7 +9095,7 @@
 
         ; 88/CE81
 
-      rlUnknown88CE81 ; 88/CE81
+      rsUnknown88CE81 ; 88/CE81
 
         .al
         .xl
@@ -10064,12 +10064,12 @@
         .databank $88
         lda wR0
         bne _DDA8
-        jsr rlUnknown88DDAD
+        jsr rsUnknown88DDAD
         bra _DDAB
 
 
         _DDA8
-        jsr rlUnknown88DDD4
+        jsr rsUnknown88DDD4
 
         _DDAB
         plb
@@ -10080,7 +10080,7 @@
 
         ; 88/DDAD
 
-      rlUnknown88DDAD ; 88/DDAD
+      rsUnknown88DDAD ; 88/DDAD
 
         .al
         .xl
@@ -10111,7 +10111,7 @@
 
         ; 88/DDD4
 
-      rlUnknown88DDD4 ; 88/DDD4
+      rsUnknown88DDD4 ; 88/DDD4
 
         .al
         .xl
@@ -10169,12 +10169,12 @@
         beq _DE3B
         and #$8000
         beq _DE36
-        jsr rlUnknown88DE9E
+        jsr rsUnknown88DE9E
         bra _DE3B
 
 
         _DE36
-        jsr rlUnknown88DE40
+        jsr rsUnknown88DE40
         bra _DE3B
 
 
@@ -10188,7 +10188,7 @@
 
         ; 88/DE40
 
-      rlUnknown88DE40 ; 88/DE40
+      rsUnknown88DE40 ; 88/DE40
 
         .al
         .xl
@@ -10242,7 +10242,7 @@
 
         ; 88/DE9E
 
-      rlUnknown88DE9E ; 88/DE9E
+      rsUnknown88DE9E ; 88/DE9E
 
         .al
         .xl

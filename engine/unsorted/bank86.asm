@@ -264,7 +264,7 @@
       .al
       .xl
 
-      rlUnknown86BA3B ; 86/BA3B
+      rsUnknown86BA3B ; 86/BA3B
 
         .al
         .xl
@@ -316,7 +316,7 @@
       .al
       .xl
 
-      rlUnknown86BC64 ; 86/BC64
+      rsUnknown86BC64 ; 86/BC64
 
         .al
         .xl
@@ -370,7 +370,7 @@
 
         ; 86/BCB1
 
-      rlUnknown86BCB1 ; 86/BCB1
+      rsUnknown86BCB1 ; 86/BCB1
 
         .al
         .xl
@@ -395,7 +395,7 @@
 
         ; 86/BCC7
 
-      rlUnknown86BCC7 ; 86/BCC7
+      rsUnknown86BCC7 ; 86/BCC7
 
         .al
         .xl
@@ -689,7 +689,7 @@
         cmp #$FFFF
         beq _C672
         txa
-        jsr rlUnknown86C677
+        jsr rsUnknown86C677
         bcc _C669
         lda $0003,b,y
         and #$00FF
@@ -721,7 +721,7 @@
 
         ; 86/C677
 
-      rlUnknown86C677 ; 86/C677
+      rsUnknown86C677 ; 86/C677
 
         .al
         .xl

@@ -1327,13 +1327,13 @@
 
       aUnknown84DC3F ; 84/DC3F
 
-        .word <>rlUnknown84E06C
-        .word <>rlUnknown84E06C
+        .word <>rsUnknown84E06C
+        .word <>rsUnknown84E06C
         .word <>rsUnknown84DC82
         .word $DC8D
         .word <>rsUnknown84DC9A
 
-      rlUnknown84E06C ; 84/DC49
+      rsUnknown84E06C ; 84/DC49
 
         .al
         .autsiz
@@ -2788,10 +2788,10 @@
         .addr rsActionStructStaffEffectHeal ; physic
         .addr rsActionStructStaffEffectFortify ; fortify
         .addr rsActionStructStaffEffectReturn ; return
-        .addr $84EBD5 ; warp
+        .addr rsActionStructStaffEffectWarp ; warp
         .addr rsActionStructStaffEffectRescue ; rescue
-        .addr $84EB6F ; charm
-        .addr $84EB6F ; restore
+        .addr rsActionStructStaffEffectClearStatus ; charm
+        .addr rsActionStructStaffEffectClearStatus ; restore
         .addr rsActionStructStaffEffectValkyrie ; valkyrie
         .addr rsActionStructStaffEffectStatus ; silence
         .addr rsActionStructStaffEffectStatus ; sleep

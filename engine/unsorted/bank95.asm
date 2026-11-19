@@ -5,7 +5,7 @@
       .al
       .xl
 
-      rlUnknown9594F8 ; 95/94F8
+      rsUnknown9594F8 ; 95/94F8
 
         .al
         .xl
@@ -48,7 +48,7 @@
 
         ; 95/9537
 
-      rlUnknown959537 ; 95/9537
+      rsUnknown959537 ; 95/9537
 
         .al
         .xl
@@ -293,10 +293,10 @@
         .databank ?
 
         lda #$2940
-        jsr rlUnknown9594F8
+        jsr rsUnknown9594F8
 
         lda #$2940
-        jsr rlUnknown959537
+        jsr rsUnknown959537
 
         ldx #2
         
@@ -340,7 +340,7 @@
         jsl rlGetFactionBattleHUDColorID
         
         +
-        jsr rlUnknown959BC1
+        jsr rsUnknown959BC1
         rtl
 
         .databank 0
@@ -552,7 +552,7 @@
       .al
       .xl
 
-      rlUnknown959BC1 ; 95/9BC1
+      rsUnknown959BC1 ; 95/9BC1
 
         .al
         .xl

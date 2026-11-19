@@ -60,7 +60,7 @@
             .structDMAToVRAM $7E8908, $0140, $80, $BD80
 
         +
-        jsr rlUnknown8B8114
+        jsr rsUnknown8B8114
         rtl
 
         .databank 0
@@ -125,7 +125,7 @@
 
         ; 8B/8114
 
-      rlUnknown8B8114 ; 8B/8114
+      rsUnknown8B8114 ; 8B/8114
 
         .al
         .xl

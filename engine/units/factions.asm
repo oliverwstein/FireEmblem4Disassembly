@@ -1610,7 +1610,7 @@
                 jsl rlGetSelectedUnitGenerationID
                 bcs +
 
-                  jsr rlUnknown84C398
+                  jsr rsUnknown84C398
 
               +
               dec x
@@ -1632,7 +1632,7 @@
                   cmp #$0010
                   bcc +
 
-                    jsr rlUnknown84C3C1
+                    jsr rsUnknown84C3C1
 
               +
               dec x

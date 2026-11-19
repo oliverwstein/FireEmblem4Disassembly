@@ -33,7 +33,7 @@
       .al
       .xl
 
-      rlUnknown808C50 ; 80/8C50
+      rsUnknown808C50 ; 80/8C50
 
         .al
         .xl
@@ -216,7 +216,7 @@
         lda #$01
         sta $420B,b
         rep #$20
-        jsr rlUnknown808C50
+        jsr rsUnknown808C50
         jsl rlUnknown808EF6
         jsl rlUnknown878074
         lda #$0028
@@ -708,7 +708,7 @@
         beq _927C
         cmp #$0064
         bcs _920B
-        jsr rlUnknown8093C6
+        jsr rsUnknown8093C6
         ldx $04FD,b
         bne _920F
 
@@ -925,7 +925,7 @@
       .al
       .xl
 
-      rlUnknown8093C6 ; 80/93C6
+      rsUnknown8093C6 ; 80/93C6
 
         .al
         .xs
@@ -1149,7 +1149,7 @@
 
         _9667
         ldx #$0000
-        jsr rlUnknown809677
+        jsr rsUnknown809677
         jsl rlUnknown809903
 
         _9671
@@ -1165,7 +1165,7 @@
 
         ; 80/9677
 
-      rlUnknown809677 ; 80/9677
+      rsUnknown809677 ; 80/9677
 
         .al
         .xl
@@ -1837,7 +1837,7 @@
       .as
       .xl
 
-      rlUnknown80B041 ; 80/B041
+      rsUnknown80B041 ; 80/B041
 
         .al
         .xl
@@ -1856,7 +1856,7 @@
 
         ; 80/B052
 
-      rlUnknown80B052 ; 80/B052
+      rsUnknown80B052 ; 80/B052
 
         .al
         .xl
@@ -1875,7 +1875,7 @@
 
         ; 80/B065
 
-      rlUnknown80B065 ; 80/B065
+      rsUnknown80B065 ; 80/B065
 
         .al
         .xl
@@ -2028,7 +2028,7 @@
       .al
       .xl
 
-      rlUnknown80B105 ; 80/B105
+      rsUnknown80B105 ; 80/B105
 
         .al
         .xl
@@ -2083,10 +2083,10 @@
         jsr rsUnknown80AF9B
         jsr rsUnknown80B16A
         jsl rlUnknown899FDC
-        jsr rlUnknown80B065
-        jsr rlUnknown80B105
-        jsr rlUnknown80B052
-        jsr rlUnknown80B041
+        jsr rsUnknown80B065
+        jsr rsUnknown80B105
+        jsr rsUnknown80B052
+        jsr rsUnknown80B041
 
         lda #$0012
         sta $0302,b
@@ -2268,7 +2268,7 @@
       .al
       .xl
 
-      rlUnknown80B9E1 ; 80/B9E1
+      rsUnknown80B9E1 ; 80/B9E1
 
         .al
         .xl
@@ -2402,7 +2402,7 @@
         lda #$9C56
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        jsr rlUnknown80B9E1
+        jsr rsUnknown80B9E1
         lda #$0001
         sta $0304,b
         rtl
@@ -2828,9 +2828,9 @@
         jsl rlUnknown8780AA
         jsl rlUnknown82F211
 
-        jsr rlUnknown80F340
-        jsr rlUnknown80F392
-        jsr rlUnknown80F4EB
+        jsr rsUnknown80F340
+        jsr rsUnknown80F392
+        jsr rsUnknown80F4EB
 
         lda #$0024
         sta $0304,b
@@ -2860,7 +2860,7 @@
       .al
       .xl
 
-      rlUnknown80F340 ; 80/F340
+      rsUnknown80F340 ; 80/F340
 
         .al
         .xl
@@ -2965,7 +2965,7 @@
       .al
       .xl
 
-      rlUnknown80F392 ; 80/F392
+      rsUnknown80F392 ; 80/F392
 
         .al
         .xl
@@ -3044,7 +3044,7 @@
       .al
       .xl
 
-      rlUnknown80F4EB ; 80/F4EB
+      rsUnknown80F4EB ; 80/F4EB
 
         .al
         .xl

@@ -40,7 +40,7 @@
         rts
         
         _APressed
-        jsr rlUnknown88B028
+        jsr rsUnknown88B028
         rts
         
         _SelectPressed
@@ -50,24 +50,24 @@
           rts
 
         +
-        jsr rlUnknown88B10B
+        jsr rsUnknown88B10B
         rts
         
         _BPressed
         lda wUnknown000770,b
         beq +
 
-          jsr rlUnknown88B133
+          jsr rsUnknown88B133
 
         +
         rts
         
         _XPressed
-        jsr rlUnknown88B1C2
+        jsr rsUnknown88B1C2
         rts
         
         _StartPressed
-        jsr rlUnknown88B20C
+        jsr rsUnknown88B20C
         rts
         
         _RPressed
@@ -86,7 +86,7 @@
 
         lda #0
         sta $0790,b
-        jsr rlUnknown88B51A
+        jsr rsUnknown88B51A
         rts
         
         _LPressed
@@ -96,7 +96,7 @@
           rts
 
         +
-        jsr rlUnknown88C1BF
+        jsr rsUnknown88C1BF
         rts
 
         .databank 0

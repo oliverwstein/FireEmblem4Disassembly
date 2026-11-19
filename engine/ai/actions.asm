@@ -972,7 +972,7 @@
         cmp #$FFFF
         bne +
 
-          jsr rlUnknown86BA3B
+          jsr rsUnknown86BA3B
           cmp #$FFFF
           beq ++
 
@@ -1129,13 +1129,13 @@
           jml _End
         
         +
-        jsr rlUnknown86BCB1
+        jsr rsUnknown86BCB1
         bcc +
 
           jml _End
         
         +
-        jsr rlUnknown86BCC7
+        jsr rsUnknown86BCC7
         bcc +
 
           jml _End
@@ -1200,7 +1200,7 @@
         bcc +
 
           sta aAIAction.wDestinationYPosition
-          jsr rlUnknown86BC64
+          jsr rsUnknown86BC64
           bne _BC3E
         
         +
@@ -1212,7 +1212,7 @@
           sta aAIAction.wDestinationXPosition
           lda aDeploymentTable._YTilePosition,x
           sta aAIAction.wDestinationYPosition
-          jsr rlUnknown86BC64
+          jsr rsUnknown86BC64
           bne _BC3E
         
         +
@@ -1224,7 +1224,7 @@
           sta aAIAction.wDestinationXPosition
           lda aDeploymentTable._YTilePosition,x
           sta aAIAction.wDestinationYPosition
-          jsr rlUnknown86BC64
+          jsr rsUnknown86BC64
           bne _BC3E
         
         +
@@ -1236,7 +1236,7 @@
         bcs +
 
           sta aAIAction.wDestinationYPosition
-          jsr rlUnknown86BC64
+          jsr rsUnknown86BC64
           bne _BC3E
         
         +
@@ -1250,7 +1250,7 @@
           inc a
           inc a
           sta aAIAction.wDestinationYPosition
-          jsr rlUnknown86BC64
+          jsr rsUnknown86BC64
           beq _End
           
             _BC3E

@@ -324,7 +324,7 @@
 
 
         _8283
-        jsr rlUnknown87840F
+        jsr rsUnknown87840F
         jsl rlUnknown87828D
         plp
         plb
@@ -524,7 +524,7 @@
         sta lMapMenuRAMEntryPointer+1,b
 
         _83CF
-        jsr rlUnknown87862D
+        jsr rsUnknown87862D
         lda $000C,b,y
         ora $000D,b,y
         beq _83EA
@@ -563,7 +563,7 @@
       .al
       .xl
 
-      rlUnknown87840F ; 87/840F
+      rsUnknown87840F ; 87/840F
 
         .al
         .xl
@@ -804,7 +804,7 @@
         phx
         phy
         jsl rlUnknown87829A
-        jsr rlUnknown87862D
+        jsr rsUnknown87862D
         lda @l bUnknown000521
         bit #$0040
         beq _8628
@@ -817,7 +817,7 @@
 
 
         _8604
-        jsr rlUnknown87862D
+        jsr rsUnknown87862D
 
         _8607
         lda $000C,b,y
@@ -850,7 +850,7 @@
 
         ; 87/862D
 
-      rlUnknown87862D ; 87/862D
+      rsUnknown87862D ; 87/862D
 
         .al
         .xl
@@ -883,7 +883,7 @@
         sta @l lMapMenuTilemapRAMEntryPointer+1
         lda $0006,b,y
         sta @l lMapMenuTilemapRAMEntryPointer
-        jsr rlUnknown878697
+        jsr rsUnknown878697
         bcs _8696
         lda $000A,b,y
         and #$00FF
@@ -915,7 +915,7 @@
 
         ; 87/8697
 
-      rlUnknown878697 ; 87/8697
+      rsUnknown878697 ; 87/8697
 
         .al
         .xl
@@ -2231,7 +2231,7 @@
           beq +
 
           ldy $894C,b,x
-          jsr rlUnknown87B91C
+          jsr rsUnknown87B91C
 
           inc x
           inc x
@@ -2319,7 +2319,7 @@
 
                 tax
                 ldy $894A+2,b,x
-                jsr rlUnknown87B63F
+                jsr rsUnknown87B63F
                 bra -
 
           +
@@ -2341,7 +2341,7 @@
       .al
       .xl
 
-      rlUnknown87B63F ; 87/B63F
+      rsUnknown87B63F ; 87/B63F
 
         .al
         .xl
@@ -2356,7 +2356,7 @@
         bmi _B692
         rep #$20
         lda #$FFC0
-        jsr rlUnknown87B8A7
+        jsr rsUnknown87B8A7
         sep #$20
         bmi _B692
         lda wR2
@@ -2365,7 +2365,7 @@
         bcc _B692
         beq _B692
         pha
-        jsr rlUnknown87B8FE
+        jsr rsUnknown87B8FE
         pla
         bcc _B66A
         ora #$80
@@ -2399,7 +2399,7 @@
         bmi _B6E2
         rep #$20
         lda #$FFFF
-        jsr rlUnknown87B8A7
+        jsr rsUnknown87B8A7
         sep #$20
         bmi _B6E2
         lda wR2
@@ -2408,7 +2408,7 @@
         bcc _B6E2
         beq _B6E2
         pha
-        jsr rlUnknown87B8FE
+        jsr rsUnknown87B8FE
         pla
         bcc _B6BA
         ora #$80
@@ -2442,7 +2442,7 @@
         bmi _B732
         rep #$20
         lda #$0001
-        jsr rlUnknown87B8A7
+        jsr rsUnknown87B8A7
         sep #$20
         bmi _B732
         lda wR2
@@ -2451,7 +2451,7 @@
         bcc _B732
         beq _B732
         pha
-        jsr rlUnknown87B8FE
+        jsr rsUnknown87B8FE
         pla
         bcc _B70A
         ora #$80
@@ -2485,7 +2485,7 @@
         bmi _B782
         rep #$20
         lda #$0040
-        jsr rlUnknown87B8A7
+        jsr rsUnknown87B8A7
         sep #$20
         bmi _B782
         lda wR2
@@ -2494,7 +2494,7 @@
         bcc _B782
         beq _B782
         pha
-        jsr rlUnknown87B8FE
+        jsr rsUnknown87B8FE
         pla
         bcc _B75A
         ora #$80
@@ -2827,7 +2827,7 @@
       .al
       .xl
 
-      rlUnknown87B8A7 ; 87/B8A7
+      rsUnknown87B8A7 ; 87/B8A7
 
         .al
         .xl
@@ -2887,7 +2887,7 @@
       .al
       .xl
 
-      rlUnknown87B8FE ; 87/B8FE
+      rsUnknown87B8FE ; 87/B8FE
 
         .as
         .xl
@@ -2917,7 +2917,7 @@
 
         ; 87/B91C
 
-      rlUnknown87B91C ; 87/B91C
+      rsUnknown87B91C ; 87/B91C
 
         .as
         .xl
@@ -3100,7 +3100,7 @@
         bmi _BA47
         tax
         ldy $894C,b,x
-        jsr rlUnknown87BA54
+        jsr rsUnknown87BA54
         bra _BA39
 
 
@@ -3120,7 +3120,7 @@
 
         ; 87/BA54
 
-      rlUnknown87BA54 ; 87/BA54
+      rsUnknown87BA54 ; 87/BA54
 
         .al
         .xl
@@ -3205,7 +3205,7 @@
         phy
 
         _BAA4
-        jsr rlUnknown87BABB
+        jsr rsUnknown87BABB
         inc x
         dec y
         bne _BAA4
@@ -3213,7 +3213,7 @@
         plx
 
         _BAAD
-        jsr rlUnknown87BABB
+        jsr rsUnknown87BABB
         dec x
         dec y
         bne _BAAD
@@ -3232,7 +3232,7 @@
 
         ; 87/BABB
 
-      rlUnknown87BABB ; 87/BABB
+      rsUnknown87BABB ; 87/BABB
 
         .al
         .xl
@@ -3576,11 +3576,11 @@
         sta $7E8B8C
         lda #$0000
         sta $7E8B90
-        jsr rlUnknown87C47A
+        jsr rsUnknown87C47A
         lda #$0000
-        jsr rlUnknown87C442
+        jsr rsUnknown87C442
         lda #$0064
-        jsr rlUnknown87C442
+        jsr rsUnknown87C442
         rtl
 
         .databank 0
@@ -3611,7 +3611,7 @@
         _C3E1
         sta $165F,b,x
         lda $7E8B8E
-        jsr rlUnknown87C442
+        jsr rsUnknown87C442
         lda $7E8B8A
         clc
         adc #$4000
@@ -3643,7 +3643,7 @@
       .al
       .xl
 
-      rlUnknown87C442 ; 87/C442
+      rsUnknown87C442 ; 87/C442
 
         .al
         .xl
@@ -3687,7 +3687,7 @@
 
         ; 87/C47A
 
-      rlUnknown87C47A ; 87/C47A
+      rsUnknown87C47A ; 87/C47A
 
         .al
         .xl
@@ -3896,12 +3896,12 @@
         lda wUnknown000D79,b
         bit #$0020
         bne _E8B0
-        jsr rlUnknown87E8BB
+        jsr rsUnknown87E8BB
         bra _E8B3
 
 
         _E8B0
-        jsr rlUnknown87E913
+        jsr rsUnknown87E913
 
         _E8B3
         pla
@@ -3916,7 +3916,7 @@
 
         ; 87/E8BB
 
-      rlUnknown87E8BB ; 87/E8BB
+      rsUnknown87E8BB ; 87/E8BB
 
         .al
         .xl
@@ -3964,7 +3964,7 @@
 
         ; 87/E913
 
-      rlUnknown87E913 ; 87/E913
+      rsUnknown87E913 ; 87/E913
 
         .al
         .xl
@@ -4456,9 +4456,9 @@
         jsl rlAppendNewStructEntry
 
         tya
-        jsr rlUnknown87F55A
-        jsr rlUnknown87FABC
-        jsr rlUnknown87FB94
+        jsr rsUnknown87F55A
+        jsr rsUnknown87FABC
+        jsr rsUnknown87FB94
         jsl rlLoadBufferedRAMAreaPointer
 
         ply
@@ -4478,7 +4478,7 @@
       .al
       .xl
 
-      rlUnknown87F55A ; 87/F55A
+      rsUnknown87F55A ; 87/F55A
 
         .al
         .xl
@@ -4597,7 +4597,7 @@
       .al
       .xl
 
-      rlUnknown87FABC ; 87/FABC
+      rsUnknown87FABC ; 87/FABC
 
         .al
         .xl
@@ -4769,7 +4769,7 @@
       .al
       .xl
 
-      rlUnknown87FB94 ; 87/FB94
+      rsUnknown87FB94 ; 87/FB94
 
         ; TRACE: odd-opcode
         .al

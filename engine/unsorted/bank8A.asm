@@ -88,7 +88,7 @@
       .al
       .xl
 
-      rlUnknown8A950E ; 8A/950E
+      rsUnknown8A950E ; 8A/950E
 
         .al
         .xl
@@ -126,7 +126,7 @@
 
         ; 8A/9539
 
-      rlUnknown8A9539 ; 8A/9539
+      rsUnknown8A9539 ; 8A/9539
 
         .al
         .xl
@@ -596,14 +596,14 @@
         .autsiz
         .databank ?
 
-        jsr rlUnknown8ACE54
+        jsr rsUnknown8ACE54
         rtl
 
         .databank 0
 
         ; 8A/CE54
 
-      rlUnknown8ACE54 ; 8A/CE54
+      rsUnknown8ACE54 ; 8A/CE54
 
         .al
         .xl
@@ -687,7 +687,7 @@
         lda #0
         sta $7F7670
         jsr rsUnknown8ADA83
-        jsr rlUnknown8ADA24
+        jsr rsUnknown8ADA24
 
         sep #$20
         lda bBufferINIDISP
@@ -719,8 +719,8 @@
           lda #$0060
           sta wR1
           ldx #0
-          jsr rlUnknown8A950E
-          jsr rlUnknown8ADB04
+          jsr rsUnknown8A950E
+          jsr rsUnknown8ADB04
 
         +
         lda $08AD,b
@@ -732,8 +732,8 @@
           lda #$0060
           sta wR1
           ldx #2
-          jsr rlUnknown8A9539
-          jsr rlUnknown8ADB37
+          jsr rsUnknown8A9539
+          jsr rsUnknown8ADB37
 
         +
         plp
@@ -799,7 +799,7 @@
 
         ; 8A/DA24
 
-      rlUnknown8ADA24 ; 8A/DA24
+      rsUnknown8ADA24 ; 8A/DA24
 
         .al
         .xl
@@ -988,7 +988,7 @@
       .al
       .xl
 
-      rlUnknown8ADB04 ; 8A/DB04
+      rsUnknown8ADB04 ; 8A/DB04
 
         .al
         .xl
@@ -1030,7 +1030,7 @@
       .al
       .xl
 
-      rlUnknown8ADB37 ; 8A/DB37
+      rsUnknown8ADB37 ; 8A/DB37
 
         .al
         .xl

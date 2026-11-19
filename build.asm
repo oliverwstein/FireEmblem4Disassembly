@@ -1398,6 +1398,13 @@
 
     .here
 
+    * = $048AED
+    .logical $848AED
+
+      .dsection UnitsTable848A0DEntriesSection
+
+    .here
+
     * = $048C31
     .logical $848C31
 
@@ -1747,6 +1754,13 @@
       .dsection BattleSection
 
       ; 84/EB24
+
+    .here
+
+    * = $04EB6F
+    .logical $84EB6F
+
+      .dsection StaffEffectClearStatusSection
 
     .here
 

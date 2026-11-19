@@ -971,7 +971,7 @@
         .addr rsUnknown828E31
         .addr rsUnknown828E36
         .addr rsUnknown828E3B
-        .addr rlUnknown828E40
+        .addr rsUnknown828E40
         .addr rsUnknown828E45
         .addr rsUnknown828E4A
         .addr rsUnknown828E4F
@@ -1011,7 +1011,7 @@
 
         .databank 0
 
-      rlUnknown828E40 ; 82/8E40
+      rsUnknown828E40 ; 82/8E40
 
         .al
         .autsiz
@@ -1950,14 +1950,14 @@
         cmp $1693,b
         beq _E173
         sta $1693,b
-        jsr rlUnknown82E177
+        jsr rsUnknown82E177
         lda $1693,b
         beq _E16A
         dec a
         asl a
         sta $1691,b
         tax
-        jsr rlUnknown82E283
+        jsr rsUnknown82E283
         bra _E173
 
 
@@ -1977,7 +1977,7 @@
 
         ; 82/E177
 
-      rlUnknown82E177 ; 82/E177
+      rsUnknown82E177 ; 82/E177
 
         .al
         .xl
@@ -2015,7 +2015,7 @@
         lda $16DA,b,x
         cmp $16DA,b,y
         bcs _E1AA
-        jsr rlUnknown82E1BF
+        jsr rsUnknown82E1BF
 
         _E1AA
         inc wR31
@@ -2039,7 +2039,7 @@
 
         ; 82/E1BF
 
-      rlUnknown82E1BF ; 82/E1BF
+      rsUnknown82E1BF ; 82/E1BF
 
         .al
         .xl
@@ -2108,7 +2108,7 @@
       .al
       .xl
 
-      rlUnknown82E283 ; 82/E283
+      rsUnknown82E283 ; 82/E283
 
         .al
         .xl

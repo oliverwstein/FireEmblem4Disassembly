@@ -74,7 +74,7 @@
         _FD01
         lda $7FD046
         sta wR0
-        jsr rlUnknown9BFD52
+        jsr rsUnknown9BFD52
         lda $7FD046
         clc
         adc #$0005
@@ -128,7 +128,7 @@
 
         ; 9B/FD52
 
-      rlUnknown9BFD52 ; 9B/FD52
+      rsUnknown9BFD52 ; 9B/FD52
 
         .al
         .xl

@@ -2,6 +2,145 @@
 ; Valkyrie, status), Sol healing, level-up and dropped-item results, and a
 ; percentage-chance roll.
 
+    .section StaffEffectClearStatusSection
+
+      .al
+      .xl
+
+      rsActionStructStaffEffectClearStatus ; 84/EB6F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Used by charm and restore. Clears the target's status and its duration.
+
+        ldx $CCD8,b
+        ldy $CCDA,b
+        lda #$0002
+        tsb $CCDE,b
+        jsr rsUnknown84E62C
+        phx
+        lda $0006,b,y
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitStatus
+        cmp #$0005
+        bne _EBA1
+        lda $0000,b,y
+        tax
+        lda $489B,b,x
+        and #$DFFF
+        sta $489B,b,x
+        lda #$0004
+        tsb wUnknown000D79,b
+
+        _EBA1
+        plx
+        lda #$0000
+        jsl rlSetSelectedUnitStatus
+        lda #$0000
+        jsl rlSetSelectedUnitStatusDuration
+        lda $0006,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda $0026,b,x
+        and #$00FF
+        jsl rlUnknown84F99D
+        sta $001A,b,x
+        sep #$20
+        lda #$00
+        sta $7ECCDF
+        rep #$20
+        lda #$003A
+        sta $4EB3,b
+        clc
+        rts
+
+        .databank 0
+
+        ; 84/EBD5
+
+      rsActionStructStaffEffectWarp ; 84/EBD5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx $CCD8,b
+        ldy $CCDA,b
+        lda #$0002
+        tsb $CCDE,b
+        jsr rsUnknown84E62C
+        lda $0006,b,y
+        sta wSelectedUnitDataRAMPointer,b
+        lda $0580,b
+        pha
+        phx
+        jsl rlGetSelectedUnitStates
+        bit #$8000
+        bne _EC02
+        lda #$FFFF
+        sta wRoutineVariable1,b
+        jsl rlUnknown84AEC0
+
+        _EC02
+        lda $0006,b,y
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitFactionSlot
+        jsl rlGetFactionSlotLocationID
+        sta $7ECCE8
+        lda $0000,b,y
+        tax
+        lda $7ECCCE
+        sta wR0
+        sta $7E4F77
+        lda $7ECCD0
+        sta wR1
+        sta $7E4F79
+        jsl rlCheckIfCoordsNotEventLocationTile
+        bcs _EC46
+        jsl rlGetEventLocationEntryID
+        cmp $7ECCE8
+        bne _EC46
+        lda $7ECCE8
+        jsl rlUnknown84CD8A
+        bra _EC56
+
+
+        _EC46
+        lda $7ECCD0
+        xba
+        ora $7ECCCE
+        sta wRoutineVariable1,b
+        jsl rlUnknown84C9BF
+
+        _EC56
+        plx
+        pla
+        sta $0580,b
+        lda $0006,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda $0026,b,x
+        and #$00FF
+        jsl rlUnknown84F99D
+        sta $001A,b,x
+        sep #$20
+        lda #$00
+        sta $7ECCDF
+        rep #$20
+        lda #$003A
+        sta $4EB3,b
+        clc
+        rts
+
+        .databank 0
+
+        ; 84/EC80
+
+    .endsection StaffEffectClearStatusSection
+
+
     .section BattleEffectsSection
 
       .al

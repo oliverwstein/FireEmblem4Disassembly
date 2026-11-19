@@ -292,7 +292,7 @@
 
         .databank 0
 
-      rlUnknown81AB6B ; 81/AB6B
+      rsUnknown81AB6B ; 81/AB6B
 
         .al
         .autsiz

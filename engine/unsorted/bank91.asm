@@ -282,7 +282,7 @@
       .al
       .xl
 
-      rlUnknown91DF6D ; 91/DF6D
+      rsUnknown91DF6D ; 91/DF6D
 
         .al
         .xl
@@ -388,7 +388,7 @@
         .databank ?
 
         php
-        jsr rlUnknown91DF6D
+        jsr rsUnknown91DF6D
         lda #$9C00
         sta lR18+1
         lda #$B90D
@@ -457,7 +457,7 @@
         .databank ?
 
         php
-        jsr rlUnknown91DF6D
+        jsr rsUnknown91DF6D
         lda #$9C00
         sta lR18+1
         lda #$B90D
@@ -527,7 +527,7 @@
 
         php
         sei
-        jsr rlUnknown91E915
+        jsr rsUnknown91E915
         jsl rlUnknown91E793
         bra _E8D5
 
@@ -576,7 +576,7 @@
       .al
       .xl
 
-      rlUnknown91E915 ; 91/E915
+      rsUnknown91E915 ; 91/E915
 
         .al
         .xl

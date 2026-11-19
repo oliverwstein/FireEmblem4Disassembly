@@ -100,7 +100,7 @@
           lda aProcSystem.aBody6,b,x
           sta $02
           jsl rlUnknown82F3E5
-          jsr rlUnknown8584A1
+          jsr rsUnknown8584A1
           bra _End
 
         +
@@ -112,7 +112,7 @@
           jsl rlUnknown808FAD
 
           jsl rlUnknown8582BA
-          jsr rlUnknown8584A1
+          jsr rsUnknown8584A1
           bra _End
         
         +
@@ -166,7 +166,7 @@
           jsl rlUnknown808FAD
         
         _849A
-        jsr rlUnknown858542
+        jsr rsUnknown858542
         
         _End
         ply
@@ -186,7 +186,7 @@
       .al
       .xl
 
-      rlUnknown8584A1 ; 85/84A1
+      rsUnknown8584A1 ; 85/84A1
 
         .al
         .xl
@@ -275,7 +275,7 @@
         _850B
         sta $0534,b
         jsl rlUnknown858751
-        jsr rlUnknown858542
+        jsr rsUnknown858542
 
         _8515
         rtl
@@ -337,7 +337,7 @@
 
         ; 85/8542
 
-      rlUnknown858542 ; 85/8542
+      rsUnknown858542 ; 85/8542
 
         .al
         .xl
@@ -436,7 +436,7 @@
       .al
       .xl
 
-      rlUnknown85860E ; 85/860E
+      rsUnknown85860E ; 85/860E
 
         .al
         .xl
@@ -597,7 +597,7 @@
             bit #$0001
             beq +
 
-              jsr rlUnknown858D18
+              jsr rsUnknown858D18
               lda #$0001
               trb $0D79,b
 
@@ -1010,7 +1010,7 @@
       .al
       .xl
 
-      rlUnknown858D18 ; 85/8D18
+      rsUnknown858D18 ; 85/8D18
 
         .al
         .xl
@@ -1292,7 +1292,7 @@
 
         _906D
         ldx #$0F05
-        jsr rlUnknown85860E
+        jsr rsUnknown85860E
 
         _9073
         ply
@@ -1335,7 +1335,7 @@
         and #$FFFB
         ora #$0008
         sta $0F37,b,x
-        jsr rlUnknown85915A
+        jsr rsUnknown85915A
         lda $0F37,b,x
         and #$FFFE
         sta $0F37,b,x
@@ -1372,7 +1372,7 @@
       .al
       .xl
 
-      rlUnknown85915A ; 85/915A
+      rsUnknown85915A ; 85/915A
 
         .al
         .xl
@@ -1416,7 +1416,7 @@
 
         _91A7
         ldx #$0700
-        jsr rlUnknown85860E
+        jsr rsUnknown85860E
 
         _91AD
         plx
@@ -1696,8 +1696,8 @@
         sta wR4
         phx
         ldx #$0000
-        jsr rlUnknown859DCD
-        jsr rlUnknown859E08
+        jsr rsUnknown859DCD
+        jsr rsUnknown859E08
         plx
         rtl
 
@@ -1726,7 +1726,7 @@
       .al
       .xl
 
-      rlUnknown859DCD ; 85/9DCD
+      rsUnknown859DCD ; 85/9DCD
 
         .al
         .xl
@@ -1777,7 +1777,7 @@
       .al
       .xl
 
-      rlUnknown859E08 ; 85/9E08
+      rsUnknown859E08 ; 85/9E08
 
         .al
         .xl
@@ -1792,14 +1792,14 @@
         jsl rlUnsignedDivide16By8
         lda wR13
         sta wR3
-        jsr rlUnknown859E1F
+        jsr rsUnknown859E1F
         rts
 
         .databank 0
 
         ; 85/9E1F
 
-      rlUnknown859E1F ; 85/9E1F
+      rsUnknown859E1F ; 85/9E1F
 
         .al
         .xl
@@ -1814,14 +1814,14 @@
         beq _9E41
         cmp #$0001
         beq _9E3A
-        jsr rlUnknown859E5F
-        jsr rlUnknown859ECB
+        jsr rsUnknown859E5F
+        jsr rsUnknown859ECB
         rts
 
 
         _9E3A
-        jsr rlUnknown859E7E
-        jsr rlUnknown859ECB
+        jsr rsUnknown859E7E
+        jsr rsUnknown859ECB
         rts
 
 
@@ -1831,24 +1831,24 @@
         sta wR3
         lda wR4
         sta wR0
-        jsr rlUnknown859E7E
+        jsr rsUnknown859E7E
         lda wR0
         sta wR4
-        jsr rlUnknown859E5F
-        jsr rlUnknown859ECB
+        jsr rsUnknown859E5F
+        jsr rsUnknown859ECB
         rts
 
 
         _9E58
-        jsr rlUnknown859EA2
-        jsr rlUnknown859ECB
+        jsr rsUnknown859EA2
+        jsr rsUnknown859ECB
         rts
 
         .databank 0
 
         ; 85/9E5F
 
-      rlUnknown859E5F ; 85/9E5F
+      rsUnknown859E5F ; 85/9E5F
 
         .al
         .xl
@@ -1860,8 +1860,8 @@
         stz wR1
 
         _9E66
-        jsr rlUnknown859FA3
-        jsr rlUnknown859F97
+        jsr rsUnknown859FA3
+        jsr rsUnknown859F97
         lda $9EE7,b,y
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
@@ -1880,7 +1880,7 @@
 
         ; 85/9E7E
 
-      rlUnknown859E7E ; 85/9E7E
+      rsUnknown859E7E ; 85/9E7E
 
         .al
         .xl
@@ -1896,8 +1896,8 @@
         tay
 
         _9E8A
-        jsr rlUnknown859FA3
-        jsr rlUnknown859F97
+        jsr rsUnknown859FA3
+        jsr rsUnknown859F97
         lda $9F27,b,y
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
@@ -1916,7 +1916,7 @@
 
         ; 85/9EA2
 
-      rlUnknown859EA2 ; 85/9EA2
+      rsUnknown859EA2 ; 85/9EA2
 
         .al
         .xl
@@ -1935,8 +1935,8 @@
         tay
 
         _9EB3
-        jsr rlUnknown859FA3
-        jsr rlUnknown859F97
+        jsr rsUnknown859FA3
+        jsr rsUnknown859F97
         lda $9F4F,b,y
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
@@ -1955,7 +1955,7 @@
 
         ; 85/9ECB
 
-      rlUnknown859ECB ; 85/9ECB
+      rsUnknown859ECB ; 85/9ECB
 
         .al
         .xl
@@ -1987,7 +1987,7 @@
       .al
       .xl
 
-      rlUnknown859F97 ; 85/9F97
+      rsUnknown859F97 ; 85/9F97
 
         .al
         .xl
@@ -2005,7 +2005,7 @@
 
         ; 85/9FA3
 
-      rlUnknown859FA3 ; 85/9FA3
+      rsUnknown859FA3 ; 85/9FA3
 
         .al
         .xl
@@ -2309,8 +2309,8 @@
         stz $83
 
         jsl rlUnknown85A227
-        jsr rlUnknown85B009
-        jsr rlUnknown85B07C
+        jsr rsUnknown85B009
+        jsr rsUnknown85B07C
 
         plx
         phx
@@ -2391,7 +2391,7 @@
       .al
       .xl
 
-      rlUnknown85B009 ; 85/B009
+      rsUnknown85B009 ; 85/B009
 
         .al
         .xl
@@ -2431,7 +2431,7 @@
       .al
       .xl
 
-      rlUnknown85B07C ; 85/B07C
+      rsUnknown85B07C ; 85/B07C
 
         .al
         .xl
@@ -2443,8 +2443,8 @@
         ldx wActiveFactionSlot,b
         jsl rlGetFactionRelation
         sta wR0
-        jsr rlUnknown85B091
-        jsr rlUnknown85B107
+        jsr rsUnknown85B091
+        jsr rsUnknown85B107
         plx
         rts
 
@@ -2452,7 +2452,7 @@
 
         ; 85/B091
 
-      rlUnknown85B091 ; 85/B091
+      rsUnknown85B091 ; 85/B091
 
         .al
         .xl
@@ -2496,7 +2496,7 @@
       .al
       .xl
 
-      rlUnknown85B107 ; 85/B107
+      rsUnknown85B107 ; 85/B107
 
         .al
         .xl
@@ -2607,12 +2607,12 @@
         sta wSelectedUnitDataRAMPointer,b
         lda aProcSystem.aBody5,b,x
         sta wCurrentItemDataROMPointer,b
-        jsr rlUnknown85B45C
+        jsr rsUnknown85B45C
         bcs +
 
           lda #$2000
           sta aCurrentTilemapInfo.wBaseTile,b
-          jsr rlUnknown85B489
+          jsr rsUnknown85B489
           jsl rlUnknown8587E1
           jsl rlUnknown85A227
           jsl rlFreeHDMAEntry0
@@ -2640,8 +2640,8 @@
         .autsiz
         .databank ?
 
-        jsr rlUnknown85B2DA
-        jsr rlUnknown85B307
+        jsr rsUnknown85B2DA
+        jsr rsUnknown85B307
         jsl rlUnknown85A234
         lda #$B207
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -2659,7 +2659,7 @@
       .al
       .xl
 
-      rlUnknown85B2DA ; 85/B2DA
+      rsUnknown85B2DA ; 85/B2DA
 
         .al
         .xl
@@ -2696,7 +2696,7 @@
 
         ; 85/B307
 
-      rlUnknown85B307 ; 85/B307
+      rsUnknown85B307 ; 85/B307
 
         .al
         .xl
@@ -2771,7 +2771,7 @@
       .al
       .xl
 
-      rlUnknown85B45C ; 85/B45C
+      rsUnknown85B45C ; 85/B45C
 
         .al
         .xl
@@ -2813,7 +2813,7 @@
 
         ; 85/B489
 
-      rlUnknown85B489 ; 85/B489
+      rsUnknown85B489 ; 85/B489
 
         .al
         .xl
@@ -2850,7 +2850,7 @@
         tyx
         lda $7FEABC,x
         sta wCurrentItemDataROMPointer,b
-        jsr rlUnknown85B4ED
+        jsr rsUnknown85B4ED
         jsl rlGetItemNamePointer
         lda lRoutineVariable+1,b
         sta lR18+1
@@ -2881,7 +2881,7 @@
       .al
       .xl
 
-      rlUnknown85B4ED ; 85/B4ED
+      rsUnknown85B4ED ; 85/B4ED
 
         .al
         .xl
@@ -3055,7 +3055,7 @@
         jsl rlUnknown878921
 
         _B769
-        jsr rlUnknown85B4ED
+        jsr rsUnknown85B4ED
         jsl rlGetItemNamePointer
         lda lRoutineVariable+1,b
         sta lR18+1
@@ -4513,8 +4513,8 @@
         ldx $0772,b
         lda $7E46EB,x
         sta wSelectedUnitDataRAMPointer,b
-        jsr rlUnknown85E44E
-        jsr rlUnknown85E468
+        jsr rsUnknown85E44E
+        jsr rsUnknown85E468
         ldx #$002E
 
         _E235
@@ -4526,7 +4526,7 @@
         sta lUnknown0540+1,b
         lda $E2AF,b,x
         sta lUnknown0540,b
-        jsr rlUnknown85E332
+        jsr rsUnknown85E332
 
         _E24B
         dec x
@@ -4546,7 +4546,7 @@
         beq _E278
         cmp #$0001
         bne _E278
-        jsr rlUnknown85E2DF
+        jsr rsUnknown85E2DF
         bra _E278
 
 
@@ -4567,7 +4567,7 @@
       .al
       .xl
 
-      rlUnknown85E2DF ; 85/E2DF
+      rsUnknown85E2DF ; 85/E2DF
 
         .al
         .xl
@@ -4626,7 +4626,7 @@
 
         ; 85/E332
 
-      rlUnknown85E332 ; 85/E332
+      rsUnknown85E332 ; 85/E332
 
         .al
         .xl
@@ -4699,7 +4699,7 @@
         jsl rlLoadMapMenuEntryPointerFromProcBody
         lda #1
         sta aProcSystem.aBody6,b,x
-        jsr rlUnknown858542
+        jsr rsUnknown858542
         bra -
 
         .databank 0
@@ -4714,7 +4714,7 @@
       .al
       .xl
 
-      rlUnknown85E44E ; 85/E44E
+      rsUnknown85E44E ; 85/E44E
 
         .al
         .xl
@@ -4735,7 +4735,7 @@
 
         ; 85/E468
 
-      rlUnknown85E468 ; 85/E468
+      rsUnknown85E468 ; 85/E468
 
         .al
         .xl
