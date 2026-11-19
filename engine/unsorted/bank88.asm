@@ -2725,6 +2725,173 @@
     .endsection Unsorted889400Section
 
 
+    .section Unsorted889411Section
+
+      .al
+      .xl
+
+      rlUnknown889411 ; 88/9411
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$BD
+        sta bBufferCGADSUB
+        inc bBufferCOLDATA_1
+        inc bBufferCOLDATA_2
+        inc bBufferCOLDATA_3
+        rep #$20
+        lda aProcSystem.aBody2,b,x
+        sec
+        sbc #$0400
+        bpl _942B
+        lda #$0000
+
+        _942B
+        sta wTempVariable1,b
+        phx
+        lda aProcSystem.aBody2,b,x
+        tax
+        jsl rlUnknown889B6D
+        txa
+        plx
+        sta aProcSystem.aBody2,b,x
+        lda aProcSystem.aBody2,b,x
+        bpl _9447
+        lda #$9448
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _9447
+        rtl
+
+        .databank 0
+
+        ; 88/9448
+
+      rlUnknown889448 ; 88/9448
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown889BF7
+        lda #$946B
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda #$0004
+        sta aProcSystem.aBody2,b,x
+        lda #$0019
+        jsl rlUnknown808FAD
+        lda wUnknown000D79,b
+        bit #$0800
+        beq _946A
+        jsr $8898D2
+
+        _946A
+        rtl
+
+        .databank 0
+
+        ; 88/946B
+
+      rlUnknown88946B ; 88/946B
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$7E8B
+        sta lR18+1
+        lda aProcSystem.aBody0,b,x
+        sta lR18
+        clc
+        adc #$0800
+        sta aProcSystem.aBody0,b,x
+        lda aProcSystem.aBody1,b,x
+        sta wR1
+        clc
+        adc #$0400
+        sta aProcSystem.aBody1,b,x
+        lda #$0800
+        sta wR0
+        phx
+        jsl rlDMAByPointer
+        plx
+        dec aProcSystem.aBody2,b,x
+        bne _949E
+        lda #$949F
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _949E
+        rtl
+
+        .databank 0
+
+        ; 88/949F
+
+      rlUnknown88949F ; 88/949F
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        rep #$20
+        phx
+        lda #$3BFF
+        sta wR0
+        ldx #$01FE
+
+        _94AC
+        txa
+        lda wR0
+        sta aEpilogueUnitStates,x
+        dec wR0
+        dec x
+        dec x
+        bpl _94AC
+        lda wCurrentChapter,b
+        beq _94CC
+        lda #$8800
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$94F2
+        sta lMapMenuTilemapRAMEntryPointer,b
+        bra _94D8
+
+
+        _94CC
+        lda #$8800
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$94FB
+        sta lMapMenuTilemapRAMEntryPointer,b
+
+        _94D8
+        ldx #$0190
+        jsl rlUnknown878AB5
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7B88, $0800, $80, $A800
+
+        plx
+        jsl rlProcEngineFreeProc
+        rtl
+
+        .databank 0
+
+        ; 88/94F2
+
+    .endsection Unsorted889411Section
+
+
     .section ProcScript889504Section
 
       .al
@@ -2819,6 +2986,82 @@
         ; 88/958F
 
     .endsection Unsorted889506Section
+
+
+    .section Unsorted8896AFSection
+
+      .al
+      .xl
+
+      rsUnknown8896AF ; 88/96AF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        phx
+        lda wR1
+        and #$FFFC
+        xba
+        lsr a
+        sta wR3
+        lda wR0
+        and #$FFFC
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR3
+        sta wR3
+        lda wR1
+        and #$0003
+        asl a
+        asl a
+        clc
+        adc wR3
+        tay
+        lda wR0
+        and #$0003
+        asl a
+        asl a
+        tax
+        sep #$20
+        lda $8B88,b,y
+        and $88972F,x
+        sta $8B88,b,y
+        lda $8B89,b,y
+        and $889730,x
+        sta $8B89,b,y
+        lda $8B98,b,y
+        and $889731,x
+        sta $8B98,b,y
+        lda $8B99,b,y
+        and $889732,x
+        sta $8B99,b,y
+        lda $8B8A,b,y
+        and $88972F,x
+        sta $8B8A,b,y
+        lda $8B8B,b,y
+        and $889730,x
+        sta $8B8B,b,y
+        lda $8B9A,b,y
+        and $889731,x
+        sta $8B9A,b,y
+        lda $8B9B,b,y
+        and $889732,x
+        sta $8B9B,b,y
+        plx
+        plp
+        .al
+        rts
+
+        .databank 0
+
+        ; 88/972F
+
+    .endsection Unsorted8896AFSection
 
 
     .section Unsorted88973FSection
@@ -3529,6 +3772,65 @@
     .endsection Unsorted889BB5Section
 
 
+    .section Unsorted889BF7Section
+
+      .al
+      .xl
+
+      rlUnknown889BF7 ; 88/9BF7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+        phx
+        phy
+        ldx #$008E
+
+        _9C06
+        lda @l aDeploymentTable,x
+        bit #$0080
+        beq _9C2F
+        bit #$0040
+        bne _9C2F
+        and #$0003
+        clc
+        adc #$000C
+        sta wR2
+        lda @l aDeploymentTable._XTilePosition,x
+        sta wR0
+        lda @l aDeploymentTable._YTilePosition,x
+        sta wR1
+        jsr rsUnknown8896AF
+        jsr rsUnknown889506
+
+        _9C2F
+        dec x
+        dec x
+        bpl _9C06
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 88/9C38
+
+    .endsection Unsorted889BF7Section
+
+
     .section ProcScript889C52Section
 
       .al
@@ -3648,6 +3950,48 @@
     .endsection Unsorted889C5ASection
 
 
+    .section Unsorted889CEESection
+
+      .al
+      .xl
+
+      rlUnknown889CEE ; 88/9CEE
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sep #$20
+        rep #$10
+        ldx #$1FBA
+        stx DecompressionVariables
+        lda #$C0
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $0400, $80, $6800
+
+        plx
+        lda #$9D20
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 88/9D20
+
+    .endsection Unsorted889CEESection
+
+
     .section Unsorted889D20Section
 
       .al
@@ -3709,6 +4053,112 @@
         ; 88/9D92
 
     .endsection Unsorted889D20Section
+
+
+    .section Unsorted889DA6Section
+
+      .al
+      .xl
+
+      rlUnknown889DA6 ; 88/9DA6
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0020
+        trb $0788,b
+        jsl rlProcEngineFreeProc
+        lda wUnknown000D79,b
+        bit #$0800
+        beq _9E0B
+        lda $0788,b
+        bit #$4000
+        beq _9DF3
+        lda #$4000
+        trb $0788,b
+        lda wActiveUnitDeploymentOffset,b
+        sta wR0
+        lda $0774,b
+        sta wR1
+        lda $087D,b
+        sta wR2
+        lda $087F,b
+        sta wR3
+        lda $0786,b
+        bit #$0008
+        bne _9E0C
+        jsl rlUnknown84DC1C
+        lda #$0800
+        trb wUnknown000D79,b
+        lda #$0008
+        tsb $0788,b
+        rtl
+
+
+        _9DF3
+        lda #$0800
+        trb wUnknown000D79,b
+        lda $0786,b
+        bit #$0008
+        bne _9E34
+        lda #$0008
+        tsb $0788,b
+        jsl rlUnknown85E85D
+
+        _9E0B
+        rtl
+
+
+        _9E0C
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda $0897,b
+        asl a
+        tax
+        lda $7F757A,x
+        asl a
+        tax
+        lda $7F75AA,x
+        beq _9DF3
+        sta wRoutineVariable1,b
+        jsl rlUnknown84B6A6
+        lda #$0800
+        trb wUnknown000D79,b
+
+        _9E34
+        stz $0891,b
+        lda $0899,b
+        sta $0897,b
+        asl a
+        tax
+        lda aUnknown8A99DB,x
+        sta $088D,b
+        lda aUnknown8A9A0B,x
+        sta $088F,b
+        jsl rlUnknown8A8496
+        ldx #$00FE
+
+        _9E54
+        lda $8C9800,x
+        sta aBGPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _9E54
+        stz $07DA,b
+        lda #$0008
+        trb $0786,b
+        stz $07E0,b
+        rtl
+
+        .databank 0
+
+        ; 88/9E6C
+
+    .endsection Unsorted889DA6Section
 
 
     .section ProcScript889E6CSection
@@ -4116,6 +4566,35 @@
         ; 88/A383
 
     .endsection Unsorted88A32DSection
+
+
+    .section Unsorted88A38CSection
+
+      .al
+      .xl
+
+      rlUnknown88A38C ; 88/A38C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown000758,b
+        beq _A393
+        sec
+        rtl
+
+
+        _A393
+        clc
+        rtl
+
+        .databank 0
+
+        ; 88/A395
+
+    .endsection Unsorted88A38CSection
 
 
     .section Unsorted88A395Section
@@ -8904,6 +9383,212 @@
     .endsection Table88C834Section
 
 
+    .section Unsorted88C844Section
+
+      .al
+      .xl
+
+      rlUnknown88C844 ; 88/C844
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $07DA,b
+        beq _C873
+        cmp #$0001
+        beq _C89A
+        cmp #$0003
+        beq _C876
+        lda wCursorXOffset,b
+        sta wR0
+        lda wCursorYOffset,b
+        sta wR1
+        lda #$0000
+        sta wR4
+        stz wR5
+        jsr rsUnknown88C8FF
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+        jml _C8F9
+
+
+        _C873
+        plx
+        ply
+        rtl
+
+
+        _C876
+        lda $0780,b
+        sec
+        sbc wMapScrollXPixels,b
+        sta wR0
+        lda $0782,b
+        sec
+        sbc wMapScrollYPixels,b
+        sta wR1
+        lda #$0000
+        sta wR4
+        stz wR5
+        jsr rsUnknown88C8FF
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+        bra _C8F9
+
+
+        _C89A
+        ldx wActiveUnitDeploymentOffset,b
+        lda wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sec
+        sbc #$0001
+        sta wTempVariable1,b
+        lda wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sec
+        sbc #$0001
+        sta wTempVariable2,b
+        lda aDeploymentTable._XTilePosition,x
+        sec
+        sbc wTempVariable1,b
+        bmi _C873
+        cmp #$0012
+        bcs _C873
+        lda aDeploymentTable._YTilePosition,x
+        sec
+        sbc wTempVariable2,b
+        bmi _C873
+        cmp #$0011
+        bcs _C873
+        lda wUnknown00076C,b
+        sec
+        sbc wMapScrollXPixels,b
+        sta wR0
+        lda wUnknown00076E,b
+        sec
+        sbc wMapScrollYPixels,b
+        sta wR1
+        lda #$0000
+        sta wR4
+        stz wR5
+        jsr rsUnknown88C8FF
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+
+        _C8F9
+        jsr rsUnknown88CA28
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 88/C8FF
+
+      rsUnknown88C8FF ; 88/C8FF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $07DE,b
+        bne _C91E
+        lda bDMAArrayFlag,b
+        and #$00FF
+        bne _C91E
+        lda $07DC,b
+        clc
+        adc #$0001
+        cmp #$0004
+        bcc _C91B
+        lda #$0000
+
+        _C91B
+        sta $07DC,b
+
+        _C91E
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._DeploymentOffsets,x
+        cmp #$0060
+        bcs _C939
+        sep #$20
+        lda #$88
+        pha
+        plb
+        .databank $88
+        rep #$20
+        ldy #$CC5F
+        jml _C97E
+
+
+        _C939
+        sep #$20
+        lda #$88
+        pha
+        plb
+        .databank $88
+        rep #$20
+        phx
+        lda aDeploymentTable._DeploymentOffsets,x
+        tax
+        lda aDeploymentTable._MapSpriteID,x
+        and #$7FFF
+        asl a
+        tax
+        lda @l aUnknown88D488,x
+        sta wR3
+        lda $07DC,b
+        asl a
+        clc
+        adc wUnknown0007E2,b
+        clc
+        adc wR3
+        tax
+        lda @l aUnknown88D4C6,x
+        and #$00FF
+        clc
+        adc wR0
+        sta wR0
+        lda @l $88D4C7,x
+        and #$00FF
+        clc
+        adc wR1
+        sta wR1
+        ldy #$CC49
+        plx
+
+        _C97E
+        lda aDeploymentTable,x
+        and #$0003
+        asl a
+        phx
+        tax
+        lda @l $88C990,x
+        sta wR5
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/C990
+
+    .endsection Unsorted88C844Section
+
+
     .section Unsorted88C9A6Section
 
       .al
@@ -8983,6 +9668,64 @@
         ; 88/CA28
 
     .endsection Unsorted88C9A6Section
+
+
+    .section Unsorted88CA28Section
+
+      .al
+      .xl
+
+      rsUnknown88CA28 ; 88/CA28
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0865,b
+        bmi _CA30
+        stz $0865,b
+
+        _CA30
+        lda $07DA,b
+        beq _CA73
+        lda $07DE,b
+        bne _CA73
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._DeploymentOffsets,x
+        tax
+        lda aDeploymentTable._MapSpriteID,x
+        and #$7FFF
+        tax
+        lda aUnknown88CBE8,x
+        and #$00FF
+        sta $07DE,b
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._DeploymentOffsets,x
+        tax
+        lda aDeploymentTable._MapSpriteID,x
+        and #$8000
+        bne _CA6C
+        jsr rsUnknown88CA77
+        inc $0865,b
+        rts
+
+
+        _CA6C
+        jsr rsUnknown88CB43
+        inc $0865,b
+        rts
+
+
+        _CA73
+        dec $07DE,b
+        rts
+
+        .databank 0
+
+        ; 88/CA77
+
+    .endsection Unsorted88CA28Section
 
 
     .section Unsorted88CA77Section
@@ -9859,6 +10602,123 @@
         ; 88/D073
 
     .endsection Table88D013Section
+
+
+    .section Unsorted88D084Section
+
+      .al
+      .xl
+
+      rlUnknown88D084 ; 88/D084
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        sep #$20
+        lda #$7E
+        pha
+        plb
+        .databank $7E
+        rep #$20
+        jsl rlUnknown8089AD
+        ldy #$008E
+        bra _D0A0
+
+
+        _D096
+        lda #$0000
+        sta $0A43,b,y
+        jml _D10F
+
+
+        _D0A0
+        lda aDeploymentTable,y
+        beq _D096
+        bit #$0040
+        bne _D096
+        lda $453B,b,y
+        sec
+        sbc wMapScrollXPixels,b
+        sta $0923,b,y
+        sta wR0
+        clc
+        adc #$0007
+        cmp #$00FF
+        bcs _D096
+        lda $45CB,b,y
+        sec
+        sbc wMapScrollYPixels,b
+        sta $09B3,b,y
+        clc
+        adc #$000F
+        cmp #$00F1
+        bcs _D096
+        sec
+        sbc #$001F
+        sta wR1
+        lda aDeploymentTable,y
+        bit #$2000
+        bne _D0EA
+        bit #$0008
+        beq _D0EF
+        bit #$0003
+        bne _D0EF
+
+        _D0EA
+        lda #$0E00
+        bra _D0F8
+
+
+        _D0EF
+        and #$0003
+        asl a
+        tax
+        lda $88C990,x
+
+        _D0F8
+        ldx $465B,b,y
+        ora $88D135,x
+        sta $0A43,b,y
+        cpx #$0060
+        bcc _D10F
+        inc a
+        inc a
+        sta wR4
+        jsl rlUnknown80889D
+
+        _D10F
+        dec y
+        dec y
+        bpl _D0A0
+        ldy #$008E
+
+        _D116
+        lda $0A43,b,y
+        beq _D12B
+        sta wR4
+        lda $0923,b,y
+        sta wR0
+        lda $09B3,b,y
+        sta wR1
+        jsl $8088D8
+
+        _D12B
+        dec y
+        dec y
+        bpl _D116
+        jsl rlUnknown808A01
+        plb
+        .databank $7E
+        rtl
+
+        .databank 0
+
+        ; 88/D135
+
+    .endsection Unsorted88D084Section
 
 
     .section Table88D488Section
@@ -10998,6 +11858,35 @@
         ; 88/DDFB
 
     .endsection Unsorted88DD9CSection
+
+
+    .section Unsorted88DDFBSection
+
+      .al
+      .xl
+
+      rlUnknown88DDFB ; 88/DDFB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$008E
+
+        _DDFE
+        lda aDeploymentTable._MapSpriteID,x
+        sta $7E4DB5,x
+        dec x
+        dec x
+        bpl _DDFE
+        rtl
+
+        .databank 0
+
+        ; 88/DE0B
+
+    .endsection Unsorted88DDFBSection
 
 
     .section Unsorted88DE0BSection

@@ -5707,6 +5707,45 @@
     .endsection Unsorted87C398Section
 
 
+    .section Unsorted87C41BSection
+
+      .al
+      .xl
+
+      rlUnknown87C41B ; 87/C41B
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $04BA,b
+        bne _C43F
+        lda $04F6,b
+        bit #$0030
+        bne _C43F
+        lda #$BFFB
+        sta wMainLoopPointer
+        sei
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$CF
+        sta bBufferNMITIMEN
+        sta $4200,b
+        rep #$20
+        jsl rlHDMAEngineFreeEntryByOffset
+
+        _C43F
+        rtl
+
+        .databank 0
+
+        ; 87/C440
+
+    .endsection Unsorted87C41BSection
+
+
     .section Unsorted87C442Section
 
       .al

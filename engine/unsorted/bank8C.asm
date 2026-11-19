@@ -47,6 +47,86 @@
     .endsection Unsorted8CED00Section
 
 
+    .section Unsorted8CED4FSection
+
+      .al
+      .xl
+
+      rlUnknown8CED4F ; 8C/ED4F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phk
+        plb
+        .databank $8C
+        lda $08B2,b
+        sta aDialogue.wUnit1,b
+        sec
+        sbc #$0001
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda @l $8CEEE9,x
+        sta lR18+1
+        lda @l $8CEEE8,x
+        sta lR18
+        inc x
+        inc x
+        inc x
+        lda @l $8CEEE8,x
+        sec
+        sbc lR18
+        sta wR0
+        lda #$7F00
+        sta lR19+1
+        lda #$8183
+        sta lR19
+        jsl rlUnknown8CF06A
+        lda #$7F00
+        sta lR18+1
+        lda #$8183
+        sta lR18
+        lda $08B4,b
+        sta aDialogue.wUnit2,b
+        sec
+        sbc #$0001
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda @l $8CEFA9,x
+        sta lR19+1
+        lda @l $8CEFA8,x
+        sta lR19
+        inc x
+        inc x
+        inc x
+        lda @l $8CEFA8,x
+        sec
+        sbc lR19
+        sta wR0
+        jsl rlUnknown8CF07F
+        lda #$7F00
+        sta $08B0,b
+        lda #$8183
+        sta $08AF,b
+        rtl
+
+        .databank 0
+
+        ; 8C/EDD0
+
+    .endsection Unsorted8CED4FSection
+
+
     .section Unsorted8CEDD0Section
 
       .al
@@ -211,3 +291,66 @@
 ; F1 F0 8C 02 F1 8C 1A F1 8C 31 F1 8C 4D F1 8C 68 F1 8C 86 F1 8C A2 F1 8C
 
     .endsection Unsorted8CEDD0Section
+
+
+    .section Unsorted8CF06ASection
+
+      .al
+      .xl
+
+      rlUnknown8CF06A ; 8C/F06A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy #$0000
+
+        _F06D
+        lda [lR18],y
+        sta [lR19],y
+        inc y
+        cpy wR0
+        bne _F06D
+        lda lR19+1
+        sta lR18+1
+        lda lR19
+        sta lR18
+        rtl
+
+        .databank 0
+
+        ; 8C/F07F
+
+      rlUnknown8CF07F ; 8C/F07F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tya
+        dec a
+        dec a
+        clc
+        adc lR18
+        sta lR20
+        lda lR18+1
+        adc #$0000
+        sta lR20+1
+        ldy #$0000
+
+        _F091
+        lda [lR19],y
+        sta [lR20],y
+        inc y
+        cpy wR0
+        bne _F091
+        rtl
+
+        .databank 0
+
+        ; 8C/F09B
+
+    .endsection Unsorted8CF06ASection

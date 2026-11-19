@@ -1,5 +1,2936 @@
 ; Code from bank $96 not yet assigned to a game system.
 
+    .section Unsorted968008Section
+
+      .al
+      .xl
+
+      rlUnknown968008 ; 96/8008
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown96892D
+        rtl
+
+        .databank 0
+
+        ; 96/800D
+
+    .endsection Unsorted968008Section
+
+
+    .section Unsorted968017Section
+
+      .al
+      .xl
+
+      rlUnknown968017 ; 96/8017
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FE4C2
+        and #$00FF
+        cmp #$0004
+        bcs _803F
+        cmp #$0003
+        bcs _8039
+        cmp #$0002
+        bcs _8033
+        jsl rlUnknown968982
+        bra _8043
+
+
+        _8033
+        jsl rlUnknown968BC2
+        bra _8043
+
+
+        _8039
+        jsl rlUnknown968C97
+        bra _8043
+
+
+        _803F
+        jsl rlUnknown968D22
+
+        _8043
+        sep #$20
+        lda #$01
+        sta $7FE1CF
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/804E
+
+    .endsection Unsorted968017Section
+
+
+    .section Unsorted968058Section
+
+      .al
+      .xl
+
+      rlUnknown968058 ; 96/8058
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FE4C2
+        and #$00FF
+        cmp #$0003
+        beq _806F
+        cmp #$0001
+        bne _8075
+        jsl rlUnknown968A57
+        bra _8075
+
+
+        _806F
+        jsl rlUnknown968DAA
+        bra _8075
+
+
+        _8075
+        rtl
+
+        .databank 0
+
+        ; 96/8076
+
+    .endsection Unsorted968058Section
+
+
+    .section Unsorted968080Section
+
+      .al
+      .xl
+
+      rlUnknown968080 ; 96/8080
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FE4C2
+        and #$00FF
+        cmp #$0001
+        bne _8092
+        jsl rlUnknown968B16
+        bra _8092
+
+
+        _8092
+        rtl
+
+        .databank 0
+
+        ; 96/8093
+
+    .endsection Unsorted968080Section
+
+
+    .section Unsorted96809DSection
+
+      .al
+      .xl
+
+      rlUnknown96809D ; 96/809D
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown968943
+        rtl
+
+        .databank 0
+
+        ; 96/80A2
+
+    .endsection Unsorted96809DSection
+
+
+    .section Unsorted9680ACSection
+
+      .al
+      .xl
+
+      rlUnknown9680AC ; 96/80AC
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown9BEEB4
+        rtl
+
+        .databank 0
+
+        ; 96/80B1
+
+    .endsection Unsorted9680ACSection
+
+
+    .section Unsorted9680BBSection
+
+      .al
+      .xl
+
+      rlUnknown9680BB ; 96/80BB
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown9BEF88
+        rtl
+
+        .databank 0
+
+        ; 96/80C0
+
+    .endsection Unsorted9680BBSection
+
+
+    .section Unsorted9680C2Section
+
+      .al
+      .xl
+
+      rlUnknown9680C2 ; 96/80C2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown9680CC
+        jsr rsUnknown9680F7
+        jsr rsUnknown9680E9
+        rtl
+
+        .databank 0
+
+        ; 96/80CC
+
+      rsUnknown9680CC ; 96/80CC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        rep #$10
+        ldx #$0A2B
+        stx DecompressionVariables
+        lda #$C0
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        rts
+
+        .databank 0
+
+        ; 96/80E9
+
+      rsUnknown9680E9 ; 96/80E9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7EAC88, $0400, $80, $F800
+
+        rts
+
+        .databank 0
+
+        ; 96/80F7
+
+      rsUnknown9680F7 ; 96/80F7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $0D5E,b
+        cmp #$0000
+        beq _8128
+        ldx #$0100
+        jsl rlGetCharacterNamePointer
+        jsr rsUnknown96815A
+        jsr rsUnknown968179
+        lda $0D60,b
+        ldx #$0000
+        cmp #$FFFF
+        bne _811E
+        jsr rsUnknown9682E8
+        bra _8128
+
+
+        _811E
+        jsl rlGetItemNamePointerByItemID
+        jsr rsUnknown96815A
+        jsr rsUnknown9681B3
+
+        _8128
+        lda $0D50,b
+        cmp #$0000
+        beq _8157
+        ldx #$0300
+        jsl rlGetCharacterNamePointer
+        jsr rsUnknown96815A
+        jsr rsUnknown968196
+        lda $0D52,b
+        ldx #$0200
+        cmp #$FFFF
+        bne _814D
+        jsr rsUnknown9682E8
+        bra _8157
+
+
+        _814D
+        jsl rlGetItemNamePointerByItemID
+        jsr rsUnknown96815A
+        jsr rsUnknown9681D0
+
+        _8157
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/815A
+
+      rsUnknown96815A ; 96/815A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldy #$0000
+
+        _8168
+        lda [lR18],y
+        beq _8173
+        inc y
+        inc y
+        cpy #$0010
+        bcc _8168
+
+        _8173
+        tya
+        lsr a
+        sta wR0
+        ply
+        rts
+
+        .databank 0
+
+        ; 96/8179
+
+      rsUnknown968179 ; 96/8179
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda #$0008
+        sec
+        sbc wR0
+        beq _818A
+
+        _8182
+        pha
+        jsr rsUnknown9682CD
+        pla
+        dec a
+        bne _8182
+
+        _818A
+        lda wR0
+
+        _818C
+        pha
+        jsr rsUnknown9681ED
+        pla
+        dec a
+        bne _818C
+        pla
+        rts
+
+        .databank 0
+
+        ; 96/8196
+
+      rsUnknown968196 ; 96/8196
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda wR0
+
+        _8199
+        pha
+        jsr rsUnknown9681ED
+        pla
+        dec a
+        bne _8199
+        lda #$0008
+        sec
+        sbc wR0
+        beq _81B1
+
+        _81A9
+        pha
+        jsr rsUnknown9682CD
+        pla
+        dec a
+        bne _81A9
+
+        _81B1
+        pla
+        rts
+
+        .databank 0
+
+        ; 96/81B3
+
+      rsUnknown9681B3 ; 96/81B3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda #$0008
+        sec
+        sbc wR0
+        beq _81C4
+
+        _81BC
+        pha
+        jsr rsUnknown9682CD
+        pla
+        dec a
+        bne _81BC
+
+        _81C4
+        lda wR0
+
+        _81C6
+        pha
+        jsr rsUnknown96824C
+        pla
+        dec a
+        bne _81C6
+        pla
+        rts
+
+        .databank 0
+
+        ; 96/81D0
+
+      rsUnknown9681D0 ; 96/81D0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda wR0
+
+        _81D3
+        pha
+        jsr rsUnknown96824C
+        pla
+        dec a
+        bne _81D3
+        lda #$0008
+        sec
+        sbc wR0
+        beq _81EB
+
+        _81E3
+        pha
+        jsr rsUnknown9682CD
+        pla
+        dec a
+        bne _81E3
+
+        _81EB
+        pla
+        rts
+
+        .databank 0
+
+        ; 96/81ED
+
+      rsUnknown9681ED ; 96/81ED
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        phy
+        ldy #$0000
+        lda [lR18],y
+        jsl rlUnknown879DD1
+        lda #$7E00
+        sta lR19+1
+        lda wR10
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$8B88
+        sta lR19
+        ldy #$0000
+
+        _820C
+        lda [lR19],y
+        sta $7EAC88,x
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0010
+        bcc _820C
+        phx
+        lda wR11
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$8B88
+        sta lR19
+        txa
+        clc
+        adc #$0070
+        tax
+        ldy #$0000
+
+        _8231
+        lda [lR19],y
+        sta $7EAC88,x
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0010
+        bcc _8231
+        plx
+        lda lR18
+        clc
+        adc #$0002
+        sta lR18
+        ply
+        pla
+        rts
+
+        .databank 0
+
+        ; 96/824C
+
+      rsUnknown96824C ; 96/824C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        phy
+        ldy #$0000
+        lda [lR18],y
+        jsl rlUnknown879DD1
+        lda #$7E00
+        sta lR19+1
+        lda wR10
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$8B88
+        sta lR19
+        ldy #$0004
+
+        _826B
+        lda [lR19],y
+        sta $7EAC88,x
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0010
+        bcc _826B
+        lda wR11
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$8B88
+        sta lR19
+        ldy #$0000
+        lda [lR19],y
+        sta $7EAC88,x
+        ldy #$0002
+        lda [lR19],y
+        sta $7EAC8A,x
+        txa
+        clc
+        adc #$0004
+        pha
+        txa
+        clc
+        adc #$0074
+        tax
+        ldy #$0004
+
+        _82A7
+        lda [lR19],y
+        sta $7EAC88,x
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0010
+        bcc _82A7
+        lda #$0000
+        sta $7EAC88,x
+        sta $7EAC8A,x
+        plx
+        lda lR18
+        clc
+        adc #$0002
+        sta lR18
+        ply
+        pla
+        rts
+
+        .databank 0
+
+        ; 96/82CD
+
+      rsUnknown9682CD ; 96/82CD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        phy
+        ldy #$0000
+        lda #$0000
+
+        _82D5
+        sta $7EAC88,x
+        sta $7EAD08,x
+        inc x
+        inc x
+        inc y
+        cpy #$0008
+        bcc _82D5
+        ply
+        pla
+        rts
+
+        .databank 0
+
+        ; 96/82E8
+
+      rsUnknown9682E8 ; 96/82E8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        phx
+        phy
+        lda #$0008
+
+        _82EE
+        jsr rsUnknown9682CD
+        dec a
+        bne _82EE
+        ply
+        plx
+        pla
+        rts
+
+        .databank 0
+
+        ; 96/82F8
+
+      rlUnknown9682F8 ; 96/82F8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $7FED4E
+        rtl
+
+        .databank 0
+
+        ; 96/8300
+
+      rlUnknown968300 ; 96/8300
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0D4B,b
+        beq _830C
+        lda #$0000
+        jsl rlUnknown96A4B2
+
+        _830C
+        rtl
+
+        .databank 0
+
+        ; 96/830D
+
+      rlUnknown96830D ; 96/830D
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0D49,b
+        and #$00FF
+        xba
+        sta $7FED4B
+        lda $0D4B,b
+        sta wR0
+        jsl rlUnknown9594E0
+        sta $7FED4E
+        lda $0D49,b
+        clc
+        adc $0D4B,b
+        sta $7FED50
+        lda #$0191
+        sta $7FED56
+        lda #$3000
+        sta $7FED58
+        lda #$0BCE
+        sta $7FED53
+        sep #$20
+        lda #$FF
+        sta $7FED4D
+        lda #$02
+        sta $7FED52
+        lda #$2C
+        sta $7FED55
+        rep #$20
+        jsl rlUnknown9684AF
+        rtl
+
+        .databank 0
+
+        ; 96/8360
+
+      rlUnknown968360 ; 96/8360
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000B
+        jsl rlUnknown808FAD
+        lda #$9600
+        sta $7FED00
+        lda #$8376
+        sta $7FECFF
+        rtl
+
+        .databank 0
+
+        ; 96/8376
+
+      rlUnknown968376 ; 96/8376
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7FED4E
+        bne _838D
+        lda #$000C
+        jsl rlUnknown808FAD
+        jsl rlUnknown96C9FE
+        jml _8415
+
+
+        _838D
+        lda $7FED4B
+        clc
+        adc $7FED4E
+        bcc _83A2
+        lda $7FED4D
+        and #$00FF
+        xba
+        bra _83CA
+
+
+        _83A2
+        sta $7FED4B
+        xba
+        sep #$20
+        cmp $7FED4D
+        bcc _83B8
+        lda $7FED4D
+        xba
+        lda #$00
+        bra _83CA
+
+
+        _83B8
+        cmp $7FED50
+        bcc _83C7
+        lda $7FED50
+        xba
+        lda #$00
+        bra _83CA
+
+
+        _83C7
+        xba
+        bra _83F4
+
+
+        _83CA
+        rep #$20
+        cmp #$6400
+        bcc _83E3
+        sec
+        sbc #$6400
+        pha
+        lda $7FED50
+        sec
+        sbc #$0064
+        sta $7FED50
+        pla
+
+        _83E3
+        sta $7FED4B
+        jsl rlUnknown9684AF
+        lda #$0000
+        sta $7FED4E
+        bra _8415
+
+
+        _83F4
+        .as
+        rep #$20
+        cmp #$6400
+        bcc _840D
+        sec
+        sbc #$6400
+        pha
+        lda $7FED50
+        sec
+        sbc #$0064
+        sta $7FED50
+        pla
+
+        _840D
+        sta $7FED4B
+        jsl rlUnknown9684AF
+
+        _8415
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/8418
+
+      rlUnknown968418 ; 96/8418
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7FED4E
+        bne _8424
+        jml _84AC
+
+
+        _8424
+        lda $7FED4B
+        clc
+        adc $7FED4E
+        bcc _8439
+        lda $7FED4D
+        and #$00FF
+        xba
+        bra _8461
+
+
+        _8439
+        sta $7FED4B
+        xba
+        sep #$20
+        cmp $7FED4D
+        bcc _844F
+        lda $7FED4D
+        xba
+        lda #$00
+        bra _8461
+
+
+        _844F
+        cmp $7FED50
+        bcc _845E
+        lda $7FED50
+        xba
+        lda #$00
+        bra _8461
+
+
+        _845E
+        xba
+        bra _848B
+
+
+        _8461
+        rep #$20
+        cmp #$6400
+        bcc _847A
+        sec
+        sbc #$6400
+        pha
+        lda $7FED50
+        sec
+        sbc #$0064
+        sta $7FED50
+        pla
+
+        _847A
+        sta $7FED4B
+        jsl rlUnknown968530
+        lda #$0000
+        sta $7FED4E
+        bra _84AC
+
+
+        _848B
+        .as
+        rep #$20
+        cmp #$6400
+        bcc _84A4
+        sec
+        sbc #$6400
+        pha
+        lda $7FED50
+        sec
+        sbc #$0064
+        sta $7FED50
+        pla
+
+        _84A4
+        sta $7FED4B
+        jsl rlUnknown968530
+
+        _84AC
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/84AF
+
+      rlUnknown9684AF ; 96/84AF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FED52
+        and #$00FF
+        sta wR0
+        lda #$2C00
+        sta wR1
+        lda $7FED53
+        tax
+        lda $7FED4B
+        xba
+        and #$00FF
+        jsl rlUnknown959576
+        lda $7FED4C
+        and #$00FF
+        sta wR0
+        lda $7FED4D
+        and #$00FF
+        cmp #$00FF
+        bne _84E6
+        lda #$0063
+
+        _84E6
+        sta wR1
+        lda $7FED56
+        cmp #$FFFF
+        beq _850B
+        sta wR2
+        lda $7FED58
+        sta wR3
+        lda $7FED52
+        and #$00FF
+        asl a
+        clc
+        adc $7FED53
+        tax
+        jsl rlUnknown959742
+
+        _850B
+        lda #$7F00
+        sta lR18+1
+        lda $7FED53
+        clc
+        adc #$C800
+        sta lR18
+        lda $7FED53
+        lsr a
+        clc
+        adc #$6800
+        tay
+        lda $7FED55
+        and #$00FF
+        jsl rlUnknown95C43E
+        rtl
+
+        .databank 0
+
+        ; 96/8530
+
+      rlUnknown968530 ; 96/8530
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FED4C
+        and #$00FF
+        sta wR0
+        lda $7FED4D
+        and #$00FF
+        sta wR1
+        lda $7FED56
+        cmp #$FFFF
+        beq _855B
+        sta wR2
+        lda #$2400
+        sta wR3
+        lda $7FED53
+        tax
+        jsl rlUnknown959742
+
+        _855B
+        lda $7FED52
+        and #$00FF
+        sta wR0
+        lda #$2000
+        sta wR1
+        lda $7FED53
+        clc
+        adc #$F9C8
+        tax
+        lda $7FED4B
+        xba
+        and #$00FF
+        pha
+        lda $7FED56
+        cmp #$FFFF
+        beq _858B
+        pla
+        jsl rlUnknown9596EE
+        bra _8590
+
+
+        _858B
+        pla
+        jsl rlUnknown95968E
+
+        _8590
+        lda #$7F00
+        sta lR18+1
+        lda $7FED53
+        clc
+        adc #$C1C0
+        sta lR18
+        lda $7FED53
+        lsr a
+        clc
+        adc #$64E0
+        tay
+        lda $7FED55
+        and #$00FF
+        jsl rlUnknown95C43E
+        lda #$7F00
+        sta lR18+1
+        lda $7FED53
+        clc
+        adc #$C800
+        sta lR18
+        lda $7FED53
+        lsr a
+        clc
+        adc #$6800
+        tay
+        lda $7FED55
+        and #$00FF
+        jsl rlUnknown95C43E
+        rtl
+
+        .databank 0
+
+        ; 96/85D9
+
+      rlUnknown9685D9 ; 96/85D9
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$9C
+        sta $7FE4C5
+        lda #$A1
+        sta $7FE4CB
+        rep #$20
+        lda #$FFC3
+        sta $7FE4C6
+        lda #$00DB
+        sta $7FE4C8
+        sep #$20
+        lda #$01
+        sta $7FE4C2
+        rep #$20
+        lda #$9800
+        sta $7FE4D3
+        lda #$AD7E
+        sta $7FE4D2
+        lda #$9600
+        sta $7FED00
+        lda #$861E
+        sta $7FECFF
+        rtl
+
+        .databank 0
+
+        ; 96/861E
+
+      rlUnknown96861E ; 96/861E
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        lda $7FE4D2
+        sta lR18
+        lda $7FE4D3
+        sta lR18+1
+        ldy #$0000
+        lda [lR18],y
+        cmp #$FFFF
+        bne _863B
+        jsl rlUnknown96C9FE
+        bra _865A
+
+
+        _863B
+        pha
+        sep #$20
+        sta $7FE4C5
+        xba
+        sta $7FE4CB
+        rep #$20
+        pla
+        jsl rlUnknown9695AE
+        lda $7FE4D2
+        clc
+        adc #$0002
+        sta $7FE4D2
+
+        _865A
+        ply
+        rtl
+
+        .databank 0
+
+        ; 96/865C
+
+      rlUnknown96865C ; 96/865C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7E4ECB
+        beq _86BA
+        lda $7FF5AF
+        bit #$0001
+        beq _8674
+        lda #$0040
+        jsl rlUnknown96A4B2
+        bra _86BA
+
+
+        _8674
+        lda wBattleDistance
+        cmp #$0003
+        bcc _86A2
+        lda $0D52,b
+        cmp #$005B
+        beq _8699
+        cmp #$0061
+        beq _8699
+        cmp #$0063
+        beq _8699
+        cmp #$0064
+        beq _8699
+        cmp #$0065
+        bne _86A2
+
+        _8699
+        lda #$003E
+        jsl rlUnknown96A4B2
+        bra _86BA
+
+
+        _86A2
+        lda $0AE9,b
+        cmp #$0000
+        bne _86B3
+        lda #$0032
+        jsl rlUnknown96A4B2
+        bra _86BA
+
+
+        _86B3
+        lda #$003D
+        jsl rlUnknown96A4B2
+
+        _86BA
+        rtl
+
+        .databank 0
+
+        ; 96/86BB
+
+      rlUnknown9686BB ; 96/86BB
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FFC59
+        bit #$0400
+        beq _86E6
+        lda $7FF5AF
+        bit #$0001
+        beq _86DF
+        lda $7E4ECB
+        and #$00FF
+        beq _86DF
+        lda #$004B
+        jsl rlUnknown96A4B2
+        bra _86E6
+
+
+        _86DF
+        lda #$003D
+        jsl rlUnknown96A4B2
+
+        _86E6
+        rtl
+
+        .databank 0
+
+        ; 96/86E7
+
+      rlUnknown9686E7 ; 96/86E7
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7E4ECB
+        beq _86FB
+        lda #$00E0
+        jsl rlUnknown808FA3
+        lda #$0001
+        jsl rlUnknown96A4B2
+
+        _86FB
+        rtl
+
+        .databank 0
+
+        ; 96/86FC
+
+      rlUnknown9686FC ; 96/86FC
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$02
+        sta $7FE4C2
+        rep #$20
+        stz aBGPaletteBuffer,b
+        lda $E000BC
+        sta $0108,b
+        ldx #$0000
+
+        _8713
+        lda $E000B0,x
+        sta $010A,b,x
+        inc x
+        inc x
+        cpx #$0006
+        bcc _8713
+        ldx #$0000
+
+        _8724
+        lda $9984C6,x
+        sta lR18
+        lda $9984C7,x
+        sta lR18+1
+        ldy #$0000
+        lda [lR18],y
+        and #$00FF
+        xba
+        sta $7FED4B
+        inc x
+        inc x
+        inc x
+        lda $9984C6,x
+        sta $7FED56
+        inc x
+        inc x
+        lda $9984C6,x
+        sta $7FED53
+        inc x
+        inc x
+        sep #$20
+        lda $9984C6,x
+        sta $7FED4D
+        inc x
+        lda $9984C6,x
+        sta $7FED52
+        inc x
+        lda $9984C6,x
+        sta $7FED55
+        inc x
+        rep #$20
+        lda $9984C6,x
+        sta $7FED58
+        inc x
+        inc x
+        phx
+        jsl rlUnknown968530
+        plx
+        cpx #$006C
+        bcc _8724
+        jsl rlUnknown96957D
+        rtl
+
+        .databank 0
+
+        ; 96/878D
+
+      rlUnknown96878D ; 96/878D
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FFC59
+        bit #$0400
+        bne _87AC
+        lda $7E4EA9
+        and #$00FF
+        cmp #$0001
+        beq _87A7
+        lda #$0039
+        bra _87AF
+
+
+        _87A7
+        lda #$003F
+        bra _87AF
+
+
+        _87AC
+        lda #$0040
+
+        _87AF
+        sta $04BA,b
+        rtl
+
+        .databank 0
+
+        ; 96/87B3
+
+    .endsection Unsorted9680C2Section
+
+
+    .section Unsorted96881FSection
+
+      .al
+      .xl
+
+      rlUnknown96881F ; 96/881F
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wBattleQuotePointer
+        cmp #$0000
+        beq _883F
+        lda wBattleQuotePointer
+        sta $7FE4D6
+        lda wBattleQuotePointer+1
+        sta $7FE4D7
+        lda #$002D
+        jsl rlUnknown96A4B2
+
+        _883F
+        rtl
+
+        .databank 0
+
+        ; 96/8840
+
+      rlUnknown968840 ; 96/8840
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FFC59
+        bit #$0400
+        bne _888F
+        lda wDeathQuotePointer
+        cmp #$0000
+        beq _888F
+        lda wDeathQuotePointer
+        sta $7FE4D6
+        lda wDeathQuotePointer+1
+        sta $7FE4D7
+        lda $7E4ECF
+        bne _8888
+        lda $7E4ED1
+        cmp #$FFFF
+        bne _8888
+        lda $7E4ED3
+        bne _8888
+        lda aActionStructUnit2.ObtainedStealMoney
+        bne _8888
+        lda aActionStructUnit1.WeaponInventorySlot
+        bmi _8888
+        lda #$004A
+        bra _888B
+
+
+        _8888
+        lda #$002E
+
+        _888B
+        jsl rlUnknown96A4B2
+
+        _888F
+        rtl
+
+        .databank 0
+
+        ; 96/8890
+
+      rlUnknown968890 ; 96/8890
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FFC59
+        bit #$0400
+        beq _88B9
+        lda wDeathQuotePointer
+        cmp #$0000
+        beq _88B9
+        lda wDeathQuotePointer
+        sta $7FE4D6
+        lda wDeathQuotePointer+1
+        sta $7FE4D7
+        lda #$004A
+        jsl rlUnknown96A4B2
+
+        _88B9
+        rtl
+
+        .databank 0
+
+        ; 96/88BA
+
+      rlUnknown9688BA ; 96/88BA
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$03
+        sta $7FE4C2
+        rep #$20
+        stz aBGPaletteBuffer,b
+        ldx #$0000
+
+        _88CA
+        lda $E000DA,x
+        sta $0102,b,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc _88CA
+        lda #$0004
+        jsl rlHDMAEngineFreeEntryByIndex
+        jsl rlUnknown9695E3
+        rtl
+
+        .databank 0
+
+        ; 96/88E4
+
+    .endsection Unsorted96881FSection
+
+
+    .section Unsorted96890ESection
+
+      .al
+      .xl
+
+      rlUnknown96890E ; 96/890E
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta $7FE4C2
+        rep #$20
+        stz aBGPaletteBuffer,b
+        jsl rlUnknown9599E7
+        jsl rlUnknown95A414
+        jsl rlUnknown96957D
+        jsl rlUnknown969EBB
+        rtl
+
+        .databank 0
+
+        ; 96/892C
+
+      rlUnknown96892C ; 96/892C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 96/892D
+
+      rlUnknown96892D ; 96/892D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        stz $420C,b
+
+        _8932
+        lda $4212,b
+        bit #$40
+        beq _8932
+        lda #$80
+        sta $2100,b
+        rep #$20
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/8943
+
+      rlUnknown968943 ; 96/8943
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+
+        _8945
+        lda $4212,b
+        bit #$40
+        beq _8945
+        lda #$80
+        lda $7FE4DD
+        bit #$80
+        bne _896A
+
+        _8956
+        lda $4212,b
+        bit #$40
+        bne _8956
+
+        _895D
+        lda $4212,b
+        bit #$40
+        beq _895D
+        lda $7FE4DD
+        bra _897C
+
+
+        _896A
+        lda $4212,b
+        bit #$40
+        bne _896A
+
+        _8971
+        lda $4212,b
+        bit #$40
+        beq _8971
+        lda $7FE4DD
+
+        _897C
+        sta $2100,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/8982
+
+      rlUnknown968982 ; 96/8982
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+
+        _8984
+        lda $4212,b
+        bit #$40
+        beq _8984
+        lda #$80
+        sta $2100,b
+        lda #$06
+        sta $212C,b
+        lda #$09
+        sta $2105,b
+        lda #$6A
+        sta $2107,b
+        sta $2108,b
+        sta $2109,b
+        lda #$77
+        sta $210B,b
+        lda #$77
+        sta $210C,b
+        lda $7FFC74
+        sta $2110,b
+        lda #$01
+        sta $2110,b
+        lda $7FFC73
+        sta $210F,b
+        stz $210F,b
+        lda $7FFC76
+        sta $2112,b
+        stz $2112,b
+        lda $7FFC75
+        sta $2111,b
+        stz $2111,b
+        stz $2123,b
+        stz $2124,b
+        stz $420C,b
+        rep #$20
+        jsl rlUnknown9695D5
+        sep #$20
+        lda #$00
+        sta $2121,b
+        sta $2122,b
+        sta $2122,b
+        lda #$15
+        sta $2121,b
+        lda $E000B6
+        sta $2122,b
+        lda $E000B7
+        sta $2122,b
+        lda $E000B8
+        sta $2122,b
+        lda $E000B9
+        sta $2122,b
+        lda $E000BA
+        sta $2122,b
+        lda $E000BB
+        sta $2122,b
+        lda $7FFC6F
+        sta $420C,b
+
+        _8A2B
+        lda $4212,b
+        bit #$40
+        bne _8A2B
+
+        _8A32
+        lda $4212,b
+        bit #$40
+        beq _8A32
+        lda $7FE4D5
+        bra _8A51
+
+        .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
+        .byte $E4, $7F
+
+
+        _8A51
+        sta $2100,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/8A57
+
+      rlUnknown968A57 ; 96/8A57
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+
+        _8A59
+        lda $4212,b
+        bit #$40
+        beq _8A59
+        lda #$80
+        sta $2100,b
+        lda #$06
+        sta $212C,b
+        lda #$6A
+        sta $2107,b
+        sta $2108,b
+        sta $2109,b
+        lda #$77
+        sta $210B,b
+        lda #$77
+        sta $210C,b
+        lda $7FE4C6
+        sta $2110,b
+        lda $7FE4C7
+        sta $2110,b
+        lda #$04
+        sta $210F,b
+        stz $210F,b
+        lda $7FE4C8
+        clc
+        adc #$04
+        sta $2112,b
+        lda $7FE4C9
+        sta $2112,b
+        stz $2111,b
+        stz $2111,b
+        lda $7FE4C5
+        and #$FF
+        sta $16DA,b,x
+        lda #$11
+        sta $2121,b
+        lda $E000B0
+        sta $2122,b
+        lda $E000B1
+        sta $2122,b
+        lda $E000B2
+        sta $2122,b
+        lda $E000B3
+        sta $2122,b
+        lda $E000B4
+        sta $2122,b
+        lda $E000B5
+        sta $2122,b
+        lda $7FE4D5
+        bit #$80
+
+        _8AEA
+        lda $4212,b
+        bit #$40
+        bne _8AEA
+
+        _8AF1
+        lda $4212,b
+        bit #$40
+        beq _8AF1
+        lda $7FE4D5
+        bra _8B10
+
+        .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
+        .byte $E4, $7F
+
+
+        _8B10
+        sta $2100,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/8B16
+
+      rlUnknown968B16 ; 96/8B16
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+
+        _8B18
+        lda $4212,b
+        bit #$40
+        beq _8B18
+        lda #$80
+        sta $2100,b
+        lda #$06
+        sta $212C,b
+        lda #$6A
+        sta $2107,b
+        sta $2108,b
+        sta $2109,b
+        lda #$77
+        sta $210B,b
+        lda #$77
+        sta $210C,b
+        lda #$7F
+        sta $2110,b
+        lda #$01
+        sta $2110,b
+        stz $210F,b
+        stz $210F,b
+        lda #$97
+        sta $2112,b
+        stz $2112,b
+        lda #$FC
+        sta $2111,b
+        stz $2111,b
+        lda $7FE4CB
+        and #$FF
+        sta $16DA,b,x
+        lda #$11
+        sta $2121,b
+        lda $0122,b
+        sta $2122,b
+        lda $0123,b
+        sta $2122,b
+        lda $0124,b
+        sta $2122,b
+        lda $0125,b
+        sta $2122,b
+        lda $0126,b
+        sta $2122,b
+        lda $0127,b
+        sta $2122,b
+        lda $7FE4D5
+        bit #$80
+
+        _8B96
+        lda $4212,b
+        bit #$40
+        bne _8B96
+
+        _8B9D
+        lda $4212,b
+        bit #$40
+        beq _8B9D
+        lda $7FE4D5
+        bra _8BBC
+
+        .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
+        .byte $E4, $7F
+
+
+        _8BBC
+        sta $2100,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/8BC2
+
+      rlUnknown968BC2 ; 96/8BC2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+
+        _8BC4
+        lda $4212,b
+        bit #$40
+        beq _8BC4
+        lda #$80
+        sta $2100,b
+        lda #$17
+        sta $212C,b
+        lda #$03
+        sta $2101,b
+        lda #$6A
+        sta $2107,b
+        sta $2108,b
+        sta $2109,b
+        lda #$77
+        sta $210B,b
+        lda #$77
+        sta $210C,b
+        lda #$47
+        sta $210E,b
+        lda #$00
+        sta $210E,b
+        lda #$00
+        sta $210D,b
+        stz $210D,b
+        lda #$F7
+        sta $2110,b
+        lda #$01
+        sta $2110,b
+        lda #$00
+        sta $210F,b
+        stz $210F,b
+        lda #$0F
+        sta $2112,b
+        lda #$01
+        sta $2112,b
+        stz $2111,b
+        stz $2111,b
+        lda #$10
+        sta $420C,b
+        lda #$81
+        sta $2121,b
+        lda $E000C8
+        sta $2122,b
+        lda $E000C9
+        sta $2122,b
+        lda $E000CA
+        sta $2122,b
+        lda $E000CB
+        sta $2122,b
+        lda $E000CC
+        sta $2122,b
+        lda $E000CD
+        sta $2122,b
+        stz $2123,b
+        stz $2124,b
+        rep #$20
+        jsl rlUnknown9695D5
+        sep #$20
+        lda $7FE4D5
+        bit #$80
+
+        _8C6B
+        lda $4212,b
+        bit #$40
+        bne _8C6B
+
+        _8C72
+        lda $4212,b
+        bit #$40
+        beq _8C72
+        lda $7FE4D5
+        bra _8C91
+
+        .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
+        .byte $E4, $7F
+
+
+        _8C91
+        sta $2100,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/8C97
+
+      rlUnknown968C97 ; 96/8C97
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+
+        _8C99
+        lda $4212,b
+        bit #$40
+        beq _8C99
+        lda #$80
+        sta $2100,b
+        lda #$06
+        sta $212C,b
+        lda #$03
+        sta $2101,b
+        lda #$6A
+        sta $2107,b
+        sta $2108,b
+        lda #$74
+        sta $2109,b
+        lda #$77
+        sta $210B,b
+        sta $210C,b
+        lda #$F7
+        sta $2110,b
+        lda #$01
+        sta $2110,b
+        lda #$00
+        sta $210F,b
+        stz $210F,b
+        lda #$FF
+        sta $2112,b
+        sta $2112,b
+        stz $2111,b
+        stz $2111,b
+        stz $2123,b
+        stz $2124,b
+        stz $2131,b
+        stz $2125,b
+        lda $7FE4D5
+        bit #$80
+
+        _8CF6
+        lda $4212,b
+        bit #$40
+        bne _8CF6
+
+        _8CFD
+        lda $4212,b
+        bit #$40
+        beq _8CFD
+        lda $7FE4D5
+        bra _8D1C
+
+        .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
+        .byte $E4, $7F
+
+
+        _8D1C
+        sta $2100,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/8D22
+
+      rlUnknown968D22 ; 96/8D22
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+
+        _8D24
+        lda $4212,b
+        bit #$40
+        beq _8D24
+        lda #$80
+        sta $2100,b
+        lda #$16
+        sta $212C,b
+        lda #$03
+        sta $2101,b
+        lda #$6A
+        sta $2108,b
+        lda #$74
+        sta $2109,b
+        lda #$77
+        sta $210B,b
+        sta $210C,b
+        lda #$F7
+        sta $2110,b
+        lda #$01
+        sta $2110,b
+        lda #$00
+        sta $210F,b
+        stz $210F,b
+        lda #$FF
+        sta $2112,b
+        sta $2112,b
+        stz $2111,b
+        stz $2111,b
+        stz $2123,b
+        stz $2124,b
+        stz $2131,b
+        stz $2125,b
+        lda $7FE4D5
+        bit #$80
+
+        _8D7E
+        lda $4212,b
+        bit #$40
+        bne _8D7E
+
+        _8D85
+        lda $4212,b
+        bit #$40
+        beq _8D85
+        lda $7FE4D5
+        bra _8DA4
+
+        .byte $AD, $12, $42, $89, $40, $D0, $F9, $AD, $12, $42, $89, $40, $F0, $F9, $AF, $DC
+        .byte $E4, $7F
+
+
+        _8DA4
+        sta $2100,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/8DAA
+
+      rlUnknown968DAA ; 96/8DAA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+
+        _8DAC
+        lda $4212,b
+        bit #$40
+        beq _8DAC
+        lda #$16
+        sta $212C,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/8DBB
+
+    .endsection Unsorted96890ESection
+
+
+    .section Unsorted968DBDSection
+
+      .al
+      .xl
+
+      rlUnknown968DBD ; 96/8DBD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$8F
+        sta $7FE4D5
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/8DC8
+
+      rlUnknown968DC8 ; 96/8DC8
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FE4D5
+        and #$000F
+        bne _8DD7
+        jsl rlUnknown96C9FE
+        bra _8DE0
+
+
+        _8DD7
+        sep #$20
+        dec a
+        sta $7FE4D5
+        rep #$20
+
+        _8DE0
+        rtl
+
+        .databank 0
+
+        ; 96/8DE1
+
+    .endsection Unsorted968DBDSection
+
+
+    .section Unsorted968E4CSection
+
+      .al
+      .xl
+
+      rlUnknown968E4C ; 96/8E4C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FE4D5
+        and #$000F
+        cmp #$000F
+        bne _8E6C
+        sep #$20
+        sta $7FE4D5
+        lda $7FE4B7
+        and #$FE
+        sta $7FE4B7
+        rep #$20
+        bra _8E7D
+
+
+        _8E6C
+        sep #$20
+        clc
+        adc #$03
+        cmp #$0F
+        bcc _8E77
+        lda #$0F
+
+        _8E77
+        sta $7FE4D5
+        rep #$20
+
+        _8E7D
+        rtl
+
+        .databank 0
+
+        ; 96/8E7E
+
+      rlUnknown968E7E ; 96/8E7E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$8F
+        sta $7FE4DD
+        lda #$0F
+        sta $7FE4DC
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/8E8F
+
+    .endsection Unsorted968E4CSection
+
+
+    .section Unsorted968F50Section
+
+      .al
+      .xl
+
+      rlUnknown968F50 ; 96/8F50
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda #$0004
+        sta $7E52F0
+        lda #$0000
+        sta $7E5313
+        lda #$9600
+        sta $7FED00
+        lda #$8F71
+        sta $7FECFF
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/8F71
+
+      rlUnknown968F71 ; 96/8F71
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+
+        _8F73
+        lda $7E5313
+        tax
+        lda $998683,x
+        cmp #$0080
+        bne _8F89
+        jsl rlUnknown96C9FE
+        jml _9034
+
+
+        _8F89
+        lda $998683,x
+        sta lR18
+        lda $998684,x
+        sta lR18+1
+        ldy #$0000
+        lda [lR18],y
+        and #$00FF
+        bne _8FAD
+        lda $7E5313
+        clc
+        adc #$0009
+        sta $7E5313
+        bra _8F73
+
+
+        _8FAD
+        pha
+        pha
+        bit #$0080
+        bne _8FBE
+        lda #$015E
+        sta $7E530D
+        pla
+        bra _8FCD
+
+
+        _8FBE
+        lda #$015F
+        sta $7E530D
+        pla
+        eor #$FFFF
+        inc a
+        and #$00FF
+
+        _8FCD
+        jsr rsUnknown969137
+        sta $7E530F
+        lda $998686,x
+        sta lR18
+        lda $998687,x
+        sta lR18+1
+        ldy #$0000
+        lda [lR18],y
+        and #$00FF
+        clc
+        adc #1,s
+        jsr rsUnknown969137
+        sta $7E5304
+        lda lR18
+        sta $7E52FF
+        pla
+        lda $998689,x
+        sta $7E530B
+        lda $99868B,x
+        and #$00FF
+        jsl rlUnknown969398
+        lda $7E5313
+        clc
+        adc #$0009
+        sta $7E5313
+        lda #$0000
+        sta $7E5311
+        lda #$0023
+        jsl rlUnknown808FAD
+        lda #$9600
+        sta $7FED00
+        lda #$9037
+        sta $7FECFF
+
+        _9034
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/9037
+
+      rlUnknown969037 ; 96/9037
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+
+        _9039
+        lda $7E5311
+        tax
+        lda $998532,x
+        and #$00FF
+        cmp #$0082
+        bne _9072
+        lda $7E4EA9
+        and #$00FF
+        cmp #$0002
+        beq _9064
+        lda $7E5311
+        clc
+        adc #$0019
+        sta $7E5311
+        bra _9039
+
+
+        _9064
+        lda $7E5311
+        clc
+        adc #$0001
+        sta $7E5311
+        bra _9039
+
+
+        _9072
+        lda $998532,x
+        and #$00FF
+        cmp #$0080
+        bne _9090
+        lda #$9600
+        sta $7FED00
+        lda #$8F71
+        sta $7FECFF
+        jml _9130
+
+
+        _9090
+        cmp #$0081
+        bne _90A2
+        lda #$01FF
+        sta $7E52F5
+        sta $7E52FA
+        bra _90B4
+
+
+        _90A2
+        pha
+        lda $7E530D
+        sta $7E52F5
+        lda $7E530F
+        sta $7E52FA
+        pla
+
+        _90B4
+        sta $7E52F7
+        sec
+        sbc #$0008
+        and #$01FF
+        sta $7E52F2
+        lda #$0000
+        sec
+        sbc #$0008
+        and #$01FF
+        sta $7E5301
+        sec
+        sbc #$0008
+        and #$01FF
+        sta $7E52FC
+        sep #$20
+        lda $998533,x
+        sta $7E52F4
+        sta $7E52F9
+        lda #$00
+        sta $7E52FE
+        sta $7E5303
+        rep #$20
+        phb
+        sep #$20
+        lda #$7E
+        pha
+        plb
+        .databank $7E
+        rep #$20
+        ldy #$52F0
+        lda @l $7E530B
+        and #$00FF
+        sta wR0
+        lda @l $7E530C
+        and #$00FF
+        sta wR1
+        lda #$3000
+        sta wR4
+        lda #$0000
+        sta wR5
+        clc
+        jsl rlUnknown95C51F
+        plb
+        .databank $7E
+        lda @l $7E5311
+        clc
+        adc #$0002
+        sta @l $7E5311
+
+        _9130
+        jsl rlUnknown968418
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/9137
+
+      rsUnknown969137 ; 96/9137
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        cmp #$000A
+        bcs _9147
+        pha
+        lda #$01FF
+        sta lR18
+        pla
+        bra _915C
+
+
+        _9147
+        sta wR13
+        lda #$000A
+        sta wR14
+        jsl rlUnknown959C3E
+        lda wR13
+        clc
+        adc #$0154
+        sta lR18
+        lda wR10
+
+        _915C
+        clc
+        adc #$0154
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/9163
+
+      rlUnknown969163 ; 96/9163
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda #$0005
+        sta $7E52F0
+        lda #$015E
+        sta $7E530D
+        ldx #$0000
+        jsl rlUnknown95B5FD
+        pha
+        lda $0AFE,b,x
+        and #$00FF
+        clc
+        adc #1,s
+        pha
+        lda #$0064
+        sec
+        sbc #1,s
+        sep #$20
+        sta $7E530C
+        rep #$20
+        pla
+        pla
+        lda $0AF9,b,x
+        and #$01FF
+        sec
+        sbc $7FE198
+        jsl rlUnknown95A164
+        sec
+        sbc #$0004
+        sep #$20
+        sta $7E530B
+        rep #$20
+        lda #$0000
+        sta $7E5311
+        lda #$9600
+        sta $7FED00
+        lda #$91C8
+        sta $7FECFF
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/91C8
+
+      rlUnknown9691C8 ; 96/91C8
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7E5311
+        tax
+        lda $998586,x
+        and #$00FF
+        cmp #$0080
+        bne _91E3
+        jsl rlUnknown96C9FE
+        jml _92F5
+
+
+        _91E3
+        cmp #$0081
+        bne _9223
+        lda #$01FF
+        sta $7E52F5
+        sta $7E52FA
+        sta $7E52FF
+        sta $7E5304
+        sta $7E5309
+        sep #$20
+        lda $998587,x
+        clc
+        adc #$80
+        sta $7E52F4
+        sta $7E52F9
+        sta $7E52FE
+        sta $7E5303
+        sta $7E5308
+        rep #$20
+        lda #$0000
+        bra _9266
+
+
+        _9223
+        lda #$067B
+        sta $7E52F5
+        lda #$067C
+        sta $7E52FA
+        lda #$067D
+        sta $7E52FF
+        lda #$067E
+        sta $7E5304
+        lda #$067F
+        sta $7E5309
+        sep #$20
+        lda $998587,x
+        sta $7E52F4
+        sta $7E52F9
+        sta $7E52FE
+        sta $7E5303
+        sta $7E5308
+        rep #$20
+        lda $998586,x
+
+        _9266
+        and #$00FF
+        bit #$0080
+        beq _9271
+        ora #$0100
+
+        _9271
+        sta $7E52F2
+        phx
+        pha
+        lda $998588,x
+        and #$00FF
+        asl a
+        asl a
+        tax
+        lda $99862F,x
+        and #$00FF
+        clc
+        adc #1,s
+        sta $7E52F7
+        lda $998630,x
+        and #$00FF
+        clc
+        adc #1,s
+        sta $7E52FC
+        lda $998631,x
+        and #$00FF
+        clc
+        adc #1,s
+        sta $7E5301
+        lda $998632,x
+        and #$00FF
+        clc
+        adc #1,s
+        sta $7E5306
+        pla
+        plx
+        phb
+        sep #$20
+        lda #$7E
+        pha
+        plb
+        .databank $7E
+        rep #$20
+        ldy #$52F0
+        lda @l $7E530B
+        and #$00FF
+        sta wR0
+        lda @l $7E530C
+        and #$00FF
+        sta wR1
+        lda #$3000
+        sta wR4
+        lda #$0000
+        sta wR5
+        clc
+        jsl rlUnknown95C51F
+        plb
+        .databank $7E
+        lda @l $7E5311
+        clc
+        adc #$0003
+        sta @l $7E5311
+
+        _92F5
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/92F8
+
+    .endsection Unsorted968F50Section
+
+
+    .section Unsorted969398Section
+
+      .al
+      .xl
+
+      rlUnknown969398 ; 96/9398
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        pha
+        asl a
+        pha
+        asl a
+        asl a
+        clc
+        adc #1,s
+        clc
+        adc #3,s
+        tax
+        pla
+        pla
+        ldy #$0000
+        lda $9986CD,x
+        sta lR18
+        lda $9986CE,x
+        sta lR18+1
+        lda [lR18],y
+        and #$00FF
+        sta wR0
+        xba
+        sta $7FED4B
+        lda $9986D0,x
+        sta lR18
+        lda $9986D1,x
+        sta lR18+1
+        lda [lR18],y
+        and #$00FF
+        clc
+        adc wR0
+        pha
+        sta wR0
+        jsl rlUnknown9594E0
+        sta $7FED4E
+        pla
+        and #$00FF
+        sta $7FED50
+        lda $9986D3,x
+        sta $7FED56
+        lda #$2800
+        sta $7FED58
+        lda $9986D5,x
+        sta $7FED53
+        sep #$20
+        lda $9986D7,x
+        sta $7FED4D
+        lda #$02
+        sta $7FED52
+        lda #$0C
+        sta $7FED55
+        rep #$20
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/941C
+
+    .endsection Unsorted969398Section
+
+
     .section Unsorted96941CSection
 
       .al
@@ -78,6 +3009,73 @@
         ; 96/947D
 
     .endsection Unsorted96941CSection
+
+
+    .section Unsorted96947DSection
+
+      .al
+      .xl
+
+      rlUnknown96947D ; 96/947D
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FE4B7
+        lda $7FE4B8
+        and #$00FF
+        bne _94A0
+        sep #$20
+        lda #$95
+        sta $7FE4CC
+        lda $7FE1B3
+        and #$F7
+        sta $7FE1B3
+        rep #$20
+        bra _94AD
+
+
+        _94A0
+        sep #$20
+        lda $7FE4CC
+        inc a
+        sta $7FE4CC
+        rep #$20
+
+        _94AD
+        rtl
+
+        .databank 0
+
+        ; 96/94AE
+
+      rlUnknown9694AE ; 96/94AE
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $7FE1B3
+        ora #$08
+        sta $7FE1B3
+        rep #$20
+        lda #$0000
+        sta wBufferBG3HOFS
+        lda #$01FF
+        sta wBufferBG3VOFS
+        rtl
+
+        .databank 0
+
+        ; 96/94C7
+
+    .endsection Unsorted96947DSection
 
 
     .section Unsorted9694C7Section
@@ -224,6 +3222,139 @@
     .endsection Unsorted9694C7Section
 
 
+    .section Unsorted96957DSection
+
+      .al
+      .xl
+
+      rlUnknown96957D ; 96/957D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+
+        _9581
+        lda $98ABFC,x
+        sta $7FE3F1,x
+        lda $98ABFE,x
+        sta $7FE3F3,x
+        lda $98AC00,x
+        sta $7FE3F5,x
+        lda $98AC02,x
+        sta $7FE3F7,x
+        txa
+        clc
+        adc #$0008
+        tax
+        cpx #$0050
+        bcc _9581
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/95AE
+
+      rlUnknown9695AE ; 96/95AE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sec
+        sbc #$8A8A
+        sep #$20
+        xba
+        inc a
+        sta wR0
+        stz wR0+1
+        rep #$20
+        xba
+        and #$00FF
+        tax
+        sep #$20
+
+        _95C4
+        lda $98AC4C,x
+        sta $7FE3FD,x
+        inc x
+        cpx wR0
+        bcc _95C4
+        rep #$20
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/95D5
+
+      rlUnknown9695D5 ; 96/95D5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8200
+        sta $2130,b
+        sep #$20
+        stz $2125,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/95E3
+
+      rlUnknown9695E3 ; 96/95E3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FE3EA
+        tax
+        sep #$20
+        lda #$00
+        sta $7FE3CA,x
+        rep #$20
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/95F5
+
+      rlUnknown9695F5 ; 96/95F5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wBattleSong
+        beq _9602
+        sta $04BA,b
+        jsl rlUnknown809654
+
+        _9602
+        rtl
+
+        .databank 0
+
+        ; 96/9603
+
+    .endsection Unsorted96957DSection
+
+
     .section Unsorted969603Section
 
       .al
@@ -251,6 +3382,30 @@
         ; 96/9617
 
     .endsection Unsorted969603Section
+
+
+    .section Unsorted969617Section
+
+      .al
+      .xl
+
+      rlUnknown969617 ; 96/9617
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$00E0
+        jsl rlUnknown808FA3
+        rtl
+
+        .databank 0
+
+        ; 96/961F
+
+    .endsection Unsorted969617Section
 
 
     .section Unsorted96961FSection
@@ -303,6 +3458,240 @@
     .endsection Unsorted96961FSection
 
 
+    .section Unsorted969665Section
+
+      .al
+      .xl
+
+      rlUnknown969665 ; 96/9665
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7FFC59
+        bit #$0002
+        beq _9677
+        lda #$0003
+        sta wR0
+        bra _9693
+
+
+        _9677
+        jsl rlUnknown9697FA
+        bcs _9685
+        ldx #$0043
+        lda $0D52,b
+        bra _968B
+
+
+        _9685
+        ldx #$0000
+        lda $0D60,b
+
+        _968B
+        jsl rlUnknown9696AA
+        bcs _969D
+        sta wR0
+
+        _9693
+        txy
+        phx
+        lda wR0
+        asl a
+        tax
+        jsr ($9696A0,x)
+        plx
+
+        _969D
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/96A0
+
+    .endsection Unsorted969665Section
+
+
+    .section Unsorted9696AASection
+
+      .al
+      .xl
+
+      rlUnknown9696AA ; 96/96AA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        pha
+        ldx #$0000
+
+        _96AF
+        lda $9982E3,x
+        inc x
+        inc x
+        inc x
+        cmp #$FFFF
+        beq _96E2
+        and #$00FF
+        cmp #1,s
+        bne _96AF
+        lda wBattleDistance
+        cmp #$0003
+        bcs _96D1
+        lda $9982E1,x
+        bra _96D5
+
+
+        _96D1
+        lda $9982E2,x
+
+        _96D5
+        and #$00FF
+        cmp #$00FF
+        beq _96E2
+        sta #1,s
+        clc
+        bra _96E3
+
+
+        _96E2
+        sec
+
+        _96E3
+        pla
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/96E6
+
+    .endsection Unsorted9696AASection
+
+
+    .section Unsorted9697FASection
+
+      .al
+      .xl
+
+      rlUnknown9697FA ; 96/97FA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+
+        _97FE
+        lda $7E4F85,x
+        cmp #$FFFF
+        beq _981A
+        cmp #$FEFF
+        beq _981A
+        bit #$0080
+        beq _9815
+        inc x
+        inc x
+        bra _97FE
+
+
+        _9815
+        bit #$0001
+        bne _981D
+
+        _981A
+        clc
+        bra _981E
+
+
+        _981D
+        sec
+
+        _981E
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/9820
+
+      rlUnknown969820 ; 96/9820
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        cpx #$0000
+        bne _982C
+        lda $0D52,b
+        bra _982F
+
+
+        _982C
+        lda $0D60,b
+
+        _982F
+        jsl rlUnknown9696AA
+        bcs _9846
+        cmp #$0004
+        bne _9846
+        lda wBattleDistance
+        cmp #$0002
+        bcc _9846
+        sec
+        bra _9847
+
+
+        _9846
+        clc
+
+        _9847
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/984A
+
+      rlUnknown96984A ; 96/984A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta $7FE187
+        sta $7FE188
+        lda $0AE0,b
+        and #$EF
+        sta $0AE0,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/9861
+
+    .endsection Unsorted9697FASection
+
+
     .section Unsorted969861Section
 
       .al
@@ -327,6 +3716,46 @@
         ; 96/9872
 
     .endsection Unsorted969861Section
+
+
+    .section Unsorted969872Section
+
+      .al
+      .xl
+
+      rlUnknown969872 ; 96/9872
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda $7FE187
+        bit #$0001
+        beq _989C
+        sep #$20
+        and #$FE
+        ora #$02
+        sta $7FE187
+        rep #$20
+        jsl rlActionStructBuildBattleRounds
+        sep #$20
+        lda $7FE187
+        and #$FD
+        ora #$04
+        sta $7FE187
+        rep #$20
+
+        _989C
+        pla
+        rtl
+
+        .databank 0
+
+        ; 96/989E
+
+    .endsection Unsorted969872Section
 
 
     .section Unsorted96989ESection
@@ -463,6 +3892,757 @@
     .endsection Unsorted96989ESection
 
 
+    .section Unsorted96994BSection
+
+      .al
+      .xl
+
+      rlUnknown96994B ; 96/994B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        phx
+        sep #$20
+        lda $0AF5,b
+        and #$FB
+        sta $0AF5,b
+        lda $0B38,b
+        and #$FB
+        sta $0B38,b
+        rep #$20
+        plx
+        pla
+        rtl
+
+        .databank 0
+
+        ; 96/9964
+
+    .endsection Unsorted96994BSection
+
+
+    .section Unsorted9699DDSection
+
+      .al
+      .xl
+
+      rlUnknown9699DD ; 96/99DD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FFC59
+        bit #$0002
+        beq _9A24
+        ldx #$0000
+        lda #$000A
+
+        _99ED
+        pha
+        lda #$0010
+
+        _99F1
+        pha
+        lda $7FD0C0,x
+        and #$1C00
+        cmp #$0400
+        bne _9A08
+        lda $7FD0C0,x
+        clc
+        adc #$1800
+        bra _9A10
+
+
+        _9A08
+        lda $7FD0C0,x
+        clc
+        adc #$1000
+
+        _9A10
+        sta $7FD0C0,x
+        inc x
+        inc x
+        pla
+        dec a
+        bne _99F1
+        txa
+        clc
+        adc #$0020
+        tax
+        pla
+        dec a
+        bne _99ED
+
+        _9A24
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/9A26
+
+      rlUnknown969A26 ; 96/9A26
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FFC59
+        bit #$0002
+        bne _9A34
+        jml _9B9A
+
+
+        _9A34
+        ldx #$0000
+
+        _9A37
+        lda $0102,b,x
+        sta $7ECC08,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc _9A37
+        ldx #$0000
+
+        _9A48
+        lda $01C2,b,x
+        sta $7ECC28,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc _9A48
+        ldx #$0000
+
+        _9A59
+        lda $0102,b,x
+        sta $0122,b,x
+        sta $7FFE22,x
+        inc x
+        inc x
+        cpx #$0016
+        bcc _9A59
+        ldx #$0000
+
+        _9A6D
+        lda $0108,b,x
+        sta $0138,b,x
+        sta $7FFE38,x
+        inc x
+        inc x
+        cpx #$0008
+        bcc _9A6D
+        ldx #$0000
+
+        _9A81
+        lda $01E2,b,x
+        jsl rlUnknown96EDC0
+        lsr a
+        and #$3DEF
+        sta $01E2,b,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc _9A81
+        ldx #$0000
+
+        _9A99
+        lda $0122,b,x
+        jsl rlUnknown96EDC0
+        lsr a
+        and #$3DEF
+        sta $0122,b,x
+        inc x
+        inc x
+        cpx #$0006
+        bcc _9A99
+        ldx #$0000
+        lda #$0001
+        sta wR0
+
+        _9AB6
+        lda $0132,b,x
+        jsl rlUnknown96EDC0
+        lsr a
+        and #$3DEF
+        jsl rlUnknown969C63
+        sta $0132,b,x
+        inc x
+        inc x
+        cpx #$0006
+        bcc _9AB6
+        ldx #$0000
+        lda #$0003
+        sta wR0
+
+        _9AD7
+        lda $013A,b,x
+        jsl rlUnknown96EDC0
+        lsr a
+        and #$3DEF
+        jsl rlUnknown969C63
+        sta $013A,b,x
+        inc x
+        inc x
+        cpx #$0006
+        bcc _9AD7
+        ldx #$0000
+
+        _9AF3
+        lda $01C2,b,x
+        jsl rlUnknown96EDC0
+        lsr a
+        and #$3DEF
+        sta $7FFEC2,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc _9AF3
+        ldx #$0000
+
+        _9B0C
+        lda $0102,b,x
+        jsl rlUnknown96EDC0
+        lsr a
+        and #$3DEF
+        sta $7FFE02,x
+        inc x
+        inc x
+        cpx #$0006
+        bcc _9B0C
+        ldx #$0000
+        lda #$0001
+        sta wR0
+
+        _9B2A
+        lda $0112,b,x
+        jsl rlUnknown96EDC0
+        lsr a
+        and #$3DEF
+        jsl rlUnknown969C63
+        sta $7FFE12,x
+        inc x
+        inc x
+        cpx #$0006
+        bcc _9B2A
+        ldx #$0000
+        lda #$0003
+        sta wR0
+
+        _9B4C
+        lda $011A,b,x
+        jsl rlUnknown96EDC0
+        lsr a
+        and #$3DEF
+        jsl rlUnknown969C63
+        sta $7FFE1A,x
+        inc x
+        inc x
+        cpx #$0006
+        bcc _9B4C
+        ldx #$0000
+        lda #$0008
+        sta wR0
+
+        _9B6E
+        lda $0162,b,x
+        jsl rlUnknown969B9C
+        sta aWorldMapMarkerPalette,x
+        inc x
+        inc x
+        cpx #$003E
+        bcc _9B6E
+        ldx #$0000
+        lda #$0014
+        sta wR0
+
+        _9B88
+        lda $0162,b,x
+        jsl rlUnknown969B9C
+        sta $7ECBC8,x
+        inc x
+        inc x
+        cpx #$003E
+        bcc _9B88
+
+        _9B9A
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/9B9C
+
+      rlUnknown969B9C ; 96/9B9C
+
+        ; Reads the stack above its return address, but in the emulator log every
+        ; caller continues right after the call: no inline arguments.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        pha
+        lda wR0
+        asl a
+        tax
+        lda #1,s
+        and #$001F
+        clc
+        adc wR0
+        cmp #$0020
+        bcc _9BB2
+        lda #$001F
+
+        _9BB2
+        pha
+        lda #3,s
+        and #$03E0
+        clc
+        adc $969BE3,x
+        cmp #$0400
+        bcc _9BC5
+        lda #$03E0
+
+        _9BC5
+        ora #1,s
+        sta #1,s
+        lda #3,s
+        and #$7C00
+        clc
+        adc $969C23,x
+        cmp #$8000
+        bcc _9BDB
+        lda #$7C00
+
+        _9BDB
+        ora #1,s
+        sta #3,s
+        pla
+        pla
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/9BE3
+
+    .endsection Unsorted9699DDSection
+
+
+    .section Unsorted969C63Section
+
+      .al
+      .xl
+
+      rlUnknown969C63 ; 96/9C63
+
+        ; Reads the stack above its return address, but in the emulator log every
+        ; caller continues right after the call: no inline arguments.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        pha
+        lda wR0
+        asl a
+        tax
+        lda #1,s
+        and #$001F
+        sec
+        sbc wR0
+        bcs _9C76
+        lda #$0000
+
+        _9C76
+        pha
+        lda #3,s
+        and #$03E0
+        sec
+        sbc $969BE3,x
+        bcs _9C86
+        lda #$0000
+
+        _9C86
+        ora #1,s
+        sta #1,s
+        lda #3,s
+        and #$7C00
+        sec
+        sbc $969C23,x
+        bcs _9C99
+        lda #$0000
+
+        _9C99
+        ora #1,s
+        sta #3,s
+        pla
+        pla
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/9CA1
+
+      rlUnknown969CA1 ; 96/9CA1
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $0AE4,b
+        bit #$0080
+        beq _9CFF
+        jsl rlUnknown96F341
+        bcs _9CFF
+        lda $0AEB,b
+        cmp #$0000
+        bne _9CBD
+        lda #$0000
+        bra _9CC0
+
+
+        _9CBD
+        lda #$0001
+
+        _9CC0
+        jsl rlUnknown9EB0F2
+        cmp #$0002
+        beq _9CD8
+        cmp #$0001
+        beq _9CD3
+        lda #$0089
+        bra _9CDB
+
+
+        _9CD3
+        lda #$008A
+        bra _9CDB
+
+
+        _9CD8
+        lda #$008B
+
+        _9CDB
+        pha
+        ldx $0AEB,b
+        lda $0AF9,b,x
+        and #$01FF
+        sec
+        sbc $7FE198
+        jsl rlUnknown9EB4BB
+        cpx #$0000
+        bne _9CF7
+        clc
+        adc #$2000
+
+        _9CF7
+        clc
+        adc #1,s
+        jsl rlUnknown80900D
+        pla
+
+        _9CFF
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/9D01
+
+      rlUnknown969D01 ; 96/9D01
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$74
+        sta $2181,b
+        lda #$55
+        sta $2182,b
+        lda #$01
+        sta $2183,b
+        rep #$20
+        lda #$0000
+
+        _9D17
+        sta wR0
+        asl a
+        tax
+        lda $98B388,x
+        sta wR1
+        ldx #$0000
+
+        _9D24
+        lda $0202,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        lda $0222,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        lda $0242,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        lda $0262,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        inc x
+        inc x
+        cpx #$0012
+        bcc _9D24
+
+        _9D6F
+        lda $0202,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        lda $0222,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        lda $0242,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        inc x
+        inc x
+        cpx #$001E
+        bcc _9D6F
+        lda wR0
+        inc a
+        cmp #$0019
+        bcs _9DB5
+        jml _9D17
+
+
+        _9DB5
+        sep #$20
+        lda #$74
+        sta $2181,b
+        lda #$B5
+        sta $2182,b
+        lda #$01
+        sta $2183,b
+        rep #$20
+        lda #$0000
+
+        _9DCB
+        sta wR0
+        asl a
+        tax
+        lda $98B388,x
+        sta wR1
+        ldx #$0000
+
+        _9DD8
+        lda $0282,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        lda $02A2,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        lda $02C2,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        lda $02E2,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        inc x
+        inc x
+        cpx #$0012
+        bcc _9DD8
+
+        _9E23
+        lda $0282,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        lda $02A2,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        lda $02C2,b,x
+        jsr rsUnknown969E6A
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        inc x
+        inc x
+        cpx #$001E
+        bcc _9E23
+        lda wR0
+        inc a
+        cmp #$0019
+        bcs _9E69
+        jml _9DCB
+
+
+        _9E69
+        rtl
+
+        .databank 0
+
+        ; 96/9E6A
+
+      rsUnknown969E6A ; 96/9E6A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        pha
+        eor #$FFFF
+        pha
+        and #$001F
+        sta wR10
+        lda wR1
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR12+1
+        and #$001F
+        sta wR2
+        pla
+        pha
+        and #$03E0
+        sta wR10
+        lda wR1
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR12+1
+        and #$03E0
+        ora wR2
+        sta wR2
+        pla
+        pha
+        and #$7C00
+        sta wR10
+        lda wR1
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR12+1
+        and #$7C00
+        ora wR2
+        sta wR2
+        pla
+        pla
+        clc
+        adc wR2
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/9EBB
+
+      rlUnknown969EBB ; 96/9EBB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FFC59
+        bit #$0008
+        beq _9EF8
+        sep #$20
+        lda $7FFC6F
+        ora #$48
+        sta $7FFC6F
+        rep #$20
+        lda #$9500
+        sta lR44+1
+        lda #$E754
+        sta lR44
+        lda #$0003
+        sta wR40
+        jsl rlHDMAEngineCreateEntryByIndex
+        lda #$9500
+        sta lR44+1
+        lda #$E760
+        sta lR44
+        lda #$0006
+        sta wR40
+        jsl rlHDMAEngineCreateEntryByIndex
+
+        _9EF8
+        rtl
+
+        .databank 0
+
+        ; 96/9EF9
+
+    .endsection Unsorted969C63Section
+
+
     .section Unsorted969EF9Section
 
       .al
@@ -568,6 +4748,161 @@
     .endsection Unsorted969EF9Section
 
 
+    .section Unsorted969F7DSection
+
+      .al
+      .xl
+
+      rlUnknown969F7D ; 96/9F7D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda wBattleDistance
+        cmp #$0002
+        bcs _9FC1
+        ldx #$0000
+        ldy #$0000
+
+        _9F8E
+        lda $7E4F85,x
+        cmp #$FFFF
+        beq _9FC1
+        cmp #$FEFF
+        beq _9FC1
+        bit #$0080
+        bne _9FBD
+        bit #$0002
+        bne _9FC1
+        bit #$0001
+        bne _9FB5
+        cpy #$0002
+        beq _9FC4
+        ldy #$0001
+        bra _9FBD
+
+
+        _9FB5
+        cpy #$0001
+        beq _9FC4
+        ldy #$0002
+
+        _9FBD
+        inc x
+        inc x
+        bra _9F8E
+
+
+        _9FC1
+        clc
+        bra _9FC5
+
+
+        _9FC4
+        sec
+
+        _9FC5
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/9FC8
+
+      rlUnknown969FC8 ; 96/9FC8
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $7FFC77
+        ora #$02
+        sta $7FFC77
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/9FD7
+
+      rlUnknown969FD7 ; 96/9FD7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FFC77
+        bit #$0002
+        beq _9FEA
+        sep #$20
+        eor #$03
+        sta $7FFC77
+        rep #$20
+
+        _9FEA
+        rtl
+
+        .databank 0
+
+        ; 96/9FEB
+
+      rlUnknown969FEB ; 96/9FEB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FFC7C
+        sta aSpriteExtBuffer,b
+        lda $7FFC7E
+        sta $1E02,b
+        lda $7FFC80
+        sta $1E04,b
+        lda $7FFC82
+        sta $1E06,b
+        lda $7FFC84
+        sta $1E08,b
+        lda $7FFC86
+        sta $1E0A,b
+        lda $7FFC88
+        sta $1E0C,b
+        lda $7FFC8A
+        sta $1E0E,b
+        lda $7FFC8C
+        sta $1E10,b
+        lda $7FFC8E
+        sta $1E12,b
+        lda $7FFC90
+        sta $1E14,b
+        lda $7FFC92
+        sta $1E16,b
+        lda $7FFC94
+        sta $1E18,b
+        lda $7FFC96
+        sta $1E1A,b
+        lda $7FFC98
+        sta $1E1C,b
+        lda $7FFC9A
+        sta $1E1E,b
+        rtl
+
+        .databank 0
+
+        ; 96/A05C
+
+    .endsection Unsorted969F7DSection
+
+
     .section Unsorted96A05CSection
 
       .al
@@ -643,6 +4978,111 @@
         ; 96/A0EB
 
     .endsection Unsorted96A05CSection
+
+
+    .section Unsorted96A20ESection
+
+      .al
+      .xl
+
+      rlUnknown96A20E ; 96/A20E
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FFC59
+        bit #$0400
+        beq _A21E
+        lda #$004C
+        jsl rlUnknown96A4B2
+
+        _A21E
+        rtl
+
+        .databank 0
+
+        ; 96/A21F
+
+      rlUnknown96A21F ; 96/A21F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FE4C2
+        and #$00FF
+        cmp #$0003
+        bne _A26D
+        lda @l $0018A5
+        cmp #$0002
+        bcc _A23A
+        lda #$891A
+        bra _A247
+
+
+        _A23A
+        cmp #$0001
+        bne _A244
+        lda #$890A
+        bra _A247
+
+
+        _A244
+        lda #$88FA
+
+        _A247
+        sta lR18
+        sep #$20
+        lda #$99
+        sta lR18+2
+        rep #$20
+        lda #$0008
+        ldy #$6A83
+        jsl rlUnknown95C43E
+        lda lR18
+        clc
+        adc #$0008
+        sta lR18
+        lda #$0008
+        ldy #$6AA3
+        jsl rlUnknown95C43E
+
+        _A26D
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/A26F
+
+      rlUnknown96A26F ; 96/A26F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $7FE4B7
+        and #$7F
+        sta $7FE4B7
+        lda #$00
+        sta $7FE4B8
+        rep #$20
+        lda #$0000
+        sta $7FE4BE
+        rtl
+
+        .databank 0
+
+        ; 96/A28B
+
+    .endsection Unsorted96A20ESection
 
 
     .section Unsorted96A28BSection
@@ -1008,6 +5448,67 @@
     .endsection Unsorted96A28BSection
 
 
+    .section Unsorted96A477Section
+
+      .al
+      .xl
+
+      rsUnknown96A477 ; 96/A477
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        and #$C000
+        cmp #$4000
+        bne _A48D
+        sep #$20
+        lda $7FE4B8
+        inc a
+        sta $7FE4B8
+        rep #$20
+
+        _A48D
+        lda $7FE4BC
+        clc
+        adc #$0002
+        sta $7FE4BC
+        pla
+        rts
+
+        .databank 0
+
+        ; 96/A49B
+
+      rsUnknown96A49B ; 96/A49B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        and #$C000
+        cmp #$4000
+        bne _A4A4
+
+        _A4A4
+        lda $7FE4BC
+        clc
+        adc #$0002
+        sta $7FE4BC
+        pla
+        rts
+
+        .databank 0
+
+        ; 96/A4B2
+
+    .endsection Unsorted96A477Section
+
+
     .section Unsorted96A4B2Section
 
       .al
@@ -1064,6 +5565,43 @@
         ; 96/A4FC
 
     .endsection Unsorted96A4B2Section
+
+
+    .section Unsorted96A4FCSection
+
+      .al
+      .xl
+
+      rlUnknown96A4FC ; 96/A4FC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta $7FEC1D
+        sta $7FEC41
+        sta aUnit2DataBuffer._ROM.Skills1
+        sta $7FEC50
+        lda #$10
+        sta $7FEC65
+        lda #$70
+        sta $7FEC66
+        rep #$20
+        lda #$0000
+        sta aUnit2DataBuffer._Inventory.ItemCount
+        sta aUnit2DataBuffer._Inventory.Items
+        sta $7FEC5A
+        sta $7FEC5C
+        rtl
+
+        .databank 0
+
+        ; 96/A532
+
+    .endsection Unsorted96A4FCSection
 
 
     .section Unsorted96A532Section
@@ -2189,6 +6727,103 @@
     .endsection Unsorted96A532Section
 
 
+    .section Unsorted96AC1FSection
+
+      .al
+      .xl
+
+      rlUnknown96AC1F ; 96/AC1F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldy #$0000
+        sep #$20
+        lda [lR18],y
+        inc y
+        bit #$40
+        bne _AC32
+        ldx #$0000
+        bra _AC35
+
+
+        _AC32
+        ldx #$0024
+
+        _AC35
+        bit #$80
+        beq _AC45
+        ora #$80
+        ora $7FEC1D,x
+        sta $7FEC1D,x
+        bra _AC8D
+
+
+        _AC45
+        ora #$80
+        sta $7FEC1D,x
+        lda [lR18],y
+        ora bBufferW12SEL
+        sta bBufferW12SEL
+        sta $2123,b
+        inc y
+        lda [lR18],y
+        ora bBufferW34SEL
+        sta bBufferW34SEL
+        sta $2124,b
+        inc y
+        lda [lR18],y
+        ora bBufferWOBJSEL
+        sta bBufferWOBJSEL
+        sta $2125,b
+        inc y
+        lda #$00
+        sta bBufferWH0
+        lda #$FF
+        sta bBufferWH1
+        lda #$00
+        sta bBufferWH2
+        lda #$FF
+        sta bBufferWH3
+        lda [lR18],y
+        sta bBufferWBGLOG
+        inc y
+        lda [lR18],y
+        sta bBufferWBGLOG
+        inc y
+        lda [lR18],y
+        sta bBufferTMW
+        inc y
+        lda [lR18],y
+        sta bBufferTSW
+        inc y
+
+        _AC8D
+        lda lR18+2
+        sta aUnit2DataBuffer._ROM.ResistanceGrowth,x
+        rep #$20
+        tya
+        clc
+        adc lR18
+        sta aUnit2DataBuffer._ROM.DefenseGrowth,x
+        sta $7FEC29,x
+        jsl rlUnknown96AD39
+        jsr rsUnknown96AD07
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/ACAB
+
+    .endsection Unsorted96AC1FSection
+
+
     .section Unsorted96ACABSection
 
       .al
@@ -2219,6 +6854,169 @@
         ; 96/ACC5
 
     .endsection Unsorted96ACABSection
+
+
+    .section Unsorted96AD07Section
+
+      .al
+      .xl
+
+      rsUnknown96AD07 ; 96/AD07
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        cpx #$0000
+        bne _AD22
+        lda #$9500
+        sta lR44+1
+        lda #$E6BA
+        sta lR44
+        lda #$0003
+        sta wR40
+        jsl rlHDMAEngineCreateEntryByIndex
+        bra _AD35
+
+
+        _AD22
+        lda #$9500
+        sta lR44+1
+        lda #$E6C6
+        sta lR44
+        lda #$0006
+        sta wR40
+        jsl rlHDMAEngineCreateEntryByIndex
+
+        _AD35
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/AD37
+
+    .endsection Unsorted96AD07Section
+
+
+    .section Unsorted96AD39Section
+
+      .al
+      .xl
+
+      rlUnknown96AD39 ; 96/AD39
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        cpx #$0000
+        bne _AD47
+        lda #$E51D
+        ldx #$0000
+        bra _AD4D
+
+
+        _AD47
+        lda #$E6DD
+        ldx #$001C
+
+        _AD4D
+        sta wR0
+        lda $7FE09E
+        bit #$0001
+        beq _AD5D
+        lda #$0380
+        bra _AD60
+
+
+        _AD5D
+        lda #$0000
+
+        _AD60
+        clc
+        adc wR0
+        sta wR0
+        lda $7FEC65
+        and #$00FF
+        beq _AD9C
+        dec a
+        cmp #$0080
+        bcc _AD8B
+        pha
+        lda #$00FF
+        sta $7FE4EA,x
+        inc x
+        lda #$E51B
+        sta $7FE4EA,x
+        inc x
+        inc x
+        pla
+        sec
+        sbc #$007F
+
+        _AD8B
+        ora #$0080
+        sta $7FE4EA,x
+        inc x
+        lda #$E51B
+        sta $7FE4EA,x
+        inc x
+        inc x
+
+        _AD9C
+        lda $7FEC66
+        and #$00FF
+        beq _ADE7
+        cmp #$0080
+        bcc _ADD9
+        pha
+        lda #$00FF
+        sta $7FE4EA,x
+        phx
+        txa
+        sec
+        sbc #3,s
+        pha
+        lda #5,s
+        tax
+        pla
+        sep #$20
+        sta $7FE4E9,x
+        rep #$20
+        plx
+        inc x
+        lda wR0
+        sta $7FE4EA,x
+        inc x
+        inc x
+        clc
+        adc #$00FE
+        sta wR0
+        pla
+        sec
+        sbc #$007F
+
+        _ADD9
+        ora #$0080
+        sta $7FE4EA,x
+        inc x
+        lda wR0
+        sta $7FE4EA,x
+
+        _ADE7
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/ADE9
+
+    .endsection Unsorted96AD39Section
 
 
     .section Unsorted96ADE9Section
@@ -4086,6 +8884,344 @@
     .endsection Unsorted96B852Section
 
 
+    .section Unsorted96B945Section
+
+      .al
+      .xl
+
+      rlUnknown96B945 ; 96/B945
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7FECF4
+        and #$00FF
+        bne _B9A1
+        lda #$9700
+        sta lR18+1
+        tya
+        and #$01FF
+        asl a
+        pha
+        asl a
+        asl a
+        clc
+        adc #1,s
+        clc
+        adc #$B081
+        sta lR18
+        pla
+        ldy #$0000
+        ldx #$0000
+
+        _B96D
+        lda [lR18],y
+        sta $7FECF5,x
+        inc y
+        inc y
+        inc x
+        inc x
+        cpx #$000A
+        bne _B96D
+        lda $7FECF5
+        sta lR18
+        lda $7FECF7
+        sta lR18+2
+        lda $7FECF9
+        sta lR19+1
+        jsl rlAppendDecompList
+        sep #$20
+        lda #$01
+        sta $7FECF4
+        rep #$20
+        pla
+        pha
+        jsr rsUnknown96A477
+
+        _B9A1
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/B9A4
+
+      rlUnknown96B9A4 ; 96/B9A4
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx $0AE9,b
+        lda $0B24,b,x
+        bit #$8000
+        beq _B9B1
+        inc y
+
+        _B9B1
+        jsl rlUnknown96B945
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/B9B7
+
+      rlUnknown96B9B7 ; 96/B9B7
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7FECF4
+        and #$00FF
+        bne _BA12
+        lda #$9700
+        sta lR18+1
+        tya
+        and #$01FF
+        asl a
+        pha
+        asl a
+        clc
+        adc #1,s
+        clc
+        adc #$B5D1
+        sta lR18
+        pla
+        ldy #$0000
+        ldx #$0000
+
+        _B9DE
+        lda [lR18],y
+        sta $7FECF5,x
+        inc y
+        inc y
+        inc x
+        inc x
+        cpx #$0006
+        bne _B9DE
+        lda $7FECF5
+        sta lR18
+        lda $7FECF7
+        sta lR18+2
+        lda $7FECF9
+        sta lR19+1
+        jsl rlAppendDecompList
+        sep #$20
+        lda #$03
+        sta $7FECF4
+        rep #$20
+        pla
+        pha
+        jsr rsUnknown96A477
+
+        _BA12
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BA15
+
+      rlUnknown96BA15 ; 96/BA15
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7FECF4
+        and #$00FF
+        bne _BA65
+        tya
+        and #$0002
+        beq _BA37
+        lda $7FE4D6
+        sta lR18
+        lda $7FE4D7
+        sta lR18+1
+        jsr rsUnknown96F7A8
+        bra _BA44
+
+
+        _BA37
+        and #$0001
+        bne _BA41
+        lda $0D50,b
+        bra _BA44
+
+
+        _BA41
+        lda $0D5E,b
+
+        _BA44
+        jsl rlGetCharacterPortraitData
+        lda #(`aDecompressionBuffer)<<8
+        sta lR19+1
+        lda #<>aDecompressionBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        sep #$20
+        lda #$03
+        sta $7FECF4
+        rep #$20
+        pla
+        pha
+        jsr rsUnknown96A477
+
+        _BA65
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BA68
+
+    .endsection Unsorted96B945Section
+
+
+    .section Unsorted96BB0CSection
+
+      .al
+      .xl
+
+      rlUnknown96BB0C ; 96/BB0C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7FECF4
+        and #$00FF
+        bne _BB6D
+        lda #$9700
+        sta lR18+1
+        tya
+        and #$01FF
+        pha
+        asl a
+        asl a
+        asl a
+        sec
+        sbc #1,s
+        clc
+        adc #$B60D
+        sta lR18
+        pla
+        ldy #$0000
+        ldx #$0000
+        sep #$20
+
+        _BB36
+        lda [lR18],y
+        sta $7FECF8,x
+        inc y
+        inc x
+        cpx #$0007
+        bne _BB36
+        rep #$20
+        lda $7FECF9
+        sta lR18+1
+        lda $7FECF8
+        sta lR18
+        lda $7FECFB
+        tay
+        lda $7FECFD
+        jsl rlUnknown95C4E3
+        sep #$20
+        lda #$02
+        sta $7FECF4
+        rep #$20
+        pla
+        pha
+        jsr rsUnknown96A477
+
+        _BB6D
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BB70
+
+    .endsection Unsorted96BB0CSection
+
+
+    .section Unsorted96BBC2Section
+
+      .al
+      .xl
+
+      rlUnknown96BBC2 ; 96/BBC2
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        tya
+        and #$01FF
+        sta $7FE4BE
+        pla
+        pha
+        jsr rsUnknown96A49B
+        ply
+        rtl
+
+        .databank 0
+
+        ; 96/BBD2
+
+      rlUnknown96BBD2 ; 96/BBD2
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        tya
+        and #$01FF
+        sta $7FE4C0
+        pla
+        pha
+        jsr rsUnknown96A49B
+        ply
+        rtl
+
+        .databank 0
+
+        ; 96/BBE2
+
+    .endsection Unsorted96BBC2Section
+
+
     .section Unsorted96BBE2Section
 
       .al
@@ -4160,6 +9296,92 @@
     .endsection Unsorted96BBE2Section
 
 
+    .section Unsorted96BC4CSection
+
+      .al
+      .xl
+
+      rlUnknown96BC4C ; 96/BC4C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tya
+        sta wR0
+        and #$01FF
+        asl a
+        tax
+        lda $98AD04,x
+        ldx $0AE9,b
+        cpx #$0000
+        bne _BC66
+        clc
+        adc #$2000
+
+        _BC66
+        jsl rlUnknown80900D
+        lda #1,s
+        jsr rsUnknown96A477
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BC72
+
+      rlUnknown96BC72 ; 96/BC72
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tya
+        sta wR0
+        and #$01FF
+        asl a
+        tax
+        lda $98AD04,x
+        pha
+        ldx $0AE9,b
+        lda $0AF9,b,x
+        and #$01FF
+        sec
+        sbc $7FE198
+        jsl rlUnknown9EB4BB
+        ldx $0AE9,b
+        cpx #$0000
+        bne _BC9F
+        clc
+        adc #$2000
+
+        _BC9F
+        clc
+        adc #1,s
+        jsl rlUnknown80900D
+        pla
+        lda #1,s
+        jsr rsUnknown96A477
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BCAF
+
+    .endsection Unsorted96BC4CSection
+
+
     .section Unsorted96BCECSection
 
       .al
@@ -4180,6 +9402,48 @@
         ; 96/BCF1
 
     .endsection Unsorted96BCECSection
+
+
+    .section Unsorted96BCF1Section
+
+      .al
+      .xl
+
+      rlUnknown96BCF1 ; 96/BCF1
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda #$9700
+        sta lR18+1
+        tya
+        and #$01FF
+        asl a
+        clc
+        adc #$B67D
+        sta lR18
+        ldy #$0000
+        lda [lR18],y
+        clc
+        adc #$B67D
+        sta lR18
+        jsl rlUnknown96BD1A
+        lda #1,s
+        jsr rsUnknown96A477
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BD1A
+
+    .endsection Unsorted96BCF1Section
 
 
     .section Unsorted96BD1ASection
@@ -4267,6 +9531,139 @@
     .endsection Unsorted96BD1ASection
 
 
+    .section Unsorted96BD74Section
+
+      .al
+      .xl
+
+      rlUnknown96BD74 ; 96/BD74
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0000
+        sta $7FED02
+        ldx #$0000
+
+        _BD7F
+        lda #$0000
+        sta $7FED03,x
+        txa
+        clc
+        adc #$0009
+        tax
+        cpx #$0048
+        bcc _BD7F
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BD93
+
+      rlUnknown96BD93 ; 96/BD93
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tya
+        and #$01FF
+        cmp #$0008
+        bcs _BDA4
+        jsl rlUnknown96C942
+        bra _BE20
+
+
+        _BDA4
+        lda $7FED02
+        and #$00FF
+        cmp #$0008
+        bcs _BE1D
+        ldx #$0000
+
+        _BDB3
+        lda $7FED03,x
+        bit #$0001
+        bne _BE12
+        sep #$20
+        lda #$01
+        sta $7FED03,x
+        lda $7FED02
+        inc a
+        sta $7FED02
+        rep #$20
+        lda #$9700
+        sta lR18+1
+        tya
+        and #$01FF
+        sec
+        sbc #$0008
+        asl a
+        clc
+        adc #$BD3E
+        sta lR18
+        ldy #$0000
+        lda [lR18],y
+        clc
+        adc #$BD3E
+        sta lR18
+        ldy #$0000
+        lda [lR18],y
+        sta $7FED04,x
+        inc y
+        inc y
+        lda [lR18],y
+        sta $7FED06,x
+        inc y
+        inc y
+        lda [lR18],y
+        sta $7FED08,x
+        inc y
+        inc y
+        lda [lR18],y
+        sta $7FED0A,x
+        clc
+        bra _BE20
+
+
+        _BE12
+        txa
+        clc
+        adc #$0009
+        tax
+        cpx #$0048
+        bcc _BDB3
+
+        _BE1D
+        sec
+        bra _BE25
+
+
+        _BE20
+        pla
+        pha
+        jsr rsUnknown96A477
+
+        _BE25
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BE28
+
+    .endsection Unsorted96BD74Section
+
+
     .section Unsorted96BE28Section
 
       .al
@@ -4335,6 +9732,246 @@
         ; 96/BE68
 
     .endsection Unsorted96BE28Section
+
+
+    .section Unsorted96BFE5Section
+
+      .al
+      .xl
+
+      rlUnknown96BFE5 ; 96/BFE5
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sep #$20
+        lda $7FED03
+        ora #$02
+        sta $7FED03
+        rep #$20
+        jsl rlUnknown96C7DB
+        lda #$9600
+        sta $7FED05,x
+        lda #$C008
+        sta $7FED04,x
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/C008
+
+      rlUnknown96C008 ; 96/C008
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7FED07
+        and #$00FF
+        beq _C01E
+        sep #$20
+        dec a
+        sta $7FED07
+        rep #$20
+        bra _C078
+
+
+        _C01E
+        lda $7FED0A,x
+        tax
+        lda $97C462,x
+        cmp #$8001
+        bne _C035
+        lda #$0000
+        jsl rlUnknown96C975
+        bra _C04D
+
+
+        _C035
+        cmp #$8000
+        bne _C05C
+        lda #$0000
+        jsl rlUnknown96C942
+        sep #$20
+        lda $7FED03
+        and #$FD
+        sta $7FED03
+
+        _C04D
+        lda $7FE4B8
+        beq _C058
+        dec a
+        sta $7FE4B8
+
+        _C058
+        rep #$20
+        bra _C07C
+
+
+        _C05C
+        sep #$20
+        sta $7FED07
+        xba
+        sta $7FF5AC
+        rep #$20
+        lda #3,s
+        tax
+        lda $7FED0A,x
+        clc
+        adc #$0002
+        sta $7FED0A,x
+
+        _C078
+        jsl rlUnknown96C817
+
+        _C07C
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/C07F
+
+    .endsection Unsorted96BFE5Section
+
+
+    .section Unsorted96C7DBSection
+
+      .al
+      .xl
+
+      rlUnknown96C7DB ; 96/C7DB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$000F
+        sta $7FF6B4,x
+        lda #$F714
+        sta $7FF6B5,x
+        lda #$00F0
+        sta $7FF6B7,x
+        lda #$F714
+        sta $7FF6B8,x
+        sep #$20
+        lda #$00
+        sta $7FF6BA,x
+        rep #$20
+        lda #$9500
+        sta lR44+1
+        lda #$E70E
+        sta lR44
+        lda #$0005
+        sta wR40
+        jsl rlHDMAEngineCreateEntryByIndex
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/C817
+
+      rlUnknown96C817 ; 96/C817
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$7F00
+        sta lR18+1
+        lda #$F714
+        sta lR18
+        lda $7FE47A
+        eor #$FFFF
+        inc a
+        clc
+        adc #$000F
+        and #$00FF
+        asl a
+        tax
+        ldy #$0000
+        lda $7FE47A
+        pha
+
+        _C83B
+        lda $7FEDAA,x
+        sec
+        sbc #1,s
+        sta [lR18],y
+        inc y
+        inc y
+        lda $7FEDAC,x
+        sec
+        sbc #1,s
+        sta [lR18],y
+        inc y
+        inc y
+        lda $7FEDAE,x
+        sec
+        sbc #1,s
+        sta [lR18],y
+        inc y
+        inc y
+        lda $7FEDB0,x
+        sec
+        sbc #1,s
+        sta [lR18],y
+        inc y
+        inc y
+        lda $7FEDB2,x
+        sec
+        sbc #1,s
+        sta [lR18],y
+        inc y
+        inc y
+        lda $7FEDB4,x
+        sec
+        sbc #1,s
+        sta [lR18],y
+        inc y
+        inc y
+        lda $7FEDB6,x
+        sec
+        sbc #1,s
+        sta [lR18],y
+        inc y
+        inc y
+        lda $7FEDB8,x
+        sec
+        sbc #1,s
+        sta [lR18],y
+        inc y
+        inc y
+        txa
+        clc
+        adc #$0010
+        tax
+        cpy #$00E0
+        bcc _C83B
+        pla
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/C8A1
+
+    .endsection Unsorted96C7DBSection
 
 
     .section Unsorted96C8A1Section
@@ -4462,6 +10099,98 @@
     .endsection Unsorted96C8A1Section
 
 
+    .section Unsorted96C942Section
+
+      .al
+      .xl
+
+      rlUnknown96C942 ; 96/C942
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        pha
+        sta wR10
+        lda #$0009
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        ldx wR12
+        sep #$20
+        lda $7FED03,x
+        and #$FE
+        sta $7FED03,x
+        rep #$20
+        lda $7FED02
+        beq _C96A
+        dec a
+        sta $7FED02
+
+        _C96A
+        pla
+        clc
+        adc #$0005
+        jsl rlHDMAEngineFreeEntryByIndex
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/C975
+
+      rlUnknown96C975 ; 96/C975
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sta wR10
+        lda #$0009
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        ldx wR12
+        sep #$20
+        lda $7FED03,x
+        and #$FE
+        sta $7FED03,x
+        rep #$20
+        lda $7FED02
+        beq _C99C
+        dec a
+        sta $7FED02
+
+        _C99C
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/C99E
+
+      rlUnknown96C99E ; 96/C99E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$FF00
+        sta $7FED00
+        lda #$FFFF
+        sta $7FECFF
+        rtl
+
+        .databank 0
+
+        ; 96/C9AD
+
+    .endsection Unsorted96C942Section
+
+
     .section Unsorted96C9ADSection
 
       .al
@@ -4506,6 +10235,318 @@
         ; 96/C9D9
 
     .endsection Unsorted96C9ADSection
+
+
+    .section Unsorted96C9D9Section
+
+      .al
+      .xl
+
+      rlUnknown96C9D9 ; 96/C9D9
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tya
+        and #$01FF
+        pha
+        asl a
+        clc
+        adc #1,s
+        tax
+        pla
+        lda $97BDD5,x
+        sta $7FED00
+        lda $97BDD4,x
+        sta $7FECFF
+        pla
+        pha
+        jsr rsUnknown96A477
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/C9FE
+
+      rlUnknown96C9FE ; 96/C9FE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$FF00
+        sta $7FED00
+        lda #$FFFF
+        sta $7FECFF
+        sep #$20
+        lda $7FE4B8
+        beq _CA19
+        dec a
+        sta $7FE4B8
+
+        _CA19
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/CA1C
+
+      rlUnknown96CA1C ; 96/CA1C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tya
+        and #$01FF
+        sta wR0
+        phb
+        jsl _CA2C
+        plb
+        .databank ?
+        bra _CA4E
+
+
+        _CA2C
+        lda wR0
+        cmp #$0048
+        bmi _CA35
+
+        _CA33
+        bra _CA33
+
+
+        _CA35
+        asl a
+        adc wR0
+        tax
+        lda $97BDD4,x
+        sta lR23
+        sep #$20
+        lda $97BDD6,x
+        sta lR23+2
+        pha
+        plb
+        .databank ?
+        rep #$20
+        jml [lR23]
+
+
+        _CA4E
+        pla
+        pha
+        jsr rsUnknown96A49B
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/CA56
+
+      rlUnknown96CA56 ; 96/CA56
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        sep #$20
+        lda $7FE4B7
+        ora #$01
+        sta $7FE4B7
+        rep #$20
+        tya
+        and #$01FF
+        sta wR0
+        phb
+        jsl _CA74
+        plb
+        .databank ?
+        bra _CA96
+
+
+        _CA74
+        lda wR0
+        cmp #$0048
+        bmi _CA7D
+
+        _CA7B
+        bra _CA7B
+
+
+        _CA7D
+        asl a
+        adc wR0
+        tax
+        lda $97BDD4,x
+        sta lR23
+        sep #$20
+        lda $97BDD6,x
+        sta lR23+2
+        pha
+        plb
+        .databank ?
+        rep #$20
+        jml [lR23]
+
+
+        _CA96
+        lda $7FE4B7
+        bit #$0001
+        bne _CAA4
+        pla
+        pha
+        jsr rsUnknown96A49B
+
+        _CAA4
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/CAA7
+
+      rlUnknown96CAA7 ; 96/CAA7
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        clc
+        jsl rlUnknown96CAB3
+        rtl
+
+        .databank 0
+
+        ; 96/CAAD
+
+      rlUnknown96CAAD ; 96/CAAD
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sec
+        jsl rlUnknown96CAB3
+        rtl
+
+        .databank 0
+
+        ; 96/CAB3
+
+      rlUnknown96CAB3 ; 96/CAB3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        bcs _CADA
+        lda $0D50,b
+        jsl rlGetCharacterPortraitData
+        ldy #$0000
+        ldx #$0000
+
+        _CAC4
+        lda [lR19],y
+        sta aBGPaletteBuffer.aPalette7,b,x
+        inc x
+        inc x
+        inc y
+        inc y
+        cpx #$0020
+        bcc _CAC4
+        lda #$35AD
+        sta $01FC,b
+        bra _CB07
+
+
+        _CADA
+        lda $7FE4D6
+        sta lR18
+        lda $7FE4D7
+        sta lR18+1
+        jsr rsUnknown96F7A8
+        jsl rlGetCharacterPortraitData
+        ldy #$0000
+        ldx #$0000
+
+        _CAF3
+        lda [lR19],y
+        sta aBGPaletteBuffer.aPalette7,b,x
+        inc x
+        inc x
+        inc y
+        inc y
+        cpx #$0020
+        bcc _CAF3
+        lda #$0000
+        sta $01FC,b
+
+        _CB07
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/CB0A
+
+      rlUnknown96CB0A ; 96/CB0A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta $7FED5C
+        sta $7FED64
+        sta $7FED6E
+        sta $7FED8A
+        sta $7FED5D
+        sta $7FED65
+        sta $7FED63
+        sta $7FED6B
+        lda #$0F
+        sta $7FED6C
+        lda #$70
+        sta $7FED6D
+        rep #$20
+        lda #$00FF
+        sta $7FE51B
+        rtl
+
+        .databank 0
+
+        ; 96/CB44
+
+    .endsection Unsorted96C9D9Section
 
 
     .section Unsorted96CB44Section
@@ -6285,6 +12326,85 @@
     .endsection Unsorted96D42CSection
 
 
+    .section Unsorted96D5DBSection
+
+      .al
+      .xl
+
+      rlUnknown96D5DB ; 96/D5DB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FED5C
+        and #$0003
+        cmp #$0003
+        bne _D657
+        ldx #$0000
+        lda $7FED6C
+        and #$00FF
+        sta $7FED7A,x
+        lda #$E51B
+        sta $7FED7B,x
+        inc x
+        inc x
+        inc x
+        lda $7FF5AA
+        and #$00FF
+        beq _D617
+        sta $7FED7A,x
+        lda #$E51B
+        sta $7FED7B,x
+        inc x
+        inc x
+        inc x
+
+        _D617
+        lda $7FF5AB
+        and #$00FF
+        beq _D63F
+        ora #$0080
+        sta $7FED7A,x
+        lda $7FED6E
+        bit #$0002
+        bne _D635
+        lda #$E51D
+        bra _D638
+
+
+        _D635
+        lda #$E6DD
+
+        _D638
+        sta $7FED7B,x
+        inc x
+        inc x
+        inc x
+
+        _D63F
+        lda #$0001
+        sta $7FED7A,x
+        lda #$E51B
+        sta $7FED7B,x
+        sep #$20
+        lda #$00
+        sta $7FED7D,x
+        rep #$20
+
+        _D657
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/D659
+
+    .endsection Unsorted96D5DBSection
+
+
     .section Unsorted96D659Section
 
       .al
@@ -6321,6 +12441,40 @@
         ; 96/D67B
 
     .endsection Unsorted96D659Section
+
+
+    .section Unsorted96D67BSection
+
+      .al
+      .xl
+
+      rlUnknown96D67B ; 96/D67B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        ldx #$0000
+
+        _D685
+        lda aBGPaletteBuffer,b,x
+        sta $7FFE00,x
+        inc x
+        inc x
+        cpx #$0200
+        bcc _D685
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/D695
+
+    .endsection Unsorted96D67BSection
 
 
     .section Unsorted96D695Section
@@ -6385,6 +12539,304 @@
     .endsection Unsorted96D695Section
 
 
+    .section Unsorted96D774Section
+
+      .al
+      .xl
+
+      rsUnknown96D774 ; 96/D774
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tyx
+        phx
+        lda $7FFDA1,x
+        and #$00FF
+        dec a
+        bne _D78B
+        lda $7FFDA0,x
+        and #$00FF
+        asl a
+        tax
+        bra _D7A3
+
+
+        _D78B
+        pha
+        lda $7FFDA0,x
+        and #$00FF
+        asl a
+        tax
+        ply
+
+        _D796
+        lda @l $000102,x
+        sta @l aBGPaletteBuffer,x
+        inc x
+        inc x
+        dec y
+        bne _D796
+
+        _D7A3
+        phx
+        lda #3,s
+        tax
+
+        _D7A7
+        lda $7FFD9C,x
+        sta lR18+1
+        lda $7FFD9E,x
+        sta lR18
+        ldy #$0000
+        lda [lR18],y
+        and #$00FF
+        cmp #$00FF
+        beq _D7CF
+        cmp #$00FE
+        beq _D7D6
+        bit #$0080
+        beq _D7E3
+        and #$007F
+        bra _D7E0
+
+
+        _D7CF
+        jsr rsUnknown96DB36
+        plx
+        plx
+        bra _D807
+
+
+        _D7D6
+        lda $7FFD9B,x
+        sta $7FFD9E,x
+        bra _D7A7
+
+
+        _D7E0
+        inc y
+        bra _D7E7
+
+
+        _D7E3
+        lda $7FFDA2,x
+
+        _D7E7
+        sep #$20
+        sta $7FFDA3,x
+        sta $7FFDA2,x
+        rep #$20
+        plx
+        lda [lR18],y
+        xba
+        sta aBGPaletteBuffer,b,x
+        inc y
+        inc y
+        plx
+        tya
+        clc
+        adc $7FFD9E,x
+        sta $7FFD9E,x
+
+        _D807
+        rts
+
+        .databank 0
+
+        ; 96/D808
+
+      rsUnknown96D808 ; 96/D808
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tyx
+        phx
+        lda $7FFDA1,x
+        and #$00FF
+        dec a
+        bne _D81F
+        lda $7FFDA0,x
+        and #$00FF
+        asl a
+        tax
+        bra _D83A
+
+
+        _D81F
+        pha
+        lda $7FFDA0,x
+        and #$00FF
+        clc
+        adc #1,s
+        asl a
+        tax
+        ply
+
+        _D82D
+        lda @l wJoy2RepeatTimer,x
+        sta @l aBGPaletteBuffer,x
+        dec x
+        dec x
+        dec y
+        bne _D82D
+
+        _D83A
+        phx
+        lda #3,s
+        tax
+
+        _D83E
+        lda $7FFD9C,x
+        sta lR18+1
+        lda $7FFD9E,x
+        sta lR18
+        ldy #$0000
+        lda [lR18],y
+        and #$00FF
+        cmp #$00FF
+        beq _D866
+        cmp #$00FE
+        beq _D86D
+        bit #$0080
+        beq _D87A
+        and #$007F
+        bra _D877
+
+
+        _D866
+        jsr rsUnknown96DB36
+        plx
+        plx
+        bra _D89E
+
+
+        _D86D
+        lda $7FFD9B,x
+        sta $7FFD9E,x
+        bra _D83E
+
+
+        _D877
+        inc y
+        bra _D87E
+
+
+        _D87A
+        lda $7FFDA2,x
+
+        _D87E
+        sep #$20
+        sta $7FFDA3,x
+        sta $7FFDA2,x
+        rep #$20
+        plx
+        lda [lR18],y
+        xba
+        sta aBGPaletteBuffer,b,x
+        inc y
+        inc y
+        plx
+        tya
+        clc
+        adc $7FFD9E,x
+        sta $7FFD9E,x
+
+        _D89E
+        rts
+
+        .databank 0
+
+        ; 96/D89F
+
+    .endsection Unsorted96D774Section
+
+
+    .section Unsorted96D912Section
+
+      .al
+      .xl
+
+      rsUnknown96D912 ; 96/D912
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tyx
+        sep #$20
+        lda $7FFDA2,x
+        sta $7FFDA3,x
+        rep #$20
+        lda $7FFDA1,x
+        and #$00FF
+        tay
+        lda $7FFDA0,x
+        and #$00FF
+        jsl rlUnknown959DAC
+        bcc _D937
+        jsr rsUnknown96DB36
+
+        _D937
+        rts
+
+        .databank 0
+
+        ; 96/D938
+
+    .endsection Unsorted96D912Section
+
+
+    .section Unsorted96D95ESection
+
+      .al
+      .xl
+
+      rsUnknown96D95E ; 96/D95E
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tyx
+        sep #$20
+        lda $7FFDA2,x
+        sta $7FFDA3,x
+        rep #$20
+        lda $7FFD9B,x
+        sta lR18
+        lda $7FFD9C,x
+        sta lR18+1
+        lda $7FFDA1,x
+        and #$00FF
+        tay
+        lda $7FFDA0,x
+        and #$00FF
+        jsl rlUnknown959F43
+        bcc _D98F
+        jsr rsUnknown96DB36
+
+        _D98F
+        rts
+
+        .databank 0
+
+        ; 96/D990
+
+    .endsection Unsorted96D95ESection
+
+
     .section Unsorted96DB20Section
 
       .al
@@ -6442,6 +12894,61 @@
         ; 96/DB58
 
     .endsection Unsorted96DB20Section
+
+
+    .section Unsorted96DB58Section
+
+      .al
+      .xl
+
+      rlUnknown96DB58 ; 96/DB58
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tya
+        and #$C000
+        cmp #$4000
+        bne _DB68
+        lda #$0001
+        bra _DB6B
+
+
+        _DB68
+        lda #$0000
+
+        _DB6B
+        sta wR0
+        lda #$9700
+        sta lR18+1
+        tya
+        and #$01FF
+        asl a
+        clc
+        adc #$A9A8
+        sta lR18
+        ldy #$0000
+        lda [lR18],y
+        clc
+        adc #$A9A8
+        sta lR18
+        jsl rlUnknown96DB94
+        lda #1,s
+        jsr rsUnknown96A477
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/DB94
+
+    .endsection Unsorted96DB58Section
 
 
     .section Unsorted96DB94Section
@@ -6659,6 +13166,42 @@
     .endsection Unsorted96DC7CSection
 
 
+    .section Unsorted96DD39Section
+
+      .al
+      .xl
+
+      rlUnknown96DD39 ; 96/DD39
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta $7FE475
+        sta $7FE475
+        sta $7FE475
+        rep #$20
+        lda #$0000
+        sta $7FE486
+        sta $7FE488
+        sta $7FE49B
+        sta $7FE49D
+        sta $7FE4B0
+        sta $7FE4B2
+        lda #$FFFF
+        sta $7FE471
+        rtl
+
+        .databank 0
+
+        ; 96/DD6E
+
+    .endsection Unsorted96DD39Section
+
+
     .section Unsorted96DD6ESection
 
       .al
@@ -6846,6 +13389,478 @@
     .endsection Unsorted96DD6ESection
 
 
+    .section Unsorted96DEC0Section
+
+      .al
+      .xl
+
+      rlUnknown96DEC0 ; 96/DEC0
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tya
+        sta wR0
+        and #$01FF
+        asl a
+        tax
+        lda #$9700
+        sta lR18+1
+        lda $97BEAC,x
+        clc
+        adc #$BEAC
+        sta lR18
+        jsl rlUnknown96DEE5
+        lda #1,s
+        jsr rsUnknown96A477
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/DEE5
+
+      rlUnknown96DEE5 ; 96/DEE5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldy #$0000
+        lda [lR18],y
+        inc y
+        and #$0003
+        cmp #$0003
+        bcs _DF5C
+        sta wR10
+        lda #$0015
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        ldx wR12
+        sep #$20
+        lda $7FE475,x
+        ora #$80
+        sta $7FE475,x
+        rep #$20
+        lda wR0
+        and #$C000
+        cmp #$4000
+        bne _DF24
+        sep #$20
+        lda $7FE475,x
+        ora #$20
+        bra _DF2C
+
+
+        _DF24
+        .al
+        sep #$20
+        lda $7FE475,x
+        and #$DF
+
+        _DF2C
+        sta $7FE475,x
+        rep #$20
+        lda [lR18],y
+        and #$00FF
+        sta wR0
+        sep #$20
+        lda $7FE475,x
+        and #$E0
+        ora wR0
+        sta $7FE475,x
+        rep #$20
+        txy
+        phx
+        phb
+        php
+        phk
+        plb
+        .databank $96
+        lda wR0
+        asl a
+        tax
+        jsr ($96DF60,x)
+        plp
+        plb
+        .databank $96
+        plx
+        clc
+        bra _DF5D
+
+
+        _DF5C
+        sec
+
+        _DF5D
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/DF60
+
+    .endsection Unsorted96DEC0Section
+
+
+    .section Unsorted96DFBBSection
+
+      .al
+      .xl
+
+      rsUnknown96DFBB ; 96/DFBB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $7FE486,x
+        sta $7FE488,x
+        rts
+
+        .databank 0
+
+        ; 96/DFC7
+
+    .endsection Unsorted96DFBBSection
+
+
+    .section Unsorted96E01FSection
+
+      .al
+      .xl
+
+      rsUnknown96E01F ; 96/E01F
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        tyx
+        jsr rsUnknown96DFBB
+        sep #$20
+        lda $7FE475,x
+        and #$7F
+        and #$BF
+        sta $7FE475,x
+        rep #$20
+        phx
+        lda #$0000
+        sta $7FE476,x
+        ldx $0AE9,b
+        lda $0AF9,b,x
+        clc
+        adc #$0100
+        clc
+        adc #$0100
+        plx
+        sta $7FE477,x
+        phx
+        lda #$0000
+        sta $7FE479,x
+        ldx $0AE9,b
+        jsl rlUnknown95B5FD
+        sec
+        sbc #$0008
+        pha
+        lda #$0064
+        sec
+        sbc #1,s
+        sta #1,s
+        pla
+        clc
+        adc #$0080
+        plx
+        sta $7FE47A,x
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/E077
+
+    .endsection Unsorted96E01FSection
+
+
+    .section Unsorted96E50ESection
+
+      .al
+      .xl
+
+      rsUnknown96E50E ; 96/E50E
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 96/E50F
+
+    .endsection Unsorted96E50ESection
+
+
+    .section Unsorted96E612Section
+
+      .al
+      .xl
+
+      rsUnknown96E612 ; 96/E612
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tyx
+        sep #$20
+        lda $7FE475,x
+        and #$BF
+        sta $7FE475,x
+        rep #$20
+        phx
+        ldx $0AEB,b
+        lda $0AF9,b,x
+        sta wR0
+        jsl rlUnknown95B5FD
+        sec
+        sbc #$0008
+        clc
+        adc $0AFE,b,x
+        and #$00FF
+        sta wR1
+        plx
+        ldy #$0002
+        lda [lR18],y
+        and #$00FF
+        jsl rlUnknown96E654
+        lda #$0000
+        sta $7FE47E,x
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/E654
+
+      rlUnknown96E654 ; 96/E654
+
+        ; Reads the stack above its return address, but in the emulator log every
+        ; caller continues right after the call: no inline arguments.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        and #$00FF
+        pha
+        lda wR0
+        clc
+        adc #$0100
+        clc
+        adc #$0100
+        sec
+        sbc $7FE477,x
+        bpl _E67A
+        eor #$FFFF
+        inc a
+        sta wR13
+        lda #1,s
+        xba
+        eor #$FFFF
+        inc a
+        bra _E67F
+
+
+        _E67A
+        sta wR13
+        lda #1,s
+        xba
+
+        _E67F
+        sta $7FE47C,x
+        lda #1,s
+        sta wR14
+        jsl rlUnsignedDivide16By16R13
+        lda wR13
+        sta $7FE480,x
+        sta wR14
+        lda wR1
+        and #$00FF
+        pha
+        lda #$0064
+        sec
+        sbc #1,s
+        sta #1,s
+        pla
+        clc
+        adc #$0080
+        sec
+        sbc $7FE47A,x
+        bpl _E6BB
+        and #$00FF
+        xba
+        sta wR13
+        jsl rlUnsignedDivide16By16R13
+        lda wR13
+        bra _E6CF
+
+
+        _E6BB
+        eor #$FFFF
+        inc a
+        and #$00FF
+        xba
+        sta wR13
+        jsl rlUnsignedDivide16By16R13
+        lda wR13
+        eor #$FFFF
+        inc a
+
+        _E6CF
+        sta $7FE47E,x
+        pla
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/E6D7
+
+    .endsection Unsorted96E612Section
+
+
+    .section Unsorted96E716Section
+
+      .al
+      .xl
+
+      rsUnknown96E716 ; 96/E716
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        tyx
+        jsl rlUnknown96E9B8
+        lda $7FE480,x
+        bne _E74A
+        sep #$20
+        lda $7FE475,x
+        and #$7F
+        sta $7FE475,x
+        rep #$20
+        lda $7FE475,x
+        bit #$0020
+        beq _E748
+        sep #$20
+        lda $7FE4B8
+        beq _E742
+        dec a
+
+        _E742
+        sta $7FE4B8
+        rep #$20
+
+        _E748
+        bra _E74F
+
+
+        _E74A
+        dec a
+        sta $7FE480,x
+
+        _E74F
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/E751
+
+      rsUnknown96E751 ; 96/E751
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        tyx
+        jsl rlUnknown96E9B8
+        lda $7FE477,x
+        sec
+        sbc $7FE198
+        sec
+        sbc #$0100
+        cmp #$00C0
+        bcc _E76E
+        cmp #$0240
+        bcc _E796
+
+        _E76E
+        sep #$20
+        lda $7FE475,x
+        and #$7F
+        sta $7FE475,x
+        rep #$20
+        lda $7FE475,x
+        bit #$0020
+        beq _E794
+        sep #$20
+        lda $7FE4B8
+        beq _E78E
+        dec a
+
+        _E78E
+        sta $7FE4B8
+        rep #$20
+
+        _E794
+        bra _E796
+
+
+        _E796
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/E798
+
+    .endsection Unsorted96E716Section
+
+
     .section Unsorted96E803Section
 
       .al
@@ -6987,6 +14002,333 @@
     .endsection Unsorted96E803Section
 
 
+    .section Unsorted96E9B8Section
+
+      .al
+      .xl
+
+      rlUnknown96E9B8 ; 96/E9B8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FE47C,x
+        bmi _E9DE
+        lda $7FE476,x
+        clc
+        adc $7FE47C,x
+        sta $7FE476,x
+        bcc _EA00
+        sep #$20
+        lda $7FE478,x
+        inc a
+        and #$03
+        sta $7FE478,x
+        rep #$20
+        bra _EA00
+
+
+        _E9DE
+        eor #$FFFF
+        inc a
+        pha
+        lda $7FE476,x
+        sec
+        sbc #1,s
+        sta $7FE476,x
+        pla
+        bcs _EA00
+        sep #$20
+        lda $7FE478,x
+        dec a
+        and #$03
+        sta $7FE478,x
+        rep #$20
+
+        _EA00
+        lda $7FE47E,x
+        cmp #$8000
+        bne _EA31
+        lda $7FE09E
+        bit #$0001
+        beq _EA79
+        lda $7FE479,x
+        sec
+        sbc #$0100
+        sta $7FE479,x
+        bcs _EA79
+        sep #$20
+        lda $7FE47B,x
+        dec a
+        and #$01
+        sta $7FE47B,x
+        rep #$20
+        bra _EA79
+
+
+        _EA31
+        lda $7FE47E,x
+        bmi _EA57
+        lda $7FE479,x
+        clc
+        adc $7FE47E,x
+        sta $7FE479,x
+        bcc _EA79
+        sep #$20
+        lda $7FE47B,x
+        inc a
+        and #$01
+        sta $7FE47B,x
+        rep #$20
+        bra _EA79
+
+
+        _EA57
+        eor #$FFFF
+        inc a
+        pha
+        lda $7FE479,x
+        sec
+        sbc #1,s
+        sta $7FE479,x
+        pla
+        bcs _EA79
+        sep #$20
+        lda $7FE47B,x
+        dec a
+        and #$01
+        sta $7FE47B,x
+        rep #$20
+
+        _EA79
+        rtl
+
+        .databank 0
+
+        ; 96/EA7A
+
+    .endsection Unsorted96E9B8Section
+
+
+    .section Unsorted96EA99Section
+
+      .al
+      .xl
+
+      rlUnknown96EA99 ; 96/EA99
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda #$9700
+        sta lR18+1
+        tya
+        and #$01FF
+        asl a
+        clc
+        adc #$C2A0
+        sta lR18
+        ldy #$0000
+        lda [lR18],y
+        clc
+        adc #$C2A0
+        sta lR18
+        ldy #$0000
+        lda [lR18],y
+        bit #$0001
+        bne _EAC5
+        ldx $0AE9,b
+        bra _EAC8
+
+
+        _EAC5
+        ldx $0AEB,b
+
+        _EAC8
+        lda $0AF9,b,x
+        sta $7FE1A4
+        ldy #$0001
+        lda [lR18],y
+        and #$00FF
+        jsl rlUnknown95D6EC
+        bcs _EAFC
+        lda #1,s
+        and #$C000
+        cmp #$4000
+        bne _EAF5
+        sep #$20
+        lda $7FE1A3
+        ora #$01
+        sta $7FE1A3
+        rep #$20
+
+        _EAF5
+        lda #1,s
+        jsr rsUnknown96A477
+        bra _EAFF
+
+
+        _EAFC
+        jsr rsUnknown96A49B
+
+        _EAFF
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/EB02
+
+      rlUnknown96EB02 ; 96/EB02
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $7FEC70
+        sta $7FEC72
+        sta $7FEC74
+        sta $7FEC76
+        sta $7FEC78
+        sta $7FEC7A
+        rtl
+
+        .databank 0
+
+        ; 96/EB1E
+
+      rlUnknown96EB1E ; 96/EB1E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        pha
+        phx
+        sep #$20
+        lda #$7F
+        pha
+        plb
+        .databank $7F
+        rep #$20
+        lda @l $7FEC70
+        beq _EB43
+        tax
+        lda @l $7FEC7C
+        sta @l $7FEC94,x
+        inc x
+        inc x
+        inc x
+        lda @l $7FEC7C
+        sta @l $7FEC94,x
+
+        _EB43
+        lda @l $7FEC72
+        beq _EB5D
+        tax
+        lda @l $7FEC7E
+        sta @l $7FECA4,x
+        inc x
+        inc x
+        inc x
+        lda @l $7FEC7E
+        sta @l $7FECA4,x
+
+        _EB5D
+        lda @l $7FEC74
+        beq _EB77
+        tax
+        lda @l $7FEC80
+        sta @l $7FECB4,x
+        inc x
+        inc x
+        inc x
+        lda @l $7FEC80
+        sta @l $7FECB4,x
+
+        _EB77
+        lda @l $7FEC76
+        beq _EB91
+        tax
+        lda @l $7FEC82
+        sta @l $7FECC4,x
+        inc x
+        inc x
+        inc x
+        lda @l $7FEC82
+        sta @l $7FECC4,x
+
+        _EB91
+        lda @l $7FEC78
+        beq _EBAB
+        tax
+        lda @l $7FEC84
+        sta @l $7FECD4,x
+        inc x
+        inc x
+        inc x
+        lda @l $7FEC84
+        sta @l $7FECD4,x
+
+        _EBAB
+        lda @l $7FEC7A
+        beq _EBC5
+        tax
+        lda @l $7FEC86
+        sta @l $7FECE4,x
+        inc x
+        inc x
+        inc x
+        lda @l $7FEC86
+        sta @l $7FECE4,x
+
+        _EBC5
+        plx
+        pla
+        plb
+        .databank $7F
+        rtl
+
+        .databank 0
+
+        ; 96/EBC9
+
+      rlUnknown96EBC9 ; 96/EBC9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $7FF630
+        and #$7F
+        sta $7FF630
+        rep #$20
+        lda #$0000
+        sta $7FE19F
+        sta $7FE1A1
+        rtl
+
+        .databank 0
+
+        ; 96/EBE3
+
+    .endsection Unsorted96EA99Section
+
+
     .section Unsorted96EBE3Section
 
       .al
@@ -7087,6 +14429,172 @@
         ; 96/ECAB
 
     .endsection Unsorted96EC91Section
+
+
+    .section Unsorted96ECABSection
+
+      .al
+      .xl
+
+      rlUnknown96ECAB ; 96/ECAB
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        tya
+        and #$01FF
+        jsl rlUnknown96ECBB
+        lda #1,s
+        jsr rsUnknown96A477
+        ply
+        rtl
+
+        .databank 0
+
+        ; 96/ECBB
+
+      rlUnknown96ECBB ; 96/ECBB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        and #$00FF
+        sta wR0
+        lda wR0
+        asl a
+        tax
+        jsr ($96ECCC,x)
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/ECCC
+
+    .endsection Unsorted96ECABSection
+
+
+    .section Unsorted96EDC0Section
+
+      .al
+      .xl
+
+      rlUnknown96EDC0 ; 96/EDC0
+
+        ; Reads the stack above its return address, but in the emulator log every
+        ; caller continues right after the call: no inline arguments.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        pha
+        and #$001F
+        pha
+        lda #3,s
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta #3,s
+        and #$001F
+        clc
+        adc #1,s
+        sta #1,s
+        lda #3,s
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        and #$003E
+        clc
+        adc #1,s
+        lsr a
+        and #$FFFE
+        tax
+        lda $96EDF2,x
+        sta #3,s
+        pla
+        pla
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/EDF2
+
+    .endsection Unsorted96EDC0Section
+
+
+    .section Unsorted96EE32Section
+
+      .al
+      .xl
+
+      rsUnknown96EE32 ; 96/EE32
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+
+        _EE36
+        lda $0282,b,x
+        lsr a
+        and #$3DEF
+        sta $7FF636,x
+        inc x
+        inc x
+        cpx #$007E
+        bcc _EE36
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/EE4A
+
+    .endsection Unsorted96EE32Section
+
+
+    .section Unsorted96EE8ASection
+
+      .al
+      .xl
+
+      rlUnknown96EE8A ; 96/EE8A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta $7FEC67
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/EE95
+
+    .endsection Unsorted96EE8ASection
 
 
     .section Unsorted96EE95Section
@@ -7251,6 +14759,329 @@
         ; 96/F315
 
     .endsection Unsorted96F28DSection
+
+
+    .section Unsorted96F315Section
+
+      .al
+      .xl
+
+      rlUnknown96F315 ; 96/F315
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0AE4,b
+        bit #$0080
+        beq _F32A
+        jsl rlUnknown96F341
+        bcs _F32A
+        lda #$0034
+        jsl rlUnknown96A4B2
+
+        _F32A
+        rtl
+
+        .databank 0
+
+        ; 96/F32B
+
+      rlUnknown96F32B ; 96/F32B
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0AE4,b
+        bit #$0080
+        beq _F340
+        jsl rlUnknown96F341
+        bcs _F340
+        lda #$0031
+        jsl rlUnknown96A4B2
+
+        _F340
+        rtl
+
+        .databank 0
+
+        ; 96/F341
+
+      rlUnknown96F341 ; 96/F341
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0AE9,b
+        cmp #$0000
+        bne _F354
+        lda $0D5E,b
+        cmp #$01C6
+        bne _F354
+        sec
+        bra _F355
+
+
+        _F354
+        clc
+
+        _F355
+        rtl
+
+        .databank 0
+
+        ; 96/F356
+
+      rlUnknown96F356 ; 96/F356
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta $7FFC54
+        sta $7FFC55
+        lda #$00
+        sta bBufferTMW
+        sta bBufferTSW
+        lda bBufferTM
+        ora #$12
+        sta bBufferTM
+        lda bBufferTS
+        and #$FF
+        ora #$02
+        sta bBufferTS
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$00
+        sta bBufferCGADSUB
+        rep #$20
+        lda #$9600
+        sta $7FED00
+        lda #$F38F
+        sta $7FECFF
+        rtl
+
+        .databank 0
+
+        ; 96/F38F
+
+      rlUnknown96F38F ; 96/F38F
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FFC55
+        and #$00FF
+        beq _F3A4
+        sep #$20
+        dec a
+        sta $7FFC55
+        rep #$20
+        bra _F3E0
+
+
+        _F3A4
+        lda $7FFC54
+        and #$00FF
+        tax
+        lda $99892A,x
+        and #$00FF
+        cmp #$00FF
+        bne _F3BE
+        jsl rlUnknown96C9FE
+        bra _F3E0
+
+
+        _F3BE
+        pha
+        sep #$20
+        and #$7F
+        sta $7FFC55
+        lda $7FFC54
+        inc a
+        sta $7FFC54
+        rep #$20
+        pla
+        bit #$0080
+        bne _F3DD
+        jsr rsUnknown96F3E2
+        bra _F3E0
+
+
+        _F3DD
+        jsr rsUnknown96F3FE
+
+        _F3E0
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/F3E2
+
+      rsUnknown96F3E2 ; 96/F3E2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+
+        _F3E6
+        lda $7FFF82,x
+        sta $0282,b,x
+        inc x
+        inc x
+        cpx #$007E
+        bcc _F3E6
+        sep #$20
+        lda #$00
+        sta bBufferCGADSUB
+        rep #$20
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/F3FE
+
+      rsUnknown96F3FE ; 96/F3FE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+
+        _F402
+        lda $7FF636,x
+        sta $0282,b,x
+        inc x
+        inc x
+        cpx #$007E
+        bcc _F402
+        sep #$20
+        lda #$10
+        sta bBufferCGADSUB
+        rep #$20
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/F41A
+
+    .endsection Unsorted96F315Section
+
+
+    .section Unsorted96F558Section
+
+      .al
+      .xl
+
+      rlUnknown96F558 ; 96/F558
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7E4EA9
+        and #$00FF
+        cmp #$0002
+        bne _F56B
+        lda #$0033
+        jsl rlUnknown96A4B2
+
+        _F56B
+        rtl
+
+        .databank 0
+
+        ; 96/F56C
+
+      rlUnknown96F56C ; 96/F56C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7E4EA9
+        and #$00FF
+        cmp #$0002
+        bne _F57F
+        lda #$0035
+        jsl rlUnknown96A4B2
+
+        _F57F
+        rtl
+
+        .databank 0
+
+        ; 96/F580
+
+    .endsection Unsorted96F558Section
+
+
+    .section Unsorted96F676Section
+
+      .al
+      .xl
+
+      rlUnknown96F676 ; 96/F676
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7E4ECB
+        beq _F695
+        ldx #$0000
+
+        _F680
+        lda $E000BE,x
+        sta $0274,b,x
+        inc x
+        inc x
+        cpx #$000A
+        bcc _F680
+        lda #$003B
+        jsl rlUnknown96A4B2
+
+        _F695
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/F697
+
+    .endsection Unsorted96F676Section
 
 
     .section Unsorted96F697Section
@@ -7487,6 +15318,59 @@
         ; 96/F7A8
 
     .endsection Unsorted96F697Section
+
+
+    .section Unsorted96F7A8Section
+
+      .al
+      .xl
+
+      rsUnknown96F7A8 ; 96/F7A8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7E4EA9
+        and #$00FF
+        cmp #$00FF
+        beq _F7BA
+        jsl rlUnknown9198B3
+        bra _F7BE
+
+
+        _F7BA
+        jsl rlUnknown9198D6
+
+        _F7BE
+        rts
+
+        .databank 0
+
+        ; 96/F7BF
+
+      rlUnknown96F7BF ; 96/F7BF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta $7FFC5D
+        lda #$FF
+        sta $7FFC5E
+        sta $7FFC5F
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/F7D4
+
+    .endsection Unsorted96F7A8Section
 
 
     .section Unsorted96F7D4Section
@@ -7877,3 +15761,88 @@
         ; 96/FADA
 
     .endsection Unsorted96FAB6Section
+
+
+    .section Unsorted96FBF9Section
+
+      .al
+      .xl
+
+      rlUnknown96FBF9 ; 96/FBF9
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown96A4FC
+        jsl rlUnknown96BD74
+        jsl rlUnknown96CB0A
+        jsl rlUnknown96DD39
+        jsl rlUnknown96EE8A
+        jsl rlUnknown96EBC9
+        jsl rlUnknown96C99E
+        lda #$0003
+        jsl rlHDMAEngineFreeEntryByIndex
+        lda #$0005
+        jsl rlHDMAEngineFreeEntryByIndex
+        lda #$0006
+        jsl rlHDMAEngineFreeEntryByIndex
+        ldx #$0014
+
+        _FC2D
+        sep #$20
+        lda #$80
+        sta $7FFD9A,x
+        rep #$20
+        txa
+        clc
+        adc #$000A
+        tax
+        cpx #$0064
+        bcc _FC2D
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        rtl
+
+        .databank 0
+
+        ; 96/FC49
+
+    .endsection Unsorted96FBF9Section
+
+
+    .section Unsorted96FD54Section
+
+      .al
+      .xl
+
+      rlUnknown96FD54 ; 96/FD54
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+
+        _FD58
+        lda $7FC3F0,x
+        sta $01F2,b,x
+        lda $7FC1F0,x
+        sta $01D2,b,x
+        inc x
+        inc x
+        cpx #$000E
+        bcc _FD58
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/FD6F
+
+    .endsection Unsorted96FD54Section

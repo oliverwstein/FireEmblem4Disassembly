@@ -706,6 +706,135 @@
     .endsection Unsorted898105Section
 
 
+    .section Unsorted898536Section
+
+      .al
+      .xl
+
+      rsUnknown898536 ; 89/8536
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown8989AD
+        jsr rsUnknown898AF5
+        lda bDecompressionArrayFlag,b
+        beq _854B
+        jsr rsUnknown898B3B
+        jsr rsUnknown898A7E
+        jsr rsUnknown8992AD
+        rts
+
+
+        _854B
+        lda $7F8191
+        cmp #$0005
+        beq _856A
+        cmp #$0004
+        beq _85C6
+        cmp #$0003
+        beq _85B0
+        cmp #$0002
+        beq _859A
+        cmp #$0001
+        beq _8584
+        bra _856E
+
+
+        _856A
+        jml _85E4
+
+
+        _856E
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E9B88, $0800, $80, $0000
+
+        lda #$0001
+        sta $7F8191
+        bra _85DA
+
+
+        _8584
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7EA388, $0800, $80, $0800
+
+        lda #$0002
+        sta $7F8191
+        bra _85DA
+
+
+        _859A
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7EAB88, $0800, $80, $1000
+
+        lda #$0003
+        sta $7F8191
+        bra _85DA
+
+
+        _85B0
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7EB388, $0800, $80, $1800
+
+        lda #$0004
+        sta $7F8191
+        bra _85DA
+
+
+        _85C6
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7EBB88, $0600, $80, $2000
+
+        lda #$0005
+        sta $7F8191
+
+        _85DA
+        jsr rsUnknown898B3B
+        jsr rsUnknown898A7E
+        jsr rsUnknown8992AD
+        rts
+
+
+        _85E4
+        ldx #$0020
+
+        _85E7
+        lda $DE2C9E,x
+        sta $02DE,b,x
+        dec x
+        dec x
+        bne _85E7
+        jsr rsUnknown898D55
+        jsr rsUnknown8989AD
+        jsr rsUnknown898AF5
+        lda #$0002
+        sta wGameStateStep,b
+        jsl rlUnknown899200
+        lda #$0110
+        sta wBufferBG3VOFS
+        lda #$00AC
+        sta wBufferBG1VOFS
+        lda wBufferBG2VOFS
+        sta $7F8189
+        lda #$0110
+        sta wBufferBG2VOFS
+        rts
+
+        .databank 0
+
+        ; 89/861B
+
+    .endsection Unsorted898536Section
+
+
     .section Unsorted89861BSection
 
       .al
@@ -871,6 +1000,34 @@
         ; 89/8734
 
     .endsection Unsorted89861BSection
+
+
+    .section Unsorted898755Section
+
+      .al
+      .xl
+
+      rsUnknown898755 ; 89/8755
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta $0D77,b
+        lda #$B122
+        sta wMainLoopPointer
+        lda #$00E8
+        jsl rlUnknown808F6F
+        rts
+
+        .databank 0
+
+        ; 89/8768
+
+    .endsection Unsorted898755Section
 
 
     .section Unsorted89876DSection
@@ -2090,6 +2247,159 @@
     .endsection Table899081Section
 
 
+    .section Unsorted8990BDSection
+
+      .al
+      .xl
+
+      rlUnknown8990BD ; 89/90BD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+
+        _90C0
+        sta wR0
+        jsl rlCheckForSpecifiedHolyBlood
+        tay
+        lda wR0
+        asl a
+        tax
+        tya
+        sta $7F81D3,x
+        lda wR0
+        inc a
+        cmp #$000D
+        bne _90C0
+        rtl
+
+        .databank 0
+
+        ; 89/90D9
+
+    .endsection Unsorted8990BDSection
+
+
+    .section Unsorted89914BSection
+
+      .al
+      .xl
+
+      rlUnknown89914B ; 89/914B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$57
+        sta $08C8,b
+        rep #$20
+        lda #$FFFF
+        sta $08C9,b
+        sep #$20
+        lda #$01
+        sta $08CB,b
+        rep #$20
+        lda wBufferBG3VOFS
+        sta $08CC,b
+        sep #$20
+        lda #$00
+        sta $08CE,b
+        rep #$20
+        lda #$0000
+        sta $08CF,b
+        rtl
+
+        .databank 0
+
+        ; 89/9178
+
+    .endsection Unsorted89914BSection
+
+
+    .section Unsorted899185Section
+
+      .al
+      .xl
+
+      rlUnknown899185 ; 89/9185
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$57
+        sta $7FB160
+        rep #$20
+        lda #$FFFF
+        sta $7FB161
+        sep #$20
+        lda #$01
+        sta $7FB163
+        rep #$20
+        lda wBufferBG1VOFS
+        dec a
+        sta $7FB164
+        sep #$20
+        lda #$00
+        sta $7FB166
+        rep #$20
+        lda #$0000
+        sta $7FB167
+        rtl
+
+        .databank 0
+
+        ; 89/91B9
+
+    .endsection Unsorted899185Section
+
+
+    .section Unsorted8991C4Section
+
+      .al
+      .xl
+
+      rlUnknown8991C4 ; 89/91C4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta wGameStateStep,b
+        jsl rlUnknown899200
+        stz wGameStateStep,b
+        rtl
+
+        .databank 0
+
+        ; 89/91D2
+
+      rlUnknown8991D2 ; 89/91D2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 89/91D3
+
+    .endsection Unsorted8991C4Section
+
+
     .section Unsorted899200Section
 
       .al
@@ -2487,6 +2797,225 @@
         ; 89/9509
 
     .endsection Unsorted8994B8Section
+
+
+    .section Unsorted899510Section
+
+      .al
+      .xl
+
+      rlUnknown899510 ; 89/9510
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        jsl rlGetSelectedUnitNamePointer
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0102
+        jsl rlDrawMenuTextLine
+        jsl rlGetSelectedUnitClassNamePointer
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0304
+        jsl rlDrawMenuTextLine
+        jsl rlGetSelectedUnitLevel
+        ldx #$3920
+        stx wR5
+        ldx #$0002
+        stx wR6
+        ldx #$014A
+        jsl rlDrawMenuTextNumber
+        lda $7F8193
+        bne _9570
+        jsl rlGetSelectedUnitExperience
+        ldx #$3920
+        stx wR5
+        ldx #$0002
+        stx wR6
+        ldx #$0150
+        jsl rlDrawMenuTextNumber
+
+        _9570
+        jsl rlGetSelectedUnitCurrentHP
+        ldx #$3920
+        stx wR5
+        ldx #$0002
+        stx wR6
+        ldx #$01CA
+        jsl rlDrawMenuTextNumber
+        jsl rlGetSelectedUnitMaxHP
+        ldx #$3920
+        stx wR5
+        ldx #$0002
+        stx wR6
+        ldx #$01D0
+        jsl rlDrawMenuTextNumber
+        jsl rlGetFirstEquippableWeaponInInventory
+        lda wCurrentItemDataROMPointer,b
+        bne _95A7
+        jml _9660
+
+
+        _95A7
+        lda #$0000
+        sta wRoutineVariable1,b
+        jsl rlGetFirstWeaponBattleMight
+        cmp #$00FF
+        bcs _95C9
+        ldx #$3920
+        stx wR5
+        ldx #$0002
+        stx wR6
+        ldx #$0076
+        jsl rlDrawMenuTextNumber
+        bra _95E0
+
+
+        _95C9
+        lda #$3800
+        sta aCurrentTilemapInfo,b
+        lda #$8900
+        sta lR18+1
+        lda #$9703
+        sta lR18
+        ldx #$011B
+        jsl rlDrawMenuTextLine
+
+        _95E0
+        jsl rlUnknown84FE98
+        ldx #$3920
+        stx wR5
+        ldx #$0003
+        stx wR6
+        ldx #$00F4
+        jsl rlDrawMenuTextNumber
+        lda wSelectedInventorySlot,b
+        sta $7F81AF
+        jsl rlGetFirstEquippableWeaponInInventory
+        sta wSelectedInventorySlot,b
+        jsl rlGetSelectedItemRange
+        lda wR11
+        ldx #$3920
+        stx wR5
+        ldx #$0002
+        stx wR6
+        ldx #$0176
+        jsl rlDrawMenuTextNumber
+        sta wR11
+        lda $7F81AF
+        sta wSelectedInventorySlot,b
+        lda #$001B
+        sec
+        sbc wR11
+        asl a
+        clc
+        adc #$0140
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0001
+        sta wR6
+        lda wR10
+        jsl rlDrawMenuTextNumber
+        lda #$001C
+        sec
+        sbc wR11
+        asl a
+        clc
+        adc #$0140
+        tax
+        lda #$3800
+        sta wR1
+        lda #$02A0
+        sta wR2
+        lda #$0001
+        sta wR0
+        jsl rlUnknown89BECC
+        bra _968B
+
+
+        _9660
+        lda #$3800
+        sta aCurrentTilemapInfo,b
+        lda #$8900
+        sta lR18+1
+        lda #$9703
+        sta lR18
+        ldx #$011B
+        jsl rlDrawMenuTextLine
+        ldx #$031B
+        jsl rlDrawMenuTextLine
+        ldx #$051B
+        jsl rlDrawMenuTextLine
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+
+        _968B
+        lda #$FFFF
+        jsl rlUnknown84FEA1
+        cmp #$0000
+        bpl _96DA
+        eor #$FFFF
+        inc a
+        ldx #$3920
+        stx wR5
+        ldx #$0003
+        stx wR6
+        ldx #$01F4
+        jsl rlDrawMenuTextNumber
+        sta $7F83F5
+        lda #$001C
+        sec
+        sbc $7F83F5
+        sta $7F83F5
+        lda #$8900
+        sta lR18+1
+        lda #$9709
+        sta lR18
+        lda #$0700
+        ora $7F83F5
+        tax
+        lda #$3800
+        sta aCurrentTilemapInfo,b
+        jsl rlDrawMenuTextLine
+        bra _96EB
+
+
+        _96DA
+        ldx #$3920
+        stx wR5
+        ldx #$0003
+        stx wR6
+        ldx #$01F4
+        jsl rlDrawMenuTextNumber
+
+        _96EB
+        lda $7F8193
+        beq _9702
+        lda #$8900
+        sta lR18+1
+        lda #$9703
+        sta lR18
+        ldx #$0508
+        jsl rlDrawMenuTextLine
+
+        _9702
+        rtl
+
+        .databank 0
+
+        ; 89/9703
+
+    .endsection Unsorted899510Section
 
 
     .section Unsorted89970DSection
@@ -3013,6 +3542,83 @@
         ; 89/9B8F
 
     .endsection Unsorted8998E1Section
+
+
+    .section Unsorted899BA5Section
+
+      .al
+      .xl
+
+      rlUnknown899BA5 ; 89/9BA5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2400
+        sta aCurrentTilemapInfo,b
+        lda #$2400
+        sta wR1
+        lda #$020C
+        sta wR2
+        lda #$0002
+        sta wR0
+        ldx #$0144
+        jsl rlUnknown89BECC
+        lda #$8900
+        sta lR18+1
+        lda #$9C44
+        sta lR18
+        ldx #$0507
+        jsl rlDrawMenuTextLine
+        lda #$2400
+        sta wR1
+        lda #$0220
+        sta wR2
+        lda #$0002
+        sta wR0
+        ldx #$01C4
+        jsl rlUnknown89BECC
+        lda #$8900
+        sta lR18+1
+        lda #$9C4E
+        sta lR18
+        ldx #$0707
+        jsl rlDrawMenuTextLine
+        lda #$3400
+        sta aCurrentTilemapInfo,b
+        lda #$8900
+        sta lR18+1
+        lda #$9C52
+        sta lR18
+        ldx #$0114
+        jsl rlDrawMenuTextLine
+        lda #$8900
+        sta lR18+1
+        lda #$9C5C
+        sta lR18
+        ldx #$0313
+        jsl rlDrawMenuTextLine
+        lda #$8900
+        sta lR18+1
+        lda #$9C68
+        sta lR18
+        ldx #$0514
+        jsl rlDrawMenuTextLine
+        lda #$8900
+        sta lR18+1
+        lda #$9C72
+        sta lR18
+        ldx #$0714
+        jsl rlDrawMenuTextLine
+        rtl
+
+        .databank 0
+
+        ; 89/9C44
+
+    .endsection Unsorted899BA5Section
 
 
     .section Unsorted899C7CSection
@@ -3567,6 +4173,38 @@
     .endsection Unsorted89A085Section
 
 
+    .section Unsorted89A138Section
+
+      .al
+      .xl
+
+      rlUnknown89A138 ; 89/A138
+
+        ; Runs on into built code at the end.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8195
+        cmp #$002B
+        bne _A14C
+        lda $7F8193
+        beq _A14C
+        lda #$02B4
+        bra rlUnknown89A150
+
+
+        _A14C
+        lda $7F8195
+
+        .databank 0
+
+        ; 89/A150
+
+    .endsection Unsorted89A138Section
+
+
     .section Unsorted89A150Section
 
       .al
@@ -3809,6 +4447,64 @@
         ; 89/A376
 
     .endsection Unsorted89A2EDSection
+
+
+    .section Unsorted89A376Section
+
+      .al
+      .xl
+
+      rlUnknown89A376 ; 89/A376
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wR13
+        jsl rlUnknown87A415
+        lda $7E2000
+        beq _A3B9
+        lda #$0000
+
+        _A385
+        sta wR15
+        tax
+        lda $7E2002,x
+        and #$00FF
+        sta wR14
+        beq _A3B1
+        lda wR15
+        asl a
+        tax
+        lda $8992FE,x
+        bmi _A3B1
+        sta wR14
+        lda wR13
+        asl a
+        tax
+        lda wR15
+        sta $7F81B3,x
+        lda wR14
+        sta $7F81C1,x
+        inc wR13
+
+        _A3B1
+        lda wR15
+        inc a
+        cmp #$001F
+        bne _A385
+
+        _A3B9
+        lda wR13
+        sta $7F81B1
+        rtl
+
+        .databank 0
+
+        ; 89/A3C0
+
+    .endsection Unsorted89A376Section
 
 
     .section Unsorted89A3C0Section
@@ -4901,6 +5597,34 @@
         ; 89/B79D
 
     .endsection Unsorted89B400Section
+
+
+    .section Unsorted89B856Section
+
+      .al
+      .xl
+
+      rsUnknown89B856 ; 89/B856
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta $0D77,b
+        lda #$B122
+        sta wMainLoopPointer
+        lda #$00E8
+        jsl rlUnknown808F6F
+        rts
+
+        .databank 0
+
+        ; 89/B869
+
+    .endsection Unsorted89B856Section
 
 
     .section Unsorted89B883Section
@@ -7032,6 +7756,28 @@
     .endsection Unsorted89EB5ESection
 
 
+    .section Unsorted89ECC6Section
+
+      .al
+      .xl
+
+      rsUnknown89ECC6 ; 89/ECC6
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 89/ECC7
+
+    .endsection Unsorted89ECC6Section
+
+
     .section Unsorted89ECC7Section
 
       .al
@@ -7175,6 +7921,42 @@
         ; 89/EE0E
 
     .endsection Unsorted89EDFDSection
+
+
+    .section Unsorted89EE32Section
+
+      .al
+      .xl
+
+      rsUnknown89EE32 ; 89/EE32
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8900
+        sta lR18+1
+        lda #$F897
+        sta lR18
+        ldx #$141C
+        lda $7F842C
+        bne _EE4B
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _EE4B
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/EE50
+
+    .endsection Unsorted89EE32Section
 
 
     .section Unsorted89F065Section

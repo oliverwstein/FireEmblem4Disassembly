@@ -320,6 +320,71 @@
     .endsection Unsorted8081B6Section
 
 
+    .section Unsorted8081FDSection
+
+      .al
+      .xl
+
+      rlUnknown8081FD ; 80/81FD
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .as
+        .xs
+        .autsiz
+        .databank ?
+
+        rep #$30
+        jml _8203
+
+
+        _8203
+        phb
+        phd
+        pha
+        phx
+        phy
+        phk
+        plb
+        .databank $80
+        lda #$0000
+        tcd
+        lda $4211,b
+        bit #$0080
+        beq _821C
+        pea #<>_821C - 1
+        jmp (wIRQPointer)
+
+
+        _821C
+        ply
+        plx
+        pla
+        pld
+        plb
+        .databank $80
+        rti
+
+        .databank 0
+
+        ; 80/8222
+
+      rsUnknown808222 ; 80/8222
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 80/8223
+
+    .endsection Unsorted8081FDSection
+
+
     .section Unsorted80823FSection
 
       .al
@@ -1199,6 +1264,175 @@
         ; 80/8D56
 
     .endsection Unsorted808C50Section
+
+
+    .section Unsorted808D56Section
+
+      .al
+      .xl
+
+      rlReset ; 80/8D56
+
+        ; The reset vector ($00/FFFC) points here. Switches the CPU to native mode
+        ; and jumps on into rlUnknown808D6C in bank $80, checking on the way that
+        ; the reset vector still points at this routine. Part of the code that the
+        ; checksums in include/Checksums.h cover.
+        .as
+        .xs
+        .autsiz
+        .databank ?
+
+        sei
+        clc
+        xce
+        bcc rlUnknown808D6C
+        rep #$30
+        tdc
+        bne rlUnknown808D6C
+        ldx #<>rlReset
+        cpx $FFFC,b
+        bne rlUnknown808D6C
+        jml rlUnknown808D6C
+
+        .databank 0
+
+        ; 80/8D6C
+
+    .endsection Unsorted808D56Section
+
+
+    .section Unsorted808D6CSection
+
+      .al
+      .xl
+
+      rlUnknown808D6C ; 80/8D6C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Runs on into built code at the end.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rep #$30
+        tsx
+        txy
+        ldx #$1FF7
+        txs
+        sep #$20
+        lda #$01
+        sta $420D,b
+        lda #$80
+        sta $2100,b
+        stz $4200,b
+        stz $420B,b
+        stz $420C,b
+        rep #$30
+        lda $1FFC,b
+        cmp #$4C45
+        bne _8D9B
+        lda $1FFE,b
+        cmp #$304D
+        beq _8DC3
+
+        _8D9B
+        dec y
+        lda $0000,b,y
+        inc a
+        cmp $FFFC,b
+        beq _8DCA
+        ldx #$0000
+
+        _8DA8
+        lda $0000,b,x
+        and #$00FF
+        cmp #$006C
+        beq _8DD2
+        cmp #$004C
+        beq _8DE9
+        cmp #$0060
+        beq _8DF3
+
+        _8DBD
+        inc x
+        cpx #$1FFE
+        bne _8DA8
+
+        _8DC3
+        phk
+        phk
+        pla
+        beq _8DCA
+        bra _8E13
+
+
+        _8DCA
+        lda #$0000
+        tcd
+        jsl $87803E
+
+        _8DD2
+        ldy $0001,b,x
+        cpy #$FFFC
+        beq _8DCA
+        cpy #$1FFF
+        bcs _8DBD
+        lda $0000,b,y
+        cmp #$8D56
+        beq _8DCA
+        bra _8DBD
+
+
+        _8DE9
+        ldy $0001,b,x
+        cpy #$8D56
+        beq _8DCA
+        bra _8DBD
+
+
+        _8DF3
+        txa
+        tcd
+        ldy #$0000
+        lda #$6160
+
+        _8DFB
+        cmp $0000,b,x
+        bne _8E0F
+        clc
+        adc #$0202
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0020
+        bne _8DFB
+        bra _8DCA
+
+
+        _8E0F
+        tdc
+        tax
+        bra _8DBD
+
+
+        _8E13
+        lda #$0000
+        tcd
+        jsl rlUnknown878074
+        sta $1FF8,b
+        sta $1FFA,b
+        lda #$4C45
+        sta $1FFC,b
+        lda #$304D
+        sta $1FFE,b
+
+        .databank 0
+
+        ; 80/8E2D
+
+    .endsection Unsorted808D6CSection
 
 
     .section Unsorted808E2DSection
@@ -2201,6 +2435,64 @@
     .endsection Unsorted809124Section
 
 
+    .section Unsorted809382Section
+
+      .al
+      .xl
+
+      rsUnknown809382 ; 80/9382
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .as
+        .xs
+        .autsiz
+        .databank ?
+
+        rep #$20
+        lda [lR39]
+        sta $04F2,b
+        inc lR39
+        inc lR39
+        stz $04F0,b
+        rts
+
+        .databank 0
+
+        ; 80/9391
+
+    .endsection Unsorted809382Section
+
+
+    .section Unsorted8093B0Section
+
+      .al
+      .xs
+
+      rsUnknown8093B0 ; 80/93B0
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .as
+        .xs
+        .autsiz
+        .databank ?
+
+        rep #$20
+        stz $0502,b
+        stz $0504,b
+        sep #$20
+        stz $04FE,b
+        stz $04FF,b
+        rep #$20
+        stz $04F0,b
+        rts
+
+        .databank 0
+
+        ; 80/93C6
+
+    .endsection Unsorted8093B0Section
+
+
     .section Unsorted8093C6Section
 
       .al
@@ -2401,6 +2693,130 @@
     .endsection Unsorted8093C6Section
 
 
+    .section Unsorted8094E2Section
+
+      .al
+      .xs
+
+      rsUnknown8094E2 ; 80/94E2
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .as
+        .xs
+        .autsiz
+        .databank ?
+
+        rep #$30
+        lda wBattleStatus
+        and #$0001
+        sta $04F0,b
+        beq _94F6
+        lda aActionStructUnit1.TerrainType
+        bra _94FA
+
+
+        _94F6
+        lda aActionStructUnit2.TerrainType
+
+        _94FA
+        and #$001F
+        sta $050C,b
+        sta $050E,b
+        lda wBattleDistance
+        tax
+        lda $04F0,b
+        bne _9513
+        lda aActionStructUnit1.WeaponID
+        bra _9517
+
+
+        _9513
+        lda aActionStructUnit2.WeaponID
+
+        _9517
+        cmp #$005C
+        beq _954E
+        cpx #$0003
+        bcc _9569
+        cmp #$005B
+        beq _954E
+        cmp #$0061
+        beq _954E
+        cmp #$0063
+        beq _954E
+        cmp #$0064
+        beq _954E
+        cmp #$0065
+        beq _954E
+        cmp #$0042
+        beq _954E
+        cmp #$0047
+        beq _954E
+        cmp #$004C
+        beq _954E
+        cmp #$0052
+        bne _9569
+
+        _954E
+        lda $04F0,b
+        bne _955F
+        lda aActionStructUnit1.TerrainType
+        and #$001F
+        sta $050E,b
+        bra _9569
+
+
+        _955F
+        lda aActionStructUnit2.TerrainType
+        and #$001F
+        sta $050C,b
+
+        _9569
+        ldx $050C,b
+        jsr rsUnknown809583
+        stx $050C,b
+        ldx $050E,b
+        jsr rsUnknown809583
+        inc x
+        inc x
+        stx $050E,b
+        stz $04F0,b
+        sep #$30
+        rts
+
+        .databank 0
+
+        ; 80/9583
+
+      rsUnknown809583 ; 80/9583
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $95AD,b,x
+        and #$001C
+        tax
+        lda @l wCurrentChapter
+        cmp #$0004
+        bne _95A0
+        cpx #$000C
+        beq _95A0
+        cpx #$0014
+        beq _95A0
+        ldx #$0010
+
+        _95A0
+        rts
+
+        .databank 0
+
+        ; 80/95A1
+
+    .endsection Unsorted8094E2Section
+
+
     .section Unsorted8095CDSection
 
       .al
@@ -2507,6 +2923,233 @@
         ; 80/9654
 
     .endsection Unsorted8095CDSection
+
+
+    .section Unsorted809733Section
+
+      .al
+      .xl
+
+      rsUnknown809733 ; 80/9733
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        ldx $04EE,b
+        lda $04BA,b,x
+        cmp #$0100
+        bcc _9753
+        and #$0F00
+        cmp #$0900
+        bcs _9753
+        sta $04F0,b
+        pla
+        and #$80FF
+        ora $04F0,b
+        bra _9754
+
+
+        _9753
+        pla
+
+        _9754
+        jsl rlUnknown808F6F
+        rts
+
+        .databank 0
+
+        ; 80/9759
+
+    .endsection Unsorted809733Section
+
+
+    .section Unsorted8097E0Section
+
+      .al
+      .xl
+
+      rsUnknown8097E0 ; 80/97E0
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tax
+        lda $04F4,b
+        and #$00FF
+        bne _97F6
+        sep #$20
+        lda #$FD
+        sta $04FC,b
+        stx $04FA,b
+        rep #$20
+        rts
+
+
+        _97F6
+        lda #$0001
+        sta $04F8,b
+        dec y
+        dec y
+        dec y
+        dec y
+        rts
+
+        .databank 0
+
+        ; 80/9801
+
+    .endsection Unsorted8097E0Section
+
+
+    .section Unsorted809846Section
+
+      .al
+      .xl
+
+      rsUnknown809846 ; 80/9846
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tax
+        lda $0508,b
+        bne _9851
+        lda $04FA,b
+        beq _985C
+
+        _9851
+        lda #$0001
+        sta $04F8,b
+        dec y
+        dec y
+        dec y
+        dec y
+        rts
+
+
+        _985C
+        cpx #$00CB
+        bcc _9866
+        cpx #$00CE
+        bcc _9871
+
+        _9866
+        txa
+        ora $050A,b
+        stz $050A,b
+        jml rsUnknown809733
+
+
+        _9871
+        sep #$20
+        lda $0507,b
+        beq _98A0
+        cmp $0506,b
+        bne _98A0
+        rep #$20
+        lda $0500,b
+        bne _989B
+        txa
+        sep #$20
+        sta $04EB,b
+        rep #$20
+        lda $0507,b
+        and #$00FF
+        xba
+        ora #$00F1
+        jsl rlUnknown808FA3
+        rts
+
+
+        _989B
+        sep #$20
+        stz $0507,b
+
+        _98A0
+        rep #$20
+        stz $0500,b
+        txa
+        jsl rlUnknown808F6F
+        rts
+
+        .databank 0
+
+        ; 80/98AB
+
+      rsUnknown8098AB ; 80/98AB
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rep #$20
+        ldx $04FA,b
+        bne $809851
+        dec a
+        bne _98C0
+        lda wBattleStatus
+        and #$0001
+        bne _98CF
+        bra _98C9
+
+
+        _98C0
+        lda wBattleStatus
+        and #$0001
+        beq _98CF
+
+        _98C9
+        lda aActionStructUnit1.TerrainType
+        bra _98D3
+
+
+        _98CF
+        lda aActionStructUnit2.TerrainType
+
+        _98D3
+        and #$001F
+        cmp #$0001
+        beq _98EA
+        cmp #$0004
+        beq _98EA
+        cmp #$0017
+        beq _98F5
+        lda #$00C2
+        bra _98FE
+
+
+        _98EA
+        lda #$8000
+        sta $050A,b
+        lda #$80C3
+        bra _98FE
+
+
+        _98F5
+        lda #$8000
+        sta $050A,b
+        lda #$80C4
+
+        _98FE
+        jsl rlUnknown808F6F
+        rts
+
+        .databank 0
+
+        ; 80/9903
+
+    .endsection Unsorted809846Section
 
 
     .section Unsorted809903Section
@@ -3523,6 +4166,205 @@
     .endsection Unsorted80AD24Section
 
 
+    .section Unsorted80AE25Section
+
+      .al
+      .xl
+
+      rsUnknown80AE25 ; 80/AE25
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        rep #$20
+        jsl rlProcessDMAStructArray
+        jsl rlDMAPaletteAndOAMBuffer
+        jsl rlUnknown80A328
+        jsl rlUnknown8080C3
+        jsl rlUnknown8090A2
+        jsl rlUnknown808002
+        jsl rlIncreaseFrameCounters
+        jsl rlClearSpriteExtBuffer
+        jsl rlRunGameStateRoutines
+        jsl rlUnknown809C7A
+        jsl rlHideSprites
+        jsl rlUnknown858728
+        jsl rlUnknown8095CD
+        rts
+
+        .databank 0
+
+        ; 80/AE63
+
+      rsUnknown80AE63 ; 80/AE63
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown82E250
+        rts
+
+        .databank 0
+
+        ; 80/AE68
+
+      rsUnknown80AE68 ; 80/AE68
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta $2100,b
+        rep #$20
+        jsl rlDMAPaletteAndOAMBuffer
+        lda wUnknown000D79,b
+        bit #$0200
+        bne _AE92
+        lda bDMAArrayFlag,b
+        and #$00FF
+        bne _AE92
+        lda #$0008
+        trb wUnknown000D79,b
+        jsl rlUnknown88CD68
+        bra _AE98
+
+
+        _AE92
+        lda #$0008
+        tsb wUnknown000D79,b
+
+        _AE98
+        jsl rlProcessDMAStructArray
+        jsl rlUnknown80A328
+        jsl rlUnknown8080C3
+        jsl rlUnknown8090A2
+        jsl rlUnknown808002
+        jsl rlIncreaseFrameCounters
+        jsl rlUnknown82E147
+        lda bUnknown000E7B,b
+        bit #$0010
+        bne _AEC0
+        jsl rlClearSpriteExtBuffer
+
+        _AEC0
+        jsl rlRunGameStateRoutines
+        jsl rlUnknown809C7A
+        jsl rlUnknown81B3A6
+        jsl rlUnknown858728
+        lda bUnknown000E7B,b
+        bit #$0010
+        bne _AEE4
+        jsl rlUnknown88C844
+        jsl rlUnknown88D084
+        jsl rlHideSprites
+
+        _AEE4
+        jsl rlUnknown8095CD
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/AEEA
+
+      rsUnknown80AEEA ; 80/AEEA
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sei
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        jsl rlDisableVBlank
+        jsr rsUnknown80AF9B
+        jsl rlProcEngineResetProcEngine
+        jsl $88806A
+        lda wCurrentChapter,b
+        jsl rlSetChapterEventDataPointerByID
+        jsl rlUnknown87BF6F
+        lda wUnknown000D79,b
+        bit #$0100
+        bne _AF33
+        jsl rlResetUnitsForChapter
+        lda wCurrentChapter,b
+        jsl rlUnknown86C4C4
+        stz wCurrentTurn,b
+        stz $0D7B,b
+        sep #$20
+        stz wAreaRestrictionBitfield,b
+        rep #$20
+        bra _AF4C
+
+
+        _AF33
+        stz $0DAB,b
+        jsl rlUnknown86C4EB
+        lda #$0007
+        sta $0D7B,b
+        jsl rlUnknown81A9D4
+        jsl rlUnknown809654
+        jsl rlUnknown86C629
+
+        _AF4C
+        jsl rlUnknown88DE1B
+        jsl rlUpdateAllLocationEvents
+        jsl rlUnknown888082
+        jsl rlUnknown899FDC
+        jsr rsUnknown80B065
+        jsr rsUnknown80B105
+        jsr rsUnknown80B052
+        jsr rsUnknown80B041
+        lda #$0011
+        sta wGameStateRoutine1,b
+        stz wGameStateStep,b
+        lda wUnknown000D79,b
+        bit #$0020
+        beq _AF89
+        stz wGameStateRoutine1,b
+        lda #$0000
+        jsl $88B30D
+        lda #$0004
+        tsb $0788,b
+
+        _AF89
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        plp
+        cli
+        rts
+
+        .databank 0
+
+        ; 80/AF9B
+
+    .endsection Unsorted80AE25Section
+
+
     .section Unsorted80B0A3Section
 
       .al
@@ -4095,6 +4937,139 @@
     .endsection Unsorted80B347Section
 
 
+    .section Unsorted80B641Section
+
+      .al
+      .xl
+
+      rsUnknown80B641 ; 80/B641
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        rep #$20
+        lda bDMAArrayFlag,b
+        and #$00FF
+        bne _B663
+        lda $0891,b
+        cmp #$0002
+        beq _B663
+        cmp #$0003
+        beq _B663
+        jsl rlUnknown88CD68
+
+        _B663
+        jsl rlProcessDMAStructArray
+        jsl rlDMAPaletteAndOAMBuffer
+        jsl rlUnknown80A328
+        jsl rlUnknown8080C3
+        jsl rlUnknown8090A2
+        jsl rlUnknown808002
+        jsl rlIncreaseFrameCounters
+        jsl rlClearSpriteExtBuffer
+        jsl rlRunGameStateRoutines
+        jsl rlUnknown809C7A
+        lda $0891,b
+        cmp #$0002
+        beq _B69C
+        cmp #$0003
+        beq _B69C
+        jsl rlUnknown8A98D0
+
+        _B69C
+        jsl rlHideSprites
+        jsl rlUnknown9181F6
+        jsl rlUnknown858728
+        jsl rlUnknown8095CD
+        rts
+
+        .databank 0
+
+        ; 80/B6AD
+
+    .endsection Unsorted80B641Section
+
+
+    .section Unsorted80B6B6Section
+
+      .al
+      .xl
+
+      rsUnknown80B6B6 ; 80/B6B6
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+        lda #$0000
+        sta wR1
+        lda #$0000
+        sta wR2
+        lda #$4000
+        sta wR3
+        sta wR4
+        lda #$6000
+        sta wR5
+        lda #$5000
+        sta wR6
+        lda #$5400
+        sta wR7
+        lda #$5800
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        jsl rlActiveSpriteEngineReset
+        jsl rlResetHDMAEngine
+        jsl rlUnknown82E073
+        jsl rlClearUnitWindowAndTerrainWindowProcs
+        jsl rlUnknown82E400
+        jsl rlUnknown8780AA
+        jsl rlUnknown82F211
+        lda #$000B
+        sta wGameStateRoutine1,b
+        lda #$000A
+        sta wGameStateRoutine2,b
+        lda #$B641
+        sta wVBlankPointer
+        lda #$9D4F
+        sta wMainLoopPointer
+        lda #$0002
+        sta aDialogue.wUnknown0018D0,b
+        lda #$0020
+        tsb wUnknown000D79,b
+        jsl rlUnknown80B77F
+        jsl rlUnknown88CD61
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/B74B
+
+    .endsection Unsorted80B6B6Section
+
+
     .section Unsorted80B74BSection
 
       .al
@@ -4134,6 +5109,251 @@
     .endsection Unsorted80B74BSection
 
 
+    .section Unsorted80B77FSection
+
+      .al
+      .xl
+
+      rlUnknown80B77F ; 80/B77F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $088B,b
+        asl a
+        tax
+        jmp ($80B787,x)
+
+        .databank 0
+
+        ; 80/B787
+
+    .endsection Unsorted80B77FSection
+
+
+    .section Unsorted80B793Section
+
+      .al
+      .xl
+
+      rlUnknown80B793 ; 80/B793
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown80B9AD
+        lda $089D,b
+        beq _B7A3
+        stz $089D,b
+        jsl rlUnknown8CED4F
+
+        _B7A3
+        lda #$0003
+        sta $0891,b
+        jsr rsUnknown80B9BC
+        jsl rlUnknown8AD81B
+        rtl
+
+        .databank 0
+
+        ; 80/B7B1
+
+    .endsection Unsorted80B793Section
+
+
+    .section Unsorted80B81BSection
+
+      .al
+      .xl
+
+      rlUnknown80B81B ; 80/B81B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown80B827
+        lda #$00F7
+        jsl rlUnknown808F6F
+        rtl
+
+        .databank 0
+
+        ; 80/B827
+
+      rlUnknown80B827 ; 80/B827
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rep #$20
+        jsl rlUnknown8881EC
+        jsl rlUnknown80B08C
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $D80000, $4000, $80, $0000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE40C0, $0400, $80, $C000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $D77800, $0800, $80, $A000
+
+        ldx #$06FE
+        lda #$00FF
+
+        _B85E
+        sta aBG2TilemapBuffer.Page1,x
+        dec x
+        dec x
+        bpl _B85E
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7B88, $0700, $80, $A800
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $D76800, $0800, $80, $9800
+
+        lda #$8000
+        sta lR19+1
+        lda #$B99D
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$8000
+        sta lR19+1
+        lda #$B9A5
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlGetEventLocationEntryID
+        sta $089F,b
+        ldx #$00FE
+
+        _B8A6
+        lda $8C9800,x
+        sta aBGPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _B8A6
+        ldx #$00FE
+
+        _B8B4
+        lda $8C9500,x
+        sta aOAMPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _B8B4
+        ldx #$001E
+
+        _B8C2
+        lda $8C9D00,x
+        sta aOAMPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _B8C2
+        jsl rlUnknown899FDC
+        sep #$20
+        rep #$10
+        ldx #$2542
+        stx DecompressionVariables
+        lda #$C0
+        sta $CA
+        ldx #$8F88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8F88, $0400, $80, $6C00
+
+        sep #$20
+        lda #$03
+        sta bBufferWOBJSEL
+        rep #$20
+        stz $0891,b
+        ldx #$07FE
+        lda #$00FF
+
+        _B90B
+        sta aBG3TilemapBuffer,x
+        dec x
+        dec x
+        bpl _B90B
+        jsl rlUnknown80B9AD
+        jsl rlUnknown8A9A56
+        jsl rlUnknown88DE1B
+        lda $0897,b
+        asl a
+        tax
+        lda aUnknown8A99DB,x
+        sta $088D,b
+        lda aUnknown8A9A0B,x
+        sta $088F,b
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        beq _B97B
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitHomeCastle
+        bcs _B97B
+        cmp $089F,b
+        bne _B97B
+        jsl rlGetSelectedUnitGenerationID
+        sta $0897,b
+        lda $0897,b
+        dec a
+        asl a
+        tax
+        lda wCurrentChapter,b
+        cmp #$0006
+        bcs _B964
+        lda aUnknown8A9BF4,x
+        bra _B968
+
+
+        _B964
+        lda aUnknown8A9C24,x
+
+        _B968
+        sta $0897,b
+        asl a
+        tax
+        lda aUnknown8A99DB,x
+        sta $088D,b
+        lda aUnknown8A9A0B,x
+        sta $088F,b
+
+        _B97B
+        jsl rlUnknown8A8496
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $B000
+
+        jsr rsUnknown80B9BC
+        sep #$20
+        lda #$00
+        sta bBufferCGADSUB
+        rep #$20
+        stz wGameStateStep,b
+        rtl
+
+        .databank 0
+
+        ; 80/B99B
+
+    .endsection Unsorted80B81BSection
+
+
     .section Unsorted80B9ADSection
 
       .al
@@ -4161,6 +5381,45 @@
         ; 80/B9BC
 
     .endsection Unsorted80B9ADSection
+
+
+    .section Unsorted80B9BCSection
+
+      .al
+      .xl
+
+      rsUnknown80B9BC ; 80/B9BC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        stz bBufferW12SEL
+        stz bBufferW34SEL
+        stz bBufferWOBJSEL
+        lda #$15
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        lda bBufferBGMODE
+        and #$FF
+        sta bBufferBGMODE
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$81
+        sta bBufferCGADSUB
+        lda #$FF
+        sta bBufferWH1
+        rep #$20
+        rts
+
+        .databank 0
+
+        ; 80/B9E1
+
+    .endsection Unsorted80B9BCSection
 
 
     .section Unsorted80B9E1Section
@@ -4423,6 +5682,713 @@
         ; 80/BB9B
 
     .endsection Unsorted80BB7CSection
+
+
+    .section Unsorted80BB9BSection
+
+      .al
+      .xl
+
+      rsUnknown80BB9B ; 80/BB9B
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        rep #$20
+        jsl rlProcessDMAStructArray
+        jsl rlDMAPaletteAndOAMBuffer
+        jsl rlUnknown80A328
+        jsl rlUnknown8080C3
+        jsl rlUnknown8090A2
+        jsl rlUnknown808002
+        jsl rlIncreaseFrameCounters
+        jsl rlClearSpriteExtBuffer
+        jsl rlUnknown809C7A
+        jsl rlRunGameStateRoutines
+        jsl rlHideSprites
+        jsl rlUnknown878256
+        jsl rlUnknown8095CD
+        rts
+
+        .databank 0
+
+        ; 80/BBD9
+
+      rsUnknown80BBD9 ; 80/BBD9
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$BB9B
+        sta wVBlankPointer
+        jsl rlUnknown80823F
+        jsl rlDisableVBlank
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+        lda #$0000
+        sta wR1
+        lda #$0000
+        sta wR2
+        lda #$4000
+        sta wR3
+        lda #$6000
+        sta wR5
+        lda #$2000
+        sta wR6
+        lda #$2800
+        sta wR7
+        lda #$5800
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        jsl rlClearUnitWindowAndTerrainWindowProcs
+        jsl rlActiveSpriteEngineReset
+        jsl rlUnknown82E073
+        jsl rlResetHDMAEngine
+        jsr rsUnknown80BC52
+        jsl rlUnknown80BD27
+        jsr rsUnknown80BF01
+        lda #$0008
+        sta wGameStateRoutine1,b
+        lda #$0007
+        sta wGameStateRoutine2,b
+        stz wGameStateStep,b
+        lda #$9D4F
+        sta wMainLoopPointer
+        jsl rlEnableVBlank
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/BC52
+
+      rsUnknown80BC52 ; 80/BC52
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F819D
+        cmp #$1111
+        beq _BC66
+        lda #$0000
+        sta $7F8187
+        sta $7F8189
+
+        _BC66
+        lda #$0000
+        sta $7F81A1
+        sta $7F8185
+        lda #$0050
+        sta $0885,b
+        lda #$FFFF
+        sta wTempVariable1,b
+        lda #$0000
+        tax
+
+        _BC81
+        sta $7F81ED,x
+        sta $7F8255,x
+        inc x
+        inc x
+        cpx #$0068
+        bne _BC81
+        jsl rlGetSelectedUnitCharacterID
+        sta $7F8195
+        jsl rlUnknown8990BD
+        jsl rlUnknown849FC4
+        sta $7F8199
+        cmp #$0000
+        bne _BCB1
+        jsl rlGetSelectedUnitLeadershipStars
+        sta $7F8197
+
+        _BCB1
+        lda #$000C
+        jsl rlCheckForSpecifiedHolyBlood
+        sta $7F818D
+        jsl rlGetSelectedUnitFactionSlot
+        sta $7F8193
+        jsl rlGetUnitType
+        sta $7F818B
+        jsl rlUnknown89A376
+        lda #$0000
+        sta $7F819B
+        lda $7F8193
+        bne _BCE9
+        jsl rlGetPromotedClassIfAvailable
+        lda $7E2000
+        sta $7F819B
+
+        _BCE9
+        jsl rlCheckForValidUniqueItemOrDrops
+        bcc _BCF2
+        lda #$0000
+
+        _BCF2
+        sta $7F81A7
+        jsl rlGetSelectedUnitStates
+        sta $7F81A9
+        jsl rlGetSelectedUnitStatus
+        sta $7F81AB
+        lda #$0000
+        sta $7F81D1
+        lda $7F81A9
+        bit #$0200
+        bne _BD1F
+        lda $7F81AB
+        cmp #$0003
+        bne _BD26
+
+        _BD1F
+        lda #$0008
+        sta $7F81D1
+
+        _BD26
+        rts
+
+        .databank 0
+
+        ; 80/BD27
+
+      rlUnknown80BD27 ; 80/BD27
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8900
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$ACB3
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$0001
+        sta $7F81AD
+        lda $7F819D
+        beq _BD44
+        jml _BE18
+
+
+        _BD44
+        lda #$0000
+        sta $7F81AD
+        lda #$0000
+        sta $7F818F
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE44C0, $0400, $80, $C000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE0200, $0800, $80, $E000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE34C0, $0C00, $80, $D000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE0A00, $0C00, $80, $E800
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE48C0, $1800, $80, $9800
+
+        lda #$8000
+        sta lR19+1
+        lda #$BEF9
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$030F
+        jsl rlUnknown8BB45D
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $4000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $5000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DD6730, $02C0, $80, $4000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DD69F0, $08C0, $80, $5280
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE1A40, $0440, $80, $5B40
+
+        ldx #$0200
+
+        _BDF9
+        lda $DE2ABE,x
+        sta wJoy2RepeatTimer,x
+        dec x
+        dec x
+        bne _BDF9
+        lda #$0006
+        jsl rlUnknown8BC467
+        ldx #$0020
+
+        _BE0D
+        lda $DE00BE,x
+        sta $02DE,b,x
+        dec x
+        dec x
+        bne _BE0D
+
+        _BE18
+        lda $7F818D
+        cmp #$0002
+        beq _BE30
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE1600, $0440, $80, $4800
+
+        bra _BE3D
+
+
+        _BE30
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE1E80, $0440, $80, $4800
+
+
+        _BE3D
+        lda #$004E
+        jsl rlUnknown8BB45D
+        jsl rlUnknown899BA5
+        jsl rlUnknown899C7C
+        jsl rlUnknown899D72
+        jsl rlUnknown899510
+        jsl rlUnknown89970D
+        jsl rlUnknown8998E1
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $B000
+
+        sep #$20
+        lda #$00
+        pha
+        plb
+        .databank $00
+        rep #$20
+        lda $7F81AB
+        cmp #$0005
+        beq _BE92
+        lda $7F81D1
+        beq _BE83
+        tax
+        bra _BEA4
+
+
+        _BE83
+        lda $7F8193
+        bne _BE97
+        lda $7F81A9
+        bit #$4000
+        beq _BE97
+
+        _BE92
+        ldx #$0008
+        bra _BEA4
+
+
+        _BE97
+        lda $7F8193
+        ldx #$0000
+        jsl rlGetFactionRelation
+        asl a
+        tax
+
+        _BEA4
+        lda $80BEEF,x
+        tax
+        ldy #$0000
+
+        _BEAC
+        lda $8C9400,x
+        sta aOAMPaletteBuffer.aPalette1,b,y
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0020
+        bne _BEAC
+        jsl rlUnknown89A138
+        jsl rlUnknown8990DA
+        lda #$8900
+        sta lR44+1
+        lda #$9140
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        lda #$8900
+        sta lR44+1
+        lda #$917A
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        lda #$8900
+        sta lR44+1
+        lda #$91B9
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        rtl
+
+        .databank 0
+
+        ; 80/BEEF
+
+    .endsection Unsorted80BB9BSection
+
+
+    .section Unsorted80BF01Section
+
+      .al
+      .xl
+
+      rsUnknown80BF01 ; 80/BF01
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        stz bBufferW12SEL
+        stz bBufferW34SEL
+        stz bBufferWOBJSEL
+        lda #$17
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        lda bBufferBG1SC
+        and #$FC
+        ora #$02
+        sta bBufferBG1SC
+        lda bBufferBG2SC
+        and #$FC
+        ora #$02
+        sta bBufferBG2SC
+        lda bBufferBG3SC
+        and #$FC
+        ora #$02
+        sta bBufferBG3SC
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$83
+        sta bBufferCGADSUB
+        rep #$20
+        stz wBufferBG1VOFS
+        stz wBufferBG2VOFS
+        stz wBufferBG3VOFS
+        stz wBufferBG1HOFS
+        stz wBufferBG2HOFS
+        stz wBufferBG3HOFS
+        rts
+
+        .databank 0
+
+        ; 80/BF40
+
+      rsUnknown80BF40 ; 80/BF40
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta $2100,b
+        rep #$20
+        jsl rlUnknown95C368
+        jsl rlUnknown969FD7
+        jsl rlUnknown96D5DB
+        jsl rlUnknown95A086
+        jsl rlUnknown96EB1E
+        jsl rlProcessDMAStructArray
+        jsl rlDMAPaletteAndOAMBuffer
+        jsl rlUnknown80A328
+        jsl rlUnknown8080C3
+        jsl rlUnknown8090A2
+        jsl rlUnknown808002
+        jsl rlUnknown82E147
+        lda $7FFC77
+        bit #$0001
+        beq _BF89
+        jsl rlUnknown969FEB
+        bra _BF8D
+
+
+        _BF89
+        jsl rlClearSpriteExtBuffer
+
+        _BF8D
+        sep #$20
+        lda #$00
+        sta $7FE1CF
+        rep #$20
+        jsl rlRunGameStateRoutines
+        jsl rlUnknown809C7A
+        jsl rlHideSprites
+        jsl rlUnknown8095CD
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/BFA9
+
+      rsUnknown80BFA9 ; 80/BFA9
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta $2100,b
+        rep #$20
+        jsl rlUnknown95C368
+        jsl rlUnknown96D5DB
+        jsl rlUnknown9BEAB1
+        jsl rlProcessDMAStructArray
+        jsl rlDMAPaletteAndOAMBuffer
+        jsl rlUnknown80A328
+        jsl rlUnknown8080C3
+        jsl rlUnknown8090A2
+        jsl rlUnknown808002
+        jsl rlUnknown82E147
+        jsl rlClearSpriteExtBuffer
+        sep #$20
+        lda #$00
+        sta $7FE1CF
+        rep #$20
+        jsl rlRunGameStateRoutines
+        jsl rlUnknown809C7A
+        jsl rlHideSprites
+        jsl rlUnknown8095CD
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/BFFB
+
+      rsUnknown80BFFB ; 80/BFFB
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlClearUnitWindowAndTerrainWindowProcs
+        jsl rlActiveSpriteEngineReset
+        jsl rlResetHDMAEngine
+        jsl rlUnknown82E073
+        jsl rlUnknown95B96F
+        jsl rlUnknown958AF0
+        jsl rlUnknown95A0F7
+        lda #$0000
+        sta $0AE9,b
+        lda #$0043
+        sta $0AEB,b
+        sep #$20
+        lda #$18
+        sta $0B06,b
+        sta $0B49,b
+        rep #$20
+        jsl rlUnknown958000
+        lda #$9600
+        sta lR44+1
+        lda #$8095
+        sta lR44
+        jsl rlUnknown82E0C6
+        lda #$9600
+        sta lR44+1
+        lda #$8000
+        sta lR44
+        jsl rlUnknown82E0C6
+        lda #$9600
+        sta lR44+1
+        lda #$800F
+        sta lR44
+        jsl rlUnknown82E0C6
+        lda #$9600
+        sta lR44+1
+        lda #$8050
+        sta lR44
+        jsl rlUnknown82E0C6
+        lda #$9600
+        sta lR44+1
+        lda #$8078
+        sta lR44
+        jsl rlUnknown82E0C6
+        jsl rlUnknown82E08D
+        lda #$0018
+        sta wGameStateRoutine1,b
+        lda #$BF40
+        sta wVBlankPointer
+        lda #$C144
+        sta wMainLoopPointer
+        stz wGameStateRoutine2,b
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        plp
+        jsl rlUnknown96892C
+        cli
+        rts
+
+        .databank 0
+
+        ; 80/C0B6
+
+      rsUnknown80C0B6 ; 80/C0B6
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        lda #$0000
+        bra _C0C0
+
+        .byte $08, $A9, $01, $00
+
+
+        _C0C0
+        sep #$20
+        sta $7FD8B9
+        rep #$20
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlUnknown95F13C
+        bcc _C0E7
+        sep #$20
+        lda #$01
+        sta $7FD8B9
+        rep #$20
+
+        _C0E7
+        jsl rlProcEngineResetProcEngine
+        jsl rlActiveSpriteEngineReset
+        jsl rlResetHDMAEngine
+        jsl rlUnknown82E073
+        jsl rlUnknown95EE73
+        jsl rlUnknown95F0E9
+        lda #$9600
+        sta lR44+1
+        lda #$80A4
+        sta lR44
+        jsl rlUnknown82E0C6
+        lda #$9600
+        sta lR44+1
+        lda #$80B3
+        sta lR44
+        jsl rlUnknown82E0C6
+        jsl rlUnknown82E08D
+        lda #$001A
+        sta wGameStateRoutine1,b
+        lda #$BFA9
+        sta wVBlankPointer
+        lda #$C155
+        sta wMainLoopPointer
+        stz wGameStateRoutine2,b
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        plp
+        cli
+        rts
+
+        .databank 0
+
+        ; 80/C144
+
+      rsUnknown80C144 ; 80/C144
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlButtonCombinationResetCheck
+        jsl rlDecompressByList
+        jsl rlUnknown809903
+        jsl rlUnknown969872
+        rts
+
+        .databank 0
+
+        ; 80/C155
+
+      rsUnknown80C155 ; 80/C155
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlButtonCombinationResetCheck
+        jsl rlDecompressByList
+        jsl rlUnknown809903
+        rts
+
+        .databank 0
+
+        ; 80/C162
+
+    .endsection Unsorted80BF01Section
 
 
     .section Unsorted80C1A0Section
@@ -4733,6 +6699,901 @@
     .endsection Unsorted80C39ASection
 
 
+    .section Unsorted80C3E6Section
+
+      .al
+      .xl
+
+      rsUnknown80C3E6 ; 80/C3E6
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$BB9B
+        sta wVBlankPointer
+        jsl rlUnknown80823F
+        jsl rlDisableVBlank
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+        lda #$0000
+        sta wR1
+        lda #$0000
+        sta wR2
+        lda #$4000
+        sta wR3
+        lda #$6000
+        sta wR5
+        lda #$2800
+        sta wR6
+        lda #$1000
+        sta wR7
+        lda #$5800
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        jsl rlClearUnitWindowAndTerrainWindowProcs
+        jsl rlActiveSpriteEngineReset
+        jsl rlResetHDMAEngine
+        jsl rlUnknown82E073
+        lda $7F82C5
+        cmp #$BBD9
+        beq _C447
+        jsr rsUnknown80C4F4
+
+        _C447
+        jsr rsUnknown80C471
+        jsr rsUnknown80C530
+        jsr rsUnknown80C628
+        jsr rsUnknown80C694
+        jsr rsUnknown80C951
+        jsl rlUnknown88DE1B
+        lda #$0021
+        sta wGameStateRoutine1,b
+        lda #$0020
+        sta wGameStateRoutine2,b
+        lda #$9D4F
+        sta wMainLoopPointer
+        jsl rlEnableVBlank
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/C471
+
+      rsUnknown80C471 ; 80/C471
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown7E5315
+        sta wGameStateStep,b
+        lda #$0000
+        sta $7F83F5
+        sta $7F83F7
+        sta $7F83F9
+        sta $7F83FB
+        sta $7F83FD
+        sta $7F83FF
+        sta $7F8401
+        sta wDebugMenuScreenIndex+1
+        sta $7F8405
+        sta $7F82D5
+        sta $7F82D7
+        sta $7F82D9
+        sta $7F82DD
+        sta $7F82FB
+        sta $7F82E3
+        sta $7F82E5
+        sta $7F82E7
+        sta $7F82ED
+        sta $7F82EF
+        sta $7F82F1
+        lda #$0000
+        tax
+
+        _C4CF
+        sta $7F8391,x
+        inc a
+        inc x
+        inc x
+        cmp #$0018
+        bne _C4CF
+        lda #$0000
+        ldx #$0000
+
+        _C4E1
+        sta $7F8407,x
+        inc x
+        inc x
+        cpx #$0030
+        bne _C4E1
+        jsr rsUnknown80C8D5
+        jsl rlUnknown8BCD89
+        rts
+
+        .databank 0
+
+        ; 80/C4F4
+
+      rsUnknown80C4F4 ; 80/C4F4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown88DDFB
+        lda #$0000
+        sta $7F82C5
+        sta $7F8183
+        sta $7F82C9
+        sta $7F82CB
+        sta $7F82DF
+        sta $7F82EB
+        lda #$0001
+        sta $7F82C7
+        lda #$003A
+        sta $7F82DB
+        lda #$0000
+        sta $7F82F9
+        lda #$00E8
+        sta $7F82FD
+        rts
+
+        .databank 0
+
+        ; 80/C530
+
+      rsUnknown80C530 ; 80/C530
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
+
+        lda #$8000
+        sta lR19+1
+        lda #$C5BE
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE48C0, $1800, $80, $9800
+
+        jsl rlUnknown8881EC
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE44C0, $0400, $80, $C000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE0200, $0800, $80, $C800
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE34C0, $0C00, $80, $0000
+
+        ldx #$0200
+
+        _C586
+        lda $DDFFFE,x
+        sta wJoy2RepeatTimer,x
+        dec x
+        dec x
+        bne _C586
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        ldx #$001E
+
+        _C599
+        lda $8C9520,x
+        sta aOAMPaletteBuffer.aPalette6,b,x
+        dec x
+        dec x
+        bpl _C599
+        ldx #$001E
+
+        _C5A7
+        lda $8C95E0,x
+        sta aOAMPaletteBuffer.aPalette7,b,x
+        dec x
+        dec x
+        bpl _C5A7
+        lda #$0005
+        jsl rlUnknown8BC467
+        jsl rlUnknown80C5C6
+        rts
+
+        .databank 0
+
+        ; 80/C5BE
+
+    .endsection Unsorted80C3E6Section
+
+
+    .section Unsorted80C5C6Section
+
+      .al
+      .xl
+
+      rlUnknown80C5C6 ; 80/C5C6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+
+        _C5C9
+        sta $7F8405
+        asl a
+        tax
+        lda $7F832D,x
+        beq _C5F7
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlUnknown8BC484
+        pha
+        lda $7F8405
+        asl a
+        tax
+        lda $80C5F8,x
+        tax
+        pla
+        jsl rlUnknown8BBE68
+        lda $7F8405
+        inc a
+        cmp #$0018
+        bne _C5C9
+
+        _C5F7
+        rtl
+
+        .databank 0
+
+        ; 80/C5F8
+
+    .endsection Unsorted80C5C6Section
+
+
+    .section Unsorted80C628Section
+
+      .al
+      .xl
+
+      rsUnknown80C628 ; 80/C628
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda bBufferBG1SC
+        and #$FC
+        ora #$02
+        sta bBufferBG1SC
+        lda bBufferBG2SC
+        and #$FC
+        ora #$02
+        sta bBufferBG2SC
+        lda bBufferBG3SC
+        and #$FC
+        ora #$02
+        sta bBufferBG3SC
+        lda #$15
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        lda #$00
+        sta bBufferTMW
+        lda #$00
+        sta bBufferTSW
+        lda #$00
+        sta bBufferW12SEL
+        lda #$00
+        sta bBufferW34SEL
+        lda #$00
+        sta bBufferWOBJSEL
+        lda #$00
+        sta bBufferWH0
+        lda #$FF
+        sta bBufferWH1
+        lda #$00
+        sta bBufferWH2
+        sta bBufferWH3
+        lda #$00
+        sta bBufferWBGLOG
+        sta bBufferWOBJLOG
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$81
+        sta bBufferCGADSUB
+        lda #$E0
+        sta bBufferCOLDATA_1
+        sta bBufferCOLDATA_2
+        sta bBufferCOLDATA_3
+        rep #$20
+        stz wBufferBG1HOFS
+        stz wBufferBG3HOFS
+        stz wBufferBG2HOFS
+        stz wBufferBG2VOFS
+        lda #$0000
+        sta wBufferBG1VOFS
+        sta wBufferBG3VOFS
+        rts
+
+        .databank 0
+
+        ; 80/C694
+
+      rsUnknown80C694 ; 80/C694
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8000
+        sta lR44+1
+        lda #$C6CD
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        lda #$8000
+        sta lR44+1
+        lda #$C718
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        lda #$8000
+        sta lR44+1
+        lda #$C762
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        lda #$8000
+        sta lR44+1
+        lda #$C88C
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        rts
+
+        .databank 0
+
+        ; 80/C6CD
+
+    .endsection Unsorted80C628Section
+
+
+    .section Unsorted80C6D8Section
+
+      .al
+      .xl
+
+      rlUnknown80C6D8 ; 80/C6D8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 80/C6D9
+
+      rlUnknown80C6D9 ; 80/C6D9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F82E3
+        bne _C715
+        sep #$20
+        lda #$35
+        sta $7FB038
+        rep #$20
+        lda #$0000
+        sta $7FB039
+        sep #$20
+        lda #$01
+        sta $7FB03B
+        rep #$20
+        lda $7F82DF
+        inc a
+        inc a
+        sta $7FB03C
+        sep #$20
+        lda #$00
+        sta $7FB03E
+        rep #$20
+        lda #$0000
+        sta $7FB03F
+
+        _C715
+        rtl
+
+        .databank 0
+
+        ; 80/C716
+
+    .endsection Unsorted80C6D8Section
+
+
+    .section Unsorted80C723Section
+
+      .al
+      .xl
+
+      rlUnknown80C723 ; 80/C723
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 80/C724
+
+      rlUnknown80C724 ; 80/C724
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F82E3
+        bne _C75F
+        sep #$20
+        lda #$35
+        sta $7FB020
+        rep #$20
+        lda #$FFFF
+        sta $7FB021
+        sep #$20
+        lda #$01
+        sta $7FB023
+        rep #$20
+        lda $7F82DF
+        dec a
+        sta $7FB024
+        sep #$20
+        lda #$00
+        sta $7FB026
+        rep #$20
+        lda #$0000
+        sta $7FB027
+
+        _C75F
+        rtl
+
+        .databank 0
+
+        ; 80/C760
+
+    .endsection Unsorted80C723Section
+
+
+    .section Unsorted80C76DSection
+
+      .al
+      .xl
+
+      rlUnknown80C76D ; 80/C76D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 80/C76E
+
+      rlUnknown80C76E ; 80/C76E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F82E3
+        beq _C778
+        jml _C889
+
+
+        _C778
+        ldx #$0000
+        sep #$20
+        lda #$08
+        sta $7FB0B6
+        rep #$20
+        lda #$0000
+        sta $7FB0B7
+        lda #$E000
+        sta $7FB0B9
+        inc x
+        inc x
+        inc x
+        inc x
+        inc x
+        sep #$20
+        lda #$10
+        sta $7FB0B6,x
+        rep #$20
+        lda #$8181
+        sta $7FB0B7,x
+        lda #$E000
+        sta $7FB0B9,x
+        inc x
+        inc x
+        inc x
+        inc x
+        inc x
+        sep #$20
+        lda #$0A
+        sta $7FB0B6,x
+        rep #$20
+        lda #$8181
+        sta $7FB0B7,x
+        lda #$E100
+        sta $7FB0B9,x
+        inc x
+        inc x
+        inc x
+        inc x
+        inc x
+        sep #$20
+        lda #$10
+        sta $7FB0B6,x
+        rep #$20
+        lda #$8181
+        sta $7FB0B7,x
+        lda #$E100
+        sta $7FB0B9,x
+        inc x
+        inc x
+        inc x
+        inc x
+        inc x
+        sep #$20
+        lda #$05
+        sta $7FB0B6,x
+        rep #$20
+        lda #$8181
+        sta $7FB0B7,x
+        lda #$E200
+        sta $7FB0B9,x
+        inc x
+        inc x
+        inc x
+        inc x
+        inc x
+        lda #$0000
+        sta $7F83FB
+        lda #$0000
+        sta $7F83FD
+
+        _C81A
+        phx
+        lda $7F83FB
+        tax
+        lda $7FB044,x
+        sta wR0
+        inc x
+        txa
+        sta $7F83FB
+        plx
+        lda wR0
+        and #$00FF
+        sep #$20
+        sta $7FB0B6,x
+        rep #$20
+        phx
+        lda $7F83FD
+        tax
+        tay
+        lda $7FB062,x
+        plx
+        sep #$20
+        sta $7FB0B7,x
+        sta $7FB0B8,x
+        rep #$20
+        phx
+        tyx
+        lda $7FB063,x
+        sta @l wR0
+        txa
+        clc
+        adc #$0003
+        sta $7F83FD
+        plx
+        lda @l wR0
+        sta $7FB0B9,x
+        inc x
+        inc x
+        inc x
+        inc x
+        inc x
+        cpx #$00A0
+        bne _C81A
+        sep #$20
+        lda #$00
+        sta $7FB0B6,x
+        rep #$20
+        lda #$0000
+        sta $7FB0B7,x
+
+        _C889
+        rtl
+
+        .databank 0
+
+        ; 80/C88A
+
+    .endsection Unsorted80C76DSection
+
+
+    .section Unsorted80C897Section
+
+      .al
+      .xl
+
+      rlUnknown80C897 ; 80/C897
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 80/C898
+
+      rlUnknown80C898 ; 80/C898
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F82E3
+        bne _C8D2
+        sep #$20
+        lda #$35
+        sta $7FB02C
+        rep #$20
+        lda #$FFFF
+        sta $7FB02D
+        sep #$20
+        lda #$01
+        sta $7FB02F
+        rep #$20
+        lda $7F82DF
+        sta $7FB030
+        sep #$20
+        lda #$00
+        sta $7FB032
+        rep #$20
+        lda #$0000
+        sta $7FB033
+
+        _C8D2
+        rtl
+
+        .databank 0
+
+        ; 80/C8D3
+
+    .endsection Unsorted80C897Section
+
+
+    .section Unsorted80C8D5Section
+
+      .al
+      .xl
+
+      rsUnknown80C8D5 ; 80/C8D5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta wR0
+        sta wR1
+        jsl rlGetFactionSlotUnitCount
+        sta $7F82CD
+        lda #$0001
+        sta wRoutineVariable1,b
+
+        _C8EA
+        lda #$0000
+        jsl rlGetUnitRAMDataPointerByFactionSlotEntryID
+        lda wSelectedUnitDataRAMPointer,b
+        beq _C919
+        jsl rlGetSelectedUnitStatus
+        cmp #StatusCaptive
+        beq _C908
+        jsl rlGetSelectedUnitStates
+        bit #UnitStateDead
+        beq _C90C
+
+        _C908
+        inc wR1
+        bra _C919
+
+
+        _C90C
+        lda wR0
+        asl a
+        tax
+        lda wSelectedUnitDataRAMPointer,b
+        sta $7F832D,x
+        inc wR0
+
+        _C919
+        lda wRoutineVariable1,b
+        inc a
+        sta wRoutineVariable1,b
+        cmp #$0019
+        bne _C8EA
+        lda wR1
+        sta $7F82CF
+        lda $7F82CD
+        sec
+        sbc wR1
+        sta $7F82CD
+        sec
+        sbc #$000A
+        bpl _C93F
+        lda #$0000
+
+        _C93F
+        sta $7F82D1
+        lda $7F82CD
+        asl a
+        tax
+        lda #$0000
+        sta $7F832D,x
+        rts
+
+        .databank 0
+
+        ; 80/C951
+
+      rsUnknown80C951 ; 80/C951
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$00CE
+        jsl rlUnknown8BB45D
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $B000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE22C0, $01C0, $80, $5000
+
+        lda $7F82CD
+        cmp #$000A
+        bcs _C97E
+        lda #$000A
+
+        _C97E
+        xba
+        lsr a
+        sec
+        sbc #$0040
+        sta wR0
+        phk
+        plb
+        .databank $80
+        ldx #$0000
+        ldy #$0000
+
+        _C98E
+        cpy #$00C0
+        bne _C996
+        ldy #$0000
+
+        _C996
+        lda $CA25,b,y
+        sta $7E7548,x
+        inc x
+        inc x
+        inc y
+        inc y
+        txa
+        cmp @l wR0
+        bne _C98E
+        phk
+        plb
+        .databank $80
+        ldy #$0000
+
+        _C9AD
+        lda $CB25,b,y
+        sta $7E7548,x
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0080
+        bne _C9AD
+        jsl rlUnknown8BBAA4
+        lda $7E5335
+        and #$00FF
+        beq _C9E9
+        lda wUnknown7E5319
+        sta $7F82F7
+        lda #$0026
+        sta wUnknown7E5319
+        jsl rlUnknown8BCA1A
+        jsl rlUnknown8BC52A
+        lda $7F82F7
+        sta wUnknown7E5319
+
+        _C9E9
+        jsl rlUnknown8BCA1A
+        lda wUnknown7E5317
+        bne _C9F9
+        jsl rlUnknown8BC52A
+        bra _C9FD
+
+
+        _C9F9
+        jsl rlUnknown8BC56F
+
+        _C9FD
+        sep #$20
+        lda #$01
+        sta $7E5335
+        rep #$20
+        jsl rlUnknown8BCD89
+        jsl rlUnknown80CBA5
+        jsl rlUnknown8BADF1
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7548, $0E40, $80, $51C0
+
+        jsl rlUnknown80CC35
+        rts
+
+        .databank 0
+
+        ; 80/CA25
+
+    .endsection Unsorted80C8D5Section
+
+
     .section Unsorted80CBA5Section
 
       .al
@@ -4901,6 +7762,545 @@
     .endsection Unsorted80CC35Section
 
 
+    .section Unsorted80CD2ESection
+
+      .al
+      .xl
+
+      rsUnknown80CD2E ; 80/CD2E
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$BB9B
+        sta wVBlankPointer
+        jsl rlUnknown80823F
+        jsl rlDisableVBlank
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+        lda #$0000
+        sta wR1
+        lda #$0000
+        sta wR2
+        lda #$0000
+        sta wR3
+        lda #$4000
+        sta wR5
+        lda #$2000
+        sta wR6
+        lda #$2800
+        sta wR7
+        lda #$1800
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        jsl rlClearUnitWindowAndTerrainWindowProcs
+        jsl rlActiveSpriteEngineReset
+        jsl rlResetHDMAEngine
+        jsl rlUnknown82E073
+        jsr rsUnknown80CDAE
+        jsr rsUnknown80CDDF
+        jsr rsUnknown80CE9E
+        jsr rsUnknown80CEE7
+        jsr rsUnknown80D0B4
+        jsr rsUnknown80CEF6
+        phk
+        plb
+        .databank $80
+        lda #$0024
+        sta wGameStateRoutine1,b
+        lda #$0023
+        sta wGameStateRoutine2,b
+        lda #$9D4F
+        sta wMainLoopPointer
+        jsl rlEnableVBlank
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/CDAE
+
+      rsUnknown80CDAE ; 80/CDAE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta wGameStateStep,b
+        sta $7F846D
+        sta $7F8471
+        sta $7F8475
+        sta $7F8477
+        sta $7F8479
+        sta $7F847D
+        sta $7F847B
+        lda #$0001
+        sta $7F8467
+        lda #$001C
+        sta $7F8473
+        rts
+
+        .databank 0
+
+        ; 80/CDDF
+
+      rsUnknown80CDDF ; 80/CDDF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE44C0, $0400, $80, $8000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $D84000, $4000, $80, $8400
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
+
+        lda #$8000
+        sta lR19+1
+        lda #$CE8E
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE48C0, $1800, $80, $1800
+
+        ldx #$0200
+
+        _CE24
+        lda $DDFFFE,x
+        sta wJoy2RepeatTimer,x
+        dec x
+        dec x
+        bne _CE24
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        lda #$0003
+        jsl rlUnknown8BC43A
+        lda #$0004
+        jsl rlUnknown8BC467
+        lda #$DD00
+        sta lR18+1
+        lda #$3DC0
+        sta lR18
+        lda #(`aBG2TilemapBuffer)<<8
+        sta lR19+1
+        lda #<>aBG2TilemapBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        lda #$DD00
+        sta lR18+1
+        lda #$3E96
+        sta lR18
+        lda #$7E00
+        sta lR19+1
+        lda #$7B88
+        sta lR19
+        jsl rlAppendDecompList
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG2TilemapBuffer, $0700, $80, $4000
+
+        lda #$8000
+        sta lR19+1
+        lda #$CE96
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        rts
+
+        .databank 0
+
+        ; 80/CE8E
+
+    .endsection Unsorted80CD2ESection
+
+
+    .section Unsorted80CE9ESection
+
+      .al
+      .xl
+
+      rsUnknown80CE9E ; 80/CE9E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        lda #$00
+        sta bBufferTMW
+        lda #$00
+        sta bBufferTSW
+        lda #$00
+        sta bBufferW12SEL
+        lda #$00
+        sta bBufferW34SEL
+        lda #$00
+        sta bBufferWOBJSEL
+        lda #$00
+        sta bBufferWH0
+        lda #$FF
+        sta bBufferWH1
+        lda #$00
+        sta bBufferWH2
+        sta bBufferWH3
+        lda #$00
+        sta bBufferWBGLOG
+        sta bBufferWOBJLOG
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$83
+        sta bBufferCGADSUB
+        rep #$20
+        stz wBufferBG1HOFS
+        stz wBufferBG2HOFS
+        stz wBufferBG3HOFS
+        stz wBufferBG1VOFS
+        stz wBufferBG2VOFS
+        stz wBufferBG3VOFS
+        rts
+
+        .databank 0
+
+        ; 80/CEE7
+
+      rsUnknown80CEE7 ; 80/CEE7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8000
+        sta lR44+1
+        lda #$D07E
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        rts
+
+        .databank 0
+
+        ; 80/CEF6
+
+      rsUnknown80CEF6 ; 80/CEF6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$00CE
+        jsl rlUnknown8BB45D
+        lda $7F846B
+        bne _CF3F
+        lda #$0002
+        sta wGameStateStep,b
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$CD13
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$8000
+        sta lR18+1
+        lda #$D046
+        sta lR18
+        ldx #$0A02
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D064
+        sta lR18
+        ldx #$0D03
+        jsl rlDrawMenuTextLine
+        bra _CF4A
+
+
+        _CF3F
+        lda #$0000
+        jsl rlUnknown89B8BD
+        jsl rlUnknown89B91F
+
+        _CF4A
+        lda $7F846B
+        ldx #$3920
+        stx wR5
+        ldx #$0000
+        stx wR6
+        ldx #$0672
+        jsl rlDrawMenuTextNumber
+        lda #$3800
+        sta wR1
+        lda #$00CD
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0670
+        jsl rlUnknown89BECC
+        lda #$3C00
+        sta wR1
+        lda #$0289
+        sta wR2
+        lda #$0004
+        sta wR0
+        ldx #$0048
+        jsl rlUnknown89BECC
+        lda #$3C00
+        sta wR1
+        lda #$028D
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0058
+        jsl rlUnknown89BECC
+        lda #$3C00
+        sta wR1
+        lda #$01C5
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$005A
+        jsl rlUnknown89BECC
+        lda #$3000
+        sta wR1
+        lda #$0205
+        sta wR2
+        lda #$0007
+        sta wR0
+        ldx #$006C
+        jsl rlUnknown89BECC
+        lda $7E5333
+        beq _CFD8
+        dec a
+        beq _D00A
+        bra _CFDC
+
+
+        _CFD8
+        jml _D022
+
+
+        _CFDC
+        lda #$2000
+        sta wR1
+        lda #$01E0
+        sta wR2
+        lda #$0003
+        sta wR0
+        ldx #$012E
+        jsl rlUnknown89BECC
+        lda #$2000
+        sta wR1
+        lda #$01CF
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0134
+        jsl rlUnknown89BECC
+        bra _D038
+
+
+        _D00A
+        lda #$2000
+        sta wR1
+        lda #$01CC
+        sta wR2
+        lda #$0004
+        sta wR0
+        ldx #$012E
+        jsl rlUnknown89BECC
+        bra _D038
+
+
+        _D022
+        lda #$2000
+        sta wR1
+        lda #$01C8
+        sta wR2
+        lda #$0004
+        sta wR0
+        ldx #$012E
+        jsl rlUnknown89BECC
+
+        _D038
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $3000
+
+        rts
+
+        .databank 0
+
+        ; 80/D046
+
+    .endsection Unsorted80CE9ESection
+
+
+    .section Unsorted80D089Section
+
+      .al
+      .xl
+
+      rlUnknown80D089 ; 80/D089
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0000
+
+        _D08C
+        lda $80D09B,x
+        sta $7FB0B6,x
+        beq _D09A
+        inc x
+        inc x
+        bra _D08C
+
+
+        _D09A
+        rtl
+
+        .databank 0
+
+        ; 80/D09B
+
+    .endsection Unsorted80D089Section
+
+
+    .section Unsorted80D0B1Section
+
+      .al
+      .xl
+
+      rlUnknown80D0B1 ; 80/D0B1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 80/D0B2
+
+    .endsection Unsorted80D0B1Section
+
+
+    .section Unsorted80D0B4Section
+
+      .al
+      .xl
+
+      rsUnknown80D0B4 ; 80/D0B4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        ldx #$0096
+
+        _D0BA
+        sta $7F8481,x
+        dec x
+        dec x
+        bne _D0BA
+        jsl rlGetItemRAMDataCount
+        inc a
+        sta wR15
+        ldx #$0000
+        lda #$0001
+
+        _D0CF
+        sta wR14
+        jsl rlGetItemRAMStructEntryByPlayerItemIndex
+        jsl rlGetEffectiveItemROMPointerByItemRAMStructEntry
+        jsl rlGetItemRAMStateAndOwner
+        lda wR0
+        cmp #$0001
+        beq _D0E9
+        cmp #$0002
+        bne _D117
+
+        _D0E9
+        lda wR1
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitFactionSlot
+        cmp #$0000
+        bne _D117
+        jsl rlGetSelectedUnitStates
+        bit #UnitStateDead
+        bne _D117
+        jsl rlGetSelectedUnitStatus
+        cmp #StatusCaptive
+        beq _D117
+        lda wR14
+        and #$00FF
+        sep #$20
+        sta $7F8483,x
+        rep #$20
+        inc x
+
+        _D117
+        lda wR14
+        inc a
+        cmp wR15
+        beq _D122
+        jml _D0CF
+
+
+        _D122
+        txa
+        sta $7F846B
+        sec
+        sbc #$000C
+        bpl _D130
+        lda #$0000
+
+        _D130
+        sta $7F846F
+        lda $7F846B
+        beq _D142
+        jsl rlUnknown80D143
+        jsl rlUnknown89C2CF
+
+        _D142
+        rts
+
+        .databank 0
+
+        ; 80/D143
+
+    .endsection Unsorted80D0B4Section
+
+
     .section Unsorted80D143Section
 
       .al
@@ -4963,6 +8363,1352 @@
         ; 80/D1AE
 
     .endsection Unsorted80D143Section
+
+
+    .section Unsorted80D2C6Section
+
+      .al
+      .xl
+
+      rsUnknown80D2C6 ; 80/D2C6
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$BB9B
+        sta wVBlankPointer
+        jsl rlUnknown80823F
+        jsl rlDisableVBlank
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+        lda #$0000
+        sta wR1
+        lda #$0000
+        sta wR2
+        lda #$0000
+        sta wR3
+        lda #$4000
+        sta wR5
+        lda #$1800
+        sta wR6
+        lda #$2000
+        sta wR7
+        lda #$2800
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        jsl rlClearUnitWindowAndTerrainWindowProcs
+        jsl rlActiveSpriteEngineReset
+        jsl rlResetHDMAEngine
+        jsl rlUnknown82E073
+        jsr rsUnknown80D346
+        jsr rsUnknown80D389
+        jsr rsUnknown80D435
+        jsr rsUnknown80D47E
+        jsr rsUnknown80D503
+        jsr rsUnknown80D48D
+        phk
+        plb
+        .databank $80
+        lda #$002D
+        sta wGameStateRoutine1,b
+        lda #$002C
+        sta wGameStateRoutine2,b
+        lda #$9D4F
+        sta wMainLoopPointer
+        jsl rlEnableVBlank
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/D346
+
+      rsUnknown80D346 ; 80/D346
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta wGameStateStep,b
+        sta $7F8183
+        sta $7F8185
+        sta $7F8187
+        sta $7F818D
+        sta $7F818B
+        sta $7F818F
+        sta $7F873D
+        sta $7F873F
+        sta $7F873B
+        lda #$001C
+        sta $7F8189
+        lda #$0000
+        jsl rlGetFactionSlotUnitCount
+        sta $7F8191
+        jsr rsUnknown80D818
+        jsr rsUnknown80D862
+        rts
+
+        .databank 0
+
+        ; 80/D389
+
+      rsUnknown80D389 ; 80/D389
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE44C0, $0400, $80, $8000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE34C0, $0C00, $80, $8400
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
+
+        lda #$8000
+        sta lR19+1
+        lda #$D41D
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE48C0, $1800, $80, $1800
+
+        ldx #$0200
+
+        _D3CE
+        lda $DDFFFE,x
+        sta wJoy2RepeatTimer,x
+        dec x
+        dec x
+        bne _D3CE
+        ldx #$0020
+
+        _D3DB
+        lda $DE00BE,x
+        sta $025E,b,x
+        dec x
+        dec x
+        bne _D3DB
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        lda #$030F
+        jsl rlUnknown8BB45D
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $5000
+
+        lda #$8000
+        sta lR19+1
+        lda #$D425
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$8000
+        sta lR19+1
+        lda #$D42D
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        rts
+
+        .databank 0
+
+        ; 80/D41D
+
+    .endsection Unsorted80D2C6Section
+
+
+    .section Unsorted80D435Section
+
+      .al
+      .xl
+
+      rsUnknown80D435 ; 80/D435
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        lda #$00
+        sta bBufferTMW
+        lda #$00
+        sta bBufferTSW
+        lda #$00
+        sta bBufferW12SEL
+        lda #$00
+        sta bBufferW34SEL
+        lda #$00
+        sta bBufferWOBJSEL
+        lda #$00
+        sta bBufferWH0
+        lda #$FF
+        sta bBufferWH1
+        lda #$00
+        sta bBufferWH2
+        sta bBufferWH3
+        lda #$00
+        sta bBufferWBGLOG
+        sta bBufferWOBJLOG
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$83
+        sta bBufferCGADSUB
+        rep #$20
+        stz wBufferBG1HOFS
+        stz wBufferBG2HOFS
+        stz wBufferBG3HOFS
+        stz wBufferBG1VOFS
+        stz wBufferBG2VOFS
+        stz wBufferBG3VOFS
+        rts
+
+        .databank 0
+
+        ; 80/D47E
+
+      rsUnknown80D47E ; 80/D47E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8000
+        sta lR44+1
+        lda #$D07E
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        rts
+
+        .databank 0
+
+        ; 80/D48D
+
+      rsUnknown80D48D ; 80/D48D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3C00
+        sta wR1
+        lda #$02E6
+        sta wR2
+        lda #$0003
+        sta wR0
+        ldx #$0048
+        jsl rlUnknown89BECC
+        lda #$3C00
+        sta wR1
+        lda #$02E9
+        sta wR2
+        lda #$0003
+        sta wR0
+        ldx #$0056
+        jsl rlUnknown89BECC
+        lda #$3000
+        sta wR1
+        lda #$026F
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0066
+        jsl rlUnknown89BECC
+        lda #$3000
+        sta wR1
+        lda #$0280
+        sta wR2
+        lda #$0009
+        sta wR0
+        ldx #$0068
+        jsl rlUnknown89BECC
+        jsl rlUnknown8BD90B
+        jsl rlUnknown8BD968
+        jsl rlUnknown8BD9A6
+        jsl rlUnknown8BDA2C
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $5000
+
+        rts
+
+        .databank 0
+
+        ; 80/D503
+
+      rsUnknown80D503 ; 80/D503
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        ldx #$0800
+
+        _D509
+        sta $7F878D,x
+        dec x
+        dec x
+        bne _D509
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$D8F1
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$8000
+        sta lR18+1
+        lda #$D662
+        sta lR18
+        ldx #$0000
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D67A
+        sta lR18
+        ldx #$0200
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D692
+        sta lR18
+        ldx #$0400
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D6AA
+        sta lR18
+        ldx #$0600
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D6C2
+        sta lR18
+        ldx #$0800
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D6DA
+        sta lR18
+        ldx #$0A00
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D6F2
+        sta lR18
+        ldx #$0C00
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D70A
+        sta lR18
+        ldx #$0E00
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D722
+        sta lR18
+        ldx #$1000
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D73A
+        sta lR18
+        ldx #$1200
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D752
+        sta lR18
+        ldx #$1400
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D76A
+        sta lR18
+        ldx #$1600
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D782
+        sta lR18
+        ldx #$1800
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D79C
+        sta lR18
+        ldx #$1A00
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D7B6
+        sta lR18
+        ldx #$1C00
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D7D0
+        sta lR18
+        ldx #$1E00
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D7E8
+        sta lR18
+        ldx #$2000
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$D800
+        sta lR18
+        ldx #$2200
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$D8E8
+        sta lMapMenuTilemapRAMEntryPointer,b
+        rts
+
+        .databank 0
+
+        ; 80/D662
+
+    .endsection Unsorted80D435Section
+
+
+    .section Unsorted80D818Section
+
+      .al
+      .xl
+
+      rsUnknown80D818 ; 80/D818
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta wRoutineVariable1,b
+        stz wR0
+
+        _D820
+        lda #$0000
+        jsl rlGetUnitRAMDataPointerByFactionSlotEntryID
+        lda wSelectedUnitDataRAMPointer,b
+        beq _D84B
+        jsl rlGetSelectedUnitStatus
+        cmp #StatusCaptive
+        beq _D84B
+        jsl rlGetSelectedUnitStates
+        bit #UnitStateDead
+        bne _D84B
+        lda wR0
+        asl a
+        tax
+        lda wSelectedUnitDataRAMPointer,b
+        sta $7F8195,x
+        inc wR0
+
+        _D84B
+        inc wRoutineVariable1,b
+        lda wRoutineVariable1,b
+        cmp #$0019
+        bne _D820
+        lda wR0
+        asl a
+        tax
+        lda #$0000
+        sta $7F8195,x
+        rts
+
+        .databank 0
+
+        ; 80/D862
+
+      rsUnknown80D862 ; 80/D862
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        tax
+
+        _D866
+        sta $7F81F9,x
+        inc x
+        inc x
+        cpx #$0540
+        bne _D866
+        ldx #$0000
+
+        _D874
+        sta $7F8741,x
+        inc x
+        inc x
+        cpx #$002A
+        bne _D874
+        stz wR15
+
+        _D881
+        stz wR14
+        stz wR13
+        lda wR15
+        asl a
+        tax
+        lda $8BDFBF,x
+        sta $7F876D
+
+        _D891
+        lda wR14
+        asl a
+        tax
+        lda $7F8195,x
+        beq _D8D4
+        sta wSelectedUnitDataRAMPointer,b
+        lda $7F876D
+        jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
+        bcs _D8B9
+        lda wJoy1Input
+        bit #$2000
+        beq _D8D0
+        lda $7F876D
+        jsl rlCheckIfInventoryItemsHaveSpecifiedSkill
+        bcc _D8D0
+
+        _D8B9
+        lda wR15
+        xba
+        lsr a
+        lsr a
+        sta wR12
+        lda wR13
+        asl a
+        clc
+        adc wR12
+        tax
+        lda wSelectedUnitDataRAMPointer,b
+        sta $7F81F9,x
+        inc wR13
+
+        _D8D0
+        inc wR14
+        bra _D891
+
+
+        _D8D4
+        lda wR15
+        asl a
+        tax
+        lda wR13
+        sta $7F8741,x
+        inc wR15
+        lda wR15
+        cmp #$0012
+        bne _D881
+        rts
+
+        .databank 0
+
+        ; 80/D8E8
+
+    .endsection Unsorted80D818Section
+
+
+    .section Unsorted80D915Section
+
+      .al
+      .xl
+
+      rsUnknown80D915 ; 80/D915
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$BB9B
+        sta wVBlankPointer
+        jsl rlUnknown80823F
+        jsl rlDisableVBlank
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+        lda #$0000
+        sta wR1
+        lda #$0000
+        sta wR2
+        lda #$0000
+        sta wR3
+        lda #$4000
+        sta wR5
+        lda #$1800
+        sta wR6
+        lda #$2000
+        sta wR7
+        lda #$2800
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        jsl rlClearUnitWindowAndTerrainWindowProcs
+        jsl rlActiveSpriteEngineReset
+        jsl rlResetHDMAEngine
+        jsl rlUnknown82E073
+        jsr rsUnknown80D992
+        jsr rsUnknown80D9B7
+        jsr rsUnknown80DA52
+        jsr rsUnknown80DA9B
+        jsr rsUnknown80DAB8
+        phk
+        plb
+        .databank $80
+        lda #$0030
+        sta wGameStateRoutine1,b
+        lda #$002F
+        sta wGameStateRoutine2,b
+        lda #$9D4F
+        sta wMainLoopPointer
+        jsl rlEnableVBlank
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/D992
+
+      rsUnknown80D992 ; 80/D992
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta wGameStateStep,b
+        sta $7F8183
+        sta $7F8187
+        lda #$006A
+        sta $7F8185
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$D90C
+        sta lMapMenuTilemapRAMEntryPointer,b
+        jsr rsUnknown80DD28
+        rts
+
+        .databank 0
+
+        ; 80/D9B7
+
+      rsUnknown80D9B7 ; 80/D9B7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE44C0, $0400, $80, $8000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
+
+        lda #$8000
+        sta lR19+1
+        lda #$DA4A
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        ldx #$0200
+
+        _D9E2
+        lda $DDFFFE,x
+        sta wJoy2RepeatTimer,x
+        dec x
+        dec x
+        bne _D9E2
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        lda #$030F
+        jsl rlUnknown8BB45D
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $3000
+
+        lda #$DD00
+        sta lR18+1
+        lda #$373A
+        sta lR18
+        lda #(`aBG2TilemapBuffer)<<8
+        sta lR19+1
+        lda #<>aBG2TilemapBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        lda #$DD00
+        sta lR18+1
+        lda #$3851
+        sta lR18
+        lda #$7E00
+        sta lR19+1
+        lda #$7B88
+        sta lR19
+        jsl rlAppendDecompList
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG2TilemapBuffer, $0700, $80, $3000
+
+        jsr rsUnknown80DEB7
+        jsr rsUnknown80DF22
+        rts
+
+        .databank 0
+
+        ; 80/DA4A
+
+    .endsection Unsorted80D915Section
+
+
+    .section Unsorted80DA52Section
+
+      .al
+      .xl
+
+      rsUnknown80DA52 ; 80/DA52
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$15
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        lda #$00
+        sta bBufferTMW
+        lda #$00
+        sta bBufferTSW
+        lda #$00
+        sta bBufferW12SEL
+        lda #$00
+        sta bBufferW34SEL
+        lda #$00
+        sta bBufferWOBJSEL
+        lda #$00
+        sta bBufferWH0
+        lda #$FF
+        sta bBufferWH1
+        lda #$00
+        sta bBufferWH2
+        sta bBufferWH3
+        lda #$00
+        sta bBufferWBGLOG
+        sta bBufferWOBJLOG
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$83
+        sta bBufferCGADSUB
+        rep #$20
+        stz wBufferBG1HOFS
+        stz wBufferBG2HOFS
+        stz wBufferBG3HOFS
+        stz wBufferBG1VOFS
+        stz wBufferBG2VOFS
+        stz wBufferBG3VOFS
+        rts
+
+        .databank 0
+
+        ; 80/DA9B
+
+      rsUnknown80DA9B ; 80/DA9B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8000
+        sta lR44+1
+        lda #$DE3A
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        lda #$8000
+        sta lR44+1
+        lda #$DE78
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        rts
+
+        .databank 0
+
+        ; 80/DAB8
+
+      rsUnknown80DAB8 ; 80/DAB8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$010B
+        jsl rlUnknown8BB45D
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda wCurrentChapter,b
+        jsl rlUnknown91AB91
+        jsl rlUnknown918110
+        jsl rlDialogueFreeHDMA
+        lda #$0C00
+        sta $18D7,b
+        lda #$7E00
+        sta $18D5,b
+        lda #$840E
+        sta $18D4,b
+        lda #$2180
+        sta aDialogue.wBaseTile,b
+
+        _DAF2
+        jsl rlUnknown9181F6
+        lda aDialogue.wStatus,b
+        bne _DAF2
+        lda #$8000
+        sta lR18+1
+        lda #$DCA6
+        sta lR18
+        ldx #$0503
+        jsl rlDrawMenuTextLine
+        lda wCurrentChapter,b
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda $80DB75,x
+        sta lR18+1
+        lda $80DB74,x
+        sta lR18
+        ldx #$050A
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$DCB0
+        sta lR18
+        ldx #$0703
+        jsl rlDrawMenuTextLine
+        lda wCurrentTurn,b
+        ldx #$3920
+        stx wR5
+        ldx #$0000
+        stx wR6
+        ldx #$01D4
+        jsl rlDrawMenuTextNumber
+        sta wR0
+        lda #$8000
+        sta lR18+1
+        lda #$DCBC
+        sta lR18
+        lda #$0007
+        and #$00FF
+        xba
+        ora #$000A
+        clc
+        adc wR0
+        tax
+        jsl rlDrawMenuTextLine
+        jsr rsUnknown80DCC6
+        jsl rlUnknown8BD151
+        rts
+
+        .databank 0
+
+        ; 80/DB74
+
+    .endsection Unsorted80DA52Section
+
+
+    .section Unsorted80DCC6Section
+
+      .al
+      .xl
+
+      rsUnknown80DCC6 ; 80/DCC6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3C00
+        sta aCurrentTilemapInfo,b
+        lda #$8000
+        sta lR18+1
+        lda #$DD1C
+        sta lR18
+        ldx #$0A05
+        jsl rlDrawMenuTextLine
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$0000
+
+        _DCE6
+        sta $7F83DD
+        asl a
+        pha
+        tax
+        lda $7F83B9,x
+        jsl rlGetFactionSlotNamePointer
+        pla
+        clc
+        adc #$000D
+        and #$00FF
+        xba
+        ora #$0005
+        tax
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        jsl rlDrawMenuTextLine
+        lda $7F83DD
+        inc a
+        cmp $7F83D9
+        bne _DCE6
+        rts
+
+        .databank 0
+
+        ; 80/DD1C
+
+    .endsection Unsorted80DCC6Section
+
+
+    .section Unsorted80DD28Section
+
+      .al
+      .xl
+
+      rsUnknown80DD28 ; 80/DD28
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $80
+        lda wEventLocationEntry,b
+        pha
+        stz wR0
+        lda #$0000
+
+        _DD35
+        sta wR1
+        jsl rlGetFactionSlotNameID
+        cmp #$FFFF
+        beq _DD67
+        cmp #$00FF
+        beq _DD67
+        lda wR1
+        jsl rlGetFactionSlotLocationID
+        cmp #$00FF
+        bne _DD5B
+        lda wR1
+        jsl rlCountUnitsInFactionSlotAlive
+        cmp #$0000
+        beq _DD67
+
+        _DD5B
+        lda wR0
+        asl a
+        tax
+        lda wR1
+        sta $7F83B9,x
+        inc wR0
+
+        _DD67
+        lda wR1
+        inc a
+        cmp #$0007
+        bne _DD35
+        lda wR0
+        sta $7F83D9
+        ldy #$0000
+
+        _DD78
+        tya
+        asl a
+        tax
+        lda $7F83B9,x
+        jsl rlFindFactionUnitWithLowestGenerationID
+        lda wSelectedUnitDataRAMPointer,b
+        sta $7F8189,x
+        bne _DD9D
+
+        _DD8C
+        lda #$0000
+        sta $7F8189,x
+        sta $7F8199,x
+        sta $7F81A9,x
+        bra _DDB6
+
+
+        _DD9D
+        jsl rlGetSelectedUnitStates
+        bit #UnitStateDead
+        bne _DD8C
+        jsl rlGetSelectedUnitCharacterID
+        sta $7F8199,x
+        jsl rlGetSelectedUnitMapSprite
+        sta $7F81A9,x
+
+        _DDB6
+        inc y
+        tya
+        cmp $7F83D9
+        bne _DD78
+        ldy #$0000
+
+        _DDC1
+        tya
+        asl a
+        tax
+        lda $7F83B9,x
+        jsl rlCountUnitsInFactionSlotAlive
+        sta $7F83C9,x
+        inc y
+        tya
+        cmp $7F83D9
+        bne _DDC1
+        lda #$0000
+        sta wR15
+        sep #$20
+        lda #$7F
+        pha
+        plb
+        .databank $7F
+        rep #$20
+        lda #$0000
+
+        _DDE8
+        sta @l $7F83DD
+        asl a
+        tax
+        lda @l $7F8189,x
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetSelectedUnitFactionSlot
+        ldx #$0000
+        jsl rlGetFactionRelation
+        asl a
+        tax
+        lda $80DE32,x
+        tax
+        lda wR15
+        tay
+
+        _DE0B
+        lda $8C9400,x
+        sta $82B9,b,y
+        inc x
+        inc x
+        inc y
+        inc y
+        tya
+        and #$001F
+        bne _DE0B
+        tya
+        sta wR15
+        lda @l $7F83DD
+        inc a
+        cmp @l $7F83D9
+        bne _DDE8
+        pla
+        sta @l wEventLocationEntry
+        plp
+        plb
+        .databank $7F
+        rts
+
+        .databank 0
+
+        ; 80/DE32
+
+    .endsection Unsorted80DD28Section
+
+
+    .section Unsorted80DE45Section
+
+      .al
+      .xl
+
+      rlUnknown80DE45 ; 80/DE45
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0000
+
+        _DE48
+        lda $80DE57,x
+        sta $7F83FD,x
+        beq _DE56
+        inc x
+        inc x
+        bra _DE48
+
+
+        _DE56
+        rtl
+
+        .databank 0
+
+        ; 80/DE57
+
+    .endsection Unsorted80DE45Section
+
+
+    .section Unsorted80DE75Section
+
+      .al
+      .xl
+
+      rlUnknown80DE75 ; 80/DE75
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 80/DE76
+
+    .endsection Unsorted80DE75Section
+
+
+    .section Unsorted80DE83Section
+
+      .al
+      .xl
+
+      rlUnknown80DE83 ; 80/DE83
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$20
+        sta $7F84FD
+        rep #$20
+        lda #$0005
+        sta $7F84FE
+        sep #$20
+        lda #$01
+        sta $7F8500
+        rep #$20
+        lda #$0000
+        sta $7F8501
+        sep #$20
+        lda #$00
+        sta $7F8503
+        rep #$20
+        lda #$0000
+        sta $7F8504
+        rtl
+
+        .databank 0
+
+        ; 80/DEB7
+
+      rsUnknown80DEB7 ; 80/DEB7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$4400
+        sta $7F83DD
+        lda #$0000
+        sta $7F83DF
+        lda #$0000
+
+        _DEC8
+        sta $7F83E1
+        asl a
+        tax
+        lda $7F8199,x
+        beq _DEFE
+        jsl rlDecompressDialoguePortrait
+        lda #$0800
+        sta wR0
+        lda $7F83DD
+        sta wR1
+        jsl rlDMAByPointer
+        lda $7F83DF
+        tax
+        ldy #$0000
+
+        _DEEF
+        lda [lR19],y
+        sta $7F81B9,x
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0020
+        bne _DEEF
+
+        _DEFE
+        lda $7F83DD
+        clc
+        adc #$0400
+        sta $7F83DD
+        lda $7F83DF
+        clc
+        adc #$0020
+        sta $7F83DF
+        lda $7F83E1
+        inc a
+        cmp $7F83D9
+        bne _DEC8
+        rts
+
+        .databank 0
+
+        ; 80/DF22
+
+      rsUnknown80DF22 ; 80/DF22
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$DD00
+        sta lR18+1
+        lda #$304B
+        sta lR18
+        lda #(`aDecompressionBuffer)<<8
+        sta lR19+1
+        lda #<>aDecompressionBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        lda #$0000
+
+        _DF3D
+        sta $7F83DD
+        asl a
+        tax
+        lda $7F83B9,x
+        tax
+        jsl rlGetFactionBattleBannerID
+        pha
+        lda $7F83DD
+        tax
+        pla
+        jsr rsUnknown80DF62
+        lda $7F83DD
+        inc a
+        cmp $7F83D9
+        bne _DF3D
+        rts
+
+        .databank 0
+
+        ; 80/DF62
+
+      rsUnknown80DF62 ; 80/DF62
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tay
+        txa
+        asl a
+        tax
+        lda $80DFC3,x
+        pha
+        lda #(`aDecompressionBuffer)<<8
+        sta lR18+1
+        lda #<>aDecompressionBuffer
+        sta lR18
+        tya
+        asl a
+        tax
+        lda $80DFA7,x
+        clc
+        adc lR18
+        sta lR18
+        lda #$0040
+        sta wR0
+        pla
+        sta wR1
+        pha
+        jsl rlDMAByPointer
+        lda lR18
+        clc
+        adc #$0200
+        sta lR18
+        lda #$0040
+        sta wR0
+        pla
+        clc
+        adc #$0100
+        sta wR1
+        jsl rlDMAByPointer
+        rts
+
+        .databank 0
+
+        ; 80/DFA7
+
+    .endsection Unsorted80DE83Section
 
 
     .section Unsorted80E42BSection
@@ -5174,6 +9920,615 @@
         ; 80/E586
 
     .endsection Unsorted80E42BSection
+
+
+    .section Unsorted80E598Section
+
+      .al
+      .xl
+
+      rsUnknown80E598 ; 80/E598
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$BB9B
+        sta wVBlankPointer
+        jsl rlUnknown80823F
+        jsl rlDisableVBlank
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+        lda #$0000
+        sta wR1
+        lda #$0000
+        sta wR3
+        lda #$4000
+        sta wR5
+        lda #$2000
+        sta wR6
+        lda #$2800
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        jsl rlProcEngineResetProcEngine
+        jsl rlActiveSpriteEngineReset
+        jsl rlResetHDMAEngine
+        jsl rlUnknown82E073
+        jsl rlUnknown82E400
+        jsl rlUnknown8780AA
+        jsl rlUnknown82F211
+        jsr rsUnknown80E627
+        jsr rsUnknown80E6C9
+        jsr rsUnknown80E8F0
+        jsr rsUnknown80E951
+        jsr rsUnknown80E746
+        jsl rlUnknown89ED12
+        jsl rlUnknown89F246
+        jsl rlUnknown89F065
+        lda #$0000
+        sta wGameStateStep,b
+        lda #$002A
+        sta wGameStateRoutine1,b
+        lda #$0029
+        sta wGameStateRoutine2,b
+        lda #$9D4F
+        sta wMainLoopPointer
+        jsl rlEnableVBlank
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/E627
+
+      rsUnknown80E627 ; 80/E627
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $7F8400
+        sta $7F8428
+        lda #$0023
+        sta $7F8426
+        lda #$0000
+        sta $7F842C
+        jsl rlGetCurrentSaveCompletionCount
+        cmp #$0000
+        beq _E650
+        lda #$0001
+        sta $7F842C
+
+        _E650
+        jsl rlGetAnimationOptionSetting
+        sta wDebugMenuScreenIndex
+        sta wDebugMenuTemp3
+        jsl rlCheckIfTerrainWindowSettingOff
+        sta $7F8404
+        sta $7F8416
+        jsl rlCheckIfUnitWindowSettingOff
+        sta $7F8406
+        sta $7F8418
+        jsl rlGetTextSpeedOption
+        sta $7F8408
+        sta $7F841A
+        jsl rlUnknown87BF1B
+        sta $7F840A
+        sta $7F841C
+        jsl rlUnknown87BF43
+        sta $7F840C
+        sta $7F841E
+        jsl rlUnknown87BFB0
+        sta wR0
+        cmp #$0000
+        beq _E6A8
+        jsl rlUnknown87BFD9
+        inc a
+
+        _E6A8
+        sta $7F840E
+        sta $7F8420
+        jsl rlUnknown87C02F
+        sta wDebugMenuTemp1
+        sta $7F8422
+        jsl rlGetCleverModeFlag
+        sta wDebugMenuTemp2
+        sta $7F8424
+        rts
+
+        .databank 0
+
+        ; 80/E6C9
+
+      rsUnknown80E6C9 ; 80/E6C9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8000
+        sta lR19+1
+        lda #$E72E
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE48C0, $1800, $80, $1800
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE40C0, $0400, $80, $8000
+
+        lda #$8000
+        sta lR19+1
+        lda #$E736
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        ldx #$0200
+
+        _E70F
+        lda $DDFFFE,x
+        sta wJoy2RepeatTimer,x
+        dec x
+        dec x
+        bne _E70F
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        lda #$8000
+        sta lR19+1
+        lda #$E73E
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        rts
+
+        .databank 0
+
+        ; 80/E72E
+
+    .endsection Unsorted80E598Section
+
+
+    .section Unsorted80E746Section
+
+      .al
+      .xl
+
+      rsUnknown80E746 ; 80/E746
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$E586
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$02EF
+        jsl rlUnknown8BB45D
+        lda #$3C00
+        sta wR1
+        lda #$02E2
+        sta wR2
+        lda #$0004
+        sta wR0
+        ldx #$0048
+        jsl rlUnknown89BECC
+        lda #$3C00
+        sta wR1
+        lda #$02E0
+        sta wR2
+        lda #$0002
+        sta wR0
+        ldx #$005C
+        jsl rlUnknown89BECC
+        lda #$3000
+        sta wR1
+        lda #$02CB
+        sta wR2
+        lda #$0005
+        sta wR0
+        ldx #$006E
+        jsl rlUnknown89BECC
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$8000
+        sta lR18+1
+        lda #$E84E
+        sta lR18
+        ldx #$0404
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$E85E
+        sta lR18
+        ldx #$0604
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$E870
+        sta lR18
+        ldx #$0804
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$E884
+        sta lR18
+        ldx #$0A04
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$E898
+        sta lR18
+        ldx #$0C04
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$E8AC
+        sta lR18
+        ldx #$0E04
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$E8BE
+        sta lR18
+        ldx #$1004
+        jsl rlDrawMenuTextLine
+        lda #$8000
+        sta lR18+1
+        lda #$E8CC
+        sta lR18
+        ldx #$1204
+        jsl rlDrawMenuTextLine
+        lda $7F842C
+        beq _E840
+        lda #$8000
+        sta lR18+1
+        lda #$E8DC
+        sta lR18
+        ldx #$1404
+        jsl rlDrawMenuTextLine
+
+        _E840
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $5000
+
+        rts
+
+        .databank 0
+
+        ; 80/E84E
+
+    .endsection Unsorted80E746Section
+
+
+    .section Unsorted80E8F0Section
+
+      .al
+      .xl
+
+      rsUnknown80E8F0 ; 80/E8F0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda bBufferBG1SC
+        and #$FC
+        ora #$02
+        sta bBufferBG1SC
+        lda bBufferBG2SC
+        and #$FC
+        ora #$02
+        sta bBufferBG2SC
+        lda bBufferBG3SC
+        and #$FC
+        ora #$02
+        sta bBufferBG3SC
+        lda #$15
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        lda #$00
+        sta bBufferTMW
+        lda #$00
+        sta bBufferTSW
+        lda #$00
+        sta bBufferW12SEL
+        lda #$00
+        sta bBufferW34SEL
+        lda #$00
+        sta bBufferWOBJSEL
+        lda #$00
+        sta bBufferWH0
+        lda #$FF
+        sta bBufferWH1
+        lda #$00
+        sta bBufferWH2
+        sta bBufferWH3
+        lda #$00
+        sta bBufferWBGLOG
+        sta bBufferWOBJLOG
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$81
+        sta bBufferCGADSUB
+        rep #$20
+        stz wBufferBG1HOFS
+        stz wBufferBG1VOFS
+        stz wBufferBG2HOFS
+        stz wBufferBG2VOFS
+        stz wBufferBG3HOFS
+        stz wBufferBG3VOFS
+        rts
+
+        .databank 0
+
+        ; 80/E951
+
+      rsUnknown80E951 ; 80/E951
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8000
+        sta lR44+1
+        lda #$E96E
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        lda #$8000
+        sta lR44+1
+        lda #$E9A4
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        rts
+
+        .databank 0
+
+        ; 80/E96E
+
+    .endsection Unsorted80E8F0Section
+
+
+    .section Unsorted80E979Section
+
+      .al
+      .xl
+
+      rlUnknown80E979 ; 80/E979
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 80/E97A
+
+    .endsection Unsorted80E979Section
+
+
+    .section Unsorted80E97CSection
+
+      .al
+      .xl
+
+      rlUnknown80E97C ; 80/E97C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0000
+
+        _E97F
+        lda $80E98E,x
+        sta $7F855A,x
+        beq _E98D
+        inc x
+        inc x
+        bra _E97F
+
+
+        _E98D
+        rtl
+
+        .databank 0
+
+        ; 80/E98E
+
+    .endsection Unsorted80E97CSection
+
+
+    .section Unsorted80E9AFSection
+
+      .al
+      .xl
+
+      rlUnknown80E9AF ; 80/E9AF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 80/E9B0
+
+    .endsection Unsorted80E9AFSection
+
+
+    .section Unsorted80E9B2Section
+
+      .al
+      .xl
+
+      rlUnknown80E9B2 ; 80/E9B2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phk
+        plb
+        .databank $80
+        ldx #$0000
+        lda $7F842C
+        beq _E9D8
+
+        _E9BD
+        sep #$20
+        lda $E9F3,b,x
+        sta $7F875A,x
+        rep #$20
+        lda $E9F4,b,x
+        sta $7F875B,x
+        inc x
+        inc x
+        inc x
+        cpx #$008D
+        bne _E9BD
+        rtl
+
+
+        _E9D8
+        sep #$20
+        lda $EA80,b,x
+        sta $7F875A,x
+        rep #$20
+        lda $EA81,b,x
+        sta $7F875B,x
+        inc x
+        inc x
+        inc x
+        cpx #$00B7
+        bne _E9D8
+        rtl
+
+        .databank 0
+
+        ; 80/E9F3
+
+    .endsection Unsorted80E9B2Section
+
+
+    .section Unsorted80F222Section
+
+      .al
+      .xl
+
+      rsUnknown80F222 ; 80/F222
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        jsl rlDisableVBlank
+        stz aSave.wMenuOperation,b
+        jsl rlUnknown91E52B
+        jsl rlUnknown91D6EC
+        lda #$0004
+        sta wGameStateRoutine2,b
+        lda #$0005
+        sta wGameStateRoutine1,b
+        lda #$0002
+        sta wGameStateStep,b
+        lda #$0001
+        sta $1864,b
+        lda #$F560
+        sta wVBlankPointer
+        lda #$F542
+        sta wMainLoopPointer
+        lda #(`procFadeIn)<<8
+        sta lR44+1
+        lda #<>procFadeIn
+        sta lR44
+        jsl rlProcEngineCreateProc
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        plp
+        cli
+        rts
+
+        .databank 0
+
+        ; 80/F27C
+
+      rsUnknown80F27C ; 80/F27C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        jsl rlProcEngineResetProcEngine
+        jsl rlActiveSpriteEngineReset
+        jsl rlEnableActiveSpriteEngine
+        jsl rlResetHDMAEngine
+        jsl rlUnknown82E073
+        jsl rlUnknown8780AA
+        jsl rlUnknown82F211
+        lda #$00FF
+        sta wUnknown053E,b
+        lda #$0004
+        sta wGameStateRoutine2,b
+        lda #$0006
+        sta wGameStateRoutine1,b
+        lda #$0023
+        sta wGameStateStep,b
+        lda #$F560
+        sta wVBlankPointer
+        lda #$9D4F
+        sta wMainLoopPointer
+        plp
+        cli
+        rts
+
+        .databank 0
+
+        ; 80/F2BE
+
+    .endsection Unsorted80F222Section
 
 
     .section Unsorted80F2BESection

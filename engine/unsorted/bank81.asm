@@ -2214,3 +2214,40 @@
         ; 81/B522
 
     .endsection Unsorted81B503Section
+
+
+    .section Unsorted81B52ASection
+
+      .al
+      .xl
+
+      rlUnknown81B52A ; 81/B52A
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+
+        _B52C
+        lda $4212,b
+        bit #$40
+        beq _B52C
+        lda #$80
+        sta $2100,b
+        rep #$20
+        jsl rlUnknown8887EC
+        sep #$20
+        lda bBufferINIDISP
+        and #$80
+        sta $2100,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 81/B54A
+
+    .endsection Unsorted81B52ASection

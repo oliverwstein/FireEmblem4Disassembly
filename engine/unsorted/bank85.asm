@@ -103,6 +103,30 @@
     .endsection Unsorted8583C2Section
 
 
+    .section Unsorted8583D3Section
+
+      .al
+      .xl
+
+      rlUnknown8583D3 ; 85/83D3
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody2,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/83DA
+
+    .endsection Unsorted8583D3Section
+
+
     .section Unsorted8583F8Section
 
       .al
@@ -1503,6 +1527,173 @@
     .endsection Unsorted858C4ESection
 
 
+    .section Unsorted858D83Section
+
+      .al
+      .xl
+
+      rlUnknown858D83 ; 85/8D83
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85BC9E
+        lda #$4F15
+        sta aProcSystem.aBody4,b,x
+        lda #$0000
+        sta aProcSystem.aBody5,b,x
+        lda $057C,b
+        cmp #$0001
+        bne _8DA2
+        lda #$0D0A
+        jsl rlSetMapMenuTilemapArea
+
+        _8DA2
+        jsl rlUnknown859B2A
+        jsl rlUnknown85A227
+        rtl
+
+        .databank 0
+
+        ; 85/8DAB
+
+      rlUnknown858DAB ; 85/8DAB
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown858F10
+        lda #$8DB5
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/8DB5
+
+      rlUnknown858DB5 ; 85/8DB5
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown0007D8,b
+        cmp #$0006
+        bne _8DC1
+        jml _8EA0
+
+
+        _8DC1
+        jsr rsUnknown858F10
+        bcc _8DCA
+        jml _8EA0
+
+
+        _8DCA
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        phx
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$8500
+        sta lR18+1
+        lda #$8EA1
+        sta lR18
+        ldx #$0702
+        jsl rlUnknown878921
+        lda $057C,b
+        cmp #$0001
+        bne _8E01
+        lda #$8500
+        sta lR18+1
+        lda #$8EA7
+        sta lR18
+        ldx #$0901
+        jsl rlUnknown878921
+        bra _8E7E
+
+
+        _8E01
+        lda #$8500
+        sta lR18+1
+        lda #$8EA7
+        sta lR18
+        ldx #$0902
+        jsl rlUnknown878921
+        lda #$2140
+        sta aCurrentTilemapInfo,b
+        lda #$8500
+        sta lR18+1
+        lda #$8EAD
+        sta lR18
+        ldx #$0B02
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$8EB1
+        sta lR18
+        ldx #$0C02
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$8EB5
+        sta lR18
+        ldx #$0D02
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$8EB9
+        sta lR18
+        ldx #$0E02
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$8EBD
+        sta lR18
+        ldx #$0F02
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$8EC1
+        sta lR18
+        ldx #$1002
+        jsl rlUnknown8788F7
+
+        _8E7E
+        plx
+        jsl rlUnknown858F61
+        jsl rlUnknown858F28
+        bcc _8E92
+        sta $0534,b
+        jsl rlUnknown858751
+        bra _8E96
+
+
+        _8E92
+        jsl rlUnknown8587E1
+
+        _8E96
+        jsl rlUnknown85A234
+        lda #$8EC5
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _8EA0
+        rtl
+
+        .databank 0
+
+        ; 85/8EA1
+
+    .endsection Unsorted858D83Section
+
+
     .section Unsorted858EC5Section
 
       .al
@@ -1775,6 +1966,88 @@
         ; 85/9078
 
     .endsection Unsorted858F28Section
+
+
+    .section Unsorted8590B9Section
+
+      .al
+      .xl
+
+      rlUnknown8590B9 ; 85/90B9
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85BC9E
+        lda #$0000
+        sta aProcSystem.aBody5,b,x
+        jsl rlUnknown85A227
+        rtl
+
+        .databank 0
+
+        ; 85/90C8
+
+      rlUnknown8590C8 ; 85/90C8
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown858F10
+        lda #$90D2
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/90D2
+
+      rlUnknown8590D2 ; 85/90D2
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown0007D8,b
+        cmp #$0006
+        beq _9107
+        jsr rsUnknown858F10
+        bcs _9107
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsr rsUnknown85915A
+        jsl rlUnknown858F28
+        bcc _90F9
+        clc
+        adc #$0008
+        sta $0534,b
+        jsl rlUnknown858751
+        bra _90FD
+
+
+        _90F9
+        jsl rlUnknown8587E1
+
+        _90FD
+        jsl rlUnknown85A234
+        lda #$9108
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _9107
+        rtl
+
+        .databank 0
+
+        ; 85/9108
+
+    .endsection Unsorted8590B9Section
 
 
     .section Unsorted859108Section
@@ -2192,6 +2465,31 @@
     .endsection Unsorted8592FASection
 
 
+    .section Unsorted859386Section
+
+      .al
+      .xl
+
+      rlUnknown859386 ; 85/9386
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown85969E
+        lda #$9390
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/9390
+
+    .endsection Unsorted859386Section
+
+
     .section Unsorted859390Section
 
       .al
@@ -2283,6 +2581,31 @@
         ; 85/9427
 
     .endsection Unsorted859390Section
+
+
+    .section Unsorted859427Section
+
+      .al
+      .xl
+
+      rlUnknown859427 ; 85/9427
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown859766
+        lda #$9431
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/9431
+
+    .endsection Unsorted859427Section
 
 
     .section Unsorted859431Section
@@ -3147,6 +3470,58 @@
     .endsection Unsorted859973Section
 
 
+    .section Unsorted859AB4Section
+
+      .al
+      .xl
+
+      rlUnknown859AB4 ; 85/9AB4
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7E8BEE
+        bit #$8000
+        bne _9AC7
+        lda $7E8BEE
+        bit #$4000
+        bne _9ADB
+        rtl
+
+
+        _9AC7
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        lda #$0000
+        sta $7E8BEE
+        sta $7E8BEC
+        rtl
+
+
+        _9ADB
+        phx
+        lda $7E8BEC
+        jsl rlGetItemROMDataByInventorySlot
+        plx
+        lda wCurrentItemDataROMPointer,b
+        sta aProcSystem.aBody5,b,x
+        lda #$0000
+        sta $7E8BEE
+        sta $7E8BEC
+        lda #$9973
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/9AFD
+
+    .endsection Unsorted859AB4Section
+
+
     .section Unsorted859AFDSection
 
       .al
@@ -3843,6 +4218,28 @@
     .endsection Unsorted85A02ESection
 
 
+    .section Unsorted85A040Section
+
+      .al
+      .xl
+
+      rsUnknown85A040 ; 85/A040
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 85/A041
+
+    .endsection Unsorted85A040Section
+
+
     .section Unsorted85A041Section
 
       .al
@@ -3971,6 +4368,56 @@
         ; 85/A0CE
 
     .endsection Unsorted85A0A1Section
+
+
+    .section Unsorted85A0D0Section
+
+      .al
+      .xl
+
+      rlUnknown85A0D0 ; 85/A0D0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR5
+        sec
+        sbc wR3
+        sta wR3
+        bra rsUnknown85A0A1
+
+        .databank 0
+
+        ; 85/A0D9
+
+      rsUnknown85A0D9 ; 85/A0D9
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetMapMenuTilemapArea
+        sta wR0
+        jsr rlUnknown85A0D0
+        lda wR0
+        sec
+        sbc wR4
+        sta wR0
+        jsl rlGetMapMenuPosition
+        clc
+        adc wR0
+        jsl rlSetMapMenuPosition
+        rts
+
+        .databank 0
+
+        ; 85/A0F5
+
+    .endsection Unsorted85A0D0Section
 
 
     .section Unsorted85A117Section
@@ -4730,6 +5177,389 @@
     .endsection Unsorted85A5C5Section
 
 
+    .section Unsorted85A5FBSection
+
+      .al
+      .xl
+
+      rlUnknown85A5FB ; 85/A5FB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85BC9E
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        phx
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta wSelectedUnitDataRAMPointer,b
+        plx
+        jsl rlGetSelectedUnitStates
+        bit #UnitStateMapAnimation
+        bne _A61F
+        lda #$0000
+        bra _A622
+
+
+        _A61F
+        lda #$0001
+
+        _A622
+        sta aProcSystem.aBody7,b,x
+        phx
+        lda #$8500
+        sta lR18+1
+        lda #$A670
+        sta lR18
+        ldx #$0101
+        jsl rlUnknown878921
+        lda #$8500
+        sta lR18+1
+        lda #$A680
+        sta lR18
+        ldx #$0302
+        jsl rlUnknown878921
+        lda #$8500
+        sta lR18+1
+        lda #$A688
+        sta lR18
+        ldx #$0502
+        jsl rlUnknown878921
+        lda #$8500
+        sta lR18+1
+        lda #$A690
+        sta lR18
+        ldx #$0702
+        jsl rlUnknown878921
+        plx
+        jsl rlUnknown8587E1
+        rtl
+
+        .databank 0
+
+        ; 85/A670
+
+    .endsection Unsorted85A5FBSection
+
+
+    .section Unsorted85A69ASection
+
+      .al
+      .xl
+
+      rlUnknown85A69A ; 85/A69A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 85/A69B
+
+      rlUnknown85A69B ; 85/A69B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aHeaderBitfield,b,x
+        bit #$0004
+        beq _A6A7
+        jml _A742
+
+
+        _A6A7
+        bit #$0001
+        beq _A6B0
+        jml _A750
+
+
+        _A6B0
+        bit #$0002
+        beq _A6BF
+        and #$FFFD
+        sta aProcSystem.aHeaderBitfield,b,x
+        jml _A750
+
+
+        _A6BF
+        lda wJoy1Repeated
+        bit #$0800
+        beq _A6D8
+        lda #$0007
+        jsl rlUnknown808FAD
+        lda aProcSystem.aBody7,b,x
+        dec a
+        bpl _A6F0
+        lda #$0002
+        bra _A6F0
+
+
+        _A6D8
+        bit #$0400
+        beq _A6F5
+        lda #$0007
+        jsl rlUnknown808FAD
+        lda aProcSystem.aBody7,b,x
+        inc a
+        cmp #$0003
+        bcc _A6F0
+        lda #$0000
+
+        _A6F0
+        sta aProcSystem.aBody7,b,x
+        bra _A750
+
+
+        _A6F5
+        lda wJoy1New
+        bit #$0080
+        beq _A736
+        lda #$000A
+        jsl rlUnknown808FAD
+        phx
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta wSelectedUnitDataRAMPointer,b
+        plx
+        lda aProcSystem.aBody7,b,x
+        cmp #$0002
+        beq _A71D
+        jsl rlSetSelectedUnitMapAnimation
+        bra _A742
+
+
+        _A71D
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0001
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda #$8500
+        sta lR44+1
+        lda #$A782
+        sta lR44
+        jsl rlProcEngineCreateProc
+        bra _A750
+
+
+        _A736
+        bit #$8000
+        beq _A750
+        lda #$0021
+        jsl rlUnknown808FAD
+
+        _A742
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        jsl rlUnknown85E85D
+        bra _A764
+
+
+        _A750
+        lda #$0300
+        sta wR0
+        lda #$0000
+        sta wR1
+        phx
+        lda aProcSystem.aBody7,b,x
+        inc a
+        jsl rlUnknown8586AA
+        plx
+
+        _A764
+        rtl
+
+        .databank 0
+
+        ; 85/A765
+
+    .endsection Unsorted85A69ASection
+
+
+    .section Unsorted85A78ESection
+
+      .al
+      .xl
+
+      rlUnknown85A78E ; 85/A78E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85BC9E
+        lda #$0000
+        sta aProcSystem.aBody7,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/A799
+
+      rlUnknown85A799 ; 85/A799
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        phx
+        lda #$8500
+        sta lR18+1
+        lda #$A7CE
+        sta lR18
+        ldx #$0102
+        jsl rlUnknown878921
+        lda #$8500
+        sta lR18+1
+        lda #$A7D6
+        sta lR18
+        ldx #$0302
+        jsl rlUnknown878921
+        plx
+        jsl rlUnknown8587E1
+        lda #$A7DE
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/A7CE
+
+    .endsection Unsorted85A78ESection
+
+
+    .section Unsorted85A7DESection
+
+      .al
+      .xl
+
+      rlUnknown85A7DE ; 85/A7DE
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1Repeated
+        bit #$0800
+        beq _A7F7
+        lda #$0007
+        jsl rlUnknown808FAD
+        lda aProcSystem.aBody7,b,x
+        dec a
+        bpl _A80F
+        lda #$0001
+        bra _A80F
+
+
+        _A7F7
+        bit #$0400
+        beq _A814
+        lda #$0007
+        jsl rlUnknown808FAD
+        lda aProcSystem.aBody7,b,x
+        inc a
+        cmp #$0002
+        bcc _A80F
+        lda #$0000
+
+        _A80F
+        sta aProcSystem.aBody7,b,x
+        bra _A871
+
+
+        _A814
+        lda wJoy1New
+        bit #$0080
+        beq _A837
+        lda #$000A
+        jsl rlUnknown808FAD
+        lda aProcSystem.aBody7,b,x
+        sta wRoutineVariable1,b
+        lda #$0000
+        jsl rlUnknown84C62E
+        lda #$0004
+        sta aProcSystem.wInput0,b
+        bra _A846
+
+
+        _A837
+        bit #$8000
+        beq _A871
+        stz aProcSystem.wInput0,b
+        lda #$0021
+        jsl rlUnknown808FAD
+
+        _A846
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        phx
+        lda #$8500
+        sta lR44+1
+        lda #$A5EF
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _A885
+        lda aProcSystem.aHeaderBitfield,b,x
+        and #$FFFE
+        ora #$0002
+        ora aProcSystem.wInput0,b
+        sta aProcSystem.aHeaderBitfield,b,x
+        plx
+        bra _A885
+
+
+        _A871
+        lda #$0100
+        sta wR0
+        lda #$0000
+        sta wR1
+        phx
+        lda aProcSystem.aBody7,b,x
+        inc a
+        jsl rlUnknown8586AA
+        plx
+
+        _A885
+        rtl
+
+        .databank 0
+
+        ; 85/A886
+
+      rlUnknown85A886 ; 85/A886
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8500
+        sta lR44+1
+        lda #$A5EF
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/A895
+
+    .endsection Unsorted85A7DESection
+
+
     .section Unsorted85AB32Section
 
       .al
@@ -4842,6 +5672,28 @@
         ; 85/ABED
 
     .endsection Unsorted85AB96Section
+
+
+    .section Unsorted85ABF1Section
+
+      .al
+      .xl
+
+      rlUnknown85ABF1 ; 85/ABF1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlHDMAEngineFreeEntryByIndex
+        rtl
+
+        .databank 0
+
+        ; 85/ABF6
+
+    .endsection Unsorted85ABF1Section
 
 
     .section Unsorted85ABF6Section
@@ -5070,6 +5922,243 @@
     .endsection Unsorted85AC89Section
 
 
+    .section Unsorted85AD67Section
+
+      .al
+      .xl
+
+      rlUnknown85AD67 ; 85/AD67
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown85A234
+        lda #$0002
+        sta wR40
+        lda #$8500
+        sta lR44+1
+        lda #$AEBB
+        sta lR44
+        jsl rlHDMAEngineCreateEntryByIndex
+        sep #$20
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$42
+        sta bBufferCGADSUB
+        lda #$11
+        sta bBufferTS
+        rep #$20
+        plx
+        lda #$AD97
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/AD97
+
+      rlUnknown85AD97 ; 85/AD97
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FEAAA
+        cmp #$7FFF
+        bne _ADA6
+        lda #$ADA7
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _ADA6
+        rtl
+
+        .databank 0
+
+        ; 85/ADA7
+
+      rlUnknown85ADA7 ; 85/ADA7
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec aProcSystem.aBody6,b,x
+        bpl _ADB2
+        lda #$ADB3
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _ADB2
+        rtl
+
+        .databank 0
+
+        ; 85/ADB3
+
+      rlUnknown85ADB3 ; 85/ADB3
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wBufferBG2VOFS
+        stz wBufferBG2HOFS
+        stz wBufferBG3VOFS
+        stz wBufferBG3HOFS
+        sep #$20
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$42
+        sta bBufferCGADSUB
+        lda #$11
+        sta bBufferTS
+        rep #$20
+        jsr rsUnknown85B07C
+        lda #$ADD5
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/ADD5
+
+      rlUnknown85ADD5 ; 85/ADD5
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$ADF6
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda #$0002
+        jsl rlHDMAEngineFreeEntryByIndex
+        lda #$0002
+        sta wR40
+        lda #$8500
+        sta lR44+1
+        lda #$AF0F
+        sta lR44
+        jsl rlHDMAEngineCreateEntryByIndex
+        rtl
+
+        .databank 0
+
+        ; 85/ADF6
+
+      rlUnknown85ADF6 ; 85/ADF6
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FEAAA
+        cmp #$FFFF
+        beq _AE00
+        rtl
+
+
+        _AE00
+        phx
+        lda #$030F
+        sta wUnknown053C,b
+        lda #$8500
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$AD55
+        sta lMapMenuTilemapRAMEntryPointer,b
+        jsl rlUnknown878B98
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7B88, $0800, $80, $A800
+
+        plx
+        lda #$AE2C
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/AE2C
+
+      rlUnknown85AE2C ; 85/AE2C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$20FF
+        sta wUnknown053C,b
+        lda #$8500
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$AD5E
+        sta lMapMenuTilemapRAMEntryPointer,b
+        jsl rlUnknown878B98
+        jsl rlUnknown878459
+        lda #$0002
+        jsl rlHDMAEngineFreeEntryByIndex
+        plx
+        lda #$AE56
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/AE56
+
+      rlUnknown85AE56 ; 85/AE56
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wBufferBG2VOFS
+        stz wBufferBG2HOFS
+        stz wBufferBG3VOFS
+        stz wBufferBG3HOFS
+        jsr rsUnknown85B039
+        sep #$20
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$00
+        sta bBufferCGADSUB
+        lda #$00
+        sta bBufferTS
+        lda #$E0
+        sta bBufferCOLDATA_0
+        sta bBufferCOLDATA_1
+        sta bBufferCOLDATA_2
+        sta bBufferCOLDATA_3
+        rep #$20
+        lda aProcSystem.aBody5,b,x
+        sta wGameStateRoutine1,b
+        jsl rlProcEngineFreeProc
+        jsl rlUnknown85C0D5
+        rtl
+
+        .databank 0
+
+        ; 85/AE8A
+
+    .endsection Unsorted85AD67Section
+
+
     .section Unsorted85AE8ASection
 
       .al
@@ -5121,6 +6210,220 @@
         ; 85/AEBB
 
     .endsection ProcScript85AEACSection
+
+
+    .section Unsorted85AEC7Section
+
+      .al
+      .xl
+
+      rlUnknown85AEC7 ; 85/AEC7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$006E
+        sta $7FEAAA
+        jsr rsUnknown85AF5A
+        rtl
+
+        .databank 0
+
+        ; 85/AED2
+
+      rlUnknown85AED2 ; 85/AED2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FEAAA
+        sec
+        sbc $7FEAAC
+        sta $7FEAAA
+        cmp #$0058
+        bmi _AEE8
+
+        _AEE4
+        jsr rsUnknown85AF5A
+        rtl
+
+
+        _AEE8
+        sec
+        sbc #$0058
+        clc
+        adc $7FEAAC
+        bmi _AEFE
+        beq _AEFE
+        lda #$0058
+        sta $7FEAAA
+        bra _AEE4
+
+
+        _AEFE
+        lda #$AF0C
+        sta aHDMASystem.aOnCycle,b,x
+        lda #$7FFF
+        sta $7FEAAA
+        rtl
+
+        .databank 0
+
+        ; 85/AF0C
+
+      rlUnknown85AF0C ; 85/AF0C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 85/AF0D
+
+    .endsection Unsorted85AEC7Section
+
+
+    .section Unsorted85AF1BSection
+
+      .al
+      .xl
+
+      rlUnknown85AF1B ; 85/AF1B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0058
+        sta $7FEAAA
+        rtl
+
+        .databank 0
+
+        ; 85/AF23
+
+      rlUnknown85AF23 ; 85/AF23
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FEAAA
+        clc
+        adc $7FEAAC
+        sta $7FEAAA
+        cmp #$0071
+        bpl _AF39
+
+        _AF35
+        jsr rsUnknown85AF5A
+        rtl
+
+
+        _AF39
+        sec
+        sbc #$0070
+        cmp $7FEAAC
+        bpl _AF4C
+        lda #$0070
+        sta $7FEAAA
+        bra _AF35
+
+
+        _AF4C
+        lda #$AF0C
+        sta aHDMASystem.aOnCycle,b,x
+        lda #$FFFF
+        sta $7FEAAA
+        rtl
+
+        .databank 0
+
+        ; 85/AF5A
+
+      rsUnknown85AF5A ; 85/AF5A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        bit #$0001
+        bne _AF66
+        lda #$0000
+        bra _AF69
+
+
+        _AF66
+        lda #$0010
+
+        _AF69
+        sta wR4
+        jsr rsUnknown85AF78
+        lda #$EAAE
+        clc
+        adc wR4
+        sta aHDMASystem.aOffset,b,x
+        rts
+
+        .databank 0
+
+        ; 85/AF78
+
+      rsUnknown85AF78 ; 85/AF78
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FEAAA
+        ldx wR4
+        sep #$20
+        sta $7FEAAE,x
+        rep #$20
+        asl a
+        sta wR0
+        lda #$AFC3
+        sta $7FEAAF,x
+        lda #$00E0
+        sec
+        sbc wR0
+        sep #$20
+        sta $7FEAB1,x
+        rep #$20
+        lda #$AFC4
+        sta aDialogueBoxHDMAIndirectTableOdd,x
+        lda $7FEAAA
+        dec a
+        sep #$20
+        sta $7FEAB4,x
+        rep #$20
+        lda #$AFC3
+        sta $7FEAB5,x
+        lda #$0000
+        sta $7FEAB7,x
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/AFC3
+
+    .endsection Unsorted85AF1BSection
 
 
     .section Unsorted85AFC5Section
@@ -5234,6 +6537,46 @@
         ; 85/B039
 
     .endsection Unsorted85B009Section
+
+
+    .section Unsorted85B039Section
+
+      .al
+      .xl
+
+      rsUnknown85B039 ; 85/B039
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+
+        _B03D
+        lda $7FEACE,x
+        sta $0108,b,x
+        lda $7FEAD6,x
+        sta $01D0,b,x
+        lda $7FEADE,x
+        sta $01D8,b,x
+        lda $7FEAEE,x
+        sta $01F0,b,x
+        lda $7FEB0E,x
+        sta $01F8,b,x
+        inc x
+        inc x
+        cpx #$0008
+        bmi _B03D
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/B069
+
+    .endsection Unsorted85B039Section
 
 
     .section Unsorted85B07CSection
@@ -7520,6 +8863,31 @@
     .endsection Table85BE76Section
 
 
+    .section Unsorted85C0BASection
+
+      .al
+      .xl
+
+      rlUnknown85C0BA ; 85/C0BA
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlFreeHDMAEntry0
+        jsl rlProcEngineFreeProc
+        jsl rlUnknown85C0D5
+        rtl
+
+        .databank 0
+
+        ; 85/C0C7
+
+    .endsection Unsorted85C0BASection
+
+
     .section Unsorted85C0CESection
 
       .al
@@ -7565,6 +8933,1551 @@
         ; 85/C0E2
 
     .endsection Unsorted85C0D5Section
+
+
+    .section Unsorted85C0E2Section
+
+      .al
+      .xl
+
+      rsUnknown85C0E2 ; 85/C0E2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody0,b,x
+        and #$00FF
+        sta aProcSystem.wInput0,b
+        lda $0FD8,b,x
+        and #$00FF
+        sta aProcSystem.wInput1,b
+        rts
+
+        .databank 0
+
+        ; 85/C0F5
+
+      rsUnknown85C0F5 ; 85/C0F5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.wInput1,b
+        xba
+        ora aProcSystem.wInput0,b
+        sta aProcSystem.aBody0,b,x
+        rts
+
+        .databank 0
+
+        ; 85/C100
+
+      rsUnknown85C100 ; 85/C100
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.wInput1,b
+        xba
+        ora aProcSystem.wInput0,b
+        sta aProcSystem.aBody1,b,x
+        rts
+
+        .databank 0
+
+        ; 85/C10B
+
+      rsUnknown85C10B ; 85/C10B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody0,b,x
+        and #$00FF
+        cmp #$0020
+        bcs _C12A
+        asl a
+        sta wR10
+        lda aProcSystem.aBody0,b,x
+        and #$FF00
+        cmp #$2000
+        bcs _C12A
+        lsr a
+        lsr a
+        clc
+        adc wR10
+        clc
+
+        _C12A
+        rts
+
+        .databank 0
+
+        ; 85/C12B
+
+      rsUnknown85C12B ; 85/C12B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta aProcSystem.aBody2,b,x
+        rts
+
+        .databank 0
+
+        ; 85/C12F
+
+      rsUnknown85C12F ; 85/C12F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody3,b,x
+        bit #$0020
+        bne _C149
+        lda $0788,b
+        bit #$00FF
+        bne _C149
+        lda bUnknown000E7B,b
+        bit #$0040
+        bne _C149
+        clc
+        rts
+
+
+        _C149
+        sec
+        rts
+
+        .databank 0
+
+        ; 85/C14B
+
+      rsUnknown85C14B ; 85/C14B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody3,b,x
+        bit #$0080
+        bne _C15E
+        bit #$0040
+        bne _C15E
+        jsl rlUnknown88A38C
+        bcc _C160
+
+        _C15E
+        sec
+        rts
+
+
+        _C160
+        clc
+        rts
+
+        .databank 0
+
+        ; 85/C162
+
+      rsUnknown85C162 ; 85/C162
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody2,b,x
+        beq _C19A
+        sta aProcSystem.wInput1,b
+        lda aProcSystem.aBody3,b,x
+        sta aProcSystem.wInput0,b
+        and #$FF3F
+        sta aProcSystem.aBody3,b,x
+        lda #$0000
+        sta wBufferBG2HOFS
+        sta wBufferBG2VOFS
+        sta wBufferBG3HOFS
+        sta wBufferBG3VOFS
+        lda bBufferTM
+        ora #$0006
+        sta bBufferTM
+        lda #$8500
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$C19B
+        sta lMapMenuTilemapRAMEntryPointer,b
+        pea #<>_C19A - 1
+        jmp ($0ED1)
+
+
+        _C19A
+        rts
+
+        .databank 0
+
+        ; 85/C19B
+
+    .endsection Unsorted85C0E2Section
+
+
+    .section Unsorted85C1A4Section
+
+      .al
+      .xl
+
+      rsUnknown85C1A4 ; 85/C1A4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phx
+        lda aProcSystem.aBody3,b,x
+        bit #$0080
+        bne _C1F7
+        lda aProcSystem.aBody1,b,x
+        and #$00FF
+        sta wR0
+        asl a
+        sta wR1
+        lda $0FF8,b,x
+        and #$00FF
+        sta wR2
+        lda #$0040
+        sec
+        sbc wR1
+        sta wR3
+        jsr rsUnknown85C10B
+        bcs _C1F7
+        tax
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+
+        _C1D7
+        lda wR0
+        sta wR1
+
+        _C1DB
+        lda #$0000
+        sta $DD4A,b,x
+        sta $E3CA,b,x
+        inc x
+        inc x
+        dec wR1
+        bne _C1DB
+        txa
+        clc
+        adc wR3
+        tax
+        dec wR2
+        bne _C1D7
+        clc
+
+        _C1F4
+        plx
+        plb
+        .databank $7F
+        rts
+
+
+        _C1F7
+        sec
+        bra _C1F4
+
+        .databank 0
+
+        ; 85/C1FA
+
+      rsUnknown85C1FA ; 85/C1FA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phx
+        lda aProcSystem.aBody3,b,x
+        bit #$0080
+        bne _C24A
+        lda aProcSystem.aBody1,b,x
+        and #$00FF
+        sta wR0
+        asl a
+        sta wR1
+        lda $0FF8,b,x
+        and #$00FF
+        sta wR2
+        lda #$0040
+        sec
+        sbc wR1
+        sta wR3
+        jsr rsUnknown85C10B
+        bcs _C24A
+        tax
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+
+        _C22D
+        lda wR0
+        sta wR1
+
+        _C231
+        lda #$0000
+        sta $E3CA,b,x
+        inc x
+        inc x
+        dec wR1
+        bne _C231
+        txa
+        clc
+        adc wR3
+        tax
+        dec wR2
+        bne _C22D
+        clc
+
+        _C247
+        plx
+        plb
+        .databank $7F
+        rts
+
+
+        _C24A
+        sec
+        bra _C247
+
+        .databank 0
+
+        ; 85/C24D
+
+      rsUnknown85C24D ; 85/C24D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tay
+        lda aProcSystem.aBody1,b,x
+        and #$00FF
+        sta wR0
+        asl a
+        sta wR1
+        lda $0FF8,b,x
+        and #$00FF
+        sta wR2
+        lda #$0040
+        sec
+        sbc wR1
+        sta wR3
+        jsr rsUnknown85C10B
+        bcs _C28E
+        tax
+
+        _C271
+        lda wR0
+        sta wR1
+
+        _C275
+        lda $0000,b,y
+        sta $7FDD4A,x
+        inc y
+        inc y
+        inc x
+        inc x
+        dec wR1
+        bne _C275
+        txa
+        clc
+        adc wR3
+        tax
+        dec wR2
+        bne _C271
+        clc
+
+        _C28E
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/C291
+
+      rsUnknown85C291 ; 85/C291
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda aProcSystem.aBody0,b,x
+        bmi _C2EF
+        and #$FF00
+        lsr a
+        lsr a
+        sta wR10
+        lsr a
+        sta wR11
+        lda aProcSystem.aBody1,b,x
+        bmi _C2EF
+        and #$FF00
+        lsr a
+        lsr a
+        sta wR12
+        lda #$7FDD
+        sta lR18+1
+        lda #$DD4A
+        clc
+        adc wR10
+        sta lR18
+        lda wR12
+        sta wR0
+        lda #$5400
+        clc
+        adc wR11
+        sta wR1
+        jsl rlDMAByPointer
+        lda $0788,b
+        bit #$0002
+        bne _C2EF
+        lda #$7FE3
+        sta lR18+1
+        lda #$E3CA
+        clc
+        adc wR10
+        sta lR18
+        lda wR12
+        sta wR0
+        lda #$5800
+        clc
+        adc wR11
+        sta wR1
+        jsl rlDMAByPointer
+
+        _C2EF
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/C2F1
+
+      rsUnknown85C2F1 ; 85/C2F1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody3,b,x
+        ora #$0020
+        sta aProcSystem.aBody3,b,x
+        rts
+
+        .databank 0
+
+        ; 85/C2FB
+
+      rsUnknown85C2FB ; 85/C2FB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody3,b,x
+        and #$FFDF
+        sta aProcSystem.aBody3,b,x
+        rts
+
+        .databank 0
+
+        ; 85/C305
+
+    .endsection Unsorted85C1A4Section
+
+
+    .section Unsorted85C30DSection
+
+      .al
+      .xl
+
+      rlUnknown85C30D ; 85/C30D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta aProcSystem.aBody2,b,x
+        lda #$0040
+        sta aProcSystem.aBody3,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/C31A
+
+      rlUnknown85C31A ; 85/C31A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown85C12F
+        bcs _C32B
+        jsr rsUnknown85C14B
+        bcc _C33C
+        jsr rsUnknown85C162
+        bcs _C33C
+        bra _C339
+
+
+        _C32B
+        jsr rsUnknown85C1A4
+        bcs _C33C
+        lda aProcSystem.aBody3,b,x
+        ora #$0080
+        sta aProcSystem.aBody3,b,x
+
+        _C339
+        jsr rsUnknown85C291
+
+        _C33C
+        rtl
+
+        .databank 0
+
+        ; 85/C33D
+
+    .endsection Unsorted85C30DSection
+
+
+    .section Unsorted85C347Section
+
+      .al
+      .xl
+
+      rlUnknown85C347 ; 85/C347
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85C30D
+        lda #$C3A9
+        jsr rsUnknown85C12B
+        lda #$0002
+        sta aProcSystem.wInput0,b
+        lda #$0001
+        sta aProcSystem.wInput1,b
+        jsr rsUnknown85C0F5
+        lda #$0009
+        sta aProcSystem.wInput0,b
+        lda #$0005
+        sta aProcSystem.wInput1,b
+        jsr rsUnknown85C100
+        jsr rsUnknown85C41F
+        lda aProcSystem.aBody3,b,x
+        ora #$0004
+        sta aProcSystem.aBody3,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/C37C
+
+      rlUnknown85C37C ; 85/C37C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0788,b
+        bit #$00FD
+        beq _C393
+        lda aProcSystem.aBody3,b,x
+        bit #$0080
+        bne _C393
+        lda #$FFFF
+        jsl rlUnknown85C4E0
+
+        _C393
+        lda $0788,b
+        bit #$00FF
+        beq _C3A4
+        lda aProcSystem.aBody3,b,x
+        ora #$0004
+        sta aProcSystem.aBody3,b,x
+
+        _C3A4
+        jsl rlUnknown85C31A
+        rtl
+
+        .databank 0
+
+        ; 85/C3A9
+
+      rsUnknown85C3A9 ; 85/C3A9
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown85C41F
+        jsr rsUnknown85C467
+        lda aProcSystem.aBody3,b,x
+        bit #$0004
+        beq _C3C3
+        and #$FFFB
+        sta aProcSystem.aBody3,b,x
+        lda #$C3C5
+        jsr rsUnknown85C24D
+
+        _C3C3
+        clc
+        rts
+
+        .databank 0
+
+        ; 85/C3C5
+
+    .endsection Unsorted85C347Section
+
+
+    .section Unsorted85C41FSection
+
+      .al
+      .xl
+
+      rsUnknown85C41F ; 85/C41F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wCursorXOffset,b
+        cmp #$0080
+        bcs _C43D
+        lda aProcSystem.aBody3,b,x
+        bit #$0008
+        bne _C466
+        ora #$0008
+        sta aProcSystem.aBody3,b,x
+        lda #$0015
+        sta aProcSystem.wInput0,b
+        bra _C451
+
+
+        _C43D
+        lda aProcSystem.aBody3,b,x
+        bit #$0008
+        beq _C466
+        and #$FFF7
+        sta aProcSystem.aBody3,b,x
+        lda #$0002
+        sta aProcSystem.wInput0,b
+
+        _C451
+        lda #$0001
+        sta aProcSystem.wInput1,b
+        jsr rsUnknown85C1A4
+        jsr rsUnknown85C0F5
+        lda aProcSystem.aBody3,b,x
+        ora #$0004
+        sta aProcSystem.aBody3,b,x
+
+        _C466
+        rts
+
+        .databank 0
+
+        ; 85/C467
+
+      rsUnknown85C467 ; 85/C467
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsr rsUnknown85C1FA
+        lda aProcSystem.aBody0,b,x
+        sta aProcSystem.wInput0,b
+        jsr rsUnknown85C10B
+        sta aProcSystem.wInput1,b
+        jsr rsUnknown85C494
+        lda #$0101
+        jsr rsUnknown85C55B
+        lda #$0101
+        jsr rsUnknown85C58F
+        lda #$00C8
+        jsr rsUnknown85C5CB
+        lda #$00C4
+        jsr rsUnknown85C631
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/C494
+
+      rsUnknown85C494 ; 85/C494
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR0
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR1
+        lda wR1
+        xba
+        lsr a
+        lsr a
+        clc
+        adc wR0
+        asl a
+        tax
+        lda aMapData,x
+        and #$03FF
+        tax
+        lda aTerrainTileset,x
+        and #$00FF
+        sta aProcSystem.wInput2,b
+        jsl rlUnknown87EA09
+        bcs _C4DF
+        jsl rlGetEventLocationEntryType
+        cmp #LocationTypeCastle
+        bne _C4DF
+        lda #$8000
+        tsb aProcSystem.wInput2,b
+
+        _C4DF
+        rts
+
+        .databank 0
+
+        ; 85/C4E0
+
+    .endsection Unsorted85C41FSection
+
+
+    .section Unsorted85C55BSection
+
+      .al
+      .xl
+
+      rsUnknown85C55B ; 85/C55B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta wR10
+        lda aProcSystem.wInput2,b
+        and #$FF00
+        bne _C58E
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda aProcSystem.wInput2,b
+        jsl rlUnknown848EFB
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        lda aProcSystem.wInput0,b
+        clc
+        adc wR10
+        tax
+        jsl rlDrawMenuTextLine
+        lda #$FFFF
+        jsl rlUnknown85C4E0
+
+        _C58E
+        rts
+
+        .databank 0
+
+        ; 85/C58F
+
+      rsUnknown85C58F ; 85/C58F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta wR10
+        lda aProcSystem.wInput2,b
+        and #$FF00
+        beq _C5CA
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        jsl rlGetEventLocationEntryCastleName
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        lda aProcSystem.wInput0,b
+        clc
+        adc wR10
+        tax
+        jsl rlDrawMenuTextLine
+        jsl rlGetLocationFactionSlotOwner
+        bmi _C5CA
+        tax
+        lda #$0000
+        jsl rlGetFactionRelation
+        jsl rlUnknown85C4E0
+
+        _C5CA
+        rts
+
+        .databank 0
+
+        ; 85/C5CB
+
+      rsUnknown85C5CB ; 85/C5CB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta wR10
+        lda aProcSystem.wInput2,b
+        and #$00FF
+        cmp #$0000
+        beq _C630
+        cmp #$0002
+        beq _C630
+        cmp #$000D
+        beq _C630
+        jsl rlGetTileTerrainAvoid
+        sta wR0
+        lda aProcSystem.wInput1,b
+        clc
+        adc wR10
+        tax
+        lda #$21DB
+        sta $7FE3CA,x
+        inc x
+        inc x
+        lda wR0
+        beq _C60A
+        bpl _C603
+        lda #$21DC
+        bra _C606
+
+
+        _C603
+        lda #$21DD
+
+        _C606
+        sta $7FE3CA,x
+
+        _C60A
+        inc x
+        inc x
+        phx
+        lda wR0
+        bpl _C615
+        eor #$FFFF
+        inc a
+
+        _C615
+        asl a
+        tax
+        lda $879077,x
+        and #$00FF
+        clc
+        adc #$21DF
+        plx
+        sta $7FE3CA,x
+        inc x
+        inc x
+        lda #$21DE
+        sta $7FE3CA,x
+
+        _C630
+        rts
+
+        .databank 0
+
+        ; 85/C631
+
+      rsUnknown85C631 ; 85/C631
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta wR10
+        lda aProcSystem.wInput2,b
+        and #$00FF
+        cmp #$0009
+        beq _C643
+        cmp #$0016
+        bne _C651
+
+        _C643
+        lda aProcSystem.wInput1,b
+        clc
+        adc wR10
+        tax
+        lda #$21EA
+        sta $7FE3CA,x
+
+        _C651
+        rts
+
+        .databank 0
+
+        ; 85/C652
+
+    .endsection Unsorted85C55BSection
+
+
+    .section Unsorted85C65ASection
+
+      .al
+      .xl
+
+      rlUnknown85C65A ; 85/C65A
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85C30D
+        lda #$C7AE
+        jsr rsUnknown85C12B
+        lda #$FFFF
+        sta aProcSystem.wInput0,b
+        lda #$FFFF
+        sta aProcSystem.wInput1,b
+        jsr rsUnknown85C0F5
+        lda #$0009
+        sta aProcSystem.wInput0,b
+        lda #$0005
+        sta aProcSystem.wInput1,b
+        jsr rsUnknown85C100
+        jsr rsUnknown85C2F1
+        rtl
+
+        .databank 0
+
+        ; 85/C686
+
+      rlUnknown85C686 ; 85/C686
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown85C1A4
+        bcs _C697
+        jsr rsUnknown85C291
+        lda aProcSystem.aBody3,b,x
+        ora #$0080
+        sta aProcSystem.aBody3,b,x
+
+        _C697
+        rtl
+
+        .databank 0
+
+        ; 85/C698
+
+      rlUnknown85C698 ; 85/C698
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        jsr rsUnknown85C6D2
+        lda #$0000
+        sta aProcSystem.aBody7,b,x
+        lda #$C6B0
+        sta aProcSystem.aHeaderOnCycle,b,x
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        rtl
+
+        .databank 0
+
+        ; 85/C6B0
+
+      rlUnknown85C6B0 ; 85/C6B0
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        jsr rsUnknown85C712
+        jsr rsUnknown85C757
+        jsr rsUnknown85C784
+        jsl rlUnknown85C31A
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        rtl
+
+        .databank 0
+
+        ; 85/C6C6
+
+    .endsection Unsorted85C65ASection
+
+
+    .section Unsorted85C6D2Section
+
+      .al
+      .xl
+
+      rsUnknown85C6D2 ; 85/C6D2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda bUnknown000E7B,b
+        bit #$0040
+        bne _C711
+        lda aProcSystem.aBody3,b,x
+        and #$FFF7
+        sta aProcSystem.aBody3,b,x
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR0
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR1
+        jsl rlGetUnitByCoordinates
+        bcs _C70E
+        lda wSelectedUnitDataRAMPointer,b
+        sta aProcSystem.aBody6,b,x
+        jsr rsUnknown85C2FB
+        bra _C711
+
+
+        _C70E
+        jsr rsUnknown85C2F1
+
+        _C711
+        rts
+
+        .databank 0
+
+        ; 85/C712
+
+      rsUnknown85C712 ; 85/C712
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody3,b,x
+        bit #$0008
+        bne _C74C
+        lda wMapScrollXPixels,b
+        asl a
+        asl a
+        asl a
+        asl a
+        ora wCursorXOffset,b
+        sta wR10
+        lda wMapScrollYPixels,b
+        asl a
+        asl a
+        asl a
+        asl a
+        ora wCursorYOffset,b
+        sta wR11
+        lda wR10
+        cmp aProcSystem.aBody4,b,x
+        bne _C740
+        lda wR11
+        cmp aProcSystem.aBody5,b,x
+        beq _C74C
+
+        _C740
+        jsr rsUnknown85C2F1
+        lda aProcSystem.aBody3,b,x
+        ora #$0008
+        sta aProcSystem.aBody3,b,x
+
+        _C74C
+        lda wR10
+        sta aProcSystem.aBody4,b,x
+        lda wR11
+        sta aProcSystem.aBody5,b,x
+        rts
+
+        .databank 0
+
+        ; 85/C757
+
+      rsUnknown85C757 ; 85/C757
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0788,b
+        bit #$00FF
+        bne _C783
+        lda aProcSystem.aBody3,b,x
+        bit #$0008
+        beq _C783
+        lda wCursorXOffset,b
+        bit #$000F
+        bne _C783
+        lda wCursorYOffset,b
+        bit #$000F
+        bne _C783
+        lda #$C6C6
+        sta aProcSystem.aHeaderCodeOffset,b,x
+        lda #$0001
+        sta aProcSystem.aHeaderSleepTimer,b,x
+
+        _C783
+        rts
+
+        .databank 0
+
+        ; 85/C784
+
+      rsUnknown85C784 ; 85/C784
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown85C12F
+        bcs _C7AD
+        inc aProcSystem.aBody7,b,x
+        lda aProcSystem.aBody6,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitStatus
+        sec
+        sbc #$0004
+        bcc _C7AD
+        lda aProcSystem.aBody7,b,x
+        bit #$001F
+        bne _C7AD
+        lda aProcSystem.aBody3,b,x
+        ora #$0040
+        sta aProcSystem.aBody3,b,x
+
+        _C7AD
+        rts
+
+        .databank 0
+
+        ; 85/C7AE
+
+      rsUnknown85C7AE ; 85/C7AE
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown85C819
+        jsr rsUnknown85C867
+        lda #$C7BF
+        jsr rsUnknown85C24D
+        jsr rsUnknown85C9BF
+        clc
+        rts
+
+        .databank 0
+
+        ; 85/C7BF
+
+    .endsection Unsorted85C6D2Section
+
+
+    .section Unsorted85C819Section
+
+      .al
+      .xl
+
+      rsUnknown85C819 ; 85/C819
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda wCursorXOffset,b
+        cmp #$00D0
+        bpl _C82C
+        cmp #$0030
+        bpl _C82F
+        lda #$0028
+        bra _C82F
+
+
+        _C82C
+        lda #$00C0
+
+        _C82F
+        lsr a
+        lsr a
+        lsr a
+        sec
+        sbc #$0003
+        sta aProcSystem.wInput0,b
+        lda wCursorYOffset,b
+        cmp #$0030
+        bpl _C845
+        clc
+        adc #$0048
+
+        _C845
+        lsr a
+        lsr a
+        lsr a
+        sec
+        sbc #$0006
+        sta aProcSystem.wInput1,b
+        lda aProcSystem.aBody3,b,x
+        bit #$0080
+        bne _C85C
+        bit #$0020
+        beq _C862
+
+        _C85C
+        jsr rsUnknown85C1A4
+        jsr rsUnknown85C291
+
+        _C862
+        jsr rsUnknown85C0F5
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/C867
+
+      rsUnknown85C867 ; 85/C867
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda aProcSystem.aBody6,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda aProcSystem.aBody0,b,x
+        sta aProcSystem.wInput0,b
+        lda aProcSystem.aBody7,b,x
+        sta aProcSystem.wInput2,b
+        lda #$2400
+        sta aCurrentTilemapInfo,b
+        jsl rlGetSelectedUnitNamePointer
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        lda aProcSystem.wInput0,b
+        clc
+        adc #$0101
+        tax
+        jsl rlDrawMenuTextLine
+        jsl rlGetSelectedUnitStatus
+        sec
+        sbc #$0004
+        bcc _C8B0
+        asl a
+        sta aProcSystem.wInput1,b
+        lda aProcSystem.wInput2,b
+        bit #$0020
+        beq _C90E
+
+        _C8B0
+        lda #$25C0
+        sta aCurrentTilemapInfo,b
+        lda #$8500
+        sta lR18+1
+        lda #$C983
+        sta lR18
+        lda aProcSystem.wInput0,b
+        clc
+        adc #$0301
+        tax
+        jsl rlUnknown878F6E
+        lda #$8500
+        sta lR18+1
+        lda #$C986
+        sta lR18
+        lda aProcSystem.wInput0,b
+        clc
+        adc #$0305
+        tax
+        jsl rlUnknown878F6E
+        lda #$24E0
+        sta aCurrentTilemapInfo,b
+        jsl rlGetSelectedUnitCurrentHP
+        pha
+        lda aProcSystem.wInput0,b
+        clc
+        adc #$0303
+        tax
+        pla
+        jsl rlUnknown878FE7
+        jsl rlGetSelectedUnitMaxHP
+        pha
+        lda aProcSystem.wInput0,b
+        clc
+        adc #$0306
+        tax
+        pla
+        jsl rlUnknown878FE7
+        bra _C97E
+
+
+        _C90E
+        lda #$2500
+        sta aCurrentTilemapInfo,b
+        ldx aProcSystem.wInput1,b
+        lda #$85C9
+        sta lR18+1
+        lda $C999,b,x
+        sta lR18
+        lda aProcSystem.wInput0,b
+        clc
+        adc #$0301
+        tax
+        jsl rlUnknown878F6E
+        lda #$8500
+        sta lR18+1
+        lda #$C997
+        sta lR18
+        lda aProcSystem.wInput0,b
+        clc
+        adc #$0307
+        tax
+        jsl rlUnknown878F6E
+        lda #$24E0
+        sta aCurrentTilemapInfo,b
+        jsl rlGetSelectedUnitStatusDuration
+        pha
+        pha
+        lda aProcSystem.wInput0,b
+        clc
+        adc #$0305
+        tax
+        pla
+        jsl rlUnknown878FE7
+        pla
+        cmp #$000A
+        bcs _C97E
+        lda #$2500
+        sta aCurrentTilemapInfo,b
+        lda #$8500
+        sta lR18+1
+        lda #$C997
+        sta lR18
+        lda aProcSystem.wInput0,b
+        clc
+        adc #$0305
+        tax
+        jsl rlUnknown878F6E
+
+        _C97E
+        jsr rsUnknown85C99F
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/C983
+
+    .endsection Unsorted85C819Section
+
+
+    .section Unsorted85C99FSection
+
+      .al
+      .xl
+
+      rsUnknown85C99F ; 85/C99F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlGetSelectedUnitFactionSlot
+        tax
+        lda #$0000
+        jsl rlGetFactionRelation
+        asl a
+        tax
+        lda $85C9B7,x
+        sta $0108,b
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/C9B7
+
+    .endsection Unsorted85C99FSection
+
+
+    .section Unsorted85C9BFSection
+
+      .al
+      .xl
+
+      rsUnknown85C9BF ; 85/C9BF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        jsr rsUnknown85C0E2
+        jsr rsUnknown85C10B
+        sta aProcSystem.wInput2,b
+        lda wCursorXOffset,b
+        lsr a
+        lsr a
+        lsr a
+        sec
+        sbc aProcSystem.wInput0,b
+        bpl _C9DA
+        eor #$FFFF
+        inc a
+
+        _C9DA
+        asl a
+        asl a
+        tay
+        lda wCursorYOffset,b
+        lsr a
+        lsr a
+        lsr a
+        cmp aProcSystem.wInput1,b
+        bcs _C9F9
+        lda $CA0B,b,y
+        clc
+        adc aProcSystem.wInput2,b
+        tax
+        lda $CA0D,b,y
+        sta $7FDD4A,x
+        bra _CA08
+
+
+        _C9F9
+        lda $CA2B,b,y
+        clc
+        adc aProcSystem.wInput2,b
+        tax
+        lda $CA2D,b,y
+        sta $7FDD4A,x
+
+        _CA08
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/CA0B
+
+    .endsection Unsorted85C9BFSection
 
 
     .section Unsorted85CA4BSection
@@ -7695,6 +10608,28 @@
         ; 85/CAFB
 
     .endsection Unsorted85CA91Section
+
+
+    .section Unsorted85CAFBSection
+
+      .al
+      .xl
+
+      rlUnknown85CAFB ; 85/CAFB
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 85/CAFC
+
+    .endsection Unsorted85CAFBSection
 
 
     .section Unsorted85CAFCSection
@@ -7894,6 +10829,28 @@
         ; 85/CC3D
 
     .endsection Unsorted85CBBDSection
+
+
+    .section Unsorted85CC3DSection
+
+      .al
+      .xl
+
+      rlUnknown85CC3D ; 85/CC3D
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 85/CC3E
+
+    .endsection Unsorted85CC3DSection
 
 
     .section Unsorted85CC3ESection
@@ -9876,6 +12833,28 @@
     .endsection Unsorted85D648Section
 
 
+    .section Unsorted85D671Section
+
+      .al
+      .xl
+
+      rlUnknown85D671 ; 85/D671
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown80B0EE
+        rtl
+
+        .databank 0
+
+        ; 85/D676
+
+    .endsection Unsorted85D671Section
+
+
     .section Unsorted85D676Section
 
       .al
@@ -10328,6 +13307,125 @@
     .endsection Unsorted85D8B6Section
 
 
+    .section Unsorted85D971Section
+
+      .al
+      .xl
+
+      rlUnknown85D971 ; 85/D971
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec aProcSystem.aBody5,b,x
+        bmi _D977
+        rtl
+
+
+        _D977
+        lda #$000B
+        jsl rlUnknown808FAD
+        lda #$D985
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/D985
+
+      rlUnknown85D985 ; 85/D985
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda aProcSystem.aBody6,b,x
+        beq _D9C9
+        dec aProcSystem.aBody6,b,x
+        inc aProcSystem.aBody7,b,x
+        lda aProcSystem.aBody7,b,x
+        cmp #$0064
+        bpl _D99E
+        bra _D9A1
+
+
+        _D99E
+        stz aProcSystem.aBody7,b,x
+
+        _D9A1
+        phx
+        lda aProcSystem.aBody7,b,x
+        ldx #$05A0
+        stx aCurrentTilemapInfo,b
+        ldx #$0105
+        jsl rlUnknown878900
+        plx
+        lda aProcSystem.aBody7,b,x
+        ldx #$0980
+        stx aCurrentTilemapInfo,b
+        ldx #$0107
+        jsl rlUnknown85DA2A
+        jsl rlUnknown8785E3
+        bra _D9DE
+
+
+        _D9C9
+        lda #$000C
+        jsl rlUnknown808FAD
+        lda #$0032
+        sta aProcSystem.aBody5,b,x
+        lda #$D9DF
+        sta aProcSystem.aHeaderOnCycle,b,x
+        bra _D9DE
+
+
+        _D9DE
+        rtl
+
+        .databank 0
+
+        ; 85/D9DF
+
+      rlUnknown85D9DF ; 85/D9DF
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec aProcSystem.aBody5,b,x
+        bmi _D9EE
+        beq _D9E8
+        bra _D9F9
+
+
+        _D9E8
+        jsl rlUnknown8586FA
+        bra _D9F9
+
+
+        _D9EE
+        lda #$0001
+        jsl rlUnknown85ABF1
+        jsl rlProcEngineFreeProc
+
+        _D9F9
+        rtl
+
+        .databank 0
+
+        ; 85/D9FA
+
+    .endsection Unsorted85D971Section
+
+
     .section ProcScript85D9FASection
 
       .al
@@ -10723,6 +13821,94 @@
     .endsection Unsorted85DAF6Section
 
 
+    .section Unsorted85DBDDSection
+
+      .al
+      .xl
+
+      rlUnknown85DBDD ; 85/DBDD
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wGameStateRoutine1,b
+        lda #$B122
+        sta $7F82C5
+        lda #$C3E6
+        sta wMainLoopPointer
+        rtl
+
+        .databank 0
+
+        ; 85/DBED
+
+      rlUnknown85DBED ; 85/DBED
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wGameStateRoutine1,b
+        lda #$CD2E
+        sta wMainLoopPointer
+        rtl
+
+        .databank 0
+
+        ; 85/DBF6
+
+      rlUnknown85DBF6 ; 85/DBF6
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wGameStateRoutine1,b
+        lda #$D915
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/DC0E
+
+      rlUnknown85DC0E ; 85/DC0E
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wGameStateRoutine1,b
+        lda #$D2C6
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/DC26
+
+    .endsection Unsorted85DBDDSection
+
+
     .section Unsorted85DC26Section
 
       .al
@@ -10844,6 +14030,114 @@
     .endsection Unsorted85DCABSection
 
 
+    .section Unsorted85DCCASection
+
+      .al
+      .xl
+
+      rlUnknown85DCCA ; 85/DCCA
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wGameStateRoutine1,b
+        lda #$E598
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/DCE2
+
+    .endsection Unsorted85DCCASection
+
+
+    .section Unsorted85DE34Section
+
+      .al
+      .xl
+
+      rlUnknown85DE34 ; 85/DE34
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown858516
+        beq _DE3E
+        jml _DE42
+
+
+        _DE3E
+        jsl rlUnknown8583F8
+
+        _DE42
+        rtl
+
+        .databank 0
+
+        ; 85/DE43
+
+      rlUnknown85DE43 ; 85/DE43
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0000
+        sta $057C,b
+        jsl rlUnknown88AF7B
+        ldx wActiveUnitDeploymentOffset,b
+        jsl rlUnknown84CAA9
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/DE57
+
+      rlUnknown85DE57 ; 85/DE57
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx wActiveUnitDeploymentOffset,b
+        lda #$0000
+        sta $057C,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta aProcSystem.wInput0,b
+        lda #$2000
+        sta aProcSystem.wInput1,b
+        lda #$8500
+        sta lR44+1
+        lda #$9281
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/DE7C
+
+    .endsection Unsorted85DE34Section
+
+
     .section Unsorted85DE7CSection
 
       .al
@@ -10908,6 +14202,40 @@
         ; 85/DED6
 
     .endsection Unsorted85DE7CSection
+
+
+    .section Unsorted85DED6Section
+
+      .al
+      .xl
+
+      rlUnknown85DED6 ; 85/DED6
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx wActiveUnitDeploymentOffset,b
+        lda #$0000
+        sta $057C,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta aProcSystem.wInput0,b
+        lda #$2008
+        sta aProcSystem.wInput1,b
+        lda #$8500
+        sta lR44+1
+        lda #$9281
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/DEFB
+
+    .endsection Unsorted85DED6Section
 
 
     .section Unsorted85DF20Section
@@ -11010,6 +14338,33 @@
     .endsection Unsorted85DF3FSection
 
 
+    .section Unsorted85DF61Section
+
+      .al
+      .xl
+
+      rlUnknown85DF61 ; 85/DF61
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown88AF7B
+        ldx wActiveUnitDeploymentOffset,b
+        jsl rlUnknown84CDD6
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/DF6F
+
+    .endsection Unsorted85DF61Section
+
+
     .section Unsorted85DF6FSection
 
       .al
@@ -11033,6 +14388,52 @@
         ; 85/DF7D
 
     .endsection Unsorted85DF6FSection
+
+
+    .section Unsorted85DF8ASection
+
+      .al
+      .xl
+
+      rlUnknown85DF8A ; 85/DF8A
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown88AF7B
+        ldx wActiveUnitDeploymentOffset,b
+        jsl rlUnknown84D10F
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/DF98
+
+      rlUnknown85DF98 ; 85/DF98
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown88AF7B
+        ldx wActiveUnitDeploymentOffset,b
+        jsl rlUnknown84D0B9
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/DFA6
+
+    .endsection Unsorted85DF8ASection
 
 
     .section Unsorted85DFC2Section
@@ -11065,6 +14466,31 @@
         ; 85/DFDE
 
     .endsection Unsorted85DFC2Section
+
+
+    .section Unsorted85DFFDSection
+
+      .al
+      .xl
+
+      rlUnknown85DFFD ; 85/DFFD
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown85A886
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/E004
+
+    .endsection Unsorted85DFFDSection
 
 
     .section Unsorted85E012Section

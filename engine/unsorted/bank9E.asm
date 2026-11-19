@@ -4394,6 +4394,96 @@
     .endsection Unsorted9E9B68Section
 
 
+    .section Unsorted9E9B82Section
+
+      .al
+      .xl
+
+      rlUnknown9E9B82 ; 9E/9B82
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F4584
+        bne _9B97
+        lda #$9BAD
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0002
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        _9B97
+        lda $7F4580
+        beq _9BAC
+        lda #$0000
+        sta $7F4580
+        jsl rlUnknown9E9E61
+        jsl rlUnknown9E9C70
+
+        _9BAC
+        rtl
+
+        .databank 0
+
+        ; 9E/9BAD
+
+      rlUnknown9E9BAD ; 9E/9BAD
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        inc aProcSystem.aBody0,b,x
+        lda aProcSystem.aBody0,b,x
+        cmp #$0001
+        beq _9BC8
+        lda #$0000
+        sta $7F4584
+        lda #$9BE0
+        sta aProcSystem.aHeaderOnCycle,b,x
+        bra _9BDE
+
+
+        _9BC8
+        jsl rlUnknown9E8F6A
+        lda #$9BE0
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0002
+        ora #$0001
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        _9BDE
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/9BE0
+
+      rlUnknown9E9BE0 ; 9E/9BE0
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/9BE1
+
+    .endsection Unsorted9E9B82Section
+
+
     .section ProcScript9E9BE1Section
 
       .al
@@ -4450,6 +4540,40 @@
         ; 9E/9C70
 
     .endsection ProcScript9E9BE1Section
+
+
+    .section Unsorted9E9C70Section
+
+      .al
+      .xl
+
+      rlUnknown9E9C70 ; 9E/9C70
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aHeaderBitfield,b,x
+        and #$FFFB
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda wBattleSong
+        cmp #$0006
+        bcs _9C93
+        jsl rlUnknown9F9217
+        sta $7F57EE
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0004
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        _9C93
+        rtl
+
+        .databank 0
+
+        ; 9E/9C94
+
+    .endsection Unsorted9E9C70Section
 
 
     .section Unsorted9E9CB9Section
@@ -4743,6 +4867,69 @@
         ; 9E/9E61
 
     .endsection Unsorted9E9DD9Section
+
+
+    .section Unsorted9E9E61Section
+
+      .al
+      .xl
+
+      rlUnknown9E9E61 ; 9E/9E61
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda #$7E00
+        sta $7F459C
+        sta lR18+1
+        lda #$8B88
+        clc
+        adc #$3000
+        sta $7F459B
+        sta lR18
+        ldy #$0002
+        lda [lR18],y
+        clc
+        adc lR18
+        sta $7EFC98
+        lda aMapAction.wYTilePosition
+        tay
+        lda aMapAction.wXTilePosition
+        tax
+        lda aActionStructUnit1.UnitRAMPointer
+        jsl rlUnknown9E8D25
+        lda #$7E00
+        sta lR44+1
+        lda #$FC94
+        sta lR44
+        lda #$FC94
+        ldx wR0
+        ldy wR1
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        ldx aActiveSpriteSystem.wOffset,b
+        txa
+        sta $7F45A8
+        lda #$0001
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
+        lda #$0006
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
+        lda #$0040
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/9ECF
+
+    .endsection Unsorted9E9E61Section
 
 
     .section Unsorted9E9F26Section
@@ -5257,6 +5444,80 @@
         ; 9E/A1D7
 
     .endsection Unsorted9EA096Section
+
+
+    .section Unsorted9EA1D7Section
+
+      .al
+      .xl
+
+      rlUnknown9EA1D7 ; 9E/A1D7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F4C11
+        ora $7F4C13
+        beq _A1F5
+        lda $7F4C1F
+        tax
+        lda aProcSystem.aHeaderTypeOffset,b,x
+        cmp #$A334
+        bne _A1F5
+        lda #$0000
+        sta aProcSystem.aHeaderTypeOffset,b,x
+
+        _A1F5
+        ldy #$0000
+        lda $7F45A4
+        tax
+        tya
+        sta aActiveSpriteSystem.aTypeOffset,b,x
+        lda $7F45A6
+        cmp #$FFFF
+        beq _A20F
+        tax
+        tya
+        sta aActiveSpriteSystem.aTypeOffset,b,x
+
+        _A20F
+        lda $7F45A8
+        tax
+        tya
+        sta aActiveSpriteSystem.aTypeOffset,b,x
+        lda $7F45AA
+        cmp #$FFFF
+        beq _A226
+        tax
+        tya
+        sta aActiveSpriteSystem.aTypeOffset,b,x
+
+        _A226
+        ldx #$001E
+
+        _A229
+        lda @l $001100,x
+        bne _A235
+        dec x
+        dec x
+        bpl _A229
+        plx
+        rtl
+
+
+        _A235
+        nop
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/A238
+
+    .endsection Unsorted9EA1D7Section
 
 
     .section Unsorted9EA238Section
@@ -8805,6 +9066,38 @@
     .endsection Unsorted9EC776Section
 
 
+    .section Unsorted9EC79BSection
+
+      .al
+      .xl
+
+      rlUnknown9EC79B ; 9E/C79B
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda bDecompressionArrayFlag,b
+        and #$00FF
+        bne _C7B2
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0001
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda #$C7B2
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _C7B2
+        rtl
+
+        .databank 0
+
+        ; 9E/C7B3
+
+    .endsection Unsorted9EC79BSection
+
+
     .section Unsorted9EC7B3Section
 
       .al
@@ -8965,6 +9258,54 @@
     .endsection Unsorted9EC7B3Section
 
 
+    .section Unsorted9EC899Section
+
+      .al
+      .xl
+
+      rlUnknown9EC899 ; 9E/C899
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F4584
+        beq _C8A5
+        lda #$C8A6
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _C8A5
+        rtl
+
+        .databank 0
+
+        ; 9E/C8A6
+
+      rlUnknown9EC8A6 ; 9E/C8A6
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F4584
+        bne _C8B2
+        lda #$C8B3
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _C8B2
+        rtl
+
+        .databank 0
+
+        ; 9E/C8B3
+
+    .endsection Unsorted9EC899Section
+
+
     .section Unsorted9EC8B3Section
 
       .al
@@ -9115,6 +9456,135 @@
         ; 9E/C98A
 
     .endsection Unsorted9EC91ASection
+
+
+    .section Unsorted9EC98ASection
+
+      .al
+      .xl
+
+      rlUnknown9EC98A ; 9E/C98A
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7E4EA9
+        and #$00FF
+        cmp #$0003
+        beq _C9A4
+        jsl rlUnknown88C355
+        bcc _C9A4
+        lda #$C9AB
+        sta aProcSystem.aHeaderOnCycle,b,x
+        bra _C9AA
+
+
+        _C9A4
+        lda #$C9BD
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _C9AA
+        rtl
+
+        .databank 0
+
+        ; 9E/C9AB
+
+      rlUnknown9EC9AB ; 9E/C9AB
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown88C2BA
+        bcc _C9BB
+        plx
+        lda #$C9BD
+        sta aProcSystem.aHeaderOnCycle,b,x
+        bra _C9BC
+
+
+        _C9BB
+        plx
+
+        _C9BC
+        rtl
+
+        .databank 0
+
+        ; 9E/C9BD
+
+      rlUnknown9EC9BD ; 9E/C9BD
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85D414
+        lda #$C9C8
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 9E/C9C8
+
+      rlUnknown9EC9C8 ; 9E/C9C8
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85D648
+        lda #$C9D3
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 9E/C9D3
+
+      rlUnknown9EC9D3 ; 9E/C9D3
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85D671
+        bcs _C9FC
+        lda $7F4C87
+        bne _C9E3
+        jsl rlUnknown81B189
+
+        _C9E3
+        lda aProcSystem.aBody7,b,x
+        sta wGameStateRoutine1,b
+        jsl rlUnknown9EA1D7
+        jsl rlProcEngineFreeProc
+        lda $7F4C07
+        ora #$0002
+        sta $7F4C07
+
+        _C9FC
+        rtl
+
+        .databank 0
+
+        ; 9E/C9FD
+
+    .endsection Unsorted9EC98ASection
 
 
     .section Unsorted9EC9FDSection
@@ -9279,6 +9749,51 @@
         ; 9E/CABB
 
     .endsection Unsorted9EC9FDSection
+
+
+    .section Unsorted9ECABBSection
+
+      .al
+      .xl
+
+      rlUnknown9ECABB ; 9E/CABB
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85D671
+        bcs _CAD0
+        lda #$CAD1
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0004
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        _CAD0
+        rtl
+
+        .databank 0
+
+        ; 9E/CAD1
+
+      rlUnknown9ECAD1 ; 9E/CAD1
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/CAD2
+
+    .endsection Unsorted9ECABBSection
 
 
     .section ProcScript9ECAD2Section

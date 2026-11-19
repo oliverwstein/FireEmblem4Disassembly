@@ -230,3 +230,25 @@
         ; 8D/B5C8
 
     .endsection Unsorted8DB53ASection
+
+
+    .section Unsorted8DD041Section
+
+      .al
+      .xl
+
+      rlUnknown8DD041 ; 8D/D041
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 8D/D042
+
+    .endsection Unsorted8DD041Section

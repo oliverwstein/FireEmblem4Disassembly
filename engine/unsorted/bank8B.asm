@@ -730,6 +730,443 @@
     .endsection Unsorted8B912ASection
 
 
+    .section Unsorted8B9451Section
+
+      .al
+      .xl
+
+      rlUnknown8B9451 ; 8B/9451
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8B9458
+        rtl
+
+        .databank 0
+
+        ; 8B/9456
+
+    .endsection Unsorted8B9451Section
+
+
+    .section Unsorted8B9458Section
+
+      .al
+      .xl
+
+      rlUnknown8B9458 ; 8B/9458
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda bBufferINIDISP
+        bpl _9462
+        jml _9591
+
+
+        _9462
+        lda $4212,b
+        bit #$40
+        beq _9462
+        lda #$00
+        sta $2100,b
+        lda #$80
+        sta $2100,b
+        lda #$54
+        sta $2108,b
+        lda wBufferBG2HOFS
+        sta $210F,b
+        lda wBufferBG2HOFS+1
+        sta $210F,b
+        lda wBufferBG2VOFS
+        sec
+        sbc #$01
+        sta $2110,b
+        lda wBufferBG2VOFS+1
+        sbc #$00
+        sta $2110,b
+
+        _9491
+        lda $4212,b
+        bit #$40
+        bne _9491
+
+        _9498
+        lda $4212,b
+        bit #$40
+        beq _9498
+        lda #$02
+        cmp @l bBufferINIDISP
+        bcc _94AB
+        lda @l bBufferINIDISP
+
+        _94AB
+        sta $2100,b
+
+        _94AE
+        lda $4212,b
+        bit #$40
+        bne _94AE
+
+        _94B5
+        lda $4212,b
+        bit #$40
+        beq _94B5
+        lda #$04
+        cmp @l bBufferINIDISP
+        bcc _94C8
+        lda @l bBufferINIDISP
+
+        _94C8
+        sta $2100,b
+
+        _94CB
+        lda $4212,b
+        bit #$40
+        bne _94CB
+
+        _94D2
+        lda $4212,b
+        bit #$40
+        beq _94D2
+        lda #$06
+        cmp @l bBufferINIDISP
+        bcc _94E5
+        lda @l bBufferINIDISP
+
+        _94E5
+        sta $2100,b
+
+        _94E8
+        lda $4212,b
+        bit #$40
+        bne _94E8
+
+        _94EF
+        lda $4212,b
+        bit #$40
+        beq _94EF
+        lda #$08
+        cmp @l bBufferINIDISP
+        bcc _9502
+        lda @l bBufferINIDISP
+
+        _9502
+        sta $2100,b
+
+        _9505
+        lda $4212,b
+        bit #$40
+        bne _9505
+
+        _950C
+        lda $4212,b
+        bit #$40
+        beq _950C
+        lda #$0A
+        cmp @l bBufferINIDISP
+        bcc _951F
+        lda @l bBufferINIDISP
+
+        _951F
+        sta $2100,b
+
+        _9522
+        lda $4212,b
+        bit #$40
+        bne _9522
+
+        _9529
+        lda $4212,b
+        bit #$40
+        beq _9529
+        lda #$0C
+        cmp @l bBufferINIDISP
+        bcc _953C
+        lda @l bBufferINIDISP
+
+        _953C
+        sta $2100,b
+
+        _953F
+        lda $4212,b
+        bit #$40
+        bne _953F
+
+        _9546
+        lda $4212,b
+        bit #$40
+        beq _9546
+        lda #$0E
+        cmp @l bBufferINIDISP
+        bcc _9559
+        lda @l bBufferINIDISP
+
+        _9559
+        sta $2100,b
+
+        _955C
+        lda $4212,b
+        bit #$40
+        bne _955C
+
+        _9563
+        lda $4212,b
+        bit #$40
+        beq _9563
+        lda #$0F
+        cmp @l bBufferINIDISP
+        bcc _9576
+        lda @l bBufferINIDISP
+
+        _9576
+        sta $2100,b
+
+        _9579
+        lda $4212,b
+        bit #$40
+        beq _9579
+        lda bBufferINIDISP
+        lda #$0F
+        cmp @l bBufferINIDISP
+        bcc _958E
+        lda @l bBufferINIDISP
+
+        _958E
+        sta $2100,b
+
+        _9591
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8B/9594
+
+    .endsection Unsorted8B9458Section
+
+
+    .section Unsorted8B959CSection
+
+      .al
+      .xl
+
+      rlUnknown8B959C ; 8B/959C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8B95A3
+        rtl
+
+        .databank 0
+
+        ; 8B/95A1
+
+    .endsection Unsorted8B959CSection
+
+
+    .section Unsorted8B95A3Section
+
+      .al
+      .xl
+
+      rlUnknown8B95A3 ; 8B/95A3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda bBufferINIDISP
+        bpl _95AD
+        jml _96CC
+
+
+        _95AD
+        lda $4212,b
+        bit #$40
+        beq _95AD
+        lda #$0F
+        lda @l bBufferINIDISP
+        sta $2100,b
+
+        _95BD
+        lda $4212,b
+        bit #$40
+        bne _95BD
+
+        _95C4
+        lda $4212,b
+        bit #$40
+        beq _95C4
+        lda #$0E
+        cmp @l bBufferINIDISP
+        bcc _95D7
+        lda @l bBufferINIDISP
+
+        _95D7
+        sta $2100,b
+
+        _95DA
+        lda $4212,b
+        bit #$40
+        bne _95DA
+
+        _95E1
+        lda $4212,b
+        bit #$40
+        beq _95E1
+        lda #$0C
+        cmp @l bBufferINIDISP
+        bcc _95F4
+        lda @l bBufferINIDISP
+
+        _95F4
+        sta $2100,b
+
+        _95F7
+        lda $4212,b
+        bit #$40
+        bne _95F7
+
+        _95FE
+        lda $4212,b
+        bit #$40
+        beq _95FE
+        lda #$0A
+        cmp @l bBufferINIDISP
+        bcc _9611
+        lda @l bBufferINIDISP
+
+        _9611
+        sta $2100,b
+
+        _9614
+        lda $4212,b
+        bit #$40
+        bne _9614
+
+        _961B
+        lda $4212,b
+        bit #$40
+        beq _961B
+        lda #$08
+        cmp @l bBufferINIDISP
+        bcc _962E
+        lda @l bBufferINIDISP
+
+        _962E
+        sta $2100,b
+
+        _9631
+        lda $4212,b
+        bit #$40
+        bne _9631
+
+        _9638
+        lda $4212,b
+        bit #$40
+        beq _9638
+        lda #$06
+        cmp @l bBufferINIDISP
+        bcc _964B
+        lda @l bBufferINIDISP
+
+        _964B
+        sta $2100,b
+
+        _964E
+        lda $4212,b
+        bit #$40
+        bne _964E
+
+        _9655
+        lda $4212,b
+        bit #$40
+        beq _9655
+        lda #$04
+        cmp @l bBufferINIDISP
+        bcc _9668
+        lda @l bBufferINIDISP
+
+        _9668
+        sta $2100,b
+
+        _966B
+        lda $4212,b
+        bit #$40
+        bne _966B
+
+        _9672
+        lda $4212,b
+        bit #$40
+        beq _9672
+        lda #$02
+        cmp @l bBufferINIDISP
+        bcc _9685
+        lda @l bBufferINIDISP
+
+        _9685
+        sta $2100,b
+
+        _9688
+        lda $4212,b
+        bit #$40
+        bne _9688
+
+        _968F
+        lda $4212,b
+        bit #$40
+        beq _968F
+        lda #$80
+        sta $2100,b
+        lda #$4C
+        sta $2108,b
+        lda #$00
+        sta $210F,b
+        lda #$00
+        sta $210F,b
+        lda #$FF
+        sta $2110,b
+        lda #$FF
+        sta $2110,b
+
+        _96B4
+        lda $4212,b
+        bit #$40
+        beq _96B4
+        lda bBufferINIDISP
+        lda #$0F
+        cmp @l bBufferINIDISP
+        bcc _96C9
+        lda @l bBufferINIDISP
+
+        _96C9
+        sta $2100,b
+
+        _96CC
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8B/96CF
+
+    .endsection Unsorted8B95A3Section
+
+
     .section Unsorted8B96CFSection
 
       .al
@@ -885,6 +1322,28 @@
         ; 8B/977D
 
     .endsection Unsorted8B9759Section
+
+
+    .section Unsorted8BA0B4Section
+
+      .al
+      .xl
+
+      rlUnknown8BA0B4 ; 8B/A0B4
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 8B/A0B5
+
+    .endsection Unsorted8BA0B4Section
 
 
     .section Unsorted8BA7CBSection
@@ -2659,6 +3118,64 @@
     .endsection Unsorted8BB8B6Section
 
 
+    .section Unsorted8BBAA4Section
+
+      .al
+      .xl
+
+      rlUnknown8BBAA4 ; 8B/BAA4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$008E
+
+        _BAA7
+        lda #$FFFF
+        sta aDeploymentTable._MapSpriteID,x
+        dec x
+        dec x
+        bpl _BAA7
+        lda #$0017
+        sta wRoutineVariable1,b
+        ldx #$002E
+
+        _BABB
+        phx
+        lda wRoutineVariable1,b
+        asl a
+        tax
+        lda $7F832D,x
+        sta wSelectedUnitDataRAMPointer,b
+        plx
+        lda wSelectedUnitDataRAMPointer,b
+        beq _BAE1
+        jsl rlGetSelectedUnitMapSprite
+        bit #$8000
+        bne _BADD
+        sta aDeploymentTable._MapSpriteID,x
+        bra _BAE1
+
+
+        _BADD
+        sta $7E486B,x
+
+        _BAE1
+        dec wRoutineVariable1,b
+        dec x
+        dec x
+        bpl _BABB
+        rtl
+
+        .databank 0
+
+        ; 8B/BAE9
+
+    .endsection Unsorted8BBAA4Section
+
+
     .section Unsorted8BBAE9Section
 
       .al
@@ -4186,6 +4703,52 @@
     .endsection Unsorted8BCA7FSection
 
 
+    .section Unsorted8BCAB4Section
+
+      .al
+      .xl
+
+      rsUnknown8BCAB4 ; 8B/CAB4
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F82CD
+        asl a
+        sta wR15
+        ldx #$0000
+
+        _CABE
+        stx wR14
+        lda $7F832D,x
+        beq _CAE4
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitGenerationID
+        dec a
+        tax
+        lda $7E5336,x
+        and #$00FF
+        ldx wR14
+        sta $7F8407,x
+        ldx wR14
+        inc x
+        inc x
+        cpx wR15
+        bne _CABE
+
+        _CAE4
+        rts
+
+        .databank 0
+
+        ; 8B/CAE5
+
+    .endsection Unsorted8BCAB4Section
+
+
     .section Unsorted8BCD20Section
 
       .al
@@ -4676,6 +5239,28 @@
     .endsection Unsorted8BCF35Section
 
 
+    .section Unsorted8BD13CSection
+
+      .al
+      .xl
+
+      rsUnknown8BD13C ; 8B/D13C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 8B/D13D
+
+    .endsection Unsorted8BD13CSection
+
+
     .section Unsorted8BD13DSection
 
       .al
@@ -4701,6 +5286,167 @@
         ; 8B/D151
 
     .endsection Unsorted8BD13DSection
+
+
+    .section Unsorted8BD151Section
+
+      .al
+      .xl
+
+      rlUnknown8BD151 ; 8B/D151
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3C00
+        sta aCurrentTilemapInfo,b
+        lda #$8B00
+        sta lR18+1
+        lda #$D277
+        sta lR18
+        ldx #$0A0E
+        jsl rlDrawMenuTextLine
+        lda #$8B00
+        sta lR18+1
+        lda #$D281
+        sta lR18
+        ldx #$0A16
+        jsl rlDrawMenuTextLine
+        lda #$8B00
+        sta lR18+1
+        lda #$D28B
+        sta lR18
+        ldx #$0A1B
+        jsl rlDrawMenuTextLine
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        ldy #$0000
+
+        _D193
+        tya
+        asl a
+        tax
+        lda $7F8189,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitNamePointer
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        tya
+        asl a
+        clc
+        adc #$000D
+        and #$00FF
+        xba
+        ora #$000E
+        tax
+        jsl rlDrawMenuTextLine
+        inc y
+        tya
+        cmp $7F83D9
+        bne _D193
+        ldy #$0000
+
+        _D1C8
+        tya
+        asl a
+        tax
+        lda $7F83C9,x
+        beq _D1D7
+        lda $7F8189,x
+        bne _D1F3
+
+        _D1D7
+        lda #$8B00
+        sta lR18+1
+        lda #$D295
+        sta lR18
+        tya
+        asl a
+        clc
+        adc #$000D
+        and #$00FF
+        xba
+        ora #$000E
+        tax
+        jsl rlDrawMenuTextLine
+
+        _D1F3
+        inc y
+        tya
+        cmp $7F83D9
+        bne _D1C8
+        ldy #$0000
+
+        _D1FE
+        tya
+        asl a
+        tax
+        lda $7F83B9,x
+        tax
+        lda #$0000
+        jsl rlGetFactionRelation
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda $8BD2A4,x
+        sta lR18+1
+        lda $8BD2A3,x
+        sta lR18
+        tya
+        asl a
+        clc
+        adc #$000D
+        and #$00FF
+        xba
+        ora #$0016
+        tax
+        jsl rlDrawMenuTextLine
+        inc y
+        tya
+        cmp $7F83D9
+        bne _D1FE
+        lda #$0000
+
+        _D23D
+        sta $7F83DD
+        asl a
+        tax
+        lda $7F83C9,x
+        pha
+        lda $7F83DD
+        asl a
+        clc
+        adc #$000D
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0038
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0002
+        sta wR6
+        pla
+        jsl rlDrawMenuTextNumber
+        lda $7F83DD
+        inc a
+        cmp $7F83D9
+        bne _D23D
+        rtl
+
+        .databank 0
+
+        ; 8B/D277
+
+    .endsection Unsorted8BD151Section
 
 
     .section Unsorted8BD2D7Section

@@ -77,6 +77,33 @@
     .endsection Unsorted8283FASection
 
 
+    .section Unsorted82841FSection
+
+      .al
+      .xl
+
+      rlUnknown82841F ; 82/841F
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $04BA,b
+        bne _8428
+        jsl rlProcEngineFreeProc
+
+        _8428
+        rtl
+
+        .databank 0
+
+        ; 82/8429
+
+    .endsection Unsorted82841FSection
+
+
     .section ProcScript828429Section
 
       .al
@@ -315,6 +342,50 @@
     .endsection Unsorted828B35Section
 
 
+    .section Unsorted828BB3Section
+
+      .al
+      .xl
+
+      rlUnknown828BB3 ; 82/8BB3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 82/8BB4
+
+      rlUnknown828BB4 ; 82/8BB4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wGameStateRoutine1,b
+        cmp #$0018
+        bcc _8BC1
+        cmp #$001C
+        bcc _8BC5
+
+        _8BC1
+        jsl rlEventEngineFreeProc
+
+        _8BC5
+        rtl
+
+        .databank 0
+
+        ; 82/8BC6
+
+    .endsection Unsorted828BB3Section
+
+
     .section Unsorted829496Section
 
       .al
@@ -347,6 +418,60 @@
         ; 82/94B1
 
     .endsection Unsorted829496Section
+
+
+    .section Unsorted8294C0Section
+
+      .al
+      .xl
+
+      rlUnknown8294C0 ; 82/94C0
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8200
+        sta lR44+1
+        lda #$8BA9
+        sta lR44
+        jsl rlEventEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 82/94CF
+
+    .endsection Unsorted8294C0Section
+
+
+    .section Unsorted82E028Section
+
+      .al
+      .xl
+
+      rsUnknown82E028 ; 82/E028
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec y
+        dec y
+        tya
+        sta $16FA,b,x
+        pla
+        rts
+
+        .databank 0
+
+        ; 82/E030
+
+    .endsection Unsorted82E028Section
 
 
     .section Unsorted82E073Section
@@ -415,6 +540,144 @@
         ; 82/E0C6
 
     .endsection Unsorted82E0AFSection
+
+
+    .section Unsorted82E133Section
+
+      .al
+      .xl
+
+      rlUnknown82E133 ; 82/E133
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 82/E134
+
+    .endsection Unsorted82E133Section
+
+
+    .section Unsorted82E250Section
+
+      .al
+      .xl
+
+      rlUnknown82E250 ; 82/E250
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda $168F,b
+        bit #$8000
+        bne _E280
+        lda $1697,b
+        ora $1698,b
+        beq _E280
+        ldx $1691,b
+        jsl rlUnknown82E2DA
+        jsr rsUnknown82E2AD
+        ldx $1691,b
+        bne _E278
+        lda $1693,b
+        asl a
+        tax
+
+        _E278
+        dec x
+        dec x
+        stx $1691,b
+        jsr rsUnknown82E283
+
+        _E280
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E283
+
+    .endsection Unsorted82E250Section
+
+
+    .section Unsorted82E2ADSection
+
+      .al
+      .xl
+
+      rsUnknown82E2AD ; 82/E2AD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx $1691,b
+        dec $170A,b,x
+        bne _E2D9
+        ldy $16FA,b,x
+
+        _E2B8
+        lda $0000,b,y
+        bpl _E2C8
+        sta $1697,b
+        inc y
+        inc y
+        pea #<>_E2B8 - 1
+        jmp ($1697)
+
+
+        _E2C8
+        sta $170A,b,x
+        lda $0002,b,y
+        sta $16DA,b,x
+        tya
+        clc
+        adc #$0004
+        sta $16FA,b,x
+
+        _E2D9
+        rts
+
+        .databank 0
+
+        ; 82/E2DA
+
+      rlUnknown82E2DA ; 82/E2DA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $1699,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        jml [$1697]
+
+        .databank 0
+
+        ; 82/E2E6
+
+    .endsection Unsorted82E2ADSection
 
 
     .section Unsorted82E400Section

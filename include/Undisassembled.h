@@ -52,7 +52,6 @@
     aUnknown91D899                                           :?= address($91D899) ; read by rsUnknown91D844
     aUnknown91E4F3                                           :?= address($91E4F3) ; read by rlUnknown91E472
     aUnknownDA7000                                           :?= address($DA7000) ; read by rsUnknown8AA9A6
-    aUnknownDBB883                                           :?= address($DBB883) ; read by rlUnknown9F9341
     aUnknownE0285D                                           :?= address($E0285D) ; read by rlUnknown9BFBC0
 
   .endweak

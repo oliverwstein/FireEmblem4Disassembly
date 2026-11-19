@@ -35,3 +35,31 @@
         ; 97/8024
 
     .endsection Unsorted978000Section
+
+
+    .section Unsorted97802CSection
+
+      .al
+      .xl
+
+      rlUnknown97802C ; 97/802C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta bBufferW12SEL
+        sta bBufferW34SEL
+        sta bBufferWOBJSEL
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 97/8039
+
+    .endsection Unsorted97802CSection
