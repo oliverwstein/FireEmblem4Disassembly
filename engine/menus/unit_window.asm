@@ -60,10 +60,10 @@
 
         _C447
         jsr rsUnitWindowInitializeVariables
-        jsr rsUnknown80C530
+        jsr rsUnitWindowCopyGraphics
         jsr rsUnitWindowSetBGSettings
         jsr rsUnitWindowSetHDMA
-        jsr rsUnknown80C951
+        jsr rsUnitWindowBuildList
         jsl rlUnknown88DE1B
         lda #$0021
         sta wGameStateRoutine1,b
@@ -99,7 +99,7 @@
         sta wUnitWindowCurrentLineSlotOffset
         sta $7F8401
         sta wDebugMenuScreenIndex+1
-        sta $7F8405
+        sta wUnitWindowCurrentItemIconSlot
         sta wUnitWindowLastScrolledFlag
         sta $7F82D7
         sta wUnitWindowScrollingStep
@@ -125,13 +125,13 @@
         ldx #$0000
 
         _C4E1
-        sta $7F8407,x
+        sta aUnitWindowSortScores,x
         inc x
         inc x
         cpx #$0030
         bne _C4E1
         jsr rsUnitWindowGetUnits
-        jsl rlUnknown8BCD89
+        jsl rlUnitWindowGetPromotionFlagsAndWeapons
         rts
 
         .databank 0
@@ -169,12 +169,14 @@
 
         ; 80/C530
 
-      rsUnknown80C530 ; 80/C530
+      rsUnitWindowCopyGraphics ; 80/C530
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the window's tiles and tilemaps to VRAM and its palettes to the palette buffer, then the equipped weapon icons. FE5: rlUnitWindowCopyGraphics.
 
         jsl rlDMAByStruct
 
@@ -229,7 +231,7 @@
         dec x
         bpl _C5A7
         lda #$0005
-        jsl rlUnknown8BC467
+        jsl rlUnitWindowCopySpritePalette2
         jsl rlUnitWindowCopyAllEquippedWeaponIcons
         rts
 
@@ -257,22 +259,22 @@
         lda #$0000
 
         _C5C9
-        sta $7F8405
+        sta wUnitWindowCurrentItemIconSlot
         asl a
         tax
         lda aUnitWindowDeploymentSlots,x
         beq _C5F7
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown8BC484
+        jsl rlUnitWindowGetEquippedWeaponID
         pha
-        lda $7F8405
+        lda wUnitWindowCurrentItemIconSlot
         asl a
         tax
         lda $80C5F8,x
         tax
         pla
-        jsl rlUnknown8BBE68
-        lda $7F8405
+        jsl rlCopyItemIcon
+        lda wUnitWindowCurrentItemIconSlot
         inc a
         cmp #$0018
         bne _C5C9
@@ -824,12 +826,14 @@
 
         ; 80/C951
 
-      rsUnknown80C951 ; 80/C951
+      rsUnitWindowBuildList ; 80/C951
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Builds the list: draws the window's BG3 and row tilemaps for wUnitWindowMaxRows rows, restores the order saved by rlUnitWindowSaveListOrder if the window was open before, sorts by wUnitWindowSortType and wUnitWindowSortDirection, then draws names and skills.
 
         lda #$00CE
         jsl rlUnitWindowFillBG3Buffer
@@ -895,13 +899,13 @@
         sta $7F82F7
         lda #$0026
         sta wUnitWindowSortType
-        jsl rlUnknown8BCA1A
+        jsl rlUnitWindowGetSortScores
         jsl rlUnitWindowSetSortDescending
         lda $7F82F7
         sta wUnitWindowSortType
 
         _C9E9
-        jsl rlUnknown8BCA1A
+        jsl rlUnitWindowGetSortScores
         lda wUnitWindowSortDirection
         bne _C9F9
         jsl rlUnitWindowSetSortDescending
@@ -916,7 +920,7 @@
         lda #$01
         sta $7E5335
         rep #$20
-        jsl rlUnknown8BCD89
+        jsl rlUnitWindowGetPromotionFlagsAndWeapons
         jsl rlUnitWindowDrawUnitNames
         jsl rlUnknown8BADF1
         jsl rlDMAByStruct
@@ -1105,177 +1109,6 @@
     .endsection Unsorted80CC35Section
 
 
-    .section Unsorted80CD2ESection
-
-      .al
-      .xl
-
-      rsUnitWindowMainLoopUpdater ; 80/CD2E
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Main loop routine of the unit window. FE5: rsUnitWindowMainLoopUpdater.
-
-        php
-        sep #$20
-        lda #$80
-        sta bBufferINIDISP
-        rep #$20
-        lda #<>rsUnknown80BB9B
-        sta wVBlankPointer
-        jsl rlHaltUntilVBlank
-        jsl rlDisableVBlank
-        jsl rlHardwareResetScreenPosMathHDMA
-        jsl rlHardwareResetScreenRegisters
-        lda #$0000
-        sta wR1
-        lda #$0000
-        sta wR2
-        lda #$0000
-        sta wR3
-        lda #$4000
-        sta wR5
-        lda #$2000
-        sta wR6
-        lda #$2800
-        sta wR7
-        lda #$1800
-        sta wR8
-        jsl rlSetLayerPositionsAndSizes
-        jsl rlClearUnitWindowAndTerrainWindowProcs
-        jsl rlActiveSpriteEngineReset
-        jsl rlResetHDMAEngine
-        jsl rlResetIRQEngine
-        jsr rsUnknown80CDAE
-        jsr rsUnknown80CDDF
-        jsr rsUnknown80CE9E
-        jsr rsUnknown80CEE7
-        jsr rsUnknown80D0B4
-        jsr rsUnknown80CEF6
-        phk
-        plb
-        .databank $80
-        lda #$0024
-        sta wGameStateRoutine1,b
-        lda #$0023
-        sta wGameStateRoutine2,b
-        lda #<>rsUnknown809D4F
-        sta wMainLoopPointer
-        jsl rlEnableVBlank
-        plp
-        rts
-
-        .databank 0
-
-        ; 80/CDAE
-
-      rsUnknown80CDAE ; 80/CDAE
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0000
-        sta wGameStateStep,b
-        sta $7F846D
-        sta $7F8471
-        sta $7F8475
-        sta $7F8477
-        sta $7F8479
-        sta $7F847D
-        sta $7F847B
-        lda #$0001
-        sta $7F8467
-        lda #$001C
-        sta $7F8473
-        rts
-
-        .databank 0
-
-        ; 80/CDDF
-
-      rsUnknown80CDDF ; 80/CDDF
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DE44C0, $0400, $80, $8000
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $D84000, $4000, $80, $8400
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
-
-        lda #$8000
-        sta lR19+1
-        lda #$CE8E
-        sta lR19
-        jsl rlHandleMapMenuDecompressionDMA
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DE48C0, $1800, $80, $1800
-
-        ldx #$0200
-
-        _CE24
-        lda $DDFFFE,x
-        sta wJoy2RepeatTimer,x
-        dec x
-        dec x
-        bne _CE24
-        lda #$0000
-        sta aBGPaletteBuffer,b
-        lda #$0003
-        jsl rlUnknown8BC43A
-        lda #$0004
-        jsl rlUnknown8BC467
-        lda #$DD00
-        sta lR18+1
-        lda #$3DC0
-        sta lR18
-        lda #(`aBG2TilemapBuffer)<<8
-        sta lR19+1
-        lda #<>aBG2TilemapBuffer
-        sta lR19
-        jsl rlAppendDecompList
-        lda #$DD00
-        sta lR18+1
-        lda #$3E96
-        sta lR18
-        lda #$7E00
-        sta lR19+1
-        lda #$7B88
-        sta lR19
-        jsl rlAppendDecompList
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM aBG2TilemapBuffer, $0700, $80, $4000
-
-        lda #$8000
-        sta lR19+1
-        lda #$CE96
-        sta lR19
-        jsl rlHandleMapMenuDecompressionDMA
-        rts
-
-        .databank 0
-
-        ; 80/CE8E
-
-    .endsection Unsorted80CD2ESection
-
-
     .section Unsorted8BB45DSection
 
       .al
@@ -1311,12 +1144,14 @@
       .al
       .xl
 
-      rlUnknown8BB469 ; 8B/B469
+      rlUnitWindowRenderPageSprites ; 8B/B469
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Renders the sort icon, the current page's blinking sprite, and the scroll arrows when the list is longer than the window.
 
         jsr rsUnitWindowRenderWeaponRankSortIcon
         lda wVBlankEnabledFramecount
@@ -1817,12 +1652,14 @@
       .al
       .xl
 
-      rsUnknown8BB871 ; 8B/B871
+      rsUnitWindowRenderWeaponRankIcons ; 8B/B871
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Renders the weapon type icons of the weapon rank page (page 4). FE5: rsUnitWindowRenderWeaponRankIcons.
 
         stz wR0
         stz wR1
@@ -1922,7 +1759,7 @@
         ldx #$0000
 
         _B929
-        lda $7F82FE,x
+        lda aUnitWindowHighlightColors+1,x
         phx
         pha
         lda wR4
@@ -1976,7 +1813,7 @@
         phx
         lda $B9FD,b,x
         ldx wR0
-        sta $7F82FE,x
+        sta aUnitWindowHighlightColors+1,x
         plx
         lda $B9FC,b,x
         phx
@@ -2518,12 +2355,14 @@
       .al
       .xl
 
-      rlUnknown8BBE68 ; 8B/BE68
+      rlCopyItemIcon ; 8B/BE68
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A: item ID ($FFFF for none, which copies a blank icon), X: icon slot. Copies the item's 16x16 icon to the sprite tiles for that slot. Used by the unit window, shops and status screens. FE5: rlUnitWindowFE4CopyItemIcon.
 
         phx
         phy
@@ -2539,16 +2378,16 @@
         and #$001F
         asl a
         tax
-        lda aUnknown8BBFED+3,x
+        lda aItemIconBlankAndVRAMBases+3,x
         clc
         adc wR0
         pha
         tya
         cmp #$FFFF
         bne _BE96
-        lda aUnknown8BBFED+1
+        lda aItemIconBlankAndVRAMBases+1
         sta lR18+1
-        lda aUnknown8BBFED
+        lda aItemIconBlankAndVRAMBases
         sta lR18
         bra _BEAC
 
@@ -2601,9 +2440,9 @@
       .al
       .xl
 
-      aUnknown8BBFED ; 8B/BFED
+      aItemIconBlankAndVRAMBases ; 8B/BFED
 
-        ; Read by rlUnknown8BBE68.
+        ; Read by rlCopyItemIcon.
 
         .byte $80, $06, $DE, $00, $00, $00, $20, $00, $40, $00, $60, $00, $00, $00, $20, $00
         .byte $40, $00, $60, $00, $08, $00, $28, $00, $48, $00, $68, $00, $08, $00, $28, $00
@@ -2659,9 +2498,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown8BC08F+1,x
+        lda aUnitWindowWeaponRankIconPointers+1,x
         sta lR18+1
-        lda aUnknown8BC08F,x
+        lda aUnitWindowWeaponRankIconPointers,x
         sta lR18
         lda #$0040
         sta wR0
@@ -2697,7 +2536,7 @@
       .al
       .xl
 
-      aUnknown8BC08F ; 8B/C08F
+      aUnitWindowWeaponRankIconPointers ; 8B/C08F
 
         ; Read by rlUnitWindowCopyWeaponRankIcon.
 
@@ -2715,12 +2554,14 @@
       .al
       .xl
 
-      rsUnknown8BC0F0 ; 8B/C0F0
+      rsUnitWindowRenderSortSelectorCursor ; 8B/C0F0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The cursor over the column being picked as the sort. FE5: rlUnitWindowRenderSortSelectorCursor.
 
         phk
         plb
@@ -2766,14 +2607,16 @@
       .al
       .xl
 
-      rsUnknown8BC21F ; 8B/C21F
+      rsUnitWindowHandleSortSelection ; 8B/C21F
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown8BB469
+        ; Input while picking a sort: left and right move between columns and pages, A sorts descending and X ascending (rsUnitWindowUpdateSort), B and down leave.
+
+        jsl rlUnitWindowRenderPageSprites
         lda wUnitWindowSortTypeFlag
         cmp #$0002
         beq _C238
@@ -2887,7 +2730,7 @@
         sta wR1
         lda #$0000
         jsl rlUnknown88A704
-        jsr rsUnknown8BC0F0
+        jsr rsUnitWindowRenderSortSelectorCursor
 
         _C302
         lda wGameStateStep,b
@@ -2899,7 +2742,7 @@
         lda wGameStateStep,b
         cmp #$0004
         bne _C316
-        jsr rsUnknown8BB871
+        jsr rsUnitWindowRenderWeaponRankIcons
 
         _C316
         rts
@@ -2926,7 +2769,7 @@
         _C33F
         lda #$000A
         jsl rlUnknown808FAD
-        jsr rsUnknown8BC49F
+        jsr rsUnitWindowUpdateSort
         bra _C2EE
 
 
@@ -2966,12 +2809,14 @@
       .al
       .xl
 
-      rsUnknown8BC391 ; 8B/C391
+      rsUnitWindowHandleUnitSwap ; 8B/C391
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Input while swapping two units: A or Y swaps the selected unit with the one picked first (rsUnitWindowSwapUnits) and resets the sort, B cancels.
 
         lda wUnitWindowUnitSwapStep
         cmp #$0002
@@ -3011,8 +2856,8 @@
         tax
         lda wUnitWindowUnitSwapStartSlot
         dec a
-        jsr rsUnknown8BC9B6
-        jsl rlUnknown8BCD89
+        jsr rsUnitWindowSwapUnits
+        jsl rlUnitWindowGetPromotionFlagsAndWeapons
         lda #$0000
         sta wUnitWindowSortType
         sta wUnitWindowSortDirection
@@ -3063,16 +2908,18 @@
       .al
       .xl
 
-      rlUnknown8BC43A ; 8B/C43A
+      rlUnitWindowCopySpritePalette1 ; 8B/C43A
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A: sprite palette. Copies the palette at aUnknownDD7FB0 (what it colours is not known) into that sprite palette of the palette buffer.
+
         asl a
         tax
-        lda aUnknown8BC457,x
+        lda aUnitWindowSpritePaletteOffsets,x
         tay
         ldx #$001E
 
@@ -3102,9 +2949,9 @@
       .al
       .xl
 
-      aUnknown8BC457 ; 8B/C457
+      aUnitWindowSpritePaletteOffsets ; 8B/C457
 
-        ; Read by rlUnknown8BC43A, rlUnknown8BC467.
+        ; Read by rlUnitWindowCopySpritePalette1, rlUnitWindowCopySpritePalette2.
 
         .word $011E, $013E, $015E, $017E, $019E, $01BE, $01DE, $01FE
 
@@ -3118,16 +2965,18 @@
       .al
       .xl
 
-      rlUnknown8BC467 ; 8B/C467
+      rlUnitWindowCopySpritePalette2 ; 8B/C467
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A: sprite palette. Copies the palette at $DD7FD0 (what it colours is not known) into that sprite palette of the palette buffer.
+
         asl a
         tax
-        lda aUnknown8BC457,x
+        lda aUnitWindowSpritePaletteOffsets,x
         tay
         ldx #$001E
 
@@ -3157,13 +3006,15 @@
       .al
       .xl
 
-      rlUnknown8BC484 ; 8B/C484
+      rlUnitWindowGetEquippedWeaponID ; 8B/C484
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Returns the selected unit's equipped weapon's item ID with carry clear, or $FFFF with carry set if it has none.
 
         phx
         jsl rlGetFirstEquippableWeaponInInventory
@@ -3188,7 +3039,7 @@
 
         ; 8B/C49F
 
-      rsUnknown8BC49F ; 8B/C49F
+      rsUnitWindowUpdateSort ; 8B/C49F
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -3196,15 +3047,17 @@
         .autsiz
         .databank ?
 
+        ; Sets wUnitWindowSortType from the column picked (aUnitWindowPageSortTypePointers) and the direction from the button (X ascending), then sorts. FE5: rlUnitWindowUpdateSort.
+
         lda wGameStateStep,b
         sta wR0
         asl a
         clc
         adc wR0
         tax
-        lda aUnknown8BC518+1,x
+        lda aUnitWindowPageSortTypePointers+1,x
         sta lR18+1
-        lda aUnknown8BC518,x
+        lda aUnitWindowPageSortTypePointers,x
         sta lR18
         lda wUnitWindowCurrentColumn
         tay
@@ -3220,7 +3073,7 @@
         _C4CE
         txa
         sta wUnitWindowSortDirection
-        jsl rlUnknown8BCA1A
+        jsl rlUnitWindowGetSortScores
         lda wUnitWindowSortDirection
         bne _C4E3
         jsl rlUnitWindowSetSortDescending
@@ -3231,7 +3084,7 @@
         jsl rlUnitWindowSetSortAscending
 
         _C4E7
-        jsl rlUnknown8BCD89
+        jsl rlUnitWindowGetPromotionFlagsAndWeapons
         lda #$0002
         sta wUnitWindowSortTypeFlag
         rts
@@ -3248,9 +3101,9 @@
       .al
       .xl
 
-      aUnknown8BC518 ; 8B/C518
+      aUnitWindowPageSortTypePointers ; 8B/C518
 
-        ; Read by rsUnknown8BC49F.
+        ; Read by rsUnitWindowUpdateSort.
 
         .word $C4F3, $F98B, $8BC4, $C4FE, $068B, $8BC5, $C50B, $168B
         .word $8BC5
@@ -3297,7 +3150,7 @@
 
         _C54B
         lda $8407,b,y
-        cmp @l $7F8407,x
+        cmp @l aUnitWindowSortScores,x
         bcs _C560
         phx
         phy
@@ -3366,7 +3219,7 @@
         eor #$FFFF
         inc a
         sta wR12
-        lda @l $7F8407,x
+        lda @l aUnitWindowSortScores,x
         inc a
         eor #$FFFF
         inc a
@@ -3413,13 +3266,15 @@
       .al
       .xl
 
-      rlUnknown8BC5C6 ; 8B/C5C6
+      rlUnitWindowDrawSortLabel ; 8B/C5C6
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the label of wUnitWindowSortType through the jump table after this routine. FE5: rlUnitWindowFE4DrawSortLabels.
 
         lda #$0000
         sta aBG3TilemapBuffer
@@ -3466,12 +3321,14 @@
       .al
       .xl
 
-      rsUnknown8BC668 ; 8B/C668
+      rsUnitWindowDrawJoinOrderSortLabel ; 8B/C668
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 0 (sort type 0) of rlUnitWindowDrawSortLabel's table.
 
         lda #$3000
         sta wR1
@@ -3495,12 +3352,14 @@
       .al
       .xl
 
-      rsUnknown8BC9B6 ; 8B/C9B6
+      rsUnitWindowSwapUnits ; 8B/C9B6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A, X: two lines, counted from 0. Swaps their deployment and sprite slots, then renumbers aUnitJoinOrder from the new order.
 
         asl a
         tay
@@ -3565,12 +3424,14 @@
       .al
       .xl
 
-      rlUnknown8BCA1A ; 8B/CA1A
+      rlUnitWindowGetSortScores ; 8B/CA1A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fills the sort scores for wUnitWindowSortType through the jump table after this routine. FE5: rlUnitWindowGetSortScores.
 
         lda wUnitWindowSortType
         bmi _CA30
@@ -3602,12 +3463,14 @@
       .al
       .xl
 
-      rsUnknown8BCA7F ; 8B/CA7F
+      rsUnitWindowGetJoinOrderSortScores ; 8B/CA7F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 0: scores are each unit's place in aUnitJoinOrder, negated.
 
         lda wUnitWindowMaxRows
         asl a
@@ -3627,7 +3490,7 @@
         eor #$FFFF
         inc a
         ldx wR14
-        sta $7F8407,x
+        sta aUnitWindowSortScores,x
         ldx wR14
         inc x
         inc x
@@ -3649,13 +3512,15 @@
       .al
       .xl
 
-      rsUnknown8BCAB4 ; 8B/CAB4
+      rsUnitWindowGetSavedOrderSortScores ; 8B/CAB4
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type $26: scores are the order rlUnitWindowSaveListOrder saved.
 
         lda wUnitWindowMaxRows
         asl a
@@ -3673,7 +3538,7 @@
         lda $7E5336,x
         and #$00FF
         ldx wR14
-        sta $7F8407,x
+        sta aUnitWindowSortScores,x
         ldx wR14
         inc x
         inc x
@@ -3724,7 +3589,7 @@
         sta wR0
 
         _CD3C
-        lda $7F832B,x
+        lda aUnitWindowDeploymentSlots-2,x
         sta aUnitWindowDeploymentSlots,x
         dec x
         dec x
@@ -3737,7 +3602,7 @@
         sta wR0
 
         _CD58
-        lda $7F838F,x
+        lda aUnitWindowSpriteSlots-2,x
         sta aUnitWindowSpriteSlots,x
         dec x
         dec x
@@ -3746,18 +3611,18 @@
         lda wR0
         sta aUnitWindowSpriteSlots,x
         ldx wR2
-        lda $7F8407,x
+        lda aUnitWindowSortScores,x
         sta wR0
 
         _CD74
-        lda $7F8405,x
-        sta $7F8407,x
+        lda wUnitWindowCurrentItemIconSlot,x
+        sta aUnitWindowSortScores,x
         dec x
         dec x
         cpx wR1
         bne _CD74
         lda wR0
-        sta $7F8407,x
+        sta aUnitWindowSortScores,x
         rts
 
         .databank 0
@@ -3772,13 +3637,15 @@
       .al
       .xl
 
-      rlUnknown8BCD89 ; 8B/CD89
+      rlUnitWindowGetPromotionFlagsAndWeapons ; 8B/CD89
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; For each line: whether the unit can promote now (aUnitWindowReadyToPromoteFlags) and its equipped weapon's data pointer ($7F835F).
 
         ldx #$0000
 
@@ -3813,7 +3680,7 @@
         jsl rlGetFirstEquippableWeaponInInventory
         ldx wR15
         lda wCurrentItemDataROMPointer,b
-        sta $7F835F,x
+        sta aUnitWindowEquippedWeaponPointers,x
         inc wR15
         inc wR15
         bra _CDB9
@@ -3834,13 +3701,15 @@
       .al
       .xl
 
-      rlUnknown8BCE29 ; 8B/CE29
+      rlUnitWindowSaveListOrder ; 8B/CE29
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Saves each listed unit's place, negated, at $7E5336 by generation ID, so the list can reopen in the same order. FE5: rlUnitWindowUnknown90DF80.
 
         lda wSelectedUnitDataRAMPointer,b
         sta wR1
@@ -3894,12 +3763,14 @@
       .al
       .xl
 
-      rlUnknown8BCE71 ; 8B/CE71
+      rlResetUnitWindowSettings ; 8B/CE71
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears the saved page, sort, list order and saved order. Run for a new game and when units are reset for a chapter.
 
         phb
         php
@@ -3938,12 +3809,14 @@
 
         ; 8B/CEAD
 
-      rlUnknown8BCEAD ; 8B/CEAD
+      rlUnitWindowClearSavedListOrder ; 8B/CEAD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears the order rlUnitWindowSaveListOrder saved. Run after loading a save.
 
         phb
         php

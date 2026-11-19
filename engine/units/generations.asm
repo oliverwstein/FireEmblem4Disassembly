@@ -121,7 +121,7 @@
 
         jsl rlInitiateFactionRAMData
 
-        jsl rlUnknown8BCE71 ; clear some stuff
+        jsl rlResetUnitWindowSettings ; clear some stuff
 
         plx
         plp
@@ -235,7 +235,7 @@
 
           jsl rlSetParentsPermanentFlags
           jsl rlDeleteParentsAndModifyChildrenData
-          jsl rlUnknown8BCE71
+          jsl rlResetUnitWindowSettings
 
         +
         lda wCurrentChapter,b

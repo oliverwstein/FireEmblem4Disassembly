@@ -4647,7 +4647,7 @@
         lda $A1B0,b,y
         tax
         lda wR0
-        jsl rlUnknown8BBE68
+        jsl rlCopyItemIcon
         ply
         plx
         dec x
@@ -4682,7 +4682,7 @@
         lda $A1DF,b,y
         tax
         lda wR0
-        jsl rlUnknown8BBE68
+        jsl rlCopyItemIcon
         rts
 
         bvc _A1E1
@@ -4712,7 +4712,7 @@
         lda $A212,b,y
         tax
         lda wR0
-        jsl rlUnknown8BBE68
+        jsl rlCopyItemIcon
         rts
 
         bvc _A214
@@ -4740,7 +4740,7 @@
         tya
         inc a
         jsl rlGetItemIDByInventorySlot
-        jsl rlUnknown8BBE68
+        jsl rlCopyItemIcon
         ply
         plx
         dec x
@@ -6973,9 +6973,9 @@
         dec x
         bne _BD9B
         lda #$0001
-        jsl rlUnknown8BC43A
+        jsl rlUnitWindowCopySpritePalette1
         lda #$0002
-        jsl rlUnknown8BC467
+        jsl rlUnitWindowCopySpritePalette2
         jsr rsUnknown8ABFD1
         ldy #$0000
         stz $0889,b
@@ -10037,9 +10037,9 @@
         dec x
         bpl _E407
         lda #$0001
-        jsl rlUnknown8BC43A
+        jsl rlUnitWindowCopySpritePalette1
         lda #$0002
-        jsl rlUnknown8BC467
+        jsl rlUnitWindowCopySpritePalette2
         jsr rsUnknown8ABFD1
         sep #$20
         lda #$17
@@ -10231,9 +10231,9 @@
         dec x
         bpl _EDEE
         lda #$0001
-        jsl rlUnknown8BC43A
+        jsl rlUnitWindowCopySpritePalette1
         lda #$0002
-        jsl rlUnknown8BC467
+        jsl rlUnitWindowCopySpritePalette2
         lda wCurrentChapter,b
         cmp #$0006
         bcs _EE14
@@ -10653,9 +10653,9 @@
         dec x
         bpl _F1AB
         lda #$0001
-        jsl rlUnknown8BC43A
+        jsl rlUnitWindowCopySpritePalette1
         lda #$0002
-        jsl rlUnknown8BC467
+        jsl rlUnitWindowCopySpritePalette2
         lda #$00B2
         jsl rlUnknown8AFC52
         jsl rlUnknown8A94B6

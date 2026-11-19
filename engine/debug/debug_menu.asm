@@ -4125,7 +4125,7 @@
         lda aUnknown899109,x
         tax
         pla
-        jsl rlUnknown8BBE68
+        jsl rlCopyItemIcon
 
         lda $7F82BD
         inc a
@@ -4140,7 +4140,7 @@
       aUnknown899109 ; 89/9109
 
         ; One word per inventory slot (1-8), read by rlUnknown8990DA and passed in X
-        ; to rlUnknown8BBE68 along with the slot's item.
+        ; to rlCopyItemIcon along with the slot's item.
 
         .word $0060, $0062, $0064, $0066, $0068, $006A, $006C, $006E
 

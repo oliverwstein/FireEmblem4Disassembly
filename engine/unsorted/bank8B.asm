@@ -1412,7 +1412,7 @@
         lda wGameStateStep,b
         cmp #$0004
         bne _A80C
-        jsr rsUnknown8BB871
+        jsr rsUnitWindowRenderWeaponRankIcons
         bra _A816
 
 
@@ -1496,7 +1496,7 @@
         lda $7F82E7
         bne _A86B
         jsl rlUnitWindowRenderUnitSwapCursors
-        jsl rlUnknown8BB469
+        jsl rlUnitWindowRenderPageSprites
         jsr rsUnitWindowRenderSprites
 
         _A86B
@@ -1505,7 +1505,7 @@
         lda wGameStateStep,b
         cmp #$0004
         bne _A87E
-        jsr rsUnknown8BB871
+        jsr rsUnitWindowRenderWeaponRankIcons
         bra _A886
 
 
@@ -1680,7 +1680,7 @@
         _A983
         lda #$0021
         jsl rlUnknown808FAD
-        jsl rlUnknown8BCE29
+        jsl rlUnitWindowSaveListOrder
         lda wGameStateStep,b
         sta wUnitWindowPage
         lda wUnknown000D79,b
@@ -1708,7 +1708,7 @@
         _A9BD
         lda #$000A
         jsl rlUnknown808FAD
-        jsl rlUnknown8BCE29
+        jsl rlUnitWindowSaveListOrder
         lda wGameStateStep,b
         sta wUnitWindowPage
         jsl rlGetSelectedUnitStates
@@ -1745,7 +1745,7 @@
         _AA10
         lda #$0008
         jsl rlUnknown808FAD
-        jsl rlUnknown8BCE29
+        jsl rlUnitWindowSaveListOrder
         lda wGameStateStep,b
         sta wUnitWindowPage
         lda #$0000
@@ -2008,7 +2008,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown8BC21F
+        jsr rsUnitWindowHandleSortSelection
         jsr rsUnitWindowRenderSprites
         rtl
 
@@ -2046,7 +2046,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown8BC391
+        jsr rsUnitWindowHandleUnitSwap
         lda $7F82ED
         cmp #$0001
         bne _AC30
@@ -2198,7 +2198,7 @@
         asl a
         tax
         jsr ($8BAE12,x)
-        jsl rlUnknown8BC5C6
+        jsl rlUnitWindowDrawSortLabel
         rtl
 
         .databank 0
@@ -4537,7 +4537,7 @@
 
       aUnknownDD7FB0 ; DD/7FB0
 
-        ; Read by rlUnknown8BC43A.
+        ; Read by rlUnitWindowCopySpritePalette1.
 
         .word $3800, $7BFF, $56D7, $35EF, $0462, $02FB, $000B, $5C40
         .word $6D25, $7E0F, $0140, $1EC5, $10EA, $298F, $0487, $0134

@@ -442,7 +442,7 @@
         jsr rsLoadSaveFileBody
         jsr rsFillSaveSlotDataBuffers
         jsl rlUnknown87BF6F
-        jsl rlUnknown8BCEAD
+        jsl rlUnitWindowClearSavedListOrder
         pla
         ply
         plx

@@ -5518,7 +5518,7 @@
         dec x
         bne _BDF9
         lda #$0006
-        jsl rlUnknown8BC467
+        jsl rlUnitWindowCopySpritePalette2
         ldx #$0020
 
         _BE0D
@@ -9470,3 +9470,180 @@
         ; F7/7C12
 
     .endsection TableF77C0CSection
+
+
+    .section Unsorted80CD2ESection
+
+      .al
+      .xl
+
+      rsUnknown80CD2E ; 80/CD2E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Main loop routine that opens a screen whose per-frame code is in bank $89
+        ; (game states $23 and $24); rlUnknown85DBED in the map menu installs it.
+        ; Built like rsUnitWindowOpen, but not the unit window: the code FE5 calls
+        ; rsUnitWindowMainLoopUpdater only resembles it. rsUnknown80CDAE sets up
+        ; this screen's list variables at $7F8467, laid out like the unit window's.
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #<>rsUnknown80BB9B
+        sta wVBlankPointer
+        jsl rlHaltUntilVBlank
+        jsl rlDisableVBlank
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+        lda #$0000
+        sta wR1
+        lda #$0000
+        sta wR2
+        lda #$0000
+        sta wR3
+        lda #$4000
+        sta wR5
+        lda #$2000
+        sta wR6
+        lda #$2800
+        sta wR7
+        lda #$1800
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        jsl rlClearUnitWindowAndTerrainWindowProcs
+        jsl rlActiveSpriteEngineReset
+        jsl rlResetHDMAEngine
+        jsl rlResetIRQEngine
+        jsr rsUnknown80CDAE
+        jsr rsUnknown80CDDF
+        jsr rsUnknown80CE9E
+        jsr rsUnknown80CEE7
+        jsr rsUnknown80D0B4
+        jsr rsUnknown80CEF6
+        phk
+        plb
+        .databank $80
+        lda #$0024
+        sta wGameStateRoutine1,b
+        lda #$0023
+        sta wGameStateRoutine2,b
+        lda #<>rsUnknown809D4F
+        sta wMainLoopPointer
+        jsl rlEnableVBlank
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/CDAE
+
+      rsUnknown80CDAE ; 80/CDAE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta wGameStateStep,b
+        sta $7F846D
+        sta $7F8471
+        sta $7F8475
+        sta $7F8477
+        sta $7F8479
+        sta $7F847D
+        sta $7F847B
+        lda #$0001
+        sta $7F8467
+        lda #$001C
+        sta $7F8473
+        rts
+
+        .databank 0
+
+        ; 80/CDDF
+
+      rsUnknown80CDDF ; 80/CDDF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE44C0, $0400, $80, $8000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $D84000, $4000, $80, $8400
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
+
+        lda #$8000
+        sta lR19+1
+        lda #$CE8E
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE48C0, $1800, $80, $1800
+
+        ldx #$0200
+
+        _CE24
+        lda $DDFFFE,x
+        sta wJoy2RepeatTimer,x
+        dec x
+        dec x
+        bne _CE24
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        lda #$0003
+        jsl rlUnitWindowCopySpritePalette1
+        lda #$0004
+        jsl rlUnitWindowCopySpritePalette2
+        lda #$DD00
+        sta lR18+1
+        lda #$3DC0
+        sta lR18
+        lda #(`aBG2TilemapBuffer)<<8
+        sta lR19+1
+        lda #<>aBG2TilemapBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        lda #$DD00
+        sta lR18+1
+        lda #$3E96
+        sta lR18
+        lda #$7E00
+        sta lR19+1
+        lda #$7B88
+        sta lR19
+        jsl rlAppendDecompList
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG2TilemapBuffer, $0700, $80, $4000
+
+        lda #$8000
+        sta lR19+1
+        lda #$CE96
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        rts
+
+        .databank 0
+
+        ; 80/CE8E
+
+    .endsection Unsorted80CD2ESection
+
+

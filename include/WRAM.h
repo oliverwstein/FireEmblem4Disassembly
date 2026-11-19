@@ -1822,8 +1822,9 @@
     wUnitWindowHighlightStep .word ?                ; $7F82F9
     wUnitWindowHighlightCounter .word ?             ; $7F82FB
     aUnitWindowHighlightColors .fill $30            ; $7F82FD
-    aUnitWindowDeploymentSlots .fill $62            ; $7F832D
-    .word ?                                         ; $7F838F
+    aUnitWindowDeploymentSlots .fill $32            ; $7F832D
+    aUnitWindowEquippedWeaponPointers .fill $32     ; $7F835F
+      ; Each line's equipped weapon, as wCurrentItemDataROMPointer.
     aUnitWindowSpriteSlots .fill $32                ; $7F8391
     aUnitWindowReadyToPromoteFlags .fill $32        ; $7F83C3
     wUnitWindowCurrentNameLine .word ?              ; $7F83F5
@@ -1833,6 +1834,17 @@
     wUnitWindowCurrentLineSlotOffset .word ?        ; $7F83FF
 
     ; $7F8401
+
+  .endvirtual
+
+  .virtual $7F8405
+
+    ; More of the unit window's variables; see $7F82C7.
+
+    wUnitWindowCurrentItemIconSlot .word ?          ; $7F8405
+    aUnitWindowSortScores .fill $32                 ; $7F8407
+
+    ; $7F8439
 
   .endvirtual
 

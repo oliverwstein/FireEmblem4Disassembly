@@ -3109,9 +3109,9 @@
         tax
         lda wR1
         jsl rlGetItemIDByInventorySlot
-        jsl rlUnknown8BBE68
+        jsl rlCopyItemIcon
         lda #$0006
-        jsl rlUnknown8BC43A
+        jsl rlUnitWindowCopySpritePalette1
         pla
         sta wR0
         ply
@@ -3320,7 +3320,7 @@
         ldx #$004E
         jsl rlUnitWindowCopyWeaponRankIcon
         lda #$0005
-        jsl rlUnknown8BC467
+        jsl rlUnitWindowCopySpritePalette2
         plx
         phx
         lda aProcSystem.aBody5,b,x
@@ -7011,9 +7011,9 @@
         tya
         inc a
         jsl rlGetItemIDByInventorySlot
-        jsl rlUnknown8BBE68
+        jsl rlCopyItemIcon
         lda #$0006
-        jsl rlUnknown8BC43A
+        jsl rlUnitWindowCopySpritePalette1
         ply
         dec y
         bpl _B2E5
@@ -13831,7 +13831,7 @@
         .databank ?
 
         stz wGameStateRoutine1,b
-        lda #<>rsUnitWindowMainLoopUpdater
+        lda #<>rsUnknown80CD2E
         sta wMainLoopPointer
         rtl
 
