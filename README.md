@@ -2,7 +2,7 @@
 
 A disassembly of *Fire Emblem: Seisen no Keifu* (Japan, version 1.0). It builds a ROM that is byte-for-byte identical to the original.
 
-The project is a work in progress; [STATUS.md](STATUS.md) records what has been done and what remains. About 17% of the ROM is currently built from source. The rest is copied from your original ROM at build time; see [Base ROM](#base-rom).
+The project is a work in progress; [STATUS.md](STATUS.md) records what has been done and what remains. About 18% of the ROM is currently built from source. The rest is copied from your original ROM at build time; see [Base ROM](#base-rom).
 
 ## Building
 
@@ -42,7 +42,7 @@ You need:
 | `gfx/` | Extracted graphics. |
 | `include/` | Constants, RAM layout, hardware registers and macros. `include/fe4.h` includes them all. |
 | `tools/` | Build helpers, and tools for testing new code against the ROM and moving it into the build. See `tools/README.md`. |
-| `wip/` | Disassembled code that is not part of the build yet. |
+| `wip/` | Disassembled code that is not part of the build yet (empty when nothing is in progress). |
 
 `engine/` is split by game system:
 

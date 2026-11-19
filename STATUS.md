@@ -1,20 +1,23 @@
 # Project status
 
-Last updated 2026-11-18. This file records what has been done and what remains, so that work can pick up where it left off. For how to build and how the repository is laid out, see [README.md](README.md). For the tools used to bring new code into the build, see [tools/README.md](tools/README.md).
+Last updated 2026-11-19. This file records what has been done and what remains, so that work can pick up where it left off. For how to build and how the repository is laid out, see [README.md](README.md). For the tools used to bring new code into the build, see [tools/README.md](tools/README.md).
 
 ## Where things stand
 
 - `./build.sh` builds a ROM that is byte-for-byte identical to the original (Japanese 1.0, SHA-1 `90f0bdeaf0151899f96281258fcb30899fbd0d44`).
-- **17.22% of the ROM is built from source** (722,072 of 4,194,304 bytes; `./build.sh coverage`). The rest is copied from `fe4.sfc` at build time.
-- Engine code is organized by game system under `engine/` (95 files, about 3,200 routines). About 960 routines are still named `rlUnknown…`/`rsUnknown…`, including nearly all 423 in `engine/unsorted/`.
-- `wip/` holds one file, `TempStuffNeedsWork.asm`, with 16 routines and one unlabelled data block that are disassembled but not yet in the build (see below).
+- **18.15% of the ROM is built from source** (761,454 of 4,194,304 bytes; `./build.sh coverage`). The rest is copied from `fe4.sfc` at build time.
+- Engine code is organized by game system under `engine/` (97 files, about 2,950 routines). About 1,150 routines are still named `rlUnknown…`/`rsUnknown…`, most of them in `engine/unsorted/`.
+- `wip/` is empty and `include/Undisassembled.h` lists nothing: no built code calls code that is not built.
+- Every call, jump, engine definition (proc, HDMA, active sprite) and jump table reachable from built code is built. `tools/trace.py` reports nothing left to follow.
 
 | Stage | Bytes from source | Share |
 |---|---|---|
 | Starting point (before this work) | 675,008 | 16.09% |
 | After adding the AI code | 687,588 | 16.39% |
 | After the first pass over TempStuff | 714,327 | 17.03% |
-| Now | 722,072 | 17.22% |
+| After the rest of TempStuff | 729,236 | 17.39% |
+| After tracing calls from built code | 755,758 | 18.02% |
+| Now (also definitions and jump tables) | 761,454 | 18.15% |
 
 ## What has been done
 
@@ -32,55 +35,51 @@ In order:
    - two RAM variables defined inside code (`bRNGUnknown1/2`) were moved to `include/WRAM.h`;
    - the author's loose notes became comments next to what they describe.
 
+8. **The rest of TempStuff** (2026-11-19). All 16 needs-work items and the unlabelled block are in the build. The fixes were mostly the pitfalls listed below: list labels without `[0]`, `size()` of a list, the wrong data bank (`rlFillEventMovementMoveCostMap` sets `$7E`, not `$7F`), and long addressing where 64tass chose absolute. Movement script commands got numeric names (`MAP_CMD_*` in `include/events/Helpers.h`) that the `MAP_*` macros now use. `wSon/DaughterCharacterROMPointer` hold unit RAM pointers and were renamed `wSon/DaughterUnitRAMPointer`. The battle banner graphics in bank `$9C` are labelled ROM slices in `build.asm`, and their table is `engine/battle/banners.asm`.
+9. **Disassembler.** `tools/disasm.py` turns ROM code into routines in the project's style. It follows register widths through `rep`/`sep` and branches, follows the data bank through `phk/plb` and `lda #bank/pha/plb`, uses existing names, writes long-pointer loads as `` #(`label)<<8 ``/`#<>label`, knows the inline arguments of `rlDMAByStruct` and the palette routines, and treats unreachable bytes inside a routine as data. `--selftest` disassembles every built routine (2,789 now) and checks that the output reassembles to the same bytes; it does, for all of them.
+10. **Tracer.** `tools/trace.py` starts from every built routine and follows `jsr`/`jsl`/`jmp`/`jml`, the init and on-cycle routines of proc, HDMA and active sprite definitions loaded into `lR44` before a create call, and raw entries in jump tables whose other entries are routines. It disassembles what it finds, follows that too, and can write the result as a routines file. Three rounds found 440 routines (about 32 KB); all matched the ROM as written and are in the build, mostly in `engine/unsorted/`. Built code now calls them by label (about 850 raw addresses replaced).
+11. **Never-disassembled callees.** `rlFreeDialogueBoxes` (was `rlUnknown85AB3F`), `rlDrawMenuTextLine` and `rlDrawMenuTextNumber` (with its two tables) are in the build.
+12. **Naming convention.** Unknown routines that return with `rts` and never `rtl` are now `rsUnknown…` (145 renamed); `trace.py` picks the prefix itself.
+
 Every step kept the output identical to the original.
 
 ## What remains
 
-### 1. What is left in `wip/TempStuffNeedsWork.asm`
+### 1. Code reached only through data that is not disassembled
 
-Each starts with a `; NEEDS WORK` comment giving the error it produced. Run `tools/test_routines.py wip/TempStuffNeedsWork.asm` to see the current errors.
+The tracer has followed everything that built code reaches. The remaining code is reached through data structures that are still raw bytes, so the next step is to decode those structures and let the tracer follow them:
 
-| Item | Problem | Likely approach |
-|---|---|---|
-| `rsUnknown81AD8E` | Branches out of range | Probably a list used as a base address (see the pitfalls below), making an instruction repeat. Check with `show_lines.py --long-branch`. |
-| `rlGetFatherUnitsChildrenRAMPointers` | Branch out of range | As above. |
-| `rlFillItemsOwnerAndSlotData` | `aItems` is not a field; branch out of range | Find the right field of `structInventoryDataBuffer`; the branch problem probably follows from it. |
-| `rsUnknown81B270` | `aProcSystem.wSelectedUnitDataRAMPointer` does not exist | Probably plain `wSelectedUnitDataRAMPointer`; check against the ROM. |
-| `rlUnknown8780F9` | `structMapMenu.Unknown4` does not exist | Find the field at that offset in `include/Menus.h`. |
-| `rlEventMovementBuildTargetDistanceMap` | `wUnknown7EC4A4` is not defined | Add it to `include/WRAM.h` (it sits next to `aEventMovement`'s buffers). |
-| `rlFillEventMovementMoveCostMap` | Data bank errors on `aEventMovement.aMovementCostMap,y` | The nearest `.databank` is set to something other than `?`, so the fixer skips it; set it by hand. |
-| `rlEventMovementCreateMovementScriptFromTargetDistanceMap`, `aEventMovementDirectionLookupTable` | `MAP_UP` etc. are macros (segments), used here as numbers | Define numeric constants for the map-script command codes, or emit the bytes. |
-| `aItemObtainedText` | Japanese text with a full-width space | Needs the game's text encoding for `.text`; see how `text/` dialogue is encoded. |
-| `rlProcUnknown8AE199Init` | `len(Palette)` on a struct | Use `size(Palette)` or the actual byte count. |
-| `aBelhallaAttackingMagePositions` | `pack([4, 50])` gives values too large for `.byte` | Work out the real packing from the ROM bytes. |
-| `aASMapSpriteCode`, `rlUnknown88C4D9`, `aUnknown88CBE8`, `aBattleMapSpriteData` | Content is still raw bytes or half-converted code in comments | Disassemble them properly; `show_lines.py` and the ROM bytes are the reference. |
-| Battle banner graphics and pointer table (no label) | Bank `$9C` data written after `rsUnknown959A4D` with no address label | Give each piece a label with its address; the graphics are `ROM[...]` slices. |
+- **Proc scripts.** A proc definition's code pointer leads to a script of `PROC_*` commands (`include/Procs.h`), some of which call routines (`PROC_CALL`, `PROC_CALL_ARGS`, `PROC_SET_ONCYCLE`). Decoding scripts needs the size of every command; the command table is in `engine/core/proc.asm`. Active sprite and HDMA code pointers lead to similar scripts.
+- **Event scripts.** Chapter events run ASMC routines; the built `events/` files name some, others are raw addresses.
+- **Menu definitions**, map menus and other tables of routine pointers in data that is not built yet.
+- **Code nothing points to directly**: entries reached through computed jumps, and the main loop's game-state tables in bank `$80`.
 
-Once an item matches, write a short spec and run `tools/place_routines.py wip/TempStuffNeedsWork.asm SPEC --remove`.
+A **gap sweep** would help too: try disassembling each uncovered gap in a code bank at 16-bit widths, and report candidates whose calls all land on known routine starts. That is a heuristic, so its results should be reviewed rather than placed automatically.
 
-### 2. Calls into code that is not disassembled
-
-`include/Undisassembled.h` lists the 19 routines that built code calls but that are not in the build yet. 16 are the needs-work items above. The other three are not disassembled anywhere: `rlUnknown85AB3F`, `rlDrawMenuTextLine` (`$879354`) and `rlDrawMenuTextNumber` (`$89A18C`). These are natural starting points for new disassembly.
-
-### 3. Code that has never been disassembled
-
-Share of each bank's `$8000`–`$FFFF` half built from source, which is where code lives in this HiROM layout:
+Share of each bank's `$8000`–`$FFFF` half built from source now:
 
 | | | | |
 |---|---|---|---|
-| `$80`: 19% | `$81`: 56% | `$82`: 30% | `$83`: 99% |
-| `$84`: 83% | `$85`: 7% | `$86`: 95% | `$87`: 53% |
-| `$88`: 14% | `$89`: 29% | `$8A`: 9% | `$8B`: 18% |
-| `$8C`: 0% | `$8D`: 59% | `$8E`–`$8F`: 100% | `$90`: 81% |
-| `$91`: 67% | `$95`: 1% | `$9E`: 10% | `$9F`: 1% |
+| `$80`: 28% | `$81`: 58% | `$82`: 34% | `$83`: 99% |
+| `$84`: 90% | `$85`: 21% | `$86`: 98% | `$87`: 70% |
+| `$88`: 52% | `$89`: 30% | `$8A`: 12% | `$8B`: 19% |
+| `$8C`: 1% | `$8D`: 60% | `$8E`–`$8F`: 100% | `$90`: 82% |
+| `$91`: 70% | `$95`: 3% | `$9D`: 100% | `$9E`: 31% |
 
-Banks `$80`, `$82`, `$85` and `$88`–`$8C` contain known code, so their low coverage is mostly undisassembled engine code: menus, map handling, battle animations and more. Bank `$80` holds the core loop and interrupt handlers. Not every uncovered byte is code; tables and data are mixed in.
+Not every uncovered byte is code; tables, text and graphics are mixed in, and banks `$92`–`$9C` are almost all data.
 
-A useful next tool would be a **code tracer**. It would start from the reset/NMI/IRQ vectors, every known routine and the jump tables, follow branches, and separate code from data. That would give an exact list of undisassembled routines per bank. Then: disassemble into a `wip/` file, and use the same test, fix and place workflow.
+### 2. Workflow for new code
+
+`tools/disasm.py START > wip/File.asm` (or `tools/trace.py --write wip/File.asm`), then `test_routines.py`, then `place_routines.py`. The disassembler's output has matched the ROM without hand fixes every time so far; what it needs is names and comments. If `--selftest` ever reports a difference after a change to `disasm.py`, fix the tool before using it.
+
+### 3. Data that could become structured source
+
+- The 94-row `aBattleMapSpriteData` (bank `$9E`) and the battle banner table point at compressed graphics that are still ROM slices.
+- `aUnknown88CBE8` has one byte per short map sprite (9) and per tall one (14); what the values mean is unknown.
 
 ### 4. Naming and understanding
 
-About 960 routines are still unnamed. Many routines were filed by their name or their neighbours in the ROM, not by understanding the code. The plan agreed with the user is to name system by system: gather the clues (callees, callers, RAM addresses, hardware registers, data tables, known game mechanics), and confirm uncertain cases by running the game in a debugger (Mesen or bsnes-plus can load `labels.txt`). Names must state only what is known; uncertain routines stay `Unknown` or get a comment saying how sure it is.
+About 1,150 routines are still unnamed, and the 440 the tracer found are filed in `engine/unsorted/` by bank. Each has a caller in the build, which is the first clue to what it does. Many routines were filed by their name or their neighbours in the ROM, not by understanding the code. The plan agreed with the user is to name system by system: gather the clues (callees, callers, RAM addresses, hardware registers, data tables, known game mechanics), and confirm uncertain cases by running the game in a debugger (Mesen or bsnes-plus can load `labels.txt`). Names must state only what is known; uncertain routines stay `Unknown` or get a comment saying how sure it is.
 
 Specific things that deserve a look:
 
@@ -102,7 +101,7 @@ Specific things that deserve a look:
 
 - **The ROM decides.** A change is only correct if `./build.sh` still says the output matches. Where work-in-progress source disagrees with the ROM, the source is wrong.
 - **Commit in small steps**, each with a matching build.
-- **Use the tools.** For new code: `test_routines.py` → `fix_addressing.py` → fix the rest by hand with `--diagnose` and `show_lines.py` → `place_routines.py`. The 64tass pitfalls that caused most problems are listed in `tools/README.md`. The ones that came up most:
+- **Use the tools.** For new code: `disasm.py` or `trace.py --write` → `test_routines.py` → `place_routines.py`. For hand-written or older work-in-progress code: `test_routines.py` → `fix_addressing.py` → fix the rest by hand with `--diagnose` and `show_lines.py` → `place_routines.py`. The 64tass pitfalls that caused most problems are listed in `tools/README.md`. The ones that came up most:
   - register widths follow source order;
   - `,b` needs a 16-bit operand and does not subtract the data bank;
   - a list label (`.brept`) used without `[0]` silently emits one instruction per entry;
