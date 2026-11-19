@@ -4,7 +4,8 @@
 usage: tools/trace.py [--bank XX] [--write FILE] [--list]
 
 Starting from every routine already in the build, this follows jsr, jsl, jmp and jml
-to addresses that still come from the base ROM, disassembles what it finds there
+to addresses that still come from the base ROM, and the entries of jsr (table,x) and
+jmp (table,x) tables that the emulator log (fe4.cdl) shows read, disassembles what it finds there
 (with tools/disasm.py), and follows the calls in that code too. Since everything it
 finds is reached from verified code, it is code rather than data misread as code.
 Register widths at each new routine are the caller's widths at the call.
@@ -25,7 +26,7 @@ import argparse, collections, glob, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from asmlib import read_rom, offset, repo_copy, assemble
-from disasm import Disassembler, load_labels
+from disasm import Disassembler, load_labels, width_log
 import procs
 
 ODD = {'brk', 'cop', 'wdm', 'stp', 'xce'}
@@ -73,12 +74,13 @@ def built_routines():
 
 def table_entries():
     """(address, m8, x8, table) for raw entries in pointer tables in the build whose
-    other entries are routines. Widths come from the labelled entries."""
+    other entries are routines. Widths come from the labelled entries. A raw .word
+    entry ($XXXX or <>$XXXX) is taken to be in the table's own bank."""
     starts = {name: (m8, x8) for _, name, m8, x8 in built_routines()}
-    entry = re.compile(r'^\s+\.(addr|word|long) (?:<>)?(\$[0-9A-F]{6}|[A-Za-z]\w*)\s*(;.*)?$')
+    entry = re.compile(r'^\s+\.(addr|word|long) (?:<>)?(\$[0-9A-F]{6}|\$[89A-F][0-9A-F]{3}|[A-Za-z]\w*)\s*(;.*)?$')
     for f in glob.glob('engine/**/*.asm', recursive=True):
         lines = open(f, encoding='utf-8').read().split('\n') + ['']
-        block, table = [], None
+        block, table, bank = [], None, 0
         for l in lines:
             m = entry.match(l)
             if m:
@@ -88,14 +90,15 @@ def table_entries():
                 continue
             if block:
                 named = [starts[x] for x in block if x in starts]
-                raw = [int(x[1:], 16) for x in block if x.startswith('$')]
+                raw = [int(x[1:], 16) | (bank if len(x) == 5 else 0) for x in block if x.startswith('$')]
                 if named and raw:
                     m8, x8 = max(set(named), key=named.count)
                     for a in raw:
                         yield a, m8, x8, table
             block = []
-            t = re.match(r'^ {6}([A-Za-z]\w*)', l)
-            table = t.group(1) if t else table
+            t = re.match(r'^ {6}([A-Za-z]\w*) ; ([0-9A-F]{2})/', l)
+            if t:
+                table, bank = t.group(1), int(t.group(2), 16) << 16
 
 
 def is_rom_code_address(a):
@@ -110,6 +113,27 @@ def calls(insns):
     for ins in insns:
         if ins['mn'] in ('jsr', 'jsl', 'jmp', 'jml') and ins['mode'] in ('absj', 'abslj'):
             yield ins['target'], ins['m8'], ins['x8'], ins['mn'], ins['pc']
+
+
+def indexed_jump_targets(insns, rom, log):
+    """(target, m8, x8, kind, pc) for the entries of the tables that jsr (table,x) and
+    jmp (table,x) jump through. A table's length is not in the code, so only the
+    entries that the emulator log shows read, and whose targets it shows executed, are
+    taken."""
+    if not log:
+        return
+    for ins in insns:
+        if ins['mode'] != 'absindx':
+            continue
+        o = offset((ins['pc'] & 0xFF0000) | ins['val'])
+        while log[o] & 0x02 and log[o + 1] & 0x02 and not log[o] & 0x01:
+            t = (ins['pc'] & 0xFF0000) | rom[o] | rom[o + 1] << 8
+            # An entry that was jumped through leads to code that ran; anything else
+            # means the walk has gone past the end of the table.
+            if t & 0xFFFF < 0x8000 or not log[offset(t)] & 0x01:
+                break
+            yield t, ins['m8'], ins['x8'], f'{ins["mn"]} (table,x) entry', ins['pc']
+            o += 2
 
 
 def definitions(insns, name_of):
@@ -182,8 +206,10 @@ def trace(rom, labels, mask):
                         out += definition_targets(a, 'rlActiveSpriteEngineCreateSpriteHighestSlot')
         return out
 
+    log = width_log()
+
     def visit(insns, who):
-        targets = list(calls(insns))
+        targets = list(calls(insns)) + list(indexed_jump_targets(insns, rom, log))
         for ptr, creator in definitions(insns, name_of):
             targets += definition_targets(ptr, creator)
         add(targets, who)

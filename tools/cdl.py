@@ -94,8 +94,9 @@ def build_maps():
     built = bytes(x == y for x, y in zip(*builds))
     srccode = bytearray(ROM_SIZE)
     for line in listing:
-        m = LISTING_RE.match(line)
-        if m and m.group(3).lower().split('.')[0] in MNEMONICS:
+        m = LISTING_RE.match(line) or (re.search(r'; mv[np] ', line) and LISTING_RE.match('.' + line[1:]))
+        # Block moves are written as .byte with a "; mvn"/"; mvp" comment.
+        if m and (m.group(3).lower().split('.')[0] in MNEMONICS or re.search(r'; mv[np] ', line)):
             o = int(m.group(1), 16) & 0x3FFFFF
             for i in range(len(m.group(2).split())):  # label lines have no bytes
                 srccode[o + i] = 1
@@ -294,7 +295,9 @@ class Analysis:
             if not self.built[o]:
                 continue
             size = 3 if m.group(2) == 'long' else 2
-            for tok in re.findall(r'\$([0-9A-Fa-f]+)', m.group(3).split(';')[0]):
+            # Only items that are a bare number: not expressions such as ($8000 >> 1).
+            items = [i.strip() for i in m.group(3).split(';')[0].split(',')]
+            for tok in [mm.group(1) for i in items if (mm := re.fullmatch(r'(?:<>)?\$([0-9A-Fa-f]+)', i))]:
                 if len(tok) != size * 2:
                     continue
                 v = int(tok, 16)

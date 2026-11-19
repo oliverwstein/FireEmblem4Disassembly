@@ -122,6 +122,9 @@ class Disassembler:
         m8, x8 = self.logged_widths(start, m8, x8)
         self.m8, self.x8 = m8, x8
 
+    def executed(self, addr):
+        return bool(self.log and self.log[offset(addr)] & LOG_CODE)
+
     def logged_widths(self, addr, m8, x8):
         """The widths the log shows addr executed with, or (m8, x8) if it never ran."""
         if self.log and self.log[offset(addr)] & LOG_CODE:
@@ -177,9 +180,19 @@ class Disassembler:
                 break
             if pc in targets and targets[pc] is not None and insns and insns[-1]['ends']:
                 m8, x8 = targets[pc]
-            if insns and insns[-1]['ends'] and pc not in targets and pc not in known and self.end is None:
-                # Unreachable bytes up to the next place a branch leads: data.
+            if (insns and insns[-1]['ends'] and pc not in targets and pc not in known
+                    and (self.end is None or self.log) and not self.executed(pc)):
+                # Unreachable bytes up to the next place a branch leads: data. With the
+                # emulator log, bytes it shows executed are code, so the data ends where
+                # execution resumes (or at END).
                 ahead = [t for t in list(open_targets) + list(known) if t > pc]
+                if self.log:
+                    limit = self.end if self.end is not None else (pc | 0xFFFF) + 1
+                    nxt = next((x for x in range(pc + 1, limit) if self.executed(x)), None)
+                    if nxt is not None:
+                        ahead.append(nxt)
+                    elif self.end is not None:
+                        ahead.append(self.end)
                 if ahead:
                     n = min(ahead) - pc
                     insns.append(dict(pc=pc, op=None, mn='data', mode='data', size=n - 1, val=None,
@@ -222,6 +235,16 @@ class Disassembler:
                     near = mode.startswith('rel') or (tgt & 0xFF0000 == self.bank and 0 < tgt - pc <= 0x200)
                     if near:
                         open_targets.add(tgt)
+
+            # pea #X pushes a return address X+1 for an rts. Where the log shows X+1 ran,
+            # it is a place in this routine that code returns to.
+            if mn == 'pea' and self.log:
+                t = self.bank | ((val + 1) & 0xFFFF)
+                if t >= self.start and (self.end is None or t < self.end) and self.executed(t):
+                    targets.setdefault(t, (m8, x8))
+                    ins['pea_ret'] = t
+                    if 0 < t - pc <= 0x200:
+                        open_targets.add(t)
 
             # Width and data bank tracking.
             if mn == 'rep':
@@ -417,6 +440,8 @@ class Disassembler:
                 out.append(f'        .byte {text} ; {mn}')
             else:
                 opnd = override.get(pc) or self.operand(ins, local)
+                if ins.get('pea_ret') in local:
+                    opnd = f'#<>{local[ins["pea_ret"]]} - 1'
                 out.append(f'        {mn} {opnd}'.rstrip())
             if ins['mn'] == 'rep' or ins['mn'] == 'sep':
                 v = ins['val']
