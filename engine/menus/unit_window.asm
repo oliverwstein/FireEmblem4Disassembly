@@ -2,6 +2,13 @@
 ; sort orders (by stat, weapon rank, skill...), unit swapping, item and weapon rank
 ; icons, map sprites and its own HDMA effects. Code in banks $80 and $8B.
 ;
+; rsUnitWindowOpen sets it up as a main loop routine; then game state routines
+; $20 (rlUnitWindowHandleInput), $21 (rlUnitWindowShow) and $22
+; (rlUnitWindowRunPageTurnInput) run it, with wGameStateStep as the page (0-5).
+; Its variables are at $7F82C7-$7F8438 (include/WRAM.h); other screens reuse
+; that RAM, such as the one rsUnknown80CD2E opens (bank $89, game states
+; $23-$25) and the one at $8B/CF0A-D7BD (game states $2C-$31).
+;
 ; FE5 kept this code, and the FE5 disassembly (github.com/ZaneAvernathy/FireEmblem5)
 ; names it UnitWindowFE4...; the routines named here were matched with it by their code.
 ; Its descriptions of the FE4 behaviour are a good guide to the routines still unnamed.
@@ -922,7 +929,7 @@
         rep #$20
         jsl rlUnitWindowGetPromotionFlagsAndWeapons
         jsl rlUnitWindowDrawUnitNames
-        jsl rlUnknown8BADF1
+        jsl rlUnitWindowDrawPage
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E7548, $0E40, $80, $51C0
@@ -2685,7 +2692,7 @@
         sta wGameStateStep,b
         lda #$0000
         sta wUnitWindowCurrentColumn
-        jsl rlUnknown8BADF1
+        jsl rlUnitWindowDrawPage
         lda wGameStateStep,b
         cmp #$0005
         bne _C2B4
@@ -2717,7 +2724,7 @@
         tax
         lda $8BC385,x
         sta wUnitWindowCurrentColumn
-        jsl rlUnknown8BADF1
+        jsl rlUnitWindowDrawPage
 
         _C2E7
         lda #$0007
@@ -2779,7 +2786,7 @@
         ldy #$0005
         jsl rlClearTilemapRect
         jsl rlUnitWindowDrawUnitNames
-        jsl rlUnknown8BADF1
+        jsl rlUnitWindowDrawPage
         lda #$0003
         sta wUnitWindowSortTypeFlag
         jml _C2EE
@@ -2884,7 +2891,7 @@
         ldy #$0005
         jsl rlClearTilemapRect
         jsl rlUnitWindowDrawUnitNames
-        jsl rlUnknown8BADF1
+        jsl rlUnitWindowDrawPage
         lda #$0003
         sta wUnitWindowUnitSwapStep
         jml _C3B7
@@ -3844,5 +3851,1001 @@
         ; 8B/CECA
 
     .endsection Unsorted8BCE71Section
+
+
+    .section Unsorted8BA7F2Section
+
+      .al
+      .xl
+
+      rlUnitWindowShow ; 8B/A7F2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $21, once: starts the fade-in, sets up the line highlight and the current page's extras, turns the screen on and moves on to rlUnitWindowRunPageTurnInput.
+
+        inc wGameStateRoutine1,b
+        lda #$0001
+        sta wUnitWindowAction
+        jsr rsUnitWindowCopyLineHighlightColors
+        lda wGameStateStep,b
+        cmp #$0004
+        bne _A80C
+        jsr rsUnitWindowRenderWeaponRankIcons
+        bra _A816
+
+
+        _A80C
+        cmp #$0005
+        bne _A816
+        lda #$0017
+        sta bBufferTM
+
+        _A816
+        sep #$20
+        lda #$0F
+        sta bBufferINIDISP
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8B/A81F
+
+      rlUnitWindowRunPageTurnInput ; 8B/A81F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $22, every frame: unless an action, sort selection or swap is under way, runs the current page's page-turn input from the table after this routine.
+
+        phb
+        php
+        phk
+        plb
+        .databank $8B
+        lda wUnitWindowAction
+        bne _A842
+        lda wUnitWindowSortTypeFlag
+        ora wUnitWindowUnitSwapStep
+        bne _A842
+        lda wGameStateStep,b
+        cmp #$0006
+        bmi _A83D
+
+        _A83B
+        bra _A83B
+
+
+        _A83D
+        asl a
+        tax
+        jsr ($8BA845,x)
+
+        _A842
+        plp
+        plb
+        .databank $8B
+        rtl
+
+        .databank 0
+
+        ; 8B/A845
+
+    .endsection Unsorted8BA7F2Section
+
+
+    .section Unsorted8BA851Section
+
+      .al
+      .xl
+
+      rlUnitWindowHandleInput ; 8B/A851
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $20, every frame while the unit window is open. Runs wUnitWindowAction (1 fade in, 2 fade out and rlUnitWindowCloseWithLocationReload, 3 rlUnitWindowCloseToMap, 4 fade out and rlUnitWindowOpenSelectedUnitScreen), scrolling, sort selection and unit swapping; otherwise the buttons: B closes, A picks the unit (rlUnitWindowCloseToMap with the cursor on it if it is on the map, else rlUnitWindowOpenSelectedUnitScreen), Y starts a swap, Select and Start go to the first and last unit, L and R turn a page of lines, up and down move.
+
+        lda wUnitWindowPageScrollFlag
+        bne _A85A
+        jsr rsUnitWindowCopyLineHighlightColors
+
+        _A85A
+        lda wUnitWindowSortTypeFlag
+        bne _A86B
+        jsl rlUnitWindowRenderUnitSwapCursors
+        jsl rlUnitWindowRenderPageSprites
+        jsr rsUnitWindowRenderSprites
+
+        _A86B
+        lda wUnitWindowSortTypeFlag
+        bne _A886
+        lda wGameStateStep,b
+        cmp #$0004
+        bne _A87E
+        jsr rsUnitWindowRenderWeaponRankIcons
+        bra _A886
+
+
+        _A87E
+        cmp #$0001
+        bne _A886
+        jsr rsUnitWindowRenderItemIcons
+
+        _A886
+        lda wUnitWindowAction
+        cmp #$0001
+        beq _A8A0
+        cmp #$0002
+        beq _A8C1
+        cmp #$0003
+        beq _A8DA
+        cmp #$0004
+        beq _A8DE
+        bra _A8F8
+
+
+        _A8A0
+        sep #$20
+        lda bBufferINIDISP
+        clc
+        adc #$05
+        sta bBufferINIDISP
+        rep #$20
+        cmp #$000F
+        bcc _A8F7
+        sep #$20
+        lda #$0F
+        sta bBufferINIDISP
+        rep #$20
+        lda #$0000
+        sta wUnitWindowAction
+        bra _A8F7
+
+
+        _A8C1
+        sep #$20
+        lda bBufferINIDISP
+        sec
+        sbc #$01
+        sta bBufferINIDISP
+        rep #$20
+        bpl _A8F7
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        jml rlUnitWindowCloseWithLocationReload
+
+
+        _A8DA
+        jml rlUnitWindowCloseToMap
+
+
+        _A8DE
+        sep #$20
+        lda bBufferINIDISP
+        sec
+        sbc #$05
+        sta bBufferINIDISP
+        rep #$20
+        bpl _A8F7
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        jml rlUnitWindowOpenSelectedUnitScreen
+
+
+        _A8F7
+        rtl
+
+
+        _A8F8
+        lda wUnitWindowScrollingFlag
+        bmi _A963
+        bne _A967
+        lda wUnitWindowSortTypeFlag
+        beq _A90A
+        jml _A97B
+
+
+        _A90A
+        lda wUnitWindowUnitSwapStep
+        beq _A914
+        jml rlUnitWindowUnitSwapStep
+
+
+        _A914
+        lda #$0000
+        sta wUnitWindowPageScrollFlag
+        lda wJoy1New
+        bmi _A94F
+        bit #$0080
+        bne _A953
+        bit #$0040
+        bne _A957
+        bit #$2000
+        bne _A96B
+        bit #$1000
+        bne _A96F
+        bit #$4000
+        bne _A97F
+        bit #$0020
+        bne _A973
+        bit #$0010
+        bne _A977
+        lda wJoy1Repeated
+        bit #$0800
+        bne _A95B
+        bit #$0400
+        bne _A95F
+        rtl
+
+
+        _A94F
+        jml _A983
+
+
+        _A953
+        jml _A9BD
+
+
+        _A957
+        jml _AA10
+
+
+        _A95B
+        jml _AA31
+
+
+        _A95F
+        jml _AAA1
+
+
+        _A963
+        jml _AAF7
+
+
+        _A967
+        jml _AB6E
+
+
+        _A96B
+        jml rlUnitWindowMoveToFirstUnitWrapper
+
+
+        _A96F
+        jml rlUnitWindowMoveToLastUnitWrapper
+
+
+        _A973
+        jml rlUnitWindowMoveToPreviousPageWrapper
+
+
+        _A977
+        jml rlUnitWindowMoveToNextPageWrapper
+
+
+        _A97B
+        jml rlUnitWindowSortSelectionStep
+
+
+        _A97F
+        jml rlUnitWindowStartUnitSwap
+
+
+        _A983
+        lda #$0021
+        jsl rlUnknown808FAD
+        jsl rlUnitWindowSaveListOrder
+        lda wGameStateStep,b
+        sta wUnitWindowPage
+        lda wUnknown000D79,b
+        bit #$0020
+        bne _A9AD
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$0003
+        sta wUnitWindowAction
+        rtl
+
+
+        _A9AD
+        sep #$20
+        lda #$0E
+        sta bBufferINIDISP
+        rep #$20
+        lda #$0002
+        sta wUnitWindowAction
+        rtl
+
+
+        _A9BD
+        lda #$000A
+        jsl rlUnknown808FAD
+        jsl rlUnitWindowSaveListOrder
+        lda wGameStateStep,b
+        sta wUnitWindowPage
+        jsl rlGetSelectedUnitStates
+        bit #UnitStateFielded
+        beq _A9F9
+        jsl rlGetSelectedUnitDeploymentOffset
+        cmp #$0000
+        bmi _A9E9
+        sta @l wActiveUnitDeploymentOffset
+        jsl rlUnknown8881D7
+
+        _A9E9
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$0003
+        sta wUnitWindowAction
+        rtl
+
+
+        _A9F9
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta wActiveUnitDeploymentOffset,b
+        sep #$20
+        lda #$0E
+        sta bBufferINIDISP
+        rep #$20
+        lda #$0002
+        sta wUnitWindowAction
+        rtl
+
+
+        _AA10
+        lda #$0008
+        jsl rlUnknown808FAD
+        jsl rlUnitWindowSaveListOrder
+        lda wGameStateStep,b
+        sta wUnitWindowPage
+        lda #$0000
+        sta $7F819D
+        lda #$0004
+        sta wUnitWindowAction
+        rtl
+
+
+        _AA31
+        lda wUnitWindowCurrentLine
+        cmp #$0001
+        beq _AA4B
+        lda wUnitWindowCurrentHighlightLine
+        cmp #$0000
+        beq _AA47
+        jml _AA67
+
+
+        _AA47
+        jml _AA84
+
+
+        _AA4B
+        lda wJoy1New
+        bit #$0800
+        beq _AA66
+        lda wUnitWindowUnitSwapStep
+        bne _AA66
+        lda #$0001
+        sta wUnitWindowSortTypeFlag
+        lda #$0006
+        jsl rlUnknown808FAD
+
+        _AA66
+        rtl
+
+
+        _AA67
+        lda #$FFFF
+        sta wUnitWindowScrollingFlag
+        lda #$0000
+        sta wUnitWindowLastScrolledFlag
+        sta wUnitWindowScrollingStep
+        lda #$0006
+        jsl rlUnknown808FAD
+        jml _AAF7
+
+
+        _AA84
+        lda #$0001
+        sta wUnitWindowScrollingFlag
+        lda #$0000
+        sta $7F82D7
+        sta wUnitWindowScrollingStep
+        lda #$0006
+        jsl rlUnknown808FAD
+        jml _AB6E
+
+
+        _AAA1
+        lda wUnitWindowCurrentLine
+        cmp wUnitWindowMaxRows
+        beq _AABC
+        lda wUnitWindowCurrentHighlightLine
+        cmp #$0009
+        beq _AAB8
+        jml _AABD
+
+
+        _AAB8
+        jml _AADA
+
+
+        _AABC
+        rtl
+
+
+        _AABD
+        lda #$FFFF
+        sta wUnitWindowScrollingFlag
+        sta wUnitWindowLastScrolledFlag
+        lda #$0000
+        sta wUnitWindowScrollingStep
+        lda #$0006
+        jsl rlUnknown808FAD
+        jml _AAF7
+
+
+        _AADA
+        lda #$0001
+        sta wUnitWindowScrollingFlag
+        sta $7F82D7
+        lda #$0000
+        sta wUnitWindowScrollingStep
+        lda #$0006
+        jsl rlUnknown808FAD
+        jml _AB6E
+
+
+        _AAF7
+        lda wUnitWindowLastScrolledFlag
+        bne _AB37
+        lda wUnitWindowCursorYCoordinate
+        sec
+        sbc #$0008
+        sta wUnitWindowCursorYCoordinate
+        lda wUnitWindowScrollingStep
+        clc
+        adc #$0001
+        sta wUnitWindowScrollingStep
+        cmp #$0002
+        bne _AB6D
+        lda #$0000
+        sta wUnitWindowScrollingFlag
+        lda wUnitWindowCurrentHighlightLine
+        dec a
+        sta wUnitWindowCurrentHighlightLine
+        lda wUnitWindowCurrentLine
+        dec a
+        sta wUnitWindowCurrentLine
+        jml _AB6D
+
+
+        _AB37
+        lda wUnitWindowCursorYCoordinate
+        clc
+        adc #$0008
+        sta wUnitWindowCursorYCoordinate
+        lda wUnitWindowScrollingStep
+        clc
+        adc #$0001
+        sta wUnitWindowScrollingStep
+        cmp #$0002
+        bne _AB6D
+        lda #$0000
+        sta wUnitWindowScrollingFlag
+        lda wUnitWindowCurrentHighlightLine
+        inc a
+        sta wUnitWindowCurrentHighlightLine
+        lda wUnitWindowCurrentLine
+        inc a
+        sta wUnitWindowCurrentLine
+
+        _AB6D
+        rtl
+
+
+        _AB6E
+        lda $7F82D7
+        bne _ABAE
+        lda wUnitWindowScrollPixels
+        sec
+        sbc #$0008
+        sta wUnitWindowScrollPixels
+        lda wUnitWindowScrollingStep
+        clc
+        adc #$0001
+        sta wUnitWindowScrollingStep
+        cmp #$0002
+        bne _ABE4
+        lda #$0000
+        sta wUnitWindowScrollingFlag
+        lda wUnitWindowScrolledLines
+        dec a
+        sta wUnitWindowScrolledLines
+        lda wUnitWindowCurrentLine
+        dec a
+        sta wUnitWindowCurrentLine
+        jml _ABE4
+
+
+        _ABAE
+        lda wUnitWindowScrollPixels
+        clc
+        adc #$0008
+        sta wUnitWindowScrollPixels
+        lda wUnitWindowScrollingStep
+        clc
+        adc #$0001
+        sta wUnitWindowScrollingStep
+        cmp #$0002
+        bne _ABE4
+        lda #$0000
+        sta wUnitWindowScrollingFlag
+        lda wUnitWindowScrolledLines
+        inc a
+        sta wUnitWindowScrolledLines
+        lda wUnitWindowCurrentLine
+        inc a
+        sta wUnitWindowCurrentLine
+
+        _ABE4
+        rtl
+
+        .databank 0
+
+        ; 8B/ABE5
+
+      rlUnitWindowMoveToFirstUnitWrapper ; 8B/ABE5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnitWindowMoveToFirstUnit
+        rtl
+
+        .databank 0
+
+        ; 8B/ABE9
+
+      rlUnitWindowMoveToPreviousPageWrapper ; 8B/ABE9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnitWindowMoveToPreviousPage
+        rtl
+
+        .databank 0
+
+        ; 8B/ABED
+
+      rlUnitWindowMoveToLastUnitWrapper ; 8B/ABED
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnitWindowMoveToLastUnit
+        rtl
+
+        .databank 0
+
+        ; 8B/ABF1
+
+      rlUnitWindowMoveToNextPageWrapper ; 8B/ABF1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnitWindowMoveToNextPage
+        rtl
+
+        .databank 0
+
+        ; 8B/ABF5
+
+      rlUnitWindowSortSelectionStep ; 8B/ABF5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; One frame of picking a sort: input, then the sprites.
+
+        jsr rsUnitWindowHandleSortSelection
+        jsr rsUnitWindowRenderSprites
+        rtl
+
+        .databank 0
+
+        ; 8B/ABFC
+
+      rlUnitWindowStartUnitSwap ; 8B/ABFC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Y: remembers the selected line and its cursor position as the first unit of a swap.
+
+        lda #$0001
+        sta wUnitWindowUnitSwapStep
+        lda wUnitWindowCursorYCoordinate
+        clc
+        adc wUnitWindowScrollPixels
+        sta wUnitWindowUnitSwapStartCursorYCoordinate
+        lda wUnitWindowCurrentLine
+        sta wUnitWindowUnitSwapStartSlot
+        lda #$000A
+        jsl rlUnknown808FAD
+        rtl
+
+        .databank 0
+
+        ; 8B/AC20
+
+      rlUnitWindowUnitSwapStep ; 8B/AC20
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; One frame of a swap: input (rsUnitWindowHandleUnitSwap), and while the second unit is still being picked, the up and down input of rlUnitWindowHandleInput (a raw jml to $8BA942).
+
+        jsr rsUnitWindowHandleUnitSwap
+        lda wUnitWindowUnitSwapStep
+        cmp #$0001
+        bne _AC30
+        jml $8BA942
+
+
+        _AC30
+        rtl
+
+        .databank 0
+
+        ; 8B/AC31
+
+      rlUnitWindowCloseToMap ; 8B/AC31
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Installs rsUnknown80B122, which restarts game state $12 at the step saved in $0D7B. B uses it, and A on a unit that is on the map after making it the active unit.
+
+        jsl rlUnknown88DE0B
+        lda #$0000
+        sta $7F82C5
+        sta $7F8183
+        lda #$0001
+        sta $0D77,b
+        lda #<>rsUnknown80B122
+        sta wMainLoopPointer
+        lda #$00E8
+        jsl rlUnknown808F6F
+        rtl
+
+        .databank 0
+
+        ; 8B/AC53
+
+      rlUnitWindowCloseWithLocationReload ; 8B/AC53
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; B uses this instead of rlUnitWindowCloseToMap when bit 5 of wUnknown000D79 is set: loads the event data of faction slot 0's location, builds the dead character list and installs rsUnknown80B6B6. Where that returns to is not known yet.
+
+        jsl rlUnknown88DE0B
+        lda #$0000
+        sta $7F82C5
+        sta $7F8183
+        jsl rlUnknown80BB5D
+        rtl
+
+        .databank 0
+
+        ; 8B/AC67
+
+      rlUnitWindowOpenSelectedUnitScreen ; 8B/AC67
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A on a unit that is not on the map: installs rsUnknown80BBD9, which opens a screen run from bank $89 (game states $07 and $08) for the active unit, with $7F8183 set to return to rsUnitWindowOpen.
+
+        jsl rlUnknown88DE0B
+        lda #$0000
+        sta $7F82C5
+        lda #$C3E6
+        sta $7F8183
+        lda #<>rsUnknown80BBD9
+        sta wMainLoopPointer
+        rtl
+
+        .databank 0
+
+        ; 8B/AC7F
+
+    .endsection Unsorted8BA851Section
+
+
+    .section Unsorted8BAC7FSection
+
+      .al
+      .xl
+
+      rsUnitWindowHandlePage0Turn ; 8B/AC7F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Entry 0 of the page-turn table: right turns to the next page (page 0 has no page to its left).
+
+        lda wJoy1Input
+        bit #$0C00
+        bne _AC92
+        lda wJoy1Repeated
+        bit #$0100
+        bne _AC93
+        bit #$0200
+        bne _ACAC
+
+        _AC92
+        rts
+
+
+        _AC93
+        inc wGameStateStep,b
+        jsl rlUnitWindowDrawPage
+        lda #$FFFF
+        sta wUnitWindowPageScrollFlag
+        jsr rsUnitWindowRenderItemIcons
+        lda #$0007
+        jsl rlUnknown808FAD
+        rts
+
+
+        _ACAC
+        rts
+
+        .databank 0
+
+        ; 8B/ACAD
+
+    .endsection Unsorted8BAC7FSection
+
+
+    .section Unsorted8BADF1Section
+
+      .al
+      .xl
+
+      rlUnitWindowDrawPage ; 8B/ADF1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Clears the page area and draws the current page (wGameStateStep) from the table after this routine, then the sort label.
+
+        ldx #$01D4
+        lda #$0030
+        ldy #$0016
+        jsl rlClearTilemapRect
+        lda wGameStateStep,b
+        cmp #$0006
+        bmi _AE08
+
+        _AE06
+        bra _AE06
+
+
+        _AE08
+        asl a
+        tax
+        jsr ($8BAE12,x)
+        jsl rlUnitWindowDrawSortLabel
+        rtl
+
+        .databank 0
+
+        ; 8B/AE12
+
+    .endsection Unsorted8BADF1Section
+
+
+    .section Unsorted8BAE1ESection
+
+      .al
+      .xl
+
+      rsUnitWindowDrawPage0 ; 8B/AE1E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Entry 0 of rlUnitWindowDrawPage's table: class, level, experience and HP of each line. The drawers of pages 1-5 follow in this block.
+
+        lda #$0007
+        sta wR14
+        stz wR15
+
+        _AE25
+        lda wR15
+        asl a
+        tax
+        lda aUnitWindowDeploymentSlots,x
+        bne _AE33
+        jml _AF20
+
+
+        _AE33
+        sta wSelectedUnitDataRAMPointer,b
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        jsl rlGetSelectedUnitClassNamePointer
+        lda wR14
+        and #$00FF
+        xba
+        ora #$000A
+        tax
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        jsl rlDrawMenuTextLine
+        jsl rlGetSelectedUnitLevel
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0026
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        jsl rlGetSelectedUnitExperience
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$002C
+        tax
+        lda #$3520
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        pha
+        jsl rlDrawMenuTextNumber
+        pla
+        cmp #$005A
+        bmi _AEB6
+        lda wR14
+        xba
+        lsr a
+        lsr a
+        sta wR0
+        lda #$0030
+        clc
+        adc wR0
+        tax
+        lda #$3508
+        sta $7E83C8,x
+
+        _AEB6
+        jsl rlGetSelectedUnitCurrentHP
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0032
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        lda #$3400
+        sta aCurrentTilemapInfo,b
+        lda #$8B00
+        sta lR18+1
+        lda #$AF3B
+        sta lR18
+        lda wR14
+        and #$00FF
+        xba
+        ora #$001B
+        tax
+        jsl rlDrawMenuTextLine
+        jsl rlGetSelectedUnitMaxHP
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0038
+        tax
+        lda #$3520
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        inc wR14
+        inc wR14
+        inc wR15
+        jml _AE25
+
+
+        _AF20
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE60C0, $0140, $80, $B040
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8548, $0C00, $80, $B1C0
+
+        rts
+
+        .databank 0
+
+        ; 8B/AF3B
+
+    .endsection Unsorted8BAE1ESection
 
 

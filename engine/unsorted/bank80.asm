@@ -2917,9 +2917,9 @@
         .long $9FFACC ; unused: points into zero padding
         .long $9FFACC ; unused: points into zero padding
         .long $9FFACC ; unused: points into zero padding
-        .long rlUnknown8BA851
-        .long rlUnknown8BA7F2
-        .long rlUnknown8BA81F
+        .long rlUnitWindowHandleInput
+        .long rlUnitWindowShow
+        .long rlUnitWindowRunPageTurnInput
         .long rlUnknown89B883
         .long rlUnknown89B3D7
         .long rlUnknown89B3E7

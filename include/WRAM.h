@@ -1812,6 +1812,8 @@
     .word ?                                         ; $7F82E1
     wUnitWindowPageScrollFlag .word ?               ; $7F82E3
     wUnitWindowAction .word ?                       ; $7F82E5
+      ; 0 none, 1 fading in, 2 fading out to rlUnitWindowCloseWithLocationReload,
+      ; 3 rlUnitWindowCloseToMap, 4 fading out to rlUnitWindowOpenSelectedUnitScreen.
     wUnitWindowSortTypeFlag .word ?                 ; $7F82E7
     .word ?                                         ; $7F82E9
     wUnitWindowCurrentColumn .word ?                ; $7F82EB
