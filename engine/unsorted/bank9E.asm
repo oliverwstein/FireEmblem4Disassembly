@@ -752,6 +752,589 @@
     .endsection Unsorted9EACAFSection
 
 
+    .section BattleMapSpriteDataSection
+
+      .al
+      .xl
+
+      aBattleMapSpriteData ; 9E/B50D
+
+        ; Graphics for the units in map battles. Indexed by
+        ; aMapAction.wBattleClassID * 49 + frame * 6. Each row has 8 frames,
+        ; each a pair of long pointers to compressed graphics (the second is
+        ; read at +3), then a byte whose meaning is unknown. The row names
+        ; come from the original notes; some classes have more than one row.
+
+        ; Cavalier
+        .long $ADF4CB, $AAA0F6, $ADEDD1, $AA966C
+        .long $ADEA4E, $AA92C3, $ADE6C6, $AA8F26
+        .long $ADF10B, $AA8F26, $ADF890, $AA9A00
+        .long $ADFBD9, $AA9D2F, $D50000, $AAA0F6
+        .byte 1
+        ; LanceKnight
+        .long $D510B1, $AAA0F6, $D50A01, $AA966C
+        .long $D506AD, $AA92C3, $D50333, $AA8F26
+        .long $D50D0F, $AA8F26, $D514DD, $AA9A00
+        .long $D51825, $AA9D2F, $D51B75, $AAA0F6
+        .byte 1
+        ; BowKnight
+        .long $ADF4CB, $AAA0F6, $ADEDD1, $AA966C
+        .long $ADEA4E, $AA92C3, $ADE6C6, $AA8F26
+        .long $ADF10B, $AA8F26, $ADF890, $AA9A00
+        .long $ADFBD9, $AA9D2F, $D50000, $AAA0F6
+        .byte 1
+        ; AxeKnight
+        .long $D510B1, $AAA0F6, $D50A01, $AA966C
+        .long $D506AD, $AA92C3, $D50333, $AA8F26
+        .long $D50D0F, $AA8F26, $D514DD, $AA9A00
+        .long $D51825, $AA9D2F, $D51B75, $AAA0F6
+        .byte 1
+        ; FreeKnight
+        .long $D510B1, $AAA0F6, $D50A01, $AA966C
+        .long $D506AD, $AA92C3, $D50333, $AA8F26
+        .long $D50D0F, $AA8F26, $D514DD, $AA9A00
+        .long $D51825, $AA9D2F, $D51B75, $AAA0F6
+        .byte 1
+        ; Troubadour
+        .long $D510B1, $AC8CFB, $D50A01, $ABFF18
+        .long $D506AD, $ABFA3D, $D50333, $ABF59A
+        .long $D50D0F, $ABF59A, $D514DD, $AC83BF
+        .long $D51825, $AC8842, $D51B75, $AC8CFB
+        .byte 1
+        ; KnightLord
+        .long $ADF4CB, $A587D6, $ADEDD1, $A4FF5A
+        .long $ADEA4E, $A4FC4A, $ADE6C6, $A4F926
+        .long $ADF10B, $A4F926, $ADF890, $A5822D
+        .long $ADFBD9, $A584DD, $D50000, $A587D6
+        .byte 1
+        ; DukeKnight
+        .long $ADF4CB, $A2F96D, $ADEDD1, $A2F0BF
+        .long $ADEA4E, $A2ED85, $ADE6C6, $A2EA71
+        .long $ADF10B, $A2EA71, $ADF890, $A2F38E
+        .long $ADFBD9, $A2F66B, $D50000, $A2F96D
+        .byte 1
+        ; MasterKnight
+        .long $ADF4CB, $A5CE40, $ADEDD1, $A5BBB8
+        .long $ADEA4E, $A5B553, $ADE6C6, $A5AF39
+        .long $ADF10B, $A5AF39, $ADF890, $A5C1D7
+        .long $ADFBD9, $A5C7E4, $D50000, $A5CE40
+        .byte 1
+        ; Paladin
+        .long $ADF4CB, $A7B1DB, $ADEDD1, $A7A11A
+        .long $ADEA4E, $A79B12, $ADE6C6, $A79536
+        .long $ADF10B, $A79536, $ADF890, $A7A6A4
+        .long $ADFBD9, $A7AC2D, $D50000, $A7B1DB
+        .byte 1
+        ; PaladinF
+        .long $ADF4CB, $A78F7B, $ADEDD1, $A6FF22
+        .long $ADEA4E, $A6F94B, $ADE6C6, $A6F392
+        .long $ADF10B, $A6F392, $ADF890, $A784C2
+        .long $ADFBD9, $A789F9, $D50000, $A78F7B
+        .byte 1
+        ; ArchKnight
+        .long $ADF4CB, $A0D607, $ADEDD1, $A0CE50
+        .long $ADEA4E, $A0CBEA, $ADE6C6, $A0C992
+        .long $ADF10B, $A0C992, $ADF890, $A0D0F2
+        .long $ADFBD9, $A0D35A, $D50000, $A0D607
+        .byte 1
+        ; Ranger
+        .long $ADF4CB, $A4B00B, $ADEDD1, $A4A7DB
+        .long $ADEA4E, $A4A4EB, $ADE6C6, $A4A1E9
+        .long $ADF10B, $A4A1E9, $ADF890, $A4AAA5
+        .long $ADFBD9, $A4AD3B, $D50000, $A4B00B
+        .byte 1
+        ; MageKnight
+        .long $ADF4CB, $ABEFDD, $ADEDD1, $ABE015
+        .long $ADEA4E, $ABDA4A, $ADE6C6, $ABD4B1
+        .long $ADF10B, $ABD4B1, $ADF890, $ABE525
+        .long $ADFBD9, $ABEA44, $D50000, $ABEFDD
+        .byte 1
+        ; GreatKnight
+        .long $ADF4CB, $A38A8E, $ADEDD1, $A3825F
+        .long $ADEA4E, $A2FF6D, $ADE6C6, $A2FC7C
+        .long $ADF10B, $A2FC7C, $ADF890, $A38530
+        .long $ADFBD9, $A387C2, $D50000, $A38A8E
+        .byte 1
+        ; PegasusRider
+        .long $D528B8, $A7E6F4, $D523F3, $A7D9E8
+        .long $D52134, $A7D5BB, $D51EE2, $A7D186
+        .long $D52630, $A7D186, $D52B4C, $A7DE05
+        .long $D52D65, $A7E282, $D52FDC, $A7E6F4
+        .byte 1
+        ; PegasusKnight
+        .long $D528B8, $A7CD09, $D523F3, $A7BFF9
+        .long $D52134, $A7BBBF, $D51EE2, $A7B788
+        .long $D52630, $A7B788, $D52B4C, $A7C409
+        .long $D52D65, $A7C879, $D52FDC, $A7CD09
+        .byte 1
+        ; FalconKnight
+        .long $D528B8, $A3F50C, $D523F3, $A3DEAB
+        .long $D52134, $A3D786, $D51EE2, $A3CFD9
+        .long $D52630, $A3CFD9, $D52B4C, $A3E64B
+        .long $D52D65, $A3EDAA, $D52FDC, $A3F50C
+        .byte 1
+        ; Dragonrider
+        .long $ADA7B5, $A2E51A, $ADA37A, $A2D726
+        .long $ADA150, $A2D334, $AD9F97, $A2CEC0
+        .long $ADA578, $A2CEC0, $ADA9C5, $A2DBD4
+        .long $ADAB7F, $A2DFFB, $ADAD79, $A2E51A
+        .byte 1
+        ; Dragonknight
+        .long $ADA7B5, $A1F489, $ADA37A, $A1E63B
+        .long $ADA150, $A1E25B, $AD9F97, $A1DDF1
+        .long $ADA578, $A1DDF1, $ADA9C5, $A1EB31
+        .long $ADAB7F, $A1EF62, $ADAD79, $A1F489
+        .byte 1
+        ; Dragonmaster
+        .long $ADA7B5, $A2ADD8, $ADA37A, $A29F0C
+        .long $ADA150, $A29B16, $AD9F97, $A29697
+        .long $ADA578, $A29697, $ADA9C5, $A2A41B
+        .long $ADAB7F, $A2A86E, $ADAD79, $A2ADD8
+        .byte 1
+        ; Archer
+        .long $AD9A90, $A0C809, $AD9811, $A0C472
+        .long $AD96F4, $A0C352, $AD95BD, $A0C252
+        .long $AD995A, $A0C252, $AD9BD2, $A0C59B
+        .long $AD9D12, $A0C6CA, $AD9E4B, $A0C809
+        .byte 0
+        ; Myrmidon
+        .long $ADCC79, $AAED54, $ADC8CA, $AAE6E1
+        .long $ADC6E8, $AAE3BC, $ADC56D, $AAE08C
+        .long $ADCA27, $AAE08C, $ADCED6, $AAE83C
+        .long $ADD039, $AAEA0D, $ADD233, $AAED54
+        .byte 0
+        ; Swordmaster
+        .long $ADCC79, $AA8B7B, $ADC8CA, $AA8467
+        .long $ADC6E8, $AA812E, $ADC56D, $A9FE02
+        .long $ADCA27, $A9FE02, $ADCED6, $AA85DA
+        .long $ADD039, $AA87D2, $ADD233, $AA8B7B
+        .byte 0
+        ; Sniper
+        .long $AD9A90, $AAB1CC, $AD9811, $AAAE30
+        .long $AD96F4, $AAACF9, $AD95BD, $AAAC0F
+        .long $AD995A, $AAAC0F, $AD9BD2, $AAAF56
+        .long $AD9D12, $AAB08A, $AD9E4B, $AAB1CC
+        .byte 0
+        ; Hero
+        .long $ADCC79, $A49DE7, $ADC8CA, $A495F2
+        .long $ADC6E8, $A4925E, $ADC56D, $A48ED0
+        .long $ADCA27, $A48ED0, $ADCED6, $A4978F
+        .long $ADD039, $A499C1, $ADD233, $A49DE7
+        .byte 0
+        ; General
+        .long $ACFBAC, $A4D0B9, $ACF405, $A4C72D
+        .long $ACF029, $A4C497, $ACEC8F, $A4C198
+        .long $ACF7A3, $A4C198, $ACFFEE, $A4CA6F
+        .long $AD835A, $A4CD75, $AD8745, $A4D0B9
+        .byte 0
+        ; Emperor
+        .long $ACFBAC, $A3ABA3, $ACF405, $A39978
+        .long $ACF029, $A393A2, $ACEC8F, $A38D58
+        .long $ACF7A3, $A38D58, $ACFFEE, $A39FA1
+        .long $AD835A, $A3A542, $AD8745, $A3ABA3
+        .byte 0
+        ; Baron
+        .long $ACFBAC, $A0F859, $ACF405, $A0E56D
+        .long $ACF029, $A0DF8B, $ACEC8F, $A0D8AB
+        .long $ACF7A3, $A0D8AB, $ACFFEE, $A0EBA0
+        .long $AD835A, $A0F163, $AD8745, $A0F859
+        .byte 0
+        ; Soldier
+        .long $ACDF93, $A08CF4, $ACD92B, $A08501
+        .long $ACD606, $A082A2, $ACD31C, $A08000
+        .long $ACDC16, $A08000, $ACE32A, $A08784
+        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .byte 0
+        ; SpearSoldier
+        .long $ACDF93, $A08CF4, $ACD92B, $A08501
+        .long $ACD606, $A082A2, $ACD31C, $A08000
+        .long $ACDC16, $A08000, $ACE32A, $A08784
+        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .byte 0
+        ; AxeSoldier
+        .long $ACDF93, $A08CF4, $ACD92B, $A08501
+        .long $ACD606, $A082A2, $ACD31C, $A08000
+        .long $ACDC16, $A08000, $ACE32A, $A08784
+        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .byte 0
+        ; BowSoldier
+        .long $ACDF93, $A08CF4, $ACD92B, $A08501
+        .long $ACD606, $A082A2, $ACD31C, $A08000
+        .long $ACDC16, $A08000, $ACE32A, $A08784
+        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .byte 0
+        ; SwordSoldier
+        .long $ACDF93, $A08CF4, $ACD92B, $A08501
+        .long $ACD606, $A082A2, $ACD31C, $A08000
+        .long $ACDC16, $A08000, $ACE32A, $A08784
+        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .byte 0
+        ; LanceArmor
+        .long $ACDF93, $A08CF4, $ACD92B, $A08501
+        .long $ACD606, $A082A2, $ACD31C, $A08000
+        .long $ACDC16, $A08000, $ACE32A, $A08784
+        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .byte 0
+        ; AxeArmor
+        .long $ACDF93, $A08CF4, $ACD92B, $A08501
+        .long $ACD606, $A082A2, $ACD31C, $A08000
+        .long $ACDC16, $A08000, $ACE32A, $A08784
+        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .byte 0
+        ; BowArmor
+        .long $ACDF93, $A08CF4, $ACD92B, $A08501
+        .long $ACD606, $A082A2, $ACD31C, $A08000
+        .long $ACDC16, $A08000, $ACE32A, $A08784
+        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .byte 0
+        ; SwordArmor
+        .long $ACDF93, $A08CF4, $ACD92B, $A08501
+        .long $ACD606, $A082A2, $ACD31C, $A08000
+        .long $ACDC16, $A08000, $ACE32A, $A08784
+        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .byte 0
+        ; Barbarian
+        .long $AD904F, $A0ABAC, $AD8DB0, $A0A43A
+        .long $AD8C5B, $A0A20F, $AD8B10, $A09F53
+        .long $AD8F00, $A09F53, $AD91C6, $A0A6F2
+        .long $AD930D, $A0A93A, $AD947A, $A0ABAC
+        .byte 0
+        ; Fighter
+        .long $AD904F, $A09C49, $AD8DB0, $A09498
+        .long $AD8C5B, $A09267, $AD8B10, $A08FC2
+        .long $AD8F00, $A08FC2, $AD91C6, $A09761
+        .long $AD930D, $A099B1, $AD947A, $A09C49
+        .byte 0
+        ; Brigand
+        .long $AD904F, $A6E1B9, $AD8DB0, $A6D9E9
+        .long $AD8C5B, $A6D7A8, $AD8B10, $A6D4FD
+        .long $AD8F00, $A6D4FD, $AD91C6, $A6DCCB
+        .long $AD930D, $A6DF0D, $AD947A, $A6E1B9
+        .byte 0
+        ; Warrior
+        .long $ADDCED, $ACA6D3, $ADD80A, $AC9A19
+        .long $ADD5EA, $AC9648, $ADD39B, $AC91BF
+        .long $ADDA75, $AC91BF, $ADDF86, $AC9E5E
+        .long $ADE1DC, $ACA24F, $ADE463, $ACA6D3
+        .byte 0
+        ; Hunter
+        .long $ADDCED, $A4BE6B, $ADD80A, $A4B77E
+        .long $ADD5EA, $A4B58A, $ADD39B, $A4B2E0
+        .long $ADDA75, $A4B2E0, $ADDF86, $A4B9CD
+        .long $ADE1DC, $A4BBE8, $ADE463, $A4BE6B
+        .byte 0
+        ; Pirate
+        .long $AD904F, $A6F0B0, $AD8DB0, $A6E936
+        .long $AD8C5B, $A6E717, $AD8B10, $A6E470
+        .long $AD8F00, $A6E470, $AD91C6, $A6EBF4
+        .long $AD930D, $A6EE33, $AD947A, $A6F0B0
+        .byte 0
+        ; JuniorLord
+        .long $D66B0C, $A4E30D, $D6693A, $A4DB00
+        .long $D6680A, $A4D7AD, $D66761, $A4D411
+        .long $D669DE, $A4D411, $D66C35, $A4DD21
+        .long $D66CE1, $A4DF51, $D66E2A, $A4E30D
+        .byte 0
+        ; WarMage
+        .long $ADC013, $A6B0FD, $ADBD4A, $A6A3BA
+        .long $ADBBC7, $A69FA0, $ADBA86, $A69BEB
+        .long $ADBE85, $A69BEB, $ADC199, $A6A784
+        .long $ADC2D4, $A6ABE5, $ADC436, $A6B0FD
+        .byte 0
+        ; Prince
+        .long $D66B0C, $A89CC4, $D6693A, $A89492
+        .long $D6680A, $A8911B, $D66761, $A88D85
+        .long $D669DE, $A88D85, $D66C35, $A896CC
+        .long $D66CE1, $A898F2, $D66E2A, $A89CC4
+        .byte 0
+        ; Princess
+        .long $ADC013, $A8B74F, $ADBD4A, $A8A9AC
+        .long $ADBBC7, $A8A552, $ADBA86, $A8A0E3
+        .long $ADBE85, $A8A0E3, $ADC199, $A8ADE3
+        .long $ADC2D4, $A8B273, $ADC436, $A8B74F
+        .byte 0
+        ; WarMageF
+        .long $ADC013, $A69712, $ADBD4A, $A68A97
+        .long $ADBBC7, $A68686, $ADBA86, $A682C9
+        .long $ADBE85, $A682C9, $ADC199, $A68E87
+        .long $ADC2D4, $A69293, $ADC436, $A69712
+        .byte 0
+        ; Queen
+        .long $ADC013, $A8CA36, $ADBD4A, $A8C16A
+        .long $ADBBC7, $A8BECA, $ADBA86, $A8BC3F
+        .long $ADBE85, $A8BC3F, $ADC199, $A8C3F0
+        .long $ADC2D4, $A8C708, $ADC436, $A8CA36
+        .byte 0
+        ; Dancer
+        .long $ADB4CB, $A19E6A, $ADB1F1, $A196A1
+        .long $ADB068, $A19376, $ADAF0F, $A19090
+        .long $ADB335, $A19090, $ADB666, $A198CB
+        .long $ADB7AA, $A19B43, $ADB93C, $A19E6A
+        .byte 0
+        ; Priest
+        .long $ADC013, $A88A76, $ADBD4A, $A8827A
+        .long $ADBBC7, $A7FF9A, $ADBA86, $A7FCD3
+        .long $ADBE85, $A7FCD3, $ADC199, $A884F6
+        .long $ADC2D4, $A88764, $ADC436, $A88A76
+        .byte 0
+        ; Mage
+        .long $ADC013, $A6D1ED, $ADBD4A, $A6C964
+        .long $ADBBC7, $A6C6A5, $ADBA86, $A6C402
+        .long $ADBE85, $A6C402, $ADC199, $A6CC07
+        .long $ADC2D4, $A6CED2, $ADC436, $A6D1ED
+        .byte 0
+        ; FireMage
+        .long $ADC013, $A3CD28, $ADBD4A, $A3C579
+        .long $ADBBC7, $A3C308, $ADBA86, $A3C0E9
+        .long $ADBE85, $A3C0E9, $ADC199, $A3C7D4
+        .long $ADC2D4, $A3CA82, $ADC436, $A3CD28
+        .byte 0
+        ; ThunderMage
+        .long $ADC013, $AB9E22, $ADBD4A, $AB9668
+        .long $ADBBC7, $AB9423, $ADBA86, $AB9208
+        .long $ADBE85, $AB9208, $ADC199, $AB98D0
+        .long $ADC2D4, $AB9B8E, $ADC436, $AB9E22
+        .byte 0
+        ; WindMage
+        .long $ADC013, $ACC635, $ADBD4A, $ACBEC3
+        .long $ADBBC7, $ACBC94, $ADBA86, $ACBA7A
+        .long $ADBE85, $ACBA7A, $ADC199, $ACC12B
+        .long $ADC2D4, $ACC3A0, $ADC436, $ACC635
+        .byte 0
+        ; HighPriest
+        .long $ADC013, $A5F01D, $ADBD4A, $A5E7EF
+        .long $ADBBC7, $A5E57B, $ADBA86, $A5E35F
+        .long $ADBE85, $A5E35F, $ADC199, $A5EA5B
+        .long $ADC2D4, $A5ED72, $ADC436, $A5F01D
+        .byte 0
+        ; Bishop
+        .long $ADC013, $A18D71, $ADBD4A, $A18438
+        .long $ADBBC7, $A18193, $ADBA86, $A0FEDF
+        .long $ADBE85, $A0FEDF, $ADC199, $A18704
+        .long $ADC2D4, $A18A23, $ADC436, $A18D71
+        .byte 0
+        ; Sage
+        .long $ADC013, $A8EA83, $ADBD4A, $A8E225
+        .long $ADBBC7, $A8DFBE, $ADBA86, $A8DD73
+        .long $ADBE85, $A8DD73, $ADC199, $A8E4BF
+        .long $ADC2D4, $A8E7A1, $ADC436, $A8EA83
+        .byte 0
+        ; Bard
+        .long $ADC013, $A0B8DF, $ADBD4A, $A0B279
+        .long $ADBBC7, $A0B070, $ADBA86, $A0AE8B
+        .long $ADBE85, $A0AE8B, $ADC199, $A0B46B
+        .long $ADC2D4, $A0B69D, $ADC436, $A0B8DF
+        .byte 0
+        ; Priestess
+        .long $ADC013, $A9EB7B, $ADBD4A, $A9E452
+        .long $ADBBC7, $A9E25E, $ADBA86, $A9DFFE
+        .long $ADBE85, $A9DFFE, $ADC199, $A9E6AD
+        .long $ADC2D4, $A9E903, $ADC436, $A9EB7B
+        .byte 0
+        ; DarkMage
+        .long $ADC013, $A1BF5C, $ADBD4A, $A1B75A
+        .long $ADBBC7, $A1B4AD, $ADBA86, $A1B249
+        .long $ADBE85, $A1B249, $ADC199, $A1B9CF
+        .long $ADC2D4, $A1BCAB, $ADC436, $A1BF5C
+        .byte 0
+        ; DarkBishop
+        .long $ADC013, $A1AF51, $ADBD4A, $A1A6A2
+        .long $ADBBC7, $A1A409, $ADBA86, $A1A1A7
+        .long $ADBE85, $A1A1A7, $ADC199, $A1A8F4
+        .long $ADC2D4, $A1ABEF, $ADC436, $A1AF51
+        .byte 0
+        ; Thief
+        .long $D672E2, $AB81EF, $D670EE, $AAFD13
+        .long $D66FC6, $AAFBAF, $D66ED6, $AAFA0F
+        .long $D671DC, $AAFA0F, $D67408, $AAFEB0
+        .long $D674F4, $AB805B, $D67607, $AB81EF
+        .byte 0
+        ; Rogue
+        .long $D672E2, $ABB228, $D670EE, $ABAD5A
+        .long $D66FC6, $ABABFA, $D66ED6, $ABAA5B
+        .long $D671DC, $ABAA5B, $D67408, $ABAEEB
+        .long $D674F4, $ABB0A1, $D67607, $ABB228
+        .byte 0
+        ; Civilian
+        .long $ADB4CB, $AACF63, $ADB1F1, $AACB9F
+        .long $ADB068, $AACA3C, $ADAF0F, $AAC90D
+        .long $ADB335, $AAC90D, $ADB666, $AACCC7
+        .long $ADB7AA, $AACE0C, $ADB93C, $AACF63
+        .byte 0
+        ; Child
+        .long $ADB4CB, $AABF6A, $ADB1F1, $AABC2A
+        .long $ADB068, $AABB27, $ADAF0F, $AABA0A
+        .long $ADB335, $AABA0A, $ADB666, $AABD3B
+        .long $ADB7AA, $AABE5A, $ADB93C, $AABF6A
+        .byte 0
+        ; Ballistician
+        .long $D66343, $A8FBAD, $D66118, $A8F46F
+        .long $D6601E, $A8F112, $D65F0D, $A8ED7E
+        .long $D66227, $A8F825, $D66444, $A8FF68
+        .long $D66556, $A9835D, $D66652, $A98680
+        .byte 1
+        ; IronBallistician
+        .long $D66343, $A99857, $D66118, $A99158
+        .long $D6601E, $A98DFB, $D65F0D, $A98A62
+        .long $D66227, $A994D4, $D66444, $A99C0A
+        .long $D66556, $A99FF7, $D66652, $A9A309
+        .byte 1
+        ; KillerBallistician
+        .long $D66343, $A9B4D6, $D66118, $A9ADB1
+        .long $D6601E, $A9AA61, $D65F0D, $A9A6C8
+        .long $D66227, $A9B147, $D66444, $A9B869
+        .long $D66556, $A9BC3E, $D66652, $A9BF43
+        .byte 1
+        ; GreatBallistician
+        .long $D66343, $A9D0EF, $D66118, $A9C97D
+        .long $D6601E, $A9C650, $D65F0D, $A9C2D8
+        .long $D66227, $A9CD2F, $D66444, $A9D4C6
+        .long $D66556, $A9D8F4, $D66652, $A9DC22
+        .byte 1
+        ; DarkPrince
+        .long $ADC013, $A68003, $ADBD4A, $A5F823
+        .long $ADBBC7, $A5F554, $ADBA86, $A5F328
+        .long $ADBE85, $A5F328, $ADC199, $A5FA54
+        .long $ADC2D4, $A5FD17, $ADC436, $A68003
+        .byte 0
+        ; MasterKnightFemale
+        .long $ADF4CB, $A5A904, $ADEDD1, $A59744
+        .long $ADEA4E, $A59112, $ADE6C6, $A58ACE
+        .long $ADF10B, $A58ACE, $ADF890, $A59D62
+        .long $ADFBD9, $A5A2C9, $D50000, $A5A904
+        .byte 1
+        ; MageKnightFemale
+        .long $ADF4CB, $ABCF52, $ADEDD1, $ABBF33
+        .long $ADEA4E, $ABB99C, $ADE6C6, $ABB3E8
+        .long $ADF10B, $ABB3E8, $ADF890, $ABC43D
+        .long $ADFBD9, $ABC9B0, $D50000, $ABCF52
+        .byte 1
+        ; DragonRiderFemale
+        .long $ADA7B5, $A2C989, $ADA37A, $A2BB7F
+        .long $ADA150, $A2B7B2, $AD9F97, $A2B360
+        .long $ADA578, $A2B360, $ADA9C5, $A2C04E
+        .long $ADAB7F, $A2C469, $ADAD79, $A2C989
+        .byte 1
+        ; DragonknightFemale
+        .long $ADA7B5, $A1D8C1, $ADA37A, $A1CA4B
+        .long $ADA150, $A1C67B, $AD9F97, $A1C23C
+        .long $ADA578, $A1C23C, $ADA9C5, $A1CF61
+        .long $ADAB7F, $A1D39D, $ADAD79, $A1D8C1
+        .byte 1
+        ; DragonmasterFemale
+        .long $ADA7B5, $A29107, $ADA37A, $A28228
+        .long $ADA150, $A1FE4A, $AD9F97, $A1F9D6
+        .long $ADA578, $A1F9D6, $ADA9C5, $A2873F
+        .long $ADAB7F, $A28BA1, $ADAD79, $A29107
+        .byte 1
+        ; ArcherFemale
+        .long $AD9A90, $A0C0E9, $AD9811, $A0BD74
+        .long $AD96F4, $A0BC63, $AD95BD, $A0BB5A
+        .long $AD995A, $A0BB5A, $AD9BD2, $A0BEAE
+        .long $AD9D12, $A0BFC8, $AD9E4B, $A0C0E9
+        .byte 0
+        ; MyrmidonFemale
+        .long $ADCC79, $AADCCC, $ADC8CA, $AAD684
+        .long $ADC6E8, $AAD3DC, $ADC56D, $AAD0AC
+        .long $ADCA27, $AAD0AC, $ADCED6, $AAD80B
+        .long $ADD039, $AAD9A2, $ADD233, $AADCCC
+        .byte 0
+        ; SwordmasterFemale
+        .long $ADCC79, $A9FA2A, $ADC8CA, $A9F3B6
+        .long $ADC6E8, $A9F10C, $ADC56D, $A9EDCD
+        .long $ADCA27, $A9EDCD, $ADCED6, $A9F53D
+        .long $ADD039, $A9F6DD, $ADD233, $A9FA2A
+        .byte 0
+        ; SniperFemale
+        .long $AD9A90, $AAAA74, $AD9811, $AAA6BB
+        .long $AD96F4, $AAA5A4, $AD95BD, $AAA486
+        .long $AD995A, $AAA486, $AD9BD2, $AAA7F6
+        .long $AD9D12, $AAA92C, $AD9E4B, $AAAA74
+        .byte 0
+        ; HeroFemale
+        .long $ADCC79, $A48A78, $ADC8CA, $A48344
+        .long $ADC6E8, $A48019, $ADC56D, $A3FC94
+        .long $ADCA27, $A3FC94, $ADCED6, $A484FC
+        .long $ADD039, $A486EA, $ADD233, $A48A78
+        .byte 0
+        ; PriestFemale
+        .long $ADC013, $A7F9D7, $ADBD4A, $A7F146
+        .long $ADBBC7, $A7EE34, $ADBA86, $A7EB5C
+        .long $ADBE85, $A7EB5C, $ADC199, $A7F412
+        .long $ADC2D4, $A7F6C6, $ADC436, $A7F9D7
+        .byte 0
+        ; MageFemale
+        .long $ADC013, $A6C184, $ADBD4A, $A6BA52
+        .long $ADBBC7, $A6B822, $ADBA86, $A6B5D4
+        .long $ADBE85, $A6B5D4, $ADC199, $A6BCA0
+        .long $ADC2D4, $A6BF0D, $ADC436, $A6C184
+        .byte 0
+        ; FireMageFemale
+        .long $ADC013, $A3BE34, $ADBD4A, $A3B6A0
+        .long $ADBBC7, $A3B491, $ADBA86, $A3B26E
+        .long $ADBE85, $A3B26E, $ADC199, $A3B8E8
+        .long $ADC2D4, $A3BB9E, $ADC436, $A3BE34
+        .byte 0
+        ; ThunderMageFemale
+        .long $ADC013, $AB8F6F, $ADBD4A, $AB8816
+        .long $ADBBC7, $AB85F7, $ADBA86, $AB83A2
+        .long $ADBE85, $AB83A2, $ADC199, $AB8A5A
+        .long $ADC2D4, $AB8CDD, $ADC436, $AB8F6F
+        .byte 0
+        ; WindMageFemale
+        .long $ADC013, $ACB7E2, $ADBD4A, $ACB005
+        .long $ADBBC7, $ACAD97, $ADBA86, $ACAB39
+        .long $ADBE85, $ACAB39, $ADC199, $ACB26E
+        .long $ADC2D4, $ACB50D, $ADC436, $ACB7E2
+        .byte 0
+        ; HighPriestFemale
+        .long $ADC013, $A5E0A2, $ADBD4A, $A5D8FA
+        .long $ADBBC7, $A5D6B3, $ADBA86, $A5D458
+        .long $ADBE85, $A5D458, $ADC199, $A5DB55
+        .long $ADC2D4, $A5DE20, $ADC436, $A5E0A2
+        .byte 0
+        ; SageFemale
+        .long $ADC013, $A8DA64, $ADBD4A, $A8D223
+        .long $ADBBC7, $A8CFA3, $ADBA86, $A8CD61
+        .long $ADBE85, $A8CD61, $ADC199, $A8D471
+        .long $ADC2D4, $A8D78F, $ADC436, $A8DA64
+        .byte 0
+        ; ThiefFemale
+        .long $D672E2, $AAF846, $D670EE, $AAF3A2
+        .long $D66FC6, $AAF261, $D66ED6, $AAF0D4
+        .long $D671DC, $AAF0D4, $D67408, $AAF534
+        .long $D674F4, $AAF6C1, $D67607, $AAF846
+        .byte 0
+        ; RogueFemale
+        .long $D672E2, $ABA888, $D670EE, $ABA3C8
+        .long $D66FC6, $ABA271, $D66ED6, $ABA0DF
+        .long $D671DC, $ABA0DF, $D67408, $ABA55D
+        .long $D674F4, $ABA70D, $D67607, $ABA888
+        .byte 0
+        ; CivilianFemale
+        .long $ADB4CB, $AAC797, $ADB1F1, $AAC346
+        .long $ADB068, $AAC1E1, $ADAF0F, $AAC08F
+        .long $ADB335, $AAC08F, $ADB666, $AAC499
+        .long $ADB7AA, $AAC613, $ADB93C, $AAC797
+        .byte 0
+        ; ChildFemale
+        .long $ADB4CB, $AAB8EA, $ADB1F1, $AAB57F
+        .long $ADB068, $AAB489, $ADAF0F, $AAB35C
+        .long $ADB335, $AAB35C, $ADB666, $AAB693
+        .long $ADB7AA, $AAB7BF, $ADB93C, $AAB8EA
+        .byte 0
+        ; (no name in the original notes)
+        .long $ADF4CB, $A4F610, $ADEDD1, $A4ED49
+        .long $ADEA4E, $A4EA2A, $ADE6C6, $A4E705
+        .long $ADF10B, $A4E705, $ADF890, $A4F03A
+        .long $ADFBD9, $A4F313, $D50000, $A4F610
+        .byte 1
+
+        ; 9E/C70B
+
+    .endsection BattleMapSpriteDataSection
+
+
     .section Unsorted9EC70BSection
 
       .al

@@ -1167,7 +1167,7 @@
             jsr $88C71C
           
           +
-          jml $88C4D9
+          jml rlUnknown88C4D9
 
         +
         lda wUnknown00171A,b
@@ -2071,6 +2071,234 @@
     .endsection Unsorted88BC05Section
 
 
+    .section Unsorted88C4D9Section
+
+      .al
+      .xl
+
+      rlUnknown88C4D9 ; 88/C4D9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Reached with jml from rlUnknown88A136. Steps through states 0-4 in
+        ; wUnknown0007D8 and sets up the map scroll distance and speed, then
+        ; draws a sprite at the cursor. What the states mean is not known yet.
+
+        lda wUnknown000766,b
+        beq _C4E2
+        jml _C61E
+
+
+        _C4E2
+        lda wUnknown0007D8,b
+        beq _C4FF
+        cmp #$0001
+        beq _C507
+        cmp #$0002
+        beq _C53B
+        cmp #$0003
+        beq _C503
+        cmp #$0004
+        bne _C4FF
+        jml _C5D2
+
+
+        _C4FF
+        jml _C658
+
+
+        _C503
+        jml _C5AA
+
+
+        _C507
+        lda #$0010
+        sta wMapPixelScrollDistance,b
+        jsr rsUnknown88B64F
+        beq _C51C
+        lda #$0008
+        sta wMapScrollSpeed,b
+        jml _C60C
+
+
+        _C51C
+        lda bUnknown000E7B,b
+        and #$00FF
+        bit #$0002
+        bne _C52E
+        jsr $88C67D
+        jml _C658
+
+
+        _C52E
+        lda #$0000
+        sta wUnknown0007D8,b
+        sta $086F,b
+        jml _C658
+
+
+        _C53B
+        jsl $88C0B3
+        stz wMapPixelScrollDistance,b
+        jsr $88AA1E
+        beq _C564
+        jsl $87BF1B
+        cmp #$0000
+        bne _C55A
+        lda #$0002
+        sta wMapScrollSpeed,b
+        jml _C60C
+
+
+        _C55A
+        lda #$0004
+        sta wMapScrollSpeed,b
+        jml _C60C
+
+
+        _C564
+        lda $0873,b
+        cmp #$FFFF
+        beq _C592
+        jsl rlUnknown88B4DB
+        lda #$0003
+        sta wUnknown0007D8,b
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        sta wUnknown00076C,b
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        sta wUnknown00076E,b
+        lda #$0001
+        sta $07DA,b
+        bra _C5AA
+
+
+        _C592
+        lda #$0000
+        sta wUnknown0007D8,b
+        sta $086F,b
+        jsl rlUnknown88AF7B
+        lda $0879,b
+        jsl rlUnknown86B307
+        jml _C658
+
+
+        _C5AA
+        lda #$0010
+        sta wMapPixelScrollDistance,b
+        jsr rsUnknown88B64F
+        beq _C5C2
+        lda #$0004
+        lda #$0008
+        sta wMapScrollSpeed,b
+        jml _C60C
+
+
+        _C5C2
+        lda #$0018
+        sta wMapScrollScriptOffset,b
+        lda #$0004
+        sta wUnknown0007D8,b
+        jml _C658
+
+
+        _C5D2
+        lda wMapScrollScriptOffset,b
+        sec
+        sbc #$0001
+        sta wMapScrollScriptOffset,b
+        bmi _C5E0
+        bra _C659
+
+
+        _C5E0
+        lda #$0000
+        sta wUnknown0007D8,b
+        sta $086F,b
+        jsl rlUnknown88AF7B
+        lda wMapScrollXPixels,b
+        sta wMapXOffset,b
+        lda wMapScrollYPixels,b
+        sta wMapYOffset,b
+        lda $0871,b
+        sta wR0
+        lda $0873,b
+        sta wR1
+        lda $0879,b
+        jsl rlUnknown86B307
+        bra _C659
+
+
+        _C60C
+        stz wMapScrollCurrentPixelDistance,b
+        lda #$0001
+        sta wUnknown000766,b
+        stz wUnknown00073A,b
+        stz wMapEnableXScrollFlag,b
+        stz wMapEnableYScrollFlag,b
+
+        _C61E
+        lda wMapScrollCurrentPixelDistance,b
+        clc
+        adc wMapScrollSpeed,b
+        sta wMapScrollCurrentPixelDistance,b
+        cmp wMapPixelScrollDistance,b
+        bcc _C648
+        sec
+        sbc wMapPixelScrollDistance,b
+        sta wR0
+        lda wMapScrollSpeed,b
+        sec
+        sbc wR0
+        sta wMapScrollSpeed,b
+        stz wUnknown000766,b
+        stz wUnknown00073A,b
+        stz wMapEnableXScrollFlag,b
+        stz wMapEnableYScrollFlag,b
+
+        _C648
+        jsl rlUnknown88BC05
+        lda wUnknown0007D8,b
+        cmp #$0002
+        bne _C658
+        jsl $88C0B3
+
+        _C658
+        rtl
+
+
+        _C659
+        sep #$20
+        lda #$88
+        pha
+        plb
+        .databank $88
+        rep #$20
+        ldy #$EE52
+        lda wCursorXOffset,b
+        sta wR0
+        lda wCursorYOffset,b
+        sta wR1
+        lda #$0006
+        sta wR4
+        lda #$2000
+        sta wR5
+        jsl rlPushToOAMBuffer
+        rtl
+
+        .databank 0
+
+        ; 88/C67D
+
+    .endsection Unsorted88C4D9Section
+
+
     .section Unsorted88C9A6Section
 
       .al
@@ -2150,6 +2378,25 @@
         ; 88/CA28
 
     .endsection Unsorted88C9A6Section
+
+
+    .section Unsorted88CBE8Section
+
+      .al
+      .xl
+
+      aUnknown88CBE8 ; 88/CBE8
+
+        ; Indexed by map sprite ID (without the tall flag $8000).
+        ; 65 bytes of 9 and then 32 bytes of 14: the same counts as the
+        ; short and tall map sprite tables.
+
+        .fill 65, 9
+        .fill 32, 14
+
+        ; 88/CC49
+
+    .endsection Unsorted88CBE8Section
 
 
     .section Unsorted88CD53Section

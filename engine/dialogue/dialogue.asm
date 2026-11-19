@@ -570,7 +570,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85AB3F
+        jsl rlFreeDialogueBoxes
         jsl rlDialogueClearActivePointerStack
 
         lda #DialogueStatusWaitForInput

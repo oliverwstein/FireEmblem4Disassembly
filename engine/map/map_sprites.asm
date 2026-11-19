@@ -215,6 +215,44 @@
     .endsection MapSpriteSection
 
 
+    .section MapSpriteCodeSection
+
+      .al
+      .xl
+
+      aASMapSpriteCode ; 81/89E0
+
+        ; Active sprite code for map sprites (asMapSprite). Command $0F
+        ; points the code back at itself and calls rlUnknown8189F3, so this
+        ; one command runs every frame.
+
+        .byte $0F
+
+      rsUnknown8189E1 ; 81/89E1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the disassembled code refers to this. It is a variant of
+        ; rsActiveSpriteCommand0F that backs up one more byte.
+
+        dec y
+        dec y
+        tya
+        sta aActiveSpriteSystem.aCodeOffset,b,x
+        lda #1
+        sta aActiveSpriteSystem.aFrameTimer,b,x
+        jsl rlUnknown8189F3
+        pla
+        rts
+
+        .databank 0
+
+    .endsection MapSpriteCodeSection
+
+
     .section MovingMapSpritePositionRoutinesSection
 
       .al

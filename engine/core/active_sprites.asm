@@ -1436,7 +1436,7 @@
         sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #1
         sta aActiveSpriteSystem.aFrameTimer,b,x
-        jsl $8189F3
+        jsl rlUnknown8189F3
         pla
         rts
 

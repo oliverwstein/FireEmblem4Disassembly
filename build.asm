@@ -383,6 +383,13 @@
 
     .here
 
+    * = $0189E0
+    .logical $8189E0
+
+      .dsection MapSpriteCodeSection
+
+    .here
+
     * = $0189F3
     .logical $8189F3
 
@@ -1527,6 +1534,13 @@
 
     .here
 
+    * = $05AB3F
+    .logical $85AB3F
+
+      .dsection FreeDialogueBoxesSection
+
+    .here
+
     * = $05ABF6
     .logical $85ABF6
 
@@ -1905,6 +1919,13 @@
     .logical $878C8C
 
       .dsection Unsorted878C8CSection
+
+    .here
+
+    * = $079354
+    .logical $879354
+
+      .dsection DrawMenuTextLineSection
 
     .here
 
@@ -2324,10 +2345,24 @@
 
     .here
 
+    * = $08C4D9
+    .logical $88C4D9
+
+      .dsection Unsorted88C4D9Section
+
+    .here
+
     * = $08C9A6
     .logical $88C9A6
 
       .dsection Unsorted88C9A6Section
+
+    .here
+
+    * = $08CBE8
+    .logical $88CBE8
+
+      .dsection Unsorted88CBE8Section
 
     .here
 
@@ -2442,6 +2477,13 @@
       .dsection Unsorted89A150Section
 
       ; 89/A18C
+
+    .here
+
+    * = $09A18C
+    .logical $89A18C
+
+      .dsection DrawMenuTextNumberSection
 
     .here
 
@@ -4509,6 +4551,13 @@
     .logical $9EACAF
 
       .dsection Unsorted9EACAFSection
+
+    .here
+
+    * = $1EB50D
+    .logical $9EB50D
+
+      .dsection BattleMapSpriteDataSection
 
     .here
 

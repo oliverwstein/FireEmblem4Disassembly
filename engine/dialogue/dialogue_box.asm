@@ -1,4 +1,5 @@
-; HDMA effects that fold and unfold dialogue boxes.
+; Dialogue boxes: procDialogueBox, the HDMA effects that fold and unfold the
+; boxes, and freeing them.
 
     .section DialogueBoxSection
 
@@ -889,6 +890,63 @@
         ; 85/AB32
 
     .endsection FreeDialogueBoxHDMAIfFinishedSection
+
+
+    .section FreeDialogueBoxesSection
+
+      .al
+      .xl
+
+      rlFreeDialogueBoxes ; 85/AB3F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Frees up to two procDialogueBox procs, calling $8586FA with each one's
+        ; map menu entry first, then frees the dialogue box HDMA.
+
+        ; Output:
+        ; Carry set if there was a dialogue box, clear if not.
+
+        phx
+        lda #(`procDialogueBox)<<8
+        sta lR44+1
+        lda #<>procDialogueBox
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _AB7F
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl $8586FA
+        jsl rlProcEngineFreeProc
+        lda #(`procDialogueBox)<<8
+        sta lR44+1
+        lda #<>procDialogueBox
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _AB78
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl $8586FA
+        jsl rlProcEngineFreeProc
+
+        _AB78
+        jsl rlFreeDialogueBoxHDMA
+        plx
+        sec
+        rtl
+
+
+        _AB7F
+        plx
+        clc
+        rtl
+
+        .databank 0
+
+        ; 85/AB82
+
+    .endsection FreeDialogueBoxesSection
 
 
     .section DisplayDialogueAPressArrowsSection
