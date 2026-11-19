@@ -13851,10 +13851,10 @@
         .autsiz
         .databank ?
 
-        ; Map menu option データ (Data): fades into rsUnknown80D915 (procMainLoopChangeFade, the routine in aProcSystem.wInput0).
+        ; Map menu option データ (Data): fades into rsDataWindowOpen (procMainLoopChangeFade, the routine in aProcSystem.wInput0).
 
         stz wGameStateRoutine1,b
-        lda #$D915
+        lda #<>rsDataWindowOpen
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -13878,7 +13878,7 @@
         ; Map menu option スキル (Skill): fades into rsSkillWindowOpen (procMainLoopChangeFade, the routine in aProcSystem.wInput0).
 
         stz wGameStateRoutine1,b
-        lda #$D2C6
+        lda #<>rsSkillWindowOpen
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

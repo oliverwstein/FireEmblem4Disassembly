@@ -16,7 +16,8 @@ is a raw RAM address ($0F37,b,x or $7E46EB) gets the name at that address:
 
 Bank $00 addresses and their bank $7E mirror ($7E0000-$7E1FFF) count as the same.
 SCOPED lists RAM that other code reuses for other values: a name in that range
-with one of the given prefixes is only written in the files listed for it.
+with one of the given prefixes is only written in the files listed for it, and in
+those files it is used over any other name at the same address.
 A name of the same value cannot change how an operand assembles. --report N lists
 the N raw addresses used most that still have no name.
 """
@@ -30,6 +31,7 @@ SCOPED = [
     # The unit window's variables; bank $89 reuses the area. The debug menu's names there are not scoped.
     (0x7F82C7, 0x7F8438, ('wUnitWindow', 'aUnitWindow'), ('engine/menus/unit_window.asm',)),
     (0x7F8185, 0x7F92B4, ('wSkillWindow', 'aSkillWindow'), ('engine/menus/skill_window.asm',)),
+    (0x7F8183, 0x7F8505, ('wDataWindow', 'aDataWindow'), ('engine/menus/data_window.asm',)),
     # The item window's variables; the map buffers (aTargetDistanceMap...) share the area.
     (0x7F8467, 0x7FAF4F, ('wItemWindow', 'aItemWindow'), ('engine/menus/item_window.asm',)),
 ]
@@ -71,12 +73,25 @@ def main():
 
     names = ram_names()
 
-    def name_for(v):
-        if v in names:
-            return pick(names[v])
+    def scope(n, v):
+        """The files a name at v may be written in, or None for any file."""
+        for lo, hi, prefixes, files in SCOPED:
+            if lo <= v <= hi and n.startswith(prefixes):
+                return files
+        return None
+
+    def allowed(v, f):
+        """The names at v that file f may use: its own scoped names if it has any."""
+        here = {n for n in names.get(v, ()) if scope(n, v) is None or f in scope(n, v)}
+        own = {n for n in here if scope(n, v)}
+        return own or here
+
+    def name_for(v, f):
+        if allowed(v, f):
+            return pick(allowed(v, f))
         for k in (1, 2):
-            if v - k in names:
-                n = pick(names[v - k])
+            if allowed(v - k, f):
+                n = pick(allowed(v - k, f))
                 if n and n.split('.')[-1][:1] in ('w', 'l') and (k == 1 or n.split('.')[-1][:1] == 'l'):
                     return f'{n}+{k}'
         return None
@@ -100,10 +115,7 @@ def main():
                 full = v
                 if not 0x7E0000 <= full < 0x800000:
                     continue
-            n = name_for(full)
-            if n and any(lo <= full <= hi and n.startswith(prefixes) and f not in files
-                         for lo, hi, prefixes, files in SCOPED):
-                n = None
+            n = name_for(full, f)
             if not n:
                 missing[f'${text}'] += 1
                 continue

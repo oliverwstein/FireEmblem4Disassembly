@@ -13,7 +13,6 @@
 
       rsSkillWindowOpen ; 80/D2C6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz

@@ -50,6 +50,7 @@
   .endfor
 
   ROM = binary("fe4.sfc")
+  .include "engine/menus/data_window.asm"
   .include "engine/menus/skill_window.asm"
   .include "engine/menus/item_window.asm"
   .include "engine/core/ppu_buffers.asm"
@@ -997,54 +998,18 @@
 
     .here
 
-    * = $00D915
-    .logical $80D915
+    * = $00D90C
+    .logical $80D90C
 
-      .dsection Unsorted80D915Section
-
-    .here
-
-    * = $00DA52
-    .logical $80DA52
-
-      .dsection Unsorted80DA52Section
+      .dsection DataWindowOpenSection
 
     .here
 
-    * = $00DCC6
-    .logical $80DCC6
 
-      .dsection Unsorted80DCC6Section
 
-    .here
 
-    * = $00DD28
-    .logical $80DD28
 
-      .dsection Unsorted80DD28Section
 
-    .here
-
-    * = $00DE45
-    .logical $80DE45
-
-      .dsection Unsorted80DE45Section
-
-    .here
-
-    * = $00DE75
-    .logical $80DE75
-
-      .dsection Unsorted80DE75Section
-
-    .here
-
-    * = $00DE83
-    .logical $80DE83
-
-      .dsection Unsorted80DE83Section
-
-    .here
 
     * = $00E42B
     .logical $80E42B
@@ -9231,79 +9196,19 @@
     * = $0BCF0A
     .logical $8BCF0A
 
-      .dsection Unsorted8BCF0ASection
+      .dsection DataWindowShowSection
 
     .here
 
-    * = $0BCF35
-    .logical $8BCF35
 
-      .dsection Unsorted8BCF35Section
 
-    .here
 
-    * = $0BD13C
-    .logical $8BD13C
 
-      .dsection Unsorted8BD13CSection
 
-    .here
 
-    * = $0BD13D
-    .logical $8BD13D
 
-      .dsection Unsorted8BD13DSection
 
-    .here
 
-    * = $0BD151
-    .logical $8BD151
-
-      .dsection Unsorted8BD151Section
-
-    .here
-
-    * = $0BD2D7
-    .logical $8BD2D7
-
-      .dsection Unsorted8BD2D7Section
-
-    .here
-
-    * = $0BD4C6
-    .logical $8BD4C6
-
-      .dsection Unsorted8BD4C6Section
-
-    .here
-
-    * = $0BD4D4
-    .logical $8BD4D4
-
-      .dsection Unsorted8BD4D4Section
-
-    .here
-
-    * = $0BD51F
-    .logical $8BD51F
-
-      .dsection Unsorted8BD51FSection
-
-    .here
-
-    * = $0BD600
-    .logical $8BD600
-
-      .dsection Unsorted8BD600Section
-
-    .here
-
-    * = $0BD613
-    .logical $8BD613
-
-      .dsection Unsorted8BD613Section
-
-    .here
 
     * = $0BD794
     .logical $8BD794

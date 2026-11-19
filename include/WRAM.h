@@ -1882,6 +1882,39 @@
 
   .endvirtual
 
+  .virtual $7F8183
+
+    ; The data window's working variables (engine/menus/data_window.asm). Other
+    ; screens reuse this area, so the names are only written in that file. The
+    ; arrays are by place in the list of armies (up to 7).
+
+    wDataWindowCurrentArmy .word ?                  ; $7F8183
+      ; The place in the list.
+    wDataWindowCursorYCoordinate .word ?            ; $7F8185
+    wDataWindowCursorMoveDirection .word ?          ; $7F8187
+      ; -1 up, 1 down, 0 not moving.
+    aDataWindowLeaders .fill $10                    ; $7F8189
+      ; Unit RAM pointers; 0 if the leader is dead or there is none.
+    aDataWindowLeaderCharacterIDs .fill $10         ; $7F8199
+    aDataWindowLeaderMapSprites .fill $10           ; $7F81A9
+    aDataWindowPortraitPalettes .fill $100          ; $7F81B9
+      ; 16 colors each.
+    aDataWindowRelationPalettes .fill $100          ; $7F82B9
+      ; 16 colors each, for the leader's map sprite.
+    aDataWindowFactionSlots .fill $10               ; $7F83B9
+    aDataWindowUnitCounts .fill $10                 ; $7F83C9
+      ; Units alive.
+    wDataWindowArmyCount .word ?                    ; $7F83D9
+    .word ?                                         ; $7F83DB
+    wDataWindowTemp1 .word ?                        ; $7F83DD
+    wDataWindowTemp2 .word ?                        ; $7F83DF
+    wDataWindowTemp3 .word ?                        ; $7F83E1
+    .fill $1A                                       ; $7F83E3
+    aDataWindowCOLDATAHDMATable .fill $100          ; $7F83FD
+    aDataWindowBG3VOFSHDMATable .fill 9             ; $7F84FD
+
+  .endvirtual
+
   .virtual $7F8467
 
     ; The item window's working variables (engine/menus/item_window.asm). Other
