@@ -32,7 +32,9 @@ The files in `wip/` are routines files. Each tool assembles the file in a tempor
 | Tool | Purpose |
 |---|---|
 | `disasm.py START [END]` | Disassembles code from the ROM into a routine in the project's style, following register widths and the data bank and using existing names. Without END it stops where the routine ends. `--selftest` checks it against every routine already in the build. |
-| `trace.py` | Follows calls, jumps, engine definitions and jump tables from every built routine into code that is not built yet, and disassembles what it finds. `--list` shows each routine with a caller and warnings; `--write FILE` writes them as a routines file. |
+| `trace.py` | Follows calls, jumps, engine definitions, proc scripts and jump tables from every built routine into code that is not built yet, and disassembles what it finds. `--list` shows each routine with a caller and warnings; `--write FILE` writes them as a routines file. |
+| `proc_scripts.py FILE` | Writes proc scripts and unlabelled proc headers that are not built yet as a routines file, using the `PROC_*` macros. `procs.py` holds the script format it and `trace.py` use. |
+| `move_sections.py SPEC` | Moves whole sections between engine files (SPEC lines: section name, target file). Cannot change the ROM. |
 | `test_routines.py FILE` | Assembles each routine at its address and compares it byte for byte with the ROM. Reports assembly errors by line in FILE, which routines differ, and the contiguous runs the routines form. Use `--diagnose` to show the first line in each differing routine whose instruction differs from the ROM, and `--long-branch` to get past branch-range errors while diagnosing. |
 | `fix_addressing.py FILE` | Fixes the systematic data bank problems, using the ROM as the reference: declares the data bank after explicit bank switches and where routines are entered with it set, drops `,b` from bank `$7E`/`$7F` operands, and adds `@l` where the original uses long addressing. Prints what is left to fix by hand. |
 | `show_lines.py FILE FIRST [LAST]` | Shows source lines next to the bytes they build and the original bytes, marking lines that differ. |

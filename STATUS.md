@@ -1,14 +1,14 @@
 # Project status
 
-Last updated 2026-11-19. This file records what has been done and what remains, so that work can pick up where it left off. For how to build and how the repository is laid out, see [README.md](README.md). For the tools used to bring new code into the build, see [tools/README.md](tools/README.md).
+Last updated 2026-11-19 (second session that day). This file records what has been done and what remains, so that work can pick up where it left off. For how to build and how the repository is laid out, see [README.md](README.md). For the tools used to bring new code into the build, see [tools/README.md](tools/README.md).
 
 ## Where things stand
 
 - `./build.sh` builds a ROM that is byte-for-byte identical to the original (Japanese 1.0, SHA-1 `90f0bdeaf0151899f96281258fcb30899fbd0d44`).
-- **18.15% of the ROM is built from source** (761,454 of 4,194,304 bytes; `./build.sh coverage`). The rest is copied from `fe4.sfc` at build time.
-- Engine code is organized by game system under `engine/` (97 files, about 2,950 routines). About 1,150 routines are still named `rlUnknown…`/`rsUnknown…`, most of them in `engine/unsorted/`.
+- **18.59% of the ROM is built from source** (779,634 of 4,194,304 bytes; `./build.sh coverage`). The rest is copied from `fe4.sfc` at build time.
+- Engine code is organized by game system under `engine/` (97 files, 3,202 routines). 1,478 routines still have `Unknown` in their names, and 857 routines are in `engine/unsorted/` (filed by bank, not yet by system).
 - `wip/` is empty and `include/Undisassembled.h` lists nothing: no built code calls code that is not built.
-- Every call, jump, engine definition (proc, HDMA, active sprite) and jump table reachable from built code is built. `tools/trace.py` reports nothing left to follow.
+- Every call, jump, engine definition (proc, HDMA, active sprite), proc script and jump table reachable from built code is built, and so is every proc script. `tools/trace.py` reports nothing left to follow.
 
 | Stage | Bytes from source | Share |
 |---|---|---|
@@ -17,7 +17,8 @@ Last updated 2026-11-19. This file records what has been done and what remains, 
 | After the first pass over TempStuff | 714,327 | 17.03% |
 | After the rest of TempStuff | 729,236 | 17.39% |
 | After tracing calls from built code | 755,758 | 18.02% |
-| Now (also definitions and jump tables) | 761,454 | 18.15% |
+| After definitions and jump tables | 761,454 | 18.15% |
+| Now (also proc scripts) | 779,634 | 18.59% |
 
 ## What has been done
 
@@ -40,6 +41,9 @@ In order:
 10. **Tracer.** `tools/trace.py` starts from every built routine and follows `jsr`/`jsl`/`jmp`/`jml`, the init and on-cycle routines of proc, HDMA and active sprite definitions loaded into `lR44` before a create call, and raw entries in jump tables whose other entries are routines. It disassembles what it finds, follows that too, and can write the result as a routines file. Three rounds found 440 routines (about 32 KB); all matched the ROM as written and are in the build, mostly in `engine/unsorted/`. Built code now calls them by label (about 850 raw addresses replaced).
 11. **Never-disassembled callees.** `rlFreeDialogueBoxes` (was `rlUnknown85AB3F`), `rlDrawMenuTextLine` and `rlDrawMenuTextNumber` (with its two tables) are in the build.
 12. **Naming convention.** Unknown routines that return with `rts` and never `rtl` are now `rsUnknown…` (145 renamed); `trace.py` picks the prefix itself.
+13. **Proc scripts.** `tools/procs.py` describes the proc script format (every command in bank `$82` and its argument size). `trace.py` walks every known proc's script and follows the routines it calls and the sprites it creates: 257 more routines. `tools/proc_scripts.py` writes scripts and unlabelled proc headers with the `PROC_*` macros; 61 pieces went in. Command `$82/8279` is `rsProcCodeCreateActiveSprite` (macro `PROC_CREATE_ACTIVE_SPRITE`).
+14. **Structural names.** 79 routines used by a single proc as its init or on-cycle routine are `rlProc<Name>Init`/`Cycle…`. The 165 event and event condition command routines are named after the macros the chapter scripts use for them (`rsEventCommandJumpTrue`, `rsChapterEventConditionCommandSaveChapterTurncount`); placeholders such as `EVENT_0A` keep numbers.
+15. **Sorting by caller.** 95 sections left `engine/unsorted/` because every routine using them is a *named* routine in one system (repeated until nothing changed). Callers with `Unknown` names did not count, since many were filed by ROM neighbours. `tools/move_sections.py` moves sections between files.
 
 Every step kept the output identical to the original.
 
@@ -47,10 +51,9 @@ Every step kept the output identical to the original.
 
 ### 1. Code reached only through data that is not disassembled
 
-The tracer has followed everything that built code reaches. The remaining code is reached through data structures that are still raw bytes, so the next step is to decode those structures and let the tracer follow them:
+The tracer has followed everything that built code and proc scripts reach, and every `RUN_ASM` target in the chapter events is built. What remains is reached through data structures that are still raw bytes:
 
-- **Proc scripts.** A proc definition's code pointer leads to a script of `PROC_*` commands (`include/Procs.h`), some of which call routines (`PROC_CALL`, `PROC_CALL_ARGS`, `PROC_SET_ONCYCLE`). Decoding scripts needs the size of every command; the command table is in `engine/core/proc.asm`. Active sprite and HDMA code pointers lead to similar scripts.
-- **Event scripts.** Chapter events run ASMC routines; the built `events/` files name some, others are raw addresses.
+- **Active sprite and HDMA scripts.** Their code pointers lead to command scripts like proc scripts; the active sprite command table is `aActiveSpriteCommandPointers` (`engine/core/active_sprites.asm`). Decoding them would work like `tools/procs.py`.
 - **Menu definitions**, map menus and other tables of routine pointers in data that is not built yet.
 - **Code nothing points to directly**: entries reached through computed jumps, and the main loop's game-state tables in bank `$80`.
 
@@ -79,7 +82,7 @@ Not every uncovered byte is code; tables, text and graphics are mixed in, and ba
 
 ### 4. Naming and understanding
 
-About 1,150 routines are still unnamed, and the 440 the tracer found are filed in `engine/unsorted/` by bank. Each has a caller in the build, which is the first clue to what it does. Many routines were filed by their name or their neighbours in the ROM, not by understanding the code. The plan agreed with the user is to name system by system: gather the clues (callees, callers, RAM addresses, hardware registers, data tables, known game mechanics), and confirm uncertain cases by running the game in a debugger (Mesen or bsnes-plus can load `labels.txt`). Names must state only what is known; uncertain routines stay `Unknown` or get a comment saying how sure it is.
+1,478 routines are still unnamed and 857 are in `engine/unsorted/`. Automatic sorting by caller has gone as far as named callers allow; the rest are called mostly by other unsorted or unnamed code, so the next step is reading code. Good places to start: the helpers of the now-named event commands (in `engine/events/event_scripts.asm`), the procs named "ON" in bank `$9E` (scripted scenes, one of them `procBelhallaMagesAttack`), and bank `$88` (map scrolling and map sprites). Proc names in headers (two letters, such as "ME" for the proc that PLAY_SONG creates) are small hints. Many routines were filed by their name or their neighbours in the ROM, not by understanding the code. The plan agreed with the user is to name system by system: gather the clues (callees, callers, RAM addresses, hardware registers, data tables, known game mechanics), and confirm uncertain cases by running the game in a debugger (Mesen or bsnes-plus can load `labels.txt`). Names must state only what is known; uncertain routines stay `Unknown` or get a comment saying how sure it is.
 
 Specific things that deserve a look:
 
