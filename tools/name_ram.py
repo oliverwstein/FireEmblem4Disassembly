@@ -15,6 +15,8 @@ is a raw RAM address ($0F37,b,x or $7E46EB) gets the name at that address:
     written name+1 or name+2.
 
 Bank $00 addresses and their bank $7E mirror ($7E0000-$7E1FFF) count as the same.
+Addresses in SCOPED are RAM that other code reuses for other values; their names
+are only written in the files listed for them.
 A name of the same value cannot change how an operand assembles. --report N lists
 the N raw addresses used most that still have no name.
 """
@@ -22,6 +24,11 @@ import argparse, collections, glob, os, re, subprocess, sys, tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from asmlib import ASFLAGS
+
+# (first, last address): the only files where names in that range are written.
+SCOPED = {
+    (0x7F82C7, 0x7F8400): ('engine/menus/unit_window.asm',),   # the unit window's variables; bank $89 reuses them
+}
 
 OPERAND = re.compile(r'^(\s+[a-z]{3} (?:@l )?)\$([0-9A-F]{4}|[0-9A-F]{6})\b((?:,b)?(?:,[xy])?)(\s*)$')
 
@@ -90,6 +97,8 @@ def main():
                 if not 0x7E0000 <= full < 0x800000:
                     continue
             n = name_for(full)
+            if n and any(lo <= full <= hi and f not in files for (lo, hi), files in SCOPED.items()):
+                n = None
             if not n:
                 missing[f'${text}'] += 1
                 continue

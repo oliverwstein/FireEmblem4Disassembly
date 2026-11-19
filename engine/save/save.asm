@@ -3069,13 +3069,13 @@
       aSaveUnitJoinOrderData ; 91/F6FB
 
         .byte 3 
-        .long wUnknown7E5315
+        .long wUnitWindowPage
         
         .byte 6 
-        .long wUnknown7E5319
+        .long wUnitWindowSortType
         
         .byte 1 
-        .long wUnknown7E5317
+        .long wUnitWindowSortDirection
         
         .byte 2 
         .long aUnitJoinOrder[12]

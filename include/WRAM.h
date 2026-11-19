@@ -1368,9 +1368,11 @@
 
   .virtual $7E5315
 
-    wUnknown7E5315 .word ?      ; $7E5315
-    wUnknown7E5317 .word ?      ; $7E5317
-    wUnknown7E5319 .word ?      ; $7E5319
+    wUnitWindowPage .word ?      ; $7E5315
+      ; The unit window's page, sort direction (0 descending, else ascending) and
+      ; sort type. They are saved with the game. Names after FE5 (wUnitWindowCurrentPage...).
+    wUnitWindowSortDirection .word ?      ; $7E5317
+    wUnitWindowSortType .word ?      ; $7E5319
     aUnitJoinOrder .brept 24    ; $7E531B
       .word ?
     .endrept
@@ -1785,6 +1787,54 @@
 
 
 
+
+  .virtual $7F82C7
+
+    ; The unit window's working variables (engine/menus/unit_window.asm). Other
+    ; screens reuse this area for their own values (code in bank $89 writes
+    ; $7F82C9 and $7F83F5), so the names are only written in the unit window's
+    ; code. Names follow the FE5 disassembly, which keeps FE4's unit window and
+    ; whose code reads these at the same places; FE4 has a few extra words.
+
+    wUnitWindowCurrentLine .word ?                  ; $7F82C7
+    wUnitWindowCurrentHighlightLine .word ?         ; $7F82C9
+    wUnitWindowScrolledLines .word ?                ; $7F82CB
+    wUnitWindowMaxRows .word ?                      ; $7F82CD
+    wUnitWindowSkippedUnitCount .word ?             ; $7F82CF
+    wUnitWindowCanScrollDownFlag .word ?            ; $7F82D1
+    .word ?                                         ; $7F82D3
+    wUnitWindowLastScrolledFlag .word ?             ; $7F82D5
+    .word ?                                         ; $7F82D7
+    wUnitWindowScrollingStep .word ?                ; $7F82D9
+    wUnitWindowCursorYCoordinate .word ?            ; $7F82DB
+    wUnitWindowScrollingFlag .word ?                ; $7F82DD
+    wUnitWindowScrollPixels .word ?                 ; $7F82DF
+    .word ?                                         ; $7F82E1
+    wUnitWindowPageScrollFlag .word ?               ; $7F82E3
+    wUnitWindowAction .word ?                       ; $7F82E5
+    wUnitWindowSortTypeFlag .word ?                 ; $7F82E7
+    .word ?                                         ; $7F82E9
+    wUnitWindowCurrentColumn .word ?                ; $7F82EB
+    wUnitWindowUnitSwapStep .word ?                 ; $7F82ED
+    wUnitWindowUnitSwapStartSlot .word ?            ; $7F82EF
+    wUnitWindowUnitSwapStartCursorYCoordinate .word ? ; $7F82F1
+    .fill 6                                         ; $7F82F3
+    wUnitWindowHighlightStep .word ?                ; $7F82F9
+    wUnitWindowHighlightCounter .word ?             ; $7F82FB
+    aUnitWindowHighlightColors .fill $30            ; $7F82FD
+    aUnitWindowDeploymentSlots .fill $62            ; $7F832D
+    .word ?                                         ; $7F838F
+    aUnitWindowSpriteSlots .fill $32                ; $7F8391
+    aUnitWindowReadyToPromoteFlags .fill $32        ; $7F83C3
+    wUnitWindowCurrentNameLine .word ?              ; $7F83F5
+    .fill 4                                         ; $7F83F7
+    wUnitWindowProcessingHighlightLine .word ?      ; $7F83FB
+    wUnitWindowProcessingHighlightOffset .word ?    ; $7F83FD
+    wUnitWindowCurrentLineSlotOffset .word ?        ; $7F83FF
+
+    ; $7F8401
+
+  .endvirtual
 
   .virtual $7F8402
 

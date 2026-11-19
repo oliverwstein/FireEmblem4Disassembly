@@ -1682,7 +1682,7 @@
         jsl rlUnknown808FAD
         jsl rlUnknown8BCE29
         lda wGameStateStep,b
-        sta wUnknown7E5315
+        sta wUnitWindowPage
         lda wUnknown000D79,b
         bit #$0020
         bne _A9AD
@@ -1710,7 +1710,7 @@
         jsl rlUnknown808FAD
         jsl rlUnknown8BCE29
         lda wGameStateStep,b
-        sta wUnknown7E5315
+        sta wUnitWindowPage
         jsl rlGetSelectedUnitStates
         bit #UnitStateFielded
         beq _A9F9
@@ -1747,7 +1747,7 @@
         jsl rlUnknown808FAD
         jsl rlUnknown8BCE29
         lda wGameStateStep,b
-        sta wUnknown7E5315
+        sta wUnitWindowPage
         lda #$0000
         sta $7F819D
         lda #$0004

@@ -88,34 +88,34 @@
 
         ; FE5: rsUnitWindowInitializeVariables.
 
-        lda wUnknown7E5315
+        lda wUnitWindowPage
         sta wGameStateStep,b
         lda #$0000
-        sta $7F83F5
+        sta wUnitWindowCurrentNameLine
         sta $7F83F7
         sta $7F83F9
-        sta $7F83FB
-        sta $7F83FD
-        sta $7F83FF
+        sta wUnitWindowProcessingHighlightLine
+        sta wUnitWindowProcessingHighlightOffset
+        sta wUnitWindowCurrentLineSlotOffset
         sta $7F8401
         sta wDebugMenuScreenIndex+1
         sta $7F8405
-        sta $7F82D5
+        sta wUnitWindowLastScrolledFlag
         sta $7F82D7
-        sta $7F82D9
-        sta $7F82DD
-        sta $7F82FB
-        sta $7F82E3
-        sta $7F82E5
-        sta $7F82E7
-        sta $7F82ED
-        sta $7F82EF
-        sta $7F82F1
+        sta wUnitWindowScrollingStep
+        sta wUnitWindowScrollingFlag
+        sta wUnitWindowHighlightCounter
+        sta wUnitWindowPageScrollFlag
+        sta wUnitWindowAction
+        sta wUnitWindowSortTypeFlag
+        sta wUnitWindowUnitSwapStep
+        sta wUnitWindowUnitSwapStartSlot
+        sta wUnitWindowUnitSwapStartCursorYCoordinate
         lda #$0000
         tax
 
         _C4CF
-        sta $7F8391,x
+        sta aUnitWindowSpriteSlots,x
         inc a
         inc x
         inc x
@@ -151,18 +151,18 @@
         lda #$0000
         sta $7F82C5
         sta $7F8183
-        sta $7F82C9
-        sta $7F82CB
-        sta $7F82DF
-        sta $7F82EB
+        sta wUnitWindowCurrentHighlightLine
+        sta wUnitWindowScrolledLines
+        sta wUnitWindowScrollPixels
+        sta wUnitWindowCurrentColumn
         lda #$0001
-        sta $7F82C7
+        sta wUnitWindowCurrentLine
         lda #$003A
-        sta $7F82DB
+        sta wUnitWindowCursorYCoordinate
         lda #$0000
-        sta $7F82F9
+        sta wUnitWindowHighlightStep
         lda #$00E8
-        sta $7F82FD
+        sta aUnitWindowHighlightColors
         rts
 
         .databank 0
@@ -260,7 +260,7 @@
         sta $7F8405
         asl a
         tax
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         beq _C5F7
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown8BC484
@@ -427,7 +427,7 @@
 
         ; FE5: rlUnitWindowBG3VOFSHDMAOnCycle.
 
-        lda $7F82E3
+        lda wUnitWindowPageScrollFlag
         bne _C715
         sep #$20
         lda #$35
@@ -439,7 +439,7 @@
         lda #$01
         sta $7FB03B
         rep #$20
-        lda $7F82DF
+        lda wUnitWindowScrollPixels
         inc a
         inc a
         sta $7FB03C
@@ -489,7 +489,7 @@
 
         ; FE5: rlUnitWindowBG1VOFSHDMAOnCycle.
 
-        lda $7F82E3
+        lda wUnitWindowPageScrollFlag
         bne _C75F
         sep #$20
         lda #$35
@@ -501,7 +501,7 @@
         lda #$01
         sta $7FB023
         rep #$20
-        lda $7F82DF
+        lda wUnitWindowScrollPixels
         dec a
         sta $7FB024
         sep #$20
@@ -550,7 +550,7 @@
 
         ; FE5: rlUnitWindowCGADSUBHDMAOnCycle.
 
-        lda $7F82E3
+        lda wUnitWindowPageScrollFlag
         beq _C778
         jml _C889
 
@@ -623,19 +623,19 @@
         inc x
         inc x
         lda #$0000
-        sta $7F83FB
+        sta wUnitWindowProcessingHighlightLine
         lda #$0000
-        sta $7F83FD
+        sta wUnitWindowProcessingHighlightOffset
 
         _C81A
         phx
-        lda $7F83FB
+        lda wUnitWindowProcessingHighlightLine
         tax
         lda $7FB044,x
         sta wR0
         inc x
         txa
-        sta $7F83FB
+        sta wUnitWindowProcessingHighlightLine
         plx
         lda wR0
         and #$00FF
@@ -643,7 +643,7 @@
         sta $7FB0B6,x
         rep #$20
         phx
-        lda $7F83FD
+        lda wUnitWindowProcessingHighlightOffset
         tax
         tay
         lda $7FB062,x
@@ -659,7 +659,7 @@
         txa
         clc
         adc #$0003
-        sta $7F83FD
+        sta wUnitWindowProcessingHighlightOffset
         plx
         lda @l wR0
         sta $7FB0B9,x
@@ -716,7 +716,7 @@
 
         ; FE5: rlUnitWindowBG2VOFSHDMAOnCycle.
 
-        lda $7F82E3
+        lda wUnitWindowPageScrollFlag
         bne _C8D2
         sep #$20
         lda #$35
@@ -728,7 +728,7 @@
         lda #$01
         sta $7FB02F
         rep #$20
-        lda $7F82DF
+        lda wUnitWindowScrollPixels
         sta $7FB030
         sep #$20
         lda #$00
@@ -765,7 +765,7 @@
         sta wR0
         sta wR1
         jsl rlGetFactionSlotUnitCount
-        sta $7F82CD
+        sta wUnitWindowMaxRows
         lda #$0001
         sta wRoutineVariable1,b
 
@@ -791,7 +791,7 @@
         asl a
         tax
         lda wSelectedUnitDataRAMPointer,b
-        sta $7F832D,x
+        sta aUnitWindowDeploymentSlots,x
         inc wR0
 
         _C919
@@ -801,23 +801,23 @@
         cmp #$0019
         bne _C8EA
         lda wR1
-        sta $7F82CF
-        lda $7F82CD
+        sta wUnitWindowSkippedUnitCount
+        lda wUnitWindowMaxRows
         sec
         sbc wR1
-        sta $7F82CD
+        sta wUnitWindowMaxRows
         sec
         sbc #$000A
         bpl _C93F
         lda #$0000
 
         _C93F
-        sta $7F82D1
-        lda $7F82CD
+        sta wUnitWindowCanScrollDownFlag
+        lda wUnitWindowMaxRows
         asl a
         tax
         lda #$0000
-        sta $7F832D,x
+        sta aUnitWindowDeploymentSlots,x
         rts
 
         .databank 0
@@ -841,7 +841,7 @@
 
           .structDMAToVRAM $DE22C0, $01C0, $80, $5000
 
-        lda $7F82CD
+        lda wUnitWindowMaxRows
         cmp #$000A
         bcs _C97E
         lda #$000A
@@ -891,18 +891,18 @@
         lda $7E5335
         and #$00FF
         beq _C9E9
-        lda wUnknown7E5319
+        lda wUnitWindowSortType
         sta $7F82F7
         lda #$0026
-        sta wUnknown7E5319
+        sta wUnitWindowSortType
         jsl rlUnknown8BCA1A
         jsl rlUnitWindowSetSortDescending
         lda $7F82F7
-        sta wUnknown7E5319
+        sta wUnitWindowSortType
 
         _C9E9
         jsl rlUnknown8BCA1A
-        lda wUnknown7E5317
+        lda wUnitWindowSortDirection
         bne _C9F9
         jsl rlUnitWindowSetSortDescending
         bra _C9FD
@@ -957,9 +957,9 @@
         lda #$0000
 
         _CBB6
-        sta $7F83F5
+        sta wUnitWindowCurrentNameLine
         tax
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         beq _CC04
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitNamePointer
@@ -977,7 +977,7 @@
         sta aCurrentTilemapInfo,b
 
         _CBE6
-        lda $7F83F5
+        lda wUnitWindowCurrentNameLine
         tay
         ldx $CC05,b,y
         lda lRoutineVariable,b
@@ -985,7 +985,7 @@
         lda lRoutineVariable+1,b
         sta lR18+1
         jsl rlDrawMenuTextLine
-        lda $7F83F5
+        lda wUnitWindowCurrentNameLine
         inc a
         inc a
         bra _CBB6
@@ -1029,7 +1029,7 @@
         sta wR15
         asl a
         tax
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         beq _CCC5
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown87A415
@@ -1337,7 +1337,7 @@
         jsl rlPushToOAMBuffer
 
         _B48B
-        lda $7F82CD
+        lda wUnitWindowMaxRows
         cmp #$000B
         bcc _B4C6
         lda wVBlankEnabledFramecount
@@ -1349,8 +1349,8 @@
         lda #$0080
         sta wR1
         ldy #$0000
-        lda $7F82CB
-        cmp $7F82D1
+        lda wUnitWindowScrolledLines
+        cmp wUnitWindowCanScrollDownFlag
         beq _B4BC
         inc y
         inc y
@@ -1391,7 +1391,7 @@
 
         ; Renders the icon of the weapon type being sorted by. FE5: rlUnitWindowRenderWeaponRankWeaponRankSortIcon.
 
-        lda wUnknown7E5319
+        lda wUnitWindowSortType
         sec
         sbc #$0019
         bmi _B533
@@ -1434,22 +1434,22 @@
 
         ; The cursors shown while swapping two units' places in the list. FE5: rlUnitWindowFE4RenderUnitSwapCursors.
 
-        lda $7F82DB
+        lda wUnitWindowCursorYCoordinate
         dec a
         sta wR1
         lda #$0000
         sta wR0
-        lda $7F82E7
+        lda wUnitWindowSortTypeFlag
         jsl rlUnknown88A704
-        lda $7F82ED
+        lda wUnitWindowUnitSwapStep
         beq _B58E
         lda wVBlankEnabledFramecount
         and #$0001
         bne _B58E
-        lda $7F82F1
+        lda wUnitWindowUnitSwapStartCursorYCoordinate
         dec a
         sec
-        sbc $7F82DF
+        sbc wUnitWindowScrollPixels
         sta wR1
         lda #$0000
         sta wR0
@@ -1488,28 +1488,28 @@
         phk
         plb
         .databank $8B
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         sta wR0
-        lda $7F82CD
-        sta $7F82C7
+        lda wUnitWindowMaxRows
+        sta wUnitWindowCurrentLine
         cmp #$000A
         bpl _B5E3
         lda #$0000
-        sta $7F82CB
-        lda $7F82CD
+        sta wUnitWindowScrolledLines
+        lda wUnitWindowMaxRows
         dec a
-        sta $7F82C9
+        sta wUnitWindowCurrentHighlightLine
         asl a
         tax
         lda @l $8BB70B,x
-        sta $7F82DB
-        lda $7F82CB
+        sta wUnitWindowCursorYCoordinate
+        lda wUnitWindowScrolledLines
         asl a
         tax
         lda @l $8BB61B,x
-        sta $7F82DF
+        sta wUnitWindowScrollPixels
         lda wR0
-        cmp $7F82CD
+        cmp wUnitWindowMaxRows
         beq _B5E2
         lda #$0006
         jsl rlUnknown808FAD
@@ -1519,21 +1519,21 @@
 
 
         _B5E3
-        lda $7F82CD
+        lda wUnitWindowMaxRows
         sec
         sbc #$000A
-        sta $7F82CB
+        sta wUnitWindowScrolledLines
         lda #$0009
-        sta $7F82C9
+        sta wUnitWindowCurrentHighlightLine
         lda #$00CA
-        sta $7F82DB
-        lda $7F82CB
+        sta wUnitWindowCursorYCoordinate
+        lda wUnitWindowScrolledLines
         asl a
         tax
         lda @l $8BB61B,x
-        sta $7F82DF
+        sta wUnitWindowScrollPixels
         lda wR0
-        cmp $7F82CD
+        cmp wUnitWindowMaxRows
         beq _B61A
         lda #$0006
         jsl rlUnknown808FAD
@@ -1562,12 +1562,12 @@
 
         ; FE5: rsUnitWindowFE4MoveToNextPage.
 
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         sta wR0
-        lda $7F82CB
+        lda wUnitWindowScrolledLines
         clc
         adc #$000A
-        cmp $7F82D1
+        cmp wUnitWindowCanScrollDownFlag
         beq _B655
         bcc _B655
         jml _B659
@@ -1578,38 +1578,38 @@
 
 
         _B659
-        lda $7F82CB
-        cmp $7F82D1
+        lda wUnitWindowScrolledLines
+        cmp wUnitWindowCanScrollDownFlag
         beq _B68F
-        lda $7F82D1
-        sta $7F82CB
-        lda $7F82CB
+        lda wUnitWindowCanScrollDownFlag
+        sta wUnitWindowScrolledLines
+        lda wUnitWindowScrolledLines
         clc
-        adc $7F82C9
+        adc wUnitWindowCurrentHighlightLine
         inc a
-        sta $7F82C7
-        lda $7F82CB
+        sta wUnitWindowCurrentLine
+        lda wUnitWindowScrolledLines
         asl a
         tax
         lda $8BB61B,x
-        sta $7F82DF
+        sta wUnitWindowScrollPixels
         lda #$0006
         jsl rlUnknown808FAD
         rts
 
 
         _B68F
-        lda $7F82CD
-        sta $7F82C7
-        lda $7F82CD
+        lda wUnitWindowMaxRows
+        sta wUnitWindowCurrentLine
+        lda wUnitWindowMaxRows
         cmp #$000B
         bmi _B6BE
         lda #$0009
-        sta $7F82C9
+        sta wUnitWindowCurrentHighlightLine
         lda #$00CA
-        sta $7F82DB
+        sta wUnitWindowCursorYCoordinate
         lda wR0
-        cmp $7F82CD
+        cmp wUnitWindowMaxRows
         beq _B6BD
         lda #$0006
         jsl rlUnknown808FAD
@@ -1619,15 +1619,15 @@
 
 
         _B6BE
-        lda $7F82CD
+        lda wUnitWindowMaxRows
         dec a
-        sta $7F82C9
+        sta wUnitWindowCurrentHighlightLine
         asl a
         tax
         lda $8BB70B,x
-        sta $7F82DB
+        sta wUnitWindowCursorYCoordinate
         lda wR0
-        cmp $7F82CD
+        cmp wUnitWindowMaxRows
         beq _B6E0
         lda #$0006
         jsl rlUnknown808FAD
@@ -1637,18 +1637,18 @@
 
 
         _B6E1
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         clc
         adc #$000A
-        sta $7F82C7
-        lda $7F82CB
+        sta wUnitWindowCurrentLine
+        lda wUnitWindowScrolledLines
         clc
         adc #$000A
-        sta $7F82CB
+        sta wUnitWindowScrolledLines
         asl a
         tax
         lda $8BB61B,x
-        sta $7F82DF
+        sta wUnitWindowScrollPixels
         lda #$0006
         jsl rlUnknown808FAD
         rts
@@ -1674,16 +1674,16 @@
 
         ; FE5: rsUnitWindowFE4MoveToFirstUnit.
 
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         sta wR0
         lda #$0000
-        sta $7F82CB
-        sta $7F82C9
-        sta $7F82DF
+        sta wUnitWindowScrolledLines
+        sta wUnitWindowCurrentHighlightLine
+        sta wUnitWindowScrollPixels
         lda #$003A
-        sta $7F82DB
+        sta wUnitWindowCursorYCoordinate
         lda #$0001
-        sta $7F82C7
+        sta wUnitWindowCurrentLine
         lda wR0
         cmp #$0001
         beq _B750
@@ -1706,33 +1706,33 @@
 
         ; FE5: rsUnitWindowFE4MoveToPreviousPage.
 
-        lda $7F82CB
+        lda wUnitWindowScrolledLines
         sec
         sbc #$000A
         beq _B7A9
         bpl _B7A9
-        lda $7F82CB
+        lda wUnitWindowScrolledLines
         beq _B77F
         lda #$0000
-        sta $7F82CB
-        sta $7F82DF
-        lda $7F82C9
+        sta wUnitWindowScrolledLines
+        sta wUnitWindowScrollPixels
+        lda wUnitWindowCurrentHighlightLine
         inc a
-        sta $7F82C7
+        sta wUnitWindowCurrentLine
         lda #$0006
         jsl rlUnknown808FAD
         rts
 
 
         _B77F
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         sta wR0
         lda #$0001
-        sta $7F82C7
+        sta wUnitWindowCurrentLine
         lda #$0000
-        sta $7F82C9
+        sta wUnitWindowCurrentHighlightLine
         lda #$003A
-        sta $7F82DB
+        sta wUnitWindowCursorYCoordinate
         lda wR0
         cmp #$0001
         beq _B7A8
@@ -1744,18 +1744,18 @@
 
 
         _B7A9
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         sec
         sbc #$000A
-        sta $7F82C7
-        lda $7F82CB
+        sta wUnitWindowCurrentLine
+        lda wUnitWindowScrolledLines
         sec
         sbc #$000A
-        sta $7F82CB
+        sta wUnitWindowScrolledLines
         asl a
         tax
         lda $8BB61B,x
-        sta $7F82DF
+        sta wUnitWindowScrollPixels
         lda #$0006
         jsl rlUnknown808FAD
         rts
@@ -1782,16 +1782,16 @@
 
         _B7DB
         lda wR15
-        cmp $7F82CD
+        cmp wUnitWindowMaxRows
         beq _B809
         lda wR15
         asl a
         tax
         lda @l $8BB841,x
         sec
-        sbc $7F82DF
+        sbc wUnitWindowScrollPixels
         sta wR1
-        lda $7F8391,x
+        lda aUnitWindowSpriteSlots,x
         asl a
         tax
         lda @l $8BB811,x
@@ -1854,8 +1854,8 @@
 
         ; Copies the colours of the highlight on the selected line; runs every frame. FE5: rsUnitWindowFE4CopyLineHighlightColors.
 
-        lda $7F82E7
-        ora $7F82ED
+        lda wUnitWindowSortTypeFlag
+        ora wUnitWindowUnitSwapStep
         beq _B8C4
         jml _B9C5
 
@@ -1873,7 +1873,7 @@
         dec x
         bpl _B8CD
         rep #$20
-        lda $7F82C9
+        lda wUnitWindowCurrentHighlightLine
         and #$00FF
         tax
         sep #$20
@@ -1890,7 +1890,7 @@
         stz wR4
 
         _B8F3
-        lda $7F82C9
+        lda wUnitWindowCurrentHighlightLine
         cmp wR3
         beq _B926
         lda wR3
@@ -1930,7 +1930,7 @@
         pla
         sta $7FB063,x
         plx
-        lda $7F82FD,x
+        lda aUnitWindowHighlightColors,x
         phx
         pha
         lda wR4
@@ -1960,9 +1960,9 @@
 
 
         _B968
-        lda $7F82FB
+        lda wUnitWindowHighlightCounter
         bne _B9B3
-        lda $7F82F9
+        lda wUnitWindowHighlightStep
         sta wR0
         asl a
         clc
@@ -1981,7 +1981,7 @@
         lda $B9FC,b,x
         phx
         ldx wR0
-        sta $7F82FD,x
+        sta aUnitWindowHighlightColors,x
         inc x
         inc x
         inc x
@@ -1992,24 +1992,24 @@
         inc x
         dec y
         bne _B981
-        lda $7F82F9
+        lda wUnitWindowHighlightStep
         inc a
         cmp #$0016
         bne _B9AF
         lda #$0000
 
         _B9AF
-        sta $7F82F9
+        sta wUnitWindowHighlightStep
 
         _B9B3
-        lda $7F82FB
+        lda wUnitWindowHighlightCounter
         inc a
         cmp #$0006
         bne _B9C0
         lda #$0000
 
         _B9C0
-        sta $7F82FB
+        sta wUnitWindowHighlightCounter
         rts
 
 
@@ -2078,7 +2078,7 @@
         lda wRoutineVariable1,b
         asl a
         tax
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         sta wSelectedUnitDataRAMPointer,b
         plx
         lda wSelectedUnitDataRAMPointer,b
@@ -2125,7 +2125,7 @@
         stz wR1
         stz wR4
         stz wR5
-        lda wUnknown7E5317
+        lda wUnitWindowSortDirection
         bne _BAFC
         ldy #$BD9B
         bra _BAFF
@@ -2145,11 +2145,11 @@
         sta wR15
         asl a
         tax
-        lda $7F83C3,x
+        lda aUnitWindowReadyToPromoteFlags,x
         beq _BB2F
         lda $8BBD40,x
         sec
-        sbc $7F82DF
+        sbc wUnitWindowScrollPixels
         sta wR1
         stz wR0
         stz wR4
@@ -2160,7 +2160,7 @@
         _BB2F
         lda wR15
         inc a
-        cmp $7F82CD
+        cmp wUnitWindowMaxRows
         bne _BB0D
 
         _BB38
@@ -2169,7 +2169,7 @@
         plb
         .databank $8B
         ldx #$002E
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         dec a
         asl a
         sta wR0
@@ -2183,7 +2183,7 @@
 
 
         _BB50
-        lda $7F82EF
+        lda wUnitWindowUnitSwapStartSlot
         dec a
         asl a
         sta wR0
@@ -2197,7 +2197,7 @@
 
         _BB67
         phx
-        lda $7F8391,x
+        lda aUnitWindowSpriteSlots,x
         asl a
         tax
         lda $7E486B,x
@@ -2223,18 +2223,18 @@
         ldy #$2C00
         cpx #$0000
         bne _BBA1
-        lda $7F82DF
+        lda wUnitWindowScrollPixels
         bne _BBA1
         ldy #$3C00
 
         _BBA1
         tya
         sta wR5
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         dec a
         asl a
         tax
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitStates
         bit #UnitStateMoved
@@ -2255,19 +2255,19 @@
         stz wR0
         lda @l $8BBD40,x
         sec
-        sbc $7F82DF
+        sbc wUnitWindowScrollPixels
         sta wR1
         jsl rlPushToOAMBuffer
 
         _BBE1
-        lda $7F82CD
+        lda wUnitWindowMaxRows
         dec a
         asl a
         tax
 
         _BBE8
         phx
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         dec a
         asl a
         sta wR0
@@ -2277,7 +2277,7 @@
 
 
         _BBF9
-        lda $7F82EF
+        lda wUnitWindowUnitSwapStartSlot
         dec a
         asl a
         sta wR0
@@ -2291,7 +2291,7 @@
 
         _BC10
         phx
-        lda $7F8391,x
+        lda aUnitWindowSpriteSlots,x
         asl a
         tax
         lda $7E486B,x
@@ -2301,14 +2301,14 @@
         ldy #$2C00
         cpx #$0000
         bne _BC32
-        lda $7F82DF
+        lda wUnitWindowScrollPixels
         bne _BC32
         ldy #$3C00
 
         _BC32
         tya
         sta wR5
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitStates
         bit #UnitStateMoved
@@ -2326,7 +2326,7 @@
         _BC58
         plx
         phx
-        lda $7F8391,x
+        lda aUnitWindowSpriteSlots,x
         asl a
         tax
         lda $88D2B5,x
@@ -2337,7 +2337,7 @@
         stz wR0
         lda @l $8BBD40,x
         sec
-        sbc $7F82DF
+        sbc wUnitWindowScrollPixels
         sta wR1
         phx
         jsl rlPushToOAMBuffer
@@ -2351,13 +2351,13 @@
 
 
         _BC86
-        lda $7F82CD
+        lda wUnitWindowMaxRows
         dec a
         asl a
         tax
 
         _BC8D
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         dec a
         asl a
         sta wR0
@@ -2367,7 +2367,7 @@
 
 
         _BC9D
-        lda $7F82EF
+        lda wUnitWindowUnitSwapStartSlot
         dec a
         asl a
         sta wR0
@@ -2381,7 +2381,7 @@
 
         _BCB4
         phx
-        lda $7F8391,x
+        lda aUnitWindowSpriteSlots,x
         asl a
         tax
         lda aDeploymentTable._MapSpriteID,x
@@ -2393,7 +2393,7 @@
         ldy #$2C00
         cpx #$0000
         bne _BCD8
-        lda $7F82DF
+        lda wUnitWindowScrollPixels
         bne _BCD8
         ldy #$3C00
 
@@ -2401,7 +2401,7 @@
         tya
         sta wR5
         plx
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         sta wSelectedUnitDataRAMPointer,b
         phx
         jsl rlGetSelectedUnitStates
@@ -2421,7 +2421,7 @@
         plx
         ply
         phx
-        lda $7F8391,x
+        lda aUnitWindowSpriteSlots,x
         asl a
         tax
         lda $88D1C5,x
@@ -2432,7 +2432,7 @@
         stz wR0
         lda @l $8BBD40,x
         sec
-        sbc $7F82DF
+        sbc wUnitWindowScrollPixels
         sta wR1
         phy
         phx
@@ -2448,11 +2448,11 @@
 
 
         _BD31
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         dec a
         asl a
         tax
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         sta wSelectedUnitDataRAMPointer,b
         rts
 
@@ -2477,18 +2477,18 @@
 
         ; FE5: rsUnitWindowFE4GetCurrentLineUnit.
 
-        lda $7F82E3
+        lda wUnitWindowPageScrollFlag
         bne _BDEF
-        lda $7F82E7
+        lda wUnitWindowSortTypeFlag
         bne _BDEF
-        ora $7F82ED
+        ora wUnitWindowUnitSwapStep
         bne _BDEF
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         dec a
         asl a
-        sta $7F83FF
+        sta wUnitWindowCurrentLineSlotOffset
         tax
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitStates
         bit #UnitStateMoved
@@ -2496,10 +2496,10 @@
         jsl rlGetSelectedUnitStatus
         cmp #StatusSleep
         beq _BDEF
-        lda $7F83FF
-        lda $7F8391,x
+        lda wUnitWindowCurrentLineSlotOffset
+        lda aUnitWindowSpriteSlots,x
         asl a
-        sta $7F83FF
+        sta wUnitWindowCurrentLineSlotOffset
         tax
         jsl rlUnknown88DF8C
 
@@ -2731,7 +2731,7 @@
         lsr a
         lsr a
         sta wR0
-        lda $7F82EB
+        lda wUnitWindowCurrentColumn
         asl a
         clc
         adc wR0
@@ -2774,7 +2774,7 @@
         .databank ?
 
         jsl rlUnknown8BB469
-        lda $7F82E7
+        lda wUnitWindowSortTypeFlag
         cmp #$0002
         beq _C238
         cmp #$0003
@@ -2825,23 +2825,23 @@
 
 
         _C271
-        lda $7F82EB
+        lda wUnitWindowCurrentColumn
         inc a
-        sta $7F82EB
+        sta wUnitWindowCurrentColumn
         lda wGameStateStep,b
         asl a
         tax
         lda $8BC385,x
-        cmp $7F82EB
+        cmp wUnitWindowCurrentColumn
         bcs _C2E7
-        sta $7F82EB
+        sta wUnitWindowCurrentColumn
         lda wGameStateStep,b
         inc a
         cmp #$0006
         beq _C2EE
         sta wGameStateStep,b
         lda #$0000
-        sta $7F82EB
+        sta wUnitWindowCurrentColumn
         jsl rlUnknown8BADF1
         lda wGameStateStep,b
         cmp #$0005
@@ -2856,16 +2856,16 @@
 
 
         _C2B6
-        lda $7F82EB
+        lda wUnitWindowCurrentColumn
         dec a
-        sta $7F82EB
+        sta wUnitWindowCurrentColumn
         bpl _C2E7
         sep #$20
         lda #$15
         sta bBufferTM
         rep #$20
         lda #$0000
-        sta $7F82EB
+        sta wUnitWindowCurrentColumn
         lda wGameStateStep,b
         dec a
         bmi _C2EE
@@ -2873,7 +2873,7 @@
         asl a
         tax
         lda $8BC385,x
-        sta $7F82EB
+        sta wUnitWindowCurrentColumn
         jsl rlUnknown8BADF1
 
         _C2E7
@@ -2909,8 +2909,8 @@
         lda #$0006
         jsl rlUnknown808FAD
         lda #$0000
-        sta $7F82E7
-        sta $7F82EB
+        sta wUnitWindowSortTypeFlag
+        sta wUnitWindowCurrentColumn
         bra _C302
 
 
@@ -2918,8 +2918,8 @@
         lda #$0021
         jsl rlUnknown808FAD
         lda #$0000
-        sta $7F82E7
-        sta $7F82EB
+        sta wUnitWindowSortTypeFlag
+        sta wUnitWindowCurrentColumn
         bra _C302
 
 
@@ -2938,20 +2938,20 @@
         jsl rlUnitWindowDrawUnitNames
         jsl rlUnknown8BADF1
         lda #$0003
-        sta $7F82E7
+        sta wUnitWindowSortTypeFlag
         jml _C2EE
 
 
         _C36B
         jsl rlUnitWindowDrawUnitSkills
         lda #$0001
-        sta $7F82E7
+        sta wUnitWindowSortTypeFlag
         jml _C2EE
 
 
         _C37A
         lda #$0001
-        sta $7F82E7
+        sta wUnitWindowSortTypeFlag
         jml _C2EE
 
         .databank 0
@@ -2973,7 +2973,7 @@
         .autsiz
         .databank ?
 
-        lda $7F82ED
+        lda wUnitWindowUnitSwapStep
         cmp #$0002
         beq _C3A3
         cmp #$0003
@@ -3001,23 +3001,23 @@
 
 
         _C3B8
-        lda $7F82C7
-        cmp $7F82EF
+        lda wUnitWindowCurrentLine
+        cmp wUnitWindowUnitSwapStartSlot
         beq _C3F1
         lda #$000A
         jsl rlUnknown808FAD
-        lda $7F82C7
+        lda wUnitWindowCurrentLine
         dec a
         tax
-        lda $7F82EF
+        lda wUnitWindowUnitSwapStartSlot
         dec a
         jsr rsUnknown8BC9B6
         jsl rlUnknown8BCD89
         lda #$0000
-        sta wUnknown7E5319
-        sta wUnknown7E5317
+        sta wUnitWindowSortType
+        sta wUnitWindowSortDirection
         lda #$0002
-        sta $7F82ED
+        sta wUnitWindowUnitSwapStep
         jml _C3B7
 
 
@@ -3027,9 +3027,9 @@
 
         _C3F8
         lda #$0000
-        sta $7F82ED
-        sta $7F82F1
-        sta $7F82EF
+        sta wUnitWindowUnitSwapStep
+        sta wUnitWindowUnitSwapStartCursorYCoordinate
+        sta wUnitWindowUnitSwapStartSlot
         jml _C3B7
 
 
@@ -3041,14 +3041,14 @@
         jsl rlUnitWindowDrawUnitNames
         jsl rlUnknown8BADF1
         lda #$0003
-        sta $7F82ED
+        sta wUnitWindowUnitSwapStep
         jml _C3B7
 
 
         _C42B
         jsl rlUnitWindowDrawUnitSkills
         lda #$0000
-        sta $7F82ED
+        sta wUnitWindowUnitSwapStep
         jml _C3F8
 
         .databank 0
@@ -3206,11 +3206,11 @@
         sta lR18+1
         lda aUnknown8BC518,x
         sta lR18
-        lda $7F82EB
+        lda wUnitWindowCurrentColumn
         tay
         lda [lR18],y
         and #$00FF
-        sta wUnknown7E5319
+        sta wUnitWindowSortType
         ldx #$0000
         lda wJoy1New
         bit #$0040
@@ -3219,9 +3219,9 @@
 
         _C4CE
         txa
-        sta wUnknown7E5317
+        sta wUnitWindowSortDirection
         jsl rlUnknown8BCA1A
-        lda wUnknown7E5317
+        lda wUnitWindowSortDirection
         bne _C4E3
         jsl rlUnitWindowSetSortDescending
         bra _C4E7
@@ -3233,7 +3233,7 @@
         _C4E7
         jsl rlUnknown8BCD89
         lda #$0002
-        sta $7F82E7
+        sta wUnitWindowSortTypeFlag
         rts
 
         .databank 0
@@ -3274,7 +3274,7 @@
 
         ; FE5: rlUnitWindowSetSortDescending.
 
-        lda $7F82CD
+        lda wUnitWindowMaxRows
         cmp #$0001
         beq _C56C
         asl a
@@ -3339,7 +3339,7 @@
 
         ; FE5: rlUnitWindowSetSortAscending.
 
-        lda $7F82CD
+        lda wUnitWindowMaxRows
         cmp #$0001
         beq _C5C3
         asl a
@@ -3432,7 +3432,7 @@
         sta $7E83CC
         sta $7E83CE
         sta $7E83D0
-        lda wUnknown7E5319
+        lda wUnitWindowSortType
         cmp #$0026
         bmi _C5FC
 
@@ -3508,25 +3508,25 @@
         asl a
         tax
         sta wR1
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         sta wR0
         tyx
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         ldx wR1
-        sta $7F832D,x
+        sta aUnitWindowDeploymentSlots,x
         lda wR0
         tyx
-        sta $7F832D,x
+        sta aUnitWindowDeploymentSlots,x
         ldx wR1
-        lda $7F8391,x
+        lda aUnitWindowSpriteSlots,x
         sta wR0
         tyx
-        lda $7F8391,x
+        lda aUnitWindowSpriteSlots,x
         ldx wR1
-        sta $7F8391,x
+        sta aUnitWindowSpriteSlots,x
         lda wR0
         tyx
-        sta $7F8391,x
+        sta aUnitWindowSpriteSlots,x
         lda #$0001
         sta wR0
         stz wR2
@@ -3535,7 +3535,7 @@
         lda wR2
         asl a
         tax
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         beq _CA19
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitGenerationID
@@ -3572,9 +3572,9 @@
         .autsiz
         .databank ?
 
-        lda wUnknown7E5319
+        lda wUnitWindowSortType
         bmi _CA30
-        lda wUnknown7E5319
+        lda wUnitWindowSortType
         cmp #$0027
         bmi _CA2B
 
@@ -3609,14 +3609,14 @@
         .autsiz
         .databank ?
 
-        lda $7F82CD
+        lda wUnitWindowMaxRows
         asl a
         sta wR15
         ldx #$0000
 
         _CA89
         stx wR14
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         beq _CAB3
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitGenerationID
@@ -3657,14 +3657,14 @@
         .autsiz
         .databank ?
 
-        lda $7F82CD
+        lda wUnitWindowMaxRows
         asl a
         sta wR15
         ldx #$0000
 
         _CABE
         stx wR14
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         beq _CAE4
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitGenerationID
@@ -3720,31 +3720,31 @@
         asl a
         sta wR2
         ldx wR2
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         sta wR0
 
         _CD3C
         lda $7F832B,x
-        sta $7F832D,x
+        sta aUnitWindowDeploymentSlots,x
         dec x
         dec x
         cpx wR1
         bne _CD3C
         lda wR0
-        sta $7F832D,x
+        sta aUnitWindowDeploymentSlots,x
         ldx wR2
-        lda $7F8391,x
+        lda aUnitWindowSpriteSlots,x
         sta wR0
 
         _CD58
         lda $7F838F,x
-        sta $7F8391,x
+        sta aUnitWindowSpriteSlots,x
         dec x
         dec x
         cpx wR1
         bne _CD58
         lda wR0
-        sta $7F8391,x
+        sta aUnitWindowSpriteSlots,x
         ldx wR2
         lda $7F8407,x
         sta wR0
@@ -3783,7 +3783,7 @@
         ldx #$0000
 
         _CD8C
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         beq _CDB4
         sta wSelectedUnitDataRAMPointer,b
         ldy #$0000
@@ -3795,7 +3795,7 @@
 
         _CDA8
         tya
-        sta $7F83C3,x
+        sta aUnitWindowReadyToPromoteFlags,x
         inc x
         inc x
         cpx #$0030
@@ -3807,7 +3807,7 @@
 
         _CDB9
         ldx wR15
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         beq _CDD7
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetFirstEquippableWeaponInInventory
@@ -3860,7 +3860,7 @@
         dec a
         asl a
         tax
-        lda $7F832D,x
+        lda aUnitWindowDeploymentSlots,x
         beq _CE6B
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitGenerationID
@@ -3907,9 +3907,9 @@
         plb
         .databank $8B
         lda #$0000
-        sta wUnknown7E5315
-        sta wUnknown7E5319
-        sta wUnknown7E5317
+        sta wUnitWindowPage
+        sta wUnitWindowSortType
+        sta wUnitWindowSortDirection
         sta $7E5333
         sep #$20
         lda #$00
