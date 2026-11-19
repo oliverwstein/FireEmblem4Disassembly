@@ -534,11 +534,13 @@
 
         .databank 0
 
-      rlUnknown848603 ; 84/8603
+      rlRegisterCharacterMapSprite ; 84/8603
 
         .al
         .autsiz
         .databank ?
+
+        ; Adds the map sprite of character A to the deployed map sprites.
 
         phb
         php
@@ -1262,7 +1264,7 @@
 
 
 
-      rlUnknown848924 ; 84/8924
+      rlFindTargetsInRange ; 84/8924
 
         .al
         .autsiz
@@ -1286,7 +1288,7 @@
 
         asl a
         tax
-        lda aUnknown848A0D,x
+        lda aTargetFilterRoutines,x
         sta wR0
 
         sep #$20
@@ -1371,7 +1373,7 @@
             beq +
 
               ; A = deployment offset
-              jsr rsUnknown8489F2
+              jsr rsRunTargetFilter
               bcc +
 
                 inc $442A,b
@@ -1416,7 +1418,7 @@
 
         .databank 0
 
-      rsUnknown8489F2 ; 84/89F2
+      rsRunTargetFilter ; 84/89F2
 
         .al
         .autsiz
@@ -1442,24 +1444,24 @@
         .word $FFFF
         .word $FFFF
 
-      aUnknown848A0D ; 84/8A0D
+      aTargetFilterRoutines ; 84/8A0D
 
-        .word <>rsUnknown848A29
-        .word <>rsUnknown848A2E
-        .word <>rsUnknown848A33
-        .word <>rsUnknown848A38
-        .word <>rsUnknown848A4E
-        .word <>rsUnknown848A70
-        .word <>rsUnknown848A8E
-        .word <>rsUnknown848A9E
-        .word <>rsUnknown848AB8
-        .word <>rsUnknown848AED
-        .word <>rsUnknown848B1B
-        .word <>rsUnknown848B49
-        .word <>rsUnknown848B88
-        .word <>rsUnknown848BC9
+        .word <>rsTargetFilterEnemy
+        .word <>rsTargetFilterFoeOfOwnFaction
+        .word <>rsTargetFilterOwnFaction
+        .word <>rsTargetFilterTalkEventOrUnknown
+        .word <>rsTargetFilterEnemyAtCastle
+        .word <>rsTargetFilterCivilianOrChild
+        .word <>rsTargetFilterTalkEvent
+        .word <>rsTargetFilterGrayedOwnFaction
+        .word <>rsTargetFilterNotFullHP
+        .word <>rsTargetFilterHasStatus
+        .word <>rsTargetFilterOwnFactionUnderMoneyCap
+        .word <>rsTargetFilterLoverUnderMoneyCap
+        .word <>rsTargetFilterMagicUserWithLowerResistance
+        .word <>rsTargetFilterEnemyWithLowerResistance
 
-      rsUnknown848A29 ; 84/8A29
+      rsTargetFilterEnemy ; 84/8A29
 
         .al
         .autsiz
@@ -1470,7 +1472,7 @@
 
         .databank 0
 
-      rsUnknown848A2E ; 84/8A2E
+      rsTargetFilterFoeOfOwnFaction ; 84/8A2E
 
         .al
         .autsiz
@@ -1481,7 +1483,7 @@
 
         .databank 0
 
-      rsUnknown848A33 ; 84/8A33
+      rsTargetFilterOwnFaction ; 84/8A33
 
         .al
         .autsiz
@@ -1492,11 +1494,13 @@
 
         .databank 0
 
-      rsUnknown848A38 ; 84/8A38
+      rsTargetFilterTalkEventOrUnknown ; 84/8A38
 
         .al
         .autsiz
         .databank ?
+
+        ; Accepts a target with a talk event; if there is none, rlUnknown879EE7 decides.
 
         phx
         tax
@@ -1513,11 +1517,13 @@
 
         .databank 0
 
-      rsUnknown848A4E ; 84/8A4E
+      rsTargetFilterEnemyAtCastle ; 84/8A4E
 
         .al
         .autsiz
         .databank ?
+
+        ; Accepts an enemy on a castle gate or guarding a castle.
 
         phx
         tax
@@ -1546,7 +1552,7 @@
 
         .databank 0
 
-      rsUnknown848A70 ; 84/8A70
+      rsTargetFilterCivilianOrChild ; 84/8A70
 
         .al
         .autsiz
@@ -1575,7 +1581,7 @@
 
         .databank 0
 
-      rsUnknown848A8E ; 84/8A8E
+      rsTargetFilterTalkEvent ; 84/8A8E
 
         .al
         .autsiz
@@ -1591,11 +1597,13 @@
 
         .databank 0
 
-      rsUnknown848A9E ; 84/8A9E
+      rsTargetFilterGrayedOwnFaction ; 84/8A9E
 
         .al
         .autsiz
         .databank ?
+
+        ; Accepts a unit of its own faction that has moved (grayed) and is not asleep.
 
         phx
         tax
@@ -1620,11 +1628,14 @@
 
         .databank 0
 
-      rsUnknown848AB8 ; 84/8AB8
+      rsTargetFilterNotFullHP ; 84/8AB8
 
         .al
         .autsiz
         .databank ?
+
+        ; Accepts a target with less than full HP, if rlCheckIfTargetFoeOfOwnFaction
+        ; accepts it.
 
         phx
         phy
@@ -1668,12 +1679,15 @@
       .al
       .xl
 
-      rsUnknown848AED ; 84/8AED
+      rsTargetFilterHasStatus ; 84/8AED
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Accepts a target whose status is not StatusHealthy, if
+        ; rlCheckIfTargetFoeOfOwnFaction accepts it.
 
         phx
         phy
@@ -1706,12 +1720,14 @@
 
         ; 84/8B1B
 
-      rsUnknown848B1B ; 84/8B1B
+      rsTargetFilterOwnFactionUnderMoneyCap ; 84/8B1B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Accepts a unit of its own faction with less than 50000.
 
         phx
         phy
@@ -1744,12 +1760,15 @@
 
         ; 84/8B49
 
-      rsUnknown848B49 ; 84/8B49
+      rsTargetFilterLoverUnderMoneyCap ; 84/8B49
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Accepts a player unit with less than 50000 whose generation ID is the selected
+        ; unit's lover generation ID.
 
         phx
         phy
@@ -1789,12 +1808,15 @@
 
         ; 84/8B88
 
-      rsUnknown848B88 ; 84/8B88
+      rsTargetFilterMagicUserWithLowerResistance ; 84/8B88
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Accepts a target with a usable rank (A-C) in any of the staff and magic
+        ; weapon types, if rsTargetFilterEnemyWithLowerResistance accepts it.
 
         phx
         phy
@@ -1825,7 +1847,7 @@
         tya
         sta @l wSelectedUnitDataRAMPointer
         txa
-        jsr rsUnknown848BC9
+        jsr rsTargetFilterEnemyWithLowerResistance
 
         _8BC6
         ply
@@ -1836,12 +1858,14 @@
 
         ; 84/8BC9
 
-      rsUnknown848BC9 ; 84/8BC9
+      rsTargetFilterEnemyWithLowerResistance ; 84/8BC9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Accepts an enemy whose resistance is lower than the selected unit's magic.
 
         phx
         phy

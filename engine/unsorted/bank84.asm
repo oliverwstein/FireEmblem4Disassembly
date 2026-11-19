@@ -141,7 +141,7 @@
         phx
         asl a
         tax
-        lda aUnknown848A0D,x
+        lda aTargetFilterRoutines,x
         sta wR0
         plx
         lda aDeploymentTable._UnitRAMPointer,x
@@ -1218,7 +1218,7 @@
         sta wR10
         sta wR11
         lda #$0006
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         ora #$0000
         bne _B9C9
         jsr rsUnknown84B9D4
@@ -1367,7 +1367,7 @@
         sta wR10
         sta wR11
         lda #$0003
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         ora #$0000
         bne _BA64
         jsr rsUnknown84B9D4
@@ -3569,7 +3569,7 @@
 
         _FEFD
         pla
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
 
         _FF02
         plp

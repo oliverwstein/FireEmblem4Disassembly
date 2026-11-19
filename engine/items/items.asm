@@ -1662,7 +1662,7 @@
         sta wR11
         pla
 
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         ora #0
         beq +
 

@@ -3963,7 +3963,7 @@
         bcs +
 
           lda $0000,b,y
-          jsl rlUnknown848603
+          jsl rlRegisterCharacterMapSprite
 
         +
         inc y

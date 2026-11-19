@@ -10537,7 +10537,7 @@
         lda #$0001
         sta wR11
         lda #$0002
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         lda $0772,b
         sta wR0
         lda #$FFFF
@@ -10730,7 +10730,7 @@
         sta wR11
         sta wR12
         lda #$0005
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         jsl rlUnknown88AD46
         rtl
 
@@ -10755,7 +10755,7 @@
         sta wR11
         sta wR12
         lda #$000A
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         jsl rlUnknown88AD46
         plx
         rtl
@@ -10781,7 +10781,7 @@
         sta wR11
         sta wR12
         lda #$000B
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         jsl rlUnknown88AD46
         plx
         rtl
@@ -11167,7 +11167,7 @@
         sta wR11
         stz wR12
         lda #$0003
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         ora #$0000
         bne _E57A
         jml rsUnknown85E547
@@ -11561,7 +11561,7 @@
         sta wR11
         stz wR12
         lda #$0007
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         ora #$0000
         bne _E786
         jml rsUnknown85E547
@@ -11602,7 +11602,7 @@
         sta wR11
         stz wR12
         lda #$0005
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         ora #$0000
         bne _E7AF
         jml rsUnknown85E547
@@ -11657,7 +11657,7 @@
         sta wR11
         stz wR12
         lda #$000A
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         ora #$0000
         bne _E7F2
         jml rsUnknown85E547
@@ -11704,7 +11704,7 @@
         sta wR11
         stz wR12
         lda #$000B
-        jsl rlUnknown848924
+        jsl rlFindTargetsInRange
         ora #$0000
         bne _E835
         jml rsUnknown85E547
