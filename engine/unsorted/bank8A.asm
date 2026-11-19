@@ -1543,7 +1543,7 @@
 
       procUnknown8AE147 ; 8A/E147
 
-        .structProcInfo "FN", rlUnknown8AE14F, rlUnknown8AE16F, aProcUnknown8AE147Code
+        .structProcInfo "FN", rlProcUnknown8AE147Init, rlProcUnknown8AE147Cycle, aProcUnknown8AE147Code
 
     .endsection ProcScript8AE147Section
 
@@ -1553,7 +1553,7 @@
       .al
       .xl
 
-      rlUnknown8AE14F ; 8A/E14F
+      rlProcUnknown8AE147Init ; 8A/E14F
 
         .al
         .xl
@@ -1580,7 +1580,7 @@
 
         ; 8A/E16F
 
-      rlUnknown8AE16F ; 8A/E16F
+      rlProcUnknown8AE147Cycle ; 8A/E16F
 
         .al
         .xl

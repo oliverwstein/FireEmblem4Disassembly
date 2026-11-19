@@ -266,6 +266,6 @@
 
       procUnknown828865 ; 82/8865
 
-        .structProcInfo "TT", rlUnknown82886F, rlUnknown828876, aProcUnknown828865Code
+        .structProcInfo "TT", rlProcUnknown828865Init, rlProcUnknown828865Cycle, aProcUnknown828865Code
 
     .endsection ProcScript828865Section

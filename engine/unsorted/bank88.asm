@@ -3035,7 +3035,7 @@
 
       procUnknown889396 ; 88/9396
 
-        .structProcInfo "MG", rlUnknown88939E, rlUnknown889400, aProcUnknown889396Code
+        .structProcInfo "MG", rlProcUnknown889396Init, rlProcUnknown889396Cycle, aProcUnknown889396Code
 
     .endsection ProcScript889396Section
 
@@ -3045,7 +3045,7 @@
       .al
       .xl
 
-      rlUnknown88939E ; 88/939E
+      rlProcUnknown889396Init ; 88/939E
 
         .al
         .xl
@@ -3091,7 +3091,7 @@
       .al
       .xl
 
-      rlUnknown889400 ; 88/9400
+      rlProcUnknown889396Cycle ; 88/9400
 
         .al
         .xl
@@ -3705,7 +3705,7 @@
 
       procUnknown889C52 ; 88/9C52
 
-        .structProcInfo "MC", rlUnknown889C5A, rlUnknown889CE1, aProcUnknown889C52Code
+        .structProcInfo "MC", rlProcUnknown889C52Init, rlProcUnknown889C52Cycle, aProcUnknown889C52Code
 
     .endsection ProcScript889C52Section
 
@@ -3715,7 +3715,7 @@
       .al
       .xl
 
-      rlUnknown889C5A ; 88/9C5A
+      rlProcUnknown889C52Init ; 88/9C5A
 
         .al
         .xl
@@ -3796,7 +3796,7 @@
 
         ; 88/9CE1
 
-      rlUnknown889CE1 ; 88/9CE1
+      rlProcUnknown889C52Cycle ; 88/9CE1
 
         .al
         .xl
@@ -10606,7 +10606,7 @@
 
       procUnknown88E200 ; 88/E200
 
-        .structProcInfo "MN", rlUnknown88E208, rlUnknown88E23B, aProcUnknown88E200Code
+        .structProcInfo "MN", rlProcUnknown88E200Init, rlProcUnknown88E200Cycle, aProcUnknown88E200Code
 
     .endsection ProcScript88E200Section
 
@@ -10616,7 +10616,7 @@
       .al
       .xl
 
-      rlUnknown88E208 ; 88/E208
+      rlProcUnknown88E200Init ; 88/E208
 
         .al
         .xl
@@ -10653,7 +10653,7 @@
 
         ; 88/E23B
 
-      rlUnknown88E23B ; 88/E23B
+      rlProcUnknown88E200Cycle ; 88/E23B
 
         .al
         .xl
@@ -10707,7 +10707,7 @@
 
       procUnknown88E26A ; 88/E26A
 
-        .structProcInfo "FF", rlUnknown88E272, rlUnknown88E28D, aProcUnknown88E26ACode
+        .structProcInfo "FF", rlProcUnknown88E26AInit, rlProcUnknown88E26ACycle, aProcUnknown88E26ACode
 
     .endsection ProcScript88E268Section
 
@@ -10717,7 +10717,7 @@
       .al
       .xl
 
-      rlUnknown88E272 ; 88/E272
+      rlProcUnknown88E26AInit ; 88/E272
 
         .al
         .xl
@@ -10742,7 +10742,7 @@
 
         ; 88/E28D
 
-      rlUnknown88E28D ; 88/E28D
+      rlProcUnknown88E26ACycle ; 88/E28D
 
         .al
         .xl

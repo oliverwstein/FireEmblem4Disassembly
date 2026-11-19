@@ -58,7 +58,7 @@
 
       procUnknown9F805D ; 9F/805D
 
-        .structProcInfo "ON", rlUnknown9FEBA7, rlUnknown9F8065, aProcUnknown9F805DCode
+        .structProcInfo "ON", rlProcUnknown9F805DInit, rlProcUnknown9F805DCycle, aProcUnknown9F805DCode
 
     .endsection ProcScript9F805DSection
 
@@ -68,7 +68,7 @@
       .al
       .xl
 
-      rlUnknown9F8065 ; 9F/8065
+      rlProcUnknown9F805DCycle ; 9F/8065
 
         .al
         .xl
@@ -1000,7 +1000,7 @@
       .al
       .xl
 
-      rlUnknown9FEBA7 ; 9F/EBA7
+      rlProcUnknown9F805DInit ; 9F/EBA7
 
         .al
         .xl

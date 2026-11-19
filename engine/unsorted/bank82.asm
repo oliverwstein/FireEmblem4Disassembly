@@ -5,7 +5,7 @@
       .al
       .xl
 
-      rlUnknown8283EB ; 82/83EB
+      rlProcUnknown8283E3Init ; 82/83EB
 
         .al
         .xl
@@ -22,7 +22,7 @@
 
         ; 82/83F9
 
-      rlUnknown8283F9 ; 82/83F9
+      rlProcUnknown8283E3Cycle1 ; 82/83F9
 
         .al
         .xl
@@ -43,7 +43,7 @@
       .al
       .xl
 
-      rlUnknown8283FA ; 82/83FA
+      rlProcUnknown8283E3Cycle2 ; 82/83FA
 
         .al
         .xl
@@ -85,7 +85,7 @@
       aProcUnknown8283E3Code ; 82/8429
 
         PROC_YIELD 3
-        PROC_SET_ONCYCLE rlUnknown8283FA
+        PROC_SET_ONCYCLE rlProcUnknown8283E3Cycle2
         PROC_HALT
 
 
@@ -184,7 +184,7 @@
       .al
       .xl
 
-      rlUnknown82886F ; 82/886F
+      rlProcUnknown828865Init ; 82/886F
 
         .al
         .xl
@@ -199,7 +199,7 @@
 
         ; 82/8876
 
-      rlUnknown828876 ; 82/8876
+      rlProcUnknown828865Cycle ; 82/8876
 
         .al
         .xl
@@ -254,7 +254,7 @@
 
       procUnknown8288E9 ; 82/88E9
 
-        .structProcInfo "TT", rlUnknown8288F3, rlProcDialogueWithBGCycle1, aProcDialogueWithBGCode
+        .structProcInfo "TT", rlProcUnknown8288E9Init, rlProcDialogueWithBGCycle1, aProcDialogueWithBGCode
 
     .endsection ProcScript8288E7Section
 
@@ -264,7 +264,7 @@
       .al
       .xl
 
-      rlUnknown8288F3 ; 82/88F3
+      rlProcUnknown8288E9Init ; 82/88F3
 
         ; Runs on into built code at the end.
         .al
@@ -640,7 +640,7 @@
 
       procUnknown828B61 ; 82/8B61
 
-        .structProcInfo "ME", rlUnknown828B6B, rlUnknown828B92, aProcUnknown828B61Code
+        .structProcInfo "ME", rlProcUnknown828B61Init, rlProcUnknown828B61Cycle, aProcUnknown828B61Code
 
     .endsection ProcScript828B61Section
 
@@ -650,7 +650,7 @@
       .al
       .xl
 
-      rlUnknown828B6B ; 82/8B6B
+      rlProcUnknown828B61Init ; 82/8B6B
 
         .al
         .xl
@@ -676,7 +676,7 @@
 
         ; 82/8B92
 
-      rlUnknown828B92 ; 82/8B92
+      rlProcUnknown828B61Cycle ; 82/8B92
 
         .al
         .xl

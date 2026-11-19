@@ -3736,7 +3736,7 @@
 
       procUnknown9E9A43 ; 9E/9A43
 
-        .structProcInfo "ON", rlUnknown9E9A4B, rlUnknown9E9CB9, aProcUnknown9E9A43Code
+        .structProcInfo "ON", rlProcUnknown9E9A43Init, rlProcUnknown9E9A43Cycle1, aProcUnknown9E9A43Code
 
     .endsection ProcScript9E9A43Section
 
@@ -3746,7 +3746,7 @@
       .al
       .xl
 
-      rlUnknown9E9A4B ; 9E/9A4B
+      rlProcUnknown9E9A43Init ; 9E/9A4B
 
         .al
         .xl
@@ -3859,7 +3859,7 @@
       .al
       .xl
 
-      rlUnknown9E9B68 ; 9E/9B68
+      rlProcUnknown9E9A43Cycle4 ; 9E/9B68
 
         .al
         .xl
@@ -3898,7 +3898,7 @@
         PROC_CALL rlUnknown9F86B0
         PROC_JUMP_IF_BITS_UNSET aProcUnknown9E9A43Code, $0001
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown9E9DD9
+        PROC_SET_ONCYCLE rlProcUnknown9E9A43Cycle2
         PROC_YIELD 16
         PROC_CALL rlUnknown9E99F7
         PROC_YIELD 4
@@ -3921,7 +3921,7 @@
         PROC_YIELD 8
         PROC_CALL rlUnknown9E9E10
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown9E9B68
+        PROC_SET_ONCYCLE rlProcUnknown9E9A43Cycle4
         _9C3C
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _9C3C, $0002
@@ -3950,7 +3950,7 @@
       .al
       .xl
 
-      rlUnknown9E9CB9 ; 9E/9CB9
+      rlProcUnknown9E9A43Cycle1 ; 9E/9CB9
 
         .al
         .xl
@@ -4139,7 +4139,7 @@
       .al
       .xl
 
-      rlUnknown9E9DD9 ; 9E/9DD9
+      rlProcUnknown9E9A43Cycle2 ; 9E/9DD9
 
         .al
         .xl
@@ -4331,7 +4331,7 @@
 
         ; 9E/9FD4
 
-      rlUnknown9E9FD4 ; 9E/9FD4
+      rlProcUnknown9EC70BCycle8 ; 9E/9FD4
 
         .al
         .xl
@@ -4872,7 +4872,7 @@
 
       procUnknown9EA334 ; 9E/A334
 
-        .structProcInfo "ON", rlUnknown9EA33C, rlUnknown9EA353, aProcUnknown9EA334Code
+        .structProcInfo "ON", rlProcUnknown9EA334Init, rlProcUnknown9EA334Cycle, aProcUnknown9EA334Code
 
     .endsection ProcScript9EA334Section
 
@@ -4882,7 +4882,7 @@
       .al
       .xl
 
-      rlUnknown9EA33C ; 9E/A33C
+      rlProcUnknown9EA334Init ; 9E/A33C
 
         .al
         .xl
@@ -4901,7 +4901,7 @@
 
         ; 9E/A353
 
-      rlUnknown9EA353 ; 9E/A353
+      rlProcUnknown9EA334Cycle ; 9E/A353
 
         .al
         .xl
@@ -6473,7 +6473,7 @@
 
       procUnknown9EAF98 ; 9E/AF98
 
-        .structProcInfo "ON", rlUnknown9EAFA0, rlUnknown9EAFF7, aProcUnknown9EAF98Code
+        .structProcInfo "ON", rlProcUnknown9EAF98Init, rlProcUnknown9EAF98Cycle1, aProcUnknown9EAF98Code
 
     .endsection ProcScript9EAF98Section
 
@@ -6483,7 +6483,7 @@
       .al
       .xl
 
-      rlUnknown9EAFA0 ; 9E/AFA0
+      rlProcUnknown9EAF98Init ; 9E/AFA0
 
         .al
         .xl
@@ -6535,7 +6535,7 @@
 
         ; 9E/AFF7
 
-      rlUnknown9EAFF7 ; 9E/AFF7
+      rlProcUnknown9EAF98Cycle1 ; 9E/AFF7
 
         .al
         .xl
@@ -6563,7 +6563,7 @@
         PROC_CALL rlUnknown9F8020
         PROC_YIELD 1
         PROC_CALL rlUnknown9EB0B2
-        PROC_SET_ONCYCLE rlUnknown9ED1A1
+        PROC_SET_ONCYCLE rlProcUnknown9EAF98Cycle2
         _B00F
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _B00F, $0002
@@ -8094,7 +8094,7 @@
       .al
       .xl
 
-      rlUnknown9EC776 ; 9E/C776
+      rlProcUnknown9EC70BCycle2 ; 9E/C776
 
         .al
         .xl
@@ -8129,7 +8129,7 @@
       .al
       .xl
 
-      rlUnknown9EC7B3 ; 9E/C7B3
+      rlProcUnknown9EC70BCycle3 ; 9E/C7B3
 
         .al
         .xl
@@ -8252,7 +8252,7 @@
 
         ; 9E/C868
 
-      rlUnknown9EC868 ; 9E/C868
+      rlProcUnknown9EC70BCycle6 ; 9E/C868
 
         .al
         .xl
@@ -8338,7 +8338,7 @@
 
         ; 9E/C957
 
-      rlUnknown9EC957 ; 9E/C957
+      rlProcUnknown9EC70BCycle12 ; 9E/C957
 
         .al
         .xl
@@ -8398,7 +8398,7 @@
 
         ; 9E/CA10
 
-      rlUnknown9ECA10 ; 9E/CA10
+      rlProcUnknown9EC70BCycle4 ; 9E/CA10
 
         .al
         .xl
@@ -8509,7 +8509,7 @@
 
         ; 9E/CA9B
 
-      rlUnknown9ECA9B ; 9E/CA9B
+      rlProcUnknown9EC70BCycle7 ; 9E/CA9B
 
         .al
         .xl
@@ -8547,11 +8547,11 @@
       aProcUnknown9EC70BCode ; 9E/CAD2
 
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown9EC776
+        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle2
         _CAD8
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CAD8, $0001
-        PROC_SET_ONCYCLE rlUnknown9EC7B3
+        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle3
         _CAE4
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CAE4, $0001
@@ -8591,7 +8591,7 @@
         PROC_CALL rlUnknown9EAE5A
         PROC_JUMP_IF_BITS_UNSET _CB5D, $0004
         _CB6A
-        PROC_SET_ONCYCLE rlUnknown9ECA10
+        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle4
         PROC_YIELD 48
         _CB70
         PROC_CALL rlUnknown9EA2F8
@@ -8639,7 +8639,7 @@
         _CC10
         PROC_CALL rlUnknown9F8020
         _CC15
-        PROC_SET_ONCYCLE rlUnknown9EC868
+        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle6
         PROC_YIELD 1
         PROC_CALL rlUnknown9E82AA
         _CC20
@@ -8672,7 +8672,7 @@
         PROC_YIELD 40
         PROC_CALL rlUnknown85D414
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown9ECA9B
+        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle7
         _CC8E
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CC8E, $0004
@@ -8703,7 +8703,7 @@
         PROC_JUMP_IF_BITS_UNSET _CCFD, $0002
         _CCEF
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown9E9FD4
+        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle8
         PROC_JUMP_IF_BITS_UNSET _CCEF, $0004
         PROC_YIELD 1
         _CCFD
@@ -8822,7 +8822,7 @@
         PROC_YIELD 16
         _CE88
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown9EC957
+        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle12
         PROC_YIELD 1
         _CE90
         PROC_YIELD 1
@@ -8875,7 +8875,7 @@
 
       procUnknown9ECEDD ; 9E/CEDD
 
-        .structProcInfo "ON", rlUnknown9ECEE5, rlUnknown9ECF7A, aProcUnknown9ECEDDCode
+        .structProcInfo "ON", rlProcUnknown9ECEDDInit, rlProcUnknown9ECEDDCycle1, aProcUnknown9ECEDDCode
 
     .endsection ProcScript9ECEDDSection
 
@@ -8885,7 +8885,7 @@
       .al
       .xl
 
-      rlUnknown9ECEE5 ; 9E/CEE5
+      rlProcUnknown9ECEDDInit ; 9E/CEE5
 
         .al
         .xl
@@ -8959,7 +8959,7 @@
       .al
       .xl
 
-      rlUnknown9ECF7A ; 9E/CF7A
+      rlProcUnknown9ECEDDCycle1 ; 9E/CF7A
 
         .al
         .xl
@@ -9085,7 +9085,7 @@
       .al
       .xl
 
-      rlUnknown9ED1A1 ; 9E/D1A1
+      rlProcUnknown9EAF98Cycle2 ; 9E/D1A1
 
         .al
         .xl
@@ -9674,7 +9674,7 @@
 
       procUnknown9ED78B ; 9E/D78B
 
-        .structProcInfo "ON", rlUnknown9ED793, rlUnknown9ED79E, aProcUnknown9ED78BCode
+        .structProcInfo "ON", rlProcUnknown9ED78BInit, rlProcUnknown9ED78BCycle, aProcUnknown9ED78BCode
 
     .endsection ProcScript9ED78BSection
 
@@ -9684,7 +9684,7 @@
       .al
       .xl
 
-      rlUnknown9ED793 ; 9E/D793
+      rlProcUnknown9ED78BInit ; 9E/D793
 
         .al
         .xl
@@ -9700,7 +9700,7 @@
 
         ; 9E/D79E
 
-      rlUnknown9ED79E ; 9E/D79E
+      rlProcUnknown9ED78BCycle ; 9E/D79E
 
         .al
         .xl
@@ -9948,7 +9948,7 @@
 
       procUnknown9EDAF6 ; 9E/DAF6
 
-        .structProcInfo "ON", rlUnknown9EDAFE, rlUnknown9EDC09, aProcUnknown9EDAF6Code
+        .structProcInfo "ON", rlProcUnknown9EDAF6Init, rlProcUnknown9EDAF6Cycle1, aProcUnknown9EDAF6Code
 
     .endsection ProcScript9EDAF6Section
 
@@ -9958,7 +9958,7 @@
       .al
       .xl
 
-      rlUnknown9EDAFE ; 9E/DAFE
+      rlProcUnknown9EDAF6Init ; 9E/DAFE
 
         .al
         .xl
@@ -10059,7 +10059,7 @@
 
         ; 9E/DC09
 
-      rlUnknown9EDC09 ; 9E/DC09
+      rlProcUnknown9EDAF6Cycle1 ; 9E/DC09
 
         .al
         .xl
@@ -10088,7 +10088,7 @@
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET aProcUnknown9EDAF6Code, $0001
         PROC_YIELD 4
-        PROC_SET_ONCYCLE rlUnknown9EDCD2
+        PROC_SET_ONCYCLE rlProcUnknown9EDAF6Cycle2
         PROC_YIELD 32
         PROC_CALL rlUnknown9E99F7
         PROC_YIELD 2
@@ -10153,7 +10153,7 @@
       .al
       .xl
 
-      rlUnknown9EDCD2 ; 9E/DCD2
+      rlProcUnknown9EDAF6Cycle2 ; 9E/DCD2
 
         .al
         .xl
@@ -10434,7 +10434,7 @@
 
       procUnknown9EDF8E ; 9E/DF8E
 
-        .structProcInfo "ON", rlUnknown9EDF96, rlUnknown9EDFF7, aProcUnknown9EDF8ECode
+        .structProcInfo "ON", rlProcUnknown9EDF8EInit, rlProcUnknown9EDF8ECycle1, aProcUnknown9EDF8ECode
 
     .endsection ProcScript9EDF8ESection
 
@@ -10444,7 +10444,7 @@
       .al
       .xl
 
-      rlUnknown9EDF96 ; 9E/DF96
+      rlProcUnknown9EDF8EInit ; 9E/DF96
 
         .al
         .xl
@@ -10491,7 +10491,7 @@
 
         ; 9E/DFF7
 
-      rlUnknown9EDFF7 ; 9E/DFF7
+      rlProcUnknown9EDF8ECycle1 ; 9E/DFF7
 
         .al
         .xl
@@ -10512,7 +10512,7 @@
       .al
       .xl
 
-      rlUnknown9EDFF8 ; 9E/DFF8
+      rlProcUnknown9EDF8ECycle2 ; 9E/DFF8
 
         .al
         .xl
@@ -10546,7 +10546,7 @@
       aProcUnknown9EDF8ECode ; 9E/E011
 
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown9EDFF8
+        PROC_SET_ONCYCLE rlProcUnknown9EDF8ECycle2
         _E017
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _E017, $0001
@@ -10615,7 +10615,7 @@
 
       procUnknown9EE03C ; 9E/E03C
 
-        .structProcInfo "ON", rlUnknown9EE044, rlUnknown9EE060, aProcUnknown9EE03CCode
+        .structProcInfo "ON", rlProcUnknown9EE03CInit, rlProcUnknown9EE03CCycle, aProcUnknown9EE03CCode
 
     .endsection ProcScript9EE03CSection
 
@@ -10625,7 +10625,7 @@
       .al
       .xl
 
-      rlUnknown9EE044 ; 9E/E044
+      rlProcUnknown9EE03CInit ; 9E/E044
 
         .al
         .xl
@@ -10647,7 +10647,7 @@
 
         ; 9E/E060
 
-      rlUnknown9EE060 ; 9E/E060
+      rlProcUnknown9EE03CCycle ; 9E/E060
 
         .al
         .xl
@@ -11059,7 +11059,7 @@
 
       procUnknown9EECA4 ; 9E/ECA4
 
-        .structProcInfo "ON", rlUnknown9EECAC, rlUnknown9EED30, aProcUnknown9EECA4Code
+        .structProcInfo "ON", rlProcUnknown9EECA4Init, rlProcUnknown9EECA4Cycle1, aProcUnknown9EECA4Code
 
     .endsection ProcScript9EECA4Section
 
@@ -11069,7 +11069,7 @@
       .al
       .xl
 
-      rlUnknown9EECAC ; 9E/ECAC
+      rlProcUnknown9EECA4Init ; 9E/ECAC
 
         .al
         .xl
@@ -11130,7 +11130,7 @@
 
         ; 9E/ED30
 
-      rlUnknown9EED30 ; 9E/ED30
+      rlProcUnknown9EECA4Cycle1 ; 9E/ED30
 
         .al
         .xl

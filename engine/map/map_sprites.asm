@@ -597,7 +597,7 @@
 
         .databank 0
 
-      rlUnknown87C0C2 ; 87/C0C2
+      rlProcUnknown87C056Cycle3 ; 87/C0C2
 
         .al
         .autsiz
@@ -922,7 +922,7 @@
         PROC_YIELD 16
         PROC_CALL rlUnknown888410
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown87C0C2
+        PROC_SET_ONCYCLE rlProcUnknown87C056Cycle3
         PROC_HALT
 
       procFactionSlotUnitDeath ; 87/C249
@@ -977,7 +977,7 @@
 
         .databank 0
 
-      rlUnknown87C295 ; 87/C295
+      rlProcFactionSlotUnitDeathCycle2 ; 87/C295
 
         .al
         .autsiz
@@ -1120,7 +1120,7 @@
 
         .databank 0
 
-      rlUnknown87C343 ; 87/C343
+      rlProcFactionSlotUnitDeathCycle3 ; 87/C343
 
         .al
         .autsiz
@@ -1163,7 +1163,7 @@
 
         PROC_YIELD 4
         PROC_CALL rlUnknown87C0D5
-        PROC_SET_ONCYCLE rlUnknown87C295
+        PROC_SET_ONCYCLE rlProcFactionSlotUnitDeathCycle2
         PROC_YIELD 16
         PROC_CALL rlUnknown87C352
         PROC_YIELD 8
@@ -1172,7 +1172,7 @@
         PROC_SET_ONCYCLE rlProcUnknown87C249Cycle
         PROC_CALL rlUnknown87C2B7
         PROC_YIELD 8
-        PROC_SET_ONCYCLE rlUnknown87C343
+        PROC_SET_ONCYCLE rlProcFactionSlotUnitDeathCycle3
         PROC_HALT
 
         ; 87/C38C

@@ -2315,7 +2315,7 @@
 
         ; 85/A168
 
-      rlUnknown85A168 ; 85/A168
+      rlProcUnknown85DAEACycle ; 85/A168
 
         .al
         .xl
@@ -2443,7 +2443,7 @@
 
       procUnknown85A47F ; 85/A47F
 
-        .structProcInfo "PW", rlUnknown85A48B, rlUnknown85A508, aProcUnknown85A47FCode
+        .structProcInfo "PW", rlProcUnknown85A47FInit, rlProcUnknown85A47FCycle1, aProcUnknown85A47FCode
 
     .endsection ProcScript85A47FSection
 
@@ -2453,7 +2453,7 @@
       .al
       .xl
 
-      rlUnknown85A48B ; 85/A48B
+      rlProcUnknown85A47FInit ; 85/A48B
 
         .al
         .xl
@@ -2505,7 +2505,7 @@
       .al
       .xl
 
-      rlUnknown85A508 ; 85/A508
+      rlProcUnknown85A47FCycle1 ; 85/A508
 
         .al
         .xl
@@ -2526,7 +2526,7 @@
       .al
       .xl
 
-      rlUnknown85A509 ; 85/A509
+      rlProcUnknown85A47FCycle2 ; 85/A509
 
         .al
         .xl
@@ -2666,7 +2666,7 @@
       aProcUnknown85A47FCode ; 85/A5BD
 
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown85A509
+        PROC_SET_ONCYCLE rlProcUnknown85A47FCycle2
         PROC_HALT
 
 
@@ -2818,7 +2818,7 @@
       .al
       .xl
 
-      rlUnknown85AC02 ; 85/AC02
+      rlProcUnknown85ABF6Init ; 85/AC02
 
         .al
         .autsiz
@@ -2868,7 +2868,7 @@
       .al
       .xl
 
-      rlUnknown85AC40 ; 85/AC40
+      rlProcUnknown85ABF6Cycle ; 85/AC40
 
         .al
         .xl
@@ -3560,7 +3560,7 @@
 
       procUnknown85B63B ; 85/B63B
 
-        .structProcInfo "PW", rlUnknown85B65C, rlUnknown85B6E0, aProcUnknown85B63BCode
+        .structProcInfo "PW", rlProcUnknown85B63BInit, rlProcUnknown85B63BCycle, aProcUnknown85B63BCode
 
     .endsection ProcScript85B63BSection
 
@@ -3570,7 +3570,7 @@
       .al
       .xl
 
-      rlUnknown85B65C ; 85/B65C
+      rlProcUnknown85B63BInit ; 85/B65C
 
         .al
         .xl
@@ -3615,7 +3615,7 @@
       .al
       .xl
 
-      rlUnknown85B6E0 ; 85/B6E0
+      rlProcUnknown85B63BCycle ; 85/B6E0
 
         .al
         .xl
@@ -3645,7 +3645,7 @@
 
       procUnknown85B6E3 ; 85/B6E3
 
-        .structProcInfo "PW", rlUnknown85B725, rlUnknown85B78A, aProcUnknown85B6E3Code
+        .structProcInfo "PW", rlProcUnknown85B6E3Init, rlProcUnknown85B6E3Cycle, aProcUnknown85B6E3Code
 
     .endsection ProcScript85B6E1Section
 
@@ -3655,7 +3655,7 @@
       .al
       .xl
 
-      rlUnknown85B725 ; 85/B725
+      rlProcUnknown85B6E3Init ; 85/B725
 
         .al
         .xl
@@ -3712,7 +3712,7 @@
       .al
       .xl
 
-      rlUnknown85B78A ; 85/B78A
+      rlProcUnknown85B6E3Cycle ; 85/B78A
 
         .al
         .xl
@@ -4043,7 +4043,7 @@
 
       procUnknown85B8FA ; 85/B8FA
 
-        .structProcInfo "PW", rlUnknown85B906, rlProcUnknown85B9D4Cycle1, aProcDialogueBoxCode
+        .structProcInfo "PW", rlProcUnknown85B8FAInit, rlProcUnknown85B9D4Cycle1, aProcDialogueBoxCode
 
     .endsection ProcScript85B8FASection
 
@@ -4053,7 +4053,7 @@
       .al
       .xl
 
-      rlUnknown85B906 ; 85/B906
+      rlProcUnknown85B8FAInit ; 85/B906
 
         .al
         .xl
@@ -4274,7 +4274,7 @@
       .al
       .xl
 
-      rlUnknown85BAC7 ; 85/BAC7
+      rlProcUnknown85BA41Cycle ; 85/BAC7
 
         .al
         .xl
@@ -4331,7 +4331,7 @@
 
       procUnknown85BB52 ; 85/BB52
 
-        .structProcInfo "PW", rlUnknown85BB5E, rlUnknown85BB83, aProcDialogueBoxCode
+        .structProcInfo "PW", rlProcUnknown85BB52Init, rlProcUnknown85BB52Cycle, aProcDialogueBoxCode
 
     .endsection ProcScript85BB52Section
 
@@ -4341,7 +4341,7 @@
       .al
       .xl
 
-      rlUnknown85BB5E ; 85/BB5E
+      rlProcUnknown85BB52Init ; 85/BB5E
 
         .al
         .xl
@@ -4365,7 +4365,7 @@
 
         ; 85/BB83
 
-      rlUnknown85BB83 ; 85/BB83
+      rlProcUnknown85BB52Cycle ; 85/BB83
 
         .al
         .xl
@@ -4922,7 +4922,7 @@
 
       procUnknown85CA85 ; 85/CA85
 
-        .structProcInfo "OW", rlUnknown85CA91, rlUnknown85CADA, aProcUnknown85CA85Code
+        .structProcInfo "OW", rlProcUnknown85CA85Init, rlProcUnknown85CA85Cycle1, aProcUnknown85CA85Code
 
     .endsection ProcScript85CA85Section
 
@@ -4932,7 +4932,7 @@
       .al
       .xl
 
-      rlUnknown85CA91 ; 85/CA91
+      rlProcUnknown85CA85Init ; 85/CA91
 
         .al
         .xl
@@ -4971,7 +4971,7 @@
 
         ; 85/CADA
 
-      rlUnknown85CADA ; 85/CADA
+      rlProcUnknown85CA85Cycle1 ; 85/CADA
 
         .al
         .xl
@@ -5008,7 +5008,7 @@
       .al
       .xl
 
-      rlUnknown85CAFC ; 85/CAFC
+      rlProcUnknown85CA85Cycle2 ; 85/CAFC
 
         .al
         .xl
@@ -5056,7 +5056,7 @@
       .al
       .xl
 
-      rlUnknown85CBBD ; 85/CBBD
+      rlProcUnknown85CA85Cycle3 ; 85/CBBD
 
         .al
         .xl
@@ -5134,7 +5134,7 @@
       .al
       .xl
 
-      rlUnknown85CC3E ; 85/CC3E
+      rlProcUnknown85CA85Cycle4 ; 85/CC3E
 
         .al
         .xl
@@ -5169,7 +5169,7 @@
         _CC70
         PROC_YIELD 1
         PROC_JUMP_WHILE_UNK_TIMER _CC70
-        PROC_SET_ONCYCLE rlUnknown85CAFC
+        PROC_SET_ONCYCLE rlProcUnknown85CA85Cycle2
         _CC7A
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CC7A, $0001
@@ -5177,7 +5177,7 @@
         _CC86
         PROC_YIELD 1
         PROC_JUMP_WHILE_UNK_TIMER _CC86
-        PROC_SET_ONCYCLE rlUnknown85CBBD
+        PROC_SET_ONCYCLE rlProcUnknown85CA85Cycle3
         _CC90
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CC90, $0001
@@ -5185,7 +5185,7 @@
         _CC9C
         PROC_YIELD 1
         PROC_JUMP_WHILE_UNK_TIMER _CC9C
-        PROC_SET_ONCYCLE rlUnknown85CC3E
+        PROC_SET_ONCYCLE rlProcUnknown85CA85Cycle4
         PROC_HALT
 
 
@@ -6453,7 +6453,7 @@
 
       procUnknown85D8AA ; 85/D8AA
 
-        .structProcInfo "OW", rlUnknown85D8B6, rlUnknown85D90F, aProcUnknown85D8AACode
+        .structProcInfo "OW", rlProcUnknown85D8AAInit, rlProcUnknown85D8AACycle, aProcUnknown85D8AACode
 
     .endsection ProcScript85D8AASection
 
@@ -6463,7 +6463,7 @@
       .al
       .xl
 
-      rlUnknown85D8B6 ; 85/D8B6
+      rlProcUnknown85D8AAInit ; 85/D8B6
 
         .al
         .xl
@@ -6513,7 +6513,7 @@
 
         ; 85/D90F
 
-      rlUnknown85D90F ; 85/D90F
+      rlProcUnknown85D8AACycle ; 85/D90F
 
         .al
         .xl
@@ -6770,7 +6770,7 @@
 
       procUnknown85DAEA ; 85/DAEA
 
-        .structProcInfo "OW", rlUnknown85DAF6, rlUnknown85A168, aProcDialogueBoxCode
+        .structProcInfo "OW", rlProcUnknown85DAEAInit, rlProcUnknown85DAEACycle, aProcDialogueBoxCode
 
     .endsection ProcScript85DAEASection
 
@@ -6780,7 +6780,7 @@
       .al
       .xl
 
-      rlUnknown85DAF6 ; 85/DAF6
+      rlProcUnknown85DAEAInit ; 85/DAF6
 
         .al
         .xl
@@ -6954,7 +6954,7 @@
 
       procUnknown85DDDB ; 85/DDDB
 
-        .structProcInfo "PM", rlUnknown85DDF9, rlUnknown85DE13, aProcUnknown85DDDBCode
+        .structProcInfo "PM", rlProcUnknown85DDDBInit, rlProcUnknown85DDDBCycle, aProcUnknown85DDDBCode
 
     .endsection ProcScript85DDDBSection
 
@@ -6964,7 +6964,7 @@
       .al
       .xl
 
-      rlUnknown85DDF9 ; 85/DDF9
+      rlProcUnknown85DDDBInit ; 85/DDF9
 
         .al
         .xl
@@ -6988,7 +6988,7 @@
 
         ; 85/DE13
 
-      rlUnknown85DE13 ; 85/DE13
+      rlProcUnknown85DDDBCycle ; 85/DE13
 
         .al
         .xl
@@ -7109,7 +7109,7 @@
 
       procUnknown85E1CC ; 85/E1CC
 
-        .structProcInfo "PW", rlUnknown85E1DB, rlUnknown85E1ED, aProcUnknown85DDDBCode
+        .structProcInfo "PW", rlProcUnknown85E1CCInit, rlProcUnknown85E1CCCycle, aProcUnknown85DDDBCode
 
     .endsection ProcScript85E1CCSection
 
@@ -7119,7 +7119,7 @@
       .al
       .xl
 
-      rlUnknown85E1DB ; 85/E1DB
+      rlProcUnknown85E1CCInit ; 85/E1DB
 
         .al
         .xl
@@ -7138,7 +7138,7 @@
 
         ; 85/E1ED
 
-      rlUnknown85E1ED ; 85/E1ED
+      rlProcUnknown85E1CCCycle ; 85/E1ED
 
         .al
         .xl
