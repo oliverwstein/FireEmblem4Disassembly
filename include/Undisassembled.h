@@ -83,8 +83,6 @@
     rsUnknown88DA99                                          :?= address($88DA99)
     rsUnknown88DABA                                          :?= address($88DABA)
     rsUnknown88DADB                                          :?= address($88DADB)
-    rlSplitNumberIntoDigits                                  :?= address($89A107)
-    aSplitNumberIntoDigitsTable                              :?= address($89A130)
     rlDrawMenuTextNumber                                     :?= address($89A18C)
     rlUnknown8A9750                                          :?= address($8A9750)
     rlUnknown8A97C2                                          :?= address($8A97C2)

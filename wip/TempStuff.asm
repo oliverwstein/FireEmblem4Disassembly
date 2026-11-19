@@ -3827,63 +3827,6 @@
 
         .databank 0
 
-      rlSplitNumberIntoDigits ; 89/A107
-
-        .al
-        .autsiz
-        .databank ?
-
-        phb
-        php
-        phk
-        plb
-        phk
-        plb
-        sta wR0
-        stz wR1
-        stz wR2
-        stz wR3
-        stz wR4
-
-        ldx #6
-
-          _Loop
-          lda wR0
-          sec
-          sbc aSplitNumberIntoDigitsTable,x
-          bcc _Next
-
-            sta wR0
-            inc wR1,x
-            bra _Loop
-
-          _Next
-          dec x
-          dec x
-          bpl _Loop
-
-        plp
-        plb
-        rtl
-
-        .databank 0
-
-      aSplitNumberIntoDigitsTable ; 89/A130
-
-        .word 10
-        .word 100
-        .word 1000
-        .word 10000
-
-
-
-
-
-
-
-
-
-
       rlUnknown8A9750 ; 8A/9750
 
         .al

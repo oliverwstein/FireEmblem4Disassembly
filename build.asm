@@ -1965,6 +1965,13 @@
 
     .here
 
+    * = $09A107
+    .logical $89A107
+
+      .dsection SplitNumberIntoDigitsSection
+
+    .here
+
     * = $09A150
     .logical $89A150
 
