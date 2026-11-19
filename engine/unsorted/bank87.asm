@@ -986,12 +986,15 @@
       .al
       .xl
 
-      rlUnknown8785A4 ; 87/85A4
+      rlRemoveMapMenu ; 87/85A4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Frees the current map menu's tilemap entry and its RAM area entry, after
+        ; rlUnknown8784B7 and rlUnknown878148.
 
         phb
         php
@@ -1406,11 +1409,14 @@
       .al
       .xl
 
-      rlUnknown878921 ; 87/8921
+      rlDrawMapMenuTextLine ; 87/8921
 
         .al
         .autsiz
         .databank ?
+
+        ; Draws a line of menu text (lR18, at X as in rlDrawMenuTextLine) into the
+        ; current map menu's tilemap (lMapMenuRAMEntryPointer).
 
         jsl rlGetMapMenuTilemapRAMEntryPointer
         jsl rlDrawMenuTextLine

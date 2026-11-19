@@ -154,7 +154,7 @@
           lda #$000A
           jsl rlPlaySoundEffect
           
-          jsl rlUnknown8582BA
+          jsl rlMapMenuCloseAndRestoreMapState
           lda #1
           sta $00
           lda aProcSystem.aBody6,b,x
@@ -171,7 +171,7 @@
           lda #$0021
           jsl rlPlaySoundEffect
 
-          jsl rlUnknown8582BA
+          jsl rlMapMenuCloseAndRestoreMapState
           jsr rsUnknown8584A1
           bra _End
         
@@ -481,7 +481,7 @@
         sta lR18
         jsl rlUnknown82F4A7
         tax
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         dec y
         bne _857E
 
@@ -568,7 +568,7 @@
         sta lR18+1
         lda lRoutineVariable,b
         sta lR18
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         rtl
 
         .databank 0
@@ -587,7 +587,7 @@
         sta lR18+1
         lda lRoutineVariable,b
         sta lR18
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         rtl
 
         .databank 0
@@ -615,7 +615,7 @@
         sta lR18+1
         lda lRoutineVariable,b
         sta lR18
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         rtl
 
         .databank 0
@@ -642,7 +642,7 @@
         sta lR18+1
         lda lRoutineVariable,b
         sta lR18
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         rtl
 
         .databank 0
@@ -670,7 +670,7 @@
         sta lR18+1
         lda lRoutineVariable,b
         sta lR18
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         rtl
 
         .databank 0
@@ -749,14 +749,17 @@
       .al
       .xl
 
-      rlUnknown8586FA ; 85/86FA
+      rlCloseMapMenuFromProc ; 85/86FA
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown8582BA
+        ; Calls rlMapMenuCloseAndRestoreMapState; map menu procs call it just before
+        ; freeing themselves.
+
+        jsl rlMapMenuCloseAndRestoreMapState
         rtl
 
         .databank 0
@@ -1091,17 +1094,20 @@
 
         ; 85/8882
 
-      rlUnknown858882 ; 85/8882
+      rlCloseMapMenu ; 85/8882
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sets $0534 to $FFFF, runs rlUnknown858751 (works with the menu's rectangle in
+        ; wR10-wR13), then rlRemoveMapMenu.
+
         lda #$FFFF
         sta $0534,b
         jsl rlUnknown858751
-        jsl rlUnknown8785A4
+        jsl rlRemoveMapMenu
         rtl
 
         .databank 0
@@ -1605,7 +1611,7 @@
         lda #$8EA1
         sta lR18
         ldx #$0702
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda $057C,b
         cmp #$0001
         bne _8E01
@@ -1614,7 +1620,7 @@
         lda #$8EA7
         sta lR18
         ldx #$0901
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         bra _8E7E
 
 
@@ -1624,7 +1630,7 @@
         lda #$8EA7
         sta lR18
         ldx #$0902
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$2140
         sta aCurrentTilemapInfo,b
         lda #$8500
@@ -1736,7 +1742,7 @@
 
 
         _8F03
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
 
@@ -1766,7 +1772,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         bit #$0002
         beq _8F26
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
         sec
@@ -1864,19 +1870,19 @@
         lda #$9080
         sta lR18
         ldx #$0101
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$8500
         sta lR18+1
         lda #$9080
         sta lR18
         ldx #$0301
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$8500
         sta lR18+1
         lda #$9080
         sta lR18
         ldx #$0501
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         ldx #$0101
         jsl rlUnknown85864B
         ldx #$0301
@@ -1906,7 +1912,7 @@
         lda #$9078
         sta lR18
         ldx #$0906
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         bra _9073
 
 
@@ -1930,7 +1936,7 @@
         lda #$9092
         sta lR18
         ldx #$0B06
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$24F0
         sta aCurrentTilemapInfo,b
 
@@ -2092,7 +2098,7 @@
 
 
         _914F
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
 
         _9157
@@ -2683,7 +2689,7 @@
         lda #$0021
         jsl rlPlaySoundEffect
         jsr rsUnknown8596FA
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
         jsl rlUnknown85A3A6
@@ -2787,7 +2793,7 @@
         beq _959A
         lda #$000A
         jsl rlPlaySoundEffect
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
         bra _95AE
@@ -2890,7 +2896,7 @@
         _9649
         sta wSelectedInventorySlot,b
         ldx aProcSystem.wOffset,b
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
         jsl rlUnknown85A3A6
@@ -2912,7 +2918,7 @@
 
         _9682
         ldx aProcSystem.wOffset,b
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
         lda #$8000
@@ -3047,7 +3053,7 @@
         jsl rlProcEngineFindProc
         bcc _975C
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
 
         _975C
@@ -3434,7 +3440,7 @@
         sta lR18+1
         lda #$9AAC
         sta lR18
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         bra _9AA5
 
 
@@ -3443,7 +3449,7 @@
         sta lR18+1
         lda #$9AA8
         sta lR18
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         bra _9AA5
 
 
@@ -3452,7 +3458,7 @@
         sta lR18+1
         lda #$9AB0
         sta lR18
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
 
         _9AA5
         lda wR0
@@ -3487,7 +3493,7 @@
 
 
         _9AC7
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         lda #$0000
         sta $7E8BEE
@@ -4524,7 +4530,7 @@
 
 
         _A1B8
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         jsl rlFreeHDMAEntry0
         rtl
@@ -4562,7 +4568,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         jsl rlGetMenuTextStringLength
         plx
         phx
@@ -4574,7 +4580,7 @@
         sta lR18
         lda lR19+1
         sta lR18+1
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         plx
         rtl
 
@@ -4686,7 +4692,7 @@
 
 
         _A35B
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         bra _A359
 
@@ -4761,7 +4767,7 @@
         lda lMapMenuRAMEntryPointer+1,b
         pha
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         pla
         sta lMapMenuRAMEntryPointer+1,b
@@ -4882,7 +4888,7 @@
         lda #$8BF6
         sta lR18
         ldx wR7
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda wR7
         clc
         adc #$0200
@@ -4941,19 +4947,19 @@
         lda #$A4E6
         sta lR18
         ldx #$0102
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$8500
         sta lR18+1
         lda #$A4FA
         sta lR18
         ldx #$0303
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$8500
         sta lR18+1
         lda #$A500
         sta lR18
         ldx #$0308
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         plx
         jsl rlUnknown8587E1
         jsl rlUnknown85C0CE
@@ -5027,7 +5033,7 @@
         _A539
         jsr rsUnknown85A56D
         bcc _A54C
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         jsl rlUnknown85C0D5
         bra _A56C
@@ -5209,25 +5215,25 @@
         lda #$A670
         sta lR18
         ldx #$0101
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$8500
         sta lR18+1
         lda #$A680
         sta lR18
         ldx #$0302
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$8500
         sta lR18+1
         lda #$A688
         sta lR18
         ldx #$0502
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$8500
         sta lR18+1
         lda #$A690
         sta lR18
         ldx #$0702
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         plx
         jsl rlUnknown8587E1
         rtl
@@ -5350,7 +5356,7 @@
         jsl rlPlaySoundEffect
 
         _A742
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         jsl rlUnknown85E85D
         bra _A764
@@ -5413,13 +5419,13 @@
         lda #$A7CE
         sta lR18
         ldx #$0102
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$8500
         sta lR18+1
         lda #$A7D6
         sta lR18
         ldx #$0302
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         plx
         jsl rlUnknown8587E1
         lda #<>rlUnknown85A7DE
@@ -5496,7 +5502,7 @@
         jsl rlPlaySoundEffect
 
         _A846
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         phx
         lda #$8500
@@ -7197,7 +7203,7 @@
 
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         lda #(`procUnknown85B63B)<<8
         sta lR44+1
@@ -7331,7 +7337,7 @@
         jsl rlProcEngineFindProc
         bcc _B43D
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
 
         _B43D
@@ -7460,7 +7466,7 @@
         clc
         adc #$0008
         tax
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
 
         _B4BB
         tyx
@@ -7473,7 +7479,7 @@
         lda lRoutineVariable,b
         sta lR18
         ldx wR0
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda wR0
         sec
         sbc #$0200
@@ -7599,19 +7605,19 @@
         lda #$B6A0
         sta lR18
         ldx #$0101
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$8500
         sta lR18+1
         lda #$B6BA
         sta lR18
         ldx #$0301
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         lda #$8500
         sta lR18+1
         lda #$B6D4
         sta lR18
         ldx #$0501
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         plx
         jsl rlUnknown8587E1
         rtl
@@ -7699,7 +7705,7 @@
         lda #$B786
         sta lR18
         ldx #$010C
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
 
         _B769
         jsr rsUnknown85B4ED
@@ -7709,7 +7715,7 @@
         lda lRoutineVariable,b
         sta lR18
         ldx #$0104
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         jsl rlUnknown8587E1
         rtl
 
@@ -8010,7 +8016,7 @@
         clc
         adc #$0102
         tax
-        jsl rlUnknown878921
+        jsl rlDrawMapMenuTextLine
         jsl rlUnknown8587E1
         jsl rlUnknown85A227
         plx
@@ -8092,7 +8098,7 @@
 
         _BA13
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlUnknown85C0C7
         jsl rlUnknown85C0D5
         lda #$00E8
@@ -8270,7 +8276,7 @@
 
         _BB1A
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlUnknown85C0C7
         lda #$0000
         sta $0508,b
@@ -10845,7 +10851,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlUnknown85D648
         lda #<>rlUnknown85CC4D
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -11662,7 +11668,7 @@
         _D055
         lda #$0000
         jsr rsUnknown85CE9C
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         rtl
 
@@ -13384,7 +13390,7 @@
 
 
         _D9E8
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         bra _D9F9
 
 

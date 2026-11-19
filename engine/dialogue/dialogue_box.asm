@@ -201,7 +201,7 @@
           rtl
 
         +
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlFreeDialogueBoxHDMA
         lda #$0002
         tsb wUnknown000D79,b
@@ -918,7 +918,7 @@
         jsl rlProcEngineFindProc
         bcc _AB7F
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         lda #(`procDialogueBox)<<8
         sta lR44+1
@@ -927,7 +927,7 @@
         jsl rlProcEngineFindProc
         bcc _AB78
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
 
         _AB78

@@ -638,7 +638,7 @@
 
           sta lMapMenuRAMEntryPointer,b
           phx
-          jsl rlUnknown8785A4
+          jsl rlRemoveMapMenu
           plx
           lda #0
           sta lMapMenuRAMEntryPointer,b,x

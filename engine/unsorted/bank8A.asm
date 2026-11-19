@@ -7434,7 +7434,7 @@
         lda aUnknown8ACEB3,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -7462,7 +7462,7 @@
         lda #$D3AA
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -7494,7 +7494,7 @@
 
         _C14D
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -7662,7 +7662,7 @@
         lda $8ACEE9,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -7703,7 +7703,7 @@
         lda #$0001
         sta $0592,b
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$000A
@@ -7736,7 +7736,7 @@
         lda $0592,b
         sta $0594,b
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -7809,7 +7809,7 @@
         lda $8ACEE9,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -7850,7 +7850,7 @@
         lda #$0001
         sta $0592,b
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$000A
@@ -7916,7 +7916,7 @@
         lda $8ACEE9,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -8027,7 +8027,7 @@
         lda $8ACF64,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -8051,7 +8051,7 @@
         lda $8ACED7,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -8162,7 +8162,7 @@
         lda $8ACF91,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -8186,7 +8186,7 @@
         lda $8ACEE9,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -8209,7 +8209,7 @@
         lda $8ACFAF,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -9066,7 +9066,7 @@
         lda $08AF,b
         sta $24
         lda #2
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
 
         lda #0
         sta aBGPaletteBuffer,b
@@ -10368,7 +10368,7 @@
         lda aUnknown8ACEB3,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -10449,7 +10449,7 @@
         lda $8ACF91,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -10465,7 +10465,7 @@
         lda #$D7A4
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -10494,7 +10494,7 @@
 
         _EFF3
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -10523,7 +10523,7 @@
 
         _F02B
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -10796,7 +10796,7 @@
         lda aUnknown8ACEB3,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -10942,7 +10942,7 @@
         lda $8ACEE9,x
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -10981,7 +10981,7 @@
         lda #$0001
         sta $0592,b
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$000A
@@ -11271,7 +11271,7 @@
         lda #$D616
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -11398,7 +11398,7 @@
         lda #$D6DA
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
@@ -11476,7 +11476,7 @@
 
         _FBE2
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsl rlUnknown8ACE50
         lda #$0001
@@ -11668,7 +11668,7 @@
         lda #$D648
         sta lR18
         lda #$0003
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001

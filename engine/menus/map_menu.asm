@@ -69,14 +69,17 @@
 
         .databank 0
 
-      rlUnknown8582BA ; 85/82BA
+      rlMapMenuCloseAndRestoreMapState ; 85/82BA
 
         .al
         .autsiz
         .databank ?
 
+        ; X = proc: closes the proc's map menu and puts back the wGameStateRoutine1 that
+        ; rlMapMenuSaveMapState kept in its body.
+
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown858882
+        jsl rlCloseMapMenu
         lda aProcSystem.aBody3,b,x
         beq +
 

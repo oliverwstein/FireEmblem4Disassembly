@@ -3052,7 +3052,7 @@
         stx $18DF,b
         sty $18DD,b
         lda #$0000
-        jsl rlUnknown918127
+        jsl rlDialogueStartText
         lda #$2000
         trb aDialogue.wStatus,b
         lda #$2000

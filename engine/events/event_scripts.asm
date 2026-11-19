@@ -3561,7 +3561,7 @@
         sta $7E93AA,x
         rep #$20
 
-        jsl rlUnknown8785A4
+        jsl rlRemoveMapMenu
 
         ply
         inc y
@@ -3871,7 +3871,7 @@
         sta lR18+1
 
         lda #2
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         ldx #0
         jsl rlUnknown8ACE50
 
@@ -4240,7 +4240,7 @@
         sta lR18+1
 
         lda #0
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
 
         lda #(`rlUnknown8B9275)<<8
         sta aDialogue.lHDMARoutine+1,b

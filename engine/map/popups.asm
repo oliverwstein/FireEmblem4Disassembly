@@ -215,7 +215,7 @@
         lda aProcSystem.aBody5,b,x
         sta lR18+1
         lda #0
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         jsl rlDialogueFreeHDMA
         plx
 
@@ -331,7 +331,7 @@
 
         _BB8C
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown8586FA
+        jsl rlCloseMapMenuFromProc
         jsl rlUnknown85C0C7
         lda #$FFFF
         jsl rlUnknown85C4E0

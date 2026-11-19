@@ -320,7 +320,7 @@
         jsl rlUnknown8B87A0
         jsl rlResetDialogueEngine
         lda #$0002
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
         lda #(`rlUnknown8B9275)<<8
         sta aDialogue.lHDMARoutine+1,b
         lda #<>rlUnknown8B9275

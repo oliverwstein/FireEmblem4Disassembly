@@ -231,34 +231,40 @@
         .databank ?
 
         lda #0
-        jsl rlUnknown918127
+        jsl rlDialogueStartText
         rtl
 
         .databank 0
 
-      rlUnknown91811C ; 91/811C
+      rlDialogueStartTextAndHDMA ; 91/811C
 
         .al
         .autsiz
         .databank ?
 
+        ; rlDialogueStartText, then rlDialogueStartHDMA.
+
         ; Input:
-        ; A = ?
+        ; A = mode (see rlDialogueStartText)
         ; lR18 = dialogue pointer
 
         php
-        jsl rlUnknown918127
+        jsl rlDialogueStartText
         jsl rlDialogueStartHDMA
         plp
         rtl
 
         .databank 0
 
-      rlUnknown918127 ; 91/8127
+      rlDialogueStartText ; 91/8127
 
         .al
         .autsiz
         .databank ?
+
+        ; A = mode (kept in aDialogue.wUnknown0018D0; the dialogue code treats 1, 2 and
+        ; 3 differently, not worked out), lR18 = text. Clears both slots, sets the text
+        ; speed from the options and enables the dialogue engine.
 
         php
         sta aDialogue.wUnknown0018D0,b

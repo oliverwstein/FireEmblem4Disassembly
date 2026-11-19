@@ -438,7 +438,7 @@
         jsl rlFreeHDMAEntry0
 
         lda #1
-        jsl rlUnknown91811C
+        jsl rlDialogueStartTextAndHDMA
 
         lda #1
         sta aDialogue.wTextSound,b
