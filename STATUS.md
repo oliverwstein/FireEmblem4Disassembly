@@ -124,7 +124,7 @@ A region of the ROM can move only when it is **all source**, its sections form *
    - Return addresses pushed with `pea`.
 3. **Handle the integrity checks.** Code in `$80/8D56`-`8E2C`, `$87/8017`-`80A9` and `$88/8888`-`8907` must not change without updating or switching off the checks. Make the build compute the sums from the assembled bytes, as pokecrystal does for its header checksum, and add the second check to `include/Checksums.h`.
 4. **Merge sections bank by bank.** Once a bank is all source, its sections can become one block that flows freely. Only the bank start and addresses the hardware fixes (vectors, header) stay pinned. Banks `$86`, `$8E`-`$8F` and `$9D` are already 100% built.
-5. **Test it.** For a merged bank: build with a few padding bytes inserted early in the block, run the game in Mesen, and check that it still works. This catches the hidden addresses that step 2 missed.
+5. **Test it.** For a merged bank: `./build.sh pad SECTION N` builds `FE4Padded.sfc` with N bytes inserted at the start of SECTION and checks what can be checked without running it (`tools/pad_test.py`; the block needs room to grow, such as a `.fill` to the bank end). Then run that ROM in Mesen and use what the block does. This catches the hidden addresses that step 2 missed.
 
 ### 3. Naming and sorting (the bulk of the work)
 

@@ -9,6 +9,7 @@ Run all of these from the repository root, next to `build.asm` and `fe4.sfc`.
 | `c2a.py`, `process_dialogue.py` | Convert CSV tables and dialogue text to assembly (download them; see the main README). |
 | `FE4c2a.py` | Converts the character and item data tables. |
 | `check_paths.py` | Checks that every included file exists with exactly the spelling used. `build.sh` runs it. |
+| `pad_test.py` | The padding test, run as `./build.sh pad SECTION N`: builds `FE4Padded.sfc` with N bytes of `$EA` (NOP) inserted at the start of SECTION in a temporary copy, and checks that the block (the sections between that `* =` and its `.here` in `build.asm`) moved cleanly: room to grow after it (or a `.fill` to the bank end that absorbs the bytes), every label in it moved by N and none outside it, which bytes elsewhere changed (references the assembler updated), and nothing changed in the code the game checksums. It fixes the header checksum. Hidden addresses (numbers that are really addresses) only show when you run the ROM: `open -a Mesen FE4Padded.sfc`. |
 
 ## Bringing new code into the build
 

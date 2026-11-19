@@ -4,6 +4,11 @@
 # Usage:
 #   ./build.sh             build FE4Disassembly.sfc and compare it to fe4.sfc
 #   ./build.sh coverage    also report how much of the ROM is built from source
+#   ./build.sh pad SECTION N
+#                          padding test: also build FE4Padded.sfc with N bytes
+#                          inserted at the start of SECTION, and check that its
+#                          block moved cleanly (tools/pad_test.py); then run
+#                          that ROM to catch the addresses no check can see
 #   ./build.sh clean       remove generated files
 #
 # Needs: python3, 64tass (brew install tass64), tools/c2a.py,
@@ -22,7 +27,7 @@ ASFLAGS=(-x -f -C -a -Wall -Wno-portable -Wno-shadow -Wno-deprecated)
 clean() {
   find text -name '*.dialogue.txt' -delete
   find data -name '*.csv.asm' -delete
-  rm -f "$OUT" log.txt labels.txt
+  rm -f "$OUT" FE4Padded.sfc log.txt labels.txt
 }
 
 # Convert dialogue text and CSV tables to assembly. Only files whose source is
@@ -105,5 +110,9 @@ case ${1:-build} in
          generate; python3 tools/check_paths.py; assemble "$OUT" log.txt; verify ;;
   coverage) [[ -f $ROM ]] || { echo "Missing $ROM" >&2; exit 1; }
          generate; python3 tools/check_paths.py; assemble "$OUT" log.txt; verify; coverage ;;
-  *) echo "Usage: $0 [build|coverage|clean]" >&2; exit 2 ;;
+  pad)   [[ -f $ROM ]] || { echo "Missing $ROM" >&2; exit 1; }
+         [[ $# -eq 3 ]] || { echo "Usage: $0 pad SECTION N" >&2; exit 2; }
+         generate; python3 tools/check_paths.py; assemble "$OUT" log.txt; verify
+         python3 tools/pad_test.py "$2" "$3" -- "${ASFLAGS[@]}" ;;
+  *) echo "Usage: $0 [build|coverage|clean|pad SECTION N]" >&2; exit 2 ;;
 esac
