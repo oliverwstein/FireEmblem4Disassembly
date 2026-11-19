@@ -31,3 +31,4 @@ Map.txt
 labels.txt
 
 __pycache__/
+*.cdl
