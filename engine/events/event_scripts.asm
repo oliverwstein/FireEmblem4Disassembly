@@ -958,7 +958,7 @@
         phy
         lda [lR22],y
         and #$00FF
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         ply
         inc y
@@ -978,7 +978,7 @@
         phy
         lda [lR22],y
         and #$00FF
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         ply
         inc y
@@ -1000,7 +1000,7 @@
         phy
         lda [lR22],y
         and #$00FF
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
 
         ply
         inc y
@@ -1021,7 +1021,7 @@
 
         phy
         lda [lR22],y
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
 
         ply
         inc y
@@ -4405,7 +4405,7 @@
 
             stz $1832,b
             lda #$00D0
-            jsl rlUnknown808FA3
+            jsl rlSendSoundCommand
 
         +
         lda #(`procUnknown828865)<<8
@@ -4420,9 +4420,9 @@
         lda #$0010
         tsb $0788,b
 
-        lda $04EA,b
+        lda bSoundFlags,b
         ora #$0005
-        sta $04EA,b
+        sta bSoundFlags,b
 
         ply
         plb
@@ -4453,9 +4453,9 @@
         sta lR44
         jsl rlProcEngineCreateProc
 
-        lda $04EA,b
+        lda bSoundFlags,b
         and #$FFFA
-        sta $04EA,b
+        sta bSoundFlags,b
 
         ply
         plb

@@ -802,7 +802,7 @@
         .databank ?
 
         lda #$000B
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$9600
         sta $7FED00
         lda #$8376
@@ -826,7 +826,7 @@
         lda $7FED4E
         bne _838D
         lda #$000C
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnknown96C9FE
         jml _8415
 
@@ -1346,7 +1346,7 @@
         lda $7E4ECB
         beq _86FB
         lda #$00E0
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
         lda #$0001
         jsl rlUnknown96A4B2
 
@@ -2480,7 +2480,7 @@
         lda #$0000
         sta $7E5311
         lda #$0023
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$9600
         sta $7FED00
         lda #$9037
@@ -3398,7 +3398,7 @@
         .databank ?
 
         lda #$00E0
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
         rtl
 
         .databank 0
@@ -3432,7 +3432,7 @@
         sta $7FFC9C
         rep #$20
         lda #$01D1
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
         bra _9664
 
 
@@ -3446,7 +3446,7 @@
         sta $7FFC9C
         rep #$20
         lda #$00D1
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
 
         _9664
         rtl
@@ -3867,7 +3867,7 @@
         sta $7FE188
         rep #$20
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         bra _9949
 
 
@@ -4355,7 +4355,7 @@
         _9CF7
         clc
         adc #1,s
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         pla
 
         _9CFF
@@ -9324,7 +9324,7 @@
         adc #$2000
 
         _BC66
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         lda #1,s
         jsr rsUnknown96A477
         ply
@@ -9367,7 +9367,7 @@
         _BC9F
         clc
         adc #1,s
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         pla
         lda #1,s
         jsr rsUnknown96A477
@@ -15751,7 +15751,7 @@
 
         _FAD0
         ora #$006F
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         ply
         plx
         rts

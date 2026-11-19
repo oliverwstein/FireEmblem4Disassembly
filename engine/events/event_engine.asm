@@ -5372,7 +5372,7 @@
 
             jsl rlSetVillageOpen
             lda #10
-            jsl rlUnknown80900D
+            jsl rlPlaySoundEffect2
 
         +
         inc y

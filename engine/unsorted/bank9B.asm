@@ -147,7 +147,7 @@
         jsl rlUnknown95F13C
         bcc _DD62
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         sep #$20
         lda $7FD8BA
         ora #$01
@@ -165,7 +165,7 @@
         lda bDecompressionArrayFlag,b
         and #$00FF
         bne _DD99
-        lda $04F4,b
+        lda bAPUUploading,b
         and #$00FF
         bne _DD99
         jsl rlUnknown9BDE69
@@ -422,7 +422,7 @@
         .databank ?
 
         lda #$001E
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlResetHDMAEngine
         jsl rlUnknown96D659
         jsl rlUnknown95F741
@@ -2748,9 +2748,9 @@
         .databank ?
 
         sep #$20
-        lda $04EA,b
+        lda bSoundFlags,b
         and #$EF
-        sta $04EA,b
+        sta bSoundFlags,b
         rep #$20
         lda #$0001
         sta $04BA,b
@@ -2974,7 +2974,7 @@
         lda #$0028
         sta $7FD046
         lda #$0084
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         bra _FD43
 
 

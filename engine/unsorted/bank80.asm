@@ -52,7 +52,7 @@
 
         _81E9
         inc wVBlankDisabledFramecount
-        jsl rlUnknown8090A2
+        jsl rlSendSoundQueuesToAPU
         jsl rlCopyINIDISPBuffer
         jsl rlUnknown91EB76
         ply
@@ -1156,12 +1156,12 @@
         stz lR38
         sep #$20
         lda #$FE
-        sta $04F4,b
+        sta bAPUUploading,b
         jsl rlUnknown809124
         sep #$20
         stz $04F5,b
         lda #$FD
-        sta $04F4,b
+        sta bAPUUploading,b
         rep #$20
         lda $04B8,b
         sta lR39+1
@@ -1220,7 +1220,7 @@
 
         _8F94
         rep #$20
-        lda $04EA,b
+        lda bSoundFlags,b
         and #$0010
         beq $808FC6
         pla
@@ -1242,11 +1242,14 @@
       .al
       .xs
 
-      rlUnknown808FA3 ; 80/8FA3
+      rlSendSoundCommand ; 80/8FA3
 
         .al
         .autsiz
         .databank ?
+
+        ; A = value: adds it to aSoundEffectQueue whatever bSoundFlags says. Used for
+        ; commands from $C0 up, such as $E0 before the phase music changes.
 
         php
         phb
@@ -1257,11 +1260,16 @@
         pha
         bra +
 
-      rlUnknown808FAD ; 80/8FAD
+      rlPlaySoundEffect ; 80/8FAD
 
         .al
         .autsiz
         .databank ?
+
+        ; A = sound effect ID: adds it to aSoundEffectQueue, which
+        ; rlSendSoundQueuesToAPU sends to APU port 0. Does nothing while bAPUUploading
+        ; is set or bit 0 of bSoundFlags is set (sound effects off). Menus use it: $06
+        ; cursor, $08 confirm, $21 cancel.
 
         php
         phb
@@ -1270,11 +1278,11 @@
         rep #$30
         phx
         tax
-        lda $04F4,b
+        lda bAPUUploading,b
         and #$00FF
         bne _End
 
-          lda $04EA,b
+          lda bSoundFlags,b
           and #$0001
           bne _End
 
@@ -1284,7 +1292,7 @@
             ldx #0
 
               -
-              lda $04D8,b,x
+              lda aSoundEffectQueue,b,x
               beq +
 
                 inc x
@@ -1294,7 +1302,7 @@
 
             +
             pla
-            sta $04D8,b,x
+            sta aSoundEffectQueue,b,x
         
         _End
         plx
@@ -1326,35 +1334,39 @@
         phx
 
         tax
-        lda $04F4,b
+        lda bAPUUploading,b
         and #$00FF
-        beq rlUnknown80900D._901D
+        beq rlPlaySoundEffect2._901D
 
         cpx #$0010
         beq +
 
         cpx #$0020
-        bne rlUnknown80900D._End
+        bne rlPlaySoundEffect2._End
         
         +
-        cpx $04E2,b
-        beq rlUnknown80900D._End
+        cpx aSoundEffect2Queue,b
+        beq rlPlaySoundEffect2._End
 
-        cpx $04E4,b
-        beq rlUnknown80900D._End
+        cpx aSoundEffect2Queue+2,b
+        beq rlPlaySoundEffect2._End
 
-        cpx $04E6,b
-        beq rlUnknown80900D._End
+        cpx aSoundEffect2Queue+4,b
+        beq rlPlaySoundEffect2._End
 
-        cpx $04E8,b
-        beq rlUnknown80900D._End
-        bra rlUnknown80900D._901D
+        cpx aSoundEffect2Queue+6,b
+        beq rlPlaySoundEffect2._End
+        bra rlPlaySoundEffect2._901D
 
-      rlUnknown80900D ; 80/900D
+      rlPlaySoundEffect2 ; 80/900D
 
         .al
         .autsiz
         .databank ?
+
+        ; A = sound effect ID: adds it to aSoundEffect2Queue, which
+        ; rlSendSoundQueuesToAPU sends to APU port 2. Does nothing while bAPUUploading
+        ; is set or bit 2 of bSoundFlags is set. Battle animations use it most.
 
         php
         phb
@@ -1363,12 +1375,12 @@
         rep #$30
         phx
         tax
-        lda $04F4,b
+        lda bAPUUploading,b
         and #$00FF
         bne _End
 
           _901D
-          lda $04EA,b
+          lda bSoundFlags,b
           and #$0004
           bne _End
 
@@ -1376,7 +1388,7 @@
           ldx #0
 
           -
-          lda $04E2,b,x
+          lda aSoundEffect2Queue,b,x
           beq +
 
             inc x
@@ -1386,7 +1398,7 @@
 
           +
           pla
-          sta $04E2,b,x
+          sta aSoundEffect2Queue,b,x
 
         _End
         plx
@@ -1419,7 +1431,7 @@
         plb
         .databank $80
         rep #$20
-        lda $04F6,b
+        lda bAPUStatus,b
         and #$0002
         bne _9057
         lda $04EB,b
@@ -1450,11 +1462,11 @@
         plb
         .databank $80
         rep #$20
-        lda $04F6,b
+        lda bAPUStatus,b
         and #$0002
         beq _906F
         lda #$00F8
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
 
         _906F
         plb
@@ -1479,11 +1491,11 @@
         plb
         .databank $80
         rep #$20
-        lda $04F6,b
+        lda bAPUStatus,b
         and #$0080
         beq _9087
         lda #$00F3
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
 
         _9087
         plb
@@ -1508,11 +1520,11 @@
         plb
         .databank $80
         rep #$20
-        lda $04F6,b
+        lda bAPUStatus,b
         and #$0080
         bne _909F
         lda #$00F2
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
 
         _909F
         plb
@@ -1532,13 +1544,17 @@
       .al
       .xl
 
-      rlUnknown8090A2 ; 80/90A2
+      rlSendSoundQueuesToAPU ; 80/90A2
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Once the APU echoes back the value on port 0 (or port 2), sends the next one
+        ; from aSoundEffectQueue (aSoundEffect2Queue). Also keeps port 3 in bAPUStatus
+        ; and port 1 in $0506. Skipped while bAPUUploading is set.
 
         php
         phb
@@ -1547,7 +1563,7 @@
         .databank $80
         sep #$10
         rep #$20
-        ldy $04F4,b
+        ldy bAPUUploading,b
         bne _9121
 
         _90AF
@@ -1560,46 +1576,46 @@
         ldx $2140,b
         cpx $2140,b
         bne _90BA
-        cpx $04D6,b
+        cpx wSoundEffectCurrent,b
         bne _90E2
-        lda $04D8,b
-        sta $04D6,b
-        lda $04DA,b
-        sta $04D8,b
-        lda $04DC,b
-        sta $04DA,b
-        lda $04DE,b
-        sta $04DC,b
-        stz $04DE,b
+        lda aSoundEffectQueue,b
+        sta wSoundEffectCurrent,b
+        lda aSoundEffectQueue+2,b
+        sta aSoundEffectQueue,b
+        lda aSoundEffectQueue+4,b
+        sta aSoundEffectQueue+2,b
+        lda aSoundEffectQueue+6,b
+        sta aSoundEffectQueue+4,b
+        stz aSoundEffectQueue+6,b
 
         _90E2
-        lda $04D6,b
+        lda wSoundEffectCurrent,b
         sta $2140,b
 
         _90E8
         ldx $2143,b
         cpx $2143,b
         bne _90E8
-        stx $04F6,b
+        stx bAPUStatus,b
 
         _90F3
         ldx $2142,b
         cpx $2142,b
         bne _90F3
-        cpx $04E0,b
+        cpx wSoundEffect2Current,b
         bne _911B
-        lda $04E2,b
-        sta $04E0,b
-        lda $04E4,b
-        sta $04E2,b
-        lda $04E6,b
-        sta $04E4,b
-        lda $04E8,b
-        sta $04E6,b
-        stz $04E8,b
+        lda aSoundEffect2Queue,b
+        sta wSoundEffect2Current,b
+        lda aSoundEffect2Queue+2,b
+        sta aSoundEffect2Queue,b
+        lda aSoundEffect2Queue+4,b
+        sta aSoundEffect2Queue+2,b
+        lda aSoundEffect2Queue+6,b
+        sta aSoundEffect2Queue+4,b
+        stz aSoundEffect2Queue+6,b
 
         _911B
-        lda $04E0,b
+        lda wSoundEffect2Current,b
         sta $2142,b
 
         _9121
@@ -1640,7 +1656,7 @@
         ldx #$BBAA
         cpx $2140,b
         beq _916E
-        lda $04F4,b
+        lda bAPUUploading,b
         sta $2140,b
         bra _912C
 
@@ -1713,7 +1729,7 @@
         cmp $2140,b
         bne _9197
         bvs _9148
-        stz $04F4,b
+        stz bAPUUploading,b
         rep #$30
 
         _91A3
@@ -1745,7 +1761,7 @@
         .databank $80
         sep #$10
         rep #$20
-        lda $04F4,b
+        lda bAPUUploading,b
         and #$00FF
         sta $2140,b
         ldx #$00
@@ -1755,7 +1771,7 @@
         jsl rlDisableVBlank
 
         _91D2
-        ldx $04F4,b
+        ldx bAPUUploading,b
         bra _91F9
 
 
@@ -1903,10 +1919,10 @@
 
         _92B0
         ldx $2141,b
-        cpx $04F4,b
+        cpx bAPUUploading,b
         beq _92B0
         ldx #$00
-        stx $04F4,b
+        stx bAPUUploading,b
         ldx $04F5,b
         beq _92C6
         jsl rlEnableVBlank
@@ -2416,7 +2432,7 @@
 
         _95DF
         sta $04F7,b
-        lda $04EA,b
+        lda bSoundFlags,b
         cmp $04EC,b
         beq _962F
         clc
@@ -2441,7 +2457,7 @@
 
         _960B
         clc
-        lda $04EA,b
+        lda bSoundFlags,b
         and #$10
         beq _9614
         sec
@@ -2552,7 +2568,7 @@
         .databank ?
 
         tax
-        lda $04F4,b
+        lda bAPUUploading,b
         and #$00FF
         bne _97F6
         sep #$20
@@ -2638,7 +2654,7 @@
         and #$00FF
         xba
         ora #$00F1
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
         rts
 
 
@@ -2745,12 +2761,12 @@
         rep #$20
         lda $04FA,b
         beq _9930
-        ldx $04F4,b
+        ldx bAPUUploading,b
         bne _9930
         ldx #$00
         stx $04F5,b
         ldx $04FC,b
-        stx $04F4,b
+        stx bAPUUploading,b
         rep #$10
         ldx $04B8,b
         stx lR39+1
@@ -3197,7 +3213,7 @@
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlCopyPPURegisterBuffer
-        jsl rlUnknown8090A2
+        jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
@@ -3711,9 +3727,9 @@
         cmp #$0001
         bne _ADD0
         sep #$20
-        lda $04EA,b
+        lda bSoundFlags,b
         ora #$40
-        sta $04EA,b
+        sta bSoundFlags,b
         rep #$20
 
         _ADD0
@@ -3762,7 +3778,7 @@
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlHandlePossibleHDMA
         jsl rlCopyPPURegisterBuffer
-        jsl rlUnknown8090A2
+        jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
@@ -3824,7 +3840,7 @@
         jsl rlProcessDMAStructArray
         jsl rlHandlePossibleHDMA
         jsl rlCopyPPURegisterBuffer
-        jsl rlUnknown8090A2
+        jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlUnknown82E147
@@ -4207,7 +4223,7 @@
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlHandlePossibleHDMA
         jsl rlCopyPPURegisterBuffer
-        jsl rlUnknown8090A2
+        jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
@@ -4541,7 +4557,7 @@
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlHandlePossibleHDMA
         jsl rlCopyPPURegisterBuffer
-        jsl rlUnknown8090A2
+        jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
@@ -5275,7 +5291,7 @@
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlHandlePossibleHDMA
         jsl rlCopyPPURegisterBuffer
-        jsl rlUnknown8090A2
+        jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
@@ -5702,7 +5718,7 @@
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlHandlePossibleHDMA
         jsl rlCopyPPURegisterBuffer
-        jsl rlUnknown8090A2
+        jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
         jsl rlUnknown82E147
         lda $7FFC77
@@ -5750,7 +5766,7 @@
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlHandlePossibleHDMA
         jsl rlCopyPPURegisterBuffer
-        jsl rlUnknown8090A2
+        jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
         jsl rlUnknown82E147
         jsl rlClearSpriteExtBuffer
@@ -7501,7 +7517,7 @@
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlHandlePossibleHDMA
         jsl rlCopyPPURegisterBuffer
-        jsl rlUnknown8090A2
+        jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
@@ -7567,7 +7583,7 @@
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlHandlePossibleHDMA
         jsl rlCopyPPURegisterBuffer
-        jsl rlUnknown8090A2
+        jsl rlSendSoundQueuesToAPU
         jsl rlGetJoypadInput
         pla
         sta lR19+1

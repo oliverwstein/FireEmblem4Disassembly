@@ -114,7 +114,7 @@
         lda #$0000
         sta wCurrentChapter,b
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0002
         sta $0D77,b
         lda #$B122

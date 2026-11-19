@@ -2864,7 +2864,7 @@
         cmp #1,s
         beq _92C0
         lda #$000D
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _92C0
         pla
@@ -3035,7 +3035,7 @@
         cmp #1,s
         beq _93BA
         lda #$000D
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _93BA
         pla
@@ -5939,7 +5939,7 @@
         and #$00FF
         beq _A480
         lda #$00E0
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
 
         _A480
         rtl
@@ -7646,14 +7646,14 @@
         _AFEA
         sta wR0
         ora #1,s
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         pla
         lda $0AE4,b
         bit #$0040
         beq _B004
         lda wR0
         ora #$0050
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
 
         _B004
         plx
@@ -9842,7 +9842,7 @@
         jsr rsUnknown95C0F3
         jsr rsUnknown95C17A
         ora #1,s
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         pla
 
         _BD60
@@ -17116,7 +17116,7 @@
         lda #$002C
         jsl rlUnknown96A4B2
         lda #$0092
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0057
         sta $7FE4D9
 
@@ -17146,7 +17146,7 @@
         lda #$002F
         jsl rlUnknown96A4B2
         lda #$0092
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0057
         sta $7FE4D9
 
@@ -17176,7 +17176,7 @@
         lda #$002F
         jsl rlUnknown96A4B2
         lda #$0093
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0067
         sta $7FE4D9
 
@@ -17206,7 +17206,7 @@
         lda #$0044
         jsl rlUnknown96A4B2
         lda #$0093
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0067
         sta $7FE4D9
 

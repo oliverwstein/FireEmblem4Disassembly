@@ -5266,9 +5266,9 @@
         cmp #$0002
         bne _BF8A
         sep #$20
-        lda $04EA,b
+        lda bSoundFlags,b
         ora #$10
-        sta $04EA,b
+        sta bSoundFlags,b
         rep #$20
         bra _BFAD
 
@@ -5277,19 +5277,19 @@
         cmp #$0001
         bne _BF9F
         sep #$20
-        lda $04EA,b
+        lda bSoundFlags,b
         and #$EF
         ora #$40
-        sta $04EA,b
+        sta bSoundFlags,b
         rep #$20
         bra _BFAD
 
 
         _BF9F
         sep #$20
-        lda $04EA,b
+        lda bSoundFlags,b
         and #$AF
-        sta $04EA,b
+        sta bSoundFlags,b
         rep #$20
         bra _BFAD
 
@@ -5721,7 +5721,7 @@
 
         lda $04BA,b
         bne _C43F
-        lda $04F6,b
+        lda bAPUStatus,b
         bit #$0030
         bne _C43F
         lda #<>rsUnknown80BFFB
@@ -5805,7 +5805,7 @@
         bit #$0001
         bne _C49C
         lda #$006D
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         lda #$00FF
         sta $7E8B90
         sep #$20
@@ -5817,7 +5817,7 @@
 
         _C49C
         lda #$006C
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
 
         _C4A3
         rts

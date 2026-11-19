@@ -237,7 +237,7 @@
         .autsiz
         .databank ?
 
-        lda $04F6,b
+        lda bAPUStatus,b
         bit #$0002
         beq +
 

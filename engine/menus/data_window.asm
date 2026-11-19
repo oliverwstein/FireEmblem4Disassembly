@@ -1012,7 +1012,7 @@
 
         _CF6E
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda wUnknown000D79,b
         bit #$0020
         bne _CF9E
@@ -1041,7 +1041,7 @@
         lda #$0001
         sta wGameStateStep,b
         lda #$0008
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsDataWindowCopyPalettes
         jsr rsDataWindowClearListColumns
         jsl rlDataWindowDrawDetails
@@ -1057,7 +1057,7 @@
         lda wDataWindowCurrentArmy
         beq _CFF1
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$FFFF
         sta wDataWindowCursorMoveDirection
         lda wDataWindowCursorYCoordinate
@@ -1075,7 +1075,7 @@
         cmp wDataWindowArmyCount
         beq _D017
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0001
         sta wDataWindowCursorMoveDirection
         lda wDataWindowCursorYCoordinate
@@ -1151,7 +1151,7 @@
 
         _D079
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsDataWindowClearListColumns
         jsl rlDataWindowDrawListColumns
         jsl rlDMAByStruct
@@ -1167,7 +1167,7 @@
         lda wDataWindowCurrentArmy
         beq _D0BB
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$FFFF
         sta wDataWindowCursorMoveDirection
         lda wDataWindowCursorYCoordinate
@@ -1186,7 +1186,7 @@
         cmp wDataWindowArmyCount
         beq _D0E4
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0001
         sta wDataWindowCursorMoveDirection
         lda wDataWindowCursorYCoordinate

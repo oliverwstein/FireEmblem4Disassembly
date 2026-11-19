@@ -217,7 +217,7 @@
 
         _814A
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown898B3B
         lda $7F8183
         cmp #$C3E6
@@ -341,7 +341,7 @@
         jsl rlUnknown89876D
         stz $0885,b
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _826D
         jsr rsUnknown898B3B
@@ -350,7 +350,7 @@
 
         _8271
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $7F818F
         bne _82AB
         sta $7F8191
@@ -410,7 +410,7 @@
         sta wBufferBG3VOFS
         sta wBufferBG2VOFS
         lda #$0011
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown898B3B
         jsr rsUnknown898A7E
         jsr rsUnknown8992AD
@@ -486,7 +486,7 @@
 
         _8366
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown898A7E
         jsr rsUnknown8992AD
         lda $7F8183
@@ -601,7 +601,7 @@
 
         _8465
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $7F818F
         bne _84A2
         sta $7F8191
@@ -660,7 +660,7 @@
         sta wBufferBG3VOFS
         sta wBufferBG2VOFS
         lda #$0012
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown898B3B
         jsr rsUnknown898A7E
         jsr rsUnknown8992AD
@@ -673,7 +673,7 @@
         lda #$0000
         sta $7F81CF
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown89A3C0
         lda #$0008
         sta wGameStateStep,b
@@ -895,7 +895,7 @@
         jsr rsUnknown898A7E
         jsr rsUnknown8992AD
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -951,7 +951,7 @@
         sta $7F8185
         jsl rlUnknown89876D
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _86D5
         jsr rsUnknown8989CE
@@ -971,7 +971,7 @@
         sta $7F8185
         jsl rlUnknown89876D
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _8700
         jsr rsUnknown8989CE
@@ -992,7 +992,7 @@
         lda #$0000
         sta wGameStateStep,b
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -4294,7 +4294,7 @@
 
         _A27B
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         ldx #$0700
         lda #$0010
         ldy #$0010
@@ -4318,7 +4318,7 @@
         beq _A2CA
         sta $7F81CF
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown89A3C0
         jsr rsUnknown8992AD
 
@@ -4334,7 +4334,7 @@
         bmi _A2E6
         sta $7F81CF
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown89A3C0
 
         _A2E6
@@ -4863,7 +4863,7 @@
 
         _A651
         lda #$0027
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         lda @l wSelectedUnitDataRAMPointer
         sta $7F81A5
         lda #$0003
@@ -4942,7 +4942,7 @@
 
         _A6F4
         lda #$0026
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         lda #$0003
         sta $7F819F
         sep #$20
@@ -5227,7 +5227,7 @@
         lda $7F8400
         beq _EBB5
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$F000
         sta $7F8428
 
@@ -5244,7 +5244,7 @@
         cmp wR0
         beq _EBD6
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$1000
         sta $7F8428
 
@@ -5297,7 +5297,7 @@
         beq _EC47
         sta wDebugMenuScreenIndex,x
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnknown89ED12
         jsl rlUnknown89F065
 
@@ -5316,7 +5316,7 @@
         dec a
         sta wDebugMenuScreenIndex,x
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnknown89ED12
         jsl rlUnknown89F065
 
@@ -5326,7 +5326,7 @@
 
         _EC72
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnknown89F842
         jsl rlUnknown89ED12
         jsl rlUnknown89F065
@@ -5425,7 +5425,7 @@
 
         _ECEE
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnknown89F7E6
         lda #$0001
         sta wGameStateStep,b
@@ -5434,7 +5434,7 @@
 
         _ED00
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnknown89F7E6
         lda #$0001
         sta wGameStateStep,b

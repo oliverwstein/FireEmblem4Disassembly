@@ -1354,7 +1354,7 @@
         cmp wUnitWindowMaxRows
         beq _B5E2
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _B5E2
         rts
@@ -1378,7 +1378,7 @@
         cmp wUnitWindowMaxRows
         beq _B61A
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _B61A
         rts
@@ -1436,7 +1436,7 @@
         lda $8BB61B,x
         sta wUnitWindowScrollPixels
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -1454,7 +1454,7 @@
         cmp wUnitWindowMaxRows
         beq _B6BD
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _B6BD
         rts
@@ -1472,7 +1472,7 @@
         cmp wUnitWindowMaxRows
         beq _B6E0
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _B6E0
         rts
@@ -1492,7 +1492,7 @@
         lda $8BB61B,x
         sta wUnitWindowScrollPixels
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -1530,7 +1530,7 @@
         cmp #$0001
         beq _B750
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _B750
         rts
@@ -1562,7 +1562,7 @@
         inc a
         sta wUnitWindowCurrentLine
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -1579,7 +1579,7 @@
         cmp #$0001
         beq _B7A8
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _B7A8
         rts
@@ -1599,7 +1599,7 @@
         lda $8BB61B,x
         sta wUnitWindowScrollPixels
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -2728,7 +2728,7 @@
 
         _C2E7
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _C2EE
         lda #$0001
@@ -2757,7 +2757,7 @@
 
         _C317
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0000
         sta wUnitWindowSortTypeFlag
         sta wUnitWindowCurrentColumn
@@ -2766,7 +2766,7 @@
 
         _C32B
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0000
         sta wUnitWindowSortTypeFlag
         sta wUnitWindowCurrentColumn
@@ -2775,7 +2775,7 @@
 
         _C33F
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnitWindowUpdateSort
         bra _C2EE
 
@@ -2857,7 +2857,7 @@
         cmp wUnitWindowUnitSwapStartSlot
         beq _C3F1
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda wUnitWindowCurrentLine
         dec a
         tax
@@ -2875,7 +2875,7 @@
 
         _C3F1
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _C3F8
         lda #$0000
@@ -4145,7 +4145,7 @@
 
         _A983
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnitWindowSaveListOrder
         lda wGameStateStep,b
         sta wUnitWindowPage
@@ -4173,7 +4173,7 @@
 
         _A9BD
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnitWindowSaveListOrder
         lda wGameStateStep,b
         sta wUnitWindowPage
@@ -4210,7 +4210,7 @@
 
         _AA10
         lda #$0008
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnitWindowSaveListOrder
         lda wGameStateStep,b
         sta wUnitWindowPage
@@ -4244,7 +4244,7 @@
         lda #$0001
         sta wUnitWindowSortTypeFlag
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _AA66
         rtl
@@ -4257,7 +4257,7 @@
         sta wUnitWindowLastScrolledFlag
         sta wUnitWindowScrollingStep
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jml _AAF7
 
 
@@ -4268,7 +4268,7 @@
         sta $7F82D7
         sta wUnitWindowScrollingStep
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jml _AB6E
 
 
@@ -4297,7 +4297,7 @@
         lda #$0000
         sta wUnitWindowScrollingStep
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jml _AAF7
 
 
@@ -4308,7 +4308,7 @@
         lda #$0000
         sta wUnitWindowScrollingStep
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jml _AB6E
 
 
@@ -4502,7 +4502,7 @@
         lda wUnitWindowCurrentLine
         sta wUnitWindowUnitSwapStartSlot
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rtl
 
         .databank 0
@@ -4636,7 +4636,7 @@
         sta wUnitWindowPageScrollFlag
         jsr rsUnitWindowRenderItemIcons
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 

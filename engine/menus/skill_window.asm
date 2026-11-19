@@ -736,7 +736,7 @@
 
         _D821
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0001
         sta wGameStateStep,b
         lda wUnknown000D79,b
@@ -769,7 +769,7 @@
         lda wSkillWindowHolderScroll
         bne _D886
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0001
         sta wSkillWindowHolderScroll
         lda #$0001
@@ -785,7 +785,7 @@
         lda wSkillWindowHolderScroll
         beq _D8A7
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$FFFF
         sta wSkillWindowHolderScrollDirection
         lda wSkillWindowHolderScroll
@@ -1348,7 +1348,7 @@
         lda wSkillWindowCursorRow
         beq _DCB9
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$FFFF
         sta wSkillWindowCursorMoveDirection
         lda wSkillWindowCursorYCoordinate
@@ -1362,7 +1362,7 @@
 
         _DCB9
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$FFFF
         sta wSkillWindowScrollDirection
         lda wSkillWindowScrolledLines
@@ -1399,7 +1399,7 @@
         cmp #$000B
         beq _DD17
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0001
         sta wSkillWindowCursorMoveDirection
         lda wSkillWindowCursorYCoordinate
@@ -1413,7 +1413,7 @@
 
         _DD17
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0001
         sta wSkillWindowScrollDirection
         lda wSkillWindowScrolledLines

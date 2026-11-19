@@ -140,7 +140,7 @@
         _8270
         xba
         ora #1,s
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         pla
         plx
         rts

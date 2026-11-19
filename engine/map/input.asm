@@ -82,7 +82,7 @@
         beq +
 
         lda #5
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         lda #0
         sta $0790,b
@@ -119,7 +119,7 @@
         .databank ?
 
         lda #$0009
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aHeaderTypeOffset,b,x
         tay
         jsl rlLoadMapMenuDataFromProc
@@ -224,7 +224,7 @@
 
         _B037
         lda #$0008
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -241,13 +241,13 @@
         jsr rsUnknown88B8E9
         bcs _B067
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
         _B067
         lda #$0022
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -271,7 +271,7 @@
 
         _B081
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         stz $07DA,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
@@ -360,7 +360,7 @@
         lda wMapScrollYPixels,b
         sta wMapYOffset,b
         lda #$0009
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #(`procUnknown85DDDB)<<8
         sta lR44+1
         lda #<>procUnknown85DDDB
@@ -389,7 +389,7 @@
         bit #$0800
         bne _B198
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         stz $07DA,b
         lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
@@ -433,7 +433,7 @@
         lda $077E,b
         sta $077A,b
         lda #$0005
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown88BBD3
         stz wUnknown0007D8,b
         jsl rlUnknown85E85D
@@ -474,7 +474,7 @@
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         lda #$0008
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnknown88B3AF
         lda #$B122
         sta $7F8183
@@ -575,7 +575,7 @@
         lda #$FFFF
         sta $089B,b
         lda #$0009
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jml $88B316
 
         .byte $18, $6B
@@ -683,7 +683,7 @@
         .databank ?
 
         lda #$00F0
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
         lda #$00E0
         jsl rlUnknown808F6F
         jsl rlUnknown88B3AF

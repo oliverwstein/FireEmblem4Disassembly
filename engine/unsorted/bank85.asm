@@ -152,7 +152,7 @@
         beq +
 
           lda #$000A
-          jsl rlUnknown808FAD
+          jsl rlPlaySoundEffect
           
           jsl rlUnknown8582BA
           lda #1
@@ -169,7 +169,7 @@
         beq +
 
           lda #$0021
-          jsl rlUnknown808FAD
+          jsl rlPlaySoundEffect
 
           jsl rlUnknown8582BA
           jsr rsUnknown8584A1
@@ -199,7 +199,7 @@
           +
           sta aProcSystem.aBody6,b,x
           lda #6
-          jsl rlUnknown808FAD
+          jsl rlPlaySoundEffect
           bra _849A
         
         _8472
@@ -223,7 +223,7 @@
           +
           sta aProcSystem.aBody6,b,x
           lda #6
-          jsl rlUnknown808FAD
+          jsl rlPlaySoundEffect
         
         _849A
         jsr rsUnknown858542
@@ -2642,7 +2642,7 @@
         _9465
         sta aProcSystem.aBody6,b,x
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jml _94EC
 
 
@@ -2662,7 +2662,7 @@
         _948C
         sta aProcSystem.aBody6,b,x
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jml _94EC
 
 
@@ -2671,7 +2671,7 @@
         bit #$0080
         beq _94AF
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown8595C0
         jml _957A
 
@@ -2681,7 +2681,7 @@
         bit #$8000
         beq _94E8
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown8596FA
         jsl rlUnknown8586FA
         jsl rlProcEngineFreeProc
@@ -2786,7 +2786,7 @@
         bit #$0080
         beq _959A
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnknown8586FA
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
@@ -2798,7 +2798,7 @@
         bit #$8000
         beq _95AE
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$943B
         sta aProcSystem.aHeaderOnCycle,b,x
 
@@ -4958,7 +4958,7 @@
         jsl rlUnknown8587E1
         jsl rlUnknown85C0CE
         lda #$0009
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rtl
 
         .databank 0
@@ -5009,7 +5009,7 @@
         bit #$0300
         beq _A539
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aBody7,b,x
         bit #$0001
         bne _A531
@@ -5073,7 +5073,7 @@
         bit #$0080
         beq _A591
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aBody7,b,x
         bne _A58B
         jsl rlUnknown85DCAB
@@ -5100,11 +5100,11 @@
         bit #$0080
         beq _A5B9
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aBody7,b,x
         bne _A5BB
         lda #$000E
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnknown87BFD9
         jsl rlSaveToSaveSlot
         bra _A5BB
@@ -5289,7 +5289,7 @@
         bit #$0800
         beq _A6D8
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aBody7,b,x
         dec a
         bpl _A6F0
@@ -5301,7 +5301,7 @@
         bit #$0400
         beq _A6F5
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aBody7,b,x
         inc a
         cmp #$0003
@@ -5318,7 +5318,7 @@
         bit #$0080
         beq _A736
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         phx
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
@@ -5347,7 +5347,7 @@
         bit #$8000
         beq _A750
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _A742
         jsl rlUnknown8586FA
@@ -5449,7 +5449,7 @@
         bit #$0800
         beq _A7F7
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aBody7,b,x
         dec a
         bpl _A80F
@@ -5461,7 +5461,7 @@
         bit #$0400
         beq _A814
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aBody7,b,x
         inc a
         cmp #$0002
@@ -5478,7 +5478,7 @@
         bit #$0080
         beq _A837
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aBody7,b,x
         sta wRoutineVariable1,b
         lda #$0000
@@ -5493,7 +5493,7 @@
         beq _A871
         stz aProcSystem.wInput0,b
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _A846
         jsl rlUnknown8586FA
@@ -6847,7 +6847,7 @@
         bit #$0080
         beq _B220
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$B26B
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _B254
@@ -6858,7 +6858,7 @@
         bit #$0800
         beq _B239
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aBody6,b,x
         dec a
         bpl _B251
@@ -6870,7 +6870,7 @@
         bit #$0400
         beq _B254
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aBody6,b,x
         inc a
         cmp #$0008
@@ -6919,7 +6919,7 @@
         bit #$0080
         beq _B29F
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown85B43E
         pha
         jsr rsUnknown85B40E
@@ -6933,7 +6933,7 @@
         bit #$8000
         beq _B2B0
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown85B40E
         bra _B2B2
 
@@ -8041,9 +8041,9 @@
 
           jsl rlUnknown85A234
           lda #$00F7
-          jsl rlUnknown808FA3
+          jsl rlSendSoundCommand
           lda aProcSystem.aBody4,b,x
-          jsl rlUnknown808FAD
+          jsl rlPlaySoundEffect
           lda #<>rlUnknown85B9F2
           sta aProcSystem.aHeaderOnCycle,b,x
 
@@ -8096,7 +8096,7 @@
         jsl rlUnknown85C0C7
         jsl rlUnknown85C0D5
         lda #$00E8
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
         bra _BA12
 
         .databank 0
@@ -8231,7 +8231,7 @@
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlUnknown858793
         lda #$0095
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #<>rlUnknown85BAF9
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
@@ -10770,7 +10770,7 @@
         dec $0DB2,b
         bpl _CBFF
         lda #$0D
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$06
         sta $0DB2,b
 
@@ -11609,7 +11609,7 @@
         ora wR0
         jsr rsUnknown85CE9C
         lda #$000D
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _D009
         phx
@@ -13306,7 +13306,7 @@
 
         _D977
         lda #$000B
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #<>rlUnknown85D985
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
@@ -13355,7 +13355,7 @@
 
         _D9C9
         lda #$000C
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0032
         sta aProcSystem.aBody5,b,x
         lda #<>rlUnknown85D9DF
@@ -13997,7 +13997,7 @@
         .databank ?
 
         lda #$00E0
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
         stz wGameStateRoutine1,b
         lda #$F222
         sta aProcSystem.wInput0,b
@@ -14605,7 +14605,7 @@
         .databank ?
 
         lda #$0009
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aHeaderTypeOffset,b,x
         tay
         jsl rlLoadMapMenuDataFromProc
@@ -16025,7 +16025,7 @@
         .databank ?
 
         lda #$0009
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda aProcSystem.aHeaderTypeOffset,b,x
         tay
         jsl rlLoadMapMenuDataFromProc

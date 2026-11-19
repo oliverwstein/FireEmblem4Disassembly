@@ -619,7 +619,7 @@
         .databank ?
 
         lda #$0021
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         rtl
 
         .databank 0

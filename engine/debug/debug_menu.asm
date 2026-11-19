@@ -3559,7 +3559,7 @@
 
         +
         lda #6
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         sep #$20
         lda #INIDISP_Setting(true, 0)
@@ -3596,7 +3596,7 @@
         
         _E84B
         lda #6
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda wGameStateStep,b
         inc a
         cmp #4
@@ -3872,7 +3872,7 @@
           sta $7F8408
           jsr rlDrawDebugMenu
           lda #6
-          jsl rlUnknown808FAD
+          jsl rlPlaySoundEffect
 
         + 
         rts
@@ -3885,7 +3885,7 @@
           sta $7F8408
           jsr rlDrawDebugMenu
           lda #6
-          jsl rlUnknown808FAD
+          jsl rlPlaySoundEffect
 
         +
         rts

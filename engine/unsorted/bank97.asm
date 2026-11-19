@@ -26,7 +26,7 @@
         pha
         lda #$0090
         ora #1,s
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         pla
         rtl
 

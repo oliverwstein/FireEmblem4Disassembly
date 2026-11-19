@@ -2784,7 +2784,7 @@
         lda #$0004
         sta aProcSystem.aBody2,b,x
         lda #$0019
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda wUnknown000D79,b
         bit #$0800
         beq _946A
@@ -3122,7 +3122,7 @@
         beq _9801
         stz $0ADB,b
         lda #$001C
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         bra _9801
 
 
@@ -3131,9 +3131,9 @@
         bne _97C2
         inc $0ADB,b
         lda #$001A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$001B
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _97C2
         stz wMapScrollCurrentPixelDistance,b
@@ -3474,7 +3474,7 @@
         beq _99EF
         stz $0ADB,b
         lda #$001C
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         bra _99EF
 
         .databank 0
@@ -3881,7 +3881,7 @@
           .structDMAToVRAM $7E7C88, $0500, $80, $A900
 
         lda #$001D
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda wCursorXOffset,b
         clc
         adc wMapXOffset,b
@@ -4482,7 +4482,7 @@
         jsl rlUnknown85921D
         jsl rlUnknown84DC1C
         lda #$0008
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rtl
 
         .databank 0
@@ -4631,7 +4631,7 @@
         stz wMapEnableXScrollFlag,b
         stz wMapEnableYScrollFlag,b
         lda #$0005
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0004
         sta wMapScrollSpeed,b
         lda wJoy1Input
@@ -5284,7 +5284,7 @@
         lda $077E,b
         sta $077A,b
         lda #$0005
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         stz wUnknown0007D8,b
         lda $0786,b
         bit #$0004
@@ -5337,7 +5337,7 @@
 
         _A8A3
         lda #$0005
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown88AB47
         lda wActiveUnitDeploymentOffset,b
         sta wR0
@@ -5445,7 +5445,7 @@
         jsl rlUnknown85921D
         jsl rlUnknown84DC1C
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rtl
 
 
@@ -7984,7 +7984,7 @@
         bit #$0001
         beq _BEFE
         lda #$0005
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _BEFE
         rts
@@ -8554,7 +8554,7 @@
 
         _C255
         lda #$0026
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         rts
 
         .databank 0

@@ -557,7 +557,7 @@
             bcc _INC
 
               lda #$00E0
-              jsl rlUnknown808FA3
+              jsl rlSendSoundCommand
               lda #$0020
               sta $0DAD,b
               bra +
@@ -960,7 +960,7 @@
         bne +
 
           lda #$00E0
-          jsl rlUnknown808FA3
+          jsl rlSendSoundCommand
 
           stz wGameStateRoutine1,b
 
@@ -1305,7 +1305,7 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown84AF17
         lda #$001A
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         sec
         rts
 
@@ -1912,7 +1912,7 @@
         plb
         .databank $81
         lda #$00E0
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
         inc wCurrentChapter,b
         stz wUnknown000D79,b
         stz wGameStateRoutine1,b
@@ -2006,7 +2006,7 @@
         .databank ?
 
         lda #$00E0
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
 
         stz $07E0,b
         stz wGameStateRoutine1,b

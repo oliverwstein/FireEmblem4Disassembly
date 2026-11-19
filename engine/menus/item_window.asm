@@ -775,7 +775,7 @@
 
         _B476
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda wUnknown000D79,b
         bit #$0020
         bne _B494
@@ -824,7 +824,7 @@
         sta $7F8475
         sta $7F8477
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jml _B630
 
 
@@ -835,7 +835,7 @@
         sta $7F847B
         sta $7F8477
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jml _B6AF
 
 
@@ -865,7 +865,7 @@
         lda #$0000
         sta $7F8477
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jml _B630
 
 
@@ -876,7 +876,7 @@
         lda #$0000
         sta $7F8477
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jml _B6AF
 
 
@@ -885,7 +885,7 @@
         dec a
         beq _B567
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsItemWindowMoveToPreviousPage
 
         _B567
@@ -897,7 +897,7 @@
         dec a
         beq _B5A8
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda wItemWindowCurrentLine
         cmp #$000D
         bcc _B587
@@ -926,7 +926,7 @@
         cmp wItemWindowItemCount
         beq _B5BD
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsItemWindowMoveToNextPage
 
         _B5BD
@@ -952,7 +952,7 @@
         adc #$001C
         sta wItemWindowCursorYCoordinate
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _B5F1
         rts
@@ -960,7 +960,7 @@
 
         _B5F2
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda wItemWindowScrollOffset
         lsr a
         cmp wItemWindowMaxScroll
@@ -1097,7 +1097,7 @@
         ; Moves to step 1 and draws the panel for choosing the sort order.
 
         lda #$0008
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0001
         sta wGameStateStep,b
         ldx #$01EA
@@ -1125,7 +1125,7 @@
         ; A: makes the item's owner the active unit; closes to the map with the cursor on it if it is on the map (step 3), else fades out to the unit's screen (step 4).
 
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlGetItemRAMStateAndOwner
         lda wR1
         sta wSelectedUnitDataRAMPointer,b

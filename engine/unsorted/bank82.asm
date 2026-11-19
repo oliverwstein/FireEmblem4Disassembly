@@ -15,7 +15,7 @@
         lda aProcSystem.wInput0,b
         sta aProcSystem.aBody0,b,x
         lda aProcSystem.wInput1,b
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
         rtl
 
         .databank 0
@@ -52,7 +52,7 @@
 
         lda $04BA,b
         bne _841E
-        lda $04F6,b
+        lda bAPUStatus,b
         bit #$0030
         bne _841E
         lda aProcSystem.aBody0,b,x
@@ -184,17 +184,17 @@
         stz wGameStateRoutine1,b
         lda #$88B2
         sta aProcSystem.aHeaderOnCycle,b,x
-        lda $04EA,b
+        lda bSoundFlags,b
         pha
         and #$FFFA
-        sta $04EA,b
+        sta bSoundFlags,b
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         pla
-        sta $04EA,b
+        sta bSoundFlags,b
         jsl rlClearAllFadeInProcs
         lda #$00E1
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
 
         _88B1
         rtl
@@ -231,9 +231,9 @@
         jsl rlEventEngineFreeProc
         lda #$0002
         sta wUnknown00171C,b
-        lda $04EA,b
+        lda bSoundFlags,b
         and #$FFFA
-        sta $04EA,b
+        sta bSoundFlags,b
         lda #$C0BC
         jsl rlUnknown80A9D4
         sei

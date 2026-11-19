@@ -1944,7 +1944,7 @@
         bit #$0080
         beq _D898
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         ldx $185A,b
         lda @l $00185C,x
         and #$00FF
@@ -1996,7 +1996,7 @@
         cmp #$0001
         bne _D8EA
         lda #$000E
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $1864,b
         sta aSave.wMenuOperation,b
         inc wGameStateStep,b
@@ -2005,7 +2005,7 @@
 
         _D8DD
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0005
         sta wGameStateStep,b
 
@@ -2118,7 +2118,7 @@
         bit #$0080
         beq _DA24
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _DA24
         rts
@@ -2158,7 +2158,7 @@
         jsl rlUnknown91E932
         bcs _DA63
         lda #$000E
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $1864,b
         dec a
         jsl rlUnknown91E9BB
@@ -2208,7 +2208,7 @@
         cmp #$0007
         beq _DACD
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown91DB17
         lda #$0001
         sta $1866,b
@@ -2223,7 +2223,7 @@
         cmp #$0003
         beq _DAC8
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$FFFF
         sta $1864,b
         lda #$0000
@@ -2274,7 +2274,7 @@
 
         _DB09
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         stz $1866,b
 
         _DB13
@@ -3290,7 +3290,7 @@
         cmp wR0
         beq _E2A8
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _E2A8
         txa
@@ -3357,7 +3357,7 @@
         cmp wR0
         beq _E2E0
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _E2E0
         txa
@@ -4113,7 +4113,7 @@
         lda #$0022
         sta wGameStateStep,b
         lda #$00E0
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
         bra _E77F
 
 

@@ -5722,7 +5722,7 @@
         tax
         jsl rlUnknown9EB4BB
         ora #$0046
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         plx
         jsl rlUnknown9EA417
         lda #$A38C
@@ -7680,7 +7680,7 @@
         pla
         jsl rlUnknown9EB4BB
         ora wR0
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         plx
         rtl
 
@@ -7902,7 +7902,7 @@
         sta $7F57EA
         jsl rlUnknown9EB4BB
         ora wR0
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         lda #1,s
         tax
         lda @l $001057,x
@@ -7915,7 +7915,7 @@
         lda $7F57EA
         jsl rlUnknown9EB4BB
         ora #$004E
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
 
         _B211
         plx
@@ -7955,7 +7955,7 @@
         tya
         jsl rlUnknown9EB4BB
         ora wR0
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
 
         _B249
         plx
@@ -8018,7 +8018,7 @@
         tya
         jsl rlUnknown9EB4BB
         ora wR0
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
 
         _B2AE
         lda $7F45A2
@@ -8064,7 +8064,7 @@
         lda aActiveSpriteSystem.aUnknown001200,b,x
         jsl rlUnknown9EB4BB
         ora wR0
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         plx
         ply
         rtl
@@ -8103,7 +8103,7 @@
         tya
         jsl rlUnknown9EB4BB
         ora #$003D
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
 
         _B39C
         plx
@@ -8138,7 +8138,7 @@
         tya
         jsl rlUnknown9EB4BB
         ora #$002E
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         plx
         ply
         rtl
@@ -8167,7 +8167,7 @@
         and #$00FF
         jsl rlUnknown9EB4BB
         ora #$0032
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         plx
         rtl
 
@@ -8191,7 +8191,7 @@
         lda #$0001
         sta $7F4C05
         lda #$00F7
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
@@ -8217,7 +8217,7 @@
         lda #$0000
         sta $7F4C05
         lda #$00E8
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
 
         _B431
         plx
@@ -8270,7 +8270,7 @@
 
 
         _B4B5
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         plx
         rtl
 
@@ -13772,7 +13772,7 @@
           and #$00FF
           jsl rlUnknown9EB4BB
           ora wR0
-          jsl rlUnknown80900D ; sound
+          jsl rlPlaySoundEffect2 ; sound
         
         _FC23
         lda #(`$7F45AC)<<8

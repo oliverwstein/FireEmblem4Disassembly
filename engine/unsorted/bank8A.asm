@@ -847,7 +847,7 @@
         sta $088F,b
         jsl rlUnknown8A8496
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -1115,7 +1115,7 @@
         _8676
         jsl rlUnknown8A8496
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -1328,7 +1328,7 @@
         _87AD
         jsr rsUnknown8A87B8
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -1676,13 +1676,13 @@
 
         _89E0
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
         _89E8
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -1761,7 +1761,7 @@
         lda #$0000
         sta $7F819D
         lda #$0008
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$BBD9
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -1876,7 +1876,7 @@
 
         _8B3C
         lda #$0022
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -1912,7 +1912,7 @@
         jsl rlUnknown8A979C
         jsr rsUnknown8A8CB7
         lda #$0008
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -1998,7 +1998,7 @@
         lda #$0800
         trb wUnknown000D79,b
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -2054,7 +2054,7 @@
         sta bBufferTM
         rep #$20
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -2080,7 +2080,7 @@
         bpl _8C96
         jsr rsUnknown8A929B
         lda #$0009
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #(`procUnknown85DDDB)<<8
         sta lR44+1
         lda #<>procUnknown85DDDB
@@ -2460,7 +2460,7 @@
 
         _8FAE
         lda #$0022
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -2470,7 +2470,7 @@
         jsl rlUnknown84AF17
         bcs _8FAE
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda wRoutineVariable1,b
         sta wActiveUnitDeploymentOffset,b
         lda #$FFFF
@@ -2499,7 +2499,7 @@
         lda #$0003
         sta $7F766A
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -2531,7 +2531,7 @@
         bcc _8FAE
         jsr rsUnknown8A9209
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -2558,13 +2558,13 @@
         lda #$0005
         sta $7F8082
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
         _9061
         lda #$0022
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -2583,7 +2583,7 @@
         bcc _90BF
         jsl rlUnknown84AF17
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsl rlUnknown88C25D
         lda wCursorXOffset,b
         clc
@@ -2619,7 +2619,7 @@
 
         _90BF
         lda #$0022
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -2689,7 +2689,7 @@
 
         _9150
         lda #$0022
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -3108,7 +3108,7 @@
 
         _944E
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         sep #$20
         lda #$80
         sta bBufferINIDISP
@@ -4821,7 +4821,7 @@
         sbc #$0001
         sta $08A7,b
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $08A5,b
         sta wR1
         beq _A52C
@@ -4840,7 +4840,7 @@
         bcs _A525
         sta $08A7,b
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $08A5,b
         sta wR1
         cmp #$0007
@@ -4891,7 +4891,7 @@
         sbc #$0001
         sta $08A7,b
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $08A5,b
         sta wR1
         beq _A594
@@ -4910,7 +4910,7 @@
         bcs _A58D
         sta $08A7,b
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $08A5,b
         sta wR1
         cmp #$0007
@@ -4961,7 +4961,7 @@
         sbc #$0001
         sta $08A7,b
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $08A5,b
         sta wR1
         beq _A5FB
@@ -4980,7 +4980,7 @@
         adc #$0001
         sta $08A7,b
         lda #$0006
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $08A5,b
         sta wR1
         cmp $7F8091
@@ -7670,7 +7670,7 @@
         lda #$0013
         sta $0594,b
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -7707,7 +7707,7 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -7732,7 +7732,7 @@
 
         _C312
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $0592,b
         sta $0594,b
         lda #$0003
@@ -7817,7 +7817,7 @@
         lda #$0013
         sta $0594,b
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -7854,7 +7854,7 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -7924,7 +7924,7 @@
         lda #$0013
         sta $0594,b
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -8015,7 +8015,7 @@
         lda wCurrentItemDataROMPointer,b
         beq _C8E8
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $7F8082
         clc
         adc $7F8082
@@ -8039,7 +8039,7 @@
 
         _C935
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $7F8082
         clc
         adc $7F8082
@@ -8132,7 +8132,7 @@
 
         _CB19
         lda #$0022
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -8148,7 +8148,7 @@
         cmp #$0000
         beq _CB19
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         jsr rsUnknown8ACC43
         bcs _CBBD
         lda $7F8082
@@ -8174,7 +8174,7 @@
 
         _CB7E
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda $7F8082
         clc
         adc $7F8082
@@ -8357,7 +8357,7 @@
         sbc #$0001
         sta $08A1,b
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$FFFF
         sta $7F7670
         bra _D02D
@@ -8371,7 +8371,7 @@
         adc #$0001
         sta $08A1,b
         lda #$0007
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$FFFF
         sta $7F7670
         bra _D02D
@@ -10950,7 +10950,7 @@
         lda #$000C
         sta $0594,b
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -10985,7 +10985,7 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
 
@@ -11330,7 +11330,7 @@
         lda #$0003
         sta $0592,b
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         .databank 0
@@ -11384,7 +11384,7 @@
         lda #$FFFF
         sta $7F7670
         lda #$000A
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0005
         sta $0592,b
         rts
@@ -11392,7 +11392,7 @@
 
         _FB32
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$8A00
         sta lR18+1
         lda #$D6DA

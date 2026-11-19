@@ -1493,7 +1493,7 @@
         lda $0000,b,y
         and #$00FF
         ora $00
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         inc y
         plx
         rts
@@ -2017,7 +2017,7 @@
         tya
         jsl rlUnknown9EB4BB
         ora wR0
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
 
         _B342
         plx

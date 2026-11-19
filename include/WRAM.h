@@ -254,6 +254,32 @@
 
   ; .word ? ; $0004BA - song ID to play ?
 
+  .virtual $0004D6
+
+    ; Values for the APU's ports 0 and 2, sent by rlSendSoundQueuesToAPU: the
+    ; one being sent, then up to four waiting (0 = empty).
+    wSoundEffectCurrent .word ?   ; $0004D6
+    aSoundEffectQueue .fill 8     ; $0004D8
+      ; Filled by rlPlaySoundEffect and rlSendSoundCommand.
+    wSoundEffect2Current .word ?  ; $0004E0
+    aSoundEffect2Queue .fill 8    ; $0004E2
+      ; Filled by rlPlaySoundEffect2.
+    bSoundFlags .byte ?           ; $0004EA
+      ; Bit 0: rlPlaySoundEffect does nothing. Bit 2: rlPlaySoundEffect2 does
+      ; nothing. Bit 4: rlUnknown808F6F drops values $C8-$DF.
+
+  .endvirtual
+
+  .virtual $0004F4
+
+    bAPUUploading .byte ?         ; $0004F4
+      ; Nonzero while data is being uploaded to the APU; the sound queues wait.
+    .byte ?                       ; $0004F5
+    bAPUStatus .byte ?            ; $0004F6
+      ; Read from APU port 3 every frame.
+
+  .endvirtual
+
 
 
 

@@ -2081,7 +2081,7 @@
           bne _EC96
 
             lda #$0049
-            jsl rlUnknown80900D
+            jsl rlPlaySoundEffect2
 
             jsl rlSetLocationDestroyed
             inc wDestroyedLocationsCount,b

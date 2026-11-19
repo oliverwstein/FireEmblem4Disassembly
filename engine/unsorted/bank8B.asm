@@ -341,7 +341,7 @@
 
         _884F
         lda #$0021
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         lda #$0000
         sta $0D77,b
         lda #$B122

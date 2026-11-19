@@ -1900,17 +1900,17 @@
 
         _89E9
         lda #1
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         _89F1
         lda #2
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rts
 
         _89F9
         lda #$0014
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
 
         _End
         rts
@@ -2394,7 +2394,7 @@
 
         lda [lR18],y
         and #$00FF
-        jsl rlUnknown808FA3
+        jsl rlSendSoundCommand
 
         inc aDialogue.lActivePointer,b
         clc
@@ -3671,7 +3671,7 @@
         .databank ?
 
         and #$00FF
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rtl
 
         .databank 0
@@ -3683,7 +3683,7 @@
         .databank ?
 
         and #$00FF
-        jsl rlUnknown808FAD
+        jsl rlPlaySoundEffect
         rtl
 
         .databank 0
@@ -3695,7 +3695,7 @@
         .databank ?
 
         and #$00FF
-        jsl rlUnknown80900D
+        jsl rlPlaySoundEffect2
         rtl
 
         .databank 0
