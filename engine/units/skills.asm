@@ -501,8 +501,8 @@
         dec x
         bpl -
 
-        jsr $87A373
-        jsr $87A39C
+        jsr rsDebugGetClassSkills
+        jsr rsDebugGetPersonalSkills
 
         plx
         plp

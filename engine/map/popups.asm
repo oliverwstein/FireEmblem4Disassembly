@@ -127,7 +127,7 @@
           tsb aDialogue.wStatus,b
 
           lda #$00FF
-          jsl $809F01
+          jsl rlFillBG3Page0TilemapBuffer
 
         _End
         rtl
@@ -163,7 +163,7 @@
           tay
           lda aProcSystem.aBody0,b,x
           ldx wR0
-          jsl $85BBA5
+          jsl rlUnknown85BBA5
 
         _End
         rtl
@@ -185,7 +185,7 @@
           trb bBufferTM
 
           phx
-          jsl $85BBE0
+          jsl rlUnknown85BBE0
           jsl rlFreeHDMAEntry0
           plx
 

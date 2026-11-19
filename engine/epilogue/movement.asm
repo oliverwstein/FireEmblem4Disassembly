@@ -387,7 +387,7 @@
         sta lR18+1
         lda #<>aEpilogueUnitMovement
         sta lR18
-        jsl $91B03F
+        jsl rlUnknown91B03F
         plx
         bcs _95D3
 

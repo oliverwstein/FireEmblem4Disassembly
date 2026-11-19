@@ -85,7 +85,7 @@
         .autsiz
         .databank ?
 
-        jsl $9BFC8D
+        jsl rlUnknown9BFC8D
         bcs +
 
           rts
@@ -906,7 +906,7 @@
         jsl rlGetCurrentEventPointer
         ldx #<>lEventPointer
         lda #8
-        jsl $80A861
+        jsl rlUnknown80A861
         plx
         rtl
 
@@ -3629,7 +3629,7 @@
         bcs +
 
           lda $0000,b,y
-          jsl $87A040
+          jsl rlUnknown87A040
           bcs +
 
             jml rsChapterEventConditionCommand2F
@@ -3853,7 +3853,7 @@
           stz wEventUnit2Pointer,b
 
           lda $0000,b,y
-          jsl $848DF4
+          jsl rlGetFatherUnitsChildrenRAMPointers
 
           lda $7E2000
           beq _NoChildren
@@ -3931,7 +3931,7 @@
         bcs +
 
           lda $0000,b,y
-          jsl $848603
+          jsl rlUnknown848603
 
         +
         inc y
@@ -3959,7 +3959,7 @@
           inc a
           jsl rlGetUNITGroupPointer
           sta lR18
-          jsl $8488EC ; rlLoadUNITGroupMapSprites
+          jsl rlLoadUNITGroupMapSprites ; rlLoadUNITGroupMapSprites
 
         +
         inc y
@@ -4064,7 +4064,7 @@
           inc a
           jsl rlGetUNITGroupPointer
           sta lR18
-          jsl $8487BA
+          jsl rlLoadUnitGroup
         
         +
         inc y
@@ -4102,7 +4102,7 @@
           inc a
           jsl rlGetUNITGroupPointer
           sta lR18
-          jsl $8487BA
+          jsl rlLoadUnitGroup
 
         +
         tya
@@ -4640,7 +4640,7 @@
           sta lR18
           lda $0000+1,b,y
           sta lR18+1
-          jsl $84B613
+          jsl rlUnknown84B613
 
         +
         inc y
@@ -4835,7 +4835,7 @@
             jsl rlUnsetCastleGuarded
             jsl rlHandleEventLocationModification
             phy
-            jsl $888410
+            jsl rlUnknown888410
             ply
 
         _End
@@ -5180,7 +5180,7 @@
             lda $0002,b,y
             and #$00FF
             sta wR1
-            jsl $848EA0
+            jsl rlCheckUnitsMarriedToEachOther
             bcs +
 
         _End
@@ -5219,7 +5219,7 @@
             lda $0002,b,y
             and #$00FF
             sta wR1
-            jsl $848EA0
+            jsl rlCheckUnitsMarriedToEachOther
             bcs _97FB
 
             lda $0003,b,y
@@ -5231,7 +5231,7 @@
               lda $0002,b,y
               and #$00FF
               sta wR1
-              jsl $848EA0
+              jsl rlCheckUnitsMarriedToEachOther
               bcs _97FB
 
             +
@@ -5244,7 +5244,7 @@
             beq +
 
               sta wR1
-              jsl $848EA0
+              jsl rlCheckUnitsMarriedToEachOther
               bcs _97FB
 
             +
@@ -5260,7 +5260,7 @@
               beq _End
 
                 sta wR1
-                jsl $848EA0
+                jsl rlCheckUnitsMarriedToEachOther
                 bcs _97FB
 
         _End
@@ -5340,7 +5340,7 @@
 
             jsl rlSetVillageOpen
             lda #10
-            jsl $80900D
+            jsl rlUnknown80900D
 
         +
         inc y
@@ -5402,7 +5402,7 @@
 
           lda $0000,b,y
           and #$00FF
-          jsl $81B43F
+          jsl rlUnknown81B43F
 
         +
         inc y
@@ -5420,7 +5420,7 @@
 
           lda $0000,b,y
           and #$00FF
-          jsl $81B461
+          jsl rlUnknown81B461
 
         +
         inc y
@@ -5645,7 +5645,7 @@
 
         bcs +
 
-          jsl $81B2AA
+          jsl rlSaveChapterTurncount
 
         +
         rts
@@ -6619,7 +6619,7 @@
             bra _Loop
 
         _End
-        jsl $888410
+        jsl rlUnknown888410
         ply
         plx
         plp

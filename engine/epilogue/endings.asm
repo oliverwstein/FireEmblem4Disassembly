@@ -1298,7 +1298,7 @@
 
         lda #26
         sta wR14
-        jsl $80A1AB ; divide
+        jsl rlUnknown80A1AB ; divide
         sep #$20
         lda wR13
         clc

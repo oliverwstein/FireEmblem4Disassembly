@@ -160,7 +160,7 @@
         sta lStructPointer1+1,b
         lda #<>$87E001
         sta lStructPointer1,b
-        jsl $82E85D
+        jsl rlUnknown82E85D
         plb
         rtl
 
@@ -686,20 +686,20 @@
         php
         phk
         plb
-        jsl $87E0C9
-        jsl $87E3BE
+        jsl rlGetItemROMPointerByItemRAMStructEntry
+        jsl rlGetItemMaxDurability2
         sta $14
         cmp #$00FF
         beq _E229
 
-        jsl $87E0E5
+        jsl rlGetItemCurrentDurability
         cmp #0
         beq +
 
         cmp $14
         beq _E229
 
-        jsl $87E230
+        jsl rlUnknown87E230
         asl a
         bra _End
         
@@ -708,7 +708,7 @@
         bra _End
         
         _E229
-        jsl $87E3D6
+        jsl rlUnknown87E3D6
         
         _End
         plp
@@ -727,18 +727,18 @@
         php
         phk
         plb
-        jsl $87E0C9
-        jsl $87E3D6
+        jsl rlGetItemROMPointerByItemRAMStructEntry
+        jsl rlUnknown87E3D6
         lsr a
         sta $14
-        jsl $87E0E5
+        jsl rlGetItemCurrentDurability
         and #$00FF
         sta $16
         jsl rlUnsignedMultiply16By16
-        jsl $87E3BE
+        jsl rlGetItemMaxDurability2
         sta $1C
         stz $1E
-        jsl $80A1D8
+        jsl rlUnknown80A1D8
         lda $18
         plp
         plb
@@ -756,21 +756,21 @@
         php
         phk
         plb
-        jsl $87E0C9
-        jsl $87E0E5
+        jsl rlGetItemROMPointerByItemRAMStructEntry
+        jsl rlGetItemCurrentDurability
         and #$00FF
         sta $0585,b
-        jsl $87E3D6
+        jsl rlUnknown87E3D6
         sta $14
-        jsl $87E3BE
+        jsl rlGetItemMaxDurability2
         sec
         sbc $0585,b
         sta $16
         jsl rlUnsignedMultiply16By16
-        jsl $87E3BE
+        jsl rlGetItemMaxDurability2
         sta $1C
         stz $1E
-        jsl $80A1D8
+        jsl rlUnknown80A1D8
         lda $18
         plp
         plb
@@ -788,12 +788,12 @@
         php
         phk
         plb
-        jsl $87E0C9
-        jsl $87E3D6
+        jsl rlGetItemROMPointerByItemRAMStructEntry
+        jsl rlUnknown87E3D6
         sta $1A
-        jsl $87E3BE
+        jsl rlGetItemMaxDurability2
         sta $1C
-        jsl $80A1AB
+        jsl rlUnknown80A1AB
         lda $1A
         plp
         plb
@@ -1646,7 +1646,7 @@
         sta wR11
         pla
 
-        jsl $848924
+        jsl rlUnknown848924
         ora #0
         beq +
 

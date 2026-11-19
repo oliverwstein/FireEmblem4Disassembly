@@ -228,7 +228,7 @@
         .autsiz
         .databank ?
 
-        jsl $80B0D3
+        jsl rlUnknown80B0D3
         lda #<>rlProcDialogueCycle7
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
@@ -313,7 +313,7 @@
         .databank ?
 
         phx
-        jsl $80B0EE
+        jsl rlUnknown80B0EE
         plx
         bcs _End
 
@@ -351,7 +351,7 @@
 
           lda aDialogue.wUnknown0018A3,b
           ldy #0
-          jsl $85BD12
+          jsl rlUnknown85BD12
 
         +
         lda aDialogue._Slot[1].wPortraitID
@@ -360,7 +360,7 @@
 
           lda aDialogue.wUnknown0018A5,b
           ldy #1
-          jsl $85BD12
+          jsl rlUnknown85BD12
 
         +
         lda aDialogue._Slot[0].wPortraitID
@@ -375,7 +375,7 @@
         lda aDialogue.wUnknown0018A7,b
         beq _End
 
-          jsl $85BD93
+          jsl rlUnknown85BD93
 
         _End
         rts
@@ -579,7 +579,7 @@
         cmp #$0012
         bne +
 
-          jsl $88B3AF
+          jsl rlUnknown88B3AF
 
         +
         lda #2
@@ -633,7 +633,7 @@
           lda #<>rlProcDialogueWithBGCycle3
           sta aProcSystem.aHeaderOnCycle,b,x
           jsl rlClearAllFadeInProcs
-          jsl $8AE29F
+          jsl rlUnknown8AE29F
 
         +
         rtl

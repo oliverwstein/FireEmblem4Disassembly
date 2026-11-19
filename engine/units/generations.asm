@@ -118,7 +118,7 @@
 
         jsl rlInitiateFactionRAMData
 
-        jsl $8BCE71 ; clear some stuff
+        jsl rlUnknown8BCE71 ; clear some stuff
 
         plx
         plp
@@ -227,9 +227,9 @@
         cmp #6
         bne +
 
-          jsl $82F866
+          jsl rlSetParentsPermanentFlags
           jsl rlDeleteParentsAndModifyChildrenData
-          jsl $8BCE71
+          jsl rlUnknown8BCE71
 
         +
         lda wCurrentChapter,b
@@ -266,9 +266,9 @@
             bra -
 
         _End
-        jsl $87E93F
-        jsl $87E952
-        jsl $86C548
+        jsl rlUnknown87E93F
+        jsl rlUnknown87E952
+        jsl rlUnknown86C548
 
         pla
         sta wR0
@@ -313,7 +313,7 @@
             bra _Loop
 
         _End
-        jsl $81B15A
+        jsl rlUnknown81B15A
         plx
         plp
         plb

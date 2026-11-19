@@ -301,7 +301,7 @@
         lda wUnknown00171A,b
         bne _End
 
-          jsl $84C33D
+          jsl rlUnknown84C33D
 
           lda wActiveFactionSlot,b
           jsl rlRunTurnStartEffectsForAllUnitsInFaction
@@ -380,7 +380,7 @@
           rts
 
         _ABF1
-        jsl $85C0D5
+        jsl rlUnknown85C0D5
 
         lda #$0004
         tsb $0788,b

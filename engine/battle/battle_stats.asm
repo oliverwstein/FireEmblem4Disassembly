@@ -68,7 +68,7 @@
         jsl rlGetItemRAMStructEntryByInventorySlot
         bcs +
 
-        jsl $87E230
+        jsl rlUnknown87E230
         
         -
         plp
@@ -95,7 +95,7 @@
         jsl rlGetItemRAMStructEntryByInventorySlot
         bcs +
 
-        jsl $87E25D
+        jsl rlUnknown87E25D
         
         -
         plp
@@ -127,14 +127,14 @@
 
         jsl rlGetItemRAMStructEntryByInventorySlot
         jsl rlGetItemROMPointerByItemRAMStructEntry
-        jsl $87E3D6 ; get item cost
+        jsl rlUnknown87E3D6 ; get item cost
         sta $1A
         jsl rlGetItemMaxDurability2
         sta $1C
-        jsl $80A1AB ; divide
+        jsl rlUnknown80A1AB ; divide
         lda #20
         sta $1C
-        jsl $80A1AB
+        jsl rlUnknown80A1AB
 
         lda $1A
         clc
@@ -170,7 +170,7 @@
         .autsiz
         .databank ?
 
-        jsr $84F1A8
+        jsr rsAddItemStatBonusIfRingByItemRAMStructEntry
         rtl
 
         .databank 0
@@ -349,15 +349,15 @@
         plb
         phx
         lda #$000F
-        jsl $87A19D
+        jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs +
 
         lda #$000F
-        jsl $87A2EF
+        jsl rlCheckIfInventoryItemsHaveSpecifiedSkill
         bcc _FAFA
         
         +
-        jsl $8498C6
+        jsl rlGetSelectedUnitCurrentHP
         cmp #$000B
         bcs _FAFA
 
@@ -369,7 +369,7 @@
 
         lda #$000A
         sta $4E
-        jsl $80A096
+        jsl rlUnsignedMultiply16By16High
         lda $50
         
         -

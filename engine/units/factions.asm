@@ -261,7 +261,7 @@
 
             ; is player FactionSlot
             lda #1
-            jsl $81B32C
+            jsl rlUnknown81B32C
 
           +
           lda #(`aFactionArea)<<8
@@ -1598,7 +1598,7 @@
           bne _End
 
             lda #0
-            jsl $84C412
+            jsl rlUnknown84C412
 
             ldx #(9 - 1) * size(word)
 
@@ -1610,7 +1610,7 @@
                 jsl rlGetSelectedUnitGenerationID
                 bcs +
 
-                  jsr $84C398
+                  jsr rlUnknown84C398
 
               +
               dec x
@@ -1632,7 +1632,7 @@
                   cmp #$0010
                   bcc +
 
-                    jsr $84C3C1
+                    jsr rlUnknown84C3C1
 
               +
               dec x

@@ -73,7 +73,7 @@
         lda #10
         sta wR14
         stz wR15
-        jsl $80A1D8
+        jsl rlUnknown80A1D8
 
         lda wR12
         clc

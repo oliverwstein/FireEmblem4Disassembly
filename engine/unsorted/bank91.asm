@@ -39,6 +39,32 @@
     .endsection Unsorted91A7BCSection
 
 
+    .section Unsorted91A7DFSection
+
+      .al
+      .xl
+
+      rlUnknown91A7DF ; 91/A7DF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        rep #$30
+        lda #$0084
+        tsb bUnknown000521,b
+        plp
+        rtl
+
+        .databank 0
+
+        ; 91/A7EA
+
+    .endsection Unsorted91A7DFSection
+
+
     .section Unsorted91A80DSection
 
       .al
@@ -240,7 +266,7 @@
         tax
         lda aWorldMapEvents,x
         sta lR18
-        jsl $80C1FC
+        jsl rlUnknown80C1FC
         inc $0304,b
         rts
 
@@ -249,3 +275,331 @@
         ; 91/D6BB
 
     .endsection Unsorted91D69BSection
+
+
+    .section Unsorted91DF6DSection
+
+      .al
+      .xl
+
+      rlUnknown91DF6D ; 91/DF6D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$61
+        sta bBufferOBSEL
+        lda #$09
+        sta bBufferBGMODE
+        lda #$00
+        sta bBufferMOSAIC
+        lda #$3C
+        sta bBufferBG1SC
+        lda #$42
+        sta bBufferBG2SC
+        lda #$4A
+        sta bBufferBG3SC
+        lda #$4C
+        sta bBufferBG4SC
+        lda #$00
+        sta bBufferBG12NBA
+        lda #$55
+        sta bBufferBG34NBA
+        lda #$00
+        sta wBufferBG1HOFS
+        sta wBufferBG1HOFS+1
+        lda #$00
+        sta wBufferBG1VOFS
+        sta wBufferBG1VOFS+1
+        lda #$00
+        sta wBufferBG2HOFS
+        sta wBufferBG2HOFS+1
+        lda #$20
+        sta wBufferBG2VOFS
+        lda #$00
+        sta wBufferBG2VOFS+1
+        lda #$06
+        sta wBufferBG3HOFS
+        lda #$00
+        sta wBufferBG3HOFS+1
+        lda #$00
+        sta wBufferBG3VOFS
+        sta wBufferBG3VOFS+1
+        lda #$00
+        sta wBufferBG4HOFS
+        sta wBufferBG4HOFS+1
+        lda #$00
+        sta wBufferBG4VOFS
+        sta wBufferBG4VOFS+1
+        lda #$00
+        sta bBufferW12SEL
+        lda #$00
+        sta bBufferW34SEL
+        lda #$00
+        sta bBufferWOBJSEL
+        lda #$00
+        sta bBufferWBGLOG
+        lda #$00
+        sta bBufferWOBJLOG
+        lda #$16
+        sta bBufferTM
+        lda #$01
+        sta bBufferTS
+        lda #$07
+        sta bBufferTMW
+        lda #$04
+        sta bBufferTSW
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$84
+        sta bBufferCGADSUB
+        lda #$20
+        sta bBufferCOLDATA_1
+        lda #$40
+        sta bBufferCOLDATA_2
+        lda #$80
+        sta bBufferCOLDATA_3
+        lda #$00
+        sta bBufferSETINI
+        plp
+        rts
+
+        .databank 0
+
+        ; 91/E006
+
+    .endsection Unsorted91DF6DSection
+
+
+    .section Unsorted91E793Section
+
+      .as
+      .xl
+
+      rlUnknown91E793 ; 91/E793
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        jsr rlUnknown91DF6D
+        lda #$9C00
+        sta lR18+1
+        lda #$B90D
+        sta lR18
+        lda #(`aDecompressionBuffer)<<8
+        sta lR19+1
+        lda #<>aDecompressionBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $0800, $80, $6000
+
+        lda #$9C00
+        sta lR18+1
+        lda #$C0B4
+        sta lR18
+        lda #(`aDecompressionBuffer)<<8
+        sta lR19+1
+        lda #<>aDecompressionBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $4800, $80, $A000
+
+        lda #$9C00
+        sta lR18+1
+        lda #$CB62
+        sta lR18
+        lda #(`aBG3TilemapBuffer)<<8
+        sta lR19+1
+        lda #<>aBG3TilemapBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $9000
+
+        lda #$9C00
+        sta lR18+1
+        lda #$D916
+        sta lR18
+        lda #(`aBGPaletteBuffer)<<8
+        sta lR19+1
+        lda #<>aBGPaletteBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        sep #$20
+        lda #$04
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        plp
+        rtl
+
+        .databank 0
+
+        ; 91/E82A
+
+      rlUnknown91E82A ; 91/E82A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        jsr rlUnknown91DF6D
+        lda #$9C00
+        sta lR18+1
+        lda #$B90D
+        sta lR18
+        lda #(`aDecompressionBuffer)<<8
+        sta lR19+1
+        lda #<>aDecompressionBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $0800, $80, $6000
+
+        lda #$9C00
+        sta lR18+1
+        lda #$CE12
+        sta lR18
+        lda #(`aDecompressionBuffer)<<8
+        sta lR19+1
+        lda #<>aDecompressionBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $4800, $80, $A000
+
+        lda #$9C00
+        sta lR18+1
+        lda #$D719
+        sta lR18
+        lda #(`aBG3TilemapBuffer)<<8
+        sta lR19+1
+        lda #<>aBG3TilemapBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $9000
+
+        lda #$9C00
+        sta lR18+1
+        lda #$D916
+        sta lR18
+        lda #(`aBGPaletteBuffer)<<8
+        sta lR19+1
+        lda #<>aBGPaletteBuffer
+        sta lR19
+        jsl rlAppendDecompList
+        sep #$20
+        lda #$04
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        plp
+        rtl
+
+        .databank 0
+
+        ; 91/E8C1
+
+      rlUnknown91E8C1 ; 91/E8C1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sei
+        jsr rlUnknown91E915
+        jsl rlUnknown91E793
+        bra _E8D5
+
+        .byte $08, $78, $20, $15, $E9, $22, $2A, $E8, $91
+
+
+        _E8D5
+        stz $0302,b
+        lda #$F5D0
+        sta wVBlankPointer
+        lda #$F553
+        sta wMainLoopPointer
+        lda #$8222
+        sta wIRQPointer
+        sep #$20
+        lda #$04
+        sta $212C,b
+        sta bBufferTM
+        lda #$00
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlEnableVBlank
+
+        _E8FD
+        jsl rlUnknown80823F
+        inc bBufferINIDISP
+        lda bBufferINIDISP
+        and #$000F
+        cmp #$000F
+        bne _E8FD
+        jsl rlDisableVBlank
+
+        _E911
+        bra _E911
+
+        .databank 0
+
+        ; 91/E913
+
+    .endsection Unsorted91E793Section
+
+
+    .section Unsorted91E915Section
+
+      .al
+      .xl
+
+      rlUnknown91E915 ; 91/E915
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0FFE
+
+        _E918
+        stz $0000,b,x
+        dec x
+        dec x
+        bpl _E918
+        phk
+        plb
+        .databank $91
+        jsl rlUnknown808EF6
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+        rts
+
+        .databank 0
+
+        ; 91/E92E
+
+    .endsection Unsorted91E915Section

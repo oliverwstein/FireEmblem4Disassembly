@@ -392,28 +392,28 @@
         bit #$0200
         beq +
 
-          jsr $818EAB
+          jsr rlUnknown818EAB
           bcs _SEC
 
         +
         bit #$0100
         beq +
 
-          jsr $818EB3
+          jsr rlUnknown818EB3
           bcs _SEC
 
         +
         bit #$0800
         beq +
 
-          jsr $818EBB
+          jsr rlUnknown818EBB
           bcs _SEC
 
         +
         bit #$0400
         beq +
 
-          jsr $818EC3
+          jsr rlUnknown818EC3
           bcs _SEC
 
         +
@@ -619,7 +619,7 @@
         .databank ?
 
         lda #$0021
-        jsl $80900D
+        jsl rlUnknown80900D
         rtl
 
         .databank 0

@@ -108,7 +108,7 @@
         lda $0302,b
         bne +
 
-          jml $88E377
+          jml rlUnknown88E377
 
         +
         txa
@@ -262,12 +262,12 @@
         cpy #0
         bne +
 
-          jml $88E33D
+          jml rlUnknown88E33D
 
         +
         phx
         txy
-        jsl $8AB49A
+        jsl rlDecompressWorldMapPortraitToSlot
         plx
 
         phx

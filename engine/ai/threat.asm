@@ -308,7 +308,7 @@
           sta $0EA2,b
           jsl rlTryGetAIFactionGroupLeader
           jsl rlFillMovementMap
-          jsl $86AD5E
+          jsl rlUnknown86AD5E
 
           lda wAITemp000E96,b
           sta wAIUnknown7E2010

@@ -76,7 +76,7 @@
         .databank ?
 
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl $858882
+        jsl rlUnknown858882
         lda $1037,b,x
         beq +
 

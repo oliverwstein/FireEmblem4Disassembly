@@ -3014,7 +3014,7 @@
         bra _Dialogue
 
         _C938
-        jsl $8B80F3
+        jsl rlUnknown8B80F3
 
         lda aDialogue.lActivePointer,b
         clc
@@ -3044,7 +3044,7 @@
         cmp #$556E
         bcs _End
 
-          jsl $8B80CB
+          jsl rlUnknown8B80CB
           bra _End
 
         _End

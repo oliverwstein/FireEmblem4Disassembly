@@ -756,8 +756,8 @@
         phx
         phy
 
-        jsl $8780AA
-        jsl $8780DF
+        jsl rlUnknown8780AA
+        jsl rlUnknown8780DF
         jsl rlResetDialogueEngine
 
         ply
@@ -788,7 +788,7 @@
         .databank ?
 
         phy
-        jsl $8780EC
+        jsl rlUnknown8780EC
         ply
 
         clc
@@ -888,7 +888,7 @@
         phy
         lda [lR22],y
         and #$00FF
-        jsl $808FAD
+        jsl rlUnknown808FAD
 
         ply
         inc y
@@ -908,7 +908,7 @@
         phy
         lda [lR22],y
         and #$00FF
-        jsl $808FAD
+        jsl rlUnknown808FAD
 
         ply
         inc y
@@ -930,7 +930,7 @@
         phy
         lda [lR22],y
         and #$00FF
-        jsl $80900D
+        jsl rlUnknown80900D
 
         ply
         inc y
@@ -951,7 +951,7 @@
 
         phy
         lda [lR22],y
-        jsl $808FA3
+        jsl rlUnknown808FA3
 
         ply
         inc y
@@ -972,7 +972,7 @@
         ; RESTORE_PHASE_MUSIC
 
         phy
-        jsl $81AB26
+        jsl rlUnknown81AB26
 
         lda #(`procUnknown828AF2)<<8
         sta lR44+1
@@ -1062,7 +1062,7 @@
 
         php
         phy
-        jsl $8CEDD0
+        jsl rlUnknown8CEDD0
 
         lda #(`$828A88)<<8
         sta lR44+1
@@ -1120,7 +1120,7 @@
         ; EVENT_19
 
         phy
-        jsl $91A931
+        jsl rlUnknown91A931
         ply
 
         phy
@@ -1140,7 +1140,7 @@
         sta lR19
 
         ; Routine does nothing
-        jsl $9183A8
+        jsl rlUnknown9183A8
 
         pla
         clc
@@ -1457,7 +1457,7 @@
             _Continue
             lda #0
             sta wR7
-            jsl $818FA1
+            jsl rlUnknown818FA1
             jsr rsUnknown91C38C
 
         _End
@@ -1560,7 +1560,7 @@
 
         lda #1
         sta wR7
-        jsl $818FA1
+        jsl rlUnknown818FA1
         jsr rsUnknown91C38C
 
         ply
@@ -1696,7 +1696,7 @@
 
         lda #0
         sta wR7
-        jsl $818FA1
+        jsl rlUnknown818FA1
 
         plx
 
@@ -1818,7 +1818,7 @@
         phx
         lda #1
         sta wR7
-        jsl $818FA1
+        jsl rlUnknown818FA1
         plx
 
         phx
@@ -2465,7 +2465,7 @@
         rep #$20
 
         ldx #0
-        jsl $809933
+        jsl rlUnknown809933
 
         sep #$20
         lda #$10
@@ -2473,7 +2473,7 @@
         rep #$20
 
         ldx #3
-        jsl $809933
+        jsl rlUnknown809933
         rtl
 
         .databank 0
@@ -2707,7 +2707,7 @@
         php
         phy
 
-        jsl $80C32C
+        jsl rlUnknown80C32C
 
         stz wBufferBG1HOFS
         stz wBufferBG1VOFS
@@ -2717,7 +2717,7 @@
         stz wBufferBG3VOFS
 
         lda #$00FF
-        jsl $91A7BC
+        jsl rlUnknown91A7BC
 
         sep #$20
         lda #$17
@@ -2725,7 +2725,7 @@
         sta bBufferTMW
         rep #$20
 
-        jsl $8780AA
+        jsl rlUnknown8780AA
 
         ply
         plp
@@ -2744,7 +2744,7 @@
         php
         phy
 
-        jsl $80C35D
+        jsl rlUnknown80C35D
 
         stz wBufferBG1HOFS
         stz wBufferBG1VOFS
@@ -3101,7 +3101,7 @@
             lda wEventUnitSlot1YCoordinate
             sta wR1
 
-            jsl $88C473
+            jsl rlUnknown88C473
 
             lda wR0
             sta wR4
@@ -3290,7 +3290,7 @@
         phy
 
         phx
-        jsl $848776
+        jsl rlGetUnitByCoordinates
         plx
         bcs _End
 
@@ -3425,7 +3425,7 @@
         sta lR18+1
 
         phx
-        jsl $91A9BB
+        jsl rlUnknown91A9BB
         plx
 
         lda lMapMenuRAMEntryPointer,b
@@ -3451,7 +3451,7 @@
         sta bBufferBGMODE
         rep #$20
 
-        jsl $91A7DF
+        jsl rlUnknown91A7DF
 
         pla
         clc
@@ -3491,7 +3491,7 @@
         sta $7E93AA,x
         rep #$20
 
-        jsl $8785A4
+        jsl rlUnknown8785A4
 
         ply
         inc y
@@ -3803,7 +3803,7 @@
         lda #2
         jsl rlUnknown91811C
         ldx #0
-        jsl $8ACE50
+        jsl rlUnknown8ACE50
 
         phy
         lda #(`procUnknown828AC3)<<8
@@ -3892,7 +3892,7 @@
           rts
 
         +
-        jsl $8B80CB
+        jsl rlUnknown8B80CB
         bra _End
 
         .databank 0
@@ -3957,7 +3957,7 @@
         and #$00FF
         tay
 
-        jsl $8B84E5
+        jsl rlLoadWorldMapMarkerData
 
         ply
         inc y
@@ -3989,7 +3989,7 @@
         and #$00FF
         tax
 
-        jsl $8B86BF
+        jsl rlClearWorldMapMarker
 
         ply
         inc y
@@ -4062,7 +4062,7 @@
         and #$00FF
         sta wR1
 
-        jsl $8B821F
+        jsl rlFadeInWorldMapPortraitSlot
 
         ply
         inc y
@@ -4093,7 +4093,7 @@
         and #$00FF
         tax
 
-        jsl $8B8245
+        jsl rlFadeOutWorldMapPortraitSlot
 
         ply
         inc y
@@ -4132,7 +4132,7 @@
         and #$00FF
         sta wR1
 
-        jsl $8B8261
+        jsl rlMoveWorldMapPortraitSlot
 
         ply
         inc y
@@ -4178,7 +4178,7 @@
         sta aDialogue.lHDMARoutine,b
 
         ldx #0
-        jsl $8B91F6
+        jsl rlUnknown8B91F6
 
         phy
         lda #(`procUnknown828AC3)<<8
@@ -4211,7 +4211,7 @@
         phb
 
         phy
-        jsl $8B87A0
+        jsl rlUnknown8B87A0
         ply
 
         plb
@@ -4234,7 +4234,7 @@
         phb
 
         phy
-        jsl $8B87C5
+        jsl rlUnknown8B87C5
         ply
 
         plb
@@ -4335,7 +4335,7 @@
 
             stz $1832,b
             lda #$00D0
-            jsl $808FA3
+            jsl rlUnknown808FA3
 
         +
         lda #(`$828865)<<8

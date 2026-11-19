@@ -65,13 +65,13 @@
         cmp #size(aRNArray)
         blt ++
 
-          jsr $80A7C5 ; rsShuffleRNTable
+          jsr rsShuffleRNTable ; rsShuffleRNTable
           rep #$30
 
-          jsl $8F8006
+          jsl rlUnknown8F8006
           blt +
 
-            jsr $80A7F3
+            jsr rsUnknown80A7F3
 
         +
         lda #0
@@ -220,7 +220,7 @@
         .databank ?
 
         rep #$30
-        jsl $91EBC9
+        jsl rlUnknown91EBC9
         lsr a
         lsr a
         sta $04A4,b

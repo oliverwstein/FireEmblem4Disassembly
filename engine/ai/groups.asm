@@ -593,7 +593,7 @@
         adc $0EA2,b
         tax
         sep #$20
-        jsr $87DC71
+        jsr rlUnknown87DC71
 
         lda $0E9E,b
         cmp structAIUnitEntry.XPosition,b,y

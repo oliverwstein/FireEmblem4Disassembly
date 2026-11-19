@@ -131,7 +131,7 @@
 
         php
         phx
-        jsl $84EFA5
+        jsl rlUnknown84EFA5
         jsl rlGetDeathQuote
         plx
         plp

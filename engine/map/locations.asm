@@ -1135,7 +1135,7 @@
         phk
         plb
         lda #<>aVillageOpenedTileData
-        jsl $86C6E8
+        jsl rlApplyMapTileChange
 
         pla
         sta wR1
@@ -1370,7 +1370,7 @@
 
         lda #500
         sta wR14
-        jsl $80A1AB
+        jsl rlUnknown80A1AB
 
         lda wR13
         cmp #9
@@ -1388,7 +1388,7 @@
           lda aVillageDestroyedPatterns,x
           beq +
 
-            jsl $86C6E8
+            jsl rlApplyMapTileChange
 
         +
         jsl rlCheckIfVillageClosed
@@ -1397,7 +1397,7 @@
           phk
           plb
           lda #<>aVillageClosedTiles
-          jsl $86C6E8
+          jsl rlApplyMapTileChange
 
         _End
         rts
@@ -1710,7 +1710,7 @@
         plb
         jsl rlGetEventLocationEntryType
         jsl rlGetEventLocationTypeDestoyedTileData
-        jsl $86C6E8
+        jsl rlApplyMapTileChange
         rts
 
         .databank 0

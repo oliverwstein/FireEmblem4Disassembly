@@ -52,7 +52,7 @@
         sta lR47
 
         phx
-        jsl $95A3FB ; rlDecompressSingle
+        jsl rlDecompressSingle ; rlDecompressSingle
         plx
 
         lda #(`aDecompressionBuffer)<<8
@@ -89,7 +89,7 @@
         sta lR47
 
         phx
-        jsl $95A3FB ; rlDecompressSingle
+        jsl rlDecompressSingle ; rlDecompressSingle
         plx
 
         lda #(`aDecompressionBuffer)<<8

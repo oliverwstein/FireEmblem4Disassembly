@@ -31,6 +31,8 @@ from asmlib import read_rom, offset, ASFLAGS
 
 # Routines that take inline arguments after the jsl, and how many bytes.
 INLINE_ARGS = {
+    # rlDMAByStruct's argument is a DMA struct whose size depends on its first byte.
+    'rlDMAByStruct': lambda first: {1: 7, 4: 11}.get(first, 9),
     'rlFadePaletteToBlack': 2,
     'rlFadePaletteToColors': 6,
     'rlSavePaletteBufferColorsToRAM': 7,
@@ -113,7 +115,23 @@ class Disassembler:
         return None
 
     def decode(self):
-        """First pass: decode instructions, widths and branch targets."""
+        """Decode instructions, widths and branch targets. Bytes after an unconditional
+        exit that nothing branches to are data; if a branch found later leads into
+        them, decode again with that address known as code."""
+        known = set()
+        while True:
+            insns, targets = self._decode(known)
+            data_starts = {}
+            for i in insns:
+                if i['mode'] == 'data':
+                    for t in targets:
+                        if i['pc'] <= t < i['pc'] + 1 + i['size']:
+                            data_starts[t] = True
+            if not data_starts or set(data_starts) <= known:
+                return insns, targets
+            known |= set(data_starts)
+
+    def _decode(self, known):
         insns, targets, open_targets = [], {}, set()
         pc, m8, x8 = self.start, self.m8, self.x8
         db, pushed, a_low = None, None, None
@@ -123,6 +141,15 @@ class Disassembler:
                 break
             if pc in targets and targets[pc] is not None and insns and insns[-1]['ends']:
                 m8, x8 = targets[pc]
+            if insns and insns[-1]['ends'] and pc not in targets and pc not in known and self.end is None:
+                # Unreachable bytes up to the next place a branch leads: data.
+                ahead = [t for t in list(open_targets) + list(known) if t > pc]
+                if ahead:
+                    n = min(ahead) - pc
+                    insns.append(dict(pc=pc, op=None, mn='data', mode='data', size=n - 1, val=None,
+                                      m8=m8, x8=x8, db=db, ends=True, args=0, target=None))
+                    pc += n
+                    continue
             op = self.byte(pc)
             mn, mode = OPS[op]
             size = SIZE[mode]
@@ -182,6 +209,8 @@ class Disassembler:
 
             if mn == 'jsl' and tgt is not None:
                 n = INLINE_ARGS.get(self.name(tgt, rom_only=True) or '', 0)
+                if callable(n):
+                    n = n(self.byte(nxt))
                 ins['args'] = n
                 nxt += n
 
@@ -299,11 +328,23 @@ class Disassembler:
                 out[c['pc']] = f'#<>{n}'
         return out
 
+    def inline_args(self, ins):
+        """The inline arguments after a jsl, as a directive."""
+        a, n = ins['pc'] + 4, ins['args']
+        data = [self.byte(a + i) for i in range(n)]
+        if self.name(ins['target'], rom_only=True) == 'rlDMAByStruct' and data[0] == 2:
+            src = int.from_bytes(bytes(data[1:4]), 'little')
+            count = int.from_bytes(bytes(data[4:6]), 'little') or 0x10000
+            dest = int.from_bytes(bytes(data[7:9]), 'little') << 1
+            srcname = self.name(src) or f'${src:06X}'
+            return f'.structDMAToVRAM {srcname}, ${count:04X}, ${data[6]:02X}, ${dest:04X}'
+        return '.byte ' + ', '.join(f'${b:02X}' for b in data)
+
     def render(self, name):
         insns, targets = self.decode()
         starts = {i['pc'] for i in insns}
         local = {t: f'_{t & 0xFFFF:04X}' for t in targets if t in starts and t != self.start}
-        bad = [t for t in targets if t not in starts and t != self.stop_pc]
+        bad = [t for t in targets if t not in starts and self.start <= t < self.stop_pc]
         override = self.long_pointer_loads(insns)
 
         b = self.start
@@ -326,7 +367,11 @@ class Disassembler:
                     out.append('        .xs' if ins['x8'] else '        .xl')
             asm_m, asm_x = ins['m8'], ins['x8']
             mn = STYLE.get(ins['mn'], ins['mn'])
-            if ins['mode'] == 'blk':
+            if ins['mode'] == 'data':
+                data = [self.byte(pc + i) for i in range(ins['size'] + 1)]
+                for j in range(0, len(data), 16):
+                    out.append('        .byte ' + ', '.join(f'${b:02X}' for b in data[j:j + 16]))
+            elif ins['mode'] == 'blk':
                 src, dst = ins['val'] >> 8, ins['val'] & 0xFF
                 out.append(f'        .byte ${ins["op"]:02X}, ${dst:02X}, ${src:02X} ; {mn} from bank ${src:02X} to bank ${dst:02X}')
             elif ins['mn'] in ('brk', 'cop', 'wdm', 'stp'):
@@ -343,11 +388,7 @@ class Disassembler:
                 out.append(f'        .databank ${ins["set_db"]:02X}' if ins['set_db'] is not None else '        .databank ?')
                 asm_db = ins['set_db']
             if ins['args']:
-                a = pc + 4
-                data = ', '.join(f'${self.byte(a + i):02X}' for i in range(ins['args']))
-                out.append('')
-                out.append(f'          .byte {data}')
-                out.append('')
+                out += ['', '          ' + self.inline_args(ins), '']
             if ins['ends'] and k + 1 < len(insns):
                 out.append('')
         out += ['', '        .databank 0', '']

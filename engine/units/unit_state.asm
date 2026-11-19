@@ -434,7 +434,7 @@
 
         lda wRoutineVariable1,b
         jsl rlGetItemRAMStructEntryByPlayerItemIndex
-        jsl $87E1FD
+        jsl rlUnknown87E1FD
         sta wR0
 
         lda #$001C
@@ -488,7 +488,7 @@
         cmp #8
         bcs _End
 
-        jsl $84F96E
+        jsl rlUnknown84F96E
         sta wR0
         jsl rlGetItemROMPointerByItemRAMStructEntry
         jsl rlGetItemWeaponRank
@@ -525,8 +525,8 @@
         plb
 
         lda $057E,b
-        jsl $84F3B5
-        jsl $87E422
+        jsl rlGetItemROMDataByInventorySlot
+        jsl rlGetItemWeaponRank
         cmp #$FFFF
         beq _SEC
 
@@ -952,7 +952,7 @@
           dec a
           clc
           adc lR18
-          jsl $91EB0F
+          jsl rlUnknown91EB0F
 
         _B981
         lda #$18

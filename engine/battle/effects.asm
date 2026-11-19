@@ -77,7 +77,7 @@
         +
         lda structActionStructEntry.UnitRAMPointer,b,y
         sta wSelectedUnitDataRAMPointer,b
-        jsl $87AF46
+        jsl rlUnknown87AF46
         bcc +
 
           jml _End
@@ -91,7 +91,7 @@
         phx
         lda structActionStructEntry.DeploymentNumber,b,y
         tax
-        jsl $84C9BF
+        jsl rlUnknown84C9BF
         plx
         jsr rsUnknown84EDAE
 
@@ -101,7 +101,7 @@
         sta @l $7E4F79
         phb
         phy
-        jsl $88C9A6
+        jsl rlUnknown88C9A6
         ply
         plb
         bra +
@@ -144,7 +144,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl $84F99D
+        jsl rlUnknown84F99D
         sta structActionStructEntry.GainedExperience,b,x
 
         sep #$20
@@ -171,7 +171,7 @@
         bit #UnitStateGuardingCastle
         beq +
 
-          jsl $84BA6F
+          jsl rlUnknown84BA6F
 
         +
         rts
@@ -195,7 +195,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl $84F99D
+        jsl rlUnknown84F99D
         sta structActionStructEntry.GainedExperience,b,x
         
         sep #$20
@@ -234,7 +234,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl $84F99D
+        jsl rlUnknown84F99D
         sta structActionStructEntry.GainedExperience,b,x
 
         lda structActionStructEntry.MaxHP,b,y
@@ -288,7 +288,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl $84F99D
+        jsl rlUnknown84F99D
         sta structActionStructEntry.GainedExperience,b,x
         
         +

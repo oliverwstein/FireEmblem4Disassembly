@@ -149,7 +149,7 @@
         and #$00FF
         tax
         lda $7E4EBB
-        jsl $9E8D25
+        jsl rlUnknown9E8D25
 
         lda wR0
         and #$00FF
@@ -189,7 +189,7 @@
         ora #$0002
         sta $7F4C07
 
-        jsl $88CD4C
+        jsl rlUnknown88CD4C
         jsl rlUnknown88CD5A
 
         ldx #$00DE
@@ -269,7 +269,7 @@
 
         phx
         lda aProcSystem.aBody4,b,x
-        jsl $8280F8
+        jsl rlUnknown8280F8
         bcc +
 
           lda aProcSystem.aHeaderBitfield,b,x
@@ -333,7 +333,7 @@
         sta @l wR1
         lda aScriptedUnitMapAction + structScriptedMapAttack.wCharacterID
         sta @l wR2
-        jsl $9E85A4
+        jsl rlUnknown9E85A4
         sta aMapAction.wBattleClassID
 
         lda aScriptedUnitMapAction + structScriptedMapAttack.wXTilePosition
@@ -341,7 +341,7 @@
         lda aScriptedUnitMapAction + structScriptedMapAttack.wYTilePosition
         sta $4554,b
         lda #$FFFF
-        jsl $9E866F
+        jsl rlUnknown9E866F
         sta aMapAction.wWeaponType
 
         lda #$FFFF
@@ -370,7 +370,7 @@
         tay
         lda @l aMapAction.wXTilePosition
         tax
-        jsl $9E8D25
+        jsl rlUnknown9E8D25
 
         lda #$8000
         sta @l $7F508F

@@ -476,7 +476,7 @@
           bit #(JOY_B | JOY_A)
           beq _825E
 
-            jsl $9181B0
+            jsl rlUnknown9181B0
             brl _End
 
         _825E
@@ -2902,7 +2902,7 @@
         lda aDialogue.wNumber2,b
 
         +
-        jsl $89A107
+        jsl rlSplitNumberIntoDigits
         stz wR5
 
         ldx #0
@@ -3370,7 +3370,7 @@
 
           lda #DialogueStatusAssetLoading
           tsb aDialogue.wStatus,b
-          jsl $88CD53
+          jsl rlUnknown88CD53
 
         +
         lda $07E8,b
@@ -3379,7 +3379,7 @@
 
           lda #DialogueStatusUpdateMouth
           tsb aDialogue.wStatus,b
-          jsl $88CD61
+          jsl rlUnknown88CD61
 
         _End
         inc aDialogue.wCommandCycle,b
@@ -3424,7 +3424,7 @@
         beq +
 
           lda #$00FF
-          jsl $809F01
+          jsl rlFillBG3Page0TilemapBuffer
           stz wBufferBG3HOFS
           jsl rlUnknown878459
 
@@ -3442,7 +3442,7 @@
 
         lda #1
         sta wR0
-        jsl $859D60
+        jsl rlUnknown859D60
         inc aDialogue.wCommandCycle,b
         rts
 
@@ -3454,12 +3454,12 @@
         .autsiz
         .databank ?
 
-        jsl $85AB32
+        jsl rlUnknown85AB32
         bcc +
 
           lda #0
           sta wR0
-          jsl $859D60
+          jsl rlUnknown859D60
           inc aDialogue.wCommandCycle,b
 
         +
@@ -3473,7 +3473,7 @@
         .autsiz
         .databank ?
 
-        jsl $85AB32
+        jsl rlUnknown85AB32
         bcc +
 
           inc aDialogue.wCommandCycle,b
@@ -3499,7 +3499,7 @@
 
             lda #DialogueStatusAssetLoading
             trb aDialogue.wStatus,b
-            jsl $88CD4C
+            jsl rlUnknown88CD4C
 
           +
           lda aDialogue.wStatus,b
@@ -3508,11 +3508,11 @@
 
             lda #DialogueStatusUpdateMouth
             trb aDialogue.wStatus,b
-            jsl $88CD5A
+            jsl rlUnknown88CD5A
 
           +
           jsl rlUnknown899FDC
-          jsl $80B0A3
+          jsl rlUnknown80B0A3
 
         _End
         stz aDialogue.wCommandCycle,b
@@ -3695,7 +3695,7 @@
         .databank ?
 
         and #$00FF
-        jsl $80900D
+        jsl rlUnknown80900D
         rtl
 
         .databank 0
@@ -3897,11 +3897,11 @@
         ldx aDialogue.wSlotOffset,b
         bne +
 
-        jsl $8ADA08
+        jsl rlUnknown8ADA08
         bra ++
 
         +
-        jsl $8ADA16
+        jsl rlUnknown8ADA16
 
         +
         rts
@@ -3984,7 +3984,7 @@
           ldx #$1200
 
         +
-        jsl $859D45
+        jsl rlCreateProcDialogueBox
         lda #4
         sta wBufferBG3HOFS
         inc aDialogue.wCommandCycle,b
@@ -3998,7 +3998,7 @@
         .autsiz
         .databank ?
 
-        jsl $85AB19
+        jsl rlFreeDialogueBoxHDMAIfFinished
         bcs +
 
           rts
@@ -4093,11 +4093,11 @@
         ldx aDialogue.wSlotOffset,b
         bne +
 
-        jsl $8ADA5B
+        jsl rlUnknown8ADA5B
         bra ++
 
         +
-        jsl $8ADA6F
+        jsl rlUnknown8ADA6F
 
         +
         rts
@@ -4169,7 +4169,7 @@
 
         +
         sta wR0
-        jsl $859D60
+        jsl rlUnknown859D60
         rts
 
         .databank 0
@@ -4180,7 +4180,7 @@
         .autsiz
         .databank ?
 
-        jsl $85AB32
+        jsl rlUnknown85AB32
         bcs +
 
           rts
@@ -4255,13 +4255,13 @@
 
                 ; Left portrait
                 sta $08B2,b
-                jsl $8ADACA
+                jsl rlUnknown8ADACA
                 bra _End
 
               ; Right portrait
               +
               sta $08B4,b
-              jsl $8ADAD8
+              jsl rlUnknown8ADAD8
               bra _End
 
             _9355
@@ -4398,12 +4398,12 @@
         bne +
 
         sta $08B2,b
-        jsl $8ADACA
+        jsl rlUnknown8ADACA
         bra _End
         
         +
         sta $08B4,b
-        jsl $8ADAD8
+        jsl rlUnknown8ADAD8
         
         _End
         rtl
@@ -4458,11 +4458,11 @@
         cpx #0
         bne +
 
-        jsl $8ADAE6
+        jsl rlUnknown8ADAE6
         bra _End
 
         +
-        jsl $8ADAF5
+        jsl rlUnknown8ADAF5
 
         _End
         rtl
@@ -4952,7 +4952,7 @@
 
         sta wR13
         stx wR14
-        jsl $80A1AB
+        jsl rlUnknown80A1AB
         lda wR13
         ldx wR10
         rtl

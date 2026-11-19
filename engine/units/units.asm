@@ -1465,7 +1465,7 @@
         .autsiz
         .databank ?
 
-        jsl $84D52E
+        jsl rlUnknown84D52E
         rts
 
         .databank 0
@@ -1505,7 +1505,7 @@
         jsl rlCheckTalkEventEntryAvailable
         bcs +
 
-          jsl $879EE7
+          jsl rlUnknown879EE7
         
         +
         plx
@@ -1522,7 +1522,7 @@
         phx
         tax
         txa
-        jsl $84D52E
+        jsl rlUnknown84D52E
         bcc _CLC
 
         txa

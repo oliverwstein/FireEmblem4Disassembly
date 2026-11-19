@@ -1,5 +1,353 @@
 ; Code from bank $9E not yet assigned to a game system.
 
+    .section Unsorted9E800CSection
+
+      .al
+      .xl
+
+      rlUnknown9E800C ; 9E/800C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0000
+        sta $7F4C87
+        lda #(`procUnknown9EC70B)<<8
+        sta lR44+1
+        lda #<>procUnknown9EC70B
+        sta lR44
+        lda #$0008
+        dec a
+
+        _8022
+        sta $7F57F0
+        jsl rlProcEngineCreateProcByIndex
+        bcc _8033
+        lda $7F57F0
+        dec a
+        bpl _8022
+
+        _8033
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/8035
+
+    .endsection Unsorted9E800CSection
+
+
+    .section Unsorted9E811FSection
+
+      .al
+      .xl
+
+      rlUnknown9E811F ; 9E/811F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda #$0000
+        sta $7F508F
+        lda $7F4C87
+        beq _8139
+        lda #$8000
+        sta $7F508F
+        jml _8268
+
+
+        _8139
+        lda $7E4EDD
+        cmp #$FFFF
+        beq _817A
+        jsl rlGetItemDataROMPointer
+        sta $7F57EA
+        jsl rlGetItemWeaponType
+        cmp #$0004
+        bcs _81C5
+        lda $7F57EA
+        jsl rlGetItemWeaponTraits
+        cmp #$0001
+        beq _8171
+        cmp #$0002
+        beq _8171
+        cmp #$0003
+        beq _8171
+        cmp #$0006
+        beq _81C5
+        bra _817A
+
+
+        _8171
+        lda wBattleDistance
+        cmp #$0002
+        bcs _81C5
+
+        _817A
+        lda $7E4F3D
+        cmp #$FFFF
+        bne _8187
+        jml _8261
+
+
+        _8187
+        jsl rlGetItemDataROMPointer
+        sta $7F57EA
+        jsl rlGetItemWeaponType
+        cmp #$0004
+        bcs _81C5
+        lda $7F57EA
+        jsl rlGetItemWeaponTraits
+        cmp #$0001
+        beq _81B8
+        cmp #$0002
+        beq _81B8
+        cmp #$0003
+        beq _81B8
+        cmp #$0006
+        beq _81C5
+        jml _8261
+
+
+        _81B8
+        lda wBattleDistance
+        cmp #$0002
+        bcs _81C5
+        jml _8261
+
+
+        _81C5
+        lda aActionStructUnit2
+        cmp #$FFFF
+        bne _81D9
+        lda #$8000
+        sta $7F508F
+        jml _8268
+
+
+        _81D9
+        lda $7E4EA9
+        and #$00FF
+        cmp #$0003
+        bne _81EE
+        lda #$0001
+        sta $7F508F
+        bra _8268
+
+
+        _81EE
+        jsl rlUnknown9E8271
+        lda $7E4EB7
+        sta wR4
+        lda $7E4EB9
+        sta wR5
+        lda $7E4F17
+        sta wR6
+        lda $7E4F19
+        sta wR7
+        lda wR0
+        clc
+        adc $9E826B
+        cmp wR4
+        bcs _8219
+        cmp wR6
+        bcc _8222
+
+        _8219
+        lda #$0101
+        sta $7F508F
+        bra _8238
+
+
+        _8222
+        lda wR1
+        sec
+        sbc $9E826D
+        cmp wR4
+        bcc _8231
+        cmp wR6
+        bcs _8238
+
+        _8231
+        lda #$0201
+        sta $7F508F
+
+        _8238
+        lda wR2
+        clc
+        adc $9E826F
+        cmp wR5
+        bcs _8247
+        cmp wR7
+        bcc _8254
+
+        _8247
+        lda $7F508F
+        ora #$0401
+        sta $7F508F
+        bra _8268
+
+
+        _8254
+        lda $7F508F
+        ora #$0001
+        sta $7F508F
+        bra _8268
+
+
+        _8261
+        lda #$0000
+        sta $7F508F
+
+        _8268
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/826B
+
+    .endsection Unsorted9E811FSection
+
+
+    .section Unsorted9E8271Section
+
+      .al
+      .xl
+
+      rlUnknown9E8271 ; 9E/8271
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        .databank $9E
+        lda wMapMinXScroll,b
+        clc
+        adc #$0010
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR0
+        lda wMapMaxXScroll,b
+        clc
+        adc #$00E0
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR1
+        lda wMapMinYScroll,b
+        clc
+        adc #$0010
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR2
+        lda wMapMaxYScroll,b
+        clc
+        adc #$00C0
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR3
+        plb
+        .databank $9E
+        rtl
+
+        .databank 0
+
+        ; 9E/82AA
+
+    .endsection Unsorted9E8271Section
+
+
+    .section Unsorted9E832CSection
+
+      .al
+      .xl
+
+      rlUnknown9E832C ; 9E/832C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        and #$0001
+        bne _8353
+        lda @l wR0
+        and #$0001
+        bne _8343
+        lda $7E4F85,x
+        and #$0020
+        bne _834B
+
+        _8343
+        ldx #$000E
+        ldy #$0010
+        bra _8378
+
+
+        _834B
+        ldx #$0012
+        ldy #$0014
+        bra _8378
+
+
+        _8353
+        lda $7E4F85,x
+        and #$0008
+        beq _836B
+        lda #$0000
+        sta $7F45A2
+        ldx #$000A
+        ldy #$000C
+        bra _8378
+
+
+        _836B
+        lda #$0000
+        sta $7F45A2
+        ldx #$0006
+        ldy #$0008
+
+        _8378
+        lda [lR18],y
+        clc
+        adc @l lR18
+        pha
+        txy
+        lda [lR18],y
+        clc
+        adc @l lR18
+        tax
+        ply
+        rts
+
+        .databank 0
+
+        ; 9E/838B
+
+    .endsection Unsorted9E832CSection
+
+
     .section Unsorted9E85A4Section
 
       .al
@@ -479,6 +827,47 @@
     .endsection Unsorted9E8D25Section
 
 
+    .section Unsorted9E8F6ASection
+
+      .al
+      .xl
+
+      rlUnknown9E8F6A ; 9E/8F6A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $7F4584
+        lda $9E8FB2
+        sta $7EFCA1
+        lda #$7E00
+        sta $7F4587
+        lda #$FCA1
+        sta $7F4586
+        lda #$7E00
+        sta $7F458A
+        lda #$FCA1
+        sta $7F4589
+        lda #$7E00
+        sta $7F458D
+        lda #$FCA1
+        sta $7F458C
+        lda #$7E00
+        sta $7F4590
+        lda #$FCA1
+        sta $7F458F
+        rtl
+
+        .databank 0
+
+        ; 9E/8FB2
+
+    .endsection Unsorted9E8F6ASection
+
+
     .section Unsorted9E99F7Section
 
       .al
@@ -532,6 +921,32 @@
         ; 9E/9A34
 
     .endsection Unsorted9E99F7Section
+
+
+    .section Unsorted9E9A34Section
+
+      .al
+      .xl
+
+      rlUnknown9E9A34 ; 9E/9A34
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$9E00
+        sta lR44+1
+        lda #$9A43
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 9E/9A43
+
+    .endsection Unsorted9E9A34Section
 
 
     .section Unsorted9E9D3BSection
@@ -750,6 +1165,140 @@
         ; AD7B
 
     .endsection Unsorted9EACAFSection
+
+
+    .section Unsorted9EB2BASection
+
+      .al
+      .xl
+
+      rlUnknown9EB2BA ; 9E/B2BA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda $7F4BEB
+        and #$0001
+        asl a
+        tax
+        lda $7F4C11,x
+        beq _B2D4
+        lda $7F4BEB
+        and #$0001
+        bne _B342
+
+        _B2D4
+        lda $7F4BEB
+        and #$0001
+        asl a
+        tax
+        lda $7F454A,x
+        bne _B2EA
+        lda #$0041
+        sta wR0
+        bra _B315
+
+
+        _B2EA
+        dec a
+        bne _B2F4
+        lda #$0044
+        sta wR0
+        bra _B315
+
+
+        _B2F4
+        dec a
+        bne _B30E
+        lda $7F4BEB
+        and #$0020
+        beq _B307
+        lda #$0045
+        sta wR0
+        bra _B315
+
+
+        _B307
+        lda #$0041
+        sta wR0
+        bra _B315
+
+
+        _B30E
+        lda #$0043
+        sta wR0
+        bra _B315
+
+
+        _B315
+        lda $7F45A8
+        cmp #$FFFF
+        beq _B329
+        tax
+        lda $1200,b,x
+        tay
+        lda $7F57EA
+        bne _B337
+
+        _B329
+        lda $7F45A4
+        cmp #$FFFF
+        beq _B342
+        tax
+        lda $1200,b,x
+        tay
+
+        _B337
+        tya
+        jsl rlUnknown9EB4BB
+        ora wR0
+        jsl rlUnknown80900D
+
+        _B342
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/B345
+
+    .endsection Unsorted9EB2BASection
+
+
+    .section Unsorted9EB4BBSection
+
+      .al
+      .xl
+
+      rlUnknown9EB4BB ; 9E/B4BB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        and #$00FF
+        lsr a
+        lsr a
+        lsr a
+        cmp #$0010
+        bcs _B4C7
+        inc a
+
+        _B4C7
+        xba
+        rtl
+
+        .databank 0
+
+        ; 9E/B4C9
+
+    .endsection Unsorted9EB4BBSection
 
 
     .section BattleMapSpriteDataSection
@@ -1376,7 +1925,7 @@
         sta $7F4BF3
         sta $7F4C1F
 
-        jsl $9E811F
+        jsl rlUnknown9E811F
 
         lda $10F7,b
         sta $7F4BD9
@@ -1427,10 +1976,10 @@
         lda #$FFFF
         sta $7F45A4
         sta $7F45A6
-        jsl $9E88CE
-        jsl $9E87A4
+        jsl rlUnknown9E88CE
+        jsl rlUnknown9E87A4
         lda #0
-        jsl $9E8867
+        jsl rlUnknown9E8867
         plx
         lda #$D1F3
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -1798,6 +2347,58 @@
     .endsection Unsorted9ED68BSection
 
 
+    .section Unsorted9EDAE7Section
+
+      .al
+      .xl
+
+      rlUnknown9EDAE7 ; 9E/DAE7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$9E00
+        sta lR44+1
+        lda #$DAF6
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 9E/DAF6
+
+    .endsection Unsorted9EDAE7Section
+
+
+    .section Unsorted9EDF7FSection
+
+      .al
+      .xl
+
+      rlUnknown9EDF7F ; 9E/DF7F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$9E00
+        sta lR44+1
+        lda #$DF8E
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 9E/DF8E
+
+    .endsection Unsorted9EDF7FSection
+
+
     .section Unsorted9EF60FSection
 
       .al
@@ -2010,7 +2611,7 @@
         lda $455E,b
         sta wR0
         lda #0
-        jsr $9E832C
+        jsr rlUnknown9E832C
         stx $4589,b
         sty $4586,b
         plx
@@ -2298,9 +2899,9 @@
           sta wR0
           lda @l $7F509B
           and #$00FF
-          jsl $9EB4BB
+          jsl rlUnknown9EB4BB
           ora wR0
-          jsl $80900D ; sound
+          jsl rlUnknown80900D ; sound
         
         _FC23
         lda #(`$7F45AC)<<8
@@ -2311,7 +2912,7 @@
         sta lR18
         ldy #$000F
         lda #$00F1
-        jsl $959F43
+        jsl rlUnknown959F43
         bcc _End
 
           lda #0

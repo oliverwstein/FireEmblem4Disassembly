@@ -433,7 +433,7 @@
 
         +
         jsl rlClearUnitWindowAndTerrainWindowProcs
-        jsl $85C0D5
+        jsl rlUnknown85C0D5
         jsl rlUnknown9180BC
         jsl rlDialogueFreeHDMA
         plp
@@ -483,7 +483,7 @@
         stz wActiveEventOffset,b
         jsl rlEventEngineFreeAllProcs
         jsl rlActiveSpriteEngineClearAllSprites
-        jsl $818D7B
+        jsl rlUnknown818D7B
         plp
         rtl
 
@@ -626,7 +626,7 @@
 
           sta lMapMenuRAMEntryPointer,b
           phx
-          jsl $8785A4
+          jsl rlUnknown8785A4
           plx
           lda #0
           sta lMapMenuRAMEntryPointer,b,x

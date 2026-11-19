@@ -601,7 +601,7 @@
 
           _8CF3
           phx
-          jsl $888082
+          jsl rlUnknown888082
           plx
           lda #2
           sta aProcSystem.aBody0,b,x
@@ -771,7 +771,7 @@
         jsr rsUnknown828E61
         bcs _End
 
-        jsl $88BF97
+        jsl rlUnknown88BF97
         bcc +
 
           lda #$0080
@@ -802,7 +802,7 @@
         .autsiz
         .databank ?
 
-        jsl $8885D3
+        jsl rlUnknown8885D3
         rts
  
         .databank 0
@@ -813,7 +813,7 @@
         .autsiz
         .databank ?
 
-        jsl $8885E1
+        jsl rlUnknown8885E1
         rts
 
         .databank 0
@@ -824,7 +824,7 @@
         .autsiz
         .databank ?
 
-        jsl $8885EF
+        jsl rlUnknown8885EF
         rts
 
         .databank 0
@@ -835,7 +835,7 @@
         .autsiz
         .databank ?
 
-        jsl $8885FD
+        jsl rlUnknown8885FD
         rts
 
         .databank 0
@@ -846,7 +846,7 @@
         .autsiz
         .databank ?
 
-        jsl $88860B
+        jsl rlUnknown88860B
         rts
 
         .databank 0
@@ -857,7 +857,7 @@
         .autsiz
         .databank ?
 
-        jsl $88861C
+        jsl rlUnknown88861C
         rts
 
         .databank 0
@@ -868,7 +868,7 @@
         .autsiz
         .databank ?
 
-        jsl $88862D
+        jsl rlUnknown88862D
         rts
 
         .databank 0
@@ -879,7 +879,7 @@
         .autsiz
         .databank ?
 
-        jsl $88863E
+        jsl rlUnknown88863E
         rts
 
         .databank 0
@@ -964,7 +964,7 @@
           lda #0
           sta wR12
           sta wR15
-          jsl $80A1D8
+          jsl rlUnknown80A1D8
 
           lda wR12
           sta $175F,b
@@ -1048,14 +1048,14 @@
 
           _8F11
           phx
-          jsl $8883C7
+          jsl rlUnknown8883C7
           plx
           lda #2
           sta aProcSystem.aBody0,b,x
           bra _8F23
 
         _8F1F
-        jsl $80B63F
+        jsl rlUnknown80B63F
 
         _8F23
         ldx aProcSystem.wOffset,b
@@ -1601,6 +1601,47 @@
     .endsection Unsorted82E073Section
 
 
+    .section Unsorted82E08DSection
+
+      .al
+      .xl
+
+      rlUnknown82E08D ; 82/E08D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sei
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        sep #$20
+        lda bBufferNMITIMEN
+        ora #$30
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #$8000
+        trb $168F,b
+        jsl rlUnknown82E147
+        lda #$AE63
+        sta wIRQPointer
+        plp
+        plb
+        .databank $82
+        cli
+        rtl
+
+        .databank 0
+
+        ; 82/E0AF
+
+    .endsection Unsorted82E08DSection
+
+
     .section Unsorted82E0AFSection
 
       .al
@@ -1630,6 +1671,290 @@
         ; 82/E0C6
 
     .endsection Unsorted82E0AFSection
+
+
+    .section Unsorted82E0C6Section
+
+      .al
+      .xl
+
+      rlUnknown82E0C6 ; 82/E0C6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        ldy lR44
+        sep #$20
+        lda lR44+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $1695,b
+        cmp #$0007
+        bcc _E0E2
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        rtl
+
+
+        _E0E2
+        lda $1695,b
+        asl a
+        tax
+        tya
+        sta $169A,b,x
+        lda lR44+1
+        and #$FF00
+        xba
+        sta $16AA,b,x
+        lda #$0000
+        sta $16BA,b,x
+        lda $0000,b,y
+        sta $16CA,b,x
+        lda $0002,b,y
+        sta $16DA,b,x
+        lda $0004,b,y
+        sta $16EA,b,x
+        lda $0006,b,y
+        sta $16FA,b,x
+        lda #$0001
+        sta $170A,b,x
+        inc $1695,b
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+        rtl
+
+        .databank 0
+
+        ; 82/E120
+
+    .endsection Unsorted82E0C6Section
+
+
+    .section Unsorted82E147Section
+
+      .al
+      .xl
+
+      rlUnknown82E147 ; 82/E147
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sei
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda $1695,b
+        cmp $1693,b
+        beq _E173
+        sta $1693,b
+        jsr rlUnknown82E177
+        lda $1693,b
+        beq _E16A
+        dec a
+        asl a
+        sta $1691,b
+        tax
+        jsr rlUnknown82E283
+        bra _E173
+
+
+        _E16A
+        lda #$0000
+        sta $1697,b
+        sta $1698,b
+
+        _E173
+        plp
+        plb
+        .databank $82
+        cli
+        rtl
+
+        .databank 0
+
+        ; 82/E177
+
+      rlUnknown82E177 ; 82/E177
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        phy
+        lda $1693,b
+        cmp #$0001
+        beq _E1BA
+        bcc _E1BA
+        and #$FFFE
+        sta wR30
+
+        _E18C
+        lda $1693,b
+        asl a
+        sec
+        sbc wR30
+        sta wR32
+        stz wR31
+
+        _E197
+        lda wR30
+        clc
+        adc wR31
+        tay
+        ldx wR31
+        lda $16DA,b,x
+        cmp $16DA,b,y
+        bcs _E1AA
+        jsr rlUnknown82E1BF
+
+        _E1AA
+        inc wR31
+        inc wR31
+        lda wR31
+        cmp wR32
+        bcc _E197
+        dec wR30
+        dec wR30
+        bne _E18C
+
+        _E1BA
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 82/E1BF
+
+      rlUnknown82E1BF ; 82/E1BF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $169A,b,x
+        sta $16A8,b
+        lda $16AA,b,x
+        sta $16B8,b
+        lda $16BA,b,x
+        sta $16C8,b
+        lda $16CA,b,x
+        sta $16D8,b
+        lda $16DA,b,x
+        sta $16E8,b
+        lda $16EA,b,x
+        sta $16F8,b
+        lda $16FA,b,x
+        sta $1708,b
+        lda $170A,b,x
+        sta $1718,b
+        lda $169A,b,y
+        sta $169A,b,x
+        lda $16AA,b,y
+        sta $16AA,b,x
+        lda $16BA,b,y
+        sta $16BA,b,x
+        lda $16CA,b,y
+        sta $16CA,b,x
+        lda $16DA,b,y
+        sta $16DA,b,x
+        lda $16EA,b,y
+        sta $16EA,b,x
+        lda $16FA,b,y
+        sta $16FA,b,x
+        lda $170A,b,y
+        sta $170A,b,x
+        lda $16A8,b
+        sta $169A,b,y
+        lda $16B8,b
+        sta $16AA,b,y
+        lda $16C8,b
+        sta $16BA,b,y
+        lda $16D8,b
+        sta $16CA,b,y
+        lda $16E8,b
+        sta $16DA,b,y
+        lda $16F8,b
+        sta $16EA,b,y
+        lda $1708,b
+        sta $16FA,b,y
+        lda $1718,b
+        sta $170A,b,y
+        rts
+
+        .databank 0
+
+        ; 82/E250
+
+    .endsection Unsorted82E147Section
+
+
+    .section Unsorted82E283Section
+
+      .al
+      .xl
+
+      rlUnknown82E283 ; 82/E283
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $16CB,b,x
+        sta $4208,b
+        lda $16CA,b,x
+        sta $4207,b
+        lda $16DB,b,x
+        sta $420A,b
+        lda $16DA,b,x
+        sta $4209,b
+        rep #$20
+        lda $16AA,b,x
+        xba
+        sta $1698,b
+        lda $16EA,b,x
+        sta $1697,b
+        rts
+
+        .databank 0
+
+        ; 82/E2AD
+
+    .endsection Unsorted82E283Section
 
 
     .section Unsorted82E400Section
@@ -1705,6 +2030,155 @@
     .endsection Unsorted82F211Section
 
 
+    .section Unsorted82F2E3Section
+
+      .al
+      .xl
+
+      rlUnknown82F2E3 ; 82/F2E3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda wR0
+        pha
+        lda $0547,b
+        ora $0548,b
+        beq _F33D
+        jsl rlUnknown82F3BE
+        ora #$0000
+        beq _F315
+        sta wR0
+
+        _F2FD
+        lda wR0
+        jsl rlUnknown82F3C7
+        lda lUnknown0540,b
+        sta lR25
+        lda lUnknown0540+1,b
+        sta lR25+1
+        jsl rlRemoveRAMAreaEntry
+        dec wR0
+        bne _F2FD
+
+        _F315
+        lda $0547,b
+        sta lR25
+        lda $0548,b
+        sta lR25+1
+        jsl rlRemoveRAMAreaEntry
+        ldy $0547,b
+        sep #$20
+        lda $0549,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0002,b,y
+        sta @l $000547
+        lda $0003,b,y
+        sta @l $000548
+
+        _F33D
+        pla
+        sta wR0
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F343
+
+    .endsection Unsorted82F2E3Section
+
+
+    .section Unsorted82F3A7Section
+
+      .al
+      .xl
+
+      rlUnknown82F3A7 ; 82/F3A7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda $0548,b
+        sta lStructPointer2+1,b
+        lda $0547,b
+        clc
+        adc #$0005
+        sta lStructPointer2,b
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/F3BE
+
+      rlUnknown82F3BE ; 82/F3BE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown82F3A7
+        jsl rlGetRAMStructCurrentStructCount
+        rtl
+
+        .databank 0
+
+        ; 82/F3C7
+
+      rlUnknown82F3C7 ; 82/F3C7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        sta wStructIndex,b
+        jsl rlUnknown82F3A7
+        jsl rlLoadRAMStructDataByIndex
+        lda lStructPointer1,b
+        sta lUnknown0540,b
+        lda lStructPointer1+1,b
+        sta lUnknown0540+1,b
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/F3E5
+
+    .endsection Unsorted82F3A7Section
+
+
     .section Unsorted82F3E5Section
 
       .al
@@ -1736,7 +2210,7 @@
         sta wR2+1
         rep #$20
 
-        jsl $82F3BE
+        jsl rlUnknown82F3BE
         ora #$0000
         beq _F463
 
@@ -1745,7 +2219,7 @@
         
         _Loop
         txa
-        jsl $82F3C7
+        jsl rlUnknown82F3C7
         phk
         plb
 
@@ -1824,7 +2298,7 @@
         jsl rlUnknown82F488
         ldx #$0024
         lda #0
-        jsl $80A861
+        jsl rlUnknown80A861
 
         pla
         sta lR18+1

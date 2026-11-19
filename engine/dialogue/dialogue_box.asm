@@ -197,12 +197,12 @@
           sec
           sbc #4
           jsl rlSetMapMenuTilemapArea
-          jsl $85884A
+          jsl rlUnknown85884A
           rtl
 
         +
-        jsl $8586FA
-        jsl $85AB2A
+        jsl rlUnknown8586FA
+        jsl rlFreeDialogueBoxHDMA
         lda #$0002
         tsb wUnknown000D79,b
         lda #<>rlProcDialogueBoxCycle6
@@ -918,7 +918,7 @@
         jsl rlProcEngineFindProc
         bcc _AB7F
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl $8586FA
+        jsl rlUnknown8586FA
         jsl rlProcEngineFreeProc
         lda #(`procDialogueBox)<<8
         sta lR44+1
@@ -927,7 +927,7 @@
         jsl rlProcEngineFindProc
         bcc _AB78
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl $8586FA
+        jsl rlUnknown8586FA
         jsl rlProcEngineFreeProc
 
         _AB78

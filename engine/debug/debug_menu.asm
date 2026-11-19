@@ -2691,7 +2691,7 @@
         jsl rlDrawMenuTextNumber
 
         lda aActionStructUnit2.TerrainType
-        jsl $848EFB
+        jsl rlUnknown848EFB
 
         lda lRoutineVariable,b
         sta lR18
@@ -2709,7 +2709,7 @@
         jsl rlDrawMenuTextNumber
 
         lda aActionStructUnit1.TerrainType
-        jsl $848EFB
+        jsl rlUnknown848EFB
 
         lda lRoutineVariable,b
         sta lR18
@@ -3459,7 +3459,7 @@
         adc #4
         sta wR1
         lda #1
-        jsl $88A704
+        jsl rlUnknown88A704
 
         lda $7F840A
         lsr a
@@ -3559,7 +3559,7 @@
 
         +
         lda #6
-        jsl $808FAD
+        jsl rlUnknown808FAD
 
         sep #$20
         lda #INIDISP_Setting(true, 0)
@@ -3596,7 +3596,7 @@
         
         _E84B
         lda #6
-        jsl $808FAD
+        jsl rlUnknown808FAD
         lda $0304,b
         inc a
         cmp #4
@@ -3608,7 +3608,7 @@
         sta $0304,b
         lda #0
         sta $7F8402
-        jsl $8BB45D
+        jsl rlUnknown8BB45D
         jsr rlDrawDebugMenu
         rtl
 
@@ -3872,7 +3872,7 @@
           sta $7F8408
           jsr rlDrawDebugMenu
           lda #6
-          jsl $808FAD
+          jsl rlUnknown808FAD
 
         + 
         rts
@@ -3885,7 +3885,7 @@
           sta $7F8408
           jsr rlDrawDebugMenu
           lda #6
-          jsl $808FAD
+          jsl rlUnknown808FAD
 
         +
         rts
@@ -3902,13 +3902,13 @@
         ; Stop song
         _XPress
         lda #$00C0
-        jsl $808F6F
+        jsl rlUnknown808F6F
         rts
 
         ; Fade out and pause song, some can be continued with A
         _YPress
         lda #$00E0
-        jsl $808F6F
+        jsl rlUnknown808F6F
         rts
 
         .databank 0

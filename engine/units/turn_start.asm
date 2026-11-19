@@ -240,7 +240,7 @@
         sec
         sbc wRoutineVariable1,b
         sta wRoutineVariable1,b
-        jsr $84B0F0
+        jsr rsGetCastleHealingCost
         bcs _CLC
 
         jsl rlSubtractSelectedCharacterMoney

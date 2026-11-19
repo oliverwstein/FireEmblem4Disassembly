@@ -739,7 +739,7 @@
         sta wUnknown00073A,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
-        jsl $8886E1
+        jsl rlUnknown8886E1
         rts
 
         .databank 0
@@ -754,7 +754,7 @@
         sta wUnknown00073A,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
-        jsl $8886D2
+        jsl rlUnknown8886D2
         rts
 
         .databank 0
@@ -769,7 +769,7 @@
         sta wUnknown00073A,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
-        jsl $8886F0
+        jsl rlUnknown8886F0
         rts
 
         .databank 0

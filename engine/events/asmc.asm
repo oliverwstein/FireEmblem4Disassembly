@@ -90,8 +90,8 @@
         sta aProcSystem.wInput0,b
         lda wSelectedUnitDataRAMPointer,b
         sta aProcSystem.wInput3,b
-        jsl $85B52F
-        jsl $85B520
+        jsl rlUnknown85B52F
+        jsl rlUnknown85B520
         lda wSelectedUnitDataRAMPointer,b
         sta aProcSystem.wInput0,b
         lda wCurrentItemDataROMPointer,b

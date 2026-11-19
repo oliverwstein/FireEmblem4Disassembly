@@ -507,7 +507,7 @@
           bit #UnitStateGuardingCastle
           beq ++
 
-            jsl $84BA6F
+            jsl rlUnknown84BA6F
             bra ++
 
         ; is on castle terrain
@@ -592,7 +592,7 @@
         sta wR0
         lda $7E44AB,x
         sta wR1
-        jsl $88BF37
+        jsl rlUnknown88BF37
         tax
         lda $7F2400,x
         and #$FC00
@@ -968,7 +968,7 @@
           cmp wRoutineVariable1,b
           bne _CB24
 
-          jsl $84D4A2
+          jsl rlUnknown84D4A2
           bcs +
 
             jml _End
@@ -981,7 +981,7 @@
         _CB18
         lda aDeploymentTable._FactionSlot,x
         jsl rlGetFactionSlotLocationID
-        jsl $84CD8A
+        jsl rlUnknown84CD8A
 
         _CB24
         lda aDeploymentTable._StateBuffer,x
@@ -997,7 +997,7 @@
         lda #$0004
         tsb wUnknown000D79,b
 
-        jsl $85E897
+        jsl rlUnknown85E897
 
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b

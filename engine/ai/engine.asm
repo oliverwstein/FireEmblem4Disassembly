@@ -339,7 +339,7 @@
             jsl rlCheckIfCastleGuarded
             bcs _CLC
 
-              jsl $87ECFD
+              jsl rlGetEventLocationEntryEffectiveXCoordinate
               sta $0E88,b
               asl a
               asl a

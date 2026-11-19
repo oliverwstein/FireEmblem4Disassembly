@@ -1487,13 +1487,13 @@
         phx
         lda $1200,b,x
         tax
-        jsl $9EB4BB
+        jsl rlUnknown9EB4BB
         sta $00
 
         lda $0000,b,y
         and #$00FF
         ora $00
-        jsl $80900D
+        jsl rlUnknown80900D
         inc y
         plx
         rts
@@ -1577,7 +1577,7 @@
         clc
         adc $04
         sta $02
-        jsl $88DD9C
+        jsl rlUnknown88DD9C
         plx
         ply
         inc y
@@ -1593,7 +1593,7 @@
 
         lda #1
         sta $7F4580
-        jsl $9EB2BA
+        jsl rlUnknown9EB2BA
         rts
 
         .databank 0
@@ -1759,7 +1759,7 @@
 
         phy
         phx
-        jsl $9E8F6A
+        jsl rlUnknown9E8F6A
         plx
         ply
         rts

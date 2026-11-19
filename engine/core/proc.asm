@@ -680,7 +680,7 @@
 
         ply
         plx
-        jsl $818087
+        jsl rlActiveSpriteEngineCreateSpriteHighestSlot
 
         pla
         clc

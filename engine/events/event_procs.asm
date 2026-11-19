@@ -42,7 +42,7 @@
           bne _End
 
         +
-        jsl $819166
+        jsl rlUnknown819166
         bcc _End
 
           lda wUnknown000D79,b
@@ -50,7 +50,7 @@
           bne +
 
             phx
-            jsl $88BF97
+            jsl rlUnknown88BF97
             plx
             bcc +
 
@@ -174,11 +174,11 @@
         bra _End
 
         _ScrollLeftUp
-        jsl $88860B
+        jsl rlUnknown88860B
         bra _End
 
         _ScrollLeftDown
-        jsl $88861C
+        jsl rlUnknown88861C
         bra _End
 
         _ScrollRight
@@ -188,11 +188,11 @@
         bra _ScrollRightDown
 
         _ScrollJustRight
-        jsl $8885FD
+        jsl rlUnknown8885FD
         bra _End
 
         _ScrollRightUp
-        jsl $88862D
+        jsl rlUnknown88862D
         bra _End
 
         _ScrollRightDown
@@ -200,11 +200,11 @@
         bra _End
 
         _ScrollUp
-        jsl $8885D3
+        jsl rlUnknown8885D3
         bra _End
 
         _ScrollDown
-        jsl $8885E1
+        jsl rlUnknown8885E1
         bra _End
 
         _FinishedScrolling

@@ -1357,7 +1357,7 @@
         rep #$20
         plb
 
-        jsr $82F19A
+        jsr rlUnknown82F19A
         bcs _EDB6
 
         sta $02
@@ -1367,16 +1367,16 @@
         sta $0000,b,y
         rep #$20
 
-        jsr $82F032
+        jsr rsUnknown82F032
         tay
-        jsr $82F1EA
+        jsr rsUnknown82F1EA
 
         lda $0001,b,y
         sec
         sbc $00
         pha
-        jsr $82F00C
-        jsr $82F022
+        jsr rsUnknown82F00C
+        jsr rsSaveOffsetToRAMAreaEntry
         pla
         pha
         cmp #7
@@ -1389,7 +1389,7 @@
         bra ++
         
         +
-        jsr $82F086
+        jsr rsGetRAMAreaEntryOffset
         tay
         jsr rsFreeRAMAreaEntryHeader
         pla

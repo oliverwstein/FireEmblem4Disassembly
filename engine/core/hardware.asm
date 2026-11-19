@@ -16,7 +16,7 @@
 
         jsl rlButtonCombinationResetCheck
         jsl rlDecompressByList
-        jsl $809903 ; ?
+        jsl rlUnknown809903 ; ?
         rts
 
         .databank 0

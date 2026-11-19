@@ -641,7 +641,7 @@
         and #$FF00
         bne +
 
-          jsr $818D23
+          jsr rlUnknown818D23
           bra _End
 
         +
@@ -678,6 +678,54 @@
         ; 81/8D23
 
     .endsection Unsorted818C98Section
+
+
+    .section Unsorted818D23Section
+
+      .al
+      .xl
+
+      rlUnknown818D23 ; 81/8D23
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $04BA,b
+        bne _8D57
+        phx
+        stz wR0
+        ldx #$0000
+
+        _8D2E
+        lda $180C,b,x
+        and #$FF00
+        ora wR0
+        sta wR0
+        inc x
+        inc x
+        cpx #$0008
+        bne _8D2E
+        plx
+        lda wR0
+        cmp #$0300
+        beq _8D57
+        phx
+        lda $180C,b,x
+        jsl rlUnknown91C472
+        plx
+        sta $180C,b,x
+        jsl rlUnknown91C4CE
+
+        _8D57
+        rts
+
+        .databank 0
+
+        ; 81/8D58
+
+    .endsection Unsorted818D23Section
 
 
     .section Unsorted818D58Section
@@ -834,6 +882,82 @@
     .endsection Unsorted818D58Section
 
 
+    .section Unsorted818EABSection
+
+      .al
+      .xl
+
+      rlUnknown818EAB ; 81/8EAB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda wR0
+        cmp #$0060
+        pla
+        rts
+
+        .databank 0
+
+        ; 81/8EB3
+
+      rlUnknown818EB3 ; 81/8EB3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda #$0080
+        cmp wR0
+        pla
+        rts
+
+        .databank 0
+
+        ; 81/8EBB
+
+      rlUnknown818EBB ; 81/8EBB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda wR1
+        cmp #$0060
+        pla
+        rts
+
+        .databank 0
+
+        ; 81/8EC3
+
+      rlUnknown818EC3 ; 81/8EC3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda #$0080
+        cmp wR1
+        pla
+        rts
+
+        .databank 0
+
+        ; 81/8ECB
+
+    .endsection Unsorted818EABSection
+
+
     .section Unsorted819166Section
 
       .al
@@ -897,6 +1021,55 @@
         .databank 0
 
     .endsection Unsorted819166Section
+
+
+    .section Unsorted81A85CSection
+
+      .al
+      .xl
+
+      rlUnknown81A85C ; 81/A85C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $81
+        stz wUnknown000D79,b
+        lda #$FFFF
+        sta wUnknownDeploymentOffset000D7F,b
+        sta wDefeatedUnitDeploymentOffset,b
+        sta $0D89,b
+        sta $0D8B,b
+        sta $0D8D,b
+        stz $0D87,b
+        stz wActiveFactionSlot,b
+        stz $0DAF,b
+        stz $0DB1,b
+        stz wCurrentChapter,b
+        stz wCurrentTurn,b
+        stz $0D7B,b
+        stz wDestroyedLocationsCount,b
+        lda #$0008
+        sta wOptionSettings,b
+        sep #$20
+        stz wAreaRestrictionBitfield,b
+        rep #$20
+        plp
+        plb
+        .databank $81
+        rtl
+
+        .databank 0
+
+        ; 81/A89D
+
+    .endsection Unsorted81A85CSection
 
 
     .section Unsorted81A89DSection
@@ -1190,7 +1363,7 @@
           cmp #1
           beq +
 
-            jsl $87C02F
+            jsl rlUnknown87C02F
             cmp #0
             beq +
 
@@ -1200,7 +1373,7 @@
               lda $0D76,b
               and #$00FF
               sta $16
-              jsl $848E5D
+              jsl rlUnknown848E5D
               bra _End
           
           +
@@ -1236,7 +1409,7 @@
           lda wActiveFactionSlot,b
           bne _INC
 
-            jsl $87BFB0
+            jsl rlUnknown87BFB0
             ora #0
             beq _INC
 
@@ -1652,7 +1825,7 @@
         bit #$0020
         beq +
 
-          jsl $8A9342
+          jsl rlUnknown8A9342
         
         +
         sec
@@ -1761,7 +1934,7 @@
         bit #$0020
         beq +
 
-          jsl $8A9342
+          jsl rlUnknown8A9342
           bra _End
         
         +
@@ -1776,7 +1949,7 @@
         jsl rlGetAndRunChapterMapEventConditions
         bcs _End
 
-          jsl $8CEDD0
+          jsl rlUnknown8CEDD0
 
         _End
         sec
@@ -1792,9 +1965,9 @@
 
         lda $0D83,b
         sta wSelectedUnitDataRAMPointer,b
-        jsl $84AF17
+        jsl rlUnknown84AF17
         lda #$001A
-        jsl $80900D
+        jsl rlUnknown80900D
         sec
         rts
 
@@ -1817,7 +1990,7 @@
             lda aDeploymentTable._UnitRAMPointer,x
             sta $0ECF,b
 
-            jsl $85B14F
+            jsl rlUnknown85B14F
 
             lda #$FFFF
             sta $0D89,b
@@ -1934,7 +2107,7 @@
           sta aProcSystem.wInput2,b
           lda $0D83,b
           sta aProcSystem.wInput3,b
-          jsl $85BB2E
+          jsl rlUnknown85BB2E
 
         +
         sec
@@ -1957,7 +2130,7 @@
           sta aProcSystem.wInput2,b
           lda #$0D00
           sta aProcSystem.wInput3,b
-          jsl $85B8D6
+          jsl rlUnknown85B8D6
 
           lda #$FFFF
           sta $0D8D,b
@@ -2051,7 +2224,7 @@
         bit #$2000
         beq _CLC
 
-          jsl $88B6FD
+          jsl rlUnknown88B6FD
 
           ldx $0772,b
           lda aDeploymentTable._UnitRAMPointer,x
@@ -2388,7 +2561,7 @@
 
         jsl rlUnknown869CF9
         jsl rlUnknown88AF7B
-        jsl $9E800C
+        jsl rlUnknown9E800C
         rtl
 
         .databank 0
@@ -2511,3 +2684,45 @@
         ; 81/B47D
 
     .endsection Unsorted81B461Section
+
+
+    .section Unsorted81B503Section
+
+      .al
+      .xl
+
+      rlUnknown81B503 ; 81/B503
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $81
+        phy
+        lda lChapterEventDataPointer+1,b
+        sta lR18+1
+        ldy lChapterEventDataPointer,b
+        sep #$20
+        lda lChapterEventDataPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0008,b,y
+        sta lR18
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 81/B522
+
+    .endsection Unsorted81B503Section

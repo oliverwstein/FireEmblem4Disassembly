@@ -1380,8 +1380,8 @@
         .databank ?
 
         ldx $00
-        jsl $88AF7B
-        jsl $84D2BA
+        jsl rlUnknown88AF7B
+        jsl rlUnknown84D2BA
         rts
 
         .databank 0
@@ -1392,9 +1392,9 @@
         .autsiz
         .databank ?
 
-        jsl $88AF7B
-        jsl $84D334
-        jsl $9EDAE7
+        jsl rlUnknown88AF7B
+        jsl rlUnknown84D334
+        jsl rlUnknown9EDAE7
         rts
 
         .databank 0
@@ -1405,8 +1405,8 @@
         .autsiz
         .databank ?
 
-        jsl $88AF7B
-        jsl $84D16B
+        jsl rlUnknown88AF7B
+        jsl rlUnknown84D16B
         rts
 
         .databank 0
@@ -1692,17 +1692,17 @@
           +
           lda aActionStructUnit1.UnitRAMPointer
           sta wSelectedUnitDataRAMPointer,b
-          jsl $84BB54
+          jsl rlUnknown84BB54
           bra _End
 
           _DE91
-          jsl $81B368
+          jsl rlUnknown81B368
           bra _End
 
           _DE97
           and #$7FFF
           sta wBattleCriticalType
-          jsl $9EDF7F
+          jsl rlUnknown9EDF7F
           bra _End
         
         _End
@@ -1745,7 +1745,7 @@
           +
           lda aActionStructUnit1.UnitRAMPointer
           sta wSelectedUnitDataRAMPointer,b
-          jsl $84BB65
+          jsl rlCheckIfBattleAnimationOFF
           bcc _End
 
             lda #$0040
@@ -1965,7 +1965,7 @@
         trb wUnknown000D79,b
         lda #$0033
         sta wBattleSong
-        jsl $81B368
+        jsl rlUnknown81B368
 
         ply
         plx
@@ -3540,7 +3540,7 @@
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
         jsl rlGetItemROMDataByInventorySlot
-        jsl $87E86A
+        jsl rlUnknown87E86A
         sta wRoutineVariable1,b
 
         lda structActionStructEntry.UnitRAMPointer,b,y
@@ -3561,7 +3561,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl $84F99D
+        jsl rlUnknown84F99D
         sta structActionStructEntry.GainedExperience,b,x
 
         lda wRoutineVariable1,b
@@ -3592,14 +3592,14 @@
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
         jsl rlGetItemROMDataByInventorySlot
-        jsl $87E89A
+        jsl rlUnknown87E89A
         jsr rsUnknown84E62C
 
         lda structActionStructEntry.UnitRAMPointer,b,x
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl $84F99D
+        jsl rlUnknown84F99D
         sta structActionStructEntry.GainedExperience,b,x
 
         sep #$20
@@ -3638,7 +3638,7 @@
         tax
         jsl rlGetSelectedUnitFactionSlot
         jsl rlGetFactionSlotLocationID
-        jsl $84CD8A
+        jsl rlUnknown84CD8A
 
         pla
         sta $0580,b
@@ -3648,7 +3648,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl $84F99D
+        jsl rlUnknown84F99D
         sta structActionStructEntry.GainedExperience,b,x
 
         sep #$20

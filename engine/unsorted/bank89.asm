@@ -27,7 +27,7 @@
         lda $899109,x
         tax
         pla
-        jsl $8BBE68
+        jsl rlUnknown8BBE68
 
         lda $7F82BD
         inc a

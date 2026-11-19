@@ -435,13 +435,13 @@
         phy
         pha
         sta aSave.wActiveSlot,b
-        jsl $88818A
-        jsl $81A85C
+        jsl rlUnknown88818A
+        jsl rlUnknown81A85C
         jsr rsLoadGameTimerAndUnitLosses
         jsr rsLoadSaveFileBody
         jsr rsFillSaveSlotDataBuffers
-        jsl $87BF6F
-        jsl $8BCEAD
+        jsl rlUnknown87BF6F
+        jsl rlUnknown8BCEAD
         pla
         ply
         plx
@@ -455,15 +455,15 @@
         .autsiz
         .databank ?
 
-        jsl $88818A
-        jsl $81A85C
+        jsl rlUnknown88818A
+        jsl rlUnknown81A85C
         jsl rlUnknown848000
         jsr rsFillSaveSlotDataBuffers
         jsr rsGetNewUniqueSaveID
         sta aSave.wActiveSaveData,b
         jsr rsClearUnitLosses
         jsr rsClearGameTimer
-        jsl $87BF6F
+        jsl rlUnknown87BF6F
         rtl
 
         .databank 0
@@ -923,13 +923,13 @@
         sta wR14
         lda #0
         sta wR15
-        jsl $80A1D8
+        jsl rlUnknown80A1D8
 
         lda #60
         sta wR14
         lda #0
         sta wR15
-        jsl $80A1D8
+        jsl rlUnknown80A1D8
 
         lda wR13
         bne +
@@ -1114,7 +1114,7 @@
         .autsiz
         .databank ?
 
-        jsr $91ECC3
+        jsr rsUnknown91ECC3
         rtl
 
         .databank 0
@@ -1721,7 +1721,7 @@
         jsl rlUnknown848000
         jsr rsLoadGeneralSaveData
         jsr rsLoadFactionHeaderRAMData
-        jsl $87FB5E
+        jsl rlUnknown87FB5E
         jsr rsLoadItemRAMData
         jsr rsLoadChapterLocationData
         jsr rsLoadChapterEventData
@@ -1885,7 +1885,7 @@
         lda aSave.wCharacterID
         sta aUnit1DataBuffer._ROM.CharacterID
 
-        jsl $87F501
+        jsl rlUnknown87F501
         jsr rsLoadSpecifiedUnitsDataByType
 
         lda aSave.wCharacterID
@@ -2015,7 +2015,7 @@
         ldx #<>aSaveStaticDynamicPersonalCharacterData
         jsr rsLoadBitpackedDataOffsets._Entry
 
-        jsl $87F9F6
+        jsl rlUnknown87F9F6
         rts
 
         .databank 0
@@ -2051,7 +2051,7 @@
         ldx #<>aSaveHolyEnemyPersonalCharacterData
         jsr rsLoadBitpackedDataOffsets._Entry
 
-        jsl $87FA57
+        jsl rlUnknown87FA57
         rts
 
         .databank 0
@@ -2652,7 +2652,7 @@
         .autsiz
         .databank ?
 
-        jsl $868079
+        jsl rlInitiateChapterEventRAMData
 
         ldx #0
         
@@ -2703,7 +2703,7 @@
           cmp aSave.wStructIndex,b
           bne -
 
-        jsl $86C4EB
+        jsl rlUnknown86C4EB
         rts
 
         .databank 0

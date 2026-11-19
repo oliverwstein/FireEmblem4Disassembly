@@ -1,5 +1,52 @@
 ; Code from bank $8C not yet assigned to a game system.
 
+    .section Unsorted8CED00Section
+
+      .al
+      .xl
+
+      rlUnknown8CED00 ; 8C/ED00
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        tsb $08AD,b
+        lda #$0002
+        tsb $08AD,b
+        lda #$0004
+        tsb $08AD,b
+        lda #$0008
+        tsb $08AD,b
+        lda #$0000
+        sta $08B6,b
+        jsl rlUnknown88B3AF
+        lda #$0002
+        sta $088B,b
+        lda #$0003
+        sta $08B8,b
+        lda #$0001
+        sta $089D,b
+        lda #$0002
+        sta wScreenFadingProcInput,b
+        lda #$B6B6
+        sta $0ECF,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 8C/ED4F
+
+    .endsection Unsorted8CED00Section
+
+
     .section Unsorted8CEDD0Section
 
       .al
@@ -85,7 +132,7 @@
             jsl rlSetPermanentEventFlag
 
         _EE64
-        jsl $8CED00
+        jsl rlUnknown8CED00
         sec
         rtl
 

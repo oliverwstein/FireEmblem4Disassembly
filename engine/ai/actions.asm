@@ -342,7 +342,7 @@
         +
         lda #0
         sta aAIAction.wUnknown7F4402
-        jsr $86B73E
+        jsr rsUnknown86B73E
         
         +
         rts
@@ -884,7 +884,7 @@
         sta $000E9C
         lda aAIAction.wUnitInventorySlot
         sta $000E9E
-        jsl $86BFE6
+        jsl rlUnknown86BFE6
         clc
         adc aAIAction.wTurnValue
         ora #0
@@ -972,7 +972,7 @@
         cmp #$FFFF
         bne +
 
-          jsr $86BA3B
+          jsr rlUnknown86BA3B
           cmp #$FFFF
           beq ++
 
@@ -1088,7 +1088,7 @@
                 sta wAITemp000E9C,b
                 lda aAIAction.wUnitInventorySlot
                 sta wAITemp000E9E,b
-                jsl $86BFE6
+                jsl rlUnknown86BFE6
                 ora #0
                 beq _End
 
@@ -1129,13 +1129,13 @@
           jml _End
         
         +
-        jsr $86BCB1
+        jsr rlUnknown86BCB1
         bcc +
 
           jml _End
         
         +
-        jsr $86BCC7
+        jsr rlUnknown86BCC7
         bcc +
 
           jml _End
@@ -1200,7 +1200,7 @@
         bcc +
 
           sta aAIAction.wDestinationYPosition
-          jsr $86BC64
+          jsr rlUnknown86BC64
           bne _BC3E
         
         +
@@ -1212,7 +1212,7 @@
           sta aAIAction.wDestinationXPosition
           lda aDeploymentTable._YTilePosition,x
           sta aAIAction.wDestinationYPosition
-          jsr $86BC64
+          jsr rlUnknown86BC64
           bne _BC3E
         
         +
@@ -1224,7 +1224,7 @@
           sta aAIAction.wDestinationXPosition
           lda aDeploymentTable._YTilePosition,x
           sta aAIAction.wDestinationYPosition
-          jsr $86BC64
+          jsr rlUnknown86BC64
           bne _BC3E
         
         +
@@ -1236,7 +1236,7 @@
         bcs +
 
           sta aAIAction.wDestinationYPosition
-          jsr $86BC64
+          jsr rlUnknown86BC64
           bne _BC3E
         
         +
@@ -1250,7 +1250,7 @@
           inc a
           inc a
           sta aAIAction.wDestinationYPosition
-          jsr $86BC64
+          jsr rlUnknown86BC64
           beq _End
           
             _BC3E
