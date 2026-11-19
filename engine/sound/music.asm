@@ -1,0 +1,253 @@
+; TODO: describe this file.
+
+    .section PlayerPhaseChapterSongIDsSection
+
+      .al
+      .xl
+
+      aPlayerPhaseChapterSongIDs ; 81/AA4D
+
+        .word $0011
+        .word $0013
+        .word $002C
+        .word $001C
+        .word $0014
+        .word $002B
+        .word $0012
+        .word $0018
+        .word $001E
+        .word $0024
+        .word $001B
+        .word $002D
+
+      aNonPlayerFactionPhaseSongIDs ; 81/AA65
+
+        .word $0022
+        .word $0022
+        .word $0022
+        .word $0022
+        .word $0022
+        .word $0022
+        .word $0022
+        .word $0019
+        .word $0019
+        .word $0019
+        .word $0019
+        .word $0019
+        .word $0019
+        .word $0019
+        .word $0027
+        .word $0027
+        .word $0027
+        .word $0027
+        .word $0027
+        .word $0023
+        .word $001F
+        .word $001F
+        .word $001F
+        .word $001F
+        .word $0019
+        .word $0026
+        .word $0026
+        .word $0026
+        .word $0026
+        .word $0026
+        .word $0025
+        .word $0025
+        .word $0025
+        .word $0021
+        .word $0021
+        .word $0021
+        .word $0021
+        .word $0029
+        .word $0029
+        .word $0029
+        .word $0029
+        .word $0028
+        .word $0028
+        .word $0028
+        .word $0028
+        .word $0028
+        .word $0017
+        .word $0017
+        .word $0017
+        .word $0017
+        .word $0017
+        .word $0017
+        .word $0017
+
+      rlGetVictoryThemeIfAllEnemiesDead ; 81/AACF
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Returns SongID $20 and SEC aka victory theme if all enemies are dead.
+        ; Returns CLC otherwise
+
+        phx
+        lda wActiveFactionSlot,b
+        bne _CLC
+
+          ldx #(72 -1) * size(word)
+          
+            -
+            lda aDeploymentTable._StateBuffer,x
+            bit #DeploymentStateAlive
+            beq _Next
+
+              bit #DeploymentStateHidden
+              bne _Next
+
+                and #DeploymentAllegianceMask
+                cmp #AllegianceEnemy
+                beq _CLC
+
+            _Next
+            dec x
+            dec x
+            bpl -
+
+          lda #$0020
+          sec
+
+          -
+          plx
+          rtl
+        
+        _CLC
+        clc
+        bra -
+
+        .databank 0
+
+      rsUnknown81AAFB ; 81/AAFB
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Loads enemy music?
+
+        jsl rlGetVictoryThemeIfAllEnemiesDead
+        bcs +
+
+          lda wCurrentChapter,b
+          asl a
+          tax
+          lda aUnknown81AB0E,x
+
+        +
+        sta $04BA,b
+        rts
+
+        .databank 0
+
+      aUnknown81AB0E ; 81/AB0E
+
+        ; Song IDs?
+
+        .word $0011
+        .word $0013
+        .word $002C
+        .word $001C
+        .word $0014
+        .word $002B
+        .word $0012
+        .word $0018
+        .word $001E
+        .word $0024
+        .word $001B
+        .word $002E
+
+      rlUnknown81AB26 ; 81/AB26
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda $04F6,b
+        bit #$0002
+        beq +
+
+        lda $0DAB,b
+        cmp $0510,b
+        beq _End
+
+        +
+        lda $0DAB,b
+        beq _End
+
+        sta $04BA,b
+        
+        _End
+        rtl
+
+        .databank 0
+
+      rlUnknown81AB3F ; 81/AB3F
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+
+        jsl rlGetVictoryThemeIfAllEnemiesDead
+        bcc _End
+
+          sta $0DAB,b
+          sta aProcSystem.wInput0,b
+
+          lda wUnknown00171A,b
+          bne _End
+
+            lda #$00E1
+            sta aProcSystem.wInput1,b
+
+            lda #(`$8283E3)<<8
+            sta lR44+1
+            lda #<>$8283E3
+            sta lR44
+            jsl rlProcEngineCreateProc
+
+        _End
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlUnknown81AB6B ; 81/AB6B
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wUnknown00171A,b
+        bne _End
+
+          jsl $84C33D
+
+          lda wActiveFactionSlot,b
+          jsl rlRunTurnStartEffectsForAllUnitsInFaction
+          jsl rlUnknown869CE4
+
+          lda wActiveFactionSlot,b
+          jsl rlUnknown84C5D7
+          bcc +
+
+            jsl rlUnknown81A9D4
+
+          +
+          inc $0304,b
+        
+        _End
+        rts
+
+        .databank 0
+
+    .endsection PlayerPhaseChapterSongIDsSection

@@ -217,3 +217,451 @@
         ; 81/8FA1
 
     .endsection MapScrollScriptSection
+
+
+    .section GetMapPixelScrollDistanceSection
+
+      .al
+      .xl
+
+      rsGetMapPixelScrollDistance ; 81/91BE
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Evaluates a map scroll code: if $80, end the scolling
+        ; If $84, change the map scrolling speed
+        ; Values 1-8 control the direction of the scrolling
+        ; Prior values +9 make a command scroll multiple tiles, 
+        ; with the tile count being a byte argument that comes afterwards.
+
+        ; Output: 
+        ; wMapPixelScrollDistance
+        ; CLC if scrolling, SEC if finished
+
+        ldy wMapScrollScriptOffset,b
+        bmi _EndScroll
+
+          lda wEventMapScrollScript,b
+          sta lR18
+          lda wEventMapScrollScript+1,b
+          sta lR18+1
+          
+            -
+            lda [lR18],y
+            and #$00FF
+            cmp #$0080
+            sta wR0
+            beq _EndScroll
+
+            cmp #$0084
+            bne _KeepSpeed
+
+              inc y
+              lda [lR18],y
+              and #$00FF
+              sta wEventMapScrollSpeed,b
+              inc wMapScrollScriptOffset,b
+              inc wMapScrollScriptOffset,b
+              ldy wMapScrollScriptOffset,b
+              bra -
+
+            _KeepSpeed
+            cmp #10
+            bcc +
+
+              sbc #9
+
+            +
+            jsr rsGetMapScrollDirectionIdentifierFromCommand
+            sta wMapScrollDirectionIdentifier,b
+
+            lda [lR18],y
+            and #$00FF
+            cmp #10
+            bcc _SingleTileScroll
+
+            ; Multiple tiles
+            jsr rsGetMapPixelScrollDistanceMultipleTiles
+            bra +
+
+            _SingleTileScroll
+            jsr rsGetMapPixelScrollDistanceSingleTile
+
+            +
+            clc
+            rts
+
+        _EndScroll
+        lda #16
+        sta wMapPixelScrollDistance,b
+        stz wUnknown0007D8,b
+        stz wMapScrollScriptOffset,b
+        stz wUnknown00073A,b
+        sec
+        rts
+
+        .databank 0
+
+      rsGetMapPixelScrollDistanceSingleTile ; 81/9225
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Adds 16 pixels to the scroll distance for a single tile command.
+        ; If similar commands occur sequentially, continue to add 16 pixels 
+        ; to the distance for each command.
+
+        ; Input:
+        ; wR0 = Scrolling command
+
+        ; Output:
+        ; wMapPixelScrollDistance
+
+        _OuterLoop
+        lda wMapPixelScrollDistance,b
+        clc
+        adc #16
+        sta wMapPixelScrollDistance,b
+        
+          _InnerLoop
+          inc y
+          sty wMapScrollScriptOffset,b
+          bmi _End
+
+            lda [lR18],y
+            and #$00FF
+            cmp #$0080
+            beq _End
+
+              bit #$0080
+              beq +
+
+                cmp #$0084
+                bne _InnerLoop
+
+                  inc y
+                  lda [lR18],y
+                  and #$00FF
+                  sta wEventMapScrollSpeed,b
+                  bra _InnerLoop
+
+              +
+              cmp wR0
+              beq _OuterLoop
+
+        _End
+        rts
+
+        .databank 0
+
+      rsGetMapPixelScrollDistanceMultipleTiles ; 81/9259
+
+        .al
+        .autsiz
+        .databank ?
+
+        phx
+        lda [lR18],y
+        and #$00FF
+        tax
+        inc y
+        lda [lR18],y
+        and #$00FF
+
+        ; Check for pause command
+        cpx #$12
+        beq +
+
+          ora #16 << 8
+          jsl rlUnsignedMultiply8By8
+
+        +
+        clc
+        adc wMapPixelScrollDistance,b
+        sta wMapPixelScrollDistance,b
+
+        inc y
+        sty wMapScrollScriptOffset,b
+        plx
+        rts
+
+        .databank 0
+
+      rsGetMapScrollDirectionIdentifierFromCommand ; 81/927F
+
+        .al
+        .autsiz
+        .databank ?
+
+        cmp #4
+        beq _Down
+
+        cmp #3
+        beq _Up
+
+        cmp #2
+        beq _Right
+
+        cmp #1
+        beq _Left
+
+        cmp #5
+        beq _TopLeft
+
+        cmp #6
+        beq _BottomLeft
+
+        cmp #7
+        beq _TopRight
+
+        cmp #8
+        beq _BottomRight
+
+        lda #0
+        bra _End
+        
+        _Down
+        lda #$0018
+        sta wUnknown0007E2,b
+        lda #$0400
+        bra _End
+        
+        _Up
+        lda #$0010
+        sta wUnknown0007E2,b
+        lda #$0800
+        bra _End
+        
+        _Right
+        lda #$0008
+        sta wUnknown0007E2,b
+        lda #$0100
+        bra _End
+        
+        _Left
+        lda #0
+        sta wUnknown0007E2,b
+        lda #$0200
+        bra _End
+        
+        _TopLeft
+        lda #0
+        sta wUnknown0007E2,b
+        lda #$0A00
+        bra _End
+        
+        _BottomLeft
+        lda #0
+        sta wUnknown0007E2,b
+        lda #$0600
+        bra _End
+        
+        _TopRight
+        lda #$0008
+        sta wUnknown0007E2,b
+        lda #$0900
+        bra _End
+        
+        _BottomRight
+        lda #$0008
+        sta wUnknown0007E2,b
+        lda #$0500
+        bra _End
+        
+        _End
+        rts
+
+        .databank 0
+
+      rlUnknown819305 ; 81/9305
+
+        .al
+        .autsiz
+        .databank ?
+
+        and #$FFFF
+        beq _End
+
+        cmp #$0200
+        beq _Left
+
+        cmp #$0100
+        beq _Right
+
+        cmp #$0800
+        beq _Up
+
+        cmp #$0400
+        beq _Down
+
+        cmp #$0A00
+        beq _UpLeft
+
+        cmp #$0600
+        beq _DownLeft
+
+        cmp #$0900
+        beq _UpRight
+
+        cmp #$0500
+        beq _DownRight
+
+        _End
+        rtl
+
+        _Left
+        jsr rsMapScrollLeft
+        rtl
+
+        _Right
+        jsr rsMapScrollRight
+        rtl
+
+        _Up
+        jsr rsMapScrollUp
+        rtl
+
+        _Down
+        jsr rsMapScrollDown
+        rtl
+
+        _UpLeft
+        jsr rsMapScrollUpLeft
+        rtl
+
+        _DownLeft
+        jsr rsMapScrollDownLeft
+        rtl
+
+        _UpRight
+        jsr rsMapScrollUpRight
+        rtl
+
+        _DownRight
+        jsr rsMapScrollDownRight
+        rtl
+
+        .databank 0
+
+      rsMapScrollUp ; 81/9353
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableYScrollFlag,b
+        jsl rlUnknown8886B3
+        rts
+
+        .databank 0
+
+      rsMapScrollDown ; 81/9361
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableYScrollFlag,b
+        jsl rlUnknown8886BB
+        rts
+
+        .databank 0
+
+      rsMapScrollLeft ; 81/936F
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+        jsl rlUnknown8886A3
+        rts
+
+        .databank 0
+
+      rsMapScrollRight ; 81/937D
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+        jsl rlUnknown8886AB
+        rts
+
+        .databank 0
+
+      rsMapScrollUpLeft ; 81/938B
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+        sta wMapEnableYScrollFlag,b
+        jsl rlUnknown8886C3
+        rts
+
+        .databank 0
+
+      rsMapScrollDownLeft ; 81/939C
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+        sta wMapEnableYScrollFlag,b
+        jsl $8886E1
+        rts
+
+        .databank 0
+
+      rsMapScrollUpRight ; 81/93AD
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+        sta wMapEnableYScrollFlag,b
+        jsl $8886D2
+        rts
+
+        .databank 0
+
+      rsMapScrollDownRight ; 81/93BE
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+        sta wMapEnableYScrollFlag,b
+        jsl $8886F0
+        rts
+
+        .databank 0
+
+        ; 81/93CF
+
+    .endsection GetMapPixelScrollDistanceSection

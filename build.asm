@@ -114,7 +114,10 @@
   .include "engine/epilogue/world_map.asm"
   .include "engine/save/save.asm"
   .include "engine/debug/debug_menu.asm"
+  .include "engine/map/map_sprites.asm"
+  .include "engine/sound/music.asm"
   .include "engine/unsorted/bank80.asm"
+  .include "engine/unsorted/bank81.asm"
   .include "engine/unsorted/bank82.asm"
   .include "engine/unsorted/bank84.asm"
   .include "engine/unsorted/bank87.asm"
@@ -322,12 +325,154 @@
 
     .here
 
+    * = $0188B0
+    .logical $8188B0
+
+      .dsection MapSpriteSection
+
+    .here
+
+    * = $0189F3
+    .logical $8189F3
+
+      .dsection Unsorted8189F3Section
+
+    .here
+
+    * = $018A4A
+    .logical $818A4A
+
+      .dsection Unsorted818A4ASection
+
+    .here
+
+    * = $018C98
+    .logical $818C98
+
+      .dsection Unsorted818C98Section
+
+    .here
+
+    * = $018D58
+    .logical $818D58
+
+      .dsection Unsorted818D58Section
+      .dsection MovingMapSpritePositionRoutinesSection
+
+    .here
+
     * = $018ECB
     .logical $818ECB
 
       .dsection MapScrollScriptSection
 
       ; 81/8FA1
+
+    .here
+
+    * = $019031
+    .logical $819031
+
+      .dsection CapSpawnDestinationCoordinates100Section
+
+    .here
+
+    * = $019092
+    .logical $819092
+
+      .dsection FillMovingMapSpriteDataSection
+
+    .here
+
+    * = $019166
+    .logical $819166
+
+      .dsection Unsorted819166Section
+      .dsection GetMapPixelScrollDistanceSection
+
+    .here
+
+    * = $01A89D
+    .logical $81A89D
+
+      .dsection Unsorted81A89DSection
+
+    .here
+
+    * = $01AA4D
+    .logical $81AA4D
+
+      .dsection PlayerPhaseChapterSongIDsSection
+
+    .here
+
+    * = $01AC02
+    .logical $81AC02
+
+      .dsection Unsorted81AC02Section
+
+    .here
+
+    * = $01AD6A
+    .logical $81AD6A
+
+      .dsection Unsorted81AD6ASection
+
+    .here
+
+    * = $01AE02
+    .logical $81AE02
+
+      .dsection Unsorted81AE02Section
+
+    .here
+
+    * = $01AEAA
+    .logical $81AEAA
+
+      .dsection Unsorted81AEAASection
+
+    .here
+
+    * = $01B088
+    .logical $81B088
+
+      .dsection Unsorted81B088Section
+
+    .here
+
+    * = $01B259
+    .logical $81B259
+
+      .dsection ASMCGiveToSupplyMenuIfInventoryFullSection
+
+    .here
+
+    * = $01B2AA
+    .logical $81B2AA
+
+      .dsection Unsorted81B2AASection
+
+    .here
+
+    * = $01B32C
+    .logical $81B32C
+
+      .dsection Unsorted81B32CSection
+
+    .here
+
+    * = $01B43F
+    .logical $81B43F
+
+      .dsection Unsorted81B43FSection
+
+    .here
+
+    * = $01B461
+    .logical $81B461
+
+      .dsection Unsorted81B461Section
 
     .here
 
