@@ -79,8 +79,15 @@ def table_entries():
     """(address, m8, x8, table) for raw entries in pointer tables in the build whose
     other entries are routines. Widths come from the labelled entries. A raw .word
     entry ($XXXX or <>$XXXX) is taken to be in the table's own bank; words below $8000
-    (unused slots) belong to the table but are not followed."""
+    (unused slots) belong to the table but are not followed. A table that built code
+    jumps through with jsr/jmp (table,x) is followed even with no labelled entry,
+    with 16-bit registers."""
     starts = {name: (m8, x8) for _, name, m8, x8 in built_routines()}
+    # Tables that built code jumps through (jsr/jmp (table,x)). Their raw entries
+    # are followed even when no entry is a built routine, with 16-bit registers.
+    jumped = set()
+    for f in glob.glob('engine/**/*.asm', recursive=True):
+        jumped.update(re.findall(r'\bj(?:sr|mp) \(([A-Za-z]\w*),x\)', open(f, encoding='utf-8').read()))
     entry = re.compile(r'^\s+\.(addr|word|long) (?:<>)?(\$[0-9A-F]{6}|\$[0-9A-F]{4}|[A-Za-z]\w*)\s*(;.*)?$')
     for f in glob.glob('engine/**/*.asm', recursive=True):
         lines = open(f, encoding='utf-8').read().split('\n') + ['']
@@ -94,12 +101,12 @@ def table_entries():
                 continue
             if block:
                 named = [starts[x] for x in block if x in starts]
-                # Words below $8000 (unused slots such as $0000) stay part of the
-                # table but are not code.
+                # Words below $8000 and $FFFF (unused slots) stay part of the table
+                # but are not code.
                 raw = [int(x[1:], 16) | (bank if len(x) == 5 else 0) for x in block
-                       if x.startswith('$') and (len(x) != 5 or int(x[1:], 16) >= 0x8000)]
-                if named and raw:
-                    m8, x8 = max(set(named), key=named.count)
+                       if x.startswith('$') and (len(x) != 5 or 0x8000 <= int(x[1:], 16) < 0xFFFF)]
+                if raw and (named or table in jumped):
+                    m8, x8 = max(set(named), key=named.count) if named else (False, False)
                     for a in raw:
                         yield a, m8, x8, table
             block = []
@@ -287,13 +294,16 @@ def trace(rom, labels, mask, from_log=False):
 
 
 def merge(found):
-    """Drop routines that start inside another one found earlier in the ROM (local entry
-    points), keeping the outer one."""
+    """Fold routines that start inside another one found earlier in the ROM into it, as
+    further entry points ('inner'); the outer one is rendered with a local label at each."""
     out, end = [], 0
     for a in sorted(found):
         if a < end:
+            out[-1][1].setdefault('inner', []).append(a)
+            end = max(end, found[a]['end'])
+            out[-1][1]['end'] = end
             continue
-        out.append((a, found[a]))
+        out.append((a, dict(found[a])))
         end = max(end, found[a]['end'])
     return out
 
@@ -342,7 +352,8 @@ def main():
         parts = ['; Routines found by tools/trace.py. Each was reached from code in the build'
                  + (' or ran in fe4.cdl.\n' if a.from_log else '.\n')]
         for x, info in found:
-            d = Disassembler(rom, labels, x, info['end'] if info['clipped'] else None, info['m8'], info['x8'])
+            d = Disassembler(rom, labels, x, info['end'] if info['clipped'] else None, info['m8'], info['x8'],
+                             entries=info.get('inner', ()))
             insns, _ = d.decode()
             # The project names routines that return with rts rs..., and rtl rl...
             mns = {i['mn'] for i in insns}

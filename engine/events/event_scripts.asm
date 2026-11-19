@@ -3,6 +3,36 @@
 ; It also holds the unnamed helpers that only event commands, and procs those
 ; commands create, use.
 
+    .section Table809703Section
+
+      .al
+      .xl
+
+      aUnknown809703 ; 80/9703
+
+        ; Jump table of rsUnknown809677.
+        .word <>rsUnknown809729
+        .word <>rsUnknown809729
+        .word <>rsUnknown80972E
+        .word <>rsUnknown80972E
+        .word <>rsUnknown809759
+        .word <>rsUnknown809733
+        .word <>rsUnknown80975E
+        .word <>rsUnknown809772
+        .word <>rsUnknown809786
+        .word <>rsUnknown80979A
+        .word <>rsUnknown8097E0
+        .word <>rlUnknown809801
+        .word <>rlUnknown809810
+        .word <>rlUnknown80981F
+        .word <>rsUnknown80982E
+        .word <>rsUnknown80983C
+        .word <>rsUnknown809846
+        .word <>rsUnknown8098AB
+
+    .endsection Table809703Section
+
+
     .section Table86C69ASection
 
       .al
@@ -4587,7 +4617,7 @@
         lda [lR38],y
         inc y
         inc y
-        jsr ($809703,x)
+        jsr (aUnknown809703,x)
 
         _96D7
         lda $04F8,b

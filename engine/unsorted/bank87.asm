@@ -6179,6 +6179,50 @@
     .endsection Unsorted87E6D7Section
 
 
+    .section Unsorted87E705Section
+
+      .al
+      .xl
+
+      rsUnknown87E705 ; 87/E705
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        clc
+        rts
+
+        .databank 0
+
+        ; 87/E707
+
+    .endsection Unsorted87E705Section
+
+
+    .section Unsorted87E707Section
+
+      .al
+      .xl
+
+      rsUnknown87E707 ; 87/E707
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        clc
+        rts
+
+        .databank 0
+
+        ; 87/E709
+
+    .endsection Unsorted87E707Section
+
+
     .section Unsorted87E709Section
 
       .as
@@ -6195,7 +6239,7 @@
         jsl rlGetItemStaffEffect
         asl a
         tax
-        jsr ($87E715,x)
+        jsr (aUnknown87E715,x)
         plx
         rtl
 
@@ -6204,6 +6248,123 @@
         ; 87/E715
 
     .endsection Unsorted87E709Section
+
+
+    .section Table87E715Section
+
+      .al
+      .xl
+
+      aUnknown87E715 ; 87/E715
+
+        ; Jump table of rlUnknown87E709.
+        .word <>rsUnknown87E75F
+        .word <>rsUnknown87E737
+        .word <>rsUnknown87E737
+        .word <>rsUnknown87E737
+        .word <>rsUnknown87E737
+        .word <>rsUnknown87E737
+        .word <>rsUnknown87E75F
+        .word <>rsUnknown87E741
+        .word <>rsUnknown87E75F
+        .word <>rsUnknown87E75F
+        .word <>rsUnknown87E73C
+        .word <>rsUnknown87E75D
+        .word <>rsUnknown87E75F
+        .word <>rsUnknown87E75F
+        .word <>rsUnknown87E75F
+        .word <>rsUnknown87E75F
+        .word <>rsUnknown87E75F
+
+    .endsection Table87E715Section
+
+
+    .section Unsorted87E737Section
+
+      .al
+      .xl
+
+      rsUnknown87E737 ; 87/E737
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0008
+        bra rsUnknown87E741._E744
+
+        .databank 0
+
+        ; 87/E73C
+
+      rsUnknown87E73C ; 87/E73C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0009
+        bra rsUnknown87E741._E744
+
+        .databank 0
+
+        ; 87/E741
+
+      rsUnknown87E741 ; 87/E741
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0002
+
+        _E744
+        sta wRoutineVariable1,b
+        lda wUnknown000D79,b
+        bit #$0020
+        beq rsUnknown87E75F
+        lda $7E4E77
+        cmp #$FFFF
+        beq rsUnknown87E75F
+        jsl rlUnknown879FBE
+        rts
+
+        .databank 0
+
+        ; 87/E75D
+
+      rsUnknown87E75D ; 87/E75D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sec
+        rts
+
+        .databank 0
+
+        ; 87/E75F
+
+      rsUnknown87E75F ; 87/E75F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        clc
+        rts
+
+        .databank 0
+
+        ; 87/E761
+
+    .endsection Unsorted87E737Section
 
 
     .section Unsorted87E762Section
@@ -6226,7 +6387,7 @@
         jsl rlGetItemStaffEffect
         asl a
         tax
-        jsr ($87E779,x)
+        jsr (aUnknown87E779,x)
         plx
         rtl
 
@@ -6242,46 +6403,105 @@
       .al
       .xl
 
-      rsUnknown87E779 ; 87/E779
+      aUnknown87E779 ; 87/E779
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; One handler per staff effect (rlGetItemStaffEffect). (tools/sweep.py had
+        ; decoded this table as code.)
+        .word <>rsUnknown87E79B
+        .word <>rsUnknown87E7A6
+        .word <>rsUnknown87E7A6
+        .word <>rsUnknown87E7A6
+        .word <>rsUnknown87E7A6
+        .word <>rsUnknown87E7B5
+        .word <>rsUnknown87E7B0
+        .word <>rsUnknown87E79C
+        .word <>rsUnknown87E7B0
+        .word <>rsUnknown87E7AB
+        .word <>rsUnknown87E7AB
+        .word <>rsUnknown87E79B
+        .word <>rsUnknown87E7D9
+        .word <>rsUnknown87E7DE
+        .word <>rsUnknown87E7DE
+        .word <>rsUnknown87E7DE
+        .word <>rsUnknown87E7E3
+
+
+      rsUnknown87E79B ; 87/E79B
+
         .al
         .xl
         .autsiz
         .databank ?
 
-        txy
-        sbc [$A6]
-        sbc [$A6]
-        sbc [$A6]
-        sbc [$A6]
-        sbc [bBufferHTIMEH]
-        sbc [$B0]
-        sbc [bBufferCOLDATA_0]
-        sbc [$B0]
-        sbc [$AB]
-        sbc [$AB]
-        sbc [bBufferCGADSUB]
-        sbc [wVBlankFlag]
-        sbc [wVBlankDisabledFramecount+1]
-        sbc [wVBlankDisabledFramecount+1]
-        sbc [wVBlankDisabledFramecount+1]
-        sbc [wJoyRepeatInterval+1]
-        sbc [wR43]
+        rts
+
+        .databank 0
+
+        ; 87/E79C
+
+      rsUnknown87E79C ; 87/E79C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda #$0800
         tsb wUnknown000D79,b
-        jml _E7B0
+        jml rsUnknown87E7B0
+
+        .databank 0
+
+        ; 87/E7A6
+
+      rsUnknown87E7A6 ; 87/E7A6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
         lda #$0008
-        bra _E7E4
+        bra rsUnknown87E7E4
+
+        .databank 0
+
+        ; 87/E7AB
+
+      rsUnknown87E7AB ; 87/E7AB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
         lda #$0009
-        bra _E7E4
+        bra rsUnknown87E7E4
 
+        .databank 0
 
-        _E7B0
+        ; 87/E7B0
+
+      rsUnknown87E7B0 ; 87/E7B0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda #$0002
-        bra _E7E4
+        bra rsUnknown87E7E4
+
+        .databank 0
+
+        ; 87/E7B5
+
+      rsUnknown87E7B5 ; 87/E7B5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateFielded
@@ -6301,16 +6521,58 @@
         jsl rlUnknown8A92D6
         rts
 
+        .databank 0
+
+        ; 87/E7D9
+
+      rsUnknown87E7D9 ; 87/E7D9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda #$000C
-        bra _E7E4
+        bra rsUnknown87E7E4
+
+        .databank 0
+
+        ; 87/E7DE
+
+      rsUnknown87E7DE ; 87/E7DE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
         lda #$000D
-        bra _E7E4
+        bra rsUnknown87E7E4
+
+        .databank 0
+
+        ; 87/E7E3
+
+      rsUnknown87E7E3 ; 87/E7E3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
         rts
 
+        .databank 0
 
-        _E7E4
+        ; 87/E7E4
+
+      rsUnknown87E7E4 ; 87/E7E4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         jsl rlUnknown87E689
         lda #$0001
         sta $057C,b
@@ -6349,7 +6611,7 @@
         jsl rlGetItemStaffEffect
         asl a
         tax
-        jsr ($87E811,x)
+        jsr (aUnknown87E811,x)
         plx
         rtl
 
@@ -6358,6 +6620,156 @@
         ; 87/E811
 
     .endsection Unsorted87E801Section
+
+
+    .section Table87E811Section
+
+      .al
+      .xl
+
+      aUnknown87E811 ; 87/E811
+
+        ; Jump table of rlUnknown87E801.
+        .word <>rsUnknown87E833
+        .word <>rsUnknown87E834
+        .word <>rsUnknown87E834
+        .word <>rsUnknown87E834
+        .word <>rsUnknown87E834
+        .word <>rsUnknown87E84A
+        .word <>rsUnknown87E833
+        .word <>rsUnknown87E83F
+        .word <>rsUnknown87E833
+        .word <>rsUnknown87E833
+        .word <>rsUnknown87E834
+        .word <>rsUnknown87E855
+        .word <>rsUnknown87E833
+        .word <>rsUnknown87E833
+        .word <>rsUnknown87E833
+        .word <>rsUnknown87E833
+        .word <>rsUnknown87E833
+
+    .endsection Table87E811Section
+
+
+    .section Unsorted87E833Section
+
+      .al
+      .xl
+
+      rsUnknown87E833 ; 87/E833
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 87/E834
+
+    .endsection Unsorted87E833Section
+
+
+    .section Unsorted87E834Section
+
+      .al
+      .xl
+
+      rsUnknown87E834 ; 87/E834
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0800
+        trb wUnknown000D79,b
+        jsl $8A92AA
+        rts
+
+        .databank 0
+
+        ; 87/E83F
+
+    .endsection Unsorted87E834Section
+
+
+    .section Unsorted87E83FSection
+
+      .al
+      .xl
+
+      rsUnknown87E83F ; 87/E83F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0800
+        tsb wUnknown000D79,b
+        jsl $8A92AA
+        rts
+
+        .databank 0
+
+        ; 87/E84A
+
+    .endsection Unsorted87E83FSection
+
+
+    .section Unsorted87E84ASection
+
+      .al
+      .xl
+
+      rsUnknown87E84A ; 87/E84A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$FFFF
+        sta wRoutineVariable1,b
+        jsl rlUnknown84B6A6
+        rts
+
+        .databank 0
+
+        ; 87/E855
+
+    .endsection Unsorted87E84ASection
+
+
+    .section Unsorted87E855Section
+
+      .al
+      .xl
+
+      rsUnknown87E855 ; 87/E855
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$DFDC
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rts
+
+        .databank 0
+
+        ; 87/E86A
+
+    .endsection Unsorted87E855Section
 
 
     .section Unsorted87E86ASection

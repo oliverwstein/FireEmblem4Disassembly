@@ -135,15 +135,15 @@
         .word <>rsUnknown8A80A6
         .word <>rsUnknown8A80BD
         .word <>rsUnknown8A80C2
-        .word $80C3
-        .word $80C8
+        .word <>rsUnknown8A80C3
+        .word <>rsUnknown8A80C8
         .word <>rsUnknown8A80CD
         .word <>rsUnknown8A80D2
         .word <>rsUnknown8A80D7
         .word <>rsUnknown8A80DC
         .word <>rsUnknown8A80E1
         .word <>rsUnknown8A80E6
-        .word $80F5
+        .word <>rsUnknown8A80F5
         .word <>rsUnknown8A80FA
         .word <>rsUnknown8A80EB
         .word <>rsUnknown8A80F0
@@ -2933,6 +2933,32 @@
         ; 8A/92AA
 
     .endsection Unsorted8A929BSection
+
+
+    .section Unsorted8A92AASection
+
+      .al
+      .xl
+
+      rlUnknown8A92AA ; 8A/92AA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0004
+        sta $0891,b
+        stz $0897,b
+        jsr rsUnknown8A870D
+        jsl rlUnknown8A8496
+        rtl
+
+        .databank 0
+
+        ; 8A/92BB
+
+    .endsection Unsorted8A92AASection
 
 
     .section Unsorted8A92BBSection
@@ -6526,7 +6552,7 @@
         ; Jump table of rsUnknown8AAD6F.
         .word <>rsUnknown8AADAD
         .word <>rsUnknown8AADB8
-        .word $ADC3
+        .word <>rsUnknown8AADC3
 
     .endsection Table8AADA7Section
 
@@ -7983,24 +8009,24 @@
         .word <>rsUnknown8AC0B9
         .word <>rsUnknown8AC168
         .word <>rsUnknown8AC1BC
-        .word $C50D
-        .word $C524
-        .word $C6BA
-        .word $C785
-        .word $C81E
-        .word $C853
+        .word <>rsUnknown8AC50D
+        .word <>rsUnknown8AC524
+        .word <>rsUnknown8AC6BA
+        .word <>rsUnknown8AC785
+        .word <>rsUnknown8AC81E
+        .word <>rsUnknown8AC853
         .word <>rsUnknown8AC8A2
         .word <>rsUnknown8AC8B9
-        .word $C984
-        .word $CA53
+        .word <>rsUnknown8AC984
+        .word <>rsUnknown8ACA53
         .word <>rsUnknown8ACAD2
         .word <>rsUnknown8ACAE9
-        .word $CC58
-        .word $CD53
-        .word $CD94
-        .word $CDAB
+        .word <>rsUnknown8ACC58
+        .word <>rsUnknown8ACD53
+        .word <>rsUnknown8ACD94
+        .word <>rsUnknown8ACDAB
         .word <>rsUnknown8ACE2B
-        .word $CE3A
+        .word <>rsUnknown8ACE3A
 
     .endsection Table8AC08FSection
 
@@ -12079,8 +12105,8 @@
         .word <>rsUnknown8AEEFE
         .word <>rsUnknown8AEF30
         .word <>rsUnknown8AEF4B
-        .word $F048
-        .word $F0B4
+        .word <>rsUnknown8AF048
+        .word <>rsUnknown8AF0B4
         .word <>rsUnknown8AF0D7
 
     .endsection Table8AEEF2Section
@@ -12634,15 +12660,15 @@
         .word <>rsUnknown8AF2E1
         .word <>rsUnknown8AF313
         .word <>rsUnknown8AF362
-        .word $F4A1
-        .word $F4B8
-        .word $F556
-        .word $F634
-        .word $F6A1
-        .word $F6D5
-        .word $F6EC
-        .word $F791
-        .word $F818
+        .word <>rsUnknown8AF4A1
+        .word <>rsUnknown8AF4B8
+        .word <>rsUnknown8AF556
+        .word <>rsUnknown8AF634
+        .word <>rsUnknown8AF6A1
+        .word <>rsUnknown8AF6D5
+        .word <>rsUnknown8AF6EC
+        .word <>rsUnknown8AF791
+        .word <>rsUnknown8AF818
         .word <>rsUnknown8AF885
 
     .endsection Table8AF2C7Section

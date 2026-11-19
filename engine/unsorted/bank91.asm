@@ -1022,7 +1022,7 @@
         _B1DD
         asl a
         tax
-        jsr ($91B1E3,x)
+        jsr (aUnknown91B1E3,x)
 
         _B1E2
         rtl
@@ -1032,6 +1032,30 @@
         ; 91/B1E3
 
     .endsection Unsorted91B164Section
+
+
+    .section Table91B1E3Section
+
+      .al
+      .xl
+
+      aUnknown91B1E3 ; 91/B1E3
+
+        ; Jump table of rlUnknown91B1C4.
+        .word <>rsUnknown91B511
+        .word <>rsUnknown91B4CD
+        .word <>rsUnknown91B1FC
+        .word <>rsUnknown91B33C
+        .word <>rsUnknown91B33C
+        .word <>rsUnknown91B33C
+        .word <>rsUnknown91B33C
+        .word <>rsUnknown91B33C
+        .word <>rsUnknown91B33C
+        .word <>rsUnknown91B33C
+        .word <>rsUnknown91B4EF
+        .word <>rsUnknown91B341
+
+    .endsection Table91B1E3Section
 
 
     .section Unsorted91B1FCSection
@@ -1541,7 +1565,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        jsr ($91D62A,x)
+        jsr (aUnknown91D62A,x)
         plp
         plb
         .databank $91
@@ -1552,6 +1576,83 @@
         ; 91/D62A
 
     .endsection Unsorted91D616Section
+
+
+    .section Table91D62ASection
+
+      .al
+      .xl
+
+      aUnknown91D62A ; 91/D62A
+
+        ; Jump table of rlUnknown91D61B.
+        .word <>rsUnknown91D844
+        .word $D853
+        .word <>rsUnknown91D8A0
+        .word $D8BE
+        .word <>rsUnknown91D8EB
+        .word <>rsUnknown91D90D
+        .word <>rsUnknown91D945
+        .word $D95F
+        .word <>rsUnknown91D995
+        .word <>rsUnknown91D9FA
+        .word $DA09
+        .word <>rsUnknown91DA25
+        .word $DA34
+        .word <>rsUnknown91DBEE
+        .word $DC01
+        .word <>rsUnknown91DC13
+        .word <>rsUnknown91DC1A
+        .word <>rsUnknown91DC37
+        .word <>rsUnknown91DC50
+        .word <>rsUnknown91DC6D
+        .word <>rsUnknown91E583
+        .word <>rsUnknown91E5B2
+        .word <>rsUnknown91E5F4
+        .word <>rsUnknown91E622
+        .word <>rsUnknown91E650
+        .word <>rsUnknown91E650._E667
+        .word <>rsUnknown91E692
+        .word <>rsUnknown91E6BA
+        .word <>rsUnknown91E6D8
+        .word <>rsUnknown91E710
+        .word <>rsUnknown91E726
+        .word <>rsUnknown91E732
+        .word <>rsUnknown91E74E
+        .word <>rsUnknown91E780
+        .word <>rsUnknown91D683
+        .word $D691
+        .word <>rsUnknown91D6BC
+        .word <>rsUnknown91D6C8
+        .word <>rsUnknown91D6D1
+        .word <>rsUnknown91D6DA
+        .word <>rsUnknown91D6E3
+        .word <>rsUnknown91D69B
+        .word <>rsUnknown91D6BB
+        .word <>rsUnknown91D682
+
+    .endsection Table91D62ASection
+
+
+    .section Unsorted91D682Section
+
+      .al
+      .xl
+
+      rsUnknown91D682 ; 91/D682
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 91/D683
+
+    .endsection Unsorted91D682Section
 
 
     .section Unsorted91D683Section
@@ -1706,6 +1807,29 @@
         ; 91/D6E3
 
     .endsection Unsorted91D6BBSection
+
+
+    .section Unsorted91D6E3Section
+
+      .al
+      .xl
+
+      rsUnknown91D6E3 ; 91/D6E3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl $91F907
+        jsl rlUnknown91F935
+        rts
+
+        .databank 0
+
+        ; 91/D6EC
+
+    .endsection Unsorted91D6E3Section
 
 
     .section Unsorted91D6ECSection
@@ -2050,6 +2174,36 @@
     .endsection Unsorted91D8A0Section
 
 
+    .section Unsorted91D90DSection
+
+      .al
+      .xl
+
+      rsUnknown91D90D ; 91/D90D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1864,b
+        jsl rlUnknown91E2E2
+        dec bBufferINIDISP
+        lda bBufferINIDISP
+        and #$000F
+        bne _D920
+        jsr rsUnknown91D921
+
+        _D920
+        rts
+
+        .databank 0
+
+        ; 91/D921
+
+    .endsection Unsorted91D90DSection
+
+
     .section Unsorted91D921Section
 
       .al
@@ -2089,6 +2243,103 @@
         ; 91/D945
 
     .endsection Unsorted91D921Section
+
+
+    .section Unsorted91D945Section
+
+      .al
+      .xl
+
+      rsUnknown91D945 ; 91/D945
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0003
+        jsr rsUnknown91DB6D
+        jsr rsUnknown91DCB9
+        jsl rlUnknown91ECEF
+        and #$0003
+        inc a
+        sta $1864,b
+        lda #$0007
+        jsr rlUnknown91DC92
+        jsr rsUnknown91DA64
+        cmp #$0002
+        beq _D994
+        cmp #$0001
+        bne _D994
+        jsl rlUnknown88800F
+        lda $1864,b
+        dec a
+        jsl rlUnknown91E932
+        bcs _D994
+        lda #$000A
+        jsl rlPlaySoundEffect
+        lda #$00E0
+        jsl rlSendSoundCommand
+        lda $1864,b
+        ora #$8000
+        sta aSave.wMenuOperation,b
+        inc wGameStateStep,b
+
+        _D994
+        rts
+
+        .databank 0
+
+        ; 91/D995
+
+    .endsection Unsorted91D945Section
+
+
+    .section Unsorted91D995Section
+
+      .al
+      .xl
+
+      rsUnknown91D995 ; 91/D995
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda bBufferINIDISP
+        and #$000F
+        beq _D9AE
+        lda $1864,b
+        jsl rlUnknown91E2E2
+        lda wVBlankEnabledFramecount
+        and #$0001
+        bne _D9C4
+        dec bBufferINIDISP
+        bra _D9C4
+
+
+        _D9AE
+        lda aSave.wMenuOperation,b
+        bne _D9C4
+        lda wCurrentTurn,b
+        cmp #$FFFF
+        beq _D9C0
+        jsr $91DBA8
+        bra _D9C4
+
+
+        _D9C0
+        jsl rlUnknown81B301
+
+        _D9C4
+        rts
+
+        .databank 0
+
+        ; 91/D9C5
+
+    .endsection Unsorted91D995Section
 
 
     .section Unsorted91D9FASection
@@ -2434,6 +2685,42 @@
     .endsection Unsorted91DB6DSection
 
 
+    .section Unsorted91DBA8Section
+
+      .al
+      .xl
+
+      rsUnknown91DBA8 ; 91/DBA8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda bBufferTM
+        and #$13
+        sta bBufferTM
+        rep #$20
+        lda #$0100
+        tsb wUnknown000D79,b
+        stz wGameStateRoutine1,b
+        lda #$AEEA
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rts
+
+        .databank 0
+
+        ; 91/DBD0
+
+    .endsection Unsorted91DBA8Section
+
+
     .section Unsorted91DBD0Section
 
       .al
@@ -2501,6 +2788,124 @@
         ; 91/DC13
 
     .endsection Unsorted91DBEESection
+
+
+    .section Unsorted91DC13Section
+
+      .al
+      .xl
+
+      rsUnknown91DC13 ; 91/DC13
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000D
+        sta wGameStateStep,b
+        rts
+
+        .databank 0
+
+        ; 91/DC1A
+
+    .endsection Unsorted91DC13Section
+
+
+    .section Unsorted91DC1ASection
+
+      .al
+      .xl
+
+      rsUnknown91DC1A ; 91/DC1A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1864,b
+        jsl rlUnknown91E2E2
+        ldx $1864,b
+        lda @l $00185C,x
+        and #$00FF
+        cmp #$000B
+        bcc _DC33
+        jsr rsUnknown91DDF1
+
+        _DC33
+        inc wGameStateStep,b
+        rts
+
+        .databank 0
+
+        ; 91/DC37
+
+    .endsection Unsorted91DC1ASection
+
+
+    .section Unsorted91DC37Section
+
+      .al
+      .xl
+
+      rsUnknown91DC37 ; 91/DC37
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1864,b
+        jsl rlUnknown91E2E2
+        jsl rlUnknown9181F6
+        lda aDialogue.wStatus,b
+        bne _DC4F
+        lda aDialogue.wUnknown0018C9,b
+        bne _DC4F
+        inc wGameStateStep,b
+
+        _DC4F
+        rts
+
+        .databank 0
+
+        ; 91/DC50
+
+    .endsection Unsorted91DC37Section
+
+
+    .section Unsorted91DC50Section
+
+      .al
+      .xl
+
+      rsUnknown91DC50 ; 91/DC50
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1864,b
+        jsl rlUnknown91E2E2
+        ldx $1864,b
+        lda @l $00185C,x
+        and #$00FF
+        cmp #$000B
+        bcc _DC69
+        jsr rsUnknown91DE4D
+
+        _DC69
+        inc wGameStateStep,b
+        rts
+
+        .databank 0
+
+        ; 91/DC6D
+
+    .endsection Unsorted91DC50Section
 
 
     .section Unsorted91DC6DSection
@@ -4137,6 +4542,38 @@
     .endsection Unsorted91E583Section
 
 
+    .section Unsorted91E780Section
+
+      .al
+      .xl
+
+      rsUnknown91E780 ; 91/E780
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$1000
+        bne _E78C
+        dec $185A,b
+        bne _E792
+
+        _E78C
+        lda #$0022
+        sta wGameStateStep,b
+
+        _E792
+        rts
+
+        .databank 0
+
+        ; 91/E793
+
+    .endsection Unsorted91E780Section
+
+
     .section Unsorted91E793Section
 
       .as
@@ -4715,7 +5152,7 @@
         _F895
         asl a
         tax
-        jsr ($91F89B,x)
+        jsr (aUnknown91F89B,x)
         rtl
 
         .databank 0
@@ -4723,6 +5160,20 @@
         ; 91/F89B
 
     .endsection Unsorted91F88ASection
+
+
+    .section Table91F89BSection
+
+      .al
+      .xl
+
+      aUnknown91F89B ; 91/F89B
+
+        ; Jump table of rlUnknown91F88A.
+        .word <>rsUnknown91F89F
+        .word <>rsUnknown91F8D8
+
+    .endsection Table91F89BSection
 
 
     .section Unsorted91F89FSection
@@ -4798,6 +5249,49 @@
         ; 91/F907
 
     .endsection Unsorted91F89FSection
+
+
+    .section Unsorted91F907Section
+
+      .al
+      .xl
+
+      rlUnknown91F907 ; 91/F907
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8185
+        bne _F917
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        bra _F934
+
+
+        _F917
+        stz wGameStateRoutine1,b
+        lda #$AEEA
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        stz aPaletteFading,b
+        stz aPaletteFading.wCurrentStep,b
+
+        _F934
+        rtl
+
+        .databank 0
+
+        ; 91/F935
+
+    .endsection Unsorted91F907Section
 
 
     .section Unsorted91F935Section

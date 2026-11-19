@@ -1829,7 +1829,7 @@
         lsr a
         lsr a
         tax
-        jsr ($809357,x)
+        jsr (aUnknown809357,x)
 
         _9220
         rep #$20
@@ -2023,6 +2023,59 @@
     .endsection Unsorted809124Section
 
 
+    .section Table809357Section
+
+      .al
+      .xl
+
+      aUnknown809357 ; 80/9357
+
+        ; Jump table of rlUnknown8091B3.
+        .word $FFFF
+        .word <>rsUnknown809392
+        .word <>rsUnknown809392
+        .word <>rsUnknown809392
+        .word <>rsUnknown809392
+        .word <>rsUnknown809392
+        .word <>rsUnknown809392
+        .word <>rsUnknown809392
+        .word <>rsUnknown809392
+        .word <>rsUnknown809377
+        .word <>rsUnknown8094E2
+        .word <>rsUnknown8093B0
+        .word <>rsUnknown809382
+        .word <>rsUnknown809391
+        .word <>rsUnknown809392
+        .word $93B8
+
+    .endsection Table809357Section
+
+
+    .section Unsorted809377Section
+
+      .al
+      .xl
+
+      rsUnknown809377 ; 80/9377
+
+        .as
+        .xs
+        .autsiz
+        .databank ?
+
+        sep #$20
+        stz $04EB,b
+        rep #$20
+        stz $04F0,b
+        rts
+
+        .databank 0
+
+        ; 80/9382
+
+    .endsection Unsorted809377Section
+
+
     .section Unsorted809382Section
 
       .al
@@ -2049,6 +2102,63 @@
         ; 80/9391
 
     .endsection Unsorted809382Section
+
+
+    .section Unsorted809391Section
+
+      .al
+      .xs
+
+      rsUnknown809391 ; 80/9391
+
+        .as
+        .xs
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 80/9392
+
+    .endsection Unsorted809391Section
+
+
+    .section Unsorted809392Section
+
+      .as
+      .xs
+
+      rsUnknown809392 ; 80/9392
+
+        .as
+        .xs
+        .autsiz
+        .databank ?
+
+        rep #$20
+        lda $04F0,b
+        dec lR39
+        dec lR39
+        asl a
+        and #$1FFF
+        cmp #$1000
+        bcc _93A7
+        ora #$F000
+
+        _93A7
+        clc
+        adc lR39
+        sta lR39
+        stz $04F0,b
+        rts
+
+        .databank 0
+
+        ; 80/93B0
+
+    .endsection Unsorted809392Section
 
 
     .section Unsorted8093B0Section
@@ -2513,6 +2623,50 @@
     .endsection Unsorted8095CDSection
 
 
+    .section Unsorted809729Section
+
+      .al
+      .xs
+
+      rsUnknown809729 ; 80/9729
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlPlaySoundEffect
+        rts
+
+        .databank 0
+
+        ; 80/972E
+
+    .endsection Unsorted809729Section
+
+
+    .section Unsorted80972ESection
+
+      .al
+      .xl
+
+      rsUnknown80972E ; 80/972E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlPlaySoundEffect2
+        rts
+
+        .databank 0
+
+        ; 80/9733
+
+    .endsection Unsorted80972ESection
+
+
     .section Unsorted809733Section
 
       .al
@@ -2554,6 +2708,157 @@
     .endsection Unsorted809733Section
 
 
+    .section Unsorted809759Section
+
+      .al
+      .xl
+
+      rsUnknown809759 ; 80/9759
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlSendSoundCommand
+        rts
+
+        .databank 0
+
+        ; 80/975E
+
+    .endsection Unsorted809759Section
+
+
+    .section Unsorted80975ESection
+
+      .al
+      .xl
+
+      rsUnknown80975E ; 80/975E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tax
+        lda bAPUUploading,b
+        and #$00FF
+        bne rsUnknown80979A._97AE
+        sep #$20
+        lda #$FD
+        sta bAPUUploading,b
+        rep #$20
+        bra rsUnknown80979A._97B9
+
+        .databank 0
+
+        ; 80/9772
+
+      rsUnknown809772 ; 80/9772
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tax
+        lda bAPUUploading,b
+        and #$00FF
+        bne rsUnknown80979A._97AE
+        sep #$20
+        lda #$FC
+        sta bAPUUploading,b
+        rep #$20
+        bra rsUnknown80979A._97B9
+
+        .databank 0
+
+        ; 80/9786
+
+      rsUnknown809786 ; 80/9786
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tax
+        lda bAPUUploading,b
+        and #$00FF
+        bne rsUnknown80979A._97AE
+        sep #$20
+        lda #$FB
+        sta bAPUUploading,b
+        rep #$20
+        bra rsUnknown80979A._97B9
+
+        .databank 0
+
+        ; 80/979A
+
+      rsUnknown80979A ; 80/979A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tax
+        lda bAPUUploading,b
+        and #$00FF
+        bne _97AE
+        sep #$20
+        lda #$FA
+        sta bAPUUploading,b
+        rep #$20
+        bra _97B9
+
+
+        _97AE
+        lda #$0001
+        sta $04F8,b
+        dec y
+        dec y
+        dec y
+        dec y
+        rts
+
+
+        _97B9
+        txa
+        phy
+        ldy lR39
+        phy
+        ldy lR39+1
+        phy
+        ldy lR38
+        phy
+        ldy lR38+1
+        phy
+        ldy $04B8,b
+        sty lR39+1
+        sta lR39
+        jsl rlUnknown8091B3
+        ply
+        sty lR38+1
+        ply
+        sty lR38
+        ply
+        sty lR39+1
+        ply
+        sty lR39
+        ply
+        rts
+
+        .databank 0
+
+        ; 80/97E0
+
+    .endsection Unsorted80975ESection
+
+
     .section Unsorted8097E0Section
 
       .al
@@ -2593,6 +2898,148 @@
         ; 80/9801
 
     .endsection Unsorted8097E0Section
+
+
+    .section Unsorted809801Section
+
+      .al
+      .xl
+
+      rlUnknown809801 ; 80/9801
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tax
+        lda bAPUUploading,b
+        and #$00FF
+        bne $8097F6
+        sep #$20
+        lda #$FC
+        bra $8097ED
+
+        .databank 0
+
+        ; 80/9810
+
+    .endsection Unsorted809801Section
+
+
+    .section Unsorted809810Section
+
+      .as
+      .xl
+
+      rlUnknown809810 ; 80/9810
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tax
+        lda bAPUUploading,b
+        and #$00FF
+        bne $8097F6
+        sep #$20
+        lda #$FB
+        bra $8097ED
+
+        .databank 0
+
+        ; 80/981F
+
+    .endsection Unsorted809810Section
+
+
+    .section Unsorted80981FSection
+
+      .as
+      .xl
+
+      rlUnknown80981F ; 80/981F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tax
+        lda bAPUUploading,b
+        and #$00FF
+        bne $8097F6
+        sep #$20
+        lda #$FA
+        bra $8097ED
+
+        .databank 0
+
+        ; 80/982E
+
+    .endsection Unsorted80981FSection
+
+
+    .section Unsorted80982ESection
+
+      .as
+      .xl
+
+      rsUnknown80982E ; 80/982E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        and bAPUStatus,b
+        bne _983A
+        dec y
+        dec y
+        dec y
+        dec y
+
+        _983A
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/983C
+
+    .endsection Unsorted80982ESection
+
+
+    .section Unsorted80983CSection
+
+      .as
+      .xl
+
+      rsUnknown80983C ; 80/983C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $04FA,b
+        beq _9845
+        dec y
+        dec y
+        dec y
+        dec y
+
+        _9845
+        rts
+
+        .databank 0
+
+        ; 80/9846
+
+    .endsection Unsorted80983CSection
 
 
     .section Unsorted809846Section
@@ -4711,13 +5158,31 @@
         lda $088B,b
         asl a
         tax
-        jmp ($80B787,x)
+        jmp (aUnknown80B787,x)
 
         .databank 0
 
         ; 80/B787
 
     .endsection Unsorted80B77FSection
+
+
+    .section Table80B787Section
+
+      .al
+      .xl
+
+      aUnknown80B787 ; 80/B787
+
+        ; Jump table of rlUnknown80B77F.
+        .word <>rlUnknown80B81B
+        .word <>rlUnknown80BA02
+        .word <>rlUnknown80B793
+        .word <>rlUnknown80B7B1
+        .word <>rlUnknown80B81B
+        .word <>rlUnknown80B7DE
+
+    .endsection Table80B787Section
 
 
     .section Unsorted80B793Section
@@ -4750,6 +5215,83 @@
         ; 80/B7B1
 
     .endsection Unsorted80B793Section
+
+
+    .section Unsorted80B7B1Section
+
+      .al
+      .xl
+
+      rlUnknown80B7B1 ; 80/B7B1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0003
+        sta $0891,b
+        jsr rsUnknown80B9BC
+        lda #$0007
+        sta $7F8082
+        jsl rlUnknown8AE2F8
+        lda #$0002
+        sta $0592,b
+        lda #$0000
+        jsl rlGetFactionSlotLocationID
+        cmp $089F,b
+        beq _B7DD
+        lda #$0001
+        sta $088B,b
+
+        _B7DD
+        rtl
+
+        .databank 0
+
+        ; 80/B7DE
+
+    .endsection Unsorted80B7B1Section
+
+
+    .section Unsorted80B7DESection
+
+      .al
+      .xl
+
+      rlUnknown80B7DE ; 80/B7DE
+
+        ; Runs on into built code at the end.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown889268
+        lda wEventLocationEntry,b
+        pha
+        jsl rlUpdateAllLocationEvents
+        jsl rlUnknown86C629
+        pla
+        sta wEventLocationEntry,b
+        lda #$0000
+        sta $088B,b
+        jsl rlUnknown81AB26
+        jsl rlUnknown809654
+        lda #$0000
+        jsl rlGetFactionSlotLocationID
+        cmp $089F,b
+        bne rlUnknown80B81B
+        lda #$0000
+        jsl rlGetLocationEventDataEntry
+        jsl rlBuildDeadPlayerCharacterList
+        jsl rlUnknown8A9A56
+
+        .databank 0
+
+        ; 80/B81B
+
+    .endsection Unsorted80B7DESection
 
 
     .section Unsorted80B81BSection
@@ -7759,7 +8301,7 @@
         _F3FF
         asl a
         tax
-        jsr ($80F413,x)
+        jsr (aUnknown80F413,x)
         lda #$8000
         sta lR19+1
         lda #$F43B
@@ -7772,6 +8314,30 @@
         ; 80/F413
 
     .endsection Unsorted80F392Section
+
+
+    .section Table80F413Section
+
+      .al
+      .xl
+
+      aUnknown80F413 ; 80/F413
+
+        ; Jump table of rsUnknown80F392.
+        .word <>rsUnknown80F443
+        .word <>rsUnknown80F451
+        .word <>rsUnknown80F45F
+        .word <>rsUnknown80F46D
+        .word <>rsUnknown80F47B
+        .word <>rsUnknown80F489
+        .word <>rsUnknown80F497
+        .word <>rsUnknown80F4A5
+        .word <>rsUnknown80F4B3
+        .word <>rsUnknown80F4C1
+        .word <>rsUnknown80F4CF
+        .word <>rsUnknown80F4DD
+
+    .endsection Table80F413Section
 
 
     .section Unsorted80F443Section
@@ -7797,6 +8363,281 @@
         ; 80/F451
 
     .endsection Unsorted80F443Section
+
+
+    .section Unsorted80F451Section
+
+      .al
+      .xl
+
+      rsUnknown80F451 ; 80/F451
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8C48, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F45F
+
+    .endsection Unsorted80F451Section
+
+
+    .section Unsorted80F45FSection
+
+      .al
+      .xl
+
+      rsUnknown80F45F ; 80/F45F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8D08, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F46D
+
+    .endsection Unsorted80F45FSection
+
+
+    .section Unsorted80F46DSection
+
+      .al
+      .xl
+
+      rsUnknown80F46D ; 80/F46D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8DC8, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F47B
+
+    .endsection Unsorted80F46DSection
+
+
+    .section Unsorted80F47BSection
+
+      .al
+      .xl
+
+      rsUnknown80F47B ; 80/F47B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8E88, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F489
+
+    .endsection Unsorted80F47BSection
+
+
+    .section Unsorted80F489Section
+
+      .al
+      .xl
+
+      rsUnknown80F489 ; 80/F489
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8F48, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F497
+
+    .endsection Unsorted80F489Section
+
+
+    .section Unsorted80F497Section
+
+      .al
+      .xl
+
+      rsUnknown80F497 ; 80/F497
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E9008, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F4A5
+
+    .endsection Unsorted80F497Section
+
+
+    .section Unsorted80F4A5Section
+
+      .al
+      .xl
+
+      rsUnknown80F4A5 ; 80/F4A5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E90C8, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F4B3
+
+    .endsection Unsorted80F4A5Section
+
+
+    .section Unsorted80F4B3Section
+
+      .al
+      .xl
+
+      rsUnknown80F4B3 ; 80/F4B3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E9188, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F4C1
+
+    .endsection Unsorted80F4B3Section
+
+
+    .section Unsorted80F4C1Section
+
+      .al
+      .xl
+
+      rsUnknown80F4C1 ; 80/F4C1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E9248, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F4CF
+
+    .endsection Unsorted80F4C1Section
+
+
+    .section Unsorted80F4CFSection
+
+      .al
+      .xl
+
+      rsUnknown80F4CF ; 80/F4CF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E9308, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F4DD
+
+    .endsection Unsorted80F4CFSection
+
+
+    .section Unsorted80F4DDSection
+
+      .al
+      .xl
+
+      rsUnknown80F4DD ; 80/F4DD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E93C8, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F4EB
+
+    .endsection Unsorted80F4DDSection
 
 
     .section Unsorted80F4EBSection

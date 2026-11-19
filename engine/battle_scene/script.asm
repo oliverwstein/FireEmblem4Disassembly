@@ -485,6 +485,46 @@
     .endsection BattleSceneCommand96CDB7Section
 
 
+    .section Table96DF60Section
+
+      .al
+      .xl
+
+      aUnknown96DF60 ; 96/DF60
+
+        ; Jump table of rlBattleSceneStartBGScrollEffect.
+        .word <>rsUnknown96DFC7
+        .word <>rsUnknown96E01F
+        .word <>rsUnknown96E077
+        .word <>rsUnknown96E0CF
+        .word <>rsUnknown96E127
+        .word <>rsUnknown96E17B
+        .word <>rsUnknown96E1D3
+        .word <>rsUnknown96E20A
+        .word <>rsUnknown96E245
+        .word <>rsUnknown96E275
+        .word <>rsUnknown96E2CE
+        .word <>rsUnknown96E312
+        .word <>rsUnknown96E3CA
+        .word <>rsUnknown96E3E5
+        .word <>rsUnknown96E42D
+        .word <>rsUnknown96E356
+        .word <>rsUnknown96E38D
+        .word <>rsUnknown96E463
+        .word <>rsUnknown96E49C
+        .word <>rsUnknown96E49D
+        .word <>rsUnknown96E50E
+        .word <>rsUnknown96E50F
+        .word <>rsUnknown96E558
+        .word <>rsUnknown96E58E
+        .word <>rsUnknown96E4D8
+        .word <>rsUnknown96E5DA
+        .word <>rsUnknown96E5F6
+        .word <>rsUnknown96E612
+
+    .endsection Table96DF60Section
+
+
     .section BattleSceneCommand96EC4ASection
 
       .al
@@ -555,6 +595,26 @@
         ; 96/EC91
 
     .endsection BattleSceneCommand96EC4ASection
+
+
+    .section Table96ECCCSection
+
+      .al
+      .xl
+
+      aUnknown96ECCC ; 96/ECCC
+
+        ; Jump table of rlBattleSceneRunPaletteOperation.
+        .word <>rsUnknown96ECDC
+        .word <>rsUnknown96ED0B
+        .word <>rsUnknown96ED23
+        .word <>rsUnknown96EDA7
+        .word <>rsUnknown96EE32
+        .word <>rsUnknown96EE4A
+        .word <>rsUnknown96EE5E
+        .word <>rsUnknown96EE71
+
+    .endsection Table96ECCCSection
 
 
     .section BattleSceneCommand96F1C2Section
@@ -2358,7 +2418,7 @@
         lda wR0
         asl a
         tax
-        jsr ($96DF60,x)
+        jsr (aUnknown96DF60,x)
         plp
         plb
         .databank $96
@@ -2456,7 +2516,7 @@
         lda wR0
         asl a
         tax
-        jsr ($96ECCC,x)
+        jsr (aUnknown96ECCC,x)
         ply
         plx
         rtl

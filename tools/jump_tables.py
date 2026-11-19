@@ -13,7 +13,9 @@ targets that are not built with *.
 The number of entries is found from a `cmp #N` bound shortly before the jump if
 there is one; otherwise entries are read until one is below $8000, points into
 the table itself, or the next word is the first target or a built byte (code
-usually follows its table). Check the list before writing.
+usually follows its table). Check the list before writing; --count ADDR=N
+gives the length where the guess is wrong (a parallel table that starts right
+after the jump table, for example), and --skip ADDR leaves a table out.
 
 --write FILE writes the tables as a routines file (`aUnknownXXXXXX .word ...`):
 entries with a label use it, the rest stay raw words, which tools/trace.py then
@@ -101,11 +103,36 @@ def main():
     ap.add_argument('--bank')
     ap.add_argument('--write', metavar='FILE')
     ap.add_argument('--fix', action='store_true', help='point raw jumps at tables now labelled')
+    ap.add_argument('--count', action='append', default=[], metavar='ADDR=N',
+                    help='the number of entries of the table at ADDR, overriding the guess')
+    ap.add_argument('--skip', action='append', default=[], metavar='ADDR',
+                    help='leave the table at ADDR out (for example an operand that is not a table)')
     a = ap.parse_args()
     bank = int(a.bank, 16) & 0x3F if a.bank else None
     names = labels_at()
 
     if a.fix:
+        # Raw entries in tables this tool wrote, whose targets now have labels.
+        k = 0
+        for f in sorted(glob.glob('engine/**/*.asm', recursive=True)):
+            lines = open(f, encoding='utf-8').read().split('\n')
+            bank, changed = None, False
+            for i, l in enumerate(lines):
+                m = re.match(r'^ {6}aUnknown([0-9A-F]{2})[0-9A-F]{4} ; ', l)
+                if m:
+                    bank = int(m.group(1), 16) << 16 if i + 2 < len(lines) and 'Jump table of' in lines[i + 2] else None
+                    continue
+                if bank is None:
+                    continue
+                w = re.match(r'^(\s+\.word )\$([0-9A-F]{4})\s*$', l)
+                if w and (bank | int(w.group(2), 16)) in names:
+                    lines[i] = f'{w.group(1)}<>{names[bank | int(w.group(2), 16)]}'
+                    changed, k = True, k + 1
+                elif l.strip() and not w and not l.strip().startswith(('.word', ';')):
+                    bank = None
+            if changed:
+                open(f, 'w', encoding='utf-8').write('\n'.join(lines))
+        print(f'{k} table entries now use labels')
         n = 0
         for f, i, addr, _, _ in find_jumps(bank):
             name = names.get(addr)
@@ -118,8 +145,13 @@ def main():
         return
 
     rom, mask = read_rom(), coverage_mask()
+    counts = {int(k, 16): int(v) for k, v in (c.split('=') for c in a.count)}
+    skip = {int(x, 16) for x in a.skip}
     tables = {}
     for f, i, addr, n, routine in find_jumps(bank):
+        if addr in skip:
+            continue
+        n = counts.get(addr, n)
         if mask[offset(addr)]:
             print(f'{f}:{i + 1}: ${addr:06X} is built but has no label at the operand; skipped')
             continue
@@ -127,7 +159,7 @@ def main():
         tables.setdefault(addr, (ents, n, f, i, routine))
     for addr, (ents, n, f, i, routine) in sorted(tables.items()):
         unbuilt = sum(not mask[offset(e)] for e in ents)
-        how = f'cmp #{n}' if n is not None else 'heuristic'
+        how = 'given' if addr in counts else f'cmp #{n}' if n is not None else 'heuristic'
         print(f'${addr:06X} {len(ents):2} entries ({how}), {unbuilt} not built  {f}:{i + 1}')
         print('   ', ' '.join(f'{e & 0xFFFF:04X}{"" if mask[offset(e)] else "*"}' for e in ents))
 
@@ -138,8 +170,6 @@ def main():
             if not ents:
                 continue
             words = [f'<>{names[e]}' if e in names else f'${e & 0xFFFF:04X}' for e in ents]
-            if not any(w.startswith('<>') for w in words):
-                print(f'${addr:06X}: no entry has a label; tools/trace.py could not follow it')
             body = ''.join(f'        .word {w}\n' for w in words)
             parts.append(f'      aUnknown{addr:06X} ; {addr >> 16:02X}/{addr & 0xFFFF:04X}\n\n'
                          f'        ; Jump table of {routine}.\n{body}')

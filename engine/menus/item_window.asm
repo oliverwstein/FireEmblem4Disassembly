@@ -672,7 +672,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        jsr ($89B3F6,x)
+        jsr (aUnknown89B3F6,x)
         plp
         plb
         .databank $89
@@ -683,6 +683,23 @@
         ; 89/B3F6
 
     .endsection Unsorted89B3D7Section
+
+
+    .section Table89B3F6Section
+
+      .al
+      .xl
+
+      aUnknown89B3F6 ; 89/B3F6
+
+        ; Jump table of rlItemWindowRunStep.
+        .word <>rsItemWindowHandleInput
+        .word <>rsUnknown89B79D
+        .word <>rsUnknown89B838
+        .word <>rsItemWindowCloseToMap
+        .word <>rsUnknown89B869
+
+    .endsection Table89B3F6Section
 
 
     .section Unsorted89B400Section

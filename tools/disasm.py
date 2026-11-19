@@ -120,8 +120,11 @@ LOG_CODE, LOG_X8, LOG_M8 = 0x01, 0x10, 0x20
 
 
 class Disassembler:
-    def __init__(self, rom, labels, start, end, m8, x8, use_log=None):
+    def __init__(self, rom, labels, start, end, m8, x8, use_log=None, entries=()):
         self.rom, self.labels = rom, labels
+        # Further entry points inside the routine (for example jump table targets):
+        # decoded as code and given local labels.
+        self.entries = set(entries)
         self.start, self.end = start, end
         self.bank = start & 0xFF0000
         self.log = width_log() if (USE_LOG if use_log is None else use_log) else None
@@ -178,6 +181,9 @@ class Disassembler:
 
     def _decode(self, known):
         insns, targets, open_targets = [], {}, set()
+        for e in self.entries:
+            targets[e] = (self.m8, self.x8)
+            open_targets.add(e)
         pc, m8, x8 = self.start, self.m8, self.x8
         db, pushed, a_low = None, None, None
         stop = False

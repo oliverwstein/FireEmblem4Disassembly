@@ -1264,7 +1264,7 @@
         ; Jump table of rlUnknown8B9717.
         .word <>rsUnknown8B9759
         .word <>rsUnknown8B972C
-        .word $973C
+        .word <>rsUnknown8B973C
 
     .endsection Table8B9726Section
 

@@ -5032,6 +5032,87 @@
     .endsection Unsorted959DACSection
 
 
+    .section Unsorted959E22Section
+
+      .al
+      .xl
+
+      rlUnknown959E22 ; 95/9E22
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        phx
+        phy
+        sty wR0
+        asl a
+        tax
+        phx
+
+        _9E2A
+        lda aBGPaletteBuffer,b,x
+        inc a
+        bit #$001F
+        bne _9E34
+        dec a
+
+        _9E34
+        clc
+        adc #$0020
+        bit #$03E0
+        bne _9E41
+        sec
+        sbc #$0020
+
+        _9E41
+        clc
+        adc #$0400
+        bit #$7C00
+        bne _9E4E
+        sec
+        sbc #$0400
+
+        _9E4E
+        sta aBGPaletteBuffer,b,x
+        inc x
+        inc x
+        dec y
+        bne _9E2A
+        plx
+        ldy #$0000
+
+        _9E5A
+        lda aBGPaletteBuffer,b,x
+        cmp #$7FFF
+        bne _9E6C
+        inc x
+        inc x
+        inc y
+        cpy wR0
+        bcc _9E5A
+        sec
+        bra _9E6D
+
+
+        _9E6C
+        clc
+
+        _9E6D
+        ply
+        plx
+        pla
+        rtl
+
+        .databank 0
+
+        ; 95/9E71
+
+    .endsection Unsorted959E22Section
+
+
     .section Unsorted959F43Section
 
       .al
@@ -7960,7 +8041,7 @@
         sta wR0
         pla
         ldx #$0000
-        jsr ($950000,x)
+        jsr (((`*) << 16) | wR0,x) ; wR0 is the routine: X is 0, and $0000 in this bank is RAM
         plx
 
         _B1D9
@@ -15153,7 +15234,7 @@
         lda wR0
         asl a
         tax
-        jsr ($95DC4C,x)
+        jsr (aUnknown95DC4C,x)
         plp
         plb
         .databank $95
@@ -15167,6 +15248,22 @@
         ; 95/DC4C
 
     .endsection Unsorted95DA1DSection
+
+
+    .section Table95DC4CSection
+
+      .al
+      .xl
+
+      aUnknown95DC4C ; 95/DC4C
+
+        ; Jump table of rlUnknown95DBDE.
+        .word <>rsUnknown95DC54
+        .word <>rsUnknown95DC54
+        .word <>rsUnknown95DC61
+        .word <>rsUnknown95DC90
+
+    .endsection Table95DC4CSection
 
 
     .section Unsorted95DC54Section
@@ -15231,6 +15328,36 @@
         ; 95/DC90
 
     .endsection Unsorted95DC54Section
+
+
+    .section Unsorted95DC90Section
+
+      .al
+      .xl
+
+      rsUnknown95DC90 ; 95/DC90
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        tyx
+        lda #$0000
+        sta $0B2D,b,x
+        sep #$20
+        lda #$04
+        sta $0AF7,b,x
+        rep #$20
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/DCA3
+
+    .endsection Unsorted95DC90Section
 
 
     .section Unsorted95DCA3Section
@@ -15529,7 +15656,7 @@
         lda wR0
         asl a
         tax
-        jsr ($95DE84,x)
+        jsr (aUnknown95DE84,x)
         plp
         plb
         .databank $95
@@ -15544,6 +15671,22 @@
         ; 95/DE84
 
     .endsection Unsorted95DCA3Section
+
+
+    .section Table95DE84Section
+
+      .al
+      .xl
+
+      aUnknown95DE84 ; 95/DE84
+
+        ; Jump table of rlUnknown95DE61.
+        .word <>rsUnknown95DE8C
+        .word <>rsUnknown95DE8C
+        .word <>rsUnknown95DED5
+        .word <>rsUnknown95DF76
+
+    .endsection Table95DE84Section
 
 
     .section Unsorted95DE8CSection
@@ -15721,6 +15864,197 @@
         ; 95/DF76
 
     .endsection Unsorted95DE8CSection
+
+
+    .section Unsorted95DF76Section
+
+      .al
+      .xl
+
+      rsUnknown95DF76 ; 95/DF76
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tyx
+
+        _DF79
+        lda $0B2D,b,x
+        phx
+        tax
+        lda $98AB5C,x
+        cmp #$8081
+        bne _DF8C
+        plx
+        jml _E089
+
+
+        _DF8C
+        cmp #$8082
+        bne _DFA5
+        plx
+        lda #$0028
+        jsl rlStartBattleSceneScript
+        lda $0B2D,b,x
+        clc
+        adc #$0002
+        sta $0B2D,b,x
+        bra _DF79
+
+
+        _DFA5
+        cmp #$8083
+        bne _DFC8
+        plx
+        lda $0AE4,b
+        bit #$0008
+        beq _DFBC
+        phx
+        ldx $0AEB,b
+        jsl rlUnknown95AB53
+        plx
+
+        _DFBC
+        lda $0B2D,b,x
+        clc
+        adc #$0002
+        sta $0B2D,b,x
+        bra _DF79
+
+
+        _DFC8
+        cmp #$8084
+        bne _DFFF
+        plx
+        phx
+        ldx $0AEB,b
+        lda $0AF9,b,x
+        ldx $0AE9,b
+        cmp $0AF9,b,x
+        plx
+        bcs _DFE7
+        lda $0AF9,b,x
+        clc
+        adc #$0030
+        bra _DFEE
+
+
+        _DFE7
+        lda $0AF9,b,x
+        sec
+        sbc #$0030
+
+        _DFEE
+        sta $0AF9,b,x
+        lda $0B2D,b,x
+        clc
+        adc #$0002
+        sta $0B2D,b,x
+        jml _DF79
+
+
+        _DFFF
+        cmp #$8085
+        bne _E017
+        plx
+        jsl rlUnknown95AE8B
+        lda $0B2D,b,x
+        clc
+        adc #$0002
+        sta $0B2D,b,x
+        jml _DF79
+
+
+        _E017
+        cmp #$8080
+        bne _E02A
+        plx
+        jsl rlUnknown95DDFB
+        ldx $0AE9,b
+        jsl rlUnknown95C057
+        bra _E089
+
+
+        _E02A
+        plx
+        pha
+        and #$FF00
+        pha
+        lda $0AFD,b,x
+        sec
+        sbc #1,s
+        sta $0AFD,b,x
+        pla
+        phx
+        ldx $0AEB,b
+        lda $0AF9,b,x
+        ldx $0AE9,b
+        cmp $0AF9,b,x
+        bcs _E04D
+        plx
+        pla
+        bra _E053
+
+
+        _E04D
+        plx
+        pla
+        eor #$FFFF
+        inc a
+
+        _E053
+        and #$00FF
+        bit #$0080
+        bne _E06C
+        xba
+        sta wR0
+        jsr rsUnknown95E0C5
+        bit #$0001
+        beq _E068
+        php
+        plp
+
+        _E068
+        bcc _E06A
+
+        _E06A
+        bra _E07F
+
+
+        _E06C
+        eor #$00FF
+        inc a
+        xba
+        sta wR0
+        jsr rsUnknown95E146
+        bit #$0001
+        beq _E07D
+        php
+        plp
+
+        _E07D
+        bcc _E07F
+
+        _E07F
+        lda $0B2D,b,x
+        clc
+        adc #$0002
+        sta $0B2D,b,x
+
+        _E089
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/E08C
+
+    .endsection Unsorted95DF76Section
 
 
     .section Unsorted95E0C5Section

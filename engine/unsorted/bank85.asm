@@ -4145,7 +4145,7 @@
         asl a
         phx
         tax
-        jsr ($859FFB,x)
+        jsr (aUnknown859FFB,x)
         plx
         rtl
 
@@ -4156,20 +4156,29 @@
     .endsection Unsorted859FEASection
 
 
-    .section Unsorted85A004Section
+    .section Unsorted859FFBSection
 
       .al
       .xl
 
-      rsUnknown85A004 ; 85/A004
+      aUnknown859FFB ; 85/9FFB
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Jump table of rlUnknown859FEA. (tools/sweep.py had started a routine at
+        ; $85/A004, three bytes into this table.)
+        .word <>rsUnknown85A007
+        .word <>rsUnknown85A02E
+        .word <>rlUnknown85A03D
+        .word <>rsUnknown85A040
+        .word <>rsUnknown85A040
+        .word <>rsUnknown85A040
+
+      rsUnknown85A007 ; 85/A007
+
         .al
         .xl
         .autsiz
         .databank ?
 
-        ldy #$A040
         jsl rlGetMapMenuTilemapArea
         sta wR0
         and #$FF00
@@ -4190,7 +4199,7 @@
 
         ; 85/A02E
 
-    .endsection Unsorted85A004Section
+    .endsection Unsorted859FFBSection
 
 
     .section Unsorted85A02ESection
@@ -4216,6 +4225,27 @@
         ; 85/A03D
 
     .endsection Unsorted85A02ESection
+
+
+    .section Unsorted85A03DSection
+
+      .al
+      .xl
+
+      rlUnknown85A03D ; 85/A03D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        bra rsUnknown85A02E
+
+        .databank 0
+
+        ; 85/A03F
+
+    .endsection Unsorted85A03DSection
 
 
     .section Unsorted85A040Section
@@ -4270,7 +4300,7 @@
         asl a
         phx
         tax
-        jsr ($85A079,x)
+        jsr (aUnknown85A079,x)
         plx
         inc aProcSystem.aBody4,b,x
         lda wR4
@@ -14745,7 +14775,7 @@
 
         _E235
         phx
-        jsr ($85E27F,x)
+        jsr (aUnknown85E27F,x)
         plx
         bcc _E24B
         lda #$85E2
@@ -14786,6 +14816,42 @@
         ; 85/E27F
 
     .endsection Unsorted85E1DBSection
+
+
+    .section Table85E27FSection
+
+      .al
+      .xl
+
+      aUnknown85E27F ; 85/E27F
+
+        ; Jump table of rlProcUnknown85E1CCCycle.
+        .word <>rlUnknown85E5B6
+        .word <>rlUnknown85E6E8
+        .word <>rsUnknown85E545
+        .word $E539
+        .word <>rlUnknown85E6A5
+        .word <>rlUnknown85E6D7
+        .word <>rlUnknown85E7F6
+        .word <>rlUnknown85E7B3
+        .word $E524
+        .word $E4FB
+        .word <>rlUnknown85E623
+        .word <>rlUnknown85E549
+        .word <>rlUnknown85E5E6
+        .word <>rlUnknown85E57E
+        .word $E3E1
+        .word $E3C4
+        .word $E412
+        .word <>rsUnknown85E38C
+        .word <>rlUnknown85E744
+        .word $E4D2
+        .word <>rsUnknown85E47F
+        .word <>rlUnknown85E656
+        .word <>rlUnknown85E78A
+        .word <>rlUnknown85E839
+
+    .endsection Table85E27FSection
 
 
     .section Unsorted85E2DFSection
@@ -16157,7 +16223,7 @@
 
         _EA06
         phx
-        jsr ($85EA3A,x)
+        jsr (aUnknown85EA3A,x)
         plx
         bcc _EA1C
         lda #$85EA
@@ -16187,6 +16253,76 @@
         ; 85/EA3A
 
     .endsection Unsorted85E9D6Section
+
+
+    .section Table85EA3ASection
+
+      .al
+      .xl
+
+      aUnknown85EA3A ; 85/EA3A
+
+        ; Jump table of rlUnknown85E9D6.
+        .word <>rlUnknown85EA42
+        .word <>rlUnknown85EA53
+
+    .endsection Table85EA3ASection
+
+
+    .section Unsorted85EA42Section
+
+      .al
+      .xl
+
+      rlUnknown85EA42 ; 85/EA42
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wAIGroupLeaderFieldMovement
+        and #$00FF
+        bne _EA4F
+        jml rsUnknown85E547
+
+
+        _EA4F
+        jml rsUnknown85E545
+
+        .databank 0
+
+        ; 85/EA53
+
+    .endsection Unsorted85EA42Section
+
+
+    .section Unsorted85EA53Section
+
+      .al
+      .xl
+
+      rlUnknown85EA53 ; 85/EA53
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7E2028
+        and #$00FF
+        bne _EA60
+        jml rsUnknown85E547
+
+
+        _EA60
+        jml rsUnknown85E545
+
+        .databank 0
+
+        ; 85/EA64
+
+    .endsection Unsorted85EA53Section
 
 
     .section Unsorted85EA64Section

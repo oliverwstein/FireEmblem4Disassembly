@@ -10793,7 +10793,7 @@
         lda @l $88D366,x
         sta lR45+1
         plx
-        jsr ($88D7B2,x)
+        jsr (aUnknown88D7B2,x)
         jsl rlDecompressSingle
         lda #(`g4bppcMageFemaleMapMovementSprite)<<8
         sta lR18+1
@@ -10827,7 +10827,7 @@
         lda @l $88D429,x
         sta lR45+1
         plx
-        jsr ($88D7B2,x)
+        jsr (aUnknown88D7B2,x)
         jsl rlDecompressSingle
         plx
         pla
@@ -10841,6 +10841,134 @@
         ; 88/D7B2
 
     .endsection Unsorted88D731Section
+
+
+    .section Table88D7B2Section
+
+      .al
+      .xl
+
+      aUnknown88D7B2 ; 88/D7B2
+
+        ; Jump table of rlUnknown88D731.
+        .word <>rsUnknown88D7BA
+        .word <>rsUnknown88D7C5
+        .word <>rsUnknown88D7D8
+        .word <>rsUnknown88D7EB
+
+    .endsection Table88D7B2Section
+
+
+    .section Unsorted88D7BASection
+
+      .al
+      .xl
+
+      rsUnknown88D7BA ; 88/D7BA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aMapAction)<<8
+        sta lR47+1
+        lda #<>aMapAction
+        sta lR47
+        rts
+
+        .databank 0
+
+        ; 88/D7C5
+
+    .endsection Unsorted88D7BASection
+
+
+    .section Unsorted88D7C5Section
+
+      .al
+      .xl
+
+      rsUnknown88D7C5 ; 88/D7C5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aMapAction)<<8
+        sta lR47+1
+        lda #<>aMapAction
+        sta lR47
+        lda lR47
+        clc
+        adc #$2000
+        sta lR47
+        rts
+
+        .databank 0
+
+        ; 88/D7D8
+
+    .endsection Unsorted88D7C5Section
+
+
+    .section Unsorted88D7D8Section
+
+      .al
+      .xl
+
+      rsUnknown88D7D8 ; 88/D7D8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aMapAction)<<8
+        sta lR47+1
+        lda #<>aMapAction
+        sta lR47
+        lda lR47
+        clc
+        adc #$4000
+        sta lR47
+        rts
+
+        .databank 0
+
+        ; 88/D7EB
+
+    .endsection Unsorted88D7D8Section
+
+
+    .section Unsorted88D7EBSection
+
+      .al
+      .xl
+
+      rsUnknown88D7EB ; 88/D7EB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aMapAction)<<8
+        sta lR47+1
+        lda #<>aMapAction
+        sta lR47
+        lda lR47
+        clc
+        adc #$6000
+        sta lR47
+        rts
+
+        .databank 0
+
+        ; 88/D7FE
+
+    .endsection Unsorted88D7EBSection
 
 
     .section Unsorted88D7FESection

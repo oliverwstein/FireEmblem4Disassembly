@@ -146,7 +146,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        jsr ($8980EF,x)
+        jsr (aUnknown8980EF,x)
         plp
         plb
         .databank $89
@@ -157,6 +157,29 @@
         ; 89/80EF
 
     .endsection Unsorted898000Section
+
+
+    .section Table8980EFSection
+
+      .al
+      .xl
+
+      aUnknown8980EF ; 89/80EF
+
+        ; Jump table of rlUnknown8980E0.
+        .word <>rsUnknown898105
+        .word <>rsUnknown89831F
+        .word <>rsUnknown89861B
+        .word <>rsUnknown898690
+        .word <>rsUnknown898734
+        .word <>rsUnknown898536
+        .word <>rsUnknown898755
+        .word <>rsUnknown898768
+        .word <>rsUnknown89A25A
+        .word <>rsUnknown89A2ED
+        .word <>rsUnknown89A32E
+
+    .endsection Table8980EFSection
 
 
     .section Unsorted898105Section
@@ -1002,6 +1025,42 @@
     .endsection Unsorted89861BSection
 
 
+    .section Unsorted898734Section
+
+      .al
+      .xl
+
+      rsUnknown898734 ; 89/8734
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F81A3
+        sta wMainLoopPointer
+        jsr rsUnknown8989AD
+        jsr rsUnknown898AF5
+        lda wBufferBG2VOFS
+        cmp #$0110
+        beq _8751
+        jsr rsUnknown898B3B
+        jsr rsUnknown898A7E
+        jsr rsUnknown8992AD
+        rts
+
+
+        _8751
+        jsr rsUnknown898D55
+        rts
+
+        .databank 0
+
+        ; 89/8755
+
+    .endsection Unsorted898734Section
+
+
     .section Unsorted898755Section
 
       .al
@@ -1028,6 +1087,28 @@
         ; 89/8768
 
     .endsection Unsorted898755Section
+
+
+    .section Unsorted898768Section
+
+      .al
+      .xl
+
+      rsUnknown898768 ; 89/8768
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown80BB5D
+        rts
+
+        .databank 0
+
+        ; 89/876D
+
+    .endsection Unsorted898768Section
 
 
     .section Unsorted89876DSection
@@ -5031,7 +5112,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        jsr ($89ACF6,x)
+        jsr (aUnknown89ACF6,x)
         plp
         plb
         .databank $89
@@ -5042,6 +5123,550 @@
         ; 89/ACF6
 
     .endsection Unsorted89ACCESection
+
+
+    .section Table89ACF6Section
+
+      .al
+      .xl
+
+      aUnknown89ACF6 ; 89/ACF6
+
+        ; Jump table of rlUnknown89ACE7.
+        .word <>rsUnknown89AD00
+        .word <>rsUnknown89AF58
+        .word <>rsUnknown89B058
+        .word <>rsUnknown89B0A9
+        .word <>rsUnknown89B0A9
+
+    .endsection Table89ACF6Section
+
+
+    .section ReviveMenuSection
+
+      .al
+      .xl
+
+      rsUnknown89AD00 ; 89/AD00
+
+        ; Entry 0 of aUnknown89ACF6. The revive staff's menu (the text asks whom to
+        ; revive and confirms); the routines through $89/B058 belong to it.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda bBufferINIDISP
+        and #$000F
+        cmp #$000F
+        bne _AD31
+        lda wJoy1New
+        bit #$8000
+        bne _AD4A
+        bit #$0080
+        bne _AD32
+        bit #$0040
+        bne _AD36
+        lda wJoy1Repeated
+        bit #$0100
+        bne _AD3A
+        bit #$0200
+        bne _AD3E
+        bit #$0800
+        bne _AD42
+        bit #$0400
+        bne _AD46
+
+        _AD31
+        rts
+
+
+        _AD32
+        jml _AD9A
+
+
+        _AD36
+        jml rsUnknown89AEB3
+
+
+        _AD3A
+        jml rsUnknown89AEFE
+
+
+        _AD3E
+        jml rsUnknown89AF15
+
+
+        _AD42
+        jml rsUnknown89AF28
+
+
+        _AD46
+        jml rsUnknown89AF3E
+
+
+        _AD4A
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda #$00E8
+        jsl rlUnknown808F6F
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$FE
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #$FFFF
+        sta wDataWindowCurrentArmy
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$FE
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #$0000
+        sta $0891,b
+        lda #$0000
+        sta $088B,b
+        lda #$B6B6
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        lda #$0003
+        sta wGameStateStep,b
+        rts
+
+
+        _AD9A
+        lda #$000A
+        jsl rlPlaySoundEffect
+        lda #(`aReviveMenuBlankLine)<<8
+        sta lR18+1
+        lda #<>aReviveMenuBlankLine
+        sta lR18
+        ldx #$0203
+        jsl rlDrawMenuTextLine
+        lda wUnitWindowMaxRows
+        dec a
+        beq _AE01
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda aUnitWindowDeploymentSlots,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitNamePointer
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0203
+        jsl rlDrawMenuTextLine
+        jsl rlGetMenuTextStringLength
+        lda wR10
+        clc
+        adc #$0003
+        sta wR10
+        lda #(`aReviveMenuReviveThemText)<<8
+        sta lR18+1
+        lda #<>aReviveMenuReviveThemText
+        sta lR18
+        lda #$0002
+        and #$00FF
+        xba
+        ora wR10
+        tax
+        jsl rlDrawMenuTextLine
+        bra _AE12
+
+
+        _AE01
+        lda #(`aReviveMenuConfirmText)<<8
+        sta lR18+1
+        lda #<>aReviveMenuConfirmText
+        sta lR18
+        ldx #$0203
+        jsl rlDrawMenuTextLine
+
+        _AE12
+        lda #(`aReviveMenuYesNoText)<<8
+        sta lR18+1
+        lda #<>aReviveMenuYesNoText
+        sta lR18
+        ldx #$0215
+        jsl rlDrawMenuTextLine
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0200, $80, $5000
+
+        lda #$0000
+        sta $7FB018
+        lda #$0001
+        sta wGameStateStep,b
+        lda #$0001
+        sta wDebugMenuScreenIndex+1
+        rts
+
+        .databank 0
+
+        ; 89/AE45
+
+      aReviveMenuReviveThemText ; 89/AE45
+
+        ; をいきかえらせますか (revive them?)
+        .enc "SJIS"
+        .text "をいきかえらせますか\n"
+
+
+      aReviveMenuYesNoText ; 89/AE5B
+
+        ; はい (yes), いいえ (no).
+        .text "はい　　　いいえ\n"
+
+
+      aReviveMenuConfirmText ; 89/AE6D
+
+        ; よろしいですか (is that OK?)
+        .text "よろしいですか\n"
+
+
+      aReviveMenuBlankLine ; 89/AE7D
+
+        ; A blank line.
+        .text "　　　　　　　　　　　　　　　　　　　　　　　　　　\n"
+
+
+      rsUnknown89AEB3 ; 89/AEB3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0008
+        jsl rlPlaySoundEffect
+        lda wUnitWindowCurrentHighlightLine
+        sta wItemWindowCursorRow
+        asl a
+        tax
+        lda aUnitWindowDeploymentSlots,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda #$DFDC
+        sta wDataWindowCurrentArmy
+        lda #$BBD9
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$FE
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #$0003
+        sta wGameStateStep,b
+        lda #$0000
+        sta $7F819D
+        rts
+
+        .databank 0
+
+        ; 89/AEFE
+
+      rsUnknown89AEFE ; 89/AEFE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowCurrentHighlightLine
+        inc a
+        cmp wUnitWindowMaxRows
+        beq _AF14
+        sta wUnitWindowCurrentHighlightLine
+        lda #$0007
+        jsl rlPlaySoundEffect
+
+        _AF14
+        rts
+
+        .databank 0
+
+        ; 89/AF15
+
+      rsUnknown89AF15 ; 89/AF15
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowCurrentHighlightLine
+        beq _AF27
+        dec a
+        sta wUnitWindowCurrentHighlightLine
+        lda #$0007
+        jsl rlPlaySoundEffect
+
+        _AF27
+        rts
+
+        .databank 0
+
+        ; 89/AF28
+
+      rsUnknown89AF28 ; 89/AF28
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowCurrentHighlightLine
+        sec
+        sbc #$0003
+        bmi _AF3D
+        sta wUnitWindowCurrentHighlightLine
+        lda #$0006
+        jsl rlPlaySoundEffect
+
+        _AF3D
+        rts
+
+        .databank 0
+
+        ; 89/AF3E
+
+      rsUnknown89AF3E ; 89/AF3E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowCurrentHighlightLine
+        clc
+        adc #$0003
+        cmp wUnitWindowMaxRows
+        bpl _AF57
+        sta wUnitWindowCurrentHighlightLine
+        lda #$0006
+        jsl rlPlaySoundEffect
+
+        _AF57
+        rts
+
+        .databank 0
+
+        ; 89/AF58
+
+      rsUnknown89AF58 ; 89/AF58
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$0080
+        bne _AF77
+        bit #$8000
+        bne _AF9D
+        bit #$0100
+        bne _AF6F
+        bit #$0200
+        bne _AF73
+        rts
+
+
+        _AF6F
+        jml rsUnknown89B02E
+
+
+        _AF73
+        jml rsUnknown89B043
+
+
+        _AF77
+        lda $7FB018
+        bne _AF9D
+        lda #$000A
+        jsl rlPlaySoundEffect
+        lda $7FB016
+        sta wSelectedUnitDataRAMPointer,b
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda aUnitWindowDeploymentSlots,x
+        sta wRoutineVariable1,b
+        jsl rlUnknown84B6A6
+        rts
+
+
+        _AF9D
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda #(`aReviveMenuBlankLine2)<<8
+        sta lR18+1
+        lda #<>aReviveMenuBlankLine2
+        sta lR18
+        ldx #$0203
+        jsl rlDrawMenuTextLine
+        lda #(`aReviveMenuWhomText)<<8
+        sta lR18+1
+        lda #<>aReviveMenuWhomText
+        sta lR18
+        ldx #$0203
+        jsl rlDrawMenuTextLine
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0200, $80, $5000
+
+        lda #$0000
+        sta wGameStateStep,b
+        sta wDebugMenuScreenIndex+1
+        rts
+
+        .databank 0
+
+        ; 89/AFDE
+
+      aReviveMenuWhomText ; 89/AFDE
+
+        ; だれをいきかえらせますか (whom will you revive?)
+        .enc "SJIS"
+        .text "だれをいきかえらせますか\n"
+
+
+      aReviveMenuBlankLine2 ; 89/AFF8
+
+        ; A blank line.
+        .text "　　　　　　　　　　　　　　　　　　　　　　　　　　\n"
+
+
+      rsUnknown89B02E ; 89/B02E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FB018
+        bne _B042
+        lda #$0001
+        sta $7FB018
+        lda #$0007
+        jsl rlPlaySoundEffect
+
+        _B042
+        rts
+
+        .databank 0
+
+        ; 89/B043
+
+      rsUnknown89B043 ; 89/B043
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FB018
+        beq _B057
+        lda #$0000
+        sta $7FB018
+        lda #$0007
+        jsl rlPlaySoundEffect
+
+        _B057
+        rts
+
+        .databank 0
+
+        ; 89/B058
+
+    .endsection ReviveMenuSection
+
+
+    .section Unsorted89B058Section
+
+      .al
+      .xl
+
+      rsUnknown89B058 ; 89/B058
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$8000
+        bne _B060
+        rts
+
+
+        _B060
+        lda #$0021
+        jsl rlPlaySoundEffect
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$FE
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #$FFFF
+        sta wDataWindowCurrentArmy
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$FE
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #$0000
+        sta $0891,b
+        lda #$0000
+        sta $088B,b
+        lda #$B6B6
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        lda #$0004
+        sta wGameStateStep,b
+        rts
+
+        .databank 0
+
+        ; 89/B0A9
+
+    .endsection Unsorted89B058Section
+
+
+    .section Unsorted89B0A9Section
+
+      .al
+      .xl
+
+      rsUnknown89B0A9 ; 89/B0A9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 89/B0AA
+
+    .endsection Unsorted89B0A9Section
 
 
     .section Unsorted89B0AASection
@@ -5059,7 +5684,7 @@
         lda wDebugMenuScreenIndex+1
         asl a
         tax
-        jsr ($89B0B9,x)
+        jsr (aUnknown89B0B9,x)
         lda wVBlankEnabledFramecount
         lsr a
         sta wBufferBG2VOFS
@@ -5070,6 +5695,558 @@
         ; 89/B0B9
 
     .endsection Unsorted89B0AASection
+
+
+    .section Table89B0B9Section
+
+      .al
+      .xl
+
+      aUnknown89B0B9 ; 89/B0B9
+
+        ; Jump table of rlUnknown89B0AA.
+        .word <>rsUnknown89B0BF
+        .word <>rsUnknown89B0C6
+        .word <>rsUnknown89B0D0
+
+    .endsection Table89B0B9Section
+
+
+    .section Unsorted89B0BFSection
+
+      .al
+      .xl
+
+      rsUnknown89B0BF ; 89/B0BF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr $89B0D1
+        jsr $89B20B
+        rts
+
+        .databank 0
+
+        ; 89/B0C6
+
+    .endsection Unsorted89B0BFSection
+
+
+    .section Unsorted89B0C6Section
+
+      .al
+      .xl
+
+      rsUnknown89B0C6 ; 89/B0C6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr $89B0D1
+        jsr $89B20B
+        jsr $89B285
+        rts
+
+        .databank 0
+
+        ; 89/B0D0
+
+    .endsection Unsorted89B0C6Section
+
+
+    .section Unsorted89B0D0Section
+
+      .al
+      .xl
+
+      rsUnknown89B0D0 ; 89/B0D0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 89/B0D1
+
+    .endsection Unsorted89B0D0Section
+
+
+    .section Unsorted89B0D1Section
+
+      .al
+      .xl
+
+      rsUnknown89B0D1 ; 89/B0D1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wGameStateStep,b
+        bne _B0D9
+        jsr $89B2A2
+
+        _B0D9
+        phk
+        plb
+        .databank $89
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda #$0200
+        sta wR5
+        jsr $89B10C
+        lda #$0000
+
+        _B0EC
+        sta wUnitWindowCurrentNameLine
+        cmp wUnitWindowCurrentHighlightLine
+        beq _B100
+        asl a
+        tax
+        lda #$0800
+        sta wR5
+        jsr $89B10C
+
+        _B100
+        lda wUnitWindowCurrentNameLine
+        inc a
+        cmp wUnitWindowMaxRows
+        bne _B0EC
+        rts
+
+        .databank 0
+
+        ; 89/B10C
+
+    .endsection Unsorted89B0D1Section
+
+
+    .section Unsorted89B10CSection
+
+      .al
+      .xl
+
+      rsUnknown89B10C ; 89/B10C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aUnitWindowEquippedWeaponPointers,x
+        bmi _B11C
+        lda $B133,b,x
+        sta wR4
+        ldy #$B1F3
+        bra _B124
+
+
+        _B11C
+        lda $B163,b,x
+        sta wR4
+        ldy #$B1FA
+
+        _B124
+        lda $B193,b,x
+        sta wR0
+        lda $B1C3,b,x
+        sta wR1
+        jsl rlPushToOAMBuffer
+        rts
+
+        .databank 0
+
+        ; 89/B133
+
+    .endsection Unsorted89B10CSection
+
+
+    .section Unsorted89B20BSection
+
+      .al
+      .xl
+
+      rsUnknown89B20B ; 89/B20B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda $89B225,x
+        sta wR0
+        lda $89B255,x
+        sta wR1
+        lda wGameStateStep,b
+        jsl rlUnknown88A704
+        rts
+
+        .databank 0
+
+        ; 89/B225
+
+    .endsection Unsorted89B20BSection
+
+
+    .section Unsorted89B285Section
+
+      .al
+      .xl
+
+      rsUnknown89B285 ; 89/B285
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FB018
+        asl a
+        tax
+        lda $89B29E,x
+        sta wR0
+        lda #$0013
+        sta wR1
+        lda #$0000
+        jsl rlUnknown88A704
+        rts
+
+        .databank 0
+
+        ; 89/B29E
+
+    .endsection Unsorted89B285Section
+
+
+    .section Unsorted89B2A2Section
+
+      .al
+      .xl
+
+      rsUnknown89B2A2 ; 89/B2A2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda aUnitWindowEquippedWeaponPointers,x
+        bmi _B2B2
+        jsr $89B2B6
+        rts
+
+
+        _B2B2
+        jsr $89B344
+        rts
+
+        .databank 0
+
+        ; 89/B2B6
+
+    .endsection Unsorted89B2A2Section
+
+
+    .section Unsorted89B2B6Section
+
+      .al
+      .xl
+
+      rsUnknown89B2B6 ; 89/B2B6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda wVBlankEnabledFramecount
+        lsr a
+        lsr a
+        lsr a
+        and #$0006
+        tax
+        lda $89B30C,x
+        sta wR15
+        pla
+        and #$7FFF
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda $88D527,x
+        sta lR18+1
+        lda aUnknown88D526,x
+        clc
+        adc wR15
+        sta lR18
+        sta wR14
+        lda #$0040
+        sta wR0
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda $89B314,x
+        sta wR1
+        jsl rlDMAByPointer
+        lda wR14
+        clc
+        adc #$0040
+        sta lR18
+        lda wR1
+        clc
+        adc #$0100
+        sta wR1
+        jsl rlDMAByPointer
+        rts
+
+        .databank 0
+
+        ; 89/B30C
+
+    .endsection Unsorted89B2B6Section
+
+
+    .section Unsorted89B344Section
+
+      .al
+      .xl
+
+      rsUnknown89B344 ; 89/B344
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda wVBlankEnabledFramecount
+        lsr a
+        lsr a
+        lsr a
+        and #$0006
+        tax
+        lda $89B39F,x
+        sta wR15
+        pla
+        and #$7FFF
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda $88D5E4,x
+        sta lR18+1
+        lda aUnknown88D5E3,x
+        clc
+        adc wR15
+        sta lR18
+        sta wR14
+        lda #$0040
+        sta wR0
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda $89B3A7,x
+        sta wR1
+        jsl rlDMAByPointer
+        lda wR14
+        clc
+        adc #$0040
+        sta lR18
+        lda #$0080
+        sta wR0
+        lda wR1
+        clc
+        adc #$0100
+        sta wR1
+        jsl rlDMAByPointer
+        rts
+
+        .databank 0
+
+        ; 89/B39F
+
+    .endsection Unsorted89B344Section
+
+
+    .section Unsorted89B79DSection
+
+      .al
+      .xl
+
+      rsUnknown89B79D ; 89/B79D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsItemWindowRenderCursor
+        lda wJoy1New
+        bit #$C200
+        bne _B7BC
+        bit #$0080
+        bne _B7EC
+        lda wJoy1Repeated
+        bit #$0800
+        bne _B7FB
+        bit #$0400
+        bne _B818
+        jsr $89C119
+        rts
+
+
+        _B7BC
+        lda #$0000
+        sta wGameStateStep,b
+        sta $7F847D
+        ldx #$01AA
+        lda #$0004
+        ldy #$0009
+        jsl rlClearTilemapRect
+        jsl rlItemWindowDrawItemInfo
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG2TilemapBuffer, $02C0, $80, $4000
+
+        lda #$0021
+        jsl rlPlaySoundEffect
+        rts
+
+
+        _B7EC
+        lda #$000A
+        jsl rlPlaySoundEffect
+        jsl rlItemWindowSort
+        jsr $89C119
+        rts
+
+
+        _B7FB
+        lda $7F847D
+        beq _B814
+        dec a
+        sta $7F847D
+        lda #$0002
+        sta wUnitWindowScrollingFlag
+        lda #$0006
+        jsl rlPlaySoundEffect
+
+        _B814
+        jsr $89C119
+        rts
+
+
+        _B818
+        lda $7F847D
+        cmp #$0002
+        beq _B834
+        inc a
+        sta $7F847D
+        lda #$0004
+        sta wUnitWindowScrollingFlag
+        lda #$0006
+        jsl rlPlaySoundEffect
+
+        _B834
+        jsr $89C119
+        rts
+
+        .databank 0
+
+        ; 89/B838
+
+    .endsection Unsorted89B79DSection
+
+
+    .section Unsorted89B838Section
+
+      .al
+      .xl
+
+      rsUnknown89B838 ; 89/B838
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$8000
+        bne _B840
+        rts
+
+
+        _B840
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$0003
+        sta wGameStateStep,b
+        lda #$0021
+        jsl rlPlaySoundEffect
+        rts
+
+        .databank 0
+
+        ; 89/B856
+
+    .endsection Unsorted89B838Section
+
+
+    .section Unsorted89B869Section
+
+      .al
+      .xl
+
+      rsUnknown89B869 ; 89/B869
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda bBufferINIDISP
+        sec
+        sbc #$01
+        sta bBufferINIDISP
+        rep #$20
+        bne _B882
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlUnknown80BB5D
+
+        _B882
+        rts
+
+        .databank 0
+
+        ; 89/B883
+
+    .endsection Unsorted89B869Section
 
 
     .section Unsorted89BECCSection
@@ -5109,6 +6286,42 @@
         ; 89/BEEB
 
     .endsection Unsorted89BECCSection
+
+
+    .section Unsorted89C119Section
+
+      .al
+      .xl
+
+      rsUnknown89C119 ; 89/C119
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowScrollingFlag
+        tax
+        lda $7F847D
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc $89C13E,x
+        sta wR1
+        lda #$00A5
+        sta wR0
+        lda #$0000
+        sta wUnitWindowScrollingFlag
+        jsl rlUnknown88A704
+        rts
+
+        .databank 0
+
+        ; 89/C13E
+
+    .endsection Unsorted89C119Section
 
 
     .section Unsorted89EB26Section
@@ -5160,7 +6373,7 @@
         _EB4E
         asl a
         tax
-        jsr ($89EB56,x)
+        jsr (aUnknown89EB56,x)
         plp
         plb
         .databank $89
@@ -5171,6 +6384,22 @@
         ; 89/EB56
 
     .endsection Unsorted89EB26Section
+
+
+    .section Table89EB56Section
+
+      .al
+      .xl
+
+      aUnknown89EB56 ; 89/EB56
+
+        ; Jump table of rlUnknown89EB40.
+        .word <>rsUnknown89EB5E
+        .word <>rsUnknown89EC86
+        .word <>rsUnknown89ECB4
+        .word <>rsUnknown89ECC6
+
+    .endsection Table89EB56Section
 
 
     .section Unsorted89EB5ESection
@@ -5371,6 +6600,33 @@
     .endsection Unsorted89EB5ESection
 
 
+    .section Unsorted89ECB4Section
+
+      .al
+      .xl
+
+      rsUnknown89ECB4 ; 89/ECB4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0003
+        sta wGameStateStep,b
+        lda #$0001
+        sta $0D77,b
+        lda #$B122
+        sta wMainLoopPointer
+        rts
+
+        .databank 0
+
+        ; 89/ECC6
+
+    .endsection Unsorted89ECB4Section
+
+
     .section Unsorted89ECC6Section
 
       .al
@@ -5495,7 +6751,7 @@
         _ED52
         asl a
         tax
-        jsr ($89ED58,x)
+        jsr (aUnknown89ED58,x)
         rtl
 
         .databank 0
@@ -5503,6 +6759,27 @@
         ; 89/ED58
 
     .endsection Unsorted89ED12Section
+
+
+    .section Table89ED58Section
+
+      .al
+      .xl
+
+      aUnknown89ED58 ; 89/ED58
+
+        ; Jump table of rlUnknown89ED12.
+        .word <>rsUnknown89EDFD
+        .word <>rsUnknown89EE50
+        .word <>rsUnknown89EE50
+        .word <>rsUnknown89EE89
+        .word <>rsUnknown89EEFE
+        .word <>rsUnknown89EF50
+        .word <>rsUnknown89EFA3
+        .word <>rsUnknown89EE50
+        .word <>rsUnknown89F018
+
+    .endsection Table89ED58Section
 
 
     .section Unsorted89EDFDSection
@@ -5528,7 +6805,7 @@
         _EE08
         asl a
         tax
-        jsr ($89EE0E,x)
+        jsr (aUnknown89EE0E,x)
         rts
 
         .databank 0
@@ -5538,6 +6815,65 @@
     .endsection Unsorted89EDFDSection
 
 
+    .section Table89EE0ESection
+
+      .al
+      .xl
+
+      aUnknown89EE0E ; 89/EE0E
+
+        ; Jump table of rsUnknown89EDFD.
+        .word <>rsUnknown89EE14
+        .word <>rsUnknown89EE23
+        .word <>rsUnknown89EE32
+
+    .endsection Table89EE0ESection
+
+
+    .section Unsorted89EE14Section
+
+      .al
+      .xl
+
+      rsUnknown89EE14 ; 89/EE14
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8900
+        sta lR18+1
+        lda #$F88F
+        sta lR18
+        ldx #$1416
+        bra rsUnknown89EE32._EE3F
+
+        .databank 0
+
+        ; 89/EE23
+
+      rsUnknown89EE23 ; 89/EE23
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8900
+        sta lR18+1
+        lda #$F893
+        sta lR18
+        ldx #$1419
+        bra rsUnknown89EE32._EE3F
+
+        .databank 0
+
+        ; 89/EE32
+
+    .endsection Unsorted89EE14Section
+
+
     .section Unsorted89EE32Section
 
       .al
@@ -5545,7 +6881,6 @@
 
       rsUnknown89EE32 ; 89/EE32
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5556,6 +6891,8 @@
         lda #$F897
         sta lR18
         ldx #$141C
+
+        _EE3F
         lda $7F842C
         bne _EE4B
         txa
@@ -5572,6 +6909,592 @@
         ; 89/EE50
 
     .endsection Unsorted89EE32Section
+
+
+    .section Unsorted89EE50Section
+
+      .al
+      .xl
+
+      rsUnknown89EE50 ; 89/EE50
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowCurrentLineSlotOffset+1
+        asl a
+        tax
+        lda wDebugMenuScreenIndex,x
+        beq _EE6B
+        lda #$8900
+        sta lR18+1
+        lda #$F8AD
+        sta lR18
+        ldx #$141B
+        bra _EE78
+
+
+        _EE6B
+        lda #$8900
+        sta lR18+1
+        lda #$F8A3
+        sta lR18
+        ldx #$1415
+
+        _EE78
+        lda $7F842C
+        bne _EE84
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _EE84
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/EE89
+
+    .endsection Unsorted89EE50Section
+
+
+    .section Unsorted89EE89Section
+
+      .al
+      .xl
+
+      rsUnknown89EE89 ; 89/EE89
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8408
+        cmp #$0005
+        bmi _EE94
+
+        _EE92
+        bra _EE92
+
+
+        _EE94
+        asl a
+        tax
+        jsr (aUnknown89EE9A,x)
+        rts
+
+        .databank 0
+
+        ; 89/EE9A
+
+    .endsection Unsorted89EE89Section
+
+
+    .section Table89EE9ASection
+
+      .al
+      .xl
+
+      aUnknown89EE9A ; 89/EE9A
+
+        ; Jump table of rsUnknown89EE89.
+        .word <>rsUnknown89EEA4
+        .word <>rsUnknown89EEA4._EEB3
+        .word <>rsUnknown89EEA4._EEC2
+        .word <>rsUnknown89EEA4._EED1
+        .word <>rsUnknown89EEA4._EEE0
+
+    .endsection Table89EE9ASection
+
+
+    .section Unsorted89EEA4Section
+
+      .al
+      .xl
+
+      rsUnknown89EEA4 ; 89/EEA4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8900
+        sta lR18+1
+        lda #$F88F
+        sta lR18
+        ldx #$1415
+        bra _EEED
+
+
+        _EEB3
+        lda #$8900
+        sta lR18+1
+        lda #$F893
+        sta lR18
+        ldx #$1417
+        bra _EEED
+
+
+        _EEC2
+        lda #$8900
+        sta lR18+1
+        lda #$F897
+        sta lR18
+        ldx #$1419
+        bra _EEED
+
+
+        _EED1
+        lda #$8900
+        sta lR18+1
+        lda #$F89B
+        sta lR18
+        ldx #$141B
+        bra _EEED
+
+
+        _EEE0
+        lda #$8900
+        sta lR18+1
+        lda #$F89F
+        sta lR18
+        ldx #$141D
+
+        _EEED
+        lda $7F842C
+        bne _EEF9
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _EEF9
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/EEFE
+
+    .endsection Unsorted89EEA4Section
+
+
+    .section Unsorted89EEFESection
+
+      .al
+      .xl
+
+      rsUnknown89EEFE ; 89/EEFE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F840A
+        cmp #$0002
+        bmi _EF09
+
+        _EF07
+        bra _EF07
+
+
+        _EF09
+        asl a
+        tax
+        jsr (aUnknown89EF0F,x)
+        rts
+
+        .databank 0
+
+        ; 89/EF0F
+
+    .endsection Unsorted89EEFESection
+
+
+    .section Table89EF0FSection
+
+      .al
+      .xl
+
+      aUnknown89EF0F ; 89/EF0F
+
+        ; Jump table of rsUnknown89EEFE.
+        .word <>rsUnknown89EF13
+        .word <>rsUnknown89EF13._EF22
+
+    .endsection Table89EF0FSection
+
+
+    .section Unsorted89EF13Section
+
+      .al
+      .xl
+
+      rsUnknown89EF13 ; 89/EF13
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8900
+        sta lR18+1
+        lda #$EF40
+        sta lR18
+        ldx #$1415
+        bra _EF2F
+
+
+        _EF22
+        lda #$8900
+        sta lR18+1
+        lda #$EF48
+        sta lR18
+        ldx #$141B
+
+        _EF2F
+        lda $7F842C
+        bne _EF3B
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _EF3B
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/EF40
+
+    .endsection Unsorted89EF13Section
+
+
+    .section Unsorted89EF50Section
+
+      .al
+      .xl
+
+      rsUnknown89EF50 ; 89/EF50
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F840C
+        cmp #$0003
+        bmi _EF5B
+
+        _EF59
+        bra _EF59
+
+
+        _EF5B
+        asl a
+        tax
+        jsr (aUnknown89EF61,x)
+        rts
+
+        .databank 0
+
+        ; 89/EF61
+
+    .endsection Unsorted89EF50Section
+
+
+    .section Table89EF61Section
+
+      .al
+      .xl
+
+      aUnknown89EF61 ; 89/EF61
+
+        ; Jump table of rsUnknown89EF50.
+        .word <>rsUnknown89EF67
+        .word <>rsUnknown89EF67._EF76
+        .word <>rsUnknown89EF67._EF85
+
+    .endsection Table89EF61Section
+
+
+    .section Unsorted89EF67Section
+
+      .al
+      .xl
+
+      rsUnknown89EF67 ; 89/EF67
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8900
+        sta lR18+1
+        lda #$F88F
+        sta lR18
+        ldx #$1416
+        bra _EF92
+
+
+        _EF76
+        lda #$8900
+        sta lR18+1
+        lda #$F893
+        sta lR18
+        ldx #$1419
+        bra _EF92
+
+
+        _EF85
+        lda #$8900
+        sta lR18+1
+        lda #$F897
+        sta lR18
+        ldx #$141C
+
+        _EF92
+        lda $7F842C
+        bne _EF9E
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _EF9E
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/EFA3
+
+    .endsection Unsorted89EF67Section
+
+
+    .section Unsorted89EFA3Section
+
+      .al
+      .xl
+
+      rsUnknown89EFA3 ; 89/EFA3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F840E
+        cmp #$0005
+        bmi _EFAE
+
+        _EFAC
+        bra _EFAC
+
+
+        _EFAE
+        asl a
+        tax
+        jsr (aUnknown89EFB4,x)
+        rts
+
+        .databank 0
+
+        ; 89/EFB4
+
+    .endsection Unsorted89EFA3Section
+
+
+    .section Table89EFB4Section
+
+      .al
+      .xl
+
+      aUnknown89EFB4 ; 89/EFB4
+
+        ; Jump table of rsUnknown89EFA3.
+        .word <>rsUnknown89EFBE
+        .word <>rsUnknown89EFBE._EFCD
+        .word <>rsUnknown89EFBE._EFDC
+        .word <>rsUnknown89EFBE._EFEB
+        .word <>rsUnknown89EFBE._EFFA
+
+    .endsection Table89EFB4Section
+
+
+    .section Unsorted89EFBESection
+
+      .al
+      .xl
+
+      rsUnknown89EFBE ; 89/EFBE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8900
+        sta lR18+1
+        lda #$F88B
+        sta lR18
+        ldx #$1415
+        bra _F007
+
+
+        _EFCD
+        lda #$8900
+        sta lR18+1
+        lda #$F88F
+        sta lR18
+        ldx #$1417
+        bra _F007
+
+
+        _EFDC
+        lda #$8900
+        sta lR18+1
+        lda #$F893
+        sta lR18
+        ldx #$1419
+        bra _F007
+
+
+        _EFEB
+        lda #$8900
+        sta lR18+1
+        lda #$F897
+        sta lR18
+        ldx #$141B
+        bra _F007
+
+
+        _EFFA
+        lda #$8900
+        sta lR18+1
+        lda #$F89B
+        sta lR18
+        ldx #$141D
+
+        _F007
+        lda $7F842C
+        bne _F013
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _F013
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/F018
+
+    .endsection Unsorted89EFBESection
+
+
+    .section Unsorted89F018Section
+
+      .al
+      .xl
+
+      rsUnknown89F018 ; 89/F018
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wDebugMenuTemp2
+        cmp #$0002
+        bmi _F023
+
+        _F021
+        bra _F021
+
+
+        _F023
+        asl a
+        tax
+        jsr (aUnknown89F029,x)
+        rts
+
+        .databank 0
+
+        ; 89/F029
+
+    .endsection Unsorted89F018Section
+
+
+    .section Table89F029Section
+
+      .al
+      .xl
+
+      aUnknown89F029 ; 89/F029
+
+        ; Jump table of rsUnknown89F018.
+        .word <>rsUnknown89F02D
+        .word <>rsUnknown89F03F
+
+    .endsection Table89F029Section
+
+
+    .section Unsorted89F02DSection
+
+      .al
+      .xl
+
+      rsUnknown89F02D ; 89/F02D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8900
+        sta lR18+1
+        lda #$F05B
+        sta lR18
+        ldx #$1415
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/F03F
+
+      rsUnknown89F03F ; 89/F03F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8900
+        sta lR18+1
+        lda #$F051
+        sta lR18
+        ldx #$141A
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/F051
+
+    .endsection Unsorted89F02DSection
 
 
     .section Unsorted89F065Section

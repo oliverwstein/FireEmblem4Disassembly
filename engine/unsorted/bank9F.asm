@@ -4086,7 +4086,7 @@
         _F408
         sta wR1
         cmp wR0
-        bpl _F42F
+        bpl rlUnknown9FF42F
         sep #$20
         stz $4204,b
         lda wR1
@@ -4097,14 +4097,27 @@
         nop
         nop
         rep #$20
-        jsr ($9FF427,x)
+        jsr (aUnknown9FF427,x)
         plx
         rtl
 
-        .byte $50, $F4, $5E, $F4, $68, $F4, $76, $F4
+        .databank 0
 
+      aUnknown9FF427 ; 9F/F427
 
-        _F42F
+        ; Jump table of rlUnknown9FF3ED.
+        .word <>rsUnknown9FF450
+        .word <>rsUnknown9FF45E
+        .word <>rsUnknown9FF468
+        .word <>rsUnknown9FF476
+
+      rlUnknown9FF42F ; 9F/F42F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         sep #$20
         stz $4204,b
         lda wR0
@@ -4115,7 +4128,7 @@
         nop
         nop
         rep #$20
-        jsr ($9FF448,x)
+        jsr (aUnknown9FF448,x)
         plx
         rtl
 
@@ -4124,3 +4137,220 @@
         ; 9F/F448
 
     .endsection Unsorted9FF3EDSection
+
+
+    .section Table9FF448Section
+
+      .al
+      .xl
+
+      aUnknown9FF448 ; 9F/F448
+
+        ; Jump table of rlUnknown9FF3ED.
+        .word <>rsUnknown9FF487
+        .word <>rsUnknown9FF495
+        .word <>rsUnknown9FF4A6
+        .word <>rsUnknown9FF4B7
+
+    .endsection Table9FF448Section
+
+
+    .section Unsorted9FF450Section
+
+      .al
+      .xl
+
+      rsUnknown9FF450 ; 9F/F450
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        eor #$FFFF
+        inc a
+        and #$00FF
+        rts
+
+        .databank 0
+
+        ; 9F/F45E
+
+      rsUnknown9FF45E ; 9F/F45E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        and #$00FF
+        rts
+
+        .databank 0
+
+        ; 9F/F468
+
+      rsUnknown9FF468 ; 9F/F468
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        clc
+        adc #$0080
+        and #$00FF
+        rts
+
+        .databank 0
+
+        ; 9F/F476
+
+      rsUnknown9FF476 ; 9F/F476
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        eor #$FFFF
+        sec
+        adc #$0080
+        and #$00FF
+        rts
+
+        .databank 0
+
+        ; 9F/F487
+
+    .endsection Unsorted9FF450Section
+
+
+    .section Unsorted9FF487Section
+
+      .al
+      .xl
+
+      rsUnknown9FF487 ; 9F/F487
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        clc
+        adc #$00C0
+        and #$00FF
+        rts
+
+        .databank 0
+
+        ; 9F/F495
+
+    .endsection Unsorted9FF487Section
+
+
+    .section Unsorted9FF495Section
+
+      .al
+      .xl
+
+      rsUnknown9FF495 ; 9F/F495
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        eor #$FFFF
+        sec
+        adc #$0040
+        and #$00FF
+        rts
+
+        .databank 0
+
+        ; 9F/F4A6
+
+    .endsection Unsorted9FF495Section
+
+
+    .section Unsorted9FF4A6Section
+
+      .al
+      .xl
+
+      rsUnknown9FF4A6 ; 9F/F4A6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        eor #$FFFF
+        sec
+        adc #$00C0
+        and #$00FF
+        rts
+
+        .databank 0
+
+        ; 9F/F4B7
+
+    .endsection Unsorted9FF4A6Section
+
+
+    .section Unsorted9FF4B7Section
+
+      .al
+      .xl
+
+      rsUnknown9FF4B7 ; 9F/F4B7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        clc
+        adc #$0040
+        and #$00FF
+        rts
+
+        .databank 0
+
+        ; 9F/F4C5
+
+    .endsection Unsorted9FF4B7Section
