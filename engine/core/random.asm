@@ -1,0 +1,145 @@
+; Random number generation and percentage-chance rolls.
+
+    .section RandomNumberSection
+
+      .as
+      .xl
+
+      rlGetRandomNumber100 ; 80/A70E
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Returns random value between 0 and input exclusive
+
+        phb
+        php
+        phk
+        plb
+        and #$00FF
+        beq +
+
+          sta wR10
+
+          jsl rlGetRandomNumber
+          and #$00FF
+          beq +
+
+            sta wR11
+            jsl rlUnsignedMultiply16By16
+            lda wR12
+            sta wR13
+
+            lda #100
+            sta wR14
+            jsl rlUnsignedDivide16By8
+            lda wR13
+
+        +
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlGetRandomNumber ; 80/A73A
+
+        .al
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        phb
+        php
+        phk
+        plb
+
+        lda #0
+        sep #$30
+
+        inc wRNIndex,b
+
+        lda wRNIndex,b
+        cmp #size(aRNArray)
+        blt ++
+
+          jsr $80A7C5 ; rsShuffleRNTable
+          rep #$30
+
+          jsl $8F8006
+          blt +
+
+            jsr $80A7F3
+
+        +
+        lda #0
+        sep #$30
+        sta wRNIndex,b
+
+        +
+        tay
+        lda aRNArray,b,y
+        dec a
+        bpl +
+
+          lda #99
+
+        +
+        plp
+        plb
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 80/A773
+
+    .endsection RandomNumberSection
+
+
+    .section RandomChanceSection
+
+      .as
+      .xs
+
+      rlConvertChanceToFullByte ; 80/A899
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Enters with a percent chance from 0 to 100
+        ; and exits with a chance scaled up to 0 to 256
+
+        ora #0
+        beq +
+
+          phx
+          dec a
+          asl a
+          tax
+          lda aChanceToByteLookupTable,x
+          plx
+
+        +
+        rtl
+
+        .databank 0
+
+      aChanceToByteLookupTable ; 80/A8A8
+
+        .word   2,   5,   7,  10,  12,  15,  17,  20,  23,  25
+        .word  28,  30,  33,  35,  38,  40,  43,  46,  48,  51
+        .word  53,  56,  58,  61,  64,  66,  69,  71,  74,  76
+        .word  79,  81,  84,  87,  89,  92,  94,  97,  99, 102
+        .word 104, 107, 110, 112, 115, 117, 120, 122, 125, 128
+        .word 130, 133, 135, 138, 140, 143, 145, 148, 151, 153
+        .word 156, 158, 161, 163, 166, 168, 171, 174, 176, 179
+        .word 181, 184, 186, 189, 192, 194, 197, 199, 202, 204
+        .word 207, 209, 212, 215, 217, 220, 222, 225, 227, 230
+        .word 232, 235, 238, 240, 243, 245, 248, 250, 253, 256
+
+    .endsection RandomChanceSection

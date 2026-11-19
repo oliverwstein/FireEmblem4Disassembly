@@ -32,3 +32,4 @@
   .include "SAFEGUARD/Terrain.h"
   .include "SAFEGUARD/Tiles.h"
   .include "SAFEGUARD/WRAM.h"
+  .include "SAFEGUARD/Undisassembled.h"

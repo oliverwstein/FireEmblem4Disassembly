@@ -42,31 +42,62 @@
   .include "SRC/BaseRom.asm"
 
   ROM = binary("fe4.sfc")
-
-  .include "SRC/Debug.asm"
-  .include "SRC/Proc.asm"
-  .include "SRC/DMA.asm"
-  .include "SRC/HDMA.asm"
-  .include "SRC/Decompressor.asm"
-  .include "SRC/Dialogue.asm"
-  .include "SRC/ActiveSpriteEngine.asm"
-  .include "SRC/Save.asm"
-  .include "SRC/Epilogue.asm"
-  .include "SRC/Events.asm"
-  .include "SRC/WorldMap.asm"
-
-  .include "SRC/Bank80.asm"
-  .include "SRC/Bank81.asm"
-  .include "SRC/Bank82.asm"
-  .include "SRC/Bank84.asm"
-  .include "SRC/Bank85.asm"
-  .include "SRC/Bank87.asm"
-  .include "SRC/Bank89.asm"
-  .include "SRC/Bank8A.asm"
-  .include "SRC/Bank8B.asm"
-  .include "SRC/Bank8F.asm"
-  .include "SRC/Bank91.asm"
-  .include "SRC/BankB1.asm"
+  .include "engine/core/active_sprites.asm"
+  .include "engine/core/decompressor.asm"
+  .include "engine/core/dma.asm"
+  .include "engine/core/fade.asm"
+  .include "engine/core/frame.asm"
+  .include "engine/core/hardware.asm"
+  .include "engine/core/hdma.asm"
+  .include "engine/core/interrupts.asm"
+  .include "engine/core/math.asm"
+  .include "engine/core/memory.asm"
+  .include "engine/core/proc.asm"
+  .include "engine/core/ram_structs.asm"
+  .include "engine/core/random.asm"
+  .include "engine/map/deployment.asm"
+  .include "engine/map/locations.asm"
+  .include "engine/map/scroll.asm"
+  .include "engine/units/factions.asm"
+  .include "engine/units/generations.asm"
+  .include "engine/units/join_order.asm"
+  .include "engine/units/level_up.asm"
+  .include "engine/units/lovers.asm"
+  .include "engine/units/skills.asm"
+  .include "engine/units/stats.asm"
+  .include "engine/units/unit_creation.asm"
+  .include "engine/units/unit_info.asm"
+  .include "engine/units/unit_state.asm"
+  .include "engine/units/units.asm"
+  .include "engine/items/items.asm"
+  .include "engine/battle/battle.asm"
+  .include "engine/battle/battle_stats.asm"
+  .include "engine/battle/effects.asm"
+  .include "engine/battle/scripted_crits.asm"
+  .include "engine/dialogue/death_quotes.asm"
+  .include "engine/dialogue/dialogue.asm"
+  .include "engine/dialogue/dialogue_box.asm"
+  .include "engine/dialogue/portraits.asm"
+  .include "engine/events/asmc.asm"
+  .include "engine/events/chapter_data.asm"
+  .include "engine/events/event_commands.asm"
+  .include "engine/events/event_engine.asm"
+  .include "engine/events/event_procs.asm"
+  .include "engine/worldmap/highlight.asm"
+  .include "engine/worldmap/markers.asm"
+  .include "engine/worldmap/portraits.asm"
+  .include "engine/epilogue/dialogue.asm"
+  .include "engine/epilogue/endings.asm"
+  .include "engine/epilogue/movement.asm"
+  .include "engine/epilogue/world_map.asm"
+  .include "engine/save/save.asm"
+  .include "engine/debug/debug_menu.asm"
+  .include "engine/unsorted/bank80.asm"
+  .include "engine/unsorted/bank82.asm"
+  .include "engine/unsorted/bank84.asm"
+  .include "engine/unsorted/bank87.asm"
+  .include "engine/unsorted/bank89.asm"
+  .include "engine/unsorted/bank8F.asm"
 
   .include "EVENTS/ChapterPrologue.asm"
   .include "EVENTS/Chapter01.asm"
@@ -85,7 +116,7 @@
     * = $008223
     .logical $808223
 
-      .dsection Code808223Section
+      .dsection VBlankControlSection
 
       ; 80/823F
 
@@ -94,7 +125,7 @@
     * = $009D4F
     .logical $809D4F
 
-      .dsection Code809D4FSection
+      .dsection HardwareResetSection
 
       ; 80/9DD9
 
@@ -103,7 +134,7 @@
     * = $00A096
     .logical $80A096
 
-      .dsection Code80A096Section
+      .dsection MathSection
 
       ; 80/A1AB
 
@@ -121,7 +152,7 @@
     * = $00A5E9
     .logical $80A5E9
 
-      .dsection Code80A5E9Section
+      .dsection DecompressionListSection
 
       ; 80/A678
 
@@ -130,7 +161,9 @@
     * = $00A6C3
     .logical $80A6C3
 
-      .dsection Code80A6C3Section
+      .dsection FrameSection
+
+      .dsection RandomNumberSection
 
       ; 80/A773
 
@@ -139,7 +172,9 @@
     * = $00A899
     .logical $80A899
 
-      .dsection Code80A899Section
+      .dsection RandomChanceSection
+
+      .dsection BlockCopySection
 
       ; 80/A9F2
 
@@ -157,7 +192,7 @@
     * = $00C1CB
     .logical $80C1CB
 
-      .dsection Code80C1CBSection
+      .dsection Unsorted80C1CBSection
 
       ; 80/C212
 
@@ -166,7 +201,7 @@
     * = $00E42B
     .logical $80E42B
 
-      .dsection Code80E42BSection
+      .dsection Unsorted80E42BSection
 
       ; 80/E586
 
@@ -184,7 +219,7 @@
     * = $018ECB
     .logical $818ECB
 
-      .dsection Code818ECBSection
+      .dsection MapScrollScriptSection
 
       ; 81/8FA1
 
@@ -193,7 +228,7 @@
     * = $01B483
     .logical $81B483
 
-      .dsection Code81B483Section
+      .dsection ChapterDataPointerSection
 
       ; 81/B4C5
 
@@ -271,7 +306,7 @@
 
       .dsection ProcEngineSection
       .dsection ProcCodeSection
-      .dsection Code828299Section
+      .dsection FadeProcsSection
 
       ; 82/83B5
 
@@ -280,7 +315,7 @@
     * = $028A30
     .logical $828A30
 
-      .dsection Code828A30Section
+      .dsection Unsorted828A30Section
 
       ; 82/8B2B
 
@@ -289,7 +324,7 @@
     * = $028F3F
     .logical $828F3F
 
-      .dsection Code828F3FSection
+      .dsection EventScrollFadeProcSection
 
       ; 82/90B0
 
@@ -298,7 +333,7 @@
     * = $02921E
     .logical $82921E
 
-      .dsection Code82921ESection
+      .dsection EventPauseProcSection
 
       ; 82/9245
 
@@ -307,7 +342,7 @@
     * = $029478
     .logical $829478
 
-      .dsection Code829478Section
+      .dsection EventHaltProcSection
 
       ; 829487
 
@@ -327,7 +362,7 @@
     * = $02E41B
     .logical $82E41B
 
-      .dsection Code82E41BSection
+      .dsection RAMStructSection
 
       ; 82/E5FF
 
@@ -336,7 +371,7 @@
     * = $02E747
     .logical $82E747
 
-      .dsection Code82E747Section
+      .dsection RAMStructAccessSection
 
       ; 82/EA43
 
@@ -345,7 +380,7 @@
     * = $02ECB9
     .logical $82ECB9
 
-      .dsection Code82ECB9Section
+      .dsection RAMAreaHeaderSection
 
       ; 82/ED1D
 
@@ -354,7 +389,7 @@
     * = $02EDE7
     .logical $82EDE7
 
-      .dsection Code82EDE7Section
+      .dsection RAMAreaSection
 
       ; 82/F207
 
@@ -363,7 +398,7 @@
     * = $02F4DE
     .logical $82F4DE
 
-      .dsection Code82F4DEESection
+      .dsection UNITGroupPointerSection
 
       ; 82/F4F9
 
@@ -372,7 +407,7 @@
     * = $02F567
     .logical $82F567
 
-      .dsection Code82F567Section
+      .dsection OffsetTableSection
 
       ; 82/F7A2
 
@@ -381,7 +416,7 @@
     * = $02F866
     .logical $82F866
 
-      .dsection Code82F866Section
+      .dsection EpilogueEndingsSection
 
     .here
 
@@ -469,7 +504,7 @@
     * = $048000
     .logical $848000
 
-      .dsection Code848000Section
+      .dsection GenerationTransferSection
 
       ; 84/822D
 
@@ -478,7 +513,7 @@
     * = $048397
     .logical $848397
 
-      .dsection Code848397Section
+      .dsection UnitsSection
 
       ; 84/862C
 
@@ -487,7 +522,7 @@
     * = $048C31
     .logical $848C31
 
-      .dsection Code848C31Section
+      .dsection LoversSection
 
       ; 84/8CFE
 
@@ -496,7 +531,7 @@
     * = $048F17
     .logical $848F17
 
-      .dsection Code848F17Section
+      .dsection UnitCreationSection
 
       ; 84/99B5
 
@@ -505,7 +540,7 @@
     * = $049AE5
     .logical $849AE5
 
-      .dsection Code849AE5Section
+      .dsection UnitStatsSection
 
       ; 84/9FB9
 
@@ -514,7 +549,7 @@
     * = $049FC4
     .logical $849FC4
 
-      .dsection Code849FC4Section
+      .dsection UnitClassInfoSection
 
       ; 84/A282
 
@@ -523,7 +558,7 @@
     * = $04A333
     .logical $84A333
 
-      .dsection Code84A333Section
+      .dsection UnitCharacterInfoSection
 
       ; 84/ABB0
 
@@ -532,7 +567,7 @@
     * = $04ACE7
     .logical $84ACE7
 
-      .dsection Code84ACE7Section
+      .dsection LevelUpSection
 
       ; 84/AF17
 
@@ -541,7 +576,7 @@
     * = $04B1B8
     .logical $84B1B8
 
-      .dsection Code84B1B8Section
+      .dsection UnitStateSection
 
       ; 84/B32B
 
@@ -550,7 +585,7 @@
     * = $04B3E4
     .logical $84B3E4
 
-      .dsection Code84B3E4Section
+      .dsection UnitInventoryStateSection
 
       ; 84/B508
 
@@ -559,7 +594,7 @@
     * = $04B8C1
     .logical $84B8C1
 
-      .dsection Code84B8C1Section
+      .dsection UnitDeathSection
 
       ; 84/B9A3
 
@@ -568,7 +603,7 @@
     * = $04BAA1
     .logical $84BAA1
 
-      .dsection Code84BAA1Section
+      .dsection ChildUnitSection
 
       ; 84/BB54
 
@@ -577,7 +612,7 @@
     * = $04BB9A
     .logical $84BB9A
 
-      .dsection Code84BB9ASection
+      .dsection FactionSection
 
       ; 84/C0BD
 
@@ -586,7 +621,7 @@
     * = $04C15F
     .logical $84C15F
 
-      .dsection Code84C15FSection
+      .dsection FactionRelationsSection
 
       ; 84/C398
 
@@ -595,7 +630,7 @@
     * = $04C461
     .logical $84C461
 
-      .dsection Code84C461Section
+      .dsection FactionUnitsSection
 
       ; 84/C5D7
 
@@ -604,7 +639,7 @@
     * = $04C65E
     .logical $84C65E
 
-      .dsection Code84C65ESection
+      .dsection DeploymentSection
 
       ; 84/CC5D
 
@@ -613,7 +648,7 @@
     * = $04CCB4
     .logical $84CCB4
 
-      .dsection Code84CCB4Section
+      .dsection UnitCastleSection
 
       ; 84/CD35
 
@@ -622,7 +657,7 @@
     * = $04CFBF
     .logical $84CFBF
 
-      .dsection Code84CFBFSection
+      .dsection Unsorted84CFBFSection
 
       ; 84/D03E
 
@@ -631,7 +666,7 @@
     * = $04D271
     .logical $84D271
 
-      .dsection Code84D271Section
+      .dsection FieldedUnitFactionSection
 
       ; 84/D2BA
 
@@ -640,7 +675,7 @@
     * = $04D4C7
     .logical $84D4C7
 
-      .dsection Code84D4C7Section
+      .dsection BattleSection
 
       ; 84/EB24
 
@@ -649,7 +684,7 @@
     * = $04EC80
     .logical $84EC80
 
-      .dsection Code84EC80Section
+      .dsection BattleEffectsSection
 
       ; 84/F75C
 
@@ -658,7 +693,7 @@
     * = $04F939
     .logical $84F939
 
-      .dsection Code84F939Section
+      .dsection BattleStatsSection
 
       ; 84/FE98
 
@@ -676,7 +711,7 @@
     * = $068000
     .logical $868000
 
-      .dsection Code868000Section
+      .dsection EventEngineSection
 
       ; 86/9CCC
 
@@ -685,7 +720,7 @@
     * = $06C4C4
     .logical $86C4C4
 
-      .dsection Code86C4C4Section
+      .dsection ChapterEventDataSection
 
       ; 86/C575
 
@@ -723,7 +758,7 @@
     * = $07A19D
     .logical $87A19D
 
-      .dsection Code87A19DSection
+      .dsection SkillsSection
 
       ; 87/AE88
 
@@ -732,7 +767,7 @@
     * = $07BB50
     .logical $87BB50
 
-      .dsection Code87BB50Section
+      .dsection ScriptedCritsSection
 
       ; 87/BE98
 
@@ -741,7 +776,7 @@
     * = $07DF12
     .logical $87DF12
 
-      .dsection Code87DF12Section
+      .dsection ItemsSection
 
       ; 87/E6D3
 
@@ -750,7 +785,7 @@
     * = $07E98D
     .logical $87E98D
 
-      .dsection Code87E98DSection
+      .dsection LocationEventDataSection
 
       ; 87/E9E0
 
@@ -759,7 +794,7 @@
     * = $07EA87
     .logical $87EA87
 
-      .dsection Code87EA87Section
+      .dsection LocationUpdateSection
 
       ; 87/EBC8
 
@@ -768,7 +803,7 @@
     * = $07EC42
     .logical $87EC42
 
-      .dsection Code87EC42Section
+      .dsection LocationGettersSection
 
       ; 87/EF46
 
@@ -777,7 +812,7 @@
     * = $07EF61
     .logical $87EF61
 
-      .dsection Code87EF61Section
+      .dsection LocationModificationSection
 
       ; 87/F321
 
@@ -786,7 +821,7 @@
     * = $07F3A7
     .logical $87F3A7
 
-      .dsection Code87F3A7Section
+      .dsection LocationTypeOffsetsSection
 
       ; 87/F4A7
 
@@ -795,7 +830,7 @@
     * = $07F515
     .logical $87F515
 
-      .dsection Code87F515Section
+      .dsection Unsorted87F515Section
 
       ; 87/F559
 
@@ -814,7 +849,7 @@
     * = $0990DA
     .logical $8990DA
 
-      .dsection Code8990DASection
+      .dsection Unsorted8990DASection
 
       ; 89/9140
 
@@ -823,7 +858,7 @@
     * = $099FDC
     .logical $899FDC
 
-      .dsection Code899FDCSection
+      .dsection Unsorted899FDCSection
 
       ; 89/A085
 
@@ -832,7 +867,7 @@
     * = $09A150
     .logical $89A150
 
-      .dsection Code89A150Section
+      .dsection Unsorted89A150Section
 
       ; 89/A18C
 
@@ -850,7 +885,7 @@
     * = $0AB317
     .logical $8AB317
 
-      .dsection Code8AB317Section
+      .dsection DialoguePortraitSection
 
       ; 8A/B3FE
 
@@ -869,7 +904,7 @@
     * = $0B8345
     .logical $8B8345
 
-      .dsection Code8B8345Section
+      .dsection WorldMapPortraitSection
 
       ; 8b83a7
 
@@ -910,7 +945,7 @@
     * = $0BCDD8
     .logical $8BCDD8
 
-      .dsection Code8BCDD8Section
+      .dsection JoinOrderSection
 
       ; 8B/CE29
 
@@ -1789,7 +1824,7 @@
     * = $0F8000
     .logical $8F8000
 
-      .dsection Code8F8000Section
+      .dsection Unsorted8F8000Section
 
       dialogueChapter02Opening1 .include "TEXT/DIALOGUE/Chapter02/Opening1.dialogue.txt" ; 8F806B
       dialogueChapter02Opening2 .include "TEXT/DIALOGUE/Chapter02/Opening2.dialogue.txt" ; 8F823F
@@ -2159,7 +2194,7 @@
     * = $118000
     .logical $918000
 
-      .dsection Dialogue1Section
+      .dsection DialogueEngineSection
 
       ; 91/A3AB
 
@@ -2168,8 +2203,8 @@
     * = $11A40E
     .logical $91A40E
 
-      .dsection Code91A40ESection
-      .dsection Code91A670Section
+      .dsection EventProcSection
+      .dsection FadeProcClearSection
 
       ; 91a7bc
 
@@ -2178,7 +2213,7 @@
     * = $11A863
     .logical $91A863
 
-      .dsection Dialogue2Section
+      .dsection DialogueEventCommandSection
 
       ; 91/A8E4
 
@@ -2187,7 +2222,7 @@
     * = $11A984
     .logical $91A984
 
-      .dsection Dialogue3Section
+      .dsection DialogueUnknownSection
 
       ; 91/A9BB
 
@@ -2196,7 +2231,7 @@
     * = $11AD0B
     .logical $91AD0B
 
-      .dsection Code91AD0BSection
+      .dsection DeathQuoteSection
 
       ; 91b11c
 
@@ -2214,7 +2249,7 @@
     * = $11BDD2
     .logical $91BDD2
 
-      .dsection Code91BDD2Section
+      .dsection EventCommandSection
 
       .include "EVENTS/Chapter06/EventChapter06Opening.asm"
       .include "EVENTS/Chapter06/EventChapter06OifeyGroupSpawn.asm"
@@ -2249,7 +2284,7 @@
     * = $11D9C5
     .logical $91D9C5
 
-      .dsection SaveCode1Section
+      .dsection SaveFileSection
 
       ; 91/D9FA
 
@@ -2258,7 +2293,7 @@
     * = $11E95F
     .logical $91E95F
 
-      .dsection SaveCode2Section
+      .dsection SaveSlotSection
 
       ; 91/F748
 
