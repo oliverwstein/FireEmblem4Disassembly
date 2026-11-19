@@ -12988,9 +12988,9 @@
         sta wBattleQuotePointer
         lda #$0000
         sta $7F4C87
-        lda #$9E00
+        lda #(`procUnknown9EF24B)<<8
         sta lR44+1
-        lda #$F24B
+        lda #<>procUnknown9EF24B
         sta lR44
         jsl rlProcEngineCreateProc
         rtl

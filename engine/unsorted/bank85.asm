@@ -5841,9 +5841,9 @@
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #$AD55
         sta lMapMenuTilemapRAMEntryPointer,b
-        lda #$8500
+        lda #(`aUnknown85ACC2)<<8
         sta lR18+1
-        lda #$ACC2
+        lda #<>aUnknown85ACC2
         sta lR18
         jsl rlUnknown878BF0
         jsr rsUnknown85AFC5

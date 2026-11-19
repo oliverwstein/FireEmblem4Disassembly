@@ -446,9 +446,9 @@
         .databank ?
 
         phx
-        lda #$9100
+        lda #(`aUnknown91AB0B)<<8
         sta lR18+1
-        lda #$AB0B
+        lda #<>aUnknown91AB0B
         sta lR18
         lda aCurrentTilemapInfo,b
         pha
@@ -2864,9 +2864,9 @@
         bcc _DE2D
         sbc #$000B
         pha
-        lda #$9100
+        lda #(`aUnknown91DE4C)<<8
         sta lR18+1
-        lda #$DE4C
+        lda #<>aUnknown91DE4C
         sta lR18
         pla
         jsl rlUnknown91E932
