@@ -113,7 +113,9 @@
   .endstruct
 
   ; Bits of bBattleRoundFlags, for the strike being resolved. Bit 0 is
-  ; wBattleAttackerIndex (which side strikes); the meaning of the others is not
-  ; known yet.
+  ; wBattleAttackerIndex (which side strikes). Crit and miss are from the
+  ; original notes (see bBattleRoundFlags in WRAM.h); $02 and $10 are not known.
+  BattleRoundFlagCrit   = bits($04)
+  BattleRoundFlagMiss   = bits($08)
   BattleRoundFlagRanged = bits($20) ; the battle distance is 2 or more
   BattleRoundFlagMagic  = bits($40) ; the weapon is a staff or magic

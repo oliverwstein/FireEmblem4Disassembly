@@ -284,7 +284,7 @@
         jsl rlDeployedUnitSetDefeated
 
         lda #1
-        sta $0D81,b
+        sta wUnitRelocationType,b
 
         jsl rlGetSelectedUnitFactionSlot
         cmp #7
@@ -735,7 +735,7 @@
         jsl rlDeployedUnitSetDefeated
 
         lda #2
-        sta $0D81,b
+        sta wUnitRelocationType,b
 
         lda #StatusCaptive
         jsl rlSetSelectedUnitStatus

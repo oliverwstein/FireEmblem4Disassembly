@@ -4439,11 +4439,11 @@
             sta wRoutineVariable1,b
             jsl rlGiveItemToUnitCheckEncumbered
 
-            stz wUnknownDeploymentOffset000D7F,b
+            stz wUnitRelocationDeploymentOffset,b
             lda #8
-            sta $0D81,b
+            sta wUnitRelocationType,b
             lda wRoutineVariable1,b
-            sta $0D83,b
+            sta wUnitRelocationLocationID,b
 
         +
         inc y
@@ -4472,13 +4472,13 @@
 
             jsl rlGetSelectedUnitInventorySize
             jsl rlFlagEquippedInventorySlotAndGetStatBonus
-            stz wUnknownDeploymentOffset000D7F,b
+            stz wUnitRelocationDeploymentOffset,b
 
             lda #8
-            sta $0D81,b
+            sta wUnitRelocationType,b
             lda $0002,b,y
             and #$00FF
-            sta $0D83,b
+            sta wUnitRelocationLocationID,b
 
         +
         inc y
@@ -4506,11 +4506,11 @@
             sta wRoutineVariable1,b
             jsl rlGiveItemToUnitCheckEncumbered
 
-            stz wUnknownDeploymentOffset000D7F,b
+            stz wUnitRelocationDeploymentOffset,b
             lda #8
-            sta $0D81,b
+            sta wUnitRelocationType,b
             lda wRoutineVariable1,b
-            sta $0D83,b
+            sta wUnitRelocationLocationID,b
 
         +
         inc y
@@ -6872,9 +6872,9 @@
         beq +
 
           lda wActiveUnitDeploymentOffset,b
-          sta wUnknownDeploymentOffset000D7F,b
+          sta wUnitRelocationDeploymentOffset,b
           lda #6
-          sta $0D81,b
+          sta wUnitRelocationType,b
           bra +
 
         +

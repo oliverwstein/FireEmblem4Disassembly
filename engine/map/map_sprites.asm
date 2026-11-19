@@ -878,12 +878,12 @@
         lda aProcSystem.aBody2,b,x
         bne +
 
-          stz wUnknownDeploymentOffset000D7F,b
+          stz wUnitRelocationDeploymentOffset,b
           lda #5
-          sta $0D81,b
+          sta wUnitRelocationType,b
           lda aProcSystem.aBody0,b,x
           and #$00FF
-          sta $0D83,b
+          sta wUnitRelocationLocationID,b
 
         +
         rtl

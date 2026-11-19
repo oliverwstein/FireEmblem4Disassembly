@@ -586,12 +586,14 @@
 
   .virtual $000D7F
 
-    wUnknownDeploymentOffset000D7F .word ? ; $000D7F
+    wUnitRelocationDeploymentOffset .word ? ; $000D7F
+    wUnitRelocationType             .word ? ; $000D81
+    wUnitRelocationLocationID       .word ? ; $000D83
+      ; A unit to be moved to a location after an action: rescue stores type 9 and
+      ; the player's castle, capture stores type 2 and the location where it
+      ; happened. rlUnknown81ADD8 acts on the type.
 
-  .endvirtual  
-
-    ; .word ? ; $000D81
-    ; .word ? ; $000D83
+  .endvirtual
 
   .virtual $000D85
 
@@ -1521,6 +1523,14 @@
       ; $10 = vs julius, arena and not trigger skill 1 set?
       ; $20 = ranged
       ; $40 = magic
+  .endvirtual
+
+  .virtual $7ECCE8
+
+    wBattleTempVariable .word ? ; $7ECCE8
+      ; A temporary of the battle calculations: a location ID, a class weakness,
+      ; a number of strikes or a side, depending on the routine.
+
   .endvirtual
 
   .virtual $7ECCE6

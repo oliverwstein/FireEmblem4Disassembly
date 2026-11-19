@@ -314,7 +314,7 @@
         .databank $81
         stz wUnknown000D79,b
         lda #$FFFF
-        sta wUnknownDeploymentOffset000D7F,b
+        sta wUnitRelocationDeploymentOffset,b
         sta wDefeatedUnitDeploymentOffset,b
         sta $0D89,b
         sta $0D8B,b
@@ -982,14 +982,14 @@
         lda wUnknown00171A,b
         bne _CLC
 
-          lda wUnknownDeploymentOffset000D7F,b
+          lda wUnitRelocationDeploymentOffset,b
           bmi _CLC
 
             tax
             lda aDeploymentTable._UnitRAMPointer,x
             sta wSelectedUnitDataRAMPointer,b
 
-            lda $0D81,b
+            lda wUnitRelocationType,b
             bmi _CLC
 
               asl a
@@ -997,7 +997,7 @@
               jsr (aUnknown81AE02,x)
 
               lda #$FFFF
-              sta wUnknownDeploymentOffset000D7F,b
+              sta wUnitRelocationDeploymentOffset,b
               bra +
 
         _CLC
@@ -1043,10 +1043,10 @@
         lda wUnknown00171A,b
         bne _CLC
 
-          lda wUnknownDeploymentOffset000D7F,b
+          lda wUnitRelocationDeploymentOffset,b
           bmi _CLC
 
-            lda $0D81,b
+            lda wUnitRelocationType,b
             cmp #0
             beq +
 
@@ -1082,10 +1082,10 @@
         .autsiz
         .databank ?
 
-        ldx wUnknownDeploymentOffset000D7F,b
+        ldx wUnitRelocationDeploymentOffset,b
 
         ; packed coords?
-        lda $0D83,b
+        lda wUnitRelocationLocationID,b
         sta wRoutineVariable1,b
         jsl rlUnknown84C996
 
@@ -1152,8 +1152,8 @@
         lda $0580,b
         pha
 
-        ldx wUnknownDeploymentOffset000D7F,b
-        lda $0D83,b
+        ldx wUnitRelocationDeploymentOffset,b
+        lda wUnitRelocationLocationID,b
         jsl rlSetUnitResidingInCastle
 
         pla
@@ -1180,8 +1180,8 @@
 
         ; entering castle?
 
-        ldx wUnknownDeploymentOffset000D7F,b
-        lda $0D83,b
+        ldx wUnitRelocationDeploymentOffset,b
+        lda wUnitRelocationLocationID,b
         jsl rlSetUnitResidingInCastle
 
         stz $0580,b
@@ -1235,7 +1235,7 @@
         .autsiz
         .databank ?
 
-        lda $0D83,b
+        lda wUnitRelocationLocationID,b
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown84AF17
         lda #$001A
@@ -1374,10 +1374,10 @@
         bit #$0400
         bne +
 
-          ldx wUnknownDeploymentOffset000D7F,b
+          ldx wUnitRelocationDeploymentOffset,b
           lda #1
           sta aProcSystem.wInput2,b
-          lda $0D83,b
+          lda wUnitRelocationLocationID,b
           sta aProcSystem.wInput3,b
           jsl rlUnknown85BB2E
 
@@ -1435,7 +1435,7 @@
         .autsiz
         .databank ?
 
-        ldx $0D83,b
+        ldx wUnitRelocationLocationID,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUndeployUnit
@@ -1706,10 +1706,10 @@
         .autsiz
         .databank ?
 
-        lda wUnknownDeploymentOffset000D7F,b
+        lda wUnitRelocationDeploymentOffset,b
         bmi _End
 
-          lda $0D81,b
+          lda wUnitRelocationType,b
           cmp #5
           bne _End
 
@@ -1719,7 +1719,7 @@
 
               lda #1
               sta aProcSystem.wInput2,b
-              lda $0D83,b
+              lda wUnitRelocationLocationID,b
               sta aProcSystem.wInput3,b
 
               lda #(`procUnknown85BA41)<<8
@@ -1728,7 +1728,7 @@
               sta lR44
               jsl rlEventEngineCreateProc
               lda #$FFFF
-              sta wUnknownDeploymentOffset000D7F,b
+              sta wUnitRelocationDeploymentOffset,b
 
         _End
         rtl

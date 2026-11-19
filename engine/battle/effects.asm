@@ -89,7 +89,7 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitFactionSlot
         jsl rlGetFactionSlotLocationID
-        sta $7ECCE8
+        sta wBattleTempVariable
         lda $0000,b,y
         tax
         lda $7ECCCE
@@ -101,9 +101,9 @@
         jsl rlCheckIfCoordsNotEventLocationTile
         bcs _EC46
         jsl rlGetEventLocationEntryID
-        cmp $7ECCE8
+        cmp wBattleTempVariable
         bne _EC46
-        lda $7ECCE8
+        lda wBattleTempVariable
         jsl rlUnknown84CD8A
         bra _EC56
 
@@ -248,12 +248,12 @@
         _ED3A
         jsr rsUnknown84EDAE
         lda structActionStructEntry.DeploymentNumber,b,x
-        sta wUnknownDeploymentOffset000D7F,b
+        sta wUnitRelocationDeploymentOffset,b
         lda #9
-        sta $0D81,b
+        sta wUnitRelocationType,b
         lda #0
         jsl rlGetFactionSlotLocationID
-        sta $0D83,b
+        sta wUnitRelocationLocationID,b
         jsl rlGetLocationEventDataEntry
         jsl rlGetEventLocationEntryEffectiveXCoordinate
         sta @l $7E4F77
@@ -547,12 +547,12 @@
         phx
         jsl rlUnknown87EB24
         jsl rlGetEventLocationEntryID
-        sta $0D83,b
+        sta wUnitRelocationLocationID,b
         lda $0000,b,y
-        sta wUnknownDeploymentOffset000D7F,b
+        sta wUnitRelocationDeploymentOffset,b
 
         lda #2
-        sta $0D81,b
+        sta wUnitRelocationType,b
         plx
         rts
 

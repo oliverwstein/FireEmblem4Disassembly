@@ -2131,14 +2131,14 @@
         lda #0
         sta wBattleActivatedSkill
         lda #0
-        sta $7ECCE8
+        sta wBattleTempVariable
 
         ldx #<>aActionStructUnit1
         ldy #<>aActionStructUnit2
         jsr rsActionStructTryProcSwordSkillsEffect
 
         lda #1
-        sta $7ECCE8
+        sta wBattleTempVariable
 
         ldx #<>aActionStructUnit2
         ldy #<>aActionStructUnit1
@@ -2213,7 +2213,7 @@
           cpy #SkillIDDarkness
           beq +
 
-            lda @l $7ECCE8
+            lda @l wBattleTempVariable
             cmp @l wBattleAttackerIndex
             bne _End
 
@@ -2437,7 +2437,7 @@
 
             sta wSelectedUnitDataRAMPointer,b
             jsl rlGetClassWeakness
-            sta $7ECCE8
+            sta wBattleTempVariable
 
             lda structActionStructEntry.WeaponID,b,x
             jsl rlGetItemDataROMPointer
@@ -2462,7 +2462,7 @@
         ldx wActionStructAttacker
 
         lda #1
-        sta @l $7ECCE8
+        sta @l wBattleTempVariable
 
         jsr rsCheckIfUnitHasWeaponEquipped
         bcc _End
@@ -2473,7 +2473,7 @@
         bne +
 
           lda #5
-          sta @l $7ECCE8
+          sta @l wBattleTempVariable
           bra _E2ED
 
         +
@@ -2506,7 +2506,7 @@
           asl $CCE8,b
 
         _End
-        lda @l $7ECCE8
+        lda @l wBattleTempVariable
         rts
 
         .databank 0
@@ -2521,7 +2521,7 @@
 
         lda @l wBattleStatus
         and #$0001
-        sta @l $7ECCE8
+        sta @l wBattleTempVariable
         asl a
         tax
         lda aUnknown84E35E,x
@@ -2531,7 +2531,7 @@
 
         lda @l wBattleStatus
         and #$0001
-        sta @l $7ECCE8
+        sta @l wBattleTempVariable
 
         ldx wActionStructAttacker
         ldy wActionStructDefender
@@ -2541,7 +2541,7 @@
         lda @l wBattleStatus
         and #$0001
         eor #$0001
-        sta @l $7ECCE8
+        sta @l wBattleTempVariable
 
         ldx wActionStructDefender
         ldy wActionStructAttacker
@@ -2554,7 +2554,7 @@
         rts
 
         +
-        lda @l $7ECCE8
+        lda @l wBattleTempVariable
         sta @l wBattleAttackerIndex
         sec
         bra -
@@ -2612,7 +2612,7 @@
 
           lda @l wBattleStatus
           and #$0001
-          sta @l $7ECCE8
+          sta @l wBattleTempVariable
           asl a
           tax
           lda aUnknown84E3F2,x
@@ -2622,7 +2622,7 @@
           
           lda @l wBattleStatus
           and #$0001
-          sta @l $7ECCE8
+          sta @l wBattleTempVariable
 
           ldx wActionStructAttacker
           ldy wActionStructDefender
@@ -2632,7 +2632,7 @@
           lda @l wBattleStatus
           and #$0001
           eor #$0001
-          sta @l $7ECCE8
+          sta @l wBattleTempVariable
 
           ldx wActionStructDefender
           ldy wActionStructAttacker
@@ -2648,7 +2648,7 @@
         _SEC
         lda #2
         sta @l $7ECCD2
-        lda @l $7ECCE8
+        lda @l wBattleTempVariable
         sta @l wBattleAttackerIndex
         sec
         bra -
@@ -3113,11 +3113,11 @@
         bcc +
 
           jsl rlGetSelectedUnitCurrentHP
-          sta $7ECCE8
+          sta wBattleTempVariable
           lda structActionStructEntry.MaxHP,b,x
           lsr a
           inc a
-          cmp $7ECCE8
+          cmp wBattleTempVariable
           bcc +
 
             lda #100
@@ -3459,12 +3459,12 @@
             lda structActionStructEntry.UnitRAMPointer,b,y
             sta wSelectedUnitDataRAMPointer,b
             jsl rlGetSelectedUnitStatus
-            sta @l $7ECCE8
+            sta @l wBattleTempVariable
 
             lda structActionStructEntry.WeaponID,b,x
             jsl rlGetItemDataROMPointer
             jsl rlGetItemAdditionalInfo
-            cmp @l $7ECCE8
+            cmp @l wBattleTempVariable
             beq _End
 
               jsl rlGetSelectedUnitTotalResistance
@@ -3720,7 +3720,7 @@
         _EA76
         phx
         lda structActionStructEntry.DeploymentNumber,b,x
-        sta @l $7ECCE8
+        sta @l wBattleTempVariable
         lda structActionStructEntry.UnitRAMPointer,b,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitHomeCastle
@@ -3732,7 +3732,7 @@
         lda aDeadPlayerCharacterList,x
         bmi _EABF
 
-        cmp @l $7ECCE8
+        cmp @l wBattleTempVariable
         beq +
 
         phx
@@ -3811,7 +3811,7 @@
             ora #0
             beq _End
 
-              sta $7ECCE8
+              sta wBattleTempVariable
               sta wRoutineVariable1,b
               jsl rlSubtractSelectedCharacterMoney
 
@@ -3821,7 +3821,7 @@
 
               lda structActionStructEntry.ObtainedStealMoney,b,x
               clc
-              adc $7ECCE8
+              adc wBattleTempVariable
               sta structActionStructEntry.ObtainedStealMoney,b,x
 
         _End

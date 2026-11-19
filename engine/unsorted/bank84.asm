@@ -1902,12 +1902,12 @@
         plb
         .databank $84
         phy
-        ldy wUnknownDeploymentOffset000D7F,b
+        ldy wUnitRelocationDeploymentOffset,b
         bpl _CDA0
-        sta $0D83,b
-        stx wUnknownDeploymentOffset000D7F,b
+        sta wUnitRelocationLocationID,b
+        stx wUnitRelocationDeploymentOffset,b
         lda #$0003
-        sta $0D81,b
+        sta wUnitRelocationType,b
 
         _CDA0
         ply
@@ -2781,11 +2781,11 @@
         phx
         jsl rlClearBattleData
         lda wR0
-        sta wUnknownDeploymentOffset000D7F,b
+        sta wUnitRelocationDeploymentOffset,b
         lda wR1
-        sta $0D83,b
+        sta wUnitRelocationLocationID,b
         lda #$0007
-        sta $0D81,b
+        sta wUnitRelocationType,b
         lda wR0
         sta aActionStructUnit1
         tax

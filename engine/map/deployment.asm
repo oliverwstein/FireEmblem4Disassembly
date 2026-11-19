@@ -754,10 +754,10 @@
         lda wRoutineVariable1,b
         bmi +
 
-          sta $0D83,b
-          stx wUnknownDeploymentOffset000D7F,b
+          sta wUnitRelocationLocationID,b
+          stx wUnitRelocationDeploymentOffset,b
           lda #0
-          sta $0D81,b
+          sta wUnitRelocationType,b
 
         +
         pla
@@ -1143,7 +1143,7 @@
         ; A = deployment offset
 
         phx
-        sta wUnknownDeploymentOffset000D7F,b
+        sta wUnitRelocationDeploymentOffset,b
         tax
         lda aDeploymentTable._StateBuffer,x
         ora #DeploymentStateDefeated

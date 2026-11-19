@@ -12,14 +12,14 @@
         .autsiz
         .databank ?
 
-        lda wUnknownDeploymentOffset000D7F,b
+        lda wUnitRelocationDeploymentOffset,b
         bmi _End
 
-          lda $0D81,b
+          lda wUnitRelocationType,b
           cmp #8
           bne _End
 
-            lda $0D83,b
+            lda wUnitRelocationLocationID,b
             jsl rlGetItemRAMStructEntryByPlayerItemIndex
             jsl rlGetEffectiveItemIDByItemRAMStructEntry
             sta aProcSystem.wInput2,b
@@ -33,7 +33,7 @@
             jsl rlEventEngineCreateProc
 
             lda #$FFFF
-            sta wUnknownDeploymentOffset000D7F,b
+            sta wUnitRelocationDeploymentOffset,b
 
         _End
         rtl

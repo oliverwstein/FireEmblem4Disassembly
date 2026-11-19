@@ -1468,14 +1468,14 @@
               bne _SEC 
 
                 lda #4
-                sta $0D81,b
+                sta wUnitRelocationType,b
                 lda wSelectedUnitDataRAMPointer,b
-                sta $0D83,b
+                sta wUnitRelocationLocationID,b
                 lda #0
-                sta wUnknownDeploymentOffset000D7F,b
+                sta wUnitRelocationDeploymentOffset,b
 
                   -
-                  lda wUnknownDeploymentOffset000D7F,b
+                  lda wUnitRelocationDeploymentOffset,b
                   beq -
 
                 clc
