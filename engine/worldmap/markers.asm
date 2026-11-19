@@ -470,6 +470,147 @@
     .endsection WorldMapMarkers1Section
 
 
+    .section WorldMapMarkerShadowFadeInSection
+
+      .al
+      .xl
+
+      procWorldMapMarkerShadowFadeIn ; 8B/8B59
+
+        .structProcInfo "CN", rlProcWorldMapMarkerShadowFadeInInit, rlProcWorldMapMarkerShadowFadeInCycle, aProcWorldMapMarkerShadowFadeInCode
+
+      rlProcWorldMapMarkerShadowFadeInInit ; 8B/8B61
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; fades in WMM shadow
+
+        lda #0
+        sta $7F8089
+        rtl
+
+        .databank 0
+
+      rlProcWorldMapMarkerShadowFadeInCycle ; 8B/8B69
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda $7F8089
+
+        lda wVBlankEnabledFramecount
+        and #$0003
+        bne _End
+
+          lda #16
+          sta aPaletteFading.wMaxSteps,b
+          clc
+          jsl rlFadePaletteToColors
+
+            .word <>aWorldMapMarkerPalette
+            .word 5
+            .word aBGPaletteBuffer.aPalette1 + $10 - aBGPaletteBuffer
+
+          bcs +
+
+        _End
+        lda aPaletteFading.wCurrentStep,b
+        sta $7F8089
+        rtl
+
+        +
+        jsl rlProcEngineFreeProc
+
+        lda #(`procWorldMapMarkerShadowFadeOut)<<8
+        sta lR44+1
+        lda #<>procWorldMapMarkerShadowFadeOut
+        sta lR44
+        jsl rlProcEngineCreateProc
+        bra _End
+
+        .databank 0
+
+      aProcWorldMapMarkerShadowFadeInCode ; 8B/8BA3
+
+        PROC_HALT
+
+        ; 8B/8BA5
+
+    .endsection WorldMapMarkerShadowFadeInSection
+
+
+    .section WorldMapMarkerShadowFadeOutSection
+
+      .al
+      .xl
+
+      procWorldMapMarkerShadowFadeOut ; 8B/8BF4
+
+        .structProcInfo "CF", rlProcWorldMapMarkerShadowFadeOutInit, rlProcWorldMapMarkerShadowFadeOutCycle, aProcWorldMapMarkerShadowFadeOutCode
+
+      rlProcWorldMapMarkerShadowFadeOutInit ; 8B/8BFC
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #0
+        sta $7F808D
+        rtl
+
+        .databank 0
+
+      rlProcWorldMapMarkerShadowFadeOutCycle ; 8B/8C04
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda $7F808D
+
+        lda wVBlankEnabledFramecount
+        and #$0001
+        bne _End
+
+          lda #0
+          sta aPaletteFading.wDesiredColor,b
+          lda #16
+          sta aPaletteFading.wMaxSteps,b
+          clc
+          jsl rlFadePaletteToBlack
+            .word <>aWorldMapMarkerShadowFadeOutData
+
+          bcs +
+
+        _End
+        lda aPaletteFading.wCurrentStep,b
+        sta $7F808D
+        rtl
+
+        +
+        jsl rlProcEngineFreeProc
+        bra _End
+
+        .databank 0
+
+      aWorldMapMarkerShadowFadeOutData ; 8B/8C32
+
+        .word aBGPaletteBuffer.aPalette1 + $10 - aBGPaletteBuffer
+        .word 5
+        .word $FFFF
+
+      aProcWorldMapMarkerShadowFadeOutCode ; 8B/8C38
+
+        PROC_HALT
+
+        ; 8B/8C3A
+
+    .endsection WorldMapMarkerShadowFadeOutSection
+
+
     .section WorldMapMarkers2Section
 
       .al

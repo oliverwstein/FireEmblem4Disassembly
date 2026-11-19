@@ -288,3 +288,42 @@
         ; 8B/8A58
 
     .endsection WorldMapHighlightCodeSection
+
+
+    .section ClearHighlightWorldMapPartSection
+
+      .al
+      .xl
+
+      rlClearHighlightWorldMapPart ; 8B/8A84
+
+        .al
+        .autsiz
+        .databank ?
+
+        ldx #$07FE
+        lda #$00FF
+
+          -
+          sta $7E7B88,x
+          dec x
+          dec x
+          bpl -
+
+        lda #0
+        sta wBufferBG2HOFS
+        lda #0
+        sta wBufferBG2VOFS
+
+        lda #(`procUnknown8B90D9)<<8
+        sta lR44+1
+        lda #<>procUnknown8B90D9
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 8B/8AAB
+
+    .endsection ClearHighlightWorldMapPartSection

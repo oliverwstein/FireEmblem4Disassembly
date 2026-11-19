@@ -137,6 +137,7 @@
   .include "engine/unsorted/bank88.asm"
   .include "engine/unsorted/bank89.asm"
   .include "engine/unsorted/bank8A.asm"
+  .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8F.asm"
 
   .include "events/ChapterPrologue.asm"
@@ -2101,6 +2102,20 @@
 
     .here
 
+    * = $0B8000
+    .logical $8B8000
+
+      .dsection Unsorted8B8000Section
+
+    .here
+
+    * = $0B821F
+    .logical $8B821F
+
+      .dsection FadeInWorldMapPortraitSlotSection
+
+    .here
+
     * = $0B8345
     .logical $8B8345
 
@@ -2126,6 +2141,41 @@
       .dsection WorldMapHighlightCodeSection
 
       ; 8b8a58
+
+    .here
+
+    * = $0B8A84
+    .logical $8B8A84
+
+      .dsection ClearHighlightWorldMapPartSection
+
+    .here
+
+    * = $0B8B59
+    .logical $8B8B59
+
+      .dsection WorldMapMarkerShadowFadeInSection
+
+    .here
+
+    * = $0B8BF4
+    .logical $8B8BF4
+
+      .dsection WorldMapMarkerShadowFadeOutSection
+
+    .here
+
+    * = $0B8C83
+    .logical $8B8C83
+
+      .dsection FadeInWorldMapPortraitSlot8B8C83Section
+
+    .here
+
+    * = $0B8E17
+    .logical $8B8E17
+
+      .dsection ProcFadeInWorldMapPortraitSlotCodeSection
 
     .here
 
