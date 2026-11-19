@@ -95,6 +95,7 @@
   .include "engine/ai/scripts.asm"
   .include "engine/ai/threat.asm"
   .include "engine/core/oam.asm"
+  .include "engine/core/options.asm"
   .include "engine/core/tilemaps.asm"
   .include "engine/dialogue/death_quotes.asm"
   .include "engine/dialogue/dialogue.asm"
@@ -117,7 +118,9 @@
   .include "engine/dialogue/dialogue_procs.asm"
   .include "engine/map/map_sprites.asm"
   .include "engine/map/popups.asm"
+  .include "engine/rankings/rankings.asm"
   .include "engine/sound/music.asm"
+  .include "engine/units/turn_start.asm"
   .include "engine/unsorted/bank80.asm"
   .include "engine/unsorted/bank81.asm"
   .include "engine/unsorted/bank82.asm"
@@ -886,12 +889,41 @@
 
     .here
 
+    * = $048776
+    .logical $848776
+
+      .dsection GetUnitByCoordinatesSection
+
+    .here
+
+    * = $0488EC
+    .logical $8488EC
+
+      .dsection LoadUNITGroupMapSpritesSection
+
+    .here
+
     * = $048C31
     .logical $848C31
 
       .dsection LoversSection
 
       ; 84/8CFE
+
+    .here
+
+    * = $048CFE
+    .logical $848CFE
+
+      .dsection CalculateTacticsRankingSection
+
+    .here
+
+    * = $048EA0
+    .logical $848EA0
+
+      .dsection CheckUnitsMarriedToEachOtherSection
+      .dsection EvaluateSpecifiedRankingScoreSection
 
     .here
 
@@ -946,6 +978,20 @@
 
     .here
 
+    * = $04AF9E
+    .logical $84AF9E
+
+      .dsection GetTurnStartEffectsByStatusSection
+
+    .here
+
+    * = $04B0C9
+    .logical $84B0C9
+
+      .dsection GetCastleHealingAmountSection
+
+    .here
+
     * = $04B1B8
     .logical $84B1B8
 
@@ -961,6 +1007,13 @@
       .dsection UnitInventoryStateSection
 
       ; 84/B508
+
+    .here
+
+    * = $04B57A
+    .logical $84B57A
+
+      .dsection Unsorted84B57ASection
 
     .here
 
@@ -982,12 +1035,27 @@
 
     .here
 
+    * = $04BB54
+    .logical $84BB54
+
+      .dsection Unsorted84BB54Section
+      .dsection CheckIfBattleAnimationOFFSection
+
+    .here
+
     * = $04BB9A
     .logical $84BB9A
 
       .dsection FactionSection
 
       ; 84/C0BD
+
+    .here
+
+    * = $04C0D6
+    .logical $84C0D6
+
+      .dsection RunTurnStartEffectsForAllUnitsInFactionSection
 
     .here
 
@@ -1000,12 +1068,26 @@
 
     .here
 
+    * = $04C412
+    .logical $84C412
+
+      .dsection Unsorted84C412Section
+
+    .here
+
     * = $04C461
     .logical $84C461
 
       .dsection FactionUnitsSection
 
       ; 84/C5D7
+
+    .here
+
+    * = $04C5D7
+    .logical $84C5D7
+
+      .dsection Unsorted84C5D7Section
 
     .here
 
@@ -1027,6 +1109,20 @@
 
     .here
 
+    * = $04CDA4
+    .logical $84CDA4
+
+      .dsection Unsorted84CDA4Section
+
+    .here
+
+    * = $04CE21
+    .logical $84CE21
+
+      .dsection Unsorted84CE21Section
+
+    .here
+
     * = $04CFBF
     .logical $84CFBF
 
@@ -1036,12 +1132,26 @@
 
     .here
 
+    * = $04D16B
+    .logical $84D16B
+
+      .dsection Unsorted84D16BSection
+
+    .here
+
     * = $04D271
     .logical $84D271
 
       .dsection FieldedUnitFactionSection
 
       ; 84/D2BA
+
+    .here
+
+    * = $04D4A2
+    .logical $84D4A2
+
+      .dsection Unsorted84D4A2Section
 
     .here
 

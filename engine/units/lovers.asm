@@ -159,6 +159,63 @@
     .endsection LoversSection
 
 
+    .section CheckUnitsMarriedToEachOtherSection
+
+      .al
+      .xl
+
+      rlCheckUnitsMarriedToEachOther ; 84/8EA0
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; wR0 = CharacterID1
+        ; wR1 = CharacterID2
+
+        ; Output:
+        ; SEC if married, clc if not
+
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        lda wRoutineVariable1,b
+        pha
+
+        lda wR1
+        jsl rlGetUnitRAMDataPointerByID
+        bcs _CLC
+
+          jsl rlGetSelectedUnitGenerationID
+          bcs _CLC
+
+            sta wRoutineVariable1,b
+            lda wR0
+            jsl rlGetUnitRAMDataPointerByID
+            bcs _CLC
+
+              jsl rlGetSelectedUnitLoverGenerationID
+              cmp wRoutineVariable1,b
+              bne _CLC
+
+                sec
+
+                -
+                pla
+                sta wRoutineVariable1,b
+                pla
+                sta wSelectedUnitDataRAMPointer,b
+                rtl
+
+        _CLC
+        clc
+        bra -
+
+        .databank 0
+
+    .endsection CheckUnitsMarriedToEachOtherSection
+
+
     .section LovePointsSection
 
       .al
