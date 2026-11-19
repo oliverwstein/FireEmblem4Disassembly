@@ -37,6 +37,7 @@ The files in `wip/` are routines files. Each tool assembles the file in a tempor
 | `move_sections.py SPEC` | Moves whole sections between engine files (SPEC lines: section name, target file). Cannot change the ROM. |
 | `rom_tables.py FILE` | Labels the unbuilt ROM tables that built code reads: writes those with a certain extent to FILE and names the rest weakly in `include/Undisassembled.h`. |
 | `sweep.py` | Decodes gaps in the code banks that nothing points to and writes the candidates with enough evidence (`--min-score`, default 3) to a routines file. |
+| `cdl.py [CDL]` | Compares a Mesen code/data log (`fe4.cdl`) with the build: executed code that is not built and the raw pointers that lead to it, built code read as tables, built data that is executed, bulk reads of code, and the read extents of the tables in `include/Undisassembled.h`. `--report FILE` writes Markdown (keeping hand-written text above its marker line); `--entries FILE` lists the entry points of unbuilt code with their register widths. |
 | `apply_constants.py` | Writes numbers as constants by the rules in `constant_rules.txt`. |
 | `name_ram.py` | Writes raw RAM addresses with the names `include/` gives them. |
 | `name_struct_fields.py` | Writes small offsets from an index register as struct fields. |

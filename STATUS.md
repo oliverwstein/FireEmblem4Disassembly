@@ -2,7 +2,12 @@
 
 Last updated 2026-11-19. This file records what has been done and what remains, so that work can pick up where it left off. For how to build and how the repository is laid out, see [README.md](README.md). For the tools, see [tools/README.md](tools/README.md).
 
-The goal is source that reads like a clean reconstruction of the original, in the way pokecrystal and Polished Crystal do: every routine, variable and field named, constants instead of numbers, data in readable formats, organized by game system, and eventually nothing taken from the base ROM.
+The goal is source that is **readable and moddable**, in the way pokecrystal and Polished Crystal are.
+
+- **Readable:** every routine, variable and field named, constants instead of numbers, data in readable formats, organized by game system.
+- **Moddable, which means shiftable:** you can add instructions to a routine, lengthen a table or add an entry, and the assembler moves everything after it and updates every reference. Matching the ROM byte for byte does not give this by itself. A byte-identical build can still pin code to fixed addresses, so that any change breaks something far away.
+
+Byte-identical output stays the test for every change to the original layout. Shiftability is what makes it worth building from source.
 
 ## Where things stand
 
@@ -12,6 +17,8 @@ The goal is source that reads like a clean reconstruction of the original, in th
 - In built code, **3,509 operands** still use raw RAM addresses (825 distinct addresses), and about **8,800** use numbers that may stand for constants.
 - `wip/` is empty. `include/Undisassembled.h` names 47 ROM tables that built code reads but whose length is not known yet. No built code calls code that is not built.
 - `tools/trace.py` finds nothing left to follow, and `tools/disasm.py --selftest` reassembles all 3,548 routines it can start from to the same bytes.
+- **A Mesen code/data log of the prologue** (`fe4.cdl`, analysed by `tools/cdl.py` in [cdl_analysis_report.md](cdl_analysis_report.md)) shows **70,629 bytes of executed code that are not built**. That is 35% of the code the prologue ran, so the estimate of 50-80 KB of code left is low.
+- **Nothing can move yet.** `build.asm` lays the base ROM down and places 1,351 sections over it at fixed addresses, with ROM bytes in the gaps between them. On top of that, 47 tables are named only (`include/Undisassembled.h`), 31 `ROM[start:end]` slices remain, and about 464 `.long` and 28 `jsl`/`jmp` operands in `engine/` are raw addresses.
 
 | Stage | Bytes from source | Share |
 |---|---|---|
@@ -33,7 +40,7 @@ Share of each bank's `$8000`-`$FFFF` half built from source:
 | `$8C`: 2% | `$8D`: 60% | `$8E`-`$8F`: 100% | `$90`: 82% |
 | `$91`: 80% | `$95`: 3% | `$9D`: 100% | `$9E`: 79% |
 
-Not every uncovered byte is code: tables, text, graphics and zero-filled padding are mixed in, and banks `$92`-`$9C` are almost all data.
+Not every uncovered byte is code: tables, text, graphics and zero-filled padding are mixed in. Banks `$92`-`$9C` are mostly data, but the log shows about 32 KB of code running in `$95` and `$96`, possibly the battle scenes, and 3.4 KB in `$9B`.
 
 ## What has been done
 
@@ -51,12 +58,13 @@ Every step kept the output identical to the original.
 - **Tracer** (`tools/trace.py`). Follows calls and jumps from every built routine, the init and on-cycle routines of proc, HDMA and active sprite definitions, proc scripts (`tools/procs.py` knows every proc command), and jump tables. About 700 routines came in this way, all reached from verified code.
 - **Proc scripts** (`tools/proc_scripts.py`). Scripts and unlabelled proc headers are written with the `PROC_*` macros. Command `$82/8279` is `rsProcCodeCreateActiveSprite`.
 - **ROM tables** (`tools/rom_tables.py`). Every table that built code reads by raw address got a label: 130 written out with their bytes, 47 named only.
+- **Emulator log** (`tools/cdl.py`). Compares a Mesen 2 code/data log with the build. It finds executed code that is not built and the raw pointers that lead to it, built code that is read as tables, built data that is executed, and bulk reads of code. It also gives the read extents of the tables in `Undisassembled.h`, and `--entries` lists every entry point of unbuilt code with the register widths it ran with. The flags are `$01` code, `$02` data, `$04` jump target, `$08` subroutine entry, `$10` 8-bit X and `$20` 8-bit A; the tool checks this against the build each run. The current log covers the prologue only. The hand-written summary at the top of `cdl_analysis_report.md` has the findings.
 - **Code sweep** (`tools/sweep.py`). Decodes gaps that nothing points to and accepts a candidate only with evidence: it ends cleanly, has no data-like opcodes, does not branch into itself, calls only known routines or other gaps, does not start like a proc header or pointer table, and scores at least 3 (calls to known routines plus named RAM variables). With the tracer, this added about 500 routines (44 KB). Each is marked "Found by tools/sweep.py". Ten early finds that began with data were repaired by hand.
 
 ### Findings worth knowing
 
-- **Code checksums** (`include/Checksums.h`). The game sums `$80/8D56-8E2C` and `$87/8017-80A9` and compares the sums with `aCodeChecksums` (`$8F/8000`) and its copies at the start of banks `$87` and `$88`. The third word, "IS", switches the checks on. When `rlCheckCodeChecksums` finds a difference, the random number generator takes its numbers from `rsUnknown80A7F3` instead. Anyone changing that code has to update the sums.
-- **Game states.** Every frame, `rlRunGameStateRoutines` runs the routines at `wGameStateRoutine1` and `wGameStateRoutine2` in `aGameStateRoutines`; `wGameStateStep` counts the steps of the current state. Routines such as `$80/C39A` set up a state (screen off, VBlank and main loop pointers, state indices).
+- **Code checksums** (`include/Checksums.h`). The game sums `$80/8D56-8E2C` and `$87/8017-80A9` and compares the sums with `aCodeChecksums` (`$8F/8000`) and its copies at the start of banks `$87` and `$88`. The third word, "IS", switches the checks on. When `rlCheckCodeChecksums` finds a difference, the random number generator takes its numbers from `rsUnknown80A7F3` instead. Anyone changing that code has to update the sums. **A second check** is not in `Checksums.h` yet: `rlUnknown878017` copies `$88/8888`-`8907` to `$1E00`, and `rlUnknown87802A` compares the copy with the ROM, falling into an endless loop on a difference. The log also shows bulk reads of code at `$88/8888`-`8AC7` and `$82/8888`-`890D` whose reader is not known; they may be further checks.
+- **Game states.** Every frame, `rlRunGameStateRoutines` runs the routines at `wGameStateRoutine1` and `wGameStateRoutine2` in `aGameStateRoutines`; `wGameStateStep` counts the steps of the current state. The table is 56 raw `.long` values, and 33 of them lead to executed code that is not built. Routines such as `$80/C39A` set up a state (screen off, VBlank and main loop pointers, state indices).
 - **Battle.** `rlActionStructBuildBattleRounds` fills `aBattleRoundsData` with strikes; `rsActionStructResolveStrike` resolves one. `rlFindTargetsInRange` picks targets with 14 filters (`aTargetFilterRoutines`).
 - **Items.** Buying, selling and repair prices (`rlGetItemBuyPrice`, `rlGetItemSellPrice`, `rlGetItemRepairCost`); Bargain halves them; holy weapons cannot be sold or thrown away.
 - **AI formations.** Four routines, one per `wAIFormationDirection`, each turning a formation pattern a quarter turn further.
@@ -71,11 +79,45 @@ Every step kept the output identical to the original.
 
 ## What remains
 
-In rough order of value.
+In rough order of value. Sections 1 and 2 go together, and both serve shiftability; naming (section 3) can go on alongside them.
 
-### 1. Naming and sorting (the bulk of the work)
+### 1. Code from the emulator log
 
-1,916 unnamed routines, 1,358 of them in `unsorted/`, and 825 unnamed RAM addresses. Automatic naming and sorting have gone as far as the evidence allows; from here it is reading code, system by system. Names must state only what is known; uncertain routines stay `Unknown` or get a comment saying how sure it is.
+The log shows code that ran, and the widths it ran with, so this code needs no guessing.
+
+- **Raw pointer tables first.** Write the raw values in `aGameStateRoutines` (33 targets), the jump table in `rlUnknown86B307` (9), `aMapMenuTypePointers` (6), `aUnknown81AE02` and `aUnknown81AFAE` as labels, disassembling the targets they lead to, then rerun `tools/trace.py`. This should bring in a large share of the 70 KB.
+- **Then the entry points** that are still missing: `tools/cdl.py --entries FILE`, then `tools/disasm.py` with `--m8`/`--x8` where the list says 8. Start with banks `$80`, `$8A` and `$89`, which are partly built. Banks `$95` and `$96` (32 KB) are a larger job.
+- **Fix what was misread.** Seven "routines" are tables:
+  - jump tables `$8A/87F3`, `$89/C326` and `$9F/8A6E`;
+  - data tables `$88/9BB5`, `$89/A5D1`, `$89/9109` (one byte before `aUnknown89910A`) and `$91/F7B7`.
+
+  Eighteen places built as data are executed: routines entered by `jsr`/`jsl` inside data blocks (`$84/F815`, `$87/9DD1`, `$88/8ABE`, `$88/8ADD`, `$88/B2A5`, `$8A/E0D7`), the unrolled `stx` loop at `$80/8A4A`, returns pushed with `pea #ret-1` (`$80/8EE8`, `$80/91E7`, `$9F/8080`), and `$9E/88F9`. The report lists them all.
+- **Teach the tools** what they missed: `disasm.py` should treat `X+1` as reachable after `pea #X`; `trace.py` should follow `jsr (table,x)` tables like `$8A/87F3`.
+- **`$8A/CFBE`** is a routine entry: the log marks it as the target of a `jsr` or `jsl`. It is not the middle of a routine, as this file used to say. Disassemble it with `tools/disasm.py 8ACFBE`.
+- **Record more of the game** and rerun `tools/cdl.py`: battles with animations on, a chapter or two, shops, the arena, saving and loading, the debug menu. Mesen adds to the same log across sessions. Rarely used code (late chapters' scripted events) still needs the static methods.
+- **Sweep candidates.** 21 now pass the threshold (757 bytes): run `tools/sweep.py --write wip/Sweep.asm`, test and place them, then trace again. About 240 below the threshold (9 KB) can be read one by one with `tools/sweep.py --min-score 0 --list`, or checked against the log.
+- **Active sprite and HDMA scripts**: mostly visual code; low priority.
+
+### 2. Shiftability
+
+A region of the ROM can move only when it is **all source**, its sections form **one block that is not pinned**, and **nothing refers to it by raw address**. In order:
+
+1. **Remove raw addresses.**
+   - Write the 47 tables in `include/Undisassembled.h` out with their bytes. `cdl_analysis_report.md` gives the read extent of each, as a lower bound; the reader's loop confirms the length. Several were read in full from their first byte (`aUnknown8C9800`, `aUnknown8CDCB0`, `aUnknown899099`, `aUnknown8AA241`).
+   - Write the raw `.long`/`.word` pointers and raw `jsl`/`jmp` targets as labels.
+   - Replace the 31 `ROM[start:end]` slices with source.
+2. **Find the hidden addresses.** The log cannot show these, so they need reading or tooling:
+   - Numbers that are really addresses or offsets: `$027E` in `engine/menus/map_menu.asm`, and pointers loaded in halves, such as `lda #$8A00` and `lda #$88E0` into `lRoutineVariable` at `$8A/87FF`.
+   - Table lengths written as numbers in loops (`cpx #$0080`).
+   - DMA sizes.
+   - Return addresses pushed with `pea`.
+3. **Handle the integrity checks.** Code in `$80/8D56`-`8E2C`, `$87/8017`-`80A9` and `$88/8888`-`8907` must not change without updating or switching off the checks. Make the build compute the sums from the assembled bytes, as pokecrystal does for its header checksum, and add the second check to `include/Checksums.h`.
+4. **Merge sections bank by bank.** Once a bank is all source, its sections can become one block that flows freely. Only the bank start and addresses the hardware fixes (vectors, header) stay pinned. Banks `$86`, `$8E`-`$8F` and `$9D` are already 100% built.
+5. **Test it.** For a merged bank: build with a few padding bytes inserted early in the block, run the game in Mesen, and check that it still works. This catches the hidden addresses that step 2 missed.
+
+### 3. Naming and sorting (the bulk of the work)
+
+1,916 unnamed routines, 1,358 of them in `unsorted/`, and 825 unnamed RAM addresses. Automatic naming and sorting have gone as far as the evidence allows; from here it is reading code, system by system. Names must state only what is known; uncertain routines stay `Unknown` or get a comment saying how sure it is. Mesen's debugger, which can load `labels.txt`, is the quickest way to confirm a name: break on a routine or watch a RAM address.
 
 - **Main-loop game states** in bank `$80`: the sweep found their setup routines, and naming them gives the rest of the code a structure to hang on.
 - **Helpers of the named event commands** in `engine/events/event_scripts.asm`.
@@ -84,24 +126,12 @@ In rough order of value.
 - **RAM.** `tools/name_ram.py --report 25` lists the most-used unnamed addresses. The top ones are flag words (`$0788`, `$0D87`, `$08AD`, `$04EA`) and map and map battle working values (`$0778`, `$07DA`, `$07E0`, `$07E6`, `$0792`, `$7F45xx`, `$7F4Cxx`) whose meaning is not clear from the code alone.
 - **Constants.** About 8,800 numbers left. Each new getter or field with a known constant family is one line in `tools/constant_rules.txt`. `bBattleRoundFlags` bits `$02` and `$10` are still unknown.
 - File descriptions were written from routine names and existing comments; correct them as understanding improves. In `units/`, `map/` and elsewhere, routines placed next to named neighbours are only probably related.
-
-### 2. An emulator log (needs the user)
-
-A code/data log from Mesen (which runs on macOS), recorded while playing, marks which bytes were executed and which were only read. It would settle what is code and what is data for everything played, give the exact extent of tables, and find code reached only by computed jumps. Mesen's debugger, which can load `labels.txt`, is also how uncertain names get confirmed. Rarely used code (the debug menu, late chapters' scripted events) still needs the static methods.
-
-### 3. Code and data left to bring in
-
-- **21 sweep candidates now pass the threshold** (757 bytes): naming RAM raised their scores. Run `tools/sweep.py --write wip/Sweep.asm`, test and place them, then trace again.
-- **Below the threshold**: about 240 candidates (about 9 KB), a mix of real code (for example a palette routine at `$88/9EE9`), data that happens to decode, and gaps that start with a few table bytes. Read them one by one (`tools/sweep.py --min-score 0 --list`), or wait for the emulator log.
-- **The 47 tables with names only**: their readers' loops give their lengths. Write the table out and remove its line from `include/Undisassembled.h`.
-- **`$8A/CFBE`** (after the 89-pointer table at `$8A/CEB3`) is a ROM slice because it starts in the middle of a routine.
 - **Check written tables against their readers' loops** as you name them: a short table followed by code that calls nothing known can have been taken as one block (`aUnknown88ACF1` and `aUnknown91FA27` were).
-- **Active sprite and HDMA scripts**: mostly visual code; low priority.
 
 ### 4. Data and assets
 
 - Readable formats for the remaining data: map layouts, menu definitions, portrait tables, and the tables written as `aUnknownXXXXXX`.
-- 29 `ROM[start:end]` slices remain, most in `build.asm` (world map tilemaps, the dialogue font, battle banner graphics).
+- 31 `ROM[start:end]` slices remain, 29 of them in `build.asm` (world map tilemaps, the dialogue font, battle banner graphics).
 - Graphics, maps and music: the decompressor is disassembled (`engine/core/decompressor.asm`), so a compressor that reproduces its output byte for byte, a PNG converter and an extraction script are tooling work that can start any time. **A decision for the user:** commit extracted assets, as pokecrystal does, or extract them from each user's own ROM at build time, which keeps Nintendo's assets out of the repository.
 - Once everything is source, `build.asm` becomes a pure layout and the `.binary "fe4.sfc"` overlay goes away.
 
@@ -118,11 +148,12 @@ Short explanations of the engines that are understood (procs, the event interpre
 ### 7. Loose ends
 
 - The Windows `.bat` scripts have updated paths but have not been run since the folder rename.
-- `engine/menus/map_menu.asm` adds the constant `$027E` in two places. The original author's guess, `size(aDialogueBoxTilemap)-2`, did not match the ROM, and the meaning is unknown.
+- `engine/menus/map_menu.asm` adds the constant `$027E` in two places. The original author's guess, `size(aDialogueBoxTilemap)-2`, did not match the ROM, and the meaning is unknown. It is probably an offset that will break when things move (see section 2).
 - `labels.txt`, `log.txt`, the `.dialogue.txt` and `.csv.asm` files, `fe4.sfc` and `FE4Disassembly.sfc` are generated or local, and are ignored by git.
 
 ## How to work on this project
 
+- **The emulator log is tied to the original ROM.** `fe4.cdl` describes the original bytes at their original addresses. Renaming, relabelling and anything else that keeps the build identical leaves it valid: rerun `tools/cdl.py`, no new recording needed. Once the output changes (a mod, a shifted bank), record logs from the original ROM only.
 - **The ROM decides.** A change is only correct if `./build.sh` still says the output matches. Where work-in-progress source disagrees with the ROM, the source is wrong.
 - **Commit in small steps**, each with a matching build.
 - **New code:** `tools/disasm.py`, `trace.py --write` or `sweep.py --write` into `wip/`, then `test_routines.py`, then `place_routines.py`. If `disasm.py --selftest` ever reports a difference after a change to the disassembler, fix the tool first.
