@@ -889,3 +889,67 @@
         ; 85/AB32
 
     .endsection FreeDialogueBoxHDMAIfFinishedSection
+
+
+    .section DisplayDialogueAPressArrowsSection
+
+      .al
+      .xl
+
+      rlDisplayDialogueAPressArrows ; 8A/DB63
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; wR0 = X Pos
+        ; wR1 = Y Pos
+
+        phb
+        phx
+        phy
+        lda aDialogue.wStatus,b
+        bit #DialogueStatusCaretLight
+        bne _Light
+
+        bit #DialogueStatusCaretDark
+        bne _Dark
+        bra _End
+
+        _Light
+        sep #$20
+        lda #`$8ADBAF
+        pha
+        plb
+        rep #$20
+
+        ldy #<>$8ADBAF
+        bra _Push
+
+        _Dark
+        sep #$20
+        lda #`$8ADBB6
+        pha
+        plb
+        rep #$20
+        ldy #<>$8ADBB6
+
+        _Push
+        lda #0
+        sta wR4
+        lda #$2000
+        sta wR5
+        jsl rlPushToOAMBuffer
+
+        _End
+        ply
+        plx
+        plb
+        rtl
+
+        .databank 0
+
+        ; 8A/DB9F
+
+    .endsection DisplayDialogueAPressArrowsSection

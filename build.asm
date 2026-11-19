@@ -136,6 +136,7 @@
   .include "engine/unsorted/bank87.asm"
   .include "engine/unsorted/bank88.asm"
   .include "engine/unsorted/bank89.asm"
+  .include "engine/unsorted/bank8A.asm"
   .include "engine/unsorted/bank8F.asm"
 
   .include "events/ChapterPrologue.asm"
@@ -1990,12 +1991,33 @@
 
     .here
 
+    * = $0A97C2
+    .logical $8A97C2
+
+      .dsection Unsorted8A97C2Section
+
+    .here
+
     * = $0AB317
     .logical $8AB317
 
       .dsection DialoguePortraitSection
 
       ; 8A/B3FE
+
+    .here
+
+    * = $0AB452
+    .logical $8AB452
+
+      .dsection GetDecompressedPortraitDataPointersSection
+
+    .here
+
+    * = $0AB4EB
+    .logical $8AB4EB
+
+      .dsection PortraitSlotDecompressionPointersSection
 
     .here
 
@@ -2006,6 +2028,76 @@
       aPortraitPalettePointers .include "data/PortraitPalettePointers.csv.asm" ; 8A/B7E1
 
       ; 8A/BAC9
+
+    .here
+
+    * = $0AD9FE
+    .logical $8AD9FE
+
+      .dsection Unsorted8AD9FESection
+
+    .here
+
+    * = $0ADA83
+    .logical $8ADA83
+
+      .dsection Unsorted8ADA83Section
+
+    .here
+
+    * = $0ADB63
+    .logical $8ADB63
+
+      .dsection DisplayDialogueAPressArrowsSection
+
+    .here
+
+    * = $0ADBFF
+    .logical $8ADBFF
+
+      .dsection Unsorted8ADBFFSection
+
+    .here
+
+    * = $0ADCF9
+    .logical $8ADCF9
+
+      .dsection Unsorted8ADCF9Section
+
+    .here
+
+    * = $0AE05E
+    .logical $8AE05E
+
+      .dsection Unsorted8AE05ESection
+
+    .here
+
+    * = $0AE199
+    .logical $8AE199
+
+      .dsection Unsorted8AE199Section
+
+    .here
+
+    * = $0AE1C1
+    .logical $8AE1C1
+
+      .dsection Unsorted8AE1C1Section
+
+    .here
+
+    * = $0AE1F3
+    .logical $8AE1F3
+
+      .dsection Unsorted8AE1F3Section
+
+    .here
+
+    * = $0AE245
+    .logical $8AE245
+
+      .dsection Unsorted8AE245Section
 
     .here
 

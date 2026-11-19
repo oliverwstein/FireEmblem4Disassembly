@@ -179,3 +179,79 @@
         ; 8A/B3FE
 
     .endsection DialoguePortraitSection
+
+
+    .section GetDecompressedPortraitDataPointersSection
+
+      .al
+      .xl
+
+      rlGetDecompressedPortraitDataPointers ; 8A/B452
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; A = PortraitID
+
+        ; Output:
+        ; wR18 = graphics pointer
+        ; wR19 = palette pointer
+
+        phk
+        plb
+        sta $078C,b
+        jsl rlGetCharacterPortraitDataID
+        jsr rlTryGetClassPortraitDataID
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda aPortraitGraphicPointers,x
+        sta lR45
+        lda aPortraitGraphicPointers+1,x
+        sta lR45+1
+        lda #(`aDecompressionBuffer)<<8
+        sta lR47+1
+        lda #<>aDecompressionBuffer
+        sta lR47
+        phx
+        jsl rlDecompressSingle
+        plx
+
+        lda #(`aDecompressionBuffer)<<8
+        sta lR18+1
+        lda #<>aDecompressionBuffer
+        sta lR18
+        lda aPortraitPalettePointers+1,x
+        sta lR19+1
+        lda aPortraitPalettePointers,x
+        sta lR19
+        rtl
+
+        .databank 0
+
+    .endsection GetDecompressedPortraitDataPointersSection
+
+
+    .section PortraitSlotDecompressionPointersSection
+
+      .al
+      .xl
+
+      aPortraitSlotDecompressionPointers ; 8A/B4EB
+
+        .word <>aDecompressionBuffer
+        .word <>aDecompressionBuffer + $800
+        .word <>aDecompressionBuffer + ($800 * 2)
+        .word <>aDecompressionBuffer + ($800 * 3)
+        .word <>aDecompressionBuffer + ($800 * 4)
+        .word <>aDecompressionBuffer + ($800 * 5)
+        .word <>aDecompressionBuffer + ($800 * 6)
+
+      ; 8A/B4F9
+
+    .endsection PortraitSlotDecompressionPointersSection
