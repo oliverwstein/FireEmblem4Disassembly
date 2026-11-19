@@ -6,7 +6,7 @@
 ; $20 (rlUnitWindowHandleInput), $21 (rlUnitWindowShow) and $22
 ; (rlUnitWindowRunPageTurnInput) run it, with wGameStateStep as the page (0-5).
 ; Its variables are at $7F82C7-$7F8438 (include/WRAM.h); other screens reuse
-; that RAM, such as the one rsUnknown80CD2E opens (bank $89, game states
+; that RAM, such as the one rsItemWindowOpen opens (bank $89, game states
 ; $23-$25) and the one at $8B/CF0A-D7BD (game states $2C-$31).
 ;
 ; FE5 kept this code, and the FE5 disassembly (github.com/ZaneAvernathy/FireEmblem5)
@@ -28,7 +28,7 @@
         .autsiz
         .databank ?
 
-        ; Main loop routine that opens the unit window (rlUnknown85DBDD in the map menu installs it): resets the screen and the engines, sets up the window's variables, BG and HDMA, then hands the main loop on. Not matched in FE5; named from its callees.
+        ; Main loop routine that opens the unit window (rlMapMenuOpenUnitWindow in the map menu installs it): resets the screen and the engines, sets up the window's variables, BG and HDMA, then hands the main loop on. Not matched in FE5; named from its callees.
 
         php
         sep #$20
@@ -3344,7 +3344,7 @@
         lda #$0004
         sta wR0
         ldx #$0002
-        jsl rlUnknown89BECC
+        jsl rlDrawBG3TileRun
         rts
 
         .databank 0

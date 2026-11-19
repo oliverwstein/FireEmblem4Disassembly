@@ -32,15 +32,15 @@
     aUnknownE00060                                           :?= address($E00060) ; read by rlUnknown9599E7
     aUnknownF77C12                                           :?= address($F77C12) ; read by rsUnknown8093C6
 
-    aUnknown80D1AE                                           :?= address($80D1AE) ; read by rlUnknown80D143
+    aUnknown80D1AE                                           :?= address($80D1AE) ; read by rlItemWindowGetItemData
     aUnknown85BE87                                           :?= address($85BE87) ; read by rlUnknown85BDA1
     aUnknown88C83C                                           :?= address($88C83C) ; read by rsUnknown88C7D8
     aUnknown898B88                                           :?= address($898B88) ; read by rsUnknown898B3B
     aUnknown899099                                           :?= address($899099) ; read by rsUnknown899028
     aUnknown89935F                                           :?= address($89935F) ; read by rsUnknown89933C
     aUnknown89AC56                                           :?= address($89AC56) ; read by rsUnknown89A3C0
-    aUnknown89BCE6                                           :?= address($89BCE6) ; read by rsUnknown89BBB2
-    aUnknown89C5C9                                           :?= address($89C5C9) ; read by rsUnknown89C5A2
+    aUnknown89BCE6                                           :?= address($89BCE6) ; read by rsItemWindowRenderItemIcons
+    aUnknown89C5C9                                           :?= address($89C5C9) ; read by rsItemWindowDrawWeaponRank
     aUnknown8A945E                                           :?= address($8A945E) ; read by rsUnknown8A9389
     aUnknown8A9D79                                           :?= address($8A9D79) ; read by rlUnknown8A9D39, rsUnknown8A9D22
     aUnknown8AA241                                           :?= address($8AA241) ; read by rsUnknown8AA142

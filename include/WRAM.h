@@ -1850,6 +1850,41 @@
 
   .endvirtual
 
+  .virtual $7F8467
+
+    ; The item window's working variables (engine/menus/item_window.asm). Other
+    ; screens reuse this area, so the names are only written in that file.
+
+    wItemWindowCurrentLine .word ?                  ; $7F8467
+      ; Counted from 1.
+    .word ?                                         ; $7F8469
+    wItemWindowItemCount .word ?                    ; $7F846B
+    wItemWindowScrollOffset .word ?                 ; $7F846D
+      ; The first visible line, times 2.
+    wItemWindowMaxScroll .word ?                    ; $7F846F
+      ; The furthest the first visible line can go: the item count less 12.
+    wItemWindowCursorRow .word ?                    ; $7F8471
+      ; 0-11, the cursor's row on the screen.
+    wItemWindowCursorYCoordinate .word ?            ; $7F8473
+    .fill 4                                         ; $7F8475
+    wItemWindowScrollDirection .word ?              ; $7F8479
+      ; -1 scrolling up, 1 scrolling down, 0 not scrolling.
+    .fill 4                                         ; $7F847B
+    wItemWindowSelectedItemIcon .word ?             ; $7F847F
+    .word ?                                         ; $7F8481
+    aItemWindowList .fill $97                       ; $7F8483
+      ; One byte per listed item: its player item index.
+    aItemWindowItemRAMPointers .fill $12E           ; $7F851A
+      ; By player item index, like the next two.
+    aItemWindowItemROMPointers .fill $12E           ; $7F8648
+    aItemWindowItemIcons .fill $12E                 ; $7F8776
+    aItemWindowSortScores .fill $12A                ; $7F88A4
+      ; By place in the list.
+    .word ?                                         ; $7F89CE
+    aItemWindowListTilemap .fill $2580              ; $7F89D0
+
+  .endvirtual
+
   .virtual $7F8402
 
     wDebugMenuScreenIndex .word ? ; 7F8402

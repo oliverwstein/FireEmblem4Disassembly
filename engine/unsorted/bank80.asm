@@ -2920,9 +2920,9 @@
         .long rlUnitWindowHandleInput
         .long rlUnitWindowShow
         .long rlUnitWindowRunPageTurnInput
-        .long rlUnknown89B883
-        .long rlUnknown89B3D7
-        .long rlUnknown89B3E7
+        .long rlItemWindowRender
+        .long rlItemWindowShow
+        .long rlItemWindowRunStep
         .long rlDebugMenuTabInputHandler
         .long rlUnknown89E7BD
         .long rlDebugMenuPageInputHandler
@@ -6263,439 +6263,6 @@
     .endsection Unsorted80C39ASection
 
 
-    .section Unsorted80CE9ESection
-
-      .al
-      .xl
-
-      rsUnknown80CE9E ; 80/CE9E
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        sep #$20
-        lda #$17
-        sta bBufferTM
-        lda #$00
-        sta bBufferTS
-        lda #$00
-        sta bBufferTMW
-        lda #$00
-        sta bBufferTSW
-        lda #$00
-        sta bBufferW12SEL
-        lda #$00
-        sta bBufferW34SEL
-        lda #$00
-        sta bBufferWOBJSEL
-        lda #$00
-        sta bBufferWH0
-        lda #$FF
-        sta bBufferWH1
-        lda #$00
-        sta bBufferWH2
-        sta bBufferWH3
-        lda #$00
-        sta bBufferWBGLOG
-        sta bBufferWOBJLOG
-        lda #$00
-        sta bBufferCGWSEL
-        lda #$83
-        sta bBufferCGADSUB
-        rep #$20
-        stz wBufferBG1HOFS
-        stz wBufferBG2HOFS
-        stz wBufferBG3HOFS
-        stz wBufferBG1VOFS
-        stz wBufferBG2VOFS
-        stz wBufferBG3VOFS
-        rts
-
-        .databank 0
-
-        ; 80/CEE7
-
-      rsUnknown80CEE7 ; 80/CEE7
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$8000
-        sta lR44+1
-        lda #$D07E
-        sta lR44
-        jsl rlHDMAEngineCreateEntry
-        rts
-
-        .databank 0
-
-        ; 80/CEF6
-
-      rsUnknown80CEF6 ; 80/CEF6
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$00CE
-        jsl rlUnitWindowFillBG3Buffer
-        lda $7F846B
-        bne _CF3F
-        lda #$0002
-        sta wGameStateStep,b
-        lda #$8000
-        sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$CD13
-        sta lMapMenuTilemapRAMEntryPointer,b
-        lda #$2000
-        sta aCurrentTilemapInfo,b
-        lda #$8000
-        sta lR18+1
-        lda #$D046
-        sta lR18
-        ldx #$0A02
-        jsl rlDrawMenuTextLine
-        lda #$8000
-        sta lR18+1
-        lda #$D064
-        sta lR18
-        ldx #$0D03
-        jsl rlDrawMenuTextLine
-        bra _CF4A
-
-
-        _CF3F
-        lda #$0000
-        jsl rlUnknown89B8BD
-        jsl rlUnknown89B91F
-
-        _CF4A
-        lda $7F846B
-        ldx #$3920
-        stx wR5
-        ldx #$0000
-        stx wR6
-        ldx #$0672
-        jsl rlDrawMenuTextNumber
-        lda #$3800
-        sta wR1
-        lda #$00CD
-        sta wR2
-        lda #$0001
-        sta wR0
-        ldx #$0670
-        jsl rlUnknown89BECC
-        lda #$3C00
-        sta wR1
-        lda #$0289
-        sta wR2
-        lda #$0004
-        sta wR0
-        ldx #$0048
-        jsl rlUnknown89BECC
-        lda #$3C00
-        sta wR1
-        lda #$028D
-        sta wR2
-        lda #$0001
-        sta wR0
-        ldx #$0058
-        jsl rlUnknown89BECC
-        lda #$3C00
-        sta wR1
-        lda #$01C5
-        sta wR2
-        lda #$0001
-        sta wR0
-        ldx #$005A
-        jsl rlUnknown89BECC
-        lda #$3000
-        sta wR1
-        lda #$0205
-        sta wR2
-        lda #$0007
-        sta wR0
-        ldx #$006C
-        jsl rlUnknown89BECC
-        lda $7E5333
-        beq _CFD8
-        dec a
-        beq _D00A
-        bra _CFDC
-
-
-        _CFD8
-        jml _D022
-
-
-        _CFDC
-        lda #$2000
-        sta wR1
-        lda #$01E0
-        sta wR2
-        lda #$0003
-        sta wR0
-        ldx #$012E
-        jsl rlUnknown89BECC
-        lda #$2000
-        sta wR1
-        lda #$01CF
-        sta wR2
-        lda #$0001
-        sta wR0
-        ldx #$0134
-        jsl rlUnknown89BECC
-        bra _D038
-
-
-        _D00A
-        lda #$2000
-        sta wR1
-        lda #$01CC
-        sta wR2
-        lda #$0004
-        sta wR0
-        ldx #$012E
-        jsl rlUnknown89BECC
-        bra _D038
-
-
-        _D022
-        lda #$2000
-        sta wR1
-        lda #$01C8
-        sta wR2
-        lda #$0004
-        sta wR0
-        ldx #$012E
-        jsl rlUnknown89BECC
-
-        _D038
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $3000
-
-        rts
-
-        .databank 0
-
-        ; 80/D046
-
-    .endsection Unsorted80CE9ESection
-
-
-    .section Unsorted80D089Section
-
-      .al
-      .xl
-
-      rlUnknown80D089 ; 80/D089
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ldx #$0000
-
-        _D08C
-        lda $80D09B,x
-        sta $7FB0B6,x
-        beq _D09A
-        inc x
-        inc x
-        bra _D08C
-
-
-        _D09A
-        rtl
-
-        .databank 0
-
-        ; 80/D09B
-
-    .endsection Unsorted80D089Section
-
-
-    .section Unsorted80D0B1Section
-
-      .al
-      .xl
-
-      rlUnknown80D0B1 ; 80/D0B1
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        rtl
-
-        .databank 0
-
-        ; 80/D0B2
-
-    .endsection Unsorted80D0B1Section
-
-
-    .section Unsorted80D0B4Section
-
-      .al
-      .xl
-
-      rsUnknown80D0B4 ; 80/D0B4
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0000
-        ldx #$0096
-
-        _D0BA
-        sta $7F8481,x
-        dec x
-        dec x
-        bne _D0BA
-        jsl rlGetItemRAMDataCount
-        inc a
-        sta wR15
-        ldx #$0000
-        lda #$0001
-
-        _D0CF
-        sta wR14
-        jsl rlGetItemRAMStructEntryByPlayerItemIndex
-        jsl rlGetEffectiveItemROMPointerByItemRAMStructEntry
-        jsl rlGetItemRAMStateAndOwner
-        lda wR0
-        cmp #$0001
-        beq _D0E9
-        cmp #$0002
-        bne _D117
-
-        _D0E9
-        lda wR1
-        sta wSelectedUnitDataRAMPointer,b
-        jsl rlGetSelectedUnitFactionSlot
-        cmp #$0000
-        bne _D117
-        jsl rlGetSelectedUnitStates
-        bit #UnitStateDead
-        bne _D117
-        jsl rlGetSelectedUnitStatus
-        cmp #StatusCaptive
-        beq _D117
-        lda wR14
-        and #$00FF
-        sep #$20
-        sta $7F8483,x
-        rep #$20
-        inc x
-
-        _D117
-        lda wR14
-        inc a
-        cmp wR15
-        beq _D122
-        jml _D0CF
-
-
-        _D122
-        txa
-        sta $7F846B
-        sec
-        sbc #$000C
-        bpl _D130
-        lda #$0000
-
-        _D130
-        sta $7F846F
-        lda $7F846B
-        beq _D142
-        jsl rlUnknown80D143
-        jsl rlUnknown89C2CF
-
-        _D142
-        rts
-
-        .databank 0
-
-        ; 80/D143
-
-    .endsection Unsorted80D0B4Section
-
-
-    .section Unsorted80D143Section
-
-      .al
-      .xl
-
-      rlUnknown80D143 ; 80/D143
-
-        ; Found by tools/sweep.py: nothing in the build reaches this.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0000
-        ldx #$0200
-
-        _D149
-        sta $7F8518,x
-        sta $7F8646,x
-        sta $7F8774,x
-        dec x
-        dec x
-        bne _D149
-        lda $7F846B
-        sta $7FB012
-        lda #$0000
-
-        _D164
-        sta $7FB010
-        tax
-        lda $7F8483,x
-        and #$00FF
-        pha
-        jsl rlGetItemRAMStructEntryByPlayerItemIndex
-        jsl rlGetEffectiveItemIDByItemRAMStructEntry
-        sta $7FB014
-        jsl rlGetItemDataROMPointer
-        lda $7FB014
-        asl a
-        tax
-        lda aUnknown80D1AE,x
-        tay
-        pla
-        asl a
-        tax
-        tya
-        sta $7F8776,x
-        lda wCurrentItemDataRAMPointer,b
-        sta $7F851A,x
-        lda wCurrentItemDataROMPointer,b
-        sta $7F8648,x
-        lda $7FB010
-        inc a
-        cmp $7FB012
-        bne _D164
-        rtl
-
-        .databank 0
-
-        ; 80/D1AE
-
-    .endsection Unsorted80D143Section
-
-
     .section Unsorted80D2C6Section
 
       .al
@@ -6950,7 +6517,7 @@
         lda #$0003
         sta wR0
         ldx #$0048
-        jsl rlUnknown89BECC
+        jsl rlDrawBG3TileRun
         lda #$3C00
         sta wR1
         lda #$02E9
@@ -6958,7 +6525,7 @@
         lda #$0003
         sta wR0
         ldx #$0056
-        jsl rlUnknown89BECC
+        jsl rlDrawBG3TileRun
         lda #$3000
         sta wR1
         lda #$026F
@@ -6966,7 +6533,7 @@
         lda #$0001
         sta wR0
         ldx #$0066
-        jsl rlUnknown89BECC
+        jsl rlDrawBG3TileRun
         lda #$3000
         sta wR1
         lda #$0280
@@ -6974,7 +6541,7 @@
         lda #$0009
         sta wR0
         ldx #$0068
-        jsl rlUnknown89BECC
+        jsl rlDrawBG3TileRun
         jsl rlUnknown8BD90B
         jsl rlUnknown8BD968
         jsl rlUnknown8BD9A6
@@ -8458,7 +8025,7 @@
         lda #$0004
         sta wR0
         ldx #$0048
-        jsl rlUnknown89BECC
+        jsl rlDrawBG3TileRun
         lda #$3C00
         sta wR1
         lda #$02E0
@@ -8466,7 +8033,7 @@
         lda #$0002
         sta wR0
         ldx #$005C
-        jsl rlUnknown89BECC
+        jsl rlDrawBG3TileRun
         lda #$3000
         sta wR1
         lda #$02CB
@@ -8474,7 +8041,7 @@
         lda #$0005
         sta wR0
         ldx #$006E
-        jsl rlUnknown89BECC
+        jsl rlDrawBG3TileRun
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda #$8000
@@ -9470,180 +9037,5 @@
         ; F7/7C12
 
     .endsection TableF77C0CSection
-
-
-    .section Unsorted80CD2ESection
-
-      .al
-      .xl
-
-      rsUnknown80CD2E ; 80/CD2E
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Main loop routine that opens a screen whose per-frame code is in bank $89
-        ; (game states $23 and $24); rlUnknown85DBED in the map menu installs it.
-        ; Built like rsUnitWindowOpen, but not the unit window: the code FE5 calls
-        ; rsUnitWindowMainLoopUpdater only resembles it. rsUnknown80CDAE sets up
-        ; this screen's list variables at $7F8467, laid out like the unit window's.
-
-        php
-        sep #$20
-        lda #$80
-        sta bBufferINIDISP
-        rep #$20
-        lda #<>rsUnknown80BB9B
-        sta wVBlankPointer
-        jsl rlHaltUntilVBlank
-        jsl rlDisableVBlank
-        jsl rlHardwareResetScreenPosMathHDMA
-        jsl rlHardwareResetScreenRegisters
-        lda #$0000
-        sta wR1
-        lda #$0000
-        sta wR2
-        lda #$0000
-        sta wR3
-        lda #$4000
-        sta wR5
-        lda #$2000
-        sta wR6
-        lda #$2800
-        sta wR7
-        lda #$1800
-        sta wR8
-        jsl rlSetLayerPositionsAndSizes
-        jsl rlClearUnitWindowAndTerrainWindowProcs
-        jsl rlActiveSpriteEngineReset
-        jsl rlResetHDMAEngine
-        jsl rlResetIRQEngine
-        jsr rsUnknown80CDAE
-        jsr rsUnknown80CDDF
-        jsr rsUnknown80CE9E
-        jsr rsUnknown80CEE7
-        jsr rsUnknown80D0B4
-        jsr rsUnknown80CEF6
-        phk
-        plb
-        .databank $80
-        lda #$0024
-        sta wGameStateRoutine1,b
-        lda #$0023
-        sta wGameStateRoutine2,b
-        lda #<>rsUnknown809D4F
-        sta wMainLoopPointer
-        jsl rlEnableVBlank
-        plp
-        rts
-
-        .databank 0
-
-        ; 80/CDAE
-
-      rsUnknown80CDAE ; 80/CDAE
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0000
-        sta wGameStateStep,b
-        sta $7F846D
-        sta $7F8471
-        sta $7F8475
-        sta $7F8477
-        sta $7F8479
-        sta $7F847D
-        sta $7F847B
-        lda #$0001
-        sta $7F8467
-        lda #$001C
-        sta $7F8473
-        rts
-
-        .databank 0
-
-        ; 80/CDDF
-
-      rsUnknown80CDDF ; 80/CDDF
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DE44C0, $0400, $80, $8000
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $D84000, $4000, $80, $8400
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
-
-        lda #$8000
-        sta lR19+1
-        lda #$CE8E
-        sta lR19
-        jsl rlHandleMapMenuDecompressionDMA
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DE48C0, $1800, $80, $1800
-
-        ldx #$0200
-
-        _CE24
-        lda $DDFFFE,x
-        sta wJoy2RepeatTimer,x
-        dec x
-        dec x
-        bne _CE24
-        lda #$0000
-        sta aBGPaletteBuffer,b
-        lda #$0003
-        jsl rlUnitWindowCopySpritePalette1
-        lda #$0004
-        jsl rlUnitWindowCopySpritePalette2
-        lda #$DD00
-        sta lR18+1
-        lda #$3DC0
-        sta lR18
-        lda #(`aBG2TilemapBuffer)<<8
-        sta lR19+1
-        lda #<>aBG2TilemapBuffer
-        sta lR19
-        jsl rlAppendDecompList
-        lda #$DD00
-        sta lR18+1
-        lda #$3E96
-        sta lR18
-        lda #$7E00
-        sta lR19+1
-        lda #$7B88
-        sta lR19
-        jsl rlAppendDecompList
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM aBG2TilemapBuffer, $0700, $80, $4000
-
-        lda #$8000
-        sta lR19+1
-        lda #$CE96
-        sta lR19
-        jsl rlHandleMapMenuDecompressionDMA
-        rts
-
-        .databank 0
-
-        ; 80/CE8E
-
-    .endsection Unsorted80CD2ESection
 
 

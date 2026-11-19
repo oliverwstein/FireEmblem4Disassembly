@@ -13803,13 +13803,15 @@
       .al
       .xl
 
-      rlUnknown85DBDD ; 85/DBDD
+      rlMapMenuOpenUnitWindow ; 85/DBDD
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Map menu option ユニット (Unit): installs rsUnitWindowOpen as the main loop routine, with $7F82C5 set to return through rsUnknown80B122.
 
         stz wGameStateRoutine1,b
         lda #$B122
@@ -13822,7 +13824,7 @@
 
         ; 85/DBED
 
-      rlUnknown85DBED ; 85/DBED
+      rlMapMenuOpenItemWindow ; 85/DBED
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
@@ -13830,8 +13832,10 @@
         .autsiz
         .databank ?
 
+        ; Map menu option アイテム (Item): installs rsItemWindowOpen as the main loop routine.
+
         stz wGameStateRoutine1,b
-        lda #<>rsUnknown80CD2E
+        lda #<>rsItemWindowOpen
         sta wMainLoopPointer
         rtl
 
@@ -13839,13 +13843,15 @@
 
         ; 85/DBF6
 
-      rlUnknown85DBF6 ; 85/DBF6
+      rlMapMenuOpenDataWindow ; 85/DBF6
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Map menu option データ (Data): fades into rsUnknown80D915 (procMainLoopChangeFade, the routine in aProcSystem.wInput0).
 
         stz wGameStateRoutine1,b
         lda #$D915
@@ -13861,13 +13867,15 @@
 
         ; 85/DC0E
 
-      rlUnknown85DC0E ; 85/DC0E
+      rlMapMenuOpenSkillWindow ; 85/DC0E
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Map menu option スキル (Skill): fades into rsUnknown80D2C6 (procMainLoopChangeFade, the routine in aProcSystem.wInput0).
 
         stz wGameStateRoutine1,b
         lda #$D2C6
