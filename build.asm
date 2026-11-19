@@ -134,6 +134,7 @@
   .include "engine/map/windows.asm"
   .include "engine/menus/map_menu.asm"
   .include "engine/menus/menu_text.asm"
+  .include "engine/menus/revive_screen.asm"
   .include "engine/rankings/rankings.asm"
   .include "engine/sound/music.asm"
   .include "engine/units/turn_start.asm"
@@ -1090,6 +1091,20 @@
 
 
 
+
+    * = $00DFD3
+    .logical $80DFD3
+
+      .dsection ReviveScreenSection
+
+    .here
+
+    * = $00E07A
+    .logical $80E07A
+
+      .dsection ReviveScreenBuildSection
+
+    .here
 
     * = $00E42B
     .logical $80E42B
@@ -6604,6 +6619,13 @@
     .logical $88DC07
 
       .dsection Unsorted88DC07Section
+
+    .here
+
+    * = $08DD0F
+    .logical $88DD0F
+
+      .dsection Unsorted88DD0FSection
 
     .here
 

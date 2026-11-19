@@ -11883,6 +11883,103 @@
     .endsection Unsorted88DC07Section
 
 
+    .section Unsorted88DD0FSection
+
+      .al
+      .xl
+
+      rlUnknown88DD0F ; 88/DD0F
+
+        ; Nothing in the build reaches this. Draws a sprite array at the active
+        ; unit (wR0 = $68, wR1 = $0885 + 6): aUnknown88DD57, or aUnknown88DD77
+        ; when its map sprite has bit 15 set.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $88
+        lda #$0068
+        sta wR0
+        lda $0885,b
+        clc
+        adc #$0006
+        sta wR1
+        stz wR4
+        ldx wActiveUnitDeploymentOffset,b
+        lda #$0000
+        sta wR5
+        jsl rlGetSelectedUnitMapSprite
+        and #$8000
+        bne _DD42
+        sep #$20
+        lda #$88
+        pha
+        plb
+        .databank $88
+        rep #$20
+        lda #<>aUnknown88DD57
+        tay
+        bra _DD4E
+
+
+        _DD42
+        sep #$20
+        lda #$88
+        pha
+        plb
+        .databank $88
+        rep #$20
+        lda #<>aUnknown88DD77
+        tay
+
+        _DD4E
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 88/DD57
+
+      aUnknown88DD57 ; 88/DD57
+
+        ; Drawn by rlUnknown88DD0F when the active unit's map sprite has bit 15 clear.
+        _Sprites := [[(   4,    4), $21, SpriteLarge, $00E0, 3, 1, false, false]]
+        _Sprites..= [[(  16,   16), $00, SpriteSmall, $0022, 3, 2, false, false]]
+        _Sprites..= [[(   8,   16), $00, SpriteSmall, $0021, 3, 2, false, false]]
+        _Sprites..= [[(   0,   16), $00, SpriteSmall, $0020, 3, 2, false, false]]
+        _Sprites..= [[(  16,    0), $21, SpriteLarge, $0002, 3, 2, false, false]]
+        _Sprites..= [[(   0,    0), $21, SpriteLarge, $0000, 3, 2, false, false]]
+
+        .structSpriteArray aUnknown88DD57._Sprites
+
+
+      aUnknown88DD77 ; 88/DD77
+
+        ; Drawn by rlUnknown88DD0F when the active unit's map sprite has bit 15 set.
+        _Sprites := [[(   4,    6), $21, SpriteLarge, $00E0, 3, 1, false, false]]
+        _Sprites..= [[(   4,  -10), $21, SpriteLarge, $00E2, 3, 1, false, false]]
+        _Sprites..= [[(  16,   16), $00, SpriteSmall, $0022, 3, 2, false, false]]
+        _Sprites..= [[(   8,   16), $00, SpriteSmall, $0021, 3, 2, false, false]]
+        _Sprites..= [[(   0,   16), $00, SpriteSmall, $0020, 3, 2, false, false]]
+        _Sprites..= [[(  16,    0), $21, SpriteLarge, $0002, 3, 2, false, false]]
+        _Sprites..= [[(   0,    0), $21, SpriteLarge, $0000, 3, 2, false, false]]
+
+        .structSpriteArray aUnknown88DD77._Sprites
+
+    .endsection Unsorted88DD0FSection
+
+
     .section Unsorted88DD9CSection
 
       .as

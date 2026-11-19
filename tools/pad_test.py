@@ -291,6 +291,15 @@ def main():
         t = (bank << 16) | rom[o + 1] | rom[o + 2] << 8
         if t in targets and not any(from_source[o:o + size]):
             calls.append((o, op, t))
+    # The game's code runs from the upper halves of banks $80-$9F; a match in the
+    # lower half of a bank ($xx/0000-7FFF) or above bank $9F is data that only
+    # looks like a call, unless the log shows it ran.
+    lower = [c for c in calls if not ran(c[0]) and ((c[0] & 0xFFFF) < 0x8000 or c[0] >> 16 >= 0x20)]
+    if lower:
+        print(f'Calls into the block in data areas (lower bank halves, or past bank $9F), '
+              f'taken to be data: {len(lower)} (' + ', '.join(cpu(o) for o, _, _ in lower[:6])
+              + (' ...' if len(lower) > 6 else '') + ')')
+    calls = [c for c in calls if c not in lower]
     certain = [c for c in calls if ran(c[0])]
     mnem = {0x22: 'jsl', 0x5C: 'jml', 0x20: 'jsr', 0x4C: 'jmp'}
     if calls:

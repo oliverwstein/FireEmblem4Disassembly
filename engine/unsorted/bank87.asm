@@ -6756,7 +6756,7 @@
         .autsiz
         .databank ?
 
-        lda #$DFDC
+        lda #<>rsReviveScreenOpen
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
