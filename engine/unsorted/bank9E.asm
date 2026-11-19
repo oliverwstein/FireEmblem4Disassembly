@@ -1546,6 +1546,150 @@
     .endsection Unsorted9E88F4Section
 
 
+    .section Unsorted9E88FASection
+
+      .al
+      .xl
+
+      rlUnknown9E88FA ; 9E/88FA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phb
+        php
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+        lda @l $7F4BE7
+        beq _8929
+        lda #$213F
+        sta @l $000224
+        lda #$0002
+        sta @l $000226
+        lda #$AC00
+        sta @l lR18+1
+        lda #$C8C3
+        sta @l lR18
+        bra _895A
+
+
+        _8929
+        lda @l $7F455E
+        asl a
+        clc
+        adc @l $7F455E
+        asl a
+        sta wR0
+        lda @l $7F454E
+        sta wR10
+        lda #$0031
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR12
+        clc
+        adc wR0
+        adc #$0003
+        tax
+        lda $9EB50E,x
+        sta lR18+1
+        lda aBattleMapSpriteData,x
+        sta lR18
+
+        _895A
+        lda #$7E00
+        sta lR19+1
+        lda #$8B88
+        clc
+        adc #$0000
+        sta lR19
+        plp
+        plb
+        .databank $7F
+        jsl rlAppendDecompList
+        lda aActionStructUnit2
+        cmp #$FFFF
+        beq _89EE
+        phb
+        php
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+        lda @l $7F4560
+        asl a
+        clc
+        adc @l $7F4560
+        asl a
+        sta wR0
+        lda @l $7F4550
+        sta wR10
+        lda #$0031
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR12
+        clc
+        adc wR0
+        adc #$0003
+        tax
+        lda $9EB50E,x
+        sta lR18+1
+        lda aBattleMapSpriteData,x
+        sta lR18
+        lda #$7E00
+        sta lR19+1
+        lda #$8B88
+        clc
+        adc #$2000
+        sta lR19
+        plp
+        plb
+        .databank $7F
+        jsl rlAppendDecompList
+        phb
+        php
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+        lda #$AC00
+        sta lR18+1
+        lda #$CC17
+        sta lR18
+        lda #$7E00
+        sta lR19+1
+        lda #$8B88
+        clc
+        adc #$4000
+        sta lR19
+        plp
+        plb
+        .databank $7F
+        jsl rlAppendDecompList
+
+        _89EE
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/89F1
+
+    .endsection Unsorted9E88FASection
+
+
     .section Unsorted9E89F1Section
 
       .al
@@ -2892,6 +3036,44 @@
         ; 9E/9320
 
     .endsection Unsorted9E915BSection
+
+
+    .section Unsorted9E9320Section
+
+      .al
+      .xl
+
+      rlUnknown9E9320 ; 9E/9320
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda bUnknown000E7B,b
+        bit #$0040
+        bne _9340
+        ldx $0772,b
+        lda aDeploymentTable,x
+        bit #$0020
+        bne _9340
+        bit #$0010
+        beq _9340
+        jsl rlUnknown88B6FD
+        bra _9340
+
+
+        _9340
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/9342
+
+    .endsection Unsorted9E9320Section
 
 
     .section Unsorted9E9342Section
@@ -8753,6 +8935,67 @@
     .endsection Unsorted9EC7B3Section
 
 
+    .section Unsorted9EC8B3Section
+
+      .al
+      .xl
+
+      rlUnknown9EC8B3 ; 9E/C8B3
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aBattleRoundsData)<<8
+        sta lStructPointer2+1,b
+        lda #<>aBattleRoundsData
+        sta lStructPointer2,b
+        lda $1057,b,x
+        sta wStructIndex,b
+        jsl rlLoadRAMStructDataByIndex
+        lda lStructPointer1,b
+        sta $1077,b,x
+        sta $7F4C2F
+        inc $1057,b,x
+        lda $1057,b,x
+        sta wStructIndex,b
+        jsl rlLoadRAMStructDataByIndex
+        lda lStructPointer1,b
+        sta $1077,b,x
+        cmp #$FFFF
+        beq _C907
+        cmp #$7F00
+        bne _C8F7
+        lda #$0001
+        sta $7F4C07
+
+        _C8F7
+        lda $0F37,b,x
+        ora #$0002
+        sta $0F37,b,x
+        lda #$CAD1
+        sta $0F57,b,x
+        rtl
+
+
+        _C907
+        lda #$CAD1
+        sta $0F57,b,x
+        lda $0F37,b,x
+        ora #$0002
+        ora #$0001
+        sta $0F37,b,x
+        rtl
+
+        .databank 0
+
+        ; 9E/C91A
+
+    .endsection Unsorted9EC8B3Section
+
+
     .section Unsorted9EC91ASection
 
       .al
@@ -9565,6 +9808,146 @@
     .endsection Unsorted9ECFCDSection
 
 
+    .section Unsorted9ED07ASection
+
+      .al
+      .xl
+
+      rlUnknown9ED07A ; 9E/D07A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`rlUnknown9ED089)<<8
+        sta lR44+1
+        lda #<>rlUnknown9ED089
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 9E/D089
+
+    .endsection Unsorted9ED07ASection
+
+
+    .section Unsorted9ED089Section
+
+      .al
+      .xl
+
+      rlUnknown9ED089 ; 9E/D089
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        eor $D0914E
+        lda $D2,x
+        pea #$5AD1
+        phx
+        phb
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0000
+        sta $4580,b
+        sta $4582,b
+        sta $4584,b
+        sta $7F455A
+        sta $7F4572
+        sta $7F4C87
+        sta $7F5091
+        sta $7F5093
+        sta $4C11,b
+        sta $4C13,b
+        sta $7F4C07
+        lda $7E4EA9
+        sta aActionStructUnit1
+        sta aActionStructUnit2
+        lda $7E4EAF
+        sta @l wR0
+        lda $7E4EBD
+        sta @l wR1
+        lda $7E4EBB
+        sta @l wR2
+        jsl rlUnknown9E85A4
+        sta $454E,b
+        lda wBattleDistance
+        sta $4552,b
+        lda wBattleQuotePointer
+        sta $4554,b
+        lda #$FFFF
+        jsl rlUnknown9E866F
+        sta $454A,b
+        lda #$FFFF
+        sta $7E4EDD
+        lda #$0000
+        sta $4550,b
+        sta $4556,b
+        sta $4558,b
+        sta $454C,b
+        lda #$0006
+        sta $455E,b
+        sta $4560,b
+        lda #$001F
+        sta $5089,b
+        plb
+        .databank ?
+        lda $7F4554
+        tay
+        lda $7F4552
+        tax
+        jsl rlUnknown9E8D25
+        lda #$8000
+        sta $7F508F
+        lda wR0
+        and #$00FF
+        sta wR0
+        lda wR1
+        and #$00FF
+        sta wR1
+        lda wR1
+        xba
+        ora wR0
+        sta $7F5099
+        sta $7F509B
+        lda #$8100
+        sta @l $0015E5
+        lda #$841B
+        sta @l $0015E4
+        lda @l aActiveSpriteSystem
+        sta $7F4BD9
+        lda @l aActiveSpriteSystem
+        ora #$4000
+        sta @l aActiveSpriteSystem
+        plx
+        lda @l $000302
+        sta @l $0010B7,x
+        stz $0302,b
+        lda #$0000
+        sta $0F37,b,x
+        lda $7E4EAF
+        sta $7E4EBF
+        jsl rlUnknown88CD53
+        jsl rlUnknown88CD61
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/D1A1
+
+    .endsection Unsorted9ED089Section
+
+
     .section Unsorted9ED1A1Section
 
       .al
@@ -9596,6 +9979,93 @@
         ; 9E/D1BB
 
     .endsection Unsorted9ED1A1Section
+
+
+    .section Unsorted9ED2B5Section
+
+      .al
+      .xl
+
+      rlUnknown9ED2B5 ; 9E/D2B5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        phb
+        php
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+        lda @l $7F455E
+        asl a
+        clc
+        adc @l $7F455E
+        asl a
+        sta wR0
+        lda @l $7F454E
+        sta wR10
+        lda #$0031
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR12
+        clc
+        adc wR0
+        adc #$0003
+        tax
+        lda $9EB50E,x
+        sta lR18+1
+        lda aBattleMapSpriteData,x
+        sta lR18
+        lda #$7E00
+        sta lR19+1
+        lda #$8B88
+        clc
+        adc #$0000
+        sta lR19
+        plp
+        plb
+        .databank $7F
+        jsl rlAppendDecompList
+        phb
+        php
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+        lda #$AC00
+        sta lR18+1
+        lda #$CC17
+        sta lR18
+        lda #$7E00
+        sta lR19+1
+        lda #$8B88
+        clc
+        adc #$4000
+        sta lR19
+        plp
+        plb
+        .databank $7F
+        jsl rlAppendDecompList
+        ply
+        plx
+        lda #$D1F3
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 9E/D337
+
+    .endsection Unsorted9ED2B5Section
 
 
     .section Unsorted9ED337Section
@@ -9636,6 +10106,133 @@
         ; 9E/D372
 
     .endsection Unsorted9ED337Section
+
+
+    .section Unsorted9ED372Section
+
+      .al
+      .xl
+
+      rlUnknown9ED372 ; 9E/D372
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+        phy
+        phx
+        lda #$0000
+        sta @l $7F4580
+        sta @l $7F4582
+        sta @l $7F4584
+        sta @l $000F37,x
+        lda #$0001
+        sta $5091,b
+        lda $4599,b
+        sta $458A,b
+        sta $4587,b
+        lda $4598,b
+        sta lR18
+        lda $4599,b
+        sta lR18+1
+        lda @l $7F455E
+        sta wR0
+        lda #$0000
+        jsr rsUnknown9E832C
+        stx $4589,b
+        sty $4586,b
+        plx
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 9E/D3C1
+
+    .endsection Unsorted9ED372Section
+
+
+    .section Unsorted9ED3C1Section
+
+      .al
+      .xl
+
+      rlUnknown9ED3C1 ; 9E/D3C1
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F45A4
+        tax
+        stz $1100,b,x
+        lda $7F45A6
+        tax
+        cpx #$FFFF
+        beq _D3D7
+        stz $1100,b,x
+
+        _D3D7
+        lda #$0001
+        sta $7F4584
+        jsl rlUnknown88CD4C
+        jsl rlUnknown88CD5A
+        plx
+        lda $10B7,b,x
+        sta $0302,b
+        lda #(`rlPushToOAMBuffer)<<8
+        sta $15E5,b
+        lda #<>rlPushToOAMBuffer
+        sta $15E4,b
+        lda $7F4BD9
+        sta aActiveSpriteSystem,b
+        rtl
+
+        .databank 0
+
+        ; 9E/D401
+
+    .endsection Unsorted9ED3C1Section
+
+
+    .section Unsorted9ED401Section
+
+      .al
+      .xl
+
+      rlUnknown9ED401 ; 9E/D401
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F45A4
+        sta $7F45A8
+        lda $7F45A6
+        sta $7F45AA
+        rtl
+
+        .databank 0
+
+        ; 9E/D412
+
+    .endsection Unsorted9ED401Section
 
 
     .section Unsorted9ED42ASection
@@ -11577,6 +12174,224 @@
     .endsection Unsorted9EE2BESection
 
 
+    .section Unsorted9EEDB5Section
+
+      .al
+      .xl
+
+      rlUnknown9EEDB5 ; 9E/EDB5
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0019
+        sta $7E4EBF
+        lda #$0000
+        sta $7E4EC1
+        lda #$0038
+        sta $7E4EB7
+        lda #$0039
+        sta $7E4EB9
+        lda #$000A
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0000
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$0012
+        sta $7E4F1F
+        lda #$0000
+        sta $7E4F21
+        lda #$0039
+        sta $7E4F17
+        lda #$0039
+        sta $7E4F19
+        lda #$001D
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0009
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$1B00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$1614
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/EED3
+
+      rlUnknown9EEED3 ; 9E/EED3
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$003B
+        sta $7E4EBF
+        lda #$0000
+        sta $7E4EC1
+        lda #$0039
+        sta $7E4EB7
+        lda #$0037
+        sta $7E4EB9
+        lda #$004B
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0000
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$000E
+        sta $7E4F1F
+        lda #$0000
+        sta $7E4F21
+        lda #$0039
+        sta $7E4F17
+        lda #$0038
+        sta $7E4F19
+        lda #$002A
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0148
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0109
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0140
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/EFF1
+
+    .endsection Unsorted9EEDB5Section
+
+
     .section Unsorted9EF1B5Section
 
       .al
@@ -11609,6 +12424,270 @@
         ; 9E/F1D9
 
     .endsection Unsorted9EF1B5Section
+
+
+    .section Unsorted9EF1FASection
+
+      .al
+      .xl
+
+      rlUnknown9EF1FA ; 9E/F1FA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wEventUnitSlot1ID,b
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta $7E4EA9
+        jsl rlGetSelectedUnitClassID
+        sta $7E4EAF
+        jsl rlGetSelectedUnitGender
+        sta $7E4EBD
+        jsl rlGetSelectedUnitCharacterID
+        sta $7E4EBB
+        jsl rlGetSelectedUnitDeploymentOffset
+        tax
+        lda $7E441B,x
+        sta wBattleDistance
+        lda $7E44AB,x
+        sta wBattleQuotePointer
+        lda #$0000
+        sta $7F4C87
+        lda #$9E00
+        sta lR44+1
+        lda #$F24B
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 9E/F24B
+
+      rlUnknown9EF24B ; 9E/F24B
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        eor $F2534E
+        lda $D2,x
+        pea #$5AD1
+        phx
+        phb
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0000
+        sta $4580,b
+        sta $4582,b
+        sta $4584,b
+        sta $7F455A
+        sta $7F4572
+        sta $7F5091
+        sta $7F5093
+        sta $7F4C07
+        lda $7E4EA9
+        sta aActionStructUnit1
+        sta aActionStructUnit2
+        lda $7E4EAF
+        sta @l wR0
+        lda $7E4EBD
+        sta @l wR1
+        lda $7E4EBB
+        sta @l wR2
+        jsl rlUnknown9E85A4
+        sta $454E,b
+        lda wBattleDistance
+        sta $4552,b
+        lda wBattleQuotePointer
+        sta $4554,b
+        lda #$FFFF
+        jsl rlUnknown9E866F
+        sta $454A,b
+        lda #$FFFF
+        sta $7E4EDD
+        lda #$0000
+        sta $4550,b
+        sta $4556,b
+        sta $4558,b
+        sta $454C,b
+        lda #$0006
+        sta $455E,b
+        sta $4560,b
+        lda #$0020
+        sta $5089,b
+        plb
+        .databank ?
+        lda $7F4554
+        tay
+        lda $7F4552
+        tax
+        jsl rlUnknown9E8D25
+        lda #$8000
+        sta $7F508F
+        lda $7E4EAF
+        sta $7E4EBF
+        lda wR0
+        and #$00FF
+        sta wR0
+        lda wR1
+        and #$00FF
+        sta wR1
+        lda wR1
+        xba
+        ora wR0
+        sta $7F5099
+        sta $7F509B
+        lda #$8100
+        sta @l $0015E5
+        lda #$841B
+        sta @l $0015E4
+        lda @l aActiveSpriteSystem
+        sta $7F4BD9
+        lda @l aActiveSpriteSystem
+        ora #$4000
+        sta @l aActiveSpriteSystem
+        plx
+        lda @l $000302
+        sta @l $0010B7,x
+        stz $0302,b
+        jsl rlUnknown88CD53
+        jsl rlUnknown88CD61
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/F353
+
+    .endsection Unsorted9EF1FASection
+
+
+    .section Unsorted9EF37FSection
+
+      .al
+      .xl
+
+      rlUnknown9EF37F ; 9E/F37F
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        eor $F3874E
+        lda $D2,x
+        stz $5AF4,b,x
+        phx
+        phb
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #$0000
+        sta $4580,b
+        sta $4582,b
+        sta $4584,b
+        sta $7F455A
+        sta $7F4572
+        sta $7F5091
+        sta $7F5093
+        lda #$0001
+        sta $7F4C87
+        lda #$FFFF
+        sta aActionStructUnit1
+        sta aActionStructUnit2
+        lda $7E4EAF
+        sta @l wR0
+        lda $7E4EBD
+        sta @l wR1
+        lda #$FFFF
+        sta @l wR2
+        jsl rlUnknown9E85A4
+        sta $454E,b
+        lda wBattleDistance
+        sta $4552,b
+        lda wBattleQuotePointer
+        sta $4554,b
+        lda #$FFFF
+        jsl rlUnknown9E866F
+        sta $454A,b
+        lda #$FFFF
+        sta $7E4EDD
+        lda #$0000
+        sta $4550,b
+        sta $4556,b
+        sta $4558,b
+        sta $454C,b
+        lda #$0006
+        sta $455E,b
+        sta $4560,b
+        lda #$0029
+        sta $5089,b
+        plb
+        .databank ?
+        lda $7F4554
+        tay
+        lda $7F4552
+        tax
+        jsl rlUnknown9E8D25
+        lda #$8000
+        sta $7F508F
+        lda wR0
+        and #$00FF
+        sta wR0
+        lda wR1
+        and #$00FF
+        sta wR1
+        lda wR1
+        xba
+        ora wR0
+        sta $7F509B
+        sta $7F5099
+        lda #$8100
+        sta @l $0015E5
+        lda #$841B
+        sta @l $0015E4
+        lda @l aActiveSpriteSystem
+        sta $7F4BD9
+        lda @l aActiveSpriteSystem
+        ora #$4000
+        sta @l aActiveSpriteSystem
+        plx
+        lda @l $000302
+        sta @l $0010B7,x
+        stz $0302,b
+        lda #$0000
+        sta $0F37,b,x
+        lda #$0038
+        sta $1037,b,x
+        lda $7E4EAF
+        sta $7E4EBF
+        jsl rlUnknown88CD53
+        jsl rlUnknown88CD61
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/F49E
+
+    .endsection Unsorted9EF37FSection
 
 
     .section Unsorted9EF60FSection

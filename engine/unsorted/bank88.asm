@@ -79,6 +79,29 @@
     .endsection Unsorted888197Section
 
 
+    .section Unsorted8881DESection
+
+      .al
+      .xl
+
+      rlUnknown8881DE ; 88/81DE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0002
+        tsb $0786,b
+        rtl
+
+        .databank 0
+
+        ; 88/81E5
+
+    .endsection Unsorted8881DESection
+
+
     .section Unsorted8881ECSection
 
       .al
@@ -3173,6 +3196,69 @@
     .endsection Unsorted889B22Section
 
 
+    .section Unsorted889BB5Section
+
+      .al
+      .xl
+
+      rsUnknown889BB5 ; 88/9BB5
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        asl wR0+1
+        asl wR1
+        ora #10,s
+        asl a
+        ora wR2
+        phd
+        php
+        php
+        php
+        php
+        ora wR5+1
+        ora [wR4]
+        php
+        php
+        php
+        php
+        php
+        php
+        php
+        tsb $C9
+        ora (wR0)
+        beq _9BD9
+        cmp #$0013
+        bne _9BF5
+
+        _9BD9
+        jsl rlUnknown87EA09
+        bcs _9BF5
+        jsl rlGetEventLocationEntryType
+        cmp #$0002
+        bne _9BF5
+        jsl rlCheckIfVillageClosed
+        bcc _9BF5
+        lda #$0009
+        sta wR2
+        sec
+        rts
+
+
+        _9BF5
+        clc
+        rts
+
+        .databank 0
+
+        ; 88/9BF7
+
+    .endsection Unsorted889BB5Section
+
+
     .section ProcScript889C52Section
 
       .al
@@ -3290,6 +3376,69 @@
         ; 88/9CEE
 
     .endsection Unsorted889C5ASection
+
+
+    .section Unsorted889D20Section
+
+      .al
+      .xl
+
+      rlUnknown889D20 ; 88/9D20
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sep #$20
+        rep #$10
+        ldx #$2542
+        stx DecompressionVariables
+        lda #$C0
+        sta $CA
+        ldx #$8F88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8F88, $0400, $80, $6C00
+
+        jsl rlUnknown80B0A3
+        lda #$8800
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$98C9
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$8800
+        sta lRoutineVariable+1,b
+        lda #$9D92
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$040D
+        jsl rlDrawMenuTextLine
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8488, $0080, $80, $B100
+
+        plx
+        lda #$9DA6
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 88/9D92
+
+    .endsection Unsorted889D20Section
 
 
     .section ProcScript889E6CSection
@@ -3699,6 +3848,118 @@
     .endsection Unsorted88A32DSection
 
 
+    .section Unsorted88A395Section
+
+      .al
+      .xl
+
+      rlUnknown88A395 ; 88/A395
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wUnknown000758,b
+        lda wUnknown000766,b
+        bne _A3E6
+        lda wJoy1Input
+        bit #$4000
+        bne _A3B0
+        lda wJoy1Repeated
+        and #$0F00
+        sta wMapScrollDirectionIdentifier,b
+        beq _A40B
+        bra _A3BA
+
+
+        _A3B0
+        lda wJoy1Input
+        and #$0F00
+        sta wMapScrollDirectionIdentifier,b
+        beq _A40B
+
+        _A3BA
+        stz wMapScrollCurrentPixelDistance,b
+        lda #$0001
+        sta wUnknown000766,b
+        stz wUnknown00073A,b
+        stz wMapEnableXScrollFlag,b
+        stz wMapEnableYScrollFlag,b
+        lda #$0005
+        jsl rlUnknown808FAD
+        lda #$0004
+        sta wMapScrollSpeed,b
+        lda wJoy1Input
+        bit #$4000
+        beq _A3E6
+        lda #$0008
+        sta wMapScrollSpeed,b
+
+        _A3E6
+        lda wMapScrollCurrentPixelDistance,b
+        clc
+        adc wMapScrollSpeed,b
+        sta wMapScrollCurrentPixelDistance,b
+        cmp #$0010
+        bcc _A407
+        stz wUnknown000766,b
+        stz wUnknown00073A,b
+        stz wMapEnableXScrollFlag,b
+        stz wMapEnableYScrollFlag,b
+        lda #$0001
+        sta wUnknown000758,b
+
+        _A407
+        jsl rlUnknown88BC05
+
+        _A40B
+        sep #$20
+        lda #$88
+        pha
+        plb
+        .databank $88
+        rep #$20
+        ldy #$EE52
+        lda wCursorXOffset,b
+        sta wR0
+        lda wCursorYOffset,b
+        sta wR1
+        lda #$2000
+        sta wR5
+        lda #$0000
+        sta wR4
+        lda wUnknown000770,b
+        beq _A447
+        cmp #$0001
+        beq _A439
+        cmp #$0002
+        beq _A440
+
+        _A439
+        lda #$0004
+        sta wR4
+        bra _A447
+
+
+        _A440
+        lda #$0006
+        sta wR4
+        bra _A447
+
+
+        _A447
+        jsl rlPushToOAMBuffer
+        rtl
+
+        .databank 0
+
+        ; 88/A44C
+
+    .endsection Unsorted88A395Section
+
+
     .section Unsorted88A4FCSection
 
       .al
@@ -3922,6 +4183,56 @@
         ; 88/A698
 
     .endsection Unsorted88A551Section
+
+
+    .section Unsorted88A698Section
+
+      .al
+      .xl
+
+      rsUnknown88A698 ; 88/A698
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1Input
+        bit #$4000
+        bne _A6B3
+        lda $0752,b
+        beq _A6BB
+        lda wJoy1New
+        and #$0F00
+        bne _A6BB
+        lda #$0004
+        sta wMapScrollSpeed,b
+        bra _A6C3
+
+
+        _A6B3
+        lda #$0008
+        sta wMapScrollSpeed,b
+        bra _A6C3
+
+
+        _A6BB
+        lda #$0001
+        sta wMapScrollSpeed,b
+        bra _A6C3
+
+
+        _A6C3
+        lda #$0001
+        sta $0752,b
+        rts
+
+        .databank 0
+
+        ; 88/A6CA
+
+    .endsection Unsorted88A698Section
 
 
     .section Unsorted88A704Section
@@ -4579,6 +4890,44 @@
     .endsection Unsorted88A81DSection
 
 
+    .section Unsorted88AB2CSection
+
+      .al
+      .xl
+
+      rsUnknown88AB2C ; 88/AB2C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR10
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR11
+        rts
+
+        .databank 0
+
+        ; 88/AB47
+
+    .endsection Unsorted88AB2CSection
+
+
     .section Unsorted88AB47Section
 
       .al
@@ -4782,6 +5131,140 @@
         ; 88/AD09
 
     .endsection Table88ACF1Section
+
+
+    .section Unsorted88AD46Section
+
+      .al
+      .xl
+
+      rlUnknown88AD46 ; 88/AD46
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0003
+        sta wUnknown0007D8,b
+        lda #$0003
+        sta $07DA,b
+        stz $0776,b
+        jsr rsUnknown88AB47
+        lda $0778,b
+        sta $077C,b
+        lda $077A,b
+        sta $077E,b
+        lda $0772,b
+        sta wR0
+        lda $0774,b
+        sta wR1
+        jsl rlUnknown8591B2
+        lda $0774,b
+        tax
+        lda $7E441B,x
+        sta wR10
+        lda $7E44AB,x
+        sta wR11
+        jsl rlUnknown88BFC3
+        lda wR10
+        bmi _AD94
+        sta wCursorXOffset,b
+        lda wR11
+        sta wCursorYOffset,b
+        bra _ADA1
+
+
+        _AD94
+        lda $0774,b
+        jsl rlUnknown88B4DB
+        lda #$0006
+        sta wUnknown0007D8,b
+
+        _ADA1
+        rtl
+
+        .databank 0
+
+        ; 88/ADA2
+
+    .endsection Unsorted88AD46Section
+
+
+    .section Unsorted88ADA6Section
+
+      .al
+      .xl
+
+      rlUnknown88ADA6 ; 88/ADA6
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta $0778,b
+        sta $077C,b
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta $077A,b
+        sta $077E,b
+        rtl
+
+        .databank 0
+
+        ; 88/ADC9
+
+    .endsection Unsorted88ADA6Section
+
+
+    .section Unsorted88ADC9Section
+
+      .al
+      .xl
+
+      rlUnknown88ADC9 ; 88/ADC9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0772,b
+        jsl rlUnknown88B4DB
+        lda #$0008
+        sta wUnknown0007D8,b
+        lda $07E0,b
+        beq _ADE2
+        lda #$0005
+        sta $07E0,b
+        rtl
+
+
+        _ADE2
+        lda #$0009
+        sta $07E0,b
+        rtl
+
+        .databank 0
+
+        ; 88/ADE9
+
+    .endsection Unsorted88ADC9Section
 
 
     .section Unsorted88ADE9Section
@@ -5064,6 +5547,52 @@
     .endsection Unsorted88AF7BSection
 
 
+    .section Unsorted88B366Section
+
+      .al
+      .xl
+
+      rlUnknown88B366 ; 88/B366
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        tsb $08AD,b
+        lda #$0002
+        tsb $08AD,b
+        lda #$0004
+        tsb $08AD,b
+        lda #$0008
+        tsb $08AD,b
+        lda wSelectedUnitDataRAMPointer,b
+        sta $08B2,b
+        lda wSelectedUnitDataRAMPointer,b
+        sta $08B4,b
+        lda #$0003
+        sta $08B8,b
+        jsl rlUnknown88B3AF
+        lda #$0002
+        sta $088B,b
+        lda #$B6B6
+        sta $0ECF,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 88/B3AF
+
+    .endsection Unsorted88B366Section
+
+
     .section Unsorted88B3AFSection
 
       .al
@@ -5089,6 +5618,60 @@
         ; 88/B3C2
 
     .endsection Unsorted88B3AFSection
+
+
+    .section Unsorted88B3DFSection
+
+      .al
+      .xl
+
+      rlUnknown88B3DF ; 88/B3DF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        lda wCursorXOffset,b
+        sta wR10
+        lda wCursorYOffset,b
+        sta wR11
+        jsl rlUnknown88C059
+        lda wR10
+        sta wR0
+        lda wR11
+        sta wR1
+        jsl rlUnknown88BF37
+        tax
+        lda aMapData,x
+        and #$03FF
+        asl a
+        asl a
+        asl a
+        tax
+        lda $7F0000,x
+        and #$DFFF
+        sta wR0
+        lda $7F0002,x
+        and #$DFFF
+        sta wR1
+        lda $7F0004,x
+        and #$DFFF
+        sta wR2
+        lda $7F0006,x
+        and #$DFFF
+        sta wR3
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 88/B42C
+
+    .endsection Unsorted88B3DFSection
 
 
     .section Unsorted88B42CSection
@@ -6788,6 +7371,123 @@
     .endsection Unsorted88BF97Section
 
 
+    .section Unsorted88BFFASection
+
+      .al
+      .xl
+
+      rlUnknown88BFFA ; 88/BFFA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR10
+        asl a
+        asl a
+        asl a
+        asl a
+        sec
+        sbc wMapScrollXPixels,b
+        sta wR10
+        cmp #$00C8
+        bcs _C03B
+        sec
+        sbc #$0030
+        bmi _C031
+
+        _C011
+        lda wR11
+        asl a
+        asl a
+        asl a
+        asl a
+        sec
+        sbc wMapScrollYPixels,b
+        sta wR11
+        cmp #$00A8
+        bcs _C04F
+        sec
+        sbc #$0028
+        bmi _C045
+
+        _C028
+        rtl
+
+
+        _C029
+        lda #$FFFF
+        sta wR10
+        sta wR11
+        rtl
+
+
+        _C031
+        lda wMapScrollXPixels,b
+        cmp wMapMinXScroll,b
+        beq _C011
+        bra _C029
+
+
+        _C03B
+        lda wMapScrollXPixels,b
+        cmp wMapMaxXScroll,b
+        beq _C011
+        bra _C029
+
+
+        _C045
+        lda wMapScrollYPixels,b
+        cmp wMapMinYScroll,b
+        beq _C028
+        bra _C029
+
+
+        _C04F
+        lda wMapScrollYPixels,b
+        cmp wMapMaxYScroll,b
+        beq _C028
+        bra _C029
+
+        .databank 0
+
+        ; 88/C059
+
+    .endsection Unsorted88BFFASection
+
+
+    .section Unsorted88C072Section
+
+      .al
+      .xl
+
+      rlUnknown88C072 ; 88/C072
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        sta wR10
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        sta wR11
+        rtl
+
+        .databank 0
+
+        ; 88/C085
+
+    .endsection Unsorted88C072Section
+
+
     .section Unsorted88C085Section
 
       .al
@@ -7029,6 +7729,78 @@
     .endsection Unsorted88C1BFSection
 
 
+    .section Unsorted88C25DSection
+
+      .al
+      .xl
+
+      rlUnknown88C25D ; 88/C25D
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetEventLocationEntryEffectiveXCoordinate
+        asl a
+        asl a
+        asl a
+        asl a
+        sta $078C,b
+        sec
+        sbc #$0080
+        bpl _C273
+        lda #$0000
+        bra _C27B
+
+
+        _C273
+        cmp wMapMaxXScroll,b
+        bcc _C27B
+        lda wMapMaxXScroll,b
+
+        _C27B
+        sta wMapScrollXPixels,b
+        sta wMapXOffset,b
+        jsl rlGetEventLocationEntryEffectiveYCoordinate
+        asl a
+        asl a
+        asl a
+        asl a
+        sta $078E,b
+        sec
+        sbc #$0080
+        bpl _C297
+        lda #$0000
+        bra _C29F
+
+
+        _C297
+        cmp wMapMaxYScroll,b
+        bcc _C29F
+        lda wMapMaxYScroll,b
+
+        _C29F
+        sta wMapScrollYPixels,b
+        sta wMapYOffset,b
+        lda $078C,b
+        sec
+        sbc wMapScrollXPixels,b
+        sta wCursorXOffset,b
+        lda $078E,b
+        sec
+        sbc wMapScrollYPixels,b
+        sta wCursorYOffset,b
+        rtl
+
+        .databank 0
+
+        ; 88/C2BA
+
+    .endsection Unsorted88C25DSection
+
+
     .section Unsorted88C2BASection
 
       .al
@@ -7171,6 +7943,102 @@
         ; 88/C355
 
     .endsection Unsorted88C2BASection
+
+
+    .section Unsorted88C355Section
+
+      .al
+      .xl
+
+      rlUnknown88C355 ; 88/C355
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wCursorXOffset,b
+        sta wR10
+        lda wCursorYOffset,b
+        sta wR11
+        jsl rlUnknown88C059
+        jsl rlUnknown88BFC3
+        lda wR10
+        cmp #$FFFF
+        beq _C394
+        lda $7F4BF9
+        cmp wMapScrollXPixels,b
+        bne _C382
+        lda $7F4BFB
+        cmp wMapScrollYPixels,b
+        bne _C382
+        clc
+        rtl
+
+
+        _C382
+        lda $7F4BF9
+        sta $7F4BF5
+        lda $7F4BFB
+        sta $7F4BF7
+        sec
+        rtl
+
+
+        _C394
+        lda wCursorXOffset,b
+        clc
+        adc $7F4BF9
+        sta $078C,b
+        sec
+        sbc #$0080
+        bpl _C3AA
+        lda #$0000
+        bra _C3B2
+
+
+        _C3AA
+        cmp wMapMaxXScroll,b
+        bcc _C3B2
+        lda wMapMaxXScroll,b
+
+        _C3B2
+        sta $7F4BF5
+        lda wCursorYOffset,b
+        clc
+        adc $7F4BFB
+        sta $078E,b
+        sec
+        sbc #$0080
+        bpl _C3CC
+        lda #$0000
+        bra _C3D4
+
+
+        _C3CC
+        cmp wMapMaxYScroll,b
+        bcc _C3D4
+        lda wMapMaxYScroll,b
+
+        _C3D4
+        sta $7F4BF7
+        lda $078C,b
+        sec
+        sbc $7F4BF5
+        sta wCursorXOffset,b
+        lda $078E,b
+        sec
+        sbc $7F4BF7
+        sta wCursorYOffset,b
+        sec
+        rtl
+
+        .databank 0
+
+        ; 88/C3F0
+
+    .endsection Unsorted88C355Section
 
 
     .section Unsorted88C4D9Section
@@ -7573,6 +8441,65 @@
     .endsection Unsorted88C71CSection
 
 
+    .section Unsorted88C7D8Section
+
+      .al
+      .xl
+
+      rsUnknown88C7D8 ; 88/C7D8
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta aMovingMapSpritesMapSprites,b
+        lda #$8000
+        sta $0869,b
+        lda #$0002
+        sta $086B,b
+        lda #$8002
+        sta $086D,b
+        lda wUnknown0007E2,b
+        sta @l wUnknown000911
+        sta @l $000913
+        sta @l $000915
+        sta @l $000917
+        ldx #$0006
+
+        _C806
+        lda #$0400
+        sta wR5
+        jsl rlUnknown88D7FE
+        lda wR0
+        clc
+        adc wCursorXOffset,b
+        clc
+        adc $88C834,x
+        sta wR0
+        lda wR1
+        clc
+        adc wCursorYOffset,b
+        clc
+        adc $88C83C,x
+        sta wR1
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+        dec x
+        dec x
+        bpl _C806
+        rts
+
+        .databank 0
+
+        ; 88/C834
+
+    .endsection Unsorted88C7D8Section
+
+
     .section Unsorted88C9A6Section
 
       .al
@@ -7652,6 +8579,239 @@
         ; 88/CA28
 
     .endsection Unsorted88C9A6Section
+
+
+    .section Unsorted88CA77Section
+
+      .al
+      .xl
+
+      rsUnknown88CA77 ; 88/CA77
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $07DC,b
+        cmp #$0000
+        beq _CA8E
+        cmp #$0001
+        beq _CA93
+        cmp #$0002
+        beq _CA98
+        cmp #$0003
+        beq _CA9D
+
+        _CA8E
+        lda #$0000
+        bra _CAA2
+
+
+        _CA93
+        lda #$0140
+        bra _CAA2
+
+
+        _CA98
+        lda #$0280
+        bra _CAA2
+
+
+        _CA9D
+        lda #$03C0
+        bra _CAA2
+
+
+        _CAA2
+        sta $07E6,b
+        lda wUnknown0007E2,b
+        cmp #$0000
+        beq _CABC
+        cmp #$0008
+        beq _CAC1
+        cmp #$0010
+        beq _CAC6
+        cmp #$0018
+        beq _CACB
+
+        _CABC
+        lda #$0000
+        bra _CAD0
+
+
+        _CAC1
+        lda #$0500
+        bra _CAD0
+
+
+        _CAC6
+        lda #$0A00
+        bra _CAD0
+
+
+        _CACB
+        lda #$0F00
+        bra _CAD0
+
+
+        _CAD0
+        clc
+        adc $07E6,b
+        sta $07E6,b
+        lda #$7E00
+        sta lR18+1
+        lda #$AB88
+        sta lR18
+        lda #$7E00
+        sta $07EB,b
+        lda #$AB88
+        sta $07EA,b
+        lda #$7E00
+        sta $084E,b
+        lda #$AB88
+        sta $084D,b
+        lda $07EA,b
+        clc
+        adc $07E6,b
+        sta lR18
+        sta $084D,b
+        lda #$00A0
+        sta wR0
+        lda #$6200
+        sta wR1
+        lda $0865,b
+        beq _CB1A
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        _CB1A
+        lda $07EA,b
+        clc
+        adc #$00A0
+        clc
+        adc $07E6,b
+        sta lR18
+        sta $0850,b
+        lda #$00A0
+        sta wR0
+        lda #$6300
+        sta wR1
+        lda $0865,b
+        beq _CB42
+        phx
+        jsl rlDMAByPointer
+        plx
+        stz $0865,b
+
+        _CB42
+        rts
+
+        .databank 0
+
+        ; 88/CB43
+
+      rsUnknown88CB43 ; 88/CB43
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $07DC,b
+        cmp #$0000
+        beq _CB5A
+        cmp #$0001
+        beq _CB5F
+        cmp #$0002
+        beq _CB64
+        cmp #$0003
+        beq _CB69
+
+        _CB5A
+        lda #$0000
+        bra _CB6E
+
+
+        _CB5F
+        lda #$0200
+        bra _CB6E
+
+
+        _CB64
+        lda #$0400
+        bra _CB6E
+
+
+        _CB69
+        lda #$0600
+        bra _CB6E
+
+
+        _CB6E
+        sta $07E6,b
+        lda wUnknown0007E2,b
+        xba
+        clc
+        adc $07E6,b
+        sta $07E6,b
+        lda #$7E00
+        sta lR18+1
+        lda #$AB88
+        sta lR18
+        lda #$7E00
+        sta $07EB,b
+        lda #$AB88
+        sta $07EA,b
+        lda #$7E00
+        sta $084E,b
+        lda #$AB88
+        sta $084D,b
+        lda $07EA,b
+        clc
+        adc $07E6,b
+        sta lR18
+        sta $084D,b
+        lda #$0100
+        sta wR0
+        lda #$6200
+        sta wR1
+        lda $0865,b
+        beq _CBBF
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        _CBBF
+        lda $07EA,b
+        clc
+        adc #$0100
+        clc
+        adc $07E6,b
+        sta lR18
+        sta $0850,b
+        lda #$0100
+        sta wR0
+        lda #$6300
+        sta wR1
+        lda $0865,b
+        beq _CBE7
+        phx
+        jsl rlDMAByPointer
+        plx
+        stz $0865,b
+
+        _CBE7
+        rts
+
+        .databank 0
+
+        ; 88/CBE8
+
+    .endsection Unsorted88CA77Section
 
 
     .section Unsorted88CBE8Section
@@ -8335,6 +9495,94 @@
         ; 88/D526
 
     .endsection Table88D4C6Section
+
+
+    .section Unsorted88D731Section
+
+      .al
+      .xl
+
+      rlUnknown88D731 ; 88/D731
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+        phx
+        phk
+        plb
+        .databank $88
+        lda aMovingMapSpritesMapSprites,b,x
+        and #$8000
+        bne _D786
+        lda aMovingMapSpritesMapSprites,b,x
+        phx
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda @l aMapMovementShortSpritePointers,x
+        sta lR45
+        lda @l $88D366,x
+        sta lR45+1
+        plx
+        jsr ($88D7B2,x)
+        jsl rlDecompressSingle
+        lda #(`g4bppcMageFemaleMapMovementSprite)<<8
+        sta lR18+1
+        lda #<>g4bppcMageFemaleMapMovementSprite
+        sta lR18
+        lda #(`aMapAction)<<8
+        sta lR19+1
+        lda #<>aMapAction
+        sta lR19
+        jsl rlAppendDecompList
+        plx
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        rtl
+
+
+        _D786
+        lda aMovingMapSpritesMapSprites,b,x
+        phx
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda @l aMapMovementTallSpritePointers,x
+        sta lR45
+        lda @l $88D429,x
+        sta lR45+1
+        plx
+        jsr ($88D7B2,x)
+        jsl rlDecompressSingle
+        plx
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        rtl
+
+        .databank 0
+
+        ; 88/D7B2
+
+    .endsection Unsorted88D731Section
 
 
     .section Unsorted88D7FESection
@@ -9034,6 +10282,221 @@
     .endsection Unsorted88DB0CSection
 
 
+    .section Unsorted88DBEESection
+
+      .al
+      .xl
+
+      rlUnknown88DBEE ; 88/DBEE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $88
+        jsl rlGetSelectedUnitMapSprite
+        and #$8000
+        bne _DC01
+        jsr rsUnknown88DC07
+        plp
+        plb
+        .databank $88
+        rtl
+
+
+        _DC01
+        jsr rsUnknown88DC8B
+        plp
+        plb
+        .databank $88
+        rtl
+
+        .databank 0
+
+        ; 88/DC07
+
+    .endsection Unsorted88DBEESection
+
+
+    .section Unsorted88DC07Section
+
+      .al
+      .xl
+
+      rsUnknown88DC07 ; 88/DC07
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0030
+        cmp #$0000
+        beq _DC20
+        cmp #$0010
+        beq _DC25
+        cmp #$0020
+        beq _DC2A
+        cmp #$0030
+        beq _DC2F
+
+        _DC20
+        lda #$0000
+        bra _DC34
+
+
+        _DC25
+        lda #$0080
+        bra _DC34
+
+
+        _DC2A
+        lda #$0100
+        bra _DC34
+
+
+        _DC2F
+        lda #$0080
+        bra _DC34
+
+
+        _DC34
+        sta $07E6,b
+        jsl rlGetSelectedUnitMapSprite
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda $88D527,x
+        sta lR18+1
+        lda aUnknown88D526,x
+        sta $07EA,b
+        lda $07EA,b
+        clc
+        adc $07E6,b
+        sta lR18
+        lda #$0040
+        sta wR0
+        lda #$6E00
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        lda $07EA,b
+        clc
+        adc #$0040
+        clc
+        adc $07E6,b
+        sta lR18
+        lda #$0040
+        sta wR0
+        lda #$6F00
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/DC8B
+
+      rsUnknown88DC8B ; 88/DC8B
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0030
+        cmp #$0000
+        beq _DCA4
+        cmp #$0010
+        beq _DCA9
+        cmp #$0020
+        beq _DCAE
+        cmp #$0030
+        beq _DCB3
+
+        _DCA4
+        lda #$0000
+        bra _DCB8
+
+
+        _DCA9
+        lda #$00C0
+        bra _DCB8
+
+
+        _DCAE
+        lda #$0180
+        bra _DCB8
+
+
+        _DCB3
+        lda #$00C0
+        bra _DCB8
+
+
+        _DCB8
+        sta $07E6,b
+        jsl rlGetSelectedUnitMapSprite
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda $88D5E4,x
+        sta lR18+1
+        lda aUnknown88D5E3,x
+        sta $07EA,b
+        lda $07EA,b
+        clc
+        adc $07E6,b
+        sta lR18
+        lda #$0040
+        sta wR0
+        lda #$6E00
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        lda $07EA,b
+        clc
+        adc #$0040
+        clc
+        adc $07E6,b
+        sta lR18
+        lda #$0080
+        sta wR0
+        lda #$6F00
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/DD0F
+
+    .endsection Unsorted88DC07Section
+
+
     .section Unsorted88DD9CSection
 
       .as
@@ -9133,3 +10596,1168 @@
     .endsection Unsorted88DD9CSection
 
 
+    .section Unsorted88E401Section
+
+      .al
+      .xl
+
+      rsUnknown88E401 ; 88/E401
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta wRoutineVariable1,b
+        stz wR10
+        lda #$0000
+        jsl rlUnknown84BF25
+        lda wSelectedUnitDataRAMPointer,b
+        rts
+
+        .databank 0
+
+        ; 88/E411
+
+      rlUnknown88E411 ; 88/E411
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0002
+
+        _E414
+        sta wRoutineVariable1,b
+        lda #$0000
+        jsl rlFindGenerationIDInFactionSlotData
+        lda wSelectedUnitDataRAMPointer,b
+        beq _E42C
+        jsl rlGetSelectedUnitStates
+        bit #$0200
+        beq _E436
+
+        _E42C
+        lda wRoutineVariable1,b
+        inc a
+        cmp #$0019
+        bne _E414
+        rtl
+
+
+        _E436
+        lda #$EBFD
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+        rtl
+
+        .databank 0
+
+        ; 88/E440
+
+      rlUnknown88E440 ; 88/E440
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0002
+        jsr rsUnknown88E401
+        beq _E465
+        lda #$0014
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E465
+        lda #$8800
+        sta lR18+1
+        lda #$EC34
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E465
+        rtl
+
+        .databank 0
+
+        ; 88/E466
+
+      rlUnknown88E466 ; 88/E466
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0003
+        jsr rsUnknown88E401
+        beq _E48B
+        lda #$0015
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E48B
+        lda #$8800
+        sta lR18+1
+        lda #$EC51
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E48B
+        rtl
+
+        .databank 0
+
+        ; 88/E48C
+
+      rlUnknown88E48C ; 88/E48C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0004
+        jsr rsUnknown88E401
+        beq _E4B1
+        lda #$0016
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E4B1
+        lda #$8800
+        sta lR18+1
+        lda #$EC6C
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E4B1
+        rtl
+
+        .databank 0
+
+        ; 88/E4B2
+
+      rlUnknown88E4B2 ; 88/E4B2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000E
+        jsr rsUnknown88E401
+        beq _E4D7
+        lda #$001E
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E4D7
+        lda #$8800
+        sta lR18+1
+        lda #$EC8A
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E4D7
+        rtl
+
+        .databank 0
+
+        ; 88/E4D8
+
+      rlUnknown88E4D8 ; 88/E4D8
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000A
+        jsr rsUnknown88E401
+        beq _E4FD
+        lda #$001A
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E4FD
+        lda #$8800
+        sta lR18+1
+        lda #$ECA4
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E4FD
+        rtl
+
+        .databank 0
+
+        ; 88/E4FE
+
+      rlUnknown88E4FE ; 88/E4FE
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0013
+        jsr rsUnknown88E401
+        beq _E523
+        lda #$0021
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E523
+        lda #$8800
+        sta lR18+1
+        lda #$ECC0
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E523
+        rtl
+
+        .databank 0
+
+        ; 88/E524
+
+      rlUnknown88E524 ; 88/E524
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0017
+        jsr rsUnknown88E401
+        beq _E549
+        lda #$002A
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E549
+        lda #$8800
+        sta lR18+1
+        lda #$ECDA
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E549
+        rtl
+
+        .databank 0
+
+        ; 88/E54A
+
+      rlUnknown88E54A ; 88/E54A
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0007
+        jsr rsUnknown88E401
+        beq _E56F
+        lda #$0017
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E56F
+        lda #$8800
+        sta lR18+1
+        lda #$ECF7
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E56F
+        rtl
+
+        .databank 0
+
+        ; 88/E570
+
+      rlUnknown88E570 ; 88/E570
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000B
+        jsr rsUnknown88E401
+        beq _E595
+        lda #$001B
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E595
+        lda #$8800
+        sta lR18+1
+        lda #$ED16
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E595
+        rtl
+
+        .databank 0
+
+        ; 88/E596
+
+      rlUnknown88E596 ; 88/E596
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0012
+        jsr rsUnknown88E401
+        beq _E5BB
+        lda #$0020
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E5BB
+        lda #$8800
+        sta lR18+1
+        lda #$ED32
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E5BB
+        rtl
+
+        .databank 0
+
+        ; 88/E5BC
+
+      rlUnknown88E5BC ; 88/E5BC
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000D
+        jsr rsUnknown88E401
+        beq _E5E1
+        lda #$001D
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E5E1
+        lda #$8800
+        sta lR18+1
+        lda #$ED4E
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E5E1
+        rtl
+
+        .databank 0
+
+        ; 88/E5E2
+
+      rlUnknown88E5E2 ; 88/E5E2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0009
+        jsr rsUnknown88E401
+        beq _E607
+        lda #$0019
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E607
+        lda #$8800
+        sta lR18+1
+        lda #$ED68
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E607
+        rtl
+
+        .databank 0
+
+        ; 88/E608
+
+      rlUnknown88E608 ; 88/E608
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000F
+        jsr rsUnknown88E401
+        beq _E62D
+        lda #$001F
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E62D
+        lda #$8800
+        sta lR18+1
+        lda #$ED7D
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E62D
+        rtl
+
+        .databank 0
+
+        ; 88/E62E
+
+      rlUnknown88E62E ; 88/E62E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0008
+        jsr rsUnknown88E401
+        beq _E653
+        lda #$0018
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E653
+        lda #$8800
+        sta lR18+1
+        lda #$ED92
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E653
+        rtl
+
+        .databank 0
+
+        ; 88/E654
+
+      rlUnknown88E654 ; 88/E654
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0014
+        jsr rsUnknown88E401
+        beq _E679
+        lda #$0025
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E679
+        lda #$8800
+        sta lR18+1
+        lda #$EDAD
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E679
+        rtl
+
+        .databank 0
+
+        ; 88/E67A
+
+      rlUnknown88E67A ; 88/E67A
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0016
+        jsr rsUnknown88E401
+        beq _E69F
+        lda #$0029
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E69F
+        lda #$8800
+        sta lR18+1
+        lda #$EDCC
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E69F
+        rtl
+
+        .databank 0
+
+        ; 88/E6A0
+
+      rlUnknown88E6A0 ; 88/E6A0
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000C
+        jsr rsUnknown88E401
+        beq _E6C5
+        lda #$001C
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E6C5
+        lda #$8800
+        sta lR18+1
+        lda #$EDE9
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E6C5
+        rtl
+
+        .databank 0
+
+        ; 88/E6C6
+
+      rlUnknown88E6C6 ; 88/E6C6
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0015
+        jsr rsUnknown88E401
+        beq _E6EB
+        lda #$002C
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E6EB
+        lda #$8800
+        sta lR18+1
+        lda #$EE03
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E6EB
+        rtl
+
+        .databank 0
+
+        ; 88/E6EC
+
+      rlUnknown88E6EC ; 88/E6EC
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0018
+        jsr rsUnknown88E401
+        beq _E711
+        lda #$002B
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcc _E711
+        lda #$8800
+        sta lR18+1
+        lda #$EE1F
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E711
+        rtl
+
+        .databank 0
+
+        ; 88/E712
+
+      rlUnknown88E712 ; 88/E712
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0002
+        jsr rsUnknown88E401
+        beq _E737
+        lda #$0014
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E737
+        lda #$8800
+        sta lR18+1
+        lda #$EC34
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E737
+        rtl
+
+        .databank 0
+
+        ; 88/E738
+
+      rlUnknown88E738 ; 88/E738
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0003
+        jsr rsUnknown88E401
+        beq _E75D
+        lda #$0015
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E75D
+        lda #$8800
+        sta lR18+1
+        lda #$EC51
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E75D
+        rtl
+
+        .databank 0
+
+        ; 88/E75E
+
+      rlUnknown88E75E ; 88/E75E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0004
+        jsr rsUnknown88E401
+        beq _E783
+        lda #$0016
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E783
+        lda #$8800
+        sta lR18+1
+        lda #$EC6C
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E783
+        rtl
+
+        .databank 0
+
+        ; 88/E784
+
+      rlUnknown88E784 ; 88/E784
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000E
+        jsr rsUnknown88E401
+        beq _E7A9
+        lda #$001E
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E7A9
+        lda #$8800
+        sta lR18+1
+        lda #$EC8A
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E7A9
+        rtl
+
+        .databank 0
+
+        ; 88/E7AA
+
+      rlUnknown88E7AA ; 88/E7AA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000A
+        jsr rsUnknown88E401
+        beq _E7CF
+        lda #$001A
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E7CF
+        lda #$8800
+        sta lR18+1
+        lda #$ECA4
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E7CF
+        rtl
+
+        .databank 0
+
+        ; 88/E7D0
+
+      rlUnknown88E7D0 ; 88/E7D0
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0013
+        jsr rsUnknown88E401
+        beq _E7F5
+        lda #$0021
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E7F5
+        lda #$8800
+        sta lR18+1
+        lda #$ECC0
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E7F5
+        rtl
+
+        .databank 0
+
+        ; 88/E7F6
+
+      rlUnknown88E7F6 ; 88/E7F6
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0017
+        jsr rsUnknown88E401
+        beq _E81B
+        lda #$002A
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E81B
+        lda #$8800
+        sta lR18+1
+        lda #$ECDA
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E81B
+        rtl
+
+        .databank 0
+
+        ; 88/E81C
+
+      rlUnknown88E81C ; 88/E81C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0007
+        jsr rsUnknown88E401
+        beq _E841
+        lda #$0017
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E841
+        lda #$8800
+        sta lR18+1
+        lda #$ECF7
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E841
+        rtl
+
+        .databank 0
+
+        ; 88/E842
+
+      rlUnknown88E842 ; 88/E842
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000B
+        jsr rsUnknown88E401
+        beq _E867
+        lda #$001B
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E867
+        lda #$8800
+        sta lR18+1
+        lda #$ED16
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E867
+        rtl
+
+        .databank 0
+
+        ; 88/E868
+
+      rlUnknown88E868 ; 88/E868
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0012
+        jsr rsUnknown88E401
+        beq _E88D
+        lda #$0020
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E88D
+        lda #$8800
+        sta lR18+1
+        lda #$ED32
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E88D
+        rtl
+
+        .databank 0
+
+        ; 88/E88E
+
+      rlUnknown88E88E ; 88/E88E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000D
+        jsr rsUnknown88E401
+        beq _E8B3
+        lda #$001D
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E8B3
+        lda #$8800
+        sta lR18+1
+        lda #$ED4E
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E8B3
+        rtl
+
+        .databank 0
+
+        ; 88/E8B4
+
+      rlUnknown88E8B4 ; 88/E8B4
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0009
+        jsr rsUnknown88E401
+        beq _E8D9
+        lda #$0019
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E8D9
+        lda #$8800
+        sta lR18+1
+        lda #$ED68
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E8D9
+        rtl
+
+        .databank 0
+
+        ; 88/E8DA
+
+      rlUnknown88E8DA ; 88/E8DA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000F
+        jsr rsUnknown88E401
+        beq _E8FF
+        lda #$001F
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E8FF
+        lda #$8800
+        sta lR18+1
+        lda #$ED7D
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E8FF
+        rtl
+
+        .databank 0
+
+        ; 88/E900
+
+      rlUnknown88E900 ; 88/E900
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0008
+        jsr rsUnknown88E401
+        beq _E925
+        lda #$0018
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E925
+        lda #$8800
+        sta lR18+1
+        lda #$ED92
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E925
+        rtl
+
+        .databank 0
+
+        ; 88/E926
+
+      rlUnknown88E926 ; 88/E926
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0014
+        jsr rsUnknown88E401
+        beq _E94B
+        lda #$0025
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E94B
+        lda #$8800
+        sta lR18+1
+        lda #$EDAD
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E94B
+        rtl
+
+        .databank 0
+
+        ; 88/E94C
+
+      rlUnknown88E94C ; 88/E94C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0016
+        jsr rsUnknown88E401
+        beq _E971
+        lda #$0029
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E971
+        lda #$8800
+        sta lR18+1
+        lda #$EDCC
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E971
+        rtl
+
+        .databank 0
+
+        ; 88/E972
+
+      rlUnknown88E972 ; 88/E972
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000C
+        jsr rsUnknown88E401
+        beq _E997
+        lda #$001C
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E997
+        lda #$8800
+        sta lR18+1
+        lda #$EDE9
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E997
+        rtl
+
+        .databank 0
+
+        ; 88/E998
+
+      rlUnknown88E998 ; 88/E998
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0015
+        jsr rsUnknown88E401
+        beq _E9BD
+        lda #$002C
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E9BD
+        lda #$8800
+        sta lR18+1
+        lda #$EE03
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E9BD
+        rtl
+
+        .databank 0
+
+        ; 88/E9BE
+
+      rlUnknown88E9BE ; 88/E9BE
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0018
+        jsr rsUnknown88E401
+        beq _E9E3
+        lda #$002B
+        sta wEventEngineParameter1,b
+        lda #$0005
+        jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+        bcs _E9E3
+        lda #$8800
+        sta lR18+1
+        lda #$EE1F
+        sta lR18
+        jsl rlDialoguePushToActivePointerStack
+
+        _E9E3
+        rtl
+
+        .databank 0
+
+        ; 88/E9E4
+
+    .endsection Unsorted88E401Section

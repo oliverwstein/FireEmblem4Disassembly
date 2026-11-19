@@ -251,6 +251,39 @@
     .endsection Table86AE36Section
 
 
+    .section Unsorted86B371Section
+
+      .al
+      .xl
+
+      rsUnknown86B371 ; 86/B371
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx $0871,b
+        jsl rlUnknown84CAA9
+        lda $0580,b
+        beq _B388
+        sta wEventLocationEntry,b
+        jsl rlGetEventLocationEntryID
+        jsl rlUnknown84CD8A
+
+        _B388
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B38F
+
+    .endsection Unsorted86B371Section
+
+
     .section Unsorted86B39DSection
 
       .al
@@ -273,6 +306,62 @@
         ; 86/B3AB
 
     .endsection Unsorted86B39DSection
+
+
+    .section Unsorted86B3DDSection
+
+      .al
+      .xl
+
+      rsUnknown86B3DD ; 86/B3DD
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        trb bUnknown000E7B,b
+        lda #$000A
+        sta bEventActionIdentifier,b
+        ldx $0873,b
+        lda $7E46EB,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitCharacterID
+        sta wEventEngineArgument2,b
+        ldx $0772,b
+        lda $7E46EB,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitCharacterID
+        sta wEventEngineArgument1,b
+        jsl rlGetAndRunChapterMapEventConditions
+        rts
+
+        .databank 0
+
+        ; 86/B410
+
+      rsUnknown86B410 ; 86/B410
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wAICurrentAISetting,b
+        sta wRoutineVariable1,b
+        lda wAIActiveFaction,b
+        jsl rlReviveFactionsUnitsOfAISetting
+        jsr rsUnknown86B371
+        rts
+
+        .databank 0
+
+        ; 86/B421
+
+    .endsection Unsorted86B3DDSection
 
 
     .section Unsorted86BA3BSection
@@ -669,3 +758,194 @@
     .endsection Unsorted86C293Section
 
 
+    .section Unsorted86C333Section
+
+      .al
+      .xl
+
+      rlUnknown86C333 ; 86/C333
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        lda @l wSelectedUnitDataRAMPointer
+        pha
+        lda $7E46EB,x
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetSelectedUnitClassID
+        tax
+        lda @l $86C359,x
+        and #$00FF
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 86/C359
+
+    .endsection Unsorted86C333Section
+
+
+    .section Unsorted86C3A0Section
+
+      .al
+      .xl
+
+      rlUnknown86C3A0 ; 86/C3A0
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        lda @l wSelectedUnitDataRAMPointer
+        pha
+        lda $7E46EB,x
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetSelectedUnitClassID
+        tax
+        lda @l $86C3C6,x
+        and #$00FF
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 86/C3C6
+
+    .endsection Unsorted86C3A0Section
+
+
+    .section Unsorted86C40DSection
+
+      .al
+      .xl
+
+      rlUnknown86C40D ; 86/C40D
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        lda @l wSelectedUnitDataRAMPointer
+        pha
+        ldx wAITemp000E96,b
+        lda $7E46EB,x
+        sta @l wAITemp000E96
+        ldx wAITemp000E98,b
+        lda $7E46EB,x
+        sta @l wAITemp000E98
+        lda @l wAITemp000E96
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetFirstEquippableWeaponInInventory
+        lda @l wCurrentItemDataROMPointer
+        beq _C466
+        jsl rlGetItemWeaponType
+        sta @l wRoutineVariable1
+        lda @l wAITemp000E98
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetFirstEquippableWeaponInInventory
+        lda @l wCurrentItemDataROMPointer
+        beq _C466
+        jsl rlGetItemWeaponType
+        xba
+        ora @l wRoutineVariable1
+        jsl rlGetWeaponTriangleBonus
+
+        _C466
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 86/C46E
+
+      rlUnknown86C46E ; 86/C46E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        lda @l wSelectedUnitDataRAMPointer
+        pha
+        ldx wAITemp000E96,b
+        lda $7E46EB,x
+        sta @l wAITemp000E96
+        ldx wAITemp000E98,b
+        lda $7E46EB,x
+        sta @l wAITemp000E98
+        lda @l wAITemp000E98
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetClassWeakness
+        sta @l wAITemp000E9A
+        lda @l wAITemp000E96
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetFirstEquippableWeaponInInventory
+        lda @l wCurrentItemDataROMPointer
+        beq _C4BC
+        jsl rlGetItemEffectiveness
+        bit wAITemp000E9A,b
+        beq _C4BC
+        lda #$0032
+
+        _C4BC
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 86/C4C4
+
+    .endsection Unsorted86C40DSection

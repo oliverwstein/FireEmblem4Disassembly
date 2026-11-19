@@ -1422,6 +1422,35 @@
     .endsection Unsorted81AFB7Section
 
 
+    .section Unsorted81AFFESection
+
+      .al
+      .xl
+
+      rsUnknown81AFFE ; 81/AFFE
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx $0D83,b
+        lda $7E46EB,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlUndeployUnit
+        jsl rlDeleteUnit
+        jsl rlUnknown9EAC5A
+        sec
+        rts
+
+        .databank 0
+
+        ; 81/B016
+
+    .endsection Unsorted81AFFESection
+
+
     .section Unsorted81B088Section
 
       .al
@@ -1855,6 +1884,138 @@
         ; 81/B3A6
 
     .endsection Unsorted81B32CSection
+
+
+    .section Unsorted81B3A6Section
+
+      .al
+      .xl
+
+      rlUnknown81B3A6 ; 81/B3A6
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $81
+        phx
+        lda wUnknown000D79,b
+        bit #$0002
+        beq _B429
+        lda #$0002
+        trb wUnknown000D79,b
+        lda #$0001
+        tsb wUnknown000D79,b
+        lda #$8100
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$B42D
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda aEpilogueUnitStates
+        sta wR0
+        lda $7FC54C
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR0
+        asl a
+        tax
+        jsl rlUnknown878AB5
+        lda #$8100
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$B436
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda $7FC5AE
+        sta wR0
+        lda $7FC5B0
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR0
+        asl a
+        tax
+        jsl rlUnknown878AB5
+        lda $7FC5B0
+        cmp #$0021
+        bcs _B418
+        cmp wUnknown00052A,b
+        bcs _B418
+        sta wUnknown00052A,b
+
+        _B418
+        clc
+        adc #$0008
+        cmp #$0021
+        bcs _B429
+        cmp wUnknown00052C,b
+        bcc _B429
+        sta wUnknown00052C,b
+
+        _B429
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 81/B42D
+
+    .endsection Unsorted81B3A6Section
+
+
+    .section Unsorted81B4C5Section
+
+      .al
+      .xl
+
+      rlUnknown81B4C5 ; 81/B4C5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $81
+        phy
+        lda lChapterEventDataPointer+1,b
+        sta lR18+1
+        ldy lChapterEventDataPointer,b
+        sep #$20
+        lda lChapterEventDataPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0004,b,y
+        sta lR18
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 81/B4E4
+
+    .endsection Unsorted81B4C5Section
 
 
     .section Unsorted81B503Section

@@ -180,6 +180,54 @@
     .endsection Unsorted82886FSection
 
 
+    .section Unsorted8288B2Section
+
+      .al
+      .xl
+
+      rlUnknown8288B2 ; 82/88B2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda bBufferINIDISP
+        bit #$000F
+        beq _88BE
+        dec a
+        sta bBufferINIDISP
+        bra _88E6
+
+
+        _88BE
+        jsl rlEventEngineFreeProc
+        lda #$0002
+        sta wUnknown00171C,b
+        lda $04EA,b
+        and #$FFFA
+        sta $04EA,b
+        lda #$C0BC
+        jsl rlUnknown80A9D4
+        sei
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$CF
+        sta bBufferNMITIMEN
+        sta $4200,b
+        rep #$20
+
+        _88E6
+        rtl
+
+        .databank 0
+
+        ; 82/88E7
+
+    .endsection Unsorted8288B2Section
+
+
     .section ProcScript8288E7Section
 
       .al
@@ -265,6 +313,40 @@
         ; 82/8B46
 
     .endsection Unsorted828B35Section
+
+
+    .section Unsorted829496Section
+
+      .al
+      .xl
+
+      rlUnknown829496 ; 82/9496
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procUnknown9EC70B)<<8
+        sta lR44+1
+        lda #<>procUnknown9EC70B
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _94B0
+        txa
+        lsr a
+        jsl rlProcEngineFreeProcByIndex
+        jsl rlActiveSpriteEngineClearAllSprites
+
+        _94B0
+        rtl
+
+        .databank 0
+
+        ; 82/94B1
+
+    .endsection Unsorted829496Section
 
 
     .section Unsorted82E073Section
@@ -370,6 +452,382 @@
         ; 82/E41A
 
     .endsection Unsorted82E400Section
+
+
+    .section Unsorted82E5FFSection
+
+      .al
+      .xl
+
+      rlUnknown82E5FF ; 82/E5FF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        .databank $82
+        jsl rlFindRAMStructEntry
+        sta wStructIndex,b
+        lda #$0001
+        sta $0552,b
+        jsl rlUnknown82E664
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E615
+
+    .endsection Unsorted82E5FFSection
+
+
+    .section Unsorted82E615Section
+
+      .al
+      .xl
+
+      rlUnknown82E615 ; 82/E615
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        .databank $82
+        jsl rlFindRAMStructEntry
+        sta wStructIndex,b
+        jsl rlGetRAMStructCurrentStructCount
+        sta $0552,b
+        jsl rlUnknown82E664
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E62C
+
+    .endsection Unsorted82E615Section
+
+
+    .section Unsorted82E62CSection
+
+      .al
+      .xl
+
+      rlUnknown82E62C ; 82/E62C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        .databank $82
+        jsl rlFindRAMStructEntry
+        sta wStructIndex,b
+        dec a
+        sta $0552,b
+        jsl rlUnknown82E664
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E640
+
+      rlUnknown82E640 ; 82/E640
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        .databank $82
+        jsl rlFindRAMStructEntry
+        sta wStructIndex,b
+        inc a
+        sta $0552,b
+        jsl rlUnknown82E664
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E654
+
+      rlUnknown82E654 ; 82/E654
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        .databank $82
+        jsl rlFindRAMStructEntry
+        sta wStructIndex,b
+        jsl rlUnknown82E664
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E664
+
+    .endsection Unsorted82E62CSection
+
+
+    .section Unsorted82E664Section
+
+      .al
+      .xl
+
+      rlUnknown82E664 ; 82/E664
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        phy
+        lda wStructIndex,b
+        ora $0552,b
+        bne _E676
+        jml _E741
+
+
+        _E676
+        lda wStructIndex,b
+        beq _E6B8
+        lda $0552,b
+        beq _E6B8
+        ldy lStructPointer2,b
+        sep #$20
+        lda lStructPointer2+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0000,b,y
+        cmp @l wStructIndex
+        bcc _E6B8
+        cmp @l $000552
+        bcc _E6B8
+        lda $0002,b,y
+        and #$00FF
+        sta @l wStructSize
+        lda @l wStructIndex
+        jsr rsUnknown82EADE
+        lda @l wStructIndex
+        cmp @l $000552
+        bcc _E700
+        bra _E6BE
+
+
+        _E6B8
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        rtl
+
+
+        _E6BE
+        sec
+        sbc @l $000552
+        inc a
+        jsr rsGetRAMStructOffset
+        sta @l wStructIndexAlternate
+        lda @l wStructIndex
+        and #$00FF
+        dec a
+        jsr rsGetRAMStructOffset
+        clc
+        adc @l lStructPointer2
+        clc
+        adc @l wStructSize
+        tay
+        clc
+        adc @l wStructSize
+        tax
+        sep #$20
+
+        _E6E9
+        lda $0003,b,y
+        sta $0003,b,x
+        dec y
+        dec x
+        lda @l wStructIndexAlternate
+        dec a
+        sta @l wStructIndexAlternate
+        bne _E6E9
+        rep #$20
+        bra _E73A
+
+
+        _E700
+        lda @l $000552
+        sec
+        sbc @l wStructIndex
+        inc a
+        jsr rsGetRAMStructOffset
+        sta wStructIndexAlternate,b
+        lda @l wStructIndex
+        jsr rsGetRAMStructOffset
+        clc
+        adc @l lStructPointer2
+        tax
+        clc
+        adc @l wStructSize
+        tay
+        sep #$20
+
+        _E725
+        lda $0004,b,y
+        sta $0004,b,x
+        inc y
+        inc x
+        lda @l wStructIndexAlternate
+        dec a
+        sta @l wStructIndexAlternate
+        bne _E725
+        rep #$20
+
+        _E73A
+        lda @l $000552
+        jsr rsUnknown82EB15
+
+        _E741
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+        rtl
+
+        .databank 0
+
+        ; 82/E747
+
+    .endsection Unsorted82E664Section
+
+
+    .section Unsorted82EADESection
+
+      .al
+      .xl
+
+      rsUnknown82EADE ; 82/EADE
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        pha
+        lda @l lStructPointer2
+        tay
+        lda $0002,b,y
+        and #$00FF
+        cmp #$0004
+        bcc _EB0F
+        lda $0001,b,y
+        and #$00FF
+        inc a
+        jsr rsGetRAMStructOffset
+        clc
+        adc @l lStructPointer2
+        sta @l lStructPointer1
+        sep #$20
+        lda @l lStructPointer2+1
+        sta @l lStructPointer1+1
+        rep #$20
+
+        _EB0F
+        pla
+        jsr rsLoadDataFromRAMStruct
+        ply
+        rts
+
+        .databank 0
+
+        ; 82/EB15
+
+      rsUnknown82EB15 ; 82/EB15
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        pha
+        lda @l lStructPointer2
+        tay
+        lda $0002,b,y
+        and #$00FF
+        cmp #$0004
+        bcc _EB46
+        lda $0001,b,y
+        and #$00FF
+        inc a
+        jsr rsGetRAMStructOffset
+        clc
+        adc @l lStructPointer2
+        sta @l lStructPointer1
+        sep #$20
+        lda @l lStructPointer2+1
+        sta @l lStructPointer1+1
+        rep #$20
+
+        _EB46
+        pla
+        jsr rsSaveDataToRAMStruct
+        ply
+        rts
+
+        .databank 0
+
+        ; 82/EB4C
+
+    .endsection Unsorted82EADESection
 
 
     .section Unsorted82F211Section
@@ -941,3 +1399,55 @@
         ; 82/F4BF
 
     .endsection Unsorted82F4A7Section
+
+
+    .section Unsorted82F517Section
+
+      .al
+      .xl
+
+      rlUnknown82F517 ; 82/F517
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phb
+        dec a
+        asl a
+        clc
+        adc lR18
+        tay
+        sep #$20
+        lda lR18+2
+        pha
+        sta lBlockCopySource+2,b
+        rep #$20
+        plb
+        .databank ?
+        lda $0002,b,y
+        sec
+        sbc $0000,b,y
+        sta @l wBlockCopySize
+        lda $0000,b,y
+        plb
+        .databank ?
+        clc
+        adc lR18
+        sta lBlockCopySource,b
+        lda lR19+1
+        sta lBlockCopyDestination+1,b
+        lda lR19
+        sta lBlockCopyDestination,b
+        jsl rlBlockCopyMVNByRAM
+        ply
+        rtl
+
+        .databank 0
+
+        ; 82/F54F
+
+    .endsection Unsorted82F517Section

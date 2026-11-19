@@ -1986,7 +1986,7 @@
 
         ; 87/D637
 
-        jsr $87D65A
+        jsr rsUnknown87D65A
         ldy #3
         ldx #0
 

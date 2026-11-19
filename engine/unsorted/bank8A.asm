@@ -1,5 +1,66 @@
 ; Code from bank $8A not yet assigned to a game system.
 
+    .section Unsorted8A800ESection
+
+      .al
+      .xl
+
+      rlUnknown8A800E ; 8A/800E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$7F00
+        sta lR18+1
+        lda #$B16C
+        sta lR18
+        lda #$0001
+        sta wStructIndex,b
+        lda #$4E93
+        jsl rlBuildRAMAreaHeaderAndGuidingEntry
+        lda $088B,b
+        cmp #$0002
+        beq _8041
+        jsl rlEnableActiveSpriteEngine
+        lda #(`procFadeIn)<<8
+        sta lR44+1
+        lda #<>procFadeIn
+        sta lR44
+        jsl rlProcEngineCreateProc
+        bra _8049
+
+
+        _8041
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+
+        _8049
+        lda $08B8,b
+        cmp #$0004
+        beq _805D
+        stz wBufferBG1VOFS
+        stz wBufferBG2VOFS
+        stz wBufferBG3VOFS
+        stz wBufferBG1HOFS
+        stz wBufferBG2HOFS
+        stz wBufferBG3HOFS
+
+        _805D
+        inc $0302,b
+        rtl
+
+        .databank 0
+
+        ; 8A/8061
+
+    .endsection Unsorted8A800ESection
+
+
     .section Unsorted8A8496Section
 
       .al
@@ -154,6 +215,275 @@
     .endsection Unsorted8A8496Section
 
 
+    .section Unsorted8A870DSection
+
+      .al
+      .xl
+
+      rsUnknown8A870D ; 8A/870D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0897,b
+        sta $078C,b
+        sta $078E,b
+
+        _8716
+        lda $7F763A
+        beq _8781
+        lda $078C,b
+        cmp #$0017
+        bcs _875C
+        clc
+        adc #$0001
+        sta $078C,b
+
+        _872B
+        asl a
+        tax
+        lda $7F757A,x
+        asl a
+        tax
+        lda $7F75AA,x
+        beq _8716
+        sta wRoutineVariable1,b
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        lda wRoutineVariable1,b
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta wRoutineVariable1,b
+        jsl $87A01A
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        bcc _8716
+        lda $078C,b
+        bra _8764
+
+
+        _875C
+        lda #$0000
+        sta $078C,b
+        bra _872B
+
+
+        _8764
+        sta $0897,b
+        asl a
+        tax
+        lda aUnknown8A99DB,x
+        sta $088D,b
+        lda aUnknown8A9A0B,x
+        sta $088F,b
+        lda $078C,b
+        cmp $078E,b
+        beq _8781
+        sec
+        rts
+
+
+        _8781
+        clc
+        rts
+
+        .databank 0
+
+        ; 8A/8783
+
+    .endsection Unsorted8A870DSection
+
+
+    .section Unsorted8A87B8Section
+
+      .al
+      .xl
+
+      rsUnknown8A87B8 ; 8A/87B8
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$B6AD
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$3400
+        sta aCurrentTilemapInfo,b
+        lda $0893,b
+        asl a
+        tax
+        jsr ($8A87F3,x)
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8988, $0100, $80, $B600
+
+        stz wBufferBG2VOFS
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$1903
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 8A/87F3
+
+      rsUnknown8A87F3 ; 8A/87F3
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec a
+        dec y
+        sbc $881287,x
+        and wBufferBG3HOFS+1
+        txs
+        dec y
+        ror wBufferBG3HOFS+1,x
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$88E0
+        sta lRoutineVariable,b
+        jsl rlUnknown879F12
+        bcc _886F
+        rts
+
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$88F4
+        sta lRoutineVariable,b
+        jsl rlUnknown879F67
+        bcc _886F
+        rts
+
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$8908
+        sta lRoutineVariable,b
+        lda wCurrentChapter,b
+        cmp #$0006
+        beq _8863
+        rts
+
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$891C
+        sta lRoutineVariable,b
+        rts
+
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$896C
+        sta lRoutineVariable,b
+        bra _886F
+
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$8958
+        sta lRoutineVariable,b
+        bra _886F
+
+
+        _8863
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$8944
+        sta lRoutineVariable,b
+
+        _886F
+        lda #$3800
+        sta aCurrentTilemapInfo,b
+        rts
+
+        .databank 0
+
+        ; 8A/8876
+
+      rsUnknown8A8876 ; 8A/8876
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0006
+        jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
+        bcs _8887
+        jsl rlUnknown879F9C
+        bcs _8887
+        bra $8A8863
+
+
+        _8887
+        jsl rlUnknown879F9C
+        bcc $8A8847
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$896C
+        sta lRoutineVariable,b
+        rts
+
+        .databank 0
+
+        ; 8A/889A
+
+      rsUnknown8A889A ; 8A/889A
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0008
+        jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
+        bcs _88CD
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta $0772,b
+        jsl rlUnknown84F8D9
+        lda wAIGroupLeaderFieldMovement
+        and #$00FF
+        bne _88C0
+        lda $7E2028
+        and #$00FF
+        beq $8A8863
+
+        _88C0
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$8930
+        sta lRoutineVariable,b
+        rts
+
+
+        _88CD
+        jsl rlUnknown87A006
+        bcc $8A8855
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$8958
+        sta lRoutineVariable,b
+        rts
+
+        .databank 0
+
+        ; 8A/88E0
+
+    .endsection Unsorted8A87B8Section
+
+
     .section Unsorted8A8F68Section
 
       .al
@@ -195,6 +525,517 @@
         ; 8A/8F8F
 
     .endsection Unsorted8A8F68Section
+
+
+    .section Unsorted8A8F8FSection
+
+      .al
+      .xl
+
+      rsUnknown8A8F8F ; 8A/8F8F
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0893,b
+        beq _8FE4
+        cmp #$0001
+        beq _8FB6
+        cmp #$0002
+        beq _8FDC
+        cmp #$0003
+        beq _8FE0
+        cmp #$0004
+        beq _9002
+        cmp #$0005
+        beq _9021
+        rts
+
+
+        _8FAE
+        lda #$0022
+        jsl rlUnknown808FAD
+        rts
+
+
+        _8FB6
+        jsl rlUnknown879F12
+        bcc _8FAE
+        jsl rlUnknown84AF17
+        bcs _8FAE
+        lda #$000A
+        jsl rlUnknown808FAD
+        lda wRoutineVariable1,b
+        sta $0772,b
+        lda #$FFFF
+        sta $07E0,b
+        lda #$0016
+        sta $0304,b
+        rts
+
+
+        _8FDC
+        jsr rsUnknown8A9069
+        rts
+
+
+        _8FE0
+        jsr rsUnknown8A9038
+        rts
+
+
+        _8FE4
+        jsr $8A9D22
+        lda #$000F
+        sta $0304,b
+        lda #$0015
+        sta $0594,b
+        lda #$0003
+        sta $7F766A
+        lda #$000A
+        jsl rlUnknown808FAD
+        rts
+
+
+        _9002
+        lda $0897,b
+        sta $0899,b
+        lda #$0008
+        jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
+        bcc _9019
+        jsl $87A006
+        bcs _901D
+        bra _8FAE
+
+
+        _9019
+        jsr rsUnknown8A90C7
+        rts
+
+
+        _901D
+        jsr rsUnknown8A918A
+        rts
+
+
+        _9021
+        lda $0897,b
+        sta $0899,b
+        jsl rlUnknown879F9C
+        bcc _8FAE
+        jsr rsUnknown8A9209
+        lda #$000A
+        jsl rlUnknown808FAD
+        rts
+
+        .databank 0
+
+        ; 8A/9038
+
+      rsUnknown8A9038 ; 8A/9038
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wCurrentChapter,b
+        cmp #$0006
+        beq _9061
+        lda #$0003
+        sta $0891,b
+        lda #$0009
+        sta $0304,b
+        lda #$0003
+        sta $08A9,b
+        lda #$0005
+        sta $7F8082
+        lda #$000A
+        jsl rlUnknown808FAD
+        rts
+
+
+        _9061
+        lda #$0022
+        jsl rlUnknown808FAD
+        rts
+
+        .databank 0
+
+        ; 8A/9069
+
+      rsUnknown8A9069 ; 8A/9069
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown879F67
+        bcc _90BF
+        jsl rlUnknown84AF17
+        lda #$000A
+        jsl rlUnknown808FAD
+        jsl rlUnknown88C25D
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta $0778,b
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta $077A,b
+        lda wCursorYOffset,b
+        sec
+        sbc #$0020
+        sta wCursorYOffset,b
+        lda #$0003
+        sta $07E0,b
+        lda wRoutineVariable1,b
+        sta $0772,b
+        tax
+        lda #$0001
+        jsl rlUnknown84D03E
+        lda #$0016
+        sta $0304,b
+        rts
+
+
+        _90BF
+        lda #$0022
+        jsl rlUnknown808FAD
+        rts
+
+        .databank 0
+
+        ; 8A/90C7
+
+      rsUnknown8A90C7 ; 8A/90C7
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta $0772,b
+        jsl $84F8D9
+        lda wAIGroupLeaderFieldMovement
+        and #$00FF
+        bne _90E4
+        lda $7E2028
+        and #$00FF
+        beq _9150
+
+        _90E4
+        stz wBufferBG2VOFS
+        stz $0891,b
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$9158
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$1903
+        jsl rlDrawMenuTextLine
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8988, $0100, $80, $B600
+
+        ldx #$01FE
+        lda #$00FF
+
+        _9119
+        sta $7E8088,x
+        dec x
+        dec x
+        bpl _9119
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8088, $0200, $80, $AD00
+
+        lda #$0000
+        sta wUnknown00052A,b
+        lda #$0001
+        sta wUnknown00052C,b
+        jsl rlUnknown87829A
+        jsr $8A929B
+        lda #$8500
+        sta lR44+1
+        lda #$E9C7
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rts
+
+
+        _9150
+        lda #$0022
+        jsl rlUnknown808FAD
+        rts
+
+        .databank 0
+
+        ; 8A/9158
+
+    .endsection Unsorted8A8F8FSection
+
+
+    .section Unsorted8A918ASection
+
+      .al
+      .xl
+
+      rsUnknown8A918A ; 8A/918A
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$91D7
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$1903
+        jsl rlDrawMenuTextLine
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8988, $0100, $80, $B600
+
+        ldx #$01FE
+        lda #$00FF
+
+        _91BA
+        sta $7E8088,x
+        dec x
+        dec x
+        bpl _91BA
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8088, $0200, $80, $AD00
+
+        jsr $8A929B
+        jsl $84B6E2
+        rts
+
+        .databank 0
+
+        ; 8A/91D7
+
+    .endsection Unsorted8A918ASection
+
+
+    .section Unsorted8A9209Section
+
+      .al
+      .xl
+
+      rsUnknown8A9209 ; 8A/9209
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0005
+        sta $0891,b
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta $0772,b
+        stz $0897,b
+        jsr $8A870D
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$9269
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$1903
+        jsl rlDrawMenuTextLine
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8988, $0100, $80, $B600
+
+        ldx #$01FE
+        lda #$00FF
+
+        _924C
+        sta $7E8088,x
+        dec x
+        dec x
+        bpl _924C
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8088, $0200, $80, $AD00
+
+        jsr $8A929B
+        jsl rlUnknown8A8496
+        rts
+
+        .databank 0
+
+        ; 8A/9269
+
+    .endsection Unsorted8A9209Section
+
+
+    .section Unsorted8A929BSection
+
+      .al
+      .xl
+
+      rsUnknown8A929B ; 8A/929B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$001E
+
+        _929E
+        lda $DE0000,x
+        sta aBGPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _929E
+        rts
+
+        .databank 0
+
+        ; 8A/92AA
+
+    .endsection Unsorted8A929BSection
+
+
+    .section Unsorted8A92BBSection
+
+      .al
+      .xl
+
+      rlUnknown8A92BB ; 8A/92BB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown88C25D
+        jsl rlUnknown84AF57
+        bcs _92D5
+        lda wRoutineVariable1,b
+        sta $0772,b
+        jsl $8881DE
+        lda #$0016
+        sta $0304,b
+
+        _92D5
+        rtl
+
+        .databank 0
+
+        ; 8A/92D6
+
+    .endsection Unsorted8A92BBSection
+
+
+    .section Unsorted8A92D6Section
+
+      .al
+      .xl
+
+      rlUnknown8A92D6 ; 8A/92D6
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown88C25D
+        jsl rlUnknown84AF57
+        bcs _92FE
+        lda wRoutineVariable1,b
+        sta $0772,b
+        jsl rlUnknown8881DE
+        jsl $8881E5
+        lda wCursorYOffset,b
+        sec
+        sbc #$0010
+        sta wCursorYOffset,b
+        lda #$0016
+        sta $0304,b
+
+        _92FE
+        rtl
+
+        .databank 0
+
+        ; 8A/92FF
+
+      rlUnknown8A92FF ; 8A/92FF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phk
+        plb
+        .databank $8A
+        jsl rlUnknown8A8496
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        rep #$20
+        jsr $8A87B8
+        lda #$0001
+        sta $0891,b
+        jsl rlGetSelectedUnitCharacterID
+        jsl $8A979C
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DA6500, $0200, $80, $AD00
+
+        lda $0899,b
+        sta $0897,b
+        asl a
+        tax
+        lda @l aUnknown8A99DB,x
+        sta $088D,b
+        lda @l aUnknown8A9A0B,x
+        sta $088F,b
+        rtl
+
+        .databank 0
+
+        ; 8A/9342
+
+    .endsection Unsorted8A92D6Section
 
 
     .section Unsorted8A9342Section
@@ -242,6 +1083,176 @@
         ; 8A/937E
 
     .endsection Unsorted8A9342Section
+
+
+    .section Unsorted8A9389Section
+
+      .al
+      .xl
+
+      rsUnknown8A9389 ; 8A/9389
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown87EF46
+        sta wR0
+        lda $0895,b
+        asl a
+        tax
+        lda $8A945E,x
+        sta wR1
+        lda wR0
+        bit wR1
+        beq _93BE
+        lda $0895,b
+        beq _93EB
+        cmp #$0001
+        beq _93D5
+        cmp #$0002
+        beq _9423
+        cmp #$0003
+        beq _940A
+        cmp #$0004
+        beq _9401
+        cmp #$0005
+        beq _93BF
+
+        _93BE
+        rts
+
+
+        _93BF
+        lda #$000D
+        sta $0304,b
+        lda #$0004
+        sta $08A9,b
+        lda #$0000
+        sta $7F8082
+        bra _944E
+
+        rts
+
+
+        _93D5
+        lda #$000D
+        sta $0304,b
+        lda #$0005
+        sta $08A9,b
+        lda #$0001
+        sta $7F8082
+        bra _944E
+
+        rts
+
+
+        _93EB
+        lda #$000D
+        sta $0304,b
+        lda #$0004
+        sta $08A9,b
+        lda #$0002
+        sta $7F8082
+        bra _944E
+
+        rts
+
+
+        _9401
+        lda #$0005
+        sta $0304,b
+        bra _944E
+
+        rts
+
+
+        _940A
+        lda wSelectedUnitDataRAMPointer,b
+        sta $089B,b
+        lda #$0003
+        sta $0304,b
+        lda #$0007
+        sta $7F8082
+        stz $0AD7,b
+        bra _944E
+
+        rts
+
+
+        _9423
+        lda #$0007
+        sta $0304,b
+        lda #$0002
+        sta $08A9,b
+        lda #$0003
+        sta $7F8082
+        bra _944E
+
+        rts
+
+        lda #$C39A
+        sta $0ECF,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rts
+
+
+        _944E
+        lda #$000A
+        jsl rlUnknown808FAD
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        rts
+
+        .databank 0
+
+        ; 8A/945E
+
+    .endsection Unsorted8A9389Section
+
+
+    .section Unsorted8A94B6Section
+
+      .al
+      .xl
+
+      rlUnknown8A94B6 ; 8A/94B6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rep #$30
+        lda #$1809
+        sta $4300,b
+        lda #$8A00
+        sta $4303,b
+        lda #$94E1
+        sta $4302,b
+        lda #$0800
+        sta $4305,b
+        lda #$2000
+        sta $2116,b
+        sep #$20
+        lda #$01
+        sta $420B,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8A/94E0
+
+    .endsection Unsorted8A94B6Section
 
 
     .section Unsorted8A94E2Section
@@ -908,6 +1919,1785 @@
     .endsection Unsorted8A9C61Section
 
 
+    .section Unsorted8A9D22Section
+
+      .al
+      .xl
+
+      rsUnknown8A9D22 ; 8A/9D22
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetEventLocationEntryNameID
+        asl a
+        tax
+        lda $8A9D79,x
+        cmp $0510,b
+        beq _9D38
+        lda #$00E0
+        jsl rlUnknown808F6F
+
+        _9D38
+        rts
+
+        .databank 0
+
+        ; 8A/9D39
+
+    .endsection Unsorted8A9D22Section
+
+
+    .section Unsorted8A9D39Section
+
+      .al
+      .xl
+
+      rlUnknown8A9D39 ; 8A/9D39
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phk
+        plb
+        .databank $8A
+        jsl rlGetEventLocationEntryNameID
+        asl a
+        tax
+        lda @l $8A9D79,x
+        cmp $0510,b
+        beq _9D6C
+        lda #$00C0
+        jsl rlUnknown808F6F
+        jsl rlGetEventLocationEntryNameID
+        asl a
+        cmp #$005C
+        bcs _9D74
+
+        _9D5B
+        tax
+        lda @l $8A9D79,x
+        cmp $0510,b
+        beq _9D6C
+        sta $04BA,b
+        jsl rlUnknown809654
+
+        _9D6C
+        lda #$00E8
+        jsl rlUnknown808F6F
+        rtl
+
+
+        _9D74
+        lda #$0000
+        bra _9D5B
+
+        .databank 0
+
+        ; 8A/9D79
+
+    .endsection Unsorted8A9D39Section
+
+
+    .section Unsorted8A9EB7Section
+
+      .al
+      .xl
+
+      rlUnknown8A9EB7 ; 8A/9EB7
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0000
+        stz $08AB,b
+        jsl rlGetFirstEquippableWeaponInInventory
+        sta $7F8072,x
+        sta $078C,b
+        lda wCurrentItemDataROMPointer,b
+        beq _9EEC
+        sta $7F7C72,x
+        lda #$0000
+        sta $7F7E72,x
+        jsl rlGetEffectiveItemIDByItemRAMStructEntry
+        sta $7F7A72,x
+        lda wCurrentItemDataRAMPointer,b
+        sta $7F7872,x
+        inc $08AB,b
+        inc x
+        inc x
+
+        _9EEC
+        ldy #$0007
+
+        _9EEF
+        tya
+        sta wRoutineVariable1,b
+        jsl rlGetItemROMDataByInventorySlot
+        lda wCurrentItemDataROMPointer,b
+        beq _9F2E
+        jsl rlCheckWeaponEquippable
+        bcc _9F2E
+        lda #$0000
+        sta $7F7E72,x
+        lda wCurrentItemDataROMPointer,b
+        sta $7F7C72,x
+        jsl rlGetEffectiveItemIDByItemRAMStructEntry
+        sta $7F7A72,x
+        lda wCurrentItemDataRAMPointer,b
+        sta $7F7872,x
+        tya
+        cmp $078C,b
+        beq _9F2E
+        sta $7F8072,x
+        inc $08AB,b
+        inc x
+        inc x
+
+        _9F2E
+        dec y
+        bne _9EEF
+        rtl
+
+        .databank 0
+
+        ; 8A/9F32
+
+      rlUnknown8A9F32 ; 8A/9F32
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0000
+        stz $08AB,b
+        jsl rlGetFirstEquippableWeaponInInventory
+        sta $7F8072,x
+        sta $078C,b
+        jsl rlGetItemMinimumRange
+        sta $078E,b
+        jsl rlGetSelectedUnitEquippedWeaponBitfield
+        cmp #$0000
+        bne _9F59
+        lda #$0001
+        sta $078E,b
+
+        _9F59
+        lda wCurrentItemDataROMPointer,b
+        beq _9F7D
+        sta $7F7C72,x
+        lda #$0000
+        sta $7F7E72,x
+        jsl rlGetEffectiveItemIDByItemRAMStructEntry
+        sta $7F7A72,x
+        lda wCurrentItemDataRAMPointer,b
+        sta $7F7872,x
+        inc $08AB,b
+        inc x
+        inc x
+
+        _9F7D
+        ldy #$0007
+
+        _9F80
+        tya
+        sta wRoutineVariable1,b
+        jsl rlGetItemROMDataByInventorySlot
+        lda wCurrentItemDataROMPointer,b
+        beq _9FC8
+        jsl rlGetItemMinimumRange
+        cmp $078E,b
+        bne _9FC8
+        jsl rlCheckWeaponEquippable
+        bcc _9FC8
+        lda #$0000
+        sta $7F7E72,x
+        lda wCurrentItemDataROMPointer,b
+        sta $7F7C72,x
+        jsl rlGetEffectiveItemIDByItemRAMStructEntry
+        sta $7F7A72,x
+        lda wCurrentItemDataRAMPointer,b
+        sta $7F7872,x
+        tya
+        cmp $078C,b
+        beq _9FC8
+        sta $7F8072,x
+        inc $08AB,b
+        inc x
+        inc x
+
+        _9FC8
+        dec y
+        bne _9F80
+        rtl
+
+        .databank 0
+
+        ; 8A/9FCC
+
+    .endsection Unsorted8A9EB7Section
+
+
+    .section Unsorted8A9FCCSection
+
+      .al
+      .xl
+
+      rlUnknown8A9FCC ; 8A/9FCC
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz $08AB,b
+        jsl rlUnknown87E007
+        tay
+        ldx #$0000
+
+        _9FD7
+        tya
+        jsl rlGetItemRAMStructEntryByPlayerItemIndex
+        bcs _A00F
+        jsl rlGetItemRAMStateAndOwner
+        lda wR0
+        cmp $08A9,b
+        bne _A00F
+        bne _A00F
+        tya
+        sta $7F7672,x
+        jsl rlGetEffectiveItemIDByItemRAMStructEntry
+        sta $7F7A72,x
+        jsl rlGetEffectiveItemROMPointerByItemRAMStructEntry
+        lda #$0000
+        sta $7F7E72,x
+        lda wCurrentItemDataROMPointer,b
+        sta $7F7C72,x
+        inc $08AB,b
+        inc x
+        inc x
+
+        _A00F
+        dec y
+        bne _9FD7
+        rtl
+
+        .databank 0
+
+        ; 8A/A013
+
+    .endsection Unsorted8A9FCCSection
+
+
+    .section Unsorted8AA02BSection
+
+      .al
+      .xl
+
+      rsUnknown8AA02B ; 8A/A02B
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8A00
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$A022
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$0000
+        ldx #$00C0
+
+        _A03D
+        sta $7F80C1,x
+        dec x
+        dec x
+        bne _A03D
+        lda aCurrentTilemapInfo,b
+        pha
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        jsl rlUnknown87E459
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0000
+        jsl rlDrawMenuTextLine
+        pla
+        sta aCurrentTilemapInfo,b
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$B6AD
+        sta lMapMenuTilemapRAMEntryPointer,b
+        ldx #$0000
+
+        _A077
+        lda $7F80C3,x
+        sta $7E868A,x
+        lda $7F8123,x
+        sta $7E86CA,x
+        inc x
+        inc x
+        cpx #$0010
+        bne _A077
+        ldx #$0000
+
+        _A091
+        lda $7F80D3,x
+        sta $7E870A,x
+        lda $7F8133,x
+        sta $7E874A,x
+        inc x
+        inc x
+        cpx #$0010
+        bne _A091
+        ldx #$0000
+
+        _A0AB
+        lda $7F80E3,x
+        sta $7E878A,x
+        lda $7F8143,x
+        sta $7E87CA,x
+        inc x
+        inc x
+        cpx #$0010
+        bne _A0AB
+        ldx #$0000
+
+        _A0C5
+        lda $7F80F3,x
+        sta $7E880A,x
+        lda $7F8153,x
+        sta $7E884A,x
+        inc x
+        inc x
+        cpx #$0010
+        bne _A0C5
+        ldx #$0000
+
+        _A0DF
+        lda $7F8103,x
+        sta $7E888A,x
+        lda $7F8163,x
+        sta $7E88CA,x
+        inc x
+        inc x
+        cpx #$0010
+        bne _A0DF
+        ldx #$0000
+
+        _A0F9
+        lda $7F8113,x
+        sta $7E890A,x
+        lda $7F8173,x
+        sta $7E894A,x
+        inc x
+        inc x
+        cpx #$0010
+        bne _A0F9
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$A12E
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$1600
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 8A/A12E
+
+    .endsection Unsorted8AA02BSection
+
+
+    .section Unsorted8AA142Section
+
+      .al
+      .xl
+
+      rsUnknown8AA142 ; 8A/A142
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8087
+        sta lR20+1
+        lda $7F8086
+        sta lR20
+        lda $08A1,b
+        tay
+        lda [lR20],y
+        and #$00FF
+        beq _A177
+        cmp #$0001
+        beq _A17B
+        cmp #$0002
+        beq _A17B
+        cmp #$0003
+        beq _A17F
+        cmp #$0004
+        beq _A17F
+        cmp #$0005
+        beq _A17F
+        cmp #$00FF
+        beq _A177
+
+        _A177
+        jml _A180
+
+
+        _A17B
+        jml _A222
+
+
+        _A17F
+        rts
+
+
+        _A180
+        ldy #$000E
+        lda $08A7,b
+        sec
+        sbc $08A5,b
+        clc
+        adc #$0007
+        asl a
+        tax
+
+        _A190
+        phx
+        phy
+        lda $7F7A72,x
+        sta wR0
+        txa
+        and #$000E
+        tay
+        lda $A1B0,b,y
+        tax
+        lda wR0
+        jsl rlUnknown8BBE68
+        ply
+        plx
+        dec x
+        dec x
+        dec y
+        dec y
+        bpl _A190
+        rts
+
+        bvc _A1B2
+
+        _A1B2
+        eor (wR0)
+        .byte $54, $00, $56 ; mvn from bank $56 to bank $00
+        .byte $00 ; brk
+        cli
+        .byte $00 ; brk
+        phy
+        .byte $00 ; brk
+        jml $005E00
+
+        lda $08A7,b
+        sec
+        sbc $08A5,b
+        asl a
+        tax
+        lda $7F7A72,x
+        sta wR0
+        txa
+        and #$000E
+        tay
+        lda $A1DF,b,y
+        tax
+        lda wR0
+        jsl rlUnknown8BBE68
+        rts
+
+        bvc _A1E1
+
+        _A1E1
+        eor (wR0)
+        .byte $54, $00, $56 ; mvn from bank $56 to bank $00
+        .byte $00 ; brk
+        cli
+        .byte $00 ; brk
+        phy
+        .byte $00 ; brk
+        jml $005E00
+
+        lda $08A7,b
+        sec
+        sbc $08A5,b
+        clc
+        adc #$0007
+        asl a
+        tax
+        lda $7F7A72,x
+        sta wR0
+        txa
+        and #$000E
+        tay
+        lda $A212,b,y
+        tax
+        lda wR0
+        jsl rlUnknown8BBE68
+        rts
+
+        bvc _A214
+
+        _A214
+        eor (wR0)
+        .byte $54, $00, $56 ; mvn from bank $56 to bank $00
+        .byte $00 ; brk
+        cli
+        .byte $00 ; brk
+        phy
+        .byte $00 ; brk
+        jml $005E00
+
+
+        _A222
+        ldx #$000E
+        ldy #$0007
+
+        _A228
+        phx
+        phy
+        lda $8AA241,x
+        tax
+        tya
+        inc a
+        jsl rlGetItemIDByInventorySlot
+        jsl rlUnknown8BBE68
+        ply
+        plx
+        dec x
+        dec x
+        dec y
+        bpl _A228
+        rts
+
+        .databank 0
+
+        ; 8A/A241
+
+    .endsection Unsorted8AA142Section
+
+
+    .section Unsorted8AA2EDSection
+
+      .al
+      .xl
+
+      rsUnknown8AA2ED ; 8A/A2ED
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2800
+        sta aCurrentTilemapInfo,b
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$A31C
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$1902
+        jsl rlDrawMenuTextLine
+        jsl rlGetSelectedUnitMoney
+        ldx #$0646
+        jsl $8AB111
+        rts
+
+        .databank 0
+
+        ; 8A/A31C
+
+    .endsection Unsorted8AA2EDSection
+
+
+    .section Unsorted8AA6CASection
+
+      .al
+      .xl
+
+      rsUnknown8AA6CA ; 8A/A6CA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0282
+        lda #$000A
+        ldy #$0008
+        jsr $8AA9A6
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$B6AD
+        sta lMapMenuTilemapRAMEntryPointer,b
+        jsl rlGetItemWeaponRank
+        ldx #$0008
+        ldy #$000A
+        inc a
+        jsl $8AA5FF
+        jsl rlGetItemAccuracy
+        ldx #$2520
+        stx wR5
+        ldx #$0000
+        stx wR6
+        ldx #$030C
+        jsl rlDrawMenuTextNumber
+        jsl rlGetItemMight
+        ldx #$24F0
+        stx aCurrentTilemapInfo,b
+        ldx #$0E06
+        jsl rlUnknown87913E
+        jsl rlGetItemMinimumRange
+        ldx #$2520
+        stx wR5
+        ldx #$0001
+        stx wR6
+        ldx #$040C
+        jsl rlDrawMenuTextNumber
+        jsl rlGetItemMaximumRange
+        ldx #$2520
+        stx wR5
+        ldx #$0000
+        stx wR6
+        ldx #$0410
+        jsl rlDrawMenuTextNumber
+        jsl rlGetItemWeight
+        ldx #$24F0
+        stx aCurrentTilemapInfo,b
+        ldx #$1206
+        jsl rlUnknown87913E
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$A7DD
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$1400
+        jsl rlDrawMenuTextLine
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$A7DD
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$1600
+        jsl rlDrawMenuTextLine
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$B6AD
+        sta lMapMenuTilemapRAMEntryPointer,b
+        jsl rlUnknown87E459
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$1501
+        jsl rlDrawMenuTextLine
+        lda #$2400
+        sta aCurrentTilemapInfo,b
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$A7F1
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$1007
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 8A/A7DD
+
+    .endsection Unsorted8AA6CASection
+
+
+    .section Unsorted8AA830Section
+
+      .al
+      .xl
+
+      rsUnknown8AA830 ; 8A/A830
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0282
+        lda #$000E
+        ldy #$0008
+        jsr $8AA97F
+        rts
+
+        .databank 0
+
+        ; 8A/A83D
+
+    .endsection Unsorted8AA830Section
+
+
+    .section Unsorted8AA83DSection
+
+      .al
+      .xl
+
+      rlUnknown8AA83D ; 8A/A83D
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $08A7,b
+        inc a
+        sta wRoutineVariable1,b
+        jsl rlGetItemROMDataByInventorySlot
+        lda wCurrentItemDataROMPointer,b
+        beq _A8AD
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$B6AD
+        sta lMapMenuTilemapRAMEntryPointer,b
+        jsl rlGetItemEquipmentType
+        cmp #$0001
+        beq _A88E
+        cmp #$0000
+        beq _A8B1
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$A8B5
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0A00
+        jsl rlDrawMenuTextLine
+        jml $8AA02B
+
+
+        _A88E
+        ldx #$0282
+        lda #$0002
+        ldy #$0008
+        jsr $8AA9A6
+        jsl rlGetItemWeaponRank
+        ldx #$0008
+        ldy #$000A
+        inc a
+        jsl $8AA5FF
+        jml $8AA02B
+
+
+        _A8AD
+        jml rsUnknown8AA830
+
+
+        _A8B1
+        jml $8AA6CA
+
+        .databank 0
+
+        ; 8A/A8B5
+
+    .endsection Unsorted8AA83DSection
+
+
+    .section Unsorted8AA97FSection
+
+      .al
+      .xl
+
+      rsUnknown8AA97F ; 8A/A97F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stx wR0
+        sty wR1
+        sty wR3
+        sta wR2
+
+        _A987
+        lda #$00FF
+        sta aBG3TilemapBuffer,x
+        inc x
+        inc x
+        dec wR1
+        bne _A987
+        lda wR0
+        clc
+        adc #$0040
+        sta wR0
+        tax
+        lda wR3
+        sta wR1
+        dec wR2
+        bne _A987
+        rts
+
+        .databank 0
+
+        ; 8A/A9A6
+
+    .endsection Unsorted8AA97FSection
+
+
+    .section Unsorted8AA9CESection
+
+      .al
+      .xl
+
+      rsUnknown8AA9CE ; 8A/A9CE
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        ldy #$000E
+        lda $08A7,b
+        sec
+        sbc $08A5,b
+        clc
+        adc #$0007
+        asl a
+        tax
+
+        _A9E4
+        txa
+        lsr a
+        cmp $08AB,b
+        bcs _AA0F
+        lda $7F7E72,x
+        bmi _A9F9
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        bra _A9FF
+
+
+        _A9F9
+        lda #$2C00
+        sta aCurrentTilemapInfo,b
+
+        _A9FF
+        jsr $8AAA8A
+        jsr $8AAAE7
+        jsr $8AAA3A
+
+        _AA08
+        dec x
+        dec x
+        dec y
+        dec y
+        bpl _A9E4
+        rts
+
+
+        _AA0F
+        lda #$8A00
+        sta lR18+1
+        lda #$A320
+        sta lR18
+        phx
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$000D
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        bra _AA08
+
+        .databank 0
+
+        ; 8A/AA2A
+
+    .endsection Unsorted8AA9CESection
+
+
+    .section Unsorted8AAA3ASection
+
+      .al
+      .xl
+
+      rsUnknown8AAA3A ; 8A/AA3A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8A00
+        sta lR18+1
+        lda #$AA78
+        sta lR18
+        phx
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$000D
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        lda $7F7C72,x
+        sta wCurrentItemDataROMPointer,b
+        jsl rlGetItemNamePointer
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        phx
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$000D
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        rts
+
+        .databank 0
+
+        ; 8A/AA78
+
+    .endsection Unsorted8AAA3ASection
+
+
+    .section Unsorted8AAA8ASection
+
+      .al
+      .xl
+
+      rsUnknown8AAA8A ; 8A/AA8A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8082
+        cmp #$0003
+        beq _AAE6
+        cmp #$0004
+        beq _AAE6
+        cmp #$0007
+        beq _AAE6
+        phy
+        phx
+        lda $7F7872,x
+        sta wCurrentItemDataRAMPointer,b
+        jsl rlUnknown87E1FD
+        sta $078C,b
+        plx
+        ply
+        jsl $87A18C
+        bcc _AABC
+        lda $078C,b
+        lsr a
+        sta $078C,b
+
+        _AABC
+        phx
+        lda $AA2A,b,y
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0032
+        tax
+        lda $078C,b
+        jsl $8AB111
+        plx
+        rts
+
+        .byte $DA, $B9, $2A, $AA, $EB, $4A, $4A, $18, $69, $32, $00, $AA, $AD, $8C, $07, $4A
+        .byte $22, $11, $B1, $8A, $FA
+
+
+        _AAE6
+        rts
+
+        .databank 0
+
+        ; 8A/AAE7
+
+      rsUnknown8AAAE7 ; 8A/AAE7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda $7F7872,x
+        sta wCurrentItemDataRAMPointer,b
+        jsl rlGetItemCurrentDurability
+        sta wR0
+        plx
+        ply
+        lda $7F7C72,x
+        sta wCurrentItemDataROMPointer,b
+        phy
+        phx
+        jsl rlGetItemEquipmentType
+        plx
+        ply
+        cmp #$0002
+        beq _AB20
+        phx
+        lda $AA2A,b,y
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0026
+        tax
+        lda wR0
+        jsl $8AB111
+        plx
+        rts
+
+
+        _AB20
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$8A00
+        sta lR18+1
+        lda #$AB40
+        sta lR18
+        phx
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$0015
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        rts
+
+        .databank 0
+
+        ; 8A/AB40
+
+    .endsection Unsorted8AAA8ASection
+
+
+    .section Unsorted8AAB48Section
+
+      .al
+      .xl
+
+      rsUnknown8AAB48 ; 8A/AB48
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        stz $0889,b
+        ldx #$0007
+        ldy #$000E
+
+        _AB57
+        txa
+        inc a
+        sta wRoutineVariable1,b
+        jsl rlGetItemROMDataByInventorySlot
+        lda wCurrentItemDataROMPointer,b
+        beq _AB90
+        inc $0889,b
+        jsl rlCheckItemObtainable
+        bcc _AB76
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        bra _AB7C
+
+
+        _AB76
+        lda #$2C00
+        sta aCurrentTilemapInfo,b
+
+        _AB7C
+        txa
+        inc a
+        sta wRoutineVariable1,b
+        jsr $8AABFC
+        jsr $8AAC51
+        jsr $8AABAB
+
+        _AB8A
+        dec x
+        dec y
+        dec y
+        bpl _AB57
+        rts
+
+
+        _AB90
+        lda #$8A00
+        sta lR18+1
+        lda #$A320
+        sta lR18
+        phx
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$000D
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        bra _AB8A
+
+        .databank 0
+
+        ; 8A/ABAB
+
+    .endsection Unsorted8AAB48Section
+
+
+    .section Unsorted8AABABSection
+
+      .al
+      .xl
+
+      rsUnknown8AABAB ; 8A/ABAB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8A00
+        sta lR18+1
+        lda #$ABEA
+        sta lR18
+        phx
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$000D
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        phx
+        phy
+        jsl rlGetEffectiveItemROMPointerByItemRAMStructEntry
+        ply
+        plx
+        jsl rlGetItemNamePointer
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        phx
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$000D
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        rts
+
+        .databank 0
+
+        ; 8A/ABEA
+
+    .endsection Unsorted8AABABSection
+
+
+    .section Unsorted8AABFCSection
+
+      .al
+      .xl
+
+      rsUnknown8AABFC ; 8A/ABFC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8082
+        cmp #$0003
+        beq _AC36
+        cmp #$0007
+        beq _AC36
+        txa
+        inc a
+        phx
+        phy
+        jsl rlGetItemROMDataByInventorySlot
+        ply
+        plx
+        jsl rlGetItemWeaponRank
+        ora #$0000
+        bmi _AC37
+        jsl rlUnknown84F96E
+        sta wR0
+        phx
+        lda $AA2A,b,y
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0032
+        tax
+        lda wR0
+        jsl $8AB111
+        plx
+
+        _AC36
+        rts
+
+
+        _AC37
+        lda #$8A00
+        sta lR18+1
+        lda #$A320
+        sta lR18
+        phx
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$000D
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        rts
+
+        .databank 0
+
+        ; 8A/AC51
+
+      rsUnknown8AAC51 ; 8A/AC51
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        txa
+        inc a
+        jsl rlGetItemDurabilityOfInventorySlot
+        sta wR0
+        txa
+        inc a
+        phy
+        phx
+        jsl rlGetItemROMDataByInventorySlot
+        jsl rlGetItemEquipmentType
+        plx
+        ply
+        cmp #$0002
+        beq _AC80
+        phx
+        lda $AA2A,b,y
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0026
+        tax
+        lda wR0
+        jsl $8AB111
+        plx
+        rts
+
+
+        _AC80
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$8A00
+        sta lR18+1
+        lda #$ACA0
+        sta lR18
+        phx
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$0015
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        rts
+
+        .databank 0
+
+        ; 8A/ACA0
+
+    .endsection Unsorted8AABFCSection
+
+
+    .section Unsorted8AACA8Section
+
+      .al
+      .xl
+
+      rsUnknown8AACA8 ; 8A/ACA8
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        stz $0889,b
+        ldx #$0007
+        ldy #$000E
+
+        _ACB7
+        txa
+        inc a
+        sta wRoutineVariable1,b
+        jsl rlGetItemROMDataByInventorySlot
+        lda wCurrentItemDataROMPointer,b
+        beq _ACEA
+        inc $0889,b
+        jsr $8AAD05
+        jsr $8AAC51
+        lda $078C,b
+        beq _ACDB
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        bra _ACE1
+
+
+        _ACDB
+        lda #$2C00
+        sta aCurrentTilemapInfo,b
+
+        _ACE1
+        jsr $8AABAB
+
+        _ACE4
+        dec x
+        dec y
+        dec y
+        bpl _ACB7
+        rts
+
+
+        _ACEA
+        lda #$8A00
+        sta lR18+1
+        lda #$A320
+        sta lR18
+        phx
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$000D
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        bra _ACE4
+
+        .databank 0
+
+        ; 8A/AD05
+
+    .endsection Unsorted8AACA8Section
+
+
+    .section Unsorted8AAD05Section
+
+      .al
+      .xl
+
+      rsUnknown8AAD05 ; 8A/AD05
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wRoutineVariable1,b
+        jsl rlUnknown84F987
+        sta $078C,b
+        txa
+        inc a
+        phy
+        phx
+        jsl rlGetItemROMDataByInventorySlot
+        jsl rlGetItemEquipmentType
+        plx
+        ply
+        cmp #$0002
+        beq _AD43
+        jsl $87A18C
+        bcc _AD2F
+        lda $078C,b
+        lsr a
+        sta $078C,b
+
+        _AD2F
+        phx
+        lda $AA2A,b,y
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0032
+        tax
+        lda $078C,b
+        jsl $8AB111
+        plx
+
+        _AD43
+        rts
+
+        .databank 0
+
+        ; 8A/AD44
+
+      rsUnknown8AAD44 ; 8A/AD44
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        ldx #$0007
+        ldy #$000E
+
+        _AD50
+        lda #$8A00
+        sta lR18+1
+        lda #$A320
+        sta lR18
+        phx
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$000D
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        dec x
+        dec y
+        dec y
+        bpl _AD50
+        rts
+
+        .databank 0
+
+        ; 8A/AD6F
+
+    .endsection Unsorted8AAD05Section
+
+
+    .section Unsorted8AAD6FSection
+
+      .al
+      .xl
+
+      rsUnknown8AAD6F ; 8A/AD6F
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda $7F8183
+        and #$00FF
+        tax
+
+        _AD7D
+        lda $7F8184,x
+        and #$00FF
+        asl a
+        phx
+        tax
+        jsr ($8AADA7,x)
+        plx
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        phx
+        txa
+        asl a
+        tay
+        lda $AA2A,b,y
+        xba
+        clc
+        adc #$0003
+        tax
+        jsl rlDrawMenuTextLine
+        plx
+        dec x
+        bpl _AD7D
+        rts
+
+        .databank 0
+
+        ; 8A/ADA7
+
+    .endsection Unsorted8AAD6FSection
+
+
+    .section Unsorted8AB111Section
+
+      .al
+      .xl
+
+      rlUnknown8AB111 ; 8A/B111
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta wR0
+        stz wR1
+        stz wR2
+        stz wR3
+        stz wR4
+        stz wR5
+        lda wR0
+        cmp #$2710
+        bcs _B129
+        lda #$00CF
+        sta wR1
+
+        _B129
+        lda wR0
+        cmp #$03E8
+        bcs _B135
+        lda #$00CF
+        sta wR2
+
+        _B135
+        lda wR0
+        cmp #$0064
+        bcs _B141
+        lda #$00CF
+        sta wR3
+
+        _B141
+        lda wR0
+        cmp #$000A
+        bcs _B14D
+        lda #$00CF
+        sta wR4
+
+        _B14D
+        lda wR0
+        cmp #$2710
+        bcc _B164
+        sec
+        sbc #$2710
+        sta wR0
+        lda wR1
+        clc
+        adc #$0001
+        sta wR1
+        bra _B14D
+
+
+        _B164
+        lda wR0
+        cmp #$03E8
+        bcc _B17B
+        sec
+        sbc #$03E8
+        sta wR0
+        lda wR2
+        clc
+        adc #$0001
+        sta wR2
+        bra _B164
+
+
+        _B17B
+        lda wR0
+        cmp #$0064
+        bcc _B192
+        sec
+        sbc #$0064
+        sta wR0
+        lda wR3
+        clc
+        adc #$0001
+        sta wR3
+        bra _B17B
+
+
+        _B192
+        lda wR0
+        cmp #$000A
+        bcc _B1A9
+        sec
+        sbc #$000A
+        sta wR0
+        lda wR4
+        clc
+        adc #$0001
+        sta wR4
+        bra _B192
+
+
+        _B1A9
+        lda wR0
+        sta wR5
+        lda wR1
+        clc
+        adc #$0120
+        ora #$2400
+        sta aBG3TilemapBuffer,x
+        lda wR1
+        clc
+        adc #$0130
+        ora #$2400
+        sta $7E83C8,x
+        lda wR2
+        clc
+        adc #$0120
+        ora #$2400
+        sta $7E838A,x
+        lda wR2
+        clc
+        adc #$0130
+        ora #$2400
+        sta $7E83CA,x
+        lda wR3
+        clc
+        adc #$0120
+        ora #$2400
+        sta $7E838C,x
+        lda wR3
+        clc
+        adc #$0130
+        ora #$2400
+        sta $7E83CC,x
+        lda wR4
+        clc
+        adc #$0120
+        ora #$2400
+        sta $7E838E,x
+        lda wR4
+        clc
+        adc #$0130
+        ora #$2400
+        sta $7E83CE,x
+        lda wR5
+        clc
+        adc #$0120
+        ora #$2400
+        sta $7E8390,x
+        lda wR5
+        clc
+        adc #$0130
+        ora #$2400
+        sta $7E83D0,x
+        rtl
+
+        .databank 0
+
+        ; 8A/B230
+
+    .endsection Unsorted8AB111Section
+
+
+    .section Unsorted8AB23BSection
+
+      .al
+      .xl
+
+      rlUnknown8AB23B ; 8A/B23B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$48
+        sta $08C8,b
+        lda #$00
+        sta $08C9,b
+        lda #$80
+        sec
+        sbc #$48
+        sta $08CA,b
+        lda #$82
+        sta $08CB,b
+        lda #$00
+        sta $08CC,b
+        lda #$00
+        sta $08CD,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8A/B261
+
+    .endsection Unsorted8AB23BSection
+
+
     .section Unsorted8AB3FESection
 
       .al
@@ -964,6 +3754,426 @@
         ; 8A/B452
 
     .endsection Unsorted8AB3FESection
+
+
+    .section Unsorted8ABF27Section
+
+      .al
+      .xl
+
+      rsUnknown8ABF27 ; 8A/BF27
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8082
+        beq _BF50
+        cmp #$0001
+        beq _BF60
+        cmp #$0002
+        beq _BF70
+        cmp #$0003
+        beq _BF80
+        cmp #$0004
+        beq _BF90
+        cmp #$0005
+        beq _BFA0
+        cmp #$0006
+        beq _BFB0
+        cmp #$0007
+        beq _BFC0
+
+        _BF50
+        lda #$8A00
+        sta $7F8087
+        lda #$D074
+        sta $7F8086
+        bra _BFD0
+
+
+        _BF60
+        lda #$8A00
+        sta $7F8087
+        lda #$D07A
+        sta $7F8086
+        bra _BFD0
+
+
+        _BF70
+        lda #$8A00
+        sta $7F8087
+        lda #$D07F
+        sta $7F8086
+        bra _BFD0
+
+
+        _BF80
+        lda #$8A00
+        sta $7F8087
+        lda #$D083
+        sta $7F8086
+        bra _BFD0
+
+
+        _BF90
+        lda #$8A00
+        sta $7F8087
+        lda #$D085
+        sta $7F8086
+        bra _BFD0
+
+
+        _BFA0
+        lda #$8A00
+        sta $7F8087
+        lda #$D086
+        sta $7F8086
+        bra _BFD0
+
+
+        _BFB0
+        lda #$8A00
+        sta $7F8087
+        lda #$D087
+        sta $7F8086
+        bra _BFD0
+
+
+        _BFC0
+        lda #$8A00
+        sta $7F8087
+        lda #$D08A
+        sta $7F8086
+        bra _BFD0
+
+
+        _BFD0
+        rts
+
+        .databank 0
+
+        ; 8A/BFD1
+
+      rsUnknown8ABFD1 ; 8A/BFD1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        lda #$FFFF
+        sta $7F8084
+        lda $7F8082
+        asl a
+        tax
+        lda $8ABFF3,x
+        jsl $8AFC52
+        jsl $8A94B6
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        rts
+
+        .databank 0
+
+        ; 8A/BFF3
+
+    .endsection Unsorted8ABF27Section
+
+
+    .section Unsorted8ACEB3Section
+
+      .al
+      .xl
+
+      rsUnknown8ACEB3 ; 8A/CEB3
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pei ($D0)
+        txa
+        sta $D1,x
+        txa
+        cmp $8AD2,b,y
+        cmp (#211,s),y
+        txa
+        and [wMainLoopPointer]
+        txa
+        bcs $8ACE98
+        txa
+        ora $8AD6,b
+        ora $8AD6,b
+        ora $8AD6,b
+        ora $8AD6,b
+        ora $8AD6,b
+        ora $8AD6,b
+        tdc
+        cmp (wBufferBG3VOFS+1),y
+        clv
+        cmp (wBufferBG3VOFS+1)
+        sta $8F8AD3
+        pei (wBufferBG3VOFS+1)
+        inc a
+        cld
+        txa
+        tdc
+        cmp (wBufferBG3VOFS+1),y
+        phb
+        cmp (wBufferBG3VOFS+1),y
+        inc y
+        cmp (wBufferBG3VOFS+1)
+        sta $A08AD3,x
+        pei (wBufferBG3VOFS+1)
+        inc a
+        cld
+        txa
+        sbc $8AD5,b,y
+
+        _CEFB
+        sbc #208,s
+        txa
+        cmp ($D1)
+        txa
+        sbc #208,s
+        txa
+
+        _CF04
+        lsr $8AD4,b
+
+        _CF07
+        inc a
+        cld
+        txa
+        sbc ($D0),y
+        txa
+        cpx #$8AD1
+        sbc ($D0),y
+        txa
+        ora (wVBlankPointer+1,x)
+        txa
+        inc a
+        cld
+        txa
+        ora ($D1,x)
+        txa
+        sbc ($D1)
+        txa
+        inc a
+        cld
+        txa
+        eor $8AD4,b,x
+        inc a
+        cld
+        txa
+        bpl _CEFB
+        txa
+        tdc
+        cmp (wBufferBG3VOFS+1)
+        adc #211,s
+        txa
+        bpl _CF04
+        txa
+        bpl _CF07
+        txa
+        and ($D1,x)
+        txa
+        txa
+        cmp (wBufferBG3VOFS+1)
+        and ($D1,x)
+        txa
+        rol $8AD4,b,x
+        and ($D1,x)
+        txa
+        sta $9F8AD2,x
+        cmp (wBufferBG3VOFS+1)
+        adc (#211,s),y
+        txa
+        sta $9F8AD2,x
+        cmp (wBufferBG3VOFS+1)
+        .byte $54, $D1, $8A ; mvn from bank $8A to bank $D1
+        ora $D2
+        txa
+        inc a
+        cld
+        txa
+        sbc $1A8AD3
+        cld
+        txa
+        inc a
+        cld
+        txa
+        ora [$D2],y
+        txa
+        inc a
+        cld
+        txa
+        ora (wVBlankPointer+1,x)
+        txa
+        inc a
+        cld
+        txa
+        inc a
+        cld
+        txa
+        bit $D2
+        txa
+        inc a
+        cld
+        txa
+        phd
+        pei (wBufferBG3VOFS+1)
+        inc a
+        cld
+        txa
+        asl a
+        cmp (#138,s),y
+        asl a
+        cmp (#138,s),y
+        sed
+        cmp (wBufferBG3VOFS+1)
+        asl a
+        cmp (#138,s),y
+        inc a
+        cld
+        txa
+        trb $8AD3,b
+        trb $8AD3,b
+        trb $8AD3,b
+        trb $8AD3,b
+        plp
+        cmp [wBufferBG3VOFS+1],y
+        eor (wVBlankPointer),y
+        txa
+        eor (wVBlankPointer),y
+        txa
+        eor (wVBlankPointer),y
+        txa
+        eor (wVBlankPointer),y
+        txa
+        eor (wVBlankPointer),y
+        txa
+        rol $8AD3,b
+        rol $8AD3,b
+        rol $8AD3,b
+        rol $8AD3,b
+        plp
+        cmp [wBufferBG3VOFS+1],y
+        sec
+        sbc #$0001
+        sta wR0
+        lda wJoy1New
+        bit #$0200
+        bne _CFD2
+        bit #$0100
+        bne _CFEE
+        bra _D00C
+
+
+        _CFD2
+        lda $08A1,b
+        beq _D00C
+        sec
+        sbc #$0001
+        sta $08A1,b
+        lda #$0007
+        jsl rlUnknown808FAD
+        lda #$FFFF
+        sta $7F7670
+        bra _D02D
+
+
+        _CFEE
+        lda $08A1,b
+        cmp wR0
+        bcs _D00C
+        clc
+        adc #$0001
+        sta $08A1,b
+        lda #$0007
+        jsl rlUnknown808FAD
+        lda #$FFFF
+        sta $7F7670
+        bra _D02D
+
+
+        _D00C
+        lda $08A1,b
+        tay
+        lda [lR19],y
+        and #$00FF
+        sec
+        sbc #$000D
+        sta wR0
+        lda #$0020
+        clc
+        adc #$0004
+        clc
+        adc #$0008
+        clc
+        adc #$0008
+        sta wR1
+        rts
+
+
+        _D02D
+        lda $08A1,b
+        tay
+        lda [lR20],y
+        and #$00FF
+        cmp #$00FF
+        beq _D00C
+        cmp #$0000
+        beq _D059
+        cmp #$0001
+        beq _D05E
+        cmp #$0002
+        beq _D063
+        cmp #$0003
+        beq _D068
+        cmp #$0004
+        beq _D06D
+        cmp #$0005
+        beq _D06F
+
+        _D059
+        jsr rsUnknown8AA9CE
+        bra _D00C
+
+
+        _D05E
+        jsr rsUnknown8AAB48
+        bra _D00C
+
+
+        _D063
+        jsr rsUnknown8AACA8
+        bra _D00C
+
+
+        _D068
+        jsr rsUnknown8AAD44
+        bra _D00C
+
+
+        _D06D
+        bra _D00C
+
+
+        _D06F
+        bra _D00C
+
+        .databank 0
+
+        ; 8A/D071
+
+    .endsection Unsorted8ACEB3Section
 
 
     .section Unsorted8AD975Section
@@ -1459,6 +4669,115 @@
         ; 8A/DC25
 
     .endsection Unsorted8ADBFFSection
+
+
+    .section Unsorted8ADC25Section
+
+      .al
+      .xl
+
+      rsUnknown8ADC25 ; 8A/DC25
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $08B8,b
+        cmp #$0000
+        beq _DC41
+        cmp #$0001
+        beq _DC7A
+        cmp #$0004
+        beq _DC73
+        cmp #$0005
+        beq _DC5E
+        cmp #$0003
+        beq _DCB6
+
+        _DC41
+        lda #$0000
+        sta $0891,b
+        jsl rlBuildDeadPlayerCharacterList
+        jsl rlUnknown8A9A56
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$0011
+        sta $0304,b
+        rts
+
+
+        _DC5E
+        lda #$0003
+        sta $0592,b
+        lda #(`procFadeOutByScreenFadingTimer)<<8
+        sta lR44+1
+        lda #<>procFadeOutByScreenFadingTimer
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rts
+
+
+        _DC73
+        lda #$0004
+        sta $0592,b
+        rts
+
+
+        _DC7A
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$0012
+        sta $0304,b
+        lda #$0000
+        jsl rlGetFactionSlotLocationID
+        cmp $089F,b
+        bne _DCA9
+        lda #$0000
+        sta $088B,b
+        jsl rlBuildDeadPlayerCharacterList
+        jsl rlUnknown8A9A56
+        lda $08BA,b
+        sta wSelectedUnitDataRAMPointer,b
+        rts
+
+
+        _DCA9
+        lda #$0001
+        sta $088B,b
+        lda $08BA,b
+        sta wSelectedUnitDataRAMPointer,b
+        rts
+
+
+        _DCB6
+        lda #$0003
+        sta $0592,b
+        lda #$0000
+        sta $0D77,b
+        lda #$B122
+        sta $0ECF,b
+        lda #(`procMainLoopChangeFadeByTimer)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFadeByTimer
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcs _DCDC
+        jsl rlProcEngineCreateProc
+
+        _DCDC
+        rts
+
+        .databank 0
+
+        ; 8A/DCDD
+
+    .endsection Unsorted8ADC25Section
 
 
     .section Unsorted8ADCF9Section
@@ -2024,3 +5343,305 @@
     .endsection Unsorted8AE245Section
 
 
+    .section Unsorted8AE2F8Section
+
+      .al
+      .xl
+
+      rlUnknown8AE2F8 ; 8A/E2F8
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phk
+        plb
+        .databank $8A
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlResetHDMAEngine
+        lda #$004B
+        sta $04BA,b
+        jsl rlUnknown809654
+        phk
+        plb
+        .databank $8A
+        rep #$30
+        lda #$1809
+        sta $4300,b
+        lda #$8A00
+        sta $4303,b
+        lda #$E4BA
+        sta $4302,b
+        lda #$2000
+        sta $4305,b
+        lda #$2000
+        sta $2116,b
+        sep #$20
+        lda #$01
+        sta $420B,b
+        rep #$20
+        jsl rlResetDialogueEngine
+        jsr $8ABF27
+        jsl rlUnknown889268
+        lda wEventLocationEntry,b
+        pha
+        jsl rlUpdateAllLocationEvents
+        jsl rlUnknown86C629
+        pla
+        sta wEventLocationEntry,b
+        lda #$0000
+        sta wR1
+        lda #$0000
+        sta wR2
+        lda #$4000
+        sta wR3
+        sta wR4
+        lda #$6000
+        sta wR5
+        lda #$2800
+        sta wR6
+        lda #$2C00
+        sta wR7
+        lda #$3800
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        lda #$8A00
+        sta lR19+1
+        lda #$E4C3
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE40C0, $0400, $80, $C000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE0200, $0800, $80, $D600
+
+        lda #$8A00
+        sta lR19+1
+        lda #$E4CB
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$8A00
+        sta lR19+1
+        lda #$E4D3
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $D76000, $0800, $80, $9800
+
+        lda #$8A00
+        sta lR19+1
+        lda #$E4BB
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlGetDialogueBoxGraphicsAndPalette
+        ldx #$0800
+        lda #$00FF
+
+        _E3EF
+        sta aBG3TilemapBuffer,x
+        dec x
+        dec x
+        bne _E3EF
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $7000
+
+        ldx #$01FE
+
+        _E407
+        lda $8CD600,x
+        sta aBGPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _E407
+        lda #$0001
+        jsl rlUnknown8BC43A
+        lda #$0002
+        jsl $8BC467
+        jsr $8ABFD1
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$00
+        sta bBufferCGADSUB
+        lda #$04
+        ora #$20
+        sta bBufferCOLDATA_1
+        lda #$04
+        ora #$40
+        sta bBufferCOLDATA_2
+        lda #$04
+        ora #$80
+        sta bBufferCOLDATA_3
+        rep #$20
+        lda $0AD7,b
+        beq _E457
+        jsl $84B550
+        cmp #$0002
+        beq _E45D
+
+        _E457
+        jsl rlUnknown8A9EB7
+        bra _E461
+
+
+        _E45D
+        jsl rlUnknown8A9F32
+
+        _E461
+        stz $08A1,b
+        jsr rsUnknown8AA142
+        stz $0592,b
+        stz $08A1,b
+        stz $08A3,b
+        stz $08A5,b
+        stz $08A7,b
+        lda #$0000
+        sta $7F7670
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$B6AD
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        jsr $8AA830
+        jsr rsUnknown8AA2ED
+        jsr $8AAD44
+        lda #$8A00
+        sta lR44+1
+        lda #$B230
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        lda #$0004
+        sta $0304,b
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8A/E4B9
+
+    .endsection Unsorted8AE2F8Section
+
+
+    .section Unsorted8AFC52Section
+
+      .al
+      .xl
+
+      rlUnknown8AFC52 ; 8A/FC52
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl $8AB45E
+        ldx #$001E
+        ldy #$001E
+
+        _FC5C
+        lda [lR19],y
+        sta $02A0,b,y
+        dec x
+        dec x
+        dec y
+        dec y
+        bpl _FC5C
+        lda #$0800
+        sta wR0
+        lda #$6700
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rtl
+
+        .databank 0
+
+        ; 8A/FC78
+
+    .endsection Unsorted8AFC52Section
+
+
+    .section Unsorted8AFC78Section
+
+      .al
+      .xl
+
+      rsUnknown8AFC78 ; 8A/FC78
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        lda $089F,b
+        jsl rlUnknown87AE88
+        sta $078C,b
+        lda $078C,b
+        ora #$0000
+        beq _FCCD
+        jsl rlFindCharacterByGenerationID
+        jsl rlGetSelectedUnitCharacterID
+        sta $18A9,b
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitGenerationID
+        cmp #$0010
+        bcs _FCC5
+        sta $078E,b
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        lda $078C,b
+        jsl rlFindCharacterByGenerationID
+        lda $078E,b
+        jsl rlGetLoverPointsWithTarget
+        sta wR0
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        lda wR0
+        bra _FCCC
+
+
+        _FCC5
+        lda $078C,b
+        jsl rlGetLoverPointsWithTarget
+
+        _FCCC
+        rts
+
+
+        _FCCD
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        lda #$0000
+        rts
+
+        .databank 0
+
+        ; 8A/FCD5
+
+    .endsection Unsorted8AFC78Section

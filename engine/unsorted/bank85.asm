@@ -1,6 +1,82 @@
 ; Code from bank $85 not yet assigned to a game system.
 
 
+    .section Unsorted8582D4Section
+
+      .al
+      .xl
+
+      rlUnknown8582D4 ; 85/82D4
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+        lda wR40
+        pha
+        lda wR41
+        pha
+        lda wR42
+        pha
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlGetMapMenuTilemapArea
+        sta wR42
+        sep #$20
+        lda #$1E
+        sec
+        sbc wR42
+        sta wR40
+        lda #$1C
+        sec
+        sbc wR42+1
+        sta wR41
+        lda @l wCursorXOffset
+        lsr a
+        lsr a
+        lsr a
+        cmp wR40
+        bcc _830A
+        lda wR40
+
+        _830A
+        sta @l $000534
+        lda @l wCursorYOffset
+        lsr a
+        lsr a
+        lsr a
+        cmp wR41
+        bcc _831B
+        lda wR41
+
+        _831B
+        sta @l $000535
+        rep #$20
+        jsl rlUnknown878472
+        pla
+        sta wR42
+        pla
+        sta wR41
+        pla
+        sta wR40
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        rtl
+
+        .databank 0
+
+        ; 85/8335
+
+    .endsection Unsorted8582D4Section
+
+
     .section Unsorted8583C2Section
 
       .al
@@ -498,6 +574,34 @@
     .endsection Unsorted85864BSection
 
 
+    .section Unsorted858671Section
+
+      .al
+      .xl
+
+      rlUnknown858671 ; 85/8671
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitFactionNamePointer
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        jsl rlUnknown878921
+        rtl
+
+        .databank 0
+
+        ; 85/8684
+
+    .endsection Unsorted858671Section
+
+
     .section Unsorted858684Section
 
       .al
@@ -523,6 +627,34 @@
         ; 85/8697
 
     .endsection Unsorted858684Section
+
+
+    .section Unsorted858697Section
+
+      .al
+      .xl
+
+      rlUnknown858697 ; 85/8697
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetEventLocationEntryCastleName
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        jsl rlUnknown878921
+        rtl
+
+        .databank 0
+
+        ; 85/86AA
+
+    .endsection Unsorted858697Section
 
 
     .section Unsorted8586AASection
@@ -609,6 +741,37 @@
         ; 85/86FF
 
     .endsection Unsorted8586FASection
+
+
+    .section Unsorted8586FFSection
+
+      .al
+      .xl
+
+      rlUnknown8586FF ; 85/86FF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlStallProcUntilMapMenuDataLoaded
+        lda #$20F0
+        sta aCurrentTilemapInfo,b
+        lda #$20FF
+        sta wUnknown053C,b
+        jsl rlUnknown8788E5
+        lda #$0000
+        sta wBufferBG3VOFS
+        sta wBufferBG3HOFS
+        rtl
+
+        .databank 0
+
+        ; 85/871B
+
+    .endsection Unsorted8586FFSection
 
 
     .section Unsorted858751Section
@@ -712,6 +875,60 @@
     .endsection Unsorted858793Section
 
 
+    .section Unsorted8587A8Section
+
+      .al
+      .xl
+
+      rlUnknown8587A8 ; 85/87A8
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        sta $0534,b
+        jsl rlUnknown87829A
+        lda wR12
+        pha
+        lda wR13
+        pha
+        lda $0534,b
+        jsl rlUnknown8784E1
+        pla
+        sta wR13
+        pla
+        sta wR12
+        jsl rlUnknown8588F3
+        lda wR10
+        cmp @l wR12
+        bcc _87DA
+        lda @l wR13
+        cmp wR11
+        bcs _87DE
+
+        _87DA
+        jsl rlUnknown8587E1
+
+        _87DE
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 85/87E1
+
+    .endsection Unsorted8587A8Section
+
+
     .section Unsorted8587E1Section
 
       .al
@@ -743,6 +960,52 @@
         ; 85/87F2
 
     .endsection Unsorted8587E1Section
+
+
+    .section Unsorted8587F2Section
+
+      .al
+      .xl
+
+      rlUnknown8587F2 ; 85/87F2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        jsl rlUnknown87829A
+        lda $0534,b
+        jsl rlSetMapMenuPosition
+        jsl rlUnknown8588F3
+        jsl rlGetMapMenuYPositions
+        lda wR10
+        cmp @l wR12
+        bcc _8819
+        lda @l wR13
+        cmp wR11
+        bcs _881D
+
+        _8819
+        jsl rlUnknown858879
+
+        _881D
+        plp
+        plb
+        .databank $85
+        rtl
+
+        .databank 0
+
+        ; 85/8820
+
+    .endsection Unsorted8587F2Section
 
 
     .section Unsorted85884ASection
@@ -1024,6 +1287,40 @@
         ; 85/8F10
 
     .endsection Unsorted858EC5Section
+
+
+    .section Unsorted858F10Section
+
+      .al
+      .xl
+
+      rsUnknown858F10 ; 85/8F10
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0F37,b,x
+        bit #$0002
+        beq _8F26
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        jsl rlUnknown859B48
+        sec
+        rts
+
+
+        _8F26
+        clc
+        rts
+
+        .databank 0
+
+        ; 85/8F28
+
+    .endsection Unsorted858F10Section
 
 
     .section Unsorted858F28Section
@@ -1451,6 +1748,908 @@
         ; 85/926C
 
     .endsection Unsorted85915ASection
+
+
+    .section Unsorted85928DSection
+
+      .al
+      .xl
+
+      rlUnknown85928D ; 85/928D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8586FF
+        lda $0ECF,b
+        sta $1057,b,x
+        lda $0ED1,b
+        sta $1077,b,x
+        lda #$0001
+        sta $1097,b,x
+        lda #$0000
+        sta $7E8BEE
+        sta $7E8BEC
+        jsl $859B2A
+        lda wUnknown000D79,b
+        bit #$0020
+        bne _92BC
+        bra _92C3
+
+
+        _92BC
+        lda #$0102
+        jsl rlSetMapMenuPosition
+
+        _92C3
+        rtl
+
+        .databank 0
+
+        ; 85/92C4
+
+      rlUnknown8592C4 ; 85/92C4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        phx
+        lda $1077,b,x
+        tax
+        lda $7E0000,x
+        and #$00FF
+        sta wR0
+        plx
+        jsl rlGetMapMenuTilemapArea
+        and #$00FF
+        xba
+        ora wR0
+        sep #$20
+        asl a
+        rep #$20
+        clc
+        adc #$0002
+        xba
+        jsl rlSetMapMenuTilemapArea
+        jsl rlUnknown85A227
+        lda #$92FA
+        sta $0F57,b,x
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/92FA
+
+    .endsection Unsorted85928DSection
+
+
+    .section Unsorted8592FASection
+
+      .al
+      .xl
+
+      rlUnknown8592FA ; 85/92FA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda $1057,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda $1077,b,x
+        sta wR2
+        tax
+        lda $7E0000,x
+        and #$00FF
+        sta wR0
+        ldy #$0000
+
+        _9318
+        lda #$20F0
+        sta aCurrentTilemapInfo,b
+        tya
+        clc
+        adc wR2
+        tax
+        lda $7E0001,x
+        and #$00FF
+        sta wR1
+        tya
+        asl a
+        xba
+        clc
+        adc #$0104
+        tax
+        lda wR1
+        jsl rlGetItemROMDataByInventorySlot
+        lda wCurrentItemDataROMPointer,b
+        bne _9343
+        jml _936C
+
+
+        _9343
+        lda aCurrentTilemapInfo,b
+        and #$FC00
+        sta aCurrentTilemapInfo,b
+        jsl rlUnknown858684
+        lda aCurrentTilemapInfo,b
+        and #$FFC0
+        ora #$24F0
+        sta aCurrentTilemapInfo,b
+        txa
+        clc
+        adc #$0008
+        tax
+        lda wR1
+        jsl rlGetItemDurabilityOfInventorySlot
+        jsl rlUnknown878916
+
+        _936C
+        inc y
+        cpy wR0
+        bcs _9375
+        jml _9318
+
+
+        _9375
+        ply
+        plx
+        lda #$9386
+        sta $0F57,b,x
+        jsl rlUnknown8587E1
+        jsl rlUnknown85A227
+        rtl
+
+        .databank 0
+
+        ; 85/9386
+
+    .endsection Unsorted8592FASection
+
+
+    .section Unsorted859390Section
+
+      .al
+      .xl
+
+      rlUnknown859390 ; 85/9390
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda $1077,b,x
+        sta wR2
+        lda $1097,b,x
+        phx
+        dec a
+        clc
+        adc wR2
+        tax
+        lda $7E0001,x
+        and #$00FF
+        sta $0ED1,b
+        plx
+        lda wR2
+        cmp #$2000
+        beq _93F7
+        cmp #$2010
+        beq _93F7
+        cmp #$2020
+        beq _93F7
+        lda wR1
+        pha
+        lda wR2
+        pha
+        lda $0ED1,b
+        phx
+        jsl rlGetItemROMDataByInventorySlot
+        jsl rlUnknown87E459
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda wUnknown000D79,b
+        bit #$0020
+        bne _93E7
+        lda #$0213
+        bra _93EA
+
+
+        _93E7
+        lda #$0113
+
+        _93EA
+        jsl $85A394
+        plx
+        pla
+        sta wR2
+        pla
+        sta wR1
+        bra _9414
+
+
+        _93F7
+        lda $1057,b,x
+        sta $0ECF,b
+        phx
+        lda #$8500
+        sta lR44+1
+        lda #$988E
+        sta lR44
+        jsl rlProcEngineCreateProc
+        plx
+        lda #$0000
+        sta $7E8BEE
+
+        _9414
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown878531
+        jsl rlUnknown85A227
+        lda #$9427
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/9427
+
+    .endsection Unsorted859390Section
+
+
+    .section Unsorted859431Section
+
+      .al
+      .xl
+
+      rlUnknown859431 ; 85/9431
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85A234
+        lda #$943B
+        sta $0F57,b,x
+        phx
+        lda $1077,b,x
+        tax
+        lda $7E0000,x
+        and #$00FF
+        sta wR1
+        plx
+        lda $1077,b,x
+        sta wR2
+        lda wJoy1Repeated
+        bit #$0800
+        beq _9473
+        lda $1097,b,x
+        dec a
+        bne _9465
+        lda wJoy1New
+        bit #$0800
+        beq _9473
+        lda wR1
+
+        _9465
+        sta $1097,b,x
+        lda #$0006
+        jsl rlUnknown808FAD
+        jml _94EC
+
+
+        _9473
+        bit #$0400
+        beq _949A
+        lda $1097,b,x
+        inc a
+        cmp wR1
+        beq _948C
+        bcc _948C
+        lda wJoy1New
+        bit #$0400
+        beq _949A
+        lda #$0001
+
+        _948C
+        sta $1097,b,x
+        lda #$0006
+        jsl rlUnknown808FAD
+        jml _94EC
+
+
+        _949A
+        lda wJoy1New
+        bit #$0080
+        beq _94AF
+        lda #$000A
+        jsl rlUnknown808FAD
+        jsr $8595C0
+        jml _957A
+
+
+        _94AF
+        lda wJoy1New
+        bit #$8000
+        beq _94E8
+        lda #$0021
+        jsl rlUnknown808FAD
+        jsr $8596FA
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        jsl rlUnknown859B48
+        jsl $85A3A6
+        lda #$8000
+        sta $7E8BEE
+        jsr $859737
+        phx
+        jsl $88ADA2
+        jsl rlUnknown85E85D
+        plx
+        jml _957A
+
+
+        _94E8
+        jml _9551
+
+
+        _94EC
+        phx
+        lda $1097,b,x
+        dec a
+        clc
+        adc wR2
+        tax
+        lda $7E0001,x
+        and #$00FF
+        sta $7E8BEC
+        plx
+        lda wR2
+        cmp #$2000
+        beq _9542
+        cmp #$2010
+        beq _9542
+        cmp #$2020
+        beq _9542
+        lda wR1
+        pha
+        lda wR2
+        pha
+        lda $1057,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda $7E8BEC
+        phx
+        jsl rlGetItemROMDataByInventorySlot
+        jsl rlUnknown87E459
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        jsl $85A3D5
+        plx
+        pla
+        sta wR2
+        pla
+        sta wR1
+        bra _9551
+
+
+        _9542
+        lda #$4000
+        sta $7E8BEE
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown878531
+
+        _9551
+        lda #$0100
+        sta wR0
+        lda wR1
+        inc a
+        sta wR1
+        lda $1097,b,x
+        jsl rlUnknown8586AA
+        jsr $8597CD
+        lda $1077,b,x
+        cmp #$2008
+        beq _957A
+        cmp #$2018
+        beq _957A
+        cmp #$2028
+        beq _957A
+        jsr $859AFD
+
+        _957A
+        rtl
+
+        .databank 0
+
+        ; 85/957B
+
+      rlUnknown85957B ; 85/957B
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr $8597CD
+        lda wJoy1New
+        bit #$0080
+        beq _959A
+        lda #$000A
+        jsl rlUnknown808FAD
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        jsl rlUnknown859B48
+        bra _95AE
+
+
+        _959A
+        lda wJoy1New
+        bit #$8000
+        beq _95AE
+        lda #$0021
+        jsl rlUnknown808FAD
+        lda #$943B
+        sta $0F57,b,x
+
+        _95AE
+        lda #$0100
+        sta wR0
+        lda wR1
+        inc a
+        sta wR1
+        lda $1097,b,x
+        jsl rlUnknown8586AA
+        rtl
+
+        .databank 0
+
+        ; 85/95C0
+
+      rsUnknown8595C0 ; 85/95C0
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsr $8596FA
+        phx
+        lda $1057,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda $1097,b,x
+        dec a
+        clc
+        adc wR2
+        tax
+        lda wR2
+        cmp #$2000
+        beq _95F2
+        cmp #$2008
+        beq _9642
+        cmp #$2010
+        beq _95F2
+        cmp #$2018
+        beq _960F
+        cmp #$2028
+        beq _9636
+        jml _9668
+
+
+        _95F2
+        lda $7E0001,x
+        and #$00FF
+        sta wSelectedInventorySlot,b
+        jsr _9682
+        ldx $0772,b
+        jsl rlUnknown87B512
+        jsl rlUnknown88AD46
+        plx
+        jml _969C
+
+
+        _960F
+        lda $7E0001,x
+        and #$00FF
+        sta wSelectedInventorySlot,b
+        lda #$8500
+        sta lR44+1
+        lda #$E951
+        sta lR44
+        jsl rlProcEngineCreateProc
+        plx
+        lda #$957B
+        sta $0F57,b,x
+        jsl $85A3A6
+        jml _969C
+
+
+        _9636
+        lda $7E0001,x
+        and #$00FF
+        ora #$8000
+        bra _9649
+
+
+        _9642
+        lda $7E0001,x
+        and #$00FF
+
+        _9649
+        sta wSelectedInventorySlot,b
+        ldx $0ECA,b
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        jsl rlUnknown859B48
+        jsl $85A3A6
+        jsl $85E8EA
+        plx
+        jml _969C
+
+
+        _9668
+        lda $7E0001,x
+        and #$00FF
+        sta wSelectedInventorySlot,b
+        jsl rlFlagEquippedInventorySlotAndGetStatBonus
+        jsr _9682
+        jsl rlUnknown85E85D
+        plx
+        jml _969C
+
+
+        _9682
+        ldx $0ECA,b
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        jsl rlUnknown859B48
+        lda #$8000
+        sta $7E8BEE
+        jsr $859737
+        rts
+
+
+        _969C
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/969E
+
+      rsUnknown85969E ; 85/969E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown000D79,b
+        bit #$0020
+        bne _96F9
+        phx
+        lda $1057,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitCharacterID
+        ldx #$0000
+        jsl rlUnknown9196EE
+        plx
+        phx
+        ldx #$005E
+        lda #$0000
+
+        _96C0
+        sta $7FC5B2,x
+        dec x
+        dec x
+        bpl _96C0
+        plx
+        lda #$0005
+        sta aEpilogueUnitStates
+        lda #$0001
+        sta $7FC54C
+        lda #$000B
+        sta $7FC5AE
+        lda #$0001
+        sta $7FC5B0
+        lda wUnknown00052C,b
+        cmp #$0009
+        bpl _96F3
+        lda #$0009
+        sta wUnknown00052C,b
+
+        _96F3
+        lda #$0001
+        sta wUnknown00052A,b
+
+        _96F9
+        rts
+
+        .databank 0
+
+        ; 85/96FA
+
+      rsUnknown8596FA ; 85/96FA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown000D79,b
+        bit #$0020
+        bne _9736
+        phy
+        phx
+        phx
+        ldx #$000C
+        lda #$0000
+
+        _970B
+        sta $7E7BD2,x
+        sta $7E7C12,x
+        sta $7E7C52,x
+        dec x
+        dec x
+        bpl _970B
+        plx
+        lda wUnknown00052C,b
+        cmp #$0009
+        bpl _972A
+        lda #$0009
+        sta wUnknown00052C,b
+
+        _972A
+        lda #$0001
+        sta wUnknown00052A,b
+        jsl rlUnknown87829A
+        plx
+        ply
+
+        _9736
+        rts
+
+        .databank 0
+
+        ; 85/9737
+
+      rsUnknown859737 ; 85/9737
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda lMapMenuRAMEntryPointer,b
+        pha
+        lda lMapMenuRAMEntryPointer+1,b
+        pha
+        lda #$8500
+        sta lR44+1
+        lda #$988E
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _975C
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+
+        _975C
+        pla
+        sta lMapMenuRAMEntryPointer+1,b
+        pla
+        sta lMapMenuRAMEntryPointer,b
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/9766
+
+      rsUnknown859766 ; 85/9766
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $1057,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda $1077,b,x
+        sta wR2
+        tax
+        lda $7E0000,x
+        and #$00FF
+        sta wR0
+        ldy #$0000
+
+        _9780
+        tya
+        clc
+        adc wR2
+        tax
+        lda $7E0001,x
+        and #$00FF
+        sta wR1
+        lda wR1
+        jsl rlGetItemROMDataByInventorySlot
+        lda wCurrentItemDataROMPointer,b
+        bne _979D
+        jml _97C1
+
+
+        _979D
+        phx
+        phy
+        lda wR0
+        pha
+        tya
+        asl a
+        and #$000F
+        ora #$0040
+        tax
+        lda wR1
+        jsl rlGetItemIDByInventorySlot
+        jsl rlUnknown8BBE68
+        lda #$0006
+        jsl rlUnknown8BC43A
+        pla
+        sta wR0
+        ply
+        plx
+
+        _97C1
+        inc y
+        cpy wR0
+        bcs _97CA
+        jml _9780
+
+
+        _97CA
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/97CD
+
+      rsUnknown8597CD ; 85/97CD
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda wR0
+        pha
+        lda wR1
+        pha
+        lda wR2
+        pha
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlGetMapMenuPosition
+        pha
+        and #$FF00
+        xba
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$0008
+        sta wR1
+        pla
+        and #$00FF
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$0010
+        sta wR0
+        lda $1077,b,x
+        sta wR2
+        tax
+        lda $7E0000,x
+        and #$00FF
+        asl a
+        sta wR7
+        ldx #$0000
+        stz wR4
+        stz wR5
+
+        _9812
+        phx
+        ldy $9831,b,x
+        jsl rlPushToOAMBuffer
+        plx
+        inc x
+        inc x
+        cpx wR7
+        bcs _9825
+        jml _9812
+
+
+        _9825
+        pla
+        sta wR2
+        pla
+        sta wR1
+        pla
+        sta wR0
+        plx
+        ply
+        rts
+
+        .databank 0
+
+        ; 85/9831
+
+    .endsection Unsorted859431Section
+
+
+    .section Unsorted859B2ASection
+
+      .al
+      .xl
+
+      rlUnknown859B2A ; 85/9B2A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0004
+
+        _9B2E
+        lda $010A,b,x
+        sta $7FEB0A,x
+        lda $859B42,x
+        sta $010A,b,x
+        dec x
+        dec x
+        bpl _9B2E
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/9B42
+
+    .endsection Unsorted859B2ASection
 
 
     .section Unsorted859B48Section
@@ -1999,6 +3198,43 @@
     .endsection Unsorted859FEASection
 
 
+    .section Unsorted85A004Section
+
+      .al
+      .xl
+
+      rsUnknown85A004 ; 85/A004
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy #$A040
+        jsl rlGetMapMenuTilemapArea
+        sta wR0
+        and #$FF00
+        ora #$0004
+        jsl rlSetMapMenuTilemapArea
+        lda wR0
+        and #$00FF
+        sec
+        sbc #$0004
+        sta wR0
+        jsl rlGetMapMenuPosition
+        clc
+        adc wR0
+        jsl rlSetMapMenuPosition
+        rts
+
+        .databank 0
+
+        ; 85/A02E
+
+    .endsection Unsorted85A004Section
+
+
     .section Unsorted85A041Section
 
       .al
@@ -2052,6 +3288,84 @@
         ; 85/A079
 
     .endsection Unsorted85A041Section
+
+
+    .section Unsorted85A079Section
+
+      .al
+      .xl
+
+      rsUnknown85A079 ; 85/A079
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta bBufferSETINI
+        lda (bBufferSETINI,x)
+        dec $D0A0,b
+        ldy #$A0D9
+        sbc bBufferSETINI,x
+        jsl rlGetMapMenuTilemapArea
+        sta wR0
+        jsr $85A0A1
+        lda wR4
+        sec
+        sbc wR0
+        sta wR0
+        jsl rlGetMapMenuPosition
+        sec
+        sbc wR0
+        jsl rlSetMapMenuPosition
+        rts
+
+        .databank 0
+
+        ; 85/A0A1
+
+    .endsection Unsorted85A079Section
+
+
+    .section Unsorted85A0A1Section
+
+      .al
+      .xl
+
+      rsUnknown85A0A1 ; 85/A0A1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR7
+        and #$00FF
+        sec
+        sbc #$0004
+        sta wR10
+        lda wR3
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR12
+        sta wR13
+        lda wR5
+        sta wR14
+        jsl rlUnsignedDivide16By8
+        lda wR7
+        and #$FF00
+        ora wR13
+        clc
+        adc #$0004
+        sta wR4
+        rts
+
+        .databank 0
+
+        ; 85/A0CE
+
+    .endsection Unsorted85A0A1Section
 
 
     .section Unsorted85A117Section
@@ -2142,6 +3456,54 @@
     .endsection Unsorted85A117Section
 
 
+    .section Unsorted85A1AASection
+
+      .al
+      .xl
+
+      rlUnknown85A1AA ; 85/A1AA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0F37,b,x
+        bit #$0002
+        bne _A1B8
+        bit #$0004
+        bne _A1C5
+        rtl
+
+
+        _A1B8
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        jsl rlFreeHDMAEntry0
+        rtl
+
+
+        _A1C5
+        lda $0F37,b,x
+        and #$FFFB
+        sta $0F37,b,x
+        lda #$A168
+        sta $0F57,b,x
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda #$20FF
+        sta wUnknown053C,b
+        jsl rlUnknown8788E5
+        jsl rlUnknown8785E3
+        rtl
+
+        .databank 0
+
+        ; 85/A1E7
+
+    .endsection Unsorted85A1AASection
+
+
     .section Unsorted85A1E7Section
 
       .al
@@ -2221,6 +3583,49 @@
         ; 85/A241
 
     .endsection Unsorted85A227Section
+
+
+    .section Unsorted85A3A6Section
+
+      .al
+      .xl
+
+      rlUnknown85A3A6 ; 85/A3A6
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$8500
+        sta lR44+1
+        lda #$A314
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _A3D3
+        lda lMapMenuRAMEntryPointer,b
+        pha
+        lda lMapMenuRAMEntryPointer+1,b
+        pha
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        pla
+        sta lMapMenuRAMEntryPointer+1,b
+        pla
+        sta lMapMenuRAMEntryPointer,b
+
+        _A3D3
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/A3D5
+
+    .endsection Unsorted85A3A6Section
 
 
     .section ProcScript85A47FSection
@@ -2708,6 +4113,119 @@
     .endsection Unsorted85AC40Section
 
 
+    .section Unsorted85AC89Section
+
+      .al
+      .xl
+
+      rlUnknown85AC89 ; 85/AC89
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$1800
+        sta aCurrentTilemapInfo,b
+        lda #$8500
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$AD55
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$8500
+        sta lR18+1
+        lda #$ACC2
+        sta lR18
+        jsl $878BF0
+        jsr $85AFC5
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7B88, $0800, $80, $A800
+
+        plx
+        lda #$ACEE
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/ACC2
+
+      rlUnknown85ACC2 ; 85/ACC2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ora [wR1+1]
+        php
+        and #9,s
+        and #10,s
+        and #11,s
+        and #12,s
+        and #13,s
+        and #14,s
+        and #24,s
+        and #25,s
+        and #26,s
+        and #27,s
+        and #28,s
+        and #29,s
+        and #30,s
+        and #40,s
+        and #41,s
+        and #42,s
+        and #43,s
+        and #44,s
+        and #45,s
+        and #46,s
+        and #218,s
+        lda #$2400
+        sta aCurrentTilemapInfo,b
+        lda wActiveFactionSlot,b
+        jsl rlGetFactionSlotNamePointer
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        jsl rlGetMenuTextStringLength
+        lda #$001A
+        sec
+        sbc wR10
+        lsr a
+        and #$00FF
+        ora #$0D00
+        tax
+        clc
+        adc wR10
+        pha
+        lda #$8500
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$AD5E
+        sta lMapMenuTilemapRAMEntryPointer,b
+        jsl rlDrawMenuTextLine
+        lda #$8500
+        sta lR18+1
+        lda #$AD47
+        sta lR18
+        plx
+        jsl rlDrawMenuTextLine
+        jsl rlUnknown878459
+        plx
+        lda #$AD67
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/AD47
+
+    .endsection Unsorted85AC89Section
+
+
     .section Unsorted85AE8ASection
 
       .al
@@ -2759,6 +4277,79 @@
         ; 85/AEBB
 
     .endsection ProcScript85AEACSection
+
+
+    .section Unsorted85AFC5Section
+
+      .al
+      .xl
+
+      rsUnknown85AFC5 ; 85/AFC5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        phy
+        phx
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+        ldy #$7EA6
+        lda #$3F80
+        sta wR0
+        stz wR1
+
+        _AFDD
+        ldx #$0000
+
+        _AFE0
+        lda wR0
+        sta $0000,b,y
+        cpx #$0002
+        beq _AFF1
+        inc x
+        inc y
+        inc y
+        inc wR0
+        bra _AFE0
+
+
+        _AFF1
+        lda wR1
+        cmp #$0003
+        beq _B004
+        inc wR0
+        inc wR1
+        tya
+        clc
+        adc #$003C
+        tay
+        bra _AFDD
+
+
+        _B004
+        plx
+        ply
+        plp
+        plb
+        .databank $7E
+        rts
+
+        .databank 0
+
+        ; 85/B009
+
+    .endsection Unsorted85AFC5Section
 
 
     .section Unsorted85B009Section
@@ -3067,6 +4658,145 @@
     .endsection Unsorted85B1B0Section
 
 
+    .section Unsorted85B207Section
+
+      .al
+      .xl
+
+      rlUnknown85B207 ; 85/B207
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown85B307
+        lda wJoy1New
+        bit #$0080
+        beq _B220
+        lda #$000A
+        jsl rlUnknown808FAD
+        lda #$B26B
+        sta $0F57,b,x
+        bra _B254
+
+
+        _B220
+        lda wJoy1Repeated
+        bit #$0800
+        beq _B239
+        lda #$0006
+        jsl rlUnknown808FAD
+        lda $1097,b,x
+        dec a
+        bpl _B251
+        lda #$0007
+        bra _B251
+
+
+        _B239
+        bit #$0400
+        beq _B254
+        lda #$0006
+        jsl rlUnknown808FAD
+        lda $1097,b,x
+        inc a
+        cmp #$0008
+        bcc _B251
+        lda #$0000
+
+        _B251
+        sta $1097,b,x
+
+        _B254
+        lda #$0100
+        sta wR0
+        lda #$0010
+        sta wR1
+        lda $1097,b,x
+        bne _B264
+        dec a
+
+        _B264
+        phx
+        jsl rlUnknown8586AA
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/B26B
+
+    .endsection Unsorted85B207Section
+
+
+    .section Unsorted85B282Section
+
+      .al
+      .xl
+
+      rlUnknown85B282 ; 85/B282
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$0080
+        beq _B29F
+        lda #$000A
+        jsl rlUnknown808FAD
+        jsr $85B43E
+        pha
+        jsr $85B40E
+        pla
+        ora #$0000
+        beq _B2BB
+        bra _B2B2
+
+
+        _B29F
+        bit #$8000
+        beq _B2B0
+        lda #$0021
+        jsl rlUnknown808FAD
+        jsr $85B40E
+        bra _B2B2
+
+
+        _B2B0
+        bra _B2C9
+
+
+        _B2B2
+        jsr $85B3DA
+        jsl rlUnknown85A227
+        bra _B2C3
+
+
+        _B2BB
+        jsr rsUnknown85B367
+        jsr rsUnknown85B3B1
+        bra _B2C9
+
+
+        _B2C3
+        lda #$B2CA
+        sta $0F57,b,x
+
+        _B2C9
+        rtl
+
+        .databank 0
+
+        ; 85/B2CA
+
+    .endsection Unsorted85B282Section
+
+
     .section ProcScript85B2D8Section
 
       .al
@@ -3192,6 +4922,293 @@
         ; 85/B367
 
     .endsection Unsorted85B2DASection
+
+
+    .section Unsorted85B367Section
+
+      .al
+      .xl
+
+      rsUnknown85B367 ; 85/B367
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1097,b,x
+        bne _B36F
+        lda #$0008
+
+        _B36F
+        sta wSelectedInventorySlot,b
+        lda $1057,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlDumpInventorySlotIntoSupplyIfFilled
+        rts
+
+        .databank 0
+
+        ; 85/B37D
+
+    .endsection Unsorted85B367Section
+
+
+    .section Unsorted85B37DSection
+
+      .al
+      .xl
+
+      rsUnknown85B37D ; 85/B37D
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown85877E
+        lda #(`procUnknown85B63B)<<8
+        sta lR44+1
+        lda #<>procUnknown85B63B
+        sta lR44
+        jsr rsUnknown85B3A2
+        lda #(`procUnknown85B6E3)<<8
+        sta lR44+1
+        lda #<>procUnknown85B6E3
+        sta lR44
+        jsr rsUnknown85B3A2
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/B3A2
+
+    .endsection Unsorted85B37DSection
+
+
+    .section Unsorted85B3A2Section
+
+      .al
+      .xl
+
+      rsUnknown85B3A2 ; 85/B3A2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlProcEngineFindProc
+        bcc _B3B0
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown85877E
+
+        _B3B0
+        rts
+
+        .databank 0
+
+        ; 85/B3B1
+
+      rsUnknown85B3B1 ; 85/B3B1
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        lda #(`procUnknown85B63B)<<8
+        sta lR44+1
+        lda #<>procUnknown85B63B
+        sta lR44
+        jsr rsUnknown85B42B
+        lda #(`procUnknown85B6E3)<<8
+        sta lR44+1
+        lda #<>procUnknown85B6E3
+        sta lR44
+        jsr rsUnknown85B42B
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/B3DA
+
+    .endsection Unsorted85B3A2Section
+
+
+    .section Unsorted85B3DASection
+
+      .al
+      .xl
+
+      rsUnknown85B3DA ; 85/B3DA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown858793
+        lda #(`procUnknown85B63B)<<8
+        sta lR44+1
+        lda #<>procUnknown85B63B
+        sta lR44
+        jsr rsUnknown85B3FF
+        lda #(`procUnknown85B6E3)<<8
+        sta lR44+1
+        lda #<>procUnknown85B6E3
+        sta lR44
+        jsr rsUnknown85B3FF
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/B3FF
+
+    .endsection Unsorted85B3DASection
+
+
+    .section Unsorted85B3FFSection
+
+      .al
+      .xl
+
+      rsUnknown85B3FF ; 85/B3FF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlProcEngineFindProc
+        bcc _B40D
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown858793
+
+        _B40D
+        rts
+
+        .databank 0
+
+        ; 85/B40E
+
+    .endsection Unsorted85B3FFSection
+
+
+    .section Unsorted85B40ESection
+
+      .al
+      .xl
+
+      rsUnknown85B40E ; 85/B40E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$8500
+        sta lR44+1
+        lda #$B704
+        sta lR44
+        jsr rsUnknown85B42B
+        lda #$8500
+        sta lR44+1
+        lda #$B547
+        sta lR44
+        jsr rsUnknown85B42B
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/B42B
+
+    .endsection Unsorted85B40ESection
+
+
+    .section Unsorted85B42BSection
+
+      .al
+      .xl
+
+      rsUnknown85B42B ; 85/B42B
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlProcEngineFindProc
+        bcc _B43D
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+
+        _B43D
+        rts
+
+        .databank 0
+
+        ; 85/B43E
+
+    .endsection Unsorted85B42BSection
+
+
+    .section Unsorted85B43ESection
+
+      .al
+      .xl
+
+      rsUnknown85B43E ; 85/B43E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$8500
+        sta lR44+1
+        lda #$B547
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _B457
+        lda $10B7,b,x
+        and #$0001
+        bra _B45A
+
+
+        _B457
+        lda #$0000
+
+        _B45A
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/B45C
+
+    .endsection Unsorted85B43ESection
 
 
     .section Unsorted85B45CSection
@@ -3869,6 +5886,55 @@
     .endsection Unsorted85B9D4Section
 
 
+    .section Unsorted85B9F2Section
+
+      .al
+      .xl
+
+      rlUnknown85B9F2 ; 85/B9F2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$D0C0
+        beq _BA09
+        lda #$BA09
+        sta $0F57,b,x
+        lda $1077,b,x
+        sec
+        sbc #$003C
+        sta $1077,b,x
+
+        _BA09
+        lda $1077,b,x
+        dec a
+        bmi _BA13
+        sta $1077,b,x
+
+        _BA12
+        rtl
+
+
+        _BA13
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown8586FA
+        jsl rlUnknown85C0C7
+        jsl rlUnknown85C0D5
+        lda #$00E8
+        jsl rlUnknown808FA3
+        bra _BA12
+
+        .databank 0
+
+        ; 85/BA2C
+
+    .endsection Unsorted85B9F2Section
+
+
     .section Unsorted85BA41Section
 
       .al
@@ -3968,6 +6034,82 @@
         ; 85/BAD9
 
     .endsection Unsorted85BAC7Section
+
+
+    .section Unsorted85BAD9Section
+
+      .al
+      .xl
+
+      rlUnknown85BAD9 ; 85/BAD9
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1097,b,x
+        dec a
+        bmi _BAE3
+        sta $1097,b,x
+        rtl
+
+
+        _BAE3
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown858793
+        lda #$0095
+        jsl rlUnknown808FAD
+        lda #$BAF9
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/BAF9
+
+      rlUnknown85BAF9 ; 85/BAF9
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$D0C0
+        beq _BB10
+        lda #$BB10
+        sta $0F57,b,x
+        lda $10B7,b,x
+        sec
+        sbc #$003C
+        sta $10B7,b,x
+
+        _BB10
+        lda $10B7,b,x
+        dec a
+        bmi _BB1A
+        sta $10B7,b,x
+
+        _BB19
+        rtl
+
+
+        _BB1A
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown8586FA
+        jsl rlUnknown85C0C7
+        lda #$0000
+        sta $0508,b
+        bra _BB19
+
+        .databank 0
+
+        ; 85/BB2E
+
+    .endsection Unsorted85BAD9Section
 
 
     .section Unsorted85BB2ESection
@@ -4101,6 +6243,88 @@
         ; 85/BCB8
 
     .endsection Unsorted85BC9ESection
+
+
+    .section Unsorted85BCB8Section
+
+      .al
+      .xl
+
+      rlUnknown85BCB8 ; 85/BCB8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR13
+        bmi _BCC1
+        jsl rlUnknown80A1AB
+        rtl
+
+
+        _BCC1
+        eor #$FFFF
+        inc a
+        sta wR13
+        jsl rlUnknown80A1AB
+        lda wR13
+        eor #$FFFF
+        inc a
+        sta wR13
+        rtl
+
+        .databank 0
+
+        ; 85/BCD4
+
+    .endsection Unsorted85BCB8Section
+
+
+    .section Unsorted85BCD4Section
+
+      .al
+      .xl
+
+      rlUnknown85BCD4 ; 85/BCD4
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        sep #$20
+        clc
+        ror a
+        sta wDialogueBoxHDMAYPixelPosition
+        bcc _BCE0
+        inc a
+
+        _BCE0
+        sta wDialogueBoxHDMACycleCounter+1
+        lda #$20
+        sta wDialogueBoxHDMAPositionIndicator
+        lda #$01
+        sta $7FEA53
+        lda #$00
+        sta $7FEA56
+        rep #$20
+        lda #$BD10
+        sta wDialogueBoxHDMAYPixelPosition+1
+        sta wDialogueBoxHDMAStatus
+        sta $7FEA54
+        lda #$BD11
+        sta wDialogueBoxHDMAPositionIndicator+1
+        pla
+        rtl
+
+        .databank 0
+
+        ; 85/BD10
+
+    .endsection Unsorted85BCD4Section
 
 
     .section Unsorted85BD12Section
@@ -4255,6 +6479,158 @@
         ; 85/BDA1
 
     .endsection Unsorted85BD93Section
+
+
+    .section Unsorted85BDA1Section
+
+      .al
+      .xl
+
+      rlUnknown85BDA1 ; 85/BDA1
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        pha
+        txa
+        and #$00FF
+        asl a
+        asl a
+        asl a
+        sta wR0
+        txa
+        and #$FF00
+        xba
+        asl a
+        asl a
+        asl a
+        sta wR1
+        sta wR6
+        pla
+        pha
+        tya
+        ora #$0000
+        bne _BDD7
+        lda aEpilogueUnitStates
+        asl a
+        asl a
+        asl a
+        sta wR4
+        lda $7FC54C
+        asl a
+        asl a
+        asl a
+        sta wR5
+        bra _BDE9
+
+
+        _BDD7
+        lda $7FC5AE
+        asl a
+        asl a
+        asl a
+        sta wR4
+        lda $7FC5B0
+        asl a
+        asl a
+        asl a
+        sta wR5
+
+        _BDE9
+        pla
+        sta wR7
+        pha
+        beq _BE35
+        lda wR4
+        sec
+        sbc wR0
+        sta wR13
+        lda #$0010
+        sta wR14
+        jsl $85BCB8
+        lda wR13
+        sta wR10
+        lda wR7
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR0
+        clc
+        adc wR12
+        sta wR0
+        lda wR5
+        sec
+        sbc wR1
+        sta wR13
+        lda #$0010
+        sta wR14
+        jsl $85BCB8
+        lda wR13
+        sta wR10
+        lda wR7
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR1
+        clc
+        adc wR12
+        sta wR1
+
+        _BE35
+        pla
+        pha
+        phx
+        tax
+        lda wR6
+        cmp #$0070
+        bmi _BE50
+        lda @l $85BE76,x
+        and #$00FF
+        sta wR7
+        lda wR1
+        sec
+        sbc wR7
+        bra _BE5A
+
+
+        _BE50
+        lda @l $85BE76,x
+        and #$00FF
+        clc
+        adc wR1
+
+        _BE5A
+        sta wR1
+        plx
+        pla
+        asl a
+        tax
+        ldy $BE87,b,x
+        stz wR4
+        stz wR5
+        sep #$20
+        lda #$85
+        pha
+        plb
+        .databank $85
+        rep #$20
+        jsl rlPushToOAMBuffer
+        plp
+        plb
+        .databank $85
+        rtl
+
+        .databank 0
+
+        ; 85/BE76
+
+    .endsection Unsorted85BDA1Section
 
 
     .section Unsorted85C0CESection
@@ -4482,6 +6858,72 @@
     .endsection Unsorted85CAFCSection
 
 
+    .section Unsorted85CB51Section
+
+      .al
+      .xl
+
+      rlUnknown85CB51 ; 85/CB51
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85D65A
+        bcc _CB58
+        rtl
+
+
+        _CB58
+        jsl rlUnknown85D5CC
+        phx
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsr $85CCA8
+        jsr $85CCC9
+        lda $0534,b
+        and #$FF00
+        asl a
+        asl a
+        asl a
+        and #$FF00
+        ora #$0018
+        sta wR43
+        lda #$000A
+        sta wR42
+        jsl rlUnknown859FCD
+        plx
+        phx
+        lda $10B7,b,x
+        ldx #$05A0
+        stx aCurrentTilemapInfo,b
+        ldx #$0101
+        jsl rlUnknown878900
+        plx
+        phx
+        lda $10B7,b,x
+        ldy $1077,b,x
+        ldx #$0980
+        stx aCurrentTilemapInfo,b
+        ldx #$0103
+        jsl rlUnknown85D9FC
+        plx
+        lda #$CBBC
+        sta $0F57,b,x
+        lda $0F37,b,x
+        ora #$0001
+        sta $0F37,b,x
+        jsl rlUnknown858751
+        rtl
+
+        .databank 0
+
+        ; 85/CBBD
+
+    .endsection Unsorted85CB51Section
+
+
     .section Unsorted85CBBDSection
 
       .al
@@ -4585,6 +7027,36 @@
     .endsection Unsorted85CC3ESection
 
 
+    .section Unsorted85CC4DSection
+
+      .al
+      .xl
+
+      rlUnknown85CC4D ; 85/CC4D
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown80B0EE
+        bcs _CC61
+        jsl rlFreeHDMAEntry0
+        jsl rlProcEngineFreeProc
+        lda #$FFFF
+        sta $0DB1,b
+
+        _CC61
+        rtl
+
+        .databank 0
+
+        ; 85/CC62
+
+    .endsection Unsorted85CC4DSection
+
+
     .section ProcScript85CC62Section
 
       .al
@@ -4623,6 +7095,87 @@
         ; 85/CCA8
 
     .endsection ProcScript85CC62Section
+
+
+    .section Unsorted85CCA8Section
+
+      .al
+      .xl
+
+      rsUnknown85CCA8 ; 85/CCA8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $1097,b,x
+        tax
+        lda $7E441B,x
+        sta wR10
+        lda $7E44AB,x
+        sta wR11
+        jsl rlUnknown88BF6C
+        lda wR11
+        xba
+        and #$FF00
+        ora wR10
+        sta wR0
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/CCC9
+
+      rsUnknown85CCC9 ; 85/CCC9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR0
+        xba
+        and #$00FF
+        cmp #$0004
+        bmi _CCDA
+        sec
+        sbc #$0003
+        bra _CCDC
+
+
+        _CCDA
+        inc a
+        inc a
+
+        _CCDC
+        xba
+        sta wR4
+        lda wR0
+        and #$00FF
+        cmp #$000F
+        bmi _CCEF
+        sec
+        sbc #$000C
+        bra _CCF1
+
+
+        _CCEF
+        inc a
+        inc a
+
+        _CCF1
+        ora wR4
+        sta $0534,b
+        rts
+
+        .databank 0
+
+        ; 85/CCF7
+
+    .endsection Unsorted85CCA8Section
 
 
     .section ProcScript85CD0CSection
@@ -4883,6 +7436,137 @@
     .endsection Unsorted85CD81Section
 
 
+    .section Unsorted85CE54Section
+
+      .al
+      .xl
+
+      rsUnknown85CE54 ; 85/CE54
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda $0F37,b,x
+        bit #$0001
+        bne _CE65
+        ldy #$0004
+        bra _CE68
+
+
+        _CE65
+        ldy #$0003
+
+        _CE68
+        tya
+        jsl rlUnknown859FEA
+        lda #$20FF
+        sta wUnknown053C,b
+        jsl rlUnknown8788E5
+        jsl rlUnknown8785E3
+        rts
+
+        .databank 0
+
+        ; 85/CE7C
+
+    .endsection Unsorted85CE54Section
+
+
+    .section Unsorted85CE7CSection
+
+      .al
+      .xl
+
+      rsUnknown85CE7C ; 85/CE7C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0F37,b,x
+        bit #$0001
+        bne _CE89
+        ldy #$0004
+        bra _CE8C
+
+
+        _CE89
+        ldy #$0003
+
+        _CE8C
+        lda #$040C
+        pha
+        tya
+        xba
+        ora #$0005
+        tay
+        pla
+        jsl rlUnknown85A041
+        rts
+
+        .databank 0
+
+        ; 85/CE9C
+
+      rsUnknown85CE9C ; 85/CE9C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        jsl rlGetMapMenuType
+        cmp #$0004
+        beq _CEAC
+        pla
+        sta $0DB1,b
+        bra _CEB0
+
+
+        _CEAC
+        pla
+        sta $0DAF,b
+
+        _CEB0
+        rts
+
+        .databank 0
+
+        ; 85/CEB1
+
+      rsUnknown85CEB1 ; 85/CEB1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetMapMenuType
+        cmp #$0004
+        beq _CEBF
+        lda $0DB1,b
+        bra _CEC2
+
+
+        _CEBF
+        lda $0DAF,b
+
+        _CEC2
+        rts
+
+        .databank 0
+
+        ; 85/CEC3
+
+    .endsection Unsorted85CE7CSection
+
+
     .section Unsorted85CEC3Section
 
       .al
@@ -4915,6 +7599,247 @@
         ; 85/CEE2
 
     .endsection Unsorted85CEC3Section
+
+
+    .section Unsorted85CEE2Section
+
+      .al
+      .xl
+
+      rlUnknown85CEE2 ; 85/CEE2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsr $85CEB1
+        bit #$4000
+        bne _CF11
+        bit #$0800
+        bne _CF00
+        bit #$1000
+        bne _CF37
+        bit #$0100
+        bne _CF44
+
+        _CEFE
+        plx
+        rtl
+
+
+        _CF00
+        and #$00FF
+        clc
+        adc $1077,b,x
+        cmp $1097,b,x
+        bmi _CF24
+        lda $1097,b,x
+        bra _CF24
+
+
+        _CF11
+        and #$00FF
+        sta wR0
+        lda $1077,b,x
+        sec
+        sbc wR0
+        ora #$0000
+        bpl _CF24
+        lda #$0000
+
+        _CF24
+        sta $1057,b,x
+        lda #$2000
+        jsr $85CE9C
+        lda #$CFC0
+        sta $0F57,b,x
+        jml _CEFE
+
+
+        _CF37
+        lda #$D047
+        sta $0F57,b,x
+        jsr rsUnknown85CE54
+        jml _CEFE
+
+
+        _CF44
+        lda $1097,b,x
+        bit #$0080
+        bne _CFA3
+        phb
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+        lda $10B7,b,x
+        tay
+        lda $0018,b,y
+        sta $0ED1,b
+        lda $001A,b,y
+        sta $0ED5,b
+        plb
+        .databank $7E
+        lda $0ED5,b
+        beq _CFB3
+        lda #$0080
+        sta $1097,b,x
+        jsl rlGetMapMenuPosition
+        xba
+        and #$00FF
+        cmp #$0002
+        bmi _CF81
+        dec a
+        bra _CF85
+
+
+        _CF81
+        clc
+        adc #$0002
+
+        _CF85
+        sta $0ED3,b
+        lda #$0001
+        sta $0ECF,b
+        lda #(`procUnknown85D8AA)<<8
+        sta lR44+1
+        lda #<>procUnknown85D8AA
+        sta lR44
+        lda #$0001
+        jsl rlProcEngineCreateProcByIndex
+        jml _CEFE
+
+
+        _CFA3
+        lda #(`procUnknown85D8AA)<<8
+        sta lR44+1
+        lda #<>procUnknown85D8AA
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcs _CFBC
+
+        _CFB3
+        lda #$0000
+        sta $1097,b,x
+        jsr $85CE9C
+
+        _CFBC
+        jml _CEFE
+
+        .databank 0
+
+        ; 85/CFC0
+
+      rlUnknown85CFC0 ; 85/CFC0
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda $1057,b,x
+        cmp $1077,b,x
+        beq _D033
+        bpl _CFDA
+        lda #$1D80
+        sta aCurrentTilemapInfo,b
+        dec $1077,b,x
+        bra _D009
+
+
+        _CFDA
+        lda #$0980
+        sta aCurrentTilemapInfo,b
+        inc $1077,b,x
+        jsr $85CEB1
+        pha
+        and #$FF00
+        sta wR0
+        pla
+        and #$00FF
+        dec a
+        bmi _CFFA
+        ora wR0
+        jsr $85CE9C
+        bra _D009
+
+
+        _CFFA
+        lda #$0006
+        ora wR0
+        jsr $85CE9C
+        lda #$000D
+        jsl rlUnknown808FAD
+
+        _D009
+        phx
+        lda $1077,b,x
+        ldy $1097,b,x
+        ldx #$0203
+        jsl rlUnknown85D9FC
+        plx
+        phx
+        lda #$01A0
+        jsr rsUnknown85CE08
+        sta aCurrentTilemapInfo,b
+        lda $1077,b,x
+        ldx #$0201
+        jsl rlUnknown878900
+        plx
+        jsl rlUnknown8785E3
+        plx
+        rtl
+
+
+        _D033
+        lda #$8000
+        jsr $85CE9C
+        lda #$CEE2
+        sta $0F57,b,x
+        lda #$0980
+        sta aCurrentTilemapInfo,b
+        bra _D009
+
+        .databank 0
+
+        ; 85/D047
+
+      rlUnknown85D047 ; 85/D047
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsr $85CE7C
+        bcs _D055
+        jsl rlUnknown85884A
+        rtl
+
+
+        _D055
+        lda #$0000
+        jsr $85CE9C
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        rtl
+
+        .databank 0
+
+        ; 85/D064
+
+    .endsection Unsorted85CEE2Section
 
 
     .section ProcScript85D064Section
@@ -5031,6 +7956,108 @@
         ; 85/D100
 
     .endsection Unsorted85D066Section
+
+
+    .section Unsorted85D100Section
+
+      .al
+      .xl
+
+      rlUnknown85D100 ; 85/D100
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz $0DB1,b
+        phb
+        phy
+        phx
+        jsl rlUnknown85D0B9
+        jsr rsUnknown85D1E6
+        jsr rsUnknown85D17E
+        lda wR0
+        and #$FF00
+        asl a
+        asl a
+        asl a
+        sec
+        sbc #$0010
+        tay
+        xba
+        and #$00FF
+        cmp #$0000
+        bpl _D129
+        ldy #$0000
+
+        _D129
+        tya
+        and #$FF00
+        ora #$0030
+        sta wR43
+        lda #$0014
+        sta wR42
+        jsl rlUnknown859FCD
+        plx
+        ply
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 85/D13F
+
+      rlUnknown85D13F ; 85/D13F
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz $0DAF,b
+        phb
+        phy
+        phx
+        jsl rlUnknown85D0B9
+        jsr rsUnknown85D1E6
+        jsr rsUnknown85D17E
+        lda wR1
+        and #$FF00
+        asl a
+        asl a
+        asl a
+        sec
+        sbc #$0010
+        tay
+        xba
+        and #$00FF
+        cmp #$0000
+        bpl _D168
+        ldy #$0000
+
+        _D168
+        tya
+        and #$FF00
+        ora #$0030
+        sta wR43
+        lda #$0014
+        sta wR42
+        jsl rlUnknown859FCD
+        plx
+        ply
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 85/D17E
+
+    .endsection Unsorted85D100Section
 
 
     .section Unsorted85D17ESection
@@ -5497,6 +8524,297 @@
         ; 85/D438
 
     .endsection Unsorted85D3F5Section
+
+
+    .section Unsorted85D442Section
+
+      .al
+      .xl
+
+      rlUnknown85D442 ; 85/D442
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stx wR7
+        sta wR2
+        sty wR3
+        lda wR3
+        cmp #$0026
+        bpl _D45D
+        lda wR2
+        sta wR4
+        sta wR6
+        lda wR3
+        sta wR5
+        jsr rsUnknown85D4B2
+        rtl
+
+
+        _D45D
+        lda wR2
+        cmp #$0026
+        bpl _D489
+        lda wR2
+        sta wR4
+        sta wR6
+        lda #$0026
+        sta wR5
+        jsr rsUnknown85D4B2
+        lda wR7
+        sec
+        sbc #$0100
+        tax
+        stz wR4
+        stz wR6
+        lda wR3
+        sec
+        sbc #$0026
+        sta wR5
+        jsr rsUnknown85D4B2
+        rtl
+
+
+        _D489
+        lda #$0026
+        sta wR4
+        sta wR6
+        sta wR5
+        jsr rsUnknown85D4B2
+        lda wR7
+        sec
+        sbc #$0100
+        tax
+        lda wR2
+        sec
+        sbc #$0026
+        sta wR4
+        sta wR6
+        lda wR3
+        sec
+        sbc #$0026
+        sta wR5
+        jsr rsUnknown85D4B2
+        rtl
+
+        .databank 0
+
+        ; 85/D4B2
+
+    .endsection Unsorted85D442Section
+
+
+    .section Unsorted85D4B2Section
+
+      .al
+      .xl
+
+      rsUnknown85D4B2 ; 85/D4B2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR4
+        sec
+        sbc #$0004
+        sta wR0
+        bpl _D4C0
+        jml _D4DF
+
+
+        _D4C0
+        phy
+        pha
+        phx
+        ldy #$0004
+        lda #$0004
+        jsr $85D5AA
+        plx
+        jsr $85D5C3
+        jsl rlUnknown85D81F
+        pla
+        ply
+        lda wR0
+        sta wR4
+        inc x
+        jml rsUnknown85D4B2
+
+
+        _D4DF
+        lda wR5
+        sec
+        sbc wR6
+        sta wR1
+        clc
+        adc wR4
+        cmp #$0005
+        bpl _D505
+        tay
+        phy
+        pha
+        phx
+        lda wR4
+        jsr $85D5AA
+        plx
+        jsr $85D5C3
+        jsl rlUnknown85D81F
+        pla
+        ply
+        jml _D572
+
+
+        _D505
+        phy
+        pha
+        phx
+        ldy #$0004
+        lda wR4
+        jsr $85D5AA
+        plx
+        jsr $85D5C3
+        jsl rlUnknown85D81F
+        pla
+        ply
+        inc x
+        lda #$0004
+        sec
+        sbc wR4
+        sta wR0
+        lda wR5
+        sec
+        sbc wR6
+        sec
+        sbc wR0
+        sta wR5
+        jml _D531
+
+
+        _D531
+        lda wR5
+        sec
+        sbc #$0004
+        bmi _D556
+        phy
+        pha
+        phx
+        ldy #$0004
+        lda #$0000
+        jsr $85D5AA
+        plx
+        jsr $85D5C3
+        jsl rlUnknown85D81F
+        pla
+        ply
+        sta wR5
+        inc x
+        jml _D531
+
+
+        _D556
+        nop
+        nop
+        nop
+        phy
+        pha
+        phx
+        ldy wR5
+        lda #$0000
+        jsr $85D5AA
+        plx
+        jsr $85D5C3
+        jsl rlUnknown85D81F
+        pla
+        ply
+        nop
+        nop
+        nop
+        rts
+
+
+        _D572
+        tya
+        cmp #$0004
+        beq _D579
+        rts
+
+
+        _D579
+        inc x
+        phy
+        pha
+        phx
+        ldy #$0000
+        lda #$0000
+        jsr $85D5AA
+        plx
+        jsr $85D5C3
+        jsl rlUnknown85D81F
+        pla
+        ply
+        rts
+
+        .databank 0
+
+        ; 85/D591
+
+    .endsection Unsorted85D4B2Section
+
+
+    .section Unsorted85D5AASection
+
+      .al
+      .xl
+
+      rsUnknown85D5AA ; 85/D5AA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda #$0005
+        sta wR10
+        sty wR11
+        jsl rlUnsignedMultiply16By16
+        pla
+        clc
+        adc wR12
+        tax
+        lda $85D591,x
+        and #$00FF
+        rts
+
+        .databank 0
+
+        ; 85/D5C3
+
+      rsUnknown85D5C3 ; 85/D5C3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        cpx wR7
+        bpl _D5CB
+        sec
+        sbc #$0010
+
+        _D5CB
+        rts
+
+        .databank 0
+
+        ; 85/D5CC
+
+    .endsection Unsorted85D5AASection
 
 
     .section Unsorted85D5CCSection
@@ -6494,6 +9812,96 @@
     .endsection Unsorted85DAF6Section
 
 
+    .section Unsorted85DC26Section
+
+      .al
+      .xl
+
+      rlUnknown85DC26 ; 85/DC26
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0020
+        tsb $0D87,b
+        jsl rlUnknown85C0CE
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sep #$20
+        sta $0D75,b
+        rep #$20
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sep #$20
+        sta $0D76,b
+        rep #$20
+        lda wUnknown000D79,b
+        bit #$0020
+        beq _DC79
+        lda #$0000
+        sta $0D77,b
+        stz $0302,b
+        lda #$B122
+        sta $0ECF,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+
+        _DC79
+        rtl
+
+        .databank 0
+
+        ; 85/DC7A
+
+      rlUnknown85DC7A ; 85/DC7A
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wMapScrollXPixels,b
+        sta wMapXOffset,b
+        lda wMapScrollYPixels,b
+        sta wMapYOffset,b
+        lda #$0001
+        jsl $87CBC5
+        lda #$0100
+        tsb wUnknown000D79,b
+        stz $0302,b
+        lda #$AEEA
+        sta $0ECF,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/DCAB
+
+    .endsection Unsorted85DC26Section
+
+
     .section Unsorted85DCABSection
 
       .al
@@ -6523,6 +9931,110 @@
         ; 85/DCCA
 
     .endsection Unsorted85DCABSection
+
+
+    .section Unsorted85DE7CSection
+
+      .al
+      .xl
+
+      rlUnknown85DE7C ; 85/DE7C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx $0772,b
+        lda #$0000
+        sta $057C,b
+        lda $7E46EB,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlUnknown84B474
+        lda wSelectedUnitDataRAMPointer,b
+        sta $0ECF,b
+        lda #$2010
+        sta $0ED1,b
+        lda #$8500
+        sta lR44+1
+        lda #$9281
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/DEAB
+
+      rlUnknown85DEAB ; 85/DEAB
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wSelectedInventorySlot,b
+        lda #$0000
+        sta $057C,b
+        lda #$0001
+        sta wR10
+        sta wR12
+        lda #$0001
+        sta wR11
+        lda #$0002
+        jsl rlUnknown848924
+        lda $0772,b
+        sta wR0
+        lda #$FFFF
+        sta wR1
+        jsl rlUnknown84DC1C
+        rtl
+
+        .databank 0
+
+        ; 85/DED6
+
+    .endsection Unsorted85DE7CSection
+
+
+    .section Unsorted85DF20Section
+
+      .al
+      .xl
+
+      rlUnknown85DF20 ; 85/DF20
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown88AF7B
+        ldx $0772,b
+        jsl rlUnknown84CC5D
+        pha
+        bcs _DF33
+        jsl rlUnknown84CAA9
+
+        _DF33
+        pla
+        cpy #$0001
+        bne _DF3D
+        jsl rlUnknown84CD8A
+
+        _DF3D
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/DF3F
+
+    .endsection Unsorted85DF20Section
 
 
     .section Unsorted85DF3FSection
@@ -6610,6 +10122,122 @@
         ; 85/DF7D
 
     .endsection Unsorted85DF6FSection
+
+
+    .section Unsorted85DFC2Section
+
+      .al
+      .xl
+
+      rlUnknown85DFC2 ; 85/DFC2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0004
+        sta $057C,b
+        ldx $0772,b
+        lda $7E46EB,x
+        sta wSelectedUnitDataRAMPointer,b
+        sec
+        jsl rlUnknown84BA3E
+        jsl rlUnknown88AD46
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/DFDE
+
+    .endsection Unsorted85DFC2Section
+
+
+    .section Unsorted85E012Section
+
+      .al
+      .xl
+
+      rlUnknown85E012 ; 85/E012
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wSelectedInventorySlot,b
+        lda #$0002
+        sta $057C,b
+        lda #$0001
+        sta wR10
+        sta wR11
+        sta wR12
+        lda #$0005
+        jsl rlUnknown848924
+        jsl rlUnknown88AD46
+        rtl
+
+        .databank 0
+
+        ; 85/E030
+
+      rlUnknown85E030 ; 85/E030
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        stz wSelectedInventorySlot,b
+        lda #$0003
+        sta $057C,b
+        lda #$0001
+        sta wR10
+        sta wR11
+        sta wR12
+        lda #$000A
+        jsl rlUnknown848924
+        jsl rlUnknown88AD46
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/E050
+
+      rlUnknown85E050 ; 85/E050
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        stz wSelectedInventorySlot,b
+        lda #$0003
+        sta $057C,b
+        lda #$0001
+        sta wR10
+        sta wR11
+        sta wR12
+        lda #$000B
+        jsl rlUnknown848924
+        jsl rlUnknown88AD46
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/E070
+
+    .endsection Unsorted85E012Section
 
 
     .section ProcScript85E1CCSection
@@ -6921,6 +10549,663 @@
     .endsection Unsorted85E44ESection
 
 
+    .section Unsorted85E545Section
+
+      .al
+      .xl
+
+      rsUnknown85E545 ; 85/E545
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sec
+        rts
+
+        .databank 0
+
+        ; 85/E547
+
+      rsUnknown85E547 ; 85/E547
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        clc
+        rts
+
+        .databank 0
+
+        ; 85/E549
+
+    .endsection Unsorted85E545Section
+
+
+    .section Unsorted85E549Section
+
+      .al
+      .xl
+
+      rlUnknown85E549 ; 85/E549
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitStates
+        bit #$0800
+        bne _E55A
+        lda $0D87,b
+        bit #$0008
+        bne rsUnknown85E547
+
+        _E55A
+        clc
+        jsl rlUnknown84B9A3
+        bcs rsUnknown85E547
+        lda #$0001
+        sta wR10
+        sta wR11
+        stz wR12
+        lda #$0003
+        jsl rlUnknown848924
+        ora #$0000
+        bne _E57A
+        jml rsUnknown85E547
+
+
+        _E57A
+        jml rsUnknown85E545
+
+        .databank 0
+
+        ; 85/E57E
+
+    .endsection Unsorted85E549Section
+
+
+    .section Unsorted85E57ESection
+
+      .al
+      .xl
+
+      rlUnknown85E57E ; 85/E57E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wEventLocationEntry,b
+        beq $85E547
+        lda $07E0,b
+        and #$00FF
+        cmp #$0002
+        beq $85E547
+        jsl rlCheckIfCastleGuarded
+        bcs $85E547
+        jsl rlGetEventLocationEntryType
+        cmp #$0000
+        bne $85E547
+        ldx wActiveFactionSlot,b
+        jsl rlGetLocationFactionSlotOwner
+        jsl rlGetFactionRelation
+        cmp #$0000
+        beq $85E545
+        cmp #$0002
+        beq $85E545
+        jml $85E547
+
+        .databank 0
+
+        ; 85/E5B6
+
+      rlUnknown85E5B6 ; 85/E5B6
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitHomeCastle
+        sta wR0
+        jsl rlGetSelectedUnitFactionSlot
+        jsl rlGetFactionSlotLocationID
+        cmp wR0
+        beq _E5CC
+        jml $85E547
+
+
+        _E5CC
+        jsl rlGetSelectedUnitStates
+        bit #$2000
+        bne _E5D9
+        jml $85E547
+
+
+        _E5D9
+        bit #$0800
+        beq _E5E2
+        jml $85E547
+
+
+        _E5E2
+        jml $85E545
+
+        .databank 0
+
+        ; 85/E5E6
+
+      rlUnknown85E5E6 ; 85/E5E6
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitStates
+        bit #$2000
+        bne _E5F3
+        jml $85E547
+
+
+        _E5F3
+        bit #$0800
+        beq _E5FC
+        jml $85E547
+
+
+        _E5FC
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        ldx $0772,b
+        lda $7E441B,x
+        sta wR0
+        lda $7E44AB,x
+        inc a
+        inc a
+        sta wR1
+        jsl rlGetUnitByCoordinates
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        bcs _E61F
+        jml $85E547
+
+
+        _E61F
+        jml $85E545
+
+        .databank 0
+
+        ; 85/E623
+
+      rlUnknown85E623 ; 85/E623
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0772,b
+        jsl rlGetTerrainTypeByDeploymentOffset
+        cmp #$0009
+        bne _E633
+        jml $85E545
+
+
+        _E633
+        lda wEventLocationEntry,b
+        bne _E63C
+        jml $85E545
+
+
+        _E63C
+        jsl rlGetEventLocationEntryID
+        sta wR0
+        jsl rlGetSelectedUnitFactionSlot
+        jsl rlGetFactionSlotLocationID
+        cmp wR0
+        beq _E652
+        jml $85E545
+
+
+        _E652
+        jml $85E547
+
+        .databank 0
+
+        ; 85/E656
+
+      rlUnknown85E656 ; 85/E656
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitStates
+        bit #$2000
+        bne _E694
+        lda wEventLocationEntry,b
+        bne _E668
+        jml $85E547
+
+
+        _E668
+        jsl rlCheckIfCastleGuarded
+        bcs _E672
+        jml $85E547
+
+
+        _E672
+        jsl rlGetEventLocationEntryType
+        cmp #$0000
+        beq _E67F
+        jml $85E547
+
+
+        _E67F
+        jsl rlGetLocationFactionSlotOwner
+        tax
+        lda wActiveFactionSlot,b
+        jsl rlGetFactionRelation
+        cmp #$0001
+        beq _E694
+        jml $85E547
+
+
+        _E694
+        lda wAIUnknown7E2010
+        and #$00FF
+        bne _E6A1
+        jml $85E547
+
+
+        _E6A1
+        jml $85E545
+
+        .databank 0
+
+        ; 85/E6A5
+
+      rlUnknown85E6A5 ; 85/E6A5
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitSkills
+        lda lRoutineVariable,b
+        bit #$0008
+        bne _E6B5
+        jml $85E547
+
+
+        _E6B5
+        jsl rlGetSelectedUnitClassDataPointer
+        jsl rlGetClassSkills
+        bit #$0400
+        bne _E6C6
+        jml $85E547
+
+
+        _E6C6
+        jsl rlGetSelectedUnitStates
+        bit #$1000
+        beq _E6D3
+        jml $85E547
+
+
+        _E6D3
+        jml $85E545
+
+        .databank 0
+
+        ; 85/E6D7
+
+    .endsection Unsorted85E57ESection
+
+
+    .section Unsorted85E6D7Section
+
+      .al
+      .xl
+
+      rlUnknown85E6D7 ; 85/E6D7
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitStates
+        bit #$1000
+        bne _E6E4
+        jml rsUnknown85E547
+
+
+        _E6E4
+        jml rsUnknown85E545
+
+        .databank 0
+
+        ; 85/E6E8
+
+    .endsection Unsorted85E6D7Section
+
+
+    .section Unsorted85E6E8Section
+
+      .al
+      .xl
+
+      rlUnknown85E6E8 ; 85/E6E8
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx $0ECA,b
+        lda $10B7,b,x
+        cmp #$0002
+        bne _E6F7
+        jml $85E547
+
+
+        _E6F7
+        jsl rlGetEventLocationEntryID
+        sta wR0
+        jsl rlGetSelectedUnitFactionSlot
+        jsl rlGetFactionSlotLocationID
+        cmp wR0
+        bne _E70D
+        jml $85E547
+
+
+        _E70D
+        lda $0D87,b
+        bit #$0008
+        beq _E719
+        jml $85E547
+
+
+        _E719
+        jsl rlGetSelectedUnitStates
+        bit #$2000
+        beq _E726
+        jml $85E547
+
+
+        _E726
+        lda #$001D
+        jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
+        bcc _E733
+        jml $85E545
+
+
+        _E733
+        lda #$001D
+        jsl rlCheckIfInventoryItemsHaveSpecifiedSkill
+        bcc _E740
+        jml $85E545
+
+
+        _E740
+        jml $85E547
+
+        .databank 0
+
+        ; 85/E744
+
+      rlUnknown85E744 ; 85/E744
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0D87,b
+        bit #$0008
+        beq _E750
+        jml $85E547
+
+
+        _E750
+        jsl rlGetSelectedUnitStates
+        bit #$0800
+        beq _E75D
+        jml $85E547
+
+
+        _E75D
+        lda #$0008
+        jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
+        bcs _E76A
+        jml $85E547
+
+
+        _E76A
+        lda #$0001
+        sta wR10
+        lda #$0001
+        sta wR11
+        stz wR12
+        lda #$0007
+        jsl rlUnknown848924
+        ora #$0000
+        bne _E786
+        jml $85E547
+
+
+        _E786
+        jml $85E545
+
+        .databank 0
+
+        ; 85/E78A
+
+    .endsection Unsorted85E6E8Section
+
+
+    .section Unsorted85E78ASection
+
+      .al
+      .xl
+
+      rlUnknown85E78A ; 85/E78A
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0D87,b
+        bit #$0008
+        beq _E796
+        jml rsUnknown85E547
+
+
+        _E796
+        lda #$0001
+        sta wR10
+        sta wR11
+        stz wR12
+        lda #$0005
+        jsl rlUnknown848924
+        ora #$0000
+        bne _E7AF
+        jml rsUnknown85E547
+
+
+        _E7AF
+        jml rsUnknown85E545
+
+        .databank 0
+
+        ; 85/E7B3
+
+    .endsection Unsorted85E78ASection
+
+
+    .section Unsorted85E7B3Section
+
+      .al
+      .xl
+
+      rlUnknown85E7B3 ; 85/E7B3
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0D87,b
+        bit #$0008
+        beq _E7BF
+        jml $85E547
+
+
+        _E7BF
+        lda #$0006
+        jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
+        bcs _E7CC
+        jml $85E547
+
+
+        _E7CC
+        jsl rlGetSelectedUnitMoney
+        ora #$0000
+        bne _E7D9
+        jml $85E547
+
+
+        _E7D9
+        lda #$0001
+        sta wR10
+        sta wR11
+        stz wR12
+        lda #$000A
+        jsl rlUnknown848924
+        ora #$0000
+        bne _E7F2
+        jml $85E547
+
+
+        _E7F2
+        jml $85E545
+
+        .databank 0
+
+        ; 85/E7F6
+
+      rlUnknown85E7F6 ; 85/E7F6
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0D87,b
+        bit #$0008
+        beq _E802
+        jml $85E547
+
+
+        _E802
+        lda #$0006
+        jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
+        bcc _E80F
+        jml $85E547
+
+
+        _E80F
+        jsl rlGetSelectedUnitMoney
+        ora #$0000
+        bne _E81C
+        jml $85E547
+
+
+        _E81C
+        lda #$0001
+        sta wR10
+        sta wR11
+        stz wR12
+        lda #$000B
+        jsl rlUnknown848924
+        ora #$0000
+        bne _E835
+        jml $85E547
+
+
+        _E835
+        jml $85E545
+
+        .databank 0
+
+        ; 85/E839
+
+    .endsection Unsorted85E7B3Section
+
+
+    .section Unsorted85E839Section
+
+      .al
+      .xl
+
+      rlUnknown85E839 ; 85/E839
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitStates
+        bit #$0800
+        bne _E84E
+        lda $0D87,b
+        bit #$0008
+        beq _E84E
+        jml rsUnknown85E547
+
+
+        _E84E
+        clc
+        jsl rlUnknown84B9A3
+        bcs _E859
+        jml rsUnknown85E547
+
+
+        _E859
+        jml rsUnknown85E545
+
+        .databank 0
+
+        ; 85/E85D
+
+    .endsection Unsorted85E839Section
+
+
     .section Unsorted85E85DSection
 
       .al
@@ -7006,6 +11291,98 @@
         ; 85/E8A8
 
     .endsection Unsorted85E897Section
+
+
+    .section Unsorted85E8FBSection
+
+      .al
+      .xl
+
+      rlUnknown85E8FB ; 85/E8FB
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx $0772,b
+        lda $7E46EB,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlUnknown84B301
+        jsl rlUnknown88AF7B
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/E910
+
+    .endsection Unsorted85E8FBSection
+
+
+    .section Unsorted85E9D6Section
+
+      .al
+      .xl
+
+      rlUnknown85E9D6 ; 85/E9D6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0009
+        jsl rlUnknown808FAD
+        lda $0ED7,b,x
+        tay
+        jsl rlLoadMapMenuDataFromProc
+        jsl rlUnknown8584AC
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$20FF
+        sta wUnknown053C,b
+        lda #$0001
+        sta $0543,b
+        sta $0545,b
+        phx
+        jsl $84F8D9
+        ldx #$0002
+
+        _EA06
+        phx
+        jsr ($85EA3A,x)
+        plx
+        bcc _EA1C
+        lda #$85EA
+        sta lUnknown0540+1,b
+        lda $EA3E,b,x
+        sta lUnknown0540,b
+        jsr rsUnknown85E332
+
+        _EA1C
+        dec x
+        dec x
+        bpl _EA06
+        plx
+        jsl rlUnknown82F3BE
+        inc a
+        asl a
+        xba
+        ora #$0009
+        jsl rlSetMapMenuTilemapArea
+        jsl rlUnknown85856E
+        lda #$83F8
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/EA3A
+
+    .endsection Unsorted85E9D6Section
 
 
     .section Unsorted85EA64Section
