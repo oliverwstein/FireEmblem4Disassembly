@@ -141,7 +141,6 @@
   .include "engine/unsorted/bank8A.asm"
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
-  .include "engine/unsorted/bank8F.asm"
   .include "engine/unsorted/bank91.asm"
   .include "engine/unsorted/bank95.asm"
   .include "engine/unsorted/bank96.asm"

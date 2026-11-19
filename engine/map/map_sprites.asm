@@ -1500,3 +1500,668 @@
         ; 88/D731
 
     .endsection SetMovingMapSpriteBufferPointersSection
+
+
+    .section Unsorted818A4ASection
+
+      .al
+      .xl
+
+      rsUnknown818A4A ; 81/8A4A
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aActiveSpriteSystem.aUnknown001300,b,y
+        cmp #9
+        bne +
+
+          lda #8
+          bra _End
+
+        +
+        lda aMovingMapSprites.wSpeed,b,x
+        cmp #8
+        bcc _End
+
+          lda #4
+          bra _End
+
+            lda #6
+
+        _End
+        rts
+
+        .databank 0
+
+      rsUnknown818A68 ; 81/8A68
+
+        .al
+        .autsiz
+        .databank $81
+
+        ; Reads scripted movement paths
+
+        lda aActiveSpriteSystem.aUnknown0012E0,b,y
+        bit #$0010
+        beq +
+
+          ; If set, unload unit as soon as they are offscreen
+          jsr rsUnknown818C98
+          bcc +
+
+            ; Character is not visible
+            jsl rlUnknown818B76
+            sec
+            rts
+
+        +
+        jsr rsUnknown818CBF
+
+        lda aActiveSpriteSystem.aUnknown001320,b,y
+        beq +
+
+          clc
+          rts
+
+        +
+        sty lR19
+
+        lda aMovingMapSprites.wPathScriptAddress,b,x
+        sta lR18
+        lda aMovingMapSprites.wPathScriptBank,b,x
+        sta lR18+1
+        lda aMovingMapSprites.wPathScriptOffset,b,x
+        tay
+        
+          _Loop
+          lda [lR18],y
+          and #$00FF
+          cmp #$0080
+          bne +
+
+            jsl rlUnknown818B76
+            sec
+            rts
+
+          +
+          bit #$0080
+          beq rsUnknown818AD8
+
+          phy
+          and #$007F
+          asl a
+          tay
+          lda aScriptedMovementPointers,y
+          sta lR20
+          lda aScriptedMovementPointers+1,y
+          sta lR20+1
+          ply
+          inc y
+          jsl +
+          bcc _Loop
+
+        rts
+
+        +
+        jmp (lR20)
+
+        .databank 0
+
+      aScriptedMovementPointers ; 81/8AC6
+
+        .word <>rlUnknown818B76
+        .word <>rlUnknown818B5D
+        .word <>rlUnknown818BF0
+        .word <>rlUnknown818BF9
+        .word <>rlUnknown818C13
+        .word <>rlUnknown818C5D
+        .word <>rlUnknown818C62
+        .word <>rlUnknown818C67
+        .word <>rlUnknown818C6C
+
+      rsUnknown818AD8 ; 81/8AD8
+
+        .al
+        .autsiz
+        .databank ?
+
+        ldy #1
+        sty wR0
+
+        ldy lR19
+        cmp #10
+        bcc +
+
+          sbc #9
+          pha
+          phy
+          inc y
+          lda aMovingMapSprites.wPathScriptOffset,b,x
+          inc a
+          sta aMovingMapSprites.wPathScriptOffset,b,x
+          tay
+          lda [lR18],y
+          and #$00FF
+          sta wR0
+          ply
+          pla
+
+        +
+        cmp #9
+        beq +
+
+          cmp aActiveSpriteSystem.aUnknown001300,b,y
+          beq +
+
+            pha
+            dec a
+            asl a
+            asl a
+            asl a
+            sta wUnknown000911,x
+            lda #0
+            sta wUnknown0008F1,x
+            lda #0
+            sta wUnknown000901,x
+            pla
+
+        +
+        sta aActiveSpriteSystem.aUnknown001300,b,y
+
+        lda aMovingMapSprites.wPathScriptOffset,b,x
+        inc a
+        sta aMovingMapSprites.wPathScriptOffset,b,x
+
+        phx
+        jsr rsUnknown818A4A
+        tax
+        lda aUnknown818B54,x
+        and #$00FF
+        xba
+        ora wR0
+        jsl rlUnsignedMultiply8By8
+        sta aActiveSpriteSystem.aUnknown001320,b,y
+        plx
+
+        lda aActiveSpriteSystem.aUnknown001300,b,y
+        cmp #4
+        beq +
+
+          lda #1
+          sta aActiveSpriteSystem.aFrameTimer,b,y
+
+        +
+        lda #0
+        sta aActiveSpriteSystem.aUnknown001340,b,y
+        clc
+        rts
+
+        .databank 0
+
+      aUnknown818B54 ; 81/8B54
+
+        .byte $80
+        .byte $80
+        .byte $40
+        .byte $20
+        .byte $10
+        .byte $08
+        .byte $04
+        .byte $02
+        .byte $01
+
+      rlUnknown818B5D ; 81/8B5D
+
+        .al
+        .autsiz
+        .databank ?
+
+        phy
+        tya
+        sta aMovingMapSprites.wPathScriptOffset,b,x
+
+        lda aMovingMapSprites.wActiveSpriteOffset,b,x
+        tay
+
+        lda aActiveSpriteSystem.aUnknown0012E0,b,y
+        and #~$8000
+        sta aActiveSpriteSystem.aUnknown0012E0,b,y
+
+        jsl rlUnknown818D58
+        ply
+        sec
+        rtl
+
+        .databank 0
+
+      rlUnknown818B76 ; 81/8B76
+
+        .al
+        .autsiz
+        .databank ?
+
+        phy
+        lda aMovingMapSprites.wActiveSpriteOffset,b,x
+        tay
+
+        jsr rsUnknown818B91
+
+        lda #$FFFF
+        sta aMovingMapSprites.wActiveSpriteOffset,b,x
+        lda #0
+        sta aActiveSpriteSystem.aTypeOffset,b,y
+
+        jsl rlUnknown818D58
+        ply
+        sec
+        rtl
+
+        .databank 0
+
+      rsUnknown818B91 ; 81/8B91
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aActiveSpriteSystem.aUnknown0012E0,b,y
+        bit #$000E
+        beq _8BEF
+
+          phx
+          phy
+          bit #$0008
+          bne +
+
+            lda aMovingMapSprites.wUnknown0017CC,b,x
+            tax
+            jsl rlDeployedUnitUnsetHiddenIfAlive
+            bra _End
+
+          +
+          lda aMovingMapSprites.wUnknown001814,b,x
+          sta wR1
+          lda aMovingMapSprites.wXPixelPosition,b,x
+          sta wR2
+          lda aMovingMapSprites.wYPixelPosition,b,x
+          sta wR3
+          phx
+          lda aMovingMapSprites.wUnknown0017CC,b,x
+          tax
+          lda wR2
+          sta aDeploymentTable._XPixelPosition,x
+          lda wR3
+          sta aDeploymentTable._YPixelPosition,x
+          phx
+          jsl rlAddDeployedMapSprite
+          plx
+          sta aDeploymentTable._DeploymentOffsets,x
+          plx
+          lda aMovingMapSprites.wUnknown001804,b,x
+          xba
+          lsr a
+          dec a
+          ora #$0080
+          and #$FFBF
+          sta wR0
+          lda aMovingMapSprites.wUnknown0017CC,b,x
+          tax
+          lda wR0
+          sta aDeploymentTable._State,x
+
+          _End
+          ply
+          plx
+
+        _8BEF
+        rts
+
+        .databank 0
+
+      rlUnknown818BF0 ; 81/8BF0
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #0
+        sta aMovingMapSprites.wPathScriptOffset,b,x
+        tay
+        clc
+        rtl
+
+        .databank 0
+
+      rlUnknown818BF9 ; 81/8BF9
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda [lR18],y
+        sta aMovingMapSprites.wPathScriptAddress,b,x
+        pha
+        inc y
+        lda [lR18],y
+        sta aMovingMapSprites.wPathScriptBank,b,x
+        sta lR18+1
+        pla
+        sta lR18
+        lda #0
+        sta aMovingMapSprites.wPathScriptOffset,b,x
+        tay
+        clc
+        rtl
+
+        .databank 0
+
+      rlUnknown818C13 ; 81/8C13
+
+        .al
+        .autsiz
+        .databank ?
+
+        phx
+        lda [lR18],y
+        and #$00FF
+        sta aMovingMapSprites.wSpeed,b,x
+        asl a
+        sta wR0
+        inc y
+        tya
+        sta aMovingMapSprites.wPathScriptOffset,b,x
+
+        lda aMovingMapSprites.wActiveSpriteOffset,b,x
+        tay
+        ldx wR0
+        lda aUnknown818C45,x
+        sta aActiveSpriteSystem.aUnknown001380,b,y
+        lda aUnknown818C51,x
+        sta aActiveSpriteSystem.aUnknown0013A0,b,y
+        lda #9
+        sta aActiveSpriteSystem.aUnknown001300,b,y
+        plx
+        lda aMovingMapSprites.wPathScriptOffset,b,x
+        tay
+        clc
+        rtl
+
+        .databank 0
+
+      aUnknown818C45 ; 81/8C45
+
+        .word $0000
+        .word $2000
+        .word $4000
+        .word $8000
+        .word $0000
+        .word $0000
+
+      aUnknown818C51 ; 81/8C51
+
+        .word $0000
+        .word $0000
+        .word $0000
+        .word $0000
+        .word $0001
+        .word $0002
+
+    .endsection Unsorted818A4ASection
+
+
+    .section Unsorted818C5DSection
+
+      .al
+      .xl
+
+      rlUnknown818C5D ; 81/8C5D
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        bra +
+
+      rlUnknown818C62 ; 81/8C62
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #2
+        bra +
+
+      rlUnknown818C67 ; 81/8C67
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #3
+        bra +
+
+      rlUnknown818C6C ; 81/8C6C
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #4
+
+        +
+        sta wR0
+
+        tya
+        sta aMovingMapSprites.wPathScriptOffset,b,x
+
+        lda aMovingMapSprites.wActiveSpriteOffset,b,x
+        tay
+
+        lda wR0
+        pha
+
+        dec a
+        asl a
+        asl a
+        asl a
+        sta wUnknown000911,x
+        lda #0
+        sta wUnknown0008F1,x
+        lda #0
+        sta wUnknown000901,x
+
+        pla
+        sta aActiveSpriteSystem.aUnknown001300,b,y
+        sec
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted818C5DSection
+
+
+    .section Unsorted818C98Section
+
+      .al
+      .xl
+
+      rsUnknown818C98 ; 81/8C98
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Check if moving character is not visible
+        ; SEC if yes, CLC if no
+
+        lda aMovingMapSprites.wXPixelPosition,b,x
+        sec
+        sbc wMapScrollXPixels,b
+        cmp #$FFF0
+        bcs +
+
+        cmp #$0100
+        bcs _SEC
+
+        +
+        lda aMovingMapSprites.wYPixelPosition,b,x
+        sec
+        sbc wMapScrollYPixels,b
+        cmp #$FFF0
+        bcs +
+
+        cmp #$0100
+        bcs _SEC
+
+        +
+        clc
+        bra +
+
+        _SEC
+        sec
+        
+        +
+        rts
+
+        .databank 0
+
+      rsUnknown818CBF ; 81/8CBF
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Guess: X panned moving sound effects
+
+        php
+        phx
+        phy
+        lda aMovingMapSprites.wXPixelPosition,b,x
+        sec
+        sbc wMapScrollXPixels,b
+        bmi +
+
+        cmp #16 * 16
+        bcc _Continue
+
+        lda #$00FF
+        bra _Continue
+
+        +
+        lda #0
+        bra _Continue
+
+        _Continue
+        jsl rlUnknown818CE2
+        ply
+        plx
+        plp
+        rts
+
+        .databank 0
+
+      rlUnknown818CE2 ; 81/8CE2
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        phx
+        phy
+
+        tay
+        lda aMovingMapSprites.wMovingSound,b,x
+        and #$FF00
+        bne +
+
+          jsr rsUnknown818D23
+          bra _End
+
+        +
+        xba
+        dec a
+        bne +
+
+        sep #$20
+        sty $04CB,b
+        lda #0
+        sta $04CC,b
+        rep #$20
+        ldx #0
+        jsl rlUnknown809933
+        bra _End
+
+        +
+        sep #$20
+        sty $04CE,b
+        lda #0
+        sta $04CF,b
+        rep #$20
+        ldx #3
+        jsl rlUnknown809933
+
+        _End
+        ply
+        plx
+        plp
+        rtl
+
+        .databank 0
+
+        ; 81/8D23
+
+    .endsection Unsorted818C98Section
+
+
+    .section Unsorted818D23Section
+
+      .al
+      .xl
+
+      rsUnknown818D23 ; 81/8D23
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $04BA,b
+        bne _8D57
+        phx
+        stz wR0
+        ldx #$0000
+
+        _8D2E
+        lda $180C,b,x
+        and #$FF00
+        ora wR0
+        sta wR0
+        inc x
+        inc x
+        cpx #$0008
+        bne _8D2E
+        plx
+        lda wR0
+        cmp #$0300
+        beq _8D57
+        phx
+        lda $180C,b,x
+        jsl rlUnknown91C472
+        plx
+        sta $180C,b,x
+        jsl rlUnknown91C4CE
+
+        _8D57
+        rts
+
+        .databank 0
+
+        ; 81/8D58
+
+    .endsection Unsorted818D23Section
+
+

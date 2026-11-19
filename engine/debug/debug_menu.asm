@@ -4057,3 +4057,147 @@
       ; 89/EB26
 
     .endsection DebugMenuSection
+
+
+    .section Unsorted848EFBSection
+
+      .al
+      .xl
+
+      rlUnknown848EFB ; 84/8EFB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        phx
+        asl a
+        tax
+        lda #$8383
+        sta lRoutineVariable+1,b
+        lda aTerrainNameOffsets,x
+        clc
+        adc #$837B
+        sta lRoutineVariable,b
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 84/8F17
+
+    .endsection Unsorted848EFBSection
+
+
+    .section Unsorted8990DASection
+
+      .al
+      .xl
+
+      rlUnknown8990DA ; 89/90DA
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta $7F82BD
+
+        -
+        lda $7F82BD
+        jsl rlGetItemIDByInventorySlot
+        bcs +
+
+        pha
+        lda $7F82BD
+        dec a
+        asl a
+        tax
+        lda $899109,x
+        tax
+        pla
+        jsl rlUnknown8BBE68
+
+        lda $7F82BD
+        inc a
+        sta $7F82BD
+        bra -
+        
+        +
+        rtl
+
+        .databank 0
+
+      rsUnknown899109 ; 89/9109
+
+        .al
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+      aUnknown89910A ; 89/910A
+
+        .word $6200
+        .word $6400
+        .word $6600
+        .word $6800
+        .word $6A00
+        .word $6C00
+        .word $6E00
+        .byte 0
+
+      rlClearTilemapRect ; 89/9119
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; In:
+        ; X = coord
+        ; Y = width
+        ; A = height
+
+        stx wR0
+        sty wR1
+        sty wR3
+        sta wR2
+
+          -
+          lda #$00FF
+          sta aBG3TilemapBuffer,x
+          inc x
+          inc x
+          dec wR1
+          bne -
+
+        lda wR0
+        clc
+        adc #$0040
+        sta wR0
+        tax 
+        lda wR3
+        sta wR1
+        dec wR2
+        bne -
+
+        rtl
+
+        .databank 0
+
+        ; 89/9140
+
+    .endsection Unsorted8990DASection
+
+

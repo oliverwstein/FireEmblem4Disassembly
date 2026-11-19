@@ -1926,3 +1926,108 @@
         ; 81/88B0
 
     .endsection ActiveSpriteEngineSection
+
+
+    .section Unsorted9EB2BASection
+
+      .al
+      .xl
+
+      rlUnknown9EB2BA ; 9E/B2BA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda $7F4BEB
+        and #$0001
+        asl a
+        tax
+        lda $7F4C11,x
+        beq _B2D4
+        lda $7F4BEB
+        and #$0001
+        bne _B342
+
+        _B2D4
+        lda $7F4BEB
+        and #$0001
+        asl a
+        tax
+        lda $7F454A,x
+        bne _B2EA
+        lda #$0041
+        sta wR0
+        bra _B315
+
+
+        _B2EA
+        dec a
+        bne _B2F4
+        lda #$0044
+        sta wR0
+        bra _B315
+
+
+        _B2F4
+        dec a
+        bne _B30E
+        lda $7F4BEB
+        and #$0020
+        beq _B307
+        lda #$0045
+        sta wR0
+        bra _B315
+
+
+        _B307
+        lda #$0041
+        sta wR0
+        bra _B315
+
+
+        _B30E
+        lda #$0043
+        sta wR0
+        bra _B315
+
+
+        _B315
+        lda $7F45A8
+        cmp #$FFFF
+        beq _B329
+        tax
+        lda $1200,b,x
+        tay
+        lda $7F57EA
+        bne _B337
+
+        _B329
+        lda $7F45A4
+        cmp #$FFFF
+        beq _B342
+        tax
+        lda $1200,b,x
+        tay
+
+        _B337
+        tya
+        jsl rlUnknown9EB4BB
+        ora wR0
+        jsl rlUnknown80900D
+
+        _B342
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/B345
+
+    .endsection Unsorted9EB2BASection
+
+

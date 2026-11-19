@@ -397,3 +397,82 @@
         ; 82/9487
 
     .endsection EventHaltProcSection
+
+
+    .section Unsorted819166Section
+
+      .al
+      .xl
+
+      rlUnknown819166 ; 81/9166
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wMapCurrentlyScrollingFlag,b
+        bne +
+
+          stz wMapPixelScrollDistance,b
+          jsr rsGetMapPixelScrollDistance
+          bcs _End
+
+            lda wEventMapScrollSpeed,b
+            sta wMapScrollSpeed,b
+            stz wMapScrollCurrentPixelDistance,b
+
+            lda #1
+            sta wMapCurrentlyScrollingFlag,b
+
+            stz wUnknown00073A,b
+            stz wMapEnableXScrollFlag,b
+            stz wMapEnableYScrollFlag,b
+
+        +
+        lda wMapScrollCurrentPixelDistance,b
+        clc
+        adc wMapScrollSpeed,b
+        sta wMapScrollCurrentPixelDistance,b
+        cmp wMapPixelScrollDistance,b
+        bcc +
+
+          ; Scrolled up to the wanted pixel distance, clear scrolling flags.
+          sec
+          sbc wMapPixelScrollDistance,b
+          sta wR0
+
+          lda wMapScrollSpeed,b
+          sec
+          sbc wR0
+          sta wMapScrollSpeed,b
+
+          stz wMapCurrentlyScrollingFlag,b
+          stz wUnknown00073A,b
+          stz wMapEnableXScrollFlag,b
+          stz wMapEnableYScrollFlag,b
+
+        +
+        lda wMapScrollDirectionIdentifier,b
+        jsl rlUnknown819305
+        clc
+
+        _End
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted819166Section
+
+
+    .section Unsorted828B2BSection
+
+      .as
+      .xl
+
+      procUnknown828B2B .structProcInfo "ME", rlProcUnknown828B2BInit, rlProcUnknown828B2BCycle, aProcUnknown828B2BCode ; 82/8B2B
+
+        .word 0
+
+    .endsection Unsorted828B2BSection
+
+

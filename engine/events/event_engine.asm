@@ -6791,3 +6791,336 @@
         ; 86/C739
 
     .endsection ApplyMapTileChangeSection
+
+
+    .section Unsorted81B2AASection
+
+      .al
+      .xl
+
+      rlSaveChapterTurncount ; 81/B2AA
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        phx
+        lda wCurrentChapter,b
+        cmp #5
+        beq +
+
+        cmp #11
+        bne ++
+
+        +
+        lda #FS_Player
+        jsl rlCountUnitsInFactionSlotAlive
+        clc
+        adc wTotalAlivePlayerUnitCount
+        sta wTotalAlivePlayerUnitCount
+
+        +
+        lda wCurrentChapter,b
+        asl a
+        tax
+        lda wCurrentTurn,b
+        sta aChapterTurncounts,b,x
+        lda #$FFFF
+        sta wCurrentTurn,b
+        lda #$0400
+        tsb wUnknown000D79,b
+        jsl rlClearUnitWindowAndTerrainWindowProcs
+
+        lda wCurrentChapter,b
+        cmp #11
+        beq +
+
+          lda $0772,b
+          sta wUnknownDeploymentOffset000D7F,b
+          lda #6
+          sta $0D81,b
+          bra +
+
+        +
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 81/B301
+
+    .endsection Unsorted81B2AASection
+
+
+    .section Unsorted81B43FSection
+
+      .al
+      .xl
+
+      rlUnknown81B43F ; 81/B43F
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        dec a
+        cmp #6
+        bcs +
+
+          tax
+          sep #$20
+          lda wAreaRestrictionBitfield,b
+          ora $81B45B,x
+          sta wAreaRestrictionBitfield,b
+          rep #$20
+
+        +
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 81/B45B
+
+    .endsection Unsorted81B43FSection
+
+
+    .section Unsorted81B461Section
+
+      .al
+      .xl
+
+      rlUnknown81B461 ; 81/B461
+
+        .al
+        .autsiz
+        .databank ?
+
+
+        phb
+        php
+        phk
+        plb
+        dec a
+        cmp #6
+        bcs +
+
+          tax
+          sep #$20
+          lda wAreaRestrictionBitfield,b
+          and $81B47D,x
+          sta wAreaRestrictionBitfield,b
+          rep #$20
+
+        +
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 81/B47D
+
+    .endsection Unsorted81B461Section
+
+
+    .section Unsorted84B57ASection
+
+      .al
+      .xl
+
+      rlUnknown84B57A ; 84/B57A
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; entering castle menu
+
+        phb
+        php
+        phk
+        plb
+        phx
+        ldx wRoutineVariable1,b
+        phx
+
+        lda #$0010
+        trb wUnknown000D79,b
+
+        ldx wSelectedUnitDataRAMPointer,b
+        lda #$2100
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitCharacterID
+        sta wRoutineVariable1,b
+        jsl rlClearSelectedUnitRAMAreaData
+        stx wSelectedUnitDataRAMPointer,b
+
+        lda #UnitStateMiracleActive
+        jsl rlUnsetSelectedUnitStates
+        jsl rlGetSelectedUnitDeploymentOffset
+        tax
+        lda aDeploymentTable._StateBuffer,x
+        bit #DeploymentStateDefeated
+        bne _B5FB
+
+          lda aActionStructUnit1.ObtainedArenaMoney
+          beq _B5EE
+
+            jsl rlGetSelectedUnitMaxHP
+            jsl rlSetSelectedUnitCurrentHP
+
+            lda #$001C
+            sta bEventActionIdentifier,b
+            jsl rlGetSelectedUnitCharacterID
+            sta wEventEngineArgument1,b
+            jsl rlGetEventLocationEntryID
+            sta wEventEngineArgument2,b
+            lda wRoutineVariable1,b
+            sta wEventEngineArgument3,b
+            jsl rlGetAndRunChapterMapEventConditions
+
+            lda aActionStructUnit1.ObtainedArenaMoney
+
+            plx
+            stx wRoutineVariable1,b
+            plx
+            plp
+            plb
+            sec
+
+            -
+            rtl
+
+          _B5EE
+          lda #0
+
+          plx
+          stx wRoutineVariable1,b
+          plx
+          plp
+          plb
+          sec
+          bra -
+
+        _B5FB
+        and #~DeploymentStateDefeated
+        sta aDeploymentTable._StateBuffer,x
+        sta aDeploymentTable._State,x
+        lda #0
+
+        plx
+        stx wRoutineVariable1,b
+        plx
+        plp
+        plb
+        clc
+        bra -
+
+        .databank 0
+
+      rlUnknown84B613 ; 84/B613
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        phy
+        ldy lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+
+        lda $0000,b,y
+        jsl rlGetUnitRAMDataPointerByID
+        bcs _End
+
+          jsl rlGetSelectedUnitDeploymentOffset
+          sta wR0
+
+          lda $0002,b,y
+          and #$00FF
+          sta wSelectedInventorySlot,b
+
+          lda $0004,b,y
+          jsl rlGetUnitRAMDataPointerByID
+          bcs _End
+
+            jsl rlGetSelectedUnitDeploymentOffset
+            sta wR1
+
+            lda lR18
+            clc
+            adc #$000D
+            sta lR18
+
+            lda lR18
+            pha
+            lda lR18+1
+            pha
+
+            jsl rlActionStructGetBattleStats
+
+            sep #$20
+            lda $000D,b,y
+            and #$01
+            ora wBattleStatus
+            sta wBattleStatus
+            rep #$20
+
+            lda $0007,b,y
+            sta lR18
+            lda $0007+1,b,y
+            sta lR18+1
+            lda #0
+            jsl rlSetBattleDeathQuotes
+
+            lda $000A,b,y
+            sta lR18
+            lda $000A+1,b,y
+            sta lR18+1
+            lda #1
+            jsl rlSetBattleDeathQuotes
+
+            pla
+            sta lR18+1
+            pla
+            sta lR18
+
+            sep #$20
+            lda #0
+            sta wBattleType
+            rep #$20
+
+            jsl rlUnknown84DF87
+
+        _End
+        ply
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 84/B6A6
+
+    .endsection Unsorted84B57ASection
+
+

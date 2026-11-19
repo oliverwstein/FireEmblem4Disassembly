@@ -1,4 +1,5 @@
 ; Portraits shown on the world map.
+; Also the procs and helpers that only the portrait routines use.
 
     .section DecompressWorldMapPortraitToSlotSection
 
@@ -798,3 +799,285 @@
       ; 8B/911F
 
     .endsection ProcFadeInWorldMapPortraitSlotCodeSection
+
+
+    .section ProcScript88E200Section
+
+      .al
+      .xl
+
+      procUnknown88E200 ; 88/E200
+
+        .structProcInfo "MN", rlProcUnknown88E200Init, rlProcUnknown88E200Cycle, aProcUnknown88E200Code
+
+    .endsection ProcScript88E200Section
+
+
+    .section Unsorted88E208Section
+
+      .al
+      .xl
+
+      rlProcUnknown88E200Init ; 88/E208
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlSavePaletteBufferColorsToRAM
+
+          .byte $88, $9B, $7E, $10, $00, $C0, $00
+
+        ldx #$001E
+        lda #$2DAD
+
+        _E219
+        sta $01C0,b,x
+        dec x
+        dec x
+        bpl _E219
+        sep #$20
+        lda #$51
+        sta bBufferCGADSUB
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$15
+        sta bBufferTM
+        lda #$02
+        sta bBufferTS
+        rep #$20
+        lda #$0000
+        sta $1B45,b
+        rtl
+
+        .databank 0
+
+        ; 88/E23B
+
+      rlProcUnknown88E200Cycle ; 88/E23B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0001
+        bne _E255
+        lda #$0008
+        sta aPaletteFading,b
+        clc
+        jsl rlFadePaletteToColors
+
+          .byte $88, $9B, $10, $00, $C0, $00
+
+        bcs _E256
+
+        _E255
+        rtl
+
+
+        _E256
+        jsl rlProcEngineFreeProc
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        rep #$20
+        bra _E255
+
+        .databank 0
+
+        ; 88/E268
+
+    .endsection Unsorted88E208Section
+
+
+    .section ProcScript88E268Section
+
+      .al
+      .xl
+
+      aProcUnknown88E200Code ; 88/E268
+
+        PROC_HALT
+
+
+        ; 88/E26A
+
+      procUnknown88E26A ; 88/E26A
+
+        .structProcInfo "FF", rlProcUnknown88E26AInit, rlProcUnknown88E26ACycle, aProcUnknown88E26ACode
+
+    .endsection ProcScript88E268Section
+
+
+    .section Unsorted88E272Section
+
+      .al
+      .xl
+
+      rlProcUnknown88E26AInit ; 88/E272
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $1B45,b
+        sep #$20
+        lda #$51
+        sta bBufferCGADSUB
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$15
+        sta bBufferTM
+        lda #$02
+        sta bBufferTS
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 88/E28D
+
+      rlProcUnknown88E26ACycle ; 88/E28D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0001
+        bne _E2A9
+        lda #$2DAD
+        sta $1B43,b
+        lda #$0008
+        sta aPaletteFading,b
+        clc
+        jsl rlFadePaletteToBlack
+
+          .byte $D6, $E2
+
+        bcs _E2AA
+
+        _E2A9
+        rtl
+
+
+        _E2AA
+        jsl rlProcEngineFreeProc
+        ldx #$07FE
+        lda #$0000
+
+        _E2B4
+        sta $7E8B88,x
+        dec x
+        dec x
+        bpl _E2B4
+        lda #(`aDecompressionBuffer)<<8
+        sta lR18+1
+        lda #<>aDecompressionBuffer
+        sta lR18
+        lda #$3800
+        sta wR1
+        lda #$0800
+        sta wR0
+        jsl rlDMAByPointer
+        bra _E2A9
+
+        .databank 0
+
+        ; 88/E2D6
+
+    .endsection Unsorted88E272Section
+
+
+    .section ProcScript88E2DCSection
+
+      .al
+      .xl
+
+      aProcUnknown88E26ACode ; 88/E2DC
+
+        PROC_HALT
+
+
+        ; 88/E2DE
+
+    .endsection ProcScript88E2DCSection
+
+
+    .section Unsorted88E33DSection
+
+      .al
+      .xl
+
+      rlUnknown88E33D ; 88/E33D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        phx
+        jsl rlDecompressWorldMapPortraitToSlot
+        lda #$0000
+        sta lR20+1
+        lda #$01C0
+        sta lR20
+        ldy #$001E
+
+        _E350
+        lda [lR19],y
+        sta [lR20],y
+        dec y
+        dec y
+        bpl _E350
+        lda #$3800
+        sta wR1
+        lda #$0800
+        sta wR0
+        jsl rlDMAByPointer
+        lda #(`procUnknown88E200)<<8
+        sta lR44+1
+        lda #<>procUnknown88E200
+        sta lR44
+        jsl rlProcEngineCreateProc
+        plx
+        plp
+        rtl
+
+        .databank 0
+
+        ; 88/E377
+
+      rlUnknown88E377 ; 88/E377
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        phx
+        lda #(`procUnknown88E26A)<<8
+        sta lR44+1
+        lda #<>procUnknown88E26A
+        sta lR44
+        jsl rlProcEngineCreateProc
+        plx
+        plp
+        rtl
+
+        .databank 0
+
+        ; 88/E38A
+
+    .endsection Unsorted88E33DSection
+

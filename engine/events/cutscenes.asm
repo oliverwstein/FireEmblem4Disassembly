@@ -491,3 +491,83 @@
         .databank 0
 
     .endsection ProcUnknown9EF837InitSection
+
+
+    .section Unsorted9EF79DSection
+
+      .al
+      .xl
+
+      rlUnknown9EF79D ; 9E/F79D
+
+        .al
+        .autsiz
+        .databank ?
+
+        phx
+        lda aProcSystem.aHeaderBitfield,b,x
+        and #~$0002
+        and #~$0004
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        lda aProcSystem.aBody5,x
+        asl a
+        tax
+        lda aBelhallaAttackingMagePositions,x
+        cmp #$FFFF
+        beq _End
+
+          pha
+          and #$00FF
+          sta wR0
+          pla
+          xba
+          and #$00FF
+          sta wR1
+          jsl rlGetUnitByCoordinates
+          bcs +
+
+            lda #1,s
+            tax
+            lda aProcSystem.aBody5,x
+            tax
+            lda aBelhallaAttackingMageDirections,x
+            and #$00FF
+            sta aProcSystem.wInput0
+
+            lda #(`procUnknown9EF837)<<8
+            sta lR44+1
+            lda #<>procUnknown9EF837
+            sta lR44
+            jsl rlProcEngineCreateProc
+
+            tay
+            lda #1,s
+            tax
+            tya
+            sta aProcSystem.aBody4,b,x
+
+          +
+          lda #1,s
+          tax
+          lda aProcSystem.aBody5,x
+          inc a
+          sta aProcSystem.aBody5,x
+          bra +
+
+        _End
+        lda #1,s
+        tax
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0002
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        +
+        plx
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted9EF79DSection
+
+

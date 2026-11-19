@@ -688,3 +688,153 @@
         .databank 0
 
     .endsection BattleEffectsSection
+
+
+    .section Unsorted87AF46Section
+
+      .al
+      .xl
+
+      rlUnknown87AF46 ; 87/AF46
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        jsl rlGetSelectedUnitMovementCostPointer
+        sta $7EC488
+        jsl rlFillEventMovementMoveCostMap
+        lda #$007E
+        ldx #$B448
+        jsl rlClearMapBufferAddBorders
+        ldx #$008E
+
+        _AF65
+        lda aDeploymentTable,x
+        bit #$0080
+        beq _AF85
+        lda $7E441B,x
+        sta $7EC49A
+        lda $7E44AB,x
+        sta $7EC49C
+        lda #$00FF
+        jsl rlSetEventMovementTargetTile
+
+        _AF85
+        dec x
+        dec x
+        bpl _AF65
+        jsl rlUnknown87AFB6
+        lda $7EC490
+        sta $7EC496
+        lda $7EC492
+        sta $7EC498
+        lda #$0000
+        sta $7EC49A
+        jsl rlEventMovementBuildTargetDistanceMap
+        bcc _AFB0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+        rtl
+
+
+        _AFB0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        rtl
+
+        .databank 0
+
+        ; 87/AFB6
+
+      rlUnknown87AFB6 ; 87/AFB6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        ldy #$0FFF
+
+        _AFBF
+        tya
+        asl a
+        tax
+        lda aMapData,x
+        xba
+        and #$00FC
+        beq _AFD9
+        sta $7EC496
+        and wAreaRestrictionBitfield,b
+        cmp $7EC496
+        bne _B007
+
+        _AFD9
+        lda aMapData,x
+        and #$03FF
+        tax
+        lda aTerrainTileset,x
+        and #$00FF
+        cmp #$000C
+        beq _B007
+        cmp #$0007
+        bne _B013
+        tya
+        tax
+        lda $7E9388,x
+        and #$0080
+        beq _B013
+        sep #$20
+        lda #$0A
+        sta $7E9388,x
+        rep #$20
+
+        _B007
+        tya
+        tax
+        sep #$20
+        lda #$FF
+        sta $7EB448,x
+        rep #$20
+
+        _B013
+        dec y
+        bpl _AFBF
+        rep #$20
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/B01D
+
+    .endsection Unsorted87AF46Section
+
+

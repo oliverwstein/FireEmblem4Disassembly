@@ -1,4 +1,6 @@
 ; The castle name pop-up shown on the map.
+; Also a second pop-up proc (procUnknown85BB52) and the helpers only these
+; pop-ups use.
 
     .section CastleNamePopUpSection
 
@@ -269,3 +271,249 @@
         .structProcInfo "TT", rlProcUnknown828865Init, rlProcUnknown828865Cycle, aProcUnknown828865Code
 
     .endsection ProcScript828865Section
+
+
+    .section ProcScript85BB52Section
+
+      .al
+      .xl
+
+      procUnknown85BB52 ; 85/BB52
+
+        .structProcInfo "PW", rlProcUnknown85BB52Init, rlProcUnknown85BB52Cycle, aProcDialogueBoxCode
+
+    .endsection ProcScript85BB52Section
+
+
+    .section Unsorted85BB5ESection
+
+      .al
+      .xl
+
+      rlProcUnknown85BB52Init ; 85/BB5E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlStallProcUntilMapMenuDataLoaded
+        jsl rlUnknown85C0CE
+        lda #$0000
+        sta wBufferBG3VOFS
+        sta wBufferBG3HOFS
+        lda $0ED3,b
+        jsl rlSetMapMenuPosition
+        lda $0ED5,b
+        jsl rlUnknown85884A
+        lda $0ED1,b
+        jsl rlUnknown85C4E0
+        rtl
+
+        .databank 0
+
+        ; 85/BB83
+
+      rlProcUnknown85BB52Cycle ; 85/BB83
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0F37,b,x
+        bit #$0001
+        bne _BB8C
+
+        _BB8B
+        rtl
+
+
+        _BB8C
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown8586FA
+        jsl rlUnknown85C0C7
+        lda #$FFFF
+        jsl rlUnknown85C4E0
+        jsl rlUnknown85C0D5
+        bra _BB8B
+
+        .databank 0
+
+        ; 85/BBA5
+
+    .endsection Unsorted85BB5ESection
+
+
+    .section Unsorted85BBA5Section
+
+      .al
+      .xl
+
+      rlUnknown85BBA5 ; 85/BBA5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        phy
+        phx
+        and #$FF00
+        asl a
+        asl a
+        asl a
+        sta wR0
+        txa
+        and #$FF00
+        asl a
+        asl a
+        asl a
+        xba
+        ora wR0
+        sta wR43
+        lda #$000F
+        sta wR42
+        jsl rlUnknown859FCD
+        plx
+        ply
+        pla
+        sty $0ED1,b
+        sta $0ED3,b
+        stx $0ED5,b
+        lda #(`procUnknown85BB52)<<8
+        sta lR44+1
+        lda #<>procUnknown85BB52
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/BBE0
+
+      rlUnknown85BBE0 ; 85/BBE0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #(`procUnknown85BB52)<<8
+        sta lR44+1
+        lda #<>procUnknown85BB52
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _BBFD
+        lda $0F37,b,x
+        ora #$0001
+        sta $0F37,b,x
+        plx
+        sec
+        rtl
+
+
+        _BBFD
+        plx
+        clc
+        rtl
+
+        .databank 0
+
+        ; 85/BC00
+
+    .endsection Unsorted85BBA5Section
+
+
+    .section Unsorted85C0C7Section
+
+      .al
+      .xl
+
+      rlUnknown85C0C7 ; 85/C0C7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$C0BA
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/C0CE
+
+    .endsection Unsorted85C0C7Section
+
+
+    .section Unsorted85C4E0Section
+
+      .al
+      .xl
+
+      rlUnknown85C4E0 ; 85/C4E0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        phx
+        phy
+        ora #$0000
+        bmi _C505
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$000E
+        tay
+        ldx #$000E
+
+        _C4F7
+        lda $C51B,b,y
+        sta $0110,b,x
+        dec y
+        dec y
+        dec x
+        dec x
+        bpl _C4F7
+        bra _C516
+
+
+        _C505
+        ldx #$0010
+
+        _C508
+        lda $DE0000,x
+        sta aBGPaletteBuffer,b,x
+        inc x
+        inc x
+        cpx #$0020
+        bmi _C508
+
+        _C516
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 85/C51B
+
+    .endsection Unsorted85C4E0Section
+
+

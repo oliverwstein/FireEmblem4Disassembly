@@ -1,69 +1,5 @@
 ; Code from bank $91 not yet assigned to a game system.
 
-    .section Unsorted91A7BCSection
-
-      .al
-      .xl
-
-      rlUnknown91A7BC ; 91/A7BC
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; A = fill value
-
-        php
-        ldx #$07FE
-
-          -
-          sta aBG3TilemapBuffer,x
-          dec x
-          dec x
-          bpl -
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $B000
-
-        nop
-        nop
-        nop
-        nop
-        jsl rlUnknown8780EC
-        plp
-        rtl
-
-        .databank 0
-
-    .endsection Unsorted91A7BCSection
-
-
-    .section Unsorted91A7DFSection
-
-      .al
-      .xl
-
-      rlUnknown91A7DF ; 91/A7DF
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        rep #$30
-        lda #$0084
-        tsb bUnknown000521,b
-        plp
-        rtl
-
-        .databank 0
-
-        ; 91/A7EA
-
-    .endsection Unsorted91A7DFSection
-
 
     .section Unsorted91A80DSection
 
@@ -194,51 +130,6 @@
         ; 91/A984
 
     .endsection Unsorted91A928Section
-
-
-    .section Unsorted91A9BBSection
-
-      .al
-      .xl
-
-      rlUnknown91A9BB ; 91/A9BB
-
-        .al
-        .autsiz
-        .databank ?
-
-        jsl rlLoadMapMenuData
-
-        lda #$2000
-        sta aCurrentTilemapInfo.wBaseTile,b
-        lda #$00FF
-        sta wUnknown053E,b
-        lda #$20FF
-        sta wUnknown053C,b
-        jsl rlUnknown8788E5
-
-        lda #(`aUnknown91A9E4)<<8
-        sta lR18+1
-        lda #<>aUnknown91A9E4
-        sta lR18
-        jsl rlUnknown8788EE
-        rtl
-
-        .databank 0
-
-      aUnknown91A9E4 ; 91/A9E4
-
-        .word $6106
-        .word $2107
-        .word $2106
-        .word $6108
-        .word $2108
-        .word $E106
-        .word $A107
-
-; 06 A1 85 06 A5 27 48 A5 28 48 A9 00 00 85 28 A9 08 00 85 27 A5 06 20 15 AA 20 6F AA 68 85 28 68 85 27 6B 08 DA 5A A0 00 00 85 1A A9 10 27
-
-    .endsection Unsorted91A9BBSection
 
 
     .section Unsorted91D69BSection

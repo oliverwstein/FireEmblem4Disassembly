@@ -235,3 +235,18 @@
         .databank 0
 
     .endsection FinalChapterJuliaRecruitmentASMCSection
+
+
+    .section Unsorted85BC0FSection
+
+      .al
+      .xl
+
+      procUnknown85BC0F .structProcInfo "PW", rlProcUnknown85BC0FInit, rlProcUnknown85B9D4Cycle1, $858398 ; 85/BC0F
+
+        .long $85B8EE
+        .byte 1
+
+    .endsection Unsorted85BC0FSection
+
+

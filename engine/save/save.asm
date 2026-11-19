@@ -1,4 +1,5 @@
 ; Saving to and loading from SRAM save slots.
+; Also unnamed helpers that only the loading routines use.
 
     .section CompactStaticDynamicUnitBuffer1UnitStatesSection
 
@@ -3131,3 +3132,438 @@
         ; 91/F748
 
     .endsection SaveSlotSection
+
+
+    .section Unsorted87F501Section
+
+      .al
+      .xl
+
+      rlUnknown87F501 ; 87/F501
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phy
+        jsl rlSwapToMainDataBank
+        jsl rlGetCharacterDataROMPointer
+        tay
+        lda $0000,b,y
+        and #$00FF
+        ply
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/F515
+
+    .endsection Unsorted87F501Section
+
+
+    .section Unsorted87F515Section
+
+      .al
+      .xl
+
+      rlUnknown87F515 ; 87/F515
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        phx
+        phy
+        tay
+
+        lda #(`aUnitRAMArea)<<8
+        sta lR18+1
+        lda #<>aUnitRAMArea
+        sta lR18
+        jsl rlBufferAndLoadNewRAMAreaPointer
+
+        lda #size(structCharacterDataRAM)
+        jsl rlAllocateRAMArea
+
+        lda lR25
+        sta wSelectedUnitDataRAMPointer,b
+
+        lda #(`aUnitRAMPointers)<<8
+        sta lStructPointer2+1,b
+        lda #<>aUnitRAMPointers
+        sta lStructPointer2,b
+
+        lda lR25
+        sta lStructPointer1,b
+
+        jsl rlAppendNewStructEntry
+
+        tya
+        jsr rsUnknown87F55A
+        jsr rsUnknown87FABC
+        jsr rsUnknown87FB94
+        jsl rlLoadBufferedRAMAreaPointer
+
+        ply
+        plx
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/F559
+
+    .endsection Unsorted87F515Section
+
+
+    .section Unsorted87F55ASection
+
+      .al
+      .xl
+
+      rsUnknown87F55A ; 87/F55A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        jsl rlSwapToMainDataBank
+        jsl rlGetCharacterDataROMPointer
+        tay
+        lda $0000,b,y
+        and #$00FF
+        sta $1B39,b
+        asl a
+        tax
+        jsr ($87F574,x)
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 87/F574
+
+    .endsection Unsorted87F55ASection
+
+
+    .section Unsorted87F9F6Section
+
+      .al
+      .xl
+
+      rlUnknown87F9F6 ; 87/F9F6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aUnit1DataBuffer
+        sta wR0
+        and #$0007
+        sta wR1
+        lda wR0
+        asl a
+        asl a
+        asl a
+        and #$03C0
+        ora wR1
+        sta wR1
+        lda wR0
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        and #$F000
+        ora wR1
+        sta aUnit1DataBuffer
+        rtl
+
+        .databank 0
+
+        ; 87/FA1E
+
+    .endsection Unsorted87F9F6Section
+
+
+    .section Unsorted87FA57Section
+
+      .al
+      .xl
+
+      rlUnknown87FA57 ; 87/FA57
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aUnit1DataBuffer
+        sta wR0
+        and #$0007
+        sta wR1
+        lda wR0
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        and #$0300
+        ora wR1
+        sta wR1
+        lda wR0
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        and #$F000
+        ora wR1
+        sta aUnit1DataBuffer
+        rtl
+
+        .databank 0
+
+        ; 87/FA83
+
+    .endsection Unsorted87FA57Section
+
+
+    .section Unsorted87FABCSection
+
+      .al
+      .xl
+
+      rsUnknown87FABC ; 87/FABC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+        phx
+        phy
+        lda $1B1F,b
+        cmp #$001F
+        bne _FADB
+        lda $1B21,b
+        and $1B23,b
+        cmp #$003F
+        beq _FB52
+
+        _FADB
+        lda $1B23,b
+        xba
+        ora $1B21,b
+        sta wRoutineVariable1,b
+        jsl rlDeployUnitCheckIfAsleep
+        tax
+        jsl rlSetSelectedUnitDeploymentOffset
+        lda aDeploymentTable,x
+        and #$000B
+        sta wR0
+        lda $1B1F,b
+        xba
+        ora wR0
+        sta wR0
+        jsl rlGetSelectedUnitStates
+        sta wR1
+        and #$2000
+        beq _FB0E
+        lda #$0004
+        tsb wR0
+
+        _FB0E
+        lda wR1
+        and #$4000
+        beq _FB1A
+        lda #$0008
+        tsb wR0
+
+        _FB1A
+        jsl rlGetSelectedUnitStatus
+        cmp #$0005
+        bne _FB28
+        lda #$2000
+        tsb wR0
+
+        _FB28
+        lda wR1
+        and #$0200
+        beq _FB36
+        lda #$0020
+        tsb wR0
+        beq _FB42
+
+        _FB36
+        lda wR1
+        and #$8000
+        beq _FB42
+        lda #$0080
+        bra _FB45
+
+
+        _FB42
+        lda #$0040
+
+        _FB45
+        tsb wR0
+        lda wR0
+        sta aDeploymentTable,x
+        sta @l $7E489B,x
+        bra _FB59
+
+
+        _FB52
+        lda #$FFFF
+        jsl rlSetSelectedUnitDeploymentOffset
+
+        _FB59
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 87/FB5E
+
+    .endsection Unsorted87FABCSection
+
+
+    .section Unsorted87FB5ESection
+
+      .al
+      .xl
+
+      rlUnknown87FB5E ; 87/FB5E
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+
+        phx
+        phy
+        ldx #0
+        
+          _Loop
+          lda aFactionArea,x
+          tay
+          clc
+          adc #size(structFactionHeader)
+          sta aSave.aFactionEntryOffsets[0],b,x
+          sep #$20
+
+          lda aFactionArea + structFactionHeader.LocationID,y
+          cmp #$0F
+          bne +
+
+            lda #$FF
+            sta aFactionArea + structFactionHeader.LocationID,y
+
+          +
+          rep #$20
+
+          inc x
+          inc x
+          cpx #7 * size(word)
+          bne _Loop
+
+        ply
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/FB94
+
+    .endsection Unsorted87FB5ESection
+
+
+    .section Unsorted87FB94Section
+
+      .al
+      .xl
+
+      rsUnknown87FB94 ; 87/FB94
+
+        ; TRACE: odd-opcode
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+        phx
+        phy
+        jsl rlGetSelectedUnitFactionSlot
+        cmp #$0007
+        beq _FBC0
+        asl a
+        tax
+        lda $1B2B,b,x
+        cmp $2182,b,x
+        bne _FBB4
+        .byte $00 ; brk
+
+        _FBB4
+        tay
+        inc a
+        inc a
+        sta $1B2B,b,x
+        lda wSelectedUnitDataRAMPointer,b
+        sta aFactionArea,y
+
+        _FBC0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 87/FBC5
+
+    .endsection Unsorted87FB94Section
+

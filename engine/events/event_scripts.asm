@@ -1,5 +1,7 @@
 ; The event script interpreter (procs that run event scripts, the command table and
 ; command dispatch) and the event script commands themselves.
+; It also holds the unnamed helpers that only event commands, and procs those
+; commands create, use.
 
     .section EventScriptEngineSection
 
@@ -4409,3 +4411,4446 @@
         ; 91/CE2B
 
     .endsection EventCommandSection
+
+
+    .section Unsorted809654Section
+
+      .al
+      .xs
+
+      rlUnknown809654 ; 80/9654
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        phb
+        phk
+        plb
+        .databank $80
+        rep #$30
+        pha
+        phx
+        phy
+        lda $04BA,b
+        bne _9667
+        sta $04C6,b
+        bra _9671
+
+
+        _9667
+        ldx #$0000
+        jsr rsUnknown809677
+        jsl rlUnknown809903
+
+        _9671
+        ply
+        plx
+        pla
+        plb
+        .databank ?
+        plp
+        rtl
+
+        .databank 0
+
+        ; 80/9677
+
+      rsUnknown809677 ; 80/9677
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy lR38
+        phy
+        ldy lR38+1
+        phy
+        ldy $04B8,b
+        sty lR38+1
+        stx $04EE,b
+        cmp $04C6,b,x
+        beq _96A3
+        sta $04C6,b,x
+        and #$00FF
+        dec a
+        asl a
+        tay
+        lda #$0001
+        sta $04C2,b,x
+        lda $F77C04
+        sta lR38
+        lda [lR38],y
+        bra _96A6
+
+
+        _96A3
+        lda $04BE,b,x
+
+        _96A6
+        tay
+        lda $04BA,b,x
+        and #$8000
+        xba
+        sep #$20
+        sta $04F5,b
+        rep #$20
+        dec $04C2,b,x
+        bne _96E9
+        stz lR38
+
+        _96BC
+        lda [lR38],y
+        beq _96F0
+        inc y
+        inc y
+        sta $04F8,b
+        and #$FC00
+        beq _96D7
+        xba
+        lsr a
+        lsr a
+        dec a
+        asl a
+        tax
+        lda [lR38],y
+        inc y
+        inc y
+        jsr ($809703,x)
+
+        _96D7
+        lda $04F8,b
+        and #$03FF
+        beq _96BC
+        ldx $04EE,b
+        sta $04C2,b,x
+        tya
+        sta $04BE,b,x
+
+        _96E9
+        pla
+        sta lR38+1
+        pla
+        sta lR38
+        rts
+
+
+        _96F0
+        ldx $04EE,b
+        pha
+        lda $04BA,b,x
+        sta $0510,b,x
+        pla
+        sta $04BA,b,x
+        sta $04C6,b,x
+        bra _96E9
+
+        .databank 0
+
+        ; 80/9703
+
+    .endsection Unsorted809654Section
+
+
+    .section Unsorted80AF9BSection
+
+      .al
+      .xl
+
+      rsUnknown80AF9B ; 80/AF9B
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+        lda #0
+        jsl rlFillBG2Page0TilemapBuffer
+        lda #$030F
+        jsl rlFillBG2Page1TilemapBuffer
+        lda #$00FF
+        jsl rlFillBG3Page0TilemapBuffer
+
+        ldx #$067E
+        lda #0
+
+          -
+          sta $7FDD4A,x
+          sta $7FE3CA,x
+          dec x
+          dec x
+          bpl -
+
+        lda #$0000 >> 1
+        sta wR1
+        sta wR2
+        lda #$8000 >> 1
+        sta wR3
+        sta wR4
+        lda #$C000 >> 1
+        sta wR5
+        lda #$A000 >> 1
+        sta wR6
+        lda #$A800 >> 1
+        sta wR7
+        lda #$B000 >> 1
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+
+        jsl rlClearSpriteExtBuffer
+        jsl rlHideSprites
+        jsl rlDMAPaletteAndOAMBuffer
+        jsl rlDMAByStruct
+          .structDMAToVRAM aBG2TilemapBuffer.Page1, $0800, $80, $A800
+
+        jsl rlDMAByStruct
+          .structDMAToVRAM aBG3TilemapBuffer.Page0, $0800, $80, $B000
+
+        jsl rlClearUnitWindowAndTerrainWindowProcs
+        jsl rlActiveSpriteEngineReset
+        jsl rlEnableActiveSpriteEngine
+        jsl rlResetHDMAEngine
+        jsl rlUnknown82E073
+        jsl rlUnknown82E400
+        jsl rlUnknown8780AA
+        jsl rlUnknown82F211
+        lda #$00FF
+        sta $053E,b
+        jsl rlUnknown8780DF
+        rts
+
+        .databank 0
+
+        ; 80/B041
+
+    .endsection Unsorted80AF9BSection
+
+
+    .section Unsorted80B041Section
+
+      .as
+      .xl
+
+      rsUnknown80B041 ; 80/B041
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0010
+        sta $0300,b
+        lda #$AE68
+        sta wVBlankPointer
+        lda #$B301
+        sta wMainLoopPointer
+        rts
+
+        .databank 0
+
+        ; 80/B052
+
+      rsUnknown80B052 ; 80/B052
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8100
+        sta lR44+1
+        lda #$B522
+        sta lR44
+        jsl rlUnknown82E0C6
+        jsl rlUnknown82E08D
+        rts
+
+        .databank 0
+
+        ; 80/B065
+
+      rsUnknown80B065 ; 80/B065
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown80B08C
+        lda #$8000
+        sta lR19+1
+        lda #$B084
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlUnknown80B0BC
+        jsl rlUnknown80B0EE
+        jsl rlUnknown80B0A3
+        rts
+
+        .databank 0
+
+        ; 80/B084
+
+    .endsection Unsorted80B041Section
+
+
+    .section Unsorted80B08CSection
+
+      .al
+      .xl
+
+      rlUnknown80B08C ; 80/B08C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8000
+        sta lR19+1
+        lda #$B09B
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        rtl
+
+        .databank 0
+
+        ; 80/B09B
+
+    .endsection Unsorted80B08CSection
+
+
+    .section Unsorted80B105Section
+
+      .al
+      .xl
+
+      rsUnknown80B105 ; 80/B105
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$17
+        sta bBufferTMW
+        lda #$08
+        sta bBufferWH0
+        lda #$F7
+        sta bBufferWH1
+        lda #$33
+        sta bBufferW12SEL
+        lda #$03
+        sta bBufferW34SEL
+        lda #$15
+        sta bBufferTM
+        rep #$20
+        rts
+
+        .databank 0
+
+        ; 80/B122
+
+    .endsection Unsorted80B105Section
+
+
+    .section Unsorted80B122Section
+
+      .al
+      .xl
+
+      rsUnknown80B122 ; 80/B122
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; a MainLoop routine
+
+        php
+        sei
+        sep #$20
+        lda #INIDISP_Setting(true, 0)
+        sta bBufferINIDISP
+        sta INIDISP,b
+        rep #$20
+
+        jsl rlDisableVBlank
+        jsr rsUnknown80AF9B
+        jsr rsUnknown80B16A
+        jsl rlUnknown899FDC
+        jsr rsUnknown80B065
+        jsr rsUnknown80B105
+        jsr rsUnknown80B052
+        jsr rsUnknown80B041
+
+        lda #$0012
+        sta $0302,b
+        lda $0D7B,b
+        sta $0304,b
+        jsr rsUnknown80B195
+
+        sep #$20
+        lda #INIDISP_Setting(false, 0)
+        sta bBufferINIDISP
+        sta INIDISP,b
+        rep #$20
+
+        jsl rlEnableVBlank
+        plp
+        cli
+        rts
+
+        .databank 0
+
+      rsUnknown80B16A ; 80/B16A
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda $0D77,b
+        asl a
+        tax
+        jmp (+,x)
+
+        +
+        .addr rsUnknown80B17A
+        .addr rsUnknown80B17F
+        .addr rsUnknown80B184
+        .addr rsUnknown80B184
+
+        .databank 0
+
+      rsUnknown80B17A ; 80/B17A
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown888082
+        rts
+
+        .databank 0
+
+      rsUnknown80B17F ; 80/B17F
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown88821A
+        rts
+
+        .databank 0
+
+      rsUnknown80B184 ; 80/B184
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown889268
+        jsl rlUpdateAllLocationEvents
+        jsl rlUnknown86C629
+        jsl rlUnknown888082
+        rts
+
+        .databank 0
+
+      rsUnknown80B195 ; 80/B195
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #$0020
+        trb wUnknown000D79,b
+
+        lda #(`aMapMenuRAMArea)<<8
+        sta lR18+1
+        lda #<>aMapMenuRAMArea
+        sta lR18
+        lda #1
+        sta wStructIndex,b
+        lda #size(aMapMenuRAMArea)
+        jsl rlBuildRAMAreaHeaderAndGuidingEntry
+
+        lda #11
+        sta $0304,b
+        jsl rlUnknown858728
+
+        lda $0D77,b
+        cmp #2
+        bcc _End
+
+          jsl rlUnknown81B088
+          bcc +
+
+            jsl rlGetVictoryThemeIfAllEnemiesDead
+            bcc +
+
+              sta $0DAB,b
+
+          +
+          lda wUnknown00171A,b
+          bne _End
+
+            jsl rlUnknown81AB26
+            jsl rlUnknown809654
+
+        _End
+        rts
+
+        .databank 0
+
+        ; 80/B1E1
+
+    .endsection Unsorted80B122Section
+
+
+    .section Unsorted80B63FSection
+
+      .al
+      .xl
+
+      rlUnknown80B63F ; 80/B63F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 80/B640
+
+    .endsection Unsorted80B63FSection
+
+
+    .section Unsorted80C32CSection
+
+      .al
+      .xl
+
+      rlUnknown80C32C ; 80/C32C
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$09
+        sta bBufferBGMODE
+        rep #$20
+
+        lda #0
+        sta wR1
+        sta wR2
+        lda #$8000 >> 1
+        sta wR3
+        sta wR4
+        lda #$C000 >> 1
+        sta wR5
+        lda #$A000 >> 1
+        sta wR6
+        lda #$A800 >> 1
+        sta wR7
+        lda #$B000 >> 1
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        plp
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted80C32CSection
+
+
+    .section Unsorted80C35DSection
+
+      .al
+      .xl
+
+      rlUnknown80C35D ; 80/C35D
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #3
+        sta BGMODE,b
+        sta bBufferBGMODE
+        lda #0
+        sta BG1SC,b
+        sta bBufferBG1SC
+        sta BG2SC,b
+        sta bBufferBG2SC
+        rep #$20
+
+        lda #$2000 >> 1
+        sta wR1
+        sta wR2
+        lda #$0000 >> 1
+        sta wR3
+        sta wR4
+        lda #$0000 >> 1
+        sta wR5
+        lda #$E000 >> 1
+        sta wR6
+        sta wR7
+        lda #$0000 >> 1
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        plp
+        rtl
+
+        .databank 0
+
+        ; 80/C39A
+
+    .endsection Unsorted80C35DSection
+
+
+    .section Unsorted828431Section
+
+      .al
+      .xl
+
+      procUnknown828431 ; 82/8431
+
+        .structProcInfo "UA", rlProcUnknown828431Init, rlProcUnknown828431Cycle, aProcUnknown828431Code
+
+      rlProcUnknown828431Init ; 82/8439
+
+        .al
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+      rlProcUnknown828431Cycle ; 82/843A
+
+        .al
+        .autsiz
+        .databank ?
+
+        stz wR7
+        ldx #6
+
+          -
+          lda aMovingMapSprites.wActiveSpriteOffset,b,x
+          cmp #$FFFF
+          beq +
+
+            tay
+            lda aActiveSpriteSystem.aUnknown0012E0,b,y
+            tsb wR7
+
+          +
+          dec x
+          dec x
+          bpl -
+
+        lda wR7
+        bit #$8000
+        bne +
+
+          jsl rlEventEngineFreeProc
+
+        +
+        rtl
+
+        .databank 0
+
+      aProcUnknown828431Code ; 82/845D
+
+        PROC_HALT
+
+    .endsection Unsorted828431Section
+
+
+    .section Unsorted828A30Section
+
+      .al
+      .xl
+
+      procUnknown828A30 ; 82/8A30
+
+        .structProcInfo "TT", rlProcUnknown828A30Init, rlProcUnknown828A30Cycle1, $828A86
+
+        .word 0
+
+      rlProcUnknown828A30Init ; 82/8A3A
+
+        .al
+        .autsiz
+        .databank ?
+
+        ldy wActiveEventOffset,b
+        lda lActiveEventPointer,b
+        sta @l lR22
+        lda lActiveEventPointer+1,b
+        sta @l lR22+1
+        lda [lR22],y
+        sta aProcSystem.aBody0,b,x
+        rtl
+
+        .databank 0
+
+      rlProcUnknown828A30Cycle1 ; 82/8A51
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda bBufferINIDISP
+        and #INIDISP_Brightness
+        cmp #INIDISP_Setting(false, 0)
+        bne _End
+
+          lda aProcSystem.aBody0,b,x
+          bit #$0080
+          bne +
+
+            lda #<>rlProcUnknown828A30Cycle2
+            sta aProcSystem.aHeaderOnCycle,b,x
+            bra _End
+
+          +
+          lda bBufferINIDISP
+          bit #INIDISP_ForcedBlank
+          bne _End
+
+            jsl rlEventEngineFreeProc
+
+        _End
+        rtl
+
+        .databank 0
+
+      rlProcUnknown828A30Cycle2 ; 82/8A77
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda bBufferINIDISP
+        and #INIDISP_Brightness
+        cmp #INIDISP_Setting(false, 15)
+        bne +
+
+          jsl rlEventEngineFreeProc
+
+        +
+        rtl
+
+        .databank 0
+
+      aProcUnknown828A30Code ; 82/8A86
+
+        PROC_HALT
+
+      procUnknown828A88 ; 82/8A88
+
+        .structProcInfo "LL", rlProcUnknown828A88Init, $82899F, $828A1A
+
+        .word 0
+
+      rlProcUnknown828A88Init ; 82/8A92
+
+        .al
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+      procUnknown828A93 ; 82/8A93
+
+        .structProcInfo "TT", rlProcUnknown828A93Init, rlProcUnknown828A93Cycle1, aProcUnknown828A93Code
+
+        .word 0
+
+      rlProcUnknown828A93Init ; 82/8A9D
+
+        .al
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+      rlProcUnknown828A93Cycle1 ; 82/8A9E
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda bUnknown000E7B,b
+        bit #$0001
+        bne +
+
+          lda #4
+          sta aProcSystem.aBody0,b,x
+          lda #<>rlProcUnknown828A93Cycle2
+          sta aProcSystem.aHeaderOnCycle,b,x
+
+        +
+        rtl
+
+        .databank 0
+
+      rlProcUnknown828A93Cycle2 ; 82/8AB3
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody0,b,x
+        dec a
+        sta aProcSystem.aBody0,b,x
+        bne +
+
+          jsl rlEventEngineFreeProc
+
+        +
+        rtl
+
+        .databank 0
+
+      aProcUnknown828A93Code ; 82/8AC1
+
+        PROC_HALT
+
+      procUnknown828AC3 ; 82/8AC3
+
+        .structProcInfo "ME", rlProcUnknown828AC3Init, rlProcUnknown828AC3Cycle, aProcUnknown828AC3Code
+
+        .word 0
+
+      rlProcUnknown828AC3Init ; 82/8ACD
+
+        .al
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+      rlUnknown828ACE ; 82/8ACE
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta aDialogue.wTextSound,b
+
+        lda aDialogue.wStatus,b
+        bit #DialogueStatusEnabled
+        beq +
+
+          lda #<>rlProcUnknown828AC3Cycle
+          sta aProcSystem.aHeaderOnCycle,b,x
+
+        +
+        rtl
+
+        .databank 0
+
+      rlProcUnknown828AC3Cycle ; 82/8AE3
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aDialogue.wStatus,b
+        bit #DialogueStatusEnabled
+        bne +
+
+          jsl rlEventEngineFreeProc
+
+        +
+        rtl
+
+        .databank 0
+
+      aProcUnknown828AC3Code ; 82/8AF0
+
+        PROC_HALT
+
+      procUnknown828AF2 ; 82/8AF2
+
+        .structProcInfo "ME", rlProcUnknown828AF2Init, rlProcUnknown828AF2Cycle, aProcUnknown828AF2Code
+
+        .word 0
+
+      rlUnknown828AFC ; 82/8AFC
+
+        .al
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+      rlUnknown828AFD ; 82/8AFD
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda $04BA,b
+        bne +
+
+          jsl rlEventEngineFreeProc
+
+        +
+        rtl
+
+        .databank 0
+
+      aProcCodeUnknown828B07 ; 82/8B07
+
+        PROC_HALT
+
+      procUnknown828AD9 ; 82/8AD9
+
+        .structProcInfo "ME", rlProcUnknown828AF2Init, rlProcUnknown828AF2Cycle, aProcUnknown828AF2Code
+
+        .word 0
+
+      rlProcUnknown828AF2Init ; 82/8B13
+
+        .al
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+      rlProcUnknown828AF2Cycle ; 82/8B14
+      
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`procUnknown9EC70B)<<8
+        sta lR44+1
+        lda #<>procUnknown9EC70B
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcs +
+
+          jsl rlEventEngineFreeProc
+
+        +
+        rtl
+
+        .databank 0
+
+      aProcUnknown828AF2Code ; 82/8B29
+
+        PROC_HALT
+
+      ; 82/8B2B
+
+    .endsection Unsorted828A30Section
+
+
+    .section ProcScript828B61Section
+
+      .al
+      .xl
+
+      procUnknown828B61 ; 82/8B61
+
+        .structProcInfo "ME", rlProcUnknown828B61Init, rlProcUnknown828B61Cycle, aProcUnknown828B61Code
+
+    .endsection ProcScript828B61Section
+
+
+    .section Unsorted828B6BSection
+
+      .al
+      .xl
+
+      rlProcUnknown828B61Init ; 82/8B6B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy wActiveEventOffset,b
+        lda lActiveEventPointer,b
+        sta @l lR22
+        lda lActiveEventPointer+1,b
+        sta @l lR22+1
+        lda [lR22],y
+        and #$00FF
+        sta $0ECF,b
+        inc y
+        lda [lR22],y
+        and #$00FF
+        sta $0ED1,b
+        jsl rlUnknown9EEC95
+        rtl
+
+        .databank 0
+
+        ; 82/8B92
+
+      rlProcUnknown828B61Cycle ; 82/8B92
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procUnknown9EECA4)<<8
+        sta lR44+1
+        lda #<>procUnknown9EECA4
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcs _8BA6
+        jsl rlEventEngineFreeProc
+
+        _8BA6
+        rtl
+
+        .databank 0
+
+        ; 82/8BA7
+
+    .endsection Unsorted828B6BSection
+
+
+    .section ProcScript828BA7Section
+
+      .al
+      .xl
+
+      aProcUnknown828B61Code ; 82/8BA7
+
+        PROC_HALT
+
+
+        ; 82/8BA9
+
+    .endsection ProcScript828BA7Section
+
+
+    .section Unsorted828BEASection
+
+      .as
+      .xl
+
+      procUnknown828BEA  ; 82/8BEA
+
+        .structProcInfo "CC", rlProcUnknown828BEAInit, rlProcUnknown828BEACycle, $828CA1
+        .word 0
+
+    .endsection Unsorted828BEASection
+
+
+    .section Unsorted828BF4Section
+
+      .al
+      .xl
+
+      rlProcUnknown828BEAInit ; 82/8BF4
+
+        .al
+        .autsiz
+        .databank ?
+
+        ldy wActiveEventOffset,b
+        sep #$20
+        lda [lR22],y
+        sta aProcSystem.aBody0,b,x
+        inc y
+        lda [lR22],y
+        sta aProcSystem.aBody0+1,b,x
+        inc y
+        lda [lR22],y
+        sta aProcSystem.aBody2,b,x
+        inc y
+        lda [lR22],y
+        sta aProcSystem.aBody1,b,x
+        inc y
+        lda [lR22],y
+        sta aProcSystem.aBody1+1,b,x
+        inc y
+        lda [lR22],y
+        sta aProcSystem.aBody2+1,b,x
+        inc y
+        lda [lR22],y
+        sta aProcSystem.aBody3,b,x
+        rep #$20
+        inc y
+        lda [lR22],y
+        sta aProcSystem.aBody6,b,x
+        inc y
+        inc y
+        lda [lR22],y
+        sta aProcSystem.aBody7,b,x
+
+        stz aProcSystem.aBody4,b,x
+        stz aProcSystem.aBody5,b,x
+        rtl
+
+        .databank 0
+
+      rlProcUnknown828BEACycle ; 82/8C38
+
+        .al
+        .autsiz
+        .databank ?
+
+        ldx aProcSystem.wOffset,b
+        jsl rlUnknown91A4AC
+
+        lda aProcSystem.aBody4,b,x
+        cmp aProcSystem.aBody3,b,x
+        bcs +
+
+          inc a
+          sta aProcSystem.aBody4,b,x
+          rtl
+
+        +
+        lda aProcSystem.aBody5,b,x
+        beq +
+
+          sep #$20
+          lda aProcSystem.aBody0,b,x
+          sta lR18
+          lda aProcSystem.aBody0+1,b,x
+          sta lR18+1
+          lda aProcSystem.aBody2,b,x
+          sta lR18+2
+          bra ++
+
+          +
+          sep #$20
+          lda aProcSystem.aBody1,b,x
+          sta lR18
+          lda aProcSystem.aBody1+1,b,x
+          sta lR18+1
+          lda aProcSystem.aBody2+1,b,x
+          sta lR18+2
+
+        +
+        rep #$20
+        ldy aProcSystem.aBody6,b,x
+        phy
+        tya
+        clc
+        adc aProcSystem.aBody7,b,x
+        sta wR0
+        plx
+
+          -
+          lda [lR18],y
+          sta aBGPaletteBuffer,x
+          inc x
+          inc x
+          inc y
+          inc y
+          cpy wR0
+          bcc -
+
+        ldx aProcSystem.wOffset,b
+        lda aProcSystem.aBody5,b,x
+        eor #1
+        sta aProcSystem.aBody5,b,x
+        stz aProcSystem.aBody4,b,x
+        rtl
+
+        .databank 0
+
+      aProcUnknown828BEACode ; 82/8CA1
+
+        PROC_HALT
+
+      procUnknown828CA3 ; 82/8CA3
+
+        .structProcInfo "BM", rlProcUnknown828CA3Init, rlProcUnknown828CA3Cycle, aProcUnknown828CA3Code
+        .word 0
+
+      rlProcUnknown828CA3Init ; 82/8CAD
+
+        .al
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$01
+        ora bBufferTM
+        sta bBufferTM
+        lda #$01
+        ora bBufferTMW
+        sta bBufferTMW
+        rep #$20
+
+        stz aProcSystem.aBody0,b,x
+
+        lda wMapScrollXPixels,b
+        sta wBufferBG1HOFS
+        lda wMapScrollYPixels,b
+        sta wBufferBG1VOFS
+        rtl
+
+        .databank 0
+
+      rlProcUnknown828CA3Cycle ; 82/8CCB
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody0,b,x
+        cmp #2
+        beq _8D01
+
+          cmp #1
+          beq +
+
+            lda bBufferINIDISP
+            bit #$0080
+            bne _8CF3
+
+              ora #$0080
+              sta bBufferINIDISP
+
+              lda #1
+              sta aProcSystem.aBody0,b,x
+              bra _8D05
+
+          +
+          lda bBufferINIDISP
+          eor #$0080
+          sta bBufferINIDISP
+
+          _8CF3
+          phx
+          jsl rlUnknown888082
+          plx
+          lda #2
+          sta aProcSystem.aBody0,b,x
+          bra _8D05
+        
+        _8D01
+        jsl rlUnknown888560
+
+        _8D05
+        ldx aProcSystem.wOffset,b
+        jsl rlUnknown91A4AC
+        bcc +
+
+          jsr rsUnknown828D12
+
+        +
+        rtl
+
+        .databank 0
+
+      rsUnknown828D12 ; 82/8D12
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda bBufferTM
+        eor #$0001
+        sta bBufferTM
+        ldx aProcSystem.wOffset,b
+        jsr rsProcCodeEnd
+
+      aProcUnknown828CA3Code ; 82/8D1F
+
+        PROC_HALT
+
+        ; 82/8D21
+
+    .endsection Unsorted828BF4Section
+
+
+    .section Unsorted828D52Section
+
+      .al
+      .xl
+
+      procUnknown828D52 ; 82/8D52
+
+        .structProcInfo "MS", rlProcUnknown828D52Init, rlProcUnknown828D52Cycle, aProcUnknown828D52Code
+        .word 0
+
+      rlProcUnknown828D52Init ; 82/8D5C
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        rep #$30
+        lda #0
+        sta aProcSystem.aBody2,b,x
+        ldy wActiveEventOffset,b
+        lda [lR22],y
+        sta aProcSystem.aBody0,b,x
+        inc y
+        inc y
+        lda [lR22],y
+        and #$00FF
+        sta aProcSystem.aBody1,b,x
+        jsr rsUnknown828E61
+        bcs +
+
+          lda #0
+          sta aProcSystem.aBody1,b,x
+
+        +
+        plp
+        rtl
+
+        .databank 0
+
+      rlProcUnknown828D52Cycle ; 82/8D84
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        phb
+        lda $0302,b
+        cmp #$0012
+        beq +
+
+          cmp #$000F
+          bne _End
+
+        +
+        ldx aProcSystem.wOffset,b
+        lda aProcSystem.aBody6,b,x
+        inc a
+        sta aProcSystem.aBody6,b,x
+        cmp aProcSystem.aBody3,b,x
+        beq _8DE8
+
+        sta wR12
+        lda #0
+        sta wR13
+        lda $175F,b
+        sta wR10
+        lda $1761,b
+        sta wR11
+        jsl rlUnsignedMultiply32By32
+
+        ldx aProcSystem.wOffset,b
+        lda wR15
+        sec
+        sbc aProcSystem.aBody5,b,x
+        sta wMapScrollSpeed,b
+        lda wR15
+        sta aProcSystem.aBody5,b,x
+
+        lda aProcSystem.aBody7,b,x
+        sta wR0
+
+        lda wR0
+        cmp #9
+        bmi +
+
+          -
+          bra -
+
+        +
+        asl a
+        tax
+        jsr (aUnknown828E1F,x)
+
+        lda wMapScrollXPixels,b
+        sta wBufferBG1HOFS
+        lda wMapScrollYPixels,b
+        sta wBufferBG1VOFS
+
+        _End
+        plb
+        plp
+        rtl
+
+        _8DE8
+        lda aProcSystem.aBody4,b,x
+        sec
+        sbc aProcSystem.aBody5,b,x
+        sta wMapScrollSpeed,b
+
+        lda aProcSystem.aBody7,b,x
+        sta wR0
+
+        lda wR0
+        cmp #9
+        bmi +
+
+          -
+          bra -
+
+        +
+        asl a
+        tax
+        jsr (aUnknown828E1F,x)
+        jsr rsUnknown828E61
+        bcs _End
+
+        jsl rlUnknown88BF97
+        bcc +
+
+          lda #$0080
+          sta wCursorXOffset,b
+          sta wCursorYOffset,b
+
+        +
+        jsl rlEventEngineFreeProc
+        bra _End
+
+        .databank 0
+
+      aUnknown828E1F ; 82/8E1F
+
+        .addr rsUnknown828E31
+        .addr rsUnknown828E36
+        .addr rsUnknown828E3B
+        .addr rsUnknown828E40
+        .addr rsUnknown828E45
+        .addr rsUnknown828E4A
+        .addr rsUnknown828E4F
+        .addr rsUnknown828E54
+        .addr rsUnknown828E59
+
+      rsUnknown828E31 ; 82/8E31
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8885D3
+        rts
+ 
+        .databank 0
+
+      rsUnknown828E36 ; 82/8E36
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8885E1
+        rts
+
+        .databank 0
+
+      rsUnknown828E3B ; 82/8E3B
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8885EF
+        rts
+
+        .databank 0
+
+      rsUnknown828E40 ; 82/8E40
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8885FD
+        rts
+
+        .databank 0
+
+      rsUnknown828E45 ; 82/8E45
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown88860B
+        rts
+
+        .databank 0
+
+      rsUnknown828E4A ; 82/8E4A
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown88861C
+        rts
+
+        .databank 0
+
+      rsUnknown828E4F ; 82/8E4F
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown88862D
+        rts
+
+        .databank 0
+
+      rsUnknown828E54 ; 82/8E54
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown88863E
+        rts
+
+        .databank 0
+
+      rsUnknown828E59 ; 82/8E59
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown828E5E
+        rts
+
+        .databank 0
+
+      rlUnknown828E5E ; 82/8E5E
+
+        .al
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+      aProcUnknown828D52Code ; 82/8E5F
+
+        PROC_HALT
+
+    .endsection Unsorted828D52Section
+
+
+    .section Unsorted828E61Section
+
+      .as
+      .xl
+
+      rsUnknown828E61 ; 82/8E61
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        rep #$30
+        ldx aProcSystem.wOffset,b
+        lda aProcSystem.aBody1,b,x
+        xba
+        sta lR18+1
+        lda aProcSystem.aBody0,b,x
+        sta lR18
+        ldy aProcSystem.aBody2,b,x
+
+        lda [lR18],y
+        cmp #$00FF
+        beq _CLC
+
+          lda [lR18],y
+          sta aProcSystem.aBody7,b,x
+          inc y
+          inc y
+          lda [lR18],y
+          sta aProcSystem.aBody4,b,x
+          sta wR13
+          inc y
+          inc y
+          lda [lR18],y
+          sta aProcSystem.aBody3,b,x
+          sta wR14
+
+          lda aProcSystem.aBody7,b,x
+          cmp #8
+          bne +
+
+            stz aProcSystem.aBody4,b,x
+
+          +
+          inc y
+          inc y
+          tya
+          sta aProcSystem.aBody2,b,x
+          lda #0
+          sta wR12
+          sta wR15
+          jsl rlUnknown80A1D8
+
+          lda wR12
+          sta $175F,b
+          lda wR13
+          sta $1761,b
+          ldx aProcSystem.wOffset,b
+          lda #0
+          sta aProcSystem.aBody5,b,x
+          sta aProcSystem.aBody6,b,x
+          plp
+          sec
+          rts
+
+        _CLC
+        plp
+        clc
+        rts
+
+        .databank 0
+
+    .endsection Unsorted828E61Section
+
+
+    .section Unsorted828ECBSection
+
+      .al
+      .xl
+
+      procUnknown828ECB ; 82/8ECB
+
+        .structProcInfo "CM", rlProcUnknown828ECBInit, rlProcUnknown828ECBCycle, aProcUnknown828ECBCode
+        .word 0
+
+      rlProcUnknown828ECBInit ; 82/8ED5
+
+        .al
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$01
+        ora bBufferTM
+        sta bBufferTM
+        lda #$01
+        ora bBufferTMW
+        sta bBufferTMW
+        rep #$20
+        stz aProcSystem.aBody0,b,x
+        rtl
+
+        .databank 0
+
+      rlProcUnknown828ECBCycle ; 82/8EE9
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody0,b,x
+        cmp #2
+        beq _8F1F
+
+          cmp #1
+          beq +
+
+            lda bBufferINIDISP
+            bit #$0080
+            bne _8F11
+
+              ora #$0080
+              sta bBufferINIDISP
+
+              lda #1
+              sta aProcSystem.aBody0,b,x
+              bra _8F23
+
+          +
+          lda bBufferINIDISP
+          eor #$0080
+          sta bBufferINIDISP
+
+          _8F11
+          phx
+          jsl rlUnknown8883C7
+          plx
+          lda #2
+          sta aProcSystem.aBody0,b,x
+          bra _8F23
+
+        _8F1F
+        jsl rlUnknown80B63F
+
+        _8F23
+        ldx aProcSystem.wOffset,b
+        jsl rlUnknown91A4AC
+        bcc +
+
+          jsr rsUnknown828F30
+
+        +
+        rtl
+
+        .databank 0
+
+      rsUnknown828F30 ; 82/8F30
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda bBufferTM
+        eor #$0001
+        sta bBufferTM
+        ldx aProcSystem.wOffset,b
+        jsr rsProcCodeEnd
+
+        .databank 0
+
+      aProcUnknown828ECBCode ; 82/8F3D
+
+        PROC_HALT
+
+        ; 82/8F3F
+
+    .endsection Unsorted828ECBSection
+
+
+    .section Unsorted829245Section
+
+      .al
+      .xl
+
+      procUnknown829245 ; 82/9245
+
+        .structProcInfo "e0", rlProcUnknown829245Init, rlProcUnknown829245Cycle, aProcUnknown829245Code
+        .word 2
+
+      rlProcUnknown829245Init ; 82/924F
+
+        .al
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+      rlProcUnknown829245Cycle ; 82/9250
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #JOY_ABXY
+        beq +
+
+          jsl rlEventEngineFreeProc
+
+        +
+        rtl
+
+        .databank 0
+
+      aProcUnknown829245Code ; 82/925C
+
+        PROC_HALT
+
+      procUnknown82925E ; 82/925E
+
+        .structProcInfo "e0", rlProcUnknown82925EInit, rlProcUnknown82925ECycle, aProcUnknown82925ECode
+        .word 2
+
+      rlProcUnknown82925EInit ; 82/9268
+
+        .al
+        .autsiz
+        .databank ?
+
+        ldy wActiveEventOffset,b
+        lda [lR22],y
+        sta aProcSystem.aBody0,b,x
+        rtl
+
+        .databank 0
+
+      rlProcUnknown82925ECycle ; 82/9271
+
+        .al
+        .autsiz
+        .databank ?
+
+        dec aProcSystem.aBody0,b,x
+        beq +
+
+          lda wJoy1New
+          bit #JOY_ABXY
+          bne +
+
+            rtl
+
+        +
+        jsl rlEventEngineFreeProc
+        rtl
+
+        .databank 0
+
+      aProcUnknown82925ECode ; 82/9283
+
+        PROC_HALT
+
+    .endsection Unsorted829245Section
+
+
+    .section Unsorted8292A9Section
+
+      .al
+      .xl
+
+      procUnknown8292A9 ; 82/92A9
+
+        .structProcInfo "NP", rlProcUnknown8292A9Init, rlProcUnknown8292A9Init, aProcUnknown8292A9Code
+        .word 0
+
+    .endsection Unsorted8292A9Section
+
+
+    .section Unsorted8292B3Section
+
+      .al
+      .xl
+
+      rlProcUnknown8292A9Init ; 82/92B3
+
+        .al
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+      aProcUnknown8292A9Code ; 82/92B4
+
+        PROC_END
+
+      procUnknown8292B6 ; 82/92B6
+
+        .structProcInfo "RS", rlProcUnknown8292B6Init, rlProcUnknown8292B6Cycle, aProcUnknown8292B6Code ; 82/92A9
+        .word 0
+
+      rlProcUnknown8292B6Init ; 82/92C0
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        ldy wActiveEventOffset,b
+        lda [lR22],y
+        sta aProcSystem.aBody0,b,x
+        inc y
+        lda [lR22],y
+        sta aProcSystem.aBody1,b,x
+        inc y
+        inc y
+        lda [lR22],y
+        and #$00FF
+        sta aProcSystem.aBody2,b,x
+        cmp #$00FF
+        bne +
+
+          ldx aProcSystem.wOffset,b
+          jsl rlUnknown91A4AC
+
+        +
+        lda #$FFFF
+        sta aProcSystem.aBody5,b,x
+        plp
+        rtl
+
+        .databank 0
+
+      rlProcUnknown8292B6Cycle ; 82/92ED
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        jsr rsUnknown829306
+        bcc +
+
+          jsr rsUnknown82932C
+          bcc +
+
+            lda #0
+            sta aProcSystem.aBody2,b,x
+            jsl rlEventEngineFreeProc
+
+        +
+        plp
+        rtl
+
+        .databank 0
+
+      aProcUnknown8292B6Code ; 82/9304
+
+        PROC_HALT
+
+      rsUnknown829306 ; 82/9306
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        phx
+        lda aProcSystem.aBody5,b,x
+        cmp #$FFFE
+        beq _SEC
+
+          cmp #$FFFF
+          bne +
+
+            dec a
+            sta aProcSystem.aBody5,b,x
+            bra _CLC
+
+          +
+          tax
+          lda aProcSystem.aHeaderBitfield,b,x
+          bit #$2000
+          bne _SEC
+
+          _CLC
+          plx
+          plp
+          clc
+          rts
+        
+        _SEC
+        plx
+        plp
+        sec
+        rts
+
+        .databank 0
+
+    .endsection Unsorted8292B3Section
+
+
+    .section Unsorted82932CSection
+
+      .al
+      .xl
+
+      rsUnknown82932C ; 82/932C
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        lda aProcSystem.aBody2,b,x
+        beq _SEC
+
+          cmp #$00FF
+          beq +
+
+            dec a
+            sta aProcSystem.aBody2,b,x
+
+          +
+          lda lActiveEventPointer,b
+          sta aProcSystem.aBody3,b,x
+          lda wActiveEventOffset,b
+          sta aProcSystem.aBody4,b,x
+          jsr rsUnknown829391
+
+          ldy #0
+          sty wActiveEventOffset,b
+          lda lActiveEventPointer+1,b
+          sta @l lR22+1
+          lda aProcSystem.aBody0,b,x
+          sta lActiveEventPointer,b
+          sta @l lR22
+          phx
+
+          lda [lR22],y
+          sta lR23
+          inc y
+          inc y
+          sty wActiveEventOffset,b
+          jsl rlUnknown91C6D8
+
+          txa
+          plx
+          lda aProcSystem.aBody3,b,x
+          sta lActiveEventPointer,b
+          lda aProcSystem.aBody4,b,x
+          sta wActiveEventOffset,b
+          lda lActiveEventPointer+1,b
+          sta @l lR22+1
+          lda lActiveEventPointer,b
+          sta @l lR22
+          plp
+          clc
+          rts
+
+        _SEC
+        plp
+        sec
+        rts
+
+        .databank 0
+
+    .endsection Unsorted82932CSection
+
+
+    .section Unsorted829391Section
+
+      .al
+      .xl
+
+      rsUnknown829391 ; 82/9391
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Store first free proc offset into aBody5
+
+        phx
+        ldx #$001E
+
+        -
+        lda aProcSystem.aHeaderTypeOffset,b,x
+        beq _CLC
+
+          dec x
+          dec x
+          bpl -
+
+          lda #$FFFF
+          plx
+          sta aProcSystem.aBody5,b,x
+          sec
+          rts
+
+        _CLC
+        txa
+        plx
+        sta aProcSystem.aBody5,b,x
+        clc
+        rts
+
+        .databank 0
+
+      procUnknown8293AE
+
+        .structProcInfo "CC", rlProcUnknown8293AEInit, rlProcUnknown8293AECycle, aProcUnknown8293AECode ; 82/93AE
+        .word 0
+
+      rlProcUnknown8293AEInit ; 82/93B8
+
+        .al
+        .autsiz
+        .databank ?
+
+        ldy wActiveEventOffset,b
+        lda [lR22],y
+        sta aProcSystem.aBody0,b,x
+        inc y
+        lda [lR22],y
+        and #$FF00
+        sta aProcSystem.aBody2,b,x
+
+        inc y
+        inc y
+        lda [lR22],y
+        sta lR19
+        inc y
+        inc y
+
+        sep #$20
+        lda [lR22],y
+        sta aProcSystem.aBody2,b,x
+        sta lR19+2
+        rep #$20
+
+        lda [lR19]
+        and #$00FF
+        asl a
+        sta aProcSystem.aBody5,b,x
+
+        inc lR19
+        lda [lR19]
+        and #$00FF
+        asl a
+        sta aProcSystem.aBody6,b,x
+
+        lda lR19
+        inc a
+        sta aProcSystem.aBody1,b,x
+
+        stz aProcSystem.aBody3,b,x
+        lda #1
+        sta aProcSystem.aBody4,b,x
+
+        ldx aProcSystem.wOffset,b
+        jsl rlUnknown91A4AC
+        rtl
+
+        .databank 0
+
+      rlProcUnknown8293AECycle ; 82/9407
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody4,b,x
+        dec a
+        beq +
+
+          sta aProcSystem.aBody4,b,x
+          rtl
+
+        +
+        lda aProcSystem.aBody2,b,x
+        sta lR18+1
+        xba
+        sta lR19+1
+
+        lda aProcSystem.aBody0,b,x
+        sta lR18
+        lda aProcSystem.aBody1,b,x
+        sta lR19
+
+        lda aProcSystem.aBody3,b,x
+        inc a
+        inc a
+        
+          -
+          sta aProcSystem.aBody3,b,x
+          tay
+          lda [lR19],y
+          bit #$FF00
+          bne +
+
+            lda #0
+            bra -
+
+        +
+        phx
+        sep #$20
+        xba
+        sta aProcSystem.aBody4,b,x
+        rep #$20
+        xba
+        and #$00FF
+        asl a
+        clc
+        adc lR18
+        sta lR18
+
+        lda #0
+        sta lR20+1
+
+        lda #<>aBGPaletteBuffer
+        clc
+        adc aProcSystem.aBody5,b,x
+        sta lR20
+
+        lda aProcSystem.aBody6,b,x
+        tay
+
+          -
+          lda [lR18],y
+          sta [lR20],y
+          dec y
+          dec y
+          bne -
+
+        plx
+        rtl
+
+        .databank 0
+
+      aProcUnknown8293AECode ; 82/9467
+
+        PROC_HALT
+
+        ; 82/9469
+
+    .endsection Unsorted829391Section
+
+
+    .section Unsorted82E08DSection
+
+      .al
+      .xl
+
+      rlUnknown82E08D ; 82/E08D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sei
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        sep #$20
+        lda bBufferNMITIMEN
+        ora #$30
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #$8000
+        trb $168F,b
+        jsl rlUnknown82E147
+        lda #$AE63
+        sta wIRQPointer
+        plp
+        plb
+        .databank $82
+        cli
+        rtl
+
+        .databank 0
+
+        ; 82/E0AF
+
+    .endsection Unsorted82E08DSection
+
+
+    .section Unsorted82E0C6Section
+
+      .al
+      .xl
+
+      rlUnknown82E0C6 ; 82/E0C6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        ldy lR44
+        sep #$20
+        lda lR44+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $1695,b
+        cmp #$0007
+        bcc _E0E2
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        rtl
+
+
+        _E0E2
+        lda $1695,b
+        asl a
+        tax
+        tya
+        sta $169A,b,x
+        lda lR44+1
+        and #$FF00
+        xba
+        sta $16AA,b,x
+        lda #$0000
+        sta $16BA,b,x
+        lda $0000,b,y
+        sta $16CA,b,x
+        lda $0002,b,y
+        sta $16DA,b,x
+        lda $0004,b,y
+        sta $16EA,b,x
+        lda $0006,b,y
+        sta $16FA,b,x
+        lda #$0001
+        sta $170A,b,x
+        inc $1695,b
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+        rtl
+
+        .databank 0
+
+        ; 82/E120
+
+    .endsection Unsorted82E0C6Section
+
+
+    .section Unsorted82E147Section
+
+      .al
+      .xl
+
+      rlUnknown82E147 ; 82/E147
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sei
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda $1695,b
+        cmp $1693,b
+        beq _E173
+        sta $1693,b
+        jsr rsUnknown82E177
+        lda $1693,b
+        beq _E16A
+        dec a
+        asl a
+        sta $1691,b
+        tax
+        jsr rsUnknown82E283
+        bra _E173
+
+
+        _E16A
+        lda #$0000
+        sta $1697,b
+        sta $1698,b
+
+        _E173
+        plp
+        plb
+        .databank $82
+        cli
+        rtl
+
+        .databank 0
+
+        ; 82/E177
+
+      rsUnknown82E177 ; 82/E177
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        phy
+        lda $1693,b
+        cmp #$0001
+        beq _E1BA
+        bcc _E1BA
+        and #$FFFE
+        sta wR30
+
+        _E18C
+        lda $1693,b
+        asl a
+        sec
+        sbc wR30
+        sta wR32
+        stz wR31
+
+        _E197
+        lda wR30
+        clc
+        adc wR31
+        tay
+        ldx wR31
+        lda $16DA,b,x
+        cmp $16DA,b,y
+        bcs _E1AA
+        jsr rsUnknown82E1BF
+
+        _E1AA
+        inc wR31
+        inc wR31
+        lda wR31
+        cmp wR32
+        bcc _E197
+        dec wR30
+        dec wR30
+        bne _E18C
+
+        _E1BA
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 82/E1BF
+
+      rsUnknown82E1BF ; 82/E1BF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $169A,b,x
+        sta $16A8,b
+        lda $16AA,b,x
+        sta $16B8,b
+        lda $16BA,b,x
+        sta $16C8,b
+        lda $16CA,b,x
+        sta $16D8,b
+        lda $16DA,b,x
+        sta $16E8,b
+        lda $16EA,b,x
+        sta $16F8,b
+        lda $16FA,b,x
+        sta $1708,b
+        lda $170A,b,x
+        sta $1718,b
+        lda $169A,b,y
+        sta $169A,b,x
+        lda $16AA,b,y
+        sta $16AA,b,x
+        lda $16BA,b,y
+        sta $16BA,b,x
+        lda $16CA,b,y
+        sta $16CA,b,x
+        lda $16DA,b,y
+        sta $16DA,b,x
+        lda $16EA,b,y
+        sta $16EA,b,x
+        lda $16FA,b,y
+        sta $16FA,b,x
+        lda $170A,b,y
+        sta $170A,b,x
+        lda $16A8,b
+        sta $169A,b,y
+        lda $16B8,b
+        sta $16AA,b,y
+        lda $16C8,b
+        sta $16BA,b,y
+        lda $16D8,b
+        sta $16CA,b,y
+        lda $16E8,b
+        sta $16DA,b,y
+        lda $16F8,b
+        sta $16EA,b,y
+        lda $1708,b
+        sta $16FA,b,y
+        lda $1718,b
+        sta $170A,b,y
+        rts
+
+        .databank 0
+
+        ; 82/E250
+
+    .endsection Unsorted82E147Section
+
+
+    .section Unsorted82E283Section
+
+      .al
+      .xl
+
+      rsUnknown82E283 ; 82/E283
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $16CB,b,x
+        sta $4208,b
+        lda $16CA,b,x
+        sta $4207,b
+        lda $16DB,b,x
+        sta $420A,b
+        lda $16DA,b,x
+        sta $4209,b
+        rep #$20
+        lda $16AA,b,x
+        xba
+        sta $1698,b
+        lda $16EA,b,x
+        sta $1697,b
+        rts
+
+        .databank 0
+
+        ; 82/E2AD
+
+    .endsection Unsorted82E283Section
+
+
+    .section Unsorted858728Section
+
+      .al
+      .xl
+
+      rlUnknown858728 ; 85/8728
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        lda $0521,b
+        bit #$0080
+        beq _End
+
+          bit #$0020
+          bne _End
+
+            lda $0D79,b
+            bit #$0001
+            beq +
+
+              jsr rsUnknown858D18
+              lda #$0001
+              trb $0D79,b
+
+            +
+            jsl rlUnknown878256
+
+        _End
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 85/8751
+
+    .endsection Unsorted858728Section
+
+
+    .section Unsorted858D18Section
+
+      .al
+      .xl
+
+      rsUnknown858D18 ; 85/8D18
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        lda wUnknown00052A,b
+        cmp wUnknown00052C,b
+        bcs _8D5F
+        lda wUnknown00052A,b
+        cmp #$0020
+        bcs _8D5F
+        lda wUnknown00052C,b
+        cmp #$0020
+        bcs _8D5F
+        lda #$7E7B
+        sta lR18+1
+        lda wUnknown00052A,b
+        xba
+        lsr a
+        lsr a
+        pha
+        clc
+        adc #$7B88
+        sta lR18
+        lda wUnknown00052C,b
+        sec
+        sbc wUnknown00052A,b
+        inc a
+        xba
+        lsr a
+        lsr a
+        sta wR0
+        pla
+        lsr a
+        clc
+        adc #$5400
+        sta wR1
+        jsl rlDMAByPointer
+
+        _8D5F
+        plp
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 85/8D62
+
+    .endsection Unsorted858D18Section
+
+
+    .section Unsorted86C629Section
+
+      .al
+      .xl
+
+      rlUnknown86C629 ; 86/C629
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        phy
+        jsl rlGetChapterMapChangesPointer
+        lda lR18
+        beq _C672
+        ldy lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        ldx #$0000
+
+        _C644
+        lda $0000,b,y
+        cmp #$FFFF
+        beq _C672
+        txa
+        jsr rsUnknown86C677
+        bcc _C669
+        lda $0003,b,y
+        and #$00FF
+        sta wR0
+        lda $0004,b,y
+        and #$00FF
+        sta wR1
+        lda $0005,b,y
+        jsl rlApplyMapTileChange
+
+        _C669
+        tya
+        clc
+        adc #$0007
+        tay
+        inc x
+        bra _C644
+
+
+        _C672
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 86/C677
+
+      rsUnknown86C677 ; 86/C677
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        .databank $86
+        phx
+        phy
+        pha
+        lsr a
+        lsr a
+        lsr a
+        tax
+        pla
+        and #$0007
+        tay
+        lda aChapterActiveMapChanges,x
+        and #$00FF
+        and $C69A,b,y
+        bne _C695
+        clc
+        bra _C696
+
+
+        _C695
+        sec
+
+        _C696
+        ply
+        plx
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 86/C69A
+
+    .endsection Unsorted86C629Section
+
+
+    .section Unsorted888082Section
+
+      .al
+      .xl
+
+      rlUnknown888082 ; 88/8082
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta wUnknown00075A,b
+        lda #$03FF
+        sta wUnknown000596,b
+        phk
+        plb
+        .databank $88
+        rep #$30
+        lda #$1809
+        sta $4350,b
+        lda #$8800
+        sta $4353,b
+        lda #$8189
+        sta $4352,b
+        lda #$4000
+        sta $4355,b
+        lda #$6000
+        sta $2116,b
+        sep #$20
+        lda #$20
+        sta $420B,b
+        rep #$20
+        stz wDMAArrayPosition,b
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE40C0, $0400, $80, $C000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $D90000, $5000, $80, $0000
+
+        jsl rlUnknown889305
+        ldx #$17FE
+
+        _80DD
+        lda $D95000,x
+        sta $7F0800,x
+        dec x
+        dec x
+        bpl _80DD
+        ldx #$00DE
+
+        _80EC
+        lda $8C9520,x
+        sta $0220,b,x
+        dec x
+        dec x
+        bpl _80EC
+        ldx #$001E
+
+        _80FA
+        lda $8C9D00,x
+        sta aOAMPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _80FA
+        sep #$20
+        lda #$08
+        sta bBufferWH0
+        lda #$F8
+        sta bBufferWH1
+        stz bBufferWH2
+        stz bBufferWH3
+        lda #$03
+        sta bBufferW12SEL
+        sta bBufferW34SEL
+        lda #$15
+        sta bBufferTM
+        lda bBufferBG1SC
+        and #$FC
+        sta bBufferBG1SC
+        lda bBufferBG3SC
+        and #$FC
+        sta bBufferBG3SC
+        lda #$54
+        sta bBufferBG2SC
+        lda #$03
+        sta bBufferWOBJSEL
+        rep #$20
+        lda #$000A
+        sta wJoyRepeatDelay
+        lda #$0002
+        sta wJoyRepeatInterval
+        jsl rlUnknown88C3F0
+        lda wMapXOffset,b
+        sta wMapScrollXPixels,b
+        sta wBufferBG1HOFS
+        sta wBufferBG3HOFS
+        lda wMapYOffset,b
+        sta wMapScrollYPixels,b
+        sta wBufferBG1VOFS
+        sta wBufferBG3VOFS
+        lda #$0020
+        trb $0788,b
+        stz wUnknown000770,b
+        stz wUnknown000766,b
+        stz wUnknown0007D8,b
+        stz $07DA,b
+        stz $086F,b
+        stz wMapScrollSpeed,b
+        stz wMapScrollDirectionIdentifier,b
+        jsl rlUnknown8883C8
+        jsl rlUnknown88DE1B
+        jsr rsUnknown8881B8
+        jsl rlUnknown88CD4C
+        jsl rlUnknown88CD5A
+        jsl rlUnknown88D073
+        rtl
+
+        .databank 0
+
+        ; 88/8188
+
+    .endsection Unsorted888082Section
+
+
+    .section Unsorted8881B8Section
+
+      .al
+      .xl
+
+      rsUnknown8881B8 ; 88/81B8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0786,b
+        bit #$0001
+        bne _81C6
+        bit #$0002
+        bne _81D5
+
+        _81C5
+        rts
+
+
+        _81C6
+        lda $0772,b
+        jsl rlUnknown88B4DB
+        lda #$0001
+        trb $0786,b
+        bra _81C5
+
+
+        _81D5
+        bra _81C5
+
+        .databank 0
+
+        ; 88/81D7
+
+    .endsection Unsorted8881B8Section
+
+
+    .section Unsorted88821ASection
+
+      .al
+      .xl
+
+      rlUnknown88821A ; 88/821A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta wUnknown00075A,b
+        lda #$03FF
+        sta wUnknown000596,b
+        rep #$30
+        lda #$1809
+        sta $4300,b
+        lda #$8800
+        sta $4303,b
+        lda #$83C5
+        sta $4302,b
+        lda #$2000
+        sta $4305,b
+        lda #$7000
+        sta $2116,b
+        sep #$20
+        lda #$01
+        sta $420B,b
+        rep #$20
+        stz wDMAArrayPosition,b
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $D90000, $5000, $80, $0000
+
+        jsl rlUnknown889305
+        ldx #$17FE
+
+        _8266
+        lda $D95000,x
+        sta $7F0800,x
+        dec x
+        dec x
+        bpl _8266
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE40C0, $0400, $80, $C000
+
+        ldx #$00DE
+
+        _8282
+        lda $8C9520,x
+        sta $0220,b,x
+        dec x
+        dec x
+        bpl _8282
+        ldx #$001E
+
+        _8290
+        lda $8C9D00,x
+        sta aOAMPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _8290
+        sep #$20
+        lda #$08
+        sta bBufferWH0
+        lda #$F8
+        sta bBufferWH1
+        stz bBufferWH2
+        stz bBufferWH3
+        lda #$03
+        sta bBufferW12SEL
+        sta bBufferW34SEL
+        lda #$15
+        sta bBufferTM
+        lda bBufferBG1SC
+        and #$FC
+        sta bBufferBG1SC
+        lda bBufferBG3SC
+        and #$FC
+        sta bBufferBG3SC
+        lda #$54
+        sta bBufferBG2SC
+        lda #$03
+        sta bBufferWOBJSEL
+        rep #$20
+        lda #$000A
+        sta wJoyRepeatDelay
+        lda #$0002
+        sta wJoyRepeatInterval
+        jsl rlUnknown88C3F0
+        lda wMapXOffset,b
+        sta wMapScrollXPixels,b
+        sta wBufferBG1HOFS
+        sta wBufferBG3HOFS
+        lda wMapYOffset,b
+        sta wMapScrollYPixels,b
+        sta wBufferBG1VOFS
+        sta wBufferBG3VOFS
+        stz wUnknown000770,b
+        stz wUnknown000766,b
+        stz wUnknown0007D8,b
+        stz $07DA,b
+        stz $086F,b
+        stz wMapScrollSpeed,b
+        stz wMapScrollDirectionIdentifier,b
+        jsl rlUnknown8883C8
+        lda #$0000
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$0001
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$0002
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$0003
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$0004
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$0005
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$0006
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$0007
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$0008
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$0009
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$000A
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$000B
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$000C
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$000D
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$000E
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        lda #$000F
+        jsl rlUnknown88CC75
+        jsl rlUnknown88CD68
+        jsr rsUnknown8881B8
+        jsl rlUnknown88CD4C
+        jsl rlUnknown88CD5A
+        jsl rlUnknown88D073
+        rtl
+
+        .databank 0
+
+        ; 88/83C4
+
+    .endsection Unsorted88821ASection
+
+
+    .section Unsorted8883C7Section
+
+      .al
+      .xl
+
+      rlUnknown8883C7 ; 88/83C7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 88/83C8
+
+      rlUnknown8883C8 ; 88/83C8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta wMapEnableXScrollFlag,b
+        sta wMapEnableYScrollFlag,b
+        lda wMapScrollXPixels,b
+        sta wUnknown000734,b
+        lda wMapScrollYPixels,b
+        sta wUnknown000736,b
+        clc
+        adc #$0100
+        sta wMapScrollYPixels,b
+        lda #$0008
+        sta wMapScrollSpeed,b
+
+        _83EA
+        jsr rsMapScrollUpSetBGOFS
+        jsl rlUnknown888798
+        jsl rlUnknown8887EC
+        lda wUnknown000736,b
+        cmp wMapScrollYPixels,b
+        bcc _83EA
+        lda wUnknown000734,b
+        sta wMapScrollXPixels,b
+        lda wUnknown000736,b
+        sta wMapScrollYPixels,b
+        stz wMapEnableXScrollFlag,b
+        stz wMapEnableYScrollFlag,b
+        rtl
+
+        .databank 0
+
+        ; 88/8410
+
+    .endsection Unsorted8883C7Section
+
+
+    .section Unsorted8887ECSection
+
+      .al
+      .xl
+
+      rlUnknown8887EC ; 88/87EC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $88
+        lda wUnknown00072E,b
+        bne _87F9
+        jml _8877
+
+
+        _87F9
+        stz wUnknown00072E,b
+        lda wUnknown000732,b
+        clc
+        adc #$5000
+        sta $2116,b
+        sep #$20
+        lda #$80
+        sta $2115,b
+        lda #$01
+        sta $4310,b
+        lda #$18
+        sta $4311,b
+        lda #$DC
+        sta $4312,b
+        lda #$05
+        sta $4313,b
+        lda #$00
+        sta $4314,b
+        lda #$40
+        sta $4315,b
+        lda #$00
+        sta $4316,b
+        lda #$02
+        sta $420B,b
+        rep #$20
+        lda wUnknown000770,b
+        beq _8877
+        lda wUnknown000732,b
+        clc
+        adc #$5800
+        sta $2116,b
+        sep #$20
+        lda #$80
+        sta $2115,b
+        lda #$01
+        sta $4320,b
+        lda #$18
+        sta $4321,b
+        lda #$DC
+        sta $4322,b
+        lda #$06
+        sta $4323,b
+        lda #$00
+        sta $4324,b
+        lda #$40
+        sta $4325,b
+        lda #$00
+        sta $4326,b
+        lda #$04
+        sta $420B,b
+        rep #$20
+
+        _8877
+        lda wUnknown00072C,b
+        bne _8880
+        jml _88FE
+
+
+        _8880
+        stz wUnknown00072C,b
+        lda wUnknown000730,b
+        clc
+        adc #$5000
+        sta $2116,b
+        sep #$20
+        lda #$81
+        sta $2115,b
+        lda #$01
+        sta $4300,b
+        lda #$18
+        sta $4301,b
+        lda #$9C
+        sta $4302,b
+        lda #$05
+        sta $4303,b
+        lda #$00
+        sta $4304,b
+        lda #$40
+        sta $4305,b
+        lda #$00
+        sta $4306,b
+        lda #$01
+        sta $420B,b
+        rep #$20
+        lda wUnknown000770,b
+        beq _88FE
+        lda wUnknown000730,b
+        clc
+        adc #$5800
+        sta $2116,b
+        sep #$20
+        lda #$81
+        sta $2115,b
+        lda #$01
+        sta $4320,b
+        lda #$18
+        sta $4321,b
+        lda #$9C
+        sta $4322,b
+        lda #$06
+        sta $4323,b
+        lda #$00
+        sta $4324,b
+        lda #$40
+        sta $4325,b
+        lda #$00
+        sta $4326,b
+        lda #$04
+        sta $420B,b
+        rep #$20
+
+        _88FE
+        plp
+        plb
+        .databank $88
+        rtl
+
+        .databank 0
+
+        ; 88/8901
+
+    .endsection Unsorted8887ECSection
+
+
+    .section Unsorted88C059Section
+
+      .al
+      .xl
+
+      rlUnknown88C059 ; 88/C059
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR10
+        clc
+        adc wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR10
+        lda wR11
+        clc
+        adc wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR11
+        rtl
+
+        .databank 0
+
+        ; 88/C072
+
+    .endsection Unsorted88C059Section
+
+
+    .section Unsorted88C3F0Section
+
+      .al
+      .xl
+
+      rlUnknown88C3F0 ; 88/C3F0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wMapXOffset,b
+        sta wMapScrollXPixels,b
+        lda wMapYOffset,b
+        sta wMapScrollYPixels,b
+        lda wCursorXOffset,b
+        sta wR10
+        lda wCursorYOffset,b
+        sta wR11
+        jsl rlUnknown88C059
+        jsl rlUnknown88BFC3
+        lda wR10
+        cmp #$FFFF
+        beq _C417
+        clc
+        rtl
+
+
+        _C417
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        sta $078C,b
+        sec
+        sbc #$0080
+        bpl _C42C
+        lda #$0000
+        bra _C434
+
+
+        _C42C
+        cmp wMapMaxXScroll,b
+        bcc _C434
+        lda wMapMaxXScroll,b
+
+        _C434
+        sta wMapScrollXPixels,b
+        sta wMapXOffset,b
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        sta $078E,b
+        sec
+        sbc #$0080
+        bpl _C44F
+        lda #$0000
+        bra _C457
+
+
+        _C44F
+        cmp wMapMaxYScroll,b
+        bcc _C457
+        lda wMapMaxYScroll,b
+
+        _C457
+        sta wMapScrollYPixels,b
+        sta wMapYOffset,b
+        lda $078C,b
+        sec
+        sbc wMapScrollXPixels,b
+        sta wCursorXOffset,b
+        lda $078E,b
+        sec
+        sbc wMapScrollYPixels,b
+        sta wCursorYOffset,b
+        sec
+        rtl
+
+        .databank 0
+
+        ; 88/C473
+
+      rlUnknown88C473 ; 88/C473
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR0
+        asl a
+        asl a
+        asl a
+        asl a
+        sta $078C,b
+        lda wR1
+        asl a
+        asl a
+        asl a
+        asl a
+        sta $078E,b
+        lda $078C,b
+        sec
+        sbc #$0080
+        bpl _C493
+        lda #$0000
+        bra _C49B
+
+
+        _C493
+        cmp wMapMaxXScroll,b
+        bcc _C49B
+        lda wMapMaxXScroll,b
+
+        _C49B
+        sta wR0
+        lda $078E,b
+        sec
+        sbc #$0080
+        bpl _C4AB
+        lda #$0000
+        bra _C4B3
+
+
+        _C4AB
+        cmp wMapMaxYScroll,b
+        bcc _C4B3
+        lda wMapMaxYScroll,b
+
+        _C4B3
+        sta wR1
+        lda $078C,b
+        sec
+        sbc wR0
+        sta wCursorXOffset,b
+        lda $078E,b
+        sec
+        sbc wR1
+        sta wCursorYOffset,b
+        lda wR0
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR0
+        lda wR1
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR1
+        sec
+        rtl
+
+        .databank 0
+
+        ; 88/C4D9
+
+    .endsection Unsorted88C3F0Section
+
+
+    .section Unsorted88D073Section
+
+      .al
+      .xl
+
+      rlUnknown88D073 ; 88/D073
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $88
+        phk
+        plb
+        .databank $88
+        jsl rlUnknown88CF31
+        jsl rlUnknown88CFBA
+        plp
+        plb
+        .databank $88
+        rtl
+
+        .databank 0
+
+        ; 88/D084
+
+    .endsection Unsorted88D073Section
+
+
+    .section Unsorted88DE1BSection
+
+      .al
+      .xl
+
+      rlUnknown88DE1B ; 88/DE1B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phk
+        plb
+        .databank $88
+        stz $07E6,b
+        ldx #$008E
+
+        _DE23
+        lda $7E480B,x
+        cmp #$FFFF
+        beq _DE3B
+        and #$8000
+        beq _DE36
+        jsr rsUnknown88DE9E
+        bra _DE3B
+
+
+        _DE36
+        jsr rsUnknown88DE40
+        bra _DE3B
+
+
+        _DE3B
+        dec x
+        dec x
+        bpl _DE23
+        rtl
+
+        .databank 0
+
+        ; 88/DE40
+
+      rsUnknown88DE40 ; 88/DE40
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $88DEFC,x
+        sta $078E,b
+        lda $7E480B,x
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        phx
+        tax
+        lda $88D527,x
+        sta lR18+1
+        lda $88D526,x
+        clc
+        adc $07E6,b
+        sta $07EA,b
+        sta lR18
+        plx
+        lda #$0040
+        sta wR0
+        lda #$6000
+        clc
+        adc $078E,b
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        lda $07EA,b
+        clc
+        adc #$0040
+        sta lR18
+        lda #$0040
+        sta wR0
+        lda #$6100
+        clc
+        adc $078E,b
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/DE9E
+
+      rsUnknown88DE9E ; 88/DE9E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $88DEFC,x
+        sta $078E,b
+        lda $7E480B,x
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        phx
+        tax
+        lda $88D5E4,x
+        sta lR18+1
+        lda $88D5E3,x
+        clc
+        adc $07E6,b
+        sta $07EA,b
+        sta lR18
+        plx
+        lda #$0040
+        sta wR0
+        lda #$6000
+        clc
+        adc $078E,b
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        lda $07EA,b
+        clc
+        adc #$0040
+        sta lR18
+        lda #$0080
+        sta wR0
+        lda #$6100
+        clc
+        adc $078E,b
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/DEFC
+
+    .endsection Unsorted88DE1BSection
+
+
+    .section Unsorted8ACE50Section
+
+      .al
+      .xl
+
+      rlUnknown8ACE50 ; 8A/CE50
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown8ACE54
+        rtl
+
+        .databank 0
+
+        ; 8A/CE54
+
+      rsUnknown8ACE54 ; 8A/CE54
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0003
+        sta $18D0,b
+        lda #$0002
+        sta $1888,b
+        lda #$0001
+        sta $189B,b
+        lda #$061E
+        sta $18DB,b,x
+        lda #$5000
+        sta $18D7,b,x
+        lda #$7E00
+        sta $18D5,b,x
+        lda #$8388
+        sta $18D4,b,x
+        lda #$3200
+        sta $189F,b,x
+        lda #$0212
+        sta wR1
+        sep #$20
+        lda #$00
+        sta wR0+1
+        xba
+        lda wR1
+        sta wR0
+        lda wR1+1
+        xba
+        rep #$20
+        lsr a
+        lsr a
+        clc
+        adc wR0
+        sta wR0
+        ldx aDialogue,b
+        lda #$7E00
+        sta $18D5,b,x
+        lda #$8388
+        clc
+        adc wR0
+        sta $18D4,b,x
+        rts
+
+        .databank 0
+
+        ; 8A/CEB3
+
+    .endsection Unsorted8ACE50Section
+
+
+    .section Unsorted8B91F6Section
+
+      .al
+      .xl
+
+      rlUnknown8B91F6 ; 8B/91F6
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #DialogueStatusPreventASpeedUp
+        tsb aDialogue.wStatus,b
+
+        lda #3
+        sta aDialogue.wTextSpeed,b
+        lda #2
+        sta aDialogue.wTextSound,b
+
+        lda wCurrentChapter,b
+        cmp #-1
+        bne +
+
+          lda #4
+          sta aDialogue.wUnknown00188C,b
+          lda #6
+          sta aDialogue.wTextSpeed,b
+          lda #0
+          sta aDialogue.wTextSound,b
+
+        +
+        lda #2
+        sta aDialogue.wUnknown0018D0,b
+        lda #(4 << 8 | 30)
+        sta aDialogue._Slot[0].wDisplayArea,b,x
+        lda #$9000 >> 1
+        sta aDialogue._Slot[0].wVRAMAddress,b,x
+        lda #(`aBG3TilemapBuffer)<<8
+        sta aDialogue._Slot[0].lBGBufferPosition+1,b,x
+        lda #<>aBG3TilemapBuffer
+        sta aDialogue._Slot[0].lBGBufferPosition,b,x
+
+        ; Is this supposed to be X indexed?
+        lda #TilemapEntry($100, 0, true, false, false)
+        sta aDialogue.wBaseTile,b,x
+        lda #$1604
+        sta wR1
+
+        sep #$20
+        lda #0
+        sta wR0+1
+        xba
+        lda wR1
+        sta wR0
+        lda wR1+1
+        xba
+        rep #$20
+
+        lsr a
+        lsr a
+        clc
+        adc wR0
+        sta wR0
+
+        ldx aDialogue.wSlotOffset,b
+        lda #(`aBG3TilemapBuffer)<<8
+        sta aDialogue._Slot[0].lBGBufferPosition+1,b,x
+        lda #<>aBG3TilemapBuffer
+        clc
+        adc wR0
+        sta aDialogue._Slot[0].lBGBufferPosition,b,x
+        rtl
+
+        .databank 0
+
+      rlUnknown8B9275 ; 8B/9275
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        lda #$7E00
+        sta $24+1
+        ldy #$FF00
+
+        lda $18A1,b
+        and #$0001
+        bne +
+
+        ldy #$FF80
+        
+        +
+        sty $24
+
+        ldy #0
+        lda $18D4,b
+        sec
+        sbc #$8388
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        pha
+
+        asl a
+        asl a
+        asl a
+        cmp #$007F
+        bcc +
+        beq +
+
+        pha
+        lda $87
+        sta $00
+        lda $89
+        sta $02
+        lda #$007F
+        jsl rlDialogueWriteHDMADataEntry
+        pla
+        sec
+        sbc #$007F
+        
+        +
+        pha
+        lda $87
+        sta $00
+        lda $89
+        sta $02
+        pla
+        jsl rlDialogueWriteHDMADataEntry
+        jsl rlDialogueGetSlot1BoxPixelHeight
+        sta $27
+        sec
+        sbc #$0010
+        cmp $18E1,b
+        bcs _9352
+
+        sta $2D
+        lda #$0100
+        clc
+        adc #0
+        sta $00
+
+        lda $27
+        tax
+        lda $18E1,b
+        sec
+        sbc $2D
+        jsl rlUnknown91969C
+        txa
+        beq _9352
+
+        sta $2A
+        clc
+        adc #0
+        sta $02
+        lda $27
+        sec
+        sbc $2A
+        jsl rlDialogueWriteHDMADataEntry
+        lda $2A
+        cmp #$0010
+        bcc +
+
+        lda #$0100
+        clc
+        adc #0
+        sta $00
+        lda $2A
+        sec
+        sbc $27
+        clc
+        adc #0
+        sta $02
+
+        lda $2A
+        and #$FFF0
+        jsl rlDialogueWriteHDMADataEntry
+
+        +
+        lda $2A
+        and #$000F
+        sta $2A
+        beq _9366
+        
+        -
+        lda #$0100
+        clc
+        adc #0
+        sta $00
+        lda $2A
+        sec
+        sbc $27
+        clc
+        adc #0
+        sta $02
+        lda #1
+        jsl rlDialogueWriteHDMADataEntry
+        dec $2A
+        bne -
+        bra _9366
+        
+        _9352
+        lda #$0100
+        clc
+        adc #0
+        sta $00
+        lda #0
+        sta $02
+        lda $27
+        jsl rlDialogueWriteHDMADataEntry
+        
+        _9366
+        pla
+        clc
+        adc $18DC,b
+        sta $00
+
+        lda $1882,b
+        bit #$1000
+        bne +
+
+        jml $8B942F
+        
+        +
+        lda $18ED,b
+        sec
+        sbc #$8388
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sec
+        sbc $00
+        asl a
+        asl a
+        asl a
+        pha
+        lda $87
+        sta $00
+        lda $89
+        sta $02
+        pla
+        jsl rlDialogueWriteHDMADataEntry
+        jsl rlDialogueGetSlot2BoxPixelHeight
+        sta $27
+        sec
+        sbc #$0010
+        cmp $18FA,b
+        bcs _941D
+
+        sta $2D
+        lda $87
+        clc
+        adc #0
+        sta $00
+        lda $27
+        tax
+        lda $18FA,b
+        sec
+        sbc $2D
+        jsl rlUnknown91969C
+        txa
+        beq _941D
+
+        sta $2A
+        clc
+        adc $89
+        sta $02
+        lda $27
+        sec
+        sbc $2A
+        jsl rlDialogueWriteHDMADataEntry
+
+        lda $2A
+        cmp #$0010
+        bcc +
+
+        lda $87
+        clc
+        adc #0
+        sta $00
+        lda $2A
+        sec
+        sbc $27
+        clc
+        adc $89
+        sta $02
+        lda $2A
+        and #$FFF0
+        jsl rlDialogueWriteHDMADataEntry
+        
+        +
+        lda $2A
+        and #$000F
+        sta $2A
+        beq _942F
+        
+        -
+        lda $87
+        clc
+        adc #0
+        sta $00
+        lda $2A
+        sec
+        sbc $27
+        clc
+        adc $89
+        sta $02
+        lda #1
+        jsl rlDialogueWriteHDMADataEntry
+        dec $2A
+        bne -
+        bra _942F
+        
+        _941D
+        lda $87
+        clc
+        adc #0
+        sta $00
+        lda $89
+        sta $02
+        lda $27
+        jsl rlDialogueWriteHDMADataEntry
+        
+        _942F
+        lda #1
+        pha
+        lda #$0100
+        sta $00
+        lda #0
+        sta $02
+        pla
+        jsl rlDialogueWriteHDMADataEntry
+        lda #0
+        sta [$24],y
+        plp
+        rtl
+
+        .databank 0
+
+        ; 8B/9449
+
+    .endsection Unsorted8B91F6Section
+
+
+    .section Unsorted91A7BCSection
+
+      .al
+      .xl
+
+      rlUnknown91A7BC ; 91/A7BC
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; A = fill value
+
+        php
+        ldx #$07FE
+
+          -
+          sta aBG3TilemapBuffer,x
+          dec x
+          dec x
+          bpl -
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $B000
+
+        nop
+        nop
+        nop
+        nop
+        jsl rlUnknown8780EC
+        plp
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted91A7BCSection
+
+
+    .section Unsorted91A7DFSection
+
+      .al
+      .xl
+
+      rlUnknown91A7DF ; 91/A7DF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        rep #$30
+        lda #$0084
+        tsb bUnknown000521,b
+        plp
+        rtl
+
+        .databank 0
+
+        ; 91/A7EA
+
+    .endsection Unsorted91A7DFSection
+
+
+    .section Unsorted91A9BBSection
+
+      .al
+      .xl
+
+      rlUnknown91A9BB ; 91/A9BB
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlLoadMapMenuData
+
+        lda #$2000
+        sta aCurrentTilemapInfo.wBaseTile,b
+        lda #$00FF
+        sta wUnknown053E,b
+        lda #$20FF
+        sta wUnknown053C,b
+        jsl rlUnknown8788E5
+
+        lda #(`aUnknown91A9E4)<<8
+        sta lR18+1
+        lda #<>aUnknown91A9E4
+        sta lR18
+        jsl rlUnknown8788EE
+        rtl
+
+        .databank 0
+
+      aUnknown91A9E4 ; 91/A9E4
+
+        .word $6106
+        .word $2107
+        .word $2106
+        .word $6108
+        .word $2108
+        .word $E106
+        .word $A107
+
+; 06 A1 85 06 A5 27 48 A5 28 48 A9 00 00 85 28 A9 08 00 85 27 A5 06 20 15 AA 20 6F AA 68 85 28 68 85 27 6B 08 DA 5A A0 00 00 85 1A A9 10 27
+
+    .endsection Unsorted91A9BBSection
+
+
+    .section Unsorted9EEC95Section
+
+      .al
+      .xl
+
+      rlUnknown9EEC95 ; 9E/EC95
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procUnknown9EECA4)<<8
+        sta lR44+1
+        lda #<>procUnknown9EECA4
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 9E/ECA4
+
+    .endsection Unsorted9EEC95Section
+
+
+    .section ProcScript9EECA4Section
+
+      .al
+      .xl
+
+      procUnknown9EECA4 ; 9E/ECA4
+
+        .structProcInfo "ON", rlProcUnknown9EECA4Init, rlProcUnknown9EECA4Cycle1, aProcUnknown9EECA4Code
+
+    .endsection ProcScript9EECA4Section
+
+
+    .section Unsorted9EECACSection
+
+      .al
+      .xl
+
+      rlProcUnknown9EECA4Init ; 9E/ECAC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #$FFFF
+        sta aActionStructUnit2
+        lda $0ECF,b
+        sta wR4
+        sta wR6
+        sta $7F4552
+        lda $0ED1,b
+        sta wR5
+        sta wR7
+        sta $7F4554
+        ldx $0ECF,b
+        ldy $0ED1,b
+        lda $7E4EBB
+        jsl rlUnknown9E8D25
+        lda #$0000
+        sta $7F508F
+        lda wR1
+        xba
+        ora wR0
+        sta $7F509B
+        lda #$0027
+        sta $7F5089
+        plx
+        lda #$0000
+        sta $0F37,b,x
+        sta $7F5091
+        sta $7F5093
+        sta $7F4C07
+        lda $0302,b
+        sta $10B7,b,x
+        stz $0302,b
+        sep #$20
+        lda bBufferBG2SC
+        sta $7F57EA
+        lda #$5C
+        sta bBufferBG2SC
+        lda bBufferTM
+        sta $7F57EC
+        lda #$15
+        sta bBufferTM
+        rep #$20
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/ED30
+
+      rlProcUnknown9EECA4Cycle1 ; 9E/ED30
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/ED31
+
+    .endsection Unsorted9EECACSection
+
+
+    .section ProcScript9EED31Section
+
+      .al
+      .xl
+
+      aProcUnknown9EECA4Code ; 9E/ED31
+
+        PROC_YIELD 1
+        PROC_SET_ONCYCLE rlUnknown9EC9FD
+        PROC_YIELD 16
+        PROC_CALL rlUnknown9F85A3
+        PROC_YIELD 4
+        PROC_CALL rlUnknown9F85F5
+        PROC_YIELD 2
+        PROC_CALL rlUnknown9F861F
+        PROC_YIELD 2
+        PROC_CALL rlUnknown9F8020
+        PROC_YIELD 16
+        PROC_CALL rlUnknown9EED7C
+        _ED5A
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9EED84
+        PROC_JUMP_IF_BITS_UNSET _ED5A, $0004
+        PROC_CALL rlUnknown9F8349
+        PROC_CALL rlUnknown9F8473
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9EED9A
+        PROC_YIELD 1
+        PROC_END
+
+
+        ; 9E/ED7C
+
+    .endsection ProcScript9EED31Section
+
+
+    .section Unsorted9EED7CSection
+
+      .al
+      .xl
+
+      rlUnknown9EED7C ; 9E/ED7C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta $7F5091
+        rtl
+
+        .databank 0
+
+        ; 9E/ED84
+
+      rlUnknown9EED84 ; 9E/ED84
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F5093
+        beq _ED99
+        lda #$ED30
+        sta $0F57,b,x
+        lda $0F37,b,x
+        ora #$0004
+        sta $0F37,b,x
+
+        _ED99
+        rtl
+
+        .databank 0
+
+        ; 9E/ED9A
+
+      rlUnknown9EED9A ; 9E/ED9A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $7F57EA
+        sta bBufferBG2SC
+        lda $7F57EC
+        sta bBufferTM
+        sta $7F57EC
+        rep #$20
+        lda $10B7,b,x
+        sta $0302,b
+        rtl
+
+        .databank 0
+
+        ; 9E/EDB5
+
+    .endsection Unsorted9EED7CSection
+
+

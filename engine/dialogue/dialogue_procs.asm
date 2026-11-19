@@ -752,3 +752,69 @@
         ; 82/8A30
 
     .endsection DialogueWithBGSection
+
+
+    .section Unsorted8AE29FSection
+
+      .al
+      .xl
+
+      rlUnknown8AE29F ; 8A/E29F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procUnknown8AE147)<<8
+        sta lR44+1
+        lda #<>procUnknown8AE147
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _E2B5
+        txa
+        lsr a
+        jsl rlProcEngineFreeProcByIndex
+
+        _E2B5
+        lda #(`procUnknown8AE199)<<8
+        sta lR44+1
+        lda #<>procUnknown8AE199
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _E2CB
+        txa
+        lsr a
+        jsl rlProcEngineFreeProcByIndex
+
+        _E2CB
+        lda #(`procUnknown8AE1EB)<<8
+        sta lR44+1
+        lda #<>procUnknown8AE1EB
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _E2E1
+        txa
+        lsr a
+        jsl rlProcEngineFreeProcByIndex
+
+        _E2E1
+        lda #(`procUnknown8AE245)<<8
+        sta lR44+1
+        lda #<>procUnknown8AE245
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _E2F7
+        txa
+        lsr a
+        jsl rlProcEngineFreeProcByIndex
+
+        _E2F7
+        rtl
+
+        .databank 0
+
+        ; 8A/E2F8
+
+    .endsection Unsorted8AE29FSection
+

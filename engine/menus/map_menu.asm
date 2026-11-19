@@ -1435,3 +1435,233 @@
         ; 87/8BF0
 
     .endsection RemoveMapMenuTilemapRAMEntrySection
+
+
+    .section Unsorted858000Section
+
+      .al
+      .xl
+
+      aDialogueBoxTilemap .text ROM[$058000:$058250] ; 85/8000
+
+    .endsection Unsorted858000Section
+
+
+    .section Unsorted858CD3Section
+
+      .al
+      .xl
+
+      rsMapMenuTypeDialogue ; 85/8CD3
+
+        .al
+        .autsiz
+        .databank ?
+
+        phy
+        jsl rlBuildMapMenuDialogueBox
+
+        lda aProcSystem.wInput0,b
+        bmi _End
+        bne _Bottom
+
+          ; Copy the 2x2 dialogue box tail to the correct spot
+
+          ; Top
+          jsl rlGetMapMenuTileIndex
+          clc
+          adc #C2I((10, 8), 32) * size(word)
+          tax
+
+          ; Load downwards facing tail
+          ldy #TilemapEntry(C2I((10, 2)) + C2I((0, 48)), 0, true, false, false) 
+          bra +
+
+          _Bottom
+          jsl rlGetMapMenuTileIndex
+          clc
+          adc #C2I((18, 0), 32) * size(word) ; $0024
+          tax
+
+          ; Load upwards facing tail
+          ldy #TilemapEntry(C2I((8, 2)) + C2I((0, 48)), 0, true, false, false) 
+
+          +
+          tya
+          sta aBG2TilemapBuffer.Page1,x
+          tya
+          inc a
+          sta aBG2TilemapBuffer.Page1+2,x
+          tya
+          clc
+          adc #C2I((0, 1))
+          sta aBG2TilemapBuffer.Page1+$40,x
+          tya
+          clc
+          adc #C2I((1, 1))
+          sta aBG2TilemapBuffer.Page1+$40+2,x
+        
+        _End
+        ply
+        rts
+
+        .databank 0
+
+        ; 85/8D18
+
+    .endsection Unsorted858CD3Section
+
+
+    .section Unsorted85B81DSection
+
+      .al
+      .xl
+
+      rlBuildMapMenuDialogueBox ; 85/B81D
+
+        .al
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        jsl rlGetMapMenuTilemapArea
+        and #$00FF
+        sta wR5
+        cmp #32
+        beq _FullWidth
+
+        lda aProcSystem.wInput0,b
+        bne _Bottom
+
+        ; Top
+        lda #32
+        sec
+        sbc wR5
+        pha
+        sta wR13
+        lda #3
+        sta wR14
+        jsl rlUnsignedDivide16By8
+        pla
+        lsr a
+        sta wR10
+
+        lda wR13
+        sec
+        sbc wR10
+        bra _B870
+
+        _FullWidth
+        lda #0
+        bra _B870
+
+        _Bottom
+        lda #32
+        sec
+        sbc wR5
+        pha
+        sta wR13
+        lda #3
+        sta wR14
+        jsl rlUnsignedDivide16By8
+        pla
+        lsr a
+        sta wR10
+        lda wR13
+        asl a
+        sec
+        sbc wR10
+
+        _B870
+        ; Get the middle of the box as the destination tile
+        asl a
+        sta wR3
+        jsl rlGetMapMenuTileIndex
+        clc
+        adc #$027E
+        sec
+        sbc #32
+        clc
+        adc wR5
+        clc
+        adc wR3
+        sta wR7
+
+        ; Source offset
+        lda #$027E
+        sta wR6
+
+          _Loop
+          ; Write the right part to the tilemap
+          lda wR6
+          tay
+
+          lda wR5
+          lsr a
+          dec a
+          sta wR4
+          ldx wR7
+          jsr rsDialogueBoxWriteToBG2
+
+          ; Write the left part to the tilemap
+          lda wR6
+          sec
+          sbc #32 * size(word)
+          clc
+          adc wR5
+          tay
+
+          lda wR5
+          lsr a
+          dec a
+          sta wR4
+          jsr rsDialogueBoxWriteToBG2
+
+          lda wR7
+          sec
+          sbc #32 * size(word)
+          sta wR7
+          lda wR6
+          sec
+          sbc #32 * size(word)
+          sta wR6
+          bpl _Loop
+
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+      rsDialogueBoxWriteToBG2 ; 85/B8C2
+
+        .al
+        .autsiz
+        .databank $85
+
+        ; Y = source offset
+        ; X = destination offset
+        ; wR4 = count
+
+          _Loop
+          lda aDialogueBoxTilemap,y
+          clc
+          adc #$0300
+          sta aBG2TilemapBuffer.Page1,x
+          dec x
+          dec x
+          dec y
+          dec y
+          dec wR4
+          bpl _Loop
+
+        rts
+
+        .databank 0
+
+        ; 85/B8D6
+
+    .endsection Unsorted85B81DSection
+
+
