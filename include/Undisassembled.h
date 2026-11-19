@@ -93,8 +93,6 @@
     rlProcFadeInWorldMapPortraitSlotCycle                    :?= address($8B8C98)
     rlUnknown8B91F6                                          :?= address($8B91F6)
     rlUnknown8B9275                                          :?= address($8B9275)
-    rlUnknown8CEDD0                                          :?= address($8CEDD0)
-    aUnknown8CEE6A                                           :?= address($8CEE6A)
     rlUnknown91A7BC                                          :?= address($91A7BC)
     rlUnknown91A80D                                          :?= address($91A80D)
     rlUnknown91A928                                          :?= address($91A928)

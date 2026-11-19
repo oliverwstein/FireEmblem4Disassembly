@@ -138,6 +138,7 @@
   .include "engine/unsorted/bank89.asm"
   .include "engine/unsorted/bank8A.asm"
   .include "engine/unsorted/bank8B.asm"
+  .include "engine/unsorted/bank8C.asm"
   .include "engine/unsorted/bank8F.asm"
 
   .include "events/ChapterPrologue.asm"
@@ -2198,6 +2199,13 @@
       .dsection JoinOrderSection
 
       ; 8B/CE29
+
+    .here
+
+    * = $0CEDD0
+    .logical $8CEDD0
+
+      .dsection Unsorted8CEDD0Section
 
     .here
 
