@@ -10673,7 +10673,7 @@
         sta wRoutineVariable1,b
         stz wR10
         lda #$0000
-        jsl rlUnknown84BF25
+        jsl rlFindFactionUnitByCharacterID
         lda wSelectedUnitDataRAMPointer,b
         rts
 

@@ -3339,7 +3339,7 @@
 
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl rlUnknown84AB5C
+        jsl rlAddWinToSelectedUnitAndWeapon
         bra ++
 
         ; Arena

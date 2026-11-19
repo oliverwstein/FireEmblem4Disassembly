@@ -462,7 +462,7 @@
         
           -
           tya
-          jsl rlUnknown84C104
+          jsl rlDecreaseFactionStatusDurations
           dec y
           bpl -
 
@@ -765,7 +765,7 @@
         .databank ?
 
         lda wActiveFactionSlot,b
-        jsl rlUnknown84C12E
+        jsl rlUnsetFactionUnitsMoved
 
           -
           lda wActiveFactionSlot,b

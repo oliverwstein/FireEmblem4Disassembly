@@ -2750,7 +2750,7 @@
         sta wRoutineVariable1,b
         pla
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown849EA3
+        jsl rlGetSelectedUnitLivingTalkTarget
         cmp wRoutineVariable1,b
         bne _9F0D
         plp

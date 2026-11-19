@@ -110,7 +110,7 @@
         sta wRoutineVariable1,b
 
         ldy #3
-        jsr rsUnknown84B148
+        jsr rsAddTurnStartHealingEntry
         sec
         rts
 
@@ -137,7 +137,7 @@
         sta wRoutineVariable1,b
 
         ldy #3
-        jsr rsUnknown84B148
+        jsr rsAddTurnStartHealingEntry
         sec
         rts
 
@@ -203,7 +203,7 @@
         stx wRoutineVariable1,b
 
         ldy #1
-        jsr rsUnknown84B148
+        jsr rsAddTurnStartHealingEntry
         sec
         rts
 
@@ -247,7 +247,7 @@
         stx wRoutineVariable1,b
 
         ldy #2
-        jsr rsUnknown84B148
+        jsr rsAddTurnStartHealingEntry
         sec
         rts
 
@@ -353,11 +353,15 @@
 
         .databank 0
 
-      rsUnknown84B148 ; 84/B148
+      rsAddTurnStartHealingEntry ; 84/B148
 
         .al
         .autsiz
         .databank ?
+
+        ; Records the unit (deployment slot, HP, maximum HP and the healing in
+        ; wRoutineVariable1) in the turn start healing list at $7E2002, unless its HP
+        ; is full.
 
         phx
         lda $7E2002
@@ -503,11 +507,14 @@
 
 
 
-      rlUnknown84C104 ; 84/C104
+      rlDecreaseFactionStatusDurations ; 84/C104
 
         .al
         .autsiz
         .databank ?
+
+        ; For each unit of faction slot A: lowers its status duration and clears
+        ; UnitStateMiracleActive.
 
         ; Ran for every unit in a faction, decrements status and unsets miracle.
 
@@ -557,11 +564,14 @@
 
 
 
-      rlUnknown84C12E ; 84/C12E
+      rlUnsetFactionUnitsMoved ; 84/C12E
 
         .al
         .autsiz
         .databank ?
+
+        ; For each unit of faction slot A: clears UnitStateMoved (and calls
+        ; rlUnknown84CA97 for its deployment slot).
 
         ; Unset grayed and moved status of all units in a faction?
 

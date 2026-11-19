@@ -458,7 +458,7 @@
 
         jsl rlUnknown88818A
         jsl rlUnknown81A85C
-        jsl rlUnknown848000
+        jsl rlInitializeUnitRAM
         jsr rsFillSaveSlotDataBuffers
         jsr rsGetNewUniqueSaveID
         sta aSave.wActiveSaveData,b
@@ -1719,7 +1719,7 @@
         plb
         lda aSave.wActiveSlot,b
         jsr rsSetSaveDataOffsets
-        jsl rlUnknown848000
+        jsl rlInitializeUnitRAM
         jsr rsLoadGeneralSaveData
         jsr rsLoadFactionHeaderRAMData
         jsl rlUnknown87FB5E

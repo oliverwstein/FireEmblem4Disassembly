@@ -758,11 +758,14 @@
 
         .databank 0
 
-      rlUnknown849EA3 ; 84/9EA3
+      rlGetSelectedUnitLivingTalkTarget ; 84/9EA3
 
         .al
         .autsiz
         .databank ?
+
+        ; Returns the character ID of the unit's talk target if that unit is alive,
+        ; otherwise 0. Always 0 for enemy units.
 
         phb
         php
@@ -787,7 +790,7 @@
           stz wR10
 
           lda #0
-          jsl rlUnknown84BF25
+          jsl rlFindFactionUnitByCharacterID
 
           lda wSelectedUnitDataRAMPointer,b
           beq +

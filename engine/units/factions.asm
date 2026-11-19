@@ -163,7 +163,7 @@
             jsl rlGetEventLocationEntryCoordinatesByID
             sta wRoutineVariable1,b
 
-            jsl rlUnknown84AEC0
+            jsl rlDeploySelectedUnit
 
           _Next
           inc y
@@ -728,11 +728,14 @@
 
         .databank 0
 
-      rlUnknown84BEB7 ; 84/BEB7
+      rlCountFactionFieldedLivingUnits ; 84/BEB7
 
         .al
         .autsiz
         .databank ?
+
+        ; Input: A = faction slot. Output: A = how many of its units are fielded and
+        ; not dead.
 
         phb
         php
@@ -830,11 +833,14 @@
 
         .databank 0
 
-      rlUnknown84BF25 ; 84/BF25
+      rlFindFactionUnitByCharacterID ; 84/BF25
 
         .al
         .autsiz
         .databank ?
+
+        ; Input: A = faction slot, wRoutineVariable1 = character ID; if wR10 is not 0,
+        ; the unit must be fielded. Output: wSelectedUnitDataRAMPointer, or 0.
 
         phb
         php
@@ -1712,11 +1718,14 @@
 
         .databank 0
 
-      rlUnknown84C4A2 ; 84/C4A2
+      rlFindFactionUnitWithLowestGenerationID ; 84/C4A2
 
         .al
         .autsiz
         .databank ?
+
+        ; Input: A = faction slot. Output: wSelectedUnitDataRAMPointer = its living unit
+        ; with the lowest generation ID, or 0.
 
         phb
         php

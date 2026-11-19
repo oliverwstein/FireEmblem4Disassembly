@@ -3436,7 +3436,7 @@
         jsl rlUnknown82F211
         lda #$00FF
         sta wUnknown053E,b
-        jsl rlUnknown848000
+        jsl rlInitializeUnitRAM
         jsl rlInitiateChapterEventRAMData
         jsl rlUnknown869CCC
         jsl rlUnknown80A773

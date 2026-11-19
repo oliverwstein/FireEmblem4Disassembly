@@ -199,11 +199,14 @@
 
         .databank 0
 
-      rlUnknown84AB5C ; 84/AB5C
+      rlAddWinToSelectedUnitAndWeapon ; 84/AB5C
 
         .al
         .autsiz
         .databank ?
+
+        ; For player units: adds a kill to the weapon in inventory slot A and a win to
+        ; the unit's entry in aUnitWinCounts (the second half is for chapter 6 on).
 
         phb
         php
@@ -659,11 +662,14 @@
 
         .databank 0
 
-      rlUnknown84AEC0 ; 84/AEC0
+      rlDeploySelectedUnit ; 84/AEC0
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets UnitStateFielded and gives the unit a deployment slot, or updates the
+        ; one it has.
 
         ; Input:
         ; filled wSelectedUnitDataRAMPointer

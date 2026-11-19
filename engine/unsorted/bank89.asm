@@ -1024,7 +1024,7 @@
         bne _9A27
         lda @l wSelectedUnitDataRAMPointer
         pha
-        jsl rlUnknown849EA3
+        jsl rlGetSelectedUnitLivingTalkTarget
         cmp #$0000
         beq _99DA
         jsl rlGetUnitRAMDataPointerByID

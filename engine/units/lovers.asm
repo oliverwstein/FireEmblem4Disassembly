@@ -473,11 +473,13 @@
 
         .databank 0
 
-      rlUnknown87AC8C ; 87/AC8C
+      rlCopySelectedUnitLoverData ; 87/AC8C
 
         .al
         .autsiz
         .databank ?
+
+        ; Copies the unit's 30 bytes of love data to X (in the current data bank).
 
         phb
         php

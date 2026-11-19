@@ -82,7 +82,7 @@
         bne _EC02
         lda #$FFFF
         sta wRoutineVariable1,b
-        jsl rlUnknown84AEC0
+        jsl rlDeploySelectedUnit
 
         _EC02
         lda $0006,b,y

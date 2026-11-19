@@ -531,7 +531,7 @@
         xba
         ora wRoutineVariable1,b
         sta wRoutineVariable1,b
-        jsl rlUnknown84AEC0
+        jsl rlDeploySelectedUnit
         lda wEventLocationEntry,b
         sta $0580,b
         plp
@@ -589,7 +589,7 @@
         xba
         ora wRoutineVariable1,b
         sta wRoutineVariable1,b
-        jsl rlUnknown84AEC0
+        jsl rlDeploySelectedUnit
         lda wEventLocationEntry,b
         sta $0580,b
         lda #$0040
@@ -1665,7 +1665,7 @@
           beq _CLC
 
           txa
-          jsl rlUnknown84BEB7
+          jsl rlCountFactionFieldedLivingUnits
           ora #0
           beq _CLC
 
@@ -1752,7 +1752,7 @@
         lda wSelectedUnitDataRAMPointer,b
         beq _C656
         lda wR0
-        jsl rlUnknown8498A4
+        jsl rlSetSelectedUnitMapAnimation
         inc x
         bra _C640
 
@@ -2618,7 +2618,7 @@
 
         pla
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown849EA3
+        jsl rlGetSelectedUnitLivingTalkTarget
         cmp wEventEngineArgument2,b
         bne +
 

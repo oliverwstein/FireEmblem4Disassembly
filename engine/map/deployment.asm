@@ -494,7 +494,7 @@
           jsl rlAssignUnitToFactionSlot
 
         +
-        jsl rlUnknown84AEC0
+        jsl rlDeploySelectedUnit
 
         ldx wRoutineVariable1,b
         jsl rlDeployedUnitSetHidden

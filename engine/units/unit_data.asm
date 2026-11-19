@@ -1078,11 +1078,14 @@
 
         .databank 0
 
-      rlUnknown8498A4 ; 84/98A4
+      rlSetSelectedUnitMapAnimation ; 84/98A4
 
         .al
         .autsiz
         .databank ?
+
+        ; A not 0 sets UnitStateMapAnimation, 0 clears it. Also sets the battle
+        ; animation option to 2.
 
         pha
         lda #UnitStateMapAnimation

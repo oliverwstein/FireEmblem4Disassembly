@@ -909,7 +909,7 @@
 
         lda structUNITEntry.DestinationCoords,b,y
         sta wRoutineVariable1,b
-        jsl rlUnknown84AEC0
+        jsl rlDeploySelectedUnit
 
         +
         lda structUNITEntry.AI,b,y

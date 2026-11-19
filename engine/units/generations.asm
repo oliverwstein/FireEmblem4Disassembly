@@ -5,11 +5,14 @@
       .al
       .xl
 
-      rlUnknown848000 ; 84/8000
+      rlInitializeUnitRAM ; 84/8000
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears the unit counts and $7E2000-$7E5295 and builds the headers of the unit
+        ; RAM structures.
 
         phb
         php
@@ -127,11 +130,14 @@
 
         .databank 0
 
-      rlUnknown8480EC ; 84/80EC
+      rlResetUnitsForChapter ; 84/80EC
 
         .al
         .autsiz
         .databank ?
+
+        ; Run at chapter start: unloads the factions and, for every unit, heals HP and
+        ; clears its status.
 
         ; Run on chapter start
 
