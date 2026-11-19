@@ -96,7 +96,7 @@
         cmp #AllegianceEnemy
         beq +
 
-          cmp #AllegianceOther
+          cmp #AllegianceNeutral
           beq +
 
             plx
@@ -188,7 +188,7 @@
         cmp #AllegianceOwn
         beq +
 
-        cmp #AllegianceNeutral
+        cmp #AllegianceAllied
         beq +
 
         ldx wActionStructDefenderDeploymentNumber
@@ -199,7 +199,7 @@
         cmp #AllegianceEnemy
         beq +
 
-        cmp #AllegianceOther
+        cmp #AllegianceNeutral
         beq +
 
         .databank ?
@@ -331,7 +331,7 @@
         cmp #AllegianceEnemy
         beq _EnemyAttack
 
-        cmp #AllegianceOther
+        cmp #AllegianceNeutral
         beq _EnemyAttack
 
         ; Player attack

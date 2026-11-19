@@ -15230,7 +15230,7 @@
         jsl rlGetFactionRelation
         cmp #AllegianceOwn
         beq rsUnknown85E545
-        cmp #AllegianceNeutral
+        cmp #AllegianceAllied
         beq rsUnknown85E545
         jml rsUnknown85E547
 

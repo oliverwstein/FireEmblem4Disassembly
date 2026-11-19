@@ -145,10 +145,14 @@
 
   FS_Player               = 0
 
+  ; A faction's relation to another (rlGetFactionRelation), and the allegiance
+  ; bits of a unit's deployment state (DeploymentAllegianceMask). The data window
+  ; calls them じぐん, てきたい, どうめい and ちゅうりつ. Enemy and neutral
+  ; units can be attacked; own and allied units cannot.
   AllegianceOwn           = 0
   AllegianceEnemy         = 1
-  AllegianceNeutral       = 2
-  AllegianceOther         = 3
+  AllegianceAllied        = 2
+  AllegianceNeutral       = 3
 
 
   structHolyBloodDataEntry .struct BoostedWeaponRank, HolyWeapon, HPGrowth, StrGrowth, MagGrowth, SklGrowth, SpdGrowth, DefGrowth, ResGrowth, LuckGrowth, StrBoost, MagBoost, SklBoost, SpdBoost, DefBoost, ResBoost

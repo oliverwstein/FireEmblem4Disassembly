@@ -351,7 +351,7 @@
 
               lda #0
               jsl rlGetFactionRelation
-              cmp #AllegianceOther
+              cmp #AllegianceNeutral
               beq _Next
 
                 cmp #AllegianceEnemy

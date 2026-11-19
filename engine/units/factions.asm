@@ -1203,13 +1203,13 @@
               lda aFactionBitLookupTable,y
               and #$00FF
               and $7E0000 + structFactionHeader.AlliedFactions,x
-              bne _Neutral
+              bne _Allied
 
-                lda #AllegianceOther
+                lda #AllegianceNeutral
                 bra +
 
-              _Neutral
-              lda #AllegianceNeutral
+              _Allied
+              lda #AllegianceAllied
               bra +
 
           _Enemy
@@ -1497,7 +1497,7 @@
           lda wRoutineVariable1,b
           bne _End
 
-            lda #AllegianceNeutral
+            lda #AllegianceAllied
             sta wRoutineVariable1,b
             lda wR0
             jsr rsSetFactionSlotAllegiance
@@ -1567,7 +1567,7 @@
           lda wRoutineVariable1,b
           bne _End
 
-            lda #AllegianceOther
+            lda #AllegianceNeutral
             sta wRoutineVariable1,b
             lda wR0
             jsr rsSetFactionSlotAllegiance

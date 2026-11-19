@@ -457,7 +457,7 @@
         cmp #AllegianceEnemy
         beq +
 
-        cmp #AllegianceOther
+        cmp #AllegianceNeutral
         beq +
 
         lda #$0031

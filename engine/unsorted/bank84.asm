@@ -2310,7 +2310,7 @@
             cmp #AllegianceEnemy
             beq +
 
-              cmp #AllegianceOther
+              cmp #AllegianceNeutral
               beq +
 
                 jsr rsUnknown84D010

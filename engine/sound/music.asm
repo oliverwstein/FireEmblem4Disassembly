@@ -30,10 +30,10 @@
         +
         ldx #0
         jsl rlGetFactionRelation
-        cmp #AllegianceNeutral
+        cmp #AllegianceAllied
         beq _NPC
 
-          cmp #AllegianceOther
+          cmp #AllegianceNeutral
           beq _Yellow
 
             lda wActiveFactionSlot,b

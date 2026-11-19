@@ -1264,7 +1264,7 @@
               jsl rlGetFactionRelation
               plx
 
-              cmp #AllegianceOther
+              cmp #AllegianceNeutral
               beq +
 
                 cmp #AllegianceEnemy
@@ -1637,7 +1637,7 @@
         cmp #AllegianceEnemy
         beq rsFillUnitMapFoeFilter._CLC
 
-        cmp #AllegianceOther
+        cmp #AllegianceNeutral
         beq rsFillUnitMapFoeFilter._CLC
         bra rsFillUnitMapFoeFilter._SEC
 
@@ -1653,7 +1653,7 @@
         lda aDeploymentTable._FactionSlot,x
         ldx $442C,b
         jsl rlGetFactionRelation
-        cmp #AllegianceOther
+        cmp #AllegianceNeutral
         beq _SEC
 
         cmp #AllegianceEnemy

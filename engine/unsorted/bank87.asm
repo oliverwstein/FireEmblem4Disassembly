@@ -4352,18 +4352,18 @@
 
           jsl rlGetFactionRelation
           plx
-          cmp #AllegianceOther
+          cmp #AllegianceNeutral
           beq +
 
             cmp #AllegianceEnemy
             bne ++
 
-          ; other, enemy
+          ; neutral, enemy
           +
           lda #$00FF
           rts
 
-        ; player, npc 
+        ; own, allied
         +
         lda #1
         rts
