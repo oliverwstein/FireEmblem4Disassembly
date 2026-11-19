@@ -6,7 +6,7 @@ usage: tools/fix_addressing.py FILE
 First it adds `.databank X` after each explicit bank switch (`lda #X / pha / rep #$20 /
 plb`) that does not declare one. Then it repeatedly tests FILE (see test_routines.py).
 While there are assembly errors, it fixes
-the two systematic ones for WRAM in banks $7E/$7F:
+the two systematic data bank ones (for operands outside bank $00):
 
   `not a data bank address`  -> the nearest `.databank ?` gets that bank
   `too large for a 16 bit`   -> the operand's `,b` is removed (in 64tass, `,b` requires a
@@ -20,6 +20,8 @@ Once it assembles, for each differing routine it looks at the first real differe
   built absolute, original long
       -> the original used a long address although the data bank allowed absolute,
          so the operand gets `@l`
+  an immediate operand one byte longer or shorter than in the ROM
+      -> a register width directive (.as/.al/.xs/.xl) goes before that instruction
 
 Stops when a round changes nothing, then prints the remaining differences, which need a
 look by hand. FILE is edited in place; review the changes with `git diff`.
@@ -60,18 +62,18 @@ def declare_bank_switches(path):
 
 
 def fix_errors(path, res):
-    """Fix the two systematic WRAM addressing errors. Returns the number of lines changed.
+    """Fix the two systematic data bank errors. Returns the number of lines changed.
 
-    `not a data bank address` on a $7E/$7F operand: the instruction has no long form, so
-    the routine must run with that data bank; set the nearest `.databank ?` to it.
-    `too large for a 16 bit` on a $7E/$7F operand: `,b` needs a 16-bit operand, so drop
-    the `,b` and let .databank decide the addressing mode.
+    `not a data bank address` on an operand outside bank $00: the instruction has no long
+    form, so the routine must run with that data bank; set the nearest `.databank ?` to it.
+    `too large for a 16 bit` on such an operand: `,b` needs a 16-bit operand, so drop the
+    `,b` and let .databank decide the addressing mode.
     """
     lines = res.lines
     changed = set()
     for e in res.errors:
         m = re.search(rf'{re.escape(path)}:(\d+):\d+: error: (not a data bank address|too large for a 16 bit)'
-                      rf"[^']*'\$(7[ef])[0-9a-f]{{4}}'", e)
+                      rf"[^']*'\$([0-9a-f][1-9a-f]|[1-9a-f]0)[0-9a-f]{{4}}'", e)
         if not m:
             continue
         ln, kind, bank = int(m.group(1)), m.group(2), m.group(3).upper()
@@ -87,6 +89,32 @@ def fix_errors(path, res):
     if changed:
         open(path, 'w', encoding='utf-8').write('\n'.join(lines))
     return len(changed)
+
+
+M_IMMEDIATE = {0x09, 0x29, 0x49, 0x69, 0x89, 0xA9, 0xC9, 0xE9}   # ora and eor adc bit lda cmp sbc #
+X_IMMEDIATE = {0xA0, 0xA2, 0xC0, 0xE0}                           # ldy ldx cpy cpx #
+
+
+def width_fix(ln, built, orig, res, at_offset):
+    """A register width directive that makes an immediate operand the size the ROM has.
+
+    64tass tracks register widths through rep/sep, but not through plp or across
+    routines entered in a different mode, so an immediate can come out one byte too long
+    or too short. Returns (line number, directive) or None.
+    """
+    def directive(op, wide):
+        return ('.al' if wide else '.as') if op in M_IMMEDIATE else ('.xl' if wide else '.xs')
+    # Built 16-bit, original 8-bit: same opcode and low byte, but the next byte differs.
+    if (len(built) == 3 and built[0] in M_IMMEDIATE | X_IMMEDIATE and orig[0] == built[0]
+            and orig[1] == built[1] and orig[2] != built[2]):
+        return ln, directive(built[0], False)
+    # Built 8-bit, original 16-bit: the previous instruction is a 2-byte immediate and this
+    # one starts where the original still has the immediate's high byte.
+    off = res.listing[ln][0]
+    prev = at_offset.get(off - 2)
+    if prev and len(prev[1]) == 2 and prev[1][0] in M_IMMEDIATE | X_IMMEDIATE:
+        return prev[0], directive(prev[1][0], True)
+    return None
 
 
 def main():
@@ -110,6 +138,8 @@ def main():
         bad = res.mismatches(rom)
         lines = res.lines
         changed, headers = 0, set()
+        inserts = []                     # (line number, directive) to insert before that line
+        at_offset = {off: (n, bs) for n, (off, bs) in res.listing.items()}
         for name, addr, n, size, first in bad:
             d = res.first_difference(addr, rom) if n else None
             if not d:
@@ -123,6 +153,11 @@ def main():
                 new = re.sub(r'^(\s*[a-z]{3}\s+)', r'\1@l ', lines[ln - 1], count=1)
                 if new != lines[ln - 1]:
                     lines[ln - 1] = new; changed += 1
+            elif (w := width_fix(ln, built, orig, res, at_offset)):
+                inserts.append(w); changed += 1
+        for n, directive in sorted(set(inserts), reverse=True):
+            indent = lines[n - 1][:len(lines[n - 1]) - len(lines[n - 1].lstrip())]
+            lines.insert(n - 1, indent + directive)
         print(f'round {rnd}: {len(res.routines) - len(bad)} of {len(res.routines)} routines match; {changed} fixes')
         if not changed:
             break

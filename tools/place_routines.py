@@ -16,7 +16,8 @@ stay where they are. Labels must be in address order.
 The tool first tests FILE (see test_routines.py) and refuses unless every routine in a
 section assembles and matches the ROM. It then measures the register widths at each
 section start, writes the sections into their files (in address order; a new file gets
-a TODO description), adds placement blocks and includes to build.asm, and with
+a TODO description), adds placement blocks and includes to build.asm, removes the
+placed routines' forward declarations from include/Undisassembled.h, and with
 --remove deletes the placed routines from FILE. Run ./build.sh afterwards.
 """
 import os, re, sys
@@ -139,6 +140,15 @@ def main():
         pos = after[-1].end() if after else engine[0].start()
         b = b[:pos] + inc + b[pos:]
     open('build.asm', 'w', encoding='utf-8').write(b)
+
+    # The placed routines are now defined, so their forward declarations can go.
+    und = 'include/Undisassembled.h'
+    if os.path.exists(und):
+        names = {routines[k][1] for k in placed}
+        h = open(und, encoding='utf-8').read().split('\n')
+        kept = [l for l in h if not ((m := re.match(r'\s+(\w+)\s+:\?=', l)) and m.group(1) in names)]
+        if len(kept) != len(h):
+            open(und, 'w', encoding='utf-8').write('\n'.join(kept))
 
     if remove:
         drop = set()
