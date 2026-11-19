@@ -1072,6 +1072,27 @@
 
     .here
 
+    * = $00EE37
+    .logical $80EE37
+
+      .dsection Unsorted80EE37Section
+
+    .here
+
+    * = $00EFD8
+    .logical $80EFD8
+
+      .dsection Unsorted80EFD8Section
+
+    .here
+
+    * = $00F1A7
+    .logical $80F1A7
+
+      .dsection Unsorted80F1A7Section
+
+    .here
+
     * = $00F222
     .logical $80F222
 
@@ -9182,6 +9203,111 @@
     .logical $8DA06A
 
       .dsection Unsorted8DA06ASection
+
+    .here
+
+    * = $0DA0C6
+    .logical $8DA0C6
+
+      .dsection Unsorted8DA0C6Section
+
+    .here
+
+    * = $0DA2AA
+    .logical $8DA2AA
+
+      .dsection Unsorted8DA2AASection
+      .dsection Unsorted8DA34DSection
+
+    .here
+
+    * = $0DA3DE
+    .logical $8DA3DE
+
+      .dsection Unsorted8DA3DESection
+
+    .here
+
+    * = $0DA4B3
+    .logical $8DA4B3
+
+      .dsection Unsorted8DA4B3Section
+
+    .here
+
+    * = $0DA50F
+    .logical $8DA50F
+
+      .dsection Unsorted8DA50FSection
+
+    .here
+
+    * = $0DA624
+    .logical $8DA624
+
+      .dsection Unsorted8DA624Section
+
+    .here
+
+    * = $0DA755
+    .logical $8DA755
+
+      .dsection Unsorted8DA755Section
+
+    .here
+
+    * = $0DAD73
+    .logical $8DAD73
+
+      .dsection Unsorted8DAD73Section
+
+    .here
+
+    * = $0DAE85
+    .logical $8DAE85
+
+      .dsection Unsorted8DAE85Section
+
+    .here
+
+    * = $0DAEC2
+    .logical $8DAEC2
+
+      .dsection Unsorted8DAEC2Section
+      .dsection Unsorted8DAF33Section
+
+    .here
+
+    * = $0DAFA5
+    .logical $8DAFA5
+
+      .dsection Unsorted8DAFA5Section
+
+    .here
+
+    * = $0DB06E
+    .logical $8DB06E
+
+      .dsection Unsorted8DB06ESection
+      .dsection Unsorted8DB150Section
+      .dsection Unsorted8DB1DDSection
+      .dsection Unsorted8DB217Section
+      .dsection Unsorted8DB252Section
+      .dsection Unsorted8DB276Section
+
+    .here
+
+    * = $0DB2B8
+    .logical $8DB2B8
+
+      .dsection Unsorted8DB2B8Section
+
+    .here
+
+    * = $0DB4F1
+    .logical $8DB4F1
+
+      .dsection Unsorted8DB4F1Section
 
     .here
 

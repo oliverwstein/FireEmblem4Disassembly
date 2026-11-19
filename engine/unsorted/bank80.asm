@@ -7007,6 +7007,426 @@
     .endsection Unsorted80E9B2Section
 
 
+    .section Unsorted80EE37Section
+
+      .al
+      .xl
+
+      rlUnknown80EE37 ; 80/EE37
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlCalculateFinalRankingScore
+        cmp #$0000
+        beq _EE51
+        lda #$000D
+        sta wGameStateStep,b
+        lda #$005A
+        sta $04BA,b
+        jsl rlUnknown809654
+        rtl
+
+
+        _EE51
+        phk
+        plb
+        .databank $80
+        rep #$30
+        lda #$1809
+        sta $4300,b
+        lda #$8000
+        sta $4303,b
+        lda #$EFA7
+        sta $4302,b
+        lda #$4000
+        sta $4305,b
+        lda #$4000
+        sta $2116,b
+        sep #$20
+        lda #$01
+        sta $420B,b
+        rep #$20
+        lda #$0002
+        sta aDialogue.wUnknown0018D0,b
+        lda #$8000
+        sta lR19+1
+        lda #$EFA8
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$8000
+        sta lR19+1
+        lda #$EFB0
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$8000
+        sta lR19+1
+        lda #$EFB8
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$8000
+        sta lR19+1
+        lda #$EFC8
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$8000
+        sta lR19+1
+        lda #$EFD0
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$8000
+        sta lR19+1
+        lda #$EFC0
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        ldx #$07FE
+        lda #$00FF
+
+        _EEDC
+        sta aBG3TilemapBuffer,x
+        dec x
+        dec x
+        bpl _EEDC
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $D000
+
+        ldx #$01FE
+
+        _EEF4
+        lda $8CA200,x
+        sta aBGPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _EEF4
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        sep #$20
+        lda #$00
+        sta bBufferWH0
+        sta bBufferWH1
+        stz bBufferWH2
+        stz bBufferWH3
+        lda #$00
+        sta bBufferW12SEL
+        sta bBufferW34SEL
+        lda bBufferBG1SC
+        ora #$02
+        sta bBufferBG1SC
+        lda bBufferBG2SC
+        ora #$02
+        sta bBufferBG2SC
+        lda bBufferBG3SC
+        and #$FC
+        sta bBufferBG3SC
+        lda #$03
+        sta bBufferWOBJSEL
+        rep #$20
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        lda #$10
+        sta bBufferTS
+        lda #$03
+        sta bBufferTMW
+        lda #$00
+        sta bBufferTSW
+        lda #$A3
+        sta bBufferCGWSEL
+        lda #$42
+        sta bBufferCGADSUB
+        lda #$20
+        sta bBufferCOLDATA_1
+        lda #$40
+        sta bBufferCOLDATA_2
+        lda #$80
+        sta bBufferCOLDATA_3
+        rep #$20
+        lda #$0000
+        sta wBufferBG1HOFS
+        sta wBufferBG2HOFS
+        lda #$0140
+        sta wBufferBG1VOFS
+        sta wBufferBG2VOFS
+        lda #$000D
+        sta $04BA,b
+        jsl rlUnknown809654
+        jsl rlResetDialogueEngine
+        lda #$8D00
+        sta lR18+1
+        lda #$C9A6
+        sta lR18
+        lda #$0002
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsl $8DA3DE
+        lda #$0003
+        sta wGameStateStep,b
+        lda #$0004
+        sta wScreenFadingProcInput,b
+        lda #(`procFadeInByScreenFadingTimer)<<8
+        sta lR44+1
+        lda #<>procFadeInByScreenFadingTimer
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 80/EFA6
+
+    .endsection Unsorted80EE37Section
+
+
+    .section Unsorted80EFD8Section
+
+      .al
+      .xl
+
+      rlUnknown80EFD8 ; 80/EFD8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlResetHDMAEngine
+        phk
+        plb
+        .databank $80
+        rep #$30
+        lda #$1809
+        sta $4300,b
+        lda #$8000
+        sta $4303,b
+        lda #$F186
+        sta $4302,b
+        lda #$4000
+        sta $4305,b
+        lda #$4000
+        sta $2116,b
+        sep #$20
+        lda #$01
+        sta $420B,b
+        rep #$20
+        phk
+        plb
+        .databank $80
+        rep #$30
+        lda #$1809
+        sta $4300,b
+        lda #$8000
+        sta $4303,b
+        lda #$F186
+        sta $4302,b
+        lda #$3000
+        sta $4305,b
+        lda #$1800
+        sta $2116,b
+        sep #$20
+        lda #$01
+        sta $420B,b
+        rep #$20
+        lda #$0002
+        sta aDialogue.wUnknown0018D0,b
+        ldx #$07FE
+        lda #$03FF
+
+        _F04D
+        sta aBG3TilemapBuffer,x
+        dec x
+        dec x
+        bpl _F04D
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $D000
+
+        lda #$8000
+        sta lR19+1
+        lda #$F187
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$8000
+        sta lR19+1
+        lda #$F18F
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$8000
+        sta lR19+1
+        lda #$F197
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #$8000
+        sta lR19+1
+        lda #$F19F
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        ldx #$01FE
+
+        _F09D
+        lda $8CA400,x
+        sta aBGPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _F09D
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        sep #$20
+        lda #$00
+        sta bBufferWH0
+        sta bBufferWH1
+        stz bBufferWH2
+        stz bBufferWH3
+        lda #$00
+        sta bBufferW12SEL
+        sta bBufferW34SEL
+        lda bBufferBG1SC
+        and #$FC
+        sta bBufferBG1SC
+        lda bBufferBG2SC
+        ora #$02
+        sta bBufferBG2SC
+        lda bBufferBG3SC
+        and #$FC
+        sta bBufferBG3SC
+        lda #$03
+        sta bBufferWOBJSEL
+        rep #$20
+        sep #$20
+        lda #$16
+        sta bBufferTM
+        lda #$01
+        sta bBufferTS
+        lda #$00
+        sta bBufferTMW
+        lda #$00
+        sta bBufferTSW
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$44
+        sta bBufferCGADSUB
+        lda #$20
+        sta bBufferCOLDATA_1
+        lda #$40
+        sta bBufferCOLDATA_2
+        lda #$80
+        sta bBufferCOLDATA_3
+        rep #$20
+        lda #$0000
+        sta wBufferBG1HOFS
+        sta wBufferBG2HOFS
+        sta wBufferBG3HOFS
+        lda #$0000
+        sta wBufferBG1VOFS
+        sta wBufferBG3VOFS
+        lda #$FFE0
+        sta wBufferBG2VOFS
+        jsl rlCalculateFinalRankingScore
+        cmp #$0000
+        beq _F125
+        cmp #$0003
+        bcc _F12D
+        bra _F138
+
+
+        _F125
+        lda #$800E
+        sta $04BA,b
+        bra _F13A
+
+
+        _F12D
+        lda #$800C
+        lda #$800B
+        sta $04BA,b
+        bra _F13A
+
+
+        _F138
+        bra _F13A
+
+
+        _F13A
+        lda #$000B
+        sta wGameStateStep,b
+        lda #$0007
+        sta $0594,b
+        jsl rlResetDialogueEngine
+        lda #$8D00
+        sta lR18+1
+        lda #$C9FF
+        sta lR18
+        lda #$0002
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsl $8DAEC2
+        lda #$8D00
+        sta lR44+1
+        lda #$AE7A
+        sta lR44
+        lda #$0002
+        sta wR40
+        jsl rlHDMAEngineCreateEntryByIndex
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 80/F185
+
+    .endsection Unsorted80EFD8Section
+
+
+    .section Unsorted80F1A7Section
+
+      .al
+      .xl
+
+      rlUnknown80F1A7 ; 80/F1A7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlResetHDMAEngine
+        lda #$0018
+        sta $08DC,b
+        jsl rlUnknown8DB52C
+        stz wGameStateStep,b
+        lda #$B6B6
+        sta wMainLoopPointer
+        jsl rlEnableVBlank
+        sep #$20
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 80/F1D5
+
+    .endsection Unsorted80F1A7Section
+
+
     .section Unsorted80F222Section
 
       .al
