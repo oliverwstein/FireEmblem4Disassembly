@@ -118,6 +118,9 @@
   .include "engine/dialogue/dialogue_procs.asm"
   .include "engine/map/map_sprites.asm"
   .include "engine/map/popups.asm"
+  .include "engine/map/windows.asm"
+  .include "engine/menus/map_menu.asm"
+  .include "engine/menus/menu_text.asm"
   .include "engine/rankings/rankings.asm"
   .include "engine/sound/music.asm"
   .include "engine/units/turn_start.asm"
@@ -125,6 +128,7 @@
   .include "engine/unsorted/bank81.asm"
   .include "engine/unsorted/bank82.asm"
   .include "engine/unsorted/bank84.asm"
+  .include "engine/unsorted/bank85.asm"
   .include "engine/unsorted/bank87.asm"
   .include "engine/unsorted/bank89.asm"
   .include "engine/unsorted/bank8F.asm"
@@ -1184,12 +1188,181 @@
 
     .here
 
+    * = $0582A2
+    .logical $8582A2
+
+      .dsection MapMenuSaveMapStateSection
+
+    .here
+
+    * = $058341
+    .logical $858341
+
+      .dsection StallProcUntilMapMenuDataLoadedSection
+
+    .here
+
+    * = $0583F8
+    .logical $8583F8
+
+      .dsection Unsorted8583F8Section
+
+    .here
+
+    * = $058728
+    .logical $858728
+
+      .dsection Unsorted858728Section
+
+    .here
+
+    * = $05895C
+    .logical $85895C
+
+      .dsection MapMenuBuildTilemapSection
+
+    .here
+
+    * = $059B59
+    .logical $859B59
+
+      .dsection CreateUnitWindowAndTerrainWindowProcsSection
+
+    .here
+
+    * = $059BD1
+    .logical $859BD1
+
+      .dsection DialogueBoxMapMenuTilemapDataSection
+
+    .here
+
+    * = $059BE6
+    .logical $859BE6
+
+      .dsection DialogueBoxSection
+
+    .here
+
+    * = $059FC5
+    .logical $859FC5
+
+      .dsection FreeHDMAEntry0Section
+
+    .here
+
+    * = $05A1E7
+    .logical $85A1E7
+
+      .dsection Unsorted85A1E7Section
+      .dsection GetMenuTextStringLengthSection
+
+    .here
+
     * = $05A895
     .logical $85A895
 
       .dsection DialogueBoxHDMASection
 
       ; 85/AB19
+
+    .here
+
+    * = $05AB19
+    .logical $85AB19
+
+      .dsection FreeDialogueBoxHDMAIfFinishedSection
+
+    .here
+
+    * = $05ABF6
+    .logical $85ABF6
+
+      .dsection Unsorted85ABF6Section
+
+    .here
+
+    * = $05AC02
+    .logical $85AC02
+
+      .dsection Unsorted85AC02Section
+
+    .here
+
+    * = $05B1B0
+    .logical $85B1B0
+
+      .dsection Unsorted85B1B0Section
+
+    .here
+
+    * = $05B9D4
+    .logical $85B9D4
+
+      .dsection Unsorted85B9D4Section
+
+    .here
+
+    * = $05BA4D
+    .logical $85BA4D
+
+      .dsection Unsorted85BA4DSection
+
+    .here
+
+    * = $05BC1B
+    .logical $85BC1B
+
+      .dsection Unsorted85BC1BSection
+
+    .here
+
+    * = $05BC9E
+    .logical $85BC9E
+
+      .dsection Unsorted85BC9ESection
+
+    .here
+
+    * = $05C0CE
+    .logical $85C0CE
+
+      .dsection Unsorted85C0CESection
+
+    .here
+
+    * = $05CA4B
+    .logical $85CA4B
+
+      .dsection Unsorted85CA4BSection
+
+    .here
+
+    * = $05DF3F
+    .logical $85DF3F
+
+      .dsection Unsorted85DF3FSection
+
+    .here
+
+    * = $05DF6F
+    .logical $85DF6F
+
+      .dsection Unsorted85DF6FSection
+
+    .here
+
+    * = $05E33D
+    .logical $85E33D
+
+      .dsection Unsorted85E33DSection
+
+    .here
+
+    * = $05E897
+    .logical $85E897
+
+      .dsection Unsorted85E897Section
 
     .here
 

@@ -605,3 +605,25 @@
         ; 82/C26D
 
     .endsection HDMACodeSection
+
+
+    .section FreeHDMAEntry0Section
+
+      .al
+      .xl
+
+      rlFreeHDMAEntry0 ; 85/9FC5
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #0
+        jsl rlHDMAEngineFreeEntryByIndex
+        rtl
+
+        .databank 0
+
+        ; 85/9FCD
+
+    .endsection FreeHDMAEntry0Section

@@ -1,5 +1,255 @@
 ; HDMA effects that fold and unfold dialogue boxes.
 
+    .section DialogueBoxSection
+
+      .al
+      .xl
+
+      procDialogueBox ; 85/9BE6
+
+        .structProcInfo "PC", rlProcDialogueBoxInit, rlProcDialogueBoxCycle1, $858398
+
+        .long aDialogueBoxMapMenuData
+        .byte 0
+
+        ; Handles writing the necessary BG tiles to the BG2, increasing in width over time 
+        ; and creates a HDMA that handles the box folding and modifies the height.
+        ; aProcSystem.wInput0 = position indicator
+        ; aProcSystem.wInput1 = Y tile position << 8 | X 
+
+      rlProcDialogueBoxInit ; 85/9BF2
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlStallProcUntilMapMenuDataLoaded
+
+        lda #0
+        sta wBufferBG3VOFS
+        sta wBufferBG3HOFS
+
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody5,b,x
+        lda aProcSystem.wInput1,b
+        sta aProcSystem.aBody6,b,x
+        jsl rlSetMapMenuPosition
+
+        lda #0
+        sta aProcSystem.aBody4,b,x
+
+        lda aProcSystem.aBody5,b,x
+        sta wR42
+
+        lda aProcSystem.wInput1,b
+        xba
+        and #$00FF
+        asl a
+        asl a
+        asl a
+        sta aProcSystem.aBody6,b,x
+        sta wR43
+        lda #2
+        sta wR40
+
+        lda #(`aDialogueBoxUnfoldingHDMA)<<8
+        sta lR44+1
+        lda #<>aDialogueBoxUnfoldingHDMA
+        sta lR44
+        jsl rlHDMAEngineCreateEntryByIndex
+        rtl
+
+        .databank 0
+
+      rlProcDialogueBoxCycle1 ; 85/9C3B
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody5,b,x
+        sta aProcSystem.wInput0,b
+
+        lda #<>rlProcDialogueBoxCycle2
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+      rlProcDialogueBoxCycle2 ; 85/9C48
+
+        .al
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda aProcSystem.aBody5,b,x
+        sta aProcSystem.wInput0,b
+
+        jsl rlUnknown87829A
+        jsl rlMapMenuBuildTilemap
+        plx
+
+        lda #<>rlProcDialogueBoxCycle3
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda #$0002
+        tsb wUnknown000D79,b
+        rtl
+
+        .databank 0
+
+      rlProcDialogueBoxCycle3 ; 85/9C69
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #$0002
+        tsb wUnknown000D79,b
+
+        jsl rlCheckDialogueBoxHDMAFinished
+        bcs +
+
+          lda aProcSystem.aBody5,b,x
+          sta aProcSystem.wInput0,b
+          jsl rlLoadMapMenuEntryPointerFromProcBody
+          jsl rlGetMapMenuTilemapArea
+          clc
+          adc #2
+          jsl rlSetMapMenuTilemapArea
+          jsl rlMapMenuBuildTilemap
+          rtl
+
+        +
+        phx
+        lda aProcSystem.aBody5,b,x
+        sta aProcSystem.wInput0,b
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda #pack([32, 10])
+        jsl rlSetMapMenuTilemapArea
+        jsl rlUnknown87829A
+        jsl rlMapMenuBuildTilemap
+        plx
+        lda #<>rlProcDialogueBoxCycle4
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+      rlProcDialogueBoxCycle4 ; 85/9CB2
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody5,b,x
+        sta aProcSystem.wInput0,b
+
+        lda aProcSystem.aBody4,b,x
+        bit #$0001
+        bne +
+
+          rtl
+
+        +
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda #<>rlProcDialogueBoxCycle5
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aBody5,b,x
+        sta wR42
+        lda aProcSystem.aBody6,b,x
+        sta wR43
+        lda #2
+        sta wR40
+        lda #(`aDialogueBoxFoldingHDMA)<<8
+        sta lR44+1
+        lda #<>aDialogueBoxFoldingHDMA
+        sta lR44
+        jsl rlHDMAEngineCreateEntryByIndex
+
+        lda aProcSystem.aBody5,b,x
+        sta aProcSystem.wInput0,b
+        jsl rlUnknown87829A
+        jsl rlMapMenuBuildTilemap
+        lda #$0002
+        tsb wUnknown000D79,b
+        rtl
+
+        .databank 0
+
+      rlProcDialogueBoxCycle5 ; 85/9CFD
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlCheckDialogueBoxHDMAFinished
+        bcs +
+
+          lda aProcSystem.aBody5,b,x
+          sta aProcSystem.wInput0,b
+          lda #$0002
+          tsb wUnknown000D79,b
+          jsl rlLoadMapMenuEntryPointerFromProcBody
+          jsl rlGetMapMenuTilemapArea
+          sec
+          sbc #4
+          jsl rlSetMapMenuTilemapArea
+          jsl $85884A
+          rtl
+
+        +
+        jsl $8586FA
+        jsl $85AB2A
+        lda #$0002
+        tsb wUnknown000D79,b
+        lda #<>rlProcDialogueBoxCycle6
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+      rlProcDialogueBoxCycle6 ; 85/9D39
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #$7FFF
+        sta wDialogueBoxHDMAStatus
+        jsl rlProcEngineFreeProc
+        rtl
+
+        .databank 0
+
+      rlCreateProcDialogueBox ; 85/9D45
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; A = top or bottom indicator:  0 or 1
+        ; X = tile y coordinate:        0 or (18 << 8)
+
+        pha
+        jsl rlFreeHDMAEntry0
+        pla
+        sta aProcSystem.wInput0,b
+        stx aProcSystem.wInput1,b
+
+        lda #(`procDialogueBox)<<8
+        sta lR44+1
+        lda #<>procDialogueBox
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/9D60
+
+    .endsection DialogueBoxSection
+
+
     .section DialogueBoxHDMASection
 
       .al
@@ -597,3 +847,45 @@
         ; 85/AB19
 
     .endsection DialogueBoxHDMASection
+
+
+    .section FreeDialogueBoxHDMAIfFinishedSection
+
+      .al
+      .xl
+
+      rlFreeDialogueBoxHDMAIfFinished ; 85/AB19
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wDialogueBoxHDMAStatus
+        cmp #$FFFF
+        beq +
+
+          clc
+          rtl
+
+        +
+        jsl rlFreeDialogueBoxHDMA
+        sec
+        rtl
+
+        .databank 0
+
+      rlFreeDialogueBoxHDMA ; 85/AB2A
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #2
+        jsl rlHDMAEngineFreeEntryByIndex
+        rtl
+
+        .databank 0
+
+        ; 85/AB32
+
+    .endsection FreeDialogueBoxHDMAIfFinishedSection
