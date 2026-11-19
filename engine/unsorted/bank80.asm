@@ -370,7 +370,6 @@
 
       rsUnknown808222 ; 80/8222
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1515,11 +1514,11 @@
         sta wJoyRepeatDelay
         lda #$000A
         sta wJoyRepeatInterval
-        lda #$9CA0
+        lda #<>rsUnknown809CA0
         sta wVBlankPointer
-        lda #$8222
+        lda #<>rsUnknown808222
         sta wIRQPointer
-        lda #$9CD6
+        lda #<>rlUnknown809CD6
         sta wMainLoopPointer
         jml _8EEE
 
@@ -3610,7 +3609,7 @@
 
       rsUnknown809CA0 ; 80/9CA0
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3639,7 +3638,7 @@
 
       rlUnknown809CD6 ; 80/9CD6
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -4150,9 +4149,9 @@
         lda #$0002
         sta wGameStateRoutine1,b
         stz wGameStateStep,b
-        lda #$AE25
+        lda #<>rsUnknown80AE25
         sta wVBlankPointer
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -4173,7 +4172,6 @@
 
       rsUnknown80AE25 ; 80/AE25
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4204,7 +4202,6 @@
 
       rsUnknown80AE63 ; 80/AE63
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4219,7 +4216,6 @@
 
       rsUnknown80AE68 ; 80/AE68
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4569,9 +4565,9 @@
         lda #$C5A2
         sta lR44
         jsl rlProcEngineCreateProc
-        lda #$AE68
+        lda #<>rsUnknown80AE68
         sta wVBlankPointer
-        lda #$B301
+        lda #<>rsUnknown80B301
         sta wMainLoopPointer
         stz wGameStateRoutine2,b
         stz wGameStateRoutine1,b
@@ -4592,7 +4588,7 @@
 
       rsUnknown80B301 ; 80/B301
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -4619,7 +4615,7 @@
 
       rsUnknown80B347 ; 80/B347
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -4716,9 +4712,9 @@
         lda #$000D
         sta wGameStateRoutine2,b
         stz wGameStateStep,b
-        lda #$B347
+        lda #<>rsUnknown80B347
         sta wVBlankPointer
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         jsl rlUnknown80B452
         jsl rlUnknown88CD61
@@ -4944,7 +4940,6 @@
 
       rsUnknown80B641 ; 80/B641
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5003,7 +4998,6 @@
 
       rsUnknown80B6B6 ; 80/B6B6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5045,9 +5039,9 @@
         sta wGameStateRoutine1,b
         lda #$000A
         sta wGameStateRoutine2,b
-        lda #$B641
+        lda #<>rsUnknown80B641
         sta wVBlankPointer
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         lda #$0002
         sta aDialogue.wUnknown0018D0,b
@@ -5097,7 +5091,7 @@
         sta $088B,b
         lda $089B,b
         sta wSelectedUnitDataRAMPointer,b
-        lda #$B6B6
+        lda #<>rsUnknown80B6B6
         sta wMainLoopPointer
         clc
         rtl
@@ -5642,7 +5636,7 @@
         jsl rlBuildDeadPlayerCharacterList
         lda #$0000
         sta $088B,b
-        lda #$B6B6
+        lda #<>rsUnknown80B6B6
         sta wMainLoopPointer
         rtl
 
@@ -5691,7 +5685,6 @@
 
       rsUnknown80BB9B ; 80/BB9B
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5722,7 +5715,6 @@
 
       rsUnknown80BBD9 ; 80/BBD9
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5733,7 +5725,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$BB9B
+        lda #<>rsUnknown80BB9B
         sta wVBlankPointer
         jsl rlUnknown80823F
         jsl rlDisableVBlank
@@ -5766,7 +5758,7 @@
         lda #$0007
         sta wGameStateRoutine2,b
         stz wGameStateStep,b
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -6114,7 +6106,6 @@
 
       rsUnknown80BF40 ; 80/BF40
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6165,7 +6156,6 @@
 
       rsUnknown80BFA9 ; 80/BFA9
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6204,7 +6194,6 @@
 
       rsUnknown80BFFB ; 80/BFFB
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6262,9 +6251,9 @@
         jsl rlUnknown82E08D
         lda #$0018
         sta wGameStateRoutine1,b
-        lda #$BF40
+        lda #<>rsUnknown80BF40
         sta wVBlankPointer
-        lda #$C144
+        lda #<>rsUnknown80C144
         sta wMainLoopPointer
         stz wGameStateRoutine2,b
         jsl rlEnableVBlank
@@ -6334,9 +6323,9 @@
         jsl rlUnknown82E08D
         lda #$001A
         sta wGameStateRoutine1,b
-        lda #$BFA9
+        lda #<>rsUnknown80BFA9
         sta wVBlankPointer
-        lda #$C155
+        lda #<>rsUnknown80C155
         sta wMainLoopPointer
         stz wGameStateRoutine2,b
         jsl rlEnableVBlank
@@ -6355,7 +6344,6 @@
 
       rsUnknown80C144 ; 80/C144
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6373,7 +6361,6 @@
 
       rsUnknown80C155 ; 80/C155
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6685,7 +6672,7 @@
         stz wGameStateRoutine2,b
         lda #$C162
         sta wVBlankPointer
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         jsl rlEnableVBlank
         jsl rlUnknown80825B
@@ -6706,7 +6693,6 @@
 
       rsUnknown80C3E6 ; 80/C3E6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6717,7 +6703,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$BB9B
+        lda #<>rsUnknown80BB9B
         sta wVBlankPointer
         jsl rlUnknown80823F
         jsl rlDisableVBlank
@@ -6758,7 +6744,7 @@
         sta wGameStateRoutine1,b
         lda #$0020
         sta wGameStateRoutine2,b
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -7769,7 +7755,6 @@
 
       rsUnknown80CD2E ; 80/CD2E
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -7780,7 +7765,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$BB9B
+        lda #<>rsUnknown80BB9B
         sta wVBlankPointer
         jsl rlUnknown80823F
         jsl rlDisableVBlank
@@ -7818,7 +7803,7 @@
         sta wGameStateRoutine1,b
         lda #$0023
         sta wGameStateRoutine2,b
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -8383,7 +8368,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$BB9B
+        lda #<>rsUnknown80BB9B
         sta wVBlankPointer
         jsl rlUnknown80823F
         jsl rlDisableVBlank
@@ -8421,7 +8406,7 @@
         sta wGameStateRoutine1,b
         lda #$002C
         sta wGameStateRoutine2,b
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -8959,7 +8944,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$BB9B
+        lda #<>rsUnknown80BB9B
         sta wVBlankPointer
         jsl rlUnknown80823F
         jsl rlDisableVBlank
@@ -8996,7 +8981,7 @@
         sta wGameStateRoutine1,b
         lda #$002F
         sta wGameStateRoutine2,b
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -9940,7 +9925,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$BB9B
+        lda #<>rsUnknown80BB9B
         sta wVBlankPointer
         jsl rlUnknown80823F
         jsl rlDisableVBlank
@@ -9978,7 +9963,7 @@
         sta wGameStateRoutine1,b
         lda #$0029
         sta wGameStateRoutine2,b
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -10470,9 +10455,9 @@
         sta wGameStateStep,b
         lda #$0001
         sta $1864,b
-        lda #$F560
+        lda #<>rsUnknown80F560
         sta wVBlankPointer
-        lda #$F542
+        lda #<>rsUnknown80F542
         sta wMainLoopPointer
         lda #(`procFadeIn)<<8
         sta lR44+1
@@ -10516,9 +10501,9 @@
         sta wGameStateRoutine1,b
         lda #$0023
         sta wGameStateStep,b
-        lda #$F560
+        lda #<>rsUnknown80F560
         sta wVBlankPointer
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         plp
         cli
@@ -10550,7 +10535,7 @@
         sta bBufferINIDISP
         rep #$20
 
-        lda #$BB9B
+        lda #<>rsUnknown80BB9B
         sta wVBlankPointer
         jsl rlUnknown80823F
         jsl rlDisableVBlank
@@ -10882,7 +10867,7 @@
 
       rsUnknown80F542 ; 80/F542
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -10900,7 +10885,7 @@
 
       rsUnknown80F553 ; 80/F553
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -10917,7 +10902,7 @@
 
       rsUnknown80F560 ; 80/F560
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -10983,7 +10968,7 @@
 
       rsUnknown80F5D0 ; 80/F5D0
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

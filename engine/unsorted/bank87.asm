@@ -5694,7 +5694,7 @@
         sta $7E8B88
         cmp #$0100
         bmi _C41A
-        lda #$C41B
+        lda #<>rlUnknown87C41B
         sta aHDMASystem.aOnCycle,b,x
 
         _C41A
@@ -5714,7 +5714,6 @@
 
       rlUnknown87C41B ; 87/C41B
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5725,7 +5724,7 @@
         lda $04F6,b
         bit #$0030
         bne _C43F
-        lda #$BFFB
+        lda #<>rsUnknown80BFFB
         sta wMainLoopPointer
         sei
         sep #$20

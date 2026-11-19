@@ -191,7 +191,7 @@
           jsl rlFreeHDMAEntry0
           plx
 
-          lda #$8576
+          lda #<>rlProcDialogueCycle6
           sta aProcSystem.aHeaderOnCycle,b,x
 
         _End
@@ -439,7 +439,7 @@
         .autsiz
         .databank ?
 
-        lda #$C0BA
+        lda #<>rlUnknown85C0BA
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 

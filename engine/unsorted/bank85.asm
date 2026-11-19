@@ -92,7 +92,7 @@
         jsl rlMapMenuSaveMapState
         lda aProcSystem.aHeaderOnCycle,b,x
         sta aProcSystem.aBody2,b,x
-        lda #$83D3
+        lda #<>rlUnknown8583D3
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -110,7 +110,6 @@
 
       rlUnknown8583D3 ; 85/83D3
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1569,7 +1568,7 @@
         .databank ?
 
         jsr rsUnknown858F10
-        lda #$8DB5
+        lda #<>rlUnknown858DB5
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -1579,7 +1578,6 @@
 
       rlUnknown858DB5 ; 85/8DB5
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1681,7 +1679,7 @@
 
         _8E96
         jsl rlUnknown85A234
-        lda #$8EC5
+        lda #<>rlUnknown858EC5
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _8EA0
@@ -2000,7 +1998,7 @@
         .databank ?
 
         jsr rsUnknown858F10
-        lda #$90D2
+        lda #<>rlUnknown8590D2
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -2010,7 +2008,6 @@
 
       rlUnknown8590D2 ; 85/90D2
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2037,7 +2034,7 @@
 
         _90FD
         jsl rlUnknown85A234
-        lda #$9108
+        lda #<>rlUnknown859108
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _9107
@@ -2363,7 +2360,7 @@
         xba
         jsl rlSetMapMenuTilemapArea
         jsl rlUnknown85A227
-        lda #$92FA
+        lda #<>rlUnknown8592FA
         sta aProcSystem.aHeaderOnCycle,b,x
         ply
         plx
@@ -2383,7 +2380,7 @@
 
       rlUnknown8592FA ; 85/92FA
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2452,7 +2449,7 @@
         _9375
         ply
         plx
-        lda #$9386
+        lda #<>rlUnknown859386
         sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlUnknown8587E1
         jsl rlUnknown85A227
@@ -2472,14 +2469,13 @@
 
       rlUnknown859386 ; 85/9386
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
 
         jsr rsUnknown85969E
-        lda #$9390
+        lda #<>rlUnknown859390
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -2497,7 +2493,7 @@
 
       rlUnknown859390 ; 85/9390
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2572,7 +2568,7 @@
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlUnknown878531
         jsl rlUnknown85A227
-        lda #$9427
+        lda #<>rlUnknown859427
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -2590,14 +2586,13 @@
 
       rlUnknown859427 ; 85/9427
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
 
         jsr rsUnknown859766
-        lda #$9431
+        lda #<>rlUnknown859431
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -2615,7 +2610,7 @@
 
       rlUnknown859431 ; 85/9431
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3410,7 +3405,7 @@
 
         _9A5B
         jsl rlUnknown8785E3
-        lda #$9AB4
+        lda #<>rlUnknown859AB4
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -3477,7 +3472,6 @@
 
       rlUnknown859AB4 ; 85/9AB4
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -3511,7 +3505,7 @@
         lda #$0000
         sta $7E8BEE
         sta $7E8BEC
-        lda #$9973
+        lda #<>rlUnknown859973
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -4497,7 +4491,7 @@
         jsl rlUnknown858793
         jsl rlUnknown85A234
         plx
-        lda #$A1AA
+        lda #<>rlUnknown85A1AA
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -4515,7 +4509,7 @@
 
       rlUnknown85A1AA ; 85/A1AA
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -4540,7 +4534,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$A168
+        lda #<>rlProcUnknown85DAEACycle
         sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlLoadMapMenuEntryPointerFromProcBody
         lda #$20FF
@@ -5428,7 +5422,7 @@
         jsl rlUnknown878921
         plx
         jsl rlUnknown8587E1
-        lda #$A7DE
+        lda #<>rlUnknown85A7DE
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -5446,7 +5440,6 @@
 
       rlUnknown85A7DE ; 85/A7DE
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5815,7 +5808,7 @@
         bpl _AC77
         ply
         plx
-        lda #$AC89
+        lda #<>rlUnknown85AC89
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _AC88
@@ -5835,7 +5828,7 @@
 
       rlUnknown85AC89 ; 85/AC89
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5859,7 +5852,7 @@
           .structDMAToVRAM $7E7B88, $0800, $80, $A800
 
         plx
-        lda #$ACEE
+        lda #<>rlUnknown85ACEE
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -5913,7 +5906,7 @@
         jsl rlDrawMenuTextLine
         jsl rlUnknown878459
         plx
-        lda #$AD67
+        lda #<>rlUnknown85AD67
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -5929,7 +5922,6 @@
 
       rlUnknown85AD67 ; 85/AD67
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5953,7 +5945,7 @@
         sta bBufferTS
         rep #$20
         plx
-        lda #$AD97
+        lda #<>rlUnknown85AD97
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -5963,7 +5955,6 @@
 
       rlUnknown85AD97 ; 85/AD97
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5972,7 +5963,7 @@
         lda $7FEAAA
         cmp #$7FFF
         bne _ADA6
-        lda #$ADA7
+        lda #<>rlUnknown85ADA7
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _ADA6
@@ -5984,7 +5975,6 @@
 
       rlUnknown85ADA7 ; 85/ADA7
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5992,7 +5982,7 @@
 
         dec aProcSystem.aBody6,b,x
         bpl _ADB2
-        lda #$ADB3
+        lda #<>rlUnknown85ADB3
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _ADB2
@@ -6004,7 +5994,6 @@
 
       rlUnknown85ADB3 ; 85/ADB3
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6023,7 +6012,7 @@
         sta bBufferTS
         rep #$20
         jsr rsUnknown85B07C
-        lda #$ADD5
+        lda #<>rlUnknown85ADD5
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -6033,13 +6022,12 @@
 
       rlUnknown85ADD5 ; 85/ADD5
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #$ADF6
+        lda #<>rlUnknown85ADF6
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0002
         jsl rlHDMAEngineFreeEntryByIndex
@@ -6058,7 +6046,6 @@
 
       rlUnknown85ADF6 ; 85/ADF6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6084,7 +6071,7 @@
           .structDMAToVRAM $7E7B88, $0800, $80, $A800
 
         plx
-        lda #$AE2C
+        lda #<>rlUnknown85AE2C
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -6094,7 +6081,6 @@
 
       rlUnknown85AE2C ; 85/AE2C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6112,7 +6098,7 @@
         lda #$0002
         jsl rlHDMAEngineFreeEntryByIndex
         plx
-        lda #$AE56
+        lda #<>rlUnknown85AE56
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -6122,7 +6108,6 @@
 
       rlUnknown85AE56 ; 85/AE56
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6265,7 +6250,7 @@
 
 
         _AEFE
-        lda #$AF0C
+        lda #<>rlUnknown85AF0C
         sta aHDMASystem.aOnCycle,b,x
         lda #$7FFF
         sta $7FEAAA
@@ -6277,7 +6262,6 @@
 
       rlUnknown85AF0C ; 85/AF0C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6342,7 +6326,7 @@
 
 
         _AF4C
-        lda #$AF0C
+        lda #<>rlUnknown85AF0C
         sta aHDMASystem.aOnCycle,b,x
         lda #$FFFF
         sta $7FEAAA
@@ -6834,7 +6818,7 @@
         jsr rsUnknown85B2DA
         jsr rsUnknown85B307
         jsl rlUnknown85A234
-        lda #$B207
+        lda #<>rlUnknown85B207
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -6852,7 +6836,7 @@
 
       rlUnknown85B207 ; 85/B207
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -8060,7 +8044,7 @@
           jsl rlUnknown808FA3
           lda aProcSystem.aBody4,b,x
           jsl rlUnknown808FAD
-          lda #$B9F2
+          lda #<>rlUnknown85B9F2
           sta aProcSystem.aHeaderOnCycle,b,x
 
         +
@@ -8080,7 +8064,7 @@
 
       rlUnknown85B9F2 ; 85/B9F2
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -8210,7 +8194,7 @@
         bne _BAD8
         lda #$0001
         sta $0508,b
-        lda #$BAD9
+        lda #<>rlUnknown85BAD9
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _BAD8
@@ -8230,7 +8214,7 @@
 
       rlUnknown85BAD9 ; 85/BAD9
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -8248,7 +8232,7 @@
         jsl rlUnknown858793
         lda #$0095
         jsl rlUnknown808FAD
-        lda #$BAF9
+        lda #<>rlUnknown85BAF9
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -8258,7 +8242,7 @@
 
       rlUnknown85BAF9 ; 85/BAF9
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -8870,7 +8854,6 @@
 
       rlUnknown85C0BA ; 85/C0BA
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9962,7 +9945,7 @@
         jsr rsUnknown85C6D2
         lda #$0000
         sta aProcSystem.aBody7,b,x
-        lda #$C6B0
+        lda #<>rlUnknown85C6B0
         sta aProcSystem.aHeaderOnCycle,b,x
         pla
         sta wSelectedUnitDataRAMPointer,b
@@ -9974,7 +9957,6 @@
 
       rlUnknown85C6B0 ; 85/C6B0
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -10594,7 +10576,7 @@
         .databank ?
         lda wUnknown0007D8,b
         bne _CAFA
-        lda #$CAFB
+        lda #<>rlUnknown85CAFB
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
@@ -10617,7 +10599,6 @@
 
       rlUnknown85CAFB ; 85/CAFB
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -10674,7 +10655,7 @@
         jsl rlProcEngineFindProc
         bcs _CB50
         ldx wR0
-        lda #$CB51
+        lda #<>rlUnknown85CB51
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _CB50
@@ -10694,7 +10675,7 @@
 
       rlUnknown85CB51 ; 85/CB51
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -10776,7 +10757,7 @@
         and #$00FF
         cmp aProcSystem.aBody7,b,x
         bne _CBED
-        lda #$CC3D
+        lda #<>rlUnknown85CC3D
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
@@ -10838,7 +10819,6 @@
 
       rlUnknown85CC3D ; 85/CC3D
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -10867,7 +10847,7 @@
 
         jsl rlUnknown8586FA
         jsl rlUnknown85D648
-        lda #$CC4D
+        lda #<>rlUnknown85CC4D
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -10885,7 +10865,7 @@
 
       rlUnknown85CC4D ; 85/CC4D
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -11441,7 +11421,7 @@
         jsr rsUnknown85CD9C
         jsr rsUnknown85CDB9
         jsl rlUnknown8785E3
-        lda #$CEE2
+        lda #<>rlUnknown85CEE2
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -11459,7 +11439,7 @@
 
       rlUnknown85CEE2 ; 85/CEE2
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -11506,13 +11486,13 @@
         sta aProcSystem.aBody4,b,x
         lda #$2000
         jsr rsUnknown85CE9C
-        lda #$CFC0
+        lda #<>rlUnknown85CFC0
         sta aProcSystem.aHeaderOnCycle,b,x
         jml _CEFE
 
 
         _CF37
-        lda #$D047
+        lda #<>rlUnknown85D047
         sta aProcSystem.aHeaderOnCycle,b,x
         jsr rsUnknown85CE54
         jml _CEFE
@@ -11589,7 +11569,7 @@
 
       rlUnknown85CFC0 ; 85/CFC0
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -11654,7 +11634,7 @@
         _D033
         lda #$8000
         jsr rsUnknown85CE9C
-        lda #$CEE2
+        lda #<>rlUnknown85CEE2
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0980
         sta aCurrentTilemapInfo,b
@@ -11666,7 +11646,7 @@
 
       rlUnknown85D047 ; 85/D047
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -13296,7 +13276,7 @@
         .databank ?
         lda #$001E
         sta aProcSystem.aBody5,b,x
-        lda #$D971
+        lda #<>rlUnknown85D971
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -13314,7 +13294,6 @@
 
       rlUnknown85D971 ; 85/D971
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -13328,7 +13307,7 @@
         _D977
         lda #$000B
         jsl rlUnknown808FAD
-        lda #$D985
+        lda #<>rlUnknown85D985
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -13338,7 +13317,6 @@
 
       rlUnknown85D985 ; 85/D985
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -13380,7 +13358,7 @@
         jsl rlUnknown808FAD
         lda #$0032
         sta aProcSystem.aBody5,b,x
-        lda #$D9DF
+        lda #<>rlUnknown85D9DF
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _D9DE
 
@@ -13394,7 +13372,6 @@
 
       rlUnknown85D9DF ; 85/D9DF
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -13837,7 +13814,7 @@
         stz wGameStateRoutine1,b
         lda #$B122
         sta $7F82C5
-        lda #$C3E6
+        lda #<>rsUnknown80C3E6
         sta wMainLoopPointer
         rtl
 
@@ -13854,7 +13831,7 @@
         .databank ?
 
         stz wGameStateRoutine1,b
-        lda #$CD2E
+        lda #<>rsUnknown80CD2E
         sta wMainLoopPointer
         rtl
 
@@ -14067,7 +14044,6 @@
 
       rlUnknown85DE34 ; 85/DE34
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -14679,7 +14655,7 @@
 
 
         _E278
-        lda #$E33D
+        lda #<>rlUnknown85E33D
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -16017,7 +15993,7 @@
         .databank ?
 
         jsl rlUnknown8583DA
-        lda #$DE34
+        lda #<>rlUnknown85DE34
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -16080,7 +16056,7 @@
         ora #$0009
         jsl rlSetMapMenuTilemapArea
         jsl rlUnknown85856E
-        lda #$83F8
+        lda #<>rlUnknown8583F8
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 

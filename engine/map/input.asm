@@ -125,7 +125,7 @@
         jsl rlLoadMapMenuDataFromProc
         jsl rlUnknown8584AC
         jsl rlUnknown85856E
-        lda #$83F8
+        lda #<>rlUnknown8583F8
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -192,7 +192,7 @@
         sta wUnknown053C,b
         jsl rlUnknown8583DA
         jsl rlUnknown8584DC
-        lda #$DE34
+        lda #<>rlUnknown85DE34
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 

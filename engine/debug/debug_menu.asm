@@ -3581,7 +3581,7 @@
         sta wGameStateStep,b
         lda #1
         sta $0D77,b
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta wMainLoopPointer
         rtl
 
@@ -3590,7 +3590,7 @@
         sta wGameStateStep,b
         lda $7F8404
         sta $7F8183
-        lda #$BBD9
+        lda #<>rsUnknown80BBD9
         sta wMainLoopPointer
         rtl
         

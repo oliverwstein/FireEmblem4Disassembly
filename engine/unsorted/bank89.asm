@@ -1017,7 +1017,7 @@
 
         lda #$0001
         sta $0D77,b
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta wMainLoopPointer
         lda #$00E8
         jsl rlUnknown808F6F
@@ -5614,7 +5614,7 @@
 
         lda #$0001
         sta $0D77,b
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta wMainLoopPointer
         lda #$00E8
         jsl rlUnknown808F6F

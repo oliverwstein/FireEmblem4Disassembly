@@ -59,7 +59,7 @@
         cmp $0510,b
         beq _841A
         sta $04BA,b
-        lda #$841F
+        lda #<>rlUnknown82841F
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _841E
 
@@ -84,7 +84,6 @@
 
       rlUnknown82841F ; 82/841F
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -531,7 +530,7 @@
 
         lda #$8000
         tsb $168F,b
-        lda #$8222
+        lda #<>rsUnknown808222
         sta wIRQPointer
         rtl
 

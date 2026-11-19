@@ -1909,7 +1909,7 @@
         jsr rlUnknown9F9341
         lda #$0020
         sta aProcSystem.aBody4,b,x
-        lda #$926E
+        lda #<>rlUnknown9F926E
         sta aProcSystem.aHeaderOnCycle,b,x
         lda $7F509B
         and #$00FF
@@ -1933,7 +1933,6 @@
 
       rlUnknown9F926E ; 9F/926E
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1943,7 +1942,7 @@
         dec a
         sta aProcSystem.aBody4,b,x
         bne _927D
-        lda #$927E
+        lda #<>rlUnknown9F927E
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _927D
@@ -1955,7 +1954,6 @@
 
       rlUnknown9F927E ; 9F/927E
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2230,7 +2228,7 @@
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda #$000E
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #$9406
+        lda #<>rlUnknown9F9406
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         _9405
@@ -2242,7 +2240,6 @@
 
       rlUnknown9F9406 ; 9F/9406
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2274,7 +2271,7 @@
         lda #$0100
         sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
-        lda #$944F
+        lda #<>rlUnknown9F944F
         sta aActiveSpriteSystem.aOnCycle,b,x
 
         _944E
@@ -2286,7 +2283,6 @@
 
       rlUnknown9F944F ; 9F/944F
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2314,7 +2310,7 @@
         sta $7ECC06
         lda #$000D
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #$94FE
+        lda #<>rlUnknown9F94FE
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda $7F509B
         and #$00FF
@@ -2357,7 +2353,6 @@
 
       rlUnknown9F94FE ; 9F/94FE
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2675,7 +2670,7 @@
         bne _99FE
         lda #$0001
         sta $7F4580
-        lda #$99FF
+        lda #<>rlUnknown9F99FF
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0040
         sta aProcSystem.aBody0,b,x
@@ -2689,7 +2684,6 @@
 
       rlUnknown9F99FF ; 9F/99FF
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2702,7 +2696,7 @@
         eor #$FFFF
         inc a
         sta aProcSystem.aBody4,b,y
-        lda #$9A1E
+        lda #<>rlUnknown9F9A1E
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$000C
         sta aProcSystem.aBody0,b,x
@@ -2716,7 +2710,6 @@
 
       rlUnknown9F9A1E ; 9F/9A1E
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz

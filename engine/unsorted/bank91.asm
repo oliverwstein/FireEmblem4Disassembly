@@ -3749,9 +3749,9 @@
         sta wGameStateRoutine2,b
         lda #$0005
         sta wGameStateRoutine1,b
-        lda #$F560
+        lda #<>rsUnknown80F560
         sta wVBlankPointer
-        lda #$F542
+        lda #<>rsUnknown80F542
         sta wMainLoopPointer
         stz aSave.wMenuOperation,b
         jsl rlUnknown91E92E
@@ -4298,11 +4298,11 @@
 
         _E8D5
         stz wGameStateRoutine1,b
-        lda #$F5D0
+        lda #<>rsUnknown80F5D0
         sta wVBlankPointer
-        lda #$F553
+        lda #<>rsUnknown80F553
         sta wMainLoopPointer
-        lda #$8222
+        lda #<>rsUnknown808222
         sta wIRQPointer
         sep #$20
         lda #$04

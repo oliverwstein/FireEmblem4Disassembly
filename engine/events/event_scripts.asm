@@ -4712,9 +4712,9 @@
 
         lda #$0010
         sta wGameStateRoutine2,b
-        lda #$AE68
+        lda #<>rsUnknown80AE68
         sta wVBlankPointer
-        lda #$B301
+        lda #<>rsUnknown80B301
         sta wMainLoopPointer
         rts
 
@@ -6710,7 +6710,7 @@
         lda #$8000
         trb $168F,b
         jsl rlUnknown82E147
-        lda #$AE63
+        lda #<>rsUnknown80AE63
         sta wIRQPointer
         plp
         plb
@@ -8884,7 +8884,7 @@
 
         lda $7F5093
         beq _ED99
-        lda #$ED30
+        lda #<>rlProcUnknown9EECA4Cycle1
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004

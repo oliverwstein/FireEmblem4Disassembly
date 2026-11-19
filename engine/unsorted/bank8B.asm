@@ -2073,7 +2073,7 @@
         sta $7F8183
         lda #$0001
         sta $0D77,b
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta wMainLoopPointer
         lda #$00E8
         jsl rlUnknown808F6F
@@ -2113,7 +2113,7 @@
         sta $7F82C5
         lda #$C3E6
         sta $7F8183
-        lda #$BBD9
+        lda #<>rsUnknown80BBD9
         sta wMainLoopPointer
         rtl
 

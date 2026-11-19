@@ -2712,7 +2712,7 @@
         .databank ?
 
         jsl rlUnknown889B22
-        lda #$9411
+        lda #<>rlUnknown889411
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$1FFE
         sta aProcSystem.aBody2,b,x
@@ -2732,7 +2732,6 @@
 
       rlUnknown889411 ; 88/9411
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2762,7 +2761,7 @@
         sta aProcSystem.aBody2,b,x
         lda aProcSystem.aBody2,b,x
         bpl _9447
-        lda #$9448
+        lda #<>rlUnknown889448
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _9447
@@ -2774,14 +2773,13 @@
 
       rlUnknown889448 ; 88/9448
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
 
         jsl rlUnknown889BF7
-        lda #$946B
+        lda #<>rlUnknown88946B
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0004
         sta aProcSystem.aBody2,b,x
@@ -2801,7 +2799,6 @@
 
       rlUnknown88946B ; 88/946B
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2826,7 +2823,7 @@
         plx
         dec aProcSystem.aBody2,b,x
         bne _949E
-        lda #$949F
+        lda #<>rlUnknown88949F
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _949E
@@ -2838,7 +2835,6 @@
 
       rlUnknown88949F ; 88/949F
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -3939,7 +3935,7 @@
         phx
         jsl rlUnknown899FDC
         plx
-        lda #$9CEE
+        lda #<>rlUnknown889CEE
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -3957,7 +3953,6 @@
 
       rlUnknown889CEE ; 88/9CEE
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -3981,7 +3976,7 @@
           .structDMAToVRAM $7E8B88, $0400, $80, $6800
 
         plx
-        lda #$9D20
+        lda #<>rlUnknown889D20
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -3999,7 +3994,7 @@
 
       rlUnknown889D20 ; 88/9D20
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -4044,7 +4039,7 @@
           .structDMAToVRAM $7E8488, $0080, $80, $B100
 
         plx
-        lda #$9DA6
+        lda #<>rlUnknown889DA6
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -4062,7 +4057,6 @@
 
       rlUnknown889DA6 ; 88/9DA6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz

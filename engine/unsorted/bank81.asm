@@ -882,7 +882,7 @@
         .autsiz
         .databank ?
 
-        lda #$BBD9
+        lda #<>rsUnknown80BBD9
         sta wMainLoopPointer
         lda #7
         sta wGameStateStep,b

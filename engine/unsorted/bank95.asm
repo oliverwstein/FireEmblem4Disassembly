@@ -16750,7 +16750,7 @@
         jsl rlUnknown95A52D
         lda #$0003
         sta $0D77,b
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta wMainLoopPointer
         bra _E68B
 
@@ -16763,7 +16763,7 @@
         jsl rlUnknown95A52D
         lda #$0002
         sta $0D77,b
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta wMainLoopPointer
         bra _E68B
 
@@ -16782,7 +16782,7 @@
         jsl rlUnknown95A52D
         lda #$0005
         sta $088B,b
-        lda #$B6B6
+        lda #<>rsUnknown80B6B6
         sta wMainLoopPointer
         bra _E68B
 
@@ -16793,7 +16793,7 @@
         jsl rlUnknown95A52D
         lda #$0005
         sta $088B,b
-        lda #$B6B6
+        lda #<>rsUnknown80B6B6
         sta wMainLoopPointer
         bra _E68B
 
@@ -16810,7 +16810,7 @@
         jsl rlUnknown95A52D
         lda #$0002
         sta $0D77,b
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta wMainLoopPointer
 
         _E68B

@@ -3105,7 +3105,7 @@
         sta aProcSystem.aHeaderBitfield,b,x
         lda $7E4ECB
         beq _936A
-        lda #$936B
+        lda #<>rlUnknown9E936B
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0000
         sta $7F45CE
@@ -3464,7 +3464,7 @@
         plx
         lda wR0
         beq _95AA
-        lda #$95AB
+        lda #<>rlUnknown9E95AB
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$7E00
         sta $7F45D1
@@ -3555,7 +3555,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$CAD1
+        lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
         phx
 
@@ -4375,7 +4375,7 @@
 
         lda $7F4584
         beq _9B74
-        lda #$9B82
+        lda #<>rlUnknown9E9B82
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _9B74
@@ -4401,7 +4401,6 @@
 
       rlUnknown9E9B82 ; 9E/9B82
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4409,7 +4408,7 @@
 
         lda $7F4584
         bne _9B97
-        lda #$9BAD
+        lda #<>rlUnknown9E9BAD
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -4432,7 +4431,6 @@
 
       rlUnknown9E9BAD ; 9E/9BAD
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4445,14 +4443,14 @@
         beq _9BC8
         lda #$0000
         sta $7F4584
-        lda #$9BE0
+        lda #<>rlUnknown9E9BE0
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _9BDE
 
 
         _9BC8
         jsl rlUnknown9E8F6A
-        lda #$9BE0
+        lda #<>rlUnknown9E9BE0
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -4469,7 +4467,6 @@
 
       rlUnknown9E9BE0 ; 9E/9BE0
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4652,7 +4649,7 @@
         jsl rlAppendDecompList
         ply
         plx
-        lda #$9BE0
+        lda #<>rlUnknown9E9BE0
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -4810,7 +4807,7 @@
         jsl rlUnknown9E8867
         plx
         ply
-        lda #$9BE0
+        lda #<>rlUnknown9E9BE0
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -5023,7 +5020,7 @@
         lda $7F45A6,x
         sta $7F4C39
         ldx wR0
-        lda #$9FD4
+        lda #<>rlProcUnknown9EC70BCycle8
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -5113,7 +5110,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$CAD1
+        lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
         phx
         bra _A082
@@ -6304,7 +6301,7 @@
         jsl rlUnknown88C2BA
         bcc _A8B8
         plx
-        lda #$CAD1
+        lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
@@ -9053,7 +9050,7 @@
         sta $15E5,b
         lda #<>rlUnknown81841B
         sta $15E4,b
-        lda #$C79B
+        lda #<>rlUnknown9EC79B
         sta aProcSystem.aHeaderOnCycle,b,x
         plx
         ply
@@ -9073,7 +9070,6 @@
 
       rlUnknown9EC79B ; 9E/C79B
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9131,7 +9127,7 @@
         jsl rlUnknown9E8867
 
         _C7F1
-        lda #$C79B
+        lda #<>rlUnknown9EC79B
         sta aProcSystem.aHeaderOnCycle,b,x
         plx
         ply
@@ -9247,7 +9243,7 @@
         sta aProcSystem.aHeaderBitfield,b,x
         plx
         ply
-        lda #$C899
+        lda #<>rlUnknown9EC899
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -9265,7 +9261,6 @@
 
       rlUnknown9EC899 ; 9E/C899
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9273,7 +9268,7 @@
 
         lda $7F4584
         beq _C8A5
-        lda #$C8A6
+        lda #<>rlUnknown9EC8A6
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _C8A5
@@ -9285,7 +9280,6 @@
 
       rlUnknown9EC8A6 ; 9E/C8A6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9293,7 +9287,7 @@
 
         lda $7F4584
         bne _C8B2
-        lda #$C8B3
+        lda #<>rlUnknown9EC8B3
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _C8B2
@@ -9313,7 +9307,7 @@
 
       rlUnknown9EC8B3 ; 9E/C8B3
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -9346,13 +9340,13 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$CAD1
+        lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
 
         _C907
-        lda #$CAD1
+        lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -9387,7 +9381,7 @@
         beq _C943
         jsl rlUnknown9EA140
         jsl rlUnknown85D385
-        lda #$CAD1
+        lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -9447,7 +9441,7 @@
 
         _C982
         plx
-        lda #$C98A
+        lda #<>rlUnknown9EC98A
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -9465,7 +9459,6 @@
 
       rlUnknown9EC98A ; 9E/C98A
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9477,13 +9470,13 @@
         beq _C9A4
         jsl rlUnknown88C355
         bcc _C9A4
-        lda #$C9AB
+        lda #<>rlUnknown9EC9AB
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _C9AA
 
 
         _C9A4
-        lda #$C9BD
+        lda #<>rlUnknown9EC9BD
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _C9AA
@@ -9495,7 +9488,6 @@
 
       rlUnknown9EC9AB ; 9E/C9AB
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9505,7 +9497,7 @@
         jsl rlUnknown88C2BA
         bcc _C9BB
         plx
-        lda #$C9BD
+        lda #<>rlUnknown9EC9BD
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _C9BC
 
@@ -9522,14 +9514,13 @@
 
       rlUnknown9EC9BD ; 9E/C9BD
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
 
         jsl rlUnknown85D414
-        lda #$C9C8
+        lda #<>rlUnknown9EC9C8
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -9539,14 +9530,13 @@
 
       rlUnknown9EC9C8 ; 9E/C9C8
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
 
         jsl rlUnknown85D648
-        lda #$C9D3
+        lda #<>rlUnknown9EC9D3
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -9556,7 +9546,6 @@
 
       rlUnknown9EC9D3 ; 9E/C9D3
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9602,7 +9591,7 @@
         jsl rlUnknown9F84DD
         jsl rlUnknown9F850B
         jsl rlUnknown9F8575
-        lda #$CAD1
+        lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -9705,13 +9694,13 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$CAD1
+        lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _CA9A
 
 
         _CA94
-        lda #$CAD1
+        lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _CA9A
@@ -9738,7 +9727,7 @@
         jsl rlUnknown85D648
 
         _CAB4
-        lda #$CABB
+        lda #<>rlUnknown9ECABB
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _CABA
@@ -9758,7 +9747,6 @@
 
       rlUnknown9ECABB ; 9E/CABB
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9766,7 +9754,7 @@
 
         jsl rlUnknown85D671
         bcs _CAD0
-        lda #$CAD1
+        lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
@@ -9781,7 +9769,6 @@
 
       rlUnknown9ECAD1 ; 9E/CAD1
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -10315,7 +10302,7 @@
 
         lda $7F5093
         beq _CFEA
-        lda #$CF7A
+        lda #<>rlProcUnknown9ECEDDCycle1
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
@@ -11710,7 +11697,7 @@
         .databank ?
 
         jsl rlUnknown9E88F9
-        lda #$C79B
+        lda #<>rlUnknown9EC79B
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
