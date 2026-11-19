@@ -3992,6 +3992,27 @@
 
     .here
 
+    * = $1F8E6C
+    .logical $9F8E6C
+
+      .dsection SavePaletteBufferColorsToRAMSection
+
+    .here
+
+    * = $1F8F4F
+    .logical $9F8F4F
+
+      .dsection FadePaletteToBlackSection
+
+    .here
+
+    * = $1F8FE3
+    .logical $9F8FE3
+
+      .dsection FadeFromToColorByStepSection
+
+    .here
+
     * = $2E8000
     .logical $AE8000
 

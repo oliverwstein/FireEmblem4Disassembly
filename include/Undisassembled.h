@@ -112,11 +112,6 @@
     rlUnknown9EFC47                                          :?= address($9EFC47)
     rlUnknown9EFC9B                                          :?= address($9EFC9B)
     rlUnknown9F86B0                                          :?= address($9F86B0)
-    rlSavePaletteBufferColorsToRAM                           :?= address($9F8E6C)
-    rlUnknown9F8E9E                                          :?= address($9F8E9E)
     rlFadePaletteToColors                                    :?= address($9F8EE1)
-    rlFadePaletteToBlack                                     :?= address($9F8F4F)
-    rlFadeFromToColorByStep                                  :?= address($9F8FE3)
-    rsUnknown9F903F                                          :?= address($9F903F)
 
   .endweak
