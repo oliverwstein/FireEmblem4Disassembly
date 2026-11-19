@@ -1919,3 +1919,60 @@
         .databank 0
 
     .endsection UnitCharacterInfoSection
+
+
+    .section CheckIfCharacterHasFemaleGenerationIDSection
+
+      .al
+      .xl
+
+      rlCheckIfCharacterHasFemaleGenerationID ; 87/F4CF
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; A = CharacterID
+
+        phb
+        phy
+        jsl rlSwapToMainDataBank
+        jsl rlGetCharacterDataROMPointer
+        tay
+        lda structCharacterROMEntry.Type,b,y
+        and #$00FF
+        cmp #UnitTypeStatic
+        beq _Static
+
+          cmp #UnitTypeDynamic
+          beq _Dynamic
+
+            _CLC
+            clc
+            bra _End
+
+        _Static
+        lda structStaticCharacterROMEntry.GenerationID,b,y
+        bra +
+
+        _Dynamic
+        lda structDynamicCharacterROMEntry.GenerationID,b,y
+
+        +
+        and #$00FF
+        cmp #16
+        bcc _CLC
+
+        sec
+
+        _End
+        ply
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/F501
+
+    .endsection CheckIfCharacterHasFemaleGenerationIDSection

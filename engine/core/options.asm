@@ -52,3 +52,121 @@
         ; 84/BB9A
 
     .endsection CheckIfBattleAnimationOFFSection
+
+
+    .section CheckIfTerrainWindowSettingOffSection
+
+      .al
+      .xl
+
+      rlCheckIfTerrainWindowSettingOff ; 87/BE98
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+
+        lda wOptionSettings,b
+        bit #$0002
+
+        _BEA2
+        bne +
+
+        lda #0
+        bra ++
+
+        +
+        lda #1
+
+        +
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlSetTerrainWindowSetting ; 87/BEAF
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        ora #0
+        bne +
+
+        lda #$0002
+        trb wOptionSettings,b
+        bra ++
+
+        +
+        lda #$0002
+        tsb wOptionSettings,b
+
+        +
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlCheckIfUnitWindowSettingOff ; 87/BEC9
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+
+        lda wOptionSettings,b
+        bit #$0004
+        jml rlCheckIfTerrainWindowSettingOff._BEA2
+
+        .databank 0
+
+        ; 87/BED7
+
+    .endsection CheckIfTerrainWindowSettingOffSection
+
+
+    .section GetTextSpeedOptionSection
+
+      .al
+      .xl
+
+      rlGetTextSpeedOption ; 87/BEF1
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb 
+        php
+        phk
+        plb
+
+        lda wOptionSettings,b
+        and #$0038
+        lsr a
+        lsr a
+        lsr a
+
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/BF01
+
+    .endsection GetTextSpeedOptionSection

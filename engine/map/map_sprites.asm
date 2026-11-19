@@ -497,3 +497,618 @@
         .databank 0
 
     .endsection FillMovingMapSpriteDataSection
+
+
+    .section ProcCycleFlickerUnitsOfFactionSlotSection
+
+      .al
+      .xl
+
+      rlProcCycleFlickerUnitsOfFactionSlot ; 87/C0AA
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; aProcSystem.aBody1 = FactionSlot
+
+        lda aProcSystem.aBody1,b,x
+        sta aProcSystem.wInput0,b
+
+        lda wVBlankEnabledFramecount
+        bit #$0001
+        beq +
+
+        jsl rlRevealUnitsOfFactionSlot
+        bra _End
+
+        +
+        jsl rlHideUnitsOfFactionSlot
+
+        _End
+        rtl
+
+        .databank 0
+
+      rlUnknown87C0C2 ; 87/C0C2
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlProcEngineFreeProc
+        lda #$0012
+        sta $0302,b
+        jsl rlUnknown87C205
+        jsl rlUnknown87C1E1
+        rtl
+
+        .databank 0
+
+      rlUnknown87C0D5 ; 87/C0D5
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #$0021
+        jsl $80900D
+        rtl
+
+        .databank 0
+
+      rlHideUnitsOfFactionSlot ; 87/C0DD
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; aProcSystem.wInput0 = FactionSlot
+
+        phx
+        ldx #(len(aDeploymentTable._State) - 2)
+        
+          _Loop
+          lda aDeploymentTable._State,x
+          bit #DeploymentStateAlive
+          beq _Next
+
+            lda aDeploymentTable._FactionSlot,x
+            cmp aProcSystem.wInput0,b
+            bne _Next
+
+              jsl rlDeployedUnitSetHidden
+
+          _Next
+          dec x
+          dec x
+          bpl _Loop
+
+        plx
+        rtl
+
+        .databank 0
+
+      rlRevealUnitsOfFactionSlot ; 87/C0FD
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; aProcSystem.wInput0 = FactionSlot
+
+        phx
+        ldx #(len(aDeploymentTable._State) - 2)
+        
+          _Loop
+          lda aDeploymentTable._State,x
+          bit #DeploymentStateAlive
+          beq _Next
+
+            lda aDeploymentTable._FactionSlot,x
+            cmp aProcSystem.wInput0,b
+            bne _Next
+
+              jsl rlDeployedUnitUnsetHiddenIfAlive
+
+          _Next
+          dec x
+          dec x
+          bpl _Loop
+
+        plx
+        rtl
+
+        .databank 0
+
+      rlUnknown87C11D ; 87/C11D
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Checks if the factions home castle was captured?
+
+        lda $0590,b
+        pha
+
+        lda aProcSystem.aBody1,b,x
+        jsl rlGetFactionSlotLocationID
+        jsl rlGetLocationEventDataEntry
+        jsl rlGetLocationFactionSlotOwner
+        cmp aProcSystem.aBody1,b,x
+        bne +
+
+          pla
+          sta $0590,b
+          clc
+          rtl
+
+        +
+        pla
+        sta $0590,b
+        sec
+        rtl
+
+        .databank 0
+
+      rlUnknown87C141 ; 87/C141
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Returns 1 if after capturing a castle any of their units
+        ; that are visible on the screen need to be faded out.
+        ; Returns 0 otherwise
+
+        phb
+        php
+        phk
+        plb
+        phx
+        phy
+        ldx wSelectedUnitDataRAMPointer,b
+        phx
+
+        jsl rlGetFactionSlotOffsetWrapper
+        bcs _End
+
+          lda wMapScrollXPixels,b
+          lsr a
+          lsr a
+          lsr a
+          lsr a
+          sta aProcSystem.wInput0,b
+          lda wMapScrollYPixels,b
+          lsr a
+          lsr a
+          lsr a
+          lsr a
+          sta aProcSystem.wInput1,b
+
+          lda $7E0000 + structFactionHeader.UnitCount,x
+          and #$00FF
+          beq _NoUnits
+
+            tay
+
+              _Loop
+              phx
+              lda $7E0000 + size(structFactionHeader),x
+              sta wSelectedUnitDataRAMPointer,b
+              jsl rlGetSelectedUnitDeploymentOffset
+              bcs _Next
+
+                tax
+                lda aDeploymentTable._State,x
+                bit #DeploymentStateAlive
+                beq _Next
+
+                  bit #DeploymentStateHidden
+                  bne _Next
+
+                    lda aDeploymentTable._XTilePosition,x
+                    cmp aProcSystem.wInput0,b
+                    bmi _Next
+
+                      lda aDeploymentTable._XTilePosition,x
+                      sec
+                      sbc #16
+                      cmp aProcSystem.wInput0,b
+                      bpl _Next
+
+                        lda aDeploymentTable._YTilePosition,x
+                        cmp aProcSystem.wInput1,b
+                        bmi _Next
+
+                          lda aDeploymentTable._YTilePosition,x
+                          sec
+                          sbc #16 - 2
+                          cmp aProcSystem.wInput1,b
+                          bpl _Next
+
+                            plx
+                            lda #1
+                            bra _End
+
+              _Next
+              plx
+              inc x
+              inc x
+              dec y
+              bne _Loop
+
+          _NoUnits
+          lda #0
+
+        _End
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        ply
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlUnknown87C1D0 ; 87/C1D0
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody1,b,x
+        jsl rlUnloadFactionSlot
+        jsl rlGetVictoryThemeIfAllEnemiesDead
+        bcc +
+
+          sta $0DAB,b
+
+        +
+        rtl
+
+        .databank 0
+
+      rlUnknown87C1E1 ; 87/C1E1
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; aProcSystem.aBody0 = LocationID
+        ; aProcSystem.aBody2 = New owner
+
+        lda $08,x
+        cmp #$01C6
+        beq +
+
+          lda #1
+          sta bEventActionIdentifier,b
+          lda aProcSystem.aBody2,b,x
+          sta wEventEngineArgument1,b
+          lda aProcSystem.aBody0,b,x
+          sta wEventEngineArgument2,b
+          jsl rlGetAndRunChapterMapEventConditions
+          bcs +
+
+            jsl rlUnknown81AB26
+
+        +
+        rtl
+
+        .databank 0
+
+      rlUnknown87C205 ; 87/C205
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody2,b,x
+        bne +
+
+          stz wUnknownDeploymentOffset000D7F,b
+          lda #5
+          sta $0D81,b
+          lda aProcSystem.aBody0,b,x
+          and #$00FF
+          sta $0D83,b
+
+        +
+        rtl
+
+        .databank 0
+
+        ; 87/C21D
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      aProcUnknown87C056Code ; 87/C21D
+
+        PROC_YIELD 32
+        PROC_CALL rlUnknown87C0D5
+        PROC_SET_ONCYCLE rlProcCycleFlickerUnitsOfFactionSlot
+        PROC_YIELD 64
+        PROC_CALL rlHideUnitsOfFactionSlot
+        PROC_SET_ONCYCLE rlProcUnknown87C056Cycle
+        PROC_YIELD 16
+
+        _C235
+        PROC_CALL rlUnknown87C1D0
+
+        _C23A
+        PROC_YIELD 16
+        PROC_CALL rlUnknown888410
+        PROC_YIELD 1
+        PROC_SET_ONCYCLE rlUnknown87C0C2
+        PROC_HALT
+
+      procFactionSlotUnitDeath ; 87/C249
+
+        .structProcInfo "DU", rlProcUnknown87C249Init, rlProcUnknown87C249Cycle, aProcUnknown87C249Code
+
+      rlProcUnknown87C249Init ; 87/C251
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody0,b,x
+        lda aProcSystem.wInput1,b
+        sta aProcSystem.aBody1,b,x
+        lda aProcSystem.wInput2,b
+        sta aProcSystem.aBody2,b,x
+        lda #3
+        sta aProcSystem.aBody3,b,x
+        lda #0
+        sta aProcSystem.aBody4,b,x
+        jsl rlUnknown87C2FA
+
+        lda aProcSystem.wInput3,b
+        bne +
+
+          jsl rlProcEngineFreeProc
+          bra ++
+
+          +
+          stz $0302,b
+
+        +
+        rtl
+
+        .databank 0
+
+      rlProcUnknown87C249Cycle ; 87/C282
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody0,b,x
+        sta aProcSystem.wInput0,b
+        lda aProcSystem.aBody1,b,x
+        sta aProcSystem.wInput1,b
+        lda aProcSystem.aBody2,b,x
+        sta aProcSystem.wInput2,b
+        rtl
+
+        .databank 0
+
+      rlUnknown87C295 ; 87/C295
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlProcUnknown87C249Cycle
+
+        lda aProcSystem.aBody4,b,x
+        beq ++
+
+          cmp aProcSystem.aBody3,b,x
+          bcc +
+
+            lda #$FFFF
+            sta aProcSystem.aBody4,b,x
+
+          +
+          jsl rlUnknown87C2FA
+          bra ++
+
+        +
+        jsl rlUnknown87C2B7
+
+        +
+        inc aProcSystem.aBody4,b,x
+        rtl
+
+        .databank 0
+
+      rlUnknown87C2B7 ; 87/C2B7
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; aProcSystem.wInput0 = FactionSlot
+        ; aProcSystem.wInput1 = AI setting, if $FFFF ignored
+        ; aProcSystem.wInput2 = CharacterID, if $FFFF ignored
+
+        phx
+        ldx #(len(aDeploymentTable._State) - 2)
+        
+          _Loop
+          lda aDeploymentTable._State,x
+          bit #DeploymentStateAlive
+          beq _Next
+
+            lda aDeploymentTable._FactionSlot,x
+            cmp aProcSystem.wInput0,b
+            bne _Next
+
+              lda aDeploymentTable._UnitRAMPointer,x
+              sta wSelectedUnitDataRAMPointer,b
+
+              lda aProcSystem.wInput1,b
+              bmi +
+
+                jsl rlGetSelectedUnitAI
+                cmp aProcSystem.wInput1,b
+                bne _Next
+
+              +
+              lda aProcSystem.wInput2,b
+              bmi +
+
+                jsl rlGetSelectedUnitCharacterID
+                cmp aProcSystem.wInput2,b
+                bne _Next
+
+              +
+              jsl rlDeployedUnitSetHidden
+
+          _Next
+          dec x
+          dec x
+          bpl _Loop
+
+        plx
+        rtl
+
+        .databank 0
+
+      rlUnknown87C2FA ; 87/C2FA
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; aProcSystem.wInput0 = FactionSlot
+        ; aProcSystem.wInput1 = AI setting, if $FFFF ignored
+        ; aProcSystem.wInput2 = CharacterID, if $FFFF ignored
+
+        ; Output:
+        ; aProcSystem.wInput3 = count
+
+        phx
+        stz aProcSystem.wInput3,b
+        ldx #(len(aDeploymentTable._State) - 2)
+
+          _Loop
+          lda aDeploymentTable._State,x
+          bit #DeploymentStateAlive
+          beq _Next
+
+            lda aDeploymentTable._FactionSlot,x
+            cmp aProcSystem.wInput0,b
+            bne _Next
+
+              lda aDeploymentTable._UnitRAMPointer,x
+              sta wSelectedUnitDataRAMPointer,b
+
+              lda aProcSystem.wInput1,b
+              bmi +
+
+                jsl rlGetSelectedUnitAI
+                cmp aProcSystem.wInput1,b
+                bne _Next
+
+              +
+              lda aProcSystem.wInput2,b
+              bmi +
+
+                jsl rlGetSelectedUnitCharacterID
+                cmp aProcSystem.wInput2,b
+                bne _Next
+
+              +
+              jsl rlDeployedUnitUnsetHiddenIfAlive
+              inc aProcSystem.wInput3,b
+
+          _Next
+          dec x
+          dec x
+          bpl _Loop
+
+        plx
+        rtl
+
+        .databank 0
+
+      rlUnknown87C343 ; 87/C343
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlProcEngineFreeProc
+        jsl rlUnknown81AB3F
+
+        lda #$0012
+        sta $0302,b
+        rtl
+
+        .databank 0
+
+      rlUnknown87C352 ; 87/C352
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #2
+        sta aProcSystem.aBody3,b,x
+        rtl
+
+        .databank 0
+
+      rlUnknown87C359 ; 87/C359
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta aProcSystem.aBody3,b,x
+        rtl
+
+        .databank 0
+
+      aProcUnknown87C249Code ; 87/C360
+
+        PROC_YIELD 4
+        PROC_CALL rlUnknown87C0D5
+        PROC_SET_ONCYCLE rlUnknown87C295
+        PROC_YIELD 16
+        PROC_CALL rlUnknown87C352
+        PROC_YIELD 8
+        PROC_CALL rlUnknown87C359
+        PROC_YIELD 8
+        PROC_SET_ONCYCLE rlProcUnknown87C249Cycle
+        PROC_CALL rlUnknown87C2B7
+        PROC_YIELD 8
+        PROC_SET_ONCYCLE rlUnknown87C343
+        PROC_HALT
+
+        ; 87/C38C
+
+    .endsection ProcCycleFlickerUnitsOfFactionSlotSection

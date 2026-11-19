@@ -1700,3 +1700,75 @@
         ; 87/E6D3
 
     .endsection ItemsSection
+
+
+    .section CapItemDurabilitySection
+
+      .al
+      .xl
+
+      rsCapItemDurability ; 87/FCC3
+
+        .al
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda structItemRAMEntry.ItemID,b,x
+        cmp #ValkyrieStaff
+        beq _Max1Durability
+
+        cmp #SleepStaff
+        beq _Max1Durability
+
+        cmp #BerserkStaff
+        beq _Max1Durability
+
+        cmp #EarthSword
+        beq _Max10Durability
+
+        cmp #SilenceStaff
+        beq _Max3Durability
+
+        cmp #Circlet
+        beq _SetUnbreakable
+        bra _End
+
+        _Max10Durability
+        lda structItemRAMEntry.Durability,b,x
+        cmp #10
+        bcc _SetDurability
+
+        lda #10
+        bra _SetDurability
+
+        _Max3Durability
+        lda structItemRAMEntry.Durability,b,x
+        cmp #3
+        bcc _SetDurability
+
+        lda #3
+        bra _SetDurability
+        
+        _Max1Durability
+        lda structItemRAMEntry.Durability,b,x
+        beq _SetDurability
+
+        lda #1
+        bra _SetDurability
+
+        _SetUnbreakable
+        lda #$FF
+
+        _SetDurability
+        sta structItemRAMEntry.Durability,b,x
+
+        _End
+        rep #$20
+        rts
+
+        .databank 0
+
+        ; 87/FD09
+
+    .endsection CapItemDurabilitySection

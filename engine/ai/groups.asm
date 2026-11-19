@@ -654,3 +654,446 @@
         ; 87/DC71
 
     .endsection AIGroupSection
+
+
+    .section FormationPatternOffsetsSection
+
+      .al
+      .xl
+
+      aFormationPatternOffsets ; 87/DCD8
+
+        .word aFormationPatternNone           - aFormationPatternOffsets
+        .word aFormationPatternBlockAhead     - aFormationPatternOffsets
+        .word aFormationPatternCheckerboard   - aFormationPatternOffsets
+        .word aFormationPatternArrowShaft     - aFormationPatternOffsets
+        .word aFormationPatternArrowTip       - aFormationPatternOffsets
+        .word aFormationPatternWall1Wide      - aFormationPatternOffsets
+        .word aFormationPatternWall2Wide      - aFormationPatternOffsets
+        .word aFormationPatternLine1Wide      - aFormationPatternOffsets
+        .word aFormationPatternLine2Wide      - aFormationPatternOffsets
+        .word aFormationPatternLine3Wide      - aFormationPatternOffsets
+        .word aFormationPatternUForm          - aFormationPatternOffsets
+        .word aFormationPatternZipper         - aFormationPatternOffsets
+        .word aFormationPatternCircle         - aFormationPatternOffsets
+        .word aFormationPatternCastleDefense  - aFormationPatternOffsets
+        .word aFormationPatternJulius         - aFormationPatternOffsets
+
+      aFormationPatternNone ; 87/DCF6
+
+        ; No formation
+
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+        .char  0,  0
+
+      aFormationPatternBlockAhead ; 87/DD1A
+
+        ; Formation:
+        ; X X X X X
+        ; X X X X X
+        ; X X X X X
+        ; - X L X -
+
+        .char  0,  0 ; 0
+        .char  0, -1 ; 1
+        .char -1,  0 ; 2
+        .char  1,  0 ; 3
+        .char  0, -2 ; 4
+        .char -1, -1 ; 5
+        .char  1, -1 ; 6
+        .char -2, -1 ; 7
+        .char  2, -1 ; 8
+        .char -2, -2 ; 9
+        .char  2, -2 ; 10
+        .char -1, -2 ; 11
+        .char  1, -2 ; 12
+        .char  0, -3 ; 13
+        .char -1, -3 ; 14
+        .char  1, -3 ; 15
+        .char -2, -3 ; 16
+        .char  2, -3 ; 17
+
+      aFormationPatternCheckerboard ; 87/DD3E
+
+        ; Formation:
+        ; X - X - X - X - X
+        ; - X - X - X - X -
+        ; X - X - L - X - X
+        ; - X - X - X - X -
+
+        .char  0,  0
+        .char -1,  1
+        .char  1,  1
+        .char -2,  0
+        .char  2,  0
+        .char  0, -2
+        .char -2, -2
+        .char  2, -2
+        .char -1, -1
+        .char  1, -1
+        .char -4,  0
+        .char  4,  0
+        .char -3,  1
+        .char  3,  1
+        .char -3, -1
+        .char  3, -1
+        .char -4, -2
+        .char  4, -2
+
+      aFormationPatternArrowShaft ; 87/DD62
+
+        ; Formation:
+        ; - - - X - - -
+        ; - - - X - - -
+        ; - - X X X - -
+        ; - X X X X X -
+        ; X X X X X X X
+        ; - - - L - - -
+
+        .char  0,  0
+        .char  0, -1
+        .char -1, -1
+        .char  1, -1
+        .char  0, -2
+        .char -2, -1
+        .char  2, -1
+        .char -1, -2
+        .char  1, -2
+        .char  0, -3
+        .char -3, -1
+        .char  3, -1
+        .char -2, -2
+        .char  2, -2
+        .char -1, -3
+        .char  1, -3
+        .char  0, -4
+        .char  0, -5
+
+      aFormationPatternArrowTip ; 87/DD86
+
+        ; Formation: (with a small error)
+        ; - - X - X - - -
+        ; X X X X X X - X
+        ; - X X X X X - -
+        ; - - X X X - - -
+        ; - - - L - - - -
+
+        .char  0,  0
+        .char  0, -1
+        .char -1, -1
+        .char  1, -1
+        .char  0, -2
+        .char -1, -2
+        .char  1, -2
+        .char -2, -2
+        .char  2, -2
+        .char  0, -3
+        .char -1, -3
+        .char  1, -3
+        .char -2, -3
+        .char  2, -3
+        .char -3, -3
+        .char  4, -3
+        .char -1, -4
+        .char  1, -4
+
+      aFormationPatternWall1Wide ; 87/DDAA
+
+        ; Formation:
+        ; X X X X X X X X X X X X X X X X X
+        ; - - - - - - - - L - - - - - - - -
+
+        .char  0,  0
+        .char  0, -1
+        .char -1, -1
+        .char  1, -1
+        .char -2, -1
+        .char  2, -1
+        .char -3, -1
+        .char  3, -1
+        .char -4, -1
+        .char  4, -1
+        .char -5, -1
+        .char  5, -1
+        .char -6, -1
+        .char  6, -1
+        .char -7, -1
+        .char  7, -1
+        .char -8, -1
+        .char  8, -1
+
+      aFormationPatternWall2Wide ; 87/DDCE
+
+        ; Formation:
+        ; X X X X X X X X X
+        ; X X X X L X X X X
+
+        .char  0,  0
+        .char -1,  0
+        .char  1,  0
+        .char  0, -1
+        .char -1, -1
+        .char  1, -1
+        .char -2,  0
+        .char  2,  0
+        .char -2, -1
+        .char  2, -1
+        .char -3,  0
+        .char  3,  0
+        .char -3, -1
+        .char  3, -1
+        .char -4,  0
+        .char  4,  0
+        .char -4, -1
+        .char  4, -1
+
+      aFormationPatternLine1Wide ; 87/DDF2
+
+        ; Formation:
+        ; just 17 units straight above leader
+
+        .char  0, -1
+        .char  0, -2
+        .char  0, -3
+        .char  0, -4
+        .char  0, -5
+        .char  0, -6
+        .char  0, -7
+        .char  0, -8
+        .char  0, -9
+        .char  0, -10
+        .char  0, -11
+        .char  0, -12
+        .char  0, -13
+        .char  0, -14
+        .char  0, -15
+        .char  0, -16
+        .char  0, -17
+        .char  0, -18
+
+      aFormationPatternLine2Wide ; 87/DE16
+
+        ; Formation:
+        ; X X
+        ; X X
+        ; X X
+        ; X X
+        ; X X
+        ; X X
+        ; X X
+        ; X X
+        ; L X
+
+        .char  0,  0
+        .char  1,  0
+        .char  0, -1
+        .char  1, -1
+        .char  0, -2
+        .char  1, -2
+        .char  0, -3
+        .char  1, -3
+        .char  0, -4
+        .char  1, -4
+        .char  0, -5
+        .char  1, -5
+        .char  0, -6
+        .char  1, -6
+        .char  0, -7
+        .char  1, -7
+        .char  0, -8
+        .char  1, -8
+
+      aFormationPatternLine3Wide ; 87/DE3A
+
+        ; Formation:
+        ; X X X
+        ; X X X
+        ; X X X
+        ; X X X
+        ; X X X
+        ; X L X
+
+        .char  0,  0
+        .char -1,  0
+        .char  1,  0
+        .char  0, -1
+        .char -1, -1
+        .char  1, -1
+        .char  0, -2
+        .char -1, -2
+        .char  1, -2
+        .char  0, -3
+        .char -1, -3
+        .char  1, -3
+        .char  0, -4
+        .char -1, -4
+        .char  1, -4
+        .char  0, -5
+        .char -1, -5
+        .char  1, -5
+
+      aFormationPatternUForm ; 87/DE5E
+
+        ; Formation:
+        ; X X - - - - - - - X X
+        ; X X - - - - - - - X X
+        ; - - X X X X X X X - -
+        ; - - - - X L X - - - -
+
+        .char  0,  0
+        .char  0, -1
+        .char -1,  0
+        .char  1,  0
+        .char -2, -1
+        .char  2, -1
+        .char -4, -2
+        .char  4, -2
+        .char -4, -3
+        .char  4, -3
+        .char -3, -1
+        .char  3, -1
+        .char -5, -2
+        .char  5, -2
+        .char -5, -3
+        .char  5, -3
+        .char -1, -1
+        .char  1, -1
+
+      aFormationPatternZipper ; 87/DE82
+
+        ; Formation:
+        ; X X -
+        ; - X X
+        ; X X -
+        ; - X X
+        ; X X -
+        ; - X X
+        ; X X -
+        ; - X X
+        ; X L -
+
+        .char  0,  0
+        .char -1,  0
+        .char  0, -1
+        .char  1, -1
+        .char  0, -2
+        .char -1, -2
+        .char  0, -3
+        .char  1, -3
+        .char  0, -4
+        .char -1, -4
+        .char  0, -5
+        .char  1, -5
+        .char  0, -6
+        .char -1, -6
+        .char  0, -7
+        .char  1, -7
+        .char  0, -8
+        .char -1, -8
+
+      aFormationPatternCircle ; 87/DEA6
+
+        ; Formation:
+        ; - - X X X - -
+        ; - X - - - X -
+        ; X - - X - - X
+        ; X - - L - - X
+        ; X - - - - - X
+        ; - - X - - X -
+        ; - - X X X - -
+
+        .char  0,  0
+        .char  0, -1
+        .char -3,  1
+        .char  3,  1
+        .char  0,  3
+        .char -2, -2
+        .char  2,  2
+        .char  2, -2
+        .char -1,  2
+        .char -1, -3
+        .char  1,  3
+        .char -3,  0
+        .char  3,  0
+        .char  1, -3
+        .char -1,  3
+        .char -3, -1
+        .char  3, -1
+        .char  0, -3
+
+      aFormationPatternCastleDefense ; 87/DECA
+
+        ; Formation:
+        ; X - L - X
+        ; X - - - X
+        ; X 2 S 3 X
+        ; - X 1 X -
+        ; - - X - -
+
+        .char  0, -2
+        .char  0,  1
+        .char -1,  0
+        .char  1,  0
+        .char  0,  2
+        .char -1,  1
+        .char  1,  1
+        .char -2,  0
+        .char  2,  0
+        .char -2,  1
+        .char  2,  1
+        .char -2, -1
+        .char  2, -1
+        .char -2, -2
+        .char  2, -2
+        .char  0,  3
+        .char -1,  2
+        .char  1,  2
+
+      aFormationPatternJulius ; 87/DEEE
+
+        ; Formation:
+        ; - - - L - - -
+        ; - - - - - - -
+        ; - X X S X - -
+        ; - X X X X - X
+        ; X - - X - - -
+        ; - - X - X - -
+
+        .char  0, -2
+        .char  0,  1
+        .char -1,  0
+        .char  1,  0
+        .char  0,  2
+        .char -1,  1
+        .char  1,  1
+        .char -1,  3
+        .char  1,  3
+        .char -2,  1
+        .char  3,  1
+        .char -3,  2
+        .char -2,  0
+        .char -3, -2
+        .char -3, -2
+        .char -3, -2
+        .char -3, -2
+        .char -3, -2
+
+; 87/DF12
+
+    .endsection FormationPatternOffsetsSection

@@ -1720,6 +1720,41 @@
     .endsection LocationModificationSection
 
 
+    .section GetEventLocationTypeBaseMoneySection
+
+      .al
+      .xl
+
+      rlGetEventLocationTypeBaseMoney ; 87/F391
+
+        .al
+        .autsiz
+        .databank `aEventLocationTypeOffsets
+
+        phb
+        php
+        phk
+        plb
+        phx
+        asl a
+        tax
+        lda aEventLocationTypeOffsets,x
+        clc
+        adc #<>aEventLocationTypeOffsets
+        tax
+        lda structEventLocationType.BaseMoney,b,x
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/F3A7
+
+    .endsection GetEventLocationTypeBaseMoneySection
+
+
     .section LocationTypeOffsetsSection
 
       .al

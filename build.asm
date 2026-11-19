@@ -116,6 +116,8 @@
   .include "engine/save/save.asm"
   .include "engine/debug/debug_menu.asm"
   .include "engine/dialogue/dialogue_procs.asm"
+  .include "engine/events/event_movement.asm"
+  .include "engine/events/talk_events.asm"
   .include "engine/map/map_sprites.asm"
   .include "engine/map/popups.asm"
   .include "engine/map/windows.asm"
@@ -1488,6 +1490,91 @@
 
     .here
 
+    * = $0780DF
+    .logical $8780DF
+
+      .dsection Unsorted8780DFSection
+
+    .here
+
+    * = $0781EA
+    .logical $8781EA
+
+      .dsection LoadMapMenuDataSection
+
+    .here
+
+    * = $07829A
+    .logical $87829A
+
+      .dsection Unsorted87829ASection
+
+    .here
+
+    * = $078459
+    .logical $878459
+
+      .dsection Unsorted878459Section
+
+    .here
+
+    * = $078517
+    .logical $878517
+
+      .dsection GetMapMenuYPositionsSection
+
+    .here
+
+    * = $0786BA
+    .logical $8786BA
+
+      .dsection HandleMapMenuPaletteGraphicsDataSection
+
+    .here
+
+    * = $078749
+    .logical $878749
+
+      .dsection GetMapMenuPositionSection
+
+    .here
+
+    * = $0788B3
+    .logical $8788B3
+
+      .dsection GetMapMenuTileIndexSection
+
+    .here
+
+    * = $078921
+    .logical $878921
+
+      .dsection Unsorted878921Section
+      .dsection ApplyMapMenuPaletteDataSection
+
+    .here
+
+    * = $078B83
+    .logical $878B83
+
+      .dsection RemoveMapMenuTilemapRAMEntrySection
+
+    .here
+
+    * = $078C8C
+    .logical $878C8C
+
+      .dsection Unsorted878C8CSection
+
+    .here
+
+    * = $079E42
+    .logical $879E42
+
+      .dsection CheckTalkEventEntryAvailableSection
+
+    .here
+
     * = $07A19D
     .logical $87A19D
 
@@ -1503,6 +1590,42 @@
 
     .here
 
+    * = $07B01D
+    .logical $87B01D
+
+      .dsection Unsorted87B01DSection
+      .dsection ClearEventMovementTargetMapSection
+
+    .here
+
+    * = $07B4ED
+    .logical $87B4ED
+
+      .dsection EventMovementMovementScriptBufferAddressesSection
+
+    .here
+
+    * = $07B505
+    .logical $87B505
+
+      .dsection EventMovementWriteToMovementScriptBufferSection
+
+    .here
+
+    * = $07B541
+    .logical $87B541
+
+      .dsection Unsorted87B541Section
+
+    .here
+
+    * = $07B786
+    .logical $87B786
+
+      .dsection Unsorted87B786Section
+
+    .here
+
     * = $07BB50
     .logical $87BB50
 
@@ -1512,10 +1635,32 @@
 
     .here
 
+    * = $07BE98
+    .logical $87BE98
+
+      .dsection CheckIfTerrainWindowSettingOffSection
+
+    .here
+
+    * = $07BEF1
+    .logical $87BEF1
+
+      .dsection GetTextSpeedOptionSection
+
+    .here
+
     * = $07C003
     .logical $87C003
 
       .dsection AICleverModeSection
+
+    .here
+
+    * = $07C056
+    .logical $87C056
+
+      .dsection Unsorted87C056Section
+      .dsection ProcCycleFlickerUnitsOfFactionSlotSection
 
     .here
 
@@ -1534,6 +1679,13 @@
       .dsection AITargetMapSection
       .dsection AIUnitListSection
       .dsection AIGroupSection
+
+    .here
+
+    * = $07DCD8
+    .logical $87DCD8
+
+      .dsection FormationPatternOffsetsSection
 
     .here
 
@@ -1564,6 +1716,13 @@
 
     .here
 
+    * = $07EBC8
+    .logical $87EBC8
+
+      .dsection Unsorted87EBC8Section
+
+    .here
+
     * = $07EC42
     .logical $87EC42
 
@@ -1582,6 +1741,13 @@
 
     .here
 
+    * = $07F391
+    .logical $87F391
+
+      .dsection GetEventLocationTypeBaseMoneySection
+
+    .here
+
     * = $07F3A7
     .logical $87F3A7
 
@@ -1591,12 +1757,47 @@
 
     .here
 
+    * = $07F4CF
+    .logical $87F4CF
+
+      .dsection CheckIfCharacterHasFemaleGenerationIDSection
+
+    .here
+
     * = $07F515
     .logical $87F515
 
       .dsection Unsorted87F515Section
 
       ; 87/F559
+
+    .here
+
+    * = $07F9CE
+    .logical $87F9CE
+
+      .dsection CompactStaticDynamicUnitBuffer1UnitStatesSection
+
+    .here
+
+    * = $07FA1E
+    .logical $87FA1E
+
+      .dsection CompactHolyEnemyUnitBuffer1UnitStatesSection
+
+    .here
+
+    * = $07FA83
+    .logical $87FA83
+
+      .dsection FillUnitsDeploymentSaveDataSection
+
+    .here
+
+    * = $07FCC3
+    .logical $87FCC3
+
+      .dsection CapItemDurabilitySection
 
     .here
 

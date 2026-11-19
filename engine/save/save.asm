@@ -1,5 +1,154 @@
 ; Saving to and loading from SRAM save slots.
 
+    .section CompactStaticDynamicUnitBuffer1UnitStatesSection
+
+      .al
+      .xl
+
+      rlCompactStaticDynamicUnitBuffer1UnitStates ; 87/F9CE
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aUnit1DataBuffer._Personal.UnitStates
+        sta wR0
+        and #UnitStateArenaLevelMask
+        sta wR1
+
+        lda wR0
+        and #(UnitStateMapAnimation | UnitStateMiracleActive | UnitStateGroupLeader | UnitStateDead)
+        lsr a
+        lsr a
+        lsr a
+        ora wR1
+        sta wR1
+
+        lda wR0
+        and #(UnitState1000 | UnitStateGuardingCastle | UnitStateMoved | UnitStateFielded)
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        ora wR1
+        sta aUnit1DataBuffer._Personal.UnitStates
+        rtl
+
+        .databank 0
+
+        ; 87/F9F6
+
+    .endsection CompactStaticDynamicUnitBuffer1UnitStatesSection
+
+
+    .section CompactHolyEnemyUnitBuffer1UnitStatesSection
+
+      .al
+      .xl
+
+      rlCompactHolyEnemyUnitBuffer1UnitStates ; 87/FA1E
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda aUnit1DataBuffer._Personal.UnitStates
+        sta wR0
+        and #UnitStateArenaLevelMask
+        sta wR1
+
+        lda wR0
+        and #(UnitStateGroupLeader | UnitStateDead)
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        ora wR1
+        sta wR1
+
+        lda wR0
+        and #(UnitState1000 | UnitStateGuardingCastle | UnitStateMoved | UnitStateFielded)
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        ora wR1
+        sta aUnit1DataBuffer._Personal.UnitStates
+
+        lda aUnit1DataBuffer._Personal.ClassMoney
+        beq +
+
+          lda #1
+          sta aUnit1DataBuffer._Personal.ClassMoney
+
+        +
+        rtl
+
+        .databank 0
+
+        ; 87FA57
+
+    .endsection CompactHolyEnemyUnitBuffer1UnitStatesSection
+
+
+    .section FillUnitsDeploymentSaveDataSection
+
+      .al
+      .xl
+
+      rlFillUnitsDeploymentSaveData ; 87/FA83
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+
+        phx
+        jsl rlGetSelectedUnitDeploymentOffset
+        bcs +
+
+          tax
+          lda aDeploymentTable._State,x
+          xba
+          sta aSave.wCharacterDeploymentState,b
+          lda @l aDeploymentTable._XTilePosition,x
+          sta aSave.wCharacterXPosition,b
+          lda @l aDeploymentTable._YTilePosition,x
+          sta aSave.wCharacterYPosition,b
+          bra _End
+
+        +
+        lda #$00FF
+        sta aSave.wCharacterDeploymentState,b
+        sta aSave.wCharacterXPosition,b
+        sta aSave.wCharacterYPosition,b
+        
+        _End
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/FABC
+
+    .endsection FillUnitsDeploymentSaveDataSection
+
+
     .section SaveFileSection
 
       .al
