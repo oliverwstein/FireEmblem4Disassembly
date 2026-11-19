@@ -4799,235 +4799,71 @@
 
       .dsection EventEngineSection
 
-      ; 86/9CCC
-
-    .here
-
-    * = $069CCC
-    .logical $869CCC
-
       .dsection Unsorted869CCCSection
 
-    .here
-
-    * = $069CE4
-    .logical $869CE4
-
       .dsection Unsorted869CE4Section
-
-    .here
-
-    * = $069D1B
-    .logical $869D1B
 
       .dsection AIEngineCycleSection
       .dsection AIAttackSection
       .dsection AIMovementMapSection
 
-    .here
-
-    * = $06AD5E
-    .logical $86AD5E
-
       .dsection Unsorted86AD5ESection
-
-    .here
-
-    * = $06AE36
-    .logical $86AE36
 
       .dsection Table86AE36Section
 
-    .here
-
-    * = $06AE3E
-    .logical $86AE3E
-
       .dsection FillMapBufferSection
-
-    .here
-
-    * = $06AF39
-    .logical $86AF39
 
       .dsection AIThreatSection
 
-    .here
-
-    * = $06B335
-    .logical $86B335
-
       .dsection Unsorted86B335Section
-
-    .here
-
-    * = $06B36A
-    .logical $86B36A
 
       .dsection Unsorted86B36ASection
 
-    .here
-
-    * = $06B371
-    .logical $86B371
-
       .dsection Unsorted86B371Section
-
-    .here
-
-    * = $06B38F
-    .logical $86B38F
 
       .dsection Unsorted86B38FSection
 
-    .here
-
-    * = $06B39D
-    .logical $86B39D
-
       .dsection Unsorted86B39DSection
-
-    .here
-
-    * = $06B3AB
-    .logical $86B3AB
 
       .dsection Unsorted86B3ABSection
 
-    .here
-
-    * = $06B3DD
-    .logical $86B3DD
-
       .dsection Unsorted86B3DDSection
-
-    .here
-
-    * = $06B421
-    .logical $86B421
 
       .dsection AIActionSection
 
-    .here
-
-    * = $06BA3B
-    .logical $86BA3B
-
       .dsection Unsorted86BA3BSection
-
-    .here
-
-    * = $06BA86
-    .logical $86BA86
 
       .dsection AIAction86BA86Section
 
-    .here
-
-    * = $06BC64
-    .logical $86BC64
-
       .dsection Unsorted86BC64Section
-
-    .here
-
-    * = $06BCE3
-    .logical $86BCE3
 
       .dsection AIClosestTileSection
 
-    .here
-
-    * = $06BFE6
-    .logical $86BFE6
-
       .dsection Unsorted86BFE6Section
-
-    .here
-
-    * = $06C0AF
-    .logical $86C0AF
 
       .dsection AILowHPSection
       .dsection AIUnitMapSection
 
-    .here
-
-    * = $06C293
-    .logical $86C293
-
       .dsection Unsorted86C293Section
-
-    .here
-
-    * = $06C333
-    .logical $86C333
 
       .dsection Unsorted86C333Section
 
-    .here
-
-    * = $06C359
-    .logical $86C359
-
       .dsection Table86C359Section
-
-    .here
-
-    * = $06C3A0
-    .logical $86C3A0
 
       .dsection Unsorted86C3A0Section
 
-    .here
-
-    * = $06C3C6
-    .logical $86C3C6
-
       .dsection Table86C3C6Section
-
-    .here
-
-    * = $06C40D
-    .logical $86C40D
 
       .dsection Unsorted86C40DSection
 
-    .here
-
-    * = $06C4C4
-    .logical $86C4C4
-
       .dsection ChapterEventDataSection
-
-      ; 86/C575
-
-    .here
-
-    * = $06C629
-    .logical $86C629
 
       .dsection Unsorted86C629Section
 
-    .here
-
-    * = $06C69A
-    .logical $86C69A
-
       .dsection Table86C69ASection
-
-    .here
-
-    * = $06C6A2
-    .logical $86C6A2
 
       .dsection ASMCGiveJuliaLightIfNoWeaponSection
       .dsection ApplyMapTileChangeSection
-
-    .here
-
-    * = $06C739
-    .logical $86C739
 
       aChapterEventPointers .include "data/chapter/ChapterEventPointers.csv.asm" ; 86/C739
       aChapterEventDataPointers .include "data/chapter/ChapterEventDataPointers.csv.asm" ; 86/C760
