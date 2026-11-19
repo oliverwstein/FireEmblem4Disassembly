@@ -145,13 +145,16 @@
 
   FS_Player               = 0
 
-  ; A faction's relation to another (rlGetFactionRelation), and the allegiance
-  ; bits of a unit's deployment state (DeploymentAllegianceMask). The data window
-  ; calls them じぐん, てきたい, どうめい and ちゅうりつ. Only enemy units
-  ; fight each other: neutral units cannot attack or be attacked
-  ; (rlCheckIfDeployedUnitIsEnemy accepts only AllegianceEnemy). Own and allied
-  ; units are "friendly" (rlCheckIfDeployedUnitIsFriendly); enemy and neutral
-  ; units are "unfriendly" and block movement (aUnfriendlyUnitMap).
+  ; One faction's relation to another (rlGetFactionRelation, from the first
+  ; faction's hostile and allied bits), and the allegiance bits of a unit's
+  ; deployment state (DeploymentAllegianceMask), which hold its faction's
+  ; relation to the player's. The data window calls them じぐん, てきたい,
+  ; どうめい and ちゅうりつ. Relations are per pair: an army neutral to the
+  ; player can be at war with another army. Only factions that are enemies of
+  ; each other fight (rlCheckIfDeployedUnitIsEnemy accepts only
+  ; AllegianceEnemy). To a faction, own and allied units are "friendly"
+  ; (rlCheckIfDeployedUnitIsFriendly); enemy and neutral units are "unfriendly"
+  ; and block its movement (aUnfriendlyUnitMap).
   AllegianceOwn           = 0
   AllegianceEnemy         = 1
   AllegianceAllied        = 2
