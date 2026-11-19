@@ -114,7 +114,9 @@
   .include "engine/epilogue/world_map.asm"
   .include "engine/save/save.asm"
   .include "engine/debug/debug_menu.asm"
+  .include "engine/dialogue/dialogue_procs.asm"
   .include "engine/map/map_sprites.asm"
+  .include "engine/map/popups.asm"
   .include "engine/sound/music.asm"
   .include "engine/unsorted/bank80.asm"
   .include "engine/unsorted/bank81.asm"
@@ -563,12 +565,70 @@
 
     .here
 
+    * = $028431
+    .logical $828431
+
+      .dsection Unsorted828431Section
+      .dsection DialogueSection
+
+    .here
+
+    * = $0284EA
+    .logical $8284EA
+
+      .dsection ProcDialogueCycle1Section
+
+    .here
+
+    * = $028694
+    .logical $828694
+
+      .dsection ProcDialogueCodeSection
+      .dsection CastleNamePopUpSection
+
+    .here
+
+    * = $028906
+    .logical $828906
+
+      .dsection DialogueWithBGSection
+
+    .here
+
     * = $028A30
     .logical $828A30
 
       .dsection Unsorted828A30Section
 
       ; 82/8B2B
+
+    .here
+
+    * = $028B35
+    .logical $828B35
+
+      .dsection Unsorted828B35Section
+
+    .here
+
+    * = $028BF4
+    .logical $828BF4
+
+      .dsection Unsorted828BF4Section
+
+    .here
+
+    * = $028D52
+    .logical $828D52
+
+      .dsection Unsorted828D52Section
+
+    .here
+
+    * = $028ECB
+    .logical $828ECB
+
+      .dsection Unsorted828ECBSection
 
     .here
 
@@ -590,6 +650,27 @@
 
     .here
 
+    * = $029245
+    .logical $829245
+
+      .dsection Unsorted829245Section
+
+    .here
+
+    * = $0292B3
+    .logical $8292B3
+
+      .dsection Unsorted8292B3Section
+
+    .here
+
+    * = $029391
+    .logical $829391
+
+      .dsection Unsorted829391Section
+
+    .here
+
     * = $029478
     .logical $829478
 
@@ -607,6 +688,27 @@
       .dsection HDMACodeSection
 
       ; 82/C26D
+
+    .here
+
+    * = $02E073
+    .logical $82E073
+
+      .dsection Unsorted82E073Section
+
+    .here
+
+    * = $02E0AF
+    .logical $82E0AF
+
+      .dsection Unsorted82E0AFSection
+
+    .here
+
+    * = $02E400
+    .logical $82E400
+
+      .dsection Unsorted82E400Section
 
     .here
 
@@ -643,6 +745,20 @@
       .dsection RAMAreaSection
 
       ; 82/F207
+
+    .here
+
+    * = $02F211
+    .logical $82F211
+
+      .dsection Unsorted82F211Section
+
+    .here
+
+    * = $02F3E5
+    .logical $82F3E5
+
+      .dsection Unsorted82F3E5Section
 
     .here
 
