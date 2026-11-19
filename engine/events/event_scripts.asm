@@ -230,97 +230,97 @@
 
         .word <>rsEventCommand00
         .word <>rsEventCommand01
-        .word <>rsEventCommand02
-        .word <>rsEventCommand03
-        .word <>rsEventCommand04
-        .word <>rsEventCommand05
-        .word <>rsEventCommand06
-        .word <>rsEventCommand07
-        .word <>rsEventCommand08
-        .word <>rsEventCommand09
+        .word <>rsEventCommandJump
+        .word <>rsEventCommandJumpTrue
+        .word <>rsEventCommandJumpFalse
+        .word <>rsEventCommandJumpRelativeTrue
+        .word <>rsEventCommandJumpRelativeFalse
+        .word <>rsEventCommandTestPermanentFlagSet
+        .word <>rsEventCommandTestFlagInChapterSet
+        .word <>rsEventCommandChangePaletteProc
         .word <>rsEventCommand0A
         .word <>rsEventCommand0B
-        .word <>rsEventCommand0C
-        .word <>rsEventCommand0D
-        .word <>rsEventCommand0E
+        .word <>rsEventCommandDialogue
+        .word <>rsEventCommandCastleName
+        .word <>rsEventCommandPlaySong
         .word <>rsEventCommand0F
         .word <>rsEventCommand10
-        .word <>rsEventCommand11
-        .word <>rsEventCommand12
-        .word <>rsEventCommand13
-        .word <>rsEventCommand14
+        .word <>rsEventCommandPlaySFXByte
+        .word <>rsEventCommandPlaySFXWord
+        .word <>rsEventCommandRestorePhaseMusic
+        .word <>rsEventCommandDialogueWithBG
         .word <>rsEventCommand15
-        .word <>rsEventCommand16
-        .word <>rsEventCommand17
+        .word <>rsEventCommandLoverHomeCastle
+        .word <>rsEventCommandBerserkCast
         .word $0000               ; $18
         .word <>rsEventCommand19
         .word <>rsEventCommand1A
         .word <>rsEventCommand1B
-        .word <>rsEventCommand1C
+        .word <>rsEventCommandChangeDialogue
         .word <>rsEventCommand1D
         .word $0000               ; $1E
-        .word <>rsEventCommand1F
+        .word <>rsEventCommandCreateHDMA
         .word <>rsEventCommand20
-        .word <>rsEventCommand21
-        .word <>rsEventCommand22
-        .word <>rsEventCommand23
-        .word <>rsEventCommand24
-        .word <>rsEventCommand25
-        .word <>rsEventCommand26
-        .word <>rsEventCommand27
-        .word <>rsEventCommand28
-        .word <>rsEventCommand29
-        .word <>rsEventCommand2A
-        .word <>rsEventCommand2B
+        .word <>rsEventCommandCreateSprite
+        .word <>rsEventCommandMoveTemporaryToCoords
+        .word <>rsEventCommandLoadUnitByGroup
+        .word <>rsEventCommandLoadUnitDirect
+        .word <>rsEventCommandMoveTemporaryToCoordsFollow
+        .word <>rsEventCommandMoveTemporaryToCoordsClass
+        .word <>rsEventCommandMoveTemporaryByScript
+        .word <>rsEventCommandLoadUnitByGroupSilent
+        .word <>rsEventCommandWaitUnitSpriteDecompressed
+        .word <>rsEventCommandWaitUntilMapSpritesHalting
+        .word <>rsEventCommandContinueFormMapSpriteHalt
         .word <>rsEventCommand2C
-        .word <>rsEventCommand2D
-        .word <>rsEventCommand2E
-        .word <>rsEventCommand2F
+        .word <>rsEventCommandChangePalette
+        .word <>rsEventCommandPaletteSwap
+        .word <>rsEventCommandStoreWord
         .word <>rsEventCommand30
         .word <>rsEventCommand31
         .word <>rsEventCommand32
-        .word <>rsEventCommand33
-        .word <>rsEventCommand34
+        .word <>rsEventCommandResetSpriteEngine
+        .word <>rsEventCommandPause
         .word <>rsEventCommand35
         .word <>rsEventCommand36
         .word <>rsEventCommand37
         .word <>rsEventCommand38
-        .word <>rsEventCommand39
-        .word <>rsEventCommand3A
+        .word <>rsEventCommandSetCameraToEventUnitSlot1
+        .word <>rsEventCommandSetCameraPosition
         .word <>rsEventCommand3B
         .word <>rsEventCommand3C
         .word <>rsEventCommand3D
         .word <>rsEventCommand3E
-        .word <>rsEventCommand3F
-        .word <>rsEventCommand40
-        .word <>rsEventCommand41
-        .word <>rsEventCommand42
-        .word <>rsEventCommand43
-        .word <>rsEventCommand44
-        .word <>rsEventCommand45
-        .word <>rsEventCommand46
-        .word <>rsEventCommand47
+        .word <>rsEventCommandScriptedMapScroll
+        .word <>rsEventCommandMapScroll
+        .word <>rsEventCommandMapScrollToEventUnitSlot1
+        .word <>rsEventCommandFillEventUnitSlot
+        .word <>rsEventCommandFillEventUnitSlotByCoords
+        .word <>rsEventCommandFactionUnitDeath
+        .word <>rsEventCommandRunASM
+        .word <>rsEventCommandFadeInByTimer
+        .word <>rsEventCommandFadeOutByTimer
         .word <>rsEventCommand48
         .word <>rsEventCommand49
-        .word <>rsEventCommand4A
-        .word <>rsEventCommand4B
-        .word <>rsEventCommand4C
-        .word <>rsEventCommand4D
+        .word <>rsEventCommandRunEventCondition
+        .word <>rsEventCommandSetFlagIfInChapter
+        .word <>rsEventCommandUnsetFlagIfInChapter
+        .word <>rsEventCommandRunEventConditionUnskippable
         .word <>rsEventCommand4E
-        .word <>rsEventCommand4F
-        .word <>rsEventCommand50
-        .word <>rsEventCommand51
-        .word <>rsEventCommand52
-        .word <>rsEventCommand53
-        .word <>rsEventCommand54
-        .word <>rsEventCommand55
-        .word <>rsEventCommand56
-        .word <>rsEventCommand57
-        .word <>rsEventCommand58
+        .word <>rsEventCommandWMFadeIn
+        .word <>rsEventCommandWMFadeOut
+        .word <>rsEventCommandWMScroll
+        .word <>rsEventCommandWMMarker
+        .word <>rsEventCommandWMClearMarker
+        .word <>rsEventCommandWMLoadPortrait
+        .word <>rsEventCommandWMFadeInPortrait
+        .word <>rsEventCommandWMFadeOutPortrait
+        .word <>rsEventCommandWMMovePortrait
+        .word <>rsEventCommandWMDialogue
         .word <>rsEventCommand59
-        .word <>rsEventCommand5A
-        .word <>rsEventCommand5B
-        .word <>rsEventCommand5C
+        .word <>rsEventCommandWMClearDialogue
+        .word <>rsEventCommandWMHighlight
+        .word <>rsEventCommandWMClearHighlight
         .word <>rsEventCommand5D
         .word <>rsEventCommand5E
         .word $0000               ; $5F
@@ -515,7 +515,7 @@
 
         .databank 0
 
-      rsEventCommand02 ; 91/BDF4
+      rsEventCommandJump ; 91/BDF4
 
         .al
         .autsiz
@@ -534,7 +534,7 @@
 
         .databank 0
 
-      rsEventCommand03 ; 91/BDFF
+      rsEventCommandJumpTrue ; 91/BDFF
 
         .al
         .autsiz
@@ -563,7 +563,7 @@
 
         .databank 0
 
-      rsEventCommand04 ; 91/BE13
+      rsEventCommandJumpFalse ; 91/BE13
 
         .al
         .autsiz
@@ -592,7 +592,7 @@
 
         .databank 0
 
-      rsEventCommand05 ; 91/BE27
+      rsEventCommandJumpRelativeTrue ; 91/BE27
 
         .al
         .autsiz
@@ -621,7 +621,7 @@
 
         .databank 0
 
-      rsEventCommand06 ; 91/BE3C
+      rsEventCommandJumpRelativeFalse ; 91/BE3C
 
         .al
         .autsiz
@@ -650,7 +650,7 @@
 
         .databank 0
 
-      rsEventCommand07 ; 91/BE51
+      rsEventCommandTestPermanentFlagSet ; 91/BE51
 
         .al
         .autsiz
@@ -676,7 +676,7 @@
 
         .databank 0
 
-      rsEventCommand08 ; 91/BE69
+      rsEventCommandTestFlagInChapterSet ; 91/BE69
 
         .al
         .autsiz
@@ -716,7 +716,7 @@
 
         .databank 0
 
-      rsEventCommand09 ; 91/BE94
+      rsEventCommandChangePaletteProc ; 91/BE94
 
         .al
         .autsiz
@@ -798,7 +798,7 @@
 
         .databank 0
 
-      rsEventCommand0C ; 91/BEDE
+      rsEventCommandDialogue ; 91/BEDE
 
         .al
         .autsiz
@@ -827,7 +827,7 @@
 
         .databank 0
 
-      rsEventCommand0D ; 91/BEFD
+      rsEventCommandCastleName ; 91/BEFD
 
         .al
         .autsiz
@@ -855,7 +855,7 @@
 
         .databank 0
 
-      rsEventCommand0E ; 91/BF17
+      rsEventCommandPlaySong ; 91/BF17
 
         .al
         .autsiz
@@ -921,7 +921,7 @@
 
         .databank 0
 
-      rsEventCommand11 ; 91/BF57
+      rsEventCommandPlaySFXByte ; 91/BF57
 
         .al
         .autsiz
@@ -943,7 +943,7 @@
 
         .databank 0
 
-      rsEventCommand12 ; 91/BF68
+      rsEventCommandPlaySFXWord ; 91/BF68
 
         .al
         .autsiz
@@ -965,7 +965,7 @@
 
         .databank 0
 
-      rsEventCommand13 ; 91/BF77
+      rsEventCommandRestorePhaseMusic ; 91/BF77
 
         .al
         .autsiz
@@ -990,7 +990,7 @@
 
         .databank 0
 
-      rsEventCommand14 ; 91/BF90
+      rsEventCommandDialogueWithBG ; 91/BF90
 
         .al
         .autsiz
@@ -1056,7 +1056,7 @@
 
         .databank 0
 
-      rsEventCommand16 ; 91/BFD4
+      rsEventCommandLoverHomeCastle ; 91/BFD4
 
         .al
         .autsiz
@@ -1083,7 +1083,7 @@
 
         .databank 0
 
-      rsEventCommand17 ; 91/BFF0
+      rsEventCommandBerserkCast ; 91/BFF0
 
         .al
         .autsiz
@@ -1200,7 +1200,7 @@
 
         .databank 0
 
-      rsEventCommand1C ; 91/C059
+      rsEventCommandChangeDialogue ; 91/C059
 
         .al
         .autsiz
@@ -1244,7 +1244,7 @@
 
         .databank 0
 
-      rsEventCommand1F ; 91/C07A
+      rsEventCommandCreateHDMA ; 91/C07A
 
         .al
         .autsiz
@@ -1316,7 +1316,7 @@
 
         .databank 0
 
-      rsEventCommand21 ; 91/C0CA
+      rsEventCommandCreateSprite ; 91/C0CA
 
         .al
         .autsiz
@@ -1581,7 +1581,7 @@
         .byte $06
         .byte $08
 
-      rsEventCommand28 ; 91/C221
+      rsEventCommandLoadUnitByGroupSilent ; 91/C221
 
         .al
         .autsiz
@@ -2144,7 +2144,7 @@
 
         .databank 0
 
-      rsEventCommand27 ; 91/C503
+      rsEventCommandMoveTemporaryByScript ; 91/C503
 
         .al
         .autsiz
@@ -2157,7 +2157,7 @@
 
         .databank 0
 
-      rsEventCommand22 ; 91/C50A
+      rsEventCommandMoveTemporaryToCoords ; 91/C50A
 
         .al
         .autsiz
@@ -2170,7 +2170,7 @@
 
         .databank 0
 
-      rsEventCommand23 ; 91/C511
+      rsEventCommandLoadUnitByGroup ; 91/C511
 
         .al
         .autsiz
@@ -2183,7 +2183,7 @@
 
         .databank 0
 
-      rsEventCommand24 ; 91/C518
+      rsEventCommandLoadUnitDirect ; 91/C518
 
         .al
         .autsiz
@@ -2196,7 +2196,7 @@
 
         .databank 0
 
-      rsEventCommand25 ; 91/C51F
+      rsEventCommandMoveTemporaryToCoordsFollow ; 91/C51F
 
         .al
         .autsiz
@@ -2209,7 +2209,7 @@
 
         .databank 0
 
-      rsEventCommand26 ; 91/C526
+      rsEventCommandMoveTemporaryToCoordsClass ; 91/C526
 
         .al
         .autsiz
@@ -2308,7 +2308,7 @@
         .word <>rsUnknown91C0F4
         .word <>rsUnknown91C2FD
 
-      rsEventCommand29 ; 91/C589
+      rsEventCommandWaitUnitSpriteDecompressed ; 91/C589
 
         .al
         .autsiz
@@ -2335,7 +2335,7 @@
 
         .databank 0
 
-      rsEventCommand2A ; 91/C59C
+      rsEventCommandWaitUntilMapSpritesHalting ; 91/C59C
 
         .al
         .autsiz
@@ -2370,7 +2370,7 @@
 
         .databank 0
 
-      rsEventCommand2B ; 91/C5BF
+      rsEventCommandContinueFormMapSpriteHalt ; 91/C5BF
 
         .al
         .autsiz
@@ -2510,7 +2510,7 @@
 
         .databank 0
 
-      rsEventCommand2D ; 91/C65D
+      rsEventCommandChangePalette ; 91/C65D
 
         .al
         .autsiz
@@ -2558,7 +2558,7 @@
 
         .databank 0
 
-      rsEventCommand2E ; 91/C68A
+      rsEventCommandPaletteSwap ; 91/C68A
 
         .al
         .autsiz
@@ -2587,7 +2587,7 @@
 
         .databank 0
 
-      rsEventCommand2F ; 91/C6A6
+      rsEventCommandStoreWord ; 91/C6A6
 
         .al
         .autsiz
@@ -2666,7 +2666,7 @@
 
         .databank 0
 
-      rsEventCommand33 ; 91/C6E1
+      rsEventCommandResetSpriteEngine ; 91/C6E1
 
         .al
         .autsiz
@@ -2773,7 +2773,7 @@
 
         .databank 0
 
-      rsEventCommand39 ; 91/C749
+      rsEventCommandSetCameraToEventUnitSlot1 ; 91/C749
 
         .al
         .autsiz
@@ -2815,7 +2815,7 @@
 
         .databank 0
 
-      rsEventCommand3A ; 91/C77D
+      rsEventCommandSetCameraPosition ; 91/C77D
 
         .al
         .autsiz
@@ -2977,7 +2977,7 @@
 
         .databank 0
 
-      rsEventCommand3F ; 91/C834
+      rsEventCommandScriptedMapScroll ; 91/C834
 
         .al
         .autsiz
@@ -3017,7 +3017,7 @@
 
         .databank 0
 
-      rsEventCommand40 ; 91/C865
+      rsEventCommandMapScroll ; 91/C865
 
         .al
         .autsiz
@@ -3081,7 +3081,7 @@
 
         .databank 0
 
-      rsEventCommand41 ; 91/C8B8
+      rsEventCommandMapScrollToEventUnitSlot1 ; 91/C8B8
 
         .al
         .autsiz
@@ -3154,7 +3154,7 @@
 
         .databank 0
 
-      rsEventCommand42 ; 91/C925
+      rsEventCommandFillEventUnitSlot ; 91/C925
 
         .al
         .autsiz
@@ -3256,7 +3256,7 @@
 
         .databank 0
 
-      rsEventCommand43 ; 91/C9AB
+      rsEventCommandFillEventUnitSlotByCoords ; 91/C9AB
 
         .al
         .autsiz
@@ -3315,7 +3315,7 @@
 
         .databank 0
 
-      rsEventCommand44 ; 91/C9EA
+      rsEventCommandFactionUnitDeath ; 91/C9EA
 
         .al
         .autsiz
@@ -3361,7 +3361,7 @@
 
         .databank 0
 
-      rsEventCommand45 ; 91/CA1F
+      rsEventCommandRunASM ; 91/CA1F
 
         .al
         .autsiz
@@ -3505,7 +3505,7 @@
 
         .databank 0
 
-      rsEventCommand46 ; 91/CADC
+      rsEventCommandFadeInByTimer ; 91/CADC
 
         .al
         .autsiz
@@ -3531,7 +3531,7 @@
 
         .databank 0
 
-      rsEventCommand47 ; 91/CAF8
+      rsEventCommandFadeOutByTimer ; 91/CAF8
 
         .al
         .autsiz
@@ -3557,7 +3557,7 @@
 
         .databank 0
 
-      rsEventCommand34 ; 91/CB14
+      rsEventCommandPause ; 91/CB14
 
         .al
         .autsiz
@@ -3636,7 +3636,7 @@
 
         .databank 0
 
-      rsEventCommand4A ; 91/CB5E
+      rsEventCommandRunEventCondition ; 91/CB5E
 
         .al
         .autsiz
@@ -3673,7 +3673,7 @@
 
         .databank 0
 
-      rsEventCommand4B ; 91/CB7A
+      rsEventCommandSetFlagIfInChapter ; 91/CB7A
 
         .al
         .autsiz
@@ -3714,7 +3714,7 @@
 
         .databank 0
 
-      rsEventCommand4C ; 91/CBA2
+      rsEventCommandUnsetFlagIfInChapter ; 91/CBA2
 
         .al
         .autsiz
@@ -3755,7 +3755,7 @@
 
         .databank 0
 
-      rsEventCommand4D ; 91/CBCA
+      rsEventCommandRunEventConditionUnskippable ; 91/CBCA
 
         .al
         .autsiz
@@ -3766,7 +3766,7 @@
         php
         phb
 
-        jsr rsEventCommand4A
+        jsr rsEventCommandRunEventCondition
 
         phy
         lda #(`procUnknown828A93)<<8
@@ -3828,7 +3828,7 @@
 
         .databank 0
 
-      rsEventCommand4F ; 91/CC15
+      rsEventCommandWMFadeIn ; 91/CC15
 
         .al
         .autsiz
@@ -3856,7 +3856,7 @@
 
         .databank 0
 
-      rsEventCommand50 ; 91/CC31
+      rsEventCommandWMFadeOut ; 91/CC31
 
         .al
         .autsiz
@@ -3899,7 +3899,7 @@
 
         .databank 0
 
-      rsEventCommand51 ; 91/CC64
+      rsEventCommandWMScroll ; 91/CC64
 
         .al
         .autsiz
@@ -3928,7 +3928,7 @@
 
         .databank 0
 
-      rsEventCommand52 ; 91/CC80
+      rsEventCommandWMMarker ; 91/CC80
 
         .al
         .autsiz
@@ -3975,7 +3975,7 @@
 
         .databank 0
 
-      rsEventCommand53 ; 91/CCAD
+      rsEventCommandWMClearMarker ; 91/CCAD
 
         .al
         .autsiz
@@ -4004,7 +4004,7 @@
 
         .databank 0
 
-      rsEventCommand54 ; 91/CCC0
+      rsEventCommandWMLoadPortrait ; 91/CCC0
 
         .al
         .autsiz
@@ -4038,7 +4038,7 @@
 
         .databank 0
 
-      rsEventCommand55 ; 91/CCD8
+      rsEventCommandWMFadeInPortrait ; 91/CCD8
 
         .al
         .autsiz
@@ -4079,7 +4079,7 @@
 
         .databank 0
 
-      rsEventCommand56 ; 91/CCFD
+      rsEventCommandWMFadeOutPortrait ; 91/CCFD
 
         .al
         .autsiz
@@ -4108,7 +4108,7 @@
 
         .databank 0
 
-      rsEventCommand57 ; 91/CD10
+      rsEventCommandWMMovePortrait ; 91/CD10
 
         .al
         .autsiz
@@ -4149,7 +4149,7 @@
 
         .databank 0
 
-      rsEventCommand58 ; 91/CD35
+      rsEventCommandWMDialogue ; 91/CD35
 
         .al
         .autsiz
@@ -4224,7 +4224,7 @@
 
         .databank 0
 
-      rsEventCommand5A ; 91/CD85
+      rsEventCommandWMClearDialogue ; 91/CD85
 
         .al
         .autsiz
@@ -4247,7 +4247,7 @@
 
         .databank 0
 
-      rsEventCommand5B ; 91/CD91
+      rsEventCommandWMHighlight ; 91/CD91
 
         .al
         .autsiz
@@ -4275,7 +4275,7 @@
 
         .databank 0
 
-      rsEventCommand5C ; 91/CDA3
+      rsEventCommandWMClearHighlight ; 91/CDA3
 
         .al
         .autsiz

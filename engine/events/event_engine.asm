@@ -964,126 +964,126 @@
       aChapterEventConditionCommands ; 86/83FA
 
         .word <>rsChapterEventConditionCommand00
-        .word <>rsChapterEventConditionCommand01
-        .word <>rsChapterEventConditionCommand02
-        .word <>rsChapterEventConditionCommand03
-        .word <>rsChapterEventConditionCommand04
-        .word <>rsChapterEventConditionCommand05
+        .word <>rsChapterEventConditionCommandStartPlayerPhase
+        .word <>rsChapterEventConditionCommandCheckSeizingCastle
+        .word <>rsChapterEventConditionCommandCheckVillageDestroyed
+        .word <>rsChapterEventConditionCommandCheckTalk
+        .word <>rsChapterEventConditionCommandCheckEnteringHomeCastle
         .word <>rsChapterEventConditionCommand06
-        .word <>rsChapterEventConditionCommand07
+        .word <>rsChapterEventConditionCommandCheckEnteringCastleMenu
         .word <>rsChapterEventConditionCommand08
         .word <>rsChapterEventConditionCommand09
-        .word <>rsChapterEventConditionCommand0A
-        .word <>rsChapterEventConditionCommand0B
-        .word <>rsChapterEventConditionCommand0C
-        .word <>rsChapterEventConditionCommand0D
-        .word <>rsChapterEventConditionCommand0E
-        .word <>rsChapterEventConditionCommand0F
-        .word <>rsChapterEventConditionCommand10
+        .word <>rsChapterEventConditionCommandVisitVillage
+        .word <>rsChapterEventConditionCommandCheckUnitInArea
+        .word <>rsChapterEventConditionCommandCheckUnitsWithinDistance
+        .word <>rsChapterEventConditionCommandCheckUnitsFighting
+        .word <>rsChapterEventConditionCommandCheckUnitsFighting1to2range
+        .word <>rsChapterEventConditionCommandCheckUnitDied
+        .word <>rsChapterEventConditionCommandCheckFellInLove
         .word <>rsChapterEventConditionCommand11
         .word <>rsChapterEventConditionCommand12
-        .word <>rsChapterEventConditionCommand13
-        .word <>rsChapterEventConditionCommand14
+        .word <>rsChapterEventConditionCommandCheckChildEnteringHomeCastle
+        .word <>rsChapterEventConditionCommandCheckChildEnteringCastleMenu
         .word <>rsChapterEventConditionCommand15
-        .word <>rsChapterEventConditionCommand16
-        .word <>rsChapterEventConditionCommand17
-        .word <>rsChapterEventConditionCommand18
-        .word <>rsChapterEventConditionCommand19
-        .word <>rsChapterEventConditionCommand1A
-        .word <>rsChapterEventConditionCommand1B
-        .word <>rsChapterEventConditionCommand1C
-        .word <>rsChapterEventConditionCommand1D
-        .word <>rsChapterEventConditionCommand1E
-        .word <>rsChapterEventConditionCommand1F
-        .word <>rsChapterEventConditionCommand20
-        .word <>rsChapterEventConditionCommand21
-        .word <>rsChapterEventConditionCommand22
+        .word <>rsChapterEventConditionCommandCheckChildTalk
+        .word <>rsChapterEventConditionCommandCheckChildUnitDied
+        .word <>rsChapterEventConditionCommandCheckChildFellInLove
+        .word <>rsChapterEventConditionCommandCheckChildUnitsFighting
+        .word <>rsChapterEventConditionCommandCheckUnitDiedTo
+        .word <>rsChapterEventConditionCommandCheckChildUnitDiedTo
+        .word <>rsChapterEventConditionCommandRescueCivilian
+        .word <>rsChapterEventConditionCommandCheckPlayerUncapturedIfSeizing
+        .word <>rsChapterEventConditionCommandCheckWonInArena
+        .word <>rsChapterEventConditionCommandCheckSpecialCrit
+        .word <>rsChapterEventConditionCommandBreak
+        .word <>rsChapterEventConditionCommandCheckTurnPhaseAIActor
+        .word <>rsChapterEventConditionCommandSkipIfStartPlayerPhase
         .word <>rsChapterEventConditionCommand23
         .word <>rsChapterEventConditionCommand24
-        .word <>rsChapterEventConditionCommand20 ; $25
-        .word <>rsChapterEventConditionCommand26
-        .word <>rsChapterEventConditionCommand27
-        .word <>rsChapterEventConditionCommand28
-        .word <>rsChapterEventConditionCommand29
-        .word <>rsChapterEventConditionCommand2A
-        .word <>rsChapterEventConditionCommand2B
-        .word <>rsChapterEventConditionCommand2C
-        .word <>rsChapterEventConditionCommand2D
-        .word <>rsChapterEventConditionCommand20 ; $2E
+        .word <>rsChapterEventConditionCommandBreak ; $25
+        .word <>rsChapterEventConditionCommandRunASM
+        .word <>rsChapterEventConditionCommandSetFlag
+        .word <>rsChapterEventConditionCommandUnsetFlag
+        .word <>rsChapterEventConditionCommandCheckFlagSet
+        .word <>rsChapterEventConditionCommandCheckFlagUnset
+        .word <>rsChapterEventConditionCommandJump
+        .word <>rsChapterEventConditionCommandCheckAllFlagsInListSet
+        .word <>rsChapterEventConditionCommandCheckFlagInListSet
+        .word <>rsChapterEventConditionCommandBreak ; $2E
         .word <>rsChapterEventConditionCommand2F ; $2F
-        .word <>rsChapterEventConditionCommand30
-        .word <>rsChapterEventConditionCommand31
-        .word <>rsChapterEventConditionCommand32
-        .word <>rsChapterEventConditionCommand33
-        .word <>rsChapterEventConditionCommand34
+        .word <>rsChapterEventConditionCommandEvent
+        .word <>rsChapterEventConditionCommandSetBattleOrDeathQuote
+        .word <>rsChapterEventConditionCommandSetPrecombatDialogue
+        .word <>rsChapterEventConditionCommandRemoveCurrentChapterStruct
+        .word <>rsChapterEventConditionCommandRemoveChapterStruct
         .word <>rsChapterEventConditionCommand35
-        .word <>rsChapterEventConditionCommand36
-        .word <>rsChapterEventConditionCommand37
-        .word <>rsChapterEventConditionCommand38
-        .word <>rsChapterEventConditionCommand39
-        .word <>rsChapterEventConditionCommand3A
-        .word <>rsChapterEventConditionCommand3B
-        .word <>rsChapterEventConditionCommand3C
-        .word <>rsChapterEventConditionCommand3D
-        .word <>rsChapterEventConditionCommand3E
-        .word <>rsChapterEventConditionCommand3F
-        .word <>rsChapterEventConditionCommand40
-        .word <>rsChapterEventConditionCommand41
-        .word <>rsChapterEventConditionCommand42
-        .word <>rsChapterEventConditionCommand43
-        .word <>rsChapterEventConditionCommand44
-        .word <>rsChapterEventConditionCommand45
-        .word <>rsChapterEventConditionCommand46
-        .word <>rsChapterEventConditionCommand47
-        .word <>rsChapterEventConditionCommand48
-        .word <>rsChapterEventConditionCommand49
-        .word <>rsChapterEventConditionCommand4A
-        .word <>rsChapterEventConditionCommand4B
-        .word <>rsChapterEventConditionCommand4C
-        .word <>rsChapterEventConditionCommand4D
-        .word <>rsChapterEventConditionCommand4E
-        .word <>rsChapterEventConditionCommand4F
-        .word <>rsChapterEventConditionCommand50
+        .word <>rsChapterEventConditionCommandSetPermanentFlag
+        .word <>rsChapterEventConditionCommandUnsetPermanentFlag
+        .word <>rsChapterEventConditionCommandCheckPermanentFlagSet
+        .word <>rsChapterEventConditionCommandCheckPermanentFlagUnset
+        .word <>rsChapterEventConditionCommandCheckAllPermanentFlagsInListSet
+        .word <>rsChapterEventConditionCommandSetChapterEventCounter
+        .word <>rsChapterEventConditionCommandAddChapterEventCounter
+        .word <>rsChapterEventConditionCommandIncrementChapterEventCounter
+        .word <>rsChapterEventConditionCommandDecrementChapterEventCounter
+        .word <>rsChapterEventConditionCommandCheckChapterEventCounterEqual
+        .word <>rsChapterEventConditionCommandCheckChapterEventCounterNotEqual
+        .word <>rsChapterEventConditionCommandCheckIfInHomeCastle
+        .word <>rsChapterEventConditionCommandCheckItemUnobtained
+        .word <>rsChapterEventConditionCommandCheckNoCastleDestroyed
+        .word <>rsChapterEventConditionCommandCheckEveryoneInFactionDead
+        .word <>rsChapterEventConditionCommandCheckUnitsMarried
+        .word <>rsChapterEventConditionCommandCheckUnitAlive
+        .word <>rsChapterEventConditionCommandCheckFathersChildAlive
+        .word <>rsChapterEventConditionCommandSetChapterEventDataPointer
+        .word <>rsChapterEventConditionCommandRegisterCharacterMapSprite
+        .word <>rsChapterEventConditionCommandRegisterUnitgroupMapSprites
+        .word <>rsChapterEventConditionCommandLoadFactionGroup
+        .word <>rsChapterEventConditionCommandSetFactionGroup
+        .word <>rsChapterEventConditionCommandSetFactionHostility
+        .word <>rsChapterEventConditionCommandDeployUnitGroup
+        .word <>rsChapterEventConditionCommandDeployUnitGroupChild
+        .word <>rsChapterEventConditionCommandSetUnitPosition
         .word <>rsChapterEventConditionCommand51
         .word <>rsChapterEventConditionCommand52
-        .word <>rsChapterEventConditionCommand53
-        .word <>rsChapterEventConditionCommand54
-        .word <>rsChapterEventConditionCommand55
+        .word <>rsChapterEventConditionCommandChangeUnitsFactionslot
+        .word <>rsChapterEventConditionCommandAddUnitMoney
+        .word <>rsChapterEventConditionCommandSubtractUnitMoney
         .word <>rsChapterEventConditionCommand56
-        .word <>rsChapterEventConditionCommand57
-        .word <>rsChapterEventConditionCommand58
-        .word <>rsChapterEventConditionCommand59
-        .word <>rsChapterEventConditionCommand5A
-        .word <>rsChapterEventConditionCommand5B
-        .word <>rsChapterEventConditionCommand5C
+        .word <>rsChapterEventConditionCommandGiveUnitPID
+        .word <>rsChapterEventConditionCommandGiveUnitPIDEquip
+        .word <>rsChapterEventConditionCommandGiveChildUnitPID
+        .word <>rsChapterEventConditionCommandSendInventoryToSupply
+        .word <>rsChapterEventConditionCommandGiveUnitPIDForced
+        .word <>rsChapterEventConditionCommandUpdateLocationAndMapChangeEvents
         .word <>rsChapterEventConditionCommand5D
         .word <>rsChapterEventConditionCommand5E
-        .word <>rsChapterEventConditionCommand5F
-        .word <>rsChapterEventConditionCommand60
-        .word <>rsChapterEventConditionCommand61
-        .word <>rsChapterEventConditionCommand62
-        .word <>rsChapterEventConditionCommand63
-        .word <>rsChapterEventConditionCommand64
-        .word <>rsChapterEventConditionCommand65
-        .word <>rsChapterEventConditionCommand66
-        .word <>rsChapterEventConditionCommand67
-        .word <>rsChapterEventConditionCommand68
-        .word <>rsChapterEventConditionCommand69
-        .word <>rsChapterEventConditionCommand6A
-        .word <>rsChapterEventConditionCommand6B
-        .word <>rsChapterEventConditionCommand6C
-        .word <>rsChapterEventConditionCommand6D
-        .word <>rsChapterEventConditionCommand6E
-        .word <>rsChapterEventConditionCommand6F
-        .word <>rsChapterEventConditionCommand70
-        .word <>rsChapterEventConditionCommand71
-        .word <>rsChapterEventConditionCommand72
+        .word <>rsChapterEventConditionCommandSetScriptedAction
+        .word <>rsChapterEventConditionCommandModifyLovePoints
+        .word <>rsChapterEventConditionCommandSetUnitInCastle
+        .word <>rsChapterEventConditionCommandSetLocationTakeover
+        .word <>rsChapterEventConditionCommandDeleteFactionsAI
+        .word <>rsChapterEventConditionCommandReviveFactionsAI
+        .word <>rsChapterEventConditionCommandRemoveUnit
+        .word <>rsChapterEventConditionCommandUndeployUnit
+        .word <>rsChapterEventConditionCommandSetEventUnitPointers
+        .word <>rsChapterEventConditionCommandSetTalkTarget
+        .word <>rsChapterEventConditionCommandSetTalkTargetIfUnmarried
+        .word <>rsChapterEventConditionCommandSetChildTalkTarget
+        .word <>rsChapterEventConditionCommandSetTalkTargetIfMarried
+        .word <>rsChapterEventConditionCommandSetTalkTargetIfChildrenMarried
+        .word <>rsChapterEventConditionCommandAddCastleMoney
+        .word <>rsChapterEventConditionCommandCloseVillage
+        .word <>rsChapterEventConditionCommandOpenVillage
+        .word <>rsChapterEventConditionCommandAddUnitStat
+        .word <>rsChapterEventConditionCommandRemoveAreaRestriction
+        .word <>rsChapterEventConditionCommandSetAreaRestriction
         .word <>rsChapterEventConditionCommand73
-        .word <>rsChapterEventConditionCommand74
-        .word <>rsChapterEventConditionCommand75
-        .word <>rsChapterEventConditionCommand76
-        .word <>rsChapterEventConditionCommand77
-        .word <>rsChapterEventConditionCommand78
+        .word <>rsChapterEventConditionCommandCombatantsStayOnMap
+        .word <>rsChapterEventConditionCommandSetUnitStatus
+        .word <>rsChapterEventConditionCommandReplaceUnit
+        .word <>rsChapterEventConditionCommandClearTalkIfOneMarried
+        .word <>rsChapterEventConditionCommandSaveChapterTurncount
 
       rsChapterEventConditionCommand00 ; 86/84EC
 
@@ -1983,7 +1983,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand01 ; 86/897C
+      rsChapterEventConditionCommandStartPlayerPhase ; 86/897C
 
         .al
         .autsiz
@@ -1994,7 +1994,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand02 ; 86/8983
+      rsChapterEventConditionCommandCheckSeizingCastle ; 86/8983
 
         .al
         .autsiz
@@ -2010,7 +2010,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand03 ; 86/898A
+      rsChapterEventConditionCommandCheckVillageDestroyed ; 86/898A
 
         .al
         .autsiz
@@ -2026,7 +2026,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand04 ; 86/8991
+      rsChapterEventConditionCommandCheckTalk ; 86/8991
 
         .al
         .autsiz
@@ -2043,7 +2043,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand05 ; 86/8998
+      rsChapterEventConditionCommandCheckEnteringHomeCastle ; 86/8998
 
         .al
         .autsiz
@@ -2070,7 +2070,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand07 ; 86/89A6
+      rsChapterEventConditionCommandCheckEnteringCastleMenu ; 86/89A6
 
         .al
         .autsiz
@@ -2103,7 +2103,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand0A ; 86/89BB
+      rsChapterEventConditionCommandVisitVillage ; 86/89BB
 
         .al
         .autsiz
@@ -2116,7 +2116,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand0B ; 86/89C2
+      rsChapterEventConditionCommandCheckUnitInArea ; 86/89C2
 
         .al
         .autsiz
@@ -2180,7 +2180,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand0C ; 86/8A1A
+      rsChapterEventConditionCommandCheckUnitsWithinDistance ; 86/8A1A
 
         .al
         .autsiz
@@ -2267,7 +2267,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand0D ; 86/8A8F
+      rsChapterEventConditionCommandCheckUnitsFighting ; 86/8A8F
 
         .al
         .autsiz
@@ -2280,7 +2280,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand0E ; 86/8A96
+      rsChapterEventConditionCommandCheckUnitsFighting1to2range ; 86/8A96
 
         .al
         .autsiz
@@ -2327,7 +2327,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand0F ; 86/8AD2
+      rsChapterEventConditionCommandCheckUnitDied ; 86/8AD2
 
         .al
         .autsiz
@@ -2343,7 +2343,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand1A ; 86/8AD9
+      rsChapterEventConditionCommandCheckUnitDiedTo ; 86/8AD9
 
         .al
         .autsiz
@@ -2356,7 +2356,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand10 ; 86/8AE0
+      rsChapterEventConditionCommandCheckFellInLove ; 86/8AE0
 
         .al
         .autsiz
@@ -2509,7 +2509,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand13 ; 86/8BA9
+      rsChapterEventConditionCommandCheckChildEnteringHomeCastle ; 86/8BA9
 
         .al
         .autsiz
@@ -2520,7 +2520,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand14 ; 86/8BB0
+      rsChapterEventConditionCommandCheckChildEnteringCastleMenu ; 86/8BB0
 
         .al
         .autsiz
@@ -2542,7 +2542,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand16 ; 86/8BBE
+      rsChapterEventConditionCommandCheckChildTalk ; 86/8BBE
 
         .al
         .autsiz
@@ -2555,7 +2555,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand17 ; 86/8BC5
+      rsChapterEventConditionCommandCheckChildUnitDied ; 86/8BC5
 
         .al
         .autsiz
@@ -2566,7 +2566,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand1B ; 86/8BCC
+      rsChapterEventConditionCommandCheckChildUnitDiedTo ; 86/8BCC
 
         .al
         .autsiz
@@ -2577,7 +2577,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand18 ; 86/8BD3
+      rsChapterEventConditionCommandCheckChildFellInLove ; 86/8BD3
 
         .al
         .autsiz
@@ -2588,7 +2588,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand19 ; 86/8BDA
+      rsChapterEventConditionCommandCheckChildUnitsFighting ; 86/8BDA
 
         .al
         .autsiz
@@ -2599,7 +2599,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand1C ; 86/8BE1
+      rsChapterEventConditionCommandRescueCivilian ; 86/8BE1
 
         .al
         .autsiz
@@ -2615,7 +2615,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand1D ; 86/8BE8
+      rsChapterEventConditionCommandCheckPlayerUncapturedIfSeizing ; 86/8BE8
 
         .al
         .autsiz
@@ -2628,7 +2628,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand1E ; 86/8BEF
+      rsChapterEventConditionCommandCheckWonInArena ; 86/8BEF
 
         .al
         .autsiz
@@ -2679,7 +2679,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand1F ; 86/8C30
+      rsChapterEventConditionCommandCheckSpecialCrit ; 86/8C30
 
         .al
         .autsiz
@@ -2720,7 +2720,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand21 ; 86/8C51
+      rsChapterEventConditionCommandCheckTurnPhaseAIActor ; 86/8C51
 
         .al
         .autsiz
@@ -2784,7 +2784,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand22 ; 86/8CA6
+      rsChapterEventConditionCommandSkipIfStartPlayerPhase ; 86/8CA6
 
         .al
         .autsiz
@@ -2864,7 +2864,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand26 ; 86/8CE1
+      rsChapterEventConditionCommandRunASM ; 86/8CE1
 
         .al
         .autsiz
@@ -2888,7 +2888,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand27 ; 86/8CFA
+      rsChapterEventConditionCommandSetFlag ; 86/8CFA
 
         .al
         .autsiz
@@ -2908,7 +2908,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand28 ; 86/8D08
+      rsChapterEventConditionCommandUnsetFlag ; 86/8D08
 
         .al
         .autsiz
@@ -2928,7 +2928,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand29 ; 86/8D16
+      rsChapterEventConditionCommandCheckFlagSet ; 86/8D16
 
         .al
         .autsiz
@@ -2949,7 +2949,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand2A ; 86/8D26
+      rsChapterEventConditionCommandCheckFlagUnset ; 86/8D26
 
         .al
         .autsiz
@@ -2970,7 +2970,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand2B ; 86/8D36
+      rsChapterEventConditionCommandJump ; 86/8D36
 
         .al
         .autsiz
@@ -2991,7 +2991,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand2C ; 86/8D41
+      rsChapterEventConditionCommandCheckAllFlagsInListSet ; 86/8D41
 
         .al
         .autsiz
@@ -3031,7 +3031,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand2D ; 86/8D69
+      rsChapterEventConditionCommandCheckFlagInListSet ; 86/8D69
 
         .al
         .autsiz
@@ -3104,7 +3104,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand20 ; 86/8DB2
+      rsChapterEventConditionCommandBreak ; 86/8DB2
 
         .al
         .autsiz
@@ -3118,7 +3118,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand30 ; 86/8DB5
+      rsChapterEventConditionCommandEvent ; 86/8DB5
 
         .al
         .autsiz
@@ -3156,7 +3156,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand31 ; 86/8DE5
+      rsChapterEventConditionCommandSetBattleOrDeathQuote ; 86/8DE5
 
         .al
         .autsiz
@@ -3219,7 +3219,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand32 ; 86/8E42
+      rsChapterEventConditionCommandSetPrecombatDialogue ; 86/8E42
 
         .al
         .autsiz
@@ -3268,7 +3268,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand33 ; 86/8E83
+      rsChapterEventConditionCommandRemoveCurrentChapterStruct ; 86/8E83
 
         .al
         .autsiz
@@ -3283,7 +3283,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand34 ; 86/8E8A
+      rsChapterEventConditionCommandRemoveChapterStruct ; 86/8E8A
 
         .al
         .autsiz
@@ -3337,7 +3337,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand36 ; 86/8EBF
+      rsChapterEventConditionCommandSetPermanentFlag ; 86/8EBF
 
         .al
         .autsiz
@@ -3357,7 +3357,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand37 ; 86/8ECD
+      rsChapterEventConditionCommandUnsetPermanentFlag ; 86/8ECD
 
         .al
         .autsiz
@@ -3377,7 +3377,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand38 ; 86/8EDB
+      rsChapterEventConditionCommandCheckPermanentFlagSet ; 86/8EDB
 
         .al
         .autsiz
@@ -3400,7 +3400,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand39 ; 86/8EEF
+      rsChapterEventConditionCommandCheckPermanentFlagUnset ; 86/8EEF
 
         .al
         .autsiz
@@ -3423,7 +3423,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand3A ; 86/8F03
+      rsChapterEventConditionCommandCheckAllPermanentFlagsInListSet ; 86/8F03
 
         .al
         .autsiz
@@ -3466,7 +3466,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand3B ; 86/8F2F
+      rsChapterEventConditionCommandSetChapterEventCounter ; 86/8F2F
 
         .al
         .autsiz
@@ -3490,7 +3490,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand3C ; 86/8F47
+      rsChapterEventConditionCommandAddChapterEventCounter ; 86/8F47
 
         .al
         .autsiz
@@ -3520,7 +3520,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand3D ; 86/8F68
+      rsChapterEventConditionCommandIncrementChapterEventCounter ; 86/8F68
 
         .al
         .autsiz
@@ -3541,7 +3541,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand3E ; 86/8F79
+      rsChapterEventConditionCommandDecrementChapterEventCounter ; 86/8F79
 
         .al
         .autsiz
@@ -3562,7 +3562,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand3F ; 86/8F8A
+      rsChapterEventConditionCommandCheckChapterEventCounterEqual ; 86/8F8A
 
         .al
         .autsiz
@@ -3591,7 +3591,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand40 ; 86/8FA9
+      rsChapterEventConditionCommandCheckChapterEventCounterNotEqual ; 86/8FA9
 
         .al
         .autsiz
@@ -3620,7 +3620,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand41 ; 86/8FC8
+      rsChapterEventConditionCommandCheckIfInHomeCastle ; 86/8FC8
 
         .al
         .autsiz
@@ -3641,7 +3641,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand42 ; 86/8FDA
+      rsChapterEventConditionCommandCheckItemUnobtained ; 86/8FDA
 
         .al
         .autsiz
@@ -3679,7 +3679,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand43 ; 86/9007
+      rsChapterEventConditionCommandCheckNoCastleDestroyed ; 86/9007
 
         .al
         .autsiz
@@ -3723,7 +3723,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand44 ; 86/9036
+      rsChapterEventConditionCommandCheckEveryoneInFactionDead ; 86/9036
 
         .al
         .autsiz
@@ -3745,7 +3745,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand45 ; 86/904D
+      rsChapterEventConditionCommandCheckUnitsMarried ; 86/904D
 
         .al
         .autsiz
@@ -3801,7 +3801,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand46 ; 86/909B
+      rsChapterEventConditionCommandCheckUnitAlive ; 86/909B
 
         .al
         .autsiz
@@ -3836,7 +3836,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand47 ; 86/90C2
+      rsChapterEventConditionCommandCheckFathersChildAlive ; 86/90C2
 
         .al
         .autsiz
@@ -3897,7 +3897,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand48 ; 86/911C
+      rsChapterEventConditionCommandSetChapterEventDataPointer ; 86/911C
 
         .al
         .autsiz
@@ -3920,7 +3920,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand49 ; 86/9133
+      rsChapterEventConditionCommandRegisterCharacterMapSprite ; 86/9133
 
         .al
         .autsiz
@@ -3940,7 +3940,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand4A ; 86/913F
+      rsChapterEventConditionCommandRegisterUnitgroupMapSprites ; 86/913F
 
         .al
         .autsiz
@@ -3967,7 +3967,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand4B ; 86/915E
+      rsChapterEventConditionCommandLoadFactionGroup ; 86/915E
 
         .al
         .autsiz
@@ -3991,7 +3991,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand4C ; 86/9176
+      rsChapterEventConditionCommandSetFactionGroup ; 86/9176
 
         .al
         .autsiz
@@ -4015,7 +4015,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand4D ; 86/918E
+      rsChapterEventConditionCommandSetFactionHostility ; 86/918E
 
         .al
         .autsiz
@@ -4040,7 +4040,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand4E ; 86/91A7
+      rsChapterEventConditionCommandDeployUnitGroup ; 86/91A7
 
         .al
         .autsiz
@@ -4072,7 +4072,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand4F ; 86/91CD
+      rsChapterEventConditionCommandDeployUnitGroupChild ; 86/91CD
 
         .al
         .autsiz
@@ -4113,7 +4113,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand50 ; 86/9200
+      rsChapterEventConditionCommandSetUnitPosition ; 86/9200
 
         .al
         .autsiz
@@ -4290,7 +4290,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand53 ; 86/92EE
+      rsChapterEventConditionCommandChangeUnitsFactionslot ; 86/92EE
 
         .al
         .autsiz
@@ -4328,7 +4328,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand54 ; 86/9327
+      rsChapterEventConditionCommandAddUnitMoney ; 86/9327
 
         .al
         .autsiz
@@ -4353,7 +4353,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand55 ; 86/9342
+      rsChapterEventConditionCommandSubtractUnitMoney ; 86/9342
 
         .al
         .autsiz
@@ -4388,7 +4388,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand57 ; 86/935E
+      rsChapterEventConditionCommandGiveUnitPID ; 86/935E
 
         .al
         .autsiz
@@ -4421,7 +4421,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand58 ; 86/9388
+      rsChapterEventConditionCommandGiveUnitPIDEquip ; 86/9388
 
         .al
         .autsiz
@@ -4456,7 +4456,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand59 ; 86/93BD
+      rsChapterEventConditionCommandGiveChildUnitPID ; 86/93BD
 
         .al
         .autsiz
@@ -4488,7 +4488,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand5A ; 86/93EA
+      rsChapterEventConditionCommandSendInventoryToSupply ; 86/93EA
 
         .al
         .autsiz
@@ -4516,7 +4516,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand5B ; 86/9405
+      rsChapterEventConditionCommandGiveUnitPIDForced ; 86/9405
 
         .al
         .autsiz
@@ -4553,7 +4553,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand5C ; 86/9435
+      rsChapterEventConditionCommandUpdateLocationAndMapChangeEvents ; 86/9435
 
         .al
         .autsiz
@@ -4650,7 +4650,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand5F ; 86/94AA
+      rsChapterEventConditionCommandSetScriptedAction ; 86/94AA
 
         .al
         .autsiz
@@ -4726,7 +4726,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand60 ; 86/9519
+      rsChapterEventConditionCommandModifyLovePoints ; 86/9519
 
         .al
         .autsiz
@@ -4775,7 +4775,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand61 ; 86/9559
+      rsChapterEventConditionCommandSetUnitInCastle ; 86/9559
 
         .al
         .autsiz
@@ -4801,7 +4801,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand62 ; 86/9577
+      rsChapterEventConditionCommandSetLocationTakeover ; 86/9577
 
         .al
         .autsiz
@@ -4845,7 +4845,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand63 ; 86/95C2
+      rsChapterEventConditionCommandDeleteFactionsAI ; 86/95C2
 
         .al
         .autsiz
@@ -4869,7 +4869,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand64 ; 86/95DA
+      rsChapterEventConditionCommandReviveFactionsAI ; 86/95DA
 
         .al
         .autsiz
@@ -4893,7 +4893,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand65 ; 86/95F2
+      rsChapterEventConditionCommandRemoveUnit ; 86/95F2
 
         .al
         .autsiz
@@ -4915,7 +4915,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand66 ; 86/9608
+      rsChapterEventConditionCommandUndeployUnit ; 86/9608
 
         .al
         .autsiz
@@ -4936,7 +4936,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand67 ; 86/961A
+      rsChapterEventConditionCommandSetEventUnitPointers ; 86/961A
 
         .al
         .autsiz
@@ -4974,7 +4974,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand68 ; 86/964D
+      rsChapterEventConditionCommandSetTalkTarget ; 86/964D
 
         .al
         .autsiz
@@ -5007,7 +5007,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand69 ; 86/9670
+      rsChapterEventConditionCommandSetTalkTargetIfUnmarried ; 86/9670
 
         .al
         .autsiz
@@ -5103,7 +5103,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand6A ; 86/96E3
+      rsChapterEventConditionCommandSetChildTalkTarget ; 86/96E3
 
         .al
         .autsiz
@@ -5159,7 +5159,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand6B ; 86/973F
+      rsChapterEventConditionCommandSetTalkTargetIfMarried ; 86/973F
 
         .al
         .autsiz
@@ -5196,11 +5196,11 @@
         jsl rlSetEventFlag
         inc y
         clc
-        jml rsChapterEventConditionCommand68
+        jml rsChapterEventConditionCommandSetTalkTarget
 
         .databank 0
 
-      rsChapterEventConditionCommand6C ; 86/977A
+      rsChapterEventConditionCommandSetTalkTargetIfChildrenMarried ; 86/977A
 
         .al
         .autsiz
@@ -5276,11 +5276,11 @@
         jsl rlSetEventFlag
         inc y
         clc
-        jml rsChapterEventConditionCommand6A
+        jml rsChapterEventConditionCommandSetChildTalkTarget
 
         .databank 0
 
-      rsChapterEventConditionCommand6D ; 86/980B
+      rsChapterEventConditionCommandAddCastleMoney ; 86/980B
 
         .al
         .autsiz
@@ -5298,7 +5298,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand6E ; 86/9815
+      rsChapterEventConditionCommandCloseVillage ; 86/9815
 
         .al
         .autsiz
@@ -5323,7 +5323,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand6F ; 86/9830
+      rsChapterEventConditionCommandOpenVillage ; 86/9830
 
         .al
         .autsiz
@@ -5348,7 +5348,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand70 ; 86/9852
+      rsChapterEventConditionCommandAddUnitStat ; 86/9852
 
         .al
         .autsiz
@@ -5390,7 +5390,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand71 ; 86/988A
+      rsChapterEventConditionCommandRemoveAreaRestriction ; 86/988A
 
         .al
         .autsiz
@@ -5410,7 +5410,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand72 ; 86/9898
+      rsChapterEventConditionCommandSetAreaRestriction ; 86/9898
 
         .al
         .autsiz
@@ -5443,7 +5443,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand74 ; 86/98AD
+      rsChapterEventConditionCommandCombatantsStayOnMap ; 86/98AD
 
         .al
         .autsiz
@@ -5466,7 +5466,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand75 ; 86/98C6
+      rsChapterEventConditionCommandSetUnitStatus ; 86/98C6
 
         .al
         .autsiz
@@ -5494,7 +5494,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand76 ; 86/98EC
+      rsChapterEventConditionCommandReplaceUnit ; 86/98EC
 
         .al
         .autsiz
@@ -5563,7 +5563,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand77 ; 86/9970
+      rsChapterEventConditionCommandClearTalkIfOneMarried ; 86/9970
 
         .al
         .autsiz
@@ -5635,7 +5635,7 @@
 
         .databank 0
 
-      rsChapterEventConditionCommand78 ; 86/99CF
+      rsChapterEventConditionCommandSaveChapterTurncount ; 86/99CF
 
         .al
         .autsiz

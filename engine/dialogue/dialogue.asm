@@ -6824,7 +6824,7 @@
 
         ; $80
 
-        jsr rsEventCommand52
+        jsr rsEventCommandWMMarker
 
         inc aDialogue.lActivePointer,b
         inc aDialogue.lActivePointer,b
@@ -6846,7 +6846,7 @@
 
         ; $81
 
-        jsr rsEventCommand53
+        jsr rsEventCommandWMClearMarker
 
         inc aDialogue.lActivePointer,b
 
@@ -6865,7 +6865,7 @@
 
         ; DIALOGUE_WM_LOAD_PORTRAIT
 
-        jsr rsEventCommand54
+        jsr rsEventCommandWMLoadPortrait
 
         inc aDialogue.lActivePointer,b
         inc aDialogue.lActivePointer,b
@@ -6885,7 +6885,7 @@
         ; $83
         ; DIALOGUE_WM_FADE_IN_PORTRAIT
 
-        jsr rsEventCommand55
+        jsr rsEventCommandWMFadeInPortrait
 
         inc aDialogue.lActivePointer,b
         inc aDialogue.lActivePointer,b
@@ -6905,7 +6905,7 @@
         ; $84
         ; DIALOGUE_WM_FADE_OUT_PORTRAIT
 
-        jsr rsEventCommand56
+        jsr rsEventCommandWMFadeOutPortrait
 
         inc aDialogue.lActivePointer,b
 
@@ -6922,7 +6922,7 @@
 
         ; $85
 
-        jsr rsEventCommand57
+        jsr rsEventCommandWMMovePortrait
 
         inc aDialogue.lActivePointer,b
         inc aDialogue.lActivePointer,b
@@ -6942,7 +6942,7 @@
         ; $86
         ; DIALOGUE_WM_HIGHLIGHT
 
-        jsr rsEventCommand5B
+        jsr rsEventCommandWMHighlight
 
         inc aDialogue.lActivePointer,b
 
@@ -6960,7 +6960,7 @@
         ; $87
         ; DIALOGUE_WM_CLEAR_HIGHLIGHT
 
-        jsr rsEventCommand5C
+        jsr rsEventCommandWMClearHighlight
 
         clc
         rts
