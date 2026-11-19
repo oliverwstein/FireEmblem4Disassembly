@@ -19,6 +19,9 @@ starting widths, a caller, and warnings:
   mid-branch   branches into the middle of one of its own instructions
   widths       called with different register widths from different places
 
+--from-log also starts from every entry point of executed code in fe4.cdl that is
+not built: the log proves it is code, so it needs no caller in the build.
+
 --write FILE writes the routines found (optionally only in --bank) to FILE as a
 routines file for tools/test_routines.py and tools/place_routines.py.
 """
@@ -171,7 +174,7 @@ def warnings(insns, disasm, start):
     return w
 
 
-def trace(rom, labels, mask):
+def trace(rom, labels, mask, from_log=False):
     found = {}                     # address -> info
     entry = collections.defaultdict(set)
     callers = collections.defaultdict(list)
@@ -234,6 +237,21 @@ def trace(rom, labels, mask):
         if a >= 0x800000 and any(n.startswith('proc') for n in names):
             add(definition_targets(a, 'rlProcEngineCreateProc'), names[0])
 
+    if from_log:
+        # Every entry point of executed code that is not built: the first byte of
+        # each executed run and every byte the log marks as a jump or call target.
+        # The log proves these are code, so they need no caller in the build.
+        for o in range(0x8000, 0x400000):
+            if not (o & 0x8000) or mask[o] or not log[o] & 0x01:
+                continue
+            if log[o] & 0x0C or not log[o - 1] & 0x01:
+                a = 0x800000 | o
+                entry[a].add((bool(log[o] & 0x20), bool(log[o] & 0x10)))
+                callers[a].append(('fe4.cdl', a, 'log entry'))
+                if a not in found:
+                    found[a] = None
+                    queue.append((a, bool(log[o] & 0x20), bool(log[o] & 0x10)))
+
     for a, m8, x8, table in table_entries():
         # An entry that points at $00 (brk) is an unused slot aimed at padding, not code.
         if is_rom_code_address(a) and not mask[offset(a)] and rom[offset(a)] != 0x00:
@@ -281,13 +299,17 @@ def main():
     ap.add_argument('--bank', help='only this bank, e.g. 88')
     ap.add_argument('--list', action='store_true', help='list every routine found')
     ap.add_argument('--write', metavar='FILE', help='write the routines found to FILE')
+    ap.add_argument('--from-log', action='store_true',
+                    help='also start from every entry point of executed code in fe4.cdl')
     a = ap.parse_args()
 
     rom, labels = read_rom(), load_labels('labels.txt')
     if not labels:
         raise SystemExit('labels.txt is missing; run ./build.sh first')
     mask = coverage_mask()
-    found = merge(trace(rom, labels, mask))
+    if a.from_log and not width_log():
+        raise SystemExit('--from-log needs fe4.cdl recorded from this ROM')
+    found = merge(trace(rom, labels, mask, a.from_log))
     if a.bank:
         bank = int(a.bank, 16) & 0x3F
         found = [(x, i) for x, i in found if (x >> 16) & 0x3F == bank]
@@ -313,7 +335,8 @@ def main():
                   f'{len(info["callers"])} caller(s), e.g. {who[2]} from {who[0]}  {" ".join(info["warn"])}')
 
     if a.write:
-        parts = ['; Routines found by tools/trace.py. Each was reached from code in the build.\n']
+        parts = ['; Routines found by tools/trace.py. Each was reached from code in the build'
+                 + (' or ran in fe4.cdl.\n' if a.from_log else '.\n')]
         for x, info in found:
             d = Disassembler(rom, labels, x, info['end'] if info['clipped'] else None, info['m8'], info['x8'])
             insns, _ = d.decode()

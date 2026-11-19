@@ -35,14 +35,20 @@ import argparse, binascii, glob, os, re, struct, subprocess, sys, tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from asmlib import read_rom, offset, ASFLAGS
 
-# Routines that take inline arguments after the jsl, and how many bytes.
+# Routines that take inline arguments after the jsl or jsr, and how many bytes.
 INLINE_ARGS = {
     # rlDMAByStruct's argument is a DMA struct whose size depends on its first byte.
     'rlDMAByStruct': lambda first: {1: 7, 4: 11}.get(first, 9),
     'rlFadePaletteToBlack': 2,
     'rlFadePaletteToColors': 6,
     'rlSavePaletteBufferColorsToRAM': 7,
+    # Bank $9F routines called with jsr, measured from fe4.cdl (the bytes after every
+    # call that ran are read, not executed). The 2-byte ones are written as a word.
+    'rsUnknown9F8253': 1,
+    'rsUnknown9F82D7': 2,
+    'rsUnknown9F830F': 2,
 }
+WORD_ARGS = {'rsUnknown9F82D7', 'rsUnknown9F830F'}
 
 # Opcode table: mnemonic and addressing mode for every opcode.
 _ROWS = """
@@ -267,7 +273,7 @@ class Disassembler:
             elif mn in ('phb', 'phx', 'phy', 'php', 'phd'):
                 pushed = None
 
-            if mn == 'jsl' and tgt is not None:
+            if mn in ('jsl', 'jsr') and tgt is not None:
                 n = INLINE_ARGS.get(self.name(tgt, rom_only=True) or '', 0)
                 if callable(n):
                     n = n(self.byte(nxt))
@@ -389,8 +395,8 @@ class Disassembler:
         return out
 
     def inline_args(self, ins):
-        """The inline arguments after a jsl, as a directive."""
-        a, n = ins['pc'] + 4, ins['args']
+        """The inline arguments after a jsl or jsr, as a directive."""
+        a, n = ins['pc'] + 1 + ins['size'], ins['args']
         data = [self.byte(a + i) for i in range(n)]
         if self.name(ins['target'], rom_only=True) == 'rlDMAByStruct' and data[0] == 2:
             src = int.from_bytes(bytes(data[1:4]), 'little')
@@ -398,6 +404,10 @@ class Disassembler:
             dest = int.from_bytes(bytes(data[7:9]), 'little') << 1
             srcname = self.name(src) or f'${src:06X}'
             return f'.structDMAToVRAM {srcname}, ${count:04X}, ${data[6]:02X}, ${dest:04X}'
+        if self.name(ins['target'], rom_only=True) in WORD_ARGS:
+            v = data[0] | data[1] << 8
+            n = self.name(self.bank | v, rom_only=True)
+            return f'.word <>{n}' if n else f'.word ${v:04X}'
         return '.byte ' + ', '.join(f'${b:02X}' for b in data)
 
     def render(self, name):
