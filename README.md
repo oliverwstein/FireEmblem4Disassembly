@@ -2,7 +2,7 @@
 
 A disassembly of *Fire Emblem: Seisen no Keifu* (Japan, version 1.0). It builds a ROM that is byte-for-byte identical to the original.
 
-The project is a work in progress. About 17% of the ROM is currently built from source. The rest is copied from your original ROM at build time; see [Base ROM](#base-rom).
+The project is a work in progress; [STATUS.md](STATUS.md) records what has been done and what remains. About 17% of the ROM is currently built from source. The rest is copied from your original ROM at build time; see [Base ROM](#base-rom).
 
 ## Building
 

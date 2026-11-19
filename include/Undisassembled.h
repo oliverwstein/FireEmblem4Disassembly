@@ -22,7 +22,6 @@
     aUnknown88CBE8                                           :?= address($88CBE8)
     rlDrawMenuTextNumber                                     :?= address($89A18C)
     rlProcUnknown8AE199Init                                  :?= address($8AE1A1)
-    rsUnknown91BF17                                          :?= address($91BF17)
     aBattleMapSpriteData                                     :?= address($9EB50D)
     aBelhallaAttackingMagePositions                          :?= address($9EF811)
 
