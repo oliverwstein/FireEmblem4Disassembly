@@ -1,5 +1,31 @@
 ; Code from bank $9E not yet assigned to a game system.
 
+    .section Unsorted9E8000Section
+
+      .al
+      .xl
+
+      rlUnknown9E8000 ; 9E/8000
+
+        ; Nothing in the build reaches this. Runs rlUnknown9E800C with $7F4C87 = 1.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0001
+        sta $7F4C87
+        jml rlUnknown9E800C._8014
+
+        .databank 0
+
+        ; 9E/800C
+
+    .endsection Unsorted9E8000Section
+
+
     .section Unsorted9E800CSection
 
       .al
@@ -12,9 +38,14 @@
         .autsiz
         .databank ?
 
+        ; Entered here with $7F4C87 = 0, at rlUnknown9E8000 with 1, and by
+        ; rlUnknown9EEFF1 and rlUnknown9EF0CF at _8014 with 2.
+
         phx
         lda #$0000
         sta $7F4C87
+        _8014
+
         lda #(`procUnknown9EC70B)<<8
         sta lR44+1
         lda #<>procUnknown9EC70B
@@ -12921,6 +12952,210 @@
         ; 9E/EFF1
 
     .endsection Unsorted9EEDB5Section
+
+
+    .section Unsorted9EEFF1Section
+
+      .al
+      .xl
+
+      rlUnknown9EEFF1 ; 9E/EFF1
+
+        ; Nothing in the build reaches this. Fills the battle action structs for the
+        ; selected unit alone (no opponent: aActionStructUnit2 = $FFFF), then runs
+        ; rlUnknown9E800C with $7F4C87 = 2.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta aActionStructUnit1
+        jsl rlGetSelectedUnitClassID
+        sta aActionStructUnit1.ClassID
+        jsl rlGetSelectedUnitGender
+        sta aActionStructUnit1.Gender
+        jsl rlGetSelectedUnitCharacterID
+        sta aActionStructUnit1.CharacterID
+        jsl rlGetSelectedUnitDeploymentOffset
+        tax
+        lda aDeploymentTable._XTilePosition,x
+        sta aActionStructUnit1.XPosition
+        lda aDeploymentTable._YTilePosition,x
+        sta aActionStructUnit1.YPosition
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$FFFF
+        sta aActionStructUnit1.WeaponID
+        lda #$0008
+        sta aActionStructUnit1.Unknown
+        lda #$0000
+        sta aMapAction.wUnknown7F4562
+        lda #$FFFF
+        sta aActionStructUnit2
+        sta aActionStructUnit2.ClassID
+        lda #$0000
+        sta aActionStructUnit2.Gender
+        sta aActionStructUnit2.XPosition
+        sta aActionStructUnit2.YPosition
+        sta aActionStructUnit2.WeaponID
+        sta aActionStructUnit2.Unknown
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0002
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        lda #$0002
+        sta $7F4C87
+        jml rlUnknown9E800C._8014
+
+        .databank 0
+
+        ; 9E/F0CF
+
+      rlUnknown9EF0CF ; 9E/F0CF
+
+        ; Nothing in the build reaches this. Fills the battle action structs for
+        ; the unit at wR0 and the unit at wR1, then runs rlUnknown9E800C with
+        ; $7F4C87 = 2. When the second unit has no usable weapon, the original
+        ; branches back to the first unit's code (bra _F11F); that looks like a bug.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda wR1
+        pha
+        lda wR0
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta aActionStructUnit1
+        jsl rlGetSelectedUnitClassID
+        sta aActionStructUnit1.ClassID
+        jsl rlGetSelectedUnitGender
+        sta aActionStructUnit1.Gender
+        jsl rlGetSelectedUnitCharacterID
+        sta aActionStructUnit1.CharacterID
+        jsl rlGetSelectedUnitDeploymentOffset
+        tax
+        lda aDeploymentTable._XTilePosition,x
+        sta aActionStructUnit1.XPosition
+        lda aDeploymentTable._YTilePosition,x
+        sta aActionStructUnit1.YPosition
+        jsl rlGetFirstEquippableWeaponInInventory
+        ldx wCurrentItemDataROMPointer,b
+        bne _F11B
+        lda #$FFFF
+        bra _F11F
+
+
+        _F11B
+        jsl rlGetItemIDByInventorySlot
+
+        _F11F
+        sta aActionStructUnit1.WeaponID
+        lda #$0000
+        sta aActionStructUnit1.Unknown
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta aActionStructUnit1
+        tax
+        lda aDeploymentTable,x
+        and #$0003
+        sta aMapAction.wUnknown7F4562
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta aActionStructUnit2
+        jsl rlGetSelectedUnitClassID
+        sta aActionStructUnit2.ClassID
+        jsl rlGetSelectedUnitGender
+        sta aActionStructUnit2.Gender
+        jsl rlGetSelectedUnitCharacterID
+        sta aActionStructUnit2.CharacterID
+        jsl rlGetSelectedUnitDeploymentOffset
+        tax
+        lda aDeploymentTable._XTilePosition,x
+        sta aActionStructUnit2.XPosition
+        lda aDeploymentTable._YTilePosition,x
+        sta aActionStructUnit2.YPosition
+        jsl rlGetFirstEquippableWeaponInInventory
+        ldx wCurrentItemDataROMPointer,b
+        bne _F185
+        lda #$FFFF
+        bra _F11F
+
+
+        _F185
+        jsl rlGetItemIDByInventorySlot
+        sta aActionStructUnit2.WeaponID
+        lda #$0000
+        sta aActionStructUnit2.Unknown
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta aActionStructUnit2
+        tax
+        lda aDeploymentTable,x
+        and #$0003
+        sta $7F4564
+        lda #$0002
+        sta $7F4C87
+        jml rlUnknown9E800C._8014
+
+        .databank 0
+
+        ; 9E/F1B3
+
+      rlUnknown9EF1B3 ; 9E/F1B3
+
+        ; Only plx / rtl; nothing reaches it.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/F1B5
+
+    .endsection Unsorted9EEFF1Section
 
 
     .section Unsorted9EF1B5Section

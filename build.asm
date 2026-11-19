@@ -5396,6 +5396,13 @@
 
     .here
 
+    * = $07F574
+    .logical $87F574
+
+      .dsection CreateUnitFromBuffersByTypeSection
+
+    .here
+
     * = $07F9CE
     .logical $87F9CE
 
@@ -5470,6 +5477,13 @@
     .logical $87FCC3
 
       .dsection CapItemDurabilitySection
+
+    .here
+
+    * = $07FD09
+    .logical $87FD09
+
+      .dsection Unsorted87FD09Section
 
     .here
 
@@ -8354,10 +8368,24 @@
 
     .here
 
+    * = $0BAE12
+    .logical $8BAE12
+
+      .dsection UnitWindowPageDrawersSection
+
+    .here
+
     * = $0BAE1E
     .logical $8BAE1E
 
       .dsection Unsorted8BAE1ESection
+
+    .here
+
+    * = $0BAF3B
+    .logical $8BAF3B
+
+      .dsection UnitWindowDrawPagesSection
 
     .here
 
@@ -8442,6 +8470,13 @@
     .logical $8BBDA7
 
       .dsection Unsorted8BBDA7Section
+
+    .here
+
+    * = $0BBDF0
+    .logical $8BBDF0
+
+      .dsection UnitWindowDrawWeaponRankSection
 
     .here
 
@@ -12661,6 +12696,13 @@
 
     .here
 
+    * = $1E8000
+    .logical $9E8000
+
+      .dsection Unsorted9E8000Section
+
+    .here
+
     * = $1E800C
     .logical $9E800C
 
@@ -13845,6 +13887,13 @@
     .logical $9EEDB5
 
       .dsection Unsorted9EEDB5Section
+
+    .here
+
+    * = $1EEFF1
+    .logical $9EEFF1
+
+      .dsection Unsorted9EEFF1Section
 
     .here
 

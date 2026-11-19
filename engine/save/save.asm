@@ -1,6 +1,615 @@
 ; Saving to and loading from SRAM save slots.
 ; Also unnamed helpers that only the loading routines use.
 
+    .section CreateUnitFromBuffersByTypeSection
+
+      .al
+      .xl
+
+      aCreateUnitFromBuffersByTypeHandlers .word <>rsCreateStaticUnitFromBuffers, <>rsCreateDynamicUnitFromBuffers, <>rsCreateHolyUnitFromBuffers, <>rsCreateEnemyUnitFromBuffers ; 87/F574
+
+      rsCreateStaticUnitFromBuffers ; 87/F57C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #(`aStaticUnitRAMArea)<<8
+        sta lR18+1
+        lda #<>aStaticUnitRAMArea
+        sta lR18
+        jsl rlLoadRAMAreaPointer
+        ldx wSelectedUnitDataRAMPointer,b
+        sep #$20
+        lda #$00
+        sta $7E0000,x
+        rep #$20
+        lda #$001E
+        jsl rlAllocateRAMArea
+        lda lR25+1
+        sta $7E0002,x
+        lda lR25
+        clc
+        adc #$0000
+        sta $7E0001,x
+        lda lR25+1
+        sta $7E0005,x
+        lda lR25
+        clc
+        adc #$000F
+        sta $7E0004,x
+        lda #$83AD
+        sta $7E0008,x
+        tya
+        clc
+        adc #$000D
+        sta $7E0007,x
+        lda #$0000
+        sta $7E000B,x
+        sta $7E000A,x
+        lda #$7F00
+        sta lRAMBufferPointer+1,b
+        lda #$EB66
+        sta lRAMBufferPointer,b
+        jsl rlLoadExtendedCharacterDataFromBuffer
+        jsr rsUnknown87F80F
+        lda #(`aUnit1DataBuffer)<<8
+        sta lRAMBufferPointer+1,b
+        lda #<>aUnit1DataBuffer
+        sta lRAMBufferPointer,b
+        jsl rlLoadPersonalCharacterDataFromBuffer
+        jsr rsUnknown87F7B2
+        jsr rsUnknown87FD09
+        jsr rsUnknown87F890
+        jsr rsUnknown87F967
+        plx
+        rts
+
+        .databank 0
+
+        ; 87/F60B
+
+      rsCreateDynamicUnitFromBuffers ; 87/F60B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #(`aDynamicUnitRAMArea)<<8
+        sta lR18+1
+        lda #<>aDynamicUnitRAMArea
+        sta lR18
+        jsl rlLoadRAMAreaPointer
+        ldx wSelectedUnitDataRAMPointer,b
+        sep #$20
+        lda #$01
+        sta $7E0000,x
+        rep #$20
+        lda #$0034
+        jsl rlAllocateRAMArea
+        lda lR25+1
+        sta $7E0002,x
+        lda lR25
+        clc
+        adc #$0000
+        sta $7E0001,x
+        lda lR25+1
+        sta $7E0005,x
+        lda lR25
+        clc
+        adc #$000F
+        sta $7E0004,x
+        lda lR25+1
+        sta $7E0008,x
+        lda lR25
+        clc
+        adc #$001E
+        sta $7E0007,x
+        lda #$0000
+        sta $7E000B,x
+        sta $7E000A,x
+        lda #$7F00
+        sta lRAMBufferPointer+1,b
+        lda #$EB84
+        sta lRAMBufferPointer,b
+        jsl rlLoadCharacterROMDataFromBuffer
+        jsr rsUnknown87F860
+        lda #$7F00
+        sta lRAMBufferPointer+1,b
+        lda #$EB66
+        sta lRAMBufferPointer,b
+        jsl rlLoadExtendedCharacterDataFromBuffer
+        jsr rsUnknown87F80F
+        lda #(`aUnit1DataBuffer)<<8
+        sta lRAMBufferPointer+1,b
+        lda #<>aUnit1DataBuffer
+        sta lRAMBufferPointer,b
+        jsl rlLoadPersonalCharacterDataFromBuffer
+        jsr rsUnknown87F7B2
+        jsr rsUnknown87FD09
+        jsr rsUnknown87F890
+        jsr rsUnknown87F967
+        plx
+        rts
+
+        .databank 0
+
+        ; 87/F6AD
+
+      rsCreateHolyUnitFromBuffers ; 87/F6AD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #(`aHolyAndEnemyRAMArea)<<8
+        sta lR18+1
+        lda #<>aHolyAndEnemyRAMArea
+        sta lR18
+        jsl rlLoadRAMAreaPointer
+        ldx wSelectedUnitDataRAMPointer,b
+        sep #$20
+        lda #$02
+        sta $7E0000,x
+        rep #$20
+        lda #$000F
+        jsl rlAllocateRAMArea
+        lda lR25+1
+        sta $7E0002,x
+        lda lR25
+        clc
+        adc #$0000
+        sta $7E0001,x
+        lda #$83AD
+        sta $7E0005,x
+        tya
+        clc
+        adc #$0001
+        sta $7E0004,x
+        lda #$83AD
+        sta $7E0008,x
+        tya
+        clc
+        adc #$000D
+        sta $7E0007,x
+        lda #$0000
+        sta $7E000B,x
+        sta $7E000A,x
+        lda #$0000
+        sta $7E0011,x
+        sta $7E0010,x
+        lda #(`aUnit1DataBuffer)<<8
+        sta lRAMBufferPointer+1,b
+        lda #<>aUnit1DataBuffer
+        sta lRAMBufferPointer,b
+        jsl rlLoadPersonalCharacterDataFromBuffer
+        jsr rsUnknown87F7B2
+        jsr rsUnknown87F890
+        plx
+        rts
+
+        .databank 0
+
+        ; 87/F72E
+
+      rsCreateEnemyUnitFromBuffers ; 87/F72E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda wRoutineVariable1,b
+        pha
+        lda #(`aHolyAndEnemyRAMArea)<<8
+        sta lR18+1
+        lda #<>aHolyAndEnemyRAMArea
+        sta lR18
+        jsl rlLoadRAMAreaPointer
+        ldx wSelectedUnitDataRAMPointer,b
+        sep #$20
+        lda #$03
+        sta $7E0000,x
+        rep #$20
+        lda #$000F
+        jsl rlAllocateRAMArea
+        lda lR25+1
+        sta $7E0002,x
+        lda lR25
+        clc
+        adc #$0000
+        sta $7E0001,x
+        lda #$0000
+        sta $7E0005,x
+        sta $7E0004,x
+        lda #$0000
+        sta $7E0008,x
+        sta $7E0007,x
+        lda #$83AD
+        sta $7E000B,x
+        tya
+        clc
+        adc #$0001
+        sta $7E000A,x
+        lda #$0000
+        sta $7E0011,x
+        sta $7E0010,x
+        lda #(`aUnit1DataBuffer)<<8
+        sta lRAMBufferPointer+1,b
+        lda #<>aUnit1DataBuffer
+        sta lRAMBufferPointer,b
+        jsl rlLoadPersonalCharacterDataFromBuffer
+        jsr rsUnknown87F7B2
+        jsr rsUnknown87F890
+        pla
+        sta wRoutineVariable1,b
+        plx
+        rts
+
+        .databank 0
+
+        ; 87/F7B2
+
+      rsUnknown87F7B2 ; 87/F7B2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phx
+        phy
+        phy
+        ldx wSelectedUnitDataRAMPointer,b
+        sep #$20
+        lda $7E0003,x
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $7E0001,x
+        tay
+        plx
+        jsl rlGetSelectedUnitLoveDataIDByCharacterID
+        sep #$20
+        sta $0002,b,y
+        lda #$00
+        sta $000A,b,y
+        sta $000B,b,y
+        sta $0009,b,y
+        rep #$20
+        lda $1B39,b
+        cmp #$0000
+        beq _F7FC
+        cmp #$0001
+        beq _F7FC
+        lda #$0000
+        sep #$20
+        sta $0003,b,y
+        rep #$20
+        lda aUnit1DataBuffer._Personal.ClassMoney
+        beq _F804
+
+        _F7FC
+        jsl rlGetSelectedUnitClassDataPointer
+        jsl rlGetClassMoney
+
+        _F804
+        sep #$20
+        sta $000E,b,y
+        rep #$20
+        ply
+        plx
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 87/F80F
+
+      rsUnknown87F80F ; 87/F80F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phx
+        phy
+        phy
+        ldx wSelectedUnitDataRAMPointer,b
+        sep #$20
+        lda $7E0006,x
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $7E0004,x
+        tay
+        plx
+        jsl rlGetSelectedUnitCharacterID
+        cmp #$0001
+        beq _F852
+        cmp #$0006
+        beq _F852
+        cmp #$0019
+        beq _F84D
+        cmp #$002C
+        beq _F84D
+        cmp #$0024
+        beq _F848
+        lda #$0000
+        bra _F855
+
+
+        _F848
+        lda #$0005
+        bra _F855
+
+
+        _F84D
+        lda #$0003
+        bra _F855
+
+
+        _F852
+        lda #$0002
+
+        _F855
+        sep #$20
+        sta $000A,b,y
+        rep #$20
+        ply
+        plx
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 87/F860
+
+      rsUnknown87F860 ; 87/F860
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phx
+        phy
+        phy
+        ldx wSelectedUnitDataRAMPointer,b
+        sep #$20
+        lda $7E0009,x
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $7E0007,x
+        tay
+        plx
+        lda #$0006
+        sep #$20
+
+        _F87C
+        pha
+        lda $830003,x
+        sta $0000,b,y
+        inc x
+        inc y
+        pla
+        dec a
+        bne _F87C
+        rep #$20
+        ply
+        plx
+        plb
+        .databank $06
+        rts
+
+        .databank 0
+
+        ; 87/F890
+
+      rsUnknown87F890 ; 87/F890
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx wSelectedUnitDataRAMPointer,b
+        lda #(`aInventoryRAMArea)<<8
+        sta lR18+1
+        lda #<>aInventoryRAMArea
+        sta lR18
+        jsl rlLoadRAMAreaPointer
+        lda #$000D
+        jsl rlAllocateRAMArea
+        lda lR25+1
+        sta $7E000E,x
+        lda lR25
+        sta $7E000D,x
+        lda $1B39,b
+        cmp #$0003
+        beq _F8CE
+        cmp #$0002
+        beq _F8C7
+        jsl rlUnknown87F8EF
+        bra _F8EA
+
+
+        _F8C7
+        tya
+        clc
+        adc #$0023
+        bra _F8D3
+
+
+        _F8CE
+        tya
+        clc
+        adc #$000A
+
+        _F8D3
+        tax
+        jsl rlGetSelectedUnitStatus
+        pha
+        lda #$0000
+        jsl rlSetSelectedUnitStatus
+        txa
+        jsl rlLoadEquipmentDataIntoSpecifiedInventory
+        pla
+        jsl rlSetSelectedUnitStatus
+
+        _F8EA
+        jsl rlSaveEquippedWeaponStatBonus
+        rts
+
+        .databank 0
+
+        ; 87/F8EF
+
+      rlUnknown87F8EF ; 87/F8EF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phx
+        phy
+        tay
+        ldx wSelectedUnitDataRAMPointer,b
+        lda $7E000E,x
+        sta lStructPointer2+1,b
+        sta lR18+1
+        lda $7E000D,x
+        clc
+        adc #$0001
+        sta lStructPointer2,b
+        sta lR18
+        lda #$0008
+        sta wR0
+        lda #$0001
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda aUnit1DataBuffer._Inventory.ItemCount
+        beq _F958
+        tay
+        ldx #$0000
+
+        _F924
+        lda aUnit1DataBuffer._Inventory.Items,x
+        and #$00FF
+        phx
+        pha
+        jsl rlGetItemRAMStructEntryByPlayerItemIndex
+        pla
+        sta lStructPointer1,b
+        ldx wSelectedUnitDataRAMPointer,b
+        lda $7E000E,x
+        sta lStructPointer2+1,b
+        lda $7E000D,x
+        clc
+        adc #$0001
+        sta lStructPointer2,b
+        jsl rlAppendNewStructEntry
+        jsl rlUnknown84F9EE
+        plx
+        inc x
+        inc x
+        dec y
+        bne _F924
+
+        _F958
+        lda aUnit1DataBuffer._Inventory.EquippedWeaponBitfield
+        sta wRoutineVariable1,b
+        jsl rlSetSelectedUnitEquippedWeaponBitfield
+        ply
+        plx
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/F967
+
+      rsUnknown87F967 ; 87/F967
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        jsl rlGetSelectedUnitGenerationID
+        cmp #$0010
+        bcs _F97E
+        lda #$0000
+        sta $7E0011,x
+        sta $7E0010,x
+        bra _F9CC
+
+
+        _F97E
+        ldx #$0000
+
+        _F981
+        lda aUnit1DataBuffer._Lover.LoveValue,x
+        cmp #$01FF
+        bne _F991
+        lda #$FFFF
+        sta aUnit1DataBuffer._Lover.LoveValue,x
+
+        _F991
+        inc x
+        inc x
+        cpx #$001E
+        bne _F981
+        ldx wSelectedUnitDataRAMPointer,b
+        lda #(`aLoverRAMArea)<<8
+        sta lR18+1
+        lda #<>aLoverRAMArea
+        sta lR18
+        jsl rlLoadRAMAreaPointer
+        lda #$001E
+        jsl rlAllocateRAMArea
+        lda lR25+1
+        sta $7E0011,x
+        lda lR25
+        sta $7E0010,x
+        lda #$7F00
+        sta lRAMBufferPointer+1,b
+        lda #$EBBA
+        sta lRAMBufferPointer,b
+        jsl rlCopySelectedUnitLoverData
+
+        _F9CC
+        ply
+        rts
+
+        .databank 0
+
+        ; 87/F9CE
+
+    .endsection CreateUnitFromBuffersByTypeSection
+
+
     .section CompactStaticDynamicUnitBuffer1UnitStatesSection
 
       .al
@@ -341,6 +950,142 @@
         .databank 0
 
     .endsection FillItemDurabilityDataSection
+
+
+    .section Unsorted87FD09Section
+
+      .al
+      .xl
+
+      rsUnknown87FD09 ; 87/FD09
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+        phx
+        phy
+        jsl rlGetSelectedUnitCharacterID
+        sta lR19
+        lda #$0000
+        sta lR20
+        sta aUnit1DataBuffer._Inventory.Items
+        sta $7FEBAC
+        sta $7FEBAE
+        sta $7FEBB0
+        sta $7FEBB2
+        sta $7FEBB4
+        sta $7FEBB6
+        lda #$0001
+        sta lR18
+        jsl rlGetItemRAMStructEntryByPlayerItemIndex
+
+        _FD45
+        ldx wCurrentItemDataRAMPointer,b
+        lda $0003,b,x
+        bit #$FE00
+        bne _FD9A
+        and #$003F
+        cmp lR19
+        bne _FD9A
+        lda $0002,b,x
+        and #$00FF
+        cmp #$0001
+        beq _FD67
+        cmp #$0002
+        bne _FD9A
+
+        _FD67
+        pha
+        ldy $0003,b,x
+        lda wSelectedUnitDataRAMPointer,b
+        sta $0003,b,x
+        pla
+        cmp #$0002
+        beq _FD9A
+        tya
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        and #$000E
+        tax
+        beq _FD92
+        cpx #$000E
+        beq _FD8E
+
+        _FD88
+        lda aUnit1DataBuffer._Inventory.Items,x
+        beq _FD92
+
+        _FD8E
+        dec x
+        dec x
+        bne _FD88
+
+        _FD92
+        lda lR18
+        sta aUnit1DataBuffer._Inventory.Items,x
+        inc lR20
+
+        _FD9A
+        lda wCurrentItemDataRAMPointer,b
+        clc
+        adc #$0006
+        sta wCurrentItemDataRAMPointer,b
+        lda lR18
+        inc a
+        sta lR18
+        cmp #$0101
+        bne _FD45
+        lda lR20
+        sta aUnit1DataBuffer._Inventory.ItemCount
+        beq _FDD4
+        lda #$7F00
+        pha
+        plb
+        .databank $00
+        plb
+        .databank $00
+        ldx #$0000
+        ldy #$0000
+
+        _FDC2
+        lda aUnit1DataBuffer._Inventory.Items,x
+        beq _FDCD
+        sta $EBAA,b,y
+        inc y
+        inc y
+
+        _FDCD
+        inc x
+        inc x
+        cpx #$000E
+        bne _FDC2
+
+        _FDD4
+        ply
+        plx
+        plp
+        plb
+        .databank $00
+        rts
+
+        .databank 0
+
+        ; 87/FDD9
+
+    .endsection Unsorted87FD09Section
 
 
     .section SaveFileSection
@@ -1886,11 +2631,11 @@
         lda aSave.wCharacterID
         sta aUnit1DataBuffer._ROM.CharacterID
 
-        jsl rlUnknown87F501
+        jsl rlGetCharacterUnitType
         jsr rsLoadSpecifiedUnitsDataByType
 
         lda aSave.wCharacterID
-        jsl rlUnknown87F515
+        jsl rlCreateUnitFromBuffers
         rts
 
         .databank 0
@@ -3139,12 +3884,14 @@
       .al
       .xl
 
-      rlUnknown87F501 ; 87/F501
+      rlGetCharacterUnitType ; 87/F501
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = character ID; returns its unit type (UnitTypeStatic, ...) from its ROM entry.
 
         phb
         phy
@@ -3170,11 +3917,13 @@
       .al
       .xl
 
-      rlUnknown87F515 ; 87/F515
+      rlCreateUnitFromBuffers ; 87/F515
 
         .al
         .autsiz
         .databank ?
+
+        ; Allocates a unit RAM struct for character A and fills it from the save buffers (aUnit1DataBuffer and others), by unit type.
 
         phb
         phx
@@ -3204,7 +3953,7 @@
         jsl rlAppendNewStructEntry
 
         tya
-        jsr rsUnknown87F55A
+        jsr rsCreateUnitFromBuffersByType
         jsr rsUnknown87FABC
         jsr rsUnknown87FB94
         jsl rlLoadBufferedRAMAreaPointer
@@ -3226,7 +3975,7 @@
       .al
       .xl
 
-      rsUnknown87F55A ; 87/F55A
+      rsCreateUnitFromBuffersByType ; 87/F55A
 
         .al
         .xl
@@ -3242,7 +3991,7 @@
         sta $1B39,b
         asl a
         tax
-        jsr ($87F574,x)
+        jsr (aCreateUnitFromBuffersByTypeHandlers,x)
         plb
         .databank ?
         rts

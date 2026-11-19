@@ -1116,6 +1116,737 @@
     .endsection Unsorted80CC35Section
 
 
+    .section UnitWindowPageDrawersSection
+
+      .al
+      .xl
+
+      aUnitWindowPageDrawers .word <>rsUnitWindowDrawPage0, <>rsUnitWindowDrawPage1, <>rsUnitWindowDrawPage2, <>rsUnitWindowDrawPage3, <>rsUnitWindowDrawPage4, <>rsUnitWindowDrawPage5 ; 8B/AE12
+
+    .endsection UnitWindowPageDrawersSection
+
+
+    .section UnitWindowDrawPagesSection
+
+      .al
+      .xl
+
+      aUnitWindowHPSlashText ; 8B/AF3B
+
+        .enc "SJIS"
+        .text "／\n"
+
+
+      rsUnitWindowDrawPage1 ; 8B/AF3F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Entry 1 of aUnitWindowPageDrawers: each line's equipped weapon and its battle stats (might and the rest); dashes for a unit with no weapon.
+
+        lda #$0007
+        sta wR14
+        stz wR15
+
+        _AF46
+        ldx wR15
+        lda aUnitWindowDeploymentSlots,x
+        bne _AF52
+        jml _B0AA
+
+
+        _AF52
+        sta wSelectedUnitDataRAMPointer,b
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda aUnitWindowEquippedWeaponPointers,x
+        sta wCurrentItemDataROMPointer,b
+        beq _AF82
+        jsl rlGetItemNamePointer
+        lda wR14
+        and #$00FF
+        xba
+        ora #$000C
+        tax
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        jsl rlDrawMenuTextLine
+        bra _AF9A
+
+
+        _AF82
+        lda #(`aUnitWindowNoValueText6)<<8
+        sta lR18+1
+        lda #<>aUnitWindowNoValueText6
+        sta lR18
+        lda wR14
+        and #$00FF
+        xba
+        ora #$000C
+        tax
+        jsl rlDrawMenuTextLine
+
+        _AF9A
+        lda wCurrentItemDataROMPointer,b
+        beq _AFC8
+        lda #$0000
+        sta wRoutineVariable1,b
+        jsl rlGetFirstWeaponBattleMight
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0028
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        bra _AFE6
+
+
+        _AFC8
+        lda #$3800
+        sta aCurrentTilemapInfo,b
+        lda #(`aUnitWindowNoValueText2)<<8
+        sta lR18+1
+        lda #<>aUnitWindowNoValueText2
+        sta lR18
+        lda wR14
+        and #$00FF
+        xba
+        ora #$0014
+        tax
+        jsl rlDrawMenuTextLine
+
+        _AFE6
+        lda wCurrentItemDataROMPointer,b
+        beq _B00E
+        jsl rlUnknown84FE98
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$002E
+        tax
+        lda #$3520
+        sta wR5
+        lda #$0003
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        bra _B02C
+
+
+        _B00E
+        lda #$3400
+        sta aCurrentTilemapInfo,b
+        lda #(`aUnitWindowNoValueText3)<<8
+        sta lR18+1
+        lda #<>aUnitWindowNoValueText3
+        sta lR18
+        lda wR14
+        and #$00FF
+        xba
+        ora #$0017
+        tax
+        jsl rlDrawMenuTextLine
+
+        _B02C
+        lda #$FFFF
+        jsl rlUnknown84FEA1
+        tay
+        cmp #$0000
+        bpl _B082
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0036
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0003
+        sta wR6
+        tya
+        eor #$FFFF
+        inc a
+        jsl rlDrawMenuTextNumber
+        sta wR5
+        lda #$001D
+        sec
+        sbc wR5
+        sta wR5
+        lda #$3800
+        sta aCurrentTilemapInfo,b
+        lda #(`aUnitWindowNoValueText1)<<8
+        sta lR18+1
+        lda #<>aUnitWindowNoValueText1
+        sta lR18
+        lda wR14
+        and #$00FF
+        xba
+        ora wR5
+        tax
+        jsl rlDrawMenuTextLine
+        bra _B09E
+
+
+        _B082
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0036
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0003
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+
+        _B09E
+        inc wR14
+        inc wR14
+        inc wR15
+        inc wR15
+        jml _AF46
+
+
+        _B0AA
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE2480, $0140, $80, $B040
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8548, $0C00, $80, $B1C0
+
+        rts
+
+        .databank 0
+
+        ; 8B/B0C5
+
+      aUnitWindowNoValueText2 ; 8B/B0C5
+
+        .enc "SJIS"
+        .text "ーー\n"
+
+      aUnitWindowNoValueText6 ; 8B/B0CB
+
+        .text "ーーーーーー\n"
+
+      aUnitWindowNoValueText1 ; 8B/B0D9
+
+        .text "ー\n"
+
+      aUnitWindowNoValueText3 ; 8B/B0DD
+
+        .text "ーーー\n"
+
+
+      rsUnitWindowDrawPage2 ; 8B/B0E5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Entry 2 of aUnitWindowPageDrawers: each line's strength, magic, skill, speed, luck, defense and resistance.
+
+        lda #$0007
+        sta wR14
+        stz wR15
+
+        _B0EC
+        ldx wR15
+        lda aUnitWindowDeploymentSlots,x
+        bne _B0F8
+        jml _B1EE
+
+
+        _B0F8
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitTotalStrength
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0014
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        jsl rlGetSelectedUnitTotalMagic
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$001A
+        tax
+        lda #$3520
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        jsl rlGetSelectedUnitTotalSkill
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0020
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        jsl rlGetSelectedUnitTotalSpeed
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0026
+        tax
+        lda #$3520
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        jsl rlGetSelectedUnitLuck
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$002C
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        jsl rlGetSelectedUnitTotalDefense
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0032
+        tax
+        lda #$3520
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        jsl rlGetSelectedUnitTotalResistance
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0038
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        inc wR14
+        inc wR14
+        inc wR15
+        inc wR15
+        jml _B0EC
+
+
+        _B1EE
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE25C0, $0140, $80, $B040
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8548, $0C00, $80, $B1C0
+
+        rts
+
+        .databank 0
+
+        ; 8B/B209
+
+      rsUnitWindowDrawPage3 ; 8B/B209
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Entry 3 of aUnitWindowPageDrawers: each line's movement, money, arena level and talk target.
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$0007
+        sta wR14
+        lda #$0000
+        sta wR15
+
+        _B219
+        ldx wR15
+        lda aUnitWindowDeploymentSlots,x
+        bne _B225
+        jml _B30E
+
+
+        _B225
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitTotalMovement
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0016
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0002
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        jsl rlGetSelectedUnitMoney
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$001E
+        tax
+        lda #$3520
+        sta wR5
+        lda #$0005
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        jsl rlGetSelectedUnitArenaLevel
+        inc a
+        cmp #$0008
+        beq _B293
+        tay
+        lda wR14
+        and #$00FF
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$002C
+        tax
+        lda #$3920
+        sta wR5
+        lda #$0001
+        sta wR6
+        tya
+        jsl rlDrawMenuTextNumber
+        bra _B2AF
+
+
+        _B293
+        lda wR14
+        xba
+        lsr a
+        lsr a
+        sta wR0
+        lda #$002C
+        clc
+        adc wR0
+        tax
+        lda #$39E4
+        sta aBG3TilemapBuffer,x
+        lda #$39F4
+        sta $7E83C8,x
+
+        _B2AF
+        lda @l wSelectedUnitDataRAMPointer
+        pha
+        jsl rlGetSelectedUnitLivingTalkTarget
+        cmp #$0000
+        beq _B2D9
+        jsl rlGetUnitRAMDataPointerByID
+        jsl rlGetSelectedUnitStates
+        bit #$0200
+        bne _B2D9
+        jsl rlGetSelectedUnitStatus
+        cmp #$0003
+        beq _B2D9
+        jsl rlGetSelectedUnitNamePointer
+        bra _B2E5
+
+
+        _B2D9
+        lda #(`aUnitWindowNoValueText4)<<8
+        sta lRoutineVariable+1,b
+        lda #<>aUnitWindowNoValueText4
+        sta lRoutineVariable,b
+
+        _B2E5
+        lda wR14
+        and #$00FF
+        xba
+        ora #$0019
+        tax
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        jsl rlDrawMenuTextLine
+        pla
+        sta @l wSelectedUnitDataRAMPointer
+        inc wR14
+        inc wR14
+        inc wR15
+        inc wR15
+        jml _B219
+
+
+        _B30E
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE2700, $0140, $80, $B040
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8548, $0C00, $80, $B1C0
+
+        rts
+
+        .databank 0
+
+        ; 8B/B329
+
+      aUnitWindowNoValueText4 ; 8B/B329
+
+        .enc "SJIS"
+        .text "ーーーー\n"
+
+
+      rsUnitWindowDrawPage4 ; 8B/B333
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Entry 4 of aUnitWindowPageDrawers: each line's weapon ranks (rsUnitWindowDrawWeaponRank).
+
+        lda #$0007
+        sta wR14
+        stz wR15
+
+        _B33A
+        ldx wR15
+        lda aUnitWindowDeploymentSlots,x
+        bne _B346
+        jml _B427
+
+
+        _B346
+        sta wSelectedUnitDataRAMPointer,b
+        lda #$0000
+        jsl rlGetSelectedUnitWeaponRank
+        ldx #$000B
+        ldy wR14
+        bcc _B35A
+        lda #$0004
+
+        _B35A
+        clc
+        jsr rsUnitWindowDrawWeaponRank
+        lda #$0001
+        jsl rlGetSelectedUnitWeaponRank
+        ldx #$000D
+        ldy wR14
+        bcc _B36F
+        lda #$0004
+
+        _B36F
+        sec
+        jsr rsUnitWindowDrawWeaponRank
+        lda #$0002
+        jsl rlGetSelectedUnitWeaponRank
+        ldx #$000F
+        ldy wR14
+        bcc _B384
+        lda #$0004
+
+        _B384
+        clc
+        jsr rsUnitWindowDrawWeaponRank
+        lda #$0003
+        jsl rlGetSelectedUnitWeaponRank
+        ldx #$0011
+        ldy wR14
+        bcc _B399
+        lda #$0004
+
+        _B399
+        sec
+        jsr rsUnitWindowDrawWeaponRank
+        lda #$0004
+        jsl rlGetSelectedUnitWeaponRank
+        ldx #$0013
+        ldy wR14
+        bcc _B3AE
+        lda #$0004
+
+        _B3AE
+        clc
+        jsr rsUnitWindowDrawWeaponRank
+        lda #$0005
+        jsl rlGetSelectedUnitWeaponRank
+        ldx #$0015
+        ldy wR14
+        bcc _B3C3
+        lda #$0004
+
+        _B3C3
+        sec
+        jsr rsUnitWindowDrawWeaponRank
+        lda #$0006
+        jsl rlGetSelectedUnitWeaponRank
+        ldx #$0017
+        ldy wR14
+        bcc _B3D8
+        lda #$0004
+
+        _B3D8
+        clc
+        jsr rsUnitWindowDrawWeaponRank
+        lda #$0007
+        jsl rlGetSelectedUnitWeaponRank
+        ldx #$0019
+        ldy wR14
+        bcc _B3ED
+        lda #$0004
+
+        _B3ED
+        sec
+        jsr rsUnitWindowDrawWeaponRank
+        lda #$0008
+        jsl rlGetSelectedUnitWeaponRank
+        ldx #$001B
+        ldy wR14
+        bcc _B402
+        lda #$0004
+
+        _B402
+        clc
+        jsr rsUnitWindowDrawWeaponRank
+        lda #$0009
+        jsl rlGetSelectedUnitWeaponRank
+        ldx #$001D
+        ldy wR14
+        bcc _B417
+        lda #$0000
+
+        _B417
+        sec
+        jsr rsUnitWindowDrawWeaponRank
+        inc wR14
+        inc wR14
+        inc wR15
+        inc wR15
+        jml _B33A
+
+
+        _B427
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE2840, $0140, $80, $B040
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8548, $0C00, $80, $B1C0
+
+        rts
+
+        .databank 0
+
+        ; 8B/B442
+
+      rsUnitWindowDrawPage5 ; 8B/B442
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Entry 5 of aUnitWindowPageDrawers: only copies two blocks to VRAM.
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE2980, $0140, $80, $B040
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8548, $0C00, $80, $B1C0
+
+        rts
+
+        .databank 0
+
+        ; 8B/B45D
+
+    .endsection UnitWindowDrawPagesSection
+
+
     .section Unsorted8BB45DSection
 
       .al
@@ -2355,6 +3086,91 @@
         ; 8B/BDF0
 
     .endsection Unsorted8BBDA7Section
+
+
+    .section UnitWindowDrawWeaponRankSection
+
+      .al
+      .xl
+
+      rsUnitWindowDrawWeaponRank ; 8B/BDF0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draws a weapon rank's two tiles from aUnitWindowWeaponRankTiles, or from aUnitWindowWeaponRankTiles2 when carry is set.
+
+        bcs _BE19
+        pha
+        tya
+        xba
+        lsr a
+        lsr a
+        sta wR0
+        txa
+        asl a
+        clc
+        adc wR0
+        tay
+        pla
+        asl a
+        asl a
+        tax
+        lda aUnitWindowWeaponRankTiles,x
+        phx
+        tyx
+        sta aBG3TilemapBuffer,x
+        txy
+        plx
+        lda aUnitWindowWeaponRankTiles+2,x
+        tyx
+        sta $7E83C8,x
+        rts
+
+
+        _BE19
+        pha
+        tya
+        xba
+        lsr a
+        lsr a
+        sta wR0
+        txa
+        asl a
+        clc
+        adc wR0
+        tay
+        pla
+        asl a
+        asl a
+        tax
+        lda aUnitWindowWeaponRankTiles2,x
+        phx
+        tyx
+        sta aBG3TilemapBuffer,x
+        txy
+        plx
+        lda aUnitWindowWeaponRankTiles2+2,x
+        tyx
+        sta $7E83C8,x
+        rts
+
+        .databank 0
+
+        ; 8B/BE40
+
+      aUnitWindowWeaponRankTiles ; 8B/BE40
+
+        .word $392A, $393A, $392B, $393B, $392C, $393C, $38FF, $3909, $39E4, $39F4
+
+
+      aUnitWindowWeaponRankTiles2 ; 8B/BE54
+
+        .word $352A, $353A, $352B, $353B, $352C, $353C, $34FF, $3509, $35E4, $35F4
+
+    .endsection UnitWindowDrawWeaponRankSection
 
 
     .section Unsorted8BBE68Section
@@ -4662,7 +5478,7 @@
         .autsiz
         .databank ?
 
-        ; Clears the page area and draws the current page (wGameStateStep) from the table after this routine, then the sort label.
+        ; Clears the page area and draws the current page (wGameStateStep) from aUnitWindowPageDrawers, then the sort label.
 
         ldx #$01D4
         lda #$0030
@@ -4679,7 +5495,7 @@
         _AE08
         asl a
         tax
-        jsr ($8BAE12,x)
+        jsr (aUnitWindowPageDrawers,x)
         jsl rlUnitWindowDrawSortLabel
         rtl
 
@@ -4702,7 +5518,7 @@
         .autsiz
         .databank ?
 
-        ; Entry 0 of rlUnitWindowDrawPage's table: class, level, experience and HP of each line. The drawers of pages 1-5 follow in this block.
+        ; Entry 0 of aUnitWindowPageDrawers: class, level, experience and HP of each line.
 
         lda #$0007
         sta wR14
@@ -4799,9 +5615,9 @@
         jsl rlDrawMenuTextNumber
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #$8B00
+        lda #(`aUnitWindowHPSlashText)<<8
         sta lR18+1
-        lda #$AF3B
+        lda #<>aUnitWindowHPSlashText
         sta lR18
         lda wR14
         and #$00FF
