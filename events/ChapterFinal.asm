@@ -558,7 +558,7 @@
 
         .byte size(aChapterFinalLocationData._Entries) / size(word)
 
-        _Entries .include "../TABLES/CHAPTER/ChapterFinalLocationData.csv.asm"
+        _Entries .include "../data/chapter/ChapterFinalLocationData.csv.asm"
 
       aChapterFinalChalphyCastle ; B1/A9BC
 

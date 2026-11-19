@@ -6,8 +6,8 @@
 #   ./build.sh coverage    also report how much of the ROM is built from source
 #   ./build.sh clean       remove generated files
 #
-# Needs: python3, 64tass (brew install tass64), TOOLS/c2a.py,
-# TOOLS/process_dialogue.py, and a headerless fe4.sfc (Japanese 1.0) in this
+# Needs: python3, 64tass (brew install tass64), tools/c2a.py,
+# tools/process_dialogue.py, and a headerless fe4.sfc (Japanese 1.0) in this
 # directory.
 
 set -euo pipefail
@@ -20,34 +20,34 @@ EXPECTED_SHA1=90f0bdeaf0151899f96281258fcb30899fbd0d44
 ASFLAGS=(-x -f -C -a -Wall -Wno-portable -Wno-shadow -Wno-deprecated)
 
 clean() {
-  find TEXT -name '*.dialogue.txt' -delete
-  find TABLES -name '*.csv.asm' -delete
+  find text -name '*.dialogue.txt' -delete
+  find data -name '*.csv.asm' -delete
   rm -f "$OUT" log.txt labels.txt
 }
 
 # Convert dialogue text and CSV tables to assembly. Only files whose source is
 # newer than their output are converted.
 generate() {
-  local font=TEXT/DIALOGUE/DialogueFont.txt t out
+  local font=text/dialogue/DialogueFont.txt t out
   while IFS= read -r t; do
     out=${t%.txt}.dialogue.txt
     if [[ ! -e $out || $t -nt $out || $font -nt $out ]]; then
-      python3 TOOLS/process_dialogue.py "$t" "$font" "$out"
+      python3 tools/process_dialogue.py "$t" "$font" "$out"
     fi
-  done < <(find TEXT/DIALOGUE -mindepth 2 -name '*.txt' ! -name '*.dialogue.txt')
+  done < <(find text/dialogue -mindepth 2 -name '*.txt' ! -name '*.dialogue.txt')
 
   while IFS= read -r t; do
     case $t in
-      TABLES/CHARACTER/CharacterData.csv|TABLES/ITEM/ItemData.csv) continue ;;
+      data/character/CharacterData.csv|data/item/ItemData.csv) continue ;;
     esac
     out=${t%.csv}.csv.asm
     if [[ ! -e $out || $t -nt $out ]]; then
-      python3 TOOLS/c2a.py "$t" "$out"
+      python3 tools/c2a.py "$t" "$out"
     fi
-  done < <(find TABLES -name '*.csv')
+  done < <(find data -name '*.csv')
 
-  (cd TABLES/CHARACTER && python3 "$ROOT/TOOLS/FE4c2a.py" CharacterData.csv CharacterDataHelper.h CharacterData.csv.asm)
-  (cd TABLES/ITEM && python3 "$ROOT/TOOLS/FE4c2a.py" ItemData.csv ItemDataHelper.h ItemData.csv.asm)
+  (cd data/character && python3 "$ROOT/tools/FE4c2a.py" CharacterData.csv CharacterDataHelper.h CharacterData.csv.asm)
+  (cd data/item && python3 "$ROOT/tools/FE4c2a.py" ItemData.csv ItemDataHelper.h ItemData.csv.asm)
 }
 
 assemble() { # assemble <output> <log>
@@ -102,8 +102,8 @@ EOF
 case ${1:-build} in
   clean) clean ;;
   build) [[ -f $ROM ]] || { echo "Missing $ROM" >&2; exit 1; }
-         generate; assemble "$OUT" log.txt; verify ;;
+         generate; python3 tools/check_paths.py; assemble "$OUT" log.txt; verify ;;
   coverage) [[ -f $ROM ]] || { echo "Missing $ROM" >&2; exit 1; }
-         generate; assemble "$OUT" log.txt; verify; coverage ;;
+         generate; python3 tools/check_paths.py; assemble "$OUT" log.txt; verify; coverage ;;
   *) echo "Usage: $0 [build|coverage|clean]" >&2; exit 2 ;;
 esac

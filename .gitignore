@@ -19,9 +19,9 @@ EN_ROM/*.*
 *.csv.asm
 *.dialogue.txt
 
-TOOLS/64tass.exe
-TOOLS/c2a.py
-TOOLS/process_dialogue.py
+tools/64tass.exe
+tools/c2a.py
+tools/process_dialogue.py
 
 *.sublime*
 

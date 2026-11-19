@@ -898,7 +898,7 @@
         DIALOGUE_UNIT1_NAME
         .text "と"
 
-      dialogueChapterFinalEddaSeizedClaudsChildrenAloneStart .include "../../TEXT/DIALOGUE/ChapterFinal/EddaSeizedClaudsChildrenAloneStart.dialogue.txt" ; 91/B115
+      dialogueChapterFinalEddaSeizedClaudsChildrenAloneStart .include "../../text/dialogue/ChapterFinal/EddaSeizedClaudsChildrenAloneStart.dialogue.txt" ; 91/B115
       ; The 2nd one starts 3 bytes later to cut out the Unit1 call and one character. But the dialogue builder really dislikes files ending with a japanese
       ; character so I have to do it like this.
 

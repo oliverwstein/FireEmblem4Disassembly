@@ -404,7 +404,7 @@
 
         .databank 0
 
-      aWorldMapMarkerSprites .include "../../TABLES/SYSTEM/WorldMapMarkerSprites.csv.asm" ; 8B/8740
+      aWorldMapMarkerSprites .include "../../data/system/WorldMapMarkerSprites.csv.asm" ; 8B/8740
 
       rlUnknown8B87A0 ; 8B/87A0
 

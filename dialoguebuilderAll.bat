@@ -1,7 +1,7 @@
 SET pd=%~dp0tools\process_dialogue.py
-SET font=%~dp0TEXT\DIALOGUE\DialogueFont.txt
+SET font=%~dp0text\dialogue\DialogueFont.txt
 
-cd %~dp0TEXT\DIALOGUE
+cd %~dp0text\dialogue
 
 for /r /d %%f in (*.*) do (
 

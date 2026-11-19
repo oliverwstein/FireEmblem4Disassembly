@@ -288,7 +288,7 @@
 
         .byte size(aChapter03LocationData._Entries) / size(word)
   
-        _Entries .include "../TABLES/CHAPTER/Chapter03LocationData.csv.asm"
+        _Entries .include "../data/chapter/Chapter03LocationData.csv.asm"
 
       aChapter03AgustiCastle ; 86/D68B
 

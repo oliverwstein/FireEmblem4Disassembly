@@ -303,7 +303,7 @@
 
         .databank 0
 
-      aEpiloguePriorityRoutines .include "../../TABLES/SYSTEM/EpiloguePriorityRoutines.csv.asm" ; 82/FA01
+      aEpiloguePriorityRoutines .include "../../data/system/EpiloguePriorityRoutines.csv.asm" ; 82/FA01
 
       aEpiloguePriorityList ; 82/FA1B
 
@@ -655,8 +655,8 @@
 
         .databank 0
 
-      aEpilogueDialogueIDRoutines .include "../../TABLES/SYSTEM/EpilogueDialogueIDRoutines.csv.asm" ; 82/FC1D
-      aEpilogueDialogueIDEvaluationTable .binclude "../../TABLES/SYSTEM/EpilogueDialogueIDEvaluation.csv.asm" ; 82/FC37
+      aEpilogueDialogueIDRoutines .include "../../data/system/EpilogueDialogueIDRoutines.csv.asm" ; 82/FC1D
+      aEpilogueDialogueIDEvaluationTable .binclude "../../data/system/EpilogueDialogueIDEvaluation.csv.asm" ; 82/FC37
 
       rsCheckIfCurrentEpilogueCharacterGetsOwnEpilogue ; 82/FC9B
 

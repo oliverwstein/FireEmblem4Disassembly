@@ -833,8 +833,8 @@
 
         .databank 0
 
-      aBrokenWeaponOffsets .include "../../TABLES/ITEM/BrokenWeaponOffsets.csv.asm" ; 87/E2DC
-      aBrokenWeaponData .binclude "../../TABLES/ITEM/BrokenWeaponData.csv.asm"      ; 87/E2F0
+      aBrokenWeaponOffsets .include "../../data/item/BrokenWeaponOffsets.csv.asm" ; 87/E2DC
+      aBrokenWeaponData .binclude "../../data/item/BrokenWeaponData.csv.asm"      ; 87/E2F0
 
       rlGetItemNamePointerByItemID ; 87/E314
 

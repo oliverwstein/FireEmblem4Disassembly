@@ -1621,7 +1621,7 @@
 
         .databank 0
 
-      aValidInheritableSkills .binclude "../../TABLES/CHARACTER/ValidInheritableSkills.asm"  ; 87/A975
+      aValidInheritableSkills .binclude "../../data/character/ValidInheritableSkills.asm"  ; 87/A975
 
       rlGetChildGrowthRate ; 87/A9EA
 

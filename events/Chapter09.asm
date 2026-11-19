@@ -371,7 +371,7 @@
 
         .byte size(aChapter09LocationData._Entries) / size(word)
 
-        _Entries .include "../TABLES/CHAPTER/Chapter09LocationData.csv.asm"
+        _Entries .include "../data/chapter/Chapter09LocationData.csv.asm"
 
       aChapter09MeathCastle ; 86/F890
 

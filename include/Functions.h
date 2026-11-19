@@ -6,9 +6,9 @@
   ; Most are namespaced and must be accessed using the dot notation
   ; to avoid redefinition problems.
 
-  ; .include "FUNCTIONS/General.h"
-  .include "FUNCTIONS/Numbers.h"
-  .include "FUNCTIONS/Operators.h"
-  .include "FUNCTIONS/Strings.h"
-  .include "FUNCTIONS/Iterables.h"
-  .include "FUNCTIONS/Enumerations.h"
+  ; .include "functions/General.h"
+  .include "functions/Numbers.h"
+  .include "functions/Operators.h"
+  .include "functions/Strings.h"
+  .include "functions/Iterables.h"
+  .include "functions/Enumerations.h"

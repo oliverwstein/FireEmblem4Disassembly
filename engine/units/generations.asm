@@ -321,7 +321,7 @@
 
         .databank 0
 
-      aModifyChildrenDataRoutines .include "../../TABLES/SYSTEM/ModifyChildrenDataRoutines.csv.asm" ; 84/822D
+      aModifyChildrenDataRoutines .include "../../data/system/ModifyChildrenDataRoutines.csv.asm" ; 84/822D
 
       aModifyChildrenDataList ; 84/8237
 
@@ -424,7 +424,7 @@
 
         .databank 0
 
-      aLoadChildUnitRoutines .include "../../TABLES/SYSTEM/LoadChildUnitRoutines.csv.asm" ; 84/8331
+      aLoadChildUnitRoutines .include "../../data/system/LoadChildUnitRoutines.csv.asm" ; 84/8331
 
       rsLoadBothChildUnits ; 84/8339
 

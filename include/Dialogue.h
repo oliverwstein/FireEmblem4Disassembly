@@ -1,5 +1,5 @@
 
-  .include "../TEXT/DIALOGUE/Dialogue.h"
+  .include "../text/dialogue/Dialogue.h"
 
   DialogueStatusEnabled           = bits($0001)
   DialogueStatusActive            = bits($0002)

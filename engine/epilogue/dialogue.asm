@@ -138,7 +138,7 @@
 
         .databank 0
 
-      aEpilogueRegions .include "../../TABLES/SYSTEM/EpilogueRegions.csv.asm" ; 91/BB05
+      aEpilogueRegions .include "../../data/system/EpilogueRegions.csv.asm" ; 91/BB05
 
       rlASMCLoadEpilogueDialogue ; 91/BB1D
 
@@ -308,7 +308,7 @@
 
         .databank 0
 
-      dialogueEpiloge_PullDialogueStack .include "../../TEXT/DIALOGUE/Epilogue/PullDialogueStack.dialogue.txt" ; 91/BC3C
+      dialogueEpiloge_PullDialogueStack .include "../../text/dialogue/Epilogue/PullDialogueStack.dialogue.txt" ; 91/BC3C
 
       rlASMCEpilogueSeliphLoverCallJuliaDead ; 91/BC40
 

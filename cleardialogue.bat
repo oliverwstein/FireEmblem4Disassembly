@@ -1,4 +1,4 @@
-cd %~dp0TEXT\DIALOGUE
+cd %~dp0text\dialogue
 
 for /d %%f in (*.*) do (
 

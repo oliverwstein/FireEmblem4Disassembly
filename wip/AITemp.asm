@@ -6043,7 +6043,7 @@
 
         .databank 0
 
-      aFillUnitMapFilter .include "../TABLES/SYSTEM/FillUnitMapFilters.csv.asm" ; 86/C1B9
+      aFillUnitMapFilter .include "../data/system/FillUnitMapFilters.csv.asm" ; 86/C1B9
 
       rsFillUnitMapAllyFilter ; 86/C1BF
 

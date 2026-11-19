@@ -41,7 +41,7 @@
 
         .databank 0
 
-      aWorldMapHighlights .include "../../TABLES/SYSTEM/WorldMapHighlights.csv.asm" ; 8B/8903
+      aWorldMapHighlights .include "../../data/system/WorldMapHighlights.csv.asm" ; 8B/8903
 
       rsDecompressVerdaneMapHighlight ; 8B/8919
 

@@ -254,7 +254,7 @@
 
         .byte size(aChapterPrologueLocationData._Entries) / size(word)
 
-        _Entries .include "../TABLES/CHAPTER/ChapterPrologueLocationData.csv.asm"
+        _Entries .include "../data/chapter/ChapterPrologueLocationData.csv.asm"
 
       aChapterPrologueChalphyCastle ; 90/81FA
 

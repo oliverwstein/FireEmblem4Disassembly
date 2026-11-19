@@ -5594,10 +5594,10 @@
 
         .databank 0
 
-      aDialogueFontWidth .include "../../TABLES/DIALOGUE/DialogueFontWidth.asm" ; 91/9971
+      aDialogueFontWidth .include "../../data/dialogue/DialogueFontWidth.asm" ; 91/9971
         ; This is indexed by the current character - $10 (to ignore the dialogue commands) to get the pixel width.
 
-      aDialogueAdjustPriorCharacterWidth .include "../../TABLES/DIALOGUE/DialogueAdjustPriorCharacterWidth.asm" ; 91/9E71
+      aDialogueAdjustPriorCharacterWidth .include "../../data/dialogue/DialogueAdjustPriorCharacterWidth.asm" ; 91/9E71
         ; This is indexed by the character that follows the current one and if the flag here is set, always subtracts
         ; 1 pixel from the current characters width. If flag is not set, look into the custom width adjust table.
 
