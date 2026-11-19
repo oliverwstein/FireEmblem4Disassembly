@@ -6,7 +6,7 @@ Last updated 2026-11-19 (second session that day). This file records what has be
 
 - `./build.sh` builds a ROM that is byte-for-byte identical to the original (Japanese 1.0, SHA-1 `90f0bdeaf0151899f96281258fcb30899fbd0d44`).
 - **19.74% of the ROM is built from source** (828,048 of 4,194,304 bytes; `./build.sh coverage`). The rest is copied from `fe4.sfc` at build time.
-- Engine code is organized by game system under `engine/` (3,713 routines and 996 data labels). 1,981 routines still have `Unknown` in their names, and 1,360 routines are in `engine/unsorted/` (filed by bank, not yet by system).
+- Engine code is organized by game system under `engine/` (3,713 routines and 996 data labels). 1,917 routines still have `Unknown` in their names, and 1,358 routines are in `engine/unsorted/` (filed by bank, not yet by system).
 - `wip/` is empty. `include/Undisassembled.h` names 47 ROM tables that built code reads but whose length is not known yet; no built code calls code that is not built.
 - Every call, jump, engine definition (proc, HDMA, active sprite), proc script and jump table reachable from built code is built, and so is every proc script. `tools/trace.py` reports nothing left to follow.
 
@@ -51,6 +51,12 @@ In order:
     - **Code checksums.** The game sums `$80/8D56–8E2C` and `$87/8017–80A9` and compares the sums with `aCodeChecksums` (`$8F/8000`) and its copies at the start of banks `$87` and `$88` (`include/Checksums.h`). The third word, "IS", switches the checks on. When `rlCheckCodeChecksums` (in the random number generator) finds a difference, the random numbers come from `rsUnknown80A7F3` instead. There is also a lock-up loop and another copy of the check in bank `$88`. Anyone changing that code has to update the sums.
     - **AI formation offsets.** `$87/DC71` picks one of four routines by `wAIFormationDirection`; each adds a formation pattern offset to a position, turned a quarter turn further (`engine/ai/groups.asm`).
 17. **Code sweep.** `tools/sweep.py` decodes gaps that nothing points to and accepts a candidate only if it ends cleanly, has no data-like opcodes, does not branch into itself, calls only known routines or other gaps, does not start like a proc header or pointer table, and scores at least 3 (calls to known routines plus named RAM variables). Alternating with the tracer until nothing new turned up added about 500 routines (about 44 KB), among them the joypad reader (`$80/8002`) and game state setups such as `$80/C39A`. Ten early finds began with data and were repaired by hand. Each swept routine is marked "Found by tools/sweep.py".
+
+18. **Constants, RAM names and struct fields.** Three tools, all of which only swap a number for a name of the same value:
+    - `tools/apply_constants.py` with `tools/constant_rules.txt`: a getter's or field's value compared or masked with a number gets the constant family it belongs to (unit states, statuses, character, class and generation IDs, genders, weapon types and ranks, location types, deployment and item states, skill IDs, allegiances). 78 operands.
+    - `tools/name_ram.py`: raw RAM addresses get the name `include/` gives that address, nested fields included (from `--dump-labels`). 1,552 operands. 4,148 raw RAM operands at 837 addresses still have no name; `--report N` lists the most used.
+    - `tools/name_struct_fields.py`: small offsets from an index register become struct fields, using the struct that the register's source points to elsewhere in the code. 64 offsets.
+19. **Names in battle, units and items.** About 80 routines, each named from what its code does and how its callers use it: item prices, repair and selling (`rlGetItemBuyPrice`, `rlGetItemRepairCost`, `rlSellInventorySlotItem`, ...), battle rounds and strikes (`rlActionStructBuildBattleRounds`, `rsActionStructResolveStrike`), the 14 target filters behind `rlFindTargetsInRange`, faction-wide unit routines, two divides in `core/math.asm`. Where only the computation is certain, the name says that and the comment says what it is most likely for (`rlGetInventorySlotStaffCostValue`, probably staff experience). Unnamed: battle 16, units 14, items 6. `tools/rename.py` renames labels everywhere and can add a comment.
 
 Every step kept the output identical to the original.
 

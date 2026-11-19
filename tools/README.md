@@ -37,6 +37,10 @@ The files in `wip/` are routines files. Each tool assembles the file in a tempor
 | `move_sections.py SPEC` | Moves whole sections between engine files (SPEC lines: section name, target file). Cannot change the ROM. |
 | `rom_tables.py FILE` | Labels the unbuilt ROM tables that built code reads: writes those with a certain extent to FILE and names the rest weakly in `include/Undisassembled.h`. |
 | `sweep.py` | Decodes gaps in the code banks that nothing points to and writes the candidates with enough evidence (`--min-score`, default 3) to a routines file. |
+| `apply_constants.py` | Writes numbers as constants by the rules in `constant_rules.txt`. |
+| `name_ram.py` | Writes raw RAM addresses with the names `include/` gives them. |
+| `name_struct_fields.py` | Writes small offsets from an index register as struct fields. |
+| `rename.py FILE` | Renames labels everywhere, optionally adding a comment to the routine. |
 | `test_routines.py FILE` | Assembles each routine at its address and compares it byte for byte with the ROM. Reports assembly errors by line in FILE, which routines differ, and the contiguous runs the routines form. Use `--diagnose` to show the first line in each differing routine whose instruction differs from the ROM, and `--long-branch` to get past branch-range errors while diagnosing. |
 | `fix_addressing.py FILE` | Fixes the systematic data bank problems, using the ROM as the reference: declares the data bank after explicit bank switches and where routines are entered with it set, drops `,b` from bank `$7E`/`$7F` operands, and adds `@l` where the original uses long addressing. Prints what is left to fix by hand. |
 | `show_lines.py FILE FIRST [LAST]` | Shows source lines next to the bytes they build and the original bytes, marking lines that differ. |
