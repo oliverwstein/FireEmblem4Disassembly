@@ -200,7 +200,7 @@
         lda wR9
         cmp #$000A
         bcc _9831
-        lda $959890
+        lda aUnknown959890
         and #$00FF
         clc
         adc wR3
@@ -215,7 +215,7 @@
         lda wR1
         cmp #$0004
         bcc _986D
-        lda $959894
+        lda aUnknown959894
         and #$00FF
         pha
         lda wR0
@@ -260,7 +260,7 @@
 
 
         _987B
-        lda $959890,x
+        lda aUnknown959890,x
         and #$00FF
         clc
         adc wR0
@@ -279,6 +279,22 @@
         ; 95/9890
 
     .endsection Unsorted9597FASection
+
+
+    .section Table959890Section
+
+      .al
+      .xl
+
+      aUnknown959890 ; 95/9890
+
+        ; Read by rlUnknown9597FA.
+
+        .word $0C0E, $0509
+
+        ; 95/9894
+
+    .endsection Table959890Section
 
 
     .section Unsorted9599E7Section
@@ -301,7 +317,7 @@
         ldx #2
         
           -
-          lda $E00060,x
+          lda aUnknownE00060,x
           sta $0100,b,x
           inc x
           inc x
@@ -515,7 +531,7 @@
         ldy #0
 
           -
-          lda $998944,x
+          lda aUnknown998944,x
           sta $01C2,b,y
           inc x
           inc x
@@ -527,7 +543,7 @@
         ldy #0
         
           -
-          lda $998944,x
+          lda aUnknown998944,x
           sta $011A,b,y
           inc x
           inc x
@@ -578,7 +594,7 @@
         ldy #$0000
 
         _9BD8
-        lda $998944,x
+        lda aUnknown998944,x
         sta $01E2,b,y
         inc x
         inc x
@@ -589,7 +605,7 @@
         ldy #$0000
 
         _9BEB
-        lda $998944,x
+        lda aUnknown998944,x
         sta $010A,b,y
         inc x
         inc x

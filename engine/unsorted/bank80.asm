@@ -330,9 +330,9 @@
         sta $04B8,b
         lda #$7C00
         sta $04B6,b
-        lda $F77C00
+        lda aUnknownF77C00
         tay
-        lda $F77C01
+        lda aUnknownF77C00+1
         clc
         adc $04B8,b
         sta lR38+1
@@ -348,7 +348,7 @@
         rep #$20
         lda $04B8,b
         sta lR39+1
-        lda $F77C0E
+        lda aUnknownF77C0C+2
         sta lR39
         lda [lR39]
         sta lR39
@@ -795,7 +795,7 @@
         asl a
         asl a
         clc
-        adc $F77C0C
+        adc aUnknownF77C0C
         tax
         lda $0007,b,x
         lsr a
@@ -1007,7 +1007,7 @@
         rep #$20
         asl a
         clc
-        adc $F77C08
+        adc aUnknownF77C08
         sta lR38
         ldy $04B9,b
         sty lR38+2
@@ -1058,7 +1058,7 @@
         _9435
         and #$00FF
         clc
-        adc $F77C12
+        adc aUnknownF77C12
         sta lR38
         lda [lR38],y
 
@@ -1074,7 +1074,7 @@
         dec a
         asl a
         clc
-        adc $F77C08
+        adc aUnknownF77C08
         sta lR38
         lda [lR38]
         sta lR38
@@ -1125,7 +1125,7 @@
         lda $7E4EA9,x
         and #$007F
         clc
-        adc $F77C12
+        adc aUnknownF77C12
         sta lR38
         lda [lR38],y
         sep #$10
@@ -1138,7 +1138,7 @@
         _94B5
         dec a
         clc
-        adc $F77C14
+        adc aUnknownF77C12+2
         adc $04F0,b
         sta lR38
         lda [lR38]
@@ -1873,7 +1873,7 @@
         lda #$00FF
 
         _BAAF
-        lda $D77000,x
+        lda aUnknownD77000,x
         sta aBG3TilemapBuffer,x
         dec x
         dec x
@@ -1899,7 +1899,7 @@
         ldx #$01FE
 
         _BAF6
-        lda $8C9A00,x
+        lda aUnknown8C9A00,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -1907,7 +1907,7 @@
         ldx #$001E
 
         _BB04
-        lda $8C9D00,x
+        lda aUnknown8C9D00,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -2426,7 +2426,7 @@
         ldx #$0100
 
         _F3B1
-        lda $DD7EAE,x
+        lda aUnknownDD7EAE,x
         sta wJoy2RepeatTimer,x
         dec x
         dec x
@@ -2434,7 +2434,7 @@
         ldx #$0020
 
         _F3BE
-        lda $DD7F6E,x
+        lda aUnknownDD7F6E,x
         sta $01DE,b,x
         dec x
         dec x
@@ -2542,3 +2542,82 @@
         ; 80/F542
 
     .endsection Unsorted80F4EBSection
+
+
+    .section TableDD7EAESection
+
+      .al
+      .xl
+
+      aUnknownDD7EAE ; DD/7EAE
+
+        ; Read by rsUnknown80F392.
+
+        .word $0000, $0001, $318B, $7FFF, $1484, $420F, $296E, $56D6
+        .word $0C84, $0000, $02FC, $5AF1, $528F, $524E, $4E2D, $4A0C
+        .word $04A7, $3000, $41EE, $04A2, $7314, $7EF8, $3DAC, $1CA2
+        .word $7314, $7FFF, $2E29, $77FC, $0441, $7FFF, $35CF, $0086
+        .word $4252, $3000, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $62B1
+        .word $5A8F, $0000, $02FC, $4EAE, $52CF, $528E, $4E6D, $4A4C
+        .word $04A7, $7FFF, $420F, $7FFF, $7FFA, $7FFF, $7FFF, $7FFF
+        .word $7FFF, $0000, $02FC, $0D4C, $092A, $0509, $04E8, $04C8
+        .word $10A6, $3000, $0000, $1084, $1CE7, $35AD, $3DEF, $4210
+        .word $4A52, $5294, $5EF7, $6318, $7FFF, $5000, $5000, $5000
+        .word $5000, $4001, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
+        .word $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
+
+        ; DD/7F6E
+
+    .endsection TableDD7EAESection
+
+
+    .section TableDD7F6ESection
+
+      .al
+      .xl
+
+      aUnknownDD7F6E ; DD/7F6E
+
+        ; Read by rsUnknown80F392.
+
+        .word $7FFF, $0001, $00AF, $00AE, $008D, $008C, $008B, $006A
+        .word $0069, $0068, $0047, $0045, $0044, $0023, $0022, $0001
+        .word $0000, $4001, $4C00, $5400, $5C00, $6400, $6C00, $7400
+        .word $7C00, $0800, $1000, $1800, $2000, $2800, $3000, $3800
+        .word $4000
+
+        ; DD/7FB0
+
+    .endsection TableDD7F6ESection
+
+
+    .section TableF77C08Section
+
+      .al
+      .xl
+
+      aUnknownF77C08 ; F7/7C08
+
+        ; Read by rsUnknown8093C6.
+
+        .word $9B32, $9C62
+
+        ; F7/7C0C
+
+    .endsection TableF77C08Section
+
+
+    .section TableF77C0CSection
+
+      .al
+      .xl
+
+      aUnknownF77C0C ; F7/7C0C
+
+        ; Read by rlUnknown808EF6, rlUnknown8091B3.
+
+        .word $7C16, $AF2C, $AD8C
+
+        ; F7/7C12
+
+    .endsection TableF77C0CSection

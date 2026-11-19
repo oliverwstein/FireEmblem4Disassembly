@@ -96,7 +96,7 @@
         ldx #$0000
 
         _80A9
-        cmp @l $9E80CB,x
+        cmp @l aUnknown9E80CB,x
         beq _80B4
         inc x
         inc x
@@ -107,7 +107,7 @@
         _80B4
         inc x
         inc x
-        lda @l $9E80CB,x
+        lda @l aUnknown9E80CB,x
         and #$00FF
         sta $7F455E
         bra _80C7
@@ -128,6 +128,24 @@
         ; 9E/80CB
 
     .endsection Unsorted9E805ESection
+
+
+    .section Table9E80CBSection
+
+      .al
+      .xl
+
+      aUnknown9E80CB ; 9E/80CB
+
+        ; Read by rlUnknown9E805E.
+
+        .byte $00, $FE, $06, $FF, $FF, $05, $00, $FF, $06, $01, $FF, $07, $FE, $00, $04, $FF
+        .byte $00, $04, $00, $00, $00, $01, $00, $00, $02, $00, $00, $FF, $01, $03, $00, $01
+        .byte $02, $01, $01, $01, $00, $02, $02
+
+        ; 9E/80F2
+
+    .endsection Table9E80CBSection
 
 
     .section Unsorted9E80F2Section
@@ -291,7 +309,7 @@
         sta wR7
         lda wR0
         clc
-        adc $9E826B
+        adc aUnknown9E826B
         cmp wR4
         bcs _8219
         cmp wR6
@@ -306,7 +324,7 @@
         _8222
         lda wR1
         sec
-        sbc $9E826D
+        sbc aUnknown9E826B+2
         cmp wR4
         bcc _8231
         cmp wR6
@@ -319,7 +337,7 @@
         _8238
         lda wR2
         clc
-        adc $9E826F
+        adc aUnknown9E826B+4
         cmp wR5
         bcs _8247
         cmp wR7
@@ -353,6 +371,22 @@
         ; 9E/826B
 
     .endsection Unsorted9E811FSection
+
+
+    .section Table9E826BSection
+
+      .al
+      .xl
+
+      aUnknown9E826B ; 9E/826B
+
+        ; Read by rlUnknown9E811F.
+
+        .word $0005, $0006, $0006
+
+        ; 9E/8271
+
+    .endsection Table9E826BSection
 
 
     .section Unsorted9E8271Section
@@ -1154,7 +1188,7 @@
         bcs _8782
         asl a
         tax
-        lda $9E8792,x
+        lda aUnknown9E8792,x
         sec
         sbc #$003E
         bra _8782
@@ -1172,7 +1206,7 @@
         sta $7F4BF1
         asl a
         tax
-        lda $9E879C,x
+        lda aUnknown9E879C,x
         bmi _8782
         sec
         sbc #$003E
@@ -1199,6 +1233,38 @@
         ; 9E/8792
 
     .endsection Unsorted9E86CFSection
+
+
+    .section Table9E8792Section
+
+      .al
+      .xl
+
+      aUnknown9E8792 ; 9E/8792
+
+        ; Read by rlUnknown9E86CF.
+
+        .word $003F, $004E, $0044, $0049, $004D
+
+        ; 9E/879C
+
+    .endsection Table9E8792Section
+
+
+    .section Table9E879CSection
+
+      .al
+      .xl
+
+      aUnknown9E879C ; 9E/879C
+
+        ; Read by rlUnknown9E86CF.
+
+        .word $0065, $FFFF, $0063, $0064
+
+        ; 9E/87A4
+
+    .endsection Table9E879CSection
 
 
     .section Unsorted9E87A4Section
@@ -1306,7 +1372,7 @@
         sta lR18+1
         lda #$8B88
         clc
-        adc $9E8863,x
+        adc aUnknown9E8863,x
         sta lR18
         lda lR18+1
         sta $7F4593
@@ -1339,6 +1405,22 @@
         ; 9E/8863
 
     .endsection Unsorted9E87CASection
+
+
+    .section Table9E8863Section
+
+      .al
+      .xl
+
+      aUnknown9E8863 ; 9E/8863
+
+        ; Read by rlUnknown9E87F0.
+
+        .word $6000, $6880
+
+        ; 9E/8867
+
+    .endsection Table9E8863Section
 
 
     .section Unsorted9E8867Section
@@ -1951,7 +2033,7 @@
         lda $7F4576
         asl a
         tax
-        lda @l $9EB4DB,x
+        lda @l aUnknown9EB4DB,x
         sta wR2
         lda bBufferOBSEL
         and #$0003
@@ -1990,7 +2072,7 @@
         lda $7F4576
         asl a
         tax
-        lda @l $9EB4C9,x
+        lda @l aUnknown9EB4C9,x
         sta wR2
         lda #$7E00
         sta lR18+1
@@ -1999,7 +2081,7 @@
         adc #$1000
         adc wR2
         sta lR18
-        lda @l $9EB4D7,x
+        lda @l aUnknown9EB4D7,x
         sta wR2
         lda $7F4572
         and #$00FF
@@ -2065,7 +2147,7 @@
         sta $7F57EA
         asl a
         tax
-        lda $9E8EC4,x
+        lda aUnknown9E8EC4,x
         and #$00FF
         xba
         sta wR2
@@ -2081,7 +2163,7 @@
         lda $7F4576
         asl a
         tax
-        lda $9EB4DB,x
+        lda aUnknown9EB4DB,x
         sta wR2
         lda bBufferOBSEL
         and #$0003
@@ -2107,17 +2189,17 @@
         lda $7F57EA
         asl a
         tax
-        lda $9E8EC4,x
+        lda aUnknown9E8EC4,x
         and #$FF00
         xba
         asl a
         asl a
         tax
-        lda $9E8F3E,x
+        lda aUnknown9E8F3E,x
         pha
         inc x
         inc x
-        lda $9E8F3E,x
+        lda aUnknown9E8F3E,x
         pha
         lda $7F4574
         inc a
@@ -2148,6 +2230,47 @@
     .endsection Unsorted9E8D6CSection
 
 
+    .section Table9E8EC4Section
+
+      .al
+      .xl
+
+      aUnknown9E8EC4 ; 9E/8EC4
+
+        ; Read by rlUnknown9E8E01.
+
+        .word $0200, $0000, $0900, $0205, $0005, $0905, $0607, $0608
+        .word $0408, $0102, $0804, $0302, $0002, $0007, $0807, $0103
+        .word $0203, $0403, $0003, $0603, $0706, $0806, $0509, $0104
+        .word $0004, $0301, $0301, $0301, $020A, $000A, $090A, $020C
+        .word $040C, $090F, $060C, $0A0D, $010E, $020B, $020B, $020B
+        .word $0210, $0010, $0910, $0114, $0013, $0212, $0311, $0311
+        .word $0311, $0216, $0016, $0916, $0019, $0118, $0417, $0315
+        .word $0315, $0315, $0301, $020B, $0315
+
+        ; 9E/8F3E
+
+    .endsection Table9E8EC4Section
+
+
+    .section Table9E8F3ESection
+
+      .al
+      .xl
+
+      aUnknown9E8F3E ; 9E/8F3E
+
+        ; Read by rlUnknown9E8E01.
+
+        .word $6481, $1F19, $213F, $03A0, $2DD2, $6E10, $2D6B, $08B1
+        .word $0B7F, $013E, $6481, $0197, $03E0, $0D23, $213F, $0197
+        .word $0B7F, $0197, $7FFF, $6E10, $001B, $1E9C
+
+        ; 9E/8F6A
+
+    .endsection Table9E8F3ESection
+
+
     .section Unsorted9E8F6ASection
 
       .al
@@ -2162,7 +2285,7 @@
 
         lda #$0000
         sta $7F4584
-        lda $9E8FB2
+        lda aUnknown9E8FB2
         sta $7EFCA1
         lda #$7E00
         sta $7F4587
@@ -2187,6 +2310,22 @@
         ; 9E/8FB2
 
     .endsection Unsorted9E8F6ASection
+
+
+    .section Table9E8FB2Section
+
+      .al
+      .xl
+
+      aUnknown9E8FB2 ; 9E/8FB2
+
+        ; Read by rlUnknown9E8F6A.
+
+        .byte $01
+
+        ; 9E/8FB3
+
+    .endsection Table9E8FB2Section
 
 
     .section Unsorted9E8FB3Section
@@ -2355,14 +2494,14 @@
         xba
         and #$00FF
         beq _90C0
-        lda $9E9123,x
+        lda aUnknown9E9123,x
         cmp #$8000
         bne _90DD
         bra _90D4
 
 
         _90C0
-        lda $9E914B,x
+        lda aUnknown9E914B,x
         cmp #$8000
         bne _90DD
         lda #$0000
@@ -2424,6 +2563,40 @@
         ; 9E/9123
 
     .endsection Unsorted9E8FB3Section
+
+
+    .section Table9E9123Section
+
+      .al
+      .xl
+
+      aUnknown9E9123 ; 9E/9123
+
+        ; Read by rlUnknown9E9074.
+
+        .word $0000, $0000, $0000, $0000, $FFFF, $0003, $FFFD, $0003
+        .word $FFFD, $0003, $FFFD, $0003, $FFFD, $0003, $FFFD, $0003
+        .word $FFFD, $0003, $FFFE, $8000
+
+        ; 9E/914B
+
+    .endsection Table9E9123Section
+
+
+    .section Table9E914BSection
+
+      .al
+      .xl
+
+      aUnknown9E914B ; 9E/914B
+
+        ; Read by rlUnknown9E9074.
+
+        .word $0000, $0000, $0000, $0000, $FFFF, $0002, $FFFF, $8000
+
+        ; 9E/915B
+
+    .endsection Table9E914BSection
 
 
     .section Unsorted9E915BSection
@@ -2859,7 +3032,7 @@
         lda $7F45CE
         asl a
         tax
-        lda $9E9480,x
+        lda aUnknown9E9480,x
         cmp #$8000
         bne _93FE
         sec
@@ -2869,17 +3042,17 @@
         _93FE
         lda $7F4578
         clc
-        adc $9E9480,x
+        adc aUnknown9E9480,x
         sta wR0
         jsl rlUnknown9E950A
         lda $7F457A
         clc
         adc wR1
-        adc $9E94B6,x
+        adc aUnknown9E94B6,x
         sta wR1
         lda $7F45CE
         tax
-        lda $9E94EA,x
+        lda aUnknown9E94EA,x
         and #$00FF
         sta wR15
         stz wR4
@@ -2905,7 +3078,7 @@
         lda wR13
         asl a
         tax
-        lda $9E9504,x
+        lda aUnknown9E9504,x
         ora #$2000
         plx
         sta $7E52F5,x
@@ -2937,6 +3110,77 @@
         ; 9E/9480
 
     .endsection Unsorted9E9342Section
+
+
+    .section Table9E9480Section
+
+      .al
+      .xl
+
+      aUnknown9E9480 ; 9E/9480
+
+        ; Read by rlUnknown9E93E7.
+
+        .word $FFF4, $FFF4, $FFEF, $FFEF, $FFEC, $FFEC, $FFEF, $FFEF
+        .word $FFF4, $FFF4, $FFF9, $FFF9, $FFFC, $FFFC, $FFF9, $FFF9
+        .word $FFF4, $FFF4, $FFF4, $FFF4, $FFF4, $FFF4, $FFF4, $FFF4
+        .word $FFF4, $FFF4, $8000
+
+        ; 9E/94B6
+
+    .endsection Table9E9480Section
+
+
+    .section Table9E94B6Section
+
+      .al
+      .xl
+
+      aUnknown9E94B6 ; 9E/94B6
+
+        ; Read by rlUnknown9E93E7.
+
+        .word $FFEC, $FFEC, $FFE9, $FFE9, $FFE4, $FFE4, $FFDF, $FFDF
+        .word $FFDC, $FFDC, $FFDF, $FFDF, $FFE4, $FFE4, $FFE9, $FFE9
+        .word $FFEC, $FFEC, $FFEB, $FFEC, $FFEB, $FFEC, $FFEB, $FFEC
+        .word $FFEB, $FFEC
+
+        ; 9E/94EA
+
+    .endsection Table9E94B6Section
+
+
+    .section Table9E94EASection
+
+      .al
+      .xl
+
+      aUnknown9E94EA ; 9E/94EA
+
+        ; Read by rlUnknown9E93E7.
+
+        .word $0101, $0202, $0303, $0404, $0505, $0606, $0707, $0808
+        .word $0808, $0808, $0808, $0808, $0808
+
+        ; 9E/9504
+
+    .endsection Table9E94EASection
+
+
+    .section Table9E9504Section
+
+      .al
+      .xl
+
+      aUnknown9E9504 ; 9E/9504
+
+        ; Read by rlUnknown9E93E7.
+
+        .word $0000, $0001, $0002
+
+        ; 9E/950A
+
+    .endsection Table9E9504Section
 
 
     .section Unsorted9E950ASection
@@ -2996,7 +3240,7 @@
         ldx #$0000
 
         _954A
-        lda $9E964C,x
+        lda aUnknown9E964C,x
         cmp #$FFFF
         beq _955E
         tay
@@ -3070,7 +3314,7 @@
         lda $7F45D3
         asl a
         tax
-        lda $9E964C,x
+        lda aUnknown9E964C,x
         tay
         lda [lR18],y
         beq _961D
@@ -3111,7 +3355,7 @@
         sta $7F45D3
         asl a
         tax
-        lda $9E964C,x
+        lda aUnknown9E964C,x
         cmp #$FFFF
         bne _9649
         plx
@@ -3132,6 +3376,23 @@
         ; 9E/964C
 
     .endsection Unsorted9E950ASection
+
+
+    .section Table9E964CSection
+
+      .al
+      .xl
+
+      aUnknown9E964C ; 9E/964C
+
+        ; Read by rlUnknown9E952D, rlUnknown9E95AB.
+
+        .word $0010, $0012, $0014, $0016, $0018, $001E, $001A, $001C
+        .word $FFFF
+
+        ; 9E/965E
+
+    .endsection Table9E964CSection
 
 
     .section Unsorted9E965ESection
@@ -3225,7 +3486,7 @@
         lda $7F457A
         clc
         adc wR1
-        adc $9E973D,x
+        adc aUnknown9E973D,x
         sta wR1
         stz wR4
         stz wR5
@@ -3250,7 +3511,7 @@
         lda wR13
         asl a
         tax
-        lda $9E9787,x
+        lda aUnknown9E9787,x
         ora #$2000
         plx
         sta $7E52F5,x
@@ -3280,6 +3541,42 @@
         ; 9E/973D
 
     .endsection Unsorted9E965ESection
+
+
+    .section Table9E973DSection
+
+      .al
+      .xl
+
+      aUnknown9E973D ; 9E/973D
+
+        ; Read by rlUnknown9E96C0, rlUnknown9E978D, rlUnknown9E97F3.
+
+        .word $FFEC, $FFEC, $FFEC, $FFEC, $FFEC, $FFEC, $FFEC, $FFEC
+        .word $FFEC, $FFEC, $FFEC, $FFEC, $FFE9, $FFE9, $FFE4, $FFE4
+        .word $FFDF, $FFDF, $FFDC, $FFDC, $FFDF, $FFDF, $FFE4, $FFE4
+        .word $FFE9, $FFE9, $FFEC, $FFEC, $FFEB, $FFEC, $FFEB, $FFEC
+        .word $FFEB, $FFEC, $FFEB, $FFEC, $8000
+
+        ; 9E/9787
+
+    .endsection Table9E973DSection
+
+
+    .section Table9E9787Section
+
+      .al
+      .xl
+
+      aUnknown9E9787 ; 9E/9787
+
+        ; Read by rlUnknown9E96C0.
+
+        .word $0000, $0001, $0002
+
+        ; 9E/978D
+
+    .endsection Table9E9787Section
 
 
     .section Unsorted9E978DSection
@@ -3312,7 +3609,7 @@
         lda $7F457A
         clc
         adc wR1
-        adc $9E973D,x
+        adc aUnknown9E973D,x
         sta wR1
         stz wR4
         stz wR5
@@ -3373,7 +3670,7 @@
         lda $7F457A
         clc
         adc wR1
-        adc $9E973D,x
+        adc aUnknown9E973D,x
         sta wR1
         stz wR4
         stz wR5
@@ -3804,11 +4101,11 @@
         .databank ?
         lda $7F4554
         clc
-        adc $9E9B52,x
+        adc aUnknown9E9B50+2,x
         tay
         lda $7F4552
         clc
-        adc $9E9B50,x
+        adc aUnknown9E9B50,x
         tax
         lda $7E4EBB
         jsl rlUnknown9E8D25
@@ -3852,6 +4149,23 @@
         ; 9E/9B50
 
     .endsection Unsorted9E9A4BSection
+
+
+    .section Table9E9B50Section
+
+      .al
+      .xl
+
+      aUnknown9E9B50 ; 9E/9B50
+
+        ; Read by rlProcUnknown9E9A43Init.
+
+        .word $FFFF, $FFFF, $0000, $FFFF, $0001, $FFFF, $FFFF, $0000
+        .word $0000, $0000, $0001, $0000
+
+        ; 9E/9B68
+
+    .endsection Table9E9B50Section
 
 
     .section Unsorted9E9B68Section
@@ -4115,7 +4429,7 @@
         ldy #$01C0
 
         _9DA6
-        lda $9E9DB9,x
+        lda aUnknown9E9DB9,x
         sta aBGPaletteBuffer,b,y
         inc y
         inc y
@@ -4132,6 +4446,23 @@
         ; 9E/9DB9
 
     .endsection Unsorted9E9D76Section
+
+
+    .section Table9E9DB9Section
+
+      .al
+      .xl
+
+      aUnknown9E9DB9 ; 9E/9DB9
+
+        ; Read by rlUnknown9E9D76.
+
+        .word $3800, $7FFF, $035F, $01BF, $0037, $0C8A, $0425, $7FBA
+        .word $7E6E, $7C84, $30C4, $1421, $0000, $0000, $0000, $0000
+
+        ; 9E/9DD9
+
+    .endsection Table9E9DB9Section
 
 
     .section Unsorted9E9DD9Section
@@ -4348,7 +4679,7 @@
         _9FE0
         lda $7F4C33
         tax
-        lda $9EA085,x
+        lda aUnknown9EA085,x
         and #$00FF
         cmp #$00FF
         beq _A033
@@ -4423,6 +4754,23 @@
         ; 9E/A085
 
     .endsection Unsorted9E9F26Section
+
+
+    .section Table9EA085Section
+
+      .al
+      .xl
+
+      aUnknown9EA085 ; 9E/A085
+
+        ; Read by rlProcUnknown9EC70BCycle8.
+
+        .byte $04, $04, $04, $04, $02, $02, $02, $02, $01, $01, $01, $01, $01, $01, $01, $01
+        .byte $FF
+
+        ; 9E/A096
+
+    .endsection Table9EA085Section
 
 
     .section Unsorted9EA096Section
@@ -5020,7 +5368,7 @@
         lda $7F4578,x
         tyx
         clc
-        adc $9EA513,x
+        adc aUnknown9EA513,x
         sta $7F4C25
         sta wR0
         lda $7F57EA
@@ -5064,7 +5412,7 @@
         lsr a
         sta wR0,b
         tax
-        lda $9EA50F,x
+        lda aUnknown9EA50F,x
         tyx
         sta $1260,b,x
         phx
@@ -5084,6 +5432,22 @@
         ; 9E/A50F
 
     .endsection Unsorted9EA417Section
+
+
+    .section Table9EA50FSection
+
+      .al
+      .xl
+
+      aUnknown9EA50F ; 9E/A50F
+
+        ; Read by rlUnknown9EA417.
+
+        .word $0020, $0040
+
+        ; 9E/A513
+
+    .endsection Table9EA50FSection
 
 
     .section Unsorted9EA67CSection
@@ -5360,7 +5724,7 @@
         inc a
 
         _A814
-        cmp $9EA84A
+        cmp aUnknown9EA84A
         bcs _A848
         lda wMapScrollYPixels,b
         sec
@@ -5370,10 +5734,10 @@
         inc a
 
         _A828
-        cmp $9EA84C
+        cmp aUnknown9EA84A+2
         bcs _A848
         lda wBattleDistance
-        cmp $9EA84E
+        cmp aUnknown9EA84A+4
         bcs _A848
         lda wMapScrollXPixels,b
         sta $7F4BF5
@@ -5394,6 +5758,22 @@
     .endsection Unsorted9EA67CSection
 
 
+    .section Table9EA84ASection
+
+      .al
+      .xl
+
+      aUnknown9EA84A ; 9E/A84A
+
+        ; Read by rlUnknown9EA806.
+
+        .word $0030, $0030, $0008
+
+        ; 9E/A850
+
+    .endsection Table9EA84ASection
+
+
     .section Unsorted9EA850Section
 
       .al
@@ -5409,12 +5789,12 @@
         phx
         lda $7F508B
         tax
-        lda $9EA873,x
+        lda aUnknown9EA873,x
         and #$00FF
         bne _A86D
         lda $7F508D
         tax
-        lda $9EA873,x
+        lda aUnknown9EA873,x
         and #$00FF
         beq _A870
 
@@ -5434,6 +5814,24 @@
         ; 9E/A873
 
     .endsection Unsorted9EA850Section
+
+
+    .section Table9EA873Section
+
+      .al
+      .xl
+
+      aUnknown9EA873 ; 9E/A873
+
+        ; Read by rlUnknown9EA850.
+
+        .word $0101, $0101, $0101, $0101, $0101, $0101, $0101, $0101
+        .word $0101, $0100, $0101, $0000, $0000, $0101, $0101, $0101
+        .word $0101, $0100, $0100, $0101, $0000, $0000
+
+        ; 9E/A89F
+
+    .endsection Table9EA873Section
 
 
     .section Unsorted9EA89FSection
@@ -5687,7 +6085,7 @@
         ldy #$01A0
 
         _AA25
-        lda $9EAA61,x
+        lda aUnknown9EAA61,x
         sta aBGPaletteBuffer,b,y
         inc x
         inc x
@@ -5719,6 +6117,33 @@
         ; 9E/AA5C
 
     .endsection Unsorted9EA89FSection
+
+
+    .section Table9EAA61Section
+
+      .al
+      .xl
+
+      aUnknown9EAA61 ; 9E/AA61
+
+        ; Read by rlUnknown9EA9B5.
+
+        .word $5BF6, $53F2, $33EC, $03E0, $0280, $0180, $1104, $0080
+        .word $1104, $0180, $0280, $03E0, $33EC, $53F2, $5BF6, $6BF8
+        .word $7F77, $7EB2, $7DC9, $7C00, $4800, $3000, $2082, $1000
+        .word $2082, $3000, $4800, $7C00, $7DC9, $7EB2, $7F77, $7F7A
+        .word $52FF, $4E7F, $29BF, $1D1F, $001F, $0015, $000D, $0006
+        .word $0009, $000D, $0015, $001F, $1D1F, $29BF, $4E7F, $62FF
+        .word $5F9F, $3B1F, $1E9F, $021F, $015B, $00F3, $00CD, $0088
+        .word $00CD, $00F3, $015B, $021F, $1E9F, $3B1F, $5F9F, $73DF
+        .word $7E9A, $7DB8, $7974, $78F1, $588B, $2844, $1C83, $1403
+        .word $1C83, $2844, $588B, $78F1, $7974, $7DB8, $7E9A, $7F1F
+        .word $57FF, $3FFF, $27FF, $03FF, $02B9, $01CE, $00C6, $0084
+        .word $00C6, $01CE, $02B9, $03FF, $27FF, $3FFF, $57FF, $63FF
+
+        ; 9E/AB21
+
+    .endsection Table9EAA61Section
 
 
     .section Unsorted9EAB21Section
@@ -5784,7 +6209,7 @@
         _AB71
         lda $7F508B
         tax
-        lda $9EABBD,x
+        lda aUnknown9EABBD,x
         and #$00FF
         bne _AB87
         lda #$0000
@@ -5804,7 +6229,7 @@
         _AB9A
         lda $7F508D
         tax
-        lda $9EABBD,x
+        lda aUnknown9EABBD,x
         and #$00FF
         bne _ABB0
         lda #$0001
@@ -5829,6 +6254,24 @@
         ; 9E/ABBD
 
     .endsection Unsorted9EAB21Section
+
+
+    .section Table9EABBDSection
+
+      .al
+      .xl
+
+      aUnknown9EABBD ; 9E/ABBD
+
+        ; Read by rlUnknown9EAB5D.
+
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0101
+        .word $0101, $0100, $0100, $0101, $0001, $0000
+
+        ; 9E/ABE9
+
+    .endsection Table9EABBDSection
 
 
     .section Unsorted9EABE9Section
@@ -6278,7 +6721,7 @@
         phx
         lda $7F57EC
         tax
-        lda $9EAEAF,x
+        lda aUnknown9EAEAF,x
         sta wR0
         cmp #$8000
         beq _AEA1
@@ -6329,6 +6772,23 @@
     .endsection Unsorted9EADD1Section
 
 
+    .section Table9EAEAFSection
+
+      .al
+      .xl
+
+      aUnknown9EAEAF ; 9E/AEAF
+
+        ; Read by rlUnknown9EAE5A.
+
+        .word $0001, $0001, $0002, $0002, $0002, $0004, $0004, $8000
+        .word $FFFF, $FFFF, $FFFE, $FFFE, $FFFE, $FFFC, $FFFC, $8000
+
+        ; 9E/AECF
+
+    .endsection Table9EAEAFSection
+
+
     .section Unsorted9EAECFSection
 
       .al
@@ -6344,7 +6804,7 @@
         phx
         lda $7F57EC
         tax
-        lda $9EAF24,x
+        lda aUnknown9EAF24,x
         sta wR0
         cmp #$8000
         beq _AF16
@@ -6393,6 +6853,23 @@
         ; 9E/AF24
 
     .endsection Unsorted9EAECFSection
+
+
+    .section Table9EAF24Section
+
+      .al
+      .xl
+
+      aUnknown9EAF24 ; 9E/AF24
+
+        ; Read by rlUnknown9EAECF.
+
+        .word $0004, $0004, $0002, $0002, $0002, $0001, $0001, $8000
+        .word $FFFC, $FFFC, $FFFE, $FFFE, $FFFE, $FFFF, $FFFF, $8000
+
+        ; 9E/AF44
+
+    .endsection Table9EAF24Section
 
 
     .section Unsorted9EAF44Section
@@ -6746,7 +7223,7 @@
         jsl rlUnknown9EB0F2
         asl a
         tax
-        lda $9EB0EC,x
+        lda aUnknown9EB0EC,x
         sta wR0
         jsl rlUnknown9EB12B
         pla
@@ -6761,6 +7238,22 @@
         ; 9E/B0EC
 
     .endsection Unsorted9EB01BSection
+
+
+    .section Table9EB0ECSection
+
+      .al
+      .xl
+
+      aUnknown9EB0EC ; 9E/B0EC
+
+        ; Read by rlUnknown9EB0BA.
+
+        .word $0021, $0022, $0023
+
+        ; 9E/B0F2
+
+    .endsection Table9EB0ECSection
 
 
     .section Unsorted9EB0F2Section
@@ -6839,7 +7332,7 @@
         inc a
         asl a
         tax
-        lda $9EB15A,x
+        lda aUnknown9EB15A,x
         sta wR0,b
 
         _B158
@@ -6851,6 +7344,22 @@
         ; 9E/B15A
 
     .endsection Unsorted9EB0F2Section
+
+
+    .section Table9EB15ASection
+
+      .al
+      .xl
+
+      aUnknown9EB15A ; 9E/B15A
+
+        ; Read by rlUnknown9EB12B.
+
+        .word $0024, $0024, $0025
+
+        ; 9E/B160
+
+    .endsection Table9EB15ASection
 
 
     .section Unsorted9EB160Section
@@ -7331,6 +7840,70 @@
         ; 9E/B4C9
 
     .endsection Unsorted9EB4BBSection
+
+
+    .section Table9EB4C9Section
+
+      .al
+      .xl
+
+      aUnknown9EB4C9 ; 9E/B4C9
+
+        ; Read by rlUnknown9E8D6C, rlUnknown9E8DBB, rsActiveSpriteCommand03.
+
+        .word $0000, $2000
+
+        ; 9E/B4CD
+
+    .endsection Table9EB4C9Section
+
+
+    .section Table9EB4CDSection
+
+      .al
+      .xl
+
+      aUnknown9EB4CD ; 9E/B4CD
+
+        ; Read by rlUnknown9E8D6C.
+
+        .word $0000, $0000, $0000, $0400, $0600
+
+        ; 9E/B4D7
+
+    .endsection Table9EB4CDSection
+
+
+    .section Table9EB4D7Section
+
+      .al
+      .xl
+
+      aUnknown9EB4D7 ; 9E/B4D7
+
+        ; Read by rlUnknown9E8DBB, rsActiveSpriteCommand03.
+
+        .word $0200, $0280
+
+        ; 9E/B4DB
+
+    .endsection Table9EB4D7Section
+
+
+    .section Table9EB4DBSection
+
+      .al
+      .xl
+
+      aUnknown9EB4DB ; 9E/B4DB
+
+        ; Read by rlUnknown9E8D6C, rlUnknown9E8E01.
+
+        .word $0400, $0600
+
+        ; 9E/B4DF
+
+    .endsection Table9EB4DBSection
 
 
     .section BattleMapSpriteDataSection
@@ -8817,7 +9390,7 @@
         lda $0ED5,b
         asl a
         tax
-        lda $9ECF72,x
+        lda aUnknown9ECF72,x
         sec
         sbc #$003E
         sta $7F5089
@@ -8848,6 +9421,22 @@
         ; 9E/CF72
 
     .endsection Unsorted9ECEE5Section
+
+
+    .section Table9ECF72Section
+
+      .al
+      .xl
+
+      aUnknown9ECF72 ; 9E/CF72
+
+        ; Read by rlProcUnknown9ECEDDInit.
+
+        .word $0058, $0058, $005A, $0058
+
+        ; 9E/CF7A
+
+    .endsection Table9ECF72Section
 
 
     .section Unsorted9ECF7ASection
@@ -9666,7 +10255,7 @@
         ldx #$001E
 
         _D7DB
-        lda $9ED7E8,x
+        lda aUnknown9ED7E8,x
         sta $02C0,b,x
         dec x
         dec x
@@ -9679,6 +10268,23 @@
         ; 9E/D7E8
 
     .endsection Unsorted9ED7B7Section
+
+
+    .section Table9ED7E8Section
+
+      .al
+      .xl
+
+      aUnknown9ED7E8 ; 9E/D7E8
+
+        ; Read by rlUnknown9ED7B7.
+
+        .word $3800, $7FFF, $035F, $01BF, $0037, $0C8A, $0425, $7FBA
+        .word $7E6E, $7C84, $30C4, $1421, $0000, $0000, $0000, $0000
+
+        ; 9E/D808
+
+    .endsection Table9ED7E8Section
 
 
     .section Unsorted9ED808Section
@@ -10188,7 +10794,7 @@
         ldx #$001E
 
         _DDBB
-        lda $9EDDC8,x
+        lda aUnknown9EDDC8,x
         sta $02C0,b,x
         dec x
         dec x
@@ -10201,6 +10807,23 @@
         ; 9E/DDC8
 
     .endsection Unsorted9EDCD2Section
+
+
+    .section Table9EDDC8Section
+
+      .al
+      .xl
+
+      aUnknown9EDDC8 ; 9E/DDC8
+
+        ; Read by rlUnknown9EDD97.
+
+        .word $3800, $7FFF, $035F, $01BF, $0037, $0C8A, $0425, $7FBA
+        .word $7E6E, $7C84, $30C4, $1421, $0000, $0000, $0000, $0000
+
+        ; 9E/DDE8
+
+    .endsection Table9EDDC8Section
 
 
     .section Unsorted9EDDE8Section
@@ -10629,9 +11252,9 @@
         clc
         adc wR0
         tax
-        lda $9EE11B,x
+        lda aUnknown9EE11B,x
         sta lR18
-        lda $9EE11C,x
+        lda aUnknown9EE11B+1,x
         sta lR18+1
         lda #$7E00
         sta lR19+1
@@ -10649,6 +11272,22 @@
         ; 9E/E11B
 
     .endsection Unsorted9EE0F1Section
+
+
+    .section Table9EE11BSection
+
+      .al
+      .xl
+
+      aUnknown9EE11B ; 9E/E11B
+
+        ; Read by rlUnknown9EE0F1.
+
+        .word $7840, $84D6, $D679, $7CC7, $C6D6, $D67B
+
+        ; 9E/E127
+
+    .endsection Table9EE11BSection
 
 
     .section Unsorted9EE127Section
@@ -10858,9 +11497,9 @@
         clc
         adc wR0
         tax
-        lda $9EE2B3,x
+        lda aUnknown9EE2B2+1,x
         sta lR44+1
-        lda $9EE2B2,x
+        lda aUnknown9EE2B2,x
         sta lR44
         jsl rlProcEngineCreateProc
         plx
@@ -10872,6 +11511,22 @@
         ; 9E/E2B2
 
     .endsection Unsorted9EE228Section
+
+
+    .section Table9EE2B2Section
+
+      .al
+      .xl
+
+      aUnknown9EE2B2 ; 9E/E2B2
+
+        ; Read by rlUnknown9EE290.
+
+        .word $E2E4, $CA9E, $9EE3, $E5D7, $3B9E, $9EE8
+
+        ; 9E/E2BE
+
+    .endsection Table9EE2B2Section
 
 
     .section Unsorted9EE2BESection

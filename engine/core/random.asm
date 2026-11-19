@@ -1,4 +1,5 @@
-; Random number generation and percentage-chance rolls.
+; Random number generation and percentage-chance rolls, and the checks of the
+; game's code checksums that can change the random numbers (see Checksums.h).
 
     .section RandomNumberSection
 
@@ -68,7 +69,10 @@
           jsr rsShuffleRNTable ; rsShuffleRNTable
           rep #$30
 
-          jsl rlUnknown8F8006
+          ; If the game's code has been changed, the next random numbers
+          ; come from rsUnknown80A7F3 instead.
+
+          jsl rlCheckCodeChecksums
           blt +
 
             jsr rsUnknown80A7F3
@@ -319,29 +323,142 @@
     .endsection RandomChanceSection
 
 
+    .section Table888000Section
+
+      .al
+      .xl
+
+      aCodeChecksumsCopy88 .structCodeChecksums $AA24, $B66C, $5349 ; 88/8000
+
+      rsCodeChecksumTrap88 ; 88/8006
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A loop that never ends. Nothing in the built code jumps here.
+
+        nop
+        nop
+        nop
+
+        -
+        bra -
+
+        jml -
+
+        .databank 0
+
+      rlUnknown88800F ; 88/800F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Another copy of the code checksum check. Nothing in the built code
+        ; calls it yet. When a sum does not match, it calls $878063 and the
+        ; routines below.
+
+        pha
+        lda aCodeChecksumsCopy88.ChecksEnabled
+        bne _8018
+        pla
+        rtl
+
+
+        _8018
+        pla
+        phb
+        php
+        phk
+        plb
+        .databank $88
+        phx
+        lda #$0000
+        ldx #$8D56
+
+        _8024
+        clc
+        adc $800000,x
+        inc x
+        inc x
+        cpx #$8E2D
+        bcc _8024
+        cmp @l aCodeChecksumsCopy88.Bank80Sum
+        bne _8066
+        lda #$0000
+        ldx #$8017
+
+        _803C
+        clc
+        adc $870000,x
+        inc x
+        inc x
+        cpx #$80AA
+        bcc _803C
+        cmp @l aCodeChecksumsCopy88.Bank87Sum
+        bne _8066
+        lda aCodeChecksumsCopy87.Bank80Sum
+        cmp @l aCodeChecksumsCopy88.Bank80Sum
+        bne _8066
+        lda aCodeChecksumsCopy87.Bank87Sum
+        cmp @l aCodeChecksumsCopy88.Bank87Sum
+        bne _8066
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+
+        _8066
+        jsl $878063
+        lda $0897,b
+        bne _8075
+        lda #$0001
+        sta $0897,b
+
+        _8075
+        jsl rlUnknown889268
+        jsl rlUnknown88CD4C
+        jsl rlUnknown88CD5A
+        rtl
+
+        .databank 0
+
+        ; 88/8082
+
+    .endsection Table888000Section
+
+
     .section Unsorted8F8000Section
 
       .al
       .xl
 
-      aUnknown8F8000 ; 8F/8000
+      aCodeChecksums .structCodeChecksums $AA24, $B66C, $5349 ; 8F/8000
 
-        .word $AA24
-        .word $B66C
-        .word $5349
-
-      rlUnknown8F8006 ; 8F/8006
+      rlCheckCodeChecksums ; 8F/8006
 
         .al
         .autsiz
         .databank ?
+
+        ; Adds up the words in $80/8D56-8E2C and $87/8017-80A9 and compares the
+        ; sums with aCodeChecksums, and aCodeChecksums with its two copies.
+
+        ; Output:
+        ; Carry set if anything differs. Clear if they all match or the checks
+        ; are turned off.
 
         phb
         php
         phk
         plb
         phx
-        lda aUnknown8F8000+4
+        lda aCodeChecksums.ChecksEnabled
         beq _CLC
 
           lda #0
@@ -355,7 +472,7 @@
             cpx #$8E2D
             bcc -
 
-          cmp aUnknown8F8000
+          cmp aCodeChecksums.Bank80Sum
           bne _SEC
 
           lda #0
@@ -369,21 +486,21 @@
             cpx #$80AA
             bcc -
 
-          cmp aUnknown8F8000+2
+          cmp aCodeChecksums.Bank87Sum
           bne _SEC
 
-          lda aUnknown8F8000
-          cmp $888000
+          lda aCodeChecksums.Bank80Sum
+          cmp aCodeChecksumsCopy88.Bank80Sum
           bne _SEC
 
-          cmp $878008
+          cmp aCodeChecksumsCopy87.Bank80Sum
           bne _SEC
 
-          lda aUnknown8F8000+2
-          cmp $888002
+          lda aCodeChecksums.Bank87Sum
+          cmp aCodeChecksumsCopy88.Bank87Sum
           bne _SEC
 
-          cmp $87800A
+          cmp aCodeChecksumsCopy87.Bank87Sum
           bne _SEC
 
         _CLC
@@ -404,3 +521,43 @@
 
     .endsection Unsorted8F8000Section
 
+
+    .section CodeChecksums878000Section
+
+      .al
+      .xl
+
+      aCodeChecksumRanges ; 87/8000
+
+        ; The words that the checksums add up: $80/8D56-8E2C and $87/8017-80A9.
+        ; Nothing in the built code reads this; the checks use these numbers as
+        ; constants.
+
+        .word $8D56, $8E2D
+        .word $8017, $80AA
+
+      aCodeChecksumsCopy87 .structCodeChecksums $AA24, $B66C, $5349 ; 87/8008
+
+      rsCodeChecksumTrap87 ; 87/800E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A loop that never ends. Nothing in the built code jumps here.
+
+        nop
+        nop
+        nop
+
+        -
+        bra -
+
+        jml -
+
+        .databank 0
+
+        ; 87/8017
+
+    .endsection CodeChecksums878000Section

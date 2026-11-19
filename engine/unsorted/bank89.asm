@@ -47,7 +47,7 @@
         ldx #size(Palette)-2
         
           _Loop
-          lda $DE0000,x
+          lda aUnknownDE0000,x
           sta aBGPaletteBuffer,b,x
           dec x
           dec x
@@ -70,7 +70,7 @@
         ldx #size(Palette)-2
         
           _Loop
-          lda $DE0000,x
+          lda aUnknownDE0000,x
           sta aBGPaletteBuffer,b,x
           dec x
           dec x
@@ -93,7 +93,7 @@
         ldx #size(Palette)-2
         
           _Loop
-          lda $DE0000,x
+          lda aUnknownDE0000,x
           sta aBGPaletteBuffer,b,x
           dec x
           dec x
@@ -116,7 +116,7 @@
         ldx #size(Palette)-2
         
           _Loop
-          lda $DE0000,x
+          lda aUnknownDE0000,x
           sta aBGPaletteBuffer,b,x
           dec x
           dec x
@@ -139,7 +139,7 @@
         ldx #size(Palette)-2
         
           _Loop
-          lda $DE6200,x
+          lda aUnknownDE6200,x
           sta aBGPaletteBuffer,b,x
           dec x
           dec x

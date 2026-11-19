@@ -564,7 +564,7 @@
         lda wAIFormationDirection
         asl a
         tax
-        lda $87DC74,x
+        lda aUnknown87DC74,x
         sta lAITemp000E90,b
 
         lda wAIFormationType
@@ -654,6 +654,28 @@
         ; 87/DC71
 
     .endsection AIGroupSection
+
+
+    .section Table87DC74Section
+
+      .al
+      .xl
+
+      aUnknown87DC74 ; 87/DC74
+
+        ; Read by rlUnknown87DBD2.
+
+        .word $DC7C, $DC93, $DCAA, $DCC1, $0CAD, $1820, $D87F, $87DC
+        .word $9E8D, <>rlGetUnitLoveGrowthWithTarget, $200E, $7F18, $DCD9, $8D87, $0EA0, $AD60
+        .word $200C, $FF38, $DCD9, $8D87, $0E9E, $0EAD, $1820, $D87F
+        .word $87DC, $A08D, $600E, $0CAD, $3820, $D8FF, $87DC, $9E8D
+        .word <>rlGetUnitLoveGrowthWithTarget, $200E, $FF38, $DCD9, $8D87, $0EA0, $AD60, $200C
+        .word $7F18, $DCD9, $8D87, $0E9E, $0EAD, $3820, $D8FF, $87DC
+        .word $A08D, $600E
+
+        ; 87/DCD8
+
+    .endsection Table87DC74Section
 
 
     .section FormationPatternOffsetsSection

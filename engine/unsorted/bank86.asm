@@ -201,7 +201,7 @@
         rep #$20
         tya
         clc
-        adc $86AE36,x
+        adc aUnknown86AE36,x
         tay
         sep #$20
         inc wR36
@@ -233,6 +233,22 @@
         ; 86/AE36
 
     .endsection Unsorted86AD5ESection
+
+
+    .section Table86AE36Section
+
+      .al
+      .xl
+
+      aUnknown86AE36 ; 86/AE36
+
+        ; Read by rlUnknown86AD5E.
+
+        .word $FFC0, $0001, $0040, $FFFF
+
+        ; 86/AE3E
+
+    .endsection Table86AE36Section
 
 
     .section Unsorted86B39DSection

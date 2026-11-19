@@ -87,7 +87,7 @@
         .databank $87
         phx
         jsl rlUnknown87802A
-        lda @l $87800C
+        lda @l aCodeChecksumsCopy87.ChecksEnabled
         beq _809B
         lda #$0000
         ldx #$8D56
@@ -99,7 +99,7 @@
         inc x
         cpx #$8E2D
         bcc _8089
-        cmp @l $878008
+        cmp @l aCodeChecksumsCopy87.Bank80Sum
         bne _80A6
 
         _809B
@@ -1584,7 +1584,7 @@
         adc lR23
         sta lR23
         plx
-        lda $879077,x
+        lda aUnknown879076+1,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -1593,7 +1593,7 @@
         ora #$2000
         sta [lR23]
         ldy #$0002
-        lda $879076,x
+        lda aUnknown879076,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -1630,6 +1630,34 @@
         ; 87/9076
 
     .endsection Unsorted878FE7Section
+
+
+    .section Table879076Section
+
+      .al
+      .xl
+
+      aUnknown879076 ; 87/9076
+
+        ; Read by rlUnknown878FE7, rlUnknown87913E, rlUnknown8791EE.
+
+        .word $0000, $0001, $0002, $0003, $0004, $0005, $0006, $0007
+        .word $0008, $0009, $0100, $0101, $0102, $0103, $0104, $0105
+        .word $0106, $0107, $0108, $0109, $0200, $0201, $0202, $0203
+        .word $0204, $0205, $0206, $0207, $0208, $0209, $0300, $0301
+        .word $0302, $0303, $0304, $0305, $0306, $0307, $0308, $0309
+        .word $0400, $0401, $0402, $0403, $0404, $0405, $0406, $0407
+        .word $0408, $0409, $0500, $0501, $0502, $0503, $0504, $0505
+        .word $0506, $0507, $0508, $0509, $0600, $0601, $0602, $0603
+        .word $0604, $0605, $0606, $0607, $0608, $0609, $0700, $0701
+        .word $0702, $0703, $0704, $0705, $0706, $0707, $0708, $0709
+        .word $0800, $0801, $0802, $0803, $0804, $0805, $0806, $0807
+        .word $0808, $0809, $0900, $0901, $0902, $0903, $0904, $0905
+        .word $0906, $0907, $0908, $0909
+
+        ; 87/913E
+
+    .endsection Table879076Section
 
 
     .section Unsorted87913ESection
@@ -1697,7 +1725,7 @@
         asl a
         sta wR0
         plx
-        lda $879077,x
+        lda aUnknown879076+1,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -1710,7 +1738,7 @@
         ldy wR0
         sta [lR23],y
         ldy #$0002
-        lda $879076,x
+        lda aUnknown879076,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -1902,7 +1930,7 @@
         asl a
         tax
         ldy #$0002
-        lda $879077,x
+        lda aUnknown879076+1,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -1935,7 +1963,7 @@
 
         _931D
         ldy #$0004
-        lda $879076,x
+        lda aUnknown879076,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -3014,7 +3042,7 @@
         bne _B8E6
         asl a
         tax
-        lda $87B8EE,x
+        lda aUnknown87B8EE,x
 
         _B8E6
         ply
@@ -3028,6 +3056,22 @@
         ; 87/B8EE
 
     .endsection Unsorted87B8A7Section
+
+
+    .section Table87B8EESection
+
+      .al
+      .xl
+
+      aUnknown87B8EE ; 87/B8EE
+
+        ; Read by rsUnknown87B8A7.
+
+        .word $0007, $000A, $0014, $001E, $0028, $0032, $003C, $0046
+
+        ; 87/B8FE
+
+    .endsection Table87B8EESection
 
 
     .section Unsorted87B8FESection
@@ -3339,10 +3383,10 @@
         ldx #$0000
 
         _BA91
-        lda $87BAD1,x
+        lda aUnknown87BAD1,x
         beq _BAB7
         tay
-        lda $87BAD3,x
+        lda aUnknown87BAD1+2,x
         inc x
         inc x
         inc x
@@ -3405,6 +3449,27 @@
         ; 87/BAD1
 
     .endsection Unsorted87B8FESection
+
+
+    .section Table87BAD1Section
+
+      .al
+      .xl
+
+      aUnknown87BAD1 ; 87/BAD1
+
+        ; Read by rlUnknown87BA82.
+
+        .word $0001, $05A0, $0002, $05E0, $0003, $0620, $0004, $0660
+        .word $0005, $06A0, $0006, $06E0, $0007, $0720, $0008, $0760
+        .word $0009, $07A0, $000A, $07E0, $000B, $0820, $000A, $0860
+        .word $0009, $08A0, $0008, $08E0, $0007, $0920, $0006, $0960
+        .word $0005, $09A0, $0004, $09E0, $0003, $0A20, $0002, $0A60
+        .word $0001, $0AA0, $0000
+
+        ; 87/BB27
+
+    .endsection Table87BAD1Section
 
 
     .section Unsorted87BB27Section
@@ -4545,11 +4610,11 @@
         cmp #$000A
         bcs _F35A
         ldx wR2
-        lda @l $87F361,x
+        lda @l aUnknown87F361,x
         clc
         adc wR13
         tax
-        lda @l $87F361,x
+        lda @l aUnknown87F361,x
         and #$00FF
 
         _F35A
@@ -4568,3 +4633,19 @@
     .endsection Unsorted87F321Section
 
 
+    .section Table87F361Section
+
+      .al
+      .xl
+
+      aUnknown87F361 ; 87/F361
+
+        ; Read by rlUnknown87F321.
+
+        .word $0008, $0012, $001C, $0026, $0000, $0202, $0303, $0505
+        .word $0101, $0101, $0000, $0202, $0303, $0505, $0505, $0101
+        .word $0000, $0202, $0303, $0303, $0505, $0101, $0000, $0202
+
+        ; 87/F391
+
+    .endsection Table87F361Section

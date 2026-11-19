@@ -164,7 +164,7 @@
         sbc #$0081
         asl a
         tax
-        lda $879471,x
+        lda aUnknown879471,x
         sta wR0
         plx
         phx
@@ -187,7 +187,7 @@
         tax
         lda @l aCurrentTilemapInfo
         clc
-        adc $879471,x
+        adc aUnknown879471,x
         sta [lR23],y
         tya
         clc
@@ -195,7 +195,7 @@
         tay
         lda @l aCurrentTilemapInfo
         clc
-        adc $879481,x
+        adc aUnknown879481,x
         sta [lR23],y
         ply
         plx
@@ -208,7 +208,7 @@
         ldx #$0000
 
         _9424
-        cmp $879D77,x
+        cmp aUnknown879D77,x
         beq _9437
         inc x
         inc x
@@ -225,7 +225,7 @@
         phy
         lda @l aCurrentTilemapInfo
         clc
-        adc $879D79,x
+        adc aUnknown879D77+2,x
         sta [lR23],y
         tya
         clc
@@ -233,7 +233,7 @@
         tay
         lda @l aCurrentTilemapInfo
         clc
-        adc $879D7B,x
+        adc aUnknown879D77+4,x
         sta [lR23],y
         ply
         plx
@@ -259,6 +259,50 @@
         ; 87/9471
 
     .endsection DrawMenuTextLineSection
+
+
+    .section Table879471Section
+
+      .al
+      .xl
+
+      aUnknown879471 ; 87/9471
+
+        ; Read by rlDrawMenuTextLine.
+
+        .word $0006, $0306, $0606, $00FF, $00FF, $00FF, $00FF, $00FF
+
+        ; 87/9481
+
+    .endsection Table879471Section
+
+
+    .section Table879D77Section
+
+      .al
+      .xl
+
+      aUnknown879D77 ; 87/9D77
+
+        ; Read by rlDrawMenuTextLine.
+
+        .byte $8C, $95, $0F, $01, $1F, $01, $8C, $C9, $A1, $02, $B1, $02, $89, $F1, $6E, $01
+        .byte $7E, $01, $8F, $E9, $6B, $01, $7B, $01, $95, $BA, $66, $01, $76, $01, $91, $E5
+        .byte $0E, $01, $1E, $01, $8F, $91, $0D, $01, $1D, $01, $8F, $F1, $6A, $01, $7A, $01
+        .byte $8D, $91, $69, $01, $79, $01, $8C, $52, $6C, $01, $7C, $01, $92, $E9, $68, $01
+        .byte $78, $01, $8C, $6E, $6D, $01, $7D, $01, $93, $C1, $0B, $01, $1B, $01, $8C, $F8
+        .byte $67, $01, $77, $01, $95, $94, $A4, $01, $B4, $01, $8B, $08, $4B, $AB, $DA, $48
+        .byte $29, $FF, $00, $C9, $84, $00, $68, $B0, $39, $48, $29, $FF, $00, $38, $E9, $81
+        .byte $00, $0A, $AA, $BD, $71, $94, $85, $14, $68, $EB, $29, $FF, $00, $38, $E9, $40
+        .byte $00, $48, $29, $07, $00, $85, $16, $68, $29, $F8, $FF, $0A, $18, $65, $16, $0A
+        .byte $18, $65, $14, $AA, $BD, $71, $94, $85, $14, $BD, $81, $94, $85, $16, $FA, $28
+        .byte $AB, $6B, $A2, $00, $00, $DD, $77, $9D, $F0, $0D, $E8, $E8, $E8, $E8, $E8, $E8
+        .byte $E0, $5A, $00, $90, $F0, $80, $0E, $BD, $79, $9D, $85, $14, $BD, $7B, $9D, $85
+        .byte $16, $FA, $28, $AB, $6B, $64, $14, $64, $16, $80, $F6
+
+        ; 87/9E42
+
+    .endsection Table879D77Section
 
 
     .section DrawMenuTextNumberSection

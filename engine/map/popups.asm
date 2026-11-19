@@ -495,7 +495,7 @@
         ldx #$0010
 
         _C508
-        lda $DE0000,x
+        lda aUnknownDE0000,x
         sta aBGPaletteBuffer,b,x
         inc x
         inc x

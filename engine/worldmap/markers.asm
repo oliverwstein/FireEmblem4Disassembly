@@ -138,7 +138,7 @@
         ldx #7 * size(word)
         
           -
-          lda $8CDCB0,x
+          lda aUnknown8CDCB0,x
           sta aWorldMapMarkerPalette,x
           dec x
           dec x
@@ -172,7 +172,7 @@
         ; Blue palette
 
           -
-          lda $8CDC30,x
+          lda aUnknown8CDC30,x
           sta aWorldMapMarkerPalette,x
           dec x
           dec x
@@ -853,3 +853,26 @@
         ; 8B/9A88
 
     .endsection WorldMapMarkers2Section
+
+
+    .section Table8CDC30Section
+
+      .al
+      .xl
+
+      aUnknown8CDC30 ; 8C/DC30
+
+        ; Read by rsWorldMapMarkerShadowLoadBluePalette.
+
+        .word $1C00, $3460, $4CA0, $6500, $7D40, $3656, $1DB1, $0000
+        .word $52F9, $192B, $0CA8, $25D1, $3678, $3A2F, $42B4, $5315
+        .word $72B2, $433B, $431A, $4AF7, $25F2, $3EFA, $5338, $5B9D
+        .word $0CEC, $10C9, $0CA8, $1D6F, $2E16, $362F, $3E94, $3EDB
+        .word $3EFA, $4B7D, $431A, $4AF7, $3EFA, $3EFA, $5338, $431A
+        .word $4335, $10C9, $0CA8, $1D6F, $2A15, $362F, $3E94, $3EDB
+        .word $533B, $4B7D, $431A, $4AF7, $535C, $4F5B, $5338, $5B9D
+        .word $7FFF, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+        ; 8C/DCB0
+
+    .endsection Table8CDC30Section

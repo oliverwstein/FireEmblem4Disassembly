@@ -118,12 +118,14 @@ class Placement:
         bp = os.path.join(root, 'build.asm')
         b = open(bp, encoding='utf-8').read()
         existing = [(int(m.group(1), 16), m.start()) for m in re.finditer(r'^    \* = \$([0-9A-F]{6})\n', b, re.M)]
-        for start, secs, _ in sorted(blocks, reverse=True):
+        for start, secs, _ in sorted(blocks, key=lambda b: asmlib.offset(b[0]), reverse=True):
             text = (f'    * = ${asmlib.offset(start):06X}\n    .logical ${start:06X}\n\n'
                     + ''.join(f'      .dsection {s}\n' for s in secs) + '\n    .here\n\n')
             pos = next((p for a, p in existing if a > asmlib.offset(start)), None)
             if pos is None:
-                raise SystemExit('could not find where to place a block in build.asm')
+                # Past every block so far: add it at the end.
+                b = b.rstrip('\n') + '\n\n' + text.rstrip('\n') + '\n'
+                continue
             b = b[:pos] + text + b[pos:]
         for fname in sorted({f for _, f, _, _ in self.sections}):
             inc = f'  .include "{fname}"\n'
@@ -189,7 +191,15 @@ def main():
             plan.apply(tmp, widths, remove=True)
             ok, log = asmlib.assemble(tmp)
             if not ok:
-                raise SystemExit('trial build failed:\n' + '\n'.join(asmlib.errors(log)[:15]))
+                errs = asmlib.errors(log)
+                detail = []
+                for e in errs[:3]:
+                    m = re.match(r'build\.asm:(\d+):', e)
+                    if m:
+                        lines = open(os.path.join(tmp, 'build.asm'), encoding='utf-8').read().split('\n')
+                        n = int(m.group(1))
+                        detail.append('\n'.join(lines[max(0, n - 4):n + 2]))
+                raise SystemExit('trial build failed:\n' + '\n'.join(errs[:15]) + ('\n\n' + '\n---\n'.join(detail) if detail else ''))
             built = open(os.path.join(tmp, 'out.sfc'), 'rb').read()
         wrong = [res.routines[k][1] for k in plan.placed
                  if (r := res.ranges[res.routines[k][2]]) and built[r[0]:r[1]] != rom[r[0]:r[1]]]

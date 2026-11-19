@@ -10,6 +10,7 @@
   .include "Battle.h"
   .include "Chapters.h"
   .include "Characters.h"
+  .include "Checksums.h"
   .include "Classes.h"
   .include "Decompressor.h"
   .include "Deployment.h"

@@ -977,3 +977,19 @@
       ; B2D2AA
 
     .endsection EpilogueDialoguePointersSection
+
+
+    .section TableF77C00Section
+
+      .al
+      .xl
+
+      aUnknownF77C00 ; F7/7C00
+
+        ; Read by rlUnknown808EF6, rsUnknown809677.
+
+        .word $AFF0, $0000, $943E, $957E
+
+        ; F7/7C08
+
+    .endsection TableF77C00Section

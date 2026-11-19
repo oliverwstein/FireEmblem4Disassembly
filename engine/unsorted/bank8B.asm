@@ -136,9 +136,9 @@
         and #$003C
         lsr a
         tax
-        lda $8CDE00,x
+        lda aUnknown8CDE00,x
         sta $022A,b
-        lda $8CDE20,x
+        lda aUnknown8CDE20,x
         sta $024A,b
         rts
 
@@ -203,16 +203,16 @@
         and #$001F
         asl a
         tax
-        lda $8BBFF0,x
+        lda aUnknown8BBFED+3,x
         clc
         adc wR0
         pha
         tya
         cmp #$FFFF
         bne _BE96
-        lda $8BBFEE
+        lda aUnknown8BBFED+1
         sta lR18+1
-        lda $8BBFED
+        lda aUnknown8BBFED
         sta lR18
         bra _BEAC
 
@@ -225,7 +225,7 @@
         tya
         asl a
         tax
-        lda $8BBED5,x
+        lda aUnknown8BBED5,x
         clc
         adc lR18
         sta lR18
@@ -274,12 +274,12 @@
 
         asl a
         tax
-        lda $8BC457,x
+        lda aUnknown8BC457,x
         tay
         ldx #$001E
 
         _C444
-        lda $DD7FB0,x
+        lda aUnknownDD7FB0,x
         dec x
         dec x
         phx
@@ -381,3 +381,40 @@
         ; 8B/CECA
 
     .endsection Unsorted8BCE71Section
+
+
+    .section Table8CDE00Section
+
+      .al
+      .xl
+
+      aUnknown8CDE00 ; 8C/DE00
+
+        ; Read by rsUnknown8B8114.
+
+        .word $031F, $133F, $235F, $337F, $3F7F, $4F9F, $5FBF, $6FDF
+        .word $6FDF, $5FBF, $4F9F, $3F7F, $337F, $235F, $133F, $031F
+
+        ; 8C/DE20
+
+    .endsection Table8CDE00Section
+
+
+    .section TableDD7FB0Section
+
+      .al
+      .xl
+
+      aUnknownDD7FB0 ; DD/7FB0
+
+        ; Read by rlUnknown8BC43A.
+
+        .word $3800, $7BFF, $56D7, $35EF, $0462, $02FB, $000B, $5C40
+        .word $6D25, $7E0F, $0140, $1EC5, $10EA, $298F, $0487, $0134
+        .word $3800, $0012, $013A, $02FB, $7E6A, $7504, $0120, $0280
+        .word $7FFF, $56D7, $35EF, $08A6, $190A, $256C, $4232, $0842
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+        ; DD/8000
+
+    .endsection TableDD7FB0Section

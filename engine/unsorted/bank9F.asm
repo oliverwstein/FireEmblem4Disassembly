@@ -396,9 +396,9 @@
         clc
         adc wR0
         tax
-        lda $9F80D9,x
+        lda aUnknown9F80D9,x
         sta lR18
-        lda $9F80DA,x
+        lda aUnknown9F80D9+1,x
         sta lR18+1
         lda #(`aWorldMapMarkerPalette)<<8
         sta lR19+1
@@ -462,9 +462,9 @@
         clc
         adc wR0
         tax
-        lda $9F80DC,x
+        lda aUnknown9F80D9+3,x
         sta lR18
-        lda $9F80DD,x
+        lda aUnknown9F80D9+4,x
         sta lR18+1
 
         _8564
@@ -501,9 +501,9 @@
         clc
         adc wR0
         tax
-        lda $9F80DF,x
+        lda aUnknown9F80D9+6,x
         sta lR18
-        lda $9F80E0,x
+        lda aUnknown9F80D9+7,x
         sta lR18+1
         lda #$7E00
         sta lR19+1
@@ -783,7 +783,7 @@
         asl a
         adc $7F5089
         tax
-        lda $9F8724,x
+        lda aUnknown9F8724,x
         cmp #$FFFF
         beq _8721
         phk
@@ -791,9 +791,9 @@
         ply
         sty lR19+1
         sta lR19
-        lda $9F8726,x
+        lda aUnknown9F8724+2,x
         sta lR18
-        lda $9F8727,x
+        lda aUnknown9F8724+3,x
         sta lR18+1
         ldx #$01DE
         ldy #$001E

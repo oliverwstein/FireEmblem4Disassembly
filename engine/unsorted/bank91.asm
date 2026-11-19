@@ -562,6 +562,24 @@
     .endsection Unsorted91F959Section
 
 
+    .section Table91F9ADSection
+
+      .al
+      .xl
+
+      aUnknown91F9AD ; 91/F9AD
+
+        ; Read by rlUnknown91F959.
+
+        .word $0000, $0006, $000D, $0013, $0018, $001E, $0023, $0029
+        .word $002E, $0033, $0039, $003E, $0042, $0045, $0046, $0046
+        .word $0045, $0044, $0041, $003D, $0037, $0030, $0029, $0023
+
+        ; 91/F9DD
+
+    .endsection Table91F9ADSection
+
+
     .section Unsorted91F9DDSection
 
       .al

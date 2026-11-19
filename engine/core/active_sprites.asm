@@ -1528,9 +1528,9 @@
         adc aActiveSpriteSystem.aUnknown0012E0,b,x
         tax
 
-        lda $9EB4DF,x
+        lda aUnknown9EB4DF,x
         sta $24
-        lda $9EB4DF+1,x
+        lda aUnknown9EB4DF+1,x
         sta $24+1
 
         lda $0000,b,y
@@ -1544,7 +1544,7 @@
         lda $12C0,b,x
         asl a
         tax
-        lda $9EB4C9,x
+        lda aUnknown9EB4C9,x
         sta $06
         lda #$7E00
         sta $24+1
@@ -1564,7 +1564,7 @@
         asl a
         tax
 
-        lda $9EB4D7,x
+        lda aUnknown9EB4D7,x
         sta $04
         lda $71
         and #$0003
@@ -2031,3 +2031,19 @@
     .endsection Unsorted9EB2BASection
 
 
+    .section Table9EB4DFSection
+
+      .al
+      .xl
+
+      aUnknown9EB4DF ; 9E/B4DF
+
+        ; Read by rsActiveSpriteCommand03.
+
+        .word $B4F5, $E59E, $9EB4, $0000, $0200, $0400, $0600, $0800
+        .word $0A00, $0C00, $0E00, $0000, $0140, $0280, $03C0, $0500
+        .word $0640, $0780, $08C0, $0000, $0100, $0200, $0300
+
+        ; 9E/B50D
+
+    .endsection Table9EB4DFSection

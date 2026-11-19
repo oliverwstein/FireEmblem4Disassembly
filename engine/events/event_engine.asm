@@ -2,6 +2,38 @@
 ; flags, running chapter opening and map events, and the event condition commands
 ; (fights, talks, interactions and so on).
 
+    .section Table81B45BSection
+
+      .al
+      .xl
+
+      aUnknown81B45B ; 81/B45B
+
+        ; Read by rlUnknown81B43F.
+
+        .byte $04, $08, $10, $20, $40, $80
+
+        ; 81/B461
+
+    .endsection Table81B45BSection
+
+
+    .section Table81B47DSection
+
+      .al
+      .xl
+
+      aUnknown81B47D ; 81/B47D
+
+        ; Read by rlUnknown81B461.
+
+        .byte $FB, $F7, $EF, $DF, $BF, $7F
+
+        ; 81/B483
+
+    .endsection Table81B47DSection
+
+
     .section EventEngineSection
 
       .al
@@ -6880,7 +6912,7 @@
           tax
           sep #$20
           lda wAreaRestrictionBitfield,b
-          ora $81B45B,x
+          ora aUnknown81B45B,x
           sta wAreaRestrictionBitfield,b
           rep #$20
 
@@ -6919,7 +6951,7 @@
           tax
           sep #$20
           lda wAreaRestrictionBitfield,b
-          and $81B47D,x
+          and aUnknown81B47D,x
           sta wAreaRestrictionBitfield,b
           rep #$20
 
