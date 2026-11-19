@@ -41,10 +41,23 @@ target is enough. The log is checked wherever it has the target, and a
 disagreement (ran but not entered by a jump, or only read as data) skips it.
 
 A target is written as a label only when exactly one top-level routine label
-(rl.../rs...) is at that address. The other active sprite fields (aCodeOffset,
+(rl.../rs...) is at that address.
+
+Second rule, long pointers loaded in two halves into any variable:
+
+    lda #$8A00                       lda #(`label)<<8
+    sta lRoutineVariable+1,b         sta lRoutineVariable+1,b
+    lda #$88E0                       lda #<>label
+    sta lRoutineVariable,b           sta lRoutineVariable,b
+
+The address half is the nearest immediate stored into the same variable within
+six lines of the bank half. Most of these point at data (menu text,
+definitions, lR44/lR18), so both halves are written only when exactly one
+top-level label is at the full 24-bit ROM address; the rest are counted, and
+listed with the nearest label below the address. The other active sprite fields (aCodeOffset,
 aFrameOffset, aUnknown...) hold script, frame data or counters, not code.
 """
-import argparse, collections, glob, os, re, sys
+import argparse, bisect, collections, glob, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from asmlib import ROUTINE_RE
@@ -132,6 +145,36 @@ def header_banks(files):
         for name in blocks.get(code, ()):
             claims[name] |= banks
     return {name: next(iter(b)) for name, b in claims.items() if len(b) == 1}
+
+
+BANK_HALF = re.compile(r'^(\s+ld([axy]) #)\$([0-9A-F]{2})00(\s*(?:;.*)?)$')
+BANK_STORE = re.compile(r'^\s+st([axy]) ([\w.]+)\+1((?:,b)?)\s*(?:;.*)?$')
+ADDRESS_HALF = re.compile(r'^(\s+ld([axy]) #)(\$[0-9A-F]{4}|<>[\w.]+)(\s*(?:;.*)?)$')
+
+
+def find_halves(files):
+    """[(file, bank line, address line or None, variable, full address or None)]"""
+    out = []
+    for f in files:
+        lines = open(f, encoding='utf-8').read().split('\n')
+        for i in range(len(lines) - 1):
+            b, st = BANK_HALF.match(lines[i]), BANK_STORE.match(lines[i + 1])
+            if not (b and st and b.group(2) == st.group(1)):
+                continue
+            var, suffix = st.group(2), st.group(3)
+            store = re.compile(r'^\s+st([axy]) ' + re.escape(var + suffix) + r'\s*(?:;.*)?$')
+            near = []
+            for j in range(max(0, i - 6), min(len(lines) - 1, i + 7)):
+                a, s = ADDRESS_HALF.match(lines[j]), store.match(lines[j + 1])
+                if j != i and a and s and a.group(2) == s.group(1):
+                    near.append((abs(j - i), j, a.group(3)))
+            if not near:
+                out.append((f, i, None, var, None))
+                continue
+            _, j, value = min(near)
+            full = None if value.startswith('<>') else int(b.group(3), 16) << 16 | int(value[1:], 16)
+            out.append((f, i, j, var, full))
+    return out
 
 
 def classify(store, at, addr, cdl, local_at, headers):
@@ -233,6 +276,38 @@ def main():
     targets = sorted({label for _, label in done})
     print(f'\nTargets: {len(targets)} routines.')
 
+    # Second rule: long pointers loaded in two halves.
+    starts = sorted(a for a in at if a >= 0x800000)
+    halves, half_left = [], collections.Counter()
+    half_notes = []
+    for h in find_halves(files):
+        f, i, j, var, full = h
+        if j is None:
+            why = 'no address half stored within six lines'
+        elif full is None:
+            why = 'the address half is already a name'
+        elif full < 0x800000:
+            why = 'RAM address'
+        elif len(at.get(full, [])) == 1:
+            halves.append((h, at[full][0]))
+            continue
+        elif full in at:
+            why = 'several labels'
+        else:
+            below = starts[bisect.bisect_right(starts, full) - 1] if starts and starts[0] <= full else None
+            hint = f' (inside or after {at[below][0]}+${full - below:X})' if below and below >> 16 == full >> 16 else ''
+            why = 'no label at the address'
+            half_notes.append(f'  {f}:{i + 1} {var} ${full:06X}{hint}')
+        half_left[why] += 1
+    print(f'\nLong pointers in two halves: {len(halves) + sum(half_left.values())}. '
+          f'Written as labels: {len(halves)}. Left:')
+    for why, n in half_left.most_common():
+        print(f'  {n:4} {why}')
+    for (f, i, j, var, full), label in halves:
+        print(f'  {f}:{i + 1} {var} ${full:06X} -> {label}')
+    print('\nNo label at the address:')
+    print('\n'.join(half_notes))
+
     if not args.write:
         for (f, i, rname, raddr, reg, var, value), label in done:
             how = 'header' if var in OWN_BANK and rname in headers else ('log' if var in OWN_BANK else 'fixed')
@@ -241,17 +316,27 @@ def main():
 
     edits = collections.defaultdict(dict)
     for (f, i, *_), label in done:
-        edits[f][i] = label
+        edits[f][i] = ('word', label)
+    for (f, i, j, var, full), label in halves:
+        edits[f][i] = ('bank', label)
+        edits[f][j] = ('address', label)
     for f, lines_to_fix in edits.items():
         lines = open(f, encoding='utf-8').read().split('\n')
-        for i, label in lines_to_fix.items():
-            m = LOAD.match(lines[i])
-            lines[i] = f'{m.group(1)}<>{label}{m.group(5)}'
+        for i, (kind, label) in lines_to_fix.items():
+            if kind == 'word':
+                m = LOAD.match(lines[i])
+                lines[i] = f'{m.group(1)}<>{label}{m.group(5)}'
+            elif kind == 'bank':
+                m = BANK_HALF.match(lines[i])
+                lines[i] = f'{m.group(1)}(`{label})<<8{m.group(4)}'
+            else:
+                m = ADDRESS_HALF.match(lines[i])
+                lines[i] = f'{m.group(1)}<>{label}{m.group(4)}'
         open(f, 'w', encoding='utf-8').write('\n'.join(lines))
 
     # The targets now have a reference: drop the comment saying nothing reaches them.
     cleared = swept = 0
-    want = set(targets)
+    want = set(targets) | {label for _, label in halves}
     for f in files:
         lines = open(f, encoding='utf-8').read().split('\n')
         out, current, changed = [], None, False
@@ -268,7 +353,7 @@ def main():
         if changed:
             open(f, 'w', encoding='utf-8').write('\n'.join(out))
     remaining = sum(open(f, encoding='utf-8').read().count(FOUND) for f in files)
-    print(f'Wrote {len(done)} labels in {len(edits)} files; removed the "Found through fe4.cdl" comment '
+    print(f'Wrote {len(done)} labels and {len(halves)} long pointers in {len(edits)} files; removed the "Found through fe4.cdl" comment '
           f'from {cleared} routines ({remaining} left) and shortened {swept} "Found by tools/sweep.py" comments.')
 
 
