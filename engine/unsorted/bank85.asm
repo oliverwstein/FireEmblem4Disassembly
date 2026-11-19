@@ -3318,7 +3318,7 @@
         sta wCurrentItemDataROMPointer,b
         jsl rlGetItemWeaponType
         ldx #$004E
-        jsl rlUnknown8BC030
+        jsl rlUnitWindowCopyWeaponRankIcon
         lda #$0005
         jsl rlUnknown8BC467
         plx
@@ -13814,7 +13814,7 @@
         stz wGameStateRoutine1,b
         lda #$B122
         sta $7F82C5
-        lda #<>rsUnknown80C3E6
+        lda #<>rsUnitWindowOpen
         sta wMainLoopPointer
         rtl
 
@@ -13831,7 +13831,7 @@
         .databank ?
 
         stz wGameStateRoutine1,b
-        lda #<>rsUnknown80CD2E
+        lda #<>rsUnitWindowMainLoopUpdater
         sta wMainLoopPointer
         rtl
 

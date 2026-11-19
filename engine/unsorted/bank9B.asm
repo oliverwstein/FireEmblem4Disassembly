@@ -278,7 +278,7 @@
         jsl rlResetHDMAEngine
         jsl rlUnknown95F87F
         jsl rlUnknown96D659
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         lda #$0000
         sta $7FE18A
         sep #$20

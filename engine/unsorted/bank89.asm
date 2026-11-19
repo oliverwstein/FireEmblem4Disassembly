@@ -6295,7 +6295,7 @@
         jsl rlGetItemWeaponType
         sta $7FB010
         ldx #$0004
-        jsl rlUnknown8BC030
+        jsl rlUnitWindowCopyWeaponRankIcon
         lda #$0004
         sta wR4
         stz wR5
@@ -6321,12 +6321,12 @@
         tax
         lda @l $89BE57,x
         ldx #$0006
-        jsl rlUnknown8BC030
+        jsl rlUnitWindowCopyWeaponRankIcon
         lda $7FB010
         tax
         lda @l $89BE59,x
         ldx #$0008
-        jsl rlUnknown8BC030
+        jsl rlUnitWindowCopyWeaponRankIcon
         lda #$009A
         sta wR1
         lda #$0000
@@ -6353,12 +6353,12 @@
         tax
         lda @l $89BE63,x
         ldx #$0006
-        jsl rlUnknown8BC030
+        jsl rlUnitWindowCopyWeaponRankIcon
         lda $7FB010
         tax
         lda @l $89BE65,x
         ldx #$0008
-        jsl rlUnknown8BC030
+        jsl rlUnitWindowCopyWeaponRankIcon
         lda #$009A
         sta wR1
         stz wR0
@@ -6372,13 +6372,13 @@
         _BE14
         lda #$0005
         ldx #$0006
-        jsl rlUnknown8BC030
+        jsl rlUnitWindowCopyWeaponRankIcon
         lda #$0006
         ldx #$0008
-        jsl rlUnknown8BC030
+        jsl rlUnitWindowCopyWeaponRankIcon
         lda #$0007
         ldx #$000A
-        jsl rlUnknown8BC030
+        jsl rlUnitWindowCopyWeaponRankIcon
         lda #$009A
         sta wR1
         lda #$0080

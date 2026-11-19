@@ -50,6 +50,9 @@
   .endfor
 
   ROM = binary("fe4.sfc")
+  .include "engine/core/ppu_buffers.asm"
+  .include "engine/core/joypad.asm"
+  .include "engine/menus/unit_window.asm"
   .include "engine/core/active_sprites.asm"
   .include "engine/core/decompressor.asm"
   .include "engine/core/dma.asm"
@@ -219,6 +222,13 @@
     .logical $80823F
 
       .dsection Unsorted80823FSection
+
+    .here
+
+    * = $008248
+    .logical $808248
+
+      .dsection EnableForcedBlankSection
 
     .here
 

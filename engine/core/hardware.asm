@@ -252,3 +252,122 @@
         ; 80/9DD9
 
     .endsection HardwareResetSection
+
+
+    .section Unsorted808C50Section
+
+      .al
+      .xl
+
+      rsInitPPURegisters ; 80/8C50
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; FE5: rsInitPPURegisters.
+
+        php
+        sep #$20
+        lda #$01
+        sta $4200,b
+        sta bBufferNMITIMEN
+        stz $4201,b
+        stz $4202,b
+        stz $4203,b
+        stz $4204,b
+        stz $4205,b
+        stz $4206,b
+        stz $4207,b
+        stz $4208,b
+        stz $4209,b
+        stz $420A,b
+        stz $420B,b
+        stz $420C,b
+        stz $2140,b
+        stz $2141,b
+        stz $2142,b
+        stz $2143,b
+        lda #$01
+        sta $420D,b
+        sta bBufferMEMSEL
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        stz $2101,b
+        stz $2102,b
+        stz wBufferOAMADD
+        lda #$80
+        sta $2103,b
+        sta wBufferOAMADD+1
+        stz $2104,b
+        stz $2104,b
+        stz $2105,b
+        stz $2106,b
+        stz bBufferMOSAIC
+        stz $2107,b
+        stz $2108,b
+        stz $2109,b
+        stz $210A,b
+        stz $210B,b
+        stz $210C,b
+        stz $210D,b
+        stz $210D,b
+        stz $210E,b
+        stz $210E,b
+        stz $210F,b
+        stz $210F,b
+        stz $2110,b
+        stz $2110,b
+        stz $2111,b
+        stz $2111,b
+        stz $2112,b
+        stz $2112,b
+        stz $2113,b
+        stz $2113,b
+        stz $2114,b
+        stz $2114,b
+        stz $2115,b
+        stz $211A,b
+        stz $211B,b
+        stz $211C,b
+        stz $211D,b
+        stz $211E,b
+        stz $211F,b
+        stz $2120,b
+        stz $2123,b
+        stz $2124,b
+        stz $2125,b
+        stz $2126,b
+        stz $2127,b
+        stz $2128,b
+        stz $2129,b
+        stz $212A,b
+        stz $212B,b
+        stz $212C,b
+        stz $212E,b
+        stz $212D,b
+        stz $212F,b
+        stz $2130,b
+        stz $2131,b
+        lda #$80
+        sta $2132,b
+        sta bBufferCOLDATA_1
+        lda #$40
+        sta $2132,b
+        sta bBufferCOLDATA_2
+        lda #$20
+        sta $2132,b
+        sta bBufferCOLDATA_3
+        stz $2133,b
+        plp
+        rts
+
+        .databank 0
+
+        ; 80/8D56
+
+    .endsection Unsorted808C50Section
+
+

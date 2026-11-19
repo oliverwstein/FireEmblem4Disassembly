@@ -3608,7 +3608,7 @@
         sta wGameStateStep,b
         lda #0
         sta wDebugMenuScreenIndex
-        jsl rlUnknown8BB45D
+        jsl rlUnitWindowFillBG3Buffer
         jsr rlDrawDebugMenu
         rtl
 

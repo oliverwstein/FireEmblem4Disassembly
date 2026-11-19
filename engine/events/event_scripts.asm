@@ -4682,7 +4682,7 @@
         jsl rlActiveSpriteEngineReset
         jsl rlEnableActiveSpriteEngine
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlUnknown82E400
         jsl rlUnknown8780AA
         jsl rlUnknown82F211

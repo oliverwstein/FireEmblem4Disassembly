@@ -1,255 +1,5 @@
 ; Code from bank $80 not yet assigned to a game system.
 
-    .section Unsorted808002Section
-
-      .al
-      .xl
-
-      rlUnknown808002 ; 80/8002
-
-        ; Found by tools/sweep.py: nothing in the build reaches this.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        sep #$20
-
-        _8005
-        lda $4212,b
-        and #$01
-        bne _8005
-        rep #$20
-        lda $4218,b
-        sta wJoy1Input
-        and #$000F
-        beq _801C
-        lda wJoy1Old
-        sta wJoy1Input
-
-        _801C
-        lda wJoy1Input
-        eor wJoy1Old
-        and wJoy1Input
-        sta wJoy1New
-        sta wJoy1Repeated
-        lda wJoy1Input
-        beq _803C
-        cmp wJoy1Old
-        bne _803C
-        dec wJoy1RepeatTimer
-        bne _8040
-        lda wJoy1Input
-        sta wJoy1Repeated
-        lda wJoyRepeatInterval
-        sta wJoy1RepeatTimer
-        bra _8040
-
-
-        _803C
-        lda wJoyRepeatDelay
-        sta wJoy1RepeatTimer
-
-        _8040
-        lda wJoy1Input
-        sta wJoy1Old
-        lda $421A,b
-        sta wJoy2Input
-        and #$000F
-        beq _8052
-        lda wJoy2Old
-        sta wJoy2Input
-
-        _8052
-        lda wJoy2Input
-        eor wJoy2Old
-        and wJoy2Input
-        sta wJoy2New
-        sta wJoy2Repeated
-        lda wJoy2Input
-        beq _8072
-        cmp wJoy2Old
-        bne _8072
-        dec wJoy2RepeatTimer
-        bne _8076
-        lda wJoy2Input
-        sta wJoy2Repeated
-        lda wJoyRepeatInterval
-        sta wJoy2RepeatTimer
-        bra _8076
-
-
-        _8072
-        lda wJoyRepeatDelay
-        sta wJoy2RepeatTimer
-
-        _8076
-        lda wJoy2Input
-        sta wJoy2Old
-        plp
-        rtl
-
-        .databank 0
-
-        ; 80/807C
-
-    .endsection Unsorted808002Section
-
-
-    .section Unsorted8080C3Section
-
-      .al
-      .xl
-
-      rlUnknown8080C3 ; 80/80C3
-
-        ; Found by tools/sweep.py: nothing in the build reaches this.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        phb
-        phk
-        plb
-        .databank $80
-        sep #$20
-        lda bBufferINIDISP
-        sta $2100,b
-        lda bBufferOBSEL
-        sta $2101,b
-        lda bBufferBGMODE
-        sta $2105,b
-        lda bBufferMOSAIC
-        sta $2106,b
-        lda bBufferBG1SC
-        sta $2107,b
-        lda bBufferBG2SC
-        sta $2108,b
-        lda bBufferBG3SC
-        sta $2109,b
-        lda bBufferBG4SC
-        sta $210A,b
-        lda bBufferBG12NBA
-        sta $210B,b
-        lda bBufferBG34NBA
-        sta $210C,b
-        lda bBufferW12SEL
-        sta $2123,b
-        lda bBufferW34SEL
-        sta $2124,b
-        lda bBufferWOBJSEL
-        sta $2125,b
-        lda bBufferWH0
-        sta $2126,b
-        lda bBufferWH1
-        sta $2127,b
-        lda bBufferWH2
-        sta $2128,b
-        lda bBufferWH3
-        sta $2129,b
-        lda bBufferWBGLOG
-        sta $212A,b
-        lda bBufferWOBJLOG
-        sta $212B,b
-        lda bBufferTM
-        sta $212C,b
-        lda bBufferTMW
-        sta $212E,b
-        lda bBufferTS
-        sta $212D,b
-        lda bBufferTSW
-        sta $212F,b
-        lda bBufferCGWSEL
-        sta $2130,b
-        lda bBufferCGADSUB
-        sta $2131,b
-        lda bBufferCOLDATA_1
-        sta $2132,b
-        lda bBufferCOLDATA_2
-        sta $2132,b
-        lda bBufferCOLDATA_3
-        sta $2132,b
-        lda bBufferSETINI
-        sta $2133,b
-        lda wBufferBG1HOFS
-        sta $210D,b
-        lda wBufferBG1HOFS+1
-        sta $210D,b
-        lda wBufferBG1VOFS
-        sec
-        sbc #$01
-        sta $210E,b
-        lda wBufferBG1VOFS+1
-        sbc #$00
-        sta $210E,b
-        lda wBufferBG2HOFS
-        sta $210F,b
-        lda wBufferBG2HOFS+1
-        sta $210F,b
-        lda wBufferBG2VOFS
-        sec
-        sbc #$01
-        sta $2110,b
-        lda wBufferBG2VOFS+1
-        sbc #$00
-        sta $2110,b
-        lda wBufferBG3HOFS
-        sta $2111,b
-        lda wBufferBG3HOFS+1
-        sta $2111,b
-        lda wBufferBG3VOFS
-        sec
-        sbc #$01
-        sta $2112,b
-        lda wBufferBG3VOFS+1
-        sbc #$00
-        sta $2112,b
-        plb
-        .databank $80
-        plp
-        rtl
-
-        .databank 0
-
-        ; 80/81A8
-
-    .endsection Unsorted8080C3Section
-
-
-    .section Unsorted8081A8Section
-
-      .al
-      .xl
-
-      rlUnknown8081A8 ; 80/81A8
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        phb
-        phk
-        plb
-        .databank $80
-        sep #$20
-        lda bBufferINIDISP
-        sta $2100,b
-        plb
-        .databank $80
-        plp
-        rtl
-
-        .databank 0
-
-        ; 80/81B6
-
-    .endsection Unsorted8081A8Section
-
 
     .section Unsorted8081B6Section
 
@@ -303,7 +53,7 @@
         _81E9
         inc wVBlankDisabledFramecount
         jsl rlUnknown8090A2
-        jsl rlUnknown8081A8
+        jsl rlCopyINIDISPBuffer
         jsl rlUnknown91EB76
         ply
         plx
@@ -382,68 +132,6 @@
         ; 80/8223
 
     .endsection Unsorted8081FDSection
-
-
-    .section Unsorted80823FSection
-
-      .al
-      .xl
-
-      rlUnknown80823F ; 80/823F
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        lda wVBlankEnabledFramecount
-
-        _8242
-        cmp wVBlankEnabledFramecount
-        beq _8242
-        plp
-        rtl
-
-        .databank 0
-
-        ; 80/8248
-
-    .endsection Unsorted80823FSection
-
-
-    .section Unsorted80825BSection
-
-      .al
-      .xl
-
-      rlUnknown80825B ; 80/825B
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        phb
-        phk
-        plb
-        .databank $80
-        sep #$20
-        lda bBufferINIDISP
-        and #$7F
-        sta bBufferINIDISP
-        jsl rlUnknown80823F
-        plb
-        .databank $80
-        plp
-        rtl
-
-        .databank 0
-
-        ; 80/826E
-
-    .endsection Unsorted80825BSection
 
 
     .section Unsorted808875Section
@@ -1150,121 +838,6 @@
     .endsection Unsorted808B48Section
 
 
-    .section Unsorted808C50Section
-
-      .al
-      .xl
-
-      rsUnknown808C50 ; 80/8C50
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        sep #$20
-        lda #$01
-        sta $4200,b
-        sta bBufferNMITIMEN
-        stz $4201,b
-        stz $4202,b
-        stz $4203,b
-        stz $4204,b
-        stz $4205,b
-        stz $4206,b
-        stz $4207,b
-        stz $4208,b
-        stz $4209,b
-        stz $420A,b
-        stz $420B,b
-        stz $420C,b
-        stz $2140,b
-        stz $2141,b
-        stz $2142,b
-        stz $2143,b
-        lda #$01
-        sta $420D,b
-        sta bBufferMEMSEL
-        lda #$80
-        sta $2100,b
-        sta bBufferINIDISP
-        stz $2101,b
-        stz $2102,b
-        stz wBufferOAMADD
-        lda #$80
-        sta $2103,b
-        sta wBufferOAMADD+1
-        stz $2104,b
-        stz $2104,b
-        stz $2105,b
-        stz $2106,b
-        stz bBufferMOSAIC
-        stz $2107,b
-        stz $2108,b
-        stz $2109,b
-        stz $210A,b
-        stz $210B,b
-        stz $210C,b
-        stz $210D,b
-        stz $210D,b
-        stz $210E,b
-        stz $210E,b
-        stz $210F,b
-        stz $210F,b
-        stz $2110,b
-        stz $2110,b
-        stz $2111,b
-        stz $2111,b
-        stz $2112,b
-        stz $2112,b
-        stz $2113,b
-        stz $2113,b
-        stz $2114,b
-        stz $2114,b
-        stz $2115,b
-        stz $211A,b
-        stz $211B,b
-        stz $211C,b
-        stz $211D,b
-        stz $211E,b
-        stz $211F,b
-        stz $2120,b
-        stz $2123,b
-        stz $2124,b
-        stz $2125,b
-        stz $2126,b
-        stz $2127,b
-        stz $2128,b
-        stz $2129,b
-        stz $212A,b
-        stz $212B,b
-        stz $212C,b
-        stz $212E,b
-        stz $212D,b
-        stz $212F,b
-        stz $2130,b
-        stz $2131,b
-        lda #$80
-        sta $2132,b
-        sta bBufferCOLDATA_1
-        lda #$40
-        sta $2132,b
-        sta bBufferCOLDATA_2
-        lda #$20
-        sta $2132,b
-        sta bBufferCOLDATA_3
-        stz $2133,b
-        plp
-        rts
-
-        .databank 0
-
-        ; 80/8D56
-
-    .endsection Unsorted808C50Section
-
-
     .section Unsorted808D56Section
 
       .al
@@ -1507,14 +1080,14 @@
         lda #$01
         sta $420B,b
         rep #$20
-        jsr rsUnknown808C50
+        jsr rsInitPPURegisters
         jsl rlUnknown808EF6
         jsl rlUnknown878074
         lda #$0028
         sta wJoyRepeatDelay
         lda #$000A
         sta wJoyRepeatInterval
-        lda #<>rsUnknown809CA0
+        lda #<>rsDefaultVBlankRoutine
         sta wVBlankPointer
         lda #<>rsUnknown808222
         sta wIRQPointer
@@ -1528,7 +1101,7 @@
 
         _8EE8
         rep #$30
-        jsl rlUnknown80823F
+        jsl rlHaltUntilVBlank
 
         _8EEE
         rep #$30
@@ -3607,7 +3180,7 @@
       .al
       .xl
 
-      rsUnknown809CA0 ; 80/9CA0
+      rsDefaultVBlankRoutine ; 80/9CA0
 
         ; Found by tools/sweep.py.
         .al
@@ -3615,15 +3188,17 @@
         .autsiz
         .databank ?
 
+        ; The VBlank routine rlReset installs. FE5: rsDefaultVBlankRoutine.
+
         sep #$20
         lda #$80
         sta $2100,b
         rep #$20
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
-        jsl rlUnknown8080C3
+        jsl rlCopyPPURegisterBuffer
         jsl rlUnknown8090A2
-        jsl rlUnknown808002
+        jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
         jsl rlRunGameStateRoutines
@@ -3820,13 +3395,15 @@
 
         ; 80/A328
 
-      rlUnknown80A328 ; 80/A328
+      rlHandlePossibleHDMA ; 80/A328
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Starts the pending DMA channels, runs the HDMA engine and enables its channels. FE5: rlHandlePossibleHDMA.
 
         phb
         php
@@ -4119,7 +3696,7 @@
         jsl rlActiveSpriteEngineReset
         jsl rlEnableActiveSpriteEngine
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlUnknown82E400
         jsl rlUnknown8780AA
         jsl rlUnknown82F211
@@ -4183,10 +3760,10 @@
         rep #$20
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
-        jsl rlUnknown80A328
-        jsl rlUnknown8080C3
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
         jsl rlUnknown8090A2
-        jsl rlUnknown808002
+        jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
         jsl rlRunGameStateRoutines
@@ -4245,10 +3822,10 @@
 
         _AE98
         jsl rlProcessDMAStructArray
-        jsl rlUnknown80A328
-        jsl rlUnknown8080C3
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
         jsl rlUnknown8090A2
-        jsl rlUnknown808002
+        jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlUnknown82E147
         lda bUnknown000E7B,b
@@ -4501,7 +4078,7 @@
         jsl rlProcEngineResetProcEngine
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlUnknown82E400
         jsl rlUnknown8780AA
         sep #$20
@@ -4628,10 +4205,10 @@
         jsl rlUnknown8887EC
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
-        jsl rlUnknown80A328
-        jsl rlUnknown8080C3
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
         jsl rlUnknown8090A2
-        jsl rlUnknown808002
+        jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
         jsl rlRunGameStateRoutines
@@ -4691,7 +4268,7 @@
         jsl rlClearUnitWindowAndTerrainWindowProcs
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlUnknown82E400
         jsl rlUnknown8780AA
         jsl rlUnknown82F211
@@ -4962,10 +4539,10 @@
         _B663
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
-        jsl rlUnknown80A328
-        jsl rlUnknown8080C3
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
         jsl rlUnknown8090A2
-        jsl rlUnknown808002
+        jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
         jsl rlRunGameStateRoutines
@@ -5030,7 +4607,7 @@
         jsl rlSetLayerPositionsAndSizes
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlClearUnitWindowAndTerrainWindowProcs
         jsl rlUnknown82E400
         jsl rlUnknown8780AA
@@ -5696,10 +5273,10 @@
         rep #$20
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
-        jsl rlUnknown80A328
-        jsl rlUnknown8080C3
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
         jsl rlUnknown8090A2
-        jsl rlUnknown808002
+        jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
         jsl rlUnknown809C7A
@@ -5727,7 +5304,7 @@
         rep #$20
         lda #<>rsUnknown80BB9B
         sta wVBlankPointer
-        jsl rlUnknown80823F
+        jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
         jsl rlHardwareResetScreenPosMathHDMA
         jsl rlHardwareResetScreenRegisters
@@ -5748,7 +5325,7 @@
         jsl rlSetLayerPositionsAndSizes
         jsl rlClearUnitWindowAndTerrainWindowProcs
         jsl rlActiveSpriteEngineReset
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlResetHDMAEngine
         jsr rsUnknown80BC52
         jsl rlUnknown80BD27
@@ -5911,7 +5488,7 @@
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         lda #$030F
-        jsl rlUnknown8BB45D
+        jsl rlUnitWindowFillBG3Buffer
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $4000
@@ -5970,7 +5547,7 @@
 
         _BE3D
         lda #$004E
-        jsl rlUnknown8BB45D
+        jsl rlUnitWindowFillBG3Buffer
         jsl rlUnknown899BA5
         jsl rlUnknown899C7C
         jsl rlUnknown899D72
@@ -6123,10 +5700,10 @@
         jsl rlUnknown96EB1E
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
-        jsl rlUnknown80A328
-        jsl rlUnknown8080C3
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
         jsl rlUnknown8090A2
-        jsl rlUnknown808002
+        jsl rlGetJoypadInput
         jsl rlUnknown82E147
         lda $7FFC77
         bit #$0001
@@ -6171,10 +5748,10 @@
         jsl rlUnknown9BEAB1
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
-        jsl rlUnknown80A328
-        jsl rlUnknown8080C3
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
         jsl rlUnknown8090A2
-        jsl rlUnknown808002
+        jsl rlGetJoypadInput
         jsl rlUnknown82E147
         jsl rlClearSpriteExtBuffer
         sep #$20
@@ -6209,7 +5786,7 @@
         jsl rlClearUnitWindowAndTerrainWindowProcs
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlUnknown95B96F
         jsl rlUnknown958AF0
         jsl rlUnknown95A0F7
@@ -6307,7 +5884,7 @@
         jsl rlProcEngineResetProcEngine
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlUnknown95EE73
         jsl rlUnknown95F0E9
         lda #$9600
@@ -6675,7 +6252,7 @@
         lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         jsl rlEnableVBlank
-        jsl rlUnknown80825B
+        jsl rlDisableForcedBlank
         plp
         rts
 
@@ -6684,1237 +6261,6 @@
         ; 80/C3DD
 
     .endsection Unsorted80C39ASection
-
-
-    .section Unsorted80C3E6Section
-
-      .al
-      .xl
-
-      rsUnknown80C3E6 ; 80/C3E6
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        sep #$20
-        lda #$80
-        sta bBufferINIDISP
-        rep #$20
-        lda #<>rsUnknown80BB9B
-        sta wVBlankPointer
-        jsl rlUnknown80823F
-        jsl rlDisableVBlank
-        jsl rlHardwareResetScreenPosMathHDMA
-        jsl rlHardwareResetScreenRegisters
-        lda #$0000
-        sta wR1
-        lda #$0000
-        sta wR2
-        lda #$4000
-        sta wR3
-        lda #$6000
-        sta wR5
-        lda #$2800
-        sta wR6
-        lda #$1000
-        sta wR7
-        lda #$5800
-        sta wR8
-        jsl rlSetLayerPositionsAndSizes
-        jsl rlClearUnitWindowAndTerrainWindowProcs
-        jsl rlActiveSpriteEngineReset
-        jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
-        lda $7F82C5
-        cmp #$BBD9
-        beq _C447
-        jsr rsUnknown80C4F4
-
-        _C447
-        jsr rsUnknown80C471
-        jsr rsUnknown80C530
-        jsr rsUnknown80C628
-        jsr rsUnknown80C694
-        jsr rsUnknown80C951
-        jsl rlUnknown88DE1B
-        lda #$0021
-        sta wGameStateRoutine1,b
-        lda #$0020
-        sta wGameStateRoutine2,b
-        lda #<>rsUnknown809D4F
-        sta wMainLoopPointer
-        jsl rlEnableVBlank
-        plp
-        rts
-
-        .databank 0
-
-        ; 80/C471
-
-      rsUnknown80C471 ; 80/C471
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda wUnknown7E5315
-        sta wGameStateStep,b
-        lda #$0000
-        sta $7F83F5
-        sta $7F83F7
-        sta $7F83F9
-        sta $7F83FB
-        sta $7F83FD
-        sta $7F83FF
-        sta $7F8401
-        sta wDebugMenuScreenIndex+1
-        sta $7F8405
-        sta $7F82D5
-        sta $7F82D7
-        sta $7F82D9
-        sta $7F82DD
-        sta $7F82FB
-        sta $7F82E3
-        sta $7F82E5
-        sta $7F82E7
-        sta $7F82ED
-        sta $7F82EF
-        sta $7F82F1
-        lda #$0000
-        tax
-
-        _C4CF
-        sta $7F8391,x
-        inc a
-        inc x
-        inc x
-        cmp #$0018
-        bne _C4CF
-        lda #$0000
-        ldx #$0000
-
-        _C4E1
-        sta $7F8407,x
-        inc x
-        inc x
-        cpx #$0030
-        bne _C4E1
-        jsr rsUnknown80C8D5
-        jsl rlUnknown8BCD89
-        rts
-
-        .databank 0
-
-        ; 80/C4F4
-
-      rsUnknown80C4F4 ; 80/C4F4
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlUnknown88DDFB
-        lda #$0000
-        sta $7F82C5
-        sta $7F8183
-        sta $7F82C9
-        sta $7F82CB
-        sta $7F82DF
-        sta $7F82EB
-        lda #$0001
-        sta $7F82C7
-        lda #$003A
-        sta $7F82DB
-        lda #$0000
-        sta $7F82F9
-        lda #$00E8
-        sta $7F82FD
-        rts
-
-        .databank 0
-
-        ; 80/C530
-
-      rsUnknown80C530 ; 80/C530
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
-
-        lda #$8000
-        sta lR19+1
-        lda #$C5BE
-        sta lR19
-        jsl rlHandleMapMenuDecompressionDMA
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DE48C0, $1800, $80, $9800
-
-        jsl rlUnknown8881EC
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DE44C0, $0400, $80, $C000
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DE0200, $0800, $80, $C800
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DE34C0, $0C00, $80, $0000
-
-        ldx #$0200
-
-        _C586
-        lda $DDFFFE,x
-        sta wJoy2RepeatTimer,x
-        dec x
-        dec x
-        bne _C586
-        lda #$0000
-        sta aBGPaletteBuffer,b
-        ldx #$001E
-
-        _C599
-        lda $8C9520,x
-        sta aOAMPaletteBuffer.aPalette6,b,x
-        dec x
-        dec x
-        bpl _C599
-        ldx #$001E
-
-        _C5A7
-        lda $8C95E0,x
-        sta aOAMPaletteBuffer.aPalette7,b,x
-        dec x
-        dec x
-        bpl _C5A7
-        lda #$0005
-        jsl rlUnknown8BC467
-        jsl rlUnknown80C5C6
-        rts
-
-        .databank 0
-
-        ; 80/C5BE
-
-    .endsection Unsorted80C3E6Section
-
-
-    .section Unsorted80C5C6Section
-
-      .al
-      .xl
-
-      rlUnknown80C5C6 ; 80/C5C6
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0000
-
-        _C5C9
-        sta $7F8405
-        asl a
-        tax
-        lda $7F832D,x
-        beq _C5F7
-        sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown8BC484
-        pha
-        lda $7F8405
-        asl a
-        tax
-        lda $80C5F8,x
-        tax
-        pla
-        jsl rlUnknown8BBE68
-        lda $7F8405
-        inc a
-        cmp #$0018
-        bne _C5C9
-
-        _C5F7
-        rtl
-
-        .databank 0
-
-        ; 80/C5F8
-
-    .endsection Unsorted80C5C6Section
-
-
-    .section Unsorted80C628Section
-
-      .al
-      .xl
-
-      rsUnknown80C628 ; 80/C628
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        sep #$20
-        lda bBufferBG1SC
-        and #$FC
-        ora #$02
-        sta bBufferBG1SC
-        lda bBufferBG2SC
-        and #$FC
-        ora #$02
-        sta bBufferBG2SC
-        lda bBufferBG3SC
-        and #$FC
-        ora #$02
-        sta bBufferBG3SC
-        lda #$15
-        sta bBufferTM
-        lda #$00
-        sta bBufferTS
-        lda #$00
-        sta bBufferTMW
-        lda #$00
-        sta bBufferTSW
-        lda #$00
-        sta bBufferW12SEL
-        lda #$00
-        sta bBufferW34SEL
-        lda #$00
-        sta bBufferWOBJSEL
-        lda #$00
-        sta bBufferWH0
-        lda #$FF
-        sta bBufferWH1
-        lda #$00
-        sta bBufferWH2
-        sta bBufferWH3
-        lda #$00
-        sta bBufferWBGLOG
-        sta bBufferWOBJLOG
-        lda #$00
-        sta bBufferCGWSEL
-        lda #$81
-        sta bBufferCGADSUB
-        lda #$E0
-        sta bBufferCOLDATA_1
-        sta bBufferCOLDATA_2
-        sta bBufferCOLDATA_3
-        rep #$20
-        stz wBufferBG1HOFS
-        stz wBufferBG3HOFS
-        stz wBufferBG2HOFS
-        stz wBufferBG2VOFS
-        lda #$0000
-        sta wBufferBG1VOFS
-        sta wBufferBG3VOFS
-        rts
-
-        .databank 0
-
-        ; 80/C694
-
-      rsUnknown80C694 ; 80/C694
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$8000
-        sta lR44+1
-        lda #$C6CD
-        sta lR44
-        jsl rlHDMAEngineCreateEntry
-        lda #$8000
-        sta lR44+1
-        lda #$C718
-        sta lR44
-        jsl rlHDMAEngineCreateEntry
-        lda #$8000
-        sta lR44+1
-        lda #$C762
-        sta lR44
-        jsl rlHDMAEngineCreateEntry
-        lda #$8000
-        sta lR44+1
-        lda #$C88C
-        sta lR44
-        jsl rlHDMAEngineCreateEntry
-        rts
-
-        .databank 0
-
-        ; 80/C6CD
-
-    .endsection Unsorted80C628Section
-
-
-    .section Unsorted80C6D8Section
-
-      .al
-      .xl
-
-      rlUnknown80C6D8 ; 80/C6D8
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        rtl
-
-        .databank 0
-
-        ; 80/C6D9
-
-      rlUnknown80C6D9 ; 80/C6D9
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F82E3
-        bne _C715
-        sep #$20
-        lda #$35
-        sta $7FB038
-        rep #$20
-        lda #$0000
-        sta $7FB039
-        sep #$20
-        lda #$01
-        sta $7FB03B
-        rep #$20
-        lda $7F82DF
-        inc a
-        inc a
-        sta $7FB03C
-        sep #$20
-        lda #$00
-        sta $7FB03E
-        rep #$20
-        lda #$0000
-        sta $7FB03F
-
-        _C715
-        rtl
-
-        .databank 0
-
-        ; 80/C716
-
-    .endsection Unsorted80C6D8Section
-
-
-    .section Unsorted80C723Section
-
-      .al
-      .xl
-
-      rlUnknown80C723 ; 80/C723
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        rtl
-
-        .databank 0
-
-        ; 80/C724
-
-      rlUnknown80C724 ; 80/C724
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F82E3
-        bne _C75F
-        sep #$20
-        lda #$35
-        sta $7FB020
-        rep #$20
-        lda #$FFFF
-        sta $7FB021
-        sep #$20
-        lda #$01
-        sta $7FB023
-        rep #$20
-        lda $7F82DF
-        dec a
-        sta $7FB024
-        sep #$20
-        lda #$00
-        sta $7FB026
-        rep #$20
-        lda #$0000
-        sta $7FB027
-
-        _C75F
-        rtl
-
-        .databank 0
-
-        ; 80/C760
-
-    .endsection Unsorted80C723Section
-
-
-    .section Unsorted80C76DSection
-
-      .al
-      .xl
-
-      rlUnknown80C76D ; 80/C76D
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        rtl
-
-        .databank 0
-
-        ; 80/C76E
-
-      rlUnknown80C76E ; 80/C76E
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F82E3
-        beq _C778
-        jml _C889
-
-
-        _C778
-        ldx #$0000
-        sep #$20
-        lda #$08
-        sta $7FB0B6
-        rep #$20
-        lda #$0000
-        sta $7FB0B7
-        lda #$E000
-        sta $7FB0B9
-        inc x
-        inc x
-        inc x
-        inc x
-        inc x
-        sep #$20
-        lda #$10
-        sta $7FB0B6,x
-        rep #$20
-        lda #$8181
-        sta $7FB0B7,x
-        lda #$E000
-        sta $7FB0B9,x
-        inc x
-        inc x
-        inc x
-        inc x
-        inc x
-        sep #$20
-        lda #$0A
-        sta $7FB0B6,x
-        rep #$20
-        lda #$8181
-        sta $7FB0B7,x
-        lda #$E100
-        sta $7FB0B9,x
-        inc x
-        inc x
-        inc x
-        inc x
-        inc x
-        sep #$20
-        lda #$10
-        sta $7FB0B6,x
-        rep #$20
-        lda #$8181
-        sta $7FB0B7,x
-        lda #$E100
-        sta $7FB0B9,x
-        inc x
-        inc x
-        inc x
-        inc x
-        inc x
-        sep #$20
-        lda #$05
-        sta $7FB0B6,x
-        rep #$20
-        lda #$8181
-        sta $7FB0B7,x
-        lda #$E200
-        sta $7FB0B9,x
-        inc x
-        inc x
-        inc x
-        inc x
-        inc x
-        lda #$0000
-        sta $7F83FB
-        lda #$0000
-        sta $7F83FD
-
-        _C81A
-        phx
-        lda $7F83FB
-        tax
-        lda $7FB044,x
-        sta wR0
-        inc x
-        txa
-        sta $7F83FB
-        plx
-        lda wR0
-        and #$00FF
-        sep #$20
-        sta $7FB0B6,x
-        rep #$20
-        phx
-        lda $7F83FD
-        tax
-        tay
-        lda $7FB062,x
-        plx
-        sep #$20
-        sta $7FB0B7,x
-        sta $7FB0B8,x
-        rep #$20
-        phx
-        tyx
-        lda $7FB063,x
-        sta @l wR0
-        txa
-        clc
-        adc #$0003
-        sta $7F83FD
-        plx
-        lda @l wR0
-        sta $7FB0B9,x
-        inc x
-        inc x
-        inc x
-        inc x
-        inc x
-        cpx #$00A0
-        bne _C81A
-        sep #$20
-        lda #$00
-        sta $7FB0B6,x
-        rep #$20
-        lda #$0000
-        sta $7FB0B7,x
-
-        _C889
-        rtl
-
-        .databank 0
-
-        ; 80/C88A
-
-    .endsection Unsorted80C76DSection
-
-
-    .section Unsorted80C897Section
-
-      .al
-      .xl
-
-      rlUnknown80C897 ; 80/C897
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        rtl
-
-        .databank 0
-
-        ; 80/C898
-
-      rlUnknown80C898 ; 80/C898
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F82E3
-        bne _C8D2
-        sep #$20
-        lda #$35
-        sta $7FB02C
-        rep #$20
-        lda #$FFFF
-        sta $7FB02D
-        sep #$20
-        lda #$01
-        sta $7FB02F
-        rep #$20
-        lda $7F82DF
-        sta $7FB030
-        sep #$20
-        lda #$00
-        sta $7FB032
-        rep #$20
-        lda #$0000
-        sta $7FB033
-
-        _C8D2
-        rtl
-
-        .databank 0
-
-        ; 80/C8D3
-
-    .endsection Unsorted80C897Section
-
-
-    .section Unsorted80C8D5Section
-
-      .al
-      .xl
-
-      rsUnknown80C8D5 ; 80/C8D5
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0000
-        sta wR0
-        sta wR1
-        jsl rlGetFactionSlotUnitCount
-        sta $7F82CD
-        lda #$0001
-        sta wRoutineVariable1,b
-
-        _C8EA
-        lda #$0000
-        jsl rlGetUnitRAMDataPointerByFactionSlotEntryID
-        lda wSelectedUnitDataRAMPointer,b
-        beq _C919
-        jsl rlGetSelectedUnitStatus
-        cmp #StatusCaptive
-        beq _C908
-        jsl rlGetSelectedUnitStates
-        bit #UnitStateDead
-        beq _C90C
-
-        _C908
-        inc wR1
-        bra _C919
-
-
-        _C90C
-        lda wR0
-        asl a
-        tax
-        lda wSelectedUnitDataRAMPointer,b
-        sta $7F832D,x
-        inc wR0
-
-        _C919
-        lda wRoutineVariable1,b
-        inc a
-        sta wRoutineVariable1,b
-        cmp #$0019
-        bne _C8EA
-        lda wR1
-        sta $7F82CF
-        lda $7F82CD
-        sec
-        sbc wR1
-        sta $7F82CD
-        sec
-        sbc #$000A
-        bpl _C93F
-        lda #$0000
-
-        _C93F
-        sta $7F82D1
-        lda $7F82CD
-        asl a
-        tax
-        lda #$0000
-        sta $7F832D,x
-        rts
-
-        .databank 0
-
-        ; 80/C951
-
-      rsUnknown80C951 ; 80/C951
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$00CE
-        jsl rlUnknown8BB45D
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $B000
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DE22C0, $01C0, $80, $5000
-
-        lda $7F82CD
-        cmp #$000A
-        bcs _C97E
-        lda #$000A
-
-        _C97E
-        xba
-        lsr a
-        sec
-        sbc #$0040
-        sta wR0
-        phk
-        plb
-        .databank $80
-        ldx #$0000
-        ldy #$0000
-
-        _C98E
-        cpy #$00C0
-        bne _C996
-        ldy #$0000
-
-        _C996
-        lda $CA25,b,y
-        sta $7E7548,x
-        inc x
-        inc x
-        inc y
-        inc y
-        txa
-        cmp @l wR0
-        bne _C98E
-        phk
-        plb
-        .databank $80
-        ldy #$0000
-
-        _C9AD
-        lda $CB25,b,y
-        sta $7E7548,x
-        inc x
-        inc x
-        inc y
-        inc y
-        cpy #$0080
-        bne _C9AD
-        jsl rlUnknown8BBAA4
-        lda $7E5335
-        and #$00FF
-        beq _C9E9
-        lda wUnknown7E5319
-        sta $7F82F7
-        lda #$0026
-        sta wUnknown7E5319
-        jsl rlUnknown8BCA1A
-        jsl rlUnknown8BC52A
-        lda $7F82F7
-        sta wUnknown7E5319
-
-        _C9E9
-        jsl rlUnknown8BCA1A
-        lda wUnknown7E5317
-        bne _C9F9
-        jsl rlUnknown8BC52A
-        bra _C9FD
-
-
-        _C9F9
-        jsl rlUnknown8BC56F
-
-        _C9FD
-        sep #$20
-        lda #$01
-        sta $7E5335
-        rep #$20
-        jsl rlUnknown8BCD89
-        jsl rlUnknown80CBA5
-        jsl rlUnknown8BADF1
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $7E7548, $0E40, $80, $51C0
-
-        jsl rlUnknown80CC35
-        rts
-
-        .databank 0
-
-        ; 80/CA25
-
-    .endsection Unsorted80C8D5Section
-
-
-    .section Unsorted80CBA5Section
-
-      .al
-      .xl
-
-      rlUnknown80CBA5 ; 80/CBA5
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phk
-        plb
-        .databank $80
-        lda #$8000
-        sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$C3DD
-        sta lMapMenuTilemapRAMEntryPointer,b
-        lda #$0000
-
-        _CBB6
-        sta $7F83F5
-        tax
-        lda $7F832D,x
-        beq _CC04
-        sta wSelectedUnitDataRAMPointer,b
-        jsl rlGetSelectedUnitNamePointer
-        lda #$2000
-        sta aCurrentTilemapInfo,b
-        jsl rlGetSelectedUnitStates
-        bit #UnitStateMoved
-        bne _CBE0
-        jsl rlGetSelectedUnitStatus
-        cmp #StatusSleep
-        bne _CBE6
-
-        _CBE0
-        lda #$2400
-        sta aCurrentTilemapInfo,b
-
-        _CBE6
-        lda $7F83F5
-        tay
-        ldx $CC05,b,y
-        lda lRoutineVariable,b
-        sta lR18
-        lda lRoutineVariable+1,b
-        sta lR18+1
-        jsl rlDrawMenuTextLine
-        lda $7F83F5
-        inc a
-        inc a
-        bra _CBB6
-
-
-        _CC04
-        rtl
-
-        .databank 0
-
-        ; 80/CC05
-
-    .endsection Unsorted80CBA5Section
-
-
-    .section Unsorted80CC35Section
-
-      .al
-      .xl
-
-      rlUnknown80CC35 ; 80/CC35
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0324
-        ldx #$1000
-
-        _CC3B
-        sta $7E7386,x
-        dec x
-        dec x
-        bne _CC3B
-        lda #$0000
-
-        _CC46
-        sta wR15
-        asl a
-        tax
-        lda $7F832D,x
-        beq _CCC5
-        sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown87A415
-        lda $7E2000
-        beq _CCBD
-        lda #$0000
-        sta wR12
-
-        _CC62
-        sta wR14
-        tax
-        lda $7E2002,x
-        and #$00FF
-        sta wR13
-        beq _CCB5
-        txa
-        asl a
-        tax
-        lda $8BCECA,x
-        beq _CCB5
-        sta wR13
-        lda wR12
-        asl a
-        tax
-        lda $80CCD3,x
-        sta wR0
-        lda wR15
-        asl a
-        tax
-        lda $80CCE3,x
-        ora wR0
-        sta wR0
-        lda wR13
-        ldx wR0
-        sta aBG2TilemapBuffer,x
-        inc a
-        sta $7E738A,x
-        txa
-        clc
-        adc #$0040
-        tax
-        lda wR13
-        clc
-        adc #$0010
-        sta aBG2TilemapBuffer,x
-        inc a
-        sta $7E738A,x
-        inc wR12
-
-        _CCB5
-        lda wR14
-        inc a
-        cmp #$001D
-        bne _CC62
-
-        _CCBD
-        lda wR15
-        inc a
-        cmp #$0018
-        bne _CC46
-
-        _CCC5
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $7E7548, $0C80, $80, $21C0
-
-        rtl
-
-        .databank 0
-
-        ; 80/CCD3
-
-    .endsection Unsorted80CC35Section
-
-
-    .section Unsorted80CD2ESection
-
-      .al
-      .xl
-
-      rsUnknown80CD2E ; 80/CD2E
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        sep #$20
-        lda #$80
-        sta bBufferINIDISP
-        rep #$20
-        lda #<>rsUnknown80BB9B
-        sta wVBlankPointer
-        jsl rlUnknown80823F
-        jsl rlDisableVBlank
-        jsl rlHardwareResetScreenPosMathHDMA
-        jsl rlHardwareResetScreenRegisters
-        lda #$0000
-        sta wR1
-        lda #$0000
-        sta wR2
-        lda #$0000
-        sta wR3
-        lda #$4000
-        sta wR5
-        lda #$2000
-        sta wR6
-        lda #$2800
-        sta wR7
-        lda #$1800
-        sta wR8
-        jsl rlSetLayerPositionsAndSizes
-        jsl rlClearUnitWindowAndTerrainWindowProcs
-        jsl rlActiveSpriteEngineReset
-        jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
-        jsr rsUnknown80CDAE
-        jsr rsUnknown80CDDF
-        jsr rsUnknown80CE9E
-        jsr rsUnknown80CEE7
-        jsr rsUnknown80D0B4
-        jsr rsUnknown80CEF6
-        phk
-        plb
-        .databank $80
-        lda #$0024
-        sta wGameStateRoutine1,b
-        lda #$0023
-        sta wGameStateRoutine2,b
-        lda #<>rsUnknown809D4F
-        sta wMainLoopPointer
-        jsl rlEnableVBlank
-        plp
-        rts
-
-        .databank 0
-
-        ; 80/CDAE
-
-      rsUnknown80CDAE ; 80/CDAE
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0000
-        sta wGameStateStep,b
-        sta $7F846D
-        sta $7F8471
-        sta $7F8475
-        sta $7F8477
-        sta $7F8479
-        sta $7F847D
-        sta $7F847B
-        lda #$0001
-        sta $7F8467
-        lda #$001C
-        sta $7F8473
-        rts
-
-        .databank 0
-
-        ; 80/CDDF
-
-      rsUnknown80CDDF ; 80/CDDF
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DE44C0, $0400, $80, $8000
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $D84000, $4000, $80, $8400
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
-
-        lda #$8000
-        sta lR19+1
-        lda #$CE8E
-        sta lR19
-        jsl rlHandleMapMenuDecompressionDMA
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM $DE48C0, $1800, $80, $1800
-
-        ldx #$0200
-
-        _CE24
-        lda $DDFFFE,x
-        sta wJoy2RepeatTimer,x
-        dec x
-        dec x
-        bne _CE24
-        lda #$0000
-        sta aBGPaletteBuffer,b
-        lda #$0003
-        jsl rlUnknown8BC43A
-        lda #$0004
-        jsl rlUnknown8BC467
-        lda #$DD00
-        sta lR18+1
-        lda #$3DC0
-        sta lR18
-        lda #(`aBG2TilemapBuffer)<<8
-        sta lR19+1
-        lda #<>aBG2TilemapBuffer
-        sta lR19
-        jsl rlAppendDecompList
-        lda #$DD00
-        sta lR18+1
-        lda #$3E96
-        sta lR18
-        lda #$7E00
-        sta lR19+1
-        lda #$7B88
-        sta lR19
-        jsl rlAppendDecompList
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM aBG2TilemapBuffer, $0700, $80, $4000
-
-        lda #$8000
-        sta lR19+1
-        lda #$CE96
-        sta lR19
-        jsl rlHandleMapMenuDecompressionDMA
-        rts
-
-        .databank 0
-
-        ; 80/CE8E
-
-    .endsection Unsorted80CD2ESection
 
 
     .section Unsorted80CE9ESection
@@ -7997,7 +6343,7 @@
         .databank ?
 
         lda #$00CE
-        jsl rlUnknown8BB45D
+        jsl rlUnitWindowFillBG3Buffer
         lda $7F846B
         bne _CF3F
         lda #$0002
@@ -8370,7 +6716,7 @@
         rep #$20
         lda #<>rsUnknown80BB9B
         sta wVBlankPointer
-        jsl rlUnknown80823F
+        jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
         jsl rlHardwareResetScreenPosMathHDMA
         jsl rlHardwareResetScreenRegisters
@@ -8392,7 +6738,7 @@
         jsl rlClearUnitWindowAndTerrainWindowProcs
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsr rsUnknown80D346
         jsr rsUnknown80D389
         jsr rsUnknown80D435
@@ -8494,7 +6840,7 @@
         lda #$0000
         sta aBGPaletteBuffer,b
         lda #$030F
-        jsl rlUnknown8BB45D
+        jsl rlUnitWindowFillBG3Buffer
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $5000
@@ -8946,7 +7292,7 @@
         rep #$20
         lda #<>rsUnknown80BB9B
         sta wVBlankPointer
-        jsl rlUnknown80823F
+        jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
         jsl rlHardwareResetScreenPosMathHDMA
         jsl rlHardwareResetScreenRegisters
@@ -8968,7 +7314,7 @@
         jsl rlClearUnitWindowAndTerrainWindowProcs
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsr rsUnknown80D992
         jsr rsUnknown80D9B7
         jsr rsUnknown80DA52
@@ -9046,7 +7392,7 @@
         lda #$0000
         sta aBGPaletteBuffer,b
         lda #$030F
-        jsl rlUnknown8BB45D
+        jsl rlUnitWindowFillBG3Buffer
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $3000
@@ -9171,7 +7517,7 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda #$010B
-        jsl rlUnknown8BB45D
+        jsl rlUnitWindowFillBG3Buffer
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda wCurrentChapter,b
@@ -9716,7 +8062,7 @@
         lda #<>$80BB9B
         sta $D3
 
-        jsl rlUnknown80823F
+        jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
 
         jsl rlHardwareResetScreenPosMathHDMA
@@ -9743,7 +8089,7 @@
         jsl rlProcEngineResetProcEngine
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlUnknown82E400
         jsl rlUnknown8780AA
         jsl rlUnknown82F211
@@ -9831,7 +8177,7 @@
         ; Clear the tilemap
         lda #0
         sta $0100,b
-        jsl rlUnknown8BB45D
+        jsl rlUnitWindowFillBG3Buffer
 
          ; DMA clean tilemap
         jsl rlDMAByStruct
@@ -9927,7 +8273,7 @@
         rep #$20
         lda #<>rsUnknown80BB9B
         sta wVBlankPointer
-        jsl rlUnknown80823F
+        jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
         jsl rlHardwareResetScreenPosMathHDMA
         jsl rlHardwareResetScreenRegisters
@@ -9945,7 +8291,7 @@
         jsl rlProcEngineResetProcEngine
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlUnknown82E400
         jsl rlUnknown8780AA
         jsl rlUnknown82F211
@@ -10104,7 +8450,7 @@
         lda #$E586
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$02EF
-        jsl rlUnknown8BB45D
+        jsl rlUnitWindowFillBG3Buffer
         lda #$3C00
         sta wR1
         lda #$02E2
@@ -10490,7 +8836,7 @@
         jsl rlActiveSpriteEngineReset
         jsl rlEnableActiveSpriteEngine
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlUnknown8780AA
         jsl rlUnknown82F211
         lda #$00FF
@@ -10537,7 +8883,7 @@
 
         lda #<>rsUnknown80BB9B
         sta wVBlankPointer
-        jsl rlUnknown80823F
+        jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
         jsl rlHardwareResetScreenPosMathHDMA
         jsl rlHardwareResetScreenRegisters
@@ -10555,7 +8901,7 @@
         jsl rlProcEngineResetProcEngine
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlUnknown82E400
         jsl rlUnknown8780AA
         jsl rlUnknown82F211
@@ -10731,7 +9077,7 @@
         dec x
         bne _F3BE
         lda #$0053
-        jsl rlUnknown8BB45D
+        jsl rlUnitWindowFillBG3Buffer
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $A000
@@ -10932,10 +9278,10 @@
         rep #$20
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
-        jsl rlUnknown80A328
-        jsl rlUnknown8080C3
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
         jsl rlUnknown8090A2
-        jsl rlUnknown808002
+        jsl rlGetJoypadInput
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
         jsl rlRunGameStateRoutines
@@ -10998,10 +9344,10 @@
         rep #$20
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
-        jsl rlUnknown80A328
-        jsl rlUnknown8080C3
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
         jsl rlUnknown8090A2
-        jsl rlUnknown808002
+        jsl rlGetJoypadInput
         pla
         sta lR19+1
         pla

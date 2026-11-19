@@ -3700,7 +3700,7 @@
         jsl rlActiveSpriteEngineReset
         jsl rlEnableActiveSpriteEngine
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsl rlUnknown91A6C0
         lda #$00FF
         sta wUnknown053E,b
@@ -3778,7 +3778,7 @@
         .databank ?
 
         jsl rlResetHDMAEngine
-        jsl rlUnknown82E073
+        jsl rlResetIRQEngine
         jsr rsUnknown91DF6D
         sep #$20
         lda #$02
@@ -4315,7 +4315,7 @@
         jsl rlEnableVBlank
 
         _E8FD
-        jsl rlUnknown80823F
+        jsl rlHaltUntilVBlank
         inc bBufferINIDISP
         lda bBufferINIDISP
         and #$000F

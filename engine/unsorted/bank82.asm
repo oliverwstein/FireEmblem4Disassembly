@@ -478,11 +478,13 @@
       .al
       .xl
 
-      rlUnknown82E073 ; 82/E073
+      rlResetIRQEngine ; 82/E073
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears $168F-$1719 and calls rlUnknown82E0AF. FE5: rlIRQEngineReset (identical, same size cleared).
 
         php
         phb

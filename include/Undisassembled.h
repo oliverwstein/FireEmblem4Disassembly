@@ -46,7 +46,7 @@
     aUnknown8AA241                                           :?= address($8AA241) ; read by rsUnknown8AA142
     aUnknown8AA629                                           :?= address($8AA629) ; read by rlUnknown8AA5FF
     aUnknown8ABFF3                                           :?= address($8ABFF3) ; read by rsUnknown8ABFD1
-    aUnknown8BC0B0                                           :?= address($8BC0B0) ; read by rlUnknown8BC030
+    aUnknown8BC0B0                                           :?= address($8BC0B0) ; read by rlUnitWindowCopyWeaponRankIcon
     aUnknown8CD600                                           :?= address($8CD600) ; read by rlUnknown8AE2F8
     aUnknown8D9BF6                                           :?= address($8D9BF6) ; read by rlUnknown91ACE2
     aUnknown91D899                                           :?= address($91D899) ; read by rsUnknown91D844
