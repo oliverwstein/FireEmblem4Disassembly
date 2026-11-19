@@ -950,7 +950,7 @@
         beq _C31D
         cmp #$00FF
         bne _C328
-        lda aFoeUnitMap,x
+        lda aUnfriendlyUnitMap,x
         and #$00FF
         cmp #$00FF
         bne _C328

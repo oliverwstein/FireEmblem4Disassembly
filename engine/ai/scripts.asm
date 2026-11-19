@@ -1122,7 +1122,7 @@
         and #$0080
         bne _End
 
-          lda aFoeUnitMap,y
+          lda aUnfriendlyUnitMap,y
           and #$00FF
           cmp #$00FF
           bne _End

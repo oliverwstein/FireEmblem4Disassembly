@@ -1751,10 +1751,11 @@
         .endrept
       .endstruct
       .struct
-        aAllyUnitMap  .fill $1000       ; $7F454A
-          ; Filled with deployment offsets of units of own faction and allies.
-        aFoeUnitMap   .fill $1000       ; $7F554A
-          ; Filled with deployment offsets of units of opposing faction and others.
+        aAllyUnitMap .fill $1000        ; $7F454A
+          ; Filled with deployment offsets of units of own and allied factions.
+        aUnfriendlyUnitMap .fill $1000  ; $7F554A
+          ; Filled with deployment offsets of enemy and neutral units. Neutral
+          ; units cannot be fought, but they block movement like enemies.
         aRangeMap .fill $1000           ; $7F654A
           ; Filled with flagged tiles that can be attacked.
         aMovementMap .fill $1000        ; $7F754A

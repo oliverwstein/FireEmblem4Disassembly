@@ -147,9 +147,11 @@
 
   ; A faction's relation to another (rlGetFactionRelation), and the allegiance
   ; bits of a unit's deployment state (DeploymentAllegianceMask). The data window
-  ; calls them じぐん, てきたい, どうめい and ちゅうりつ. The attack target
-  ; filter (rlCheckIfDeployedUnitIsEnemy) accepts only AllegianceEnemy; the AI's
-  ; unit maps, battle setup and battle music group neutral with enemy.
+  ; calls them じぐん, てきたい, どうめい and ちゅうりつ. Only enemy units
+  ; fight each other: neutral units cannot attack or be attacked
+  ; (rlCheckIfDeployedUnitIsEnemy accepts only AllegianceEnemy). Own and allied
+  ; units are "friendly" (rlCheckIfDeployedUnitIsFriendly); enemy and neutral
+  ; units are "unfriendly" and block movement (aUnfriendlyUnitMap).
   AllegianceOwn           = 0
   AllegianceEnemy         = 1
   AllegianceAllied        = 2

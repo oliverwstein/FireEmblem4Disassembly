@@ -519,7 +519,7 @@
             beq _Next
 
               txa
-              jsl rlCheckIfTargetFoeOfOwnFaction
+              jsl rlCheckIfDeployedUnitIsFriendly
               bcc _Next
 
                 stx aAIAction.wTargetDeploymentOffset
@@ -1071,7 +1071,7 @@
               adc wAITemp000E96,b
               tax
 
-              lda aFoeUnitMap,x
+              lda aUnfriendlyUnitMap,x
               and #$00FF
               cmp #$00FF
               beq _End
@@ -1462,7 +1462,7 @@
               adc wAITemp000E96,b
               tax
 
-              lda aFoeUnitMap,x
+              lda aUnfriendlyUnitMap,x
               and #$00FF
               cmp #$00FF
               bne _SEC 

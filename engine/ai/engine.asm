@@ -113,7 +113,7 @@
         tsb bUnknown000E7B,b
 
         jsl rlFillAllyUnitMap
-        jsl rlFillFoeUnitMap
+        jsl rlFillUnfriendlyUnitMap
 
         ; This loop builds unit lists out of matching group AIs and runs their
         ; AI scripts, set in the chapter event data.
@@ -250,7 +250,7 @@
         bcs +
 
           jsl rlFillAllyUnitMap
-          jsl rlFillFoeUnitMap
+          jsl rlFillUnfriendlyUnitMap
           jsl rlUnknown86B129
 
         +

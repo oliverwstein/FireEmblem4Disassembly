@@ -1,5 +1,6 @@
 ; The maps the AI works from: movement, movement cost, range and target maps, and
-; maps of where allied and enemy units stand.
+; maps of where friendly (own and allied) and unfriendly (enemy and neutral) units
+; stand.
 
     .section AIMovementMapSection
 
@@ -379,10 +380,10 @@
 
       aBlockingUnitMapPointers ; 86/A8AF
 
-        .word <>aFoeUnitMap
+        .word <>aUnfriendlyUnitMap
         .word <>aAllyUnitMap
-        .word <>aFoeUnitMap
-        .word <>aFoeUnitMap
+        .word <>aUnfriendlyUnitMap
+        .word <>aUnfriendlyUnitMap
 
       aUnknown86A8B7 ; 86/A8B7
 
@@ -1222,13 +1223,13 @@
 
         .databank 0
 
-      rlIncreaseMoveCostOfFoesOccupiedTiles ; 86/ACED
+      rlIncreaseMoveCostOfUnfriendlyUnitsTiles ; 86/ACED
 
         .al
         .autsiz
         .databank ?
 
-        ; Add 24 to the move cost of any tile a foe is on?
+        ; Adds 24 to the move cost of each tile an enemy or neutral unit stands on.
 
         phb
         php
@@ -1270,7 +1271,7 @@
                 cmp #AllegianceEnemy
                 bne _Next
 
-              ; Target is a foe
+              ; Enemy or neutral
               +
               lda aDeploymentTable._XTilePosition,x
               sta aAIAction.wAttackTileXPosition
@@ -1499,17 +1500,17 @@
 
         .databank 0
 
-      rlFillFoeUnitMap ; 86/C125
+      rlFillUnfriendlyUnitMap ; 86/C125
 
         .al
         .autsiz
         .databank ?
 
-        lda #<>aFoeUnitMap
+        lda #<>aUnfriendlyUnitMap
         sta aAIAction.wMapPointer
         lda #$FFFF
         sta wAITemp000EA2,b
-        lda #FillUnitMapFoeFilter
+        lda #FillUnitMapUnfriendlyFilter
         jsl rlFillUnitMap
         rtl
 
@@ -1635,15 +1636,15 @@
         ldx $442C,b
         jsl rlGetFactionRelation
         cmp #AllegianceEnemy
-        beq rsFillUnitMapFoeFilter._CLC
+        beq rsFillUnitMapUnfriendlyFilter._CLC
 
         cmp #AllegianceNeutral
-        beq rsFillUnitMapFoeFilter._CLC
-        bra rsFillUnitMapFoeFilter._SEC
+        beq rsFillUnitMapUnfriendlyFilter._CLC
+        bra rsFillUnitMapUnfriendlyFilter._SEC
 
         .databank 0
 
-      rsFillUnitMapFoeFilter ; 86/C1D7
+      rsFillUnitMapUnfriendlyFilter ; 86/C1D7
 
         .al
         .autsiz
@@ -1755,7 +1756,7 @@
         lda #0
         jsl rlSetTargetMapTile
         jsl rlFillMovementCostMap
-        jsl rlIncreaseMoveCostOfFoesOccupiedTiles
+        jsl rlIncreaseMoveCostOfUnfriendlyUnitsTiles
 
         lda wAITemp000E9A
         sta wAITemp000E96

@@ -1,4 +1,4 @@
 .word 0,Pointer
 FillUnitMapAllyFilter,<>rsFillUnitMapAllyFilter
-FillUnitMapFoeFilter,<>rsFillUnitMapFoeFilter
+FillUnitMapUnfriendlyFilter,<>rsFillUnitMapUnfriendlyFilter
 FillUnitMapNoFilter,<>rsFillUnitMapNoFilter

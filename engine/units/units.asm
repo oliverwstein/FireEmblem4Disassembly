@@ -1447,7 +1447,7 @@
       aTargetFilterRoutines ; 84/8A0D
 
         .word <>rsTargetFilterEnemy
-        .word <>rsTargetFilterFoeOfOwnFaction
+        .word <>rsTargetFilterFriendly
         .word <>rsTargetFilterOwnFaction
         .word <>rsTargetFilterTalkEventOrUnknown
         .word <>rsTargetFilterEnemyAtCastle
@@ -1472,13 +1472,13 @@
 
         .databank 0
 
-      rsTargetFilterFoeOfOwnFaction ; 84/8A2E
+      rsTargetFilterFriendly ; 84/8A2E
 
         .al
         .autsiz
         .databank ?
 
-        jsl rlCheckIfTargetFoeOfOwnFaction
+        jsl rlCheckIfDeployedUnitIsFriendly
         rts
 
         .databank 0
@@ -1634,7 +1634,7 @@
         .autsiz
         .databank ?
 
-        ; Accepts a target with less than full HP, if rlCheckIfTargetFoeOfOwnFaction
+        ; Accepts a target with less than full HP, if rlCheckIfDeployedUnitIsFriendly
         ; accepts it.
 
         phx
@@ -1660,7 +1660,7 @@
         tya
         sta wSelectedUnitDataRAMPointer
         txa
-        jsl rlCheckIfTargetFoeOfOwnFaction
+        jsl rlCheckIfDeployedUnitIsFriendly
         
         _End
         ply
@@ -1687,7 +1687,7 @@
         .databank ?
 
         ; Accepts a target whose status is not StatusHealthy, if
-        ; rlCheckIfTargetFoeOfOwnFaction accepts it.
+        ; rlCheckIfDeployedUnitIsFriendly accepts it.
 
         phx
         phy
@@ -1709,7 +1709,7 @@
         tya
         sta @l wSelectedUnitDataRAMPointer
         txa
-        jsl rlCheckIfTargetFoeOfOwnFaction
+        jsl rlCheckIfDeployedUnitIsFriendly
 
         _8B18
         ply

@@ -81,11 +81,16 @@
 
         .databank 0
 
-      rlCheckIfTargetFoeOfOwnFaction ; 84/D50F
+      rlCheckIfDeployedUnitIsFriendly ; 84/D50F
 
         .al
         .autsiz
         .databank ?
+
+        ; Input: A = deployment number.
+        ; Output: carry set if that unit's faction is the selected unit's own
+        ; faction or allied with it (AllegianceOwn, AllegianceAllied). Healing
+        ; and status staffs use it to pick targets.
 
         phx
         tax
