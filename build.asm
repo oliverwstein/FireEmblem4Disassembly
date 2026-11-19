@@ -101,6 +101,7 @@
   .include "engine/ai/maps.asm"
   .include "engine/ai/scripts.asm"
   .include "engine/ai/threat.asm"
+  .include "engine/arena/arena.asm"
   .include "engine/battle_scene/script.asm"
   .include "engine/core/oam.asm"
   .include "engine/core/options.asm"
@@ -7531,6 +7532,13 @@
 
     .here
 
+    * = $0AA400
+    .logical $8AA400
+
+      .dsection Unsorted8AA400Section
+
+    .here
+
     * = $0AA4C8
     .logical $8AA4C8
 
@@ -7542,6 +7550,13 @@
     .logical $8AA5FF
 
       .dsection Unsorted8AA5FFSection
+
+    .here
+
+    * = $0AA63D
+    .logical $8AA63D
+
+      .dsection Unsorted8AA63DSection
 
     .here
 
@@ -7661,6 +7676,13 @@
     .logical $8AADAD
 
       .dsection Unsorted8AADADSection
+
+    .here
+
+    * = $0AADF4
+    .logical $8AADF4
+
+      .dsection Unsorted8AADF4Section
 
     .here
 
@@ -7827,6 +7849,13 @@
     .logical $8ACFBE
 
       .dsection Unsorted8ACFBESection
+
+    .here
+
+    * = $0AD092
+    .logical $8AD092
+
+      .dsection Unsorted8AD092Section
 
     .here
 
@@ -8030,6 +8059,13 @@
     .logical $8AE2F8
 
       .dsection Unsorted8AE2F8Section
+
+    .here
+
+    * = $0AE4B9
+    .logical $8AE4B9
+
+      .dsection ArenaMenuSection
 
     .here
 
