@@ -474,6 +474,58 @@
     .endsection Unsorted8A9A56Section
 
 
+    .section Unsorted8A9C61Section
+
+      .al
+      .xl
+
+      rlUnknown8A9C61 ; 8A/9C61
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0891,b
+        cmp #$0003
+        beq _9C87
+        jsl rlHDMAEngineFreeEntryByOffset
+        bra _9CA5
+
+        .byte $E2, $20, $B9, $AA, $9C, $9F, $A3, $80, $7F, $F0, $2B, $B9, $AB, $9C, $9F, $A4
+        .byte $80, $7F, $E8, $E8, $C8, $C8, $80, $EA
+
+
+        _9C87
+        ldx #$0000
+        ldy #$0000
+        sep #$20
+
+        _9C8F
+        lda $9CFE,b,y
+        sta $7F80A3,x
+        beq _9CA5
+        lda $9CFF,b,y
+        sta $7F80A4,x
+        inc x
+        inc x
+        inc y
+        inc y
+        bra _9C8F
+
+
+        _9CA5
+        .al
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8A/9CA8
+
+    .endsection Unsorted8A9C61Section
+
+
     .section Unsorted8AB3FESection
 
       .al
@@ -1285,6 +1337,73 @@
         ; 8A/E0C7
 
     .endsection Unsorted8AE05ESection
+
+
+    .section Unsorted8AE14FSection
+
+      .al
+      .xl
+
+      rlUnknown8AE14F ; 8A/E14F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlSavePaletteBufferColorsToRAM
+
+          .byte $88, $9B, $7E, $10, $00, $A0, $01
+
+        ldx #$001E
+        lda #$0000
+
+        _E160
+        sta $02A0,b,x
+        dec x
+        dec x
+        bpl _E160
+        lda #$0000
+        sta $7F8089
+        rtl
+
+        .databank 0
+
+        ; 8A/E16F
+
+      rlUnknown8AE16F ; 8A/E16F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8089
+        sta $1B45,b
+        lda #$0010
+        sta aPaletteFading,b
+        clc
+        jsl rlFadePaletteToColors
+
+          .byte $88, $9B, $10, $00, $A0, $01
+
+        bcs _E191
+
+        _E189
+        lda $1B45,b
+        sta $7F8089
+        rtl
+
+
+        _E191
+        jsl rlProcEngineFreeProc
+        bra _E189
+
+        .databank 0
+
+        ; 8A/E197
+
+    .endsection Unsorted8AE14FSection
 
 
     .section Unsorted8AE199Section

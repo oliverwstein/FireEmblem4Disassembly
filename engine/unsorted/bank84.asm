@@ -1649,6 +1649,226 @@
     .endsection Unsorted84D4A2Section
 
 
+    .section Unsorted84F75CSection
+
+      .al
+      .xl
+
+      rlUnknown84F75C ; 84/F75C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetItemROMDataByInventorySlot
+        jsl rlCheckStaffEquippable
+        rtl
+
+        .databank 0
+
+        ; 84/F765
+
+      rlUnknown84F765 ; 84/F765
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        .databank $84
+        jsl rlGetItemROMDataByInventorySlot
+        lda wCurrentItemDataROMPointer,b
+        beq _F783
+        jsl rlGetItemEquipmentType
+        cmp #$0001
+        beq _F783
+        jsl rlUnknown87E6A5
+        bcc _F783
+        sec
+
+        _F781
+        plb
+        .databank $84
+        rtl
+
+
+        _F783
+        clc
+        bra _F781
+
+        .databank 0
+
+        ; 84/F786
+
+      rlUnknown84F786 ; 84/F786
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        phx
+        phy
+        lda wR0
+        pha
+        lda wR1
+        pha
+        lda #(`aRangeMap)<<8
+        sta lRoutineVariable+1,b
+        lda #<>aRangeMap
+        sta lRoutineVariable,b
+        jsl rlUnknown8483F3
+        lda #$0400
+        jsl rlUnsetSelectedUnitStates
+        lda #$0000
+        sta $7E2000
+        sta wAIGroupLeaderFieldMovement
+        sta wAIUnknown7E2010
+        sta wAIUnknown7E2018
+        sta wAIGroupLeaderDeploymentOffset
+        lda #$0001
+        sta wR0
+
+        _F7C5
+        jsl rlGetSelectedUnitStates
+        bit #$0800
+        bne _F7DA
+        jsr rlUnknown84F7F5
+        jsr $84F815
+        jsr $84F845
+        jsr $84F865
+
+        _F7DA
+        jsr $84F877
+        inc wR0
+        lda wR0
+        cmp #$0008
+        bcs _F7EA
+        jml _F7C5
+
+
+        _F7EA
+        pla
+        sta wR1
+        pla
+        sta wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 84/F7F5
+
+      rlUnknown84F7F5 ; 84/F7F5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta wR1
+        lda wR0
+        jsl rlCheckWeaponInInventorySlotEquippable
+        bcc _F814
+        stz wR12
+        lda #$0000
+        jsl rlUnknown84FED2
+        ora #$0000
+        beq _F814
+        jml _F889
+
+
+        _F814
+        rts
+
+        .byte $A9, $08, $20, $85, $02, $A5, $00, $22, $5C, $F7, $84, $90, $0A, $22, $A5, $E6
+        .byte $87, $90, $04, $5C, $89, $F8, $84, $60, $A9, $28, $20, $85, $02, $A5, $00, $22
+        .byte $5C, $F7, $84, $90, $0A, $22, $09, $E7, $87, $90, $04, $5C, $89, $F8, $84, $60
+        .byte $A9, $10, $20, $85, $02, $A5, $00, $22, $53, $F7, $84, $90, $12, $64, $18, $A9
+        .byte $04, $00, $22, $D2, $FE, $84, $09, $00, $00, $F0, $04, $5C, $89, $F8, $84, $60
+        .byte $A9, $18, $20, $85, $02, $A5, $00, $22, $65, $F7, $84, $90, $04, $5C, $89, $F8
+        .byte $84, $60, $A9, $20, $20, $85, $02, $A5, $00, $22, $53, $F7, $84, $90, $04, $5C
+        .byte $89, $F8, $84, $60
+
+
+        _F889
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+        ldx wR1
+        lda wR0
+        jsl rlCheckIfWeaponEquipped
+        bcs _F8B0
+        lda $0000,b,x
+        and #$00FF
+
+        _F8A3
+        clc
+        adc wR1
+        tay
+        sep #$20
+        lda wR0
+        sta $0001,b,y
+        bra _F8D1
+
+
+        _F8B0
+        .al
+        lda $0000,b,x
+        and #$00FF
+        beq _F8A3
+        phx
+        tax
+        clc
+        adc wR1
+        dec a
+        tay
+        sep #$20
+
+        _F8C1
+        lda $0001,b,y
+        sta $0002,b,y
+        dec y
+        dec x
+        bne _F8C1
+        plx
+        lda wR0
+        sta $0002,b,y
+
+        _F8D1
+        inc $0000,b,x
+        rep #$20
+        plp
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 84/F8D9
+
+    .endsection Unsorted84F75CSection
+
+
     .section Unsorted84FE98Section
 
       .al
@@ -1687,3 +1907,63 @@
         ; 84/FEAC
 
     .endsection Unsorted84FE98Section
+
+
+    .section Unsorted84FED2Section
+
+      .al
+      .xl
+
+      rlUnknown84FED2 ; 84/FED2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        pha
+        cmp #$0004
+        beq _FEEA
+        jsl rlGetItemMinimumRange
+        sta wR10
+        jsl rlGetItemMaximumRange
+        sta wR11
+        bra _FEFD
+
+
+        _FEEA
+        jsl rlGetItemMinimumRange
+        ora #$0000
+        beq _FF05
+        cmp #$0002
+        bcs _FF05
+        inc a
+        sta wR10
+        sta wR11
+
+        _FEFD
+        pla
+        jsl rlUnknown848924
+
+        _FF02
+        plp
+        plb
+        .databank ?
+        rtl
+
+
+        _FF05
+        pla
+        lda #$0000
+        bra _FF02
+
+        .databank 0
+
+        ; 84/FF0B
+
+    .endsection Unsorted84FED2Section

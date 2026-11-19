@@ -10,6 +10,62 @@
     .endsection Unsorted858000Section
 
 
+    .section Unsorted8583C2Section
+
+      .al
+      .xl
+
+      rlUnknown8583C2 ; 85/83C2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlMapMenuSaveMapState
+        lda $0F57,b,x
+        sta $1017,b,x
+        lda #$83D3
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/83D3
+
+    .endsection Unsorted8583C2Section
+
+
+    .section Unsorted8583DASection
+
+      .al
+      .xl
+
+      rlUnknown8583DA ; 85/83DA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0009
+        jsl rlUnknown808FAD
+        lda $0ED7,b,x
+        tay
+        jsl rlLoadMapMenuDataFromProc
+        jsl rlUnknown8584AC
+        jsl rlUnknown85856E
+        lda #$83F8
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/83F8
+
+    .endsection Unsorted8583DASection
+
+
     .section Unsorted8583F8Section
 
       .al
@@ -148,6 +204,89 @@
     .endsection Unsorted8584A1Section
 
 
+    .section Unsorted8584ACSection
+
+      .al
+      .xl
+
+      rlUnknown8584AC ; 85/84AC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $000C,b,y
+        sta lUnknown0540,b
+        lda $000D,b,y
+        sta lUnknown0540+1,b
+        jsl rlUnknown82F227
+        lda $0547,b
+        sta $1057,b,x
+        lda $0548,b
+        sta $1077,b,x
+        lda #$0001
+        sta $1097,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/84CF
+
+    .endsection Unsorted8584ACSection
+
+
+    .section Unsorted8584DCSection
+
+      .al
+      .xl
+
+      rlUnknown8584DC ; 85/84DC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wCursorXOffset,b
+        cmp #$0070
+        bcc _84F1
+        cmp #$0090
+        bcs _8503
+        lda $0D87,b
+        bit #$0004
+        beq _8503
+
+        _84F1
+        lda #$0004
+        tsb $0D87,b
+        jsl rlGetMapMenuPosition
+        and #$FF00
+        ora #$0013
+        bra _850B
+
+
+        _8503
+        lda #$0004
+        trb $0D87,b
+        bra _8515
+
+
+        _850B
+        sta $0534,b
+        jsl rlUnknown858751
+        jsr rlUnknown858542
+
+        _8515
+        rtl
+
+        .databank 0
+
+        ; 85/8516
+
+    .endsection Unsorted8584DCSection
+
+
     .section Unsorted858516Section
 
       .al
@@ -235,6 +374,61 @@
         ; 85/856E
 
     .endsection Unsorted858516Section
+
+
+    .section Unsorted85856ESection
+
+      .al
+      .xl
+
+      rlUnknown85856E ; 85/856E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        jsl rlUnknown8788E5
+        jsl rlUnknown82F3BE
+        ora #$0000
+        beq _859B
+        tay
+
+        _857E
+        tya
+        jsl rlUnknown82F3C7
+        jsl rlUnknown82F488
+        lda lR18
+        clc
+        adc #$0005
+        sta lR18
+        jsl rlUnknown82F4A7
+        tax
+        jsl rlUnknown878921
+        dec y
+        bne _857E
+
+        _859B
+        ply
+        plx
+        jsl rlUnknown8587E1
+        lda wUnknown000D79,b
+        bit #$0020
+        bne _85AD
+        jsl rlFreeHDMAEntry0
+
+        _85AD
+        lda #$0006
+        tsb bBufferTM
+        rtl
+
+        .databank 0
+
+        ; 85/85B3
+
+    .endsection Unsorted85856ESection
 
 
     .section Unsorted85860ESection
@@ -1468,6 +1662,385 @@
     .endsection Unsorted859D60Section
 
 
+    .section Unsorted859D94Section
+
+      .al
+      .xl
+
+      rlUnknown859D94 ; 85/9D94
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$82
+        sta bBufferCGADSUB
+        rep #$20
+        lda wR43
+        xba
+        and #$00FF
+        sta wR7
+        lda wR43
+        and #$00FF
+        sta wR5
+        lda wR42
+        xba
+        and #$00FF
+        sta wR6
+        lda wR42
+        and #$00FF
+        sta wR4
+        phx
+        ldx #$0000
+        jsr rlUnknown859DCD
+        jsr rlUnknown859E08
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/9DCA
+
+      rlUnknown859DCA ; 85/9DCA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 85/9DCB
+
+    .endsection Unsorted859D94Section
+
+
+    .section Unsorted859DCDSection
+
+      .al
+      .xl
+
+      rlUnknown859DCD ; 85/9DCD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR7
+        beq _9E06
+        cmp #$0080
+        bmi _9DF2
+        lda wR7
+        sec
+        sbc #$007F
+        sta wR7
+        sep #$20
+        lda #$7F
+        sta wDialogueBoxHDMAYPixelPosition,x
+        rep #$20
+        inc x
+        lda #$9E07
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+
+        _9DF2
+        sep #$20
+        lda wR7
+        sta wDialogueBoxHDMAYPixelPosition,x
+        rep #$20
+        inc x
+        lda #$9E07
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+
+        _9E06
+        rts
+
+        .databank 0
+
+        ; 85/9E07
+
+    .endsection Unsorted859DCDSection
+
+
+    .section Unsorted859E08Section
+
+      .al
+      .xl
+
+      rlUnknown859E08 ; 85/9E08
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR5
+        sta wR13
+        lda wR4
+        and #$00FF
+        sta wR14
+        jsl rlUnsignedDivide16By8
+        lda wR13
+        sta wR3
+        jsr rlUnknown859E1F
+        rts
+
+        .databank 0
+
+        ; 85/9E1F
+
+      rlUnknown859E1F ; 85/9E1F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy #$0000
+        lda wR6
+        cmp #$0003
+        beq _9E58
+        cmp #$0002
+        beq _9E41
+        cmp #$0001
+        beq _9E3A
+        jsr rlUnknown859E5F
+        jsr rlUnknown859ECB
+        rts
+
+
+        _9E3A
+        jsr rlUnknown859E7E
+        jsr rlUnknown859ECB
+        rts
+
+
+        _9E41
+        lda wR3
+        lsr a
+        sta wR3
+        lda wR4
+        sta wR0
+        jsr rlUnknown859E7E
+        lda wR0
+        sta wR4
+        jsr rlUnknown859E5F
+        jsr rlUnknown859ECB
+        rts
+
+
+        _9E58
+        jsr rlUnknown859EA2
+        jsr rlUnknown859ECB
+        rts
+
+        .databank 0
+
+        ; 85/9E5F
+
+      rlUnknown859E5F ; 85/9E5F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy #$0000
+        stz wR2
+        stz wR1
+
+        _9E66
+        jsr rlUnknown859FA3
+        jsr rlUnknown859F97
+        lda $9EE7,b,y
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+        dec wR4
+        beq _9E7D
+        inc y
+        inc y
+        bra _9E66
+
+
+        _9E7D
+        rts
+
+        .databank 0
+
+        ; 85/9E7E
+
+      rlUnknown859E7E ; 85/9E7E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wR2
+        stz wR1
+        lda #$0014
+        sec
+        sbc wR4
+        asl a
+        tay
+
+        _9E8A
+        jsr rlUnknown859FA3
+        jsr rlUnknown859F97
+        lda $9F27,b,y
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+        dec wR4
+        beq _9EA1
+        inc y
+        inc y
+        bra _9E8A
+
+
+        _9EA1
+        rts
+
+        .databank 0
+
+        ; 85/9EA2
+
+      rlUnknown859EA2 ; 85/9EA2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wR2
+        stz wR1
+        lda wR4
+        lsr a
+        sta wR0
+        lda #$000A
+        sec
+        sbc wR0
+        asl a
+        tay
+
+        _9EB3
+        jsr rlUnknown859FA3
+        jsr rlUnknown859F97
+        lda $9F4F,b,y
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+        dec wR4
+        beq _9ECA
+        inc y
+        inc y
+        bra _9EB3
+
+
+        _9ECA
+        rts
+
+        .databank 0
+
+        ; 85/9ECB
+
+      rlUnknown859ECB ; 85/9ECB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$01
+        sta wDialogueBoxHDMAYPixelPosition,x
+        rep #$20
+        inc x
+        lda #$9F77
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+        lda #$0000
+        sta wDialogueBoxHDMAYPixelPosition,x
+        rts
+
+        .databank 0
+
+        ; 85/9EE7
+
+    .endsection Unsorted859E08Section
+
+
+    .section Unsorted859F97Section
+
+      .al
+      .xl
+
+      rlUnknown859F97 ; 85/9F97
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda wR3
+        sta wDialogueBoxHDMAYPixelPosition,x
+        rep #$20
+        inc x
+        rts
+
+        .databank 0
+
+        ; 85/9FA3
+
+      rlUnknown859FA3 ; 85/9FA3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR1
+        beq _9FAB
+        dec wR3
+        stz wR1
+
+        _9FAB
+        lda wR2
+        clc
+        adc wR10
+        sta wR2
+        cmp #$000A
+        bmi _9FC4
+        sec
+        sbc #$000A
+        sta wR2
+        inc wR3
+        lda #$FFFF
+        sta wR1
+
+        _9FC4
+        rts
+
+        .databank 0
+
+        ; 85/9FC5
+
+    .endsection Unsorted859F97Section
+
+
     .section Unsorted859FCDSection
 
       .al
@@ -1578,6 +2151,79 @@
     .endsection Unsorted85A227Section
 
 
+    .section Unsorted85A48BSection
+
+      .al
+      .xl
+
+      rlUnknown85A48B ; 85/A48B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85BC9E
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda $0ECF,b
+        sta $1097,b,x
+        lda #$0000
+        sta $10B7,b,x
+        phx
+        lda #$8500
+        sta lR18+1
+        lda #$A4E6
+        sta lR18
+        ldx #$0102
+        jsl rlUnknown878921
+        lda #$8500
+        sta lR18+1
+        lda #$A4FA
+        sta lR18
+        ldx #$0303
+        jsl rlUnknown878921
+        lda #$8500
+        sta lR18+1
+        lda #$A500
+        sta lR18
+        ldx #$0308
+        jsl rlUnknown878921
+        plx
+        jsl rlUnknown8587E1
+        jsl rlUnknown85C0CE
+        lda #$0009
+        jsl rlUnknown808FAD
+        rtl
+
+        .databank 0
+
+        ; 85/A4E6
+
+    .endsection Unsorted85A48BSection
+
+
+    .section Unsorted85A508Section
+
+      .al
+      .xl
+
+      rlUnknown85A508 ; 85/A508
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 85/A509
+
+    .endsection Unsorted85A508Section
+
+
     .section Unsorted85AB32Section
 
       .al
@@ -1680,6 +2326,64 @@
         ; 85/AC40
 
     .endsection Unsorted85AC02Section
+
+
+    .section Unsorted85AC40Section
+
+      .al
+      .xl
+
+      rlUnknown85AC40 ; 85/AC40
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda bDecompressionArrayFlag,b
+        bne _AC88
+        phx
+        phy
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8E88, $0180, $80, $7000
+
+        lda #$7E00
+        sta lR18+1
+        lda #$8C88
+        sta lR18
+        lda #$7E00
+        sta lR18+1
+        lda wActiveFactionSlot,b
+        jsl rlGetFactionBattleBannerID
+        xba
+        lsr a
+        lsr a
+        lsr a
+        clc
+        adc #$8C98
+        sta lR18
+        ldy #$000E
+
+        _AC77
+        lda [lR18],y
+        sta $01F0,b,y
+        dec y
+        dec y
+        bpl _AC77
+        ply
+        plx
+        lda #$AC89
+        sta $0F57,b,x
+
+        _AC88
+        rtl
+
+        .databank 0
+
+        ; 85/AC89
+
+    .endsection Unsorted85AC40Section
 
 
     .section Unsorted85B009Section
@@ -2246,6 +2950,188 @@
     .endsection Unsorted85B520Section
 
 
+    .section Unsorted85B65CSection
+
+      .al
+      .xl
+
+      rlUnknown85B65C ; 85/B65C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85BC9E
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        phx
+        lda #$8500
+        sta lR18+1
+        lda #$B6A0
+        sta lR18
+        ldx #$0101
+        jsl rlUnknown878921
+        lda #$8500
+        sta lR18+1
+        lda #$B6BA
+        sta lR18
+        ldx #$0301
+        jsl rlUnknown878921
+        lda #$8500
+        sta lR18+1
+        lda #$B6D4
+        sta lR18
+        ldx #$0501
+        jsl rlUnknown878921
+        plx
+        jsl rlUnknown8587E1
+        rtl
+
+        .databank 0
+
+        ; 85/B6A0
+
+    .endsection Unsorted85B65CSection
+
+
+    .section Unsorted85B6E0Section
+
+      .al
+      .xl
+
+      rlUnknown85B6E0 ; 85/B6E0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 85/B6E1
+
+    .endsection Unsorted85B6E0Section
+
+
+    .section Unsorted85B725Section
+
+      .al
+      .xl
+
+      rlUnknown85B725 ; 85/B725
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85BC9E
+        lda $0ECF,b
+        sta wCurrentItemDataROMPointer,b
+        lda $0ED1,b
+        bmi _B738
+        jsl rlSetMapMenuPosition
+
+        _B738
+        lda $0ED3,b
+        sta $10B7,b,x
+        lda $0ED5,b
+        sta wSelectedUnitDataRAMPointer,b
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda $0ED3,b
+        bpl _B769
+        lda #$0008
+        jsl rlCheckIfWeaponEquipped
+        bcc _B769
+        lda #$8500
+        sta lR18+1
+        lda #$B786
+        sta lR18
+        ldx #$010C
+        jsl rlUnknown878921
+
+        _B769
+        jsr rlUnknown85B4ED
+        jsl rlGetItemNamePointer
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        ldx #$0104
+        jsl rlUnknown878921
+        jsl rlUnknown8587E1
+        rtl
+
+        .databank 0
+
+        ; 85/B786
+
+    .endsection Unsorted85B725Section
+
+
+    .section Unsorted85B78ASection
+
+      .al
+      .xl
+
+      rlUnknown85B78A ; 85/B78A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $10B7,b,x
+        bmi _B7CD
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlGetMapMenuPosition
+        cmp #$0000
+        bmi _B7CD
+        pha
+        and #$00FF
+        clc
+        adc #$0002
+        asl a
+        asl a
+        asl a
+        sta wR0
+        pla
+        xba
+        and #$00FF
+        clc
+        adc #$0001
+        asl a
+        asl a
+        asl a
+        sta wR1
+        lda $10B7,b,x
+        beq _B7C2
+        sec
+        sbc #$0008
+        asl a
+
+        _B7C2
+        sta wR4
+        stz wR5
+        ldy $983F,b
+        jsl rlPushToOAMBuffer
+
+        _B7CD
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/B7CF
+
+    .endsection Unsorted85B78ASection
+
+
     .section Unsorted85B7D1Section
 
       .al
@@ -2501,6 +3387,123 @@
     .endsection Unsorted85B8EESection
 
 
+    .section Unsorted85B906Section
+
+      .al
+      .xl
+
+      rlUnknown85B906 ; 85/B906
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85BC9E
+        jsl rlUnknown85C0CE
+        lda #$00B4
+        sta $1077,b,x
+        lda $0ED5,b
+        and #$FF00
+        sta $10B7,b,x
+        lda $0ED3,b
+        sta $1097,b,x
+        ldy #$0000
+        cmp #$000A
+        bmi _B93E
+        cmp #$0064
+        bmi _B93D
+        cmp #$03E8
+        bmi _B93C
+        cmp #$2710
+        bmi _B93B
+        inc y
+
+        _B93B
+        inc y
+
+        _B93C
+        inc y
+
+        _B93D
+        inc y
+
+        _B93E
+        inc y
+        tya
+        clc
+        adc #$000E
+        sta wR0
+        ora #$0400
+        jsl rlSetMapMenuTilemapArea
+        lda #$0020
+        sec
+        sbc wR0
+        lsr a
+        ora $10B7,b,x
+        jsl rlSetMapMenuPosition
+        phx
+        phy
+        lda #$20F0
+        sta aCurrentTilemapInfo,b
+        lda $1097,b,x
+        sta wR0
+
+        _B968
+        dec y
+        lda wR0
+        sta wR13
+        lda #$000A
+        sta wR14
+        jsl rlUnknown80A1AB
+        lda wR13
+        sta wR0
+        lda wR10
+        beq _B980
+        bra _B983
+
+
+        _B980
+        tya
+        bmi _B991
+
+        _B983
+        tya
+        clc
+        adc #$0101
+        tax
+        lda wR10
+        jsl rlUnknown878916
+        bra _B968
+
+
+        _B991
+        ply
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$8500
+        sta lR18+1
+        lda #$B9BC
+        sta lR18
+        tya
+        clc
+        adc #$0102
+        tax
+        jsl rlUnknown878921
+        jsl rlUnknown8587E1
+        jsl rlUnknown85A227
+        plx
+        lda #$0094
+        sta $1057,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/B9BC
+
+    .endsection Unsorted85B906Section
+
+
     .section Unsorted85B9D4Section
 
       .al
@@ -2605,6 +3608,35 @@
     .endsection Unsorted85BA4DSection
 
 
+    .section Unsorted85BAC7Section
+
+      .al
+      .xl
+
+      rlUnknown85BAC7 ; 85/BAC7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $04BA,b
+        bne _BAD8
+        lda #$0001
+        sta $0508,b
+        lda #$BAD9
+        sta $0F57,b,x
+
+        _BAD8
+        rtl
+
+        .databank 0
+
+        ; 85/BAD9
+
+    .endsection Unsorted85BAC7Section
+
+
     .section Unsorted85BB2ESection
 
       .al
@@ -2629,6 +3661,66 @@
         ; 85/BB3D
 
     .endsection Unsorted85BB2ESection
+
+
+    .section Unsorted85BB5ESection
+
+      .al
+      .xl
+
+      rlUnknown85BB5E ; 85/BB5E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlStallProcUntilMapMenuDataLoaded
+        jsl rlUnknown85C0CE
+        lda #$0000
+        sta wBufferBG3VOFS
+        sta wBufferBG3HOFS
+        lda $0ED3,b
+        jsl rlSetMapMenuPosition
+        lda $0ED5,b
+        jsl rlUnknown85884A
+        lda $0ED1,b
+        jsl rlUnknown85C4E0
+        rtl
+
+        .databank 0
+
+        ; 85/BB83
+
+      rlUnknown85BB83 ; 85/BB83
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0F37,b,x
+        bit #$0001
+        bne _BB8C
+
+        _BB8B
+        rtl
+
+
+        _BB8C
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlUnknown8586FA
+        jsl rlUnknown85C0C7
+        lda #$FFFF
+        jsl rlUnknown85C4E0
+        jsl rlUnknown85C0D5
+        bra _BB8B
+
+        .databank 0
+
+        ; 85/BBA5
+
+    .endsection Unsorted85BB5ESection
 
 
     .section Unsorted85BBA5Section
@@ -2971,6 +4063,29 @@
     .endsection Unsorted85BD93Section
 
 
+    .section Unsorted85C0C7Section
+
+      .al
+      .xl
+
+      rlUnknown85C0C7 ; 85/C0C7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$C0BA
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/C0CE
+
+    .endsection Unsorted85C0C7Section
+
+
     .section Unsorted85C0CESection
 
       .al
@@ -3018,6 +4133,73 @@
     .endsection Unsorted85C0D5Section
 
 
+    .section Unsorted85C4E0Section
+
+      .al
+      .xl
+
+      rlUnknown85C4E0 ; 85/C4E0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        phx
+        phy
+        ora #$0000
+        bmi _C505
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$000E
+        tay
+        ldx #$000E
+
+        _C4F7
+        lda $C51B,b,y
+        sta $0110,b,x
+        dec y
+        dec y
+        dec x
+        dec x
+        bpl _C4F7
+        bra _C516
+
+
+        _C505
+        ldx #$0010
+
+        _C508
+        lda $DE0000,x
+        sta aBGPaletteBuffer,b,x
+        inc x
+        inc x
+        cpx #$0020
+        bmi _C508
+
+        _C516
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 85/C51B
+
+    .endsection Unsorted85C4E0Section
+
+
     .section Unsorted85CA4BSection
 
       .al
@@ -3058,6 +4240,137 @@
         ; 85/CA70
 
     .endsection Unsorted85CA4BSection
+
+
+    .section Unsorted85CA91Section
+
+      .al
+      .xl
+
+      rlUnknown85CA91 ; 85/CA91
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85BC9E
+        jsl rlUnknown85C0CE
+        stz $0DB1,b
+        lda $0ECF,b
+        and #$00FF
+        sta $10B7,b,x
+        lda $0ED1,b
+        sta $1077,b,x
+        lda $0ED5,b
+        sta $7FEB0A
+        lda $0ED0,b
+        and #$00FF
+        clc
+        adc $10B7,b,x
+        cmp $1077,b,x
+        bmi _CAC4
+        lda $1077,b,x
+
+        _CAC4
+        sep #$20
+        sta $1058,b,x
+        rep #$20
+        lda $0ED3,b
+        sta $1097,b,x
+        jsl rlUnknown88B46A
+        jsl rlUnknown85877E
+        rtl
+
+        .databank 0
+
+        ; 85/CADA
+
+      rlUnknown85CADA ; 85/CADA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phx
+        jsl rlUnknown88A12B
+        jsl rlUnknown888560
+        plx
+        plb
+        .databank ?
+        lda wUnknown0007D8,b
+        bne _CAFA
+        lda #$CAFB
+        sta $0F57,b,x
+        lda $0F37,b,x
+        ora #$0001
+        sta $0F37,b,x
+
+        _CAFA
+        rtl
+
+        .databank 0
+
+        ; 85/CAFB
+
+    .endsection Unsorted85CA91Section
+
+
+    .section Unsorted85DDF9Section
+
+      .al
+      .xl
+
+      rlUnknown85DDF9 ; 85/DDF9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown000D79,b
+        bit #$1000
+        beq _DE07
+        lda #$DDEA
+        sta $0ED7,b,x
+
+        _DE07
+        jsl rlUnknown8583C2
+        lda #$0000
+        sta wBufferBG3VOFS
+        sta wBufferBG3HOFS
+        rtl
+
+        .databank 0
+
+        ; 85/DE13
+
+      rlUnknown85DE13 ; 85/DE13
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$20FF
+        sta wUnknown053C,b
+        jsl rlUnknown8583DA
+        jsl rlUnknown8584DC
+        lda #$DE34
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/DE34
+
+    .endsection Unsorted85DDF9Section
 
 
     .section Unsorted85DF3FSection
@@ -3148,6 +4461,190 @@
     .endsection Unsorted85DF6FSection
 
 
+    .section Unsorted85E1DBSection
+
+      .al
+      .xl
+
+      rlUnknown85E1DB ; 85/E1DB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8583C2
+        lda #$0000
+        sta wBufferBG3VOFS
+        sta wBufferBG3HOFS
+        lda $0ECF,b
+        sta $10B7,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/E1ED
+
+      rlUnknown85E1ED ; 85/E1ED
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0009
+        jsl rlUnknown808FAD
+        lda $0ED7,b,x
+        tay
+        jsl rlLoadMapMenuDataFromProc
+        jsl rlUnknown8584AC
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$20FF
+        sta wUnknown053C,b
+        lda $10B7,b,x
+        sta $0ECF,b
+        lda #$0001
+        sta $0543,b
+        sta $0545,b
+        phx
+        ldx $0772,b
+        lda $7E46EB,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsr rlUnknown85E44E
+        jsr rlUnknown85E468
+        ldx #$002E
+
+        _E235
+        phx
+        jsr ($85E27F,x)
+        plx
+        bcc _E24B
+        lda #$85E2
+        sta lUnknown0540+1,b
+        lda $E2AF,b,x
+        sta lUnknown0540,b
+        jsr rlUnknown85E332
+
+        _E24B
+        dec x
+        dec x
+        bpl _E235
+        plx
+        jsl rlUnknown82F3BE
+        inc a
+        asl a
+        xba
+        ora #$0009
+        jsl rlSetMapMenuTilemapArea
+        jsl rlUnknown85856E
+        jsl rlUnknown8584DC
+        lda $10B7,b,x
+        cmp #$0002
+        beq _E278
+        cmp #$0001
+        bne _E278
+        jsr rlUnknown85E2DF
+        bra _E278
+
+
+        _E278
+        lda #$E33D
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/E27F
+
+    .endsection Unsorted85E1DBSection
+
+
+    .section Unsorted85E2DFSection
+
+      .al
+      .xl
+
+      rlUnknown85E2DF ; 85/E2DF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        phx
+        phy
+        ldy $0547,b
+        sep #$20
+        lda $0549,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0002,b,y
+        ora $0003,b,y
+        beq _E32D
+        phb
+        lda $0002,b,y
+        tax
+        sep #$20
+        lda $0004,b,y
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda @l $000547
+        sta $0002,b,x
+        lda @l $000548
+        sta $0003,b,x
+        plb
+        .databank ?
+        lda $0002,b,y
+        sta @l $000547
+        lda $0003,b,y
+        sta @l $000548
+        lda #$0000
+        sta $0002,b,y
+        sta $0003,b,y
+
+        _E32D
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 85/E332
+
+      rlUnknown85E332 ; 85/E332
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown82F343
+        inc $0545,b
+        inc $0545,b
+        rts
+
+        .databank 0
+
+        ; 85/E33D
+
+    .endsection Unsorted85E2DFSection
+
+
     .section Unsorted85E33DSection
 
       .al
@@ -3210,6 +4707,55 @@
         ; 85/E38C
 
     .endsection Unsorted85E33DSection
+
+
+    .section Unsorted85E44ESection
+
+      .al
+      .xl
+
+      rlUnknown85E44E ; 85/E44E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7E441B,x
+        sta wR10
+        lda $7E44AB,x
+        sta wR11
+        lda aDeploymentTable,x
+        and #$0003
+        sta wR12
+        jsl rlUnknown84F786
+        rts
+
+        .databank 0
+
+        ; 85/E468
+
+      rlUnknown85E468 ; 85/E468
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7E441B,x
+        sta wR0
+        lda $7E44AB,x
+        sta wR1
+        jsl rlCheckIfCoordsNotEventLocationTile
+        lda wEventLocationEntry,b
+        sta $0580,b
+        rts
+
+        .databank 0
+
+        ; 85/E47F
+
+    .endsection Unsorted85E44ESection
 
 
     .section Unsorted85E85DSection

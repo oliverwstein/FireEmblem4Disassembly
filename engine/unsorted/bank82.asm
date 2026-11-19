@@ -1,5 +1,43 @@
 ; Code from bank $82 not yet assigned to a game system.
 
+    .section Unsorted8283EBSection
+
+      .al
+      .xl
+
+      rlUnknown8283EB ; 82/83EB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0ECF,b
+        sta $0FD7,b,x
+        lda $0ED1,b
+        jsl rlUnknown808FA3
+        rtl
+
+        .databank 0
+
+        ; 82/83F9
+
+      rlUnknown8283F9 ; 82/83F9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 82/83FA
+
+    .endsection Unsorted8283EBSection
+
+
     .section Unsorted828431Section
 
       .al
@@ -58,6 +96,94 @@
         PROC_HALT
 
     .endsection Unsorted828431Section
+
+
+    .section Unsorted82886FSection
+
+      .al
+      .xl
+
+      rlUnknown82886F ; 82/886F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0200
+        sta wEventProcBanks,b,x
+        rtl
+
+        .databank 0
+
+        ; 82/8876
+
+      rlUnknown828876 ; 82/8876
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0200
+        sta wEventProcBanks,b,x
+        lda wUnknown00171A,b
+        beq _8888
+        lda wJoy1New
+        bit #$1000
+        beq _88B1
+
+        _8888
+        stz $0302,b
+        lda #$88B2
+        sta $0F57,b,x
+        lda $04EA,b
+        pha
+        and #$FFFA
+        sta $04EA,b
+        lda #$000A
+        jsl rlUnknown808FAD
+        pla
+        sta $04EA,b
+        jsl rlClearAllFadeInProcs
+        lda #$00E1
+        jsl rlUnknown808FA3
+
+        _88B1
+        rtl
+
+        .databank 0
+
+        ; 82/88B2
+
+    .endsection Unsorted82886FSection
+
+
+    .section Unsorted8288F3Section
+
+      .al
+      .xl
+
+      rlUnknown8288F3 ; 82/88F3
+
+        ; Runs on into built code at the end.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy #$0000
+        lda $0FD7,b
+        sta @l lR22
+        lda $0FF7,b
+        sta @l lR22+1
+        bra $828921
+
+        .databank 0
+
+        ; 82/8906
+
+    .endsection Unsorted8288F3Section
 
 
     .section Unsorted828A30Section
@@ -405,6 +531,62 @@
         ; 82/8B46
 
     .endsection Unsorted828B35Section
+
+
+    .section Unsorted828B6BSection
+
+      .al
+      .xl
+
+      rlUnknown828B6B ; 82/8B6B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy wActiveEventOffset,b
+        lda lActiveEventPointer,b
+        sta @l lR22
+        lda lActiveEventPointer+1,b
+        sta @l lR22+1
+        lda [lR22],y
+        and #$00FF
+        sta $0ECF,b
+        inc y
+        lda [lR22],y
+        and #$00FF
+        sta $0ED1,b
+        jsl rlUnknown9EEC95
+        rtl
+
+        .databank 0
+
+        ; 82/8B92
+
+      rlUnknown828B92 ; 82/8B92
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$9E00
+        sta lR44+1
+        lda #$ECA4
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcs _8BA6
+        jsl rlEventEngineFreeProc
+
+        _8BA6
+        rtl
+
+        .databank 0
+
+        ; 82/8BA7
+
+    .endsection Unsorted828B6BSection
 
 
     .section Unsorted828BEASection
@@ -2030,6 +2212,120 @@
     .endsection Unsorted82F211Section
 
 
+    .section Unsorted82F227Section
+
+      .al
+      .xl
+
+      rlUnknown82F227 ; 82/F227
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda wR0
+        pha
+        lda wR1
+        pha
+        phx
+        phy
+        ldx lUnknown0540,b
+        sep #$20
+        lda lUnknown0540+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        sep #$20
+        lda $0002,b,x
+        asl a
+        clc
+        adc $0002,b,x
+        rep #$20
+        and #$00FF
+        clc
+        adc #$0009
+        jsl rlAllocateRAMArea
+        sep #$20
+        ldy #$0000
+        lda $0000,b,x
+        sta [lR25],y
+        ldy #$0001
+        lda $0001,b,x
+        sta [lR25],y
+        rep #$20
+        ldy #$0002
+        lda $0547,b
+        sta [lR25],y
+        ldy #$0003
+        lda $0548,b
+        sta [lR25],y
+        lda lR25+1
+        sta lR18+1
+        lda lR25
+        clc
+        adc #$0005
+        sta lR18
+        lda $0002,b,x
+        and #$00FF
+        sta wR0
+        lda #$0003
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda lR25
+        sta @l $000547
+        lda lR25+1
+        sta @l $000548
+        lda $0003,b,x
+        and #$00FF
+        beq _F2D8
+        sta wR0
+
+        _F2AD
+        lda $0004,b,x
+        and #$00FF
+        sta $0543,b
+        lda $0005,b,x
+        and #$00FF
+        sta $0545,b
+        lda $0006,b,x
+        sta lUnknown0540,b
+        lda $0007,b,x
+        sta lUnknown0540+1,b
+        jsl rlUnknown82F343
+        inc x
+        inc x
+        inc x
+        inc x
+        inc x
+        dec wR0
+        bne _F2AD
+
+        _F2D8
+        ply
+        plx
+        pla
+        sta wR1
+        pla
+        sta wR0
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F2E3
+
+    .endsection Unsorted82F227Section
+
+
     .section Unsorted82F2E3Section
 
       .al
@@ -2099,6 +2395,74 @@
         ; 82/F343
 
     .endsection Unsorted82F2E3Section
+
+
+    .section Unsorted82F343Section
+
+      .al
+      .xl
+
+      rlUnknown82F343 ; 82/F343
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        phy
+        lda #$0007
+        jsl rlAllocateRAMArea
+        ldx lUnknown0540,b
+        sep #$20
+        lda lUnknown0540+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        ldy #$0000
+        lda lUnknown0540,b
+        sta [lR25],y
+        ldy #$0001
+        lda lUnknown0540+1,b
+        sta [lR25],y
+        sep #$20
+        ldy #$0003
+        lda $0543,b
+        sta [lR25],y
+        ldy #$0004
+        lda $0545,b
+        sta [lR25],y
+        ldy #$0005
+        lda $0003,b,x
+        sta [lR25],y
+        ldy #$0006
+        lda $0004,b,x
+        sta [lR25],y
+        rep #$20
+        jsl rlUnknown82F3A7
+        lda lR25
+        sta lStructPointer1,b
+        lda lR25+1
+        sta lStructPointer1+1,b
+        jsl rlAppendNewStructEntry
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F3A7
+
+    .endsection Unsorted82F343Section
 
 
     .section Unsorted82F3A7Section
@@ -2342,3 +2706,42 @@
         ; 82/F4A7
 
     .endsection Unsorted82F3E5Section
+
+
+    .section Unsorted82F4A7Section
+
+      .al
+      .xl
+
+      rlUnknown82F4A7 ; 82/F4A7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        ldx lUnknown0540,b
+        sep #$20
+        lda lUnknown0540+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0003,b,x
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F4BF
+
+    .endsection Unsorted82F4A7Section

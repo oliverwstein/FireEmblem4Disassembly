@@ -603,3 +603,126 @@
         ; 91/E92E
 
     .endsection Unsorted91E915Section
+
+
+    .section Unsorted91F959Section
+
+      .al
+      .xl
+
+      rlUnknown91F959 ; 91/F959
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $91
+        phk
+        plb
+        .databank $91
+        ldx #$0000
+        sep #$20
+        lda #$5D
+        sta $7F828F,x
+        rep #$20
+        lda #$0000
+        sta $7F8290,x
+        inc x
+        inc x
+        inc x
+        ldy #$0000
+
+        _F979
+        sep #$20
+        lda #$01
+        sta $7F828F,x
+        rep #$20
+        lda $7F8290,x
+        clc
+        adc $F9AD,b,y
+        sta $7F8290,x
+        inc y
+        inc y
+        inc x
+        inc x
+        inc x
+        cpy #$0030
+        bne _F979
+        sep #$20
+        lda #$00
+        sta $7F828F,x
+        rep #$20
+        lda #$0000
+        sta $7F8290,x
+        plp
+        plb
+        .databank $91
+        rtl
+
+        .databank 0
+
+        ; 91/F9AD
+
+    .endsection Unsorted91F959Section
+
+
+    .section Unsorted91F9DDSection
+
+      .al
+      .xl
+
+      rlUnknown91F9DD ; 91/F9DD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phk
+        plb
+        .databank $91
+        ldx #$0000
+        sep #$20
+        lda #$60
+        sta $7F838F,x
+        rep #$20
+        inc x
+        lda #$0000
+        sta $7F838F,x
+        inc x
+        inc x
+        ldy #$0000
+
+        _F9F9
+        sep #$20
+        lda #$01
+        sta $7F838F,x
+        rep #$20
+        inc x
+        lda $FA27,b,y
+        sta $7F838F,x
+        inc x
+        inc x
+        inc y
+        inc y
+        cpx #$004B
+        bne _F9F9
+        sep #$20
+        lda #$00
+        sta $7F838F,x
+        rep #$20
+        inc x
+        lda #$0000
+        sta $7F838F,x
+        rtl
+
+        .databank 0
+
+        ; 91/FA27
+
+    .endsection Unsorted91F9DDSection

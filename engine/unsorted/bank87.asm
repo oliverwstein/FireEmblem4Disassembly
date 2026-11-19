@@ -3556,6 +3556,172 @@
     .endsection Unsorted87C056Section
 
 
+    .section Unsorted87C398Section
+
+      .al
+      .xl
+
+      rlUnknown87C398 ; 87/C398
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$FFE0
+        sta $7E8B88
+        lda #$0000
+        sta $7E8B8A
+        lda #$0010
+        sta $7E8B8C
+        lda #$0000
+        sta $7E8B90
+        jsr rlUnknown87C47A
+        lda #$0000
+        jsr rlUnknown87C442
+        lda #$0064
+        jsr rlUnknown87C442
+        rtl
+
+        .databank 0
+
+        ; 87/C3C4
+
+      rlUnknown87C3C4 ; 87/C3C4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        bit #$0001
+        bne _C3D7
+        lda #$0000
+        sta $7E8B8E
+        lda #$C4A4
+        bra _C3E1
+
+
+        _C3D7
+        lda #$0100
+        sta $7E8B8E
+        lda #$C4AB
+
+        _C3E1
+        sta $165F,b,x
+        lda $7E8B8E
+        jsr rlUnknown87C442
+        lda $7E8B8A
+        clc
+        adc #$4000
+        sta $7E8B8A
+        lda $7E8B8C
+        adc #$0000
+        sta $7E8B8C
+        lda $7E8B88
+        clc
+        adc $7E8B8C
+        sta $7E8B88
+        cmp #$0100
+        bmi _C41A
+        lda #$C41B
+        sta $161F,b,x
+
+        _C41A
+        rtl
+
+        .databank 0
+
+        ; 87/C41B
+
+    .endsection Unsorted87C398Section
+
+
+    .section Unsorted87C442Section
+
+      .al
+      .xl
+
+      rlUnknown87C442 ; 87/C442
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        clc
+        adc #$00EF
+        tax
+        ldy #$00EF
+
+        _C44B
+        lda $C4B2,b,y
+        and #$00FF
+        clc
+        adc $7E8B88
+        cmp #$0008
+        bmi _C465
+        cmp #$00F8
+        bcc _C468
+        lda #$00F8
+        bra _C468
+
+
+        _C465
+        lda #$0008
+
+        _C468
+        sep #$20
+        eor $7E8B90
+        sta $7E8B92,x
+        rep #$20
+        dec x
+        dec y
+        bpl _C44B
+        plx
+        rts
+
+        .databank 0
+
+        ; 87/C47A
+
+      rlUnknown87C47A ; 87/C47A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wBattleStatus
+        bit #$0001
+        bne _C49C
+        lda #$006D
+        jsl rlUnknown80900D
+        lda #$00FF
+        sta $7E8B90
+        sep #$20
+        lda #$27
+        sta $1670,b,x
+        rep #$20
+        bra _C4A3
+
+
+        _C49C
+        lda #$006C
+        jsl rlUnknown80900D
+
+        _C4A3
+        rts
+
+        .databank 0
+
+        ; 87/C4A4
+
+    .endsection Unsorted87C442Section
+
+
     .section Unsorted87DC71Section
 
       .al

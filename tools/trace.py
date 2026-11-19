@@ -29,6 +29,19 @@ from disasm import Disassembler, load_labels
 
 ODD = {'brk', 'cop', 'wdm', 'stp', 'xce'}
 
+# Routines that take a definition in lR44 whose header points to init and
+# on-cycle routines, and where in the header those two pointers are (each a
+# word in the definition's bank). The engines call them with 16-bit registers.
+CREATORS = {
+    'rlProcEngineCreateProc': (2, 4),
+    'rlProcEngineCreateProcByIndex': (2, 4),
+    'rlEventEngineCreateProc': (2, 4),
+    'rlHDMAEngineCreateEntry': (0, 2),
+    'rlHDMAEngineCreateEntryByIndex': (0, 2),
+    'rlActiveSpriteEngineCreateSpriteHighestSlot': (0, 2),
+}
+LR44 = 0x62
+
 
 def coverage_mask():
     """bytearray with 1 for each ROM byte built from source (same method as build.sh)."""
@@ -71,6 +84,24 @@ def calls(insns):
             yield ins['target'], ins['m8'], ins['x8'], ins['mn'], ins['pc']
 
 
+def definitions(insns, name_of):
+    """(definition address, creator name) for each long pointer loaded into lR44
+    shortly before a call to one of CREATORS."""
+    for i in range(len(insns) - 3):
+        a, b, c, d = insns[i:i + 4]
+        if not (a['mn'] == c['mn'] == 'lda' and a['mode'] == c['mode'] == 'immm' and a['size'] == 2
+                and b['mn'] == d['mn'] == 'sta' and b['mode'] == d['mode'] == 'dp'
+                and b['val'] == LR44 + 1 and d['val'] == LR44):
+            continue
+        ptr = ((a['val'] >> 8) << 16) | c['val']
+        for e in insns[i + 4:i + 14]:
+            if e['mn'] == 'jsl':
+                creator = name_of(e['target'])
+                if creator in CREATORS:
+                    yield ptr, creator
+                break
+
+
 def warnings(insns, disasm, start):
     w = []
     if any(i['mn'] in ODD for i in insns):
@@ -94,8 +125,21 @@ def trace(rom, labels, mask):
     callers = collections.defaultdict(list)
     queue = []
 
+    def name_of(a):
+        n = labels.get(a, [])
+        return n[0] if n else None
+
     def visit(insns, who):
-        for t, m8, x8, kind, pc in calls(insns):
+        targets = list(calls(insns))
+        for ptr, creator in definitions(insns, name_of):
+            if not is_rom_code_address(ptr):
+                continue
+            o = offset(ptr)
+            for field in CREATORS[creator]:
+                t = (ptr & 0xFF0000) | rom[o + field] | rom[o + field + 1] << 8
+                if t & 0xFFFF >= 0x8000:
+                    targets.append((t, False, False, f'{creator} definition {ptr:06X}', ptr))
+        for t, m8, x8, kind, pc in targets:
             if not is_rom_code_address(t) or mask[offset(t)]:
                 continue
             entry[t].add((m8, x8))

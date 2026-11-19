@@ -2978,6 +2978,78 @@
     .endsection Unsorted888F32Section
 
 
+    .section Unsorted88939ESection
+
+      .al
+      .xl
+
+      rlUnknown88939E ; 88/939E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8B88
+        sta $0FD7,b,x
+        lda #$3000
+        sta $0FF7,b,x
+        lda #$0004
+        sta $1017,b,x
+        lda #$8800
+        sta lR19+1
+        lda #$93DB
+        sta lR19
+        jsl rlApplyMapMenuPaletteData
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$BD
+        sta bBufferCGADSUB
+        lda #$20
+        sta bBufferCOLDATA_1
+        lda #$40
+        sta bBufferCOLDATA_2
+        lda #$80
+        sta bBufferCOLDATA_3
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 88/93DB
+
+    .endsection Unsorted88939ESection
+
+
+    .section Unsorted889400Section
+
+      .al
+      .xl
+
+      rlUnknown889400 ; 88/9400
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown889B22
+        lda #$9411
+        sta $0F57,b,x
+        lda #$1FFE
+        sta $1017,b,x
+        rtl
+
+        .databank 0
+
+        ; 88/9411
+
+    .endsection Unsorted889400Section
+
+
     .section Unsorted88973FSection
 
       .al
@@ -3488,6 +3560,172 @@
         ; 88/9AC4
 
     .endsection Unsorted8899B8Section
+
+
+    .section Unsorted889B22Section
+
+      .al
+      .xl
+
+      rlUnknown889B22 ; 88/9B22
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+        phx
+        phy
+        ldx #$01FE
+        lda #$0000
+
+        _9B34
+        sta $8B88,b,x
+        sta $8D88,b,x
+        sta $8F88,b,x
+        sta $9188,b,x
+        sta $9388,b,x
+        sta $9588,b,x
+        sta $9788,b,x
+        sta $9988,b,x
+        sta $9B88,b,x
+        sta $9D88,b,x
+        sta $9F88,b,x
+        sta $A188,b,x
+        sta $A388,b,x
+        sta $A588,b,x
+        sta $A788,b,x
+        sta $A988,b,x
+        dec x
+        dec x
+        bpl _9B34
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 88/9B6D
+
+    .endsection Unsorted889B22Section
+
+
+    .section Unsorted889C5ASection
+
+      .al
+      .xl
+
+      rlUnknown889C5A ; 88/9C5A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sep #$20
+        lda #$15
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$00
+        sta bBufferCGADSUB
+        lda #$20
+        sta bBufferCOLDATA_1
+        lda #$40
+        sta bBufferCOLDATA_2
+        lda #$80
+        sta bBufferCOLDATA_3
+        rep #$20
+        ldx #$07FE
+        lda #$00FF
+
+        _9C81
+        sta $7E7B88,x
+        dec x
+        dec x
+        bpl _9C81
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7C88, $0500, $80, $A900
+
+        lda #$001D
+        jsl rlUnknown808FAD
+        lda wCursorXOffset,b
+        clc
+        adc wMapXOffset,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR10
+        lda wCursorYOffset,b
+        clc
+        adc wMapYOffset,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR11
+        lda wUnknown000D79,b
+        bit #$0800
+        bne _9CDF
+        jsl rlUnknown88BFC3
+        lda wR10
+        cmp #$FFFF
+        beq _9CD6
+        lda wR10
+        sta wCursorXOffset,b
+        lda wR11
+        sta wCursorYOffset,b
+        bra _9CDF
+
+
+        _9CD6
+        lda #$0080
+        sta wCursorXOffset,b
+        sta wCursorYOffset,b
+
+        _9CDF
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/9CE1
+
+      rlUnknown889CE1 ; 88/9CE1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown899FDC
+        plx
+        lda #$9CEE
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 88/9CEE
+
+    .endsection Unsorted889C5ASection
 
 
     .section Unsorted88A12BSection
@@ -5731,6 +5969,78 @@
         ; 88/B46A
 
     .endsection Unsorted88B42CSection
+
+
+    .section Unsorted88B46ASection
+
+      .al
+      .xl
+
+      rlUnknown88B46A ; 88/B46A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta $0784,b
+        lda bUnknown000E7B,b
+        and #$00FF
+        bit #$0041
+        beq _B48D
+        lda $0784,b
+        sta $0871,b
+        sta $0772,b
+        lda #$0001
+        sta $086F,b
+        lda #$0002
+        tsb bUnknown000E7B,b
+
+        _B48D
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta $078C,b
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta $078E,b
+        ldx $0784,b
+        lda $7E441B,x
+        sec
+        sbc $078C,b
+        sta $0778,b
+        lda $7E44AB,x
+        sec
+        sbc $078E,b
+        sta $077A,b
+        lda #$0004
+        sta wUnknown0007D8,b
+        lda bUnknown000E7B,b
+        and #$00FF
+        bit #$0041
+        bne _B4D4
+        rtl
+
+
+        _B4D4
+        lda #$0001
+        sta wUnknown0007D8,b
+        rtl
+
+        .databank 0
+
+        ; 88/B4DB
+
+    .endsection Unsorted88B46ASection
 
 
     .section Unsorted88B4DBSection
@@ -9987,6 +10297,171 @@
         ; 88/DEFC
 
     .endsection Unsorted88DE1BSection
+
+
+    .section Unsorted88E208Section
+
+      .al
+      .xl
+
+      rlUnknown88E208 ; 88/E208
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlSavePaletteBufferColorsToRAM
+
+          .byte $88, $9B, $7E, $10, $00, $C0, $00
+
+        ldx #$001E
+        lda #$2DAD
+
+        _E219
+        sta $01C0,b,x
+        dec x
+        dec x
+        bpl _E219
+        sep #$20
+        lda #$51
+        sta bBufferCGADSUB
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$15
+        sta bBufferTM
+        lda #$02
+        sta bBufferTS
+        rep #$20
+        lda #$0000
+        sta $1B45,b
+        rtl
+
+        .databank 0
+
+        ; 88/E23B
+
+      rlUnknown88E23B ; 88/E23B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0001
+        bne _E255
+        lda #$0008
+        sta aPaletteFading,b
+        clc
+        jsl rlFadePaletteToColors
+
+          .byte $88, $9B, $10, $00, $C0, $00
+
+        bcs _E256
+
+        _E255
+        rtl
+
+
+        _E256
+        jsl rlProcEngineFreeProc
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        rep #$20
+        bra _E255
+
+        .databank 0
+
+        ; 88/E268
+
+    .endsection Unsorted88E208Section
+
+
+    .section Unsorted88E272Section
+
+      .al
+      .xl
+
+      rlUnknown88E272 ; 88/E272
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $1B45,b
+        sep #$20
+        lda #$51
+        sta bBufferCGADSUB
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$15
+        sta bBufferTM
+        lda #$02
+        sta bBufferTS
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 88/E28D
+
+      rlUnknown88E28D ; 88/E28D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0001
+        bne _E2A9
+        lda #$2DAD
+        sta $1B43,b
+        lda #$0008
+        sta aPaletteFading,b
+        clc
+        jsl rlFadePaletteToBlack
+
+          .byte $D6, $E2
+
+        bcs _E2AA
+
+        _E2A9
+        rtl
+
+
+        _E2AA
+        jsl rlProcEngineFreeProc
+        ldx #$07FE
+        lda #$0000
+
+        _E2B4
+        sta $7E8B88,x
+        dec x
+        dec x
+        bpl _E2B4
+        lda #(`aDecompressionBuffer)<<8
+        sta lR18+1
+        lda #<>aDecompressionBuffer
+        sta lR18
+        lda #$3800
+        sta wR1
+        lda #$0800
+        sta wR0
+        jsl rlDMAByPointer
+        bra _E2A9
+
+        .databank 0
+
+        ; 88/E2D6
+
+    .endsection Unsorted88E272Section
 
 
     .section Unsorted88E33DSection

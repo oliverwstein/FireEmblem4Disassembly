@@ -2890,6 +2890,76 @@
     .endsection Unsorted80F340Section
 
 
+    .section Unsorted80F377Section
+
+      .al
+      .xl
+
+      rlUnknown80F377 ; 80/F377
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown91F959
+        rtl
+
+        .databank 0
+
+        ; 80/F37C
+
+      rlUnknown80F37C ; 80/F37C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 80/F37D
+
+    .endsection Unsorted80F377Section
+
+
+    .section Unsorted80F38ASection
+
+      .al
+      .xl
+
+      rlUnknown80F38A ; 80/F38A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown91F9DD
+        rtl
+
+        .databank 0
+
+        ; 80/F38F
+
+      rlUnknown80F38F ; 80/F38F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 80/F390
+
+    .endsection Unsorted80F38ASection
+
+
     .section Unsorted80F392Section
 
       .al
