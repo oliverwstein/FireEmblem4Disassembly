@@ -1086,7 +1086,7 @@
 
         bit #$0080
         beq _8A9C
-        jml _8AFC
+        jml $888AFC
 
 
         _8A9C
@@ -1107,13 +1107,66 @@
         sta $06DE,b,y
         rts
 
-        .byte $89, $80, $00, $F0, $04, $5C, $27, $8B, $88, $AD, $92, $07, $29, $08, $00, $D0
-        .byte $07, $A9, $4F, $28, $99, $DC, $06, $60, $A9, $5F, $28, $99, $DC, $06, $60, $89
-        .byte $80, $00, $F0, $04, $5C, $46, $8B, $88, $AD, $92, $07, $29, $08, $00, $D0, $07
-        .byte $A9, $4E, $28, $99, $DC, $06, $60, $A9, $5E, $28, $99, $DC, $06, $60
+        .databank 0
+
+        ; 88/8ABE
+
+      rsUnknown888ABE ; 88/8ABE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        bit #$0080
+        beq _8AC7
+        jml $888B27
 
 
-        _8AFC
+        _8AC7
+        lda $0792,b
+        and #$0008
+        bne _8AD6
+        lda #$284F
+        sta $06DC,b,y
+        rts
+
+
+        _8AD6
+        lda #$285F
+        sta $06DC,b,y
+        rts
+
+        .databank 0
+
+        ; 88/8ADD
+
+      rsUnknown888ADD ; 88/8ADD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        bit #$0080
+        beq _8AE6
+        jml _8B46
+
+
+        _8AE6
+        lda $0792,b
+        and #$0008
+        bne _8AF5
+        lda #$284E
+        sta $06DC,b,y
+        rts
+
+
+        _8AF5
+        lda #$285E
+        sta $06DC,b,y
+        rts
+
         cmp #$0080
         bne _8B05
         jml _8B65
@@ -1137,10 +1190,45 @@
         sta $06DE,b,y
         rts
 
-        .byte $C9, $80, $00, $D0, $04, $5C, $87, $8B, $88, $AD, $92, $07, $29, $08, $00, $D0
-        .byte $07, $A9, $4F, $24, $99, $DC, $06, $60, $A9, $5F, $24, $99, $DC, $06, $60, $C9
-        .byte $80, $00, $D0, $04, $5C, $9D, $8B, $88, $AD, $92, $07, $29, $08, $00, $D0, $07
-        .byte $A9, $4E, $24, $99, $DC, $06, $60, $A9, $5E, $24, $99, $DC, $06, $60
+        cmp #$0080
+        bne _8B30
+        jml rsUnknown888B87
+
+
+        _8B30
+        lda $0792,b
+        and #$0008
+        bne _8B3F
+        lda #$244F
+        sta $06DC,b,y
+        rts
+
+
+        _8B3F
+        lda #$245F
+        sta $06DC,b,y
+        rts
+
+
+        _8B46
+        cmp #$0080
+        bne _8B4F
+        jml rsUnknown888B9D
+
+
+        _8B4F
+        lda $0792,b
+        and #$0008
+        bne _8B5E
+        lda #$244E
+        sta $06DC,b,y
+        rts
+
+
+        _8B5E
+        lda #$245E
+        sta $06DC,b,y
+        rts
 
 
         _8B65
@@ -1390,7 +1478,7 @@
         lda aMovementMap,x
         and #$00FF
         beq _8CED
-        jsr $888ABE
+        jsr rsUnknown888ABE
 
         _8CB1
         inc wTempVariable1,b
@@ -1406,7 +1494,7 @@
         lda aMovementMap,x
         and #$00FF
         beq _8CF5
-        jsr $888ADD
+        jsr rsUnknown888ADD
         bra _8CFB
 
 
@@ -2652,6 +2740,87 @@
     .endsection ProcScript889504Section
 
 
+    .section Unsorted889506Section
+
+      .al
+      .xl
+
+      rsUnknown889506 ; 88/9506
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        phx
+        lda wR1
+        and #$FFFC
+        xba
+        lsr a
+        sta wR3
+        lda wR0
+        and #$FFFC
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR3
+        sta wR3
+        lda wR1
+        and #$0003
+        asl a
+        asl a
+        clc
+        adc wR3
+        tay
+        lda wR2
+        asl a
+        tax
+        lda wR0
+        and #$0003
+        asl a
+        asl a
+        clc
+        adc $88958F,x
+        tax
+        sep #$20
+        lda $8B88,b,y
+        ora $88958F,x
+        sta $8B88,b,y
+        lda $8B89,b,y
+        ora $889590,x
+        sta $8B89,b,y
+        lda $8B98,b,y
+        ora $889591,x
+        sta $8B98,b,y
+        lda $8B99,b,y
+        ora $889592,x
+        sta $8B99,b,y
+        lda $8B8A,b,y
+        ora $88958F,x
+        sta $8B8A,b,y
+        lda $8B8B,b,y
+        ora $889590,x
+        sta $8B8B,b,y
+        lda $8B9A,b,y
+        ora $889591,x
+        sta $8B9A,b,y
+        lda $8B9B,b,y
+        ora $889592,x
+        sta $8B9B,b,y
+        plx
+        plp
+        .al
+        rts
+
+        .databank 0
+
+        ; 88/958F
+
+    .endsection Unsorted889506Section
+
+
     .section Unsorted88973FSection
 
       .al
@@ -3242,40 +3411,95 @@
     .endsection Unsorted889B22Section
 
 
-    .section Unsorted889BB5Section
+    .section Unsorted889B6DSection
 
       .al
       .xl
 
-      rsUnknown889BB5 ; 88/9BB5
+      rlUnknown889B6D ; 88/9B6D
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
 
-        asl wR0+1
-        asl wR1
-        ora #10,s
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+
+        _9B77
+        txa
+        and #$007E
+        lsr a
+        sta wR0
+        txa
+        and #$FF80
         asl a
-        ora wR2
-        phd
-        php
-        php
-        php
-        php
-        ora wR5+1
-        ora [wR4]
-        php
-        php
-        php
-        php
-        php
-        php
-        php
-        tsb $C9
-        ora (wR0)
+        xba
+        sta wR1
+        phx
+        lda aMapData,x
+        and #$03FF
+        tax
+        lda aTerrainTileset,x
+        and #$00FF
+        tax
+        jsr rsUnknown889BCF
+        bcs _9BA5
+        lda aUnknown889BB5,x
+        and #$00FF
+        sta wR2
+
+        _9BA5
+        plx
+        jsr rsUnknown889506
+        dec x
+        dec x
+        cpx wTempVariable1,b
+        bmi _9BB2
+        bcs _9B77
+
+        _9BB2
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 88/9BB5
+
+    .endsection Unsorted889B6DSection
+
+
+    .section Unsorted889BB5Section
+
+      .al
+      .xl
+
+      aUnknown889BB5 ; 88/9BB5
+
+        ; One byte per terrain type (the index comes from aTerrainTileset), read by
+        ; rlUnknown889B6D unless rsUnknown889BCF returns with carry set.
+
+        .byte $06, $01, $06, $02, $03, $0A, $0A, $05, $04, $0B, $08, $08, $08
+        .byte $08, $05, $0B, $07, $08, $08, $08, $08, $08, $08, $08, $08, $04
+
+        ; 88/9BCF
+
+      rsUnknown889BCF ; 88/9BCF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        cmp #$0012
         beq _9BD9
         cmp #$0013
         bne _9BF5
@@ -4041,7 +4265,7 @@
         clc
         adc #$0018
         sta $011C,b
-        lda $7F442A
+        lda aAIAction.wMapPointer
         bne _A4A3
         lda $88A4DC,x
         clc
@@ -4994,7 +5218,7 @@
         bmi _AB2B
         lda $0794,b,x
         cmp wR0
-        beq $88AB13
+        beq rsUnknown88AB13
 
         _AB2B
         rts
@@ -10792,7 +11016,7 @@
 
         _DE0E
         lda $7E4DB5,x
-        sta $7E480B,x
+        sta aDeploymentTable._MapSpriteID,x
         dec x
         dec x
         bpl _DE0E
@@ -10824,12 +11048,12 @@
         clc
         adc #$0060
         tax
-        jsr $88DFDA
+        jsr rsUnknown88DFDA
         bra _DFA5
 
 
         _DFA0
-        jsr $88DFA6
+        jsr rsUnknown88DFA6
         bra _DFA5
 
 

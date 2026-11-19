@@ -576,7 +576,7 @@
         sta $089B,b
         lda #$0009
         jsl rlUnknown808FAD
-        jml _B316
+        jml $88B316
 
         .byte $18, $6B
 
@@ -585,14 +585,76 @@
         sec
         rtl
 
-        .byte $BF, $1B, $44, $7E, $0A, $0A, $0A, $0A, $38, $ED, $98, $05, $8D, $68, $07, $BF
-        .byte $AB, $44, $7E, $0A, $0A, $0A, $0A, $38, $ED, $9A, $05, $8D, $6A, $07, $AD, $68
-        .byte $07, $18, $6D, $98, $05, $4A, $4A, $4A, $4A, $85, $00, $AD, $6A, $07, $18, $6D
-        .byte $9A, $05, $4A, $4A, $4A, $4A, $85, $02, $22, $87, $EA, $87, $B0, $28, $22, $78
-        .byte $EC, $87, $C9, $01, $00, $F0, $19, $22, $42, $EC, $87, $8D, $9F, $08, $A9, $00
-        .byte $00, $22, $3D, $BE, $84, $CD, $9F, $08, $D0, $06, $5C, $16, $B3, $88, $18, $6B
-        .byte $5C, $39, $B3, $88, $18, $6B, $38, $6B, $22, $8D, $E9, $87, $5C, $16, $B3, $88
-        .byte $6B
+        .databank 0
+
+        ; 88/B2A5
+
+      rlUnknown88B2A5 ; 88/B2A5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aDeploymentTable._XTilePosition,x
+        asl a
+        asl a
+        asl a
+        asl a
+        sec
+        sbc wMapScrollXPixels,b
+        sta wCursorXOffset,b
+        lda aDeploymentTable._YTilePosition,x
+        asl a
+        asl a
+        asl a
+        asl a
+        sec
+        sbc wMapScrollYPixels,b
+        sta wCursorYOffset,b
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR0
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR1
+        jsl rlCheckIfCoordsNotEventLocationTile
+        bcs _B30B
+        jsl rlGetEventLocationEntryType
+        cmp #$0001
+        beq _B305
+        jsl rlGetEventLocationEntryID
+        sta $089F,b
+        lda #$0000
+        jsl rlGetFactionSlotLocationID
+        cmp $089F,b
+        bne _B305
+        jml _B316
+
+        .byte $18, $6B
+
+
+        _B305
+        jml rlUnknown88B339
+
+        .byte $18, $6B
+
+
+        _B30B
+        sec
+        rtl
+
+        .byte $22, $8D, $E9, $87, $5C, $16, $B3, $88, $6B
 
 
         _B316

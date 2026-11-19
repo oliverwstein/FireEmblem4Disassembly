@@ -284,21 +284,117 @@
 
       aUnknown879D77 ; 87/9D77
 
-        ; Read by rlDrawMenuTextLine.
+        ; Fifteen 6-byte records. Read by rlDrawMenuTextLine.
 
-        .byte $8C, $95, $0F, $01, $1F, $01, $8C, $C9, $A1, $02, $B1, $02, $89, $F1, $6E, $01
-        .byte $7E, $01, $8F, $E9, $6B, $01, $7B, $01, $95, $BA, $66, $01, $76, $01, $91, $E5
-        .byte $0E, $01, $1E, $01, $8F, $91, $0D, $01, $1D, $01, $8F, $F1, $6A, $01, $7A, $01
-        .byte $8D, $91, $69, $01, $79, $01, $8C, $52, $6C, $01, $7C, $01, $92, $E9, $68, $01
-        .byte $78, $01, $8C, $6E, $6D, $01, $7D, $01, $93, $C1, $0B, $01, $1B, $01, $8C, $F8
-        .byte $67, $01, $77, $01, $95, $94, $A4, $01, $B4, $01, $8B, $08, $4B, $AB, $DA, $48
-        .byte $29, $FF, $00, $C9, $84, $00, $68, $B0, $39, $48, $29, $FF, $00, $38, $E9, $81
-        .byte $00, $0A, $AA, $BD, $71, $94, $85, $14, $68, $EB, $29, $FF, $00, $38, $E9, $40
-        .byte $00, $48, $29, $07, $00, $85, $16, $68, $29, $F8, $FF, $0A, $18, $65, $16, $0A
-        .byte $18, $65, $14, $AA, $BD, $71, $94, $85, $14, $BD, $81, $94, $85, $16, $FA, $28
-        .byte $AB, $6B, $A2, $00, $00, $DD, $77, $9D, $F0, $0D, $E8, $E8, $E8, $E8, $E8, $E8
-        .byte $E0, $5A, $00, $90, $F0, $80, $0E, $BD, $79, $9D, $85, $14, $BD, $7B, $9D, $85
-        .byte $16, $FA, $28, $AB, $6B, $64, $14, $64, $16, $80, $F6
+        .byte $8C, $95, $0F, $01, $1F, $01
+        .byte $8C, $C9, $A1, $02, $B1, $02
+        .byte $89, $F1, $6E, $01, $7E, $01
+        .byte $8F, $E9, $6B, $01, $7B, $01
+        .byte $95, $BA, $66, $01, $76, $01
+        .byte $91, $E5, $0E, $01, $1E, $01
+        .byte $8F, $91, $0D, $01, $1D, $01
+        .byte $8F, $F1, $6A, $01, $7A, $01
+        .byte $8D, $91, $69, $01, $79, $01
+        .byte $8C, $52, $6C, $01, $7C, $01
+        .byte $92, $E9, $68, $01, $78, $01
+        .byte $8C, $6E, $6D, $01, $7D, $01
+        .byte $93, $C1, $0B, $01, $1B, $01
+        .byte $8C, $F8, $67, $01, $77, $01
+        .byte $95, $94, $A4, $01, $B4, $01
+
+        ; 87/9DD1
+
+      rlUnknown879DD1 ; 87/9DD1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        pha
+        and #$00FF
+        cmp #$0084
+        pla
+        bcs _9E19
+        pha
+        and #$00FF
+        sec
+        sbc #$0081
+        asl a
+        tax
+        lda aUnknown879471,x
+        sta wR10
+        pla
+        xba
+        and #$00FF
+        sec
+        sbc #$0040
+        pha
+        and #$0007
+        sta wR11
+        pla
+        and #$FFF8
+        asl a
+        clc
+        adc wR11
+        asl a
+        clc
+        adc wR10
+        tax
+        lda aUnknown879471,x
+        sta wR10
+        lda $9481,b,x
+        sta wR11
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+
+        _9E19
+        ldx #$0000
+
+        _9E1C
+        cmp $9D77,b,x
+        beq _9E2E
+        inc x
+        inc x
+        inc x
+        inc x
+        inc x
+        inc x
+        cpx #$005A
+        bcc _9E1C
+        bra _9E3C
+
+
+        _9E2E
+        lda $9D79,b,x
+        sta wR10
+        lda $9D7B,b,x
+        sta wR11
+
+        _9E38
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+
+        _9E3C
+        stz wR10
+        stz wR11
+        bra _9E38
+
+        .databank 0
 
         ; 87/9E42
 

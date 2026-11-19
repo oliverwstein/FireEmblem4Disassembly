@@ -307,8 +307,8 @@
         .autsiz
         .databank ?
 
-        jsl $88C7CF
-        jsl $88A44C
+        jsl rlUnknown88C7CF
+        jsl rlUnknown88A44C
         lda wMapScrollXPixels,b
         sta wBufferBG1HOFS
         lda wMapScrollYPixels,b
@@ -1091,10 +1091,10 @@
         .word <>rsUnknown81AEAA
         .word <>rsUnknown81AF03
         .word <>rsUnknown81AFB7
-        .word <>$AFF8
-        .word <>$AFFE
-        .word <>$B016
-        .word <>$B030
+        .word <>rsUnknown81AFF8
+        .word <>rsUnknown81AFFE
+        .word <>rsUnknown81B016
+        .word <>rsUnknown81B030
 
       rlUnknown81AE16 ; 81/AE16
 
@@ -1418,9 +1418,9 @@
 
       aUnknown81AFAE ; 81/AFAE
 
-        .long $85E85D
-        .long $85E8A8
-        .long $85E8C9
+        .long rlUnknown85E85D
+        .long rlUnknown85E8A8
+        .long rlUnknown85E8C9
 
     .endsection Unsorted81AEAASection
 
@@ -1488,6 +1488,29 @@
     .endsection Unsorted81AFB7Section
 
 
+    .section Unsorted81AFF8Section
+
+      .al
+      .xl
+
+      rsUnknown81AFF8 ; 81/AFF8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85A5C5
+        sec
+        rts
+
+        .databank 0
+
+        ; 81/AFFE
+
+    .endsection Unsorted81AFF8Section
+
+
     .section Unsorted81AFFESection
 
       .al
@@ -1515,6 +1538,73 @@
         ; 81/B016
 
     .endsection Unsorted81AFFESection
+
+
+    .section Unsorted81B016Section
+
+      .al
+      .xl
+
+      rsUnknown81B016 ; 81/B016
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitRelocationLocationID,b
+        jsl rlGetItemRAMStructEntryByPlayerItemIndex
+        jsl rlGetEffectiveItemIDByItemRAMStructEntry
+        sta aProcSystem.wInput2,b
+        lda #$0D00
+        sta aProcSystem.wInput3,b
+        jsl rlUnknown85BC00
+        sec
+        rts
+
+        .databank 0
+
+        ; 81/B030
+
+      rsUnknown81B030 ; 81/B030
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx wUnitRelocationDeploymentOffset,b
+        lda wUnitRelocationLocationID,b
+        jsl rlSetUnitResidingInCastle
+        lda aActionStructUnit2
+        tax
+        lda wUnitRelocationLocationID,b
+        jsl rlSetUnitResidingInCastle
+        stz $0580,b
+        jsl rlUnknown85CA4B
+        lda #$0040
+        trb wUnknown000D79,b
+        phx
+        stz wGameStateRoutine1,b
+        lda #$0000
+        jsl $88B30D
+        plx
+        bra _B086
+
+        .byte $BF, $EB, $46, $7E, $8D, $6F, $05, $A9, $04, $00, $8D, $BC, $0E, $22, $33, $A3
+        .byte $84, $8D, $BD, $0E, $22, $DA, $96, $84, $8D, $BF, $0E, $22, $BC, $82, $86, $B0
+        .byte $04, $22, $D0, $ED, $8C
+
+
+        _B086
+        sec
+        rts
+
+        .databank 0
+
+        ; 81/B088
+
+    .endsection Unsorted81B016Section
 
 
     .section Unsorted81B088Section

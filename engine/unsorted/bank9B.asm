@@ -18,23 +18,23 @@
         sta bBufferINIDISP
         rep #$20
         jsl rlProcEngineResetProcEngine
-        jsl $9BE05D
+        jsl rlUnknown9BE05D
         jsl rlResetHDMAEngine
-        jsl $95F1A9
-        jsl $96B93A
-        jsl $95EA47
-        jsl $9BF3F3
+        jsl rlUnknown95F1A9
+        jsl rlUnknown96B93A
+        jsl rlUnknown95EA47
+        jsl rlUnknown9BF3F3
         jsl rlUnknown96D659
-        jsl $95F741
-        jsl $95F7F7
-        jsl $95F87F
-        jsl $9BEAA5
+        jsl rlUnknown95F741
+        jsl rlUnknown95F7F7
+        jsl rlUnknown95F87F
+        jsl rlUnknown9BEAA5
         lda #$0000
         sta $7FE09E
         lda $7FD8B9
         and #$00FF
         bne _DCA7
-        jsl $9BFB7E
+        jsl rlUnknown9BFB7E
         jsl rlUnknown809654
         lda #$0000
         sep #$20
@@ -57,8 +57,8 @@
 
 
         _DCA7
-        jsl $9BDE12
-        jsl $9BDE69
+        jsl rlUnknown9BDE12
+        jsl rlUnknown9BDE69
         sep #$20
         stz $0CC4,b
         rep #$20
@@ -95,17 +95,17 @@
         beq _DCE5
         cmp #$0001
         beq _DCEB
-        jsl $9BDDE3
+        jsl rlUnknown9BDDE3
         bra _DCEF
 
 
         _DCE5
-        jsl $9BDD02
+        jsl rlUnknown9BDD02
         bra _DCEF
 
 
         _DCEB
-        jsl $9BDD9A
+        jsl rlUnknown9BDD9A
 
         _DCEF
         lda $7FD001
@@ -144,7 +144,7 @@
 
 
         _DD29
-        jsl $95F13C
+        jsl rlUnknown95F13C
         bcc _DD62
         lda #$000A
         jsl rlUnknown808FAD
@@ -157,7 +157,7 @@
 
 
         _DD46
-        jsl $9BDE12
+        jsl rlUnknown9BDE12
         bra _DD99
 
 
@@ -168,26 +168,26 @@
         lda $04F4,b
         and #$00FF
         bne _DD99
-        jsl $9BDE69
+        jsl rlUnknown9BDE69
         bra _DD99
 
 
         _DD62
-        jsl $9BE184
-        jsr $9BE08A
-        jsr $9BE128
-        jsl $95F1D5
-        jsl $96BBE2
-        jsl $95F14D
+        jsl rlUnknown9BE184
+        jsr rsUnknown9BE08A
+        jsr rsUnknown9BE128
+        jsl rlUnknown95F1D5
+        jsl rlUnknown96BBE2
+        jsl rlUnknown95F14D
         jsl rlUnknown96D695
-        jsl $96CB44
-        jsl $96A532
-        jsl $95F89A
-        jsl $9BF179
+        jsl rlUnknown96CB44
+        jsl rlUnknown96A532
+        jsl rlUnknown95F89A
+        jsl rlUnknown9BF179
         lda $7FD8B5
         and #$00FF
         beq _DD99
-        jsl $9BDFAA
+        jsl rlUnknown9BDFAA
 
         _DD99
         rtl
@@ -206,25 +206,25 @@
         lda $7FD8BA
         bit #$0002
         beq _DDAD
-        jsl $95F12B
+        jsl rlUnknown95F12B
         bcc _DDAD
-        jsl $9BDFF3
+        jsl rlUnknown9BDFF3
 
         _DDAD
-        jsl $9BE184
-        jsr $9BE08A
-        jsr $9BE128
-        jsl $95F1D5
-        jsl $96BBE2
-        jsl $95F14D
+        jsl rlUnknown9BE184
+        jsr rsUnknown9BE08A
+        jsr rsUnknown9BE128
+        jsl rlUnknown95F1D5
+        jsl rlUnknown96BBE2
+        jsl rlUnknown95F14D
         jsl rlUnknown96D695
-        jsl $96A532
-        jsl $96CB44
-        jsl $95F89A
+        jsl rlUnknown96A532
+        jsl rlUnknown96CB44
+        jsl rlUnknown95F89A
         lda $7FD8B5
         and #$00FF
         beq _DDE2
-        jsl $9BDFAA
+        jsl rlUnknown9BDFAA
         bra _DDE2
 
 
@@ -242,19 +242,19 @@
         .autsiz
         .databank ?
 
-        jsl $9BE184
-        jsr $9BE08A
-        jsr $9BE128
-        jsl $95F1D5
-        jsl $96BBE2
-        jsl $95F14D
+        jsl rlUnknown9BE184
+        jsr rsUnknown9BE08A
+        jsr rsUnknown9BE128
+        jsl rlUnknown95F1D5
+        jsl rlUnknown96BBE2
+        jsl rlUnknown95F14D
         jsl rlUnknown96D695
-        jsl $95F89A
+        jsl rlUnknown95F89A
         lda $7FD8B5
         and #$00FF
         beq _DE11
         stz wGameStateRoutine1,b
-        jsl $91E55A
+        jsl rlUnknown91E55A
 
         _DE11
         rtl
@@ -276,7 +276,7 @@
         sta bBufferINIDISP
         rep #$20
         jsl rlResetHDMAEngine
-        jsl $95F87F
+        jsl rlUnknown95F87F
         jsl rlUnknown96D659
         jsl rlUnknown82E073
         lda #$0000
@@ -286,12 +286,12 @@
         sta $7FD08B
         sta $7FD075
         rep #$20
-        jsl $9BE05D
+        jsl rlUnknown9BE05D
         lda #$9700
         sta $7FD004
         lda #$F12D
         sta $7FD003
-        jsl $95F1A9
+        jsl rlUnknown95F1A9
         sep #$20
         lda $7FD8BA
         ora #$04
@@ -315,30 +315,30 @@
         lda #$01
         sta $7FD000
         rep #$20
-        jsl $95EF54
-        jsl $95F12A
+        jsl rlUnknown95EF54
+        jsl rlUnknown95F12A
         ldx #$0000
         lda #$9900
         sta lR18+1
         lda #$FEAC
         sta lR18
-        jsl $95F967
-        jsl $9BFD71
-        jsl $9BFD8C
-        jsl $9BFD99
-        jsl $9BFDA6
-        jsl $9BFDB3
-        jsl $9BFDC0
-        jsl $9BFDD2
-        jsl $9BFDDF
-        jsl $9BFDEC
-        jsl $9BFDF9
-        jsl $9BFE06
+        jsl rlUnknown95F967
+        jsl rlUnknown9BFD71
+        jsl rsUnknown9BFD8C
+        jsl rsUnknown9BFD99
+        jsl rsUnknown9BFDA6
+        jsl rsUnknown9BFDB3
+        jsl rlUnknown9BFDC0
+        jsl rlUnknown9BFDD2
+        jsl rlUnknown9BFDDF
+        jsl rlUnknown9BFDEC
+        jsl rlUnknown9BFDF9
+        jsl rlUnknown9BFE06
         lda #$9B00
         sta lR18+1
         lda #$DF09
         sta lR18
-        jsl $96BD1A
+        jsl rlUnknown96BD1A
         lda #$0000
         sta wBufferBG1HOFS
         sta wBufferBG1VOFS
@@ -353,8 +353,8 @@
         rep #$20
         lda #$0000
         sta aBGPaletteBuffer,b
-        jsl $9BEAA5
-        jsl $9BFBA9
+        jsl rlUnknown9BEAA5
+        jsl rlUnknown9BFBA9
         jsl rlUnknown809654
         jsl rlEnableVBlank
         sep #$20
@@ -385,7 +385,7 @@
 
         sei
         jsl rlDisableVBlank
-        jsl $9BF297
+        jsl rlUnknown9BF297
         sep #$20
         lda #$80
         sta $2100,b
@@ -398,7 +398,7 @@
         lda #$00
         sta $7FD8B5
         rep #$20
-        jsl $9BE05D
+        jsl rlUnknown9BE05D
         lda #$9700
         sta $7FD004
         lda #$EC63
@@ -425,8 +425,8 @@
         jsl rlUnknown808FAD
         jsl rlResetHDMAEngine
         jsl rlUnknown96D659
-        jsl $95F741
-        jsl $95F7F7
+        jsl rlUnknown95F741
+        jsl rlUnknown95F7F7
         lda #$0000
         sta $7FE18A
         sep #$20
@@ -438,18 +438,18 @@
         lda #$00
         sta $7FD8B5
         rep #$20
-        jsl $9BE05D
+        jsl rlUnknown9BE05D
         lda #$9700
         sta $7FD004
         lda #$F15D
         sta $7FD003
-        jsl $95F1BF
+        jsl rlUnknown95F1BF
         ldx #$0000
         lda #$9900
         sta lR18+1
         lda #$FEAC
         sta lR18
-        jsl $95F967
+        jsl rlUnknown95F967
         sep #$20
         lda #$0F
         sta bBufferINIDISP
@@ -523,7 +523,7 @@
         beq _E0E9
         bit #$0080
         beq _E0BD
-        jsl $9BE0F6
+        jsl rlUnknown9BE0F6
         bra _E0E7
 
 
@@ -882,7 +882,7 @@
         _EAF6
         bit #$0002
         beq _EB03
-        jsl $9BEC6E
+        jsl rlUnknown9BEC6E
         jml _EC6C
 
 
@@ -1150,7 +1150,7 @@
         lda $7FD0BF,x
         sta wR1
         plx
-        jsr $9BED9D
+        jsr rsUnknown9BED9D
         lda $7FD001
         bit #$0001
         bne _ED4A
@@ -1185,7 +1185,7 @@
         lda $7FD0BF,x
         sta wR1
         plx
-        jsr $9BED9D
+        jsr rsUnknown9BED9D
         bra _ED9B
 
 
@@ -1231,7 +1231,7 @@
         lda $7FD0BF,x
         sta wR1
         plx
-        jsr $9BED9D
+        jsr rsUnknown9BED9D
 
         _ED9B
         plx
@@ -1474,8 +1474,8 @@
         pha
         lda $7E8D88,x
         clc
-        adc $7E9388,x
-        sta $7E9388,x
+        adc aEventMovement.aMovementCostMap,x
+        sta aEventMovement.aMovementCostMap,x
         lsr a
         lsr a
         lsr a
@@ -1862,17 +1862,93 @@
         lda #$9900
         sta lR18+1
         lda #$FEB9
-        bra _FDCB
+        bra $9BFDCB
 
-        .byte $A2, $C4, $00, $A9, $00, $99, $85, $25, $A9, $C6, $FE, $80, $32, $A2, $26, $01
-        .byte $A9, $00, $99, $85, $25, $A9, $D3, $FE, $80, $25, $A2, $88, $01, $A9, $00, $99
-        .byte $85, $25, $A9, $E0, $FE, $80, $18, $A2, $EA, $01, $A9, $00, $99, $85, $25, $A9
-        .byte $ED, $FE, $80, $0B, $A2, $4C, $02, $A9, $00, $99, $85, $25, $A9, $FA, $FE
+        .databank 0
 
+        ; 9B/FD8C
 
-        _FDCB
+      rsUnknown9BFD8C ; 9B/FD8C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$00C4
+        lda #$9900
+        sta lR18+1
+        lda #$FEC6
+        bra $9BFDCB
+
+        .databank 0
+
+        ; 9B/FD99
+
+      rsUnknown9BFD99 ; 9B/FD99
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0126
+        lda #$9900
+        sta lR18+1
+        lda #$FED3
+        bra $9BFDCB
+
+        .databank 0
+
+        ; 9B/FDA6
+
+      rsUnknown9BFDA6 ; 9B/FDA6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0188
+        lda #$9900
+        sta lR18+1
+        lda #$FEE0
+        bra $9BFDCB
+
+        .databank 0
+
+        ; 9B/FDB3
+
+      rsUnknown9BFDB3 ; 9B/FDB3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$01EA
+        lda #$9900
+        sta lR18+1
+        lda #$FEED
+        bra $9BFDCB
+
+        .databank 0
+
+        ; 9B/FDC0
+
+      rlUnknown9BFDC0 ; 9B/FDC0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$024C
+        lda #$9900
+        sta lR18+1
+        lda #$FEFA
         sta lR18
-        jsl $95F967
+        jsl rlUnknown95F967
         rtl
 
         .databank 0

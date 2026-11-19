@@ -88,3 +88,145 @@
         ; 8D/A0C6
 
     .endsection Unsorted8DA06ASection
+
+
+    .section Unsorted8DB4F6Section
+
+      .al
+      .xl
+
+      rsUnknown8DB4F6 ; 8D/B4F6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1Input
+        bit #$8000
+        bne _B503
+        bit #$2000
+        bne _B52B
+        rts
+
+
+        _B503
+        lda #$0000
+        sta wCurrentChapter,b
+        lda #$0021
+        jsl rlUnknown808FAD
+        lda #$0002
+        sta $0D77,b
+        lda #$B122
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rts
+
+
+        _B52B
+        rts
+
+        .databank 0
+
+        ; 8D/B52C
+
+      rlUnknown8DB52C ; 8D/B52C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown8DB53A
+        jsr rsUnknown8DB4F6
+        lda #$000B
+        sta wGameStateStep,b
+        rtl
+
+        .databank 0
+
+        ; 8D/B539
+
+    .endsection Unsorted8DB4F6Section
+
+
+    .section Unsorted8DB53ASection
+
+      .al
+      .xl
+
+      rsUnknown8DB53A ; 8D/B53A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0002
+        tsb $08AD,b
+        lda #$FFFF
+        sta $7F7670
+        lda #$0004
+        trb $08AD,b
+        lda #$0008
+        trb $08AD,b
+        lda #$0001
+        trb $08AD,b
+        lda $08DC,b
+        cmp #$003F
+        bcc _B563
+        bra _B5A9
+
+
+        _B563
+        inc $08DC,b
+        lda $08DC,b
+        sta aDialogue.wUnit1,b
+        sta $08B4,b
+        lda $08DC,b
+        sec
+        sbc #$0019
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda $8DB5C9,x
+        sta $08B0,b
+        lda $8DB5C8,x
+        sta $08AF,b
+        lda $08DC,b
+        and #$0003
+        sta $08B6,b
+        lda #$0004
+        sta $08B8,b
+        lda #$0002
+        sta $088B,b
+        lda #$0002
+        sta wScreenFadingProcInput,b
+        rts
+
+
+        _B5A9
+        lda #$0001
+        sta $08DA,b
+        lda #$ECC9
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        jsl rlUnknown88B3AF
+        rts
+
+        .databank 0
+
+        ; 8D/B5C8
+
+    .endsection Unsorted8DB53ASection

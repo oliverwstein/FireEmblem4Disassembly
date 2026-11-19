@@ -685,22 +685,22 @@
         .databank 0
 
         _B315
-        .word $B335
-        .word $B343
-        .word $B358
-        .word $B371
-        .word $B39D
-        .word $B38F
-        .word $B3AB
-        .word $B3B9
-        .word $B343
-        .word $B36A
-        .word $B3C7
-        .word $B3CE
-        .word $B3DD
-        .word $B410
-        .word $B343
-        .word $B343
+        .word <>rsUnknown86B335
+        .word <>rsUnknown86B343
+        .word <>rlUnknown86B358
+        .word <>rsUnknown86B371
+        .word <>rsUnknown86B39D
+        .word <>rsUnknown86B38F
+        .word <>rsUnknown86B3AB
+        .word <>rsUnknown86B3B9
+        .word <>rsUnknown86B343
+        .word <>rsUnknown86B36A
+        .word <>rsUnknown86B3C7
+        .word <>rsUnknown86B3CE
+        .word <>rsUnknown86B3DD
+        .word <>rsUnknown86B410
+        .word <>rsUnknown86B343
+        .word <>rsUnknown86B343
 
         ; 86/B335
 

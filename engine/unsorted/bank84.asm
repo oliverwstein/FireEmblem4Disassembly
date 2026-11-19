@@ -1808,7 +1808,7 @@
 
         _CC85
         phx
-        jsl $88B2A5
+        jsl rlUnknown88B2A5
         plx
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
@@ -3219,12 +3219,12 @@
         bit #UnitStateCanto
         bne _F7DA
         jsr rsUnknown84F7F5
-        jsr $84F815
-        jsr $84F845
-        jsr $84F865
+        jsr rsUnknown84F815
+        jsr rsUnknown84F845
+        jsr rsUnknown84F865
 
         _F7DA
-        jsr $84F877
+        jsr rsUnknown84F877
         inc wR0
         lda wR0
         cmp #$0008
@@ -3265,20 +3265,130 @@
         jsl rlUnknown84FED2
         ora #$0000
         beq _F814
-        jml _F889
+        jml $84F889
 
 
         _F814
         rts
 
-        .byte $A9, $08, $20, $85, $02, $A5, $00, $22, $5C, $F7, $84, $90, $0A, $22, $A5, $E6
-        .byte $87, $90, $04, $5C, $89, $F8, $84, $60, $A9, $28, $20, $85, $02, $A5, $00, $22
-        .byte $5C, $F7, $84, $90, $0A, $22, $09, $E7, $87, $90, $04, $5C, $89, $F8, $84, $60
-        .byte $A9, $10, $20, $85, $02, $A5, $00, $22, $53, $F7, $84, $90, $12, $64, $18, $A9
-        .byte $04, $00, $22, $D2, $FE, $84, $09, $00, $00, $F0, $04, $5C, $89, $F8, $84, $60
-        .byte $A9, $18, $20, $85, $02, $A5, $00, $22, $65, $F7, $84, $90, $04, $5C, $89, $F8
-        .byte $84, $60, $A9, $20, $20, $85, $02, $A5, $00, $22, $53, $F7, $84, $90, $04, $5C
-        .byte $89, $F8, $84, $60
+        .databank 0
+
+        ; 84/F815
+
+      rsUnknown84F815 ; 84/F815
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2008
+        sta wR1
+        lda wR0
+        jsl rlUnknown84F75C
+        bcc _F82C
+        jsl rlUnknown87E6A5
+        bcc _F82C
+        jml $84F889
+
+
+        _F82C
+        rts
+
+        .databank 0
+
+        ; 84/F82D
+
+      rsUnknown84F82D ; 84/F82D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2028
+        sta wR1
+        lda wR0
+        jsl rlUnknown84F75C
+        bcc _F844
+        jsl rlUnknown87E709
+        bcc _F844
+        jml $84F889
+
+
+        _F844
+        rts
+
+        .databank 0
+
+        ; 84/F845
+
+      rsUnknown84F845 ; 84/F845
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2010
+        sta wR1
+        lda wR0
+        jsl rlCheckWeaponInInventorySlotEquippable
+        bcc _F864
+        stz wR12
+        lda #$0004
+        jsl rlUnknown84FED2
+        ora #$0000
+        beq _F864
+        jml $84F889
+
+
+        _F864
+        rts
+
+        .databank 0
+
+        ; 84/F865
+
+      rsUnknown84F865 ; 84/F865
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2018
+        sta wR1
+        lda wR0
+        jsl rlUnknown84F765
+        bcc _F876
+        jml $84F889
+
+
+        _F876
+        rts
+
+        .databank 0
+
+        ; 84/F877
+
+      rsUnknown84F877 ; 84/F877
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2020
+        sta wR1
+        lda wR0
+        jsl rlCheckWeaponInInventorySlotEquippable
+        bcc _F888
+        jml _F889
+
+
+        _F888
+        rts
 
 
         _F889
@@ -3388,8 +3498,8 @@
         sta wR0
 
         _F91B
-        jsr $84F815
-        jsr $84F82D
+        jsr rsUnknown84F815
+        jsr rsUnknown84F82D
         inc wR0
         lda wR0
         cmp #$0008

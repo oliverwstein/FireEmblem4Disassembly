@@ -5399,7 +5399,7 @@
 
         PROC_HALT
 
-      procUnknown828AD9 ; 82/8AD9
+      procUnknown828B09 ; 82/8AD9
 
         .structProcInfo "ME", rlProcUnknown828AF2Init, rlProcUnknown828AF2Cycle, aProcUnknown828AF2Code
 

@@ -188,7 +188,7 @@
         inc x
         txa
         sta $7FE3EA
-        jsl $96955D
+        jsl rlUnknown96955D
         plx
         rtl
 
@@ -319,7 +319,7 @@
         sta $0AE2,b
         lda #$4F85
         sta $0AE1,b
-        jsl $9582D8
+        jsl rlUnknown9582D8
         rtl
 
         .databank 0
@@ -365,7 +365,7 @@
         and #$F9
         sta $0AE0,b
         rep #$20
-        jsl $969861
+        jsl rlUnknown969861
 
         _98DB
         clc
@@ -510,7 +510,7 @@
         lda $998F0F,x
         cmp #$8080
         bne _9F3A
-        jsl $969EF9
+        jsl rlUnknown969EF9
         bra _9F68
 
 
@@ -701,64 +701,64 @@
         lda [lR18],y
         cmp #$FFFF
         bne _A2E5
-        jsr $96A334
+        jsr rsUnknown96A334
         bra _A32E
 
 
         _A2E5
         cmp #$FFFE
         bne _A2EF
-        jsr $96A343
+        jsr rsUnknown96A343
         bra _A32E
 
 
         _A2EF
         cmp #$FFFD
         bne _A2F9
-        jsr $96A359
+        jsr rsUnknown96A359
         bra _A2D0
 
 
         _A2F9
         cmp #$FFFC
         bne _A303
-        jsr $96A36F
+        jsr rsUnknown96A36F
         bra _A2D0
 
 
         _A303
         cmp #$FFFB
         bne _A30D
-        jsr $96A3C5
+        jsr rsUnknown96A3C5
         bra _A2D0
 
 
         _A30D
         cmp #$FFF8
         bne _A317
-        jsr $96A3D8
+        jsr rsUnknown96A3D8
         bra _A2D0
 
 
         _A317
         cmp #$FFFA
         bne _A321
-        jsr $96A385
+        jsr rsUnknown96A385
         bra _A2D0
 
 
         _A321
         cmp #$FFF9
         bne _A32B
-        jsr $96A396
+        jsr rsUnknown96A396
         bra _A2D0
 
 
         _A32B
-        jsr $96A3F3
+        jsr rsUnknown96A3F3
 
         _A32E
-        jsl $96C9AD
+        jsl rlUnknown96C9AD
         ply
         rtl
 
@@ -815,7 +815,7 @@
 
         phx
         ldx $0AE9,b
-        jsl $95C057
+        jsl rlUnknown95C057
         lda $7FE4BC
         clc
         adc #$0002
@@ -836,7 +836,7 @@
 
         phx
         ldx $0AE9,b
-        jsl $95C077
+        jsl rlUnknown95C077
         lda $7FE4BC
         clc
         adc #$0002
@@ -855,7 +855,7 @@
         .autsiz
         .databank ?
 
-        jsl $95AEA2
+        jsl rlUnknown95AEA2
         lda $7FE4BC
         clc
         adc #$0002
@@ -873,7 +873,7 @@
         .autsiz
         .databank ?
 
-        jsl $96F9BF
+        jsl rlUnknown96F9BF
         lda $0AE4,b
         bit #$0008
         beq _A3B8
@@ -889,7 +889,7 @@
         ldx #$0043
 
         _A3B3
-        jsl $95AB53
+        jsl rlUnknown95AB53
         plx
 
         _A3B8
@@ -911,7 +911,7 @@
         .databank ?
 
         phx
-        jsl $95B006
+        jsl rlUnknown95B006
         lda $7FE4BC
         clc
         adc #$0002
@@ -934,7 +934,7 @@
         lda $0AE0,b
         bit #$0040
         bne _A3E5
-        jsl $95B02B
+        jsl rlUnknown95B02B
 
         _A3E5
         lda $7FE4BC
@@ -1079,9 +1079,9 @@
         .databank ?
 
         ldx #$0000
-        jsl $96A541
+        jsl rlUnknown96A541
         ldx #$0024
-        jsl $96A541
+        jsl rlUnknown96A541
         rtl
 
         .databank 0
@@ -1107,8 +1107,8 @@
 
 
         _A559
-        jsr $96A715
-        jsr $96B719
+        jsr rsUnknown96A715
+        jsr rsUnknown96B719
 
         _A55F
         sep #$20
@@ -1134,9 +1134,9 @@
         lda @l $7FEC1F,x
         sep #$20
         sta $E4DE,b,y
-        lda @l $7FEC22,x
+        lda @l aUnit2DataBuffer._ROM.SkillGrowth,x
         sec
-        sbc @l $7FEC24,x
+        sbc @l aUnit2DataBuffer._ROM.SpeedGrowth,x
         sta $E4DF,b,y
         lda @l $7FEC25,x
         sta $E4E1,b,y
@@ -1150,9 +1150,9 @@
         sbc @l $7FE198
         sep #$20
         sta $E4DE,b,y
-        lda @l $7FEC22,x
+        lda @l aUnit2DataBuffer._ROM.SkillGrowth,x
         sec
-        sbc @l $7FEC24,x
+        sbc @l aUnit2DataBuffer._ROM.SpeedGrowth,x
         sec
         sbc @l $7FE19A
         sta $E4DF,b,y
@@ -1213,9 +1213,9 @@
         and #$00FF
         asl a
         sta @l $7FE4E2,x
-        jsl $96A6F7
+        jsl rlUnknown96A6F7
         lda #$0078
-        jsl $96ADE9
+        jsl rlUnknown96ADE9
         plx
         jml _A6F1
 
@@ -1223,10 +1223,10 @@
         _A631
         phx
         tyx
-        jsr $96B5D2
-        jsl $96A6F7
+        jsr rsUnknown96B5D2
+        jsl rlUnknown96A6F7
         lda #$0078
-        jsl $96ADE9
+        jsl rlUnknown96ADE9
         plx
         jml _A6F1
 
@@ -1234,9 +1234,9 @@
         _A646
         phx
         tyx
-        jsr $96B5D2
-        jsl $96A6F7
-        jsl $96B317
+        jsr rsUnknown96B5D2
+        jsl rlUnknown96A6F7
+        jsl rlUnknown96B317
         plx
         jml _A6F1
 
@@ -1247,8 +1247,8 @@
         lda @l $7FE4E1,x
         and #$00FF
         sta @l $7FE4E2,x
-        jsl $96A6F7
-        jsr $96B0E1
+        jsl rlUnknown96A6F7
+        jsr rsUnknown96B0E1
         plx
         jml _A6F1
 
@@ -1259,8 +1259,8 @@
         lda @l $7FE4E1,x
         and #$00FF
         sta @l $7FE4E2,x
-        jsl $96A6F7
-        jsr $96B1AE
+        jsl rlUnknown96A6F7
+        jsr rsUnknown96B1AE
         plx
         bra _A6F1
 
@@ -1271,8 +1271,8 @@
         lda @l $7FE4E1,x
         and #$00FF
         sta @l $7FE4E2,x
-        jsl $96A6F7
-        jsr $96B254
+        jsl rlUnknown96A6F7
+        jsr rsUnknown96B254
         plx
         bra _A6F1
 
@@ -1284,9 +1284,9 @@
         and #$00FF
         asl a
         sta @l $7FE4E2,x
-        jsl $96A6F7
+        jsl rlUnknown96A6F7
         lda #$00C0
-        jsl $96ADE9
+        jsl rlUnknown96ADE9
         plx
         bra _A6F1
 
@@ -1294,10 +1294,10 @@
         _A6BB
         phx
         tyx
-        jsr $96B623
-        jsl $96A6F7
+        jsr rsUnknown96B623
+        jsl rlUnknown96A6F7
         lda #$00C0
-        jsl $96AEDC
+        jsl rlUnknown96AEDC
         plx
         bra _A6F1
 
@@ -1305,10 +1305,10 @@
         _A6CE
         phx
         tyx
-        jsr $96B623
-        jsl $96A6F7
+        jsr rsUnknown96B623
+        jsl rlUnknown96A6F7
         lda #$0070
-        jsl $96AFCF
+        jsl rlUnknown96AFCF
         plx
         bra _A6F1
 
@@ -1316,14 +1316,14 @@
         _A6E1
         phx
         tyx
-        jsr $96B623
-        jsl $96A6F7
+        jsr rsUnknown96B623
+        jsl rlUnknown96A6F7
         lda #$0070
-        jsr $96B43B
+        jsr rsUnknown96B43B
         plx
 
         _A6F1
-        jsr $96B6E3
+        jsr rsUnknown96B6E3
         ply
         plx
         rtl
@@ -1383,122 +1383,122 @@
         rep #$20
 
         _A729
-        jsr $96ABE2
+        jsr rsUnknown96ABE2
         xba
         and #$00FF
         cmp #$00FF
         bne _A73C
-        jsr $96A7E3
+        jsr rsUnknown96A7E3
         jml _A7DF
 
 
         _A73C
         cmp #$00FD
         bne _A748
-        jsr $96A81C
+        jsr rsUnknown96A81C
         jml _A7DF
 
 
         _A748
         cmp #$00FE
         bne _A754
-        jsr $96A843
+        jsr rsUnknown96A843
         jml _A7DB
 
 
         _A754
         cmp #$00FC
         bne _A75E
-        jsr $96A87E
+        jsr rsUnknown96A87E
         bra _A7DB
 
 
         _A75E
         cmp #$00FB
         bne _A768
-        jsr $96A8B2
+        jsr rsUnknown96A8B2
         bra _A7DB
 
 
         _A768
         cmp #$00FA
         bne _A772
-        jsr $96A913
+        jsr rsUnknown96A913
         bra _A7DB
 
 
         _A772
         cmp #$00F9
         bne _A77C
-        jsr $96A928
+        jsr rsUnknown96A928
         bra _A7DF
 
 
         _A77C
         cmp #$00F8
         bne _A786
-        jsr $96A937
+        jsr rsUnknown96A937
         bra _A7DB
 
 
         _A786
         cmp #$00F7
         bne _A790
-        jsr $96A969
+        jsr rsUnknown96A969
         bra _A7DB
 
 
         _A790
         cmp #$00F6
         bne _A79A
-        jsr $96A99B
+        jsr rsUnknown96A99B
         bra _A7DB
 
 
         _A79A
         cmp #$00F5
         bne _A7A4
-        jsr $96AA10
+        jsr rsUnknown96AA10
         bra _A7DB
 
 
         _A7A4
         cmp #$00F4
         bne _A7AE
-        jsr $96AA54
+        jsr rsUnknown96AA54
         bra _A7DB
 
 
         _A7AE
         cmp #$00F3
         bne _A7B8
-        jsr $96AAA4
+        jsr rsUnknown96AAA4
         bra _A7DB
 
 
         _A7B8
         cmp #$00F2
         bne _A7C2
-        jsr $96AB0E
+        jsr rsUnknown96AB0E
         bra _A7DB
 
 
         _A7C2
         cmp #$00F1
         bne _A7CC
-        jsr $96AB4B
+        jsr rsUnknown96AB4B
         bra _A7DB
 
 
         _A7CC
         cmp #$00F0
         bne _A7D6
-        jsr $96AB88
+        jsr rsUnknown96AB88
         bra _A7DB
 
 
         _A7D6
-        jsr $96ABC5
+        jsr rsUnknown96ABC5
         bra _A7DF
 
 
@@ -1526,14 +1526,14 @@
         lda $7FEC1D,x
         bit #$0080
         beq _A81B
-        jsr $96ACAB
+        jsr rsUnknown96ACAB
         sep #$20
         lda $7FEC1D,x
         and #$7F
         sta $7FEC1D,x
         rep #$20
         lda #$0000
-        sta $7FEC36,x
+        sta aUnit2DataBuffer._Inventory.ItemCount,x
         sta $7FEC3A,x
         sta $7FEC3F,x
         sep #$20
@@ -1590,12 +1590,12 @@
         .autsiz
         .databank ?
 
-        lda $7FEC2C,x
+        lda aUnit2DataBuffer._ROM.Skills1,x
         and #$00FF
         beq _A865
         dec a
         sep #$20
-        sta $7FEC2C,x
+        sta aUnit2DataBuffer._ROM.Skills1,x
         rep #$20
         bne _A875
         lda $7FEC29,x
@@ -1606,15 +1606,15 @@
 
 
         _A865
-        jsr $96ABE2
+        jsr rsUnknown96ABE2
         and #$00FF
         beq _A875
         sep #$20
-        sta $7FEC2C,x
+        sta aUnit2DataBuffer._ROM.Skills1,x
         rep #$20
 
         _A875
-        lda $7FEC26,x
+        lda aUnit2DataBuffer._ROM.DefenseGrowth,x
         sta $7FEC29,x
 
         _A87D
@@ -1635,7 +1635,7 @@
         phy
         ldy $0AE9,b
         lda $0AF8,b,y
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda $0AF9,b,y
         sta $7FEC1F,x
         lda $0AFB,b,y
@@ -1668,7 +1668,7 @@
         phy
         ldy $0AEB,b
         lda $0AF8,b,y
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda $0AF9,b,y
         sta $7FEC1F,x
         lda $0AFB,b,y
@@ -1677,7 +1677,7 @@
         clc
         adc #$1000
         sta $7FEC23,x
-        jsl $95B050
+        jsl rlUnknown95B050
         lda wR0
         cmp #$0100
         bcc _A903
@@ -1723,7 +1723,7 @@
 
         pha
         phx
-        jsl $96B672
+        jsl rlUnknown96B672
         lda $7FEC29,x
         clc
         adc #$0002
@@ -1769,7 +1769,7 @@
         phy
         ldy $0AE9,b
         lda $0AF8,b,y
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda $0AF9,b,y
         sta $7FEC1F,x
         lda $0AFB,b,y
@@ -1801,7 +1801,7 @@
         phy
         ldy $0AEB,b
         lda $0AF8,b,y
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda $0AF9,b,y
         sta $7FEC1F,x
         lda $0AFB,b,y
@@ -1833,7 +1833,7 @@
         phy
         ldy $0AEB,b
         lda $0AF8,b,y
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda $0AF9,b,y
         sta $7FEC1F,x
         lda $7FEC65
@@ -1847,13 +1847,13 @@
         pla
         phx
         ldx $0AEB,b
-        jsl $95B5FD
+        jsl rlUnknown95B5FD
         sec
         sbc #$0010
         xba
         plx
         sta $7FEC23,x
-        jsl $95B050
+        jsl rlUnknown95B050
         lda wR0
         cmp #$0100
         bcc _AA00
@@ -1902,7 +1902,7 @@
         phy
         ldy $0AEB,b
         lda #$0000
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda $7FE198
         clc
         adc #$0080
@@ -1946,7 +1946,7 @@
         sta $7FEC1D,x
         rep #$20
         lda #$0000
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda $7FE477
         and #$03FF
         sec
@@ -1986,7 +1986,7 @@
         phy
         ldy $0AEB,b
         lda $0AF8,b,y
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda $0AF9,b,y
         sta $7FEC1F,x
         lda $7FEC65
@@ -2000,7 +2000,7 @@
         pla
         lda #$F000
         sta $7FEC23,x
-        jsl $95B050
+        jsl rlUnknown95B050
         lda wR0
         cmp #$0100
         bcc _AAFE
@@ -2053,7 +2053,7 @@
         sta $7FEC1D,x
         rep #$20
         lda #$0000
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda #$0080
         sta $7FEC1F,x
         lda #$4A00
@@ -2088,7 +2088,7 @@
         sta $7FEC1D,x
         rep #$20
         lda #$0000
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda #$0080
         sta $7FEC1F,x
         lda #$4A10
@@ -2123,7 +2123,7 @@
         sta $7FEC1D,x
         rep #$20
         lda #$0000
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda #$0080
         sta $7FEC1F,x
         lda #$3400
@@ -2149,7 +2149,7 @@
         .autsiz
         .databank ?
 
-        jsr $96ABE2
+        jsr rsUnknown96ABE2
         sep #$20
         sta $7FEC25,x
         xba
@@ -2268,7 +2268,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl $96B517
+        jsl rlUnknown96B517
         ldy #$0000
         sep #$20
         lda wR2
@@ -2314,7 +2314,7 @@
         sep #$20
 
         _AE7D
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _AED7
         inc y
@@ -2331,7 +2331,7 @@
         dec y
         cpy #$0000
         bmi _AEC7
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _AED7
         rep #$20
@@ -2345,7 +2345,7 @@
         .al
         and #$85FF
         asl $A8
-        jsl $96B517
+        jsl rlUnknown96B517
         sep #$20
 
         _AEB5
@@ -2355,7 +2355,7 @@
         dec y
         cpy #$0000
         bmi _AEC7
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _AED7
         bra _AEB5
@@ -2423,7 +2423,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl $96B517
+        jsl rlUnknown96B517
         ldy #$0000
         sep #$20
         lda wR2
@@ -2469,7 +2469,7 @@
         sep #$20
 
         _AF70
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _AFCA
         inc y
@@ -2486,7 +2486,7 @@
         dec y
         cpy #$0000
         bmi _AFBA
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _AFCA
         rep #$20
@@ -2500,7 +2500,7 @@
         .al
         and #$85FF
         asl $A8
-        jsl $96B517
+        jsl rlUnknown96B517
         sep #$20
 
         _AFA8
@@ -2510,7 +2510,7 @@
         dec y
         cpy #$0000
         bmi _AFBA
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _AFCA
         bra _AFA8
@@ -2574,7 +2574,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl $96B517
+        jsl rlUnknown96B517
         ldy #$0000
         sep #$20
         lda wR2
@@ -2709,7 +2709,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl $96B517
+        jsl rlUnknown96B517
         ldy #$0000
         sep #$20
         lda wR3
@@ -2741,7 +2741,7 @@
         bne _B147
 
         _B15C
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _B1A9
         inc y
@@ -2772,7 +2772,7 @@
         dec y
         cpy #$0000
         bmi _B197
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _B1A9
         rep #$20
@@ -2844,7 +2844,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl $96B517
+        jsl rlUnknown96B517
         lda wR3
         tay
         sep #$20
@@ -2879,7 +2879,7 @@
         dec y
         cpy #$0000
         bmi _B23D
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _B24F
         rep #$20
@@ -2951,7 +2951,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl $96B517
+        jsl rlUnknown96B517
         ldy #$0000
         sep #$20
         lda wR3
@@ -2981,7 +2981,7 @@
         bne _B2B8
 
         _B2CD
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _B312
         inc y
@@ -3004,7 +3004,7 @@
         dec y
         cpy #$0000
         bmi _B300
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _B312
         rep #$20
@@ -3079,7 +3079,7 @@
         lda $7FE4E2,x
         sta wR4
         lda wR3
-        jsr $96B56F
+        jsr rsUnknown96B56F
         pha
         sep #$20
         lda wR1
@@ -3100,7 +3100,7 @@
         rep #$20
         sta wR5
         pla
-        jsl $96B517
+        jsl rlUnknown96B517
         ldy #$0000
         sep #$20
         lda wR2
@@ -3170,7 +3170,7 @@
         dec y
         cpy #$0000
         bmi _B426
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _B436
         rep #$20
@@ -3184,7 +3184,7 @@
         .al
         and #$85FF
         asl $A8
-        jsl $96B517
+        jsl rlUnknown96B517
         sep #$20
 
         _B413
@@ -3195,7 +3195,7 @@
         dec y
         cpy #$0000
         bmi _B426
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _B436
         bra _B413
@@ -3262,7 +3262,7 @@
         sta wR3
         lda $7FE4E2,x
         sta wR4
-        jsl $96B517
+        jsl rlUnknown96B517
         ldy #$0000
         sep #$20
         lda wR3
@@ -3314,7 +3314,7 @@
         pla
 
         _B4D1
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _B512
         inc y
@@ -3333,7 +3333,7 @@
         dec y
         cpy #$0000
         bmi _B500
-        jsr $96B5B5
+        jsr rsUnknown96B5B5
         dec wR0
         beq _B512
         rep #$20
@@ -3650,7 +3650,7 @@
 
 
         _B685
-        jsr $96B68A
+        jsr rsUnknown96B68A
         plx
         rtl
 
@@ -3667,20 +3667,20 @@
 
         pha
         pha
-        jsl $95B050
-        jsr $96B894
+        jsl rlUnknown95B050
+        jsr rsUnknown96B894
         lda wR0
         sta wR1
         clc
-        jsl $95E304
+        jsl rlUnknown95E304
         pha
         sta wR0
         lda wR1
-        jsl $95CE5E
+        jsl rlUnknown95CE5E
         sta wR0
         pla
         sta wR1
-        jsl $95B184
+        jsl rlUnknown95B184
         bcc _B6B6
         pla
         eor #$8000
@@ -3692,20 +3692,20 @@
 
         _B6B7
         ora wR1
-        sta $7FEC36,x
+        sta aUnit2DataBuffer._Inventory.ItemCount,x
         pla
         pha
         sta wR1
         lda wR0
         pha
         lda wR1
-        jsr $96B852
+        jsr rsUnknown96B852
         pla
         sta wR0
         pla
         asl a
-        jsl $95E33B
-        jsl $95CE78
+        jsl rlUnknown95E33B
+        jsl rlUnknown95CE78
         lda wR0
         sta $7FEC3C,x
         lda wR1
@@ -3728,7 +3728,7 @@
         bit #$0020
         beq _B717
         lda #$0000
-        sta $7FEC1E,x
+        sta aUnit2DataBuffer._ROM.StrengthGrowth,x
         lda $7FE477
         and #$03FF
         sec
@@ -3759,7 +3759,7 @@
         .databank ?
 
         phx
-        lda $7FEC36
+        lda aUnit2DataBuffer._Inventory.ItemCount
         bne _B724
         jml _B743
 
@@ -3771,9 +3771,9 @@
 
         _B72A
         sta wR0
-        jsr $96B745
+        jsr rsUnknown96B745
         bcc _B734
-        jsr $96A81C
+        jsr rsUnknown96A81C
 
         _B734
         bra _B743
@@ -3782,9 +3782,9 @@
         _B736
         and #$7FFF
         sta wR0
-        jsr $96B794
+        jsr rsUnknown96B794
         bcc _B743
-        jsr $96A81C
+        jsr rsUnknown96A81C
 
         _B743
         plx
@@ -3803,14 +3803,14 @@
 
         phx
         sta wR2
-        lda $7FEC1E
+        lda aUnit2DataBuffer._ROM.StrengthGrowth
         clc
         adc wR2
-        sta $7FEC1E
-        lda $7FEC20
+        sta aUnit2DataBuffer._ROM.StrengthGrowth
+        lda aUnit2DataBuffer._ROM.MagicGrowth
         adc #$0000
         sep #$20
-        sta $7FEC20
+        sta aUnit2DataBuffer._ROM.MagicGrowth
         rep #$20
         lda $7FEC1F
         cmp #$0200
@@ -3857,14 +3857,14 @@
         .databank ?
 
         sta wR2
-        lda $7FEC1E
+        lda aUnit2DataBuffer._ROM.StrengthGrowth
         sec
         sbc wR2
-        sta $7FEC1E
-        lda $7FEC20
+        sta aUnit2DataBuffer._ROM.StrengthGrowth
+        lda aUnit2DataBuffer._ROM.MagicGrowth
         sbc #$0000
         sep #$20
-        sta $7FEC20
+        sta aUnit2DataBuffer._ROM.MagicGrowth
         rep #$20
         lda $7FEC1F
         bpl _B7B9
@@ -3928,7 +3928,7 @@
         lda $0AFE,b,x
         and #$00FF
         sta wR1
-        lda $7FEC24
+        lda aUnit2DataBuffer._ROM.SpeedGrowth
         and #$00FF
         sta wR2
         lda wR1
@@ -3950,11 +3950,11 @@
         _B87E
         sta wR3
         lda wR2
-        jsl $95CE5E
+        jsl rlUnknown95CE5E
         ora wR3
         sta $7FEC3F
         lda wR1
-        sta $7FEC32
+        sta aUnit2DataBuffer._ROM.HolyBlood2
         plx
         rts
 
@@ -4033,12 +4033,12 @@
         lda wR2
         sta wR4
         sec
-        jsl $95B530
+        jsl rlUnknown95B530
         sta wR0
         lda wR2
-        jsl $95CE5E
+        jsl rlUnknown95CE5E
         ora wR3
-        sta $7FEC36
+        sta aUnit2DataBuffer._Inventory.ItemCount
         lda wR3
         bmi _B921
         lda $7FEC1F
@@ -4054,10 +4054,10 @@
 
         _B928
         pha
-        lda $7FEC1E
-        sta $7FEC2D
+        lda aUnit2DataBuffer._ROM.StrengthGrowth
+        sta aUnit2DataBuffer._ROM.Skills2
         pla
-        sta $7FEC2E
+        sta aUnit2DataBuffer._ROM.Skills3
         lda wR4
         plx
         rts
@@ -4124,7 +4124,7 @@
         lda $7FECFB
         tay
         lda $7FECFD
-        jsl $95C4E3
+        jsl rlUnknown95C4E3
         sep #$20
         lda #$02
         sta $7FECF4
@@ -4172,7 +4172,7 @@
         .autsiz
         .databank ?
 
-        jsl $96A4B2
+        jsl rlUnknown96A4B2
         rtl
 
         .databank 0
@@ -4291,7 +4291,7 @@
         bit #$0001
         beq _BE45
         phb
-        jsl $96BE53
+        jsl rlUnknown96BE53
         plb
         .databank ?
 
@@ -4358,7 +4358,7 @@
 
 
         _C8AE
-        jsl $96C904
+        jsl rlUnknown96C904
         lda $7FF5AC
         and #$00FF
         pha
@@ -4530,12 +4530,12 @@
         beq _CB5F
         bit #$0002
         bne _CB5C
-        jsr $96CB6D
+        jsr rsUnknown96CB6D
         bra _CB5F
 
 
         _CB5C
-        jsr $96D43F
+        jsr rsUnknown96D43F
 
         _CB5F
         txa
@@ -4571,59 +4571,59 @@
         rep #$20
 
         _CB7E
-        jsr $96CDA3
+        jsr rsUnknown96CDA3
         xba
         and #$00FF
         cmp #$00FF
         bne _CB8F
-        jsr $96CBE1
+        jsr rsUnknown96CBE1
         bra _CBD2
 
 
         _CB8F
         cmp #$00FD
         bne _CB99
-        jsr $96CC1A
+        jsr rsUnknown96CC1A
         bra _CBD2
 
 
         _CB99
         cmp #$00FE
         bne _CBA3
-        jsr $96CC40
+        jsr rsUnknown96CC40
         bra _CBD0
 
 
         _CBA3
         cmp #$00FC
         bne _CBAD
-        jsr $96CC7B
+        jsr rsUnknown96CC7B
         bra _CBD0
 
 
         _CBAD
         cmp #$00FB
         bne _CBB7
-        jsr $96CCAF
+        jsr rsUnknown96CCAF
         bra _CBD0
 
 
         _CBB7
         cmp #$00FA
         bne _CBC1
-        jsr $96CD23
+        jsr rsUnknown96CD23
         bra _CBD0
 
 
         _CBC1
         cmp #$00F9
         bne _CBCB
-        jsr $96CD32
+        jsr rsUnknown96CD32
         bra _CBD0
 
 
         _CBCB
-        jsr $96CD51
+        jsr rsUnknown96CD51
         bra _CBD2
 
 
@@ -4634,9 +4634,9 @@
         _CBD2
         .as
         rep #$20
-        jsl $96D256
-        jsl $96D05F
-        jsl $96CEE6
+        jsl rlUnknown96D256
+        jsl rlUnknown96D05F
+        jsl rlUnknown96CEE6
         rts
 
         .databank 0
@@ -4650,7 +4650,7 @@
         .autsiz
         .databank ?
 
-        jsr $96ACAB
+        jsr rsUnknown96ACAB
         sep #$20
         phx
         cpx #$0000
@@ -4666,7 +4666,7 @@
         and #$FE
         sta $7FED5C,x
         rep #$20
-        jsl $96CECE
+        jsl rlUnknown96CECE
         sep #$20
         lda $7FE4B8
         beq _CC13
@@ -4736,7 +4736,7 @@
 
 
         _CC62
-        jsr $96CDA3
+        jsr rsUnknown96CDA3
         and #$00FF
         beq _CC72
         sep #$20
@@ -4765,7 +4765,7 @@
         phx
         ldx $0AE9,b
         lda $0AF8,b,x
-        sta $7FEC1E
+        sta aUnit2DataBuffer._ROM.StrengthGrowth
         lda $0AF9,b,x
         sta $7FEC1F
         lda $0AFB,b,x
@@ -4797,7 +4797,7 @@
         phx
         ldx $0AEB,b
         lda $0AF8,b,x
-        sta $7FEC1E
+        sta aUnit2DataBuffer._ROM.StrengthGrowth
         lda $0AF9,b,x
         sta $7FEC1F
         lda $0AFB,b,x
@@ -4806,7 +4806,7 @@
         clc
         adc #$1000
         sta $7FEC23
-        jsl $95B050
+        jsl rlUnknown95B050
         lda wR0
         cmp #$0100
         bcc _CCFF
@@ -5033,7 +5033,7 @@
         lda $7FED74
         and #$00FF
         sta wR5
-        jsl $96CF58
+        jsl rlUnknown96CF58
 
         _CF23
         lda $7FED8A
@@ -5057,7 +5057,7 @@
         lda $7FED90
         and #$00FF
         sta wR5
-        jsl $96CF58
+        jsl rlUnknown96CF58
 
         _CF56
         plx
@@ -5259,13 +5259,13 @@
         bit #$0001
         bne _D082
         lda $7FED79
-        jsl $96D0B6
+        jsl rlUnknown96D0B6
         bra _D08A
 
 
         _D082
         lda $7FED79
-        jsl $96D185
+        jsl rlUnknown96D185
 
         _D08A
         lda $7FED8A
@@ -5277,13 +5277,13 @@
         bit #$0001
         bne _D0AC
         lda $7FED95
-        jsl $96D11D
+        jsl rlUnknown96D11D
         bra _D0B4
 
 
         _D0AC
         lda $7FED95
-        jsl $96D1EC
+        jsl rlUnknown96D1EC
 
         _D0B4
         plx
@@ -5677,7 +5677,7 @@
         clc
         adc #$0200
         sta $7FEDA8
-        jsl $96D2D7
+        jsl rlUnknown96D2D7
         sep #$20
         sta $7FED79,x
         rep #$20
@@ -5744,12 +5744,12 @@
         lda wR4
         cmp wR6
         bcs _D30F
-        jsr $96D417
+        jsr rsUnknown96D417
         bra _D312
 
 
         _D30F
-        jsr $96D402
+        jsr rsUnknown96D402
 
         _D312
         txa
@@ -5781,12 +5781,12 @@
         lda wR4
         cmp wR8
         bcs _D34D
-        jsr $96D3ED
+        jsr rsUnknown96D3ED
         bra _D350
 
 
         _D34D
-        jsr $96D42C
+        jsr rsUnknown96D42C
 
         _D350
         txa
@@ -5838,12 +5838,12 @@
         lda wR6
         cmp wR8
         bcs _D3AA
-        jsr $96D402
+        jsr rsUnknown96D402
         bra _D3AD
 
 
         _D3AA
-        jsr $96D3ED
+        jsr rsUnknown96D3ED
 
         _D3AD
         txa
@@ -5866,12 +5866,12 @@
         lda wR8
         cmp wR6
         bcs _D3D4
-        jsr $96D402
+        jsr rsUnknown96D402
         bra _D3D7
 
 
         _D3D4
-        jsr $96D3ED
+        jsr rsUnknown96D3ED
 
         _D3D7
         txa
@@ -6087,14 +6087,14 @@
         and #$00FF
         cmp #$00FF
         bne _D4B1
-        jsr $96CBE1
+        jsr rsUnknown96CBE1
         jml _D5D8
 
 
         _D4B1
         cmp #$00FD
         bne _D4BD
-        jsr $96CC1A
+        jsr rsUnknown96CC1A
         jml _D5D8
 
 
@@ -6404,7 +6404,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        jsr $96DB36
+        jsr rsUnknown96DB36
         plx
         rtl
 
@@ -6681,7 +6681,7 @@
         and #$03FF
         sec
         sbc #$0100
-        jsl $95A164
+        jsl rlUnknown95A164
         eor #$FFFF
         inc a
         sec
@@ -6703,7 +6703,7 @@
         sbc $7FE198
         sec
         sbc #$0100
-        jsl $95A164
+        jsl rlUnknown95A164
         eor #$FFFF
         inc a
         sec
@@ -6834,7 +6834,7 @@
         tax
         cpx #$003F
         bcc _DE74
-        jsl $96E803
+        jsl rlUnknown96E803
         ply
         plx
         rtl
@@ -7021,7 +7021,7 @@
         _EC0D
         cmp #$8081
         bne _EC18
-        jsl $96EC91
+        jsl rlUnknown96EC91
         bra _EC48
 
 
@@ -7120,8 +7120,8 @@
         plp
         plb
         .databank $96
-        jsl $96F28D
-        jsl $96F275
+        jsl rlUnknown96F28D
+        jsl rlUnknown96F275
 
         _EEBA
         ply
@@ -7271,42 +7271,42 @@
         and #$00FF
         cmp #$0013
         bne _F6A9
-        jsl $96F6E0
+        jsl rlUnknown96F6E0
         bra _F6DE
 
 
         _F6A9
         cmp #$0014
         bne _F6B4
-        jsl $96F6FB
+        jsl rlUnknown96F6FB
         bra _F6DE
 
 
         _F6B4
         cmp #$0015
         bne _F6BF
-        jsl $96F716
+        jsl rlUnknown96F716
         bra _F6DE
 
 
         _F6BF
         cmp #$0016
         bne _F6CA
-        jsl $96F73F
+        jsl rlUnknown96F73F
         bra _F6DE
 
 
         _F6CA
         cmp #$0017
         bne _F6D5
-        jsl $96F762
+        jsl rlUnknown96F762
         bra _F6DE
 
 
         _F6D5
         cmp #$0002
         bne _F6DE
-        jsl $96F785
+        jsl rlUnknown96F785
 
         _F6DE
         ply
@@ -7334,7 +7334,7 @@
         cpx #$000A
         bcc _F6E4
         lda #$0036
-        jsl $96A4B2
+        jsl rlUnknown96A4B2
         plx
         rtl
 
@@ -7360,7 +7360,7 @@
         cpx #$000A
         bcc _F6FF
         lda #$0037
-        jsl $96A4B2
+        jsl rlUnknown96A4B2
         plx
         rtl
 
@@ -7386,7 +7386,7 @@
         cpx #$000A
         bcc _F71A
         lda #$0038
-        jsl $96A4B2
+        jsl rlUnknown96A4B2
         sep #$20
         lda $7FFC5D
         ora #$04
@@ -7420,7 +7420,7 @@
         cpx #$000A
         bcc _F74B
         lda #$0039
-        jsl $96A4B2
+        jsl rlUnknown96A4B2
         plx
         rtl
 
@@ -7449,7 +7449,7 @@
         cpx #$000A
         bcc _F76E
         lda #$003A
-        jsl $96A4B2
+        jsl rlUnknown96A4B2
         plx
         rtl
 
@@ -7478,7 +7478,7 @@
         cpx #$000A
         bcc _F791
         lda #$003F
-        jsl $96A4B2
+        jsl rlUnknown96A4B2
         plx
         rtl
 
@@ -7506,12 +7506,12 @@
         beq _F7EA
         bit #$0002
         bne _F7E7
-        jsr $96F7EB
+        jsr rsUnknown96F7EB
         bra _F7EA
 
 
         _F7E7
-        jsr $96F915
+        jsr rsUnknown96F915
 
         _F7EA
         rtl
@@ -7604,7 +7604,7 @@
         lda $7FFC64
         tay
         clc
-        jsl $95C51F
+        jsl rlUnknown95C51F
         sep #$20
         plb
         .databank ?
@@ -7678,7 +7678,7 @@
         sta $7FFC5F
         rep #$20
         lda #$0009
-        jsl $96DB20
+        jsl rlUnknown96DB20
         jml _F9BD
 
 
@@ -7713,7 +7713,7 @@
         tay
         lda $7FFC6C
         asl a
-        jsl $95C51F
+        jsl rlUnknown95C51F
         sep #$20
         plb
         .databank ?
@@ -7752,7 +7752,7 @@
         sta $7FFC69
         rep #$20
         ldx $0AEB,b
-        jsl $95B5D0
+        jsl rlUnknown95B5D0
         pha
         ldx $0AE9,b
         lda $0AF9,b,x
@@ -7779,7 +7779,7 @@
         sta $7FFC6C
 
         _FA20
-        jsl $95B5FD
+        jsl rlUnknown95B5FD
         pha
         lda $0AFB,b,x
         sec
@@ -7817,7 +7817,7 @@
         sta $7FFC65
         lda #$B363
         sta $7FFC67
-        jsr $96FAB6
+        jsr rsUnknown96FAB6
         bra _FA90
 
 

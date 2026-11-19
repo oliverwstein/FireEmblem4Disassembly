@@ -291,6 +291,91 @@
     .endsection Table86AE36Section
 
 
+    .section Unsorted86B335Section
+
+      .al
+      .xl
+
+      rsUnknown86B335 ; 86/B335
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx $0871,b
+        jsl rlUnknown84CAA9
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B343
+
+      rsUnknown86B343 ; 86/B343
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $057C,b
+        lda $0871,b
+        sta wR0
+        lda $0873,b
+        sta wR1
+        jsl rlUnknown84DC1C
+        rts
+
+        .databank 0
+
+        ; 86/B358
+
+      rlUnknown86B358 ; 86/B358
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx $0871,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlUnknown84B474
+        jml rsUnknown86B343
+
+        .databank 0
+
+        ; 86/B36A
+
+    .endsection Unsorted86B335Section
+
+
+    .section Unsorted86B36ASection
+
+      .al
+      .xl
+
+      rsUnknown86B36A ; 86/B36A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B371
+
+    .endsection Unsorted86B36ASection
+
+
     .section Unsorted86B371Section
 
       .al
@@ -324,6 +409,31 @@
     .endsection Unsorted86B371Section
 
 
+    .section Unsorted86B38FSection
+
+      .al
+      .xl
+
+      rsUnknown86B38F ; 86/B38F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx $0871,b
+        jsl rlUnknown84CF0F
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B39D
+
+    .endsection Unsorted86B38FSection
+
+
     .section Unsorted86B39DSection
 
       .al
@@ -346,6 +456,81 @@
         ; 86/B3AB
 
     .endsection Unsorted86B39DSection
+
+
+    .section Unsorted86B3ABSection
+
+      .al
+      .xl
+
+      rsUnknown86B3AB ; 86/B3AB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx $0871,b
+        jsl rlUnknown84D03E
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B3B9
+
+      rsUnknown86B3B9 ; 86/B3B9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx wActiveUnitDeploymentOffset,b
+        jsl rlUnknown84D0B9
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B3C7
+
+      rsUnknown86B3C7 ; 86/B3C7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B3CE
+
+      rsUnknown86B3CE ; 86/B3CE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda lAITemp000E90+1,b
+        sta lR18+1
+        lda lAITemp000E90,b
+        sta lR18
+        jsl rlUnknown84B613
+        rts
+
+        .databank 0
+
+        ; 86/B3DD
+
+    .endsection Unsorted86B3ABSection
 
 
     .section Unsorted86B3DDSection

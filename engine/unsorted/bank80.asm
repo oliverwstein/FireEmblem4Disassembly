@@ -726,15 +726,32 @@
         tya
         cmp #$0020
         bcs _8A6A
-        adc #$8A4A
+        adc #<>_8A4A
         sta wR0
         lda #$1E00
         tcd
         jmp (wR0)
 
-        .byte $86, $00, $86, $02, $86, $04, $86, $06, $86, $08, $86, $0A, $86, $0C, $86, $0E
-        .byte $86, $10, $86, $12, $86, $14, $86, $16, $86, $18, $86, $1A, $86, $1C, $86, $1E
+        ; Stores X in the wR variables from the one Y selects up to wR15: the jump
+        ; enters this run of stores partway.
 
+        _8A4A
+        stx wR0
+        stx wR1
+        stx wR2
+        stx wR3
+        stx wR4
+        stx wR5
+        stx wR6
+        stx wR7
+        stx wR8
+        stx wR9
+        stx wR10
+        stx wR11
+        stx wR12
+        stx wR13
+        stx wR14
+        stx wR15
 
         _8A6A
         pld
@@ -1273,13 +1290,16 @@
         jml _8EEE
 
         .byte $C2, $30, $A2, $F7, $1F, $9A, $E2, $20, $A9, $80, $8D, $00, $21, $9C, $00, $42
-        .byte $9C, $0B, $42, $9C, $0C, $42, $C2, $30, $5C, $2D, $8E, $80, $C2, $30, $22, $3F
-        .byte $82, $80
+        .byte $9C, $0B, $42, $9C, $0C, $42, $C2, $30, $5C, $2D, $8E, $80
 
+
+        _8EE8
+        rep #$30
+        jsl rlUnknown80823F
 
         _8EEE
         rep #$30
-        pea #$8EE7
+        pea #<>_8EE8 - 1
         jmp (wMainLoopPointer)
 
         .databank 0
@@ -1934,7 +1954,7 @@
 
 
         _91D7
-        pea #$91E6
+        pea #<>_91E7 - 1
         inc y
         inc y
 
@@ -1948,8 +1968,14 @@
         _91E6
         rts
 
-        .byte $EC, $40, $21, $D0, $FB, $8D, $42, $21, $8C, $40, $21, $E8, $E8
 
+        _91E7
+        cpx $2140,b
+        bne _91E7
+        sta $2142,b
+        sty $2140,b
+        inc x
+        inc x
 
         _91F4
         dec $04F0,b
@@ -2083,11 +2109,11 @@
         plb
         .databank ?
         plp
+        .xl
         rtl
 
 
         _92C9
-        .xl
         ldy DecompressionVariables
         phy
         ldy $CA
@@ -4368,6 +4394,37 @@
     .endsection Unsorted80BB5DSection
 
 
+    .section Unsorted80BB7CSection
+
+      .al
+      .xl
+
+      rlUnknown80BB7C ; 80/BB7C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $088B,b
+        jsl rlBuildDeadPlayerCharacterList
+        lda #$B6B6
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 80/BB9B
+
+    .endsection Unsorted80BB7CSection
+
+
     .section Unsorted80C1A0Section
 
       .al
@@ -4707,10 +4764,10 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsl rlGetSelectedUnitStates
-        bit #$4000
+        bit #UnitStateMoved
         bne _CBE0
         jsl rlGetSelectedUnitStatus
-        cmp #$0005
+        cmp #StatusSleep
         bne _CBE6
 
         _CBE0
@@ -5372,6 +5429,31 @@
         ; 80/F413
 
     .endsection Unsorted80F392Section
+
+
+    .section Unsorted80F443Section
+
+      .al
+      .xl
+
+      rsUnknown80F443 ; 80/F443
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $00C0, $80, $A300
+
+        rts
+
+        .databank 0
+
+        ; 80/F451
+
+    .endsection Unsorted80F443Section
 
 
     .section Unsorted80F4EBSection

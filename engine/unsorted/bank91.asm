@@ -1098,6 +1098,132 @@
     .endsection Unsorted91D844Section
 
 
+    .section Unsorted91D8A0Section
+
+      .al
+      .xl
+
+      rsUnknown91D8A0 ; 91/D8A0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0002
+        jsr rsUnknown91DB6D
+        jsr rsUnknown91DCB9
+        lda #$0003
+        jsr rlUnknown91DC92
+        lda aSave,b
+        cmp #$0004
+        bcc _D8BA
+        lda #$0000
+
+        _D8BA
+        inc a
+        sta $1864,b
+        jsr rsUnknown91DA64
+        cmp #$0002
+        beq _D8DD
+        cmp #$0001
+        bne _D8EA
+        lda #$000E
+        jsl rlUnknown808FAD
+        lda $1864,b
+        sta aSave.wMenuOperation,b
+        inc wGameStateStep,b
+        bra _D8EA
+
+
+        _D8DD
+        lda #$0021
+        jsl rlUnknown808FAD
+        lda #$0005
+        sta wGameStateStep,b
+
+        _D8EA
+        rts
+
+        .databank 0
+
+        ; 91/D8EB
+
+      rsUnknown91D8EB ; 91/D8EB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda bBufferINIDISP
+        and #$000F
+        beq _D904
+        lda $1864,b
+        jsl rlUnknown91E2E2
+        lda wVBlankEnabledFramecount
+        and #$0001
+        bne _D90C
+        dec bBufferINIDISP
+        bra _D90C
+
+
+        _D904
+        lda aSave.wMenuOperation,b
+        bne _D90C
+        jsr rsUnknown91D921
+
+        _D90C
+        rts
+
+        .databank 0
+
+        ; 91/D90D
+
+    .endsection Unsorted91D8A0Section
+
+
+    .section Unsorted91D921Section
+
+      .al
+      .xl
+
+      rsUnknown91D921 ; 91/D921
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown000D79,b
+        bit #$0400
+        beq _D92F
+        jsl rlUnknown81B301
+        bra _D944
+
+
+        _D92F
+        lda wUnknown000D79,b
+        bit #$0020
+        beq _D941
+        jsl rlUnknown80BB7C
+        jsl rlUnknown81AB26
+        bra _D944
+
+
+        _D941
+        jsr rsUnknown91DBD0
+
+        _D944
+        rts
+
+        .databank 0
+
+        ; 91/D945
+
+    .endsection Unsorted91D921Section
+
+
     .section Unsorted91D9FASection
 
       .al
@@ -1441,6 +1567,37 @@
     .endsection Unsorted91DB6DSection
 
 
+    .section Unsorted91DBD0Section
+
+      .al
+      .xl
+
+      rsUnknown91DBD0 ; 91/DBD0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0002
+        sta $0D77,b
+        stz wGameStateRoutine1,b
+        lda #$B122
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rts
+
+        .databank 0
+
+        ; 91/DBEE
+
+    .endsection Unsorted91DBD0Section
+
+
     .section Unsorted91DBEESection
 
       .al
@@ -1458,7 +1615,7 @@
         cmp $1858,b
         beq _DBFE
         jsr rsUnknown91DCF8
-        bra $91DBEE
+        bra rsUnknown91DBEE
 
 
         _DBFE
@@ -2608,7 +2765,7 @@
         .autsiz
         .databank ?
 
-        jsl $91E565
+        jsl rlUnknown91E565
         lda #$0014
         sta wGameStateStep,b
         rtl
@@ -2632,8 +2789,8 @@
         sta wVBlankPointer
         lda #$F542
         sta wMainLoopPointer
-        stz $1B0B,b
-        jsl $91E92E
+        stz aSave.wMenuOperation,b
+        jsl rlUnknown91E92E
         rtl
 
         .databank 0
@@ -3023,33 +3180,25 @@
         lda wCurrentChapter,b
         asl a
         tax
-        lda $91F7B7,x
+        lda aUnknown91F7B7,x
         beq _F7B6
         sta $04BA,b
 
         _F7B6
         rts
 
-        rtl
-
-        .byte $00 ; brk
-        eor wR0,x
-        eor wR0,x
-        adc #0,s
-        lsr wR0,x
-        ror wR0
-        rol wR0
-        rtl
-
-        .byte $00 ; brk
-        adc #0,s
-        sta (wR0,x)
-        ply
-        .byte $00 ; brk
-        .byte $00 ; brk
-        .byte $00 ; brk
-
         .databank 0
+
+        ; 91/F7B7
+
+      aUnknown91F7B7 ; 91/F7B7
+
+        ; One word per chapter, read by rlUnknown91F75F: if it is not 0, it is stored in $04BA.
+
+        .word $006B, $0055, $0055, $0063, $0056, $0066, $0026, $006B
+        .word $0063, $0081, $007A, $0000
+
+        ; 91/F7CF
 
       rlUnknown91F7CF ; 91/F7CF
 

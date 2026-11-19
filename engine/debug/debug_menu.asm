@@ -4122,7 +4122,7 @@
         dec a
         asl a
         tax
-        lda $899109,x
+        lda aUnknown899109,x
         tax
         pla
         jsl rlUnknown8BBE68
@@ -4137,26 +4137,12 @@
 
         .databank 0
 
-      rsUnknown899109 ; 89/9109
+      aUnknown899109 ; 89/9109
 
-        .al
-        .autsiz
-        .databank ?
+        ; One word per inventory slot (1-8), read by rlUnknown8990DA and passed in X
+        ; to rlUnknown8BBE68 along with the slot's item.
 
-        rts
-
-        .databank 0
-
-      aUnknown89910A ; 89/910A
-
-        .word $6200
-        .word $6400
-        .word $6600
-        .word $6800
-        .word $6A00
-        .word $6C00
-        .word $6E00
-        .byte 0
+        .word $0060, $0062, $0064, $0066, $0068, $006A, $006C, $006E
 
       rlClearTilemapRect ; 89/9119
 

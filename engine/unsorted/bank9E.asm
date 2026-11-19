@@ -1540,8 +1540,19 @@
 
         .word $FCA0
         .word $FCA0
+        .byte $6B
 
-        .word $DA6B
+      rlUnknown9E88F9 ; 9E/88F9
+
+        ; Pushes X and runs on into rlUnknown9E88FA.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+
+        .databank 0
 
     .endsection Unsorted9E88F4Section
 
@@ -3502,7 +3513,7 @@
         beq _961D
         sta $7F45D7
         jsl rlUnknown9E965E
-        jsl $9EB4AF
+        jsl rlUnknown9EB4AF
         lda #$0008
         sta $7F45CE
         lda #$0000
@@ -7975,10 +7986,29 @@
 
         phx
         lda #$0092
-        bra _B4B5
+        bra $9EB4B5
 
         .byte $DA, $A9, $93, $00, $80, $18, $DA, $A9, $92, $00, $80, $12, $DA, $A9, $93, $00
-        .byte $80, $0C, $DA, $A9, $91, $00, $80, $06, $DA, $A9, $23, $00, $80, $00
+        .byte $80, $0C
+
+        phx
+        lda #$0091
+        bra $9EB4B5
+
+        .databank 0
+
+        ; 9E/B4AF
+
+      rlUnknown9EB4AF ; 9E/B4AF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0023
+        bra _B4B5
 
 
         _B4B5
@@ -8757,7 +8787,7 @@
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown9E838B
-        jsl $9E88F9
+        jsl rlUnknown9E88F9
         lda #(`rlUnknown81841B)<<8
         sta $15E5,b
         lda #<>rlUnknown81841B
@@ -11164,7 +11194,7 @@
         .autsiz
         .databank ?
 
-        jsl $9E88F9
+        jsl rlUnknown9E88F9
         lda #$C79B
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl

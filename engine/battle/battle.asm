@@ -1334,13 +1334,13 @@
 
       aUnknown84DC3F ; 84/DC3F
 
-        .word <>rsUnknown84E06C
-        .word <>rsUnknown84E06C
+        .word <>rsUnknown84DC49
+        .word <>rsUnknown84DC49
         .word <>rsUnknown84DC82
-        .word $DC8D
+        .word <>rsUnknown84DC8D
         .word <>rsUnknown84DC9A
 
-      rsUnknown84E06C ; 84/DC49
+      rsUnknown84DC49 ; 84/DC49
 
         .al
         .autsiz

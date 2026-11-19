@@ -43,11 +43,11 @@
         .autsiz
         .databank ?
 
-        jsl $96941C
-        jsl $958C3E
-        jsr $95A114
-        jsr $959C14
-        jsl $95A481
+        jsl rlUnknown96941C
+        jsl rlUnknown958C3E
+        jsr rsUnknown95A114
+        jsr rsUnknown959C14
+        jsl rlUnknown95A481
         lda $7FFC77
         bit #$0001
         beq _8B26
@@ -58,78 +58,78 @@
         lda $0AE0,b
         bit #$0001
         beq _8B36
-        jsl $95DA1D
-        jsl $95A65F
+        jsl rlUnknown95DA1D
+        jsl rlUnknown95A65F
 
         _8B36
-        jsl $96F7D4
-        jsr $95C5E6
+        jsl rlUnknown96F7D4
+        jsr rsUnknown95C5E6
         ldx #$0000
-        jsl $95C6CD
-        jsl $95CBE4
-        jsl $95CC06
-        jsl $95CDA3
+        jsl rlUnknown95C6CD
+        jsl rlUnknown95CBE4
+        jsl rlUnknown95CC06
+        jsl rlUnknown95CDA3
         ldx #$0043
-        jsl $95C6CD
-        jsl $95CBE4
-        jsl $95CC06
-        jsl $95CDA3
+        jsl rlUnknown95C6CD
+        jsl rlUnknown95CBE4
+        jsl rlUnknown95CC06
+        jsl rlUnknown95CDA3
         ldx #$0086
-        jsl $95DE61
-        jsl $95E1C9
-        jsl $95E22C
+        jsl rlUnknown95DE61
+        jsl rlUnknown95E1C9
+        jsl rlUnknown95E22C
         ldx #$00C9
-        jsl $95DE61
-        jsl $95E1C9
-        jsl $95E22C
-        jsl $95CAD5
+        jsl rlUnknown95DE61
+        jsl rlUnknown95E1C9
+        jsl rlUnknown95E22C
+        jsl rlUnknown95CAD5
 
         _8B85
-        jsl $96961F
-        jsl $96A0E2
-        jsl $95C0A6
-        jsl $96A28B
-        jsl $96CB44
-        jsl $96BBE2
-        jsl $96952C
-        jsl $96EBE3
-        jsr $95D580
-        jsr $95D670
-        jsl $96DE6F
-        jsl $96A532
-        jsl $96DD6E
-        jsl $95D721
-        jsl $96BE28
-        jsl $95BAEF
-        jsl $96A05C
-        jsl $95D863
-        jsr $95D77C
-        jsr $959292
-        jsr $95938C
+        jsl rlUnknown96961F
+        jsl rlUnknown96A0E2
+        jsl rlUnknown95C0A6
+        jsl rlUnknown96A28B
+        jsl rlUnknown96CB44
+        jsl rlUnknown96BBE2
+        jsl rlUnknown96952C
+        jsl rlUnknown96EBE3
+        jsr rsUnknown95D580
+        jsr rsUnknown95D670
+        jsl rlUnknown96DE6F
+        jsl rlUnknown96A532
+        jsl rlUnknown96DD6E
+        jsl rlUnknown95D721
+        jsl rlUnknown96BE28
+        jsl rlUnknown95BAEF
+        jsl rlUnknown96A05C
+        jsl rlUnknown95D863
+        jsr rsUnknown95D77C
+        jsr rsUnknown959292
+        jsr rsUnknown95938C
         jsl rlUnknown96D695
-        jsl $95C508
-        jsl $95C47A
-        jsl $96C8A1
-        jsr $959CF8
-        jsl $969F1C
-        jsl $9598E7
+        jsl rlUnknown95C508
+        jsl rlUnknown95C47A
+        jsl rlUnknown96C8A1
+        jsr rsUnknown959CF8
+        jsl rlUnknown969F1C
+        jsl rlUnknown9598E7
 
         _8BEF
         lda $7FE1CF
         and #$00FF
         beq _8BEF
-        jsr $9590F2
-        jsr $959210
-        jsr $959197
-        jsl $95A086
-        jsl $96EE95
-        jsl $9698EF
-        jsr $959C64
-        jsr $958C52
-        jsl $96989E
-        jsl $9694C7
+        jsr rsUnknown9590F2
+        jsr rsUnknown959210
+        jsr rsUnknown959197
+        jsl rlUnknown95A086
+        jsl rlUnknown96EE95
+        jsl rlUnknown9698EF
+        jsr rsUnknown959C64
+        jsr rsUnknown958C52
+        jsl rlUnknown96989E
+        jsl rlUnknown9694C7
         bcc _8C22
-        jsr $958CA8
+        jsr rsUnknown958CA8
         bcc _8C22
 
         _8C22
@@ -505,7 +505,7 @@
         lda #$E1E0
         sta wR0
         lda #$0010
-        jsl $95A0C1
+        jsl rlUnknown95A0C1
         rts
 
         .databank 0
@@ -851,7 +851,7 @@
         .autsiz
         .databank ?
 
-        jsl $9594E0
+        jsl rlUnknown9594E0
         sta $0D57,b
         sep #$20
         lda $0D55,b
@@ -876,7 +876,7 @@
         .autsiz
         .databank ?
 
-        jsl $9594E0
+        jsl rlUnknown9594E0
         eor #$FFFF
         inc a
         sta $0D57,b
@@ -903,7 +903,7 @@
         .autsiz
         .databank ?
 
-        jsl $9594E0
+        jsl rlUnknown9594E0
         sta $0D65,b
         sep #$20
         lda $0D63,b
@@ -928,7 +928,7 @@
         .autsiz
         .databank ?
 
-        jsl $9594E0
+        jsl rlUnknown9594E0
         eor #$FFFF
         inc a
         sta $0D65,b
@@ -1295,7 +1295,7 @@
         sta lR18
         ldy #$6D02
         lda #$0078
-        jsl $95C43E
+        jsl rlUnknown95C43E
         ply
         plx
         pla
@@ -1753,7 +1753,7 @@
         sec
 
         _9C81
-        jsr $959C92
+        jsr rsUnknown959C92
         sep #$20
         lda $0AE0,b
         ora #$20
@@ -2264,7 +2264,7 @@
         lda #$E36A
         sta wR0
         lda #$0030
-        jsl $95A0C1
+        jsl rlUnknown95A0C1
         ply
         plx
         pla
@@ -2436,9 +2436,9 @@
         .autsiz
         .databank ?
 
-        jsr $95A66A
+        jsr rsUnknown95A66A
         bcs _A669
-        jsr $95A761
+        jsr rsUnknown95A761
         bcs _A669
 
         _A669
@@ -2605,7 +2605,7 @@
         sep #$20
         sta $0AE3,b
         rep #$20
-        bra $95A761
+        bra rsUnknown95A761
 
 
         _A792
@@ -2613,7 +2613,7 @@
         cmp #$FE
         bne _A7A2
         rep #$20
-        jsl $96F697
+        jsl rlUnknown96F697
         jml _AA53
 
 
@@ -2678,7 +2678,7 @@
         ora #$02
         sta $0AE0,b
         rep #$20
-        jsl $9698E0
+        jsl rlUnknown9698E0
         bcs _A831
         sep #$20
         lda $0AE0,b
@@ -2702,9 +2702,9 @@
         bit #$0080
         beq _A865
         lda #$0043
-        jsl $96A4B2
+        jsl rlUnknown96A4B2
         ldx #$0000
-        jsl $978000
+        jsl rlUnknown978000
         lda $7FFC59
         and #$FF7F
         sta $7FFC59
@@ -2721,7 +2721,7 @@
         and #$7F
         sta $0AE8,b
         clc
-        jsr $95E3DF
+        jsr rsUnknown95E3DF
         .al
         lda #$0000
         sta $7FE1A8
@@ -2731,7 +2731,7 @@
         sta $7FE1AE
         lda #$0B3C
         sta $7FE1AD
-        jsl $95D6B2
+        jsl rlUnknown95D6B2
         bcs _A8A5
         jml _AA8C
 
@@ -2746,9 +2746,9 @@
         bit #$0040
         beq _A8D0
         lda #$0043
-        jsl $96A4B2
+        jsl rlUnknown96A4B2
         ldx #$0043
-        jsl $978000
+        jsl rlUnknown978000
         lda $7FFC59
         and #$FFBF
         sta $7FFC59
@@ -2765,7 +2765,7 @@
         ora #$80
         sta $0AE8,b
         sec
-        jsr $95E3DF
+        jsr rsUnknown95E3DF
         .al
         lda #$0000
         sta $7FE1AE
@@ -2775,7 +2775,7 @@
         sta $7FE1A8
         lda #$0B3C
         sta $7FE1A7
-        jsl $95D6CF
+        jsl rlUnknown95D6CF
         bcs _A910
         jml _AA8C
 
@@ -2784,8 +2784,8 @@
         ldx #$0043
 
         _A913
-        jsl $95C097
-        jsl $95E47F
+        jsl rlUnknown95C097
+        jsl rlUnknown95E47F
         lda $7FFC59
         bit #$0004
         bne _A92D
@@ -2796,7 +2796,7 @@
 
 
         _A92D
-        jsl $95ADEE
+        jsl rlUnknown95ADEE
         jml _AA53
 
 
@@ -2814,7 +2814,7 @@
         rep #$20
 
         _A950
-        jsl $95ADD6
+        jsl rlUnknown95ADD6
         jml _AA53
 
 
@@ -2853,7 +2853,7 @@
         bne _A9C3
 
         _A98F
-        jsl $95B050
+        jsl rlUnknown95B050
         lda wR1
         cmp #$0010
         bcc _A9C3
@@ -2870,7 +2870,7 @@
         pha
         lda lR18+1
         pha
-        jsl $95AE06
+        jsl rlUnknown95AE06
         pla
         sta lR18+1
         pla
@@ -2915,12 +2915,12 @@
         ora #$10
         sta $0AE4,b
         rep #$20
-        jsl $95B8F3
+        jsl rlUnknown95B8F3
         bcs _AA53
         lda $0AF5,b,x
         bit #$0004
         beq _AA1D
-        jsl $95ACF6
+        jsl rlUnknown95ACF6
         bra _AA53
 
 
@@ -2930,7 +2930,7 @@
         beq _AA4D
         bit #$0010
         beq _AA3B
-        jsl $95ACAE
+        jsl rlUnknown95ACAE
         sep #$20
         lda $0AE4,b
         ora #$40
@@ -2940,7 +2940,7 @@
 
 
         _AA3B
-        jsl $95AC41
+        jsl rlUnknown95AC41
         sep #$20
         lda $0AE4,b
         ora #$40
@@ -2950,7 +2950,7 @@
 
 
         _AA4D
-        jsl $95ABBB
+        jsl rlUnknown95ABBB
         bra _AA53
 
 
@@ -3043,13 +3043,13 @@
 
         _AB43
         plx
-        jsl $95E3FE
+        jsl rlUnknown95E3FE
         bra _AB51
 
 
         _AB4A
         lda #$0000
-        jsl $95E3FE
+        jsl rlUnknown95E3FE
 
         _AB51
         plx
@@ -3067,7 +3067,7 @@
         .databank ?
 
         phx
-        jsr $95AE65
+        jsr rsUnknown95AE65
         lda $95AB80,x
         and #$00FF
         plx
@@ -3076,7 +3076,7 @@
         and #$0003
         clc
         adc #1,s
-        jsl $95E3FE
+        jsl rlUnknown95E3FE
         pla
         sep #$20
         lda @l $000AF5,x
@@ -3122,7 +3122,7 @@
         _ABD0
         php
         phx
-        jsr $95AE65
+        jsr rsUnknown95AE65
         lda $95AC3B,x
         and #$00FF
         plx
@@ -3142,11 +3142,11 @@
         adc #1,s
 
         _ABF7
-        jsl $95E3FE
+        jsl rlUnknown95E3FE
         pla
         plp
         bcs _AC3A
-        jsr $95AE7A
+        jsr rsUnknown95AE7A
         cmp #$0010
         bne _AC0D
         sep #$20
@@ -3209,7 +3209,7 @@
         .databank ?
 
         phx
-        jsr $95AE65
+        jsr rsUnknown95AE65
         lda $95ACA8,x
         and #$00FF
         plx
@@ -3229,9 +3229,9 @@
         adc #1,s
 
         _AC67
-        jsl $95E3FE
+        jsl rlUnknown95E3FE
         pla
-        jsr $95AE7A
+        jsr rsUnknown95AE7A
         cmp #$0010
         bne _AC7A
         sep #$20
@@ -3292,7 +3292,7 @@
         .databank ?
 
         phx
-        jsr $95AE65
+        jsr rsUnknown95AE65
         lda $95ACF0,x
         and #$00FF
         plx
@@ -3312,7 +3312,7 @@
         adc #1,s
 
         _ACD4
-        jsl $95E3FE
+        jsl rlUnknown95E3FE
         pla
         sep #$20
         lda @l $000AF5,x
@@ -3358,7 +3358,7 @@
         sta $7FE189
         rep #$20
         phx
-        jsr $95AE65
+        jsr rsUnknown95AE65
         lda $95AD8C,x
         and #$00FF
         plx
@@ -3367,7 +3367,7 @@
         and #$0003
         clc
         adc #1,s
-        jsl $95E3FE
+        jsl rlUnknown95E3FE
         pla
         phx
         lda $0AF5,b,x
@@ -3381,7 +3381,7 @@
         jsl rlUnsignedMultiply16By16
         lda wR12
         pha
-        jsr $95AE65
+        jsr rsUnknown95AE65
         txa
         clc
         adc #1,s
@@ -3390,7 +3390,7 @@
         lda $95AD64,x
         and #$00FF
         plx
-        jsl $95E3FE
+        jsl rlUnknown95E3FE
         sep #$20
         lda @l $000AF5,x
         and #$FC
@@ -3419,7 +3419,7 @@
         .databank ?
 
         lda #$0005
-        jsl $95E3FE
+        jsl rlUnknown95E3FE
         sep #$20
         lda @l $000AF5,x
         and #$FC
@@ -3440,7 +3440,7 @@
         .databank ?
 
         lda #$0001
-        jsl $95E3FE
+        jsl rlUnknown95E3FE
         sep #$20
         lda @l $000AF5,x
         and #$FC
@@ -3515,7 +3515,7 @@
 
         _AE5E
         plx
-        jsl $95E3FE
+        jsl rlUnknown95E3FE
 
         _AE63
         plx
@@ -3578,6 +3578,37 @@
     .endsection Unsorted95ADD6Section
 
 
+    .section Unsorted95AE8BSection
+
+      .al
+      .xl
+
+      rlUnknown95AE8B ; 95/AE8B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $7FE189
+        cmp #$03
+        beq _AE9B
+        lda #$02
+        sta $7FE189
+
+        _AE9B
+        rep #$20
+        jsl rlUnknown95AEA2
+        rtl
+
+        .databank 0
+
+        ; 95/AEA2
+
+    .endsection Unsorted95AE8BSection
+
+
     .section Unsorted95AEA2Section
 
       .al
@@ -3621,7 +3652,7 @@
         clc
         adc #$0086
         tax
-        jsl $95DDFB
+        jsl rlUnknown95DDFB
 
         _AEE6
         lda $0AE8,b
@@ -3631,14 +3662,14 @@
         and #$00FF
         beq _AF00
         sta wR0
-        jsr $95948D
+        jsr rsUnknown95948D
         clc
-        jsl $959CDF
+        jsl rlUnknown959CDF
 
         _AF00
-        jsl $95CA88
-        jsl $95AF55
-        jsl $969F6A
+        jsl rlUnknown95CA88
+        jsl rlUnknown95AF55
+        jsl rlUnknown969F6A
         lda $0D60,b
         bra _AF33
 
@@ -3648,14 +3679,14 @@
         and #$00FF
         beq _AF23
         sta wR0
-        jsr $9594C3
+        jsr rsUnknown9594C3
         sec
-        jsl $959CDF
+        jsl rlUnknown959CDF
 
         _AF23
-        jsl $95CA88
-        jsl $95AF55
-        jsl $969F6A
+        jsl rlUnknown95CA88
+        jsl rlUnknown95AF55
+        jsl rlUnknown969F6A
         lda @l $000D52
 
         _AF33
@@ -3666,7 +3697,7 @@
         beq _AF45
 
         _AF41
-        jsl $95B02B
+        jsl rlUnknown95B02B
 
         _AF45
         sep #$20
@@ -3730,7 +3761,7 @@
         lda $7FFC59
         ora #$0400
         sta $7FFC59
-        jsl $969603
+        jsl rlUnknown969603
 
         _AFB5
         lda #$0094
@@ -3803,7 +3834,7 @@
         sta wR0
         asl a
         asl a
-        jsr $959474
+        jsr rsUnknown959474
         bra _B02A
 
 
@@ -3813,7 +3844,7 @@
         sta wR0
         asl a
         asl a
-        jsr $9594AA
+        jsr rsUnknown9594AA
 
         _B02A
         rtl
@@ -3837,7 +3868,7 @@
         sta wR0
         asl a
         asl a
-        jsr $959474
+        jsr rsUnknown959474
         bra _B04F
 
 
@@ -3847,7 +3878,7 @@
         sta wR0
         asl a
         asl a
-        jsr $9594AA
+        jsr rsUnknown9594AA
 
         _B04F
         rtl
@@ -3877,10 +3908,10 @@
         _B065
         sta wR0
         ldx $0AE9,b
-        jsl $95B626
+        jsl rlUnknown95B626
         sta wR8
         ldx $0AEB,b
-        jsl $95B5D0
+        jsl rlUnknown95B5D0
         sta wR9
         ldx $0AEB,b
         lda $0AF9,b,x
@@ -3935,7 +3966,7 @@
         pla
 
         _B0C7
-        jsl $95B0D7
+        jsl rlUnknown95B0D7
         bcc _B0D4
         lda #$0000
         sta wR0
@@ -3971,10 +4002,10 @@
         _B0EC
         sta wR9
         ldx $0AE9,b
-        jsl $95B5D0
+        jsl rlUnknown95B5D0
         pha
         ldx $0AEB,b
-        jsl $95B5D0
+        jsl rlUnknown95B5D0
         clc
         adc #1,s
         sta #1,s
@@ -4176,12 +4207,12 @@
         phx
         pha
         bcs _B539
-        jsr $95B655
+        jsr rsUnknown95B655
         bra _B53C
 
 
         _B539
-        jsr $95B67E
+        jsr rsUnknown95B67E
 
         _B53C
         sta wR14
@@ -4238,7 +4269,7 @@
         ldx wR12
         lda $97EA9A,x
         and #$00FF
-        jsl $95A165
+        jsl rlUnknown95A165
         plx
         rtl
 
@@ -4306,7 +4337,7 @@
         ldx wR12
         lda $97EA9C,x
         and #$00FF
-        jsl $95A165
+        jsl rlUnknown95A165
         ply
         plx
         rtl
@@ -4397,7 +4428,7 @@
         .databank ?
 
         phx
-        jsl $95B80C
+        jsl rlUnknown95B80C
         sta wR14
         lda #$0762
         sta wR13
@@ -4473,7 +4504,7 @@
         ora #$0001
 
         _B8AA
-        jsl $95BA05
+        jsl rlUnknown95BA05
 
         _B8AE
         plx
@@ -4610,8 +4641,8 @@
 
 
         _B959
-        jsl $96DC7C
-        jsl $96BCEC
+        jsl rlUnknown96DC7C
+        jsl rlUnknown96BCEC
         sep #$20
         lda $0AF3,b,x
         ora #$40
@@ -4913,7 +4944,7 @@
         lda $0AF3,b,x
         bit #$0080
         beq _BB18
-        jsr $95BB2E
+        jsr rsUnknown95BB2E
 
         _BB18
         plx
@@ -4946,12 +4977,12 @@
         bit #$0001
         bne _BB3D
         clc
-        jsl $95C1AB
+        jsl rlUnknown95C1AB
         bra _BB40
 
 
         _BB3D
-        jsr $95BB41
+        jsr rsUnknown95BB41
 
         _BB40
         rts
@@ -4974,7 +5005,7 @@
 
 
         _BB4D
-        jsr $95BFB3
+        jsr rsUnknown95BFB3
         and #$00FF
         cmp #$00FE
         bne _BB5C
@@ -4984,70 +5015,70 @@
         _BB5C
         cmp #$00FD
         bne _BB68
-        jsr $95BCBE
+        jsr rsUnknown95BCBE
         jml _BC9D
 
 
         _BB68
         cmp #$00FC
         bne _BB74
-        jsr $95BCCB
+        jsr rsUnknown95BCCB
         jml _BC65
 
 
         _BB74
         cmp #$00FB
         bne _BB80
-        jsr $95BCD5
+        jsr rsUnknown95BCD5
         jml _BC65
 
 
         _BB80
         cmp #$00FA
         bne _BB8C
-        jsr $95BCEF
+        jsr rsUnknown95BCEF
         jml _BC9D
 
 
         _BB8C
         cmp #$00F9
         bne _BB98
-        jsr $95BD10
+        jsr rsUnknown95BD10
         jml _BC65
 
 
         _BB98
         cmp #$00F8
         bne _BBA4
-        jsr $95BD6B
+        jsr rsUnknown95BD6B
         jml _BC65
 
 
         _BBA4
         cmp #$00F7
         bne _BBB0
-        jsr $95BD76
+        jsr rsUnknown95BD76
         jml _BC65
 
 
         _BBB0
         cmp #$00F6
         bne _BBBC
-        jsr $95BD89
+        jsr rsUnknown95BD89
         jml _BC65
 
 
         _BBBC
         cmp #$00F5
         bne _BBC8
-        jsr $95BDA0
+        jsr rsUnknown95BDA0
         jml _BC65
 
 
         _BBC8
         cmp #$00F4
         bne _BBD6
-        jsr $95BDB7
+        jsr rsUnknown95BDB7
         bcs _BBD6
         jml _BC65
 
@@ -5055,21 +5086,21 @@
         _BBD6
         cmp #$00F3
         bne _BBE2
-        jsr $95BDD2
+        jsr rsUnknown95BDD2
         jml _BC65
 
 
         _BBE2
         cmp #$00F2
         bne _BBEC
-        jsr $95BDF5
+        jsr rsUnknown95BDF5
         bra _BC65
 
 
         _BBEC
         cmp #$00F1
         bne _BBFC
-        jsr $95BE04
+        jsr rsUnknown95BE04
         bcc _BBFA
         jml _BC9D
 
@@ -5081,75 +5112,75 @@
         _BBFC
         cmp #$00F0
         bne _BC06
-        jsr $95BE17
+        jsr rsUnknown95BE17
         bra _BC65
 
 
         _BC06
         cmp #$00EF
         bne _BC10
-        jsr $95BE26
+        jsr rsUnknown95BE26
         bra _BC65
 
 
         _BC10
         cmp #$00EE
         bne _BC1A
-        jsr $95BE39
+        jsr rsUnknown95BE39
         bra _BC65
 
 
         _BC1A
         cmp #$00ED
         bne _BC24
-        jsr $95BEA4
+        jsr rsUnknown95BEA4
         bra _BC65
 
 
         _BC24
         cmp #$00EC
         bne _BC2E
-        jsr $95BECE
+        jsr rsUnknown95BECE
         bra _BC65
 
 
         _BC2E
         cmp #$00EB
         bne _BC38
-        jsr $95BEED
+        jsr rsUnknown95BEED
         bra _BC65
 
 
         _BC38
         cmp #$00EA
         bne _BC42
-        jsr $95BF4A
+        jsr rsUnknown95BF4A
         bra _BC65
 
 
         _BC42
         cmp #$00E9
         bne _BC4C
-        jsr $95BF8D
+        jsr rsUnknown95BF8D
         bra _BC65
 
 
         _BC4C
         cmp #$00E8
         bne _BC56
-        jsr $95BFA4
+        jsr rsUnknown95BFA4
         bra _BC65
 
 
         _BC56
         cmp #$00E7
         bne _BC60
-        jsr $95BF61
+        jsr rsUnknown95BF61
         bra _BC65
 
 
         _BC60
-        jsr $95E4D2
+        jsr rsUnknown95E4D2
         bra _BC69
 
 
@@ -5163,7 +5194,7 @@
         and #$FD
         sta $0AF3,b,x
         rep #$20
-        jsr $95BFB3
+        jsr rsUnknown95BFB3
         pha
         lda $0B21,b,x
         clc
@@ -5173,7 +5204,7 @@
         sep #$20
         sta $0B1D,b,x
         xba
-        jsr $95BFC6
+        jsr rsUnknown95BFC6
         sta $0B23,b,x
         rep #$20
         lda $0AF3,b,x
@@ -5190,7 +5221,7 @@
         clc
 
         _BCA6
-        jsl $95C1AB
+        jsl rlUnknown95C1AB
 
         _BCAA
         lda $0B23,b,x
@@ -5239,7 +5270,7 @@
 
         lda $0B1F,b,x
         sta $0B21,b,x
-        jsr $95E58C
+        jsr rsUnknown95E58C
         rts
 
         .databank 0
@@ -5253,7 +5284,7 @@
         .autsiz
         .databank ?
 
-        jsr $95BFB3
+        jsr rsUnknown95BFB3
         xba
         and #$00FF
         bne _BCDF
@@ -5267,7 +5298,7 @@
         sbc #1,s
         sta $0B21,b,x
         pla
-        jsr $95E59B
+        jsr rsUnknown95E59B
         rts
 
         .databank 0
@@ -5281,10 +5312,10 @@
         .autsiz
         .databank ?
 
-        jsr $95BFB3
+        jsr rsUnknown95BFB3
         sep #$20
         xba
-        jsr $95BFC6
+        jsr rsUnknown95BFC6
         sta $0B23,b,x
         lda $0AF3,b,x
         ora #$02
@@ -5337,7 +5368,7 @@
 
         _BD42
         pha
-        jsr $95BFB3
+        jsr rsUnknown95BFB3
         inc a
         xba
         and #$00FF
@@ -5346,8 +5377,8 @@
         tax
         lda $98ACC0,x
         plx
-        jsr $95C0F3
-        jsr $95C17A
+        jsr rsUnknown95C0F3
+        jsr rsUnknown95C17A
         ora #1,s
         jsl rlUnknown80900D
         pla
@@ -5492,7 +5523,7 @@
         ora #$40
         sta $0AF3,b,x
         rep #$20
-        jsr $95BFB3
+        jsr rsUnknown95BFB3
         xba
         and #$00FF
         bne _BDE8
@@ -5519,7 +5550,7 @@
         .autsiz
         .databank ?
 
-        jsl $95C077
+        jsl rlUnknown95C077
         lda $0B21,b,x
         clc
         adc #$0002
@@ -5537,7 +5568,7 @@
         .autsiz
         .databank ?
 
-        jsl $95AAFF
+        jsl rlUnknown95AAFF
         sep #$20
         lda $0AF5,b,x
         and #$FC
@@ -5557,7 +5588,7 @@
         .autsiz
         .databank ?
 
-        jsl $95AEA2
+        jsl rlUnknown95AEA2
         lda $0B21,b,x
         clc
         adc #$0002
@@ -5575,8 +5606,8 @@
         .autsiz
         .databank ?
 
-        jsl $96DC7C
-        jsl $96BCEC
+        jsl rlUnknown96DC7C
+        jsl rlUnknown96BCEC
         lda $0B21,b,x
         clc
         adc #$0002
@@ -5594,7 +5625,7 @@
         .autsiz
         .databank ?
 
-        jsr $95BFB3
+        jsr rsUnknown95BFB3
         phx
         cpx #$0000
         bne _BE6E
@@ -5602,7 +5633,7 @@
         lda $0D52,b
         sta wR0
         lda $0D5B,b
-        jsl $95DBDE
+        jsl rlUnknown95DBDE
         sep #$20
         lda $0B7D,b
         sta $0C03,b
@@ -5610,12 +5641,12 @@
         pla
         pha
         xba
-        jsr $95DCA3
+        jsr rsUnknown95DCA3
         pla
         lda $0D52,b
         sta wR0
         lda $0D5B,b
-        jsl $95DBDE
+        jsl rlUnknown95DBDE
         bra _BE98
 
 
@@ -5624,7 +5655,7 @@
         lda $0D60,b
         sta wR0
         lda $0D69,b
-        jsl $95DBDE
+        jsl rlUnknown95DBDE
         sep #$20
         lda $0BC0,b
         sta $0C03,b
@@ -5632,12 +5663,12 @@
         pla
         pha
         xba
-        jsr $95DD4F
+        jsr rsUnknown95DD4F
         pla
         lda $0D60,b
         sta wR0
         lda $0D69,b
-        jsl $95DBDE
+        jsl rlUnknown95DBDE
 
         _BE98
         plx
@@ -5658,7 +5689,7 @@
         .autsiz
         .databank ?
 
-        jsl $96F9BF
+        jsl rlUnknown96F9BF
         lda $0AE4,b
         bit #$0008
         beq _BEC3
@@ -5673,7 +5704,7 @@
         ldx #$0043
 
         _BEBE
-        jsl $95AB53
+        jsl rlUnknown95AB53
         plx
 
         _BEC3
@@ -5694,7 +5725,7 @@
         .autsiz
         .databank ?
 
-        jsr $95BFB3
+        jsr rsUnknown95BFB3
         xba
         pha
         sep #$20
@@ -5732,7 +5763,7 @@
 
         _BEFA
         pha
-        jsr $95BFB3
+        jsr rsUnknown95BFB3
         xba
         and #$0003
         beq _BF13
@@ -5745,13 +5776,13 @@
 
         _BF13
         pla
-        jsl $95D9BE
+        jsl rlUnknown95D9BE
         bra _BF3F
 
 
         _BF1A
         pla
-        jsl $95D963
+        jsl rlUnknown95D963
         bra _BF3F
 
 
@@ -5817,7 +5848,7 @@
 
         lda $0B08,b,x
         bne _BF76
-        jsl $95C057
+        jsl rlUnknown95C057
         sep #$20
         lda $0AF3,b,x
         ora #$40
@@ -5869,7 +5900,7 @@
         .autsiz
         .databank ?
 
-        jsl $95C697
+        jsl rlUnknown95C697
         lda $0B21,b,x
         clc
         adc #$0002
@@ -5989,7 +6020,7 @@
         rep #$20
 
         _C02F
-        jsr $95BFB3
+        jsr rsUnknown95BFB3
         and #$00FF
         cmp #$00FD
         beq _C055
@@ -6111,7 +6142,7 @@
         lda $0AF3,b,x
         bit #$0040
         beq _C0CC
-        jsl $95C022
+        jsl rlUnknown95C022
         sep #$20
         lda $7FE184
         dec a
@@ -6126,7 +6157,7 @@
         lda $0AF3,b,x
         bit #$0040
         beq _C0F1
-        jsl $95C022
+        jsl rlUnknown95C022
         sep #$20
         lda $7FE185
         dec a
@@ -6306,7 +6337,7 @@
         sta wR6
         lda $0AF9,b,x
         and #$01FF
-        jsl $95D9DC
+        jsl rlUnknown95D9DC
         bcc _C1CA
         pha
         lda wR6
@@ -6334,7 +6365,7 @@
         _C1E4
         clc
         adc wR0
-        jsl $95A164
+        jsl rlUnknown95A164
         sta wR0
         lda $0AFB,b,x
         sec
@@ -6373,7 +6404,7 @@
         plb
         .databank ?
         rep #$20
-        jsr $95BFF9
+        jsr rsUnknown95BFF9
         pha
         inc a
         tay
@@ -6399,7 +6430,7 @@
 
         _C256
         plp
-        jsl $95C51F
+        jsl rlUnknown95C51F
 
         _C25B
         plx
@@ -6414,7 +6445,7 @@
         plx
         plp
         bcc _C272
-        jsl $95C275
+        jsl rlUnknown95C275
 
         _C272
         ply
@@ -6455,7 +6486,7 @@
         lda $0B2D,b,x
         sta wR0
         pla
-        jsl $95C2A9
+        jsl rlUnknown95C2A9
         bra _C2A5
 
 
@@ -6486,7 +6517,7 @@
         clc
         adc lR19
         sta lR19
-        jsr $95C2C0
+        jsr rsUnknown95C2C0
 
         _C2BE
         ply
@@ -6533,7 +6564,7 @@
         inc lR19
         inc lR19
         ply
-        jsl $95C43E
+        jsl rlUnknown95C43E
         tya
         clc
         adc #$0100
@@ -6630,7 +6661,7 @@
         cmp $7FE18A
         bcc _C4BA
         lda $7FE18A
-        jsl $95C43E
+        jsl rlUnknown95C43E
         lda #$0000
         sta $7FE18A
         bra _C4E0
@@ -6638,7 +6669,7 @@
 
         _C4BA
         pha
-        jsl $95C43E
+        jsl rlUnknown95C43E
         lda $7FE18A
         sec
         sbc #1,s
@@ -6882,14 +6913,14 @@
 
         _C613
         ldx $0AE9,b
-        jsr $95C63B
+        jsr rsUnknown95C63B
         bcc _C639
         lda $0B24,b,x
         and #$7FFF
         ora wR0
         sta $0B24,b,x
         ldx $0AEB,b
-        jsr $95C63B
+        jsr rsUnknown95C63B
         bcc _C639
         lda $0B24,b,x
         and #$7FFF
@@ -7065,7 +7096,7 @@
         _C718
         lda wR0
         sec
-        jsr $95C858
+        jsr rsUnknown95C858
         bcc _C738
         sta wR0
         lda $0AFF,b,x
@@ -7111,7 +7142,7 @@
         _C76F
         lda wR0
         sec
-        jsr $95C90F
+        jsr rsUnknown95C90F
         bcc _C78F
         sta wR0
         lda $0AFF,b,x
@@ -7149,7 +7180,7 @@
         rep #$20
 
         _C7C1
-        jsr $95C802
+        jsr rsUnknown95C802
         ply
         plx
         rtl
@@ -7269,7 +7300,7 @@
         php
         pha
         sec
-        jsr $95CA01
+        jsr rsUnknown95CA01
         bcc _C89B
         xba
         pha
@@ -7315,7 +7346,7 @@
         sep #$20
         sta $0AFA,b,x
         rep #$20
-        jsr $95C9C3
+        jsr rsUnknown95C9C3
         lda lR19+1
         bpl _C8F1
         lda lR19
@@ -7346,13 +7377,13 @@
         bcc _C8FE
         lda wR0
         and #$7FFF
-        jsr $95D2A4
+        jsr rsUnknown95D2A4
         bra _C903
 
 
         _C8FE
         lda wR0
-        jsr $95D3A3
+        jsr rsUnknown95D3A3
 
         _C903
         lda wR2
@@ -7385,7 +7416,7 @@
         php
         pha
         clc
-        jsr $95CA01
+        jsr rsUnknown95CA01
         bcc _C952
         xba
         pha
@@ -7431,7 +7462,7 @@
         sep #$20
         sta $0AFA,b,x
         rep #$20
-        jsr $95C9C3
+        jsr rsUnknown95C9C3
         lda lR18+1
         bpl _C9A8
         lda lR18
@@ -7461,13 +7492,13 @@
         plp
         bcc _C9B2
         lda wR0
-        jsr $95D322
+        jsr rsUnknown95D322
         bra _C9B7
 
 
         _C9B2
         lda wR0
-        jsr $95D420
+        jsr rsUnknown95D420
 
         _C9B7
         lda wR2
@@ -7500,7 +7531,7 @@
         sta lR18
         lda $0AF9,b,x
         sta lR18+1
-        jsl $95B5D0
+        jsl rlUnknown95B5D0
         pha
         clc
         adc lR18+1
@@ -7608,10 +7639,10 @@
         _CA56
         pha
         ldx $0AE9,b
-        jsl $95B5D0
+        jsl rlUnknown95B5D0
         pha
         ldx $0AEB,b
-        jsl $95B5D0
+        jsl rlUnknown95B5D0
         clc
         adc #1,s
         cmp #3,s
@@ -7665,9 +7696,9 @@
         bit #$0080
         beq _CAAB
         lda $0D4E,b
-        jsl $95B7F8
+        jsl rlUnknown95B7F8
         sta wR0
-        jsl $95B184
+        jsl rlUnknown95B184
         bcc _CAA6
         lda #$0040
         bra _CAC2
@@ -7680,9 +7711,9 @@
 
         _CAAB
         lda $0D5C,b
-        jsl $95B7F8
+        jsl rlUnknown95B7F8
         sta wR0
-        jsl $95B184
+        jsl rlUnknown95B184
         bcc _CABF
         lda #$0080
         bra _CAC2
@@ -7719,7 +7750,7 @@
         lda $0AF1,b
         bit #$003F
         beq _CB3B
-        jsl $95CB97
+        jsl rlUnknown95CB97
         bit #$0080
         bne _CAEC
         ldx #$0000
@@ -7737,7 +7768,7 @@
         lsr a
         lsr a
         sec
-        jsr $95C858
+        jsr rsUnknown95C858
         bcc _CB06
         stz $0B08,b,x
         stz $0B0A,b,x
@@ -7752,7 +7783,7 @@
         lsr a
         lsr a
         sec
-        jsr $95C90F
+        jsr rsUnknown95C90F
         bcc _CB1C
         stz $0B08,b,x
         stz $0B0A,b,x
@@ -7849,7 +7880,7 @@
         lda $0AF1,b
         bit #$0080
         bne _CBB5
-        jsl $95B184
+        jsl rlUnknown95B184
         bne _CBB1
         lda $0AF9,b
         cmp #$0100
@@ -7863,7 +7894,7 @@
 
 
         _CBB5
-        jsl $95B184
+        jsl rlUnknown95B184
         bne _CBC5
         lda $0AF9,b
         cmp #$0100
@@ -7950,7 +7981,7 @@
         lda $0AF6,b,x
         bit #$0001
         beq _CC20
-        jml $95CE46
+        jml rlUnknown95CE46
 
 
         _CC20
@@ -8048,7 +8079,7 @@
         lda #$0002
 
         _CCC5
-        jsr $95B884
+        jsr rsUnknown95B884
 
         _CCC8
         lda $0B0E,b,x
@@ -9068,7 +9099,7 @@
         lda $0AF9,b
         sta $7FE1A4
         lda #$0003
-        jsl $95D6EC
+        jsl rlUnknown95D6EC
         sep #$20
         lda $7FE1A3
         and #$FE
@@ -9090,7 +9121,7 @@
         lda $0B3C,b
         sta $7FE1A4
         lda #$0003
-        jsl $95D6EC
+        jsl rlUnknown95D6EC
         sep #$20
         lda $7FE1A3
         and #$FE
@@ -9174,7 +9205,7 @@
         pha
         pla
         pla
-        jsr $95D49D
+        jsr rsUnknown95D49D
         bcs _D75D
         bra _D77A
 
@@ -9192,7 +9223,7 @@
         eor #$FF00
         clc
         adc #$0100
-        jsr $95D50F
+        jsr rsUnknown95D50F
         bcs _D75D
         bra _D77A
 
@@ -9295,7 +9326,7 @@
         _D7EC
         clc
         adc wR0
-        jsl $95A164
+        jsl rlUnknown95A164
         sta wR0
         lda $0AFB,b,x
         xba
@@ -9345,7 +9376,7 @@
         sec
 
         _D84B
-        jsl $95C51F
+        jsl rlUnknown95C51F
         plx
         plb
         .databank ?
@@ -9376,7 +9407,7 @@
         .autsiz
         .databank ?
 
-        jsr $95D867
+        jsr rsUnknown95D867
         rtl
 
         .databank 0
@@ -9437,7 +9468,7 @@
         sta $0C75,b,x
         lda lR18+1
         sta $0C76,b,x
-        jsr $95D8D0
+        jsr rsUnknown95D8D0
 
         _D8C1
         plx
@@ -9499,7 +9530,7 @@
         lda #3,s
         tax
         lda wR0
-        jsl $95A164
+        jsl rlUnknown95A164
         sta wR0
         plx
         lda $0C49,b,x
@@ -9528,7 +9559,7 @@
         plb
         .databank ?
         rep #$20
-        jsr $95BFF9
+        jsr rsUnknown95BFF9
         inc a
         tay
         lda $0B24,b,x
@@ -9542,7 +9573,7 @@
         sec
 
         _D95B
-        jsl $95C51F
+        jsl rlUnknown95C51F
 
         _D95F
         ply
@@ -9699,30 +9730,30 @@
         .databank ?
 
         stz $0ADE,b
-        jsr $95DA98
+        jsr rsUnknown95DA98
         bcs _DA39
         pha
         ldx #$0000
-        jsl $95B1AB
+        jsl rlUnknown95B1AB
         pla
         and #$FF00
         pha
-        jsl $95BA05
+        jsl rlUnknown95BA05
         pla
         bra _DA8F
 
 
         _DA39
-        jsr $95DAE1
+        jsr rsUnknown95DAE1
         bcs _DA55
         pha
         ldx #$0043
-        jsl $95B1AB
+        jsl rlUnknown95B1AB
         pla
         and #$FF00
         ora #$0001
         pha
-        jsl $95BA05
+        jsl rlUnknown95BA05
         pla
         bra _DA8F
 
@@ -9813,7 +9844,7 @@
 
         _DACF
         clc
-        jsl $95DB55
+        jsl rlUnknown95DB55
         bcc _DAE0
         lda $0ADE,b
         ora #$0001
@@ -9865,7 +9896,7 @@
 
         _DB18
         sec
-        jsl $95DB55
+        jsl rlUnknown95DB55
         bcc _DB29
         lda $0ADE,b
         ora #$0002
@@ -10003,7 +10034,7 @@
         rep #$20
         lda [lR19],y
         clc
-        jsl $95DB2A
+        jsl rlUnknown95DB2A
         inc y
         inc y
         bra _DB96
@@ -10017,7 +10048,7 @@
         rep #$20
         lda [lR19],y
         sec
-        jsl $95DB2A
+        jsl rlUnknown95DB2A
         inc y
         inc y
         bra _DBAB
@@ -10057,7 +10088,7 @@
         sec
 
         _DBD7
-        jsl $95DB2A
+        jsl rlUnknown95DB2A
         ply
         plx
         rtl
@@ -10154,6 +10185,70 @@
     .endsection Unsorted95DA1DSection
 
 
+    .section Unsorted95DC54Section
+
+      .al
+      .xl
+
+      rsUnknown95DC54 ; 95/DC54
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        tyx
+        sep #$20
+        lda #$01
+        sta $0AF7,b,x
+        rep #$20
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/DC61
+
+      rsUnknown95DC61 ; 95/DC61
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        tyx
+        lda #$0000
+        sta $0B2D,b,x
+        jsl rlUnknown95B050
+        lda wR0
+        asl a
+        asl a
+        asl a
+        asl a
+        sta wR13
+        lda #$0008
+        sta wR14
+        phx
+        jsl rlUnsignedDivide16By16R13
+        plx
+        lda wR13
+        sta $0B2A,b,x
+        sep #$20
+        lda #$01
+        sta $0AF7,b,x
+        rep #$20
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/DC90
+
+    .endsection Unsorted95DC54Section
+
+
     .section Unsorted95DCA3Section
 
       .al
@@ -10169,7 +10264,7 @@
         phx
         and #$001F
         pha
-        jsl $95B993
+        jsl rlUnknown95B993
         pla
         pha
         sep #$20
@@ -10196,7 +10291,7 @@
         lda $0D5B,b
         sta wR2
         lda $0D4E,b
-        jsl $95B8B0
+        jsl rlUnknown95B8B0
         pha
         and #$00FF
         bit #$0080
@@ -10205,7 +10300,7 @@
 
         _DCFF
         pha
-        jsl $95B184
+        jsl rlUnknown95B184
         pla
         bcs _DD0B
         eor #$FFFF
@@ -10221,9 +10316,9 @@
         adc wR1
         sta $0C09,b
         lda #$0000
-        jsr $95DE0C
+        jsr rsUnknown95DE0C
         lda #$0002
-        jsl $95B9AC
+        jsl rlUnknown95B9AC
         lda $0B7D,b
         and #$00FF
         cmp #$0004
@@ -10233,7 +10328,7 @@
         sep #$20
         lda #$02
         rep #$20
-        jsl $95BA76
+        jsl rlUnknown95BA76
         bra _DD4D
 
 
@@ -10243,7 +10338,7 @@
         sep #$20
         lda #$02
         rep #$20
-        jsl $95BA05
+        jsl rlUnknown95BA05
 
         _DD4D
         plx
@@ -10263,7 +10358,7 @@
         phx
         and #$001F
         pha
-        jsl $95B993
+        jsl rlUnknown95B993
         pla
         pha
         sep #$20
@@ -10290,7 +10385,7 @@
         lda $0D69,b
         sta wR2
         lda $0D5C,b
-        jsl $95B8B0
+        jsl rlUnknown95B8B0
         pha
         and #$00FF
         bit #$0080
@@ -10299,7 +10394,7 @@
 
         _DDAB
         pha
-        jsl $95B184
+        jsl rlUnknown95B184
         pla
         bcc _DDB7
         eor #$FFFF
@@ -10315,9 +10410,9 @@
         adc wR1
         sta $0C09,b
         lda #$8000
-        jsr $95DE0C
+        jsr rsUnknown95DE0C
         lda #$0003
-        jsl $95B9AC
+        jsl rlUnknown95B9AC
         lda $0BC0,b
         and #$00FF
         cmp #$0004
@@ -10327,7 +10422,7 @@
         sep #$20
         lda #$03
         rep #$20
-        jsl $95BA76
+        jsl rlUnknown95BA76
         bra _DDF9
 
 
@@ -10337,7 +10432,7 @@
         sep #$20
         lda #$03
         rep #$20
-        jsl $95BA05
+        jsl rlUnknown95BA05
 
         _DDF9
         plx
@@ -10355,12 +10450,12 @@
         .databank ?
 
         phx
-        jsl $95BAE7
+        jsl rlUnknown95BAE7
         txa
         sec
         sbc #$0086
         tax
-        jsl $95C077
+        jsl rlUnknown95C077
         plx
         rtl
 
@@ -10377,20 +10472,20 @@
 
         pha
         pha
-        jsl $95B050
+        jsl rlUnknown95B050
         lda wR0
         sta wR1
         lda #1,s
         asl a
-        jsl $95E304
+        jsl rlUnknown95E304
         pha
         sta wR0
         lda wR1
-        jsl $95CE5E
+        jsl rlUnknown95CE5E
         sta wR0
         pla
         sta wR1
-        jsl $95B184
+        jsl rlUnknown95B184
         bcc _DE37
         pla
         eor #$8000
@@ -10409,13 +10504,13 @@
         lda wR0
         pha
         lda wR1
-        jsr $95E291
+        jsr rsUnknown95E291
         pla
         sta wR0
         pla
         asl a
-        jsl $95E33B
-        jsl $95CE78
+        jsl rlUnknown95E33B
+        jsl rlUnknown95CE78
         lda wR0
         sta $0C1C,b
         lda wR1
@@ -10467,6 +10562,370 @@
     .endsection Unsorted95DCA3Section
 
 
+    .section Unsorted95DE8CSection
+
+      .al
+      .xl
+
+      rsUnknown95DE8C ; 95/DE8C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tyx
+        jsr rsUnknown95E372
+        lda $0B08,b,x
+        bne _DE9B
+        jml _DED2
+
+
+        _DE9B
+        bpl _DEA1
+        jml _DEB9
+
+
+        _DEA1
+        sta wR0
+        jsr rsUnknown95E0C5
+        bit #$0001
+        beq _DEB1
+        php
+        jsl rlUnknown95AE8B
+        plp
+
+        _DEB1
+        bcc _DEB7
+        jsl rlUnknown95DDFB
+
+        _DEB7
+        bra _DED2
+
+
+        _DEB9
+        and #$7FFF
+        sta wR0
+        jsr rsUnknown95E146
+        bit #$0001
+        beq _DECC
+        php
+        jsl rlUnknown95AE8B
+        plp
+
+        _DECC
+        bcc _DED2
+        jsl rlUnknown95DDFB
+
+        _DED2
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/DED5
+
+      rsUnknown95DED5 ; 95/DED5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tyx
+        lda $0B2D,b,x
+        phx
+        tax
+        lda $98AAD4,x
+        cmp #$8080
+        bne _DEF4
+        plx
+        jsl rlUnknown95DDFB
+        ldx $0AE9,b
+        jsl rlUnknown95C057
+        bra _DF73
+
+
+        _DEF4
+        plx
+        pha
+        and #$FF00
+        pha
+        lda $0AFD,b,x
+        sec
+        sbc #1,s
+        sta $0AFD,b,x
+        pla
+        phx
+        ldx $0AEB,b
+        lda $0AF9,b,x
+        ldx $0AE9,b
+        cmp $0AF9,b,x
+        bcs _DF17
+        plx
+        pla
+        bra _DF1D
+
+
+        _DF17
+        plx
+        pla
+        eor #$FFFF
+        inc a
+
+        _DF1D
+        and #$00FF
+        bit #$0080
+        bne _DF46
+        sta wR10
+        lda $0B2A,b,x
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR12
+        sta wR0
+        jsr rsUnknown95E0C5
+        bit #$0001
+        beq _DF42
+        php
+        jsl rlUnknown95AE8B
+        plp
+
+        _DF42
+        bcc _DF44
+
+        _DF44
+        bra _DF69
+
+
+        _DF46
+        eor #$00FF
+        inc a
+        sta wR10
+        lda $0B2A,b,x
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR12
+        sta wR0
+        jsr rsUnknown95E146
+        bit #$0001
+        beq _DF67
+        php
+        jsl rlUnknown95AE8B
+        plp
+
+        _DF67
+        bcc _DF69
+
+        _DF69
+        lda $0B2D,b,x
+        clc
+        adc #$0002
+        sta $0B2D,b,x
+
+        _DF73
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/DF76
+
+    .endsection Unsorted95DE8CSection
+
+
+    .section Unsorted95E0C5Section
+
+      .al
+      .xl
+
+      rsUnknown95E0C5 ; 95/E0C5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sta wR2
+        lda $0AF8,b,x
+        clc
+        adc wR2
+        sta $0AF8,b,x
+        lda $0AFA,b,x
+        adc #$0000
+        sep #$20
+        sta $0AFA,b,x
+        rep #$20
+        lda $0AF9,b,x
+        cmp #$0200
+        bcs _E141
+        pha
+        lda $0AF9,b
+        cmp $0B3C,b
+        bcc _E0F4
+        ldx #$0000
+        bra _E0F7
+
+
+        _E0F4
+        ldx #$0043
+
+        _E0F7
+        pla
+        cmp $0AF9,b,x
+        bcc _E103
+        lda #$0001
+        clc
+        bra _E144
+
+
+        _E103
+        cmp #$0140
+        bcc _E10D
+        lda #$0140
+        bra _E140
+
+
+        _E10D
+        cmp #$00C0
+        bcs _E117
+        lda #$00C0
+        bra _E140
+
+
+        _E117
+        lda $7FE197
+        clc
+        adc wR2
+        sta $7FE197
+        sep #$20
+        lda $7FE199
+        adc #$00
+        sta $7FE199
+        rep #$20
+        lda $7FE198
+        cmp #$00C0
+        bcc _E13C
+        lda #$00C0
+
+        _E13C
+        sta $7FE198
+
+        _E140
+        clc
+
+        _E141
+        lda #$0000
+
+        _E144
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/E146
+
+      rsUnknown95E146 ; 95/E146
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sta wR2
+        lda $0AF8,b,x
+        sec
+        sbc wR2
+        sta $0AF8,b,x
+        lda $0AFA,b,x
+        sbc #$0000
+        sep #$20
+        sta $0AFA,b,x
+        rep #$20
+        lda $0AF9,b,x
+        bpl _E167
+        sec
+        bra _E1C4
+
+
+        _E167
+        pha
+        lda $0AF9,b
+        cmp $0B3C,b
+        bcs _E175
+        ldx #$0000
+        bra _E178
+
+
+        _E175
+        ldx #$0043
+
+        _E178
+        pla
+        cmp $0AF9,b,x
+        beq _E186
+        bcs _E186
+        lda #$0001
+        clc
+        bra _E1C7
+
+
+        _E186
+        cmp #$0140
+        bcc _E190
+        lda #$0140
+        bra _E1C3
+
+
+        _E190
+        cmp #$00C0
+        bcs _E19A
+        lda #$00C0
+        bra _E1C3
+
+
+        _E19A
+        lda $7FE197
+        sec
+        sbc wR2
+        sta $7FE197
+        sep #$20
+        lda $7FE199
+        sbc #$00
+        sta $7FE199
+        rep #$20
+        lda $7FE198
+        cmp #$0040
+        bcs _E1BF
+        lda #$0040
+
+        _E1BF
+        sta $7FE198
+
+        _E1C3
+        clc
+
+        _E1C4
+        lda #$0000
+
+        _E1C7
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/E1C9
+
+    .endsection Unsorted95E0C5Section
+
+
     .section Unsorted95E1C9Section
 
       .al
@@ -10516,7 +10975,7 @@
         rep #$20
         stz $0AFD,b,x
         stz $0B0E,b,x
-        jsl $95DDFB
+        jsl rlUnknown95DDFB
         bra _E229
 
 
@@ -10574,7 +11033,7 @@
         sec
         sbc wR0
         bcs _E273
-        jsl $95DDFB
+        jsl rlUnknown95DDFB
         bra _E276
 
 
@@ -10592,7 +11051,7 @@
         clc
         adc wR0
         bcc _E28B
-        jsl $95DDFB
+        jsl rlUnknown95DDFB
         bra _E28E
 
 
@@ -10634,10 +11093,10 @@
         _E2AD
         pha
         ldx $0AEB,b
-        jsl $95B5FD
+        jsl rlUnknown95B5FD
         sta wR1
         ldx $0AE9,b
-        jsl $95B5FD
+        jsl rlUnknown95B5FD
         clc
         adc #1,s
         sta wR2
@@ -10660,7 +11119,7 @@
         _E2DB
         sta wR3
         lda wR2
-        jsl $95E2EF
+        jsl rlUnknown95E2EF
         ora wR3
         sta $0C1F,b
         lda wR1
@@ -10809,6 +11268,94 @@
     .endsection Unsorted95E1C9Section
 
 
+    .section Unsorted95E372Section
+
+      .al
+      .xl
+
+      rsUnknown95E372 ; 95/E372
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $0B08,b,x
+        and #$7FFF
+        sta wR10
+        lda $0B0E,b,x
+        beq _E3C2
+        bmi _E3A0
+        sta wR13
+        phx
+        jsl rlUnsignedDivide16By16R13
+        plx
+        lda wR13
+        cmp #$0020
+        bcc _E396
+        lda #$0000
+        bra _E3C5
+
+
+        _E396
+        cmp #$0010
+        bcc _E3C2
+        lda #$0002
+        bra _E3C5
+
+
+        _E3A0
+        eor #$FFFF
+        inc a
+        sta wR13
+        phx
+        jsl rlUnsignedDivide16By16R13
+        plx
+        lda wR13
+        cmp #$0020
+        bcc _E3B8
+        lda #$0004
+        bra _E3C5
+
+
+        _E3B8
+        cmp #$0010
+        bcc _E3C2
+        lda #$0003
+        bra _E3C5
+
+
+        _E3C2
+        lda #$0002
+
+        _E3C5
+        clc
+        adc $0B1E,b,x
+        sep #$20
+        xba
+        cpx #$0086
+        bne _E3D5
+        lda #$02
+        bra _E3D7
+
+
+        _E3D5
+        lda #$03
+
+        _E3D7
+        rep #$20
+        jsl rlUnknown95BA05
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/E3DF
+
+    .endsection Unsorted95E372Section
+
+
     .section Unsorted95E3DFSection
 
       .al
@@ -10907,13 +11454,13 @@
         bit #$0080
         bne _E474
         and #$007F
-        jsl $95DBC5
+        jsl rlUnknown95DBC5
         bra _E47B
 
 
         _E474
         and #$007F
-        jsl $95DB8A
+        jsl rlUnknown95DB8A
 
         _E47B
         ply
@@ -10937,7 +11484,7 @@
         lda $0B26,b,x
         bit #$0008
         bne _E48F
-        jsl $95E491
+        jsl rlUnknown95E491
 
         _E48F
         plx
@@ -11035,7 +11582,7 @@
         bit #$8000
         bne _E516
         clc
-        jsr $95C858
+        jsr rsUnknown95C858
         bra _E53F
 
 
@@ -11044,7 +11591,7 @@
         clc
         adc #$0100
         clc
-        jsr $95C90F
+        jsr rsUnknown95C90F
         bra _E53F
 
 
@@ -11055,7 +11602,7 @@
         bit #$8000
         bne _E534
         clc
-        jsr $95C90F
+        jsr rsUnknown95C90F
         bra _E53F
 
 
@@ -11064,7 +11611,7 @@
         clc
         adc #$0100
         clc
-        jsr $95C858
+        jsr rsUnknown95C858
 
         _E53F
         inc y
@@ -11078,9 +11625,9 @@
         beq _E58A
         phx
         ldx $0AEB,b
-        jsl $95B5D0
+        jsl rlUnknown95B5D0
         pha
-        jsl $95B050
+        jsl rlUnknown95B050
         lda wR1
         cmp #1,s
         pla
@@ -11140,7 +11687,7 @@
         lda $0AF4,b,x
         bit #$0001
         beq _E5C8
-        jsr $95BFB3
+        jsr rsUnknown95BFB3
         xba
         and #$00FF
         bne _E5AD
@@ -11210,7 +11757,7 @@
         sta $4200,b
         sta bBufferNMITIMEN
         rep #$20
-        jsr $958B07
+        jsr rsUnknown958B07
         bcs _E5FC
         jml _E69D
 
@@ -11219,7 +11766,7 @@
         lda $7FFC59
         bit #$0400
         beq _E616
-        jsl $95A52D
+        jsl rlUnknown95A52D
         lda #$0003
         sta $0D77,b
         lda #$B122
@@ -11232,7 +11779,7 @@
         and #$00FF
         cmp #$0000
         bne _E633
-        jsl $95A52D
+        jsl rlUnknown95A52D
         lda #$0002
         sta $0D77,b
         lda #$B122
@@ -11243,15 +11790,15 @@
         _E633
         cmp #$0001
         bne _E642
-        jsl $95A52D
-        jsl $80B74B
+        jsl rlUnknown95A52D
+        jsl rlUnknown80B74B
         bra _E68B
 
 
         _E642
         cmp #$0002
         bne _E658
-        jsl $95A52D
+        jsl rlUnknown95A52D
         lda #$0005
         sta $088B,b
         lda #$B6B6
@@ -11262,7 +11809,7 @@
         _E658
         cmp #$0003
         bne _E66E
-        jsl $95A52D
+        jsl rlUnknown95A52D
         lda #$0005
         sta $088B,b
         lda #$B6B6
@@ -11273,13 +11820,13 @@
         _E66E
         cmp #$00FF
         bne _E67C
-        jsl $95A52D
+        jsl rlUnknown95A52D
         stz wGameStateRoutine1,b
         bra _E69D
 
 
         _E67C
-        jsl $95A52D
+        jsl rlUnknown95A52D
         lda #$0002
         sta $0D77,b
         lda #$B122
@@ -11358,9 +11905,9 @@
         sta bBufferCOLDATA_1
         sta bBufferCOLDATA_2
         rep #$20
-        jsl $95EA6A
-        jsl $9BE1C0
-        jsl $9BE179
+        jsl rlUnknown95EA6A
+        jsl rlUnknown9BE1C0
+        jsl rlUnknown9BE179
         rtl
 
         .databank 0
@@ -11378,7 +11925,7 @@
         sta lR18+1
         lda #$EA91
         sta lR18
-        jsl $96BD1A
+        jsl rlUnknown96BD1A
         lda #$0000
         sta wBufferBG2HOFS
         sta wBufferBG2VOFS
@@ -11563,9 +12110,9 @@
         inc x
         cpx #$001E
         bcc _F0CA
-        stz $0140,b
-        stz $0160,b
-        stz $0180,b
+        stz aBGPaletteBuffer.aPalette2,b
+        stz aBGPaletteBuffer.aPalette3,b
+        stz aBGPaletteBuffer.aPalette4,b
         rtl
 
         .databank 0
@@ -11666,7 +12213,7 @@
         cmp $7FE18A
         bcc _F180
         lda $7FE18A
-        jsl $95C43E
+        jsl rlUnknown95C43E
         lda #$0000
         sta $7FE18A
         bra _F1A6
@@ -11674,7 +12221,7 @@
 
         _F180
         pha
-        jsl $95C43E
+        jsl rlUnknown95C43E
         lda $7FE18A
         sec
         sbc #1,s
@@ -11764,7 +12311,7 @@
 
 
         _F204
-        jsl $95F256
+        jsl rlUnknown95F256
         bcs _F246
         lda $7FD08C
         clc
@@ -11783,7 +12330,7 @@
 
 
         _F227
-        jsl $95F29B
+        jsl rlUnknown95F29B
         bcs _F246
         lda $7FD08C
         clc
@@ -11890,7 +12437,7 @@
         lda $7FECFB
         tay
         lda $7FECFD
-        jsl $95C4E3
+        jsl rlUnknown95C4E3
         sep #$20
         lda #$02
         sta $7FECF4
@@ -11925,7 +12472,7 @@
         lda #$00
         sta $7FEC1D
         sta $7FEC41
-        sta $7FEC2C
+        sta aUnit2DataBuffer._ROM.Skills1
         sta $7FEC50
         lda #$08
         sta $7FEC65
@@ -11933,8 +12480,8 @@
         sta $7FEC66
         rep #$20
         lda #$0000
-        sta $7FEC36
-        sta $7FEC38
+        sta aUnit2DataBuffer._Inventory.ItemCount
+        sta aUnit2DataBuffer._Inventory.Items
         sta $7FEC5A
         sta $7FEC5C
         rtl
@@ -12031,8 +12578,8 @@
         lda $7FD08F,x
         bit #$0080
         beq _F8AF
-        jsl $95F8BC
-        jsl $9BEAE8
+        jsl rlUnknown95F8BC
+        jsl rlUnknown9BEAE8
 
         _F8AF
         txa

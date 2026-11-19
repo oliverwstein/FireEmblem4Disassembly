@@ -1559,6 +1559,79 @@
     .endsection Unsorted878B1FSection
 
 
+    .section Unsorted878B4ESection
+
+      .al
+      .xl
+
+      rlUnknown878B4E ; 87/8B4E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenuTilemapData.Width,b,y
+        and #$00FF
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8B69
+
+      rlUnknown878B69 ; 87/8B69
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        pha
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        pla
+        sta structMapMenuTilemapData.Area,b,y
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8B83
+
+    .endsection Unsorted878B4ESection
+
+
     .section Unsorted878BF0Section
 
       .al
@@ -6004,6 +6077,62 @@
         ; 87/D711
 
     .endsection Unsorted87D65ASection
+
+
+    .section Unsorted87E6D3Section
+
+      .al
+      .xl
+
+      rsUnknown87E6D3 ; 87/E6D3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        clc
+        rts
+
+        .databank 0
+
+        ; 87/E6D5
+
+    .endsection Unsorted87E6D3Section
+
+
+    .section Unsorted87E6D7Section
+
+      .al
+      .xl
+
+      rsUnknown87E6D7 ; 87/E6D7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown000D79,b
+        bit #$0020
+        bne rsUnknown87E6D3
+        lda #$0008
+        bra _E6FE
+
+        .byte $A9, $09, $00, $80, $15, $AD, $79, $0D, $89, $20, $00, $D0, $E2, $A9, $02, $00
+        .byte $80, $08, $A9, $0C, $00, $80, $03, $A9, $0D, $00
+
+
+        _E6FE
+        stz wR12
+        jsl rlUnknown87E689
+        rts
+
+        .databank 0
+
+        ; 87/E705
+
+    .endsection Unsorted87E6D7Section
 
 
     .section Unsorted87E709Section

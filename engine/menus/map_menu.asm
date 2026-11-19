@@ -258,12 +258,12 @@
 
       aMapMenuTypePointers ; 85/89B5
 
-        .word $89F5
-        .word $8A6F
-        .word $8AD7
-        .word $8B51
-        .word $8B59
-        .word $8C4E
+        .word <>rsUnknown8589F5
+        .word <>rsUnknown858A6F
+        .word <>rsUnknown858AD7
+        .word <>rsUnknown858B51
+        .word <>rsUnknown858B59
+        .word <>rsUnknown858C4E
         .word $8C56
         .word <>rsMapMenuTypeDialogue
 
