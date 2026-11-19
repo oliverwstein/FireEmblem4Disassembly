@@ -29,3 +29,5 @@ Errors.txt
 Log.txt
 Map.txt
 labels.txt
+
+__pycache__/

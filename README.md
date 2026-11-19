@@ -41,7 +41,7 @@ You need:
 | `text/` | Dialogue and menu text. |
 | `gfx/` | Extracted graphics. |
 | `include/` | Constants, RAM layout, hardware registers and macros. `include/fe4.h` includes them all. |
-| `tools/` | Build helpers. |
+| `tools/` | Build helpers, and tools for testing new code against the ROM and moving it into the build. See `tools/README.md`. |
 | `wip/` | Disassembled code that is not part of the build yet. |
 
 `engine/` is split by game system:
@@ -78,4 +78,4 @@ The long-term goal is to build the ROM entirely from source, with graphics and m
 
 ## Contributing
 
-Every change must keep the output identical to the original. Run `./build.sh` before each commit.
+Every change must keep the output identical to the original. Run `./build.sh` before each commit. To bring code from `wip/` into the build, see `tools/README.md`.
