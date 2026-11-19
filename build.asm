@@ -7232,6 +7232,13 @@
 
     .here
 
+    * = $0A8078
+    .logical $8A8078
+
+      .dsection Table8A8078Section
+
+    .here
+
     * = $0A80A6
     .logical $8A80A6
 
@@ -7239,10 +7246,25 @@
 
     .here
 
+    * = $0A80C3
+    .logical $8A80C3
+
+      .dsection Unsorted8A80C3Section
+      .dsection Unsorted8A80C8Section
+
+    .here
+
     * = $0A80CD
     .logical $8A80CD
 
       .dsection Unsorted8A80CDSection
+
+    .here
+
+    * = $0A80F5
+    .logical $8A80F5
+
+      .dsection Unsorted8A80F5Section
 
     .here
 
@@ -7533,6 +7555,13 @@
 
     .here
 
+    * = $0AA013
+    .logical $8AA013
+
+      .dsection Unsorted8AA013Section
+
+    .here
+
     * = $0AA02B
     .logical $8AA02B
 
@@ -7694,10 +7723,24 @@
 
     .here
 
+    * = $0AADA7
+    .logical $8AADA7
+
+      .dsection Table8AADA7Section
+
+    .here
+
     * = $0AADAD
     .logical $8AADAD
 
       .dsection Unsorted8AADADSection
+
+    .here
+
+    * = $0AADC3
+    .logical $8AADC3
+
+      .dsection Unsorted8AADC3Section
 
     .here
 
@@ -7719,6 +7762,13 @@
     .logical $8AB043
 
       .dsection Unsorted8AB043Section
+
+    .here
+
+    * = $0AB093
+    .logical $8AB093
+
+      .dsection Unsorted8AB093Section
 
     .here
 
@@ -7811,6 +7861,13 @@
 
     .here
 
+    * = $0AC08F
+    .logical $8AC08F
+
+      .dsection Table8AC08FSection
+
+    .here
+
     * = $0AC0B9
     .logical $8AC0B9
 
@@ -7825,10 +7882,31 @@
 
     .here
 
+    * = $0AC50D
+    .logical $8AC50D
+
+      .dsection Unsorted8AC50DSection
+      .dsection Unsorted8AC524Section
+      .dsection Unsorted8AC68ESection
+      .dsection Unsorted8AC6BASection
+      .dsection Unsorted8AC785Section
+      .dsection Unsorted8AC81ESection
+      .dsection Unsorted8AC853Section
+
+    .here
+
     * = $0AC8A2
     .logical $8AC8A2
 
       .dsection Unsorted8AC8A2Section
+
+    .here
+
+    * = $0AC984
+    .logical $8AC984
+
+      .dsection Unsorted8AC984Section
+      .dsection Unsorted8ACA53Section
 
     .here
 
@@ -7839,6 +7917,13 @@
 
     .here
 
+    * = $0ACBF2
+    .logical $8ACBF2
+
+      .dsection Unsorted8ACBF2Section
+
+    .here
+
     * = $0ACC43
     .logical $8ACC43
 
@@ -7846,10 +7931,27 @@
 
     .here
 
+    * = $0ACC58
+    .logical $8ACC58
+
+      .dsection Unsorted8ACC58Section
+      .dsection Unsorted8ACD53Section
+      .dsection Unsorted8ACD94Section
+      .dsection Unsorted8ACDABSection
+
+    .here
+
     * = $0ACE2B
     .logical $8ACE2B
 
       .dsection Unsorted8ACE2BSection
+
+    .here
+
+    * = $0ACE3A
+    .logical $8ACE3A
+
+      .dsection Unsorted8ACE3ASection
 
     .here
 
@@ -8105,10 +8207,25 @@
 
     .here
 
+    * = $0AEEF2
+    .logical $8AEEF2
+
+      .dsection Table8AEEF2Section
+
+    .here
+
     * = $0AEEFE
     .logical $8AEEFE
 
       .dsection Unsorted8AEEFESection
+
+    .here
+
+    * = $0AF048
+    .logical $8AF048
+
+      .dsection Unsorted8AF048Section
+      .dsection Unsorted8AF0B4Section
 
     .here
 
@@ -8126,10 +8243,32 @@
 
     .here
 
+    * = $0AF2C7
+    .logical $8AF2C7
+
+      .dsection Table8AF2C7Section
+
+    .here
+
     * = $0AF2E1
     .logical $8AF2E1
 
       .dsection Unsorted8AF2E1Section
+
+    .here
+
+    * = $0AF4A1
+    .logical $8AF4A1
+
+      .dsection Unsorted8AF4A1Section
+      .dsection Unsorted8AF4B8Section
+      .dsection Unsorted8AF556Section
+      .dsection Unsorted8AF634Section
+      .dsection Unsorted8AF6A1Section
+      .dsection Unsorted8AF6D5Section
+      .dsection Unsorted8AF6ECSection
+      .dsection Unsorted8AF791Section
+      .dsection Unsorted8AF818Section
 
     .here
 
@@ -8144,6 +8283,13 @@
     .logical $8AFA34
 
       .dsection Unsorted8AFA34Section
+
+    .here
+
+    * = $0AFA6F
+    .logical $8AFA6F
+
+      .dsection Table8AFA6FSection
 
     .here
 

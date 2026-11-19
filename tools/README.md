@@ -50,6 +50,7 @@ The files in `wip/` are routines files. Each tool assembles the file in a tempor
 | `fix_addressing.py FILE` | Fixes the systematic data bank problems, using the ROM as the reference: declares the data bank after explicit bank switches and where routines are entered with it set, drops `,b` from bank `$7E`/`$7F` operands, and adds `@l` where the original uses long addressing. Prints what is left to fix by hand. |
 | `show_lines.py FILE FIRST [LAST]` | Shows source lines next to the bytes they build and the original bytes, marking lines that differ. |
 | `place_routines.py FILE SPEC [--remove]` | Once routines match, moves them into engine files as sections, adds them to `build.asm`, and with `--remove` deletes them from FILE. SPEC says which routines go to which file and section. |
+| `jump_tables.py` | Lists every `jsr`/`jmp (addr,x)` in the build whose table is still base-ROM bytes, with each table's entries (`*` marks targets not built); the length comes from a `cmp #N` bound or from where the table runs into its first target. `--write FILE` writes the tables as a routines file plus a `.spec` that files each beside its jump: labelled targets by name, the rest as raw words, which `trace.py` follows. After placing them, `--fix` points the jumps at the new labels. Check the entry counts before writing. |
 | `split_section.py FILE SECTION LABEL NEW_FILE NEW_SECTION` | Moves the end of a section, from LABEL on, into another file without changing the ROM. |
 | `asmlib.py` | Shared helpers for the tools above. |
 

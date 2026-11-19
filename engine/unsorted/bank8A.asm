@@ -111,7 +111,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        jsr ($8A8078,x)
+        jsr (aUnknown8A8078,x)
         plp
         plb
         .databank $8A
@@ -122,6 +122,41 @@
         ; 8A/8078
 
     .endsection Unsorted8A8061Section
+
+
+    .section Table8A8078Section
+
+      .al
+      .xl
+
+      aUnknown8A8078 ; 8A/8078
+
+        ; Jump table of rlUnknown8A8061.
+        .word <>rsUnknown8A80A6
+        .word <>rsUnknown8A80BD
+        .word <>rsUnknown8A80C2
+        .word $80C3
+        .word $80C8
+        .word <>rsUnknown8A80CD
+        .word <>rsUnknown8A80D2
+        .word <>rsUnknown8A80D7
+        .word <>rsUnknown8A80DC
+        .word <>rsUnknown8A80E1
+        .word <>rsUnknown8A80E6
+        .word $80F5
+        .word <>rsUnknown8A80FA
+        .word <>rsUnknown8A80EB
+        .word <>rsUnknown8A80F0
+        .word <>rsUnknown8A811A
+        .word <>rsUnknown8A80FF
+        .word <>rsUnknown8A8139
+        .word $816F
+        .word $8178
+        .word <>rsUnknown8A8139
+        .word <>rsUnknown8A815F
+        .word <>rsUnknown8A8174
+
+    .endsection Table8A8078Section
 
 
     .section Unsorted8A80A6Section
@@ -179,6 +214,50 @@
         ; 8A/80C3
 
     .endsection Unsorted8A80A6Section
+
+
+    .section Unsorted8A80C3Section
+
+      .al
+      .xl
+
+      rsUnknown8A80C3 ; 8A/80C3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8AE2F8
+        rts
+
+        .databank 0
+
+        ; 8A/80C8
+
+    .endsection Unsorted8A80C3Section
+
+
+    .section Unsorted8A80C8Section
+
+      .al
+      .xl
+
+      rsUnknown8A80C8 ; 8A/80C8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlArenaMenuRunStep
+        rts
+
+        .databank 0
+
+        ; 8A/80CD
+
+    .endsection Unsorted8A80C8Section
 
 
     .section Unsorted8A80CDSection
@@ -307,6 +386,28 @@
         ; 8A/80F5
 
     .endsection Unsorted8A80CDSection
+
+
+    .section Unsorted8A80F5Section
+
+      .al
+      .xl
+
+      rsUnknown8A80F5 ; 8A/80F5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8AD81B
+        rts
+
+        .databank 0
+
+        ; 8A/80FA
+
+    .endsection Unsorted8A80F5Section
 
 
     .section Unsorted8A80FASection
@@ -4452,6 +4553,32 @@
     .endsection Unsorted8A9FCCSection
 
 
+    .section Unsorted8AA013Section
+
+      .al
+      .xl
+
+      rlUnknown8AA013 ; 8A/A013
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0005
+        sta wR0
+        lda $089F,b
+        sta wR1
+        jsl rlSetItemRAMStateAndOwner
+        rtl
+
+        .databank 0
+
+        ; 8A/A022
+
+    .endsection Unsorted8AA013Section
+
+
     .section Unsorted8AA02BSection
 
       .al
@@ -6363,7 +6490,7 @@
         asl a
         phx
         tax
-        jsr ($8AADA7,x)
+        jsr (aUnknown8AADA7,x)
         plx
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -6387,6 +6514,21 @@
         ; 8A/ADA7
 
     .endsection Unsorted8AAD6FSection
+
+
+    .section Table8AADA7Section
+
+      .al
+      .xl
+
+      aUnknown8AADA7 ; 8A/ADA7
+
+        ; Jump table of rsUnknown8AAD6F.
+        .word <>rsUnknown8AADAD
+        .word <>rsUnknown8AADB8
+        .word $ADC3
+
+    .endsection Table8AADA7Section
 
 
     .section Unsorted8AADADSection
@@ -6429,6 +6571,31 @@
         ; 8A/ADC3
 
     .endsection Unsorted8AADADSection
+
+
+    .section Unsorted8AADC3Section
+
+      .al
+      .xl
+
+      rsUnknown8AADC3 ; 8A/ADC3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8A00
+        sta lR18+1
+        lda #$ADE8
+        sta lR18
+        rts
+
+        .databank 0
+
+        ; 8A/ADCE
+
+    .endsection Unsorted8AADC3Section
 
 
     .section Unsorted8AADF4Section
@@ -6757,6 +6924,91 @@
         ; 8A/B07C
 
     .endsection Unsorted8AB043Section
+
+
+    .section Unsorted8AB093Section
+
+      .al
+      .xl
+
+      rlUnknown8AB093 ; 8A/B093
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phx
+        phy
+        lda wR0
+        sta wTempVariable1,b
+        lda wR1
+        sta wTempVariable2,b
+        sep #$20
+        lda #$8A
+        pha
+        plb
+        .databank $8A
+        rep #$20
+        lda $08A7,b
+        cmp #$0008
+        bcs _B0B7
+        cmp $08A5,b
+        bne _B0B7
+        bra _B0D2
+
+
+        _B0B7
+        lda #$0098
+        sta wR0
+        lda #$0048
+        sta wR1
+        ldy #$B10A
+        lda #$0000
+        sta wR4
+        lda #$A000
+        sta wR5
+        jsl rlPushToOAMBuffer
+
+        _B0D2
+        lda $08AB,b
+        lda $08A7,b
+        clc
+        adc #$0008
+        sec
+        sbc $08A5,b
+        cmp $08AB,b
+        bcc _B0E7
+        bra _B106
+
+
+        _B0E7
+        lda #$0098
+        sta wR0
+        lda #$00C8
+        clc
+        adc #$0006
+        sta wR1
+        ldy #$B10A
+        lda #$0000
+        sta wR4
+        lda #$2000
+        sta wR5
+        jsl rlPushToOAMBuffer
+
+        _B106
+        ply
+        plx
+        plb
+        .databank $8A
+        rtl
+
+        .databank 0
+
+        ; 8A/B10A
+
+    .endsection Unsorted8AB093Section
 
 
     .section Unsorted8AB111Section
@@ -7684,7 +7936,7 @@
         lda $0592,b
         asl a
         tax
-        jsr ($8AC08F,x)
+        jsr (aUnknown8AC08F,x)
         lda $7F7670
         bne _C06C
         jsl rlDMAByStruct
@@ -7718,6 +7970,39 @@
         ; 8A/C08F
 
     .endsection Unsorted8AC003Section
+
+
+    .section Table8AC08FSection
+
+      .al
+      .xl
+
+      aUnknown8AC08F ; 8A/C08F
+
+        ; Jump table of rlUnknown8AC04B.
+        .word <>rsUnknown8AC0B9
+        .word <>rsUnknown8AC168
+        .word <>rsUnknown8AC1BC
+        .word $C50D
+        .word $C524
+        .word $C6BA
+        .word $C785
+        .word $C81E
+        .word $C853
+        .word <>rsUnknown8AC8A2
+        .word <>rsUnknown8AC8B9
+        .word $C984
+        .word $CA53
+        .word <>rsUnknown8ACAD2
+        .word <>rsUnknown8ACAE9
+        .word $CC58
+        .word $CD53
+        .word $CD94
+        .word $CDAB
+        .word <>rsUnknown8ACE2B
+        .word $CE3A
+
+    .endsection Table8AC08FSection
 
 
     .section Unsorted8AC0B9Section
@@ -8266,6 +8551,517 @@
     .endsection Unsorted8AC457Section
 
 
+    .section Unsorted8AC50DSection
+
+      .al
+      .xl
+
+      rsUnknown8AC50D ; 8A/C50D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$FFFF
+        sta $7F7670
+        jsr rsUnknown8AA63D
+        jsr rsUnknown8AA8C9
+        jsr rsUnknown8AA9CE
+        lda #$0004
+        sta $0592,b
+        rts
+
+        .databank 0
+
+        ; 8A/C524
+
+    .endsection Unsorted8AC50DSection
+
+
+    .section Unsorted8AC524Section
+
+      .al
+      .xl
+
+      rsUnknown8AC524 ; 8A/C524
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown8AA8C9
+        lda $08A5,b
+        tax
+        lda #$004C
+        sta wR0
+        lda $8A9DD5,x
+        and #$00FF
+        clc
+        adc #$0004
+        sta wR1
+        lda #$0000
+        jsl rlUnknown8AB043
+        jsl $8AB093
+        jsr rsUnknown8AA400
+        lda wJoy1New
+        cmp #$0080
+        beq _C560
+        cmp #$8000
+        beq _C5C1
+
+        _C557
+        rts
+
+
+        _C558
+        lda #$0022
+        jsl rlPlaySoundEffect
+        rts
+
+
+        _C560
+        lda $08A7,b
+        asl a
+        tax
+        lda $7F7E72,x
+        bmi _C558
+        lda $08AB,b
+        beq _C557
+        lda $0889,b
+        cmp #$0007
+        bne _C57C
+        jml _C610
+
+
+        _C57C
+        jsr $8AC68E
+        bcs _C585
+        jml _C64F
+
+
+        _C585
+        lda #$000A
+        jsl rlPlaySoundEffect
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACF0B,x
+        sta lR18+1
+        lda $8ACF0A,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0005
+        sta $0594,b
+        rts
+
+
+        _C5C1
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACED8,x
+        sta lR18+1
+        lda $8ACED7,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0002
+        sta $0594,b
+        jsr rsUnknown8AA830
+        stz $08A5,b
+        stz $08A7,b
+        jsr rsUnknown8AA9CE
+        lda #$FFFF
+        sta $7F7670
+        rts
+
+
+        _C610
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACF38,x
+        sta lR18+1
+        lda $8ACF37,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0008
+        sta $0594,b
+        jsr rsUnknown8AA830
+        rts
+
+
+        _C64F
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACF29,x
+        sta lR18+1
+        lda $8ACF28,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0007
+        sta $0594,b
+        jsr rsUnknown8AA830
+        rts
+
+        .databank 0
+
+        ; 8A/C68E
+
+    .endsection Unsorted8AC524Section
+
+
+    .section Unsorted8AC68ESection
+
+      .al
+      .xl
+
+      rsUnknown8AC68E ; 8A/C68E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $08A7,b
+        asl a
+        tax
+        lda $7F7672,x
+        sta wRoutineVariable1,b
+        jsl rlGetItemRAMStructEntryByPlayerItemIndex
+        jsl rlGetItemBuyPrice
+        sta wTempVariable1,b
+        jsl rlUnknown87A18C
+        bcc _C6B2
+        lda wTempVariable1,b
+        lsr a
+        sta wTempVariable1,b
+
+        _C6B2
+        jsl rlGetSelectedUnitMoney
+        cmp wTempVariable1,b
+        rts
+
+        .databank 0
+
+        ; 8A/C6BA
+
+    .endsection Unsorted8AC68ESection
+
+
+    .section Unsorted8AC6BASection
+
+      .al
+      .xl
+
+      rsUnknown8AC6BA ; 8A/C6BA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        jsr rsUnknown8AA8C9
+        lda $08A5,b
+        tax
+        lda #$004C
+        sta wR0
+        lda $8A9DD5,x
+        and #$00FF
+        clc
+        adc #$0004
+        sta wR1
+        lda #$0001
+        jsl rlUnknown8AB043
+        jsr rsUnknown8AD092
+        jsr rsUnknown8AA46E
+        lda #$0000
+        jsl rlUnknown8AB043
+        lda wJoy1New
+        cmp #$8000
+        beq _C707
+        cmp #$0080
+        bne _C706
+        lda $08A3,b
+        cmp #$0000
+        beq _C71B
+        cmp #$0001
+        beq _C707
+
+        _C706
+        rts
+
+
+        _C707
+        lda #$0021
+        jsl rlPlaySoundEffect
+        stz $08A3,b
+        lda #$0006
+        sta $0592,b
+        jsr rsUnknown8AA830
+        rts
+
+
+        _C71B
+        lda $08A7,b
+        asl a
+        tax
+        lda $7F7672,x
+        sta wRoutineVariable1,b
+        jsl rlBuyItemForSelectedUnit
+        bcs _C744
+        inc $0889,b
+        lda #$0070
+        jsl rlPlaySoundEffect2
+        stz $08A3,b
+        lda #$0006
+        sta $0592,b
+        jsr rsUnknown8AA830
+        rts
+
+
+        _C744
+        bra _C746
+
+
+        _C746
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACF29,x
+        sta lR18+1
+        lda $8ACF28,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0007
+        sta $0594,b
+        jsr rsUnknown8AA830
+        rts
+
+        .databank 0
+
+        ; 8A/C785
+
+    .endsection Unsorted8AC6BASection
+
+
+    .section Unsorted8AC785Section
+
+      .al
+      .xl
+
+      rsUnknown8AC785 ; 8A/C785
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8A9DF2
+        jsr rsUnknown8AA9CE
+        lda #$FFFF
+        sta $7F7670
+        lda $08AB,b
+        beq _C7DC
+        lda $08A7,b
+        cmp $08AB,b
+        bcc _C7A7
+        dec a
+        sta $08A7,b
+        dec $08A5,b
+
+        _C7A7
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACF1A,x
+        sta lR18+1
+        lda $8ACF19,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0003
+        sta $0594,b
+        rts
+
+
+        _C7DC
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACED8,x
+        sta lR18+1
+        lda $8ACED7,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0002
+        sta $0594,b
+        stz $08A5,b
+        stz $08A7,b
+        rts
+
+        .databank 0
+
+        ; 8A/C81E
+
+    .endsection Unsorted8AC785Section
+
+
+    .section Unsorted8AC81ESection
+
+      .al
+      .xl
+
+      rsUnknown8AC81E ; 8A/C81E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACF1A,x
+        sta lR18+1
+        lda $8ACF19,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0003
+        sta $0592,b
+        rts
+
+        .databank 0
+
+        ; 8A/C853
+
+    .endsection Unsorted8AC81ESection
+
+
+    .section Unsorted8AC853Section
+
+      .al
+      .xl
+
+      rsUnknown8AC853 ; 8A/C853
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz $08A3,b
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACED8,x
+        sta lR18+1
+        lda $8ACED7,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0002
+        sta $0594,b
+        stz $08A5,b
+        stz $08A7,b
+        jsr rsUnknown8AA9CE
+        lda #$FFFF
+        sta $7F7670
+        rts
+
+        .databank 0
+
+        ; 8A/C8A2
+
+    .endsection Unsorted8AC853Section
+
+
     .section Unsorted8AC8A2Section
 
       .al
@@ -8387,6 +9183,178 @@
         ; 8A/C984
 
     .endsection Unsorted8AC8A2Section
+
+
+    .section Unsorted8AC984Section
+
+      .al
+      .xl
+
+      rsUnknown8AC984 ; 8A/C984
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown8AA928
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda $08A5,b
+        tax
+        lda #$004C
+        sta wR0
+        lda $8A9DD5,x
+        and #$00FF
+        clc
+        adc #$0004
+        sta wR1
+        lda #$0001
+        jsl rlUnknown8AB043
+        jsr rsUnknown8AD092
+        jsr rsUnknown8AA46E
+        lda #$0000
+        jsl rlUnknown8AB043
+        lda wJoy1New
+        cmp #$8000
+        beq _C9FD
+        cmp #$0080
+        bne _C9D0
+        lda $08A3,b
+        cmp #$0000
+        beq _C9D1
+        cmp #$0001
+        beq _C9FD
+
+        _C9D0
+        rts
+
+
+        _C9D1
+        jsl rlSellInventorySlotItem
+        bcs _CA11
+        jsl $8AA013
+        jsl rlUnknown8A9DF2
+        jsr rsUnknown8AAB48
+        lda #$FFFF
+        sta $7F7670
+        lda #$0070
+        jsl rlPlaySoundEffect2
+        stz $08A3,b
+        lda #$000C
+        sta $0592,b
+        jsr rsUnknown8AA830
+        rts
+
+
+        _C9FD
+        lda #$0021
+        jsl rlPlaySoundEffect
+        stz $08A3,b
+        lda #$000C
+        sta $0592,b
+        jsr rsUnknown8AA830
+        rts
+
+
+        _CA11
+        lda #$0021
+        jsl rlPlaySoundEffect
+        stz $08A3,b
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACF47,x
+        sta lR18+1
+        lda $8ACF46,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$000C
+        sta $0594,b
+        jsr rsUnknown8AA830
+        rts
+
+        .databank 0
+
+        ; 8A/CA53
+
+    .endsection Unsorted8AC984Section
+
+
+    .section Unsorted8ACA53Section
+
+      .al
+      .xl
+
+      rsUnknown8ACA53 ; 8A/CA53
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz $08A5,b
+        stz $08A7,b
+        lda $0889,b
+        beq _CA93
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACF74,x
+        sta lR18+1
+        lda $8ACF73,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0009
+        sta $0594,b
+        rts
+
+
+        _CA93
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACED8,x
+        sta lR18+1
+        lda $8ACED7,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0002
+        sta $0594,b
+        jsr rsUnknown8AAB48
+        lda #$FFFF
+        sta $7F7670
+        rts
+
+        .databank 0
+
+        ; 8A/CAD2
+
+    .endsection Unsorted8ACA53Section
 
 
     .section Unsorted8ACAD2Section
@@ -8541,6 +9509,72 @@
     .endsection Unsorted8ACAD2Section
 
 
+    .section Unsorted8ACBF2Section
+
+      .al
+      .xl
+
+      rsUnknown8ACBF2 ; 8A/CBF2
+
+        ; Nothing in the build reaches this. Plays sound $21 and starts the shop
+        ; dialogue picked by $7F8082 from the table at $8A/CF28 (not built).
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACF29,x
+        sta lR18+1
+        lda $8ACF28,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$000D
+        sta $0594,b
+        jsr rsUnknown8AA830
+        rts
+
+        .databank 0
+
+        ; 8A/CC31
+
+      rsUnknown8ACC31 ; 8A/CC31
+
+        ; Nothing in the build reaches this. Compares the selected unit's money with
+        ; the repair cost of inventory slot wRoutineVariable1 (kept in wTempVariable1).
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wRoutineVariable1,b
+        jsl rlGetInventorySlotItemRepairCost
+        sta wTempVariable1,b
+        jsl rlGetSelectedUnitMoney
+        cmp wTempVariable1,b
+        rts
+
+        .databank 0
+
+        ; 8A/CC43
+
+    .endsection Unsorted8ACBF2Section
+
+
     .section Unsorted8ACC43Section
 
       .al
@@ -8574,6 +9608,274 @@
     .endsection Unsorted8ACC43Section
 
 
+    .section Unsorted8ACC58Section
+
+      .al
+      .xl
+
+      rsUnknown8ACC58 ; 8A/CC58
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown8AA928
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda $08A5,b
+        tax
+        lda #$004C
+        sta wR0
+        lda $8A9DD5,x
+        and #$00FF
+        clc
+        adc #$0004
+        sta wR1
+        lda #$0001
+        jsl rlUnknown8AB043
+        jsr rsUnknown8AD092
+        jsr rsUnknown8AA46E
+        lda #$0000
+        jsl rlUnknown8AB043
+        lda wJoy1New
+        cmp #$8000
+        beq _CCA5
+        cmp #$0080
+        bne _CCA4
+        lda $08A3,b
+        cmp #$0000
+        beq _CCB6
+        cmp #$0001
+        beq _CCA5
+
+        _CCA4
+        rts
+
+
+        _CCA5
+        lda #$0021
+        jsl rlPlaySoundEffect
+        stz $08A3,b
+        lda #$0010
+        sta $0592,b
+        rts
+
+
+        _CCB6
+        jsl rlUnknown84B349
+        bcs _CCCD
+        lda #$0070
+        jsl rlPlaySoundEffect2
+        stz $08A3,b
+        lda #$0010
+        sta $0592,b
+        rts
+
+
+        _CCCD
+        cmp #$0000
+        bne _CD14
+        lda #$0021
+        jsl rlPlaySoundEffect
+        stz $08A3,b
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACF47,x
+        sta lR18+1
+        lda $8ACF46,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0010
+        sta $0594,b
+        jsr rsUnknown8AA830
+        rts
+
+
+        _CD14
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACF29,x
+        sta lR18+1
+        lda $8ACF28,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$000D
+        sta $0594,b
+        jsr rsUnknown8AA830
+        rts
+
+        .databank 0
+
+        ; 8A/CD53
+
+    .endsection Unsorted8ACC58Section
+
+
+    .section Unsorted8ACD53Section
+
+      .al
+      .xl
+
+      rsUnknown8ACD53 ; 8A/CD53
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz $08A5,b
+        stz $08A7,b
+        jsr rsUnknown8AACA8
+        jsr rsUnknown8AA830
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACFA1,x
+        sta lR18+1
+        lda $8ACFA0,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$000D
+        sta $0594,b
+        rts
+
+        .databank 0
+
+        ; 8A/CD94
+
+    .endsection Unsorted8ACD53Section
+
+
+    .section Unsorted8ACD94Section
+
+      .al
+      .xl
+
+      rsUnknown8ACD94 ; 8A/CD94
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$FFFF
+        sta $7F7670
+        jsr rlUnknown8AA83D
+        jsr rsUnknown8AA928
+        jsr rsUnknown8AAB48
+        lda #$0012
+        sta $0592,b
+        rts
+
+        .databank 0
+
+        ; 8A/CDAB
+
+    .endsection Unsorted8ACD94Section
+
+
+    .section Unsorted8ACDABSection
+
+      .al
+      .xl
+
+      rsUnknown8ACDAB ; 8A/CDAB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown8AA928
+        lda $08A5,b
+        tax
+        lda #$004C
+        sta wR0
+        lda $8A9DD5,x
+        and #$00FF
+        clc
+        adc #$0004
+        sta wR1
+        lda #$0000
+        jsl rlUnknown8AB043
+        jsr rsUnknown8AA4C8
+        lda wJoy1New
+        cmp #$0080
+        beq _CDDB
+        cmp #$8000
+        beq _CDDC
+        rts
+
+
+        _CDDB
+        rts
+
+
+        _CDDC
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACED8,x
+        sta lR18+1
+        lda $8ACED7,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0002
+        sta $0594,b
+        jsr rsUnknown8AA830
+        stz $08A5,b
+        stz $08A7,b
+        jsr rsUnknown8AAB48
+        lda #$FFFF
+        sta $7F7670
+        rts
+
+        .databank 0
+
+        ; 8A/CE2B
+
+    .endsection Unsorted8ACDABSection
+
+
     .section Unsorted8ACE2BSection
 
       .al
@@ -8600,6 +9902,35 @@
         ; 8A/CE3A
 
     .endsection Unsorted8ACE2BSection
+
+
+    .section Unsorted8ACE3ASection
+
+      .al
+      .xl
+
+      rsUnknown8ACE3A ; 8A/CE3A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $0891,b
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$0011
+        sta wGameStateStep,b
+        rts
+
+        .databank 0
+
+        ; 8A/CE4F
+
+    .endsection Unsorted8ACE3ASection
 
 
     .section Unsorted8ACEB3Section
@@ -10717,7 +12048,7 @@
         lda $0592,b
         asl a
         tax
-        jsr ($8AEEF2,x)
+        jsr (aUnknown8AEEF2,x)
         jsr rsUnknown8AAF0A
         lda #$0008
         sta wR0
@@ -10735,6 +12066,24 @@
         ; 8A/EEF2
 
     .endsection Unsorted8AEEB1Section
+
+
+    .section Table8AEEF2Section
+
+      .al
+      .xl
+
+      aUnknown8AEEF2 ; 8A/EEF2
+
+        ; Jump table of rlUnknown8AEEB1.
+        .word <>rsUnknown8AEEFE
+        .word <>rsUnknown8AEF30
+        .word <>rsUnknown8AEF4B
+        .word $F048
+        .word $F0B4
+        .word <>rsUnknown8AF0D7
+
+    .endsection Table8AEEF2Section
 
 
     .section Unsorted8AEEFESection
@@ -10925,6 +12274,115 @@
         ; 8A/F045
 
     .endsection Unsorted8AEEFESection
+
+
+    .section Unsorted8AF048Section
+
+      .al
+      .xl
+
+      rsUnknown8AF048 ; 8A/F048
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        jsr rsUnknown8AD092
+        jsr rsUnknown8AA46E
+        lda #$0000
+        jsl rlUnknown8AB043
+        lda wJoy1New
+        cmp #$8000
+        beq _F083
+        cmp #$0080
+        bne _F074
+        lda $08A3,b
+        cmp #$0000
+        beq _F075
+        cmp #$0001
+        beq _F083
+
+        _F074
+        rts
+
+
+        _F075
+        lda #$000A
+        jsl rlPlaySoundEffect
+        lda #$0004
+        sta $0592,b
+        rts
+
+
+        _F083
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda #$000C
+        tax
+        lda $8ACEEA,x
+        sta lR18+1
+        lda $8ACEE9,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0005
+        sta $0594,b
+        rts
+
+        .databank 0
+
+        ; 8A/F0B4
+
+    .endsection Unsorted8AF048Section
+
+
+    .section Unsorted8AF0B4Section
+
+      .al
+      .xl
+
+      rsUnknown8AF0B4 ; 8A/F0B4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0001
+        bne _F0C5
+        sep #$20
+        lda bBufferINIDISP
+        and #$0F
+        beq _F0C8
+        dec bBufferINIDISP
+
+        _F0C5
+        rep #$20
+        rts
+
+
+        _F0C8
+        .as
+        rep #$20
+        lda $08A7,b
+        tax
+        lda $7E2002,x
+        jsl rlUnknown84ABB0
+        rts
+
+        .databank 0
+
+        ; 8A/F0D7
+
+    .endsection Unsorted8AF0B4Section
 
 
     .section Unsorted8AF0D7Section
@@ -11129,7 +12587,7 @@
         lda $0592,b
         asl a
         tax
-        jsr ($8AF2C7,x)
+        jsr (aUnknown8AF2C7,x)
         lda $7F7670
         bne _F2A4
         jsl rlDMAByStruct
@@ -11163,6 +12621,31 @@
         ; 8A/F2C7
 
     .endsection Unsorted8AF283Section
+
+
+    .section Table8AF2C7Section
+
+      .al
+      .xl
+
+      aUnknown8AF2C7 ; 8A/F2C7
+
+        ; Jump table of rlUnknown8AF283.
+        .word <>rsUnknown8AF2E1
+        .word <>rsUnknown8AF313
+        .word <>rsUnknown8AF362
+        .word $F4A1
+        .word $F4B8
+        .word $F556
+        .word $F634
+        .word $F6A1
+        .word $F6D5
+        .word $F6EC
+        .word $F791
+        .word $F818
+        .word <>rsUnknown8AF885
+
+    .endsection Table8AF2C7Section
 
 
     .section Unsorted8AF2E1Section
@@ -11399,6 +12882,589 @@
     .endsection Unsorted8AF2E1Section
 
 
+    .section Unsorted8AF4A1Section
+
+      .al
+      .xl
+
+      rsUnknown8AF4A1 ; 8A/F4A1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$FFFF
+        sta $7F7670
+        jsr rsUnknown8AA63D
+        jsr rsUnknown8AA8C9
+        jsr rsUnknown8AA9CE
+        lda #$0004
+        sta $0592,b
+        rts
+
+        .databank 0
+
+        ; 8A/F4B8
+
+    .endsection Unsorted8AF4A1Section
+
+
+    .section Unsorted8AF4B8Section
+
+      .al
+      .xl
+
+      rsUnknown8AF4B8 ; 8A/F4B8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown8AA8C9
+        lda $08A5,b
+        tax
+        lda #$004C
+        sta wR0
+        lda $8A9DD5,x
+        and #$00FF
+        clc
+        adc #$0004
+        sta wR1
+        lda #$0000
+        jsl rlUnknown8AB043
+        jsl $8AB093
+        jsr rsUnknown8AA400
+        lda wJoy1New
+        cmp #$0080
+        beq _F4EC
+        cmp #$8000
+        beq _F522
+
+        _F4EB
+        rts
+
+
+        _F4EC
+        lda $08AB,b
+        beq _F4EB
+        lda #$000A
+        jsl rlPlaySoundEffect
+        lda #$0009
+        tax
+        lda $8ACF0B,x
+        sta lR18+1
+        lda $8ACF0A,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0005
+        sta $0594,b
+        rts
+
+
+        _F522
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda #$0009
+        tax
+        lda $8ACED8,x
+        sta lR18+1
+        lda $8ACED7,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0002
+        sta $0594,b
+        jsr rsUnknown8AA830
+        rts
+
+        .databank 0
+
+        ; 8A/F556
+
+    .endsection Unsorted8AF4B8Section
+
+
+    .section Unsorted8AF556Section
+
+      .al
+      .xl
+
+      rsUnknown8AF556 ; 8A/F556
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        jsr rsUnknown8AA8C9
+        lda $08A5,b
+        tax
+        lda #$004C
+        sta wR0
+        lda $8A9DD5,x
+        and #$00FF
+        clc
+        adc #$0004
+        sta wR1
+        lda #$0001
+        jsl rlUnknown8AB043
+        jsr rsUnknown8AD092
+        jsr rsUnknown8AA46E
+        lda #$0000
+        jsl rlUnknown8AB043
+        lda wJoy1New
+        cmp #$8000
+        beq _F5A3
+        cmp #$0080
+        bne _F5A2
+        lda $08A3,b
+        cmp #$0000
+        beq _F5B7
+        cmp #$0001
+        beq _F5A3
+
+        _F5A2
+        rts
+
+
+        _F5A3
+        lda #$0021
+        jsl rlPlaySoundEffect
+        stz $08A3,b
+        lda #$0006
+        sta $0592,b
+        jsr rsUnknown8AA830
+        rts
+
+
+        _F5B7
+        ldy #$0000
+        stz wTempVariable1,b
+
+        _F5BD
+        tya
+        clc
+        adc #$0001
+        jsl rlGetItemROMDataByInventorySlot
+        lda wCurrentItemDataROMPointer,b
+        beq _F5D4
+        inc wTempVariable1,b
+        inc y
+        cpy #$0007
+        bcc _F5BD
+
+        _F5D4
+        lda wTempVariable1,b
+        cmp #$0007
+        beq _F600
+        lda $08A7,b
+        asl a
+        tax
+        lda $7F7672,x
+        sta wRoutineVariable1,b
+        jsl rlGiveItemToUnitCheckEncumbered
+        lda #$000A
+        jsl rlPlaySoundEffect
+        stz $08A3,b
+        lda #$0006
+        sta $0592,b
+        jsr rsUnknown8AA830
+        rts
+
+
+        _F600
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda #$0009
+        tax
+        lda $8ACF38,x
+        sta lR18+1
+        lda $8ACF37,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0007
+        sta $0594,b
+        jsr rsUnknown8AA830
+        rts
+
+        .databank 0
+
+        ; 8A/F634
+
+    .endsection Unsorted8AF556Section
+
+
+    .section Unsorted8AF634Section
+
+      .al
+      .xl
+
+      rsUnknown8AF634 ; 8A/F634
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8A9E5A
+        jsr rsUnknown8AA9CE
+        lda #$FFFF
+        sta $7F7670
+        stz $08A5,b
+        stz $08A7,b
+        lda $08AB,b
+        beq _F677
+        lda #$0009
+        tax
+        lda $8ACF1A,x
+        sta lR18+1
+        lda $8ACF19,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0003
+        sta $0594,b
+        rts
+
+
+        _F677
+        lda #$0009
+        tax
+        lda $8ACED8,x
+        sta lR18+1
+        lda $8ACED7,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0002
+        sta $0594,b
+        rts
+
+        .databank 0
+
+        ; 8A/F6A1
+
+    .endsection Unsorted8AF634Section
+
+
+    .section Unsorted8AF6A1Section
+
+      .al
+      .xl
+
+      rsUnknown8AF6A1 ; 8A/F6A1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz $08A3,b
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda #$0009
+        tax
+        lda $8ACED8,x
+        sta lR18+1
+        lda $8ACED7,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0002
+        sta $0594,b
+        rts
+
+        .databank 0
+
+        ; 8A/F6D5
+
+    .endsection Unsorted8AF6A1Section
+
+
+    .section Unsorted8AF6D5Section
+
+      .al
+      .xl
+
+      rsUnknown8AF6D5 ; 8A/F6D5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$FFFF
+        sta $7F7670
+        jsr rlUnknown8AA83D
+        jsr rsUnknown8AA928
+        jsr rsUnknown8AAB48
+        lda #$0009
+        sta $0592,b
+        rts
+
+        .databank 0
+
+        ; 8A/F6EC
+
+    .endsection Unsorted8AF6D5Section
+
+
+    .section Unsorted8AF6ECSection
+
+      .al
+      .xl
+
+      rsUnknown8AF6EC ; 8A/F6EC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown8AA928
+        lda $08A5,b
+        tax
+        lda #$004C
+        sta wR0
+        lda $8A9DD5,x
+        and #$00FF
+        clc
+        adc #$0004
+        sta wR1
+        lda #$0000
+        jsl rlUnknown8AB043
+        jsr rsUnknown8AA4C8
+        lda wJoy1New
+        cmp #$0080
+        beq _F71C
+        cmp #$8000
+        beq _F75D
+
+        _F71B
+        rts
+
+
+        _F71C
+        lda $08A7,b
+        inc a
+        sta wRoutineVariable1,b
+        jsl rlGetItemROMDataByInventorySlot
+        lda wCurrentItemDataROMPointer,b
+        beq _F71B
+        lda #$000A
+        jsl rlPlaySoundEffect
+        lda #$0009
+        tax
+        lda $8ACF65,x
+        sta lR18+1
+        lda $8ACF64,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$000A
+        sta $0594,b
+        rts
+
+
+        _F75D
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda #$0009
+        tax
+        lda $8ACED8,x
+        sta lR18+1
+        lda $8ACED7,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0002
+        sta $0594,b
+        jsr rsUnknown8AA830
+        rts
+
+        .databank 0
+
+        ; 8A/F791
+
+    .endsection Unsorted8AF6ECSection
+
+
+    .section Unsorted8AF791Section
+
+      .al
+      .xl
+
+      rsUnknown8AF791 ; 8A/F791
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown8AA928
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda $08A5,b
+        tax
+        lda #$004C
+        sta wR0
+        lda $8A9DD5,x
+        and #$00FF
+        clc
+        adc #$0004
+        sta wR1
+        lda #$0001
+        jsl rlUnknown8AB043
+        jsr rsUnknown8AD092
+        jsr rsUnknown8AA46E
+        lda #$0000
+        jsl rlUnknown8AB043
+        lda wJoy1New
+        cmp #$8000
+        beq _F804
+        cmp #$0080
+        bne _F7DD
+        lda $08A3,b
+        cmp #$0000
+        beq _F7DE
+        cmp #$0001
+        beq _F804
+
+        _F7DD
+        rts
+
+
+        _F7DE
+        jsl rlSendInventorySlotItemToSupply
+        jsl rlUnknown8A9E5A
+        jsr rsUnknown8AAB48
+        lda #$FFFF
+        sta $7F7670
+        lda #$000A
+        jsl rlPlaySoundEffect
+        stz $08A3,b
+        lda #$000B
+        sta $0592,b
+        jsr rsUnknown8AA830
+        rts
+
+
+        _F804
+        lda #$0021
+        jsl rlPlaySoundEffect
+        stz $08A3,b
+        lda #$000B
+        sta $0592,b
+        jsr rsUnknown8AA830
+        rts
+
+        .databank 0
+
+        ; 8A/F818
+
+    .endsection Unsorted8AF791Section
+
+
+    .section Unsorted8AF818Section
+
+      .al
+      .xl
+
+      rsUnknown8AF818 ; 8A/F818
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz $08A5,b
+        stz $08A7,b
+        lda $0889,b
+        beq _F84D
+        lda #$0009
+        tax
+        lda $8ACF74,x
+        sta lR18+1
+        lda $8ACF73,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0008
+        sta $0594,b
+        rts
+
+
+        _F84D
+        lda $7F8082
+        clc
+        adc $7F8082
+        clc
+        adc $7F8082
+        tax
+        lda $8ACED8,x
+        sta lR18+1
+        lda $8ACED7,x
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsr rsUnknown8ACE54
+        lda #$0001
+        sta $0592,b
+        lda #$0002
+        sta $0594,b
+        jsr rsUnknown8AAB48
+        rts
+
+        .databank 0
+
+        ; 8A/F885
+
+    .endsection Unsorted8AF818Section
+
+
     .section Unsorted8AF885Section
 
       .al
@@ -11623,7 +13689,7 @@
         lda $0592,b
         asl a
         tax
-        jsr ($8AFA6F,x)
+        jsr (aUnknown8AFA6F,x)
         lda #$0008
         sta wR0
         lda #$0008
@@ -11640,6 +13706,26 @@
         ; 8A/FA6F
 
     .endsection Unsorted8AFA34Section
+
+
+    .section Table8AFA6FSection
+
+      .al
+      .xl
+
+      aUnknown8AFA6F ; 8A/FA6F
+
+        ; Jump table of rlUnknown8AFA34.
+        .word <>rsUnknown8AFA7F
+        .word <>rsUnknown8AFAAB
+        .word <>rsUnknown8AFAC6
+        .word <>rsUnknown8AFAE6
+        .word <>rsUnknown8AFAF0
+        .word <>rsUnknown8AFB5D
+        .word <>rsUnknown8AFCD5
+        .word <>rsUnknown8AFD00
+
+    .endsection Table8AFA6FSection
 
 
     .section Unsorted8AFA7FSection
