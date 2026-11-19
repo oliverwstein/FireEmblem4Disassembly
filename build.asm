@@ -140,6 +140,7 @@
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
   .include "engine/unsorted/bank8F.asm"
+  .include "engine/unsorted/bank91.asm"
 
   .include "events/ChapterPrologue.asm"
   .include "events/Chapter01.asm"
@@ -3468,6 +3469,20 @@
 
     .here
 
+    * = $11A7BC
+    .logical $91A7BC
+
+      .dsection Unsorted91A7BCSection
+
+    .here
+
+    * = $11A80D
+    .logical $91A80D
+
+      .dsection Unsorted91A80DSection
+
+    .here
+
     * = $11A863
     .logical $91A863
 
@@ -3477,12 +3492,26 @@
 
     .here
 
+    * = $11A928
+    .logical $91A928
+
+      .dsection Unsorted91A928Section
+
+    .here
+
     * = $11A984
     .logical $91A984
 
       .dsection DialogueUnknownSection
 
       ; 91/A9BB
+
+    .here
+
+    * = $11A9BB
+    .logical $91A9BB
+
+      .dsection Unsorted91A9BBSection
 
     .here
 
@@ -3501,6 +3530,13 @@
       .dsection EpilogueDialogueCodeSection
 
       ; 91bd42
+
+    .here
+
+    * = $11BD94
+    .logical $91BD94
+
+      .dsection ASMCStatUpDisplaySection
 
     .here
 

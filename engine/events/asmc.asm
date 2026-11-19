@@ -81,6 +81,56 @@
     .endsection ASMCGiveJuliaLightIfNoWeaponSection
 
 
+    .section ASMCStatUpDisplaySection
+
+      .al
+      .xl
+
+      rlASMCStatUpDisplay ; 91/BD94
+
+        ; Shows stat gains for unit in EventUnitSlot1
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wEventUnitSlot1XCoordinate
+        sta aActionStructUnit1.XPosition
+        lda wEventUnitSlot1YCoordinate
+        sta aActionStructUnit1.YPosition
+        jsl rlUnknown91BDA9
+        rtl
+
+        .databank 0
+
+      rlUnknown91BDA9 ; 91/BDA9
+
+        .al
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #0
+        sta wBattleType
+        rep #$20
+
+        lda #$FFFF
+        sta aActionStructUnit1.ObtainedItem
+        lda #0
+        sta aActionStructUnit1.GainedLevels
+        sta aActionStructUnit1.ObtainedStealMoney
+        sta aActionStructUnit1.GainedExperience
+        jsl rlUnknown9EAC5A
+        jsl rlCreateProcHaltEvent
+        rtl
+
+        .databank 0
+
+        ; 91/BDD2
+
+    .endsection ASMCStatUpDisplaySection
+
+
     .section FinalChapterJuliaRecruitmentASMCSection
 
       .al
