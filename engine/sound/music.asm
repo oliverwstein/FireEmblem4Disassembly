@@ -1,6 +1,76 @@
 ; Choosing music: the songs for each faction's phase in each chapter, and the
 ; victory theme. The unknown routines here sit next to them in the ROM.
 
+    .section GetActiveFactionSongIDSection
+
+      .al
+      .xl
+
+      rsGetActiveFactionSongID ; 81/AA00
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Returns CLC if faction name out of bounds or phase has no faction name assigned
+        ; Returns SEC if phase song found
+
+        lda wActiveFactionSlot,b
+        bne +
+
+          jsl rlGetVictoryThemeIfAllEnemiesDead
+          bcs _SEC
+
+            lda wCurrentChapter,b
+            asl a
+            tax
+            lda aPlayerPhaseChapterSongIDs,x
+            bra _SEC
+
+        +
+        ldx #0
+        jsl rlGetFactionRelation
+        cmp #AllegianceNeutral
+        beq _NPC
+
+          cmp #AllegianceOther
+          beq _Yellow
+
+            lda wActiveFactionSlot,b
+            jsl rlGetFactionSlotNameID
+            bit #$0080
+            bne _CLC
+
+              asl a
+              cmp #53 * size(word)
+              bcs _CLC
+
+                tax
+                lda aNonPlayerFactionPhaseSongIDs,x
+                bra _SEC
+
+          _NPC
+          lda #$001D
+          bra _SEC
+
+        _Yellow
+        lda #$002A
+
+        _SEC
+        sec
+
+        -
+        rts
+
+        _CLC
+        clc
+        bra -
+
+        .databank 0
+
+    .endsection GetActiveFactionSongIDSection
+
+
     .section PlayerPhaseChapterSongIDsSection
 
       .al
@@ -252,3 +322,73 @@
         .databank 0
 
     .endsection PlayerPhaseChapterSongIDsSection
+
+
+    .section Unknown81AB90Section
+
+      .al
+      .xl
+
+      rsUnknown81AB90 ; 81/AB90
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Handle turn start healing animations?
+
+        lda $7E2002
+        beq _ABF1
+
+          lda $7E2000
+          tax
+          clc
+          adc #5
+          sta $7E2000
+
+          lda $7E2006,x
+          and #$00FF
+          sta $0ECF,b
+
+          lda $7E2007,x
+          and #$00FF
+          xba
+          ora $0ECF,b
+          sta $0ECF,b
+
+          lda $7E2008,x
+          and #$00FF
+          sta $0ED1,b
+
+          lda $7E2005,x
+          and #$00FF
+          sta $0ED3,b
+
+          lda $7E2004,x
+          and #$00FF
+          sta $0ED5,b
+
+          lda #(`$85CA85)<<8
+          sta $62+1
+          lda #<>$85CA85
+          sta $62
+          jsl rlProcEngineCreateProc
+
+          lda $7E2002
+          dec a
+          sta $7E2002
+          rts
+
+        _ABF1
+        jsl $85C0D5
+
+        lda #$0004
+        tsb $0788,b
+
+        jsr rsUnknown81AC02
+        inc $0304,b
+        rts
+
+        .databank 0
+
+    .endsection Unknown81AB90Section

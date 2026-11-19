@@ -99,17 +99,22 @@ def run(path, long_branch=False, listing=False):
             if m and srcline[int(m.group(2)) - 1]:
                 return f'{path}:{srcline[int(m.group(2)) - 1]}:{m.group(3)}:{m.group(4)}'
             return e.replace(tmp + '/', '')
+        if os.environ.get('FE4_KEEP_LOG'):
+            open(os.environ['FE4_KEEP_LOG'], 'w').write(log)
         res.errors = [remap(e) for e in asmlib.errors(log)]
         if not ok:
             return res
         res.built = open(os.path.join(tmp, 'out.sfc'), 'rb').read()
         res.ranges = {int(n[5:], 16): r for n, r in asmlib.section_ranges(log, 'TEST_').items()}
+        if listing and os.environ.get('FE4_KEEP_LISTING'):
+            import shutil
+            shutil.copy(os.path.join(tmp, 'list.txt'), os.environ['FE4_KEEP_LISTING'])
         if listing:
             cur = None
             for l in open(os.path.join(tmp, 'list.txt'), errors='replace'):
                 if 'Processing file:' in l or 'Return to file:' in l:
                     cur = l.rsplit(':', 1)[1].strip(); continue
-                m = re.match(r'^(\d+)\t\.([0-9a-f]{6})\t[0-9a-f]{6}\t([0-9a-f ]+)\t', l)
+                m = re.match(r'^(\d+)\t\.([0-9a-f]{1,6})\t[0-9a-f]{6}\t([0-9a-f ]+)\t', l)
                 if m and cur == rel and srcline[int(m.group(1)) - 1]:
                     res.listing[srcline[int(m.group(1)) - 1]] = (int(m.group(2), 16), bytes.fromhex(m.group(3).replace(' ', '')))
     return res

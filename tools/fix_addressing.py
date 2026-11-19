@@ -20,6 +20,8 @@ Once it assembles, for each differing routine it looks at the first real differe
   built absolute, original long
       -> the original used a long address although the data bank allowed absolute,
          so the operand gets `@l`
+  built direct page, original absolute or long
+      -> `,b` or `@l` on the operand
   an immediate operand one byte longer or shorter than in the ROM
       -> a register width directive (.as/.al/.xs/.xl) goes before that instruction
 
@@ -108,12 +110,8 @@ def width_fix(ln, built, orig, res, at_offset):
     if (len(built) == 3 and built[0] in M_IMMEDIATE | X_IMMEDIATE and orig[0] == built[0]
             and orig[1] == built[1] and orig[2] != built[2]):
         return ln, directive(built[0], False)
-    # Built 8-bit, original 16-bit: the previous instruction is a 2-byte immediate and this
-    # one starts where the original still has the immediate's high byte.
-    off = res.listing[ln][0]
-    prev = at_offset.get(off - 2)
-    if prev and len(prev[1]) == 2 and prev[1][0] in M_IMMEDIATE | X_IMMEDIATE:
-        return prev[0], directive(prev[1][0], True)
+    # (The opposite case, built 8-bit where the original is 16-bit, cannot be told apart
+    # reliably from other size differences, so it is left to be fixed by hand.)
     return None
 
 
@@ -150,6 +148,17 @@ def main():
                 lines[dbline - 1] = lines[dbline - 1].replace('.databank ?', f'.databank ${built[3]:02X}')
                 headers.add(dbline); changed += 1
             elif asmlib.ABS_TO_LONG.get(built[0]) == orig[0] and '@l' not in lines[ln - 1]:
+                new = re.sub(r'^(\s*[a-z]{3}\s+)', r'\1@l ', lines[ln - 1], count=1)
+                if new != lines[ln - 1]:
+                    lines[ln - 1] = new; changed += 1
+            elif asmlib.DP_TO_ABS.get(built[0]) == orig[0] and ',b' not in lines[ln - 1]:
+                # Built direct page, original absolute: say so with ,b.
+                new = re.sub(r'^(\s*[a-z]{3}\s+[^\s;,]+)', r'\1,b', lines[ln - 1], count=1)
+                if new != lines[ln - 1]:
+                    lines[ln - 1] = new; changed += 1
+            elif (asmlib.ABS_TO_LONG.get(asmlib.DP_TO_ABS.get(built[0])) == orig[0]
+                  and '@l' not in lines[ln - 1]):
+                # Built direct page, original long.
                 new = re.sub(r'^(\s*[a-z]{3}\s+)', r'\1@l ', lines[ln - 1], count=1)
                 if new != lines[ln - 1]:
                     lines[ln - 1] = new; changed += 1

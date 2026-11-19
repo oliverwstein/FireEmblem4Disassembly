@@ -144,6 +144,7 @@
   .include "engine/unsorted/bank91.asm"
   .include "engine/unsorted/bank95.asm"
   .include "engine/unsorted/bank9E.asm"
+  .include "engine/unsorted/bank9F.asm"
 
   .include "events/ChapterPrologue.asm"
   .include "events/Chapter01.asm"
@@ -158,6 +159,13 @@
   .include "events/Chapter10.asm"
   .include "events/ChapterFinal.asm"
   .include "events/ChapterEpilogue.asm"
+
+    * = $00807C
+    .logical $80807C
+
+      .dsection DMAPaletteAndOAMBufferSection
+
+    .here
 
     * = $008223
     .logical $808223
@@ -179,6 +187,13 @@
     .logical $8083C7
 
       .dsection OAMUpperXBitTableSection
+
+    .here
+
+    * = $008FA3
+    .logical $808FA3
+
+      .dsection Unsorted808FA3Section
 
     .here
 
@@ -264,6 +279,13 @@
 
     .here
 
+    * = $00A773
+    .logical $80A773
+
+      .dsection Unknown80A773Section
+
+    .here
+
     * = $00A861
     .logical $80A861
 
@@ -321,6 +343,13 @@
 
     .here
 
+    * = $00C35D
+    .logical $80C35D
+
+      .dsection Unsorted80C35DSection
+
+    .here
+
     * = $00E42B
     .logical $80E42B
 
@@ -367,6 +396,13 @@
 
     .here
 
+    * = $018C5D
+    .logical $818C5D
+
+      .dsection Unsorted818C5DSection
+
+    .here
+
     * = $018C98
     .logical $818C98
 
@@ -391,6 +427,13 @@
 
     .here
 
+    * = $018FA1
+    .logical $818FA1
+
+      .dsection Unknown818FA1Section
+
+    .here
+
     * = $019031
     .logical $819031
 
@@ -402,6 +445,13 @@
     .logical $819092
 
       .dsection FillMovingMapSpriteDataSection
+
+    .here
+
+    * = $0190BF
+    .logical $8190BF
+
+      .dsection FillMovingMapSpriteDataPathScriptPointerSection
 
     .here
 
@@ -420,10 +470,24 @@
 
     .here
 
+    * = $01AA00
+    .logical $81AA00
+
+      .dsection GetActiveFactionSongIDSection
+
+    .here
+
     * = $01AA4D
     .logical $81AA4D
 
       .dsection PlayerPhaseChapterSongIDsSection
+
+    .here
+
+    * = $01AB90
+    .logical $81AB90
+
+      .dsection Unknown81AB90Section
 
     .here
 
@@ -434,10 +498,24 @@
 
     .here
 
+    * = $01AD28
+    .logical $81AD28
+
+      .dsection Unsorted81AD28Section
+
+    .here
+
     * = $01AD6A
     .logical $81AD6A
 
       .dsection Unsorted81AD6ASection
+
+    .here
+
+    * = $01ADD8
+    .logical $81ADD8
+
+      .dsection Unsorted81ADD8Section
 
     .here
 
@@ -448,6 +526,13 @@
 
     .here
 
+    * = $01AE96
+    .logical $81AE96
+
+      .dsection Unsorted81AE96Section
+
+    .here
+
     * = $01AEAA
     .logical $81AEAA
 
@@ -455,10 +540,24 @@
 
     .here
 
+    * = $01AFB7
+    .logical $81AFB7
+
+      .dsection Unsorted81AFB7Section
+
+    .here
+
     * = $01B088
     .logical $81B088
 
       .dsection Unsorted81B088Section
+
+    .here
+
+    * = $01B223
+    .logical $81B223
+
+      .dsection ASMCShowItemPopUpBoxSection
 
     .here
 
@@ -503,6 +602,13 @@
       .dsection ChapterDataPointerSection
 
       ; 81/B4C5
+
+    .here
+
+    * = $01B4E4
+    .logical $81B4E4
+
+      .dsection GetChapterTalkEventsPointerSection
 
     .here
 
@@ -592,10 +698,31 @@
 
     .here
 
+    * = $028469
+    .logical $828469
+
+      .dsection ProcDialogueInitSection
+
+    .here
+
     * = $0284EA
     .logical $8284EA
 
       .dsection ProcDialogueCycle1Section
+
+    .here
+
+    * = $02862E
+    .logical $82862E
+
+      .dsection Unknown82862ESection
+
+    .here
+
+    * = $028653
+    .logical $828653
+
+      .dsection Unknown828653Section
 
     .here
 
@@ -623,10 +750,24 @@
 
     .here
 
+    * = $028B2B
+    .logical $828B2B
+
+      .dsection Unsorted828B2BSection
+
+    .here
+
     * = $028B35
     .logical $828B35
 
       .dsection Unsorted828B35Section
+
+    .here
+
+    * = $028BEA
+    .logical $828BEA
+
+      .dsection Unsorted828BEASection
 
     .here
 
@@ -641,6 +782,13 @@
     .logical $828D52
 
       .dsection Unsorted828D52Section
+
+    .here
+
+    * = $028E61
+    .logical $828E61
+
+      .dsection Unsorted828E61Section
 
     .here
 
@@ -676,10 +824,24 @@
 
     .here
 
+    * = $0292A9
+    .logical $8292A9
+
+      .dsection Unsorted8292A9Section
+
+    .here
+
     * = $0292B3
     .logical $8292B3
 
       .dsection Unsorted8292B3Section
+
+    .here
+
+    * = $02932C
+    .logical $82932C
+
+      .dsection Unsorted82932CSection
 
     .here
 
@@ -905,10 +1067,24 @@
 
     .here
 
+    * = $048726
+    .logical $848726
+
+      .dsection FindCharacterByGenerationIDSection
+
+    .here
+
     * = $048776
     .logical $848776
 
       .dsection GetUnitByCoordinatesSection
+
+    .here
+
+    * = $0488AE
+    .logical $8488AE
+
+      .dsection Unknown8488AESection
 
     .here
 
@@ -998,6 +1174,13 @@
     .logical $84AF9E
 
       .dsection GetTurnStartEffectsByStatusSection
+
+    .here
+
+    * = $04B094
+    .logical $84B094
+
+      .dsection GetChurchHealingSection
 
     .here
 
@@ -1200,6 +1383,20 @@
 
     .here
 
+    * = $058000
+    .logical $858000
+
+      .dsection Unsorted858000Section
+
+    .here
+
+    * = $058280
+    .logical $858280
+
+      .dsection LoadMapMenuDataFromProcSection
+
+    .here
+
     * = $0582A2
     .logical $8582A2
 
@@ -1211,6 +1408,13 @@
     .logical $858341
 
       .dsection StallProcUntilMapMenuDataLoadedSection
+
+    .here
+
+    * = $058366
+    .logical $858366
+
+      .dsection ProcCycleMapMenuWaitForPaletteGraphicFinishSection
 
     .here
 
@@ -1235,6 +1439,13 @@
 
     .here
 
+    * = $058CD3
+    .logical $858CD3
+
+      .dsection Unsorted858CD3Section
+
+    .here
+
     * = $059B59
     .logical $859B59
 
@@ -1246,6 +1457,13 @@
     .logical $859BD1
 
       .dsection DialogueBoxMapMenuTilemapDataSection
+
+    .here
+
+    * = $059BDA
+    .logical $859BDA
+
+      .dsection DialogueBoxMapMenuDataSection
 
     .here
 
@@ -1294,10 +1512,24 @@
 
     .here
 
+    * = $05ABFE
+    .logical $85ABFE
+
+      .dsection Unsorted85ABFESection
+
+    .here
+
     * = $05AC02
     .logical $85AC02
 
       .dsection Unsorted85AC02Section
+
+    .here
+
+    * = $05B18F
+    .logical $85B18F
+
+      .dsection Unsorted85B18FSection
 
     .here
 
@@ -1308,6 +1540,20 @@
 
     .here
 
+    * = $05B81D
+    .logical $85B81D
+
+      .dsection Unsorted85B81DSection
+
+    .here
+
+    * = $05B8EE
+    .logical $85B8EE
+
+      .dsection Unsorted85B8EESection
+
+    .here
+
     * = $05B9D4
     .logical $85B9D4
 
@@ -1315,10 +1561,24 @@
 
     .here
 
+    * = $05BA41
+    .logical $85BA41
+
+      .dsection Unsorted85BA41Section
+
+    .here
+
     * = $05BA4D
     .logical $85BA4D
 
       .dsection Unsorted85BA4DSection
+
+    .here
+
+    * = $05BC0F
+    .logical $85BC0F
+
+      .dsection Unsorted85BC0FSection
 
     .here
 
@@ -1499,6 +1759,13 @@
 
     .here
 
+    * = $0780AA
+    .logical $8780AA
+
+      .dsection Unsorted8780AASection
+
+    .here
+
     * = $0780DF
     .logical $8780DF
 
@@ -1506,10 +1773,24 @@
 
     .here
 
+    * = $07819A
+    .logical $87819A
+
+      .dsection Unknown87819ASection
+
+    .here
+
     * = $0781EA
     .logical $8781EA
 
       .dsection LoadMapMenuDataSection
+
+    .here
+
+    * = $078232
+    .logical $878232
+
+      .dsection LoadMapMenuTilemapDataSection
 
     .here
 
@@ -1548,6 +1829,13 @@
 
     .here
 
+    * = $0787B5
+    .logical $8787B5
+
+      .dsection GetMapMenuTilemapRAMEntryPointerSection
+
+    .here
+
     * = $0788B3
     .logical $8788B3
 
@@ -1560,6 +1848,13 @@
 
       .dsection Unsorted878921Section
       .dsection ApplyMapMenuPaletteDataSection
+
+    .here
+
+    * = $078979
+    .logical $878979
+
+      .dsection HandleMapMenuDecompressionDMASection
 
     .here
 
@@ -1581,6 +1876,13 @@
     .logical $879E42
 
       .dsection CheckTalkEventEntryAvailableSection
+
+    .here
+
+    * = $07A040
+    .logical $87A040
+
+      .dsection Unsorted87A040Section
 
     .here
 
@@ -1628,10 +1930,24 @@
 
     .here
 
+    * = $07B5DD
+    .logical $87B5DD
+
+      .dsection Unsorted87B5DDSection
+
+    .here
+
     * = $07B786
     .logical $87B786
 
       .dsection Unsorted87B786Section
+
+    .here
+
+    * = $07B877
+    .logical $87B877
+
+      .dsection Unsorted87B877Section
 
     .here
 
@@ -1803,6 +2119,20 @@
 
     .here
 
+    * = $07FB5E
+    .logical $87FB5E
+
+      .dsection Unsorted87FB5ESection
+
+    .here
+
+    * = $07FC51
+    .logical $87FC51
+
+      .dsection FillItemDurabilityDataSection
+
+    .here
+
     * = $07FCC3
     .logical $87FCC3
 
@@ -1831,6 +2161,13 @@
 
     .here
 
+    * = $08860B
+    .logical $88860B
+
+      .dsection Unsorted88860BSection
+
+    .here
+
     * = $08861C
     .logical $88861C
 
@@ -1843,6 +2180,13 @@
     .logical $888901
 
       .dsection Unsorted888901Section
+
+    .here
+
+    * = $088BB3
+    .logical $888BB3
+
+      .dsection Unsorted888BB3Section
 
     .here
 
@@ -1867,10 +2211,24 @@
 
     .here
 
+    * = $08A754
+    .logical $88A754
+
+      .dsection Unsorted88A754Section
+
+    .here
+
     * = $08AF4C
     .logical $88AF4C
 
       .dsection Unsorted88AF4CSection
+
+    .here
+
+    * = $08AF7B
+    .logical $88AF7B
+
+      .dsection Unsorted88AF7BSection
 
     .here
 
@@ -1888,6 +2246,13 @@
 
     .here
 
+    * = $08B64F
+    .logical $88B64F
+
+      .dsection Unsorted88B64FSection
+
+    .here
+
     * = $08BC05
     .logical $88BC05
 
@@ -1899,6 +2264,13 @@
     .logical $88C13E
 
       .dsection GetMapSpriteMovementSoundSection
+
+    .here
+
+    * = $08C9A6
+    .logical $88C9A6
+
+      .dsection Unsorted88C9A6Section
 
     .here
 
@@ -1919,6 +2291,13 @@
 
     .here
 
+    * = $08D67C
+    .logical $88D67C
+
+      .dsection MovingMapSpriteAppendDecompSection
+
+    .here
+
     * = $08D6E5
     .logical $88D6E5
 
@@ -1933,6 +2312,13 @@
 
     .here
 
+    * = $08D847
+    .logical $88D847
+
+      .dsection Unsorted88D847Section
+
+    .here
+
     * = $08D94B
     .logical $88D94B
 
@@ -1940,10 +2326,24 @@
 
     .here
 
+    * = $08D963
+    .logical $88D963
+
+      .dsection Unsorted88D963Section
+
+    .here
+
     * = $08DA6A
     .logical $88DA6A
 
       .dsection Unsorted88DA6ASection
+
+    .here
+
+    * = $08DA82
+    .logical $88DA82
+
+      .dsection Unsorted88DA82Section
 
     .here
 
@@ -1997,6 +2397,13 @@
 
     .here
 
+    * = $0A9750
+    .logical $8A9750
+
+      .dsection Unsorted8A9750Section
+
+    .here
+
     * = $0A97C2
     .logical $8A97C2
 
@@ -2020,6 +2427,13 @@
 
     .here
 
+    * = $0AB49A
+    .logical $8AB49A
+
+      .dsection DecompressWorldMapPortraitToSlotSection
+
+    .here
+
     * = $0AB4EB
     .logical $8AB4EB
 
@@ -2034,6 +2448,13 @@
       aPortraitPalettePointers .include "data/PortraitPalettePointers.csv.asm" ; 8A/B7E1
 
       ; 8A/BAC9
+
+    .here
+
+    * = $0AD975
+    .logical $8AD975
+
+      .dsection Unsorted8AD975Section
 
     .here
 
@@ -2055,6 +2476,13 @@
     .logical $8ADB63
 
       .dsection DisplayDialogueAPressArrowsSection
+
+    .here
+
+    * = $0ADBBD
+    .logical $8ADBBD
+
+      .dsection Unsorted8ADBBDSection
 
     .here
 
@@ -2090,6 +2518,13 @@
     .logical $8AE1C1
 
       .dsection Unsorted8AE1C1Section
+
+    .here
+
+    * = $0AE1EB
+    .logical $8AE1EB
+
+      .dsection Unsorted8AE1EBSection
 
     .here
 
@@ -2177,10 +2612,24 @@
 
     .here
 
+    * = $0B8C98
+    .logical $8B8C98
+
+      .dsection ProcFadeInWorldMapPortraitSlotCycleSection
+
+    .here
+
     * = $0B8E17
     .logical $8B8E17
 
       .dsection ProcFadeInWorldMapPortraitSlotCodeSection
+
+    .here
+
+    * = $0B91F6
+    .logical $8B91F6
+
+      .dsection Unsorted8B91F6Section
 
     .here
 
@@ -3578,6 +4027,13 @@
 
     .here
 
+    * = $11D69B
+    .logical $91D69B
+
+      .dsection Unsorted91D69BSection
+
+    .here
+
     * = $11D9C5
     .logical $91D9C5
 
@@ -3600,6 +4056,13 @@
     .logical $928000
 
       g2bppDialogueFont .text ROM[$128000:$130000] ; 92/8000
+
+    .here
+
+    * = $1599E7
+    .logical $9599E7
+
+      .dsection Unsorted9599E7Section
 
     .here
 
@@ -3872,6 +4335,13 @@
 
     .here
 
+    * = $1E85A4
+    .logical $9E85A4
+
+      .dsection Unsorted9E85A4Section
+
+    .here
+
     * = $1E85DF
     .logical $9E85DF
 
@@ -3890,6 +4360,13 @@
     .logical $9E8867
 
       .dsection Unsorted9E8867Section
+
+    .here
+
+    * = $1E88CE
+    .logical $9E88CE
+
+      .dsection Unsorted9E88CESection
 
     .here
 
@@ -3928,10 +4405,24 @@
 
     .here
 
+    * = $1EACAF
+    .logical $9EACAF
+
+      .dsection Unsorted9EACAFSection
+
+    .here
+
     * = $1EC70B
     .logical $9EC70B
 
       .dsection Unsorted9EC70BSection
+
+    .here
+
+    * = $1ED337
+    .logical $9ED337
+
+      .dsection Unsorted9ED337Section
 
     .here
 
@@ -3942,10 +4433,24 @@
 
     .here
 
+    * = $1ED449
+    .logical $9ED449
+
+      .dsection Unsorted9ED449Section
+
+    .here
+
     * = $1ED535
     .logical $9ED535
 
       .dsection Unsorted9ED535Section
+
+    .here
+
+    * = $1ED609
+    .logical $9ED609
+
+      .dsection Unsorted9ED609Section
 
     .here
 
@@ -3964,6 +4469,13 @@
 
     .here
 
+    * = $1EF791
+    .logical $9EF791
+
+      .dsection Unknown9EF791Section
+
+    .here
+
     * = $1EF79D
     .logical $9EF79D
 
@@ -3978,10 +4490,24 @@
 
     .here
 
+    * = $1EF83F
+    .logical $9EF83F
+
+      .dsection ProcUnknown9EF837InitSection
+
+    .here
+
     * = $1EF9DF
     .logical $9EF9DF
 
       .dsection Unsorted9EF9DFSection
+
+    .here
+
+    * = $1EF9E0
+    .logical $9EF9E0
+
+      .dsection Unsorted9EF9E0Section
 
     .here
 
@@ -3992,10 +4518,31 @@
 
     .here
 
+    * = $1EFC47
+    .logical $9EFC47
+
+      .dsection Unsorted9EFC47Section
+
+    .here
+
+    * = $1F86B0
+    .logical $9F86B0
+
+      .dsection Unsorted9F86B0Section
+
+    .here
+
     * = $1F8E6C
     .logical $9F8E6C
 
       .dsection SavePaletteBufferColorsToRAMSection
+
+    .here
+
+    * = $1F8EE1
+    .logical $9F8EE1
+
+      .dsection FadePaletteToColorsSection
 
     .here
 
@@ -4992,7 +5539,7 @@
       dialogueEpilogueLover_Ares_Noble .include "text/dialogue/Epilogue/Lover_Ares_Noble.dialogue.txt" ; B3ED26
 
       aEpilogueLoverGroups .binclude "data/system/EpilogueLoverGroups.csv.asm"
-      aEpilogueLoverPointersPeppy .binclude "data/system/EpilogueLoverPointersPeppy.csv.asm"
+      aEpilogueLoverPointersPeppy .binclude "data/system/EpilogueLoverPointersPeppy.csv.asm" ; Daisy, Patty, Hermina, Fee, Laylea, Lene
       aEpilogueLoverPointersCreidneLarcei .binclude "data/system/EpilogueLoverPointersCreidneLarcei.csv.asm"
       aEpilogueLoverPointersMuirneLana .binclude "data/system/EpilogueLoverPointersMuirneLana.csv.asm"
       aEpilogueLoverPointersLindaTine .binclude "data/system/EpilogueLoverPointersLindaTine.csv.asm"

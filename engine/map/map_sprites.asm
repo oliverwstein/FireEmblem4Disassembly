@@ -501,6 +501,32 @@
     .endsection FillMovingMapSpriteDataSection
 
 
+    .section FillMovingMapSpriteDataPathScriptPointerSection
+
+      .al
+      .xl
+
+      rsFillMovingMapSpriteDataPathScriptPointer ; 81/90BF
+
+        .al
+        .autsiz
+        .databank ?
+
+        ldy #6
+        lda lR19
+        sta [lR18],y
+        inc y
+        lda lR19+1
+        sta [lR18],y
+        rts
+
+        .databank 0
+
+        ; 81/90CC
+
+    .endsection FillMovingMapSpriteDataPathScriptPointerSection
+
+
     .section ProcCycleFlickerUnitsOfFactionSlotSection
 
       .al
@@ -1265,6 +1291,89 @@
         ; 88/C1BF
 
     .endsection GetMapSpriteMovementSoundSection
+
+
+    .section MovingMapSpriteAppendDecompSection
+
+      .al
+      .xl
+
+      rsMovingMapSpriteAppendDecomp ; 88/D67C
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+        phx
+        phk
+        plb
+
+        lda aMovingMapSpritesMapSprites,b,x
+        and #$8000
+        bne +
+
+          ; Short map sprites
+          lda aMovingMapSpritesMapSprites,b,x
+          phx
+          and #$7FFF
+          sta wR0
+          clc
+          adc wR0
+          clc
+          adc wR0
+          tax
+
+          lda aMapMovementShortSpritePointers,x
+          sta lR18
+          lda aMapMovementShortSpritePointers+1,x
+          sta lR18+1
+          plx
+
+          jsr (aSetMovingMapSpriteBufferPointers,x)
+          jsl rlAppendDecompList
+
+          plx
+          pla
+          sta lR18+1
+          pla
+          sta lR18
+          rtl
+
+        ; Tall map sprite
+        +
+        lda aMovingMapSpritesMapSprites,b,x
+        phx
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+
+        lda aMapMovementTallSpritePointers,x
+        sta lR18
+        lda aMapMovementTallSpritePointers+1,x
+        sta lR18+1
+        plx
+
+        jsr (aSetMovingMapSpriteBufferPointers,x)
+        jsl rlAppendDecompList
+
+        plx
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        rtl
+
+        .databank 0
+
+    .endsection MovingMapSpriteAppendDecompSection
 
 
     .section SetMovingMapSpriteBufferPointersSection

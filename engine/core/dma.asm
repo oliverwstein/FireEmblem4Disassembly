@@ -1,6 +1,63 @@
 ; The DMA engine: runs a queue of DMA transfers to CGRAM or VRAM, from VRAM, or to
 ; any given PPU register, plus single transfers described by a struct or by pointers.
 
+    .section DMAPaletteAndOAMBufferSection
+
+      .al
+      .xl
+
+      rlDMAPaletteAndOAMBuffer ; 80/807C
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        sep #$10
+        rep #$20
+
+        lda #pack([DMAP_DMA_Setting(DMAP_CPUToIO, DMAP_Increment, DMAP_Mode0), narrow(OAMDATA - PPU_REG_BASE, 1)])
+        sta DMA_IO[0].DMAP,b
+
+        lda #<>aSpriteBuffer
+        sta DMA_IO[0].A1,b
+        ldx #`aSpriteBuffer
+        stx DMA_IO[0].A1+2,b
+
+        lda #size(aSpriteBuffer)+size(aSpriteExtBuffer)
+        sta DMA_IO[0].DAS,b
+
+        stz OAMADD,b
+
+        lda #pack([DMAP_DMA_Setting(DMAP_CPUToIO, DMAP_Increment, DMAP_Mode0), narrow(CGDATA - PPU_REG_BASE, 1)])
+        sta DMA_IO[1].DMAP,b
+
+        lda #<>aBGPaletteBuffer
+        sta DMA_IO[1].A1,b
+        ldx #`aBGPaletteBuffer
+        stx DMA_IO[1].A1+2,b
+
+        lda #size(aBGPaletteBuffer)+size(aOAMPaletteBuffer)
+        sta DMA_IO[1].DAS,b
+
+        ldx #0
+        stx CGADD,b
+
+        ldx #MDMAEN_Setting([0, 1])
+        stx MDMAEN,b
+
+        lda wBufferOAMADD
+        sta OAMADD,b
+        plp
+        rtl
+
+        .databank 0
+
+        ; 80/80C3
+
+    .endsection DMAPaletteAndOAMBufferSection
+
+
     .section DMAEngineSection
 
       .al

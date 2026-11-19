@@ -139,6 +139,30 @@
     .endsection Unsorted8885EFSection
 
 
+    .section Unsorted88860BSection
+
+      .al
+      .xl
+
+      rlUnknown88860B ; 88/860B
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+        sta wMapEnableYScrollFlag,b
+
+        jsl rlUnknown8886C3
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted88860BSection
+
+
     .section Unsorted88861CSection
 
       .al
@@ -578,6 +602,131 @@
         ; 88/8A14
 
     .endsection Unsorted888901Section
+
+
+    .section Unsorted888BB3Section
+
+      .al
+      .xl
+
+      rsUnknown888BB3 ; 88/8BB3
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Grabs the next row of map tiles when scrolling down?
+
+        _Loop
+        lda aMapData,x
+        and wUnknown000596,b
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR2
+        phx
+        tax
+        lda $7F0004,x
+        and #$DFFF
+        sta $05DC,b,y
+        plx
+
+        lda wUnknown00075A,b
+        bit #$0002
+        beq +
+
+          lda $7F6400,x
+          and #$03FF
+          asl a
+          asl a
+          asl a
+          clc
+          adc wR2
+          phx
+          tax
+          lda $7F0004,x
+          and #$DFFF
+          ora #$2000
+          sta $065C,b,y
+          plx
+
+        +
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #64
+        bcc +
+
+          inc wUnknown00072A,b
+          ldy #0
+
+        +
+        lda aMapData,x
+        and wUnknown000596,b
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR2
+        phx
+        tax
+        lda $7F0000,x
+        and #$DFFF
+        sta $05DC,b,y
+        plx
+
+        lda $075A,b
+        bit #$0002
+        beq +
+
+          lda $7F6400,x
+          and #$03FF
+          asl a
+          asl a
+          asl a
+          clc
+          adc wR2
+          phx
+          tax
+          lda $7F0000,x
+          and #$DFFF
+          ora #$2000
+          sta $065C,b,y
+          plx
+
+        +
+        inc y
+        inc y
+        
+        -
+        lda wUnknown00072A,b
+        beq +
+
+          cpy wR8
+          bcs _End
+          bra _8C5B
+
+        +
+        cpy #64
+        bcc _8C5B
+
+          inc wUnknown00072A,b
+          ldy #0
+          bra -
+
+        _End
+        rts
+        
+        _8C5B
+        jml _Loop
+
+        .databank 0
+
+        ; 88/8C5F
+
+    .endsection Unsorted888BB3Section
 
 
     .section Unsorted888D57Section
@@ -1298,6 +1447,111 @@
     .endsection Unsorted88A32DSection
 
 
+    .section Unsorted88A754Section
+
+      .al
+      .xl
+
+      rlUnknown88A754 ; 88/A754
+
+        .al
+        .autsiz
+        .databank $00
+
+        lda wUnknown000766,b
+        bne _A7BA
+
+          lda wUnknown0007D8,b
+          cmp #2
+          beq _A788
+
+            cmp #4
+            beq _A795
+
+              cmp #5
+              beq _A795
+
+                cmp #6
+                beq _A795
+
+                  cmp #7
+                  beq _A795
+
+                    lda #16
+                    sta wMapPixelScrollDistance,b
+                    jsr $88A9B4
+                    beq _End
+
+                      lda #8
+                      sta wMapScrollSpeed,b
+                      bra +
+          
+          _A788
+          stz wMapPixelScrollDistance,b
+          jsr $88AA1E
+          beq _End
+
+            jsr $88A7F5
+            bra +
+
+          _A795
+          lda #16
+          sta wMapPixelScrollDistance,b
+          jsr rsUnknown88B64F
+          beq _End
+
+            lda #8
+            sta wMapScrollSpeed
+            bra +
+
+          +
+          stz wMapScrollCurrentPixelDistance,b
+          lda #1
+          sta wUnknown000766,b
+          stz wUnknown00073A,b
+          stz wMapEnableXScrollFlag,b
+          stz wMapEnableYScrollFlag,b
+
+        _A7BA
+        lda wMapScrollCurrentPixelDistance,b
+        clc
+        adc wMapScrollSpeed,b
+        sta wMapScrollCurrentPixelDistance,b
+        cmp wMapPixelScrollDistance,b
+        bcc +
+
+          sec
+          sbc wMapPixelScrollDistance,b
+          sta wR0
+          lda wMapScrollSpeed,b
+          sec
+          sbc wR0
+          sta wMapScrollSpeed,b
+
+          stz wUnknown000766,b
+          stz wUnknown00073A,b
+          stz wMapEnableXScrollFlag,b
+          stz wMapEnableYScrollFlag,b
+        
+        +
+        jsl rlUnknown88BC05
+
+        lda wUnknown0007D8,b
+        cmp #2
+        bne _End
+
+          jsl $88C0B3
+
+        _End
+        rtl
+
+        .databank 0
+
+        ; 88/A7F5
+
+    .endsection Unsorted88A754Section
+
+
     .section Unsorted88AF4CSection
 
       .al
@@ -1337,6 +1591,53 @@
         .databank 0
 
     .endsection Unsorted88AF4CSection
+
+
+    .section Unsorted88AF7BSection
+
+      .al
+      .xl
+
+      rlUnknown88AF7B ; 88/AF7B
+
+        .al
+        .autsiz
+        .databank ?
+
+        phx
+        stz $07DA,b
+        stz $07E0,b
+
+        ldx $0772,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        beq +
+
+          sta $00089B
+        
+        +
+        ldx $0772,b
+        jsl rlDeployedUnitUnsetHiddenIfAlive
+
+        ldx $0772,b
+        lda aDeploymentTable._State,x
+        bit #DeploymentStateCanto
+        bne +
+
+          lda bUnknown000E7B,b
+          and #$00FF
+          bit #$0041
+          bne +
+
+            lda $0772,b
+            jsl rlUnknown88B4DB
+
+        +
+        plx
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted88AF7BSection
 
 
     .section Unsorted88B4DBSection
@@ -1390,6 +1691,115 @@
         ; 88/B51A
 
     .endsection Unsorted88B4DBSection
+
+
+    .section Unsorted88B64FSection
+
+      .al
+      .xl
+
+      rsUnknown88B64F ; 88/B64F
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda $0778,b
+        beq ++
+        bpl +
+
+          inc $0778,b
+          lda #$0200
+          bra _End
+          
+            +
+            dec $0778,b
+            lda #$0100
+            bra _End
+
+        +
+        lda $077A,b
+        beq _B681
+        bpl +
+
+          inc $077A,b
+          lda #$0800
+          bra _End
+
+        +
+        dec $077A,b
+        lda #$0400
+        bra _End
+        
+        _End
+        sta wMapScrollDirectionIdentifier,b
+        rts
+
+        _B681
+        lda wUnknown0007D8,b
+        cmp #5
+        beq _B6A6
+
+          cmp #6
+          beq _B6B6
+
+            cmp #7
+            beq _B6D4
+
+              stz wUnknown00073A,b
+              stz wMapScrollScriptOffset,b
+              stz wUnknown0007D8,b
+              lda #$0004
+              trb $0788,b
+              lda #0
+              rts
+        
+        _B6A6
+        stz wUnknown00073A,b
+        stz wMapScrollScriptOffset,b
+        stz wUnknown0007D8,b
+        jsr $88B701
+        lda #0
+        rts
+
+        _B6B6
+        stz wUnknown00073A,b
+        stz wMapScrollScriptOffset,b
+        lda #3
+        sta wUnknown0007D8,b
+        lda $0772,b
+        sta $00
+        lda $0774,b
+        sta $02
+        jsl $8591B2
+        lda #0
+        rts
+
+        _B6D4
+        stz wUnknown00073A,b
+        stz wMapScrollScriptOffset,b
+        stz wUnknown0007D8,b
+        lda $0D87,b
+        bit #$0008
+        bne +
+
+          jsr $88B701
+          lda #0
+          rts
+
+        +
+        ldx $0772,b
+        jsl rlUnknown84D4A2
+        lda #$0008
+        tsb $0788,b
+        lda #0
+        rts
+
+        .databank 0
+
+        ; 88/B6FD
+
+    .endsection Unsorted88B64FSection
 
 
     .section Unsorted88BC05Section
@@ -1661,6 +2071,87 @@
     .endsection Unsorted88BC05Section
 
 
+    .section Unsorted88C9A6Section
+
+      .al
+      .xl
+
+      rlUnknown88C9A6 ; 88/C9A6
+
+        .al
+        .autsiz
+        .databank ?
+
+        phx
+        phk
+        plb
+
+        lda #$FFFF
+        sta $0865,b
+
+        ldx $0772,b
+        lda aDeploymentTable._DeploymentOffsets,x
+        tax
+        lda aDeploymentTable._MapSpriteID,x
+        and #$8000
+        bne _Tall
+
+          ldx $0772,b
+          lda aDeploymentTable._DeploymentOffsets,x
+          tax
+          lda aDeploymentTable._MapSpriteID,x
+          and #~$8000
+          sta wR0
+          clc
+          adc wR0
+          clc
+          adc wR0
+          tax
+          lda aMapMovementShortSpritePointers,x
+          sta lR45
+          lda aMapMovementShortSpritePointers+1,x
+          sta lR45+1
+          lda #(`$7EAB88)<<8
+          sta lR47+1
+          lda #<>$7EAB88
+          sta lR47
+          jsl rlDecompressSingle
+
+          plx
+          rtl
+        
+        _Tall
+        ldx $0772,b
+        lda aDeploymentTable._DeploymentOffsets,x
+        tax
+        lda aDeploymentTable._MapSpriteID,x
+        and #~$8000
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda aMapMovementTallSpritePointers,x
+        sta lR45
+        lda aMapMovementTallSpritePointers+1,x
+        sta lR45+1
+        lda #(`$7EAB88)<<8
+        sta lR47+1
+        lda #<>$7EAB88
+        sta lR47
+        jsl rlDecompressSingle
+
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/CA28
+
+    .endsection Unsorted88C9A6Section
+
+
     .section Unsorted88CD53Section
 
       .al
@@ -1769,6 +2260,179 @@
     .endsection Unsorted88D7FESection
 
 
+    .section Unsorted88D847Section
+
+      .al
+      .xl
+
+      rsUnknown88D847 ; 88/D847
+
+        .al
+        .autsiz
+        .databank $88
+
+        ; X = active mover offset
+
+        ; For short map sprites
+
+        lda wUnknown000901,x
+        beq +
+
+          jml _End
+
+        +
+        lda wUnknown000921,b
+        beq ++
+
+          and #$FF00
+          beq +
+
+            inc wUnknown000901,b,x
+            jml _End
+
+          +
+          lda @l aUnknown88D95B,x
+          tsb wUnknown000921,b
+
+        +
+        lda @l aUnknown88D953,x
+        tsb wUnknown000921,b
+
+        lda aMovingMapSpritesMapSprites,b,x
+        and #$7FFF
+        tay
+        lda aUnknown88CBE8,y
+        and #$00FF
+        sta wUnknown000901,x
+
+        lda wUnknown0008F1,x
+        clc
+        adc #1
+        and #$0003
+        sta wUnknown0008F1,x
+
+        lda wUnknown0008F1,x
+        cmp #0
+        beq _D8A8
+
+        cmp #1
+        beq _D8AD
+
+        cmp #2
+        beq _D8B2
+
+        cmp #3
+        beq _D8B7
+
+        _D8A8
+        lda #size(Tile4bpp) * 0
+        bra +
+
+        _D8AD
+        lda #size(Tile4bpp) * 10
+        bra +
+
+        _D8B2
+        lda #size(Tile4bpp) * 20
+        bra +
+
+        _D8B7
+        lda #size(Tile4bpp) * 30
+        bra +
+
+        +
+        sta $07E6,b
+
+        ; Check for direction of movement
+        lda wUnknown000911,x
+        cmp #0
+        beq _D8D7
+
+        cmp #8
+        beq _D8DC
+
+        cmp #$0010
+        beq _D8E1
+
+        cmp #$0018
+        beq _D8E6
+
+        _D8D7
+        lda #0
+        bra +
+
+        _D8DC
+        lda #$0500
+        bra +
+
+        _D8E1
+        lda #$0A00
+        bra +
+
+        _D8E6
+        lda #$0F00
+        bra +
+
+        +
+        clc
+        adc $07E6,b
+        sta $07E6,b
+
+        jsr (aUnknown88D94B,x)
+
+        lda $07EA,b
+        clc
+        adc $07E6,b
+        sta lR18
+
+        lda #$00A0
+        sta wR0
+
+        lda #$C400 >> 1
+        clc
+        adc @l aUnknown88DB04,x
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        lda $07EA,b
+        clc
+        adc #$00A0
+        clc
+        adc $07E6,b
+        sta lR18
+
+        lda #$00A0
+        sta wR0
+
+        lda #$C600 >> 1
+        clc
+        adc @l aUnknown88DB04,x
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        _End
+        sep #$20
+        lda #$88
+        pha
+        plb
+        rep #$20
+
+        stz wR0
+        stz wR1
+        lda @l aUnknown88DAFC,x
+        sta wR4
+        ldy #$CC5F
+        rts
+
+        .databank 0
+
+    .endsection Unsorted88D847Section
+
+
     .section Unsorted88D94BSection
 
       .al
@@ -1798,6 +2462,166 @@
     .endsection Unsorted88D94BSection
 
 
+    .section Unsorted88D963Section
+
+      .al
+      .xl
+
+      rsUnknown88D963 ; 88/D963
+
+        .al
+        .autsiz
+        .databank $88
+
+        lda wUnknown000901,x
+        beq +
+
+          jml _End
+
+        +
+        lda wUnknown000921,b
+        beq ++
+
+          and #$FF00
+          beq +
+
+            inc wUnknown000901,b,x
+            jml _End
+
+          +
+          lda @l $88DA7A,x
+          tsb wUnknown000921,b
+
+        +
+        lda @l aUnknown88DA72,x
+        tsb wUnknown000921,b
+
+        lda $0867,b,x
+        and #$7FFF
+        tay
+        lda aUnknown88CBE8,y
+        and #$00FF
+        sta wUnknown000901,x
+
+        lda wUnknown0008F1,x
+        clc
+        adc #1
+        and #$0003
+        sta wUnknown0008F1,x
+
+        lda wUnknown0008F1,x
+        cmp #0
+        beq _D9C4
+
+        cmp #1
+        beq _D9C9
+
+        cmp #2
+        beq _D9CE
+
+        cmp #3
+        beq _D9D3
+        
+        _D9C4
+        lda #0
+        bra +
+
+        _D9C9
+        lda #$0200
+        bra +
+
+        _D9CE
+        lda #$0400
+        bra +
+
+        _D9D3
+        lda #$0600
+        bra +
+
+        +
+        sta $07E6,b
+
+        lda wUnknown000911,x
+        xba
+        clc
+        adc $07E6,b
+        sta $07E6,b
+
+        jsr (aUnknown88DA6A,x)
+
+        lda $07EA,b
+        clc
+        adc $07E6,b
+        sta lR18
+
+        lda #size(Tile4bpp) * 8
+        sta wR0
+
+        lda #$C400 >> 1
+        clc
+        adc @l aUnknown88DB04,x
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        lda $07EA,b
+        clc
+        adc #$0100
+        clc
+        adc $07E6,b
+        sta lR18
+
+        lda #size(Tile4bpp) * 8
+        sta wR0
+
+        lda #$C600 >> 1
+        clc
+        adc @l aUnknown88DB04,x
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        _End
+        sep #$20
+        lda #$88
+        pha
+        plb
+        rep #$20
+
+        phx
+        lda $0867,b,x
+        and #$7FFF
+        asl a
+        tax
+        lda @l $88D488,x
+        sta wR3
+        plx
+
+        lda wUnknown0008F1,x
+        asl a
+        clc
+        adc wUnknown000911,x
+        clc
+        adc wR3
+        tay
+        lda $D4C6,b,y
+        and #$00FF
+        sta wR0
+        lda $D4C7,b,y
+        and #$00FF
+        sta wR1
+        lda @l aUnknown88DAFC,x
+        sta wR4
+        ldy #$CC49
+        rts
+
+        .databank 0
+
+    .endsection Unsorted88D963Section
+
+
     .section Unsorted88DA6ASection
 
       .al
@@ -1825,6 +2649,101 @@
         .word $1000
 
     .endsection Unsorted88DA6ASection
+
+
+    .section Unsorted88DA82Section
+
+      .al
+      .xl
+
+      rsUnknown88DA82 ; 88/DA82
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR18+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR18
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta $07EA+1,b
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta $07EA,b
+        rts
+
+        .databank 0
+
+      rsUnknown88DA99 ; 88/DA99
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR18+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR18
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta $07EA+1,b
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta $07EA,b
+
+        lda $07EA,b
+        clc
+        adc #$2000
+        sta $07EA,b
+        rts
+
+        .databank 0
+
+      rsUnknown88DABA ; 88/DABA
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR18+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR18
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta $07EB,b
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta $07EA,b
+
+        lda $07EA,b
+        clc
+        adc #$4000
+        sta $07EA,b
+        rts
+
+        .databank 0
+
+      rsUnknown88DADB ; 88/DADB
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR18+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR18
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta $07EB,b
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta $07EA,b
+
+        lda $07EA,b
+        clc
+        adc #$6000
+        sta $07EA,b
+        rts
+
+        .databank 0
+
+    .endsection Unsorted88DA82Section
 
 
     .section Unsorted88DAFCSection

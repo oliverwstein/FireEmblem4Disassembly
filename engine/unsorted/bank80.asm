@@ -1,5 +1,75 @@
 ; Code from bank $80 not yet assigned to a game system.
 
+    .section Unsorted808FA3Section
+
+      .al
+      .xs
+
+      rlUnknown808FA3 ; 80/8FA3
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        phb
+        phk
+        plb
+        rep #$30
+        phx
+        pha
+        bra +
+
+      rlUnknown808FAD ; 80/8FAD
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        phb
+        phk
+        plb
+        rep #$30
+        phx
+        tax
+        lda $04F4,b
+        and #$00FF
+        bne _End
+
+          lda $04EA,b
+          and #$0001
+          bne _End
+
+            phx
+
+            +
+            ldx #0
+
+              -
+              lda $04D8,b,x
+              beq +
+
+                inc x
+                inc x
+                cpx #6
+                bcc -
+
+            +
+            pla
+            sta $04D8,b,x
+        
+        _End
+        plx
+        plb
+        plp
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted808FA3Section
+
+
     .section Unsorted808FDDSection
 
       .al
@@ -731,6 +801,53 @@
         .databank 0
 
     .endsection Unsorted80C32CSection
+
+
+    .section Unsorted80C35DSection
+
+      .al
+      .xl
+
+      rlUnknown80C35D ; 80/C35D
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #3
+        sta BGMODE,b
+        sta bBufferBGMODE
+        lda #0
+        sta BG1SC,b
+        sta bBufferBG1SC
+        sta BG2SC,b
+        sta bBufferBG2SC
+        rep #$20
+
+        lda #$2000 >> 1
+        sta wR1
+        sta wR2
+        lda #$0000 >> 1
+        sta wR3
+        sta wR4
+        lda #$0000 >> 1
+        sta wR5
+        lda #$E000 >> 1
+        sta wR6
+        sta wR7
+        lda #$0000 >> 1
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        plp
+        rtl
+
+        .databank 0
+
+        ; 80/C39A
+
+    .endsection Unsorted80C35DSection
 
 
     .section Unsorted80E42BSection

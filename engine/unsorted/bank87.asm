@@ -1,5 +1,51 @@
 ; Code from bank $87 not yet assigned to a game system.
 
+    .section Unsorted8780AASection
+
+      .al
+      .xl
+
+      rlUnknown8780AA ; 87/80AA
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        ldx #$0029
+        sep #$20
+        lda #0
+
+          -
+          sta $0516,b,x
+          dec x
+          bpl -
+
+        rep #$20
+
+        lda bBufferBG3SC
+        and #BGSC_Address
+        xba
+        sta $0516,b
+        lda #(`aBG3TilemapBuffer)<<8
+        sta $0519,b
+        lda #<>aBG3TilemapBuffer
+        sta $0518,b
+        lda #0
+        sta $053E,b
+        jsl $87828D
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted8780AASection
+
+
     .section Unsorted8780DFSection
 
       .al
@@ -319,6 +365,65 @@
     .endsection Unsorted878C8CSection
 
 
+    .section Unsorted87A040Section
+
+      .al
+      .xl
+
+      rlUnknown87A040 ; 87/A040
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Check if selected unit alive in home castle.
+
+        phx
+        ldx wSelectedUnitDataRAMPointer,b
+        phx
+        ldx wRoutineVariable1,b
+        phx
+
+        jsl rlGetUnitRAMDataPointerByID
+        bcs _CLC
+
+          jsl rlGetSelectedUnitStates
+          bit #(UnitStateFielded | UnitStateDead)
+          bne _CLC
+
+            jsl rlGetSelectedUnitFactionSlot
+            ora #FS_Player
+            bne _CLC
+
+              lda #0
+              jsl rlGetFactionSlotLocationID
+              sta wRoutineVariable1,b
+
+              jsl rlGetSelectedUnitHomeCastle
+              cmp wRoutineVariable1,b
+              bne _CLC
+
+                sec
+                bra +
+
+        _CLC
+        clc
+
+        +
+        pla
+        sta wRoutineVariable1,b
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        plx
+        rtl
+
+        .databank 0
+
+        ; 87/A082
+
+    .endsection Unsorted87A040Section
+
+
     .section Unsorted87B01DSection
 
       .al
@@ -628,6 +733,89 @@
     .endsection Unsorted87B541Section
 
 
+    .section Unsorted87B5DDSection
+
+      .al
+      .xl
+
+      rsUnknown87B5DD ; 87/B5DD
+
+        .al
+        .autsiz
+        .databank $7F
+
+        ldx #64 - 2
+        lda #$FFFF
+        
+          -
+          sta $894A + (64 * 0),b,x
+          sta $894A + (64 * 1),b,x
+          sta $894A + (64 * 2),b,x
+          sta $894A + (64 * 3),b,x
+          dec x
+          dec x
+          bpl -
+
+        lda #32
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc #32
+        tay
+
+        lda $18
+        sep #$20
+        sta aMovementMap,y
+        rep #$20
+        sta $04
+        asl a
+        tax
+        lda #$0100
+        sta $894A,b,x
+
+        lda #$FFFF
+        sta $894A,b + $100
+        tya
+        sta $894A,b + $102
+
+        lda #$0104
+        sta $06
+        
+          -
+          lda $04
+          cmp #7
+          bcc _End
+
+            asl 
+            tax
+            
+              -
+              lda $894A,b,x
+              bmi +
+
+                tax
+                ldy $894A+2,b,x
+                jsr $87B63F
+                bra -
+
+          +
+          dec $04
+          bra --
+        
+        _End
+        rts
+
+        .databank 0
+
+        ; 87/B63F
+
+    .endsection Unsorted87B5DDSection
+
+
     .section Unsorted87B786Section
 
       .al
@@ -849,6 +1037,74 @@
     .endsection Unsorted87B786Section
 
 
+    .section Unsorted87B877Section
+
+      .al
+      .xl
+
+      rsUnknown87B877 ; 87/B877
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; write vertical boundaries?
+
+        tay
+        ldx #64
+        
+          -
+          lda #$00FE
+          sep #$20
+          sta $654A,b,y
+          rep #$20
+          tya
+          clc
+          adc #64
+          tay
+          dec x
+          bne -
+
+        rts
+
+        .databank 0
+
+      rsUnknown87B88F ; 87/B88F
+
+        .al
+        .autsiz
+        .databank $7F
+
+        ; write horizonal boundaries?
+
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        tay
+
+        sep #$20
+        ldx #64
+        
+          -
+          lda #$FE
+          sta aRangeMap,y
+          inc y
+          dec x
+          bne -
+
+        rep #$20
+        rts
+
+        .databank 0
+
+        ; 87/B8A7
+
+    .endsection Unsorted87B877Section
+
+
     .section Unsorted87C056Section
 
       .al
@@ -1062,3 +1318,63 @@
         ; 87/F559
 
     .endsection Unsorted87F515Section
+
+
+    .section Unsorted87FB5ESection
+
+      .al
+      .xl
+
+      rlUnknown87FB5E ; 87/FB5E
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+
+        phx
+        phy
+        ldx #0
+        
+          _Loop
+          lda aFactionArea,x
+          tay
+          clc
+          adc #size(structFactionHeader)
+          sta aSave.aFactionEntryOffsets[0],b,x
+          sep #$20
+
+          lda aFactionArea + structFactionHeader.LocationID,y
+          cmp #$0F
+          bne +
+
+            lda #$FF
+            sta aFactionArea + structFactionHeader.LocationID,y
+
+          +
+          rep #$20
+
+          inc x
+          inc x
+          cpx #7 * size(word)
+          bne _Loop
+
+        ply
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/FB94
+
+    .endsection Unsorted87FB5ESection

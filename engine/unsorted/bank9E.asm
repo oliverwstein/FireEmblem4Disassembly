@@ -1,5 +1,70 @@
 ; Code from bank $9E not yet assigned to a game system.
 
+    .section Unsorted9E85A4Section
+
+      .al
+      .xl
+
+      rlUnknown9E85A4 ; 9E/85A4
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Get gendered battle sprite?
+
+        ; wR0 = ClassID
+        ; wR1 = Gender
+        ; wR2 = CharacterID
+
+        phx
+        phy
+        lda wR0
+        cmp #KnightLord
+        bne +
+
+          lda wR2
+          cmp #Seliph
+          bne +
+
+            lda #$005D
+            bra _End
+
+        +
+        asl a
+        tax
+        lda aUnknown9E85DF,x
+        cmp #$FFFF
+        bne +
+
+          lda wR0
+          bra _End
+
+        +
+        lda wR1
+        dec a
+        beq +
+
+          lda wR0
+          bra _End
+
+        +
+        lda wR0
+        asl a
+        tax
+        lda aUnknown9E85DF+1,x
+        and #$00FF
+
+        _End
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted9E85A4Section
+
+
     .section Unsorted9E85DFSection
 
       .al
@@ -305,6 +370,40 @@
     .endsection Unsorted9E8867Section
 
 
+    .section Unsorted9E88CESection
+
+      .al
+      .xl
+
+      rlUnknown9E88CE ; 9E/88CE
+
+        .al
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #2
+
+          -
+          lda aUnknown9E88F4,x
+          sta $7EFC88,x
+          sta $7EFC8E,x
+          sta $7EFC94,x
+          sta $7EFC9A,x
+          dec x
+          dec x
+          bpl -
+
+        lda aUnknown9E88F4 + 4
+        sta $7EFCA0
+        plx
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted9E88CESection
+
+
     .section Unsorted9E88F4Section
 
       .al
@@ -551,6 +650,108 @@
     .endsection Unsorted9EAC5ASection
 
 
+    .section Unsorted9EACAFSection
+
+      .al
+      .xl
+
+      aProcUnknown9EAC69Code ; 9E/ACAF
+
+        PROC_YIELD 1
+        PROC_SET_ONCYCLE $9ECA45
+
+        PROC_YIELD 48
+        PROC_CALL $9EC91A
+
+        PROC_JUMP_IF_BITS_UNSET _ACD1, $0002
+
+            _ACC2
+            PROC_YIELD 1
+            PROC_CALL $9EC944
+
+            PROC_JUMP_IF_BITS_UNSET _ACC2, $0004
+
+          PROC_YIELD 1
+        _ACD1
+        PROC_CALL $9E9342
+        PROC_JUMP_IF_BITS_UNSET _ACFC, $0002
+
+          PROC_CALL $9EB3F3
+          PROC_JUMP_IF_BITS_UNSET _ACEE, $0004
+
+            PROC_YIELD 16
+            PROC_CALL $9EB4A9
+
+        _ACEE
+        PROC_YIELD 1
+        PROC_SET_ONCYCLE $9E936B
+        PROC_JUMP_IF_BITS_UNSET _ACEE, $0004
+
+        PROC_YIELD 107
+
+        _ACFC
+        PROC_CALL $9E952D
+
+        PROC_JUMP_IF_BITS_UNSET _AD22, $0002
+        PROC_CALL $9EB3F3
+
+        PROC_JUMP_IF_BITS_UNSET _AD14, $0004
+
+          PROC_YIELD 16
+
+        _AD14
+        PROC_SET_ONCYCLE $9E95AB
+
+        _AD18
+        PROC_YIELD 1
+        PROC_JUMP_IF_BITS_UNSET _AD18, $0004
+
+        PROC_YIELD 8
+
+        _AD22
+        PROC_CALL $9E9928
+
+        PROC_JUMP_IF_BITS_UNSET _AD48, $0002
+
+        PROC_CALL $9EB3F3
+        PROC_JUMP_IF_BITS_UNSET _AD3A, $0004
+
+          PROC_YIELD 16
+
+        _AD3A
+        PROC_CALL $9EB491
+        PROC_YIELD 117
+        PROC_CALL $85DB91
+        PROC_YIELD 8
+
+        _AD48
+        PROC_CALL $9E985E
+
+        PROC_JUMP_IF_BITS_UNSET _AD6E, $0002
+
+        PROC_CALL $9EB3F3
+
+        PROC_JUMP_IF_BITS_UNSET _AD60, $0004
+
+          PROC_YIELD 16
+
+        _AD60
+        PROC_CALL $9EB49D
+        PROC_YIELD 117
+        PROC_CALL $85DB91
+        PROC_YIELD 8
+
+        _AD6E
+        PROC_CALL $9EB41C
+        PROC_YIELD 16
+        PROC_SET_ONCYCLE $9EAD7B
+        PROC_HALT
+
+        ; AD7B
+
+    .endsection Unsorted9EACAFSection
+
+
     .section Unsorted9EC70BSection
 
       .al
@@ -620,6 +821,46 @@
     .endsection Unsorted9EC70BSection
 
 
+    .section Unsorted9ED337Section
+
+      .al
+      .xl
+
+      rlUnknown9ED337 ; 9E/D337
+
+        .al
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda #0
+        sta $7F4580
+        sta $7F4582
+        sta $7F4584
+        sta $7F5091
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        lda #$FFFF
+        sta $7F45A4
+        sta $7F45A6
+        jsl $9E88CE
+        jsl $9E87A4
+        lda #0
+        jsl $9E8867
+        plx
+        lda #$D1F3
+        sta aProcSystem.aHeaderOnCycle,b,x
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/D372
+
+    .endsection Unsorted9ED337Section
+
+
     .section Unsorted9ED42ASection
 
       .al
@@ -646,6 +887,108 @@
       procUnknown9ED441 .structProcInfo "ON", rlProcUnknown9ED441Init, rlProcUnknown9ED441Cycle1, aProcUnknown9ED441Code ; 9E/D441
 
     .endsection Unsorted9ED42ASection
+
+
+    .section Unsorted9ED449Section
+
+      .al
+      .xl
+
+      rlProcUnknown9ED441Init ; 9E/D449
+
+        .al
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        phb
+        pea $7F00
+        plb
+        plb
+
+        lda #0
+        sta $7F4580
+        sta $7F4582
+        sta $7F4584
+        sta $7F455A
+        sta $7F4572
+        sta $7F4C87
+        sta $7F4BE9
+        sta $7F4C07
+        sta $4C11,b
+        sta $4C13,b
+
+        lda #$FFFF
+        sta $7F45A4
+        sta $7F45A6
+        sta $7F45A8
+        sta $7F45AA
+
+        lda $7E4EBF
+        sta @l wR0
+        lda $7E4EC1
+        sta @l wR1
+        lda $7E4EBD
+        sta @l wR2
+        jsl rlUnknown9E85A4
+        sta $454E,b
+        lda $7E4EB7
+        sta $4552,b
+        lda $7E4EB9
+        sta $4554,b
+
+        lda #$FFFF
+        jsl rlUnknown9E866F
+        sta $454A,b
+
+        lda #$FFFF
+        sta $7E4EDD
+
+        lda #0
+        sta $4550,b
+        sta $4556,b
+        sta $4558,b
+        sta $454C,b
+
+        lda #$FFFF
+        sta $7E4F15
+
+        lda #6
+        sta $455E,b
+        sta $4560,b
+
+        lda #0
+        sta $508F,b
+        sta $459E,b
+        sta $7E4F85
+
+        lda #5
+        sta $4BF3,b
+
+        plb
+        lda #(`rlUnknown81841B)<<8
+        sta $0015E4+1
+        lda #<>rlUnknown81841B
+        sta $0015E4
+        plx
+
+        lda $000302
+        sta aProcSystem.aBody7,x
+        stz $0302,b
+
+        lda #0
+        sta aProcSystem.aHeaderBitfield,b,x
+        jsl rlUnknown88CD53
+        jsl rlUnknown88CD61
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/D528
+
+    .endsection Unsorted9ED449Section
 
 
     .section Unsorted9ED535Section
@@ -748,6 +1091,92 @@
         .databank 0
 
     .endsection Unsorted9ED535Section
+
+
+    .section Unsorted9ED609Section
+
+      .al
+      .xl
+
+      rlProcUnknown9ED441Cycle1 ; 9E/D609
+
+        .al
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        phb
+        php
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+
+        lda @l $7F455E
+        asl a
+        clc
+        adc @l $7F455E
+        asl a
+        sta wR0
+
+        lda @l $7F454E
+        sta wR10
+        lda #$0031
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR12
+        clc
+        adc wR0
+        adc #$0003
+        tax
+        lda aBattleMapSpriteData+1,x
+        sta lR18+1
+        lda aBattleMapSpriteData,x
+        sta lR18
+
+        lda #(`aDecompressionBuffer)<<8
+        sta lR19+1
+        lda #<>aDecompressionBuffer
+        clc
+        adc #0
+        sta lR19
+        plp
+        plb
+        jsl rlAppendDecompList
+        phb
+        php
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+
+        lda #(`$ACCC17)<<8
+        sta lR18+1
+        lda #<>$ACCC17
+        sta lR18
+        lda #(`aDecompressionBuffer)<<8
+        sta lR19+1
+        lda #<>aDecompressionBuffer
+        clc
+        adc #$4000
+        sta lR19
+        plp
+        plb
+        jsl rlAppendDecompList
+        ply
+        plx
+        lda #<>rlProcUnknown9ED441Cycle2
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted9ED609Section
 
 
     .section Unsorted9ED68BSection
@@ -903,6 +1332,33 @@
         .databank 0
 
     .endsection Unsorted9EF9DFSection
+
+
+    .section Unsorted9EF9E0Section
+
+      .al
+      .xl
+
+      aProcUnknown9EF837Code ; 9E/F9E0
+
+        PROC_YIELD 44
+        PROC_SET_ONCYCLE rlUnknown9ED337
+        PROC_YIELD 32
+        PROC_CALL rlUnknown9E99F7
+        PROC_YIELD 2
+        PROC_CALL $9E89F1
+        PROC_CALL $9EB3DE
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9EFA4F
+        PROC_YIELD 32
+        PROC_CALL rlUnknown9EFA9A
+        PROC_CALL $888197
+        PROC_YIELD 4
+        PROC_CALL $8881A7
+        PROC_YIELD 1
+        PROC_END
+
+    .endsection Unsorted9EF9E0Section
 
 
     .section Unsorted9EFA17Section
@@ -1286,3 +1742,135 @@
         .databank 0
 
     .endsection Unsorted9EFA17Section
+
+
+    .section Unsorted9EFC47Section
+
+      .al
+      .xl
+
+      rlUnknown9EFC47 ; 9E/FC47
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        phx
+        phy
+        lda $7F57F0
+        asl a
+        clc
+        adc $7F57F0
+        tax
+        lda aUnknown9EFAF8,x
+        sta lR18,b
+        lda aUnknown9EFAF8+1,x
+        sta lR18+1,b
+        ldy #0
+
+        _Loop
+        lda [lR18],y
+        cmp #$FFFF
+        beq _End
+
+          and #$00FF
+          sta wR0
+          inc y
+          lda [$24],y
+          and #$00FF
+          sta wR1
+          phy
+          jsl rlGetUnitByCoordinates
+          bcs _Next
+
+            jsl rlGetSelectedUnitDeploymentOffset
+            tax
+            lda aDeploymentTable._State,x
+            ora #DeploymentStateGrayed
+            sta aDeploymentTable._State,x
+
+          _Next
+          ply
+          inc y
+          bra _Loop
+
+        _End
+        ply
+        plx
+        plb
+        rtl
+
+        .databank 0
+
+      rlUnknown9EFC9B ; 9E/FC9B
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        phx
+        phy
+        lda #0
+        sta aProcSystem.aHeaderBitfield,b,x
+        sta $7F45CC
+
+        lda $7F57F0
+        asl a
+        clc
+        adc $7F57F0
+        tax
+        lda aUnknown9EFAF8,x
+        sta lR18,b
+        lda aUnknown9EFAF8+1,x
+        sta lR18+1,b
+        ldy #0
+        
+        _Loop
+        lda [lR18],y
+        cmp #$FFFF
+        beq _End
+
+          and #$00FF
+          sta wR0
+          inc y
+          lda [lR18],y
+          and #$00FF
+          sta wR1
+          phy
+          jsl rlGetUnitByCoordinates
+          bcs _Next
+
+            jsl rlGetSelectedUnitDeploymentOffset
+            tax
+            lda aDeploymentTable._State,x
+            and #~DeploymentStateGrayed
+            sta aDeploymentTable._State,x
+
+          _Next
+          ply
+          inc y
+          bra _Loop
+
+        _End
+        lda $7F57F0
+        inc a
+        sta $7F57F0
+
+        ply
+        plx
+        plb
+        rtl
+
+        .databank 0
+
+        ; 9E/FD02
+
+        ; fill 0
+
+    .endsection Unsorted9EFC47Section

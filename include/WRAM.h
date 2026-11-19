@@ -229,6 +229,8 @@
     bFrameCounterByThrees .byte ?       ; $00046A
     aRNArray .fill 55                   ; $00046B
     wRNIndex .word ?                    ; $0004A2
+    bRNGUnknown1 .byte ?                ; $0004A4
+    bRNGUnknown2 .byte ?                ; $0004A5
 
   .endvirtual
 
@@ -646,6 +648,17 @@
     wEventEngineGen2CharacterID1 .word ?          ; $000EB8
     wEventEngineGen2CharacterID2 .word ?          ; $000EBA
     bEventActionIdentifier .byte ?                ; $000EBC
+      ; Known values (from the original author's notes; "?" marks guesses):
+      ; $03 = after action
+      ; $04 = enter home castle?
+      ; $09 = visit village
+      ; $0A = talk
+      ; $11 = ?
+      ; $14 = attack
+      ; $17 = someone got killed?
+      ; $18 = ?
+      ; $20 = start player phase?
+      ; $21 = before enemy action?
     wEventEngineArgument1 .word ?                 ; $000EBD
     wEventEngineArgument2 .word ?                 ; $000EBF
     wEventEngineArgument3 .word ?                 ; $000EC1

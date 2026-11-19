@@ -684,6 +684,89 @@
     .endsection UnitsSection
 
 
+    .section FindCharacterByGenerationIDSection
+
+      .al
+      .xl
+
+      rlFindCharacterByGenerationID ; 84/8726
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; A = GenerationID
+
+        ; Output:
+        ; CLC if successful
+        ; Filled wSelectedUnitDataRAMPointer
+
+        phb
+        phx
+        phy
+        ldx wR34
+        phx
+        ldx wR35
+        phx
+
+        sta wR34
+
+        sep #$20
+        lda #`aUnitRAMPointers
+        pha
+        rep #$20
+        plb
+        .databank `aUnitRAMPointers
+
+        lda aUnitRAMPointers._Header.CurrentStructCount
+        and #$00FF
+        asl a
+        sta wR35
+
+        ldx #0
+
+          -
+          lda aUnitRAMPointers._Entry[0],x
+          sta wSelectedUnitDataRAMPointer,b
+          tay
+          lda structCharacterDataRAM.Type,b,y
+          and #$00FF
+          cmp #UnitTypeHoly
+          bcs +
+
+            jsl rlGetSelectedUnitGenerationID
+            cmp wR34
+            beq _CLC
+
+          +
+          inc x
+          inc x
+          cpx wR35
+          bcc -
+
+        stz wSelectedUnitDataRAMPointer,b
+        sec
+
+        -
+        pla
+        sta wR35
+        pla
+        sta wR34
+        ply
+        plx
+        plb
+        rtl
+
+        _CLC
+        clc
+        bra -
+
+        .databank 0
+
+    .endsection FindCharacterByGenerationIDSection
+
+
     .section GetUnitByCoordinatesSection
 
       .al
@@ -929,6 +1012,146 @@
         .databank 0
 
     .endsection GetUnitByCoordinatesSection
+
+
+    .section Unknown8488AESection
+
+      .al
+      .xl
+
+      rsUnknown8488AE ; 84/88AE
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; wR0 = ?
+
+        ; Output:
+        ; SEC if a new unit was deployed
+
+        ldx #size(aDeploymentTable._UnitRAMPointer) - 2
+
+        _Loop
+        lda aDeploymentTable._UnitRAMPointer,x
+        beq _Next
+
+          cmp #$2000
+          bge _Next
+
+            cmp wR0
+            bne _Next
+
+              lda wSelectedUnitDataRAMPointer,b
+              sta aDeploymentTable._UnitRAMPointer,x
+              jsl rlDeployedUnitUnsetHiddenIfAlive
+              bra +
+
+        _Next
+        dec x
+        dec x
+        bpl _Loop
+
+        clc
+        rts
+
+        +
+        txa
+        jsl rlSetSelectedUnitDeploymentOffset
+        lda #UnitStateFielded
+        jsl rlSetSelectedUnitStates
+        jsl rlGetSelectedUnitFactionSlot
+        sta aDeploymentTable._FactionSlot,x
+        stx wRoutineVariable1,b
+        sec
+        rts
+
+        .databank 0
+
+        ; 84/88EC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; Ishtore Death Quote $8EEA40
+
+
+; 07 
+; 00 3D OpenBox
+; 00 3F LoadPortrait
+; 52 02 
+; 09 StartText
+
+; 86 
+; 61 
+; 92 
+; BF 
+; BF 
+; BF 
+
+; 0A 
+; AA 
+; 09 
+; 29 
+; BF 
+; BF 
+; BF 
+
+; 02 NewLine
+
+; 00 1D C8  PauseText $C8
+
+; 01 EndText 
+
+
+
+; EA5A
+; 07 
+; 00 3D OpenBox
+; 00 3F LoadPortrait
+; 52 02 
+; 09 
+
+; 86 
+; 61 
+; 92 
+; BF 
+; BF 
+; BF 
+
+; 02 NewLine
+
+; 10 23 29 
+; 1F 28 3D 0A 18 09 48 47 BF BF BF 
+
+
+; 02 NewLine
+; 00 1D C8 PauseText $C8
+; 01 EndText
+
+    .endsection Unknown8488AESection
 
 
     .section LoadUNITGroupMapSpritesSection

@@ -213,3 +213,39 @@
 ; 06 A1 85 06 A5 27 48 A5 28 48 A9 00 00 85 28 A9 08 00 85 27 A5 06 20 15 AA 20 6F AA 68 85 28 68 85 27 6B 08 DA 5A A0 00 00 85 1A A9 10 27
 
     .endsection Unsorted91A9BBSection
+
+
+    .section Unsorted91D69BSection
+
+      .al
+      .xl
+
+      rsUnknown91D69B ; 91/D69B
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aWorldMapEvents)<<8
+        sta lR18+1
+
+        lda wCurrentChapter,b
+        cmp #$0012
+        bcc +
+
+          lda #0
+
+        +
+        asl a
+        tax
+        lda aWorldMapEvents,x
+        sta lR18
+        jsl $80C1FC
+        inc $0304,b
+        rts
+
+        .databank 0
+
+        ; 91/D6BB
+
+    .endsection Unsorted91D69BSection

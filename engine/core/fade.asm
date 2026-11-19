@@ -762,6 +762,98 @@
     .endsection SavePaletteBufferColorsToRAMSection
 
 
+    .section FadePaletteToColorsSection
+
+      .al
+      .xl
+
+      rlFadePaletteToColors ; 9F/8EE1
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Call followed by:
+        ; .addr palette source in bank $7E
+        ; .word color count
+        ; .word palette destination offset
+
+        lda aPaletteFading.wMaxSteps,b
+        bcc +
+
+          lsr a
+
+        +
+        inc a
+        cmp aPaletteFading.wCurrentStep,b
+        bcs +
+
+          lda #1,s
+          adc #6
+          sta #1,s
+          stz aPaletteFading.wCurrentStep,b
+          sec
+          rtl
+
+        +
+        phx
+        phy
+        lda #5,s
+        tay
+        lda $0001,b,y
+        sta wR3
+        lda $0003,b,y
+        sta wR5
+        lda $0005,b,y
+        tax
+        tya
+        clc
+        adc #6
+        sta #5,s
+
+        phb
+        pea #$7E7E
+        plb
+        plb
+
+        ldy #0
+
+          -
+          stx aPaletteFading.wCurrentPaletteBufferOffset,b
+          sty wR4,b
+          lda (wR3),y
+          cmp aBGPaletteBuffer,b,x
+          beq +
+
+            tay
+            lda aBGPaletteBuffer,b,x
+            tax
+            lda aPaletteFading.wCurrentStep,b
+            jsl rlFadeFromToColorByStep
+            ldy wR4,b
+            ldx aPaletteFading.wCurrentPaletteBufferOffset,b
+            sta aBGPaletteBuffer,b,x
+
+          +
+          inc y
+          inc y
+          inc x
+          inc x
+          dec wR5,b
+          bne -
+
+        inc aPaletteFading.wCurrentStep,b
+        plb
+        ply
+        plx
+        clc
+        rtl
+
+        .databank 0
+
+    .endsection FadePaletteToColorsSection
+
+
     .section FadePaletteToBlackSection
 
       .al
@@ -1013,276 +1105,5 @@
 
         ; 9F/9090
 
-
-
-
-
-
-
-
-
-
-; ============================================================================
-; Duplicates of code that is already in the build (kept for comparison).
-; ============================================================================
-
-;       rsUnknown91BF17 ; 91/BF17
-
-;         .al
-;         .autsiz
-;         .databank ?
-
-;         phy
-
-;         lda [$30],y
-;         and #$00FF
-;         sta $04BA,b
-;         lda #(`$828AF2)<<8
-;         sta $62+1
-;         lda #<>$828AF2
-;         sta $62
-;         jsl rlEventEngineCreateProc
-
-;         ply
-;         inc y
-;         sty wActiveEventOffset,b
-
-;         sec
-;         rts
-
-;         .databank 0
-
-;         ; 91/BF35
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;       aEpilogueLoverGroups ; B3/EDD9
-
-;         .long aEpilogueLoverPointersPeppy
-;         .long aEpilogueLoverPointersCreidneLarcei
-;         .long aEpilogueLoverPointersMuirneLana
-;         .long aEpilogueLoverPointersPeppy
-;         .long aEpilogueLoverPointersLindaTine
-;         .long aEpilogueLoverPointersPeppy
-;         .long aEpilogueLoverPointersJeanneNanna
-
-;       aEpilogueLoverPointersPeppy ; B3/EDEE
-
-;         ; daisy, patty, hermina, fee, laylea, lene
-
-;         .long dialogueEpilogueLover_Seliph_JuliaDead_Peppy
-;         .long dialogueEpilogueLover_Seliph_JuliaAlive_All
-;         .long dialogueEpilogueLover_Shannan_Peppy
-;         .long dialogueEpilogueLover_DalvinScathach_ShannanDead_Peppy
-;         .long dialogueEpilogueLover_DalvinScathach_ShannanAlive_All
-;         .long dialogueEpilogueLover_Deimne_MuirneDead_Peppy
-;         .long dialogueEpilogueLover_Deimne_MuirneAlive_All
-;         .long dialogueEpilogueLover_Leif_Peppy
-;         .long dialogueEpilogueLover_Leif_Peppy
-;         .long dialogueEpilogueLover_CharlotCoirpre_HannibalDead_Peppy
-;         .long dialogueEpilogueLover_CharlotCoirpre_HannibalAlive_Peppy
-;         .long dialogueEpilogueLover_Asaello_DaisyDead_Peppy
-;         .long dialogueEpilogueLover_Asaello_DaisyAlive_Peppy
-;         .long dialogueEpilogueLover_Ares_Peppy
-;         .long dialogueEpilogueLover_Diarmuid_Peppy
-;         .long dialogueEpilogueLover_Diarmuid_Peppy
-;         .long dialogueEpilogueLover_Tristan_Peppy
-;         .long dialogueEpilogueLover_Tristan_Peppy
-;         .long dialogueEpilogueLover_JamkesSon_Peppy
-;         .long dialogueEpilogueLover_Febail_Peppy
-;         .long dialogueEpilogueLover_Lester_BrigidsChildrenDead_Peppy
-;         .long dialogueEpilogueLover_Lester_BrigidsChildrenAlive_Peppy
-;         .long dialogueEpilogueLover_AmidArthur_Peppy
-;         .long dialogueEpilogueLover_LexSon_Peppy
-;         .long dialogueEpilogueLover_Iuchar_Peppy
-;         .long dialogueEpilogueLover_Iucharba_Peppy
-;         .long dialogueEpilogueLover_ClaudsSon_Peppy
-;         .long dialogueEpilogueLover_AzellesSon_Peppy
-;         .long dialogueEpilogueLover_Oifey_Peppy
-;         .long dialogueEpilogueLover_Ced_Peppy
-;         .long dialogueEpilogueLover_LewynsSon_Peppy
-
-;       aEpilogueLoverPointersCreidneLarcei ; B3/EE4B
-
-;         ; creidne, larcei
-
-;         .long dialogueEpilogueLover_Seliph_JuliaDead_Noble
-;         .long dialogueEpilogueLover_Seliph_JuliaAlive_All
-;         .long dialogueEpilogueLover_Shannan_Noble
-;         .long dialogueEpilogueLover_DalvinScathach_ShannanDead_Peppy
-;         .long dialogueEpilogueLover_DalvinScathach_ShannanAlive_All
-;         .long dialogueEpilogueLover_Deimne_MuirneDead_CreidneLarcei
-;         .long dialogueEpilogueLover_Deimne_MuirneAlive_CreidneLarcei
-;         .long dialogueEpilogueLover_Leif_AltenaDead_CreidneLarcei
-;         .long dialogueEpilogueLover_Leif_AltenaAlive_CreidneLarcei
-;         .long dialogueEpilogueLover_CharlotCoirpre_HannibalDead_CreidneLarcei
-;         .long dialogueEpilogueLover_CharlotCoirpre_HannibalAlive_CreidneLarcei
-;         .long dialogueEpilogueLover_Asaello_DaisyDead_CreidneLarcei
-;         .long dialogueEpilogueLover_Asaello_DaisyAlive_CreidneLarcei
-;         .long dialogueEpilogueLover_Ares_CreidneLarcei
-;         .long dialogueEpilogueLover_Diarmuid_Noble
-;         .long dialogueEpilogueLover_Diarmuid_Noble
-;         .long dialogueEpilogueLover_Tristan_Noble
-;         .long dialogueEpilogueLover_Tristan_Noble
-;         .long dialogueEpilogueLover_JamkesSon_CreidneLarcei
-;         .long dialogueEpilogueLover_Febail_CreidneLarcei
-;         .long dialogueEpilogueLover_Lester_BrigidsChildrenDead_Noble
-;         .long dialogueEpilogueLover_Lester_BrigidsChildrenAlive_Noble
-;         .long dialogueEpilogueLover_AmidArthur_NobleA
-;         .long dialogueEpilogueLover_LexSon_CreidneLarcei
-;         .long dialogueEpilogueLover_Iuchar_CreidneLarcei
-;         .long dialogueEpilogueLover_Iucharba_Noble
-;         .long dialogueEpilogueLover_ClaudsSon_CreidneLarcei
-;         .long dialogueEpilogueLover_AzellesSon_CreidneLarcei
-;         .long dialogueEpilogueLover_Oifey_Noble
-;         .long dialogueEpilogueLover_Ced_Noble
-;         .long dialogueEpilogueLover_LewynsSon_Noble
-
-;       aEpilogueLoverPointersMuirneLana ; B3/EEA8
-
-;         ; murine, lana
-
-;         .long dialogueEpilogueLover_Seliph_JuliaDead_Noble
-;         .long dialogueEpilogueLover_Seliph_JuliaAlive_All
-;         .long dialogueEpilogueLover_Shannan_Noble
-;         .long dialogueEpilogueLover_DalvinScathach_ShannanDead_Noble
-;         .long dialogueEpilogueLover_DalvinScathach_ShannanAlive_MuirneLana
-;         .long dialogueEpilogueLover_Deimne_MuirneDead_Peppy
-;         .long dialogueEpilogueLover_Deimne_MuirneAlive_All
-;         .long dialogueEpilogueLover_Leif_Noble
-;         .long dialogueEpilogueLover_Leif_Noble
-;         .long dialogueEpilogueLover_CharlotCoirpre_HannibalDead_Noble
-;         .long dialogueEpilogueLover_CharlotCoirpre_HannibalAlive_MuirneLana
-;         .long dialogueEpilogueLover_Asaello_DaisyDead_Noble
-;         .long dialogueEpilogueLover_Asaello_DaisyAlive_MuirneLana
-;         .long dialogueEpilogueLover_Ares_Noble
-;         .long dialogueEpilogueLover_Diarmuid_Noble
-;         .long dialogueEpilogueLover_Diarmuid_Noble
-;         .long dialogueEpilogueLover_Tristan_Noble
-;         .long dialogueEpilogueLover_Tristan_Noble
-;         .long dialogueEpilogueLover_JamkesSon_Noble
-;         .long dialogueEpilogueLover_Febail_MuirneLana
-;         .long dialogueEpilogueLover_Lester_BrigidsChildrenDead_Noble
-;         .long dialogueEpilogueLover_Lester_BrigidsChildrenAlive_Noble
-;         .long dialogueEpilogueLover_AmidArthur_NobleA
-;         .long dialogueEpilogueLover_LexSon_Noble
-;         .long dialogueEpilogueLover_Iuchar_Noble
-;         .long dialogueEpilogueLover_Iucharba_Noble
-;         .long dialogueEpilogueLover_ClaudsSon_MuirneLana
-;         .long dialogueEpilogueLover_AzellesSon_MuirneLana
-;         .long dialogueEpilogueLover_Oifey_Noble
-;         .long dialogueEpilogueLover_Ced_Noble
-;         .long dialogueEpilogueLover_LewynsSon_Noble
-
-;       aEpilogueLoverPointersLindaTine ; B3/EF05
-
-;         ; linda, tine
-
-;         .long dialogueEpilogueLover_Seliph_JuliaDead_Noble
-;         .long dialogueEpilogueLover_Seliph_JuliaAlive_All
-;         .long dialogueEpilogueLover_Shannan_Noble
-;         .long dialogueEpilogueLover_DalvinScathach_ShannanDead_Noble
-;         .long dialogueEpilogueLover_DalvinScathach_ShannanAlive_All
-;         .long dialogueEpilogueLover_Deimne_MuirneDead_Noble
-;         .long dialogueEpilogueLover_Deimne_MuirneAlive_LindaTine
-;         .long dialogueEpilogueLover_Leif_Noble
-;         .long dialogueEpilogueLover_Leif_Noble
-;         .long dialogueEpilogueLover_CharlotCoirpre_HannibalDead_Noble
-;         .long dialogueEpilogueLover_CharlotCoirpre_HannibalAlive_LindaTine
-;         .long dialogueEpilogueLover_Asaello_DaisyDead_Noble
-;         .long dialogueEpilogueLover_Asaello_DaisyAlive_LindaTine
-;         .long dialogueEpilogueLover_Ares_Noble
-;         .long dialogueEpilogueLover_Diarmuid_Noble
-;         .long dialogueEpilogueLover_Diarmuid_Noble
-;         .long dialogueEpilogueLover_Tristan_Noble
-;         .long dialogueEpilogueLover_Tristan_Noble
-;         .long dialogueEpilogueLover_JamkesSon_Noble
-;         .long dialogueEpilogueLover_Febail_Noble
-;         .long dialogueEpilogueLover_Lester_BrigidsChildrenDead_Noble
-;         .long dialogueEpilogueLover_Lester_BrigidsChildrenAlive_Noble
-;         .long dialogueEpilogueLover_AmidArthur_NobleB
-;         .long dialogueEpilogueLover_LexSon_Noble
-;         .long dialogueEpilogueLover_Iuchar_Noble
-;         .long dialogueEpilogueLover_Iucharba_Noble
-;         .long dialogueEpilogueLover_ClaudsSon_LindaTine
-;         .long dialogueEpilogueLover_AzellesSon_LindaTine
-;         .long dialogueEpilogueLover_Oifey_Noble
-;         .long dialogueEpilogueLover_Ced_Noble
-;         .long dialogueEpilogueLover_LewynsSon_Noble
-
-;       aEpilogueLoverPointersJeanneNanna ; B3/EF62
-
-;         ; jeanne, nanna
-
-;         .long dialogueEpilogueLover_Seliph_JuliaDead_Noble
-;         .long dialogueEpilogueLover_Seliph_JuliaAlive_All
-;         .long dialogueEpilogueLover_Shannan_Noble
-;         .long dialogueEpilogueLover_DalvinScathach_ShannanDead_JeanneNanna
-;         .long dialogueEpilogueLover_DalvinScathach_ShannanAlive_All
-;         .long dialogueEpilogueLover_Deimne_MuirneDead_Noble
-;         .long dialogueEpilogueLover_Deimne_MuirneAlive_All
-;         .long dialogueEpilogueLover_Leif_Noble
-;         .long dialogueEpilogueLover_Leif_Noble
-;         .long dialogueEpilogueLover_CharlotCoirpre_HannibalDead_Noble
-;         .long dialogueEpilogueLover_CharlotCoirpre_HannibalAlive_JeanneNanna
-;         .long dialogueEpilogueLover_Asaello_DaisyDead_Noble
-;         .long dialogueEpilogueLover_Asaello_DaisyAlive_JeanneNanna
-;         .long dialogueEpilogueLover_Ares_Noble
-;         .long dialogueEpilogueLover_Diarmuid_Noble
-;         .long dialogueEpilogueLover_Diarmuid_Noble
-;         .long dialogueEpilogueLover_Tristan_Noble
-;         .long dialogueEpilogueLover_Tristan_Noble
-;         .long dialogueEpilogueLover_JamkesSon_Noble
-;         .long dialogueEpilogueLover_Febail_Noble
-;         .long dialogueEpilogueLover_Lester_BrigidsChildrenDead_Noble
-;         .long dialogueEpilogueLover_Lester_BrigidsChildrenAlive_Noble
-;         .long dialogueEpilogueLover_AmidArthur_NobleB
-;         .long dialogueEpilogueLover_LexSon_Noble
-;         .long dialogueEpilogueLover_Iuchar_Noble
-;         .long dialogueEpilogueLover_Iucharba_Noble
-;         .long dialogueEpilogueLover_ClaudsSon_JeanneNanna
-;         .long dialogueEpilogueLover_AzellesSon_JeanneNanna
-;         .long dialogueEpilogueLover_Oifey_Noble
-;         .long dialogueEpilogueLover_Ced_Noble
-;         .long dialogueEpilogueLover_LewynsSon_Noble
-
-; B3EFBF
-;  -fill 0
 
     .endsection FadeFromToColorByStepSection

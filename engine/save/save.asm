@@ -149,6 +149,91 @@
     .endsection FillUnitsDeploymentSaveDataSection
 
 
+    .section FillItemDurabilityDataSection
+
+      .al
+      .xl
+
+      rlFillItemDurabilityData ; 87/FC51
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+
+        phx
+        lda #PI_IronSword1
+        sta lR18
+        jsl rlGetItemRAMStructEntryByPlayerItemIndex
+
+          _Loop
+          ldx wCurrentItemDataRAMPointer,b
+          jsr rsCapItemDurability
+          sep #$20
+          lda structItemRAMEntry.Durability,b,x
+          cmp #63
+          bne +
+
+            lda #$FF
+            sta structItemRAMEntry.Durability,b,x
+
+          +
+          rep #$20
+          lda structItemRAMEntry.ItemState,b,x
+          and #$00FF
+          cmp #ItemStateInventory
+          beq +
+
+            cmp #ItemStateSupply
+            bne _Next
+
+          +
+          lda structItemRAMEntry.OwnerRAMPointer,b,x
+          bit #$FE00
+          bne _Next
+
+            and #$003F
+            jsl rlGetUnitRAMDataPointerByID
+            bcs +
+
+              lda wSelectedUnitDataRAMPointer,b
+              sta structItemRAMEntry.OwnerRAMPointer,b,x
+              bra _Next
+
+          +
+          lda #ItemStateUnobtained
+          sta structItemRAMEntry.ItemState,b,x
+          brk
+
+          _Next
+          lda wCurrentItemDataRAMPointer,b
+          clc
+          adc #size(structItemRAMEntry)
+          sta wCurrentItemDataRAMPointer,b
+          lda lR18
+          inc a
+          sta lR18
+          cmp #256 + 1
+          bne _Loop
+
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+    .endsection FillItemDurabilityDataSection
+
+
     .section SaveFileSection
 
       .al

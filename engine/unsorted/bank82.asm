@@ -354,6 +354,18 @@
     .endsection Unsorted828A30Section
 
 
+    .section Unsorted828B2BSection
+
+      .as
+      .xl
+
+      procUnknown828B2B .structProcInfo "ME", rlProcUnknown828B2BInit, rlProcUnknown828B2BCycle, aProcUnknown828B2BCode ; 82/8B2B
+
+        .word 0
+
+    .endsection Unsorted828B2BSection
+
+
     .section Unsorted828B35Section
 
       .al
@@ -393,6 +405,19 @@
         ; 82/8B46
 
     .endsection Unsorted828B35Section
+
+
+    .section Unsorted828BEASection
+
+      .as
+      .xl
+
+      procUnknown828BEA  ; 82/8BEA
+
+        .structProcInfo "CC", rlProcUnknown828BEAInit, rlProcUnknown828BEACycle, $828CA1
+        .word 0
+
+    .endsection Unsorted828BEASection
 
 
     .section Unsorted828BF4Section
@@ -887,6 +912,82 @@
     .endsection Unsorted828D52Section
 
 
+    .section Unsorted828E61Section
+
+      .as
+      .xl
+
+      rsUnknown828E61 ; 82/8E61
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        rep #$30
+        ldx aProcSystem.wOffset,b
+        lda aProcSystem.aBody1,b,x
+        xba
+        sta lR18+1
+        lda aProcSystem.aBody0,b,x
+        sta lR18
+        ldy aProcSystem.aBody2,b,x
+
+        lda [lR18],y
+        cmp #$00FF
+        beq _CLC
+
+          lda [lR18],y
+          sta aProcSystem.aBody7,b,x
+          inc y
+          inc y
+          lda [lR18],y
+          sta aProcSystem.aBody4,b,x
+          sta wR13
+          inc y
+          inc y
+          lda [lR18],y
+          sta aProcSystem.aBody3,b,x
+          sta wR14
+
+          lda aProcSystem.aBody7,b,x
+          cmp #8
+          bne +
+
+            stz aProcSystem.aBody4,b,x
+
+          +
+          inc y
+          inc y
+          tya
+          sta aProcSystem.aBody2,b,x
+          lda #0
+          sta wR12
+          sta wR15
+          jsl $80A1D8
+
+          lda wR12
+          sta $175F,b
+          lda wR13
+          sta $1761,b
+          ldx aProcSystem.wOffset,b
+          lda #0
+          sta aProcSystem.aBody5,b,x
+          sta aProcSystem.aBody6,b,x
+          plp
+          sec
+          rts
+
+        _CLC
+        plp
+        clc
+        rts
+
+        .databank 0
+
+    .endsection Unsorted828E61Section
+
+
     .section Unsorted828ECBSection
 
       .al
@@ -1078,6 +1179,19 @@
     .endsection Unsorted829245Section
 
 
+    .section Unsorted8292A9Section
+
+      .al
+      .xl
+
+      procUnknown8292A9 ; 82/92A9
+
+        .structProcInfo "NP", rlProcUnknown8292A9Init, rlProcUnknown8292A9Init, aProcUnknown8292A9Code
+        .word 0
+
+    .endsection Unsorted8292A9Section
+
+
     .section Unsorted8292B3Section
 
       .al
@@ -1201,6 +1315,74 @@
         .databank 0
 
     .endsection Unsorted8292B3Section
+
+
+    .section Unsorted82932CSection
+
+      .al
+      .xl
+
+      rsUnknown82932C ; 82/932C
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        lda aProcSystem.aBody2,b,x
+        beq _SEC
+
+          cmp #$00FF
+          beq +
+
+            dec a
+            sta aProcSystem.aBody2,b,x
+
+          +
+          lda lActiveEventPointer,b
+          sta aProcSystem.aBody3,b,x
+          lda wActiveEventOffset,b
+          sta aProcSystem.aBody4,b,x
+          jsr rsUnknown829391
+
+          ldy #0
+          sty wActiveEventOffset,b
+          lda lActiveEventPointer+1,b
+          sta @l lR22+1
+          lda aProcSystem.aBody0,b,x
+          sta lActiveEventPointer,b
+          sta @l lR22
+          phx
+
+          lda [lR22],y
+          sta lR23
+          inc y
+          inc y
+          sty wActiveEventOffset,b
+          jsl rlUnknown91C6D8
+
+          txa
+          plx
+          lda aProcSystem.aBody3,b,x
+          sta lActiveEventPointer,b
+          lda aProcSystem.aBody4,b,x
+          sta wActiveEventOffset,b
+          lda lActiveEventPointer+1,b
+          sta @l lR22+1
+          lda lActiveEventPointer,b
+          sta @l lR22
+          plp
+          clc
+          rts
+
+        _SEC
+        plp
+        sec
+        rts
+
+        .databank 0
+
+    .endsection Unsorted82932CSection
 
 
     .section Unsorted829391Section

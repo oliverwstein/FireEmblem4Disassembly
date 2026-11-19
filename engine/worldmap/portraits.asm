@@ -1,5 +1,74 @@
 ; Portraits shown on the world map.
 
+    .section DecompressWorldMapPortraitToSlotSection
+
+      .al
+      .xl
+
+      rlDecompressWorldMapPortraitToSlot ; 8A/B49A
+
+        .al
+        .autsiz
+        .databank $8A
+
+        ; Input:
+        ; A = CharacterID / also PortraitDialogue
+        ; X = portrait slot offset
+
+        ; Output:
+        ; lR18 = Decompression buffer pointer
+        ; lR19 = Portrait palette
+
+        phk
+        plb
+
+        phy
+        sta $078C,b
+
+        jsl rlGetCharacterPortraitDataID
+        jsr rlTryGetClassPortraitDataID
+        ply
+
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+
+        lda @l aPortraitGraphicPointers,x
+        sta lR45
+        lda @l aPortraitGraphicPointers+1,x
+        sta lR45+1
+        lda #(`aDecompressionBuffer)<<8
+        sta lR47+1
+        lda aPortraitSlotDecompressionPointers,y
+        sta lR47
+
+        phx
+        phy
+        jsl rlDecompressSingle
+        ply
+        plx
+
+        lda #(`aDecompressionBuffer)<<8
+        sta lR18+1
+        lda #<>aDecompressionBuffer
+        sta lR18
+
+        lda aPortraitSlotDecompressionPointers,y
+        sta lR18
+        lda @l aPortraitPalettePointers+1,x
+        sta lR19+1
+        lda @l aPortraitPalettePointers,x
+        sta lR19
+        rtl
+
+        .databank 0
+
+    .endsection DecompressWorldMapPortraitToSlotSection
+
+
     .section FadeInWorldMapPortraitSlotSection
 
       .al
@@ -286,6 +355,53 @@
         .databank 0
 
     .endsection FadeInWorldMapPortraitSlot8B8C83Section
+
+
+    .section ProcFadeInWorldMapPortraitSlotCycleSection
+
+      .al
+      .xl
+
+      rlProcFadeInWorldMapPortraitSlotCycle ; 8B/8C98
+
+        .al
+        .autsiz
+        .databank ?
+
+        .for i in range(15)
+
+          lda #(i+1) * $200
+          sta lR18+1
+          lda #<>(aOAMPaletteBuffer.aPalette0 + ((i+1) * size(word)))
+          sta lR18
+          lda #(i+1) * $200 + $7F
+          sta lR19+1
+          lda #<>(aPortraitSlotsPaletteBuffer + ((i+1) * size(word)))
+          sta lR19
+          jsl rlIncreaseColorBightnessOfPortraitSlot
+
+        .endfor
+
+        lda wVBlankEnabledFramecount
+        and #$0003
+        bne _End
+
+          lda aProcSystem.aBody0,b,x
+          dec a
+          dec a
+          sta aProcSystem.aBody0,b,x
+          bmi +
+
+        _End
+        rtl
+
+        +
+        jsl rlProcEngineFreeProc
+        rtl
+
+        .databank 0
+
+    .endsection ProcFadeInWorldMapPortraitSlotCycleSection
 
 
     .section ProcFadeInWorldMapPortraitSlotCodeSection

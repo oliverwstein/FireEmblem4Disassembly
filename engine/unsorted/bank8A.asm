@@ -1,5 +1,49 @@
 ; Code from bank $8A not yet assigned to a game system.
 
+    .section Unsorted8A9750Section
+
+      .al
+      .xl
+
+      rlUnknown8A9750 ; 8A/9750
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; A = PortraitID
+
+        jsl rlGetDecompressedPortraitDataPointers
+
+        ldx #size(Palette)-2
+        ldy #size(Palette)-2
+
+          -
+          lda [lR19],y
+          sta aOAMPaletteBuffer.aPalette5,b,y
+          dec x
+          dec x
+          dec y
+          dec y
+          bpl -
+
+        lda #16 * 4 * size(Tile4bpp)
+        sta wR0
+        lda #$CE00 >> 1
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rtl
+
+        .databank 0
+
+        ; 8A/9776
+
+    .endsection Unsorted8A9750Section
+
+
     .section Unsorted8A97C2Section
 
       .al
@@ -81,6 +125,93 @@
         ; 8A/9858
 
     .endsection Unsorted8A97C2Section
+
+
+    .section Unsorted8AD975Section
+
+      .al
+      .xl
+
+      rlUnknown8AD975 ; 8A/D975
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        jsr rsUnknown8AE05E
+
+        lda $7F7670
+        bne +
+
+          jsl rlDMAByStruct
+            .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $F000
+
+          bra ++
+
+        +
+        lda #0
+        sta $7F7670
+        jsr rsUnknown8ADA83
+        jsr $8ADA24
+
+        sep #$20
+        lda bBufferINIDISP
+        rep #$20
+        and #$000F
+        bne +
+
+          lda #(`procFadeInByScreenFadingTimer)<<8
+          sta lR44+1
+          lda #<>procFadeInByScreenFadingTimer
+          sta lR44
+          jsl rlProcEngineFindProc
+          bcs +
+
+            jsl rlProcEngineCreateProc
+
+        +
+        lda $0592,b
+        asl a
+        tax
+        jsr (aUnknown8AD9FE,x)
+
+        lda $08AD,b
+        bit #$0001
+        beq +
+
+          lda #$0020
+          sta wR0
+          lda #$0060
+          sta wR1
+          ldx #0
+          jsr $8A950E
+          jsr $8ADB04
+
+        +
+        lda $08AD,b
+        bit #$0002
+        beq +
+
+          lda #$00A0
+          sta wR0
+          lda #$0060
+          sta wR1
+          ldx #2
+          jsr $8A9539
+          jsr $8ADB37
+
+        +
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted8AD975Section
 
 
     .section Unsorted8AD9FESection
@@ -221,6 +352,52 @@
         ; 8A/DB04
 
     .endsection Unsorted8ADA83Section
+
+
+    .section Unsorted8ADBBDSection
+
+      .al
+      .xl
+
+      rsUnknown8ADBBD ; 8A/DBBD
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlResetDialogueEngine
+
+        lda $08AF+1,b
+        sta $24+1
+        lda $08AF,b
+        sta $24
+        lda #2
+        jsl rlUnknown91811C
+
+        lda #0
+        sta aBGPaletteBuffer,b
+        lda #2
+        sta aDialogue.wUnknown0018D0,b
+        ldx #0
+        jsr rsUnknown8ADCF9
+
+        lda $08B8,b
+        cmp #4
+        bne +
+
+          lda #$081E
+          sta aDialogue._Slot[1].wDisplayArea,b
+
+        +
+        lda #1
+        sta $0592,b
+        lda #2
+        sta $0594,b
+        rts
+
+        .databank 0
+
+    .endsection Unsorted8ADBBDSection
 
 
     .section Unsorted8ADBFFSection
@@ -502,6 +679,18 @@
         PROC_HALT
 
     .endsection Unsorted8AE1C1Section
+
+
+    .section Unsorted8AE1EBSection
+
+      .al
+      .xl
+
+      procUnknown8AE1EB ; 8A/E1EB
+
+        .structProcInfo "FF", rlProcUnknown8AE1EBInit, rlProcUnknown8AE1EBCycle, $8AE243
+
+    .endsection Unsorted8AE1EBSection
 
 
     .section Unsorted8AE1F3Section

@@ -25,6 +25,8 @@ These tools work on a *routines file*: disassembled routines in the usual style,
         ...
 ```
 
+A label with a directive on the same line counts too (`      aTable .word 1, 2 ; 85/8000`). Everything from one routine's label up to the next label belongs to that routine and moves with it, so keep unrelated notes out of the space after the last routine in a file.
+
 The files in `wip/` are routines files. Each tool assembles the file in a temporary copy of the repository, so your working tree is only changed where a tool says so.
 
 | Tool | Purpose |
@@ -49,4 +51,6 @@ The files in `wip/` are routines files. Each tool assembles the file in a tempor
 - Register widths (`.al`/`.as`, `.xl`/`.xs`) carry over in the order 64tass reads the source, not in ROM order. That is why every section states its starting widths; the tools measure them for you.
 - `addr,b` means "absolute addressing, with a 16-bit operand". It does not subtract the data bank, so `$7F4418,b` never assembles. Declare `.databank $7F` instead and write the address without `,b`.
 - `@l addr` forces long addressing.
-- In a `.brept` list of structs, use `.dstruct structName` so that `list[0].field` works. A bare `#<>list` then means one value per entry, and 64tass silently emits the instruction once per entry; write `#<>list[0]`.
+- A label declared as a list (`.brept`) stands for every entry: `lda #<>list` silently emits one instruction per entry. Write `list[0]` for the base address. This caused several mismatches in the wip code (`aAIUnitList`, `aMovingMapSpriteData`, `aSave.aFactionEntryOffsets`).
+- In a `.brept` list of structs, use `.dstruct structName` (not the `.structName` shorthand) so that `list[0].field` works.
+- A struct macro given `None` for a field emits nothing for it, and `.structX` calls with missing arguments can emit nothing at all without an error. If a routines file reports "no bytes emitted" for data, check those first.

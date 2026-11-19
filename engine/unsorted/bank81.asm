@@ -474,6 +474,78 @@
     .endsection Unsorted818A4ASection
 
 
+    .section Unsorted818C5DSection
+
+      .al
+      .xl
+
+      rlUnknown818C5D ; 81/8C5D
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        bra +
+
+      rlUnknown818C62 ; 81/8C62
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #2
+        bra +
+
+      rlUnknown818C67 ; 81/8C67
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #3
+        bra +
+
+      rlUnknown818C6C ; 81/8C6C
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #4
+
+        +
+        sta wR0
+
+        tya
+        sta aMovingMapSprites.wPathScriptOffset,b,x
+
+        lda aMovingMapSprites.wActiveSpriteOffset,b,x
+        tay
+
+        lda wR0
+        pha
+
+        dec a
+        asl a
+        asl a
+        asl a
+        sta wUnknown000911,x
+        lda #0
+        sta wUnknown0008F1,x
+        lda #0
+        sta wUnknown000901,x
+
+        pla
+        sta aActiveSpriteSystem.aUnknown001300,b,y
+        sec
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted818C5DSection
+
+
     .section Unsorted818C98Section
 
       .al
@@ -1310,6 +1382,58 @@
     .endsection Unsorted81AC02Section
 
 
+    .section Unsorted81AD28Section
+
+      .al
+      .xl
+
+      rsUnknown81AD28 ; 81/AD28
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlCreateUnitWindowAndTerrainWindowProcs
+
+        lda $0D77,b
+        cmp #3
+        beq ++
+
+          cmp #1
+          beq +
+
+            lda #(`procFadeIn)<<8
+            sta lR44+1
+            lda #<>procFadeIn
+            sta lR44
+            lda #0
+            jsl rlProcEngineCreateProcByIndex
+            bra ++
+
+          +
+          sep #$20
+          lda bBufferINIDISP
+          ora #15
+          sta bBufferINIDISP
+          rep #$20
+
+        +
+        jsl rlUnknown81B189
+        bcc +
+
+          ldx $0772,b
+          jsl rlDeployedUnitUnsetHiddenIfAlive
+
+        +
+        lda $0D7B,b
+        sta $0304,b
+        rts
+
+        .databank 0
+
+    .endsection Unsorted81AD28Section
+
+
     .section Unsorted81AD6ASection
 
       .al
@@ -1344,6 +1468,54 @@
         .databank 0
 
     .endsection Unsorted81AD6ASection
+
+
+    .section Unsorted81ADD8Section
+
+      .al
+      .xl
+
+      rlUnknown81ADD8 ; 81/ADD8
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+
+        lda wUnknown00171A,b
+        bne _CLC
+
+          lda wUnknownDeploymentOffset000D7F,b
+          bmi _CLC
+
+            tax
+            lda aDeploymentTable._UnitRAMPointer,x
+            sta wSelectedUnitDataRAMPointer,b
+
+            lda $0D81,b
+            bmi _CLC
+
+              asl a
+              tax
+              jsr (aUnknown81AE02,x)
+
+              lda #$FFFF
+              sta wUnknownDeploymentOffset000D7F,b
+              bra +
+
+        _CLC
+        clc
+        
+        +
+        plb
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted81ADD8Section
 
 
     .section Unsorted81AE02Section
@@ -1470,6 +1642,35 @@
         .databank 0
 
     .endsection Unsorted81AE02Section
+
+
+    .section Unsorted81AE96Section
+
+      .al
+      .xl
+
+      rsUnknown81AE96 ; 81/AE96
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda $0580,b
+        pha
+
+        ldx wUnknownDeploymentOffset000D7F,b
+        lda $0D83,b
+        jsl rlSetUnitResidingInCastle
+
+        pla
+        sta $0580,b
+
+        sec
+        rts
+
+        .databank 0
+
+    .endsection Unsorted81AE96Section
 
 
     .section Unsorted81AEAASection
@@ -1662,6 +1863,69 @@
         .long $85E8C9
 
     .endsection Unsorted81AEAASection
+
+
+    .section Unsorted81AFB7Section
+
+      .al
+      .xl
+
+      rsUnknown81AFB7 ; 81/AFB7
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wUnknown000D79,b
+        bit #$0400
+        bne +
+
+          ldx wUnknownDeploymentOffset000D7F,b
+          lda #1
+          sta aProcSystem.wInput2,b
+          lda $0D83,b
+          sta aProcSystem.wInput3,b
+          jsl $85BB2E
+
+        +
+        sec
+        rts
+
+        .databank 0
+
+      rsUnknown81AFD4 ; 81/AFD4
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda $0D8D,b
+        bmi _CLC
+
+          jsl rlUnknown888410
+
+          lda $0D8D,b
+          sta aProcSystem.wInput2,b
+          lda #$0D00
+          sta aProcSystem.wInput3,b
+          jsl $85B8D6
+
+          lda #$FFFF
+          sta $0D8D,b
+          sec
+          bra +
+
+        _CLC
+        clc
+        
+        +
+        rts
+
+        .databank 0
+
+        ; 81/AFF8
+
+    .endsection Unsorted81AFB7Section
 
 
     .section Unsorted81B088Section

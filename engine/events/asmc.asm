@@ -1,6 +1,48 @@
 ; ASMCs: assembly routines called from chapter event scripts. So far only the final
 ; chapter's Julia recruitment is here; other ASMCs live with the system they belong to.
 
+    .section ASMCShowItemPopUpBoxSection
+
+      .al
+      .xl
+
+      rlASMCShowItemPopUpBox ; 81/B223
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wUnknownDeploymentOffset000D7F,b
+        bmi _End
+
+          lda $0D81,b
+          cmp #8
+          bne _End
+
+            lda $0D83,b
+            jsl rlGetItemRAMStructEntryByPlayerItemIndex
+            jsl rlGetEffectiveItemIDByItemRAMStructEntry
+            sta aProcSystem.wInput2,b
+
+            lda #$0D00
+            sta aProcSystem.wInput3,b
+            lda #(`procUnknown85BC0F)<<8
+            sta lR44+1
+            lda #<>procUnknown85BC0F
+            sta lR44
+            jsl rlEventEngineCreateProc
+
+            lda #$FFFF
+            sta wUnknownDeploymentOffset000D7F,b
+
+        _End
+        rtl
+
+        .databank 0
+
+    .endsection ASMCShowItemPopUpBoxSection
+
+
     .section ASMCGiveToSupplyMenuIfInventoryFullSection
 
       .al

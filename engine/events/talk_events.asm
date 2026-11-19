@@ -1,6 +1,48 @@
 ; Talk events: whether a talk event is available, and the conditions it can
 ; check (always, never, or enough money).
 
+    .section GetChapterTalkEventsPointerSection
+
+      .al
+      .xl
+
+      rlGetChapterTalkEventsPointer ; 81/B4E4
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        phy
+
+        lda $0D6D,b
+        sta lR18+1
+
+        ldy lChapterEventDataPointer,b
+        sep #$20
+        lda lChapterEventDataPointer+2,b
+        pha
+        rep #$20
+        plb
+
+        lda structChapterEventData.TalkEventsPointer,b,y
+        sta lR18
+
+        ply
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 81/B503
+
+    .endsection GetChapterTalkEventsPointerSection
+
+
     .section CheckTalkEventEntryAvailableSection
 
       .al

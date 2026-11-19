@@ -1,6 +1,39 @@
 ; Map menus: loading their data, building their tilemaps and palettes, and
 ; their position and size on screen.
 
+    .section LoadMapMenuDataFromProcSection
+
+      .al
+      .xl
+
+      rlLoadMapMenuDataFromProc ; 85/8280
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8780DF
+
+        lda $0000+size(structProcInfo),b,y
+        sta lR18
+        lda $0001+size(structProcInfo),b,y
+        sta lR18+1
+        jsl rlLoadMapMenuData
+
+        lda lMapMenuRAMEntryPointer,b
+        sta aProcSystem.aBody0,b,x
+        lda lMapMenuRAMEntryPointer+2,b
+        and #$00FF
+        sta aProcSystem.aBody1,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/82A1
+
+    .endsection LoadMapMenuDataFromProcSection
+
+
     .section MapMenuSaveMapStateSection
 
       .al
@@ -99,6 +132,36 @@
         .databank 0
 
     .endsection StallProcUntilMapMenuDataLoadedSection
+
+
+    .section ProcCycleMapMenuWaitForPaletteGraphicFinishSection
+
+      .al
+      .xl
+
+      rlProcCycleMapMenuWaitForPaletteGraphicFinish ; 85/8366
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlHandleMapMenuPaletteGraphicsData
+        bcc +
+
+          rtl
+
+        +
+        lda aProcSystem.aBody2,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        sta wR40
+        jmp (wR40)
+
+        .databank 0
+
+        ; 85/837C
+
+    .endsection ProcCycleMapMenuWaitForPaletteGraphicFinishSection
 
 
     .section MapMenuBuildTilemapSection
@@ -206,6 +269,102 @@
     .endsection DialogueBoxMapMenuTilemapDataSection
 
 
+    .section DialogueBoxMapMenuDataSection
+
+      .al
+      .xl
+
+      aDialogueBoxMapMenuData ; 85/9BDA
+
+        ; A structMapMenu without its last field (Unknown3): no palette or graphics data,
+        ; tilemap aDialogueBoxMapMenuTilemapData, type 7, position (1, 1).
+        .long 0, 0, aDialogueBoxMapMenuTilemapData
+        .byte 7, 1, 1
+
+
+
+; lands at 7ffcf0
+
+; .long 0
+; .long 0
+; .long $859BD1
+; .byte 7 ; index for aUnknown8589B5
+; .byte 1
+; .byte 1
+
+; size 12
+
+    .endsection DialogueBoxMapMenuDataSection
+
+
+    .section Unknown87819ASection
+
+      .al
+      .xl
+
+      rlUnknown87819A ; 87/819A
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        phx
+        phy
+
+        tax
+        lda lUnknown000522,b
+        ora lUnknown000522+1,b
+        beq _SEC
+
+        lda lUnknown000522,b
+        sta @l $000000,x
+        lda lUnknown000522+1,b
+        sta @l $000000+1,x
+        
+          _Loop
+          lda @l $000000,x
+          tay
+          sep #$20
+          lda @l $000000+2,x
+          pha
+          rep #$20
+          plb
+
+          lda $000C,b,y
+          ora $000C+1,b,y
+          beq _CLC
+
+          lda $000C,b,y
+          sta @l $000000,x
+          lda $000C+1,b,y
+          sta @l $000000+1,x
+          bra _Loop
+
+        _CLC
+        ply
+        plx
+        plp
+        plb
+        clc
+        rtl
+        
+        _SEC
+        ply
+        plx
+        plp
+        plb
+        sec
+        rtl
+
+        .databank 0
+
+    .endsection Unknown87819ASection
+
+
     .section LoadMapMenuDataSection
 
       .al
@@ -259,6 +418,52 @@
         .databank 0
 
     .endsection LoadMapMenuDataSection
+
+
+    .section LoadMapMenuTilemapDataSection
+
+      .al
+      .xl
+
+      rlLoadMapMenuTilemapData ; 87/8232
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; lR18 = map menu tilemap data source
+
+        ; Output:
+        ; lR25 = RAM entry pointer
+
+        phb
+        php
+        phk
+        plb
+        phx
+
+        lda #size(structMapMenuTilemapData)
+        jsl rlAllocateRAMArea
+
+        lda #size(structMapMenuTilemapData)
+        ldx #lR18
+        jsl rlCopyDataToRAMArea
+
+        lda lR25
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda lR25+1
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/8256
+
+    .endsection LoadMapMenuTilemapDataSection
 
 
     .section GetMapMenuYPositionsSection
@@ -604,6 +809,105 @@
     .endsection GetMapMenuPositionSection
 
 
+    .section GetMapMenuTilemapRAMEntryPointerSection
+
+      .al
+      .xl
+
+      rlGetMapMenuTilemapRAMEntryPointer ; 87/87B5
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        phy
+
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+
+        lda structMapMenu.TilemapDataPointer,b,y
+        sta lMapMenuTilemapRAMEntryPointer
+        lda structMapMenu.TilemapDataPointer+1,b,y
+        sta lMapMenuTilemapRAMEntryPointer+1
+
+        ply
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlReplaceMapMenuTilemapROMWithRAMPointer ; 87/87D8
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        lda lMapMenuTilemapRAMEntryPointer,b
+        pha
+        lda lMapMenuTilemapRAMEntryPointer+1,b
+        pha
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+        phy
+
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+
+        lda structMapMenu.TilemapDataPointer,b,y
+        sta lR18
+        lda structMapMenu.TilemapDataPointer+1,b,y
+        sta lR18+1
+
+        lda lMapMenuTilemapRAMEntryPointer
+        sta structMapMenu.TilemapDataPointer,b,y
+        lda lMapMenuTilemapRAMEntryPointer+1
+        sta structMapMenu.TilemapDataPointer+1,b,y
+
+        lda lR18
+        sta lMapMenuTilemapRAMEntryPointer
+        lda lR18+1
+        sta lMapMenuTilemapRAMEntryPointer+1
+        jsl rlRemoveMapMenuTilemapRAMEntry
+
+        ply
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        pla
+        sta lMapMenuTilemapRAMEntryPointer+1
+        pla
+        sta lMapMenuTilemapRAMEntryPointer
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/8833
+
+    .endsection GetMapMenuTilemapRAMEntryPointerSection
+
+
     .section GetMapMenuTileIndexSection
 
       .al
@@ -750,6 +1054,207 @@
         .databank 0
 
     .endsection ApplyMapMenuPaletteDataSection
+
+
+    .section HandleMapMenuDecompressionDMASection
+
+      .al
+      .xl
+
+      rlHandleMapMenuDecompressionDMA ; 87/8979
+
+        .al
+        .autsiz
+        .databank $00
+
+        phb
+        php
+        phk
+        plb
+        phx
+        phy
+        lda bUnknown0536,b
+        and #$00FF
+        beq _Free
+
+          lda #7,s
+          cmp lUnknown0537,b
+          bne +
+
+            lda #7+1,s
+            cmp lUnknown0537+1
+            bne +
+
+              lda bUnknown0536,b
+              bit #$0001
+              bne _8A17
+
+              bit #$0002
+              beq +
+
+                jml _8A98
+
+          +
+          ply
+          plx
+          plp
+          plb
+          sec
+          rtl
+
+        _Free ; 87/89AC
+        lda #7,s
+        sta lUnknown0537,b
+        lda #7+1,s
+        sta lUnknown0537+1,b
+        lda bUnknown0536,b
+        ora #$0080
+        sta bUnknown0536,b
+
+        ldy lR19
+        sep #$20
+        lda lR19+2
+        pha
+        rep #$20
+        plb
+
+        lda $0004,b,y
+        and #$00FF
+        beq _CheckDMA
+
+          ldx wDecompressionArrayPosition,b
+          lda $0005,b,y
+          sta aDecompressionArray + structDecompressionEntry.Source,b,x
+          lda $0005+1,b,y
+          sta aDecompressionArray + structDecompressionEntry.Source+1,b,x
+          lda #<>aDecompressionBuffer
+          sta aDecompressionArray + structDecompressionEntry.Dest,b,x
+          lda #aDecompressionBuffer >> 8
+          sta aDecompressionArray + structDecompressionEntry.Dest+1,b,x
+          lda #0
+          sta aDecompressionArray + size(structDecompressionEntry),b,x
+          sta aDecompressionArray + size(structDecompressionEntry)+1,b,x
+          txa
+          clc
+          adc #size(structDecompressionEntry)
+          sta wDecompressionArrayPosition,b
+          sep #$20
+          lda #1
+          sta bDecompressionArrayFlag,b
+
+          lda bBufferINIDISP
+          bpl +
+
+            jsl rlDecompressByList
+
+          +
+          rep #$20
+          lda bUnknown0536,b
+          ora #$0001
+          sta bUnknown0536,b
+
+          _8A17
+          lda bDecompressionArrayFlag,b
+          and #$00FF
+          beq _CheckDMA
+
+            ply
+            plx
+            plp
+            plb
+            sec
+            rtl
+
+        _CheckDMA ; 87/8A25
+        sep #$20
+        lda lR19+2
+        pha
+        rep #$20
+        plb
+        ldy lR19
+
+        ldx wDMAArrayPosition,b
+        sep #$20
+        lda #DMAToVRAM
+        sta aDMAArray + structDMAToVRAM.TransferType,b,x
+        rep #$20
+
+        lda $0004,b,y
+        bne +
+
+          lda $0005,b,y
+          sta aDMAArray + structDMAToVRAM.Source,b,x
+          lda $0005+1,b,y
+          sta aDMAArray + structDMAToVRAM.Source+1,b,x
+          bra ++
+
+        +
+        lda #<>aDecompressionBuffer
+        sta aDMAArray + structDMAToVRAM.Source,b,x
+        lda #aDecompressionBuffer >> 8
+        sta aDMAArray + structDMAToVRAM.Source+1,b,x
+
+        +
+        lda $0000,b,y
+        sta aDMAArray + structDMAToVRAM.Count,b,x
+
+        sep #$20
+        lda #$80
+        sta aDMAArray + structDMAToVRAM.Mode,b,x
+        rep #$20
+
+        lda $0002,b,y
+        sta aDMAArray + structDMAToVRAM.Destination,b,x
+        lda #0
+        sta aDMAArray + size(structDMAToVRAM),b,x
+        txa
+        clc
+        adc #size(structDMAToVRAM)
+        sta wDMAArrayPosition,b
+        sep #$20
+        lda #1
+        sta bDMAArrayFlag,b
+
+        lda bBufferINIDISP
+        bpl +
+
+          jsl rlProcessDMAStructArray
+
+        +
+        lda bUnknown0536,b
+        and #~$01
+        ora #$02
+        sta bUnknown0536,b
+        rep #$20
+
+        _8A98
+        lda bDMAArrayFlag,b
+        and #$00FF
+        beq _CLC
+
+          ply
+          plx
+          plp
+          plb
+          sec
+          rtl
+
+        _CLC
+        lda bUnknown0536,b
+        and #$FF00
+        sta bUnknown0536,b
+        ply
+        plx
+        plp
+        plb
+        clc
+        rtl
+
+        .databank 0
+
+        ; 87/8AB5
+
+    .endsection HandleMapMenuDecompressionDMASection
 
 
     .section RemoveMapMenuTilemapRAMEntrySection

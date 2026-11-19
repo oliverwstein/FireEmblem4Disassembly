@@ -212,6 +212,50 @@
     .endsection GetTurnStartEffectsByStatusSection
 
 
+    .section GetChurchHealingSection
+
+      .al
+      .xl
+
+      rsGetChurchHealing ; 84/B094
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitDeploymentOffset
+        jsl rlGetTerrainTypeByDeploymentOffset
+        cmp #TerrainChurch
+        beq +
+        
+          _CLC
+          clc
+          rts
+
+        +
+        jsl rlGetSelectedUnitCurrentHP
+        sta wRoutineVariable1,b
+
+        jsl rlGetSelectedUnitMaxHP
+        sec
+        sbc wRoutineVariable1,b
+        sta wRoutineVariable1,b
+        jsr $84B0F0
+        bcs _CLC
+
+        jsl rlSubtractSelectedCharacterMoney
+        stx wRoutineVariable1,b
+
+        ldy #2
+        jsr rsUnknown84B148
+        sec
+        rts
+
+        .databank 0
+
+    .endsection GetChurchHealingSection
+
+
     .section GetCastleHealingAmountSection
 
       .al

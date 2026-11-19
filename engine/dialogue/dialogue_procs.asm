@@ -14,6 +14,78 @@
     .endsection DialogueSection
 
 
+    .section ProcDialogueInitSection
+
+      .al
+      .xl
+
+      rlProcDialogueInit ; 82/8469
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #8
+        sta aProcSystem.aBody0,b,x
+
+        jsl rlResetDialogueEngine
+
+        ldy wActiveEventOffset,b
+        lda lActiveEventPointer,b
+        sta @l lR22
+        lda lActiveEventPointer+1,b
+        sta @l lR22+1
+
+        lda [lR22],y
+        sta lR18
+        inc y
+        lda [lR22],y
+        sta lR18+1
+        jsl rlUnknown828653
+
+        lda wEventUnit1Pointer,b
+        jsl rlUnknown828A1C
+        sta aDialogue.wUnit1,b
+
+        lda wEventUnit2Pointer,b
+        jsl rlUnknown828A1C
+        sta aDialogue.wUnit2,b
+
+        lda #5
+        sta $7FC54A
+        lda #11
+        sta $7FC54C
+        lda #21
+        sta $7FC5AE
+        lda #11
+        sta $7FC5B0
+
+        lda bBufferINIDISP
+        and #$000F
+        cmp #$000F
+        beq _End
+
+          lda #(`procFadeIn)<<8
+          sta lR44+1
+          lda #<>procFadeIn
+          sta lR44
+          jsl rlProcEngineFindProc
+          bcs _End
+
+            lda #(`procFadeIn)<<8
+            sta lR44+1
+            lda #<>procFadeIn
+            sta lR44
+            jsl rlProcEngineCreateProc
+
+        _End
+        rtl
+
+        .databank 0
+
+    .endsection ProcDialogueInitSection
+
+
     .section ProcDialogueCycle1Section
 
       .al
@@ -311,6 +383,91 @@
         .databank 0
 
     .endsection ProcDialogueCycle1Section
+
+
+    .section Unknown82862ESection
+
+      .al
+      .xl
+
+      rsUnknown82862E ; 82/862E
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Sets the position of the A press arrow based on the currently active slot
+
+        ldx #$00E0
+        ldy #$0038
+
+        lda aDialogue.wSlotOffset,b
+        beq +
+
+          ldx #$00E0
+          ldy #$00C8
+
+        +
+        stx wR0
+        sty wR1
+        jsl rlDisplayDialogueAPressArrows
+        rts
+
+        .databank 0
+
+        ; 82/8648
+
+    .endsection Unknown82862ESection
+
+
+    .section Unknown828653Section
+
+      .al
+      .xl
+
+      rlUnknown828653 ; 82/8653
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; lR18 = dialogue pointer
+
+        php
+        jsl rlFreeHDMAEntry0
+
+        lda #1
+        jsl rlUnknown91811C
+
+        lda #1
+        sta aDialogue.wTextSound,b
+        jsl rlUnknown91A928
+
+        ldx #0
+        jsl rlUnknown919420._944B
+
+        ldx #$0019
+        jsl rlUnknown919420._944B
+
+        lda #4
+        sta wBufferBG3HOFS
+        sep #$20
+        lda #$06
+        tsb bBufferTM
+        lda #0
+        sta bBufferCGWSEL
+        lda #$91
+        sta bBufferCGADSUB
+        lda #0
+        sta bBufferCOLDATA_0
+        jsl rlApplyCOLDATA0Intensity
+        plp
+        rtl
+
+        .databank 0
+
+    .endsection Unknown828653Section
 
 
     .section ProcDialogueCodeSection

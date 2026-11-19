@@ -219,6 +219,118 @@
     .endsection MapScrollScriptSection
 
 
+    .section Unknown818FA1Section
+
+      .al
+      .xl
+
+      rlUnknown818FA1 ; 81/8FA1
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; wR0 = CharacterID
+        ; wR1 = movement speed
+        ; wR2 = spawn X coord
+        ; wR3 = spawn y coord
+        ; wR4 = dest X coordinate
+        ; wR5 = dest Y coordinate
+        ; wR6 = sprite color
+        ; wR7 = 0 or 1 ?
+
+        phx
+        phx
+        jsr rsCapSpawnDestinationCoordinates100
+
+        lda wR0
+        pha
+        lda wR1
+        pha
+        lda wR2
+        pha
+        lda wR3
+        pha
+        lda wR4
+        pha
+        lda wR5
+        pha
+        lda wR6
+        pha
+
+        lda wR7
+        sta wR6
+
+        lda wR0
+        sta wRoutineVariable1,b
+        txa
+        lsr a
+        sta aMovingMapSprites.wEntryIndex,b
+
+        lda wR0
+        sta aMovingMapSprites.wCharacterID,b
+        lda wR2
+        sta aMovingMapSprites.wSpawnXCoordinate,b
+        lda wR3
+        sta aMovingMapSprites.wSpawnYCoordinate,b
+        lda wR4
+        sta aMovingMapSprites.wDestinationXCoordinate,b
+        lda wR5
+        sta aMovingMapSprites.wDestinationYCoordinate,b
+        lda wR6
+        sta aMovingMapSprites.wUnknown001830,b
+        lda #1
+        sta aMovingMapSprites.wState,b
+
+        pla
+        sta wR6
+        pla
+        sta wR5
+        pla
+        sta wR4
+        pla
+        sta wR3
+        pla
+        sta wR2
+        pla
+        sta wR1
+        pla
+        sta wR0
+        plx
+
+        phx
+        lda #(`aMovingMapSpriteData[0])<<8
+        sta lR18+1
+
+        txa
+        lsr a
+        ora #len(aMovingMapSpriteData[0]) << 8
+        jsl rlUnsignedMultiply8By8
+        clc
+        adc #<>aMovingMapSpriteData[0]
+        sta lR18
+        jsr rsFillMovingMapSpriteData
+        plx
+
+        phx
+        lda #(`aEventMovement.aMovementScriptBuffer1)<<8
+        sta lR19+1
+        pla
+        lsr a
+        xba
+        asl a
+        clc
+        adc #<>aEventMovement.aMovementScriptBuffer1
+        sta lR19
+        jsr rsFillMovingMapSpriteDataPathScriptPointer
+        plx
+        rtl
+
+        .databank 0
+
+    .endsection Unknown818FA1Section
+
+
     .section GetMapPixelScrollDistanceSection
 
       .al
