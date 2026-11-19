@@ -10,7 +10,8 @@ is accepted when it:
   - ends with rts, rtl, rti, jmp, jml, bra or brl, inside the gap;
   - has no brk, cop, wdm, stp or xce, and no branch into its own instructions;
   - calls (jsr, jsl, jmp, jml) only known routine starts or places in gaps;
-  - is at least 6 bytes long.
+  - is at least 6 bytes long;
+  - does not start like a proc header or a table of word or long pointers.
 Calls into gaps are queued as further starting points.
 
 Each routine gets a score: the number of calls to known routines plus the number
@@ -76,7 +77,24 @@ def main():
                 return e
         return None
 
+    def looks_like_data(start):
+        """A proc header, or a table of word or long pointers into nearby code."""
+        o = offset(start)
+        b = rom[o:o + 12]
+        bank = start >> 16
+        if all(0x20 <= x < 0x7F for x in b[:2]) and (b[2] | b[3] << 8) == (start + 8) & 0xFFFF:
+            return True
+        words = [b[i] | b[i + 1] << 8 for i in range(0, 6, 2)]
+        if all(0x8000 <= v and abs(v - (start & 0xFFFF)) < 0x1000 for v in words):
+            return True
+        longs = [(b[i + 2], b[i] | b[i + 1] << 8) for i in range(0, 9, 3)]
+        if all(k == longs[0][0] and (0x80 <= k <= 0xBF or k >= 0xC0) and v >= 0x8000 for k, v in longs):
+            return True
+        return False
+
     def try_decode(start, end):
+        if looks_like_data(start):
+            return None
         for m8, x8 in ((False, False), (True, False), (False, True), (True, True)):
             d = Disassembler(rom, labels, start, None, m8, x8)
             insns, _ = d.decode()

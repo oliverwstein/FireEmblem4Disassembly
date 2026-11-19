@@ -87,9 +87,9 @@
         ldx #$0000
 
         _FC76
-        lda $E0283F,x
+        lda aUnknownE0283F,x
         sta $0122,b,x
-        lda $E0285D,x
+        lda aUnknownE0285D,x
         sta $0222,b,x
         inc x
         inc x
@@ -266,3 +266,20 @@
         ; 9B/FD71
 
     .endsection Unsorted9BFC8DSection
+
+
+    .section TableE0283FSection
+
+      .al
+      .xl
+
+      aUnknownE0283F ; E0/283F
+
+        ; Read by rlUnknown9BFBC0.
+
+        .word $7FFF, $637C, $6739, $435E, $2F1D, $42B8, $4631, $2A33
+        .word $15D2, $096F, $00EA, $00A7, $0443, $0421, $0400
+
+        ; E0/285D
+
+    .endsection TableE0283FSection

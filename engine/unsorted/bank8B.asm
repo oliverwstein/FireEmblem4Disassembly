@@ -841,6 +841,26 @@
     .endsection Unsorted8BBE68Section
 
 
+    .section Table8BBFEDSection
+
+      .al
+      .xl
+
+      aUnknown8BBFED ; 8B/BFED
+
+        ; Read by rlUnknown8BBE68.
+
+        .byte $80, $06, $DE, $00, $00, $00, $20, $00, $40, $00, $60, $00, $00, $00, $20, $00
+        .byte $40, $00, $60, $00, $08, $00, $28, $00, $48, $00, $68, $00, $08, $00, $28, $00
+        .byte $48, $00, $68, $00, $10, $00, $30, $00, $50, $00, $70, $00, $10, $00, $30, $00
+        .byte $50, $00, $70, $00, $18, $00, $38, $00, $58, $00, $78, $00, $18, $00, $38, $00
+        .byte $58, $00, $78
+
+        ; 8B/C030
+
+    .endsection Table8BBFEDSection
+
+
     .section Unsorted8BC030Section
 
       .al
@@ -872,7 +892,7 @@
         and #$001F
         asl a
         tax
-        lda $8BC0B0,x
+        lda aUnknown8BC0B0,x
         clc
         adc wR0
         pha
@@ -882,9 +902,9 @@
         clc
         adc wR0
         tax
-        lda $8BC090,x
+        lda aUnknown8BC08F+1,x
         sta lR18+1
-        lda $8BC08F,x
+        lda aUnknown8BC08F,x
         sta lR18
         lda #$0040
         sta wR0
@@ -913,6 +933,24 @@
         ; 8B/C08F
 
     .endsection Unsorted8BC030Section
+
+
+    .section Table8BC08FSection
+
+      .al
+      .xl
+
+      aUnknown8BC08F ; 8B/C08F
+
+        ; Read by rlUnknown8BC030.
+
+        .byte $00, $02, $DE, $40, $02, $DE, $80, $02, $DE, $C0, $02, $DE, $00, $03, $DE, $40
+        .byte $03, $DE, $80, $03, $DE, $C0, $03, $DE, $00, $06, $DE, $40, $06, $DE, $80, $06
+        .byte $DE
+
+        ; 8B/C0B0
+
+    .endsection Table8BC08FSection
 
 
     .section Unsorted8BC43ASection
@@ -954,6 +992,22 @@
     .endsection Unsorted8BC43ASection
 
 
+    .section Table8BC457Section
+
+      .al
+      .xl
+
+      aUnknown8BC457 ; 8B/C457
+
+        ; Read by rlUnknown8BC43A, rlUnknown8BC467.
+
+        .word $011E, $013E, $015E, $017E, $019E, $01BE, $01DE, $01FE
+
+        ; 8B/C467
+
+    .endsection Table8BC457Section
+
+
     .section Unsorted8BC467Section
 
       .al
@@ -968,7 +1022,7 @@
 
         asl a
         tax
-        lda $8BC457,x
+        lda aUnknown8BC457,x
         tay
         ldx #$001E
 
@@ -1043,9 +1097,9 @@
         clc
         adc wR0
         tax
-        lda $8BC519,x
+        lda aUnknown8BC518+1,x
         sta lR18+1
-        lda $8BC518,x
+        lda aUnknown8BC518,x
         sta lR18
         lda $7F82EB
         tay
@@ -1082,6 +1136,23 @@
         ; 8B/C4F3
 
     .endsection Unsorted8BC484Section
+
+
+    .section Table8BC518Section
+
+      .al
+      .xl
+
+      aUnknown8BC518 ; 8B/C518
+
+        ; Read by rsUnknown8BC49F.
+
+        .word $C4F3, $F98B, $8BC4, $C4FE, $068B, $8BC5, $C50B, $168B
+        .word $8BC5
+
+        ; 8B/C52A
+
+    .endsection Table8BC518Section
 
 
     .section Unsorted8BC52ASection

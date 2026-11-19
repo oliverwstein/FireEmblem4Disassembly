@@ -917,7 +917,7 @@
         ldx #$001E
 
         _929E
-        lda $DE0000,x
+        lda aUnknownDE0000,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -1103,7 +1103,7 @@
         lda $0895,b
         asl a
         tax
-        lda $8A945E,x
+        lda aUnknown8A945E,x
         sta wR1
         lda wR0
         bit wR1
@@ -1974,7 +1974,7 @@
         jsl rlGetEventLocationEntryNameID
         asl a
         tax
-        lda $8A9D79,x
+        lda aUnknown8A9D79,x
         cmp $0510,b
         beq _9D38
         lda #$00E0
@@ -2009,7 +2009,7 @@
         jsl rlGetEventLocationEntryNameID
         asl a
         tax
-        lda @l $8A9D79,x
+        lda @l aUnknown8A9D79,x
         cmp $0510,b
         beq _9D6C
         lda #$00C0
@@ -2021,7 +2021,7 @@
 
         _9D5B
         tax
-        lda @l $8A9D79,x
+        lda @l aUnknown8A9D79,x
         cmp $0510,b
         beq _9D6C
         sta $04BA,b
@@ -2523,7 +2523,7 @@
         _A228
         phx
         phy
-        lda $8AA241,x
+        lda aUnknown8AA241,x
         tax
         tya
         inc a
@@ -2612,12 +2612,12 @@
         asl a
         tax
         phx
-        lda $8AA629,x
+        lda aUnknown8AA629,x
         tyx
         sta aBG3TilemapBuffer,x
         txy
         plx
-        lda $8AA62B,x
+        lda aUnknown8AA629+2,x
         tyx
         sta $7E83C8,x
         rtl
@@ -2897,7 +2897,7 @@
         sta wR2
 
         _A9AE
-        lda $DA7000,x
+        lda aUnknownDA7000,x
         sta aBG3TilemapBuffer,x
         inc x
         inc x
@@ -4000,7 +4000,7 @@
         lda $7F8082
         asl a
         tax
-        lda $8ABFF3,x
+        lda aUnknown8ABFF3,x
         jsl rlUnknown8AFC52
         jsl rlUnknown8A94B6
         pla
@@ -4019,7 +4019,47 @@
       .al
       .xl
 
-      rsUnknown8ACEB3 ; 8A/CEB3
+      aUnknown8ACEB3 ; 8A/CEB3
+
+        ; 89 long pointers into bank $8A.
+
+        .long $8AD0D4, $8AD195, $8AD2D9, $8AD3D3
+        .long $8AD727, $8AD4B0, $8AD60D, $8AD60D
+        .long $8AD60D, $8AD60D, $8AD60D, $8AD60D
+        .long $8AD17B, $8AD2B8, $8AD38F, $8AD48F
+        .long $8AD81A, $8AD17B, $8AD18B, $8AD2C8
+        .long $8AD39F, $8AD4A0, $8AD81A, $8AD5F9
+        .long $8AD0E3, $8AD1D2, $8AD0E3, $8AD44E
+        .long $8AD81A, $8AD0F1, $8AD1E0, $8AD0F1
+        .long $8AD401, $8AD81A, $8AD101, $8AD1F2
+        .long $8AD81A, $8AD45D, $8AD81A, $8AD110
+        .long $8AD27B, $8AD363, $8AD110, $8AD110
+        .long $8AD121, $8AD28A, $8AD121, $8AD43E
+        .long $8AD121, $8AD29F, $8AD29F, $8AD373
+        .long $8AD29F, $8AD29F, $8AD154, $8AD205
+        .long $8AD81A, $8AD3EF, $8AD81A, $8AD81A
+        .long $8AD217, $8AD81A, $8AD401, $8AD81A
+        .long $8AD81A, $8AD224, $8AD81A, $8AD40B
+        .long $8AD81A, $8AD30A, $8AD30A, $8AD2F8
+        .long $8AD30A, $8AD81A, $8AD31C, $8AD31C
+        .long $8AD31C, $8AD31C, $8AD728, $8AD351
+        .long $8AD351, $8AD351, $8AD351, $8AD351
+        .long $8AD32E, $8AD32E, $8AD32E, $8AD32E
+        .long $8AD728
+
+        ; Not understood yet: this starts in the middle of a routine.
+
+        .text ROM[$0ACFBE:$0AD071]
+
+    .endsection Unsorted8ACEB3Section
+
+
+    .section Unsorted8ACFBESection
+
+      .al
+      .xl
+
+      rsUnknown8ACFBE ; 8A/CFBE
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -4027,174 +4067,6 @@
         .autsiz
         .databank ?
 
-        pei ($D0)
-        txa
-        sta $D1,x
-        txa
-        cmp $8AD2,b,y
-        cmp (#211,s),y
-        txa
-        and [wMainLoopPointer]
-        txa
-        bcs $8ACE98
-        txa
-        ora $8AD6,b
-        ora $8AD6,b
-        ora $8AD6,b
-        ora $8AD6,b
-        ora $8AD6,b
-        ora $8AD6,b
-        tdc
-        cmp (wBufferBG3VOFS+1),y
-        clv
-        cmp (wBufferBG3VOFS+1)
-        sta $8F8AD3
-        pei (wBufferBG3VOFS+1)
-        inc a
-        cld
-        txa
-        tdc
-        cmp (wBufferBG3VOFS+1),y
-        phb
-        cmp (wBufferBG3VOFS+1),y
-        inc y
-        cmp (wBufferBG3VOFS+1)
-        sta $A08AD3,x
-        pei (wBufferBG3VOFS+1)
-        inc a
-        cld
-        txa
-        sbc $8AD5,b,y
-
-        _CEFB
-        sbc #208,s
-        txa
-        cmp ($D1)
-        txa
-        sbc #208,s
-        txa
-
-        _CF04
-        lsr $8AD4,b
-
-        _CF07
-        inc a
-        cld
-        txa
-        sbc ($D0),y
-        txa
-        cpx #$8AD1
-        sbc ($D0),y
-        txa
-        ora (wVBlankPointer+1,x)
-        txa
-        inc a
-        cld
-        txa
-        ora ($D1,x)
-        txa
-        sbc ($D1)
-        txa
-        inc a
-        cld
-        txa
-        eor $8AD4,b,x
-        inc a
-        cld
-        txa
-        bpl _CEFB
-        txa
-        tdc
-        cmp (wBufferBG3VOFS+1)
-        adc #211,s
-        txa
-        bpl _CF04
-        txa
-        bpl _CF07
-        txa
-        and ($D1,x)
-        txa
-        txa
-        cmp (wBufferBG3VOFS+1)
-        and ($D1,x)
-        txa
-        rol $8AD4,b,x
-        and ($D1,x)
-        txa
-        sta $9F8AD2,x
-        cmp (wBufferBG3VOFS+1)
-        adc (#211,s),y
-        txa
-        sta $9F8AD2,x
-        cmp (wBufferBG3VOFS+1)
-        .byte $54, $D1, $8A ; mvn from bank $8A to bank $D1
-        ora $D2
-        txa
-        inc a
-        cld
-        txa
-        sbc $1A8AD3
-        cld
-        txa
-        inc a
-        cld
-        txa
-        ora [$D2],y
-        txa
-        inc a
-        cld
-        txa
-        ora (wVBlankPointer+1,x)
-        txa
-        inc a
-        cld
-        txa
-        inc a
-        cld
-        txa
-        bit $D2
-        txa
-        inc a
-        cld
-        txa
-        phd
-        pei (wBufferBG3VOFS+1)
-        inc a
-        cld
-        txa
-        asl a
-        cmp (#138,s),y
-        asl a
-        cmp (#138,s),y
-        sed
-        cmp (wBufferBG3VOFS+1)
-        asl a
-        cmp (#138,s),y
-        inc a
-        cld
-        txa
-        trb $8AD3,b
-        trb $8AD3,b
-        trb $8AD3,b
-        trb $8AD3,b
-        plp
-        cmp [wBufferBG3VOFS+1],y
-        eor (wVBlankPointer),y
-        txa
-        eor (wVBlankPointer),y
-        txa
-        eor (wVBlankPointer),y
-        txa
-        eor (wVBlankPointer),y
-        txa
-        eor (wVBlankPointer),y
-        txa
-        rol $8AD3,b
-        rol $8AD3,b
-        rol $8AD3,b
-        rol $8AD3,b
-        plp
-        cmp [wBufferBG3VOFS+1],y
         sec
         sbc #$0001
         sta wR0
@@ -4303,7 +4175,7 @@
 
         ; 8A/D071
 
-    .endsection Unsorted8ACEB3Section
+    .endsection Unsorted8ACFBESection
 
 
     .section Unsorted8AD975Section
@@ -5590,7 +5462,7 @@
         ldx #$01FE
 
         _E407
-        lda $8CD600,x
+        lda aUnknown8CD600,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x

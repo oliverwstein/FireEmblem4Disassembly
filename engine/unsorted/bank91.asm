@@ -1,6 +1,31 @@
 ; Code from bank $91 not yet assigned to a game system.
 
 
+    .section Table8D9B65Section
+
+      .al
+      .xl
+
+      aUnknown8D9B65 ; 8D/9B65
+
+        ; Read by rsUnknown91DDF1.
+
+        .byte $7B, $9B, $7B, $9B, $89, $9B, $95, $9B, $A2, $9B, $B0, $9B, $BD, $9B, $CA, $9B
+        .byte $D1, $9B, $D8, $9B, $DE, $9B, $0A, $AC, $0B, $7E, $09, $15, $36, $0A, $BB, $09
+        .byte $31, $38, $C5, $01, $09, $C5, $0B, $7F, $80, $09, $3C, $1C, $38, $C5, $C5, $01
+        .byte $0B, $7F, $80, $09, $15, $36, $0A, $BB, $09, $31, $38, $C5, $01, $0A, $B5, $0B
+        .byte $81, $09, $15, $36, $0A, $BB, $09, $31, $38, $C5, $01, $0B, $7F, $80, $09, $3C
+        .byte $0B, $82, $09, $1C, $C5, $C5, $C5, $01, $0B, $7F, $80, $09, $3C, $0B, $83, $09
+        .byte $1C, $C5, $C5, $C5, $01, $0C, $69, $37, $09, $C5, $C5, $01, $0B, $83, $09, $1C
+        .byte $C5, $C5, $01, $09, $33, $31, $38, $C5, $01, $09, $C5, $C5, $C5, $C5, $C5, $0B
+        .byte $7F, $80, $09, $3E, $10, $37, $2E, $1D, $3D, $C5, $C5, $C5, $C5, $C5, $C5, $C5
+        .byte $01
+
+        ; 8D/9BF6
+
+    .endsection Table8D9B65Section
+
+
     .section Unsorted91A3ABSection
 
       .al
@@ -238,6 +263,101 @@
     .endsection Unsorted91AA15Section
 
 
+    .section Unsorted91AA6FSection
+
+      .al
+      .xl
+
+      rsUnknown91AA6F ; 91/AA6F
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldy #$0000
+        sty wR0
+        lda [lR19],y
+        and #$00FF
+        bne _AA86
+        cmp wR0
+        bne _AA86
+        jsr rsUnknown91AAE2
+        bra _AA8C
+
+
+        _AA86
+        jsl rlUnknown91AB0D
+        inc wR0
+
+        _AA8C
+        inc x
+        inc y
+        lda [lR19],y
+        and #$00FF
+        bne _AA9E
+        cmp wR0
+        bne _AA9E
+        jsr rsUnknown91AAE2
+        bra _AAA4
+
+
+        _AA9E
+        jsl rlUnknown91AB0D
+        inc wR0
+
+        _AAA4
+        inc x
+        inc y
+        lda [lR19],y
+        and #$00FF
+        bne _AAB6
+        cmp wR0
+        bne _AAB6
+        jsr rsUnknown91AAE2
+        bra _AABC
+
+
+        _AAB6
+        jsl rlUnknown91AB0D
+        inc wR0
+
+        _AABC
+        inc x
+        inc y
+        lda [lR19],y
+        and #$00FF
+        bne _AACE
+        cmp wR0
+        bne _AACE
+        jsr rsUnknown91AAE2
+        bra _AAD4
+
+
+        _AACE
+        jsl rlUnknown91AB0D
+        inc wR0
+
+        _AAD4
+        inc x
+        inc y
+        lda [lR19],y
+        and #$00FF
+        jsl rlUnknown91AB0D
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 91/AAE2
+
+    .endsection Unsorted91AA6FSection
+
+
     .section Unsorted91AAE2Section
 
       .as
@@ -275,15 +395,19 @@
 
         ; 91/AB0B
 
-      rlUnknown91AB0B ; 91/AB0B
+      aUnknown91AB0B ; 91/AB0B
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .word $00FF
+
+      rlUnknown91AB0D ; 91/AB0D
+
         .al
         .xl
         .autsiz
         .databank ?
 
-        sbc $088B00,x
+        phb
+        php
         phk
         plb
         .databank $91
@@ -369,8 +493,6 @@
         bra _AB86
 
         .databank 0
-
-        ; 91/AB91
 
     .endsection Unsorted91AAE2Section
 
@@ -649,7 +771,7 @@
         tax
         lda #$8D00
         sta lR18+1
-        lda $8D9BF6,x
+        lda aUnknown8D9BF6,x
         sta lR18
         rtl
 
@@ -900,7 +1022,7 @@
         lda @l $00185C,x
         and #$00FF
         tax
-        lda $91D899,x
+        lda aUnknown91D899,x
         and #$00FF
         sta $0304,b
         lda #$0001
@@ -1503,7 +1625,7 @@
         dec a
         asl a
         tax
-        lda $91DDD5,x
+        lda aUnknown91DDD5,x
         plx
         pha
         lda $18D5,b
@@ -1592,7 +1714,7 @@
         lda $18C9,b
         bne _DDA7
         lda $1856,b
-        jsr $91DE4D
+        jsr rsUnknown91DE4D
 
         _DDBB
         jsl rlUnknown9181F6
@@ -1611,6 +1733,23 @@
         ; 91/DDD5
 
     .endsection Unsorted91DD9BSection
+
+
+    .section Table91DDD5Section
+
+      .al
+      .xl
+
+      aUnknown91DDD5 ; 91/DDD5
+
+        ; Read by rsUnknown91DCF8, rsUnknown91DDF1, rsUnknown91DE4D.
+
+        .word $0000, $0020, $0040, $0060, $0080, $00A0, $00C0, $00D0
+        .word $00E0, $0100, $0140, $0180, $01C0, $0200
+
+        ; 91/DDF1
+
+    .endsection Table91DDD5Section
 
 
     .section Unsorted91DDF1Section
@@ -1655,7 +1794,7 @@
         _DE2D
         asl a
         tax
-        lda $8D9B65,x
+        lda aUnknown8D9B65,x
         sta lR18
 
         _DE35
@@ -1663,7 +1802,7 @@
         dec a
         asl a
         tax
-        lda $91DDD5,x
+        lda aUnknown91DDD5,x
         tax
         lda #$9B88
         sta $18D4,b
@@ -1683,15 +1822,18 @@
       .al
       .xl
 
-      rsUnknown91DE4C ; 91/DE4C
+      aUnknown91DE4C ; 91/DE4C
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .byte $01
+
+      rsUnknown91DE4D ; 91/DE4D
+
         .al
         .xl
         .autsiz
         .databank ?
 
-        ora (wR32,x)
+        pha
         jsl rlResetDialogueEngine
         jsl rlDialogueFreeHDMA
         lda #$5000
@@ -1719,7 +1861,7 @@
         dec a
         asl a
         tax
-        lda $91DDD5,x
+        lda aUnknown91DDD5,x
         clc
         adc #$0014
         tax
@@ -1732,8 +1874,6 @@
         rts
 
         .databank 0
-
-        ; 91/DE9F
 
     .endsection Unsorted91DE4CSection
 
@@ -2173,7 +2313,7 @@
         pla
         asl a
         tax
-        lda @l $91E397,x
+        lda @l aUnknown91E397,x
         tay
         lda #$0000
         sta wR4
@@ -2215,6 +2355,28 @@
         ; 91/E397
 
     .endsection Unsorted91E2AASection
+
+
+    .section Table91E397Section
+
+      .al
+      .xl
+
+      aUnknown91E397 ; 91/E397
+
+        ; Read by rlUnknown91E2EF.
+
+        .word $E3C0, $E39B, $0007, $C3E8, $00E8, $0831, $E8C2, $3102
+        .word $C228, $02E8, $4831, $E8C2, $3102, $C268, $02E8, $8831
+        .word $E8C2, $3102, $C298, $04E8, $0431, $E000, $E8C3, $3100
+        .word $C200, $02E8, $2031, $E8C2, $3102, $C230, $04E8, $0931
+        .word $0800, $0000, $3100, $0008, $1010, $0831, $2000, $3120
+        .word $0018, $0200, $1831, $1000, $3112, $0018, $2220, $2831
+        .word $0000, $3106, $0028, $1610, $2831, $2000, $3126
+
+        ; 91/E405
+
+    .endsection Table91E397Section
 
 
     .section Unsorted91E405Section
@@ -2331,11 +2493,11 @@
         lda wVBlankEnabledFramecount
         and #$003F
         tax
-        lda @l $91E4B3,x
+        lda @l aUnknown91E4B3,x
         and #$00FF
         asl a
         tax
-        lda @l $91E4F3,x
+        lda @l aUnknown91E4F3,x
         tay
         lda #$0000
         sta wR4
@@ -2353,6 +2515,25 @@
         ; 91/E4A3
 
     .endsection Unsorted91E405Section
+
+
+    .section Table91E4B3Section
+
+      .al
+      .xl
+
+      aUnknown91E4B3 ; 91/E4B3
+
+        ; Read by rlUnknown91E472.
+
+        .word $0000, $0000, $0000, $0101, $0101, $0101, $0202, $0202
+        .word $0202, $0303, $0303, $0303, $0303, $0303, $0303, $0303
+        .word $0303, $0303, $0303, $0303, $0303, $0303, $0303, $0303
+        .word $0303, $0303, $0303, $0303, $0303, $0303, $0303, $0303
+
+        ; 91/E4F3
+
+    .endsection Table91E4B3Section
 
 
     .section Unsorted91E793Section
@@ -2670,16 +2851,17 @@
       .al
       .xl
 
-      rsUnknown91F759 ; 91/F759
+      aUnknown91F759 ; 91/F759
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .word <>rlUnknown91F75F, <>rlUnknown91F7CF, <>rlUnknown91F813
+
+      rlUnknown91F75F ; 91/F75F
+
         .al
         .xl
         .autsiz
         .databank ?
 
-        eor $F7CFF7,x
-        ora (#248,s),y
         ldx #$0020
 
         _F762
@@ -2719,9 +2901,74 @@
         _F7B6
         rts
 
+        rtl
+
+        .byte $00 ; brk
+        eor wR0,x
+        eor wR0,x
+        adc #0,s
+        lsr wR0,x
+        ror wR0
+        rol wR0
+        rtl
+
+        .byte $00 ; brk
+        adc #0,s
+        sta (wR0,x)
+        ply
+        .byte $00 ; brk
+        .byte $00 ; brk
+        .byte $00 ; brk
+
         .databank 0
 
-        ; 91/F7B7
+      rlUnknown91F7CF ; 91/F7CF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8185
+        cmp #$0006
+        bne _F7FE
+        lda #$0000
+        sta $7F8185
+        sep #$20
+        lda bBufferINIDISP
+        inc a
+        sta bBufferINIDISP
+        rep #$20
+        and #$000F
+        cmp #$000F
+        bne _F7FE
+        lda #$0002
+        sta $7F818B
+        lda #$0000
+        sta $7F8185
+
+        _F7FE
+        lda $7F8187
+        cmp $7F8189
+        bne _F812
+        lda #$0000
+        sta $7F8187
+        jsr rsUnknown91FA9A
+
+        _F812
+        rts
+
+        .databank 0
+
+      rlUnknown91F813 ; 91/F813
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+
+        .databank 0
 
     .endsection Unsorted91F759Section
 
@@ -2865,3 +3112,48 @@
         ; 91/FA27
 
     .endsection Unsorted91F9DDSection
+
+
+    .section Table91FA27Section
+
+      .al
+      .xl
+
+      aUnknown91FA27 ; 91/FA27
+
+        ; Read by rlUnknown91F9DD.
+        ; Pairs of signed words; code follows at 91/FA57.
+
+        .word $0027, $FFDC, $0030, $FFE4, $0036, $FFBA, $0025, $FFCD
+        .word $003A, $FFC5, $002F, $FFBF, $0024, $FFD0, $0035, $FFCE
+        .word $003E, $FFC2, $003A, $FFBC, $0032, $FFD3, $002E, $FFC5
+
+        ; 91/FA57
+
+    .endsection Table91FA27Section
+
+
+    .section Unsorted91FA9ASection
+
+      .al
+      .xl
+
+      rsUnknown91FA9A ; 91/FA9A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        clc
+        jsl rlFadePaletteToColors
+
+          .byte $00, $D0, $20, $00, $80, $00
+
+        rts
+
+        .databank 0
+
+        ; 91/FAA6
+
+    .endsection Unsorted91FA9ASection

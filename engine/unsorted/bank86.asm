@@ -823,7 +823,7 @@
         sta @l wSelectedUnitDataRAMPointer
         jsl rlGetSelectedUnitClassID
         tax
-        lda @l $86C359,x
+        lda @l aUnknown86C359,x
         and #$00FF
         plx
         stx wSelectedUnitDataRAMPointer,b
@@ -838,6 +838,26 @@
         ; 86/C359
 
     .endsection Unsorted86C333Section
+
+
+    .section Table86C359Section
+
+      .al
+      .xl
+
+      aUnknown86C359 ; 86/C359
+
+        ; Read by rlUnknown86C333.
+
+        .byte $01, $01, $03, $01, $01, $00, $01, $00, $00, $00, $02, $00, $00, $00, $01, $00
+        .byte $00, $01, $00, $00, $03, $01, $00, $02, $00, $00, $00, $00, $01, $01, $01, $05
+        .byte $01, $00, $00, $00, $00, $01, $00, $00, $00, $03, $01, $05, $05, $03, $03, $05
+        .byte $05, $05, $01, $01, $01, $01, $01, $06, $06, $06, $01, $01, $00, $00, $05, $01
+        .byte $14, $14, $00, $00, $00, $00, $00
+
+        ; 86/C3A0
+
+    .endsection Table86C359Section
 
 
     .section Unsorted86C3A0Section
@@ -865,7 +885,7 @@
         sta @l wSelectedUnitDataRAMPointer
         jsl rlGetSelectedUnitClassID
         tax
-        lda @l $86C3C6,x
+        lda @l aUnknown86C3C6,x
         and #$00FF
         plx
         stx wSelectedUnitDataRAMPointer,b
@@ -880,6 +900,26 @@
         ; 86/C3C6
 
     .endsection Unsorted86C3A0Section
+
+
+    .section Table86C3C6Section
+
+      .al
+      .xl
+
+      aUnknown86C3C6 ; 86/C3C6
+
+        ; Read by rlUnknown86C3A0.
+
+        .byte $14, $14, $14, $14, $14, $14, $50, $50, $50, $50, $28, $50, $50, $50, $14, $14
+        .byte $50, $14, $14, $50, $14, $14, $14, $14, $50, $3C, $50, $50, $0A, $0A, $0A, $0A
+        .byte $0A, $28, $28, $14, $28, $00, $14, $0A, $14, $00, $00, $28, $14, $14, $14, $14
+        .byte $14, $00, $00, $14, $14, $14, $14, $50, $50, $50, $0A, $00, $00, $00, $0A, $14
+        .byte $00, $00, $00, $00, $00, $00, $00
+
+        ; 86/C40D
+
+    .endsection Table86C3C6Section
 
 
     .section Unsorted86C40DSection

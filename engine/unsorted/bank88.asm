@@ -8522,13 +8522,13 @@
         clc
         adc wCursorXOffset,b
         clc
-        adc $88C834,x
+        adc aUnknown88C834,x
         sta wR0
         lda wR1
         clc
         adc wCursorYOffset,b
         clc
-        adc $88C83C,x
+        adc aUnknown88C83C,x
         sta wR1
         phx
         jsl rlPushToOAMBuffer
@@ -8543,6 +8543,22 @@
         ; 88/C834
 
     .endsection Unsorted88C7D8Section
+
+
+    .section Table88C834Section
+
+      .al
+      .xl
+
+      aUnknown88C834 ; 88/C834
+
+        ; Read by rsUnknown88C7D8.
+
+        .word $0000, $0020, $0030, $0040
+
+        ; 88/C83C
+
+    .endsection Table88C834Section
 
 
     .section Unsorted88C9A6Section
@@ -11856,31 +11872,22 @@
       .al
       .xl
 
-      rlUnknown88EF0D ; 88/EF0D
+      aUnknown88EF0D ; 88/EF0D
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; 12 long pointers to routines.
+
+        .long rlUnknown9EEED3, rlUnknown9EEDB5, rlUnknown88F47C
+        .long rlUnknown88EF31, rlUnknown88F5B3, rlUnknown88F01D
+        .long rlUnknown88F6D1, rlUnknown88F13B, rlUnknown88F7EF
+        .long rlUnknown88F259, rlUnknown88F8F4, rlUnknown88F35E
+
+      rlUnknown88EF31 ; 88/EF31
+
         .al
         .xl
         .autsiz
         .databank ?
 
-        cmp (#238,s),y
-        stz $EDB5,b,x
-        stz $F47C,b,x
-        dec y
-        and (wJoy2Repeated+1),y
-        dec y
-        lda (#245,s),y
-        dec y
-        ora $88F0,b,x
-        cmp (wJoy1RepeatTimer),y
-        dec y
-        tsc
-        sbc (wBufferBG3HOFS+1),y
-        sbc $5988F7
-        sbc (wBufferBG3HOFS+1)
-        pea #$88F8
-        lsr $88F3,b,x
         phx
         phb
         jsl rlClearBattleData
@@ -11961,8 +11968,6 @@
         rtl
 
         .databank 0
-
-        ; 88/F01D
 
       rlUnknown88F01D ; 88/F01D
 

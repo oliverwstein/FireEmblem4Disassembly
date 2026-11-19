@@ -1581,7 +1581,7 @@
         xba
         jsr rsUnknown9F830F
         lsr $20DE,b,x
-        ora $DBB883
+        ora aUnknownDBB883
         jsr rsUnknown9F830F
         sbc (wVBlankEnabledFramecount),y
         jsr rsUnknown9F830F

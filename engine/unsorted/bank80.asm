@@ -624,7 +624,7 @@
         lsr a
         and #$001E
         tay
-        lda $8089F1,x
+        lda aUnknown8089F1,x
         ora aSpriteExtBuffer,b,y
         sta aSpriteExtBuffer,b,y
         ldx #$AAAA
@@ -636,6 +636,22 @@
         ; 80/89F1
 
     .endsection Unsorted80889DSection
+
+
+    .section Table8089F1Section
+
+      .al
+      .xl
+
+      aUnknown8089F1 ; 80/89F1
+
+        ; Read by rlUnknown8089AD.
+
+        .word $AAAA, $AAA8, $AAA0, $AA80, $AA00, $A800, $A000, $8000
+
+        ; 80/8A01
+
+    .endsection Table8089F1Section
 
 
     .section Unsorted808A01Section
@@ -662,7 +678,7 @@
         lsr a
         and #$001E
         tay
-        lda $808A25,x
+        lda aUnknown808A25,x
         and aSpriteExtBuffer,b,y
         sta aSpriteExtBuffer,b,y
         ldx #$0000
@@ -674,6 +690,22 @@
         ; 80/8A25
 
     .endsection Unsorted808A01Section
+
+
+    .section Table808A25Section
+
+      .al
+      .xl
+
+      aUnknown808A25 ; 80/8A25
+
+        ; Read by rlUnknown808A01.
+
+        .word $0000, $0003, $000F, $003F, $00FF, $03FF, $0FFF, $3FFF
+
+        ; 80/8A35
+
+    .endsection Table808A25Section
 
 
     .section Unsorted808A35Section
@@ -3307,14 +3339,14 @@
         ldx #$0003
 
         _A83F
-        lda @l $80A859,x
+        lda @l aUnknown80A859,x
         sta rsBlockCopyMVNRAM,b,x
         dec x
         bpl _A83F
         ldx #$0004
 
         _A84C
-        lda @l $80A85D,x
+        lda @l aUnknown80A85D,x
         sta rsBlockCopyMVPRAM,b,x
         dec x
         bpl _A84C
@@ -3328,6 +3360,38 @@
         ; 80/A859
 
     .endsection Unsorted80A836Section
+
+
+    .section Table80A859Section
+
+      .al
+      .xl
+
+      aUnknown80A859 ; 80/A859
+
+        ; Read by rsUnknown80A836.
+
+        .byte $54, $00, $00, $60
+
+        ; 80/A85D
+
+    .endsection Table80A859Section
+
+
+    .section Table80A85DSection
+
+      .al
+      .xl
+
+      aUnknown80A85D ; 80/A85D
+
+        ; Read by rsUnknown80A836.
+
+        .byte $44, $00, $00, $60
+
+        ; 80/A861
+
+    .endsection Table80A85DSection
 
 
     .section Unsorted80A861Section
@@ -4022,7 +4086,7 @@
         ldx #$01FE
 
         _B56D
-        lda $8CDC00,x
+        lda aUnknown8CDC00,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -4631,7 +4695,7 @@
         lda $7FB014
         asl a
         tax
-        lda $80D1AE,x
+        lda aUnknown80D1AE,x
         tay
         pla
         asl a
@@ -5352,6 +5416,24 @@
         ; 80/F628
 
     .endsection Unsorted80F542Section
+
+
+    .section Table8CDC00Section
+
+      .al
+      .xl
+
+      aUnknown8CDC00 ; 8C/DC00
+
+        ; Read by rlUnknown80B452.
+
+        .word $5F37, $1CE7, $7FFD, $0400, $7FFF, $0000, $0000, $0000
+        .word $110A, $0CC8, $08A7, $0465, $0044, $0002, $0000, $0993
+        .word $577E, $041F, $0000, $0000, $0000, $1CC5, $2526, $0000
+
+        ; 8C/DC30
+
+    .endsection Table8CDC00Section
 
 
     .section TableDD7EAESection

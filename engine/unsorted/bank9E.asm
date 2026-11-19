@@ -9820,9 +9820,9 @@
         .autsiz
         .databank ?
 
-        lda #(`rlUnknown9ED089)<<8
+        lda #(`procUnknown9ED089)<<8
         sta lR44+1
-        lda #<>rlUnknown9ED089
+        lda #<>procUnknown9ED089
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -9839,17 +9839,18 @@
       .al
       .xl
 
-      rlUnknown9ED089 ; 9E/D089
+      procUnknown9ED089 ; 9E/D089
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .structProcInfo "ON", rlProcUnknown9ED089Init, $9ED2B5, $9ED1F4
+
+      rlProcUnknown9ED089Init ; 9E/D091
+
         .al
         .xl
         .autsiz
         .databank ?
 
-        eor $D0914E
-        lda $D2,x
-        pea #$5AD1
+        phy
         phx
         phb
         pea #$7F00
@@ -9942,8 +9943,6 @@
         rtl
 
         .databank 0
-
-        ; 9E/D1A1
 
     .endsection Unsorted9ED089Section
 
@@ -12468,17 +12467,18 @@
 
         ; 9E/F24B
 
-      rlUnknown9EF24B ; 9E/F24B
+      procUnknown9EF24B ; 9E/F24B
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .structProcInfo "ON", rlProcUnknown9EF24BInit, $9ED2B5, $9ED1F4
+
+      rlProcUnknown9EF24BInit ; 9E/F253
+
         .al
         .xl
         .autsiz
         .databank ?
 
-        eor $F2534E
-        lda $D2,x
-        pea #$5AD1
+        phy
         phx
         phb
         pea #$7F00
@@ -12567,8 +12567,6 @@
 
         .databank 0
 
-        ; 9E/F353
-
     .endsection Unsorted9EF1FASection
 
 
@@ -12577,17 +12575,18 @@
       .al
       .xl
 
-      rlUnknown9EF37F ; 9E/F37F
+      procUnknown9EF37F ; 9E/F37F
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .structProcInfo "ON", rlProcUnknown9EF37FInit, $9ED2B5, $9EF49E
+
+      rlProcUnknown9EF37FInit ; 9E/F387
+
         .al
         .xl
         .autsiz
         .databank ?
 
-        eor $F3874E
-        lda $D2,x
-        stz $5AF4,b,x
+        phy
         phx
         phb
         pea #$7F00
@@ -12685,9 +12684,136 @@
 
         .databank 0
 
-        ; 9E/F49E
-
     .endsection Unsorted9EF37FSection
+
+
+    .section Unsorted9EF55BSection
+
+      .al
+      .xl
+
+      rlUnknown9EF55B ; 9E/F55B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1037,b,x
+        bne _F570
+        lda bDecompressionArrayFlag,b
+        bne _F577
+        lda $0F37,b,x
+        ora #$0001
+        sta $0F37,b,x
+        bra _F577
+
+
+        _F570
+        lda $1037,b,x
+        dec a
+        sta $1037,b,x
+
+        _F577
+        rtl
+
+        .databank 0
+
+        ; 9E/F578
+
+      rlUnknown9EF578 ; 9E/F578
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F45A4
+        sta $7F45A8
+        lda $7F45A6
+        sta $7F45AA
+        lda $7F45A4
+        tax
+        lda $1200,b,x
+        ora #$8000
+        sta $1200,b,x
+        lda $7F45A6
+        cmp #$FFFF
+        beq _F5AA
+        tax
+        lda $1200,b,x
+        ora #$8000
+        sta $1200,b,x
+
+        _F5AA
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/F5AC
+
+    .endsection Unsorted9EF55BSection
+
+
+    .section Unsorted9EF5D0Section
+
+      .al
+      .xl
+
+      rlUnknown9EF5D0 ; 9E/F5D0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $0F37,b,x
+        and #$FFFD
+        and #$FFFB
+        sta $0F37,b,x
+        lda $7F4C07
+        bit #$0004
+        beq _F5EF
+        lda $0F37,b,x
+        ora #$0002
+        sta $0F37,b,x
+
+        _F5EF
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/F5F1
+
+      rlUnknown9EF5F1 ; 9E/F5F1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F4C07
+        ora #$0010
+        sta $7F4C07
+        lda $7F4C07
+        bit #$0008
+        beq _F60E
+        lda $0F37,b,x
+        ora #$0004
+        sta $0F37,b,x
+
+        _F60E
+        rtl
+
+        .databank 0
+
+        ; 9E/F60F
+
+    .endsection Unsorted9EF5D0Section
 
 
     .section Unsorted9EF60FSection

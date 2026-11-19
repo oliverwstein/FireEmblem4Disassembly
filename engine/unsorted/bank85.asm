@@ -2932,7 +2932,7 @@
         _9B2E
         lda $010A,b,x
         sta $7FEB0A,x
-        lda $859B42,x
+        lda aUnknown859B42,x
         sta $010A,b,x
         dec x
         dec x
@@ -2945,6 +2945,22 @@
         ; 85/9B42
 
     .endsection Unsorted859B2ASection
+
+
+    .section Table859B42Section
+
+      .al
+      .xl
+
+      aUnknown859B42 ; 85/9B42
+
+        ; Read by rlUnknown859B2A.
+
+        .word $39AA, $7BDA, $0C21
+
+        ; 85/9B48
+
+    .endsection Table859B42Section
 
 
     .section Unsorted859B48Section
@@ -3590,19 +3606,18 @@
       .al
       .xl
 
-      rsUnknown85A079 ; 85/A079
+      aUnknown85A079 ; 85/A079
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .word <>rsUnknown85A085, <>rsUnknown85A0A1, <>$85A0CE
+        .word <>$85A0D0, <>$85A0D9, <>$85A0F5
+
+      rsUnknown85A085 ; 85/A085
+
         .al
         .xl
         .autsiz
         .databank ?
 
-        sta bBufferSETINI
-        lda (bBufferSETINI,x)
-        dec $D0A0,b
-        ldy #$A0D9
-        sbc bBufferSETINI,x
         jsl rlGetMapMenuTilemapArea
         sta wR0
         jsr rsUnknown85A0A1
@@ -3617,8 +3632,6 @@
         rts
 
         .databank 0
-
-        ; 85/A0A1
 
     .endsection Unsorted85A079Section
 
@@ -4677,37 +4690,20 @@
 
         ; 85/ACC2
 
-      rlUnknown85ACC2 ; 85/ACC2
+      aUnknown85ACC2 ; 85/ACC2
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .word $0307, $2308, $2309, $230A, $230B, $230C, $230D, $230E
+        .word $2318, $2319, $231A, $231B, $231C, $231D, $231E, $2328
+        .word $2329, $232A, $232B, $232C, $232D, $232E
+
+      rlUnknown85ACEE ; 85/ACEE
+
         .al
         .xl
         .autsiz
         .databank ?
 
-        ora [wR1+1]
-        php
-        and #9,s
-        and #10,s
-        and #11,s
-        and #12,s
-        and #13,s
-        and #14,s
-        and #24,s
-        and #25,s
-        and #26,s
-        and #27,s
-        and #28,s
-        and #29,s
-        and #30,s
-        and #40,s
-        and #41,s
-        and #42,s
-        and #43,s
-        and #44,s
-        and #45,s
-        and #46,s
-        and #218,s
+        phx
         lda #$2400
         sta aCurrentTilemapInfo,b
         lda wActiveFactionSlot,b
@@ -4745,8 +4741,6 @@
         rtl
 
         .databank 0
-
-        ; 85/AD47
 
     .endsection Unsorted85AC89Section
 
@@ -7115,7 +7109,7 @@
         lda wR6
         cmp #$0070
         bmi _BE50
-        lda @l $85BE76,x
+        lda @l aUnknown85BE76,x
         and #$00FF
         sta wR7
         lda wR1
@@ -7125,7 +7119,7 @@
 
 
         _BE50
-        lda @l $85BE76,x
+        lda @l aUnknown85BE76,x
         and #$00FF
         clc
         adc wR1
@@ -7156,6 +7150,23 @@
         ; 85/BE76
 
     .endsection Unsorted85BDA1Section
+
+
+    .section Table85BE76Section
+
+      .al
+      .xl
+
+      aUnknown85BE76 ; 85/BE76
+
+        ; Read by rlUnknown85BDA1.
+
+        .byte $00, $01, $02, $03, $04, $05, $06, $07, $08, $07, $06, $05, $04, $03, $02, $01
+        .byte $00
+
+        ; 85/BE87
+
+    .endsection Table85BE76Section
 
 
     .section Unsorted85C0CESection
@@ -9291,6 +9302,23 @@
     .endsection Unsorted85D4B2Section
 
 
+    .section Table85D591Section
+
+      .al
+      .xl
+
+      aUnknown85D591 ; 85/D591
+
+        ; Read by rsUnknown85D5AA.
+
+        .byte $1E, $1E, $1E, $1E, $1E, $1C, $1D, $1D, $1D, $1D, $19, $1A, $1B, $1B, $1B, $15
+        .byte $16, $17, $18, $18, $10, $11, $12, $13, $14
+
+        ; 85/D5AA
+
+    .endsection Table85D591Section
+
+
     .section Unsorted85D5AASection
 
       .al
@@ -9312,7 +9340,7 @@
         clc
         adc wR12
         tax
-        lda $85D591,x
+        lda aUnknown85D591,x
         and #$00FF
         rts
 
