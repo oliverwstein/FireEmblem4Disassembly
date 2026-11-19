@@ -6550,7 +6550,7 @@
         sta lR18+1
         lda #$AA5C
         sta lR18
-        jsl rlUnknown96DB94
+        jsl rlBattleSceneStartPaletteEffect
         jsl rlUnknown9EB36C
         lda #1,s
         tax

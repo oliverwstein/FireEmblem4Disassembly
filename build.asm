@@ -101,6 +101,7 @@
   .include "engine/ai/maps.asm"
   .include "engine/ai/scripts.asm"
   .include "engine/ai/threat.asm"
+  .include "engine/battle_scene/script.asm"
   .include "engine/core/oam.asm"
   .include "engine/core/options.asm"
   .include "engine/core/tilemaps.asm"
@@ -12150,16 +12151,10 @@
     * = $16A28B
     .logical $96A28B
 
-      .dsection Unsorted96A28BSection
+      .dsection BattleSceneScriptSection
 
     .here
 
-    * = $16A477
-    .logical $96A477
-
-      .dsection Unsorted96A477Section
-
-    .here
 
     * = $16A4B2
     .logical $96A4B2
@@ -12179,6 +12174,13 @@
     .logical $96A532
 
       .dsection Unsorted96A532Section
+
+    .here
+
+    * = $16ABF6
+    .logical $96ABF6
+
+      .dsection BattleSceneCommand96ABF6Section
 
     .here
 
@@ -12238,10 +12240,24 @@
 
     .here
 
+    * = $16BA68
+    .logical $96BA68
+
+      .dsection BattleSceneCommand96BA68Section
+
+    .here
+
     * = $16BB0C
     .logical $96BB0C
 
       .dsection Unsorted96BB0CSection
+
+    .here
+
+    * = $16BB70
+    .logical $96BB70
+
+      .dsection BattleSceneCommand96BB70Section
 
     .here
 
@@ -12263,6 +12279,13 @@
     .logical $96BC4C
 
       .dsection Unsorted96BC4CSection
+
+    .here
+
+    * = $16BCAF
+    .logical $96BCAF
+
+      .dsection BattleSceneCommand96BCAFSection
 
     .here
 
@@ -12354,6 +12377,13 @@
     .logical $96CD23
 
       .dsection Unsorted96CD23Section
+
+    .here
+
+    * = $16CDB7
+    .logical $96CDB7
+
+      .dsection BattleSceneCommand96CDB7Section
 
     .here
 
@@ -12567,6 +12597,13 @@
 
     .here
 
+    * = $16EC4A
+    .logical $96EC4A
+
+      .dsection BattleSceneCommand96EC4ASection
+
+    .here
+
     * = $16EC91
     .logical $96EC91
 
@@ -12606,6 +12643,13 @@
     .logical $96EE95
 
       .dsection Unsorted96EE95Section
+
+    .here
+
+    * = $16F1C2
+    .logical $96F1C2
+
+      .dsection BattleSceneCommand96F1C2Section
 
     .here
 

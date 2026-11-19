@@ -198,8 +198,8 @@
         jsl rlUnknown96A4FC
         jsl rlUnknown96CB0A
         jsl rlUnknown96EE8A
-        jsl rlUnknown96A26F
-        jsl rlUnknown96B93A
+        jsl rlResetBattleSceneScript
+        jsl rlBattleSceneScriptClearLoading
         jsl rlUnknown96BD74
         jsl rlUnknown95A1C6
         jsl rlUnknown95A247
@@ -1732,9 +1732,9 @@
         jsl rlUnknown96961F
         jsl rlUnknown96A0E2
         jsl rlUnknown95C0A6
-        jsl rlUnknown96A28B
+        jsl rlRunBattleSceneScript
         jsl rlUnknown96CB44
-        jsl rlUnknown96BBE2
+        jsl rlBattleSceneScriptUpdateLoading
         jsl rlUnknown96952C
         jsl rlUnknown96EBE3
         jsr rsUnknown95D580
@@ -1960,7 +1960,7 @@
         phx
         phy
         sec
-        jsl rlUnknown958D4D
+        jsl rlGetBattleBackgroundPointers
         lda lR18
         sta lR45
         lda lR18+1
@@ -2007,12 +2007,15 @@
 
         ; 95/8D4D
 
-      rlUnknown958D4D ; 95/8D4D
+      rlGetBattleBackgroundPointers ; 95/8D4D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = terrain type: lR18 graphics, lR19 tilemap and lR20 palette of its battle
+        ; background, from the tables at $98/A9F0 and $98/A900.
 
         phx
         php
@@ -6546,7 +6549,7 @@
         bit #$0080
         beq _A865
         lda #$0043
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         ldx #$0000
         jsl rlUnknown978000
         lda $7FFC59
@@ -6590,7 +6593,7 @@
         bit #$0040
         beq _A8D0
         lda #$0043
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         ldx #$0043
         jsl rlUnknown978000
         lda $7FFC59
@@ -17083,7 +17086,7 @@
 
         _E8E9
         lda #$002A
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         lda #$0000
         sta wBufferBG3VOFS
         lda #$0000
@@ -17114,7 +17117,7 @@
         lda $7E4ED1
         sta aDialogue.wItemID,b
         lda #$002C
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         lda #$0092
         jsl rlPlaySoundEffect
         lda #$0057
@@ -17144,7 +17147,7 @@
         lda $7E4ED3
         sta aDialogue.wNumber1,b
         lda #$002F
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         lda #$0092
         jsl rlPlaySoundEffect
         lda #$0057
@@ -17174,7 +17177,7 @@
         lda aActionStructUnit2.ObtainedStealMoney
         sta aDialogue.wNumber1,b
         lda #$002F
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         lda #$0093
         jsl rlPlaySoundEffect
         lda #$0067
@@ -17204,7 +17207,7 @@
         lda aActionStructUnit1.WeaponID
         sta aDialogue.wItemID,b
         lda #$0044
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         lda #$0093
         jsl rlPlaySoundEffect
         lda #$0067
@@ -17239,7 +17242,7 @@
         lda #$FFB9
         sta $7FE4D6
         lda #$0030
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _E9EE
         rtl
@@ -17366,7 +17369,7 @@
         sta lR18+1
         lda #$EA91
         sta lR18
-        jsl rlUnknown96BD1A
+        jsl rlBattleSceneWriteRAM
         lda #$0000
         sta wBufferBG2HOFS
         sta wBufferBG2VOFS
@@ -18185,7 +18188,7 @@
         sta lR18
         lda #$0000
         sta wR0
-        jsl rlUnknown96DB94
+        jsl rlBattleSceneStartPaletteEffect
         rtl
 
         .databank 0
@@ -18206,21 +18209,21 @@
         sta lR18
         lda #$0000
         sta wR0
-        jsl rlUnknown96DB94
+        jsl rlBattleSceneStartPaletteEffect
         lda #$9900
         sta lR18+1
         lda #$FE25
         sta lR18
         lda #$0000
         sta wR0
-        jsl rlUnknown96DB94
+        jsl rlBattleSceneStartPaletteEffect
         lda #$9900
         sta lR18+1
         lda #$FE2A
         sta lR18
         lda #$0000
         sta wR0
-        jsl rlUnknown96DB94
+        jsl rlBattleSceneStartPaletteEffect
         rtl
 
         .databank 0
@@ -18241,7 +18244,7 @@
         sta lR18
         lda #$0000
         sta wR0
-        jsl rlUnknown96DB94
+        jsl rlBattleSceneStartPaletteEffect
         rtl
 
         .databank 0
@@ -18306,7 +18309,7 @@
         lda #$F64E
         sta lR18
         ldx #$0000
-        jsl rlUnknown96AC1F
+        jsl rlBattleSceneStartWindowEffect1
         lda #$0000
         sta aUnit2DataBuffer._ROM.StrengthGrowth
         lda #$0080
@@ -18334,7 +18337,7 @@
         lda #$A7C7
         sta lR18
         ldx #$0000
-        jsl rlUnknown96AC1F
+        jsl rlBattleSceneStartWindowEffect1
         rtl
 
         .databank 0

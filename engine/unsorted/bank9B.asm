@@ -21,7 +21,7 @@
         jsl rlUnknown9BE05D
         jsl rlResetHDMAEngine
         jsl rlUnknown95F1A9
-        jsl rlUnknown96B93A
+        jsl rlBattleSceneScriptClearLoading
         jsl rlUnknown95EA47
         jsl rlUnknown9BF3F3
         jsl rlUnknown96D659
@@ -177,7 +177,7 @@
         jsr rsUnknown9BE08A
         jsr rsUnknown9BE128
         jsl rlUnknown95F1D5
-        jsl rlUnknown96BBE2
+        jsl rlBattleSceneScriptUpdateLoading
         jsl rlUnknown95F14D
         jsl rlUnknown96D695
         jsl rlUnknown96CB44
@@ -215,7 +215,7 @@
         jsr rsUnknown9BE08A
         jsr rsUnknown9BE128
         jsl rlUnknown95F1D5
-        jsl rlUnknown96BBE2
+        jsl rlBattleSceneScriptUpdateLoading
         jsl rlUnknown95F14D
         jsl rlUnknown96D695
         jsl rlUnknown96A532
@@ -246,7 +246,7 @@
         jsr rsUnknown9BE08A
         jsr rsUnknown9BE128
         jsl rlUnknown95F1D5
-        jsl rlUnknown96BBE2
+        jsl rlBattleSceneScriptUpdateLoading
         jsl rlUnknown95F14D
         jsl rlUnknown96D695
         jsl rlUnknown95F89A
@@ -338,7 +338,7 @@
         sta lR18+1
         lda #$DF09
         sta lR18
-        jsl rlUnknown96BD1A
+        jsl rlBattleSceneWriteRAM
         lda #$0000
         sta wBufferBG1HOFS
         sta wBufferBG1VOFS
@@ -2308,7 +2308,7 @@
         sta lR18+1
         lda #$F69D
         sta lR18
-        jsl rlUnknown96BD1A
+        jsl rlBattleSceneWriteRAM
         lda #$00F8
         sta wBufferBG3HOFS
         lda #$0000
@@ -2388,7 +2388,7 @@
         sta lR18+1
         lda #$F715
         sta lR18
-        jsl rlUnknown96BD1A
+        jsl rlBattleSceneWriteRAM
         lda #$0000
         sta wBufferBG3HOFS
         sta wBufferBG3VOFS
@@ -2497,7 +2497,7 @@
         sta lR18+1
         lda #$FA69
         sta lR18
-        jsl rlUnknown96BD1A
+        jsl rlBattleSceneWriteRAM
         plx
         rtl
 
@@ -2526,7 +2526,7 @@
         sta lR18+1
         lda #$FA7F
         sta lR18
-        jsl rlUnknown96BD1A
+        jsl rlBattleSceneWriteRAM
         plx
         rtl
 
@@ -2555,7 +2555,7 @@
         sta lR18+1
         lda #$FA96
         sta lR18
-        jsl rlUnknown96BD1A
+        jsl rlBattleSceneWriteRAM
         plx
         rtl
 
@@ -2584,7 +2584,7 @@
         sta lR18+1
         lda #$FAB2
         sta lR18
-        jsl rlUnknown96BD1A
+        jsl rlBattleSceneWriteRAM
         plx
         rtl
 
@@ -2637,7 +2637,7 @@
         sta lR18+1
         lda #$FB46
         sta lR18
-        jsl rlUnknown96BD1A
+        jsl rlBattleSceneWriteRAM
         lda #$0000
         sta wBufferBG1HOFS
         sta wBufferBG1VOFS

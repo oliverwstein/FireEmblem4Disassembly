@@ -743,7 +743,7 @@
         lda $0D4B,b
         beq _830C
         lda #$0000
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _830C
         rtl
@@ -1256,7 +1256,7 @@
         bit #$0001
         beq _8674
         lda #$0040
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         bra _86BA
 
 
@@ -1278,7 +1278,7 @@
 
         _8699
         lda #$003E
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         bra _86BA
 
 
@@ -1287,13 +1287,13 @@
         cmp #$0000
         bne _86B3
         lda #$0032
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         bra _86BA
 
 
         _86B3
         lda #$003D
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _86BA
         rtl
@@ -1320,13 +1320,13 @@
         and #$00FF
         beq _86DF
         lda #$004B
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         bra _86E6
 
 
         _86DF
         lda #$003D
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _86E6
         rtl
@@ -1348,7 +1348,7 @@
         lda #$00E0
         jsl rlSendSoundCommand
         lda #$0001
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _86FB
         rtl
@@ -1490,7 +1490,7 @@
         lda wBattleQuotePointer+1
         sta $7FE4D7
         lda #$002D
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _883F
         rtl
@@ -1536,7 +1536,7 @@
         lda #$002E
 
         _888B
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _888F
         rtl
@@ -1564,7 +1564,7 @@
         lda wDeathQuotePointer+1
         sta $7FE4D7
         lda #$004A
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _88B9
         rtl
@@ -4997,7 +4997,7 @@
         bit #$0400
         beq _A21E
         lda #$004C
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _A21E
         rtl
@@ -5060,12 +5060,14 @@
 
         ; 96/A26F
 
-      rlUnknown96A26F ; 96/A26F
+      rlResetBattleSceneScript ; 96/A26F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Stops the script and clears its wait count and timer.
 
         sep #$20
         lda $7FE4B7
@@ -5083,488 +5085,6 @@
         ; 96/A28B
 
     .endsection Unsorted96A20ESection
-
-
-    .section Unsorted96A28BSection
-
-      .al
-      .xl
-
-      rlUnknown96A28B ; 96/A28B
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phy
-        lda $7FE4B7
-        bit #$0080
-        bne _A299
-        jml _A32E
-
-
-        _A299
-        lda wJoy1Input
-        cmp #$0080
-        bne _A2A7
-        lda #$0000
-        sta $7FE4C0
-
-        _A2A7
-        lda $7FE4BE
-        beq _A2B4
-        dec a
-        sta $7FE4BE
-        bra _A32E
-
-
-        _A2B4
-        lda $7FE4C0
-        beq _A2C1
-        dec a
-        sta $7FE4C0
-        bra _A32E
-
-
-        _A2C1
-        lda $7FE4B8
-        and #$00FF
-        bne _A32E
-        lda $7FE4BA
-        sta lR18+1
-
-        _A2D0
-        lda $7FE4BC
-        sta lR18
-        ldy #$0000
-        lda [lR18],y
-        cmp #$FFFF
-        bne _A2E5
-        jsr rsUnknown96A334
-        bra _A32E
-
-
-        _A2E5
-        cmp #$FFFE
-        bne _A2EF
-        jsr rsUnknown96A343
-        bra _A32E
-
-
-        _A2EF
-        cmp #$FFFD
-        bne _A2F9
-        jsr rsUnknown96A359
-        bra _A2D0
-
-
-        _A2F9
-        cmp #$FFFC
-        bne _A303
-        jsr rsUnknown96A36F
-        bra _A2D0
-
-
-        _A303
-        cmp #$FFFB
-        bne _A30D
-        jsr rsUnknown96A3C5
-        bra _A2D0
-
-
-        _A30D
-        cmp #$FFF8
-        bne _A317
-        jsr rsUnknown96A3D8
-        bra _A2D0
-
-
-        _A317
-        cmp #$FFFA
-        bne _A321
-        jsr rsUnknown96A385
-        bra _A2D0
-
-
-        _A321
-        cmp #$FFF9
-        bne _A32B
-        jsr rsUnknown96A396
-        bra _A2D0
-
-
-        _A32B
-        jsr rsUnknown96A3F3
-
-        _A32E
-        jsl rlUnknown96C9AD
-        ply
-        rtl
-
-        .databank 0
-
-        ; 96/A334
-
-      rsUnknown96A334 ; 96/A334
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        sep #$20
-        lda $7FE4B7
-        and #$7F
-        sta $7FE4B7
-        rep #$20
-        rts
-
-        .databank 0
-
-        ; 96/A343
-
-      rsUnknown96A343 ; 96/A343
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7FE4B8
-        and #$00FF
-        bne _A358
-        lda $7FE4BC
-        clc
-        adc #$0002
-        sta $7FE4BC
-
-        _A358
-        rts
-
-        .databank 0
-
-        ; 96/A359
-
-      rsUnknown96A359 ; 96/A359
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        ldx $0AE9,b
-        jsl rlUnknown95C057
-        lda $7FE4BC
-        clc
-        adc #$0002
-        sta $7FE4BC
-        plx
-        rts
-
-        .databank 0
-
-        ; 96/A36F
-
-      rsUnknown96A36F ; 96/A36F
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        ldx $0AE9,b
-        jsl rlUnknown95C077
-        lda $7FE4BC
-        clc
-        adc #$0002
-        sta $7FE4BC
-        plx
-        rts
-
-        .databank 0
-
-        ; 96/A385
-
-      rsUnknown96A385 ; 96/A385
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlUnknown95AEA2
-        lda $7FE4BC
-        clc
-        adc #$0002
-        sta $7FE4BC
-        rts
-
-        .databank 0
-
-        ; 96/A396
-
-      rsUnknown96A396 ; 96/A396
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlUnknown96F9BF
-        lda $0AE4,b
-        bit #$0008
-        beq _A3B8
-        phx
-        ldx $0AE9,b
-        cpx #$0000
-        beq _A3B0
-        ldx #$0000
-        bra _A3B3
-
-
-        _A3B0
-        ldx #$0043
-
-        _A3B3
-        jsl rlUnknown95AB53
-        plx
-
-        _A3B8
-        lda $7FE4BC
-        clc
-        adc #$0002
-        sta $7FE4BC
-        rts
-
-        .databank 0
-
-        ; 96/A3C5
-
-      rsUnknown96A3C5 ; 96/A3C5
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        jsl rlUnknown95B006
-        lda $7FE4BC
-        clc
-        adc #$0002
-        sta $7FE4BC
-        plx
-        rts
-
-        .databank 0
-
-        ; 96/A3D8
-
-      rsUnknown96A3D8 ; 96/A3D8
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        lda $0AE0,b
-        bit #$0040
-        bne _A3E5
-        jsl rlUnknown95B02B
-
-        _A3E5
-        lda $7FE4BC
-        clc
-        adc #$0002
-        sta $7FE4BC
-        plx
-        rts
-
-        .databank 0
-
-        ; 96/A3F3
-
-      rsUnknown96A3F3 ; 96/A3F3
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        pha
-        and #$3E00
-        xba
-        lsr a
-        sta wR0
-        pla
-        tay
-        phb
-        jsl _A407
-        plb
-        .databank ?
-        bra _A429
-
-
-        _A407
-        lda wR0
-        cmp #$0019
-        bmi _A410
-
-        _A40E
-        bra _A40E
-
-
-        _A410
-        asl a
-        adc wR0
-        tax
-        lda $96A42C,x
-        sta lR23
-        sep #$20
-        lda $96A42E,x
-        sta lR23+2
-        pha
-        plb
-        .databank ?
-        rep #$20
-        jml [lR23]
-
-
-        _A429
-        ply
-        plx
-        rts
-
-        .databank 0
-
-        ; 96/A42C
-
-    .endsection Unsorted96A28BSection
-
-
-    .section Unsorted96A477Section
-
-      .al
-      .xl
-
-      rsUnknown96A477 ; 96/A477
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        pha
-        and #$C000
-        cmp #$4000
-        bne _A48D
-        sep #$20
-        lda $7FE4B8
-        inc a
-        sta $7FE4B8
-        rep #$20
-
-        _A48D
-        lda $7FE4BC
-        clc
-        adc #$0002
-        sta $7FE4BC
-        pla
-        rts
-
-        .databank 0
-
-        ; 96/A49B
-
-      rsUnknown96A49B ; 96/A49B
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        pha
-        and #$C000
-        cmp #$4000
-        bne _A4A4
-
-        _A4A4
-        lda $7FE4BC
-        clc
-        adc #$0002
-        sta $7FE4BC
-        pla
-        rts
-
-        .databank 0
-
-        ; 96/A4B2
-
-    .endsection Unsorted96A477Section
-
-
-    .section Unsorted96A4B2Section
-
-      .al
-      .xl
-
-      rlUnknown96A4B2 ; 96/A4B2
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phy
-        pha
-        lda $7FE4B7
-        bit #$0080
-        bne _A4F9
-        sep #$20
-        lda $7FE4B7
-        ora #$80
-        sta $7FE4B7
-        lda #$00
-        sta $7FE4B8
-        rep #$20
-        pla
-        asl a
-        pha
-        lda #$9700
-        sta $7FE4BA
-        sta lR18+1
-        lda #$8F7D
-        clc
-        adc #1,s
-        sta lR18
-        pla
-        ldy #$0000
-        lda [lR18],y
-        clc
-        adc #$8F7D
-        sta $7FE4B9
-        sta $7FE4BC
-        bra _A4FA
-
-
-        _A4F9
-        pla
-
-        _A4FA
-        ply
-        rtl
-
-        .databank 0
-
-        ; 96/A4FC
-
-    .endsection Unsorted96A4B2Section
 
 
     .section Unsorted96A4FCSection
@@ -6725,103 +6245,6 @@
         ; 96/ABF6
 
     .endsection Unsorted96A532Section
-
-
-    .section Unsorted96AC1FSection
-
-      .al
-      .xl
-
-      rlUnknown96AC1F ; 96/AC1F
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        ldy #$0000
-        sep #$20
-        lda [lR18],y
-        inc y
-        bit #$40
-        bne _AC32
-        ldx #$0000
-        bra _AC35
-
-
-        _AC32
-        ldx #$0024
-
-        _AC35
-        bit #$80
-        beq _AC45
-        ora #$80
-        ora $7FEC1D,x
-        sta $7FEC1D,x
-        bra _AC8D
-
-
-        _AC45
-        ora #$80
-        sta $7FEC1D,x
-        lda [lR18],y
-        ora bBufferW12SEL
-        sta bBufferW12SEL
-        sta $2123,b
-        inc y
-        lda [lR18],y
-        ora bBufferW34SEL
-        sta bBufferW34SEL
-        sta $2124,b
-        inc y
-        lda [lR18],y
-        ora bBufferWOBJSEL
-        sta bBufferWOBJSEL
-        sta $2125,b
-        inc y
-        lda #$00
-        sta bBufferWH0
-        lda #$FF
-        sta bBufferWH1
-        lda #$00
-        sta bBufferWH2
-        lda #$FF
-        sta bBufferWH3
-        lda [lR18],y
-        sta bBufferWBGLOG
-        inc y
-        lda [lR18],y
-        sta bBufferWBGLOG
-        inc y
-        lda [lR18],y
-        sta bBufferTMW
-        inc y
-        lda [lR18],y
-        sta bBufferTSW
-        inc y
-
-        _AC8D
-        lda lR18+2
-        sta aUnit2DataBuffer._ROM.ResistanceGrowth,x
-        rep #$20
-        tya
-        clc
-        adc lR18
-        sta aUnit2DataBuffer._ROM.DefenseGrowth,x
-        sta $7FEC29,x
-        jsl rlUnknown96AD39
-        jsr rsUnknown96AD07
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/ACAB
-
-    .endsection Unsorted96AC1FSection
 
 
     .section Unsorted96ACABSection
@@ -8864,7 +8287,7 @@
 
         ; 96/B93A
 
-      rlUnknown96B93A ; 96/B93A
+      rlBattleSceneScriptClearLoading ; 96/B93A
 
         .al
         .xl
@@ -8884,504 +8307,6 @@
     .endsection Unsorted96B852Section
 
 
-    .section Unsorted96B945Section
-
-      .al
-      .xl
-
-      rlUnknown96B945 ; 96/B945
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        lda $7FECF4
-        and #$00FF
-        bne _B9A1
-        lda #$9700
-        sta lR18+1
-        tya
-        and #$01FF
-        asl a
-        pha
-        asl a
-        asl a
-        clc
-        adc #1,s
-        clc
-        adc #$B081
-        sta lR18
-        pla
-        ldy #$0000
-        ldx #$0000
-
-        _B96D
-        lda [lR18],y
-        sta $7FECF5,x
-        inc y
-        inc y
-        inc x
-        inc x
-        cpx #$000A
-        bne _B96D
-        lda $7FECF5
-        sta lR18
-        lda $7FECF7
-        sta lR18+2
-        lda $7FECF9
-        sta lR19+1
-        jsl rlAppendDecompList
-        sep #$20
-        lda #$01
-        sta $7FECF4
-        rep #$20
-        pla
-        pha
-        jsr rsUnknown96A477
-
-        _B9A1
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/B9A4
-
-      rlUnknown96B9A4 ; 96/B9A4
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        ldx $0AE9,b
-        lda $0B24,b,x
-        bit #$8000
-        beq _B9B1
-        inc y
-
-        _B9B1
-        jsl rlUnknown96B945
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/B9B7
-
-      rlUnknown96B9B7 ; 96/B9B7
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        lda $7FECF4
-        and #$00FF
-        bne _BA12
-        lda #$9700
-        sta lR18+1
-        tya
-        and #$01FF
-        asl a
-        pha
-        asl a
-        clc
-        adc #1,s
-        clc
-        adc #$B5D1
-        sta lR18
-        pla
-        ldy #$0000
-        ldx #$0000
-
-        _B9DE
-        lda [lR18],y
-        sta $7FECF5,x
-        inc y
-        inc y
-        inc x
-        inc x
-        cpx #$0006
-        bne _B9DE
-        lda $7FECF5
-        sta lR18
-        lda $7FECF7
-        sta lR18+2
-        lda $7FECF9
-        sta lR19+1
-        jsl rlAppendDecompList
-        sep #$20
-        lda #$03
-        sta $7FECF4
-        rep #$20
-        pla
-        pha
-        jsr rsUnknown96A477
-
-        _BA12
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/BA15
-
-      rlUnknown96BA15 ; 96/BA15
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        lda $7FECF4
-        and #$00FF
-        bne _BA65
-        tya
-        and #$0002
-        beq _BA37
-        lda $7FE4D6
-        sta lR18
-        lda $7FE4D7
-        sta lR18+1
-        jsr rsUnknown96F7A8
-        bra _BA44
-
-
-        _BA37
-        and #$0001
-        bne _BA41
-        lda $0D50,b
-        bra _BA44
-
-
-        _BA41
-        lda $0D5E,b
-
-        _BA44
-        jsl rlGetCharacterPortraitData
-        lda #(`aDecompressionBuffer)<<8
-        sta lR19+1
-        lda #<>aDecompressionBuffer
-        sta lR19
-        jsl rlAppendDecompList
-        sep #$20
-        lda #$03
-        sta $7FECF4
-        rep #$20
-        pla
-        pha
-        jsr rsUnknown96A477
-
-        _BA65
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/BA68
-
-    .endsection Unsorted96B945Section
-
-
-    .section Unsorted96BB0CSection
-
-      .al
-      .xl
-
-      rlUnknown96BB0C ; 96/BB0C
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        lda $7FECF4
-        and #$00FF
-        bne _BB6D
-        lda #$9700
-        sta lR18+1
-        tya
-        and #$01FF
-        pha
-        asl a
-        asl a
-        asl a
-        sec
-        sbc #1,s
-        clc
-        adc #$B60D
-        sta lR18
-        pla
-        ldy #$0000
-        ldx #$0000
-        sep #$20
-
-        _BB36
-        lda [lR18],y
-        sta $7FECF8,x
-        inc y
-        inc x
-        cpx #$0007
-        bne _BB36
-        rep #$20
-        lda $7FECF9
-        sta lR18+1
-        lda $7FECF8
-        sta lR18
-        lda $7FECFB
-        tay
-        lda $7FECFD
-        jsl rlUnknown95C4E3
-        sep #$20
-        lda #$02
-        sta $7FECF4
-        rep #$20
-        pla
-        pha
-        jsr rsUnknown96A477
-
-        _BB6D
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/BB70
-
-    .endsection Unsorted96BB0CSection
-
-
-    .section Unsorted96BBC2Section
-
-      .al
-      .xl
-
-      rlUnknown96BBC2 ; 96/BBC2
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phy
-        tya
-        and #$01FF
-        sta $7FE4BE
-        pla
-        pha
-        jsr rsUnknown96A49B
-        ply
-        rtl
-
-        .databank 0
-
-        ; 96/BBD2
-
-      rlUnknown96BBD2 ; 96/BBD2
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phy
-        tya
-        and #$01FF
-        sta $7FE4C0
-        pla
-        pha
-        jsr rsUnknown96A49B
-        ply
-        rtl
-
-        .databank 0
-
-        ; 96/BBE2
-
-    .endsection Unsorted96BBC2Section
-
-
-    .section Unsorted96BBE2Section
-
-      .al
-      .xl
-
-      rlUnknown96BBE2 ; 96/BBE2
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        lda $7FECF4
-        and #$00FF
-        beq _BC49
-        cmp #$0003
-        bne _BBFC
-        lda bDecompressionArrayFlag,b
-        and #$00FF
-        bne _BC49
-        bra _BC34
-
-
-        _BBFC
-        cmp #$0001
-        bne _BC2E
-        lda bDecompressionArrayFlag,b
-        and #$00FF
-        bne _BC49
-        lda $7FECF9
-        sta lR18+1
-        lda $7FECF8
-        sta lR18
-        lda $7FECFB
-        tay
-        lda $7FECFD
-        jsl rlUnknown95C4E3
-        sep #$20
-        lda #$02
-        sta $7FECF4
-        rep #$20
-        bra _BC49
-
-
-        _BC2E
-        lda $7FE18A
-        bne _BC49
-
-        _BC34
-        sep #$20
-        lda #$00
-        sta $7FECF4
-        lda $7FE4B8
-        beq _BC47
-        dec a
-        sta $7FE4B8
-
-        _BC47
-        rep #$20
-
-        _BC49
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/BC4C
-
-    .endsection Unsorted96BBE2Section
-
-
-    .section Unsorted96BC4CSection
-
-      .al
-      .xl
-
-      rlUnknown96BC4C ; 96/BC4C
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        tya
-        sta wR0
-        and #$01FF
-        asl a
-        tax
-        lda $98AD04,x
-        ldx $0AE9,b
-        cpx #$0000
-        bne _BC66
-        clc
-        adc #$2000
-
-        _BC66
-        jsl rlPlaySoundEffect2
-        lda #1,s
-        jsr rsUnknown96A477
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/BC72
-
-      rlUnknown96BC72 ; 96/BC72
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        tya
-        sta wR0
-        and #$01FF
-        asl a
-        tax
-        lda $98AD04,x
-        pha
-        ldx $0AE9,b
-        lda $0AF9,b,x
-        and #$01FF
-        sec
-        sbc $7FE198
-        jsl rlUnknown9EB4BB
-        ldx $0AE9,b
-        cpx #$0000
-        bne _BC9F
-        clc
-        adc #$2000
-
-        _BC9F
-        clc
-        adc #1,s
-        jsl rlPlaySoundEffect2
-        pla
-        lda #1,s
-        jsr rsUnknown96A477
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/BCAF
-
-    .endsection Unsorted96BC4CSection
-
-
     .section Unsorted96BCECSection
 
       .al
@@ -9394,7 +8319,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         rtl
 
         .databank 0
@@ -9402,133 +8327,6 @@
         ; 96/BCF1
 
     .endsection Unsorted96BCECSection
-
-
-    .section Unsorted96BCF1Section
-
-      .al
-      .xl
-
-      rlUnknown96BCF1 ; 96/BCF1
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        lda #$9700
-        sta lR18+1
-        tya
-        and #$01FF
-        asl a
-        clc
-        adc #$B67D
-        sta lR18
-        ldy #$0000
-        lda [lR18],y
-        clc
-        adc #$B67D
-        sta lR18
-        jsl rlUnknown96BD1A
-        lda #1,s
-        jsr rsUnknown96A477
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/BD1A
-
-    .endsection Unsorted96BCF1Section
-
-
-    .section Unsorted96BD1ASection
-
-      .al
-      .xl
-
-      rlUnknown96BD1A ; 96/BD1A
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        ldy #$0000
-
-        _BD1F
-        lda [lR18],y
-        cmp #$FFFF
-        beq _BD71
-        inc y
-        inc y
-        pha
-        and #$3FFF
-        tax
-        pla
-        and #$C000
-        cmp #$0000
-        bne _BD41
-        sep #$20
-        lda [lR18],y
-        sta wR0,x
-        rep #$20
-        inc y
-        bra _BD1F
-
-
-        _BD41
-        cmp #$4000
-        bne _BD4E
-        lda [lR18],y
-        sta wR0,x
-        inc y
-        inc y
-        bra _BD1F
-
-
-        _BD4E
-        cmp #$8000
-        bne _BD63
-        sep #$20
-        lda wR0,x
-        and [lR18],y
-        inc y
-        ora [lR18],y
-        sta wR0,x
-        rep #$20
-        inc y
-        bra _BD1F
-
-
-        _BD63
-        lda wR0,x
-        and [lR18],y
-        inc y
-        inc y
-        ora [lR18],y
-        sta wR0,x
-        inc y
-        inc y
-        bra _BD1F
-
-
-        _BD71
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/BD74
-
-    .endsection Unsorted96BD1ASection
 
 
     .section Unsorted96BD74Section
@@ -9564,7 +8362,7 @@
 
         ; 96/BD93
 
-      rlUnknown96BD93 ; 96/BD93
+      rlBattleSceneCommandHDMAEffect ; 96/BD93
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
@@ -9572,13 +8370,17 @@
         .autsiz
         .databank ?
 
+        ; Command 3: arg 0-7 stops HDMA effect slot arg; arg 8 and up starts effect
+        ; arg-8 from the offset table at $97/BD3E in a free slot of eight ($7FED03),
+        ; waiting while none is free.
+
         phx
         phy
         tya
         and #$01FF
         cmp #$0008
         bcs _BDA4
-        jsl rlUnknown96C942
+        jsl rlBattleSceneStopHDMAEffect
         bra _BE20
 
 
@@ -9650,7 +8452,7 @@
         _BE20
         pla
         pha
-        jsr rsUnknown96A477
+        jsr rsBattleSceneScriptNextCommand
 
         _BE25
         ply
@@ -9800,7 +8602,7 @@
         cmp #$8000
         bne _C05C
         lda #$0000
-        jsl rlUnknown96C942
+        jsl rlBattleSceneStopHDMAEffect
         sep #$20
         lda $7FED03
         and #$FD
@@ -10104,12 +8906,14 @@
       .al
       .xl
 
-      rlUnknown96C942 ; 96/C942
+      rlBattleSceneStopHDMAEffect ; 96/C942
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = slot: frees it and its HDMA entry (A + 5).
 
         phx
         pha
@@ -10191,64 +8995,21 @@
     .endsection Unsorted96C942Section
 
 
-    .section Unsorted96C9ADSection
-
-      .al
-      .xl
-
-      rlUnknown96C9AD ; 96/C9AD
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        lda $7FECFF
-        cmp #$FFFF
-        bne _C9C1
-        lda $7FED00
-        cmp #$FFFF
-        beq _C9D6
-
-        _C9C1
-        lda $7FECFF
-        sta lR18
-        lda $7FED00
-        sta lR18+1
-        jsl _C9D3
-        bra _C9D6
-
-
-        _C9D3
-        jml [lR18]
-
-
-        _C9D6
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/C9D9
-
-    .endsection Unsorted96C9ADSection
-
-
     .section Unsorted96C9D9Section
 
       .al
       .xl
 
-      rlUnknown96C9D9 ; 96/C9D9
+      rlBattleSceneCommandSetRoutine ; 96/C9D9
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Command 8: sets routine arg from the table at $97/BDD4 as the one
+        ; rlBattleSceneScriptRunRoutine runs every frame.
 
         phx
         phy
@@ -10266,7 +9027,7 @@
         sta $7FECFF
         pla
         pha
-        jsr rsUnknown96A477
+        jsr rsBattleSceneScriptNextCommand
         ply
         plx
         rtl
@@ -10300,13 +9061,15 @@
 
         ; 96/CA1C
 
-      rlUnknown96CA1C ; 96/CA1C
+      rlBattleSceneCommandCallRoutine ; 96/CA1C
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Command 4: calls routine arg from the table at $97/BDD4 (72 long pointers).
 
         phx
         phy
@@ -10348,7 +9111,7 @@
         _CA4E
         pla
         pha
-        jsr rsUnknown96A49B
+        jsr rsBattleSceneScriptNextCommandNoWait
         ply
         plx
         rtl
@@ -10357,13 +9120,16 @@
 
         ; 96/CA56
 
-      rlUnknown96CA56 ; 96/CA56
+      rlBattleSceneCommandCallRoutineUntilDone ; 96/CA56
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Command 5: calls routine arg from the table at $97/BDD4 every frame until it
+        ; clears bit 0 of $7FE4B7.
 
         phx
         phy
@@ -10413,7 +9179,7 @@
         bne _CAA4
         pla
         pha
-        jsr rsUnknown96A49B
+        jsr rsBattleSceneScriptNextCommandNoWait
 
         _CAA4
         ply
@@ -12896,203 +11662,6 @@
     .endsection Unsorted96DB20Section
 
 
-    .section Unsorted96DB58Section
-
-      .al
-      .xl
-
-      rlUnknown96DB58 ; 96/DB58
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        tya
-        and #$C000
-        cmp #$4000
-        bne _DB68
-        lda #$0001
-        bra _DB6B
-
-
-        _DB68
-        lda #$0000
-
-        _DB6B
-        sta wR0
-        lda #$9700
-        sta lR18+1
-        tya
-        and #$01FF
-        asl a
-        clc
-        adc #$A9A8
-        sta lR18
-        ldy #$0000
-        lda [lR18],y
-        clc
-        adc #$A9A8
-        sta lR18
-        jsl rlUnknown96DB94
-        lda #1,s
-        jsr rsUnknown96A477
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/DB94
-
-    .endsection Unsorted96DB58Section
-
-
-    .section Unsorted96DB94Section
-
-      .al
-      .xl
-
-      rlUnknown96DB94 ; 96/DB94
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        ldy #$0000
-        lda [lR18],y
-        inc y
-        and #$00FF
-        sta wR10
-        lda #$000A
-        sta wR11
-        jsl rlUnsignedMultiply16By16
-        ldx wR12
-        sep #$20
-        lda [lR18],y
-        and #$3F
-        pha
-        inc y
-        sta $7FFD9A,x
-        lda wR0
-        beq _DBC6
-        lda $7FFD9A,x
-        ora #$40
-        sta $7FFD9A,x
-
-        _DBC6
-        lda [lR18],y
-        inc y
-        sta $7FFDA0,x
-        lda [lR18],y
-        inc y
-        sta $7FFDA1,x
-        lda #$00
-        sta $7FFDA3,x
-        sta $7FFDA2,x
-        pla
-        cmp #$00
-        beq _DC1B
-        cmp #$01
-        beq _DC1B
-        cmp #$02
-        beq _DC1B
-        cmp #$03
-        beq _DC3A
-        cmp #$04
-        beq _DC3A
-        cmp #$05
-        beq _DC3A
-        cmp #$06
-        beq _DC3A
-        cmp #$07
-        beq _DC42
-        cmp #$08
-        beq _DC60
-        cmp #$09
-        beq _DC60
-        cmp #$0A
-        beq _DC62
-        cmp #$0B
-        beq _DC60
-        cmp #$0C
-        beq _DC1B
-        lda #$80
-        sta $7FFD9A,x
-        bra _DC77
-
-
-        _DC1B
-        lda [lR18],y
-        inc y
-        sta $7FFD9B,x
-        sta $7FFD9E,x
-        lda [lR18],y
-        inc y
-        sta $7FFD9C,x
-        sta $7FFD9F,x
-        lda [lR18],y
-        inc y
-        sta $7FFD9D,x
-        bra _DC77
-
-
-        _DC3A
-        lda [lR18],y
-        sta $7FFDA2,x
-        bra _DC77
-
-
-        _DC42
-        lda [lR18],y
-        inc y
-        sta $7FFDA2,x
-        lda [lR18],y
-        inc y
-        sta $7FFD9B,x
-        lda [lR18],y
-        inc y
-        sta $7FFD9C,x
-        lda [lR18],y
-        inc y
-        sta $7FFD9D,x
-        bra _DC77
-
-
-        _DC60
-        bra _DC77
-
-
-        _DC62
-        lda [lR18],y
-        inc y
-        sta $7FFD9B,x
-        lda [lR18],y
-        inc y
-        sta $7FFD9C,x
-        lda [lR18],y
-        inc y
-        sta $7FFD9D,x
-
-        _DC77
-        rep #$20
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/DC7C
-
-    .endsection Unsorted96DB94Section
-
-
     .section Unsorted96DC7CSection
 
       .al
@@ -13387,130 +11956,6 @@
         ; 96/DEAA
 
     .endsection Unsorted96DD6ESection
-
-
-    .section Unsorted96DEC0Section
-
-      .al
-      .xl
-
-      rlUnknown96DEC0 ; 96/DEC0
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        tya
-        sta wR0
-        and #$01FF
-        asl a
-        tax
-        lda #$9700
-        sta lR18+1
-        lda $97BEAC,x
-        clc
-        adc #$BEAC
-        sta lR18
-        jsl rlUnknown96DEE5
-        lda #1,s
-        jsr rsUnknown96A477
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/DEE5
-
-      rlUnknown96DEE5 ; 96/DEE5
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        ldy #$0000
-        lda [lR18],y
-        inc y
-        and #$0003
-        cmp #$0003
-        bcs _DF5C
-        sta wR10
-        lda #$0015
-        sta wR11
-        jsl rlUnsignedMultiply16By16
-        ldx wR12
-        sep #$20
-        lda $7FE475,x
-        ora #$80
-        sta $7FE475,x
-        rep #$20
-        lda wR0
-        and #$C000
-        cmp #$4000
-        bne _DF24
-        sep #$20
-        lda $7FE475,x
-        ora #$20
-        bra _DF2C
-
-
-        _DF24
-        .al
-        sep #$20
-        lda $7FE475,x
-        and #$DF
-
-        _DF2C
-        sta $7FE475,x
-        rep #$20
-        lda [lR18],y
-        and #$00FF
-        sta wR0
-        sep #$20
-        lda $7FE475,x
-        and #$E0
-        ora wR0
-        sta $7FE475,x
-        rep #$20
-        txy
-        phx
-        phb
-        php
-        phk
-        plb
-        .databank $96
-        lda wR0
-        asl a
-        tax
-        jsr ($96DF60,x)
-        plp
-        plb
-        .databank $96
-        plx
-        clc
-        bra _DF5D
-
-
-        _DF5C
-        sec
-
-        _DF5D
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/DF60
-
-    .endsection Unsorted96DEC0Section
 
 
     .section Unsorted96DFBBSection
@@ -14117,13 +12562,16 @@
       .al
       .xl
 
-      rlUnknown96EA99 ; 96/EA99
+      rlBattleSceneCommandScrollToCombatant ; 96/EA99
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Command 15: scrolls the camera to the acting combatant ($0AE9) or its opponent
+        ; ($0AEB), by entry arg of the offset table at $97/C2A0.
 
         phx
         phy
@@ -14171,12 +12619,12 @@
 
         _EAF5
         lda #1,s
-        jsr rsUnknown96A477
+        jsr rsBattleSceneScriptNextCommand
         bra _EAFF
 
 
         _EAFC
-        jsr rsUnknown96A49B
+        jsr rsBattleSceneScriptNextCommandNoWait
 
         _EAFF
         ply
@@ -14363,7 +12811,7 @@
         _EC0D
         cmp #$8081
         bne _EC18
-        jsl rlUnknown96EC91
+        jsl rlBattleSceneStopBG2Shake
         bra _EC48
 
 
@@ -14400,87 +12848,6 @@
         ; 96/EC4A
 
     .endsection Unsorted96EBE3Section
-
-
-    .section Unsorted96EC91Section
-
-      .al
-      .xl
-
-      rlUnknown96EC91 ; 96/EC91
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        sep #$20
-        lda $7FF630
-        and #$7F
-        sta $7FF630
-        rep #$20
-        lda #$0000
-        sta $7FE19F
-        sta $7FE1A1
-        rtl
-
-        .databank 0
-
-        ; 96/ECAB
-
-    .endsection Unsorted96EC91Section
-
-
-    .section Unsorted96ECABSection
-
-      .al
-      .xl
-
-      rlUnknown96ECAB ; 96/ECAB
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phy
-        tya
-        and #$01FF
-        jsl rlUnknown96ECBB
-        lda #1,s
-        jsr rsUnknown96A477
-        ply
-        rtl
-
-        .databank 0
-
-        ; 96/ECBB
-
-      rlUnknown96ECBB ; 96/ECBB
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        and #$00FF
-        sta wR0
-        lda wR0
-        asl a
-        tax
-        jsr ($96ECCC,x)
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 96/ECCC
-
-    .endsection Unsorted96ECABSection
 
 
     .section Unsorted96EDC0Section
@@ -14780,7 +13147,7 @@
         jsl rlUnknown96F341
         bcs _F32A
         lda #$0034
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _F32A
         rtl
@@ -14803,7 +13170,7 @@
         jsl rlUnknown96F341
         bcs _F340
         lda #$0031
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _F340
         rtl
@@ -15011,7 +13378,7 @@
         cmp #$0002
         bne _F56B
         lda #$0033
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _F56B
         rtl
@@ -15033,7 +13400,7 @@
         cmp #$0002
         bne _F57F
         lda #$0035
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _F57F
         rtl
@@ -15071,7 +13438,7 @@
         cpx #$000A
         bcc _F680
         lda #$003B
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
 
         _F695
         plx
@@ -15165,7 +13532,7 @@
         cpx #$000A
         bcc _F6E4
         lda #$0036
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         plx
         rtl
 
@@ -15191,7 +13558,7 @@
         cpx #$000A
         bcc _F6FF
         lda #$0037
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         plx
         rtl
 
@@ -15217,7 +13584,7 @@
         cpx #$000A
         bcc _F71A
         lda #$0038
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         sep #$20
         lda $7FFC5D
         ora #$04
@@ -15251,7 +13618,7 @@
         cpx #$000A
         bcc _F74B
         lda #$0039
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         plx
         rtl
 
@@ -15280,7 +13647,7 @@
         cpx #$000A
         bcc _F76E
         lda #$003A
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         plx
         rtl
 
@@ -15309,7 +13676,7 @@
         cpx #$000A
         bcc _F791
         lda #$003F
-        jsl rlUnknown96A4B2
+        jsl rlStartBattleSceneScript
         plx
         rtl
 
@@ -15712,7 +14079,7 @@
         sta lR18
         lda #$0000
         sta wR0
-        jsl rlUnknown96DB94
+        jsl rlBattleSceneStartPaletteEffect
 
         _FA90
         plx
