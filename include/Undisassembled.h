@@ -97,8 +97,6 @@
     rsUnknown91D69B                                          :?= address($91D69B)
     rlUnknown9599E7                                          :?= address($9599E7)
     rsUnknown959A4D                                          :?= address($959A4D)
-    rsUnknown959B84                                          :?= address($959B84)
-    rlDecompressSingle                                       :?= address($95A3FB)
     rlUnknown9E85A4                                          :?= address($9E85A4)
     aUnknown9E85DF                                           :?= address($9E85DF)
     rlUnknown9E866F                                          :?= address($9E866F)

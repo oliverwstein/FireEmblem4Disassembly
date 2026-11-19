@@ -776,3 +776,40 @@
         ; 80/AD24
 
     .endsection DecompressorSection
+
+
+    .section DecompressSingleSection
+
+      .al
+      .xl
+
+      rlDecompressSingle ; 95/A3FB
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; lR45 = graphics pointer
+        ; lR47 = destination
+
+        lda lR45
+        sta DecompressionVariables.lSource
+        lda lR47
+        sta DecompressionVariables.lDest
+
+        sep #$20
+        lda lR45+2
+        sta DecompressionVariables.lSource+2
+        lda lR47+2
+        sta DecompressionVariables.lDest+2
+        rep #$20
+
+        jsl rlDecompressor
+        rtl
+
+        .databank 0
+
+        ; 95/A414
+
+    .endsection DecompressSingleSection

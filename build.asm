@@ -141,6 +141,7 @@
   .include "engine/unsorted/bank8C.asm"
   .include "engine/unsorted/bank8F.asm"
   .include "engine/unsorted/bank91.asm"
+  .include "engine/unsorted/bank95.asm"
 
   .include "events/ChapterPrologue.asm"
   .include "events/Chapter01.asm"
@@ -3597,6 +3598,20 @@
     .logical $928000
 
       g2bppDialogueFont .text ROM[$128000:$130000] ; 92/8000
+
+    .here
+
+    * = $159B84
+    .logical $959B84
+
+      .dsection Unsorted959B84Section
+
+    .here
+
+    * = $15A3FB
+    .logical $95A3FB
+
+      .dsection DecompressSingleSection
 
     .here
 
