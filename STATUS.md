@@ -5,9 +5,9 @@ Last updated 2026-11-19 (second session that day). This file records what has be
 ## Where things stand
 
 - `./build.sh` builds a ROM that is byte-for-byte identical to the original (Japanese 1.0, SHA-1 `90f0bdeaf0151899f96281258fcb30899fbd0d44`).
-- **18.59% of the ROM is built from source** (779,634 of 4,194,304 bytes; `./build.sh coverage`). The rest is copied from `fe4.sfc` at build time.
-- Engine code is organized by game system under `engine/` (97 files, 3,202 routines). 1,478 routines still have `Unknown` in their names, and 857 routines are in `engine/unsorted/` (filed by bank, not yet by system).
-- `wip/` is empty and `include/Undisassembled.h` lists nothing: no built code calls code that is not built.
+- **19.74% of the ROM is built from source** (828,048 of 4,194,304 bytes; `./build.sh coverage`). The rest is copied from `fe4.sfc` at build time.
+- Engine code is organized by game system under `engine/` (3,713 routines and 996 data labels). 1,981 routines still have `Unknown` in their names, and 1,360 routines are in `engine/unsorted/` (filed by bank, not yet by system).
+- `wip/` is empty. `include/Undisassembled.h` names 47 ROM tables that built code reads but whose length is not known yet; no built code calls code that is not built.
 - Every call, jump, engine definition (proc, HDMA, active sprite), proc script and jump table reachable from built code is built, and so is every proc script. `tools/trace.py` reports nothing left to follow.
 
 | Stage | Bytes from source | Share |
@@ -18,7 +18,9 @@ Last updated 2026-11-19 (second session that day). This file records what has be
 | After the rest of TempStuff | 729,236 | 17.39% |
 | After tracing calls from built code | 755,758 | 18.02% |
 | After definitions and jump tables | 761,454 | 18.15% |
-| Now (also proc scripts) | 779,634 | 18.59% |
+| After proc scripts | 779,634 | 18.59% |
+| After the ROM tables | 784,109 | 18.69% |
+| Now (after the code sweep) | 828,048 | 19.74% |
 
 ## What has been done
 
@@ -45,19 +47,22 @@ In order:
 14. **Structural names.** 79 routines used by a single proc as its init or on-cycle routine are `rlProc<Name>Init`/`Cycle…`. The 165 event and event condition command routines are named after the macros the chapter scripts use for them (`rsEventCommandJumpTrue`, `rsChapterEventConditionCommandSaveChapterTurncount`); placeholders such as `EVENT_0A` keep numbers.
 15. **Sorting by caller.** 95 sections left `engine/unsorted/` because every routine using them is a *named* routine in one system (repeated until nothing changed). Callers with `Unknown` names did not count, since many were filed by ROM neighbours. `tools/move_sections.py` moves sections between files.
 
+16. **ROM tables.** `tools/rom_tables.py` finds every read of unbuilt ROM data in built code. 130 tables with a certain extent are now source as `aUnknownXXXXXX` (each says which routines read it); 47 more have names only, in `include/Undisassembled.h`. Two blocks turned out to hold code, and decoding them found:
+    - **Code checksums.** The game sums `$80/8D56–8E2C` and `$87/8017–80A9` and compares the sums with `aCodeChecksums` (`$8F/8000`) and its copies at the start of banks `$87` and `$88` (`include/Checksums.h`). The third word, "IS", switches the checks on. When `rlCheckCodeChecksums` (in the random number generator) finds a difference, the random numbers come from `rsUnknown80A7F3` instead. There is also a lock-up loop and another copy of the check in bank `$88`. Anyone changing that code has to update the sums.
+    - **AI formation offsets.** `$87/DC71` picks one of four routines by `wAIFormationDirection`; each adds a formation pattern offset to a position, turned a quarter turn further (`engine/ai/groups.asm`).
+17. **Code sweep.** `tools/sweep.py` decodes gaps that nothing points to and accepts a candidate only if it ends cleanly, has no data-like opcodes, does not branch into itself, calls only known routines or other gaps, does not start like a proc header or pointer table, and scores at least 3 (calls to known routines plus named RAM variables). Alternating with the tracer until nothing new turned up added about 500 routines (about 44 KB), among them the joypad reader (`$80/8002`) and game state setups such as `$80/C39A`. Ten early finds began with data and were repaired by hand. Each swept routine is marked "Found by tools/sweep.py".
+
 Every step kept the output identical to the original.
 
 ## What remains
 
-### 1. Code reached only through data that is not disassembled
+### 1. Code and data that remain
 
-The tracer has followed everything that built code and proc scripts reach, and every `RUN_ASM` target in the chapter events is built. What remains is reached through data structures that are still raw bytes:
-
-- **Active sprite and HDMA scripts.** Their code pointers lead to command scripts like proc scripts; the active sprite command table is `aActiveSpriteCommandPointers` (`engine/core/active_sprites.asm`). Decoding them would work like `tools/procs.py`.
-- **Menu definitions**, map menus and other tables of routine pointers in data that is not built yet.
-- **Code nothing points to directly**: entries reached through computed jumps, and the main loop's game-state tables in bank `$80`.
-
-A **gap sweep** would help too: try disassembling each uncovered gap in a code bank at 16-bit widths, and report candidates whose calls all land on known routine starts. That is a heuristic, so its results should be reviewed rather than placed automatically.
+- **Below the sweep's threshold**: 264 candidates (about 9.6 KB) score under 3. They are a mix of real code (for example a palette routine at `$88/9EE9`), data that happens to decode, and gaps that start with a few bytes of table. They need reading one by one: `tools/sweep.py --min-score 0 --list`.
+- **The 47 tables with names only**: their readers' loops give their lengths. Once a length is known, write the table out and remove its line from `include/Undisassembled.h`.
+- **`$8A/CFBE`** (after the 89-pointer table at `$8A/CEB3`) is kept as a ROM slice because it starts in the middle of a routine; find that routine's start.
+- **Active sprite and HDMA scripts** lead mostly to visual code; lower priority.
+- Check the tables written by `rom_tables.py` against their readers' loops as you name them: a short table followed by code that calls nothing known can still have been taken as one block.
 
 Share of each bank's `$8000`–`$FFFF` half built from source now:
 
@@ -82,7 +87,7 @@ Not every uncovered byte is code; tables, text and graphics are mixed in, and ba
 
 ### 4. Naming and understanding
 
-1,478 routines are still unnamed and 857 are in `engine/unsorted/`. Automatic sorting by caller has gone as far as named callers allow; the rest are called mostly by other unsorted or unnamed code, so the next step is reading code. Good places to start: the helpers of the now-named event commands (in `engine/events/event_scripts.asm`), the procs named "ON" in bank `$9E` (scripted scenes, one of them `procBelhallaMagesAttack`), and bank `$88` (map scrolling and map sprites). Proc names in headers (two letters, such as "ME" for the proc that PLAY_SONG creates) are small hints. Many routines were filed by their name or their neighbours in the ROM, not by understanding the code. The plan agreed with the user is to name system by system: gather the clues (callees, callers, RAM addresses, hardware registers, data tables, known game mechanics), and confirm uncertain cases by running the game in a debugger (Mesen or bsnes-plus can load `labels.txt`). Names must state only what is known; uncertain routines stay `Unknown` or get a comment saying how sure it is.
+1,981 routines are still unnamed and 1,360 are in `engine/unsorted/`. Automatic sorting by caller has gone as far as named callers allow; the rest are called mostly by other unsorted or unnamed code, so the next step is reading code. Good places to start: the helpers of the now-named event commands (in `engine/events/event_scripts.asm`), the procs named "ON" in bank `$9E` (scripted scenes, one of them `procBelhallaMagesAttack`), and bank `$88` (map scrolling and map sprites). Proc names in headers (two letters, such as "ME" for the proc that PLAY_SONG creates) are small hints. Many routines were filed by their name or their neighbours in the ROM, not by understanding the code. The plan agreed with the user is to name system by system: gather the clues (callees, callers, RAM addresses, hardware registers, data tables, known game mechanics), and confirm uncertain cases by running the game in a debugger (Mesen or bsnes-plus can load `labels.txt`). Names must state only what is known; uncertain routines stay `Unknown` or get a comment saying how sure it is.
 
 Specific things that deserve a look:
 
