@@ -3077,7 +3077,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         sta wRoutineVariable1,b
-        jsl rlUnknown84A87E
+        jsl rlUseInventorySlotItem
         bcc +
 
           lda structActionStructEntry.WeaponInventorySlot,b,x

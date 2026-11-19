@@ -420,11 +420,14 @@
 
         .databank 0
 
-      rlUnknown84B282 ; 84/B282
+      rlBuyItemForSelectedUnit ; 84/B282
 
         .al
         .autsiz
         .databank ?
+
+        ; Buys the item with player item index wRoutineVariable1 at rlGetItemBuyPrice,
+        ; half with Bargain. Carry set if the unit cannot pay.
 
         phb
         phk
@@ -472,11 +475,14 @@
 
         .databank 0
 
-      rlUnknown84B2C7 ; 84/B2C7
+      rlSellInventorySlotItem ; 84/B2C7
 
         .al
         .autsiz
         .databank ?
+
+        ; Sells the item in inventory slot wRoutineVariable1 at rlGetItemSellPrice.
+        ; Carry set for holy weapons (weapon rank $FFFF), which cannot be sold.
 
         phb
         phk
@@ -514,11 +520,14 @@
 
         .databank 0
 
-      rlUnknown84B301 ; 84/B301
+      rlDiscardSelectedInventoryItem ; 84/B301
 
         .al
         .autsiz
         .databank ?
+
+        ; Removes the item in wSelectedInventorySlot. Carry set for holy weapons,
+        ; which cannot be thrown away.
 
         phb
         phk
@@ -630,11 +639,14 @@
 
         .databank 0
 
-      rlUnknown84B426 ; 84/B426
+      rlSendInventorySlotItemToSupply ; 84/B426
 
         .al
         .autsiz
         .databank ?
+
+        ; Moves the item in inventory slot wRoutineVariable1 to the supply
+        ; (ItemStateSupply, owned by the selected unit).
 
         phb 
         php
@@ -650,7 +662,7 @@
         jsl rlGetItemRAMStructEntryByInventorySlot
         bcs +
 
-          lda #2
+          lda #ItemStateSupply
           sta wR0
           lda wSelectedUnitDataRAMPointer,b
           sta wR1
@@ -731,11 +743,13 @@
 
         .databank 0
 
-      rlUnknown84B492 ; 84/B492
+      rlActionStructHandleArenaDefeat ; 84/B492
 
         .al
         .autsiz
         .databank ?
+
+        ; A unit defeated in the arena keeps 1 HP and is marked as defeated.
 
         ; Unit died in the arena
 
@@ -771,7 +785,7 @@
 
         .databank 0
 
-      rlUnknown84B4C3 ; 84/B4C3
+      rlDoNothing84B4C3 ; 84/B4C3
 
         .al
         .autsiz
@@ -895,7 +909,7 @@
             jml _BRK
 
           +
-          jsl rlUnknown84B492
+          jsl rlActionStructHandleArenaDefeat
           jml _End
 
         _B916

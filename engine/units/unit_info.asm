@@ -1866,7 +1866,7 @@
 
         .databank 0
 
-      rlUnknown84A87E ; 84/A87E
+      rlUseInventorySlotItem ; 84/A87E
 
         .al
         .autsiz

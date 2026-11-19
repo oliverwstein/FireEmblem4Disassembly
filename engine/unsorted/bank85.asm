@@ -11890,7 +11890,7 @@
         ldx $0772,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown84B301
+        jsl rlDiscardSelectedInventoryItem
         jsl rlUnknown88AF7B
         plx
         rtl
