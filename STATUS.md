@@ -12,8 +12,8 @@ Byte-identical output stays the test for every change to the original layout. Sh
 ## Where things stand
 
 - `./build.sh` builds a ROM that is byte-for-byte identical to the original (Japanese 1.0, SHA-1 `90f0bdeaf0151899f96281258fcb30899fbd0d44`).
-- **22.13% of the ROM is built from source** (928,012 of 4,194,304 bytes; `./build.sh coverage`). The rest is copied from `fe4.sfc` at build time. Most of what remains is graphics, maps, music and text.
-- `engine/` has 99 files with **5,051 routines** and 1,003 data labels. **3,253 routines** still have `Unknown` in their names, and **2,695** are in `engine/unsorted/` (filed by ROM bank, not yet by system).
+- **22.13% of the ROM is built from source** (928,031 of 4,194,304 bytes; `./build.sh coverage`). The rest is copied from `fe4.sfc` at build time. Most of what remains is graphics, maps, music and text.
+- `engine/` has 102 files with **5,052 routines** and 1,003 data labels. **3,210 routines** still have `Unknown` in their names, and **2,631** are in `engine/unsorted/` (filed by ROM bank, not yet by system).
 - In built code, **9,118 operands** still use raw RAM addresses (1,680 distinct addresses, as `tools/name_ram.py --report` counts them; the code brought in from the log added many), and about **8,800** use numbers that may stand for constants.
 - `wip/` is empty. `include/Undisassembled.h` names 46 ROM tables that built code reads but whose length is not known yet. No built code calls code that is not built.
 - `tools/trace.py` finds nothing left to follow, and `tools/disasm.py --selftest` reassembles all 4,805 routines it can start from to the same bytes, with and without the log's widths.
@@ -32,6 +32,7 @@ Byte-identical output stays the test for every change to the original layout. Sh
 | Game state routines, through the emulator log | 863,904 | 20.60% |
 | Indexed jump tables and misread tables, through the log | 877,028 | 20.91% |
 | Everything else the log shows executed (now) | 928,012 | 22.13% |
+| `rlEnableForcedBlank`, found by matching FE5 | 928,031 | 22.13% |
 
 Share of each bank's `$8000`-`$FFFF` half built from source:
 
@@ -82,6 +83,7 @@ Every step kept the output identical to the original.
 
 - **Structural names.** Event and event condition commands are named after the macros the chapter scripts use (`rsEventCommandJumpTrue`). Routines that a single proc uses as its init or on-cycle routine are `rlProc<Name>Init`/`Cycle…`. Unknown routines that return with `rts` are `rsUnknown…`.
 - **Battle, units and items.** About 80 routines named from what their code does and how callers use it. Where only the computation is certain, the name says that and the comment says what it is most likely for (`rlGetInventorySlotStaffCostValue`, probably staff experience). Left: battle 16, units 13, items 6.
+- **From the FE5 disassembly** (`tools/fe5_match.py`, 2026-11-19). FE5 kept FE4's unit window, the sortable unit list, and names its code `UnitWindowFE4...`; the low-level frame and PPU routines are the same code in both games. Matching instruction sequences against FE5's source and an FE5 ROM, then reading each pair, gave 42 names; each routine's comment gives its FE5 name. The unit window is now `engine/menus/unit_window.asm` (banks `$80` and `$8B`, 52 sections); `rlGetJoypadInput`, `rlCopyPPURegisterBuffer`, `rlCopyINIDISPBuffer`, `rlHaltUntilVBlank`, the forced-blank pair and `rsInitPPURegisters` went to `engine/core/`. `rlEnableForcedBlank` (`$80/8248`) was not built before.
 - **RAM.** `tools/name_ram.py` writes raw addresses with the names `include/` gives them (about 2,200 operands so far). The most-used unknown variables that could be named with confidence are named: the game state variables, `wActiveUnitDeploymentOffset`, the unit relocation record (`wUnitRelocationDeploymentOffset`, `...Type`, `...LocationID`) and several temporaries.
 - **Constants and struct fields.** `tools/apply_constants.py` (rules in `tools/constant_rules.txt`) writes numbers compared with a known getter or field as constants (78 operands); `tools/name_struct_fields.py` writes small offsets from an index register as struct fields (64 offsets).
 - **Sorting.** 95 sections left `unsorted/` because every routine using them is a named routine in one system. Callers with `Unknown` names do not count: many were filed by ROM neighbours, and trusting them spread wrong guesses.
@@ -120,7 +122,7 @@ A region of the ROM can move only when it is **all source**, its sections form *
 
 ### 3. Naming and sorting (the bulk of the work)
 
-3,253 unnamed routines, 2,695 of them in `unsorted/`, and 1,680 unnamed RAM addresses. Automatic naming and sorting have gone as far as the evidence allows; from here it is reading code, system by system. Names must state only what is known; uncertain routines stay `Unknown` or get a comment saying how sure it is. Mesen's debugger, which can load `labels.txt`, is the quickest way to confirm a name: break on a routine or watch a RAM address.
+3,210 unnamed routines, 2,631 of them in `unsorted/`, and 1,680 unnamed RAM addresses. Automatic naming and sorting have gone as far as the evidence allows; from here it is reading code, system by system. Names must state only what is known; uncertain routines stay `Unknown` or get a comment saying how sure it is. Mesen's debugger, which can load `labels.txt`, is the quickest way to confirm a name: break on a routine or watch a RAM address.
 
 - **Main-loop game states** in bank `$80`: the sweep found their setup routines, and naming them gives the rest of the code a structure to hang on.
 - **Helpers of the named event commands** in `engine/events/event_scripts.asm`.
@@ -144,7 +146,13 @@ Short explanations of the engines that are understood (procs, the event interpre
 
 ### 6. Outside resources to look at
 
-- **Fire Emblem 5 disassembly** by Zane Avernathy (github.com/ZaneAvernathy; our `c2a.py` and `process_dialogue.py` come from there). FE5 was built on FE4's engine (procs, active sprites, the event engine), so its named routines may match ours closely enough to bring names over by comparing code. Check how close the engines are first.
+- **Fire Emblem 5 disassembly** by Zane Avernathy (github.com/ZaneAvernathy/FireEmblem5, with the VoltEdge library; our `c2a.py` and `process_dialogue.py` come from there). **Looked at 2026-11-19; see "From the FE5 disassembly" above for what it gave.** What is known about using it:
+  - It disassembles about 960 routines, mostly FE5's own windows, menus, AI and events. The engine both games share (procs, DMA, decompression, active sprites) is only declared there by address (285 names), so code matching reaches those only with an FE5 ROM. The ROM is LoROM (`$BB/AAAA` is at file offset `(BB & $7F) << 15 | (AAAA & $7FFF)`); the Nintendo Power dump has the code at the disassembly's addresses although its SHA-1 differs.
+  - Many names are the same as ours (`rlProcEngineCreateProc`, `aProcSystem.wInput0`): this project's original author borrowed them. Where both name a routine, battle code differs a lot between the games; low-level code is identical.
+  - Leads `tools/fe5_match.py` reports and that are not applied yet: `rlUnknown809C7A` = `rlRunTaskMainLoops` (identical; FE5's "task" is our game state, `rlRunGameStateRoutines` = `rlRunCurrentTask`), `rlUnknown809BEE` = `rlProcEngineReset` (0.93), `rlUnknown8BCA1A` = `rlUnitWindowGetSortScores` (0.95), and FE5's descriptions of the unit window routines still `Unknown` here.
+  - RAM does not line up: our low page sits a few bytes off FE5's and the engine blocks moved (`aProcSystem` is `$0EC8` here, `$0526` there). Names could still come over operand by operand from routines that are the same code; FE5 names unit window variables such as `wUnitWindowFE4CurrentLine`.
+  - Its proc engine has 38 script commands; ours has the 12 `tools/procs.py` knows, so the rest are FE5 additions.
+  - Neither repository has a licence file. Names are used here; FE5's comments are not copied (ours are written fresh), unless the author agrees.
 - **Lil' Nordion**, the FE4 modding base that Project Naga's README points to for "documentation and modding files". Not looked at yet; may have notes on routines, RAM and data formats.
 - **Project Naga build files** (github.com/Miacidae/Project-Naga-beta-v7, looked at 2026-11-19). No code or RAM names. The repository has no license file, but the user reports that Project Naga was turned over to the community to be used at will, so its files may be used. The English dialogue shows what each event and scene is; menu text is pre-rendered 2bpp tiles placed by tilemaps; about 84 addresses in the original ROM are labelled (intro, attract mode, genealogy wheel, world map, menu tilemaps, pointers such as `$0D/AD70`); and their macro shows `rlUnknown89BECC` draws a run of two-row tiles into the BG3 tilemap (size in `wR0`, base tile in `wR1`, tile in `wR2`), which matches the code.
 
