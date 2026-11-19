@@ -1,4 +1,5 @@
-; Assembly routines for the world map part of the epilogue.
+; ASMCs for the world map part of the epilogue: which scenes play for each region,
+; depending on who inherited it and who their lover is.
 
     .section EpilogueDialogueWorldMapCodeSection
 

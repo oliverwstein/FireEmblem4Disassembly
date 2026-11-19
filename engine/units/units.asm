@@ -1,4 +1,5 @@
-; Creating, deleting and looking up units.
+; Creating, deleting and finding units, and reading a character's ROM data: name,
+; class, level, map sprite, portrait and starting equipment.
 
     .section UnitsSection
 

@@ -1,4 +1,265 @@
-; Level-up stat growth rolls.
+; Level-ups: gaining a level, rolling each stat's growth and applying the gains. Also
+; holds rlSetUnitUnfieldedInCastle, which does not seem to be about level-ups.
+
+    .section ActionLevelUpSection
+
+      .al
+      .xl
+
+      rlActionStructLevelUp ; 84/AA15
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; wRoutineVariable1 = gained exp
+
+        phb
+        php
+        phk
+        plb
+        phx
+        ldx wSelectedUnitDataRAMPointer,b
+        lda $7E0000+structCharacterDataRAM.Type,x
+        and #$00FF
+        cmp #UnitTypeHoly
+        bcc +
+
+          jml _NoEXP
+
+        +
+        jsl rlGetSelectedUnitFactionSlot
+        ora #0
+        bne _NoEXP
+
+        jsl rlGetSelectedUnitCurrentHP
+        ora #0
+        beq _NoEXP
+
+        lda wRoutineVariable1,b
+        beq +
+
+          jsl rlGetSelectedUnitExtendedPersonalDataPointer
+          lda structExtendedCharacterDataRAM.Level,b,x
+          and #$00FF
+          cmp #30
+          bcs _NoEXP
+
+            sep #$20
+            lda structExtendedCharacterDataRAM.Experience,b,x
+            clc
+            adc wRoutineVariable1
+            cmp #100
+            bcs ++
+
+              sta structExtendedCharacterDataRAM.Experience,b,x
+              rep #$20
+
+        +
+        lda #0
+        plx
+        plp
+        plb
+        clc
+        rtl
+        
+        .as
+
+        +
+        sec
+        sbc #100
+        sta structExtendedCharacterDataRAM.Experience,b,x
+        rep #$20
+
+        lda structExtendedCharacterDataRAM.Level,b,x
+        and #$00FF
+        inc a
+        cmp #30
+        bcc +
+
+          sep #$20
+          lda wRoutineVariable1
+          sec
+          sbc structExtendedCharacterDataRAM.Experience,b,x
+          sta wRoutineVariable1
+          lda #0
+          sta structExtendedCharacterDataRAM.Experience,b,x
+          rep #$20
+
+        +
+        lda wRoutineVariable1
+        pha
+        jsl rlGetLevelUpStats
+        pla
+        sta wRoutineVariable1
+
+        lda #1
+        plx
+        plp
+        plb
+        clc
+        
+        -
+        rtl
+
+        _NoEXP
+        lda #0
+        sta wRoutineVariable1
+        plx
+        plp
+        plb
+        sec
+        bra -
+
+        .databank 0
+
+      rlGetLevelUpStats ; 84/AABA
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        phx
+        phy
+        jsl rlGetSelectedUnitExtendedPersonalDataPointer
+        lda structExtendedCharacterDataRAM.Level,b,x
+        and #$00FF
+        inc a
+        cmp #31
+        bcc +
+
+          jml _End
+
+        +
+        sep #$20
+        sta structExtendedCharacterDataRAM.Level,b,x
+        rep #$20
+
+        lda wTotalLevelUpCount
+        inc a
+        sta wTotalLevelUpCount
+
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+
+        ldy lRoutineVariable,b
+        jsl rlGetSelectedUnitMaxHP
+        sta structLevelUpStats.HP,b,y
+        jsr rsApplyLevelUpHPGain
+        sta structLevelUpStats.HPGain,b,y
+
+        jsl rlGetSelectedUnitTotalStrengthEffect
+        sta structLevelUpStats.Strength,b,y
+        jsr rsApplyLevelUpStrengthGain
+        sta structLevelUpStats.StrengthGain,b,y
+
+        jsl rlGetSelectedUnitTotalMagicEffect
+        sta structLevelUpStats.Magic,b,y
+        jsr rsApplyLevelUpMagicGain
+        sta structLevelUpStats.MagicGain,b,y
+
+        jsl rlGetSelectedUnitTotalSkillEffect
+        sta structLevelUpStats.Skill,b,y
+        jsr rsApplyLevelUpSkillGain
+        sta structLevelUpStats.SkillGain,b,y
+
+        jsl rlGetSelectedUnitTotalSpeedEffect
+        sta structLevelUpStats.Speed,b,y
+        jsr rsApplyLevelUpSpeedGain
+        sta structLevelUpStats.SpeedGain,b,y
+
+        jsl rlGetSelectedUnitLuck
+        sta structLevelUpStats.Luck,b,y
+        jsr rsApplyLevelUpLuckGain
+        sta structLevelUpStats.LuckGain,b,y
+
+        jsl rlGetSelectedUnitTotalDefenseEffect
+        sta structLevelUpStats.Defense,b,y
+        jsr rsApplyLevelUpDefenseGain
+        sta structLevelUpStats.DefenseGain,b,y
+
+        jsl rlGetSelectedUnitTotalResistanceEffect
+        sta structLevelUpStats.Resistance,b,y
+        jsr rsApplyLevelUpResistanceGain
+        sta structLevelUpStats.ResistanceGain,b,y
+        
+        _End
+        ply
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlUnknown84AB5C ; 84/AB5C
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        phx
+        ldx wRoutineVariable1,b
+        phx
+
+        sta wRoutineVariable1,b
+        jsl rlGetSelectedUnitFactionSlot
+        ora #0
+        bne _End
+
+          lda wRoutineVariable1,b
+          beq _End
+
+            jsl rlGetItemRAMStructEntryByInventorySlot
+            bcs _End
+
+              lda #1
+              jsl rlAddToItemRAMKillCount
+              stz wRoutineVariable1,b
+
+              lda wCurrentChapter,b
+              cmp #6
+              bcc +
+
+                lda #24
+                sta wRoutineVariable1,b
+
+              +
+              jsl rlGetSelectedUnitGenerationID
+              dec a
+              clc
+              adc wRoutineVariable1,b
+              asl a
+              tax
+              lda aUnitWinCounts,x
+              inc a
+              sta aUnitWinCounts,x
+
+        _End
+        pla
+        sta wRoutineVariable1,b
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 84/ABB0
+
+    .endsection ActionLevelUpSection
+
 
     .section LevelUpSection
 

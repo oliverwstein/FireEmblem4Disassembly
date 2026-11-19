@@ -1,4 +1,5 @@
-; Map locations (castles, villages, etc.): event data, banners and tile changes.
+; Map locations (castles, villages and so on): their event data, owners, money
+; rewards, guarded and destroyed states, castle banners and village tile changes.
 
     .section LocationEventDataSection
 

@@ -1,4 +1,6 @@
-; Battle calculations: hit, damage, doubling, skills and battle rounds.
+; Setting up and resolving a battle: the combatants' stats, battle music, boss checks,
+; weapon triangle, leadership and charm, combat skills (vantage, accost, sword skills,
+; dance), effectiveness, doubling, and each round's hit, crit and damage.
 
     .section BattleSection
 

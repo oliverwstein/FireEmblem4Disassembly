@@ -1,4 +1,5 @@
-; Assembly routines called from chapter event scripts (ASMCs).
+; ASMCs: assembly routines called from chapter event scripts. So far only the final
+; chapter's Julia recruitment is here; other ASMCs live with the system they belong to.
 
     .section FinalChapterJuliaRecruitmentASMCSection
 

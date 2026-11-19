@@ -1,4 +1,6 @@
-; The chapter event engine: event flags, conditions and chapter event data.
+; The chapter event engine: chapter event RAM data, permanent and per-chapter event
+; flags, running chapter opening and map events, and the event condition commands
+; (fights, talks, interactions and so on).
 
     .section EventEngineSection
 

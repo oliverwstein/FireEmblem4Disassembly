@@ -66,17 +66,21 @@
   .include "engine/map/deployment.asm"
   .include "engine/map/locations.asm"
   .include "engine/map/scroll.asm"
+  .include "engine/units/classes.asm"
   .include "engine/units/factions.asm"
   .include "engine/units/generations.asm"
+  .include "engine/units/inheritance.asm"
   .include "engine/units/join_order.asm"
   .include "engine/units/level_up.asm"
   .include "engine/units/lovers.asm"
   .include "engine/units/skills.asm"
   .include "engine/units/stats.asm"
   .include "engine/units/unit_creation.asm"
+  .include "engine/units/unit_data.asm"
   .include "engine/units/unit_info.asm"
   .include "engine/units/unit_state.asm"
   .include "engine/units/units.asm"
+  .include "engine/items/inventory.asm"
   .include "engine/items/items.asm"
   .include "engine/battle/battle.asm"
   .include "engine/battle/battle_stats.asm"
@@ -88,9 +92,9 @@
   .include "engine/dialogue/portraits.asm"
   .include "engine/events/asmc.asm"
   .include "engine/events/chapter_data.asm"
-  .include "engine/events/event_commands.asm"
   .include "engine/events/event_engine.asm"
   .include "engine/events/event_procs.asm"
+  .include "engine/events/event_scripts.asm"
   .include "engine/worldmap/highlight.asm"
   .include "engine/worldmap/markers.asm"
   .include "engine/worldmap/portraits.asm"
@@ -541,6 +545,8 @@
 
       .dsection UnitCreationSection
 
+      .dsection UnitDataSection
+
       ; 84/99B5
 
     .here
@@ -567,6 +573,10 @@
     .logical $84A333
 
       .dsection UnitCharacterInfoSection
+
+      .dsection UnitHPAndDeathSection
+
+      .dsection ActionLevelUpSection
 
       ; 84/ABB0
 
@@ -694,6 +704,8 @@
 
       .dsection BattleEffectsSection
 
+      .dsection InventorySection
+
       ; 84/F75C
 
     .here
@@ -767,6 +779,12 @@
     .logical $87A19D
 
       .dsection SkillsSection
+
+      .dsection ClassDataSection
+
+      .dsection InheritanceSection
+
+      .dsection LovePointsSection
 
       ; 87/AE88
 
@@ -2211,7 +2229,7 @@
     * = $11A40E
     .logical $91A40E
 
-      .dsection EventProcSection
+      .dsection EventScriptEngineSection
       .dsection FadeProcClearSection
 
       ; 91a7bc

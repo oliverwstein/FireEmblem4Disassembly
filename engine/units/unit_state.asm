@@ -1,4 +1,248 @@
-; Changing a unit's state: faction slot, money, inventory, capture and death.
+; Changing a unit's state: damage, healing, death and revival, faction slot, money,
+; inventory and supply, capture, arena winnings and residing castle.
+
+    .section UnitHPAndDeathSection
+
+      .al
+      .xl
+
+      rlActionStructInflictDamage ; 84/A8C7
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; A = attacker character ID
+        ; wRoutineVariable1 = damage dealt
+
+        ; sec if fatal
+
+        phb
+        phk
+        plb
+        phx
+        phy
+        ldx wR10
+        phx
+        ldx wR1
+        phx
+
+        sta wR10
+
+        lda wRoutineVariable1,b
+        beq _CLC
+
+        cmp #80
+        bcc +
+
+        lda #80
+        sta wRoutineVariable1,b
+
+        +
+        jsl rlGetSelectedUnitPersonalDataPointer
+
+        sep #$20
+        lda structPersonalCharacterDataRAM.CurrentHP,b,x
+        cmp wRoutineVariable1
+        bcs +
+
+          sta wRoutineVariable1
+
+        +
+        lda structPersonalCharacterDataRAM.CurrentHP,b,x
+        sec
+        sbc wRoutineVariable1
+        sta structPersonalCharacterDataRAM.CurrentHP,b,x
+        rep #$20
+
+        and #$00FF
+        beq +
+
+        cmp #11
+        bcs _CLC
+
+        lda #UnitStateMiracleActive
+        jsl rlSetSelectedUnitStates
+        
+        _CLC
+        clc
+        
+        -
+        plx
+        stx wR1
+        plx
+        stx wR10
+        ply
+        plx
+        plb
+        rtl
+
+        +
+        jsl rlActionStructHandleUnitDeath
+        sec
+        bra -
+
+        .databank 0
+
+      rlHealSelectedUnitsHP ; 84/A927
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        phx
+        lda wRoutineVariable1,b
+        pha
+
+        lda wRoutineVariable1,b
+        beq _CLC
+
+        cmp #80
+        bcc +
+
+          lda #80
+          sta wRoutineVariable1,b
+
+        +
+        jsl rlGetSelectedUnitPersonalDataPointer
+
+        sep #$20
+        lda structPersonalCharacterDataRAM.CurrentHP,b,x
+        and #$FF
+        clc
+        adc wRoutineVariable1
+        pha
+        rep #$20
+
+        jsl rlGetSelectedUnitMaxHP
+        sta wRoutineVariable1,b
+
+        sep #$20
+        pla
+        cmp wRoutineVariable1,b
+        bcc +
+
+          lda wRoutineVariable1,b
+          sta structPersonalCharacterDataRAM.CurrentHP,b,x
+          rep #$20
+
+          pla
+          sta wRoutineVariable1,b
+          plx
+          plp
+          plb
+          sec
+          bra _End
+
+        +
+        sta structPersonalCharacterDataRAM.CurrentHP,b,x
+        rep #$20
+        
+        _CLC
+        pla
+        sta wRoutineVariable1,b
+        plx
+        plp
+        plb
+        clc
+        
+        _End
+        rtl
+
+        .databank 0
+
+      rlActionStructSetUnitDeath ; 84/A982
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Run when a unit doesnt have the escape skill or the PoW skill + its not ch11
+
+        phb
+        php
+        phk
+        plb
+        lda wRoutineVariable1,b
+        pha
+
+        jsl rlGetSelectedUnitDeploymentOffset
+        sta wDefeatedUnitDeploymentOffset,b
+
+        tax
+        lda aDeploymentTable._StateBuffer,x
+        ora #DeploymentStateDefeated
+        sta aDeploymentTable._StateBuffer,x
+        lda aDeploymentTable._State,x
+        ora #DeploymentStateDefeated
+        sta aDeploymentTable._State,x
+
+        lda #UnitStateDead
+        jsl rlSetSelectedUnitStates
+
+        pla
+        sta wRoutineVariable1,b
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlReviveSelectedCharacter ; 84/A9B6
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        phx
+        jsl rlGetSelectedUnitFactionSlot
+        jsl rlGetFactionSlotLocationID
+        sta wRoutineVariable1,b
+
+        jsl rlGetSelectedUnitDeploymentOffset
+        tax
+
+        lda wRoutineVariable1,b
+        jsl rlSetUnitResidingInCastle
+        lda aDeploymentTable._StateBuffer,x
+        and #~(DeploymentStateAsleep | DeploymentStateDefeated | DeploymentStateGrayed)
+        sta aDeploymentTable._StateBuffer,x
+        sta aDeploymentTable._State,x
+
+        lda #(UnitStateMoved | UnitStateDead)
+        jsl rlUnsetSelectedUnitStates
+
+        lda #StatusHealthy
+        jsl rlSetSelectedUnitStatus
+        lda #0
+        jsl rlSetSelectedUnitStatusDuration
+
+        jsl rlGetSelectedUnitMaxHP
+        jsl rlSetSelectedUnitCurrentHP
+        jsl rlGetSelectedUnitPersonalDataPointer
+        jsl rlGetSelectedUnitClassDataPointer
+        jsl rlGetClassMoney
+
+        sep #$20
+        sta structPersonalCharacterDataRAM.ClassMoney,b,x
+        rep #$20
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+    .endsection UnitHPAndDeathSection
+
 
     .section UnitStateSection
 

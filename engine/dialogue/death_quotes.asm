@@ -1,4 +1,6 @@
-; Choosing death quotes.
+; Choosing death quotes, including lover quotes. Also holds dialogue helpers that look
+; up which child characters are present, the battle banner, and a few ASMCs called
+; from event scripts.
 
     .section DeathQuoteSection
 

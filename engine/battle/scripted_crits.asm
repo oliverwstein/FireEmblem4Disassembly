@@ -1,4 +1,6 @@
-; Scripted critical hits, such as sibling and lover crits.
+; Special attacks that the game scripts for particular pairs and groups of units:
+; sibling crits and triangle attacks. A comment also lists lover crits as a type, but
+; marks it as uncertain. Also reads the battle animation option.
 
     .section ScriptedCritsSection
 

@@ -1,4 +1,5 @@
-; The deployment table: which units are on the map and their map sprites.
+; The deployment table: which units are on the map, their map sprites, hidden and
+; defeated states, terrain under them and formation IDs.
 
     .section DeploymentSection
 

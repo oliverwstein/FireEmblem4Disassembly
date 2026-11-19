@@ -1,4 +1,5 @@
-; Resetting PPU screen registers to known defaults.
+; Resetting hardware registers to defaults: screen, scrolling, windows, color math,
+; mode 7, HDMA, math registers, joypad reading and memory speed.
 
     .section HardwareResetSection
 

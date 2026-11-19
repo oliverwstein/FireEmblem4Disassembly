@@ -1,4 +1,5 @@
-; The dialogue engine: text drawing and dialogue script commands.
+; The dialogue engine: drawing text a character at a time, dialogue script commands,
+; and the commands dialogue scripts use to trigger events.
 
     .section DialogueEngineSection
 

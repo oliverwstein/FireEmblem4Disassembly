@@ -1,4 +1,5 @@
-; Working out which epilogue each character gets.
+; Working out which epilogue each character gets, from their parents, lovers and who
+; is alive. Includes setting the parents' permanent flags at the start of chapter 6.
 
     .section EpilogueEndingsSection
 

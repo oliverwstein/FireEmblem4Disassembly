@@ -1,4 +1,4 @@
-; Screen fade-in and fade-out procs.
+; Screen fade-in and fade-out procs, and clearing them.
 
     .section FadeProcsSection
 

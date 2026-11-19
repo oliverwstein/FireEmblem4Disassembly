@@ -50,11 +50,11 @@ You need:
 |---|---|
 | `core/` | The proc, DMA, HDMA and active sprite engines; decompression, math, random numbers, fades and RAM structures. |
 | `map/` | Map scrolling, deployment and map locations such as castles and villages. |
-| `units/` | Units, stats, level-ups, skills, factions, lovers and the move to generation 2. |
-| `items/` | Item data. |
-| `battle/` | Battle calculations, weapon and staff effects and scripted critical hits. |
+| `units/` | Units and their data, classes, stats, level-ups, skills, factions, lovers, and the move to generation 2 with inheritance. |
+| `items/` | Item data and unit inventories. |
+| `battle/` | Battle calculations, weapon traits and staff effects, battle stats and scripted special attacks. |
 | `dialogue/` | The dialogue engine, dialogue boxes, portraits and death quotes. |
-| `events/` | The event engine, event script commands and procs used by events. |
+| `events/` | The chapter event engine and conditions, the event script interpreter and commands, and procs used by events. |
 | `worldmap/` | The world map. |
 | `epilogue/` | Choosing and showing each character's epilogue. |
 | `save/` | Saving and loading. |

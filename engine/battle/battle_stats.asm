@@ -1,4 +1,5 @@
-; Equipped weapons and the battle stats shown for units and enemies.
+; Equipping weapons, unique equipment and drops, and the battle stats (might, hit,
+; avoid, crit, attack speed, defense, resistance) of units and enemies.
 
     .section BattleStatsSection
 

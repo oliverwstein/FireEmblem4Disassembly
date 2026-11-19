@@ -1,4 +1,5 @@
-; Unit stat totals, including equipment and skill bonuses.
+; Unit stats: totals including equipment and skill bonuses, movement, and simple
+; fields such as level, experience, leadership stars and money.
 
     .section UnitStatsSection
 

@@ -1,4 +1,5 @@
-; The DMA engine: runs queued DMA transfers to VRAM, CGRAM and OAM.
+; The DMA engine: runs a queue of DMA transfers to CGRAM or VRAM, from VRAM, or to
+; any given PPU register, plus single transfers described by a struct or by pointers.
 
     .section DMAEngineSection
 

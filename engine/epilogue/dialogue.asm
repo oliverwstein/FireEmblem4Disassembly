@@ -1,4 +1,5 @@
-; Epilogue dialogue routines and pointers.
+; Epilogue ASMCs that choose each region's epilogue and each character's lover
+; scene, and the per-character tables of epilogue dialogue.
 
     .section EpilogueDialogueCodeSection
 

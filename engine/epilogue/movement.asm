@@ -1,4 +1,5 @@
-; Placing units on the map during the epilogue.
+; Placing units on the map for the epilogue, and the ASMCs that move them in and out
+; of each region's scene.
 
     .section EpilogueMovementSection
 

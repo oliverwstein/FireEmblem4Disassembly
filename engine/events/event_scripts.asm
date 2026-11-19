@@ -1,4 +1,478 @@
-; The event script commands.
+; The event script interpreter (procs that run event scripts, the command table and
+; command dispatch) and the event script commands themselves.
+
+    .section EventScriptEngineSection
+
+      .al
+      .xl
+
+      rsUnknown91A40E ; 91/A40E
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        rep #$30
+        inc wUnknown00171C,b
+        jsl rlUnknown91A7A8
+        jsr rsGetEventLength
+        jsl rlEventEngineFreeAllProcs
+        jsl rlUnknown91C611
+        jsl rlActiveSpriteEngineClearAllSprites
+
+        lda $0302,b
+        sta wUnknown001730,b
+
+        stz wR26
+
+        lda #0
+        sta aMovingMapSprites.wState,b
+
+        lda #8
+        trb wUnknown00171A,b
+
+        plp
+        jml rlRunEventCommand
+
+        .databank 0
+
+      rsEventEngineClearProcs ; 91/A440
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        phx
+        ldx #size(wEventProcBanks)-2
+        
+          -
+          lda #$FFFF
+          sta wEventProcBanks,b,x
+          stz wEventProcOffsets,b,x
+          dec x
+          dec x
+          bpl -
+
+        plx
+        plp
+        rts
+
+        .databank 0
+
+      rlEventEngineCreateProc ; 91/A455
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        lda lR44
+        pha
+        lda lR44+1
+        pha
+
+        jsl rlProcEngineCreateProc
+        tax
+
+        pla
+        sta lR44+1
+        pla
+        sta lR44
+
+        lda lR44+1
+        and #$FF00
+        xba
+        sta wEventProcBanks,b,x
+        lda lR44
+        sta wEventProcOffsets,b,x
+
+        lda #$0004
+        tsb wUnknown00171A,b
+
+        plp
+        rtl
+
+        .databank 0
+
+      rlEventEngineFreeProc ; 91/A47D
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        ldx aProcSystem.wOffset,b
+        jsl rlProcEngineFreeProc
+        plp
+        rtl
+
+        .databank 0
+
+      rlEventEngineFreeAllProcs ; 91/A487
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+
+        rep #$30
+        ldx #size(wEventProcOffsets)-2
+
+          -
+          lda wEventProcBanks,b,x
+          cmp #$FFFF
+          beq +
+
+            phx
+            txa
+            lsr a
+            jsl rlProcEngineFreeProcByIndex
+            plx
+
+            lda #$FFFF
+            sta wEventProcBanks,b,x
+            stz wEventProcOffsets,b,x
+
+          +
+          dec x
+          dec x
+          bpl -
+
+        plp
+        rtl
+
+        .databank 0
+
+      rlUnknown91A4AC ; 91/A4AC
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        rep #$30
+        lda wEventProcBanks,b,x
+        bit #$0200
+        beq +
+
+        bit #$0400
+        beq ++
+
+        plp
+        sec
+        rtl
+
+        +
+        ora #$0200
+        sta wEventProcBanks,b,x
+
+        +
+        plp
+        clc
+        rtl
+
+        .databank 0
+
+      rsUnknown91A4C8 ; 91/A4C8
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #$0002
+        tsb wUnknown00171A,b
+
+        ldx #(16 - 1) *2
+        
+        _Loop
+        lda wEventProcBanks,b,x
+        cmp #$FFFF
+        beq _Next
+
+        lda wEventProcBanks,b,x
+        bit #$0200
+        bne _Next
+
+        lda wEventProcOffsets,b,x
+        cmp aProcSystem.aHeaderTypeOffset,b,x
+        bne +
+
+        lda wEventProcBanks,b,x
+        and #$00FF
+        cmp aProcSystem.aHeaderTypeBank,b,x
+        beq ++
+
+        +
+        lda #$FFFF
+        sta wEventProcBanks,b,x
+        stz wEventProcOffsets,b,x
+
+        _Next
+        dec x
+        dec x
+        bpl _Loop
+
+        rts
+
+        +
+        lda #$0002
+        trb wUnknown00171A,b
+        bra _Next
+
+        .databank 0
+
+      aEventCommandPointers ; 91/A50A
+
+        .word <>rsEventCommand00
+        .word <>rsEventCommand01
+        .word <>rsEventCommand02
+        .word <>rsEventCommand03
+        .word <>rsEventCommand04
+        .word <>rsEventCommand05
+        .word <>rsEventCommand06
+        .word <>rsEventCommand07
+        .word <>rsEventCommand08
+        .word <>rsEventCommand09
+        .word <>rsEventCommand0A
+        .word <>rsEventCommand0B
+        .word <>rsEventCommand0C
+        .word <>rsEventCommand0D
+        .word <>rsEventCommand0E
+        .word <>rsEventCommand0F
+        .word <>rsEventCommand10
+        .word <>rsEventCommand11
+        .word <>rsEventCommand12
+        .word <>rsEventCommand13
+        .word <>rsEventCommand14
+        .word <>rsEventCommand15
+        .word <>rsEventCommand16
+        .word <>rsEventCommand17
+        .word $0000               ; $18
+        .word <>rsEventCommand19
+        .word <>rsEventCommand1A
+        .word <>rsEventCommand1B
+        .word <>rsEventCommand1C
+        .word <>rsEventCommand1D
+        .word $0000               ; $1E
+        .word <>rsEventCommand1F
+        .word <>rsEventCommand20
+        .word <>rsEventCommand21
+        .word <>rsEventCommand22
+        .word <>rsEventCommand23
+        .word <>rsEventCommand24
+        .word <>rsEventCommand25
+        .word <>rsEventCommand26
+        .word <>rsEventCommand27
+        .word <>rsEventCommand28
+        .word <>rsEventCommand29
+        .word <>rsEventCommand2A
+        .word <>rsEventCommand2B
+        .word <>rsEventCommand2C
+        .word <>rsEventCommand2D
+        .word <>rsEventCommand2E
+        .word <>rsEventCommand2F
+        .word <>rsEventCommand30
+        .word <>rsEventCommand31
+        .word <>rsEventCommand32
+        .word <>rsEventCommand33
+        .word <>rsEventCommand34
+        .word <>rsEventCommand35
+        .word <>rsEventCommand36
+        .word <>rsEventCommand37
+        .word <>rsEventCommand38
+        .word <>rsEventCommand39
+        .word <>rsEventCommand3A
+        .word <>rsEventCommand3B
+        .word <>rsEventCommand3C
+        .word <>rsEventCommand3D
+        .word <>rsEventCommand3E
+        .word <>rsEventCommand3F
+        .word <>rsEventCommand40
+        .word <>rsEventCommand41
+        .word <>rsEventCommand42
+        .word <>rsEventCommand43
+        .word <>rsEventCommand44
+        .word <>rsEventCommand45
+        .word <>rsEventCommand46
+        .word <>rsEventCommand47
+        .word <>rsEventCommand48
+        .word <>rsEventCommand49
+        .word <>rsEventCommand4A
+        .word <>rsEventCommand4B
+        .word <>rsEventCommand4C
+        .word <>rsEventCommand4D
+        .word <>rsEventCommand4E
+        .word <>rsEventCommand4F
+        .word <>rsEventCommand50
+        .word <>rsEventCommand51
+        .word <>rsEventCommand52
+        .word <>rsEventCommand53
+        .word <>rsEventCommand54
+        .word <>rsEventCommand55
+        .word <>rsEventCommand56
+        .word <>rsEventCommand57
+        .word <>rsEventCommand58
+        .word <>rsEventCommand59
+        .word <>rsEventCommand5A
+        .word <>rsEventCommand5B
+        .word <>rsEventCommand5C
+        .word <>rsEventCommand5D
+        .word <>rsEventCommand5E
+        .word $0000               ; $5F
+
+      rlRunEventCommand ; 91/A5CA
+
+        .al
+        .autsiz
+        .databank `aEventCommandPointers
+
+        phb
+        php
+        phk
+        plb
+
+        jsr rsUnknown91A629
+        bcc _End
+
+          lda lActiveEventPointer+1,b
+          sta lR22+1
+          lda lActiveEventPointer,b
+          sta lR22
+
+          ldy wActiveEventOffset,b
+          bra _A5FC
+
+            _Loop
+            inc y
+            sty wActiveEventOffset,b
+
+            phy
+            asl a
+            tay
+
+            lda aEventCommandPointers,y
+            ply
+
+            sta lR23
+            pea #<>(+)-1
+            jmp (lR23)
+
+            +
+            bcc _A5FC
+
+              sty wActiveEventOffset,b
+              bra _End
+
+          _A5FC
+          lda [lR22],y
+          cmp #$FEFE
+          bne +
+
+            inc y
+            inc y
+            sty wActiveEventOffset,b
+            lda [lR22],y
+
+          +
+          cmp #$FFFF
+          bne +
+
+            lda #2
+            sta wUnknown00171C,b
+            bra _End
+
+          +
+          and #$00FF
+          cmp #$00FD
+          bne _Loop
+
+          inc y
+          sty wActiveEventOffset,b
+
+        _End
+        stz wUnknown000921,b
+
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rsUnknown91A629 ; 91/A629
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wUnknown00171A,b
+        bit #$0004
+        beq _SEC
+
+          jsr rsUnknown91A4C8
+
+          lda #$0002
+          bit wUnknown00171A,b
+          beq _CLC
+
+            ora #$0004
+            trb wUnknown00171A,b
+
+        _SEC
+        sec
+        bra +
+        
+        _CLC
+        clc
+        
+        +
+        rts
+
+        .databank 0
+
+      rsGetEventLength ; 91/A647
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        lda lActiveEventPointer,b
+        sta lR22
+        lda lActiveEventPointer+1,b
+        sta lR22+1
+        ldy #0
+
+        -
+        lda [lR22],y
+        cmp #$FEFE
+        beq ++
+
+          cmp #$FFFF
+          beq +
+
+            inc y
+            bra -
+
+          +
+          stz wActiveEventLength,b
+          bra _End
+
+        +
+        inc y
+        inc y
+        sty wActiveEventLength,b
+
+        _End
+        plp
+        rts
+
+        .databank 0
+
+    .endsection EventScriptEngineSection
+
 
     .section EventCommandSection
 
