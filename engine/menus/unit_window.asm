@@ -1116,6 +1116,252 @@
     .endsection Unsorted80CC35Section
 
 
+    .section Table8BA845Section
+
+      .al
+      .xl
+
+      aUnitWindowPageTurnInputHandlers ; 8B/A845
+
+        ; One per page (wGameStateStep).
+        .word <>rsUnitWindowHandlePage0Turn
+        .word $ACAD
+        .word $ACED
+        .word $AD30
+        .word $AD73
+        .word $ADBB
+
+    .endsection Table8BA845Section
+
+
+    .section UnitWindowUnknown8BACADSection
+
+      .al
+      .xl
+
+      rsUnknown8BACAD ; 8B/ACAD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1Input
+        bit #$0C00
+        bne _ACC0
+        lda wJoy1Repeated
+        bit #$0100
+        bne _ACC1
+        bit #$0200
+        bne _ACD7
+
+        _ACC0
+        rts
+
+
+        _ACC1
+        inc wGameStateStep,b
+        jsl rlUnitWindowDrawPage
+        lda #$FFFF
+        sta wUnitWindowPageScrollFlag
+        lda #$0007
+        jsl rlPlaySoundEffect
+        rts
+
+
+        _ACD7
+        dec wGameStateStep,b
+        jsl rlUnitWindowDrawPage
+        lda #$FFFF
+        sta wUnitWindowPageScrollFlag
+        lda #$0007
+        jsl rlPlaySoundEffect
+        rts
+
+        .databank 0
+
+        ; 8B/ACED
+
+      rsUnknown8BACED ; 8B/ACED
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1Input
+        bit #$0C00
+        bne _AD00
+        lda wJoy1Repeated
+        bit #$0100
+        bne _AD01
+        bit #$0200
+        bne _AD17
+
+        _AD00
+        rts
+
+
+        _AD01
+        inc wGameStateStep,b
+        jsl rlUnitWindowDrawPage
+        lda #$FFFF
+        sta wUnitWindowPageScrollFlag
+        lda #$0007
+        jsl rlPlaySoundEffect
+        rts
+
+
+        _AD17
+        jsr rsUnitWindowRenderItemIcons
+        dec wGameStateStep,b
+        jsl rlUnitWindowDrawPage
+        lda #$FFFF
+        sta wUnitWindowPageScrollFlag
+        lda #$0007
+        jsl rlPlaySoundEffect
+        rts
+
+        .databank 0
+
+        ; 8B/AD30
+
+      rsUnknown8BAD30 ; 8B/AD30
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1Input
+        bit #$0C00
+        bne _AD43
+        lda wJoy1Repeated
+        bit #$0100
+        bne _AD44
+        bit #$0200
+        bne _AD5D
+
+        _AD43
+        rts
+
+
+        _AD44
+        jsr rsUnitWindowRenderWeaponRankIcons
+        inc wGameStateStep,b
+        jsl rlUnitWindowDrawPage
+        lda #$FFFF
+        sta wUnitWindowPageScrollFlag
+        lda #$0007
+        jsl rlPlaySoundEffect
+        rts
+
+
+        _AD5D
+        dec wGameStateStep,b
+        jsl rlUnitWindowDrawPage
+        lda #$FFFF
+        sta wUnitWindowPageScrollFlag
+        lda #$0007
+        jsl rlPlaySoundEffect
+        rts
+
+        .databank 0
+
+        ; 8B/AD73
+
+      rsUnknown8BAD73 ; 8B/AD73
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1Input
+        bit #$0C00
+        bne _AD86
+        lda wJoy1Repeated
+        bit #$0100
+        bne _AD87
+        bit #$0200
+        bne _ADA5
+
+        _AD86
+        rts
+
+
+        _AD87
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        rep #$20
+        inc wGameStateStep,b
+        jsl rlUnitWindowDrawPage
+        lda #$FFFF
+        sta wUnitWindowPageScrollFlag
+        lda #$0007
+        jsl rlPlaySoundEffect
+        rts
+
+
+        _ADA5
+        dec wGameStateStep,b
+        jsl rlUnitWindowDrawPage
+        lda #$FFFF
+        sta wUnitWindowPageScrollFlag
+        lda #$0007
+        jsl rlPlaySoundEffect
+        rts
+
+        .databank 0
+
+        ; 8B/ADBB
+
+      rsUnknown8BADBB ; 8B/ADBB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1Input
+        bit #$0C00
+        bne _ADCE
+        lda wJoy1Repeated
+        bit #$0100
+        bne _ADCF
+        bit #$0200
+        bne _ADD0
+
+        _ADCE
+        rts
+
+
+        _ADCF
+        rts
+
+
+        _ADD0
+        sep #$20
+        lda #$15
+        sta bBufferTM
+        rep #$20
+        jsr rsUnitWindowRenderWeaponRankIcons
+        dec wGameStateStep,b
+        jsl rlUnitWindowDrawPage
+        lda #$FFFF
+        sta wUnitWindowPageScrollFlag
+        lda #$0007
+        jsl rlPlaySoundEffect
+        rts
+
+        .databank 0
+
+        ; 8B/ADF1
+
+    .endsection UnitWindowUnknown8BACADSection
+
+
     .section UnitWindowPageDrawersSection
 
       .al
@@ -4091,7 +4337,6 @@
 
       rlUnitWindowDrawSortLabel ; 8B/C5C6
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
@@ -4121,7 +4366,7 @@
         _C5FC
         asl a
         tax
-        jsr ($8BC61C,x)
+        jsr (aUnitWindowSortLabelDrawers,x)
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $000A, $80, $B044
@@ -4137,6 +4382,56 @@
         ; 8B/C61C
 
     .endsection Unsorted8BC5C6Section
+
+
+    .section Table8BC61CSection
+
+      .al
+      .xl
+
+      aUnitWindowSortLabelDrawers ; 8B/C61C
+
+        ; One per sort type (wUnitWindowSortType); $0000 marks an unused type.
+        .word <>rsUnitWindowDrawJoinOrderSortLabel
+        .word $C67F
+        .word $C696
+        .word $C6C3
+        .word $C6F0
+        .word $C71D
+        .word $C734
+        .word $C761
+        .word $C78E
+        .word $C7BB
+        .word $C7E8
+        .word $C7FF
+        .word $C82C
+        .word $C859
+        .word $C886
+        .word $C8B3
+        .word $C8E0
+        .word $0000
+        .word $0000
+        .word $0000
+        .word $0000
+        .word $0000
+        .word $C90D
+        .word $0000
+        .word $C924
+        .word $C951
+        .word $C951
+        .word $C951
+        .word $C951
+        .word $C951
+        .word $C951
+        .word $C951
+        .word $C951
+        .word $C951
+        .word $C951
+        .word $C952
+        .word $C972
+        .word $C989
+
+    .endsection Table8BC61CSection
 
 
     .section Unsorted8BC668Section
@@ -4168,6 +4463,596 @@
         ; 8B/C67F
 
     .endsection Unsorted8BC668Section
+
+
+    .section UnitWindowUnknown8BC67FSection
+
+      .al
+      .xl
+
+      rsUnknown8BC67F ; 8B/C67F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$0260
+        sta wR2
+        lda #$0005
+        sta wR0
+        ldx #$0000
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C696
+
+      rsUnknown8BC696 ; 8B/C696
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$020C
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$020D
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C6C3
+
+      rsUnknown8BC6C3 ; 8B/C6C3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$020E
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$020F
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C6F0
+
+      rsUnknown8BC6F0 ; 8B/C6F0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$0220
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$0221
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C71D
+
+      rsUnknown8BC71D ; 8B/C71D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$01C1
+        sta wR2
+        lda #$0003
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C734
+
+      rsUnknown8BC734 ; 8B/C734
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$01A9
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$01AA
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C761
+
+      rsUnknown8BC761 ; 8B/C761
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$0180
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$0181
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C78E
+
+      rsUnknown8BC78E ; 8B/C78E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$0182
+        sta wR2
+        lda #$0002
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$0188
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C7BB
+
+      rsUnknown8BC7BB ; 8B/C7BB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$0184
+        sta wR2
+        lda #$0002
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$0188
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C7E8
+
+      rsUnknown8BC7E8 ; 8B/C7E8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$01C4
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0004
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C7FF
+
+      rsUnknown8BC7FF ; 8B/C7FF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$018D
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$018E
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C82C
+
+      rsUnknown8BC82C ; 8B/C82C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$01C6
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$01C7
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C859
+
+      rsUnknown8BC859 ; 8B/C859
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$018F
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$01A0
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C886
+
+      rsUnknown8BC886 ; 8B/C886
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$0189
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$018A
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C8B3
+
+      rsUnknown8BC8B3 ; 8B/C8B3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$01A1
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$01A2
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C8E0
+
+      rsUnknown8BC8E0 ; 8B/C8E0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$018D
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$01A3
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C90D
+
+      rsUnknown8BC90D ; 8B/C90D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$01A6
+        sta wR2
+        lda #$0003
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C924
+
+      rsUnknown8BC924 ; 8B/C924
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$0186
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$0187
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C951
+
+      rsUnknown8BC951 ; 8B/C951
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 8B/C952
+
+      rsUnknown8BC952 ; 8B/C952
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta aCurrentTilemapInfo,b
+        lda #$8B00
+        sta lR18+1
+        lda #$C96A
+        sta lR18
+        ldx #$0001
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 8B/C96A
+
+    .endsection UnitWindowUnknown8BC67FSection
+
+
+    .section UnitWindowUnknown8BC972Section
+
+      .al
+      .xl
+
+      rsUnknown8BC972 ; 8B/C972
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$02EC
+        sta wR2
+        lda #$0004
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C989
+
+      rsUnknown8BC989 ; 8B/C989
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$3000
+        sta wR1
+        lda #$01AF
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0002
+        jsl rlDrawBG3TileRun
+        lda #$3000
+        sta wR1
+        lda #$01C0
+        sta wR2
+        lda #$0001
+        sta wR0
+        ldx #$0006
+        jsl rlDrawBG3TileRun
+        rts
+
+        .databank 0
+
+        ; 8B/C9B6
+
+    .endsection UnitWindowUnknown8BC972Section
 
 
     .section Unsorted8BC9B6Section
@@ -4254,7 +5139,7 @@
         .autsiz
         .databank ?
 
-        ; Fills the sort scores for wUnitWindowSortType through the jump table after this routine. FE5: rlUnitWindowGetSortScores.
+        ; Fills the sort scores for wUnitWindowSortType through aUnitWindowSortScoreGetters. FE5: rlUnitWindowGetSortScores.
 
         lda wUnitWindowSortType
         bmi _CA30
@@ -4269,7 +5154,7 @@
         _CA2B
         asl a
         tax
-        jsr ($8BCA31,x)
+        jsr (aUnitWindowSortScoreGetters,x)
 
         _CA30
         rtl
@@ -4279,6 +5164,57 @@
         ; 8B/CA31
 
     .endsection Unsorted8BCA1ASection
+
+
+    .section Table8BCA31Section
+
+      .al
+      .xl
+
+      aUnitWindowSortScoreGetters ; 8B/CA31
+
+        ; One per sort type (wUnitWindowSortType); $0000 marks an unused type.
+        .word <>rsUnitWindowGetJoinOrderSortScores
+        .word $CC31
+        .word $CAE5
+        .word $CB0A
+        .word $CB0A
+        .word $CB0A
+        .word $CBBA
+        .word $CCA9
+        .word $CB0A
+        .word $CCD1
+        .word $CB0A
+        .word $CB0A
+        .word $CB0A
+        .word $CB0A
+        .word $CB0A
+        .word $CB0A
+        .word $CB0A
+        .word $0000
+        .word $0000
+        .word $0000
+        .word $0000
+        .word $0000
+        .word $CB0A
+        .word $0000
+        .word $CB0A
+        .word $CBF8
+        .word $CBF8
+        .word $CBF8
+        .word $CBF8
+        .word $CBF8
+        .word $CBF8
+        .word $CBF8
+        .word $CBF8
+        .word $CBF8
+        .word $CBF8
+        .word $CC58
+        .word $CB0A
+        .word $CCFA
+        .word <>rsUnitWindowGetSavedOrderSortScores
+
+    .endsection Table8BCA31Section
 
 
     .section Unsorted8BCA7FSection
@@ -4376,6 +5312,391 @@
         ; 8B/CAE5
 
     .endsection Unsorted8BCAB4Section
+
+
+    .section UnitWindowUnknown8BCAE5Section
+
+      .al
+      .xl
+
+      rsUnknown8BCAE5 ; 8B/CAE5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0003
+        sta wUnitWindowSortType
+        jsr $8BCB0A
+        lda wUnitWindowSortDirection
+        bne _CAFB
+        jsl rlUnitWindowSetSortDescending
+        bra _CAFF
+
+
+        _CAFB
+        jsl rlUnitWindowSetSortAscending
+
+        _CAFF
+        lda #$0002
+        sta wUnitWindowSortType
+        jsr $8BCB0A
+        rts
+
+        .databank 0
+
+        ; 8B/CB0A
+
+      rsUnknown8BCB0A ; 8B/CB0A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowMaxRows
+        asl a
+        sta wR15
+        ldx #$0000
+
+        _CB14
+        lda aUnitWindowDeploymentSlots,x
+        beq _CB2D
+        sta wSelectedUnitDataRAMPointer,b
+        phx
+        jsl $8BCB2E
+        plx
+        sta aUnitWindowSortScores,x
+        inc x
+        inc x
+        cpx wR15
+        bne _CB14
+
+        _CB2D
+        rts
+
+        .databank 0
+
+        ; 8B/CB2E
+
+      rlUnknown8BCB2E ; 8B/CB2E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowSortType
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda $8BCB49,x
+        sta lR18+1
+        lda $8BCB48,x
+        sta lR18
+        jml [lR18]
+
+        .databank 0
+
+        ; 8B/CB48
+
+    .endsection UnitWindowUnknown8BCAE5Section
+
+
+    .section UnitWindowUnknown8BCBBASection
+
+      .al
+      .xl
+
+      rsUnknown8BCBBA ; 8B/CBBA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $8B
+        sep #$20
+        lda #$89
+        pha
+        plb
+        .databank $89
+        rep #$20
+        lda wUnitWindowMaxRows
+        asl a
+        sta wR15
+        ldx #$0000
+
+        _CBD0
+        lda aUnitWindowDeploymentSlots,x
+        beq _CBF5
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlUnitWindowGetEquippedWeaponID
+        bcc _CBE4
+        lda #$0075
+        bra _CBEB
+
+
+        _CBE4
+        tay
+        lda $C66E,b,y
+        and #$00FF
+
+        _CBEB
+        sta aUnitWindowSortScores,x
+        inc x
+        inc x
+        cpx wR15
+        bne _CBD0
+
+        _CBF5
+        plp
+        plb
+        .databank $89
+        rts
+
+        .databank 0
+
+        ; 8B/CBF8
+
+      rsUnknown8BCBF8 ; 8B/CBF8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowMaxRows
+        asl a
+        sta wR15
+        lda wUnitWindowSortType
+        sec
+        sbc #$0019
+        sta wR14
+        ldx #$0000
+
+        _CC0C
+        lda aUnitWindowDeploymentSlots,x
+        beq _CC30
+        sta wSelectedUnitDataRAMPointer,b
+        lda wR14
+        jsl rlGetSelectedUnitWeaponRank
+        php
+        inc a
+        inc a
+        eor #$FFFF
+        inc a
+        plp
+        adc #$0000
+        sta aUnitWindowSortScores,x
+        inc x
+        inc x
+        cpx wR15
+        bne _CC0C
+
+        _CC30
+        rts
+
+        .databank 0
+
+        ; 8B/CC31
+
+      rsUnknown8BCC31 ; 8B/CC31
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowMaxRows
+        asl a
+        sta wR15
+        ldx #$0000
+
+        _CC3B
+        lda aUnitWindowDeploymentSlots,x
+        beq _CC57
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitClassID
+        inc a
+        eor #$FFFF
+        inc a
+        sta aUnitWindowSortScores,x
+        inc x
+        inc x
+        cpx wR15
+        bne _CC3B
+
+        _CC57
+        rts
+
+        .databank 0
+
+        ; 8B/CC58
+
+      rsUnknown8BCC58 ; 8B/CC58
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowMaxRows
+        asl a
+        sta wR15
+        ldx #$0000
+
+        _CC62
+        lda aUnitWindowDeploymentSlots,x
+        beq _CCA8
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlUnknown87A415
+        lda $7E2000
+        beq _CC9E
+        phx
+        lda #$0000
+        sta wR13
+        sta wR14
+
+        _CC7D
+        tax
+        lda $7E2002,x
+        and #$00FF
+        beq _CC92
+        txa
+        asl a
+        tax
+        lda $8BCECA,x
+        beq _CC92
+        inc wR14
+
+        _CC92
+        inc wR13
+        lda wR13
+        cmp #$001F
+        bne _CC7D
+        lda wR14
+        plx
+
+        _CC9E
+        sta aUnitWindowSortScores,x
+        inc x
+        inc x
+        cpx wR15
+        bne _CC62
+
+        _CCA8
+        rts
+
+        .databank 0
+
+        ; 8B/CCA9
+
+      rsUnknown8BCCA9 ; 8B/CCA9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowMaxRows
+        asl a
+        sta wR15
+        ldx #$0000
+
+        _CCB3
+        lda aUnitWindowDeploymentSlots,x
+        beq _CCD0
+        sta wSelectedUnitDataRAMPointer,b
+        lda #$0000
+        sta wRoutineVariable1,b
+        jsl rlGetFirstWeaponBattleMight
+        sta aUnitWindowSortScores,x
+        inc x
+        inc x
+        cpx wR15
+        bne _CCB3
+
+        _CCD0
+        rts
+
+        .databank 0
+
+        ; 8B/CCD1
+
+      rsUnknown8BCCD1 ; 8B/CCD1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowMaxRows
+        asl a
+        sta wR15
+        ldx #$0000
+
+        _CCDB
+        lda aUnitWindowDeploymentSlots,x
+        beq _CCF9
+        sta wSelectedUnitDataRAMPointer,b
+        lda #$FFFF
+        jsl rlUnknown84FEA1
+        clc
+        adc #$0080
+        sta aUnitWindowSortScores,x
+        inc x
+        inc x
+        cpx wR15
+        bne _CCDB
+
+        _CCF9
+        rts
+
+        .databank 0
+
+        ; 8B/CCFA
+
+      rsUnknown8BCCFA ; 8B/CCFA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowMaxRows
+        asl a
+        sta wR15
+        ldx #$0000
+
+        _CD04
+        lda aUnitWindowDeploymentSlots,x
+        beq _CD1F
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitLivingTalkTarget
+        eor #$FFFF
+        inc a
+        sta aUnitWindowSortScores,x
+        inc x
+        inc x
+        cpx wR15
+        bne _CD04
+
+        _CD1F
+        rts
+
+        .databank 0
+
+        ; 8B/CD20
+
+    .endsection UnitWindowUnknown8BCBBASection
 
 
     .section Unsorted8BCD20Section
@@ -4718,7 +6039,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $22, every frame: unless an action, sort selection or swap is under way, runs the current page's page-turn input from the table after this routine.
+        ; Game state routine $22, every frame: unless an action, sort selection or swap is under way, runs the current page's page-turn input from aUnitWindowPageTurnInputHandlers.
 
         phb
         php
@@ -4741,7 +6062,7 @@
         _A83D
         asl a
         tax
-        jsr ($8BA845,x)
+        jsr (aUnitWindowPageTurnInputHandlers,x)
 
         _A842
         plp

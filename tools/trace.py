@@ -78,9 +78,10 @@ def built_routines():
 def table_entries():
     """(address, m8, x8, table) for raw entries in pointer tables in the build whose
     other entries are routines. Widths come from the labelled entries. A raw .word
-    entry ($XXXX or <>$XXXX) is taken to be in the table's own bank."""
+    entry ($XXXX or <>$XXXX) is taken to be in the table's own bank; words below $8000
+    (unused slots) belong to the table but are not followed."""
     starts = {name: (m8, x8) for _, name, m8, x8 in built_routines()}
-    entry = re.compile(r'^\s+\.(addr|word|long) (?:<>)?(\$[0-9A-F]{6}|\$[89A-F][0-9A-F]{3}|[A-Za-z]\w*)\s*(;.*)?$')
+    entry = re.compile(r'^\s+\.(addr|word|long) (?:<>)?(\$[0-9A-F]{6}|\$[0-9A-F]{4}|[A-Za-z]\w*)\s*(;.*)?$')
     for f in glob.glob('engine/**/*.asm', recursive=True):
         lines = open(f, encoding='utf-8').read().split('\n') + ['']
         block, table, bank = [], None, 0
@@ -93,7 +94,10 @@ def table_entries():
                 continue
             if block:
                 named = [starts[x] for x in block if x in starts]
-                raw = [int(x[1:], 16) | (bank if len(x) == 5 else 0) for x in block if x.startswith('$')]
+                # Words below $8000 (unused slots such as $0000) stay part of the
+                # table but are not code.
+                raw = [int(x[1:], 16) | (bank if len(x) == 5 else 0) for x in block
+                       if x.startswith('$') and (len(x) != 5 or int(x[1:], 16) >= 0x8000)]
                 if named and raw:
                     m8, x8 = max(set(named), key=named.count)
                     for a in raw:

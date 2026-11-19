@@ -47,12 +47,14 @@ def labels_at():
 
 def bound_before(lines, i):
     """N from a `cmp #N` within the few lines before the jump, if any."""
-    for l in reversed(lines[max(0, i - 8):i]):
+    # A `bra` to itself (the trap for an index out of range) often sits between
+    # the bound and the jump, so `bra` does not end the search.
+    for l in reversed(lines[max(0, i - 12):i]):
         m = re.match(r'\s+cmp #\$?([0-9A-Fa-f]+)\b', l)
         if m:
             v = m.group(1)
             return int(v, 16) if '$' in l else int(v)
-        if re.match(r'\s+(jsr|jsl|rts|rtl|bra|jmp|jml)\b', l):
+        if re.match(r'\s+(jsr|jsl|rts|rtl|jmp|jml)\b', l):
             return None
     return None
 

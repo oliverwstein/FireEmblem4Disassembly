@@ -631,7 +631,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $2E, every frame: runs the routine for wGameStateStep from the table after this routine (0 input, 1 nothing while fading out).
+        ; Game state routine $2E, every frame: runs the routine for wGameStateStep from aSkillWindowStepHandlers (0 input, 1 nothing while fading out).
 
         phb
         php
@@ -641,7 +641,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        jsr ($8BD7B9,x)
+        jsr (aSkillWindowStepHandlers,x)
         plp
         plb
         .databank $8B
@@ -652,6 +652,20 @@
         ; 8B/D7B9
 
     .endsection Unsorted8BD794Section
+
+
+    .section Table8BD7B9Section
+
+      .al
+      .xl
+
+      aSkillWindowStepHandlers ; 8B/D7B9
+
+        ; One per wGameStateStep.
+        .word <>rsSkillWindowHandleInput
+        .word <>rsSkillWindowWaitStep
+
+    .endsection Table8BD7B9Section
 
 
     .section Unsorted8BD7BDSection

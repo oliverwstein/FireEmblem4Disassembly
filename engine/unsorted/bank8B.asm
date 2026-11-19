@@ -1241,7 +1241,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        jsr ($8B9726,x)
+        jsr (aUnknown8B9726,x)
         plp
         plb
         .databank $8B
@@ -1252,6 +1252,21 @@
         ; 8B/9726
 
     .endsection Unsorted8B96CFSection
+
+
+    .section Table8B9726Section
+
+      .al
+      .xl
+
+      aUnknown8B9726 ; 8B/9726
+
+        ; Jump table of rlUnknown8B9717.
+        .word <>rsUnknown8B9759
+        .word <>rsUnknown8B972C
+        .word $973C
+
+    .endsection Table8B9726Section
 
 
     .section Unsorted8B972CSection
@@ -1280,6 +1295,46 @@
         ; 8B/973C
 
     .endsection Unsorted8B972CSection
+
+
+    .section Unsorted8B973CSection
+
+      .al
+      .xl
+
+      rsUnknown8B973C ; 8B/973C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0007
+        bne _974D
+        sep #$20
+        lda bBufferINIDISP
+        and #$0F
+        beq _9750
+        dec bBufferINIDISP
+
+        _974D
+        rep #$20
+        rts
+
+
+        _9750
+        .as
+        rep #$20
+        lda $0594,b
+        sta wGameStateStep,b
+        rts
+
+        .databank 0
+
+        ; 8B/9759
+
+    .endsection Unsorted8B973CSection
 
 
     .section Unsorted8B9759Section
