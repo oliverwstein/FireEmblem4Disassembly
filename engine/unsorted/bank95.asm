@@ -106,9 +106,9 @@
         tax
         pla
 
-        lda $998D84+1,x
+        lda aBattleBannerTable+1,x
         sta lR45+1
-        lda $998D84,x
+        lda aBattleBannerTable,x
         sta lR45
         lda #(`$7FC200)<<8
         sta lR47+1
@@ -118,9 +118,9 @@
         jsl rlDecompressSingle
         plx
 
-        lda $998D84+3+1,x
+        lda aBattleBannerTable+3+1,x
         sta lR18+1
-        lda $998D84+3,x
+        lda aBattleBannerTable+3,x
         sta lR18
         ldx #0
         ldy #0
@@ -159,9 +159,9 @@
         tax
         pla
 
-        lda $998D84+1,x
+        lda aBattleBannerTable+1,x
         sta lR45+1
-        lda $998D84,x
+        lda aBattleBannerTable,x
         sta lR45
         lda #(`$7FC000)<<8
         sta lR47+1
@@ -171,9 +171,9 @@
         jsl rlDecompressSingle
         plx
 
-        lda $998D84+3+1,x
+        lda aBattleBannerTable+3+1,x
         sta lR18+1
-        lda $998D84+3,x
+        lda aBattleBannerTable+3,x
         sta lR18
 
         ldx #0

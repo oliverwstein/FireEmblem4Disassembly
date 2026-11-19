@@ -1470,6 +1470,55 @@
     .endsection Unsorted81AD6ASection
 
 
+    .section Unsorted81AD8ESection
+
+      .al
+      .xl
+
+      rsUnknown81AD8E ; 81/AD8E
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda $0E7B,b
+        bit #$0040
+        beq _End
+
+          bit #$0020
+          bne _End
+
+            lda wUnknown000D79,b
+            bit #$0080
+            beq _End
+
+              lda #$0080
+              trb wUnknown000D79,b
+
+              ldx $0E82,b
+              lda aAIUnitList[0].UnitRAMPointer,x
+              sta wSelectedUnitDataRAMPointer,b
+
+              lda #$0021
+              sta bEventActionIdentifier,b
+              lda wCurrentTurn,b
+              sta wEventEngineArgument1,b
+              lda wActiveFactionSlot,b
+              sta wEventEngineArgument2,b
+              jsl rlGetSelectedUnitAI
+              sta wEventEngineArgument3,b
+              jsl rlGetSelectedUnitCharacterID
+              sta wEventEngineArgument4,b
+              jsl rlGetAndRunChapterMapEventConditions
+
+        _End
+        rts
+
+        .databank 0
+
+    .endsection Unsorted81AD8ESection
+
+
     .section Unsorted81ADD8Section
 
       .al

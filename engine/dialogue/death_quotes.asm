@@ -627,9 +627,9 @@
         sta lR19
         jsl rlAppendDecompList
 
-        lda #(`$9CEAEE)<<8
+        lda #(`aUnknown9CEAEE)<<8
         sta lR18+1
-        lda #<>$9CEAEE
+        lda #<>aUnknown9CEAEE
         sta lR18
         lda #(`$7E8C88)<<8
         sta lR19+1
@@ -668,33 +668,33 @@
           lda #0
 
         +
-        ldx #$9C00
+        ldx #(`g4bppcBattleBannerLeonster)<<8
         stx lR18+1
         asl a
         tax
-        lda aUnknown91B01C,x
+        lda aBattleBannerGraphicsPointers,x
         sta lR18
         plp
         rtl
 
         .databank 0
 
-      aUnknown91B01C ; 91/B01C
+      aBattleBannerGraphicsPointers ; 91/B01C
 
-        .word <>$9CD95E
-        .word <>$9CDA67
-        .word <>$9CDBB8
-        .word <>$9CDCEF
-        .word <>$9CDE2B
-        .word <>$9CDF6F
-        .word <>$9CE0C0
-        .word <>$9CE20F
-        .word <>$9CE367
-        .word <>$9CE494
-        .word <>$9CE5D0
-        .word <>$9CE706
-        .word <>$9CE845
-        .word <>$9CE98C
+        .word <>g4bppcBattleBannerLeonster
+        .word <>g4bppcBattleBannerDozel
+        .word <>g4bppcBattleBannerYngvi
+        .word <>g4bppcBattleBannerChalphy
+        .word <>g4bppcBattleBannerNordion
+        .word <>g4bppcBattleBannerIsaach
+        .word <>g4bppcBattleBannerThracia
+        .word <>g4bppcBattleBannerVelthomer
+        .word <>g4bppcBattleBannerFreege
+        .word <>g4bppcBattleBannerSilesse
+        .word <>g4bppcBattleBannerEdda
+        .word <>g4bppcBattleBannerBelhalla
+        .word <>g4bppcBattleBannerLoptr
+        .word <>g4bppcBattleBannerDefault
 
       rlUnknown91B038 ; 91/B038
 

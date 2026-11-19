@@ -42,91 +42,107 @@
   ; For unit movement and map scrolling
   ; Maps only support directions, speed and end
 
+  ; Movement script command codes. The MAP_* macros below emit these;
+  ; code that builds movement scripts uses the numbers directly.
+
+  MAP_CMD_LEFT       = 1
+  MAP_CMD_RIGHT      = 2
+  MAP_CMD_UP         = 3
+  MAP_CMD_DOWN       = 4
+  MAP_CMD_UP_LEFT    = 5
+  MAP_CMD_DOWN_LEFT  = 6
+  MAP_CMD_UP_RIGHT   = 7
+  MAP_CMD_DOWN_RIGHT = 8
+  MAP_CMD_MULTIPLE   = 9 ; added to a direction: move Count tiles
+  MAP_CMD_PAUSE      = $12
+  MAP_CMD_END        = $80
+  MAP_CMD_HALT       = $81
+
   MAP_LEFT .segment
-    .byte 1
+    .byte MAP_CMD_LEFT
   .endsegment
 
   MAP_RIGHT .segment
-    .byte 2
+    .byte MAP_CMD_RIGHT
   .endsegment
 
   MAP_UP .segment
-    .byte 3
+    .byte MAP_CMD_UP
   .endsegment
 
   MAP_DOWN .segment
-    .byte 4
+    .byte MAP_CMD_DOWN
   .endsegment
 
   MAP_UP_LEFT .segment
-    .byte 5
+    .byte MAP_CMD_UP_LEFT
   .endsegment
 
   MAP_DOWN_LEFT .segment
-    .byte 6
+    .byte MAP_CMD_DOWN_LEFT
   .endsegment
 
   MAP_UP_RIGHT .segment
-    .byte 7
+    .byte MAP_CMD_UP_RIGHT
   .endsegment
 
   MAP_DOWN_RIGHT .segment
-    .byte 8
+    .byte MAP_CMD_DOWN_RIGHT
   .endsegment
 
-  MAP_LEFT_MULTIPLE .segment Count 
-    .byte 1 + 9 ; $0A
+  MAP_LEFT_MULTIPLE .segment Count
+    .byte MAP_CMD_LEFT + MAP_CMD_MULTIPLE ; $0A
     .byte \Count
   .endsegment
 
   MAP_RIGHT_MULTIPLE .segment Count
-    .byte 2 + 9 ; $0B
+    .byte MAP_CMD_RIGHT + MAP_CMD_MULTIPLE ; $0B
     .byte \Count
   .endsegment
 
   MAP_UP_MULTIPLE .segment Count
-    .byte 3 + 9 ; $0C
+    .byte MAP_CMD_UP + MAP_CMD_MULTIPLE ; $0C
     .byte \Count
   .endsegment
 
   MAP_DOWN_MULTIPLE .segment Count
-    .byte 4 + 9 ; $0D
+    .byte MAP_CMD_DOWN + MAP_CMD_MULTIPLE ; $0D
     .byte \Count
   .endsegment
 
   MAP_UP_LEFT_MULTIPLE .segment Count
-    .byte 5 + 9 ; $0E
+    .byte MAP_CMD_UP_LEFT + MAP_CMD_MULTIPLE ; $0E
     .byte \Count
   .endsegment
 
   MAP_DOWN_LEFT_MULTIPLE .segment Count
-    .byte 6 + 9 ; $0F
+    .byte MAP_CMD_DOWN_LEFT + MAP_CMD_MULTIPLE ; $0F
     .byte \Count
   .endsegment
 
   MAP_UP_RIGHT_MULTIPLE .segment Count
-    .byte 7 + 9 ; $10
+    .byte MAP_CMD_UP_RIGHT + MAP_CMD_MULTIPLE ; $10
     .byte \Count
   .endsegment
 
   MAP_DOWN_RIGHT_MULTIPLE .segment Count
-    .byte 8 + 9 ; $11
+    .byte MAP_CMD_DOWN_RIGHT + MAP_CMD_MULTIPLE ; $11
     .byte \Count
   .endsegment
 
   MAP_PAUSE .segment Time
-    .byte 9 + 9 ; $12
+    .byte MAP_CMD_PAUSE ; $12
     .byte \Time
   .endsegment
 
   MAP_END .segment
-    .byte $80
+    .byte MAP_CMD_END
   .endsegment
 
   MAP_HALT .segment
     ; If all scripted moving units are halting, continue
     ; executing events.
-    .byte $81
+    .byte MAP_CMD_HALT
   .endsegment
 
   MAP_82 .segment

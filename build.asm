@@ -85,6 +85,7 @@
   .include "engine/battle/battle.asm"
   .include "engine/battle/battle_stats.asm"
   .include "engine/battle/effects.asm"
+  .include "engine/battle/banners.asm"
   .include "engine/battle/scripted_crits.asm"
   .include "engine/ai/actions.asm"
   .include "engine/ai/attack.asm"
@@ -512,6 +513,13 @@
 
     .here
 
+    * = $01AD8E
+    .logical $81AD8E
+
+      .dsection Unsorted81AD8ESection
+
+    .here
+
     * = $01ADD8
     .logical $81ADD8
 
@@ -565,6 +573,13 @@
     .logical $81B259
 
       .dsection ASMCGiveToSupplyMenuIfInventoryFullSection
+
+    .here
+
+    * = $01B270
+    .logical $81B270
+
+      .dsection ASMCGiveItemFromSlot8Section
 
     .here
 
@@ -1111,6 +1126,13 @@
 
     .here
 
+    * = $048DF4
+    .logical $848DF4
+
+      .dsection FatherChildrenSection
+
+    .here
+
     * = $048EA0
     .logical $848EA0
 
@@ -1589,6 +1611,13 @@
 
     .here
 
+    * = $05BC8C
+    .logical $85BC8C
+
+      .dsection ItemObtainedTextSection
+
+    .here
+
     * = $05BC9E
     .logical $85BC9E
 
@@ -1773,6 +1802,13 @@
 
     .here
 
+    * = $0780F9
+    .logical $8780F9
+
+      .dsection MapMenu8780F9Section
+
+    .here
+
     * = $07819A
     .logical $87819A
 
@@ -1909,10 +1945,24 @@
 
     .here
 
+    * = $07B197
+    .logical $87B197
+
+      .dsection EventMovementTargetDistanceMapSection
+
+    .here
+
     * = $07B4ED
     .logical $87B4ED
 
       .dsection EventMovementMovementScriptBufferAddressesSection
+
+    .here
+
+    * = $07B4FD
+    .logical $87B4FD
+
+      .dsection EventMovementDirectionLookupSection
 
     .here
 
@@ -2123,6 +2173,13 @@
     .logical $87FB5E
 
       .dsection Unsorted87FB5ESection
+
+    .here
+
+    * = $07FBC5
+    .logical $87FBC5
+
+      .dsection FillItemsOwnerAndSlotDataSection
 
     .here
 
@@ -2511,6 +2568,13 @@
     .logical $8AE199
 
       .dsection Unsorted8AE199Section
+
+    .here
+
+    * = $0AE1A1
+    .logical $8AE1A1
+
+      .dsection ProcUnknown8AE199InitSection
 
     .here
 
@@ -4080,6 +4144,42 @@
 
     .here
 
+    * = $198D84
+    .logical $998D84
+
+      .dsection BattleBannerTableSection
+
+      ; 99/8DD8
+
+    .here
+
+    * = $1CD95E
+    .logical $9CD95E
+
+      g4bppcBattleBannerLeonster   .text ROM[$1CD95E:$1CDA67] ; 9CD95E
+      g4bppcBattleBannerDozel      .text ROM[$1CDA67:$1CDBB8] ; 9CDA67
+      g4bppcBattleBannerYngvi      .text ROM[$1CDBB8:$1CDCEF] ; 9CDBB8
+      g4bppcBattleBannerChalphy    .text ROM[$1CDCEF:$1CDE2B] ; 9CDCEF
+      g4bppcBattleBannerNordion    .text ROM[$1CDE2B:$1CDF6F] ; 9CDE2B
+      g4bppcBattleBannerIsaach     .text ROM[$1CDF6F:$1CE0C0] ; 9CDF6F
+      g4bppcBattleBannerThracia    .text ROM[$1CE0C0:$1CE20F] ; 9CE0C0
+      g4bppcBattleBannerVelthomer  .text ROM[$1CE20F:$1CE367] ; 9CE20F
+      g4bppcBattleBannerFreege     .text ROM[$1CE367:$1CE494] ; 9CE367
+      g4bppcBattleBannerSilesse    .text ROM[$1CE494:$1CE5D0] ; 9CE494
+      g4bppcBattleBannerEdda       .text ROM[$1CE5D0:$1CE706] ; 9CE5D0
+      g4bppcBattleBannerBelhalla   .text ROM[$1CE706:$1CE845] ; 9CE706
+      g4bppcBattleBannerLoptr      .text ROM[$1CE845:$1CE98C] ; 9CE845
+      g4bppcBattleBannerDefault    .text ROM[$1CE98C:$1CEAEE] ; 9CE98C
+
+      ; Compressed. The original notes call these two tilemaps.
+      ; rlUnknown91AFC2 decompresses the first along with a banner.
+      aUnknown9CEAEE               .text ROM[$1CEAEE:$1CEBED] ; 9CEAEE
+      aUnknown9CEBED               .text ROM[$1CEBED:$1CECA6] ; 9CEBED
+
+      ; 9C/ECA6
+
+    .here
+
     * = $1D8000
     .logical $9D8000
 
@@ -4480,6 +4580,13 @@
     .logical $9EF79D
 
       .dsection Unsorted9EF79DSection
+
+    .here
+
+    * = $1EF811
+    .logical $9EF811
+
+      .dsection BelhallaAttackingMagePositionsSection
 
     .here
 

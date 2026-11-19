@@ -72,6 +72,42 @@
     .endsection ASMCGiveToSupplyMenuIfInventoryFullSection
 
 
+    .section ASMCGiveItemFromSlot8Section
+
+      .al
+      .xl
+
+      rsUnknown81B270 ; 81/B270
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #8
+        jsl rlGetItemIDByInventorySlot
+        jsl rlGetItemDataROMPointer
+        lda wCurrentItemDataROMPointer,b
+        sta aProcSystem.wInput0,b
+        lda wSelectedUnitDataRAMPointer,b
+        sta aProcSystem.wInput3,b
+        jsl $85B52F
+        jsl $85B520
+        lda wSelectedUnitDataRAMPointer,b
+        sta aProcSystem.wInput0,b
+        lda wCurrentItemDataROMPointer,b
+        sta aProcSystem.wInput1,b
+        lda #(`procUnknown85B18F)<<8
+        sta lR44+1
+        lda #<>procUnknown85B18F
+        sta lR44
+        jsl rlEventEngineCreateProc
+        rts
+
+        .databank 0
+
+    .endsection ASMCGiveItemFromSlot8Section
+
+
     .section ASMCGiveJuliaLightIfNoWeaponSection
 
       .al

@@ -777,6 +777,19 @@
     .endsection Unsorted85BC1BSection
 
 
+    .section ItemObtainedTextSection
+
+      .al
+      .xl
+
+      aItemObtainedText ; 85/BC8C
+
+        .enc "SJIS"
+        .text "　をてにいれた！\n"
+
+    .endsection ItemObtainedTextSection
+
+
     .section Unsorted85BC9ESection
 
       .al

@@ -423,7 +423,7 @@
         lda wR0
         jsl rlGetFatherUnitsChildrenRAMPointers
 
-        lda wDaughterCharacterROMPointer
+        lda wDaughterUnitRAMPointer
         beq rsEpiloguePriorityHandleUnprocessedCharacters._End
 
           sta wSelectedUnitDataRAMPointer,b
@@ -516,7 +516,7 @@
         sta wR3
         lda wR0
         jsl rlGetFatherUnitsChildrenRAMPointers
-        lda wSonCharacterROMPointer
+        lda wSonUnitRAMPointer
         beq rsEpiloguePriorityHandleUnprocessedCharacters._End
 
         sta wSelectedUnitDataRAMPointer,b
@@ -553,7 +553,7 @@
         lda wR0
         jsl rlGetFatherUnitsChildrenRAMPointers
 
-        lda wDaughterCharacterROMPointer
+        lda wDaughterUnitRAMPointer
         beq rsEpiloguePriorityHandleUnprocessedCharacters._End
 
         sta wSelectedUnitDataRAMPointer,b
@@ -590,7 +590,7 @@
 
         lda wR0
         jsl rlGetFatherUnitsChildrenRAMPointers
-        lda wSonCharacterROMPointer
+        lda wSonUnitRAMPointer
         beq rsEpiloguePriorityHandleUnprocessedCharacters._End
 
         sta wSelectedUnitDataRAMPointer,b

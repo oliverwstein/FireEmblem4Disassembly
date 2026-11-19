@@ -638,6 +638,41 @@
     .endsection Unsorted8AE199Section
 
 
+    .section ProcUnknown8AE199InitSection
+
+      .al
+      .xl
+
+      rlProcUnknown8AE199Init ; 8A/E1A1
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlSavePaletteBufferColorsToRAM
+
+          .long $7E9BA8
+          .word len(Palette.Colors)
+          .word aOAMPaletteBuffer.aPalette4 - aBGPaletteBuffer
+
+        ldx #size(Palette)-2
+        lda #0
+
+          -
+          sta aOAMPaletteBuffer.aPalette4,b,x
+          dec x
+          dec x
+          bpl -
+
+        lda #0
+        sta $7F808B
+        rtl
+
+        .databank 0
+
+    .endsection ProcUnknown8AE199InitSection
+
+
     .section Unsorted8AE1C1Section
 
       .al

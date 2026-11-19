@@ -1042,8 +1042,8 @@
 
   .virtual $7E2000
 
-    wSonCharacterROMPointer .word ?       ; $7E2000
-    wDaughterCharacterROMPointer .word ?  ; $7E2002
+    wSonUnitRAMPointer .word ?       ; $7E2000
+    wDaughterUnitRAMPointer .word ?  ; $7E2002
 
   .endvirtual
 

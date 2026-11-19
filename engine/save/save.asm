@@ -149,6 +149,114 @@
     .endsection FillUnitsDeploymentSaveDataSection
 
 
+    .section FillItemsOwnerAndSlotDataSection
+
+      .as
+      .xl
+
+      rlFillItemsOwnerAndSlotData ; 87/FBC5
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+
+        phx
+        lda #PI_IronSword1
+        sta lR18
+
+        jsl rlGetItemRAMStructEntryByPlayerItemIndex
+
+          _Loop
+          ldx wCurrentItemDataRAMPointer,b
+          lda structItemRAMEntry.ItemState,b,x
+          and #$00FF
+          cmp #ItemStateInventory
+          beq +
+
+            cmp #ItemStateSupply
+            bne _Next
+
+          +
+          pha
+          lda structItemRAMEntry.OwnerRAMPointer,b,x
+          sta wSelectedUnitDataRAMPointer,b
+          jsl rlGetSelectedUnitCharacterID
+          cmp #Gerrard
+          bcc +
+
+            brk
+
+          +
+          and #$003F
+          sta lR19
+
+          plx
+          cpx #ItemStateSupply
+          beq _FC33
+
+            lda #(`aUnit1DataBuffer._Inventory)<<8
+            sta lRAMBufferPointer+1,b
+            lda #<>aUnit1DataBuffer._Inventory
+            sta lRAMBufferPointer,b
+            jsl rlSaveCharacterInventoryToBuffer
+            ldx #0
+
+            -
+            lda aUnit1DataBuffer._Inventory.Items,x
+            cmp lR18
+            beq +
+
+              inc x
+              inc x
+              cpx #7 * 2
+              bne -
+
+                brk
+
+            +
+            txa
+            asl a
+            asl a
+            asl a
+            asl a
+            asl a
+            ora lR19
+
+          _FC33
+          ldx wCurrentItemDataRAMPointer,b
+          sta structItemRAMEntry.OwnerID_InventorySlot,b,x
+
+          _Next
+          lda wCurrentItemDataRAMPointer,b
+          clc
+          adc #size(structItemRAMEntry)
+          sta wCurrentItemDataRAMPointer,b
+
+          lda lR18
+          inc a
+          sta lR18
+          cmp #len(aItemRAMData._Entry) + 1
+          bne _Loop
+
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+    .endsection FillItemsOwnerAndSlotDataSection
+
+
     .section FillItemDurabilityDataSection
 
       .al

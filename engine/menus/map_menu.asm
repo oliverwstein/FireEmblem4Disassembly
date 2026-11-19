@@ -297,6 +297,71 @@
     .endsection DialogueBoxMapMenuDataSection
 
 
+    .section MapMenu8780F9Section
+
+      .al
+      .xl
+
+      rlUnknown8780F9 ; 87/80F9
+
+        .al
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        phy
+        lda #$0027
+        jsl rlUnknown87819A
+        bcs +
+
+          ldy lR19
+          sep #$20
+          lda lR19+2
+          pha
+          rep #$20
+          plb
+
+          lda lMapMenuRAMEntryPointer
+          sta structMapMenu.Unknown3,b,y
+          lda lMapMenuRAMEntryPointer+1
+          sta structMapMenu.Unknown3+1,b,y
+          bra ++
+
+        +
+        lda lMapMenuRAMEntryPointer,b
+        sta lUnknown000522,b
+        lda lMapMenuRAMEntryPointer+1,b
+        sta lUnknown000522+1,b
+
+        +
+        phk
+        plb
+
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+
+        lda #0
+        sta structMapMenu.Unknown3,b,y
+        sta structMapMenu.Unknown3+1,b,y
+        ply
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/8148
+
+    .endsection MapMenu8780F9Section
+
+
     .section Unknown87819ASection
 
       .al

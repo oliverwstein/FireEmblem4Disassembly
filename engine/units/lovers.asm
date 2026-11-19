@@ -159,6 +159,103 @@
     .endsection LoversSection
 
 
+    .section FatherChildrenSection
+
+      .al
+      .xl
+
+      rlGetFatherUnitsChildrenRAMPointers ; 84/8DF4
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; A = father CharacterID
+
+        ; Output:
+        ; wSonUnitRAMPointer = the unit RAM pointer of his son, or 0
+        ; wDaughterUnitRAMPointer = the unit RAM pointer of his daughter, or 0
+        ; If he has more than one, the last one in aUnitRAMPointers is kept.
+
+        phb
+        php
+        phk
+        plb
+        phx
+
+        ldx wSelectedUnitDataRAMPointer,b
+        phx
+        ldx wR0
+        phx
+        ldx wR1
+        phx
+
+        sta wR0
+
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+
+        lda aUnitRAMPointers._Header.CurrentStructCount
+        and #$00FF
+        asl a
+        sta wR1
+
+        stz wSonUnitRAMPointer
+        stz wDaughterUnitRAMPointer
+
+        ldx #0
+
+          _Loop
+          lda aUnitRAMPointers._Entry[0],x
+          sta wSelectedUnitDataRAMPointer,b
+          jsl rlGetSelectedUnitFatherID
+          cmp wR0
+          bne _Next
+
+            jsl rlGetSelectedUnitGender
+            cmp #GenderMale
+            bne _Female
+
+              lda wSelectedUnitDataRAMPointer,b
+              sta @l wSonUnitRAMPointer
+              bra _Next
+
+            _Female
+            lda wSelectedUnitDataRAMPointer,b
+            sta @l wDaughterUnitRAMPointer
+
+          _Next
+          inc x
+          inc x
+          cpx wR1
+          bcc _Loop
+
+        stz wSelectedUnitDataRAMPointer,b
+
+        pla
+        sta wR1
+        pla
+        sta wR0
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 84/8E5D
+
+    .endsection FatherChildrenSection
+
+
     .section CheckUnitsMarriedToEachOtherSection
 
       .al

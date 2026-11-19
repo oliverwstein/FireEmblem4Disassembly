@@ -231,6 +231,23 @@
     .endsection Unknown9EF791Section
 
 
+    .section BelhallaAttackingMagePositionsSection
+
+      .al
+      .xl
+
+      aBelhallaAttackingMagePositions ; 9E/F811
+
+        .word pack([4, 50])
+        .word pack([8, 49])
+        .word pack([4, 48])
+        .word pack([8, 47])
+        .word pack([4, 46])
+        .word $FFFF
+
+    .endsection BelhallaAttackingMagePositionsSection
+
+
     .section BelhallaAttackingMageDirectionsSection
 
       .al
