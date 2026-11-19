@@ -13,6 +13,7 @@ EN_ROM/*.*
 /*.spc
 /*.bin
 
+.DS_Store
 
 *.~lock*
 *.csv.asm
