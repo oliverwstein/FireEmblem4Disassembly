@@ -2192,151 +2192,51 @@
 
       .dsection GenerationTransferSection
 
-      ; 84/822D
-
-    .here
-
-    * = $048397
-    .logical $848397
-
       .dsection UnitsSection
-
-      ; 84/862C
-
-    .here
-
-    * = $0486A0
-    .logical $8486A0
 
       .dsection Unsorted8486A0Section
 
-    .here
-
-    * = $048726
-    .logical $848726
-
       .dsection FindCharacterByGenerationIDSection
-
-    .here
-
-    * = $048776
-    .logical $848776
 
       .dsection GetUnitByCoordinatesSection
 
-    .here
-
-    * = $0488AE
-    .logical $8488AE
-
       .dsection Unknown8488AESection
-
-    .here
-
-    * = $0488EC
-    .logical $8488EC
 
       .dsection LoadUNITGroupMapSpritesSection
 
-    .here
-
-    * = $048AED
-    .logical $848AED
-
       .dsection UnitsTable848A0DEntriesSection
-
-    .here
-
-    * = $048BFE
-    .logical $848BFE
 
       .dsection Unsorted848BFESection
 
-    .here
-
-    * = $048C31
-    .logical $848C31
-
       .dsection LoversSection
-
-      ; 84/8CFE
-
-    .here
-
-    * = $048CFE
-    .logical $848CFE
 
       .dsection CalculateTacticsRankingSection
 
-    .here
-
-    * = $048DF4
-    .logical $848DF4
-
       .dsection FatherChildrenSection
 
-    .here
-
-    * = $048E5D
-    .logical $848E5D
-
       .dsection Unsorted848E5DSection
-
-    .here
-
-    * = $048EA0
-    .logical $848EA0
 
       .dsection CheckUnitsMarriedToEachOtherSection
       .dsection EvaluateSpecifiedRankingScoreSection
 
-    .here
-
-    * = $048EFB
-    .logical $848EFB
-
       .dsection Unsorted848EFBSection
-
-    .here
-
-    * = $048F17
-    .logical $848F17
 
       .dsection UnitCreationSection
 
       .dsection UnitDataSection
 
-      ; 84/99B5
-
-    .here
-
-    * = $0499B5
-    .logical $8499B5
-
       .dsection Unsorted8499B5Section
 
-    .here
-
-    * = $049AE5
-    .logical $849AE5
+      .dsection LoadExtendedCharacterDataFromBufferSection
 
       .dsection UnitStatsSection
 
-      ; 84/9FB9
-
-    .here
-
-    * = $049FC4
-    .logical $849FC4
+      .dsection Unknown849FB9Section
+      .dsection GetSelectedUnitFactionNameIDSection
 
       .dsection UnitClassInfoSection
 
-      ; 84/A282
-
-    .here
-
-    * = $04A333
-    .logical $84A333
+      .dsection LoadCharacterROMDataFromBufferSection
 
       .dsection UnitCharacterInfoSection
 
@@ -2344,474 +2244,138 @@
 
       .dsection ActionLevelUpSection
 
-      ; 84/ABB0
-
-    .here
-
-    * = $04ABB0
-    .logical $84ABB0
-
       .dsection Unsorted84ABB0Section
-
-    .here
-
-    * = $04AC24
-    .logical $84AC24
 
       .dsection Unsorted84AC24Section
 
-    .here
-
-    * = $04ACE7
-    .logical $84ACE7
-
       .dsection LevelUpSection
-
-      ; 84/AF17
-
-    .here
-
-    * = $04AF17
-    .logical $84AF17
 
       .dsection Unsorted84AF17Section
 
-    .here
-
-    * = $04AF57
-    .logical $84AF57
-
       .dsection Unsorted84AF57Section
-
-    .here
-
-    * = $04AF9E
-    .logical $84AF9E
 
       .dsection GetTurnStartEffectsByStatusSection
 
-    .here
-
-    * = $04B094
-    .logical $84B094
-
       .dsection GetChurchHealingSection
-
-    .here
-
-    * = $04B0C9
-    .logical $84B0C9
 
       .dsection GetCastleHealingAmountSection
 
-    .here
-
-    * = $04B1B8
-    .logical $84B1B8
-
       .dsection UnitStateSection
-
-      ; 84/B32B
-
-    .here
-
-    * = $04B32B
-    .logical $84B32B
 
       .dsection Unsorted84B32BSection
 
-    .here
-
-    * = $04B349
-    .logical $84B349
-
       .dsection Unsorted84B349Section
-
-    .here
-
-    * = $04B3E4
-    .logical $84B3E4
 
       .dsection UnitInventoryStateSection
 
-      ; 84/B508
-
-    .here
-
-    * = $04B508
-    .logical $84B508
-
       .dsection Unsorted84B508Section
-
-    .here
-
-    * = $04B550
-    .logical $84B550
 
       .dsection Unsorted84B550Section
 
-    .here
-
-    * = $04B57A
-    .logical $84B57A
-
       .dsection Unsorted84B57ASection
-
-    .here
-
-    * = $04B6A6
-    .logical $84B6A6
 
       .dsection Unsorted84B6A6Section
 
-    .here
-
-    * = $04B6E2
-    .logical $84B6E2
-
       .dsection Unsorted84B6E2Section
-
-    .here
-
-    * = $04B6F6
-    .logical $84B6F6
 
       .dsection Unsorted84B6F6Section
 
-    .here
-
-    * = $04B8C1
-    .logical $84B8C1
-
       .dsection UnitDeathSection
-
-      ; 84/B9A3
-
-    .here
-
-    * = $04B9A3
-    .logical $84B9A3
 
       .dsection Unsorted84B9A3Section
 
-    .here
-
-    * = $04B9D4
-    .logical $84B9D4
-
       .dsection Unsorted84B9D4Section
-
-    .here
-
-    * = $04BA3E
-    .logical $84BA3E
 
       .dsection Unsorted84BA3ESection
 
-    .here
-
-    * = $04BA6F
-    .logical $84BA6F
-
       .dsection Unsorted84BA6FSection
 
-    .here
-
-    * = $04BAA1
-    .logical $84BAA1
-
       .dsection ChildUnitSection
-
-      ; 84/BB54
-
-    .here
-
-    * = $04BB54
-    .logical $84BB54
 
       .dsection Unsorted84BB54Section
       .dsection CheckIfBattleAnimationOFFSection
 
-    .here
-
-    * = $04BB9A
-    .logical $84BB9A
-
       .dsection FactionSection
 
-      ; 84/C0BD
-
-    .here
-
-    * = $04C0D6
-    .logical $84C0D6
+      .dsection SetFactionSlotLocationIDSection
 
       .dsection RunTurnStartEffectsForAllUnitsInFactionSection
 
-    .here
-
-    * = $04C15F
-    .logical $84C15F
-
       .dsection FactionRelationsSection
-
-      ; 84/C398
-
-    .here
-
-    * = $04C398
-    .logical $84C398
 
       .dsection Unsorted84C398Section
 
-    .here
-
-    * = $04C412
-    .logical $84C412
-
       .dsection Unsorted84C412Section
-
-    .here
-
-    * = $04C461
-    .logical $84C461
 
       .dsection FactionUnitsSection
 
-      ; 84/C5D7
-
-    .here
-
-    * = $04C5D7
-    .logical $84C5D7
-
       .dsection Unsorted84C5D7Section
-
-    .here
-
-    * = $04C62E
-    .logical $84C62E
 
       .dsection Unsorted84C62ESection
 
-    .here
-
-    * = $04C65E
-    .logical $84C65E
-
       .dsection DeploymentSection
-
-      ; 84/CC5D
-
-    .here
-
-    * = $04CC5D
-    .logical $84CC5D
 
       .dsection Unsorted84CC5DSection
 
-    .here
-
-    * = $04CCB4
-    .logical $84CCB4
-
       .dsection UnitCastleSection
-
-      ; 84/CD35
-
-    .here
-
-    * = $04CD35
-    .logical $84CD35
 
       .dsection Unsorted84CD35Section
 
-    .here
-
-    * = $04CD8A
-    .logical $84CD8A
-
       .dsection Unsorted84CD8ASection
-
-    .here
-
-    * = $04CDA4
-    .logical $84CDA4
 
       .dsection Unsorted84CDA4Section
 
-    .here
-
-    * = $04CDD6
-    .logical $84CDD6
-
       .dsection Unsorted84CDD6Section
-
-    .here
-
-    * = $04CE21
-    .logical $84CE21
 
       .dsection Unsorted84CE21Section
 
-    .here
-
-    * = $04CFBF
-    .logical $84CFBF
-
       .dsection Unsorted84CFBFSection
-
-      ; 84/D03E
-
-    .here
-
-    * = $04D03E
-    .logical $84D03E
 
       .dsection Unsorted84D03ESection
 
-    .here
-
-    * = $04D0B2
-    .logical $84D0B2
-
       .dsection Unsorted84D0B2Section
-
-    .here
-
-    * = $04D0B9
-    .logical $84D0B9
 
       .dsection Unsorted84D0B9Section
 
-    .here
-
-    * = $04D16B
-    .logical $84D16B
-
       .dsection Unsorted84D16BSection
-
-    .here
-
-    * = $04D1CC
-    .logical $84D1CC
 
       .dsection Unsorted84D1CCSection
 
-    .here
-
-    * = $04D271
-    .logical $84D271
-
       .dsection FieldedUnitFactionSection
-
-      ; 84/D2BA
-
-    .here
-
-    * = $04D2BA
-    .logical $84D2BA
 
       .dsection Unsorted84D2BASection
 
-    .here
-
-    * = $04D483
-    .logical $84D483
+      .dsection ReturnDeploymentToSavedTileSection
 
       .dsection Unsorted84D483Section
 
-    .here
-
-    * = $04D4A2
-    .logical $84D4A2
-
       .dsection Unsorted84D4A2Section
-
-    .here
-
-    * = $04D4C7
-    .logical $84D4C7
 
       .dsection BattleSection
 
-      ; 84/EB24
-
-    .here
-
-    * = $04EB24
-    .logical $84EB24
-
       .dsection Unsorted84EB24Section
 
-    .here
-
-    * = $04EB6F
-    .logical $84EB6F
-
       .dsection StaffEffectClearStatusSection
-
-    .here
-
-    * = $04EC80
-    .logical $84EC80
 
       .dsection BattleEffectsSection
 
       .dsection InventorySection
 
-      ; 84/F75C
-
-    .here
-
-    * = $04F75C
-    .logical $84F75C
-
       .dsection Unsorted84F75CSection
-
-    .here
-
-    * = $04F8D9
-    .logical $84F8D9
 
       .dsection Unsorted84F8D9Section
 
-    .here
-
-    * = $04F939
-    .logical $84F939
-
       .dsection BattleStatsSection
-
-      ; 84/FE98
-
-    .here
-
-    * = $04FE98
-    .logical $84FE98
 
       .dsection Unsorted84FE98Section
 
-    .here
-
-    * = $04FEAC
-    .logical $84FEAC
-
       .dsection Unsorted84FEACSection
-
-    .here
-
-    * = $04FEBE
-    .logical $84FEBE
 
       .dsection Unsorted84FEBESection
 
-    .here
-
-    * = $04FED2
-    .logical $84FED2
-
       .dsection Unsorted84FED2Section
+
+      .fill $848000 + $8000 - *, $00
 
     .here
 
@@ -4605,10 +4169,24 @@
 
     .here
 
+    * = $05DF7D
+    .logical $85DF7D
+
+      .dsection Unsorted85DF7DSection
+
+    .here
+
     * = $05DF8A
     .logical $85DF8A
 
       .dsection Unsorted85DF8ASection
+
+    .here
+
+    * = $05DFA6
+    .logical $85DFA6
+
+      .dsection Unsorted85DFA6Section
 
     .here
 
@@ -4623,6 +4201,13 @@
     .logical $85DFFD
 
       .dsection Unsorted85DFFDSection
+
+    .here
+
+    * = $05E004
+    .logical $85E004
+
+      .dsection Unsorted85E004Section
 
     .here
 

@@ -14380,6 +14380,35 @@
     .endsection Unsorted85DF6FSection
 
 
+    .section Unsorted85DF7DSection
+
+      .al
+      .xl
+
+      rlUnknown85DF7D ; 85/DF7D
+
+        ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
+        ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0000
+        ldx wActiveUnitDeploymentOffset,b
+        jsl rlUnknown84D03E
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/DF8A
+
+    .endsection Unsorted85DF7DSection
+
+
     .section Unsorted85DF8ASection
 
       .al
@@ -14424,6 +14453,56 @@
         ; 85/DFA6
 
     .endsection Unsorted85DF8ASection
+
+
+    .section Unsorted85DFA6Section
+
+      .al
+      .xl
+
+      rlUnknown85DFA6 ; 85/DFA6
+
+        ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
+        ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx wActiveUnitDeploymentOffset,b
+        jsl rlUnknown84D1CC
+        jsl rlUnknown85E85D
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/DFB4
+
+      rlUnknown85DFB4 ; 85/DFB4
+
+        ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
+        ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx wActiveUnitDeploymentOffset,b
+        jsl rlUnknown84D247
+        jsl rlUnknown85E85D
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/DFC2
+
+    .endsection Unsorted85DFA6Section
 
 
     .section Unsorted85DFC2Section
@@ -14481,6 +14560,35 @@
         ; 85/E004
 
     .endsection Unsorted85DFFDSection
+
+
+    .section Unsorted85E004Section
+
+      .al
+      .xl
+
+      rlUnknown85E004 ; 85/E004
+
+        ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
+        ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown88AF7B
+        ldx wActiveUnitDeploymentOffset,b
+        jsl rlUnknown84CD35
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/E012
+
+    .endsection Unsorted85E004Section
 
 
     .section Unsorted85E012Section

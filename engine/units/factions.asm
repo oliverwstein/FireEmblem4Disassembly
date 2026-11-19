@@ -1,5 +1,31 @@
 ; Factions: faction slots, groups and their relations to each other.
 
+    .section GetSelectedUnitFactionNameIDSection
+
+      .al
+      .xl
+
+      rlGetSelectedUnitFactionNameID ; 84/9FBB
+
+        ; Output:
+        ; A = name ID of the selected unit's faction
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitFactionSlot
+        jsl rlGetFactionSlotNameID
+        rtl
+
+        .databank 0
+
+        ; 84/9FC4
+
+    .endsection GetSelectedUnitFactionNameIDSection
+
+
     .section FactionSection
 
       .al
@@ -1164,6 +1190,49 @@
         ; 84/C0BD
 
     .endsection FactionSection
+
+
+    .section SetFactionSlotLocationIDSection
+
+      .al
+      .xl
+
+      rlSetFactionSlotLocationID ; 84/C0BD
+
+        ; Input:
+        ; A = faction slot
+        ; wRoutineVariable1 = location ID (home castle)
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        phx
+        jsr rsGetFactionSlotOffset
+        bcs _C0D2
+        sep #$20
+        lda wRoutineVariable1,b
+        sta $7E0000 + structFactionHeader.LocationID,x
+        rep #$20
+
+        _C0D2
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 84/C0D6
+
+    .endsection SetFactionSlotLocationIDSection
 
 
     .section FactionRelationsSection

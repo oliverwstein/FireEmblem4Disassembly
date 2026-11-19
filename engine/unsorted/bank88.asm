@@ -5629,7 +5629,7 @@
         sta wR1
         sta wTempVariable2,b
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84C94C
+        jsl rlMoveDeploymentToTile
         lda $07E0,b
         cmp #$0004
         beq _AAEF
@@ -6129,7 +6129,7 @@
         ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
         stz $07DA,b
-        jsl rlUnknown84C94C
+        jsl rlMoveDeploymentToTile
         lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         rtl
@@ -6147,7 +6147,7 @@
         sta wR1
         stz $07DA,b
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84C94C
+        jsl rlMoveDeploymentToTile
         lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0007
@@ -6188,7 +6188,7 @@
         ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
         stz $07DA,b
-        jsl rlUnknown84C94C
+        jsl rlMoveDeploymentToTile
         lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0007
@@ -6271,7 +6271,7 @@
         sta wR1
         sta $077A,b
         sta $077E,b
-        jsl rlUnknown84C94C
+        jsl rlMoveDeploymentToTile
         stz $07E0,b
         lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
@@ -6916,7 +6916,7 @@
         lda $077A,b
         sta wR1
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84C94C
+        jsl rlMoveDeploymentToTile
         lda #$0002
         trb $0788,b
         stz wUnknown000770,b

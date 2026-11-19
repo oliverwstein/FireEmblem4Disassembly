@@ -989,3 +989,39 @@
         ; 84/9FB9
 
     .endsection UnitStatsSection
+
+
+    .section Unknown849FB9Section
+
+      .al
+      .xl
+
+      rlUnknown849FB9 ; 84/9FB9
+
+        ; Only rtl, as is the next routine.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 84/9FBA
+
+      rlUnknown849FBA ; 84/9FBA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 84/9FBB
+
+    .endsection Unknown849FB9Section

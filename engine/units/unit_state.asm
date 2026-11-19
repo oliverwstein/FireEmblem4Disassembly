@@ -1045,9 +1045,9 @@
         ; Effective event coord in wRoutineVariable1
 
         lda aDeploymentTable._XTilePosition,x
-        sta $7E492B
+        sta wSavedDeploymentXTile
         lda aDeploymentTable._YTilePosition,x
-        sta $7E492D
+        sta wSavedDeploymentYTile
 
         lda wRoutineVariable1,b
         and #$00FF

@@ -1818,7 +1818,7 @@
         lda $0D87,b
         bit #$0008
         beq _CCA9
-        jsl rlUnknown84D461
+        jsl rlSaveDeploymentTile
 
         _CCA9
         jsr rsUnknown84CA22
@@ -2553,7 +2553,7 @@
         sta wR0
         jsl rlGetEventLocationEntryEffectiveYCoordinate
         sta wR1
-        jsl rlUnknown84C94C
+        jsl rlMoveDeploymentToTile
         lda #$8002
         sta $07E0,b
 
@@ -2963,17 +2963,19 @@
 
         ; 84/D461
 
-      rlUnknown84D461 ; 84/D461
+      rlSaveDeploymentTile ; 84/D461
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Saves the tile of the deployment at X for rlReturnDeploymentToSavedTile, without moving it.
+
         lda aDeploymentTable._XTilePosition,x
-        sta $7E492B
+        sta wSavedDeploymentXTile
         lda aDeploymentTable._YTilePosition,x
-        sta $7E492D
+        sta wSavedDeploymentYTile
         rtl
 
         .databank 0

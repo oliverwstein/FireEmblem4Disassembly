@@ -555,6 +555,110 @@
     .endsection UnitClassInfoSection
 
 
+    .section LoadCharacterROMDataFromBufferSection
+
+      .al
+      .xl
+
+      rlLoadCharacterROMDataFromBuffer ; 84/A282
+
+        ; The inverse of rlSaveCharacterROMDataToBuffer: copies the buffer at
+        ; lRAMBufferPointer back into the selected unit's constant data. The
+        ; buffer word at $04 is its generation ID. Skills are copied as two
+        ; overlapping words ($0F and $10).
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        phx
+        phy
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+        jsl rlGetSelectedUnitConstantDataPointer
+        lda lRAMBufferPointer+1,b
+        sta lR18+1
+        lda lRAMBufferPointer,b
+        sta lR18
+        ldy #structCharacterROMDataBuffer.CharacterID
+        lda [lR18],y
+        sta structCharacterConstantData.CharacterID,b,x
+        ldy #structCharacterROMDataBuffer.CharacterName
+        lda [lR18],y
+        sta structCharacterConstantData.CharacterName,b,x
+        sep #$20
+        ldy #$0004
+        lda [lR18],y
+        sta structCharacterConstantData.GenerationID,b,x
+        ldy #structCharacterROMDataBuffer.Gender
+        lda [lR18],y
+        sta structCharacterConstantData.Gender,b,x
+        ldy #structCharacterROMDataBuffer.FatherID
+        lda [lR18],y
+        sta structCharacterConstantData.FatherID,b,x
+        ldy #structCharacterROMDataBuffer.HPGrowth
+        lda [lR18],y
+        sta structCharacterConstantData.HPGrowth,b,x
+        ldy #structCharacterROMDataBuffer.StrengthGrowth
+        lda [lR18],y
+        sta structCharacterConstantData.StrengthGrowth,b,x
+        ldy #structCharacterROMDataBuffer.MagicGrowth
+        lda [lR18],y
+        sta structCharacterConstantData.MagicGrowth,b,x
+        ldy #structCharacterROMDataBuffer.SkillGrowth
+        lda [lR18],y
+        sta structCharacterConstantData.SkillGrowth,b,x
+        ldy #structCharacterROMDataBuffer.SpeedGrowth
+        lda [lR18],y
+        sta structCharacterConstantData.SpeedGrowth,b,x
+        ldy #structCharacterROMDataBuffer.DefenseGrowth
+        lda [lR18],y
+        sta structCharacterConstantData.DefenseGrowth,b,x
+        ldy #structCharacterROMDataBuffer.ResistanceGrowth
+        lda [lR18],y
+        sta structCharacterConstantData.ResistanceGrowth,b,x
+        ldy #structCharacterROMDataBuffer.LuckGrowth
+        lda [lR18],y
+        sta structCharacterConstantData.LuckGrowth,b,x
+        rep #$20
+        ldy #structCharacterROMDataBuffer.Skills1
+        lda [lR18],y
+        sta structCharacterConstantData.Skills1,b,x
+        ldy #structCharacterROMDataBuffer.Skills2
+        lda [lR18],y
+        sta structCharacterConstantData.Skills2,b,x
+        ldy #structCharacterROMDataBuffer.HolyBlood1
+        lda [lR18],y
+        sta structCharacterConstantData.HolyBlood1,b,x
+        ldy #structCharacterROMDataBuffer.HolyBlood2
+        lda [lR18],y
+        sta structCharacterConstantData.HolyBlood2,b,x
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 84/A333
+
+    .endsection LoadCharacterROMDataFromBufferSection
+
+
     .section UnitCharacterInfoSection
 
       .al

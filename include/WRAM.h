@@ -1284,8 +1284,8 @@
       _StateBuffer .fill (size(word) * 72)        ; $7E489B
     .bend
 
-    ; .word ? ; 7E492B
-    ; .word ? ; 7E492D
+    wSavedDeploymentXTile .word ? ; $7E492B: saved by rlMoveDeploymentToTile and rlSaveDeploymentTile
+    wSavedDeploymentYTile .word ? ; $7E492D
 
     ; 7E492F
 

@@ -1276,3 +1276,96 @@
         ; 84/99B5
 
     .endsection UnitDataSection
+
+
+    .section LoadExtendedCharacterDataFromBufferSection
+
+      .al
+      .xl
+
+      rlLoadExtendedCharacterDataFromBuffer ; 84/9A4C
+
+        ; The inverse of rlSaveExtendedCharacterDataToBuffer: copies the buffer at
+        ; lRAMBufferPointer back into the selected unit's extended data.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        phx
+        phy
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+        jsl rlGetSelectedUnitExtendedPersonalDataPointer
+        lda lRAMBufferPointer+1,b
+        sta lR18+1
+        lda lRAMBufferPointer,b
+        sta lR18
+        sep #$20
+        ldy #structExtendedCharacterDataBuffer.HP
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.HP,b,x
+        ldy #structExtendedCharacterDataBuffer.Strength
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.Strength,b,x
+        ldy #structExtendedCharacterDataBuffer.Magic
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.Magic,b,x
+        ldy #structExtendedCharacterDataBuffer.Skill
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.Skill,b,x
+        ldy #structExtendedCharacterDataBuffer.Speed
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.Speed,b,x
+        ldy #structExtendedCharacterDataBuffer.Defense
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.Defense,b,x
+        ldy #structExtendedCharacterDataBuffer.Resistance
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.Resistance,b,x
+        ldy #structExtendedCharacterDataBuffer.Luck
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.Luck,b,x
+        ldy #structExtendedCharacterDataBuffer.Class
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.Class,b,x
+        ldy #structExtendedCharacterDataBuffer.Level
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.Level,b,x
+        ldy #structExtendedCharacterDataBuffer.LeadershipStars
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.LeadershipStars,b,x
+        ldy #structExtendedCharacterDataBuffer.Experience
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.Experience,b,x
+        ldy #structExtendedCharacterDataBuffer.TalkTarget
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.TalkTarget,b,x
+        rep #$20
+        ldy #structExtendedCharacterDataBuffer.Money
+        lda [lR18],y
+        sta structExtendedCharacterDataRAM.Money,b,x
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 84/9AE5
+
+    .endsection LoadExtendedCharacterDataFromBufferSection

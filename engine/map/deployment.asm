@@ -634,11 +634,13 @@
 
         .databank 0
 
-      rlUnknown84C94C ; 84/C94C
+      rlMoveDeploymentToTile ; 84/C94C
 
         .al
         .autsiz
         .databank ?
+
+        ; Saves the old tile for rlReturnDeploymentToSavedTile.
 
         ; Input:
         ; X = deployment offset
@@ -654,9 +656,9 @@
         pha
 
         lda aDeploymentTable._XTilePosition,x
-        sta $7E492B
+        sta wSavedDeploymentXTile
         lda aDeploymentTable._YTilePosition,x
-        sta $7E492D
+        sta wSavedDeploymentYTile
 
         lda wR0
         sta aDeploymentTable._XTilePosition,x
@@ -721,7 +723,7 @@
           lda wRoutineVariable1+1,b
           and #$00FF
           sta wR1
-          jsl rlUnknown84C94C
+          jsl rlMoveDeploymentToTile
 
         +
         pla
@@ -839,14 +841,14 @@
         phx
         lda aDeploymentTable._XTilePosition,x
         sec
-        sbc $7E492B
+        sbc wSavedDeploymentXTile
         clc
         adc #32
         sta wR2
 
         lda aDeploymentTable._YTilePosition,x
         sec
-        sbc $7E492D
+        sbc wSavedDeploymentYTile
         clc
         adc #32
         asl a
@@ -1191,3 +1193,32 @@
         ; 84/CC5D
 
     .endsection DeploymentSection
+
+
+    .section ReturnDeploymentToSavedTileSection
+
+      .al
+      .xl
+
+      rlReturnDeploymentToSavedTile ; 84/D472
+
+        ; Moves the deployment at X back to the tile rlMoveDeploymentToTile saved
+        ; in $7E492B/$7E492D before its last move.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wSavedDeploymentXTile
+        sta wR0
+        lda wSavedDeploymentYTile
+        sta wR1
+        jsl rlMoveDeploymentToTile
+        rtl
+
+        .databank 0
+
+        ; 84/D483
+
+    .endsection ReturnDeploymentToSavedTileSection
