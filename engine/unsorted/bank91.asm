@@ -878,7 +878,7 @@
         lda aWorldMapEvents,x
         sta lR18
         jsl rlUnknown80C1FC
-        inc $0304,b
+        inc wGameStateStep,b
         rts
 
         .databank 0
@@ -1024,7 +1024,7 @@
         tax
         lda aUnknown91D899,x
         and #$00FF
-        sta $0304,b
+        sta wGameStateStep,b
         lda #$0001
         sta $1864,b
 
@@ -1151,7 +1151,7 @@
         lda wJoy1New
         bit #$0080
         beq _DAA6
-        lda $0304,b
+        lda wGameStateStep,b
         cmp #$0007
         beq _DACD
         lda #$000A
@@ -1166,7 +1166,7 @@
         lda wJoy1New
         bit #$8000
         beq _DAD2
-        lda $0304,b
+        lda wGameStateStep,b
         cmp #$0003
         beq _DAC8
         lda #$0021
@@ -1174,7 +1174,7 @@
         lda #$FFFF
         sta $1864,b
         lda #$0000
-        sta $0304,b
+        sta wGameStateStep,b
 
         _DAC8
         lda #$0002
@@ -1250,7 +1250,7 @@
         .databank ?
 
         lda #$20C0
-        ldx $0304,b
+        ldx wGameStateStep,b
         cpx #$0003
         beq _DB25
         lda #$20D0
@@ -1402,14 +1402,14 @@
 
 
         _DBFE
-        inc $0304,b
+        inc wGameStateStep,b
         jsr rsUnknown91DCEA
         sep #$20
         lda #$16
         sta bBufferTM
         rep #$20
         lda $1854,b
-        sta $0304,b
+        sta wGameStateStep,b
         rts
 
         .databank 0
@@ -1443,7 +1443,7 @@
         jsr rsUnknown91DCF8
         jsr rsUnknown91DCEA
         lda $1854,b
-        sta $0304,b
+        sta wGameStateStep,b
 
         _DC91
         rts
@@ -1469,7 +1469,7 @@
 
         sta $1854,b
         lda #$000D
-        sta $0304,b
+        sta wGameStateStep,b
         stz $1866,b
         stz $1856,b
         lda #$03FF
@@ -1489,7 +1489,7 @@
 
         sta $1854,b
         lda #$0010
-        sta $0304,b
+        sta wGameStateStep,b
         stz $1866,b
         rts
 
@@ -2696,7 +2696,7 @@
 
 
         _E8D5
-        stz $0302,b
+        stz wGameStateRoutine1,b
         lda #$F5D0
         sta wVBlankPointer
         lda #$F553

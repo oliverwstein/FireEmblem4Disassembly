@@ -389,7 +389,7 @@
                     jsr rsUnknown81B116
 
         +
-        lda $0304,b
+        lda wGameStateStep,b
         cmp #$000D
         bmi +
 
@@ -401,7 +401,7 @@
         tax
         jsr (aUnknown81A8F8,x)
 
-        lda $0304,b
+        lda wGameStateStep,b
         sta $0D7B,b
 
         lda wUnknown00171A,b
@@ -466,7 +466,7 @@
           dec y
           bpl -
 
-        inc $0304,b
+        inc wGameStateStep,b
         
         _End
         rts
@@ -501,7 +501,7 @@
                 bra + 
 
         _INC
-        inc $0304,b
+        inc wGameStateStep,b
 
         +
         rts
@@ -543,7 +543,7 @@
             bra +
 
           +
-          inc $0304,b
+          inc wGameStateStep,b
         
         _End
         rts
@@ -576,7 +576,7 @@
         bcc +
 
         +
-        inc $0304,b
+        inc wGameStateStep,b
 
         rts
 
@@ -711,7 +711,7 @@
               rts
         
         _INC
-        inc $0304,b
+        inc wGameStateStep,b
         rts
 
         .databank 0
@@ -753,7 +753,7 @@
         +
         lda #$0020
         trb $0D87,b
-        inc $0304,b
+        inc wGameStateStep,b
         rts
 
         .databank 0
@@ -779,12 +779,12 @@
             beq -
 
         lda #1
-        sta $0304,b
+        sta wGameStateStep,b
         rts
         
         +
         stz wActiveFactionSlot,b
-        inc $0304,b
+        inc wGameStateStep,b
         rts
 
         .databank 0
@@ -805,7 +805,7 @@
         lda wCurrentTurn,b
         sta wEventEngineArgument1,b
         jsl rlGetAndRunChapterMapEventConditions
-        stz $0304,b
+        stz wGameStateStep,b
         rts
 
         .databank 0
@@ -819,7 +819,7 @@
         lda #$BBD9
         sta wMainLoopPointer
         lda #7
-        sta $0304,b
+        sta wGameStateStep,b
         rts
 
         .databank 0
@@ -866,12 +866,12 @@
         jsl rlUnknown81B189
         bcc +
 
-          ldx $0772,b
+          ldx wActiveUnitDeploymentOffset,b
           jsl rlDeployedUnitUnsetHiddenIfAlive
 
         +
         lda $0D7B,b
-        sta $0304,b
+        sta wGameStateStep,b
         rts
 
         .databank 0
@@ -896,7 +896,7 @@
           lda #$00E0
           jsl rlUnknown808FA3
 
-          stz $0302,b
+          stz wGameStateRoutine1,b
 
           lda #<>$80B1E1
           sta aProcSystem.wInput0,b
@@ -1195,7 +1195,7 @@
           and #~($40)
           sta wUnknown000D79,b
 
-          stz $0302,b
+          stz wGameStateRoutine1,b
 
           lda #0
           jsl $88B30D
@@ -1291,10 +1291,10 @@
             cmp #4
             beq _CLC
 
-              ldx $0772,b
+              ldx wActiveUnitDeploymentOffset,b
               jsl rsUnknown88AF4C
 
-              ldx $0772,b
+              ldx wActiveUnitDeploymentOffset,b
               lda aDeploymentTable._UnitRAMPointer,x
               sta wSelectedUnitDataRAMPointer,b
 
@@ -1337,7 +1337,7 @@
               lda #$8000
               trb $0D87,b
 
-              lda $0304,b
+              lda wGameStateStep,b
               cmp #11
               beq _CLC
 
@@ -1527,7 +1527,7 @@
 
           jsl rlUnknown88B6FD
 
-          ldx $0772,b
+          ldx wActiveUnitDeploymentOffset,b
           lda aDeploymentTable._UnitRAMPointer,x
           sta wSelectedUnitDataRAMPointer,b
 
@@ -1607,7 +1607,7 @@
         lda wUnknown00171A,b
         bne _CLC
 
-          lda $0304,b
+          lda wGameStateStep,b
           cmp #11
           beq _CLC
 
@@ -1648,7 +1648,7 @@
         bit #$0040
         bne _CLC
 
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda wUnknown000D79,b
         bit #$0004
         beq +
@@ -1759,7 +1759,7 @@
         jsl rlUnknown808FA3
         inc wCurrentChapter,b
         stz wUnknown000D79,b
-        stz $0302,b
+        stz wGameStateRoutine1,b
         lda #$F27C
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -1812,7 +1812,7 @@
         lda aUnknown81B353,x
         jsl rlUnknown80C1CB
         lda #12
-        sta $0304,b
+        sta wGameStateStep,b
 
         plx
         plp
@@ -1853,7 +1853,7 @@
         jsl rlUnknown808FA3
 
         stz $07E0,b
-        stz $0302,b
+        stz wGameStateRoutine1,b
 
         lda wBattleType
         and #$00FF

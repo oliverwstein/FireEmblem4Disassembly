@@ -5253,7 +5253,7 @@
           sta aProcSystem.aHeaderSleepTimer,b,x
 
         +
-        stz $0302,b
+        stz wGameStateRoutine1,b
         rtl
 
         .databank 0
@@ -5832,7 +5832,7 @@
         jsl rlGetSelectedUnitStates
         bit #UnitStateFielded
         beq _E7CE
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         tax
         sta wR0
         lda #$FFFF

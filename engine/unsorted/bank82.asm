@@ -155,7 +155,7 @@
         beq _88B1
 
         _8888
-        stz $0302,b
+        stz wGameStateRoutine1,b
         lda #$88B2
         sta aProcSystem.aHeaderOnCycle,b,x
         lda $04EA,b

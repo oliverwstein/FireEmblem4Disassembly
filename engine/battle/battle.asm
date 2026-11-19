@@ -1527,7 +1527,7 @@
         bne +
 
           ; normal battle
-          ldx $0772,b
+          ldx wActiveUnitDeploymentOffset,b
           lda aDeploymentTable._UnitRAMPointer,x
           sta wSelectedUnitDataRAMPointer,b
           lda #UnitState0400

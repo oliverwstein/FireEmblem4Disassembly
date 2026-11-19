@@ -59,7 +59,7 @@
         .databank ?
 
         lda wSelectedUnitDataRAMPointer,b
-        sta $078C,b
+        sta wTempVariable1,b
         jsl rlGetSelectedUnitLoverGenerationID
         ora #0
         beq _CLC
@@ -73,14 +73,14 @@
             bra +
 
         _CLC
-        lda $078C,b
+        lda wTempVariable1,b
         sta wSelectedUnitDataRAMPointer,b
         clc
         rtl
 
         +
         sta $08B4,b
-        lda $078C,b
+        lda wTempVariable1,b
         sta wSelectedUnitDataRAMPointer,b
 
         ; Get lover target CharacterID
@@ -106,11 +106,11 @@
         cmp #$FFFF
         beq +
 
-          sta $078E,b
+          sta wTempVariable2,b
           jsl rlCheckPermanentEventFlagSet
           bcs _CLC
 
-            lda $078E,b
+            lda wTempVariable2,b
             jsl rlSetPermanentEventFlag
             bra _EE64
 
@@ -124,11 +124,11 @@
         cmp #$FFFF
         beq _EE64
 
-          sta $078E,b
+          sta wTempVariable2,b
           jsl rlCheckPermanentEventFlagSet
           bcs _CLC
 
-            lda $078E,b
+            lda wTempVariable2,b
             jsl rlSetPermanentEventFlag
 
         _EE64

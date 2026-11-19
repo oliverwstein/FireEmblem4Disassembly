@@ -370,7 +370,7 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitCharacterID
         sta wEventEngineArgument2,b
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitCharacterID

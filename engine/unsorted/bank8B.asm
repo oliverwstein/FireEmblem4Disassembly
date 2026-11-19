@@ -1091,7 +1091,7 @@
         .autsiz
         .databank ?
 
-        lda $0304,b
+        lda wGameStateStep,b
         sta wR0
         asl a
         clc

@@ -65,13 +65,13 @@
         bit #JOY_Start
         bne +
 
-          inc $0302,b
-          stz $0304,b
+          inc wGameStateRoutine1,b
+          stz wGameStateStep,b
           rtl
     
         +
         jsl rlProcEngineResetProcEngine
-        stz $0302,b
+        stz wGameStateRoutine1,b
 
         lda #<>$80F1D5
         sta aProcSystem.wInput0,b
@@ -91,7 +91,7 @@
         .autsiz
         .databank ?
 
-        lda $0304,b
+        lda wGameStateStep,b
         cmp #2
         bmi +
         
@@ -123,7 +123,7 @@
           rts
 
         +
-        inc $0304,b
+        inc wGameStateStep,b
         rts
 
         .databank 0
@@ -135,7 +135,7 @@
         .databank ?
 
         jsl rlProcEngineResetProcEngine
-        stz $0302,b
+        stz wGameStateRoutine1,b
 
         lda #<>$80C0B6
         sta aProcSystem.wInput0,b
@@ -6871,7 +6871,7 @@
         cmp #11
         beq +
 
-          lda $0772,b
+          lda wActiveUnitDeploymentOffset,b
           sta wUnknownDeploymentOffset000D7F,b
           lda #6
           sta $0D81,b

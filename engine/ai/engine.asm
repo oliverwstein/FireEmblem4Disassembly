@@ -20,11 +20,11 @@
         lda #$0020
         tsb bUnknown000E7B,b
 
-        lda $0302,b
+        lda wGameStateRoutine1,b
         cmp #18
         bne +
 
-          lda $0304,b
+          lda wGameStateStep,b
           cmp #5
           beq +
 

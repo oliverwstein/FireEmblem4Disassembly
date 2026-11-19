@@ -51,7 +51,7 @@
         stz wBufferBG3HOFS
 
         _805D
-        inc $0302,b
+        inc wGameStateRoutine1,b
         rtl
 
         .databank 0
@@ -228,18 +228,18 @@
         .databank ?
 
         lda $0897,b
-        sta $078C,b
-        sta $078E,b
+        sta wTempVariable1,b
+        sta wTempVariable2,b
 
         _8716
         lda $7F763A
         beq _8781
-        lda $078C,b
+        lda wTempVariable1,b
         cmp #$0017
         bcs _875C
         clc
         adc #$0001
-        sta $078C,b
+        sta wTempVariable1,b
 
         _872B
         asl a
@@ -260,13 +260,13 @@
         pla
         sta wSelectedUnitDataRAMPointer,b
         bcc _8716
-        lda $078C,b
+        lda wTempVariable1,b
         bra _8764
 
 
         _875C
         lda #$0000
-        sta $078C,b
+        sta wTempVariable1,b
         bra _872B
 
 
@@ -278,8 +278,8 @@
         sta $088D,b
         lda aUnknown8A9A0B,x
         sta $088F,b
-        lda $078C,b
-        cmp $078E,b
+        lda wTempVariable1,b
+        cmp wTempVariable2,b
         beq _8781
         sec
         rts
@@ -451,7 +451,7 @@
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _88CD
         jsl rlGetSelectedUnitDeploymentOffset
-        sta $0772,b
+        sta wActiveUnitDeploymentOffset,b
         jsl rlUnknown84F8D9
         lda wAIGroupLeaderFieldMovement
         and #$00FF
@@ -569,11 +569,11 @@
         lda #$000A
         jsl rlUnknown808FAD
         lda wRoutineVariable1,b
-        sta $0772,b
+        sta wActiveUnitDeploymentOffset,b
         lda #$FFFF
         sta $07E0,b
         lda #$0016
-        sta $0304,b
+        sta wGameStateStep,b
         rts
 
 
@@ -590,7 +590,7 @@
         _8FE4
         jsr rsUnknown8A9D22
         lda #$000F
-        sta $0304,b
+        sta wGameStateStep,b
         lda #$0015
         sta $0594,b
         lda #$0003
@@ -649,7 +649,7 @@
         lda #$0003
         sta $0891,b
         lda #$0009
-        sta $0304,b
+        sta wGameStateStep,b
         lda #$0003
         sta $08A9,b
         lda #$0005
@@ -705,12 +705,12 @@
         lda #$0003
         sta $07E0,b
         lda wRoutineVariable1,b
-        sta $0772,b
+        sta wActiveUnitDeploymentOffset,b
         tax
         lda #$0001
         jsl rlUnknown84D03E
         lda #$0016
-        sta $0304,b
+        sta wGameStateStep,b
         rts
 
 
@@ -732,7 +732,7 @@
         .databank ?
 
         jsl rlGetSelectedUnitDeploymentOffset
-        sta $0772,b
+        sta wActiveUnitDeploymentOffset,b
         jsl rlUnknown84F8D9
         lda wAIGroupLeaderFieldMovement
         and #$00FF
@@ -862,7 +862,7 @@
         lda #$0005
         sta $0891,b
         jsl rlGetSelectedUnitDeploymentOffset
-        sta $0772,b
+        sta wActiveUnitDeploymentOffset,b
         stz $0897,b
         jsr rsUnknown8A870D
         lda #$8A00
@@ -947,10 +947,10 @@
         jsl rlUnknown84AF57
         bcs _92D5
         lda wRoutineVariable1,b
-        sta $0772,b
+        sta wActiveUnitDeploymentOffset,b
         jsl rlUnknown8881DE
         lda #$0016
-        sta $0304,b
+        sta wGameStateStep,b
 
         _92D5
         rtl
@@ -979,7 +979,7 @@
         jsl rlUnknown84AF57
         bcs _92FE
         lda wRoutineVariable1,b
-        sta $0772,b
+        sta wActiveUnitDeploymentOffset,b
         jsl rlUnknown8881DE
         jsl rlUnknown8881E5
         lda wCursorYOffset,b
@@ -987,7 +987,7 @@
         sbc #$0010
         sta wCursorYOffset,b
         lda #$0016
-        sta $0304,b
+        sta wGameStateStep,b
 
         _92FE
         rtl
@@ -1127,7 +1127,7 @@
 
         _93BF
         lda #$000D
-        sta $0304,b
+        sta wGameStateStep,b
         lda #$0004
         sta $08A9,b
         lda #$0000
@@ -1139,7 +1139,7 @@
 
         _93D5
         lda #$000D
-        sta $0304,b
+        sta wGameStateStep,b
         lda #$0005
         sta $08A9,b
         lda #$0001
@@ -1151,7 +1151,7 @@
 
         _93EB
         lda #$000D
-        sta $0304,b
+        sta wGameStateStep,b
         lda #$0004
         sta $08A9,b
         lda #$0002
@@ -1163,7 +1163,7 @@
 
         _9401
         lda #$0005
-        sta $0304,b
+        sta wGameStateStep,b
         bra _944E
 
         rts
@@ -1173,7 +1173,7 @@
         lda wSelectedUnitDataRAMPointer,b
         sta $089B,b
         lda #$0003
-        sta $0304,b
+        sta wGameStateStep,b
         lda #$0007
         sta $7F8082
         stz $0AD7,b
@@ -1184,7 +1184,7 @@
 
         _9423
         lda #$0007
-        sta $0304,b
+        sta wGameStateStep,b
         lda #$0002
         sta $08A9,b
         lda #$0003
@@ -1536,7 +1536,7 @@
           lda wSelectedUnitDataRAMPointer,b
           sta $08BA,b
           lda #2
-          sta $0304,b
+          sta wGameStateStep,b
           rtl
 
         +
@@ -1567,7 +1567,7 @@
         lda #1
         sta $7F766A
         lda #$0010
-        sta $0304,b
+        sta wGameStateStep,b
         lda #1
         sta $0594,b
         rep #$20
@@ -1604,13 +1604,13 @@
         lda #$2400
         sta aCurrentTilemapInfo,b
         jsl rlUnknown87EF46
-        sta $078C,b
+        sta wTempVariable1,b
         ldx #$000A
 
         _986A
         lda @l aUnknown8A98AC,x
         sta wR1
-        lda $078C,b
+        lda wTempVariable1,b
         bit wR1
         bne _9897
         lda #$8A00
@@ -2061,7 +2061,7 @@
         stz $08AB,b
         jsl rlGetFirstEquippableWeaponInInventory
         sta $7F8072,x
-        sta $078C,b
+        sta wTempVariable1,b
         lda wCurrentItemDataROMPointer,b
         beq _9EEC
         sta $7F7C72,x
@@ -2095,7 +2095,7 @@
         lda wCurrentItemDataRAMPointer,b
         sta $7F7872,x
         tya
-        cmp $078C,b
+        cmp wTempVariable1,b
         beq _9F2E
         sta $7F8072,x
         inc $08AB,b
@@ -2123,14 +2123,14 @@
         stz $08AB,b
         jsl rlGetFirstEquippableWeaponInInventory
         sta $7F8072,x
-        sta $078C,b
+        sta wTempVariable1,b
         jsl rlGetItemMinimumRange
-        sta $078E,b
+        sta wTempVariable2,b
         jsl rlGetSelectedUnitEquippedWeaponBitfield
         cmp #$0000
         bne _9F59
         lda #$0001
-        sta $078E,b
+        sta wTempVariable2,b
 
         _9F59
         lda wCurrentItemDataROMPointer,b
@@ -2156,7 +2156,7 @@
         lda wCurrentItemDataROMPointer,b
         beq _9FC8
         jsl rlGetItemMinimumRange
-        cmp $078E,b
+        cmp wTempVariable2,b
         bne _9FC8
         jsl rlCheckWeaponEquippable
         bcc _9FC8
@@ -2169,7 +2169,7 @@
         lda wCurrentItemDataRAMPointer,b
         sta $7F7872,x
         tya
-        cmp $078C,b
+        cmp wTempVariable1,b
         beq _9FC8
         sta $7F8072,x
         inc $08AB,b
@@ -3069,14 +3069,14 @@
         lda $7F7872,x
         sta wCurrentItemDataRAMPointer,b
         jsl rlGetItemBuyPrice
-        sta $078C,b
+        sta wTempVariable1,b
         plx
         ply
         jsl rlUnknown87A18C
         bcc _AABC
-        lda $078C,b
+        lda wTempVariable1,b
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
 
         _AABC
         phx
@@ -3087,7 +3087,7 @@
         clc
         adc #$0032
         tax
-        lda $078C,b
+        lda wTempVariable1,b
         jsl rlUnknown8AB111
         plx
         rts
@@ -3444,7 +3444,7 @@
         inc $0889,b
         jsr rsUnknown8AAD05
         jsr rsUnknown8AAC51
-        lda $078C,b
+        lda wTempVariable1,b
         beq _ACDB
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -3502,7 +3502,7 @@
 
         lda wRoutineVariable1,b
         jsl rlGetInventorySlotItemRepairCost
-        sta $078C,b
+        sta wTempVariable1,b
         txa
         inc a
         phy
@@ -3515,9 +3515,9 @@
         beq _AD43
         jsl rlUnknown87A18C
         bcc _AD2F
-        lda $078C,b
+        lda wTempVariable1,b
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
 
         _AD2F
         phx
@@ -3528,7 +3528,7 @@
         clc
         adc #$0032
         tax
-        lda $078C,b
+        lda wTempVariable1,b
         jsl rlUnknown8AB111
         plx
 
@@ -3843,7 +3843,7 @@
         phk
         plb
         .databank $8A
-        sta $078C,b
+        sta wTempVariable1,b
         jsl rlGetCharacterPortraitDataID
         jsr rlTryGetClassPortraitDataID
         sta wR0
@@ -4708,7 +4708,7 @@
         sta bBufferINIDISP
         rep #$20
         lda #$0011
-        sta $0304,b
+        sta wGameStateStep,b
         rts
 
 
@@ -4735,7 +4735,7 @@
         sta bBufferINIDISP
         rep #$20
         lda #$0012
-        sta $0304,b
+        sta wGameStateStep,b
         lda #$0000
         jsl rlGetFactionSlotLocationID
         cmp $089F,b
@@ -5530,7 +5530,7 @@
         sta lR44
         jsl rlHDMAEngineCreateEntry
         lda #$0004
-        sta $0304,b
+        sta wGameStateStep,b
         jsl rlEnableVBlank
         sep #$20
         lda #$00
@@ -5602,8 +5602,8 @@
         pha
         lda $089F,b
         jsl rlUnknown87AE88
-        sta $078C,b
-        lda $078C,b
+        sta wTempVariable1,b
+        lda wTempVariable1,b
         ora #$0000
         beq _FCCD
         jsl rlFindCharacterByGenerationID
@@ -5614,12 +5614,12 @@
         jsl rlGetSelectedUnitGenerationID
         cmp #$0010
         bcs _FCC5
-        sta $078E,b
+        sta wTempVariable2,b
         lda wSelectedUnitDataRAMPointer,b
         pha
-        lda $078C,b
+        lda wTempVariable1,b
         jsl rlFindCharacterByGenerationID
-        lda $078E,b
+        lda wTempVariable2,b
         jsl rlGetLoverPointsWithTarget
         sta wR0
         pla
@@ -5629,7 +5629,7 @@
 
 
         _FCC5
-        lda $078C,b
+        lda wTempVariable1,b
         jsl rlGetLoverPointsWithTarget
 
         _FCCC

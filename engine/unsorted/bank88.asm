@@ -982,7 +982,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078E,b
+        sta wTempVariable2,b
         lda wMapScrollYPixels,b
         sta wBufferBG3VOFS
         lda wMapScrollXPixels,b
@@ -991,18 +991,18 @@
         lsr a
         lsr a
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
         jsr rsUnknown888D23
         stz wUnknown00072A,b
         ldy wR8
 
         _8A3B
-        lda $078E,b
+        lda wTempVariable2,b
         cmp $071E,b
         bcc _8A66
         cmp $0722,b
         bcs _8A66
-        lda $078C,b
+        lda wTempVariable1,b
         cmp $071C,b
         bcc _8A66
         cmp $0720,b
@@ -1021,7 +1021,7 @@
         sta $06DE,b,y
 
         _8A6F
-        inc $078C,b
+        inc wTempVariable1,b
         inc y
         inc y
         inc y
@@ -1337,7 +1337,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078E,b
+        sta wTempVariable2,b
         lda wMapScrollYPixels,b
         sta wBufferBG3VOFS
         lda wMapScrollXPixels,b
@@ -1346,19 +1346,19 @@
         lsr a
         lsr a
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
         jsr rsUnknown888D23
         stz wR9
         stz wUnknown00072A,b
         ldy wR8
 
         _8C88
-        lda $078E,b
+        lda wTempVariable2,b
         cmp $071E,b
         bcc _8CD2
         cmp $0722,b
         bcs _8CD2
-        lda $078C,b
+        lda wTempVariable1,b
         cmp $071C,b
         bcc _8CD2
         cmp $0720,b
@@ -1370,7 +1370,7 @@
         jsr $888ABE
 
         _8CB1
-        inc $078C,b
+        inc wTempVariable1,b
         inc y
         inc y
         cpy #$0040
@@ -1388,7 +1388,7 @@
 
 
         _8CD2
-        inc $078C,b
+        inc wTempVariable1,b
         lda #$00FF
         sta $06DC,b,y
         inc y
@@ -1455,12 +1455,12 @@
         .autsiz
         .databank ?
 
-        lda $078C,b
+        lda wTempVariable1,b
         sec
         sbc $0720,b
         and #$003F
         sta wR0
-        lda $078E,b
+        lda wTempVariable2,b
         sec
         sbc $0722,b
         and #$003F
@@ -1487,7 +1487,7 @@
         .autsiz
         .databank ?
 
-        lda $078C,b
+        lda wTempVariable1,b
         sec
         sbc $0720,b
         and #$003F
@@ -1887,7 +1887,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
         lda wMapScrollXPixels,b
         sta wBufferBG3HOFS
         lda wMapScrollYPixels,b
@@ -1896,7 +1896,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078E,b
+        sta wTempVariable2,b
         jsr rsUnknown8890CF
         stz wR9
         stz wUnknown00072A,b
@@ -1905,12 +1905,12 @@
         tay
 
         _8F5E
-        lda $078E,b
+        lda wTempVariable2,b
         cmp $071E,b
         bcc _8F89
         cmp $0722,b
         bcs _8F89
-        lda $078C,b
+        lda wTempVariable1,b
         cmp $071C,b
         bcc _8F89
         cmp $0720,b
@@ -1929,7 +1929,7 @@
         sta $069E,b,y
 
         _8F92
-        inc $078E,b
+        inc wTempVariable2,b
         inc y
         inc y
         inc y
@@ -2096,12 +2096,12 @@
         .autsiz
         .databank ?
 
-        lda $078C,b
+        lda wTempVariable1,b
         sec
         sbc $0720,b
         and #$003F
         sta $0790,b
-        lda $078E,b
+        lda wTempVariable2,b
         sec
         sbc $0722,b
         and #$003F
@@ -2127,7 +2127,7 @@
         .autsiz
         .databank ?
 
-        lda $078E,b
+        lda wTempVariable2,b
         sec
         sbc $0722,b
         and #$003F
@@ -2276,7 +2276,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
         lda wMapScrollXPixels,b
         sta wBufferBG3HOFS
         lda wMapScrollYPixels,b
@@ -2285,7 +2285,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078E,b
+        sta wTempVariable2,b
         jsr rsUnknown8890CF
         stz wR9
         stz wUnknown00072A,b
@@ -2294,12 +2294,12 @@
         tay
 
         _91E8
-        lda $078E,b
+        lda wTempVariable2,b
         cmp $071E,b
         bcc _9232
         cmp $0722,b
         bcs _9232
-        lda $078C,b
+        lda wTempVariable1,b
         cmp $071C,b
         bcc _9232
         cmp $0720,b
@@ -2311,7 +2311,7 @@
         jsr $888FDA
 
         _9211
-        inc $078E,b
+        inc wTempVariable2,b
         inc y
         inc y
         cpy #$0040
@@ -2329,7 +2329,7 @@
 
 
         _9232
-        inc $078E,b
+        inc wTempVariable2,b
         lda #$00FF
         sta $069C,b,y
         inc y
@@ -2869,26 +2869,26 @@
         cmp #$0000
         bne _9931
         jsl rlGetEventLocationEntryEffectiveXCoordinate
-        sta $078C,b
+        sta wTempVariable1,b
         jsl rlGetEventLocationEntryEffectiveYCoordinate
-        sta $078E,b
+        sta wTempVariable2,b
         jsl rlGetEventLocationEntryID
         sta $0790,b
         lda #$0000
         jsl rlGetFactionSlotLocationID
         cmp $0790,b
         beq _991E
-        lda $078C,b
+        lda wTempVariable1,b
         sta wR0
-        lda $078E,b
+        lda wTempVariable2,b
         sta wR1
         jsl rlGetUnitByCoordinates
         bcc _9931
 
         _991E
-        lda $078C,b
+        lda wTempVariable1,b
         sta $087D,b
-        lda $078E,b
+        lda wTempVariable2,b
         sta $087F,b
         bra _9952
 
@@ -3571,7 +3571,7 @@
         lda $07E0,b
         bpl +
 
-          lda $0772,b
+          lda wActiveUnitDeploymentOffset,b
           jsl rlUnknown88B42C
           jml _End
         
@@ -3580,11 +3580,11 @@
         bit #$0002
         beq _A234
 
-          ldx $0772,b
+          ldx wActiveUnitDeploymentOffset,b
           lda aDeploymentTable._UnitRAMPointer,x
           sta wSelectedUnitDataRAMPointer,b
 
-          ldx $0772,b
+          ldx wActiveUnitDeploymentOffset,b
           lda wCursorXOffset,b
           clc
           adc wMapScrollXPixels,b
@@ -3776,7 +3776,7 @@
 
         lda #$0000
         sta wUnknown0007D8,b
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         sta wR0
         lda $0774,b
         sta wR1
@@ -4168,7 +4168,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
         sta wR0
         lda wR1
         clc
@@ -4177,14 +4177,14 @@
         lsr a
         lsr a
         lsr a
-        sta $078E,b
+        sta wTempVariable2,b
         sta wR1
-        lda $078E,b
+        lda wTempVariable2,b
         cmp $071E,b
         bcc _A696
         cmp $0722,b
         bcs _A696
-        lda $078C,b
+        lda wTempVariable1,b
         cmp $071C,b
         bcc _A696
         cmp $0720,b
@@ -4449,7 +4449,7 @@
         .autsiz
         .databank ?
 
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitTotalSpeed
@@ -4511,7 +4511,7 @@
         _A85D
         lda #$0040
         trb wUnknown000D79,b
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         tax
         lda aDeploymentTable._XTilePosition,x
         asl a
@@ -4533,7 +4533,7 @@
         stz $07DA,b
         lda #$0004
         trb $0786,b
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CC5D
         rtl
 
@@ -4549,7 +4549,7 @@
         lda #$0005
         jsl rlUnknown808FAD
         jsr rsUnknown88AB47
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         sta wR0
         lda $0774,b
         sta wR1
@@ -4617,7 +4617,7 @@
         _A92C
         lda #$0000
         sta wUnknown0007D8,b
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         sta wR0
         lda $0774,b
         sta wR1
@@ -4627,7 +4627,7 @@
         sta $0778,b
         lda $077E,b
         sta $077A,b
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         tax
         lda aDeploymentTable._XTilePosition,x
         asl a
@@ -4727,7 +4727,7 @@
         sta $0778,b
         lda $077E,b
         sta $077A,b
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitSetHidden
         lda #$0002
         sta wUnknown0007D8,b
@@ -4828,7 +4828,7 @@
         lsr a
         lsr a
         sta wR0
-        sta $078C,b
+        sta wTempVariable1,b
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
@@ -4837,8 +4837,8 @@
         lsr a
         lsr a
         sta wR1
-        sta $078E,b
-        ldx $0772,b
+        sta wTempVariable2,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84C94C
         lda $07E0,b
         cmp #$0004
@@ -4963,7 +4963,7 @@
         .autsiz
         .databank ?
 
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedItemRange
@@ -5179,7 +5179,7 @@
         sta $077C,b
         lda $077A,b
         sta $077E,b
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         sta wR0
         lda $0774,b
         sta wR1
@@ -5289,7 +5289,7 @@
         .autsiz
         .databank ?
 
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0008
         sta wUnknown0007D8,b
@@ -5328,7 +5328,7 @@
         bne _AE41
 
         _ADEE
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable,x
         bit #$0010
         bne _AE1F
@@ -5336,11 +5336,11 @@
         sta wR0
         lda $077A,b
         sta wR1
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
         stz $07DA,b
         jsl rlUnknown84C94C
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         rtl
 
@@ -5356,9 +5356,9 @@
         lda $077A,b
         sta wR1
         stz $07DA,b
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84C94C
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0007
         sta wUnknown0007D8,b
@@ -5395,11 +5395,11 @@
         sta wR0
         lda $077A,b
         sta wR1
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
         stz $07DA,b
         jsl rlUnknown84C94C
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0007
         sta wUnknown0007D8,b
@@ -5407,10 +5407,10 @@
 
 
         _AE9C
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
         stz $07DA,b
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CC5D
         stz $07E0,b
         rtl
@@ -5421,10 +5421,10 @@
 
 
         _AEB3
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
         stz $07DA,b
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CFBF
         stz $07E0,b
         rtl
@@ -5452,14 +5452,14 @@
         sta $0580,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
         stz $07DA,b
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CC5D
         stz $07E0,b
         rtl
 
 
         _AEFE
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         stz $07DA,b
         lda wCursorXOffset,b
         clc
@@ -5483,9 +5483,9 @@
         sta $077E,b
         jsl rlUnknown84C94C
         stz $07E0,b
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable,x
         bit #$0010
         bne _AF45
@@ -5517,7 +5517,7 @@
 
         ; X = deployment offset
 
-        stx $0772,b
+        stx wActiveUnitDeploymentOffset,b
 
         lda wCursorXOffset,b
         clc
@@ -5560,17 +5560,17 @@
         stz $07DA,b
         stz $07E0,b
 
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         beq +
 
           sta $00089B
         
         +
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
 
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._State,x
         bit #DeploymentStateCanto
         bne +
@@ -5580,7 +5580,7 @@
           bit #$0041
           bne +
 
-            lda $0772,b
+            lda wActiveUnitDeploymentOffset,b
             jsl rlUnknown88B4DB
 
         +
@@ -5791,7 +5791,7 @@
         beq _B48D
         lda $0784,b
         sta $0871,b
-        sta $0772,b
+        sta wActiveUnitDeploymentOffset,b
         lda #$0001
         sta $086F,b
         lda #$0002
@@ -5805,7 +5805,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
@@ -5813,15 +5813,15 @@
         lsr a
         lsr a
         lsr a
-        sta $078E,b
+        sta wTempVariable2,b
         ldx $0784,b
         lda aDeploymentTable._XTilePosition,x
         sec
-        sbc $078C,b
+        sbc wTempVariable1,b
         sta $0778,b
         lda aDeploymentTable._YTilePosition,x
         sec
-        sbc $078E,b
+        sbc wTempVariable2,b
         sta $077A,b
         lda #$0004
         sta wUnknown0007D8,b
@@ -5864,7 +5864,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
 
         lda wCursorYOffset,b
         clc
@@ -5873,17 +5873,17 @@
         lsr a
         lsr a
         lsr a
-        sta $078E,b
+        sta wTempVariable2,b
 
         ldx $0784,b
         lda aDeploymentTable._XTilePosition,x
         sec
-        sbc $078C,b
+        sbc wTempVariable1,b
         sta $0778,b
 
         lda aDeploymentTable._YTilePosition,x
         sec
-        sbc $078E,b
+        sbc wTempVariable2,b
         sta $077A,b
 
         lda #$0004
@@ -5971,7 +5971,7 @@
         stz wMapScrollScriptOffset,b
         lda #3
         sta wUnknown0007D8,b
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         sta $00
         lda $0774,b
         sta $02
@@ -5992,7 +5992,7 @@
           rts
 
         +
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84D4A2
         lda #$0008
         tsb $0788,b
@@ -6083,7 +6083,7 @@
         sta $07DA,b
         stz $07DC,b
         stz $07DE,b
-        stx $0772,b
+        stx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitSetHidden
         stz wUnknown0007E2,b
         jsl rlUnknown88C9A6
@@ -6115,7 +6115,7 @@
         and #$00FF
         bit #$0041
         bne _B794
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitFactionSlot
@@ -6125,7 +6125,7 @@
         sta wR0
         lda $077A,b
         sta wR1
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84C94C
         lda #$0002
         trb $0788,b
@@ -6259,7 +6259,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
@@ -6267,15 +6267,15 @@
         lsr a
         lsr a
         lsr a
-        sta $078E,b
-        lda $078C,b
+        sta wTempVariable2,b
+        lda wTempVariable1,b
         sec
         sbc #$0020
         sta $071C,b
         clc
         adc #$0040
         sta $0720,b
-        lda $078E,b
+        lda wTempVariable2,b
         sec
         sbc #$0020
         sta $071E,b
@@ -6320,7 +6320,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
         sta wR0
         lda wCursorYOffset,b
         clc
@@ -6330,7 +6330,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078E,b
+        sta wTempVariable2,b
         sta wR1
         jsl rlUnknown88BF37
         tax
@@ -6339,12 +6339,12 @@
         tax
         lda aTerrainTileset,x
         and #$00FF
-        lda $078E,b
+        lda wTempVariable2,b
         cmp $071E,b
         bcc _B95E
         cmp $0722,b
         bcs _B95E
-        lda $078C,b
+        lda wTempVariable1,b
         cmp $071C,b
         bcc _B95E
         cmp $0720,b
@@ -6382,17 +6382,17 @@
         ldx #$008E
 
         _B963
-        cpx $0772,b
+        cpx wActiveUnitDeploymentOffset,b
         beq _B98A
         lda aDeploymentTable,x
         beq _B98A
         bit #$0080
         beq _B98A
         lda aDeploymentTable._XTilePosition,x
-        cmp $078C,b
+        cmp wTempVariable1,b
         bne _B98A
         lda aDeploymentTable._YTilePosition,x
-        cmp $078E,b
+        cmp wTempVariable2,b
         bne _B98A
         lda #$FFFF
         bra _B991
@@ -6433,9 +6433,9 @@
         dec x
         bpl _B9A0
         stz wMapScrollScriptOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sta wR4
-        lda $078E,b
+        lda wTempVariable2,b
         sta wR5
         ldy #$0000
 
@@ -6445,11 +6445,11 @@
         lda wR5
         sta wR3
         lda wR2
-        sta $078C,b
+        sta wTempVariable1,b
         lda wR3
         sec
         sbc #$0001
-        sta $078E,b
+        sta wTempVariable2,b
         jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
@@ -6460,18 +6460,18 @@
         lda #$0001
         sta $0794,b,y
         inc wMapScrollScriptOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sta wR4
-        lda $078E,b
+        lda wTempVariable2,b
         sta wR5
 
         _B9F4
         lda wR2
-        sta $078C,b
+        sta wTempVariable1,b
         lda wR3
         clc
         adc #$0001
-        sta $078E,b
+        sta wTempVariable2,b
         jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
@@ -6482,18 +6482,18 @@
         lda #$0002
         sta $0794,b,y
         inc wMapScrollScriptOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sta wR4
-        lda $078E,b
+        lda wTempVariable2,b
         sta wR5
 
         _BA29
         lda wR2
         sec
         sbc #$0001
-        sta $078C,b
+        sta wTempVariable1,b
         lda wR3
-        sta $078E,b
+        sta wTempVariable2,b
         jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
@@ -6504,18 +6504,18 @@
         lda #$0003
         sta $0794,b,y
         inc wMapScrollScriptOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sta wR4
-        lda $078E,b
+        lda wTempVariable2,b
         sta wR5
 
         _BA5E
         lda wR2
         clc
         adc #$0001
-        sta $078C,b
+        sta wTempVariable1,b
         lda wR3
-        sta $078E,b
+        sta wTempVariable2,b
         jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
@@ -6526,9 +6526,9 @@
         lda #$0004
         sta $0794,b,y
         inc wMapScrollScriptOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sta wR4
-        lda $078E,b
+        lda wTempVariable2,b
         sta wR5
 
         _BA93
@@ -6544,7 +6544,7 @@
         sty $07D6,b
         stz wMapScrollScriptOffset,b
         sty wMapScrollScriptOffset,b
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0001
         sta wUnknown0007D8,b
@@ -6560,9 +6560,9 @@
         dec x
         bpl _BABB
         stz wMapScrollScriptOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sta wR4
-        lda $078E,b
+        lda wTempVariable2,b
         sta wR5
         ldy #$0000
 
@@ -6574,9 +6574,9 @@
         lda wR2
         sec
         sbc #$0001
-        sta $078C,b
+        sta wTempVariable1,b
         lda wR3
-        sta $078E,b
+        sta wTempVariable2,b
         jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
@@ -6587,18 +6587,18 @@
         lda #$0003
         sta $0794,b,y
         inc wMapScrollScriptOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sta wR4
-        lda $078E,b
+        lda wTempVariable2,b
         sta wR5
 
         _BB0F
         lda wR2
         clc
         adc #$0001
-        sta $078C,b
+        sta wTempVariable1,b
         lda wR3
-        sta $078E,b
+        sta wTempVariable2,b
         jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
@@ -6609,18 +6609,18 @@
         lda #$0004
         sta $0794,b,y
         inc wMapScrollScriptOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sta wR4
-        lda $078E,b
+        lda wTempVariable2,b
         sta wR5
 
         _BB44
         lda wR2
-        sta $078C,b
+        sta wTempVariable1,b
         lda wR3
         sec
         sbc #$0001
-        sta $078E,b
+        sta wTempVariable2,b
         jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
@@ -6631,18 +6631,18 @@
         lda #$0001
         sta $0794,b,y
         inc wMapScrollScriptOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sta wR4
-        lda $078E,b
+        lda wTempVariable2,b
         sta wR5
 
         _BB79
         lda wR2
-        sta $078C,b
+        sta wTempVariable1,b
         lda wR3
         clc
         adc #$0001
-        sta $078E,b
+        sta wTempVariable2,b
         jsr rsUnknown888D23
         lda aMovementMap,x
         and #$007F
@@ -6653,9 +6653,9 @@
         lda #$0002
         sta $0794,b,y
         inc wMapScrollScriptOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sta wR4
-        lda $078E,b
+        lda wTempVariable2,b
         sta wR5
 
         _BBAE
@@ -6671,7 +6671,7 @@
         sty $07D6,b
         stz wMapScrollScriptOffset,b
         sty wMapScrollScriptOffset,b
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0001
         sta wUnknown0007D8,b
@@ -7545,7 +7545,7 @@
         .autsiz
         .databank ?
 
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._DeploymentOffsets,x
         tax
         lda aDeploymentTable._MapSpriteID,x
@@ -7702,7 +7702,7 @@
         asl a
         asl a
         asl a
-        sta $078C,b
+        sta wTempVariable1,b
         sec
         sbc #$0080
         bpl _C1F8
@@ -7722,7 +7722,7 @@
         asl a
         asl a
         asl a
-        sta $078E,b
+        sta wTempVariable2,b
         sec
         sbc #$0080
         bpl _C219
@@ -7737,11 +7737,11 @@
 
         _C221
         sta wMapScrollYPixels,b
-        lda $078C,b
+        lda wTempVariable1,b
         sec
         sbc wMapScrollXPixels,b
         sta wCursorXOffset,b
-        lda $078E,b
+        lda wTempVariable2,b
         sec
         sbc wMapScrollYPixels,b
         sta wCursorYOffset,b
@@ -7792,7 +7792,7 @@
         asl a
         asl a
         asl a
-        sta $078C,b
+        sta wTempVariable1,b
         sec
         sbc #$0080
         bpl _C273
@@ -7813,7 +7813,7 @@
         asl a
         asl a
         asl a
-        sta $078E,b
+        sta wTempVariable2,b
         sec
         sbc #$0080
         bpl _C297
@@ -7829,11 +7829,11 @@
         _C29F
         sta wMapScrollYPixels,b
         sta wMapYOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sec
         sbc wMapScrollXPixels,b
         sta wCursorXOffset,b
-        lda $078E,b
+        lda wTempVariable2,b
         sec
         sbc wMapScrollYPixels,b
         sta wCursorYOffset,b
@@ -8035,7 +8035,7 @@
         lda wCursorXOffset,b
         clc
         adc $7F4BF9
-        sta $078C,b
+        sta wTempVariable1,b
         sec
         sbc #$0080
         bpl _C3AA
@@ -8053,7 +8053,7 @@
         lda wCursorYOffset,b
         clc
         adc $7F4BFB
-        sta $078E,b
+        sta wTempVariable2,b
         sec
         sbc #$0080
         bpl _C3CC
@@ -8068,11 +8068,11 @@
 
         _C3D4
         sta $7F4BF7
-        lda $078C,b
+        lda wTempVariable1,b
         sec
         sbc $7F4BF5
         sta wCursorXOffset,b
-        lda $078E,b
+        lda wTempVariable2,b
         sec
         sbc $7F4BF7
         sta wCursorYOffset,b
@@ -8392,7 +8392,7 @@
         lda #$0001
         sta $086F,b
         lda $0871,b
-        sta $0772,b
+        sta wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0001
         sta wUnknown0007D8,b
@@ -8456,7 +8456,7 @@
         sta $07DA,b
         stz $07DC,b
         stz $07DE,b
-        stx $0772,b
+        stx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitSetHidden
         stz wUnknown0007E2,b
         jsl rlUnknown88C9A6
@@ -8579,14 +8579,14 @@
         lda #$FFFF
         sta $0865,b
 
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._DeploymentOffsets,x
         tax
         lda aDeploymentTable._MapSpriteID,x
         and #$8000
         bne _Tall
 
-          ldx $0772,b
+          ldx wActiveUnitDeploymentOffset,b
           lda aDeploymentTable._DeploymentOffsets,x
           tax
           lda aDeploymentTable._MapSpriteID,x
@@ -8611,7 +8611,7 @@
           rtl
         
         _Tall
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._DeploymentOffsets,x
         tax
         lda aDeploymentTable._MapSpriteID,x
@@ -8945,7 +8945,7 @@
         and #$000F
         asl a
         xba
-        sta $078E,b
+        sta wTempVariable2,b
         lda $07E4,b
         and #$000F
         sec
@@ -8954,7 +8954,7 @@
         asl a
         asl a
         asl a
-        sta $078C,b
+        sta wTempVariable1,b
         lda $07E4,b
         and #$0030
         cmp #$0000
@@ -8989,7 +8989,7 @@
         _CCE6
         sta $07E6,b
         sta $0790,b
-        ldx $078C,b
+        ldx wTempVariable1,b
         ldy #$0000
 
         _CCF2
@@ -9016,15 +9016,15 @@
         sta $07F0,b,y
         lda #$6000
         clc
-        adc $078E,b
+        adc wTempVariable2,b
         sta $081D,b,y
         clc
         adc #$0100
         sta $0820,b,y
-        lda $078E,b
+        lda wTempVariable2,b
         clc
         adc #$0020
-        sta $078E,b
+        sta wTempVariable2,b
         inc x
         inc x
         tya
@@ -9270,7 +9270,7 @@
         and #$000F
         asl a
         xba
-        sta $078E,b
+        sta wTempVariable2,b
         lda $07E4,b
         and #$000F
         sec
@@ -9280,7 +9280,7 @@
         asl a
         clc
         adc #$0060
-        sta $078C,b
+        sta wTempVariable1,b
         lda $07E4,b
         and #$0030
         cmp #$0000
@@ -9315,7 +9315,7 @@
         _CECE
         sta $07E6,b
         sta $0790,b
-        ldx $078C,b
+        ldx wTempVariable1,b
         ldy #$0000
 
         _CEDA
@@ -9341,15 +9341,15 @@
         plx
         lda #$6000
         clc
-        adc $078E,b
+        adc wTempVariable2,b
         sta $081D,b,y
         clc
         adc #$0100
         sta $0820,b,y
-        lda $078E,b
+        lda wTempVariable2,b
         clc
         adc #$0040
-        sta $078E,b
+        sta wTempVariable2,b
         inc x
         inc x
         tya
@@ -10239,7 +10239,7 @@
         beq _DB2F
         lda $0865,b
         beq _DB2F
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._DeploymentOffsets,x
         tax
         lda aDeploymentTable._MapSpriteID,x

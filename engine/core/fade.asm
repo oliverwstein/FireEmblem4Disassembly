@@ -469,7 +469,7 @@
 
             jsr rsUnknown91A670
             jsl rlEventEngineFreeAllProcs
-            stz $0302,b
+            stz wGameStateRoutine1,b
             ldy wActiveEventLength,b
             sty wActiveEventOffset,b
             sec

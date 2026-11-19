@@ -605,7 +605,7 @@
 
         jsl rlProcEngineFreeProc
         lda #$0012
-        sta $0302,b
+        sta wGameStateRoutine1,b
         jsl rlUnknown87C205
         jsl rlUnknown87C1E1
         rtl
@@ -954,7 +954,7 @@
           bra ++
 
           +
-          stz $0302,b
+          stz wGameStateRoutine1,b
 
         +
         rtl
@@ -1130,7 +1130,7 @@
         jsl rlUnknown81AB3F
 
         lda #$0012
-        sta $0302,b
+        sta wGameStateRoutine1,b
         rtl
 
         .databank 0

@@ -1340,7 +1340,7 @@
           sta $0000,b,x
           sta $0100,b,x
           sta $0200,b,x
-          sta $0300,b,x
+          sta wGameStateRoutine2,b,x
           sta $0400,b,x
           sta $0500,b,x
           sta $0600,b,x

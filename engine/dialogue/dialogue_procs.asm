@@ -575,7 +575,7 @@
           sta aDialogue.wUnit2,b
 
         +
-        lda $0302,b
+        lda wGameStateRoutine1,b
         cmp #$0012
         bne +
 

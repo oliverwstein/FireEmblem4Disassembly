@@ -91,7 +91,7 @@
         jsl rlUnknown91C611
         jsl rlActiveSpriteEngineClearAllSprites
 
-        lda $0302,b
+        lda wGameStateRoutine1,b
         sta wUnknown001730,b
 
         stz wR26
@@ -3940,7 +3940,7 @@
         cmp #$FFFF
         beq +
 
-          stz $0302,b
+          stz wGameStateRoutine1,b
 
           lda #<>rsUnknown80F2BE
           sta aProcSystem.wInput0,b
@@ -4443,7 +4443,7 @@
         phb
         phy
 
-        stz $0302,b
+        stz wGameStateRoutine1,b
         lda #<>$80C0B6
         sta aProcSystem.wInput0,b
 
@@ -4711,7 +4711,7 @@
         .databank ?
 
         lda #$0010
-        sta $0300,b
+        sta wGameStateRoutine2,b
         lda #$AE68
         sta wVBlankPointer
         lda #$B301
@@ -4858,9 +4858,9 @@
         jsr rsUnknown80B041
 
         lda #$0012
-        sta $0302,b
+        sta wGameStateRoutine1,b
         lda $0D7B,b
-        sta $0304,b
+        sta wGameStateStep,b
         jsr rsUnknown80B195
 
         sep #$20
@@ -4950,7 +4950,7 @@
         jsl rlBuildRAMAreaHeaderAndGuidingEntry
 
         lda #11
-        sta $0304,b
+        sta wGameStateStep,b
         jsl rlUnknown858728
 
         lda $0D77,b
@@ -5811,7 +5811,7 @@
 
         php
         phb
-        lda $0302,b
+        lda wGameStateRoutine1,b
         cmp #$0012
         beq +
 
@@ -7383,7 +7383,7 @@
 
 
         _81C6
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0001
         trb $0786,b
@@ -7847,7 +7847,7 @@
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
-        sta $078C,b
+        sta wTempVariable1,b
         sec
         sbc #$0080
         bpl _C42C
@@ -7866,7 +7866,7 @@
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
-        sta $078E,b
+        sta wTempVariable2,b
         sec
         sbc #$0080
         bpl _C44F
@@ -7882,11 +7882,11 @@
         _C457
         sta wMapScrollYPixels,b
         sta wMapYOffset,b
-        lda $078C,b
+        lda wTempVariable1,b
         sec
         sbc wMapScrollXPixels,b
         sta wCursorXOffset,b
-        lda $078E,b
+        lda wTempVariable2,b
         sec
         sbc wMapScrollYPixels,b
         sta wCursorYOffset,b
@@ -7909,14 +7909,14 @@
         asl a
         asl a
         asl a
-        sta $078C,b
+        sta wTempVariable1,b
         lda wR1
         asl a
         asl a
         asl a
         asl a
-        sta $078E,b
-        lda $078C,b
+        sta wTempVariable2,b
+        lda wTempVariable1,b
         sec
         sbc #$0080
         bpl _C493
@@ -7931,7 +7931,7 @@
 
         _C49B
         sta wR0
-        lda $078E,b
+        lda wTempVariable2,b
         sec
         sbc #$0080
         bpl _C4AB
@@ -7946,11 +7946,11 @@
 
         _C4B3
         sta wR1
-        lda $078C,b
+        lda wTempVariable1,b
         sec
         sbc wR0
         sta wCursorXOffset,b
-        lda $078E,b
+        lda wTempVariable2,b
         sec
         sbc wR1
         sta wCursorYOffset,b
@@ -8061,7 +8061,7 @@
         .databank ?
 
         lda aUnknown88DEFC,x
-        sta $078E,b
+        sta wTempVariable2,b
         lda aDeploymentTable._MapSpriteID,x
         and #$7FFF
         sta wR0
@@ -8083,7 +8083,7 @@
         sta wR0
         lda #$6000
         clc
-        adc $078E,b
+        adc wTempVariable2,b
         sta wR1
         phx
         jsl rlDMAByPointer
@@ -8096,7 +8096,7 @@
         sta wR0
         lda #$6100
         clc
-        adc $078E,b
+        adc wTempVariable2,b
         sta wR1
         phx
         jsl rlDMAByPointer
@@ -8115,7 +8115,7 @@
         .databank ?
 
         lda aUnknown88DEFC,x
-        sta $078E,b
+        sta wTempVariable2,b
         lda aDeploymentTable._MapSpriteID,x
         and #$7FFF
         sta wR0
@@ -8137,7 +8137,7 @@
         sta wR0
         lda #$6000
         clc
-        adc $078E,b
+        adc wTempVariable2,b
         sta wR1
         phx
         jsl rlDMAByPointer
@@ -8150,7 +8150,7 @@
         sta wR0
         lda #$6100
         clc
-        adc $078E,b
+        adc wTempVariable2,b
         sta wR1
         phx
         jsl rlDMAByPointer
@@ -8783,9 +8783,9 @@
         sta $7F5091
         sta $7F5093
         sta $7F4C07
-        lda $0302,b
+        lda wGameStateRoutine1,b
         sta aProcSystem.aBody7,b,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
         sep #$20
         lda bBufferBG2SC
         sta $7F57EA
@@ -8912,7 +8912,7 @@
         sta $7F57EC
         rep #$20
         lda aProcSystem.aBody7,b,x
-        sta $0302,b
+        sta wGameStateRoutine1,b
         rtl
 
         .databank 0

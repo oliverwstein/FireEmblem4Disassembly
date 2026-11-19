@@ -402,7 +402,7 @@
         plx
         lda $000302
         sta aProcSystem.aBody7,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
 
         lda @l $7E4EAF
         sta aActionStructUnit1.ClassID

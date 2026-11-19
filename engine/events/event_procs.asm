@@ -34,7 +34,7 @@
 
         php
         phb
-        lda $0302,b
+        lda wGameStateRoutine1,b
         cmp #$0012
         beq +
 

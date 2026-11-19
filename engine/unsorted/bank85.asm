@@ -2263,7 +2263,7 @@
         and #$00FF
         sta wSelectedInventorySlot,b
         jsr _9682
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown87B512
         jsl rlUnknown88AD46
         plx
@@ -4558,9 +4558,9 @@
         lda #$0008
         tsb $0788,b
 
-        lda $0302,b
+        lda wGameStateRoutine1,b
         sta aProcSystem.aBody5,b,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
 
         lda #$0078
         sta aProcSystem.aBody6,b,x
@@ -10406,7 +10406,7 @@
         beq _DC79
         lda #$0000
         sta $0D77,b
-        stz $0302,b
+        stz wGameStateRoutine1,b
         lda #$B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -10438,7 +10438,7 @@
         jsl rlUnknown87CBC5
         lda #$0100
         tsb wUnknown000D79,b
-        stz $0302,b
+        stz wGameStateRoutine1,b
         lda #$AEEA
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -10469,7 +10469,7 @@
 
         lda #$00E0
         jsl rlUnknown808FA3
-        stz $0302,b
+        stz wGameStateRoutine1,b
         lda #$F222
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -10499,7 +10499,7 @@
         .autsiz
         .databank ?
 
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda #$0000
         sta $057C,b
         lda aDeploymentTable._UnitRAMPointer,x
@@ -10538,7 +10538,7 @@
         sta wR11
         lda #$0002
         jsl rlFindTargetsInRange
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         sta wR0
         lda #$FFFF
         sta wR1
@@ -10567,7 +10567,7 @@
 
         phx
         jsl rlUnknown88AF7B
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CC5D
         pha
         bcs _DF33
@@ -10603,7 +10603,7 @@
 
         phx
         jsl rlUnknown88AF7B
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CDA4
 
         lda #<>$80B6B6
@@ -10665,7 +10665,7 @@
 
         phx
         jsl rlUnknown88AF7B
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CE21
         plx
         rtl
@@ -10693,7 +10693,7 @@
         phx
         lda #$0004
         sta $057C,b
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         sec
@@ -10854,7 +10854,7 @@
         sta $0543,b
         sta $0545,b
         phx
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsr rsUnknown85E44E
@@ -11280,7 +11280,7 @@
         _E5FC
         lda wSelectedUnitDataRAMPointer,b
         pha
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._XTilePosition,x
         sta wR0
         lda aDeploymentTable._YTilePosition,x
@@ -11309,7 +11309,7 @@
         .autsiz
         .databank ?
 
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         jsl rlGetTerrainTypeByDeploymentOffset
         cmp #$0009
         bne _E633
@@ -11859,7 +11859,7 @@
         .databank ?
 
         phx
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown84B32B
@@ -11887,7 +11887,7 @@
         .databank ?
 
         phx
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlDiscardSelectedInventoryItem

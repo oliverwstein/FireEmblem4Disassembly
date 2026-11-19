@@ -28,15 +28,15 @@
         ldx #$0034
         jsl rlDrawMenuTextNumber
 
-        lda $0304,b ; menu tab index
+        lda wGameStateStep,b ; menu tab index
         asl a
         asl a
         asl a
         clc
         adc wDebugMenuScreenIndex
-        sta $7F8410
+        sta wDebugMenuTemp1
 
-        lda $7F8410
+        lda wDebugMenuTemp1
         cmp #size(aDebugMenuPagePointers)/2
         bmi +
         
@@ -430,7 +430,7 @@
 
         pha
         lda aCurrentTilemapInfo.wBaseTile,b
-        sta $7F8410
+        sta wDebugMenuTemp1
         lda #$3800
         sta aCurrentTilemapInfo.wBaseTile,b
         pla
@@ -453,7 +453,7 @@
         +
         jsl rlDrawMenuTextLine
 
-        lda $7F8410
+        lda wDebugMenuTemp1
         sta aCurrentTilemapInfo.wBaseTile,b
         rts
 
@@ -716,13 +716,13 @@
 
         tax
         and #UnitStateFielded
-        sta $7F8410
+        sta wDebugMenuTemp1
         txa
         and #UnitStateMoved
-        sta $7F8412
+        sta wDebugMenuTemp2
         txa
         and #UnitStateGuardingCastle
-        sta $7F8414
+        sta wDebugMenuTemp3
         txa
         and #UnitState1000
         sta $7F8416
@@ -766,7 +766,7 @@
         ldx #pack([5, 5])
         jsl rlDrawMenuTextLine
 
-        lda $7F8410
+        lda wDebugMenuTemp1
         ldx #pack([10, 5])
         jsr rsDebugDrawBitOnOrOff
 
@@ -777,7 +777,7 @@
         ldx #pack([6, 7])
         jsl rlDrawMenuTextLine
 
-        lda $7F8412
+        lda wDebugMenuTemp2
         ldx #pack([10, 7])
         jsr rsDebugDrawBitOnOrOff
 
@@ -788,7 +788,7 @@
         ldx #pack([6, 9])
         jsl rlDrawMenuTextLine
 
-        lda $7F8414
+        lda wDebugMenuTemp3
         ldx #pack([10, 9])
         jsr rsDebugDrawBitOnOrOff
 
@@ -998,13 +998,13 @@
         jsl rlGetActiveRingStatBonusBitfield
         tax
         and #$0080
-        sta $7F8410
+        sta wDebugMenuTemp1
         txa
         and #$0040
-        sta $7F8412
+        sta wDebugMenuTemp2
         txa
         and #$0020
-        sta $7F8414
+        sta wDebugMenuTemp3
         txa
         and #$0010
         sta $7F8416
@@ -1022,7 +1022,7 @@
         ldx #pack([10, 5])
         jsl rlDrawMenuTextLine
 
-        lda $7F8410
+        lda wDebugMenuTemp1
         ldx #pack([16, 5])
         jsr rsDebugDrawBitOnOrOff
 
@@ -1033,7 +1033,7 @@
         ldx #pack([10, 7])
         jsl rlDrawMenuTextLine
 
-        lda $7F8412
+        lda wDebugMenuTemp2
         ldx #pack([16, 7])
         jsr rsDebugDrawBitOnOrOff
 
@@ -1044,7 +1044,7 @@
         ldx #pack([11, 9])
         jsl rlDrawMenuTextLine
 
-        lda $7F8414
+        lda wDebugMenuTemp3
         ldx #pack([16, 9])
         jsr rsDebugDrawBitOnOrOff
 
@@ -1184,7 +1184,7 @@
         lda #0
         
         -
-        sta $7F8410
+        sta wDebugMenuTemp1
         asl a
         tax
         lda $7F8430,x
@@ -1193,7 +1193,7 @@
           sta wSelectedUnitDataRAMPointer,b
           jsl rlGetSelectedUnitNamePointer
 
-          lda $7F8410
+          lda wDebugMenuTemp1
           asl a
           clc
           adc #7
@@ -1215,13 +1215,13 @@
         
         +
         pha
-        lda $7F8410
+        lda wDebugMenuTemp1
         asl a
         tax
         pla
         sta $7F8450,x
 
-        lda $7F8410
+        lda wDebugMenuTemp1
         inc a
         cmp #9
         bne -
@@ -1232,7 +1232,7 @@
         lda #0
 
         _Loop
-        sta $7F8410
+        sta wDebugMenuTemp1
         asl a
         tax
         lda $7F8450,x
@@ -1246,7 +1246,7 @@
         bmi +
 
           pha
-          lda $7F8410
+          lda wDebugMenuTemp1
           asl a
           clc
           adc #7
@@ -1269,7 +1269,7 @@
         eor #$FFFF  
         inc a
         pha
-        lda $7F8410
+        lda wDebugMenuTemp1
         asl a
         clc
         adc #7
@@ -1291,7 +1291,7 @@
         lda wSelectedUnitDataRAMPointer,b
         sta $7F842E
 
-        lda $7F8410
+        lda wDebugMenuTemp1
         asl a
         tax
         lda $7F8450,x
@@ -1311,7 +1311,7 @@
         bmi +
 
           pha
-          lda $7F8410
+          lda wDebugMenuTemp1
           asl a
           clc
           adc #7
@@ -1335,7 +1335,7 @@
         eor #$FFFF
         inc a
         pha
-        lda $7F8410
+        lda wDebugMenuTemp1
         asl a
         clc
         adc #7
@@ -1354,7 +1354,7 @@
         jsl rlDrawMenuTextNumber
 
         _Next
-        lda $7F8410
+        lda wDebugMenuTemp1
         inc a
         cmp #9
         beq +
@@ -1454,7 +1454,7 @@
         lda #9
         
         -
-        sta $7F8410
+        sta wDebugMenuTemp1
         asl a
         tax
         lda $7F8430,x
@@ -1463,7 +1463,7 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitNamePointer
 
-        lda $7F8410
+        lda wDebugMenuTemp1
         sec
         sbc #9
         asl a
@@ -1486,12 +1486,12 @@
 
         +
         pha
-        lda $7F8410
+        lda wDebugMenuTemp1
         asl a
         tax
         pla
         sta $7F8450,x
-        lda $7F8410
+        lda wDebugMenuTemp1
         inc a
         cmp #15
         bne -
@@ -1502,7 +1502,7 @@
         lda #9
 
         _Loop
-        sta $7F8410
+        sta wDebugMenuTemp1
         asl a
         tax
         lda $7F8450,x
@@ -1516,7 +1516,7 @@
         bmi +
 
         pha
-        lda $7F8410
+        lda wDebugMenuTemp1
         sec
         sbc #9
         asl a
@@ -1541,7 +1541,7 @@
         eor #$FFFF
         inc a
         pha
-        lda $7F8410
+        lda wDebugMenuTemp1
         sec
         sbc #9
         asl a
@@ -1565,7 +1565,7 @@
         lda wSelectedUnitDataRAMPointer,b
         sta $7F842E
 
-        lda $7F8410
+        lda wDebugMenuTemp1
         asl a
         tax
         lda $7F8450,x
@@ -1584,7 +1584,7 @@
         bmi +
 
           pha
-          lda $7F8410
+          lda wDebugMenuTemp1
           sec
           sbc #9
           asl a
@@ -1610,7 +1610,7 @@
         eor #$FFFF
         inc a
         pha
-        lda $7F8410
+        lda wDebugMenuTemp1
         sec
         sbc #9
         asl a
@@ -1631,7 +1631,7 @@
         jsl rlDrawMenuTextNumber
         
         _Next
-        lda $7F8410
+        lda wDebugMenuTemp1
         inc a
         cmp #15
         beq _End
@@ -1895,18 +1895,18 @@
         jsl rlDrawMenuTextLine
 
         jsl rlGetSelectedUnitTerrainAvoidPointer
-        sta $7F8412
+        sta wDebugMenuTemp2
 
         jsl rlGetSelectedUnitMovementCostPointer
-        sta $7F8410
+        sta wDebugMenuTemp1
 
         lda #0
-        sta $7F8414
+        sta wDebugMenuTemp3
 
         _D53D
-        lda $7F8410
+        lda wDebugMenuTemp1
         clc
-        adc $7F8414
+        adc wDebugMenuTemp3
         tax
         lda $830000,x
         and #$00FF
@@ -1914,7 +1914,7 @@
         beq _Untraversable
 
         tay
-        lda $7F8414
+        lda wDebugMenuTemp3
         asl a
         tax
         lda aDebugTerrainNumberCoordinates,x
@@ -1934,7 +1934,7 @@
         lda #<>aDebugDashText
         sta lR18
 
-        lda $7F8414
+        lda wDebugMenuTemp3
         asl a
         tax
         lda aDebugTerrainTextCoordinates,x
@@ -1944,15 +1944,15 @@
         jsl rlDrawMenuTextLine
 
         +
-        lda $7F8412
+        lda wDebugMenuTemp2
         clc
-        adc $7F8414
+        adc wDebugMenuTemp3
         tax
         lda $830000,x
         and #$00FF
         tay
 
-        lda $7F8414
+        lda wDebugMenuTemp3
         asl a
         tax
         lda aDebugTerrainNumberCoordinates,x
@@ -1966,9 +1966,9 @@
         tya
         jsl rlDrawMenuTextNumber
 
-        lda $7F8414
+        lda wDebugMenuTemp3
         inc a
-        sta $7F8414
+        sta wDebugMenuTemp3
         cmp #26
         beq +
 
@@ -3029,22 +3029,22 @@
         jsl rlDrawMenuTextLine
 
         lda #0
-        sta $7F8412
+        sta wDebugMenuTemp2
 
           _OuterLoop
           lda #0
-          sta $7F8410
+          sta wDebugMenuTemp1
 
-          lda $7F8412
+          lda wDebugMenuTemp2
           tax
-          lda $7E4F85,x
-          sta $7F8414
+          lda aBattleRoundsData._Entry[0],x
+          sta wDebugMenuTemp3
 
             _InnerLoop
-            lda $7F8410
+            lda wDebugMenuTemp1
             asl a
             tax
-            lda $7F8414
+            lda wDebugMenuTemp3
             and aDebugCombatRoundFlagMasks1,x
             beq +
 
@@ -3053,7 +3053,7 @@
             +
             pha
 
-            lda $7F8412
+            lda wDebugMenuTemp2
             clc
             adc #5
             and #$00FF
@@ -3062,7 +3062,7 @@
             lsr a
             sta wR0
 
-            lda $7F8410
+            lda wDebugMenuTemp1
             clc
             adc #10
             asl a
@@ -3078,21 +3078,21 @@
             pla
             jsl rlDrawMenuTextNumber
 
-            lda $7F8410
+            lda wDebugMenuTemp1
             inc a
-            sta $7F8410
+            sta wDebugMenuTemp1
             cmp #8
             bne _InnerLoop
 
-          lda $7F8412
+          lda wDebugMenuTemp2
           inc a
           inc a
-          sta $7F8412
+          sta wDebugMenuTemp2
           cmp #11 *2
           bne _OuterLoop
 
         lda #0
-        sta $7F8412
+        sta wDebugMenuTemp2
 
           -
           tax
@@ -3100,7 +3100,7 @@
           and #$00FF
           pha
 
-          lda $7F8412
+          lda wDebugMenuTemp2
           clc
           adc #5
           and #$00FF
@@ -3118,10 +3118,10 @@
           pla
           jsl rlDrawMenuTextNumber
 
-          lda $7F8412
+          lda wDebugMenuTemp2
           inc a
           inc a
-          sta $7F8412
+          sta wDebugMenuTemp2
           cmp #11 *2
           bne -
 
@@ -3160,21 +3160,21 @@
         jsl rlDrawMenuTextLine
 
         lda #0
-        sta $7F8412
+        sta wDebugMenuTemp2
 
           _OuterLoop
           lda #0
-          sta $7F8410
-          lda $7F8412
+          sta wDebugMenuTemp1
+          lda wDebugMenuTemp2
           tax
           lda $7E4F9B,x
-          sta $7F8414
+          sta wDebugMenuTemp3
           
             _InnerLoop
-            lda $7F8410
+            lda wDebugMenuTemp1
             asl a
             tax
-            lda $7F8414
+            lda wDebugMenuTemp3
             and aDebugCombatRoundFlagMasks2,x
             beq +
 
@@ -3183,7 +3183,7 @@
             +
             pha
 
-            lda $7F8412
+            lda wDebugMenuTemp2
             clc
             adc #5
             and #$00FF
@@ -3191,7 +3191,7 @@
             lsr a
             lsr a
             sta wR0
-            lda $7F8410
+            lda wDebugMenuTemp1
             clc
             adc #10
             asl a
@@ -3207,21 +3207,21 @@
             pla
             jsl rlDrawMenuTextNumber
 
-            lda $7F8410
+            lda wDebugMenuTemp1
             inc a
-            sta $7F8410
+            sta wDebugMenuTemp1
             cmp #8
             bne _InnerLoop
 
-          lda $7F8412
+          lda wDebugMenuTemp2
           inc a
           inc a
-          sta $7F8412
+          sta wDebugMenuTemp2
           cmp #11 *2
           bne _OuterLoop
 
         lda #0
-        sta $7F8412
+        sta wDebugMenuTemp2
 
           -
           tax
@@ -3229,7 +3229,7 @@
           and #$00FF
           pha
 
-          lda $7F8412
+          lda wDebugMenuTemp2
           clc
           adc #5
           and #$00FF
@@ -3248,10 +3248,10 @@
           pla
           jsl rlDrawMenuTextNumber
 
-          lda $7F8412
+          lda wDebugMenuTemp2
           inc a
           inc a
-          sta $7F8412
+          sta wDebugMenuTemp2
           cmp #11 *2
           bne -
 
@@ -3293,21 +3293,21 @@
         sta aCurrentTilemapInfo.wBaseTile,b
 
         lda #0
-        sta $7F8412
+        sta wDebugMenuTemp2
         
           _OuterLoop
           lda #0
-          sta $7F8410
-          lda $7F8412
+          sta wDebugMenuTemp1
+          lda wDebugMenuTemp2
           tax
           lda $7E4FB1,x
-          sta $7F8414
+          sta wDebugMenuTemp3
           
             _InnerLoop
-            lda $7F8410
+            lda wDebugMenuTemp1
             asl a
             tax
-            lda $7F8414
+            lda wDebugMenuTemp3
             and aDebugCombatRoundFlagMasks3,x
             beq +
 
@@ -3316,7 +3316,7 @@
             +
             pha
 
-            lda $7F8412
+            lda wDebugMenuTemp2
             clc
             adc #5
             and #$00FF
@@ -3324,7 +3324,7 @@
             lsr a
             lsr a
             sta wR0
-            lda $7F8410
+            lda wDebugMenuTemp1
             clc
             adc #10
             asl a
@@ -3340,21 +3340,21 @@
             pla
             jsl rlDrawMenuTextNumber
 
-            lda $7F8410
+            lda wDebugMenuTemp1
             inc a
-            sta $7F8410
+            sta wDebugMenuTemp1
             cmp #8
             bne _InnerLoop
 
-          lda $7F8412
+          lda wDebugMenuTemp2
           inc a
           inc a
-          sta $7F8412
+          sta wDebugMenuTemp2
           cmp #10 *2
           bne _OuterLoop
 
         lda #0
-        sta $7F8412
+        sta wDebugMenuTemp2
         
           -
           tax
@@ -3362,7 +3362,7 @@
           and #$00FF
           pha
 
-          lda $7F8412
+          lda wDebugMenuTemp2
           clc
           adc #5
           and #$00FF
@@ -3381,10 +3381,10 @@
           pla
           jsl rlDrawMenuTextNumber
 
-          lda $7F8412
+          lda wDebugMenuTemp2
           inc a
           inc a
-          sta $7F8412
+          sta wDebugMenuTemp2
           cmp #10 *2
           bne -
 
@@ -3493,7 +3493,7 @@
         .autsiz
         .databank ?
 
-        inc $0302,b
+        inc wGameStateRoutine1,b
         jsr rlDrawDebugMenu
 
         sep #$20
@@ -3514,7 +3514,7 @@
         php
         phk
         plb
-        lda $0304,b
+        lda wGameStateStep,b
         cmp #4
         bmi +
 
@@ -3566,7 +3566,7 @@
         sta bBufferINIDISP
         rep #$20
 
-        lda $0304,b
+        lda wGameStateStep,b
         cmp #0
         beq ++
 
@@ -3578,7 +3578,7 @@
 
         +
         lda #0
-        sta $0304,b
+        sta wGameStateStep,b
         lda #1
         sta $0D77,b
         lda #$B122
@@ -3587,7 +3587,7 @@
 
         +
         lda #0
-        sta $0304,b
+        sta wGameStateStep,b
         lda $7F8404
         sta $7F8183
         lda #$BBD9
@@ -3597,7 +3597,7 @@
         _E84B
         lda #6
         jsl rlUnknown808FAD
-        lda $0304,b
+        lda wGameStateStep,b
         inc a
         cmp #4
         bne +
@@ -3605,7 +3605,7 @@
           lda #0
 
         +
-        sta $0304,b
+        sta wGameStateStep,b
         lda #0
         sta wDebugMenuScreenIndex
         jsl rlUnknown8BB45D

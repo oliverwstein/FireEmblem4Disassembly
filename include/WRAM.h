@@ -402,6 +402,19 @@
   .endvirtual
 
 
+  .virtual $000300
+
+    wGameStateRoutine2 .word ? ; $000300
+    wGameStateRoutine1 .word ? ; $000302
+      ; Every frame, rlRunGameStateRoutines runs the routine at index
+      ; wGameStateRoutine1 in aGameStateRoutines and then the one at index
+      ; wGameStateRoutine2. An entry with bank $7D instead sets wGameStateRoutine1.
+    wGameStateStep .word ?     ; $000304
+      ; A step counter for the current game state. The routines that set up a
+      ; state clear it, and state routines advance it as they go.
+
+  .endvirtual
+
   .virtual $000750
 
     wMapScrollDirectionIdentifier .word ? ; $000750
@@ -429,7 +442,13 @@
 
 
 
-  ; .word ? ; $000772 - deployment offset?
+  .virtual $000772
+
+    wActiveUnitDeploymentOffset .word ? ; $000772
+      ; The deployment offset of the unit the map code is acting with: set when a
+      ; unit is chosen for an action, and read wherever that unit is needed.
+
+  .endvirtual
 
   ; .word ? ; $000778 ?
   ; .word ? ; $00077A ?
@@ -438,8 +457,14 @@
 
   ; .word ? ; $000788 bitfield
 
-  ; .word ? ; $00078C portrait ID ?
-  ; .word ? ; $00078E ?
+  .virtual $00078C
+
+    wTempVariable1 .word ? ; $00078C
+    wTempVariable2 .word ? ; $00078E
+      ; Temporary values used by many unrelated routines: prices, portrait IDs,
+      ; weapons and their ranges, map coordinates and more.
+
+  .endvirtual
 
 
   .virtual $0007D4
@@ -1754,6 +1779,15 @@
   .virtual $7F8402
 
     wDebugMenuScreenIndex .word ? ; 7F8402
+
+  .endvirtual
+
+  .virtual $7F8410
+
+    wDebugMenuTemp1 .word ? ; $7F8410
+    wDebugMenuTemp2 .word ? ; $7F8412
+    wDebugMenuTemp3 .word ? ; $7F8414
+      ; Temporary values of the debug menu pages.
 
   .endvirtual
 

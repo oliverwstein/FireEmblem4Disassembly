@@ -24,7 +24,7 @@
         plb
         phk
         plb
-        sta $078C,b
+        sta wTempVariable1,b
         cpx #0
         bne _Slot1
 
@@ -129,7 +129,7 @@
 
         phk
         plb
-        sta $078C,b
+        sta wTempVariable1,b
         jsl rlGetCharacterPortraitDataID
         jsr rlTryGetClassPortraitDataID
         sta wR0
@@ -165,7 +165,7 @@
           rts
 
         +
-        lda $078C,b
+        lda wTempVariable1,b
         jsl rlGetCharacterClass
         phx
         asl a
@@ -201,7 +201,7 @@
 
         phk
         plb
-        sta $078C,b
+        sta wTempVariable1,b
         jsl rlGetCharacterPortraitDataID
         jsr rlTryGetClassPortraitDataID
         sta wR0

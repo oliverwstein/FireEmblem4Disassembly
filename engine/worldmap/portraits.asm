@@ -24,7 +24,7 @@
         plb
 
         phy
-        sta $078C,b
+        sta wTempVariable1,b
 
         jsl rlGetCharacterPortraitDataID
         jsr rlTryGetClassPortraitDataID
@@ -89,7 +89,7 @@
         sta aWorldMapPortrait.wStatus[0],x
 
         txa
-        sta $078C,b
+        sta wTempVariable1,b
 
         lda #(`procFadeInWorldMapPortraitSlot)<<8
         sta lR44+1
@@ -106,14 +106,14 @@
         .autsiz
         .databank ?
 
-        lda $0302,b
+        lda wGameStateRoutine1,b
         bne +
 
           jml rlUnknown88E377
 
         +
         txa
-        sta $078C,b
+        sta wTempVariable1,b
 
         lda #(`procFadeOutWorldMapPortraitSlot)<<8
         sta lR44+1
@@ -259,7 +259,7 @@
         .autsiz
         .databank ?
 
-        ldy $0302,b
+        ldy wGameStateRoutine1,b
         cpy #0
         bne +
 
@@ -349,7 +349,7 @@
         lda #$001E
         sta aProcSystem.aBody0,b,x
 
-        lda $078C,b
+        lda wTempVariable1,b
         sta aProcSystem.aBody1,b,x
         rtl
 
@@ -426,7 +426,7 @@
 
         lda #0
         sta aProcSystem.aBody0,b,x
-        lda $078C,b
+        lda wTempVariable1,b
         sta aProcSystem.aBody1,b,x
         rtl
 

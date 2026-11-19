@@ -2703,7 +2703,7 @@
         txa
         jsl rlClearUnitDeploymentData
         jsl rlDeployUnitCheckIfAsleep
-        sta $0772,b
+        sta wActiveUnitDeploymentOffset,b
         tax
         jsl rlDeployedUnitSetHidden
         jsl rlGetSelectedUnitStates

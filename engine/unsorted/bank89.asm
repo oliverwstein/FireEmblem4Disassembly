@@ -70,7 +70,7 @@
         sta wR1
         stz wR4
         stz wR5
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlGetSelectedUnitMapSprite
         and #$8000
         bne _8A1F
@@ -142,7 +142,7 @@
         .autsiz
         .databank ?
 
-        lda $0304,b
+        lda wGameStateStep,b
         cmp #$0008
         beq _8A9A
         lda $7F8199
@@ -1801,7 +1801,7 @@
         jsl rlUnknown899D72
         jsl rlUnknown8998E1
         lda #$0001
-        sta $0304,b
+        sta wGameStateStep,b
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E8A88, $0400, $80, $B700
@@ -1875,7 +1875,7 @@
         sta bBufferINIDISP
         rep #$20
         lda $7F81A1
-        sta $0304,b
+        sta wGameStateStep,b
 
         _A311
         jsr rsUnknown8989AD
@@ -1917,7 +1917,7 @@
         sta bBufferINIDISP
         rep #$20
         lda $7F81A1
-        sta $0304,b
+        sta wGameStateStep,b
         lda $7F819D
         beq _A35B
         lda $7F81A5
@@ -2312,7 +2312,7 @@
         sta bBufferINIDISP
         rep #$20
         lda #$000A
-        sta $0304,b
+        sta wGameStateStep,b
         lda #$BBD9
         sta $7F81A3
         lda #$0004
@@ -2389,7 +2389,7 @@
         sta bBufferINIDISP
         rep #$20
         lda #$000A
-        sta $0304,b
+        sta wGameStateStep,b
         lda #$0004
         sta $7F81A1
         lda #$BBD9
@@ -3526,7 +3526,7 @@
         jsl rlUnknown89C3F3
         jsl rlUnknown80D143
         jsl rlUnknown89C021
-        lda $0304,b
+        lda wGameStateStep,b
         beq _C325
         lda #$0000
         sta $7F847D

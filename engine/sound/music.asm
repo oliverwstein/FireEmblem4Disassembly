@@ -314,7 +314,7 @@
             jsl rlUnknown81A9D4
 
           +
-          inc $0304,b
+          inc wGameStateStep,b
         
         _End
         rts
@@ -386,7 +386,7 @@
         tsb $0788,b
 
         jsr rsUnknown81AC02
-        inc $0304,b
+        inc wGameStateStep,b
         rts
 
         .databank 0

@@ -402,7 +402,7 @@
         .autsiz
         .databank ?
 
-        stz $078C,b
+        stz wTempVariable1,b
 
         ldx #LeifEpilogueID
         lda aEpilogueMainCharacters,x

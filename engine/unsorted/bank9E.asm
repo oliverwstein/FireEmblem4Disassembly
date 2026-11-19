@@ -288,7 +288,7 @@
 
 
         _81D9
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         bne _81EE
@@ -484,7 +484,7 @@
         lda $459E,b
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         sta $4BEB,b
         and #$0001
         and #$00FF
@@ -503,7 +503,7 @@
         lda $459E,b
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0001
         and #$00FF
         eor #$0001
@@ -542,7 +542,7 @@
         lda @l wR0
         and #$0001
         bne _8343
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0020
         bne _834B
 
@@ -559,7 +559,7 @@
 
 
         _8353
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0008
         beq _836B
         lda #$0000
@@ -741,7 +741,7 @@
         _8504
         eor #$0004
         sta $4560,b
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         bne _8526
@@ -1715,7 +1715,7 @@
         sta $7F4598
         lda lR18+1
         sta $7F4599
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         beq _8A2D
@@ -1861,7 +1861,7 @@
         sta $7F459B
         lda lR18+1
         sta $7F459C
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         beq _8B74
@@ -2015,7 +2015,7 @@
         lda $7F459E
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         sta $7F4BEB
         and #$0001
         bne _8CDF
@@ -2510,7 +2510,7 @@
         _8FEA
         plx
         jsl rlUnknown88CD4C
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         beq _9007
@@ -2622,7 +2622,7 @@
         dec a
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0001
         eor #$0001
         asl a
@@ -2761,7 +2761,7 @@
         dec a
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0001
         eor #$0001
         asl a
@@ -2867,7 +2867,7 @@
         dec a
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0001
         eor #$0001
         asl a
@@ -3055,7 +3055,7 @@
         lda bUnknown000E7B,b
         bit #$0040
         bne _9340
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable,x
         bit #$0020
         bne _9340
@@ -4320,7 +4320,7 @@
         plx
         lda @l $000302
         sta @l $0010B7,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
         ply
@@ -4766,7 +4766,7 @@
         jsl rlDeployedUnitUnsetHiddenIfAlive
         plx
         lda aProcSystem.aBody7,b,x
-        sta $0302,b
+        sta wGameStateRoutine1,b
         lda #(`rlPushToOAMBuffer)<<8
         sta $15E5,b
         lda #<>rlPushToOAMBuffer
@@ -5274,7 +5274,7 @@
         lda $7F459E
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         cmp #$FFFF
         bne _A26E
         lda $7F459E
@@ -5319,7 +5319,7 @@
         lda $7F459E
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         cmp #$FFFF
         bne _A2EC
 
@@ -5806,7 +5806,7 @@
         .databank ?
 
         phx
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         bne _A76E
@@ -6125,7 +6125,7 @@
         lda $7F459E
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         cmp #$FFFF
         beq _A962
         cmp #$FEFF
@@ -6137,11 +6137,11 @@
         beq _A962
         cmp #$00FD
         beq _A962
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0001
         cmp $7F57EA
         bne _A962
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0040
         bne _A965
 
@@ -6168,7 +6168,7 @@
         lda $7F459E
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         sta $7F4C2F
         lda $7F459E
         inc a
@@ -6237,7 +6237,7 @@
         lda $7F459E
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0001
         sta $7F57EA
         asl a
@@ -6353,7 +6353,7 @@
         lda $7F459E
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$00FF
         cmp #$00FE
         bne _AB5B
@@ -6473,7 +6473,7 @@
         ldx #$0000
 
         _ABEF
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         cmp #$FFFF
         beq _AC0B
         cpx #$0050
@@ -6613,10 +6613,10 @@
         .autsiz
         .databank ?
 
-        lda $0302,b
+        lda wGameStateRoutine1,b
         sta aProcSystem.aBody7,x
 
-        stz $0302,b
+        stz wGameStateRoutine1,b
         stz aProcSystem.aHeaderBitfield,b,x
 
         lda aActionStructUnit1.XPosition
@@ -6772,7 +6772,7 @@
         lda #$0001
         sta aProcSystem.aHeaderSleepTimer,b,x
         jsl rlUnknown888197
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         beq _AD9E
@@ -7251,7 +7251,7 @@
         sta wR0
         lda $7E4F79
         sta wR1
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         beq _B03A
@@ -7562,7 +7562,7 @@
         dec a
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         sta wR1
         and #$0010
         beq _B17B
@@ -7581,7 +7581,7 @@
         dec a
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         bit #$0002
         beq _B1BC
         jml _B211
@@ -7640,7 +7640,7 @@
         dec a
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         bit #$0004
         beq _B211
         lda $7F57EA
@@ -8686,10 +8686,10 @@
         .autsiz
         .databank ?
 
-        lda $0302,b
+        lda wGameStateRoutine1,b
         sta aProcSystem.aBody7,b,x
 
-        stz $0302,b
+        stz wGameStateRoutine1,b
         jsl rlUnknown88CD53
         jsl rlUnknown88CD61
 
@@ -9068,7 +9068,7 @@
         jsl rlUnknown8881A7
         plb
         .databank ?
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         bne _C982
@@ -9643,9 +9643,9 @@
         sta $7F5091
         sta $7F5093
         sta $7F4C07
-        lda $0302,b
+        lda wGameStateRoutine1,b
         sta aProcSystem.aBody7,b,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
         sep #$20
         lda bBufferBG2SC
         sta $7F57EA
@@ -9798,7 +9798,7 @@
         sta $7F57EC
         rep #$20
         lda aProcSystem.aBody7,b,x
-        sta $0302,b
+        sta wGameStateRoutine1,b
         rtl
 
         .databank 0
@@ -9932,7 +9932,7 @@
         plx
         lda @l $000302
         sta @l $0010B7,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
         lda $7E4EAF
@@ -10193,7 +10193,7 @@
         jsl rlUnknown88CD5A
         plx
         lda aProcSystem.aBody7,b,x
-        sta $0302,b
+        sta wGameStateRoutine1,b
         lda #(`rlPushToOAMBuffer)<<8
         sta $15E5,b
         lda #<>rlPushToOAMBuffer
@@ -10348,7 +10348,7 @@
 
         lda $000302
         sta aProcSystem.aBody7,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
 
         lda #0
         sta aProcSystem.aHeaderBitfield,b,x
@@ -10653,7 +10653,7 @@
         jsl rlUnknown88CD5A
         plx
         lda aProcSystem.aBody7,b,x
-        sta $0302,b
+        sta wGameStateRoutine1,b
         lda #(`rlPushToOAMBuffer)<<8
         sta $15E5,b
         lda #<>rlPushToOAMBuffer
@@ -10900,7 +10900,7 @@
         lda $7F459E
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         bit #$0001
         beq _D839
         lda $7F4598
@@ -10925,7 +10925,7 @@
         sta $7F459B
 
         _D857
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0001
         eor #$0001
         sta $7F4576
@@ -10986,7 +10986,7 @@
         lda $7F459E
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         bit #$0001
         beq _D8EE
         lda $7F57EA
@@ -11123,7 +11123,7 @@
         lda $455E,b
         eor #$0004
         sta $4560,b
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         bne _DBD7
@@ -11147,7 +11147,7 @@
         plx
         lda @l $000302
         sta @l $0010B7,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
         jsl rlUnknown88CD53
         jsl rlUnknown88CD61
         ply
@@ -11344,7 +11344,7 @@
         lda #1,s
         tax
         jsl rlUnknown88CD4C
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         beq _DD87
@@ -11747,9 +11747,9 @@
         .autsiz
         .databank ?
 
-        lda $0302,b
+        lda wGameStateRoutine1,b
         sta aProcSystem.aBody7,b,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
         lda #(`rlUnknown81841B)<<8
@@ -12159,7 +12159,7 @@
         .databank ?
 
         lda aProcSystem.aBody7,b,x
-        sta $0302,b
+        sta wGameStateRoutine1,b
         lda #(`rlPushToOAMBuffer)<<8
         sta $15E5,b
         lda #<>rlPushToOAMBuffer
@@ -12559,7 +12559,7 @@
         plx
         lda @l $000302
         sta @l $0010B7,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
         jsl rlUnknown88CD53
         jsl rlUnknown88CD61
         ply
@@ -12670,7 +12670,7 @@
         plx
         lda @l $000302
         sta @l $0010B7,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
         lda #$0038
@@ -12984,7 +12984,7 @@
         jsl rlDeployedUnitUnsetHiddenIfAlive
         plx
         lda aProcSystem.aBody7,b,x
-        sta $0302,b
+        sta wGameStateRoutine1,b
         lda #$8000
         sta $15E4+1,b
         lda #$87C7

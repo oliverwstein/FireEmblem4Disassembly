@@ -820,7 +820,7 @@
         clc
         adc #$0020
         sta lR19
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         beq _8660
@@ -885,7 +885,7 @@
         lda $7F459E
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0001
         and #$0001
         asl a
@@ -1034,7 +1034,7 @@
         lda $7F459E
         asl a
         tax
-        lda $7E4F85,x
+        lda aBattleRoundsData._Entry[0],x
         and #$0001
         beq _892F
         lda $7F508D

@@ -47,9 +47,9 @@
 
         ; At least i think $0302 is the map state...
 
-        lda $0302,b
+        lda wGameStateRoutine1,b
         sta aProcSystem.aBody3,b,x
-        stz $0302,b
+        stz wGameStateRoutine1,b
         rtl
 
         .databank 0
@@ -80,7 +80,7 @@
         lda aProcSystem.aBody3,b,x
         beq +
 
-          sta $0302,b
+          sta wGameStateRoutine1,b
 
         +
         rtl

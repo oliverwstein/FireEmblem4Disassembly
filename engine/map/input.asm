@@ -232,7 +232,7 @@
         lda wUnknown000D79,b
         bit #$0800
         bne _B079
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitFactionSlot
@@ -273,7 +273,7 @@
         lda #$0021
         jsl rlUnknown808FAD
         stz $07DA,b
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
         jsr rsUnknown88BBD3
         rts
@@ -293,7 +293,7 @@
         sta wUnknown0007D8,b
         stz $07DA,b
         jsr rsUnknown88BBD3
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         sta wR0
         lda $0774,b
         sta wR1
@@ -301,7 +301,7 @@
         sta $0778,b
         lda $077E,b
         sta $077A,b
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         tax
         lda aDeploymentTable._XTilePosition,x
         asl a
@@ -381,7 +381,7 @@
         .autsiz
         .databank ?
 
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable,x
         bit #$0010
         bne _B183
@@ -391,7 +391,7 @@
         lda #$0021
         jsl rlUnknown808FAD
         stz $07DA,b
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         jsl rlDeployedUnitUnsetHiddenIfAlive
         jsr rsUnknown88BBD3
@@ -404,14 +404,14 @@
 
 
         _B16D
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CC5D
         stz $07E0,b
         rts
 
 
         _B178
-        ldx $0772,b
+        ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CFBF
         stz $07E0,b
         rts
@@ -420,7 +420,7 @@
         _B183
         stz $07DA,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
-        lda $0772,b
+        lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0007
         sta wUnknown0007D8,b
@@ -469,8 +469,8 @@
         _B1D1
         jsl rlUnknown88B813
         bcc _B1CC
-        stx $0772,b
-        ldx $0772,b
+        stx wActiveUnitDeploymentOffset,b
+        ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         lda #$0008
@@ -481,7 +481,7 @@
         lda #$0000
         sta $7F819D
         lda #$000A
-        sta $0304,b
+        sta wGameStateStep,b
         sep #$20
         lda #$80
         sta bBufferINIDISP
@@ -662,7 +662,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078C,b
+        sta wTempVariable1,b
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
@@ -670,7 +670,7 @@
         lsr a
         lsr a
         lsr a
-        sta $078E,b
+        sta wTempVariable2,b
         ldy #$0090
         jsr rsUnknown88B5CA
         bcs _B561
@@ -712,11 +712,11 @@
         bne _B5A7
         lda aDeploymentTable._XTilePosition,x
         sec
-        sbc $078C,b
+        sbc wTempVariable1,b
         sta $0778,b
         lda aDeploymentTable._YTilePosition,x
         sec
-        sbc $078E,b
+        sbc wTempVariable2,b
         sta $077A,b
         lda #$0004
         sta wUnknown0007D8,b
@@ -806,11 +806,11 @@
         bcc _B625
         jsl rlGetEventLocationEntryEffectiveXCoordinate
         sec
-        sbc $078C,b
+        sbc wTempVariable1,b
         sta $0778,b
         jsl rlGetEventLocationEntryEffectiveYCoordinate
         sec
-        sbc $078E,b
+        sbc wTempVariable2,b
         sta $077A,b
         lda #$0004
         sta wUnknown0007D8,b

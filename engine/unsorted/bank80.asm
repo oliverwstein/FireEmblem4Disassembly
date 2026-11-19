@@ -2621,7 +2621,7 @@
       .al
       .xl
 
-      aUnknown809B01 ; 80/9B01
+      aGameStateRoutines ; 80/9B01
 
         .long $809B00
         .long $868010
@@ -2680,7 +2680,7 @@
         .long $8DA06B
         .long $8DA0B7
 
-      rlUnknown809BA9 ; 80/9BA9
+      rlRunGameStateRoutines ; 80/9BA9
 
         .al
         .autsiz
@@ -2688,14 +2688,14 @@
 
         phb
 
-        lda $0302,b
+        lda wGameStateRoutine1,b
         asl a
-        adc $0302,b
+        adc wGameStateRoutine1,b
         jsr rsUnknown809BC0
 
-        lda $0300,b
+        lda wGameStateRoutine2,b
         asl a
-        adc $0300,b
+        adc wGameStateRoutine2,b
         jsr rsUnknown809BC0
 
         plb
@@ -2711,7 +2711,7 @@
 
         tax
         sep #$20
-        lda aUnknown809B01+2,x
+        lda aGameStateRoutines+2,x
         cmp #$7D
         beq +
 
@@ -2721,7 +2721,7 @@
           plb
 
           rep #$20
-          lda aUnknown809B01,x
+          lda aGameStateRoutines,x
           sta $24
           jsl rlUnknown809BEB
           rep #$30
@@ -2729,8 +2729,8 @@
 
         +
         rep #$20
-        lda aUnknown809B01,x
-        sta $0302,b
+        lda aGameStateRoutines,x
+        sta wGameStateRoutine1,b
         jml $809BDB
 
         .databank 0
@@ -2937,7 +2937,7 @@
         jsl rlUnknown808002
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
-        jsl rlUnknown809BA9
+        jsl rlRunGameStateRoutines
         jsl rlUnknown809C7A
         jsl rlHideSprites
         jsl rlUnknown8095CD
@@ -2994,8 +2994,8 @@
         lda #$A3A5
         sta lR44
         jsl rlUnknown809C04
-        stz $0300,b
-        stz $0302,b
+        stz wGameStateRoutine2,b
+        stz wGameStateRoutine1,b
         jml rsUnknown80AD24
 
         .databank 0
@@ -3456,10 +3456,10 @@
         jsl rlUnknown9BFBC0
         jsl rlUnknown81A85C
         lda #$0001
-        sta $0300,b
+        sta wGameStateRoutine2,b
         lda #$0002
-        sta $0302,b
-        stz $0304,b
+        sta wGameStateRoutine1,b
+        stz wGameStateStep,b
         lda #$AE25
         sta wVBlankPointer
         lda #$9D4F
@@ -3684,9 +3684,9 @@
         sta wVBlankPointer
         lda #$B301
         sta wMainLoopPointer
-        stz $0300,b
-        stz $0302,b
-        stz $0304,b
+        stz wGameStateRoutine2,b
+        stz wGameStateRoutine1,b
+        stz wGameStateStep,b
         sep #$20
         lda #$00
         sta bBufferINIDISP
@@ -3749,7 +3749,7 @@
         jsl rlUnknown808002
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
-        jsl rlUnknown809BA9
+        jsl rlRunGameStateRoutines
         jsl rlUnknown809C7A
         lda wMapScrollXPixels,b
         sta wBufferBG1HOFS
@@ -3823,10 +3823,10 @@
         jsl rlUnknown82E0C6
         jsl rlUnknown82E08D
         lda #$000E
-        sta $0302,b
+        sta wGameStateRoutine1,b
         lda #$000D
-        sta $0300,b
-        stz $0304,b
+        sta wGameStateRoutine2,b
+        stz wGameStateStep,b
         lda #$B347
         sta wVBlankPointer
         lda #$9D4F
@@ -4142,8 +4142,8 @@
         lda wSelectedUnitDataRAMPointer,b
         sta $08BA,b
         lda #$0002
-        sta $0304,b
-        inc $0302,b
+        sta wGameStateStep,b
+        inc wGameStateRoutine1,b
         rtl
 
 
@@ -4268,7 +4268,7 @@
         jsl rlHDMAEngineCreateEntry
         jsr rsUnknown80B9E1
         lda #$0001
-        sta $0304,b
+        sta wGameStateStep,b
         rtl
 
         .databank 0
@@ -4515,9 +4515,9 @@
         jsl rlUnknown82E400
         jsl rlUnknown8780AA
         lda #$0016
-        sta $0302,b
-        stz $0304,b
-        stz $0300,b
+        sta wGameStateRoutine1,b
+        stz wGameStateStep,b
+        stz wGameStateRoutine2,b
         lda #$C162
         sta wVBlankPointer
         lda #$9D4F
@@ -4655,12 +4655,12 @@
         jsr rsUnknown80E54D
 
         lda $7F8400
-        sta $0304,b
+        sta wGameStateStep,b
 
         lda #$0027
-        sta $0302,b
+        sta wGameStateRoutine1,b
         lda #$0026
-        sta $0300,b
+        sta wGameStateRoutine2,b
 
         lda #<>rsUnknown809D4F
         sta $D7
@@ -4683,8 +4683,8 @@
 
         lda #0
         sta wDebugMenuScreenIndex
-        sta $7F8410
-        sta $7F8412
+        sta wDebugMenuTemp1
+        sta wDebugMenuTemp2
         sta $7F840A
         sta $7F840C
         sta $7F8408
@@ -4858,11 +4858,11 @@
         jsr rsUnknown80F4EB
 
         lda #$0024
-        sta $0304,b
+        sta wGameStateStep,b
         lda #5
-        sta $0302,b
+        sta wGameStateRoutine1,b
         lda #4
-        sta $0300,b
+        sta wGameStateRoutine2,b
 
         lda #<>rsUnknown809D4F
         sta wMainLoopPointer
@@ -5206,7 +5206,7 @@
         jsl rlUnknown808002
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
-        jsl rlUnknown809BA9
+        jsl rlRunGameStateRoutines
         jsl rlUnknown809C7A
         jsl rlHideSprites
         jsl rlUnknown8095CD
