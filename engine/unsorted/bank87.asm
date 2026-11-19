@@ -3969,27 +3969,6 @@
     .endsection Unsorted87C442Section
 
 
-    .section Unsorted87DC71Section
-
-      .al
-      .xl
-
-      rlUnknown87DC71 ; 87/DC71
-
-        .as
-        .xl
-        .autsiz
-        .databank ?
-
-        jmp (lAITemp000E90)
-
-        .databank 0
-
-        ; 87/DC74
-
-    .endsection Unsorted87DC71Section
-
-
     .section Unsorted87E709Section
 
       .as

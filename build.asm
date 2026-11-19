@@ -3729,14 +3729,7 @@
     * = $07DC71
     .logical $87DC71
 
-      .dsection Unsorted87DC71Section
-
-    .here
-
-    * = $07DC74
-    .logical $87DC74
-
-      .dsection Table87DC74Section
+      .dsection AIFormationOffsetSection
 
     .here
 

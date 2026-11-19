@@ -564,7 +564,7 @@
         lda wAIFormationDirection
         asl a
         tax
-        lda aUnknown87DC74,x
+        lda aAIFormationOffsetRoutines,x
         sta lAITemp000E90,b
 
         lda wAIFormationType
@@ -593,7 +593,7 @@
         adc $0EA2,b
         tax
         sep #$20
-        jsr rlUnknown87DC71
+        jsr rsAIFormationOffsetByDirection
 
         lda $0E9E,b
         cmp structAIUnitEntry.XPosition,b,y
@@ -656,26 +656,124 @@
     .endsection AIGroupSection
 
 
-    .section Table87DC74Section
+    .section AIFormationOffsetSection
 
-      .al
+      .as
       .xl
 
-      aUnknown87DC74 ; 87/DC74
+      rsAIFormationOffsetByDirection ; 87/DC71
 
-        ; Read by rlUnknown87DBD2.
+        .as
+        .xl
+        .autsiz
+        .databank ?
 
-        .word $DC7C, $DC93, $DCAA, $DCC1, $0CAD, $1820, $D87F, $87DC
-        .word $9E8D, <>rlGetUnitLoveGrowthWithTarget, $200E, $7F18, $DCD9, $8D87, $0EA0, $AD60
-        .word $200C, $FF38, $DCD9, $8D87, $0E9E, $0EAD, $1820, $D87F
-        .word $87DC, $A08D, $600E, $0CAD, $3820, $D8FF, $87DC, $9E8D
-        .word <>rlGetUnitLoveGrowthWithTarget, $200E, $FF38, $DCD9, $8D87, $0EA0, $AD60, $200C
-        .word $7F18, $DCD9, $8D87, $0E9E, $0EAD, $3820, $D8FF, $87DC
-        .word $A08D, $600E
+        ; Runs the routine that rlUnknown87DBD2 chose from aAIFormationOffsetRoutines
+        ; for wAIFormationDirection. X is the offset of a formation pattern entry
+        ; (aFormationPatternOffsets+X holds dX, +1 holds dY); the position it starts
+        ; from is in $200C and $200E.
+
+        jmp (lAITemp000E90)
+
+        .databank 0
+
+      aAIFormationOffsetRoutines ; 87/DC74
+
+        ; One per wAIFormationDirection. Each turns the pattern a quarter turn
+        ; further than the one before.
+
+        .word <>rsAIFormationOffsetDirection0
+        .word <>rsAIFormationOffsetDirection1
+        .word <>rsAIFormationOffsetDirection2
+        .word <>rsAIFormationOffsetDirection3
+
+      rsAIFormationOffsetDirection0 ; 87/DC7C
+
+        .as
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Stores X + dX, Y + dY in wAITemp000E9E and wAITemp000EA0.
+
+        lda $200C,b
+        clc
+        adc aFormationPatternOffsets,x
+        sta wAITemp000E9E,b
+        lda $200E,b
+        clc
+        adc aFormationPatternOffsets+1,x
+        sta wAITemp000EA0,b
+        rts
+
+        .databank 0
+
+      rsAIFormationOffsetDirection1 ; 87/DC93
+
+        .as
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Stores X - dY, Y + dX in wAITemp000E9E and wAITemp000EA0.
+
+        lda $200C,b
+        sec
+        sbc aFormationPatternOffsets+1,x
+        sta wAITemp000E9E,b
+        lda $200E,b
+        clc
+        adc aFormationPatternOffsets,x
+        sta wAITemp000EA0,b
+        rts
+
+        .databank 0
+
+      rsAIFormationOffsetDirection2 ; 87/DCAA
+
+        .as
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Stores X - dX, Y - dY in wAITemp000E9E and wAITemp000EA0.
+
+        lda $200C,b
+        sec
+        sbc aFormationPatternOffsets,x
+        sta wAITemp000E9E,b
+        lda $200E,b
+        sec
+        sbc aFormationPatternOffsets+1,x
+        sta wAITemp000EA0,b
+        rts
+
+        .databank 0
+
+      rsAIFormationOffsetDirection3 ; 87/DCC1
+
+        .as
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Stores X + dY, Y - dX in wAITemp000E9E and wAITemp000EA0.
+
+        lda $200C,b
+        clc
+        adc aFormationPatternOffsets+1,x
+        sta wAITemp000E9E,b
+        lda $200E,b
+        sec
+        sbc aFormationPatternOffsets,x
+        sta wAITemp000EA0,b
+        rts
+
+        .databank 0
 
         ; 87/DCD8
 
-    .endsection Table87DC74Section
+    .endsection AIFormationOffsetSection
 
 
     .section FormationPatternOffsetsSection
