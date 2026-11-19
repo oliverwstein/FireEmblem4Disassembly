@@ -2003,7 +2003,7 @@
         rep #$20
         plb
         .databank ?
-        lda $0004,b,y
+        lda structChapterEventData.Unknown1,b,y
         sta lR18
         ply
         plp
@@ -2045,7 +2045,7 @@
         rep #$20
         plb
         .databank ?
-        lda $0008,b,y
+        lda structChapterEventData.Unknown3,b,y
         sta lR18
         ply
         plp

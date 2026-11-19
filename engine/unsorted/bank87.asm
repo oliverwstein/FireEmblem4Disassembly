@@ -239,9 +239,9 @@
         rep #$20
         plb
         .databank ?
-        lda $000C,b,y
+        lda structMapMenu.Unknown3,b,y
         sta lR20
-        lda $000D,b,y
+        lda structMapMenu.Unknown3+1,b,y
         sta lR20+1
         jsl rlUnknown878852
         bcs _817F
@@ -465,12 +465,12 @@
         rep #$20
         plb
         .databank ?
-        lda $000C,b,y
-        ora $000D,b,y
+        lda structMapMenu.Unknown3,b,y
+        ora structMapMenu.Unknown3+1,b,y
         beq _8333
-        lda $000C,b,y
+        lda structMapMenu.Unknown3,b,y
         sta @l lMapMenuRAMEntryPointer
-        lda $000D,b,y
+        lda structMapMenu.Unknown3+1,b,y
         sta @l lMapMenuRAMEntryPointer+1
         bra _82F1
 
@@ -1008,9 +1008,9 @@
         rep #$20
         plb
         .databank ?
-        lda $0006,b,y
+        lda structMapMenu.TilemapDataPointer,b,y
         sta @l lMapMenuTilemapRAMEntryPointer
-        lda $0007,b,y
+        lda structMapMenu.TilemapDataPointer+1,b,y
         sta @l lMapMenuTilemapRAMEntryPointer+1
         jsl rlRemoveMapMenuTilemapRAMEntry
         phk
@@ -1177,8 +1177,8 @@
         rep #$20
         plb
         .databank ?
-        lda $0007,b,y
-        ora $0006,b,y
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
+        ora structMapMenuTilemapData.TilesPointer,b,y
         beq _86B5
         ply
         plp
@@ -1231,7 +1231,7 @@
         .databank ?
         pla
         sep #$20
-        sta $0009,b,y
+        sta structMapMenu.Type,b,y
         rep #$20
         ply
         plp
@@ -1447,23 +1447,23 @@
         rep #$20
         plb
         .databank ?
-        lda $0007,b,y
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
         sta lR19+1
-        lda $0006,b,y
+        lda structMapMenuTilemapData.TilesPointer,b,y
         sta lR19
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         and #$00FF
         sta wR0
-        lda $0001,b,y
+        lda structMapMenuTilemapData.Height,b,y
         and #$00FF
         sta wR1
         sta wR3
         txa
         clc
-        adc $0002,b,y
+        adc structMapMenuTilemapData.BGBuffer,b,y
         tax
         sep #$20
-        lda $0004,b,y
+        lda structMapMenuTilemapData.BGBuffer+2,b,y
         pha
         rep #$20
         plb
@@ -1536,9 +1536,9 @@
         plb
         .databank ?
         sep #$20
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         sta @l WRMPYA
-        lda $0001,b,y
+        lda structMapMenuTilemapData.Height,b,y
         sta @l WRMPYB
         nop
         nop
@@ -1603,14 +1603,14 @@
         rep #$20
         plb
         .databank ?
-        lda $0006,b,y
+        lda structMapMenuTilemapData.TilesPointer,b,y
         sta lR19
-        lda $0007,b,y
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
         sta lR19+1
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         and #$00FF
         sta wR5
-        lda $0001,b,y
+        lda structMapMenuTilemapData.Height,b,y
         and #$00FF
         sta wR7
         ldx lR19
@@ -1727,14 +1727,14 @@
         rep #$20
         plb
 
-        lda $0006,b,y
+        lda structMapMenuTilemapData.TilesPointer,b,y
         sta lR18
         lda $0006+1,b,y
         sta lR18+1
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         and #$00FF
         sta wR9
-        lda $0001,b,y
+        lda structMapMenuTilemapData.Height,b,y
         and #$00FF
         sta wR10
 
@@ -1867,14 +1867,14 @@
         rep #$20
         plb
         .databank ?
-        lda $0006,b,y
+        lda structMapMenuTilemapData.TilesPointer,b,y
         sta lR19
-        lda $0007,b,y
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
         sta lR19+1
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         and #$00FF
         sta wR13
-        lda $0001,b,y
+        lda structMapMenuTilemapData.Height,b,y
         and #$00FF
         sta wR14
         ldy lR18
@@ -2175,9 +2175,9 @@
         rep #$20
         plb
         .databank ?
-        lda $0006,b,y
+        lda structMapMenuTilemapData.TilesPointer,b,y
         sta lR23
-        lda $0007,b,y
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
         sta lR23+1
         stz wR13
         stz wR1
@@ -2186,7 +2186,7 @@
         sta wR1
         xba
         sta @l WRMPYA
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         sta wR13
         sta @l WRMPYB
         nop
@@ -2275,9 +2275,9 @@
         rep #$20
         plb
         .databank ?
-        lda $0006,b,y
+        lda structMapMenuTilemapData.TilesPointer,b,y
         sta lR23
-        lda $0007,b,y
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
         sta lR23+1
         stz wR0
         txa
@@ -2285,7 +2285,7 @@
         sta wR0
         xba
         sta @l WRMPYA
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         sta @l WRMPYB
         nop
         nop
@@ -2412,9 +2412,9 @@
         rep #$20
         plb
         .databank ?
-        lda $0006,b,y
+        lda structMapMenuTilemapData.TilesPointer,b,y
         sta lR23
-        lda $0007,b,y
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
         sta lR23+1
         stz wR0
         txa
@@ -2422,7 +2422,7 @@
         sta wR0
         xba
         sta @l WRMPYA
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         sta @l WRMPYB
         nop
         nop
@@ -2435,7 +2435,7 @@
         clc
         adc lR23
         sta lR23
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         and #$00FF
         asl a
         sta wR0
@@ -2533,9 +2533,9 @@
         rep #$20
         plb
         .databank ?
-        lda $0006,b,y
+        lda structMapMenuTilemapData.TilesPointer,b,y
         sta lR23
-        lda $0007,b,y
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
         sta lR23+1
         stz wR0
         txa
@@ -2544,7 +2544,7 @@
         sta wR0
         xba
         sta @l WRMPYA
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         sta @l WRMPYB
         nop
         nop
@@ -2557,7 +2557,7 @@
         clc
         adc lR23
         sta lR23
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         and #$00FF
         asl a
         sta wR0
@@ -6446,7 +6446,7 @@
         rep #$20
         plb
         .databank ?
-        lda $0005,b,x
+        lda structChapterLocationEntry.YPosition+1,b,x
         and #$00FF
         plx
         plp

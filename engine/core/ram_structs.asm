@@ -1907,12 +1907,12 @@
         rep #$20
         plb
 
-        lda $0000,b,y
+        lda structRAMAreaHeader.Flags,b,y
         and #$00FF
         pha
         sep #$20
         and #$7F
-        sta $0000,b,y
+        sta structRAMAreaHeader.Flags,b,y
         rep #$20
 
         pla

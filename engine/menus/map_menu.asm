@@ -1385,16 +1385,16 @@
         rep #$20
         plb
 
-        lda $0006,b,y
+        lda structMapMenuTilemapData.TilesPointer,b,y
         sta lR20
-        lda $0007,b,y
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
         sta lR20+1
 
         ; Width * Height
         sep #$20
-        lda $0000,b,y
+        lda structMapMenuTilemapData.Width,b,y
         sta WRMPYA
-        lda $0001,b,y
+        lda structMapMenuTilemapData.Height,b,y
         sta WRMPYB
         nop
         nop
