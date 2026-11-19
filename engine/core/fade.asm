@@ -1,5 +1,134 @@
 ; Screen fade-in and fade-out procs, and clearing them.
 
+    .section FadeInByTimerSection
+
+      .as
+      .xl
+
+      rlFadeInByTimer ; 80/A21C
+      
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; A = Timer
+
+        ; Output:
+        ; SEC if screen bright, else CLC
+
+        phb
+        php
+        phk
+        plb
+        sep #$20
+        sta wScreenFadingTimeIncrement,b
+
+        lda wScreenFadingFlag,b
+        bpl +
+
+          lda wScreenFadingTimeIncrement,b
+          sta wScreenFadingTimer,b
+          stz wScreenFadingFlag,b
+
+        +
+        lda bBufferINIDISP
+        and #INIDISP_Brightness
+        cmp #INIDISP_Setting(false, 15)
+        beq _SEC
+
+          dec wScreenFadingTimer,b
+          bne +
+
+            lda wScreenFadingTimeIncrement,b
+            sta wScreenFadingTimer,b
+
+            lda bBufferINIDISP
+            inc a
+            and #INIDISP_Brightness
+            sta bBufferINIDISP
+
+          +
+          plp
+          plb
+          clc
+          rtl
+
+        _SEC
+        lda #$FF
+        sta wScreenFadingFlag,b
+        plp
+        plb
+        sec
+        rtl
+
+        .databank 0
+
+      rlFadeOutByTimer ; 80/A25A
+      
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; A = Timer
+
+        ; Output:
+        ; SEC if screen dark, else CLC
+
+        phb
+        php
+        phk
+        plb
+        sep #$20
+        sta wScreenFadingTimeIncrement,b
+
+        lda wScreenFadingFlag,b
+        bpl +
+
+          lda wScreenFadingTimeIncrement,b
+          sta wScreenFadingTimer,b
+          stz wScreenFadingFlag,b
+
+        +
+        lda bBufferINIDISP
+        and #INIDISP_Brightness
+        beq _SEC
+
+        dec wScreenFadingTimer,b
+        bne +
+
+          lda wScreenFadingTimeIncrement,b
+          sta wScreenFadingTimer,b
+
+          lda bBufferINIDISP
+          dec a
+          and #INIDISP_Brightness
+          sta bBufferINIDISP
+
+        +
+        plp
+        plb
+        clc
+        rtl
+
+        _SEC
+        lda #$FF
+        sta wScreenFadingFlag,b
+        lda #INIDISP_Setting(true, 0)
+        sta bBufferINIDISP
+        plp
+        plb
+        sec
+        rtl
+
+        .databank 0
+
+        ; 80/A29A
+
+    .endsection FadeInByTimerSection
+
+
     .section FadeProcsSection
 
       .al

@@ -94,6 +94,8 @@
   .include "engine/ai/maps.asm"
   .include "engine/ai/scripts.asm"
   .include "engine/ai/threat.asm"
+  .include "engine/core/oam.asm"
+  .include "engine/core/tilemaps.asm"
   .include "engine/dialogue/death_quotes.asm"
   .include "engine/dialogue/dialogue.asm"
   .include "engine/dialogue/dialogue_box.asm"
@@ -142,6 +144,41 @@
 
     .here
 
+    * = $00826E
+    .logical $80826E
+
+      .dsection HideSpritesSection
+
+    .here
+
+    * = $0083C7
+    .logical $8083C7
+
+      .dsection OAMUpperXBitTableSection
+
+    .here
+
+    * = $008FDD
+    .logical $808FDD
+
+      .dsection Unsorted808FDDSection
+
+    .here
+
+    * = $009933
+    .logical $809933
+
+      .dsection Unsorted809933Section
+
+    .here
+
+    * = $009B01
+    .logical $809B01
+
+      .dsection Unsorted809B01Section
+
+    .here
+
     * = $009D4F
     .logical $809D4F
 
@@ -151,12 +188,26 @@
 
     .here
 
+    * = $009ED9
+    .logical $809ED9
+
+      .dsection FillBG2Page0TilemapBufferSection
+
+    .here
+
     * = $00A096
     .logical $80A096
 
       .dsection MathSection
 
       ; 80/A1AB
+
+    .here
+
+    * = $00A21C
+    .logical $80A21C
+
+      .dsection FadeInByTimerSection
 
     .here
 
@@ -189,6 +240,13 @@
 
     .here
 
+    * = $00A861
+    .logical $80A861
+
+      .dsection Unsorted80A861Section
+
+    .here
+
     * = $00A899
     .logical $80A899
 
@@ -209,6 +267,20 @@
 
     .here
 
+    * = $00AF9B
+    .logical $80AF9B
+
+      .dsection Unsorted80AF9BSection
+
+    .here
+
+    * = $00B122
+    .logical $80B122
+
+      .dsection Unsorted80B122Section
+
+    .here
+
     * = $00C1CB
     .logical $80C1CB
 
@@ -218,12 +290,26 @@
 
     .here
 
+    * = $00C32C
+    .logical $80C32C
+
+      .dsection Unsorted80C32CSection
+
+    .here
+
     * = $00E42B
     .logical $80E42B
 
       .dsection Unsorted80E42BSection
 
       ; 80/E586
+
+    .here
+
+    * = $00F2BE
+    .logical $80F2BE
+
+      .dsection Unsorted80F2BESection
 
     .here
 
