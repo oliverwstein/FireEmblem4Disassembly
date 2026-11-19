@@ -150,6 +150,7 @@
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
   .include "engine/unsorted/bank8D.asm"
+  .include "engine/unsorted/bank90.asm"
   .include "engine/unsorted/bank91.asm"
   .include "engine/unsorted/bank95.asm"
   .include "engine/unsorted/bank96.asm"
@@ -10087,6 +10088,13 @@
       dialogueChapter06DanannBattleQuote .include "text/dialogue/Chapter06/DanannBattleQuote.dialogue.txt" ; 90E8A1
 
       ; 90e8ce
+
+    .here
+
+    * = $10EBCA
+    .logical $90EBCA
+
+      .dsection Unsorted90EBCASection
 
     .here
 
