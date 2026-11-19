@@ -144,6 +144,18 @@ def main():
                 sys.exit('The padded build failed to assemble' + hint)
             results.append((bytearray(open(os.path.join(src, 'out.sfc'), 'rb').read()),
                             read_labels(os.path.join(src, 'out_labels.txt'))))
+        # Which bytes come from source: build with the base ROM filled with $00
+        # and with $FF; bytes that agree do not come from the base ROM.
+        with open(os.path.join(src, 'build.asm'), 'w') as f:
+            f.write('\n'.join(lines))
+        fills = []
+        for fill in (0x00, 0xFF):
+            with open(os.path.join(src, ROM), 'wb') as f:
+                f.write(bytes([fill]) * len(rom))
+            subprocess.run(['64tass', *asflags, '-o', 'fill.sfc', 'build.asm'],
+                           cwd=src, capture_output=True)
+            fills.append(open(os.path.join(src, 'fill.sfc'), 'rb').read())
+        from_source = bytes(x == y for x, y in zip(*fills))
     finally:
         shutil.rmtree(tmp)
     (_, markers), (built, padded) = results
@@ -249,7 +261,57 @@ def main():
     if len(groups(outside)) > 10:
         print(f'  ... and {len(groups(outside)) - 10} more routines or tables')
 
-    # 4. The game's own code checksums.
+    # 4. References into the block from bytes that are not source. The assembler
+    #    cannot update these, so they still point at the old addresses. Calls
+    #    (jsl/jml, and jsr/jmp from the same bank) to the start of a routine or
+    #    table in the block are listed; the ones fe4.cdl shows ran are certain.
+    targets = {}
+    for name, a in original.items():
+        if ':' not in name and in_block(a):
+            targets[offset(a)] = name
+    bank = s_off >> 16
+    try:
+        cdl = open('fe4.cdl', 'rb').read()
+    except OSError:
+        cdl = b''
+    if cdl.startswith(b'CDLv2'):
+        cdl = cdl[9:]                 # "CDLv2" and the ROM's CRC32, then one byte per ROM byte
+    ran = lambda o: o < len(cdl) and cdl[o] & 1
+    calls = []
+    for o in range(len(rom) - 3):
+        op = rom[o]
+        if op in (0x22, 0x5C):                                   # jsl, jml long
+            if rom[o + 3] & 0x3F != bank or rom[o + 3] < 0x80:
+                continue
+            size = 4
+        elif op in (0x20, 0x4C) and o >> 16 == bank:             # jsr, jmp absolute
+            size = 3
+        else:
+            continue
+        t = (bank << 16) | rom[o + 1] | rom[o + 2] << 8
+        if t in targets and not any(from_source[o:o + size]):
+            calls.append((o, op, t))
+    certain = [c for c in calls if ran(c[0])]
+    mnem = {0x22: 'jsl', 0x5C: 'jml', 0x20: 'jsr', 0x4C: 'jmp'}
+    if calls:
+        by_bank = defaultdict(int)
+        for o, _, _ in calls:
+            by_bank[f'${0x80 + (o >> 16):02X}'] += 1
+        print(f'Calls into the block from bytes not built from source: {len(calls)} '
+              f'({len(certain)} ran in fe4.cdl). By bank: '
+              + ', '.join(f'{b} {k}' for b, k in sorted(by_bank.items())))
+        for o, op, t in (certain + [c for c in calls if not ran(c[0])])[:12]:
+            print(f'  {cpu(o)} {mnem[op]} {targets[t]}{" (ran)" if ran(o) else ""}')
+        if len(calls) > 12:
+            print(f'  ... and {len(calls) - 12} more')
+        print('  These still go to the old addresses. Those that did not run may be data that\n'
+              '  only looks like a call; any that are code break what they belong to.')
+    if certain:
+        problems.append(f'{len(certain)} calls into the block that fe4.cdl shows ran come from '
+                        'bytes not built from source, so they did not move with it; build '
+                        'the code around them first.')
+
+    # 5. The game's own code checksums.
     for lo, hi, what in CHECKED_RANGES:
         hit = [o for o in range(lo, hi) if built[o] != rom[o]]
         if hit:

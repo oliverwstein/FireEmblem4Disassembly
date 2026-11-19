@@ -15,7 +15,10 @@ The merged blocks then flow freely: code added early moves everything after
 it. The output is unchanged; run ./build.sh to confirm.
 
 Pins that stay are listed with the reason, which is the work left before the
-bank can be one block.
+bank can be one block. If a chain of merged blocks is followed by free filler
+($00 or $FF, nothing labelled) up to the bank end, that space is written as
+`.fill <bank end> - *`, so the bank can grow into it. Comments in build.asm
+like `; 84/9FB9`, which marked where old blocks ended, are removed.
 """
 
 import os
@@ -99,8 +102,36 @@ def main():
     print(f'Kept: {cpu(bs[0][2])} (first block in build.asm)')
     for b, why in keep:
         print(f'Kept: {cpu(b[2])} ({why})')
-    if dry or not merge:
+    # A free run of filler from the end of a chain of blocks to the bank end
+    # (nothing labelled or placed there) becomes `.fill <bank end> - *`, so the
+    # chain can grow into it.
+    rom = open('fe4.sfc', 'rb').read()
+    labelled = set()
+    for l in open('labels.txt'):
+        m = re.match(r'al ([0-9a-f]+) ', l)
+        if m and int(m.group(1), 16) >> 16 >= 0x80:
+            labelled.add(int(m.group(1), 16) & 0x3FFFFF)
+    starts = {b[2] for b in blocks(lines)}
+    merged = {id(b) for b in merge}
+    bank_end = (bank << 16) + 0x10000
+    fills = []
+    for k, b in enumerate(bs):
+        if k + 1 < len(bs) and id(bs[k + 1]) in merged:
+            continue                  # not the last block of its chain
+        e = ends[k]
+        tail = rom[e:bank_end]
+        if (e < bank_end and e >> 16 == bank and tail[0] in (0x00, 0xFF)
+                and tail == bytes([tail[0]]) * len(tail)
+                and not any(e <= o < bank_end for o in labelled | starts)):
+            fills.append((b[1], tail[0], bank_end - e))
+            print(f'Fill: {bank_end - e:,} bytes of ${tail[0]:02X} from {cpu(e)} to the bank end')
+    if dry or not (merge or fills):
         return
+
+    insert = {}
+    for here, fill, _ in fills:
+        base = 0x800000 + (bank << 16) + 0x8000
+        insert[here] = ['', f'      .fill ${base:06X} + $8000 - *, ${fill:02X}', '']
 
     # Remove, for each merged block, the lines from the previous block's .here
     # through this block's .logical, with the blank lines around them, leaving
@@ -119,9 +150,26 @@ def main():
         drop.update(range(lo, hi + 1))
         drop.discard(lo)          # keep one blank line
         lines[lo] = ''
-    open('build.asm', 'w').write('\n'.join(l for i, l in enumerate(lines) if i not in drop))
-    print('Rewrote build.asm. Run ./build.sh to confirm the output still matches.')
 
+    # Comments such as `; 84/9FB9` in build.asm marked where a block ended. In a
+    # merged block they would go stale as soon as anything moves.
+    for b in bs:
+        for i in range(b[0], b[1]):
+            if re.match(r'\s*; [0-9A-F]{2}/[0-9A-F]{4}\s*$', lines[i]):
+                drop.add(i)
+                if not lines[i - 1].strip():
+                    drop.add(i - 1)
+
+    out = []
+    for i, l in enumerate(lines):
+        if i in insert:
+            while out and not out[-1].strip():
+                out.pop()
+            out.extend(insert[i])
+        if i not in drop:
+            out.append(l)
+    open('build.asm', 'w').write('\n'.join(out))
+    print('Rewrote build.asm. Run ./build.sh to confirm the output still matches.')
 
 if __name__ == '__main__':
     main()
