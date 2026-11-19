@@ -354,7 +354,7 @@
         jsl rlUnknown8499B5
         jsl rlClearBattleData
         ldx #$4EB5
-        jsr $84AC24
+        jsr rsUnknown84AC24
         pla
         jsl rlSetSelectedUnitClass
         jsl rlGetSelectedUnitDeploymentOffset
@@ -369,9 +369,9 @@
         sta lRAMBufferPointer,b
         jsl rlUnknown8499B5
         ldx #$4F15
-        jsr $84AC24
+        jsr rsUnknown84AC24
         ldx #$4EF5
-        jsr $84AC50
+        jsr rsUnknown84AC50
         lda #$FFFF
         sta $7E4F85
         sep #$20
@@ -1170,14 +1170,14 @@
         sta $002E,b,x
 
         _B89D
-        jsl $84FEB5
+        jsl rlUnknown84FEB5
         sta $0030,b,x
         jsl rlUnknown84FE98
         sta $0034,b,x
         lda $000E,b,x
         jsl rlUnknown84FEA1
         sta $0036,b,x
-        jsl $84FEAC
+        jsl rlUnknown84FEAC
         sta $0038,b,x
         rtl
 
@@ -1869,7 +1869,7 @@
         sta wBattleQuotePointer
         jsl rlGetSelectedUnitClassID
         sta $7E4EAF
-        jsl $9ED07A
+        jsl rlUnknown9ED07A
         lda #$0010
         tsb $0788,b
         plp
@@ -2403,7 +2403,7 @@
         lda $07E0,b
         cmp #$0001
         beq _D09C
-        jsr $84D0B2
+        jsr rsUnknown84D0B2
         bra _D0AE
 
 
@@ -2411,7 +2411,7 @@
         jsl rlUnknown88ADA6
 
         _D09C
-        jsl $88ADC9
+        jsl rlUnknown88ADC9
         bra _D0AE
 
 

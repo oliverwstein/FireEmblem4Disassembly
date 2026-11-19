@@ -1,5 +1,110 @@
 ; Code from bank $9B not yet assigned to a game system.
 
+    .section Unsorted9BFBC0Section
+
+      .al
+      .xl
+
+      rlUnknown9BFBC0 ; 9B/FBC0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sep #$20
+        lda #$00
+        sta $7FD000
+        lda #$01
+        sta bBufferTM
+        sta bBufferBGMODE
+        sta bBufferOBSEL
+        lda #$10
+        sta bBufferBG1SC
+        rep #$20
+        jsl rlUnknown88EEB1
+        jsl rlGetHighestCompletionCount
+        cmp #$0010
+        bcc _FBE7
+        lda #$000F
+
+        _FBE7
+        sta $0CC2,b
+        stz aBGPaletteBuffer,b
+        lda #$0000
+        sta $7FD001
+        stz wBufferBG1HOFS
+        stz wBufferBG1VOFS
+        sep #$20
+        rep #$10
+        ldx #$2AFE
+        stx DecompressionVariables
+        lda #$DF
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        jsl rlDecompressor
+        rep #$30
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $0820, $80, $0000
+
+        sep #$20
+        rep #$10
+        ldx #$30CC
+        stx DecompressionVariables
+        lda #$DF
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        jsl rlDecompressor
+        rep #$30
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $0060, $80, $4000
+
+        sep #$20
+        rep #$10
+        ldx #$30E9
+        stx DecompressionVariables
+        lda #$DF
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        jsl rlDecompressor
+        rep #$30
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $0700, $80, $2000
+
+        ldx #$0000
+
+        _FC76
+        lda $E0283F,x
+        sta $0122,b,x
+        lda $E0285D,x
+        sta $0222,b,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc _FC76
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/FC8D
+
+    .endsection Unsorted9BFBC0Section
+
+
     .section Unsorted9BFC8DSection
 
       .al

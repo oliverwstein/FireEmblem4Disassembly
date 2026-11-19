@@ -219,6 +219,38 @@
     .endsection Unsorted8080C3Section
 
 
+    .section Unsorted8081A8Section
+
+      .al
+      .xl
+
+      rlUnknown8081A8 ; 80/81A8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        phb
+        phk
+        plb
+        .databank $80
+        sep #$20
+        lda bBufferINIDISP
+        sta $2100,b
+        plb
+        .databank $80
+        plp
+        rtl
+
+        .databank 0
+
+        ; 80/81B6
+
+    .endsection Unsorted8081A8Section
+
+
     .section Unsorted8081B6Section
 
       .al
@@ -271,7 +303,7 @@
         _81E9
         inc wVBlankDisabledFramecount
         jsl rlUnknown8090A2
-        jsl $8081A8
+        jsl rlUnknown8081A8
         jsl rlUnknown91EB76
         ply
         plx
@@ -568,7 +600,7 @@
         .databank ?
 
         jsr rsUnknown808A6C
-        jsr $808B48
+        jsr rsUnknown808B48
         inc $0E73,b
         ldx #$0000
         txa
@@ -596,7 +628,7 @@
         ora aSpriteExtBuffer,b,y
         sta aSpriteExtBuffer,b,y
         ldx #$AAAA
-        jsr $808A35
+        jsr rsUnknown808A35
         rtl
 
         .databank 0
@@ -634,7 +666,7 @@
         and aSpriteExtBuffer,b,y
         sta aSpriteExtBuffer,b,y
         ldx #$0000
-        jsr $808A35
+        jsr rsUnknown808A35
         rtl
 
         .databank 0
@@ -2353,13 +2385,13 @@
         lda #$40
         bcc _9604
         tsb $04EC,b
-        jsl $80908A
+        jsl rlUnknown80908A
         bra _960B
 
 
         _9604
         trb $04EC,b
-        jsl $809072
+        jsl rlUnknown809072
 
         _960B
         clc
@@ -2375,13 +2407,13 @@
         lda #$10
         bcc _9628
         tsb $04EC,b
-        jsl $80905A
+        jsl rlUnknown80905A
         bra _962F
 
 
         _9628
         trb $04EC,b
-        jsl $80903D
+        jsl rlUnknown80903D
 
         _962F
         rep #$30
@@ -2686,6 +2718,110 @@
     .endsection Unsorted809B01Section
 
 
+    .section Unsorted809BEESection
+
+      .as
+      .xl
+
+      rlUnknown809BEE ; 80/9BEE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        phb
+        phk
+        plb
+        .databank $80
+        sep #$20
+        ldx #$002F
+        lda #$00
+
+        _9BF9
+        sta $0309,b,x
+        dec x
+        bpl _9BF9
+        rep #$20
+        plb
+        .databank $80
+        plp
+        rtl
+
+        .databank 0
+
+        ; 80/9C04
+
+      rlUnknown809C04 ; 80/9C04
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        .databank $80
+        phx
+        phy
+        ldx #$002D
+
+        _9C0C
+        lda $0309,b,x
+        beq _9C1B
+        dec x
+        dec x
+        dec x
+        bpl _9C0C
+        ply
+        plx
+        plb
+        .databank ?
+        sec
+        rtl
+
+
+        _9C1B
+        ldy #$0000
+        lda lR44+1
+        sta $030A,b,x
+        sta $0307,b
+        lda [lR44],y
+        sta $0306,b
+        inc y
+        inc y
+        lda [lR44],y
+        sta $0309,b,x
+        jsl rlUnknown809C3B
+        ply
+        plx
+        plb
+        .databank ?
+        clc
+        rtl
+
+        .databank 0
+
+        ; 80/9C3B
+
+      rlUnknown809C3B ; 80/9C3B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jml [$0306]
+
+        .databank 0
+
+        ; 80/9C3E
+
+    .endsection Unsorted809BEESection
+
+
     .section Unsorted809C7ASection
 
       .al
@@ -2712,7 +2848,7 @@
         sta $0306,b
         lda $030A,b,x
         sta $0307,b
-        jsl $809C9D
+        jsl rlUnknown809C9D
 
         _9C94
         plx
@@ -2799,36 +2935,36 @@
         jsl rlHideSprites
         rep #$30
         jsl rlUnknown80A5D9
-        jsr $80A836
-        jsl $809BEE
+        jsr rsUnknown80A836
+        jsl rlUnknown809BEE
         lda #(`aProcEngineMainProcActionTable)<<8
         sta lR44+1
         lda #<>aProcEngineMainProcActionTable
         sta lR44
-        jsl $809C04
+        jsl rlUnknown809C04
         lda #(`aActiveSpriteEngineMainActionTable)<<8
         sta lR44+1
         lda #<>aActiveSpriteEngineMainActionTable
         sta lR44
-        jsl $809C04
+        jsl rlUnknown809C04
         lda #(`aHDMAEngineMainActionTable)<<8
         sta lR44+1
         lda #<>aHDMAEngineMainActionTable
         sta lR44
-        jsl $809C04
+        jsl rlUnknown809C04
         lda #$8200
         sta lR44+1
         lda #$E000
         sta lR44
-        jsl $809C04
+        jsl rlUnknown809C04
         lda #$9100
         sta lR44+1
         lda #$A3A5
         sta lR44
-        jsl $809C04
+        jsl rlUnknown809C04
         stz $0300,b
         stz $0302,b
-        jml $80AD24
+        jml rsUnknown80AD24
 
         .databank 0
 
@@ -3150,6 +3286,50 @@
     .endsection Unsorted80A5D9Section
 
 
+    .section Unsorted80A836Section
+
+      .al
+      .xl
+
+      rsUnknown80A836 ; 80/A836
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $80
+        sep #$20
+        ldx #$0003
+
+        _A83F
+        lda @l $80A859,x
+        sta rsBlockCopyMVNRAM,b,x
+        dec x
+        bpl _A83F
+        ldx #$0004
+
+        _A84C
+        lda @l $80A85D,x
+        sta rsBlockCopyMVPRAM,b,x
+        dec x
+        bpl _A84C
+        plp
+        plb
+        .databank $80
+        rts
+
+        .databank 0
+
+        ; 80/A859
+
+    .endsection Unsorted80A836Section
+
+
     .section Unsorted80A861Section
 
       .al
@@ -3255,6 +3435,102 @@
         ; 80/AA02
 
     .endsection Unsorted80A9F2Section
+
+
+    .section Unsorted80AD24Section
+
+      .as
+      .xl
+
+      rsUnknown80AD24 ; 80/AD24
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+        lda #$000A
+        sta wJoyRepeatDelay
+        lda #$0006
+        sta wJoyRepeatInterval
+        lda #$0000
+        jsl rlFillBG2Page0TilemapBuffer
+        lda #$030F
+        jsl rlFillBG2Page1TilemapBuffer
+        lda #$00FF
+        jsl rlFillBG3Page0TilemapBuffer
+        lda #$0000
+        sta wR1
+        sta wR2
+        lda #$4000
+        sta wR3
+        sta wR4
+        lda #$6000
+        sta wR5
+        lda #$5000
+        sta wR6
+        lda #$5400
+        sta wR7
+        lda #$5800
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        jsl rlProcEngineResetProcEngine
+        jsl rlActiveSpriteEngineReset
+        jsl rlEnableActiveSpriteEngine
+        jsl rlResetHDMAEngine
+        jsl rlUnknown82E073
+        jsl rlUnknown82E400
+        jsl rlUnknown8780AA
+        jsl rlUnknown82F211
+        lda #$00FF
+        sta wUnknown053E,b
+        jsl rlUnknown848000
+        jsl rlInitiateChapterEventRAMData
+        jsl rlUnknown869CCC
+        jsl rlUnknown80A773
+        jsl rlUnknown91EC8E
+        jsl rlUnknown87BF43
+        cmp #$0001
+        bne _ADD0
+        sep #$20
+        lda $04EA,b
+        ora #$40
+        sta $04EA,b
+        rep #$20
+
+        _ADD0
+        lda #$00C0
+        jsl rlUnknown808F6F
+        jsl rlUnknown9BFBC0
+        jsl rlUnknown81A85C
+        lda #$0001
+        sta $0300,b
+        lda #$0002
+        sta $0302,b
+        stz $0304,b
+        lda #$AE25
+        sta wVBlankPointer
+        lda #$9D4F
+        sta wMainLoopPointer
+        jsl rlEnableVBlank
+        plp
+        cli
+        rts
+
+        .databank 0
+
+        ; 80/ADFF
+
+    .endsection Unsorted80AD24Section
 
 
     .section Unsorted80B0A3Section
@@ -3531,7 +3807,7 @@
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
         jsl rlUnknown809BA9
-        jsl $809C7A
+        jsl rlUnknown809C7A
         lda wMapScrollXPixels,b
         sta wBufferBG1HOFS
         and #$000F
@@ -3544,7 +3820,7 @@
         jsl rlHideSprites
         jsl rlUnknown9181F6
         jsl rlUnknown878256
-        jsl $8095CD
+        jsl rlUnknown8095CD
         rts
 
         .databank 0
@@ -4304,7 +4580,7 @@
         lda #$9D4F
         sta wMainLoopPointer
         jsl rlEnableVBlank
-        jsl $80825B
+        jsl rlUnknown80825B
         plp
         rts
 
@@ -4313,6 +4589,70 @@
         ; 80/C3DD
 
     .endsection Unsorted80C39ASection
+
+
+    .section Unsorted80D143Section
+
+      .al
+      .xl
+
+      rlUnknown80D143 ; 80/D143
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        ldx #$0200
+
+        _D149
+        sta $7F8518,x
+        sta $7F8646,x
+        sta $7F8774,x
+        dec x
+        dec x
+        bne _D149
+        lda $7F846B
+        sta $7FB012
+        lda #$0000
+
+        _D164
+        sta $7FB010
+        tax
+        lda $7F8483,x
+        and #$00FF
+        pha
+        jsl rlGetItemRAMStructEntryByPlayerItemIndex
+        jsl rlGetEffectiveItemIDByItemRAMStructEntry
+        sta $7FB014
+        jsl rlGetItemDataROMPointer
+        lda $7FB014
+        asl a
+        tax
+        lda $80D1AE,x
+        tay
+        pla
+        asl a
+        tax
+        tya
+        sta $7F8776,x
+        lda wCurrentItemDataRAMPointer,b
+        sta $7F851A,x
+        lda wCurrentItemDataROMPointer,b
+        sta $7F8648,x
+        lda $7FB010
+        inc a
+        cmp $7FB012
+        bne _D164
+        rtl
+
+        .databank 0
+
+        ; 80/D1AE
+
+    .endsection Unsorted80D143Section
 
 
     .section Unsorted80E42BSection
@@ -4924,9 +5264,9 @@
         jsl rlIncreaseFrameCounters
         jsl rlClearSpriteExtBuffer
         jsl rlUnknown809BA9
-        jsl $809C7A
+        jsl rlUnknown809C7A
         jsl rlHideSprites
-        jsl $8095CD
+        jsl rlUnknown8095CD
         pla
         sta lR19+1
         pla

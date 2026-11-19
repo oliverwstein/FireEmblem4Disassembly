@@ -1,5 +1,45 @@
 ; Code from bank $86 not yet assigned to a game system.
 
+    .section Unsorted869CCCSection
+
+      .al
+      .xl
+
+      rlUnknown869CCC ; 86/9CCC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        ldx #$002A
+        sep #$20
+        lda #$00
+
+        _9CD8
+        sta bUnknown000E7B,b,x
+        dec x
+        bpl _9CD8
+        rep #$20
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 86/9CE4
+
+    .endsection Unsorted869CCCSection
+
+
     .section Unsorted869CE4Section
 
       .al

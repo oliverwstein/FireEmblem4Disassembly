@@ -1219,7 +1219,7 @@
         lda aBGPaletteBuffer,b,x
         tax
         lda $1B45,b
-        jsl $9F9090
+        jsl rlUnknown9F9090
         plx
         sta aBGPaletteBuffer,b,x
 
@@ -1260,7 +1260,7 @@
         lda #3,s
         and #$001F
         tax
-        jsr $9F90E6
+        jsr rsUnknown9F90E6
         sta #7,s
         lda #1,s
         asl a
@@ -1276,7 +1276,7 @@
         xba
         and #$001F
         tax
-        jsr $9F90E6
+        jsr rsUnknown9F90E6
         asl a
         asl a
         asl a
@@ -1296,7 +1296,7 @@
         xba
         and #$001F
         tax
-        jsr $9F90E6
+        jsr rsUnknown9F90E6
         asl a
         asl a
         xba
@@ -1510,15 +1510,15 @@
         .autsiz
         .databank ?
 
-        jsr $9F9341
+        jsr rlUnknown9F9341
         lda #$0020
         sta $1057,b,x
         lda #$926E
         sta $0F57,b,x
         lda $7F509B
         and #$00FF
-        jsr $9F8253
-        jmp $9FBD6B
+        jsr rsUnknown9F8253
+        jmp rlUnknown9FBD6B
 
         .databank 0
 
@@ -1539,7 +1539,7 @@
         .autsiz
         .databank ?
 
-        jsr $9F83F1
+        jsr rsUnknown9F83F1
         lda #$0000
         sta $7ECC06
         sta $7ECC08
@@ -1547,7 +1547,7 @@
         sta $7ECC0C
         stz $1017,b,x
         stz $1037,b,x
-        jsl $9F9691
+        jsl rlUnknown9F9691
         rtl
 
         .databank 0
@@ -1569,22 +1569,22 @@
         .autsiz
         .databank ?
 
-        jsr $9F82D7
+        jsr rsUnknown9F82D7
         plb
         .databank ?
         xba
-        jsr $9F830F
+        jsr rsUnknown9F830F
         lsr $80DE,b
         asl a
-        jsr $9F82D7
+        jsr rsUnknown9F82D7
         tsx
         xba
-        jsr $9F830F
+        jsr rsUnknown9F830F
         lsr $20DE,b,x
         ora $DBB883
-        jsr $9F830F
+        jsr rsUnknown9F830F
         sbc (wVBlankEnabledFramecount),y
-        jsr $9F830F
+        jsr rsUnknown9F830F
         jmp ($20DB)
 
         .databank 0

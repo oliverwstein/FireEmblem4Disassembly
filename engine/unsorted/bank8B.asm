@@ -841,6 +841,80 @@
     .endsection Unsorted8BBE68Section
 
 
+    .section Unsorted8BC030Section
+
+      .al
+      .xl
+
+      rlUnknown8BC030 ; 8B/C030
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        php
+        cmp #$FFFF
+        bne _C03B
+        lda #$000A
+
+        _C03B
+        tay
+        txa
+        asl a
+        asl a
+        asl a
+        asl a
+        sta wR0
+        lda bBufferOBSEL
+        and #$001F
+        asl a
+        tax
+        lda $8BC0B0,x
+        clc
+        adc wR0
+        pha
+        tya
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda $8BC090,x
+        sta lR18+1
+        lda $8BC08F,x
+        sta lR18
+        lda #$0040
+        sta wR0
+        pla
+        sta wR1
+        pha
+        jsl rlDMAByPointer
+        lda lR18
+        clc
+        adc #$0200
+        sta lR18
+        lda #$0040
+        sta wR0
+        pla
+        clc
+        adc #$0100
+        sta wR1
+        jsl rlDMAByPointer
+        plp
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 8B/C08F
+
+    .endsection Unsorted8BC030Section
+
+
     .section Unsorted8BC43ASection
 
       .al
@@ -987,15 +1061,15 @@
         _C4CE
         txa
         sta wUnknown7E5317
-        jsl $8BCA1A
+        jsl rlUnknown8BCA1A
         lda wUnknown7E5317
         bne _C4E3
-        jsl $8BC52A
+        jsl rlUnknown8BC52A
         bra _C4E7
 
 
         _C4E3
-        jsl $8BC56F
+        jsl rlUnknown8BC56F
 
         _C4E7
         jsl rlUnknown8BCD89
@@ -1054,7 +1128,7 @@
         tax
         tya
         lsr a
-        jsr $8BCD20
+        jsr rsUnknown8BCD20
         ply
         plx
 
@@ -1127,7 +1201,7 @@
         tax
         tya
         lsr a
-        jsr $8BCD20
+        jsr rsUnknown8BCD20
         ply
         plx
 

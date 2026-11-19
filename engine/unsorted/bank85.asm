@@ -1772,7 +1772,7 @@
         lda #$0000
         sta $7E8BEE
         sta $7E8BEC
-        jsl $859B2A
+        jsl rlUnknown859B2A
         lda wUnknown000D79,b
         bit #$0020
         bne _92BC
@@ -1976,7 +1976,7 @@
         lda #$0113
 
         _93EA
-        jsl $85A394
+        jsl rlUnknown85A394
         plx
         pla
         sta wR2
@@ -2082,7 +2082,7 @@
         beq _94AF
         lda #$000A
         jsl rlUnknown808FAD
-        jsr $8595C0
+        jsr rsUnknown8595C0
         jml _957A
 
 
@@ -2092,16 +2092,16 @@
         beq _94E8
         lda #$0021
         jsl rlUnknown808FAD
-        jsr $8596FA
+        jsr rsUnknown8596FA
         jsl rlUnknown8586FA
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
-        jsl $85A3A6
+        jsl rlUnknown85A3A6
         lda #$8000
         sta $7E8BEE
-        jsr $859737
+        jsr rsUnknown859737
         phx
-        jsl $88ADA2
+        jsl rlUnknown88ADA2
         jsl rlUnknown85E85D
         plx
         jml _957A
@@ -2143,7 +2143,7 @@
         sta lR18
         lda lRoutineVariable+1,b
         sta lR18+1
-        jsl $85A3D5
+        jsl rlUnknown85A3D5
         plx
         pla
         sta wR2
@@ -2166,7 +2166,7 @@
         sta wR1
         lda $1097,b,x
         jsl rlUnknown8586AA
-        jsr $8597CD
+        jsr rsUnknown8597CD
         lda $1077,b,x
         cmp #$2008
         beq _957A
@@ -2174,7 +2174,7 @@
         beq _957A
         cmp #$2028
         beq _957A
-        jsr $859AFD
+        jsr rsUnknown859AFD
 
         _957A
         rtl
@@ -2191,7 +2191,7 @@
         .autsiz
         .databank ?
 
-        jsr $8597CD
+        jsr rsUnknown8597CD
         lda wJoy1New
         bit #$0080
         beq _959A
@@ -2235,7 +2235,7 @@
         .databank ?
 
         phx
-        jsr $8596FA
+        jsr rsUnknown8596FA
         phx
         lda $1057,b,x
         sta wSelectedUnitDataRAMPointer,b
@@ -2282,7 +2282,7 @@
         plx
         lda #$957B
         sta $0F57,b,x
-        jsl $85A3A6
+        jsl rlUnknown85A3A6
         jml _969C
 
 
@@ -2303,8 +2303,8 @@
         jsl rlUnknown8586FA
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
-        jsl $85A3A6
-        jsl $85E8EA
+        jsl rlUnknown85A3A6
+        jsl rlUnknown85E8EA
         plx
         jml _969C
 
@@ -2327,7 +2327,7 @@
         jsl rlUnknown859B48
         lda #$8000
         sta $7E8BEE
-        jsr $859737
+        jsr rsUnknown859737
         rts
 
 
@@ -2617,6 +2617,301 @@
         ; 85/9831
 
     .endsection Unsorted859431Section
+
+
+    .section Unsorted85989ASection
+
+      .al
+      .xl
+
+      rlUnknown85989A ; 85/989A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8586FF
+        lda $0ECF,b
+        sta $1057,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda $0ED1,b
+        jsl rlGetItemROMDataByInventorySlot
+        lda wCurrentItemDataROMPointer,b
+        sta $1077,b,x
+        jsl rlUnknown8587E1
+        lda $1057,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlUnknown85A227
+        phx
+        lda #$2140
+        sta aCurrentTilemapInfo,b
+        lda #$8500
+        sta lR18+1
+        lda #$996B
+        sta lR18
+        ldx #$0102
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$996F
+        sta lR18
+        ldx #$0202
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$9953
+        sta lR18
+        ldx #$0302
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$9957
+        sta lR18
+        ldx #$0402
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$995B
+        sta lR18
+        ldx #$0502
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$995F
+        sta lR18
+        ldx #$0602
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$9963
+        sta lR18
+        ldx #$0702
+        jsl rlUnknown8788F7
+        lda #$8500
+        sta lR18+1
+        lda #$9967
+        sta lR18
+        ldx #$0802
+        jsl rlUnknown8788F7
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/9953
+
+    .endsection Unsorted85989ASection
+
+
+    .section Unsorted859973Section
+
+      .al
+      .xl
+
+      rlUnknown859973 ; 85/9973
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda $1057,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda #$0000
+        sta wRoutineVariable1,b
+        plx
+        phx
+        lda $1077,b,x
+        sta wCurrentItemDataROMPointer,b
+        jsl rlGetItemWeaponType
+        ldx #$004E
+        jsl rlUnknown8BC030
+        lda #$0005
+        jsl rlUnknown8BC467
+        plx
+        phx
+        lda $1077,b,x
+        sta wCurrentItemDataROMPointer,b
+        jsl rlGetSelectedUnitBattleMight
+        sta wR0
+        jsl rlGetFirstWeaponBattleMight
+        sec
+        sbc wR0
+        phx
+        pha
+        lda #$0003
+        and #$00FF
+        xba
+        ora #$0008
+        tax
+        pla
+        jsr rsUnknown859A66
+        plx
+        lda wR0
+        ldx #$24F0
+        stx aCurrentTilemapInfo,b
+        ldx #$0306
+        jsl rlUnknown878916
+        plx
+        phx
+        lda $1077,b,x
+        sta wCurrentItemDataROMPointer,b
+        jsl rlGetSelectedUnitBattleHit
+        sta wR0
+        jsl rlUnknown84FE98
+        sec
+        sbc wR0
+        phx
+        pha
+        lda #$0005
+        and #$00FF
+        xba
+        ora #$0008
+        tax
+        pla
+        jsr rsUnknown859A66
+        plx
+        lda wR0
+        ldx #$24F0
+        stx aCurrentTilemapInfo,b
+        ldx #$0506
+        jsl rlUnknown878916
+        plx
+        phx
+        lda $1077,b,x
+        sta wCurrentItemDataROMPointer,b
+        jsl rlGetSelectedUnitDeploymentOffset
+        jsl rlGetTerrainTypeByDeploymentOffset
+        jsl rlGetSelectedUnitBattleAvoid
+        sta wR0
+        jsl rlGetSelectedUnitDeploymentOffset
+        jsl rlGetTerrainTypeByDeploymentOffset
+        jsl rlUnknown84FEA1
+        sec
+        sbc wR0
+        phx
+        pha
+        lda #$0007
+        and #$00FF
+        xba
+        ora #$0008
+        tax
+        pla
+        jsr rsUnknown859A66
+        plx
+        lda wR0
+        ldx #$24F0
+        stx aCurrentTilemapInfo,b
+        ldx #$0706
+        jsl rlUnknown878916
+        plx
+        lda bBufferTM
+        bit #$0002
+        beq _9A5B
+        jsr rsUnknown859AFD
+
+        _9A5B
+        jsl rlUnknown8785E3
+        lda #$9AB4
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/9A66
+
+      rsUnknown859A66 ; 85/9A66
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda #$2400
+        sta aCurrentTilemapInfo,b
+        pla
+        ora #$0000
+        beq _9A97
+        bpl _9A77
+        bmi _9A87
+
+        _9A77
+        lda #$8500
+        sta lR18+1
+        lda #$9AAC
+        sta lR18
+        jsl rlUnknown878921
+        bra _9AA5
+
+
+        _9A87
+        lda #$8500
+        sta lR18+1
+        lda #$9AA8
+        sta lR18
+        jsl rlUnknown878921
+        bra _9AA5
+
+
+        _9A97
+        lda #$8500
+        sta lR18+1
+        lda #$9AB0
+        sta lR18
+        jsl rlUnknown878921
+
+        _9AA5
+        lda wR0
+        rts
+
+        .databank 0
+
+        ; 85/9AA8
+
+    .endsection Unsorted859973Section
+
+
+    .section Unsorted859AFDSection
+
+      .al
+      .xl
+
+      rsUnknown859AFD ; 85/9AFD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda wR0
+        pha
+        lda wR1
+        pha
+        ldy #$9B21
+        lda #$00C8
+        sta wR0
+        lda #$0028
+        sta wR1
+        stz wR4
+        stz wR5
+        jsl rlPushToOAMBuffer
+        pla
+        sta wR1
+        pla
+        sta wR0
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/9B21
+
+    .endsection Unsorted859AFDSection
 
 
     .section Unsorted859B2ASection
@@ -3310,7 +3605,7 @@
         sbc bBufferSETINI,x
         jsl rlGetMapMenuTilemapArea
         sta wR0
-        jsr $85A0A1
+        jsr rsUnknown85A0A1
         lda wR4
         sec
         sbc wR0
@@ -3585,6 +3880,111 @@
     .endsection Unsorted85A227Section
 
 
+    .section Unsorted85A320Section
+
+      .al
+      .xl
+
+      rlUnknown85A320 ; 85/A320
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda lR18
+        sta $1077,b,x
+        lda lR18+1
+        sta $1097,b,x
+        jsl rlStallProcUntilMapMenuDataLoaded
+        lda $0ED5,b
+        jsl rlSetMapMenuPosition
+        plx
+        phx
+        lda #$4000
+        sta $10B7,b,x
+        lda #$0000
+        sta wBufferBG3VOFS
+        sta wBufferBG3HOFS
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/A347
+
+      rlUnknown85A347 ; 85/A347
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda $10B7,b,x
+        bit #$8000
+        bne _A35B
+        bit #$4000
+        bne _A365
+
+        _A359
+        plx
+        rtl
+
+
+        _A35B
+        jsl rlUnknown8586FA
+        jsl rlProcEngineFreeProc
+        bra _A359
+
+
+        _A365
+        eor #$4000
+        sta $10B7,b,x
+        phx
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$20FF
+        sta wUnknown053C,b
+        jsl rlUnknown8788E5
+        plx
+        lda $1077,b,x
+        sta lR18
+        lda $1097,b,x
+        sta lR18+1
+        ldx #$0101
+        jsl rlUnknown85A3F8
+        jsl rlUnknown8587E1
+        bra _A359
+
+        .databank 0
+
+        ; 85/A394
+
+      rlUnknown85A394 ; 85/A394
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta $0ED5,b
+        lda #$8500
+        sta lR44+1
+        lda #$A314
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/A3A6
+
+    .endsection Unsorted85A320Section
+
+
     .section Unsorted85A3A6Section
 
       .al
@@ -3626,6 +4026,131 @@
         ; 85/A3D5
 
     .endsection Unsorted85A3A6Section
+
+
+    .section Unsorted85A3D5Section
+
+      .al
+      .xl
+
+      rlUnknown85A3D5 ; 85/A3D5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$8500
+        sta lR44+1
+        lda #$A314
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _A3F6
+        lda #$4000
+        sta $10B7,b,x
+        lda lR18
+        sta $1077,b,x
+        lda lR18+1
+        sta $1097,b,x
+
+        _A3F6
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/A3F8
+
+      rlUnknown85A3F8 ; 85/A3F8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stx wR7
+        stz wR6
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        phx
+        ldx lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+
+        _A40B
+        ldy #$0000
+
+        _A40E
+        lda $0000,b,x
+        sta wR5
+        phb
+        sep #$20
+        lda #$7E
+        pha
+        plb
+        .databank $7E
+        rep #$20
+        lda wR5
+        sta $8BF6,b,y
+        plb
+        .databank $7E
+        cmp #$0000
+        bne _A42C
+        lda #$FFFF
+        sta wR6
+
+        _A42C
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0010
+        bmi _A40E
+        phx
+        phb
+        sep #$20
+        lda #$7E
+        pha
+        plb
+        .databank $7E
+        rep #$20
+        lda #$0000
+        sta $8BF6,b,y
+        plb
+        .databank $7E
+        lda #$7E00
+        sta lR18+1
+        lda #$8BF6
+        sta lR18
+        ldx wR7
+        jsl rlUnknown878921
+        lda wR7
+        clc
+        adc #$0200
+        sta wR7
+        plx
+        lda wR6
+        cmp #$0000
+        beq _A40B
+        plx
+        plp
+        plb
+        .databank $7E
+        rtl
+
+        .databank 0
+
+        ; 85/A46A
+
+    .endsection Unsorted85A3D5Section
 
 
     .section ProcScript85A47FSection
@@ -4137,8 +4662,8 @@
         sta lR18+1
         lda #$ACC2
         sta lR18
-        jsl $878BF0
-        jsr $85AFC5
+        jsl rlUnknown878BF0
+        jsr rsUnknown85AFC5
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E7B88, $0800, $80, $A800
@@ -4749,9 +5274,9 @@
         beq _B29F
         lda #$000A
         jsl rlUnknown808FAD
-        jsr $85B43E
+        jsr rsUnknown85B43E
         pha
-        jsr $85B40E
+        jsr rsUnknown85B40E
         pla
         ora #$0000
         beq _B2BB
@@ -4763,7 +5288,7 @@
         beq _B2B0
         lda #$0021
         jsl rlUnknown808FAD
-        jsr $85B40E
+        jsr rsUnknown85B40E
         bra _B2B2
 
 
@@ -4772,7 +5297,7 @@
 
 
         _B2B2
-        jsr $85B3DA
+        jsr rsUnknown85B3DA
         jsl rlUnknown85A227
         bra _B2C3
 
@@ -6555,7 +7080,7 @@
         sta wR13
         lda #$0010
         sta wR14
-        jsl $85BCB8
+        jsl rlUnknown85BCB8
         lda wR13
         sta wR10
         lda wR7
@@ -6571,7 +7096,7 @@
         sta wR13
         lda #$0010
         sta wR14
-        jsl $85BCB8
+        jsl rlUnknown85BCB8
         lda wR13
         sta wR10
         lda wR7
@@ -6880,8 +7405,8 @@
         jsl rlUnknown85D5CC
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsr $85CCA8
-        jsr $85CCC9
+        jsr rsUnknown85CCA8
+        jsr rsUnknown85CCC9
         lda $0534,b
         and #$FF00
         asl a
@@ -7616,7 +8141,7 @@
 
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsr $85CEB1
+        jsr rsUnknown85CEB1
         bit #$4000
         bne _CF11
         bit #$0800
@@ -7654,7 +8179,7 @@
         _CF24
         sta $1057,b,x
         lda #$2000
-        jsr $85CE9C
+        jsr rsUnknown85CE9C
         lda #$CFC0
         sta $0F57,b,x
         jml _CEFE
@@ -7727,7 +8252,7 @@
         _CFB3
         lda #$0000
         sta $1097,b,x
-        jsr $85CE9C
+        jsr rsUnknown85CE9C
 
         _CFBC
         jml _CEFE
@@ -7760,7 +8285,7 @@
         lda #$0980
         sta aCurrentTilemapInfo,b
         inc $1077,b,x
-        jsr $85CEB1
+        jsr rsUnknown85CEB1
         pha
         and #$FF00
         sta wR0
@@ -7769,14 +8294,14 @@
         dec a
         bmi _CFFA
         ora wR0
-        jsr $85CE9C
+        jsr rsUnknown85CE9C
         bra _D009
 
 
         _CFFA
         lda #$0006
         ora wR0
-        jsr $85CE9C
+        jsr rsUnknown85CE9C
         lda #$000D
         jsl rlUnknown808FAD
 
@@ -7802,7 +8327,7 @@
 
         _D033
         lda #$8000
-        jsr $85CE9C
+        jsr rsUnknown85CE9C
         lda #$CEE2
         sta $0F57,b,x
         lda #$0980
@@ -7822,7 +8347,7 @@
         .databank ?
 
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsr $85CE7C
+        jsr rsUnknown85CE7C
         bcs _D055
         jsl rlUnknown85884A
         rtl
@@ -7830,7 +8355,7 @@
 
         _D055
         lda #$0000
-        jsr $85CE9C
+        jsr rsUnknown85CE9C
         jsl rlUnknown8586FA
         jsl rlProcEngineFreeProc
         rtl
@@ -8634,9 +9159,9 @@
         phx
         ldy #$0004
         lda #$0004
-        jsr $85D5AA
+        jsr rsUnknown85D5AA
         plx
-        jsr $85D5C3
+        jsr rsUnknown85D5C3
         jsl rlUnknown85D81F
         pla
         ply
@@ -8660,9 +9185,9 @@
         pha
         phx
         lda wR4
-        jsr $85D5AA
+        jsr rsUnknown85D5AA
         plx
-        jsr $85D5C3
+        jsr rsUnknown85D5C3
         jsl rlUnknown85D81F
         pla
         ply
@@ -8675,9 +9200,9 @@
         phx
         ldy #$0004
         lda wR4
-        jsr $85D5AA
+        jsr rsUnknown85D5AA
         plx
-        jsr $85D5C3
+        jsr rsUnknown85D5C3
         jsl rlUnknown85D81F
         pla
         ply
@@ -8705,9 +9230,9 @@
         phx
         ldy #$0004
         lda #$0000
-        jsr $85D5AA
+        jsr rsUnknown85D5AA
         plx
-        jsr $85D5C3
+        jsr rsUnknown85D5C3
         jsl rlUnknown85D81F
         pla
         ply
@@ -8725,9 +9250,9 @@
         phx
         ldy wR5
         lda #$0000
-        jsr $85D5AA
+        jsr rsUnknown85D5AA
         plx
-        jsr $85D5C3
+        jsr rsUnknown85D5C3
         jsl rlUnknown85D81F
         pla
         ply
@@ -8751,9 +9276,9 @@
         phx
         ldy #$0000
         lda #$0000
-        jsr $85D5AA
+        jsr rsUnknown85D5AA
         plx
-        jsr $85D5C3
+        jsr rsUnknown85D5C3
         jsl rlUnknown85D81F
         pla
         ply
@@ -9882,7 +10407,7 @@
         lda wMapScrollYPixels,b
         sta wMapYOffset,b
         lda #$0001
-        jsl $87CBC5
+        jsl rlUnknown87CBC5
         lda #$0100
         tsb wUnknown000D79,b
         stz $0302,b
@@ -10661,7 +11186,7 @@
         beq $85E545
         cmp #$0002
         beq $85E545
-        jml $85E547
+        jml rsUnknown85E547
 
         .databank 0
 
@@ -10681,24 +11206,24 @@
         jsl rlGetFactionSlotLocationID
         cmp wR0
         beq _E5CC
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E5CC
         jsl rlGetSelectedUnitStates
         bit #$2000
         bne _E5D9
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E5D9
         bit #$0800
         beq _E5E2
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E5E2
-        jml $85E545
+        jml rsUnknown85E545
 
         .databank 0
 
@@ -10715,13 +11240,13 @@
         jsl rlGetSelectedUnitStates
         bit #$2000
         bne _E5F3
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E5F3
         bit #$0800
         beq _E5FC
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E5FC
@@ -10738,11 +11263,11 @@
         pla
         sta wSelectedUnitDataRAMPointer,b
         bcs _E61F
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E61F
-        jml $85E545
+        jml rsUnknown85E545
 
         .databank 0
 
@@ -10760,13 +11285,13 @@
         jsl rlGetTerrainTypeByDeploymentOffset
         cmp #$0009
         bne _E633
-        jml $85E545
+        jml rsUnknown85E545
 
 
         _E633
         lda wEventLocationEntry,b
         bne _E63C
-        jml $85E545
+        jml rsUnknown85E545
 
 
         _E63C
@@ -10776,11 +11301,11 @@
         jsl rlGetFactionSlotLocationID
         cmp wR0
         beq _E652
-        jml $85E545
+        jml rsUnknown85E545
 
 
         _E652
-        jml $85E547
+        jml rsUnknown85E547
 
         .databank 0
 
@@ -10799,20 +11324,20 @@
         bne _E694
         lda wEventLocationEntry,b
         bne _E668
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E668
         jsl rlCheckIfCastleGuarded
         bcs _E672
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E672
         jsl rlGetEventLocationEntryType
         cmp #$0000
         beq _E67F
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E67F
@@ -10822,18 +11347,18 @@
         jsl rlGetFactionRelation
         cmp #$0001
         beq _E694
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E694
         lda wAIUnknown7E2010
         and #$00FF
         bne _E6A1
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E6A1
-        jml $85E545
+        jml rsUnknown85E545
 
         .databank 0
 
@@ -10851,7 +11376,7 @@
         lda lRoutineVariable,b
         bit #$0008
         bne _E6B5
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E6B5
@@ -10859,18 +11384,18 @@
         jsl rlGetClassSkills
         bit #$0400
         bne _E6C6
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E6C6
         jsl rlGetSelectedUnitStates
         bit #$1000
         beq _E6D3
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E6D3
-        jml $85E545
+        jml rsUnknown85E545
 
         .databank 0
 
@@ -10925,7 +11450,7 @@
         lda $10B7,b,x
         cmp #$0002
         bne _E6F7
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E6F7
@@ -10935,39 +11460,39 @@
         jsl rlGetFactionSlotLocationID
         cmp wR0
         bne _E70D
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E70D
         lda $0D87,b
         bit #$0008
         beq _E719
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E719
         jsl rlGetSelectedUnitStates
         bit #$2000
         beq _E726
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E726
         lda #$001D
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _E733
-        jml $85E545
+        jml rsUnknown85E545
 
 
         _E733
         lda #$001D
         jsl rlCheckIfInventoryItemsHaveSpecifiedSkill
         bcc _E740
-        jml $85E545
+        jml rsUnknown85E545
 
 
         _E740
-        jml $85E547
+        jml rsUnknown85E547
 
         .databank 0
 
@@ -10984,21 +11509,21 @@
         lda $0D87,b
         bit #$0008
         beq _E750
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E750
         jsl rlGetSelectedUnitStates
         bit #$0800
         beq _E75D
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E75D
         lda #$0008
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _E76A
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E76A
@@ -11011,11 +11536,11 @@
         jsl rlUnknown848924
         ora #$0000
         bne _E786
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E786
-        jml $85E545
+        jml rsUnknown85E545
 
         .databank 0
 
@@ -11081,21 +11606,21 @@
         lda $0D87,b
         bit #$0008
         beq _E7BF
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E7BF
         lda #$0006
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _E7CC
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E7CC
         jsl rlGetSelectedUnitMoney
         ora #$0000
         bne _E7D9
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E7D9
@@ -11107,11 +11632,11 @@
         jsl rlUnknown848924
         ora #$0000
         bne _E7F2
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E7F2
-        jml $85E545
+        jml rsUnknown85E545
 
         .databank 0
 
@@ -11128,21 +11653,21 @@
         lda $0D87,b
         bit #$0008
         beq _E802
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E802
         lda #$0006
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _E80F
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E80F
         jsl rlGetSelectedUnitMoney
         ora #$0000
         bne _E81C
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E81C
@@ -11154,11 +11679,11 @@
         jsl rlUnknown848924
         ora #$0000
         bne _E835
-        jml $85E547
+        jml rsUnknown85E547
 
 
         _E835
-        jml $85E545
+        jml rsUnknown85E545
 
         .databank 0
 
@@ -11293,6 +11818,33 @@
     .endsection Unsorted85E897Section
 
 
+    .section Unsorted85E8EASection
+
+      .al
+      .xl
+
+      rlUnknown85E8EA ; 85/E8EA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx $0772,b
+        lda $7E46EB,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlUnknown84B32B
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/E8FB
+
+    .endsection Unsorted85E8EASection
+
+
     .section Unsorted85E8FBSection
 
       .al
@@ -11322,6 +11874,30 @@
     .endsection Unsorted85E8FBSection
 
 
+    .section Unsorted85E960Section
+
+      .al
+      .xl
+
+      rlUnknown85E960 ; 85/E960
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown8583DA
+        lda #$DE34
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/E96B
+
+    .endsection Unsorted85E960Section
+
+
     .section Unsorted85E9D6Section
 
       .al
@@ -11348,7 +11924,7 @@
         sta $0543,b
         sta $0545,b
         phx
-        jsl $84F8D9
+        jsl rlUnknown84F8D9
         ldx #$0002
 
         _EA06

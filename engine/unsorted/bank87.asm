@@ -2930,7 +2930,7 @@
         phx
         tax
         lda wRoutineVariable1,b
-        jsl $848BFE
+        jsl rlUnknown848BFE
         plx
         bcc _9FEC
         lda aDeadPlayerCharacterList,x
@@ -3130,7 +3130,7 @@
         bcs _A0D5
         asl a
         sta wRoutineVariable1,b
-        jsl $81B4C5
+        jsl rlUnknown81B4C5
         ldx lR18
         sep #$20
         lda lR18+2
@@ -5477,7 +5477,7 @@
         .autsiz
         .databank ?
 
-        jsr $87C6AA
+        jsr rsUnknown87C6AA
         lda bBufferINIDISP
         bit #$0080
         bne _C65F
@@ -5844,7 +5844,7 @@
         _E7CE
         lda #$FFFF
         sta $0774,b
-        jsl $8A92D6
+        jsl rlUnknown8A92D6
         rts
 
         lda #$000C
@@ -5868,7 +5868,7 @@
 
 
         _E7FC
-        jsl $8A92BB
+        jsl rlUnknown8A92BB
         rts
 
         .databank 0

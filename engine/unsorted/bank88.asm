@@ -102,6 +102,29 @@
     .endsection Unsorted8881DESection
 
 
+    .section Unsorted8881E5Section
+
+      .al
+      .xl
+
+      rlUnknown8881E5 ; 88/81E5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0008
+        tsb $0786,b
+        rtl
+
+        .databank 0
+
+        ; 88/81EC
+
+    .endsection Unsorted8881E5Section
+
+
     .section Unsorted8881ECSection
 
       .al
@@ -5190,6 +5213,28 @@
         ; 88/ADA2
 
     .endsection Unsorted88AD46Section
+
+
+    .section Unsorted88ADA2Section
+
+      .al
+      .xl
+
+      rlUnknown88ADA2 ; 88/ADA2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wUnknown0007D8,b
+        rtl
+
+        .databank 0
+
+        ; 88/ADA6
+
+    .endsection Unsorted88ADA2Section
 
 
     .section Unsorted88ADA6Section
@@ -11761,3 +11806,1102 @@
         ; 88/E9E4
 
     .endsection Unsorted88E401Section
+
+
+    .section Unsorted88EEB1Section
+
+      .al
+      .xl
+
+      rlUnknown88EEB1 ; 88/EEB1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown91ECA2
+        beq _EEC2
+        cmp #$0006
+        bcs _EEC2
+        sta wR0,b
+        bra _EEC8
+
+
+        _EEC2
+        lda #$0006
+        sta wR0,b
+
+        _EEC8
+        lda #$0007
+        sec
+        sbc wR0,b
+        asl a
+        dec a
+        sta $1B49,b
+        sta $1B4B,b
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/EED9
+
+    .endsection Unsorted88EEB1Section
+
+
+    .section Unsorted88EF0DSection
+
+      .al
+      .xl
+
+      rlUnknown88EF0D ; 88/EF0D
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        cmp (#238,s),y
+        stz $EDB5,b,x
+        stz $F47C,b,x
+        dec y
+        and (wJoy2Repeated+1),y
+        dec y
+        lda (#245,s),y
+        dec y
+        ora $88F0,b,x
+        cmp (wJoy1RepeatTimer),y
+        dec y
+        tsc
+        sbc (wBufferBG3HOFS+1),y
+        sbc $5988F7
+        sbc (wBufferBG3HOFS+1)
+        pea #$88F8
+        lsr $88F3,b,x
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0002
+        sta $7E4EBF
+        lda #$0000
+        sta $7E4EC1
+        lda #$0021
+        sta $7E4EB7
+        lda #$0017
+        sta $7E4EB9
+        lda #$0031
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0000
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$0029
+        sta $7E4F1F
+        lda #$0000
+        sta $7E4F21
+        lda #$0021
+        sta $7E4F17
+        lda #$0019
+        sta $7E4F19
+        lda #$002D
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0002
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0135
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/F01D
+
+      rlUnknown88F01D ; 88/F01D
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0000
+        sta $7E4EBF
+        lda #$0000
+        sta $7E4EC1
+        lda #$0034
+        sta $7E4EB7
+        lda #$0022
+        sta $7E4EB9
+        lda #$0001
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0000
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$0016
+        sta $7E4F1F
+        lda #$0001
+        sta $7E4F21
+        lda #$0034
+        sta $7E4F17
+        lda #$0023
+        sta $7E4F19
+        lda #$0003
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0008
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0105
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0009
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/F13B
+
+      rlUnknown88F13B ; 88/F13B
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0011
+        sta $7E4EBF
+        lda #$0001
+        sta $7E4EC1
+        lda #$0023
+        sta $7E4EB7
+        lda #$0032
+        sta $7E4EB9
+        lda #$0002
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0003
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$0011
+        sta $7E4F1F
+        lda #$0001
+        sta $7E4F21
+        lda #$0024
+        sta $7E4F17
+        lda #$0032
+        sta $7E4F19
+        lda #$001E
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0008
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0101
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0115
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/F259
+
+      rlUnknown88F259 ; 88/F259
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0007
+        sta $7E4EBF
+        lda #$0000
+        sta $7E4EC1
+        lda #$001E
+        sta $7E4EB7
+        lda #$0036
+        sta $7E4EB9
+        lda #$0024
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0000
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$0009
+        sta $7E4F1F
+        lda #$0000
+        sta $7E4F21
+        lda #$001D
+        sta $7E4F17
+        lda #$0036
+        sta $7E4F19
+        lda #$0014
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0009
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0008
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/F35E
+
+      rlUnknown88F35E ; 88/F35E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0006
+        sta $7E4EBF
+        lda #$0000
+        sta $7E4EC1
+        lda #$0037
+        sta $7E4EB7
+        lda #$0007
+        sta $7E4EB9
+        lda #$0015
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0000
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$001C
+        sta $7E4F1F
+        lda #$0000
+        sta $7E4F21
+        lda #$0037
+        sta $7E4F17
+        lda #$0006
+        sta $7E4F19
+        lda #$002C
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0101
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0100
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0114
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/F47C
+
+      rlUnknown88F47C ; 88/F47C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0003
+        sta $7E4EBF
+        lda #$0000
+        sta $7E4EC1
+        lda #$002E
+        sta $7E4EB7
+        lda #$001D
+        sta $7E4EB9
+        lda #$0029
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0000
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$0027
+        sta $7E4F1F
+        lda #$0000
+        sta $7E4F21
+        lda #$002D
+        sta $7E4F17
+        lda #$001D
+        sta $7E4F19
+        lda #$0029
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0100
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0101
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0100
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0101
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/F5B3
+
+      rlUnknown88F5B3 ; 88/F5B3
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$003C
+        sta $7E4EBF
+        lda #$0000
+        sta $7E4EC1
+        lda #$000D
+        sta $7E4EB7
+        lda #$000A
+        sta $7E4EB9
+        lda #$004E
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0000
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$0035
+        sta $7E4F1F
+        lda #$0000
+        sta $7E4F21
+        lda #$000E
+        sta $7E4F17
+        lda #$000A
+        sta $7E4F19
+        lda #$003F
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0141
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0140
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0140
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/F6D1
+
+      rlUnknown88F6D1 ; 88/F6D1
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0013
+        sta $7E4EBF
+        lda #$0000
+        sta $7E4EC1
+        lda #$002B
+        sta $7E4EB7
+        lda #$002F
+        sta $7E4EB9
+        lda #$0024
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0000
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$0014
+        sta $7E4F1F
+        lda #$0000
+        sta $7E4F21
+        lda #$002C
+        sta $7E4F17
+        lda #$002F
+        sta $7E4F19
+        lda #$0023
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0109
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0104
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0114
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/F7EF
+
+      rlUnknown88F7EF ; 88/F7EF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$002D
+        sta $7E4EBF
+        lda #$0000
+        sta $7E4EC1
+        lda #$0023
+        sta $7E4EB7
+        lda #$0013
+        sta $7E4EB9
+        lda #$004B
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0000
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$003A
+        sta $7E4F1F
+        lda #$0001
+        sta $7E4F21
+        lda #$0024
+        sta $7E4F17
+        lda #$0013
+        sta $7E4F19
+        lda #$0046
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0144
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0154
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/F8F4
+
+      rlUnknown88F8F4 ; 88/F8F4
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0006
+        sta $7E4EBF
+        lda #$0000
+        sta $7E4EC1
+        lda #$000F
+        sta $7E4EB7
+        lda #$0005
+        sta $7E4EB9
+        lda #$0015
+        sta $7E4EDD
+        lda #$0000
+        sta $7E4ED7
+        lda #$0019
+        sta $7E4EBD
+        lda #$0000
+        sta $7F4562
+        sta aActionStructUnit1
+        lda #$001B
+        sta $7E4F1F
+        lda #$0000
+        sta $7E4F21
+        lda #$000F
+        sta $7E4F17
+        lda #$0004
+        sta $7E4F19
+        lda #$0041
+        sta $7E4F3D
+        lda #$0000
+        sta $7E4F37
+        lda #$0001
+        sta $7F4564
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0149
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0100
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0104
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/FA19
+
+    .endsection Unsorted88EF0DSection
