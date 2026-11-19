@@ -118,6 +118,7 @@
   .include "engine/dialogue/dialogue_procs.asm"
   .include "engine/events/event_movement.asm"
   .include "engine/events/talk_events.asm"
+  .include "engine/map/input.asm"
   .include "engine/map/map_sprites.asm"
   .include "engine/map/popups.asm"
   .include "engine/map/windows.asm"
@@ -133,6 +134,7 @@
   .include "engine/unsorted/bank85.asm"
   .include "engine/unsorted/bank86.asm"
   .include "engine/unsorted/bank87.asm"
+  .include "engine/unsorted/bank88.asm"
   .include "engine/unsorted/bank89.asm"
   .include "engine/unsorted/bank8F.asm"
 
@@ -1801,6 +1803,105 @@
 
     .here
 
+    * = $088410
+    .logical $888410
+
+      .dsection Unsorted888410Section
+
+    .here
+
+    * = $088560
+    .logical $888560
+
+      .dsection Unsorted888560Section
+
+    .here
+
+    * = $0885EF
+    .logical $8885EF
+
+      .dsection Unsorted8885EFSection
+
+    .here
+
+    * = $08861C
+    .logical $88861C
+
+      .dsection Unsorted88861CSection
+      .dsection MapScrollRightSetBGOFSSection
+
+    .here
+
+    * = $088901
+    .logical $888901
+
+      .dsection Unsorted888901Section
+
+    .here
+
+    * = $088D57
+    .logical $888D57
+
+      .dsection Unsorted888D57Section
+
+    .here
+
+    * = $08A12B
+    .logical $88A12B
+
+      .dsection Unsorted88A12BSection
+
+    .here
+
+    * = $08A32D
+    .logical $88A32D
+
+      .dsection Unsorted88A32DSection
+
+    .here
+
+    * = $08AF4C
+    .logical $88AF4C
+
+      .dsection Unsorted88AF4CSection
+
+    .here
+
+    * = $08AFB6
+    .logical $88AFB6
+
+      .dsection MapInputHandlerSection
+
+    .here
+
+    * = $08B4DB
+    .logical $88B4DB
+
+      .dsection Unsorted88B4DBSection
+
+    .here
+
+    * = $08BC05
+    .logical $88BC05
+
+      .dsection Unsorted88BC05Section
+
+    .here
+
+    * = $08C13E
+    .logical $88C13E
+
+      .dsection GetMapSpriteMovementSoundSection
+
+    .here
+
+    * = $08CD53
+    .logical $88CD53
+
+      .dsection Unsorted88CD53Section
+
+    .here
+
     * = $08D365
     .logical $88D365
 
@@ -1808,6 +1909,41 @@
       aMapMovementTallSpritePointers  .binclude "data/class/MapMovementTallSpritePointers.csv.asm"  ; 88/D428
 
       ; 88/D488
+
+    .here
+
+    * = $08D6E5
+    .logical $88D6E5
+
+      .dsection SetMovingMapSpriteBufferPointersSection
+
+    .here
+
+    * = $08D7FE
+    .logical $88D7FE
+
+      .dsection Unsorted88D7FESection
+
+    .here
+
+    * = $08D94B
+    .logical $88D94B
+
+      .dsection Unsorted88D94BSection
+
+    .here
+
+    * = $08DA6A
+    .logical $88DA6A
+
+      .dsection Unsorted88DA6ASection
+
+    .here
+
+    * = $08DAFC
+    .logical $88DAFC
+
+      .dsection Unsorted88DAFCSection
 
     .here
 

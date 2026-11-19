@@ -665,3 +665,227 @@
         ; 81/93CF
 
     .endsection GetMapPixelScrollDistanceSection
+
+
+    .section MapScrollRightSetBGOFSSection
+
+      .al
+      .xl
+
+      rsMapScrollRightSetBGOFS ; 88/86FF
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wMapEnableXScrollFlag,b
+        beq +
+
+          lda wMapScrollXPixels,b
+          clc
+          adc wMapScrollSpeed,b
+          sta wMapScrollXPixels,b
+          sta wBufferBG1HOFS
+          cmp wMapMaxXScroll,b
+          bcc +
+
+            lda wMapMaxXScroll,b
+            sta wMapScrollXPixels,b
+            sta wBufferBG1HOFS
+
+        +
+        rts
+
+        .databank 0
+
+      rsMapScrollLeftSetBGOFS ; 88/871E
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wMapEnableXScrollFlag,b
+        beq _End
+
+          lda wMapScrollXPixels,b
+          sec
+          sbc wMapScrollSpeed,b
+          sta wMapScrollXPixels,b
+          sta wBufferBG1HOFS
+          bmi +
+
+            cmp wMapMinXScroll,b
+            bcs _End
+
+          +
+          lda wMapMinXScroll,b
+          sta wMapScrollXPixels,b
+          sta wBufferBG1HOFS
+
+        _End
+        rts
+
+        .databank 0
+
+      rsMapScrollDownSetBGOFS ; 88/873F
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wMapEnableYScrollFlag,b
+        beq _End
+
+          lda wMapScrollYPixels,b
+          clc
+          adc wMapScrollSpeed,b
+          sta wMapScrollYPixels,b
+          sta wBufferBG1VOFS
+
+          cmp wMapMaxYScroll,b
+          bcc _End
+
+            lda wMapMaxYScroll,b
+            sta wMapScrollYPixels,b
+            sta wBufferBG1VOFS
+
+        _End
+        rts
+
+        .databank 0
+
+      rsMapScrollUpSetBGOFS ; 88/875E
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wMapEnableYScrollFlag,b
+        beq _End
+
+          lda wMapScrollYPixels,b
+          sec
+          sbc wMapScrollSpeed,b
+          sta wMapScrollYPixels,b
+          sta wBufferBG1VOFS
+          bmi +
+
+            cmp wMapMinYScroll,b
+            bcs _End
+
+          +
+          lda wMapMinYScroll,b
+          sta wMapScrollYPixels,b
+          sta wBufferBG1VOFS
+        
+        _End
+        rts
+
+        .databank 0
+
+      rlUnknown88877F ; 88/877F
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown88891C
+
+        lda wMapScrollYPixels,b
+        sec
+        sbc #$0020
+        and #$00F8
+        asl a
+        asl a
+        sta wUnknown000732,b
+
+        lda #1
+        sta wUnknown00072E,b
+        rtl
+
+        .databank 0
+
+      rlUnknown888798 ; 88/8798
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown88895C
+
+        lda wMapScrollYPixels,b
+        and #$00F8
+        asl a
+        asl a
+        sta wUnknown000732,b
+
+        lda #1
+        sta wUnknown00072E,b
+        rtl
+
+        .databank 0
+
+      rlUnknown8887AD ; 88/87AD
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown88895C
+
+        lda wMapScrollYPixels,b
+        and #$00F8
+        asl a
+        asl a
+        sta wUnknown000732,b
+        rtl
+
+        .databank 0
+
+      rlUnknown8887BC ; 88/87BC
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown888DB8
+
+        lda wMapScrollXPixels,b
+        sec
+        sbc #7
+        and #$00F8
+        lsr a
+        lsr a
+        lsr a
+        sta wUnknown000730,b
+
+        lda #1
+        sta wUnknown00072C,b
+        rtl
+
+        .databank 0
+
+      rlUnknown8887D6 ; 88/87D6
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown888E14
+
+        lda wMapScrollXPixels,b
+        and #$00F8
+        lsr a
+        lsr a
+        lsr a
+        sta wUnknown000730,b
+
+        lda #1
+        sta wUnknown00072C,b
+        rtl
+
+        .databank 0
+
+        ; 88/87EC
+
+    .endsection MapScrollRightSetBGOFSSection

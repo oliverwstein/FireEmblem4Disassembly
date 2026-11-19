@@ -1112,3 +1112,242 @@
         ; 87/C38C
 
     .endsection ProcCycleFlickerUnitsOfFactionSlotSection
+
+
+    .section GetMapSpriteMovementSoundSection
+
+      .al
+      .xl
+
+      rlGetMapSpriteMovementSound ; 88/C13E
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; A = MapSpriteID
+
+        ; Output:
+        ; A = movement sound
+
+        phb
+        php
+        phk
+        plb
+        phk
+        plb
+        bit #$8000
+        beq _Short
+
+        ; Tall
+        and #$7FFF
+        tax
+        lda aTallMapSpriteMovementSounds,x
+        bra _End
+
+        _Short
+        tax
+        lda aShortMapSpriteMovementSounds,x
+        bra _End
+        
+        _End
+        and #$00FF
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      aShortMapSpriteMovementSounds ; 88/C160
+
+        .byte 1 ; MageFemale
+        .byte 1 ; Mage
+        .byte 1 ; PriestFemale
+        .byte 1 ; JuniorLord
+        .byte 1 ; Myrmidon
+        .byte 2 ; LanceArmor
+        .byte 1 ; Barbarian
+        .byte 1 ; Archer
+        .byte 2 ; Soldier
+        .byte 1 ; ArcherFemale
+        .byte 2 ; AxeArmor
+        .byte 1 ; BowSoldier
+        .byte 1 ; Dancer
+        .byte 1 ; MyrmidonFemale
+        .byte 1 ; Princess
+        .byte 1 ; Thief
+        .byte 2 ; General
+        .byte 1 ; Priestess
+        .byte 1 ; Fighter
+        .byte 1 ; WindMage
+        .byte 1 ; WindMageFemale
+        .byte 1 ; Priest
+        .byte 1 ; Hunter
+        .byte 1 ; Swordmaster
+        .byte 1 ; Hero
+        .byte 1 ; Warrior
+        .byte 1 ; Brigang
+        .byte 1 ; Pirate
+        .byte 1 ; HeroFemale
+        .byte 2 ; Baron
+        .byte 1 ; HighPriestFemale
+        .byte 1 ; SwordmasterFemale
+        .byte 1 ; SniperFemale
+        .byte 1 ; Sniper
+        .byte 2 ; Emperor
+        .byte 1 ; SwordSoldier
+        .byte 1 ; AxeSoldier
+        .byte 2 ; SpearSoldier
+        .byte 2 ; SwordArmor
+        .byte 2 ; BowArmor
+        .byte 1 ; FireMageFemale
+        .byte 1 ; FireMage
+        .byte 1 ; ThunderMageFemale
+        .byte 1 ; ThunderMage
+        .byte 1 ; HighPriest
+        .byte 1 ; WarMageFemale
+        .byte 1 ; DarkBishop
+        .byte 1 ; DarkMage
+        .byte 1 ; Prince
+        .byte 1 ; WarMage
+        .byte 1 ; ChildFemale
+        .byte 1 ; Child
+        .byte 1 ; Queen
+        .byte 1 ; Bishop
+        .byte 1 ; Civilian
+        .byte 1 ; CivilianFemale
+        .byte 1 ; RogueFemale
+        .byte 1 ; Bard
+        .byte 1 ; ThiefFemale
+        .byte 1 ; Rogue
+        .byte 1 ; Sage
+        .byte 1 ; SageFemale
+        .byte 1 ; DarkPrince
+        .byte 1 ; SmallOifey
+
+      aTallMapSpriteMovementSounds ; 88/C1A0
+
+        .byte 5 ; DragonRider
+        .byte 3 ; Cavalier
+        .byte 5 ; DukeKnight
+        .byte 4 ; PegasusRider
+        .byte 3 ; AxeKnight
+        .byte 3 ; FreeKnight
+        .byte 3 ; LanceKnight
+        .byte 3 ; BowKnight
+        .byte 4 ; KnightLordSeliph
+        .byte 3 ; Troubadour
+        .byte 4 ; KnightLordSigurd
+        .byte 4 ; Paladin
+        .byte 5 ; DragonMaster
+        .byte 4 ; ArchKnight
+        .byte 4 ; GreatKnight
+        .byte 4 ; MageKnight
+        .byte 5 ; DragonKnight
+        .byte 5 ; PegasusKnight
+        .byte 5 ; FalconKnight
+        .byte 4 ; MasterKnight
+        .byte 4 ; Ranger
+        .byte 0 ; Ballistician
+        .byte 0 ; IronBallistician
+        .byte 0 ; KillerBallistician
+        .byte 0 ; GreatBallistician
+        .byte 5 ; DragonRiderFemale
+        .byte 5 ; DragonKnightFemale
+        .byte 5 ; DragonMasterFemale
+        .byte 4 ; PaladinFemale
+        .byte 4 ; MageKnightFemale
+        .byte 4 ; MasterKnightFemale
+
+        ; 88/C1BF
+
+    .endsection GetMapSpriteMovementSoundSection
+
+
+    .section SetMovingMapSpriteBufferPointersSection
+
+      .al
+      .xl
+
+      aSetMovingMapSpriteBufferPointers ; 88/D6E5
+
+        .word <>rsSetMovingMapSpriteBuffer0
+        .word <>rsSetMovingMapSpriteBuffer1
+        .word <>rsSetMovingMapSpriteBuffer2
+        .word <>rsSetMovingMapSpriteBuffer3
+
+      rsSetMovingMapSpriteBuffer0 ; 88/D6ED
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR19+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR19
+        rts
+
+        .databank 0
+
+      rsSetMovingMapSpriteBuffer1 ; 88/D6F8
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR19+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR19
+
+        lda lR19
+        clc
+        adc #size(aMovingMapSpriteBuffers[0])
+        sta lR19
+        rts
+
+        .databank 0
+
+      rsSetMovingMapSpriteBuffer2 ; 88/D70B
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR19+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR19
+
+        lda lR19
+        clc
+        adc #size(aMovingMapSpriteBuffers[0]) * 2
+        sta lR19
+        rts
+
+        .databank 0
+
+      rsSetMovingMapSpriteBuffer3 ; 88/D71E
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR19+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR19
+
+        lda lR19
+        clc
+        adc #size(aMovingMapSpriteBuffers[0]) * 3
+        sta lR19
+        rts
+
+        .databank 0
+
+        ; 88/D731
+
+    .endsection SetMovingMapSpriteBufferPointersSection
