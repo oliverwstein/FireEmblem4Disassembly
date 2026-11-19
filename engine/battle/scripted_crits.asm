@@ -652,11 +652,13 @@
 
         .databank 0
 
-      rlUnknown87BE7C ; 87/BE7C
+      rlSetBattleAnimationOption ; 87/BE7C
 
         .al
         .autsiz
         .databank ?
+
+        ; Writes the battle animation setting (A, 0-3) into wOptionSettings.
 
         phb
         php

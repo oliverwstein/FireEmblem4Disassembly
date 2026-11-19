@@ -20,3 +20,4 @@ field     structItemRAMEntry\.ItemState,b,[xy]      ItemState                   
 setter    rlCheckIfUnitHasSpecifiedPersonalOrClassSkill  SkillID                       enum
 setter    rlCheckIfInventoryItemsHaveSpecifiedSkill      SkillID                       enum
 setter    rlCheckIfUnitHasSpecifiedPersonalSkill         SkillID                       enum
+getter    rlGetFactionRelation                      Allegiance                           enum

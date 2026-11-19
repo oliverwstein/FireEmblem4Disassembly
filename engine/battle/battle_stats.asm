@@ -112,11 +112,15 @@
 
         .databank 0
 
-      rlUnknown84F99D ; 84/F99D
+      rlGetInventorySlotStaffCostValue ; 84/F99D
 
         .al
         .autsiz
         .databank ?
+
+        ; For the staff in inventory slot A: cost / uses / 20 + 10, at most 100;
+        ; 10 for an empty slot. Every staff effect uses it, so it is most likely
+        ; the experience for using the staff.
 
         phb
         php
@@ -341,11 +345,14 @@
 
         .databank 0
 
-      rlUnknown84FAC1 ; 84/FAC1
+      rlGetSelectedUnitMiracleBonus ; 84/FAC1
 
         .al
         .autsiz
         .databank ?
+
+        ; With Miracle (personal, class or item skill) and less than 11 HP:
+        ; returns (11 - HP) * 10. Otherwise 0.
 
         phb
         php

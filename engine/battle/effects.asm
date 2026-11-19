@@ -45,7 +45,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda $0026,b,x
         and #$00FF
-        jsl rlUnknown84F99D
+        jsl rlGetInventorySlotStaffCostValue
         sta $001A,b,x
         sep #$20
         lda #$00
@@ -123,7 +123,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda $0026,b,x
         and #$00FF
-        jsl rlUnknown84F99D
+        jsl rlGetInventorySlotStaffCostValue
         sta $001A,b,x
         sep #$20
         lda #$00
@@ -154,7 +154,7 @@
 
         ldx wActionStructAttacker
         ldy wActionStructDefender
-        jsr rsUnknown84E51D
+        jsr rsSetBattleRoundRangedFlag
 
         sep #$20
         lda @l bBattleRoundFlags
@@ -283,7 +283,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl rlUnknown84F99D
+        jsl rlGetInventorySlotStaffCostValue
         sta structActionStructEntry.GainedExperience,b,x
 
         sep #$20
@@ -328,13 +328,13 @@
 
         lda structActionStructEntry.UnitRAMPointer,b,y
         sta wSelectedUnitDataRAMPointer,b
-        jsr rsUnknown84EAD9
+        jsr rsActionStructStealMoney
 
         lda structActionStructEntry.UnitRAMPointer,b,x
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl rlUnknown84F99D
+        jsl rlGetInventorySlotStaffCostValue
         sta structActionStructEntry.GainedExperience,b,x
         
         sep #$20
@@ -342,7 +342,7 @@
         sta @l $7ECCDF
         rep #$20
 
-        jsr rsUnknown84EE8F
+        jsr rsSetStaffBattleSong
 
         clc
         rts
@@ -373,7 +373,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl rlUnknown84F99D
+        jsl rlGetInventorySlotStaffCostValue
         sta structActionStructEntry.GainedExperience,b,x
 
         lda structActionStructEntry.MaxHP,b,y
@@ -421,13 +421,13 @@
         
         +
         jsr rsUnknown84E62C
-        jsr rsUnknown84EEB1
+        jsr rsActionStructInflictItemStatus
 
         lda structActionStructEntry.UnitRAMPointer,b,x
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl rlUnknown84F99D
+        jsl rlGetInventorySlotStaffCostValue
         sta structActionStructEntry.GainedExperience,b,x
         
         +
@@ -436,14 +436,14 @@
         sta @l $7ECCDF
         rep #$20
 
-        jsr rsUnknown84EE8F
+        jsr rsSetStaffBattleSong
 
         clc
         rts
 
         .databank 0
 
-      rsUnknown84EE8F ; 84/EE8F
+      rsSetStaffBattleSong ; 84/EE8F
 
         .al
         .autsiz
@@ -454,10 +454,10 @@
         tax
         lda aDeploymentTable._State,x
         and #DeploymentAllegianceMask
-        cmp #1
+        cmp #AllegianceEnemy
         beq +
 
-        cmp #3
+        cmp #AllegianceOther
         beq +
 
         lda #$0031
@@ -473,7 +473,7 @@
 
         .databank 0
 
-      rsUnknown84EEB1 ; 84/EEB1
+      rsActionStructInflictItemStatus ; 84/EEB1
 
         .al
         .autsiz

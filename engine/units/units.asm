@@ -1465,7 +1465,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown84D52E
+        jsl rlCheckIfDeployedUnitIsEnemy
         rts
 
         .databank 0
@@ -1522,7 +1522,7 @@
         phx
         tax
         txa
-        jsl rlUnknown84D52E
+        jsl rlCheckIfDeployedUnitIsEnemy
         bcc _CLC
 
         txa
@@ -1865,7 +1865,7 @@
         tya
         sta @l wSelectedUnitDataRAMPointer
         txa
-        jsl rlUnknown84D52E
+        jsl rlCheckIfDeployedUnitIsEnemy
 
         _8BFB
         ply

@@ -7141,7 +7141,7 @@
             sta wBattleType
             rep #$20
 
-            jsl rlUnknown84DF87
+            jsl rlActionStructBuildScriptedBattleRounds
 
         _End
         ply

@@ -111,3 +111,9 @@
     .word ?                   ; $16
     .word ?                   ; $18
   .endstruct
+
+  ; Bits of bBattleRoundFlags, for the strike being resolved. Bit 0 is
+  ; wBattleAttackerIndex (which side strikes); the meaning of the others is not
+  ; known yet.
+  BattleRoundFlagRanged = bits($20) ; the battle distance is 2 or more
+  BattleRoundFlagMagic  = bits($40) ; the weapon is a staff or magic

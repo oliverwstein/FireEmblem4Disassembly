@@ -809,7 +809,7 @@
         lda #$01
         sta $7E4EA9
         rep #$20
-        jsl rlUnknown84DCA3
+        jsl rlActionStructBuildBattleRounds
         lda #$003B
         sta wBattleSong
         jsl rlUnknown81B368
@@ -913,7 +913,7 @@
         lda #$0009
         sta aActionStructUnit1.TerrainType
         sta aActionStructUnit2.TerrainType
-        jsl rlUnknown84DCA3
+        jsl rlActionStructBuildBattleRounds
         plx
         plp
         plb
@@ -3107,7 +3107,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda $0026,b,x
         and #$00FF
-        jsl rlUnknown84F99D
+        jsl rlGetInventorySlotStaffCostValue
         sta $001A,b,x
         sep #$20
         lda #$00

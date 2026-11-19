@@ -11210,9 +11210,9 @@
         ldx wActiveFactionSlot,b
         jsl rlGetLocationFactionSlotOwner
         jsl rlGetFactionRelation
-        cmp #$0000
+        cmp #AllegianceOwn
         beq $85E545
-        cmp #$0002
+        cmp #AllegianceNeutral
         beq $85E545
         jml rsUnknown85E547
 
@@ -11373,7 +11373,7 @@
         tax
         lda wActiveFactionSlot,b
         jsl rlGetFactionRelation
-        cmp #$0001
+        cmp #AllegianceEnemy
         beq _E694
         jml rsUnknown85E547
 

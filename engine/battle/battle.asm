@@ -110,11 +110,15 @@
 
         .databank 0
 
-      rlUnknown84D52E ; 84/D52E
+      rlCheckIfDeployedUnitIsEnemy ; 84/D52E
 
         .al
         .autsiz
         .databank ?
+
+        ; Input: A = deployment number.
+        ; Output: carry set if that unit's faction is an enemy (AllegianceEnemy) of the
+        ; selected unit's faction.
 
         phx
         tax
@@ -122,7 +126,7 @@
         tax
         jsl rlGetSelectedUnitFactionSlot
         jsl rlGetFactionRelation
-        cmp #1
+        cmp #AllegianceEnemy
         bne _CLC
 
         plx
@@ -808,7 +812,7 @@
         jsl rlGetTotalCharmAndLeadershipBonus
         sta $7ECCE4
 
-        jsr rsUnknown84D97B
+        jsr rsActionStructAddLeadershipBonus
 
         lda $7ECCE4
         clc
@@ -823,11 +827,14 @@
 
         .databank 0
 
-      rsUnknown84D97B ; 84/D97B
+      rsActionStructAddLeadershipBonus ; 84/D97B
 
         .al
         .autsiz
         .databank ?
+
+        ; Adds the leadership bonus for the unit's leadership stars to $7ECCE4 if the
+        ; unit is Sigurd, Seliph or a group leader.
 
         phx
         lda structActionStructEntry.UnitRAMPointer,b,y
@@ -1368,7 +1375,7 @@
           jsl rlUnknown84B321
 
         +
-        jsl rlUnknown84DCA3
+        jsl rlActionStructBuildBattleRounds
         rts
 
         .databank 0
@@ -1411,7 +1418,7 @@
 
         .databank 0
 
-      rlUnknown84DCA3 ; 84/DCA3
+      rlActionStructBuildBattleRounds ; 84/DCA3
 
         .al
         .autsiz
@@ -1466,7 +1473,7 @@
         
         -
         lda @l wBattleAttackerIndex
-        jsr rsUnknown84DEEB
+        jsr rsActionStructAddStrikes
         bcs _DD37
 
         lda @l wBattleAttackerIndex
@@ -1479,7 +1486,7 @@
         jsr rsActionStructCheckIfCombatantsCanDouble
         bcc +
 
-        jsr rsUnknown84DEEB
+        jsr rsActionStructAddStrikes
         bcs _DD37
 
         +
@@ -1757,11 +1764,14 @@
 
         .databank 0
 
-      rsUnknown84DEEB ; 84/DEEB
+      rsActionStructAddStrikes ; 84/DEEB
 
         .al
         .autsiz
         .databank ?
+
+        ; Adds the strikes of one side to aBattleRoundsData.
+        ; Input: A = side (0 = player, 1 = opponent).
 
         ; acting unit in A
         ; 0 = player
@@ -1780,7 +1790,7 @@
         
           -
           lda #0
-          jsr rsUnknown84E433
+          jsr rsActionStructResolveStrike
           bcs _CLC
 
             lda #(`aBattleRoundsData)<<8
@@ -1879,11 +1889,14 @@
 
         .databank 0
 
-      rlUnknown84DF87 ; 84/DF87
+      rlActionStructBuildScriptedBattleRounds ; 84/DF87
 
         .al
         .autsiz
         .databank ?
+
+        ; Like rlActionStructBuildBattleRounds, but takes the strikes from a list at
+        ; lR18 that ends with $FFFF.
 
         phb
         php
@@ -1937,7 +1950,7 @@
             lda [lR18],y
             and #$00FF
             ora #SB_ApplyGuarantees
-            jsr rsUnknown84E433
+            jsr rsActionStructResolveStrike
             bcs +
 
               lda #(`aBattleRoundsData)<<8
@@ -2696,7 +2709,7 @@
 
         .databank 0
 
-      rsUnknown84E433 ; 84/E433
+      rsActionStructResolveStrike ; 84/E433
 
         .al
         .autsiz
@@ -2839,8 +2852,8 @@
 
         ldx wActionStructAttacker
         ldy wActionStructDefender
-        jsr rsUnknown84E51D
-        jsr rsUnknown84E535
+        jsr rsSetBattleRoundRangedFlag
+        jsr rsSetBattleRoundMagicFlag
         jsr rsActionStructRoundCheckIfHit
         bcc +
 
@@ -2862,7 +2875,7 @@
 
         .databank 0
 
-      rsUnknown84E51D ; 84/E51D
+      rsSetBattleRoundRangedFlag ; 84/E51D
 
         .al
         .autsiz
@@ -2874,7 +2887,7 @@
 
           sep #$20
           lda bBattleRoundFlags
-          ora #$20
+          ora #BattleRoundFlagRanged
           sta bBattleRoundFlags
           rep #$20
 
@@ -2883,7 +2896,7 @@
 
         .databank 0
 
-      rsUnknown84E535 ; 84/E535
+      rsSetBattleRoundMagicFlag ; 84/E535
 
         .al
         .autsiz
@@ -2897,7 +2910,7 @@
 
           sep #$20
           lda bBattleRoundFlags
-          ora #$40
+          ora #BattleRoundFlagMagic
           sta bBattleRoundFlags
           rep #$20
 
@@ -3082,7 +3095,7 @@
           bit #CombatSkillFlagSteal
           beq +
 
-            jsr rsUnknown84EAD9
+            jsr rsActionStructStealMoney
 
         +
         rts
@@ -3389,7 +3402,7 @@
 
         ldx wActionStructAttacker
         ldy wActionStructDefender
-        jsr rsUnknown84E51D
+        jsr rsSetBattleRoundRangedFlag
 
         sep #$20
         lda @l bBattleRoundFlags
@@ -3426,8 +3439,8 @@
 
         ldx wActionStructAttacker
         ldy wActionStructDefender
-        jsr rsUnknown84E51D
-        jsr rsUnknown84E535
+        jsr rsSetBattleRoundRangedFlag
+        jsr rsSetBattleRoundMagicFlag
         jsr rsActionStructRoundCheckIfHit
         bcc _End
 
@@ -3462,7 +3475,7 @@
               jsl rlRollForChance
               bcs _End
 
-                jsr rsUnknown84EEB1
+                jsr rsActionStructInflictItemStatus
 
                 lda #(`aBattleRoundsData)<<8
                 sta lStructPointer2+1,b
@@ -3495,8 +3508,8 @@
 
         ldx wActionStructAttacker
         ldy wActionStructDefender
-        jsr rsUnknown84E51D
-        jsr rsUnknown84E535
+        jsr rsSetBattleRoundRangedFlag
+        jsr rsSetBattleRoundMagicFlag
         jsr rsActionStructRoundCheckIfHit
         bcc +
 
@@ -3561,7 +3574,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl rlUnknown84F99D
+        jsl rlGetInventorySlotStaffCostValue
         sta structActionStructEntry.GainedExperience,b,x
 
         lda wRoutineVariable1,b
@@ -3599,7 +3612,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl rlUnknown84F99D
+        jsl rlGetInventorySlotStaffCostValue
         sta structActionStructEntry.GainedExperience,b,x
 
         sep #$20
@@ -3648,7 +3661,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
-        jsl rlUnknown84F99D
+        jsl rlGetInventorySlotStaffCostValue
         sta structActionStructEntry.GainedExperience,b,x
 
         sep #$20
@@ -3758,7 +3771,7 @@
 
         .databank 0
 
-      rsUnknown84EAD8 ; 84/EAD8
+      rsActionStructDoNothing ; 84/EAD8
 
         .al
         .autsiz
@@ -3768,11 +3781,14 @@
 
         .databank 0
 
-      rsUnknown84EAD9 ; 84/EAD9
+      rsActionStructStealMoney ; 84/EAD9
 
         .al
         .autsiz
         .databank ?
+
+        ; Moves the defender's money to the attacker, unless this is the arena, the
+        ; attacker already has 50000 or the defender has none.
 
         ; check if its an arena fight
 

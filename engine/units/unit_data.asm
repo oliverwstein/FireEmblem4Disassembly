@@ -1102,7 +1102,7 @@
         jsl rlSetSelectedUnitStates
 
         lda #2
-        jsl rlUnknown87BE7C
+        jsl rlSetBattleAnimationOption
         rtl
 
         .databank 0
