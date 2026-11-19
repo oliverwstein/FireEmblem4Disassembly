@@ -1311,6 +1311,173 @@
     .endsection AIMovementMapSection
 
 
+    .section FillMapBufferSection
+
+      .al
+      .xl
+
+      rlFillMapBuffer ; 86/AE3E
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; A = bank of buffer
+        ; X = lower word of buffer
+        ; Y = fill value
+
+        phb
+
+        sep #$20
+        pha
+        rep #$20
+        plb
+
+        tya
+        ldy #256 >> 1
+        
+          -
+          sta $0000,b,x
+          sta $0100,b,x
+          sta $0200,b,x
+          sta $0300,b,x
+          sta $0400,b,x
+          sta $0500,b,x
+          sta $0600,b,x
+          sta $0700,b,x
+          sta $0800,b,x
+          sta $0900,b,x
+          sta $0A00,b,x
+          sta $0B00,b,x
+          sta $0C00,b,x
+          sta $0D00,b,x
+          sta $0E00,b,x
+          sta $0F00,b,x
+
+          inc x
+          inc x
+          dec y
+          bne -
+
+        plb
+        rtl
+
+        .databank 0
+
+      rlClearMapBufferAddBorders ; 86/AE80
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Input:
+        ; A = map pointer bank
+        ; X = map pointer lower word
+
+        phb
+        sep #$20
+        pha
+        rep #$20
+        plb
+
+        phx
+
+        txa
+        clc
+        adc #64
+        tax
+        ldy #64 -2
+        
+        _Loop
+        lda #$00FF
+        sta $0000,b,x
+
+        lda #0
+        sta $0002,b,x
+        sta $0004,b,x
+        sta $0006,b,x
+        sta $0008,b,x
+        sta $000A,b,x
+        sta $000C,b,x
+        sta $000E,b,x
+        sta $0010,b,x
+        sta $0012,b,x
+        sta $0014,b,x
+        sta $0016,b,x
+        sta $0018,b,x
+        sta $001A,b,x
+        sta $001C,b,x
+        sta $001E,b,x
+        sta $0020,b,x
+        sta $0022,b,x
+        sta $0024,b,x
+        sta $0026,b,x
+        sta $0028,b,x
+        sta $002A,b,x
+        sta $002C,b,x
+        sta $002E,b,x
+        sta $0030,b,x
+        sta $0032,b,x
+        sta $0034,b,x
+        sta $0036,b,x
+        sta $0038,b,x
+        sta $003A,b,x
+        sta $003C,b,x
+
+        lda #$FF00
+        sta $003E,b,x
+
+        txa
+        clc
+        adc #64
+        tax
+        dec y
+        bne _Loop
+
+        plx
+        ldy #64 >> 2
+
+        lda wCurrentChapter
+        beq +
+
+          ; Prologue only gets half the buffer
+          lda #$FFFF
+
+          -
+          sta $0000 +  0 * 64 + (0 * 64 / size(word)),b,x
+          sta $0000 +  0 * 64 + (1 * 64 / size(word)),b,x
+          sta $0000 + 63 * 64 + (0 * 64 / size(word)),b,x
+          sta $0000 + 63 * 64 + (1 * 64 / size(word)),b,x
+          inc x
+          inc x
+          dec y
+          bne -
+          bra _End
+
+        +
+        lda #$FFFF
+
+        -
+        sta $0000 +  0 * 64 + (0 * 64 / size(word)),b,x
+        sta $0000 +  0 * 64 + (1 * 64 / size(word)),b,x
+        sta $0000 + 31 * 64 + (0 * 64 / size(word)),b,x
+        sta $0000 + 31 * 64 + (1 * 64 / size(word)),b,x
+        inc x
+        inc x
+        dec y
+        bne -
+        
+        _End
+        plb
+        rtl
+
+        .databank 0
+
+        ; 86/AF39
+
+    .endsection FillMapBufferSection
+
+
     .section AIUnitMapSection
 
       .al

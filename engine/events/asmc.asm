@@ -30,6 +30,57 @@
     .endsection ASMCGiveToSupplyMenuIfInventoryFullSection
 
 
+    .section ASMCGiveJuliaLightIfNoWeaponSection
+
+      .al
+      .xl
+
+      rlASMCGiveJuliaLightIfNoWeapon ; 86/C6A2
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        lda wRoutineVariable1,b
+        pha
+
+        lda #Julia
+        jsl rlGetUnitRAMDataPointerByID
+        bcs _End
+
+          jsl rlGetFirstWeaponBattleMight
+          ora #0
+          bne _End
+
+            jsl rlGetSelectedUnitInventorySize
+            cmp #7
+            bcc +
+
+              lda #7
+              sta wSelectedInventorySlot,b
+              jsl rlDumpInventorySlotIntoSupplyIfFilled
+              bcs _End
+
+            +
+            lda #PI_Light2
+            sta wRoutineVariable1,b
+            jsl rlGivePlayerItemIDToSelectedUnitsFirstItemSlot
+            jsl rlEquipFirstWeaponInInventory
+
+        _End
+        pla
+        sta wRoutineVariable1,b
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        rtl
+
+        .databank 0
+
+    .endsection ASMCGiveJuliaLightIfNoWeaponSection
+
+
     .section FinalChapterJuliaRecruitmentASMCSection
 
       .al

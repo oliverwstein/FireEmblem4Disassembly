@@ -6717,3 +6717,77 @@
         ; 86/C629
 
     .endsection ChapterEventDataSection
+
+
+    .section ApplyMapTileChangeSection
+
+      .al
+      .xl
+
+      rlApplyMapTileChange ; 86/C6E8
+
+        .al
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        tay
+        lda wR1
+        xba
+        lsr a
+        lsr a
+        clc
+        adc wR0
+        asl a
+        tax
+        lda $0000,b,y
+        and #$00FF
+        sta wR12
+        lda $0001,b,y
+        and #$00FF
+        sta wR11
+
+        lda #64
+        sec
+        sbc wR12
+        asl a
+        sta wR13
+        
+          _OuterLoop
+          lda wR12
+          sta wR10
+          
+            _InnerLoop
+            lda $0002,b,y
+            bmi +
+
+              lda aMapData,x
+              and #$FC00
+              ora $0002,b,y
+              sta aMapData,x
+
+            +
+            inc y
+            inc y
+            inc x
+            inc x
+            dec wR10
+            bne _InnerLoop
+
+          txa
+          clc
+          adc wR13
+          tax
+          dec wR11
+          bne _OuterLoop
+
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 86/C739
+
+    .endsection ApplyMapTileChangeSection

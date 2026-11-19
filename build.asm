@@ -129,6 +129,7 @@
   .include "engine/unsorted/bank82.asm"
   .include "engine/unsorted/bank84.asm"
   .include "engine/unsorted/bank85.asm"
+  .include "engine/unsorted/bank86.asm"
   .include "engine/unsorted/bank87.asm"
   .include "engine/unsorted/bank89.asm"
   .include "engine/unsorted/bank8F.asm"
@@ -1375,6 +1376,13 @@
 
     .here
 
+    * = $069CE4
+    .logical $869CE4
+
+      .dsection Unsorted869CE4Section
+
+    .here
+
     * = $069D1B
     .logical $869D1B
 
@@ -1384,10 +1392,24 @@
 
     .here
 
+    * = $06AE3E
+    .logical $86AE3E
+
+      .dsection FillMapBufferSection
+
+    .here
+
     * = $06AF39
     .logical $86AF39
 
       .dsection AIThreatSection
+
+    .here
+
+    * = $06B39D
+    .logical $86B39D
+
+      .dsection Unsorted86B39DSection
 
     .here
 
@@ -1426,6 +1448,14 @@
       .dsection ChapterEventDataSection
 
       ; 86/C575
+
+    .here
+
+    * = $06C6A2
+    .logical $86C6A2
+
+      .dsection ASMCGiveJuliaLightIfNoWeaponSection
+      .dsection ApplyMapTileChangeSection
 
     .here
 
