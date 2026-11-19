@@ -1,4 +1,5 @@
-; TODO: describe this file.
+; Map menus: loading their data, building their tilemaps and palettes, and
+; their position and size on screen.
 
     .section MapMenuSaveMapStateSection
 

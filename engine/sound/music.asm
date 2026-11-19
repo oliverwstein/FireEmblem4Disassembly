@@ -1,4 +1,5 @@
-; TODO: describe this file.
+; Choosing music: the songs for each faction's phase in each chapter, and the
+; victory theme. The unknown routines here sit next to them in the ROM.
 
     .section PlayerPhaseChapterSongIDsSection
 

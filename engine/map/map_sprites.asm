@@ -1,4 +1,6 @@
-; TODO: describe this file.
+; Map sprites: the active sprite for a unit on the map, moving map sprites and
+; their movement sounds, and hiding, revealing or flickering a faction's units.
+; The unknown routines here sit among them in the ROM.
 
     .section MapSpriteSection
 

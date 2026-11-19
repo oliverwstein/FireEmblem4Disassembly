@@ -1,4 +1,4 @@
-; TODO: describe this file.
+; Menu text helpers.
 
     .section GetMenuTextStringLengthSection
 

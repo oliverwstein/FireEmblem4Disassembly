@@ -1,4 +1,5 @@
-; TODO: describe this file.
+; The end-of-game rankings: tactics, survival, combat and experience scores
+; and the final score.
 
     .section CalculateTacticsRankingSection
 

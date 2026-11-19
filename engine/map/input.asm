@@ -1,4 +1,4 @@
-; TODO: describe this file.
+; Handling controller input on the map.
 
     .section MapInputHandlerSection
 

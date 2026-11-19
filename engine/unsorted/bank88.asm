@@ -1,4 +1,4 @@
-; TODO: describe this file.
+; Code from bank $88 not yet assigned to a game system.
 
     .section Unsorted888410Section
 

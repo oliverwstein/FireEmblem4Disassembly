@@ -1,4 +1,5 @@
-; TODO: describe this file.
+; Scripted scenes that need their own code, such as the mages attacking at
+; Belhalla. The unknown routines here sit among them in the ROM.
 
     .section BelhallaMagesAttackSection
 

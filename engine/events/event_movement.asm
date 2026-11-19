@@ -1,4 +1,5 @@
-; TODO: describe this file.
+; Moving units along paths during events: the target map and the movement
+; scripts it produces.
 
     .section ClearEventMovementTargetMapSection
 

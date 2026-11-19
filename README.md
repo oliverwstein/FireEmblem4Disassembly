@@ -2,7 +2,7 @@
 
 A disassembly of *Fire Emblem: Seisen no Keifu* (Japan, version 1.0). It builds a ROM that is byte-for-byte identical to the original.
 
-The project is a work in progress. About 16% of the ROM is currently built from source. The rest is copied from your original ROM at build time; see [Base ROM](#base-rom).
+The project is a work in progress. About 17% of the ROM is currently built from source. The rest is copied from your original ROM at build time; see [Base ROM](#base-rom).
 
 ## Building
 
@@ -48,18 +48,21 @@ You need:
 
 | Folder | Contents |
 |---|---|
-| `core/` | The proc, DMA, HDMA and active sprite engines; decompression, math, random numbers, fades and RAM structures. |
-| `map/` | Map scrolling, deployment and map locations such as castles and villages. |
-| `units/` | Units and their data, classes, stats, level-ups, skills, factions, lovers, and the move to generation 2 with inheritance. |
+| `core/` | The proc, DMA, HDMA and active sprite engines; decompression, math, random numbers, fades, RAM structures, the OAM buffer, tilemap buffers and game options. |
+| `map/` | Map scrolling, map sprites, input, deployment, the unit and terrain windows, pop-ups, and map locations such as castles and villages. |
+| `units/` | Units and their data, classes, stats, level-ups, skills, factions, lovers, turn-start effects, and the move to generation 2 with inheritance. |
 | `items/` | Item data and unit inventories. |
 | `ai/` | The enemy AI: its main cycle, AI scripts, groups and formations, and choosing targets, attacks and movement. |
 | `battle/` | Battle calculations, weapon traits and staff effects, battle stats and scripted special attacks. |
+| `menus/` | Map menus and menu text. |
 | `dialogue/` | The dialogue engine, dialogue boxes, portraits and death quotes. |
-| `events/` | The chapter event engine and conditions, the event script interpreter and commands, and procs used by events. |
+| `events/` | The chapter event engine and conditions, the event script interpreter and commands, procs used by events, talk events, event movement and scripted scenes. |
 | `worldmap/` | The world map. |
 | `epilogue/` | Choosing and showing each character's epilogue. |
 | `save/` | Saving and loading. |
 | `debug/` | The leftover debug menu. |
+| `rankings/` | The end-of-game rankings. |
+| `sound/` | Choosing music. |
 | `unsorted/` | Code that is disassembled but not yet assigned to a system, filed by bank. |
 
 ### How files relate to ROM addresses

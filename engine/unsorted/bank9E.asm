@@ -1,4 +1,4 @@
-; TODO: describe this file.
+; Code from bank $9E not yet assigned to a game system.
 
     .section Unsorted9E85DFSection
 
@@ -100,7 +100,7 @@
 
           lda wR0
           tax
-          lda aUnkown9E8687,x
+          lda aUnknown9E8687,x
           and #$00FF
           sec
           bra +
@@ -115,7 +115,7 @@
 
         .databank 0
 
-      aUnkown9E8687 ; 9E/8687
+      aUnknown9E8687 ; 9E/8687
 
         .byte 1 ; Cavalier
         .byte 1 ; LanceKnight

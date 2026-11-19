@@ -1,4 +1,5 @@
-; TODO: describe this file.
+; Effects at the start of a turn: healing from status, skills and castles,
+; castle healing costs, and curing status.
 
     .section GetTurnStartEffectsByStatusSection
 

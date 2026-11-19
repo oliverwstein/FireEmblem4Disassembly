@@ -1,4 +1,4 @@
-; TODO: describe this file.
+; The castle name pop-up shown on the map.
 
     .section CastleNamePopUpSection
 

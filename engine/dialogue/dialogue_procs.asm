@@ -1,4 +1,5 @@
-; TODO: describe this file.
+; The procs that run a dialogue scene, with and without a background picture,
+; and the colour intensity effect they use.
 
     .section DialogueSection
 

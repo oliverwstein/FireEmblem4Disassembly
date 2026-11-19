@@ -1,4 +1,5 @@
-; TODO: describe this file.
+; Talk events: whether a talk event is available, and the conditions it can
+; check (always, never, or enough money).
 
     .section CheckTalkEventEntryAvailableSection
 

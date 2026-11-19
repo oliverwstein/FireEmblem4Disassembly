@@ -1,4 +1,4 @@
-; TODO: describe this file.
+; Creating and removing the unit and terrain windows on the map.
 
     .section CreateUnitWindowAndTerrainWindowProcsSection
 

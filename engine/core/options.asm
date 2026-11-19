@@ -1,4 +1,5 @@
-; TODO: describe this file.
+; Reading and changing game options: battle animations, the unit and terrain
+; windows, and text speed.
 
     .section CheckIfBattleAnimationOFFSection
 
