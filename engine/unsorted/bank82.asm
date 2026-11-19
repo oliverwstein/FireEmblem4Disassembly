@@ -12,9 +12,9 @@
         .autsiz
         .databank ?
 
-        lda $0ECF,b
-        sta $0FD7,b,x
-        lda $0ED1,b
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody0,b,x
+        lda aProcSystem.wInput1,b
         jsl rlUnknown808FA3
         rtl
 
@@ -55,12 +55,12 @@
         lda $04F6,b
         bit #$0030
         bne _841E
-        lda $0FD7,b,x
+        lda aProcSystem.aBody0,b,x
         cmp $0510,b
         beq _841A
         sta $04BA,b
         lda #$841F
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         bra _841E
 
 
@@ -157,7 +157,7 @@
         _8888
         stz $0302,b
         lda #$88B2
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda $04EA,b
         pha
         and #$FFFA
@@ -261,9 +261,9 @@
         .databank ?
 
         ldy #$0000
-        lda $0FD7,b
+        lda aProcSystem.aBody0,b
         sta @l lR22
-        lda $0FF7,b
+        lda aProcSystem.aBody1,b
         sta @l lR22+1
         bra $828921
 
@@ -850,7 +850,7 @@
         lda #0
         
           -
-          sta $0540,b,x
+          sta lUnknown0540,b,x
           dec x
           bpl -
 
@@ -1241,9 +1241,9 @@
         phk
         plb
 
-        ldy $0540,b
+        ldy lUnknown0540,b
         sep #$20
-        lda $0542,b
+        lda lUnknown0540+2,b
         pha
         rep #$20
         plb
@@ -1338,7 +1338,7 @@
         plb
         phx
 
-        ldx $0540,b
+        ldx lUnknown0540,b
         sep #$20
         lda $0540+2,b
         pha

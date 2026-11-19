@@ -64,7 +64,7 @@
         sta wAITargetXPosition,b
         lda aAIAction.wDestinationYPosition
         sta wAITargetYPosition,b
-        lda $7F4440
+        lda aAIAction.wUnknown7F4440
         sta wAIUnknown000E8E,b
         lda aAIAction.wChosenTargetDeploymentOffset
         sta wAIUnknown000E8C,b
@@ -698,7 +698,7 @@
               bcs _CLC
 
                 jsl rlGetEventLocationEntryType
-                cmp #0
+                cmp #LocationTypeCastle
                 bne _Next
 
                   ; Is a castle
@@ -981,7 +981,7 @@
         bcs _End
 
           jsl rlGetEventLocationEntryType
-          cmp #2
+          cmp #LocationTypeVillage
           bne _End
 
             jsl rlGetEventLocationEntryEffectiveXCoordinate
@@ -1095,7 +1095,7 @@
                   lda aAIAction.wUnitInventorySlot
                   sta wSelectedInventorySlot,b
                   lda #2
-                  sta $7F4440
+                  sta aAIAction.wUnknown7F4440
                   lda aAIAction.wTargetDeploymentOffset
                   sta aAIAction.wChosenTargetDeploymentOffset
                   jsl rlUnknown86B45D
@@ -1310,7 +1310,7 @@
           bcs +
 
             lda #3
-            sta $7F4440
+            sta aAIAction.wUnknown7F4440
             jsl rlUnknown86B45D
         
         +
@@ -1334,7 +1334,7 @@
         bcs _SEC
 
           jsl rlGetEventLocationEntryType
-          cmp #0
+          cmp #LocationTypeCastle
           bne _SEC
 
             jsl rlGetEventLocationEntryEffectiveXCoordinate
@@ -1372,7 +1372,7 @@
           bcs +
 
             lda #13
-            sta $7F4440
+            sta aAIAction.wUnknown7F4440
             jsl rlUnknown86B45D
 
         +
@@ -1406,7 +1406,7 @@
           lda #$FFFF
           sta aAIAction.wChosenTargetDeploymentOffset
           lda #0
-          sta $7F4440
+          sta aAIAction.wUnknown7F4440
           jsl rlUnknown86B45D
 
         +
@@ -1427,7 +1427,7 @@
         bcs +
 
           lda #3
-          sta $7F4440
+          sta aAIAction.wUnknown7F4440
           jsl rlUnknown86B45D
 
         +
@@ -1469,7 +1469,7 @@
 
                 lda #4
                 sta $0D81,b
-                lda $056F,b
+                lda wSelectedUnitDataRAMPointer,b
                 sta $0D83,b
                 lda #0
                 sta wUnknownDeploymentOffset000D7F,b

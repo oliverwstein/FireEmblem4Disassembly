@@ -753,12 +753,12 @@
         
         _Loop
         lda $7E0005,x
-        sta $056F,b
+        sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitStates
-        bit #$0200
+        bit #UnitStateDead
         bne +
 
-        bit #$8000
+        bit #UnitStateFielded
         beq +
 
         inc wRoutineVariable1,b

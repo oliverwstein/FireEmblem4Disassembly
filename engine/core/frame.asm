@@ -32,10 +32,10 @@
             stz bDMAPendingChannels,b
             stz bHDMAPendingChannels,b
             stz bBufferHDMAEN
-            stz $0345,b
+            stz bDMAArrayFlag,b
             rep #$20
 
-            stz $0343,b
+            stz wDMAArrayPosition,b
             jml $808ECC
 
         +

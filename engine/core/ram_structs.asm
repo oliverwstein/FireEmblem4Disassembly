@@ -1340,8 +1340,8 @@
         pha
 
         sty $00
-        lda $0565,b
-        ora $0566,b
+        lda lRAMAreaPointer,b
+        ora lRAMAreaPointer+1,b
         beq _EDB1
 
         lda $00
@@ -1349,7 +1349,7 @@
         adc #6
         sta $00
 
-        ldy $0565,b
+        ldy lRAMAreaPointer,b
 
         sep #$20
         lda $0565+2,b

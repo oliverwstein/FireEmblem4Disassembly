@@ -348,25 +348,25 @@
 
           lda $7E2006,x
           and #$00FF
-          sta $0ECF,b
+          sta aProcSystem.wInput0,b
 
-          lda $7E2007,x
+          lda aDebugMenuSkillFlags.bAdept,x
           and #$00FF
           xba
-          ora $0ECF,b
-          sta $0ECF,b
+          ora aProcSystem.wInput0,b
+          sta aProcSystem.wInput0,b
 
           lda $7E2008,x
           and #$00FF
-          sta $0ED1,b
+          sta aProcSystem.wInput1,b
 
-          lda $7E2005,x
+          lda aDebugMenuSkillFlags.bWrath,x
           and #$00FF
-          sta $0ED3,b
+          sta aProcSystem.wInput2,b
 
           lda $7E2004,x
           and #$00FF
-          sta $0ED5,b
+          sta aProcSystem.wInput3,b
 
           lda #(`procUnknown85CA85)<<8
           sta $62+1

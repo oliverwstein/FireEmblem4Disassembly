@@ -981,14 +981,14 @@
 
         lda $0000,b,y
         and #$00FF
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         lda $0001,b,y
-        sta $11C0,b,x
+        sta aActiveSpriteSystem.aFrameOffset,b,x
 
         tya
         clc
         adc #3
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         pla
         rts
 
@@ -1002,16 +1002,16 @@
 
         lda $0000,b,y
         and #$00FF
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         lda $0001,b,y
         clc
-        adc $1100,b,x
-        sta $11C0,b,x
+        adc aActiveSpriteSystem.aTypeOffset,b,x
+        sta aActiveSpriteSystem.aFrameOffset,b,x
 
         tya
         clc
         adc #3
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         pla
         rts
 
@@ -1023,7 +1023,7 @@
         .autsiz
         .databank ?
 
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         pla
         rts
 
@@ -1037,7 +1037,7 @@
 
         lda $0000,b,y
         and #$00FF
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         inc y
         pla
         rts
@@ -1053,7 +1053,7 @@
         dec y
         dec y
         tya
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         pla
         rts
 
@@ -1066,10 +1066,10 @@
         .databank ?
 
         lda $0000,b,y
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         inc y
         tya
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         pla
         rts
 
@@ -1082,7 +1082,7 @@
         .databank ?
 
         lda $0000,b,y
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         inc y
         inc y
         rts
@@ -1096,7 +1096,7 @@
         .databank ?
 
         lda #$8008
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         rts
 
         .databank 0
@@ -1108,9 +1108,9 @@
         .databank ?
 
         lda $111F,b,x
-        sta $10FE,b
+        sta aActiveSpriteSystem.lPointer+1,b
         lda $0000,b,y
-        sta $10FD,b
+        sta aActiveSpriteSystem.lPointer,b
         inc y
         inc y
         phx
@@ -1131,9 +1131,9 @@
         .databank ?
 
         lda $0000,b,y
-        sta $10FD,b
+        sta aActiveSpriteSystem.lPointer,b
         lda $0001,b,y
-        sta $10FE,b
+        sta aActiveSpriteSystem.lPointer+1,b
         inc y
         inc y
         inc y
@@ -1192,7 +1192,7 @@
         .databank ?
 
         lda $0000,b,y
-        sta $1140,b,x
+        sta aActiveSpriteSystem.aUpdater,b,x
         inc y
         inc y
         rts
@@ -1205,7 +1205,7 @@
         .autsiz
         .databank ?
 
-        dec $1140,b,x
+        dec aActiveSpriteSystem.aUpdater,b,x
         bne rsActiveSpriteCommand15
 
         inc y
@@ -1220,7 +1220,7 @@
         .autsiz
         .databank ?
 
-        dec $1140,b,x
+        dec aActiveSpriteSystem.aUpdater,b,x
         bne rsActiveSpriteCommand16
 
         inc y
@@ -1261,7 +1261,7 @@
         tay
         plx
         lda #1
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         pla
         rts
 
@@ -1305,7 +1305,7 @@
         tay
         plx
         lda #1
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         pla
         rts
 
@@ -1354,7 +1354,7 @@
 
         phb
         phx
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
         inc y
@@ -1389,7 +1389,7 @@
         phx
         lda $7F4589
         tay
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
           lda $7F458F
@@ -1412,7 +1412,7 @@
         phx
         lda $7F4586
         tay
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
           lda $7F458C
@@ -1458,8 +1458,8 @@
         +
         xba
         clc
-        adc $1200,b,x
-        sta $1200,b,x
+        adc aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
 
         lda $0000,b,y
         and #$FF00
@@ -1470,8 +1470,8 @@
         +
         xba
         clc
-        adc $1240,b,x
-        sta $1240,b,x
+        adc aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         inc y
         inc y
         rts
@@ -1485,7 +1485,7 @@
         .databank ?
 
         phx
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tax
         jsl rlUnknown9EB4BB
         sta $00
@@ -1540,8 +1540,8 @@
 
         lda [$24],y
         sta $04
-        ldx $10F9,b
-        lda $12C0,b,x
+        ldx aActiveSpriteSystem.wOffset,b
+        lda aActiveSpriteSystem.aUnknown0012C0,b,x
         asl a
         tax
         lda aUnknown9EB4C9,x
@@ -1555,12 +1555,12 @@
         adc $06
         sta $24
 
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         lda aActiveSpriteSystem.aUnknown0012E0,b,x
         sta $00
 
-        ldx $10F9,b
-        lda $12C0,b,x
+        ldx aActiveSpriteSystem.wOffset,b
+        lda aActiveSpriteSystem.aUnknown0012C0,b,x
         asl a
         tax
 
@@ -1609,7 +1609,7 @@
 
         dec y
         lda #1
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         pla
         bra ++
 
@@ -1647,7 +1647,7 @@
         +
         dec y
         lda #1
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         pla
         
         _End
@@ -1666,7 +1666,7 @@
 
           dec y
           lda #1
-          sta $1180,b,x
+          sta aActiveSpriteSystem.aFrameTimer,b,x
           pla
 
         +
@@ -1685,7 +1685,7 @@
 
           dec y
           lda #1
-          sta $1180,b,x
+          sta aActiveSpriteSystem.aFrameTimer,b,x
           pla
 
         +
@@ -1704,7 +1704,7 @@
         lda $7F4598+1
         sta $24+1
 
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
         lda $7F459B
@@ -1733,7 +1733,7 @@
         lda $7F4598+1
         sta $24+1
 
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
         lda $7F459B
@@ -1780,7 +1780,7 @@
         lda $7F4598+1
         sta $24+1
         sta $28
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
           lda $7F459B
@@ -1804,15 +1804,15 @@
         lda [$27],y
         clc
         adc $24
-        sta $11C0,b,x
+        sta aActiveSpriteSystem.aFrameOffset,b,x
         ldy $00
         lda $0000,b,y
         and #$00FF
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         pla
         clc
         adc #2
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         plx
         pla
         rts
@@ -1851,7 +1851,7 @@
         +
         dec y
         lda #1
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         pla
         
         +
@@ -1875,7 +1875,7 @@
         +
         dec y
         lda #1
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         pla
         
         +
@@ -1915,7 +1915,7 @@
         +
         dec y
         lda #1
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         pla
         
         +
@@ -2000,7 +2000,7 @@
         cmp #$FFFF
         beq _B329
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tay
         lda $7F57EA
         bne _B337
@@ -2010,7 +2010,7 @@
         cmp #$FFFF
         beq _B342
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tay
 
         _B337

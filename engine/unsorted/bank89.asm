@@ -1029,10 +1029,10 @@
         beq _99DA
         jsl rlGetUnitRAMDataPointerByID
         jsl rlGetSelectedUnitStates
-        bit #$0200
+        bit #UnitStateDead
         bne _99DA
         jsl rlGetSelectedUnitStatus
-        cmp #$0003
+        cmp #StatusCaptive
         beq _99DA
         jsl rlGetSelectedUnitNamePointer
         bra _99E6
@@ -1738,7 +1738,7 @@
         
           -
           lda [$27],y
-          sta $0280,b,y
+          sta aOAMPaletteBuffer.aPalette4,b,y
           dec x
           dec x
           dec y
@@ -2294,10 +2294,10 @@
         bit #$2000
         bne _A651
         jsl rlGetSelectedUnitStates
-        bit #$0200
+        bit #UnitStateDead
         bne _A610
         jsl rlGetSelectedUnitStatus
-        cmp #$0003
+        cmp #StatusCaptive
         beq _A610
 
         _A651
@@ -2373,10 +2373,10 @@
         bit #$2000
         bne _A6F4
         jsl rlGetSelectedUnitStates
-        bit #$0200
+        bit #UnitStateDead
         bne _A6B7
         jsl rlGetSelectedUnitStatus
-        cmp #$0003
+        cmp #StatusCaptive
         beq _A6B7
 
         _A6F4

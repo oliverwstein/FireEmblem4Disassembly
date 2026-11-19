@@ -127,7 +127,7 @@
         ldx #$0108
         jsl rlDrawMenuTextLine
         jsl rlGetSelectedUnitStatus
-        cmp #$0000
+        cmp #StatusHealthy
         bne _8594
         lda #$8A00
         sta lRoutineVariable+1,b
@@ -1194,7 +1194,7 @@
         rts
 
         lda #$C39A
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade
@@ -1313,7 +1313,7 @@
         lda #$0000
         sta wR5
         sta wR4
-        lda $18A3,b,x
+        lda aDialogue.wUnknown0018A3,b,x
         beq _9534
         cmp #$0001
         beq _952F
@@ -1355,7 +1355,7 @@
         lda wCurrentChapter,b
         cmp #$FFFF
         beq _956A
-        lda $18A3,b,x
+        lda aDialogue.wUnknown0018A3,b,x
         beq _956A
         cmp #$0001
         beq _9565
@@ -1441,7 +1441,7 @@
 
         _9780
         lda [lR19],y
-        sta $0280,b,y
+        sta aOAMPaletteBuffer.aPalette4,b,y
         dec x
         dec x
         dec y
@@ -1481,7 +1481,7 @@
 
         _97A6
         lda [lR19],y
-        sta $02C0,b,y
+        sta aOAMPaletteBuffer.aPalette6,b,y
         dec x
         dec x
         dec y
@@ -1760,7 +1760,7 @@
         bmi _9ACF
         phx
         tax
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         plx
         sta wSelectedUnitDataRAMPointer,b
         lda wSelectedUnitDataRAMPointer,b
@@ -4763,7 +4763,7 @@
         lda #$0000
         sta $0D77,b
         lda #$B122
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFadeByTimer)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFadeByTimer
@@ -5023,7 +5023,7 @@
         lda #$0000
 
         _E160
-        sta $02A0,b,x
+        sta aOAMPaletteBuffer.aPalette5,b,x
         dec x
         dec x
         bpl _E160
@@ -5043,7 +5043,7 @@
         .databank ?
 
         lda $7F8089
-        sta $1B45,b
+        sta aPaletteFading.wCurrentStep,b
         lda #$0010
         sta aPaletteFading,b
         clc
@@ -5054,7 +5054,7 @@
         bcs _E191
 
         _E189
-        lda $1B45,b
+        lda aPaletteFading.wCurrentStep,b
         sta $7F8089
         rtl
 
@@ -5563,7 +5563,7 @@
 
         _FC5C
         lda [lR19],y
-        sta $02A0,b,y
+        sta aOAMPaletteBuffer.aPalette5,b,y
         dec x
         dec x
         dec y
@@ -5608,7 +5608,7 @@
         beq _FCCD
         jsl rlFindCharacterByGenerationID
         jsl rlGetSelectedUnitCharacterID
-        sta $18A9,b
+        sta aDialogue.wUnit1,b
         pla
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitGenerationID

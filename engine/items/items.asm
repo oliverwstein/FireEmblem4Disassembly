@@ -1184,7 +1184,7 @@
         plb
 
         phx
-        ldx $0583,b
+        ldx wCurrentItemDataROMPointer,b
         lda $0000,b,x
         and #$00FF
         asl a

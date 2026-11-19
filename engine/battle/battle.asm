@@ -118,7 +118,7 @@
 
         phx
         tax
-        lda $7E477B,x
+        lda aDeploymentTable._FactionSlot,x
         tax
         jsl rlGetSelectedUnitFactionSlot
         jsl rlGetFactionRelation
@@ -989,14 +989,14 @@
           and #$00FF
           sta $4F77,b
 
-          lda $7F442A
+          lda aAIAction.wMapPointer
           jsr rsGetUnitCoordinatesByDeploymentNumber
           lda wR10
           sta $4F79,b
           lda wR11
           sta $4F7B,b
 
-          lda $7F442C
+          lda aAIAction.wUnknown7F442C
           cmp #$00FF
           beq +
 
@@ -3683,7 +3683,7 @@
         ldx #$03FF
         
         -
-        lda $7F854A,x
+        lda aTargetDistanceMap,x
         and #$00FF
         cmp #$00FF
         beq +

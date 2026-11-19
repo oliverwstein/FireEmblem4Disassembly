@@ -699,7 +699,7 @@
                 bne _End
 
                   lda #1
-                  sta $0ECF,b
+                  sta aProcSystem.wInput0,b
                   lda #(`procUnknown85A47F)<<8
                   sta $62+1
                   lda #<>procUnknown85A47F
@@ -926,7 +926,7 @@
         .autsiz
         .databank ?
 
-        lda $0E7B,b
+        lda bUnknown000E7B,b
         bit #$0040
         beq _End
 
@@ -940,7 +940,7 @@
               lda #$0080
               trb wUnknown000D79,b
 
-              ldx $0E82,b
+              ldx wAISelectedAIUnitOffset,b
               lda aAIUnitList[0].UnitRAMPointer,x
               sta wSelectedUnitDataRAMPointer,b
 
@@ -1260,7 +1260,7 @@
 
             tax
             lda aDeploymentTable._UnitRAMPointer,x
-            sta $0ECF,b
+            sta aProcSystem.wInput0,b
 
             jsl rlUnknown85B14F
 
@@ -1436,7 +1436,7 @@
         .databank ?
 
         ldx $0D83,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUndeployUnit
         jsl rlDeleteUnit
@@ -1483,8 +1483,8 @@
                 jsl rlUnknown81B32C
 
             +
-            lda $7E4ED9
-            ora $7E4F39
+            lda aActionStructUnit1.TriggerableSkills
+            ora aActionStructUnit2.TriggerableSkills
             bit #$0001
             bne +
 
@@ -1644,7 +1644,7 @@
         .databank ?
 
         phx
-        lda $0E7B,b
+        lda bUnknown000E7B,b
         bit #$0040
         bne _CLC
 
@@ -1761,7 +1761,7 @@
         stz wUnknown000D79,b
         stz $0302,b
         lda #$F27C
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade

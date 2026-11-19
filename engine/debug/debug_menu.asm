@@ -17,7 +17,7 @@
         ldy #$0020
         jsl rlClearTilemapRect
 
-        lda $7F8402 ; menu page index
+        lda wDebugMenuScreenIndex ; menu page index
         inc a
 
         ; Draw the page number in the top right
@@ -33,7 +33,7 @@
         asl a
         asl a
         clc
-        adc $7F8402
+        adc wDebugMenuScreenIndex
         sta $7F8410
 
         lda $7F8410
@@ -1156,7 +1156,7 @@
         jsl rlDrawMenuTextNumber
 
         jsl rlGetSelectedUnitGender
-        cmp #0
+        cmp #GenderMale
         bne +
 
           jml _Man
@@ -1426,7 +1426,7 @@
 
         +
         jsl rlGetSelectedUnitGender
-        cmp #0
+        cmp #GenderMale
         bne +
 
           jml _End
@@ -3607,7 +3607,7 @@
         +
         sta $0304,b
         lda #0
-        sta $7F8402
+        sta wDebugMenuScreenIndex
         jsl rlUnknown8BB45D
         jsr rlDrawDebugMenu
         rtl
@@ -3630,7 +3630,7 @@
         rts
 
         _RightPress
-        lda $7F8402
+        lda wDebugMenuScreenIndex
         inc a
         cmp #8
         bne +
@@ -3638,19 +3638,19 @@
           lda #7
 
         +
-        sta $7F8402
+        sta wDebugMenuScreenIndex
         jsr rlDrawDebugMenu
         rts
 
         _LeftPress
-        lda $7F8402
+        lda wDebugMenuScreenIndex
         dec a
         bpl +
 
           lda #0
 
         +
-        sta $7F8402
+        sta wDebugMenuScreenIndex
         jsr rlDrawDebugMenu
         rts
 
@@ -3672,7 +3672,7 @@
         rts
 
         _RightPress
-        lda $7F8402
+        lda wDebugMenuScreenIndex
         inc a
         cmp #7
         bne +
@@ -3680,20 +3680,20 @@
           lda #6
 
         +
-        sta $7F8402
+        sta wDebugMenuScreenIndex
         jsr rlDrawDebugMenu
 
         rts
 
         _LeftPress
-        lda $7F8402
+        lda wDebugMenuScreenIndex
         dec a
         bpl +
 
           lda #0
 
         +
-        sta $7F8402
+        sta wDebugMenuScreenIndex
         jsr rlDrawDebugMenu
         rts
 
@@ -3730,7 +3730,7 @@
         jml _E974
 
         _RPress
-        lda $7F8402
+        lda wDebugMenuScreenIndex
         inc a
         cmp #7
         bne +
@@ -3738,19 +3738,19 @@
           lda #6
 
         +
-        sta $7F8402
+        sta wDebugMenuScreenIndex
         jsr rlDrawDebugMenu
         rts
 
         _LPress
-        lda $7F8402
+        lda wDebugMenuScreenIndex
         dec a
         bpl +
 
           lda #0
 
         +
-        sta $7F8402
+        sta wDebugMenuScreenIndex
         jsr rlDrawDebugMenu
         rts
 
@@ -3792,7 +3792,7 @@
         lsr a
         sta wR1
 
-        lda $7F8402
+        lda wDebugMenuScreenIndex
         inc a
         sta wR2
         lda #1
@@ -3814,7 +3814,7 @@
         lsr a
         sta wR1
 
-        lda $7F8402
+        lda wDebugMenuScreenIndex
         inc a
         sta wR2
         lda #$FFFF

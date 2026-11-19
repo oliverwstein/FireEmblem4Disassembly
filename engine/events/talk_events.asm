@@ -18,7 +18,7 @@
         plb
         phy
 
-        lda $0D6D,b
+        lda lChapterEventDataPointer+1,b
         sta lR18+1
 
         ldy lChapterEventDataPointer,b

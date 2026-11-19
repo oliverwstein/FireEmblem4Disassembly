@@ -148,7 +148,7 @@
         lda aUnknown9EF765,x
         and #$00FF
         tax
-        lda $7E4EBB
+        lda aActionStructUnit1.UnitRAMPointer
         jsl rlUnknown9E8D25
 
         lda wR0
@@ -314,7 +314,7 @@
         sta $4580,b
         sta $4582,b
         sta $4584,b
-        sta @l $7F455A
+        sta @l aMapAction.wUnknown7F455A
         sta @l $7F4572
         sta @l $7F5091
         sta @l $7F5093
@@ -345,7 +345,7 @@
         sta aMapAction.wWeaponType
 
         lda #$FFFF
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
 
         lda #0
         sta aMapAction.wUnknown7F4450
@@ -405,7 +405,7 @@
         stz $0302,b
 
         lda @l $7E4EAF
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         ply
         rtl
 

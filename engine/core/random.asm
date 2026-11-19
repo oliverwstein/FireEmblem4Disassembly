@@ -227,7 +227,7 @@
         jsl rlUnknown91EBC9
         lsr a
         lsr a
-        sta $04A4,b
+        sta bRNGUnknown1,b
 
         txa
         asl a
@@ -235,7 +235,7 @@
         asl a
         asl a
         clc
-        adc $04A4,b
+        adc bRNGUnknown1,b
         sec
         sbc #80
         bcc +
@@ -250,14 +250,14 @@
         lda #0
 
         +
-        sta $04A4,b
+        sta bRNGUnknown1,b
         sep #$30
         ldy #0
         tyx
 
           _Loop
           lda aRNArray,b,y
-          cmp $04A4,b
+          cmp bRNGUnknown1,b
           bcs +
 
             txa

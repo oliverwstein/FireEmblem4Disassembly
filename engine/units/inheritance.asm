@@ -552,7 +552,7 @@
         bcs _End
 
           lda lStructPointer1,b
-          sta $0587,b
+          sta wCurrentItemDataRAMPointer,b
           jsl rlGetEffectiveItemROMPointerByItemRAMStructEntry
           jsl rlGetItemRAMStateAndOwner
 

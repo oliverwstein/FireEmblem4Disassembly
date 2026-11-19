@@ -1,0 +1,19 @@
+# Rules for tools/apply_constants.py: which values in the code are which constants.
+# kind    source                                    family                               enum/bits
+
+getter    rlGetSelectedUnitStates                   UnitState                            bits
+getter    rlGetSelectedUnitStatus                   Status                               enum
+setter    rlSetSelectedUnitStatus                   Status                               enum
+getter    rlGetSelectedUnitCharacterID              file:data/character/CharacterData.csv.asm  enum
+getter    rlGetEnemyUnitCharacterID                 file:data/character/CharacterData.csv.asm  enum
+getter    rlGetSelectedUnitClassID                  file:data/class/ClassData.csv.asm    enum
+getter    rlGetCharacterClass                       file:data/class/ClassData.csv.asm    enum
+getter    rlGetEnemyUnitClassID                     file:data/class/ClassData.csv.asm    enum
+getter    rlGetSelectedUnitGenerationID             GEN_ID_                              enum
+getter    rlGetSelectedUnitGender                   Gender                               enum
+getter    rlGetEnemyUnitGender                      Gender                               enum
+getter    rlGetItemWeaponType                       WeaponType                           enum
+getter    rlGetItemWeaponRank                       WeaponRank                           enum
+getter    rlGetEventLocationEntryType               LocationType                         enum
+field     aDeploymentTable\._State(\[0\])?,[bxy,]*  DeploymentState                      bits
+field     structItemRAMEntry\.ItemState,b,[xy]      ItemState                            enum

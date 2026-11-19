@@ -85,11 +85,11 @@
             jsl rlGetItemMaximumRange
           
           +
-          sta $7FEC48
+          sta aUnit2DataBuffer._Lover.LoveValue
 
           jsr rsGetSelectedUnitMovementThreatRange
           clc
-          adc $7FEC48
+          adc aUnit2DataBuffer._Lover.LoveValue
 
           sep #$20
           sta structAITargetEntry.ThreatRange,b,y

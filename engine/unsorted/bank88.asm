@@ -835,7 +835,7 @@
         .databank ?
 
         stz $04
-        lda $059A,b
+        lda wMapScrollYPixels,b
         and #$0008
         beq +
 
@@ -852,7 +852,7 @@
 
         stz wUnknown00072A,b
 
-        lda $0598,b
+        lda wMapScrollXPixels,b
         and #$0008
         bne +
 
@@ -1266,7 +1266,7 @@
         sta $05DC,b,y
         plx
 
-        lda $075A,b
+        lda wUnknown00075A,b
         bit #$0002
         beq +
 
@@ -2517,7 +2517,7 @@
 
         _938C
         lda [lR20],y
-        sta $0120,b,y
+        sta aBGPaletteBuffer.aPalette1,b,y
         dec y
         dec y
         bpl _938C
@@ -2555,11 +2555,11 @@
         .databank ?
 
         lda #$8B88
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$3000
-        sta $0FF7,b,x
+        sta aProcSystem.aBody1,b,x
         lda #$0004
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         lda #$8800
         sta lR19+1
         lda #$93DB
@@ -2602,9 +2602,9 @@
 
         jsl rlUnknown889B22
         lda #$9411
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$1FFE
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         rtl
 
         .databank 0
@@ -2863,7 +2863,7 @@
         jsl rlGetLocationEventDataEntry
         bcs _992C
         jsl rlGetEventLocationEntryType
-        cmp #$0000
+        cmp #LocationTypeCastle
         bne _9931
         jsl rlGetLocationFactionSlotOwner
         cmp #$0000
@@ -3261,7 +3261,7 @@
         jsl rlUnknown87EA09
         bcs _9BF5
         jsl rlGetEventLocationEntryType
-        cmp #$0002
+        cmp #LocationTypeVillage
         bne _9BF5
         jsl rlCheckIfVillageClosed
         bcc _9BF5
@@ -3327,7 +3327,7 @@
         lda #$00FF
 
         _9C81
-        sta $7E7B88,x
+        sta aBG2TilemapBuffer.Page1,x
         dec x
         dec x
         bpl _9C81
@@ -3391,7 +3391,7 @@
         jsl rlUnknown899FDC
         plx
         lda #$9CEE
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -3454,7 +3454,7 @@
 
         plx
         lda #$9DA6
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -3541,7 +3541,7 @@
         jsl rlProcEngineFindProc
         bcs -
 
-        lda $0E7B,b
+        lda bUnknown000E7B,b
         and #$00FF
         bit #$0041
         beq ++
@@ -3581,8 +3581,8 @@
         beq _A234
 
           ldx $0772,b
-          lda $7E46EB,x
-          sta $056F,b
+          lda aDeploymentTable._UnitRAMPointer,x
+          sta wSelectedUnitDataRAMPointer,b
 
           ldx $0772,b
           lda wCursorXOffset,b
@@ -3590,7 +3590,7 @@
           adc wMapScrollXPixels,b
           sta $0780,b
 
-          lda $7E44AB,x
+          lda aDeploymentTable._YTilePosition,x
           asl a
           asl a
           asl a
@@ -4450,7 +4450,7 @@
         .databank ?
 
         ldx $0772,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitTotalSpeed
         cmp #$0005
@@ -4513,7 +4513,7 @@
         trb wUnknown000D79,b
         lda $0772,b
         tax
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         asl a
         asl a
         asl a
@@ -4521,7 +4521,7 @@
         sec
         sbc wMapScrollXPixels,b
         sta wCursorXOffset,b
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         asl a
         asl a
         asl a
@@ -4556,9 +4556,9 @@
         jsl rlUnknown8591B2
         lda $0774,b
         tax
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wR10
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta wR11
         jsl rlUnknown88BFC3
         lda wR10
@@ -4580,7 +4580,7 @@
         _A8EB
         lda $0774,b
         tax
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         asl a
         asl a
         asl a
@@ -4588,7 +4588,7 @@
         sec
         sbc wMapScrollXPixels,b
         sta wR0
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         asl a
         asl a
         asl a
@@ -4629,7 +4629,7 @@
         sta $077A,b
         lda $0772,b
         tax
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         asl a
         asl a
         asl a
@@ -4637,7 +4637,7 @@
         sec
         sbc wMapScrollXPixels,b
         sta wCursorXOffset,b
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         asl a
         asl a
         asl a
@@ -4964,7 +4964,7 @@
         .databank ?
 
         ldx $0772,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown84F4F7
         cmp #$0000
@@ -5186,9 +5186,9 @@
         jsl rlUnknown8591B2
         lda $0774,b
         tax
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wR10
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta wR11
         jsl rlUnknown88BFC3
         lda wR10
@@ -5623,7 +5623,7 @@
         lda #$0002
         sta $088B,b
         lda #$B6B6
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade
@@ -5815,11 +5815,11 @@
         lsr a
         sta $078E,b
         ldx $0784,b
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sec
         sbc $078C,b
         sta $0778,b
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sec
         sbc $078E,b
         sta $077A,b
@@ -6067,11 +6067,11 @@
         bne _B799
         bit #$0080
         beq _B799
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         cmp wR0
         bne _B799
         sta wR10
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         cmp wR1
         bne _B799
         sta wR11
@@ -6087,7 +6087,7 @@
         jsl rlDeployedUnitSetHidden
         stz wUnknown0007E2,b
         jsl rlUnknown88C9A6
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown87B541
         bcs _B7A9
@@ -6116,7 +6116,7 @@
         bit #$0041
         bne _B794
         ldx $0772,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitFactionSlot
         cmp wActiveFactionSlot,b
@@ -6190,10 +6190,10 @@
         lda aDeploymentTable,x
         bit #$0080
         beq _B85E
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         cmp wR0
         bne _B85E
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         cmp wR1
         bne _B85E
         bra _B86E
@@ -6388,10 +6388,10 @@
         beq _B98A
         bit #$0080
         beq _B98A
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         cmp $078C,b
         bne _B98A
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         cmp $078E,b
         bne _B98A
         lda #$FFFF
@@ -7546,9 +7546,9 @@
         .databank ?
 
         ldx $0772,b
-        lda $7E465B,x
+        lda aDeploymentTable._DeploymentOffsets,x
         tax
-        lda $7E480B,x
+        lda aDeploymentTable._MapSpriteID,x
         jsl rlGetMapSpriteMovementSound
         sep #$20
         sta $04CA,b
@@ -7695,7 +7695,7 @@
         jsl rlGetLocationEventDataEntry
         bcs _C247
         jsl rlGetEventLocationEntryType
-        cmp #$0000
+        cmp #LocationTypeCastle
         bne _C24E
         jsl rlGetEventLocationEntryEffectiveXCoordinate
         asl a
@@ -8440,11 +8440,11 @@
         lda aDeploymentTable,x
         bit #$0080
         beq _C7BF
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         cmp wR0
         bne _C7BF
         sta wR10
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         cmp wR1
         bne _C7BF
         sta wR11
@@ -8460,7 +8460,7 @@
         jsl rlDeployedUnitSetHidden
         stz wUnknown0007E2,b
         jsl rlUnknown88C9A6
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown87B541
         jsr rsUnknown88B873
@@ -8993,7 +8993,7 @@
         ldy #$0000
 
         _CCF2
-        lda $7E480B,x
+        lda aDeploymentTable._MapSpriteID,x
         and #$7FFF
         sta wR0
         clc
@@ -9319,7 +9319,7 @@
         ldy #$0000
 
         _CEDA
-        lda $7E480B,x
+        lda aDeploymentTable._MapSpriteID,x
         and #$7FFF
         sta wR0
         clc
@@ -9944,7 +9944,7 @@
         lda @l aUnknown88DA72,x
         tsb wUnknown000921,b
 
-        lda $0867,b,x
+        lda aMovingMapSpritesMapSprites,b,x
         and #$7FFF
         tay
         lda aUnknown88CBE8,y
@@ -10039,7 +10039,7 @@
         rep #$20
 
         phx
-        lda $0867,b,x
+        lda aMovingMapSpritesMapSprites,b,x
         and #$7FFF
         asl a
         tax
@@ -10240,9 +10240,9 @@
         lda $0865,b
         beq _DB2F
         ldx $0772,b
-        lda $7E465B,x
+        lda aDeploymentTable._DeploymentOffsets,x
         tax
-        lda $7E480B,x
+        lda aDeploymentTable._MapSpriteID,x
         and #$8000
         beq _DB32
         jml _DB90
@@ -10698,7 +10698,7 @@
         lda wSelectedUnitDataRAMPointer,b
         beq _E42C
         jsl rlGetSelectedUnitStates
-        bit #$0200
+        bit #UnitStateDead
         beq _E436
 
         _E42C
@@ -11897,32 +11897,32 @@
         plb
         .databank ?
         lda #$0002
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0000
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$0021
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$0017
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$0031
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0000
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$0029
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0000
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$0021
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$0019
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$002D
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2
@@ -11986,32 +11986,32 @@
         plb
         .databank ?
         lda #$0000
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0000
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$0034
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$0022
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$0001
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0000
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$0016
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0001
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$0034
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$0023
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$0003
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2
@@ -12091,32 +12091,32 @@
         plb
         .databank ?
         lda #$0011
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0001
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$0023
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$0032
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$0002
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0003
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$0011
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0001
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$0024
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$0032
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$001E
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2
@@ -12196,32 +12196,32 @@
         plb
         .databank ?
         lda #$0007
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0000
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$001E
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$0036
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$0024
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0000
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$0009
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0000
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$001D
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$0036
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$0014
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2
@@ -12294,32 +12294,32 @@
         plb
         .databank ?
         lda #$0006
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0000
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$0037
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$0007
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$0015
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0000
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$001C
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0000
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$0037
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$0006
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$002C
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2
@@ -12399,32 +12399,32 @@
         plb
         .databank ?
         lda #$0003
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0000
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$002E
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$001D
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$0029
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0000
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$0027
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0000
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$002D
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$001D
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$0029
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2
@@ -12511,32 +12511,32 @@
         plb
         .databank ?
         lda #$003C
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0000
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$000D
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$000A
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$004E
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0000
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$0035
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0000
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$000E
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$000A
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$003F
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2
@@ -12616,32 +12616,32 @@
         plb
         .databank ?
         lda #$0013
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0000
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$002B
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$002F
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$0024
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0000
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$0014
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0000
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$002C
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$002F
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$0023
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2
@@ -12721,32 +12721,32 @@
         plb
         .databank ?
         lda #$002D
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0000
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$0023
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$0013
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$004B
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0000
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$003A
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0001
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$0024
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$0013
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$0046
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2
@@ -12819,34 +12819,34 @@
         plb
         .databank ?
         lda #$0006
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0000
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$000F
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$0005
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$0015
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0019
-        sta $7E4EBD
+        sta aActionStructUnit1.CharacterID
         lda #$0000
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$001B
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0000
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$000F
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$0004
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$0041
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2

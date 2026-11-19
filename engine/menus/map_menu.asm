@@ -77,7 +77,7 @@
 
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlUnknown858882
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         beq +
 
           sta $0302,b

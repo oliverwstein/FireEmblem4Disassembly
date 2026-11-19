@@ -32,7 +32,7 @@
         lda #$0002
         sta wScreenFadingProcInput,b
         lda #$B6B6
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade

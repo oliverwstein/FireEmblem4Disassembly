@@ -55,8 +55,8 @@
             bcc +
 
               lda #$0080
-              sta $0768,b
-              sta $076A,b
+              sta wCursorXOffset,b
+              sta wCursorYOffset,b
 
           +
           jsl rlEventEngineFreeProc

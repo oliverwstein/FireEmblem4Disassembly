@@ -399,7 +399,7 @@
         and #$00FF
         jsl rlGetLocationEventDataEntry
         jsl rlGetEventLocationEntryType
-        cmp #2
+        cmp #LocationTypeVillage
         bne _CLC
 
           ; Is a village
@@ -898,7 +898,7 @@
         bcs _CLC
 
           jsl rlGetEventLocationEntryType
-          cmp #2
+          cmp #LocationTypeVillage
           bne _Next
 
             jsl rlCheckIfVillageClosed
@@ -1464,7 +1464,7 @@
         txa
         sec
         sbc #<>aAIUnitList[0]
-        sta $0E82,b
+        sta wAISelectedAIUnitOffset,b
 
         lda #$0040
         tsb wAIUnknownBitfield7E2000

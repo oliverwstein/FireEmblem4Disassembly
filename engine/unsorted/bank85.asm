@@ -90,10 +90,10 @@
         .databank ?
 
         jsl rlMapMenuSaveMapState
-        lda $0F57,b,x
-        sta $1017,b,x
+        lda aProcSystem.aHeaderOnCycle,b,x
+        sta aProcSystem.aBody2,b,x
         lda #$83D3
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -274,11 +274,11 @@
         sta lUnknown0540+1,b
         jsl rlUnknown82F227
         lda $0547,b
-        sta $1057,b,x
+        sta aProcSystem.aBody4,b,x
         lda $0548,b
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         lda #$0001
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         rtl
 
         .databank 0
@@ -357,10 +357,10 @@
         eor #$FFFF
         bit #$000F
         bne _8539
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         cmp $0548,b
         bne _8539
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         cmp $0547,b
         bne _8539
         lda #$0000
@@ -405,7 +405,7 @@
         sta wR0
         xba
         clc
-        adc $1097,b,x
+        adc aProcSystem.aBody6,b,x
         asl a
         asl a
         asl a
@@ -1254,13 +1254,13 @@
         jsl rlUnknown85A227
 
         _8ED7
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         bit #$0002
         bne _8F03
         bit #$0001
         beq _8F0F
         and #$FFFE
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown858F61
         jsl rlUnknown858F28
         bcc _8EFD
@@ -1302,7 +1302,7 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         bit #$0002
         beq _8F26
         jsl rlUnknown8586FA
@@ -1338,10 +1338,10 @@
         lda wCursorXOffset,b
         cmp #$0080
         bcc _8F47
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         beq _8F5F
         lda #$0000
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         jsl rlGetMapMenuPosition
         and #$FF00
         ora #$0002
@@ -1349,10 +1349,10 @@
 
 
         _8F47
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         bne _8F5F
         lda #$0001
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         jsl rlGetMapMenuPosition
         and #$FF00
         ora #$0012
@@ -1387,7 +1387,7 @@
         phx
         phy
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        ldy $1057,b,x
+        ldy aProcSystem.aBody4,b,x
         sep #$20
         lda #$7E
         pha
@@ -1518,10 +1518,10 @@
         .databank ?
 
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         bit #$0002
         bne _914F
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         bit #$0001
         bne _9121
         bit #$0008
@@ -1530,11 +1530,11 @@
         _9121
         and #$FFFB
         ora #$0008
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsr rsUnknown85915A
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFE
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown858F28
         bcc _9149
         clc
@@ -1659,9 +1659,9 @@
 
 
         _91E6
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _91EF
         lda $057C,b
@@ -1679,9 +1679,9 @@
 
 
         _9210
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _9219
         plx
@@ -1717,9 +1717,9 @@
         sta lR44
         jsl rlProcEngineFindProc
         bcc _9262
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown858EC5
         lda #$8500
         sta lR44+1
@@ -1727,9 +1727,9 @@
         sta lR44
         jsl rlProcEngineFindProc
         bcc _9262
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown859108
 
         _9262
@@ -1763,12 +1763,12 @@
         .databank ?
 
         jsl rlUnknown8586FF
-        lda $0ECF,b
-        sta $1057,b,x
-        lda $0ED1,b
-        sta $1077,b,x
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody4,b,x
+        lda aProcSystem.wInput1,b
+        sta aProcSystem.aBody5,b,x
         lda #$0001
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         lda #$0000
         sta $7E8BEE
         sta $7E8BEC
@@ -1800,7 +1800,7 @@
         phx
         phy
         phx
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         tax
         lda $7E0000,x
         and #$00FF
@@ -1819,7 +1819,7 @@
         jsl rlSetMapMenuTilemapArea
         jsl rlUnknown85A227
         lda #$92FA
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         ply
         plx
         rtl
@@ -1847,9 +1847,9 @@
         phx
         phy
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wR2
         tax
         lda $7E0000,x
@@ -1908,7 +1908,7 @@
         ply
         plx
         lda #$9386
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlUnknown8587E1
         jsl rlUnknown85A227
         rtl
@@ -1934,9 +1934,9 @@
         .databank ?
 
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wR2
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         phx
         dec a
         clc
@@ -1944,7 +1944,7 @@
         tax
         lda $7E0001,x
         and #$00FF
-        sta $0ED1,b
+        sta aProcSystem.wInput1,b
         plx
         lda wR2
         cmp #$2000
@@ -1957,7 +1957,7 @@
         pha
         lda wR2
         pha
-        lda $0ED1,b
+        lda aProcSystem.wInput1,b
         phx
         jsl rlGetItemROMDataByInventorySlot
         jsl rlUnknown87E459
@@ -1986,8 +1986,8 @@
 
 
         _93F7
-        lda $1057,b,x
-        sta $0ECF,b
+        lda aProcSystem.aBody4,b,x
+        sta aProcSystem.wInput0,b
         phx
         lda #$8500
         sta lR44+1
@@ -2003,7 +2003,7 @@
         jsl rlUnknown878531
         jsl rlUnknown85A227
         lda #$9427
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -2028,20 +2028,20 @@
 
         jsl rlUnknown85A234
         lda #$943B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         phx
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         tax
         lda $7E0000,x
         and #$00FF
         sta wR1
         plx
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wR2
         lda wJoy1Repeated
         bit #$0800
         beq _9473
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         dec a
         bne _9465
         lda wJoy1New
@@ -2050,7 +2050,7 @@
         lda wR1
 
         _9465
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         lda #$0006
         jsl rlUnknown808FAD
         jml _94EC
@@ -2059,7 +2059,7 @@
         _9473
         bit #$0400
         beq _949A
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         inc a
         cmp wR1
         beq _948C
@@ -2070,7 +2070,7 @@
         lda #$0001
 
         _948C
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         lda #$0006
         jsl rlUnknown808FAD
         jml _94EC
@@ -2113,7 +2113,7 @@
 
         _94EC
         phx
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         dec a
         clc
         adc wR2
@@ -2133,7 +2133,7 @@
         pha
         lda wR2
         pha
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
         lda $7E8BEC
         phx
@@ -2164,10 +2164,10 @@
         lda wR1
         inc a
         sta wR1
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         jsl rlUnknown8586AA
         jsr rsUnknown8597CD
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         cmp #$2008
         beq _957A
         cmp #$2018
@@ -2210,7 +2210,7 @@
         lda #$0021
         jsl rlUnknown808FAD
         lda #$943B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _95AE
         lda #$0100
@@ -2218,7 +2218,7 @@
         lda wR1
         inc a
         sta wR1
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         jsl rlUnknown8586AA
         rtl
 
@@ -2237,9 +2237,9 @@
         phx
         jsr rsUnknown8596FA
         phx
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         dec a
         clc
         adc wR2
@@ -2281,7 +2281,7 @@
         jsl rlProcEngineCreateProc
         plx
         lda #$957B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlUnknown85A3A6
         jml _969C
 
@@ -2299,7 +2299,7 @@
 
         _9649
         sta wSelectedInventorySlot,b
-        ldx $0ECA,b
+        ldx aProcSystem.wOffset,b
         jsl rlUnknown8586FA
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
@@ -2321,7 +2321,7 @@
 
 
         _9682
-        ldx $0ECA,b
+        ldx aProcSystem.wOffset,b
         jsl rlUnknown8586FA
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
@@ -2351,7 +2351,7 @@
         bit #$0020
         bne _96F9
         phx
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitCharacterID
         ldx #$0000
@@ -2482,9 +2482,9 @@
 
         phx
         phy
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wR2
         tax
         lda $7E0000,x
@@ -2578,7 +2578,7 @@
         clc
         adc #$0010
         sta wR0
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wR2
         tax
         lda $7E0000,x
@@ -2632,15 +2632,15 @@
         .databank ?
 
         jsl rlUnknown8586FF
-        lda $0ECF,b
-        sta $1057,b,x
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
-        lda $0ED1,b
+        lda aProcSystem.wInput1,b
         jsl rlGetItemROMDataByInventorySlot
         lda wCurrentItemDataROMPointer,b
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         jsl rlUnknown8587E1
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown85A227
         phx
@@ -2718,13 +2718,13 @@
 
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
         lda #$0000
         sta wRoutineVariable1,b
         plx
         phx
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wCurrentItemDataROMPointer,b
         jsl rlGetItemWeaponType
         ldx #$004E
@@ -2733,7 +2733,7 @@
         jsl rlUnknown8BC467
         plx
         phx
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wCurrentItemDataROMPointer,b
         jsl rlGetSelectedUnitBattleMight
         sta wR0
@@ -2757,7 +2757,7 @@
         jsl rlUnknown878916
         plx
         phx
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wCurrentItemDataROMPointer,b
         jsl rlGetSelectedUnitBattleHit
         sta wR0
@@ -2781,7 +2781,7 @@
         jsl rlUnknown878916
         plx
         phx
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wCurrentItemDataROMPointer,b
         jsl rlGetSelectedUnitDeploymentOffset
         jsl rlGetTerrainTypeByDeploymentOffset
@@ -2816,7 +2816,7 @@
         _9A5B
         jsl rlUnknown8785E3
         lda #$9AB4
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -3042,14 +3042,14 @@
         ldx #$001E
 
         _9D64
-        lda $0ED7,b,x
+        lda aProcSystem.aHeaderTypeOffset,b,x
         cmp #$9BE6
         bne _9D7B
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         cmp wR0
         bne _9D7B
         lda #$0001
-        sta $1057,b,x
+        sta aProcSystem.aBody4,b,x
         bra _9D86
 
 
@@ -3568,9 +3568,9 @@
         and #$00FF
         sta wR6
         lda wR5
-        cmp $1057,b,x
+        cmp aProcSystem.aBody4,b,x
         bmi _A074
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wR3
         lda wR6
         asl a
@@ -3578,7 +3578,7 @@
         tax
         jsr ($85A079,x)
         plx
-        inc $1057,b,x
+        inc aProcSystem.aBody4,b,x
         lda wR4
         pha
         jsl rlSetMapMenuTilemapArea
@@ -3698,18 +3698,18 @@
         lda lR19+1
         sta $7FEAAF
         jsl rlStallProcUntilMapMenuDataLoaded
-        lda $0ED1,b
-        sta $10B7,b,x
-        lda $0ED5,b
+        lda aProcSystem.wInput1,b
+        sta aProcSystem.aBody7,b,x
+        lda aProcSystem.wInput3,b
         jsl rlSetMapMenuPosition
-        lda $0ED3,b
+        lda aProcSystem.wInput2,b
         jsl rlSetMapMenuTilemapArea
         jsl rlUnknown85877E
         plx
         phx
-        lda $0ECF,b
-        sta $1097,b,x
-        lda $10B7,b,x
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody6,b,x
+        lda aProcSystem.aBody7,b,x
         bit #$8000
         bne _A166
         lda #$20FF
@@ -3733,9 +3733,9 @@
 
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         sta aCurrentTilemapInfo,b
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         bit #$8000
         bne _A19A
         lda $7FEAAA
@@ -3754,7 +3754,7 @@
         jsl rlUnknown85A234
         plx
         lda #$A1AA
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -3777,7 +3777,7 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         bit #$0002
         bne _A1B8
         bit #$0004
@@ -3793,11 +3793,11 @@
 
 
         _A1C5
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$A168
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlLoadMapMenuEntryPointerFromProcBody
         lda #$20FF
         sta wUnknown053C,b
@@ -3907,16 +3907,16 @@
 
         phx
         lda lR18
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         lda lR18+1
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         jsl rlStallProcUntilMapMenuDataLoaded
-        lda $0ED5,b
+        lda aProcSystem.wInput3,b
         jsl rlSetMapMenuPosition
         plx
         phx
         lda #$4000
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         lda #$0000
         sta wBufferBG3VOFS
         sta wBufferBG3HOFS
@@ -3936,7 +3936,7 @@
 
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         bit #$8000
         bne _A35B
         bit #$4000
@@ -3955,7 +3955,7 @@
 
         _A365
         eor #$4000
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         phx
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -3963,9 +3963,9 @@
         sta wUnknown053C,b
         jsl rlUnknown8788E5
         plx
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta lR18
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         sta lR18+1
         ldx #$0101
         jsl rlUnknown85A3F8
@@ -3983,7 +3983,7 @@
         .autsiz
         .databank ?
 
-        sta $0ED5,b
+        sta aProcSystem.wInput3,b
         lda #$8500
         sta lR44+1
         lda #$A314
@@ -4061,11 +4061,11 @@
         jsl rlProcEngineFindProc
         bcc _A3F6
         lda #$4000
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         lda lR18
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         lda lR18+1
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
 
         _A3F6
         plx
@@ -4193,10 +4193,10 @@
         jsl rlUnknown85BC9E
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda $0ECF,b
-        sta $1097,b,x
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody6,b,x
         lda #$0000
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         phx
         lda #$8500
         sta lR18+1
@@ -4272,17 +4272,17 @@
         beq _A539
         lda #$0007
         jsl rlUnknown808FAD
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         bit #$0001
         bne _A531
         ora #$0001
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         bra _A54C
 
 
         _A531
         eor #$0001
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         bra _A54C
 
 
@@ -4296,7 +4296,7 @@
 
 
         _A54C
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         bit #$0001
         bne _A559
         lda #$0002
@@ -4329,14 +4329,14 @@
         .autsiz
         .databank ?
 
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         bne _A595
         lda wJoy1New
         bit #$0080
         beq _A591
         lda #$000A
         jsl rlUnknown808FAD
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         bne _A58B
         jsl rlUnknown85DCAB
         bra _A593
@@ -4363,7 +4363,7 @@
         beq _A5B9
         lda #$000A
         jsl rlUnknown808FAD
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         bne _A5BB
         lda #$000E
         jsl rlUnknown808FAD
@@ -4559,7 +4559,7 @@
         tsb $0788,b
 
         lda $0302,b
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         stz $0302,b
 
         lda #$0078
@@ -4639,7 +4639,7 @@
         ply
         plx
         lda #$AC89
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _AC88
         rtl
@@ -4683,7 +4683,7 @@
 
         plx
         lda #$ACEE
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -4737,7 +4737,7 @@
         jsl rlUnknown878459
         plx
         lda #$AD67
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -4762,13 +4762,13 @@
         beq _AEAB
         lda #$0004
         sta $7FEAAC
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         sec
         sbc #$0064
-        sta $1097,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aBody6,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _AEAB
         rtl
@@ -5065,21 +5065,21 @@
         .autsiz
         .databank ?
 
-        lda $0ECF,b
+        lda aProcSystem.wInput0,b
         sta wSelectedUnitDataRAMPointer,b
         lda #$0008
         jsl rlGetItemIDByInventorySlot
         jsl rlGetItemDataROMPointer
         lda wCurrentItemDataROMPointer,b
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda wSelectedUnitDataRAMPointer,b
-        sta $0ED5,b
+        sta aProcSystem.wInput3,b
         jsl rlUnknown85B52F
         jsl rlUnknown85B520
         lda wSelectedUnitDataRAMPointer,b
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda wCurrentItemDataROMPointer,b
-        sta $0ED1,b
+        sta aProcSystem.wInput1,b
         lda #(`procUnknown85B18F)<<8
         sta lR44+1
         lda #<>procUnknown85B18F
@@ -5197,7 +5197,7 @@
         lda #$000A
         jsl rlUnknown808FAD
         lda #$B26B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         bra _B254
 
 
@@ -5207,7 +5207,7 @@
         beq _B239
         lda #$0006
         jsl rlUnknown808FAD
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         dec a
         bpl _B251
         lda #$0007
@@ -5219,21 +5219,21 @@
         beq _B254
         lda #$0006
         jsl rlUnknown808FAD
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         inc a
         cmp #$0008
         bcc _B251
         lda #$0000
 
         _B251
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
 
         _B254
         lda #$0100
         sta wR0
         lda #$0010
         sta wR1
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         bne _B264
         dec a
 
@@ -5304,7 +5304,7 @@
 
         _B2C3
         lda #$B2CA
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _B2C9
         rtl
@@ -5345,7 +5345,7 @@
 
         phx
         phy
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
         ldy #$0007
 
@@ -5456,13 +5456,13 @@
         .autsiz
         .databank ?
 
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         bne _B36F
         lda #$0008
 
         _B36F
         sta wSelectedInventorySlot,b
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlDumpInventorySlotIntoSupplyIfFilled
         rts
@@ -5711,7 +5711,7 @@
         sta lR44
         jsl rlProcEngineFindProc
         bcc _B457
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         and #$0001
         bra _B45A
 
@@ -5898,8 +5898,8 @@
         .databank ?
 
         lda #$FFFF
-        sta $0ED1,b
-        sta $0ED3,b
+        sta aProcSystem.wInput1,b
+        sta aProcSystem.wInput2,b
         lda #(`procUnknown85B6E3)<<8
         sta lR44+1
         lda #<>procUnknown85B6E3
@@ -6024,20 +6024,20 @@
         .databank ?
 
         jsl rlUnknown85BC9E
-        lda $0ECF,b
+        lda aProcSystem.wInput0,b
         sta wCurrentItemDataROMPointer,b
-        lda $0ED1,b
+        lda aProcSystem.wInput1,b
         bmi _B738
         jsl rlSetMapMenuPosition
 
         _B738
-        lda $0ED3,b
-        sta $10B7,b,x
-        lda $0ED5,b
+        lda aProcSystem.wInput2,b
+        sta aProcSystem.aBody7,b,x
+        lda aProcSystem.wInput3,b
         sta wSelectedUnitDataRAMPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda $0ED3,b
+        lda aProcSystem.wInput2,b
         bpl _B769
         lda #$0008
         jsl rlCheckIfWeaponEquipped
@@ -6081,7 +6081,7 @@
         .databank ?
 
         phx
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         bmi _B7CD
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlGetMapMenuPosition
@@ -6104,7 +6104,7 @@
         asl a
         asl a
         sta wR1
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         beq _B7C2
         sec
         sbc #$0008
@@ -6271,12 +6271,12 @@
         jsl rlUnknown85BC9E
         jsl rlUnknown85C0CE
         lda #$00B4
-        sta $1077,b,x
-        lda $0ED5,b
+        sta aProcSystem.aBody5,b,x
+        lda aProcSystem.wInput3,b
         and #$FF00
-        sta $10B7,b,x
-        lda $0ED3,b
-        sta $1097,b,x
+        sta aProcSystem.aBody7,b,x
+        lda aProcSystem.wInput2,b
+        sta aProcSystem.aBody6,b,x
         ldy #$0000
         cmp #$000A
         bmi _B93E
@@ -6309,13 +6309,13 @@
         sec
         sbc wR0
         lsr a
-        ora $10B7,b,x
+        ora aProcSystem.aBody7,b,x
         jsl rlSetMapMenuPosition
         phx
         phy
         lda #$20F0
         sta aCurrentTilemapInfo,b
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         sta wR0
 
         _B968
@@ -6363,7 +6363,7 @@
         jsl rlUnknown85A227
         plx
         lda #$0094
-        sta $1057,b,x
+        sta aProcSystem.aBody4,b,x
         rtl
 
         .databank 0
@@ -6422,17 +6422,17 @@
         bit #$D0C0
         beq _BA09
         lda #$BA09
-        sta $0F57,b,x
-        lda $1077,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aBody5,b,x
         sec
         sbc #$003C
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
 
         _BA09
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         dec a
         bmi _BA13
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
 
         _BA12
         rtl
@@ -6543,7 +6543,7 @@
         lda #$0001
         sta $0508,b
         lda #$BAD9
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _BAD8
         rtl
@@ -6568,10 +6568,10 @@
         .autsiz
         .databank ?
 
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         dec a
         bmi _BAE3
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         rtl
 
 
@@ -6581,7 +6581,7 @@
         lda #$0095
         jsl rlUnknown808FAD
         lda #$BAF9
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -6600,17 +6600,17 @@
         bit #$D0C0
         beq _BB10
         lda #$BB10
-        sta $0F57,b,x
-        lda $10B7,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aBody7,b,x
         sec
         sbc #$003C
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
 
         _BB10
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         dec a
         bmi _BB1A
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
 
         _BB19
         rtl
@@ -6674,7 +6674,7 @@
         sta aProcSystem.aBody5,b,x
         lda aProcSystem.wInput2,b
         jsl rlGetItemNamePointerByItemID
-        lda $0571,b
+        lda lRoutineVariable,b
         sta lR18
         lda $0571+1,b
         sta lR18+1
@@ -6752,7 +6752,7 @@
         sta wBufferBG3VOFS
         sta wBufferBG3HOFS
         lda #$20FF
-        sta $053C,b
+        sta wUnknown053C,b
         jsl rlUnknown8788E5
         jsl rlUnknown85A234
         rtl
@@ -7241,9 +7241,9 @@
         bcc +
 
           lda #$C6C6
-          sta $0F77,b,x
+          sta aProcSystem.aHeaderCodeOffset,b,x
           lda #1
-          sta $0F97,b,x
+          sta aProcSystem.aHeaderSleepTimer,b,x
 
         +
         plx
@@ -7285,27 +7285,27 @@
         jsl rlUnknown85BC9E
         jsl rlUnknown85C0CE
         stz $0DB1,b
-        lda $0ECF,b
+        lda aProcSystem.wInput0,b
         and #$00FF
-        sta $10B7,b,x
-        lda $0ED1,b
-        sta $1077,b,x
-        lda $0ED5,b
+        sta aProcSystem.aBody7,b,x
+        lda aProcSystem.wInput1,b
+        sta aProcSystem.aBody5,b,x
+        lda aProcSystem.wInput3,b
         sta $7FEB0A
-        lda $0ED0,b
+        lda aProcSystem.wInput0+1,b
         and #$00FF
         clc
-        adc $10B7,b,x
-        cmp $1077,b,x
+        adc aProcSystem.aBody7,b,x
+        cmp aProcSystem.aBody5,b,x
         bmi _CAC4
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
 
         _CAC4
         sep #$20
         sta $1058,b,x
         rep #$20
-        lda $0ED3,b
-        sta $1097,b,x
+        lda aProcSystem.wInput2,b
+        sta aProcSystem.aBody6,b,x
         jsl rlUnknown88B46A
         jsl rlUnknown85877E
         rtl
@@ -7331,10 +7331,10 @@
         lda wUnknown0007D8,b
         bne _CAFA
         lda #$CAFB
-        sta $0F57,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _CAFA
         rtl
@@ -7358,21 +7358,21 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFE
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$CB36
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         phx
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         tax
-        lda $7E441B,x
-        sta $0ECF,b
-        lda $7E44AB,x
-        sta $0ED1,b
+        lda aDeploymentTable._XTilePosition,x
+        sta aProcSystem.wInput0,b
+        lda aDeploymentTable._YTilePosition,x
+        sta aProcSystem.wInput1,b
         plx
         lda $7FEB0A
-        sta $0ED5,b
+        sta aProcSystem.wInput3,b
         lda #(`procUnknown9ECEDD)<<8
         sta lR44+1
         lda #<>procUnknown9ECEDD
@@ -7431,25 +7431,25 @@
         jsl rlUnknown859FCD
         plx
         phx
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         ldx #$05A0
         stx aCurrentTilemapInfo,b
         ldx #$0101
         jsl rlUnknown878900
         plx
         phx
-        lda $10B7,b,x
-        ldy $1077,b,x
+        lda aProcSystem.aBody7,b,x
+        ldy aProcSystem.aBody5,b,x
         ldx #$0980
         stx aCurrentTilemapInfo,b
         ldx #$0103
         jsl rlUnknown85D9FC
         plx
         lda #$CBBC
-        sta $0F57,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown858751
         rtl
 
@@ -7472,22 +7472,22 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFE
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$CBCC
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
         lda $1058,b,x
         and #$00FF
-        cmp $10B7,b,x
+        cmp aProcSystem.aBody7,b,x
         bne _CBED
         lda #$CC3D
-        sta $0F57,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         bra _CC3B
 
 
@@ -7506,21 +7506,21 @@
         lda #$02
         sta $0DB1,b
         rep #$20
-        inc $10B7,b,x
+        inc aProcSystem.aBody7,b,x
 
         _CC0E
         rep #$20
         plx
         phx
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         ldx #$05A0
         stx aCurrentTilemapInfo,b
         ldx #$0101
         jsl rlUnknown878900
         plx
         phx
-        lda $10B7,b,x
-        ldy $1077,b,x
+        lda aProcSystem.aBody7,b,x
+        ldy aProcSystem.aBody5,b,x
         ldx #$0980
         stx aCurrentTilemapInfo,b
         ldx #$0103
@@ -7553,7 +7553,7 @@
         jsl rlUnknown8586FA
         jsl rlUnknown85D648
         lda #$CC4D
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -7646,11 +7646,11 @@
         .databank ?
 
         phx
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         tax
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wR10
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta wR11
         jsl rlUnknown88BF6C
         lda wR11
@@ -7763,7 +7763,7 @@
         sta wBufferBG3VOFS
         lda #$0000
         sta wBufferBG3HOFS
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         and #$FF1F
         jsl rlSetMapMenuPosition
         plx
@@ -7795,15 +7795,15 @@
         .autsiz
         .databank ?
 
-        lda $0ED5,b
-        sta $10B7,b,x
-        lda $0ED3,b
-        sta $1077,b,x
+        lda aProcSystem.wInput3,b
+        sta aProcSystem.aBody7,b,x
+        lda aProcSystem.wInput2,b
+        sta aProcSystem.aBody5,b,x
         bit #$0080
         beq _CD9B
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _CD9B
         rts
@@ -7820,18 +7820,18 @@
         .databank ?
 
         phb
-        ldy $10B7,b,x
+        ldy aProcSystem.aBody7,b,x
         sep #$20
         lda #$7E
         pha
         rep #$20
         plb
         .databank $7E
-        ldy $10B7,b,x
+        ldy aProcSystem.aBody7,b,x
         lda $0010,b,y
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         lda $0012,b,y
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         plb
         .databank $7E
         rts
@@ -7848,15 +7848,15 @@
         .databank ?
 
         phx
-        lda $1077,b,x
-        ldy $1097,b,x
+        lda aProcSystem.aBody5,b,x
+        ldy aProcSystem.aBody6,b,x
         ldx #$0980
         stx aCurrentTilemapInfo,b
         ldx #$0203
         jsl rlUnknown85D9FC
         plx
         phx
-        ldy $10B7,b,x
+        ldy aProcSystem.aBody7,b,x
         sep #$20
         lda #$7E
         pha
@@ -7874,7 +7874,7 @@
         jsr rsUnknown85CE08
         sta aCurrentTilemapInfo,b
         phx
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         ldx #$0201
         jsl rlUnknown878900
         plx
@@ -7918,7 +7918,7 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         bit #$0001
         bne _CE2B
         ldy #$0000
@@ -7944,7 +7944,7 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         bit #$0001
         bne _CE41
         ldy #$0000
@@ -7986,7 +7986,7 @@
         .databank ?
 
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         bit #$0001
         bne _CE65
         ldy #$0004
@@ -8024,7 +8024,7 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         bit #$0001
         bne _CE89
         ldy #$0004
@@ -8127,7 +8127,7 @@
         jsr rsUnknown85CDB9
         jsl rlUnknown8785E3
         lda #$CEE2
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -8170,17 +8170,17 @@
         _CF00
         and #$00FF
         clc
-        adc $1077,b,x
-        cmp $1097,b,x
+        adc aProcSystem.aBody5,b,x
+        cmp aProcSystem.aBody6,b,x
         bmi _CF24
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         bra _CF24
 
 
         _CF11
         and #$00FF
         sta wR0
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sec
         sbc wR0
         ora #$0000
@@ -8188,23 +8188,23 @@
         lda #$0000
 
         _CF24
-        sta $1057,b,x
+        sta aProcSystem.aBody4,b,x
         lda #$2000
         jsr rsUnknown85CE9C
         lda #$CFC0
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         jml _CEFE
 
 
         _CF37
         lda #$D047
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         jsr rsUnknown85CE54
         jml _CEFE
 
 
         _CF44
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         bit #$0080
         bne _CFA3
         phb
@@ -8214,18 +8214,18 @@
         rep #$20
         plb
         .databank $7E
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         tay
         lda $0018,b,y
-        sta $0ED1,b
+        sta aProcSystem.wInput1,b
         lda $001A,b,y
-        sta $0ED5,b
+        sta aProcSystem.wInput3,b
         plb
         .databank $7E
-        lda $0ED5,b
+        lda aProcSystem.wInput3,b
         beq _CFB3
         lda #$0080
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         jsl rlGetMapMenuPosition
         xba
         and #$00FF
@@ -8240,9 +8240,9 @@
         adc #$0002
 
         _CF85
-        sta $0ED3,b
+        sta aProcSystem.wInput2,b
         lda #$0001
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procUnknown85D8AA)<<8
         sta lR44+1
         lda #<>procUnknown85D8AA
@@ -8262,7 +8262,7 @@
 
         _CFB3
         lda #$0000
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         jsr rsUnknown85CE9C
 
         _CFBC
@@ -8282,20 +8282,20 @@
 
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        lda $1057,b,x
-        cmp $1077,b,x
+        lda aProcSystem.aBody4,b,x
+        cmp aProcSystem.aBody5,b,x
         beq _D033
         bpl _CFDA
         lda #$1D80
         sta aCurrentTilemapInfo,b
-        dec $1077,b,x
+        dec aProcSystem.aBody5,b,x
         bra _D009
 
 
         _CFDA
         lda #$0980
         sta aCurrentTilemapInfo,b
-        inc $1077,b,x
+        inc aProcSystem.aBody5,b,x
         jsr rsUnknown85CEB1
         pha
         and #$FF00
@@ -8318,8 +8318,8 @@
 
         _D009
         phx
-        lda $1077,b,x
-        ldy $1097,b,x
+        lda aProcSystem.aBody5,b,x
+        ldy aProcSystem.aBody6,b,x
         ldx #$0203
         jsl rlUnknown85D9FC
         plx
@@ -8327,7 +8327,7 @@
         lda #$01A0
         jsr rsUnknown85CE08
         sta aCurrentTilemapInfo,b
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         ldx #$0201
         jsl rlUnknown878900
         plx
@@ -8340,7 +8340,7 @@
         lda #$8000
         jsr rsUnknown85CE9C
         lda #$CEE2
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0980
         sta aCurrentTilemapInfo,b
         bra _D009
@@ -8463,7 +8463,7 @@
         .autsiz
         .databank ?
 
-        lda $7E4EBB
+        lda aActionStructUnit1.UnitRAMPointer
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitFactionSlot
         jsl rlGetFactionBattleHUDColorID
@@ -8474,7 +8474,7 @@
         lda #$0000
         ldy wR0
         jsl rlUnknown85D766
-        lda $7E4F1B
+        lda aActionStructUnit2.UnitRAMPointer
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitFactionSlot
         jsl rlGetFactionBattleHUDColorID
@@ -8617,13 +8617,13 @@
         lda #<>procUnknown85CD0C
         sta lR44
         lda $7E4EC7
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda aChildAverageLevelStats
-        sta $0ED1,b
+        sta aProcSystem.wInput1,b
         lda #$4EB5
-        sta $0ED5,b
+        sta aProcSystem.wInput3,b
         lda wR0
-        sta $0ED3,b
+        sta aProcSystem.wInput2,b
         jsl rlProcEngineCreateProc
         pla
         sta wR0
@@ -8650,14 +8650,14 @@
         sta lR44+1
         lda #<>procUnknown85CD2D
         sta lR44
-        lda $7E4F27
-        sta $0ECF,b
-        lda $7E4F25
-        sta $0ED1,b
+        lda aActionStructUnit2.MaxHP
+        sta aProcSystem.wInput0,b
+        lda aActionStructUnit2.CurrentHP
+        sta aProcSystem.wInput1,b
         lda #$4F15
-        sta $0ED5,b
+        sta aProcSystem.wInput3,b
         lda wR1
-        sta $0ED3,b
+        sta aProcSystem.wInput2,b
         jsl rlProcEngineCreateProc
         pla
         sta wR1
@@ -8676,10 +8676,10 @@
         .autsiz
         .databank ?
 
-        lda $7E4F17
+        lda aActionStructUnit2.XPosition
         sta wR2
         sta wR10
-        lda $7E4EB7
+        lda aActionStructUnit1.XPosition
         sta wR12
         cmp wR2
         bpl _D204
@@ -8697,12 +8697,12 @@
         sta wR1
 
         _D20E
-        lda $7E4F19
+        lda aActionStructUnit2.YPosition
         sta wR11
         jsl rlUnknown88BF6C
         lda wR11
         sta wR2
-        lda $7E4EB9
+        lda aActionStructUnit1.YPosition
         sta wR11
         lda wR12
         sta wR10
@@ -8797,9 +8797,9 @@
         .autsiz
         .databank ?
 
-        lda $7E4F17
+        lda aActionStructUnit2.XPosition
         sta wR2
-        lda $7E4EB7
+        lda aActionStructUnit1.XPosition
         cmp wR2
         bpl _D2B9
         lda #$0004
@@ -8946,9 +8946,9 @@
         .databank ?
 
         lda #$0001
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #$000D
-        sta $0ED3,b
+        sta aProcSystem.wInput2,b
         pha
         lda #(`procUnknown85D8AA)<<8
         sta lR44+1
@@ -9878,17 +9878,17 @@
         lda #$0000
         sta wBufferBG3VOFS
         sta wBufferBG3HOFS
-        lda $0ED3,b
+        lda aProcSystem.wInput2,b
         sta wR6
-        lda $0ED1,b
-        sta $10B7,b,x
-        lda $0ED5,b
-        sta $1097,b,x
+        lda aProcSystem.wInput1,b
+        sta aProcSystem.aBody7,b,x
+        lda aProcSystem.wInput3,b
+        sta aProcSystem.aBody6,b,x
         lda wR6
         xba
         ora #$0005
         jsl rlSetMapMenuPosition
-        lda $0ECF,b
+        lda aProcSystem.wInput0,b
         bne _D8F3
         lda #$0006
         jsl rlUnknown87872B
@@ -9939,14 +9939,14 @@
         jsl rlUnknown85D7FA
         plx
         phx
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         ldx #$05A0
         stx aCurrentTilemapInfo,b
         ldx #$0105
         jsl rlUnknown878900
         plx
         phx
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         ldx #$0980
         stx aCurrentTilemapInfo,b
         ldx #$0107
@@ -9958,9 +9958,9 @@
         plb
         .databank ?
         lda #$001E
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         lda #$D971
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -10274,12 +10274,12 @@
         sbc #$0200
 
         _DB40
-        sta $0ED5,b
+        sta aProcSystem.wInput3,b
 
         _DB43
         plx
         jsl rlUnknown85A117
-        lda $0ED5,b
+        lda aProcSystem.wInput3,b
         and #$FF00
         asl a
         asl a
@@ -10321,11 +10321,11 @@
         .autsiz
         .databank ?
 
-        sta $0ED5,b
-        stx $0ED3,b
-        sty $0ED1,b
+        sta aProcSystem.wInput3,b
+        stx aProcSystem.wInput2,b
+        sty aProcSystem.wInput1,b
         lda aCurrentTilemapInfo,b
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procUnknown85DAEA)<<8
         sta lR44+1
         lda #<>procUnknown85DAEA
@@ -10351,9 +10351,9 @@
         sta lR44
         jsl rlProcEngineFindProc
         bcc _DBAA
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _DBAA
         rtl
@@ -10408,7 +10408,7 @@
         sta $0D77,b
         stz $0302,b
         lda #$B122
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade
@@ -10440,7 +10440,7 @@
         tsb wUnknown000D79,b
         stz $0302,b
         lda #$AEEA
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade
@@ -10471,7 +10471,7 @@
         jsl rlUnknown808FA3
         stz $0302,b
         lda #$F222
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade
@@ -10502,13 +10502,13 @@
         ldx $0772,b
         lda #$0000
         sta $057C,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown84B474
         lda wSelectedUnitDataRAMPointer,b
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #$2010
-        sta $0ED1,b
+        sta aProcSystem.wInput1,b
         lda #$8500
         sta lR44+1
         lda #$9281
@@ -10694,7 +10694,7 @@
         lda #$0004
         sta $057C,b
         ldx $0772,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         sec
         jsl rlUnknown84BA3E
@@ -10821,8 +10821,8 @@
         lda #$0000
         sta wBufferBG3VOFS
         sta wBufferBG3HOFS
-        lda $0ECF,b
-        sta $10B7,b,x
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody7,b,x
         rtl
 
         .databank 0
@@ -10838,7 +10838,7 @@
 
         lda #$0009
         jsl rlUnknown808FAD
-        lda $0ED7,b,x
+        lda aProcSystem.aHeaderTypeOffset,b,x
         tay
         jsl rlLoadMapMenuDataFromProc
         jsl rlUnknown8584AC
@@ -10848,14 +10848,14 @@
         sta aCurrentTilemapInfo,b
         lda #$20FF
         sta wUnknown053C,b
-        lda $10B7,b,x
-        sta $0ECF,b
+        lda aProcSystem.aBody7,b,x
+        sta aProcSystem.wInput0,b
         lda #$0001
         sta $0543,b
         sta $0545,b
         phx
         ldx $0772,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsr rsUnknown85E44E
         jsr rsUnknown85E468
@@ -10885,7 +10885,7 @@
         jsl rlSetMapMenuTilemapArea
         jsl rlUnknown85856E
         jsl rlUnknown8584DC
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         cmp #$0002
         beq _E278
         cmp #$0001
@@ -10896,7 +10896,7 @@
 
         _E278
         lda #$E33D
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -11013,7 +11013,7 @@
           bit #JOY_B
           beq _End
 
-            lda $10B7,b,x
+            lda aProcSystem.aBody7,b,x
             cmp #1
             beq _E37D
 
@@ -11065,9 +11065,9 @@
         .autsiz
         .databank ?
 
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wR10
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta wR11
         lda aDeploymentTable,x
         and #$0003
@@ -11086,9 +11086,9 @@
         .autsiz
         .databank ?
 
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wR0
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta wR1
         jsl rlCheckIfCoordsNotEventLocationTile
         lda wEventLocationEntry,b
@@ -11152,7 +11152,7 @@
         .databank ?
 
         jsl rlGetSelectedUnitStates
-        bit #$0800
+        bit #UnitStateCanto
         bne _E55A
         lda $0D87,b
         bit #$0008
@@ -11205,7 +11205,7 @@
         jsl rlCheckIfCastleGuarded
         bcs $85E547
         jsl rlGetEventLocationEntryType
-        cmp #$0000
+        cmp #LocationTypeCastle
         bne $85E547
         ldx wActiveFactionSlot,b
         jsl rlGetLocationFactionSlotOwner
@@ -11239,7 +11239,7 @@
 
         _E5CC
         jsl rlGetSelectedUnitStates
-        bit #$2000
+        bit #UnitStateGuardingCastle
         bne _E5D9
         jml rsUnknown85E547
 
@@ -11266,7 +11266,7 @@
         .databank ?
 
         jsl rlGetSelectedUnitStates
-        bit #$2000
+        bit #UnitStateGuardingCastle
         bne _E5F3
         jml rsUnknown85E547
 
@@ -11281,9 +11281,9 @@
         lda wSelectedUnitDataRAMPointer,b
         pha
         ldx $0772,b
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wR0
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         inc a
         inc a
         sta wR1
@@ -11348,7 +11348,7 @@
         .databank ?
 
         jsl rlGetSelectedUnitStates
-        bit #$2000
+        bit #UnitStateGuardingCastle
         bne _E694
         lda wEventLocationEntry,b
         bne _E668
@@ -11363,7 +11363,7 @@
 
         _E672
         jsl rlGetEventLocationEntryType
-        cmp #$0000
+        cmp #LocationTypeCastle
         beq _E67F
         jml rsUnknown85E547
 
@@ -11417,7 +11417,7 @@
 
         _E6C6
         jsl rlGetSelectedUnitStates
-        bit #$1000
+        bit #UnitState1000
         beq _E6D3
         jml rsUnknown85E547
 
@@ -11446,7 +11446,7 @@
         .databank ?
 
         jsl rlGetSelectedUnitStates
-        bit #$1000
+        bit #UnitState1000
         bne _E6E4
         jml rsUnknown85E547
 
@@ -11474,8 +11474,8 @@
         .autsiz
         .databank ?
 
-        ldx $0ECA,b
-        lda $10B7,b,x
+        ldx aProcSystem.wOffset,b
+        lda aProcSystem.aBody7,b,x
         cmp #$0002
         bne _E6F7
         jml rsUnknown85E547
@@ -11500,7 +11500,7 @@
 
         _E719
         jsl rlGetSelectedUnitStates
-        bit #$2000
+        bit #UnitStateGuardingCastle
         beq _E726
         jml rsUnknown85E547
 
@@ -11542,7 +11542,7 @@
 
         _E750
         jsl rlGetSelectedUnitStates
-        bit #$0800
+        bit #UnitStateCanto
         beq _E75D
         jml rsUnknown85E547
 
@@ -11734,7 +11734,7 @@
         .databank ?
 
         jsl rlGetSelectedUnitStates
-        bit #$0800
+        bit #UnitStateCanto
         bne _E84E
         lda $0D87,b
         bit #$0008
@@ -11797,7 +11797,7 @@
         lda #$0001
 
         _E883
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procUnknown85E1CC)<<8
         sta lR44+1
         lda #<>procUnknown85E1CC
@@ -11860,7 +11860,7 @@
 
         phx
         ldx $0772,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown84B32B
         plx
@@ -11888,7 +11888,7 @@
 
         phx
         ldx $0772,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown84B301
         jsl rlUnknown88AF7B
@@ -11916,7 +11916,7 @@
 
         jsl rlUnknown8583DA
         lda #$DE34
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -11940,7 +11940,7 @@
 
         lda #$0009
         jsl rlUnknown808FAD
-        lda $0ED7,b,x
+        lda aProcSystem.aHeaderTypeOffset,b,x
         tay
         jsl rlLoadMapMenuDataFromProc
         jsl rlUnknown8584AC
@@ -11979,7 +11979,7 @@
         jsl rlSetMapMenuTilemapArea
         jsl rlUnknown85856E
         lda #$83F8
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0

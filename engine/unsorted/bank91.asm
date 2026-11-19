@@ -49,7 +49,7 @@
         stz wActiveEventOffset,b
         stz wUnknown001732,b
         stz wUnknown00171A,b
-        stz $181E,b
+        stz aMovingMapSprites.wState,b
         stz $17BA,b
         stz $17BC,b
         sep #$20
@@ -829,10 +829,10 @@
         jsl rlProcEngineFreeProcByIndex
 
         _B147
-        lda $1882,b
+        lda aDialogue.wStatus,b
         beq _B163
         jsl rlUnknown9181F6
-        lda $1882,b
+        lda aDialogue.wStatus,b
         bne _B159
         jsl rlDialogueFreeHDMA
 
@@ -1435,9 +1435,9 @@
         lda $1864,b
         jsl rlUnknown91E2E2
         jsl rlUnknown9181F6
-        lda $1882,b
+        lda aDialogue.wStatus,b
         bne _DC91
-        lda $18C9,b
+        lda aDialogue.wUnknown0018C9,b
         bne _DC91
         lda $1864,b
         jsr rsUnknown91DCF8
@@ -1709,18 +1709,18 @@
 
         _DDA7
         jsl rlUnknown9181F6
-        lda $1882,b
+        lda aDialogue.wStatus,b
         bne _DDA7
-        lda $18C9,b
+        lda aDialogue.wUnknown0018C9,b
         bne _DDA7
         lda $1856,b
         jsr rsUnknown91DE4D
 
         _DDBB
         jsl rlUnknown9181F6
-        lda $1882,b
+        lda aDialogue.wStatus,b
         bne _DDBB
-        lda $18C9,b
+        lda aDialogue.wUnknown0018C9,b
         bne _DDBB
         lda $1856,b
         inc $1856,b
@@ -1970,20 +1970,20 @@
         lda #$0000
         jsl rlUnknown918127
         lda #$2000
-        trb $1882,b
+        trb aDialogue.wStatus,b
         lda #$2000
-        sta $189F,b
+        sta aDialogue.wBaseTile,b
         lda #$1E1E
         sta $18DB,b
         lda #$FFFF
-        sta $1888,b
-        sta $188A,b
+        sta aDialogue.wTextSpeed,b
+        sta aDialogue.wPauseTimer,b
         lda #$000A
-        sta $1892,b
+        sta aDialogue.wUnknown001892,b
         lda #$0200
-        tsb $1882,b
+        tsb aDialogue.wStatus,b
         lda #$0180
-        tsb $1882,b
+        tsb aDialogue.wStatus,b
         rtl
 
         .databank 0
@@ -2319,7 +2319,7 @@
         sta wR4
         lda #$2200
         sta wR5
-        lda $1B0B,b
+        lda aSave.wMenuOperation,b
         bit #$8000
         bne _E384
         jsl rlUnknown87BFB0
@@ -2888,7 +2888,7 @@
         sta $7F8189
         lda #$0044
         sta aPaletteFading,b
-        stz $1B45,b
+        stz aPaletteFading.wCurrentStep,b
         lda #$00E2
         jsl rlUnknown808F6F
         lda wCurrentChapter,b

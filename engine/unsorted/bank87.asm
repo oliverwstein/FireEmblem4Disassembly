@@ -157,7 +157,7 @@
         lda #<>aBG3TilemapBuffer
         sta $0518,b
         lda #0
-        sta $053E,b
+        sta wUnknown053E,b
         jsl rlUnknown87828D
         plp
         plb
@@ -2798,7 +2798,7 @@
         lda wR1
         pha
         jsl rlGetSelectedUnitStates
-        bit #$C200
+        bit #UnitStateDead | UnitStateMoved | UnitStateFielded
         bne _9F54
         jsl rlGetSelectedUnitHomeCastle
         jsl rlGetLocationEventDataEntry
@@ -2849,7 +2849,7 @@
         lda wEventLocationEntry,b
         pha
         jsl rlGetSelectedUnitStates
-        bit #$C200
+        bit #UnitStateDead | UnitStateMoved | UnitStateFielded
         bne _9F93
         jsl rlGetSelectedUnitHomeCastle
         jsl rlGetLocationEventDataEntry
@@ -3705,10 +3705,10 @@
         jsl rlGetItemROMDataByInventorySlot
         lda #$0001
         sta wR12
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitStates
-        bit #$0400
+        bit #UnitState0400
         beq _B537
         lda #$0004
         bra _B53A
@@ -3745,7 +3745,7 @@
         phx
         phy
         jsl rlGetSelectedUnitFactionSlot
-        sta $7F442A
+        sta aAIAction.wMapPointer
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateCanto
@@ -3770,7 +3770,7 @@
 
         +
         jsl rlGetSelectedUnitMovementCostPointer
-        sta $7F442C
+        sta aAIAction.wUnknown7F442C
 
         jsl rlGetSelectedUnitTotalFieldMovement
         sta $18
@@ -3780,7 +3780,7 @@
         lda wActiveFactionSlot,b
         bne +
 
-          lda $7F442A
+          lda aAIAction.wMapPointer
           beq +
 
             lda $08
@@ -4517,7 +4517,7 @@
 
         lda wR17
         bne _B91A
-        lda $7F442A
+        lda aAIAction.wMapPointer
         bne _B91A
         lda wR1+1
         and #$FC
@@ -5324,7 +5324,7 @@
         lda #$C4AB
 
         _C3E1
-        sta $165F,b,x
+        sta aHDMASystem.aOffset,b,x
         lda $7E8B8E
         jsr rsUnknown87C442
         lda $7E8B8A
@@ -5341,7 +5341,7 @@
         cmp #$0100
         bmi _C41A
         lda #$C41B
-        sta $161F,b,x
+        sta aHDMASystem.aOnCycle,b,x
 
         _C41A
         rtl
@@ -5549,7 +5549,7 @@
 
         phy
         txy
-        lda $0FD7,b,x
+        lda aProcSystem.aBody0,b,x
         bmi _C6DA
         sec
         sbc #$0084
@@ -5560,7 +5560,7 @@
         lda $C6DC,b,x
         bne _C6C6
         dec a
-        sta $0FD7,b,y
+        sta aProcSystem.aBody0,b,y
         plx
         bra _C6DA
 
@@ -5575,7 +5575,7 @@
         plx
 
         _C6D7
-        inc $0FD7,b,x
+        inc aProcSystem.aBody0,b,x
 
         _C6DA
         ply
@@ -5646,7 +5646,7 @@
         lda $7E5029,x
         and #$00FF
         tax
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         beq _D702
         lda aDeploymentTable,x
         bit #$0020
@@ -5830,7 +5830,7 @@
         bra _E7E4
 
         jsl rlGetSelectedUnitStates
-        bit #$8000
+        bit #UnitStateFielded
         beq _E7CE
         lda $0772,b
         tax
@@ -5861,7 +5861,7 @@
         lda #$0001
         sta $057C,b
         jsl rlGetSelectedUnitStates
-        bit #$8000
+        bit #UnitStateFielded
         beq _E7FC
         jsl rlUnknown88AD46
         rts
@@ -6006,9 +6006,9 @@
         sta lRoutineVariable,b
         jsl rlGetSelectedUnitDeploymentOffset
         tax
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wR10
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta wR11
         jsl rlUnknown8483F3
         lda #$0001
@@ -6026,7 +6026,7 @@
         beq _E90F
         phx
         tax
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         lda wRoutineVariable1,b
         jsl rlHealSelectedUnitsHP
@@ -6059,7 +6059,7 @@
         beq _E93A
         phx
         tax
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         lda wRoutineVariable1,b
         jsl rlHealSelectedUnitsHP

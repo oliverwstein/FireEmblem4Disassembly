@@ -833,7 +833,7 @@
         lda #$2DAD
 
         _E219
-        sta $01C0,b,x
+        sta aBGPaletteBuffer.aPalette6,b,x
         dec x
         dec x
         bpl _E219
@@ -848,7 +848,7 @@
         sta bBufferTS
         rep #$20
         lda #$0000
-        sta $1B45,b
+        sta aPaletteFading.wCurrentStep,b
         rtl
 
         .databank 0
@@ -927,7 +927,7 @@
         .databank ?
 
         lda #$0000
-        sta $1B45,b
+        sta aPaletteFading.wCurrentStep,b
         sep #$20
         lda #$51
         sta bBufferCGADSUB
@@ -955,7 +955,7 @@
         and #$0001
         bne _E2A9
         lda #$2DAD
-        sta $1B43,b
+        sta aPaletteFading.wDesiredColor,b
         lda #$0008
         sta aPaletteFading,b
         clc

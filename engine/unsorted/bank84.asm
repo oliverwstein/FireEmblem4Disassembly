@@ -144,7 +144,7 @@
         lda aUnknown848A0D,x
         sta wR0
         plx
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         cmp wSelectedUnitDataRAMPointer,b
         beq _8C2E
         sep #$20
@@ -362,7 +362,7 @@
         jsl rlGetSelectedUnitMapSprite
         sta wR1
         jsl rlAddDeployedMapSprite
-        sta $7E465B,x
+        sta aDeploymentTable._DeploymentOffsets,x
         lda #$7F00
         sta lRAMBufferPointer+1,b
         lda #$EBF4
@@ -446,47 +446,47 @@
         rep #$20
         plb
         .databank $7E
-        lda $7FEB66
+        lda aUnit1DataBuffer._Extended.HP
         sta $0000,b,x
         lda #$0000
         sta $0010,b,x
-        lda $7FEB68
+        lda aUnit1DataBuffer._Extended.Strength
         sta $0002,b,x
-        lda $7FEBF6
+        lda aUnit2DataBuffer._Extended.Strength
         sec
-        sbc $7FEB68
+        sbc aUnit1DataBuffer._Extended.Strength
         sta $0012,b,x
-        lda $7FEB6A
+        lda aUnit1DataBuffer._Extended.Magic
         sta $0004,b,x
-        lda $7FEBF8
+        lda aUnit2DataBuffer._Extended.Magic
         sec
-        sbc $7FEB6A
+        sbc aUnit1DataBuffer._Extended.Magic
         sta $0014,b,x
-        lda $7FEB6C
+        lda aUnit1DataBuffer._Extended.Skill
         sta $0006,b,x
-        lda $7FEBFA
+        lda aUnit2DataBuffer._Extended.Skill
         sec
-        sbc $7FEB6C
+        sbc aUnit1DataBuffer._Extended.Skill
         sta $0016,b,x
-        lda $7FEB6E
+        lda aUnit1DataBuffer._Extended.Speed
         sta $0008,b,x
-        lda $7FEBFC
+        lda aUnit2DataBuffer._Extended.Speed
         sec
-        sbc $7FEB6E
+        sbc aUnit1DataBuffer._Extended.Speed
         sta $0018,b,x
-        lda $7FEB70
+        lda aUnit1DataBuffer._Extended.Defense
         sta $000A,b,x
-        lda $7FEBFE
+        lda aUnit2DataBuffer._Extended.Defense
         sec
-        sbc $7FEB70
+        sbc aUnit1DataBuffer._Extended.Defense
         sta $001A,b,x
-        lda $7FEB72
+        lda aUnit1DataBuffer._Extended.Resistance
         sta $000C,b,x
-        lda $7FEC00
+        lda aUnit2DataBuffer._Extended.Resistance
         sec
-        sbc $7FEB72
+        sbc aUnit1DataBuffer._Extended.Resistance
         sta $001C,b,x
-        lda $7FEB74
+        lda aUnit1DataBuffer._Extended.Luck
         sta $000E,b,x
         lda #$0000
         sta $001E,b,x
@@ -519,7 +519,7 @@
         plb
         .databank $84
         jsl rlGetSelectedUnitStates
-        bit #$8000
+        bit #UnitStateFielded
         bne _AF52
         jsl rlGetSelectedUnitHomeCastle
         jsl rlGetLocationEventDataEntry
@@ -576,7 +576,7 @@
         plb
         .databank $84
         jsl rlGetSelectedUnitStates
-        bit #$8000
+        bit #UnitStateFielded
         bne _AF99
         jsl rlGetSelectedUnitHomeCastle
         jsl rlGetLocationEventDataEntry
@@ -847,10 +847,10 @@
         phx
         jsl rlGetSelectedUnitDeploymentOffset
         tax
-        lda $7E489B,x
+        lda aDeploymentTable._StateBuffer,x
         bit #$0020
         bne _B56E
-        lda $7E4ED5
+        lda aActionStructUnit1.ObtainedArenaMoney
         beq _B573
         lda #$0000
         bra _B576
@@ -911,8 +911,8 @@
         sta $7E4EA9
         rep #$20
         lda #$0009
-        sta $7E4EC3
-        sta $7E4F23
+        sta aActionStructUnit1.TerrainType
+        sta aActionStructUnit2.TerrainType
         jsl rlUnknown84DCA3
         plx
         plp
@@ -1043,7 +1043,7 @@
         ldx #$4EB5
         lda @l wActionStructAttackerDeploymentNumber
         jsl rlUnknown84B7EE
-        lda @l $7E4EE1
+        lda @l aActionStructUnit1.WeaponMinRange
         sta @l wBattleDistance
         lda @l wBattleStatus
         and #$0001
@@ -1265,14 +1265,14 @@
         .databank ?
 
         jsl rlGetSelectedUnitStates
-        bit #$2000
+        bit #UnitStateGuardingCastle
         beq _BA07
         lda $7F679A
         and #$00FF
         cmp #$00FF
         beq _BA07
         tax
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wRoutineVariable1,b
         jsl rlCheckTalkEventEntryAvailable
         bcc _BA07
@@ -1313,7 +1313,7 @@
         lda aDeploymentTable,x
         bit #$0004
         beq _BA3C
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wRoutineVariable1,b
         jsl rlCheckTalkEventEntryAvailable
         bcc _BA3C
@@ -1418,9 +1418,9 @@
         jsl rlUnsetSelectedUnitStates
         jsl rlGetSelectedUnitDeploymentOffset
         tax
-        lda $7E489B,x
+        lda aDeploymentTable._StateBuffer,x
         and #$FFFB
-        sta $7E489B,x
+        sta aDeploymentTable._StateBuffer,x
         sta aDeploymentTable,x
         jsl rlGetSelectedUnitHomeCastle
         jsl rlGetLocationEventDataEntry
@@ -1526,7 +1526,7 @@
         lda aDeploymentTable,x
         bit #$0080
         beq _C40B
-        lda $7E477B,x
+        lda aDeploymentTable._FactionSlot,x
         bne _C40B
         stx wR1
         jsl rlGetUnitsDistance
@@ -1538,7 +1538,7 @@
         sbc wRoutineVariable1,b
         sta wRoutineVariable1,b
         ldy wSelectedUnitDataRAMPointer,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitGenerationID
         bcs _C40B
@@ -1626,7 +1626,7 @@
         plx
         stx wRoutineVariable1,b
         plx
-        stx $056F,b
+        stx wSelectedUnitDataRAMPointer,b
 
         ply
         plx
@@ -1692,7 +1692,7 @@
 
                 lda $0001,b,y
                 and #$00FF
-                sta $0EAE,b
+                sta wEventEngineParameter1,b
                 lda $0000,b,y
                 and #$00FF
                 jsl rlCheckIfEventFlagOfSpecifiedChapterSet
@@ -1791,7 +1791,7 @@
         sta wEventLocationEntry,b
         jsl rlGetEventLocationEntryID
         sta wRoutineVariable1,b
-        lda $7E477B,x
+        lda aDeploymentTable._FactionSlot,x
         jsl rlGetFactionSlotLocationID
         cmp wRoutineVariable1,b
         bne _CC85
@@ -1810,7 +1810,7 @@
         phx
         jsl $88B2A5
         plx
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         lda wRoutineVariable1,b
         jsl rlSetUnitUnfieldedInCastle
@@ -1851,21 +1851,21 @@
         phk
         plb
         .databank $84
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown84CAA9
         jsl rlGetSelectedUnitFactionSlot
         jsl rlGetFactionSlotLocationID
         jsl rlUnknown84CD8A
         jsl rlGetSelectedUnitCharacterID
-        sta $7E4EBB
+        sta aActionStructUnit1.UnitRAMPointer
         jsl rlGetSelectedUnitGender
-        sta $7E4EBD
+        sta aActionStructUnit1.CharacterID
         txa
         sta $7E4EA9
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wBattleDistance
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta wBattleQuotePointer
         jsl rlGetSelectedUnitClassID
         sta $7E4EAF
@@ -1987,7 +1987,7 @@
         beq _CE1E
         sta wEventLocationEntry,b
         jsl rlSetVillageClosed
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetEventLocationMoneyReward
         sta wRoutineVariable1,b
@@ -2231,24 +2231,24 @@
         sta $7E4EA9
 
         lda aDeploymentTable._XTilePosition,x
-        sta $7E4EAB
+        sta wBattleDistance
         lda aDeploymentTable._YTilePosition,x
-        sta $7E4EAD
+        sta wBattleQuotePointer
         jsl rlGetSelectedUnitClassID
         sta $7E4EAF
 
         jsl rlGetFirstEquippableWeaponInInventory
         jsl rlGetItemIDByInventorySlot
-        sta $7E4EB1
+        sta wDeathQuotePointer+1
 
         jsl rlUnknown87F321
-        sta $7E4EB3
+        sta wBattleSong
         lda #5000
-        sta $7E4EB5
+        sta aActionStructUnit1.DeploymentNumber
         jsl rlGetEventLocationMoneyReward
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #500
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         jsl rlUnknown9E9A34
         
         _End
@@ -2381,7 +2381,7 @@
         bcs _D0AE
         jsl rlGetLocationFactionSlotOwner
         sta wR0
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         phx
         ldx wR0
@@ -2477,9 +2477,9 @@
         phk
         plb
         .databank $84
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wR0
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta wR1
         jsl rlUnknown87EA09
         bcs _D10C
@@ -2487,7 +2487,7 @@
         bcc _D10C
         jsl rlGetLocationFactionSlotOwner
         sta wR0
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         phx
         ldx wR0
@@ -2527,9 +2527,9 @@
         phk
         plb
         .databank $84
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wR0
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta wR1
         jsl rlUnknown87EA09
         bcs _D168
@@ -2537,7 +2537,7 @@
         bcc _D168
         jsl rlGetLocationFactionSlotOwner
         sta wR0
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         phx
         ldx wR0
@@ -2657,13 +2657,13 @@
         plb
         .databank $84
         phx
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         lda #$000B
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _D209
         jsl rlGetSelectedUnitStates
-        bit #$1000
+        bit #UnitState1000
         bne _D209
         lda #$1000
         jsl rlSetSelectedUnitStates
@@ -2696,9 +2696,9 @@
         .autsiz
         .databank ?
 
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         xba
-        ora $7E441B,x
+        ora aDeploymentTable._XTilePosition,x
         sta wRoutineVariable1,b
         txa
         jsl rlClearUnitDeploymentData
@@ -2707,12 +2707,12 @@
         tax
         jsl rlDeployedUnitSetHidden
         jsl rlGetSelectedUnitStates
-        bit #$0800
+        bit #UnitStateCanto
         beq _D242
         lda aDeploymentTable,x
         ora #$0010
         sta aDeploymentTable,x
-        sta $7E489B,x
+        sta aDeploymentTable._StateBuffer,x
 
         _D242
         jsl rsUnknown88AF4C
@@ -2736,10 +2736,10 @@
         plb
         .databank $84
         phx
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitStates
-        bit #$1000
+        bit #UnitState1000
         beq _D26D
         lda #$1000
         jsl rlUnsetSelectedUnitStates
@@ -2790,12 +2790,12 @@
         sta aActionStructUnit1
         tax
         jsl rlUnknown84CAA9
-        lda $7E46EB,x
-        sta $7E4EBB
-        lda $7E441B,x
-        sta $7E4EB7
-        lda $7E44AB,x
-        sta $7E4EB9
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta aActionStructUnit1.UnitRAMPointer
+        lda aDeploymentTable._XTilePosition,x
+        sta aActionStructUnit1.XPosition
+        lda aDeploymentTable._YTilePosition,x
+        sta aActionStructUnit1.YPosition
         jsl rlGetSelectedUnitExperience
         sta $7E4ECD
         lda #$0064
@@ -2844,21 +2844,21 @@
         .databank $84
         phx
         ldx wR0
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitMoney
         sta wRoutineVariable1,b
         jsl rlSubtractSelectedCharacterMoney
         jsl rlUnknown84CAA9
         ldx wR1
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlAddSelectedCharacterMoney
         ora #$0000
         beq _D373
         sta wRoutineVariable1,b
         ldx wR0
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlAddSelectedCharacterMoney
 
@@ -2871,21 +2871,21 @@
         lda wR0
         sta aActionStructUnit1
         tax
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        sta $7E4EBB
-        lda $7E441B,x
-        sta $7E4EB7
-        lda $7E44AB,x
-        sta $7E4EB9
+        sta aActionStructUnit1.UnitRAMPointer
+        lda aDeploymentTable._XTilePosition,x
+        sta aActionStructUnit1.XPosition
+        lda aDeploymentTable._YTilePosition,x
+        sta aActionStructUnit1.YPosition
         jsl rlGetSelectedUnitCharacterID
-        sta $7E4EBD
+        sta aActionStructUnit1.CharacterID
         jsl rlGetSelectedUnitClassID
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         jsl rlGetSelectedUnitGender
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         jsl rlGetFirstEquippableWeaponInInventory
-        sta $7E4EDB
+        sta aActionStructUnit1.WeaponInventorySlot
         cmp #$0000
         bne _D3CD
         lda #$FFFF
@@ -2896,7 +2896,7 @@
         jsl rlGetItemIDByInventorySlot
 
         _D3D1
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         jsl rlGetSelectedUnitExperience
         sta $7E4ECD
         lda #$0006
@@ -2916,21 +2916,21 @@
         lda wR1
         sta aActionStructUnit2
         tax
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        sta $7E4F1B
-        lda $7E441B,x
-        sta $7E4F17
-        lda $7E44AB,x
-        sta $7E4F19
+        sta aActionStructUnit2.UnitRAMPointer
+        lda aDeploymentTable._XTilePosition,x
+        sta aActionStructUnit2.XPosition
+        lda aDeploymentTable._YTilePosition,x
+        sta aActionStructUnit2.YPosition
         jsl rlGetSelectedUnitCharacterID
-        sta $7E4F1D
+        sta aActionStructUnit2.CharacterID
         jsl rlGetSelectedUnitClassID
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         jsl rlGetSelectedUnitGender
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         jsl rlGetFirstEquippableWeaponInInventory
-        sta $7E4F3B
+        sta aActionStructUnit2.WeaponInventorySlot
         cmp #$0000
         bne _D445
         lda #$FFFF
@@ -2941,7 +2941,7 @@
         jsl rlGetItemIDByInventorySlot
 
         _D449
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         phb
         sep #$20
         lda #$7E
@@ -2970,9 +2970,9 @@
         .autsiz
         .databank ?
 
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta $7E492B
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta $7E492D
         rtl
 
@@ -3000,7 +3000,7 @@
         phk
         plb
         .databank $84
-        lda $7E477B,x
+        lda aDeploymentTable._FactionSlot,x
         bne _D49D
         lda $0D87,b
         and #$FFFC
@@ -3097,9 +3097,9 @@
         phx
         lda $0000,b,y
         tax
-        lda $7E489B,x
+        lda aDeploymentTable._StateBuffer,x
         and #$FFF7
-        sta $7E489B,x
+        sta aDeploymentTable._StateBuffer,x
         lda #$0004
         tsb wUnknown000D79,b
         plx
@@ -3216,7 +3216,7 @@
 
         _F7C5
         jsl rlGetSelectedUnitStates
-        bit #$0800
+        bit #UnitStateCanto
         bne _F7DA
         jsr rsUnknown84F7F5
         jsr $84F815

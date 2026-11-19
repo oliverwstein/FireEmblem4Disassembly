@@ -92,7 +92,7 @@
 
 
         _8081
-        stz $0ED7,b,x
+        stz aProcSystem.aHeaderTypeOffset,b,x
 
         _8084
         rtl
@@ -163,12 +163,12 @@
         .autsiz
         .databank ?
 
-        lda $7F4560
+        lda aMapAction.wUnknown7F4560
         tay
         lda $7F4BEB
         lsr a
         bcc _82B8
-        lda $7F455E
+        lda aMapAction.wUnknown7F455E
         tay
 
         _82B8
@@ -257,7 +257,7 @@
         phx
         lda $7F50A3
         tax
-        lda $15E9,b
+        lda aHDMASystem.wOffset,b
         sta $7F50B7,x
         lda #$FFFF
         sta $7F50B9,x
@@ -266,7 +266,7 @@
         txa
         sta $7F50A3
         plx
-        lda $15E9,b
+        lda aHDMASystem.wOffset,b
 
         _8348
         rts
@@ -831,7 +831,7 @@
         lda [lR18],y
         sta aBGPaletteBuffer,b,x
         lda [lR19],y
-        sta $0120,b,x
+        sta aBGPaletteBuffer.aPalette1,b,x
         inc y
         inc y
         inc x
@@ -955,9 +955,9 @@
 
         phy
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F5089
         bmi _8721
         asl a
@@ -989,10 +989,10 @@
         bpl _86F9
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFE
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$7F00
         sta lR19+1
         lda #$45D9
@@ -1023,9 +1023,9 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F508F
         beq _8942
         phx
@@ -1045,9 +1045,9 @@
         lda $7F5089
         cmp #$FFFF
         beq _8942
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _8942
         rtl
@@ -1212,13 +1212,13 @@
         sta wR2
 
         _8EC2
-        lda $1B43,b
+        lda aPaletteFading.wDesiredColor,b
         cmp aBGPaletteBuffer,b,x
         beq _8EDA
         phx
         lda aBGPaletteBuffer,b,x
         tax
-        lda $1B45,b
+        lda aPaletteFading.wCurrentStep,b
         jsl rlUnknown9F9090
         plx
         sta aBGPaletteBuffer,b,x
@@ -1424,7 +1424,7 @@
 
 
         _912A
-        sta $1B43,b
+        sta aPaletteFading.wDesiredColor,b
         tya
         sta aPaletteFading,b
         sec
@@ -1512,9 +1512,9 @@
 
         jsr rlUnknown9F9341
         lda #$0020
-        sta $1057,b,x
+        sta aProcSystem.aBody4,b,x
         lda #$926E
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda $7F509B
         and #$00FF
         jsr rsUnknown9F8253
@@ -1545,8 +1545,8 @@
         sta $7ECC08
         sta $7ECC0A
         sta $7ECC0C
-        stz $1017,b,x
-        stz $1037,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
         jsl rlUnknown9F9691
         rtl
 
@@ -1606,7 +1606,7 @@
         .autsiz
         .databank ?
 
-        ldy $1037,b,x
+        ldy aProcSystem.aBody3,b,x
         lda $96D5,b,y
         cmp #$FFFF
         beq _96D3
@@ -1614,7 +1614,7 @@
         tya
         clc
         adc #$000E
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         tyx
         lda $96D5,b,x
         sta $01D2,b

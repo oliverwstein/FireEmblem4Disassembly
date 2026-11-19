@@ -278,7 +278,7 @@
             ldx $0001,b,y
             stx wEventLocationEntry,b
             jsl rlGetEventLocationEntryType
-            cmp #0
+            cmp #LocationTypeCastle
             bne +
 
               lda wEventLocationEntry,b
@@ -761,7 +761,7 @@
         ldy #1
 
           _Loop
-          sty $0550,b
+          sty wStructIndex,b
           jsl rlLoadRAMStructDataByIndex
           bcs _End
 

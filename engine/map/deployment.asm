@@ -557,10 +557,10 @@
         adc aDeploymentTable._XTilePosition,x
         asl a
         tax
-        lda $7F2400,x
+        lda aMapData,x
         and #$03FF
         tax
-        lda $7F2000,x
+        lda aTerrainTileset,x
         and #$00FF
         cmp #$001A
         bcc +
@@ -588,13 +588,13 @@
         phx
         tax
 
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wR0
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta wR1
         jsl rlUnknown88BF37
         tax
-        lda $7F2400,x
+        lda aMapData,x
         and #$FC00
         xba
         lsr a

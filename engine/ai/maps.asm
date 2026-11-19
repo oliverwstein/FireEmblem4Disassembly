@@ -1238,7 +1238,7 @@
         phy
 
         jsl rlGetSelectedUnitFactionSlot
-        sta $7F442C
+        sta aAIAction.wUnknown7F442C
 
         sep #$20
         lda #$7F
@@ -1352,7 +1352,7 @@
           sta $0C00,b,x
           sta $0D00,b,x
           sta $0E00,b,x
-          sta $0F00,b,x
+          sta JOY_Directions,b,x
 
           inc x
           inc x
@@ -1492,7 +1492,7 @@
         lda #<>aAllyUnitMap
         sta aAIAction.wMapPointer
         lda #$FFFF
-        sta $0EA2,b
+        sta wAITemp000EA2,b
         lda #FillUnitMapAllyFilter
         jsl rlFillUnitMap
         rtl
@@ -1508,7 +1508,7 @@
         lda #<>aFoeUnitMap
         sta aAIAction.wMapPointer
         lda #$FFFF
-        sta $0EA2,b
+        sta wAITemp000EA2,b
         lda #FillUnitMapFoeFilter
         jsl rlFillUnitMap
         rtl
@@ -1542,7 +1542,7 @@
         sta lAITemp000E90,b
 
         lda wAIActiveFaction,b
-        sta $7F442C
+        sta aAIAction.wUnknown7F442C
 
         sep #$20
         lda #`aAllyUnitMap
@@ -1818,8 +1818,8 @@
 
         phy
         lda #0
-        sta $0EA4,b
-        sta $0EA2,b
+        sta wAITemp000EA4,b
+        sta wAITemp000EA2,b
         sta wCurrentItemDataROMPointer,b
 
         jsl rlGetSelectedUnitInventorySize
@@ -1842,18 +1842,18 @@
 
             +
             jsl rlGetItemMaximumRange
-            cmp $0EA4,b
+            cmp wAITemp000EA4,b
             bcc _Next
 
-              sta $0EA4,b
+              sta wAITemp000EA4,b
               lda wCurrentItemDataROMPointer,b
-              sta $0EA2,b
+              sta wAITemp000EA2,b
             
             _Next
             dec y
             bne _Loop
 
-          lda $0EA2,b
+          lda wAITemp000EA2,b
           sta wCurrentItemDataROMPointer,b
         
         _End

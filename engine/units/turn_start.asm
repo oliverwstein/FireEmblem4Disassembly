@@ -373,7 +373,7 @@
           sta $7E2004,x
 
           jsl rlGetSelectedUnitDeploymentOffset
-          sta $7E2005,x
+          sta aDebugMenuSkillFlags.bWrath,x
 
           jsl rlGetSelectedUnitCurrentHP
           sta $7E2006,x
@@ -388,7 +388,7 @@
 
             lda wRoutineVariable1,b
             sep #$20
-            sta $7E2007,x
+            sta aDebugMenuSkillFlags.bAdept,x
             rep #$20
 
             lda $7E2002
@@ -528,7 +528,7 @@
           tya
           jsl rlGetUnitRAMDataPointerByFactionSlotEntryID
 
-          lda $056F,b
+          lda wSelectedUnitDataRAMPointer,b
           beq +
 
             jsl rlDecreaseStatusDuration

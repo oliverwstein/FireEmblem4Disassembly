@@ -302,11 +302,11 @@
         lda #$0000
         sta wBufferBG3VOFS
         sta wBufferBG3HOFS
-        lda $0ED3,b
+        lda aProcSystem.wInput2,b
         jsl rlSetMapMenuPosition
-        lda $0ED5,b
+        lda aProcSystem.wInput3,b
         jsl rlUnknown85884A
-        lda $0ED1,b
+        lda aProcSystem.wInput1,b
         jsl rlUnknown85C4E0
         rtl
 
@@ -321,7 +321,7 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         bit #$0001
         bne _BB8C
 
@@ -379,9 +379,9 @@
         plx
         ply
         pla
-        sty $0ED1,b
-        sta $0ED3,b
-        stx $0ED5,b
+        sty aProcSystem.wInput1,b
+        sta aProcSystem.wInput2,b
+        stx aProcSystem.wInput3,b
         lda #(`procUnknown85BB52)<<8
         sta lR44+1
         lda #<>procUnknown85BB52
@@ -407,9 +407,9 @@
         sta lR44
         jsl rlProcEngineFindProc
         bcc _BBFD
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         plx
         sec
         rtl
@@ -440,7 +440,7 @@
         .databank ?
 
         lda #$C0BA
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0

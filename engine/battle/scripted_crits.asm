@@ -182,8 +182,8 @@
 
           sta wR0
           lda #$00FF
-          sta $7F442A
-          sta $7F442C
+          sta aAIAction.wMapPointer
+          sta aAIAction.wUnknown7F442C
           sta aAIAction.wUnitFaction
 
           lda #0
@@ -209,7 +209,7 @@
 
               inc wR12
               lda $000C,b,y
-              sta $7F442A,x
+              sta aAIAction.wMapPointer,x
               inc x
               inc x
 
@@ -475,8 +475,8 @@
           stx wR1
           inc wR12
           lda #$00FF
-          sta $7F442A
-          sta $7F442C
+          sta aAIAction.wMapPointer
+          sta aAIAction.wUnknown7F442C
           sta aAIAction.wUnitFaction
           ldx #0
           ldy wR10
@@ -505,7 +505,7 @@
 
               inc wR12
               lda $0004,b,y
-              sta $7F442A,x
+              sta aAIAction.wMapPointer,x
               inc x
               inc x
 
@@ -675,8 +675,8 @@
         lsr a
         lsr a
         lsr a
-        ora $0D70,b
-        sta $0D70,b
+        ora wOptionSettings+1,b
+        sta wOptionSettings+1,b
         plp
         plb
         rtl

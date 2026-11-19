@@ -116,7 +116,7 @@
         sta wR4
         lda #$2000
         sta wR5
-        lda $1882,b
+        lda aDialogue.wStatus,b
         beq _80C3
         jsl rlDMAByStruct
 
@@ -157,7 +157,7 @@
         lda #$000C
         sta wScreenFadingProcInput,b
         lda #$ECC9
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFadeByTimer)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFadeByTimer
@@ -181,7 +181,7 @@
         lda #$0006
         sta wScreenFadingProcInput,b
         lda #$ECC9
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFadeByTimer)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFadeByTimer
@@ -322,9 +322,9 @@
         lda #$0002
         jsl rlUnknown91811C
         lda #(`rlUnknown8B9275)<<8
-        sta $18CE,b
+        sta aDialogue.lHDMARoutine+1,b
         lda #<>rlUnknown8B9275
-        sta $18CD,b
+        sta aDialogue.lHDMARoutine,b
         ldx #$0000
         jsl rlUnknown8B91F6
         rts
@@ -345,7 +345,7 @@
         lda #$0000
         sta $0D77,b
         lda #$B122
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade
@@ -538,7 +538,7 @@
         .databank ?
 
         lda $7F808B
-        sta $1B45,b
+        sta aPaletteFading.wCurrentStep,b
         lda wVBlankEnabledFramecount
         and #$0003
         bne _8BD6
@@ -552,7 +552,7 @@
         bcs _8BDE
 
         _8BD6
-        lda $1B45,b
+        lda aPaletteFading.wCurrentStep,b
         sta $7F808B
         rtl
 
@@ -601,12 +601,12 @@
         .databank ?
 
         lda $7F808F
-        sta $1B45,b
+        sta aPaletteFading.wCurrentStep,b
         lda wVBlankEnabledFramecount
         and #$0003
         bne _8C6D
         lda #$0000
-        sta $1B43,b
+        sta aPaletteFading.wDesiredColor,b
         lda #$0020
         sta aPaletteFading,b
         clc
@@ -617,7 +617,7 @@
         bcs _8C75
 
         _8C6D
-        lda $1B45,b
+        lda aPaletteFading.wCurrentStep,b
         sta $7F808F
         rtl
 
@@ -651,7 +651,7 @@
 
 
         _9134
-        lda $1882,b
+        lda aDialogue.wStatus,b
         sta $7F548E
         sep #$20
         lda #$01
@@ -689,7 +689,7 @@
 
 
         _9196
-        lda $1882,b
+        lda aDialogue.wStatus,b
         sta $7F548E
         sep #$20
         lda #$01

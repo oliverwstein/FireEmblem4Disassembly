@@ -3362,18 +3362,18 @@
         .databank $7E
         phx
         phy
-        lda $1B1F,b
+        lda aSave.wCharacterDeploymentState,b
         cmp #$001F
         bne _FADB
-        lda $1B21,b
-        and $1B23,b
+        lda aSave.wCharacterXPosition,b
+        and aSave.wCharacterYPosition,b
         cmp #$003F
         beq _FB52
 
         _FADB
-        lda $1B23,b
+        lda aSave.wCharacterYPosition,b
         xba
-        ora $1B21,b
+        ora aSave.wCharacterXPosition,b
         sta wRoutineVariable1,b
         jsl rlDeployUnitCheckIfAsleep
         tax
@@ -3381,13 +3381,13 @@
         lda aDeploymentTable,x
         and #$000B
         sta wR0
-        lda $1B1F,b
+        lda aSave.wCharacterDeploymentState,b
         xba
         ora wR0
         sta wR0
         jsl rlGetSelectedUnitStates
         sta wR1
-        and #$2000
+        and #UnitStateGuardingCastle
         beq _FB0E
         lda #$0004
         tsb wR0
@@ -3401,7 +3401,7 @@
 
         _FB1A
         jsl rlGetSelectedUnitStatus
-        cmp #$0005
+        cmp #StatusSleep
         bne _FB28
         lda #$2000
         tsb wR0
@@ -3429,7 +3429,7 @@
         tsb wR0
         lda wR0
         sta aDeploymentTable,x
-        sta @l $7E489B,x
+        sta @l aDeploymentTable._StateBuffer,x
         bra _FB59
 
 

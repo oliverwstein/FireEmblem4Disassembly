@@ -305,7 +305,7 @@
         lda #$00FF
 
           -
-          sta $7E7B88,x
+          sta aBG2TilemapBuffer.Page1,x
           dec x
           dec x
           bpl -

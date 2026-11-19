@@ -573,11 +573,11 @@
         asl a
         tax
         lda aFormationPatternOffsets,x
-        sta $0EA2,b
+        sta wAITemp000EA2,b
 
         lda wAIUnitCounter
-        sta $0E9A,b
-        stz $0E9C,b
+        sta wAITemp000E9A,b
+        stz wAITemp000E9C,b
         cmp #1
         beq _CLC
 
@@ -590,20 +590,20 @@
         jsl rlGetFormationIDByDeploymentOffset
         asl a
         clc
-        adc $0EA2,b
+        adc wAITemp000EA2,b
         tax
         sep #$20
         jsr rsAIFormationOffsetByDirection
 
-        lda $0E9E,b
+        lda wAITemp000E9E,b
         cmp structAIUnitEntry.XPosition,b,y
         bne +
 
-          lda $0EA0,b
+          lda wAITemp000EA0,b
           cmp structAIUnitEntry.YPosition,b,y
           bne +
 
-            inc $0E9C,b
+            inc wAITemp000E9C,b
 
         +
         rep #$20
@@ -611,17 +611,17 @@
         clc
         adc #size(structAIUnitEntry)
         tay
-        dec $0E9A,b
+        dec wAITemp000E9A,b
         bne _Loop
 
-        lda $0E9C,b
+        lda wAITemp000E9C,b
         cmp wAIUnitCounter
         beq _SEC
 
         lda #$0002
         tsb wAIUnknownBitfield7E2000
 
-        lda $0E9C,b
+        lda wAITemp000E9C,b
         and #$00FF
         xba
         sta $50

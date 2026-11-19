@@ -5122,7 +5122,7 @@
         php
         phx
         lda #5
-        sta $7FC54A
+        sta aEpilogueUnitStates
         lda #$000B
         sta $7FC54C
         lda #$0015
@@ -5235,7 +5235,7 @@
 
         php
         lda #5
-        sta $7FC54A
+        sta aEpilogueUnitStates
         lda #$000B
         sta $7FC54C
         lda #$0015

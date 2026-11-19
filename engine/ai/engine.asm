@@ -335,12 +335,12 @@
           lda $0580,b
           beq _CLC
 
-            sta $0590,b
+            sta wEventLocationEntry,b
             jsl rlCheckIfCastleGuarded
             bcs _CLC
 
               jsl rlGetEventLocationEntryEffectiveXCoordinate
-              sta $0E88,b
+              sta wAITargetXPosition,b
               asl a
               asl a
               asl a
@@ -348,7 +348,7 @@
               sta $0875,b
 
               jsl rlGetEventLocationEntryEffectiveYCoordinate
-              sta $0E8A,b
+              sta wAITargetYPosition,b
               asl a
               asl a
               asl a
@@ -360,10 +360,10 @@
               and #$00FF
               sta $0871,b
               lda #4
-              sta $0E8E,b
+              sta wAIUnknown000E8E,b
               sta $0879,b
               lda #$FFFF
-              sta $0E8C,b
+              sta wAIUnknown000E8C,b
               sta $0873,b
               lda #$FFFF
               sta $086F,b
@@ -387,7 +387,7 @@
         inc wAICurrentAISetting,b
 
         lda #2
-        sta $0E7C,b
+        sta wAIEngineCycleType,b
         rts
 
         .databank 0

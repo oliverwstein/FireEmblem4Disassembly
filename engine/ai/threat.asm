@@ -305,7 +305,7 @@
 
           _B0B6
           lda @l wAIGroupLeaderFieldMovement
-          sta $0EA2,b
+          sta wAITemp000EA2,b
           jsl rlTryGetAIFactionGroupLeader
           jsl rlFillMovementMap
           jsl rlUnknown86AD5E
@@ -348,13 +348,13 @@
           lda #0
 
         +
-        sta $0EA4,b
+        sta wAITemp000EA4,b
 
         lda $7E2002
         cmp #5
         bne +
 
-          lda $0EA4,b
+          lda wAITemp000EA4,b
           bra _END
 
         +
@@ -364,7 +364,7 @@
         lda _MovementThreatRangeLookupTable,x
         and #$00FF
         clc
-        adc $0EA4,b
+        adc wAITemp000EA4,b
         
         _END
         plx
@@ -445,7 +445,7 @@
         tax
         sta aAIAction.wUntDeploymentOffset
         lda #$FFFF
-        sta $7F4440
+        sta aAIAction.wUnknown7F4440
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateFielded
@@ -479,7 +479,7 @@
             bcs _B1E0
 
             +
-            lda $7F4440
+            lda aAIAction.wUnknown7F4440
             cmp #$FFFF
             bne _B1E0
 
@@ -532,7 +532,7 @@
             ldx wAISelectedAIUnitOffset,b
             lda aAIUnitList[0].DeploymentOffset,x
             and #$00FF
-            sta $7F443C
+            sta aAIAction.wDestinationYPosition
             jsl rlFillRangeMapOfAITargetsNearLeader
 
         +

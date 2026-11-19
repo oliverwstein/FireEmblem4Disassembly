@@ -52,7 +52,7 @@
         sta aDialogue.wUnit2,b
 
         lda #5
-        sta $7FC54A
+        sta aEpilogueUnitStates
         lda #11
         sta $7FC54C
         lda #21
@@ -241,7 +241,7 @@
         .autsiz
         .databank ?
 
-        lda $0448,b
+        lda bDecompressionArrayFlag,b
         bne _End
 
           lda #<>rlProcDialogueCycle8

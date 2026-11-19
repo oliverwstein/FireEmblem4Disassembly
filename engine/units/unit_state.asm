@@ -524,13 +524,13 @@
         phk
         plb
 
-        lda $057E,b
+        lda wSelectedInventorySlot,b
         jsl rlGetItemROMDataByInventorySlot
         jsl rlGetItemWeaponRank
         cmp #$FFFF
         beq _SEC
 
-        lda $057E,b
+        lda wSelectedInventorySlot,b
         jsl rlRemoveItemInSpecifiedInventorySlot
         clc
         

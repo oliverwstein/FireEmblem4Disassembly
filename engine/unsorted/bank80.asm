@@ -4013,7 +4013,7 @@
         lda #$03FF
         sta wUnknown000596,b
         lda #$0002
-        sta $18D0,b
+        sta aDialogue.wUnknown0018D0,b
         lda #$8000
         sta lR19+1
         lda #$B61E
@@ -4047,7 +4047,7 @@
         lda #$00FF
 
         _B500
-        sta $7E7B88,x
+        sta aBG2TilemapBuffer.Page1,x
         sta aBG3TilemapBuffer,x
         dec x
         dec x
@@ -4803,7 +4803,7 @@
         sta $7F8404
 
         lda #0
-        sta $7F8402
+        sta wDebugMenuScreenIndex
         sta $7F8410
         sta $7F8412
         sta $7F840A

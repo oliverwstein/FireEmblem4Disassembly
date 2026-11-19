@@ -1680,10 +1680,10 @@
         tax
         lda @l wSelectedUnitDataRAMPointer
         tay
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta @l wSelectedUnitDataRAMPointer
         jsl rlGetSelectedUnitStatus
-        cmp #$0000
+        cmp #StatusHealthy
         bne _8B0E
         tya
         sta @l wSelectedUnitDataRAMPointer
@@ -1718,7 +1718,7 @@
         tax
         lda @l wSelectedUnitDataRAMPointer
         tay
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta @l wSelectedUnitDataRAMPointer
         jsl rlGetSelectedUnitMoney
         cmp #$C350
@@ -1758,9 +1758,9 @@
         sta $442C,b
         lda @l wSelectedUnitDataRAMPointer
         tay
-        lda $7E477B,x
+        lda aDeploymentTable._FactionSlot,x
         bne _8B78
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta @l wSelectedUnitDataRAMPointer
         jsl rlGetSelectedUnitMoney
         cmp #$C350
@@ -1801,7 +1801,7 @@
         tax
         lda @l wSelectedUnitDataRAMPointer
         tay
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta @l wSelectedUnitDataRAMPointer
         lda #$0004
         sta $442C,b
@@ -1850,7 +1850,7 @@
         tay
         jsl rlGetSelectedUnitTotalMagic
         sta $442C,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta @l wSelectedUnitDataRAMPointer
         jsl rlGetSelectedUnitTotalResistance
         cmp $442C,b

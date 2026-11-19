@@ -59,13 +59,13 @@
         phk
         plb
         .databank $9E
-        lda $7F4552
+        lda aMapAction.wXTilePosition
         sec
-        sbc $7F4556
+        sbc aMapAction.wUnknown7F4556
         sta wR0
-        lda $7F4554
+        lda aMapAction.wYTilePosition
         sec
-        sbc $7F4558
+        sbc aMapAction.wUnknown7F4558
         sta wR1
         lda wR0
         bpl _8081
@@ -109,7 +109,7 @@
         inc x
         lda @l aUnknown9E80CB,x
         and #$00FF
-        sta $7F455E
+        sta aMapAction.wUnknown7F455E
         bra _80C7
 
 
@@ -185,7 +185,7 @@
         lda #$0007
         sec
         sbc wR0
-        sta $7F455E
+        sta aMapAction.wUnknown7F455E
         rtl
 
         .databank 0
@@ -219,7 +219,7 @@
 
 
         _8139
-        lda $7E4EDD
+        lda aActionStructUnit1.WeaponID
         cmp #$FFFF
         beq _817A
         jsl rlGetItemDataROMPointer
@@ -246,7 +246,7 @@
         bcs _81C5
 
         _817A
-        lda $7E4F3D
+        lda aActionStructUnit2.WeaponID
         cmp #$FFFF
         bne _8187
         jml _8261
@@ -299,13 +299,13 @@
 
         _81EE
         jsl rlUnknown9E8271
-        lda $7E4EB7
+        lda aActionStructUnit1.XPosition
         sta wR4
-        lda $7E4EB9
+        lda aActionStructUnit1.YPosition
         sta wR5
-        lda $7E4F17
+        lda aActionStructUnit2.XPosition
         sta wR6
-        lda $7E4F19
+        lda aActionStructUnit2.YPosition
         sta wR7
         lda wR0
         clc
@@ -479,7 +479,7 @@
         sta lR18
         lda $4599,b
         sta lR18+1
-        lda @l $7F455E
+        lda @l aMapAction.wUnknown7F455E
         sta wR0
         lda $459E,b
         asl a
@@ -498,7 +498,7 @@
         sta lR18
         lda $459C,b
         sta lR18+1
-        lda @l $7F4560
+        lda @l aMapAction.wUnknown7F4560
         sta wR0
         lda $459E,b
         asl a
@@ -632,17 +632,17 @@
         sta $508B,b
         sta $508D,b
         sta $5089,b
-        lda $7E4EBF
+        lda aActionStructUnit1.ClassID
         sta @l wR0
-        lda $7E4EC1
+        lda aActionStructUnit1.Gender
         sta @l wR1
-        lda $7E4EBD
+        lda aActionStructUnit1.CharacterID
         sta @l wR2
         jsl rlUnknown9E85A4
         sta $454E,b
-        lda $7E4EB7
+        lda aActionStructUnit1.XPosition
         sta $4552,b
-        lda $7E4EB9
+        lda aActionStructUnit1.YPosition
         sta $4554,b
         jsl rlUnknown9E852A
         bcc _83FD
@@ -655,12 +655,12 @@
         lda $454E,b
         jsl rlUnknown9E857D
         bcs _845B
-        lda $7E4EDD
+        lda aActionStructUnit1.WeaponID
         jsl rlUnknown9E866F
         bcs _845B
-        lda $7E4ED7
+        lda aActionStructUnit1.Unknown
         tay
-        lda $7E4EDD
+        lda aActionStructUnit1.WeaponID
         jsl rlUnknown9E86CF
         sta $508B,b
         lda $7F4BF1
@@ -669,12 +669,12 @@
         sta $7F4C0B
         lda #$0000
         bcs _845B
-        lda $7E4EDD
+        lda aActionStructUnit1.WeaponID
         jsl rlGetItemDataROMPointer
         jsl rlGetItemWeaponType
         cmp #$0004
         bcc _845B
-        lda $7E4EDD
+        lda aActionStructUnit1.WeaponID
         sec
         sbc #$003E
         sta $508B,b
@@ -682,11 +682,11 @@
 
         _845B
         sta $454A,b
-        lda $7E4F1F
+        lda aActionStructUnit2.ClassID
         sta @l wR0
-        lda $7E4F21
+        lda aActionStructUnit2.Gender
         sta @l wR1
-        lda $7E4F1D
+        lda aActionStructUnit2.CharacterID
         sta @l wR2
         jsl rlUnknown9E85A4
         sta $4550,b
@@ -699,21 +699,21 @@
 
 
         _848E
-        lda $7E4F17
+        lda aActionStructUnit2.XPosition
         sta $4556,b
-        lda $7E4F19
+        lda aActionStructUnit2.YPosition
         sta $4558,b
         lda #$0001
         sta @l wR15
         lda $4550,b
         jsl rlUnknown9E857D
         bcs _84FA
-        lda $7E4F3D
+        lda aActionStructUnit2.WeaponID
         jsl rlUnknown9E866F
         bcs _84FA
-        lda $7E4F37
+        lda aActionStructUnit2.Unknown
         tay
-        lda $7E4F3D
+        lda aActionStructUnit2.WeaponID
         jsl rlUnknown9E86CF
         sta $508D,b
         lda $7F4BF1
@@ -722,12 +722,12 @@
         sta $7F4C0D
         lda #$0000
         bcs _84FA
-        lda $7E4F3D
+        lda aActionStructUnit2.WeaponID
         jsl rlGetItemDataROMPointer
         jsl rlGetItemWeaponType
         cmp #$0004
         bcc _84FA
-        lda $7E4F3D
+        lda aActionStructUnit2.WeaponID
         sec
         sbc #$003E
         sta $508D,b
@@ -780,7 +780,7 @@
         lda wR0
         cmp #$0032
         bne _8578
-        lda $7E4ED7
+        lda aActionStructUnit1.Unknown
         cmp #$0008
         beq _854B
         lda aActionStructUnit2
@@ -1145,7 +1145,7 @@
         sta $7F57EA
         jsl rlGetItemWeaponType
         sta $7F57EC
-        cmp #$0000
+        cmp #WeaponTypeSword
         beq _8705
         jml _878B
 
@@ -1582,13 +1582,13 @@
 
 
         _8929
-        lda @l $7F455E
+        lda @l aMapAction.wUnknown7F455E
         asl a
         clc
-        adc @l $7F455E
+        adc @l aMapAction.wUnknown7F455E
         asl a
         sta wR0
-        lda @l $7F454E
+        lda @l aMapAction.wBattleClassID
         sta wR10
         lda #$0031
         sta wR11
@@ -1625,13 +1625,13 @@
         rep #$20
         plb
         .databank $7F
-        lda @l $7F4560
+        lda @l aMapAction.wUnknown7F4560
         asl a
         clc
-        adc @l $7F4560
+        adc @l aMapAction.wUnknown7F4560
         asl a
         sta wR0
-        lda @l $7F4550
+        lda @l aMapAction.wUnknown7F4450
         sta wR10
         lda #$0031
         sta wR11
@@ -1739,25 +1739,25 @@
         tax
         lda aDeploymentTable,x
         and #$0003
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta $7F4574
         bra _8A59
 
 
         _8A51
-        lda $7F4562
+        lda aMapAction.wUnknown7F4562
         sta $7F4574
 
         _8A59
         jsl rlUnknown9E8D6C
         jsl rlUnknown9E8DBB
-        lda $7E4EDD
+        lda aActionStructUnit1.WeaponID
         jsl rlUnknown9E8E01
-        lda $7F4552
+        lda aMapAction.wXTilePosition
         tax
-        lda $7F4554
+        lda aMapAction.wYTilePosition
         tay
-        lda $7E4EBB
+        lda aActionStructUnit1.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda wR0
         and #$00FF
@@ -1775,24 +1775,24 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F45A4
         lda $7F4576
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda $7F4572
-        sta $12E0,b,x
-        lda $7F4562
+        sta aActiveSpriteSystem.aUnknown0012E0,b,x
+        lda aMapAction.wUnknown7F4562
         inc a
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda $7F4576
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda $7F4572
         bne _8AE1
         lda $7F4C11
         bne _8AE1
         lda #$0000
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
 
         _8AE1
         lda $7F4572
@@ -1812,16 +1812,16 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F45A6
         lda #$0020
-        sta $1260,b,x
-        lda $7F4562
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        lda aMapAction.wUnknown7F4562
         inc a
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda $7F4576
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
 
         _8B30
         plx
@@ -1894,13 +1894,13 @@
         _8BA0
         jsl rlUnknown9E8D6C
         jsl rlUnknown9E8DBB
-        lda $7E4F3D
+        lda aActionStructUnit2.WeaponID
         jsl rlUnknown9E8E01
-        lda $7F4556
+        lda aMapAction.wUnknown7F4556
         tax
-        lda $7F4558
+        lda aMapAction.wUnknown7F4558
         tay
-        lda $7E4F1B
+        lda aActionStructUnit2.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda wR0
         and #$00FF
@@ -1918,20 +1918,20 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F45A8
         lda #$0008
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F4576
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda $7F4572
-        sta $12E0,b,x
+        sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda $7F4564
         inc a
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda $7F4576
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda $7F4C13
         bne _8C28
         lda $7F4572
@@ -1939,7 +1939,7 @@
 
         _8C28
         lda #$0020
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
 
         _8C2E
         lda $7F4572
@@ -1959,16 +1959,16 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F45AA
         lda #$0040
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F4564
         inc a
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda $7F4576
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
 
         _8C7D
         plx
@@ -2057,7 +2057,7 @@
         tax
         lda $7E4F79
         tay
-        lda $7E4F1B
+        lda aActionStructUnit2.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda wR0
         and #$00FF
@@ -2771,13 +2771,13 @@
         lda $7F45A4,x
         tax
         lda #$0005
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         plx
         lda $7F45A6,x
         bmi _918F
         tax
         lda #$0005
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         clc
         bra _918F
 
@@ -2810,7 +2810,7 @@
         rep #$20
         plb
         .databank $7F
-        lda @l $7F4562
+        lda @l aMapAction.wUnknown7F4562
         inc a
         ldx $45A4,b
         sta @l $0012A0,x
@@ -2872,7 +2872,7 @@
         eor #$0001
         asl a
         tax
-        lda $7F4562,x
+        lda aMapAction.wUnknown7F4562,x
         clc
         adc #$0009
         xba
@@ -3088,19 +3088,19 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         and #$FFFD
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7E4ECB
         beq _936A
         lda #$936B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0000
         sta $7F45CE
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _936A
         rtl
@@ -3130,9 +3130,9 @@
         lda $7F45CE
         cmp #$0019
         bne _9397
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         bra _93A0
 
 
@@ -3408,10 +3408,10 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         and #$FFFD
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         stz wR0
         lda #$7E00
         sta lR18+1
@@ -3454,7 +3454,7 @@
         lda wR0
         beq _95AA
         lda #$95AB
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$7E00
         sta $7F45D1
         lda #$4EA9
@@ -3464,9 +3464,9 @@
         lda #$0000
         sta $7F45D3
         sta $7F45CE
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _95AA
         rtl
@@ -3484,9 +3484,9 @@
 
         phy
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F45CE
         bne _95F1
         lda $7F45D1
@@ -3541,11 +3541,11 @@
         cmp #$FFFF
         bne _9649
         plx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$CAD1
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         phx
 
         _9649
@@ -3899,9 +3899,9 @@
 
         phy
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7E4ED1
         cmp #$FFFF
         beq _98AD
@@ -3924,9 +3924,9 @@
         jsl rlUnknown85B7D1
         jsl rlUnknown85DB63
         plx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _98AD
         plx
@@ -3954,13 +3954,13 @@
 
         phy
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
-        sta $0F37,b,x
-        lda $7E4EDB
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda aActionStructUnit1.WeaponInventorySlot
         bpl _990D
         phx
-        lda $7E4EDD
+        lda aActionStructUnit1.WeaponID
         jsl rlGetItemNamePointerByItemID
         lda lRoutineVariable+1,b
         sta lR18+1
@@ -3976,9 +3976,9 @@
         jsl rlUnknown85B7D1
         jsl rlUnknown85DB63
         plx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _990D
         plx
@@ -4004,9 +4004,9 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$9E00
         sta lR19+1
         lda #$994F
@@ -4014,9 +4014,9 @@
         lda $7E4ED3
         beq _994E
         jsl rlUnknown9E99A4
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _994E
         rtl
@@ -4040,19 +4040,19 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$9E00
         sta lR19+1
         lda #$998E
         sta lR19
-        lda $7E4F33
+        lda aActionStructUnit2.ObtainedStealMoney
         beq _998D
         jsl rlUnknown9E99A4
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _998D
         rtl
@@ -4245,7 +4245,7 @@
         sta $4582,b
         sta $4584,b
         sta @l $000FD7,x
-        sta $7F455A
+        sta aMapAction.wUnknown7F455A
         sta $7F4572
         sta $7F4C87
         sta $4C11,b
@@ -4281,15 +4281,15 @@
         tax
         plb
         .databank ?
-        lda $7F4554
+        lda aMapAction.wYTilePosition
         clc
         adc aUnknown9E9B50+2,x
         tay
-        lda $7F4552
+        lda aMapAction.wXTilePosition
         clc
         adc aUnknown9E9B50,x
         tax
-        lda $7E4EBB
+        lda aActionStructUnit1.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda wR1
         jsl rlUnknown9EAC49
@@ -4310,9 +4310,9 @@
         lda $7E4EA9
         sta aActionStructUnit1
         lda $7E4EAF
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda wDeathQuotePointer+1
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$8100
         sta @l $0015E5
         lda #$841B
@@ -4322,7 +4322,7 @@
         sta @l $0010B7,x
         stz $0302,b
         lda #$0000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         ply
         rtl
 
@@ -4365,7 +4365,7 @@
         lda $7F4584
         beq _9B74
         lda #$9B82
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _9B74
         lda $7F4580
@@ -4463,13 +4463,13 @@
         rep #$20
         plb
         .databank $7F
-        lda @l $7F455E
+        lda @l aMapAction.wUnknown7F455E
         asl a
         clc
-        adc @l $7F455E
+        adc @l aMapAction.wUnknown7F455E
         asl a
         sta wR0
-        lda @l $7F454E
+        lda @l aMapAction.wBattleClassID
         sta wR10
         lda #$0031
         sta wR11
@@ -4518,7 +4518,7 @@
         ply
         plx
         lda #$9BE0
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -4665,7 +4665,7 @@
         sta $7F4580
         sta $7F4582
         sta $7F4584
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$FFFF
         sta $7F45A4
         sta $7F45A6
@@ -4676,7 +4676,7 @@
         plx
         ply
         lda #$9BE0
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -4750,13 +4750,13 @@
         lda $7F45A4
         tax
         lda #$0000
-        sta $1100,b,x
+        sta aActiveSpriteSystem.aTypeOffset,b,x
         lda $7F45A6
         tax
         cpx #$FFFF
         beq _9F42
         lda #$0000
-        sta $1100,b,x
+        sta aActiveSpriteSystem.aTypeOffset,b,x
 
         _9F42
         lda #$0001
@@ -4765,7 +4765,7 @@
         tax
         jsl rlDeployedUnitUnsetHiddenIfAlive
         plx
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         sta $0302,b
         lda #(`rlPushToOAMBuffer)<<8
         sta $15E5,b
@@ -4806,10 +4806,10 @@
         stx wR0
         lda #$FFFF
         sta $7F4C31
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F4C2F
         bit #$0010
         beq _9FD1
@@ -4826,10 +4826,10 @@
         sta $7F4C39
         ldx wR0
         lda #$9FD4
-        sta $0F57,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$0000
         sta $7F4C33
         sta $7F4C35
@@ -4871,52 +4871,52 @@
         sta $7F4C33
         lda $7F4C37
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         eor #$1000
-        sta $1200,b,x
-        lda $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         eor #$1000
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda $7F4C39
         tax
         cpx #$FFFF
         beq _A082
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         eor #$1000
-        sta $1200,b,x
-        lda $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         eor #$1000
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         bra _A082
 
 
         _A033
         lda $7F4C37
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         ora #$1000
-        sta $1200,b,x
-        lda $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         ora #$1000
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda $7F4C39
         cmp #$FFFF
         beq _A066
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         ora #$1000
-        sta $1200,b,x
-        lda $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         ora #$1000
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
 
         _A066
         plx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$CAD1
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         phx
         bra _A082
 
@@ -4969,10 +4969,10 @@
 
         phy
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda wBattleQuotePointer
         beq _A0B6
         sta lR18
@@ -4998,11 +4998,11 @@
 
         phy
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         and #$FFFB
-        sta $0F37,b,x
-        lda $1077,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda aProcSystem.aBody5,b,x
         cmp #$FFFF
         bne _A0DD
         lda wDeathQuotePointer
@@ -5028,11 +5028,11 @@
 
         phy
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         and #$FFFB
-        sta $0F37,b,x
-        lda $1077,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda aProcSystem.aBody5,b,x
         cmp #$FFFF
         bne _A103
         lda #$0000
@@ -5062,11 +5062,11 @@
         jsl rlResetDialogueEngine
         jsl rlUnknown828648
         lda #$0001
-        sta $189B,b
+        sta aDialogue.wTextSound,b
         plx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         ply
         rtl
 
@@ -5100,12 +5100,12 @@
 
         phy
         phx
-        lda $1882,b
+        lda aDialogue.wStatus,b
         bne _A13D
         jsl rlDialogueFreeHDMA
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _A13D
         plx
@@ -5124,11 +5124,11 @@
         .databank ?
 
         lda #$0000
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda $7E4ECD
-        sta $0ED1,b
+        sta aProcSystem.wInput1,b
         lda $7E4ECF
-        sta $0ED5,b
+        sta aProcSystem.wInput3,b
         rtl
 
         .databank 0
@@ -5261,9 +5261,9 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda wUnknown000D79,b
         and #$7FFF
         sta wUnknown000D79,b
@@ -5328,11 +5328,11 @@
         lda #3,s
         tax
         pla
-        sta $1077,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aBody5,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown9E8F6A
         lda wUnknown000D79,b
         ora #$8000
@@ -5369,7 +5369,7 @@
         cmp #$FFFF
         beq _A315
         tax
-        lda $0ED7,b,x
+        lda aProcSystem.aHeaderTypeOffset,b,x
         cmp #$A334
         beq _A332
 
@@ -5422,7 +5422,7 @@
         lda #$0000
         sta $7F4C17
         sta $7F4C19
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda wBattleDistance
         sta $7F4C21
         rtl
@@ -5441,9 +5441,9 @@
         phx
         lda $7F4C1B
         beq _A38A
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         phx
         lda $7F4C2D
         asl a
@@ -5457,7 +5457,7 @@
         plx
         jsl rlUnknown9EA417
         lda #$A38C
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlUnknown9EA67C
 
         _A38A
@@ -5520,7 +5520,7 @@
         lda $7F4C2D
         asl a
         tax
-        lda $7F455E,x
+        lda aMapAction.wUnknown7F455E,x
         lsr a
         bcc _A44A
         ldy #$0010
@@ -5542,7 +5542,7 @@
         lda $7F4C2D
         asl a
         tax
-        lda $7F455E,x
+        lda aMapAction.wUnknown7F455E,x
         asl a
         tay
         lda $7F57EA
@@ -5585,7 +5585,7 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldy $10F9,b
+        ldy aActiveSpriteSystem.wOffset,b
         lda $7F57EA
         tax
         tya
@@ -5596,15 +5596,15 @@
         tax
         lda aUnknown9EA50F,x
         tyx
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         phx
         ldx wR0,b
-        lda $7F4562,x
+        lda aMapAction.wUnknown7F4562,x
         plx
         inc a
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda $7F4C2D
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         plx
         ply
         rtl
@@ -5683,7 +5683,7 @@
         inc a
 
         _A6CB
-        sta $13C0,b,x
+        sta aActiveSpriteSystem.aUnknown0013C0,b,x
         lda #$0000
         sta wR0
         ldx wR15,b
@@ -5715,7 +5715,7 @@
         inc a
 
         _A70C
-        sta $13E0,b,x
+        sta aActiveSpriteSystem.aUnknown0013E0,b,x
         plx
         ply
         rtl
@@ -5818,10 +5818,10 @@
         sta $7F4BF9
         lda wMapScrollYPixels,b
         sta $7F4BFB
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F4C87
         bne _A804
         lda $7F4C11
@@ -5833,13 +5833,13 @@
         bcc _A804
 
         _A7A4
-        lda $7F4552
+        lda aMapAction.wXTilePosition
         asl a
         asl a
         asl a
         asl a
         sta wR0
-        lda $7F4554
+        lda aMapAction.wYTilePosition
         asl a
         asl a
         asl a
@@ -5856,13 +5856,13 @@
 
 
         _A7CB
-        lda $7F4556
+        lda aMapAction.wUnknown7F4556
         asl a
         asl a
         asl a
         asl a
         sta wR2
-        lda $7F4558
+        lda aMapAction.wUnknown7F4558
         asl a
         asl a
         asl a
@@ -5879,9 +5879,9 @@
         sta $7F4BF7
         jsl rlUnknown9EA806
         bcc _A804
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _A804
         plx
@@ -6033,10 +6033,10 @@
         bcc _A8B8
         plx
         lda #$CAD1
-        sta $0F57,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         bra _A8B9
 
 
@@ -6057,10 +6057,10 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F4BEB
         bit #$0001
         bne _A8D5
@@ -6081,9 +6081,9 @@
         sta $7F57EA
         jsr rsUnknown9EA925
         bcc _A91D
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         ldx #$FFFE
         lda $7F4BEB
         bit #$0001
@@ -6159,10 +6159,10 @@
         lda #3,s
         tax
         pla
-        sta $1077,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aBody5,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _A97F
         lda $7F459E
@@ -6195,9 +6195,9 @@
 
         lda $7F5093
         beq _A9B4
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _A9B4
         rtl
@@ -6217,10 +6217,10 @@
         phx
         lda #$0000
         sta $7F4BE9
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F4BF3
         cmp #$FFFF
         bne _A9D7
@@ -6247,14 +6247,14 @@
         lda $7F45A4,x
         tax
         lda #$0005
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         ldx wR0
         lda $7F45A6,x
         cmp #$FFFF
         beq _AA16
         tax
         lda #$0005
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
 
         _AA16
         lda $7F4BF3
@@ -6285,9 +6285,9 @@
         jsl rlUnknown9EB36C
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _AA59
         plx
@@ -6347,9 +6347,9 @@
         ora #$80
         sta $7FFD9A
         rep #$20
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F459E
         asl a
         tax
@@ -6359,9 +6359,9 @@
         bne _AB5B
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _AB5B
         plx
@@ -6399,7 +6399,7 @@
         bcs _ABBA
 
         _AB87
-        lda $7F454C
+        lda aMapAction.wUnknown7F454C
         cmp #$0004
         bcs _AB9A
         lda #$0001
@@ -6619,11 +6619,11 @@
         stz $0302,b
         stz aProcSystem.aHeaderBitfield,b,x
 
-        lda $7E4EB7
+        lda aActionStructUnit1.XPosition
         tax
-        lda $7E4EB9
+        lda aActionStructUnit1.YPosition
         tay
-        lda $7E4EBB
+        lda aActionStructUnit1.UnitRAMPointer
         jsl rlUnknown9E8D25
 
         lda wR0
@@ -6768,9 +6768,9 @@
 
         phx
         lda #$CE9E
-        sta $0F77,b,x
+        sta aProcSystem.aHeaderCodeOffset,b,x
         lda #$0001
-        sta $0F97,b,x
+        sta aProcSystem.aHeaderSleepTimer,b,x
         jsl rlUnknown888197
         lda $7E4EA9
         and #$00FF
@@ -6791,7 +6791,7 @@
         .databank ?
         plx
         lda #$ADB4
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -6838,17 +6838,17 @@
         ldx wR1
         lda $7F45A4,x
         tax
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         clc
         adc wR0
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         ldx wR1
         lda $7F45A6,x
         tax
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         clc
         adc wR0
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
 
         _AE20
         plx
@@ -6866,10 +6866,10 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda wBattleStatus
         and #$00FF
         bit #$0004
@@ -6881,9 +6881,9 @@
         and #$0008
         asl a
         sta $7F57EC
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _AE58
         plx
@@ -6914,19 +6914,19 @@
         phx
         lda $7F45A4,x
         tax
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         sec
         sbc wR0
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         plx
         lda $7F45A6,x
         cmp #$FFFF
         beq _AE95
         tax
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         sec
         sbc wR0
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
 
         _AE95
         lda $7F57EC
@@ -6939,9 +6939,9 @@
         _AEA1
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _AEAD
         plx
@@ -6997,19 +6997,19 @@
         phx
         lda $7F45A4,x
         tax
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         clc
         adc wR0
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         plx
         lda $7F45A6,x
         cmp #$FFFF
         beq _AF0A
         tax
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         clc
         adc wR0
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
 
         _AF0A
         lda $7F57EC
@@ -7022,9 +7022,9 @@
         _AF16
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _AF22
         plx
@@ -7067,18 +7067,18 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F5089
         cmp #$0020
         bne _AF77
         jsl rlUnknown9EB01B
         bcs _AF77
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #(`procUnknown9EAF98)<<8
         sta lR44+1
         lda #<>procUnknown9EAF98
@@ -7109,9 +7109,9 @@
         bcs _AF96
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _AF96
         plx
@@ -7173,7 +7173,7 @@
         tax
         lda $7E4F79
         tay
-        lda $7E4F1B
+        lda aActionStructUnit2.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda wR0
         and #$00FF
@@ -7260,7 +7260,7 @@
 
 
         _B03A
-        lda $7E4F1B
+        lda aActionStructUnit2.UnitRAMPointer
         sta wR2
         jsl rlUnknown9EB06C
 
@@ -7351,16 +7351,16 @@
         phx
         lda $7F45A8
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         ora #$8000
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F45AA
         cmp #$FFFF
         beq _B0B0
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         ora #$8000
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
 
         _B0B0
         plx
@@ -7399,7 +7399,7 @@
         tax
         lda $7F45A4,x
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         pha
         lda $7F4C31
         jsl rlUnknown9EB0F2
@@ -7457,7 +7457,7 @@
         and #$0003
         cmp #$0001
         beq _B120
-        lda $7E4EC1
+        lda aActionStructUnit1.Gender
         inc a
         bra _B12A
 
@@ -7466,7 +7466,7 @@
         lda wBattleSong
         cmp #$003E
         bne _B120
-        lda $7E4F1D
+        lda aActionStructUnit2.CharacterID
         cmp #$003F
         beq _B125
         bcc _B125
@@ -7477,7 +7477,7 @@
 
 
         _B125
-        lda $7E4F21
+        lda aActionStructUnit2.Gender
         inc a
 
         _B12A
@@ -7497,18 +7497,18 @@
         phx
         lda $7F4C31
         bne _B141
-        lda $7E4EBF
+        lda aActionStructUnit1.ClassID
         cmp #$0042
         bne _B158
-        lda $7E4EC1
+        lda aActionStructUnit1.Gender
         bra _B14E
 
 
         _B141
-        lda $7E4F1F
+        lda aActionStructUnit2.ClassID
         cmp #$0042
         bne _B158
-        lda $7E4F21
+        lda aActionStructUnit2.Gender
 
         _B14E
         inc a
@@ -7619,13 +7619,13 @@
         _B1C8
         lda $7F45A8
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tay
         lda $7F57EA
         bne _B1E0
         lda $7F45A4
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tay
 
         _B1E0
@@ -7721,7 +7721,7 @@
         ldx #$0002
 
         _B276
-        lda $7F454E,x
+        lda aMapAction.wBattleClassID,x
         cmp #$002C
         beq _B284
         cmp #$002E
@@ -7736,13 +7736,13 @@
         _B28B
         lda $7F45A8
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tay
         lda $7F57EA
         bne _B2A3
         lda $7F45A4
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tay
 
         _B2A3
@@ -7784,7 +7784,7 @@
         phx
         lda #$0048
         sta wR0
-        lda $7E4EB7
+        lda aActionStructUnit1.XPosition
         bne _B357
         lda #$0049
         sta wR0
@@ -7792,7 +7792,7 @@
         _B357
         lda $7F45A4
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsl rlUnknown9EB4BB
         ora wR0
         jsl rlUnknown80900D
@@ -7817,7 +7817,7 @@
         cmp #$FFFF
         beq _B382
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tay
         lda $7F57EA
         bne _B390
@@ -7827,7 +7827,7 @@
         cmp #$FFFF
         beq _B39C
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tay
 
         _B390
@@ -7856,13 +7856,13 @@
         phx
         lda $7F45A8
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tay
         lda $7F57EA
         beq _B3B9
         lda $7F45A4
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tay
 
         _B3B9
@@ -7914,18 +7914,18 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F4C05
         bne _B41A
         lda #$0001
         sta $7F4C05
         lda #$00F7
         jsl rlUnknown808FA3
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _B41A
         plx
@@ -8714,12 +8714,12 @@
 
         jsl rlUnknown9E811F
 
-        lda $10F7,b
+        lda aActiveSpriteSystem.wFlag,b
         sta $7F4BD9
 
-        lda $10F7,b
+        lda aActiveSpriteSystem.wFlag,b
         ora #$4000
-        sta $10F7,b
+        sta aActiveSpriteSystem.wFlag,b
 
         rtl
 
@@ -8755,7 +8755,7 @@
         phy
         phx
         lda #$0000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown9E838B
         jsl $9E88F9
         lda #(`rlUnknown81841B)<<8
@@ -8763,7 +8763,7 @@
         lda #<>rlUnknown81841B
         sta $15E4,b
         lda #$C79B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         plx
         ply
         rtl
@@ -8790,7 +8790,7 @@
         phy
         phx
         lda #$0000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$FFFF
         sta $7F45A4
         sta $7F45A6
@@ -8809,7 +8809,7 @@
 
         _C7F1
         lda #$C79B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         plx
         ply
         rtl
@@ -8827,11 +8827,11 @@
 
         phx
         phy
-        lda $7F4554
-        cmp $7F4558
+        lda aMapAction.wYTilePosition
+        cmp aMapAction.wUnknown7F4558
         bne _C812
-        lda $7F4552
-        cmp $7F4556
+        lda aMapAction.wXTilePosition
+        cmp aMapAction.wUnknown7F4556
         bcc _C814
         bra _C821
 
@@ -8870,11 +8870,11 @@
 
         phx
         phy
-        lda $7F4554
-        cmp $7F4558
+        lda aMapAction.wYTilePosition
+        cmp aMapAction.wUnknown7F4558
         bne _C84B
-        lda $7F4552
-        cmp $7F4556
+        lda aMapAction.wXTilePosition
+        cmp aMapAction.wUnknown7F4556
         bcc _C84D
         bra _C85A
 
@@ -8921,11 +8921,11 @@
         sta $7F45A2
         sta $7F45CC
         sta $7F45CE
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         plx
         ply
         lda #$C899
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -8952,18 +8952,18 @@
         sta lStructPointer2+1,b
         lda #<>aBattleRoundsData
         sta lStructPointer2,b
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wStructIndex,b
         jsl rlLoadRAMStructDataByIndex
         lda lStructPointer1,b
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         sta $7F4C2F
-        inc $1057,b,x
-        lda $1057,b,x
+        inc aProcSystem.aBody4,b,x
+        lda aProcSystem.aBody4,b,x
         sta wStructIndex,b
         jsl rlLoadRAMStructDataByIndex
         lda lStructPointer1,b
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         cmp #$FFFF
         beq _C907
         cmp #$7F00
@@ -8972,21 +8972,21 @@
         sta $7F4C07
 
         _C8F7
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$CAD1
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
 
         _C907
         lda #$CAD1
-        sta $0F57,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         rtl
 
         .databank 0
@@ -9008,19 +9008,19 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         and #$FFFD
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7E4ECF
         beq _C943
         jsl rlUnknown9EA140
         jsl rlUnknown85D385
         lda #$CAD1
-        sta $0F57,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _C943
         rtl
@@ -9039,9 +9039,9 @@
         jsl rlUnknown85D3F5
         cmp #$FFFF
         beq _C956
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _C956
         rtl
@@ -9059,9 +9059,9 @@
 
         phx
         lda #$CE9E
-        sta $0F77,b,x
+        sta aProcSystem.aHeaderCodeOffset,b,x
         lda #$0001
-        sta $0F97,b,x
+        sta aProcSystem.aHeaderSleepTimer,b,x
         jsl rlUnknown9E8FB3
         jsl rlUnknown888197
         phb
@@ -9077,7 +9077,7 @@
         _C982
         plx
         lda #$C98A
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -9103,7 +9103,7 @@
         jsl rlUnknown9F850B
         jsl rlUnknown9F8575
         lda #$CAD1
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -9135,7 +9135,7 @@
 
         _CA34
         lda #$CA3A
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -9149,9 +9149,9 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         rtl
 
         .databank 0
@@ -9172,11 +9172,11 @@
 
         _CA4C
         jsl rlUnknown85D5CC
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$CA5F
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -9190,29 +9190,29 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda aActionStructUnit2
         cmp #$FFFF
         beq _CA9A
         jsl rlUnknown9EAB5D
         bcs _CA9A
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         cmp #$FFFF
         bne _CA94
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$CAD1
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         bra _CA9A
 
 
         _CA94
         lda #$CAD1
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _CA9A
         rtl
@@ -9239,7 +9239,7 @@
 
         _CAB4
         lda #$CABB
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _CABA
         rtl
@@ -9561,14 +9561,14 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F4C87
         bne _CEB8
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _CEB8
         rtl
@@ -9612,17 +9612,17 @@
         rep #$20
         lda #$FFFF
         sta aActionStructUnit2
-        lda $0ECF,b
+        lda aProcSystem.wInput0,b
         sta wR4
         sta wR6
-        sta $7F4552
-        lda $0ED1,b
+        sta aMapAction.wXTilePosition
+        lda aProcSystem.wInput1,b
         sta wR5
         sta wR7
-        sta $7F4554
-        ldx $0ECF,b
-        ldy $0ED1,b
-        lda $7E4EBB
+        sta aMapAction.wYTilePosition
+        ldx aProcSystem.wInput0,b
+        ldy aProcSystem.wInput1,b
+        lda aActionStructUnit1.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda wR1
         jsl rlUnknown9EAC49
@@ -9630,7 +9630,7 @@
         xba
         ora wR0
         sta $7F509B
-        lda $0ED5,b
+        lda aProcSystem.wInput3,b
         asl a
         tax
         lda aUnknown9ECF72,x
@@ -9639,12 +9639,12 @@
         sta $7F5089
         plx
         lda #$0000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         sta $7F5091
         sta $7F5093
         sta $7F4C07
         lda $0302,b
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         stz $0302,b
         sep #$20
         lda bBufferBG2SC
@@ -9771,10 +9771,10 @@
         lda $7F5093
         beq _CFEA
         lda #$CF7A
-        sta $0F57,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _CFEA
         rtl
@@ -9797,7 +9797,7 @@
         sta bBufferTM
         sta $7F57EC
         rep #$20
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         sta $0302,b
         rtl
 
@@ -9862,7 +9862,7 @@
         sta $4580,b
         sta $4582,b
         sta $4584,b
-        sta $7F455A
+        sta aMapAction.wUnknown7F455A
         sta $7F4572
         sta $7F4C87
         sta $7F5091
@@ -9875,9 +9875,9 @@
         sta aActionStructUnit2
         lda $7E4EAF
         sta @l wR0
-        lda $7E4EBD
+        lda aActionStructUnit1.CharacterID
         sta @l wR1
-        lda $7E4EBB
+        lda aActionStructUnit1.UnitRAMPointer
         sta @l wR2
         jsl rlUnknown9E85A4
         sta $454E,b
@@ -9889,7 +9889,7 @@
         jsl rlUnknown9E866F
         sta $454A,b
         lda #$FFFF
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
         sta $4550,b
         sta $4556,b
@@ -9902,9 +9902,9 @@
         sta $5089,b
         plb
         .databank ?
-        lda $7F4554
+        lda aMapAction.wYTilePosition
         tay
-        lda $7F4552
+        lda aMapAction.wXTilePosition
         tax
         jsl rlUnknown9E8D25
         lda #$8000
@@ -9934,9 +9934,9 @@
         sta @l $0010B7,x
         stz $0302,b
         lda #$0000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7E4EAF
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         jsl rlUnknown88CD53
         jsl rlUnknown88CD61
         ply
@@ -9962,7 +9962,7 @@
         lda $7F5091
         beq _D1AD
         lda #$D1BB
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _D1AD
         lda $7F4580
@@ -10002,13 +10002,13 @@
         rep #$20
         plb
         .databank $7F
-        lda @l $7F455E
+        lda @l aMapAction.wUnknown7F455E
         asl a
         clc
-        adc @l $7F455E
+        adc @l aMapAction.wUnknown7F455E
         asl a
         sta wR0
-        lda @l $7F454E
+        lda @l aMapAction.wBattleClassID
         sta wR10
         lda #$0031
         sta wR11
@@ -10057,7 +10057,7 @@
         ply
         plx
         lda #$D1F3
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -10143,7 +10143,7 @@
         sta lR18
         lda $4599,b
         sta lR18+1
-        lda @l $7F455E
+        lda @l aMapAction.wUnknown7F455E
         sta wR0
         lda #$0000
         jsr rsUnknown9E832C
@@ -10179,12 +10179,12 @@
         phx
         lda $7F45A4
         tax
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda $7F45A6
         tax
         cpx #$FFFF
         beq _D3D7
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _D3D7
         lda #$0001
@@ -10192,7 +10192,7 @@
         jsl rlUnknown88CD4C
         jsl rlUnknown88CD5A
         plx
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         sta $0302,b
         lda #(`rlPushToOAMBuffer)<<8
         sta $15E5,b
@@ -10284,7 +10284,7 @@
         sta $7F4580
         sta $7F4582
         sta $7F4584
-        sta $7F455A
+        sta aMapAction.wUnknown7F455A
         sta $7F4572
         sta $7F4C87
         sta $7F4BE9
@@ -10298,17 +10298,17 @@
         sta $7F45A8
         sta $7F45AA
 
-        lda $7E4EBF
+        lda aActionStructUnit1.ClassID
         sta @l wR0
-        lda $7E4EC1
+        lda aActionStructUnit1.Gender
         sta @l wR1
-        lda $7E4EBD
+        lda aActionStructUnit1.CharacterID
         sta @l wR2
         jsl rlUnknown9E85A4
         sta $454E,b
-        lda $7E4EB7
+        lda aActionStructUnit1.XPosition
         sta $4552,b
-        lda $7E4EB9
+        lda aActionStructUnit1.YPosition
         sta $4554,b
 
         lda #$FFFF
@@ -10316,7 +10316,7 @@
         sta $454A,b
 
         lda #$FFFF
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
 
         lda #0
         sta $4550,b
@@ -10325,7 +10325,7 @@
         sta $454C,b
 
         lda #$FFFF
-        sta $7E4F15
+        sta aActionStructUnit2.DeploymentNumber
 
         lda #6
         sta $455E,b
@@ -10426,19 +10426,19 @@
         lda wEventUnitSlot1ID,b
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitDeploymentOffset
-        sta $7E4EB5
+        sta aActionStructUnit1.DeploymentNumber
         jsl rlGetSelectedUnitClassID
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         jsl rlGetSelectedUnitGender
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         jsl rlGetSelectedUnitCharacterID
-        sta $7E4EBD
+        sta aActionStructUnit1.CharacterID
         jsl rlGetSelectedUnitDeploymentOffset
         tax
         lda aDeploymentTable._XTilePosition,x
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda aDeploymentTable._YTilePosition,x
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         jsl rlGetFirstEquippableWeaponInInventory
 
         ldx wCurrentItemDataROMPointer,b
@@ -10451,13 +10451,13 @@
         jsl rlGetItemIDByInventorySlot
 
         +
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         jsl rlGetSelectedUnitDeploymentOffset
-        sta $7E4EB5
+        sta aActionStructUnit1.DeploymentNumber
         tax
         lda aDeploymentTable._State,x
         and #DeploymentAllegianceMask
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         plx
         rtl
 
@@ -10488,14 +10488,14 @@
         plb
         .databank $7F
 
-        lda @l $7F455E
+        lda @l aMapAction.wUnknown7F455E
         asl a
         clc
-        adc @l $7F455E
+        adc @l aMapAction.wUnknown7F455E
         asl a
         sta wR0
 
-        lda @l $7F454E
+        lda @l aMapAction.wBattleClassID
         sta wR10
         lda #$0031
         sta wR11
@@ -10635,13 +10635,13 @@
         lda $7F45A4
         tax
         lda #$0000
-        sta $1100,b,x
+        sta aActiveSpriteSystem.aTypeOffset,b,x
         lda $7F45A6
         tax
         cpx #$FFFF
         beq _D6F2
         lda #$0000
-        sta $1100,b,x
+        sta aActiveSpriteSystem.aTypeOffset,b,x
 
         _D6F2
         lda #$0001
@@ -10652,7 +10652,7 @@
         jsl rlUnknown88CD4C
         jsl rlUnknown88CD5A
         plx
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         sta $0302,b
         lda #(`rlPushToOAMBuffer)<<8
         sta $15E5,b
@@ -10696,10 +10696,10 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         and #$FFFD
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F4C0F
         beq _D773
         lda #(`procUnknown9ED78B)<<8
@@ -10710,9 +10710,9 @@
         sta $7F57F0
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _D773
         plx
@@ -10733,9 +10733,9 @@
         lda $7F57F0
         jsl rlUnknown8280F8
         bcc _D789
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _D789
         plx
@@ -10773,7 +10773,7 @@
         .databank ?
 
         lda #$0000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown9ED7B7
         rtl
 
@@ -10852,7 +10852,7 @@
 
         _D7DB
         lda aUnknown9ED7E8,x
-        sta $02C0,b,x
+        sta aOAMPaletteBuffer.aPalette6,b,x
         dec x
         dec x
         bpl _D7DB
@@ -10932,9 +10932,9 @@
         asl a
         asl a
         tax
-        lda $7F4554,x
+        lda aMapAction.wYTilePosition,x
         tay
-        lda $7F4552,x
+        lda aMapAction.wXTilePosition,x
         tax
         jsl rlUnknown9E8D25
         lda #$9E00
@@ -10945,18 +10945,18 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F57EE
         lda #$0000
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda $7F4576
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         jsl rlUnknown9EB39F
         plx
         ply
@@ -10976,13 +10976,13 @@
         phx
         lda $7F57EE
         tax
-        lda $1100,b,x
+        lda aActiveSpriteSystem.aTypeOffset,b,x
         bne _D8FE
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F459E
         asl a
         tax
@@ -11085,40 +11085,40 @@
         sta $4C05,b
         sta @l $000F37,x
         sta $7F4C07
-        lda $7E4EBF
+        lda aActionStructUnit1.ClassID
         sta @l wR0
-        lda $7E4EC1
+        lda aActionStructUnit1.Gender
         sta @l wR1
-        lda $7E4EBD
+        lda aActionStructUnit1.CharacterID
         sta @l wR2
         jsl rlUnknown9E85A4
         sta $454E,b
-        lda $7E4EB7
+        lda aActionStructUnit1.XPosition
         sta $4552,b
-        lda $7E4EB9
+        lda aActionStructUnit1.YPosition
         sta $4554,b
         lda #$FFFF
         jsl rlUnknown9E866F
         sta $454A,b
         lda #$FFFF
-        sta $7E4EDD
-        lda $7E4F1F
+        sta aActionStructUnit1.WeaponID
+        lda aActionStructUnit2.ClassID
         sta @l wR0
-        lda $7E4F21
+        lda aActionStructUnit2.Gender
         sta @l wR1
-        lda $7E4F1D
+        lda aActionStructUnit2.CharacterID
         sta @l wR2
         jsl rlUnknown9E85A4
         sta $4550,b
-        lda $7E4F17
+        lda aActionStructUnit2.XPosition
         sta $4556,b
-        lda $7E4F19
+        lda aActionStructUnit2.YPosition
         sta $4558,b
         lda #$FFFF
         jsl rlUnknown9E866F
         sta $454C,b
         lda #$FFFF
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         jsl rlUnknown9E805E
         lda $455E,b
         eor #$0004
@@ -11166,7 +11166,7 @@
 
         jsl $9E88F9
         lda #$C79B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -11262,7 +11262,7 @@
         phx
         lda #$0000
         sta $7F4584
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$FFFF
         sta $7F45A4
         sta $7F45A6
@@ -11277,7 +11277,7 @@
         jsl rlUnknown9E8867
         plx
         lda #$DC14
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         ply
         rtl
 
@@ -11312,25 +11312,25 @@
         lda $7F45A4
         tax
         lda #$0000
-        sta $1100,b,x
+        sta aActiveSpriteSystem.aTypeOffset,b,x
         lda $7F45A6
         tax
         cpx #$FFFF
         beq _DD3C
         lda #$0000
-        sta $1100,b,x
+        sta aActiveSpriteSystem.aTypeOffset,b,x
 
         _DD3C
         lda $7F45A8
         tax
         lda #$0000
-        sta $1100,b,x
+        sta aActiveSpriteSystem.aTypeOffset,b,x
         lda $7F45AA
         tax
         cpx #$FFFF
         beq _DD57
         lda #$0000
-        sta $1100,b,x
+        sta aActiveSpriteSystem.aTypeOffset,b,x
 
         _DD57
         lda #$0001
@@ -11391,7 +11391,7 @@
 
         _DDBB
         lda aUnknown9EDDC8,x
-        sta $02C0,b,x
+        sta aOAMPaletteBuffer.aPalette6,b,x
         dec x
         dec x
         bpl _DDBB
@@ -11437,7 +11437,7 @@
         phy
         phx
         lda #$0000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F4598
         sta $7F57EA
         lda $7F4599
@@ -11446,11 +11446,11 @@
         sta $7F4599
         lda #$DE89
         sta $7F4598
-        lda $7F4558
+        lda aMapAction.wUnknown7F4558
         tay
-        lda $7F4556
+        lda aMapAction.wUnknown7F4556
         tax
-        lda $7E4F1B
+        lda aActionStructUnit2.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda #$9E00
         sta lR44+1
@@ -11463,18 +11463,18 @@
         tay
         lda #$DF78
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta @l $001097
         lda #$0000
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$0000
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         plx
         ply
         rtl
@@ -11493,13 +11493,13 @@
         phx
         lda @l $001097
         tax
-        lda $1100,b,x
+        lda aActiveSpriteSystem.aTypeOffset,b,x
         bne _DE87
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F57EA
         sta $7F4598
         lda $7F57EC
@@ -11567,13 +11567,13 @@
         .databank ?
 
         lda #$0000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown88AF7B
         jsl rlUnknown9EE02D
-        sta $1097,b,x
-        lda $7E4EB7
+        sta aProcSystem.aBody6,b,x
+        lda aActionStructUnit1.XPosition
         sta $7F57EE
-        lda $7E4EB9
+        lda aActionStructUnit1.YPosition
         sta $7F57F0
         lda wBattleStatus
         and #$0001
@@ -11594,9 +11594,9 @@
         lda wBattleStatus
         and #$0001
         beq _DFF6
-        lda $7E4F17
+        lda aActionStructUnit2.XPosition
         sta $7F57EE
-        lda $7E4F19
+        lda aActionStructUnit2.YPosition
         sta $7F57F0
 
         _DFF6
@@ -11634,14 +11634,14 @@
         .autsiz
         .databank ?
 
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         jsl rlUnknown8280F8
         bcc _E010
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$E010
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _E010
         rtl
@@ -11685,7 +11685,7 @@
         .autsiz
         .databank ?
 
-        lda $7E4EBB
+        lda aActionStructUnit1.UnitRAMPointer
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown84BB54
         rtl
@@ -11748,10 +11748,10 @@
         .databank ?
 
         lda $0302,b
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         stz $0302,b
         lda #$0000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #(`rlUnknown81841B)<<8
         sta $15E5,b
         lda #<>rlUnknown81841B
@@ -11769,14 +11769,14 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda wBattleCriticalType
         dec a
         jsl rlUnknown9EE0F1
         lda #$E079
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -11947,7 +11947,7 @@
 
         _E167
         lda $9EE175,x
-        sta $02C0,b,y
+        sta aOAMPaletteBuffer.aPalette6,b,y
         dec x
         dec x
         dec y
@@ -11976,9 +11976,9 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         phb
         pea #$9F9F
         plb
@@ -12009,9 +12009,9 @@
         .databank ?
         jsl rlUnknown9F90F2
         bcc _E252
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _E252
         plb
@@ -12030,17 +12030,17 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         and #$FFFD
-        sta $0F37,b,x
-        lda $7E4EBB
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda aActionStructUnit1.UnitRAMPointer
         sta wSelectedUnitDataRAMPointer,b
         jsl rlCheckIfBattleAnimationOFF
         bcc _E277
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _E277
         plx
@@ -12065,9 +12065,9 @@
         .databank ?
         jsl rlUnknown9F90F6
         bcc _E28E
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _E28E
         plb
@@ -12099,7 +12099,7 @@
         sta lR44
         jsl rlProcEngineCreateProc
         plx
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         rtl
 
         .databank 0
@@ -12137,12 +12137,12 @@
         .autsiz
         .databank ?
 
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         jsl rlUnknown8280F8
         bcc _E2D0
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _E2D0
         rtl
@@ -12158,7 +12158,7 @@
         .autsiz
         .databank ?
 
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         sta $0302,b
         lda #(`rlPushToOAMBuffer)<<8
         sta $15E5,b
@@ -12195,32 +12195,32 @@
         plb
         .databank ?
         lda #$0019
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0000
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$0038
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$0039
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$000A
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0000
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$0012
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0000
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$0039
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$0039
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$001D
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2
@@ -12300,32 +12300,32 @@
         plb
         .databank ?
         lda #$003B
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda #$0000
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         lda #$0039
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         lda #$0037
-        sta $7E4EB9
+        sta aActionStructUnit1.YPosition
         lda #$004B
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         lda #$0000
-        sta $7F4562
+        sta aMapAction.wUnknown7F4562
         sta aActionStructUnit1
         lda #$000E
-        sta $7E4F1F
+        sta aActionStructUnit2.ClassID
         lda #$0000
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         lda #$0039
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         lda #$0038
-        sta $7E4F19
+        sta aActionStructUnit2.YPosition
         lda #$002A
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         lda #$0000
-        sta $7E4F37
+        sta aActionStructUnit2.Unknown
         lda #$0001
         sta $7F4564
         sta aActionStructUnit2
@@ -12403,17 +12403,17 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F4C07
         beq _F1D8
         lda $7F4C07
         ora #$0002
         sta $7F4C07
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _F1D8
         rtl
@@ -12445,14 +12445,14 @@
         jsl rlGetSelectedUnitClassID
         sta $7E4EAF
         jsl rlGetSelectedUnitGender
-        sta $7E4EBD
+        sta aActionStructUnit1.CharacterID
         jsl rlGetSelectedUnitCharacterID
-        sta $7E4EBB
+        sta aActionStructUnit1.UnitRAMPointer
         jsl rlGetSelectedUnitDeploymentOffset
         tax
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sta wBattleDistance
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sta wBattleQuotePointer
         lda #$0000
         sta $7F4C87
@@ -12490,7 +12490,7 @@
         sta $4580,b
         sta $4582,b
         sta $4584,b
-        sta $7F455A
+        sta aMapAction.wUnknown7F455A
         sta $7F4572
         sta $7F5091
         sta $7F5093
@@ -12500,9 +12500,9 @@
         sta aActionStructUnit2
         lda $7E4EAF
         sta @l wR0
-        lda $7E4EBD
+        lda aActionStructUnit1.CharacterID
         sta @l wR1
-        lda $7E4EBB
+        lda aActionStructUnit1.UnitRAMPointer
         sta @l wR2
         jsl rlUnknown9E85A4
         sta $454E,b
@@ -12514,7 +12514,7 @@
         jsl rlUnknown9E866F
         sta $454A,b
         lda #$FFFF
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
         sta $4550,b
         sta $4556,b
@@ -12527,15 +12527,15 @@
         sta $5089,b
         plb
         .databank ?
-        lda $7F4554
+        lda aMapAction.wYTilePosition
         tay
-        lda $7F4552
+        lda aMapAction.wXTilePosition
         tax
         jsl rlUnknown9E8D25
         lda #$8000
         sta $7F508F
         lda $7E4EAF
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         lda wR0
         and #$00FF
         sta wR0
@@ -12602,7 +12602,7 @@
         sta $4580,b
         sta $4582,b
         sta $4584,b
-        sta $7F455A
+        sta aMapAction.wUnknown7F455A
         sta $7F4572
         sta $7F5091
         sta $7F5093
@@ -12613,7 +12613,7 @@
         sta aActionStructUnit2
         lda $7E4EAF
         sta @l wR0
-        lda $7E4EBD
+        lda aActionStructUnit1.CharacterID
         sta @l wR1
         lda #$FFFF
         sta @l wR2
@@ -12627,7 +12627,7 @@
         jsl rlUnknown9E866F
         sta $454A,b
         lda #$FFFF
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         lda #$0000
         sta $4550,b
         sta $4556,b
@@ -12640,9 +12640,9 @@
         sta $5089,b
         plb
         .databank ?
-        lda $7F4554
+        lda aMapAction.wYTilePosition
         tay
-        lda $7F4552
+        lda aMapAction.wXTilePosition
         tax
         jsl rlUnknown9E8D25
         lda #$8000
@@ -12672,11 +12672,11 @@
         sta @l $0010B7,x
         stz $0302,b
         lda #$0000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$0038
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         lda $7E4EAF
-        sta $7E4EBF
+        sta aActionStructUnit1.ClassID
         jsl rlUnknown88CD53
         jsl rlUnknown88CD61
         ply
@@ -12699,20 +12699,20 @@
         .autsiz
         .databank ?
 
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         bne _F570
         lda bDecompressionArrayFlag,b
         bne _F577
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         bra _F577
 
 
         _F570
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         dec a
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
 
         _F577
         rtl
@@ -12735,16 +12735,16 @@
         sta $7F45AA
         lda $7F45A4
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         ora #$8000
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F45A6
         cmp #$FFFF
         beq _F5AA
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         ora #$8000
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
 
         _F5AA
         plx
@@ -12770,16 +12770,16 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F4C07
         bit #$0004
         beq _F5EF
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _F5EF
         plx
@@ -12802,9 +12802,9 @@
         lda $7F4C07
         bit #$0008
         beq _F60E
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _F60E
         rtl

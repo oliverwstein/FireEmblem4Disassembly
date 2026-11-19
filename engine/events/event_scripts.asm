@@ -4687,7 +4687,7 @@
         jsl rlUnknown8780AA
         jsl rlUnknown82F211
         lda #$00FF
-        sta $053E,b
+        sta wUnknown053E,b
         jsl rlUnknown8780DF
         rts
 
@@ -5475,11 +5475,11 @@
         sta @l lR22+1
         lda [lR22],y
         and #$00FF
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         inc y
         lda [lR22],y
         and #$00FF
-        sta $0ED1,b
+        sta aProcSystem.wInput1,b
         jsl rlUnknown9EEC95
         rtl
 
@@ -7024,20 +7024,20 @@
         php
         phk
         plb
-        lda $0521,b
+        lda bUnknown000521,b
         bit #$0080
         beq _End
 
           bit #$0020
           bne _End
 
-            lda $0D79,b
+            lda wUnknown000D79,b
             bit #$0001
             beq +
 
               jsr rsUnknown858D18
               lda #$0001
-              trb $0D79,b
+              trb wUnknown000D79,b
 
             +
             jsl rlUnknown878256
@@ -7288,7 +7288,7 @@
 
         _80EC
         lda aUnknown8C9520,x
-        sta $0220,b,x
+        sta aOAMPaletteBuffer.aPalette1,b,x
         dec x
         dec x
         bpl _80EC
@@ -7453,7 +7453,7 @@
 
         _8282
         lda aUnknown8C9520,x
-        sta $0220,b,x
+        sta aOAMPaletteBuffer.aPalette1,b,x
         dec x
         dec x
         bpl _8282
@@ -8029,7 +8029,7 @@
         ldx #$008E
 
         _DE23
-        lda $7E480B,x
+        lda aDeploymentTable._MapSpriteID,x
         cmp #$FFFF
         beq _DE3B
         and #$8000
@@ -8062,7 +8062,7 @@
 
         lda aUnknown88DEFC,x
         sta $078E,b
-        lda $7E480B,x
+        lda aDeploymentTable._MapSpriteID,x
         and #$7FFF
         sta wR0
         clc
@@ -8116,7 +8116,7 @@
 
         lda aUnknown88DEFC,x
         sta $078E,b
-        lda $7E480B,x
+        lda aDeploymentTable._MapSpriteID,x
         and #$7FFF
         sta wR0
         clc
@@ -8191,11 +8191,11 @@
         .databank ?
 
         lda #$0003
-        sta $18D0,b
+        sta aDialogue.wUnknown0018D0,b
         lda #$0002
-        sta $1888,b
+        sta aDialogue.wTextSpeed,b
         lda #$0001
-        sta $189B,b
+        sta aDialogue.wTextSound,b
         lda #$061E
         sta $18DB,b,x
         lda #$5000
@@ -8205,7 +8205,7 @@
         lda #$8388
         sta $18D4,b,x
         lda #$3200
-        sta $189F,b,x
+        sta aDialogue.wBaseTile,b,x
         lda #$0212
         sta wR1
         sep #$20
@@ -8324,7 +8324,7 @@
         sta $24+1
         ldy #$FF00
 
-        lda $18A1,b
+        lda aDialogue.wFreeHDMATable,b
         and #$0001
         bne +
 
@@ -8459,7 +8459,7 @@
         adc $18DC,b
         sta $00
 
-        lda $1882,b
+        lda aDialogue.wStatus,b
         bit #$1000
         bne +
 
@@ -8757,17 +8757,17 @@
         rep #$20
         lda #$FFFF
         sta aActionStructUnit2
-        lda $0ECF,b
+        lda aProcSystem.wInput0,b
         sta wR4
         sta wR6
-        sta $7F4552
-        lda $0ED1,b
+        sta aMapAction.wXTilePosition
+        lda aProcSystem.wInput1,b
         sta wR5
         sta wR7
-        sta $7F4554
-        ldx $0ECF,b
-        ldy $0ED1,b
-        lda $7E4EBB
+        sta aMapAction.wYTilePosition
+        ldx aProcSystem.wInput0,b
+        ldy aProcSystem.wInput1,b
+        lda aActionStructUnit1.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda #$0000
         sta $7F508F
@@ -8779,12 +8779,12 @@
         sta $7F5089
         plx
         lda #$0000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         sta $7F5091
         sta $7F5093
         sta $7F4C07
         lda $0302,b
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         stz $0302,b
         sep #$20
         lda bBufferBG2SC
@@ -8885,10 +8885,10 @@
         lda $7F5093
         beq _ED99
         lda #$ED30
-        sta $0F57,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _ED99
         rtl
@@ -8911,7 +8911,7 @@
         sta bBufferTM
         sta $7F57EC
         rep #$20
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         sta $0302,b
         rtl
 

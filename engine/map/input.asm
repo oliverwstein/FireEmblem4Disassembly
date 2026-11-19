@@ -120,13 +120,13 @@
 
         lda #$0009
         jsl rlUnknown808FAD
-        lda $0ED7,b,x
+        lda aProcSystem.aHeaderTypeOffset,b,x
         tay
         jsl rlLoadMapMenuDataFromProc
         jsl rlUnknown8584AC
         jsl rlUnknown85856E
         lda #$83F8
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -164,7 +164,7 @@
         bit #$1000
         beq _DE07
         lda #$DDEA
-        sta $0ED7,b,x
+        sta aProcSystem.aHeaderTypeOffset,b,x
 
         _DE07
         jsl rlUnknown8583C2
@@ -193,7 +193,7 @@
         jsl rlUnknown8583DA
         jsl rlUnknown8584DC
         lda #$DE34
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -233,7 +233,7 @@
         bit #$0800
         bne _B079
         ldx $0772,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitFactionSlot
         cmp wActiveFactionSlot,b
@@ -303,7 +303,7 @@
         sta $077A,b
         lda $0772,b
         tax
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         asl a
         asl a
         asl a
@@ -311,7 +311,7 @@
         sec
         sbc wMapScrollXPixels,b
         sta wCursorXOffset,b
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         asl a
         asl a
         asl a
@@ -471,7 +471,7 @@
         bcc _B1CC
         stx $0772,b
         ldx $0772,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         lda #$0008
         jsl rlUnknown808FAD
@@ -560,7 +560,7 @@
         jsl rlUnknown87EA09
         bcs _B2A3
         jsl rlGetEventLocationEntryType
-        cmp #$0000
+        cmp #LocationTypeCastle
         bne _B2A3
         jsl rlGetLocationFactionSlotOwner
         bmi _B2A3
@@ -601,7 +601,7 @@
         sta $088B,b
         jsl rlBuildDeadPlayerCharacterList
         lda #$B6B6
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade
@@ -628,7 +628,7 @@
         lda #$0001
         sta $088B,b
         lda #$B6B6
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade
@@ -705,16 +705,16 @@
         bne _B5A7
         bit #$0080
         beq _B5A7
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitFactionSlot
         cmp wActiveFactionSlot,b
         bne _B5A7
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         sec
         sbc $078C,b
         sta $0778,b
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         sec
         sbc $078E,b
         sta $077A,b

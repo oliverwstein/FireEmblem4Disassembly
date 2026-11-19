@@ -25,7 +25,7 @@
         lda $0006,b,y
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitStatus
-        cmp #$0005
+        cmp #StatusSleep
         bne _EBA1
         lda $0000,b,y
         tax
@@ -37,7 +37,7 @@
 
         _EBA1
         plx
-        lda #$0000
+        lda #StatusHealthy
         jsl rlSetSelectedUnitStatus
         lda #$0000
         jsl rlSetSelectedUnitStatusDuration
@@ -78,7 +78,7 @@
         pha
         phx
         jsl rlGetSelectedUnitStates
-        bit #$8000
+        bit #UnitStateFielded
         bne _EC02
         lda #$FFFF
         sta wRoutineVariable1,b
@@ -203,9 +203,9 @@
         lda structActionStructEntry.UnitRAMPointer,b,x
         sta wSelectedUnitDataRAMPointer,b
         lda structActionStructEntry.XPosition,b,x
-        sta @l $7EC490
+        sta @l aEventMovement.wDestinationXCoordinate
         lda structActionStructEntry.YPosition,b,x
-        sta @l $7EC492
+        sta @l aEventMovement.wDestinationYCoordinate
         jsl rlGetSelectedUnitStates
         bit #UnitStateGuardingCastle
         beq +
@@ -222,9 +222,9 @@
           jml _End
         
         +
-        lda @l $7EC49C
+        lda @l aEventMovement.wTargetYCoordinate
         xba
-        ora @l $7EC49A
+        ora @l aEventMovement.wTargetXCoordinate
         sta wRoutineVariable1,b
 
         phx
@@ -234,9 +234,9 @@
         plx
         jsr rsUnknown84EDAE
 
-        lda @l $7EC49A
+        lda @l aEventMovement.wTargetXCoordinate
         sta @l $7E4F77
-        lda @l $7EC49C
+        lda @l aEventMovement.wTargetYCoordinate
         sta @l $7E4F79
         phb
         phy
@@ -271,10 +271,10 @@
         asl a
         tax
 
-        lda $7F2400,x
+        lda aMapData,x
         and #$03FF
         tax
-        lda $7F2000,x
+        lda aTerrainTileset,x
         and #$00FF
         sta structActionStructEntry.TerrainType,b,y
         plx
@@ -659,11 +659,11 @@
         rep #$20
         plb
 
-        lda $7E4EAA
+        lda wBattleStatus
         bit #$0010
         beq _EFCF
 
-        lda $7E4EAA
+        lda wBattleStatus
         bit #$0020
         bne +
 
@@ -710,7 +710,7 @@
         phx
         phy
         jsl rlGetSelectedUnitMovementCostPointer
-        sta $7EC488
+        sta aEventMovement.wMovementCostPointer
         jsl rlFillEventMovementMoveCostMap
         lda #$007E
         ldx #$B448
@@ -721,10 +721,10 @@
         lda aDeploymentTable,x
         bit #$0080
         beq _AF85
-        lda $7E441B,x
-        sta $7EC49A
-        lda $7E44AB,x
-        sta $7EC49C
+        lda aDeploymentTable._XTilePosition,x
+        sta aEventMovement.wTargetXCoordinate
+        lda aDeploymentTable._YTilePosition,x
+        sta aEventMovement.wTargetYCoordinate
         lda #$00FF
         jsl rlSetEventMovementTargetTile
 
@@ -733,12 +733,12 @@
         dec x
         bpl _AF65
         jsl rlUnknown87AFB6
-        lda $7EC490
-        sta $7EC496
-        lda $7EC492
-        sta $7EC498
+        lda aEventMovement.wDestinationXCoordinate
+        sta aEventMovement.wStartingXCoordinate
+        lda aEventMovement.wDestinationYCoordinate
+        sta aEventMovement.wStartingYCoordinate
         lda #$0000
-        sta $7EC49A
+        sta aEventMovement.wTargetXCoordinate
         jsl rlEventMovementBuildTargetDistanceMap
         bcc _AFB0
         ply
@@ -787,9 +787,9 @@
         xba
         and #$00FC
         beq _AFD9
-        sta $7EC496
+        sta aEventMovement.wStartingXCoordinate
         and wAreaRestrictionBitfield,b
-        cmp $7EC496
+        cmp aEventMovement.wStartingXCoordinate
         bne _B007
 
         _AFD9
@@ -804,12 +804,12 @@
         bne _B013
         tya
         tax
-        lda $7E9388,x
+        lda aEventMovement.aMovementCostMap,x
         and #$0080
         beq _B013
         sep #$20
         lda #$0A
-        sta $7E9388,x
+        sta aEventMovement.aMovementCostMap,x
         rep #$20
 
         _B007
@@ -817,7 +817,7 @@
         tax
         sep #$20
         lda #$FF
-        sta $7EB448,x
+        sta aEventMovement.aTargetMap,x
         rep #$20
 
         _B013

@@ -160,7 +160,7 @@
                 asl a
                 tax
                 pla
-                sta $17CC,b,x
+                sta aMovingMapSprites.wUnknown0017CC,b,x
 
               _89A7
               plx
@@ -698,7 +698,7 @@
 
         ; Checks if the factions home castle was captured?
 
-        lda $0590,b
+        lda wEventLocationEntry,b
         pha
 
         lda aProcSystem.aBody1,b,x
@@ -709,13 +709,13 @@
         bne +
 
           pla
-          sta $0590,b
+          sta wEventLocationEntry,b
           clc
           rtl
 
         +
         pla
-        sta $0590,b
+        sta wEventLocationEntry,b
         sec
         rtl
 
@@ -2136,7 +2136,7 @@
         ldx #$0000
 
         _8D2E
-        lda $180C,b,x
+        lda aMovingMapSprites.wMovingSound,b,x
         and #$FF00
         ora wR0
         sta wR0
@@ -2149,10 +2149,10 @@
         cmp #$0300
         beq _8D57
         phx
-        lda $180C,b,x
+        lda aMovingMapSprites.wMovingSound,b,x
         jsl rlUnknown91C472
         plx
-        sta $180C,b,x
+        sta aMovingMapSprites.wMovingSound,b,x
         jsl rlUnknown91C4CE
 
         _8D57

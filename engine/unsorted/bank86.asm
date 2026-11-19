@@ -338,7 +338,7 @@
         ldx $0871,b
         jsl rlUnknown84CE21
         lda #1
-        trb $0E7B,b
+        trb bUnknown000E7B,b
         rts
 
         .databank 0
@@ -366,12 +366,12 @@
         lda #$000A
         sta bEventActionIdentifier,b
         ldx $0873,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitCharacterID
         sta wEventEngineArgument2,b
         ldx $0772,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitCharacterID
         sta wEventEngineArgument1,b
@@ -523,7 +523,7 @@
         .databank ?
 
         jsl rlGetSelectedUnitStates
-        bit #$0100
+        bit #UnitStateGroupLeader
         bne _BCC5
         lda wAIUnknown7E201C
         cmp #$000C
@@ -593,10 +593,10 @@
         lda wSelectedUnitDataRAMPointer,b
         pha
         ldx wAITemp000E96,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wAITemp000E96,b
         ldx wAITemp000E98,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta wAITemp000E98,b
         lda wAITemp000E96,b
         sta wSelectedUnitDataRAMPointer,b
@@ -657,7 +657,7 @@
 
         _C071
         and #$00FF
-        sta $7FEC48
+        sta aUnit2DataBuffer._Lover.LoveValue
         jsl rlUnknown84FE98
         sta $7FEC4C
         lda wAITemp000E98,b
@@ -670,7 +670,7 @@
         sbc $7FEC4E
         bmi _C0AA
         beq _C0AA
-        lda $7FEC48
+        lda aUnit2DataBuffer._Lover.LoveValue
 
         _C0A2
         plx
@@ -712,7 +712,7 @@
         .databank $86
         phx
         phy
-        sta $7F442E
+        sta aAIAction.wUnitFaction
         sep #$20
         lda #$7F
         pha
@@ -742,7 +742,7 @@
         jsl rlGetLocationEventDataEntry
         bcs _C32B
         jsl rlGetEventLocationEntryType
-        cmp #$0002
+        cmp #LocationTypeVillage
         bne _C328
         jsl rlCheckIfVillageClosed
         bcs _C328
@@ -819,7 +819,7 @@
         phx
         lda @l wSelectedUnitDataRAMPointer
         pha
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta @l wSelectedUnitDataRAMPointer
         jsl rlGetSelectedUnitClassID
         tax
@@ -881,7 +881,7 @@
         phx
         lda @l wSelectedUnitDataRAMPointer
         pha
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta @l wSelectedUnitDataRAMPointer
         jsl rlGetSelectedUnitClassID
         tax
@@ -944,10 +944,10 @@
         lda @l wSelectedUnitDataRAMPointer
         pha
         ldx wAITemp000E96,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta @l wAITemp000E96
         ldx wAITemp000E98,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta @l wAITemp000E98
         lda @l wAITemp000E96
         sta @l wSelectedUnitDataRAMPointer
@@ -996,10 +996,10 @@
         lda @l wSelectedUnitDataRAMPointer
         pha
         ldx wAITemp000E96,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta @l wAITemp000E96
         ldx wAITemp000E98,b
-        lda $7E46EB,x
+        lda aDeploymentTable._UnitRAMPointer,x
         sta @l wAITemp000E98
         lda @l wAITemp000E98
         sta @l wSelectedUnitDataRAMPointer
