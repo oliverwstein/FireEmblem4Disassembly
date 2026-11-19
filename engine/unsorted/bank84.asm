@@ -672,7 +672,7 @@
         .databank $84
         lda wRoutineVariable1,b
         jsl rlGetItemROMDataByInventorySlot
-        jsl rlUnknown87E25D
+        jsl rlGetItemRepairCost
         sta wRoutineVariable1,b
         jsr rsUnknown84B3C3
         bcc _B363
@@ -689,7 +689,7 @@
 
 
         _B37A
-        jsl rlUnknown87E294
+        jsl rlGetItemRepairCostPerUse
         sta wRoutineVariable1,b
         jsr rsUnknown84B3C3
         bcc _B389
@@ -702,7 +702,7 @@
         sta wR13
         lda wRoutineVariable1,b
         sta wR14
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         jsl rlGetItemCurrentDurability
         clc
         adc wR13
@@ -750,10 +750,10 @@
         pha
         lda wCurrentItemDataRAMPointer,b
         pha
-        lda #$001C
+        lda #SkillIDBargain
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _B3DB
-        lda #$001C
+        lda #SkillIDBargain
         jsl rlCheckIfInventoryItemsHaveSpecifiedSkill
 
         _B3DB
@@ -2659,7 +2659,7 @@
         phx
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        lda #$000B
+        lda #SkillIDDismount
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _D209
         jsl rlGetSelectedUnitStates
@@ -2899,7 +2899,7 @@
         sta aActionStructUnit1.WeaponID
         jsl rlGetSelectedUnitExperience
         sta $7E4ECD
-        lda #$0006
+        lda #SkillIDSteal
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _D3EB
         lda #$000A

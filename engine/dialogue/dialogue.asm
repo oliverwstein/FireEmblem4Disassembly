@@ -4952,7 +4952,7 @@
 
         sta wR13
         stx wR14
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         lda wR13
         ldx wR10
         rtl

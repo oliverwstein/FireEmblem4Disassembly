@@ -418,7 +418,7 @@
         .autsiz
         .databank ?
 
-        lda #$0006
+        lda #SkillIDSteal
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _8887
         jsl rlUnknown879F9C
@@ -447,7 +447,7 @@
         .autsiz
         .databank ?
 
-        lda #$0008
+        lda #SkillIDDance
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _88CD
         jsl rlGetSelectedUnitDeploymentOffset
@@ -603,7 +603,7 @@
         _9002
         lda $0897,b
         sta $0899,b
-        lda #$0008
+        lda #SkillIDDance
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _9019
         jsl rlUnknown87A006
@@ -2202,7 +2202,7 @@
         .databank ?
 
         stz $08AB,b
-        jsl rlUnknown87E007
+        jsl rlGetItemRAMDataCount
         tay
         ldx #$0000
 
@@ -2269,7 +2269,7 @@
         pha
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsl rlUnknown87E459
+        jsl rlGetItemDescriptionPointer
         lda lRoutineVariable,b
         sta lR18
         lda lRoutineVariable+1,b
@@ -2714,7 +2714,7 @@
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #$B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
-        jsl rlUnknown87E459
+        jsl rlGetItemDescriptionPointer
         lda lRoutineVariable,b
         sta lR18
         lda lRoutineVariable+1,b
@@ -3068,7 +3068,7 @@
         phx
         lda $7F7872,x
         sta wCurrentItemDataRAMPointer,b
-        jsl rlUnknown87E1FD
+        jsl rlGetItemBuyPrice
         sta $078C,b
         plx
         ply
@@ -3319,7 +3319,7 @@
         jsl rlGetItemWeaponRank
         ora #$0000
         bmi _AC37
-        jsl rlUnknown84F96E
+        jsl rlGetInventorySlotItemSellPrice
         sta wR0
         phx
         lda $AA2A,b,y
@@ -3501,7 +3501,7 @@
         .databank ?
 
         lda wRoutineVariable1,b
-        jsl rlUnknown84F987
+        jsl rlGetInventorySlotItemRepairCost
         sta $078C,b
         txa
         inc a

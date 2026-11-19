@@ -73,7 +73,7 @@
         lda #10
         sta wR14
         stz wR15
-        jsl rlUnknown80A1D8
+        jsl rlUnsignedDivide32By32
 
         lda wR12
         clc

@@ -1960,7 +1960,7 @@
         lda aProcSystem.wInput1,b
         phx
         jsl rlGetItemROMDataByInventorySlot
-        jsl rlUnknown87E459
+        jsl rlGetItemDescriptionPointer
         lda lRoutineVariable,b
         sta lR18
         lda lRoutineVariable+1,b
@@ -2138,7 +2138,7 @@
         lda $7E8BEC
         phx
         jsl rlGetItemROMDataByInventorySlot
-        jsl rlUnknown87E459
+        jsl rlGetItemDescriptionPointer
         lda lRoutineVariable,b
         sta lR18
         lda lRoutineVariable+1,b
@@ -6324,7 +6324,7 @@
         sta wR13
         lda #$000A
         sta wR14
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         lda wR13
         sta wR0
         lda wR10
@@ -6778,7 +6778,7 @@
 
         lda wR13
         bmi _BCC1
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         rtl
 
 
@@ -6786,7 +6786,7 @@
         eor #$FFFF
         inc a
         sta wR13
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         lda wR13
         eor #$FFFF
         inc a
@@ -10004,7 +10004,7 @@
         jsl rlUnsignedMultiply16By16
         stz wR15
         sty wR14
-        jsl rlUnknown80A1D8
+        jsl rlUnsignedDivide32By32
         lda wR12
         sta wR0
         stx wR1
@@ -11506,14 +11506,14 @@
 
 
         _E726
-        lda #$001D
+        lda #SkillIDReturn
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _E733
         jml rsUnknown85E545
 
 
         _E733
-        lda #$001D
+        lda #SkillIDReturn
         jsl rlCheckIfInventoryItemsHaveSpecifiedSkill
         bcc _E740
         jml rsUnknown85E545
@@ -11548,7 +11548,7 @@
 
 
         _E75D
-        lda #$0008
+        lda #SkillIDDance
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _E76A
         jml rsUnknown85E547
@@ -11638,7 +11638,7 @@
 
 
         _E7BF
-        lda #$0006
+        lda #SkillIDSteal
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _E7CC
         jml rsUnknown85E547
@@ -11685,7 +11685,7 @@
 
 
         _E802
-        lda #$0006
+        lda #SkillIDSteal
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _E80F
         jml rsUnknown85E547

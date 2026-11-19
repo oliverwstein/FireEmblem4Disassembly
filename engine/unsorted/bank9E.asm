@@ -5669,7 +5669,7 @@
         sta wR13
         lda #$0010
         sta wR14
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         lda $7F4C2D
         asl a
         asl a
@@ -5701,7 +5701,7 @@
         sta wR13
         lda #$0010
         sta wR14
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         lda $7F4C2D
         asl a
         asl a

@@ -2890,7 +2890,7 @@
         jsl rlGetSelectedUnitMoney
         cmp #$0001
         bcc _9FBD
-        lda #$0006
+        lda #SkillIDSteal
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _9FB3
         lda #$000A
@@ -2982,7 +2982,7 @@
         .autsiz
         .databank ?
 
-        lda #$0008
+        lda #SkillIDDance
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _A019
         lda #$0007
@@ -3138,7 +3138,7 @@
         rep #$20
         plb
         .databank ?
-        jsl rlUnknown84F4F7
+        jsl rlGetSelectedItemRange
         lda wR10
         cmp #$0002
         bcs _A0B6
@@ -3354,10 +3354,10 @@
         .autsiz
         .databank ?
 
-        lda #$001C
+        lda #SkillIDBargain
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _A19C
-        lda #$001C
+        lda #SkillIDBargain
         jsl rlCheckIfInventoryItemsHaveSpecifiedSkill
 
         _A19C
@@ -6489,7 +6489,7 @@
         sta wR13
         lda #$01F4
         sta wR14
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         lda wR13
         cmp #$000A
         bcs _F35A

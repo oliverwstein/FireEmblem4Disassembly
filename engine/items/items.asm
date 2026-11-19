@@ -175,11 +175,13 @@
         .byte $FF
         .byte $FF
 
-      rlUnknown87E007 ; 87/E007
+      rlGetItemRAMDataCount ; 87/E007
 
         .al
         .autsiz
         .databank ?
+
+        ; Returns how many entries aItemRAMData has.
 
         phb
         php
@@ -676,11 +678,15 @@
 
         .databank 0
 
-      rlUnknown87E1FD ; 87/E1FD
+      rlGetItemBuyPrice ; 87/E1FD
 
         .al
         .autsiz
         .databank ?
+
+        ; The price to buy the item at wCurrentItemDataRAMPointer: its cost if it is
+        ; unused or unbreakable, its cost scaled by the uses left if it is used,
+        ; and 1000 if it is broken. Callers halve it for units with Bargain.
 
         phb
         php
@@ -699,7 +705,7 @@
         cmp $14
         beq _E229
 
-        jsl rlUnknown87E230
+        jsl rlGetItemSellPrice
         asl a
         bra _End
         
@@ -708,7 +714,7 @@
         bra _End
         
         _E229
-        jsl rlUnknown87E3D6
+        jsl rlGetItemCost
         
         _End
         plp
@@ -717,18 +723,20 @@
 
         .databank 0
 
-      rlUnknown87E230 ; 87/E230
+      rlGetItemSellPrice ; 87/E230
 
         .al
         .autsiz
         .databank ?
+
+        ; Half the item's cost, scaled by the uses it has left.
 
         phb
         php
         phk
         plb
         jsl rlGetItemROMPointerByItemRAMStructEntry
-        jsl rlUnknown87E3D6
+        jsl rlGetItemCost
         lsr a
         sta $14
         jsl rlGetItemCurrentDurability
@@ -738,7 +746,7 @@
         jsl rlGetItemMaxDurability2
         sta $1C
         stz $1E
-        jsl rlUnknown80A1D8
+        jsl rlUnsignedDivide32By32
         lda $18
         plp
         plb
@@ -746,11 +754,13 @@
 
         .databank 0
 
-      rlUnknown87E25D ; 87/E25D
+      rlGetItemRepairCost ; 87/E25D
 
         .al
         .autsiz
         .databank ?
+
+        ; The item's cost scaled by the uses it has lost.
 
         phb
         php
@@ -760,7 +770,7 @@
         jsl rlGetItemCurrentDurability
         and #$00FF
         sta $0585,b
-        jsl rlUnknown87E3D6
+        jsl rlGetItemCost
         sta $14
         jsl rlGetItemMaxDurability2
         sec
@@ -770,7 +780,7 @@
         jsl rlGetItemMaxDurability2
         sta $1C
         stz $1E
-        jsl rlUnknown80A1D8
+        jsl rlUnsignedDivide32By32
         lda $18
         plp
         plb
@@ -778,22 +788,24 @@
 
         .databank 0
 
-      rlUnknown87E294 ; 87/E294
+      rlGetItemRepairCostPerUse ; 87/E294
 
         .al
         .autsiz
         .databank ?
+
+        ; The item's cost divided by its maximum uses.
 
         phb
         php
         phk
         plb
         jsl rlGetItemROMPointerByItemRAMStructEntry
-        jsl rlUnknown87E3D6
+        jsl rlGetItemCost
         sta $1A
         jsl rlGetItemMaxDurability2
         sta $1C
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         lda $1A
         plp
         plb
@@ -1020,11 +1032,13 @@
 
         .databank 0
 
-      rlUnknown87E3D6 ; 87/E3D6
+      rlGetItemCost ; 87/E3D6
 
         .al
         .autsiz
         .databank ?
+
+        ; Returns the Cost field of the item at wCurrentItemDataROMPointer.
 
         phb
         php
@@ -1168,11 +1182,13 @@
 
         .databank 0
 
-      rlUnknown87E459 ; 87/E459
+      rlGetItemDescriptionPointer ; 87/E459
 
         .al
         .autsiz
         .databank ?
+
+        ; Returns a long pointer to the item's description in lRoutineVariable.
 
         phb
         php

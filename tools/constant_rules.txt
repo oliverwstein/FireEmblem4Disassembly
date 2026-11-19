@@ -17,3 +17,6 @@ getter    rlGetItemWeaponRank                       WeaponRank                  
 getter    rlGetEventLocationEntryType               LocationType                         enum
 field     aDeploymentTable\._State(\[0\])?,[bxy,]*  DeploymentState                      bits
 field     structItemRAMEntry\.ItemState,b,[xy]      ItemState                            enum
+setter    rlCheckIfUnitHasSpecifiedPersonalOrClassSkill  SkillID                       enum
+setter    rlCheckIfInventoryItemsHaveSpecifiedSkill      SkillID                       enum
+setter    rlCheckIfUnitHasSpecifiedPersonalSkill         SkillID                       enum

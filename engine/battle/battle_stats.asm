@@ -53,11 +53,13 @@
 
         .databank 0
 
-      rlUnknown84F96E ; 84/F96E
+      rlGetInventorySlotItemSellPrice ; 84/F96E
 
         .al
         .autsiz
         .databank ?
+
+        ; rlGetItemSellPrice for the item in inventory slot wRoutineVariable1, or 0.
 
         phb
         php
@@ -68,7 +70,7 @@
         jsl rlGetItemRAMStructEntryByInventorySlot
         bcs +
 
-        jsl rlUnknown87E230
+        jsl rlGetItemSellPrice
         
         -
         plp
@@ -81,11 +83,13 @@
 
         .databank 0
 
-      rlUnknown84F987 ; 84/F987
+      rlGetInventorySlotItemRepairCost ; 84/F987
 
         .al
         .autsiz
         .databank ?
+
+        ; rlGetItemRepairCost for the item in the inventory slot in A, or 0.
 
         phb
         php
@@ -95,7 +99,7 @@
         jsl rlGetItemRAMStructEntryByInventorySlot
         bcs +
 
-        jsl rlUnknown87E25D
+        jsl rlGetItemRepairCost
         
         -
         plp
@@ -127,14 +131,14 @@
 
         jsl rlGetItemRAMStructEntryByInventorySlot
         jsl rlGetItemROMPointerByItemRAMStructEntry
-        jsl rlUnknown87E3D6 ; get item cost
+        jsl rlGetItemCost ; get item cost
         sta $1A
         jsl rlGetItemMaxDurability2
         sta $1C
-        jsl rlUnknown80A1AB ; divide
+        jsl rlUnsignedDivide16By16R13 ; divide
         lda #20
         sta $1C
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
 
         lda $1A
         clc
@@ -348,11 +352,11 @@
         phk
         plb
         phx
-        lda #$000F
+        lda #SkillIDMiracle
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs +
 
-        lda #$000F
+        lda #SkillIDMiracle
         jsl rlCheckIfInventoryItemsHaveSpecifiedSkill
         bcc _FAFA
         

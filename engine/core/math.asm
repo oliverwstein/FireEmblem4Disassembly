@@ -355,3 +355,133 @@
         .word 10000
 
     .endsection SplitNumberIntoDigitsSection
+
+
+    .section Unsorted80A1ABSection
+
+      .al
+      .xl
+
+      rlUnsignedDivide16By16R13 ; 80/A1AB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Like rlUnsignedDivide16By16, with other registers.
+        ; Inputs: wR13 = dividend, wR14 = divisor.
+        ; Outputs: wR13 = result, wR10 = remainder.
+
+        phx
+        php
+        phb
+        phk
+        plb
+        .databank $80
+        rep #$30
+        stz wR10
+        lda wR14
+        bne _A1BC
+        stz wR13
+        bra _A1D4
+
+
+        _A1BC
+        ldx #$0011
+        clc
+
+        _A1C0
+        rol wR13
+        dec x
+        beq _A1D4
+        rol wR10
+        lda wR10
+        beq _A1C0
+        sec
+        sbc wR14
+        bcc _A1C0
+        sta wR10
+        bra _A1C0
+
+
+        _A1D4
+        plb
+        .databank $80
+        plp
+        plx
+        rtl
+
+        .databank 0
+
+        ; 80/A1D8
+
+      rlUnsignedDivide32By32 ; 80/A1D8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Inputs: wR12-wR13 = 32-bit dividend, wR14-wR15 = 32-bit divisor.
+        ; Outputs: wR12-wR13 = result, wR10-wR11 = remainder.
+
+        phx
+        phy
+        php
+        phb
+        phk
+        plb
+        .databank $80
+        rep #$30
+        stz wR11
+        stz wR10
+        lda wR15
+        ora wR14
+        bne _A1F0
+        stz wR13
+        stz wR12
+        bra _A217
+
+
+        _A1F0
+        ldx #$0021
+        clc
+
+        _A1F4
+        rol wR12
+        rol wR13
+        dec x
+        beq _A217
+        rol wR10
+        rol wR11
+        lda wR11
+        ora wR10
+        beq _A1F4
+        lda wR10
+        sec
+        sbc wR14
+        tay
+        lda wR11
+        sbc wR15
+        bcc _A1F4
+        sta wR11
+        sty wR10
+        bra _A1F4
+
+
+        _A217
+        plb
+        .databank $80
+        plp
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 80/A21C
+
+    .endsection Unsorted80A1ABSection
+
+

@@ -924,13 +924,13 @@
         sta wR14
         lda #0
         sta wR15
-        jsl rlUnknown80A1D8
+        jsl rlUnsignedDivide32By32
 
         lda #60
         sta wR14
         lda #0
         sta wR15
-        jsl rlUnknown80A1D8
+        jsl rlUnsignedDivide32By32
 
         lda wR13
         bne +

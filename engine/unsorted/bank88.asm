@@ -4966,7 +4966,7 @@
         ldx $0772,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown84F4F7
+        jsl rlGetSelectedItemRange
         cmp #$0000
         beq _AB61
         lda wR11

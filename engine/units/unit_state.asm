@@ -434,14 +434,14 @@
 
         lda wRoutineVariable1,b
         jsl rlGetItemRAMStructEntryByPlayerItemIndex
-        jsl rlUnknown87E1FD
+        jsl rlGetItemBuyPrice
         sta wR0
 
-        lda #$001C
+        lda #SkillIDBargain
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs +
 
-        lda #$001C
+        lda #SkillIDBargain
         jsl rlCheckIfInventoryItemsHaveSpecifiedSkill
         bcc ++
         
@@ -488,7 +488,7 @@
         cmp #8
         bcs _End
 
-        jsl rlUnknown84F96E
+        jsl rlGetInventorySlotItemSellPrice
         sta wR0
         jsl rlGetItemROMPointerByItemRAMStructEntry
         jsl rlGetItemWeaponRank

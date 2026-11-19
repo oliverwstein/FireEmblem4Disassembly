@@ -3357,7 +3357,7 @@
         dec x
         dec x
         bne _C1B3
-        jsl rlUnknown87E459
+        jsl rlGetItemDescriptionPointer
         lda lRoutineVariable,b
         sta lR18
         lda lRoutineVariable+1,b
@@ -3459,7 +3459,7 @@
         dec x
         dec x
         bne _C28B
-        jsl rlUnknown87E459
+        jsl rlGetItemDescriptionPointer
         lda lRoutineVariable,b
         sta lR18
         lda lRoutineVariable+1,b

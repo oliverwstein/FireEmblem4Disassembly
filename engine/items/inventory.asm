@@ -573,11 +573,13 @@
         .byte $02 
         .byte $01 
 
-      rlUnknown84F2C6 ; 84/F2C6
+      rlFindItemInSelectedUnitInventory ; 84/F2C6
 
         .al
         .autsiz
         .databank ?
+
+        ; Looks for the item in A in the selected unit's inventory (rlFindRAMStructEntry).
 
         phb
         php
@@ -1086,11 +1088,14 @@
 
         .databank 0
 
-      rlUnknown84F4F7 ; 84/F4F7
+      rlGetSelectedItemRange ; 84/F4F7
 
         .al
         .autsiz
         .databank ?
+
+        ; Output: wR10 = minimum and wR11 = maximum range of the item in
+        ; wSelectedInventorySlot. UnitState0400 adds 1 to the maximum.
 
         phb
         php

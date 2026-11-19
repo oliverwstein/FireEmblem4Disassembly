@@ -236,7 +236,7 @@
         cmp #6
         bne _End
 
-        jsl rlUnknown87E007
+        jsl rlGetItemRAMDataCount
         ora #0
         beq _End
 

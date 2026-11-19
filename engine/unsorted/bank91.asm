@@ -216,7 +216,7 @@
         sta wR13
         lda #$2710
         sta wR14
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         lda wR13
         sta [lR19],y
         inc x
@@ -225,7 +225,7 @@
         sta wR13
         lda #$03E8
         sta wR14
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         lda wR13
         sta [lR19],y
         inc x
@@ -234,7 +234,7 @@
         sta wR13
         lda #$0064
         sta wR14
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
         lda wR13
         sta [lR19],y
         inc x

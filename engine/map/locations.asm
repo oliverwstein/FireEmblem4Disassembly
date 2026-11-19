@@ -1370,7 +1370,7 @@
 
         lda #500
         sta wR14
-        jsl rlUnknown80A1AB
+        jsl rlUnsignedDivide16By16R13
 
         lda wR13
         cmp #9
