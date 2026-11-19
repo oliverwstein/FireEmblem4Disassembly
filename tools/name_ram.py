@@ -29,6 +29,7 @@ from asmlib import ASFLAGS
 SCOPED = [
     # The unit window's variables; bank $89 reuses the area. The debug menu's names there are not scoped.
     (0x7F82C7, 0x7F8438, ('wUnitWindow', 'aUnitWindow'), ('engine/menus/unit_window.asm',)),
+    (0x7F8185, 0x7F92B4, ('wSkillWindow', 'aSkillWindow'), ('engine/menus/skill_window.asm',)),
     # The item window's variables; the map buffers (aTargetDistanceMap...) share the area.
     (0x7F8467, 0x7FAF4F, ('wItemWindow', 'aItemWindow'), ('engine/menus/item_window.asm',)),
 ]

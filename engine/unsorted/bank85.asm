@@ -13875,7 +13875,7 @@
         .autsiz
         .databank ?
 
-        ; Map menu option スキル (Skill): fades into rsUnknown80D2C6 (procMainLoopChangeFade, the routine in aProcSystem.wInput0).
+        ; Map menu option スキル (Skill): fades into rsSkillWindowOpen (procMainLoopChangeFade, the routine in aProcSystem.wInput0).
 
         stz wGameStateRoutine1,b
         lda #$D2C6

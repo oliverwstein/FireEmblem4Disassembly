@@ -50,6 +50,8 @@
   .endfor
 
   ROM = binary("fe4.sfc")
+  .include "engine/menus/skill_window.asm"
+  .include "engine/menus/item_window.asm"
   .include "engine/core/ppu_buffers.asm"
   .include "engine/core/joypad.asm"
   .include "engine/menus/unit_window.asm"

@@ -1850,6 +1850,38 @@
 
   .endvirtual
 
+  .virtual $7F8185
+
+    ; The skill window's working variables (engine/menus/skill_window.asm). Other
+    ; screens reuse this area, so the names are only written in that file.
+
+    wSkillWindowCurrentSkill .word ?                ; $7F8185
+      ; 0-17, the place in the skill list.
+    wSkillWindowCursorRow .word ?                   ; $7F8187
+    wSkillWindowCursorYCoordinate .word ?           ; $7F8189
+    wSkillWindowCursorMoveDirection .word ?         ; $7F818B
+      ; -1 up, 1 down, 0 not moving.
+    wSkillWindowScrolledLines .word ?               ; $7F818D
+    wSkillWindowScrollDirection .word ?             ; $7F818F
+    wSkillWindowUnitCount .word ?                   ; $7F8191
+    .word ?                                         ; $7F8193
+    aSkillWindowUnits .fill $64                     ; $7F8195
+    aSkillWindowSkillHolders .fill $540             ; $7F81F9
+      ; 32 words per skill: unit RAM pointers, ended by 0.
+    .word ?                                         ; $7F8739
+    wSkillWindowHolderScrollDirection .word ?       ; $7F873B
+    wSkillWindowHolderScroll .word ?                ; $7F873D
+    .word ?                                         ; $7F873F
+    aSkillWindowHolderCounts .fill $2C              ; $7F8741
+    wSkillWindowSkillID .word ?                     ; $7F876D
+      ; Used while building aSkillWindowSkillHolders.
+    .fill $1E                                       ; $7F876F
+    aSkillWindowSkillListTilemap .fill $7FE         ; $7F878D
+    aSkillWindowDescriptionTilemap .fill $100       ; $7F8F8B
+    aSkillWindowHolderTilemap .fill $22A            ; $7F908B
+
+  .endvirtual
+
   .virtual $7F8467
 
     ; The item window's working variables (engine/menus/item_window.asm). Other

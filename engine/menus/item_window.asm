@@ -247,7 +247,7 @@
         .autsiz
         .databank ?
 
-        ; Creates the COLDATA HDMA entry whose header is at $80/D07E (rlItemWindowCOLDATAHDMAInit, rlItemWindowCOLDATAHDMACycle).
+        ; Creates the COLDATA HDMA entry whose header is at $80/D07E (rlMapMenuWindowCOLDATAHDMAInit, rlMapMenuWindowCOLDATAHDMACycle).
 
         lda #$8000
         sta lR44+1
@@ -421,7 +421,7 @@
       .al
       .xl
 
-      rlItemWindowCOLDATAHDMAInit ; 80/D089
+      rlMapMenuWindowCOLDATAHDMAInit ; 80/D089
 
         .al
         .xl
@@ -456,7 +456,7 @@
       .al
       .xl
 
-      rlItemWindowCOLDATAHDMACycle ; 80/D0B1
+      rlMapMenuWindowCOLDATAHDMACycle ; 80/D0B1
 
         .al
         .xl

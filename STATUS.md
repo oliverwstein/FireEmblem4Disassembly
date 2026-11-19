@@ -2,12 +2,12 @@
 
 Last updated 2026-11-19. This file records what has been done and what remains, so that work can pick up where it left off. For how to build and how the repository is laid out, see [README.md](README.md). For the tools, see [tools/README.md](tools/README.md).
 
-The goal is source that is **readable and moddable**, in the way pokecrystal and Polished Crystal are.
+The goal is source that is **readable and moddable**, in the way Pokemon Polished Crystal is.
 
 - **Readable:** every routine, variable and field named, constants instead of numbers, data in readable formats, organized by game system.
 - **Moddable, which means shiftable:** you can add instructions to a routine, lengthen a table or add an entry, and the assembler moves everything after it and updates every reference. Matching the ROM byte for byte does not give this by itself. A byte-identical build can still pin code to fixed addresses, so that any change breaks something far away.
 
-Byte-identical output stays the test for every change to the original layout. Shiftability is what makes it worth building from source.
+Byte-identical output remains the test for every change to the original layout. Shiftability is what makes it worth building from source.
 
 ## Where things stand
 

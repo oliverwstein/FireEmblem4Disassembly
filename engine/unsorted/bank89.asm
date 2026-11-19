@@ -4563,9 +4563,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89ABF9+1,x
+        lda aSkillDescriptionPointers+1,x
         sta lR18+1
-        lda aUnknown89ABF9,x
+        lda aSkillDescriptionPointers,x
         sta lR18
         ldx #$0000
         jsl rlDrawMenuTextLine
@@ -4974,7 +4974,7 @@
       .al
       .xl
 
-      aUnknown89ABF9 ; 89/ABF9
+      aSkillDescriptionPointers ; 89/ABF9
 
         ; Read by rsUnknown89A3C0.
 
