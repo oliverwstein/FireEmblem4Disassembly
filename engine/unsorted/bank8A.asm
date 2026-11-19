@@ -1,5 +1,33 @@
 ; Code from bank $8A not yet assigned to a game system.
 
+    .section Unsorted8A8000Section
+
+      .al
+      .xl
+
+      rlUnknown8A8000 ; 8A/8000
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0891,b
+        cmp #$0002
+        beq _800D
+        cmp #$0003
+        beq _800D
+
+        _800D
+        rtl
+
+        .databank 0
+
+        ; 8A/800E
+
+    .endsection Unsorted8A8000Section
+
+
     .section Unsorted8A800ESection
 
       .al
@@ -59,6 +87,41 @@
         ; 8A/8061
 
     .endsection Unsorted8A800ESection
+
+
+    .section Unsorted8A8061Section
+
+      .al
+      .xl
+
+      rlUnknown8A8061 ; 8A/8061
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $8A
+        jsl rlUnknown81B15A
+        jsl rlUnknown81ADD8
+        lda wGameStateStep,b
+        asl a
+        tax
+        jsr ($8A8078,x)
+        plp
+        plb
+        .databank $8A
+        rtl
+
+        .databank 0
+
+        ; 8A/8078
+
+    .endsection Unsorted8A8061Section
 
 
     .section Unsorted8A8496Section

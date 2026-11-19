@@ -852,6 +852,66 @@
     .endsection Unsorted91B131Section
 
 
+    .section Unsorted91D616Section
+
+      .al
+      .xl
+
+      rlUnknown91D616 ; 91/D616
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 91/D617
+
+      rlUnknown91D617 ; 91/D617
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        inc wGameStateRoutine1,b
+        rtl
+
+        .databank 0
+
+        ; 91/D61B
+
+      rlUnknown91D61B ; 91/D61B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $91
+        lda wGameStateStep,b
+        asl a
+        tax
+        jsr ($91D62A,x)
+        plp
+        plb
+        .databank $91
+        rtl
+
+        .databank 0
+
+        ; 91/D62A
+
+    .endsection Unsorted91D616Section
+
+
     .section Unsorted91D69BSection
 
       .al
@@ -2536,6 +2596,53 @@
     .endsection Table91E4B3Section
 
 
+    .section Unsorted91E55ASection
+
+      .al
+      .xl
+
+      rlUnknown91E55A ; 91/E55A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl $91E565
+        lda #$0014
+        sta wGameStateStep,b
+        rtl
+
+        .databank 0
+
+        ; 91/E565
+
+      rlUnknown91E565 ; 91/E565
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0004
+        sta wGameStateRoutine2,b
+        lda #$0005
+        sta wGameStateRoutine1,b
+        lda #$F560
+        sta wVBlankPointer
+        lda #$F542
+        sta wMainLoopPointer
+        stz $1B0B,b
+        jsl $91E92E
+        rtl
+
+        .databank 0
+
+        ; 91/E583
+
+    .endsection Unsorted91E55ASection
+
+
     .section Unsorted91E793Section
 
       .as
@@ -2764,6 +2871,28 @@
         ; 91/E92E
 
     .endsection Unsorted91E915Section
+
+
+    .section Unsorted91E92ESection
+
+      .al
+      .xl
+
+      rlUnknown91E92E ; 91/E92E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsFillSaveSlotDataBuffers
+        rtl
+
+        .databank 0
+
+        ; 91/E932
+
+    .endsection Unsorted91E92ESection
 
 
     .section Unsorted91E932Section

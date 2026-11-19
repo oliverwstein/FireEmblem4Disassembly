@@ -79,6 +79,29 @@
     .endsection Unsorted888197Section
 
 
+    .section Unsorted8881D7Section
+
+      .al
+      .xl
+
+      rlUnknown8881D7 ; 88/81D7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        tsb $0786,b
+        rtl
+
+        .databank 0
+
+        ; 88/81DE
+
+    .endsection Unsorted8881D7Section
+
+
     .section Unsorted8881DESection
 
       .al
@@ -3981,6 +4004,76 @@
         ; 88/A44C
 
     .endsection Unsorted88A395Section
+
+
+    .section Unsorted88A44CSection
+
+      .al
+      .xl
+
+      rlUnknown88A44C ; 88/A44C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown000770,b
+        beq _A4BB
+        lda wVBlankEnabledFramecount
+        and #$0078
+        lsr a
+        lsr a
+        tax
+        lda $88A4BC,x
+        clc
+        adc #$2E29
+        sta $0112,b
+        lda $88A4BC,x
+        clc
+        adc #$00C1
+        sta $0114,b
+        lda $88A4DC,x
+        clc
+        adc #$1E18
+        sta $011A,b
+        lda $88A4DC,x
+        clc
+        adc #$0018
+        sta $011C,b
+        lda $7F442A
+        bne _A4A3
+        lda $88A4DC,x
+        clc
+        adc #$1318
+        sta $010A,b
+        lda $88A4DC,x
+        clc
+        adc #$0210
+        sta $010C,b
+        bra _A4BB
+
+
+        _A4A3
+        lda $88A4DC,x
+        clc
+        adc #$1940
+        sta $010A,b
+        lda $88A4DC,x
+        clc
+        adc #$1020
+        sta $010C,b
+        bra _A4BB
+
+
+        _A4BB
+        rtl
+
+        .databank 0
+
+        ; 88/A4BC
+
+    .endsection Unsorted88A44CSection
 
 
     .section Unsorted88A4FCSection
@@ -8486,6 +8579,32 @@
     .endsection Unsorted88C71CSection
 
 
+    .section Unsorted88C7CFSection
+
+      .al
+      .xl
+
+      rlUnknown88C7CF ; 88/C7CF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        lda wVBlankEnabledFramecount
+        jsl rlUnknown88CC75
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 88/C7D8
+
+    .endsection Unsorted88C7CFSection
+
+
     .section Unsorted88C7D8Section
 
       .al
@@ -10655,6 +10774,167 @@
         ; 88/DDFB
 
     .endsection Unsorted88DD9CSection
+
+
+    .section Unsorted88DE0BSection
+
+      .al
+      .xl
+
+      rlUnknown88DE0B ; 88/DE0B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$008E
+
+        _DE0E
+        lda $7E4DB5,x
+        sta $7E480B,x
+        dec x
+        dec x
+        bpl _DE0E
+        rtl
+
+        .databank 0
+
+        ; 88/DE1B
+
+    .endsection Unsorted88DE0BSection
+
+
+    .section Unsorted88DF8CSection
+
+      .al
+      .xl
+
+      rlUnknown88DF8C ; 88/DF8C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7E486B,x
+        cmp #$FFFF
+        beq _DFA0
+        txa
+        clc
+        adc #$0060
+        tax
+        jsr $88DFDA
+        bra _DFA5
+
+
+        _DFA0
+        jsr $88DFA6
+        bra _DFA5
+
+
+        _DFA5
+        rtl
+
+        .databank 0
+
+        ; 88/DFA6
+
+      rsUnknown88DFA6 ; 88/DFA6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0030
+        cmp #$0000
+        beq _DFBF
+        cmp #$0010
+        beq _DFC4
+        cmp #$0020
+        beq _DFC9
+        cmp #$0030
+        beq _DFCE
+
+        _DFBF
+        lda #$0000
+        bra _DFD3
+
+
+        _DFC4
+        lda #$0080
+        bra _DFD3
+
+
+        _DFC9
+        lda #$0100
+        bra _DFD3
+
+
+        _DFCE
+        lda #$0080
+        bra _DFD3
+
+
+        _DFD3
+        sta $07E6,b
+        jsr rsUnknown88DE40
+        rts
+
+        .databank 0
+
+        ; 88/DFDA
+
+      rsUnknown88DFDA ; 88/DFDA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0030
+        cmp #$0000
+        beq _DFF3
+        cmp #$0010
+        beq _DFF8
+        cmp #$0020
+        beq _DFFD
+        cmp #$0030
+        beq _E002
+
+        _DFF3
+        lda #$0000
+        bra _E007
+
+
+        _DFF8
+        lda #$00C0
+        bra _E007
+
+
+        _DFFD
+        lda #$0180
+        bra _E007
+
+
+        _E002
+        lda #$00C0
+        bra _E007
+
+
+        _E007
+        sta $07E6,b
+        jsr rsUnknown88DE9E
+        rts
+
+        .databank 0
+
+        ; 88/E00E
+
+    .endsection Unsorted88DF8CSection
 
 
     .section Unsorted88E401Section

@@ -11,7 +11,12 @@ jmp, jml, bra, brl) beyond which no branch inside the routine leads.
 The accumulator and index registers start 16-bit unless --m8/--x8 say otherwise.
 Widths then follow rep/sep, and each branch carries its widths to its target, so
 the output declares .al/.as/.xl/.xs wherever a label is reached with widths that
-differ from the code just above it. The data bank is followed through
+differ from the code just above it.
+
+If fe4.cdl (a Mesen code/data log, see tools/cdl.py) is present and was recorded
+from this ROM, every instruction the log shows as executed takes its widths from
+the log instead. That covers what rep/sep tracking cannot see, such as a routine
+that returns with other widths than it was called with. --no-log turns this off. The data bank is followed through
 `phk / plb` and `lda #bank / pha / plb`, and declared with .databank.
 
 Operands use the names in labels.txt (written by ./build.sh) where exactly one
@@ -22,9 +27,10 @@ The output goes to standard output. It should match the ROM as written; check it
 with tools/test_routines.py after saving it to a wip/ file, then give it names.
 
 --selftest disassembles every routine already in the build and checks that the
-output reassembles to the same bytes. Run it after changing this tool.
+output reassembles to the same bytes, without and then with the log's widths.
+Run it after changing this tool.
 """
-import argparse, glob, os, re, subprocess, sys, tempfile
+import argparse, binascii, glob, os, re, struct, subprocess, sys, tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from asmlib import read_rom, offset, ASFLAGS
@@ -86,12 +92,42 @@ def load_labels(path):
     return names
 
 
+LOG_PATH = 'fe4.cdl'
+USE_LOG = True
+_log = None
+
+
+def width_log():
+    """The flag bytes of fe4.cdl if it exists and was recorded from fe4.sfc, else None."""
+    global _log
+    if _log is None:
+        _log = b''
+        if os.path.exists(LOG_PATH):
+            raw = open(LOG_PATH, 'rb').read()
+            if (raw[:5] == b'CDLv2' and len(raw) == 9 + 0x400000
+                    and struct.unpack('<I', raw[5:9])[0] == binascii.crc32(read_rom()) & 0xFFFFFFFF):
+                _log = raw[9:]
+    return _log or None
+
+
+LOG_CODE, LOG_X8, LOG_M8 = 0x01, 0x10, 0x20
+
+
 class Disassembler:
-    def __init__(self, rom, labels, start, end, m8, x8):
+    def __init__(self, rom, labels, start, end, m8, x8, use_log=None):
         self.rom, self.labels = rom, labels
         self.start, self.end = start, end
         self.bank = start & 0xFF0000
+        self.log = width_log() if (USE_LOG if use_log is None else use_log) else None
+        m8, x8 = self.logged_widths(start, m8, x8)
         self.m8, self.x8 = m8, x8
+
+    def logged_widths(self, addr, m8, x8):
+        """The widths the log shows addr executed with, or (m8, x8) if it never ran."""
+        if self.log and self.log[offset(addr)] & LOG_CODE:
+            f = self.log[offset(addr)]
+            return bool(f & LOG_M8), bool(f & LOG_X8)
+        return m8, x8
 
     def byte(self, addr):
         return self.rom[offset(addr)]
@@ -150,6 +186,7 @@ class Disassembler:
                                       m8=m8, x8=x8, db=db, ends=True, args=0, target=None))
                     pc += n
                     continue
+            m8, x8 = self.logged_widths(pc, m8, x8)
             op = self.byte(pc)
             mn, mode = OPS[op]
             size = SIZE[mode]
@@ -361,10 +398,11 @@ class Disassembler:
             if pc in local:
                 out.append('')
                 out.append(f'        {local[pc]}')
-                if ins['m8'] != asm_m:
-                    out.append('        .as' if ins['m8'] else '        .al')
-                if ins['x8'] != asm_x:
-                    out.append('        .xs' if ins['x8'] else '        .xl')
+            # At labels, and wherever the log shows widths changed without rep/sep.
+            if ins['m8'] != asm_m:
+                out.append('        .as' if ins['m8'] else '        .al')
+            if ins['x8'] != asm_x:
+                out.append('        .xs' if ins['x8'] else '        .xl')
             asm_m, asm_x = ins['m8'], ins['x8']
             mn = STYLE.get(ins['mn'], ins['mn'])
             if ins['mode'] == 'data':
@@ -397,7 +435,7 @@ class Disassembler:
         return '\n'.join(out) + '\n'
 
 
-def selftest(rom, labels):
+def selftest(rom, labels, use_log=False):
     """Disassemble every routine already in the build and check that it reassembles to
     the ROM's bytes. Starting widths come from each routine's existing source. ROM names
     are left out, since the test assembles without the engine files."""
@@ -416,7 +454,7 @@ def selftest(rom, labels):
     for a, name, m8, x8 in starts:
         if a < done:
             continue
-        d = Disassembler(rom, ram, a, None, m8, x8)
+        d = Disassembler(rom, ram, a, None, m8, x8, use_log=use_log)
         text = d.render(f'test{a:06X}')
         done = d.stop_pc
         ranges.append((a, d.stop_pc, name))
@@ -448,11 +486,19 @@ def main():
     ap.add_argument('--x8', action='store_true', help='index registers start 8-bit')
     ap.add_argument('--name', help='label for the routine (default rlUnknownXXXXXX)')
     ap.add_argument('--labels', default='labels.txt')
+    ap.add_argument('--no-log', action='store_true', help='ignore fe4.cdl')
     ap.add_argument('--selftest', action='store_true',
                     help='check the disassembler against every routine already in the build')
     a = ap.parse_args()
+    global USE_LOG
+    USE_LOG = not a.no_log
     if a.selftest:
-        return selftest(read_rom(), load_labels(a.labels))
+        # Static width tracking first, then with the log's widths.
+        r = selftest(read_rom(), load_labels(a.labels))
+        if USE_LOG and width_log():
+            print('with the widths from fe4.cdl:')
+            r |= selftest(read_rom(), load_labels(a.labels), use_log=True)
+        return r
     if not a.start:
         ap.error('START is required')
     start = parse_addr(a.start)

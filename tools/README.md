@@ -31,7 +31,7 @@ The files in `wip/` are routines files. Each tool assembles the file in a tempor
 
 | Tool | Purpose |
 |---|---|
-| `disasm.py START [END]` | Disassembles code from the ROM into a routine in the project's style, following register widths and the data bank and using existing names. Without END it stops where the routine ends. `--selftest` checks it against every routine already in the build. |
+| `disasm.py START [END]` | Disassembles code from the ROM into a routine in the project's style, following register widths and the data bank and using existing names. Where `fe4.cdl` shows an instruction ran, it takes the widths from the log (`--no-log` to turn this off). Without END it stops where the routine ends. `--selftest` checks it against every routine already in the build. |
 | `trace.py` | Follows calls, jumps, engine definitions, proc scripts and jump tables from every built routine into code that is not built yet, and disassembles what it finds. `--list` shows each routine with a caller and warnings; `--write FILE` writes them as a routines file. |
 | `proc_scripts.py FILE` | Writes proc scripts and unlabelled proc headers that are not built yet as a routines file, using the `PROC_*` macros. `procs.py` holds the script format it and `trace.py` use. |
 | `move_sections.py SPEC` | Moves whole sections between engine files (SPEC lines: section name, target file). Cannot change the ROM. |

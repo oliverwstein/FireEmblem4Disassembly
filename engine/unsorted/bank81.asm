@@ -295,6 +295,72 @@
     .endsection Unsorted818EABSection
 
 
+    .section Unsorted81A800Section
+
+      .al
+      .xl
+
+      rlUnknown81A800 ; 81/A800
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl $88C7CF
+        jsl $88A44C
+        lda wMapScrollXPixels,b
+        sta wBufferBG1HOFS
+        lda wMapScrollYPixels,b
+        sta wBufferBG1VOFS
+        rtl
+
+        .databank 0
+
+        ; 81/A813
+
+      rlUnknown81A813 ; 81/A813
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown000D79,b
+        and #$4005
+        sta wUnknown000D79,b
+        lda #(`aMapMenuRAMArea)<<8
+        sta lR18+1
+        lda #<>aMapMenuRAMArea
+        sta lR18
+        lda #$0001
+        sta wStructIndex,b
+        lda #$0E57
+        jsl rlBuildRAMAreaHeaderAndGuidingEntry
+        jsl rlEnableActiveSpriteEngine
+        jsl rlUnknown818064
+        lda wUnknown00171A,b
+        bne _A84E
+        lda #(`procFadeIn)<<8
+        sta lR44+1
+        lda #<>procFadeIn
+        sta lR44
+        jsl rlProcEngineCreateProc
+
+        _A84E
+        jsl rlCreateUnitWindowAndTerrainWindowProcs
+        inc wGameStateRoutine1,b
+        lda $0D7B,b
+        sta wGameStateStep,b
+        rtl
+
+        .databank 0
+
+        ; 81/A85C
+
+    .endsection Unsorted81A800Section
+
+
     .section Unsorted81A85CSection
 
       .al

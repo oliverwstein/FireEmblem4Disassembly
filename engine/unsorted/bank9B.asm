@@ -1,5 +1,1578 @@
 ; Code from bank $9B not yet assigned to a game system.
 
+    .section Unsorted9BDC24Section
+
+      .al
+      .xl
+
+      rlUnknown9BDC24 ; 9B/DC24
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlProcEngineResetProcEngine
+        jsl $9BE05D
+        jsl rlResetHDMAEngine
+        jsl $95F1A9
+        jsl $96B93A
+        jsl $95EA47
+        jsl $9BF3F3
+        jsl rlUnknown96D659
+        jsl $95F741
+        jsl $95F7F7
+        jsl $95F87F
+        jsl $9BEAA5
+        lda #$0000
+        sta $7FE09E
+        lda $7FD8B9
+        and #$00FF
+        bne _DCA7
+        jsl $9BFB7E
+        jsl rlUnknown809654
+        lda #$0000
+        sep #$20
+        sta $7FD000
+        lda #$00
+        sta $7FD8B5
+        sta $7FD075
+        sta $7FD8B7
+        lda $7FD8BA
+        ora #$08
+        sta $7FD8BA
+        stz $0CC4,b
+        rep #$20
+        stz $0CC7,b
+
+        _DCA0
+        inc wGameStateRoutine1,b
+        stz wGameStateStep,b
+        rtl
+
+
+        _DCA7
+        jsl $9BDE12
+        jsl $9BDE69
+        sep #$20
+        stz $0CC4,b
+        rep #$20
+        stz $0CC7,b
+        bra _DCA0
+
+        .databank 0
+
+        ; 9B/DCBB
+
+      rlUnknown9BDCBB ; 9B/DCBB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $7FD075
+        beq _DCC7
+        lda #$80
+        bra _DCC9
+
+
+        _DCC7
+        lda bBufferINIDISP
+
+        _DCC9
+        sta $2100,b
+        rep #$20
+        lda $7FD000
+        and #$00FF
+        cmp #$0000
+        beq _DCE5
+        cmp #$0001
+        beq _DCEB
+        jsl $9BDDE3
+        bra _DCEF
+
+
+        _DCE5
+        jsl $9BDD02
+        bra _DCEF
+
+
+        _DCEB
+        jsl $9BDD9A
+
+        _DCEF
+        lda $7FD001
+        inc a
+        sta $7FD001
+        lda $7FE09E
+        inc a
+        sta $7FE09E
+        rtl
+
+        .databank 0
+
+        ; 9B/DD02
+
+      rlUnknown9BDD02 ; 9B/DD02
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FD8BA
+        bit #$0004
+        bne _DD4C
+        lda $7FD8B9
+        and #$00FF
+        bne _DD46
+        lda $7FD8BA
+        bit #$0001
+        beq _DD29
+        sep #$20
+        and #$FE
+        sta $7FD8BA
+        rep #$20
+        bra _DD46
+
+
+        _DD29
+        jsl $95F13C
+        bcc _DD62
+        lda #$000A
+        jsl rlUnknown808FAD
+        sep #$20
+        lda $7FD8BA
+        ora #$01
+        sta $7FD8BA
+        rep #$20
+        bra _DD62
+
+
+        _DD46
+        jsl $9BDE12
+        bra _DD99
+
+
+        _DD4C
+        lda bDecompressionArrayFlag,b
+        and #$00FF
+        bne _DD99
+        lda $04F4,b
+        and #$00FF
+        bne _DD99
+        jsl $9BDE69
+        bra _DD99
+
+
+        _DD62
+        jsl $9BE184
+        jsr $9BE08A
+        jsr $9BE128
+        jsl $95F1D5
+        jsl $96BBE2
+        jsl $95F14D
+        jsl rlUnknown96D695
+        jsl $96CB44
+        jsl $96A532
+        jsl $95F89A
+        jsl $9BF179
+        lda $7FD8B5
+        and #$00FF
+        beq _DD99
+        jsl $9BDFAA
+
+        _DD99
+        rtl
+
+        .databank 0
+
+        ; 9B/DD9A
+
+      rlUnknown9BDD9A ; 9B/DD9A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FD8BA
+        bit #$0002
+        beq _DDAD
+        jsl $95F12B
+        bcc _DDAD
+        jsl $9BDFF3
+
+        _DDAD
+        jsl $9BE184
+        jsr $9BE08A
+        jsr $9BE128
+        jsl $95F1D5
+        jsl $96BBE2
+        jsl $95F14D
+        jsl rlUnknown96D695
+        jsl $96A532
+        jsl $96CB44
+        jsl $95F89A
+        lda $7FD8B5
+        and #$00FF
+        beq _DDE2
+        jsl $9BDFAA
+        bra _DDE2
+
+
+        _DDE2
+        rtl
+
+        .databank 0
+
+        ; 9B/DDE3
+
+      rlUnknown9BDDE3 ; 9B/DDE3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl $9BE184
+        jsr $9BE08A
+        jsr $9BE128
+        jsl $95F1D5
+        jsl $96BBE2
+        jsl $95F14D
+        jsl rlUnknown96D695
+        jsl $95F89A
+        lda $7FD8B5
+        and #$00FF
+        beq _DE11
+        stz wGameStateRoutine1,b
+        jsl $91E55A
+
+        _DE11
+        rtl
+
+        .databank 0
+
+        ; 9B/DE12
+
+      rlUnknown9BDE12 ; 9B/DE12
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlResetHDMAEngine
+        jsl $95F87F
+        jsl rlUnknown96D659
+        jsl rlUnknown82E073
+        lda #$0000
+        sta $7FE18A
+        sep #$20
+        sta $7FECF4
+        sta $7FD08B
+        sta $7FD075
+        rep #$20
+        jsl $9BE05D
+        lda #$9700
+        sta $7FD004
+        lda #$F12D
+        sta $7FD003
+        jsl $95F1A9
+        sep #$20
+        lda $7FD8BA
+        ora #$04
+        sta $7FD8BA
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 9B/DE69
+
+      rlUnknown9BDE69 ; 9B/DE69
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDisableVBlank
+        sep #$20
+        lda #$01
+        sta $7FD000
+        rep #$20
+        jsl $95EF54
+        jsl $95F12A
+        ldx #$0000
+        lda #$9900
+        sta lR18+1
+        lda #$FEAC
+        sta lR18
+        jsl $95F967
+        jsl $9BFD71
+        jsl $9BFD8C
+        jsl $9BFD99
+        jsl $9BFDA6
+        jsl $9BFDB3
+        jsl $9BFDC0
+        jsl $9BFDD2
+        jsl $9BFDDF
+        jsl $9BFDEC
+        jsl $9BFDF9
+        jsl $9BFE06
+        lda #$9B00
+        sta lR18+1
+        lda #$DF09
+        sta lR18
+        jsl $96BD1A
+        lda #$0000
+        sta wBufferBG1HOFS
+        sta wBufferBG1VOFS
+        sta wBufferBG2HOFS
+        lda #$0020
+        sta wBufferBG2VOFS
+        sep #$20
+        lda #$E0
+        sta $2132,b
+        lda #$00
+        sta $7FD075
+        rep #$20
+        lda #$0000
+        sta aBGPaletteBuffer,b
+        jsl $9BEAA5
+        jsl $9BFBA9
+        jsl rlUnknown809654
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 9B/DF09
+
+    .endsection Unsorted9BDC24Section
+
+
+    .section Unsorted9BDFAASection
+
+      .al
+      .xl
+
+      rlUnknown9BDFAA ; 9B/DFAA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sei
+        jsl rlDisableVBlank
+        jsl $9BF297
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlResetHDMAEngine
+        sep #$20
+        lda #$00
+        sta $7FD000
+        lda #$00
+        sta $7FD8B5
+        rep #$20
+        jsl $9BE05D
+        lda #$9700
+        sta $7FD004
+        lda #$EC63
+        sta $7FD003
+        lda #$9000
+        sta lR18+1
+        lda #$E8CE
+        sta lR18
+        jsl rlUnknown80C1FC
+        rtl
+
+        .databank 0
+
+        ; 9B/DFF3
+
+      rlUnknown9BDFF3 ; 9B/DFF3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$001E
+        jsl rlUnknown808FAD
+        jsl rlResetHDMAEngine
+        jsl rlUnknown96D659
+        jsl $95F741
+        jsl $95F7F7
+        lda #$0000
+        sta $7FE18A
+        sep #$20
+        sta $7FECF4
+        sta $7FD08B
+        sta $7FD075
+        lda #$02
+        sta $7FD000
+        lda #$00
+        sta $7FD8B5
+        rep #$20
+        jsl $9BE05D
+        lda #$9700
+        sta $7FD004
+        lda #$F15D
+        sta $7FD003
+        jsl $95F1BF
+        ldx #$0000
+        lda #$9900
+        sta lR18+1
+        lda #$FEAC
+        sta lR18
+        jsl $95F967
+        sep #$20
+        lda #$0F
+        sta bBufferINIDISP
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 9B/E05D
+
+      rlUnknown9BE05D ; 9B/E05D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0000
+        sta $7FD001
+        lda #$9700
+        sta $7FD004
+        lda #$EC63
+        sta $7FD003
+        ldx #$0000
+
+        _E076
+        lda #$0000
+        sta $7FD006,x
+        txa
+        clc
+        adc #$0004
+        tax
+        cpx #$0040
+        bcc _E076
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/E08A
+
+      rsUnknown9BE08A ; 9B/E08A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7FD003
+        sta lR18
+        lda $7FD004
+        sta lR18+1
+        ldy #$0000
+        lda [lR18],y
+        cmp $7FD001
+        beq _E0A5
+        bcs _E0F3
+
+        _E0A5
+        inc y
+        inc y
+
+        _E0A7
+        lda [lR18],y
+        inc y
+        and #$00FF
+        cmp #$00FF
+        beq _E0E9
+        bit #$0080
+        beq _E0BD
+        jsl $9BE0F6
+        bra _E0E7
+
+
+        _E0BD
+        sta wR10
+        lda #$0004
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        ldx wR12
+        sep #$20
+        lda $7FD006,x
+        ora #$01
+        sta $7FD006,x
+        lda [lR18],y
+        inc y
+        sta $7FD007,x
+        rep #$20
+        lda [lR18],y
+        inc y
+        inc y
+        sta $7FD008,x
+
+        _E0E7
+        bra _E0A7
+
+
+        _E0E9
+        tya
+        clc
+        adc $7FD003
+        sta $7FD003
+
+        _E0F3
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 9B/E0F6
+
+      rlUnknown9BE0F6 ; 9B/E0F6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        and #$007F
+        sta wR0
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+        phb
+        jsl _E109
+        plb
+        .databank ?
+        bra _E121
+
+
+        _E109
+        lda [lR18],y
+        inc y
+        sta lR19
+        lda [lR18],y
+        inc y
+        inc y
+        sta lR19+1
+        sep #$20
+        lda lR19+2
+        pha
+        plb
+        .databank ?
+        rep #$20
+        lda wR0
+        jml [lR19]
+
+
+        _E121
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        rtl
+
+        .databank 0
+
+        ; 9B/E128
+
+      rsUnknown9BE128 ; 9B/E128
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+
+        _E12C
+        lda $7FD006,x
+        bit #$0001
+        beq _E152
+        phb
+        jsl _E13D
+        plb
+        .databank ?
+        bra _E152
+
+
+        _E13D
+        lda $7FD007,x
+        sta lR18
+        sep #$20
+        lda $7FD009,x
+        sta lR18+2
+        pha
+        plb
+        .databank ?
+        rep #$20
+        jml [lR18]
+
+
+        _E152
+        txa
+        clc
+        adc #$0004
+        tax
+        cpx #$0040
+        bcc _E12C
+        plx
+        rts
+
+        .databank 0
+
+        ; 9B/E15F
+
+    .endsection Unsorted9BDFAASection
+
+
+    .section Unsorted9BE179Section
+
+      .al
+      .xl
+
+      rlUnknown9BE179 ; 9B/E179
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$08
+        sta $7FD074
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 9B/E184
+
+      rlUnknown9BE184 ; 9B/E184
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+        sep #$20
+        lda $7FD074
+        cmp #$02
+        bcc _E1A4
+        dec a
+        sta $7FD06B,x
+        lda #$00
+        sta $7FD06C,x
+        sta $7FD06D,x
+        inc x
+        inc x
+        inc x
+
+        _E1A4
+        lda #$01
+        sta $7FD06B,x
+        lda bBufferTM
+        sta $7FD06C,x
+        lda bBufferTS
+        sta $7FD06D,x
+        lda #$00
+        sta $7FD06E,x
+        rep #$20
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/E1C0
+
+      rlUnknown9BE1C0 ; 9B/E1C0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+        lda #$0080
+
+        _E1C7
+        sta $7E8B88,x
+        inc x
+        inc x
+        cpx #$0140
+        bcc _E1C7
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $0140, $80, $FE00
+
+        sep #$20
+        rep #$10
+        ldx #$426A
+        stx DecompressionVariables
+        lda #$F3
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $6000, $80, $0000
+
+        sep #$20
+        rep #$10
+        ldx #$0F1E
+        stx DecompressionVariables
+        lda #$F4
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $1000, $80, $6000
+
+        sep #$20
+        rep #$10
+        ldx #$68D3
+        stx DecompressionVariables
+        lda #$F4
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $2000, $80, $C000
+
+        sep #$20
+        rep #$10
+        ldx #$7CBD
+        stx DecompressionVariables
+        lda #$F4
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $0800, $80, $E000
+
+        ldx #$0000
+
+        _E286
+        lda $E02299,x
+        sta $0162,b,x
+        lda $E023B1,x
+        sta $0142,b,x
+        lda $E02787,x
+        sta $0102,b,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc _E286
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/E2A4
+
+    .endsection Unsorted9BE179Section
+
+
+    .section Unsorted9BEAA5Section
+
+      .al
+      .xl
+
+      rlUnknown9BEAA5 ; 9B/EAA5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $7FD8A5
+        sta $7FD8A8
+        rtl
+
+        .databank 0
+
+        ; 9B/EAB1
+
+    .endsection Unsorted9BEAA5Section
+
+
+    .section Unsorted9BEAE8Section
+
+      .al
+      .xl
+
+      rlUnknown9BEAE8 ; 9B/EAE8
+
+        ; Reads the stack above its return address, but in the emulator log every
+        ; caller continues right after the call: no inline arguments.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FD08F,x
+        bit #$0001
+        bne _EAF6
+        jml _EC6C
+
+
+        _EAF6
+        bit #$0002
+        beq _EB03
+        jsl $9BEC6E
+        jml _EC6C
+
+
+        _EB03
+        sep #$20
+        lda $7FD0EF,x
+        dec a
+        and #$0F
+        sta $7FD0EF,x
+        rep #$20
+        phx
+        lda $7FD090,x
+        pha
+        lda $7FD092,x
+        pha
+        lda $7FD099,x
+        pha
+        lda $7FD0EF,x
+        and #$00FF
+        clc
+        adc #7,s
+        tax
+        pla
+        sep #$20
+        sta $7FD0DF,x
+        rep #$20
+        lda #5,s
+        tax
+        lda $7FD0EF,x
+        and #$00FF
+        asl a
+        clc
+        adc #5,s
+        tax
+        pla
+        sta $7FD0BF,x
+        pla
+        sta $7FD09F,x
+        plx
+        lda $7FD001
+        bit #$0001
+        beq _EB62
+        bit #$0002
+        bne _EBA3
+        jml _EBE5
+
+
+        _EB62
+        phx
+        lda $7FD0EF,x
+        clc
+        adc $7FD0F0,x
+        dec a
+        and #$000F
+        clc
+        adc #1,s
+        tax
+        lda $7FD0DF,x
+        and #$00FF
+        sta wR9
+        lda #1,s
+        tax
+        lda $7FD0EF,x
+        clc
+        adc $7FD0F0,x
+        dec a
+        and #$000F
+        asl a
+        clc
+        adc #1,s
+        tax
+        lda $7FD09F,x
+        sta wR0
+        lda $7FD0BF,x
+        sta wR1
+        plx
+        jml _EC33
+
+
+        _EBA3
+        phx
+        lda $7FD0F0,x
+        asl a
+        dec a
+        clc
+        adc $7FD0EF,x
+        and #$000F
+        clc
+        adc #1,s
+        tax
+        sep #$20
+        lda $7FD0DF,x
+        sta wR9
+        rep #$20
+        lda #1,s
+        tax
+        lda $7FD0F0,x
+        asl a
+        dec a
+        clc
+        adc $7FD0EF,x
+        and #$000F
+        asl a
+        clc
+        adc #1,s
+        tax
+        lda $7FD09F,x
+        sta wR0
+        lda $7FD0BF,x
+        sta wR1
+        plx
+        bra _EC33
+
+
+        _EBE5
+        phx
+        lda $7FD0F0,x
+        pha
+        asl a
+        clc
+        adc #1,s
+        sta #1,s
+        pla
+        dec a
+        clc
+        adc $7FD0EF,x
+        and #$000F
+        clc
+        adc #1,s
+        tax
+        sep #$20
+        lda $7FD0DF,x
+        sta wR9
+        rep #$20
+        lda #1,s
+        tax
+        lda $7FD0F0,x
+        pha
+        asl a
+        clc
+        adc #1,s
+        sta #1,s
+        pla
+        dec a
+        clc
+        adc $7FD0EF,x
+        and #$000F
+        asl a
+        clc
+        adc #1,s
+        tax
+        lda $7FD09F,x
+        sta wR0
+        lda $7FD0BF,x
+        sta wR1
+        plx
+
+        _EC33
+        lda $7FD095,x
+        sta lR18+1
+        lda $7FD097,x
+        sta lR18
+        lda wR9
+        and #$00FF
+        asl a
+        tay
+        lda [lR18],y
+        clc
+        adc $7FD097,x
+        tay
+        lda $7FD09B,x
+        sta wR5
+        lda $7FD09D,x
+        sta wR4
+        sep #$20
+        phb
+        lda $7FD096,x
+        pha
+        plb
+        .databank ?
+        rep #$20
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+        plb
+        .databank ?
+
+        _EC6C
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/EC6E
+
+      rlUnknown9BEC6E ; 9B/EC6E
+
+        ; TRACE: stack-args
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sep #$20
+        lda $7FD0EF,x
+        dec a
+        and #$0F
+        sta $7FD0EF,x
+        rep #$20
+        phx
+        lda $7FD090,x
+        pha
+        lda $7FD092,x
+        pha
+        lda $7FD0FB,x
+        pha
+        lda $7FD0EF,x
+        and #$00FF
+        clc
+        adc #7,s
+        tax
+        pla
+        sep #$20
+        sta $7FD0DF,x
+        rep #$20
+        lda #5,s
+        tax
+        lda $7FD0EF,x
+        and #$00FF
+        asl a
+        clc
+        adc #5,s
+        tax
+        pla
+        sta $7FD0BF,x
+        pla
+        sta $7FD09F,x
+        plx
+        phx
+        lda $7FD0EF,x
+        clc
+        adc $7FD0F0,x
+        dec a
+        and #$000F
+        clc
+        adc #1,s
+        tax
+        lda $7FD0DF,x
+        and #$00FF
+        sta wR9
+        lda #1,s
+        tax
+        lda $7FD0EF,x
+        clc
+        adc $7FD0F0,x
+        dec a
+        and #$000F
+        asl a
+        clc
+        adc #1,s
+        tax
+        lda $7FD09F,x
+        sta wR0
+        lda $7FD0BF,x
+        sta wR1
+        plx
+        jsr $9BED9D
+        lda $7FD001
+        bit #$0001
+        bne _ED4A
+        phx
+        lda $7FD0F0,x
+        asl a
+        dec a
+        clc
+        adc $7FD0EF,x
+        and #$000F
+        clc
+        adc #1,s
+        tax
+        sep #$20
+        lda $7FD0DF,x
+        sta wR9
+        rep #$20
+        lda #1,s
+        tax
+        lda $7FD0F0,x
+        asl a
+        dec a
+        clc
+        adc $7FD0EF,x
+        and #$000F
+        asl a
+        clc
+        adc #1,s
+        tax
+        lda $7FD09F,x
+        sta wR0
+        lda $7FD0BF,x
+        sta wR1
+        plx
+        jsr $9BED9D
+        bra _ED9B
+
+
+        _ED4A
+        phx
+        lda $7FD0F0,x
+        pha
+        asl a
+        clc
+        adc #1,s
+        sta #1,s
+        pla
+        dec a
+        clc
+        adc $7FD0EF,x
+        and #$000F
+        clc
+        adc #1,s
+        tax
+        sep #$20
+        lda $7FD0DF,x
+        sta wR9
+        rep #$20
+        lda #1,s
+        tax
+        lda $7FD0F0,x
+        pha
+        asl a
+        clc
+        adc #1,s
+        sta #1,s
+        pla
+        dec a
+        clc
+        adc $7FD0EF,x
+        and #$000F
+        asl a
+        clc
+        adc #1,s
+        tax
+        lda $7FD09F,x
+        sta wR0
+        lda $7FD0BF,x
+        sta wR1
+        plx
+        jsr $9BED9D
+
+        _ED9B
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/ED9D
+
+      rsUnknown9BED9D ; 9B/ED9D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FD095,x
+        sta lR18+1
+        lda $7FD097,x
+        sta lR18
+        lda wR9
+        and #$00FF
+        asl a
+        tay
+        lda [lR18],y
+        clc
+        adc $7FD097,x
+        tay
+        lda $7FD0FD,x
+        sta wR5
+        lda $7FD0FF,x
+        sta wR4
+        sep #$20
+        phb
+        lda $7FD096,x
+        pha
+        plb
+        .databank ?
+        rep #$20
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 9B/EDD7
+
+    .endsection Unsorted9BEAE8Section
+
+
+    .section Unsorted9BF179Section
+
+      .al
+      .xl
+
+      rlUnknown9BF179 ; 9B/F179
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda bBufferINIDISP
+        bit #$80
+        beq _F1A3
+        sta $7FD8AD
+        sta $7FD8AE
+        sta $7FD8AF
+        sta $7FD8B0
+        sta $7FD8B1
+        sta $7FD8B2
+        sta $7FD8B3
+        sta $7FD8B4
+        bra _F1F1
+
+
+        _F1A3
+        dec a
+        dec a
+        bpl _F1A9
+        lda #$00
+
+        _F1A9
+        sta $7FD8AD
+        dec a
+        dec a
+        bpl _F1B3
+        lda #$00
+
+        _F1B3
+        sta $7FD8AE
+        dec a
+        dec a
+        bpl _F1BD
+        lda #$00
+
+        _F1BD
+        sta $7FD8AF
+        dec a
+        dec a
+        bpl _F1C7
+        lda #$00
+
+        _F1C7
+        sta $7FD8B0
+        dec a
+        dec a
+        bpl _F1D1
+        lda #$00
+
+        _F1D1
+        sta $7FD8B1
+        dec a
+        dec a
+        bpl _F1DB
+        lda #$00
+
+        _F1DB
+        sta $7FD8B2
+        dec a
+        bpl _F1E4
+        lda #$00
+
+        _F1E4
+        sta $7FD8B3
+        dec a
+        bpl _F1ED
+        lda #$00
+
+        _F1ED
+        sta $7FD8B4
+
+        _F1F1
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 9B/F1F4
+
+    .endsection Unsorted9BF179Section
+
+
+    .section Unsorted9BF297Section
+
+      .al
+      .xl
+
+      rlUnknown9BF297 ; 9B/F297
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+
+        _F299
+        lda $4212,b
+        bit #$80
+        bne _F299
+
+        _F2A0
+        lda $4212,b
+        bit #$80
+        beq _F2A0
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 9B/F2AA
+
+    .endsection Unsorted9BF297Section
+
+
+    .section Unsorted9BF3F3Section
+
+      .al
+      .xl
+
+      rlUnknown9BF3F3 ; 9B/F3F3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0000
+        txa
+
+        _F3F7
+        sta $7E9188,x
+        inc x
+        inc x
+        cpx #$0600
+        bcc _F3F7
+        ldx #$0000
+
+        _F405
+        lda $E024E3,x
+        and #$001F
+        sta $7E8B88,x
+        lda $E024E3,x
+        and #$03E0
+        sta $7E8D88,x
+        lda $E024E3,x
+        and #$7C00
+        xba
+        sta $7E8F88,x
+        inc x
+        inc x
+        cpx #$0184
+        bcc _F405
+        lda #$8000
+        sta $2181,b
+        sep #$20
+        lda #$01
+        sta $2183,b
+        rep #$20
+        ldy #$0021
+
+        _F440
+        ldx #$0000
+
+        _F443
+        lda $7E8B88,x
+        clc
+        adc $7E9188,x
+        sta $7E9188,x
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        pha
+        lda $7E8D88,x
+        clc
+        adc $7E9388,x
+        sta $7E9388,x
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        and #$03E0
+        ora #1,s
+        sta #1,s
+        lda $7E8F88,x
+        clc
+        adc $7E9588,x
+        sta $7E9588,x
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        xba
+        and #$7C00
+        ora #1,s
+        sep #$20
+        sta $2180,b
+        xba
+        sta $2180,b
+        rep #$20
+        pla
+        inc x
+        inc x
+        cpx #$0184
+        bcc _F443
+        dec y
+        bne _F440
+        rtl
+
+        .databank 0
+
+        ; 9B/F49E
+
+    .endsection Unsorted9BF3F3Section
+
+
+    .section Unsorted9BFB7ESection
+
+      .al
+      .xl
+
+      rlUnknown9BFB7E ; 9B/FB7E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $04EA,b
+        and #$EF
+        sta $04EA,b
+        rep #$20
+        lda #$0001
+        sta $04BA,b
+        sep #$20
+        lda $7FD8BA
+        and #$F7
+        sta $7FD8BA
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 9B/FB9F
+
+    .endsection Unsorted9BFB7ESection
+
+
+    .section Unsorted9BFBA9Section
+
+      .al
+      .xl
+
+      rlUnknown9BFBA9 ; 9B/FBA9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0003
+        sta $04BA,b
+        rtl
+
+        .databank 0
+
+        ; 9B/FBB0
+
+    .endsection Unsorted9BFBA9Section
+
+
     .section Unsorted9BFBC0Section
 
       .al
@@ -266,6 +1839,132 @@
         ; 9B/FD71
 
     .endsection Unsorted9BFC8DSection
+
+
+    .section Unsorted9BFD71Section
+
+      .al
+      .xl
+
+      rlUnknown9BFD71 ; 9B/FD71
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $7FD08F
+        and #$FC
+        sta $7FD08F
+        rep #$20
+        ldx #$0062
+        lda #$9900
+        sta lR18+1
+        lda #$FEB9
+        bra _FDCB
+
+        .byte $A2, $C4, $00, $A9, $00, $99, $85, $25, $A9, $C6, $FE, $80, $32, $A2, $26, $01
+        .byte $A9, $00, $99, $85, $25, $A9, $D3, $FE, $80, $25, $A2, $88, $01, $A9, $00, $99
+        .byte $85, $25, $A9, $E0, $FE, $80, $18, $A2, $EA, $01, $A9, $00, $99, $85, $25, $A9
+        .byte $ED, $FE, $80, $0B, $A2, $4C, $02, $A9, $00, $99, $85, $25, $A9, $FA, $FE
+
+
+        _FDCB
+        sta lR18
+        jsl $95F967
+        rtl
+
+        .databank 0
+
+        ; 9B/FDD2
+
+      rlUnknown9BFDD2 ; 9B/FDD2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$02AE
+        lda #$9900
+        sta lR18+1
+        lda #$FF07
+        bra $9BFDCB
+
+        .databank 0
+
+        ; 9B/FDDF
+
+      rlUnknown9BFDDF ; 9B/FDDF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0310
+        lda #$9900
+        sta lR18+1
+        lda #$FF14
+        bra $9BFDCB
+
+        .databank 0
+
+        ; 9B/FDEC
+
+      rlUnknown9BFDEC ; 9B/FDEC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0372
+        lda #$9900
+        sta lR18+1
+        lda #$FF21
+        bra $9BFDCB
+
+        .databank 0
+
+        ; 9B/FDF9
+
+      rlUnknown9BFDF9 ; 9B/FDF9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$03D4
+        lda #$9900
+        sta lR18+1
+        lda #$FF2E
+        bra $9BFDCB
+
+        .databank 0
+
+        ; 9B/FE06
+
+      rlUnknown9BFE06 ; 9B/FE06
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$0436
+        lda #$9900
+        sta lR18+1
+        lda #$FF3B
+        bra $9BFDCB
+
+        .databank 0
+
+        ; 9B/FE13
+
+    .endsection Unsorted9BFD71Section
 
 
     .section TableE0283FSection

@@ -209,7 +209,8 @@ def trace(rom, labels, mask):
             add(definition_targets(a, 'rlProcEngineCreateProc'), names[0])
 
     for a, m8, x8, table in table_entries():
-        if is_rom_code_address(a) and not mask[offset(a)]:
+        # An entry that points at $00 (brk) is an unused slot aimed at padding, not code.
+        if is_rom_code_address(a) and not mask[offset(a)] and rom[offset(a)] != 0x00:
             entry[a].add((m8, x8))
             callers[a].append((table, a, 'table entry'))
             if a not in found:

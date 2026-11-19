@@ -4952,6 +4952,85 @@
     .endsection Unsorted87BB27Section
 
 
+    .section Unsorted87BED7Section
+
+      .al
+      .xl
+
+      rlUnknown87BED7 ; 87/BED7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        ora #$0000
+        bne _BEE8
+        lda #$0004
+        trb wOptionSettings,b
+        bra _BEEE
+
+
+        _BEE8
+        lda #$0004
+        tsb wOptionSettings,b
+
+        _BEEE
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BEF1
+
+    .endsection Unsorted87BED7Section
+
+
+    .section Unsorted87BF01Section
+
+      .al
+      .xl
+
+      rlUnknown87BF01 ; 87/BF01
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        and #$0007
+        asl a
+        asl a
+        asl a
+        sta wR0
+        lda wOptionSettings,b
+        and #$FFC7
+        ora wR0
+        sta wOptionSettings,b
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BF1B
+
+    .endsection Unsorted87BF01Section
+
+
     .section Unsorted87BF1BSection
 
       .al
@@ -4978,6 +5057,47 @@
         ; 87/BF29
 
     .endsection Unsorted87BF1BSection
+
+
+    .section Unsorted87BF29Section
+
+      .al
+      .xl
+
+      rlUnknown87BF29 ; 87/BF29
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        ora #$0000
+        bne _BF3A
+        lda #$0040
+        trb wOptionSettings,b
+        bra _BF40
+
+
+        _BF3A
+        lda #$0040
+        tsb wOptionSettings,b
+
+        _BF40
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BF43
+
+    .endsection Unsorted87BF29Section
 
 
     .section Unsorted87BF43Section
@@ -5139,6 +5259,47 @@
     .endsection Unsorted87BF6FSection
 
 
+    .section Unsorted87BFBFSection
+
+      .al
+      .xl
+
+      rlUnknown87BFBF ; 87/BFBF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        ora #$0000
+        bne _BFD0
+        lda #$0200
+        trb wOptionSettings,b
+        bra _BFD6
+
+
+        _BFD0
+        lda #$0200
+        tsb wOptionSettings,b
+
+        _BFD6
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BFD9
+
+    .endsection Unsorted87BFBFSection
+
+
     .section Unsorted87BFD9Section
 
       .al
@@ -5173,6 +5334,85 @@
     .endsection Unsorted87BFD9Section
 
 
+    .section Unsorted87BFE9Section
+
+      .al
+      .xl
+
+      rlUnknown87BFE9 ; 87/BFE9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        and #$0003
+        xba
+        asl a
+        asl a
+        sta wR0
+        lda wOptionSettings,b
+        and #$F3FF
+        ora wR0
+        sta wOptionSettings,b
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/C003
+
+    .endsection Unsorted87BFE9Section
+
+
+    .section Unsorted87C015Section
+
+      .al
+      .xl
+
+      rlUnknown87C015 ; 87/C015
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        ora #$0000
+        bne _C026
+        lda #$1000
+        trb wOptionSettings,b
+        bra _C02C
+
+
+        _C026
+        lda #$1000
+        tsb wOptionSettings,b
+
+        _C02C
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/C02F
+
+    .endsection Unsorted87C015Section
+
+
     .section Unsorted87C02FSection
 
       .al
@@ -5202,6 +5442,47 @@
         ; 87/C03C
 
     .endsection Unsorted87C02FSection
+
+
+    .section Unsorted87C03CSection
+
+      .al
+      .xl
+
+      rlUnknown87C03C ; 87/C03C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        ora #$0000
+        bne _C04D
+        lda #$0001
+        trb wOptionSettings,b
+        bra _C053
+
+
+        _C04D
+        lda #$0001
+        tsb wOptionSettings,b
+
+        _C053
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/C056
+
+    .endsection Unsorted87C03CSection
 
 
     .section Unsorted87C056Section
