@@ -156,6 +156,56 @@
     .endsection Unsorted88818ASection
 
 
+    .section Unsorted888197Section
+
+      .al
+      .xl
+
+      rlUnknown888197 ; 88/8197
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $DE40C0, $0400, $80, $C000
+
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/81A7
+
+      rlUnknown8881A7 ; 88/81A7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$001E
+
+        _81AB
+        lda $8C9D00,x
+        sta aOAMPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _81AB
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/81B8
+
+    .endsection Unsorted888197Section
+
+
     .section Unsorted8881B8Section
 
       .al
@@ -7699,6 +7749,58 @@
     .endsection Unsorted88BF37Section
 
 
+    .section Unsorted88BF6CSection
+
+      .al
+      .xl
+
+      rlUnknown88BF6C ; 88/BF6C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR10
+        asl a
+        asl a
+        asl a
+        asl a
+        sec
+        sbc wMapScrollXPixels,b
+        bmi _BF8F
+        lsr a
+        lsr a
+        lsr a
+        sta wR10
+        lda wR11
+        asl a
+        asl a
+        asl a
+        asl a
+        sec
+        sbc wMapScrollYPixels,b
+        bmi _BF8F
+        lsr a
+        lsr a
+        lsr a
+        sta wR11
+        rtl
+
+
+        _BF8F
+        lda #$FFFF
+        sta wR10
+        sta wR11
+        rtl
+
+        .databank 0
+
+        ; 88/BF97
+
+    .endsection Unsorted88BF6CSection
+
+
     .section Unsorted88BF97Section
 
       .al
@@ -8066,6 +8168,150 @@
         ; 88/C25D
 
     .endsection Unsorted88C1BFSection
+
+
+    .section Unsorted88C2BASection
+
+      .al
+      .xl
+
+      rlUnknown88C2BA ; 88/C2BA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        phb
+        lda #$0000
+        sta wR2
+        sta wR3
+        lda #$0004
+        sta wMapScrollSpeed,b
+        lda $7F4BF5
+        cmp wMapScrollXPixels,b
+        beq _C2E2
+        bcs _C2DB
+        lda #$0001
+        sta wR2
+        bra _C2E2
+
+
+        _C2DB
+        lda #$FFFF
+        sta wR2
+        bra _C2E2
+
+
+        _C2E2
+        lda $7F4BF7
+        cmp wMapScrollYPixels,b
+        beq _C2FB
+        bcs _C2F4
+        lda #$0001
+        sta wR3
+        bra _C2FB
+
+
+        _C2F4
+        lda #$FFFF
+        sta wR3
+        bra _C2FB
+
+
+        _C2FB
+        lda wR2
+        bne _C305
+        lda wR3
+        beq _C34D
+        bra _C309
+
+
+        _C305
+        bpl _C30D
+        bra _C327
+
+
+        _C309
+        bpl _C341
+        bra _C347
+
+
+        _C30D
+        lda wR3
+        beq _C315
+        bpl _C31B
+        bra _C321
+
+
+        _C315
+        jsl rlUnknown8885EF
+        bra _C351
+
+
+        _C31B
+        jsl rlUnknown88860B
+        bra _C351
+
+
+        _C321
+        jsl rlUnknown88861C
+        bra _C351
+
+
+        _C327
+        lda wR3
+        beq _C32F
+        bpl _C335
+        bra _C33B
+
+
+        _C32F
+        jsl rlUnknown8885FD
+        bra _C351
+
+
+        _C335
+        jsl rlUnknown88862D
+        bra _C351
+
+
+        _C33B
+        jsl rlUnknown88863E
+        bra _C351
+
+
+        _C341
+        jsl rlUnknown8885D3
+        bra _C351
+
+
+        _C347
+        jsl rlUnknown8885E1
+        bra _C351
+
+
+        _C34D
+        plb
+        .databank ?
+        plp
+        sec
+        rtl
+
+
+        _C351
+        plb
+        .databank ?
+        plp
+        clc
+        rtl
+
+        .databank 0
+
+        ; 88/C355
+
+    .endsection Unsorted88C2BASection
 
 
     .section Unsorted88C3F0Section

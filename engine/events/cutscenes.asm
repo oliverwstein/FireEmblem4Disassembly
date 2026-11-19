@@ -62,29 +62,29 @@
         PROC_CALL rlUnknown9EF703
         PROC_SET_ONCYCLE $C9FD
         PROC_YIELD 16
-        PROC_CALL $9F85A3
+        PROC_CALL rlUnknown9F85A3
         PROC_YIELD 2
-        PROC_CALL $9F85CC
+        PROC_CALL rlUnknown9F85CC
         PROC_YIELD 2
-        PROC_CALL $9F85F5
+        PROC_CALL rlUnknown9F85F5
         PROC_YIELD 2
-        PROC_CALL $9F861F
+        PROC_CALL rlUnknown9F861F
         PROC_YIELD 2
-        PROC_CALL $9F86BF
+        PROC_CALL rlUnknown9F86BF
 
         PROC_JUMP_IF_BITS_UNSET _F6FA, $0002
 
         -
         PROC_YIELD 1
-        PROC_CALL $9F86B0
+        PROC_CALL rlUnknown9F86B0
         PROC_JUMP_IF_BITS_UNSET -, $0001
 
-        PROC_CALL $9F8677
+        PROC_CALL rlUnknown9F8677
         PROC_YIELD 2
-        PROC_CALL $9EE228
+        PROC_CALL rlUnknown9EE228
 
         -
-        PROC_CALL $9EE23D
+        PROC_CALL rlUnknown9EE23D
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET -, $0004
 
@@ -93,18 +93,18 @@
         ; Meteors fall
         -
         PROC_CALL rlUnknown9EF724
-        PROC_CALL $9EFAD4
-        PROC_CALL $9F8020
+        PROC_CALL rlUnknown9EFAD4
+        PROC_CALL rlUnknown9F8020
         PROC_YIELD 128
-        PROC_CALL $9F8349
-        PROC_CALL $9F8473
+        PROC_CALL rlUnknown9F8349
+        PROC_CALL rlUnknown9F8473
         PROC_YIELD 1
         PROC_JUMP_WHILE_UNK_TIMER -
 
         PROC_CALL rlUnknown9EF791
 
         -
-        PROC_CALL $9EE279
+        PROC_CALL rlUnknown9EE279
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET -, $0004
 

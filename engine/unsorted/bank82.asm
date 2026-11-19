@@ -38,6 +38,45 @@
     .endsection Unsorted8283EBSection
 
 
+    .section Unsorted8283FASection
+
+      .al
+      .xl
+
+      rlUnknown8283FA ; 82/83FA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $04BA,b
+        bne _841E
+        lda $04F6,b
+        bit #$0030
+        bne _841E
+        lda $0FD7,b,x
+        cmp $0510,b
+        beq _841A
+        sta $04BA,b
+        lda #$841F
+        sta $0F57,b,x
+        bra _841E
+
+
+        _841A
+        jsl rlProcEngineFreeProc
+
+        _841E
+        rtl
+
+        .databank 0
+
+        ; 82/841F
+
+    .endsection Unsorted8283FASection
+
+
     .section Unsorted828431Section
 
       .al
@@ -96,6 +135,31 @@
         PROC_HALT
 
     .endsection Unsorted828431Section
+
+
+    .section Unsorted828648Section
+
+      .al
+      .xl
+
+      rlUnknown828648 ; 82/8648
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        jsl rlUnknown828653
+        jsl rlGetDialogueBoxGraphicsAndPalette
+        plp
+        rtl
+
+        .databank 0
+
+        ; 82/8653
+
+    .endsection Unsorted828648Section
 
 
     .section Unsorted82886FSection

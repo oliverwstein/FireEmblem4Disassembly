@@ -26,6 +26,7 @@ import argparse, collections, glob, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from asmlib import read_rom, offset, repo_copy, assemble
 from disasm import Disassembler, load_labels
+import procs
 
 ODD = {'brk', 'cop', 'wdm', 'stp', 'xce'}
 
@@ -156,16 +157,38 @@ def trace(rom, labels, mask):
         n = labels.get(a, [])
         return n[0] if n else None
 
+    seen_defs = set()
+
+    def definition_targets(ptr, creator):
+        """Routines that a definition leads to: its init and on-cycle routines, and for a
+        proc, the routines its script calls and the sprites it creates."""
+        if ptr in seen_defs or not is_rom_code_address(ptr):
+            return []
+        seen_defs.add(ptr)
+        out = []
+        o = offset(ptr)
+        for field in CREATORS[creator]:
+            t = (ptr & 0xFF0000) | rom[o + field] | rom[o + field + 1] << 8
+            if t & 0xFFFF >= 0x8000:
+                out.append((t, False, False, f'{creator} definition {ptr:06X}', ptr))
+        if CREATORS[creator] == (2, 4):
+            script = procs.header(rom, ptr)[2]
+            if script:
+                _, refs, problems = procs.walk(rom, script)
+                for kind, a, at in refs:
+                    if kind == 'routine':
+                        out.append((a, False, False, f'proc script {script:06X}', at))
+                    else:
+                        out += definition_targets(a, 'rlActiveSpriteEngineCreateSpriteHighestSlot')
+        return out
+
     def visit(insns, who):
         targets = list(calls(insns))
         for ptr, creator in definitions(insns, name_of):
-            if not is_rom_code_address(ptr):
-                continue
-            o = offset(ptr)
-            for field in CREATORS[creator]:
-                t = (ptr & 0xFF0000) | rom[o + field] | rom[o + field + 1] << 8
-                if t & 0xFFFF >= 0x8000:
-                    targets.append((t, False, False, f'{creator} definition {ptr:06X}', ptr))
+            targets += definition_targets(ptr, creator)
+        add(targets, who)
+
+    def add(targets, who):
         for t, m8, x8, kind, pc in targets:
             if not is_rom_code_address(t) or mask[offset(t)]:
                 continue
@@ -179,6 +202,11 @@ def trace(rom, labels, mask):
         d = Disassembler(rom, labels, a, None, m8, x8)
         insns, _ = d.decode()
         visit(insns, name)
+
+    # Every proc that has a label, whether or not code that creates it is built.
+    for a, names in labels.items():
+        if a >= 0x800000 and any(n.startswith('proc') for n in names):
+            add(definition_targets(a, 'rlProcEngineCreateProc'), names[0])
 
     for a, m8, x8, table in table_entries():
         if is_rom_code_address(a) and not mask[offset(a)]:

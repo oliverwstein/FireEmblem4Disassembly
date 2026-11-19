@@ -2502,6 +2502,47 @@
     .endsection Unsorted81B2AASection
 
 
+    .section Unsorted81B301Section
+
+      .al
+      .xl
+
+      rlUnknown81B301 ; 81/B301
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $81
+        lda #$00E0
+        jsl rlUnknown808FA3
+        inc wCurrentChapter,b
+        stz wUnknown000D79,b
+        stz $0302,b
+        lda #$F27C
+        sta $0ECF,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        plp
+        plb
+        .databank $81
+        rtl
+
+        .databank 0
+
+        ; 81/B32C
+
+    .endsection Unsorted81B301Section
+
+
     .section Unsorted81B32CSection
 
       .al

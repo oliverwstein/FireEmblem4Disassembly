@@ -961,6 +961,49 @@
     .endsection Unsorted8785A4Section
 
 
+    .section Unsorted87872BSection
+
+      .al
+      .xl
+
+      rlUnknown87872B ; 87/872B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        pha
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        pla
+        sep #$20
+        sta $0009,b,y
+        rep #$20
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8749
+
+    .endsection Unsorted87872BSection
+
+
     .section Unsorted878852Section
 
       .al
@@ -1064,6 +1107,31 @@
         ; 87/8900
 
     .endsection Unsorted8788F7Section
+
+
+    .section Unsorted878900Section
+
+      .al
+      .xl
+
+      rlUnknown878900 ; 87/8900
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        jsl rlGetMapMenuTilemapRAMEntryPointer
+        pla
+        jsl rlUnknown878FE7
+        rtl
+
+        .databank 0
+
+        ; 87/890B
+
+    .endsection Unsorted878900Section
 
 
     .section Unsorted878916Section
@@ -1457,6 +1525,234 @@
         ; 87/8FE7
 
     .endsection Unsorted878F6ESection
+
+
+    .section Unsorted878FE7Section
+
+      .al
+      .xl
+
+      rlUnknown878FE7 ; 87/8FE7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        ldy wR0
+        phy
+        and #$00FF
+        cmp #$0064
+        bcs _906C
+        asl a
+        pha
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0006,b,y
+        sta lR23
+        lda $0007,b,y
+        sta lR23+1
+        stz wR0
+        txa
+        sep #$20
+        sta wR0
+        xba
+        sta @l WRMPYA
+        lda $0000,b,y
+        sta @l WRMPYB
+        nop
+        nop
+        nop
+        rep #$20
+        lda @l RDMPY
+        clc
+        adc wR0
+        asl a
+        clc
+        adc lR23
+        sta lR23
+        plx
+        lda $879077,x
+        and #$00FF
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23]
+        ldy #$0002
+        lda $879076,x
+        and #$00FF
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23],y
+        pla
+        sta wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+
+        _906B
+        rtl
+
+
+        _906C
+        plx
+        stx wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        bra _906B
+
+        .databank 0
+
+        ; 87/9076
+
+    .endsection Unsorted878FE7Section
+
+
+    .section Unsorted87913ESection
+
+      .al
+      .xl
+
+      rlUnknown87913E ; 87/913E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        ldy wR0
+        phy
+        and #$00FF
+        cmp #$0064
+        bcc _9153
+        jml _91E4
+
+
+        _9153
+        asl a
+        pha
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0006,b,y
+        sta lR23
+        lda $0007,b,y
+        sta lR23+1
+        stz wR0
+        txa
+        sep #$20
+        sta wR0
+        xba
+        sta @l WRMPYA
+        lda $0000,b,y
+        sta @l WRMPYB
+        nop
+        nop
+        nop
+        rep #$20
+        lda @l RDMPY
+        clc
+        adc wR0
+        asl a
+        clc
+        adc lR23
+        sta lR23
+        lda $0000,b,y
+        and #$00FF
+        asl a
+        sta wR0
+        plx
+        lda $879077,x
+        and #$00FF
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23]
+        clc
+        adc #$0010
+        ldy wR0
+        sta [lR23],y
+        ldy #$0002
+        lda $879076,x
+        and #$00FF
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23],y
+        clc
+        adc #$0010
+        inc wR0
+        inc wR0
+        ldy wR0
+        sta [lR23],y
+        pla
+        sta wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+
+        _91E3
+        rtl
+
+
+        _91E4
+        plx
+        stx wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        bra _91E3
+
+        .databank 0
+
+        ; 87/91EE
+
+    .endsection Unsorted87913ESection
 
 
     .section Unsorted8791EESection
@@ -3456,6 +3752,40 @@
         ; 87/BFBF
 
     .endsection Unsorted87BF6FSection
+
+
+    .section Unsorted87BFD9Section
+
+      .al
+      .xl
+
+      rlUnknown87BFD9 ; 87/BFD9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        lda wOptionSettings,b
+        and #$0C00
+        xba
+        lsr a
+        lsr a
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BFE9
+
+    .endsection Unsorted87BFD9Section
 
 
     .section Unsorted87C02FSection

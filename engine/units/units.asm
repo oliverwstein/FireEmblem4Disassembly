@@ -1825,7 +1825,7 @@
         tya
         sta @l wSelectedUnitDataRAMPointer
         txa
-        jsr $848BC9
+        jsr rsUnknown848BC9
 
         _8BC6
         ply

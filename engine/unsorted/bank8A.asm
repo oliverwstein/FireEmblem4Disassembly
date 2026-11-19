@@ -1,5 +1,202 @@
 ; Code from bank $8A not yet assigned to a game system.
 
+    .section Unsorted8A8496Section
+
+      .al
+      .xl
+
+      rlUnknown8A8496 ; 8A/8496
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phk
+        plb
+        .databank $8A
+        lda #$8000
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$B6AD
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$3000
+        sta aCurrentTilemapInfo,b
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0200, $80, $B000
+
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$85EF
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0104
+        jsl rlDrawMenuTextLine
+        sep #$20
+        lda #$15
+        sta bBufferTM
+        rep #$20
+        lda $0891,b
+        beq _84EF
+        cmp #$0004
+        beq _84EF
+        cmp #$0005
+        beq _84EF
+        jml _857E
+
+
+        _84EF
+        lda $0897,b
+        asl a
+        tax
+        lda $7F757A,x
+        asl a
+        tax
+        lda $7F75AA,x
+        beq _857E
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitNamePointer
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0108
+        jsl rlDrawMenuTextLine
+        jsl rlGetSelectedUnitStatus
+        cmp #$0000
+        bne _8594
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$8621
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0110
+        jsl rlDrawMenuTextLine
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$8627
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0115
+        jsl rlDrawMenuTextLine
+        jsl rlGetSelectedUnitCurrentHP
+        ldx #$30F0
+        stx aCurrentTilemapInfo,b
+        ldx #$0113
+        jsl rlUnknown87913E
+        jsl rlGetSelectedUnitMaxHP
+        ldx #$30F0
+        stx aCurrentTilemapInfo,b
+        ldx #$0116
+        jsl rlUnknown87913E
+        rtl
+
+
+        _857E
+        jsl rlGetEventLocationEntryCastleName
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$010C
+        jsl rlDrawMenuTextLine
+        rtl
+
+
+        _8594
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda $89A76D,x
+        sta lRoutineVariable+1,b
+        lda $89A76C,x
+        sta lRoutineVariable,b
+        lda #$3400
+        sta aCurrentTilemapInfo,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$010E
+        jsl rlDrawMenuTextLine
+        lda #$8A00
+        sta lRoutineVariable+1,b
+        lda #$863B
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0114
+        jsl rlDrawMenuTextLine
+        jsl rlGetSelectedUnitStatusDuration
+        ldx #$34F0
+        stx aCurrentTilemapInfo,b
+        ldx #$0117
+        jsl rlUnknown87913E
+        rtl
+
+        .databank 0
+
+        ; 8A/85EF
+
+    .endsection Unsorted8A8496Section
+
+
+    .section Unsorted8A8F68Section
+
+      .al
+      .xl
+
+      rlUnknown8A8F68 ; 8A/8F68
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        .databank $8A
+        ldx #$00FE
+
+        _8F6E
+        lda $8C9800,x
+        sta aBGPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _8F6E
+        jsl rlResetHDMAEngine
+        sep #$20
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$81
+        sta bBufferCGADSUB
+        rep #$20
+        jsl rlUnknown8A8496
+        plb
+        .databank $8A
+        rtl
+
+        .databank 0
+
+        ; 8A/8F8F
+
+    .endsection Unsorted8A8F68Section
+
+
     .section Unsorted8A9342Section
 
       .al

@@ -28,6 +28,56 @@
     .endsection Unsorted80823FSection
 
 
+    .section Unsorted808875Section
+
+      .al
+      .xl
+
+      rlUnknown808875 ; 80/8875
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta $0E77,b
+        lda #$0030
+        sta $0E75,b
+        rtl
+
+        .databank 0
+
+        ; 80/8882
+
+      rlUnknown808882 ; 80/8882
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $0E77,b
+        lda #$0001
+        sta $0E75,b
+        ldx #$0000
+
+        _8891
+        sta @l $000E53,x
+        inc x
+        inc x
+        cpx #$0020
+        bne _8891
+        rtl
+
+        .databank 0
+
+        ; 80/889D
+
+    .endsection Unsorted808875Section
+
+
     .section Unsorted808C50Section
 
       .al
