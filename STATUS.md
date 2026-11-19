@@ -109,7 +109,13 @@ A code/data log from Mesen (which runs on macOS), recorded while playing, marks 
 
 Short explanations of the engines that are understood (procs, the event interpreter, active sprites, AI, battle rounds, the checksums), like pokecrystal's `docs/`.
 
-### 6. Loose ends
+### 6. Outside resources to look at
+
+- **Fire Emblem 5 disassembly** by Zane Avernathy (github.com/ZaneAvernathy; our `c2a.py` and `process_dialogue.py` come from there). FE5 was built on FE4's engine (procs, active sprites, the event engine), so its named routines may match ours closely enough to bring names over by comparing code. Check how close the engines are first.
+- **Lil' Nordion**, the FE4 modding base that Project Naga's README points to for "documentation and modding files". Not looked at yet; may have notes on routines, RAM and data formats.
+- **Project Naga build files** (github.com/Miacidae/Project-Naga-beta-v7, looked at 2026-11-19). No code or RAM names. Useful as reference only (no license, so do not copy files): the English dialogue shows what each event and scene is; menu text is pre-rendered 2bpp tiles placed by tilemaps; about 84 addresses in the original ROM are labelled (intro, attract mode, genealogy wheel, world map, menu tilemaps, pointers such as `$0D/AD70`); and their macro shows `rlUnknown89BECC` draws a run of two-row tiles into the BG3 tilemap (size in `wR0`, base tile in `wR1`, tile in `wR2`), which matches the code.
+
+### 7. Loose ends
 
 - The Windows `.bat` scripts have updated paths but have not been run since the folder rename.
 - `engine/menus/map_menu.asm` adds the constant `$027E` in two places. The original author's guess, `size(aDialogueBoxTilemap)-2`, did not match the ROM, and the meaning is unknown.
