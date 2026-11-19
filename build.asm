@@ -116,6 +116,7 @@
   .include "engine/save/save.asm"
   .include "engine/debug/debug_menu.asm"
   .include "engine/dialogue/dialogue_procs.asm"
+  .include "engine/events/cutscenes.asm"
   .include "engine/events/event_movement.asm"
   .include "engine/events/talk_events.asm"
   .include "engine/map/input.asm"
@@ -142,6 +143,7 @@
   .include "engine/unsorted/bank8F.asm"
   .include "engine/unsorted/bank91.asm"
   .include "engine/unsorted/bank95.asm"
+  .include "engine/unsorted/bank9E.asm"
 
   .include "events/ChapterPrologue.asm"
   .include "events/Chapter01.asm"
@@ -3867,6 +3869,126 @@
       dialogueEpilogueLover_CharlotCoirpre_HannibalDead_Noble .include "text/dialogue/Epilogue/Lover_CharlotCoirpre_HannibalDead_Noble.dialogue.txt" ; 9DFED4
 
       .fill $9D8000 + $8000 - *, 0
+
+    .here
+
+    * = $1E85DF
+    .logical $9E85DF
+
+      .dsection Unsorted9E85DFSection
+
+    .here
+
+    * = $1E87A4
+    .logical $9E87A4
+
+      .dsection Unsorted9E87A4Section
+
+    .here
+
+    * = $1E8867
+    .logical $9E8867
+
+      .dsection Unsorted9E8867Section
+
+    .here
+
+    * = $1E88F4
+    .logical $9E88F4
+
+      .dsection Unsorted9E88F4Section
+
+    .here
+
+    * = $1E8D25
+    .logical $9E8D25
+
+      .dsection Unsorted9E8D25Section
+
+    .here
+
+    * = $1E99F7
+    .logical $9E99F7
+
+      .dsection Unsorted9E99F7Section
+
+    .here
+
+    * = $1E9D3B
+    .logical $9E9D3B
+
+      .dsection Unsorted9E9D3BSection
+
+    .here
+
+    * = $1EAC5A
+    .logical $9EAC5A
+
+      .dsection Unsorted9EAC5ASection
+
+    .here
+
+    * = $1EC70B
+    .logical $9EC70B
+
+      .dsection Unsorted9EC70BSection
+
+    .here
+
+    * = $1ED42A
+    .logical $9ED42A
+
+      .dsection Unsorted9ED42ASection
+
+    .here
+
+    * = $1ED535
+    .logical $9ED535
+
+      .dsection Unsorted9ED535Section
+
+    .here
+
+    * = $1ED68B
+    .logical $9ED68B
+
+      .dsection Unsorted9ED68BSection
+
+    .here
+
+    * = $1EF60F
+    .logical $9EF60F
+
+      .dsection Unsorted9EF60FSection
+      .dsection BelhallaMagesAttackSection
+
+    .here
+
+    * = $1EF79D
+    .logical $9EF79D
+
+      .dsection Unsorted9EF79DSection
+
+    .here
+
+    * = $1EF81D
+    .logical $9EF81D
+
+      .dsection BelhallaAttackingMageDirectionsSection
+
+    .here
+
+    * = $1EF9DF
+    .logical $9EF9DF
+
+      .dsection Unsorted9EF9DFSection
+
+    .here
+
+    * = $1EFA17
+    .logical $9EFA17
+
+      .dsection Unsorted9EFA17Section
 
     .here
 
