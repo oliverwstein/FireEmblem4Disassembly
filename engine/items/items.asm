@@ -156,9 +156,9 @@
         sta lStructPointer2+1,b
         lda #<>aItemRAMData
         sta lStructPointer2,b
-        lda #(`$87E001)<<8
+        lda #(`aUnknown87E001)<<8
         sta lStructPointer1+1,b
-        lda #<>$87E001
+        lda #<>aUnknown87E001
         sta lStructPointer1,b
         jsl rlUnknown82E85D
         plb

@@ -407,6 +407,18 @@
     .endsection FadeProcsSection
 
 
+    .section ProcScript8283E3Section
+
+      .al
+      .xl
+
+      procUnknown8283E3 ; 82/83E3
+
+        .structProcInfo "SB", rlUnknown8283EB, rlUnknown8283F9, aProcUnknown8283E3Code
+
+    .endsection ProcScript8283E3Section
+
+
     .section FadeProcClearSection
 
       .al

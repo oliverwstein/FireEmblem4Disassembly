@@ -2889,7 +2889,7 @@
         lda #4
         sta $0300,b
 
-        lda #<>$809D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
 
         jsl rlEnableVBlank

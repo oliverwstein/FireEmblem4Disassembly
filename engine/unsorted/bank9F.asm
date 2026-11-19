@@ -33,9 +33,9 @@
         lda #$FFFF
         sta $7F50A5
         sta $7F50B7
-        lda #$9F00
+        lda #(`procUnknown9F805D)<<8
         sta lR44+1
-        lda #$805D
+        lda #<>procUnknown9F805D
         sta lR44
         jsl rlProcEngineCreateProc
         ply
@@ -49,6 +49,18 @@
         ; 9F/805D
 
     .endsection Unsorted9F8020Section
+
+
+    .section ProcScript9F805DSection
+
+      .al
+      .xl
+
+      procUnknown9F805D ; 9F/805D
+
+        .structProcInfo "ON", rlUnknown9FEBA7, rlUnknown9F8065, aProcUnknown9F805DCode
+
+    .endsection ProcScript9F805DSection
 
 
     .section Unsorted9F8065Section
@@ -1002,6 +1014,21 @@
         ; 9F/EBA8
 
     .endsection Unsorted9FEBA7Section
+
+
+    .section ProcScript9FEBA9Section
+
+      .al
+      .xl
+
+      aProcUnknown9F805DCode ; 9F/EBA9
+
+        PROC_HALT
+
+
+        ; 9F/EBAB
+
+    .endsection ProcScript9FEBA9Section
 
 
     .section Unsorted9FF3EDSection

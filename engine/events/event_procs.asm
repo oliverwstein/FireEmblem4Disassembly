@@ -385,9 +385,9 @@
 
         ; Halt until $0002 of $7F4C07 is set
 
-        lda #(`$828B2B)<<8
+        lda #(`procUnknown828B2B)<<8
         sta lR44+1
-        lda #<>$828B2B
+        lda #<>procUnknown828B2B
         sta lR44
         jsl rlEventEngineCreateProc
         rtl

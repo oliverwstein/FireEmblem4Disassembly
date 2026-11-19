@@ -77,6 +77,23 @@
     .endsection Unsorted8283FASection
 
 
+    .section ProcScript828429Section
+
+      .al
+      .xl
+
+      aProcUnknown8283E3Code ; 82/8429
+
+        PROC_YIELD 3
+        PROC_SET_ONCYCLE rlUnknown8283FA
+        PROC_HALT
+
+
+        ; 82/8431
+
+    .endsection ProcScript828429Section
+
+
     .section Unsorted828431Section
 
       .al
@@ -221,6 +238,25 @@
         ; 82/88B2
 
     .endsection Unsorted82886FSection
+
+
+    .section ProcScript8288E7Section
+
+      .al
+      .xl
+
+      aProcUnknown828865Code ; 82/88E7
+
+        PROC_HALT
+
+
+        ; 82/88E9
+
+      procUnknown8288E9 ; 82/88E9
+
+        .structProcInfo "TT", rlUnknown8288F3, rlProcDialogueWithBGCycle1, aProcDialogueWithBGCode
+
+    .endsection ProcScript8288E7Section
 
 
     .section Unsorted8288F3Section
@@ -597,6 +633,18 @@
     .endsection Unsorted828B35Section
 
 
+    .section ProcScript828B61Section
+
+      .al
+      .xl
+
+      procUnknown828B61 ; 82/8B61
+
+        .structProcInfo "ME", rlUnknown828B6B, rlUnknown828B92, aProcUnknown828B61Code
+
+    .endsection ProcScript828B61Section
+
+
     .section Unsorted828B6BSection
 
       .al
@@ -635,9 +683,9 @@
         .autsiz
         .databank ?
 
-        lda #$9E00
+        lda #(`procUnknown9EECA4)<<8
         sta lR44+1
-        lda #$ECA4
+        lda #<>procUnknown9EECA4
         sta lR44
         jsl rlProcEngineFindProc
         bcs _8BA6
@@ -651,6 +699,21 @@
         ; 82/8BA7
 
     .endsection Unsorted828B6BSection
+
+
+    .section ProcScript828BA7Section
+
+      .al
+      .xl
+
+      aProcUnknown828B61Code ; 82/8BA7
+
+        PROC_HALT
+
+
+        ; 82/8BA9
+
+    .endsection ProcScript828BA7Section
 
 
     .section Unsorted828BEASection

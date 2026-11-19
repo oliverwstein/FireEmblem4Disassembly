@@ -4253,9 +4253,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aRangeMap)<<8
+        lda #(`$7F654A)<<8
         sta lRoutineVariable+1,b
-        lda #<>aRangeMap
+        lda #<>$7F654A
         sta lRoutineVariable,b
         jsl rlGetSelectedUnitDeploymentOffset
         tax

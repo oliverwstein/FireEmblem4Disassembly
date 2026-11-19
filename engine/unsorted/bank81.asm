@@ -1260,9 +1260,9 @@
             sta $0500,b
             jsl rlUnknown81A9D4
 
-            lda #(`$85ABF6)<<8
+            lda #(`procUnknown85ABF6)<<8
             sta $62+1
-            lda #<>$85ABF6
+            lda #<>procUnknown85ABF6
             sta $62
             jsl rlProcEngineCreateProc
 
@@ -1413,9 +1413,9 @@
             ora #0
             beq _INC
 
-              lda #(`$85CA85)<<8
+              lda #(`procUnknown85CA85)<<8
               sta $62+1
-              lda #<>$85CA85
+              lda #<>procUnknown85CA85
               sta $62
               jsl rlProcEngineFindProc
               bcs _End
@@ -1428,9 +1428,9 @@
 
                   lda #1
                   sta $0ECF,b
-                  lda #(`$85A47F)<<8
+                  lda #(`procUnknown85A47F)<<8
                   sta $62+1
-                  lda #<>$85A47F
+                  lda #<>procUnknown85A47F
                   sta $62
                   jsl rlProcEngineCreateProc
                   bra _INC
@@ -2421,9 +2421,9 @@
               lda $0D83,b
               sta aProcSystem.wInput3,b
 
-              lda #(`$85BA41)<<8
+              lda #(`procUnknown85BA41)<<8
               sta lR44+1
-              lda #<>$85BA41
+              lda #<>procUnknown85BA41
               sta lR44
               jsl rlEventEngineCreateProc
               lda #$FFFF

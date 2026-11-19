@@ -279,9 +279,9 @@
             lda #$00E1
             sta aProcSystem.wInput1,b
 
-            lda #(`$8283E3)<<8
+            lda #(`procUnknown8283E3)<<8
             sta lR44+1
-            lda #<>$8283E3
+            lda #<>procUnknown8283E3
             sta lR44
             jsl rlProcEngineCreateProc
 
@@ -368,9 +368,9 @@
           and #$00FF
           sta $0ED5,b
 
-          lda #(`$85CA85)<<8
+          lda #(`procUnknown85CA85)<<8
           sta $62+1
-          lda #<>$85CA85
+          lda #<>procUnknown85CA85
           sta $62
           jsl rlProcEngineCreateProc
 

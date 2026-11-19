@@ -3028,6 +3028,18 @@
     .endsection Unsorted888F32Section
 
 
+    .section ProcScript889396Section
+
+      .al
+      .xl
+
+      procUnknown889396 ; 88/9396
+
+        .structProcInfo "MG", rlUnknown88939E, rlUnknown889400, aProcUnknown889396Code
+
+    .endsection ProcScript889396Section
+
+
     .section Unsorted88939ESection
 
       .al
@@ -3100,6 +3112,21 @@
     .endsection Unsorted889400Section
 
 
+    .section ProcScript889504Section
+
+      .al
+      .xl
+
+      aProcUnknown889396Code ; 88/9504
+
+        PROC_HALT
+
+
+        ; 88/9506
+
+    .endsection ProcScript889504Section
+
+
     .section Unsorted88973FSection
 
       .al
@@ -3112,9 +3139,9 @@
         .autsiz
         .databank ?
 
-        lda #$8800
+        lda #(`procUnknown889396)<<8
         sta lR44+1
-        lda #$9396
+        lda #<>procUnknown889396
         sta lR44
         jsl rlProcEngineFindProc
         bcc _9753
@@ -3122,9 +3149,9 @@
 
 
         _9753
-        lda #$8800
+        lda #(`procUnknown889C52)<<8
         sta lR44+1
-        lda #$9C52
+        lda #<>procUnknown889C52
         sta lR44
         jsl rlProcEngineFindProc
         bcc _9767
@@ -3144,9 +3171,9 @@
         lda wJoy1New
         bit #$9000
         beq _978E
-        lda #$8800
+        lda #(`procUnknown889C52)<<8
         sta lR44+1
-        lda #$9C52
+        lda #<>procUnknown889C52
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -3305,9 +3332,9 @@
 
 
         _98A1
-        lda #$8800
+        lda #(`procUnknown889C52)<<8
         sta lR44+1
-        lda #$9C52
+        lda #<>procUnknown889C52
         sta lR44
         jsl rlProcEngineCreateProc
         stz wUnknown0007D8,b
@@ -3319,9 +3346,9 @@
         _98B4
         lda #$4000
         tsb $0788,b
-        lda #$8800
+        lda #(`procUnknown889C52)<<8
         sta lR44+1
-        lda #$9C52
+        lda #<>procUnknown889C52
         sta lR44
         jsl rlProcEngineCreateProc
         rts
@@ -3671,6 +3698,18 @@
     .endsection Unsorted889B22Section
 
 
+    .section ProcScript889C52Section
+
+      .al
+      .xl
+
+      procUnknown889C52 ; 88/9C52
+
+        .structProcInfo "MC", rlUnknown889C5A, rlUnknown889CE1, aProcUnknown889C52Code
+
+    .endsection ProcScript889C52Section
+
+
     .section Unsorted889C5ASection
 
       .al
@@ -3776,6 +3815,21 @@
         ; 88/9CEE
 
     .endsection Unsorted889C5ASection
+
+
+    .section ProcScript889E6CSection
+
+      .al
+      .xl
+
+      aProcUnknown889C52Code ; 88/9E6C
+
+        PROC_HALT
+
+
+        ; 88/9E6E
+
+    .endsection ProcScript889E6CSection
 
 
     .section Unsorted88A12BSection
@@ -4785,9 +4839,9 @@
         lda #$0020
         tsb $0788,b
         jsl rlUnknown85EA64
-        lda #$8800
+        lda #(`procUnknown889396)<<8
         sta lR44+1
-        lda #$9396
+        lda #<>procUnknown889396
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -5659,9 +5713,9 @@
         sta wMapYOffset,b
         lda #$0009
         jsl rlUnknown808FAD
-        lda #$8500
+        lda #(`procUnknown85DDDB)<<8
         sta lR44+1
-        lda #$DDDB
+        lda #<>procUnknown85DDDB
         sta lR44
         jsl rlProcEngineCreateProc
         lda #$0008
@@ -5811,9 +5865,9 @@
         sta wMapXOffset,b
         lda wMapScrollYPixels,b
         sta wMapYOffset,b
-        lda #$8800
+        lda #(`procUnknown889396)<<8
         sta lR44+1
-        lda #$9396
+        lda #<>procUnknown889396
         sta lR44
         jsl rlProcEngineCreateProc
         rts
@@ -10545,6 +10599,18 @@
     .endsection Unsorted88DE1BSection
 
 
+    .section ProcScript88E200Section
+
+      .al
+      .xl
+
+      procUnknown88E200 ; 88/E200
+
+        .structProcInfo "MN", rlUnknown88E208, rlUnknown88E23B, aProcUnknown88E200Code
+
+    .endsection ProcScript88E200Section
+
+
     .section Unsorted88E208Section
 
       .al
@@ -10625,6 +10691,25 @@
         ; 88/E268
 
     .endsection Unsorted88E208Section
+
+
+    .section ProcScript88E268Section
+
+      .al
+      .xl
+
+      aProcUnknown88E200Code ; 88/E268
+
+        PROC_HALT
+
+
+        ; 88/E26A
+
+      procUnknown88E26A ; 88/E26A
+
+        .structProcInfo "FF", rlUnknown88E272, rlUnknown88E28D, aProcUnknown88E26ACode
+
+    .endsection ProcScript88E268Section
 
 
     .section Unsorted88E272Section
@@ -10710,6 +10795,21 @@
     .endsection Unsorted88E272Section
 
 
+    .section ProcScript88E2DCSection
+
+      .al
+      .xl
+
+      aProcUnknown88E26ACode ; 88/E2DC
+
+        PROC_HALT
+
+
+        ; 88/E2DE
+
+    .endsection ProcScript88E2DCSection
+
+
     .section Unsorted88E33DSection
 
       .al
@@ -10742,9 +10842,9 @@
         lda #$0800
         sta wR0
         jsl rlDMAByPointer
-        lda #$8800
+        lda #(`procUnknown88E200)<<8
         sta lR44+1
-        lda #$E200
+        lda #<>procUnknown88E200
         sta lR44
         jsl rlProcEngineCreateProc
         plx
@@ -10764,9 +10864,9 @@
 
         php
         phx
-        lda #$8800
+        lda #(`procUnknown88E26A)<<8
         sta lR44+1
-        lda #$E26A
+        lda #<>procUnknown88E26A
         sta lR44
         jsl rlProcEngineCreateProc
         plx

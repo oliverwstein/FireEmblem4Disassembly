@@ -387,9 +387,9 @@
         sta @l $7F5099
         sta @l $7F509B
 
-        lda #(`$81841B)<<8
+        lda #(`rlUnknown81841B)<<8
         sta $0015E4+1
-        lda #<>$81841B
+        lda #<>rlUnknown81841B
         sta $0015E4
 
         lda aActiveSpriteSystem.wFlag

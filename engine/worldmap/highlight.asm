@@ -27,9 +27,9 @@
         lda #0
         sta wBufferBG2VOFS
 
-        lda #(`$8B901D)<<8
+        lda #(`procUnknown8B901D)<<8
         sta lR44+1
-        lda #<>$8B901D
+        lda #<>procUnknown8B901D
         sta lR44
         jsl rlProcEngineCreateProc
 

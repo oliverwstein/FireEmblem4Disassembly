@@ -1091,9 +1091,9 @@
           jsl rlUnknown8A9750
           lda #$0010
           trb $08AD,b
-          lda #(`$8AE147)<<8
+          lda #(`procUnknown8AE147)<<8
           sta lR44+1
-          lda #<>$8AE147
+          lda #<>procUnknown8AE147
           sta lR44
           jsl rlProcEngineCreateProc
 
@@ -1106,9 +1106,9 @@
           jsl rlUnknown8A9776
           lda #$0020
           trb $08AD,b
-          lda #(`$8AE199)<<8
+          lda #(`procUnknown8AE199)<<8
           sta lR44+1
-          lda #<>$8AE199
+          lda #<>procUnknown8AE199
           sta lR44
           jsl rlProcEngineCreateProc
 
@@ -1536,6 +1536,18 @@
     .endsection Unsorted8AE05ESection
 
 
+    .section ProcScript8AE147Section
+
+      .al
+      .xl
+
+      procUnknown8AE147 ; 8A/E147
+
+        .structProcInfo "FN", rlUnknown8AE14F, rlUnknown8AE16F, aProcUnknown8AE147Code
+
+    .endsection ProcScript8AE147Section
+
+
     .section Unsorted8AE14FSection
 
       .al
@@ -1601,6 +1613,21 @@
         ; 8A/E197
 
     .endsection Unsorted8AE14FSection
+
+
+    .section ProcScript8AE197Section
+
+      .al
+      .xl
+
+      aProcUnknown8AE147Code ; 8A/E197
+
+        PROC_HALT
+
+
+        ; 8A/E199
+
+    .endsection ProcScript8AE197Section
 
 
     .section Unsorted8AE199Section
@@ -1747,9 +1774,9 @@
         rtl
 
         +
-        lda #(`$8AE147)<<8
+        lda #(`procUnknown8AE147)<<8
         sta lR44+1
-        lda #<>$8AE147
+        lda #<>procUnknown8AE147
         sta lR44
         phx
         jsl rlProcEngineFindProc
@@ -1768,6 +1795,21 @@
         ; 8A/E23D
 
     .endsection Unsorted8AE1F3Section
+
+
+    .section ProcScript8AE243Section
+
+      .al
+      .xl
+
+      aProcUnknown8AE1EBCode ; 8A/E243
+
+        PROC_HALT
+
+
+        ; 8A/E245
+
+    .endsection ProcScript8AE243Section
 
 
     .section Unsorted8AE245Section
@@ -1860,9 +1902,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`procUnknown8AE147)<<8
         sta lR44+1
-        lda #$E147
+        lda #<>procUnknown8AE147
         sta lR44
         jsl rlProcEngineFindProc
         bcc _E2B5

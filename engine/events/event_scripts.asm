@@ -492,9 +492,9 @@
         and #$00FF
         pha
 
-        lda #(`$8292A9)<<8
+        lda #(`procUnknown8292A9)<<8
         sta lR44+1
-        lda #<>$8292A9
+        lda #<>procUnknown8292A9
         sta lR44
 
         jsl rlEventEngineCreateProc
@@ -724,9 +724,9 @@
 
         phy
 
-        lda #(`$8293AE)<<8
+        lda #(`procUnknown8293AE)<<8
         sta lR44+1
-        lda #<>$8293AE
+        lda #<>procUnknown8293AE
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -808,9 +808,9 @@
         lda #0
         jsl rlDialogueUpdateSlotOffset
 
-        lda #(`$82845F)<<8
+        lda #(`procDialogue)<<8
         sta lR44+1
-        lda #<>$82845F
+        lda #<>procDialogue
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -834,9 +834,9 @@
         ; CASTLE_NAME
 
         phy
-        lda #(`$8286B6)<<8
+        lda #(`procCastleNamePopUp)<<8
         sta lR44+1
-        lda #<>$8286B6
+        lda #<>procCastleNamePopUp
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -1002,9 +1002,9 @@
         lda #0
         sta $08B8,b
 
-        lda #(`$828906)<<8
+        lda #(`procDialogueWithBG)<<8
         sta lR44+1
-        lda #<>$828906
+        lda #<>procDialogueWithBG
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -1035,9 +1035,9 @@
         lda #1
         sta $08B8,b
 
-        lda #(`$828906)<<8
+        lda #(`procDialogueWithBG)<<8
         sta lR44+1
-        lda #<>$828906
+        lda #<>procDialogueWithBG
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -1064,9 +1064,9 @@
         phy
         jsl rlUnknown8CEDD0
 
-        lda #(`$828A88)<<8
+        lda #(`procUnknown828A88)<<8
         sta lR44+1
-        lda #<>$828A88
+        lda #<>procUnknown828A88
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -1092,9 +1092,9 @@
         php
         phy
 
-        lda #(`$828B61)<<8
+        lda #(`procUnknown828B61)<<8
         sta lR44+1
-        lda #<>$828B61
+        lda #<>procUnknown828B61
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -1971,9 +1971,9 @@
         inc y
 
         phy
-        lda #(`$8188B0)<<8
+        lda #(`asMapSprite)<<8
         sta lR44+1
-        lda #<>$8188B0
+        lda #<>asMapSprite
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -2355,9 +2355,9 @@
           bra _End
 
         +
-        lda #(`$828431)<<8
+        lda #(`procUnknown828431)<<8
         sta lR44+1
-        lda #<>$828431
+        lda #<>procUnknown828431
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -2567,9 +2567,9 @@
         php
         phy
 
-        lda #(`$828BEA)<<8
+        lda #(`procUnknown828BEA)<<8
         sta lR44+1
-        lda #<>$828BEA
+        lda #<>procUnknown828BEA
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -2621,9 +2621,9 @@
         php
         phy
 
-        lda #(`$8292B6)<<8
+        lda #(`procUnknown8292B6)<<8
         sta lR44+1
-        lda #<>$8292B6
+        lda #<>procUnknown8292B6
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -2880,7 +2880,7 @@
         +
         stx $0D77,b
 
-        lda #<>$80B122
+        lda #<>rsUnknown80B122
         sta aProcSystem.wInput0,b
 
         lda #(`procMainLoopChangeFadeByTimer)<<8
@@ -2913,9 +2913,9 @@
         php
         phy
 
-        lda #(`$828CA3)<<8
+        lda #(`procUnknown828CA3)<<8
         sta lR44+1
-        lda #<>$828CA3
+        lda #<>procUnknown828CA3
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -2935,9 +2935,9 @@
         php
         phy
 
-        lda #(`$828ECB)<<8
+        lda #(`procUnknown828ECB)<<8
         sta lR44+1
-        lda #<>$828ECB
+        lda #<>procUnknown828ECB
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -2957,9 +2957,9 @@
         php
         phy
 
-        lda #(`$828D52)<<8
+        lda #(`procUnknown828D52)<<8
         sta lR44+1
-        lda #<>$828D52
+        lda #<>procUnknown828D52
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -3345,9 +3345,9 @@
         inc y
         phy
 
-        lda #(`$87C249)<<8
+        lda #(`procFactionSlotUnitDeath)<<8
         sta lR44+1
-        lda #<>$87C249
+        lda #<>procFactionSlotUnitDeath
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -3593,9 +3593,9 @@
         phy
         rep #$30
 
-        lda #(`$829245)<<8
+        lda #(`procUnknown829245)<<8
         sta lR44+1
-        lda #<>$829245
+        lda #<>procUnknown829245
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -3617,9 +3617,9 @@
         phy
         rep #$30
 
-        lda #(`$82925E)<<8
+        lda #(`procUnknown82925E)<<8
         sta lR44+1
-        lda #<>$82925E
+        lda #<>procUnknown82925E
         sta lR44
         jsl rlEventEngineCreateProc
 
@@ -3872,7 +3872,7 @@
 
           stz $0302,b
 
-          lda #<>$80F2BE
+          lda #<>rsUnknown80F2BE
           sta aProcSystem.wInput0,b
           lda #2
           sta wScreenFadingProcInput,b
@@ -4172,9 +4172,9 @@
         lda #0
         jsl rlUnknown91811C
 
-        lda #(`$8B9275)<<8
+        lda #(`rlUnknown8B9275)<<8
         sta aDialogue.lHDMARoutine+1,b
-        lda #<>$8B9275
+        lda #<>rlUnknown8B9275
         sta aDialogue.lHDMARoutine,b
 
         ldx #0
@@ -4338,9 +4338,9 @@
             jsl rlUnknown808FA3
 
         +
-        lda #(`$828865)<<8
+        lda #(`procUnknown828865)<<8
         sta lR44+1
-        lda #<>$828865
+        lda #<>procUnknown828865
         sta lR44
         jsl rlEventEngineCreateProc
 

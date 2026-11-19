@@ -661,7 +661,7 @@
 
         .databank 0
 
-      rsProcCodeUnknown828179 ; 82/8279
+      rsProcCodeCreateActiveSprite ; 82/8279
 
         .al
         .autsiz

@@ -831,9 +831,9 @@
         .autsiz
         .databank ?
 
-        lda #(`$8288E9)<<8
+        lda #(`procUnknown8288E9)<<8
         sta lR44+1
-        lda #<>$8288E9
+        lda #<>procUnknown8288E9
         sta lR44
         jsl rlEventEngineCreateProc
         rtl

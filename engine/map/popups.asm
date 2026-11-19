@@ -257,3 +257,15 @@
         ; 82/8816
 
     .endsection CastleNamePopUpSection
+
+
+    .section ProcScript828865Section
+
+      .al
+      .xl
+
+      procUnknown828865 ; 82/8865
+
+        .structProcInfo "TT", rlUnknown82886F, rlUnknown828876, aProcUnknown828865Code
+
+    .endsection ProcScript828865Section

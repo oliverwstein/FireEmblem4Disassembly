@@ -164,6 +164,21 @@
     .endsection ProcCycleMapMenuWaitForPaletteGraphicFinishSection
 
 
+    .section ProcScript858398Section
+
+      .al
+      .xl
+
+      aProcDialogueBoxCode ; 85/8398
+
+        PROC_HALT
+
+
+        ; 85/839A
+
+    .endsection ProcScript858398Section
+
+
     .section MapMenuBuildTilemapSection
 
       .al

@@ -95,3 +95,76 @@ def walk(rom, script):
                 break
             pc += 2 + n
     return commands, refs, problems
+
+
+def runs(commands):
+    """Split decoded commands into contiguous runs: [(start, end, [addresses])]."""
+    out = []
+    for a in sorted(commands):
+        size = commands[a][2]
+        if out and out[-1][1] == a:
+            out[-1][1] = a + size
+            out[-1][2].append(a)
+        else:
+            out.append([a, a + size, [a]])
+    return [tuple(r) for r in out]
+
+
+def render(rom, commands, start, end, label, run_labels, name_of):
+    """Source for the commands in [start, end) as a routines-file entry.
+
+    run_labels maps the start of each run of this script to its label, so that jumps
+    into another run can use it; name_of(address) gives a label or None."""
+    bank = start & 0xFF0000
+    inside = [a for a in sorted(commands) if start <= a < end]
+    targets = set()
+    for a in inside:
+        name, args, _ = commands[a]
+        flow = next(c[2] for c in COMMANDS.values() if c[0] == name) if name != 'PROC_YIELD' else 'next'
+        if flow in ('jump', 'branch'):
+            targets.add(bank | int.from_bytes(args[:2], 'little'))
+
+    def position(t):
+        if start <= t < end and t != start:
+            return f'_{t & 0xFFFF:04X}'
+        if t in run_labels:
+            return run_labels[t]
+        return name_of(t) or f'${t:06X}'
+
+    def routine(t):
+        return name_of(t) or f'${t:06X}'
+
+    out = [f'      {label} ; {start >> 16:02X}/{start & 0xFFFF:04X}', '']
+    for a in inside:
+        name, args, size = commands[a]
+        if a in targets and a != start:
+            out.append(f'        _{a & 0xFFFF:04X}')
+        if name == 'PROC_YIELD':
+            line = f'PROC_YIELD {int.from_bytes(args, "little")}'
+        elif name in ('PROC_CALL',):
+            line = f'PROC_CALL {routine(int.from_bytes(args[:3], "little"))}'
+        elif name == 'PROC_CALL_ARGS':
+            n = args[3]
+            line = f'PROC_CALL_ARGS {routine(int.from_bytes(args[:3], "little"))}, {n}'
+            if n:
+                line += '\n          .byte ' + ', '.join(f'${b:02X}' for b in args[4:])
+        elif name == 'PROC_SET_ONCYCLE':
+            line = f'PROC_SET_ONCYCLE {routine(bank | int.from_bytes(args, "little"))}'
+        elif name in ('PROC_JUMP', 'PROC_JUMP_WHILE_UNK_TIMER'):
+            line = f'{name} {position(bank | int.from_bytes(args[:2], "little"))}'
+        elif name in ('PROC_JUMP_IF_BITS_UNSET', 'PROC_JUMP_IF_BITS_SET'):
+            bits = int.from_bytes(args[2:4], 'little')
+            line = f'{name} {position(bank | int.from_bytes(args[:2], "little"))}, ${bits:04X}'
+        elif name == 'PROC_SET_UNK_TIMER':
+            line = f'PROC_SET_UNK_TIMER {int.from_bytes(args, "little")}'
+        elif name == 'PROC_CREATE_ACTIVE_SPRITE':
+            sprite = int.from_bytes(args[:3], 'little')
+            xv, yv = int.from_bytes(args[3:5], 'little'), int.from_bytes(args[5:7], 'little')
+            line = f'PROC_CREATE_ACTIVE_SPRITE {routine(sprite)}, ${xv:04X}, ${yv:04X}'
+        else:
+            line = name
+        out.append('        ' + line)
+        if name in ('PROC_END', 'PROC_HALT', 'PROC_HALT_SLEEP', 'PROC_JUMP'):
+            out.append('')
+    out += ['', f'        ; {end >> 16:02X}/{end & 0xFFFF:04X}', '']
+    return '\n'.join(out)

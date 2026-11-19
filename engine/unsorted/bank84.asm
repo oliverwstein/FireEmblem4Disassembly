@@ -1033,9 +1033,9 @@
         lda aDeploymentTable._FactionSlot,x
         sta aProcSystem.wInput2,b
 
-        lda #(`$87C056)<<8
+        lda #(`procUnknown87C056)<<8
         sta lR44+1
-        lda #<>$87C056
+        lda #<>procUnknown87C056
         sta lR44
         jsl rlProcEngineCreateProc
         rts
@@ -1722,9 +1722,9 @@
         pha
         lda wR1
         pha
-        lda #(`aRangeMap)<<8
+        lda #(`$7F654A)<<8
         sta lRoutineVariable+1,b
-        lda #<>aRangeMap
+        lda #<>$7F654A
         sta lRoutineVariable,b
         jsl rlUnknown8483F3
         lda #$0400

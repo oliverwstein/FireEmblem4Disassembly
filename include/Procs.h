@@ -81,3 +81,14 @@
       .word <>\Position
       .word \Bits
     .endsegment
+
+    PROC_CREATE_ACTIVE_SPRITE .segment Sprite, XValue, YValue
+      ; 82/8279
+      ; Creates an active sprite from the definition Sprite. XValue and YValue
+      ; are passed in X and Y and end up in aActiveSpriteSystem.aUnknown001200
+      ; and aUnknown001240.
+      .word <>rsProcCodeCreateActiveSprite
+      .long \Sprite
+      .word \XValue
+      .word \YValue
+    .endsegment

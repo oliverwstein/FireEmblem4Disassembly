@@ -204,6 +204,21 @@
     .endsection Unsorted8584A1Section
 
 
+    .section ProcScript8584AASection
+
+      .al
+      .xl
+
+      aProcUnknown85DDDBCode ; 85/84AA
+
+        PROC_HALT
+
+
+        ; 85/84AC
+
+    .endsection ProcScript8584AASection
+
+
     .section Unsorted8584ACSection
 
       .al
@@ -2421,6 +2436,18 @@
     .endsection Unsorted85A227Section
 
 
+    .section ProcScript85A47FSection
+
+      .al
+      .xl
+
+      procUnknown85A47F ; 85/A47F
+
+        .structProcInfo "PW", rlUnknown85A48B, rlUnknown85A508, aProcUnknown85A47FCode
+
+    .endsection ProcScript85A47FSection
+
+
     .section Unsorted85A48BSection
 
       .al
@@ -2629,6 +2656,23 @@
         ; 85/A5BD
 
     .endsection Unsorted85A509Section
+
+
+    .section ProcScript85A5BDSection
+
+      .al
+      .xl
+
+      aProcUnknown85A47FCode ; 85/A5BD
+
+        PROC_YIELD 1
+        PROC_SET_ONCYCLE rlUnknown85A509
+        PROC_HALT
+
+
+        ; 85/A5C5
+
+    .endsection ProcScript85A5BDSection
 
 
     .section Unsorted85AB32Section
@@ -2912,6 +2956,24 @@
     .endsection Unsorted85AE8ASection
 
 
+    .section ProcScript85AEACSection
+
+      .al
+      .xl
+
+      aProcUnknown85ABF6Code ; 85/AEAC
+
+        PROC_YIELD 1
+        PROC_CALL rlUnknown85AE8A
+        PROC_JUMP_IF_BITS_UNSET aProcUnknown85ABF6Code, $0001
+        PROC_HALT
+
+
+        ; 85/AEBB
+
+    .endsection ProcScript85AEACSection
+
+
     .section Unsorted85B009Section
 
       .al
@@ -3180,6 +3242,21 @@
     .endsection Unsorted85B1B0Section
 
 
+    .section ProcScript85B2D8Section
+
+      .al
+      .xl
+
+      aProcUnknown85B18FCode ; 85/B2D8
+
+        PROC_HALT
+
+
+        ; 85/B2DA
+
+    .endsection ProcScript85B2D8Section
+
+
     .section Unsorted85B2DASection
 
       .al
@@ -3441,9 +3518,9 @@
         .autsiz
         .databank ?
 
-        lda #$8500
+        lda #(`procUnknown85B63B)<<8
         sta lR44+1
-        lda #$B63B
+        lda #<>procUnknown85B63B
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -3462,9 +3539,9 @@
         lda #$FFFF
         sta $0ED1,b
         sta $0ED3,b
-        lda #$8500
+        lda #(`procUnknown85B6E3)<<8
         sta lR44+1
-        lda #$B6E3
+        lda #<>procUnknown85B6E3
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -3474,6 +3551,18 @@
         ; 85/B547
 
     .endsection Unsorted85B520Section
+
+
+    .section ProcScript85B63BSection
+
+      .al
+      .xl
+
+      procUnknown85B63B ; 85/B63B
+
+        .structProcInfo "PW", rlUnknown85B65C, rlUnknown85B6E0, aProcUnknown85B63BCode
+
+    .endsection ProcScript85B63BSection
 
 
     .section Unsorted85B65CSection
@@ -3540,6 +3629,25 @@
         ; 85/B6E1
 
     .endsection Unsorted85B6E0Section
+
+
+    .section ProcScript85B6E1Section
+
+      .al
+      .xl
+
+      aProcUnknown85B63BCode ; 85/B6E1
+
+        PROC_HALT
+
+
+        ; 85/B6E3
+
+      procUnknown85B6E3 ; 85/B6E3
+
+        .structProcInfo "PW", rlUnknown85B725, rlUnknown85B78A, aProcUnknown85B6E3Code
+
+    .endsection ProcScript85B6E1Section
 
 
     .section Unsorted85B725Section
@@ -3656,6 +3764,21 @@
         ; 85/B7CF
 
     .endsection Unsorted85B78ASection
+
+
+    .section ProcScript85B7CFSection
+
+      .al
+      .xl
+
+      aProcUnknown85B6E3Code ; 85/B7CF
+
+        PROC_HALT
+
+
+        ; 85/B7D1
+
+    .endsection ProcScript85B7CFSection
 
 
     .section Unsorted85B7D1Section
@@ -3883,9 +4006,9 @@
         .autsiz
         .databank ?
 
-        lda #$8500
+        lda #(`procUnknown85B8FA)<<8
         sta lR44+1
-        lda #$B8FA
+        lda #<>procUnknown85B8FA
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -3911,6 +4034,18 @@
         ; 00 01 01 50 57 06
 
     .endsection Unsorted85B8EESection
+
+
+    .section ProcScript85B8FASection
+
+      .al
+      .xl
+
+      procUnknown85B8FA ; 85/B8FA
+
+        .structProcInfo "PW", rlUnknown85B906, rlProcUnknown85B9D4Cycle1, aProcDialogueBoxCode
+
+    .endsection ProcScript85B8FASection
 
 
     .section Unsorted85B906Section
@@ -4189,6 +4324,18 @@
     .endsection Unsorted85BB2ESection
 
 
+    .section ProcScript85BB52Section
+
+      .al
+      .xl
+
+      procUnknown85BB52 ; 85/BB52
+
+        .structProcInfo "PW", rlUnknown85BB5E, rlUnknown85BB83, aProcDialogueBoxCode
+
+    .endsection ProcScript85BB52Section
+
+
     .section Unsorted85BB5ESection
 
       .al
@@ -4286,9 +4433,9 @@
         sty $0ED1,b
         sta $0ED3,b
         stx $0ED5,b
-        lda #$8500
+        lda #(`procUnknown85BB52)<<8
         sta lR44+1
-        lda #$BB52
+        lda #<>procUnknown85BB52
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -4305,9 +4452,9 @@
         .databank ?
 
         phx
-        lda #$8500
+        lda #(`procUnknown85BB52)<<8
         sta lR44+1
-        lda #$BB52
+        lda #<>procUnknown85BB52
         sta lR44
         jsl rlProcEngineFindProc
         bcc _BBFD
@@ -4768,6 +4915,18 @@
     .endsection Unsorted85CA4BSection
 
 
+    .section ProcScript85CA85Section
+
+      .al
+      .xl
+
+      procUnknown85CA85 ; 85/CA85
+
+        .structProcInfo "OW", rlUnknown85CA91, rlUnknown85CADA, aProcUnknown85CA85Code
+
+    .endsection ProcScript85CA85Section
+
+
     .section Unsorted85CA91Section
 
       .al
@@ -4871,9 +5030,9 @@
         plx
         lda $7FEB0A
         sta $0ED5,b
-        lda #$9E00
+        lda #(`procUnknown9ECEDD)<<8
         sta lR44+1
-        lda #$CEDD
+        lda #<>procUnknown9ECEDD
         sta lR44
         jsl rlProcEngineCreateProc
         bra _CB50
@@ -4993,6 +5152,70 @@
         ; 85/CC4D
 
     .endsection Unsorted85CC3ESection
+
+
+    .section ProcScript85CC62Section
+
+      .al
+      .xl
+
+      aProcUnknown85CA85Code ; 85/CC62
+
+        PROC_YIELD 1
+        _CC64
+        PROC_YIELD 1
+        PROC_JUMP_IF_BITS_UNSET _CC64, $0001
+        PROC_SET_UNK_TIMER 30
+        _CC70
+        PROC_YIELD 1
+        PROC_JUMP_WHILE_UNK_TIMER _CC70
+        PROC_SET_ONCYCLE rlUnknown85CAFC
+        _CC7A
+        PROC_YIELD 1
+        PROC_JUMP_IF_BITS_UNSET _CC7A, $0001
+        PROC_SET_UNK_TIMER 40
+        _CC86
+        PROC_YIELD 1
+        PROC_JUMP_WHILE_UNK_TIMER _CC86
+        PROC_SET_ONCYCLE rlUnknown85CBBD
+        _CC90
+        PROC_YIELD 1
+        PROC_JUMP_IF_BITS_UNSET _CC90, $0001
+        PROC_SET_UNK_TIMER 60
+        _CC9C
+        PROC_YIELD 1
+        PROC_JUMP_WHILE_UNK_TIMER _CC9C
+        PROC_SET_ONCYCLE rlUnknown85CC3E
+        PROC_HALT
+
+
+        ; 85/CCA8
+
+    .endsection ProcScript85CC62Section
+
+
+    .section ProcScript85CD0CSection
+
+      .al
+      .xl
+
+      procUnknown85CD0C ; 85/CD0C
+
+        .structProcInfo "OB", rlUnknown85CD39, rlUnknown85CEC3, aProcUnknown85CD0CCode
+
+    .endsection ProcScript85CD0CSection
+
+
+    .section ProcScript85CD2DSection
+
+      .al
+      .xl
+
+      procUnknown85CD2D ; 85/CD2D
+
+        .structProcInfo "OB", rlUnknown85CD39, rlUnknown85CEC3, aProcUnknown85CD0CCode
+
+    .endsection ProcScript85CD2DSection
 
 
     .section Unsorted85CD39Section
@@ -5263,6 +5486,21 @@
     .endsection Unsorted85CEC3Section
 
 
+    .section ProcScript85D064Section
+
+      .al
+      .xl
+
+      aProcUnknown85CD0CCode ; 85/D064
+
+        PROC_HALT
+
+
+        ; 85/D066
+
+    .endsection ProcScript85D064Section
+
+
     .section Unsorted85D066Section
 
       .al
@@ -5380,9 +5618,9 @@
         pha
         lda wR0
         pha
-        lda #$8500
+        lda #(`procUnknown85CD0C)<<8
         sta lR44+1
-        lda #$CD0C
+        lda #<>procUnknown85CD0C
         sta lR44
         lda $7E4EC7
         sta $0ECF,b
@@ -5414,9 +5652,9 @@
         pha
         lda wR1
         pha
-        lda #$8500
+        lda #(`procUnknown85CD2D)<<8
         sta lR44+1
-        lda #$CD2D
+        lda #<>procUnknown85CD2D
         sta lR44
         lda $7E4F27
         sta $0ECF,b
@@ -5718,9 +5956,9 @@
         lda #$000D
         sta $0ED3,b
         pha
-        lda #$8500
+        lda #(`procUnknown85D8AA)<<8
         sta lR44+1
-        lda #$D8AA
+        lda #<>procUnknown85D8AA
         sta lR44
         lda #$0001
         jsl rlProcEngineCreateProcByIndex
@@ -5758,9 +5996,9 @@
         .databank ?
 
         phx
-        lda #$8500
+        lda #(`procUnknown85D8AA)<<8
         sta lR44+1
-        lda #$D8AA
+        lda #<>procUnknown85D8AA
         sta lR44
         jsl rlProcEngineFindProc
         bcc _D40B
@@ -6208,6 +6446,18 @@
     .endsection Unsorted85D7FASection
 
 
+    .section ProcScript85D8AASection
+
+      .al
+      .xl
+
+      procUnknown85D8AA ; 85/D8AA
+
+        .structProcInfo "OW", rlUnknown85D8B6, rlUnknown85D90F, aProcUnknown85D8AACode
+
+    .endsection ProcScript85D8AASection
+
+
     .section Unsorted85D8B6Section
 
       .al
@@ -6318,6 +6568,21 @@
         ; 85/D96D
 
     .endsection Unsorted85D8B6Section
+
+
+    .section ProcScript85D9FASection
+
+      .al
+      .xl
+
+      aProcUnknown85D8AACode ; 85/D9FA
+
+        PROC_HALT
+
+
+        ; 85/D9FC
+
+    .endsection ProcScript85D9FASection
 
 
     .section Unsorted85D9FCSection
@@ -6498,6 +6763,18 @@
     .endsection Unsorted85DABBSection
 
 
+    .section ProcScript85DAEASection
+
+      .al
+      .xl
+
+      procUnknown85DAEA ; 85/DAEA
+
+        .structProcInfo "OW", rlUnknown85DAF6, rlUnknown85A168, aProcDialogueBoxCode
+
+    .endsection ProcScript85DAEASection
+
+
     .section Unsorted85DAF6Section
 
       .al
@@ -6511,15 +6788,15 @@
         .databank ?
 
         phx
-        lda #$8500
+        lda #(`procUnknown85CD0C)<<8
         sta lR44+1
-        lda #$CD0C
+        lda #<>procUnknown85CD0C
         sta lR44
         jsl rlProcEngineFindProc
         bcs _DB19
-        lda #$8500
+        lda #(`procUnknown85CD2D)<<8
         sta lR44+1
-        lda #$CD2D
+        lda #<>procUnknown85CD2D
         sta lR44
         jsl rlProcEngineFindProc
         bcs _DB19
@@ -6600,9 +6877,9 @@
         sty $0ED1,b
         lda aCurrentTilemapInfo,b
         sta $0ECF,b
-        lda #$8500
+        lda #(`procUnknown85DAEA)<<8
         sta lR44+1
-        lda #$DAEA
+        lda #<>procUnknown85DAEA
         sta lR44
         lda #$0000
         jsl rlProcEngineCreateProcByIndex
@@ -6619,9 +6896,9 @@
         .autsiz
         .databank ?
 
-        lda #$8500
+        lda #(`procUnknown85DAEA)<<8
         sta lR44+1
-        lda #$DAEA
+        lda #<>procUnknown85DAEA
         sta lR44
         jsl rlProcEngineFindProc
         bcc _DBAA
@@ -6668,6 +6945,18 @@
         ; 85/DCCA
 
     .endsection Unsorted85DCABSection
+
+
+    .section ProcScript85DDDBSection
+
+      .al
+      .xl
+
+      procUnknown85DDDB ; 85/DDDB
+
+        .structProcInfo "PM", rlUnknown85DDF9, rlUnknown85DE13, aProcUnknown85DDDBCode
+
+    .endsection ProcScript85DDDBSection
 
 
     .section Unsorted85DDF9Section
@@ -6811,6 +7100,18 @@
         ; 85/DF7D
 
     .endsection Unsorted85DF6FSection
+
+
+    .section ProcScript85E1CCSection
+
+      .al
+      .xl
+
+      procUnknown85E1CC ; 85/E1CC
+
+        .structProcInfo "PW", rlUnknown85E1DB, rlUnknown85E1ED, aProcUnknown85DDDBCode
+
+    .endsection ProcScript85E1CCSection
 
 
     .section Unsorted85E1DBSection
@@ -7149,9 +7450,9 @@
 
         _E883
         sta $0ECF,b
-        lda #$8500
+        lda #(`procUnknown85E1CC)<<8
         sta lR44+1
-        lda #$E1CC
+        lda #<>procUnknown85E1CC
         sta lR44
         jsl rlProcEngineCreateProc
 
