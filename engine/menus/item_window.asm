@@ -125,9 +125,9 @@
 
           .structDMAToVRAM $DD72B0, $0C00, $80, $6000
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80CE8E)<<8
         sta lR19+1
-        lda #$CE8E
+        lda #<>aDecompressionDMAEntry80CE8E
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
@@ -148,18 +148,18 @@
         jsl rlUnitWindowCopySpritePalette1
         lda #$0004
         jsl rlUnitWindowCopySpritePalette2
-        lda #$DD00
+        lda #(`gcUnknownDD3DC0)<<8
         sta lR18+1
-        lda #$3DC0
+        lda #<>gcUnknownDD3DC0
         sta lR18
         lda #(`aBG2TilemapBuffer)<<8
         sta lR19+1
         lda #<>aBG2TilemapBuffer
         sta lR19
         jsl rlAppendDecompList
-        lda #$DD00
+        lda #(`gcUnknownDD3E96)<<8
         sta lR18+1
-        lda #$3E96
+        lda #<>gcUnknownDD3E96
         sta lR18
         lda #$7E00
         sta lR19+1
@@ -170,9 +170,9 @@
 
           .structDMAToVRAM aBG2TilemapBuffer, $0700, $80, $4000
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80CE96)<<8
         sta lR19+1
-        lda #$CE96
+        lda #<>aDecompressionDMAEntry80CE96
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         rts

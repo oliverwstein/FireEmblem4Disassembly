@@ -1,0 +1,17 @@
+# Compressed streams for rlDecompressor, placed in this order from start to
+# end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is
+# the stream as the ROM has it; gcUnknown... are not identified yet (graphics
+# or tilemaps).
+start $C00A2B
+end $C03C05
+
+gcUnknownC00A2B gcUnknownC00A2B ; 6144 bytes decompressed
+gcUnknownC0197B gcUnknownC0197B ; 2048 bytes decompressed
+gcUnknownC01FBA gcUnknownC01FBA ; 1024 bytes decompressed
+gcUnknownC022B6 gcUnknownC022B6 ; 1440 bytes decompressed
+gcUnknownC02542 gcUnknownC02542 ; 1024 bytes decompressed
+gcUnknownC02786 gcUnknownC02786 ; 2048 bytes decompressed
+gcUnknownC02B6B gcUnknownC02B6B ; 3520 bytes decompressed
+gcUnknownC03455 gcUnknownC03455 ; 2048 bytes decompressed
+gcUnknownC03558 gcUnknownC03558 ; 2048 bytes decompressed
+gcUnknownC0365A gcUnknownC0365A ; 3584 bytes decompressed

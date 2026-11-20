@@ -1351,14 +1351,14 @@
         jsl rlUnknown9180BC
         jsl rlDialogueFreeHDMA
         stz wBufferBG2VOFS
-        lda #$8D00
+        lda #(`aDecompressionDMAEntry8DAF95)<<8
         sta lR19+1
-        lda #$AF95
+        lda #<>aDecompressionDMAEntry8DAF95
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8D00
+        lda #(`aDecompressionDMAEntry8DAF9D)<<8
         sta lR19+1
-        lda #$AF9D
+        lda #<>aDecompressionDMAEntry8DAF9D
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         ldx #$01FE
@@ -1412,14 +1412,14 @@
         jsl rlDialogueFreeHDMA
         stz wBufferBG2VOFS
         stz wBufferBG3VOFS
-        lda #$8D00
+        lda #(`aDecompressionDMAEntry8DB056)<<8
         sta lR19+1
-        lda #$B056
+        lda #<>aDecompressionDMAEntry8DB056
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8D00
+        lda #(`aDecompressionDMAEntry8DB066)<<8
         sta lR19+1
-        lda #$B066
+        lda #<>aDecompressionDMAEntry8DB066
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         sep #$20

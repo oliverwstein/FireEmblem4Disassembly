@@ -1705,9 +1705,9 @@
         rep #$20
         plb
         .databank $7F
-        lda #$AC00
+        lda #(`gcUnknownACCC17)<<8
         sta lR18+1
-        lda #$CC17
+        lda #<>gcUnknownACCC17
         sta lR18
         lda #$7E00
         sta lR19+1
@@ -4664,9 +4664,9 @@
         rep #$20
         plb
         .databank $7F
-        lda #$AC00
+        lda #(`gcUnknownACCC17)<<8
         sta lR18+1
-        lda #$CC17
+        lda #<>gcUnknownACCC17
         sta lR18
         lda #$7E00
         sta lR19+1
@@ -4703,9 +4703,9 @@
         .databank ?
 
         phx
-        lda #(`$D676F6)<<8
+        lda #(`gcUnknownD676F6)<<8
         sta lR18+1
-        lda #<>$D676F6
+        lda #<>gcUnknownD676F6
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -4715,9 +4715,9 @@
         sta lR19
         jsl rlAppendDecompList
 
-        lda #(`$D677E9)<<8
+        lda #(`gcUnknownD677E9)<<8
         sta lR18+1
-        lda #<>$D677E9
+        lda #<>gcUnknownD677E9
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -5369,9 +5369,9 @@
         .databank ?
 
         phx
-        lda #$C000
+        lda #(`gcUnknownC00A2B)<<8
         sta lR18+1
-        lda #$0A2B
+        lda #<>gcUnknownC00A2B
         sta lR18
         lda #$7E00
         sta lR19+1
@@ -8421,568 +8421,568 @@
         ; come from the original notes; some classes have more than one row.
 
         ; Cavalier
-        .long $ADF4CB, $AAA0F6, $ADEDD1, $AA966C
-        .long $ADEA4E, $AA92C3, $ADE6C6, $AA8F26
-        .long $ADF10B, $AA8F26, $ADF890, $AA9A00
-        .long $ADFBD9, $AA9D2F, $D50000, $AAA0F6
+        .long gcUnknownADF4CB, gcUnknownAAA0F6, gcUnknownADEDD1, gcUnknownAA966C
+        .long gcUnknownADEA4E, gcUnknownAA92C3, gcUnknownADE6C6, gcUnknownAA8F26
+        .long gcUnknownADF10B, gcUnknownAA8F26, gcUnknownADF890, gcUnknownAA9A00
+        .long gcUnknownADFBD9, gcUnknownAA9D2F, gcUnknownD50000, gcUnknownAAA0F6
         .byte 1
         ; LanceKnight
-        .long $D510B1, $AAA0F6, $D50A01, $AA966C
-        .long $D506AD, $AA92C3, $D50333, $AA8F26
-        .long $D50D0F, $AA8F26, $D514DD, $AA9A00
-        .long $D51825, $AA9D2F, $D51B75, $AAA0F6
+        .long gcUnknownD510B1, gcUnknownAAA0F6, gcUnknownD50A01, gcUnknownAA966C
+        .long gcUnknownD506AD, gcUnknownAA92C3, gcUnknownD50333, gcUnknownAA8F26
+        .long gcUnknownD50D0F, gcUnknownAA8F26, gcUnknownD514DD, gcUnknownAA9A00
+        .long gcUnknownD51825, gcUnknownAA9D2F, gcUnknownD51B75, gcUnknownAAA0F6
         .byte 1
         ; BowKnight
-        .long $ADF4CB, $AAA0F6, $ADEDD1, $AA966C
-        .long $ADEA4E, $AA92C3, $ADE6C6, $AA8F26
-        .long $ADF10B, $AA8F26, $ADF890, $AA9A00
-        .long $ADFBD9, $AA9D2F, $D50000, $AAA0F6
+        .long gcUnknownADF4CB, gcUnknownAAA0F6, gcUnknownADEDD1, gcUnknownAA966C
+        .long gcUnknownADEA4E, gcUnknownAA92C3, gcUnknownADE6C6, gcUnknownAA8F26
+        .long gcUnknownADF10B, gcUnknownAA8F26, gcUnknownADF890, gcUnknownAA9A00
+        .long gcUnknownADFBD9, gcUnknownAA9D2F, gcUnknownD50000, gcUnknownAAA0F6
         .byte 1
         ; AxeKnight
-        .long $D510B1, $AAA0F6, $D50A01, $AA966C
-        .long $D506AD, $AA92C3, $D50333, $AA8F26
-        .long $D50D0F, $AA8F26, $D514DD, $AA9A00
-        .long $D51825, $AA9D2F, $D51B75, $AAA0F6
+        .long gcUnknownD510B1, gcUnknownAAA0F6, gcUnknownD50A01, gcUnknownAA966C
+        .long gcUnknownD506AD, gcUnknownAA92C3, gcUnknownD50333, gcUnknownAA8F26
+        .long gcUnknownD50D0F, gcUnknownAA8F26, gcUnknownD514DD, gcUnknownAA9A00
+        .long gcUnknownD51825, gcUnknownAA9D2F, gcUnknownD51B75, gcUnknownAAA0F6
         .byte 1
         ; FreeKnight
-        .long $D510B1, $AAA0F6, $D50A01, $AA966C
-        .long $D506AD, $AA92C3, $D50333, $AA8F26
-        .long $D50D0F, $AA8F26, $D514DD, $AA9A00
-        .long $D51825, $AA9D2F, $D51B75, $AAA0F6
+        .long gcUnknownD510B1, gcUnknownAAA0F6, gcUnknownD50A01, gcUnknownAA966C
+        .long gcUnknownD506AD, gcUnknownAA92C3, gcUnknownD50333, gcUnknownAA8F26
+        .long gcUnknownD50D0F, gcUnknownAA8F26, gcUnknownD514DD, gcUnknownAA9A00
+        .long gcUnknownD51825, gcUnknownAA9D2F, gcUnknownD51B75, gcUnknownAAA0F6
         .byte 1
         ; Troubadour
-        .long $D510B1, $AC8CFB, $D50A01, $ABFF18
-        .long $D506AD, $ABFA3D, $D50333, $ABF59A
-        .long $D50D0F, $ABF59A, $D514DD, $AC83BF
-        .long $D51825, $AC8842, $D51B75, $AC8CFB
+        .long gcUnknownD510B1, gcUnknownAC8CFB, gcUnknownD50A01, gcUnknownABFF18
+        .long gcUnknownD506AD, gcUnknownABFA3D, gcUnknownD50333, gcUnknownABF59A
+        .long gcUnknownD50D0F, gcUnknownABF59A, gcUnknownD514DD, gcUnknownAC83BF
+        .long gcUnknownD51825, gcUnknownAC8842, gcUnknownD51B75, gcUnknownAC8CFB
         .byte 1
         ; KnightLord
-        .long $ADF4CB, $A587D6, $ADEDD1, $A4FF5A
-        .long $ADEA4E, $A4FC4A, $ADE6C6, $A4F926
-        .long $ADF10B, $A4F926, $ADF890, $A5822D
-        .long $ADFBD9, $A584DD, $D50000, $A587D6
+        .long gcUnknownADF4CB, gcUnknownA587D6, gcUnknownADEDD1, gcUnknownA4FF5A
+        .long gcUnknownADEA4E, gcUnknownA4FC4A, gcUnknownADE6C6, gcUnknownA4F926
+        .long gcUnknownADF10B, gcUnknownA4F926, gcUnknownADF890, gcUnknownA5822D
+        .long gcUnknownADFBD9, gcUnknownA584DD, gcUnknownD50000, gcUnknownA587D6
         .byte 1
         ; DukeKnight
-        .long $ADF4CB, $A2F96D, $ADEDD1, $A2F0BF
-        .long $ADEA4E, $A2ED85, $ADE6C6, $A2EA71
-        .long $ADF10B, $A2EA71, $ADF890, $A2F38E
-        .long $ADFBD9, $A2F66B, $D50000, $A2F96D
+        .long gcUnknownADF4CB, gcUnknownA2F96D, gcUnknownADEDD1, gcUnknownA2F0BF
+        .long gcUnknownADEA4E, gcUnknownA2ED85, gcUnknownADE6C6, gcUnknownA2EA71
+        .long gcUnknownADF10B, gcUnknownA2EA71, gcUnknownADF890, gcUnknownA2F38E
+        .long gcUnknownADFBD9, gcUnknownA2F66B, gcUnknownD50000, gcUnknownA2F96D
         .byte 1
         ; MasterKnight
-        .long $ADF4CB, $A5CE40, $ADEDD1, $A5BBB8
-        .long $ADEA4E, $A5B553, $ADE6C6, $A5AF39
-        .long $ADF10B, $A5AF39, $ADF890, $A5C1D7
-        .long $ADFBD9, $A5C7E4, $D50000, $A5CE40
+        .long gcUnknownADF4CB, gcUnknownA5CE40, gcUnknownADEDD1, gcUnknownA5BBB8
+        .long gcUnknownADEA4E, gcUnknownA5B553, gcUnknownADE6C6, gcUnknownA5AF39
+        .long gcUnknownADF10B, gcUnknownA5AF39, gcUnknownADF890, gcUnknownA5C1D7
+        .long gcUnknownADFBD9, gcUnknownA5C7E4, gcUnknownD50000, gcUnknownA5CE40
         .byte 1
         ; Paladin
-        .long $ADF4CB, $A7B1DB, $ADEDD1, $A7A11A
-        .long $ADEA4E, $A79B12, $ADE6C6, $A79536
-        .long $ADF10B, $A79536, $ADF890, $A7A6A4
-        .long $ADFBD9, $A7AC2D, $D50000, $A7B1DB
+        .long gcUnknownADF4CB, gcUnknownA7B1DB, gcUnknownADEDD1, gcUnknownA7A11A
+        .long gcUnknownADEA4E, gcUnknownA79B12, gcUnknownADE6C6, gcUnknownA79536
+        .long gcUnknownADF10B, gcUnknownA79536, gcUnknownADF890, gcUnknownA7A6A4
+        .long gcUnknownADFBD9, gcUnknownA7AC2D, gcUnknownD50000, gcUnknownA7B1DB
         .byte 1
         ; PaladinF
-        .long $ADF4CB, $A78F7B, $ADEDD1, $A6FF22
-        .long $ADEA4E, $A6F94B, $ADE6C6, $A6F392
-        .long $ADF10B, $A6F392, $ADF890, $A784C2
-        .long $ADFBD9, $A789F9, $D50000, $A78F7B
+        .long gcUnknownADF4CB, gcUnknownA78F7B, gcUnknownADEDD1, gcUnknownA6FF22
+        .long gcUnknownADEA4E, gcUnknownA6F94B, gcUnknownADE6C6, gcUnknownA6F392
+        .long gcUnknownADF10B, gcUnknownA6F392, gcUnknownADF890, gcUnknownA784C2
+        .long gcUnknownADFBD9, gcUnknownA789F9, gcUnknownD50000, gcUnknownA78F7B
         .byte 1
         ; ArchKnight
-        .long $ADF4CB, $A0D607, $ADEDD1, $A0CE50
-        .long $ADEA4E, $A0CBEA, $ADE6C6, $A0C992
-        .long $ADF10B, $A0C992, $ADF890, $A0D0F2
-        .long $ADFBD9, $A0D35A, $D50000, $A0D607
+        .long gcUnknownADF4CB, gcUnknownA0D607, gcUnknownADEDD1, gcUnknownA0CE50
+        .long gcUnknownADEA4E, gcUnknownA0CBEA, gcUnknownADE6C6, gcUnknownA0C992
+        .long gcUnknownADF10B, gcUnknownA0C992, gcUnknownADF890, gcUnknownA0D0F2
+        .long gcUnknownADFBD9, gcUnknownA0D35A, gcUnknownD50000, gcUnknownA0D607
         .byte 1
         ; Ranger
-        .long $ADF4CB, $A4B00B, $ADEDD1, $A4A7DB
-        .long $ADEA4E, $A4A4EB, $ADE6C6, $A4A1E9
-        .long $ADF10B, $A4A1E9, $ADF890, $A4AAA5
-        .long $ADFBD9, $A4AD3B, $D50000, $A4B00B
+        .long gcUnknownADF4CB, gcUnknownA4B00B, gcUnknownADEDD1, gcUnknownA4A7DB
+        .long gcUnknownADEA4E, gcUnknownA4A4EB, gcUnknownADE6C6, gcUnknownA4A1E9
+        .long gcUnknownADF10B, gcUnknownA4A1E9, gcUnknownADF890, gcUnknownA4AAA5
+        .long gcUnknownADFBD9, gcUnknownA4AD3B, gcUnknownD50000, gcUnknownA4B00B
         .byte 1
         ; MageKnight
-        .long $ADF4CB, $ABEFDD, $ADEDD1, $ABE015
-        .long $ADEA4E, $ABDA4A, $ADE6C6, $ABD4B1
-        .long $ADF10B, $ABD4B1, $ADF890, $ABE525
-        .long $ADFBD9, $ABEA44, $D50000, $ABEFDD
+        .long gcUnknownADF4CB, gcUnknownABEFDD, gcUnknownADEDD1, gcUnknownABE015
+        .long gcUnknownADEA4E, gcUnknownABDA4A, gcUnknownADE6C6, gcUnknownABD4B1
+        .long gcUnknownADF10B, gcUnknownABD4B1, gcUnknownADF890, gcUnknownABE525
+        .long gcUnknownADFBD9, gcUnknownABEA44, gcUnknownD50000, gcUnknownABEFDD
         .byte 1
         ; GreatKnight
-        .long $ADF4CB, $A38A8E, $ADEDD1, $A3825F
-        .long $ADEA4E, $A2FF6D, $ADE6C6, $A2FC7C
-        .long $ADF10B, $A2FC7C, $ADF890, $A38530
-        .long $ADFBD9, $A387C2, $D50000, $A38A8E
+        .long gcUnknownADF4CB, gcUnknownA38A8E, gcUnknownADEDD1, gcUnknownA3825F
+        .long gcUnknownADEA4E, gcUnknownA2FF6D, gcUnknownADE6C6, gcUnknownA2FC7C
+        .long gcUnknownADF10B, gcUnknownA2FC7C, gcUnknownADF890, gcUnknownA38530
+        .long gcUnknownADFBD9, gcUnknownA387C2, gcUnknownD50000, gcUnknownA38A8E
         .byte 1
         ; PegasusRider
-        .long $D528B8, $A7E6F4, $D523F3, $A7D9E8
-        .long $D52134, $A7D5BB, $D51EE2, $A7D186
-        .long $D52630, $A7D186, $D52B4C, $A7DE05
-        .long $D52D65, $A7E282, $D52FDC, $A7E6F4
+        .long gcUnknownD528B8, gcUnknownA7E6F4, gcUnknownD523F3, gcUnknownA7D9E8
+        .long gcUnknownD52134, gcUnknownA7D5BB, gcUnknownD51EE2, gcUnknownA7D186
+        .long gcUnknownD52630, gcUnknownA7D186, gcUnknownD52B4C, gcUnknownA7DE05
+        .long gcUnknownD52D65, gcUnknownA7E282, gcUnknownD52FDC, gcUnknownA7E6F4
         .byte 1
         ; PegasusKnight
-        .long $D528B8, $A7CD09, $D523F3, $A7BFF9
-        .long $D52134, $A7BBBF, $D51EE2, $A7B788
-        .long $D52630, $A7B788, $D52B4C, $A7C409
-        .long $D52D65, $A7C879, $D52FDC, $A7CD09
+        .long gcUnknownD528B8, gcUnknownA7CD09, gcUnknownD523F3, gcUnknownA7BFF9
+        .long gcUnknownD52134, gcUnknownA7BBBF, gcUnknownD51EE2, gcUnknownA7B788
+        .long gcUnknownD52630, gcUnknownA7B788, gcUnknownD52B4C, gcUnknownA7C409
+        .long gcUnknownD52D65, gcUnknownA7C879, gcUnknownD52FDC, gcUnknownA7CD09
         .byte 1
         ; FalconKnight
-        .long $D528B8, $A3F50C, $D523F3, $A3DEAB
-        .long $D52134, $A3D786, $D51EE2, $A3CFD9
-        .long $D52630, $A3CFD9, $D52B4C, $A3E64B
-        .long $D52D65, $A3EDAA, $D52FDC, $A3F50C
+        .long gcUnknownD528B8, gcUnknownA3F50C, gcUnknownD523F3, gcUnknownA3DEAB
+        .long gcUnknownD52134, gcUnknownA3D786, gcUnknownD51EE2, gcUnknownA3CFD9
+        .long gcUnknownD52630, gcUnknownA3CFD9, gcUnknownD52B4C, gcUnknownA3E64B
+        .long gcUnknownD52D65, gcUnknownA3EDAA, gcUnknownD52FDC, gcUnknownA3F50C
         .byte 1
         ; Dragonrider
-        .long $ADA7B5, $A2E51A, $ADA37A, $A2D726
-        .long $ADA150, $A2D334, $AD9F97, $A2CEC0
-        .long $ADA578, $A2CEC0, $ADA9C5, $A2DBD4
-        .long $ADAB7F, $A2DFFB, $ADAD79, $A2E51A
+        .long gcUnknownADA7B5, gcUnknownA2E51A, gcUnknownADA37A, gcUnknownA2D726
+        .long gcUnknownADA150, gcUnknownA2D334, gcUnknownAD9F97, gcUnknownA2CEC0
+        .long gcUnknownADA578, gcUnknownA2CEC0, gcUnknownADA9C5, gcUnknownA2DBD4
+        .long gcUnknownADAB7F, gcUnknownA2DFFB, gcUnknownADAD79, gcUnknownA2E51A
         .byte 1
         ; Dragonknight
-        .long $ADA7B5, $A1F489, $ADA37A, $A1E63B
-        .long $ADA150, $A1E25B, $AD9F97, $A1DDF1
-        .long $ADA578, $A1DDF1, $ADA9C5, $A1EB31
-        .long $ADAB7F, $A1EF62, $ADAD79, $A1F489
+        .long gcUnknownADA7B5, gcUnknownA1F489, gcUnknownADA37A, gcUnknownA1E63B
+        .long gcUnknownADA150, gcUnknownA1E25B, gcUnknownAD9F97, gcUnknownA1DDF1
+        .long gcUnknownADA578, gcUnknownA1DDF1, gcUnknownADA9C5, gcUnknownA1EB31
+        .long gcUnknownADAB7F, gcUnknownA1EF62, gcUnknownADAD79, gcUnknownA1F489
         .byte 1
         ; Dragonmaster
-        .long $ADA7B5, $A2ADD8, $ADA37A, $A29F0C
-        .long $ADA150, $A29B16, $AD9F97, $A29697
-        .long $ADA578, $A29697, $ADA9C5, $A2A41B
-        .long $ADAB7F, $A2A86E, $ADAD79, $A2ADD8
+        .long gcUnknownADA7B5, gcUnknownA2ADD8, gcUnknownADA37A, gcUnknownA29F0C
+        .long gcUnknownADA150, gcUnknownA29B16, gcUnknownAD9F97, gcUnknownA29697
+        .long gcUnknownADA578, gcUnknownA29697, gcUnknownADA9C5, gcUnknownA2A41B
+        .long gcUnknownADAB7F, gcUnknownA2A86E, gcUnknownADAD79, gcUnknownA2ADD8
         .byte 1
         ; Archer
-        .long $AD9A90, $A0C809, $AD9811, $A0C472
-        .long $AD96F4, $A0C352, $AD95BD, $A0C252
-        .long $AD995A, $A0C252, $AD9BD2, $A0C59B
-        .long $AD9D12, $A0C6CA, $AD9E4B, $A0C809
+        .long gcUnknownAD9A90, gcUnknownA0C809, gcUnknownAD9811, gcUnknownA0C472
+        .long gcUnknownAD96F4, gcUnknownA0C352, gcUnknownAD95BD, gcUnknownA0C252
+        .long gcUnknownAD995A, gcUnknownA0C252, gcUnknownAD9BD2, gcUnknownA0C59B
+        .long gcUnknownAD9D12, gcUnknownA0C6CA, gcUnknownAD9E4B, gcUnknownA0C809
         .byte 0
         ; Myrmidon
-        .long $ADCC79, $AAED54, $ADC8CA, $AAE6E1
-        .long $ADC6E8, $AAE3BC, $ADC56D, $AAE08C
-        .long $ADCA27, $AAE08C, $ADCED6, $AAE83C
-        .long $ADD039, $AAEA0D, $ADD233, $AAED54
+        .long gcUnknownADCC79, gcUnknownAAED54, gcUnknownADC8CA, gcUnknownAAE6E1
+        .long gcUnknownADC6E8, gcUnknownAAE3BC, gcUnknownADC56D, gcUnknownAAE08C
+        .long gcUnknownADCA27, gcUnknownAAE08C, gcUnknownADCED6, gcUnknownAAE83C
+        .long gcUnknownADD039, gcUnknownAAEA0D, gcUnknownADD233, gcUnknownAAED54
         .byte 0
         ; Swordmaster
-        .long $ADCC79, $AA8B7B, $ADC8CA, $AA8467
-        .long $ADC6E8, $AA812E, $ADC56D, $A9FE02
-        .long $ADCA27, $A9FE02, $ADCED6, $AA85DA
-        .long $ADD039, $AA87D2, $ADD233, $AA8B7B
+        .long gcUnknownADCC79, gcUnknownAA8B7B, gcUnknownADC8CA, gcUnknownAA8467
+        .long gcUnknownADC6E8, gcUnknownAA812E, gcUnknownADC56D, gcUnknownA9FE02
+        .long gcUnknownADCA27, gcUnknownA9FE02, gcUnknownADCED6, gcUnknownAA85DA
+        .long gcUnknownADD039, gcUnknownAA87D2, gcUnknownADD233, gcUnknownAA8B7B
         .byte 0
         ; Sniper
-        .long $AD9A90, $AAB1CC, $AD9811, $AAAE30
-        .long $AD96F4, $AAACF9, $AD95BD, $AAAC0F
-        .long $AD995A, $AAAC0F, $AD9BD2, $AAAF56
-        .long $AD9D12, $AAB08A, $AD9E4B, $AAB1CC
+        .long gcUnknownAD9A90, gcUnknownAAB1CC, gcUnknownAD9811, gcUnknownAAAE30
+        .long gcUnknownAD96F4, gcUnknownAAACF9, gcUnknownAD95BD, gcUnknownAAAC0F
+        .long gcUnknownAD995A, gcUnknownAAAC0F, gcUnknownAD9BD2, gcUnknownAAAF56
+        .long gcUnknownAD9D12, gcUnknownAAB08A, gcUnknownAD9E4B, gcUnknownAAB1CC
         .byte 0
         ; Hero
-        .long $ADCC79, $A49DE7, $ADC8CA, $A495F2
-        .long $ADC6E8, $A4925E, $ADC56D, $A48ED0
-        .long $ADCA27, $A48ED0, $ADCED6, $A4978F
-        .long $ADD039, $A499C1, $ADD233, $A49DE7
+        .long gcUnknownADCC79, gcUnknownA49DE7, gcUnknownADC8CA, gcUnknownA495F2
+        .long gcUnknownADC6E8, gcUnknownA4925E, gcUnknownADC56D, gcUnknownA48ED0
+        .long gcUnknownADCA27, gcUnknownA48ED0, gcUnknownADCED6, gcUnknownA4978F
+        .long gcUnknownADD039, gcUnknownA499C1, gcUnknownADD233, gcUnknownA49DE7
         .byte 0
         ; General
-        .long $ACFBAC, $A4D0B9, $ACF405, $A4C72D
-        .long $ACF029, $A4C497, $ACEC8F, $A4C198
-        .long $ACF7A3, $A4C198, $ACFFEE, $A4CA6F
-        .long $AD835A, $A4CD75, $AD8745, $A4D0B9
+        .long gcUnknownACFBAC, gcUnknownA4D0B9, gcUnknownACF405, gcUnknownA4C72D
+        .long gcUnknownACF029, gcUnknownA4C497, gcUnknownACEC8F, gcUnknownA4C198
+        .long gcUnknownACF7A3, gcUnknownA4C198, gcUnknownACFFEE, gcUnknownA4CA6F
+        .long gcUnknownAD835A, gcUnknownA4CD75, gcUnknownAD8745, gcUnknownA4D0B9
         .byte 0
         ; Emperor
-        .long $ACFBAC, $A3ABA3, $ACF405, $A39978
-        .long $ACF029, $A393A2, $ACEC8F, $A38D58
-        .long $ACF7A3, $A38D58, $ACFFEE, $A39FA1
-        .long $AD835A, $A3A542, $AD8745, $A3ABA3
+        .long gcUnknownACFBAC, gcUnknownA3ABA3, gcUnknownACF405, gcUnknownA39978
+        .long gcUnknownACF029, gcUnknownA393A2, gcUnknownACEC8F, gcUnknownA38D58
+        .long gcUnknownACF7A3, gcUnknownA38D58, gcUnknownACFFEE, gcUnknownA39FA1
+        .long gcUnknownAD835A, gcUnknownA3A542, gcUnknownAD8745, gcUnknownA3ABA3
         .byte 0
         ; Baron
-        .long $ACFBAC, $A0F859, $ACF405, $A0E56D
-        .long $ACF029, $A0DF8B, $ACEC8F, $A0D8AB
-        .long $ACF7A3, $A0D8AB, $ACFFEE, $A0EBA0
-        .long $AD835A, $A0F163, $AD8745, $A0F859
+        .long gcUnknownACFBAC, gcUnknownA0F859, gcUnknownACF405, gcUnknownA0E56D
+        .long gcUnknownACF029, gcUnknownA0DF8B, gcUnknownACEC8F, gcUnknownA0D8AB
+        .long gcUnknownACF7A3, gcUnknownA0D8AB, gcUnknownACFFEE, gcUnknownA0EBA0
+        .long gcUnknownAD835A, gcUnknownA0F163, gcUnknownAD8745, gcUnknownA0F859
         .byte 0
         ; Soldier
-        .long $ACDF93, $A08CF4, $ACD92B, $A08501
-        .long $ACD606, $A082A2, $ACD31C, $A08000
-        .long $ACDC16, $A08000, $ACE32A, $A08784
-        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
+        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
+        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
+        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
         .byte 0
         ; SpearSoldier
-        .long $ACDF93, $A08CF4, $ACD92B, $A08501
-        .long $ACD606, $A082A2, $ACD31C, $A08000
-        .long $ACDC16, $A08000, $ACE32A, $A08784
-        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
+        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
+        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
+        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
         .byte 0
         ; AxeSoldier
-        .long $ACDF93, $A08CF4, $ACD92B, $A08501
-        .long $ACD606, $A082A2, $ACD31C, $A08000
-        .long $ACDC16, $A08000, $ACE32A, $A08784
-        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
+        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
+        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
+        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
         .byte 0
         ; BowSoldier
-        .long $ACDF93, $A08CF4, $ACD92B, $A08501
-        .long $ACD606, $A082A2, $ACD31C, $A08000
-        .long $ACDC16, $A08000, $ACE32A, $A08784
-        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
+        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
+        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
+        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
         .byte 0
         ; SwordSoldier
-        .long $ACDF93, $A08CF4, $ACD92B, $A08501
-        .long $ACD606, $A082A2, $ACD31C, $A08000
-        .long $ACDC16, $A08000, $ACE32A, $A08784
-        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
+        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
+        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
+        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
         .byte 0
         ; LanceArmor
-        .long $ACDF93, $A08CF4, $ACD92B, $A08501
-        .long $ACD606, $A082A2, $ACD31C, $A08000
-        .long $ACDC16, $A08000, $ACE32A, $A08784
-        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
+        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
+        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
+        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
         .byte 0
         ; AxeArmor
-        .long $ACDF93, $A08CF4, $ACD92B, $A08501
-        .long $ACD606, $A082A2, $ACD31C, $A08000
-        .long $ACDC16, $A08000, $ACE32A, $A08784
-        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
+        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
+        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
+        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
         .byte 0
         ; BowArmor
-        .long $ACDF93, $A08CF4, $ACD92B, $A08501
-        .long $ACD606, $A082A2, $ACD31C, $A08000
-        .long $ACDC16, $A08000, $ACE32A, $A08784
-        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
+        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
+        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
+        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
         .byte 0
         ; SwordArmor
-        .long $ACDF93, $A08CF4, $ACD92B, $A08501
-        .long $ACD606, $A082A2, $ACD31C, $A08000
-        .long $ACDC16, $A08000, $ACE32A, $A08784
-        .long $ACE615, $A08A50, $ACE977, $A08CF4
+        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
+        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
+        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
+        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
         .byte 0
         ; Barbarian
-        .long $AD904F, $A0ABAC, $AD8DB0, $A0A43A
-        .long $AD8C5B, $A0A20F, $AD8B10, $A09F53
-        .long $AD8F00, $A09F53, $AD91C6, $A0A6F2
-        .long $AD930D, $A0A93A, $AD947A, $A0ABAC
+        .long gcUnknownAD904F, gcUnknownA0ABAC, gcUnknownAD8DB0, gcUnknownA0A43A
+        .long gcUnknownAD8C5B, gcUnknownA0A20F, gcUnknownAD8B10, gcUnknownA09F53
+        .long gcUnknownAD8F00, gcUnknownA09F53, gcUnknownAD91C6, gcUnknownA0A6F2
+        .long gcUnknownAD930D, gcUnknownA0A93A, gcUnknownAD947A, gcUnknownA0ABAC
         .byte 0
         ; Fighter
-        .long $AD904F, $A09C49, $AD8DB0, $A09498
-        .long $AD8C5B, $A09267, $AD8B10, $A08FC2
-        .long $AD8F00, $A08FC2, $AD91C6, $A09761
-        .long $AD930D, $A099B1, $AD947A, $A09C49
+        .long gcUnknownAD904F, gcUnknownA09C49, gcUnknownAD8DB0, gcUnknownA09498
+        .long gcUnknownAD8C5B, gcUnknownA09267, gcUnknownAD8B10, gcUnknownA08FC2
+        .long gcUnknownAD8F00, gcUnknownA08FC2, gcUnknownAD91C6, gcUnknownA09761
+        .long gcUnknownAD930D, gcUnknownA099B1, gcUnknownAD947A, gcUnknownA09C49
         .byte 0
         ; Brigand
-        .long $AD904F, $A6E1B9, $AD8DB0, $A6D9E9
-        .long $AD8C5B, $A6D7A8, $AD8B10, $A6D4FD
-        .long $AD8F00, $A6D4FD, $AD91C6, $A6DCCB
-        .long $AD930D, $A6DF0D, $AD947A, $A6E1B9
+        .long gcUnknownAD904F, gcUnknownA6E1B9, gcUnknownAD8DB0, gcUnknownA6D9E9
+        .long gcUnknownAD8C5B, gcUnknownA6D7A8, gcUnknownAD8B10, gcUnknownA6D4FD
+        .long gcUnknownAD8F00, gcUnknownA6D4FD, gcUnknownAD91C6, gcUnknownA6DCCB
+        .long gcUnknownAD930D, gcUnknownA6DF0D, gcUnknownAD947A, gcUnknownA6E1B9
         .byte 0
         ; Warrior
-        .long $ADDCED, $ACA6D3, $ADD80A, $AC9A19
-        .long $ADD5EA, $AC9648, $ADD39B, $AC91BF
-        .long $ADDA75, $AC91BF, $ADDF86, $AC9E5E
-        .long $ADE1DC, $ACA24F, $ADE463, $ACA6D3
+        .long gcUnknownADDCED, gcUnknownACA6D3, gcUnknownADD80A, gcUnknownAC9A19
+        .long gcUnknownADD5EA, gcUnknownAC9648, gcUnknownADD39B, gcUnknownAC91BF
+        .long gcUnknownADDA75, gcUnknownAC91BF, gcUnknownADDF86, gcUnknownAC9E5E
+        .long gcUnknownADE1DC, gcUnknownACA24F, gcUnknownADE463, gcUnknownACA6D3
         .byte 0
         ; Hunter
-        .long $ADDCED, $A4BE6B, $ADD80A, $A4B77E
-        .long $ADD5EA, $A4B58A, $ADD39B, $A4B2E0
-        .long $ADDA75, $A4B2E0, $ADDF86, $A4B9CD
-        .long $ADE1DC, $A4BBE8, $ADE463, $A4BE6B
+        .long gcUnknownADDCED, gcUnknownA4BE6B, gcUnknownADD80A, gcUnknownA4B77E
+        .long gcUnknownADD5EA, gcUnknownA4B58A, gcUnknownADD39B, gcUnknownA4B2E0
+        .long gcUnknownADDA75, gcUnknownA4B2E0, gcUnknownADDF86, gcUnknownA4B9CD
+        .long gcUnknownADE1DC, gcUnknownA4BBE8, gcUnknownADE463, gcUnknownA4BE6B
         .byte 0
         ; Pirate
-        .long $AD904F, $A6F0B0, $AD8DB0, $A6E936
-        .long $AD8C5B, $A6E717, $AD8B10, $A6E470
-        .long $AD8F00, $A6E470, $AD91C6, $A6EBF4
-        .long $AD930D, $A6EE33, $AD947A, $A6F0B0
+        .long gcUnknownAD904F, gcUnknownA6F0B0, gcUnknownAD8DB0, gcUnknownA6E936
+        .long gcUnknownAD8C5B, gcUnknownA6E717, gcUnknownAD8B10, gcUnknownA6E470
+        .long gcUnknownAD8F00, gcUnknownA6E470, gcUnknownAD91C6, gcUnknownA6EBF4
+        .long gcUnknownAD930D, gcUnknownA6EE33, gcUnknownAD947A, gcUnknownA6F0B0
         .byte 0
         ; JuniorLord
-        .long $D66B0C, $A4E30D, $D6693A, $A4DB00
-        .long $D6680A, $A4D7AD, $D66761, $A4D411
-        .long $D669DE, $A4D411, $D66C35, $A4DD21
-        .long $D66CE1, $A4DF51, $D66E2A, $A4E30D
+        .long gcUnknownD66B0C, gcUnknownA4E30D, gcUnknownD6693A, gcUnknownA4DB00
+        .long gcUnknownD6680A, gcUnknownA4D7AD, gcUnknownD66761, gcUnknownA4D411
+        .long gcUnknownD669DE, gcUnknownA4D411, gcUnknownD66C35, gcUnknownA4DD21
+        .long gcUnknownD66CE1, gcUnknownA4DF51, gcUnknownD66E2A, gcUnknownA4E30D
         .byte 0
         ; WarMage
-        .long $ADC013, $A6B0FD, $ADBD4A, $A6A3BA
-        .long $ADBBC7, $A69FA0, $ADBA86, $A69BEB
-        .long $ADBE85, $A69BEB, $ADC199, $A6A784
-        .long $ADC2D4, $A6ABE5, $ADC436, $A6B0FD
+        .long gcUnknownADC013, gcUnknownA6B0FD, gcUnknownADBD4A, gcUnknownA6A3BA
+        .long gcUnknownADBBC7, gcUnknownA69FA0, gcUnknownADBA86, gcUnknownA69BEB
+        .long gcUnknownADBE85, gcUnknownA69BEB, gcUnknownADC199, gcUnknownA6A784
+        .long gcUnknownADC2D4, gcUnknownA6ABE5, gcUnknownADC436, gcUnknownA6B0FD
         .byte 0
         ; Prince
-        .long $D66B0C, $A89CC4, $D6693A, $A89492
-        .long $D6680A, $A8911B, $D66761, $A88D85
-        .long $D669DE, $A88D85, $D66C35, $A896CC
-        .long $D66CE1, $A898F2, $D66E2A, $A89CC4
+        .long gcUnknownD66B0C, gcUnknownA89CC4, gcUnknownD6693A, gcUnknownA89492
+        .long gcUnknownD6680A, gcUnknownA8911B, gcUnknownD66761, gcUnknownA88D85
+        .long gcUnknownD669DE, gcUnknownA88D85, gcUnknownD66C35, gcUnknownA896CC
+        .long gcUnknownD66CE1, gcUnknownA898F2, gcUnknownD66E2A, gcUnknownA89CC4
         .byte 0
         ; Princess
-        .long $ADC013, $A8B74F, $ADBD4A, $A8A9AC
-        .long $ADBBC7, $A8A552, $ADBA86, $A8A0E3
-        .long $ADBE85, $A8A0E3, $ADC199, $A8ADE3
-        .long $ADC2D4, $A8B273, $ADC436, $A8B74F
+        .long gcUnknownADC013, gcUnknownA8B74F, gcUnknownADBD4A, gcUnknownA8A9AC
+        .long gcUnknownADBBC7, gcUnknownA8A552, gcUnknownADBA86, gcUnknownA8A0E3
+        .long gcUnknownADBE85, gcUnknownA8A0E3, gcUnknownADC199, gcUnknownA8ADE3
+        .long gcUnknownADC2D4, gcUnknownA8B273, gcUnknownADC436, gcUnknownA8B74F
         .byte 0
         ; WarMageF
-        .long $ADC013, $A69712, $ADBD4A, $A68A97
-        .long $ADBBC7, $A68686, $ADBA86, $A682C9
-        .long $ADBE85, $A682C9, $ADC199, $A68E87
-        .long $ADC2D4, $A69293, $ADC436, $A69712
+        .long gcUnknownADC013, gcUnknownA69712, gcUnknownADBD4A, gcUnknownA68A97
+        .long gcUnknownADBBC7, gcUnknownA68686, gcUnknownADBA86, gcUnknownA682C9
+        .long gcUnknownADBE85, gcUnknownA682C9, gcUnknownADC199, gcUnknownA68E87
+        .long gcUnknownADC2D4, gcUnknownA69293, gcUnknownADC436, gcUnknownA69712
         .byte 0
         ; Queen
-        .long $ADC013, $A8CA36, $ADBD4A, $A8C16A
-        .long $ADBBC7, $A8BECA, $ADBA86, $A8BC3F
-        .long $ADBE85, $A8BC3F, $ADC199, $A8C3F0
-        .long $ADC2D4, $A8C708, $ADC436, $A8CA36
+        .long gcUnknownADC013, gcUnknownA8CA36, gcUnknownADBD4A, gcUnknownA8C16A
+        .long gcUnknownADBBC7, gcUnknownA8BECA, gcUnknownADBA86, gcUnknownA8BC3F
+        .long gcUnknownADBE85, gcUnknownA8BC3F, gcUnknownADC199, gcUnknownA8C3F0
+        .long gcUnknownADC2D4, gcUnknownA8C708, gcUnknownADC436, gcUnknownA8CA36
         .byte 0
         ; Dancer
-        .long $ADB4CB, $A19E6A, $ADB1F1, $A196A1
-        .long $ADB068, $A19376, $ADAF0F, $A19090
-        .long $ADB335, $A19090, $ADB666, $A198CB
-        .long $ADB7AA, $A19B43, $ADB93C, $A19E6A
+        .long gcUnknownADB4CB, gcUnknownA19E6A, gcUnknownADB1F1, gcUnknownA196A1
+        .long gcUnknownADB068, gcUnknownA19376, gcUnknownADAF0F, gcUnknownA19090
+        .long gcUnknownADB335, gcUnknownA19090, gcUnknownADB666, gcUnknownA198CB
+        .long gcUnknownADB7AA, gcUnknownA19B43, gcUnknownADB93C, gcUnknownA19E6A
         .byte 0
         ; Priest
-        .long $ADC013, $A88A76, $ADBD4A, $A8827A
-        .long $ADBBC7, $A7FF9A, $ADBA86, $A7FCD3
-        .long $ADBE85, $A7FCD3, $ADC199, $A884F6
-        .long $ADC2D4, $A88764, $ADC436, $A88A76
+        .long gcUnknownADC013, gcUnknownA88A76, gcUnknownADBD4A, gcUnknownA8827A
+        .long gcUnknownADBBC7, gcUnknownA7FF9A, gcUnknownADBA86, gcUnknownA7FCD3
+        .long gcUnknownADBE85, gcUnknownA7FCD3, gcUnknownADC199, gcUnknownA884F6
+        .long gcUnknownADC2D4, gcUnknownA88764, gcUnknownADC436, gcUnknownA88A76
         .byte 0
         ; Mage
-        .long $ADC013, $A6D1ED, $ADBD4A, $A6C964
-        .long $ADBBC7, $A6C6A5, $ADBA86, $A6C402
-        .long $ADBE85, $A6C402, $ADC199, $A6CC07
-        .long $ADC2D4, $A6CED2, $ADC436, $A6D1ED
+        .long gcUnknownADC013, gcUnknownA6D1ED, gcUnknownADBD4A, gcUnknownA6C964
+        .long gcUnknownADBBC7, gcUnknownA6C6A5, gcUnknownADBA86, gcUnknownA6C402
+        .long gcUnknownADBE85, gcUnknownA6C402, gcUnknownADC199, gcUnknownA6CC07
+        .long gcUnknownADC2D4, gcUnknownA6CED2, gcUnknownADC436, gcUnknownA6D1ED
         .byte 0
         ; FireMage
-        .long $ADC013, $A3CD28, $ADBD4A, $A3C579
-        .long $ADBBC7, $A3C308, $ADBA86, $A3C0E9
-        .long $ADBE85, $A3C0E9, $ADC199, $A3C7D4
-        .long $ADC2D4, $A3CA82, $ADC436, $A3CD28
+        .long gcUnknownADC013, gcUnknownA3CD28, gcUnknownADBD4A, gcUnknownA3C579
+        .long gcUnknownADBBC7, gcUnknownA3C308, gcUnknownADBA86, gcUnknownA3C0E9
+        .long gcUnknownADBE85, gcUnknownA3C0E9, gcUnknownADC199, gcUnknownA3C7D4
+        .long gcUnknownADC2D4, gcUnknownA3CA82, gcUnknownADC436, gcUnknownA3CD28
         .byte 0
         ; ThunderMage
-        .long $ADC013, $AB9E22, $ADBD4A, $AB9668
-        .long $ADBBC7, $AB9423, $ADBA86, $AB9208
-        .long $ADBE85, $AB9208, $ADC199, $AB98D0
-        .long $ADC2D4, $AB9B8E, $ADC436, $AB9E22
+        .long gcUnknownADC013, gcUnknownAB9E22, gcUnknownADBD4A, gcUnknownAB9668
+        .long gcUnknownADBBC7, gcUnknownAB9423, gcUnknownADBA86, gcUnknownAB9208
+        .long gcUnknownADBE85, gcUnknownAB9208, gcUnknownADC199, gcUnknownAB98D0
+        .long gcUnknownADC2D4, gcUnknownAB9B8E, gcUnknownADC436, gcUnknownAB9E22
         .byte 0
         ; WindMage
-        .long $ADC013, $ACC635, $ADBD4A, $ACBEC3
-        .long $ADBBC7, $ACBC94, $ADBA86, $ACBA7A
-        .long $ADBE85, $ACBA7A, $ADC199, $ACC12B
-        .long $ADC2D4, $ACC3A0, $ADC436, $ACC635
+        .long gcUnknownADC013, gcUnknownACC635, gcUnknownADBD4A, gcUnknownACBEC3
+        .long gcUnknownADBBC7, gcUnknownACBC94, gcUnknownADBA86, gcUnknownACBA7A
+        .long gcUnknownADBE85, gcUnknownACBA7A, gcUnknownADC199, gcUnknownACC12B
+        .long gcUnknownADC2D4, gcUnknownACC3A0, gcUnknownADC436, gcUnknownACC635
         .byte 0
         ; HighPriest
-        .long $ADC013, $A5F01D, $ADBD4A, $A5E7EF
-        .long $ADBBC7, $A5E57B, $ADBA86, $A5E35F
-        .long $ADBE85, $A5E35F, $ADC199, $A5EA5B
-        .long $ADC2D4, $A5ED72, $ADC436, $A5F01D
+        .long gcUnknownADC013, gcUnknownA5F01D, gcUnknownADBD4A, gcUnknownA5E7EF
+        .long gcUnknownADBBC7, gcUnknownA5E57B, gcUnknownADBA86, gcUnknownA5E35F
+        .long gcUnknownADBE85, gcUnknownA5E35F, gcUnknownADC199, gcUnknownA5EA5B
+        .long gcUnknownADC2D4, gcUnknownA5ED72, gcUnknownADC436, gcUnknownA5F01D
         .byte 0
         ; Bishop
-        .long $ADC013, $A18D71, $ADBD4A, $A18438
-        .long $ADBBC7, $A18193, $ADBA86, $A0FEDF
-        .long $ADBE85, $A0FEDF, $ADC199, $A18704
-        .long $ADC2D4, $A18A23, $ADC436, $A18D71
+        .long gcUnknownADC013, gcUnknownA18D71, gcUnknownADBD4A, gcUnknownA18438
+        .long gcUnknownADBBC7, gcUnknownA18193, gcUnknownADBA86, gcUnknownA0FEDF
+        .long gcUnknownADBE85, gcUnknownA0FEDF, gcUnknownADC199, gcUnknownA18704
+        .long gcUnknownADC2D4, gcUnknownA18A23, gcUnknownADC436, gcUnknownA18D71
         .byte 0
         ; Sage
-        .long $ADC013, $A8EA83, $ADBD4A, $A8E225
-        .long $ADBBC7, $A8DFBE, $ADBA86, $A8DD73
-        .long $ADBE85, $A8DD73, $ADC199, $A8E4BF
-        .long $ADC2D4, $A8E7A1, $ADC436, $A8EA83
+        .long gcUnknownADC013, gcUnknownA8EA83, gcUnknownADBD4A, gcUnknownA8E225
+        .long gcUnknownADBBC7, gcUnknownA8DFBE, gcUnknownADBA86, gcUnknownA8DD73
+        .long gcUnknownADBE85, gcUnknownA8DD73, gcUnknownADC199, gcUnknownA8E4BF
+        .long gcUnknownADC2D4, gcUnknownA8E7A1, gcUnknownADC436, gcUnknownA8EA83
         .byte 0
         ; Bard
-        .long $ADC013, $A0B8DF, $ADBD4A, $A0B279
-        .long $ADBBC7, $A0B070, $ADBA86, $A0AE8B
-        .long $ADBE85, $A0AE8B, $ADC199, $A0B46B
-        .long $ADC2D4, $A0B69D, $ADC436, $A0B8DF
+        .long gcUnknownADC013, gcUnknownA0B8DF, gcUnknownADBD4A, gcUnknownA0B279
+        .long gcUnknownADBBC7, gcUnknownA0B070, gcUnknownADBA86, gcUnknownA0AE8B
+        .long gcUnknownADBE85, gcUnknownA0AE8B, gcUnknownADC199, gcUnknownA0B46B
+        .long gcUnknownADC2D4, gcUnknownA0B69D, gcUnknownADC436, gcUnknownA0B8DF
         .byte 0
         ; Priestess
-        .long $ADC013, $A9EB7B, $ADBD4A, $A9E452
-        .long $ADBBC7, $A9E25E, $ADBA86, $A9DFFE
-        .long $ADBE85, $A9DFFE, $ADC199, $A9E6AD
-        .long $ADC2D4, $A9E903, $ADC436, $A9EB7B
+        .long gcUnknownADC013, gcUnknownA9EB7B, gcUnknownADBD4A, gcUnknownA9E452
+        .long gcUnknownADBBC7, gcUnknownA9E25E, gcUnknownADBA86, gcUnknownA9DFFE
+        .long gcUnknownADBE85, gcUnknownA9DFFE, gcUnknownADC199, gcUnknownA9E6AD
+        .long gcUnknownADC2D4, gcUnknownA9E903, gcUnknownADC436, gcUnknownA9EB7B
         .byte 0
         ; DarkMage
-        .long $ADC013, $A1BF5C, $ADBD4A, $A1B75A
-        .long $ADBBC7, $A1B4AD, $ADBA86, $A1B249
-        .long $ADBE85, $A1B249, $ADC199, $A1B9CF
-        .long $ADC2D4, $A1BCAB, $ADC436, $A1BF5C
+        .long gcUnknownADC013, gcUnknownA1BF5C, gcUnknownADBD4A, gcUnknownA1B75A
+        .long gcUnknownADBBC7, gcUnknownA1B4AD, gcUnknownADBA86, gcUnknownA1B249
+        .long gcUnknownADBE85, gcUnknownA1B249, gcUnknownADC199, gcUnknownA1B9CF
+        .long gcUnknownADC2D4, gcUnknownA1BCAB, gcUnknownADC436, gcUnknownA1BF5C
         .byte 0
         ; DarkBishop
-        .long $ADC013, $A1AF51, $ADBD4A, $A1A6A2
-        .long $ADBBC7, $A1A409, $ADBA86, $A1A1A7
-        .long $ADBE85, $A1A1A7, $ADC199, $A1A8F4
-        .long $ADC2D4, $A1ABEF, $ADC436, $A1AF51
+        .long gcUnknownADC013, gcUnknownA1AF51, gcUnknownADBD4A, gcUnknownA1A6A2
+        .long gcUnknownADBBC7, gcUnknownA1A409, gcUnknownADBA86, gcUnknownA1A1A7
+        .long gcUnknownADBE85, gcUnknownA1A1A7, gcUnknownADC199, gcUnknownA1A8F4
+        .long gcUnknownADC2D4, gcUnknownA1ABEF, gcUnknownADC436, gcUnknownA1AF51
         .byte 0
         ; Thief
-        .long $D672E2, $AB81EF, $D670EE, $AAFD13
-        .long $D66FC6, $AAFBAF, $D66ED6, $AAFA0F
-        .long $D671DC, $AAFA0F, $D67408, $AAFEB0
-        .long $D674F4, $AB805B, $D67607, $AB81EF
+        .long gcUnknownD672E2, gcUnknownAB81EF, gcUnknownD670EE, gcUnknownAAFD13
+        .long gcUnknownD66FC6, gcUnknownAAFBAF, gcUnknownD66ED6, gcUnknownAAFA0F
+        .long gcUnknownD671DC, gcUnknownAAFA0F, gcUnknownD67408, gcUnknownAAFEB0
+        .long gcUnknownD674F4, gcUnknownAB805B, gcUnknownD67607, gcUnknownAB81EF
         .byte 0
         ; Rogue
-        .long $D672E2, $ABB228, $D670EE, $ABAD5A
-        .long $D66FC6, $ABABFA, $D66ED6, $ABAA5B
-        .long $D671DC, $ABAA5B, $D67408, $ABAEEB
-        .long $D674F4, $ABB0A1, $D67607, $ABB228
+        .long gcUnknownD672E2, gcUnknownABB228, gcUnknownD670EE, gcUnknownABAD5A
+        .long gcUnknownD66FC6, gcUnknownABABFA, gcUnknownD66ED6, gcUnknownABAA5B
+        .long gcUnknownD671DC, gcUnknownABAA5B, gcUnknownD67408, gcUnknownABAEEB
+        .long gcUnknownD674F4, gcUnknownABB0A1, gcUnknownD67607, gcUnknownABB228
         .byte 0
         ; Civilian
-        .long $ADB4CB, $AACF63, $ADB1F1, $AACB9F
-        .long $ADB068, $AACA3C, $ADAF0F, $AAC90D
-        .long $ADB335, $AAC90D, $ADB666, $AACCC7
-        .long $ADB7AA, $AACE0C, $ADB93C, $AACF63
+        .long gcUnknownADB4CB, gcUnknownAACF63, gcUnknownADB1F1, gcUnknownAACB9F
+        .long gcUnknownADB068, gcUnknownAACA3C, gcUnknownADAF0F, gcUnknownAAC90D
+        .long gcUnknownADB335, gcUnknownAAC90D, gcUnknownADB666, gcUnknownAACCC7
+        .long gcUnknownADB7AA, gcUnknownAACE0C, gcUnknownADB93C, gcUnknownAACF63
         .byte 0
         ; Child
-        .long $ADB4CB, $AABF6A, $ADB1F1, $AABC2A
-        .long $ADB068, $AABB27, $ADAF0F, $AABA0A
-        .long $ADB335, $AABA0A, $ADB666, $AABD3B
-        .long $ADB7AA, $AABE5A, $ADB93C, $AABF6A
+        .long gcUnknownADB4CB, gcUnknownAABF6A, gcUnknownADB1F1, gcUnknownAABC2A
+        .long gcUnknownADB068, gcUnknownAABB27, gcUnknownADAF0F, gcUnknownAABA0A
+        .long gcUnknownADB335, gcUnknownAABA0A, gcUnknownADB666, gcUnknownAABD3B
+        .long gcUnknownADB7AA, gcUnknownAABE5A, gcUnknownADB93C, gcUnknownAABF6A
         .byte 0
         ; Ballistician
-        .long $D66343, $A8FBAD, $D66118, $A8F46F
-        .long $D6601E, $A8F112, $D65F0D, $A8ED7E
-        .long $D66227, $A8F825, $D66444, $A8FF68
-        .long $D66556, $A9835D, $D66652, $A98680
+        .long gcUnknownD66343, gcUnknownA8FBAD, gcUnknownD66118, gcUnknownA8F46F
+        .long gcUnknownD6601E, gcUnknownA8F112, gcUnknownD65F0D, gcUnknownA8ED7E
+        .long gcUnknownD66227, gcUnknownA8F825, gcUnknownD66444, gcUnknownA8FF68
+        .long gcUnknownD66556, gcUnknownA9835D, gcUnknownD66652, gcUnknownA98680
         .byte 1
         ; IronBallistician
-        .long $D66343, $A99857, $D66118, $A99158
-        .long $D6601E, $A98DFB, $D65F0D, $A98A62
-        .long $D66227, $A994D4, $D66444, $A99C0A
-        .long $D66556, $A99FF7, $D66652, $A9A309
+        .long gcUnknownD66343, gcUnknownA99857, gcUnknownD66118, gcUnknownA99158
+        .long gcUnknownD6601E, gcUnknownA98DFB, gcUnknownD65F0D, gcUnknownA98A62
+        .long gcUnknownD66227, gcUnknownA994D4, gcUnknownD66444, gcUnknownA99C0A
+        .long gcUnknownD66556, gcUnknownA99FF7, gcUnknownD66652, gcUnknownA9A309
         .byte 1
         ; KillerBallistician
-        .long $D66343, $A9B4D6, $D66118, $A9ADB1
-        .long $D6601E, $A9AA61, $D65F0D, $A9A6C8
-        .long $D66227, $A9B147, $D66444, $A9B869
-        .long $D66556, $A9BC3E, $D66652, $A9BF43
+        .long gcUnknownD66343, gcUnknownA9B4D6, gcUnknownD66118, gcUnknownA9ADB1
+        .long gcUnknownD6601E, gcUnknownA9AA61, gcUnknownD65F0D, gcUnknownA9A6C8
+        .long gcUnknownD66227, gcUnknownA9B147, gcUnknownD66444, gcUnknownA9B869
+        .long gcUnknownD66556, gcUnknownA9BC3E, gcUnknownD66652, gcUnknownA9BF43
         .byte 1
         ; GreatBallistician
-        .long $D66343, $A9D0EF, $D66118, $A9C97D
-        .long $D6601E, $A9C650, $D65F0D, $A9C2D8
-        .long $D66227, $A9CD2F, $D66444, $A9D4C6
-        .long $D66556, $A9D8F4, $D66652, $A9DC22
+        .long gcUnknownD66343, gcUnknownA9D0EF, gcUnknownD66118, gcUnknownA9C97D
+        .long gcUnknownD6601E, gcUnknownA9C650, gcUnknownD65F0D, gcUnknownA9C2D8
+        .long gcUnknownD66227, gcUnknownA9CD2F, gcUnknownD66444, gcUnknownA9D4C6
+        .long gcUnknownD66556, gcUnknownA9D8F4, gcUnknownD66652, gcUnknownA9DC22
         .byte 1
         ; DarkPrince
-        .long $ADC013, $A68003, $ADBD4A, $A5F823
-        .long $ADBBC7, $A5F554, $ADBA86, $A5F328
-        .long $ADBE85, $A5F328, $ADC199, $A5FA54
-        .long $ADC2D4, $A5FD17, $ADC436, $A68003
+        .long gcUnknownADC013, gcUnknownA68003, gcUnknownADBD4A, gcUnknownA5F823
+        .long gcUnknownADBBC7, gcUnknownA5F554, gcUnknownADBA86, gcUnknownA5F328
+        .long gcUnknownADBE85, gcUnknownA5F328, gcUnknownADC199, gcUnknownA5FA54
+        .long gcUnknownADC2D4, gcUnknownA5FD17, gcUnknownADC436, gcUnknownA68003
         .byte 0
         ; MasterKnightFemale
-        .long $ADF4CB, $A5A904, $ADEDD1, $A59744
-        .long $ADEA4E, $A59112, $ADE6C6, $A58ACE
-        .long $ADF10B, $A58ACE, $ADF890, $A59D62
-        .long $ADFBD9, $A5A2C9, $D50000, $A5A904
+        .long gcUnknownADF4CB, gcUnknownA5A904, gcUnknownADEDD1, gcUnknownA59744
+        .long gcUnknownADEA4E, gcUnknownA59112, gcUnknownADE6C6, gcUnknownA58ACE
+        .long gcUnknownADF10B, gcUnknownA58ACE, gcUnknownADF890, gcUnknownA59D62
+        .long gcUnknownADFBD9, gcUnknownA5A2C9, gcUnknownD50000, gcUnknownA5A904
         .byte 1
         ; MageKnightFemale
-        .long $ADF4CB, $ABCF52, $ADEDD1, $ABBF33
-        .long $ADEA4E, $ABB99C, $ADE6C6, $ABB3E8
-        .long $ADF10B, $ABB3E8, $ADF890, $ABC43D
-        .long $ADFBD9, $ABC9B0, $D50000, $ABCF52
+        .long gcUnknownADF4CB, gcUnknownABCF52, gcUnknownADEDD1, gcUnknownABBF33
+        .long gcUnknownADEA4E, gcUnknownABB99C, gcUnknownADE6C6, gcUnknownABB3E8
+        .long gcUnknownADF10B, gcUnknownABB3E8, gcUnknownADF890, gcUnknownABC43D
+        .long gcUnknownADFBD9, gcUnknownABC9B0, gcUnknownD50000, gcUnknownABCF52
         .byte 1
         ; DragonRiderFemale
-        .long $ADA7B5, $A2C989, $ADA37A, $A2BB7F
-        .long $ADA150, $A2B7B2, $AD9F97, $A2B360
-        .long $ADA578, $A2B360, $ADA9C5, $A2C04E
-        .long $ADAB7F, $A2C469, $ADAD79, $A2C989
+        .long gcUnknownADA7B5, gcUnknownA2C989, gcUnknownADA37A, gcUnknownA2BB7F
+        .long gcUnknownADA150, gcUnknownA2B7B2, gcUnknownAD9F97, gcUnknownA2B360
+        .long gcUnknownADA578, gcUnknownA2B360, gcUnknownADA9C5, gcUnknownA2C04E
+        .long gcUnknownADAB7F, gcUnknownA2C469, gcUnknownADAD79, gcUnknownA2C989
         .byte 1
         ; DragonknightFemale
-        .long $ADA7B5, $A1D8C1, $ADA37A, $A1CA4B
-        .long $ADA150, $A1C67B, $AD9F97, $A1C23C
-        .long $ADA578, $A1C23C, $ADA9C5, $A1CF61
-        .long $ADAB7F, $A1D39D, $ADAD79, $A1D8C1
+        .long gcUnknownADA7B5, gcUnknownA1D8C1, gcUnknownADA37A, gcUnknownA1CA4B
+        .long gcUnknownADA150, gcUnknownA1C67B, gcUnknownAD9F97, gcUnknownA1C23C
+        .long gcUnknownADA578, gcUnknownA1C23C, gcUnknownADA9C5, gcUnknownA1CF61
+        .long gcUnknownADAB7F, gcUnknownA1D39D, gcUnknownADAD79, gcUnknownA1D8C1
         .byte 1
         ; DragonmasterFemale
-        .long $ADA7B5, $A29107, $ADA37A, $A28228
-        .long $ADA150, $A1FE4A, $AD9F97, $A1F9D6
-        .long $ADA578, $A1F9D6, $ADA9C5, $A2873F
-        .long $ADAB7F, $A28BA1, $ADAD79, $A29107
+        .long gcUnknownADA7B5, gcUnknownA29107, gcUnknownADA37A, gcUnknownA28228
+        .long gcUnknownADA150, gcUnknownA1FE4A, gcUnknownAD9F97, gcUnknownA1F9D6
+        .long gcUnknownADA578, gcUnknownA1F9D6, gcUnknownADA9C5, gcUnknownA2873F
+        .long gcUnknownADAB7F, gcUnknownA28BA1, gcUnknownADAD79, gcUnknownA29107
         .byte 1
         ; ArcherFemale
-        .long $AD9A90, $A0C0E9, $AD9811, $A0BD74
-        .long $AD96F4, $A0BC63, $AD95BD, $A0BB5A
-        .long $AD995A, $A0BB5A, $AD9BD2, $A0BEAE
-        .long $AD9D12, $A0BFC8, $AD9E4B, $A0C0E9
+        .long gcUnknownAD9A90, gcUnknownA0C0E9, gcUnknownAD9811, gcUnknownA0BD74
+        .long gcUnknownAD96F4, gcUnknownA0BC63, gcUnknownAD95BD, gcUnknownA0BB5A
+        .long gcUnknownAD995A, gcUnknownA0BB5A, gcUnknownAD9BD2, gcUnknownA0BEAE
+        .long gcUnknownAD9D12, gcUnknownA0BFC8, gcUnknownAD9E4B, gcUnknownA0C0E9
         .byte 0
         ; MyrmidonFemale
-        .long $ADCC79, $AADCCC, $ADC8CA, $AAD684
-        .long $ADC6E8, $AAD3DC, $ADC56D, $AAD0AC
-        .long $ADCA27, $AAD0AC, $ADCED6, $AAD80B
-        .long $ADD039, $AAD9A2, $ADD233, $AADCCC
+        .long gcUnknownADCC79, gcUnknownAADCCC, gcUnknownADC8CA, gcUnknownAAD684
+        .long gcUnknownADC6E8, gcUnknownAAD3DC, gcUnknownADC56D, gcUnknownAAD0AC
+        .long gcUnknownADCA27, gcUnknownAAD0AC, gcUnknownADCED6, gcUnknownAAD80B
+        .long gcUnknownADD039, gcUnknownAAD9A2, gcUnknownADD233, gcUnknownAADCCC
         .byte 0
         ; SwordmasterFemale
-        .long $ADCC79, $A9FA2A, $ADC8CA, $A9F3B6
-        .long $ADC6E8, $A9F10C, $ADC56D, $A9EDCD
-        .long $ADCA27, $A9EDCD, $ADCED6, $A9F53D
-        .long $ADD039, $A9F6DD, $ADD233, $A9FA2A
+        .long gcUnknownADCC79, gcUnknownA9FA2A, gcUnknownADC8CA, gcUnknownA9F3B6
+        .long gcUnknownADC6E8, gcUnknownA9F10C, gcUnknownADC56D, gcUnknownA9EDCD
+        .long gcUnknownADCA27, gcUnknownA9EDCD, gcUnknownADCED6, gcUnknownA9F53D
+        .long gcUnknownADD039, gcUnknownA9F6DD, gcUnknownADD233, gcUnknownA9FA2A
         .byte 0
         ; SniperFemale
-        .long $AD9A90, $AAAA74, $AD9811, $AAA6BB
-        .long $AD96F4, $AAA5A4, $AD95BD, $AAA486
-        .long $AD995A, $AAA486, $AD9BD2, $AAA7F6
-        .long $AD9D12, $AAA92C, $AD9E4B, $AAAA74
+        .long gcUnknownAD9A90, gcUnknownAAAA74, gcUnknownAD9811, gcUnknownAAA6BB
+        .long gcUnknownAD96F4, gcUnknownAAA5A4, gcUnknownAD95BD, gcUnknownAAA486
+        .long gcUnknownAD995A, gcUnknownAAA486, gcUnknownAD9BD2, gcUnknownAAA7F6
+        .long gcUnknownAD9D12, gcUnknownAAA92C, gcUnknownAD9E4B, gcUnknownAAAA74
         .byte 0
         ; HeroFemale
-        .long $ADCC79, $A48A78, $ADC8CA, $A48344
-        .long $ADC6E8, $A48019, $ADC56D, $A3FC94
-        .long $ADCA27, $A3FC94, $ADCED6, $A484FC
-        .long $ADD039, $A486EA, $ADD233, $A48A78
+        .long gcUnknownADCC79, gcUnknownA48A78, gcUnknownADC8CA, gcUnknownA48344
+        .long gcUnknownADC6E8, gcUnknownA48019, gcUnknownADC56D, gcUnknownA3FC94
+        .long gcUnknownADCA27, gcUnknownA3FC94, gcUnknownADCED6, gcUnknownA484FC
+        .long gcUnknownADD039, gcUnknownA486EA, gcUnknownADD233, gcUnknownA48A78
         .byte 0
         ; PriestFemale
-        .long $ADC013, $A7F9D7, $ADBD4A, $A7F146
-        .long $ADBBC7, $A7EE34, $ADBA86, $A7EB5C
-        .long $ADBE85, $A7EB5C, $ADC199, $A7F412
-        .long $ADC2D4, $A7F6C6, $ADC436, $A7F9D7
+        .long gcUnknownADC013, gcUnknownA7F9D7, gcUnknownADBD4A, gcUnknownA7F146
+        .long gcUnknownADBBC7, gcUnknownA7EE34, gcUnknownADBA86, gcUnknownA7EB5C
+        .long gcUnknownADBE85, gcUnknownA7EB5C, gcUnknownADC199, gcUnknownA7F412
+        .long gcUnknownADC2D4, gcUnknownA7F6C6, gcUnknownADC436, gcUnknownA7F9D7
         .byte 0
         ; MageFemale
-        .long $ADC013, $A6C184, $ADBD4A, $A6BA52
-        .long $ADBBC7, $A6B822, $ADBA86, $A6B5D4
-        .long $ADBE85, $A6B5D4, $ADC199, $A6BCA0
-        .long $ADC2D4, $A6BF0D, $ADC436, $A6C184
+        .long gcUnknownADC013, gcUnknownA6C184, gcUnknownADBD4A, gcUnknownA6BA52
+        .long gcUnknownADBBC7, gcUnknownA6B822, gcUnknownADBA86, gcUnknownA6B5D4
+        .long gcUnknownADBE85, gcUnknownA6B5D4, gcUnknownADC199, gcUnknownA6BCA0
+        .long gcUnknownADC2D4, gcUnknownA6BF0D, gcUnknownADC436, gcUnknownA6C184
         .byte 0
         ; FireMageFemale
-        .long $ADC013, $A3BE34, $ADBD4A, $A3B6A0
-        .long $ADBBC7, $A3B491, $ADBA86, $A3B26E
-        .long $ADBE85, $A3B26E, $ADC199, $A3B8E8
-        .long $ADC2D4, $A3BB9E, $ADC436, $A3BE34
+        .long gcUnknownADC013, gcUnknownA3BE34, gcUnknownADBD4A, gcUnknownA3B6A0
+        .long gcUnknownADBBC7, gcUnknownA3B491, gcUnknownADBA86, gcUnknownA3B26E
+        .long gcUnknownADBE85, gcUnknownA3B26E, gcUnknownADC199, gcUnknownA3B8E8
+        .long gcUnknownADC2D4, gcUnknownA3BB9E, gcUnknownADC436, gcUnknownA3BE34
         .byte 0
         ; ThunderMageFemale
-        .long $ADC013, $AB8F6F, $ADBD4A, $AB8816
-        .long $ADBBC7, $AB85F7, $ADBA86, $AB83A2
-        .long $ADBE85, $AB83A2, $ADC199, $AB8A5A
-        .long $ADC2D4, $AB8CDD, $ADC436, $AB8F6F
+        .long gcUnknownADC013, gcUnknownAB8F6F, gcUnknownADBD4A, gcUnknownAB8816
+        .long gcUnknownADBBC7, gcUnknownAB85F7, gcUnknownADBA86, gcUnknownAB83A2
+        .long gcUnknownADBE85, gcUnknownAB83A2, gcUnknownADC199, gcUnknownAB8A5A
+        .long gcUnknownADC2D4, gcUnknownAB8CDD, gcUnknownADC436, gcUnknownAB8F6F
         .byte 0
         ; WindMageFemale
-        .long $ADC013, $ACB7E2, $ADBD4A, $ACB005
-        .long $ADBBC7, $ACAD97, $ADBA86, $ACAB39
-        .long $ADBE85, $ACAB39, $ADC199, $ACB26E
-        .long $ADC2D4, $ACB50D, $ADC436, $ACB7E2
+        .long gcUnknownADC013, gcUnknownACB7E2, gcUnknownADBD4A, gcUnknownACB005
+        .long gcUnknownADBBC7, gcUnknownACAD97, gcUnknownADBA86, gcUnknownACAB39
+        .long gcUnknownADBE85, gcUnknownACAB39, gcUnknownADC199, gcUnknownACB26E
+        .long gcUnknownADC2D4, gcUnknownACB50D, gcUnknownADC436, gcUnknownACB7E2
         .byte 0
         ; HighPriestFemale
-        .long $ADC013, $A5E0A2, $ADBD4A, $A5D8FA
-        .long $ADBBC7, $A5D6B3, $ADBA86, $A5D458
-        .long $ADBE85, $A5D458, $ADC199, $A5DB55
-        .long $ADC2D4, $A5DE20, $ADC436, $A5E0A2
+        .long gcUnknownADC013, gcUnknownA5E0A2, gcUnknownADBD4A, gcUnknownA5D8FA
+        .long gcUnknownADBBC7, gcUnknownA5D6B3, gcUnknownADBA86, gcUnknownA5D458
+        .long gcUnknownADBE85, gcUnknownA5D458, gcUnknownADC199, gcUnknownA5DB55
+        .long gcUnknownADC2D4, gcUnknownA5DE20, gcUnknownADC436, gcUnknownA5E0A2
         .byte 0
         ; SageFemale
-        .long $ADC013, $A8DA64, $ADBD4A, $A8D223
-        .long $ADBBC7, $A8CFA3, $ADBA86, $A8CD61
-        .long $ADBE85, $A8CD61, $ADC199, $A8D471
-        .long $ADC2D4, $A8D78F, $ADC436, $A8DA64
+        .long gcUnknownADC013, gcUnknownA8DA64, gcUnknownADBD4A, gcUnknownA8D223
+        .long gcUnknownADBBC7, gcUnknownA8CFA3, gcUnknownADBA86, gcUnknownA8CD61
+        .long gcUnknownADBE85, gcUnknownA8CD61, gcUnknownADC199, gcUnknownA8D471
+        .long gcUnknownADC2D4, gcUnknownA8D78F, gcUnknownADC436, gcUnknownA8DA64
         .byte 0
         ; ThiefFemale
-        .long $D672E2, $AAF846, $D670EE, $AAF3A2
-        .long $D66FC6, $AAF261, $D66ED6, $AAF0D4
-        .long $D671DC, $AAF0D4, $D67408, $AAF534
-        .long $D674F4, $AAF6C1, $D67607, $AAF846
+        .long gcUnknownD672E2, gcUnknownAAF846, gcUnknownD670EE, gcUnknownAAF3A2
+        .long gcUnknownD66FC6, gcUnknownAAF261, gcUnknownD66ED6, gcUnknownAAF0D4
+        .long gcUnknownD671DC, gcUnknownAAF0D4, gcUnknownD67408, gcUnknownAAF534
+        .long gcUnknownD674F4, gcUnknownAAF6C1, gcUnknownD67607, gcUnknownAAF846
         .byte 0
         ; RogueFemale
-        .long $D672E2, $ABA888, $D670EE, $ABA3C8
-        .long $D66FC6, $ABA271, $D66ED6, $ABA0DF
-        .long $D671DC, $ABA0DF, $D67408, $ABA55D
-        .long $D674F4, $ABA70D, $D67607, $ABA888
+        .long gcUnknownD672E2, gcUnknownABA888, gcUnknownD670EE, gcUnknownABA3C8
+        .long gcUnknownD66FC6, gcUnknownABA271, gcUnknownD66ED6, gcUnknownABA0DF
+        .long gcUnknownD671DC, gcUnknownABA0DF, gcUnknownD67408, gcUnknownABA55D
+        .long gcUnknownD674F4, gcUnknownABA70D, gcUnknownD67607, gcUnknownABA888
         .byte 0
         ; CivilianFemale
-        .long $ADB4CB, $AAC797, $ADB1F1, $AAC346
-        .long $ADB068, $AAC1E1, $ADAF0F, $AAC08F
-        .long $ADB335, $AAC08F, $ADB666, $AAC499
-        .long $ADB7AA, $AAC613, $ADB93C, $AAC797
+        .long gcUnknownADB4CB, gcUnknownAAC797, gcUnknownADB1F1, gcUnknownAAC346
+        .long gcUnknownADB068, gcUnknownAAC1E1, gcUnknownADAF0F, gcUnknownAAC08F
+        .long gcUnknownADB335, gcUnknownAAC08F, gcUnknownADB666, gcUnknownAAC499
+        .long gcUnknownADB7AA, gcUnknownAAC613, gcUnknownADB93C, gcUnknownAAC797
         .byte 0
         ; ChildFemale
-        .long $ADB4CB, $AAB8EA, $ADB1F1, $AAB57F
-        .long $ADB068, $AAB489, $ADAF0F, $AAB35C
-        .long $ADB335, $AAB35C, $ADB666, $AAB693
-        .long $ADB7AA, $AAB7BF, $ADB93C, $AAB8EA
+        .long gcUnknownADB4CB, gcUnknownAAB8EA, gcUnknownADB1F1, gcUnknownAAB57F
+        .long gcUnknownADB068, gcUnknownAAB489, gcUnknownADAF0F, gcUnknownAAB35C
+        .long gcUnknownADB335, gcUnknownAAB35C, gcUnknownADB666, gcUnknownAAB693
+        .long gcUnknownADB7AA, gcUnknownAAB7BF, gcUnknownADB93C, gcUnknownAAB8EA
         .byte 0
         ; (no name in the original notes)
-        .long $ADF4CB, $A4F610, $ADEDD1, $A4ED49
-        .long $ADEA4E, $A4EA2A, $ADE6C6, $A4E705
-        .long $ADF10B, $A4E705, $ADF890, $A4F03A
-        .long $ADFBD9, $A4F313, $D50000, $A4F610
+        .long gcUnknownADF4CB, gcUnknownA4F610, gcUnknownADEDD1, gcUnknownA4ED49
+        .long gcUnknownADEA4E, gcUnknownA4EA2A, gcUnknownADE6C6, gcUnknownA4E705
+        .long gcUnknownADF10B, gcUnknownA4E705, gcUnknownADF890, gcUnknownA4F03A
+        .long gcUnknownADFBD9, gcUnknownA4F313, gcUnknownD50000, gcUnknownA4F610
         .byte 1
 
         ; 9E/C70B
@@ -10603,9 +10603,9 @@
         rep #$20
         plb
         .databank $7F
-        lda #$AC00
+        lda #(`gcUnknownACCC17)<<8
         sta lR18+1
-        lda #$CC17
+        lda #<>gcUnknownACCC17
         sta lR18
         lda #$7E00
         sta lR19+1
@@ -11091,9 +11091,9 @@
         plb
         .databank $7F
 
-        lda #(`$ACCC17)<<8
+        lda #(`gcUnknownACCC17)<<8
         sta lR18+1
-        lda #<>$ACCC17
+        lda #<>gcUnknownACCC17
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1

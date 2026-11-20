@@ -1846,9 +1846,9 @@
 
         php
         jsr rsUnknown91DF6D
-        lda #$9C00
+        lda #(`gcUnknown9CB90D)<<8
         sta lR18+1
-        lda #$B90D
+        lda #<>gcUnknown9CB90D
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -1868,9 +1868,9 @@
 
           .structDMAToVRAM $91D7E8, $0010, $80, $DFF0
 
-        lda #$9C00
+        lda #(`gcUnknown9C8000)<<8
         sta lR18+1
-        lda #$8000
+        lda #<>gcUnknown9C8000
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -1881,9 +1881,9 @@
 
           .structDMAToVRAM $7E8B88, $4800, $80, $0000
 
-        lda #$9C00
+        lda #(`gcUnknown9CBB20)<<8
         sta lR18+1
-        lda #$BB20
+        lda #<>gcUnknown9CBB20
         sta lR18
         lda #(`aBG2TilemapBuffer)<<8
         sta lR19+1
@@ -1894,9 +1894,9 @@
 
           .structDMAToVRAM aBG2TilemapBuffer, $0800, $80, $7800
 
-        lda #$9C00
+        lda #(`gcUnknown9CBBB7)<<8
         sta lR18+1
-        lda #$BBB7
+        lda #<>gcUnknown9CBBB7
         sta lR18
         lda #$7E00
         sta lR19+1
@@ -1907,9 +1907,9 @@
 
           .structDMAToVRAM $7E7B88, $0800, $80, $8000
 
-        lda #$9C00
+        lda #(`gcUnknown9CBFA1)<<8
         sta lR18+1
-        lda #$BFA1
+        lda #<>gcUnknown9CBFA1
         sta lR18
         lda #(`aBGPaletteBuffer)<<8
         sta lR19+1
@@ -4189,9 +4189,9 @@
         lda #$02
         sta bBufferTM
         rep #$20
-        lda #$9C00
+        lda #(`gcUnknown9CB90D)<<8
         sta lR18+1
-        lda #$B90D
+        lda #<>gcUnknown9CB90D
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -4225,9 +4225,9 @@
 
           .structDMAToVRAM $7E8B88, $0800, $80, $6000
 
-        lda #$9C00
+        lda #(`gcUnknown9CBB20)<<8
         sta lR18+1
-        lda #$BB20
+        lda #<>gcUnknown9CBB20
         sta lR18
         lda #(`aBG2TilemapBuffer)<<8
         sta lR19+1
@@ -4257,9 +4257,9 @@
 
           .structDMAToVRAM aBG2TilemapBuffer, $0800, $80, $7800
 
-        lda #$9C00
+        lda #(`gcUnknown9CBBB7)<<8
         sta lR18+1
-        lda #$BBB7
+        lda #<>gcUnknown9CBBB7
         sta lR18
         lda #$7E00
         sta lR19+1
@@ -4289,9 +4289,9 @@
 
           .structDMAToVRAM $7E7B88, $0800, $80, $8000
 
-        lda #$9C00
+        lda #(`gcUnknown9CBFA1)<<8
         sta lR18+1
-        lda #$BFA1
+        lda #<>gcUnknown9CBFA1
         sta lR18
         lda #(`aBGPaletteBuffer)<<8
         sta lR19+1
@@ -4588,9 +4588,9 @@
 
         php
         jsr rsUnknown91DF6D
-        lda #$9C00
+        lda #(`gcUnknown9CB90D)<<8
         sta lR18+1
-        lda #$B90D
+        lda #<>gcUnknown9CB90D
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -4601,9 +4601,9 @@
 
           .structDMAToVRAM $7E8B88, $0800, $80, $6000
 
-        lda #$9C00
+        lda #(`gcUnknown9CC0B4)<<8
         sta lR18+1
-        lda #$C0B4
+        lda #<>gcUnknown9CC0B4
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -4614,9 +4614,9 @@
 
           .structDMAToVRAM $7E8B88, $4800, $80, $A000
 
-        lda #$9C00
+        lda #(`gcUnknown9CCB62)<<8
         sta lR18+1
-        lda #$CB62
+        lda #<>gcUnknown9CCB62
         sta lR18
         lda #(`aBG3TilemapBuffer)<<8
         sta lR19+1
@@ -4627,9 +4627,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $9000
 
-        lda #$9C00
+        lda #(`gcUnknown9CD916)<<8
         sta lR18+1
-        lda #$D916
+        lda #<>gcUnknown9CD916
         sta lR18
         lda #(`aBGPaletteBuffer)<<8
         sta lR19+1
@@ -4657,9 +4657,9 @@
 
         php
         jsr rsUnknown91DF6D
-        lda #$9C00
+        lda #(`gcUnknown9CB90D)<<8
         sta lR18+1
-        lda #$B90D
+        lda #<>gcUnknown9CB90D
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -4670,9 +4670,9 @@
 
           .structDMAToVRAM $7E8B88, $0800, $80, $6000
 
-        lda #$9C00
+        lda #(`gcUnknown9CCE12)<<8
         sta lR18+1
-        lda #$CE12
+        lda #<>gcUnknown9CCE12
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -4683,9 +4683,9 @@
 
           .structDMAToVRAM $7E8B88, $4800, $80, $A000
 
-        lda #$9C00
+        lda #(`gcUnknown9CD719)<<8
         sta lR18+1
-        lda #$D719
+        lda #<>gcUnknown9CD719
         sta lR18
         lda #(`aBG3TilemapBuffer)<<8
         sta lR19+1
@@ -4696,9 +4696,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $9000
 
-        lda #$9C00
+        lda #(`gcUnknown9CD916)<<8
         sta lR18+1
-        lda #$D916
+        lda #<>gcUnknown9CD916
         sta lR18
         lda #(`aBGPaletteBuffer)<<8
         sta lR19+1

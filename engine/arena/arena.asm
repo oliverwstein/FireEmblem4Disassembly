@@ -23,25 +23,25 @@
       aUnknown8AE4BB ; 8A/E4BB
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aUnknown80E53D.
-        .word $1800, $4000, $2B01, $C00A
+        .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000
 
 
       aUnknown8AE4C3 ; 8A/E4C3
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aUnknown80E53D.
-        .word $1000, $0000, $D601, $D306
+        .structDecompressionDMAEntry gcUnknownD306D6, $1000, $0000
 
 
       aUnknown8AE4CB ; 8A/E4CB
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aUnknown80E53D.
-        .word $0800, $2800, $9101, $D466
+        .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800
 
 
       aUnknown8AE4D3 ; 8A/E4D3
 
         ; Entry for rlHandleMapMenuDecompressionDMA, as aUnknown80E53D.
-        .word $0800, $2C00, $EF01, $D467
+        .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00
 
 
       rlArenaMenuRunStep ; 8A/E4DB

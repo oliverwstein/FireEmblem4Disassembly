@@ -382,9 +382,9 @@
         lda #$0005
         sta wGameStateStep,b
         jsr rsUnknown898B3B
-        lda #$DD00
+        lda #(`gcUnknownDD0000)<<8
         sta lR18+1
-        lda #$0000
+        lda #<>gcUnknownDD0000
         sta lR18
         lda #$7E00
         sta lR19+1
@@ -632,9 +632,9 @@
         sta $7F818F
         lda #$0005
         sta wGameStateStep,b
-        lda #$DD00
+        lda #(`gcUnknownDD0000)<<8
         sta lR18+1
-        lda #$0000
+        lda #<>gcUnknownDD0000
         sta lR18
         lda #$7E00
         sta lR19+1

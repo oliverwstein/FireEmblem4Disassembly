@@ -189,9 +189,9 @@
 
           .structDMAToVRAM $DD72B0, $0C00, $80, $6000
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80C5BE)<<8
         sta lR19+1
-        lda #$C5BE
+        lda #<>aDecompressionDMAEntry80C5BE
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct

@@ -1,0 +1,11 @@
+# Compressed streams for rlDecompressor, placed in this order from start to
+# end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is
+# the stream as the ROM has it; gcUnknown... are not identified yet (graphics
+# or tilemaps).
+start $DF3192
+end $DF7FF8
+
+gcUnknownDF3192 gcUnknownDF3192 ; 16384 bytes decompressed
+gcUnknownDF6581 gcUnknownDF6581 ; 4096 bytes decompressed
+gcUnknownDF6981 gcUnknownDF6981 ; 4096 bytes decompressed
+gcUnknownDF6FFA gcUnknownDF6FFA ; 7488 bytes decompressed

@@ -2392,14 +2392,14 @@
 
           .structDMAToVRAM $D76800, $0800, $80, $9800
 
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8A8F58)<<8
         sta lR19+1
-        lda #$8F58
+        lda #<>aDecompressionDMAEntry8A8F58
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8A8F60)<<8
         sta lR19+1
-        lda #$8F60
+        lda #<>aDecompressionDMAEntry8A8F60
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlUnknown8881EC
@@ -7554,23 +7554,23 @@
 
           .structDMAToVRAM $DE0200, $0800, $80, $D600
 
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8ABE53)<<8
         sta lR19+1
-        lda #$BE53
+        lda #<>aDecompressionDMAEntry8ABE53
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8ABE5B)<<8
         sta lR19+1
-        lda #$BE5B
+        lda #<>aDecompressionDMAEntry8ABE5B
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
           .structDMAToVRAM $D76000, $0800, $80, $9800
 
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8ABE4B)<<8
         sta lR19+1
-        lda #$BE4B
+        lda #<>aDecompressionDMAEntry8ABE4B
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlGetDialogueBoxGraphicsAndPalette
@@ -7678,9 +7678,9 @@
         beq _BEDC
 
         _BE76
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8ABF0F)<<8
         sta lR19+1
-        lda #$BF0F
+        lda #<>aDecompressionDMAEntry8ABF0F
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         ldx #$01FE
@@ -7706,9 +7706,9 @@
 
 
         _BEA9
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8ABF17)<<8
         sta lR19+1
-        lda #$BF17
+        lda #<>aDecompressionDMAEntry8ABF17
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         ldx #$01FE
@@ -7734,9 +7734,9 @@
 
 
         _BEDC
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8ABF1F)<<8
         sta lR19+1
-        lda #$BF1F
+        lda #<>aDecompressionDMAEntry8ABF1F
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         ldx #$01FE
@@ -10351,9 +10351,9 @@
         dec x
         dec x
         bpl _D8A6
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AD952)<<8
         sta lR19+1
-        lda #$D952
+        lda #<>aDecompressionDMAEntry8AD952
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         lda $08AD,b
@@ -12001,14 +12001,14 @@
         sta wR8
         jsl rlSetLayerPositionsAndSizes
         jsl rlResetDialogueEngine
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AEE91)<<8
         sta lR19+1
-        lda #$EE91
+        lda #<>aDecompressionDMAEntry8AEE91
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AEE99)<<8
         sta lR19+1
-        lda #$EE99
+        lda #<>aDecompressionDMAEntry8AEE99
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
@@ -12019,23 +12019,23 @@
 
           .structDMAToVRAM $DE0200, $0800, $80, $D600
 
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AEEA1)<<8
         sta lR19+1
-        lda #$EEA1
+        lda #<>aDecompressionDMAEntry8AEEA1
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AEEA9)<<8
         sta lR19+1
-        lda #$EEA9
+        lda #<>aDecompressionDMAEntry8AEEA9
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
           .structDMAToVRAM $D76000, $0800, $80, $9800
 
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AEE89)<<8
         sta lR19+1
-        lda #$EE89
+        lda #<>aDecompressionDMAEntry8AEE89
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlGetDialogueBoxGraphicsAndPalette
@@ -12559,9 +12559,9 @@
         sta wR8
         jsl rlSetLayerPositionsAndSizes
         jsl rlResetDialogueEngine
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AF26B)<<8
         sta lR19+1
-        lda #$F26B
+        lda #<>aDecompressionDMAEntry8AF26B
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
@@ -12572,23 +12572,23 @@
 
           .structDMAToVRAM $DE0200, $0800, $80, $D600
 
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AF273)<<8
         sta lR19+1
-        lda #$F273
+        lda #<>aDecompressionDMAEntry8AF273
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AF27B)<<8
         sta lR19+1
-        lda #$F27B
+        lda #<>aDecompressionDMAEntry8AF27B
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
           .structDMAToVRAM $D76000, $0800, $80, $9800
 
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AF263)<<8
         sta lR19+1
-        lda #$F263
+        lda #<>aDecompressionDMAEntry8AF263
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlGetDialogueBoxGraphicsAndPalette
@@ -13635,37 +13635,37 @@
         sta wR8
         jsl rlSetLayerPositionsAndSizes
         jsl rlResetDialogueEngine
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AFA14)<<8
         sta lR19+1
-        lda #$FA14
+        lda #<>aDecompressionDMAEntry8AFA14
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AFA1C)<<8
         sta lR19+1
-        lda #$FA1C
+        lda #<>aDecompressionDMAEntry8AFA1C
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
           .structDMAToVRAM $DE40C0, $0400, $80, $C000
 
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AFA24)<<8
         sta lR19+1
-        lda #$FA24
+        lda #<>aDecompressionDMAEntry8AFA24
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AFA2C)<<8
         sta lR19+1
-        lda #$FA2C
+        lda #<>aDecompressionDMAEntry8AFA2C
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
           .structDMAToVRAM $D76000, $0800, $80, $9800
 
-        lda #$8A00
+        lda #(`aDecompressionDMAEntry8AFA0C)<<8
         sta lR19+1
-        lda #$FA0C
+        lda #<>aDecompressionDMAEntry8AFA0C
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlGetDialogueBoxGraphicsAndPalette

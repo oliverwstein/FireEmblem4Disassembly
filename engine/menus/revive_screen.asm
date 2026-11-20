@@ -215,22 +215,22 @@
       aUnknown80E13E ; 80/E13E
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
-        .word $1800, $0000, $2B01, $C00A
+        .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000
 
       aUnknown80E146 ; 80/E146
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
-        .word $1200, $3000, $A001, $DD20
+        .structDecompressionDMAEntry gcUnknownDD20A0, $1200, $3000
 
       aUnknown80E14E ; 80/E14E
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
-        .word $0700, $1800, $EE01, $DD2C
+        .structDecompressionDMAEntry gcUnknownDD2CEE, $0700, $1800
 
       aUnknown80E156 ; 80/E156
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
-        .word $0800, $2000, $9001, $DD2D
+        .structDecompressionDMAEntry gcUnknownDD2D90, $0800, $2000
 
       rsUnknown80E15E ; 80/E15E
 

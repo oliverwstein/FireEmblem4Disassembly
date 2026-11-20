@@ -1,0 +1,173 @@
+# Compressed streams for rlDecompressor, placed in this order from start to
+# end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is
+# the stream as the ROM has it; gcUnknown... are not identified yet (graphics
+# or tilemaps).
+start $D50000
+end $D67F1B
+
+gcUnknownD50000 gcUnknownD50000 ; 2048 bytes decompressed
+gcUnknownD50333 gcUnknownD50333 ; 2048 bytes decompressed
+gcUnknownD506AD gcUnknownD506AD ; 2048 bytes decompressed
+gcUnknownD50A01 gcUnknownD50A01 ; 2048 bytes decompressed
+gcUnknownD50D0F gcUnknownD50D0F ; 2048 bytes decompressed
+gcUnknownD510B1 gcUnknownD510B1 ; 2048 bytes decompressed
+gcUnknownD514DD gcUnknownD514DD ; 2048 bytes decompressed
+gcUnknownD51825 gcUnknownD51825 ; 2048 bytes decompressed
+gcUnknownD51B75 gcUnknownD51B75 ; 2048 bytes decompressed
+gcUnknownD51EE2 gcUnknownD51EE2 ; 2048 bytes decompressed
+gcUnknownD52134 gcUnknownD52134 ; 2048 bytes decompressed
+gcUnknownD523F3 gcUnknownD523F3 ; 2048 bytes decompressed
+gcUnknownD52630 gcUnknownD52630 ; 2048 bytes decompressed
+gcUnknownD528B8 gcUnknownD528B8 ; 2048 bytes decompressed
+gcUnknownD52B4C gcUnknownD52B4C ; 2048 bytes decompressed
+gcUnknownD52D65 gcUnknownD52D65 ; 2048 bytes decompressed
+gcUnknownD52FDC gcUnknownD52FDC ; 2048 bytes decompressed
+gcUnknownD531ED gcUnknownD531ED ; 512 bytes decompressed, found
+gcUnknownD5336A gcUnknownD5336A ; 512 bytes decompressed, found
+gcUnknownD534DC gcUnknownD534DC ; 512 bytes decompressed, found
+gcUnknownD53555 gcUnknownD53555 ; 512 bytes decompressed, found
+gcUnknownD535C4 gcUnknownD535C4 ; 512 bytes decompressed, found
+gcUnknownD5362F gcUnknownD5362F ; 512 bytes decompressed, found
+gcUnknownD53670 gcUnknownD53670 ; 512 bytes decompressed, found
+gcUnknownD536B8 gcUnknownD536B8 ; 512 bytes decompressed, found
+gcUnknownD53700 gcUnknownD53700 ; 512 bytes decompressed, found
+gcUnknownD5388D gcUnknownD5388D ; 512 bytes decompressed, found
+gcUnknownD539FE gcUnknownD539FE ; 512 bytes decompressed, found
+gcUnknownD53B70 gcUnknownD53B70 ; 512 bytes decompressed, found
+gcUnknownD53CFF gcUnknownD53CFF ; 512 bytes decompressed, found
+gcUnknownD53D92 gcUnknownD53D92 ; 512 bytes decompressed, found
+gcUnknownD53DEC gcUnknownD53DEC ; 512 bytes decompressed, found
+gcUnknownD53E5A gcUnknownD53E5A ; 512 bytes decompressed, found
+gcUnknownD53ECD gcUnknownD53ECD ; 512 bytes decompressed, found
+gcUnknownD54048 gcUnknownD54048 ; 512 bytes decompressed, found
+gcUnknownD541C3 gcUnknownD541C3 ; 512 bytes decompressed, found
+gcUnknownD54330 gcUnknownD54330 ; 512 bytes decompressed, found
+gcUnknownD54378 gcUnknownD54378 ; 512 bytes decompressed, found
+gcUnknownD54407 gcUnknownD54407 ; 512 bytes decompressed, found
+gcUnknownD54424 gcUnknownD54424 ; 512 bytes decompressed, found
+gcUnknownD54481 gcUnknownD54481 ; 512 bytes decompressed, found
+gcUnknownD545F2 gcUnknownD545F2 ; 512 bytes decompressed, found
+gcUnknownD54764 gcUnknownD54764 ; 512 bytes decompressed, found
+gcUnknownD548CE gcUnknownD548CE ; 512 bytes decompressed, found
+gcUnknownD54916 gcUnknownD54916 ; 512 bytes decompressed, found
+gcUnknownD5493D gcUnknownD5493D ; 512 bytes decompressed, found
+gcUnknownD54AAE gcUnknownD54AAE ; 512 bytes decompressed, found
+gcUnknownD54C1F gcUnknownD54C1F ; 512 bytes decompressed, found
+gcUnknownD54D91 gcUnknownD54D91 ; 512 bytes decompressed, found
+gcUnknownD54DD9 gcUnknownD54DD9 ; 512 bytes decompressed, found
+gcUnknownD54E60 gcUnknownD54E60 ; 512 bytes decompressed, found
+gcUnknownD54EA7 gcUnknownD54EA7 ; 512 bytes decompressed, found
+gcUnknownD54F0A gcUnknownD54F0A ; 512 bytes decompressed, found
+gcUnknownD54F31 gcUnknownD54F31 ; 512 bytes decompressed, found
+gcUnknownD54F79 gcUnknownD54F79 ; 512 bytes decompressed, found
+gcUnknownD54FBF gcUnknownD54FBF ; 512 bytes decompressed, found
+gcUnknownD55131 gcUnknownD55131 ; 512 bytes decompressed, found
+gcUnknownD552AE gcUnknownD552AE ; 512 bytes decompressed, found
+gcUnknownD55420 gcUnknownD55420 ; 512 bytes decompressed, found
+gcUnknownD55592 gcUnknownD55592 ; 512 bytes decompressed, found
+gcUnknownD55704 gcUnknownD55704 ; 512 bytes decompressed, found
+gcUnknownD55876 gcUnknownD55876 ; 512 bytes decompressed, found
+gcUnknownD559E7 gcUnknownD559E7 ; 4096 bytes decompressed, found
+gcUnknownD55B7E gcUnknownD55B7E ; 4096 bytes decompressed, found
+gcUnknownD55C7E gcUnknownD55C7E ; 4096 bytes decompressed, found
+gcUnknownD56065 gcUnknownD56065 ; 4096 bytes decompressed, found
+gcUnknownD56256 gcUnknownD56256 ; 4096 bytes decompressed, found
+gcUnknownD56507 gcUnknownD56507 ; 4096 bytes decompressed, found
+gcUnknownD567AC gcUnknownD567AC ; 4096 bytes decompressed, found
+gcUnknownD56878 gcUnknownD56878 ; 4096 bytes decompressed, found
+gcUnknownD5695E gcUnknownD5695E ; 4096 bytes decompressed, found
+gcUnknownD56BC7 gcUnknownD56BC7 ; 4096 bytes decompressed, found
+gcUnknownD56C7D gcUnknownD56C7D ; 4096 bytes decompressed, found
+gcUnknownD56D37 gcUnknownD56D37 ; 4096 bytes decompressed, found
+gcUnknownD57249 gcUnknownD57249 ; 4096 bytes decompressed, found
+gcUnknownD5745C gcUnknownD5745C ; 4096 bytes decompressed, found
+gcUnknownD57758 gcUnknownD57758 ; 4096 bytes decompressed, found
+gcUnknownD579B4 gcUnknownD579B4 ; 4096 bytes decompressed, found
+gcUnknownD57A2C gcUnknownD57A2C ; 4096 bytes decompressed, found
+gcUnknownD57A9B gcUnknownD57A9B ; 4096 bytes decompressed, found
+gcUnknownD57B50 gcUnknownD57B50 ; 4096 bytes decompressed, found
+gcUnknownD603DE gcUnknownD603DE ; 4096 bytes decompressed, found
+gcUnknownD60B99 gcUnknownD60B99 ; 4096 bytes decompressed, found
+gcUnknownD60BBF gcUnknownD60BBF ; 4096 bytes decompressed, found
+gcUnknownD60D43 gcUnknownD60D43 ; 4096 bytes decompressed, found
+gcUnknownD61759 gcUnknownD61759 ; 4096 bytes decompressed, found
+gcUnknownD617A1 gcUnknownD617A1 ; 2048 bytes decompressed, found
+gcUnknownD6183B gcUnknownD6183B ; 2048 bytes decompressed, found
+gcUnknownD61A12 gcUnknownD61A12 ; 2048 bytes decompressed, found
+gcUnknownD61C03 gcUnknownD61C03 ; 2048 bytes decompressed, found
+gcUnknownD61CB4 gcUnknownD61CB4 ; 2048 bytes decompressed, found
+gcUnknownD61D6C gcUnknownD61D6C ; 2048 bytes decompressed, found
+gcUnknownD61E24 gcUnknownD61E24 ; 2048 bytes decompressed, found
+gcUnknownD61ECF gcUnknownD61ECF ; 2048 bytes decompressed, found
+gcUnknownD61F7A gcUnknownD61F7A ; 2048 bytes decompressed, found
+gcUnknownD62028 gcUnknownD62028 ; 2048 bytes decompressed, found
+gcUnknownD620CE gcUnknownD620CE ; 2048 bytes decompressed, found
+gcUnknownD6222F gcUnknownD6222F ; 2048 bytes decompressed, found
+gcUnknownD622B6 gcUnknownD622B6 ; 2048 bytes decompressed, found
+gcUnknownD6235C gcUnknownD6235C ; 2048 bytes decompressed, found
+gcUnknownD6256B gcUnknownD6256B ; 2048 bytes decompressed, found
+gcUnknownD6267B gcUnknownD6267B ; 2048 bytes decompressed, found
+gcUnknownD62768 gcUnknownD62768 ; 2048 bytes decompressed, found
+gcUnknownD62802 gcUnknownD62802 ; 2048 bytes decompressed, found
+gcUnknownD62883 gcUnknownD62883 ; 2048 bytes decompressed, found
+gcUnknownD6290A gcUnknownD6290A ; 2048 bytes decompressed, found
+gcUnknownD629B1 gcUnknownD629B1 ; 2048 bytes decompressed, found
+gcUnknownD62C5D gcUnknownD62C5D ; 2048 bytes decompressed, found
+gcUnknownD62ECC gcUnknownD62ECC ; 2048 bytes decompressed, found
+gcUnknownD62F39 gcUnknownD62F39 ; 2048 bytes decompressed, found
+gcUnknownD62FF0 gcUnknownD62FF0 ; 2048 bytes decompressed, found
+gcUnknownD6326C gcUnknownD6326C ; 2048 bytes decompressed, found
+gcUnknownD633EB gcUnknownD633EB ; 1024 bytes decompressed, found
+gcUnknownD63617 gcUnknownD63617 ; 1024 bytes decompressed, found
+gcUnknownD6372D gcUnknownD6372D ; 1024 bytes decompressed, found
+gcUnknownD638BA gcUnknownD638BA ; 1024 bytes decompressed, found
+gcUnknownD63AC0 gcUnknownD63AC0 ; 1024 bytes decompressed, found
+gcUnknownD63B9F gcUnknownD63B9F ; 1024 bytes decompressed, found
+gcUnknownD63E58 gcUnknownD63E58 ; 1024 bytes decompressed, found
+gcUnknownD6408E gcUnknownD6408E ; 1024 bytes decompressed, found
+gcUnknownD64244 gcUnknownD64244 ; 1024 bytes decompressed, found
+gcUnknownD643DE gcUnknownD643DE ; 1024 bytes decompressed, found
+gcUnknownD644F3 gcUnknownD644F3 ; 1024 bytes decompressed, found
+gcUnknownD646CD gcUnknownD646CD ; 1024 bytes decompressed, found
+gcUnknownD64934 gcUnknownD64934 ; 1024 bytes decompressed, found
+gcUnknownD64BEE gcUnknownD64BEE ; 1024 bytes decompressed, found
+gcUnknownD64D4E gcUnknownD64D4E ; 1024 bytes decompressed, found
+gcUnknownD65010 gcUnknownD65010 ; 1024 bytes decompressed, found
+gcUnknownD65153 gcUnknownD65153 ; 1024 bytes decompressed, found
+gcUnknownD651C2 gcUnknownD651C2 ; 1024 bytes decompressed, found
+gcUnknownD653F9 gcUnknownD653F9 ; 1024 bytes decompressed, found
+gcUnknownD6564B gcUnknownD6564B ; 1024 bytes decompressed, found
+gcUnknownD656D0 gcUnknownD656D0 ; 1024 bytes decompressed, found
+gcUnknownD65930 gcUnknownD65930 ; 1024 bytes decompressed, found
+gcUnknownD65BF9 gcUnknownD65BF9 ; 1024 bytes decompressed, found
+gcUnknownD65F0D gcUnknownD65F0D ; 2048 bytes decompressed
+gcUnknownD6601E gcUnknownD6601E ; 2048 bytes decompressed
+gcUnknownD66118 gcUnknownD66118 ; 2048 bytes decompressed
+gcUnknownD66227 gcUnknownD66227 ; 2048 bytes decompressed
+gcUnknownD66343 gcUnknownD66343 ; 2048 bytes decompressed
+gcUnknownD66444 gcUnknownD66444 ; 2048 bytes decompressed
+gcUnknownD66556 gcUnknownD66556 ; 2048 bytes decompressed
+gcUnknownD66652 gcUnknownD66652 ; 2048 bytes decompressed
+gcUnknownD66761 gcUnknownD66761 ; 2048 bytes decompressed
+gcUnknownD6680A gcUnknownD6680A ; 2048 bytes decompressed
+gcUnknownD6693A gcUnknownD6693A ; 2048 bytes decompressed
+gcUnknownD669DE gcUnknownD669DE ; 2048 bytes decompressed
+gcUnknownD66B0C gcUnknownD66B0C ; 2048 bytes decompressed
+gcUnknownD66C35 gcUnknownD66C35 ; 2048 bytes decompressed
+gcUnknownD66CE1 gcUnknownD66CE1 ; 2048 bytes decompressed
+gcUnknownD66E2A gcUnknownD66E2A ; 2048 bytes decompressed
+gcUnknownD66ED6 gcUnknownD66ED6 ; 2048 bytes decompressed
+gcUnknownD66FC6 gcUnknownD66FC6 ; 2048 bytes decompressed
+gcUnknownD670EE gcUnknownD670EE ; 2048 bytes decompressed
+gcUnknownD671DC gcUnknownD671DC ; 2048 bytes decompressed
+gcUnknownD672E2 gcUnknownD672E2 ; 2048 bytes decompressed
+gcUnknownD67408 gcUnknownD67408 ; 2048 bytes decompressed
+gcUnknownD674F4 gcUnknownD674F4 ; 2048 bytes decompressed
+gcUnknownD67607 gcUnknownD67607 ; 2048 bytes decompressed
+gcUnknownD676F6 gcUnknownD676F6 ; 1024 bytes decompressed, after
+gcUnknownD677E9 gcUnknownD677E9 ; 2048 bytes decompressed, after
+gcUnknownD67840 gcUnknownD67840 ; 1024 bytes decompressed, after
+gcUnknownD67984 gcUnknownD67984 ; 1024 bytes decompressed, after
+gcUnknownD67BC6 gcUnknownD67BC6 ; 1024 bytes decompressed, after
+gcUnknownD67CC7 gcUnknownD67CC7 ; 1024 bytes decompressed, after
+gcUnknownD67D7D gcUnknownD67D7D ; 2048 bytes decompressed, after

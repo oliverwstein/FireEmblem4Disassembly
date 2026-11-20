@@ -125,9 +125,9 @@
 
           .structDMAToVRAM $DD72B0, $0C00, $80, $6000
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80D41D)<<8
         sta lR19+1
-        lda #$D41D
+        lda #<>aDecompressionDMAEntry80D41D
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
@@ -158,14 +158,14 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $5000
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80D425)<<8
         sta lR19+1
-        lda #$D425
+        lda #<>aDecompressionDMAEntry80D425
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80D42D)<<8
         sta lR19+1
-        lda #$D42D
+        lda #<>aDecompressionDMAEntry80D42D
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         rts

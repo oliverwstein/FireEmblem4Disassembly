@@ -1,0 +1,26 @@
+# Compressed streams for rlDecompressor, placed in this order from start to
+# end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is
+# the stream as the ROM has it; gcUnknown... are not identified yet (graphics
+# or tilemaps).
+start $F623D3
+end $F77BC8
+
+gcUnknownF623D3 gcUnknownF623D3 ; 7200 bytes decompressed
+gcUnknownF63A2C gcUnknownF63A2C ; 128 bytes decompressed
+gcUnknownF63A58 gcUnknownF63A58 ; 128 bytes decompressed
+gcUnknownF63A8D gcUnknownF63A8D ; 128 bytes decompressed
+gcUnknownF63AC8 gcUnknownF63AC8 ; 128 bytes decompressed
+gcUnknownF63AFB gcUnknownF63AFB ; 128 bytes decompressed
+gcUnknownF63B39 gcUnknownF63B39 ; 128 bytes decompressed
+gcUnknownF63B70 gcUnknownF63B70 ; 128 bytes decompressed
+gcUnknownF63BAE gcUnknownF63BAE ; 128 bytes decompressed
+gcUnknownF63BEC gcUnknownF63BEC ; 128 bytes decompressed
+gcUnknownF63C0B gcUnknownF63C0B ; 4096 bytes decompressed
+gcUnknownF6405C gcUnknownF6405C ; 4096 bytes decompressed
+gcUnknownF644CB gcUnknownF644CB ; 4096 bytes decompressed
+gcUnknownF64799 gcUnknownF64799 ; 16384 bytes decompressed
+gcUnknownF676FE gcUnknownF676FE ; 16384 bytes decompressed
+gcUnknownF72CD3 gcUnknownF72CD3 ; 4096 bytes decompressed
+gcUnknownF7319C gcUnknownF7319C ; 16384 bytes decompressed
+gcUnknownF75A94 gcUnknownF75A94 ; 4096 bytes decompressed
+gcUnknownF75EB1 gcUnknownF75EB1 ; 16384 bytes decompressed

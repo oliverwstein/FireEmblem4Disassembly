@@ -4434,9 +4434,9 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80B0CB)<<8
         sta lR19+1
-        lda #$B0CB
+        lda #<>aDecompressionDMAEntry80B0CB
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         rtl
@@ -4461,9 +4461,9 @@
         .databank ?
 
         phx
-        lda #$C000
+        lda #(`gcUnknownC00A2B)<<8
         sta lR18+1
-        lda #$0A2B
+        lda #<>gcUnknownC00A2B
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -4484,9 +4484,9 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80B0FD)<<8
         sta lR19+1
-        lda #$B0FD
+        lda #<>aDecompressionDMAEntry80B0FD
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         rtl
@@ -4818,9 +4818,9 @@
         sta wUnknown000596,b
         lda #$0002
         sta aDialogue.wUnknown0018D0,b
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80B61E)<<8
         sta lR19+1
-        lda #$B61E
+        lda #<>aDecompressionDMAEntry80B61E
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         sep #$20
@@ -4856,9 +4856,9 @@
         dec x
         dec x
         bpl _B500
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80B626)<<8
         sta lR19+1
-        lda #$B626
+        lda #<>aDecompressionDMAEntry80B626
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
@@ -4873,18 +4873,18 @@
 
           .structDMAToVRAM $D97940, $01C0, $80, $9D40
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80B62E)<<8
         sta lR19+1
-        lda #$B62E
+        lda #<>aDecompressionDMAEntry80B62E
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
           .structDMAToVRAM $D96C00, $0800, $80, $B000
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80B636)<<8
         sta lR19+1
-        lda #$B636
+        lda #<>aDecompressionDMAEntry80B636
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         ldx #$01FE
@@ -5353,14 +5353,14 @@
 
           .structDMAToVRAM $D76800, $0800, $80, $9800
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80B99D)<<8
         sta lR19+1
-        lda #$B99D
+        lda #<>aDecompressionDMAEntry80B99D
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80B9A5)<<8
         sta lR19+1
-        lda #$B9A5
+        lda #<>aDecompressionDMAEntry80B9A5
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlGetEventLocationEntryID
@@ -5664,19 +5664,19 @@
 
           .structDMAToVRAM $D76800, $0800, $80, $9800
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80BB45)<<8
         sta lR19+1
-        lda #$BB45
+        lda #<>aDecompressionDMAEntry80BB45
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80BB55)<<8
         sta lR19+1
-        lda #$BB55
+        lda #<>aDecompressionDMAEntry80BB55
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80BB4D)<<8
         sta lR19+1
-        lda #$BB4D
+        lda #<>aDecompressionDMAEntry80BB4D
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         ldx #$07FE
@@ -6040,9 +6040,9 @@
 
           .structDMAToVRAM $DE48C0, $1800, $80, $9800
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80BEF9)<<8
         sta lR19+1
-        lda #$BEF9
+        lda #<>aDecompressionDMAEntry80BEF9
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         lda #$030F
@@ -6974,17 +6974,13 @@
 
       aUnknown80E53D ; 80/E53D
 
-        .word $1800
-        .word $4000
-        .word $2B01
-        .word $C00A
+        ; Entry for rlHandleMapMenuDecompressionDMA.
+        .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000
 
       aUnknown80E545 ; 80/E545
 
-        .word $0800
-        .word $6000
-        .word $2001
-        .word $DD3F
+        ; Entry for rlHandleMapMenuDecompressionDMA.
+        .structDecompressionDMAEntry gcUnknownDD3F20, $0800, $6000
 
       rsUnknown80E54D ; 80/E54D
 
@@ -7166,9 +7162,9 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80E72E)<<8
         sta lR19+1
-        lda #$E72E
+        lda #<>aDecompressionDMAEntry80E72E
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
@@ -7183,9 +7179,9 @@
 
           .structDMAToVRAM $DE40C0, $0400, $80, $8000
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80E736)<<8
         sta lR19+1
-        lda #$E736
+        lda #<>aDecompressionDMAEntry80E736
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         ldx #$0200
@@ -7198,9 +7194,9 @@
         bne _E70F
         lda #$0000
         sta aBGPaletteBuffer,b
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80E73E)<<8
         sta lR19+1
-        lda #$E73E
+        lda #<>aDecompressionDMAEntry80E73E
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         rts
@@ -7593,34 +7589,34 @@
         rep #$20
         lda #$0002
         sta aDialogue.wUnknown0018D0,b
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80EFA8)<<8
         sta lR19+1
-        lda #$EFA8
+        lda #<>aDecompressionDMAEntry80EFA8
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80EFB0)<<8
         sta lR19+1
-        lda #$EFB0
+        lda #<>aDecompressionDMAEntry80EFB0
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80EFB8)<<8
         sta lR19+1
-        lda #$EFB8
+        lda #<>aDecompressionDMAEntry80EFB8
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80EFC8)<<8
         sta lR19+1
-        lda #$EFC8
+        lda #<>aDecompressionDMAEntry80EFC8
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80EFD0)<<8
         sta lR19+1
-        lda #$EFD0
+        lda #<>aDecompressionDMAEntry80EFD0
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80EFC0)<<8
         sta lR19+1
-        lda #$EFC0
+        lda #<>aDecompressionDMAEntry80EFC0
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         ldx #$07FE
@@ -7791,24 +7787,24 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $D000
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80F187)<<8
         sta lR19+1
-        lda #$F187
+        lda #<>aDecompressionDMAEntry80F187
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80F18F)<<8
         sta lR19+1
-        lda #$F18F
+        lda #<>aDecompressionDMAEntry80F18F
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80F197)<<8
         sta lR19+1
-        lda #$F197
+        lda #<>aDecompressionDMAEntry80F197
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80F19F)<<8
         sta lR19+1
-        lda #$F19F
+        lda #<>aDecompressionDMAEntry80F19F
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         ldx #$01FE
@@ -8249,14 +8245,14 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80F42B)<<8
         sta lR19+1
-        lda #$F42B
+        lda #<>aDecompressionDMAEntry80F42B
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80F433)<<8
         sta lR19+1
-        lda #$F433
+        lda #<>aDecompressionDMAEntry80F433
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         ldx #$0100
@@ -8281,9 +8277,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $A000
 
-        lda #$DD00
+        lda #(`gcUnknownDD629E)<<8
         sta lR18+1
-        lda #$629E
+        lda #<>gcUnknownDD629E
         sta lR18
         lda #(`aDecompressionBuffer)<<8
         sta lR19+1
@@ -8302,9 +8298,9 @@
         asl a
         tax
         jsr (aUnknown80F413,x)
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80F43B)<<8
         sta lR19+1
-        lda #$F43B
+        lda #<>aDecompressionDMAEntry80F43B
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         rts

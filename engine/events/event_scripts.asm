@@ -4779,9 +4779,9 @@
         .databank ?
 
         jsl rlUnknown80B08C
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80B084)<<8
         sta lR19+1
-        lda #$B084
+        lda #<>aDecompressionDMAEntry80B084
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlUnknown80B0BC
@@ -4808,9 +4808,9 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aDecompressionDMAEntry80B09B)<<8
         sta lR19+1
-        lda #$B09B
+        lda #<>aDecompressionDMAEntry80B09B
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         rtl

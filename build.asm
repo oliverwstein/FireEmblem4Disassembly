@@ -174,6 +174,9 @@
   .include "events/ChapterFinal.asm"
   .include "events/ChapterEpilogue.asm"
 
+    ; Compressed streams: generated from gfx/compressed/C00A2B/C00A2B.streams by build.sh.
+    .include "gfx/compressed/C00A2B/Layout.asm"
+
     * = $008002
     .logical $808002
 
@@ -719,10 +722,26 @@
 
     .here
 
+    * = $00B084
+    .logical $80B084
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B084 .structDecompressionDMAEntry gcUnknownC02542, $0400, $3600 ; 80/B084
+
+    .here
+
     * = $00B08C
     .logical $80B08C
 
       .dsection Unsorted80B08CSection
+
+    .here
+
+    * = $00B09B
+    .logical $80B09B
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B09B .structDecompressionDMAEntry gcUnknownC01FBA, $0400, $3400 ; 80/B09B
 
     .here
 
@@ -733,10 +752,26 @@
 
     .here
 
+    * = $00B0CB
+    .logical $80B0CB
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B0CB .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/B0CB
+
+    .here
+
     * = $00B0D3
     .logical $80B0D3
 
       .dsection Unsorted80B0D3Section
+
+    .here
+
+    * = $00B0FD
+    .logical $80B0FD
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B0FD .structDecompressionDMAEntry gcUnknownC0197B, $0800, $4C00 ; 80/B0FD
 
     .here
 
@@ -765,6 +800,17 @@
     .logical $80B347
 
       .dsection Unsorted80B347Section
+
+    .here
+
+    * = $00B61E
+    .logical $80B61E
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B61E .structDecompressionDMAEntry gcUnknownD05673, $6000, $0000 ; 80/B61E
+      aDecompressionDMAEntry80B626 .structDecompressionDMAEntry gcUnknownD13D09, $1000, $3000 ; 80/B626
+      aDecompressionDMAEntry80B62E .structDecompressionDMAEntry gcUnknownD1432E, $0100, $4000 ; 80/B62E
+      aDecompressionDMAEntry80B636 .structDecompressionDMAEntry gcUnknownD14375, $0800, $6000 ; 80/B636
 
     .here
 
@@ -832,6 +878,15 @@
 
     .here
 
+    * = $00B99D
+    .logical $80B99D
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80B99D .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/B99D
+      aDecompressionDMAEntry80B9A5 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 80/B9A5
+
+    .here
+
     * = $00B9AD
     .logical $80B9AD
 
@@ -867,6 +922,16 @@
 
     .here
 
+    * = $00BB45
+    .logical $80BB45
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80BB45 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/BB45
+      aDecompressionDMAEntry80BB4D .structDecompressionDMAEntry gcUnknownD35B40, $0800, $5400 ; 80/BB4D
+      aDecompressionDMAEntry80BB55 .structDecompressionDMAEntry gcUnknownD33EFA, $2000, $1000 ; 80/BB55
+
+    .here
+
     * = $00BB5D
     .logical $80BB5D
 
@@ -885,6 +950,14 @@
     .logical $80BB9B
 
       .dsection Unsorted80BB9BSection
+
+    .here
+
+    * = $00BEF9
+    .logical $80BEF9
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80BEF9 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/BEF9
 
     .here
 
@@ -950,6 +1023,14 @@
     .logical $80C3E6
 
       .dsection Unsorted80C3E6Section
+
+    .here
+
+    * = $00C5BE
+    .logical $80C5BE
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80C5BE .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/C5BE
 
     .here
 
@@ -1023,6 +1104,15 @@
 
     .here
 
+    * = $00CE8E
+    .logical $80CE8E
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80CE8E .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000 ; 80/CE8E
+      aDecompressionDMAEntry80CE96 .structDecompressionDMAEntry gcUnknownDD3F20, $0800, $2800 ; 80/CE96
+
+    .here
+
     * = $00CE9E
     .logical $80CE9E
 
@@ -1062,6 +1152,16 @@
     .logical $80D2C6
 
       .dsection Unsorted80D2C6Section
+
+    .here
+
+    * = $00D41D
+    .logical $80D41D
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80D41D .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000 ; 80/D41D
+      aDecompressionDMAEntry80D425 .structDecompressionDMAEntry gcUnknownDD3CE4, $0700, $1800 ; 80/D425
+      aDecompressionDMAEntry80D42D .structDecompressionDMAEntry gcUnknownDD3F20, $0800, $2000 ; 80/D42D
 
     .here
 
@@ -1122,6 +1222,16 @@
 
     .here
 
+    * = $00E72E
+    .logical $80E72E
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80E72E .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000 ; 80/E72E
+      aDecompressionDMAEntry80E736 .structDecompressionDMAEntry gcUnknownDD3932, $0800, $4200 ; 80/E736
+      aDecompressionDMAEntry80E73E .structDecompressionDMAEntry gcUnknownDD3BDE, $0700, $2000 ; 80/E73E
+
+    .here
+
     * = $00E746
     .logical $80E746
 
@@ -1171,10 +1281,34 @@
 
     .here
 
+    * = $00EFA8
+    .logical $80EFA8
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80EFA8 .structDecompressionDMAEntry gcUnknownDF3192, $4000, $0000 ; 80/EFA8
+      aDecompressionDMAEntry80EFB0 .structDecompressionDMAEntry gcUnknownD317A0, $2000, $2000 ; 80/EFB0
+      aDecompressionDMAEntry80EFB8 .structDecompressionDMAEntry gcUnknownF623D3, $2000, $3000 ; 80/EFB8
+      aDecompressionDMAEntry80EFC0 .structDecompressionDMAEntry gcUnknownD32CCB, $1000, $6000 ; 80/EFC0
+      aDecompressionDMAEntry80EFC8 .structDecompressionDMAEntry gcUnknownD33090, $1000, $5000 ; 80/EFC8
+      aDecompressionDMAEntry80EFD0 .structDecompressionDMAEntry gcUnknownD335B5, $1000, $5800 ; 80/EFD0
+
+    .here
+
     * = $00EFD8
     .logical $80EFD8
 
       .dsection Unsorted80EFD8Section
+
+    .here
+
+    * = $00F187
+    .logical $80F187
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80F187 .structDecompressionDMAEntry gcUnknownDD20A0, $1200, $3000 ; 80/F187
+      aDecompressionDMAEntry80F18F .structDecompressionDMAEntry gcUnknownDD2D90, $0800, $5000 ; 80/F18F
+      aDecompressionDMAEntry80F197 .structDecompressionDMAEntry gcUnknownD35EB4, $5800, $0000 ; 80/F197
+      aDecompressionDMAEntry80F19F .structDecompressionDMAEntry gcUnknownD42C50, $1000, $5800 ; 80/F19F
 
     .here
 
@@ -1231,6 +1365,16 @@
     .logical $80F413
 
       .dsection Table80F413Section
+
+    .here
+
+    * = $00F42B
+    .logical $80F42B
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry80F42B .structDecompressionDMAEntry gcUnknownDD3FA6, $4000, $0000 ; 80/F42B
+      aDecompressionDMAEntry80F433 .structDecompressionDMAEntry gcUnknownDD20A0, $1200, $4000 ; 80/F433
+      aDecompressionDMAEntry80F43B .structDecompressionDMAEntry gcUnknownDD2D90, $0800, $6000 ; 80/F43B
 
     .here
 
@@ -4095,6 +4239,14 @@
     .logical $85D648
 
       .dsection Unsorted85D648Section
+
+    .here
+
+    * = $05D669
+    .logical $85D669
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry85D669 .structDecompressionDMAEntry gcUnknownC022B6, $0800, $4C00 ; 85/D669
 
     .here
 
@@ -7816,6 +7968,15 @@
 
     .here
 
+    * = $0A8F58
+    .logical $8A8F58
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8A8F58 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/8F58
+      aDecompressionDMAEntry8A8F60 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 8A/8F60
+
+    .here
+
     * = $0A8F68
     .logical $8A8F68
 
@@ -8318,10 +8479,30 @@
 
     .here
 
+    * = $0ABE4B
+    .logical $8ABE4B
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8ABE4B .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/BE4B
+      aDecompressionDMAEntry8ABE53 .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800 ; 8A/BE53
+      aDecompressionDMAEntry8ABE5B .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/BE5B
+
+    .here
+
     * = $0ABE63
     .logical $8ABE63
 
       .dsection Unsorted8ABE63Section
+
+    .here
+
+    * = $0ABF0F
+    .logical $8ABF0F
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8ABF0F .structDecompressionDMAEntry gcUnknownD22430, $1000, $0000 ; 8A/BF0F
+      aDecompressionDMAEntry8ABF17 .structDecompressionDMAEntry gcUnknownD27F1A, $1000, $0000 ; 8A/BF17
+      aDecompressionDMAEntry8ABF1F .structDecompressionDMAEntry gcUnknownD2769C, $1000, $0000 ; 8A/BF1F
 
     .here
 
@@ -8553,6 +8734,14 @@
 
     .here
 
+    * = $0AD952
+    .logical $8AD952
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8AD952 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/D952
+
+    .here
+
     * = $0AD95A
     .logical $8AD95A
 
@@ -8763,6 +8952,18 @@
 
     .here
 
+    * = $0AEE89
+    .logical $8AEE89
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8AEE89 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/EE89
+      aDecompressionDMAEntry8AEE91 .structDecompressionDMAEntry gcUnknownD240B0, $1000, $0000 ; 8A/EE91
+      aDecompressionDMAEntry8AEE99 .structDecompressionDMAEntry gcUnknownD22C0B, $2000, $1000 ; 8A/EE99
+      aDecompressionDMAEntry8AEEA1 .structDecompressionDMAEntry gcUnknownD24914, $0800, $2800 ; 8A/EEA1
+      aDecompressionDMAEntry8AEEA9 .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/EEA9
+
+    .here
+
     * = $0AEEB1
     .logical $8AEEB1
 
@@ -8796,6 +8997,17 @@
     .logical $8AF0D7
 
       .dsection Unsorted8AF0D7Section
+
+    .here
+
+    * = $0AF263
+    .logical $8AF263
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8AF263 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/F263
+      aDecompressionDMAEntry8AF26B .structDecompressionDMAEntry gcUnknownD30F54, $1000, $0000 ; 8A/F26B
+      aDecompressionDMAEntry8AF273 .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800 ; 8A/F273
+      aDecompressionDMAEntry8AF27B .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/F27B
 
     .here
 
@@ -8839,6 +9051,18 @@
     .logical $8AF885
 
       .dsection Unsorted8AF885Section
+
+    .here
+
+    * = $0AFA0C
+    .logical $8AFA0C
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8AFA0C .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/FA0C
+      aDecompressionDMAEntry8AFA14 .structDecompressionDMAEntry gcUnknownD269F9, $1000, $0000 ; 8A/FA14
+      aDecompressionDMAEntry8AFA1C .structDecompressionDMAEntry gcUnknownD24CA4, $2000, $1000 ; 8A/FA1C
+      aDecompressionDMAEntry8AFA24 .structDecompressionDMAEntry gcUnknownD272B9, $0800, $2800 ; 8A/FA24
+      aDecompressionDMAEntry8AFA2C .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/FA2C
 
     .here
 
@@ -10078,10 +10302,29 @@
 
     .here
 
+    * = $0DAF95
+    .logical $8DAF95
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8DAF95 .structDecompressionDMAEntry gcUnknownD35EB4, $3000, $0000 ; 8D/AF95
+      aDecompressionDMAEntry8DAF9D .structDecompressionDMAEntry gcUnknownD421EE, $0800, $5800 ; 8D/AF9D
+
+    .here
+
     * = $0DAFA5
     .logical $8DAFA5
 
       .dsection Unsorted8DAFA5Section
+
+    .here
+
+    * = $0DB056
+    .logical $8DB056
+
+      ; Entries for rlHandleMapMenuDecompressionDMA.
+      aDecompressionDMAEntry8DB056 .structDecompressionDMAEntry gcUnknownD429F6, $0800, $5800 ; 8D/B056
+      aDecompressionDMAEntry8DB05E .structDecompressionDMAEntry gcUnknownD428B8, $0800, $6800 ; 8D/B05E
+      aDecompressionDMAEntry8DB066 .structDecompressionDMAEntry gcUnknownD42273, $1000, $4000 ; 8D/B066
 
     .here
 
@@ -10898,6 +11141,9 @@
       .fill $8F8000 + $8000 - *, 0
 
     .here
+
+    ; Compressed streams: generated from gfx/compressed/D05673/D05673.streams by build.sh.
+    .include "gfx/compressed/D05673/Layout.asm"
 
     * = $108000
     .logical $908000
@@ -11772,6 +12018,9 @@
       g2bppDialogueFont .text ROM[$128000:$130000] ; 92/8000
 
     .here
+
+    ; Compressed streams: generated from gfx/compressed/D50000/D50000.streams by build.sh.
+    .include "gfx/compressed/D50000/Layout.asm"
 
     * = $158000
     .logical $958000
@@ -13695,32 +13944,11 @@
 
     .here
 
-    * = $1CD95E
-    .logical $9CD95E
+    ; Compressed streams: generated from gfx/compressed/9C8000/9C8000.streams by build.sh.
+    .include "gfx/compressed/9C8000/Layout.asm"
 
-      g4bppcBattleBannerLeonster   .text ROM[$1CD95E:$1CDA67] ; 9CD95E
-      g4bppcBattleBannerDozel      .text ROM[$1CDA67:$1CDBB8] ; 9CDA67
-      g4bppcBattleBannerYngvi      .text ROM[$1CDBB8:$1CDCEF] ; 9CDBB8
-      g4bppcBattleBannerChalphy    .text ROM[$1CDCEF:$1CDE2B] ; 9CDCEF
-      g4bppcBattleBannerNordion    .text ROM[$1CDE2B:$1CDF6F] ; 9CDE2B
-      g4bppcBattleBannerIsaach     .text ROM[$1CDF6F:$1CE0C0] ; 9CDF6F
-      g4bppcBattleBannerThracia    .text ROM[$1CE0C0:$1CE20F] ; 9CE0C0
-      g4bppcBattleBannerVelthomer  .text ROM[$1CE20F:$1CE367] ; 9CE20F
-      g4bppcBattleBannerFreege     .text ROM[$1CE367:$1CE494] ; 9CE367
-      g4bppcBattleBannerSilesse    .text ROM[$1CE494:$1CE5D0] ; 9CE494
-      g4bppcBattleBannerEdda       .text ROM[$1CE5D0:$1CE706] ; 9CE5D0
-      g4bppcBattleBannerBelhalla   .text ROM[$1CE706:$1CE845] ; 9CE706
-      g4bppcBattleBannerLoptr      .text ROM[$1CE845:$1CE98C] ; 9CE845
-      g4bppcBattleBannerDefault    .text ROM[$1CE98C:$1CEAEE] ; 9CE98C
-
-      ; Compressed. The original notes call these two tilemaps.
-      ; rlUnknown91AFC2 decompresses the first along with a banner.
-      aUnknown9CEAEE               .text ROM[$1CEAEE:$1CEBED] ; 9CEAEE
-      aUnknown9CEBED               .text ROM[$1CEBED:$1CECA6] ; 9CEBED
-
-      ; 9C/ECA6
-
-    .here
+    ; Compressed streams: generated from gfx/compressed/DD0000/DD0000.streams by build.sh.
+    .include "gfx/compressed/DD0000/Layout.asm"
 
     * = $1D7EAE
     .logical $DD7EAE
@@ -15293,6 +15521,9 @@
 
     .here
 
+    ; Compressed streams: generated from gfx/compressed/DF3192/DF3192.streams by build.sh.
+    .include "gfx/compressed/DF3192/Layout.asm"
+
     * = $1F8020
     .logical $9F8020
 
@@ -15743,6 +15974,9 @@
       .dsection TableE0283FSection
 
     .here
+
+    ; Compressed streams: generated from gfx/compressed/A08000/A08000.streams by build.sh.
+    .include "gfx/compressed/A08000/Layout.asm"
 
     * = $2E8000
     .logical $AE8000
@@ -16735,42 +16969,9 @@
 
     ; The map movement sprites: generated from gfx/MapMovementSprites/sprites.streams by build.sh.
     .include "gfx/MapMovementSprites/Layout.asm"
-    * = $112E50
-    .logical $D12E50
 
-      aVerdaneMapHighlightTilemap          .text ROM[$112E50:$113019] ; D12E50
-      aAgustriaMapHighlightTilemap         .text ROM[$113019:$113193] ; D13019
-      aSilesseMapHighlightTilemap          .text ROM[$113193:$113300] ; D13193
-      aAedMapHighlightTilemap              .text ROM[$113300:$11345D] ; D13300
-      aIsaachMapHighlightTilemap           .text ROM[$11345D:$11360F] ; D1345D
-      aMunsterMapHighlightTilemap          .text ROM[$11360F:$1137AC] ; D1360F
-      aThraciaMapHighlightTilemap          .text ROM[$1137AC:$113977] ; D137AC
-      aMiletosMapHighlightTilemap          .text ROM[$113977:$113AAC] ; D13977
-      aGrannvaleMapHighlightTilemap        .text ROM[$113AAC:$113C01] ; D13AAC
-
-      ; D1/3C01
-
-    .here
-
-    * = $113C85
-    .logical $D13C85
-
-      aWorldMapMarkerShadowTilemap .text ROM[$113C85:$113D09]
-
-      ; D1/3D09
-
-    .here
-
-
-    * = $1468A3
-    .logical $D468A3
-
-      aUnitedGrannvaleMapHighlightTilemap  .text ROM[$1468A3:$14699E] ; D468A3
-      aUnifiedThraciaMapHighlightTilemap   .text ROM[$14699E:$146B27] ; D4699E
-
-      ; D4/6B27
-
-    .here
+    ; Compressed streams: generated from gfx/compressed/F623D3/F623D3.streams by build.sh.
+    .include "gfx/compressed/F623D3/Layout.asm"
 
     * = $377C00
     .logical $F77C00

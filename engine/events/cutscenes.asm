@@ -469,9 +469,9 @@
         .databank $7F
 
         ; Load map weapon slashing graphics
-        lda #(`$ACCC17)<<8
+        lda #(`gcUnknownACCC17)<<8
         sta @l lR18+1
-        lda #<>$ACCC17
+        lda #<>gcUnknownACCC17
         sta @l lR18
         lda #(`aDecompressionBuffer)<<8
         sta @l lR19+1

@@ -12856,9 +12856,9 @@
         .autsiz
         .databank ?
 
-        lda #$8500
+        lda #(`aDecompressionDMAEntry85D669)<<8
         sta lR19+1
-        lda #$D669
+        lda #<>aDecompressionDMAEntry85D669
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         rtl

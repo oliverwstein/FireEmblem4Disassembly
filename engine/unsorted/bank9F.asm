@@ -615,9 +615,9 @@
         and #$00FF
         cmp #$00A0
         bmi _8532
-        lda #$D600
+        lda #(`gcUnknownD61ECF)<<8
         sta lR18+1
-        lda #$1ECF
+        lda #<>gcUnknownD61ECF
         sta lR18
         bra _8564
 
@@ -629,9 +629,9 @@
         and #$00FF
         cmp #$00C0
         bmi _854F
-        lda #$D600
+        lda #(`gcUnknownD61D6C)<<8
         sta lR18+1
-        lda #$1D6C
+        lda #<>gcUnknownD61D6C
         sta lR18
         bra _8564
 
