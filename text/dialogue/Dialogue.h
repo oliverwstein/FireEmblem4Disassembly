@@ -289,7 +289,7 @@
   .edef "竜", $3B
   .edef "石", $3C
   .edef "団", $3D
-  .edef "閾", $3E
+  .edef "闘", $3E
   .edef "技", $3F
   .edef "場", $40
   .edef "店", $41

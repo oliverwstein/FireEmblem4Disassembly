@@ -285,7 +285,7 @@
   .byte $0C ; "竜"
   .byte $0C ; "石"
   .byte $0C ; "団"
-  .byte $0C ; "閾"
+  .byte $0C ; "闘"
   .byte $0D ; "技"
   .byte $0D ; "場"
   .byte $0C ; "店"

@@ -4,7 +4,7 @@
 まあしかたねぇな{DIALOGUE_NL}
 {DIALOGUE_WAIT_PRESS}{DIALOGUE_SCROLL}
 だが俺達から行くこともあるまいよ{DIALOGUE_NL}
-戦閾がはじまるまで{DIALOGUE_NL}
+戦闘がはじまるまで{DIALOGUE_NL}
 この場所で様子を見よう{DIALOGUE_WAIT_PRESS}{DIALOGUE_SCROLL}
 おい､ベオ⅛ウルフ､貴様はどうする？{DIALOGUE_NL}
 {DIALOGUE_RIGHT}{DIALOGUE_PAUSE 16}今度ばか⅛りは､気が乗らねえなあ{DIALOGUE_NL}
