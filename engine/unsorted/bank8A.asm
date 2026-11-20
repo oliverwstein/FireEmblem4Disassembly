@@ -7278,13 +7278,13 @@
         clc
         adc wR0
         tax
-        lda @l PortraitGraphic00PortraitGraphicPointersEntry,x
+        lda @l aPortraitGraphicPointers,x
         sta lR45
-        lda @l $8AB4FA,x
+        lda @l aPortraitGraphicPointers+1,x
         sta lR45+1
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR47+1
-        lda #$8B88
+        lda #<>aDecompressionBuffer
         clc
         adc #$0800
         sta lR47
@@ -7299,7 +7299,7 @@
         clc
         adc #$0800
         sta lR18
-        lda @l $8AB7E2,x
+        lda @l aPortraitPalettePointers+1,x
         sta lR19+1
         lda @l aPortraitPalettePointers,x
         sta lR19

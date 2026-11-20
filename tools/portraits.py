@@ -103,17 +103,23 @@ def group_entries(count, graphics):
     rows = list(csv.reader(open(os.path.join(data, 'character', 'CharacterData.csv'))))
     ti, ii = rows[0].index('Type'), rows[0].index('ID')
     unit_type = {int(r[ii].lstrip('$'), 16): r[ti] for r in rows[1:] if r[ii]}
+    index = {name: k for k, (name, _) in
+             enumerate(list(csv.reader(open(os.path.join(data, 'PortraitGraphicPointers.csv'))))[1:])}
+
+    def entry_index(value):                 # PortraitDataSigurd, or a number
+        return index[value] if value in index else int(value.lstrip('$'), 16)
+
     users = {i: [] for i in range(count)}
     types = {i: set() for i in range(count)}
     ids = list(csv.reader(open(os.path.join(data, 'character', 'PortraitDataIDs.csv'))))[1:]
     for character, (name, value) in enumerate(ids, 1):
-        i = int(value.lstrip('$'), 16)
+        i = entry_index(value)
         if i < count:
             users[i].append(name.removeprefix('Portrait'))
             types[i].add(unit_type.get(character, 'none'))
     cards = {i: [] for i in range(count)}
     for name, value in list(csv.reader(open(os.path.join(data, 'class', 'ClassPortraitDataIDs.csv'))))[1:]:
-        cards[int(value.lstrip('$'), 16)].append(name.removeprefix('ClassPortrait'))
+        cards[entry_index(value)].append(name.removeprefix('ClassPortrait'))
     result = {}
     for i in range(count):
         if types[i] & {'UnitTypeStatic', 'UnitTypeDynamic'}:

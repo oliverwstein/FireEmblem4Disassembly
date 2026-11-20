@@ -159,7 +159,10 @@
         ; Input:
         ; A = portrait data ID
 
-        cmp #$00F3
+        ; Output:
+        ; A = the class's card if the ID was PortraitDataUseClassCard
+
+        cmp #PortraitDataUseClassCard
         beq +
 
           rts
