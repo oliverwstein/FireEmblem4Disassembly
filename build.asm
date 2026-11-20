@@ -102,6 +102,8 @@
   .include "engine/ai/scripts.asm"
   .include "engine/ai/threat.asm"
   .include "engine/arena/arena.asm"
+  .include "engine/battle/map_battle_magic.asm"
+  .include "engine/battle_scene/backgrounds.asm"
   .include "engine/battle_scene/script.asm"
   .include "engine/core/oam.asm"
   .include "engine/core/options.asm"
@@ -124,10 +126,12 @@
   .include "engine/epilogue/world_map.asm"
   .include "engine/save/save.asm"
   .include "engine/debug/debug_menu.asm"
+  .include "engine/dialogue/backgrounds.asm"
   .include "engine/dialogue/dialogue_procs.asm"
   .include "engine/events/cutscenes.asm"
   .include "engine/events/event_movement.asm"
   .include "engine/events/talk_events.asm"
+  .include "engine/map/chapter_maps.asm"
   .include "engine/map/input.asm"
   .include "engine/map/map_sprites.asm"
   .include "engine/map/popups.asm"
@@ -173,6 +177,7 @@
   .include "events/Chapter10.asm"
   .include "events/ChapterFinal.asm"
   .include "events/ChapterEpilogue.asm"
+  .include "data/palettes/BackgroundPalettes.asm"
 
     ; Compressed streams: generated from gfx/compressed/C00A2B/C00A2B.streams by build.sh.
     .include "gfx/compressed/C00A2B/Layout.asm"
@@ -1285,9 +1290,9 @@
     .logical $80EFA8
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
-      aDecompressionDMAEntry80EFA8 .structDecompressionDMAEntry gcUnknownDF3192, $4000, $0000 ; 80/EFA8
+      aDecompressionDMAEntry80EFA8 .structDecompressionDMAEntry g4bppcBattleBackgroundThicket, $4000, $0000 ; 80/EFA8
       aDecompressionDMAEntry80EFB0 .structDecompressionDMAEntry gcUnknownD317A0, $2000, $2000 ; 80/EFB0
-      aDecompressionDMAEntry80EFB8 .structDecompressionDMAEntry gcUnknownF623D3, $2000, $3000 ; 80/EFB8
+      aDecompressionDMAEntry80EFB8 .structDecompressionDMAEntry g4bppcDialogueBackgroundFountainForeground, $2000, $3000 ; 80/EFB8
       aDecompressionDMAEntry80EFC0 .structDecompressionDMAEntry gcUnknownD32CCB, $1000, $6000 ; 80/EFC0
       aDecompressionDMAEntry80EFC8 .structDecompressionDMAEntry gcUnknownD33090, $1000, $5000 ; 80/EFC8
       aDecompressionDMAEntry80EFD0 .structDecompressionDMAEntry gcUnknownD335B5, $1000, $5800 ; 80/EFD0
@@ -4796,6 +4801,9 @@
 
     .here
 
+    ; Compressed streams: generated from gfx/compressed/C70C80/C70C80.streams by build.sh.
+    .include "gfx/compressed/C70C80/Layout.asm"
+
     * = $078000
     .logical $878000
 
@@ -6160,6 +6168,13 @@
     .logical $889E6C
 
       .dsection ProcScript889E6CSection
+
+    .here
+
+    * = $089FC3
+    .logical $889FC3
+
+      .dsection ChapterMapsSection
 
     .here
 
@@ -8472,6 +8487,13 @@
 
     .here
 
+    * = $0ABACF
+    .logical $8ABACF
+
+      .dsection DialogueBackgroundsSection
+
+    .here
+
     * = $0ABB3E
     .logical $8ABB3E
 
@@ -8958,7 +8980,7 @@
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8AEE89 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/EE89
       aDecompressionDMAEntry8AEE91 .structDecompressionDMAEntry gcUnknownD240B0, $1000, $0000 ; 8A/EE91
-      aDecompressionDMAEntry8AEE99 .structDecompressionDMAEntry gcUnknownD22C0B, $2000, $1000 ; 8A/EE99
+      aDecompressionDMAEntry8AEE99 .structDecompressionDMAEntry g4bppcBattleBackgroundUnknown17, $2000, $1000 ; 8A/EE99
       aDecompressionDMAEntry8AEEA1 .structDecompressionDMAEntry gcUnknownD24914, $0800, $2800 ; 8A/EEA1
       aDecompressionDMAEntry8AEEA9 .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/EEA9
 
@@ -9805,10 +9827,31 @@
 
     .here
 
+    * = $0C9E00
+    .logical $8C9E00
+
+      .dsection BackgroundPalettes8C9E00Section
+
+    .here
+
     * = $0CA800
     .logical $8CA800
 
       .include "data/PortraitPalettes.asm"
+
+    .here
+
+    * = $0CC500
+    .logical $8CC500
+
+      .dsection BackgroundPalettes8CC500Section
+
+    .here
+
+    * = $0CCC00
+    .logical $8CCC00
+
+      .dsection BackgroundPalettes8CCC00Section
 
     .here
 
@@ -9830,6 +9873,90 @@
     .logical $8CDE00
 
       .dsection Table8CDE00Section
+
+    .here
+
+    * = $0CDF00
+    .logical $8CDF00
+
+      .dsection BackgroundPalettes8CDF00Section
+
+    .here
+
+    * = $0CE000
+    .logical $8CE000
+
+      .dsection BackgroundPalettes8CE000Section
+
+    .here
+
+    * = $0CE100
+    .logical $8CE100
+
+      .dsection BackgroundPalettes8CE100Section
+
+    .here
+
+    * = $0CE200
+    .logical $8CE200
+
+      .dsection BackgroundPalettes8CE200Section
+
+    .here
+
+    * = $0CE300
+    .logical $8CE300
+
+      .dsection BackgroundPalettes8CE300Section
+
+    .here
+
+    * = $0CE400
+    .logical $8CE400
+
+      .dsection BackgroundPalettes8CE400Section
+
+    .here
+
+    * = $0CE500
+    .logical $8CE500
+
+      .dsection BackgroundPalettes8CE500Section
+
+    .here
+
+    * = $0CE600
+    .logical $8CE600
+
+      .dsection BackgroundPalettes8CE600Section
+
+    .here
+
+    * = $0CE700
+    .logical $8CE700
+
+      .dsection BackgroundPalettes8CE700Section
+
+    .here
+
+    * = $0CE800
+    .logical $8CE800
+
+      .dsection BackgroundPalettes8CE800Section
+
+    .here
+
+    * = $0CE900
+    .logical $8CE900
+
+      .dsection BackgroundPalettes8CE900Section
+
+    .here
+
+    * = $0CEA00
+    .logical $8CEA00
+
+      .dsection BackgroundPalettes8CEA00Section
 
     .here
 
@@ -12019,6 +12146,16 @@
 
     .here
 
+    * = $14C000
+    .logical $94C000
+
+      .dsection BackgroundPalettes94C000Section
+
+    .here
+
+    ; Compressed streams: generated from gfx/compressed/94C140/94C140.streams by build.sh.
+    .include "gfx/compressed/94C140/Layout.asm"
+
     ; Compressed streams: generated from gfx/compressed/D50000/D50000.streams by build.sh.
     .include "gfx/compressed/D50000/Layout.asm"
 
@@ -13746,6 +13883,13 @@
 
     .here
 
+    * = $18A900
+    .logical $98A900
+
+      .dsection BattleBackgroundsSection
+
+    .here
+
     * = $198D84
     .logical $998D84
 
@@ -14213,6 +14357,9 @@
       .fill $9D8000 + $8000 - *, 0
 
     .here
+
+    ; Compressed streams: generated from gfx/compressed/DE6230/DE6230.streams by build.sh.
+    .include "gfx/compressed/DE6230/Layout.asm"
 
     * = $1E8000
     .logical $9E8000
@@ -15545,6 +15692,13 @@
 
     .here
 
+    * = $1F80D9
+    .logical $9F80D9
+
+      .dsection MapBattleMagicBackgroundsSection
+
+    .here
+
     * = $1F8253
     .logical $9F8253
 
@@ -15968,6 +16122,20 @@
 
     .here
 
+    * = $200000
+    .logical $E00000
+
+      .dsection BackgroundPalettesE00000Section
+
+    .here
+
+    * = $2027FF
+    .logical $E027FF
+
+      .dsection BackgroundPalettesE027FFSection
+
+    .here
+
     * = $20283F
     .logical $E0283F
 
@@ -16124,6 +16292,16 @@
       ; afc293
 
     .here
+
+    * = $2FC800
+    .logical $AFC800
+
+      .dsection BackgroundPalettesAFC800Section
+
+    .here
+
+    ; Compressed streams: generated from gfx/compressed/AFC8C0/AFC8C0.streams by build.sh.
+    .include "gfx/compressed/AFC8C0/Layout.asm"
 
     * = $308000
     .logical $B08000
@@ -16969,6 +17147,16 @@
 
     ; The map movement sprites: generated from gfx/MapMovementSprites/sprites.streams by build.sh.
     .include "gfx/MapMovementSprites/Layout.asm"
+
+    * = $348000
+    .logical $B48000
+
+      .dsection BackgroundPalettesB48000Section
+
+    .here
+
+    ; Compressed streams: generated from gfx/compressed/B48720/B48720.streams by build.sh.
+    .include "gfx/compressed/B48720/Layout.asm"
 
     ; Compressed streams: generated from gfx/compressed/F623D3/F623D3.streams by build.sh.
     .include "gfx/compressed/F623D3/Layout.asm"

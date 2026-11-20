@@ -5,7 +5,8 @@
 start $F623D3
 end $F77BC8
 
-gcUnknownF623D3 gcUnknownF623D3 ; 7200 bytes decompressed
+# Also used as: g4bppcDialogueBackgroundGateForeground, g4bppcDialogueBackgroundAlleyForeground, g4bppcBattleForeground3, g4bppcBattleForeground6.
+g4bppcDialogueBackgroundFountainForeground g4bppcDialogueBackgroundFountainForeground ; 7200 bytes decompressed
 gcUnknownF63A2C gcUnknownF63A2C ; 128 bytes decompressed
 gcUnknownF63A58 gcUnknownF63A58 ; 128 bytes decompressed
 gcUnknownF63A8D gcUnknownF63A8D ; 128 bytes decompressed
@@ -15,12 +16,16 @@ gcUnknownF63B39 gcUnknownF63B39 ; 128 bytes decompressed
 gcUnknownF63B70 gcUnknownF63B70 ; 128 bytes decompressed
 gcUnknownF63BAE gcUnknownF63BAE ; 128 bytes decompressed
 gcUnknownF63BEC gcUnknownF63BEC ; 128 bytes decompressed
-gcUnknownF63C0B gcUnknownF63C0B ; 4096 bytes decompressed
-gcUnknownF6405C gcUnknownF6405C ; 4096 bytes decompressed
-gcUnknownF644CB gcUnknownF644CB ; 4096 bytes decompressed
-gcUnknownF64799 gcUnknownF64799 ; 16384 bytes decompressed
+# Also used as: acBattleBackgroundRiverSnowTilemap.
+acBattleBackgroundRiverTilemap acBattleBackgroundRiverTilemap ; 4096 bytes decompressed
+# Also used as: acBattleBackgroundCastleSnowTilemap.
+acBattleBackgroundCastleTilemap acBattleBackgroundCastleTilemap ; 4096 bytes decompressed
+acBattleBackgroundUnknown16Tilemap acBattleBackgroundUnknown16Tilemap ; 4096 bytes decompressed
+g4bppcBattleBackgroundUnknown16 g4bppcBattleBackgroundUnknown16 ; 16384 bytes decompressed
 gcUnknownF676FE gcUnknownF676FE ; 16384 bytes decompressed
-gcUnknownF72CD3 gcUnknownF72CD3 ; 4096 bytes decompressed
-gcUnknownF7319C gcUnknownF7319C ; 16384 bytes decompressed
-gcUnknownF75A94 gcUnknownF75A94 ; 4096 bytes decompressed
-gcUnknownF75EB1 gcUnknownF75EB1 ; 16384 bytes decompressed
+# Also used as: acBattleBackgroundRoadSnowTilemap.
+acBattleBackgroundRoadTilemap acBattleBackgroundRoadTilemap ; 4096 bytes decompressed
+# Also used as: g4bppcBattleBackgroundRoadSnow.
+g4bppcBattleBackgroundRoad g4bppcBattleBackgroundRoad ; 16384 bytes decompressed
+acBattleBackgroundBridgeTilemap acBattleBackgroundBridgeTilemap ; 4096 bytes decompressed
+g4bppcBattleBackgroundBridge g4bppcBattleBackgroundBridge ; 16384 bytes decompressed

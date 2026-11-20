@@ -22,124 +22,138 @@ aMapBattlePegasusRiderLayout0 aMapBattlePegasusRiderLayout0 ; 2048 bytes decompr
 aMapBattlePegasusRiderLayout5 aMapBattlePegasusRiderLayout5 ; 2048 bytes decompressed
 aMapBattlePegasusRiderLayout6 aMapBattlePegasusRiderLayout6 ; 2048 bytes decompressed
 aMapBattlePegasusRiderLayout7 aMapBattlePegasusRiderLayout7 ; 2048 bytes decompressed
-gcUnknownD531ED gcUnknownD531ED ; 512 bytes decompressed, found
-gcUnknownD5336A gcUnknownD5336A ; 512 bytes decompressed, found
-gcUnknownD534DC gcUnknownD534DC ; 512 bytes decompressed, found
-gcUnknownD53555 gcUnknownD53555 ; 512 bytes decompressed, found
-gcUnknownD535C4 gcUnknownD535C4 ; 512 bytes decompressed, found
-gcUnknownD5362F gcUnknownD5362F ; 512 bytes decompressed, found
-gcUnknownD53670 gcUnknownD53670 ; 512 bytes decompressed, found
-gcUnknownD536B8 gcUnknownD536B8 ; 512 bytes decompressed, found
-gcUnknownD53700 gcUnknownD53700 ; 512 bytes decompressed, found
-gcUnknownD5388D gcUnknownD5388D ; 512 bytes decompressed, found
-gcUnknownD539FE gcUnknownD539FE ; 512 bytes decompressed, found
-gcUnknownD53B70 gcUnknownD53B70 ; 512 bytes decompressed, found
-gcUnknownD53CFF gcUnknownD53CFF ; 512 bytes decompressed, found
-gcUnknownD53D92 gcUnknownD53D92 ; 512 bytes decompressed, found
-gcUnknownD53DEC gcUnknownD53DEC ; 512 bytes decompressed, found
-gcUnknownD53E5A gcUnknownD53E5A ; 512 bytes decompressed, found
-gcUnknownD53ECD gcUnknownD53ECD ; 512 bytes decompressed, found
-gcUnknownD54048 gcUnknownD54048 ; 512 bytes decompressed, found
-gcUnknownD541C3 gcUnknownD541C3 ; 512 bytes decompressed, found
-gcUnknownD54330 gcUnknownD54330 ; 512 bytes decompressed, found
-gcUnknownD54378 gcUnknownD54378 ; 512 bytes decompressed, found
-gcUnknownD54407 gcUnknownD54407 ; 512 bytes decompressed, found
-gcUnknownD54424 gcUnknownD54424 ; 512 bytes decompressed, found
-gcUnknownD54481 gcUnknownD54481 ; 512 bytes decompressed, found
-gcUnknownD545F2 gcUnknownD545F2 ; 512 bytes decompressed, found
-gcUnknownD54764 gcUnknownD54764 ; 512 bytes decompressed, found
-gcUnknownD548CE gcUnknownD548CE ; 512 bytes decompressed, found
-gcUnknownD54916 gcUnknownD54916 ; 512 bytes decompressed, found
-gcUnknownD5493D gcUnknownD5493D ; 512 bytes decompressed, found
-gcUnknownD54AAE gcUnknownD54AAE ; 512 bytes decompressed, found
-gcUnknownD54C1F gcUnknownD54C1F ; 512 bytes decompressed, found
-gcUnknownD54D91 gcUnknownD54D91 ; 512 bytes decompressed, found
-gcUnknownD54DD9 gcUnknownD54DD9 ; 512 bytes decompressed, found
-gcUnknownD54E60 gcUnknownD54E60 ; 512 bytes decompressed, found
-gcUnknownD54EA7 gcUnknownD54EA7 ; 512 bytes decompressed, found
-gcUnknownD54F0A gcUnknownD54F0A ; 512 bytes decompressed, found
-gcUnknownD54F31 gcUnknownD54F31 ; 512 bytes decompressed, found
-gcUnknownD54F79 gcUnknownD54F79 ; 512 bytes decompressed, found
-gcUnknownD54FBF gcUnknownD54FBF ; 512 bytes decompressed, found
-gcUnknownD55131 gcUnknownD55131 ; 512 bytes decompressed, found
-gcUnknownD552AE gcUnknownD552AE ; 512 bytes decompressed, found
-gcUnknownD55420 gcUnknownD55420 ; 512 bytes decompressed, found
-gcUnknownD55592 gcUnknownD55592 ; 512 bytes decompressed, found
-gcUnknownD55704 gcUnknownD55704 ; 512 bytes decompressed, found
-gcUnknownD55876 gcUnknownD55876 ; 512 bytes decompressed, found
-gcUnknownD559E7 gcUnknownD559E7 ; 4096 bytes decompressed, found
-gcUnknownD55B7E gcUnknownD55B7E ; 4096 bytes decompressed, found
-gcUnknownD55C7E gcUnknownD55C7E ; 4096 bytes decompressed, found
-gcUnknownD56065 gcUnknownD56065 ; 4096 bytes decompressed, found
-gcUnknownD56256 gcUnknownD56256 ; 4096 bytes decompressed, found
-gcUnknownD56507 gcUnknownD56507 ; 4096 bytes decompressed, found
-gcUnknownD567AC gcUnknownD567AC ; 4096 bytes decompressed, found
-gcUnknownD56878 gcUnknownD56878 ; 4096 bytes decompressed, found
-gcUnknownD5695E gcUnknownD5695E ; 4096 bytes decompressed, found
-gcUnknownD56BC7 gcUnknownD56BC7 ; 4096 bytes decompressed, found
-gcUnknownD56C7D gcUnknownD56C7D ; 4096 bytes decompressed, found
-gcUnknownD56D37 gcUnknownD56D37 ; 4096 bytes decompressed, found
-gcUnknownD57249 gcUnknownD57249 ; 4096 bytes decompressed, found
-gcUnknownD5745C gcUnknownD5745C ; 4096 bytes decompressed, found
-gcUnknownD57758 gcUnknownD57758 ; 4096 bytes decompressed, found
-gcUnknownD579B4 gcUnknownD579B4 ; 4096 bytes decompressed, found
-gcUnknownD57A2C gcUnknownD57A2C ; 4096 bytes decompressed, found
-gcUnknownD57A9B gcUnknownD57A9B ; 4096 bytes decompressed, found
-gcUnknownD57B50 gcUnknownD57B50 ; 4096 bytes decompressed, found
-gcUnknownD603DE gcUnknownD603DE ; 4096 bytes decompressed, found
-gcUnknownD60B99 gcUnknownD60B99 ; 4096 bytes decompressed, found
-gcUnknownD60BBF gcUnknownD60BBF ; 4096 bytes decompressed, found
-gcUnknownD60D43 gcUnknownD60D43 ; 4096 bytes decompressed, found
-gcUnknownD61759 gcUnknownD61759 ; 4096 bytes decompressed, found
-gcUnknownD617A1 gcUnknownD617A1 ; 2048 bytes decompressed, found
-gcUnknownD6183B gcUnknownD6183B ; 2048 bytes decompressed, found
-gcUnknownD61A12 gcUnknownD61A12 ; 2048 bytes decompressed, found
-gcUnknownD61C03 gcUnknownD61C03 ; 2048 bytes decompressed, found
-gcUnknownD61CB4 gcUnknownD61CB4 ; 2048 bytes decompressed, found
-gcUnknownD61D6C gcUnknownD61D6C ; 2048 bytes decompressed, found
-gcUnknownD61E24 gcUnknownD61E24 ; 2048 bytes decompressed, found
-gcUnknownD61ECF gcUnknownD61ECF ; 2048 bytes decompressed, found
-gcUnknownD61F7A gcUnknownD61F7A ; 2048 bytes decompressed, found
-gcUnknownD62028 gcUnknownD62028 ; 2048 bytes decompressed, found
-gcUnknownD620CE gcUnknownD620CE ; 2048 bytes decompressed, found
-gcUnknownD6222F gcUnknownD6222F ; 2048 bytes decompressed, found
-gcUnknownD622B6 gcUnknownD622B6 ; 2048 bytes decompressed, found
-gcUnknownD6235C gcUnknownD6235C ; 2048 bytes decompressed, found
-gcUnknownD6256B gcUnknownD6256B ; 2048 bytes decompressed, found
-gcUnknownD6267B gcUnknownD6267B ; 2048 bytes decompressed, found
-gcUnknownD62768 gcUnknownD62768 ; 2048 bytes decompressed, found
-gcUnknownD62802 gcUnknownD62802 ; 2048 bytes decompressed, found
-gcUnknownD62883 gcUnknownD62883 ; 2048 bytes decompressed, found
-gcUnknownD6290A gcUnknownD6290A ; 2048 bytes decompressed, found
-gcUnknownD629B1 gcUnknownD629B1 ; 2048 bytes decompressed, found
-gcUnknownD62C5D gcUnknownD62C5D ; 2048 bytes decompressed, found
-gcUnknownD62ECC gcUnknownD62ECC ; 2048 bytes decompressed, found
-gcUnknownD62F39 gcUnknownD62F39 ; 2048 bytes decompressed, found
-gcUnknownD62FF0 gcUnknownD62FF0 ; 2048 bytes decompressed, found
-gcUnknownD6326C gcUnknownD6326C ; 2048 bytes decompressed, found
-gcUnknownD633EB gcUnknownD633EB ; 1024 bytes decompressed, found
-gcUnknownD63617 gcUnknownD63617 ; 1024 bytes decompressed, found
-gcUnknownD6372D gcUnknownD6372D ; 1024 bytes decompressed, found
-gcUnknownD638BA gcUnknownD638BA ; 1024 bytes decompressed, found
-gcUnknownD63AC0 gcUnknownD63AC0 ; 1024 bytes decompressed, found
-gcUnknownD63B9F gcUnknownD63B9F ; 1024 bytes decompressed, found
-gcUnknownD63E58 gcUnknownD63E58 ; 1024 bytes decompressed, found
-gcUnknownD6408E gcUnknownD6408E ; 1024 bytes decompressed, found
-gcUnknownD64244 gcUnknownD64244 ; 1024 bytes decompressed, found
-gcUnknownD643DE gcUnknownD643DE ; 1024 bytes decompressed, found
-gcUnknownD644F3 gcUnknownD644F3 ; 1024 bytes decompressed, found
-gcUnknownD646CD gcUnknownD646CD ; 1024 bytes decompressed, found
-gcUnknownD64934 gcUnknownD64934 ; 1024 bytes decompressed, found
-gcUnknownD64BEE gcUnknownD64BEE ; 1024 bytes decompressed, found
-gcUnknownD64D4E gcUnknownD64D4E ; 1024 bytes decompressed, found
-gcUnknownD65010 gcUnknownD65010 ; 1024 bytes decompressed, found
-gcUnknownD65153 gcUnknownD65153 ; 1024 bytes decompressed, found
-gcUnknownD651C2 gcUnknownD651C2 ; 1024 bytes decompressed, found
-gcUnknownD653F9 gcUnknownD653F9 ; 1024 bytes decompressed, found
-gcUnknownD6564B gcUnknownD6564B ; 1024 bytes decompressed, found
-gcUnknownD656D0 gcUnknownD656D0 ; 1024 bytes decompressed, found
-gcUnknownD65930 gcUnknownD65930 ; 1024 bytes decompressed, found
-gcUnknownD65BF9 gcUnknownD65BF9 ; 1024 bytes decompressed, found
+acMapBattleMagicFenrirPalette acMapBattleMagicFenrirPalette ; 512 bytes decompressed
+# Also used as: acMapBattleMagicThiefStaffPalette.
+acMapBattleMagicHelPalette acMapBattleMagicHelPalette ; 512 bytes decompressed
+gcUnknownD534DC gcUnknownD534DC ; 512 bytes decompressed
+gcUnknownD53555 gcUnknownD53555 ; 512 bytes decompressed
+gcUnknownD535C4 gcUnknownD535C4 ; 512 bytes decompressed
+gcUnknownD5362F gcUnknownD5362F ; 512 bytes decompressed
+gcUnknownD53670 gcUnknownD53670 ; 512 bytes decompressed
+gcUnknownD536B8 gcUnknownD536B8 ; 512 bytes decompressed
+# Also used as: acMapBattleMagicElfirePalette.
+acMapBattleMagicFirePalette acMapBattleMagicFirePalette ; 512 bytes decompressed
+acMapBattleMagicBolganonePalette acMapBattleMagicBolganonePalette ; 512 bytes decompressed
+acMapBattleMagicValflamePalette acMapBattleMagicValflamePalette ; 512 bytes decompressed
+acMapBattleMagicMeteorPalette acMapBattleMagicMeteorPalette ; 512 bytes decompressed
+gcUnknownD53CFF gcUnknownD53CFF ; 512 bytes decompressed
+gcUnknownD53D92 gcUnknownD53D92 ; 512 bytes decompressed
+gcUnknownD53DEC gcUnknownD53DEC ; 512 bytes decompressed
+gcUnknownD53E5A gcUnknownD53E5A ; 512 bytes decompressed
+acMapBattleMagicLightPalette acMapBattleMagicLightPalette ; 512 bytes decompressed
+acMapBattleMagicNosferatuPalette acMapBattleMagicNosferatuPalette ; 512 bytes decompressed
+acMapBattleMagicAuraPalette acMapBattleMagicAuraPalette ; 512 bytes decompressed
+gcUnknownD54330 gcUnknownD54330 ; 512 bytes decompressed
+gcUnknownD54378 gcUnknownD54378 ; 512 bytes decompressed
+gcUnknownD54407 gcUnknownD54407 ; 512 bytes decompressed
+gcUnknownD54424 gcUnknownD54424 ; 512 bytes decompressed
+# Also used as: acMapBattleMagicElthunderPalette, acMapBattleMagicBoltingPalette.
+acMapBattleMagicThunderPalette acMapBattleMagicThunderPalette ; 512 bytes decompressed
+acMapBattleMagicThoronPalette acMapBattleMagicThoronPalette ; 512 bytes decompressed
+acMapBattleMagicMjolnirPalette acMapBattleMagicMjolnirPalette ; 512 bytes decompressed
+gcUnknownD548CE gcUnknownD548CE ; 512 bytes decompressed
+gcUnknownD54916 gcUnknownD54916 ; 512 bytes decompressed
+acMapBattleMagicSilenceStaffPalette acMapBattleMagicSilenceStaffPalette ; 512 bytes decompressed
+acMapBattleMagicSleepStaffPalette acMapBattleMagicSleepStaffPalette ; 512 bytes decompressed
+acMapBattleMagicBerserkStaffPalette acMapBattleMagicBerserkStaffPalette ; 512 bytes decompressed
+gcUnknownD54D91 gcUnknownD54D91 ; 512 bytes decompressed
+gcUnknownD54DD9 gcUnknownD54DD9 ; 512 bytes decompressed
+gcUnknownD54E60 gcUnknownD54E60 ; 512 bytes decompressed
+gcUnknownD54EA7 gcUnknownD54EA7 ; 512 bytes decompressed
+gcUnknownD54F0A gcUnknownD54F0A ; 512 bytes decompressed
+gcUnknownD54F31 gcUnknownD54F31 ; 512 bytes decompressed
+gcUnknownD54F79 gcUnknownD54F79 ; 512 bytes decompressed
+# Also used as: acMapBattleMagicElwindPalette, acMapBattleMagicTornadoPalette, acMapBattleMagicNagaPalette, acMapBattleMagicJormungandrPalette, acMapBattleMagicLoptousPalette, acMapBattleMagicBrokenFireTomeAPalette, acMapBattleMagicBrokenFireTomeBPalette, acMapBattleMagicBrokenFireTomeCPalette, acMapBattleMagicHealStaffPalette, acMapBattleMagicMendStaffPalette, acMapBattleMagicRecoverStaffPalette, acMapBattleMagicPhysicStaffPalette, acMapBattleMagicWarpStaffPalette, acMapBattleMagicRescueStaffPalette, acMapBattleMagicCharmStaffPalette, acMapBattleMagicValkyrieStaffPalette, acMapBattleMagicBrokenStaffAPalette.
+acMapBattleMagicWindPalette acMapBattleMagicWindPalette ; 512 bytes decompressed
+gcUnknownD55131 gcUnknownD55131 ; 512 bytes decompressed
+acMapBattleMagicFortifyPalette acMapBattleMagicFortifyPalette ; 512 bytes decompressed
+acMapBattleMagicReturnStaffPalette acMapBattleMagicReturnStaffPalette ; 512 bytes decompressed
+acMapBattleMagicRestoreStaffPalette acMapBattleMagicRestoreStaffPalette ; 512 bytes decompressed
+acMapBattleMagicForsetiPalette acMapBattleMagicForsetiPalette ; 512 bytes decompressed
+acMapBattleMagicBlizzardPalette acMapBattleMagicBlizzardPalette ; 512 bytes decompressed
+g4bppcMapBattleMagicFenrir g4bppcMapBattleMagicFenrir ; 4096 bytes decompressed
+# Also used as: g4bppcMapBattleMagicThiefStaff.
+g4bppcMapBattleMagicHel g4bppcMapBattleMagicHel ; 4096 bytes decompressed
+# Also used as: g4bppcMapBattleMagicElfire.
+g4bppcMapBattleMagicFire g4bppcMapBattleMagicFire ; 4096 bytes decompressed
+g4bppcMapBattleMagicBolganone g4bppcMapBattleMagicBolganone ; 4096 bytes decompressed
+g4bppcMapBattleMagicValflame g4bppcMapBattleMagicValflame ; 4096 bytes decompressed
+g4bppcMapBattleMagicMeteor g4bppcMapBattleMagicMeteor ; 4096 bytes decompressed
+g4bppcMapBattleMagicLight g4bppcMapBattleMagicLight ; 4096 bytes decompressed
+g4bppcMapBattleMagicNosferatu g4bppcMapBattleMagicNosferatu ; 4096 bytes decompressed
+g4bppcMapBattleMagicAura g4bppcMapBattleMagicAura ; 4096 bytes decompressed
+# Also used as: g4bppcMapBattleMagicElthunder, g4bppcMapBattleMagicBolting.
+g4bppcMapBattleMagicThunder g4bppcMapBattleMagicThunder ; 4096 bytes decompressed
+g4bppcMapBattleMagicThoron g4bppcMapBattleMagicThoron ; 4096 bytes decompressed
+g4bppcMapBattleMagicMjolnir g4bppcMapBattleMagicMjolnir ; 4096 bytes decompressed
+g4bppcMapBattleMagicSilenceStaff g4bppcMapBattleMagicSilenceStaff ; 4096 bytes decompressed
+g4bppcMapBattleMagicSleepStaff g4bppcMapBattleMagicSleepStaff ; 4096 bytes decompressed
+g4bppcMapBattleMagicBerserkStaff g4bppcMapBattleMagicBerserkStaff ; 4096 bytes decompressed
+# Also used as: g4bppcMapBattleMagicElwind, g4bppcMapBattleMagicTornado, g4bppcMapBattleMagicNaga, g4bppcMapBattleMagicJormungandr, g4bppcMapBattleMagicLoptous, g4bppcMapBattleMagicBrokenFireTomeA, g4bppcMapBattleMagicBrokenFireTomeB, g4bppcMapBattleMagicBrokenFireTomeC, g4bppcMapBattleMagicHealStaff, g4bppcMapBattleMagicWarpStaff, g4bppcMapBattleMagicRescueStaff, g4bppcMapBattleMagicCharmStaff, g4bppcMapBattleMagicValkyrieStaff, g4bppcMapBattleMagicBrokenStaffA.
+g4bppcMapBattleMagicWind g4bppcMapBattleMagicWind ; 4096 bytes decompressed
+# Also used as: g4bppcMapBattleMagicPhysicStaff.
+g4bppcMapBattleMagicMendStaff g4bppcMapBattleMagicMendStaff ; 4096 bytes decompressed
+g4bppcMapBattleMagicRecoverStaff g4bppcMapBattleMagicRecoverStaff ; 4096 bytes decompressed
+gcUnknownD57B50 gcUnknownD57B50 ; 4096 bytes decompressed
+g4bppcMapBattleMagicFortify g4bppcMapBattleMagicFortify ; 4096 bytes decompressed
+g4bppcMapBattleMagicReturnStaff g4bppcMapBattleMagicReturnStaff ; 4096 bytes decompressed
+g4bppcMapBattleMagicRestoreStaff g4bppcMapBattleMagicRestoreStaff ; 4096 bytes decompressed
+g4bppcMapBattleMagicForseti g4bppcMapBattleMagicForseti ; 4096 bytes decompressed
+g4bppcMapBattleMagicBlizzard g4bppcMapBattleMagicBlizzard ; 4096 bytes decompressed
+acMapBattleMagicFenrirTilemap acMapBattleMagicFenrirTilemap ; 2048 bytes decompressed
+# Also used as: acMapBattleMagicThiefStaffTilemap.
+acMapBattleMagicHelTilemap acMapBattleMagicHelTilemap ; 2048 bytes decompressed
+# Also used as: acMapBattleMagicElfireTilemap.
+acMapBattleMagicFireTilemap acMapBattleMagicFireTilemap ; 2048 bytes decompressed
+acMapBattleMagicBolganoneTilemap acMapBattleMagicBolganoneTilemap ; 2048 bytes decompressed
+acMapBattleMagicValflameTilemap acMapBattleMagicValflameTilemap ; 2048 bytes decompressed
+acMapBattleMagicValflameTilemap2 acMapBattleMagicValflameTilemap2 ; 2048 bytes decompressed
+acMapBattleMagicMeteorTilemap acMapBattleMagicMeteorTilemap ; 2048 bytes decompressed
+acMapBattleMagicMeteorTilemap2 acMapBattleMagicMeteorTilemap2 ; 2048 bytes decompressed
+acMapBattleMagicLightTilemap acMapBattleMagicLightTilemap ; 2048 bytes decompressed
+acMapBattleMagicNosferatuTilemap acMapBattleMagicNosferatuTilemap ; 2048 bytes decompressed
+acMapBattleMagicAuraTilemap acMapBattleMagicAuraTilemap ; 2048 bytes decompressed
+# Also used as: acMapBattleMagicElthunderTilemap, acMapBattleMagicBoltingTilemap.
+acMapBattleMagicThunderTilemap acMapBattleMagicThunderTilemap ; 2048 bytes decompressed
+acMapBattleMagicThoronTilemap acMapBattleMagicThoronTilemap ; 2048 bytes decompressed
+acMapBattleMagicMjolnirTilemap acMapBattleMagicMjolnirTilemap ; 2048 bytes decompressed
+acMapBattleMagicSilenceStaffTilemap acMapBattleMagicSilenceStaffTilemap ; 2048 bytes decompressed
+acMapBattleMagicSleepStaffTilemap acMapBattleMagicSleepStaffTilemap ; 2048 bytes decompressed
+acMapBattleMagicBerserkStaffTilemap acMapBattleMagicBerserkStaffTilemap ; 2048 bytes decompressed
+# Also used as: acMapBattleMagicElwindTilemap, acMapBattleMagicTornadoTilemap, acMapBattleMagicNagaTilemap, acMapBattleMagicJormungandrTilemap, acMapBattleMagicLoptousTilemap, acMapBattleMagicBrokenFireTomeATilemap, acMapBattleMagicBrokenFireTomeBTilemap, acMapBattleMagicBrokenFireTomeCTilemap, acMapBattleMagicHealStaffTilemap, acMapBattleMagicWarpStaffTilemap, acMapBattleMagicRescueStaffTilemap, acMapBattleMagicCharmStaffTilemap, acMapBattleMagicValkyrieStaffTilemap, acMapBattleMagicBrokenStaffATilemap.
+acMapBattleMagicWindTilemap acMapBattleMagicWindTilemap ; 2048 bytes decompressed
+# Also used as: acMapBattleMagicPhysicStaffTilemap.
+acMapBattleMagicMendStaffTilemap acMapBattleMagicMendStaffTilemap ; 2048 bytes decompressed
+acMapBattleMagicRecoverStaffTilemap acMapBattleMagicRecoverStaffTilemap ; 2048 bytes decompressed
+gcUnknownD629B1 gcUnknownD629B1 ; 2048 bytes decompressed
+acMapBattleMagicFortifyTilemap acMapBattleMagicFortifyTilemap ; 2048 bytes decompressed
+acMapBattleMagicReturnStaffTilemap acMapBattleMagicReturnStaffTilemap ; 2048 bytes decompressed
+acMapBattleMagicRestoreStaffTilemap acMapBattleMagicRestoreStaffTilemap ; 2048 bytes decompressed
+acMapBattleMagicForsetiTilemap acMapBattleMagicForsetiTilemap ; 2048 bytes decompressed
+acMapBattleMagicBlizzardTilemap acMapBattleMagicBlizzardTilemap ; 2048 bytes decompressed
+gcUnknownD633EB gcUnknownD633EB ; 1024 bytes decompressed
+gcUnknownD63617 gcUnknownD63617 ; 1024 bytes decompressed
+gcUnknownD6372D gcUnknownD6372D ; 1024 bytes decompressed
+gcUnknownD638BA gcUnknownD638BA ; 1024 bytes decompressed
+gcUnknownD63AC0 gcUnknownD63AC0 ; 1024 bytes decompressed
+gcUnknownD63B9F gcUnknownD63B9F ; 1024 bytes decompressed
+gcUnknownD63E58 gcUnknownD63E58 ; 1024 bytes decompressed
+gcUnknownD6408E gcUnknownD6408E ; 1024 bytes decompressed
+gcUnknownD64244 gcUnknownD64244 ; 1024 bytes decompressed
+gcUnknownD643DE gcUnknownD643DE ; 1024 bytes decompressed
+gcUnknownD644F3 gcUnknownD644F3 ; 1024 bytes decompressed
+gcUnknownD646CD gcUnknownD646CD ; 1024 bytes decompressed
+gcUnknownD64934 gcUnknownD64934 ; 1024 bytes decompressed
+gcUnknownD64BEE gcUnknownD64BEE ; 1024 bytes decompressed
+gcUnknownD64D4E gcUnknownD64D4E ; 1024 bytes decompressed
+gcUnknownD65010 gcUnknownD65010 ; 1024 bytes decompressed
+gcUnknownD65153 gcUnknownD65153 ; 1024 bytes decompressed
+gcUnknownD651C2 gcUnknownD651C2 ; 1024 bytes decompressed
+gcUnknownD653F9 gcUnknownD653F9 ; 1024 bytes decompressed
+gcUnknownD6564B gcUnknownD6564B ; 1024 bytes decompressed
+gcUnknownD656D0 gcUnknownD656D0 ; 1024 bytes decompressed
+gcUnknownD65930 gcUnknownD65930 ; 1024 bytes decompressed
+gcUnknownD65BF9 gcUnknownD65BF9 ; 1024 bytes decompressed
 aMapBattleBallisticianLayout3 aMapBattleBallisticianLayout3 ; 2048 bytes decompressed
 aMapBattleBallisticianLayout2 aMapBattleBallisticianLayout2 ; 2048 bytes decompressed
 aMapBattleBallisticianLayout1 aMapBattleBallisticianLayout1 ; 2048 bytes decompressed
@@ -164,10 +178,10 @@ aMapBattleThiefLayout0 aMapBattleThiefLayout0 ; 2048 bytes decompressed
 aMapBattleThiefLayout5 aMapBattleThiefLayout5 ; 2048 bytes decompressed
 aMapBattleThiefLayout6 aMapBattleThiefLayout6 ; 2048 bytes decompressed
 aMapBattleThiefLayout7 aMapBattleThiefLayout7 ; 2048 bytes decompressed
-gcUnknownD676F6 gcUnknownD676F6 ; 1024 bytes decompressed, after
-gcUnknownD677E9 gcUnknownD677E9 ; 2048 bytes decompressed, after
-gcUnknownD67840 gcUnknownD67840 ; 1024 bytes decompressed, after
-gcUnknownD67984 gcUnknownD67984 ; 1024 bytes decompressed, after
-gcUnknownD67BC6 gcUnknownD67BC6 ; 1024 bytes decompressed, after
-gcUnknownD67CC7 gcUnknownD67CC7 ; 1024 bytes decompressed, after
-gcUnknownD67D7D gcUnknownD67D7D ; 2048 bytes decompressed, after
+gcUnknownD676F6 gcUnknownD676F6 ; 1024 bytes decompressed
+gcUnknownD677E9 gcUnknownD677E9 ; 2048 bytes decompressed
+gcUnknownD67840 gcUnknownD67840 ; 1024 bytes decompressed
+gcUnknownD67984 gcUnknownD67984 ; 1024 bytes decompressed
+gcUnknownD67BC6 gcUnknownD67BC6 ; 1024 bytes decompressed
+gcUnknownD67CC7 gcUnknownD67CC7 ; 1024 bytes decompressed
+gcUnknownD67D7D gcUnknownD67D7D ; 2048 bytes decompressed

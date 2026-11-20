@@ -1,0 +1,33 @@
+# Compressed streams for rlDecompressor, placed in this order from start to
+# end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is
+# the stream as the ROM has it; gcUnknown... are not identified yet (graphics
+# or tilemaps).
+start $B48720
+end $B6FFFF
+
+# Also used as: g4bppcBattleBackgroundPlainsSnow.
+g4bppcBattleBackgroundPlains g4bppcBattleBackgroundPlains ; 16384 bytes decompressed
+# Also used as: g4bppcBattleBackgroundSandSnow, g4bppcBattleBackgroundDesert.
+g4bppcBattleBackgroundSand g4bppcBattleBackgroundSand ; 16384 bytes decompressed
+# Also used as: g4bppcBattleBackgroundMountainSnow.
+g4bppcBattleBackgroundMountain g4bppcBattleBackgroundMountain ; 16384 bytes decompressed
+# Also used as: g4bppcBattleBackgroundSeaSnow.
+g4bppcBattleBackgroundSea g4bppcBattleBackgroundSea ; 16384 bytes decompressed
+# Also used as: g4bppcBattleBackgroundForestSnow.
+g4bppcBattleBackgroundForest g4bppcBattleBackgroundForest ; 16384 bytes decompressed
+# Also used as: g4bppcBattleBackgroundRiverSnow.
+g4bppcBattleBackgroundRiver g4bppcBattleBackgroundRiver ; 16384 bytes decompressed
+# Also used as: g4bppcBattleBackgroundCastleSnow.
+g4bppcBattleBackgroundCastle g4bppcBattleBackgroundCastle ; 16384 bytes decompressed
+g4bppcBattleBackgroundShrine g4bppcBattleBackgroundShrine ; 16384 bytes decompressed
+# Also used as: acBattleBackgroundPlainsSnowTilemap.
+acBattleBackgroundPlainsTilemap acBattleBackgroundPlainsTilemap ; 4096 bytes decompressed
+# Also used as: acBattleBackgroundSandSnowTilemap, acBattleBackgroundDesertTilemap.
+acBattleBackgroundSandTilemap acBattleBackgroundSandTilemap ; 4096 bytes decompressed
+acBattleBackgroundThicketTilemap acBattleBackgroundThicketTilemap ; 4096 bytes decompressed
+# Also used as: acBattleBackgroundMountainSnowTilemap.
+acBattleBackgroundMountainTilemap acBattleBackgroundMountainTilemap ; 4096 bytes decompressed
+# Also used as: acBattleBackgroundSeaSnowTilemap.
+acBattleBackgroundSeaTilemap acBattleBackgroundSeaTilemap ; 4096 bytes decompressed
+acBattleBackgroundShrineTilemap acBattleBackgroundShrineTilemap ; 4096 bytes decompressed
+gcUnknownB6FFCA gcUnknownB6FFCA ; 128 bytes decompressed, after

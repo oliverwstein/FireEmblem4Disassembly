@@ -1,0 +1,12 @@
+# Compressed streams for rlDecompressor, placed in this order from start to
+# end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is
+# the stream as the ROM has it; gcUnknown... are not identified yet (graphics
+# or tilemaps).
+start $AFC8C0
+end $AFFD8B
+
+# Also used as: acBattleBackgroundVillageSnowTilemap.
+acBattleBackgroundVillageTilemap acBattleBackgroundVillageTilemap ; 4096 bytes decompressed
+# Also used as: g4bppcBattleBackgroundVillageSnow.
+g4bppcBattleBackgroundVillage g4bppcBattleBackgroundVillage ; 16384 bytes decompressed
+gcUnknownAFF670 gcUnknownAFF670 ; 3072 bytes decompressed, after

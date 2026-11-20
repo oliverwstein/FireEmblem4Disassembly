@@ -2493,9 +2493,9 @@
         clc
         adc wCurrentChapter,b
         tax
-        lda aUnknown889FC3+1,x
+        lda aChapterMapPointers+1,x
         sta lR19+1
-        lda aUnknown889FC3,x
+        lda aChapterMapPointers,x
         sta lR19
         ldy #$0000
         lda [lR19],y
@@ -2575,9 +2575,9 @@
         clc
         adc wCurrentChapter,b
         tax
-        lda aUnknown889FC3+1,x
+        lda aChapterMapPointers+1,x
         sta lR19+1
-        lda aUnknown889FC3,x
+        lda aChapterMapPointers,x
         sta lR19
         ldy #$0006
         lda [lR19],y

@@ -1,0 +1,10 @@
+# Compressed streams for rlDecompressor, placed in this order from start to
+# end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is
+# the stream as the ROM has it; gcUnknown... are not identified yet (graphics
+# or tilemaps).
+start $DE6230
+end $DE7F93
+
+g4bppcDialogueBackgroundCloisterForeground g4bppcDialogueBackgroundCloisterForeground ; 2048 bytes decompressed
+g4bppcDialogueBackgroundCloister g4bppcDialogueBackgroundCloister ; 14336 bytes decompressed
+acDialogueBackgroundCloisterTilemap acDialogueBackgroundCloisterTilemap ; 704 bytes decompressed

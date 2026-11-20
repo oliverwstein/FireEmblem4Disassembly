@@ -1,0 +1,26 @@
+# Compressed streams for rlDecompressor, placed in this order from start to
+# end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is
+# the stream as the ROM has it; gcUnknown... are not identified yet (graphics
+# or tilemaps).
+start $94C140
+end $94FFF9
+
+g4bppcBattleForeground1 g4bppcBattleForeground1 ; 3072 bytes decompressed
+acBattleForeground1Tilemap1 acBattleForeground1Tilemap1 ; 2048 bytes decompressed
+acBattleForeground1Tilemap2 acBattleForeground1Tilemap2 ; 2048 bytes decompressed
+g4bppcBattleForeground2 g4bppcBattleForeground2 ; 2592 bytes decompressed
+acBattleForeground2Tilemap1 acBattleForeground2Tilemap1 ; 2048 bytes decompressed
+acBattleForeground2Tilemap2 acBattleForeground2Tilemap2 ; 2048 bytes decompressed
+# Also used as: acBattleForeground6Tilemap1.
+acBattleForeground3Tilemap1 acBattleForeground3Tilemap1 ; 2048 bytes decompressed
+# Also used as: acBattleForeground6Tilemap2.
+acBattleForeground3Tilemap2 acBattleForeground3Tilemap2 ; 2048 bytes decompressed
+g4bppcBattleForeground4 g4bppcBattleForeground4 ; 3616 bytes decompressed
+acBattleForeground4Tilemap1 acBattleForeground4Tilemap1 ; 2048 bytes decompressed
+acBattleForeground4Tilemap2 acBattleForeground4Tilemap2 ; 2048 bytes decompressed
+g4bppcBattleForeground5 g4bppcBattleForeground5 ; 1248 bytes decompressed
+acBattleForeground5Tilemap1 acBattleForeground5Tilemap1 ; 2048 bytes decompressed
+acBattleForeground5Tilemap2 acBattleForeground5Tilemap2 ; 2048 bytes decompressed
+gcUnknown94E9EE gcUnknown94E9EE ; 8192 bytes decompressed, after
+gcUnknown94FF6D gcUnknown94FF6D ; 2048 bytes decompressed, after
+gcUnknown94FFD1 gcUnknown94FFD1 ; 128 bytes decompressed, after

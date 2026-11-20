@@ -578,9 +578,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown9F80D9,x
+        lda aMapBattleMagicBackgrounds,x
         sta lR18
-        lda aUnknown9F80D9+1,x
+        lda aMapBattleMagicBackgrounds+1,x
         sta lR18+1
         lda #(`aWorldMapMarkerPalette)<<8
         sta lR19+1
@@ -615,9 +615,9 @@
         and #$00FF
         cmp #$00A0
         bmi _8532
-        lda #(`gcUnknownD61ECF)<<8
+        lda #(`acMapBattleMagicMeteorTilemap2)<<8
         sta lR18+1
-        lda #<>gcUnknownD61ECF
+        lda #<>acMapBattleMagicMeteorTilemap2
         sta lR18
         bra _8564
 
@@ -629,9 +629,9 @@
         and #$00FF
         cmp #$00C0
         bmi _854F
-        lda #(`gcUnknownD61D6C)<<8
+        lda #(`acMapBattleMagicValflameTilemap2)<<8
         sta lR18+1
-        lda #<>gcUnknownD61D6C
+        lda #<>acMapBattleMagicValflameTilemap2
         sta lR18
         bra _8564
 
@@ -644,9 +644,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown9F80D9+3,x
+        lda aMapBattleMagicBackgrounds+3,x
         sta lR18
-        lda aUnknown9F80D9+4,x
+        lda aMapBattleMagicBackgrounds+4,x
         sta lR18+1
 
         _8564
@@ -683,9 +683,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown9F80D9+6,x
+        lda aMapBattleMagicBackgrounds+6,x
         sta lR18
-        lda aUnknown9F80D9+7,x
+        lda aMapBattleMagicBackgrounds+7,x
         sta lR18+1
         lda #$7E00
         sta lR19+1

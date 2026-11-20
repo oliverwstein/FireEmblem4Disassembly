@@ -8,7 +8,6 @@
 
     aUnknown85C51B                                           :?= address($85C51B) ; read by rlUnknown85C4E0
     aUnknown879481                                           :?= address($879481) ; read by rlDrawMenuTextLine
-    aUnknown889FC3                                           :?= address($889FC3) ; read by rlUnknown889268, rlUnknown889305
     aUnknown88DEFC                                           :?= address($88DEFC) ; read by rsUnknown88DE40, rsUnknown88DE9E
     aUnknown89A76C                                           :?= address($89A76C) ; read by rlUnknown8A8496
     aUnknown8A98C4                                           :?= address($8A98C4) ; read by rlUnknown8A9858
@@ -22,7 +21,6 @@
     aUnknown959894                                           :?= address($959894) ; read by rlUnknown9597FA
     aUnknown998944                                           :?= address($998944) ; read by rsUnknown959B84, rsUnknown959BC1
     aUnknown9EA513                                           :?= address($9EA513) ; read by rlUnknown9EA417
-    aUnknown9F80D9                                           :?= address($9F80D9) ; read by rlUnknown9F84DD, rlUnknown9F850B, rlUnknown9F8575
     aUnknown9F8724                                           :?= address($9F8724) ; read by rlUnknown9F86BF
     aUnknownD77000                                           :?= address($D77000) ; read by rlUnknown80BA52
     aUnknownD95000                                           :?= address($D95000) ; read by rlUnknown888082, rlUnknown88821A

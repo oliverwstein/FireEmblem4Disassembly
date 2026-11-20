@@ -1,0 +1,58 @@
+# Compressed streams for rlDecompressor, placed in this order from start to
+# end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is
+# the stream as the ROM has it; gcUnknown... are not identified yet (graphics
+# or tilemaps).
+start $C70C80
+end $CA65B5
+
+# Also used as: g4bppcChapterMapChapter02.
+g4bppcChapterMapPrologue g4bppcChapterMapPrologue ; 4096 bytes decompressed
+g4bppcChapterMapChapter01 g4bppcChapterMapChapter01 ; 4096 bytes decompressed
+g4bppcChapterMapChapter03 g4bppcChapterMapChapter03 ; 4096 bytes decompressed
+g4bppcChapterMapChapter04 g4bppcChapterMapChapter04 ; 4096 bytes decompressed
+# Also used as: g4bppcChapterMapFinal.
+g4bppcChapterMapChapter05 g4bppcChapterMapChapter05 ; 4096 bytes decompressed
+g4bppcChapterMapChapter06 g4bppcChapterMapChapter06 ; 4096 bytes decompressed
+g4bppcChapterMapChapter07 g4bppcChapterMapChapter07 ; 4096 bytes decompressed
+g4bppcChapterMapChapter08 g4bppcChapterMapChapter08 ; 4096 bytes decompressed
+g4bppcChapterMapChapter09 g4bppcChapterMapChapter09 ; 4096 bytes decompressed
+g4bppcChapterMapChapter10 g4bppcChapterMapChapter10 ; 4096 bytes decompressed
+acChapterMapPrologueLayout acChapterMapPrologueLayout ; 8192 bytes decompressed
+acChapterMapChapter01Layout acChapterMapChapter01Layout ; 8192 bytes decompressed
+acChapterMapChapter02Layout acChapterMapChapter02Layout ; 8192 bytes decompressed
+acChapterMapChapter03Layout acChapterMapChapter03Layout ; 8192 bytes decompressed
+acChapterMapChapter04Layout acChapterMapChapter04Layout ; 8192 bytes decompressed
+acChapterMapChapter05Layout acChapterMapChapter05Layout ; 8192 bytes decompressed
+acChapterMapChapter06Layout acChapterMapChapter06Layout ; 8192 bytes decompressed
+acChapterMapChapter07Layout acChapterMapChapter07Layout ; 8192 bytes decompressed
+acChapterMapChapter08Layout acChapterMapChapter08Layout ; 8192 bytes decompressed
+acChapterMapChapter09Layout acChapterMapChapter09Layout ; 8192 bytes decompressed
+acChapterMapChapter10Layout acChapterMapChapter10Layout ; 8192 bytes decompressed
+acChapterMapFinalLayout acChapterMapFinalLayout ; 8192 bytes decompressed
+# Also used as: acChapterMapChapter02TileEntries.
+acChapterMapPrologueTileEntries acChapterMapPrologueTileEntries ; 2048 bytes decompressed
+acChapterMapChapter01TileEntries acChapterMapChapter01TileEntries ; 2048 bytes decompressed
+acChapterMapChapter03TileEntries acChapterMapChapter03TileEntries ; 2048 bytes decompressed
+acChapterMapChapter04TileEntries acChapterMapChapter04TileEntries ; 2048 bytes decompressed
+# Also used as: acChapterMapFinalTileEntries.
+acChapterMapChapter05TileEntries acChapterMapChapter05TileEntries ; 2048 bytes decompressed
+acChapterMapChapter06TileEntries acChapterMapChapter06TileEntries ; 2048 bytes decompressed
+acChapterMapChapter07TileEntries acChapterMapChapter07TileEntries ; 2048 bytes decompressed
+acChapterMapChapter08TileEntries acChapterMapChapter08TileEntries ; 2048 bytes decompressed
+acChapterMapChapter09TileEntries acChapterMapChapter09TileEntries ; 2048 bytes decompressed
+acChapterMapChapter10TileEntries acChapterMapChapter10TileEntries ; 2048 bytes decompressed
+# Also used as: acChapterMapChapter02Terrain.
+acChapterMapPrologueTerrain acChapterMapPrologueTerrain ; 1024 bytes decompressed
+acChapterMapChapter01Terrain acChapterMapChapter01Terrain ; 1024 bytes decompressed
+acChapterMapChapter03Terrain acChapterMapChapter03Terrain ; 1024 bytes decompressed
+acChapterMapChapter04Terrain acChapterMapChapter04Terrain ; 1024 bytes decompressed
+# Also used as: acChapterMapFinalTerrain.
+acChapterMapChapter05Terrain acChapterMapChapter05Terrain ; 1024 bytes decompressed
+acChapterMapChapter06Terrain acChapterMapChapter06Terrain ; 1024 bytes decompressed
+acChapterMapChapter07Terrain acChapterMapChapter07Terrain ; 1024 bytes decompressed
+acChapterMapChapter08Terrain acChapterMapChapter08Terrain ; 1024 bytes decompressed
+acChapterMapChapter09Terrain acChapterMapChapter09Terrain ; 1024 bytes decompressed
+acChapterMapChapter10Terrain acChapterMapChapter10Terrain ; 1024 bytes decompressed
+g4bppcDialogueBackgroundFountain g4bppcDialogueBackgroundFountain ; 16384 bytes decompressed
+acDialogueBackgroundFountainForegroundTilemap acDialogueBackgroundFountainForegroundTilemap ; 2048 bytes decompressed
+acDialogueBackgroundFountainTilemap acDialogueBackgroundFountainTilemap ; 704 bytes decompressed

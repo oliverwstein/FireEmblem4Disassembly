@@ -32,4 +32,4 @@ g4bppcBattleBannerDefault g4bppcBattleBannerDefault ; 384 bytes decompressed
 # The original notes call these two tilemaps. rlUnknown91AFC2 decompresses
 # the first along with a banner.
 aUnknown9CEAEE aUnknown9CEAEE ; 512 bytes decompressed
-aUnknown9CEBED aUnknown9CEBED ; 2048 bytes decompressed
+acDialogueBackgroundCloisterForegroundTilemap acDialogueBackgroundCloisterForegroundTilemap ; 2048 bytes decompressed

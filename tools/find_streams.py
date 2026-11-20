@@ -295,7 +295,25 @@ def write(rom, regions, by_addr, carved):
                 pending = []
             elif not line.strip():
                 pending = []
-    old_dirs = {os.path.dirname(p) for p in carved.values()}
+    # A region that an earlier .streams file already lists as it is (same start,
+    # end and labels in order) keeps its folder untouched: PNGs, names and notes.
+    def listed(path):
+        text = open(path).read()
+        return (re.search(r'^start \$(\w+)', text, re.M).group(1), re.search(r'^end \$(\w+)', text, re.M).group(1),
+                re.findall(r'^(\w+) \w+', text, re.M))
+    def label_of(a):
+        label = by_addr.get(a) or f'gcUnknown{a:06X}'
+        return f'gcUnknown{a:06X}' if label.startswith('aUnknown') and label != f'aUnknown{a:06X}' else label
+    unchanged = {}
+    for path in set(carved.values()):
+        start, end, labels = listed(path)
+        for r in regions:
+            if (f'{r[0][0]:06X}', f'{r[-1][1]:06X}', [label_of(a) for a, *_ in r]) == (start, end, labels):
+                unchanged[id(r)] = path
+    regions = [r for r in regions if id(r) not in unchanged]
+    if unchanged:
+        print(f'Unchanged, left as they are: {", ".join(sorted(os.path.relpath(p, ROOT) for p in unchanged.values()))}')
+    old_dirs = {os.path.dirname(p) for p in carved.values()} - {os.path.dirname(p) for p in unchanged.values()}
     for d in old_dirs:
         shutil.rmtree(d)
     build = open(os.path.join(ROOT, 'build.asm'), encoding='utf-8').read()

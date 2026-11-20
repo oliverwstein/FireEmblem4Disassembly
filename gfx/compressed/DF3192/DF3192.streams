@@ -5,7 +5,8 @@
 start $DF3192
 end $DF7FF8
 
-gcUnknownDF3192 gcUnknownDF3192 ; 16384 bytes decompressed
-gcUnknownDF6581 gcUnknownDF6581 ; 4096 bytes decompressed
-gcUnknownDF6981 gcUnknownDF6981 ; 4096 bytes decompressed
+g4bppcBattleBackgroundThicket g4bppcBattleBackgroundThicket ; 16384 bytes decompressed
+acBattleBackgroundUnknown17Tilemap acBattleBackgroundUnknown17Tilemap ; 4096 bytes decompressed
+# Also used as: acBattleBackgroundForestSnowTilemap.
+acBattleBackgroundForestTilemap acBattleBackgroundForestTilemap ; 4096 bytes decompressed
 gcUnknownDF6FFA gcUnknownDF6FFA ; 7488 bytes decompressed
