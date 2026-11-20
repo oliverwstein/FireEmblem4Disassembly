@@ -6,7 +6,9 @@ usage: tools/portraits.py OUT_DIR [--ids 00,B9-F2] [--scale N] [--tiles]
 For each entry of aPortraitGraphicPointers (or those given by --ids, in hex),
 decompresses its graphics (tools/decompress.py), colours them with the entry's
 palette from aPortraitPalettePointers, and writes OUT_DIR/PortraitXX.png, plus
-OUT_DIR/sheet.png with every exported portrait and its index. --tiles also
+OUT_DIR/sheet.png with the portraits grouped (playable, named units,
+dialogue only, class cards, not used) and labelled, and OUT_DIR/portraits.txt
+listing each entry's group, its users and the entries sharing its graphics. --tiles also
 writes PortraitXX_tiles.png, the 64 tiles as they are stored. Needs labels.txt
 from ./build.sh, and Pillow.
 
@@ -86,6 +88,50 @@ def face(tiles):
     return img
 
 
+GROUPS = ['Playable', 'Named units', 'Dialogue only', 'Class cards', 'Not used']
+
+
+def group_entries(count, graphics):
+    """Each entry's (group, short name, users), from the game's own tables.
+
+    aPortraitDataIDs (data/character/PortraitDataIDs.csv) gives each character
+    ID its entry; IDs past the last character are dialogue-only portraits.
+    A character's unit type (data/character/CharacterData.csv) says whether it
+    is playable (Static or Dynamic). aClassPortraitDataIDs gives the class cards.
+    """
+    data = os.path.join(ROOT, 'data')
+    rows = list(csv.reader(open(os.path.join(data, 'character', 'CharacterData.csv'))))
+    ti, ii = rows[0].index('Type'), rows[0].index('ID')
+    unit_type = {int(r[ii].lstrip('$'), 16): r[ti] for r in rows[1:] if r[ii]}
+    users = {i: [] for i in range(count)}
+    types = {i: set() for i in range(count)}
+    ids = list(csv.reader(open(os.path.join(data, 'character', 'PortraitDataIDs.csv'))))[1:]
+    for character, (name, value) in enumerate(ids, 1):
+        i = int(value.lstrip('$'), 16)
+        if i < count:
+            users[i].append(name.removeprefix('Portrait'))
+            types[i].add(unit_type.get(character, 'none'))
+    cards = {i: [] for i in range(count)}
+    for name, value in list(csv.reader(open(os.path.join(data, 'class', 'ClassPortraitDataIDs.csv'))))[1:]:
+        cards[int(value.lstrip('$'), 16)].append(name.removeprefix('ClassPortrait'))
+    result = {}
+    for i in range(count):
+        if types[i] & {'UnitTypeStatic', 'UnitTypeDynamic'}:
+            group = 'Playable'
+        elif cards[i]:
+            group = 'Class cards'
+        elif types[i] & {'UnitTypeEnemy', 'UnitTypeHoly'}:
+            group = 'Named units'
+        elif users[i]:
+            group = 'Dialogue only'
+        else:
+            group = 'Not used'
+        names = cards[i] + users[i]
+        short = (names[0].removeprefix('Dialogue') if names else '-')
+        result[i] = (group, short, names[:8] + ([f'and {len(names) - 8} more'] if len(names) > 8 else []))
+    return result
+
+
 def parse_ids(spec, count):
     ids = []
     for part in spec.split(','):
@@ -126,16 +172,36 @@ def main():
         if args.tiles:
             scaled(tiles).save(os.path.join(args.out, f'Portrait{i:02X}_tiles.png'))
 
-    cols = 16
-    rows = (len(faces) + cols - 1) // cols
-    sheet = Image.new('RGB', (cols * 52, rows * 78), (32, 32, 32))
+    groups = group_entries(len(graphics), graphics)
+    by_group = {}
+    for i, img in faces:
+        by_group.setdefault(groups[i][0], []).append((i, img))
+    cols, cell_w, cell_h, head = 12, 68, 88, 22
+    height = sum(head + (len(v) + cols - 1) // cols * cell_h for v in by_group.values())
+    sheet = Image.new('RGB', (cols * cell_w + 8, height + 4), (32, 32, 32))
     draw = ImageDraw.Draw(sheet)
-    for k, (i, img) in enumerate(faces):
-        x, y = k % cols * 52 + 2, k // cols * 78 + 2
-        sheet.paste(img, (x, y))
-        draw.text((x, y + 64), f'{i:02X}', fill=(255, 255, 255))
+    y = 2
+    for title in GROUPS:
+        members = by_group.get(title)
+        if not members:
+            continue
+        draw.text((6, y + 6), f'{title} ({len(members)})', fill=(255, 220, 120))
+        y += head
+        for k, (i, img) in enumerate(members):
+            x, yy = k % cols * cell_w + 10, y + k // cols * cell_h
+            sheet.paste(img, (x, yy))
+            draw.text((x, yy + 65), f'{i:02X}', fill=(255, 255, 255))
+            draw.text((x, yy + 75), groups[i][1][:10], fill=(170, 170, 170))
+        y += (len(members) + cols - 1) // cols * cell_h
     scaled(sheet).save(os.path.join(args.out, 'sheet.png'))
-    print(f'Wrote {len(faces)} portraits and sheet.png to {args.out}')
+    with open(os.path.join(args.out, 'portraits.txt'), 'w') as f:
+        for title in GROUPS:
+            for i, _ in by_group.get(title, []):
+                same = [f'{j:02X}' for j in range(len(graphics))
+                        if graphics[j] == graphics[i] and j != i]
+                f.write(f'{i:02X}  {title:<16}  {", ".join(groups[i][2]) or "-"}'
+                        + (f'  [same graphics as {", ".join(same)}]' if same else '') + '\n')
+    print(f'Wrote {len(faces)} portraits, sheet.png and portraits.txt to {args.out}')
 
 
 if __name__ == '__main__':

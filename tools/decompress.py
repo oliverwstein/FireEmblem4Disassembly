@@ -114,12 +114,18 @@ def decompress(rom, source, limit=0x20000):
 
     def copy_from_output(dist, n):
         start = len(out) - dist
+        if dist == 0:                       # would copy bytes not written yet
+            raise DecompressionError('copy from output with distance 0')
         if start < 0:
             raise DecompressionError(f'copy from before the output start (distance {dist})')
         for i in range(n):
             write(out[start + i])           # byte by byte: overlapping copies repeat
 
+    methods = 0
     while True:
+        methods += 1                        # lookbacks inside lookbacks can loop
+        if methods > limit:                 # without writing: not a real stream
+            raise DecompressionError(f'more than {limit:#x} methods')
         b = read()                          # _GetNextMethod
         tick()
         if b < 0x40:                        # literal
