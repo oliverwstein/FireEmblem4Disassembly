@@ -7683,11 +7683,11 @@
     * = $0A65B5
     .logical $CA65B5
 
-      g4bppcPortrait00 .text ROM[$0A65B5:$0A6B56] ; CA65B5
-      g4bppcPortrait01 .text ROM[$0A6B56:$0A706A] ; CA6B56
-      g4bppcPortrait02 .text ROM[$0A706A:$0A75A0] ; CA706A
-      g4bppcPortrait03 .text ROM[$0A75A0:$0A7B54] ; CA75A0
-      g4bppcPortrait04 .text ROM[$0A7B54:$0A8000] ; CA7B54
+      g4bppcPortraitSigurd             .text ROM[$0A65B5:$0A6B56] ; CA65B5, entries 00, F6
+      g4bppcPortraitNaoise             .text ROM[$0A6B56:$0A706A] ; CA6B56, entries 01
+      g4bppcPortraitAlec               .text ROM[$0A706A:$0A75A0] ; CA706A, entries 02
+      g4bppcPortraitArden              .text ROM[$0A75A0:$0A7B54] ; CA75A0, entries 03
+      g4bppcPortraitFinn               .text ROM[$0A7B54:$0A8000] ; CA7B54, entries 04
 
     .here
 
@@ -8811,31 +8811,31 @@
     * = $0B0000
     .logical $CB0000
 
-                       .text ROM[$0B0000:$0B0039] ; CB0000, rest of g4bppcPortrait04
-      g4bppcPortrait05 .text ROM[$0B0039:$0B05C0] ; CB0039
-      g4bppcPortrait06 .text ROM[$0B05C0:$0B0B07] ; CB05C0
-      g4bppcPortrait07 .text ROM[$0B0B07:$0B10EC] ; CB0B07
-      g4bppcPortrait08 .text ROM[$0B10EC:$0B1694] ; CB10EC
-      g4bppcPortrait09 .text ROM[$0B1694:$0B1B6F] ; CB1694
-      g4bppcPortrait0A .text ROM[$0B1B6F:$0B2040] ; CB1B6F
-      g4bppcPortrait0B .text ROM[$0B2040:$0B2575] ; CB2040
-      g4bppcPortrait0C .text ROM[$0B2575:$0B2A8C] ; CB2575
-      g4bppcPortrait0D .text ROM[$0B2A8C:$0B2F53] ; CB2A8C
-      g4bppcPortrait0E .text ROM[$0B2F53:$0B349E] ; CB2F53
-      g4bppcPortrait0F .text ROM[$0B349E:$0B3A6C] ; CB349E
-      g4bppcPortrait10 .text ROM[$0B3A6C:$0B3F94] ; CB3A6C
-      g4bppcPortrait11 .text ROM[$0B3F94:$0B44D7] ; CB3F94
-      g4bppcPortrait12 .text ROM[$0B44D7:$0B4A26] ; CB44D7
-      g4bppcPortrait13 .text ROM[$0B4A26:$0B4F51] ; CB4A26
-      g4bppcPortrait14 .text ROM[$0B4F51:$0B5576] ; CB4F51
-      g4bppcPortrait15 .text ROM[$0B5576:$0B5B80] ; CB5576
-      g4bppcPortrait16 .text ROM[$0B5B80:$0B6140] ; CB5B80
-      g4bppcPortrait17 .text ROM[$0B6140:$0B6718] ; CB6140
-      g4bppcPortrait18 .text ROM[$0B6718:$0B6C8A] ; CB6718
-      g4bppcPortrait19 .text ROM[$0B6C8A:$0B712F] ; CB6C8A
-      g4bppcPortrait73 .text ROM[$0B712F:$0B75B4] ; CB712F
-      g4bppcPortrait1A .text ROM[$0B75B4:$0B7B17] ; CB75B4
-      g4bppcPortrait1B .text ROM[$0B7B17:$0B8000] ; CB7B17
+                                       .text ROM[$0B0000:$0B0039] ; CB0000, rest of g4bppcPortraitFinn
+      g4bppcPortraitQuan               .text ROM[$0B0039:$0B05C0] ; CB0039, entries 05
+      g4bppcPortraitMidir              .text ROM[$0B05C0:$0B0B07] ; CB05C0, entries 06
+      g4bppcPortraitLewyn              .text ROM[$0B0B07:$0B10EC] ; CB0B07, entries 07
+      g4bppcPortraitChulainn           .text ROM[$0B10EC:$0B1694] ; CB10EC, entries 08
+      g4bppcPortraitAzelle             .text ROM[$0B1694:$0B1B6F] ; CB1694, entries 09
+      g4bppcPortraitJamke              .text ROM[$0B1B6F:$0B2040] ; CB1B6F, entries 0A
+      g4bppcPortraitClaud              .text ROM[$0B2040:$0B2575] ; CB2040, entries 0B
+      g4bppcPortraitBeowulf            .text ROM[$0B2575:$0B2A8C] ; CB2575, entries 0C
+      g4bppcPortraitLex                .text ROM[$0B2A8C:$0B2F53] ; CB2A8C, entries 0D
+      g4bppcPortraitDew                .text ROM[$0B2F53:$0B349E] ; CB2F53, entries 0E
+      g4bppcPortraitDeirdre            .text ROM[$0B349E:$0B3A6C] ; CB349E, entries 0F, F7
+      g4bppcPortraitEthlyn             .text ROM[$0B3A6C:$0B3F94] ; CB3A6C, entries 10
+      g4bppcPortraitLachesis           .text ROM[$0B3F94:$0B44D7] ; CB3F94, entries 11
+      g4bppcPortraitAyra               .text ROM[$0B44D7:$0B4A26] ; CB44D7, entries 12
+      g4bppcPortraitErinys             .text ROM[$0B4A26:$0B4F51] ; CB4A26, entries 13
+      g4bppcPortraitTailtiu            .text ROM[$0B4F51:$0B5576] ; CB4F51, entries 14
+      g4bppcPortraitSilvia             .text ROM[$0B5576:$0B5B80] ; CB5576, entries 15
+      g4bppcPortraitEdain              .text ROM[$0B5B80:$0B6140] ; CB5B80, entries 16
+      g4bppcPortraitBrigid             .text ROM[$0B6140:$0B6718] ; CB6140, entries 17
+      g4bppcPortraitYoungOifey         .text ROM[$0B6718:$0B6C8A] ; CB6718, entries 18
+      g4bppcPortraitYoungShannan       .text ROM[$0B6C8A:$0B712F] ; CB6C8A, entries 19
+      g4bppcClassCardKnightLord        .text ROM[$0B712F:$0B75B4] ; CB712F, entries 73, 74, 9C, F3, F4
+      g4bppcPortraitSeliph             .text ROM[$0B75B4:$0B7B17] ; CB75B4, entries 1A
+      g4bppcPortraitShannan            .text ROM[$0B7B17:$0B8000] ; CB7B17, entries 1B
 
     .here
 
@@ -9532,32 +9532,32 @@
     * = $0C0000
     .logical $CC0000
 
-                       .text ROM[$0C0000:$0C0012] ; CC0000, rest of g4bppcPortrait1B
-      g4bppcPortrait1C .text ROM[$0C0012:$0C0502] ; CC0012
-      g4bppcPortrait1D .text ROM[$0C0502:$0C0A21] ; CC0502
-      g4bppcPortrait1E .text ROM[$0C0A21:$0C0F72] ; CC0A21
-      g4bppcPortrait1F .text ROM[$0C0F72:$0C1477] ; CC0F72
-      g4bppcPortrait20 .text ROM[$0C1477:$0C1905] ; CC1477
-      g4bppcPortrait21 .text ROM[$0C1905:$0C1E2D] ; CC1905
-      g4bppcPortrait22 .text ROM[$0C1E2D:$0C2335] ; CC1E2D
-      g4bppcPortrait23 .text ROM[$0C2335:$0C282A] ; CC2335
-      g4bppcPortrait24 .text ROM[$0C282A:$0C2D11] ; CC282A
-      g4bppcPortrait25 .text ROM[$0C2D11:$0C3256] ; CC2D11
-      g4bppcPortrait26 .text ROM[$0C3256:$0C37D0] ; CC3256
-      g4bppcPortrait27 .text ROM[$0C37D0:$0C3CF2] ; CC37D0
-      g4bppcPortrait28 .text ROM[$0C3CF2:$0C41E5] ; CC3CF2
-      g4bppcPortrait29 .text ROM[$0C41E5:$0C4750] ; CC41E5
-      g4bppcPortrait2A .text ROM[$0C4750:$0C4CCB] ; CC4750
-      g4bppcPortrait2B .text ROM[$0C4CCB:$0C515C] ; CC4CCB
-      g4bppcPortrait2C .text ROM[$0C515C:$0C56C8] ; CC515C
-      g4bppcPortrait2D .text ROM[$0C56C8:$0C5CA9] ; CC56C8
-      g4bppcPortrait2E .text ROM[$0C5CA9:$0C6154] ; CC5CA9
-      g4bppcPortrait2F .text ROM[$0C6154:$0C670A] ; CC6154
-      g4bppcPortrait30 .text ROM[$0C670A:$0C6D2F] ; CC670A
-      g4bppcPortrait31 .text ROM[$0C6D2F:$0C72A6] ; CC6D2F
-      g4bppcPortrait32 .text ROM[$0C72A6:$0C77A1] ; CC72A6
-      g4bppcPortrait33 .text ROM[$0C77A1:$0C7C8A] ; CC77A1
-      g4bppcPortrait34 .text ROM[$0C7C8A:$0C8000] ; CC7C8A
+                                       .text ROM[$0C0000:$0C0012] ; CC0000, rest of g4bppcPortraitShannan
+      g4bppcPortraitDalvin             .text ROM[$0C0012:$0C0502] ; CC0012, entries 1C
+      g4bppcPortraitAsaello            .text ROM[$0C0502:$0C0A21] ; CC0502, entries 1D
+      g4bppcPortraitLeif               .text ROM[$0C0A21:$0C0F72] ; CC0A21, entries 1E
+      g4bppcPortraitIuchar             .text ROM[$0C0F72:$0C1477] ; CC0F72, entries 1F
+      g4bppcPortraitCharlot            .text ROM[$0C1477:$0C1905] ; CC1477, entries 20
+      g4bppcPortraitHawk               .text ROM[$0C1905:$0C1E2D] ; CC1905, entries 21
+      g4bppcPortraitTristan            .text ROM[$0C1E2D:$0C2335] ; CC1E2D, entries 22
+      g4bppcPortraitAdultFinn          .text ROM[$0C2335:$0C282A] ; CC2335, entries 23
+      g4bppcPortraitDeimne             .text ROM[$0C282A:$0C2D11] ; CC282A, entries 24
+      g4bppcPortraitHannibal           .text ROM[$0C2D11:$0C3256] ; CC2D11, entries 25
+      g4bppcPortraitJuliaHand          .text ROM[$0C3256:$0C37D0] ; CC3256, entries 26
+      g4bppcPortraitAmid               .text ROM[$0C37D0:$0C3CF2] ; CC37D0, entries 27
+      g4bppcPortraitOldLewyn           .text ROM[$0C3CF2:$0C41E5] ; CC3CF2, entries 28
+      g4bppcPortraitDaisy              .text ROM[$0C41E5:$0C4750] ; CC41E5, entries 29
+      g4bppcPortraitCreidne            .text ROM[$0C4750:$0C4CCB] ; CC4750, entries 2A
+      g4bppcPortraitMuirne             .text ROM[$0C4CCB:$0C515C] ; CC4CCB, entries 2B
+      g4bppcPortraitJulia              .text ROM[$0C515C:$0C56C8] ; CC515C, entries 2C
+      g4bppcPortraitAltena             .text ROM[$0C56C8:$0C5CA9] ; CC56C8, entries 2D
+      g4bppcPortraitHermina            .text ROM[$0C5CA9:$0C6154] ; CC5CA9, entries 2E
+      g4bppcPortraitLinda              .text ROM[$0C6154:$0C670A] ; CC6154, entries 2F
+      g4bppcPortraitLaylea             .text ROM[$0C670A:$0C6D2F] ; CC670A, entries 30
+      g4bppcPortraitJeanne             .text ROM[$0C6D2F:$0C72A6] ; CC6D2F, entries 31
+      g4bppcPortraitIucharba           .text ROM[$0C72A6:$0C77A1] ; CC72A6, entries 32
+      g4bppcPortraitScathach           .text ROM[$0C77A1:$0C7C8A] ; CC77A1, entries 33
+      g4bppcPortraitFebail             .text ROM[$0C7C8A:$0C8000] ; CC7C8A, entries 34
 
     .here
 
@@ -9620,32 +9620,32 @@
     * = $0D0000
     .logical $CD0000
 
-                       .text ROM[$0D0000:$0D0148] ; CD0000, rest of g4bppcPortrait34
-      g4bppcPortrait35 .text ROM[$0D0148:$0D05C8] ; CD0148
-      g4bppcPortrait36 .text ROM[$0D05C8:$0D0AA1] ; CD05C8
-      g4bppcPortrait37 .text ROM[$0D0AA1:$0D1011] ; CD0AA1
-      g4bppcPortrait38 .text ROM[$0D1011:$0D14C3] ; CD1011
-      g4bppcPortrait39 .text ROM[$0D14C3:$0D197C] ; CD14C3
-      g4bppcPortrait3A .text ROM[$0D197C:$0D1EFB] ; CD197C
-      g4bppcPortrait3B .text ROM[$0D1EFB:$0D246B] ; CD1EFB
-      g4bppcPortrait3C .text ROM[$0D246B:$0D2969] ; CD246B
-      g4bppcPortrait3D .text ROM[$0D2969:$0D2E3C] ; CD2969
-      g4bppcPortrait3E .text ROM[$0D2E3C:$0D3461] ; CD2E3C
-      g4bppcPortrait3F .text ROM[$0D3461:$0D3A0D] ; CD3461
-      g4bppcPortrait40 .text ROM[$0D3A0D:$0D3F8B] ; CD3A0D
-      g4bppcPortraitF5 .text ROM[$0D3F8B:$0D44F3] ; CD3F8B
-      g4bppcPortrait41 .text ROM[$0D44F3:$0D4A7F] ; CD44F3
-      g4bppcPortrait42 .text ROM[$0D4A7F:$0D4F92] ; CD4A7F
-      g4bppcPortrait43 .text ROM[$0D4F92:$0D54F4] ; CD4F92
-      g4bppcPortrait44 .text ROM[$0D54F4:$0D5A16] ; CD54F4
-      g4bppcPortrait45 .text ROM[$0D5A16:$0D5F42] ; CD5A16
-      g4bppcPortrait46 .text ROM[$0D5F42:$0D648C] ; CD5F42
-      g4bppcPortrait47 .text ROM[$0D648C:$0D69A7] ; CD648C
-      g4bppcPortrait48 .text ROM[$0D69A7:$0D6E47] ; CD69A7
-      g4bppcPortrait49 .text ROM[$0D6E47:$0D72F3] ; CD6E47
-      g4bppcPortrait4A .text ROM[$0D72F3:$0D780E] ; CD72F3
-      g4bppcPortrait4B .text ROM[$0D780E:$0D7D6C] ; CD780E
-      g4bppcPortrait4C .text ROM[$0D7D6C:$0D8000] ; CD7D6C
+                                       .text ROM[$0D0000:$0D0148] ; CD0000, rest of g4bppcPortraitFebail
+      g4bppcPortraitCoirpre            .text ROM[$0D0148:$0D05C8] ; CD0148, entries 35
+      g4bppcPortraitCed                .text ROM[$0D05C8:$0D0AA1] ; CD05C8, entries 36
+      g4bppcPortraitDiarmuid           .text ROM[$0D0AA1:$0D1011] ; CD0AA1, entries 37
+      g4bppcPortraitLester             .text ROM[$0D1011:$0D14C3] ; CD1011, entries 38
+      g4bppcPortraitArthur             .text ROM[$0D14C3:$0D197C] ; CD14C3, entries 39
+      g4bppcPortraitPatty              .text ROM[$0D197C:$0D1EFB] ; CD197C, entries 3A
+      g4bppcPortraitLarcei             .text ROM[$0D1EFB:$0D246B] ; CD1EFB, entries 3B
+      g4bppcPortraitLana               .text ROM[$0D246B:$0D2969] ; CD246B, entries 3C
+      g4bppcPortraitFee                .text ROM[$0D2969:$0D2E3C] ; CD2969, entries 3D
+      g4bppcPortraitTine               .text ROM[$0D2E3C:$0D3461] ; CD2E3C, entries 3E
+      g4bppcPortraitLene               .text ROM[$0D3461:$0D3A0D] ; CD3461, entries 3F
+      g4bppcPortraitNanna              .text ROM[$0D3A0D:$0D3F8B] ; CD3A0D, entries 40
+      g4bppcPortraitJuliaEnemy         .text ROM[$0D3F8B:$0D44F3] ; CD3F8B, entries F5
+      g4bppcPortraitMunnir             .text ROM[$0D44F3:$0D4A7F] ; CD44F3, entries 41
+      g4bppcPortraitDiMaggio           .text ROM[$0D4A7F:$0D4F92] ; CD4A7F, entries 42, 50
+      g4bppcPortraitGerrard            .text ROM[$0D4F92:$0D54F4] ; CD4F92, entries 43, 4F
+      g4bppcPortraitCimbaeth           .text ROM[$0D54F4:$0D5A16] ; CD54F4, entries 44, 5C
+      g4bppcPortraitSandima            .text ROM[$0D5A16:$0D5F42] ; CD5A16, entries 45, 66, 6A, 82, 90, 91, 94
+      g4bppcPortraitClement            .text ROM[$0D5F42:$0D648C] ; CD5F42, entries 46, 69, 7A
+      g4bppcPortraitBordeaux           .text ROM[$0D648C:$0D69A7] ; CD648C, entries 47, 58, 7D
+      g4bppcPortraitElliot             .text ROM[$0D69A7:$0D6E47] ; CD69A7, entries 48, 57
+      g4bppcPortraitZane               .text ROM[$0D6E47:$0D72F3] ; CD6E47, entries 49, 64, 68, 76, 7C, 88, 8F
+      g4bppcPortraitPhilip             .text ROM[$0D72F3:$0D780E] ; CD72F3, entries 4A, 77, 7E, 92, A8
+      g4bppcPortraitWaltz              .text ROM[$0D780E:$0D7D6C] ; CD780E, entries 4B, A6
+      g4bppcPortraitMacBeth            .text ROM[$0D7D6C:$0D8000] ; CD7D6C, entries 4C, 9D
 
     .here
 
@@ -10279,32 +10279,32 @@
     * = $0E0000
     .logical $CE0000
 
-                       .text ROM[$0E0000:$0E01B7] ; CE0000, rest of g4bppcPortrait4C
-      g4bppcPortrait4D .text ROM[$0E01B7:$0E0724] ; CE01B7
-      g4bppcPortrait4E .text ROM[$0E0724:$0E0C32] ; CE0724
-      g4bppcPortrait51 .text ROM[$0E0C32:$0E1177] ; CE0C32
-      g4bppcPortrait52 .text ROM[$0E1177:$0E1619] ; CE1177
-      g4bppcPortrait53 .text ROM[$0E1619:$0E1B66] ; CE1619
-      g4bppcPortrait54 .text ROM[$0E1B66:$0E2047] ; CE1B66
-      g4bppcPortrait55 .text ROM[$0E2047:$0E2619] ; CE2047
-      g4bppcPortrait56 .text ROM[$0E2619:$0E2BAA] ; CE2619
-      g4bppcPortrait59 .text ROM[$0E2BAA:$0E306B] ; CE2BAA
-      g4bppcPortrait5A .text ROM[$0E306B:$0E3509] ; CE306B
-      g4bppcPortrait5B .text ROM[$0E3509:$0E39F4] ; CE3509
-      g4bppcPortrait5D .text ROM[$0E39F4:$0E3F5B] ; CE39F4
-      g4bppcPortrait5F .text ROM[$0E3F5B:$0E442D] ; CE3F5B
-      g4bppcPortrait60 .text ROM[$0E442D:$0E492B] ; CE442D
-      g4bppcPortrait62 .text ROM[$0E492B:$0E4F2B] ; CE492B
-      g4bppcPortrait63 .text ROM[$0E4F2B:$0E5423] ; CE4F2B
-      g4bppcPortrait65 .text ROM[$0E5423:$0E592E] ; CE5423
-      g4bppcPortrait67 .text ROM[$0E592E:$0E5E65] ; CE592E
-      g4bppcPortrait75 .text ROM[$0E5E65:$0E63D5] ; CE5E65
-      g4bppcPortrait78 .text ROM[$0E63D5:$0E6938] ; CE63D5
-      g4bppcPortrait7B .text ROM[$0E6938:$0E6ED3] ; CE6938
-      g4bppcPortrait7F .text ROM[$0E6ED3:$0E73DA] ; CE6ED3
-      g4bppcPortrait83 .text ROM[$0E73DA:$0E78FA] ; CE73DA
-      g4bppcPortrait86 .text ROM[$0E78FA:$0E7EBB] ; CE78FA
-      g4bppcPortrait87 .text ROM[$0E7EBB:$0E8000] ; CE7EBB
+                                       .text ROM[$0E0000:$0E01B7] ; CE0000, rest of g4bppcPortraitMacBeth
+      g4bppcPortraitChagall            .text ROM[$0E01B7:$0E0724] ; CE01B7, entries 4D, 79
+      g4bppcPortraitJacobi             .text ROM[$0E0724:$0E0C32] ; CE0724, entries 4E, 6B, A7
+      g4bppcPortraitAndrey             .text ROM[$0E0C32:$0E1177] ; CE0C32, entries 51, 5E, 8D
+      g4bppcPortraitBloom              .text ROM[$0E1177:$0E1619] ; CE1177, entries 52, 6E
+      g4bppcPortraitDanann             .text ROM[$0E1619:$0E1B66] ; CE1619, entries 53
+      g4bppcPortraitLamia              .text ROM[$0E1B66:$0E2047] ; CE1B66, entries 54, 8B, A5
+      g4bppcPortraitArvis              .text ROM[$0E2047:$0E2619] ; CE2047, entries 55
+      g4bppcPortraitEldigan            .text ROM[$0E2619:$0E2BAA] ; CE2619, entries 56
+      g4bppcPortraitPamela             .text ROM[$0E2BAA:$0E306B] ; CE2BAA, entries 59, 6F, 84
+      g4bppcPortraitDithorba           .text ROM[$0E306B:$0E3509] ; CE306B, entries 5A, 61, 70, 71, 85
+      g4bppcPortraitAnnand             .text ROM[$0E3509:$0E39F4] ; CE3509, entries 5B, 72
+      g4bppcPortraitLombard            .text ROM[$0E39F4:$0E3F5B] ; CE39F4, entries 5D
+      g4bppcPortraitReptor             .text ROM[$0E3F5B:$0E442D] ; CE3F5B, entries 5F
+      g4bppcPortraitRedIshtore         .text ROM[$0E442D:$0E492B] ; CE442D, entries 60, 6C
+      g4bppcPortraitYoungTravant       .text ROM[$0E492B:$0E4F2B] ; CE492B, entries 62
+      g4bppcPortraitCuvuli             .text ROM[$0E4F2B:$0E5423] ; CE4F2B, entries 63, 93
+      g4bppcPortraitAida               .text ROM[$0E5423:$0E592E] ; CE5423, entries 65, 6D
+      g4bppcPortraitBrian              .text ROM[$0E592E:$0E5E65] ; CE592E, entries 67, 8E
+      g4bppcPortraitArion              .text ROM[$0E5E65:$0E63D5] ; CE5E65, entries 75
+      g4bppcPortraitOvo                .text ROM[$0E63D5:$0E6938] ; CE63D5, entries 78
+      g4bppcPortraitTravant            .text ROM[$0E6938:$0E6ED3] ; CE6938, entries 7B
+      g4bppcPortraitEve                .text ROM[$0E6ED3:$0E73DA] ; CE6ED3, entries 7F, 80, 81
+      g4bppcPortraitHilda              .text ROM[$0E73DA:$0E78FA] ; CE73DA, entries 83
+      g4bppcPortraitAres               .text ROM[$0E78FA:$0E7EBB] ; CE78FA, entries 86
+      g4bppcPortraitManfroy            .text ROM[$0E7EBB:$0E8000] ; CE7EBB, entries 87
 
     .here
 
@@ -10694,35 +10694,35 @@
     * = $0F0000
     .logical $CF0000
 
-                       .text ROM[$0F0000:$0F0439] ; CF0000, rest of g4bppcPortrait87
-      g4bppcPortrait89 .text ROM[$0F0439:$0F0A24] ; CF0439
-      g4bppcPortrait8A .text ROM[$0F0A24:$0F0F90] ; CF0A24
-      g4bppcPortrait8C .text ROM[$0F0F90:$0F15CE] ; CF0F90
-      g4bppcPortrait95 .text ROM[$0F15CE:$0F1A65] ; CF15CE
-      g4bppcPortrait96 .text ROM[$0F1A65:$0F1F6D] ; CF1A65
-      g4bppcPortrait97 .text ROM[$0F1F6D:$0F254A] ; CF1F6D
-      g4bppcPortrait98 .text ROM[$0F254A:$0F29B3] ; CF254A
-      g4bppcPortrait99 .text ROM[$0F29B3:$0F2EA2] ; CF29B3
-      g4bppcPortrait9A .text ROM[$0F2EA2:$0F3407] ; CF2EA2
-      g4bppcPortrait9B .text ROM[$0F3407:$0F391B] ; CF3407
-      g4bppcPortrait9E .text ROM[$0F391B:$0F3E9C] ; CF391B
-      g4bppcPortrait9F .text ROM[$0F3E9C:$0F438C] ; CF3E9C
-      g4bppcPortraitA3 .text ROM[$0F438C:$0F47C5] ; CF438C
-      g4bppcPortraitA4 .text ROM[$0F47C5:$0F47C9] ; CF47C5
-      g4bppcPortraitA9 .text ROM[$0F47C9:$0F4CA9] ; CF47C9
-      g4bppcPortraitAA .text ROM[$0F4CA9:$0F50BB] ; CF4CA9
-      g4bppcPortraitAB .text ROM[$0F50BB:$0F5649] ; CF50BB
-      g4bppcPortraitAC .text ROM[$0F5649:$0F5B06] ; CF5649
-      g4bppcPortraitAD .text ROM[$0F5B06:$0F5FA5] ; CF5B06
-      g4bppcPortraitAE .text ROM[$0F5FA5:$0F6088] ; CF5FA5
-      g4bppcPortraitAF .text ROM[$0F6088:$0F64FE] ; CF6088
-      g4bppcPortraitB0 .text ROM[$0F64FE:$0F65E4] ; CF64FE
-      g4bppcPortraitB1 .text ROM[$0F65E4:$0F6B06] ; CF65E4
-      g4bppcPortraitB2 .text ROM[$0F6B06:$0F709D] ; CF6B06
-      g4bppcPortraitB3 .text ROM[$0F709D:$0F75AF] ; CF709D
-      g4bppcPortraitB4 .text ROM[$0F75AF:$0F7AA1] ; CF75AF
-      g4bppcPortraitB5 .text ROM[$0F7AA1:$0F7F17] ; CF7AA1
-      g4bppcPortraitB6 .text ROM[$0F7F17:$0F8000] ; CF7F17
+                                       .text ROM[$0F0000:$0F0439] ; CF0000, rest of g4bppcPortraitManfroy
+      g4bppcPortraitOldArvis           .text ROM[$0F0439:$0F0A24] ; CF0439, entries 89
+      g4bppcPortraitJulius             .text ROM[$0F0A24:$0F0F90] ; CF0A24, entries 8A
+      g4bppcPortraitIshtar             .text ROM[$0F0F90:$0F15CE] ; CF0F90, entries 8C
+      g4bppcPortraitOldEmissary        .text ROM[$0F15CE:$0F1A65] ; CF15CE, entries 95, A2
+      g4bppcPortraitAzmur              .text ROM[$0F1A65:$0F1F6D] ; CF1A65, entries 96
+      g4bppcPortraitKurth              .text ROM[$0F1F6D:$0F254A] ; CF1F6D, entries 97
+      g4bppcPortraitRing               .text ROM[$0F254A:$0F29B3] ; CF254A, entries 98, A0, A1
+      g4bppcPortraitByron              .text ROM[$0F29B3:$0F2EA2] ; CF29B3, entries 99
+      g4bppcPortraitOifey              .text ROM[$0F2EA2:$0F3407] ; CF2EA2, entries 9A
+      g4bppcPortraitSlayder            .text ROM[$0F3407:$0F391B] ; CF3407, entries 9B
+      g4bppcPortraitBatu               .text ROM[$0F391B:$0F3E9C] ; CF391B, entries 9E
+      g4bppcPortraitRahna              .text ROM[$0F3E9C:$0F438C] ; CF3E9C, entries 9F
+      g4bppcPortraitSoldier            .text ROM[$0F438C:$0F47C5] ; CF438C, entries A3
+      g4bppcPortraitEmpty              .text ROM[$0F47C5:$0F47C9] ; CF47C5, entries A4
+      g4bppcPortraitArmory             .text ROM[$0F47C9:$0F4CA9] ; CF47C9, entries A9
+      g4bppcPortraitCivilianSmallBoy   .text ROM[$0F4CA9:$0F50BB] ; CF4CA9, entries AA
+      g4bppcPortraitBlacksmith         .text ROM[$0F50BB:$0F5649] ; CF50BB, entries AB
+      g4bppcPortraitCivilianSmallGirl  .text ROM[$0F5649:$0F5B06] ; CF5649, entries AC
+      g4bppcPortraitArena              .text ROM[$0F5B06:$0F5FA5] ; CF5B06, entries AD
+      g4bppcPortraitPlaceholderArena   .text ROM[$0F5FA5:$0F6088] ; CF5FA5, entries AE
+      g4bppcPortraitCivilian           .text ROM[$0F6088:$0F64FE] ; CF6088, entries AF
+      g4bppcPortraitPlaceholderDepot   .text ROM[$0F64FE:$0F65E4] ; CF64FE, entries B0
+      g4bppcPortraitPawnbroker         .text ROM[$0F65E4:$0F6B06] ; CF65E4, entries B1
+      g4bppcPortraitAnna               .text ROM[$0F6B06:$0F709D] ; CF6B06, entries B2
+      g4bppcPortraitCivilianOldMan     .text ROM[$0F709D:$0F75AF] ; CF709D, entries B3
+      g4bppcPortraitCivilianOldWoman   .text ROM[$0F75AF:$0F7AA1] ; CF75AF, entries B4
+      g4bppcPortraitCivilian2          .text ROM[$0F7AA1:$0F7F17] ; CF7AA1, entries B5
+      g4bppcPortraitCivilianWoman      .text ROM[$0F7F17:$0F8000] ; CF7F17, entries B6
 
     .here
 
@@ -10981,27 +10981,27 @@
     * = $100000
     .logical $D00000
 
-                       .text ROM[$100000:$1002F5] ; D00000, rest of g4bppcPortraitB6
-      g4bppcPortraitB7 .text ROM[$1002F5:$100733] ; D002F5
-      g4bppcPortraitB8 .text ROM[$100733:$100C05] ; D00733
-      g4bppcPortraitB9 .text ROM[$100C05:$10102D] ; D00C05
-      g4bppcPortraitBB .text ROM[$10102D:$101484] ; D0102D
-      g4bppcPortraitBC .text ROM[$101484:$101895] ; D01484
-      g4bppcPortraitBD .text ROM[$101895:$101CF7] ; D01895
-      g4bppcPortraitC3 .text ROM[$101CF7:$10214F] ; D01CF7
-      g4bppcPortraitC5 .text ROM[$10214F:$102595] ; D0214F
-      g4bppcPortraitC7 .text ROM[$102595:$102955] ; D02595
-      g4bppcPortraitC8 .text ROM[$102955:$102D4E] ; D02955
-      g4bppcPortraitCB .text ROM[$102D4E:$103215] ; D02D4E
-      g4bppcPortraitCD .text ROM[$103215:$103609] ; D03215
-      g4bppcPortraitCF .text ROM[$103609:$1039C7] ; D03609
-      g4bppcPortraitD2 .text ROM[$1039C7:$103E0C] ; D039C7
-      g4bppcPortraitD6 .text ROM[$103E0C:$1041D9] ; D03E0C
-      g4bppcPortraitDC .text ROM[$1041D9:$1045AA] ; D041D9
-      g4bppcPortraitDE .text ROM[$1045AA:$104A66] ; D045AA
-      g4bppcPortraitDF .text ROM[$104A66:$104E8B] ; D04A66
-      g4bppcPortraitE7 .text ROM[$104E8B:$1052B5] ; D04E8B
-      g4bppcPortraitEB .text ROM[$1052B5:$105639] ; D052B5
+                                       .text ROM[$100000:$1002F5] ; D00000, rest of g4bppcPortraitCivilianWoman
+      g4bppcPortraitCivilianYoungMan   .text ROM[$1002F5:$100733] ; D002F5, entries B7
+      g4bppcPortraitCivilianYoungWoman .text ROM[$100733:$100C05] ; D00733, entries B8
+      g4bppcClassCardCavalier          .text ROM[$100C05:$10102D] ; D00C05, entries B9, BA, BE, BF, C2
+      g4bppcClassCardBowKnight         .text ROM[$10102D:$101484] ; D0102D, entries BB, C0
+      g4bppcClassCardAxeKnight         .text ROM[$101484:$101895] ; D01484, entries BC
+      g4bppcClassCardFreeKnight        .text ROM[$101895:$101CF7] ; D01895, entries BD, C1
+      g4bppcClassCardPegasusRider      .text ROM[$101CF7:$10214F] ; D01CF7, entries C3, C4
+      g4bppcClassCardDragonRider       .text ROM[$10214F:$102595] ; D0214F, entries C5, C6
+      g4bppcClassCardArcher            .text ROM[$102595:$102955] ; D02595, entries C7, C9, D0, DA
+      g4bppcClassCardMyrmidon          .text ROM[$102955:$102D4E] ; D02955, entries C8, CA, D1, F1, F2
+      g4bppcClassCardGeneral           .text ROM[$102D4E:$103215] ; D02D4E, entries CB, CC
+      g4bppcClassCardSoldier           .text ROM[$103215:$103609] ; D03215, entries CD, CE
+      g4bppcClassCardAxeSolder         .text ROM[$103609:$1039C7] ; D03609, entries CF, D7, D9
+      g4bppcClassCardLanceArmor        .text ROM[$1039C7:$103E0C] ; D039C7, entries D2, D3, D4, D5
+      g4bppcClassCardBarbarian         .text ROM[$103E0C:$1041D9] ; D03E0C, entries D6, D8, DB
+      g4bppcClassCardWarMage           .text ROM[$1041D9:$1045AA] ; D041D9, entries DC, DD, F0
+      g4bppcClassCardPriest            .text ROM[$1045AA:$104A66] ; D045AA, entries DE, E4, E6
+      g4bppcClassCardMage              .text ROM[$104A66:$104E8B] ; D04A66, entries DF, E0, E1, E2, E3, E5, EF
+      g4bppcClassCardThief             .text ROM[$104E8B:$1052B5] ; D04E8B, entries E7, E8, E9, EA
+      g4bppcClassCardBallista          .text ROM[$1052B5:$105639] ; D052B5, entries EB, EC, ED, EE
 
     .here
 
