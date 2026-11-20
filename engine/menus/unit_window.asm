@@ -5175,43 +5175,43 @@
 
         ; One per sort type (wUnitWindowSortType); $0000 marks an unused type.
         .word <>rsUnitWindowGetJoinOrderSortScores
-        .word $CC31
-        .word $CAE5
-        .word $CB0A
-        .word $CB0A
-        .word $CB0A
-        .word $CBBA
-        .word $CCA9
-        .word $CB0A
-        .word $CCD1
-        .word $CB0A
-        .word $CB0A
-        .word $CB0A
-        .word $CB0A
-        .word $CB0A
-        .word $CB0A
-        .word $CB0A
+        .word <>rsUnknown8BCC31
+        .word <>rsUnknown8BCAE5
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnknown8BCBBA
+        .word <>rsUnknown8BCCA9
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnknown8BCCD1
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnitWindowGetStatSortScores
         .word $0000
         .word $0000
         .word $0000
         .word $0000
         .word $0000
-        .word $CB0A
+        .word <>rsUnitWindowGetStatSortScores
         .word $0000
-        .word $CB0A
-        .word $CBF8
-        .word $CBF8
-        .word $CBF8
-        .word $CBF8
-        .word $CBF8
-        .word $CBF8
-        .word $CBF8
-        .word $CBF8
-        .word $CBF8
-        .word $CBF8
-        .word $CC58
-        .word $CB0A
-        .word $CCFA
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnknown8BCBF8
+        .word <>rsUnknown8BCBF8
+        .word <>rsUnknown8BCBF8
+        .word <>rsUnknown8BCBF8
+        .word <>rsUnknown8BCBF8
+        .word <>rsUnknown8BCBF8
+        .word <>rsUnknown8BCBF8
+        .word <>rsUnknown8BCBF8
+        .word <>rsUnknown8BCBF8
+        .word <>rsUnknown8BCBF8
+        .word <>rsUnknown8BCC58
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnknown8BCCFA
         .word <>rsUnitWindowGetSavedOrderSortScores
 
     .endsection Table8BCA31Section
@@ -5328,7 +5328,7 @@
 
         lda #$0003
         sta wUnitWindowSortType
-        jsr $8BCB0A
+        jsr rsUnitWindowGetStatSortScores
         lda wUnitWindowSortDirection
         bne _CAFB
         jsl rlUnitWindowSetSortDescending
@@ -5341,19 +5341,21 @@
         _CAFF
         lda #$0002
         sta wUnitWindowSortType
-        jsr $8BCB0A
+        jsr rsUnitWindowGetStatSortScores
         rts
 
         .databank 0
 
         ; 8B/CB0A
 
-      rsUnknown8BCB0A ; 8B/CB0A
+      rsUnitWindowGetStatSortScores ; 8B/CB0A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort types that score by one stat: each unit's score is what rlUnitWindowGetSortStat returns.
 
         lda wUnitWindowMaxRows
         asl a
@@ -5365,7 +5367,7 @@
         beq _CB2D
         sta wSelectedUnitDataRAMPointer,b
         phx
-        jsl $8BCB2E
+        jsl rlUnitWindowGetSortStat
         plx
         sta aUnitWindowSortScores,x
         inc x
@@ -5380,12 +5382,14 @@
 
         ; 8B/CB2E
 
-      rlUnknown8BCB2E ; 8B/CB2E
+      rlUnitWindowGetSortStat ; 8B/CB2E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Jumps to wUnitWindowSortType's getter in aUnitWindowSortStatGetters for the selected unit.
 
         lda wUnitWindowSortType
         sta wR0
@@ -5393,15 +5397,58 @@
         clc
         adc wR0
         tax
-        lda $8BCB49,x
+        lda aUnitWindowSortStatGetters+1,x
         sta lR18+1
-        lda $8BCB48,x
+        lda aUnitWindowSortStatGetters,x
         sta lR18
         jml [lR18]
 
         .databank 0
 
-        ; 8B/CB48
+      aUnitWindowSortStatGetters ; 8B/CB48
+
+        ; One long pointer per sort type (wUnitWindowSortType) for the types
+        ; whose score is one getter's value for the unit; $000000 for the rest.
+        .long $000000
+        .long $000000
+        .long rlGetSelectedUnitLevel
+        .long rlGetSelectedUnitExperience
+        .long rlGetSelectedUnitCurrentHP
+        .long rlGetSelectedUnitMaxHP
+        .long $000000
+        .long $000000
+        .long rlUnknown84FE98
+        .long $000000
+        .long rlGetSelectedUnitTotalStrength
+        .long rlGetSelectedUnitTotalMagic
+        .long rlGetSelectedUnitTotalSkill
+        .long rlGetSelectedUnitTotalSpeed
+        .long rlGetSelectedUnitLuck
+        .long rlGetSelectedUnitTotalDefense
+        .long rlGetSelectedUnitTotalResistance
+        .long $000000
+        .long $000000
+        .long $000000
+        .long $000000
+        .long $000000
+        .long rlGetSelectedUnitMoney
+        .long rlGetSelectedUnitStatus
+        .long rlGetSelectedUnitTotalMovement
+        .long $000000
+        .long $000000
+        .long $000000
+        .long $000000
+        .long $000000
+        .long $000000
+        .long $000000
+        .long $000000
+        .long $000000
+        .long $000000
+        .long $000000
+        .long rlGetSelectedUnitArenaLevel
+        .long $000000
+
+        ; 8B/CBBA
 
     .endsection UnitWindowUnknown8BCAE5Section
 

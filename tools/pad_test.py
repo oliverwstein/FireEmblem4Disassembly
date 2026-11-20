@@ -14,6 +14,11 @@ so SECTION and everything after it in its placement block (the code between one
 - it checks every label in the block moved by N and no label outside it moved;
 - it lists the bytes changed outside the block: references to the moved code
   that the assembler updated;
+- it lists calls (jsl/jml, jsr/jmp) and long pointers (three bytes: low, high,
+  bank) into the block from bytes not built from source, which cannot move;
+  long pointers checked by hand and found to be chance are in NOT_POINTERS;
+- it lists six-digit numbers in the source that are addresses in the block
+  (`jml $84F889`): built, but they do not move;
 - it warns if anything changed inside the code the game checksums while it runs
   (include/Checksums.h), since the game would then detect the change;
 - it fixes the internal header checksum of FE4Padded.sfc.
@@ -26,6 +31,7 @@ The padding is NOPs, so code that falls through from the previous section into
 SECTION still works, as it would after a real mod.
 """
 
+import glob
 import os
 import re
 import shutil
@@ -46,6 +52,73 @@ CHECKED_RANGES = [
     (0x078017, 0x0780A9, '$87/8017-80A9 (summed by rlCheckCodeChecksums)'),
     (0x088888, 0x088907, '$88/8888-8907 (checking code)'),
 ]
+
+# Bytes in unbuilt data that read as a long pointer into a tested block (banks
+# $84 and $86) but were checked by hand and are not one (2026-11-20), as file offsets. Remove an entry
+# once the data around it is built.
+NOT_POINTERS = {
+    0x0BE0CB: 'compressed graphics or data, no pointers beside it',  # $8B/E0CB
+    0x0BE66E: 'compressed graphics or data, no pointers beside it',  # $8B/E66E
+    0x0BED1E: 'compressed graphics or data, no pointers beside it',  # $8B/ED1E
+    0x0CF04E: 'straddles two entries of the $8C/FExx pointer table aUnknown8CEE6A',  # $8C/F04E
+    0x0DA8D2: 'operand of ldx #$9388',  # $8D/A8D2
+    0x0DA9DA: 'operand of ldx #$9388',  # $8D/A9DA
+    0x14C7BA: 'compressed graphics or data, no pointers beside it',  # $94/C7BA
+    0x14CE6B: 'compressed graphics or data, no pointers beside it',  # $94/CE6B
+    0x14D14D: 'compressed graphics or data, no pointers beside it',  # $94/D14D
+    0x14D30B: 'compressed graphics or data, no pointers beside it',  # $94/D30B
+    0x14DC65: 'compressed graphics or data, no pointers beside it',  # $94/DC65
+    0x14E7F4: 'compressed graphics or data, no pointers beside it',  # $94/E7F4
+    0x14E800: 'compressed graphics or data, no pointers beside it',  # $94/E800
+    0x14EFFA: 'compressed graphics or data, no pointers beside it',  # $94/EFFA
+    0x17CA97: 'run of $82-$88 bytes',  # $97/CA97
+    0x17CBCF: 'run of $80-$90 bytes',  # $97/CBCF
+    0x17CD0F: 'compressed graphics or data, no pointers beside it',  # $97/CD0F
+    0x17DABF: 'compressed graphics or data, no pointers beside it',  # $97/DABF
+    0x17DAD8: 'compressed graphics or data, no pointers beside it',  # $97/DAD8
+    0x17E4F6: 'run of $81-$87 bytes',  # $97/E4F6
+    0x17E5AC: 'compressed graphics or data, no pointers beside it',  # $97/E5AC
+    0x17E604: 'run of $81-$89 bytes',  # $97/E604
+    0x17E737: 'run of $81-$84 bytes',  # $97/E737
+    0x17E802: 'run of $81-$89 bytes',  # $97/E802
+    0x17F904: 'same bytes as $9A/A1BC: graphics',  # $97/F904
+    0x18A0A4: 'increasing byte series',  # $98/A0A4
+    0x18A11D: 'increasing byte series',  # $98/A11D
+    0x18A196: 'increasing byte series',  # $98/A196
+    0x18A238: 'increasing byte series',  # $98/A238
+    0x18A289: 'increasing byte series',  # $98/A289
+    0x18A4C1: 'increasing byte series',  # $98/A4C1
+    0x18A62F: 'increasing byte series',  # $98/A62F
+    0x18A6A9: 'increasing byte series',  # $98/A6A9
+    0x18D0E2: '01 DD C6 inside sprite-like records',  # $98/D0E2
+    0x18D14E: '01 DD C6 inside sprite-like records',  # $98/D14E
+    0x18D1AB: '01 DD C6 inside sprite-like records',  # $98/D1AB
+    0x18D274: '01 DD C6 inside sprite-like records',  # $98/D274
+    0x18D33D: '01 DD C6 inside sprite-like records',  # $98/D33D
+    0x18DEC8: '01 DD C6 inside sprite-like records',  # $98/DEC8
+    0x18E4D3: '01 DD C6 inside sprite-like records',  # $98/E4D3
+    0x1A9B4D: 'compressed graphics or data, no pointers beside it',  # $9A/9B4D
+    0x1AA1BC: 'same bytes as $97/F904: graphics',  # $9A/A1BC
+    0x1AC592: '01 DD C6 inside sprite-like records',  # $9A/C592
+    0x1AC5FE: '01 DD C6 inside sprite-like records',  # $9A/C5FE
+    0x1AC65B: '01 DD C6 inside sprite-like records',  # $9A/C65B
+    0x1AC724: '01 DD C6 inside sprite-like records',  # $9A/C724
+    0x1AC7ED: '01 DD C6 inside sprite-like records',  # $9A/C7ED
+    0x1AD256: '01 DD C6 inside sprite-like records',  # $9A/D256
+    0x1AD83E: '01 DD C6 inside sprite-like records',  # $9A/D83E
+    0x1C9BFE: 'compressed graphics or data, no pointers beside it',  # $9C/9BFE
+    0x1CAB77: 'compressed graphics or data, no pointers beside it',  # $9C/AB77
+    0x1CAC87: 'compressed graphics or data, no pointers beside it',  # $9C/AC87
+    0x1CADFA: 'compressed graphics or data, no pointers beside it',  # $9C/ADFA
+    0x1CB018: 'compressed graphics or data, no pointers beside it',  # $9C/B018
+    0x1CB95E: 'compressed graphics or data, no pointers beside it',  # $9C/B95E
+    0x1CC0DF: 'compressed graphics or data, no pointers beside it',  # $9C/C0DF
+    0x1CC666: 'compressed graphics or data, no pointers beside it',  # $9C/C666
+    0x1CD088: 'compressed graphics or data, no pointers beside it',  # $9C/D088
+    0x1CD3AF: 'compressed graphics or data, no pointers beside it',  # $9C/D3AF
+    0x1CE346: 'compressed graphics or data, no pointers beside it',  # $9C/E346
+    0x1FC4BA: 'inside 9-byte records of $9F/C4xx words',  # $9F/C4BA
+}
 
 
 def offset(addr):
@@ -319,6 +392,66 @@ def main():
         problems.append(f'{len(certain)} calls into the block that fe4.cdl shows ran come from '
                         'bytes not built from source, so they did not move with it; build '
                         'the code around them first.')
+
+    # 4b. Long pointers into the block in bytes that are not source: three bytes
+    #     low, high, bank ($8x or $Cx) giving the start of a routine or table in
+    #     the block, as in a table of `.long label`. Only the code banks' upper
+    #     halves are searched; data elsewhere matches by chance too often. Bytes
+    #     that are the operand of a jsl/jml listed above are left out.
+    call_operands = {o + 1 for o, op, _ in calls if op in (0x22, 0x5C)}
+    pointers = []
+    for o in range(0, 0x200000 - 2):
+        if (o & 0xFFFF) < 0x8000 or (o & 0xFFFF) > 0xFFFD or o in call_operands:
+            continue
+        hb = rom[o + 2]
+        if hb & 0x3F != bank or hb < 0x80:
+            continue
+        t = (bank << 16) | rom[o] | rom[o + 1] << 8
+        if t in targets and not any(from_source[o:o + 3]):
+            pointers.append((o, t))
+    reviewed = [p for p in pointers if p[0] in NOT_POINTERS]
+    pointers = [p for p in pointers if p[0] not in NOT_POINTERS]
+    if reviewed:
+        print(f'Long pointers into the block checked by hand and found to be chance '
+              f'(NOT_POINTERS): {len(reviewed)}')
+    read = lambda o: o < len(cdl) and cdl[o] & 2
+    if pointers:
+        read_ptrs = [p for p in pointers if read(p[0])]
+        by_bank = defaultdict(int)
+        for o, _ in pointers:
+            by_bank[f'${0x80 + (o >> 16):02X}'] += 1
+        print(f'Long pointers into the block in bytes not built from source: {len(pointers)} '
+              f'({len(read_ptrs)} read in fe4.cdl). By bank: '
+              + ', '.join(f'{b} {k}' for b, k in sorted(by_bank.items())))
+        for o, t in sorted(pointers):
+            print(f'  {cpu(o)} .long {targets[t]}{" (read)" if read(o) else ""}')
+        print('  These still hold the old addresses. Write the tables they belong to as\n'
+              '  source (`.long label`); a match in code or unrelated data is chance.')
+        problems.append(f'{len(pointers)} long pointers into the block are in bytes not built '
+                        'from source; write the tables they belong to, or confirm each is '
+                        'not a pointer.')
+
+    # 4c. Addresses into the block written as numbers in the source, such as
+    #     `jml $84F889` or `.long $84C398`: they are source, so the assembler
+    #     builds them, but they do not move. Six-digit numbers only; a bank's
+    #     short addresses ($C4B2) look too much like other numbers to search.
+    hidden = []
+    files = (glob.glob('engine/**/*.asm', recursive=True)
+             + glob.glob('data/**/*.asm', recursive=True) + glob.glob('events/**/*.asm', recursive=True))
+    for path in files:
+        for k, line in enumerate(open(path, encoding='utf-8'), 1):
+            code = line.split(';')[0]
+            if re.match(r'\s*\.(logical|fill)\b', code):
+                continue
+            for m in re.finditer(r'\$([0-9A-Fa-f]{6})\b', code):
+                v = int(m.group(1), 16)
+                if v >> 16 >= 0x80 and offset(v) is not None and s_off <= offset(v) < e_off:
+                    hidden.append(f'  {path}:{k}: {code.strip()}')
+    if hidden:
+        print(f'Addresses into the block written as numbers in the source: {len(hidden)}')
+        print('\n'.join(hidden[:20]) + ('\n  ...' if len(hidden) > 20 else ''))
+        problems.append(f'{len(hidden)} numbers in the source are addresses in the block; '
+                        'write them as labels so they move with it.')
 
     # 5. The game's own code checksums.
     for lo, hi, what in CHECKED_RANGES:

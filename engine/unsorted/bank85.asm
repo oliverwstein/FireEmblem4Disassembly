@@ -797,6 +797,27 @@
 
         ; 85/871B
 
+      rlUnknown85871B ; 85/871B
+
+        ; Nothing in the build reaches this; it did not run in fe4.cdl.
+        ; Closes the map menu and frees the proc when a button is pressed.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        beq _8727
+        jsl rlCloseMapMenuFromProc
+        jsl rlProcEngineFreeProc
+
+        _8727
+        rtl
+
+        .databank 0
+
+        ; 85/8728
+
     .endsection Unsorted8586FFSection
 
 

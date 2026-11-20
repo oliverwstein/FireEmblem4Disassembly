@@ -3267,7 +3267,7 @@
         jsl rlUnknown84FED2
         ora #$0000
         beq _F814
-        jml $84F889
+        jml rsUnknown84F877._F889
 
 
         _F814
@@ -3291,7 +3291,7 @@
         bcc _F82C
         jsl rlUnknown87E6A5
         bcc _F82C
-        jml $84F889
+        jml rsUnknown84F877._F889
 
 
         _F82C
@@ -3315,7 +3315,7 @@
         bcc _F844
         jsl rlUnknown87E709
         bcc _F844
-        jml $84F889
+        jml rsUnknown84F877._F889
 
 
         _F844
@@ -3342,7 +3342,7 @@
         jsl rlUnknown84FED2
         ora #$0000
         beq _F864
-        jml $84F889
+        jml rsUnknown84F877._F889
 
 
         _F864
@@ -3364,7 +3364,7 @@
         lda wR0
         jsl rlUnknown84F765
         bcc _F876
-        jml $84F889
+        jml rsUnknown84F877._F889
 
 
         _F876

@@ -5294,10 +5294,10 @@
 
     .here
 
-    * = $07C398
-    .logical $87C398
+    * = $07C38C
+    .logical $87C38C
 
-      .dsection Unsorted87C398Section
+      .dsection Unsorted87C38CSection
 
     .here
 

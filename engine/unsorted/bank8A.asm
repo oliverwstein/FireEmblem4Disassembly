@@ -3112,6 +3112,23 @@
 
         ; 8A/937E
 
+      rlUnknown8A937E ; 8A/937E
+
+        ; Nothing in the build reaches this; it did not run in fe4.cdl.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0005
+        sta $0891,b
+        jsl rlUnknown8A8496
+        rtl
+
+        .databank 0
+
+        ; 8A/9389
+
     .endsection Unsorted8A9342Section
 
 

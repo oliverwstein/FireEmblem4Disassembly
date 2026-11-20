@@ -5631,7 +5631,13 @@
     .endsection Unsorted87C056Section
 
 
-    .section Unsorted87C398Section
+    .section Unsorted87C38CSection
+
+      aHDMAUnknown87C38C ; 87/C38C
+
+        ; Created by rlUnknown81B32C. Writes WH0 indirectly from the buffer at
+        ; $7E8B92, which rsUnknown87C442 fills from aUnknown87C4B2.
+        .structHDMAIndirectEntryInfo rlUnknown87C398, rlUnknown87C3C4, aHDMAUnknown87C38CCode, aHDMAUnknown87C38CTableEven, WH0, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode0), $7E
 
       .al
       .xl
@@ -5674,14 +5680,14 @@
         bne _C3D7
         lda #$0000
         sta $7E8B8E
-        lda #$C4A4
+        lda #<>aHDMAUnknown87C38CTableEven
         bra _C3E1
 
 
         _C3D7
         lda #$0100
         sta $7E8B8E
-        lda #$C4AB
+        lda #<>aHDMAUnknown87C38CTableOdd
 
         _C3E1
         sta aHDMASystem.aOffset,b,x
@@ -5710,7 +5716,7 @@
 
         ; 87/C41B
 
-    .endsection Unsorted87C398Section
+    .endsection Unsorted87C38CSection
 
 
     .section Unsorted87C41BSection
@@ -5746,7 +5752,11 @@
 
         .databank 0
 
-        ; 87/C440
+      aHDMAUnknown87C38CCode ; 87/C440
+
+        HDMA_HALT
+
+        ; 87/C442
 
     .endsection Unsorted87C41BSection
 
@@ -5770,7 +5780,7 @@
         ldy #$00EF
 
         _C44B
-        lda $C4B2,b,y
+        lda <>aUnknown87C4B2,b,y
         and #$00FF
         clc
         adc $7E8B88
@@ -5830,7 +5840,48 @@
 
         .databank 0
 
-        ; 87/C4A4
+      aHDMAUnknown87C38CTableEven ; 87/C4A4
+
+        ; Indirect HDMA tables: 120 lines from each address in bank $7E.
+        ; rlUnknown87C3C4 switches between them every frame.
+        .byte $F8
+        .word $8B92
+        .byte $F8
+        .word $8C0A
+        .byte $00
+
+      aHDMAUnknown87C38CTableOdd ; 87/C4AB
+
+        .byte $F8
+        .word $8C92
+        .byte $F8
+        .word $8D0A
+        .byte $00
+
+      aUnknown87C4B2 ; 87/C4B2
+
+        ; 240 offsets, one per line, that rsUnknown87C442 adds to $7E8B88.
+        .byte $02, $03, $05, $07, $05, $03, $04, $05, $08, $06, $0A, $0C, $0A, $08, $04, $05
+        .byte $06, $09, $0B, $0D, $0F, $12, $10, $0C, $0E, $0F, $0E, $0A, $0A, $0E, $10, $12
+        .byte $0E, $0C, $08, $04, $03, $01, $00, $00, $04, $07, $0A, $0D, $0A, $08, $06, $06
+        .byte $0A, $0E, $0F, $0C, $0A, $09, $0D, $10, $13, $11, $0D, $0A, $09, $08, $0C, $10
+        .byte $14, $18, $13, $0E, $09, $06, $07, $09, $0A, $08, $0C, $0E, $12, $0E, $10, $14
+        .byte $18, $12, $14, $16, $18, $1C, $19, $17, $15, $12, $17, $1B, $16, $12, $0E, $0A
+        .byte $08, $06, $04, $08, $0A, $07, $03, $00, $02, $04, $08, $0C, $0A, $08, $0A, $0E
+        .byte $0C, $0E, $10, $0C, $0A, $08, $0C, $10, $0E, $0C, $0A, $06, $04, $08, $06, $02
+        .byte $04, $08, $0A, $06, $02, $00, $02, $04, $01, $03, $05, $04, $01, $00, $02, $06
+        .byte $0A, $0E, $0C, $0D, $10, $0C, $08, $04, $02, $00, $03, $05, $07, $05, $03, $06
+        .byte $09, $0C, $10, $14, $12, $0E, $0A, $06, $0A, $06, $0C, $10, $0C, $08, $04, $08
+        .byte $06, $0A, $0C, $0A, $0E, $0C, $12, $10, $11, $0F, $0B, $07, $0A, $07, $0C, $11
+        .byte $0E, $0B, $08, $03, $00, $02, $03, $05, $04, $07, $0A, $0E, $10, $0C, $10, $0C
+        .byte $12, $0E, $10, $0C, $0A, $06, $02, $06, $0A, $08, $06, $0A, $0E, $0B, $0D, $0B
+        .byte $07, $03, $02, $01, $00, $02, $03, $05, $07, $05, $03, $04, $05, $08, $0A, $04
+
+      procUnknown87C5A2 ; 87/C5A2
+
+        .structProcInfo "GO", rlUnknown87C5AA, rlUnknown87C646, aProcUnknown87C5A2Code
+
+        ; 87/C5AA
 
     .endsection Unsorted87C442Section
 
@@ -5908,7 +5959,15 @@
 
         .databank 0
 
-        ; 87/C686
+      aProcUnknown87C5A2Code ; 87/C686
+
+        PROC_YIELD 32
+        PROC_CALL rlUnknown87C695
+        PROC_YIELD 1020
+        PROC_SET_ONCYCLE rlUnknown87C646._C660
+        PROC_HALT
+
+        ; 87/C695
 
     .endsection Unsorted87C646Section
 

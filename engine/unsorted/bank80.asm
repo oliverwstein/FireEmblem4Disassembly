@@ -4600,9 +4600,9 @@
         lda #$03
         sta bBufferTM
         rep #$20
-        lda #$8700
+        lda #(`procUnknown87C5A2)<<8
         sta lR44+1
-        lda #$C5A2
+        lda #<>procUnknown87C5A2
         sta lR44
         jsl rlProcEngineCreateProc
         lda #<>rsUnknown80AE68

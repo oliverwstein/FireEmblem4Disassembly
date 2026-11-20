@@ -155,7 +155,7 @@
     sta wRoutineVariable1
 
     lda #JuliusChFinal
-    jsl $84C87A
+    jsl rlUnknown84C87A
     rtl
 
     .databank 0

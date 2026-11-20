@@ -2026,9 +2026,9 @@
         bra ++
 
         +
-        lda #(`$87C38C)<<8
+        lda #(`aHDMAUnknown87C38C)<<8
         sta lR44+1
-        lda #<>$87C38C
+        lda #<>aHDMAUnknown87C38C
         sta lR44
         jsl rlHDMAEngineCreateEntry
         
