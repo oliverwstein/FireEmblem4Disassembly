@@ -890,6 +890,194 @@
     .endsection BattleAnimationExtrasSection
 
 
+    .section BattleAnimationFramesSection
+
+      .al
+      .xl
+
+      aBattleAnimationFrameIndices ; 97/874F
+
+        ; For each first animation ID plus 1, its aBattleAnimationFrameTables
+        ; entry (rlUnknown958AB7).
+
+        .byte $00, $0C, $0D, $0E, $0F, $10, $11, $02
+        .byte $03, $02, $02, $02, $02, $02, $02, $12
+        .byte $13, $14, $15, $16, $17, $03, $02, $02
+        .byte $02, $18, $19, $1A, $1B, $1C, $1D, $1E
+        .byte $03, $01, $02, $03, $02, $1F, $20, $21
+        .byte $22, $23, $24, $25, $02, $02, $06, $07
+        .byte $08, $09, $0A, $02, $02, $26, $02, $27
+        .byte $28, $29, $2E, $2A, $04, $05, $2E, $2E
+        .byte $04, $2A, $04, $05, $04, $05, $01, $04
+        .byte $05, $05, $05, $05, $04, $05, $04, $05
+        .byte $04, $05, $2A, $05, $04, $05, $04, $05
+        .byte $04, $05, $0B, $02, $02, $2B, $2C, $2D
+
+      aBattleAnimationFrameTables ; 97/87AF
+
+        ; Two pointers per entry, to $0C25 and $0C36. The second is the frame
+        ; table: word offsets to frames, each a count byte and that many pairs
+        ; (offset into the sheet, byte count), each pair filling one 16-tile
+        ; row of sprite VRAM (rsUnknown95C2C0). The first is nested word-offset
+        ; tables, probably the frame sequences (not decoded).
+
+        .long dialogueChapterPrologueWorldMap3+228, dialogueChapterPrologueWorldMap1
+        .long $9AF2C7, $9AF201
+        .long $9AE6A2, $9AE558
+        .long $9AD9BC, $9AD943
+        .long $98B593, $98B41E
+        .long $98B4D9, $98B41E
+        .long $98EBAC, $98EB33
+        .long $98F327, $98F2A3
+        .long $98F447, $98F2A3
+        .long $98ED76, $98EB33
+        .long $98FA07, $98F9A4
+        .long $99E2A7, $99E1CB
+        .long $98C6C5, $98C659
+        .long $98D449, $98D3DD
+        .long $98D5C3, $98D3DD
+        .long $98C82B, $98C659
+        .long $98E583, $98E567
+        .long $98C98D, $98C659
+        .long $9ABA9A, $9ABA2A
+        .long $9AC88D, $9ABA2A
+        .long $9AC9D1, $9ABA2A
+        .long $9ABC1A, $9ABA2A
+        .long $9ABD66, $9ABA2A
+        .long $9ABE86, $9ABA2A
+        .long $9B8071, $9B8000
+        .long $9B90BF, $9B904E
+        .long $9B9320, $9B92AF
+        .long $9B829C, $9B822B
+        .long $9BA19F, $9BA16E
+        .long $9BAE51, $9BAE20
+        .long $9BAFE4, $9BAFB3
+        .long $9990CA, $998FA1
+        .long $999F12, $999E2B
+        .long $99A167, $99A080
+        .long $9992D2, $998FA1
+        .long $99AF10, $99AEB8
+        .long $99B5B7, $99B48E
+        .long $99C1F9, $99C0D0
+        .long $9ADFD4, $9ADF7C
+        .long $99D20F, $99D0A4
+        .long $99D407, $99D0A4
+        .long $99DBFB, $99DB82
+        .long $98BA84, $98B90E
+        .long $99CD63, $99CD42
+        .long $9AFB55, $9AFAA5
+        .long $9BBD7A, $9BBC9E
+        .long $99EAEE, $99E978
+
+    .endsection BattleAnimationFramesSection
+
+
+    .section BattleAnimationProgramsSection
+
+      .al
+      .xl
+
+      aBattleAnimationMoveRoutines ; 97/C860
+
+        ; Moves below $80 in a combatant's queue run these (rlUnknown95B1AB,
+        ; with jsr: the routines are in bank $95).
+
+        .word <>rsUnknown95B250
+        .word <>rsUnknown95B28F
+        .word <>rsUnknown95B2B2
+        .word <>rsUnknown95B2DF
+        .word <>rsUnknown95B2E9
+        .word <>rsUnknown95B314
+        .word <>rsUnknown95B332
+        .word <>rsUnknown95B352
+        .word <>rsUnknown95B362
+        .word <>rsUnknown95B36A
+        .word <>rsUnknown95B372
+        .word <>rsUnknown95B3AF
+        .word <>rsUnknown95B3ED
+        .word <>rsUnknown95B431
+        .word <>rsUnknown95B475
+        .word <>rsUnknown95B48D
+        .word <>rsUnknown95B4E0
+        .word <>rsUnknown95B519
+
+      aBattleAnimationProgramIndices ; 97/C884
+
+        ; For each first animation ID plus 1, its aBattleAnimationPrograms
+        ; entry (rlUnknown95E3FE).
+
+        .byte $00, $0B, $0C, $0D, $0E, $0F, $10, $02
+        .byte $0F, $02, $02, $02, $02, $02, $02, $11
+        .byte $12, $13, $14, $15, $16, $0F, $02, $02
+        .byte $02, $17, $18, $19, $1A, $1B, $1C, $1D
+        .byte $1F, $01, $02, $1F, $02, $20, $21, $22
+        .byte $23, $24, $25, $26, $02, $02, $05, $06
+        .byte $07, $08, $09, $21, $20, $1E, $20, $27
+        .byte $28, $29, $2E, $2A, $03, $04, $2E, $2E
+        .byte $03, $2A, $03, $04, $03, $04, $0A, $03
+        .byte $04, $04, $04, $04, $03, $04, $03, $04
+        .byte $03, $04, $2A, $04, $03, $04, $03, $04
+        .byte $03, $04, $0A, $0A, $0A, $2B, $2C, $2D
+
+      aBattleAnimationPrograms ; 97/C8E4
+
+        ; Three pointers per entry (uncompressed data in bank $97, not decoded
+        ; yet): a word-offset table of move lists (each ended by $7F) and a
+        ; byte per step that picks one (bit 7 set) or is a single move, which
+        ; rlUnknown95DB2A queues for the combatant; and the table of movement
+        ; scripts for moves with bit 7 set (signed steps, one per frame).
+
+        .long dialogueEpilogue_Piece_Leif_End+127, dialogueEpilogue_Piece_Leif_End+63, dialogueEpilogue_Piece_DaisyPatty_LoverDead+256
+        .long $97CAC4, $97CA8B, $97CB63
+        .long $97CBFB, $97CBC4, $97CCB8
+        .long $97CCFF, $97CCF7, $97CD19
+        .long $97CD57, $97CD47, $97CD7C
+        .long $97CE02, $97CDC2, $97CE78
+        .long $97CF50, $97CF15, $97CF93
+        .long $97D01F, $97CFF0, $97D058
+        .long $97D0B7, $97D087, $97D0F5
+        .long $97D14C, $97D11D, $97D18C
+        .long $97D1CB, $97D194, $97D246
+        .long $97D2AA, $97D273, $97D317
+        .long $97D367, $97D32B, $97D3B7
+        .long $97D44B, $97D41B, $97D474
+        .long $97D4CD, $97D49E, $97D4F2
+        .long $97D52F, $97D500, $97D552
+        .long $97D5A1, $97D599, $97D5AF
+        .long $97D5EC, $97D5B5, $97D656
+        .long $97D6B3, $97D673, $97D70B
+        .long $97D784, $97D74B, $97D7AD
+        .long $97D802, $97D7D3, $97D827
+        .long $97D83D, $97D835, $97D84D
+        .long $97D863, $97D853, $97D87D
+        .long $97D8C3, $97D88A, $97D992
+        .long $97D9E1, $97D9A4, $97DA85
+        .long $97DABC, $97DA8D, $97DAC6
+        .long $97DAD5, $97DACD, $97DADF
+        .long $97DB1F, $97DAE5, $97DBB4
+        .long $97DC3C, $97DBFF, $97DCAA
+        .long $97DCFD, $97DCC0, $97DD66
+        .long $97DDBC, $97DD8B, $97DDFF
+        .long $97DE80, $97DE4E, $97DEA3
+        .long $97DF0E, $97DED6, $97DFB5
+        .long $97E094, $97E059, $97E0EF
+        .long $97E18A, $97E15B, $97E1A7
+        .long $97E202, $97E1D3, $97E221
+        .long $97E274, $97E243, $97E2B7
+        .long $97E30D, $97E305, $97E31C
+        .long $97E340, $97E330, $97E36E
+        .long $97E3D6, $97E397, $97E46B
+        .long $97E525, $97E4F0, $97E54D
+        .long $97E59B, $97E56C, $97E5E4
+        .long $97E637, $97E600, $97E6DC
+        .long $97E735, $97E707, $97E735
+        .long $97E745, $97E735, $97E766
+        .long $97E7AB, $97E7A6, $97E7C4
+        .long $97E835, $97E7FE, $97E8D1
+
+    .endsection BattleAnimationProgramsSection
+
+
     .section BattleCharacterPiecesSection
 
       .al

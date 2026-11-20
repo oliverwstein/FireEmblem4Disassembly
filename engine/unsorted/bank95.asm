@@ -1619,7 +1619,7 @@
         inc a
         and #$00FF
         tax
-        lda $97874F,x
+        lda aBattleAnimationFrameIndices,x
         and #$00FF
         asl a
         pha
@@ -1630,13 +1630,13 @@
         adc #$0060
         tax
         pla
-        lda $97874F,x
+        lda aBattleAnimationFrameIndices,x
         sta $0C25,b
-        lda $978750,x
+        lda aBattleAnimationFrameIndices+1,x
         sta $0C26,b
-        lda $978752,x
+        lda aBattleAnimationFrameIndices+3,x
         sta $0C36,b
-        lda $978753,x
+        lda aBattleAnimationFrameIndices+4,x
         sta $0C37,b
         plx
         pla
@@ -5841,13 +5841,13 @@
 
 
         _A378
-        lda $9788C5,x
+        lda aBattleAnimationFrameTables+278,x
         sta $7FE1B6
-        lda $9788C6,x
+        lda aBattleAnimationFrameTables+279,x
         sta $7FE1B7
-        lda $9788C7,x
+        lda aBattleAnimationFrameTables+280,x
         sta $7FE1B8
-        lda $9788C8,x
+        lda aBattleAnimationFrameTables+281,x
         sta $7FE1B9
         sec
         bra _A3BC
@@ -8037,7 +8037,7 @@
         phx
         asl a
         tax
-        lda $97C860,x
+        lda aBattleAnimationMoveRoutines,x
         sta wR0
         pla
         ldx #$0000
@@ -16737,7 +16737,7 @@
         inc a
         and #$00FF
         tax
-        lda $97C884,x
+        lda aBattleAnimationProgramIndices,x
         and #$00FF
         pha
         asl a
@@ -16749,17 +16749,17 @@
         adc #$0060
         tax
         pla
-        lda $97C887,x
+        lda aBattleAnimationProgramIndices+3,x
         sta lR18
-        lda $97C888,x
+        lda aBattleAnimationProgramIndices+4,x
         sta lR18+1
-        lda $97C884,x
+        lda aBattleAnimationProgramIndices,x
         sta lR19
-        lda $97C885,x
+        lda aBattleAnimationProgramIndices+1,x
         sta lR19+1
-        lda $97C88A,x
+        lda aBattleAnimationProgramIndices+6,x
         sta lR20
-        lda $97C88B,x
+        lda aBattleAnimationProgramIndices+7,x
         sta lR20+1
         ply
         plx

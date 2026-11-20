@@ -103,6 +103,7 @@
   .include "engine/ai/threat.asm"
   .include "engine/arena/arena.asm"
   .include "engine/battle/map_battle_magic.asm"
+  .include "engine/battle_scene/animation_moves.asm"
   .include "engine/battle_scene/animations.asm"
   .include "engine/battle_scene/backgrounds.asm"
   .include "engine/battle_scene/script.asm"
@@ -12474,10 +12475,24 @@
 
     .here
 
+    * = $15B250
+    .logical $95B250
+
+      .dsection BattleAnimationMoves95B250Section
+
+    .here
+
     * = $15B2DF
     .logical $95B2DF
 
       .dsection Unsorted95B2DFSection
+
+    .here
+
+    * = $15B332
+    .logical $95B332
+
+      .dsection BattleAnimationMoves95B332Section
 
     .here
 
@@ -12488,10 +12503,24 @@
 
     .here
 
+    * = $15B3AF
+    .logical $95B3AF
+
+      .dsection BattleAnimationMoves95B3AFSection
+
+    .here
+
     * = $15B475
     .logical $95B475
 
       .dsection Unsorted95B475Section
+
+    .here
+
+    * = $15B48D
+    .logical $95B48D
+
+      .dsection BattleAnimationMoves95B48DSection
 
     .here
 
@@ -13901,6 +13930,20 @@
     .logical $97828B
 
       .dsection BattleAnimationExtrasSection
+
+    .here
+
+    * = $17874F
+    .logical $97874F
+
+      .dsection BattleAnimationFramesSection
+
+    .here
+
+    * = $17C860
+    .logical $97C860
+
+      .dsection BattleAnimationProgramsSection
 
     .here
 
