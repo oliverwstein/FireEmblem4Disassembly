@@ -8,7 +8,7 @@ a real name and format (a PNG if it is graphics) and run the tool again.
 Previews draw the decompressed bytes as 4bpp tiles, 16 across, in grey. That
 is only a first look: a stream may be 2bpp graphics, a tilemap, or other data.
 
-153 streams.
+130 streams.
 
 ## Region $94C140
 
@@ -161,48 +161,48 @@ Nothing in the source names it (found between other streams).
 - Entry `aUnknown80E13E` (engine/menus/revive_screen.asm:218): $1800 bytes to VRAM $0000; used by `rsUnknown80E0AE` (engine/menus/revive_screen.asm:154).
 - Entry `aDataWindowDecompressionList` (engine/menus/data_window.asm:183): $1800 bytes to VRAM $0000; used by `rsDataWindowLoadGraphics` (engine/menus/data_window.asm:130).
 - Entry `aUnknown8AE4BB` (engine/arena/arena.asm:26): $1800 bytes to VRAM $4000; used by `rlUnknown8AE2F8` (engine/unsorted/bank8A.asm:11842).
-- Entry `aDecompressionDMAEntry80B0CB` (build.asm:764): $1800 bytes to VRAM $4000; used by `rlUnknown80B0BC` (engine/unsorted/bank80.asm:4437).
-- Entry `aDecompressionDMAEntry80B99D` (build.asm:890): $1800 bytes to VRAM $4000; used by `rlUnknown80B827` (engine/unsorted/bank80.asm:5356).
-- Entry `aDecompressionDMAEntry80BB45` (build.asm:934): $1800 bytes to VRAM $4000; used by `rlUnknown80BA52` (engine/unsorted/bank80.asm:5667).
-- Entry `aDecompressionDMAEntry80BEF9` (build.asm:965): $1800 bytes to VRAM $4000; used by `rlUnknown80BD27` (engine/unsorted/bank80.asm:6043).
-- Entry `aDecompressionDMAEntry80C5BE` (build.asm:1038): $1800 bytes to VRAM $4000; used by `rsUnitWindowCopyGraphics` (engine/menus/unit_window.asm:192).
-- Entry `aDecompressionDMAEntry80CE8E` (build.asm:1116): $1800 bytes to VRAM $0000; used by `rsItemWindowCopyGraphics` (engine/menus/item_window.asm:128).
-- Entry `aDecompressionDMAEntry80D41D` (build.asm:1167): $1800 bytes to VRAM $0000; used by `rsSkillWindowCopyGraphics` (engine/menus/skill_window.asm:128).
-- Entry `aDecompressionDMAEntry80E72E` (build.asm:1234): $1800 bytes to VRAM $0000; used by `rsUnknown80E6C9` (engine/unsorted/bank80.asm:7165).
-- Entry `aDecompressionDMAEntry8A8F58` (build.asm:7990): $1800 bytes to VRAM $4000; used by `rsUnknown8A8E08` (engine/unsorted/bank8A.asm:2395).
-- Entry `aDecompressionDMAEntry8ABE4B` (build.asm:8508): $1800 bytes to VRAM $4000; used by `rlUnknown8ABCF8` (engine/unsorted/bank8A.asm:7571).
-- Entry `aDecompressionDMAEntry8AD952` (build.asm:8763): $1800 bytes to VRAM $4000; used by `rlUnknown8AD81B` (engine/unsorted/bank8A.asm:10354).
-- Entry `aDecompressionDMAEntry8AEE89` (build.asm:8981): $1800 bytes to VRAM $4000; used by `rlUnknown8AECEF` (engine/unsorted/bank8A.asm:12036).
-- Entry `aDecompressionDMAEntry8AF263` (build.asm:9029): $1800 bytes to VRAM $4000; used by `rlUnknown8AF0F2` (engine/unsorted/bank8A.asm:12589).
-- Entry `aDecompressionDMAEntry8AFA0C` (build.asm:9083): $1800 bytes to VRAM $4000; used by `rlUnknown8AF894` (engine/unsorted/bank8A.asm:13666).
+- Entry `aDecompressionDMAEntry80B0CB` (build.asm:765): $1800 bytes to VRAM $4000; used by `rlUnknown80B0BC` (engine/unsorted/bank80.asm:4437).
+- Entry `aDecompressionDMAEntry80B99D` (build.asm:891): $1800 bytes to VRAM $4000; used by `rlUnknown80B827` (engine/unsorted/bank80.asm:5356).
+- Entry `aDecompressionDMAEntry80BB45` (build.asm:935): $1800 bytes to VRAM $4000; used by `rlUnknown80BA52` (engine/unsorted/bank80.asm:5667).
+- Entry `aDecompressionDMAEntry80BEF9` (build.asm:966): $1800 bytes to VRAM $4000; used by `rlUnknown80BD27` (engine/unsorted/bank80.asm:6043).
+- Entry `aDecompressionDMAEntry80C5BE` (build.asm:1039): $1800 bytes to VRAM $4000; used by `rsUnitWindowCopyGraphics` (engine/menus/unit_window.asm:192).
+- Entry `aDecompressionDMAEntry80CE8E` (build.asm:1117): $1800 bytes to VRAM $0000; used by `rsItemWindowCopyGraphics` (engine/menus/item_window.asm:128).
+- Entry `aDecompressionDMAEntry80D41D` (build.asm:1168): $1800 bytes to VRAM $0000; used by `rsSkillWindowCopyGraphics` (engine/menus/skill_window.asm:128).
+- Entry `aDecompressionDMAEntry80E72E` (build.asm:1235): $1800 bytes to VRAM $0000; used by `rsUnknown80E6C9` (engine/unsorted/bank80.asm:7165).
+- Entry `aDecompressionDMAEntry8A8F58` (build.asm:7991): $1800 bytes to VRAM $4000; used by `rsUnknown8A8E08` (engine/unsorted/bank8A.asm:2395).
+- Entry `aDecompressionDMAEntry8ABE4B` (build.asm:8509): $1800 bytes to VRAM $4000; used by `rlUnknown8ABCF8` (engine/unsorted/bank8A.asm:7571).
+- Entry `aDecompressionDMAEntry8AD952` (build.asm:8764): $1800 bytes to VRAM $4000; used by `rlUnknown8AD81B` (engine/unsorted/bank8A.asm:10354).
+- Entry `aDecompressionDMAEntry8AEE89` (build.asm:8982): $1800 bytes to VRAM $4000; used by `rlUnknown8AECEF` (engine/unsorted/bank8A.asm:12036).
+- Entry `aDecompressionDMAEntry8AF263` (build.asm:9030): $1800 bytes to VRAM $4000; used by `rlUnknown8AF0F2` (engine/unsorted/bank8A.asm:12589).
+- Entry `aDecompressionDMAEntry8AFA0C` (build.asm:9084): $1800 bytes to VRAM $4000; used by `rlUnknown8AF894` (engine/unsorted/bank8A.asm:13666).
 
 ![gcUnknownC00A2B](catalog/gcUnknownC00A2B.png)
 
 ### gcUnknownC0197B
 
 1599 bytes compressed, 2048 decompressed.
-- Entry `aDecompressionDMAEntry80B0FD` (build.asm:779): $0800 bytes to VRAM $4C00; used by `rlUnknown80B0EE` (engine/unsorted/bank80.asm:4487).
+- Entry `aDecompressionDMAEntry80B0FD` (build.asm:780): $0800 bytes to VRAM $4C00; used by `rlUnknown80B0EE` (engine/unsorted/bank80.asm:4487).
 
 ![gcUnknownC0197B](catalog/gcUnknownC0197B.png)
 
 ### gcUnknownC01FBA
 
 764 bytes compressed, 1024 decompressed.
-- Entry `aDecompressionDMAEntry80B09B` (build.asm:749): $0400 bytes to VRAM $3400; used by `rlUnknown80B08C` (engine/events/event_scripts.asm:4811).
+- Entry `aDecompressionDMAEntry80B09B` (build.asm:750): $0400 bytes to VRAM $3400; used by `rlUnknown80B08C` (engine/events/event_scripts.asm:4811).
 
 ![gcUnknownC01FBA](catalog/gcUnknownC01FBA.png)
 
 ### gcUnknownC022B6
 
 652 bytes compressed, 1440 decompressed.
-- Entry `aDecompressionDMAEntry85D669` (build.asm:4254): $0800 bytes to VRAM $4C00; used by `rlUnknown85D65A` (engine/unsorted/bank85.asm:12859).
+- Entry `aDecompressionDMAEntry85D669` (build.asm:4255): $0800 bytes to VRAM $4C00; used by `rlUnknown85D65A` (engine/unsorted/bank85.asm:12859).
 
 ![gcUnknownC022B6](catalog/gcUnknownC022B6.png)
 
 ### gcUnknownC02542
 
 580 bytes compressed, 1024 decompressed.
-- Entry `aDecompressionDMAEntry80B084` (build.asm:734): $0400 bytes to VRAM $3600; used by `rsUnknown80B065` (engine/events/event_scripts.asm:4782).
+- Entry `aDecompressionDMAEntry80B084` (build.asm:735): $0400 bytes to VRAM $3600; used by `rsUnknown80B065` (engine/events/event_scripts.asm:4782).
 
 ![gcUnknownC02542](catalog/gcUnknownC02542.png)
 
@@ -246,7 +246,7 @@ Nothing in the source names it (found between other streams).
 ### gcUnknownD05673
 
 14246 bytes compressed, 24576 decompressed.
-- Entry `aDecompressionDMAEntry80B61E` (build.asm:815): $6000 bytes to VRAM $0000; used by `rlUnknown80B452` (engine/unsorted/bank80.asm:4821).
+- Entry `aDecompressionDMAEntry80B61E` (build.asm:816): $6000 bytes to VRAM $0000; used by `rlUnknown80B452` (engine/unsorted/bank80.asm:4821).
 
 ![gcUnknownD05673](catalog/gcUnknownD05673.png)
 
@@ -274,77 +274,77 @@ Nothing in the source names it (found between other streams).
 ### gcUnknownD13D09
 
 1573 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry80B626` (build.asm:816): $1000 bytes to VRAM $3000; used by `rlUnknown80B452` (engine/unsorted/bank80.asm:4859).
+- Entry `aDecompressionDMAEntry80B626` (build.asm:817): $1000 bytes to VRAM $3000; used by `rlUnknown80B452` (engine/unsorted/bank80.asm:4859).
 
 ![gcUnknownD13D09](catalog/gcUnknownD13D09.png)
 
 ### gcUnknownD1432E
 
 71 bytes compressed, 256 decompressed.
-- Entry `aDecompressionDMAEntry80B62E` (build.asm:817): $0100 bytes to VRAM $4000; used by `rlUnknown80B452` (engine/unsorted/bank80.asm:4876).
+- Entry `aDecompressionDMAEntry80B62E` (build.asm:818): $0100 bytes to VRAM $4000; used by `rlUnknown80B452` (engine/unsorted/bank80.asm:4876).
 
 ![gcUnknownD1432E](catalog/gcUnknownD1432E.png)
 
 ### gcUnknownD14375
 
 281 bytes compressed, 2048 decompressed.
-- Entry `aDecompressionDMAEntry80B636` (build.asm:818): $0800 bytes to VRAM $6000; used by `rlUnknown80B452` (engine/unsorted/bank80.asm:4885).
+- Entry `aDecompressionDMAEntry80B636` (build.asm:819): $0800 bytes to VRAM $6000; used by `rlUnknown80B452` (engine/unsorted/bank80.asm:4885).
 
 ![gcUnknownD14375](catalog/gcUnknownD14375.png)
 
 ### gcUnknownD22430
 
 2011 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry8ABF0F` (build.asm:8525): $1000 bytes to VRAM $0000; used by `rsUnknown8ABE63` (engine/unsorted/bank8A.asm:7681).
+- Entry `aDecompressionDMAEntry8ABF0F` (build.asm:8526): $1000 bytes to VRAM $0000; used by `rsUnknown8ABE63` (engine/unsorted/bank8A.asm:7681).
 
 ![gcUnknownD22430](catalog/gcUnknownD22430.png)
 
 ### gcUnknownD240B0
 
 2148 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry8AEE91` (build.asm:8982): $1000 bytes to VRAM $0000; used by `rlUnknown8AECEF` (engine/unsorted/bank8A.asm:12004).
+- Entry `aDecompressionDMAEntry8AEE91` (build.asm:8983): $1000 bytes to VRAM $0000; used by `rlUnknown8AECEF` (engine/unsorted/bank8A.asm:12004).
 
 ![gcUnknownD240B0](catalog/gcUnknownD240B0.png)
 
 ### gcUnknownD24914
 
 912 bytes compressed, 2048 decompressed.
-- Entry `aDecompressionDMAEntry8AEEA1` (build.asm:8984): $0800 bytes to VRAM $2800; used by `rlUnknown8AECEF` (engine/unsorted/bank8A.asm:12022).
+- Entry `aDecompressionDMAEntry8AEEA1` (build.asm:8985): $0800 bytes to VRAM $2800; used by `rlUnknown8AECEF` (engine/unsorted/bank8A.asm:12022).
 
 ![gcUnknownD24914](catalog/gcUnknownD24914.png)
 
 ### gcUnknownD24CA4
 
 7509 bytes compressed, 8192 decompressed.
-- Entry `aDecompressionDMAEntry8AFA1C` (build.asm:9085): $2000 bytes to VRAM $1000; used by `rlUnknown8AF894` (engine/unsorted/bank8A.asm:13643).
+- Entry `aDecompressionDMAEntry8AFA1C` (build.asm:9086): $2000 bytes to VRAM $1000; used by `rlUnknown8AF894` (engine/unsorted/bank8A.asm:13643).
 
 ![gcUnknownD24CA4](catalog/gcUnknownD24CA4.png)
 
 ### gcUnknownD269F9
 
 2240 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry8AFA14` (build.asm:9084): $1000 bytes to VRAM $0000; used by `rlUnknown8AF894` (engine/unsorted/bank8A.asm:13638).
+- Entry `aDecompressionDMAEntry8AFA14` (build.asm:9085): $1000 bytes to VRAM $0000; used by `rlUnknown8AF894` (engine/unsorted/bank8A.asm:13638).
 
 ![gcUnknownD269F9](catalog/gcUnknownD269F9.png)
 
 ### gcUnknownD272B9
 
 995 bytes compressed, 2048 decompressed.
-- Entry `aDecompressionDMAEntry8AFA24` (build.asm:9086): $0800 bytes to VRAM $2800; used by `rlUnknown8AF894` (engine/unsorted/bank8A.asm:13652).
+- Entry `aDecompressionDMAEntry8AFA24` (build.asm:9087): $0800 bytes to VRAM $2800; used by `rlUnknown8AF894` (engine/unsorted/bank8A.asm:13652).
 
 ![gcUnknownD272B9](catalog/gcUnknownD272B9.png)
 
 ### gcUnknownD2769C
 
 2174 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry8ABF1F` (build.asm:8527): $1000 bytes to VRAM $0000; used by `rsUnknown8ABE63` (engine/unsorted/bank8A.asm:7737).
+- Entry `aDecompressionDMAEntry8ABF1F` (build.asm:8528): $1000 bytes to VRAM $0000; used by `rsUnknown8ABE63` (engine/unsorted/bank8A.asm:7737).
 
 ![gcUnknownD2769C](catalog/gcUnknownD2769C.png)
 
 ### gcUnknownD27F1A
 
 1980 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry8ABF17` (build.asm:8526): $1000 bytes to VRAM $0000; used by `rsUnknown8ABE63` (engine/unsorted/bank8A.asm:7709).
+- Entry `aDecompressionDMAEntry8ABF17` (build.asm:8527): $1000 bytes to VRAM $0000; used by `rsUnknown8ABE63` (engine/unsorted/bank8A.asm:7709).
 
 ![gcUnknownD27F1A](catalog/gcUnknownD27F1A.png)
 
@@ -358,92 +358,92 @@ Nothing in the source names it (found between other streams).
 ### gcUnknownD30F54
 
 2124 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry8AF26B` (build.asm:9030): $1000 bytes to VRAM $0000; used by `rlUnknown8AF0F2` (engine/unsorted/bank8A.asm:12562).
+- Entry `aDecompressionDMAEntry8AF26B` (build.asm:9031): $1000 bytes to VRAM $0000; used by `rlUnknown8AF0F2` (engine/unsorted/bank8A.asm:12562).
 
 ![gcUnknownD30F54](catalog/gcUnknownD30F54.png)
 
 ### gcUnknownD317A0
 
 5419 bytes compressed, 8192 decompressed.
-- Entry `aDecompressionDMAEntry80EFB0` (build.asm:1294): $2000 bytes to VRAM $2000; used by `rlUnknown80EE37` (engine/unsorted/bank80.asm:7597).
+- Entry `aDecompressionDMAEntry80EFB0` (build.asm:1295): $2000 bytes to VRAM $2000; used by `rlUnknown80EE37` (engine/unsorted/bank80.asm:7597).
 
 ![gcUnknownD317A0](catalog/gcUnknownD317A0.png)
 
 ### gcUnknownD32CCB
 
 965 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry80EFC0` (build.asm:1296): $1000 bytes to VRAM $6000; used by `rlUnknown80EE37` (engine/unsorted/bank80.asm:7617).
+- Entry `aDecompressionDMAEntry80EFC0` (build.asm:1297): $1000 bytes to VRAM $6000; used by `rlUnknown80EE37` (engine/unsorted/bank80.asm:7617).
 
 ![gcUnknownD32CCB](catalog/gcUnknownD32CCB.png)
 
 ### gcUnknownD33090
 
 1317 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry80EFC8` (build.asm:1297): $1000 bytes to VRAM $5000; used by `rlUnknown80EE37` (engine/unsorted/bank80.asm:7607).
+- Entry `aDecompressionDMAEntry80EFC8` (build.asm:1298): $1000 bytes to VRAM $5000; used by `rlUnknown80EE37` (engine/unsorted/bank80.asm:7607).
 
 ![gcUnknownD33090](catalog/gcUnknownD33090.png)
 
 ### gcUnknownD335B5
 
 2373 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry80EFD0` (build.asm:1298): $1000 bytes to VRAM $5800; used by `rlUnknown80EE37` (engine/unsorted/bank80.asm:7612).
+- Entry `aDecompressionDMAEntry80EFD0` (build.asm:1299): $1000 bytes to VRAM $5800; used by `rlUnknown80EE37` (engine/unsorted/bank80.asm:7612).
 
 ![gcUnknownD335B5](catalog/gcUnknownD335B5.png)
 
 ### gcUnknownD33EFA
 
 7238 bytes compressed, 8192 decompressed.
-- Entry `aDecompressionDMAEntry80BB55` (build.asm:936): $2000 bytes to VRAM $1000; used by `rlUnknown80BA52` (engine/unsorted/bank80.asm:5672).
+- Entry `aDecompressionDMAEntry80BB55` (build.asm:937): $2000 bytes to VRAM $1000; used by `rlUnknown80BA52` (engine/unsorted/bank80.asm:5672).
 
 ![gcUnknownD33EFA](catalog/gcUnknownD33EFA.png)
 
 ### gcUnknownD35B40
 
 884 bytes compressed, 2048 decompressed.
-- Entry `aDecompressionDMAEntry80BB4D` (build.asm:935): $0800 bytes to VRAM $5400; used by `rlUnknown80BA52` (engine/unsorted/bank80.asm:5677).
+- Entry `aDecompressionDMAEntry80BB4D` (build.asm:936): $0800 bytes to VRAM $5400; used by `rlUnknown80BA52` (engine/unsorted/bank80.asm:5677).
 
 ![gcUnknownD35B40](catalog/gcUnknownD35B40.png)
 
 ### gcUnknownD35EB4
 
 17210 bytes compressed, 22528 decompressed.
-- Entry `aDecompressionDMAEntry80F197` (build.asm:1315): $5800 bytes to VRAM $0000; used by `rlUnknown80EFD8` (engine/unsorted/bank80.asm:7800).
-- Entry `aDecompressionDMAEntry8DAF95` (build.asm:10436): $3000 bytes to VRAM $0000; used by `rlUnknown8DAF33` (engine/unsorted/bank8D.asm:1354).
+- Entry `aDecompressionDMAEntry80F197` (build.asm:1316): $5800 bytes to VRAM $0000; used by `rlUnknown80EFD8` (engine/unsorted/bank80.asm:7800).
+- Entry `aDecompressionDMAEntry8DAF95` (build.asm:10437): $3000 bytes to VRAM $0000; used by `rlUnknown8DAF33` (engine/unsorted/bank8D.asm:1354).
 
 ![gcUnknownD35EB4](catalog/gcUnknownD35EB4.png)
 
 ### gcUnknownD421EE
 
 133 bytes compressed, 2048 decompressed.
-- Entry `aDecompressionDMAEntry8DAF9D` (build.asm:10437): $0800 bytes to VRAM $5800; used by `rlUnknown8DAF33` (engine/unsorted/bank8D.asm:1359).
+- Entry `aDecompressionDMAEntry8DAF9D` (build.asm:10438): $0800 bytes to VRAM $5800; used by `rlUnknown8DAF33` (engine/unsorted/bank8D.asm:1359).
 
 ![gcUnknownD421EE](catalog/gcUnknownD421EE.png)
 
 ### gcUnknownD42273
 
 1605 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry8DB066` (build.asm:10454): $1000 bytes to VRAM $4000; used by `rlUnknown8DAFA5` (engine/unsorted/bank8D.asm:1420).
+- Entry `aDecompressionDMAEntry8DB066` (build.asm:10455): $1000 bytes to VRAM $4000; used by `rlUnknown8DAFA5` (engine/unsorted/bank8D.asm:1420).
 
 ![gcUnknownD42273](catalog/gcUnknownD42273.png)
 
 ### gcUnknownD428B8
 
 318 bytes compressed, 2048 decompressed.
-- Entry `aDecompressionDMAEntry8DB05E` (build.asm:10453): $0800 bytes to VRAM $6800; used by nothing named.
+- Entry `aDecompressionDMAEntry8DB05E` (build.asm:10454): $0800 bytes to VRAM $6800; used by nothing named.
 
 ![gcUnknownD428B8](catalog/gcUnknownD428B8.png)
 
 ### gcUnknownD429F6
 
 602 bytes compressed, 2048 decompressed.
-- Entry `aDecompressionDMAEntry8DB056` (build.asm:10452): $0800 bytes to VRAM $5800; used by `rlUnknown8DAFA5` (engine/unsorted/bank8D.asm:1415).
+- Entry `aDecompressionDMAEntry8DB056` (build.asm:10453): $0800 bytes to VRAM $5800; used by `rlUnknown8DAFA5` (engine/unsorted/bank8D.asm:1415).
 
 ![gcUnknownD429F6](catalog/gcUnknownD429F6.png)
 
 ### gcUnknownD42C50
 
 1970 bytes compressed, 4096 decompressed.
-- Entry `aDecompressionDMAEntry80F19F` (build.asm:1316): $1000 bytes to VRAM $5800; used by `rlUnknown80EFD8` (engine/unsorted/bank80.asm:7805).
+- Entry `aDecompressionDMAEntry80F19F` (build.asm:1317): $1000 bytes to VRAM $5800; used by `rlUnknown80EFD8` (engine/unsorted/bank80.asm:7805).
 
 ![gcUnknownD42C50](catalog/gcUnknownD42C50.png)
 
@@ -542,8 +542,8 @@ Nothing in the source names it (found between other streams).
 
 350 bytes compressed, 2048 decompressed.
 - Entry `aUnknown8AE4CB` (engine/arena/arena.asm:38): $0800 bytes to VRAM $2800; used by `rlUnknown8AE2F8` (engine/unsorted/bank8A.asm:11828).
-- Entry `aDecompressionDMAEntry8ABE53` (build.asm:8509): $0800 bytes to VRAM $2800; used by `rlUnknown8ABCF8` (engine/unsorted/bank8A.asm:7557).
-- Entry `aDecompressionDMAEntry8AF273` (build.asm:9031): $0800 bytes to VRAM $2800; used by `rlUnknown8AF0F2` (engine/unsorted/bank8A.asm:12575).
+- Entry `aDecompressionDMAEntry8ABE53` (build.asm:8510): $0800 bytes to VRAM $2800; used by `rlUnknown8ABCF8` (engine/unsorted/bank8A.asm:7557).
+- Entry `aDecompressionDMAEntry8AF273` (build.asm:9032): $0800 bytes to VRAM $2800; used by `rlUnknown8AF0F2` (engine/unsorted/bank8A.asm:12575).
 
 ![gcUnknownD46691](catalog/gcUnknownD46691.png)
 
@@ -551,10 +551,10 @@ Nothing in the source names it (found between other streams).
 
 180 bytes compressed, 2048 decompressed.
 - Entry `aUnknown8AE4D3` (engine/arena/arena.asm:44): $0800 bytes to VRAM $2C00; used by `rlUnknown8AE2F8` (engine/unsorted/bank8A.asm:11833).
-- Entry `aDecompressionDMAEntry8ABE5B` (build.asm:8510): $0800 bytes to VRAM $2C00; used by `rlUnknown8ABCF8` (engine/unsorted/bank8A.asm:7562).
-- Entry `aDecompressionDMAEntry8AEEA9` (build.asm:8985): $0800 bytes to VRAM $2C00; used by `rlUnknown8AECEF` (engine/unsorted/bank8A.asm:12027).
-- Entry `aDecompressionDMAEntry8AF27B` (build.asm:9032): $0800 bytes to VRAM $2C00; used by `rlUnknown8AF0F2` (engine/unsorted/bank8A.asm:12580).
-- Entry `aDecompressionDMAEntry8AFA2C` (build.asm:9087): $0800 bytes to VRAM $2C00; used by `rlUnknown8AF894` (engine/unsorted/bank8A.asm:13657).
+- Entry `aDecompressionDMAEntry8ABE5B` (build.asm:8511): $0800 bytes to VRAM $2C00; used by `rlUnknown8ABCF8` (engine/unsorted/bank8A.asm:7562).
+- Entry `aDecompressionDMAEntry8AEEA9` (build.asm:8986): $0800 bytes to VRAM $2C00; used by `rlUnknown8AECEF` (engine/unsorted/bank8A.asm:12027).
+- Entry `aDecompressionDMAEntry8AF27B` (build.asm:9033): $0800 bytes to VRAM $2C00; used by `rlUnknown8AF0F2` (engine/unsorted/bank8A.asm:12580).
+- Entry `aDecompressionDMAEntry8AFA2C` (build.asm:9088): $0800 bytes to VRAM $2C00; used by `rlUnknown8AF894` (engine/unsorted/bank8A.asm:13657).
 
 ![gcUnknownD467EF](catalog/gcUnknownD467EF.png)
 
@@ -742,110 +742,12 @@ Nothing in the source names it (found between other streams).
 
 ![gcUnknownD629B1](catalog/gcUnknownD629B1.png)
 
-### gcUnknownD633EB
-
-556 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD633EB](catalog/gcUnknownD633EB.png)
-
-### gcUnknownD63617
-
-278 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD63617](catalog/gcUnknownD63617.png)
-
-### gcUnknownD6372D
-
-397 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD6372D](catalog/gcUnknownD6372D.png)
-
-### gcUnknownD638BA
-
-518 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD638BA](catalog/gcUnknownD638BA.png)
-
-### gcUnknownD63AC0
-
-223 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD63AC0](catalog/gcUnknownD63AC0.png)
-
-### gcUnknownD63B9F
-
-697 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD63B9F](catalog/gcUnknownD63B9F.png)
-
-### gcUnknownD63E58
-
-566 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD63E58](catalog/gcUnknownD63E58.png)
-
-### gcUnknownD6408E
-
-438 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD6408E](catalog/gcUnknownD6408E.png)
-
 ### gcUnknownD64244
 
 410 bytes compressed, 1024 decompressed.
 Nothing in the source names it (found between other streams).
 
 ![gcUnknownD64244](catalog/gcUnknownD64244.png)
-
-### gcUnknownD643DE
-
-277 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD643DE](catalog/gcUnknownD643DE.png)
-
-### gcUnknownD644F3
-
-474 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD644F3](catalog/gcUnknownD644F3.png)
-
-### gcUnknownD646CD
-
-615 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD646CD](catalog/gcUnknownD646CD.png)
-
-### gcUnknownD64934
-
-698 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD64934](catalog/gcUnknownD64934.png)
-
-### gcUnknownD64BEE
-
-352 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD64BEE](catalog/gcUnknownD64BEE.png)
-
-### gcUnknownD64D4E
-
-706 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD64D4E](catalog/gcUnknownD64D4E.png)
 
 ### gcUnknownD65010
 
@@ -861,47 +763,12 @@ Nothing in the source names it (found between other streams).
 
 ![gcUnknownD65153](catalog/gcUnknownD65153.png)
 
-### gcUnknownD651C2
-
-567 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD651C2](catalog/gcUnknownD651C2.png)
-
-### gcUnknownD653F9
-
-594 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD653F9](catalog/gcUnknownD653F9.png)
-
 ### gcUnknownD6564B
 
 133 bytes compressed, 1024 decompressed.
 Nothing in the source names it (found between other streams).
 
 ![gcUnknownD6564B](catalog/gcUnknownD6564B.png)
-
-### gcUnknownD656D0
-
-608 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD656D0](catalog/gcUnknownD656D0.png)
-
-### gcUnknownD65930
-
-713 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD65930](catalog/gcUnknownD65930.png)
-
-### gcUnknownD65BF9
-
-788 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD65BF9](catalog/gcUnknownD65BF9.png)
 
 ### gcUnknownD676F6
 
@@ -916,34 +783,6 @@ Nothing in the source names it (found between other streams).
 - `rlUnknown9E9D3B` (engine/unsorted/bank9E.asm:4718): `lda #(`gcUnknownD677E9)<<8`
 
 ![gcUnknownD677E9](catalog/gcUnknownD677E9.png)
-
-### gcUnknownD67840
-
-324 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD67840](catalog/gcUnknownD67840.png)
-
-### gcUnknownD67984
-
-578 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD67984](catalog/gcUnknownD67984.png)
-
-### gcUnknownD67BC6
-
-257 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD67BC6](catalog/gcUnknownD67BC6.png)
-
-### gcUnknownD67CC7
-
-182 bytes compressed, 1024 decompressed.
-Nothing in the source names it (found between other streams).
-
-![gcUnknownD67CC7](catalog/gcUnknownD67CC7.png)
 
 ### gcUnknownD67D7D
 
@@ -966,8 +805,8 @@ Nothing in the source names it (found between other streams).
 
 3150 bytes compressed, 4608 decompressed.
 - Entry `aUnknown80E146` (engine/menus/revive_screen.asm:223): $1200 bytes to VRAM $3000; used by `rsUnknown80E0AE` (engine/menus/revive_screen.asm:159).
-- Entry `aDecompressionDMAEntry80F187` (build.asm:1313): $1200 bytes to VRAM $3000; used by `rlUnknown80EFD8` (engine/unsorted/bank80.asm:7790).
-- Entry `aDecompressionDMAEntry80F433` (build.asm:1381): $1200 bytes to VRAM $4000; used by `rsUnknown80F392` (engine/unsorted/bank80.asm:8253).
+- Entry `aDecompressionDMAEntry80F187` (build.asm:1314): $1200 bytes to VRAM $3000; used by `rlUnknown80EFD8` (engine/unsorted/bank80.asm:7790).
+- Entry `aDecompressionDMAEntry80F433` (build.asm:1382): $1200 bytes to VRAM $4000; used by `rsUnknown80F392` (engine/unsorted/bank80.asm:8253).
 
 ![gcUnknownDD20A0](catalog/gcUnknownDD20A0.png)
 
@@ -982,8 +821,8 @@ Nothing in the source names it (found between other streams).
 
 699 bytes compressed, 2048 decompressed.
 - Entry `aUnknown80E156` (engine/menus/revive_screen.asm:233): $0800 bytes to VRAM $2000; used by `rsUnknown80E0AE` (engine/menus/revive_screen.asm:203).
-- Entry `aDecompressionDMAEntry80F18F` (build.asm:1314): $0800 bytes to VRAM $5000; used by `rlUnknown80EFD8` (engine/unsorted/bank80.asm:7795).
-- Entry `aDecompressionDMAEntry80F43B` (build.asm:1382): $0800 bytes to VRAM $6000; used by `rsUnknown80F392` (engine/unsorted/bank80.asm:8301).
+- Entry `aDecompressionDMAEntry80F18F` (build.asm:1315): $0800 bytes to VRAM $5000; used by `rlUnknown80EFD8` (engine/unsorted/bank80.asm:7795).
+- Entry `aDecompressionDMAEntry80F43B` (build.asm:1383): $0800 bytes to VRAM $6000; used by `rsUnknown80F392` (engine/unsorted/bank80.asm:8301).
 
 ![gcUnknownDD2D90](catalog/gcUnknownDD2D90.png)
 
@@ -1011,21 +850,21 @@ Nothing in the source names it (found between other streams).
 ### gcUnknownDD3932
 
 684 bytes compressed, 2048 decompressed.
-- Entry `aDecompressionDMAEntry80E736` (build.asm:1235): $0800 bytes to VRAM $4200; used by `rsUnknown80E6C9` (engine/unsorted/bank80.asm:7182).
+- Entry `aDecompressionDMAEntry80E736` (build.asm:1236): $0800 bytes to VRAM $4200; used by `rsUnknown80E6C9` (engine/unsorted/bank80.asm:7182).
 
 ![gcUnknownDD3932](catalog/gcUnknownDD3932.png)
 
 ### gcUnknownDD3BDE
 
 262 bytes compressed, 1792 decompressed.
-- Entry `aDecompressionDMAEntry80E73E` (build.asm:1236): $0700 bytes to VRAM $2000; used by `rsUnknown80E6C9` (engine/unsorted/bank80.asm:7197).
+- Entry `aDecompressionDMAEntry80E73E` (build.asm:1237): $0700 bytes to VRAM $2000; used by `rsUnknown80E6C9` (engine/unsorted/bank80.asm:7197).
 
 ![gcUnknownDD3BDE](catalog/gcUnknownDD3BDE.png)
 
 ### gcUnknownDD3CE4
 
 220 bytes compressed, 1792 decompressed.
-- Entry `aDecompressionDMAEntry80D425` (build.asm:1168): $0700 bytes to VRAM $1800; used by `rsSkillWindowCopyGraphics` (engine/menus/skill_window.asm:161).
+- Entry `aDecompressionDMAEntry80D425` (build.asm:1169): $0700 bytes to VRAM $1800; used by `rsSkillWindowCopyGraphics` (engine/menus/skill_window.asm:161).
 
 ![gcUnknownDD3CE4](catalog/gcUnknownDD3CE4.png)
 
@@ -1047,15 +886,15 @@ Nothing in the source names it (found between other streams).
 
 134 bytes compressed, 2048 decompressed.
 - Entry `aUnknown80E545` (engine/unsorted/bank80.asm:6983): $0800 bytes to VRAM $6000; used by `rsUnknown80E4EB` (engine/unsorted/bank80.asm:6966).
-- Entry `aDecompressionDMAEntry80CE96` (build.asm:1117): $0800 bytes to VRAM $2800; used by `rsItemWindowCopyGraphics` (engine/menus/item_window.asm:173).
-- Entry `aDecompressionDMAEntry80D42D` (build.asm:1169): $0800 bytes to VRAM $2000; used by `rsSkillWindowCopyGraphics` (engine/menus/skill_window.asm:166).
+- Entry `aDecompressionDMAEntry80CE96` (build.asm:1118): $0800 bytes to VRAM $2800; used by `rsItemWindowCopyGraphics` (engine/menus/item_window.asm:173).
+- Entry `aDecompressionDMAEntry80D42D` (build.asm:1170): $0800 bytes to VRAM $2000; used by `rsSkillWindowCopyGraphics` (engine/menus/skill_window.asm:166).
 
 ![gcUnknownDD3F20](catalog/gcUnknownDD3F20.png)
 
 ### gcUnknownDD3FA6
 
 8952 bytes compressed, 16384 decompressed.
-- Entry `aDecompressionDMAEntry80F42B` (build.asm:1380): $4000 bytes to VRAM $0000; used by `rsUnknown80F392` (engine/unsorted/bank80.asm:8248).
+- Entry `aDecompressionDMAEntry80F42B` (build.asm:1381): $4000 bytes to VRAM $0000; used by `rsUnknown80F392` (engine/unsorted/bank80.asm:8248).
 
 ![gcUnknownDD3FA6](catalog/gcUnknownDD3FA6.png)
 

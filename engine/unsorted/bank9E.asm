@@ -12411,9 +12411,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown9EE11B,x
+        lda aMapBattleScriptedCritSprites,x
         sta lR18
-        lda aUnknown9EE11B+1,x
+        lda aMapBattleScriptedCritSprites+1,x
         sta lR18+1
         lda #$7E00
         sta lR19+1
@@ -12438,11 +12438,17 @@
       .al
       .xl
 
-      aUnknown9EE11B ; 9E/E11B
+      aMapBattleScriptedCritSprites ; 9E/E11B
 
-        ; Read by rlUnknown9EE0F1.
+        ; Read by rlUnknown9EE0F1, by wBattleCriticalType - 1: compressed 4bpp
+        ; sprite tiles for the effect of a scripted critical (see
+        ; rlActionStructGetScriptedCritPossibility), decompressed to
+        ; aDecompressionBuffer+$6000. Nothing found sets type 4 yet.
 
-        .word $7840, $84D6, $D679, $7CC7, $C6D6, $D67B
+        .long g4bppcMapBattleCritSibling ; 1: sibling
+        .long g4bppcMapBattleCritLover ; 2: lover
+        .long g4bppcMapBattleCritTriangleAttack ; 3: triangle attack
+        .long g4bppcMapBattleCritUnknown4 ; 4
 
         ; 9E/E127
 

@@ -178,6 +178,7 @@
   .include "events/ChapterFinal.asm"
   .include "events/ChapterEpilogue.asm"
   .include "data/palettes/BackgroundPalettes.asm"
+  .include "data/palettes/MapBattleMagicPalettes.asm"
 
     ; Compressed streams: generated from gfx/compressed/C00A2B/C00A2B.streams by build.sh.
     .include "gfx/compressed/C00A2B/Layout.asm"
@@ -15759,6 +15760,20 @@
     .logical $9F86BF
 
       .dsection Unsorted9F86BFSection
+
+    .here
+
+    * = $1F8724
+    .logical $9F8724
+
+      .dsection MapBattleMagicSpritesSection
+
+    .here
+
+    * = $1F8800
+    .logical $9F8800
+
+      .dsection MapBattleMagicPalettes9F8800Section
 
     .here
 

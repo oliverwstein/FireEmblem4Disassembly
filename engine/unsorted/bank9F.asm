@@ -965,7 +965,7 @@
         asl a
         adc $7F5089
         tax
-        lda aUnknown9F8724,x
+        lda aMapBattleMagicSprites,x
         cmp #$FFFF
         beq _8721
         phk
@@ -973,9 +973,9 @@
         ply
         sty lR19+1
         sta lR19
-        lda aUnknown9F8724+2,x
+        lda aMapBattleMagicSprites+2,x
         sta lR18
-        lda aUnknown9F8724+3,x
+        lda aMapBattleMagicSprites+3,x
         sta lR18+1
         ldx #$01DE
         ldy #$001E

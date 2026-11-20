@@ -21,7 +21,6 @@
     aUnknown959894                                           :?= address($959894) ; read by rlUnknown9597FA
     aUnknown998944                                           :?= address($998944) ; read by rsUnknown959B84, rsUnknown959BC1
     aUnknown9EA513                                           :?= address($9EA513) ; read by rlUnknown9EA417
-    aUnknown9F8724                                           :?= address($9F8724) ; read by rlUnknown9F86BF
     aUnknownD77000                                           :?= address($D77000) ; read by rlUnknown80BA52
     aUnknownD95000                                           :?= address($D95000) ; read by rlUnknown888082, rlUnknown88821A
     aUnknownDE0000                                           :?= address($DE0000) ; read by rlUnknown859BBD, rlUnknown85C4E0, rsUnknown899FF3, rsUnknown89A00F, rsUnknown89A02B, rsUnknown89A047

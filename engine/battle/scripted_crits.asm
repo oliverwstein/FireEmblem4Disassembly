@@ -1,6 +1,7 @@
 ; Special attacks that the game scripts for particular pairs and groups of units:
-; sibling crits and triangle attacks. A comment also lists lover crits as a type, but
-; marks it as uncertain. Also reads the battle animation option.
+; sibling crits, lover crits and triangle attacks (types 1-3; type 2 loads heart
+; sprites in map battles, aMapBattleScriptedCritSprites). Also reads the battle
+; animation option.
 
     .section ScriptedCritsSection
 
