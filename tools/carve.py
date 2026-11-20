@@ -2,6 +2,7 @@
 """Carve what a pointer table points at into labelled source.
 
 usage: tools/carve.py TABLE --type TYPE --name NAME [options] [--write]
+       tools/carve.py ADDR:SIZE --type block --name NAME [--prefix P] [--write]
 
 TABLE is the label of a table of long pointers in the source (a run of `.long`
 lines after the label) or a pointer CSV (data/....csv, one pointer per row in
@@ -19,6 +20,11 @@ TYPE says what the targets are and so how long each one is:
   fixed:N     N bytes each. Written as a slice.
   next        each runs to the next target (the default when nothing is known).
               Written as a slice.
+  block       no table: ADDR:SIZE (hex) is one region, such as a tile sheet
+              that code indexes by offset. Written as one slice labelled
+              PREFIX+NAME; raw numbers pointing into it become label+N. The
+              offsets code adds to it, and pointers loaded in two halves
+              (tools/code_pointers.py), are not rewritten.
 
 Each target ends where its type says; if that is not where the next target
 starts, the report says so. A gap before the next target is decoded the same
@@ -253,7 +259,7 @@ def write(table, pieces, kind, name, args, labels_by_name):
         items = [label_of.get(v, f'${v:06X}') for *_, v in table.entries]
         lines[first:last + 1] = [f'        .long {x}' for x in items]
         open(table.path, 'w', encoding='utf-8').write('\n'.join(lines))
-    else:
+    elif table.path:
         lines = open(table.path, encoding='utf-8').read().split('\n')
         for _, line, _, v in table.entries:
             if v in label_of:
@@ -263,7 +269,7 @@ def write(table, pieces, kind, name, args, labels_by_name):
 
     # Raw numbers elsewhere that point into the blocks, or into the table.
     ranges = sorted((p.start, p.end, label_of[p.start]) for p in pieces)
-    if table.label:
+    if table.label and table.entries:
         t0 = labels_by_name[table.label]
         ranges.append((t0, t0 + 3 * len(table.entries), table.label))
     return replace_raw_numbers(sorted(ranges))
@@ -278,18 +284,21 @@ def replace_raw_numbers(ranges):
              + [f for f in glob.glob(os.path.join(ROOT, 'data', '**', '*.asm'), recursive=True)
                 if not f.endswith('.csv.asm')])
 
+    mirrored = []
+
     def sub(m):
         nonlocal count
         v = int(m.group(1), 16)
-        v80 = v - 0x400000 if v >> 16 >= 0xC0 else v
-        k = bisect.bisect_right(starts, v80) - 1
-        if k < 0 or not ranges[k][0] <= v80 < ranges[k][1]:
-            return m.group(0)
-        s, _, label = ranges[k]
-        if v >> 16 >= 0xC0:
-            return m.group(0)                        # a $Cx mirror: leave for a look
-        count += 1
-        return label + (f'+{v80 - s}' if v80 > s else '')
+        k = bisect.bisect_right(starts, v) - 1
+        if k >= 0 and ranges[k][0] <= v < ranges[k][1]:
+            s, _, label = ranges[k]
+            count += 1
+            return label + (f'+{v - s}' if v > s else '')
+        other = v ^ 0x400000 if v >> 16 >= 0x80 else None   # the other ROM mirror
+        k = bisect.bisect_right(starts, other) - 1 if other is not None else -1
+        if k >= 0 and ranges[k][0] <= other < ranges[k][1]:
+            mirrored.append(m.group(0))                      # same byte, other mirror:
+        return m.group(0)                                    # left for a look
 
     for path in files:
         text = open(path, encoding='utf-8').read()
@@ -306,6 +315,8 @@ def replace_raw_numbers(ranges):
         new = '\n'.join(out)
         if new != text:
             open(path, 'w', encoding='utf-8').write(new)
+    if mirrored:
+        print(f'Left alone (the other ROM mirror of a carved address): {", ".join(sorted(set(mirrored)))}')
     return count
 
 
@@ -320,22 +331,35 @@ def main():
     ap.add_argument('--end')
     ap.add_argument('--write', action='store_true')
     args = ap.parse_args()
-    if not (args.type in ('dialogue', 'compressed', 'next') or re.fullmatch(r'fixed:\w+', args.type)):
+    if not (args.type in ('dialogue', 'compressed', 'next', 'block') or re.fullmatch(r'fixed:\w+', args.type)):
         sys.exit(f'Unknown --type {args.type}')
     args.dir = args.dir or args.name
     args.prefix = args.prefix or ('g' if args.type == 'compressed' else 'a')
 
     from trace import coverage_mask
     labels_by_name, labels_by_addr = load_labels()
-    table = Table(args.table, labels_by_name)
     rom = open(os.path.join(ROOT, 'fe4.sfc'), 'rb').read()
     print('Measuring what is built from source...')
     mask = coverage_mask()
-    end = int(args.end.lstrip('$').replace('/', ''), 16) if args.end else None
-    pieces, issues = plan(table, args.type, args.name, rom, end, mask, labels_by_addr)
-
-    distinct = len({v for *_, v in table.entries})
-    print(f'{args.table}: {len(table.entries)} entries, {distinct} distinct targets')
+    if args.type == 'block':
+        m = re.fullmatch(r'\$?([0-9A-Fa-f]{6}):\$?([0-9A-Fa-f]+)', args.table)
+        if not m:
+            sys.exit('--type block takes ADDR:SIZE, such as D84000:4000')
+        start, size = int(m.group(1), 16), int(m.group(2), 16)
+        table = Table.__new__(Table)
+        table.entries, table.label, table.path = [], None, None
+        pieces = [Piece(start, start + size, args.name, 'next')]
+        issues = [f'{cpu(start)}-{cpu(start + size)} overlaps source'
+                  for _ in [0] if any(mask[rom_offset(a)] for a in range(start, start + size))]
+        if labels_by_addr.get(start):
+            issues.append(f'{cpu(start)} already has the label {labels_by_addr[start]}')
+        print(f'{args.name}: one block of {size} bytes')
+    else:
+        table = Table(args.table, labels_by_name)
+        end = int(args.end.lstrip('$').replace('/', ''), 16) if args.end else None
+        pieces, issues = plan(table, args.type, args.name, rom, end, mask, labels_by_addr)
+        distinct = len({v for *_, v in table.entries})
+        print(f'{args.table}: {len(table.entries)} entries, {distinct} distinct targets')
     for run in runs(pieces):
         size = run[-1].end - run[0].start
         found = sum(1 for p in run if 'Unknown' in p.name)

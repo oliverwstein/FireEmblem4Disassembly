@@ -3462,14 +3462,14 @@
 
 
         _BE96
-        lda #$D800
+        lda #(`g4bppItemIcons)<<8
         sta lR18+1
-        lda #$4000
+        lda #<>g4bppItemIcons
         sta lR18
         tya
         asl a
         tax
-        lda aUnknown8BBED5,x
+        lda aItemIconOffsets,x
         clc
         adc lR18
         sta lR18
@@ -3984,7 +3984,7 @@
         .autsiz
         .databank ?
 
-        ; A: sprite palette. Copies the palette at aUnknownDD7FB0 (what it colours is not known) into that sprite palette of the palette buffer.
+        ; A: sprite palette. Copies aItemIconPalette (the item icons' colours) into that sprite palette of the palette buffer.
 
         asl a
         tax
@@ -3993,7 +3993,7 @@
         ldx #$001E
 
         _C444
-        lda aUnknownDD7FB0,x
+        lda aItemIconPalette,x
         dec x
         dec x
         phx
@@ -4041,7 +4041,7 @@
         .autsiz
         .databank ?
 
-        ; A: sprite palette. Copies the palette at $DD7FD0 (what it colours is not known) into that sprite palette of the palette buffer.
+        ; A: sprite palette. Copies aUnknownDD7FD0 (what it colours is not known) into that sprite palette of the palette buffer.
 
         asl a
         tax
@@ -4050,7 +4050,7 @@
         ldx #$001E
 
         _C471
-        lda $DD7FD0,x
+        lda aUnknownDD7FD0,x
         dec x
         dec x
         phx

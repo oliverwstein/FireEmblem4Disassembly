@@ -130,3 +130,10 @@
   structPlayerItemEntry .struct Item
     Item  .byte \Item   
   .endstruct
+
+  ; Item icons: g4bppItemIcons is a sheet of 16x16 icons, 8 across, each row of
+  ; icons two rows of 16 tiles ($200 bytes each). aItemIconOffsets gives each
+  ; item's icon as an offset into it; rlCopyItemIcon copies that icon's two tile
+  ; rows ($40 bytes at the offset and $200 after it).
+  ItemIconOffset .function Icon
+  .endfunction ((Icon / 8) * $400) + ((Icon % 8) * $40)

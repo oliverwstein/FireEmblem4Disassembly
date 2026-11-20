@@ -12,7 +12,6 @@
     aUnknown88DEFC                                           :?= address($88DEFC) ; read by rsUnknown88DE40, rsUnknown88DE9E
     aUnknown89A76C                                           :?= address($89A76C) ; read by rlUnknown8A8496
     aUnknown8A98C4                                           :?= address($8A98C4) ; read by rlUnknown8A9858
-    aUnknown8BBED5                                           :?= address($8BBED5) ; read by rlCopyItemIcon
     aUnknown8C9520                                           :?= address($8C9520) ; read by rlUnknown888082, rlUnknown88821A, rlUnknown9EF76F
     aUnknown8C9800                                           :?= address($8C9800) ; read by rlUnknown8A8F68
     aUnknown8C9A00                                           :?= address($8C9A00) ; read by rlUnknown80BA52

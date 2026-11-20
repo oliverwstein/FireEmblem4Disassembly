@@ -9322,6 +9322,13 @@
 
     .here
 
+    * = $0BBED5
+    .logical $8BBED5
+
+      aItemIconOffsets .binclude "data/item/ItemIconOffsets.asm" ; 8B/BED5
+
+    .here
+
     * = $0BBFED
     .logical $8BBFED
 
@@ -13678,6 +13685,13 @@
     .logical $97802C
 
       .dsection Unsorted97802CSection
+
+    .here
+
+    * = $184000
+    .logical $D84000
+
+      g4bppItemIcons .text ROM[$184000:$188000] ; D84000
 
     .here
 

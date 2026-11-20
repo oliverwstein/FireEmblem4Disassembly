@@ -119,7 +119,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $D84000, $4000, $80, $8400
+          .structDMAToVRAM g4bppItemIcons, $4000, $80, $8400
 
         jsl rlDMAByStruct
 
