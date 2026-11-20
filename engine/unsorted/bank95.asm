@@ -517,7 +517,7 @@
         and #$00FF
         pha
         tax
-        lda $97828B,x
+        lda aBattleAnimationExtraIndices,x
         and #$00FF
         pha
         asl a
@@ -540,9 +540,9 @@
 
 
         _8432
-        lda $97828E,x
+        lda aBattleAnimationExtraIndices+3,x
         sta lR45+1
-        lda $97828D,x
+        lda aBattleAnimationExtraIndices+2,x
         sta lR45
         lda #(`aDecompressionBuffer)<<8
         sta lR47+1
@@ -551,13 +551,13 @@
         phx
         jsl rlDecompressSingle
         plx
-        lda $978290,x
+        lda aBattleAnimationExtraIndices+5,x
         cmp #$FFFF
         beq _849F
         and #$F800
         cmp #$F800
         beq _849F
-        lda $978290,x
+        lda aBattleAnimationExtraIndices+5,x
         and #$07FF
         phx
         pha
@@ -565,9 +565,9 @@
         adc #1,s
         tax
         pla
-        lda $9784B7,x
+        lda aBattleAnimationPaletteIndices+1,x
         sta lR45+1
-        lda $9784B6,x
+        lda aBattleAnimationPaletteIndices,x
         sta lR45
         plx
         lda #$7E00
@@ -592,7 +592,7 @@
         sta lR18
 
         _84A9
-        lda $97828B,x
+        lda aBattleAnimationExtraIndices,x
         and #$00FF
         asl a
         asl a
@@ -611,7 +611,7 @@
 
         _84C1
         sta wR0
-        lda $97828C,x
+        lda aBattleAnimationExtraIndices+1,x
         and #$00FF
         asl a
         asl a
@@ -698,9 +698,9 @@
         adc #1,s
         tax
         pla
-        lda $9784B7,x
+        lda aBattleAnimationPaletteIndices+1,x
         sta lR45+1
-        lda $9784B6,x
+        lda aBattleAnimationPaletteIndices,x
         sta lR45
         plx
         lda #(`aDecompressionBuffer)<<8
@@ -774,12 +774,12 @@
         ldx #$0000
 
         _85AC
-        lda $9786AD,x
+        lda aBattleAnimationPaletteOverrides,x
         cmp #$FFFF
         beq _85DD
         cmp wR0
         bne _85C4
-        lda $9786AF,x
+        lda aBattleAnimationPaletteOverrides+2,x
         and #$00FF
         cmp wR1
         beq _85CC
@@ -793,7 +793,7 @@
 
 
         _85CC
-        lda $9786B0,x
+        lda aBattleAnimationPaletteOverrides+3,x
         and #$00FF
         sta #1,s
         lda #$0001
@@ -811,18 +811,18 @@
         inc a
         and #$00FF
         tax
-        lda $9784B6,x
+        lda aBattleAnimationPaletteIndices,x
         and #$00FF
         asl a
         asl a
         clc
         adc #$006B
         tax
-        lda $9784B6,x
+        lda aBattleAnimationPaletteIndices,x
         sta lR18
-        lda $9784B7,x
+        lda aBattleAnimationPaletteIndices+1,x
         sta lR18+1
-        lda $9784B9,x
+        lda aBattleAnimationPaletteIndices+3,x
         and #$00FF
         plp
         bcs _8614
@@ -971,7 +971,7 @@
         and #$00FF
         asl a
         tax
-        lda $998725,x
+        lda aBattleWeaponGraphicsIndices,x
         pha
         and #$00FF
         pha
@@ -980,9 +980,9 @@
         adc #1,s
         tax
         pla
-        lda $99881F,x
+        lda aBattleWeaponGraphics,x
         sta lR45
-        lda $998820,x
+        lda aBattleWeaponGraphics+1,x
         sta lR45+1
         lda #(`aDecompressionBuffer)<<8
         sta lR47+1
@@ -1242,7 +1242,7 @@
         ldx #$0000
 
         _8824
-        lda $998194,x
+        lda aBattleCharacterPieceLookup,x
         cmp #$FFFF
         beq _8861
         and #$00FF
@@ -1257,13 +1257,13 @@
         _8839
         pla
         inc x
-        lda $998194,x
+        lda aBattleCharacterPieceLookup,x
         cmp #$FFFF
         beq _8868
         tax
 
         _8845
-        lda $998194,x
+        lda aBattleCharacterPieceLookup,x
         cmp #$FFFF
         beq _8858
         cmp wR0
@@ -1278,7 +1278,7 @@
         _8858
         inc x
         inc x
-        lda $998194,x
+        lda aBattleCharacterPieceLookup,x
         clc
         bra _886C
 
@@ -1321,9 +1321,9 @@
         adc #1,s
         tax
         pla
-        lda $9982AD,x
+        lda aBattleCharacterPieces,x
         sta lR45
-        lda $9982AE,x
+        lda aBattleCharacterPieces+1,x
         sta lR45+1
         lda #(`aDecompressionBuffer)<<8
         sta lR47+1

@@ -8,12 +8,17 @@ LIST has one stream per line (# starts a comment):
     LABEL 4bpp PALETTE [WIDTH]    tiles: NAME.4bpp.png, WIDTH tiles across (16)
     LABEL bin                     other data (a tilemap, a compressed palette):
                                   NAME.bin, the decompressed bytes
+    LABEL colours PALETTE         an unpacked NAME.4bpp.png: give it other
+                                  colours (only its palette changes; the tool
+                                  checks the pixels convert to the same bytes)
 
 LABEL is a stream listed in a gfx/**/*.streams file as `LABEL LABEL`.
 PALETTE gives the PNG its 16 colours, for viewing only (pixels are colour
 numbers, so the colours do not change the bytes): a CPU address (8CA400), a
 label plus a byte offset (aWindowPalette+64), stream:LABEL+N for colours inside
-another stream's decompressed bytes, or grey.
+another stream's decompressed bytes, or grey. A PALETTE ending in @1 gives the
+colours from colour 1 on (sprite palettes the game copies from colour 1), with
+colour 0, which is transparent, drawn black.
 
 For each stream the tool writes the file, renames NAME.comp to NAME.4bpp.comp
 or NAME.bin.comp (git mv), and checks that the file converts back to exactly
@@ -67,6 +72,8 @@ def main():
     def colours(spec):
         if spec == 'grey':
             return GREY
+        if spec.endswith('@1'):                     # colours from colour 1; 0 (transparent) black
+            return [(0, 0, 0)] + colours(spec[:-2])[:15]
         if m := re.fullmatch(r'stream:(\w+)(?:\+(\d+))?', spec):
             data = stream_data(comp_path(m.group(1)))
             k = int(m.group(2) or 0)
@@ -94,8 +101,14 @@ def main():
         f = line.split('#', 1)[0].split()
         if not f:
             continue
+        if f[1] == 'colours' and len(f) == 3:
+            png = os.path.join(folder_of.get(f[0], ''), f[0] + '.4bpp.png')
+            if not os.path.exists(png):
+                sys.exit(f'{f[0]}: no {f[0]}.4bpp.png to recolour')
+            jobs.append((f[0], 'colours', f[2], 0, png))
+            continue
         if f[1] not in ('4bpp', 'bin') or (f[1] == '4bpp') != (len(f) in (3, 4)) or (f[1] == 'bin' and len(f) != 2):
-            sys.exit(f'{args.list}:{n}: expected LABEL 4bpp PALETTE [WIDTH] or LABEL bin')
+            sys.exit(f'{args.list}:{n}: expected LABEL 4bpp PALETTE [WIDTH], LABEL bin or LABEL colours PALETTE')
         path = comp_path(f[0])
         if not path.endswith(os.sep + f[0] + '.comp'):
             sys.exit(f'{f[0]}: already unpacked ({os.path.relpath(path, ROOT)})')
@@ -104,6 +117,18 @@ def main():
     bad = 0
     with tempfile.TemporaryDirectory() as tmp:
         for label, kind, pal, width, path in jobs:
+            if kind == 'colours':
+                from PIL import Image
+                before = png_to_4bpp(path)
+                img = Image.open(path)
+                img.putpalette([v for c in colours(pal) for v in c] + [0] * (768 - 48))
+                out = os.path.join(tmp, label + '.png')
+                img.save(out)
+                if png_to_4bpp(out) != before:
+                    print(f'{label}: recolouring changed the pixels'); bad += 1; continue
+                if args.write:
+                    img.save(path)
+                continue
             data = stream_data(path)
             folder = os.path.dirname(path)
             if kind == '4bpp':

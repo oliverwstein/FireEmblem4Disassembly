@@ -3564,12 +3564,12 @@
         lda wBattleDistance
         cmp #$0003
         bcs _96D1
-        lda $9982E1,x
+        lda aBattleCharacterPieces+52,x
         bra _96D5
 
 
         _96D1
-        lda $9982E2,x
+        lda aBattleCharacterPieces+53,x
 
         _96D5
         and #$00FF

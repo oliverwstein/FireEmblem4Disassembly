@@ -336,3 +336,989 @@
         .word $FFFF
 
     .endsection BattleAnimationSheetsSection
+
+
+    .section BattleAnimationExtrasSection
+
+      .al
+      .xl
+
+      aBattleAnimationExtraIndices ; 97/828B
+
+        ; For each third animation ID plus 1, its aBattleAnimationExtras entry
+        ; (rsUnknown958400).
+
+        .byte $00, $05, $02, $06, $02, $07, $08, $09
+        .byte $0A, $0B, $0C, $0D, $0E, $13, $14, $0F
+        .byte $10, $11, $12, $15, $16, $17, $18, $19
+        .byte $1A, $1B, $1C, $01, $02, $1D, $1E, $1F
+        .byte $20, $05, $21, $22, $23, $24, $25, $26
+        .byte $27, $28, $29, $2A, $2B, $2C, $2D, $2E
+        .byte $2F, $30, $31, $32, $33, $34, $35, $36
+        .byte $37, $38, $39, $3A, $3B, $3C, $3D, $3E
+        .byte $02, $02, $3F, $40, $41, $42, $43, $44
+
+      aBattleAnimationExtras ; 97/82D3
+
+        ; Entries of 7 bytes: the VRAM offset (in units of 16 words, added to
+        ; $4000 or $5000 by combatant), the number of tiles to copy, the
+        ; compressed 4bpp tiles (4 KB: dust, impacts and weapon swings among
+        ; them), then a patch index as in aBattleAnimationSheets ($FFFF). Named
+        ; after the first class whose third ID selects them; entry 0 is a
+        ; placeholder.
+
+        .byte $40, $C0
+        .long aChapter07MapEvents+156
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraMyrmidon
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraSwordmaster
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtra03
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtra04
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraCavalier
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraBowKnight
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraFreeKnight
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraTroubadour
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraKnightLord
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraDukeKnight
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraMasterKnight
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraMasterKnight2
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraMasterKnight3
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraMasterKnight4
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraArchKnight
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraRanger
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraMageKnight
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraGreatKnight
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraPaladin
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraPaladinF
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraPegasusKnight
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraFalconKnight
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraDragonrider
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraDragonknight
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraDragonknight2
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraDragonmaster
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraDragonmaster2
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraArcher
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraSniper
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraGeneral
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraEmperor
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraBaron
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraLanceArmor
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraBowArmor
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraBarbarian
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraFighter
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraBrigand
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraWarrior
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraWarrior2
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraHunter
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraPirate
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraJuniorLord
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraWarMage
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraWarMage2
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraPrince
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraPrince
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraQueen
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraDancer
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraPriest
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraMage
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraFireMage
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraThunderMage
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraWindMage
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraHighPriest
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraBishop
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraSage
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraBard
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraPriestess
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraDarkMage
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraDarkBishop
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraThief
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraRogue
+        .word $FFFF
+        .byte $60, $A0
+        .long g4bppcBattleAnimationExtraBallistician
+        .word $FFFF
+        .byte $60, $A0
+        .long g4bppcBattleAnimationExtraIronBallistician
+        .word $FFFF
+        .byte $60, $A0
+        .long g4bppcBattleAnimationExtraKillerBallistician
+        .word $FFFF
+        .byte $60, $A0
+        .long g4bppcBattleAnimationExtraGreatBallistician
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtraDarkPrince
+        .word $FFFF
+        .byte $80, $80
+        .long g4bppcBattleAnimationExtra44
+        .word $FFFF
+
+      aBattleAnimationPaletteIndices ; 97/84B6
+
+        ; For each fourth animation ID plus 1, its aBattleAnimationPalettes
+        ; entry (rsUnknown95858D).
+
+        .byte $00, $01, $01, $01, $01, $02, $03, $04
+        .byte $05, $06, $07, $08, $09, $08, $0A, $0B
+        .byte $0C, $0D, $0E, $0F, $10, $11, $12, $14
+        .byte $13, $14, $15, $16, $17, $18, $19, $1A
+        .byte $1B, $1C, $1D, $01, $1E, $1F, $20, $21
+        .byte $22, $23, $24, $2A, $2B, $25, $26, $27
+        .byte $28, $29, $2C, $2D, $2E, $2F, $30, $31
+        .byte $32, $33, $34, $35, $36, $37, $38, $39
+        .byte $3A, $3B, $3C, $3D, $3E, $15, $15, $3F
+        .byte $40, $41, $42, $43, $44, $45, $46, $47
+        .byte $48, $49, $4A, $4B, $4C, $4D, $4E, $4F
+        .byte $50, $51, $52, $53, $54, $55, $56, $57
+        .byte $58, $59, $5A, $5B, $5C, $5D, $5E, $5F
+        .byte $60, $61, $62
+
+      aBattleAnimationPalettes ; 97/8521
+
+        ; Entries of 4 bytes: the combatant's sprite colours (uncompressed) and
+        ; how many bytes to copy, from sprite palette colour 1 ($82 later for
+        ; the second combatant): 30 (one palette) or 62 (two).
+
+        .long aChapter09MapEvents+727
+        .byte 62
+        .long aBattleAnimationPaletteCavalier
+        .byte 62
+        .long aBattleAnimationPaletteFreeKnight
+        .byte 62
+        .long aBattleAnimationPaletteTroubadour
+        .byte 62
+        .long aBattleAnimationPaletteKnightLord
+        .byte 62
+        .long aBattleAnimationPaletteDukeKnight
+        .byte 62
+        .long aBattleAnimationPaletteMasterKnight
+        .byte 62
+        .long aBattleAnimationPaletteMasterKnight2
+        .byte 62
+        .long aBattleAnimationPalettePaladin
+        .byte 62
+        .long aBattleAnimationPalettePaladinF
+        .byte 62
+        .long aBattleAnimationPaletteRanger
+        .byte 62
+        .long aBattleAnimationPaletteMageKnight
+        .byte 62
+        .long aBattleAnimationPaletteGreatKnight
+        .byte 62
+        .long aBattleAnimationPalettePegasusKnight
+        .byte 62
+        .long aBattleAnimationPalette0E
+        .byte 62
+        .long aBattleAnimationPaletteDragonrider
+        .byte 62
+        .long aBattleAnimationPaletteDragonknight
+        .byte 62
+        .long aBattleAnimationPaletteDragonmaster
+        .byte 62
+        .long aBattleAnimationPaletteArcher
+        .byte 30
+        .long aBattleAnimationPaletteMyrmidon
+        .byte 30
+        .long aBattleAnimationPaletteArcher2
+        .byte 30
+        .long aBattleAnimationPaletteSwordmaster
+        .byte 30
+        .long aBattleAnimationPaletteSwordmaster2
+        .byte 30
+        .long aBattleAnimationPaletteSniper
+        .byte 30
+        .long aBattleAnimationPaletteSniper2
+        .byte 30
+        .long aBattleAnimationPaletteHero
+        .byte 30
+        .long aBattleAnimationPaletteHero2
+        .byte 30
+        .long aBattleAnimationPaletteGeneral
+        .byte 30
+        .long aBattleAnimationPaletteEmperor
+        .byte 30
+        .long aBattleAnimationPaletteBaron
+        .byte 30
+        .long aBattleAnimationPaletteLanceArmor
+        .byte 30
+        .long aBattleAnimationPaletteBarbarian
+        .byte 30
+        .long aBattleAnimationPaletteBrigand
+        .byte 30
+        .long aBattleAnimationPaletteFighter
+        .byte 30
+        .long aBattleAnimationPalettePirate
+        .byte 30
+        .long aBattleAnimationPaletteJuniorLord
+        .byte 30
+        .long aBattleAnimationPaletteWarMage
+        .byte 30
+        .long aBattleAnimationPaletteWarMageF
+        .byte 30
+        .long aBattleAnimationPaletteQueen
+        .byte 30
+        .long aBattleAnimationPaletteDancer
+        .byte 30
+        .long aBattleAnimationPalette28
+        .byte 30
+        .long aBattleAnimationPalettePriest
+        .byte 30
+        .long aBattleAnimationPalettePrince
+        .byte 30
+        .long aBattleAnimationPalettePrincess
+        .byte 30
+        .long aBattleAnimationPaletteMage
+        .byte 30
+        .long aBattleAnimationPaletteMage2
+        .byte 30
+        .long aBattleAnimationPaletteFireMage
+        .byte 30
+        .long aBattleAnimationPaletteThunderMage
+        .byte 30
+        .long aBattleAnimationPaletteWindMage
+        .byte 30
+        .long aBattleAnimationPaletteHighPriest
+        .byte 30
+        .long aBattleAnimationPaletteHighPriest2
+        .byte 30
+        .long aBattleAnimationPaletteBishop
+        .byte 30
+        .long aBattleAnimationPaletteSage
+        .byte 30
+        .long aBattleAnimationPaletteSage2
+        .byte 30
+        .long aBattleAnimationPaletteSage3
+        .byte 30
+        .long aBattleAnimationPaletteBard
+        .byte 30
+        .long aBattleAnimationPalettePriestess
+        .byte 30
+        .long aBattleAnimationPaletteDarkMage
+        .byte 30
+        .long aBattleAnimationPaletteDarkBishop
+        .byte 30
+        .long aBattleAnimationPaletteThief
+        .byte 30
+        .long aBattleAnimationPaletteThief2
+        .byte 30
+        .long aBattleAnimationPaletteRogue
+        .byte 30
+        .long aBattleAnimationPaletteRogue2
+        .byte 30
+        .long aBattleAnimationPaletteBallistician
+        .byte 62
+        .long aBattleAnimationPaletteIronBallistician
+        .byte 62
+        .long aBattleAnimationPaletteKillerBallistician
+        .byte 62
+        .long aBattleAnimationPaletteGreatBallistician
+        .byte 62
+        .long aBattleAnimationPaletteDarkPrince
+        .byte 30
+        .long aBattleAnimationPalette44
+        .byte 62
+        .long aBattleAnimationPalette45
+        .byte 62
+        .long aBattleAnimationPalette46
+        .byte 62
+        .long aBattleAnimationPalette47
+        .byte 62
+        .long aBattleAnimationPalette48
+        .byte 62
+        .long aBattleAnimationPalette49
+        .byte 30
+        .long aBattleAnimationPalette4A
+        .byte 62
+        .long aBattleAnimationPaletteNaoise
+        .byte 62
+        .long aBattleAnimationPaletteNaoise2
+        .byte 62
+        .long aBattleAnimationPaletteAlec
+        .byte 62
+        .long aBattleAnimationPaletteBeowulf
+        .byte 30
+        .long aBattleAnimationPaletteBeowulf2
+        .byte 30
+        .long aBattleAnimationPaletteLeif
+        .byte 30
+        .long aBattleAnimationPaletteDeimne
+        .byte 62
+        .long aBattleAnimationPaletteAres
+        .byte 30
+        .long aBattleAnimationPaletteAres2
+        .byte 30
+        .long aBattleAnimationPaletteTravantCh05
+        .byte 30
+        .long aBattleAnimationPaletteFebail
+        .byte 30
+        .long aBattleAnimationPaletteFebail2
+        .byte 30
+        .long aBattleAnimationPaletteArthur
+        .byte 30
+        .long aBattleAnimationPaletteArthur2
+        .byte 30
+        .long aBattleAnimationPaletteAmid
+        .byte 30
+        .long aBattleAnimationPaletteAmid2
+        .byte 30
+        .long aBattleAnimationPaletteDaisy
+        .byte 62
+        .long aBattleAnimationPaletteDaisy2
+        .byte 62
+        .long aBattleAnimationPaletteAzelle
+        .byte 62
+        .long aBattleAnimationPaletteLewyn
+        .byte 62
+        .long aBattleAnimationPaletteLewyn2
+        .byte 62
+        .long aBattleAnimationPaletteChulainn
+        .byte 62
+        .long aBattleAnimationPaletteDew
+        .byte 30
+        .long aBattleAnimationPaletteFinn
+        .byte 30
+
+      aBattleAnimationPaletteOverrides ; 97/86AD
+
+        ; Character, class, then the aBattleAnimationPalettes entry that
+        ; character uses in that class instead; $FFFF ends the list.
+
+        .word Lene
+        .byte Dancer, $2F
+        .word Naoise
+        .byte Cavalier, $4B
+        .word Naoise
+        .byte Paladin, $4C
+        .word Alec
+        .byte Paladin, $4D
+        .word Beowulf
+        .byte FreeKnight, $4E
+        .word Beowulf
+        .byte Ranger, $4F
+        .word Leif
+        .byte Prince, $50
+        .word Deimne
+        .byte ArchKnight, $51
+        .word Ares
+        .byte Cavalier, $52
+        .word Ares
+        .byte Paladin, $53
+        .word Febail
+        .byte Archer, $55
+        .word Febail
+        .byte Sniper, $56
+        .word Arthur
+        .byte Mage, $57
+        .word Arthur
+        .byte MageKnight, $58
+        .word Amid
+        .byte WindMage, $59
+        .word Amid
+        .byte WarMage, $5A
+        .word Daisy
+        .byte Thief, $5B
+        .word Daisy
+        .byte Rogue, $5C
+        .word Azelle
+        .byte Mage, $5D
+        .word Lewyn
+        .byte Bard, $5E
+        .word Lewyn
+        .byte Sage, $5F
+        .word Chulainn
+        .byte Hero, $60
+        .word Dew
+        .byte Rogue, $61
+        .word Finn
+        .byte LanceKnight, $62
+        .word AdultFinn
+        .byte LanceKnight, $62
+        .word Finn
+        .byte DukeKnight, $63
+        .word AdultFinn
+        .byte DukeKnight, $63
+        .word Lex
+        .byte AxeKnight, $64
+        .word Iuchar
+        .byte AxeKnight, $64
+        .word Lester
+        .byte BowKnight, $64
+        .word Diarmuid
+        .byte Ranger, $65
+        .word Jeanne
+        .byte Troubadour, $66
+        .word Ethlyn
+        .byte PaladinF, $67
+        .word TravantCh05
+        .byte Dragonmaster, $54
+        .word TravantCh09
+        .byte Dragonmaster, $54
+        .word ArionCh09
+        .byte Dragonmaster, $54
+        .word ArionChFinal
+        .byte Dragonmaster, $54
+        .word Julia
+        .byte Sage, $3B
+        .word Ced
+        .byte Sage, $68
+        .word Hawk
+        .byte Sage, $69
+        .word $FFFF
+
+    .endsection BattleAnimationExtrasSection
+
+
+    .section BattleCharacterPiecesSection
+
+      .al
+      .xl
+
+      aBattleCharacterPieceLookup ; 99/8194
+
+        ; Read by rlUnknown95881F for rlUnknown958798: for each class with
+        ; character-specific pieces, the offset of its list ($FFFF for none).
+        ; A list gives character and value, then $FFFF and the value for any
+        ; other character. A value is (palette << 8) | piece: the piece is an
+        ; aBattleCharacterPieces stream ($300 bytes copied to VRAM), the
+        ; palette 9 colours at aBattleCharacterPiecePalette (from $E0/1368,
+        ; 18 bytes apart) copied to sprite palette colour 1; values 0 and 1
+        ; mean none.
+
+        .byte Cavalier
+        .word aBattleCharacterPieceListCavalier - aBattleCharacterPieceLookup
+        .byte LanceKnight
+        .word aBattleCharacterPieceListLanceKnight - aBattleCharacterPieceLookup
+        .byte AxeKnight
+        .word aBattleCharacterPieceListAxeKnight - aBattleCharacterPieceLookup
+        .byte FreeKnight
+        .word aBattleCharacterPieceListFreeKnight - aBattleCharacterPieceLookup
+        .byte Troubadour
+        .word aBattleCharacterPieceListTroubadour - aBattleCharacterPieceLookup
+        .byte KnightLord
+        .word aBattleCharacterPieceListKnightLord - aBattleCharacterPieceLookup
+        .byte DukeKnight
+        .word aBattleCharacterPieceListDukeKnight - aBattleCharacterPieceLookup
+        .byte MasterKnight
+        .word aBattleCharacterPieceListMasterKnight - aBattleCharacterPieceLookup
+        .byte Paladin
+        .word aBattleCharacterPieceListPaladin - aBattleCharacterPieceLookup
+        .byte PaladinF
+        .word aBattleCharacterPieceListPaladin - aBattleCharacterPieceLookup
+        .byte Ranger
+        .word aBattleCharacterPieceListRanger - aBattleCharacterPieceLookup
+        .byte MageKnight
+        .word aBattleCharacterPieceListMageKnight - aBattleCharacterPieceLookup
+        .byte GreatKnight
+        .word aBattleCharacterPieceListGreatKnight - aBattleCharacterPieceLookup
+        .byte General
+        .word aBattleCharacterPieceListGeneral - aBattleCharacterPieceLookup
+        .byte Emperor
+        .word aBattleCharacterPieceListEmperor - aBattleCharacterPieceLookup
+        .byte Baron
+        .word aBattleCharacterPieceListBaron - aBattleCharacterPieceLookup
+        .byte LanceArmor
+        .word aBattleCharacterPieceListLanceArmor - aBattleCharacterPieceLookup
+        .byte AxeArmor
+        .word aBattleCharacterPieceListAxeArmor - aBattleCharacterPieceLookup
+        .byte SwordArmor
+        .word aBattleCharacterPieceListSwordArmor - aBattleCharacterPieceLookup
+        .byte PegasusRider
+        .word $FFFF
+        .byte PegasusKnight
+        .word $FFFF
+        .byte FalconKnight
+        .word $FFFF
+        .byte Dragonrider
+        .word $FFFF
+        .byte Dragonknight
+        .word $FFFF
+        .byte Dragonmaster
+        .word $FFFF
+        .byte Ballistician
+        .word $FFFF
+        .byte IronBallistician
+        .word $FFFF
+        .byte KillerBallistician
+        .word $FFFF
+        .byte GreatBallistician
+        .word $FFFF
+        .word $FFFF
+
+      aBattleCharacterPieceListCavalier ; 99/81ED
+
+        .word Alec, $0206 ; piece 6, palette 2
+        .word Naoise, $0306 ; piece 6, palette 3
+        .word Ares, $0506 ; piece 6, palette 5
+        .word $FFFF
+        .word $0406 ; any other character: piece 6, palette 4
+
+      aBattleCharacterPieceListLanceKnight ; 99/81FD
+
+        .word Finn, $1108 ; piece 8, palette 17
+        .word AdultFinn, $1108 ; piece 8, palette 17
+        .word $FFFF
+        .word $1208 ; any other character: piece 8, palette 18
+
+      aBattleCharacterPieceListAxeKnight ; 99/8209
+
+        .word Lex, $190A ; piece 10, palette 25
+        .word Iuchar, $190A ; piece 10, palette 25
+        .word $FFFF
+        .word $040A ; any other character: piece 10, palette 4
+
+      aBattleCharacterPieceListFreeKnight ; 99/8215
+
+        .word Diarmuid, $0607 ; piece 7, palette 6
+        .word Tristan, $0607 ; piece 7, palette 6
+        .word Beowulf, $0607 ; piece 7, palette 6
+        .word $FFFF
+        .word $0707 ; any other character: piece 7, palette 7
+
+      aBattleCharacterPieceListTroubadour ; 99/8225
+
+        .word Jeanne, $0309 ; piece 9, palette 3
+        .word Nanna, $0309 ; piece 9, palette 3
+        .word Ethlyn, $0209 ; piece 9, palette 2
+        .word $FFFF
+        .word $0409 ; any other character: piece 9, palette 4
+
+      aBattleCharacterPieceListKnightLord ; 99/8235
+
+        .word $FFFF
+        .word $0800 ; any other character: piece 0, palette 8
+
+      aBattleCharacterPieceListDukeKnight ; 99/8239
+
+        .word Quan, $0B02 ; piece 2, palette 11
+        .word Finn, $0902 ; piece 2, palette 9
+        .word AdultFinn, $0902 ; piece 2, palette 9
+        .word $FFFF
+        .word $0C02 ; any other character: piece 2, palette 12
+
+      aBattleCharacterPieceListMasterKnight ; 99/8249
+
+        .word Lachesis, $0901 ; piece 1, palette 9
+        .word Leif, $0901 ; piece 1, palette 9
+        .word $FFFF
+        .word $0A01 ; any other character: piece 1, palette 10
+
+      aBattleCharacterPieceListPaladin ; 99/8255
+
+        .word EldiganCh01, $1011 ; piece 17, palette 16
+        .word EldiganCh03, $1011 ; piece 17, palette 16
+        .word Ares, $130B ; piece 11, palette 19
+        .word $FFFF
+        .word $0F04 ; any other character: piece 4, palette 15
+
+      aBattleCharacterPieceListRanger ; 99/8265
+
+        .word Diarmuid, $0607 ; piece 7, palette 6
+        .word Tristan, $0607 ; piece 7, palette 6
+        .word Beowulf, $0607 ; piece 7, palette 6
+        .word $FFFF
+        .word $0707 ; any other character: piece 7, palette 7
+
+      aBattleCharacterPieceListMageKnight ; 99/8275
+
+        .word Azelle, $0005 ; piece 5, palette 0
+        .word $FFFF
+        .word $0105 ; any other character: piece 5, palette 1
+
+      aBattleCharacterPieceListGreatKnight ; 99/827D
+
+        .word Lex, $0D03 ; piece 3, palette 13
+        .word Iuchar, $0D03 ; piece 3, palette 13
+        .word $FFFF
+        .word $0E03 ; any other character: piece 3, palette 14
+
+      aBattleCharacterPieceListGeneral ; 99/8289
+
+        .word Arden, $1810 ; piece 16, palette 24
+        .word Hannibal, $1810 ; piece 16, palette 24
+        .word $FFFF
+        .word $160D ; any other character: piece 13, palette 22
+
+      aBattleCharacterPieceListEmperor ; 99/8295
+
+        .word $FFFF
+        .word $170F ; any other character: piece 15, palette 23
+
+      aBattleCharacterPieceListBaron ; 99/8299
+
+        .word $FFFF
+        .word $150E ; any other character: piece 14, palette 21
+
+      aBattleCharacterPieceListLanceArmor ; 99/829D
+
+        .word $FFFF
+        .word $140C ; any other character: piece 12, palette 20
+
+      aBattleCharacterPieceListAxeArmor ; 99/82A1
+
+        .word $FFFF
+        .word $140C ; any other character: piece 12, palette 20
+
+      aBattleCharacterPieceListSwordArmor ; 99/82A5
+
+        .word Arden, $150C ; piece 12, palette 21
+        .word $FFFF
+        .word $140C ; any other character: piece 12, palette 20
+
+      aBattleCharacterPieces ; 99/82AD
+
+        ; Compressed 4bpp tiles, 1 KB each, named after the first character
+        ; (or class default) that uses them.
+
+        .long g4bppcBattleCharacterPieceKnightLord
+        .long g4bppcBattleCharacterPieceLachesis
+        .long g4bppcBattleCharacterPieceQuan
+        .long g4bppcBattleCharacterPieceLex2
+        .long g4bppcBattleCharacterPiecePaladin
+        .long g4bppcBattleCharacterPieceAzelle
+        .long g4bppcBattleCharacterPieceAlec
+        .long g4bppcBattleCharacterPieceDiarmuid
+        .long g4bppcBattleCharacterPieceFinn
+        .long g4bppcBattleCharacterPieceJeanne
+        .long g4bppcBattleCharacterPieceLex
+        .long g4bppcBattleCharacterPieceAres
+        .long g4bppcBattleCharacterPieceLanceArmor
+        .long g4bppcBattleCharacterPieceGeneral
+        .long g4bppcBattleCharacterPieceBaron
+        .long g4bppcBattleCharacterPieceEmperor
+        .long g4bppcBattleCharacterPieceArden
+        .long g4bppcBattleCharacterPieceEldiganCh01
+
+    .endsection BattleCharacterPiecesSection
+
+
+    .section BattleWeaponGraphicsSection
+
+      .al
+      .xl
+
+      aBattleWeaponGraphicsIndices ; 99/8725
+
+        ; For each item ID, read by rlUnknown958697: the aBattleWeaponGraphics
+        ; stream (1 KB, copied to VRAM) and the palette: 15 colours from
+        ; $E0/0F30, 30 bytes apart, copied to sprite palette colour 1. $FF,
+        ; $FF: no weapon graphics.
+
+        .byte $00, $00 ; IronSword
+        .byte $01, $00 ; SteelSword
+        .byte $02, $01 ; SilverSword
+        .byte $00, $00 ; IronBlade
+        .byte $01, $00 ; SteelBlade
+        .byte $02, $01 ; SilverBlade
+        .byte $04, $03 ; MiracleSword
+        .byte $03, $02 ; ThiefSword
+        .byte $05, $03 ; BarrierBlade
+        .byte $06, $02 ; BerserkSword
+        .byte $07, $03 ; BraveSword
+        .byte $08, $05 ; SilenceSword
+        .byte $09, $01 ; SleepSword
+        .byte $0A, $00 ; SlimSword
+        .byte $0B, $04 ; Safeguard
+        .byte $0C, $06 ; FireSword
+        .byte $0D, $02 ; EarthSword
+        .byte $0E, $04 ; ThunderSword
+        .byte $0F, $01 ; WindSword
+        .byte $11, $03 ; LightBrand
+        .byte $13, $02 ; Mystletainn
+        .byte $14, $04 ; Tyrfing
+        .byte $10, $04 ; Balmung
+        .byte $15, $02 ; Armorslayer
+        .byte $16, $05 ; Wingclipper
+        .byte $17, $00 ; BrokenSwordA
+        .byte $17, $00 ; BrokenSwordB
+        .byte $17, $00 ; BrokenSwordC
+        .byte $18, $07 ; IronLance
+        .byte $19, $07 ; SteelLance
+        .byte $1A, $08 ; SilverLance
+        .byte $1B, $09 ; Javelin
+        .byte $1C, $0A ; Ridersbane
+        .byte $1D, $0B ; BraveLance
+        .byte $1B, $09 ; SlimLance
+        .byte $1E, $0C ; Gungnir
+        .byte $1F, $0D ; GaeBolg
+        .byte $20, $0E ; BrokenLanceA
+        .byte $20, $0E ; BrokenLanceB
+        .byte $20, $0E ; BrokenLanceC
+        .byte $21, $0F ; IronAxe
+        .byte $22, $10 ; SteelAxe
+        .byte $23, $11 ; SilverAxe
+        .byte $25, $13 ; BraveAxe
+        .byte $26, $14 ; Helswath
+        .byte $24, $12 ; HandAxe
+        .byte $27, $0F ; BrokenAxeA
+        .byte $27, $0F ; BrokenAxeB
+        .byte $27, $0F ; BrokenAxeC
+        .byte $28, $16 ; IronBow
+        .byte $29, $17 ; SteelBow
+        .byte $2A, $17 ; SilverBow
+        .byte $2B, $18 ; BraveBow
+        .byte $2C, $16 ; KillerBow
+        .byte $2D, $18 ; Yewfelle
+        .byte $2E, $15 ; BrokenBowA
+        .byte $2E, $15 ; BrokenBowB
+        .byte $2E, $15 ; BrokenBowC
+        .byte $3D, $19 ; Ballista
+        .byte $3E, $1A ; IronBallista
+        .byte $3F, $1B ; KillerBallista
+        .byte $40, $1C ; GreatBallista
+        .byte $FF, $FF ; Fire
+        .byte $FF, $FF ; Elfire
+        .byte $FF, $FF ; Bolganone
+        .byte $FF, $FF ; Valflame
+        .byte $FF, $FF ; Meteor
+        .byte $FF, $FF ; Thunder
+        .byte $FF, $FF ; Elthunder
+        .byte $FF, $FF ; Thoron
+        .byte $FF, $FF ; Mjolnir
+        .byte $FF, $FF ; Bolting
+        .byte $FF, $FF ; Wind
+        .byte $FF, $FF ; Elwind
+        .byte $FF, $FF ; Tornado
+        .byte $FF, $FF ; Forseti
+        .byte $FF, $FF ; Blizzard
+        .byte $FF, $FF ; Light
+        .byte $FF, $FF ; Nosferatu
+        .byte $FF, $FF ; Aura
+        .byte $FF, $FF ; Naga
+        .byte $FF, $FF ; Jormungandr
+        .byte $FF, $FF ; Fenrir
+        .byte $FF, $FF ; Hel
+        .byte $FF, $FF ; Loptous
+        .byte $FF, $FF ; BrokenFireTomeA
+        .byte $FF, $FF ; BrokenFireTomeB
+        .byte $FF, $FF ; BrokenFireTomeC
+        .byte $2F, $1D ; HealStaff
+        .byte $2F, $22 ; MendStaff
+        .byte $2F, $23 ; RecoverStaff
+        .byte $30, $1D ; PhysicStaff
+        .byte $31, $1D ; Fortify
+        .byte $33, $1E ; ReturnStaff
+        .byte $32, $1E ; WarpStaff
+        .byte $34, $1E ; RescueStaff
+        .byte $35, $1F ; CharmStaff
+        .byte $36, $1F ; RestoreStaff
+        .byte $3B, $1D ; ValkyrieStaff
+        .byte $39, $20 ; SilenceStaff
+        .byte $37, $1F ; SleepStaff
+        .byte $38, $1F ; BerserkStaff
+        .byte $3A, $21 ; ThiefStaff
+        .byte $3C, $1D ; BrokenStaffA
+        .byte $3C, $1D ; BrokenStaffB
+        .byte $3C, $1D ; BrokenStaffC
+        .byte $FF, $FF ; RenewalBand
+        .byte $FF, $FF ; ParagonBand
+        .byte $FF, $FF ; ThiefBand
+        .byte $FF, $FF ; MiracleBand
+        .byte $FF, $FF ; PursuitRing
+        .byte $FF, $FF ; RecoverRing
+        .byte $FF, $FF ; BargainBand
+        .byte $FF, $FF ; KnightRing
+        .byte $FF, $FF ; ReturnBand
+        .byte $FF, $FF ; SpeedRing
+        .byte $FF, $FF ; MagicRing
+        .byte $FF, $FF ; PowerRing
+        .byte $FF, $FF ; ShieldRing
+        .byte $FF, $FF ; BarrierRing
+        .byte $FF, $FF ; LegRing
+        .byte $FF, $FF ; SkillRing
+        .byte $17, $00 ; BrokenHolySword
+        .byte $20, $0E ; BrokenHolyLance
+        .byte $2E, $15 ; BrokenHolyBow
+
+      aBattleWeaponGraphics ; 99/881F
+
+        ; Compressed 4bpp tiles, named after the first item that uses them.
+
+        .long g4bppcBattleWeaponIronSword
+        .long g4bppcBattleWeaponSteelSword
+        .long g4bppcBattleWeaponSilverSword
+        .long g4bppcBattleWeaponThiefSword
+        .long g4bppcBattleWeaponMiracleSword
+        .long g4bppcBattleWeaponBarrierBlade
+        .long g4bppcBattleWeaponBerserkSword
+        .long g4bppcBattleWeaponBraveSword
+        .long g4bppcBattleWeaponSilenceSword
+        .long g4bppcBattleWeaponSleepSword
+        .long g4bppcBattleWeaponSlimSword
+        .long g4bppcBattleWeaponSafeguard
+        .long g4bppcBattleWeaponFireSword
+        .long g4bppcBattleWeaponEarthSword
+        .long g4bppcBattleWeaponThunderSword
+        .long g4bppcBattleWeaponWindSword
+        .long g4bppcBattleWeaponBalmung
+        .long g4bppcBattleWeaponLightBrand
+        .long g4bppcBattleWeapon12
+        .long g4bppcBattleWeaponMystletainn
+        .long g4bppcBattleWeaponTyrfing
+        .long g4bppcBattleWeaponArmorslayer
+        .long g4bppcBattleWeaponWingclipper
+        .long g4bppcBattleWeaponBrokenSwordA
+        .long g4bppcBattleWeaponIronLance
+        .long g4bppcBattleWeaponSteelLance
+        .long g4bppcBattleWeaponSilverLance
+        .long g4bppcBattleWeaponJavelin
+        .long g4bppcBattleWeaponRidersbane
+        .long g4bppcBattleWeaponBraveLance
+        .long g4bppcBattleWeaponGungnir
+        .long g4bppcBattleWeaponGaeBolg
+        .long g4bppcBattleWeaponBrokenLanceA
+        .long g4bppcBattleWeaponIronAxe
+        .long g4bppcBattleWeaponSteelAxe
+        .long g4bppcBattleWeaponSilverAxe
+        .long g4bppcBattleWeaponHandAxe
+        .long g4bppcBattleWeaponBraveAxe
+        .long g4bppcBattleWeaponHelswath
+        .long g4bppcBattleWeaponBrokenAxeA
+        .long g4bppcBattleWeaponIronBow
+        .long g4bppcBattleWeaponSteelBow
+        .long g4bppcBattleWeaponSilverBow
+        .long g4bppcBattleWeaponBraveBow
+        .long g4bppcBattleWeaponKillerBow
+        .long g4bppcBattleWeaponYewfelle
+        .long g4bppcBattleWeaponBrokenBowA
+        .long g4bppcBattleWeaponHealStaff
+        .long g4bppcBattleWeaponPhysicStaff
+        .long g4bppcBattleWeaponFortify
+        .long g4bppcBattleWeaponWarpStaff
+        .long g4bppcBattleWeaponReturnStaff
+        .long g4bppcBattleWeaponRescueStaff
+        .long g4bppcBattleWeaponCharmStaff
+        .long g4bppcBattleWeaponRestoreStaff
+        .long g4bppcBattleWeaponSleepStaff
+        .long g4bppcBattleWeaponBerserkStaff
+        .long g4bppcBattleWeaponSilenceStaff
+        .long g4bppcBattleWeaponThiefStaff
+        .long g4bppcBattleWeaponValkyrieStaff
+        .long g4bppcBattleWeaponBrokenStaffA
+        .long g4bppcBattleWeaponBallista
+        .long g4bppcBattleWeaponIronBallista
+        .long g4bppcBattleWeaponKillerBallista
+        .long g4bppcBattleWeaponGreatBallista
+
+    .endsection BattleWeaponGraphicsSection

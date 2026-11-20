@@ -181,6 +181,7 @@
   .include "data/palettes/BackgroundPalettes.asm"
   .include "data/palettes/MapBattleMagicPalettes.asm"
   .include "data/palettes/WindowPalette.asm"
+  .include "data/palettes/BattleAnimationPalettes.asm"
 
     ; Compressed streams: generated from gfx/compressed/C00A2B/C00A2B.streams by build.sh.
     .include "gfx/compressed/C00A2B/Layout.asm"
@@ -9833,6 +9834,13 @@
     ; Compressed streams: generated from gfx/compressed/8BE03C/8BE03C.streams by build.sh.
     .include "gfx/compressed/8BE03C/Layout.asm"
 
+    * = $0BE000
+    .logical $8BE000
+
+      .dsection BattleAnimationPalettes8BE000Section
+
+    .here
+
     * = $0C9E00
     .logical $8C9E00
 
@@ -13889,6 +13897,13 @@
 
     .here
 
+    * = $17828B
+    .logical $97828B
+
+      .dsection BattleAnimationExtrasSection
+
+    .here
+
     * = $184000
     .logical $D84000
 
@@ -13900,6 +13915,20 @@
     .logical $98A900
 
       .dsection BattleBackgroundsSection
+
+    .here
+
+    * = $198194
+    .logical $998194
+
+      .dsection BattleCharacterPiecesSection
+
+    .here
+
+    * = $198725
+    .logical $998725
+
+      .dsection BattleWeaponGraphicsSection
 
     .here
 
@@ -16163,6 +16192,440 @@
 
     .here
 
+    * = $2001B8
+    .logical $E001B8
+
+      .dsection BattleAnimationPalettesE001B8Section
+
+    .here
+
+    * = $2001F4
+    .logical $E001F4
+
+      .dsection BattleAnimationPalettesE001F4Section
+
+    .here
+
+    * = $200230
+    .logical $E00230
+
+      .dsection BattleAnimationPalettesE00230Section
+
+    .here
+
+    * = $20026C
+    .logical $E0026C
+
+      .dsection BattleAnimationPalettesE0026CSection
+
+    .here
+
+    * = $2002A8
+    .logical $E002A8
+
+      .dsection BattleAnimationPalettesE002A8Section
+
+    .here
+
+    * = $2002E4
+    .logical $E002E4
+
+      .dsection BattleAnimationPalettesE002E4Section
+
+    .here
+
+    * = $200320
+    .logical $E00320
+
+      .dsection BattleAnimationPalettesE00320Section
+
+    .here
+
+    * = $2003D4
+    .logical $E003D4
+
+      .dsection BattleAnimationPalettesE003D4Section
+
+    .here
+
+    * = $200410
+    .logical $E00410
+
+      .dsection BattleAnimationPalettesE00410Section
+
+    .here
+
+    * = $20044C
+    .logical $E0044C
+
+      .dsection BattleAnimationPalettesE0044CSection
+
+    .here
+
+    * = $200488
+    .logical $E00488
+
+      .dsection BattleAnimationPalettesE00488Section
+
+    .here
+
+    * = $2004C4
+    .logical $E004C4
+
+      .dsection BattleAnimationPalettesE004C4Section
+
+    .here
+
+    * = $200500
+    .logical $E00500
+
+      .dsection BattleAnimationPalettesE00500Section
+
+    .here
+
+    * = $20053C
+    .logical $E0053C
+
+      .dsection BattleAnimationPalettesE0053CSection
+
+    .here
+
+    * = $200578
+    .logical $E00578
+
+      .dsection BattleAnimationPalettesE00578Section
+
+    .here
+
+    * = $2005B4
+    .logical $E005B4
+
+      .dsection BattleAnimationPalettesE005B4Section
+
+    .here
+
+    * = $2005F0
+    .logical $E005F0
+
+      .dsection BattleAnimationPalettesE005F0Section
+
+    .here
+
+    * = $20062C
+    .logical $E0062C
+
+      .dsection BattleAnimationPalettesE0062CSection
+
+    .here
+
+    * = $200668
+    .logical $E00668
+
+      .dsection BattleAnimationPalettesE00668Section
+
+    .here
+
+    * = $2006A4
+    .logical $E006A4
+
+      .dsection BattleAnimationPalettesE006A4Section
+
+    .here
+
+    * = $2006E0
+    .logical $E006E0
+
+      .dsection BattleAnimationPalettesE006E0Section
+
+    .here
+
+    * = $20071C
+    .logical $E0071C
+
+      .dsection BattleAnimationPalettesE0071CSection
+
+    .here
+
+    * = $2007B6
+    .logical $E007B6
+
+      .dsection BattleAnimationPalettesE007B6Section
+
+    .here
+
+    * = $200870
+    .logical $E00870
+
+      .dsection BattleAnimationPalettesE00870Section
+
+    .here
+
+    * = $2008EC
+    .logical $E008EC
+
+      .dsection BattleAnimationPalettesE008ECSection
+
+    .here
+
+    * = $200B68
+    .logical $E00B68
+
+      .dsection BattleAnimationPalettesE00B68Section
+
+    .here
+
+    * = $200BA4
+    .logical $E00BA4
+
+      .dsection BattleAnimationPalettesE00BA4Section
+
+    .here
+
+    * = $200BE0
+    .logical $E00BE0
+
+      .dsection BattleAnimationPalettesE00BE0Section
+
+    .here
+
+    * = $200C1C
+    .logical $E00C1C
+
+      .dsection BattleAnimationPalettesE00C1CSection
+
+    .here
+
+    * = $200C98
+    .logical $E00C98
+
+      .dsection BattleAnimationPalettesE00C98Section
+
+    .here
+
+    * = $200D14
+    .logical $E00D14
+
+      .dsection BattleAnimationPalettesE00D14Section
+
+    .here
+
+    * = $200F30
+    .logical $E00F30
+
+      .dsection BattleAnimationPalettesE00F30Section
+
+    .here
+
+    * = $201578
+    .logical $E01578
+
+      .dsection BattleAnimationPalettesE01578Section
+
+    .here
+
+    * = $2015B4
+    .logical $E015B4
+
+      .dsection BattleAnimationPalettesE015B4Section
+
+    .here
+
+    * = $2015F0
+    .logical $E015F0
+
+      .dsection BattleAnimationPalettesE015F0Section
+
+    .here
+
+    * = $20162C
+    .logical $E0162C
+
+      .dsection BattleAnimationPalettesE0162CSection
+
+    .here
+
+    * = $201668
+    .logical $E01668
+
+      .dsection BattleAnimationPalettesE01668Section
+
+    .here
+
+    * = $2016C2
+    .logical $E016C2
+
+      .dsection BattleAnimationPalettesE016C2Section
+
+    .here
+
+    * = $2016FE
+    .logical $E016FE
+
+      .dsection BattleAnimationPalettesE016FESection
+
+    .here
+
+    * = $201758
+    .logical $E01758
+
+      .dsection BattleAnimationPalettesE01758Section
+
+    .here
+
+    * = $2017D4
+    .logical $E017D4
+
+      .dsection BattleAnimationPalettesE017D4Section
+
+    .here
+
+    * = $20188E
+    .logical $E0188E
+
+      .dsection BattleAnimationPalettesE0188ESection
+
+    .here
+
+    * = $20190A
+    .logical $E0190A
+
+      .dsection BattleAnimationPalettesE0190ASection
+
+    .here
+
+    * = $201986
+    .logical $E01986
+
+      .dsection BattleAnimationPalettesE01986Section
+
+    .here
+
+    * = $201A02
+    .logical $E01A02
+
+      .dsection BattleAnimationPalettesE01A02Section
+
+    .here
+
+    * = $201A7E
+    .logical $E01A7E
+
+      .dsection BattleAnimationPalettesE01A7ESection
+
+    .here
+
+    * = $201AFA
+    .logical $E01AFA
+
+      .dsection BattleAnimationPalettesE01AFASection
+
+    .here
+
+    * = $201B76
+    .logical $E01B76
+
+      .dsection BattleAnimationPalettesE01B76Section
+
+    .here
+
+    * = $201BF2
+    .logical $E01BF2
+
+      .dsection BattleAnimationPalettesE01BF2Section
+
+    .here
+
+    * = $201C6E
+    .logical $E01C6E
+
+      .dsection BattleAnimationPalettesE01C6ESection
+
+    .here
+
+    * = $201CAA
+    .logical $E01CAA
+
+      .dsection BattleAnimationPalettesE01CAASection
+
+    .here
+
+    * = $201CE6
+    .logical $E01CE6
+
+      .dsection BattleAnimationPalettesE01CE6Section
+
+    .here
+
+    * = $201D22
+    .logical $E01D22
+
+      .dsection BattleAnimationPalettesE01D22Section
+
+    .here
+
+    * = $201D5E
+    .logical $E01D5E
+
+      .dsection BattleAnimationPalettesE01D5ESection
+
+    .here
+
+    * = $201D9A
+    .logical $E01D9A
+
+      .dsection BattleAnimationPalettesE01D9ASection
+
+    .here
+
+    * = $201DD6
+    .logical $E01DD6
+
+      .dsection BattleAnimationPalettesE01DD6Section
+
+    .here
+
+    * = $201E12
+    .logical $E01E12
+
+      .dsection BattleAnimationPalettesE01E12Section
+
+    .here
+
+    * = $201E4E
+    .logical $E01E4E
+
+      .dsection BattleAnimationPalettesE01E4ESection
+
+    .here
+
+    * = $201ECA
+    .logical $E01ECA
+
+      .dsection BattleAnimationPalettesE01ECASection
+
+    .here
+
+    * = $201F46
+    .logical $E01F46
+
+      .dsection BattleAnimationPalettesE01F46Section
+
+    .here
+
+    * = $201FC2
+    .logical $E01FC2
+
+      .dsection BattleAnimationPalettesE01FC2Section
+
+    .here
+
+    * = $20203E
+    .logical $E0203E
+
+      .dsection BattleAnimationPalettesE0203ESection
+
+    .here
+
     * = $2027FF
     .logical $E027FF
 
@@ -16182,6 +16645,48 @@
 
     ; Compressed streams: generated from gfx/compressed/E04220/E04220.streams by build.sh.
     .include "gfx/compressed/E04220/Layout.asm"
+
+    * = $20287B
+    .logical $E0287B
+
+      .dsection BattleAnimationPalettesE0287BSection
+
+    .here
+
+    * = $202B05
+    .logical $E02B05
+
+      .dsection BattleAnimationPalettesE02B05Section
+
+    .here
+
+    * = $202B43
+    .logical $E02B43
+
+      .dsection BattleAnimationPalettesE02B43Section
+
+    .here
+
+    * = $202C55
+    .logical $E02C55
+
+      .dsection BattleAnimationPalettesE02C55Section
+
+    .here
+
+    * = $202C93
+    .logical $E02C93
+
+      .dsection BattleAnimationPalettesE02C93Section
+
+    .here
+
+    * = $202CD1
+    .logical $E02CD1
+
+      .dsection BattleAnimationPalettesE02CD1Section
+
+    .here
 
     * = $2E8000
     .logical $AE8000

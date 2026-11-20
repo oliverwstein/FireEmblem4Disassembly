@@ -6,253 +6,253 @@ start $E04220
 end $F3365D
 
 g4bppcBattleAnimationSheetJuniorLord g4bppcBattleAnimationSheetJuniorLord ; 16640 bytes decompressed
-gcUnknownE05C7F gcUnknownE05C7F ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraJuniorLord g4bppcBattleAnimationExtraJuniorLord ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetWarMage g4bppcBattleAnimationSheetWarMage ; 16640 bytes decompressed
-gcUnknownE07731 gcUnknownE07731 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraWarMage g4bppcBattleAnimationExtraWarMage ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheet01 g4bppcBattleAnimationSheet01 ; 7488 bytes decompressed
-gcUnknownE10820 gcUnknownE10820 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraWarMage2 g4bppcBattleAnimationExtraWarMage2 ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetWarMageF g4bppcBattleAnimationSheetWarMageF ; 16640 bytes decompressed
 gcUnknownE121ED gcUnknownE121ED ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheet02 g4bppcBattleAnimationSheet02 ; 7488 bytes decompressed
-gcUnknownE132F9 gcUnknownE132F9 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtra03 g4bppcBattleAnimationExtra03 ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetPrince g4bppcBattleAnimationSheetPrince ; 16640 bytes decompressed
-gcUnknownE14D78 gcUnknownE14D78 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraPrince g4bppcBattleAnimationExtraPrince ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetPrincess g4bppcBattleAnimationSheetPrincess ; 16640 bytes decompressed
 gcUnknownE168B9 gcUnknownE168B9 ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetPrincess2 g4bppcBattleAnimationSheetPrincess2 ; 7488 bytes decompressed
 gcUnknownE171EB gcUnknownE171EB ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetQueen g4bppcBattleAnimationSheetQueen ; 7488 bytes decompressed
-gcUnknownE2046D gcUnknownE2046D ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraQueen g4bppcBattleAnimationExtraQueen ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetDancer g4bppcBattleAnimationSheetDancer ; 8896 bytes decompressed
-gcUnknownE2157E gcUnknownE2157E ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraDancer g4bppcBattleAnimationExtraDancer ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheet61 g4bppcBattleAnimationSheet61 ; 9312 bytes decompressed
-gcUnknownE2276E gcUnknownE2276E ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtra44 g4bppcBattleAnimationExtra44 ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetPriest g4bppcBattleAnimationSheetPriest ; 7488 bytes decompressed
-gcUnknownE22F44 gcUnknownE22F44 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraPriest g4bppcBattleAnimationExtraPriest ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetPriest2 g4bppcBattleAnimationSheetPriest2 ; 7488 bytes decompressed
 gcUnknownE235E5 gcUnknownE235E5 ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetMage g4bppcBattleAnimationSheetMage ; 7488 bytes decompressed
-gcUnknownE2472B gcUnknownE2472B ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraMage g4bppcBattleAnimationExtraMage ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetMage2 g4bppcBattleAnimationSheetMage2 ; 7488 bytes decompressed
 g4bppcBattleAnimationSheetFireMage g4bppcBattleAnimationSheetFireMage ; 7488 bytes decompressed
-gcUnknownE2623D gcUnknownE2623D ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraFireMage g4bppcBattleAnimationExtraFireMage ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetFireMage2 g4bppcBattleAnimationSheetFireMage2 ; 7488 bytes decompressed
 g4bppcBattleAnimationSheetThunderMage g4bppcBattleAnimationSheetThunderMage ; 7488 bytes decompressed
-gcUnknownE3027F gcUnknownE3027F ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraThunderMage g4bppcBattleAnimationExtraThunderMage ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetThunderMage2 g4bppcBattleAnimationSheetThunderMage2 ; 7488 bytes decompressed
 g4bppcBattleAnimationSheetWindMage g4bppcBattleAnimationSheetWindMage ; 7488 bytes decompressed
-gcUnknownE322C4 gcUnknownE322C4 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraWindMage g4bppcBattleAnimationExtraWindMage ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetWindMage2 g4bppcBattleAnimationSheetWindMage2 ; 7488 bytes decompressed
-gcUnknownE33249 gcUnknownE33249 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraHighPriest g4bppcBattleAnimationExtraHighPriest ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetHighPriest2 g4bppcBattleAnimationSheetHighPriest2 ; 7488 bytes decompressed
 g4bppcBattleAnimationSheetBishop g4bppcBattleAnimationSheetBishop ; 7488 bytes decompressed
-gcUnknownE34FC6 gcUnknownE34FC6 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraBishop g4bppcBattleAnimationExtraBishop ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheet52 g4bppcBattleAnimationSheet52 ; 16640 bytes decompressed
-gcUnknownE368C3 gcUnknownE368C3 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraBard g4bppcBattleAnimationExtraBard ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetBard g4bppcBattleAnimationSheetBard ; 7488 bytes decompressed
 gcUnknownE3799A gcUnknownE3799A ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetPriestess g4bppcBattleAnimationSheetPriestess ; 7488 bytes decompressed
-gcUnknownE40663 gcUnknownE40663 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraPriestess g4bppcBattleAnimationExtraPriestess ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetDarkMage g4bppcBattleAnimationSheetDarkMage ; 7488 bytes decompressed
-gcUnknownE4190E gcUnknownE4190E ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraDarkMage g4bppcBattleAnimationExtraDarkMage ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetDarkBishop g4bppcBattleAnimationSheetDarkBishop ; 7488 bytes decompressed
-gcUnknownE428DA gcUnknownE428DA ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraDarkBishop g4bppcBattleAnimationExtraDarkBishop ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetSage g4bppcBattleAnimationSheetSage ; 7488 bytes decompressed
 g4bppcBattleAnimationSheetSage2 g4bppcBattleAnimationSheetSage2 ; 7488 bytes decompressed
 g4bppcBattleAnimationSheet50 g4bppcBattleAnimationSheet50 ; 7488 bytes decompressed
-gcUnknownE450EE gcUnknownE450EE ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraSage g4bppcBattleAnimationExtraSage ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetPegasusKnight g4bppcBattleAnimationSheetPegasusKnight ; 21312 bytes decompressed
-gcUnknownE4772C gcUnknownE4772C ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraPegasusKnight g4bppcBattleAnimationExtraPegasusKnight ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetFalconKnight g4bppcBattleAnimationSheetFalconKnight ; 21312 bytes decompressed
-gcUnknownE52566 gcUnknownE52566 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraFalconKnight g4bppcBattleAnimationExtraFalconKnight ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetDragonrider g4bppcBattleAnimationSheetDragonrider ; 12864 bytes decompressed
-gcUnknownE54538 gcUnknownE54538 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraDragonrider g4bppcBattleAnimationExtraDragonrider ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetDragonknight g4bppcBattleAnimationSheetDragonknight ; 12864 bytes decompressed
-gcUnknownE5659F gcUnknownE5659F ; 4096 bytes decompressed, found
-gcUnknownE56DBC gcUnknownE56DBC ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraDragonknight g4bppcBattleAnimationExtraDragonknight ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraDragonknight2 g4bppcBattleAnimationExtraDragonknight2 ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetDragonmaster g4bppcBattleAnimationSheetDragonmaster ; 12864 bytes decompressed
-gcUnknownE60DE7 gcUnknownE60DE7 ; 4096 bytes decompressed, found
-gcUnknownE61604 gcUnknownE61604 ; 4096 bytes decompressed, found
-gcUnknownE61DE3 gcUnknownE61DE3 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraDragonmaster g4bppcBattleAnimationExtraDragonmaster ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraDragonmaster2 g4bppcBattleAnimationExtraDragonmaster2 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraBarbarian g4bppcBattleAnimationExtraBarbarian ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetFighter g4bppcBattleAnimationSheetFighter ; 14560 bytes decompressed
-gcUnknownE63EAD gcUnknownE63EAD ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraFighter g4bppcBattleAnimationExtraFighter ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetBrigand g4bppcBattleAnimationSheetBrigand ; 14560 bytes decompressed
-gcUnknownE66065 gcUnknownE66065 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraBrigand g4bppcBattleAnimationExtraBrigand ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetWarrior g4bppcBattleAnimationSheetWarrior ; 14560 bytes decompressed
-gcUnknownE7023B gcUnknownE7023B ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraWarrior g4bppcBattleAnimationExtraWarrior ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetWarrior2 g4bppcBattleAnimationSheetWarrior2 ; 5408 bytes decompressed
-gcUnknownE70D92 gcUnknownE70D92 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraWarrior2 g4bppcBattleAnimationExtraWarrior2 ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetHunter g4bppcBattleAnimationSheetHunter ; 5408 bytes decompressed
-gcUnknownE71801 gcUnknownE71801 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraHunter g4bppcBattleAnimationExtraHunter ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetPirate g4bppcBattleAnimationSheetPirate ; 14560 bytes decompressed
-gcUnknownE737F7 gcUnknownE737F7 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraPirate g4bppcBattleAnimationExtraPirate ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetArcher g4bppcBattleAnimationSheetArcher ; 4224 bytes decompressed
-gcUnknownE73FA1 gcUnknownE73FA1 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraArcher g4bppcBattleAnimationExtraArcher ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetArcher2 g4bppcBattleAnimationSheetArcher2 ; 4224 bytes decompressed
 g4bppcBattleAnimationSheetMyrmidon g4bppcBattleAnimationSheetMyrmidon ; 7264 bytes decompressed
-gcUnknownE755EC gcUnknownE755EC ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraMyrmidon g4bppcBattleAnimationExtraMyrmidon ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetMyrmidon2 g4bppcBattleAnimationSheetMyrmidon2 ; 7264 bytes decompressed
 g4bppcBattleAnimationSheetSwordmaster g4bppcBattleAnimationSheetSwordmaster ; 10752 bytes decompressed
-gcUnknownE77BFA gcUnknownE77BFA ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraSwordmaster g4bppcBattleAnimationExtraSwordmaster ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetSwordmaster2 g4bppcBattleAnimationSheetSwordmaster2 ; 10752 bytes decompressed
 g4bppcBattleAnimationSheetHero g4bppcBattleAnimationSheetHero ; 10752 bytes decompressed
 g4bppcBattleAnimationSheetHero2 g4bppcBattleAnimationSheetHero2 ; 10752 bytes decompressed
 g4bppcBattleAnimationSheetGeneral g4bppcBattleAnimationSheetGeneral ; 17376 bytes decompressed
 g4bppcBattleAnimationSheetGeneral2 g4bppcBattleAnimationSheetGeneral2 ; 13472 bytes decompressed
 g4bppcBattleAnimationSheetGeneral3 g4bppcBattleAnimationSheetGeneral3 ; 5120 bytes decompressed
-gcUnknownE87849 gcUnknownE87849 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraGeneral g4bppcBattleAnimationExtraGeneral ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetEmperor g4bppcBattleAnimationSheetEmperor ; 17376 bytes decompressed
 g4bppcBattleAnimationSheetEmperor2 g4bppcBattleAnimationSheetEmperor2 ; 13472 bytes decompressed
 g4bppcBattleAnimationSheetEmperor3 g4bppcBattleAnimationSheetEmperor3 ; 5120 bytes decompressed
-gcUnknownE933C8 gcUnknownE933C8 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraEmperor g4bppcBattleAnimationExtraEmperor ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetBaron g4bppcBattleAnimationSheetBaron ; 17376 bytes decompressed
 g4bppcBattleAnimationSheetBaron2 g4bppcBattleAnimationSheetBaron2 ; 13472 bytes decompressed
 g4bppcBattleAnimationSheetBaron3 g4bppcBattleAnimationSheetBaron3 ; 5120 bytes decompressed
-gcUnknownE971C5 gcUnknownE971C5 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraBaron g4bppcBattleAnimationExtraBaron ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetAxeArmor g4bppcBattleAnimationSheetAxeArmor ; 17376 bytes decompressed
-gcUnknownEA0801 gcUnknownEA0801 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraLanceArmor g4bppcBattleAnimationExtraLanceArmor ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetLanceArmor g4bppcBattleAnimationSheetLanceArmor ; 13472 bytes decompressed
 g4bppcBattleAnimationSheetBowArmor g4bppcBattleAnimationSheetBowArmor ; 5120 bytes decompressed
-gcUnknownEA2108 gcUnknownEA2108 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraBowArmor g4bppcBattleAnimationExtraBowArmor ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetPaladin g4bppcBattleAnimationSheetPaladin ; 8736 bytes decompressed
-gcUnknownEA397E gcUnknownEA397E ; 4096 bytes decompressed, found
-gcUnknownEA4165 gcUnknownEA4165 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraPaladin g4bppcBattleAnimationExtraPaladin ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraPaladinF g4bppcBattleAnimationExtraPaladinF ; 4096 bytes decompressed, found
 gcUnknownEA48E1 gcUnknownEA48E1 ; 3072 bytes decompressed, found
 gcUnknownEA4CCA gcUnknownEA4CCA ; 6144 bytes decompressed, found
 gcUnknownEA5110 gcUnknownEA5110 ; 10752 bytes decompressed, found
 gcUnknownEA6849 gcUnknownEA6849 ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetSniper g4bppcBattleAnimationSheetSniper ; 4224 bytes decompressed
-gcUnknownEA7085 gcUnknownEA7085 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraSniper g4bppcBattleAnimationExtraSniper ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetSniper2 g4bppcBattleAnimationSheetSniper2 ; 4224 bytes decompressed
 gcUnknownEA793F gcUnknownEA793F ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetThief g4bppcBattleAnimationSheetThief ; 8896 bytes decompressed
-gcUnknownEB0A77 gcUnknownEB0A77 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraThief g4bppcBattleAnimationExtraThief ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetThief2 g4bppcBattleAnimationSheetThief2 ; 8896 bytes decompressed
 g4bppcBattleAnimationSheetRogue g4bppcBattleAnimationSheetRogue ; 8896 bytes decompressed
-gcUnknownEB2A4C gcUnknownEB2A4C ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraRogue g4bppcBattleAnimationExtraRogue ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetRogue2 g4bppcBattleAnimationSheetRogue2 ; 8896 bytes decompressed
 gcUnknownEB3AB5 gcUnknownEB3AB5 ; 7488 bytes decompressed, found
 gcUnknownEB4A9D gcUnknownEB4A9D ; 4096 bytes decompressed, found
 gcUnknownEB4ABB gcUnknownEB4ABB ; 5408 bytes decompressed, found
-gcUnknownEB54BB gcUnknownEB54BB ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtra04 g4bppcBattleAnimationExtra04 ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetCavalier g4bppcBattleAnimationSheetCavalier ; 9312 bytes decompressed
-gcUnknownEB6C1B gcUnknownEB6C1B ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraCavalier g4bppcBattleAnimationExtraCavalier ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetBowKnight g4bppcBattleAnimationSheetBowKnight ; 3104 bytes decompressed
-gcUnknownEB7D24 gcUnknownEB7D24 ; 4096 bytes decompressed, found
-gcUnknownEC023B gcUnknownEC023B ; 4096 bytes decompressed, found
-gcUnknownEC0974 gcUnknownEC0974 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraBowKnight g4bppcBattleAnimationExtraBowKnight ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraFreeKnight g4bppcBattleAnimationExtraFreeKnight ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraTroubadour g4bppcBattleAnimationExtraTroubadour ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetKnightLord g4bppcBattleAnimationSheetKnightLord ; 8736 bytes decompressed
-gcUnknownEC2801 gcUnknownEC2801 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraKnightLord g4bppcBattleAnimationExtraKnightLord ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetDukeKnight g4bppcBattleAnimationSheetDukeKnight ; 8736 bytes decompressed
-gcUnknownEC46E3 gcUnknownEC46E3 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraDukeKnight g4bppcBattleAnimationExtraDukeKnight ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetMasterKnight g4bppcBattleAnimationSheetMasterKnight ; 8736 bytes decompressed
-gcUnknownEC6675 gcUnknownEC6675 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraMasterKnight g4bppcBattleAnimationExtraMasterKnight ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetMasterKnight2 g4bppcBattleAnimationSheetMasterKnight2 ; 3104 bytes decompressed
-gcUnknownEC774C gcUnknownEC774C ; 4096 bytes decompressed, found
-gcUnknownEC7BF5 gcUnknownEC7BF5 ; 4096 bytes decompressed, found
-gcUnknownED03C3 gcUnknownED03C3 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraMasterKnight2 g4bppcBattleAnimationExtraMasterKnight2 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraMasterKnight3 g4bppcBattleAnimationExtraMasterKnight3 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraMasterKnight4 g4bppcBattleAnimationExtraMasterKnight4 ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetArchKnight g4bppcBattleAnimationSheetArchKnight ; 3104 bytes decompressed
-gcUnknownED10E8 gcUnknownED10E8 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraArchKnight g4bppcBattleAnimationExtraArchKnight ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetRanger g4bppcBattleAnimationSheetRanger ; 8736 bytes decompressed
-gcUnknownED2D3B gcUnknownED2D3B ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraRanger g4bppcBattleAnimationExtraRanger ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetMageKnight g4bppcBattleAnimationSheetMageKnight ; 8736 bytes decompressed
-gcUnknownED4C19 gcUnknownED4C19 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraMageKnight g4bppcBattleAnimationExtraMageKnight ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetGreatKnight g4bppcBattleAnimationSheetGreatKnight ; 8736 bytes decompressed
-gcUnknownED6B53 gcUnknownED6B53 ; 4096 bytes decompressed, found
+g4bppcBattleAnimationExtraGreatKnight g4bppcBattleAnimationExtraGreatKnight ; 4096 bytes decompressed, found
 g4bppcBattleAnimationSheetBallistician g4bppcBattleAnimationSheetBallistician ; 1632 bytes decompressed
-gcUnknownED75C5 gcUnknownED75C5 ; 5120 bytes decompressed, found
+g4bppcBattleAnimationExtraBallistician g4bppcBattleAnimationExtraBallistician ; 5120 bytes decompressed, found
 g4bppcBattleAnimationSheetIronBallistician g4bppcBattleAnimationSheetIronBallistician ; 1632 bytes decompressed
-gcUnknownED7E81 gcUnknownED7E81 ; 5120 bytes decompressed, found
+g4bppcBattleAnimationExtraIronBallistician g4bppcBattleAnimationExtraIronBallistician ; 5120 bytes decompressed, found
 g4bppcBattleAnimationSheetKillerBallistician g4bppcBattleAnimationSheetKillerBallistician ; 1632 bytes decompressed
-gcUnknownEE0759 gcUnknownEE0759 ; 5120 bytes decompressed, found
+g4bppcBattleAnimationExtraKillerBallistician g4bppcBattleAnimationExtraKillerBallistician ; 5120 bytes decompressed, found
 g4bppcBattleAnimationSheetGreatBallistician g4bppcBattleAnimationSheetGreatBallistician ; 1632 bytes decompressed
-gcUnknownEE1081 gcUnknownEE1081 ; 5120 bytes decompressed, found
+g4bppcBattleAnimationExtraGreatBallistician g4bppcBattleAnimationExtraGreatBallistician ; 5120 bytes decompressed, found
 g4bppcBattleAnimationSheetDarkPrince g4bppcBattleAnimationSheetDarkPrince ; 6976 bytes decompressed
-gcUnknownEE2542 gcUnknownEE2542 ; 4096 bytes decompressed, after
+g4bppcBattleAnimationExtraDarkPrince g4bppcBattleAnimationExtraDarkPrince ; 4096 bytes decompressed, after
 gcUnknownEE2560 gcUnknownEE2560 ; 8192 bytes decompressed, after
-gcUnknownEE2843 gcUnknownEE2843 ; 1024 bytes decompressed, after
-gcUnknownEE2972 gcUnknownEE2972 ; 1024 bytes decompressed, after
-gcUnknownEE2AA1 gcUnknownEE2AA1 ; 1024 bytes decompressed, after
-gcUnknownEE2BF7 gcUnknownEE2BF7 ; 1024 bytes decompressed, after
-gcUnknownEE2DD2 gcUnknownEE2DD2 ; 1024 bytes decompressed, after
-gcUnknownEE2F3D gcUnknownEE2F3D ; 1024 bytes decompressed, after
-gcUnknownEE309C gcUnknownEE309C ; 1024 bytes decompressed, after
-gcUnknownEE31CD gcUnknownEE31CD ; 1024 bytes decompressed, after
-gcUnknownEE330C gcUnknownEE330C ; 1024 bytes decompressed, after
-gcUnknownEE3467 gcUnknownEE3467 ; 1024 bytes decompressed, after
-gcUnknownEE35C2 gcUnknownEE35C2 ; 1024 bytes decompressed, after
-gcUnknownEE3703 gcUnknownEE3703 ; 1024 bytes decompressed, after
-gcUnknownEE3851 gcUnknownEE3851 ; 1024 bytes decompressed, after
-gcUnknownEE3A44 gcUnknownEE3A44 ; 1024 bytes decompressed, after
-gcUnknownEE3BE7 gcUnknownEE3BE7 ; 1024 bytes decompressed, after
-gcUnknownEE3D68 gcUnknownEE3D68 ; 1024 bytes decompressed, after
-gcUnknownEE3EC1 gcUnknownEE3EC1 ; 1024 bytes decompressed, after
-gcUnknownEE4041 gcUnknownEE4041 ; 1024 bytes decompressed, after
-gcUnknownEE41B7 gcUnknownEE41B7 ; 1024 bytes decompressed, after
-gcUnknownEE42CE gcUnknownEE42CE ; 1024 bytes decompressed, after
-gcUnknownEE44CA gcUnknownEE44CA ; 1024 bytes decompressed, after
-gcUnknownEE461B gcUnknownEE461B ; 1024 bytes decompressed, after
-gcUnknownEE47A4 gcUnknownEE47A4 ; 1024 bytes decompressed, after
-gcUnknownEE4917 gcUnknownEE4917 ; 1024 bytes decompressed, after
-gcUnknownEE4A4E gcUnknownEE4A4E ; 1024 bytes decompressed, after
-gcUnknownEE4B39 gcUnknownEE4B39 ; 1024 bytes decompressed, after
-gcUnknownEE4C2F gcUnknownEE4C2F ; 1024 bytes decompressed, after
-gcUnknownEE4D19 gcUnknownEE4D19 ; 1024 bytes decompressed, after
-gcUnknownEE4E60 gcUnknownEE4E60 ; 1024 bytes decompressed, after
-gcUnknownEE4F4B gcUnknownEE4F4B ; 1024 bytes decompressed, after
-gcUnknownEE504C gcUnknownEE504C ; 1024 bytes decompressed, after
-gcUnknownEE51D0 gcUnknownEE51D0 ; 1024 bytes decompressed, after
-gcUnknownEE5340 gcUnknownEE5340 ; 1024 bytes decompressed, after
-gcUnknownEE542D gcUnknownEE542D ; 1024 bytes decompressed, after
-gcUnknownEE55ED gcUnknownEE55ED ; 1024 bytes decompressed, after
-gcUnknownEE57A6 gcUnknownEE57A6 ; 1024 bytes decompressed, after
-gcUnknownEE596E gcUnknownEE596E ; 1024 bytes decompressed, after
-gcUnknownEE5AF4 gcUnknownEE5AF4 ; 1024 bytes decompressed, after
-gcUnknownEE5CCA gcUnknownEE5CCA ; 1024 bytes decompressed, after
-gcUnknownEE5E7B gcUnknownEE5E7B ; 1024 bytes decompressed, after
-gcUnknownEE6004 gcUnknownEE6004 ; 1024 bytes decompressed, after
-gcUnknownEE61CA gcUnknownEE61CA ; 1024 bytes decompressed, after
-gcUnknownEE63AC gcUnknownEE63AC ; 1024 bytes decompressed, after
-gcUnknownEE6554 gcUnknownEE6554 ; 1024 bytes decompressed, after
-gcUnknownEE6714 gcUnknownEE6714 ; 1024 bytes decompressed, after
-gcUnknownEE691A gcUnknownEE691A ; 1024 bytes decompressed, after
-gcUnknownEE6B57 gcUnknownEE6B57 ; 1024 bytes decompressed, after
-gcUnknownEE6D16 gcUnknownEE6D16 ; 1024 bytes decompressed, after
-gcUnknownEE6DD9 gcUnknownEE6DD9 ; 1024 bytes decompressed, after
-gcUnknownEE6EAE gcUnknownEE6EAE ; 1024 bytes decompressed, after
-gcUnknownEE6F57 gcUnknownEE6F57 ; 1024 bytes decompressed, after
-gcUnknownEE7036 gcUnknownEE7036 ; 1024 bytes decompressed, after
-gcUnknownEE70EA gcUnknownEE70EA ; 1024 bytes decompressed, after
-gcUnknownEE71DB gcUnknownEE71DB ; 1024 bytes decompressed, after
-gcUnknownEE72D5 gcUnknownEE72D5 ; 1024 bytes decompressed, after
-gcUnknownEE73D8 gcUnknownEE73D8 ; 1024 bytes decompressed, after
-gcUnknownEE74D6 gcUnknownEE74D6 ; 1024 bytes decompressed, after
-gcUnknownEE7604 gcUnknownEE7604 ; 1024 bytes decompressed, after
-gcUnknownEE7726 gcUnknownEE7726 ; 1024 bytes decompressed, after
-gcUnknownEE784F gcUnknownEE784F ; 1024 bytes decompressed, after
-gcUnknownEE7949 gcUnknownEE7949 ; 1024 bytes decompressed, after
-gcUnknownEE7A68 gcUnknownEE7A68 ; 1024 bytes decompressed, after
-gcUnknownEE7B6F gcUnknownEE7B6F ; 1024 bytes decompressed, after
-gcUnknownEE7CAD gcUnknownEE7CAD ; 1024 bytes decompressed, after
-gcUnknownEE7D7F gcUnknownEE7D7F ; 1024 bytes decompressed, after
-gcUnknownEE7E2E gcUnknownEE7E2E ; 1024 bytes decompressed, after
-gcUnknownEE7EBD gcUnknownEE7EBD ; 1024 bytes decompressed, after
-gcUnknownEE7F5B gcUnknownEE7F5B ; 1024 bytes decompressed, after
-gcUnknownEE7FDF gcUnknownEE7FDF ; 1024 bytes decompressed, after
-gcUnknownEF007A gcUnknownEF007A ; 1024 bytes decompressed, after
-gcUnknownEF00FA gcUnknownEF00FA ; 1024 bytes decompressed, after
-gcUnknownEF0199 gcUnknownEF0199 ; 1024 bytes decompressed, after
-gcUnknownEF021A gcUnknownEF021A ; 1024 bytes decompressed, after
-gcUnknownEF0273 gcUnknownEF0273 ; 1024 bytes decompressed, after
-gcUnknownEF02EF gcUnknownEF02EF ; 1024 bytes decompressed, after
-gcUnknownEF0362 gcUnknownEF0362 ; 1024 bytes decompressed, after
-gcUnknownEF03D1 gcUnknownEF03D1 ; 1024 bytes decompressed, after
-gcUnknownEF0447 gcUnknownEF0447 ; 1024 bytes decompressed, after
-gcUnknownEF04C3 gcUnknownEF04C3 ; 1024 bytes decompressed, after
-gcUnknownEF055D gcUnknownEF055D ; 1024 bytes decompressed, after
-gcUnknownEF05F0 gcUnknownEF05F0 ; 1024 bytes decompressed, after
-gcUnknownEF06AF gcUnknownEF06AF ; 1024 bytes decompressed, after
-gcUnknownEF0765 gcUnknownEF0765 ; 1024 bytes decompressed, after
+g4bppcBattleWeaponIronSword g4bppcBattleWeaponIronSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSteelSword g4bppcBattleWeaponSteelSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSilverSword g4bppcBattleWeaponSilverSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponThiefSword g4bppcBattleWeaponThiefSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponMiracleSword g4bppcBattleWeaponMiracleSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBarrierBlade g4bppcBattleWeaponBarrierBlade ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBerserkSword g4bppcBattleWeaponBerserkSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBraveSword g4bppcBattleWeaponBraveSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSilenceSword g4bppcBattleWeaponSilenceSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSleepSword g4bppcBattleWeaponSleepSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSlimSword g4bppcBattleWeaponSlimSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSafeguard g4bppcBattleWeaponSafeguard ; 1024 bytes decompressed, after
+g4bppcBattleWeaponFireSword g4bppcBattleWeaponFireSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponEarthSword g4bppcBattleWeaponEarthSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponThunderSword g4bppcBattleWeaponThunderSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponWindSword g4bppcBattleWeaponWindSword ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBalmung g4bppcBattleWeaponBalmung ; 1024 bytes decompressed, after
+g4bppcBattleWeaponLightBrand g4bppcBattleWeaponLightBrand ; 1024 bytes decompressed, after
+g4bppcBattleWeapon12 g4bppcBattleWeapon12 ; 1024 bytes decompressed, after
+g4bppcBattleWeaponMystletainn g4bppcBattleWeaponMystletainn ; 1024 bytes decompressed, after
+g4bppcBattleWeaponTyrfing g4bppcBattleWeaponTyrfing ; 1024 bytes decompressed, after
+g4bppcBattleWeaponArmorslayer g4bppcBattleWeaponArmorslayer ; 1024 bytes decompressed, after
+g4bppcBattleWeaponWingclipper g4bppcBattleWeaponWingclipper ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBrokenSwordA g4bppcBattleWeaponBrokenSwordA ; 1024 bytes decompressed, after
+g4bppcBattleWeaponIronLance g4bppcBattleWeaponIronLance ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSteelLance g4bppcBattleWeaponSteelLance ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSilverLance g4bppcBattleWeaponSilverLance ; 1024 bytes decompressed, after
+g4bppcBattleWeaponJavelin g4bppcBattleWeaponJavelin ; 1024 bytes decompressed, after
+g4bppcBattleWeaponRidersbane g4bppcBattleWeaponRidersbane ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBraveLance g4bppcBattleWeaponBraveLance ; 1024 bytes decompressed, after
+g4bppcBattleWeaponGungnir g4bppcBattleWeaponGungnir ; 1024 bytes decompressed, after
+g4bppcBattleWeaponGaeBolg g4bppcBattleWeaponGaeBolg ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBrokenLanceA g4bppcBattleWeaponBrokenLanceA ; 1024 bytes decompressed, after
+g4bppcBattleWeaponIronBow g4bppcBattleWeaponIronBow ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSteelBow g4bppcBattleWeaponSteelBow ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSilverBow g4bppcBattleWeaponSilverBow ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBraveBow g4bppcBattleWeaponBraveBow ; 1024 bytes decompressed, after
+g4bppcBattleWeaponKillerBow g4bppcBattleWeaponKillerBow ; 1024 bytes decompressed, after
+g4bppcBattleWeaponYewfelle g4bppcBattleWeaponYewfelle ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBrokenBowA g4bppcBattleWeaponBrokenBowA ; 1024 bytes decompressed, after
+g4bppcBattleWeaponIronAxe g4bppcBattleWeaponIronAxe ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSteelAxe g4bppcBattleWeaponSteelAxe ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSilverAxe g4bppcBattleWeaponSilverAxe ; 1024 bytes decompressed, after
+g4bppcBattleWeaponHandAxe g4bppcBattleWeaponHandAxe ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBraveAxe g4bppcBattleWeaponBraveAxe ; 1024 bytes decompressed, after
+g4bppcBattleWeaponHelswath g4bppcBattleWeaponHelswath ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBrokenAxeA g4bppcBattleWeaponBrokenAxeA ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBallista g4bppcBattleWeaponBallista ; 1024 bytes decompressed, after
+g4bppcBattleWeaponIronBallista g4bppcBattleWeaponIronBallista ; 1024 bytes decompressed, after
+g4bppcBattleWeaponKillerBallista g4bppcBattleWeaponKillerBallista ; 1024 bytes decompressed, after
+g4bppcBattleWeaponGreatBallista g4bppcBattleWeaponGreatBallista ; 1024 bytes decompressed, after
+g4bppcBattleWeaponHealStaff g4bppcBattleWeaponHealStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponPhysicStaff g4bppcBattleWeaponPhysicStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponFortify g4bppcBattleWeaponFortify ; 1024 bytes decompressed, after
+g4bppcBattleWeaponWarpStaff g4bppcBattleWeaponWarpStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponReturnStaff g4bppcBattleWeaponReturnStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponRescueStaff g4bppcBattleWeaponRescueStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponCharmStaff g4bppcBattleWeaponCharmStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponRestoreStaff g4bppcBattleWeaponRestoreStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSleepStaff g4bppcBattleWeaponSleepStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBerserkStaff g4bppcBattleWeaponBerserkStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponSilenceStaff g4bppcBattleWeaponSilenceStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponThiefStaff g4bppcBattleWeaponThiefStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponValkyrieStaff g4bppcBattleWeaponValkyrieStaff ; 1024 bytes decompressed, after
+g4bppcBattleWeaponBrokenStaffA g4bppcBattleWeaponBrokenStaffA ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceKnightLord g4bppcBattleCharacterPieceKnightLord ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceLachesis g4bppcBattleCharacterPieceLachesis ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceQuan g4bppcBattleCharacterPieceQuan ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceLex2 g4bppcBattleCharacterPieceLex2 ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPiecePaladin g4bppcBattleCharacterPiecePaladin ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceAzelle g4bppcBattleCharacterPieceAzelle ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceAlec g4bppcBattleCharacterPieceAlec ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceDiarmuid g4bppcBattleCharacterPieceDiarmuid ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceFinn g4bppcBattleCharacterPieceFinn ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceJeanne g4bppcBattleCharacterPieceJeanne ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceLex g4bppcBattleCharacterPieceLex ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceAres g4bppcBattleCharacterPieceAres ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceLanceArmor g4bppcBattleCharacterPieceLanceArmor ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceGeneral g4bppcBattleCharacterPieceGeneral ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceBaron g4bppcBattleCharacterPieceBaron ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceEmperor g4bppcBattleCharacterPieceEmperor ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceArden g4bppcBattleCharacterPieceArden ; 1024 bytes decompressed, after
+g4bppcBattleCharacterPieceEldiganCh01 g4bppcBattleCharacterPieceEldiganCh01 ; 1024 bytes decompressed, after
 gcUnknownEF0815 gcUnknownEF0815 ; 3072 bytes decompressed, after
 gcUnknownEF0A82 gcUnknownEF0A82 ; 4096 bytes decompressed, after
 gcUnknownEF0C10 gcUnknownEF0C10 ; 3584 bytes decompressed, after
