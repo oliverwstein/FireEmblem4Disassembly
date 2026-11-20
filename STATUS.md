@@ -9,6 +9,17 @@ The goal is source that is **readable and moddable**, in the way Pokemon Polishe
 
 Byte-identical output remains the test for every change to the original layout. Shiftability is what makes it worth building from source.
 
+## Next session (planned 2026-11-20)
+
+Start here. The tree is clean and the build byte-identical; coverage 47.20%. In order:
+
+1. **Run bank `$84`'s padded ROM in Mesen** (needs the user at the emulator): `./build.sh pad GenerationTransferSection 4`, then `open -a Mesen FE4Padded.sfc` and use what bank `$84` does: the unit window and its sorting, a battle, saving and loading, a generation change. It passes every static check; this is the run that proves it shiftable.
+2. **Find the streams reached through tables.** 57 decompression calls take their source from a table (32 `rlDecompressSingle`, 25 `rlAppendDecompList`; `tools/find_streams.py` lists none of them yet). Read each caller, name its table, and rerun `tools/find_streams.py --table aBattleMapSpriteData --table ...`. That should explain many of the 177 catalogued streams nothing names (`gfx/compressed/CATALOG.md`), and the code that uses them says what they are: rename them, give graphics PNGs, rerun `tools/stream_catalog.py`.
+3. **Raw ROM addresses in the source** (the cleanup proposed on 2026-11-20): about 330 numbers have a label to use (calls and jumps to labels or local labels, `table+N` reads, unlabelled entry points such as `jml $808ECC`), plus two-halves loads (`tools/code_pointers.py --write` does 43 of them; review its list first). A tool, byte-identical after every step; it unblocks merging more banks.
+4. Smaller leads: the map-battle layout format (`aMapBattle*Layout*`, 2 KB: an offset table, then records); `$AD/FF80` (uncompressed tiles, a raw number in bank `$9E`); palettes for the sheets drawn in grey or placeholder colours.
+
+Deferred on purpose: compressor speed (only edited graphics are compressed) and reproducing Nintendo's encoder (only byte-identity of edited graphics depends on it).
+
 ## Where things stand
 
 - `./build.sh` builds a ROM that is byte-for-byte identical to the original (Japanese 1.0, SHA-1 `90f0bdeaf0151899f96281258fcb30899fbd0d44`).
