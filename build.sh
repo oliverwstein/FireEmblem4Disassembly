@@ -11,7 +11,7 @@
 #                          that ROM to catch the addresses no check can see
 #   ./build.sh clean       remove generated files
 #
-# Needs: python3, 64tass (brew install tass64), tools/c2a.py,
+# Needs: python3 with Pillow, 64tass (brew install tass64), tools/c2a.py,
 # tools/process_dialogue.py, and a headerless fe4.sfc (Japanese 1.0) in this
 # directory.
 
@@ -27,6 +27,7 @@ ASFLAGS=(-x -f -C -a -Wall -Wno-portable -Wno-shadow -Wno-deprecated)
 clean() {
   find text -name '*.dialogue.txt' -delete
   find data -name '*.csv.asm' -delete
+  find gfx -name '*.4bpp' -delete
   rm -f "$OUT" FE4Padded.sfc log.txt labels.txt
 }
 
@@ -50,6 +51,14 @@ generate() {
       python3 tools/c2a.py "$t" "$out"
     fi
   done < <(find data -name '*.csv')
+
+  # Graphics: gfx/**/NAME.4bpp.png (indexed) to NAME.4bpp.
+  while IFS= read -r t; do
+    out=${t%.png}
+    if [[ ! -e $out || $t -nt $out ]]; then
+      python3 tools/gfx.py png2bpp "$t" "$out"
+    fi
+  done < <(find gfx -name '*.4bpp.png')
 
   (cd data/character && python3 "$ROOT/tools/FE4c2a.py" CharacterData.csv CharacterDataHelper.h CharacterData.csv.asm)
   (cd data/item && python3 "$ROOT/tools/FE4c2a.py" ItemData.csv ItemDataHelper.h ItemData.csv.asm)

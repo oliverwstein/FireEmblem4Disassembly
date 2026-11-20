@@ -13691,7 +13691,7 @@
     * = $184000
     .logical $D84000
 
-      g4bppItemIcons .text ROM[$184000:$188000] ; D84000
+      g4bppItemIcons .binary "gfx/ItemIcons.4bpp" ; D84000
 
     .here
 

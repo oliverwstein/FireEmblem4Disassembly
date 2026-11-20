@@ -17,6 +17,7 @@ EN_ROM/*.*
 
 *.~lock*
 *.csv.asm
+gfx/**/*.4bpp
 *.dialogue.txt
 
 tools/64tass.exe

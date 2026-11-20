@@ -8,7 +8,7 @@ The project is a work in progress; [STATUS.md](STATUS.md) records what has been 
 
 You need:
 
-* Python 3.
+* Python 3 with [Pillow](https://pypi.org/project/pillow/) (`pip3 install pillow`), which converts the graphics in `gfx/`.
 * [**64tass**](https://sourceforge.net/projects/tass64/). On macOS: `brew install tass64`. On Windows, put `64tass.exe` in `tools/`.
 * Zane Avernathy's [**c2a.py**](https://github.com/ZaneAvernathy/FE5Tools/blob/main/c2a.py) and [**process_dialogue.py**](https://github.com/ZaneAvernathy/FireEmblem5/blob/master/TOOLS/process_dialogue.py), in `tools/`.
 * A headerless copy of the original ROM named `fe4.sfc` in this directory. It must be 4,194,304 bytes. A copy with a 512-byte copier header (4,194,816 bytes, often named `.smc`) can be fixed with `tail -c +513 original.smc > fe4.sfc`.
@@ -21,14 +21,14 @@ You need:
 ./build.sh clean      # remove generated files
 ```
 
-`build.sh` converts the dialogue text and CSV tables to assembly, checks that every included file exists with exactly the spelling used, assembles the ROM and compares its SHA-1 with the original. If they differ, it lists the first differing addresses.
+`build.sh` converts the dialogue text and CSV tables to assembly and the indexed PNGs in `gfx/` (`NAME.4bpp.png`) to tile data, checks that every included file exists with exactly the spelling used, assembles the ROM and compares its SHA-1 with the original. If they differ, it lists the first differing addresses.
 
 ### Windows
 
 1. Optionally run `cleardialogueAll.bat` to remove old `.dialogue.txt` files.
 2. Run `dialoguebuilderAll.bat` to convert the dialogue text files in `text/` to `.dialogue.txt` files.
 3. Run `tablebuilder.bat` to convert the `.csv` files in `data/` to `.csv.asm` files.
-4. Run `build.bat` to build `FE4Disassembly.sfc`. If no ROM is produced, see `log.txt`.
+4. Run `build.bat` to build `FE4Disassembly.sfc`; it converts the PNGs in `gfx/` first. If no ROM is produced, see `log.txt`.
 
 ## Layout
 
