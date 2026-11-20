@@ -8073,9 +8073,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACEB4,x
+        lda aShopDialoguePointers+1,x
         sta lR18+1
-        lda aUnknown8ACEB3,x
+        lda aShopDialoguePointers,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -8301,9 +8301,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACEEA,x
+        lda aShopDialoguePointers+55,x
         sta lR18+1
-        lda $8ACEE9,x
+        lda aShopDialoguePointers+54,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -8322,9 +8322,9 @@
         lda $08AB,b
         beq _C2E2
         ldx #$0000
-        lda $8ACEFC,x
+        lda aShopDialoguePointers+73,x
         sta lR18+1
-        lda $8ACEFB,x
+        lda aShopDialoguePointers+72,x
         sta lR18
         lda #$0003
         bra _C2C4
@@ -8334,9 +8334,9 @@
         lda $0889,b
         beq _C2F0
         ldx #$0000
-        lda $8ACF56,x
+        lda aShopDialoguePointers+163,x
         sta lR18+1
-        lda $8ACF55,x
+        lda aShopDialoguePointers+162,x
         sta lR18
         lda #$0011
         bra _C2C4
@@ -8448,9 +8448,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACEEA,x
+        lda aShopDialoguePointers+55,x
         sta lR18+1
-        lda $8ACEE9,x
+        lda aShopDialoguePointers+54,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -8469,9 +8469,9 @@
         lda $0889,b
         beq _C42B
         ldx #$0003
-        lda $8ACF56,x
+        lda aShopDialoguePointers+163,x
         sta lR18+1
-        lda $8ACF55,x
+        lda aShopDialoguePointers+162,x
         sta lR18
         lda #$0009
         bra _C40D
@@ -8481,9 +8481,9 @@
         lda $08AB,b
         beq _C439
         ldx #$0003
-        lda $8ACEFC,x
+        lda aShopDialoguePointers+73,x
         sta lR18+1
-        lda $8ACEFB,x
+        lda aShopDialoguePointers+72,x
         sta lR18
         lda #$0003
         bra _C40D
@@ -8555,9 +8555,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACEEA,x
+        lda aShopDialoguePointers+55,x
         sta lR18+1
-        lda $8ACEE9,x
+        lda aShopDialoguePointers+54,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -8693,9 +8693,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF0B,x
+        lda aShopDialoguePointers+88,x
         sta lR18+1
-        lda $8ACF0A,x
+        lda aShopDialoguePointers+87,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -8717,9 +8717,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACED8,x
+        lda aShopDialoguePointers+37,x
         sta lR18+1
-        lda $8ACED7,x
+        lda aShopDialoguePointers+36,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -8747,9 +8747,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF38,x
+        lda aShopDialoguePointers+133,x
         sta lR18+1
-        lda $8ACF37,x
+        lda aShopDialoguePointers+132,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -8772,9 +8772,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF29,x
+        lda aShopDialoguePointers+118,x
         sta lR18+1
-        lda $8ACF28,x
+        lda aShopDialoguePointers+117,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -8918,9 +8918,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF29,x
+        lda aShopDialoguePointers+118,x
         sta lR18+1
-        lda $8ACF28,x
+        lda aShopDialoguePointers+117,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -8972,9 +8972,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF1A,x
+        lda aShopDialoguePointers+103,x
         sta lR18+1
-        lda $8ACF19,x
+        lda aShopDialoguePointers+102,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -8996,9 +8996,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACED8,x
+        lda aShopDialoguePointers+37,x
         sta lR18+1
-        lda $8ACED7,x
+        lda aShopDialoguePointers+36,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9037,9 +9037,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF1A,x
+        lda aShopDialoguePointers+103,x
         sta lR18+1
-        lda $8ACF19,x
+        lda aShopDialoguePointers+102,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9079,9 +9079,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACED8,x
+        lda aShopDialoguePointers+37,x
         sta lR18+1
-        lda $8ACED7,x
+        lda aShopDialoguePointers+36,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9177,9 +9177,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF65,x
+        lda aShopDialoguePointers+178,x
         sta lR18+1
-        lda $8ACF64,x
+        lda aShopDialoguePointers+177,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9201,9 +9201,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACED8,x
+        lda aShopDialoguePointers+37,x
         sta lR18+1
-        lda $8ACED7,x
+        lda aShopDialoguePointers+36,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9310,9 +9310,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF47,x
+        lda aShopDialoguePointers+148,x
         sta lR18+1
-        lda $8ACF46,x
+        lda aShopDialoguePointers+147,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9354,9 +9354,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF74,x
+        lda aShopDialoguePointers+193,x
         sta lR18+1
-        lda $8ACF73,x
+        lda aShopDialoguePointers+192,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9376,9 +9376,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACED8,x
+        lda aShopDialoguePointers+37,x
         sta lR18+1
-        lda $8ACED7,x
+        lda aShopDialoguePointers+36,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9484,9 +9484,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF92,x
+        lda aShopDialoguePointers+223,x
         sta lR18+1
-        lda $8ACF91,x
+        lda aShopDialoguePointers+222,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9508,9 +9508,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACEEA,x
+        lda aShopDialoguePointers+55,x
         sta lR18+1
-        lda $8ACEE9,x
+        lda aShopDialoguePointers+54,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9531,9 +9531,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACFB0,x
+        lda aShopDialoguePointers+253,x
         sta lR18+1
-        lda $8ACFAF,x
+        lda aShopDialoguePointers+252,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9575,9 +9575,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF29,x
+        lda aShopDialoguePointers+118,x
         sta lR18+1
-        lda $8ACF28,x
+        lda aShopDialoguePointers+117,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9728,9 +9728,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF47,x
+        lda aShopDialoguePointers+148,x
         sta lR18+1
-        lda $8ACF46,x
+        lda aShopDialoguePointers+147,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9753,9 +9753,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACF29,x
+        lda aShopDialoguePointers+118,x
         sta lR18+1
-        lda $8ACF28,x
+        lda aShopDialoguePointers+117,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9797,9 +9797,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACFA1,x
+        lda aShopDialoguePointers+238,x
         sta lR18+1
-        lda $8ACFA0,x
+        lda aShopDialoguePointers+237,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9892,9 +9892,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACED8,x
+        lda aShopDialoguePointers+37,x
         sta lR18+1
-        lda $8ACED7,x
+        lda aShopDialoguePointers+36,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -9981,33 +9981,100 @@
       .al
       .xl
 
-      aUnknown8ACEB3 ; 8A/CEB3
+      aShopDialoguePointers ; 8A/CEB3
 
-        ; 89 long pointers into bank $8A.
+        ; One per shop message (indexed by $7F8082 * 3): the item shop, secondhand
+        ; shop, repair shop, depot and arena keepers. Text in text/dialogue/Shops.
 
-        .long $8AD0D4, $8AD195, $8AD2D9, $8AD3D3
-        .long $8AD727, $8AD4B0, $8AD60D, $8AD60D
-        .long $8AD60D, $8AD60D, $8AD60D, $8AD60D
-        .long $8AD17B, $8AD2B8, $8AD38F, $8AD48F
-        .long $8AD81A, $8AD17B, $8AD18B, $8AD2C8
-        .long $8AD39F, $8AD4A0, $8AD81A, $8AD5F9
-        .long $8AD0E3, $8AD1D2, $8AD0E3, $8AD44E
-        .long $8AD81A, $8AD0F1, $8AD1E0, $8AD0F1
-        .long $8AD401, $8AD81A, $8AD101, $8AD1F2
-        .long $8AD81A, $8AD45D, $8AD81A, $8AD110
-        .long $8AD27B, $8AD363, $8AD110, $8AD110
-        .long $8AD121, $8AD28A, $8AD121, $8AD43E
-        .long $8AD121, $8AD29F, $8AD29F, $8AD373
-        .long $8AD29F, $8AD29F, $8AD154, $8AD205
-        .long $8AD81A, $8AD3EF, $8AD81A, $8AD81A
-        .long $8AD217, $8AD81A, $8AD401, $8AD81A
-        .long $8AD81A, $8AD224, $8AD81A, $8AD40B
-        .long $8AD81A, $8AD30A, $8AD30A, $8AD2F8
-        .long $8AD30A, $8AD81A, $8AD31C, $8AD31C
-        .long $8AD31C, $8AD31C, $8AD728, $8AD351
-        .long $8AD351, $8AD351, $8AD351, $8AD351
-        .long $8AD32E, $8AD32E, $8AD32E, $8AD32E
-        .long $8AD728
+        .long dialogueShop00
+        .long dialogueShop01
+        .long dialogueShop02
+        .long dialogueShop03
+        .long dialogueShop04
+        .long dialogueShop05
+        .long dialogueShop06
+        .long dialogueShop06
+        .long dialogueShop06
+        .long dialogueShop06
+        .long dialogueShop06
+        .long dialogueShop06
+        .long dialogueShop0C
+        .long dialogueShop0D
+        .long dialogueShop0E
+        .long dialogueShop0F
+        .long dialogueShop10
+        .long dialogueShop0C
+        .long dialogueShop12
+        .long dialogueShop13
+        .long dialogueShop14
+        .long dialogueShop15
+        .long dialogueShop10
+        .long dialogueShop17
+        .long dialogueShop18
+        .long dialogueShop19
+        .long dialogueShop18
+        .long dialogueShop1B
+        .long dialogueShop10
+        .long dialogueShop1D
+        .long dialogueShop1E
+        .long dialogueShop1D
+        .long dialogueShop20
+        .long dialogueShop10
+        .long dialogueShop22
+        .long dialogueShop23
+        .long dialogueShop10
+        .long dialogueShop25
+        .long dialogueShop10
+        .long dialogueShop27
+        .long dialogueShop28
+        .long dialogueShop29
+        .long dialogueShop27
+        .long dialogueShop27
+        .long dialogueShop2C
+        .long dialogueShop2D
+        .long dialogueShop2C
+        .long dialogueShop2F
+        .long dialogueShop2C
+        .long dialogueShop31
+        .long dialogueShop31
+        .long dialogueShop33
+        .long dialogueShop31
+        .long dialogueShop31
+        .long dialogueShop36
+        .long dialogueShop37
+        .long dialogueShop10
+        .long dialogueShop39
+        .long dialogueShop10
+        .long dialogueShop10
+        .long dialogueShop3C
+        .long dialogueShop10
+        .long dialogueShop20
+        .long dialogueShop10
+        .long dialogueShop10
+        .long dialogueShop41
+        .long dialogueShop10
+        .long dialogueShop43
+        .long dialogueShop10
+        .long dialogueShop45
+        .long dialogueShop45
+        .long dialogueShop47
+        .long dialogueShop45
+        .long dialogueShop10
+        .long dialogueShop4A
+        .long dialogueShop4A
+        .long dialogueShop4A
+        .long dialogueShop4A
+        .long dialogueShop4E
+        .long dialogueShop4F
+        .long dialogueShop4F
+        .long dialogueShop4F
+        .long dialogueShop4F
+        .long dialogueShop4F
+        .long dialogueShop54
+        .long dialogueShop54
+        .long dialogueShop54
+        .long dialogueShop54
+        .long dialogueShop4E
 
         ; Not understood yet: this starts in the middle of a routine.
 
@@ -12143,9 +12210,9 @@
 
         lda #$000C
         tax
-        lda $8ACEB4,x
+        lda aShopDialoguePointers+1,x
         sta lR18+1
-        lda aUnknown8ACEB3,x
+        lda aShopDialoguePointers,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -12224,9 +12291,9 @@
         bcs _EFB1
         lda #$000C
         tax
-        lda $8ACF92,x
+        lda aShopDialoguePointers+223,x
         sta lR18+1
-        lda $8ACF91,x
+        lda aShopDialoguePointers+222,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -12365,9 +12432,9 @@
         jsl rlPlaySoundEffect
         lda #$000C
         tax
-        lda $8ACEEA,x
+        lda aShopDialoguePointers+55,x
         sta lR18+1
-        lda $8ACEE9,x
+        lda aShopDialoguePointers+54,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -12705,9 +12772,9 @@
 
         lda #$0009
         tax
-        lda $8ACEB4,x
+        lda aShopDialoguePointers+1,x
         sta lR18+1
-        lda aUnknown8ACEB3,x
+        lda aShopDialoguePointers,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -12851,9 +12918,9 @@
         _F3DE
         lda #$0009
         tax
-        lda $8ACEEA,x
+        lda aShopDialoguePointers+55,x
         sta lR18+1
-        lda $8ACEE9,x
+        lda aShopDialoguePointers+54,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -12871,9 +12938,9 @@
         _F40F
         lda $0889,b
         beq _F459
-        lda $8ACF56,x
+        lda aShopDialoguePointers+163,x
         sta lR18+1
-        lda $8ACF55,x
+        lda aShopDialoguePointers+162,x
         sta lR18
         lda #$0008
         bra _F43B
@@ -12882,9 +12949,9 @@
         _F425
         lda $08AB,b
         beq _F467
-        lda $8ACEFC,x
+        lda aShopDialoguePointers+73,x
         sta lR18+1
-        lda $8ACEFB,x
+        lda aShopDialoguePointers+72,x
         sta lR18
         lda #$0003
         bra _F43B
@@ -12996,9 +13063,9 @@
         jsl rlPlaySoundEffect
         lda #$0009
         tax
-        lda $8ACF0B,x
+        lda aShopDialoguePointers+88,x
         sta lR18+1
-        lda $8ACF0A,x
+        lda aShopDialoguePointers+87,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -13016,9 +13083,9 @@
         jsl rlPlaySoundEffect
         lda #$0009
         tax
-        lda $8ACED8,x
+        lda aShopDialoguePointers+37,x
         sta lR18+1
-        lda $8ACED7,x
+        lda aShopDialoguePointers+36,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -13133,9 +13200,9 @@
         jsl rlPlaySoundEffect
         lda #$0009
         tax
-        lda $8ACF38,x
+        lda aShopDialoguePointers+133,x
         sta lR18+1
-        lda $8ACF37,x
+        lda aShopDialoguePointers+132,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -13177,9 +13244,9 @@
         beq _F677
         lda #$0009
         tax
-        lda $8ACF1A,x
+        lda aShopDialoguePointers+103,x
         sta lR18+1
-        lda $8ACF19,x
+        lda aShopDialoguePointers+102,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -13195,9 +13262,9 @@
         _F677
         lda #$0009
         tax
-        lda $8ACED8,x
+        lda aShopDialoguePointers+37,x
         sta lR18+1
-        lda $8ACED7,x
+        lda aShopDialoguePointers+36,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -13233,9 +13300,9 @@
         jsl rlPlaySoundEffect
         lda #$0009
         tax
-        lda $8ACED8,x
+        lda aShopDialoguePointers+37,x
         sta lR18+1
-        lda $8ACED7,x
+        lda aShopDialoguePointers+36,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -13328,9 +13395,9 @@
         jsl rlPlaySoundEffect
         lda #$0009
         tax
-        lda $8ACF65,x
+        lda aShopDialoguePointers+178,x
         sta lR18+1
-        lda $8ACF64,x
+        lda aShopDialoguePointers+177,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -13348,9 +13415,9 @@
         jsl rlPlaySoundEffect
         lda #$0009
         tax
-        lda $8ACED8,x
+        lda aShopDialoguePointers+37,x
         sta lR18+1
-        lda $8ACED7,x
+        lda aShopDialoguePointers+36,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -13464,9 +13531,9 @@
         beq _F84D
         lda #$0009
         tax
-        lda $8ACF74,x
+        lda aShopDialoguePointers+193,x
         sta lR18+1
-        lda $8ACF73,x
+        lda aShopDialoguePointers+192,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -13486,9 +13553,9 @@
         clc
         adc $7F8082
         tax
-        lda $8ACED8,x
+        lda aShopDialoguePointers+37,x
         sta lR18+1
-        lda $8ACED7,x
+        lda aShopDialoguePointers+36,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA

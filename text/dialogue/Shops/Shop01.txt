@@ -1,0 +1,3 @@
+{DIALOGUE_FONT_0}ここは中古屋だぜ{DIALOGUE_NL}
+いろいろ売り買いしてくれよ{DIALOGUE_NL}
+{DIALOGUE_EOF}

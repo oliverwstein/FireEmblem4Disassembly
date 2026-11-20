@@ -1,0 +1,4 @@
+{DIALOGUE_CLEAR}
+自分の持ち物なんかみてねぇで{DIALOGUE_NL}
+店の商品をみてくれよ{DIALOGUE_NL}
+{DIALOGUE_EOF}

@@ -1,0 +1,5 @@
+{DIALOGUE_CLEAR}
+{DIALOGUE_FONT_0}クラスチェンジはレベル２０に{DIALOGUE_NL}
+ならないとできないぞ{DIALOGUE_NL}
+もっと経験をつむことだな{DIALOGUE_WAIT_PRESS}
+{DIALOGUE_EOF}

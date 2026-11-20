@@ -107,9 +107,9 @@
         bcs _E56E
         lda #$000F
         tax
-        lda $8ACEB4,x
+        lda aShopDialoguePointers+1,x
         sta lR18+1
-        lda aUnknown8ACEB3,x
+        lda aShopDialoguePointers,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -367,9 +367,9 @@
         _E70D
         lda #$000F
         tax
-        lda $8ACEEA,x
+        lda aShopDialoguePointers+55,x
         sta lR18+1
-        lda $8ACEE9,x
+        lda aShopDialoguePointers+54,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -852,9 +852,9 @@
         _EAE5
         lda #$000F
         tax
-        lda $8ACEEA,x
+        lda aShopDialoguePointers+55,x
         sta lR18+1
-        lda $8ACEE9,x
+        lda aShopDialoguePointers+54,x
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
