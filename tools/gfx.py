@@ -2,6 +2,7 @@
 """Convert SNES 4bpp tile graphics to and from indexed PNG.
 
 usage: tools/gfx.py png2bpp IN.4bpp.png OUT.4bpp
+       tools/gfx.py lz IN.4bpp ORIGINAL.4bpp.comp OUT.4bpp.lz
        tools/gfx.py bpp2png IN.4bpp OUT.4bpp.png --palette FILE|ADDR [--width TILES]
        tools/gfx.py --self-test
 
@@ -11,6 +12,13 @@ colours: each pixel's palette index is its colour number in the tile, so the
 conversion does not depend on the colours themselves. Its width and height must
 be multiples of 8; tiles are read left to right, top to bottom, which is how
 the game stores a sheet that is that many tiles wide.
+
+lz compresses IN for rlDecompressor. If ORIGINAL (the graphic's stream as the
+ROM has it, committed next to the PNG) still decompresses to exactly IN, it is
+copied unchanged, so an unedited graphic builds byte-identical; otherwise IN is
+compressed with tools/compress.py, which gives the same picture in different
+(usually fewer) bytes. ./build.sh runs it for every NAME.4bpp.png that has a
+NAME.4bpp.comp beside it.
 
 bpp2png writes such a PNG from 4bpp bytes, --width tiles across (default 16),
 with the 16 colours of a BGR555 palette: a file of 32 bytes, or a CPU address
@@ -97,6 +105,21 @@ def read_palette(spec):
     return bgr555(rom[o:o + 32])
 
 
+def lz(data, original_path):
+    if os.path.exists(original_path):
+        from decompress import decompress
+        original = open(original_path, 'rb').read()
+        buf = bytearray(0x400000)                      # the stream alone, at $C0/0000
+        buf[:len(original)] = original
+        try:
+            if decompress(bytes(buf), 0xC00000)[0] == data:
+                return original
+        except Exception:
+            pass
+    from compress import compress
+    return compress(data)
+
+
 def self_test():
     """Every 4bpp PNG in gfx/ converts to bytes that round-trip through PNG."""
     import glob
@@ -123,6 +146,10 @@ def main():
     a = sub.add_parser('png2bpp')
     a.add_argument('png')
     a.add_argument('out')
+    c = sub.add_parser('lz')
+    c.add_argument('bpp')
+    c.add_argument('original')
+    c.add_argument('out')
     b = sub.add_parser('bpp2png')
     b.add_argument('bpp')
     b.add_argument('out')
@@ -131,6 +158,8 @@ def main():
     args = ap.parse_args()
     if args.cmd == 'png2bpp':
         open(args.out, 'wb').write(png_to_4bpp(args.png))
+    elif args.cmd == 'lz':
+        open(args.out, 'wb').write(lz(open(args.bpp, 'rb').read(), args.original))
     else:
         bpp_to_png(open(args.bpp, 'rb').read(), read_palette(args.palette), args.width).save(args.out)
 

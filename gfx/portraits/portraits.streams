@@ -1,0 +1,159 @@
+# The portrait graphics, in the order they are placed from start to end:
+# the lower halves of banks $CA-$D0 (tools/stream_layout.py). Each NAME is
+# gfx/portraits/NAME.4bpp.png, built through NAME.4bpp.lz. Entries are the
+# portrait data IDs that use it (PortraitData... in PortraitGraphicPointers.csv).
+start $CA65B5
+end $D05639
+
+g4bppcPortraitSigurd Sigurd ; entries 00, F6
+g4bppcPortraitNaoise Naoise ; entries 01
+g4bppcPortraitAlec Alec ; entries 02
+g4bppcPortraitArden Arden ; entries 03
+g4bppcPortraitFinn Finn ; entries 04
+g4bppcPortraitQuan Quan ; entries 05
+g4bppcPortraitMidir Midir ; entries 06
+g4bppcPortraitLewyn Lewyn ; entries 07
+g4bppcPortraitChulainn Chulainn ; entries 08
+g4bppcPortraitAzelle Azelle ; entries 09
+g4bppcPortraitJamke Jamke ; entries 0A
+g4bppcPortraitClaud Claud ; entries 0B
+g4bppcPortraitBeowulf Beowulf ; entries 0C
+g4bppcPortraitLex Lex ; entries 0D
+g4bppcPortraitDew Dew ; entries 0E
+g4bppcPortraitDeirdre Deirdre ; entries 0F, F7
+g4bppcPortraitEthlyn Ethlyn ; entries 10
+g4bppcPortraitLachesis Lachesis ; entries 11
+g4bppcPortraitAyra Ayra ; entries 12
+g4bppcPortraitErinys Erinys ; entries 13
+g4bppcPortraitTailtiu Tailtiu ; entries 14
+g4bppcPortraitSilvia Silvia ; entries 15
+g4bppcPortraitEdain Edain ; entries 16
+g4bppcPortraitBrigid Brigid ; entries 17
+g4bppcPortraitYoungOifey YoungOifey ; entries 18
+g4bppcPortraitYoungShannan YoungShannan ; entries 19
+g4bppcClassCardKnightLord ClassCardKnightLord ; entries 73, 74, 9C, F3, F4
+g4bppcPortraitSeliph Seliph ; entries 1A
+g4bppcPortraitShannan Shannan ; entries 1B
+g4bppcPortraitDalvin Dalvin ; entries 1C
+g4bppcPortraitAsaello Asaello ; entries 1D
+g4bppcPortraitLeif Leif ; entries 1E
+g4bppcPortraitIuchar Iuchar ; entries 1F
+g4bppcPortraitCharlot Charlot ; entries 20
+g4bppcPortraitHawk Hawk ; entries 21
+g4bppcPortraitTristan Tristan ; entries 22
+g4bppcPortraitAdultFinn AdultFinn ; entries 23
+g4bppcPortraitDeimne Deimne ; entries 24
+g4bppcPortraitHannibal Hannibal ; entries 25
+g4bppcPortraitJuliaHand JuliaHand ; entries 26
+g4bppcPortraitAmid Amid ; entries 27
+g4bppcPortraitOldLewyn OldLewyn ; entries 28
+g4bppcPortraitDaisy Daisy ; entries 29
+g4bppcPortraitCreidne Creidne ; entries 2A
+g4bppcPortraitMuirne Muirne ; entries 2B
+g4bppcPortraitJulia Julia ; entries 2C
+g4bppcPortraitAltena Altena ; entries 2D
+g4bppcPortraitHermina Hermina ; entries 2E
+g4bppcPortraitLinda Linda ; entries 2F
+g4bppcPortraitLaylea Laylea ; entries 30
+g4bppcPortraitJeanne Jeanne ; entries 31
+g4bppcPortraitIucharba Iucharba ; entries 32
+g4bppcPortraitScathach Scathach ; entries 33
+g4bppcPortraitFebail Febail ; entries 34
+g4bppcPortraitCoirpre Coirpre ; entries 35
+g4bppcPortraitCed Ced ; entries 36
+g4bppcPortraitDiarmuid Diarmuid ; entries 37
+g4bppcPortraitLester Lester ; entries 38
+g4bppcPortraitArthur Arthur ; entries 39
+g4bppcPortraitPatty Patty ; entries 3A
+g4bppcPortraitLarcei Larcei ; entries 3B
+g4bppcPortraitLana Lana ; entries 3C
+g4bppcPortraitFee Fee ; entries 3D
+g4bppcPortraitTine Tine ; entries 3E
+g4bppcPortraitLene Lene ; entries 3F
+g4bppcPortraitNanna Nanna ; entries 40
+g4bppcPortraitJuliaEnemy JuliaEnemy ; entries F5
+g4bppcPortraitMunnir Munnir ; entries 41
+g4bppcPortraitDiMaggio DiMaggio ; entries 42, 50
+g4bppcPortraitGerrard Gerrard ; entries 43, 4F
+g4bppcPortraitCimbaeth Cimbaeth ; entries 44, 5C
+g4bppcPortraitSandima Sandima ; entries 45, 66, 6A, 82, 90, 91, 94
+g4bppcPortraitClement Clement ; entries 46, 69, 7A
+g4bppcPortraitBordeaux Bordeaux ; entries 47, 58, 7D
+g4bppcPortraitElliot Elliot ; entries 48, 57
+g4bppcPortraitZane Zane ; entries 49, 64, 68, 76, 7C, 88, 8F
+g4bppcPortraitPhilip Philip ; entries 4A, 77, 7E, 92, A8
+g4bppcPortraitWaltz Waltz ; entries 4B, A6
+g4bppcPortraitMacBeth MacBeth ; entries 4C, 9D
+g4bppcPortraitChagall Chagall ; entries 4D, 79
+g4bppcPortraitJacobi Jacobi ; entries 4E, 6B, A7
+g4bppcPortraitAndrey Andrey ; entries 51, 5E, 8D
+g4bppcPortraitBloom Bloom ; entries 52, 6E
+g4bppcPortraitDanann Danann ; entries 53
+g4bppcPortraitLamia Lamia ; entries 54, 8B, A5
+g4bppcPortraitArvis Arvis ; entries 55
+g4bppcPortraitEldigan Eldigan ; entries 56
+g4bppcPortraitPamela Pamela ; entries 59, 6F, 84
+g4bppcPortraitDithorba Dithorba ; entries 5A, 61, 70, 71, 85
+g4bppcPortraitAnnand Annand ; entries 5B, 72
+g4bppcPortraitLombard Lombard ; entries 5D
+g4bppcPortraitReptor Reptor ; entries 5F
+g4bppcPortraitRedIshtore RedIshtore ; entries 60, 6C
+g4bppcPortraitYoungTravant YoungTravant ; entries 62
+g4bppcPortraitCuvuli Cuvuli ; entries 63, 93
+g4bppcPortraitAida Aida ; entries 65, 6D
+g4bppcPortraitBrian Brian ; entries 67, 8E
+g4bppcPortraitArion Arion ; entries 75
+g4bppcPortraitOvo Ovo ; entries 78
+g4bppcPortraitTravant Travant ; entries 7B
+g4bppcPortraitEve Eve ; entries 7F, 80, 81
+g4bppcPortraitHilda Hilda ; entries 83
+g4bppcPortraitAres Ares ; entries 86
+g4bppcPortraitManfroy Manfroy ; entries 87
+g4bppcPortraitOldArvis OldArvis ; entries 89
+g4bppcPortraitJulius Julius ; entries 8A
+g4bppcPortraitIshtar Ishtar ; entries 8C
+g4bppcPortraitOldEmissary OldEmissary ; entries 95, A2
+g4bppcPortraitAzmur Azmur ; entries 96
+g4bppcPortraitKurth Kurth ; entries 97
+g4bppcPortraitRing Ring ; entries 98, A0, A1
+g4bppcPortraitByron Byron ; entries 99
+g4bppcPortraitOifey Oifey ; entries 9A
+g4bppcPortraitSlayder Slayder ; entries 9B
+g4bppcPortraitBatu Batu ; entries 9E
+g4bppcPortraitRahna Rahna ; entries 9F
+g4bppcPortraitSoldier Soldier ; entries A3
+g4bppcPortraitEmpty Empty ; entries A4
+g4bppcPortraitArmory Armory ; entries A9
+g4bppcPortraitCivilianSmallBoy CivilianSmallBoy ; entries AA
+g4bppcPortraitBlacksmith Blacksmith ; entries AB
+g4bppcPortraitCivilianSmallGirl CivilianSmallGirl ; entries AC
+g4bppcPortraitArena Arena ; entries AD
+g4bppcPortraitPlaceholderArena PlaceholderArena ; entries AE
+g4bppcPortraitCivilian Civilian ; entries AF
+g4bppcPortraitPlaceholderDepot PlaceholderDepot ; entries B0
+g4bppcPortraitPawnbroker Pawnbroker ; entries B1
+g4bppcPortraitAnna Anna ; entries B2
+g4bppcPortraitCivilianOldMan CivilianOldMan ; entries B3
+g4bppcPortraitCivilianOldWoman CivilianOldWoman ; entries B4
+g4bppcPortraitCivilian2 Civilian2 ; entries B5
+g4bppcPortraitCivilianWoman CivilianWoman ; entries B6
+g4bppcPortraitCivilianYoungMan CivilianYoungMan ; entries B7
+g4bppcPortraitCivilianYoungWoman CivilianYoungWoman ; entries B8
+g4bppcClassCardCavalier ClassCardCavalier ; entries B9, BA, BE, BF, C2
+g4bppcClassCardBowKnight ClassCardBowKnight ; entries BB, C0
+g4bppcClassCardAxeKnight ClassCardAxeKnight ; entries BC
+g4bppcClassCardFreeKnight ClassCardFreeKnight ; entries BD, C1
+g4bppcClassCardPegasusRider ClassCardPegasusRider ; entries C3, C4
+g4bppcClassCardDragonRider ClassCardDragonRider ; entries C5, C6
+g4bppcClassCardArcher ClassCardArcher ; entries C7, C9, D0, DA
+g4bppcClassCardMyrmidon ClassCardMyrmidon ; entries C8, CA, D1, F1, F2
+g4bppcClassCardGeneral ClassCardGeneral ; entries CB, CC
+g4bppcClassCardSoldier ClassCardSoldier ; entries CD, CE
+g4bppcClassCardAxeSolder ClassCardAxeSolder ; entries CF, D7, D9
+g4bppcClassCardLanceArmor ClassCardLanceArmor ; entries D2, D3, D4, D5
+g4bppcClassCardBarbarian ClassCardBarbarian ; entries D6, D8, DB
+g4bppcClassCardWarMage ClassCardWarMage ; entries DC, DD, F0
+g4bppcClassCardPriest ClassCardPriest ; entries DE, E4, E6
+g4bppcClassCardMage ClassCardMage ; entries DF, E0, E1, E2, E3, E5, EF
+g4bppcClassCardThief ClassCardThief ; entries E7, E8, E9, EA
+g4bppcClassCardBallista ClassCardBallista ; entries EB, EC, ED, EE

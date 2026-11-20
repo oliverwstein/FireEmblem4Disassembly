@@ -28,6 +28,7 @@ clean() {
   find text -name '*.dialogue.txt' -delete
   find data -name '*.csv.asm' -delete
   find gfx -name '*.4bpp' -delete
+  find gfx \( -name '*.4bpp.lz' -o -name Layout.asm \) -delete
   rm -f "$OUT" FE4Padded.sfc log.txt labels.txt
 }
 
@@ -59,6 +60,20 @@ generate() {
       python3 tools/gfx.py png2bpp "$t" "$out"
     fi
   done < <(find gfx -name '*.4bpp.png')
+
+  # Compressed graphics: NAME.4bpp to NAME.4bpp.lz, keeping the committed
+  # original stream NAME.4bpp.comp while it still decompresses to NAME.4bpp.
+  while IFS= read -r t; do
+    bpp=${t%.comp}; out=$bpp.lz
+    if [[ -e $bpp && ( ! -e $out || $bpp -nt $out || $t -nt $out ) ]]; then
+      python3 tools/gfx.py lz "$bpp" "$t" "$out"
+    fi
+  done < <(find gfx -name '*.4bpp.comp')
+
+  # Streams laid out across bank halves: LIST.streams to Layout.asm beside it.
+  while IFS= read -r t; do
+    python3 tools/stream_layout.py "$t" "$(dirname "$t")/Layout.asm"
+  done < <(find gfx -name '*.streams')
 
   (cd data/character && python3 "$ROOT/tools/FE4c2a.py" CharacterData.csv CharacterDataHelper.h CharacterData.csv.asm)
   (cd data/item && python3 "$ROOT/tools/FE4c2a.py" ItemData.csv ItemDataHelper.h ItemData.csv.asm)
