@@ -137,15 +137,15 @@
         ldx #$0200
 
         _D3CE
-        lda $DDFFFE,x
-        sta wJoy2RepeatTimer,x
+        lda aWindowPalette-2,x
+        sta aBGPaletteBuffer-2,x
         dec x
         dec x
         bne _D3CE
         ldx #$0020
 
         _D3DB
-        lda $DE00BE,x
+        lda aWindowPalette+190,x
         sta $025E,b,x
         dec x
         dec x
@@ -1046,7 +1046,7 @@
         clc
         adc wR0
         tax
-        lda $89ABFA,x
+        lda aSkillDescriptionPointers+1,x
         sta lR18+1
         lda aSkillDescriptionPointers,x
         sta lR18

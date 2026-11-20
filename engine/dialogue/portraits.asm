@@ -207,6 +207,8 @@
         sta wTempVariable1,b
         jsl rlGetCharacterPortraitDataID
         jsr rlTryGetClassPortraitDataID
+
+        _B45E
         sta wR0
         clc
         adc wR0

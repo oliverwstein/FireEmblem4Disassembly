@@ -73,7 +73,7 @@
 
     lda #ArionCh09
     sta wRoutineVariable1
-    jsl $8FBBA7
+    jsl rlUnknown8FBBA7
     rtl
 
     .databank 0
@@ -85,7 +85,7 @@
     .databank ?
 
     ldx #4
-    jsl $8FBBFC
+    jsl rlUnknown8FBBFC
     rtl
 
     .databank 0
@@ -96,7 +96,7 @@
     .autsiz
     .databank ?
 
-    jsl $8FBC11
+    jsl rlUnknown8FBC11
     rtl
 
     .databank 0
@@ -107,7 +107,7 @@
     .autsiz
     .databank ?
 
-    jsl $9EF1FA
+    jsl rlUnknown9EF1FA
     jsl rlCreateProcHaltEvent
     rtl
 

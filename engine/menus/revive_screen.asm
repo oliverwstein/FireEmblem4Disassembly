@@ -32,7 +32,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$BB9B
+        lda #<>rsUnknown80BB9B
         sta wVBlankPointer
         jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
@@ -85,7 +85,7 @@
         sta wGameStateRoutine1,b
         lda #$0032
         sta wGameStateRoutine2,b
-        lda #$9D4F
+        lda #<>rsUnknown809D4F
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -172,7 +172,7 @@
         ldx #$001E
 
         _E0F4
-        lda $DE00FE,x
+        lda aWindowPalette+254,x
         sta $01FE,b,x
         dec x
         dec x
@@ -526,7 +526,7 @@
         clc
         adc wR0
         tax
-        lda $88D527,x
+        lda aUnknown88D526+1,x
         sta lR18+1
         lda aUnknown88D526,x
         sta $07EA,b
@@ -581,7 +581,7 @@
         clc
         adc wR0
         tax
-        lda $88D5E4,x
+        lda aUnknown88D5E3+1,x
         sta lR18+1
         lda aUnknown88D5E3,x
         sta $07EA,b

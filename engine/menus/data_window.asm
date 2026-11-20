@@ -135,8 +135,8 @@
         ldx #$0200
 
         _D9E2
-        lda $DDFFFE,x
-        sta wJoy2RepeatTimer,x
+        lda aWindowPalette-2,x
+        sta aBGPaletteBuffer-2,x
         dec x
         dec x
         bne _D9E2
@@ -1959,7 +1959,7 @@
         clc
         adc wR0
         tax
-        lda $88D527,x
+        lda aUnknown88D526+1,x
         sta lR18+1
         lda aUnknown88D526,x
         sta $07EA,b
@@ -2047,7 +2047,7 @@
         clc
         adc wR0
         tax
-        lda $88D5E4,x
+        lda aUnknown88D5E3+1,x
         sta lR18+1
         lda aUnknown88D5E3,x
         sta $07EA,b

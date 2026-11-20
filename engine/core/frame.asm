@@ -36,7 +36,7 @@
             rep #$20
 
             stz wDMAArrayPosition,b
-            jml $808ECC
+            jml rlUnknown808E2D._8E60+108
 
         +
         plp

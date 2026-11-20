@@ -33,7 +33,7 @@
     .autsiz
     .databank ?
 
-    jsl $9ED42A
+    jsl rlUnknown9ED42A
     jsl rlCreateProcHaltEvent
     rtl
 

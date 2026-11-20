@@ -576,7 +576,7 @@
         sta $089B,b
         lda #$0009
         jsl rlPlaySoundEffect
-        jml $88B316
+        jml rlUnknown88B2A5._B316
 
         .byte $18, $6B
 

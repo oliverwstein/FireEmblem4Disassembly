@@ -182,7 +182,7 @@
         sbc #1
         asl a
         tax
-        lda $8CEE6A,x
+        lda aUnknown8CEE6A,x
         cmp #$FFFF
         beq +
 
@@ -200,7 +200,7 @@
         sbc #1
         asl a
         tax
-        lda $8CEE6A,x
+        lda aUnknown8CEE6A,x
         cmp #$FFFF
         beq _EE64
 

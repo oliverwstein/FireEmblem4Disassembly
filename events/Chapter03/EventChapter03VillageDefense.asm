@@ -26,7 +26,7 @@
     sta aActionStructUnit1.XPosition
     lda #40
     sta aActionStructUnit1.YPosition
-    jsl $91BDA9
+    jsl rlUnknown91BDA9
     rtl
 
     .databank 0

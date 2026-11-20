@@ -214,8 +214,8 @@
         ldx #$0200
 
         _C586
-        lda $DDFFFE,x
-        sta wJoy2RepeatTimer,x
+        lda aWindowPalette-2,x
+        sta aBGPaletteBuffer-2,x
         dec x
         dec x
         bne _C586
@@ -6267,6 +6267,8 @@
         bne _A973
         bit #$0010
         bne _A977
+
+        _A942
         lda wJoy1Repeated
         bit #$0800
         bne _A95B
@@ -6706,7 +6708,7 @@
         lda wUnitWindowUnitSwapStep
         cmp #$0001
         bne _AC30
-        jml $8BA942
+        jml rlUnitWindowHandleInput._A942
 
 
         _AC30

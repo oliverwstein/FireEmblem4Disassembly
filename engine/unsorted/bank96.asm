@@ -11968,7 +11968,7 @@
         tay
         lda $7FFDA0,x
         and #$00FF
-        jsl $959E22
+        jsl rlUnknown959E22
         bcc _D95D
         jsr rsUnknown96DB36
 
@@ -12286,7 +12286,7 @@
         plx
         lda [lR18],y
         xba
-        jsr $96DACB
+        jsr rsUnknown96DACB
         sta aBGPaletteBuffer,b,x
         inc y
         inc y
@@ -13266,7 +13266,7 @@
 
         phx
         tyx
-        jsl $96EA7A
+        jsl rlUnknown96EA7A
         jsr rsUnknown96DFBB
         sep #$20
         lda $7FE475,x
@@ -13965,7 +13965,7 @@
 
         phx
         phy
-        jsr $96E58E
+        jsr rsUnknown96E58E
         lda $7FE476
         sta $7FE4B4
         lda $7FE477
@@ -13997,7 +13997,7 @@
 
         phx
         phy
-        jsr $96E58E
+        jsr rsUnknown96E58E
         lda $7FE476
         sta $7FE4B4
         lda $7FE477
@@ -14617,7 +14617,7 @@
 
         phx
         tyx
-        jsr $96E936
+        jsr rsUnknown96E936
         lda $7FE47E
         clc
         adc #$0010
@@ -14646,7 +14646,7 @@
 
         phx
         tyx
-        jsr $96E936
+        jsr rsUnknown96E936
         plx
         rts
 

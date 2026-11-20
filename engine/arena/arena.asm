@@ -129,9 +129,9 @@
 
 
         _E56E
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD53C)<<8
         sta lR18+1
-        lda #$D53C
+        lda #<>dialogueShopUnknown8AD53C
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -168,9 +168,9 @@
         jsl rlGetSelectedUnitArenaLevel
         cmp #$0007
         bcs _E617
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD574)<<8
         sta lR18+1
-        lda #$D574
+        lda #<>dialogueShopUnknown8AD574
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -190,16 +190,16 @@
 
 
         _E5E3
-        jml $8AE647
+        jml rsUnknown8AE647
 
 
         _E5E7
         jsl rlUnknown84B57A
         jsl rlGetSelectedUnitCharacterID
         sta aDialogue.wUnit1,b
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD553)<<8
         sta lR18+1
-        lda #$D553
+        lda #<>dialogueShopUnknown8AD553
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -213,9 +213,9 @@
 
 
         _E617
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD5C5)<<8
         sta lR18+1
-        lda #$D5C5
+        lda #<>dialogueShopUnknown8AD5C5
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -247,9 +247,9 @@
 
         ; Arena menu step 3 (aArenaMenuStepHandlers).
 
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD5A5)<<8
         sta lR18+1
-        lda #$D5A5
+        lda #<>dialogueShopUnknown8AD5A5
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -391,9 +391,9 @@
         clc
         adc #$0001
         sta aDialogue.wNumber1,b
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD4D7)<<8
         sta lR18+1
-        lda #$D4D7
+        lda #<>dialogueShopUnknown8AD4D7
         sta lR18
         lda #$000C
         bra _E75D
@@ -413,9 +413,9 @@
 
 
         _E77B
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD4E9)<<8
         sta lR18+1
-        lda #$D4E9
+        lda #<>dialogueShopUnknown8AD4E9
         sta lR18
         jml rsUnknown8AC1BC._C312
 
@@ -534,8 +534,8 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsl rlDialogueFreeHDMA
-        jsr $8AD092
-        jsr $8AA46E
+        jsr rsUnknown8AD092
+        jsr rsUnknown8AA46E
         lda #$0000
         jsl rlUnknown8AB043
         lda wJoy1New
@@ -563,9 +563,9 @@
         jsl rlGetSelectedUnitEquippedWeaponBitfield
         cmp #$0000
         beq _E8EC
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD4BC)<<8
         sta lR18+1
-        lda #$D4BC
+        lda #<>dialogueShopUnknown8AD4BC
         sta lR18
         lda #$0009
         sta $0594,b
@@ -581,9 +581,9 @@
 
 
         _E8B3
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD5B7)<<8
         sta lR18+1
-        lda #$D5B7
+        lda #<>dialogueShopUnknown8AD5B7
         sta lR18
         lda #$000E
         sta $0594,b
@@ -599,17 +599,17 @@
 
 
         _E8DE
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD4E9)<<8
         sta lR18+1
-        lda #$D4E9
+        lda #<>dialogueShopUnknown8AD4E9
         sta lR18
         jml rsUnknown8AC1BC._C312
 
 
         _E8EC
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD4D7)<<8
         sta lR18+1
-        lda #$D4D7
+        lda #<>dialogueShopUnknown8AD4D7
         sta lR18
         lda #$000C
         sta $0594,b
@@ -642,7 +642,7 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsr $8AADF4
+        jsr rsUnknown8AADF4
         lda #$8000
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #$B6AD
@@ -717,17 +717,17 @@
 
 
         _E9CD
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD4E9)<<8
         sta lR18+1
-        lda #$D4E9
+        lda #<>dialogueShopUnknown8AD4E9
         sta lR18
         jml rsUnknown8AC1BC._C312
 
 
         _E9DB
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD5B7)<<8
         sta lR18+1
-        lda #$D5B7
+        lda #<>dialogueShopUnknown8AD5B7
         sta lR18
         lda #$000E
         sta $0594,b
@@ -747,9 +747,9 @@
         beq _E9CD
         lda #$0002
         sta $08A1,b
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD4D7)<<8
         sta lR18+1
-        lda #$D4D7
+        lda #<>dialogueShopUnknown8AD4D7
         sta lR18
         lda #$000C
         sta $0594,b
@@ -790,7 +790,7 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsr $8AADF4
+        jsr rsUnknown8AADF4
         lda #$000A
         sta $0592,b
 
@@ -817,7 +817,7 @@
         sta lR18+1
         lda #<>aArenaStartQuitChangeWeaponText
         sta lR18
-        jsr $8AD0B8
+        jsr rsUnknown8AD0B8
         lda #$8A00
         sta lR19+1
         lda #$D08C
@@ -880,9 +880,9 @@
 
 
         _EB2B
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD4D7)<<8
         sta lR18+1
-        lda #$D4D7
+        lda #<>dialogueShopUnknown8AD4D7
         sta lR18
         lda #$000C
         sta $0594,b
@@ -959,7 +959,7 @@
 
         lda #$FFFF
         sta $7F7670
-        jsr $8AA63D
+        jsr rsUnknown8AA63D
         jsr rsUnknown8AA8C9
         jsr rsUnknown8AAD44
         jsr rsUnknown8AA9CE
@@ -992,7 +992,7 @@
         sta wR1
         lda #$0000
         jsl rlUnknown8AB043
-        jsr $8AA400
+        jsr rsUnknown8AA400
         lda wJoy1New
         cmp #$0080
         beq _EC01
@@ -1019,9 +1019,9 @@
         sta $7F7670
         lda #$000A
         jsl rlPlaySoundEffect
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD4BC)<<8
         sta lR18+1
-        lda #$D4BC
+        lda #<>dialogueShopUnknown8AD4BC
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -1045,9 +1045,9 @@
         _EC69
         lda #$0021
         jsl rlPlaySoundEffect
-        lda #$8A00
+        lda #(`dialogueShop06)<<8
         sta lR18+1
-        lda #$D60D
+        lda #<>dialogueShop06
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA

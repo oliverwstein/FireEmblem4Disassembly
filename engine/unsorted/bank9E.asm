@@ -1640,7 +1640,7 @@
         adc wR0
         adc #$0003
         tax
-        lda $9EB50E,x
+        lda aBattleMapSpriteData+1,x
         sta lR18+1
         lda aBattleMapSpriteData,x
         sta lR18
@@ -1683,7 +1683,7 @@
         adc wR0
         adc #$0003
         tax
-        lda $9EB50E,x
+        lda aBattleMapSpriteData+1,x
         sta lR18+1
         lda aBattleMapSpriteData,x
         sta lR18
@@ -4642,7 +4642,7 @@
         adc wR0
         adc #$0003
         tax
-        lda $9EB50E,x
+        lda aBattleMapSpriteData+1,x
         sta lR18+1
         lda aBattleMapSpriteData,x
         sta lR18
@@ -6960,7 +6960,7 @@
       aProcUnknown9EAC69Code ; 9E/ACAF
 
         PROC_YIELD 1
-        PROC_SET_ONCYCLE $9ECA45
+        PROC_SET_ONCYCLE rlUnknown9ECA45
 
         PROC_YIELD 48
         PROC_CALL rlUnknown9EC91A
@@ -6982,11 +6982,11 @@
           PROC_JUMP_IF_BITS_UNSET _ACEE, $0004
 
             PROC_YIELD 16
-            PROC_CALL $9EB4A9
+            PROC_CALL rlUnknown9EB491._B4A9
 
         _ACEE
         PROC_YIELD 1
-        PROC_SET_ONCYCLE $9E936B
+        PROC_SET_ONCYCLE rlUnknown9E936B
         PROC_JUMP_IF_BITS_UNSET _ACEE, $0004
 
         PROC_YIELD 107
@@ -7002,7 +7002,7 @@
           PROC_YIELD 16
 
         _AD14
-        PROC_SET_ONCYCLE $9E95AB
+        PROC_SET_ONCYCLE rlUnknown9E95AB
 
         _AD18
         PROC_YIELD 1
@@ -7038,7 +7038,7 @@
           PROC_YIELD 16
 
         _AD60
-        PROC_CALL $9EB49D
+        PROC_CALL rlUnknown9EB491+12
         PROC_YIELD 117
         PROC_CALL rlUnknown85DB91
         PROC_YIELD 8
@@ -7046,7 +7046,7 @@
         _AD6E
         PROC_CALL rlUnknown9EB41C
         PROC_YIELD 16
-        PROC_SET_ONCYCLE $9EAD7B
+        PROC_SET_ONCYCLE rlUnknown9EAD7B
         PROC_HALT
 
         ; AD7B
@@ -8275,14 +8275,15 @@
 
         phx
         lda #$0092
-        bra $9EB4B5
+        bra rlUnknown9EB4AF._B4B5
 
         .byte $DA, $A9, $93, $00, $80, $18, $DA, $A9, $92, $00, $80, $12, $DA, $A9, $93, $00
         .byte $80, $0C
 
+        _B4A9
         phx
         lda #$0091
-        bra $9EB4B5
+        bra rlUnknown9EB4AF._B4B5
 
         .databank 0
 
@@ -8997,7 +8998,7 @@
 
       procUnknown9EC70B ; 9E/C70B
 
-        .structProcInfo "ON", rlProcUnknown9EC70BInit, rlProcUnknown9EC70BCycle, $9ECAD2
+        .structProcInfo "ON", rlProcUnknown9EC70BInit, rlProcUnknown9EC70BCycle, aProcUnknown9EC70BCode
 
       rlProcUnknown9EC70BInit ; 9E/C713
       
@@ -10034,7 +10035,7 @@
         PROC_CALL rlUnknown9EB3F3
         PROC_JUMP_IF_BITS_UNSET _CDC2, $0004
         PROC_YIELD 16
-        PROC_CALL $9EB4A9
+        PROC_CALL rlUnknown9EB491._B4A9
         _CDC2
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlUnknown9E936B
@@ -10066,7 +10067,7 @@
         PROC_JUMP_IF_BITS_UNSET _CE27, $0004
         PROC_YIELD 16
         _CE27
-        PROC_CALL $9EB497
+        PROC_CALL rlUnknown9EB491+6
         PROC_YIELD 133
         PROC_CALL rlUnknown85DB91
         PROC_YIELD 8
@@ -10077,7 +10078,7 @@
         PROC_JUMP_IF_BITS_UNSET _CE4D, $0004
         PROC_YIELD 16
         _CE4D
-        PROC_CALL $9EB49D
+        PROC_CALL rlUnknown9EB491+12
         PROC_YIELD 117
         PROC_CALL rlUnknown85DB91
         PROC_YIELD 8
@@ -10088,7 +10089,7 @@
         PROC_JUMP_IF_BITS_UNSET _CE73, $0004
         PROC_YIELD 16
         _CE73
-        PROC_CALL $9EB4A3
+        PROC_CALL rlUnknown9EB491+18
         PROC_YIELD 133
         PROC_CALL rlUnknown85DB91
         PROC_YIELD 8
@@ -10404,7 +10405,7 @@
 
       procUnknown9ED089 ; 9E/D089
 
-        .structProcInfo "ON", rlProcUnknown9ED089Init, $9ED2B5, $9ED1F4
+        .structProcInfo "ON", rlProcUnknown9ED089Init, rlUnknown9ED2B5, $9ED1F4
 
       rlProcUnknown9ED089Init ; 9E/D091
 
@@ -10581,7 +10582,7 @@
         adc wR0
         adc #$0003
         tax
-        lda $9EB50E,x
+        lda aBattleMapSpriteData+1,x
         sta lR18+1
         lda aBattleMapSpriteData,x
         sta lR18
@@ -11782,7 +11783,7 @@
         PROC_CALL rlUnknown9EB3F3
         PROC_JUMP_IF_BITS_UNSET _DC99, $0004
         PROC_YIELD 16
-        PROC_CALL $9EB4A9
+        PROC_CALL rlUnknown9EB491._B4A9
         _DC99
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlUnknown9E936B
@@ -12515,7 +12516,7 @@
         ldy #$001E
 
         _E167
-        lda $9EE175,x
+        lda rlUnknown9EE156._E175,x
         sta aOAMPaletteBuffer.aPalette6,b,y
         dec x
         dec x
@@ -12523,6 +12524,8 @@
         dec y
         bpl _E167
         plx
+
+        _E175
         ply
         rtl
 
@@ -13242,7 +13245,7 @@
 
       procUnknown9EF24B ; 9E/F24B
 
-        .structProcInfo "ON", rlProcUnknown9EF24BInit, $9ED2B5, $9ED1F4
+        .structProcInfo "ON", rlProcUnknown9EF24BInit, rlUnknown9ED2B5, $9ED1F4
 
       rlProcUnknown9EF24BInit ; 9E/F253
 
@@ -13350,7 +13353,7 @@
 
       procUnknown9EF37F ; 9E/F37F
 
-        .structProcInfo "ON", rlProcUnknown9EF37FInit, $9ED2B5, $9EF49E
+        .structProcInfo "ON", rlProcUnknown9EF37FInit, rlUnknown9ED2B5, $9EF49E
 
       rlProcUnknown9EF37FInit ; 9E/F387
 

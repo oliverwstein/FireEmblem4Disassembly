@@ -3105,7 +3105,7 @@
         lda #$9900
         sta lR18+1
         lda #$FEB9
-        bra $9BFDCB
+        bra rlUnknown9BFDC0._FDCB
 
         .databank 0
 
@@ -3122,7 +3122,7 @@
         lda #$9900
         sta lR18+1
         lda #$FEC6
-        bra $9BFDCB
+        bra rlUnknown9BFDC0._FDCB
 
         .databank 0
 
@@ -3139,7 +3139,7 @@
         lda #$9900
         sta lR18+1
         lda #$FED3
-        bra $9BFDCB
+        bra rlUnknown9BFDC0._FDCB
 
         .databank 0
 
@@ -3156,7 +3156,7 @@
         lda #$9900
         sta lR18+1
         lda #$FEE0
-        bra $9BFDCB
+        bra rlUnknown9BFDC0._FDCB
 
         .databank 0
 
@@ -3173,7 +3173,7 @@
         lda #$9900
         sta lR18+1
         lda #$FEED
-        bra $9BFDCB
+        bra rlUnknown9BFDC0._FDCB
 
         .databank 0
 
@@ -3190,6 +3190,8 @@
         lda #$9900
         sta lR18+1
         lda #$FEFA
+
+        _FDCB
         sta lR18
         jsl rlUnknown95F967
         rtl
@@ -3209,7 +3211,7 @@
         lda #$9900
         sta lR18+1
         lda #$FF07
-        bra $9BFDCB
+        bra rlUnknown9BFDC0._FDCB
 
         .databank 0
 
@@ -3226,7 +3228,7 @@
         lda #$9900
         sta lR18+1
         lda #$FF14
-        bra $9BFDCB
+        bra rlUnknown9BFDC0._FDCB
 
         .databank 0
 
@@ -3243,7 +3245,7 @@
         lda #$9900
         sta lR18+1
         lda #$FF21
-        bra $9BFDCB
+        bra rlUnknown9BFDC0._FDCB
 
         .databank 0
 
@@ -3260,7 +3262,7 @@
         lda #$9900
         sta lR18+1
         lda #$FF2E
-        bra $9BFDCB
+        bra rlUnknown9BFDC0._FDCB
 
         .databank 0
 
@@ -3277,7 +3279,7 @@
         lda #$9900
         sta lR18+1
         lda #$FF3B
-        bra $9BFDCB
+        bra rlUnknown9BFDC0._FDCB
 
         .databank 0
 

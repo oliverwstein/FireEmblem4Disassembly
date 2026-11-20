@@ -1086,7 +1086,7 @@
 
         bit #$0080
         beq _8A9C
-        jml $888AFC
+        jml rsUnknown888ADD._8AFC
 
 
         _8A9C
@@ -1120,7 +1120,7 @@
 
         bit #$0080
         beq _8AC7
-        jml $888B27
+        jml rsUnknown888ADD._8B27
 
 
         _8AC7
@@ -1167,6 +1167,7 @@
         sta $06DC,b,y
         rts
 
+        _8AFC
         cmp #$0080
         bne _8B05
         jml _8B65
@@ -1190,6 +1191,7 @@
         sta $06DE,b,y
         rts
 
+        _8B27
         cmp #$0080
         bne _8B30
         jml rsUnknown888B87
@@ -2419,7 +2421,7 @@
         lda aMovementMap,x
         and #$00FF
         beq _9242
-        jsr $888FDA
+        jsr rsUnknown888FAF._8FCD+13
 
         _9211
         inc wTempVariable2,b
@@ -2435,7 +2437,7 @@
         lda aMovementMap,x
         and #$00FF
         beq _924A
-        jsr $888FF9
+        jsr rsUnknown888FAF._8FCD+44
         bra _9250
 
 
@@ -2788,7 +2790,7 @@
         lda wUnknown000D79,b
         bit #$0800
         beq _946A
-        jsr $8898D2
+        jsr rsUnknown88986C._98D2
 
         _946A
         rtl
@@ -9557,7 +9559,7 @@
         clc
         adc wR0
         sta wR0
-        lda @l $88D4C7,x
+        lda @l aUnknown88D4C6+1,x
         and #$00FF
         clc
         adc wR1
@@ -10697,7 +10699,7 @@
         sta wR0
         lda $09B3,b,y
         sta wR1
-        jsl $8088D8
+        jsl rlUnknown80889D._88D8
 
         _D12B
         dec y
@@ -10790,7 +10792,7 @@
         tax
         lda @l aMapMovementShortSpritePointers,x
         sta lR45
-        lda @l $88D366,x
+        lda @l aMapMovementShortSpritePointers+1,x
         sta lR45+1
         plx
         jsr (aUnknown88D7B2,x)
@@ -10824,7 +10826,7 @@
         tax
         lda @l aMapMovementTallSpritePointers,x
         sta lR45
-        lda @l $88D429,x
+        lda @l aMapMovementTallSpritePointers+1,x
         sta lR45+1
         plx
         jsr (aUnknown88D7B2,x)
@@ -11262,7 +11264,7 @@
             jml _End
 
           +
-          lda @l $88DA7A,x
+          lda @l aUnknown88DA7A,x
           tsb wUnknown000921,b
 
         +
@@ -11763,7 +11765,7 @@
         clc
         adc wR0
         tax
-        lda $88D527,x
+        lda aUnknown88D526+1,x
         sta lR18+1
         lda aUnknown88D526,x
         sta $07EA,b
@@ -11846,7 +11848,7 @@
         clc
         adc wR0
         tax
-        lda $88D5E4,x
+        lda aUnknown88D5E3+1,x
         sta lR18+1
         lda aUnknown88D5E3,x
         sta $07EA,b

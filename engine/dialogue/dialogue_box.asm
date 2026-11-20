@@ -8,7 +8,7 @@
 
       procDialogueBox ; 85/9BE6
 
-        .structProcInfo "PC", rlProcDialogueBoxInit, rlProcDialogueBoxCycle1, $858398
+        .structProcInfo "PC", rlProcDialogueBoxInit, rlProcDialogueBoxCycle1, aProcDialogueBoxCode
 
         .long aDialogueBoxMapMenuData
         .byte 0

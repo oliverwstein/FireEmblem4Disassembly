@@ -171,7 +171,7 @@
 
         ; Step 2 of aUnknown8DA0C6.
 
-        jsl $80EE37
+        jsl rlUnknown80EE37
         rts
 
         .databank 0
@@ -199,10 +199,10 @@
         lda #$A4A8
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        jsl $8DA755
+        jsl rlUnknown8DA755
 
         _A161
-        jsr $8DA34D
+        jsr rsUnknown8DA34D
         lda $7F5486
         inc a
         sta $7F5486
@@ -229,7 +229,7 @@
 
         ; Step 4 of aUnknown8DA0C6.
 
-        jsl $8DA2AA
+        jsl rlUnknown8DA2AA
         rts
 
         .databank 0
@@ -245,9 +245,9 @@
 
         ; Step 5 of aUnknown8DA0C6.
 
-        jsr $8DA624
-        jsr $8DA676
-        jsr $8DA6E9
+        jsr rsUnknown8DA624
+        jsr rsUnknown8DA624._A676
+        jsr rsUnknown8DA624._A6E9
         rts
 
         .databank 0
@@ -263,7 +263,7 @@
 
         ; Step 6 of aUnknown8DA0C6.
 
-        jsl $80EFD8
+        jsl rlUnknown80EFD8
         rts
 
         .databank 0
@@ -279,7 +279,7 @@
 
         ; Step 7 of aUnknown8DA0C6.
 
-        jsl $8DAD73
+        jsl rlUnknown8DAD73
         rts
 
         .databank 0
@@ -295,7 +295,7 @@
 
         ; Step 8 of aUnknown8DA0C6.
 
-        jsl $80F1A7
+        jsl rlUnknown80F1A7
         rts
 
         .databank 0
@@ -311,7 +311,7 @@
 
         ; Step 9 of aUnknown8DA0C6.
 
-        jsl $8DB4F1
+        jsl rlUnknown8DB4F1
         rts
 
         .databank 0
@@ -420,7 +420,7 @@
 
         ; Step 13 of aUnknown8DA0C6.
 
-        jsl $8DAF33
+        jsl rlUnknown8DAF33
         lda #$000B
         sta wGameStateStep,b
         lda #$000E
@@ -483,7 +483,7 @@
 
         ; Step 15 of aUnknown8DA0C6.
 
-        jsl $8DAFA5
+        jsl rlUnknown8DAFA5
         lda #$0000
         sta $7F5486
         lda #$000B
@@ -537,7 +537,7 @@
 
         ; Step 17 of aUnknown8DA0C6.
 
-        jsl $8DB276
+        jsl rlUnknown8DB276
         rts
 
         .databank 0
@@ -606,13 +606,13 @@
         lda wBufferBG2VOFS
         cmp #$0080
         bcc _A305
-        jsr $8DA34D
+        jsr rsUnknown8DA34D
 
         _A305
         lda wBufferBG2VOFS
         cmp #$00E0
         bne _A310
-        jsl $8DA755
+        jsl rlUnknown8DA755
 
         _A310
         lda wBufferBG2VOFS
@@ -663,17 +663,17 @@
         .databank ?
 
         ldx #$0000
-        jsr $8DA624
+        jsr rsUnknown8DA624
         ldx #$0002
-        jsr $8DA624
+        jsr rsUnknown8DA624
         ldx #$0004
-        jsr $8DA624
+        jsr rsUnknown8DA624
         ldx #$0006
-        jsr $8DA624
+        jsr rsUnknown8DA624
         ldx #$0008
-        jsr $8DA624
+        jsr rsUnknown8DA624
         ldx #$000A
-        jsr $8DA624
+        jsr rsUnknown8DA624
         rts
 
         .databank 0
@@ -1056,6 +1056,8 @@
         phx
         jsl rlPushToOAMBuffer
         plx
+
+        _A6E9
         sep #$20
         lda #$8D
         pha
@@ -1434,11 +1436,11 @@
         sta $CD
         rep #$30
         jsl rlDecompressor
-        jsr $8DB06E
-        jsr $8DB150
-        jsr $8DB1DD
-        jsr $8DB217
-        jsr $8DB252
+        jsr rsUnknown8DB06E
+        jsr rsUnknown8DB150
+        jsr rsUnknown8DB1DD
+        jsr rsUnknown8DB217
+        jsr rsUnknown8DB252
         ldx #$00BE
 
         _B00E

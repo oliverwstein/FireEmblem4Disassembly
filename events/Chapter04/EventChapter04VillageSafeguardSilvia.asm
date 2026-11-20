@@ -59,7 +59,7 @@
     .autsiz
     .databank ?
 
-    jsl $9EEFF1
+    jsl rlUnknown9EEFF1
     jsl rlCreateProcHaltEvent
     rtl
 

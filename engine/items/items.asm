@@ -1205,13 +1205,13 @@
         and #$00FF
         asl a
         clc
-        adc $83800E
+        adc aMainDataOffsets+14
         tax
         lda #$8300
         sta lRoutineVariable+1,b
-        lda $838000,x
+        lda aMainDataOffsets,x
         clc
-        adc $83800E
+        adc aMainDataOffsets+14
         adc #$8000
         sta lRoutineVariable,b
         plx
@@ -1695,23 +1695,23 @@
 
       aUnknown87E6B1 ; 87/E6B1
 
-        .word <>$87E6D3
-        .word <>$87E6D7
-        .word <>$87E6D7
-        .word <>$87E6D7
-        .word <>$87E6DF
-        .word <>$87E6DF
-        .word <>$87E6E9
-        .word <>$87E6E9
-        .word <>$87E6F1
-        .word <>$87E6E9
-        .word <>$87E6E4
-        .word <>$87E705
-        .word <>$87E6F6
-        .word <>$87E6FB
-        .word <>$87E6FB
-        .word <>$87E6FB
-        .word <>$87E707
+        .word <>rsUnknown87E6D3
+        .word <>rsUnknown87E6D7
+        .word <>rsUnknown87E6D7
+        .word <>rsUnknown87E6D7
+        .word <>rsUnknown87E6D7._E6DF
+        .word <>rsUnknown87E6D7._E6DF
+        .word <>rsUnknown87E6D7+18
+        .word <>rsUnknown87E6D7+18
+        .word <>rsUnknown87E6D7+26
+        .word <>rsUnknown87E6D7+18
+        .word <>rsUnknown87E6D7+13
+        .word <>rsUnknown87E705
+        .word <>rsUnknown87E6D7+31
+        .word <>rsUnknown87E6D7+36
+        .word <>rsUnknown87E6D7+36
+        .word <>rsUnknown87E6D7+36
+        .word <>rsUnknown87E707
 
         ; 87/E6D3
 

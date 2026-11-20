@@ -964,7 +964,7 @@
 
           stz wGameStateRoutine1,b
 
-          lda #<>$80B1E1
+          lda #<>rsUnknown80B1E1
           sta aProcSystem.wInput0,b
 
           lda #(`procMainLoopChangeFade)<<8
@@ -1264,7 +1264,7 @@
           stz wGameStateRoutine1,b
 
           lda #0
-          jsl $88B30D
+          jsl rlUnknown88B2A5._B30B+2
           bra _End
         
         +
@@ -1587,7 +1587,7 @@
         phx
         stz wGameStateRoutine1,b
         lda #$0000
-        jsl $88B30D
+        jsl rlUnknown88B2A5._B30B+2
         plx
         bra _B086
 
@@ -2016,7 +2016,7 @@
         cmp #0
         beq +
 
-        lda #<>$80BFFB
+        lda #<>rsUnknown80BFFB
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

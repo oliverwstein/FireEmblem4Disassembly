@@ -1463,6 +1463,7 @@
         adc #$0080
         bra _8B8C
 
+        _8B84
         sta wR10
         lda wR0
         clc
@@ -1759,7 +1760,7 @@
         .autsiz
         .databank ?
 
-        jsr $9F919F
+        jsr rsUnknown9F9116._912A+117
         rtl
 
         .databank 0
@@ -1965,7 +1966,7 @@
         sta aProcSystem.aHeaderOnCycle,b,x
         stz aProcSystem.aHeaderTypeOffset,b,x
         jsl rlUnknown9F8349
-        jsl $9F847A
+        jsl rlUnknown9F8473._847A
 
         _9295
         rtl
@@ -2157,7 +2158,7 @@
         lda aActiveSpriteSystem.aUnknown0012E0,b,x
         sta wR0
         lda aActiveSpriteSystem.aUnknown001300,b,x
-        jsl $9F8B84
+        jsl rlUnknown9F8B7A._8B84
         ldx aActiveSpriteSystem.wOffset,b
         sta aActiveSpriteSystem.aUnknown0013C0,b,x
         lda aActiveSpriteSystem.aUnknown0012E0,b,x

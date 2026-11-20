@@ -40,7 +40,7 @@
 
     .endfor
 
-    DIALOGUE_WITH_BG $B3A303, DIALOGUE_BG_HALLWAY, 3, 1
+    DIALOGUE_WITH_BG dialogueChapter09UnusedJudahKapathogiaSeizedResponse, DIALOGUE_BG_HALLWAY, 3, 1
     YIELD
 
     PAUSE 20
@@ -85,7 +85,7 @@
     WAIT_UNTIL_MAP_SPRITES_HALTING
     YIELD
 
-    DIALOGUE $B3A37C
+    DIALOGUE dialogueChapter09UnusedMusarCharge
     YIELD
 
     RUN_EVENT_CONDITION

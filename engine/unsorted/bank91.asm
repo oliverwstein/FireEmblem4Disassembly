@@ -1821,7 +1821,7 @@
         .autsiz
         .databank ?
 
-        jsl $91F907
+        jsl rlUnknown91F907
         jsl rlUnknown91F935
         rts
 
@@ -2325,7 +2325,7 @@
         lda wCurrentTurn,b
         cmp #$FFFF
         beq _D9C0
-        jsr $91DBA8
+        jsr rsUnknown91DBA8
         bra _D9C4
 
 

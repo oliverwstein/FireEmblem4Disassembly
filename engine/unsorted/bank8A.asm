@@ -777,7 +777,7 @@
         _82DC
         lda $0893,b
         tax
-        lda $8A8343,x
+        lda rlUnknown8A8208._8314+47,x
         and #$00FF
         clc
         adc #$0004
@@ -6842,7 +6842,7 @@
         clc
         adc #$0050
         sta wR1
-        lda @l $8AAFD4,x
+        lda @l rsUnknown8AAF0A._AFC7+13,x
         and #$00FF
         sta wR4
         lda #$3200
@@ -7329,9 +7329,9 @@
         clc
         adc $08B6,b
         tax
-        lda $8ABAD0,x
+        lda aDialogueBackgroundPointers+1,x
         sta lR19+1
-        lda $8ABACF,x
+        lda aDialogueBackgroundPointers,x
         sta lR19
         ldy #$0000
         lda [lR19],y
@@ -8101,9 +8101,9 @@
 
 
         _C10B
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD3AA)<<8
         sta lR18+1
-        lda #$D3AA
+        lda #<>dialogueShopUnknown8AD3AA
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -8123,17 +8123,17 @@
 
 
         _C137
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD1B5)<<8
         sta lR18+1
-        lda #$D1B5
+        lda #<>dialogueShopUnknown8AD1B5
         sta lR18
         bra _C14D
 
 
         _C143
-        lda #$8A00
+        lda #(`dialogueShop01)<<8
         sta lR18+1
-        lda #$D195
+        lda #<>dialogueShop01
         sta lR18
 
         _C14D
@@ -8356,17 +8356,17 @@
 
 
         _C2E2
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD131)<<8
         sta lR18+1
-        lda #$D131
+        lda #<>dialogueShopUnknown8AD131
         sta lR18
         jml _C312
 
 
         _C2F0
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD257)<<8
         sta lR18+1
-        lda #$D257
+        lda #<>dialogueShopUnknown8AD257
         sta lR18
         jml _C312
 
@@ -8503,17 +8503,17 @@
 
 
         _C42B
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD257)<<8
         sta lR18+1
-        lda #$D257
+        lda #<>dialogueShopUnknown8AD257
         sta lR18
         jml _C312
 
 
         _C439
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD233)<<8
         sta lR18+1
-        lda #$D233
+        lda #<>dialogueShopUnknown8AD233
         sta lR18
         jml _C312
 
@@ -8581,11 +8581,11 @@
 
 
         _C4FF
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD257)<<8
         sta lR18+1
-        lda #$D257
+        lda #<>dialogueShopUnknown8AD257
         sta lR18
-        jml $8AC312
+        jml rsUnknown8AC1BC._C312
 
         .databank 0
 
@@ -8646,7 +8646,7 @@
         sta wR1
         lda #$0000
         jsl rlUnknown8AB043
-        jsl $8AB093
+        jsl rlUnknown8AB093
         jsr rsUnknown8AA400
         lda wJoy1New
         cmp #$0080
@@ -8679,7 +8679,7 @@
 
 
         _C57C
-        jsr $8AC68E
+        jsr rsUnknown8AC68E
         bcs _C585
         jml _C64F
 
@@ -9276,7 +9276,7 @@
         _C9D1
         jsl rlSellInventorySlotItem
         bcs _CA11
-        jsl $8AA013
+        jsl rlUnknown8AA013
         jsl rlUnknown8A9DF2
         jsr rsUnknown8AAB48
         lda #$FFFF
@@ -11490,7 +11490,7 @@
 
       procUnknown8AE199 ; 8A/E199
 
-        .structProcInfo "F2", rlProcUnknown8AE199Init, rlProcUnknown8AE199Cycle, $8AE1E9
+        .structProcInfo "F2", rlProcUnknown8AE199Init, rlProcUnknown8AE199Cycle, aProcUnknown8AE199Code
 
     .endsection Unsorted8AE199Section
 
@@ -11580,7 +11580,7 @@
 
       procUnknown8AE1EB ; 8A/E1EB
 
-        .structProcInfo "FF", rlProcUnknown8AE1EBInit, rlProcUnknown8AE1EBCycle, $8AE243
+        .structProcInfo "FF", rlProcUnknown8AE1EBInit, rlProcUnknown8AE1EBCycle, aProcUnknown8AE1EBCode
 
     .endsection Unsorted8AE1EBSection
 
@@ -11672,7 +11672,7 @@
 
       procUnknown8AE245 ; 8A/E245
 
-        .structProcInfo "FF", rlProcUnknown8AE245Init, rlProcUnknown8AE245Cycle, $8AE29D
+        .structProcInfo "FF", rlProcUnknown8AE245Init, rlProcUnknown8AE245Cycle, aProcUnknown8AE245Code
 
       rlProcUnknown8AE245Init ; 8A/E24D
 
@@ -12307,9 +12307,9 @@
 
 
         _EFB1
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD7A4)<<8
         sta lR18+1
-        lda #$D7A4
+        lda #<>dialogueShopUnknown8AD7A4
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -12326,17 +12326,17 @@
         lda wCurrentChapter,b
         cmp #$0006
         bcs _EFE9
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD756)<<8
         sta lR18+1
-        lda #$D756
+        lda #<>dialogueShopUnknown8AD756
         sta lR18
         bra _EFF3
 
 
         _EFE9
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD7D0)<<8
         sta lR18+1
-        lda #$D7D0
+        lda #<>dialogueShopUnknown8AD7D0
         sta lR18
 
         _EFF3
@@ -12355,17 +12355,17 @@
         lda wCurrentChapter,b
         cmp #$0006
         bcs _F021
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD785)<<8
         sta lR18+1
-        lda #$D785
+        lda #<>dialogueShopUnknown8AD785
         sta lR18
         bra _F02B
 
 
         _F021
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD7FC)<<8
         sta lR18+1
-        lda #$D7FC
+        lda #<>dialogueShopUnknown8AD7FC
         sta lR18
 
         _F02B
@@ -12971,19 +12971,19 @@
 
 
         _F459
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD418)<<8
         sta lR18+1
-        lda #$D418
+        lda #<>dialogueShopUnknown8AD418
         sta lR18
-        jml $8AC312
+        jml rsUnknown8AC1BC._C312
 
 
         _F467
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD46F)<<8
         sta lR18+1
-        lda #$D46F
+        lda #<>dialogueShopUnknown8AD46F
         sta lR18
-        jml $8AC312
+        jml rsUnknown8AC1BC._C312
 
         .databank 0
 
@@ -13044,7 +13044,7 @@
         sta wR1
         lda #$0000
         jsl rlUnknown8AB043
-        jsl $8AB093
+        jsl rlUnknown8AB093
         jsr rsUnknown8AA400
         lda wJoy1New
         cmp #$0080
@@ -13850,9 +13850,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD616)<<8
         sta lR18+1
-        lda #$D616
+        lda #<>dialogueShopUnknown8AD616
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -13977,9 +13977,9 @@
         _FB32
         lda #$0021
         jsl rlPlaySoundEffect
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD6DA)<<8
         sta lR18+1
-        lda #$D6DA
+        lda #<>dialogueShopUnknown8AD6DA
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -14039,9 +14039,9 @@
         sta aDialogue.wNumber1,b
         jsl rlUnknown87A165
         sta aDialogue.wNumber2,b
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD6E7)<<8
         sta lR18+1
-        lda #$D6E7
+        lda #<>dialogueShopUnknown8AD6E7
         sta lR18
         bra _FBE2
 
@@ -14051,9 +14051,9 @@
         sta aDialogue.wUnit1,b
         jsl rlGetSelectedUnitMotherID
         sta aDialogue.wUnit2,b
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD70D)<<8
         sta lR18+1
-        lda #$D70D
+        lda #<>dialogueShopUnknown8AD70D
         sta lR18
         bra _FBE2
 
@@ -14071,9 +14071,9 @@
 
 
         _FBFD
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD6BE)<<8
         sta lR18+1
-        lda #$D6BE
+        lda #<>dialogueShopUnknown8AD6BE
         sta lR18
         bra _FBE2
 
@@ -14092,33 +14092,33 @@
 
 
         _FC22
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD65E)<<8
         sta lR18+1
-        lda #$D65E
+        lda #<>dialogueShopUnknown8AD65E
         sta lR18
         bra _FBE2
 
 
         _FC2E
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD678)<<8
         sta lR18+1
-        lda #$D678
+        lda #<>dialogueShopUnknown8AD678
         sta lR18
         bra _FBE2
 
 
         _FC3A
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD68E)<<8
         sta lR18+1
-        lda #$D68E
+        lda #<>dialogueShopUnknown8AD68E
         sta lR18
         bra _FBE2
 
 
         _FC46
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD6A8)<<8
         sta lR18+1
-        lda #$D6A8
+        lda #<>dialogueShopUnknown8AD6A8
         sta lR18
         bra _FBE2
 
@@ -14141,7 +14141,7 @@
         .autsiz
         .databank ?
 
-        jsl $8AB45E
+        jsl rlGetDecompressedPortraitDataPointers._B45E
         ldx #$001E
         ldy #$001E
 
@@ -14247,9 +14247,9 @@
 
         lda #$FFFF
         sta $7F7670
-        lda #$8A00
+        lda #(`dialogueShopUnknown8AD648)<<8
         sta lR18+1
-        lda #$D648
+        lda #<>dialogueShopUnknown8AD648
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA

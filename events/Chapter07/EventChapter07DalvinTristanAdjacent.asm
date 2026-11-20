@@ -209,7 +209,7 @@
     sta wR0
     lda wEventUnitSlot2ID,b
     sta wR1
-    jsl $9EF0CF
+    jsl rlUnknown9EF0CF
     jsl rlCreateProcHaltEvent
     rtl
 

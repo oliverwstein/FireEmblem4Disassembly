@@ -179,6 +179,7 @@
   .include "events/ChapterEpilogue.asm"
   .include "data/palettes/BackgroundPalettes.asm"
   .include "data/palettes/MapBattleMagicPalettes.asm"
+  .include "data/palettes/WindowPalette.asm"
 
     ; Compressed streams: generated from gfx/compressed/C00A2B/C00A2B.streams by build.sh.
     .include "gfx/compressed/C00A2B/Layout.asm"
@@ -14361,6 +14362,13 @@
 
     ; Compressed streams: generated from gfx/compressed/DE6230/DE6230.streams by build.sh.
     .include "gfx/compressed/DE6230/Layout.asm"
+
+    * = $1E0000
+    .logical $DE0000
+
+      .dsection WindowPaletteDE0000Section
+
+    .here
 
     * = $1E8000
     .logical $9E8000

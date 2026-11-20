@@ -15,12 +15,14 @@
         ldx #$0000
 
         _801A
-        lda $888888,x
+        lda rlUnknown8887EC._8880+8,x
         sta @l aSpriteExtBuffer,x
         inc x
         inc x
         cpx #$0080
         bne _801A
+
+        _8029
         rtl
 
         .databank 0
@@ -37,13 +39,15 @@
         ldx #$0000
 
         _802D
-        lda $888888,x
+        lda rlUnknown8887EC._8880+8,x
         cmp @l aSpriteExtBuffer,x
-        bne $878029
+        bne rlUnknown878017._8029
         inc x
         inc x
         cpx #$0080
         bne _802D
+
+        _803E
         jsl rlUnknown878017
         lda #$0000
         sta @l $001FFC
@@ -53,7 +57,7 @@
         beq _8063
         lda #$6A19
         jsl rlUnknown91ECDA
-        jsl $91E8CC
+        jsl rlUnknown91E8C1+11
 
         _8061
         bra _8061
@@ -113,7 +117,7 @@
 
 
         _80A6
-        jsl $878063
+        jsl rlUnknown87802A._8063
 
         .databank 0
 
@@ -5129,7 +5133,7 @@
         .databank $87
         lda wOptionSettings,b
         bit #$0040
-        jml $87BEA2
+        jml rlCheckIfTerrainWindowSettingOff._BEA2
 
         .databank 0
 
@@ -5955,7 +5959,7 @@
         stz bDMAArrayFlag,b
         rep #$20
         stz wDMAArrayPosition,b
-        jml $808ECC
+        jml rlUnknown808E2D._8E60+108
 
         .databank 0
 
@@ -6219,6 +6223,8 @@
         lda wUnknown000D79,b
         bit #$0020
         bne rsUnknown87E6D3
+
+        _E6DF
         lda #$0008
         bra _E6FE
 
@@ -6745,7 +6751,7 @@
 
         lda #$0800
         trb wUnknown000D79,b
-        jsl $8A92AA
+        jsl rlUnknown8A92AA
         rts
 
         .databank 0
@@ -6769,7 +6775,7 @@
 
         lda #$0800
         tsb wUnknown000D79,b
-        jsl $8A92AA
+        jsl rlUnknown8A92AA
         rts
 
         .databank 0
@@ -7188,24 +7194,24 @@
         lda @l aEventLocationTypeOffsets,x
         tax
         sep #$20
-        lda @l $87F455,x
+        lda @l aEventLocationTypeOffsets+2,x
         clc
         adc $0003,b,y
         dec a
         cmp wR0
         bpl _EA69
-        lda @l $87F456,x
+        lda @l aEventLocationTypeOffsets+3,x
         clc
         adc $0004,b,y
         dec a
         cmp wR1
         bpl _EA69
-        lda @l $87F457,x
+        lda @l aEventLocationTypeOffsets+4,x
         clc
         adc $0003,b,y
         cmp wR0
         bmi _EA69
-        lda @l $87F458,x
+        lda @l aEventLocationTypeOffsets+5,x
         clc
         adc $0004,b,y
         cmp wR1

@@ -57,7 +57,7 @@
     PAUSE 20
     YIELD
 
-    RUN_ASM $81B1ED
+    RUN_ASM rlUnknown81B1ED
     YIELD
 
     PAUSE 30
@@ -238,7 +238,7 @@
       .autsiz
       .databank ?
 
-      jsl $9EF1FA
+      jsl rlUnknown9EF1FA
       jsl rlCreateProcHaltEvent
       rtl
 

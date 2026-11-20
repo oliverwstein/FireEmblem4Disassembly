@@ -311,7 +311,7 @@
 
       procFadeOutByScreenFadingTimer ; 82/834C
 
-        .structProcInfo "FO", rlProcFadeInByScreenFadingTimerInit, rlProcFadeOutByScreenFadingTimerCycle, $828362
+        .structProcInfo "FO", rlProcFadeInByScreenFadingTimerInit, rlProcFadeOutByScreenFadingTimerCycle, aProcFadeOutByScreenFadingTimerCode
 
       rlProcFadeOutByScreenFadingTimerCycle ; 82/8354
 

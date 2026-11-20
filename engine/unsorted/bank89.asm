@@ -895,7 +895,7 @@
         ldx #$0020
 
         _8641
-        lda $DE00BE,x
+        lda aWindowPalette+190,x
         sta $02DE,b,x
         dec x
         dec x
@@ -4558,7 +4558,7 @@
         lda wR15
         asl a
         tax
-        lda $8992FE,x
+        lda aUnknown8992E7+23,x
         bmi _A3B1
         sta wR14
         lda wR13
@@ -5724,8 +5724,8 @@
         .autsiz
         .databank ?
 
-        jsr $89B0D1
-        jsr $89B20B
+        jsr rsUnknown89B0D1
+        jsr rsUnknown89B20B
         rts
 
         .databank 0
@@ -5747,9 +5747,9 @@
         .autsiz
         .databank ?
 
-        jsr $89B0D1
-        jsr $89B20B
-        jsr $89B285
+        jsr rsUnknown89B0D1
+        jsr rsUnknown89B20B
+        jsr rsUnknown89B285
         rts
 
         .databank 0
@@ -5794,7 +5794,7 @@
 
         lda wGameStateStep,b
         bne _B0D9
-        jsr $89B2A2
+        jsr rsUnknown89B2A2
 
         _B0D9
         phk
@@ -5805,7 +5805,7 @@
         tax
         lda #$0200
         sta wR5
-        jsr $89B10C
+        jsr rsUnknown89B10C
         lda #$0000
 
         _B0EC
@@ -5816,7 +5816,7 @@
         tax
         lda #$0800
         sta wR5
-        jsr $89B10C
+        jsr rsUnknown89B10C
 
         _B100
         lda wUnitWindowCurrentNameLine
@@ -5949,12 +5949,12 @@
         tax
         lda aUnitWindowEquippedWeaponPointers,x
         bmi _B2B2
-        jsr $89B2B6
+        jsr rsUnknown89B2B6
         rts
 
 
         _B2B2
-        jsr $89B344
+        jsr rsUnknown89B344
         rts
 
         .databank 0
@@ -5992,7 +5992,7 @@
         clc
         adc wR0
         tax
-        lda $88D527,x
+        lda aUnknown88D526+1,x
         sta lR18+1
         lda aUnknown88D526,x
         clc
@@ -6053,7 +6053,7 @@
         clc
         adc wR0
         tax
-        lda $88D5E4,x
+        lda aUnknown88D5E3+1,x
         sta lR18+1
         lda aUnknown88D5E3,x
         clc
@@ -6111,7 +6111,7 @@
         bne _B7FB
         bit #$0400
         bne _B818
-        jsr $89C119
+        jsr rsUnknown89C119
         rts
 
 
@@ -6137,7 +6137,7 @@
         lda #$000A
         jsl rlPlaySoundEffect
         jsl rlItemWindowSort
-        jsr $89C119
+        jsr rsUnknown89C119
         rts
 
 
@@ -6152,7 +6152,7 @@
         jsl rlPlaySoundEffect
 
         _B814
-        jsr $89C119
+        jsr rsUnknown89C119
         rts
 
 
@@ -6168,7 +6168,7 @@
         jsl rlPlaySoundEffect
 
         _B834
-        jsr $89C119
+        jsr rsUnknown89C119
         rts
 
         .databank 0
@@ -6514,7 +6514,7 @@
         _EC1A
         lda $7F8400
         tax
-        lda $89EC48,x
+        lda rsUnknown89EB5E._EC47+1,x
         and #$00FF
         sta wR0
         txa
@@ -6616,7 +6616,7 @@
         sta wGameStateStep,b
         lda #$0001
         sta $0D77,b
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta wMainLoopPointer
         rts
 

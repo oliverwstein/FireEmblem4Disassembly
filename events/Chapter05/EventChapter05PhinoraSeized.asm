@@ -29,7 +29,7 @@
     DIALOGUE_WITH_BG dialogueChapter05PhinoraSeized1, DIALOGUE_BG_HALLWAY, 3, 2
     YIELD
 
-    RUN_ASM $81B1ED
+    RUN_ASM rlUnknown81B1ED
     YIELD
 
     PAUSE 25

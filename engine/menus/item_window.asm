@@ -137,8 +137,8 @@
         ldx #$0200
 
         _CE24
-        lda $DDFFFE,x
-        sta wJoy2RepeatTimer,x
+        lda aWindowPalette-2,x
+        sta aBGPaletteBuffer-2,x
         dec x
         dec x
         bne _CE24

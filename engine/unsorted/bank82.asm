@@ -291,7 +291,7 @@
         sta @l lR22
         lda aProcSystem.aBody1,b
         sta @l lR22+1
-        bra $828921
+        bra rlProcDialogueWithBGInit._8921
 
         .databank 0
 

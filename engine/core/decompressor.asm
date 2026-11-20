@@ -151,6 +151,7 @@
         +
         stz DecompressionVariables.bFlag
 
+        _AA21
         stz DecompressionVariables.bCount
         lda DecompressionVariables.lDest+2
         pha

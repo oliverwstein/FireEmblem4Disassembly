@@ -142,11 +142,11 @@
     lda wActiveFactionSlot,b
     bne +
 
-      jsl $81AB26
+      jsl rlUnknown81AB26
 
-      lda #(`$828AF2)<<8
+      lda #(`procUnknown828AF2)<<8
       sta lR44+1
-      lda #<>$828AF2
+      lda #<>procUnknown828AF2
       sta lR44
       jsl rlEventEngineCreateProc
 

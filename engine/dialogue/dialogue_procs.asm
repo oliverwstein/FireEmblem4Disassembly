@@ -8,7 +8,7 @@
 
       procDialogue ; 82/845F
 
-        .structProcInfo "TT", rlProcDialogueInit, rlProcDialogueCycle1, $828694
+        .structProcInfo "TT", rlProcDialogueInit, rlProcDialogueCycle1, aProcDialogueCode
         .word 0
 
     .endsection DialogueSection
@@ -533,6 +533,7 @@
         lda lActiveEventPointer+1,b
         sta @l lR22+1
 
+        _8921
         lda [lR22],y
         sta $08AF,b
         inc y
@@ -584,7 +585,7 @@
         +
         lda #2
         sta $088B,b
-        lda #<>$80B6B6
+        lda #<>rsUnknown80B6B6
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFadeByTimer)<<8
         sta lR44+1

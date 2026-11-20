@@ -228,6 +228,7 @@
         _88D7
         rtl
 
+        _88D8
         lda wR1
         lsr a
         lsr a
@@ -325,7 +326,7 @@
         lda aOAMSizeBitTable,x
         sta wR3
         lda (wR3)
-        ora $8085C9,x
+        ora aOAMSizeBitTable+2,x
         sta (wR3)
 
         _899A
@@ -942,7 +943,7 @@
         _8DCA
         lda #$0000
         tcd
-        jsl $87803E
+        jsl rlUnknown87802A._803E
 
         _8DD2
         ldy $0001,b,x
@@ -1207,9 +1208,9 @@
         pha
         and #$00FF
         cmp #$00C8
-        bcc $808FC6
+        bcc rlPlaySoundEffect._8FC6
         cmp #$00E0
-        bcs $808FC6
+        bcs rlPlaySoundEffect._8FC6
         sep #$20
         stz $04EB,b
         cmp #$CE
@@ -1222,7 +1223,7 @@
         rep #$20
         lda bSoundFlags,b
         and #$0010
-        beq $808FC6
+        beq rlPlaySoundEffect._8FC6
         pla
         plx
         plb
@@ -1289,6 +1290,8 @@
             phx
 
             +
+
+            _8FC6
             ldx #0
 
               -
@@ -2878,6 +2881,8 @@
         bne _97F6
         sep #$20
         lda #$FD
+
+        _97ED
         sta $04FC,b
         stx $04FA,b
         rep #$20
@@ -2915,10 +2920,10 @@
         tax
         lda bAPUUploading,b
         and #$00FF
-        bne $8097F6
+        bne rsUnknown8097E0._97F6
         sep #$20
         lda #$FC
-        bra $8097ED
+        bra rsUnknown8097E0._97ED
 
         .databank 0
 
@@ -2942,10 +2947,10 @@
         tax
         lda bAPUUploading,b
         and #$00FF
-        bne $8097F6
+        bne rsUnknown8097E0._97F6
         sep #$20
         lda #$FB
-        bra $8097ED
+        bra rsUnknown8097E0._97ED
 
         .databank 0
 
@@ -2969,10 +2974,10 @@
         tax
         lda bAPUUploading,b
         and #$00FF
-        bne $8097F6
+        bne rsUnknown8097E0._97F6
         sep #$20
         lda #$FA
-        bra $8097ED
+        bra rsUnknown8097E0._97ED
 
         .databank 0
 
@@ -3130,7 +3135,7 @@
 
         rep #$20
         ldx $04FA,b
-        bne $809851
+        bne rsUnknown809846._9851
         dec a
         bne _98C0
         lda wBattleStatus
@@ -3449,6 +3454,8 @@
           lda aGameStateRoutines,x
           sta $24
           jsl rlUnknown809BEB
+
+          _9BDB
           rep #$30
           rts
 
@@ -3456,7 +3463,7 @@
         rep #$20
         lda aGameStateRoutines,x
         sta wGameStateRoutine1,b
-        jml $809BDB
+        jml rsUnknown809BC0._9BDB
 
         .databank 0
 
@@ -4066,7 +4073,7 @@
           dec a
           asl a
           tax
-          lda $80A8A8,x
+          lda aChanceToByteLookupTable,x
           plx
 
         +
@@ -4100,7 +4107,7 @@
         sep #$20
         lda #$01
         sta $D2
-        bra $80AA21
+        bra rlDecompressor._AA21
 
         .databank 0
 
@@ -4335,7 +4342,7 @@
         jsl rlDisableVBlank
         jsr rsUnknown80AF9B
         jsl rlProcEngineResetProcEngine
-        jsl $88806A
+        jsl rlUnknown88800F._806A
         lda wCurrentChapter,b
         jsl rlSetChapterEventDataPointerByID
         jsl rlUnknown87BF6F
@@ -4379,7 +4386,7 @@
         beq _AF89
         stz wGameStateRoutine1,b
         lda #$0000
-        jsl $88B30D
+        jsl rlUnknown88B2A5._B30B+2
         lda #$0004
         tsb $0788,b
 
@@ -6080,7 +6087,7 @@
         ldx #$0020
 
         _BE0D
-        lda $DE00BE,x
+        lda aWindowPalette+190,x
         sta $02DE,b,x
         dec x
         dec x
@@ -6594,9 +6601,9 @@
             adc wUnknown001732,b
             tax
 
-            lda $8FE8BF,x
+            lda aEventPointers,x
             sta lR18
-            lda $8FE8BF+1,x
+            lda aEventPointers+1,x
             sta lR18+1
             jsl rlUnknown80C1FC
             clc
@@ -6838,7 +6845,7 @@
         sta bBufferINIDISP
         rep #$20
 
-        lda #<>$80BB9B
+        lda #<>rsUnknown80BB9B
         sta $D3
 
         jsl rlHaltUntilVBlank
@@ -6912,9 +6919,9 @@
         sta $7F840C
         sta $7F8408
 
-        lda #(`$80E422)<<8
+        lda #(`aUnknown80E422)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>$80E422
+        lda #<>aUnknown80E422
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlGetSelectedUnitFactionSlot
         sta $7F840E
@@ -6947,7 +6954,7 @@
         ldx #$0200  
         
         -
-        lda $DDFFFE,x
+        lda aWindowPalette-2,x
         sta $FE,x
         dec x
         dec x
@@ -7187,8 +7194,8 @@
         ldx #$0200
 
         _E70F
-        lda $DDFFFE,x
-        sta wJoy2RepeatTimer,x
+        lda aWindowPalette-2,x
+        sta aBGPaletteBuffer-2,x
         dec x
         dec x
         bne _E70F
@@ -7699,7 +7706,7 @@
         lda #$0002
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsl $8DA3DE
+        jsl rlUnknown8DA3DE
         lda #$0003
         sta wGameStateStep,b
         lda #$0004
@@ -7905,7 +7912,7 @@
         lda #$0002
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsl $8DAEC2
+        jsl rlUnknown8DAEC2
         lda #$8D00
         sta lR44+1
         lda #$AE7A
@@ -7951,7 +7958,7 @@
         sta $08DC,b
         jsl rlUnknown8DB52C
         stz wGameStateStep,b
-        lda #$B6B6
+        lda #<>rsUnknown80B6B6
         sta wMainLoopPointer
         jsl rlEnableVBlank
         sep #$20

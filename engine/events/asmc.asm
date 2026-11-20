@@ -242,9 +242,9 @@
       .al
       .xl
 
-      procUnknown85BC0F .structProcInfo "PW", rlProcUnknown85BC0FInit, rlProcUnknown85B9D4Cycle1, $858398 ; 85/BC0F
+      procUnknown85BC0F .structProcInfo "PW", rlProcUnknown85BC0FInit, rlProcUnknown85B9D4Cycle1, aProcDialogueBoxCode ; 85/BC0F
 
-        .long $85B8EE
+        .long aUnknown85B8EE
         .byte 1
 
     .endsection Unsorted85BC0FSection

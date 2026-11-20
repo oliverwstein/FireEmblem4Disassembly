@@ -3936,7 +3936,7 @@
         phb
         phy
 
-        lda #<>$80B3A2
+        lda #<>rsUnknown80B3A2
         sta aProcSystem.wInput0,b
 
         lda #(`procMainLoopChangeFade)<<8
@@ -4474,7 +4474,7 @@
         phy
 
         stz wGameStateRoutine1,b
-        lda #<>$80C0B6
+        lda #<>rsUnknown80C0B6
         sta aProcSystem.wInput0,b
 
         lda #(`procMainLoopChangeFade)<<8
@@ -5187,7 +5187,7 @@
 
       procUnknown828A30 ; 82/8A30
 
-        .structProcInfo "TT", rlProcUnknown828A30Init, rlProcUnknown828A30Cycle1, $828A86
+        .structProcInfo "TT", rlProcUnknown828A30Init, rlProcUnknown828A30Cycle1, aProcUnknown828A30Code
 
         .word 0
 
@@ -5263,7 +5263,7 @@
 
       procUnknown828A88 ; 82/8A88
 
-        .structProcInfo "LL", rlProcUnknown828A88Init, $82899F, $828A1A
+        .structProcInfo "LL", rlProcUnknown828A88Init, rlProcDialogueWithBGCycle1, aProcDialogueWithBGCode
 
         .word 0
 
@@ -5564,7 +5564,7 @@
 
       procUnknown828BEA  ; 82/8BEA
 
-        .structProcInfo "CC", rlProcUnknown828BEAInit, rlProcUnknown828BEACycle, $828CA1
+        .structProcInfo "CC", rlProcUnknown828BEAInit, rlProcUnknown828BEACycle, aProcUnknown828BEACode
         .word 0
 
     .endsection Unsorted828BEASection
@@ -8493,7 +8493,7 @@
         bit #$1000
         bne +
 
-        jml $8B942F
+        jml rlUnknown8B9275._942F
         
         +
         lda $18ED,b

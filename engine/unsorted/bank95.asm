@@ -2046,7 +2046,7 @@
         tax
 
         _8D7B
-        lda $98A9F0,x
+        lda aBattleBackgroundTerrainIndices,x
         and #$00FF
         asl a
         pha
@@ -2058,21 +2058,21 @@
         pla
 
         _8D8B
-        lda $98A900,x
+        lda aBattleBackgrounds,x
         sta lR18
-        lda $98A901,x
+        lda aBattleBackgrounds+1,x
         sta lR18+1
-        lda $98A903,x
+        lda aBattleBackgrounds+3,x
         sta lR19
-        lda $98A904,x
+        lda aBattleBackgrounds+4,x
         sta lR19+1
-        lda $98A906,x
+        lda aBattleBackgrounds+6,x
         sta lR20
-        lda $98A907,x
+        lda aBattleBackgrounds+7,x
         sta lR20+1
         plp
         bcc _8DD9
-        lda $98A909,x
+        lda aBattleBackgrounds+9,x
         bit #$0001
         beq _8DCB
         sep #$20
@@ -2182,9 +2182,9 @@
         bne _8EAB
 
         _8E81
-        lda $98AA24,x
+        lda aBattleForegrounds,x
         sta lR45
-        lda $98AA25,x
+        lda aBattleForegrounds+1,x
         sta lR45+1
         lda #$7F00
         sta lR47+1
@@ -2200,9 +2200,9 @@
 
 
         _8EAB
-        lda $98AA24,x
+        lda aBattleForegrounds,x
         sta lR45
-        lda $98AA25,x
+        lda aBattleForegrounds+1,x
         sta lR45+1
         lda #$7F00
         sta lR47+1
@@ -2217,9 +2217,9 @@
 
         _8ED3
         plx
-        lda $98AA2A,x
+        lda aBattleForegrounds+6,x
         sta lR45
-        lda $98AA2B,x
+        lda aBattleForegrounds+7,x
         sta lR45+1
         lda #$7F00
         sta lR47+1
@@ -2232,9 +2232,9 @@
           .structDMAToVRAM $7F0000, $0800, $80, $7800
 
         plx
-        lda $98AA2D,x
+        lda aBattleForegrounds+9,x
         sta lR18
-        lda $98AA2E,x
+        lda aBattleForegrounds+10,x
         sta lR18+1
         ldy #$0000
 
@@ -2296,9 +2296,9 @@
         lda $7FE1F2
         ora #$0101
         sta $7FE1F2
-        lda $98AA24,x
+        lda aBattleForegrounds,x
         sta lR45
-        lda $98AA25,x
+        lda aBattleForegrounds+1,x
         sta lR45+1
         lda #$7F00
         sta lR47+1
@@ -2313,9 +2313,9 @@
         plx
 
         _8FAA
-        lda $98AA27,x
+        lda aBattleForegrounds+3,x
         sta lR45
-        lda $98AA28,x
+        lda aBattleForegrounds+4,x
         sta lR45+1
         lda #$7F00
         sta lR47+1
@@ -2328,9 +2328,9 @@
           .structDMAToVRAM $7F0000, $0800, $80, $7000
 
         plx
-        lda $98AA2D,x
+        lda aBattleForegrounds+9,x
         sta lR18
-        lda $98AA2E,x
+        lda aBattleForegrounds+10,x
         sta lR18+1
         ldy #$0000
 
@@ -2434,7 +2434,7 @@
         ldx #$0000
 
         _904E
-        lda $98AA6C,x
+        lda aBattleForegroundTerrainPairs,x
         and #$00FF
         cmp #$00FF
         beq _9080
@@ -2444,7 +2444,7 @@
         bne _9073
 
         _9063
-        lda $98AA6D,x
+        lda aBattleForegroundTerrainPairs+1,x
         and #$00FF
         cmp #$00FE
         beq _9079
@@ -2460,7 +2460,7 @@
 
 
         _9079
-        lda $98AA6E,x
+        lda aBattleForegroundTerrainPairs+2,x
         clc
         bra _9081
 
@@ -11540,7 +11540,7 @@
         lda aOAMSizeBitTable,x
         sta wR3
         lda (wR3)
-        ora $8083C9,x
+        ora aOAMUpperXBitTable+2,x
         sta (wR3)
 
         _C5C3

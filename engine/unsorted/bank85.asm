@@ -1444,7 +1444,7 @@
 
         lda #$1800
         sta aCurrentTilemapInfo,b
-        bra $858B5F
+        bra rsUnknown858B59._8B5F
 
         .databank 0
 
@@ -1459,6 +1459,8 @@
 
         lda #$1C00
         sta aCurrentTilemapInfo,b
+
+        _8B5F
         jsr rsUnknown8589C5
         lda #$8500
         sta lR18+1
@@ -4354,7 +4356,7 @@
       aUnknown85A079 ; 85/A079
 
         .word <>rsUnknown85A085, <>rsUnknown85A0A1, <>$85A0CE
-        .word <>$85A0D0, <>$85A0D9, <>$85A0F5
+        .word <>rlUnknown85A0D0, <>rsUnknown85A0D9, <>$85A0F5
 
       rsUnknown85A085 ; 85/A085
 
@@ -5753,7 +5755,7 @@
 
       procUnknown85ABF6 ; 85/ABF6
 
-        .structProcInfo "PS", $85AC02, $85AC40, $85AEAC
+        .structProcInfo "PS", rlProcUnknown85ABF6Init, rlProcUnknown85ABF6Cycle, aProcUnknown85ABF6Code
 
     .endsection Unsorted85ABF6Section
 
@@ -6808,7 +6810,7 @@
       .al
       .xl
 
-      procUnknown85B18F .structProcInfo "PW", rlProcUnknown85B18FInit, rlProcUnknown85B18FCycle1, $85B2D8 ; 85/B18F
+      procUnknown85B18F .structProcInfo "PW", rlProcUnknown85B18FInit, rlProcUnknown85B18FCycle1, aProcUnknown85B18FCode ; 85/B18F
 
         ; 85/B197
 
@@ -8168,7 +8170,7 @@
       .al
       .xl
 
-      procUnknown85BA41 .structProcInfo "PW", rlProcUnknown85BA41Init, $85BAC7, $858398 ; 85/BA41
+      procUnknown85BA41 .structProcInfo "PW", rlProcUnknown85BA41Init, rlProcUnknown85BA41Cycle, aProcDialogueBoxCode ; 85/BA41
 
         .long $85BA35
         .byte 1
@@ -9883,7 +9885,7 @@
         _C615
         asl a
         tax
-        lda $879077,x
+        lda aUnknown879076+1,x
         and #$00FF
         clc
         adc #$21DF
@@ -14333,7 +14335,7 @@
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CDA4
 
-        lda #<>$80B6B6
+        lda #<>rsUnknown80B6B6
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

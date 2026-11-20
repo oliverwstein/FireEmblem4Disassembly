@@ -100,7 +100,7 @@
     .autsiz
     .databank ?
 
-    jsl $9EF1FA
+    jsl rlUnknown9EF1FA
     jsl rlCreateProcHaltEvent
     rtl
 
@@ -131,7 +131,7 @@
     lda #0
     sta $7EC494
     lda #0
-    jsl $87B01D
+    jsl rlUnknown87B01D
 
     lda $7ECCB6
     sta $7E4EAB
