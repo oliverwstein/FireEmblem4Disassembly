@@ -643,7 +643,7 @@
         and #$00FF
         pha
         tax
-        lda $978039,x
+        lda aBattleAnimationSheetIndices,x
         and #$00FF
         pha
         asl a
@@ -654,9 +654,9 @@
         adc #$0068
         tax
         pla
-        lda $97803A,x
+        lda aBattleAnimationSheetIndices+1,x
         sta lR45+1
-        lda $978039,x
+        lda aBattleAnimationSheetIndices,x
         sta lR45
         pla
         plp
@@ -684,13 +684,13 @@
         phx
         jsl rlDecompressSingle
         plx
-        lda $97803C,x
+        lda aBattleAnimationSheetIndices+3,x
         cmp #$FFFF
         beq _8588
         and #$F800
         cmp #$F800
         beq _8588
-        lda $97803C,x
+        lda aBattleAnimationSheetIndices+3,x
         and #$07FF
         phx
         pha

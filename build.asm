@@ -103,6 +103,7 @@
   .include "engine/ai/threat.asm"
   .include "engine/arena/arena.asm"
   .include "engine/battle/map_battle_magic.asm"
+  .include "engine/battle_scene/animations.asm"
   .include "engine/battle_scene/backgrounds.asm"
   .include "engine/battle_scene/script.asm"
   .include "engine/core/oam.asm"
@@ -9829,6 +9830,9 @@
 
     .here
 
+    ; Compressed streams: generated from gfx/compressed/8BE03C/8BE03C.streams by build.sh.
+    .include "gfx/compressed/8BE03C/Layout.asm"
+
     * = $0C9E00
     .logical $8C9E00
 
@@ -13878,6 +13882,13 @@
 
     .here
 
+    * = $178039
+    .logical $978039
+
+      .dsection BattleAnimationSheetsSection
+
+    .here
+
     * = $184000
     .logical $D84000
 
@@ -16168,6 +16179,9 @@
 
     ; Compressed streams: generated from gfx/compressed/A08000/A08000.streams by build.sh.
     .include "gfx/compressed/A08000/Layout.asm"
+
+    ; Compressed streams: generated from gfx/compressed/E04220/E04220.streams by build.sh.
+    .include "gfx/compressed/E04220/Layout.asm"
 
     * = $2E8000
     .logical $AE8000

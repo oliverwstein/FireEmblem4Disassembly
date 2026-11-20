@@ -11,21 +11,22 @@ Byte-identical output remains the test for every change to the original layout. 
 
 ## Next session (planned 2026-11-20, evening)
 
-Start here. The tree is clean and the build byte-identical; coverage 53.52%. In order:
+Start here. The tree is clean and the build byte-identical; coverage 68.50%. In order:
 
 1. **Run bank `$84`'s padded ROM in Mesen** (needs the user at the emulator): `./build.sh pad GenerationTransferSection 4`, then `open -a Mesen FE4Padded.sfc` and use what bank `$84` does: the unit window and its sorting, a battle, saving and loading, a generation change. It passes every static check; this is the run that proves it shiftable.
-2. **Merge banks.** Every six-digit number in `engine/` and `events/` that points at built bytes is a label now (`tools/raw_addresses.py`); the 600 left point at unbuilt bytes. Try `tools/merge_bank.py` on the 100% banks (`$83`, `$86`, `$8E`-`$8F`, `$9D`) and the pad test on each.
-3. **The streams still unnamed** (69 that nothing in the source names, `gfx/compressed/CATALOG.md`): 16 are in battle scene script data in bank `$97` (11-byte records around `$97/F1A7`: stream, destination `$7E8B88`, sizes; decode the script data first); 9 are in decompression entries inside unreached screen code at `$8D/A810`-`AD72` (routines with inline entries for `rlHandleMapMenuDecompressionDMA`, which `sweep.py` cannot decode past); 44 have no pointer anywhere (found between other streams). The bank `$95` battle scene tables (`$97/828D`, `$97/84B6`, `$97/803C`, `$99/881F`, `$99/8725`, `$99/82AD`) are not decoded yet and may hold streams not found at all.
-4. **Code written as `.byte`.** `raw_addresses.py` left 20 targets as `label+N` because they fall inside `.byte` blocks that are really code (`jml $808ECC` into `rlUnknown808E2D`, the staff handlers at `$87/E6D7`-`E6FB`, `PROC_CALL`s into `rlUnknown9EB491`). Disassemble those blocks and rerun the tool, which then gives them local labels.
-5. **Chapter maps as files**, after reading the map-drawing code: how a tile ID becomes tiles on screen, why a chapter's tile stream is only 4 KB, and the animated tiles (water), which probably swap graphics into VRAM every few frames. Same approach as the backgrounds: tiles as PNG, layout, tile entries and terrain as decompressed files, a rendered map as a preview only.
-6. Smaller leads: the map-battle layout format; `$AD/FF80`; the chapter map `TileEntries` (how the map is drawn from them); the palettes of the remaining sheets.
+2. **Battle animations, continued** (`engine/battle_scene/animations.asm`). Done: the lookup that picks four animation IDs per combatant (`$97/88C9`, 206 records: class, weapon category, character, class/gender value, then four IDs, into `$7FE1BA`-`$7FE1BD`; read by `rlUnknown95A2C8`, not yet source) and the sheets the second ID selects (`aBattleAnimationSheets`, 86 tile sheets as grey PNGs, named after the first class that selects them). That carved banks `$E0`-`$F3`'s lower halves as one region (347 streams; 263 still `gcUnknown`). Next, the same way: the 7-byte table at `$97/82D3` (index `$97/828B`, third ID, 67 streams of 4 KB, sent to VRAM `$4000`/`$5000` plus an offset by `rlUnknown958757`), the word table `$99/8725` with `$99/881F` (64 streams of 1 KB), `$99/82AD` (18 or more of 1 KB; its length is not confirmed) and the fourth ID's routine `rsUnknown95858D`. The frame layouts (how a frame is built from a sheet's tiles) and the per-character palettes are not found yet; the sheets stay grey until then. The patch table `$97/84B6` is unused (every entry `$FFFF`).
+3. **Merge banks.** Every six-digit number in `engine/` and `events/` that points at built bytes is a label now (`tools/raw_addresses.py`); the 600 left point at unbuilt bytes. Try `tools/merge_bank.py` on the 100% banks (`$83`, `$86`, `$8E`-`$8F`, `$9D`) and the pad test on each.
+4. **The streams still unnamed** (69 that nothing in the source names, `gfx/compressed/CATALOG.md`): 16 are in battle scene script data in bank `$97` (11-byte records around `$97/F1A7`: stream, destination `$7E8B88`, sizes; decode the script data first); 9 are in decompression entries inside unreached screen code at `$8D/A810`-`AD72` (routines with inline entries for `rlHandleMapMenuDecompressionDMA`, which `sweep.py` cannot decode past); 44 have no pointer anywhere (found between other streams). The bank `$95` battle scene tables (`$97/828D`, `$97/84B6`, `$97/803C`, `$99/881F`, `$99/8725`, `$99/82AD`) are not decoded yet and may hold streams not found at all.
+5. **Code written as `.byte`.** `raw_addresses.py` left 20 targets as `label+N` because they fall inside `.byte` blocks that are really code (`jml $808ECC` into `rlUnknown808E2D`, the staff handlers at `$87/E6D7`-`E6FB`, `PROC_CALL`s into `rlUnknown9EB491`). Disassemble those blocks and rerun the tool, which then gives them local labels.
+6. **Chapter maps as files**, after reading the map-drawing code: how a tile ID becomes tiles on screen, why a chapter's tile stream is only 4 KB, and the animated tiles (water), which probably swap graphics into VRAM every few frames. Same approach as the backgrounds: tiles as PNG, layout, tile entries and terrain as decompressed files, a rendered map as a preview only.
+7. Smaller leads: the map-battle layout format; `$AD/FF80`; the chapter map `TileEntries` (how the map is drawn from them); the palettes of the remaining sheets.
 
 Deferred on purpose: compressor speed and reproducing Nintendo's encoder.
 
 ## Where things stand
 
 - `./build.sh` builds a ROM that is byte-for-byte identical to the original (Japanese 1.0, SHA-1 `90f0bdeaf0151899f96281258fcb30899fbd0d44`).
-- **53.52% of the ROM is built from source** (2,244,772 of 4,194,304 bytes; `./build.sh coverage`). The rest is copied from `fe4.sfc` at build time. Most of what remains is graphics, maps, music and text.
+- **68.50% of the ROM is built from source** (2,873,065 of 4,194,304 bytes; `./build.sh coverage`). The rest is copied from `fe4.sfc` at build time. Most of what remains is graphics, maps, music and text.
 - `engine/` has 102 files with **5,052 routines** and 1,003 data labels. **3,173 routines** still have `Unknown` in their names, and **2,618** are in `engine/unsorted/` (filed by ROM bank, not yet by system).
 - In built code, **8,786 operands** still use raw RAM addresses (1,650 distinct addresses, as `tools/name_ram.py --report` counts them; the code brought in from the log added many), and about **8,800** use numbers that may stand for constants.
 - `wip/` is empty. `include/Undisassembled.h` names 46 ROM tables that built code reads but whose length is not known yet. No built code calls code that is not built.
@@ -57,6 +58,7 @@ Deferred on purpose: compressor speed and reproducing Nintendo's encoder.
 | Portraits from PNG (2026-11-20) | 1,176,757 | 28.06% |
 | All found compressed streams, as files (2026-11-20) | 1,979,621 | 47.20% |
 | Streams through tables: backgrounds, chapter maps, magic (2026-11-20) | 2,244,772 | 53.52% |
+| Battle animation region carved (2026-11-20) | 2,873,065 | 68.50% |
 
 Share of each bank's `$8000`-`$FFFF` half built from source:
 

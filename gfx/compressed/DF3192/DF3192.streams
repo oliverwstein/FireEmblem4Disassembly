@@ -9,4 +9,4 @@ g4bppcBattleBackgroundThicket g4bppcBattleBackgroundThicket ; 16384 bytes decomp
 acBattleBackgroundUnknown17Tilemap acBattleBackgroundUnknown17Tilemap ; 4096 bytes decompressed
 # Also used as: acBattleBackgroundForestSnowTilemap.
 acBattleBackgroundForestTilemap acBattleBackgroundForestTilemap ; 4096 bytes decompressed
-gcUnknownDF6FFA gcUnknownDF6FFA ; 7488 bytes decompressed
+g4bppcBattleAnimationSheetHighPriest g4bppcBattleAnimationSheetHighPriest ; 7488 bytes decompressed

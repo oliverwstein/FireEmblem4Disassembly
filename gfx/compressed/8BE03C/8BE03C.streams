@@ -1,0 +1,8 @@
+# Compressed streams for rlDecompressor, placed in this order from start to
+# end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is
+# the stream as the ROM has it; gcUnknown... are not identified yet (graphics
+# or tilemaps).
+start $8BE03C
+end $8BFFF2
+
+g4bppcBattleAnimationSheetBarbarian g4bppcBattleAnimationSheetBarbarian ; 14560 bytes decompressed
