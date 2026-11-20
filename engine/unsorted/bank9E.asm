@@ -8421,568 +8421,568 @@
         ; come from the original notes; some classes have more than one row.
 
         ; Cavalier
-        .long gcUnknownADF4CB, gcUnknownAAA0F6, gcUnknownADEDD1, gcUnknownAA966C
-        .long gcUnknownADEA4E, gcUnknownAA92C3, gcUnknownADE6C6, gcUnknownAA8F26
-        .long gcUnknownADF10B, gcUnknownAA8F26, gcUnknownADF890, gcUnknownAA9A00
-        .long gcUnknownADFBD9, gcUnknownAA9D2F, gcUnknownD50000, gcUnknownAAA0F6
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleCavalier0, aMapBattleCavalierLayout1, g4bppcMapBattleCavalier1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleCavalier2, aMapBattleCavalierLayout3, g4bppcMapBattleCavalier3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleCavalier3, aMapBattleCavalierLayout5, g4bppcMapBattleCavalier5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleCavalier6, aMapBattleCavalierLayout7, g4bppcMapBattleCavalier0
         .byte 1
         ; LanceKnight
-        .long gcUnknownD510B1, gcUnknownAAA0F6, gcUnknownD50A01, gcUnknownAA966C
-        .long gcUnknownD506AD, gcUnknownAA92C3, gcUnknownD50333, gcUnknownAA8F26
-        .long gcUnknownD50D0F, gcUnknownAA8F26, gcUnknownD514DD, gcUnknownAA9A00
-        .long gcUnknownD51825, gcUnknownAA9D2F, gcUnknownD51B75, gcUnknownAAA0F6
+        .long aMapBattleLanceKnightLayout0, g4bppcMapBattleCavalier0, aMapBattleLanceKnightLayout1, g4bppcMapBattleCavalier1
+        .long aMapBattleLanceKnightLayout2, g4bppcMapBattleCavalier2, aMapBattleLanceKnightLayout3, g4bppcMapBattleCavalier3
+        .long aMapBattleLanceKnightLayout4, g4bppcMapBattleCavalier3, aMapBattleLanceKnightLayout5, g4bppcMapBattleCavalier5
+        .long aMapBattleLanceKnightLayout6, g4bppcMapBattleCavalier6, aMapBattleLanceKnightLayout7, g4bppcMapBattleCavalier0
         .byte 1
         ; BowKnight
-        .long gcUnknownADF4CB, gcUnknownAAA0F6, gcUnknownADEDD1, gcUnknownAA966C
-        .long gcUnknownADEA4E, gcUnknownAA92C3, gcUnknownADE6C6, gcUnknownAA8F26
-        .long gcUnknownADF10B, gcUnknownAA8F26, gcUnknownADF890, gcUnknownAA9A00
-        .long gcUnknownADFBD9, gcUnknownAA9D2F, gcUnknownD50000, gcUnknownAAA0F6
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleCavalier0, aMapBattleCavalierLayout1, g4bppcMapBattleCavalier1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleCavalier2, aMapBattleCavalierLayout3, g4bppcMapBattleCavalier3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleCavalier3, aMapBattleCavalierLayout5, g4bppcMapBattleCavalier5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleCavalier6, aMapBattleCavalierLayout7, g4bppcMapBattleCavalier0
         .byte 1
         ; AxeKnight
-        .long gcUnknownD510B1, gcUnknownAAA0F6, gcUnknownD50A01, gcUnknownAA966C
-        .long gcUnknownD506AD, gcUnknownAA92C3, gcUnknownD50333, gcUnknownAA8F26
-        .long gcUnknownD50D0F, gcUnknownAA8F26, gcUnknownD514DD, gcUnknownAA9A00
-        .long gcUnknownD51825, gcUnknownAA9D2F, gcUnknownD51B75, gcUnknownAAA0F6
+        .long aMapBattleLanceKnightLayout0, g4bppcMapBattleCavalier0, aMapBattleLanceKnightLayout1, g4bppcMapBattleCavalier1
+        .long aMapBattleLanceKnightLayout2, g4bppcMapBattleCavalier2, aMapBattleLanceKnightLayout3, g4bppcMapBattleCavalier3
+        .long aMapBattleLanceKnightLayout4, g4bppcMapBattleCavalier3, aMapBattleLanceKnightLayout5, g4bppcMapBattleCavalier5
+        .long aMapBattleLanceKnightLayout6, g4bppcMapBattleCavalier6, aMapBattleLanceKnightLayout7, g4bppcMapBattleCavalier0
         .byte 1
         ; FreeKnight
-        .long gcUnknownD510B1, gcUnknownAAA0F6, gcUnknownD50A01, gcUnknownAA966C
-        .long gcUnknownD506AD, gcUnknownAA92C3, gcUnknownD50333, gcUnknownAA8F26
-        .long gcUnknownD50D0F, gcUnknownAA8F26, gcUnknownD514DD, gcUnknownAA9A00
-        .long gcUnknownD51825, gcUnknownAA9D2F, gcUnknownD51B75, gcUnknownAAA0F6
+        .long aMapBattleLanceKnightLayout0, g4bppcMapBattleCavalier0, aMapBattleLanceKnightLayout1, g4bppcMapBattleCavalier1
+        .long aMapBattleLanceKnightLayout2, g4bppcMapBattleCavalier2, aMapBattleLanceKnightLayout3, g4bppcMapBattleCavalier3
+        .long aMapBattleLanceKnightLayout4, g4bppcMapBattleCavalier3, aMapBattleLanceKnightLayout5, g4bppcMapBattleCavalier5
+        .long aMapBattleLanceKnightLayout6, g4bppcMapBattleCavalier6, aMapBattleLanceKnightLayout7, g4bppcMapBattleCavalier0
         .byte 1
         ; Troubadour
-        .long gcUnknownD510B1, gcUnknownAC8CFB, gcUnknownD50A01, gcUnknownABFF18
-        .long gcUnknownD506AD, gcUnknownABFA3D, gcUnknownD50333, gcUnknownABF59A
-        .long gcUnknownD50D0F, gcUnknownABF59A, gcUnknownD514DD, gcUnknownAC83BF
-        .long gcUnknownD51825, gcUnknownAC8842, gcUnknownD51B75, gcUnknownAC8CFB
+        .long aMapBattleLanceKnightLayout0, g4bppcMapBattleTroubadour0, aMapBattleLanceKnightLayout1, g4bppcMapBattleTroubadour1
+        .long aMapBattleLanceKnightLayout2, g4bppcMapBattleTroubadour2, aMapBattleLanceKnightLayout3, g4bppcMapBattleTroubadour3
+        .long aMapBattleLanceKnightLayout4, g4bppcMapBattleTroubadour3, aMapBattleLanceKnightLayout5, g4bppcMapBattleTroubadour5
+        .long aMapBattleLanceKnightLayout6, g4bppcMapBattleTroubadour6, aMapBattleLanceKnightLayout7, g4bppcMapBattleTroubadour0
         .byte 1
         ; KnightLord
-        .long gcUnknownADF4CB, gcUnknownA587D6, gcUnknownADEDD1, gcUnknownA4FF5A
-        .long gcUnknownADEA4E, gcUnknownA4FC4A, gcUnknownADE6C6, gcUnknownA4F926
-        .long gcUnknownADF10B, gcUnknownA4F926, gcUnknownADF890, gcUnknownA5822D
-        .long gcUnknownADFBD9, gcUnknownA584DD, gcUnknownD50000, gcUnknownA587D6
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleKnightLord0, aMapBattleCavalierLayout1, g4bppcMapBattleKnightLord1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleKnightLord2, aMapBattleCavalierLayout3, g4bppcMapBattleKnightLord3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleKnightLord3, aMapBattleCavalierLayout5, g4bppcMapBattleKnightLord5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleKnightLord6, aMapBattleCavalierLayout7, g4bppcMapBattleKnightLord0
         .byte 1
         ; DukeKnight
-        .long gcUnknownADF4CB, gcUnknownA2F96D, gcUnknownADEDD1, gcUnknownA2F0BF
-        .long gcUnknownADEA4E, gcUnknownA2ED85, gcUnknownADE6C6, gcUnknownA2EA71
-        .long gcUnknownADF10B, gcUnknownA2EA71, gcUnknownADF890, gcUnknownA2F38E
-        .long gcUnknownADFBD9, gcUnknownA2F66B, gcUnknownD50000, gcUnknownA2F96D
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleDukeKnight0, aMapBattleCavalierLayout1, g4bppcMapBattleDukeKnight1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleDukeKnight2, aMapBattleCavalierLayout3, g4bppcMapBattleDukeKnight3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleDukeKnight3, aMapBattleCavalierLayout5, g4bppcMapBattleDukeKnight5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleDukeKnight6, aMapBattleCavalierLayout7, g4bppcMapBattleDukeKnight0
         .byte 1
         ; MasterKnight
-        .long gcUnknownADF4CB, gcUnknownA5CE40, gcUnknownADEDD1, gcUnknownA5BBB8
-        .long gcUnknownADEA4E, gcUnknownA5B553, gcUnknownADE6C6, gcUnknownA5AF39
-        .long gcUnknownADF10B, gcUnknownA5AF39, gcUnknownADF890, gcUnknownA5C1D7
-        .long gcUnknownADFBD9, gcUnknownA5C7E4, gcUnknownD50000, gcUnknownA5CE40
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleMasterKnight0, aMapBattleCavalierLayout1, g4bppcMapBattleMasterKnight1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleMasterKnight2, aMapBattleCavalierLayout3, g4bppcMapBattleMasterKnight3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleMasterKnight3, aMapBattleCavalierLayout5, g4bppcMapBattleMasterKnight5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleMasterKnight6, aMapBattleCavalierLayout7, g4bppcMapBattleMasterKnight0
         .byte 1
         ; Paladin
-        .long gcUnknownADF4CB, gcUnknownA7B1DB, gcUnknownADEDD1, gcUnknownA7A11A
-        .long gcUnknownADEA4E, gcUnknownA79B12, gcUnknownADE6C6, gcUnknownA79536
-        .long gcUnknownADF10B, gcUnknownA79536, gcUnknownADF890, gcUnknownA7A6A4
-        .long gcUnknownADFBD9, gcUnknownA7AC2D, gcUnknownD50000, gcUnknownA7B1DB
+        .long aMapBattleCavalierLayout0, g4bppcMapBattlePaladin0, aMapBattleCavalierLayout1, g4bppcMapBattlePaladin1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattlePaladin2, aMapBattleCavalierLayout3, g4bppcMapBattlePaladin3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattlePaladin3, aMapBattleCavalierLayout5, g4bppcMapBattlePaladin5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattlePaladin6, aMapBattleCavalierLayout7, g4bppcMapBattlePaladin0
         .byte 1
         ; PaladinF
-        .long gcUnknownADF4CB, gcUnknownA78F7B, gcUnknownADEDD1, gcUnknownA6FF22
-        .long gcUnknownADEA4E, gcUnknownA6F94B, gcUnknownADE6C6, gcUnknownA6F392
-        .long gcUnknownADF10B, gcUnknownA6F392, gcUnknownADF890, gcUnknownA784C2
-        .long gcUnknownADFBD9, gcUnknownA789F9, gcUnknownD50000, gcUnknownA78F7B
+        .long aMapBattleCavalierLayout0, g4bppcMapBattlePaladinF0, aMapBattleCavalierLayout1, g4bppcMapBattlePaladinF1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattlePaladinF2, aMapBattleCavalierLayout3, g4bppcMapBattlePaladinF3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattlePaladinF3, aMapBattleCavalierLayout5, g4bppcMapBattlePaladinF5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattlePaladinF6, aMapBattleCavalierLayout7, g4bppcMapBattlePaladinF0
         .byte 1
         ; ArchKnight
-        .long gcUnknownADF4CB, gcUnknownA0D607, gcUnknownADEDD1, gcUnknownA0CE50
-        .long gcUnknownADEA4E, gcUnknownA0CBEA, gcUnknownADE6C6, gcUnknownA0C992
-        .long gcUnknownADF10B, gcUnknownA0C992, gcUnknownADF890, gcUnknownA0D0F2
-        .long gcUnknownADFBD9, gcUnknownA0D35A, gcUnknownD50000, gcUnknownA0D607
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleArchKnight0, aMapBattleCavalierLayout1, g4bppcMapBattleArchKnight1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleArchKnight2, aMapBattleCavalierLayout3, g4bppcMapBattleArchKnight3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleArchKnight3, aMapBattleCavalierLayout5, g4bppcMapBattleArchKnight5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleArchKnight6, aMapBattleCavalierLayout7, g4bppcMapBattleArchKnight0
         .byte 1
         ; Ranger
-        .long gcUnknownADF4CB, gcUnknownA4B00B, gcUnknownADEDD1, gcUnknownA4A7DB
-        .long gcUnknownADEA4E, gcUnknownA4A4EB, gcUnknownADE6C6, gcUnknownA4A1E9
-        .long gcUnknownADF10B, gcUnknownA4A1E9, gcUnknownADF890, gcUnknownA4AAA5
-        .long gcUnknownADFBD9, gcUnknownA4AD3B, gcUnknownD50000, gcUnknownA4B00B
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleRanger0, aMapBattleCavalierLayout1, g4bppcMapBattleRanger1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleRanger2, aMapBattleCavalierLayout3, g4bppcMapBattleRanger3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleRanger3, aMapBattleCavalierLayout5, g4bppcMapBattleRanger5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleRanger6, aMapBattleCavalierLayout7, g4bppcMapBattleRanger0
         .byte 1
         ; MageKnight
-        .long gcUnknownADF4CB, gcUnknownABEFDD, gcUnknownADEDD1, gcUnknownABE015
-        .long gcUnknownADEA4E, gcUnknownABDA4A, gcUnknownADE6C6, gcUnknownABD4B1
-        .long gcUnknownADF10B, gcUnknownABD4B1, gcUnknownADF890, gcUnknownABE525
-        .long gcUnknownADFBD9, gcUnknownABEA44, gcUnknownD50000, gcUnknownABEFDD
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleMageKnight0, aMapBattleCavalierLayout1, g4bppcMapBattleMageKnight1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleMageKnight2, aMapBattleCavalierLayout3, g4bppcMapBattleMageKnight3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleMageKnight3, aMapBattleCavalierLayout5, g4bppcMapBattleMageKnight5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleMageKnight6, aMapBattleCavalierLayout7, g4bppcMapBattleMageKnight0
         .byte 1
         ; GreatKnight
-        .long gcUnknownADF4CB, gcUnknownA38A8E, gcUnknownADEDD1, gcUnknownA3825F
-        .long gcUnknownADEA4E, gcUnknownA2FF6D, gcUnknownADE6C6, gcUnknownA2FC7C
-        .long gcUnknownADF10B, gcUnknownA2FC7C, gcUnknownADF890, gcUnknownA38530
-        .long gcUnknownADFBD9, gcUnknownA387C2, gcUnknownD50000, gcUnknownA38A8E
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleGreatKnight0, aMapBattleCavalierLayout1, g4bppcMapBattleGreatKnight1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleGreatKnight2, aMapBattleCavalierLayout3, g4bppcMapBattleGreatKnight3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleGreatKnight3, aMapBattleCavalierLayout5, g4bppcMapBattleGreatKnight5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleGreatKnight6, aMapBattleCavalierLayout7, g4bppcMapBattleGreatKnight0
         .byte 1
         ; PegasusRider
-        .long gcUnknownD528B8, gcUnknownA7E6F4, gcUnknownD523F3, gcUnknownA7D9E8
-        .long gcUnknownD52134, gcUnknownA7D5BB, gcUnknownD51EE2, gcUnknownA7D186
-        .long gcUnknownD52630, gcUnknownA7D186, gcUnknownD52B4C, gcUnknownA7DE05
-        .long gcUnknownD52D65, gcUnknownA7E282, gcUnknownD52FDC, gcUnknownA7E6F4
+        .long aMapBattlePegasusRiderLayout0, g4bppcMapBattlePegasusRider0, aMapBattlePegasusRiderLayout1, g4bppcMapBattlePegasusRider1
+        .long aMapBattlePegasusRiderLayout2, g4bppcMapBattlePegasusRider2, aMapBattlePegasusRiderLayout3, g4bppcMapBattlePegasusRider3
+        .long aMapBattlePegasusRiderLayout4, g4bppcMapBattlePegasusRider3, aMapBattlePegasusRiderLayout5, g4bppcMapBattlePegasusRider5
+        .long aMapBattlePegasusRiderLayout6, g4bppcMapBattlePegasusRider6, aMapBattlePegasusRiderLayout7, g4bppcMapBattlePegasusRider0
         .byte 1
         ; PegasusKnight
-        .long gcUnknownD528B8, gcUnknownA7CD09, gcUnknownD523F3, gcUnknownA7BFF9
-        .long gcUnknownD52134, gcUnknownA7BBBF, gcUnknownD51EE2, gcUnknownA7B788
-        .long gcUnknownD52630, gcUnknownA7B788, gcUnknownD52B4C, gcUnknownA7C409
-        .long gcUnknownD52D65, gcUnknownA7C879, gcUnknownD52FDC, gcUnknownA7CD09
+        .long aMapBattlePegasusRiderLayout0, g4bppcMapBattlePegasusKnight0, aMapBattlePegasusRiderLayout1, g4bppcMapBattlePegasusKnight1
+        .long aMapBattlePegasusRiderLayout2, g4bppcMapBattlePegasusKnight2, aMapBattlePegasusRiderLayout3, g4bppcMapBattlePegasusKnight3
+        .long aMapBattlePegasusRiderLayout4, g4bppcMapBattlePegasusKnight3, aMapBattlePegasusRiderLayout5, g4bppcMapBattlePegasusKnight5
+        .long aMapBattlePegasusRiderLayout6, g4bppcMapBattlePegasusKnight6, aMapBattlePegasusRiderLayout7, g4bppcMapBattlePegasusKnight0
         .byte 1
         ; FalconKnight
-        .long gcUnknownD528B8, gcUnknownA3F50C, gcUnknownD523F3, gcUnknownA3DEAB
-        .long gcUnknownD52134, gcUnknownA3D786, gcUnknownD51EE2, gcUnknownA3CFD9
-        .long gcUnknownD52630, gcUnknownA3CFD9, gcUnknownD52B4C, gcUnknownA3E64B
-        .long gcUnknownD52D65, gcUnknownA3EDAA, gcUnknownD52FDC, gcUnknownA3F50C
+        .long aMapBattlePegasusRiderLayout0, g4bppcMapBattleFalconKnight0, aMapBattlePegasusRiderLayout1, g4bppcMapBattleFalconKnight1
+        .long aMapBattlePegasusRiderLayout2, g4bppcMapBattleFalconKnight2, aMapBattlePegasusRiderLayout3, g4bppcMapBattleFalconKnight3
+        .long aMapBattlePegasusRiderLayout4, g4bppcMapBattleFalconKnight3, aMapBattlePegasusRiderLayout5, g4bppcMapBattleFalconKnight5
+        .long aMapBattlePegasusRiderLayout6, g4bppcMapBattleFalconKnight6, aMapBattlePegasusRiderLayout7, g4bppcMapBattleFalconKnight0
         .byte 1
         ; Dragonrider
-        .long gcUnknownADA7B5, gcUnknownA2E51A, gcUnknownADA37A, gcUnknownA2D726
-        .long gcUnknownADA150, gcUnknownA2D334, gcUnknownAD9F97, gcUnknownA2CEC0
-        .long gcUnknownADA578, gcUnknownA2CEC0, gcUnknownADA9C5, gcUnknownA2DBD4
-        .long gcUnknownADAB7F, gcUnknownA2DFFB, gcUnknownADAD79, gcUnknownA2E51A
+        .long aMapBattleDragonriderLayout0, g4bppcMapBattleDragonrider0, aMapBattleDragonriderLayout1, g4bppcMapBattleDragonrider1
+        .long aMapBattleDragonriderLayout2, g4bppcMapBattleDragonrider2, aMapBattleDragonriderLayout3, g4bppcMapBattleDragonrider3
+        .long aMapBattleDragonriderLayout4, g4bppcMapBattleDragonrider3, aMapBattleDragonriderLayout5, g4bppcMapBattleDragonrider5
+        .long aMapBattleDragonriderLayout6, g4bppcMapBattleDragonrider6, aMapBattleDragonriderLayout7, g4bppcMapBattleDragonrider0
         .byte 1
         ; Dragonknight
-        .long gcUnknownADA7B5, gcUnknownA1F489, gcUnknownADA37A, gcUnknownA1E63B
-        .long gcUnknownADA150, gcUnknownA1E25B, gcUnknownAD9F97, gcUnknownA1DDF1
-        .long gcUnknownADA578, gcUnknownA1DDF1, gcUnknownADA9C5, gcUnknownA1EB31
-        .long gcUnknownADAB7F, gcUnknownA1EF62, gcUnknownADAD79, gcUnknownA1F489
+        .long aMapBattleDragonriderLayout0, g4bppcMapBattleDragonknight0, aMapBattleDragonriderLayout1, g4bppcMapBattleDragonknight1
+        .long aMapBattleDragonriderLayout2, g4bppcMapBattleDragonknight2, aMapBattleDragonriderLayout3, g4bppcMapBattleDragonknight3
+        .long aMapBattleDragonriderLayout4, g4bppcMapBattleDragonknight3, aMapBattleDragonriderLayout5, g4bppcMapBattleDragonknight5
+        .long aMapBattleDragonriderLayout6, g4bppcMapBattleDragonknight6, aMapBattleDragonriderLayout7, g4bppcMapBattleDragonknight0
         .byte 1
         ; Dragonmaster
-        .long gcUnknownADA7B5, gcUnknownA2ADD8, gcUnknownADA37A, gcUnknownA29F0C
-        .long gcUnknownADA150, gcUnknownA29B16, gcUnknownAD9F97, gcUnknownA29697
-        .long gcUnknownADA578, gcUnknownA29697, gcUnknownADA9C5, gcUnknownA2A41B
-        .long gcUnknownADAB7F, gcUnknownA2A86E, gcUnknownADAD79, gcUnknownA2ADD8
+        .long aMapBattleDragonriderLayout0, g4bppcMapBattleDragonmaster0, aMapBattleDragonriderLayout1, g4bppcMapBattleDragonmaster1
+        .long aMapBattleDragonriderLayout2, g4bppcMapBattleDragonmaster2, aMapBattleDragonriderLayout3, g4bppcMapBattleDragonmaster3
+        .long aMapBattleDragonriderLayout4, g4bppcMapBattleDragonmaster3, aMapBattleDragonriderLayout5, g4bppcMapBattleDragonmaster5
+        .long aMapBattleDragonriderLayout6, g4bppcMapBattleDragonmaster6, aMapBattleDragonriderLayout7, g4bppcMapBattleDragonmaster0
         .byte 1
         ; Archer
-        .long gcUnknownAD9A90, gcUnknownA0C809, gcUnknownAD9811, gcUnknownA0C472
-        .long gcUnknownAD96F4, gcUnknownA0C352, gcUnknownAD95BD, gcUnknownA0C252
-        .long gcUnknownAD995A, gcUnknownA0C252, gcUnknownAD9BD2, gcUnknownA0C59B
-        .long gcUnknownAD9D12, gcUnknownA0C6CA, gcUnknownAD9E4B, gcUnknownA0C809
+        .long aMapBattleArcherLayout0, g4bppcMapBattleArcher0, aMapBattleArcherLayout1, g4bppcMapBattleArcher1
+        .long aMapBattleArcherLayout2, g4bppcMapBattleArcher2, aMapBattleArcherLayout3, g4bppcMapBattleArcher3
+        .long aMapBattleArcherLayout4, g4bppcMapBattleArcher3, aMapBattleArcherLayout5, g4bppcMapBattleArcher5
+        .long aMapBattleArcherLayout6, g4bppcMapBattleArcher6, aMapBattleArcherLayout7, g4bppcMapBattleArcher0
         .byte 0
         ; Myrmidon
-        .long gcUnknownADCC79, gcUnknownAAED54, gcUnknownADC8CA, gcUnknownAAE6E1
-        .long gcUnknownADC6E8, gcUnknownAAE3BC, gcUnknownADC56D, gcUnknownAAE08C
-        .long gcUnknownADCA27, gcUnknownAAE08C, gcUnknownADCED6, gcUnknownAAE83C
-        .long gcUnknownADD039, gcUnknownAAEA0D, gcUnknownADD233, gcUnknownAAED54
+        .long aMapBattleMyrmidonLayout0, g4bppcMapBattleMyrmidon0, aMapBattleMyrmidonLayout1, g4bppcMapBattleMyrmidon1
+        .long aMapBattleMyrmidonLayout2, g4bppcMapBattleMyrmidon2, aMapBattleMyrmidonLayout3, g4bppcMapBattleMyrmidon3
+        .long aMapBattleMyrmidonLayout4, g4bppcMapBattleMyrmidon3, aMapBattleMyrmidonLayout5, g4bppcMapBattleMyrmidon5
+        .long aMapBattleMyrmidonLayout6, g4bppcMapBattleMyrmidon6, aMapBattleMyrmidonLayout7, g4bppcMapBattleMyrmidon0
         .byte 0
         ; Swordmaster
-        .long gcUnknownADCC79, gcUnknownAA8B7B, gcUnknownADC8CA, gcUnknownAA8467
-        .long gcUnknownADC6E8, gcUnknownAA812E, gcUnknownADC56D, gcUnknownA9FE02
-        .long gcUnknownADCA27, gcUnknownA9FE02, gcUnknownADCED6, gcUnknownAA85DA
-        .long gcUnknownADD039, gcUnknownAA87D2, gcUnknownADD233, gcUnknownAA8B7B
+        .long aMapBattleMyrmidonLayout0, g4bppcMapBattleSwordmaster0, aMapBattleMyrmidonLayout1, g4bppcMapBattleSwordmaster1
+        .long aMapBattleMyrmidonLayout2, g4bppcMapBattleSwordmaster2, aMapBattleMyrmidonLayout3, g4bppcMapBattleSwordmaster3
+        .long aMapBattleMyrmidonLayout4, g4bppcMapBattleSwordmaster3, aMapBattleMyrmidonLayout5, g4bppcMapBattleSwordmaster5
+        .long aMapBattleMyrmidonLayout6, g4bppcMapBattleSwordmaster6, aMapBattleMyrmidonLayout7, g4bppcMapBattleSwordmaster0
         .byte 0
         ; Sniper
-        .long gcUnknownAD9A90, gcUnknownAAB1CC, gcUnknownAD9811, gcUnknownAAAE30
-        .long gcUnknownAD96F4, gcUnknownAAACF9, gcUnknownAD95BD, gcUnknownAAAC0F
-        .long gcUnknownAD995A, gcUnknownAAAC0F, gcUnknownAD9BD2, gcUnknownAAAF56
-        .long gcUnknownAD9D12, gcUnknownAAB08A, gcUnknownAD9E4B, gcUnknownAAB1CC
+        .long aMapBattleArcherLayout0, g4bppcMapBattleSniper0, aMapBattleArcherLayout1, g4bppcMapBattleSniper1
+        .long aMapBattleArcherLayout2, g4bppcMapBattleSniper2, aMapBattleArcherLayout3, g4bppcMapBattleSniper3
+        .long aMapBattleArcherLayout4, g4bppcMapBattleSniper3, aMapBattleArcherLayout5, g4bppcMapBattleSniper5
+        .long aMapBattleArcherLayout6, g4bppcMapBattleSniper6, aMapBattleArcherLayout7, g4bppcMapBattleSniper0
         .byte 0
         ; Hero
-        .long gcUnknownADCC79, gcUnknownA49DE7, gcUnknownADC8CA, gcUnknownA495F2
-        .long gcUnknownADC6E8, gcUnknownA4925E, gcUnknownADC56D, gcUnknownA48ED0
-        .long gcUnknownADCA27, gcUnknownA48ED0, gcUnknownADCED6, gcUnknownA4978F
-        .long gcUnknownADD039, gcUnknownA499C1, gcUnknownADD233, gcUnknownA49DE7
+        .long aMapBattleMyrmidonLayout0, g4bppcMapBattleHero0, aMapBattleMyrmidonLayout1, g4bppcMapBattleHero1
+        .long aMapBattleMyrmidonLayout2, g4bppcMapBattleHero2, aMapBattleMyrmidonLayout3, g4bppcMapBattleHero3
+        .long aMapBattleMyrmidonLayout4, g4bppcMapBattleHero3, aMapBattleMyrmidonLayout5, g4bppcMapBattleHero5
+        .long aMapBattleMyrmidonLayout6, g4bppcMapBattleHero6, aMapBattleMyrmidonLayout7, g4bppcMapBattleHero0
         .byte 0
         ; General
-        .long gcUnknownACFBAC, gcUnknownA4D0B9, gcUnknownACF405, gcUnknownA4C72D
-        .long gcUnknownACF029, gcUnknownA4C497, gcUnknownACEC8F, gcUnknownA4C198
-        .long gcUnknownACF7A3, gcUnknownA4C198, gcUnknownACFFEE, gcUnknownA4CA6F
-        .long gcUnknownAD835A, gcUnknownA4CD75, gcUnknownAD8745, gcUnknownA4D0B9
+        .long aMapBattleGeneralLayout0, g4bppcMapBattleGeneral0, aMapBattleGeneralLayout1, g4bppcMapBattleGeneral1
+        .long aMapBattleGeneralLayout2, g4bppcMapBattleGeneral2, aMapBattleGeneralLayout3, g4bppcMapBattleGeneral3
+        .long aMapBattleGeneralLayout4, g4bppcMapBattleGeneral3, aMapBattleGeneralLayout5, g4bppcMapBattleGeneral5
+        .long aMapBattleGeneralLayout6, g4bppcMapBattleGeneral6, aMapBattleGeneralLayout7, g4bppcMapBattleGeneral0
         .byte 0
         ; Emperor
-        .long gcUnknownACFBAC, gcUnknownA3ABA3, gcUnknownACF405, gcUnknownA39978
-        .long gcUnknownACF029, gcUnknownA393A2, gcUnknownACEC8F, gcUnknownA38D58
-        .long gcUnknownACF7A3, gcUnknownA38D58, gcUnknownACFFEE, gcUnknownA39FA1
-        .long gcUnknownAD835A, gcUnknownA3A542, gcUnknownAD8745, gcUnknownA3ABA3
+        .long aMapBattleGeneralLayout0, g4bppcMapBattleEmperor0, aMapBattleGeneralLayout1, g4bppcMapBattleEmperor1
+        .long aMapBattleGeneralLayout2, g4bppcMapBattleEmperor2, aMapBattleGeneralLayout3, g4bppcMapBattleEmperor3
+        .long aMapBattleGeneralLayout4, g4bppcMapBattleEmperor3, aMapBattleGeneralLayout5, g4bppcMapBattleEmperor5
+        .long aMapBattleGeneralLayout6, g4bppcMapBattleEmperor6, aMapBattleGeneralLayout7, g4bppcMapBattleEmperor0
         .byte 0
         ; Baron
-        .long gcUnknownACFBAC, gcUnknownA0F859, gcUnknownACF405, gcUnknownA0E56D
-        .long gcUnknownACF029, gcUnknownA0DF8B, gcUnknownACEC8F, gcUnknownA0D8AB
-        .long gcUnknownACF7A3, gcUnknownA0D8AB, gcUnknownACFFEE, gcUnknownA0EBA0
-        .long gcUnknownAD835A, gcUnknownA0F163, gcUnknownAD8745, gcUnknownA0F859
+        .long aMapBattleGeneralLayout0, g4bppcMapBattleBaron0, aMapBattleGeneralLayout1, g4bppcMapBattleBaron1
+        .long aMapBattleGeneralLayout2, g4bppcMapBattleBaron2, aMapBattleGeneralLayout3, g4bppcMapBattleBaron3
+        .long aMapBattleGeneralLayout4, g4bppcMapBattleBaron3, aMapBattleGeneralLayout5, g4bppcMapBattleBaron5
+        .long aMapBattleGeneralLayout6, g4bppcMapBattleBaron6, aMapBattleGeneralLayout7, g4bppcMapBattleBaron0
         .byte 0
         ; Soldier
-        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
-        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
-        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
-        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
+        .long aMapBattleSoldierLayout0, g4bppcMapBattleSoldier0, aMapBattleSoldierLayout1, g4bppcMapBattleSoldier1
+        .long aMapBattleSoldierLayout2, g4bppcMapBattleSoldier2, aMapBattleSoldierLayout3, g4bppcMapBattleSoldier3
+        .long aMapBattleSoldierLayout4, g4bppcMapBattleSoldier3, aMapBattleSoldierLayout5, g4bppcMapBattleSoldier5
+        .long aMapBattleSoldierLayout6, g4bppcMapBattleSoldier6, aMapBattleSoldierLayout7, g4bppcMapBattleSoldier0
         .byte 0
         ; SpearSoldier
-        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
-        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
-        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
-        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
+        .long aMapBattleSoldierLayout0, g4bppcMapBattleSoldier0, aMapBattleSoldierLayout1, g4bppcMapBattleSoldier1
+        .long aMapBattleSoldierLayout2, g4bppcMapBattleSoldier2, aMapBattleSoldierLayout3, g4bppcMapBattleSoldier3
+        .long aMapBattleSoldierLayout4, g4bppcMapBattleSoldier3, aMapBattleSoldierLayout5, g4bppcMapBattleSoldier5
+        .long aMapBattleSoldierLayout6, g4bppcMapBattleSoldier6, aMapBattleSoldierLayout7, g4bppcMapBattleSoldier0
         .byte 0
         ; AxeSoldier
-        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
-        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
-        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
-        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
+        .long aMapBattleSoldierLayout0, g4bppcMapBattleSoldier0, aMapBattleSoldierLayout1, g4bppcMapBattleSoldier1
+        .long aMapBattleSoldierLayout2, g4bppcMapBattleSoldier2, aMapBattleSoldierLayout3, g4bppcMapBattleSoldier3
+        .long aMapBattleSoldierLayout4, g4bppcMapBattleSoldier3, aMapBattleSoldierLayout5, g4bppcMapBattleSoldier5
+        .long aMapBattleSoldierLayout6, g4bppcMapBattleSoldier6, aMapBattleSoldierLayout7, g4bppcMapBattleSoldier0
         .byte 0
         ; BowSoldier
-        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
-        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
-        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
-        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
+        .long aMapBattleSoldierLayout0, g4bppcMapBattleSoldier0, aMapBattleSoldierLayout1, g4bppcMapBattleSoldier1
+        .long aMapBattleSoldierLayout2, g4bppcMapBattleSoldier2, aMapBattleSoldierLayout3, g4bppcMapBattleSoldier3
+        .long aMapBattleSoldierLayout4, g4bppcMapBattleSoldier3, aMapBattleSoldierLayout5, g4bppcMapBattleSoldier5
+        .long aMapBattleSoldierLayout6, g4bppcMapBattleSoldier6, aMapBattleSoldierLayout7, g4bppcMapBattleSoldier0
         .byte 0
         ; SwordSoldier
-        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
-        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
-        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
-        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
+        .long aMapBattleSoldierLayout0, g4bppcMapBattleSoldier0, aMapBattleSoldierLayout1, g4bppcMapBattleSoldier1
+        .long aMapBattleSoldierLayout2, g4bppcMapBattleSoldier2, aMapBattleSoldierLayout3, g4bppcMapBattleSoldier3
+        .long aMapBattleSoldierLayout4, g4bppcMapBattleSoldier3, aMapBattleSoldierLayout5, g4bppcMapBattleSoldier5
+        .long aMapBattleSoldierLayout6, g4bppcMapBattleSoldier6, aMapBattleSoldierLayout7, g4bppcMapBattleSoldier0
         .byte 0
         ; LanceArmor
-        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
-        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
-        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
-        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
+        .long aMapBattleSoldierLayout0, g4bppcMapBattleSoldier0, aMapBattleSoldierLayout1, g4bppcMapBattleSoldier1
+        .long aMapBattleSoldierLayout2, g4bppcMapBattleSoldier2, aMapBattleSoldierLayout3, g4bppcMapBattleSoldier3
+        .long aMapBattleSoldierLayout4, g4bppcMapBattleSoldier3, aMapBattleSoldierLayout5, g4bppcMapBattleSoldier5
+        .long aMapBattleSoldierLayout6, g4bppcMapBattleSoldier6, aMapBattleSoldierLayout7, g4bppcMapBattleSoldier0
         .byte 0
         ; AxeArmor
-        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
-        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
-        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
-        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
+        .long aMapBattleSoldierLayout0, g4bppcMapBattleSoldier0, aMapBattleSoldierLayout1, g4bppcMapBattleSoldier1
+        .long aMapBattleSoldierLayout2, g4bppcMapBattleSoldier2, aMapBattleSoldierLayout3, g4bppcMapBattleSoldier3
+        .long aMapBattleSoldierLayout4, g4bppcMapBattleSoldier3, aMapBattleSoldierLayout5, g4bppcMapBattleSoldier5
+        .long aMapBattleSoldierLayout6, g4bppcMapBattleSoldier6, aMapBattleSoldierLayout7, g4bppcMapBattleSoldier0
         .byte 0
         ; BowArmor
-        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
-        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
-        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
-        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
+        .long aMapBattleSoldierLayout0, g4bppcMapBattleSoldier0, aMapBattleSoldierLayout1, g4bppcMapBattleSoldier1
+        .long aMapBattleSoldierLayout2, g4bppcMapBattleSoldier2, aMapBattleSoldierLayout3, g4bppcMapBattleSoldier3
+        .long aMapBattleSoldierLayout4, g4bppcMapBattleSoldier3, aMapBattleSoldierLayout5, g4bppcMapBattleSoldier5
+        .long aMapBattleSoldierLayout6, g4bppcMapBattleSoldier6, aMapBattleSoldierLayout7, g4bppcMapBattleSoldier0
         .byte 0
         ; SwordArmor
-        .long gcUnknownACDF93, gcUnknownA08CF4, gcUnknownACD92B, gcUnknownA08501
-        .long gcUnknownACD606, gcUnknownA082A2, gcUnknownACD31C, gcUnknownA08000
-        .long gcUnknownACDC16, gcUnknownA08000, gcUnknownACE32A, gcUnknownA08784
-        .long gcUnknownACE615, gcUnknownA08A50, gcUnknownACE977, gcUnknownA08CF4
+        .long aMapBattleSoldierLayout0, g4bppcMapBattleSoldier0, aMapBattleSoldierLayout1, g4bppcMapBattleSoldier1
+        .long aMapBattleSoldierLayout2, g4bppcMapBattleSoldier2, aMapBattleSoldierLayout3, g4bppcMapBattleSoldier3
+        .long aMapBattleSoldierLayout4, g4bppcMapBattleSoldier3, aMapBattleSoldierLayout5, g4bppcMapBattleSoldier5
+        .long aMapBattleSoldierLayout6, g4bppcMapBattleSoldier6, aMapBattleSoldierLayout7, g4bppcMapBattleSoldier0
         .byte 0
         ; Barbarian
-        .long gcUnknownAD904F, gcUnknownA0ABAC, gcUnknownAD8DB0, gcUnknownA0A43A
-        .long gcUnknownAD8C5B, gcUnknownA0A20F, gcUnknownAD8B10, gcUnknownA09F53
-        .long gcUnknownAD8F00, gcUnknownA09F53, gcUnknownAD91C6, gcUnknownA0A6F2
-        .long gcUnknownAD930D, gcUnknownA0A93A, gcUnknownAD947A, gcUnknownA0ABAC
+        .long aMapBattleBarbarianLayout0, g4bppcMapBattleBarbarian0, aMapBattleBarbarianLayout1, g4bppcMapBattleBarbarian1
+        .long aMapBattleBarbarianLayout2, g4bppcMapBattleBarbarian2, aMapBattleBarbarianLayout3, g4bppcMapBattleBarbarian3
+        .long aMapBattleBarbarianLayout4, g4bppcMapBattleBarbarian3, aMapBattleBarbarianLayout5, g4bppcMapBattleBarbarian5
+        .long aMapBattleBarbarianLayout6, g4bppcMapBattleBarbarian6, aMapBattleBarbarianLayout7, g4bppcMapBattleBarbarian0
         .byte 0
         ; Fighter
-        .long gcUnknownAD904F, gcUnknownA09C49, gcUnknownAD8DB0, gcUnknownA09498
-        .long gcUnknownAD8C5B, gcUnknownA09267, gcUnknownAD8B10, gcUnknownA08FC2
-        .long gcUnknownAD8F00, gcUnknownA08FC2, gcUnknownAD91C6, gcUnknownA09761
-        .long gcUnknownAD930D, gcUnknownA099B1, gcUnknownAD947A, gcUnknownA09C49
+        .long aMapBattleBarbarianLayout0, g4bppcMapBattleFighter0, aMapBattleBarbarianLayout1, g4bppcMapBattleFighter1
+        .long aMapBattleBarbarianLayout2, g4bppcMapBattleFighter2, aMapBattleBarbarianLayout3, g4bppcMapBattleFighter3
+        .long aMapBattleBarbarianLayout4, g4bppcMapBattleFighter3, aMapBattleBarbarianLayout5, g4bppcMapBattleFighter5
+        .long aMapBattleBarbarianLayout6, g4bppcMapBattleFighter6, aMapBattleBarbarianLayout7, g4bppcMapBattleFighter0
         .byte 0
         ; Brigand
-        .long gcUnknownAD904F, gcUnknownA6E1B9, gcUnknownAD8DB0, gcUnknownA6D9E9
-        .long gcUnknownAD8C5B, gcUnknownA6D7A8, gcUnknownAD8B10, gcUnknownA6D4FD
-        .long gcUnknownAD8F00, gcUnknownA6D4FD, gcUnknownAD91C6, gcUnknownA6DCCB
-        .long gcUnknownAD930D, gcUnknownA6DF0D, gcUnknownAD947A, gcUnknownA6E1B9
+        .long aMapBattleBarbarianLayout0, g4bppcMapBattleBrigand0, aMapBattleBarbarianLayout1, g4bppcMapBattleBrigand1
+        .long aMapBattleBarbarianLayout2, g4bppcMapBattleBrigand2, aMapBattleBarbarianLayout3, g4bppcMapBattleBrigand3
+        .long aMapBattleBarbarianLayout4, g4bppcMapBattleBrigand3, aMapBattleBarbarianLayout5, g4bppcMapBattleBrigand5
+        .long aMapBattleBarbarianLayout6, g4bppcMapBattleBrigand6, aMapBattleBarbarianLayout7, g4bppcMapBattleBrigand0
         .byte 0
         ; Warrior
-        .long gcUnknownADDCED, gcUnknownACA6D3, gcUnknownADD80A, gcUnknownAC9A19
-        .long gcUnknownADD5EA, gcUnknownAC9648, gcUnknownADD39B, gcUnknownAC91BF
-        .long gcUnknownADDA75, gcUnknownAC91BF, gcUnknownADDF86, gcUnknownAC9E5E
-        .long gcUnknownADE1DC, gcUnknownACA24F, gcUnknownADE463, gcUnknownACA6D3
+        .long aMapBattleWarriorLayout0, g4bppcMapBattleWarrior0, aMapBattleWarriorLayout1, g4bppcMapBattleWarrior1
+        .long aMapBattleWarriorLayout2, g4bppcMapBattleWarrior2, aMapBattleWarriorLayout3, g4bppcMapBattleWarrior3
+        .long aMapBattleWarriorLayout4, g4bppcMapBattleWarrior3, aMapBattleWarriorLayout5, g4bppcMapBattleWarrior5
+        .long aMapBattleWarriorLayout6, g4bppcMapBattleWarrior6, aMapBattleWarriorLayout7, g4bppcMapBattleWarrior0
         .byte 0
         ; Hunter
-        .long gcUnknownADDCED, gcUnknownA4BE6B, gcUnknownADD80A, gcUnknownA4B77E
-        .long gcUnknownADD5EA, gcUnknownA4B58A, gcUnknownADD39B, gcUnknownA4B2E0
-        .long gcUnknownADDA75, gcUnknownA4B2E0, gcUnknownADDF86, gcUnknownA4B9CD
-        .long gcUnknownADE1DC, gcUnknownA4BBE8, gcUnknownADE463, gcUnknownA4BE6B
+        .long aMapBattleWarriorLayout0, g4bppcMapBattleHunter0, aMapBattleWarriorLayout1, g4bppcMapBattleHunter1
+        .long aMapBattleWarriorLayout2, g4bppcMapBattleHunter2, aMapBattleWarriorLayout3, g4bppcMapBattleHunter3
+        .long aMapBattleWarriorLayout4, g4bppcMapBattleHunter3, aMapBattleWarriorLayout5, g4bppcMapBattleHunter5
+        .long aMapBattleWarriorLayout6, g4bppcMapBattleHunter6, aMapBattleWarriorLayout7, g4bppcMapBattleHunter0
         .byte 0
         ; Pirate
-        .long gcUnknownAD904F, gcUnknownA6F0B0, gcUnknownAD8DB0, gcUnknownA6E936
-        .long gcUnknownAD8C5B, gcUnknownA6E717, gcUnknownAD8B10, gcUnknownA6E470
-        .long gcUnknownAD8F00, gcUnknownA6E470, gcUnknownAD91C6, gcUnknownA6EBF4
-        .long gcUnknownAD930D, gcUnknownA6EE33, gcUnknownAD947A, gcUnknownA6F0B0
+        .long aMapBattleBarbarianLayout0, g4bppcMapBattlePirate0, aMapBattleBarbarianLayout1, g4bppcMapBattlePirate1
+        .long aMapBattleBarbarianLayout2, g4bppcMapBattlePirate2, aMapBattleBarbarianLayout3, g4bppcMapBattlePirate3
+        .long aMapBattleBarbarianLayout4, g4bppcMapBattlePirate3, aMapBattleBarbarianLayout5, g4bppcMapBattlePirate5
+        .long aMapBattleBarbarianLayout6, g4bppcMapBattlePirate6, aMapBattleBarbarianLayout7, g4bppcMapBattlePirate0
         .byte 0
         ; JuniorLord
-        .long gcUnknownD66B0C, gcUnknownA4E30D, gcUnknownD6693A, gcUnknownA4DB00
-        .long gcUnknownD6680A, gcUnknownA4D7AD, gcUnknownD66761, gcUnknownA4D411
-        .long gcUnknownD669DE, gcUnknownA4D411, gcUnknownD66C35, gcUnknownA4DD21
-        .long gcUnknownD66CE1, gcUnknownA4DF51, gcUnknownD66E2A, gcUnknownA4E30D
+        .long aMapBattleJuniorLordLayout0, g4bppcMapBattleJuniorLord0, aMapBattleJuniorLordLayout1, g4bppcMapBattleJuniorLord1
+        .long aMapBattleJuniorLordLayout2, g4bppcMapBattleJuniorLord2, aMapBattleJuniorLordLayout3, g4bppcMapBattleJuniorLord3
+        .long aMapBattleJuniorLordLayout4, g4bppcMapBattleJuniorLord3, aMapBattleJuniorLordLayout5, g4bppcMapBattleJuniorLord5
+        .long aMapBattleJuniorLordLayout6, g4bppcMapBattleJuniorLord6, aMapBattleJuniorLordLayout7, g4bppcMapBattleJuniorLord0
         .byte 0
         ; WarMage
-        .long gcUnknownADC013, gcUnknownA6B0FD, gcUnknownADBD4A, gcUnknownA6A3BA
-        .long gcUnknownADBBC7, gcUnknownA69FA0, gcUnknownADBA86, gcUnknownA69BEB
-        .long gcUnknownADBE85, gcUnknownA69BEB, gcUnknownADC199, gcUnknownA6A784
-        .long gcUnknownADC2D4, gcUnknownA6ABE5, gcUnknownADC436, gcUnknownA6B0FD
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleWarMage0, aMapBattleWarMageLayout1, g4bppcMapBattleWarMage1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleWarMage2, aMapBattleWarMageLayout3, g4bppcMapBattleWarMage3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleWarMage3, aMapBattleWarMageLayout5, g4bppcMapBattleWarMage5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleWarMage6, aMapBattleWarMageLayout7, g4bppcMapBattleWarMage0
         .byte 0
         ; Prince
-        .long gcUnknownD66B0C, gcUnknownA89CC4, gcUnknownD6693A, gcUnknownA89492
-        .long gcUnknownD6680A, gcUnknownA8911B, gcUnknownD66761, gcUnknownA88D85
-        .long gcUnknownD669DE, gcUnknownA88D85, gcUnknownD66C35, gcUnknownA896CC
-        .long gcUnknownD66CE1, gcUnknownA898F2, gcUnknownD66E2A, gcUnknownA89CC4
+        .long aMapBattleJuniorLordLayout0, g4bppcMapBattlePrince0, aMapBattleJuniorLordLayout1, g4bppcMapBattlePrince1
+        .long aMapBattleJuniorLordLayout2, g4bppcMapBattlePrince2, aMapBattleJuniorLordLayout3, g4bppcMapBattlePrince3
+        .long aMapBattleJuniorLordLayout4, g4bppcMapBattlePrince3, aMapBattleJuniorLordLayout5, g4bppcMapBattlePrince5
+        .long aMapBattleJuniorLordLayout6, g4bppcMapBattlePrince6, aMapBattleJuniorLordLayout7, g4bppcMapBattlePrince0
         .byte 0
         ; Princess
-        .long gcUnknownADC013, gcUnknownA8B74F, gcUnknownADBD4A, gcUnknownA8A9AC
-        .long gcUnknownADBBC7, gcUnknownA8A552, gcUnknownADBA86, gcUnknownA8A0E3
-        .long gcUnknownADBE85, gcUnknownA8A0E3, gcUnknownADC199, gcUnknownA8ADE3
-        .long gcUnknownADC2D4, gcUnknownA8B273, gcUnknownADC436, gcUnknownA8B74F
+        .long aMapBattleWarMageLayout0, g4bppcMapBattlePrincess0, aMapBattleWarMageLayout1, g4bppcMapBattlePrincess1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattlePrincess2, aMapBattleWarMageLayout3, g4bppcMapBattlePrincess3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattlePrincess3, aMapBattleWarMageLayout5, g4bppcMapBattlePrincess5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattlePrincess6, aMapBattleWarMageLayout7, g4bppcMapBattlePrincess0
         .byte 0
         ; WarMageF
-        .long gcUnknownADC013, gcUnknownA69712, gcUnknownADBD4A, gcUnknownA68A97
-        .long gcUnknownADBBC7, gcUnknownA68686, gcUnknownADBA86, gcUnknownA682C9
-        .long gcUnknownADBE85, gcUnknownA682C9, gcUnknownADC199, gcUnknownA68E87
-        .long gcUnknownADC2D4, gcUnknownA69293, gcUnknownADC436, gcUnknownA69712
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleWarMageF0, aMapBattleWarMageLayout1, g4bppcMapBattleWarMageF1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleWarMageF2, aMapBattleWarMageLayout3, g4bppcMapBattleWarMageF3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleWarMageF3, aMapBattleWarMageLayout5, g4bppcMapBattleWarMageF5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleWarMageF6, aMapBattleWarMageLayout7, g4bppcMapBattleWarMageF0
         .byte 0
         ; Queen
-        .long gcUnknownADC013, gcUnknownA8CA36, gcUnknownADBD4A, gcUnknownA8C16A
-        .long gcUnknownADBBC7, gcUnknownA8BECA, gcUnknownADBA86, gcUnknownA8BC3F
-        .long gcUnknownADBE85, gcUnknownA8BC3F, gcUnknownADC199, gcUnknownA8C3F0
-        .long gcUnknownADC2D4, gcUnknownA8C708, gcUnknownADC436, gcUnknownA8CA36
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleQueen0, aMapBattleWarMageLayout1, g4bppcMapBattleQueen1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleQueen2, aMapBattleWarMageLayout3, g4bppcMapBattleQueen3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleQueen3, aMapBattleWarMageLayout5, g4bppcMapBattleQueen5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleQueen6, aMapBattleWarMageLayout7, g4bppcMapBattleQueen0
         .byte 0
         ; Dancer
-        .long gcUnknownADB4CB, gcUnknownA19E6A, gcUnknownADB1F1, gcUnknownA196A1
-        .long gcUnknownADB068, gcUnknownA19376, gcUnknownADAF0F, gcUnknownA19090
-        .long gcUnknownADB335, gcUnknownA19090, gcUnknownADB666, gcUnknownA198CB
-        .long gcUnknownADB7AA, gcUnknownA19B43, gcUnknownADB93C, gcUnknownA19E6A
+        .long aMapBattleDancerLayout0, g4bppcMapBattleDancer0, aMapBattleDancerLayout1, g4bppcMapBattleDancer1
+        .long aMapBattleDancerLayout2, g4bppcMapBattleDancer2, aMapBattleDancerLayout3, g4bppcMapBattleDancer3
+        .long aMapBattleDancerLayout4, g4bppcMapBattleDancer3, aMapBattleDancerLayout5, g4bppcMapBattleDancer5
+        .long aMapBattleDancerLayout6, g4bppcMapBattleDancer6, aMapBattleDancerLayout7, g4bppcMapBattleDancer0
         .byte 0
         ; Priest
-        .long gcUnknownADC013, gcUnknownA88A76, gcUnknownADBD4A, gcUnknownA8827A
-        .long gcUnknownADBBC7, gcUnknownA7FF9A, gcUnknownADBA86, gcUnknownA7FCD3
-        .long gcUnknownADBE85, gcUnknownA7FCD3, gcUnknownADC199, gcUnknownA884F6
-        .long gcUnknownADC2D4, gcUnknownA88764, gcUnknownADC436, gcUnknownA88A76
+        .long aMapBattleWarMageLayout0, g4bppcMapBattlePriest0, aMapBattleWarMageLayout1, g4bppcMapBattlePriest1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattlePriest2, aMapBattleWarMageLayout3, g4bppcMapBattlePriest3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattlePriest3, aMapBattleWarMageLayout5, g4bppcMapBattlePriest5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattlePriest6, aMapBattleWarMageLayout7, g4bppcMapBattlePriest0
         .byte 0
         ; Mage
-        .long gcUnknownADC013, gcUnknownA6D1ED, gcUnknownADBD4A, gcUnknownA6C964
-        .long gcUnknownADBBC7, gcUnknownA6C6A5, gcUnknownADBA86, gcUnknownA6C402
-        .long gcUnknownADBE85, gcUnknownA6C402, gcUnknownADC199, gcUnknownA6CC07
-        .long gcUnknownADC2D4, gcUnknownA6CED2, gcUnknownADC436, gcUnknownA6D1ED
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleMage0, aMapBattleWarMageLayout1, g4bppcMapBattleMage1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleMage2, aMapBattleWarMageLayout3, g4bppcMapBattleMage3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleMage3, aMapBattleWarMageLayout5, g4bppcMapBattleMage5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleMage6, aMapBattleWarMageLayout7, g4bppcMapBattleMage0
         .byte 0
         ; FireMage
-        .long gcUnknownADC013, gcUnknownA3CD28, gcUnknownADBD4A, gcUnknownA3C579
-        .long gcUnknownADBBC7, gcUnknownA3C308, gcUnknownADBA86, gcUnknownA3C0E9
-        .long gcUnknownADBE85, gcUnknownA3C0E9, gcUnknownADC199, gcUnknownA3C7D4
-        .long gcUnknownADC2D4, gcUnknownA3CA82, gcUnknownADC436, gcUnknownA3CD28
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleFireMage0, aMapBattleWarMageLayout1, g4bppcMapBattleFireMage1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleFireMage2, aMapBattleWarMageLayout3, g4bppcMapBattleFireMage3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleFireMage3, aMapBattleWarMageLayout5, g4bppcMapBattleFireMage5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleFireMage6, aMapBattleWarMageLayout7, g4bppcMapBattleFireMage0
         .byte 0
         ; ThunderMage
-        .long gcUnknownADC013, gcUnknownAB9E22, gcUnknownADBD4A, gcUnknownAB9668
-        .long gcUnknownADBBC7, gcUnknownAB9423, gcUnknownADBA86, gcUnknownAB9208
-        .long gcUnknownADBE85, gcUnknownAB9208, gcUnknownADC199, gcUnknownAB98D0
-        .long gcUnknownADC2D4, gcUnknownAB9B8E, gcUnknownADC436, gcUnknownAB9E22
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleThunderMage0, aMapBattleWarMageLayout1, g4bppcMapBattleThunderMage1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleThunderMage2, aMapBattleWarMageLayout3, g4bppcMapBattleThunderMage3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleThunderMage3, aMapBattleWarMageLayout5, g4bppcMapBattleThunderMage5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleThunderMage6, aMapBattleWarMageLayout7, g4bppcMapBattleThunderMage0
         .byte 0
         ; WindMage
-        .long gcUnknownADC013, gcUnknownACC635, gcUnknownADBD4A, gcUnknownACBEC3
-        .long gcUnknownADBBC7, gcUnknownACBC94, gcUnknownADBA86, gcUnknownACBA7A
-        .long gcUnknownADBE85, gcUnknownACBA7A, gcUnknownADC199, gcUnknownACC12B
-        .long gcUnknownADC2D4, gcUnknownACC3A0, gcUnknownADC436, gcUnknownACC635
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleWindMage0, aMapBattleWarMageLayout1, g4bppcMapBattleWindMage1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleWindMage2, aMapBattleWarMageLayout3, g4bppcMapBattleWindMage3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleWindMage3, aMapBattleWarMageLayout5, g4bppcMapBattleWindMage5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleWindMage6, aMapBattleWarMageLayout7, g4bppcMapBattleWindMage0
         .byte 0
         ; HighPriest
-        .long gcUnknownADC013, gcUnknownA5F01D, gcUnknownADBD4A, gcUnknownA5E7EF
-        .long gcUnknownADBBC7, gcUnknownA5E57B, gcUnknownADBA86, gcUnknownA5E35F
-        .long gcUnknownADBE85, gcUnknownA5E35F, gcUnknownADC199, gcUnknownA5EA5B
-        .long gcUnknownADC2D4, gcUnknownA5ED72, gcUnknownADC436, gcUnknownA5F01D
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleHighPriest0, aMapBattleWarMageLayout1, g4bppcMapBattleHighPriest1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleHighPriest2, aMapBattleWarMageLayout3, g4bppcMapBattleHighPriest3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleHighPriest3, aMapBattleWarMageLayout5, g4bppcMapBattleHighPriest5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleHighPriest6, aMapBattleWarMageLayout7, g4bppcMapBattleHighPriest0
         .byte 0
         ; Bishop
-        .long gcUnknownADC013, gcUnknownA18D71, gcUnknownADBD4A, gcUnknownA18438
-        .long gcUnknownADBBC7, gcUnknownA18193, gcUnknownADBA86, gcUnknownA0FEDF
-        .long gcUnknownADBE85, gcUnknownA0FEDF, gcUnknownADC199, gcUnknownA18704
-        .long gcUnknownADC2D4, gcUnknownA18A23, gcUnknownADC436, gcUnknownA18D71
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleBishop0, aMapBattleWarMageLayout1, g4bppcMapBattleBishop1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleBishop2, aMapBattleWarMageLayout3, g4bppcMapBattleBishop3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleBishop3, aMapBattleWarMageLayout5, g4bppcMapBattleBishop5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleBishop6, aMapBattleWarMageLayout7, g4bppcMapBattleBishop0
         .byte 0
         ; Sage
-        .long gcUnknownADC013, gcUnknownA8EA83, gcUnknownADBD4A, gcUnknownA8E225
-        .long gcUnknownADBBC7, gcUnknownA8DFBE, gcUnknownADBA86, gcUnknownA8DD73
-        .long gcUnknownADBE85, gcUnknownA8DD73, gcUnknownADC199, gcUnknownA8E4BF
-        .long gcUnknownADC2D4, gcUnknownA8E7A1, gcUnknownADC436, gcUnknownA8EA83
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleSage0, aMapBattleWarMageLayout1, g4bppcMapBattleSage1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleSage2, aMapBattleWarMageLayout3, g4bppcMapBattleSage3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleSage3, aMapBattleWarMageLayout5, g4bppcMapBattleSage5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleSage6, aMapBattleWarMageLayout7, g4bppcMapBattleSage0
         .byte 0
         ; Bard
-        .long gcUnknownADC013, gcUnknownA0B8DF, gcUnknownADBD4A, gcUnknownA0B279
-        .long gcUnknownADBBC7, gcUnknownA0B070, gcUnknownADBA86, gcUnknownA0AE8B
-        .long gcUnknownADBE85, gcUnknownA0AE8B, gcUnknownADC199, gcUnknownA0B46B
-        .long gcUnknownADC2D4, gcUnknownA0B69D, gcUnknownADC436, gcUnknownA0B8DF
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleBard0, aMapBattleWarMageLayout1, g4bppcMapBattleBard1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleBard2, aMapBattleWarMageLayout3, g4bppcMapBattleBard3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleBard3, aMapBattleWarMageLayout5, g4bppcMapBattleBard5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleBard6, aMapBattleWarMageLayout7, g4bppcMapBattleBard0
         .byte 0
         ; Priestess
-        .long gcUnknownADC013, gcUnknownA9EB7B, gcUnknownADBD4A, gcUnknownA9E452
-        .long gcUnknownADBBC7, gcUnknownA9E25E, gcUnknownADBA86, gcUnknownA9DFFE
-        .long gcUnknownADBE85, gcUnknownA9DFFE, gcUnknownADC199, gcUnknownA9E6AD
-        .long gcUnknownADC2D4, gcUnknownA9E903, gcUnknownADC436, gcUnknownA9EB7B
+        .long aMapBattleWarMageLayout0, g4bppcMapBattlePriestess0, aMapBattleWarMageLayout1, g4bppcMapBattlePriestess1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattlePriestess2, aMapBattleWarMageLayout3, g4bppcMapBattlePriestess3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattlePriestess3, aMapBattleWarMageLayout5, g4bppcMapBattlePriestess5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattlePriestess6, aMapBattleWarMageLayout7, g4bppcMapBattlePriestess0
         .byte 0
         ; DarkMage
-        .long gcUnknownADC013, gcUnknownA1BF5C, gcUnknownADBD4A, gcUnknownA1B75A
-        .long gcUnknownADBBC7, gcUnknownA1B4AD, gcUnknownADBA86, gcUnknownA1B249
-        .long gcUnknownADBE85, gcUnknownA1B249, gcUnknownADC199, gcUnknownA1B9CF
-        .long gcUnknownADC2D4, gcUnknownA1BCAB, gcUnknownADC436, gcUnknownA1BF5C
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleDarkMage0, aMapBattleWarMageLayout1, g4bppcMapBattleDarkMage1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleDarkMage2, aMapBattleWarMageLayout3, g4bppcMapBattleDarkMage3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleDarkMage3, aMapBattleWarMageLayout5, g4bppcMapBattleDarkMage5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleDarkMage6, aMapBattleWarMageLayout7, g4bppcMapBattleDarkMage0
         .byte 0
         ; DarkBishop
-        .long gcUnknownADC013, gcUnknownA1AF51, gcUnknownADBD4A, gcUnknownA1A6A2
-        .long gcUnknownADBBC7, gcUnknownA1A409, gcUnknownADBA86, gcUnknownA1A1A7
-        .long gcUnknownADBE85, gcUnknownA1A1A7, gcUnknownADC199, gcUnknownA1A8F4
-        .long gcUnknownADC2D4, gcUnknownA1ABEF, gcUnknownADC436, gcUnknownA1AF51
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleDarkBishop0, aMapBattleWarMageLayout1, g4bppcMapBattleDarkBishop1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleDarkBishop2, aMapBattleWarMageLayout3, g4bppcMapBattleDarkBishop3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleDarkBishop3, aMapBattleWarMageLayout5, g4bppcMapBattleDarkBishop5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleDarkBishop6, aMapBattleWarMageLayout7, g4bppcMapBattleDarkBishop0
         .byte 0
         ; Thief
-        .long gcUnknownD672E2, gcUnknownAB81EF, gcUnknownD670EE, gcUnknownAAFD13
-        .long gcUnknownD66FC6, gcUnknownAAFBAF, gcUnknownD66ED6, gcUnknownAAFA0F
-        .long gcUnknownD671DC, gcUnknownAAFA0F, gcUnknownD67408, gcUnknownAAFEB0
-        .long gcUnknownD674F4, gcUnknownAB805B, gcUnknownD67607, gcUnknownAB81EF
+        .long aMapBattleThiefLayout0, g4bppcMapBattleThief0, aMapBattleThiefLayout1, g4bppcMapBattleThief1
+        .long aMapBattleThiefLayout2, g4bppcMapBattleThief2, aMapBattleThiefLayout3, g4bppcMapBattleThief3
+        .long aMapBattleThiefLayout4, g4bppcMapBattleThief3, aMapBattleThiefLayout5, g4bppcMapBattleThief5
+        .long aMapBattleThiefLayout6, g4bppcMapBattleThief6, aMapBattleThiefLayout7, g4bppcMapBattleThief0
         .byte 0
         ; Rogue
-        .long gcUnknownD672E2, gcUnknownABB228, gcUnknownD670EE, gcUnknownABAD5A
-        .long gcUnknownD66FC6, gcUnknownABABFA, gcUnknownD66ED6, gcUnknownABAA5B
-        .long gcUnknownD671DC, gcUnknownABAA5B, gcUnknownD67408, gcUnknownABAEEB
-        .long gcUnknownD674F4, gcUnknownABB0A1, gcUnknownD67607, gcUnknownABB228
+        .long aMapBattleThiefLayout0, g4bppcMapBattleRogue0, aMapBattleThiefLayout1, g4bppcMapBattleRogue1
+        .long aMapBattleThiefLayout2, g4bppcMapBattleRogue2, aMapBattleThiefLayout3, g4bppcMapBattleRogue3
+        .long aMapBattleThiefLayout4, g4bppcMapBattleRogue3, aMapBattleThiefLayout5, g4bppcMapBattleRogue5
+        .long aMapBattleThiefLayout6, g4bppcMapBattleRogue6, aMapBattleThiefLayout7, g4bppcMapBattleRogue0
         .byte 0
         ; Civilian
-        .long gcUnknownADB4CB, gcUnknownAACF63, gcUnknownADB1F1, gcUnknownAACB9F
-        .long gcUnknownADB068, gcUnknownAACA3C, gcUnknownADAF0F, gcUnknownAAC90D
-        .long gcUnknownADB335, gcUnknownAAC90D, gcUnknownADB666, gcUnknownAACCC7
-        .long gcUnknownADB7AA, gcUnknownAACE0C, gcUnknownADB93C, gcUnknownAACF63
+        .long aMapBattleDancerLayout0, g4bppcMapBattleCivilian0, aMapBattleDancerLayout1, g4bppcMapBattleCivilian1
+        .long aMapBattleDancerLayout2, g4bppcMapBattleCivilian2, aMapBattleDancerLayout3, g4bppcMapBattleCivilian3
+        .long aMapBattleDancerLayout4, g4bppcMapBattleCivilian3, aMapBattleDancerLayout5, g4bppcMapBattleCivilian5
+        .long aMapBattleDancerLayout6, g4bppcMapBattleCivilian6, aMapBattleDancerLayout7, g4bppcMapBattleCivilian0
         .byte 0
         ; Child
-        .long gcUnknownADB4CB, gcUnknownAABF6A, gcUnknownADB1F1, gcUnknownAABC2A
-        .long gcUnknownADB068, gcUnknownAABB27, gcUnknownADAF0F, gcUnknownAABA0A
-        .long gcUnknownADB335, gcUnknownAABA0A, gcUnknownADB666, gcUnknownAABD3B
-        .long gcUnknownADB7AA, gcUnknownAABE5A, gcUnknownADB93C, gcUnknownAABF6A
+        .long aMapBattleDancerLayout0, g4bppcMapBattleChild0, aMapBattleDancerLayout1, g4bppcMapBattleChild1
+        .long aMapBattleDancerLayout2, g4bppcMapBattleChild2, aMapBattleDancerLayout3, g4bppcMapBattleChild3
+        .long aMapBattleDancerLayout4, g4bppcMapBattleChild3, aMapBattleDancerLayout5, g4bppcMapBattleChild5
+        .long aMapBattleDancerLayout6, g4bppcMapBattleChild6, aMapBattleDancerLayout7, g4bppcMapBattleChild0
         .byte 0
         ; Ballistician
-        .long gcUnknownD66343, gcUnknownA8FBAD, gcUnknownD66118, gcUnknownA8F46F
-        .long gcUnknownD6601E, gcUnknownA8F112, gcUnknownD65F0D, gcUnknownA8ED7E
-        .long gcUnknownD66227, gcUnknownA8F825, gcUnknownD66444, gcUnknownA8FF68
-        .long gcUnknownD66556, gcUnknownA9835D, gcUnknownD66652, gcUnknownA98680
+        .long aMapBattleBallisticianLayout0, g4bppcMapBattleBallistician0, aMapBattleBallisticianLayout1, g4bppcMapBattleBallistician1
+        .long aMapBattleBallisticianLayout2, g4bppcMapBattleBallistician2, aMapBattleBallisticianLayout3, g4bppcMapBattleBallistician3
+        .long aMapBattleBallisticianLayout4, g4bppcMapBattleBallistician4, aMapBattleBallisticianLayout5, g4bppcMapBattleBallistician5
+        .long aMapBattleBallisticianLayout6, g4bppcMapBattleBallistician6, aMapBattleBallisticianLayout7, g4bppcMapBattleBallistician7
         .byte 1
         ; IronBallistician
-        .long gcUnknownD66343, gcUnknownA99857, gcUnknownD66118, gcUnknownA99158
-        .long gcUnknownD6601E, gcUnknownA98DFB, gcUnknownD65F0D, gcUnknownA98A62
-        .long gcUnknownD66227, gcUnknownA994D4, gcUnknownD66444, gcUnknownA99C0A
-        .long gcUnknownD66556, gcUnknownA99FF7, gcUnknownD66652, gcUnknownA9A309
+        .long aMapBattleBallisticianLayout0, g4bppcMapBattleIronBallistician0, aMapBattleBallisticianLayout1, g4bppcMapBattleIronBallistician1
+        .long aMapBattleBallisticianLayout2, g4bppcMapBattleIronBallistician2, aMapBattleBallisticianLayout3, g4bppcMapBattleIronBallistician3
+        .long aMapBattleBallisticianLayout4, g4bppcMapBattleIronBallistician4, aMapBattleBallisticianLayout5, g4bppcMapBattleIronBallistician5
+        .long aMapBattleBallisticianLayout6, g4bppcMapBattleIronBallistician6, aMapBattleBallisticianLayout7, g4bppcMapBattleIronBallistician7
         .byte 1
         ; KillerBallistician
-        .long gcUnknownD66343, gcUnknownA9B4D6, gcUnknownD66118, gcUnknownA9ADB1
-        .long gcUnknownD6601E, gcUnknownA9AA61, gcUnknownD65F0D, gcUnknownA9A6C8
-        .long gcUnknownD66227, gcUnknownA9B147, gcUnknownD66444, gcUnknownA9B869
-        .long gcUnknownD66556, gcUnknownA9BC3E, gcUnknownD66652, gcUnknownA9BF43
+        .long aMapBattleBallisticianLayout0, g4bppcMapBattleKillerBallistician0, aMapBattleBallisticianLayout1, g4bppcMapBattleKillerBallistician1
+        .long aMapBattleBallisticianLayout2, g4bppcMapBattleKillerBallistician2, aMapBattleBallisticianLayout3, g4bppcMapBattleKillerBallistician3
+        .long aMapBattleBallisticianLayout4, g4bppcMapBattleKillerBallistician4, aMapBattleBallisticianLayout5, g4bppcMapBattleKillerBallistician5
+        .long aMapBattleBallisticianLayout6, g4bppcMapBattleKillerBallistician6, aMapBattleBallisticianLayout7, g4bppcMapBattleKillerBallistician7
         .byte 1
         ; GreatBallistician
-        .long gcUnknownD66343, gcUnknownA9D0EF, gcUnknownD66118, gcUnknownA9C97D
-        .long gcUnknownD6601E, gcUnknownA9C650, gcUnknownD65F0D, gcUnknownA9C2D8
-        .long gcUnknownD66227, gcUnknownA9CD2F, gcUnknownD66444, gcUnknownA9D4C6
-        .long gcUnknownD66556, gcUnknownA9D8F4, gcUnknownD66652, gcUnknownA9DC22
+        .long aMapBattleBallisticianLayout0, g4bppcMapBattleGreatBallistician0, aMapBattleBallisticianLayout1, g4bppcMapBattleGreatBallistician1
+        .long aMapBattleBallisticianLayout2, g4bppcMapBattleGreatBallistician2, aMapBattleBallisticianLayout3, g4bppcMapBattleGreatBallistician3
+        .long aMapBattleBallisticianLayout4, g4bppcMapBattleGreatBallistician4, aMapBattleBallisticianLayout5, g4bppcMapBattleGreatBallistician5
+        .long aMapBattleBallisticianLayout6, g4bppcMapBattleGreatBallistician6, aMapBattleBallisticianLayout7, g4bppcMapBattleGreatBallistician7
         .byte 1
         ; DarkPrince
-        .long gcUnknownADC013, gcUnknownA68003, gcUnknownADBD4A, gcUnknownA5F823
-        .long gcUnknownADBBC7, gcUnknownA5F554, gcUnknownADBA86, gcUnknownA5F328
-        .long gcUnknownADBE85, gcUnknownA5F328, gcUnknownADC199, gcUnknownA5FA54
-        .long gcUnknownADC2D4, gcUnknownA5FD17, gcUnknownADC436, gcUnknownA68003
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleDarkPrince0, aMapBattleWarMageLayout1, g4bppcMapBattleDarkPrince1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleDarkPrince2, aMapBattleWarMageLayout3, g4bppcMapBattleDarkPrince3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleDarkPrince3, aMapBattleWarMageLayout5, g4bppcMapBattleDarkPrince5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleDarkPrince6, aMapBattleWarMageLayout7, g4bppcMapBattleDarkPrince0
         .byte 0
         ; MasterKnightFemale
-        .long gcUnknownADF4CB, gcUnknownA5A904, gcUnknownADEDD1, gcUnknownA59744
-        .long gcUnknownADEA4E, gcUnknownA59112, gcUnknownADE6C6, gcUnknownA58ACE
-        .long gcUnknownADF10B, gcUnknownA58ACE, gcUnknownADF890, gcUnknownA59D62
-        .long gcUnknownADFBD9, gcUnknownA5A2C9, gcUnknownD50000, gcUnknownA5A904
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleMasterKnightFemale0, aMapBattleCavalierLayout1, g4bppcMapBattleMasterKnightFemale1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleMasterKnightFemale2, aMapBattleCavalierLayout3, g4bppcMapBattleMasterKnightFemale3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleMasterKnightFemale3, aMapBattleCavalierLayout5, g4bppcMapBattleMasterKnightFemale5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleMasterKnightFemale6, aMapBattleCavalierLayout7, g4bppcMapBattleMasterKnightFemale0
         .byte 1
         ; MageKnightFemale
-        .long gcUnknownADF4CB, gcUnknownABCF52, gcUnknownADEDD1, gcUnknownABBF33
-        .long gcUnknownADEA4E, gcUnknownABB99C, gcUnknownADE6C6, gcUnknownABB3E8
-        .long gcUnknownADF10B, gcUnknownABB3E8, gcUnknownADF890, gcUnknownABC43D
-        .long gcUnknownADFBD9, gcUnknownABC9B0, gcUnknownD50000, gcUnknownABCF52
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleMageKnightFemale0, aMapBattleCavalierLayout1, g4bppcMapBattleMageKnightFemale1
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleMageKnightFemale2, aMapBattleCavalierLayout3, g4bppcMapBattleMageKnightFemale3
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleMageKnightFemale3, aMapBattleCavalierLayout5, g4bppcMapBattleMageKnightFemale5
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleMageKnightFemale6, aMapBattleCavalierLayout7, g4bppcMapBattleMageKnightFemale0
         .byte 1
         ; DragonRiderFemale
-        .long gcUnknownADA7B5, gcUnknownA2C989, gcUnknownADA37A, gcUnknownA2BB7F
-        .long gcUnknownADA150, gcUnknownA2B7B2, gcUnknownAD9F97, gcUnknownA2B360
-        .long gcUnknownADA578, gcUnknownA2B360, gcUnknownADA9C5, gcUnknownA2C04E
-        .long gcUnknownADAB7F, gcUnknownA2C469, gcUnknownADAD79, gcUnknownA2C989
+        .long aMapBattleDragonriderLayout0, g4bppcMapBattleDragonRiderFemale0, aMapBattleDragonriderLayout1, g4bppcMapBattleDragonRiderFemale1
+        .long aMapBattleDragonriderLayout2, g4bppcMapBattleDragonRiderFemale2, aMapBattleDragonriderLayout3, g4bppcMapBattleDragonRiderFemale3
+        .long aMapBattleDragonriderLayout4, g4bppcMapBattleDragonRiderFemale3, aMapBattleDragonriderLayout5, g4bppcMapBattleDragonRiderFemale5
+        .long aMapBattleDragonriderLayout6, g4bppcMapBattleDragonRiderFemale6, aMapBattleDragonriderLayout7, g4bppcMapBattleDragonRiderFemale0
         .byte 1
         ; DragonknightFemale
-        .long gcUnknownADA7B5, gcUnknownA1D8C1, gcUnknownADA37A, gcUnknownA1CA4B
-        .long gcUnknownADA150, gcUnknownA1C67B, gcUnknownAD9F97, gcUnknownA1C23C
-        .long gcUnknownADA578, gcUnknownA1C23C, gcUnknownADA9C5, gcUnknownA1CF61
-        .long gcUnknownADAB7F, gcUnknownA1D39D, gcUnknownADAD79, gcUnknownA1D8C1
+        .long aMapBattleDragonriderLayout0, g4bppcMapBattleDragonknightFemale0, aMapBattleDragonriderLayout1, g4bppcMapBattleDragonknightFemale1
+        .long aMapBattleDragonriderLayout2, g4bppcMapBattleDragonknightFemale2, aMapBattleDragonriderLayout3, g4bppcMapBattleDragonknightFemale3
+        .long aMapBattleDragonriderLayout4, g4bppcMapBattleDragonknightFemale3, aMapBattleDragonriderLayout5, g4bppcMapBattleDragonknightFemale5
+        .long aMapBattleDragonriderLayout6, g4bppcMapBattleDragonknightFemale6, aMapBattleDragonriderLayout7, g4bppcMapBattleDragonknightFemale0
         .byte 1
         ; DragonmasterFemale
-        .long gcUnknownADA7B5, gcUnknownA29107, gcUnknownADA37A, gcUnknownA28228
-        .long gcUnknownADA150, gcUnknownA1FE4A, gcUnknownAD9F97, gcUnknownA1F9D6
-        .long gcUnknownADA578, gcUnknownA1F9D6, gcUnknownADA9C5, gcUnknownA2873F
-        .long gcUnknownADAB7F, gcUnknownA28BA1, gcUnknownADAD79, gcUnknownA29107
+        .long aMapBattleDragonriderLayout0, g4bppcMapBattleDragonmasterFemale0, aMapBattleDragonriderLayout1, g4bppcMapBattleDragonmasterFemale1
+        .long aMapBattleDragonriderLayout2, g4bppcMapBattleDragonmasterFemale2, aMapBattleDragonriderLayout3, g4bppcMapBattleDragonmasterFemale3
+        .long aMapBattleDragonriderLayout4, g4bppcMapBattleDragonmasterFemale3, aMapBattleDragonriderLayout5, g4bppcMapBattleDragonmasterFemale5
+        .long aMapBattleDragonriderLayout6, g4bppcMapBattleDragonmasterFemale6, aMapBattleDragonriderLayout7, g4bppcMapBattleDragonmasterFemale0
         .byte 1
         ; ArcherFemale
-        .long gcUnknownAD9A90, gcUnknownA0C0E9, gcUnknownAD9811, gcUnknownA0BD74
-        .long gcUnknownAD96F4, gcUnknownA0BC63, gcUnknownAD95BD, gcUnknownA0BB5A
-        .long gcUnknownAD995A, gcUnknownA0BB5A, gcUnknownAD9BD2, gcUnknownA0BEAE
-        .long gcUnknownAD9D12, gcUnknownA0BFC8, gcUnknownAD9E4B, gcUnknownA0C0E9
+        .long aMapBattleArcherLayout0, g4bppcMapBattleArcherFemale0, aMapBattleArcherLayout1, g4bppcMapBattleArcherFemale1
+        .long aMapBattleArcherLayout2, g4bppcMapBattleArcherFemale2, aMapBattleArcherLayout3, g4bppcMapBattleArcherFemale3
+        .long aMapBattleArcherLayout4, g4bppcMapBattleArcherFemale3, aMapBattleArcherLayout5, g4bppcMapBattleArcherFemale5
+        .long aMapBattleArcherLayout6, g4bppcMapBattleArcherFemale6, aMapBattleArcherLayout7, g4bppcMapBattleArcherFemale0
         .byte 0
         ; MyrmidonFemale
-        .long gcUnknownADCC79, gcUnknownAADCCC, gcUnknownADC8CA, gcUnknownAAD684
-        .long gcUnknownADC6E8, gcUnknownAAD3DC, gcUnknownADC56D, gcUnknownAAD0AC
-        .long gcUnknownADCA27, gcUnknownAAD0AC, gcUnknownADCED6, gcUnknownAAD80B
-        .long gcUnknownADD039, gcUnknownAAD9A2, gcUnknownADD233, gcUnknownAADCCC
+        .long aMapBattleMyrmidonLayout0, g4bppcMapBattleMyrmidonFemale0, aMapBattleMyrmidonLayout1, g4bppcMapBattleMyrmidonFemale1
+        .long aMapBattleMyrmidonLayout2, g4bppcMapBattleMyrmidonFemale2, aMapBattleMyrmidonLayout3, g4bppcMapBattleMyrmidonFemale3
+        .long aMapBattleMyrmidonLayout4, g4bppcMapBattleMyrmidonFemale3, aMapBattleMyrmidonLayout5, g4bppcMapBattleMyrmidonFemale5
+        .long aMapBattleMyrmidonLayout6, g4bppcMapBattleMyrmidonFemale6, aMapBattleMyrmidonLayout7, g4bppcMapBattleMyrmidonFemale0
         .byte 0
         ; SwordmasterFemale
-        .long gcUnknownADCC79, gcUnknownA9FA2A, gcUnknownADC8CA, gcUnknownA9F3B6
-        .long gcUnknownADC6E8, gcUnknownA9F10C, gcUnknownADC56D, gcUnknownA9EDCD
-        .long gcUnknownADCA27, gcUnknownA9EDCD, gcUnknownADCED6, gcUnknownA9F53D
-        .long gcUnknownADD039, gcUnknownA9F6DD, gcUnknownADD233, gcUnknownA9FA2A
+        .long aMapBattleMyrmidonLayout0, g4bppcMapBattleSwordmasterFemale0, aMapBattleMyrmidonLayout1, g4bppcMapBattleSwordmasterFemale1
+        .long aMapBattleMyrmidonLayout2, g4bppcMapBattleSwordmasterFemale2, aMapBattleMyrmidonLayout3, g4bppcMapBattleSwordmasterFemale3
+        .long aMapBattleMyrmidonLayout4, g4bppcMapBattleSwordmasterFemale3, aMapBattleMyrmidonLayout5, g4bppcMapBattleSwordmasterFemale5
+        .long aMapBattleMyrmidonLayout6, g4bppcMapBattleSwordmasterFemale6, aMapBattleMyrmidonLayout7, g4bppcMapBattleSwordmasterFemale0
         .byte 0
         ; SniperFemale
-        .long gcUnknownAD9A90, gcUnknownAAAA74, gcUnknownAD9811, gcUnknownAAA6BB
-        .long gcUnknownAD96F4, gcUnknownAAA5A4, gcUnknownAD95BD, gcUnknownAAA486
-        .long gcUnknownAD995A, gcUnknownAAA486, gcUnknownAD9BD2, gcUnknownAAA7F6
-        .long gcUnknownAD9D12, gcUnknownAAA92C, gcUnknownAD9E4B, gcUnknownAAAA74
+        .long aMapBattleArcherLayout0, g4bppcMapBattleSniperFemale0, aMapBattleArcherLayout1, g4bppcMapBattleSniperFemale1
+        .long aMapBattleArcherLayout2, g4bppcMapBattleSniperFemale2, aMapBattleArcherLayout3, g4bppcMapBattleSniperFemale3
+        .long aMapBattleArcherLayout4, g4bppcMapBattleSniperFemale3, aMapBattleArcherLayout5, g4bppcMapBattleSniperFemale5
+        .long aMapBattleArcherLayout6, g4bppcMapBattleSniperFemale6, aMapBattleArcherLayout7, g4bppcMapBattleSniperFemale0
         .byte 0
         ; HeroFemale
-        .long gcUnknownADCC79, gcUnknownA48A78, gcUnknownADC8CA, gcUnknownA48344
-        .long gcUnknownADC6E8, gcUnknownA48019, gcUnknownADC56D, gcUnknownA3FC94
-        .long gcUnknownADCA27, gcUnknownA3FC94, gcUnknownADCED6, gcUnknownA484FC
-        .long gcUnknownADD039, gcUnknownA486EA, gcUnknownADD233, gcUnknownA48A78
+        .long aMapBattleMyrmidonLayout0, g4bppcMapBattleHeroFemale0, aMapBattleMyrmidonLayout1, g4bppcMapBattleHeroFemale1
+        .long aMapBattleMyrmidonLayout2, g4bppcMapBattleHeroFemale2, aMapBattleMyrmidonLayout3, g4bppcMapBattleHeroFemale3
+        .long aMapBattleMyrmidonLayout4, g4bppcMapBattleHeroFemale3, aMapBattleMyrmidonLayout5, g4bppcMapBattleHeroFemale5
+        .long aMapBattleMyrmidonLayout6, g4bppcMapBattleHeroFemale6, aMapBattleMyrmidonLayout7, g4bppcMapBattleHeroFemale0
         .byte 0
         ; PriestFemale
-        .long gcUnknownADC013, gcUnknownA7F9D7, gcUnknownADBD4A, gcUnknownA7F146
-        .long gcUnknownADBBC7, gcUnknownA7EE34, gcUnknownADBA86, gcUnknownA7EB5C
-        .long gcUnknownADBE85, gcUnknownA7EB5C, gcUnknownADC199, gcUnknownA7F412
-        .long gcUnknownADC2D4, gcUnknownA7F6C6, gcUnknownADC436, gcUnknownA7F9D7
+        .long aMapBattleWarMageLayout0, g4bppcMapBattlePriestFemale0, aMapBattleWarMageLayout1, g4bppcMapBattlePriestFemale1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattlePriestFemale2, aMapBattleWarMageLayout3, g4bppcMapBattlePriestFemale3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattlePriestFemale3, aMapBattleWarMageLayout5, g4bppcMapBattlePriestFemale5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattlePriestFemale6, aMapBattleWarMageLayout7, g4bppcMapBattlePriestFemale0
         .byte 0
         ; MageFemale
-        .long gcUnknownADC013, gcUnknownA6C184, gcUnknownADBD4A, gcUnknownA6BA52
-        .long gcUnknownADBBC7, gcUnknownA6B822, gcUnknownADBA86, gcUnknownA6B5D4
-        .long gcUnknownADBE85, gcUnknownA6B5D4, gcUnknownADC199, gcUnknownA6BCA0
-        .long gcUnknownADC2D4, gcUnknownA6BF0D, gcUnknownADC436, gcUnknownA6C184
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleMageFemale0, aMapBattleWarMageLayout1, g4bppcMapBattleMageFemale1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleMageFemale2, aMapBattleWarMageLayout3, g4bppcMapBattleMageFemale3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleMageFemale3, aMapBattleWarMageLayout5, g4bppcMapBattleMageFemale5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleMageFemale6, aMapBattleWarMageLayout7, g4bppcMapBattleMageFemale0
         .byte 0
         ; FireMageFemale
-        .long gcUnknownADC013, gcUnknownA3BE34, gcUnknownADBD4A, gcUnknownA3B6A0
-        .long gcUnknownADBBC7, gcUnknownA3B491, gcUnknownADBA86, gcUnknownA3B26E
-        .long gcUnknownADBE85, gcUnknownA3B26E, gcUnknownADC199, gcUnknownA3B8E8
-        .long gcUnknownADC2D4, gcUnknownA3BB9E, gcUnknownADC436, gcUnknownA3BE34
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleFireMageFemale0, aMapBattleWarMageLayout1, g4bppcMapBattleFireMageFemale1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleFireMageFemale2, aMapBattleWarMageLayout3, g4bppcMapBattleFireMageFemale3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleFireMageFemale3, aMapBattleWarMageLayout5, g4bppcMapBattleFireMageFemale5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleFireMageFemale6, aMapBattleWarMageLayout7, g4bppcMapBattleFireMageFemale0
         .byte 0
         ; ThunderMageFemale
-        .long gcUnknownADC013, gcUnknownAB8F6F, gcUnknownADBD4A, gcUnknownAB8816
-        .long gcUnknownADBBC7, gcUnknownAB85F7, gcUnknownADBA86, gcUnknownAB83A2
-        .long gcUnknownADBE85, gcUnknownAB83A2, gcUnknownADC199, gcUnknownAB8A5A
-        .long gcUnknownADC2D4, gcUnknownAB8CDD, gcUnknownADC436, gcUnknownAB8F6F
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleThunderMageFemale0, aMapBattleWarMageLayout1, g4bppcMapBattleThunderMageFemale1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleThunderMageFemale2, aMapBattleWarMageLayout3, g4bppcMapBattleThunderMageFemale3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleThunderMageFemale3, aMapBattleWarMageLayout5, g4bppcMapBattleThunderMageFemale5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleThunderMageFemale6, aMapBattleWarMageLayout7, g4bppcMapBattleThunderMageFemale0
         .byte 0
         ; WindMageFemale
-        .long gcUnknownADC013, gcUnknownACB7E2, gcUnknownADBD4A, gcUnknownACB005
-        .long gcUnknownADBBC7, gcUnknownACAD97, gcUnknownADBA86, gcUnknownACAB39
-        .long gcUnknownADBE85, gcUnknownACAB39, gcUnknownADC199, gcUnknownACB26E
-        .long gcUnknownADC2D4, gcUnknownACB50D, gcUnknownADC436, gcUnknownACB7E2
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleWindMageFemale0, aMapBattleWarMageLayout1, g4bppcMapBattleWindMageFemale1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleWindMageFemale2, aMapBattleWarMageLayout3, g4bppcMapBattleWindMageFemale3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleWindMageFemale3, aMapBattleWarMageLayout5, g4bppcMapBattleWindMageFemale5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleWindMageFemale6, aMapBattleWarMageLayout7, g4bppcMapBattleWindMageFemale0
         .byte 0
         ; HighPriestFemale
-        .long gcUnknownADC013, gcUnknownA5E0A2, gcUnknownADBD4A, gcUnknownA5D8FA
-        .long gcUnknownADBBC7, gcUnknownA5D6B3, gcUnknownADBA86, gcUnknownA5D458
-        .long gcUnknownADBE85, gcUnknownA5D458, gcUnknownADC199, gcUnknownA5DB55
-        .long gcUnknownADC2D4, gcUnknownA5DE20, gcUnknownADC436, gcUnknownA5E0A2
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleHighPriestFemale0, aMapBattleWarMageLayout1, g4bppcMapBattleHighPriestFemale1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleHighPriestFemale2, aMapBattleWarMageLayout3, g4bppcMapBattleHighPriestFemale3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleHighPriestFemale3, aMapBattleWarMageLayout5, g4bppcMapBattleHighPriestFemale5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleHighPriestFemale6, aMapBattleWarMageLayout7, g4bppcMapBattleHighPriestFemale0
         .byte 0
         ; SageFemale
-        .long gcUnknownADC013, gcUnknownA8DA64, gcUnknownADBD4A, gcUnknownA8D223
-        .long gcUnknownADBBC7, gcUnknownA8CFA3, gcUnknownADBA86, gcUnknownA8CD61
-        .long gcUnknownADBE85, gcUnknownA8CD61, gcUnknownADC199, gcUnknownA8D471
-        .long gcUnknownADC2D4, gcUnknownA8D78F, gcUnknownADC436, gcUnknownA8DA64
+        .long aMapBattleWarMageLayout0, g4bppcMapBattleSageFemale0, aMapBattleWarMageLayout1, g4bppcMapBattleSageFemale1
+        .long aMapBattleWarMageLayout2, g4bppcMapBattleSageFemale2, aMapBattleWarMageLayout3, g4bppcMapBattleSageFemale3
+        .long aMapBattleWarMageLayout4, g4bppcMapBattleSageFemale3, aMapBattleWarMageLayout5, g4bppcMapBattleSageFemale5
+        .long aMapBattleWarMageLayout6, g4bppcMapBattleSageFemale6, aMapBattleWarMageLayout7, g4bppcMapBattleSageFemale0
         .byte 0
         ; ThiefFemale
-        .long gcUnknownD672E2, gcUnknownAAF846, gcUnknownD670EE, gcUnknownAAF3A2
-        .long gcUnknownD66FC6, gcUnknownAAF261, gcUnknownD66ED6, gcUnknownAAF0D4
-        .long gcUnknownD671DC, gcUnknownAAF0D4, gcUnknownD67408, gcUnknownAAF534
-        .long gcUnknownD674F4, gcUnknownAAF6C1, gcUnknownD67607, gcUnknownAAF846
+        .long aMapBattleThiefLayout0, g4bppcMapBattleThiefFemale0, aMapBattleThiefLayout1, g4bppcMapBattleThiefFemale1
+        .long aMapBattleThiefLayout2, g4bppcMapBattleThiefFemale2, aMapBattleThiefLayout3, g4bppcMapBattleThiefFemale3
+        .long aMapBattleThiefLayout4, g4bppcMapBattleThiefFemale3, aMapBattleThiefLayout5, g4bppcMapBattleThiefFemale5
+        .long aMapBattleThiefLayout6, g4bppcMapBattleThiefFemale6, aMapBattleThiefLayout7, g4bppcMapBattleThiefFemale0
         .byte 0
         ; RogueFemale
-        .long gcUnknownD672E2, gcUnknownABA888, gcUnknownD670EE, gcUnknownABA3C8
-        .long gcUnknownD66FC6, gcUnknownABA271, gcUnknownD66ED6, gcUnknownABA0DF
-        .long gcUnknownD671DC, gcUnknownABA0DF, gcUnknownD67408, gcUnknownABA55D
-        .long gcUnknownD674F4, gcUnknownABA70D, gcUnknownD67607, gcUnknownABA888
+        .long aMapBattleThiefLayout0, g4bppcMapBattleRogueFemale0, aMapBattleThiefLayout1, g4bppcMapBattleRogueFemale1
+        .long aMapBattleThiefLayout2, g4bppcMapBattleRogueFemale2, aMapBattleThiefLayout3, g4bppcMapBattleRogueFemale3
+        .long aMapBattleThiefLayout4, g4bppcMapBattleRogueFemale3, aMapBattleThiefLayout5, g4bppcMapBattleRogueFemale5
+        .long aMapBattleThiefLayout6, g4bppcMapBattleRogueFemale6, aMapBattleThiefLayout7, g4bppcMapBattleRogueFemale0
         .byte 0
         ; CivilianFemale
-        .long gcUnknownADB4CB, gcUnknownAAC797, gcUnknownADB1F1, gcUnknownAAC346
-        .long gcUnknownADB068, gcUnknownAAC1E1, gcUnknownADAF0F, gcUnknownAAC08F
-        .long gcUnknownADB335, gcUnknownAAC08F, gcUnknownADB666, gcUnknownAAC499
-        .long gcUnknownADB7AA, gcUnknownAAC613, gcUnknownADB93C, gcUnknownAAC797
+        .long aMapBattleDancerLayout0, g4bppcMapBattleCivilianFemale0, aMapBattleDancerLayout1, g4bppcMapBattleCivilianFemale1
+        .long aMapBattleDancerLayout2, g4bppcMapBattleCivilianFemale2, aMapBattleDancerLayout3, g4bppcMapBattleCivilianFemale3
+        .long aMapBattleDancerLayout4, g4bppcMapBattleCivilianFemale3, aMapBattleDancerLayout5, g4bppcMapBattleCivilianFemale5
+        .long aMapBattleDancerLayout6, g4bppcMapBattleCivilianFemale6, aMapBattleDancerLayout7, g4bppcMapBattleCivilianFemale0
         .byte 0
         ; ChildFemale
-        .long gcUnknownADB4CB, gcUnknownAAB8EA, gcUnknownADB1F1, gcUnknownAAB57F
-        .long gcUnknownADB068, gcUnknownAAB489, gcUnknownADAF0F, gcUnknownAAB35C
-        .long gcUnknownADB335, gcUnknownAAB35C, gcUnknownADB666, gcUnknownAAB693
-        .long gcUnknownADB7AA, gcUnknownAAB7BF, gcUnknownADB93C, gcUnknownAAB8EA
+        .long aMapBattleDancerLayout0, g4bppcMapBattleChildFemale0, aMapBattleDancerLayout1, g4bppcMapBattleChildFemale1
+        .long aMapBattleDancerLayout2, g4bppcMapBattleChildFemale2, aMapBattleDancerLayout3, g4bppcMapBattleChildFemale3
+        .long aMapBattleDancerLayout4, g4bppcMapBattleChildFemale3, aMapBattleDancerLayout5, g4bppcMapBattleChildFemale5
+        .long aMapBattleDancerLayout6, g4bppcMapBattleChildFemale6, aMapBattleDancerLayout7, g4bppcMapBattleChildFemale0
         .byte 0
         ; (no name in the original notes)
-        .long gcUnknownADF4CB, gcUnknownA4F610, gcUnknownADEDD1, gcUnknownA4ED49
-        .long gcUnknownADEA4E, gcUnknownA4EA2A, gcUnknownADE6C6, gcUnknownA4E705
-        .long gcUnknownADF10B, gcUnknownA4E705, gcUnknownADF890, gcUnknownA4F03A
-        .long gcUnknownADFBD9, gcUnknownA4F313, gcUnknownD50000, gcUnknownA4F610
+        .long aMapBattleCavalierLayout0, g4bppcMapBattleChildFemale8, aMapBattleCavalierLayout1, g4bppcMapBattleChildFemale9
+        .long aMapBattleCavalierLayout2, g4bppcMapBattleChildFemale10, aMapBattleCavalierLayout3, g4bppcMapBattleChildFemale11
+        .long aMapBattleCavalierLayout4, g4bppcMapBattleChildFemale11, aMapBattleCavalierLayout5, g4bppcMapBattleChildFemale13
+        .long aMapBattleCavalierLayout6, g4bppcMapBattleChildFemale14, aMapBattleCavalierLayout7, g4bppcMapBattleChildFemale8
         .byte 1
 
         ; 9E/C70B
