@@ -19,6 +19,7 @@ EN_ROM/*.*
 *.csv.asm
 gfx/**/*.4bpp
 gfx/**/*.4bpp.lz
+gfx/**/*.bin.lz
 gfx/**/Layout.asm
 *.dialogue.txt
 

@@ -8,9 +8,9 @@ LIST names the streams in order, one per line (# starts a comment):
     start $CA65B5          where the first stream goes
     end $D05639            where the region ends (exclusive)
     LABEL NAME ; comment   the stream next to LIST, labelled LABEL: NAME.4bpp.lz
-                           (built from NAME.4bpp.png) if there is one, else the
-                           committed NAME.comp (a stream whose format is not
-                           decoded yet)
+                           (built from NAME.4bpp.png) or NAME.bin.lz (built
+                           from NAME.bin) if there is one, else the committed
+                           NAME.comp (a stream whose format is not decoded yet)
 
 The streams go one after another from start, in the half of the bank start is
 in. The decompressor reads a stream that reaches the end of a half on from the
@@ -45,9 +45,8 @@ def main():
             start, end = (value, end) if code[0] == 'start' else (start, value)
             continue
         label, name = code
-        path = os.path.join(folder, name + '.4bpp.lz')
-        if not os.path.exists(path):
-            path = os.path.join(folder, name + '.comp')
+        path = next((p for p in (os.path.join(folder, name + ext) for ext in ('.4bpp.lz', '.bin.lz', '.comp'))
+                     if os.path.exists(p)), os.path.join(folder, name + '.comp'))
         streams.append((label, path, os.path.getsize(path), comment.strip()))
     if start is None or end is None:
         sys.exit(f'{list_path}: needs start and end lines')

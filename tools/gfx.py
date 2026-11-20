@@ -13,12 +13,14 @@ conversion does not depend on the colours themselves. Its width and height must
 be multiples of 8; tiles are read left to right, top to bottom, which is how
 the game stores a sheet that is that many tiles wide.
 
-lz compresses IN for rlDecompressor. If ORIGINAL (the graphic's stream as the
-ROM has it, committed next to the PNG) still decompresses to exactly IN, it is
+lz compresses IN for rlDecompressor. If ORIGINAL (the stream as the ROM has
+it, committed next to the PNG or .bin) still decompresses to exactly IN, it is
 copied unchanged, so an unedited graphic builds byte-identical; otherwise IN is
-compressed with tools/compress.py, which gives the same picture in different
-(usually fewer) bytes. ./build.sh runs it for every NAME.4bpp.png that has a
-NAME.4bpp.comp beside it.
+compressed with tools/compress.py, which gives the same data in different
+(usually fewer) bytes. Zero bytes past ORIGINAL's decompressed length (the
+blank tiles that fill out a PNG's last row) are dropped first. ./build.sh runs
+it for every NAME.4bpp.png that has a NAME.4bpp.comp beside it, and every
+NAME.bin (decompressed data such as a tilemap) that has a NAME.bin.comp.
 
 bpp2png writes such a PNG from 4bpp bytes, --width tiles across (default 16),
 with the 16 colours of a BGR555 palette: a file of 32 bytes, or a CPU address
@@ -106,16 +108,27 @@ def read_palette(spec):
 
 
 def lz(data, original_path):
+    """The stream for data: the original if it still decompresses to data, else a new one.
+
+    A PNG holds whole rows of tiles, so a sheet whose tile count is not a multiple
+    of its width comes back with blank tiles at the end. Zero bytes beyond the
+    original's decompressed length are dropped first, so they neither change an
+    unedited stream nor make the game decompress more than its buffer holds.
+    """
     if os.path.exists(original_path):
         from decompress import decompress
         original = open(original_path, 'rb').read()
         buf = bytearray(0x400000)                      # the stream alone, at $C0/0000
         buf[:len(original)] = original
         try:
-            if decompress(bytes(buf), 0xC00000)[0] == data:
-                return original
+            before = decompress(bytes(buf), 0xC00000)[0]
         except Exception:
-            pass
+            before = None
+        if before is not None:
+            if len(data) > len(before) and not any(data[len(before):]):
+                data = data[:len(before)]
+            if before == data:
+                return original
     from compress import compress
     return compress(data)
 
