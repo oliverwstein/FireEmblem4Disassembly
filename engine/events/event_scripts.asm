@@ -4603,7 +4603,7 @@
         tay
         lda #$0001
         sta $04C2,b,x
-        lda aUnknownF77C00+4
+        lda aSoundHeader.Scripts
         sta lR38
         lda [lR38],y
         bra _96A6

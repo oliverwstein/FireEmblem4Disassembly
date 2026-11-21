@@ -63,8 +63,12 @@ def rom_offset(addr):
     return None
 
 
-def decompress(rom, source, limit=0x20000):
+def decompress(rom, source, limit=0x20000, linear=False):
     """Decompress the stream at CPU address `source`.
+
+    linear=True is the entry rlDecompressLinear (the sound loader's): the
+    source is read as bank:0000+Y with bFlag set, so a stream runs on from
+    $xx/FFFF to $xx+1/0000 and lookbacks cross banks downward.
 
     Returns (data, end): the output bytes, and the CPU address just after the
     stream's terminator in the main stream (lookbacks excluded).
@@ -72,13 +76,15 @@ def decompress(rom, source, limit=0x20000):
     # Registers and direct-page variables, as in the assembly (8-bit A).
     src_bank = source >> 16
     y = source & 0xFFFF
-    if y & 0x8000:
+    if linear:
+        base = 0x0000
+    elif y & 0x8000:
         base = 0x0000                       # ROM source: [lSource],y with lSource = bank:0000
     else:
         base = 0x8000                       # source below $8000: bank-1:8000, Y + $8000
         y = (y + 0x8000) & 0xFFFF
         src_bank = (src_bank - 1) & 0xFF
-    flag = 0                                # bFlag, always 0
+    flag = 1 if linear else 0               # bFlag
     count = 0                               # bCount: bytes left in a lookback
     temp_bank = temp_y = 0                  # lTemp: where the main stream resumes
     out = bytearray()

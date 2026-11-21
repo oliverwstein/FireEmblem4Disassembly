@@ -18,7 +18,6 @@
     aUnknownD77000                                           :?= address($D77000) ; read by rlUnknown80BA52
     aUnknownD95000                                           :?= address($D95000) ; read by rlUnknown888082, rlUnknown88821A
     aUnknownDE0000                                           :?= address($DE0000) ; read by rlUnknown859BBD, rlUnknown85C4E0, rsUnknown899FF3, rsUnknown89A00F, rsUnknown89A02B, rsUnknown89A047
-    aUnknownF77C12                                           :?= address($F77C12) ; read by rsUnknown8093C6
 
     aUnknown80D1AE                                           :?= address($80D1AE) ; read by rlItemWindowGetItemData
     aUnknown85BE87                                           :?= address($85BE87) ; read by rlUnknown85BDA1

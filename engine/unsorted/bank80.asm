@@ -1143,13 +1143,13 @@
         dec x
         dec x
         bpl _8F10
-        lda #$F700
+        lda #(`aSoundHeader) << 8
         sta $04B8,b
-        lda #$7C00
+        lda #<>aSoundHeader
         sta $04B6,b
-        lda aUnknownF77C00
+        lda aSoundHeader.Driver
         tay
-        lda aUnknownF77C00+1
+        lda aSoundHeader.Driver+1
         clc
         adc $04B8,b
         sta lR38+1
@@ -1165,7 +1165,7 @@
         rep #$20
         lda $04B8,b
         sta lR39+1
-        lda aUnknownF77C0C+2
+        lda aSoundHeader.StartUpload
         sta lR39
         lda [lR39]
         sta lR39
@@ -1850,7 +1850,7 @@
         asl a
         asl a
         clc
-        adc aUnknownF77C0C
+        adc aSoundHeader.Chunks
         tax
         lda $0007,b,x
         lsr a
@@ -2228,7 +2228,7 @@
         rep #$20
         asl a
         clc
-        adc aUnknownF77C08
+        adc aSoundHeader.UploadLists
         sta lR38
         ldy $04B9,b
         sty lR38+2
@@ -2279,7 +2279,7 @@
         _9435
         and #$00FF
         clc
-        adc aUnknownF77C12
+        adc aSoundHeader.Unknown12
         sta lR38
         lda [lR38],y
 
@@ -2295,7 +2295,7 @@
         dec a
         asl a
         clc
-        adc aUnknownF77C08
+        adc aSoundHeader.UploadLists
         sta lR38
         lda [lR38]
         sta lR38
@@ -2346,7 +2346,7 @@
         lda $7E4EA9,x
         and #$007F
         clc
-        adc aUnknownF77C12
+        adc aSoundHeader.Unknown12
         sta lR38
         lda [lR38],y
         sep #$10
@@ -2359,7 +2359,7 @@
         _94B5
         dec a
         clc
-        adc aUnknownF77C12+2
+        adc aSoundHeader.TerrainUploads
         adc $04F0,b
         sta lR38
         lda [lR38]
@@ -9213,35 +9213,5 @@
     .endsection TableDD7EB0Section
 
 
-    .section TableF77C08Section
-
-      .al
-      .xl
-
-      aUnknownF77C08 ; F7/7C08
-
-        ; Read by rsUnknown8093C6.
-
-        .word $9B32, $9C62
-
-        ; F7/7C0C
-
-    .endsection TableF77C08Section
-
-
-    .section TableF77C0CSection
-
-      .al
-      .xl
-
-      aUnknownF77C0C ; F7/7C0C
-
-        ; Read by rlUnknown808EF6, rlUnknown8091B3.
-
-        .word $7C16, $AF2C, $AD8C
-
-        ; F7/7C12
-
-    .endsection TableF77C0CSection
 
 

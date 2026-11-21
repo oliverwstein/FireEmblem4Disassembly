@@ -188,6 +188,7 @@
   .include "data/battle_animation/frames_9A.asm"
   .include "data/battle_animation/frames_9B.asm"
   .include "data/battle_animation/moves.asm"
+  .include "audio/sound_data.asm"
 
     ; Compressed streams: generated from gfx/compressed/C00A2B/C00A2B.streams by build.sh.
     .include "gfx/compressed/C00A2B/Layout.asm"
@@ -19266,8 +19267,9 @@
     * = $377C00
     .logical $F77C00
 
-      .dsection TableF77C00Section
-      .dsection TableF77C08Section
-      .dsection TableF77C0CSection
+      .dsection SoundDataSection
 
     .here
+
+    ; The rest of the last bank is free.
+    .fill $400000 - *, 0

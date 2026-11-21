@@ -29,6 +29,7 @@
   .include "RAMStructs.h"
   .include "Save.h"
   .include "Skills.h"
+  .include "Sound.h"
   .include "Sprites.h"
   .include "SRAM.h"
   .include "Terrain.h"
