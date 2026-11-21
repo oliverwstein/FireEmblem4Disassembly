@@ -12,8 +12,8 @@ an action table and a script table (formats in include/BattleAnimation.h):
   list table: word offsets, up to the lowest offset it points to; a list is
     words up to a $7F byte (rlUnknown95DB8A queues them; rlUnknown95DA1D
     plays them): low byte the movement (a script with bit 7, $7E none, else a
-    move routine, of which 0, 10, 11, 12, 13 and 15 take the next word as an
-    argument), high byte the sequence (bit 15 on script steps);
+    move routine; the jumps, 0, 10, 11, 12, 13 and 15, take the next word:
+    frames and the height of the arc), high byte the sequence (bit 15 on script steps);
   script table: word offsets, up to the lowest one; a script is signed bytes up
     to the next structure (the last ends where the table rsUnknown95B84E reads
     at $97/E8FB begins).
@@ -55,7 +55,11 @@ ENTRIES = 47
 REGION = (0x97CA8B, 0x97E8FB)
 UNFOLLOWED = 43                  # entry whose lists and scripts are never read
 ROUTINES = 18
-ARG_ROUTINES = {0, 10, 11, 12, 13, 15}
+ARG_ROUTINES = {0, 10, 11, 12, 13, 15}   # the jumps: the next word is (frames, height)
+ROUTINE_NAMES = ['JumpPastOpponent', 'HopToOpponent', 'LeapToOpponent', 'Advance80', 'CoastLinear',
+                 'CoastHalving', 'GlideToOpponent', 'NoDefaultGravity', 'ToOpponentSpeedA', 'ToOpponentSpeedB',
+                 'JumpToOpponent', 'JumpInPlace', 'JumpTo40', 'JumpTo80', 'AdvancePastOpponent', 'JumpTo16',
+                 'LaunchAwayFromAttacker', 'Drift']
 
 
 class Decoded:
@@ -242,9 +246,9 @@ def emit(d):
                 elif kind == 'still':
                     lines.append(f'        ANIM_MOVE_STILL {seq}')
                 elif arg is None:
-                    lines.append(f'        ANIM_MOVE_ROUTINE {seq}, {val}')
+                    lines.append(f'        ANIM_MOVE_ROUTINE {seq}, AnimMove{ROUTINE_NAMES[val]}')
                 else:
-                    lines.append(f'        ANIM_MOVE_ROUTINE_ARG {seq}, {val}, ${arg:04X}')
+                    lines.append(f'        ANIM_MOVE_JUMP {seq}, AnimMove{ROUTINE_NAMES[val]}, {arg & 0xFF}, {arg >> 8}')
             lines += ['        ANIM_MOVE_LIST_END', '']
         lines += [f'      {lab[C]} ; {C >> 16:02X}/{C & 0xFFFF:04X}', '']
         firsts = {}

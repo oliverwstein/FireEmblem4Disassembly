@@ -271,17 +271,38 @@
       .word (\Sequence << 8) | $7E
     .endsegment
 
-    ; Play Sequence and run move routine Routine of
-    ; aBattleAnimationMoveRoutines. Routines 0, 10, 11, 12, 13 and 15 take
-    ; the next word of the list as their argument (ANIM_MOVE_ROUTINE_ARG).
+    ; Play Sequence and run move routine Routine (AnimMove... below).
     ANIM_MOVE_ROUTINE .segment Sequence, Routine
       .word (\Sequence << 8) | \Routine
     .endsegment
 
-    ANIM_MOVE_ROUTINE_ARG .segment Sequence, Routine, Argument
-      .word (\Sequence << 8) | \Routine, \Argument
+    ; Play Sequence and run a jumping move routine, which takes the next word:
+    ; Frames for the move and the Height of the jump arc.
+    ANIM_MOVE_JUMP .segment Sequence, Routine, Frames, Height
+      .word (\Sequence << 8) | \Routine, (\Height << 8) | \Frames
     .endsegment
 
     ANIM_MOVE_LIST_END .segment
       .byte $7F
     .endsegment
+
+  ; Move routines (aBattleAnimationMoveRoutines; engine/battle_scene/animation_moves.asm).
+
+    AnimMoveJumpPastOpponent        = 0     ; jump
+    AnimMoveHopToOpponent           = 1     ; not used
+    AnimMoveLeapToOpponent          = 2     ; not used
+    AnimMoveAdvance80               = 3
+    AnimMoveCoastLinear             = 4
+    AnimMoveCoastHalving            = 5
+    AnimMoveGlideToOpponent         = 6
+    AnimMoveNoDefaultGravity        = 7
+    AnimMoveToOpponentSpeedA        = 8
+    AnimMoveToOpponentSpeedB        = 9
+    AnimMoveJumpToOpponent          = 10    ; jump
+    AnimMoveJumpInPlace             = 11    ; jump
+    AnimMoveJumpTo40                = 12    ; jump
+    AnimMoveJumpTo80                = 13    ; jump
+    AnimMoveAdvancePastOpponent     = 14
+    AnimMoveJumpTo16                = 15    ; jump
+    AnimMoveLaunchAwayFromAttacker  = 16
+    AnimMoveDrift                   = 17    ; not used

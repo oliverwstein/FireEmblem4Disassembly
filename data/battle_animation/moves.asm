@@ -92,7 +92,7 @@
 
       _List00
         ANIM_MOVE_SCRIPT 1, 0
-        ANIM_MOVE_ROUTINE_ARG 11, 10, $2820
+        ANIM_MOVE_JUMP 11, AnimMoveJumpToOpponent, 32, 40
         ANIM_MOVE_STILL 5
         ANIM_MOVE_LIST_END
 
@@ -116,8 +116,8 @@
 
       _List05
         ANIM_MOVE_SCRIPT 13, 4
-        ANIM_MOVE_ROUTINE 14, 14
-        ANIM_MOVE_ROUTINE 14, 4
+        ANIM_MOVE_ROUTINE 14, AnimMoveAdvancePastOpponent
+        ANIM_MOVE_ROUTINE 14, AnimMoveCoastLinear
         ANIM_MOVE_STILL 15
         ANIM_MOVE_STILL 16
         ANIM_MOVE_LIST_END
@@ -144,21 +144,21 @@
 
       _List10
         ANIM_MOVE_SCRIPT 1, 0
-        ANIM_MOVE_ROUTINE_ARG 18, 10, $2820
+        ANIM_MOVE_JUMP 18, AnimMoveJumpToOpponent, 32, 40
         ANIM_MOVE_STILL 8
         ANIM_MOVE_LIST_END
 
       _List11
         ANIM_MOVE_STILL 22
-        ANIM_MOVE_ROUTINE_ARG 19, 12, $0710
+        ANIM_MOVE_JUMP 19, AnimMoveJumpTo40, 16, 7
         ANIM_MOVE_LIST_END
 
       _List12
         ANIM_MOVE_SCRIPT 20, 5
         ANIM_MOVE_SCRIPT 13, 6
         ANIM_MOVE_STILL 14
-        ANIM_MOVE_ROUTINE 14, 14
-        ANIM_MOVE_ROUTINE 15, 4
+        ANIM_MOVE_ROUTINE 14, AnimMoveAdvancePastOpponent
+        ANIM_MOVE_ROUTINE 15, AnimMoveCoastLinear
         ANIM_MOVE_STILL 16
         ANIM_MOVE_LIST_END
 
@@ -179,14 +179,14 @@
         ANIM_MOVE_LIST_END
 
       _List17
-        ANIM_MOVE_ROUTINE 26, 9
-        ANIM_MOVE_ROUTINE 28, 4
+        ANIM_MOVE_ROUTINE 26, AnimMoveToOpponentSpeedB
+        ANIM_MOVE_ROUTINE 28, AnimMoveCoastLinear
         ANIM_MOVE_SCRIPT 5, 8
         ANIM_MOVE_LIST_END
 
       _List18
-        ANIM_MOVE_ROUTINE 26, 9
-        ANIM_MOVE_ROUTINE 28, 4
+        ANIM_MOVE_ROUTINE 26, AnimMoveToOpponentSpeedB
+        ANIM_MOVE_ROUTINE 28, AnimMoveCoastLinear
         ANIM_MOVE_STILL 8
         ANIM_MOVE_LIST_END
 
@@ -347,22 +347,22 @@
         .word _List20 - aBattleAnimationMoveListsSwordmasterSword
 
       _List00
-        ANIM_MOVE_ROUTINE 2, 8
-        ANIM_MOVE_ROUTINE 7, 4
+        ANIM_MOVE_ROUTINE 2, AnimMoveToOpponentSpeedA
+        ANIM_MOVE_ROUTINE 7, AnimMoveCoastLinear
         ANIM_MOVE_LIST_END
 
       _List01
-        ANIM_MOVE_ROUTINE 11, 9
-        ANIM_MOVE_ROUTINE 17, 5
+        ANIM_MOVE_ROUTINE 11, AnimMoveToOpponentSpeedB
+        ANIM_MOVE_ROUTINE 17, AnimMoveCoastHalving
         ANIM_MOVE_STILL 12
-        ANIM_MOVE_ROUTINE_ARG 13, 11, $4834
+        ANIM_MOVE_JUMP 13, AnimMoveJumpInPlace, 52, 72
         ANIM_MOVE_SCRIPT 15, 1
         ANIM_MOVE_LIST_END
 
       _List02
-        ANIM_MOVE_ROUTINE 17, 5
+        ANIM_MOVE_ROUTINE 17, AnimMoveCoastHalving
         ANIM_MOVE_STILL 12
-        ANIM_MOVE_ROUTINE_ARG 13, 11, $4834
+        ANIM_MOVE_JUMP 13, AnimMoveJumpInPlace, 52, 72
         ANIM_MOVE_SCRIPT 15, 1
         ANIM_MOVE_LIST_END
 
@@ -379,7 +379,7 @@
         ANIM_MOVE_LIST_END
 
       _List06
-        ANIM_MOVE_ROUTINE_ARG 10, 10, $403D
+        ANIM_MOVE_JUMP 10, AnimMoveJumpToOpponent, 61, 64
         ANIM_MOVE_STILL 16
         ANIM_MOVE_LIST_END
 
@@ -389,16 +389,16 @@
 
       _List08
         ANIM_MOVE_STILL 9
-        ANIM_MOVE_ROUTINE 18, 3
-        ANIM_MOVE_ROUTINE 19, 5
+        ANIM_MOVE_ROUTINE 18, AnimMoveAdvance80
+        ANIM_MOVE_ROUTINE 19, AnimMoveCoastHalving
         ANIM_MOVE_STILL 20
         ANIM_MOVE_LIST_END
 
       _List09
         ANIM_MOVE_STILL 5
         ANIM_MOVE_STILL 9
-        ANIM_MOVE_ROUTINE 18, 3
-        ANIM_MOVE_ROUTINE 19, 5
+        ANIM_MOVE_ROUTINE 18, AnimMoveAdvance80
+        ANIM_MOVE_ROUTINE 19, AnimMoveCoastHalving
         ANIM_MOVE_STILL 20
         ANIM_MOVE_LIST_END
 
@@ -416,18 +416,18 @@
 
       _List13
         ANIM_MOVE_STILL 12
-        ANIM_MOVE_ROUTINE_ARG 13, 11, $1034
+        ANIM_MOVE_JUMP 13, AnimMoveJumpInPlace, 52, 16
         ANIM_MOVE_STILL 12
-        ANIM_MOVE_ROUTINE_ARG 13, 11, $3034
+        ANIM_MOVE_JUMP 13, AnimMoveJumpInPlace, 52, 48
         ANIM_MOVE_LIST_END
 
       _List14
-        ANIM_MOVE_ROUTINE 11, 9
+        ANIM_MOVE_ROUTINE 11, AnimMoveToOpponentSpeedB
         ANIM_MOVE_STILL 21
         ANIM_MOVE_STILL 5
         ANIM_MOVE_STILL 24
-        ANIM_MOVE_ROUTINE 18, 3
-        ANIM_MOVE_ROUTINE 19, 4
+        ANIM_MOVE_ROUTINE 18, AnimMoveAdvance80
+        ANIM_MOVE_ROUTINE 19, AnimMoveCoastLinear
         ANIM_MOVE_STILL 25
         ANIM_MOVE_LIST_END
 
@@ -438,16 +438,16 @@
 
       _List16
         ANIM_MOVE_STILL 28
-        ANIM_MOVE_ROUTINE 18, 14
-        ANIM_MOVE_ROUTINE 29, 5
+        ANIM_MOVE_ROUTINE 18, AnimMoveAdvancePastOpponent
+        ANIM_MOVE_ROUTINE 29, AnimMoveCoastHalving
         ANIM_MOVE_STILL 27
         ANIM_MOVE_STILL 28
-        ANIM_MOVE_ROUTINE 18, 14
+        ANIM_MOVE_ROUTINE 18, AnimMoveAdvancePastOpponent
         ANIM_MOVE_STILL 29
         ANIM_MOVE_STILL 27
         ANIM_MOVE_STILL 24
-        ANIM_MOVE_ROUTINE 18, 3
-        ANIM_MOVE_ROUTINE 25, 5
+        ANIM_MOVE_ROUTINE 18, AnimMoveAdvance80
+        ANIM_MOVE_ROUTINE 25, AnimMoveCoastHalving
         ANIM_MOVE_STILL 20
         ANIM_MOVE_LIST_END
 
@@ -1581,8 +1581,8 @@
         .word _List14 - aBattleAnimationMoveListsDancerSword
 
       _List00
-        ANIM_MOVE_ROUTINE 2, 9
-        ANIM_MOVE_ROUTINE 1, 4
+        ANIM_MOVE_ROUTINE 2, AnimMoveToOpponentSpeedB
+        ANIM_MOVE_ROUTINE 1, AnimMoveCoastLinear
         ANIM_MOVE_STILL 3
         ANIM_MOVE_LIST_END
 
@@ -1601,15 +1601,15 @@
         ANIM_MOVE_LIST_END
 
       _List04
-        ANIM_MOVE_ROUTINE_ARG 10, 10, $2821
+        ANIM_MOVE_JUMP 10, AnimMoveJumpToOpponent, 33, 40
         ANIM_MOVE_STILL 11
         ANIM_MOVE_LIST_END
 
       _List05
         ANIM_MOVE_SCRIPT 9, 4
-        ANIM_MOVE_ROUTINE_ARG 13, 12, $1027
+        ANIM_MOVE_JUMP 13, AnimMoveJumpTo40, 39, 16
         ANIM_MOVE_STILL 14
-        ANIM_MOVE_ROUTINE_ARG 10, 10, $3021
+        ANIM_MOVE_JUMP 10, AnimMoveJumpToOpponent, 33, 48
         ANIM_MOVE_STILL 11
         ANIM_MOVE_LIST_END
 
@@ -1642,16 +1642,16 @@
 
       _List12
         ANIM_MOVE_SCRIPT 12, 5
-        ANIM_MOVE_ROUTINE_ARG 13, 12, $1027
+        ANIM_MOVE_JUMP 13, AnimMoveJumpTo40, 39, 16
         ANIM_MOVE_STILL 14
-        ANIM_MOVE_ROUTINE 2, 9
-        ANIM_MOVE_ROUTINE 1, 4
+        ANIM_MOVE_ROUTINE 2, AnimMoveToOpponentSpeedB
+        ANIM_MOVE_ROUTINE 1, AnimMoveCoastLinear
         ANIM_MOVE_STILL 3
         ANIM_MOVE_LIST_END
 
       _List13
-        ANIM_MOVE_ROUTINE 2, 8
-        ANIM_MOVE_ROUTINE_ARG 16, 0, $3B14
+        ANIM_MOVE_ROUTINE 2, AnimMoveToOpponentSpeedA
+        ANIM_MOVE_JUMP 16, AnimMoveJumpPastOpponent, 20, 59
         ANIM_MOVE_STILL 17
         ANIM_MOVE_LIST_END
 
@@ -1780,8 +1780,8 @@
         .word _List16 - aBattleAnimationMoveListsCavalierSword
 
       _List00
-        ANIM_MOVE_ROUTINE 1, 8
-        ANIM_MOVE_ROUTINE 10, 4
+        ANIM_MOVE_ROUTINE 1, AnimMoveToOpponentSpeedA
+        ANIM_MOVE_ROUTINE 10, AnimMoveCoastLinear
         ANIM_MOVE_STILL 5
         ANIM_MOVE_LIST_END
 
@@ -1791,8 +1791,8 @@
         ANIM_MOVE_LIST_END
 
       _List02
-        ANIM_MOVE_ROUTINE 1, 8
-        ANIM_MOVE_ROUTINE 10, 4
+        ANIM_MOVE_ROUTINE 1, AnimMoveToOpponentSpeedA
+        ANIM_MOVE_ROUTINE 10, AnimMoveCoastLinear
         ANIM_MOVE_STILL 7
         ANIM_MOVE_LIST_END
 
@@ -1848,14 +1848,14 @@
         ANIM_MOVE_LIST_END
 
       _List15
-        ANIM_MOVE_ROUTINE 13, 9
-        ANIM_MOVE_ROUTINE 10, 4
+        ANIM_MOVE_ROUTINE 13, AnimMoveToOpponentSpeedB
+        ANIM_MOVE_ROUTINE 10, AnimMoveCoastLinear
         ANIM_MOVE_STILL 7
         ANIM_MOVE_LIST_END
 
       _List16
-        ANIM_MOVE_ROUTINE 13, 9
-        ANIM_MOVE_ROUTINE 10, 4
+        ANIM_MOVE_ROUTINE 13, AnimMoveToOpponentSpeedB
+        ANIM_MOVE_ROUTINE 10, AnimMoveCoastLinear
         ANIM_MOVE_STILL 5
         ANIM_MOVE_LIST_END
 
@@ -1968,8 +1968,8 @@
         ANIM_MOVE_LIST_END
 
       _List03
-        ANIM_MOVE_ROUTINE 3, 8
-        ANIM_MOVE_ROUTINE 4, 4
+        ANIM_MOVE_ROUTINE 3, AnimMoveToOpponentSpeedA
+        ANIM_MOVE_ROUTINE 4, AnimMoveCoastLinear
         ANIM_MOVE_SCRIPT 5, 5
         ANIM_MOVE_LIST_END
 
@@ -1987,8 +1987,8 @@
         ANIM_MOVE_LIST_END
 
       _List07
-        ANIM_MOVE_ROUTINE 3, 8
-        ANIM_MOVE_ROUTINE 4, 4
+        ANIM_MOVE_ROUTINE 3, AnimMoveToOpponentSpeedA
+        ANIM_MOVE_ROUTINE 4, AnimMoveCoastLinear
         ANIM_MOVE_SCRIPT 6, 6
         ANIM_MOVE_LIST_END
 
@@ -2002,14 +2002,14 @@
         ANIM_MOVE_LIST_END
 
       _List10
-        ANIM_MOVE_ROUTINE 11, 9
-        ANIM_MOVE_ROUTINE 4, 4
+        ANIM_MOVE_ROUTINE 11, AnimMoveToOpponentSpeedB
+        ANIM_MOVE_ROUTINE 4, AnimMoveCoastLinear
         ANIM_MOVE_SCRIPT 5, 5
         ANIM_MOVE_LIST_END
 
       _List11
-        ANIM_MOVE_ROUTINE 3, 9
-        ANIM_MOVE_ROUTINE 4, 4
+        ANIM_MOVE_ROUTINE 3, AnimMoveToOpponentSpeedB
+        ANIM_MOVE_ROUTINE 4, AnimMoveCoastLinear
         ANIM_MOVE_SCRIPT 6, 6
         ANIM_MOVE_LIST_END
 
@@ -2564,14 +2564,14 @@
         ANIM_MOVE_LIST_END
 
       _List03
-        ANIM_MOVE_ROUTINE_ARG 3, 10, $2022
-        ANIM_MOVE_ROUTINE 4, 4
+        ANIM_MOVE_JUMP 3, AnimMoveJumpToOpponent, 34, 32
+        ANIM_MOVE_ROUTINE 4, AnimMoveCoastLinear
         ANIM_MOVE_STILL 5
         ANIM_MOVE_LIST_END
 
       _List04
-        ANIM_MOVE_ROUTINE_ARG 6, 10, $000F
-        ANIM_MOVE_ROUTINE 4, 4
+        ANIM_MOVE_JUMP 6, AnimMoveJumpToOpponent, 15, 0
+        ANIM_MOVE_ROUTINE 4, AnimMoveCoastLinear
         ANIM_MOVE_STILL 5
         ANIM_MOVE_LIST_END
 
@@ -2584,14 +2584,14 @@
         ANIM_MOVE_LIST_END
 
       _List07
-        ANIM_MOVE_ROUTINE_ARG 3, 10, $2022
-        ANIM_MOVE_ROUTINE 4, 4
+        ANIM_MOVE_JUMP 3, AnimMoveJumpToOpponent, 34, 32
+        ANIM_MOVE_ROUTINE 4, AnimMoveCoastLinear
         ANIM_MOVE_STILL 8
         ANIM_MOVE_LIST_END
 
       _List08
-        ANIM_MOVE_ROUTINE_ARG 6, 10, $000F
-        ANIM_MOVE_ROUTINE 4, 4
+        ANIM_MOVE_JUMP 6, AnimMoveJumpToOpponent, 15, 0
+        ANIM_MOVE_ROUTINE 4, AnimMoveCoastLinear
         ANIM_MOVE_STILL 8
         ANIM_MOVE_LIST_END
 
@@ -2729,8 +2729,8 @@
         ANIM_MOVE_LIST_END
 
       _List01
-        ANIM_MOVE_ROUTINE_ARG 1, 10, $2022
-        ANIM_MOVE_ROUTINE 2, 4
+        ANIM_MOVE_JUMP 1, AnimMoveJumpToOpponent, 34, 32
+        ANIM_MOVE_ROUTINE 2, AnimMoveCoastLinear
         ANIM_MOVE_STILL 3
         ANIM_MOVE_LIST_END
 
@@ -2747,8 +2747,8 @@
         ANIM_MOVE_LIST_END
 
       _List05
-        ANIM_MOVE_ROUTINE_ARG 6, 10, $000F
-        ANIM_MOVE_ROUTINE 7, 4
+        ANIM_MOVE_JUMP 6, AnimMoveJumpToOpponent, 15, 0
+        ANIM_MOVE_ROUTINE 7, AnimMoveCoastLinear
         ANIM_MOVE_STILL 3
         ANIM_MOVE_LIST_END
 
@@ -2758,14 +2758,14 @@
         ANIM_MOVE_LIST_END
 
       _List07
-        ANIM_MOVE_ROUTINE_ARG 1, 10, $2022
-        ANIM_MOVE_ROUTINE 2, 4
+        ANIM_MOVE_JUMP 1, AnimMoveJumpToOpponent, 34, 32
+        ANIM_MOVE_ROUTINE 2, AnimMoveCoastLinear
         ANIM_MOVE_STILL 8
         ANIM_MOVE_LIST_END
 
       _List08
-        ANIM_MOVE_ROUTINE_ARG 6, 10, $000F
-        ANIM_MOVE_ROUTINE 7, 4
+        ANIM_MOVE_JUMP 6, AnimMoveJumpToOpponent, 15, 0
+        ANIM_MOVE_ROUTINE 7, AnimMoveCoastLinear
         ANIM_MOVE_STILL 8
         ANIM_MOVE_LIST_END
 
@@ -3241,12 +3241,12 @@
         ANIM_MOVE_LIST_END
 
       _List01
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_STILL 6
         ANIM_MOVE_LIST_END
 
       _List02
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_STILL 8
         ANIM_MOVE_STILL 6
         ANIM_MOVE_LIST_END
@@ -3261,7 +3261,7 @@
         ANIM_MOVE_LIST_END
 
       _List05
-        ANIM_MOVE_ROUTINE 5, 6
+        ANIM_MOVE_ROUTINE 5, AnimMoveGlideToOpponent
         ANIM_MOVE_LIST_END
 
       _List06
@@ -3273,7 +3273,7 @@
         ANIM_MOVE_LIST_END
 
       _List08
-        ANIM_MOVE_ROUTINE_ARG 11, 10, $1020
+        ANIM_MOVE_JUMP 11, AnimMoveJumpToOpponent, 32, 16
         ANIM_MOVE_STILL 6
         ANIM_MOVE_LIST_END
 
@@ -3283,12 +3283,12 @@
         ANIM_MOVE_LIST_END
 
       _List10
-        ANIM_MOVE_ROUTINE_ARG 2, 15, $3030
-        ANIM_MOVE_ROUTINE_ARG 2, 15, $3030
+        ANIM_MOVE_JUMP 2, AnimMoveJumpTo16, 48, 48
+        ANIM_MOVE_JUMP 2, AnimMoveJumpTo16, 48, 48
         ANIM_MOVE_LIST_END
 
       _List11
-        ANIM_MOVE_ROUTINE_ARG 11, 10, $1020
+        ANIM_MOVE_JUMP 11, AnimMoveJumpToOpponent, 32, 16
         ANIM_MOVE_STILL 8
         ANIM_MOVE_STILL 6
         ANIM_MOVE_LIST_END
@@ -3303,12 +3303,12 @@
         ANIM_MOVE_LIST_END
 
       _List14
-        ANIM_MOVE_ROUTINE 5, 6
-        ANIM_MOVE_ROUTINE 13, 16
+        ANIM_MOVE_ROUTINE 5, AnimMoveGlideToOpponent
+        ANIM_MOVE_ROUTINE 13, AnimMoveLaunchAwayFromAttacker
         ANIM_MOVE_LIST_END
 
       _List15
-        ANIM_MOVE_ROUTINE_ARG 11, 10, $1020
+        ANIM_MOVE_JUMP 11, AnimMoveJumpToOpponent, 32, 16
         ANIM_MOVE_STILL 16
         ANIM_MOVE_STILL 17
         ANIM_MOVE_STILL 18
@@ -3316,7 +3316,7 @@
 
       _List16
         ANIM_MOVE_STILL 5
-        ANIM_MOVE_ROUTINE 13, 16
+        ANIM_MOVE_ROUTINE 13, AnimMoveLaunchAwayFromAttacker
         ANIM_MOVE_LIST_END
 
       _List17
@@ -3325,7 +3325,7 @@
 
       _List18
         ANIM_MOVE_STILL 15
-        ANIM_MOVE_ROUTINE_ARG 14, 15, $5815
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo16, 21, 88
         ANIM_MOVE_LIST_END
 
       _List19
@@ -3335,24 +3335,24 @@
 
       _List20
         ANIM_MOVE_STILL 15
-        ANIM_MOVE_ROUTINE_ARG 14, 15, $3015
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo16, 21, 48
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_STILL 8
         ANIM_MOVE_STILL 6
         ANIM_MOVE_LIST_END
 
       _List21
         ANIM_MOVE_STILL 15
-        ANIM_MOVE_ROUTINE_ARG 14, 15, $5015
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo16, 21, 80
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_STILL 19
         ANIM_MOVE_STILL 17
         ANIM_MOVE_LIST_END
 
       _List22
         ANIM_MOVE_STILL 15
-        ANIM_MOVE_ROUTINE_ARG 14, 15, $5015
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo16, 21, 80
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_STILL 6
         ANIM_MOVE_LIST_END
 
@@ -3362,8 +3362,8 @@
 
       _List24
         ANIM_MOVE_STILL 15
-        ANIM_MOVE_ROUTINE_ARG 14, 15, $3815
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo16, 21, 56
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_STILL 6
         ANIM_MOVE_LIST_END
 
@@ -3475,12 +3475,12 @@
         ANIM_MOVE_LIST_END
 
       _List01
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_STILL 3
         ANIM_MOVE_LIST_END
 
       _List02
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_STILL 8
         ANIM_MOVE_LIST_END
 
@@ -3493,12 +3493,12 @@
         ANIM_MOVE_LIST_END
 
       _List05
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_STILL 19
         ANIM_MOVE_LIST_END
 
       _List06
-        ANIM_MOVE_ROUTINE_ARG 12, 10, $1021
+        ANIM_MOVE_JUMP 12, AnimMoveJumpToOpponent, 33, 16
         ANIM_MOVE_STILL 19
         ANIM_MOVE_LIST_END
 
@@ -3507,7 +3507,7 @@
         ANIM_MOVE_LIST_END
 
       _List08
-        ANIM_MOVE_ROUTINE_ARG 12, 10, $1021
+        ANIM_MOVE_JUMP 12, AnimMoveJumpToOpponent, 33, 16
         ANIM_MOVE_STILL 3
         ANIM_MOVE_LIST_END
 
@@ -3516,12 +3516,12 @@
         ANIM_MOVE_LIST_END
 
       _List10
-        ANIM_MOVE_ROUTINE_ARG 1, 15, $2030
-        ANIM_MOVE_ROUTINE_ARG 1, 15, $2030
+        ANIM_MOVE_JUMP 1, AnimMoveJumpTo16, 48, 32
+        ANIM_MOVE_JUMP 1, AnimMoveJumpTo16, 48, 32
         ANIM_MOVE_LIST_END
 
       _List11
-        ANIM_MOVE_ROUTINE_ARG 12, 10, $1021
+        ANIM_MOVE_JUMP 12, AnimMoveJumpToOpponent, 33, 16
         ANIM_MOVE_STILL 8
         ANIM_MOVE_LIST_END
 
@@ -3530,24 +3530,24 @@
         ANIM_MOVE_LIST_END
 
       _List13
-        ANIM_MOVE_ROUTINE 5, 6
-        ANIM_MOVE_ROUTINE 13, 16
+        ANIM_MOVE_ROUTINE 5, AnimMoveGlideToOpponent
+        ANIM_MOVE_ROUTINE 13, AnimMoveLaunchAwayFromAttacker
         ANIM_MOVE_LIST_END
 
       _List14
-        ANIM_MOVE_ROUTINE_ARG 12, 10, $1021
+        ANIM_MOVE_JUMP 12, AnimMoveJumpToOpponent, 33, 16
         ANIM_MOVE_STILL 5
-        ANIM_MOVE_ROUTINE 13, 16
+        ANIM_MOVE_ROUTINE 13, AnimMoveLaunchAwayFromAttacker
         ANIM_MOVE_LIST_END
 
       _List15
         ANIM_MOVE_STILL 5
-        ANIM_MOVE_ROUTINE 13, 16
+        ANIM_MOVE_ROUTINE 13, AnimMoveLaunchAwayFromAttacker
         ANIM_MOVE_LIST_END
 
       _List16
         ANIM_MOVE_STILL 16
-        ANIM_MOVE_ROUTINE_ARG 15, 15, $5815
+        ANIM_MOVE_JUMP 15, AnimMoveJumpTo16, 21, 88
         ANIM_MOVE_LIST_END
 
       _List17
@@ -3560,19 +3560,19 @@
 
       _List19
         ANIM_MOVE_STILL 16
-        ANIM_MOVE_ROUTINE_ARG 15, 15, $4015
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_JUMP 15, AnimMoveJumpTo16, 21, 64
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_STILL 19
         ANIM_MOVE_LIST_END
 
       _List20
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_LIST_END
 
       _List21
         ANIM_MOVE_STILL 16
-        ANIM_MOVE_ROUTINE_ARG 15, 15, $4015
-        ANIM_MOVE_ROUTINE 10, 6
+        ANIM_MOVE_JUMP 15, AnimMoveJumpTo16, 21, 64
+        ANIM_MOVE_ROUTINE 10, AnimMoveGlideToOpponent
         ANIM_MOVE_STILL 17
         ANIM_MOVE_LIST_END
 
@@ -3780,13 +3780,13 @@
         ANIM_MOVE_LIST_END
 
       _List01
-        ANIM_MOVE_ROUTINE_ARG 1, 12, $1024
+        ANIM_MOVE_JUMP 1, AnimMoveJumpTo40, 36, 16
         ANIM_MOVE_SCRIPT 6, 4
         ANIM_MOVE_LIST_END
 
       _List02
-        ANIM_MOVE_ROUTINE 12, 6
-        ANIM_MOVE_ROUTINE 18, 4
+        ANIM_MOVE_ROUTINE 12, AnimMoveGlideToOpponent
+        ANIM_MOVE_ROUTINE 18, AnimMoveCoastLinear
         ANIM_MOVE_SCRIPT 4, 2
         ANIM_MOVE_LIST_END
 
@@ -3799,16 +3799,16 @@
         ANIM_MOVE_LIST_END
 
       _List05
-        ANIM_MOVE_ROUTINE_ARG 17, 15, $1B2C
-        ANIM_MOVE_ROUTINE_ARG 17, 15, $192C
-        ANIM_MOVE_ROUTINE 12, 6
-        ANIM_MOVE_ROUTINE 18, 4
+        ANIM_MOVE_JUMP 17, AnimMoveJumpTo16, 44, 27
+        ANIM_MOVE_JUMP 17, AnimMoveJumpTo16, 44, 25
+        ANIM_MOVE_ROUTINE 12, AnimMoveGlideToOpponent
+        ANIM_MOVE_ROUTINE 18, AnimMoveCoastLinear
         ANIM_MOVE_SCRIPT 19, 9
         ANIM_MOVE_LIST_END
 
       _List06
-        ANIM_MOVE_ROUTINE_ARG 5, 15, $301C
-        ANIM_MOVE_ROUTINE 7, 6
+        ANIM_MOVE_JUMP 5, AnimMoveJumpTo16, 28, 48
+        ANIM_MOVE_ROUTINE 7, AnimMoveGlideToOpponent
         ANIM_MOVE_LIST_END
 
       _List07
@@ -3820,11 +3820,11 @@
         ANIM_MOVE_LIST_END
 
       _List09
-        ANIM_MOVE_ROUTINE 2, 6
+        ANIM_MOVE_ROUTINE 2, AnimMoveGlideToOpponent
         ANIM_MOVE_LIST_END
 
       _List10
-        ANIM_MOVE_ROUTINE_ARG 5, 15, $301C
+        ANIM_MOVE_JUMP 5, AnimMoveJumpTo16, 28, 48
         ANIM_MOVE_LIST_END
 
       _List11
@@ -3832,13 +3832,13 @@
         ANIM_MOVE_LIST_END
 
       _List12
-        ANIM_MOVE_ROUTINE 8, 7
+        ANIM_MOVE_ROUTINE 8, AnimMoveNoDefaultGravity
         ANIM_MOVE_LIST_END
 
       _List13
-        ANIM_MOVE_ROUTINE_ARG 7, 15, $1D26
-        ANIM_MOVE_ROUTINE_ARG 17, 15, $202C
-        ANIM_MOVE_ROUTINE 15, 6
+        ANIM_MOVE_JUMP 7, AnimMoveJumpTo16, 38, 29
+        ANIM_MOVE_JUMP 17, AnimMoveJumpTo16, 44, 32
+        ANIM_MOVE_ROUTINE 15, AnimMoveGlideToOpponent
         ANIM_MOVE_SCRIPT 4, 2
         ANIM_MOVE_LIST_END
 
@@ -3851,10 +3851,10 @@
         ANIM_MOVE_LIST_END
 
       _List16
-        ANIM_MOVE_ROUTINE_ARG 7, 15, $1A26
-        ANIM_MOVE_ROUTINE_ARG 23, 15, $1726
-        ANIM_MOVE_ROUTINE_ARG 17, 15, $202C
-        ANIM_MOVE_ROUTINE 16, 6
+        ANIM_MOVE_JUMP 7, AnimMoveJumpTo16, 38, 26
+        ANIM_MOVE_JUMP 23, AnimMoveJumpTo16, 38, 23
+        ANIM_MOVE_JUMP 17, AnimMoveJumpTo16, 44, 32
+        ANIM_MOVE_ROUTINE 16, AnimMoveGlideToOpponent
         ANIM_MOVE_SCRIPT 9, 5
         ANIM_MOVE_LIST_END
 
@@ -3998,7 +3998,7 @@
         ANIM_MOVE_LIST_END
 
       _List01
-        ANIM_MOVE_ROUTINE_ARG 1, 12, $0820
+        ANIM_MOVE_JUMP 1, AnimMoveJumpTo40, 32, 8
         ANIM_MOVE_SCRIPT 2, 1
         ANIM_MOVE_LIST_END
 
@@ -4007,15 +4007,15 @@
         ANIM_MOVE_LIST_END
 
       _List03
-        ANIM_MOVE_ROUTINE 4, 6
-        ANIM_MOVE_ROUTINE 5, 4
+        ANIM_MOVE_ROUTINE 4, AnimMoveGlideToOpponent
+        ANIM_MOVE_ROUTINE 5, AnimMoveCoastLinear
         ANIM_MOVE_STILL 6
         ANIM_MOVE_LIST_END
 
       _List04
-        ANIM_MOVE_ROUTINE_ARG 7, 15, $202D
-        ANIM_MOVE_ROUTINE_ARG 8, 15, $202B
-        ANIM_MOVE_ROUTINE 9, 6
+        ANIM_MOVE_JUMP 7, AnimMoveJumpTo16, 45, 32
+        ANIM_MOVE_JUMP 8, AnimMoveJumpTo16, 43, 32
+        ANIM_MOVE_ROUTINE 9, AnimMoveGlideToOpponent
         ANIM_MOVE_SCRIPT 10, 3
         ANIM_MOVE_LIST_END
 
@@ -4024,19 +4024,19 @@
         ANIM_MOVE_LIST_END
 
       _List06
-        ANIM_MOVE_ROUTINE_ARG 7, 15, $202D
-        ANIM_MOVE_ROUTINE_ARG 12, 15, $1C25
-        ANIM_MOVE_ROUTINE_ARG 12, 15, $1C25
-        ANIM_MOVE_ROUTINE 9, 6
+        ANIM_MOVE_JUMP 7, AnimMoveJumpTo16, 45, 32
+        ANIM_MOVE_JUMP 12, AnimMoveJumpTo16, 37, 28
+        ANIM_MOVE_JUMP 12, AnimMoveJumpTo16, 37, 28
+        ANIM_MOVE_ROUTINE 9, AnimMoveGlideToOpponent
         ANIM_MOVE_SCRIPT 10, 3
         ANIM_MOVE_LIST_END
 
       _List07
-        ANIM_MOVE_ROUTINE_ARG 12, 15, $1C25
-        ANIM_MOVE_ROUTINE_ARG 12, 15, $1C25
-        ANIM_MOVE_ROUTINE_ARG 12, 15, $2025
-        ANIM_MOVE_ROUTINE 9, 6
-        ANIM_MOVE_ROUTINE 14, 4
+        ANIM_MOVE_JUMP 12, AnimMoveJumpTo16, 37, 28
+        ANIM_MOVE_JUMP 12, AnimMoveJumpTo16, 37, 28
+        ANIM_MOVE_JUMP 12, AnimMoveJumpTo16, 37, 32
+        ANIM_MOVE_ROUTINE 9, AnimMoveGlideToOpponent
+        ANIM_MOVE_ROUTINE 14, AnimMoveCoastLinear
         ANIM_MOVE_SCRIPT 10, 3
         ANIM_MOVE_LIST_END
 
@@ -4049,11 +4049,11 @@
         ANIM_MOVE_LIST_END
 
       _List10
-        ANIM_MOVE_ROUTINE_ARG 7, 15, $202D
+        ANIM_MOVE_JUMP 7, AnimMoveJumpTo16, 45, 32
         ANIM_MOVE_LIST_END
 
       _List11
-        ANIM_MOVE_ROUTINE 20, 7
+        ANIM_MOVE_ROUTINE 20, AnimMoveNoDefaultGravity
         ANIM_MOVE_LIST_END
 
       aBattleAnimationMoveScriptsDragonriderLance ; 97/DCAA
@@ -4173,13 +4173,13 @@
         ANIM_MOVE_LIST_END
 
       _List02
-        ANIM_MOVE_ROUTINE 3, 6
+        ANIM_MOVE_ROUTINE 3, AnimMoveGlideToOpponent
         ANIM_MOVE_SCRIPT 4, 1
         ANIM_MOVE_LIST_END
 
       _List03
-        ANIM_MOVE_ROUTINE_ARG 6, 15, $3045
-        ANIM_MOVE_ROUTINE 5, 6
+        ANIM_MOVE_JUMP 6, AnimMoveJumpTo16, 69, 48
+        ANIM_MOVE_ROUTINE 5, AnimMoveGlideToOpponent
         ANIM_MOVE_SCRIPT 4, 1
         ANIM_MOVE_LIST_END
 
@@ -4188,7 +4188,7 @@
         ANIM_MOVE_LIST_END
 
       _List05
-        ANIM_MOVE_ROUTINE 1, 7
+        ANIM_MOVE_ROUTINE 1, AnimMoveNoDefaultGravity
         ANIM_MOVE_LIST_END
 
       _List06
@@ -4196,33 +4196,33 @@
         ANIM_MOVE_LIST_END
 
       _List07
-        ANIM_MOVE_ROUTINE 3, 6
+        ANIM_MOVE_ROUTINE 3, AnimMoveGlideToOpponent
         ANIM_MOVE_SCRIPT 8, 3
         ANIM_MOVE_LIST_END
 
       _List08
-        ANIM_MOVE_ROUTINE_ARG 6, 15, $3045
-        ANIM_MOVE_ROUTINE 5, 6
+        ANIM_MOVE_JUMP 6, AnimMoveJumpTo16, 69, 48
+        ANIM_MOVE_ROUTINE 5, AnimMoveGlideToOpponent
         ANIM_MOVE_SCRIPT 8, 3
         ANIM_MOVE_LIST_END
 
       _List09
-        ANIM_MOVE_ROUTINE_ARG 6, 15, $3045
+        ANIM_MOVE_JUMP 6, AnimMoveJumpTo16, 69, 48
         ANIM_MOVE_LIST_END
 
       _List10
-        ANIM_MOVE_ROUTINE_ARG 9, 13, $202F
+        ANIM_MOVE_JUMP 9, AnimMoveJumpTo80, 47, 32
         ANIM_MOVE_SCRIPT 10, 4
         ANIM_MOVE_LIST_END
 
       _List11
-        ANIM_MOVE_ROUTINE_ARG 6, 15, $2045
-        ANIM_MOVE_ROUTINE_ARG 6, 15, $2045
-        ANIM_MOVE_ROUTINE 11, 6
+        ANIM_MOVE_JUMP 6, AnimMoveJumpTo16, 69, 32
+        ANIM_MOVE_JUMP 6, AnimMoveJumpTo16, 69, 32
+        ANIM_MOVE_ROUTINE 11, AnimMoveGlideToOpponent
         ANIM_MOVE_LIST_END
 
       _List12
-        ANIM_MOVE_ROUTINE 5, 6
+        ANIM_MOVE_ROUTINE 5, AnimMoveGlideToOpponent
         ANIM_MOVE_LIST_END
 
       _List13
@@ -5646,7 +5646,7 @@
 
       _List06
         ANIM_MOVE_SCRIPT 9, 7
-        ANIM_MOVE_ROUTINE 6, 9
+        ANIM_MOVE_ROUTINE 6, AnimMoveToOpponentSpeedB
         ANIM_MOVE_SCRIPT 7, 5
         ANIM_MOVE_LIST_END
 
@@ -5665,7 +5665,7 @@
         ANIM_MOVE_LIST_END
 
       _List10
-        ANIM_MOVE_ROUTINE_ARG 11, 10, $402B
+        ANIM_MOVE_JUMP 11, AnimMoveJumpToOpponent, 43, 64
         ANIM_MOVE_SCRIPT 12, 10
         ANIM_MOVE_LIST_END
 
@@ -5677,7 +5677,7 @@
 
       _List12
         ANIM_MOVE_SCRIPT 10, 8
-        ANIM_MOVE_ROUTINE_ARG 11, 10, $4027
+        ANIM_MOVE_JUMP 11, AnimMoveJumpToOpponent, 39, 64
         ANIM_MOVE_SCRIPT 14, 11
         ANIM_MOVE_LIST_END
 
@@ -5691,19 +5691,19 @@
         ANIM_MOVE_LIST_END
 
       _List15
-        ANIM_MOVE_ROUTINE_ARG 13, 10, $4027
+        ANIM_MOVE_JUMP 13, AnimMoveJumpToOpponent, 39, 64
         ANIM_MOVE_SCRIPT 14, 11
         ANIM_MOVE_LIST_END
 
       _List16
-        ANIM_MOVE_ROUTINE_ARG 15, 10, $4027
+        ANIM_MOVE_JUMP 15, AnimMoveJumpToOpponent, 39, 64
         ANIM_MOVE_SCRIPT 14, 11
         ANIM_MOVE_LIST_END
 
       _List17
         ANIM_MOVE_SCRIPT 19, 14
-        ANIM_MOVE_ROUTINE 18, 9
-        ANIM_MOVE_ROUTINE_ARG 15, 11, $3027
+        ANIM_MOVE_ROUTINE 18, AnimMoveToOpponentSpeedB
+        ANIM_MOVE_JUMP 15, AnimMoveJumpInPlace, 39, 48
         ANIM_MOVE_LIST_END
 
       _List18
@@ -5715,7 +5715,7 @@
         ANIM_MOVE_LIST_END
 
       _List20
-        ANIM_MOVE_ROUTINE 6, 9
+        ANIM_MOVE_ROUTINE 6, AnimMoveToOpponentSpeedB
         ANIM_MOVE_SCRIPT 7, 5
         ANIM_MOVE_LIST_END
 
@@ -6146,18 +6146,18 @@
         ANIM_MOVE_LIST_END
 
       _List03
-        ANIM_MOVE_ROUTINE 18, 4
+        ANIM_MOVE_ROUTINE 18, AnimMoveCoastLinear
         ANIM_MOVE_STILL 2
         ANIM_MOVE_LIST_END
 
       _List04
         ANIM_MOVE_SCRIPT 10, 3
-        ANIM_MOVE_ROUTINE 16, 9
+        ANIM_MOVE_ROUTINE 16, AnimMoveToOpponentSpeedB
         ANIM_MOVE_STILL 4
         ANIM_MOVE_LIST_END
 
       _List05
-        ANIM_MOVE_ROUTINE_ARG 15, 12, $1827
+        ANIM_MOVE_JUMP 15, AnimMoveJumpTo40, 39, 24
         ANIM_MOVE_LIST_END
 
       _List06
@@ -6171,13 +6171,13 @@
         ANIM_MOVE_LIST_END
 
       _List08
-        ANIM_MOVE_ROUTINE_ARG 6, 10, $402C
+        ANIM_MOVE_JUMP 6, AnimMoveJumpToOpponent, 44, 64
         ANIM_MOVE_STILL 16
         ANIM_MOVE_LIST_END
 
       _List09
-        ANIM_MOVE_ROUTINE 10, 8
-        ANIM_MOVE_ROUTINE 18, 4
+        ANIM_MOVE_ROUTINE 10, AnimMoveToOpponentSpeedA
+        ANIM_MOVE_ROUTINE 18, AnimMoveCoastLinear
         ANIM_MOVE_STILL 2
         ANIM_MOVE_LIST_END
 
@@ -6193,41 +6193,41 @@
         ANIM_MOVE_LIST_END
 
       _List12
-        ANIM_MOVE_ROUTINE_ARG 14, 12, $1827
-        ANIM_MOVE_ROUTINE 16, 9
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo40, 39, 24
+        ANIM_MOVE_ROUTINE 16, AnimMoveToOpponentSpeedB
         ANIM_MOVE_STILL 4
         ANIM_MOVE_LIST_END
 
       _List13
         ANIM_MOVE_STILL 10
-        ANIM_MOVE_ROUTINE_ARG 14, 12, $1827
-        ANIM_MOVE_ROUTINE 16, 9
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo40, 39, 24
+        ANIM_MOVE_ROUTINE 16, AnimMoveToOpponentSpeedB
         ANIM_MOVE_STILL 4
         ANIM_MOVE_LIST_END
 
       _List14
         ANIM_MOVE_STILL 11
-        ANIM_MOVE_ROUTINE_ARG 15, 12, $1827
+        ANIM_MOVE_JUMP 15, AnimMoveJumpTo40, 39, 24
         ANIM_MOVE_LIST_END
 
       _List15
-        ANIM_MOVE_ROUTINE 20, 9
+        ANIM_MOVE_ROUTINE 20, AnimMoveToOpponentSpeedB
         ANIM_MOVE_STILL 21
-        ANIM_MOVE_ROUTINE_ARG 22, 11, $402B
+        ANIM_MOVE_JUMP 22, AnimMoveJumpInPlace, 43, 64
         ANIM_MOVE_LIST_END
 
       _List16
-        ANIM_MOVE_ROUTINE_ARG 15, 12, $1827
-        ANIM_MOVE_ROUTINE 10, 8
-        ANIM_MOVE_ROUTINE 18, 4
+        ANIM_MOVE_JUMP 15, AnimMoveJumpTo40, 39, 24
+        ANIM_MOVE_ROUTINE 10, AnimMoveToOpponentSpeedA
+        ANIM_MOVE_ROUTINE 18, AnimMoveCoastLinear
         ANIM_MOVE_STILL 2
         ANIM_MOVE_LIST_END
 
       _List17
         ANIM_MOVE_STILL 11
-        ANIM_MOVE_ROUTINE_ARG 15, 12, $1827
-        ANIM_MOVE_ROUTINE 10, 8
-        ANIM_MOVE_ROUTINE 18, 4
+        ANIM_MOVE_JUMP 15, AnimMoveJumpTo40, 39, 24
+        ANIM_MOVE_ROUTINE 10, AnimMoveToOpponentSpeedA
+        ANIM_MOVE_ROUTINE 18, AnimMoveCoastLinear
         ANIM_MOVE_STILL 2
         ANIM_MOVE_LIST_END
 
@@ -6350,7 +6350,7 @@
         .word _List04 - aBattleAnimationMoveListsDarkPrinceMagic
 
       _List00
-        ANIM_MOVE_ROUTINE 1, 3
+        ANIM_MOVE_ROUTINE 1, AnimMoveAdvance80
         ANIM_MOVE_LIST_END
 
       _List01
@@ -6566,7 +6566,7 @@
 
       _List04
         ANIM_MOVE_SCRIPT 10, 6
-        ANIM_MOVE_ROUTINE 16, 9
+        ANIM_MOVE_ROUTINE 16, AnimMoveToOpponentSpeedB
         ANIM_MOVE_STILL 4
         ANIM_MOVE_LIST_END
 
@@ -6584,13 +6584,13 @@
         ANIM_MOVE_LIST_END
 
       _List08
-        ANIM_MOVE_ROUTINE_ARG 6, 10, $402C
+        ANIM_MOVE_JUMP 6, AnimMoveJumpToOpponent, 44, 64
         ANIM_MOVE_STILL 15
         ANIM_MOVE_LIST_END
 
       _List09
-        ANIM_MOVE_ROUTINE 9, 8
-        ANIM_MOVE_ROUTINE 17, 4
+        ANIM_MOVE_ROUTINE 9, AnimMoveToOpponentSpeedA
+        ANIM_MOVE_ROUTINE 17, AnimMoveCoastLinear
         ANIM_MOVE_STILL 2
         ANIM_MOVE_LIST_END
 
@@ -6606,39 +6606,39 @@
         ANIM_MOVE_LIST_END
 
       _List12
-        ANIM_MOVE_ROUTINE_ARG 14, 12, $1827
-        ANIM_MOVE_ROUTINE 16, 9
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo40, 39, 24
+        ANIM_MOVE_ROUTINE 16, AnimMoveToOpponentSpeedB
         ANIM_MOVE_STILL 4
         ANIM_MOVE_LIST_END
 
       _List13
         ANIM_MOVE_STILL 10
-        ANIM_MOVE_ROUTINE_ARG 14, 12, $1827
-        ANIM_MOVE_ROUTINE 16, 9
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo40, 39, 24
+        ANIM_MOVE_ROUTINE 16, AnimMoveToOpponentSpeedB
         ANIM_MOVE_STILL 4
         ANIM_MOVE_LIST_END
 
       _List14
         ANIM_MOVE_STILL 10
-        ANIM_MOVE_ROUTINE_ARG 14, 12, $1827
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo40, 39, 24
         ANIM_MOVE_LIST_END
 
       _List15
-        ANIM_MOVE_ROUTINE 19, 9
+        ANIM_MOVE_ROUTINE 19, AnimMoveToOpponentSpeedB
         ANIM_MOVE_STILL 20
-        ANIM_MOVE_ROUTINE_ARG 21, 11, $402B
+        ANIM_MOVE_JUMP 21, AnimMoveJumpInPlace, 43, 64
         ANIM_MOVE_LIST_END
 
       _List16
-        ANIM_MOVE_ROUTINE_ARG 14, 12, $1827
-        ANIM_MOVE_ROUTINE_ARG 6, 10, $402C
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo40, 39, 24
+        ANIM_MOVE_JUMP 6, AnimMoveJumpToOpponent, 44, 64
         ANIM_MOVE_STILL 15
         ANIM_MOVE_LIST_END
 
       _List17
         ANIM_MOVE_STILL 10
-        ANIM_MOVE_ROUTINE_ARG 14, 12, $1827
-        ANIM_MOVE_ROUTINE_ARG 6, 10, $402C
+        ANIM_MOVE_JUMP 14, AnimMoveJumpTo40, 39, 24
+        ANIM_MOVE_JUMP 6, AnimMoveJumpToOpponent, 44, 64
         ANIM_MOVE_STILL 15
         ANIM_MOVE_LIST_END
 
