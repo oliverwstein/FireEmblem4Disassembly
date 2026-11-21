@@ -26,6 +26,210 @@
     .endsection Table8D9B65Section
 
 
+    .section Table8D9BF6Section
+
+      .al
+      .xl
+
+      aUnknown8D9BF6 ; 8D/9BF6
+
+        ; Read by rlUnknown91ACE2 and bank $91 ending/epilogue screens.
+
+        .word <>aUnknown8D9C0E
+        .word <>aUnknown8D9C17
+        .word <>aUnknown8D9C26
+        .word <>aUnknown8D9C32
+        .word <>aUnknown8D9C3F
+        .word <>aUnknown8D9C48
+        .word <>aUnknown8D9C51
+        .word <>aUnknown8D9C5A
+        .word <>aUnknown8D9C63
+        .word <>aUnknown8D9C6E
+        .word <>aUnknown8D9C76
+        .word <>aUnknown8D9C7F
+
+      aUnknown8D9C0E ; 8D/9C0E
+        .byte $0A, $2D, $5C, $4B, $0D, $21, $0B, $48, $01
+
+      aUnknown8D9C17 ; 8D/9C17
+        .byte $0B, $D5, $0D, $6D, $09, $28, $0C, $27, $09, $28, $0B, $E7, $0A, $60, $01
+
+      aUnknown8D9C26 ; 8D/9C26
+        .byte $09, $60, $8F, $6C, $73, $87, $60, $28, $0B, $33, $57, $01
+
+      aUnknown8D9C32 ; 8D/9C32
+        .byte $0D, $6B, $0A, $5F, $5E, $09, $63, $88, $73, $6B, $AD, $8C, $01
+
+      aUnknown8D9C3F ; 8D/9C3F
+        .byte $0B, $88, $09, $25, $0D, $69, $09, $12, $01
+
+      aUnknown8D9C48 ; 8D/9C48
+        .byte $0A, $4E, $0B, $41, $09, $28, $0C, $EE, $01
+
+      aUnknown8D9C51 ; 8D/9C51
+        .byte $0B, $18, $09, $3C, $21, $40, $32, $28, $01
+
+      aUnknown8D9C5A ; 8D/9C5A
+        .byte $0B, $DE, $DF, $09, $3C, $19, $13, $22, $01
+
+      aUnknown8D9C63 ; 8D/9C63
+        .byte $09, $73, $86, $66, $60, $28, $0A, $3B, $5C, $4B, $01
+
+      aUnknown8D9C6E ; 8D/9C6E
+        .byte $0D, $6A, $09, $3E, $1F, $31, $25, $01
+
+      aUnknown8D9C76 ; 8D/9C76
+        .byte $0B, $18, $09, $23, $0C, $F5, $09, $23, $01
+
+      aUnknown8D9C7F ; 8D/9C7F
+        .byte $0A, $B5, $BC, $09, $28, $0A, $2D, $64, $01
+
+      aUnknown8D9C88 ; 8D/9C88
+        .byte $0D, $68, $09, $C5, $0B, $77, $01
+
+      aUnknown8D9C8F ; 8D/9C8F
+        .byte $0B, $84, $09, $E0, $0B, $77, $01
+
+      aUnknown8D9C96 ; 8D/9C96
+        .byte $0B, $84, $09, $EA, $0B, $77, $01, $0B, $84, $09, $EA, $E1, $0B, $77, $01
+
+      aUnknown8D9CA5 ; 8D/9CA5
+        .byte $0B, $9D, $09, $C5, $0B, $77, $01
+
+      aUnknown8D9CAC ; 8D/9CAC
+        .byte $09, $09, $C2, $B1, $B1, $B1, $C3, $01
+
+      aUnknown8D9CB4 ; 8D/9CB4
+        .byte $09, $0A, $17, $01
+
+      aUnknown8D9CB8 ; 8D/9CB8
+        .byte $09, $C5, $C5, $84, $8F, $9B, $86, $88, $0A, $24, $90, $0C, $C3, $09, $C5, $01
+
+      aUnknown8D9CC8 ; 8D/9CC8
+        .byte $09, $84, $8C, $0D, $25, $09, $28, $0A, $8A, $09, $25, $8F, $86, $8C, $0A, $5E
+        .byte $6A, $0B, $F4, $0A, $F6, $09, $C5, $01
+
+      aUnknown8D9CE0 ; 8D/9CE0
+        .byte $0B, $F5, $50, $9A, $09, $2C, $28, $0B, $4A, $0A, $63, $09, $C5, $01
+
+      aUnknown8D9CEE ; 8D/9CEE
+        .byte $0A, $98, $96, $09, $28, $0D, $C1, $0A, $24, $09, $BB, $0D, $12, $0B, $CE, $09
+        .byte $28, $0B, $4E, $0A, $DC, $09, $C5, $01
+
+      aUnknown8D9D06 ; 8D/9D06
+        .byte $0A, $24, $0B, $35, $0C, $1C, $09, $8D, $89, $25, $0A, $56, $57, $20, $09, $3E
+        .byte $0C, $D2, $0D, $DB, $09, $C5, $01
+
+      aUnknown8D9D1D ; 8D/9D1D
+        .byte $09, $C0, $8A, $A4, $73, $0C, $1C, $0A, $3D, $09, $C1, $28, $0D, $CC, $0B, $33
+        .byte $09, $C5, $01
+
+      aUnknown8D9D30 ; 8D/9D30
+        .byte $09, $EA, $E2, $0A, $3A, $B6, $09, $28, $0B, $57, $09, $C5, $C5, $01
+
+      aUnknown8D9D3E ; 8D/9D3E
+        .byte $09, $C5, $0B, $F5, $50, $0A, $6A, $09, $8F, $86, $8C, $28, $0B, $2D, $2E, $09
+        .byte $C5, $01
+
+      aUnknown8D9D50 ; 8D/9D50
+        .byte $09, $8D, $89, $0A, $24, $0B, $35, $0C, $1C, $09, $BB, $0A, $2C, $0B, $63, $09
+        .byte $25, $21, $17, $C5, $01
+
+      aUnknown8D9D65 ; 8D/9D65
+        .byte $09, $8A, $A4, $73, $0A, $2C, $6A, $09, $28, $0B, $F4, $0A, $F6, $09, $C5, $01
+
+      aUnknown8D9D75 ; 8D/9D75
+        .byte $0A, $24, $0D, $CA, $0E, $17, $09, $C5, $01
+
+      aUnknown8D9D7E ; 8D/9D7E
+        .byte $09, $C5, $0D, $91, $92, $0A, $31, $09, $EA, $0C, $F1, $0A, $5B, $94, $D8, $09
+        .byte $C5, $01
+
+      aUnknown8D9D90 ; 8D/9D90
+        .byte $09, $7F, $0A, $18, $09, $89, $73, $6C, $28, $0B, $8E, $09, $16, $C5, $01
+
+      aUnknown8D9D9F ; 8D/9D9F
+        .byte $09, $C5, $0A, $56, $57, $20, $09, $2C, $28, $11, $18, $25, $13, $23, $1B, $22
+        .byte $C5, $01
+
+      aUnknown8D9DB1 ; 8D/9DB1
+        .byte $09, $C5, $0A, $E3, $9E, $09, $28, $0A, $5F, $0C, $E8, $09, $3E, $0A, $53, $09
+        .byte $25, $0D, $DC, $09, $44, $36, $39, $38, $C5, $01
+
+      aUnknown8D9DCB ; 8D/9DCB
+        .byte $09, $63, $AC, $97, $28, $0D, $B9, $0A, $43, $09, $C5, $01
+
+      aUnknown8D9DD7 ; 8D/9DD7
+        .byte $09, $C5, $0D, $91, $92, $0A, $31, $09, $BB, $0A, $9E, $0C, $F1, $0A, $5B, $09
+        .byte $25, $32, $14, $35, $4F, $C5, $01
+
+      aUnknown8D9DEE ; 8D/9DEE
+        .byte $0A, $2B, $0B, $23, $09, $7E, $61, $86, $28, $0B, $79, $57, $09, $C5, $01
+
+      aUnknown8D9DFD ; 8D/9DFD
+        .byte $0B, $AE, $0A, $55, $09, $25, $0A, $C3, $0B, $FF, $0A, $85, $86, $51, $09, $3E
+        .byte $0C, $3C, $09, $38, $C5, $01
+
+      aUnknown8D9E13 ; 8D/9E13
+        .byte $09, $97, $B0, $74, $0A, $B4, $09, $28, $0D, $CF, $D0, $09, $C5, $01
+
+      aUnknown8D9E21 ; 8D/9E21
+        .byte $09, $C5, $0A, $85, $86, $51, $09, $28, $0A, $64, $4B, $09, $25, $0A, $20, $09
+        .byte $3E, $0C, $D2, $0D, $DB, $09, $1B, $C5, $01
+
+      aUnknown8D9E3A ; 8D/9E3A
+        .byte $09, $C5, $EA, $E2, $0A, $2D, $64, $4B, $09, $3E, $0D, $21, $0B, $48, $09, $1C
+        .byte $38, $C5, $01
+
+      aUnknown8D9E4D ; 8D/9E4D
+        .byte $0A, $2D, $64, $09, $28, $0A, $BB, $09, $2E, $37, $C5, $01
+
+      aUnknown8D9E59 ; 8D/9E59
+        .byte $09, $8A, $A4, $73, $0A, $2C, $6A, $09, $28, $0B, $2D, $2E, $09, $C5, $01
+
+      aUnknown8D9E68 ; 8D/9E68
+        .byte $09, $C5, $EA, $E2, $0A, $2D, $64, $4B, $09, $BB, $C5, $01
+
+      aUnknown8D9E74 ; 8D/9E74
+        .byte $09, $C5, $8F, $86, $8C, $9F, $88, $E7, $0A, $9D, $6A, $09, $23, $C5, $01
+
+      aUnknown8D9E83 ; 8D/9E83
+        .byte $09, $C5, $0D, $DD, $0A, $70, $09, $E5, $0A, $5E, $6A, $09, $3C, $0A, $93, $6A
+        .byte $09, $1C, $38, $C5, $01
+
+      aUnknown8D9E98 ; 8D/9E98
+        .byte $09, $8F, $86, $8C, $9F, $88, $0A, $5E, $6A, $09, $28, $0B, $F4, $0A, $F6, $09
+        .byte $C5, $01
+
+      aUnknown8D9EAA ; 8D/9EAA
+        .byte $09, $8F, $86, $8C, $9F, $88, $0A, $6A, $51, $02, $01
+
+      aUnknown8D9EB5 ; 8D/9EB5
+        .byte $0A, $6E, $6F, $09, $28, $0A, $6A, $09, $61, $92, $B0, $67, $2C, $0B, $8A, $8B
+        .byte $09, $C5, $01
+
+      aUnknown8D9EC8 ; 8D/9EC8
+        .byte $0B, $33, $57, $09, $28, $0D, $CE, $0B, $22, $09, $18, $C5, $01, $06, $00, $3D
+        .byte $00, $3F, $81, $02, $07, $00, $3D, $00, $3F, $13, $00, $06, $00, $12, $02, $00
+        .byte $1D, $0F, $09, $60, $61, $86, $BB, $51, $17, $29, $0A, $24, $0D, $64, $0B, $EC
+        .byte $09, $48, $BB, $48, $15, $36, $02, $19, $3D, $24, $0A, $AB, $0D, $4C, $09, $28
+        .byte $11, $11, $24, $37, $25, $24, $5C, $20, $5D, $48, $31, $48, $BD, $07, $00, $1D
+        .byte $10, $6B, $AD, $74, $8C, $BF, $BF, $BF, $02, $00, $1D, $32, $01, $06, $00, $3D
+        .byte $00, $3F, $5A, $00, $07, $00, $3D, $00, $3F, $12, $00, $06, $00, $12, $02, $00
+        .byte $1D, $0F, $09, $86, $68, $6B, $6C, $BB, $0A, $AA, $09, $29, $60, $8F, $6C, $72
+        .byte $A8, $2C, $30, $15, $12, $02, $14, $3A, $15, $24, $0D, $44, $0A, $4A, $09, $24
+        .byte $4C, $33, $31, $38, $35, $12, $02, $0C, $45, $0A, $AF, $09, $25, $14, $27, $3E
+        .byte $11, $1C, $38, $00, $1D, $10, $07, $14, $2E, $20, $17, $48, $1A, $11, $BB, $0B
+        .byte $66, $0A, $D8, $09, $BD, $02, $00, $1D, $32, $01, $07, $00, $3D, $00, $3F, $04
+        .byte $01, $00, $12, $02, $09, $19, $39, $3E, $0A, $B5, $BC, $09, $48, $BD, $02, $00
+        .byte $1D, $08, $0B, $12, $0A, $51, $09, $BB, $0D, $45, $0A, $35, $36, $09, $3C, $15
+        .byte $18, $35, $BD, $BD, $02, $00, $1D, $80, $01
+
+        ; 8D/9FB1
+
+    .endsection Table8D9BF6Section
+
+
     .section Unsorted91A3ABSection
 
       .al
@@ -616,18 +820,18 @@
         sta lR18+1
         lda #<>aDecompressionBuffer
         sta lR18
-        lda #$8D00
+        lda #(`aUnknown8D9CB4)<<8
         sta lR19+1
-        lda #$9CB4
+        lda #<>aUnknown8D9CB4
         sta lR19
         jsl rlUnknown919912
         lda #(`aDecompressionBuffer)<<8
         sta lR18+1
         lda #<>aDecompressionBuffer
         sta lR18
-        lda #$8D00
+        lda #(`aUnknown8D9CB4)<<8
         sta lR19+1
-        lda #$9CB4
+        lda #<>aUnknown8D9CB4
         sta lR19
         jsl rlUnknown919912
         pla
@@ -698,9 +902,9 @@
         sta lR18+1
         lda #<>aDecompressionBuffer
         sta lR18
-        lda #$8D00
+        lda #(`aUnknown8D9CAC)<<8
         sta lR19+1
-        lda #$9CAC
+        lda #<>aUnknown8D9CAC
         sta lR19
         jsl rlUnknown919912
         pla
@@ -801,33 +1005,33 @@
         bcs _ACBD
         and #$FFFF
         bne _ACB1
-        lda #$8D00
+        lda #(`aUnknown8D9C88)<<8
         sta lR18+1
-        lda #$9C88
+        lda #<>aUnknown8D9C88
         sta lR18
         bra _ACD3
 
 
         _ACB1
-        lda #$8D00
+        lda #(`aUnknown8D9C8F)<<8
         sta lR18+1
-        lda #$9C8F
+        lda #<>aUnknown8D9C8F
         sta lR18
         bra _ACD3
 
 
         _ACBD
-        lda #$8D00
+        lda #(`aUnknown8D9C96)<<8
         sta lR18+1
-        lda #$9C96
+        lda #<>aUnknown8D9C96
         sta lR18
         bra _ACD3
 
 
         _ACC9
-        lda #$8D00
+        lda #(`aUnknown8D9CA5)<<8
         sta lR18+1
-        lda #$9CA5
+        lda #<>aUnknown8D9CA5
         sta lR18
 
         _ACD3
@@ -1333,6 +1537,76 @@
     .endsection Unsorted91B2E5Section
 
 
+    .section Table91B34CSection
+
+      .al
+      .xl
+
+      aUnknown91B34C ; 91/B34C
+
+        ; Read by rlUnknown91B164, rsUnknown91B20A, rsUnknown91B2E5, rsUnknown91B511.
+
+        .word $0000, $00FF, $0000
+        .word $0001, $0000, <>aUnknown8D9CB8
+        .word $0002, $0000, $0000
+        .word $0003, $0000, $0000
+        .word $0000, $0001, <>aUnknown8D9CC8
+        .word $0001, $0000, $0000
+        .word $0002, $00E6, <>aUnknown8D9CE0
+        .word $0003, $0000, $0000
+        .word $0000, $0136, <>aUnknown8D9CEE
+        .word $0001, $0000, $0000
+        .word $0002, $01B8, <>aUnknown8D9D06
+        .word $0003, $0000, <>aUnknown8D9D1D
+        .word $0000, $0000, $0000
+        .word $0001, $01BF, <>aUnknown8D9D30
+        .word $0002, $0000, <>aUnknown8D9D3E
+        .word $0003, $0000, $0000
+        .word $0000, $01C0, <>aUnknown8D9D50
+        .word $0001, $0000, <>aUnknown8D9D65
+        .word $0002, $0000, $0000
+        .word $0003, $01C1, <>aUnknown8D9D75
+        .word $0000, $0000, <>aUnknown8D9D7E
+        .word $0001, $0000, $0000
+        .word $0002, $01C4, <>aUnknown8D9D90
+        .word $0003, $0000, <>aUnknown8D9D9F
+        .word $0000, $0000, <>aUnknown8D9DB1
+        .word $0001, $0000, $0000
+        .word $0002, $01C5, <>aUnknown8D9DCB
+        .word $0003, $0000, <>aUnknown8D9DD7
+        .word $0000, $0000, $0000
+        .word $0001, $0217, <>aUnknown8D9DEE
+        .word $0002, $0000, $0000
+        .word $0003, $0263, <>aUnknown8D9DFD
+        .word $0000, $0000, $0000
+        .word $0001, $0278, <>aUnknown8D9E13
+        .word $0002, $0000, <>aUnknown8D9E21
+        .word $0003, $0000, <>aUnknown8D9E3A
+        .word $0000, $0000, $0000
+        .word $0001, $0279, <>aUnknown8D9E4D
+        .word $0002, $0000, $0000
+        .word $0003, $0288, <>aUnknown8D9E59
+        .word $0000, $0000, <>aUnknown8D9E68
+        .word $0001, $0000, <>aUnknown8D9E74
+        .word $0002, $0000, <>aUnknown8D9E83
+        .word $0003, $0000, $0000
+        .word $0000, $0289, <>aUnknown8D9E98
+        .word $0001, $0000, $0000
+        .word $0002, $02F5, <>aUnknown8D9EAA
+        .word $0003, $0000, <>aUnknown8D9EB5
+        .word $0004, $0000, $0000
+        .word $0005, $0000, <>aUnknown8D9EC8
+        .word $0006, $0000, $0000
+        .word $0007, $0000, $0000
+        .word $0008, $0000, $0000
+        .word $0009, $0000, $0000
+        .word $FFFF, $FFFF, $FFFF
+
+        ; 91/B496
+
+    .endsection Table91B34CSection
+
+
     .section Unsorted91B496Section
 
       .al
@@ -1497,6 +1771,101 @@
         ; 91/B546
 
     .endsection Unsorted91B496Section
+
+
+    .section Table91B546Section
+
+      .al
+      .xl
+
+      aUnknown91B546 ; 91/B546
+
+        ; Read by rsUnknown91B511.
+
+        .word $19AF, $19E0, $19C2, $19C3, $19C4, $19C5, $19C6, $19C7
+        .word $19C8, $19C9, $19CA, $19CB, $19CC, $19CD, $19CE, $19CF
+        .word $59CF, $59CF, $59CE, $59CD, $59CC, $59CB, $59CA, $59C9
+        .word $59C8, $59C7, $59C6, $59C5, $59C4, $59C3, $59C2, $59E0
+        .word $19AF, $19D1, $19D2, $19D3, $19D4, $19D5, $19D6, $19D7
+        .word $19D8, $19D9, $19DA, $19DB, $19DC, $19DD, $19DE, $19DF
+        .word $59DF, $59DF, $59DE, $59DD, $59DC, $59DB, $59DA, $59D9
+        .word $59D8, $59D7, $59D6, $59D5, $59D4, $59D3, $59D2, $59D1
+        .word $19E0, $19E1, $19E2, $19E3, $19E4, $19E5, $19E6, $19E7
+        .word $19E8, $19E9, $19EA, $19EB, $19EC, $19ED, $19EE, $19EF
+        .word $59EF, $59EF, $19EE, $59ED, $59EC, $59EB, $59EA, $59E9
+        .word $59E8, $59E7, $59E6, $59E5, $59E4, $59E3, $59E2, $59E1
+        .word $19F0, $19F1, $19F2, $19F3, $19F4, $19F5, $19F6, $19F7
+        .word $19F8, $19F9, $19FA, $19FB, $19FC, $19FD, $19FE, $19FF
+        .word $59FF, $59FF, $19FE, $59FD, $59FC, $59FB, $59FA, $59F9
+        .word $59F8, $59F7, $59F6, $59F5, $59F4, $59F3, $59F2, $59F1
+        .word $99F0, $99F1, $99F2, $99F3, $99F4, $99F5, $99F6, $99F7
+        .word $99F8, $99F9, $99FA, $99FB, $99FC, $99FD, $99FE, $99FF
+        .word $D9FF, $D9FF, $99FE, $D9FD, $D9FC, $D9FB, $D9FA, $D9F9
+        .word $D9F8, $D9F7, $D9F6, $D9F5, $D9F4, $D9F3, $D9F2, $D9F1
+        .word $99E0, $99E1, $99E2, $99E3, $99E4, $99E5, $99E6, $99E7
+        .word $99E8, $99E9, $99EA, $99EB, $99EC, $99ED, $99EE, $99EF
+        .word $D9EF, $D9EF, $99EE, $D9ED, $D9EC, $D9EB, $D9EA, $D9E9
+        .word $D9E8, $D9E7, $D9E6, $D9E5, $D9E4, $D9E3, $D9E2, $D9E1
+        .word $99AF, $99D1, $99D2, $99D3, $99D4, $99D5, $99D6, $99D7
+        .word $99D8, $99D9, $99DA, $99DB, $99DC, $99DD, $99DE, $99DF
+        .word $D9DF, $D9DF, $D9DE, $D9DD, $D9DC, $D9DB, $D9DA, $D9D9
+        .word $D9D8, $D9D7, $D9D6, $D9D5, $D9D4, $D9D3, $D9D2, $D9D1
+        .word $99AF, $99E0, $99C2, $99C3, $99C4, $99C5, $99C6, $99C7
+        .word $99C8, $99C9, $99CA, $99CB, $99CC, $99CD, $99CE, $99CF
+        .word $D9CF, $D9CF, $D9CE, $D9CD, $D9CC, $D9CB, $D9CA, $D9C9
+        .word $D9C8, $D9C7, $D9C6, $D9C5, $D9C4, $D9C3, $D9C2, $D9E0
+        .word $19AF, $19F0, $19F1, $19F2, $19F3, $19F4, $19F5, $19F6
+        .word $19F7, $19F8, $19F9, $19FA, $19FB, $19FC, $19FD, $19FE
+        .word $19FF, $19FF, $59FF, $59FE, $59FC, $59FB, $59FA, $59F8
+        .word $59F7, $D9C6, $D9C5, $D9C4, $59F3, $59E2, $59C1, $59C0
+        .word $19AF, $19AF, $19C1, $19C2, $19C3, $19C4, $19C5, $19C6
+        .word $19C7, $19C8, $19C9, $19CA, $19CB, $19CC, $19CD, $19CE
+        .word $19CF, $19CF, $59CF, $59ED, $59EC, $59EB, $D9CB, $59F8
+        .word $59C7, $59C6, $59C5, $59C4, $59C3, $59C2, $59C1, $59D0
+        .word $19AF, $19AF, $19D0, $19D1, $19D3, $19D4, $19D4, $19D5
+        .word $19D6, $19D7, $19D8, $19D9, $19DA, $19DB, $19DC, $19DD
+        .word $19DE, $19DF, $59DF, $59FD, $59FC, $59FB, $59CB, $D9F8
+        .word $59D7, $59D6, $59D5, $59D4, $59C3, $59C2, $59C1, $59E0
+        .word $19AF, $19AF, $19E0, $19E1, $19E3, $19E4, $19E4, $19E5
+        .word $19E6, $19E7, $19E8, $19E9, $19EA, $19EB, $19EC, $19ED
+        .word $19EE, $19EF, $59ED, $59CC, $59CB, $59DB, $59DB, $59F8
+        .word $59E7, $59E6, $59F4, $59F3, $D9C3, $59C2, $59C1, $59F0
+        .word $19AF, $19AF, $19F0, $19F1, $19F2, $19F3, $19F4, $19F5
+        .word $19F6, $19F7, $19F8, $19F9, $19FA, $19FB, $19FC, $19FD
+        .word $19FE, $19FF, $59FD, $59FB, $59FA, $59F9, $59F8, $D9F6
+        .word $59F6, $59F5, $59F4, $D9C3, $59C2, $59C2, $59F0, $19AF
+        .word $19AF, $19AF, $19C0, $19C1, $19C2, $19C3, $19C4, $19C5
+        .word $19C6, $19C7, $19C8, $19C9, $19CA, $19CB, $19CC, $19CD
+        .word $D9CD, $D9CC, $D9CB, $D9CA, $D9C9, $D9C8, $59C7, $59C6
+        .word $59C5, $59C4, $59F3, $59C3, $59C2, $59C1, $59F0, $19AF
+        .word $19AF, $19AF, $19D0, $19D1, $19D2, $19D3, $19D4, $19D5
+        .word $19C6, $19C7, $19C8, $19C8, $19CA, $19CB, $19CC, $19CD
+        .word $59CD, $59CC, $59CB, $D9D9, $D9D8, $99D9, $59D9, $D9D7
+        .word $D9D6, $D9D5, $59F3, $59C3, $59C2, $59C1, $59F0, $19AF
+        .word $19AF, $19AF, $19AF, $19D1, $9812, $9813, $9814, $19C6
+        .word $9816, $9816, $9816, $9817, $9818, $9819, $981A, $19EE
+        .word $19EE, $D81A, $D819, $D818, $9818, $9819, $D819, $D818
+        .word $D9D6, $D9D5, $D9D5, $59C3, $59C2, $59C1, $59F0, $19AF
+        .word $19AF, $19AF, $19AF, $19AF, $9802, $9803, $9804, $9805
+        .word $9806, $9806, $9806, $9807, $9808, $9809, $980A, $980B
+        .word $D80B, $D80A, $D809, $D808, $9808, $9809, $D809, $D808
+        .word $D807, $D806, $980F, $D804, $D803, $D802, $19AF, $19AF
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+        .word $013C, $013C, $013C, $013C, $013C, $013C, $013C, $013C
+
+        ; 91/BA46
+
+    .endsection Table91B546Section
 
 
     .section Unsorted91BA46Section
@@ -3404,9 +3773,9 @@
         pha
         sbc #$000B
         pha
-        lda #$9100
+        lda #(`aUnknown91DE9F)<<8
         sta lR18+1
-        lda #$DE9F
+        lda #<>aUnknown91DE9F
         sta lR18
         pla
         jsl rlUnknown91E932
@@ -3433,6 +3802,21 @@
         .databank 0
 
     .endsection Unsorted91DE4CSection
+
+
+    .section Table91DE9FSection
+
+      .al
+      .xl
+
+      aUnknown91DE9F ; 91/DE9F
+        .word $0100
+
+    .endsection Table91DE9FSection
+
+
+
+
 
 
     .section Unsorted91DEA1Section
@@ -3660,9 +4044,9 @@
         .autsiz
         .databank ?
 
-        lda #$9100
+        lda #(`aUnknown91E089)<<8
         sta lR44+1
-        lda #$E089
+        lda #<>aUnknown91E089
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rtl
@@ -3672,6 +4056,20 @@
         ; 91/E089
 
     .endsection Unsorted91E07ASection
+
+
+    .section Table91E089Section
+
+      .al
+      .xl
+
+      aUnknown91E089 .dstruct structHDMAIndirectEntryInfo, rlUnknown91E095, rlUnknown91E09D, aUnknown91E09E, wDialogueBoxHDMAYPixelPosition, PPU_REG_BASE + $2D, $40, $85 ; 91/E089
+
+    .endsection Table91E089Section
+
+
+
+
 
 
     .section Unsorted91E095Section
@@ -3708,6 +4106,57 @@
         ; 91/E09E
 
     .endsection Unsorted91E095Section
+
+
+    .section Table91E09ESection
+
+      .al
+      .xl
+
+      aUnknown91E09E ; 91/E09E
+        HDMA_HALT
+
+      aUnknown91E0A0 ; 91/E0A0
+        .byte $C0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $C0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01
+        .byte $01, $01, $C0, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01
+        .byte $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01
+        .byte $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $A0, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00
+
+      aUnknown91E185 .dstruct structHDMADirectEntryInfo, rlUnknown91E095, rlUnknown91E09D, aUnknown91E09E, aUnknown91E190, PPU_REG_BASE + $0F, $00 ; 91/E185
+
+      aUnknown91E190 ; 91/E190
+        .byte $C0, $06, $06, $06, $06, $05, $05, $05, $05, $04, $04, $04, $04, $04, $04, $03
+        .byte $03, $03, $03, $03, $03, $02, $02, $02, $02, $02, $01, $01, $01, $01, $00, $00
+        .byte $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $02, $02, $02, $02, $02, $03
+        .byte $03, $03, $03, $04, $04, $04, $04, $05, $05, $05, $05, $05, $04, $04, $04, $03
+        .byte $03, $C0, $03, $03, $02, $02, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00
+        .byte $00, $01, $01, $01, $01, $01, $02, $02, $02, $02, $02, $02, $03, $03, $03, $03
+        .byte $03, $04, $04, $04, $04, $05, $05, $05, $05, $05, $05, $06, $06, $06, $06, $06
+        .byte $06, $07, $07, $07, $07, $07, $08, $08, $08, $08, $08, $07, $07, $07, $07, $07
+        .byte $07, $06, $C0, $06, $06, $05, $05, $05, $05, $04, $04, $04, $04, $04, $03, $03
+        .byte $03, $03, $02, $02, $02, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00, $01
+        .byte $01, $01, $01, $02, $02, $02, $02, $02, $03, $03, $03, $03, $03, $04, $04, $04
+        .byte $04, $04, $04, $04, $05, $05, $05, $05, $06, $06, $06, $06, $06, $07, $07, $07
+        .byte $07, $07, $07, $A0, $08, $08, $08, $08, $08, $09, $09, $09, $09, $09, $08, $08
+        .byte $08, $08, $08, $07, $07, $07, $06, $06, $06, $06, $05, $05, $05, $05, $04, $04
+        .byte $04, $04, $03, $03, $00
+
+    .endsection Table91E09ESection
+
+
+
+
 
 
     .section Unsorted91E275Section

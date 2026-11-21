@@ -409,7 +409,7 @@
         ldx #$0020
 
         _82CD
-        lda aUnknownDE2C9E,x
+        lda aUnknownDE2CA0-2,x
         sta $02DE,b,x
         dec x
         dec x
@@ -661,7 +661,7 @@
         ldx #$0020
 
         _84C4
-        lda aUnknownDE2C9E,x
+        lda aUnknownDE2CA0-2,x
         sta $02DE,b,x
         dec x
         dec x
@@ -829,7 +829,7 @@
         ldx #$0020
 
         _85E7
-        lda aUnknownDE2C9E,x
+        lda aUnknownDE2CA0-2,x
         sta $02DE,b,x
         dec x
         dec x
@@ -1194,27 +1194,27 @@
         _8811
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #$8900
+        lda #(`aUnknown898973)<<8
         sta lR18+1
-        lda #$8973
+        lda #<>aUnknown898973
         sta lR18
         ldx #$0F03
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown89897F)<<8
         sta lR18+1
-        lda #$897F
+        lda #<>aUnknown89897F
         sta lR18
         ldx #$1104
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown898989)<<8
         sta lR18+1
-        lda #$8989
+        lda #<>aUnknown898989
         sta lR18
         ldx #$1304
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown898993)<<8
         sta lR18+1
-        lda #$8993
+        lda #<>aUnknown898993
         sta lR18
         ldx #$1505
         jsl rlDrawMenuTextLine
@@ -1261,9 +1261,9 @@
         _88C0
         lda #$3800
         sta aCurrentTilemapInfo,b
-        lda #$8900
+        lda #(`aUnknown8989A7)<<8
         sta lR18+1
-        lda #$89A7
+        lda #<>aUnknown8989A7
         sta lR18
         ldx #$1109
         jsl rlDrawMenuTextLine
@@ -1332,6 +1332,68 @@
     .endsection Unsorted89876DSection
 
 
+    .section Table898973Section
+
+      .al
+      .xl
+
+      aUnknown898973 ; 89/8973
+
+        .enc "SJIS"
+        .text "めいちゅう"
+        .word $0000
+        .enc "none"
+
+      aUnknown89897F ; 89/897F
+
+        .enc "SJIS"
+        .text "いりょく"
+        .word $0000
+        .enc "none"
+
+      aUnknown898989 ; 89/8989
+
+        .enc "SJIS"
+        .text "しゃてい"
+        .word $0000
+        .enc "none"
+
+      aUnknown898993 ; 89/8993
+
+        .enc "SJIS"
+        .text "おもさ"
+        .word $0000
+        .enc "none"
+
+      aUnknown89899B ; 89/899B
+
+        .enc "SJIS"
+        .text "のこり"
+        .word $0000
+        .enc "none"
+
+      aUnknown8989A3 ; 89/89A3
+
+        .enc "SJIS"
+        .text "Ｇ"
+        .word $0000
+        .enc "none"
+
+      aUnknown8989A7 ; 89/89A7
+
+        .enc "SJIS"
+        .text "ーー"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table898973Section
+
+
+
+
+
+
     .section Unsorted8989ADSection
 
       .al
@@ -1356,7 +1418,7 @@
         sta wR1
         stz wR4
         stz wR5
-        ldy #$A72E
+        ldy #<>aUnknown89A72E
         jsl rlPushToOAMBuffer
         jsr rsUnknown8989EA
         rts
@@ -1460,6 +1522,21 @@
 
         ; 89/8A29
 
+
+      aUnknown898A29 ; 89/8A29
+
+        _Sprites := [[(   4,    4), $21, SpriteLarge, $0E0, 3, 1, false, false]]
+
+        .structSpriteArray aUnknown898A29._Sprites
+
+      aUnknown898A30 ; 89/8A30
+
+        _Sprites := [[(   4,    6), $21, SpriteLarge, $0E0, 3, 1, false, false]]
+        _Sprites ..= [[(   4,   -2), $00, SpriteSmall, $0F2, 3, 1, false, false]]
+        _Sprites ..= [[(  12,   -2), $00, SpriteSmall, $0F3, 3, 1, false, false]]
+
+        .structSpriteArray aUnknown898A30._Sprites
+
     .endsection Unsorted8989EASection
 
 
@@ -1544,6 +1621,22 @@
         .databank 0
 
         ; 89/8AC1
+
+
+      aUnknown898AC1 ; 89/8AC1
+
+        _Sprites := [[(   1,    0), $21, SpriteLarge, $100, 2, 6, false, false]]
+        _Sprites ..= [[(   1,   16), $21, SpriteLarge, $102, 2, 6, false, false]]
+        _Sprites ..= [[(   1,   32), $21, SpriteLarge, $104, 2, 6, false, false]]
+        _Sprites ..= [[(   1,   48), $21, SpriteLarge, $106, 2, 6, false, false]]
+        _Sprites ..= [[(   1,   64), $21, SpriteLarge, $108, 2, 6, false, false]]
+        _Sprites ..= [[(  57,    0), $21, SpriteLarge, $10A, 2, 6, false, false]]
+        _Sprites ..= [[(  57,   16), $21, SpriteLarge, $10C, 2, 6, false, false]]
+        _Sprites ..= [[(  57,   32), $21, SpriteLarge, $10E, 2, 6, false, false]]
+        _Sprites ..= [[(  57,   48), $21, SpriteLarge, $120, 2, 6, false, false]]
+        _Sprites ..= [[(  57,   64), $21, SpriteLarge, $122, 2, 6, false, false]]
+
+        .structSpriteArray aUnknown898AC1._Sprites
 
     .endsection Unsorted898A7ESection
 
@@ -2122,6 +2215,24 @@
 
         ; 89/8ED8
 
+
+      aUnknown898ED8 ; 89/8ED8
+
+        _Sprites := [[(  32,   32), $21, SpriteLarge, $14E, 3, 7, false, false]]
+        _Sprites ..= [[(  48,   16), $21, SpriteLarge, $160, 3, 7, false, false]]
+        _Sprites ..= [[(  56,    0), $21, SpriteLarge, $164, 3, 7, false, false]]
+        _Sprites ..= [[(  56,  -24), $21, SpriteLarge, $144, 3, 7, false, false]]
+        _Sprites ..= [[(  48,  -48), $21, SpriteLarge, $14C, 3, 7, false, false]]
+        _Sprites ..= [[(  32,  -64), $21, SpriteLarge, $14A, 3, 7, false, false]]
+        _Sprites ..= [[( -40,   32), $21, SpriteLarge, $148, 3, 7, false, false]]
+        _Sprites ..= [[( -56,   16), $21, SpriteLarge, $140, 3, 7, false, false]]
+        _Sprites ..= [[( -64,    0), $21, SpriteLarge, $142, 3, 7, false, false]]
+        _Sprites ..= [[( -64,  -24), $21, SpriteLarge, $166, 3, 7, false, false]]
+        _Sprites ..= [[( -56,  -48), $21, SpriteLarge, $162, 3, 7, false, false]]
+        _Sprites ..= [[( -40,  -64), $21, SpriteLarge, $146, 3, 7, false, false]]
+
+        .structSpriteArray aUnknown898ED8._Sprites
+
     .endsection Unsorted898EB4Section
 
 
@@ -2442,6 +2553,24 @@
 
     .endsection Unsorted8990BDSection
 
+    .section Table899140Section
+
+      .al
+      .xl
+
+      aUnknown899140 .dstruct structHDMADirectEntryInfo, rlUnknown89914B, rlUnknown89914B, aUnknown899178, $0008C8, PPU_REG_BASE + $12, $02 ; 89/9140
+
+    .endsection Table899140Section
+
+
+
+
+
+
+
+
+
+
 
     .section Unsorted89914BSection
 
@@ -2482,6 +2611,23 @@
     .endsection Unsorted89914BSection
 
 
+    .section Table899178Section
+
+      .al
+      .xl
+
+      aUnknown899178 ; 89/9178
+        HDMA_HALT
+
+      aUnknown89917A .dstruct structHDMADirectEntryInfo, rlUnknown899185, rlUnknown899185, aUnknown899178, $7FB160, PPU_REG_BASE + $0E, $02 ; 89/917A
+
+    .endsection Table899178Section
+
+
+
+
+
+
     .section Unsorted899185Section
 
       .al
@@ -2520,6 +2666,20 @@
         ; 89/91B9
 
     .endsection Unsorted899185Section
+
+
+    .section Table8991B9Section
+
+      .al
+      .xl
+
+      aUnknown8991B9 .dstruct structHDMADirectEntryInfo, rlUnknown8991C4, rlUnknown8991D2, aUnknown899178, $7FB0B6, PPU_REG_BASE + $32, $00 ; 89/91B9
+
+    .endsection Table8991B9Section
+
+
+
+
 
 
     .section Unsorted8991C4Section
@@ -3010,6 +3170,13 @@
 
         ; 89/9509
 
+
+      aUnknown899509 ; 89/9509
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $00C, 2, 0, false, false]]
+
+        .structSpriteArray aUnknown899509._Sprites
+
     .endsection Unsorted8994B8Section
 
 
@@ -3097,9 +3264,9 @@
         _95C9
         lda #$3800
         sta aCurrentTilemapInfo,b
-        lda #$8900
+        lda #(`aUnknown899703)<<8
         sta lR18+1
-        lda #$9703
+        lda #<>aUnknown899703
         sta lR18
         ldx #$011B
         jsl rlDrawMenuTextLine
@@ -3160,9 +3327,9 @@
         _9660
         lda #$3800
         sta aCurrentTilemapInfo,b
-        lda #$8900
+        lda #(`aUnknown899703)<<8
         sta lR18+1
-        lda #$9703
+        lda #<>aUnknown899703
         sta lR18
         ldx #$011B
         jsl rlDrawMenuTextLine
@@ -3191,9 +3358,9 @@
         sec
         sbc $7F83F5
         sta $7F83F5
-        lda #$8900
+        lda #(`aUnknown899709)<<8
         sta lR18+1
-        lda #$9709
+        lda #<>aUnknown899709
         sta lR18
         lda #$0700
         ora $7F83F5
@@ -3215,9 +3382,9 @@
         _96EB
         lda $7F8193
         beq _9702
-        lda #$8900
+        lda #(`aUnknown899703)<<8
         sta lR18+1
-        lda #$9703
+        lda #<>aUnknown899703
         sta lR18
         ldx #$0508
         jsl rlDrawMenuTextLine
@@ -3230,6 +3397,33 @@
         ; 89/9703
 
     .endsection Unsorted899510Section
+
+
+    .section Table899703Section
+
+      .al
+      .xl
+
+      aUnknown899703 ; 89/9703
+
+        .enc "SJIS"
+        .text "ーー"
+        .word $0000
+        .enc "none"
+
+      aUnknown899709 ; 89/9709
+
+        .enc "SJIS"
+        .text "ー"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table899703Section
+
+
+
+
 
 
     .section Unsorted89970DSection
@@ -3492,9 +3686,9 @@
         _9904
         lda $7F8197
         bne _991B
-        lda #$8900
+        lda #(`aUnknown899B93)<<8
         sta lR18+1
-        lda #$9B93
+        lda #<>aUnknown899B93
         sta lR18
         ldx #$1E08
         jsl rlDrawMenuTextLine
@@ -3505,9 +3699,9 @@
         jsl rlGetFactionSlotNameID
         cmp #$00FF
         bne _9938
-        lda #$8900
+        lda #(`aUnknown899B93)<<8
         sta lRoutineVariable+1,b
-        lda #$9B93
+        lda #<>aUnknown899B93
         sta lRoutineVariable,b
         bra _993C
 
@@ -3528,9 +3722,9 @@
         _994F
         lda @l wSelectedUnitDataRAMPointer
         pha
-        lda #$8900
+        lda #(`aUnknown899B93)<<8
         sta lRoutineVariable+1,b
-        lda #$9B93
+        lda #<>aUnknown899B93
         sta lRoutineVariable,b
         jsl rlGetSelectedUnitLoverGenerationID
         cmp #$0000
@@ -3580,9 +3774,9 @@
 
 
         _99DA
-        lda #$8900
+        lda #(`aUnknown899B93)<<8
         sta lRoutineVariable+1,b
-        lda #$9B93
+        lda #<>aUnknown899B93
         sta lRoutineVariable,b
 
         _99E6
@@ -3624,9 +3818,9 @@
         lda $7F81A9
         bit #$0200
         beq _9A58
-        lda #$8900
+        lda #(`aUnknown899B9D)<<8
         sta lR18+1
-        lda #$9B9D
+        lda #<>aUnknown899B9D
         sta lR18
         ldx #$2A08
         jsl rlDrawMenuTextLine
@@ -3751,15 +3945,15 @@
         jsr rsUnknown89A5AA
         lda $7F8193
         beq _9B8E
-        lda #$8900
+        lda #(`aUnknown899B93)<<8
         sta lR18+1
-        lda #$9B93
+        lda #<>aUnknown899B93
         sta lR18
         ldx #$2208
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899B93)<<8
         sta lR18+1
-        lda #$9B93
+        lda #<>aUnknown899B93
         sta lR18
         ldx #$2808
         jsl rlDrawMenuTextLine
@@ -3772,6 +3966,40 @@
         ; 89/9B8F
 
     .endsection Unsorted8998E1Section
+
+
+    .section Table899B8FSection
+
+      .al
+      .xl
+
+      aUnknown899B8F ; 89/9B8F
+
+        .enc "SJIS"
+        .text "ー"
+        .word $0000
+        .enc "none"
+
+      aUnknown899B93 ; 89/9B93
+
+        .enc "SJIS"
+        .text "ーーーー"
+        .word $0000
+        .enc "none"
+
+      aUnknown899B9D ; 89/9B9D
+
+        .enc "SJIS"
+        .text "しぼう"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table899B8FSection
+
+
+
+
 
 
     .section Unsorted899BA5Section
@@ -3796,9 +4024,9 @@
         sta wR0
         ldx #$0144
         jsl rlDrawBG3TileRun
-        lda #$8900
+        lda #(`aUnknown899C44)<<8
         sta lR18+1
-        lda #$9C44
+        lda #<>aUnknown899C44
         sta lR18
         ldx #$0507
         jsl rlDrawMenuTextLine
@@ -3810,35 +4038,35 @@
         sta wR0
         ldx #$01C4
         jsl rlDrawBG3TileRun
-        lda #$8900
+        lda #(`aUnknown899C4E)<<8
         sta lR18+1
-        lda #$9C4E
+        lda #<>aUnknown899C4E
         sta lR18
         ldx #$0707
         jsl rlDrawMenuTextLine
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #$8900
+        lda #(`aUnknown899C52)<<8
         sta lR18+1
-        lda #$9C52
+        lda #<>aUnknown899C52
         sta lR18
         ldx #$0114
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899C5C)<<8
         sta lR18+1
-        lda #$9C5C
+        lda #<>aUnknown899C5C
         sta lR18
         ldx #$0313
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899C68)<<8
         sta lR18+1
-        lda #$9C68
+        lda #<>aUnknown899C68
         sta lR18
         ldx #$0514
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899C72)<<8
         sta lR18+1
-        lda #$9C72
+        lda #<>aUnknown899C72
         sta lR18
         ldx #$0714
         jsl rlDrawMenuTextLine
@@ -3849,6 +4077,61 @@
         ; 89/9C44
 
     .endsection Unsorted899BA5Section
+
+
+    .section Table899C44Section
+
+      .al
+      .xl
+
+      aUnknown899C44 ; 89/9C44
+
+        .enc "SJIS"
+        .text "（　　）"
+        .word $0000
+        .enc "none"
+
+      aUnknown899C4E ; 89/9C4E
+
+        .enc "SJIS"
+        .text "／"
+        .word $0000
+        .enc "none"
+
+      aUnknown899C52 ; 89/9C52
+
+        .enc "SJIS"
+        .text "こうげき"
+        .word $0000
+        .enc "none"
+
+      aUnknown899C5C ; 89/9C5C
+
+        .enc "SJIS"
+        .text "めいちゅう"
+        .word $0000
+        .enc "none"
+
+      aUnknown899C68 ; 89/9C68
+
+        .enc "SJIS"
+        .text "しゃてい"
+        .word $0000
+        .enc "none"
+
+      aUnknown899C72 ; 89/9C72
+
+        .enc "SJIS"
+        .text "かいひち"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table899C44Section
+
+
+
+
 
 
     .section Unsorted899C7CSection
@@ -3881,45 +4164,45 @@
         jsl rlDrawBG3TileRun
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #$8900
+        lda #(`aUnknown899D26)<<8
         sta lR18+1
-        lda #$9D26
+        lda #<>aUnknown899D26
         sta lR18
         ldx #$0D06
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899D2E)<<8
         sta lR18+1
-        lda #$9D2E
+        lda #<>aUnknown899D2E
         sta lR18
         ldx #$0F05
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899D38)<<8
         sta lR18+1
-        lda #$9D38
+        lda #<>aUnknown899D38
         sta lR18
         ldx #$1107
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899D3E)<<8
         sta lR18+1
-        lda #$9D3E
+        lda #<>aUnknown899D3E
         sta lR18
         ldx #$1305
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899D48)<<8
         sta lR18+1
-        lda #$9D48
+        lda #<>aUnknown899D48
         sta lR18
         ldx #$1504
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899D54)<<8
         sta lR18+1
-        lda #$9D54
+        lda #<>aUnknown899D54
         sta lR18
         ldx #$1703
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899D62)<<8
         sta lR18+1
-        lda #$9D62
+        lda #<>aUnknown899D62
         sta lR18
         ldx #$1902
         jsl rlDrawMenuTextLine
@@ -3930,6 +4213,68 @@
         ; 89/9D26
 
     .endsection Unsorted899C7CSection
+
+
+    .section Table899D26Section
+
+      .al
+      .xl
+
+      aUnknown899D26 ; 89/9D26
+
+        .enc "SJIS"
+        .text "ちから"
+        .word $0000
+        .enc "none"
+
+      aUnknown899D2E ; 89/9D2E
+
+        .enc "SJIS"
+        .text "まりょく"
+        .word $0000
+        .enc "none"
+
+      aUnknown899D38 ; 89/9D38
+
+        .enc "SJIS"
+        .text "わざ"
+        .word $0000
+        .enc "none"
+
+      aUnknown899D3E ; 89/9D3E
+
+        .enc "SJIS"
+        .text "すばやさ"
+        .word $0000
+        .enc "none"
+
+      aUnknown899D48 ; 89/9D48
+
+        .enc "SJIS"
+        .text "うんのよさ"
+        .word $0000
+        .enc "none"
+
+      aUnknown899D54 ; 89/9D54
+
+        .enc "SJIS"
+        .text "しゅびりょく"
+        .word $0000
+        .enc "none"
+
+      aUnknown899D62 ; 89/9D62
+
+        .enc "SJIS"
+        .text "まほうぼうぎょ"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table899D26Section
+
+
+
+
 
 
     .section Unsorted899D72Section
@@ -3979,17 +4324,17 @@
         jsl rlDrawBG3TileRun
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #$8900
+        lda #(`aUnknown899F15)<<8
         sta lR18+1
-        lda #$9F15
+        lda #<>aUnknown899F15
         sta lR18
         ldx #$1E03
         jsl rlDrawMenuTextLine
         lda $7F8193
         beq _9DFA
-        lda #$8900
+        lda #(`aUnknown899F0B)<<8
         sta lR18+1
-        lda #$9F0B
+        lda #<>aUnknown899F0B
         sta lR18
         ldx #$2003
         jsl rlDrawMenuTextLine
@@ -3997,101 +4342,101 @@
 
 
         _9DFA
-        lda #$8900
+        lda #(`aUnknown899F47)<<8
         sta lR18+1
-        lda #$9F47
+        lda #<>aUnknown899F47
         sta lR18
         ldx #$2003
         jsl rlDrawMenuTextLine
 
         _9E0B
-        lda #$8900
+        lda #(`aUnknown899F1F)<<8
         sta lR18+1
-        lda #$9F1F
+        lda #<>aUnknown899F1F
         sta lR18
         ldx #$2204
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F27)<<8
         sta lR18+1
-        lda #$9F27
+        lda #<>aUnknown899F27
         sta lR18
         ldx #$2404
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F2F)<<8
         sta lR18+1
-        lda #$9F2F
+        lda #<>aUnknown899F2F
         sta lR18
         ldx #$2602
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F51)<<8
         sta lR18+1
-        lda #$9F51
+        lda #<>aUnknown899F51
         sta lR18
         ldx #$2802
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F3B)<<8
         sta lR18+1
-        lda #$9F3B
+        lda #<>aUnknown899F3B
         sta lR18
         ldx #$2A02
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F5D)<<8
         sta lR18+1
-        lda #$9F5D
+        lda #<>aUnknown899F5D
         sta lR18
         ldx #$1E12
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F63)<<8
         sta lR18+1
-        lda #$9F63
+        lda #<>aUnknown899F63
         sta lR18
         ldx #$2012
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F69)<<8
         sta lR18+1
-        lda #$9F69
+        lda #<>aUnknown899F69
         sta lR18
         ldx #$2212
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F6F)<<8
         sta lR18+1
-        lda #$9F6F
+        lda #<>aUnknown899F6F
         sta lR18
         ldx #$2412
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F75)<<8
         sta lR18+1
-        lda #$9F75
+        lda #<>aUnknown899F75
         sta lR18
         ldx #$2612
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F7B)<<8
         sta lR18+1
-        lda #$9F7B
+        lda #<>aUnknown899F7B
         sta lR18
         ldx #$1E19
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F83)<<8
         sta lR18+1
-        lda #$9F83
+        lda #<>aUnknown899F83
         sta lR18
         ldx #$2019
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F8D)<<8
         sta lR18+1
-        lda #$9F8D
+        lda #<>aUnknown899F8D
         sta lR18
         ldx #$2219
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F93)<<8
         sta lR18+1
-        lda #$9F93
+        lda #<>aUnknown899F93
         sta lR18
         ldx #$2419
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown899F9B)<<8
         sta lR18+1
-        lda #$9F9B
+        lda #<>aUnknown899F9B
         sta lR18
         ldx #$2619
         jsl rlDrawMenuTextLine
@@ -4102,6 +4447,145 @@
         ; 89/9F0B
 
     .endsection Unsorted899D72Section
+
+
+    .section Table899F0BSection
+
+      .al
+      .xl
+
+      aUnknown899F0B ; 89/9F0B
+
+        .enc "SJIS"
+        .text "しょぞく"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F15 ; 89/9F15
+
+        .enc "SJIS"
+        .text "しきかん"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F1F ; 89/9F1F
+
+        .enc "SJIS"
+        .text "かいわ"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F27 ; 89/9F27
+
+        .enc "SJIS"
+        .text "いどう"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F2F ; 89/9F2F
+
+        .enc "SJIS"
+        .text "しょじきん"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F3B ; 89/9F3B
+
+        .enc "SJIS"
+        .text "じょうたい"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F47 ; 89/9F47
+
+        .enc "SJIS"
+        .text "こいびと"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F51 ; 89/9F51
+
+        .enc "SJIS"
+        .text "とうぎＬＶ"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F5D ; 89/9F5D
+
+        .enc "SJIS"
+        .text "けん"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F63 ; 89/9F63
+
+        .enc "SJIS"
+        .text "やり"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F69 ; 89/9F69
+
+        .enc "SJIS"
+        .text "おの"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F6F ; 89/9F6F
+
+        .enc "SJIS"
+        .text "ゆみ"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F75 ; 89/9F75
+
+        .enc "SJIS"
+        .text "つえ"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F7B ; 89/9F7B
+
+        .enc "SJIS"
+        .text "ほのお"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F83 ; 89/9F83
+
+        .enc "SJIS"
+        .text "いかずち"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F8D ; 89/9F8D
+
+        .enc "SJIS"
+        .text "かぜ"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F93 ; 89/9F93
+
+        .enc "SJIS"
+        .text "ひかり"
+        .word $0000
+        .enc "none"
+
+      aUnknown899F9B ; 89/9F9B
+
+        .enc "SJIS"
+        .text "やみ"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table899F0BSection
+
+
+
+
 
 
     .section Unsorted899FA1Section
@@ -4152,6 +4636,13 @@
 
         ; 89/9FD5
 
+
+      aUnknown899FD5 ; 89/9FD5
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $00E, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown899FD5._Sprites
+
     .endsection Unsorted899FA1Section
 
 
@@ -4201,7 +4692,7 @@
         ldx #size(Palette)-2
         
           _Loop
-          lda aUnknownDE0000,x
+          lda aWindowPalette,x
           sta aBGPaletteBuffer,b,x
           dec x
           dec x
@@ -4224,7 +4715,7 @@
         ldx #size(Palette)-2
         
           _Loop
-          lda aUnknownDE0000,x
+          lda aWindowPalette,x
           sta aBGPaletteBuffer,b,x
           dec x
           dec x
@@ -4247,7 +4738,7 @@
         ldx #size(Palette)-2
         
           _Loop
-          lda aUnknownDE0000,x
+          lda aWindowPalette,x
           sta aBGPaletteBuffer,b,x
           dec x
           dec x
@@ -4270,7 +4761,7 @@
         ldx #size(Palette)-2
         
           _Loop
-          lda aUnknownDE0000,x
+          lda aWindowPalette,x
           sta aBGPaletteBuffer,b,x
           dec x
           dec x
@@ -4838,17 +5329,17 @@
         lda $7F82BD
         jsl rlCheckIfUnitHasSpecifiedPersonalSkill
         bcs _A4A6
-        lda #$8900
+        lda #(`aUnknown89A4D3)<<8
         sta lR18+1
-        lda #$A4D3
+        lda #<>aUnknown89A4D3
         sta lR18
         bra _A4B0
 
 
         _A4A6
-        lda #$8900
+        lda #(`aUnknown89A4C5)<<8
         sta lR18+1
-        lda #$A4C5
+        lda #<>aUnknown89A4C5
         sta lR18
 
         _A4B0
@@ -4865,6 +5356,33 @@
         ; 89/A4C5
 
     .endsection Unsorted89A3C0Section
+
+
+    .section Table89A4C5Section
+
+      .al
+      .xl
+
+      aUnknown89A4C5 ; 89/A4C5
+
+        .enc "SJIS"
+        .text "こじんスキル"
+        .word $0000
+        .enc "none"
+
+      aUnknown89A4D3 ; 89/A4D3
+
+        .enc "SJIS"
+        .text "へいしゅスキル"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table89A4C5Section
+
+
+
+
 
 
     .section Unsorted89A4E3Section
@@ -5197,6 +5715,227 @@
         ; 89/A72E
 
     .endsection Unsorted89A5D1Section
+
+
+    .section SpriteArray89A72ESection
+
+      .al
+      .xl
+
+      aUnknown89A72E ; 89/A72E
+
+        _Sprites := [[(  32,   48), $21, SpriteLarge, $004A, 3, 4, false, false]]
+        _Sprites ..= [[(  16,   48), $21, SpriteLarge, $0048, 3, 4, false, false]]
+        _Sprites ..= [[(   0,   48), $21, SpriteLarge, $0046, 3, 4, false, false]]
+        _Sprites ..= [[(  32,   32), $21, SpriteLarge, $002A, 3, 4, false, false]]
+        _Sprites ..= [[(  16,   32), $21, SpriteLarge, $0028, 3, 4, false, false]]
+        _Sprites ..= [[(   0,   32), $21, SpriteLarge, $0026, 3, 4, false, false]]
+        _Sprites ..= [[(  32,   16), $21, SpriteLarge, $0044, 3, 4, false, false]]
+        _Sprites ..= [[(  16,   16), $21, SpriteLarge, $0042, 3, 4, false, false]]
+        _Sprites ..= [[(   0,   16), $21, SpriteLarge, $0040, 3, 4, false, false]]
+        _Sprites ..= [[(  32,    0), $21, SpriteLarge, $0024, 3, 4, false, false]]
+        _Sprites ..= [[(  16,    0), $21, SpriteLarge, $0022, 3, 4, false, false]]
+        _Sprites ..= [[(   0,    0), $21, SpriteLarge, $0020, 3, 4, false, false]]
+
+        .structSpriteArray aUnknown89A72E._Sprites
+
+        ; 89/A76C
+
+    .endsection SpriteArray89A72ESection
+
+
+    .section Table89A76CSection
+
+      .al
+      .xl
+
+      aUnknown89A76C ; 89/A76C
+
+        ; Read by rlUnknown8A8496 (status names) followed by skill descriptions & names.
+
+        .long aUnknown89A781
+        .long aUnknown89A78D
+        .long aUnknown89A797
+        .long aUnknown89A7A3
+        .long aUnknown89A7AB
+        .long aUnknown89A7B5
+        .long aUnknown89A7BF
+
+      aUnknown89A781 ; 89/A781
+        .enc "SJIS"
+          .text "せいじょう\n"
+
+      aUnknown89A78D ; 89/A78D
+        .enc "SJIS"
+          .text "ちりょう\n"
+
+      aUnknown89A797 ; 89/A797
+        .enc "SJIS"
+          .text "アルバイト\n"
+
+      aUnknown89A7A3 ; 89/A7A3
+        .enc "SJIS"
+          .text "ほりょ\n"
+
+      aUnknown89A7AB ; 89/A7AB
+        .enc "SJIS"
+          .text "サイレス\n"
+
+      aUnknown89A7B5 ; 89/A7B5
+        .enc "SJIS"
+          .text "スリープ\n"
+
+      aUnknown89A7BF ; 89/A7BF
+        .enc "SJIS"
+          .text "バサーク\n"
+
+      aUnknown89A7C9 ; 89/A7C9
+        .enc "SJIS"
+          .text "あいてのこうげきを　うけとめダメージを　むこうにする\n"
+
+      aUnknown89A7FF ; 89/A7FF
+        .enc "SJIS"
+          .text "ピンチになったとき　いかりのこうげき\n"
+
+      aUnknown89A825 ; 89/A825
+        .enc "SJIS"
+          .text "あいてよりも　　　　みがるならば　　　　さいこうげき\n"
+
+      aUnknown89A85B ; 89/A85B
+        .enc "SJIS"
+          .text "すばやさのかくりつでれんぞくこうげき\n"
+
+      aUnknown89A881 ; 89/A881
+        .enc "SJIS"
+          .text "こうげきがあたると　あいてのゴールドを　うばう\n"
+
+      aUnknown89A8B1 ; 89/A8B1
+        .enc "SJIS"
+          .text "りんせつした　　　　ユニットを　　　　　いどうかのうにする\n"
+
+      aUnknown89A8ED ; 89/A8ED
+        .enc "SJIS"
+          .text "ちかくにいるみかたに１０％のしえんこうか\n"
+
+      aUnknown89A917 ; 89/A917
+        .enc "SJIS"
+          .text "ひっさつこうげきなどをふうじる\n"
+
+      aUnknown89A937 ; 89/A937
+        .enc "SJIS"
+          .text "ピンチになると　　　かいひりつがあがる\n"
+
+      aUnknown89A95F ; 89/A95F
+        .enc "SJIS"
+          .text "ひっさつのいちげき　こうげきりょくが　　２ばいになる\n"
+
+      aUnknown89A995 ; 89/A995
+        .enc "SJIS"
+          .text "ピンチになったとき　せんせいこうげき　　をする\n"
+
+      aUnknown89A9C5 ; 89/A9C5
+        .enc "SJIS"
+          .text "みがるであれば　　　ときおり　せんとうがけいぞくする\n"
+
+      aUnknown89A9FB ; 89/A9FB
+        .enc "SJIS"
+          .text "５かいれんぞくで　　こうげきする\n"
+
+      aUnknown89AA1D ; 89/AA1D
+        .enc "SJIS"
+          .text "あいてのしゅびりょくをむこうにする\n"
+
+      aUnknown89AA41 ; 89/AA41
+        .enc "SJIS"
+          .text "あたえたダメージだけＨＰがかいふくする\n"
+
+      aUnknown89AA69 ; 89/AA69
+        .enc "SJIS"
+          .text "まいターン　　　　　ＨＰが５から１０　　かいふくする\n"
+
+      aUnknown89AA9F ; 89/AA9F
+        .enc "SJIS"
+          .text "けいけんちを　　　　２ばいもらえる\n"
+
+      aUnknown89AAC3 ; 89/AAC3
+        .enc "SJIS"
+          .text "かいものや　　　　　しゅうりが　　　　　はんがくでできる\n"
+
+      aUnknown89AAFD ; 89/AAFD
+        .enc "SJIS"
+          .text "おおたて　　\n"
+
+      aUnknown89AB0B ; 89/AB0B
+        .enc "SJIS"
+          .text "いかり　　　\n"
+
+      aUnknown89AB19 ; 89/AB19
+        .enc "SJIS"
+          .text "ついげき　　\n"
+
+      aUnknown89AB27 ; 89/AB27
+        .enc "SJIS"
+          .text "れんぞく　　\n"
+
+      aUnknown89AB35 ; 89/AB35
+        .enc "SJIS"
+          .text "ぬすむ　　　\n"
+
+      aUnknown89AB43 ; 89/AB43
+        .enc "SJIS"
+          .text "おどる　　　\n"
+
+      aUnknown89AB51 ; 89/AB51
+        .enc "SJIS"
+          .text "カリスマ　　\n"
+
+      aUnknown89AB5F ; 89/AB5F
+        .enc "SJIS"
+          .text "みきり　　　\n"
+
+      aUnknown89AB6D ; 89/AB6D
+        .enc "SJIS"
+          .text "いのり　　　\n"
+
+      aUnknown89AB7B ; 89/AB7B
+        .enc "SJIS"
+          .text "ひっさつ　　\n"
+
+      aUnknown89AB89 ; 89/AB89
+        .enc "SJIS"
+          .text "まちぶせ　　\n"
+
+      aUnknown89AB97 ; 89/AB97
+        .enc "SJIS"
+          .text "とつげき　　\n"
+
+      aUnknown89ABA5 ; 89/ABA5
+        .enc "SJIS"
+          .text "りゅうせい剣\n"
+
+      aUnknown89ABB3 ; 89/ABB3
+        .enc "SJIS"
+          .text "げっこう剣　\n"
+
+      aUnknown89ABC1 ; 89/ABC1
+        .enc "SJIS"
+          .text "たいよう剣　\n"
+
+      aUnknown89ABCF ; 89/ABCF
+        .enc "SJIS"
+          .text "ライブ　　　\n"
+
+      aUnknown89ABDD ; 89/ABDD
+        .enc "SJIS"
+          .text "エリート　　\n"
+
+      aUnknown89ABEB ; 89/ABEB
+        .enc "SJIS"
+          .text "ねぎり　　　\n"
+
+        ; 89/ABF9
+
+    .endsection Table89A76CSection
 
 
     .section Table89ABF9Section
@@ -7127,9 +7866,9 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89F88F)<<8
         sta lR18+1
-        lda #$F88F
+        lda #<>aUnknown89F88F
         sta lR18
         ldx #$1416
         bra rsUnknown89EE32._EE3F
@@ -7145,9 +7884,9 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89F893)<<8
         sta lR18+1
-        lda #$F893
+        lda #<>aUnknown89F893
         sta lR18
         ldx #$1419
         bra rsUnknown89EE32._EE3F
@@ -7171,9 +7910,9 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89F897)<<8
         sta lR18+1
-        lda #$F897
+        lda #<>aUnknown89F897
         sta lR18
         ldx #$141C
 
@@ -7213,18 +7952,18 @@
         tax
         lda wDebugMenuScreenIndex,x
         beq _EE6B
-        lda #$8900
+        lda #(`aUnknown89F8AD)<<8
         sta lR18+1
-        lda #$F8AD
+        lda #<>aUnknown89F8AD
         sta lR18
         ldx #$141B
         bra _EE78
 
 
         _EE6B
-        lda #$8900
+        lda #(`aUnknown89F8A3)<<8
         sta lR18+1
-        lda #$F8A3
+        lda #<>aUnknown89F8A3
         sta lR18
         ldx #$1415
 
@@ -7309,45 +8048,45 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89F88F)<<8
         sta lR18+1
-        lda #$F88F
+        lda #<>aUnknown89F88F
         sta lR18
         ldx #$1415
         bra _EEED
 
 
         _EEB3
-        lda #$8900
+        lda #(`aUnknown89F893)<<8
         sta lR18+1
-        lda #$F893
+        lda #<>aUnknown89F893
         sta lR18
         ldx #$1417
         bra _EEED
 
 
         _EEC2
-        lda #$8900
+        lda #(`aUnknown89F897)<<8
         sta lR18+1
-        lda #$F897
+        lda #<>aUnknown89F897
         sta lR18
         ldx #$1419
         bra _EEED
 
 
         _EED1
-        lda #$8900
+        lda #(`aUnknown89F89B)<<8
         sta lR18+1
-        lda #$F89B
+        lda #<>aUnknown89F89B
         sta lR18
         ldx #$141B
         bra _EEED
 
 
         _EEE0
-        lda #$8900
+        lda #(`aUnknown89F89F)<<8
         sta lR18+1
-        lda #$F89F
+        lda #<>aUnknown89F89F
         sta lR18
         ldx #$141D
 
@@ -7429,18 +8168,18 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89EF40)<<8
         sta lR18+1
-        lda #$EF40
+        lda #<>aUnknown89EF40
         sta lR18
         ldx #$1415
         bra _EF2F
 
 
         _EF22
-        lda #$8900
+        lda #(`aUnknown89EF48)<<8
         sta lR18+1
-        lda #$EF48
+        lda #<>aUnknown89EF48
         sta lR18
         ldx #$141B
 
@@ -7461,6 +8200,33 @@
         ; 89/EF40
 
     .endsection Unsorted89EF13Section
+
+
+    .section Table89EF40Section
+
+      .al
+      .xl
+
+      aUnknown89EF40 ; 89/EF40
+
+        .enc "SJIS"
+        .text "リアル"
+        .word $0000
+        .enc "none"
+
+      aUnknown89EF48 ; 89/EF48
+
+        .enc "SJIS"
+        .text "はやい"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table89EF40Section
+
+
+
+
 
 
     .section Unsorted89EF50Section
@@ -7523,27 +8289,27 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89F88F)<<8
         sta lR18+1
-        lda #$F88F
+        lda #<>aUnknown89F88F
         sta lR18
         ldx #$1416
         bra _EF92
 
 
         _EF76
-        lda #$8900
+        lda #(`aUnknown89F893)<<8
         sta lR18+1
-        lda #$F893
+        lda #<>aUnknown89F893
         sta lR18
         ldx #$1419
         bra _EF92
 
 
         _EF85
-        lda #$8900
+        lda #(`aUnknown89F897)<<8
         sta lR18+1
-        lda #$F897
+        lda #<>aUnknown89F897
         sta lR18
         ldx #$141C
 
@@ -7628,45 +8394,45 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89F88B)<<8
         sta lR18+1
-        lda #$F88B
+        lda #<>aUnknown89F88B
         sta lR18
         ldx #$1415
         bra _F007
 
 
         _EFCD
-        lda #$8900
+        lda #(`aUnknown89F88F)<<8
         sta lR18+1
-        lda #$F88F
+        lda #<>aUnknown89F88F
         sta lR18
         ldx #$1417
         bra _F007
 
 
         _EFDC
-        lda #$8900
+        lda #(`aUnknown89F893)<<8
         sta lR18+1
-        lda #$F893
+        lda #<>aUnknown89F893
         sta lR18
         ldx #$1419
         bra _F007
 
 
         _EFEB
-        lda #$8900
+        lda #(`aUnknown89F897)<<8
         sta lR18+1
-        lda #$F897
+        lda #<>aUnknown89F897
         sta lR18
         ldx #$141B
         bra _F007
 
 
         _EFFA
-        lda #$8900
+        lda #(`aUnknown89F89B)<<8
         sta lR18+1
-        lda #$F89B
+        lda #<>aUnknown89F89B
         sta lR18
         ldx #$141D
 
@@ -7748,9 +8514,9 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89F05B)<<8
         sta lR18+1
-        lda #$F05B
+        lda #<>aUnknown89F05B
         sta lR18
         ldx #$1415
         jsl rlDrawMenuTextLine
@@ -7767,9 +8533,9 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89F051)<<8
         sta lR18+1
-        lda #$F051
+        lda #<>aUnknown89F051
         sta lR18
         ldx #$141A
         jsl rlDrawMenuTextLine
@@ -7780,6 +8546,33 @@
         ; 89/F051
 
     .endsection Unsorted89F02DSection
+
+
+    .section Table89F051Section
+
+      .al
+      .xl
+
+      aUnknown89F051 ; 89/F051
+
+        .enc "SJIS"
+        .text "かしこい"
+        .word $0000
+        .enc "none"
+
+      aUnknown89F05B ; 89/F05B
+
+        .enc "SJIS"
+        .text "ふつう　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table89F051Section
+
+
+
+
 
 
     .section Unsorted89F065Section
@@ -8009,9 +8802,9 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aUnknown80E58F)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$E58F
+        lda #<>aUnknown80E58F
         sta lMapMenuTilemapRAMEntryPointer,b
         jsr rsUnknown89F620
         lda #$2000
@@ -8083,9 +8876,9 @@
         inc x
         cpx #$0012
         bne _F2E4
-        lda #$8000
+        lda #(`aUnknown80E586)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$E586
+        lda #<>aUnknown80E586
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -8116,6 +8909,66 @@
         ; 89/F338
 
     .endsection Unsorted89F246Section
+
+
+    .section Table89F338Section
+
+      .al
+      .xl
+
+      aUnknown89F338 ; 89/F338
+
+        ; Read by rlUnknown89F246.
+
+        .long aUnknown89F353
+        .long aUnknown89F397
+        .long aUnknown89F3C5
+        .long aUnknown89F3F5
+        .long aUnknown89F42D
+        .long aUnknown89F45B
+        .long aUnknown89F4AF
+        .long aUnknown89F52F
+        .long aUnknown89F4FD
+
+      aUnknown89F353 ; 89/F353
+        .enc "SJIS"
+          .text "アニメせってい　　　１ーリアル　　　　２ーマップ　　　　３ーこ部つ\n"
+
+      aUnknown89F397 ; 89/F397
+        .enc "SJIS"
+          .text "ちけいウィンドウ　ちけいウィンドウのひょうじ\n"
+
+      aUnknown89F3C5 ; 89/F3C5
+        .enc "SJIS"
+          .text "ユニットウィンドウユニットウィンドウのひょうじ\n"
+
+      aUnknown89F3F5 ; 89/F3F5
+        .enc "SJIS"
+          .text "メッセージスピードメッセージを　　　ひょうじするはやさ\n"
+
+      aUnknown89F42D ; 89/F42D
+        .enc "SJIS"
+          .text "てきいどうスピードてきのいどうする　スピード\n"
+
+      aUnknown89F45B ; 89/F45B
+        .enc "SJIS"
+          .text "サウンドせってい　ＢＧＭのせってい　　１ーステレオ　　　２ーモノラル　　　３ーオフ\n"
+
+      aUnknown89F4AF ; 89/F4AF
+        .enc "SJIS"
+          .text "オートセーブ　　　ターンのはじめに　えらんだファイルへじどうてきにセーブする\n"
+
+      aUnknown89F4FD ; 89/F4FD
+        .enc "SJIS"
+          .text "てきのあたまのよさてきユニットの　　あたまのよさ\n"
+
+      aUnknown89F52F ; 89/F52F
+        .enc "SJIS"
+          .text "オートカーソル　　ターンのはじめに　しゅじんこうに　　カーソルをあわせる\n"
+
+        ; 89/F579
+
+    .endsection Table89F338Section
 
 
     .section Data89F579Section
@@ -8372,6 +9225,39 @@
 
         ; 89/F74B
 
+
+      aUnknown89F74B ; 89/F74B
+
+        _Sprites := [[(  14,  -65), $21, SpriteLarge, $020, 3, 2, false, false]]
+        _Sprites ..= [[(  14,  -44), $21, SpriteLarge, $022, 3, 2, false, false]]
+        _Sprites ..= [[(  14,  -23), $21, SpriteLarge, $024, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   -2), $21, SpriteLarge, $026, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   18), $21, SpriteLarge, $02C, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   39), $21, SpriteLarge, $02A, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   61), $21, SpriteLarge, $02E, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   81), $21, SpriteLarge, $042, 3, 2, false, false]]
+
+        .structSpriteArray aUnknown89F74B._Sprites
+
+      aUnknown89F775 ; 89/F775
+
+        _Sprites := [[(  14,  -63), $21, SpriteLarge, $020, 3, 2, false, false]]
+        _Sprites ..= [[(  14,  -40), $21, SpriteLarge, $022, 3, 2, false, false]]
+        _Sprites ..= [[(  14,  -16), $21, SpriteLarge, $024, 3, 2, false, false]]
+        _Sprites ..= [[(  14,    7), $21, SpriteLarge, $026, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   29), $21, SpriteLarge, $02C, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   52), $21, SpriteLarge, $02A, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   75), $21, SpriteLarge, $02E, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   98), $21, SpriteLarge, $042, 3, 2, false, false]]
+
+        .structSpriteArray aUnknown89F775._Sprites
+
+      aUnknown89F79F ; 89/F79F
+
+        _Sprites := [[(  14,  118), $21, SpriteLarge, $040, 3, 2, false, false]]
+
+        .structSpriteArray aUnknown89F79F._Sprites
+
     .endsection Unsorted89F713Section
 
 
@@ -8519,6 +9405,75 @@
         ; 89/F88B
 
     .endsection Unsorted89F842Section
+
+
+    .section Table89F88BSection
+
+      .al
+      .xl
+
+      aUnknown89F88B ; 89/F88B
+
+        .enc "SJIS"
+        .text "０"
+        .word $0000
+        .enc "none"
+
+      aUnknown89F88F ; 89/F88F
+
+        .enc "SJIS"
+        .text "１"
+        .word $0000
+        .enc "none"
+
+      aUnknown89F893 ; 89/F893
+
+        .enc "SJIS"
+        .text "２"
+        .word $0000
+        .enc "none"
+
+      aUnknown89F897 ; 89/F897
+
+        .enc "SJIS"
+        .text "３"
+        .word $0000
+        .enc "none"
+
+      aUnknown89F89B ; 89/F89B
+
+        .enc "SJIS"
+        .text "４"
+        .word $0000
+        .enc "none"
+
+      aUnknown89F89F ; 89/F89F
+
+        .enc "SJIS"
+        .text "５"
+        .word $0000
+        .enc "none"
+
+      aUnknown89F8A3 ; 89/F8A3
+
+        .enc "SJIS"
+        .text "ＯＮ　　"
+        .word $0000
+        .enc "none"
+
+      aUnknown89F8AD ; 89/F8AD
+
+        .enc "SJIS"
+        .text "ＯＦＦ　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table89F88BSection
+
+
+
+
 
 
     .section DataDE6200Section

@@ -1066,9 +1066,9 @@
         phk
         plb
         .databank $8A
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$3000
         sta aCurrentTilemapInfo,b
@@ -1076,9 +1076,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0200, $80, $B000
 
-        lda #$8A00
+        lda #(`aUnknown8A85EF)<<8
         sta lRoutineVariable+1,b
-        lda #$85EF
+        lda #<>aUnknown8A85EF
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1119,9 +1119,9 @@
         jsl rlGetSelectedUnitStatus
         cmp #StatusHealthy
         bne _8594
-        lda #$8A00
+        lda #(`aUnknown8A8621)<<8
         sta lRoutineVariable+1,b
-        lda #$8621
+        lda #<>aUnknown8A8621
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1129,9 +1129,9 @@
         sta lR18+1
         ldx #$0110
         jsl rlDrawMenuTextLine
-        lda #$8A00
+        lda #(`aUnknown8A8627)<<8
         sta lRoutineVariable+1,b
-        lda #$8627
+        lda #<>aUnknown8A8627
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1181,9 +1181,9 @@
         sta lR18+1
         ldx #$010E
         jsl rlDrawMenuTextLine
-        lda #$8A00
+        lda #(`aUnknown8A863B)<<8
         sta lRoutineVariable+1,b
-        lda #$863B
+        lda #<>aUnknown8A863B
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1203,6 +1203,54 @@
         ; 8A/85EF
 
     .endsection Unsorted8A8496Section
+
+
+    .section Table8A85EFSection
+
+      .al
+      .xl
+
+      aUnknown8A85EF ; 8A/85EF
+
+        .enc "SJIS"
+        .text "　　　　　　　　　　　　　　　　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+      aUnknown8A8621 ; 8A/8621
+
+        .enc "SJIS"
+        .text "ＨＰ"
+        .word $0000
+        .enc "none"
+
+      aUnknown8A8627 ; 8A/8627
+
+        .enc "SJIS"
+        .text "／"
+        .word $0000
+        .enc "none"
+
+      aUnknown8A862B ; 8A/862B
+
+        .enc "SJIS"
+        .text "　　アルバイト"
+        .word $0000
+        .enc "none"
+
+      aUnknown8A863B ; 8A/863B
+
+        .enc "SJIS"
+        .text "のこり"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8A85EFSection
+
+
+
+
 
 
     .section Unsorted8A8643Section
@@ -1486,9 +1534,9 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$3400
         sta aCurrentTilemapInfo,b
@@ -1531,9 +1579,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8A88E0)<<8
         sta lRoutineVariable+1,b
-        lda #$88E0
+        lda #<>aUnknown8A88E0
         sta lRoutineVariable,b
         jsl rlUnknown879F12
         bcc rsUnknown8A886F
@@ -1550,9 +1598,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8A88F4)<<8
         sta lRoutineVariable+1,b
-        lda #$88F4
+        lda #<>aUnknown8A88F4
         sta lRoutineVariable,b
         jsl rlUnknown879F67
         bcc rsUnknown8A886F
@@ -1569,9 +1617,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8A8908)<<8
         sta lRoutineVariable+1,b
-        lda #$8908
+        lda #<>aUnknown8A8908
         sta lRoutineVariable,b
         lda wCurrentChapter,b
         cmp #$0006
@@ -1589,9 +1637,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8A891C)<<8
         sta lRoutineVariable+1,b
-        lda #$891C
+        lda #<>aUnknown8A891C
         sta lRoutineVariable,b
         rts
 
@@ -1606,9 +1654,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8A896C)<<8
         sta lRoutineVariable+1,b
-        lda #$896C
+        lda #<>aUnknown8A896C
         sta lRoutineVariable,b
         bra rsUnknown8A886F
 
@@ -1623,9 +1671,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8A8958)<<8
         sta lRoutineVariable+1,b
-        lda #$8958
+        lda #<>aUnknown8A8958
         sta lRoutineVariable,b
         bra rsUnknown8A886F
 
@@ -1641,9 +1689,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8A8944)<<8
         sta lRoutineVariable+1,b
-        lda #$8944
+        lda #<>aUnknown8A8944
         sta lRoutineVariable,b
 
         .databank 0
@@ -1684,9 +1732,9 @@
         _8887
         jsl rlUnknown879F9C
         bcc rsUnknown8A8847
-        lda #$8A00
+        lda #(`aUnknown8A896C)<<8
         sta lRoutineVariable+1,b
-        lda #$896C
+        lda #<>aUnknown8A896C
         sta lRoutineVariable,b
         rts
 
@@ -1716,9 +1764,9 @@
         beq rsUnknown8A8863
 
         _88C0
-        lda #$8A00
+        lda #(`aUnknown8A8930)<<8
         sta lRoutineVariable+1,b
-        lda #$8930
+        lda #<>aUnknown8A8930
         sta lRoutineVariable,b
         rts
 
@@ -1726,9 +1774,9 @@
         _88CD
         jsl rlUnknown87A006
         bcc rsUnknown8A8855
-        lda #$8A00
+        lda #(`aUnknown8A8958)<<8
         sta lRoutineVariable+1,b
-        lda #$8958
+        lda #<>aUnknown8A8958
         sta lRoutineVariable,b
         rts
 
@@ -1737,6 +1785,75 @@
         ; 8A/88E0
 
     .endsection Unsorted8A87B8Section
+
+
+    .section Table8A88E0Section
+
+      .al
+      .xl
+
+      aUnknown8A88E0 ; 8A/88E0
+
+        .enc "SJIS"
+        .text "　　しゅつげき　　"
+        .word $0000
+        .enc "none"
+
+      aUnknown8A88F4 ; 8A/88F4
+
+        .enc "SJIS"
+        .text "　　しゅび　　　　"
+        .word $0000
+        .enc "none"
+
+      aUnknown8A8908 ; 8A/8908
+
+        .enc "SJIS"
+        .text "　　クラスチェンジ"
+        .word $0000
+        .enc "none"
+
+      aUnknown8A891C ; 8A/891C
+
+        .enc "SJIS"
+        .text "　　まち　　　　　"
+        .word $0000
+        .enc "none"
+
+      aUnknown8A8930 ; 8A/8930
+
+        .enc "SJIS"
+        .text "　　つえ　　　　　"
+        .word $0000
+        .enc "none"
+
+      aUnknown8A8944 ; 8A/8944
+
+        .enc "SJIS"
+        .text "　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+      aUnknown8A8958 ; 8A/8958
+
+        .enc "SJIS"
+        .text "　　おどる　　　　"
+        .word $0000
+        .enc "none"
+
+      aUnknown8A896C ; 8A/896C
+
+        .enc "SJIS"
+        .text "　　あげる　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8A88E0Section
+
+
+
+
 
 
     .section Unsorted8A8980Section
@@ -2162,9 +2279,9 @@
         dec x
         bpl _8C35
         jsl rlUnknown8A8496
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$3000
         sta aCurrentTilemapInfo,b
@@ -2481,9 +2598,9 @@
         jsl rlUnknown899FDC
         sep #$20
         rep #$10
-        ldx #$2542
+        ldx #<>gcUnknownC02542
         stx DecompressionVariables
-        lda #$C0
+        lda #`gcUnknownC02542
         sta $CA
         ldx #$8F88
         stx $CB
@@ -2782,9 +2899,9 @@
         _90E4
         stz wBufferBG2VOFS
         stz $0891,b
-        lda #$8A00
+        lda #(`aUnknown8A9158)<<8
         sta lRoutineVariable+1,b
-        lda #$9158
+        lda #<>aUnknown8A9158
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -2834,6 +2951,26 @@
     .endsection Unsorted8A8F8FSection
 
 
+    .section Table8A9158Section
+
+      .al
+      .xl
+
+      aUnknown8A9158 ; 8A/9158
+
+        .enc "SJIS"
+        .text "　　　　　　　　　　　　　　　　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8A9158Section
+
+
+
+
+
+
     .section Unsorted8A918ASection
 
       .al
@@ -2847,9 +2984,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8A91D7)<<8
         sta lRoutineVariable+1,b
-        lda #$91D7
+        lda #<>aUnknown8A91D7
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -2884,6 +3021,26 @@
     .endsection Unsorted8A918ASection
 
 
+    .section Table8A91D7Section
+
+      .al
+      .xl
+
+      aUnknown8A91D7 ; 8A/91D7
+
+        .enc "SJIS"
+        .text "　　　　　　　　　　　　　　　　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8A91D7Section
+
+
+
+
+
+
     .section Unsorted8A9209Section
 
       .al
@@ -2903,9 +3060,9 @@
         sta wActiveUnitDeploymentOffset,b
         stz $0897,b
         jsr rsUnknown8A870D
-        lda #$8A00
+        lda #(`aUnknown8A9269)<<8
         sta lRoutineVariable+1,b
-        lda #$9269
+        lda #<>aUnknown8A9269
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -2940,6 +3097,26 @@
     .endsection Unsorted8A9209Section
 
 
+    .section Table8A9269Section
+
+      .al
+      .xl
+
+      aUnknown8A9269 ; 8A/9269
+
+        .enc "SJIS"
+        .text "　　　　　　　　　　　　　　　　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8A9269Section
+
+
+
+
+
+
     .section Unsorted8A929BSection
 
       .al
@@ -2955,7 +3132,7 @@
         ldx #$001E
 
         _929E
-        lda aUnknownDE0000,x
+        lda aWindowPalette,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -3300,6 +3477,96 @@
     .endsection Unsorted8A9389Section
 
 
+    .section Table8A945ESection
+
+      .al
+      .xl
+
+      aUnknown8A945E ; 8A/945E
+
+        ; Read by rsUnknown8A9389.
+
+        .word $0020, $0040, $0010, $0004, $0008, $0080
+
+        ; 8A/946A
+
+    .endsection Table8A945ESection
+
+
+    .section Unsorted8A946ASection
+
+      .al
+      .xl
+
+      rsUnknown8A946A ; 8A/946A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetDecompressedPortraitDataPointers
+        ldx #$001E
+        ldy #$001E
+
+        _9474
+        lda [lR19],y
+        sta $0140,b,y
+        dec x
+        dec x
+        dec y
+        dec y
+        bpl _9474
+        lda #$0800
+        sta wR0
+        lda #$2000
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 8A/9490
+
+
+      rsUnknown8A9490 ; 8A/9490
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetDecompressedPortraitDataPointers
+        ldx #$001E
+        ldy #$001E
+
+        _949A
+        lda [lR19],y
+        sta $0180,b,y
+        dec x
+        dec x
+        dec y
+        dec y
+        bpl _949A
+        lda #$0800
+        sta wR0
+        lda #$2000
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 8A/94B6
+
+
+    .endsection Unsorted8A946ASection
+
+
     .section Unsorted8A94B6Section
 
       .al
@@ -3488,6 +3755,140 @@
         .databank 0
 
         ; 8A/9586
+
+
+      aUnknown8A9586 ; 8A/9586
+
+        _Sprites := [[(  32,   48), $21, SpriteLarge, $09A, 2, 4, false, false]]
+        _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 4, false, false]]
+        _Sprites ..= [[(   0,   48), $21, SpriteLarge, $096, 2, 4, false, false]]
+        _Sprites ..= [[(  32,   32), $21, SpriteLarge, $07A, 2, 4, false, false]]
+        _Sprites ..= [[(  16,   32), $21, SpriteLarge, $078, 2, 4, false, false]]
+        _Sprites ..= [[(   0,   32), $21, SpriteLarge, $076, 2, 4, false, false]]
+        _Sprites ..= [[(  32,   16), $21, SpriteLarge, $094, 2, 4, false, false]]
+        _Sprites ..= [[(  16,   16), $21, SpriteLarge, $092, 2, 4, false, false]]
+        _Sprites ..= [[(   0,   16), $21, SpriteLarge, $090, 2, 4, false, false]]
+        _Sprites ..= [[(  32,    0), $21, SpriteLarge, $074, 2, 4, false, false]]
+        _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 4, false, false]]
+        _Sprites ..= [[(   0,    0), $21, SpriteLarge, $070, 2, 4, false, false]]
+
+        .structSpriteArray aUnknown8A9586._Sprites
+
+      aUnknown8A95C4 ; 8A/95C4
+
+        _Sprites := [[(  32,   48), $21, SpriteLarge, $09A, 2, 4, false, false]]
+        _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 4, false, false]]
+        _Sprites ..= [[(   0,   48), $21, SpriteLarge, $096, 2, 4, false, false]]
+        _Sprites ..= [[(  32,   32), $21, SpriteLarge, $07A, 2, 4, false, false]]
+        _Sprites ..= [[(  16,   32), $21, SpriteLarge, $07E, 2, 4, false, false]]
+        _Sprites ..= [[(   0,   32), $21, SpriteLarge, $07C, 2, 4, false, false]]
+        _Sprites ..= [[(  32,   16), $21, SpriteLarge, $094, 2, 4, false, false]]
+        _Sprites ..= [[(  16,   16), $21, SpriteLarge, $092, 2, 4, false, false]]
+        _Sprites ..= [[(   0,   16), $21, SpriteLarge, $090, 2, 4, false, false]]
+        _Sprites ..= [[(  32,    0), $21, SpriteLarge, $074, 2, 4, false, false]]
+        _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 4, false, false]]
+        _Sprites ..= [[(   0,    0), $21, SpriteLarge, $070, 2, 4, false, false]]
+
+        .structSpriteArray aUnknown8A95C4._Sprites
+
+      aUnknown8A9602 ; 8A/9602
+
+        _Sprites := [[(  32,   48), $21, SpriteLarge, $09A, 2, 4, false, false]]
+        _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 4, false, false]]
+        _Sprites ..= [[(   0,   48), $21, SpriteLarge, $096, 2, 4, false, false]]
+        _Sprites ..= [[(  32,   32), $21, SpriteLarge, $07A, 2, 4, false, false]]
+        _Sprites ..= [[(  16,   32), $21, SpriteLarge, $09E, 2, 4, false, false]]
+        _Sprites ..= [[(   0,   32), $21, SpriteLarge, $09C, 2, 4, false, false]]
+        _Sprites ..= [[(  32,   16), $21, SpriteLarge, $094, 2, 4, false, false]]
+        _Sprites ..= [[(  16,   16), $21, SpriteLarge, $092, 2, 4, false, false]]
+        _Sprites ..= [[(   0,   16), $21, SpriteLarge, $090, 2, 4, false, false]]
+        _Sprites ..= [[(  32,    0), $21, SpriteLarge, $074, 2, 4, false, false]]
+        _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 4, false, false]]
+        _Sprites ..= [[(   0,    0), $21, SpriteLarge, $070, 2, 4, false, false]]
+
+        .structSpriteArray aUnknown8A9602._Sprites
+
+      aUnknown8A9640 ; 8A/9640
+
+        _Sprites := [[(  16,   32), $21, SpriteLarge, $07E, 3, 4, false, false]]
+        _Sprites ..= [[(   0,   32), $21, SpriteLarge, $07C, 3, 4, false, false]]
+
+        .structSpriteArray aUnknown8A9640._Sprites
+
+      aUnknown8A964C ; 8A/964C
+
+        _Sprites := [[(   0,   48), $21, SpriteLarge, $09A, 2, 5, true, false]]
+        _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 5, true, false]]
+        _Sprites ..= [[(  32,   48), $21, SpriteLarge, $096, 2, 5, true, false]]
+        _Sprites ..= [[(   0,   32), $21, SpriteLarge, $07A, 2, 5, true, false]]
+        _Sprites ..= [[(  16,   32), $21, SpriteLarge, $078, 2, 5, true, false]]
+        _Sprites ..= [[(  32,   32), $21, SpriteLarge, $076, 2, 5, true, false]]
+        _Sprites ..= [[(   0,   16), $21, SpriteLarge, $094, 2, 5, true, false]]
+        _Sprites ..= [[(  16,   16), $21, SpriteLarge, $092, 2, 5, true, false]]
+        _Sprites ..= [[(  32,   16), $21, SpriteLarge, $090, 2, 5, true, false]]
+        _Sprites ..= [[(   0,    0), $21, SpriteLarge, $074, 2, 5, true, false]]
+        _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 5, true, false]]
+        _Sprites ..= [[(  32,    0), $21, SpriteLarge, $070, 2, 5, true, false]]
+
+        .structSpriteArray aUnknown8A964C._Sprites
+
+      aUnknown8A968A ; 8A/968A
+
+        _Sprites := [[(   0,   48), $21, SpriteLarge, $09A, 2, 5, true, false]]
+        _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 5, true, false]]
+        _Sprites ..= [[(  32,   48), $21, SpriteLarge, $096, 2, 5, true, false]]
+        _Sprites ..= [[(   0,   32), $21, SpriteLarge, $07A, 2, 5, true, false]]
+        _Sprites ..= [[(  16,   32), $21, SpriteLarge, $07E, 2, 5, true, false]]
+        _Sprites ..= [[(  32,   32), $21, SpriteLarge, $07C, 2, 5, true, false]]
+        _Sprites ..= [[(   0,   16), $21, SpriteLarge, $094, 2, 5, true, false]]
+        _Sprites ..= [[(  16,   16), $21, SpriteLarge, $092, 2, 5, true, false]]
+        _Sprites ..= [[(  32,   16), $21, SpriteLarge, $090, 2, 5, true, false]]
+        _Sprites ..= [[(   0,    0), $21, SpriteLarge, $074, 2, 5, true, false]]
+        _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 5, true, false]]
+        _Sprites ..= [[(  32,    0), $21, SpriteLarge, $070, 2, 5, true, false]]
+
+        .structSpriteArray aUnknown8A968A._Sprites
+
+      aUnknown8A96C8 ; 8A/96C8
+
+        _Sprites := [[(   0,   48), $21, SpriteLarge, $09A, 2, 5, true, false]]
+        _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 5, true, false]]
+        _Sprites ..= [[(  32,   48), $21, SpriteLarge, $096, 2, 5, true, false]]
+        _Sprites ..= [[(   0,   32), $21, SpriteLarge, $07A, 2, 5, true, false]]
+        _Sprites ..= [[(  16,   32), $21, SpriteLarge, $09E, 2, 5, true, false]]
+        _Sprites ..= [[(  32,   32), $21, SpriteLarge, $09C, 2, 5, true, false]]
+        _Sprites ..= [[(   0,   16), $21, SpriteLarge, $094, 2, 5, true, false]]
+        _Sprites ..= [[(  16,   16), $21, SpriteLarge, $092, 2, 5, true, false]]
+        _Sprites ..= [[(  32,   16), $21, SpriteLarge, $090, 2, 5, true, false]]
+        _Sprites ..= [[(   0,    0), $21, SpriteLarge, $074, 2, 5, true, false]]
+        _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 5, true, false]]
+        _Sprites ..= [[(  32,    0), $21, SpriteLarge, $070, 2, 5, true, false]]
+
+        .structSpriteArray aUnknown8A96C8._Sprites
+
+      aUnknown8A9706 ; 8A/9706
+
+        _Sprites := [[(  16,   32), $21, SpriteLarge, $07E, 3, 5, true, false]]
+        _Sprites ..= [[(  32,   32), $21, SpriteLarge, $07C, 3, 5, true, false]]
+
+        .structSpriteArray aUnknown8A9706._Sprites
+
+      aUnknown8A9712 ; 8A/9712
+
+        _Sprites := [[(  32,   48), $21, SpriteLarge, $06A, 3, 6, false, false]]
+        _Sprites ..= [[(  16,   48), $21, SpriteLarge, $068, 3, 6, false, false]]
+        _Sprites ..= [[(   0,   48), $21, SpriteLarge, $066, 3, 6, false, false]]
+        _Sprites ..= [[(  32,   32), $21, SpriteLarge, $04A, 3, 6, false, false]]
+        _Sprites ..= [[(  16,   32), $21, SpriteLarge, $048, 3, 6, false, false]]
+        _Sprites ..= [[(   0,   32), $21, SpriteLarge, $046, 3, 6, false, false]]
+        _Sprites ..= [[(  32,   16), $21, SpriteLarge, $064, 3, 6, false, false]]
+        _Sprites ..= [[(  16,   16), $21, SpriteLarge, $062, 3, 6, false, false]]
+        _Sprites ..= [[(   0,   16), $21, SpriteLarge, $060, 3, 6, false, false]]
+        _Sprites ..= [[(  32,    0), $21, SpriteLarge, $044, 3, 6, false, false]]
+        _Sprites ..= [[(  16,    0), $21, SpriteLarge, $042, 3, 6, false, false]]
+        _Sprites ..= [[(   0,    0), $21, SpriteLarge, $040, 3, 6, false, false]]
+
+        .structSpriteArray aUnknown8A9712._Sprites
 
     .endsection Unsorted8A956FSection
 
@@ -3726,9 +4127,9 @@
         lda wTempVariable1,b
         bit wR1
         bne _9897
-        lda #$8A00
+        lda #(`aUnknown8A989A)<<8
         sta lR18+1
-        lda #$989A
+        lda #<>aUnknown8A989A
         sta lR18
         phx
         lda @l aUnknown8A98C4,x
@@ -3754,6 +4155,29 @@
         ; 8A/9899
 
     .endsection Unsorted8A9858Section
+
+
+    .section Table8A9899Section
+
+      .al
+      .xl
+
+      ; unused trailing rtl
+        .byte $6B
+
+      aUnknown8A989A ; 8A/989A
+
+        .enc "SJIS"
+        .text "　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8A9899Section
+
+
+
+
 
 
     .section Table8A98ACSection
@@ -4241,6 +4665,39 @@
 
         ; 8A/9CA8
 
+
+      aUnknown8A9CA8 ; 8A/9CA8
+
+        HDMA_HALT
+
+      aUnknown8A9CAA ; 8A/9CAA
+
+        .byte $32, $E0, $0E, $E0, $10, $E0, $10, $E0, $10, $E0, $10, $E0
+        .byte $10, $E0, $10, $E1, $10, $E2, $10, $E3, $10, $E4, $10, $E6
+        .byte $10, $E8
+        .word 0
+
+      aUnknown8A9CC6 ; 8A/9CC6
+
+        .byte $32, $E0, $0E, $E1, $10, $E2, $10, $E4, $10, $E5, $10, $E6
+        .byte $10, $E8, $10, $E9, $10, $EA, $10, $EC, $10, $ED, $10, $EE
+        .byte $10, $F0
+        .word 0
+
+      aUnknown8A9CE2 ; 8A/9CE2
+
+        .byte $32, $E0, $0E, $E1, $10, $E2, $10, $E3, $10, $E4, $10, $E5
+        .byte $10, $E6, $10, $E7, $10, $E8, $10, $E9, $10, $EA, $10, $EB
+        .byte $10, $EC
+        .word 0
+
+      aUnknown8A9CFE ; 8A/9CFE
+
+        .byte $50, $E0, $1B, $E2, $06, $E3, $0F, $E4, $0E, $E5, $09, $E6
+        .byte $09, $E5, $08, $E4, $07, $E5, $09, $E6, $07, $E7, $09, $E8
+        .byte $08, $EA, $08, $EB, $08, $ED, $09, $EE, $00, $EF
+        .word 0
+
     .endsection Unsorted8A9C61Section
 
 
@@ -4348,6 +4805,57 @@
         ; 8A/9DD5
 
     .endsection Data8A9D79Section
+
+
+    .section Table8A9DD5Section
+
+      .al
+      .xl
+
+      aUnknown8A9DD5 ; 8A/9DD5
+
+        ; Read by arena & bank8A inventory setup routines.
+
+        .byte $50, $60, $70, $80, $90, $A0, $B0, $C0
+
+        ; 8A/9DDD
+
+    .endsection Table8A9DD5Section
+
+
+    .section Unsorted8A9DDDSection
+
+      .al
+      .xl
+
+      rlUnknown8A9DDD ; 8A/9DDD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy #$0000
+
+        _9DE0
+        lda [lR18],y
+        and #$00FF
+        cmp #$00FF
+        beq _9DF1
+        jsl rlAppendNewItemRAMEntry
+        inc y
+        bra _9DE0
+
+
+        _9DF1
+        rtl
+
+        .databank 0
+
+        ; 8A/9DF2
+
+
+    .endsection Unsorted8A9DDDSection
 
 
     .section Unsorted8A9DF2Section
@@ -4693,6 +5201,21 @@
     .endsection Unsorted8AA013Section
 
 
+    .section Table8AA022Section
+
+      .al
+      .xl
+
+      aUnknown8AA022 ; 8A/A022
+        .byte $30, $01, $00, $00, $00, $00, $C3, $80, $7F
+
+    .endsection Table8AA022Section
+
+
+
+
+
+
     .section Unsorted8AA02BSection
 
       .al
@@ -4706,9 +5229,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8AA022)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$A022
+        lda #<>aUnknown8AA022
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         ldx #$00C0
@@ -4731,9 +5254,9 @@
         jsl rlDrawMenuTextLine
         pla
         sta aCurrentTilemapInfo,b
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         ldx #$0000
 
@@ -4801,9 +5324,9 @@
         inc x
         cpx #$0010
         bne _A0F9
-        lda #$8A00
+        lda #(`aUnknown8AA12E)<<8
         sta lRoutineVariable+1,b
-        lda #$A12E
+        lda #<>aUnknown8AA12E
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -4818,6 +5341,26 @@
         ; 8A/A12E
 
     .endsection Unsorted8AA02BSection
+
+
+    .section Table8AA12ESection
+
+      .al
+      .xl
+
+      aUnknown8AA12E ; 8A/A12E
+
+        .enc "SJIS"
+        .text "　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AA12ESection
+
+
+
+
 
 
     .section Unsorted8AA142Section
@@ -5000,6 +5543,121 @@
     .endsection Unsorted8AA142Section
 
 
+    .section Table8AA241Section
+
+      .al
+      .xl
+
+      aUnknown8AA241 ; 8A/A241
+
+        ; Read by rsUnknown8AA142.
+
+        .word $0050, $0052, $0054, $0056, $0058, $005A, $005C, $005E
+
+        ; 8A/A251
+
+    .endsection Table8AA241Section
+
+
+    .section Unsorted8AA251Section
+
+      .al
+      .xl
+
+      rlUnknown8AA251 ; 8A/A251
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wCurrentItemDataROMPointer,b
+        beq _A2CA
+        jsl rlGetItemEquipmentType
+        cmp #$0000
+        bne _A279
+        lda #(`g4bppItemIcons)<<8
+        sta lR18+1
+        lda #<>g4bppItemIcons
+        sta lR18
+        jsl rlGetItemWeaponType
+        asl a
+        tay
+        lda <>aUnknown8AA2CB,b,y
+        clc
+        adc lR18
+        sta lR18
+        bra _A292
+
+
+        _A279
+        lda #(`g4bppItemIcons)<<8
+        sta lR18+1
+        lda #<>g4bppItemIcons
+        sta lR18
+        lda #$0000
+        asl a
+        tay
+        lda <>aUnknown8AA2DB,b,y
+        clc
+        adc lR18
+        sta lR18
+        bra _A292
+
+
+        _A292
+        lda #$0040
+        sta wR0
+        lda wTempVariable1,b
+        tay
+        lda <>aUnknown8AA2DD,b,y
+        clc
+        adc #$6500
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        lda lR18
+        clc
+        adc #$0200
+        sta lR18
+        lda #$0040
+        sta wR0
+        lda wTempVariable1,b
+        tay
+        lda <>aUnknown8AA2DD,b,y
+        clc
+        adc #$6600
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        _A2CA
+        rtl
+
+        .databank 0
+
+        ; 8A/A2CB
+
+
+      aUnknown8AA2CB ; 8A/A2CB
+
+        .word $0000, $05C0, $0D80, $0C00, $1540, $1580, $1800, $1880
+
+      aUnknown8AA2DB ; 8A/A2DB
+
+        .word $29C0
+
+      aUnknown8AA2DD ; 8A/A2DD
+
+        .word $0000, $0020, $0040, $0060, $0080, $00A0, $00C0, $00E0
+
+        ; 8A/A2ED
+
+    .endsection Unsorted8AA251Section
+
+
     .section Unsorted8AA2EDSection
 
       .al
@@ -5015,9 +5673,9 @@
 
         lda #$2800
         sta aCurrentTilemapInfo,b
-        lda #$8A00
+        lda #(`aUnknown8AA31C)<<8
         sta lRoutineVariable+1,b
-        lda #$A31C
+        lda #<>aUnknown8AA31C
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -5035,6 +5693,130 @@
         ; 8A/A31C
 
     .endsection Unsorted8AA2EDSection
+
+
+    .section Table8AA31CSection
+
+      .al
+      .xl
+
+      aUnknown8AA31C ; 8A/A31C
+
+        .enc "SJIS"
+        .text "Ｇ"
+        .word $0000
+        .enc "none"
+
+      aUnknown8AA320 ; 8A/A320
+
+        .enc "SJIS"
+        .text "　　　　　　　　　　　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+      aUnknown8AA348 ; 8A/A348
+
+        .enc "SJIS"
+        .text "　はい　　　いいえ　　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+      rsUnknown8AA370 ; 8A/A370
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$0200
+        bne _A39B
+        bit #$0100
+        bne _A3B7
+
+        _A37C
+        lda $08A1,b
+        tax
+        lda aUnknown8AA3FC,x
+        and #$00FF
+        sec
+        sbc #$000D
+        sta wR0
+        lda #$0020
+        clc
+        adc #$0004
+        clc
+        adc #$0008
+        sta wR1
+        rts
+
+
+        _A39B
+        lda $08A1,b
+        beq _A37C
+        sec
+        sbc #$0001
+        sta $08A1,b
+        lda #$0007
+        jsl rlPlaySoundEffect
+        lda #$FFFF
+        sta $7F7670
+        bra _A3D6
+
+
+        _A3B7
+        lda $08A1,b
+        cmp #$0003
+        bcs _A37C
+        clc
+        adc #$0001
+        sta $08A1,b
+        lda #$0007
+        jsl rlPlaySoundEffect
+        lda #$FFFF
+        sta $7F7670
+        bra _A3D6
+
+
+        _A3D6
+        lda $08A1,b
+        cmp #$0001
+        beq _A3ED
+        cmp #$0002
+        beq _A3F2
+        cmp #$0003
+        beq _A3F7
+        jsr rsUnknown8AA9CE
+        bra _A37C
+
+
+        _A3ED
+        jsr rsUnknown8AAB48
+        bra _A37C
+
+
+        _A3F2
+        jsr rsUnknown8AACA8
+        bra _A37C
+
+
+        _A3F7
+        jsr rsUnknown8AAD44
+        bra _A37C
+
+        .databank 0
+
+        ; 8A/A3FC
+
+      aUnknown8AA3FC ; 8A/A3FC
+        .byte $58, $78, $98, $C8
+
+    .endsection Table8AA31CSection
+
+
+
+
 
 
     .section Unsorted8AA400Section
@@ -5492,9 +6274,9 @@
         sta wCurrentItemDataROMPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlGetItemEquipmentType
         cmp #$0001
@@ -5568,9 +6350,9 @@
         jsr rsUnknown8AA9A6
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlGetItemWeaponRank
         ldx #$0008
@@ -5608,9 +6390,9 @@
         stx aCurrentTilemapInfo,b
         ldx #$1206
         jsl rlUnknown87913E
-        lda #$8A00
+        lda #(`aUnknown8AA7DD)<<8
         sta lRoutineVariable+1,b
-        lda #$A7DD
+        lda #<>aUnknown8AA7DD
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -5618,9 +6400,9 @@
         sta lR18+1
         ldx #$1400
         jsl rlDrawMenuTextLine
-        lda #$8A00
+        lda #(`aUnknown8AA7DD)<<8
         sta lRoutineVariable+1,b
-        lda #$A7DD
+        lda #<>aUnknown8AA7DD
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -5630,9 +6412,9 @@
         jsl rlDrawMenuTextLine
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlGetItemDescriptionPointer
         lda lRoutineVariable,b
@@ -5643,9 +6425,9 @@
         jsl rlDrawMenuTextLine
         lda #$2400
         sta aCurrentTilemapInfo,b
-        lda #$8A00
+        lda #(`aUnknown8AA7F1)<<8
         sta lRoutineVariable+1,b
-        lda #$A7F1
+        lda #<>aUnknown8AA7F1
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -5660,6 +6442,109 @@
         ; 8A/A7DD
 
     .endsection Unsorted8AA6CASection
+
+
+    .section Table8AA7DDSection
+
+      .al
+      .xl
+
+      aUnknown8AA7DD ; 8A/A7DD
+
+        .enc "SJIS"
+        .text "　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+      aUnknown8AA7F1 ; 8A/A7F1
+
+        .enc "SJIS"
+        .text "ー"
+        .word $0000
+        .enc "none"
+
+
+      aUnknown8AA7F5 ; 8A/A7F5
+        .word <>rsUnknown8AA7FD, <>rsUnknown8AA80A, <>rsUnknown8AA817, <>rsUnknown8AA7FD
+
+      rsUnknown8AA7FD ; 8A/A7FD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aUnknown8AA824)<<8
+        sta lRoutineVariable+1,b
+        lda #<>aUnknown8AA824
+        sta lRoutineVariable,b
+        rts
+
+        .databank 0
+
+        ; 8A/A80A
+
+      rsUnknown8AA80A ; 8A/A80A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aUnknown8AA828)<<8
+        sta lRoutineVariable+1,b
+        lda #<>aUnknown8AA828
+        sta lRoutineVariable,b
+        rts
+
+        .databank 0
+
+        ; 8A/A817
+
+      rsUnknown8AA817 ; 8A/A817
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aUnknown8AA82C)<<8
+        sta lRoutineVariable+1,b
+        lda #<>aUnknown8AA82C
+        sta lRoutineVariable,b
+        rts
+
+        .databank 0
+
+        ; 8A/A824
+
+      aUnknown8AA824 ; 8A/A824
+
+        .enc "SJIS"
+        .text "Ａ"
+        .word $0000
+        .enc "none"
+
+      aUnknown8AA828 ; 8A/A828
+
+        .enc "SJIS"
+        .text "Ｂ"
+        .word $0000
+        .enc "none"
+
+      aUnknown8AA82C ; 8A/A82C
+
+        .enc "SJIS"
+        .text "Ｃ"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AA7DDSection
+
+
+
+
 
 
     .section Unsorted8AA830Section
@@ -5708,18 +6593,18 @@
         beq _A8AD
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlGetItemEquipmentType
         cmp #$0001
         beq _A88E
         cmp #$0000
         beq _A8B1
-        lda #$8A00
+        lda #(`aUnknown8AA8B5)<<8
         sta lRoutineVariable+1,b
-        lda #$A8B5
+        lda #<>aUnknown8AA8B5
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -5755,6 +6640,26 @@
         ; 8A/A8B5
 
     .endsection Unsorted8AA83DSection
+
+
+    .section Table8AA8B5Section
+
+      .al
+      .xl
+
+      aUnknown8AA8B5 ; 8A/A8B5
+
+        .enc "SJIS"
+        .text "　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AA8B5Section
+
+
+
+
 
 
     .section Unsorted8AA8C9Section
@@ -6044,9 +6949,9 @@
 
 
         _AA0F
-        lda #$8A00
+        lda #(`aUnknown8AA320)<<8
         sta lR18+1
-        lda #$A320
+        lda #<>aUnknown8AA320
         sta lR18
         phx
         lda $AA2A,b,y
@@ -6061,6 +6966,11 @@
         .databank 0
 
         ; 8A/AA2A
+
+
+      aUnknown8AAA2A ; 8A/AA2A
+
+        .word $000A, $000C, $000E, $0010, $0012, $0014, $0016, $0018
 
     .endsection Unsorted8AA9CESection
 
@@ -6077,9 +6987,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8AAA78)<<8
         sta lR18+1
-        lda #$AA78
+        lda #<>aUnknown8AAA78
         sta lR18
         phx
         lda $AA2A,b,y
@@ -6111,6 +7021,26 @@
         ; 8A/AA78
 
     .endsection Unsorted8AAA3ASection
+
+
+    .section Table8AAA78Section
+
+      .al
+      .xl
+
+      aUnknown8AAA78 ; 8A/AA78
+
+        .enc "SJIS"
+        .text "　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AAA78Section
+
+
+
+
 
 
     .section Unsorted8AAA8ASection
@@ -6212,9 +7142,9 @@
         _AB20
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8A00
+        lda #(`aUnknown8AAB40)<<8
         sta lR18+1
-        lda #$AB40
+        lda #<>aUnknown8AAB40
         sta lR18
         phx
         lda $AA2A,b,y
@@ -6231,6 +7161,26 @@
         ; 8A/AB40
 
     .endsection Unsorted8AAA8ASection
+
+
+    .section Table8AAB40Section
+
+      .al
+      .xl
+
+      aUnknown8AAB40 ; 8A/AB40
+
+        .enc "SJIS"
+        .text "　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AAB40Section
+
+
+
+
 
 
     .section Unsorted8AAB48Section
@@ -6288,9 +7238,9 @@
 
 
         _AB90
-        lda #$8A00
+        lda #(`aUnknown8AA320)<<8
         sta lR18+1
-        lda #$A320
+        lda #<>aUnknown8AA320
         sta lR18
         phx
         lda $AA2A,b,y
@@ -6321,9 +7271,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8AABEA)<<8
         sta lR18+1
-        lda #$ABEA
+        lda #<>aUnknown8AABEA
         sta lR18
         phx
         lda $AA2A,b,y
@@ -6358,6 +7308,26 @@
         ; 8A/ABEA
 
     .endsection Unsorted8AABABSection
+
+
+    .section Table8AABEASection
+
+      .al
+      .xl
+
+      aUnknown8AABEA ; 8A/ABEA
+
+        .enc "SJIS"
+        .text "　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AABEASection
+
+
+
+
 
 
     .section Unsorted8AABFCSection
@@ -6406,9 +7376,9 @@
 
 
         _AC37
-        lda #$8A00
+        lda #(`aUnknown8AA320)<<8
         sta lR18+1
-        lda #$A320
+        lda #<>aUnknown8AA320
         sta lR18
         phx
         lda $AA2A,b,y
@@ -6462,9 +7432,9 @@
         _AC80
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8A00
+        lda #(`aUnknown8AACA0)<<8
         sta lR18+1
-        lda #$ACA0
+        lda #<>aUnknown8AACA0
         sta lR18
         phx
         lda $AA2A,b,y
@@ -6481,6 +7451,26 @@
         ; 8A/ACA0
 
     .endsection Unsorted8AABFCSection
+
+
+    .section Table8AACA0Section
+
+      .al
+      .xl
+
+      aUnknown8AACA0 ; 8A/ACA0
+
+        .enc "SJIS"
+        .text "　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AACA0Section
+
+
+
+
 
 
     .section Unsorted8AACA8Section
@@ -6535,9 +7525,9 @@
 
 
         _ACEA
-        lda #$8A00
+        lda #(`aUnknown8AA320)<<8
         sta lR18+1
-        lda #$A320
+        lda #<>aUnknown8AA320
         sta lR18
         phx
         lda $AA2A,b,y
@@ -6620,9 +7610,9 @@
         ldy #$000E
 
         _AD50
-        lda #$8A00
+        lda #(`aUnknown8AA320)<<8
         sta lR18+1
-        lda #$A320
+        lda #<>aUnknown8AA320
         sta lR18
         phx
         lda $AA2A,b,y
@@ -6723,9 +7713,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8AADCE)<<8
         sta lR18+1
-        lda #$ADCE
+        lda #<>aUnknown8AADCE
         sta lR18
         rts
 
@@ -6740,9 +7730,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8AADDC)<<8
         sta lR18+1
-        lda #$ADDC
+        lda #<>aUnknown8AADDC
         sta lR18
         rts
 
@@ -6765,9 +7755,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8AADE8)<<8
         sta lR18+1
-        lda #$ADE8
+        lda #<>aUnknown8AADE8
         sta lR18
         rts
 
@@ -6776,6 +7766,40 @@
         ; 8A/ADCE
 
     .endsection Unsorted8AADC3Section
+
+
+    .section Table8AADCESection
+
+      .al
+      .xl
+
+      aUnknown8AADCE ; 8A/ADCE
+
+        .enc "SJIS"
+        .text "こいのゆくえ"
+        .word $0000
+        .enc "none"
+
+      aUnknown8AADDC ; 8A/ADDC
+
+        .enc "SJIS"
+        .text "しょうはい"
+        .word $0000
+        .enc "none"
+
+      aUnknown8AADE8 ; 8A/ADE8
+
+        .enc "SJIS"
+        .text "おやのこと"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AADCESection
+
+
+
+
 
 
     .section Unsorted8AADF4Section
@@ -6792,9 +7816,9 @@
 
         lda #$2800
         sta aCurrentTilemapInfo,b
-        lda #$8A00
+        lda #(`aUnknown8AAEDA)<<8
         sta lRoutineVariable+1,b
-        lda #$AEDA
+        lda #<>aUnknown8AAEDA
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -6842,9 +7866,9 @@
         jsl rlDrawMenuTextLine
 
         _AE8B
-        lda #$8A00
+        lda #(`aUnknown8AAEEC)<<8
         sta lRoutineVariable+1,b
-        lda #$AEEC
+        lda #<>aUnknown8AAEEC
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -6852,9 +7876,9 @@
         sta lR18+1
         ldx #$160E
         jsl rlDrawMenuTextLine
-        lda #$8A00
+        lda #(`aUnknown8AAEE6)<<8
         sta lRoutineVariable+1,b
-        lda #$AEE6
+        lda #<>aUnknown8AAEE6
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -6875,6 +7899,40 @@
         ; 8A/AEDA
 
     .endsection Unsorted8AADF4Section
+
+
+    .section Table8AAEDASection
+
+      .al
+      .xl
+
+      aUnknown8AAEDA ; 8A/AEDA
+
+        .enc "SJIS"
+        .text "ＥＮＥＭＹ"
+        .word $0000
+        .enc "none"
+
+      aUnknown8AAEE6 ; 8A/AEE6
+
+        .enc "SJIS"
+        .text "ＬＶ"
+        .word $0000
+        .enc "none"
+
+      aUnknown8AAEEC ; 8A/AEEC
+
+        .enc "SJIS"
+        .text "☆Ｂボタンでちゅうしできます"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AAEDASection
+
+
+
+
 
 
     .section Unsorted8AAF0ASection
@@ -7395,6 +8453,20 @@
     .endsection Unsorted8AB111Section
 
 
+    .section Table8AB230Section
+
+      .al
+      .xl
+
+      aUnknown8AB230 .dstruct structHDMADirectEntryInfo, rlUnknown8AB23B, rlUnknown8AB23B, $B261, $0008C8, PPU_REG_BASE + $31, $00 ; 8A/B230
+
+    .endsection Table8AB230Section
+
+
+
+
+
+
     .section Unsorted8AB23BSection
 
       .al
@@ -7428,6 +8500,124 @@
         .databank 0
 
         ; 8A/B261
+
+
+      aHDMAUnknown8AB261Code ; 8A/B261
+
+        HDMA_HALT
+
+      aUnknown8AB263 .dstruct structHDMADirectEntryInfo, rlUnknown8AB26E, rlUnknown8AB26E, aHDMAUnknown8AB294Code, $0008C8, PPU_REG_BASE + $31, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B263
+
+      rlUnknown8AB26E ; 8A/B26E
+
+              .al
+              .xl
+              .autsiz
+              .databank ?
+
+              sep #$20
+              lda #$48
+              sta $08C8,b
+              lda #$00
+              sta $08C9,b
+              lda #$80
+              sec
+              sbc #$48
+              sta $08CA,b
+              lda #$81
+              sta $08CB,b
+              lda #$00
+              sta $08CC,b
+              lda #$00
+              sta $08CD,b
+              rep #$20
+              rtl
+
+              .databank 0
+
+      aHDMAUnknown8AB294Code ; 8A/B294
+
+        HDMA_HALT
+
+      aUnknown8AB296 .dstruct structHDMADirectEntryInfo, rlUnknown8AB2A1, rlUnknown8AB2A1, aHDMAUnknown8AB2C2Code, $7F80A3, PPU_REG_BASE + $32, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B296
+
+      rlUnknown8AB2A1 ; 8A/B2A1
+
+              .al
+              .xl
+              .autsiz
+              .databank ?
+
+              ldx #$0000
+              ldy #$0000
+              sep #$20
+
+              _B2A9
+              lda $B2C4,b,y
+              sta $7F80A3,x
+              beq _B2BF
+              lda $9CAB,b,y
+              sta $7F80A4,x
+              inc x
+              inc x
+              inc y
+              inc y
+              bra _B2A9
+
+
+              _B2BF
+              rep #$20
+              rtl
+
+              .databank 0
+
+      aHDMAUnknown8AB2C2Code ; 8A/B2C2
+
+        HDMA_HALT
+
+      aUnknown8AB2C4 ; 8A/B2C4
+
+        .byte $60, $E0, $10, $E1, $10, $E2, $10, $E3, $10, $E4
+        .byte $10, $E6, $10, $E7, $10, $E8, $10, $EA, $00, $00
+
+      aUnknown8AB2D8 .dstruct structHDMADirectEntryInfo, rlUnknown8AB2E3, rlUnknown8AB2E3, aHDMAUnknown8AB315Code, $0008C8, PPU_REG_BASE + $2D, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0) ; 8A/B2D8
+
+      rlUnknown8AB2E3 ; 8A/B2E3
+
+              .al
+              .xl
+              .autsiz
+              .databank ?
+
+              sep #$20
+              lda #$48
+              sta $08C8,b
+              lda #$00
+              sta $08C9,b
+              lda #$80
+              sec
+              sbc #$48
+              sta $08CA,b
+              lda #$02
+              sta $08CB,b
+              lda #$00
+              sta $08CC,b
+              lda #$00
+              sta $08CD,b
+              rep #$20
+              lda wGameStateStep,b
+              cmp #$0001
+              bne _B314
+              jsl rlHDMAEngineFreeEntryByOffset
+
+              _B314
+              rtl
+
+              .databank 0
+
+      aHDMAUnknown8AB315Code ; 8A/B315
+
+        HDMA_HALT
 
     .endsection Unsorted8AB23BSection
 
@@ -7799,9 +8989,9 @@
         stz $08A7,b
         jsl rlUnknown8A9DF2
         jsr rsUnknown8AA142
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -7813,9 +9003,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $7000
 
-        lda #$8A00
+        lda #(`aUnknown8AB230)<<8
         sta lR44+1
-        lda #$B230
+        lda #<>aUnknown8AB230
         sta lR44
         jsl rlHDMAEngineCreateEntry
         lda #$000E
@@ -8410,9 +9600,9 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -8461,13 +9651,13 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsl rlDrawMenuTextLine
-        lda #$8A00
+        lda #(`aUnknown8AD071)<<8
         sta lR19+1
-        lda #$D071
+        lda #<>aUnknown8AD071
         sta lR19
-        lda #$8A00
+        lda #(`aUnknown8AD074)<<8
         sta lR20+1
-        lda #$D074
+        lda #<>aUnknown8AD074
         sta lR20
         lda wTempVariable1,b
         jsr rsUnknown8ACFBE
@@ -8585,9 +9775,9 @@
         _C333
         lda #$0002
         sta wTempVariable1,b
-        lda #$8A00
+        lda #(`aUnknown8AC447)<<8
         sta lR18+1
-        lda #$C447
+        lda #<>aUnknown8AC447
         sta lR18
         lda $18DD,b
         cmp #$0100
@@ -8608,13 +9798,13 @@
         jsl rlDrawMenuTextLine
         stz $08A5,b
         stz $08A7,b
-        lda #$8A00
+        lda #(`aUnknown8AD077)<<8
         sta lR19+1
-        lda #$D077
+        lda #<>aUnknown8AD077
         sta lR19
-        lda #$8A00
+        lda #(`aUnknown8AD07A)<<8
         sta lR20+1
-        lda #$D07A
+        lda #<>aUnknown8AD07A
         sta lR20
         lda wTempVariable1,b
         jsr rsUnknown8ACFBE
@@ -8716,6 +9906,26 @@
         ; 8A/C447
 
     .endsection Unsorted8AC0B9Section
+
+
+    .section Table8AC447Section
+
+      .al
+      .xl
+
+      aUnknown8AC447 ; 8A/C447
+
+        .enc "SJIS"
+        .text "うる　　　かう"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AC447Section
+
+
+
+
 
 
     .section Unsorted8AC457Section
@@ -10265,10 +11475,6 @@
         .long dialogueShop54
         .long dialogueShop4E
 
-        ; Not understood yet: this starts in the middle of a routine.
-
-        .text ROM[$0ACFBE:$0AD071]
-
     .endsection Unsorted8ACEB3Section
 
 
@@ -10396,6 +11602,49 @@
     .endsection Unsorted8ACFBESection
 
 
+    .section Table8AD071Section
+
+      .al
+      .xl
+
+      aUnknown8AD071 ; 8A/D071
+        .byte $54, $7C, $A4
+
+      aUnknown8AD074 ; 8A/D074
+        .byte $00, $01, $03
+
+      aUnknown8AD077 ; 8A/D077
+        .byte $54, $7C, $A4
+
+      aUnknown8AD07A ; 8A/D07A
+        .byte $01, $00, $03, $54, $84, $02, $03
+
+      aUnknown8AD081 ; 8A/D081
+        .byte $54, $84
+
+      aUnknown8AD083 ; 8A/D083
+        .byte $01, $00, $00, $04, $05
+
+      aUnknown8AD088 ; 8A/D088
+        .byte $54, $8C
+
+      aUnknown8AD08A ; 8A/D08A
+        .byte $FF, $03
+
+      aUnknown8AD08C ; 8A/D08C
+        .byte $54, $84, $BC
+
+      aUnknown8AD08F ; 8A/D08F
+        .byte $FF, $FF, $FF
+
+
+    .endsection Table8AD071Section
+
+
+
+
+
+
     .section Unsorted8AD092Section
 
       .al
@@ -10408,9 +11657,9 @@
         .autsiz
         .databank ?
 
-        lda #$8A00
+        lda #(`aUnknown8AA348)<<8
         sta lR18+1
-        lda #$A348
+        lda #<>aUnknown8AA348
         sta lR18
         lda $18DD,b
         cmp #$0100
@@ -11021,6 +12270,13 @@
 
         ; 8A/DB30
 
+
+      aUnknown8ADB30 ; 8A/DB30
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $020, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown8ADB30._Sprites
+
     .endsection Unsorted8ADB04Section
 
 
@@ -11064,6 +12320,33 @@
         ; 8A/DB63
 
     .endsection Unsorted8ADB37Section
+
+    .section Table8ADB9FSection
+
+      .al
+      .xl
+
+      aUnknown8ADB9F ; 8A/DB9F
+        .byte $00, $00, $00, $00, $01, $00, $01, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF
+
+      aUnknown8ADBAF ; 8A/DBAF
+        .word 1 ; sprite count
+        .structSpriteEntry (   0,    0), $21, SpriteLarge, $00A, 3, 0, false, false
+
+      aUnknown8ADBB6 ; 8A/DBB6
+        .word 1 ; sprite count
+        .structSpriteEntry (   0,    0), $21, SpriteLarge, $008, 3, 0, false, false
+
+    .endsection Table8ADB9FSection
+
+
+
+
+
+
+
+
+
 
 
     .section Unsorted8ADBBDSection
@@ -11836,6 +13119,11 @@
 
         ; 8A/E23D
 
+
+      aUnknown8AE23D ; 8A/E23D
+
+        .word $01A2, $000F, $FFFF
+
     .endsection Unsorted8AE1F3Section
 
 
@@ -12102,18 +13390,18 @@
         stz $08A7,b
         lda #$0000
         sta $7F7670
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsr rsUnknown8AA830
         jsr rsUnknown8AA2ED
         jsr rsUnknown8AAD44
-        lda #$8A00
+        lda #(`aUnknown8AB230)<<8
         sta lR44+1
-        lda #$B230
+        lda #<>aUnknown8AB230
         sta lR44
         jsl rlHDMAEngineCreateEntry
         lda #$0004
@@ -12288,9 +13576,9 @@
         stz $08A7,b
         jsl rlUnknown8A9FCC
         jsr rsUnknown8AA142
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -12308,6 +13596,15 @@
         .databank 0
 
         ; 8A/EE7F
+
+
+      aUnknown8AEE7F ; 8A/EE7F
+
+        .word 0
+
+      aUnknown8AEE81 ; 8A/EE81
+
+        .word $001A, $0017, $001C, $001A
 
     .endsection Unsorted8AECEFSection
 
@@ -12454,9 +13751,9 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -12829,9 +14126,9 @@
         stz $08A7,b
         jsl rlUnknown8A9E5A
         jsr rsUnknown8AA142
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -12843,9 +14140,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $7000
 
-        lda #$8A00
+        lda #(`aUnknown8AB230)<<8
         sta lR44+1
-        lda #$B230
+        lda #<>aUnknown8AB230
         sta lR44
         jsl rlHDMAEngineCreateEntry
         lda #$0008
@@ -13045,15 +14342,15 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8A00
+        lda #(`aUnknown8AF475)<<8
         sta lR18+1
-        lda #$F475
+        lda #<>aUnknown8AF475
         sta lR18
         lda $18DD,b
         cmp #$0100
@@ -13074,13 +14371,13 @@
         jsl rlDrawMenuTextLine
         stz $08A5,b
         stz $08A7,b
-        lda #$8A00
+        lda #(`aUnknown8AD081)<<8
         sta lR19+1
-        lda #$D081
+        lda #<>aUnknown8AD081
         sta lR19
-        lda #$8A00
+        lda #(`aUnknown8AD083)<<8
         sta lR20+1
-        lda #$D083
+        lda #<>aUnknown8AD083
         sta lR20
         lda #$0002
         jsr rsUnknown8ACFBE
@@ -13178,6 +14475,26 @@
         ; 8A/F475
 
     .endsection Unsorted8AF2E1Section
+
+
+    .section Table8AF475Section
+
+      .al
+      .xl
+
+      aUnknown8AF475 ; 8A/F475
+
+        .enc "SJIS"
+        .text "あずける　　ひきだす　　　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AF475Section
+
+
+
+
 
 
     .section Unsorted8AF4A1Section
@@ -13896,9 +15213,9 @@
         stz $08A3,b
         stz $08A5,b
         stz $08A7,b
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2C00
         sta aCurrentTilemapInfo,b
@@ -14092,9 +15409,9 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2C00
         sta aCurrentTilemapInfo,b
@@ -14616,5 +15933,33 @@
         .word $3898, $3899, $30CA, $30AB
 
         ; DA/65B2
+
+      aUnknownDA65B2 ; DA/65B2
+
+        ; Read by rsUnknown8A8CB7 (continuation of $0200-byte aUnknownDA6500).
+
+        .word $38FA, $38FB, $70CA, $70C9, $70C8, $0035, $0035, $0035
+        .word $0035, $30D8, $30D9, $30DA, $30D9, $30DA, $30D9, $30DA
+        .word $30BB, $30D9, $30DA, $30D9, $30DA, $30BB, $30D9, $30DA
+        .word $30D9, $30DA, $30BB, $30D9, $30DA, $30D9, $30DA, $30BB
+        .word $30D9, $30DA, $70DA, $70D9, $70D8, $0035, $0035, $0035
+        .word $0035, $30E5, $30E6, $30E7, $30E8, $30E6, $30E7, $30E8
+        .word $30E6, $30E7, $30E8, $30E6, $30E7, $30E8, $30E6, $30E7
+        .word $30E8, $30E6, $30E7, $30E8, $30E6, $30E7, $30E8, $30E6
+        .word $30E7, $30E8, $30E6, $30E7, $30E9, $0035, $0035, $0035
+        .word $0035, $30F5, $30F6, $30F7, $30F8, $30F6, $30F7, $30F8
+        .word $30F6, $30F7, $30F8, $30F6, $30F7, $30F8, $30F6, $30F7
+        .word $30F8, $30F6, $30F7, $30F8, $30F6, $30F7, $30F8, $30F6
+        .word $30F7, $30F8, $30F6, $30F7, $30F9, $0035, $0035, $0035
+        .word $0035, $30E0, $30E1, $30E2, $30E3, $30E1, $30E2, $30E3
+        .word $30E1, $30E2, $30E3, $30E1, $30E2, $30E3, $30E1, $30E2
+        .word $30E3, $30E1, $30E2, $30E3, $30E1, $30E2, $30E3, $30E1
+        .word $30E2, $30E3, $30E1, $30E2, $30E4, $0035, $0035, $0035
+        .word $0035, $30F0, $30F1, $30F2, $30F3, $30F1, $30F2, $30F3
+        .word $30F1, $30F2, $30F3, $30F1, $30F2, $30F3, $30F1, $30F2
+        .word $30F3, $30F1, $30F2, $30F3, $30F1, $30F2, $30F3, $30F1
+        .word $30F2, $30F3, $30F1, $30F2, $30F4, $0035, $0035
+
+        ; DA/6700
 
     .endsection DataDA6500Section

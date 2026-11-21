@@ -666,6 +666,70 @@
 
     .endsection Unsorted8294CFSection
 
+    .section Unsorted82E000Section
+
+      .al
+      .xl
+
+      aIRQEngineMainActionTable ; 82/E000
+        .word <>rlResetIRQEngine, <>rlUnknown82E133, $E140
+
+      rsUnknown82E006 ; 82/E006
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0000,b,y
+        sta $170A,b,x
+        inc y
+        inc y
+        tya
+        sta $16FA,b,x
+        pla
+        rts
+
+        .databank 0
+
+        ; 82/E014
+
+      rsUnknown82E014 ; 82/E014
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz $169A,b,x
+        stz $16DA,b,x
+        jsr rsUnknown82E177
+        dec $1695,b
+        pla
+        rts
+
+        .databank 0
+
+        ; 82/E022
+
+      rsUnknown82E022 ; 82/E022
+        .al
+        .xl
+        lda #$0001
+        sta $170A,b,x
+        ; falls into rsUnknown82E028
+
+    .endsection Unsorted82E000Section
+
+
+
+
+
+
+
+
+
+
 
     .section Unsorted82E028Section
 

@@ -523,9 +523,9 @@
         pha
         lda #$2500
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown858647)<<8
         sta lR18+1
-        lda #$8647
+        lda #<>aUnknown858647
         sta lR18
         jsl rlUnknown8788F7
         txa
@@ -534,9 +534,9 @@
         tax
         lda #$2510
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown858647)<<8
         sta lR18+1
-        lda #$8647
+        lda #<>aUnknown858647
         sta lR18
         jsl rlUnknown8788F7
         pla
@@ -549,6 +549,21 @@
         ; 85/8647
 
     .endsection Unsorted85860ESection
+
+
+    .section Table858647Section
+
+      .al
+      .xl
+
+      aUnknown858647 ; 85/8647
+        .byte $AC, $AD, $AE, $00
+
+    .endsection Table858647Section
+
+
+
+
 
 
     .section Unsorted85864BSection
@@ -1295,9 +1310,9 @@
 
         jsl rlGetMapMenuTilemapArea
         pha
-        lda #$8500
+        lda #(`aUnknown8589DE)<<8
         sta lR18+1
-        lda #$89DE
+        lda #<>aUnknown8589DE
         sta lR18
         jsl rlLoadMapMenuTilemapData
         pla
@@ -1309,6 +1324,21 @@
         ; 85/89DE
 
     .endsection Unsorted8589C5Section
+
+
+    .section Table8589DESection
+
+      .al
+      .xl
+
+      aUnknown8589DE ; 85/89DE
+        .byte $00, $00, $88, $7B, $7E, $00, $4A, $D5, $7F
+
+    .endsection Table8589DESection
+
+
+
+
 
 
     .section Unsorted8589E7Section
@@ -1342,14 +1372,14 @@
 
         jsr rsUnknown8589C5
         stz aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown858A1B)<<8
         sta lR18+1
-        lda #$8A1B
+        lda #<>aUnknown858A1B
         sta lR18
         jsl rlUnknown878BF0
-        lda #$8500
+        lda #(`aUnknown858A47)<<8
         sta lR18+1
-        lda #$8A47
+        lda #<>aUnknown858A47
         sta lR18
         jsl rlUnknown878D61
         jsr rsUnknown8589E7
@@ -1360,6 +1390,29 @@
         ; 85/8A1B
 
     .endsection Unsorted8589E7Section
+
+
+    .section Table858A1BSection
+
+      .al
+      .xl
+
+      aUnknown858A1B ; 85/8A1B
+        .byte $07, $03
+        .word $236C, $236D, $236C, $236D, $236D, $236C, $236D, $236C
+        .word $236C, $236D, $236C, $236C, $236D, $236C, $236C, $236C
+        .word $236D, $236C, $236D, $236D, $236C
+
+      aUnknown858A47 ; 85/8A47
+        .word $2368, $2369, $2369, $2369, $236A, $236B, $236C, $236D
+        .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $2378
+        .word $236F, $236F, $2379, $237A
+
+    .endsection Table858A1BSection
+
+
+
+
 
 
     .section Unsorted858A6FSection
@@ -1376,14 +1429,14 @@
 
         jsr rsUnknown8589C5
         stz aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown858A95)<<8
         sta lR18+1
-        lda #$8A95
+        lda #<>aUnknown858A95
         sta lR18
         jsl rlUnknown878BF0
-        lda #$8500
+        lda #(`aUnknown858AAF)<<8
         sta lR18+1
-        lda #$8AAF
+        lda #<>aUnknown858AAF
         sta lR18
         jsl rlUnknown878D61
         jsr rsUnknown8589E7
@@ -1394,6 +1447,28 @@
         ; 85/8A95
 
     .endsection Unsorted858A6FSection
+
+
+    .section Table858A95Section
+
+      .al
+      .xl
+
+      aUnknown858A95 ; 85/8A95
+        .byte $04, $03
+        .word $236C, $236D, $236C, $236D, $236C, $236C, $236D, $236C
+        .word $236C, $236C, $236D, $236C
+
+      aUnknown858AAF ; 85/8AAF
+        .word $237B, $237C, $2369, $2369, $236A, $237D, $236C, $236D
+        .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $237E
+        .word $237F, $236F, $2379, $237A
+
+    .endsection Table858A95Section
+
+
+
+
 
 
     .section Unsorted858AD7Section
@@ -1410,14 +1485,14 @@
 
         jsr rsUnknown8589C5
         stz aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown858AFD)<<8
         sta lR18+1
-        lda #$8AFD
+        lda #<>aUnknown858AFD
         sta lR18
         jsl rlUnknown878BF0
-        lda #$8500
+        lda #(`aUnknown858B29)<<8
         sta lR18+1
-        lda #$8B29
+        lda #<>aUnknown858B29
         sta lR18
         jsl rlUnknown878D61
         jsr rsUnknown8589E7
@@ -1428,6 +1503,29 @@
         ; 85/8AFD
 
     .endsection Unsorted858AD7Section
+
+
+    .section Table858AFDSection
+
+      .al
+      .xl
+
+      aUnknown858AFD ; 85/8AFD
+        .byte $07, $03
+        .word $236C, $236D, $236C, $236D, $236D, $236C, $236D, $236C
+        .word $236C, $236D, $236C, $236C, $236D, $236C, $236C, $236C
+        .word $236D, $236C, $236D, $236D, $236C
+
+      aUnknown858B29 ; 85/8B29
+        .word $2368, $2369, $2369, $2369, $236A, $236B, $236C, $236D
+        .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $2378
+        .word $236F, $236F, $2379, $237A
+
+    .endsection Table858AFDSection
+
+
+
+
 
 
     .section Unsorted858B51Section
@@ -1462,24 +1560,24 @@
 
         _8B5F
         jsr rsUnknown8589C5
-        lda #$8500
+        lda #(`aUnknown858BD3)<<8
         sta lR18+1
-        lda #$8BD3
+        lda #<>aUnknown858BD3
         sta lR18
         jsl rlUnknown878BF0
         lda #$2340
         tsb aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown858C0D)<<8
         sta lR18+1
-        lda #$8C0D
+        lda #<>aUnknown858C0D
         sta lR18
         ldx #$0101
         jsl rlUnknown878F6E
         lda #$23FF
         trb aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown858C26)<<8
         sta lR18+1
-        lda #$8C26
+        lda #<>aUnknown858C26
         sta lR18
         jsl rlUnknown878D61
         jsl rlUnknown878B4E
@@ -1488,15 +1586,15 @@
         bcc _8BCF
         lda #$2340
         tsb aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown858BF9)<<8
         sta lR18+1
-        lda #$8BF9
+        lda #<>aUnknown858BF9
         sta lR18
         ldx #$0001
         jsl rlUnknown878F6E
-        lda #$8500
+        lda #(`aUnknown858C03)<<8
         sta lR18+1
-        lda #$8C03
+        lda #<>aUnknown858C03
         sta lR18
         ldx #$0101
         jsl rlUnknown878F6E
@@ -1510,6 +1608,39 @@
         ; 85/8BD3
 
     .endsection Unsorted858B51Section
+
+
+    .section Table858BD3Section
+
+      .al
+      .xl
+
+      aUnknown858BD3 ; 85/8BD3
+        .byte $06, $03
+        .word $2345, $2346, $2347, $2348, $2349, $234A, $2348, $2349
+        .word $234A, $2355, $2356, $2357, $2355, $2356, $2357, $2345
+        .word $2346, $2347
+
+      aUnknown858BF9 ; 85/8BF9
+        .byte $0B, $0C, $0D, $0E, $0E, $0C, $0E, $0D, $0F, $00
+
+      aUnknown858C03 ; 85/8C03
+        .byte $1B, $1C, $1D, $1E, $1D, $1C, $1E, $1D, $1F, $00
+
+      aUnknown858C0D ; 85/8C0D
+        .byte $18, $19, $18, $14, $19, $14, $18, $14, $19, $18, $19, $14, $18, $19, $14, $19
+        .byte $14, $18, $19, $14, $18, $19, $14, $19, $00
+
+      aUnknown858C26 ; 85/8C26
+        .word $2343, $2344, $2344, $6344, $6343, $2353, $2354, $6354
+        .word $6353, $2350, $2352, $A350, $A351, $E351, $A352, $A340
+        .word $A341, $A341, $A341, $A342
+
+    .endsection Table858BD3Section
+
+
+
+
 
 
     .section Unsorted858C4ESection
@@ -1533,16 +1664,16 @@
 
         _8C5C
         jsr rsUnknown8589C5
-        lda #$8500
+        lda #(`aUnknown858C85)<<8
         sta lR18+1
-        lda #$8C85
+        lda #<>aUnknown858C85
         sta lR18
         jsl rlUnknown878BF0
         lda #$23FF
         trb aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown858CAB)<<8
         sta lR18+1
-        lda #$8CAB
+        lda #<>aUnknown858CAB
         sta lR18
         jsl rlUnknown878D61
         jsr rsUnknown8589E7
@@ -1553,6 +1684,57 @@
         ; 85/8C85
 
     .endsection Unsorted858C4ESection
+
+
+    .section Table858C85Section
+
+      .al
+      .xl
+
+      aUnknown858C85 ; 85/8C85
+        .byte $06, $03
+        .word $2345, $2346, $2347, $2348, $2349, $234A, $2348, $2349
+        .word $234A, $2355, $2356, $2357, $2355, $2356, $2357, $2345
+        .word $2346, $2347
+
+      aUnknown858CAB ; 85/8CAB
+        .word $2340, $2341, $2341, $6341, $2342, $2350, $2351, $6351
+        .word $2352, $2350, $2352, $A350, $A351, $E351, $A352, $A340
+        .word $A341, $A341, $A341, $A342
+
+    .endsection Table858C85Section
+
+    .section Table858D62Section
+
+      .al
+      .xl
+
+      aUnknown858D62 ; 85/8D62
+        .byte $0A, $13, $88, $83, $7E, $00, $4A, $C5, $7F
+
+      aUnknown858D6B ; 85/8D6B
+        .long $000000
+        .long $000000
+        .long aUnknown858D62
+        .byte $00, $02, $01
+
+      procUnknown858D77 ; 85/8D77
+        .structProcInfo "PW", rlUnknown858D83, $8DAB, $8398
+        .long aUnknown858D6B
+        .byte $00
+
+    .endsection Table858D62Section
+
+
+
+
+
+
+
+
+
+
+
 
 
     .section Unsorted858D83Section
@@ -1629,18 +1811,18 @@
         phx
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown858EA1)<<8
         sta lR18+1
-        lda #$8EA1
+        lda #<>aUnknown858EA1
         sta lR18
         ldx #$0702
         jsl rlDrawMapMenuTextLine
         lda $057C,b
         cmp #$0001
         bne _8E01
-        lda #$8500
+        lda #(`aUnknown858EA7)<<8
         sta lR18+1
-        lda #$8EA7
+        lda #<>aUnknown858EA7
         sta lR18
         ldx #$0901
         jsl rlDrawMapMenuTextLine
@@ -1648,47 +1830,47 @@
 
 
         _8E01
-        lda #$8500
+        lda #(`aUnknown858EA7)<<8
         sta lR18+1
-        lda #$8EA7
+        lda #<>aUnknown858EA7
         sta lR18
         ldx #$0902
         jsl rlDrawMapMenuTextLine
         lda #$2140
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown858EAD)<<8
         sta lR18+1
-        lda #$8EAD
+        lda #<>aUnknown858EAD
         sta lR18
         ldx #$0B02
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown858EB1)<<8
         sta lR18+1
-        lda #$8EB1
+        lda #<>aUnknown858EB1
         sta lR18
         ldx #$0C02
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown858EB5)<<8
         sta lR18+1
-        lda #$8EB5
+        lda #<>aUnknown858EB5
         sta lR18
         ldx #$0D02
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown858EB9)<<8
         sta lR18+1
-        lda #$8EB9
+        lda #<>aUnknown858EB9
         sta lR18
         ldx #$0E02
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown858EBD)<<8
         sta lR18+1
-        lda #$8EBD
+        lda #<>aUnknown858EBD
         sta lR18
         ldx #$0F02
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown858EC1)<<8
         sta lR18+1
-        lda #$8EC1
+        lda #<>aUnknown858EC1
         sta lR18
         ldx #$1002
         jsl rlUnknown8788F7
@@ -1719,6 +1901,51 @@
         ; 85/8EA1
 
     .endsection Unsorted858D83Section
+
+
+    .section Table858EA1Section
+
+      .al
+      .xl
+
+      aUnknown858EA1 ; 85/8EA1
+
+        .enc "SJIS"
+        .text "ＬＶ"
+        .word $0000
+        .enc "none"
+
+      aUnknown858EA7 ; 85/8EA7
+
+        .enc "SJIS"
+        .text "ＨＰ"
+        .word $0000
+        .enc "none"
+
+
+      aUnknown858EAD ; 85/8EAD
+        .byte $44, $45, $46, $00
+
+      aUnknown858EB1 ; 85/8EB1
+        .byte $54, $55, $56, $00
+
+      aUnknown858EB5 ; 85/8EB5
+        .byte $47, $48, $49, $00
+
+      aUnknown858EB9 ; 85/8EB9
+        .byte $57, $58, $59, $00
+
+      aUnknown858EBD ; 85/8EBD
+        .byte $4A, $4B, $4C, $00
+
+      aUnknown858EC1 ; 85/8EC1
+        .byte $5A, $5B, $5C, $00
+
+    .endsection Table858EA1Section
+
+
+
+
 
 
     .section Unsorted858EC5Section
@@ -1888,21 +2115,21 @@
         sta wSelectedUnitDataRAMPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown859080)<<8
         sta lR18+1
-        lda #$9080
+        lda #<>aUnknown859080
         sta lR18
         ldx #$0101
         jsl rlDrawMapMenuTextLine
-        lda #$8500
+        lda #(`aUnknown859080)<<8
         sta lR18+1
-        lda #$9080
+        lda #<>aUnknown859080
         sta lR18
         ldx #$0301
         jsl rlDrawMapMenuTextLine
-        lda #$8500
+        lda #(`aUnknown859080)<<8
         sta lR18+1
-        lda #$9080
+        lda #<>aUnknown859080
         sta lR18
         ldx #$0501
         jsl rlDrawMapMenuTextLine
@@ -1930,9 +2157,9 @@
         jsl rlUnknown878916
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown859078)<<8
         sta lR18+1
-        lda #$9078
+        lda #<>aUnknown859078
         sta lR18
         ldx #$0906
         jsl rlDrawMapMenuTextLine
@@ -1954,9 +2181,9 @@
         _9032
         lda #$2400
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown859092)<<8
         sta lR18+1
-        lda #$9092
+        lda #<>aUnknown859092
         sta lR18
         ldx #$0B06
         jsl rlDrawMapMenuTextLine
@@ -1993,6 +2220,61 @@
         ; 85/9078
 
     .endsection Unsorted858F28Section
+
+
+    .section Table859078Section
+
+      .al
+      .xl
+
+      aUnknown859078 ; 85/9078
+
+        .enc "SJIS"
+        .text "／"
+        .word $0000
+        .enc "none"
+
+      aUnknown85907C ; 85/907C
+
+        .enc "SJIS"
+        .text "−"
+        .word $0000
+        .enc "none"
+
+      aUnknown859080 ; 85/9080
+
+        .enc "SJIS"
+        .text "　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+      aUnknown859092 ; 85/9092
+
+        .enc "SJIS"
+        .text "−−"
+        .word $0000
+        .enc "none"
+
+
+      aUnknown859098 ; 85/9098
+        .byte $04, $0A, $88, $83, $7E, $00, $4A, $C9, $7F
+
+      aUnknown8590A1 ; 85/90A1
+        .long $000000
+        .long $000000
+        .long aUnknown859098
+        .byte $01, $0A, $09
+
+      procUnknown8590AD ; 85/90AD
+        .structProcInfo "PW", rlUnknown8590B9, $90C8, $9158
+        .long aUnknown8590A1
+        .byte $00
+
+    .endsection Table859078Section
+
+
+
+
 
 
     .section Unsorted8590B9Section
@@ -2131,6 +2413,9 @@
 
         ; 85/9158
 
+
+        PROC_HALT
+
     .endsection Unsorted859108Section
 
 
@@ -2218,9 +2503,9 @@
         cmp #$0004
         beq _9219
         jsl rlActionStructGetBattleStats
-        lda #$8500
+        lda #(`procUnknown858D77)<<8
         sta lR44+1
-        lda #$8D77
+        lda #<>procUnknown858D77
         sta lR44
         jsl rlProcEngineFindProc
         bcs _91E6
@@ -2238,9 +2523,9 @@
         lda $057C,b
         cmp #$0001
         beq _9219
-        lda #$8500
+        lda #(`procUnknown8590AD)<<8
         sta lR44+1
-        lda #$90AD
+        lda #<>procUnknown8590AD
         sta lR44
         jsl rlProcEngineFindProc
         bcs _9210
@@ -2282,9 +2567,9 @@
         pha
         lda wR1
         pha
-        lda #$8500
+        lda #(`procUnknown858D77)<<8
         sta lR44+1
-        lda #$8D77
+        lda #<>procUnknown858D77
         sta lR44
         jsl rlProcEngineFindProc
         bcc _9262
@@ -2292,9 +2577,9 @@
         ora #$0002
         sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown858EC5
-        lda #$8500
+        lda #(`procUnknown8590AD)<<8
         sta lR44+1
-        lda #$90AD
+        lda #<>procUnknown8590AD
         sta lR44
         jsl rlProcEngineFindProc
         bcc _9262
@@ -2318,6 +2603,16 @@
 
         ; 85/926C
 
+
+      aUnknown85926C ; 85/926C
+
+        .structMapMenuTilemapData 16, 16, aBG3TilemapBuffer, 0, $7FC64A
+
+      aUnknown859275 ; 85/9275
+
+        .long 0, 0, aUnknown85926C
+        .byte 0, 2, 9
+
     .endsection Unsorted85915ASection
 
 
@@ -2329,6 +2624,10 @@
       procUnknown859281 ; 85/9281
 
         .structProcInfo "PW", rlUnknown85928D, rlUnknown8592C4, aProcDialogueBoxCode
+
+
+        .long aUnknown859275
+        .byte 1
 
     .endsection Unsorted859281Section
 
@@ -3247,6 +3546,75 @@
 
         ; 85/9831
 
+
+      aUnknown859831 ; 85/9831
+
+        .word <>aUnknown859841
+        .word <>aUnknown859848
+        .word <>aUnknown85984F
+        .word <>aUnknown859856
+        .word <>aUnknown85985D
+        .word <>aUnknown859864
+        .word <>aUnknown85986B
+        .word <>aUnknown859872
+
+      aUnknown859841 ; 85/9841
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $040, 3, 6, false, false]]
+
+        .structSpriteArray aUnknown859841._Sprites
+
+      aUnknown859848 ; 85/9848
+
+        _Sprites := [[(   0,   16), $21, SpriteLarge, $042, 3, 6, false, false]]
+
+        .structSpriteArray aUnknown859848._Sprites
+
+      aUnknown85984F ; 85/984F
+
+        _Sprites := [[(   0,   32), $21, SpriteLarge, $044, 3, 6, false, false]]
+
+        .structSpriteArray aUnknown85984F._Sprites
+
+      aUnknown859856 ; 85/9856
+
+        _Sprites := [[(   0,   48), $21, SpriteLarge, $046, 3, 6, false, false]]
+
+        .structSpriteArray aUnknown859856._Sprites
+
+      aUnknown85985D ; 85/985D
+
+        _Sprites := [[(   0,   64), $21, SpriteLarge, $048, 3, 6, false, false]]
+
+        .structSpriteArray aUnknown85985D._Sprites
+
+      aUnknown859864 ; 85/9864
+
+        _Sprites := [[(   0,   80), $21, SpriteLarge, $04A, 3, 6, false, false]]
+
+        .structSpriteArray aUnknown859864._Sprites
+
+      aUnknown85986B ; 85/986B
+
+        _Sprites := [[(   0,   96), $21, SpriteLarge, $04C, 3, 6, false, false]]
+
+        .structSpriteArray aUnknown85986B._Sprites
+
+      aUnknown859872 ; 85/9872
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $04E, 3, 6, false, false]]
+
+        .structSpriteArray aUnknown859872._Sprites
+
+      aUnknown859879 ; 85/9879
+
+        .structMapMenuTilemapData 11, 10, aBG3TilemapBuffer, 0, $7FC94A
+
+      aUnknown859882 ; 85/9882
+
+        .long 0, 0, aUnknown859879
+        .byte 0, 19, 4
+
     .endsection Unsorted859431Section
 
 
@@ -3258,6 +3626,10 @@
       procUnknown85988E ; 85/988E
 
         .structProcInfo "PW", rlUnknown85989A, rlUnknown859973, aProcUnknown85988ECode
+
+
+        .long aUnknown859882
+        .byte 0
 
     .endsection Unsorted85988ESection
 
@@ -3289,51 +3661,51 @@
         phx
         lda #$2140
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown85996B)<<8
         sta lR18+1
-        lda #$996B
+        lda #<>aUnknown85996B
         sta lR18
         ldx #$0102
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown85996F)<<8
         sta lR18+1
-        lda #$996F
+        lda #<>aUnknown85996F
         sta lR18
         ldx #$0202
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown859953)<<8
         sta lR18+1
-        lda #$9953
+        lda #<>aUnknown859953
         sta lR18
         ldx #$0302
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown859957)<<8
         sta lR18+1
-        lda #$9957
+        lda #<>aUnknown859957
         sta lR18
         ldx #$0402
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown85995B)<<8
         sta lR18+1
-        lda #$995B
+        lda #<>aUnknown85995B
         sta lR18
         ldx #$0502
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown85995F)<<8
         sta lR18+1
-        lda #$995F
+        lda #<>aUnknown85995F
         sta lR18
         ldx #$0602
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown859963)<<8
         sta lR18+1
-        lda #$9963
+        lda #<>aUnknown859963
         sta lR18
         ldx #$0702
         jsl rlUnknown8788F7
-        lda #$8500
+        lda #(`aUnknown859967)<<8
         sta lR18+1
-        lda #$9967
+        lda #<>aUnknown859967
         sta lR18
         ldx #$0802
         jsl rlUnknown8788F7
@@ -3345,6 +3717,42 @@
         ; 85/9953
 
     .endsection Unsorted85989ASection
+
+
+    .section Table859953Section
+
+      .al
+      .xl
+
+      aUnknown859953 ; 85/9953
+        .byte $44, $45, $46, $00
+
+      aUnknown859957 ; 85/9957
+        .byte $54, $55, $56, $00
+
+      aUnknown85995B ; 85/995B
+        .byte $4A, $4B, $4C, $00
+
+      aUnknown85995F ; 85/995F
+        .byte $5A, $5B, $5C, $00
+
+      aUnknown859963 ; 85/9963
+        .byte $4D, $4E, $4F, $00
+
+      aUnknown859967 ; 85/9967
+        .byte $5D, $5E, $5F, $00
+
+      aUnknown85996B ; 85/996B
+        .byte $40, $41, $42, $00
+
+      aUnknown85996F ; 85/996F
+        .byte $50, $51, $52, $00
+
+    .endsection Table859953Section
+
+
+
+
 
 
     .section Unsorted859973Section
@@ -3483,27 +3891,27 @@
         bmi _9A87
 
         _9A77
-        lda #$8500
+        lda #(`aUnknown859AAC)<<8
         sta lR18+1
-        lda #$9AAC
+        lda #<>aUnknown859AAC
         sta lR18
         jsl rlDrawMapMenuTextLine
         bra _9AA5
 
 
         _9A87
-        lda #$8500
+        lda #(`aUnknown859AA8)<<8
         sta lR18+1
-        lda #$9AA8
+        lda #<>aUnknown859AA8
         sta lR18
         jsl rlDrawMapMenuTextLine
         bra _9AA5
 
 
         _9A97
-        lda #$8500
+        lda #(`aUnknown859AB0)<<8
         sta lR18+1
-        lda #$9AB0
+        lda #<>aUnknown859AB0
         sta lR18
         jsl rlDrawMapMenuTextLine
 
@@ -3516,6 +3924,40 @@
         ; 85/9AA8
 
     .endsection Unsorted859973Section
+
+
+    .section Table859AA8Section
+
+      .al
+      .xl
+
+      aUnknown859AA8 ; 85/9AA8
+
+        .enc "SJIS"
+        .text "↑"
+        .word $0000
+        .enc "none"
+
+      aUnknown859AAC ; 85/9AAC
+
+        .enc "SJIS"
+        .text "↓"
+        .word $0000
+        .enc "none"
+
+      aUnknown859AB0 ; 85/9AB0
+
+        .enc "SJIS"
+        .text "　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table859AA8Section
+
+
+
+
 
 
     .section Unsorted859AB4Section
@@ -3604,6 +4046,13 @@
         .databank 0
 
         ; 85/9B21
+
+
+      aUnknown859B21 ; 85/9B21
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $04E, 3, 5, false, false]]
+
+        .structSpriteArray aUnknown859B21._Sprites
 
     .endsection Unsorted859AFDSection
 
@@ -3719,7 +4168,7 @@
         ldx #$0010
 
         _9BC1
-        lda aUnknownDE0000,x
+        lda aWindowPalette,x
         sta aBGPaletteBuffer,b,x
         inc x
         inc x
@@ -3780,6 +4229,20 @@
     .endsection Unsorted859D60Section
 
 
+    .section Table859D88Section
+
+      .al
+      .xl
+
+      aUnknown859D88 .dstruct structHDMAIndirectEntryInfo, rlUnknown859D94, rlUnknown859DCA, $9DCB, wDialogueBoxHDMAYPixelPosition, PPU_REG_BASE + $32, $40, $85 ; 85/9D88
+
+    .endsection Table859D88Section
+
+
+
+
+
+
     .section Unsorted859D94Section
 
       .al
@@ -3836,6 +4299,11 @@
 
         ; 85/9DCB
 
+
+      aUnknown859DCB ; 85/9DCB
+
+        HDMA_HALT
+
     .endsection Unsorted859D94Section
 
 
@@ -3886,6 +4354,11 @@
         .databank 0
 
         ; 85/9E07
+
+
+      aUnknown859E07 ; 85/9E07
+
+        .byte $E0
 
     .endsection Unsorted859DCDSection
 
@@ -4097,6 +4570,24 @@
 
         ; 85/9EE7
 
+
+      aUnknown859EE7 ; 85/9EE7
+
+        .word <>aUnknown859F77, <>aUnknown859F77+1, <>aUnknown859F77+2, <>aUnknown859F77+3, <>aUnknown859F77+4, <>aUnknown859F77+5, <>aUnknown859F77+6, <>aUnknown859F77+7
+        .word <>aUnknown859F77+8, <>aUnknown859F77+9, <>aUnknown859F77+10, <>aUnknown859F77+11, <>aUnknown859F77+12, <>aUnknown859F77+13, <>aUnknown859F77+14, <>aUnknown859F77+15
+        .word <>aUnknown859F77+16, <>aUnknown859F77+17, <>aUnknown859F77+18, <>aUnknown859F77+19, <>aUnknown859F77+20, <>aUnknown859F77+21, <>aUnknown859F77+22, <>aUnknown859F77+23
+        .word <>aUnknown859F77+24, <>aUnknown859F77+25, <>aUnknown859F77+26, <>aUnknown859F77+27, <>aUnknown859F77+28, <>aUnknown859F77+29, <>aUnknown859F77+30, <>aUnknown859F77+31
+        .word <>aUnknown859F77+19, <>aUnknown859F77+18, <>aUnknown859F77+17, <>aUnknown859F77+16, <>aUnknown859F77+15, <>aUnknown859F77+14, <>aUnknown859F77+13, <>aUnknown859F77+12
+        .word <>aUnknown859F77+11, <>aUnknown859F77+10, <>aUnknown859F77+9, <>aUnknown859F77+8, <>aUnknown859F77+7, <>aUnknown859F77+6, <>aUnknown859F77+5, <>aUnknown859F77+4
+        .word <>aUnknown859F77+3, <>aUnknown859F77+2, <>aUnknown859F77+1, <>aUnknown859F77, <>aUnknown859F77+19, <>aUnknown859F77+16, <>aUnknown859F77+13, <>aUnknown859F77+10
+        .word <>aUnknown859F77+7, <>aUnknown859F77+5, <>aUnknown859F77+3, <>aUnknown859F77+2, <>aUnknown859F77+1, <>aUnknown859F77, <>aUnknown859F77, <>aUnknown859F77+1
+        .word <>aUnknown859F77+2, <>aUnknown859F77+3, <>aUnknown859F77+5, <>aUnknown859F77+7, <>aUnknown859F77+10, <>aUnknown859F77+13, <>aUnknown859F77+16, <>aUnknown859F77+19
+
+      aUnknown859F77 ; 85/9F77
+
+        .byte $E0, $E1, $E2, $E3, $E4, $E5, $E6, $E7, $E8, $E9, $EA, $EB, $EC, $ED, $EE, $EF
+        .byte $F0, $F1, $F2, $F3, $F4, $F5, $F6, $F7, $F8, $F9, $FA, $FB, $FC, $FD, $FE, $FF
+
     .endsection Unsorted859E08Section
 
 
@@ -4174,9 +4665,9 @@
         jsl rlFreeHDMAEntry0
         lda #$0000
         sta wR40
-        lda #$8500
+        lda #(`aUnknown859D88)<<8
         sta lR44+1
-        lda #$9D88
+        lda #<>aUnknown859D88
         sta lR44
         jsl rlHDMAEngineCreateEntryByIndex
         rtl
@@ -4547,7 +5038,20 @@
 
         .databank 0
 
-        ; 85/A0F6
+      aUnknown85A0F6 ; 85/A0F6
+
+        .structMapMenuTilemapData 32, 4, aBG3TilemapBuffer, 0, $7FCE4A
+
+      aUnknown85A0FF ; 85/A0FF
+
+        .long 0, 0, aUnknown85A0F6
+        .byte 0, 1, 1
+
+      procUnknown85A10B ; 85/A10B
+
+        .structProcInfo "PW", rlUnknown85A117, rlProcUnknown85DAEACycle, aProcDialogueBoxCode
+        .long aUnknown85A0FF
+        .byte 0
 
     .endsection Unsorted85A0F5Section
 
@@ -4766,6 +5270,154 @@
 
         ; 85/A241
 
+
+            rlUnknown85A241 ; 85/A241
+
+              .al
+              .xl
+              .autsiz
+              .databank ?
+
+              pha
+              phx
+              and #$FF00
+              asl a
+              asl a
+              asl a
+              sta wR0
+              txa
+              and #$FF00
+              asl a
+              asl a
+              asl a
+              xba
+              ora wR0
+              sta wR43
+              lda #$000F
+              sta wR42
+              jsl rlUnknown859FCD
+              plx
+              lda #$2000
+              sta aCurrentTilemapInfo,b
+              lda #(`aUnknown85A284)<<8
+              sta lR18+1
+              lda #<>aUnknown85A284
+              sta lR18
+              lda #(`aUnknown85A284)<<8
+              sta lR19+1
+              lda #<>aUnknown85A284
+              sta lR19
+              ldy #$8000
+              pla
+              jsl rlUnknown85A295
+              rtl
+
+              .databank 0
+
+      aUnknown85A284 ; 85/A284
+
+        .enc "SJIS"
+        .text "　\n"
+        .enc "none"
+
+            rlUnknown85A288 ; 85/A288
+
+              .al
+              .xl
+              .autsiz
+              .databank ?
+
+              pha
+              lda #$2000
+              sta aCurrentTilemapInfo,b
+              pla
+              jsl rlUnknown85A295
+              rtl
+
+              .databank 0
+
+            rlUnknown85A295 ; 85/A295
+
+              .al
+              .xl
+              .autsiz
+              .databank ?
+
+              sta $0ED5,b
+              stx $0ED3,b
+              sty $0ED1,b
+              lda aCurrentTilemapInfo,b
+              sta $0ECF,b
+              lda #(`procUnknown85A10B)<<8
+              sta lR44+1
+              lda #<>procUnknown85A10B
+              sta lR44
+              jsl rlProcEngineCreateProc
+              rtl
+
+              .databank 0
+
+            rlUnknown85A2B3 ; 85/A2B3
+
+              .al
+              .xl
+              .autsiz
+              .databank ?
+
+              lda #(`procUnknown85A10B)<<8
+              sta lR44+1
+              lda #<>procUnknown85A10B
+              sta lR44
+              jsl rlProcEngineFindProc
+              bcc _A2CC
+              lda $0F37,b,x
+              ora #$0002
+              sta $0F37,b,x
+
+              _A2CC
+              rtl
+
+              .databank 0
+
+            rlUnknown85A2CD ; 85/A2CD
+
+              .al
+              .xl
+              .autsiz
+              .databank ?
+
+              lda #(`procUnknown85A10B)<<8
+              sta lR44+1
+              lda #<>procUnknown85A10B
+              sta lR44
+              jsl rlProcEngineFindProc
+              bcc _A2FE
+              lda $0F37,b,x
+              ora #$0004
+              sta $0F37,b,x
+              lda lR18
+              sta $7FEAAA
+              lda lR18+1
+              sta $7FEAAB
+              lda lR19
+              sta $7FEAAE
+              lda lR19+1
+              sta $7FEAAF
+
+              _A2FE
+              rtl
+
+              .databank 0
+
+      aUnknown85A2FF ; 85/A2FF
+
+        .structMapMenuTilemapData 10, 11, aBG3TilemapBuffer, 0, $7FCD4A
+
+      aUnknown85A308 ; 85/A308
+
+        .long 0, 0, aUnknown85A2FF
+        .byte 0, 1, 1
+
     .endsection Unsorted85A227Section
 
 
@@ -4777,6 +5429,10 @@
       procUnknown85A314 ; 85/A314
 
         .structProcInfo "PW", rlUnknown85A320, rlUnknown85A347, aProcDialogueBoxCode
+
+
+        .long aUnknown85A308
+        .byte 0
 
     .endsection Unsorted85A314Section
 
@@ -5051,6 +5707,16 @@
 
         ; 85/A46A
 
+
+      aUnknown85A46A ; 85/A46A
+
+        .structMapMenuTilemapData 13, 6, aBG3TilemapBuffer, 0, $7FC54A
+
+      aUnknown85A473 ; 85/A473
+
+        .long 0, 0, aUnknown85A46A
+        .byte 0, 9, 11
+
     .endsection Unsorted85A3D5Section
 
 
@@ -5062,6 +5728,10 @@
       procUnknown85A47F ; 85/A47F
 
         .structProcInfo "PW", rlProcUnknown85A47FInit, rlProcUnknown85A47FCycle1, aProcUnknown85A47FCode
+
+
+        .long aUnknown85A473
+        .byte 1
 
     .endsection ProcScript85A47FSection
 
@@ -5086,21 +5756,21 @@
         lda #$0000
         sta aProcSystem.aBody7,b,x
         phx
-        lda #$8500
+        lda #(`aUnknown85A4E6)<<8
         sta lR18+1
-        lda #$A4E6
+        lda #<>aUnknown85A4E6
         sta lR18
         ldx #$0102
         jsl rlDrawMapMenuTextLine
-        lda #$8500
+        lda #(`aUnknown85A4FA)<<8
         sta lR18+1
-        lda #$A4FA
+        lda #<>aUnknown85A4FA
         sta lR18
         ldx #$0303
         jsl rlDrawMapMenuTextLine
-        lda #$8500
+        lda #(`aUnknown85A500)<<8
         sta lR18+1
-        lda #$A500
+        lda #<>aUnknown85A500
         sta lR18
         ldx #$0308
         jsl rlDrawMapMenuTextLine
@@ -5116,6 +5786,40 @@
         ; 85/A4E6
 
     .endsection Unsorted85A48BSection
+
+
+    .section Table85A4E6Section
+
+      .al
+      .xl
+
+      aUnknown85A4E6 ; 85/A4E6
+
+        .enc "SJIS"
+        .text "セーブ　しますか？"
+        .word $0000
+        .enc "none"
+
+      aUnknown85A4FA ; 85/A4FA
+
+        .enc "SJIS"
+        .text "はい"
+        .word $0000
+        .enc "none"
+
+      aUnknown85A500 ; 85/A500
+
+        .enc "SJIS"
+        .text "いいえ"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table85A4E6Section
+
+
+
+
 
 
     .section Unsorted85A508Section
@@ -5318,6 +6022,16 @@
 
         ; 85/A5DA
 
+
+      aUnknown85A5DA ; 85/A5DA
+
+        .structMapMenuTilemapData 9, 10, aBG3TilemapBuffer, 0, $7FC54A
+
+      aUnknown85A5E3 ; 85/A5E3
+
+        .long 0, 0, aUnknown85A5DA
+        .byte 0, 11, 9
+
     .endsection Unsorted85A5C5Section
 
 
@@ -5329,6 +6043,10 @@
       procUnknown85A5EF ; 85/A5EF
 
         .structProcInfo "PW", rlUnknown85A5FB, rlUnknown85A69A, aProcUnknown85A5EFCode
+
+
+        .long aUnknown85A5E3
+        .byte 1
 
     .endsection Unsorted85A5EFSection
 
@@ -5366,27 +6084,27 @@
         _A622
         sta aProcSystem.aBody7,b,x
         phx
-        lda #$8500
+        lda #(`aUnknown85A670)<<8
         sta lR18+1
-        lda #$A670
+        lda #<>aUnknown85A670
         sta lR18
         ldx #$0101
         jsl rlDrawMapMenuTextLine
-        lda #$8500
+        lda #(`aUnknown85A680)<<8
         sta lR18+1
-        lda #$A680
+        lda #<>aUnknown85A680
         sta lR18
         ldx #$0302
         jsl rlDrawMapMenuTextLine
-        lda #$8500
+        lda #(`aUnknown85A688)<<8
         sta lR18+1
-        lda #$A688
+        lda #<>aUnknown85A688
         sta lR18
         ldx #$0502
         jsl rlDrawMapMenuTextLine
-        lda #$8500
+        lda #(`aUnknown85A690)<<8
         sta lR18+1
-        lda #$A690
+        lda #<>aUnknown85A690
         sta lR18
         ldx #$0702
         jsl rlDrawMapMenuTextLine
@@ -5399,6 +6117,47 @@
         ; 85/A670
 
     .endsection Unsorted85A5FBSection
+
+
+    .section Table85A670Section
+
+      .al
+      .xl
+
+      aUnknown85A670 ; 85/A670
+
+        .enc "SJIS"
+        .text "アニメせってい"
+        .word $0000
+        .enc "none"
+
+      aUnknown85A680 ; 85/A680
+
+        .enc "SJIS"
+        .text "リアル"
+        .word $0000
+        .enc "none"
+
+      aUnknown85A688 ; 85/A688
+
+        .enc "SJIS"
+        .text "マップ"
+        .word $0000
+        .enc "none"
+
+      aUnknown85A690 ; 85/A690
+
+        .enc "SJIS"
+        .text "ぜんいん"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table85A670Section
+
+
+
+
 
 
     .section Unsorted85A69ASection
@@ -5553,6 +6312,16 @@
 
         ; 85/A76D
 
+
+      aUnknown85A76D ; 85/A76D
+
+        .structMapMenuTilemapData 7, 6, aBG3TilemapBuffer, 0, $7FD54A
+
+      aUnknown85A776 ; 85/A776
+
+        .long 0, 0, aUnknown85A76D
+        .byte 1, 18, 12
+
     .endsection Unsorted85A765Section
 
 
@@ -5564,6 +6333,10 @@
       procUnknown85A782 ; 85/A782
 
         .structProcInfo "PW", rlUnknown85A78E, rlUnknown85A799, aProcDialogueBoxCode
+
+
+        .long aUnknown85A776
+        .byte 1
 
     .endsection Unsorted85A782Section
 
@@ -5599,15 +6372,15 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         phx
-        lda #$8500
+        lda #(`aUnknown85A7CE)<<8
         sta lR18+1
-        lda #$A7CE
+        lda #<>aUnknown85A7CE
         sta lR18
         ldx #$0102
         jsl rlDrawMapMenuTextLine
-        lda #$8500
+        lda #(`aUnknown85A7D6)<<8
         sta lR18+1
-        lda #$A7D6
+        lda #<>aUnknown85A7D6
         sta lR18
         ldx #$0302
         jsl rlDrawMapMenuTextLine
@@ -5622,6 +6395,33 @@
         ; 85/A7CE
 
     .endsection Unsorted85A78ESection
+
+
+    .section Table85A7CESection
+
+      .al
+      .xl
+
+      aUnknown85A7CE ; 85/A7CE
+
+        .enc "SJIS"
+        .text "リアル"
+        .word $0000
+        .enc "none"
+
+      aUnknown85A7D6 ; 85/A7D6
+
+        .enc "SJIS"
+        .text "マップ"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table85A7CESection
+
+
+
+
 
 
     .section Unsorted85A7DESection
@@ -5773,6 +6573,24 @@
 
     .endsection Unsorted85AB32Section
 
+    .section Table85AB82Section
+
+      .al
+      .xl
+
+      aUnknown85AB82 .dstruct structHDMAIndirectEntryInfo, rlUnknown85AB8E, $AB93, $AB94, $7FEA9A, PPU_REG_BASE + $12, $42, $85 ; 85/AB82
+
+    .endsection Table85AB82Section
+
+
+
+
+
+
+
+
+
+
 
     .section Unsorted85AB8ESection
 
@@ -5793,6 +6611,11 @@
         .databank 0
 
         ; 85/AB94
+
+
+      aUnknown85AB94 ; 85/AB94
+
+        HDMA_HALT
 
     .endsection Unsorted85AB8ESection
 
@@ -5854,6 +6677,15 @@
         .databank 0
 
         ; 85/ABED
+
+
+      aUnknown85ABED ; 85/ABED
+
+        .byte $FF, $01
+
+      aUnknown85ABEF ; 85/ABEF
+
+        .byte $FE, $01
 
     .endsection Unsorted85AB96Section
 
@@ -6028,9 +6860,9 @@
         phx
         lda #$1800
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown85AD55)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$AD55
+        lda #<>aUnknown85AD55
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #(`aUnknown85ACC2)<<8
         sta lR18+1
@@ -6084,14 +6916,14 @@
         clc
         adc wR10
         pha
-        lda #$8500
+        lda #(`aUnknown85AD5E)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$AD5E
+        lda #<>aUnknown85AD5E
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlDrawMenuTextLine
-        lda #$8500
+        lda #(`aUnknown85AD47)<<8
         sta lR18+1
-        lda #$AD47
+        lda #<>aUnknown85AD47
         sta lR18
         plx
         jsl rlDrawMenuTextLine
@@ -6104,6 +6936,32 @@
         .databank 0
 
     .endsection Unsorted85AC89Section
+
+
+    .section Table85AD47Section
+
+      .al
+      .xl
+
+      aUnknown85AD47 ; 85/AD47
+
+        .enc "SJIS"
+        .text "　ＰＨＡＳＥ"
+        .word $0000
+        .enc "none"
+
+
+      aUnknown85AD55 ; 85/AD55
+        .byte $20, $20, $00, $00, $00, $00, $88, $7B, $7E
+
+      aUnknown85AD5E ; 85/AD5E
+        .byte $20, $1E, $00, $00, $00, $00, $88, $83, $7E
+
+    .endsection Table85AD47Section
+
+
+
+
 
 
     .section Unsorted85AD67Section
@@ -6122,9 +6980,9 @@
         jsl rlUnknown85A234
         lda #$0002
         sta wR40
-        lda #$8500
+        lda #(`aUnknown85AEBB)<<8
         sta lR44+1
-        lda #$AEBB
+        lda #<>aUnknown85AEBB
         sta lR44
         jsl rlHDMAEngineCreateEntryByIndex
         sep #$20
@@ -6224,9 +7082,9 @@
         jsl rlHDMAEngineFreeEntryByIndex
         lda #$0002
         sta wR40
-        lda #$8500
+        lda #(`aUnknown85AF0F)<<8
         sta lR44+1
-        lda #$AF0F
+        lda #<>aUnknown85AF0F
         sta lR44
         jsl rlHDMAEngineCreateEntryByIndex
         rtl
@@ -6252,9 +7110,9 @@
         phx
         lda #$030F
         sta wUnknown053C,b
-        lda #$8500
+        lda #(`aUnknown85AD55)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$AD55
+        lda #<>aUnknown85AD55
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlUnknown878B98
         jsl rlDMAByStruct
@@ -6280,9 +7138,9 @@
         phx
         lda #$20FF
         sta wUnknown053C,b
-        lda #$8500
+        lda #(`aUnknown85AD5E)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$AD5E
+        lda #<>aUnknown85AD5E
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlUnknown878B98
         jsl rlUnknown878459
@@ -6388,6 +7246,20 @@
     .endsection ProcScript85AEACSection
 
 
+    .section Table85AEBBSection
+
+      .al
+      .xl
+
+      aUnknown85AEBB .dstruct structHDMAIndirectEntryInfo, rlUnknown85AEC7, rlUnknown85AED2, aUnknown85AF0D, $7FEAAE, PPU_REG_BASE + $2C, $40, $85 ; 85/AEBB
+
+    .endsection Table85AEBBSection
+
+
+
+
+
+
     .section Unsorted85AEC7Section
 
       .al
@@ -6465,6 +7337,23 @@
         ; 85/AF0D
 
     .endsection Unsorted85AEC7Section
+
+
+    .section Table85AF0DSection
+
+      .al
+      .xl
+
+      aUnknown85AF0D ; 85/AF0D
+        HDMA_HALT
+
+      aUnknown85AF0F .dstruct structHDMAIndirectEntryInfo, rlUnknown85AF1B, rlUnknown85AF23, aUnknown85AF0D, $7FEAAE, PPU_REG_BASE + $2C, $40, $85 ; 85/AF0F
+
+    .endsection Table85AF0DSection
+
+
+
+
 
 
     .section Unsorted85AF1BSection
@@ -6597,6 +7486,15 @@
         .databank 0
 
         ; 85/AFC3
+
+
+      aUnknown85AFC3 ; 85/AFC3
+
+        .byte $11
+
+      aUnknown85AFC4 ; 85/AFC4
+
+        .byte $17
 
     .endsection Unsorted85AF1BSection
 
@@ -7486,14 +8384,14 @@
         .databank ?
 
         phx
-        lda #$8500
+        lda #(`procUnknown85B704)<<8
         sta lR44+1
-        lda #$B704
+        lda #<>procUnknown85B704
         sta lR44
         jsr rsUnknown85B42B
-        lda #$8500
+        lda #(`procUnknown85B547)<<8
         sta lR44+1
-        lda #$B547
+        lda #<>procUnknown85B547
         sta lR44
         jsr rsUnknown85B42B
         plx
@@ -7548,9 +8446,9 @@
         .databank ?
 
         phx
-        lda #$8500
+        lda #(`procUnknown85B547)<<8
         sta lR44+1
-        lda #$B547
+        lda #<>procUnknown85B547
         sta lR44
         jsl rlProcEngineFindProc
         bcc _B457
@@ -7643,9 +8541,9 @@
         inc a
         cmp wR1
         bne _B4BB
-        lda #$8500
+        lda #(`aUnknown85B4E9)<<8
         sta lR18+1
-        lda #$B4E9
+        lda #<>aUnknown85B4E9
         sta lR18
         lda wR0
         clc
@@ -7681,6 +8579,26 @@
         ; 85/B4E9
 
     .endsection Unsorted85B45CSection
+
+
+    .section Table85B4E9Section
+
+      .al
+      .xl
+
+      aUnknown85B4E9 ; 85/B4E9
+
+        .enc "SJIS"
+        .text "Ｅ"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table85B4E9Section
+
+
+
+
 
 
     .section Unsorted85B4EDSection
@@ -7757,6 +8675,174 @@
     .endsection Unsorted85B520Section
 
 
+    .section Table85B547Section
+
+      .al
+      .xl
+
+      procUnknown85B547 ; 85/B547
+        .structProcInfo "PW", rlUnknown85B568, rlUnknown85B5DE, aUnknown85B628
+        .long aUnknown85B55C
+        .byte $01
+
+      aUnknown85B553 ; 85/B553
+        .byte $10, $06, $88, $83, $7E, $00, $4A, $C7, $7F
+
+      aUnknown85B55C ; 85/B55C
+        .long $000000
+        .long $000000
+        .long aUnknown85B553
+        .byte $00, $08, $0F
+
+      rlUnknown85B568 ; 85/B568
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85BC9E
+        lda #$0000
+        sta $10B7,b,x
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        phx
+        lda #(`aUnknown85B5B2)<<8
+        sta lR18+1
+        lda #<>aUnknown85B5B2
+        sta lR18
+        ldx #$0101
+        jsl rlDrawMapMenuTextLine
+        lda #(`aUnknown85B5D0)<<8
+        sta lR18+1
+        lda #<>aUnknown85B5D0
+        sta lR18
+        ldx #$0303
+        jsl rlDrawMapMenuTextLine
+        lda #(`aUnknown85B5D6)<<8
+        sta lR18+1
+        lda #<>aUnknown85B5D6
+        sta lR18
+        ldx #$0308
+        jsl rlDrawMapMenuTextLine
+        plx
+        jsl rlUnknown8587E1
+        rtl
+
+        .databank 0
+
+        ; 85/B5B2
+
+      aUnknown85B5B2 ; 85/B5B2
+
+        .enc "SJIS"
+        .text "このアイテムをあずけますか？"
+        .word $0000
+        .enc "none"
+
+      aUnknown85B5D0 ; 85/B5D0
+
+        .enc "SJIS"
+        .text "はい"
+        .word $0000
+        .enc "none"
+
+      aUnknown85B5D6 ; 85/B5D6
+
+        .enc "SJIS"
+        .text "いいえ"
+        .word $0000
+        .enc "none"
+
+
+      rlUnknown85B5DE ; 85/B5DE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1Repeated
+        bit #$0300
+        beq _B5F7
+        lda #$0007
+        jsl rlPlaySoundEffect
+        lda $10B7,b,x
+        eor #$0001
+        sta $10B7,b,x
+        bra _B5FE
+
+
+        _B5F7
+        lda wJoy1New
+        bit #$8080
+        bne _B620
+
+        _B5FE
+        lda $10B7,b,x
+        bit #$0001
+        bne _B60B
+        lda #$0002
+        bra _B60E
+
+
+        _B60B
+        lda #$0007
+
+        _B60E
+        ora #$0400
+        sta wR0
+        lda #$0000
+        sta wR1
+        phx
+        jsl rlUnknown8586AA
+        plx
+        bra _B626
+
+
+        _B620
+        lda #$B627
+        sta $0F57,b,x
+
+        _B626
+        rtl
+
+        .databank 0
+
+        ; 85/B627
+
+        .byte $6B ; unused rtl (85/B627)
+
+      aUnknown85B628 ; 85/B628
+        PROC_HALT
+
+      rsUnknown85B62A ; 85/B62A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #(`procUnknown85B547)<<8
+        sta lR44+1
+        lda #<>procUnknown85B547
+        sta lR44
+        jsl rlProcEngineCreateProc
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/B63B
+
+    .endsection Table85B547Section
+
+
+
+
+
+
     .section ProcScript85B63BSection
 
       .al
@@ -7785,21 +8871,21 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         phx
-        lda #$8500
+        lda #(`aUnknown85B6A0)<<8
         sta lR18+1
-        lda #$B6A0
+        lda #<>aUnknown85B6A0
         sta lR18
         ldx #$0101
         jsl rlDrawMapMenuTextLine
-        lda #$8500
+        lda #(`aUnknown85B6BA)<<8
         sta lR18+1
-        lda #$B6BA
+        lda #<>aUnknown85B6BA
         sta lR18
         ldx #$0301
         jsl rlDrawMapMenuTextLine
-        lda #$8500
+        lda #(`aUnknown85B6D4)<<8
         sta lR18+1
-        lda #$B6D4
+        lda #<>aUnknown85B6D4
         sta lR18
         ldx #$0501
         jsl rlDrawMapMenuTextLine
@@ -7812,6 +8898,40 @@
         ; 85/B6A0
 
     .endsection Unsorted85B65CSection
+
+
+    .section Table85B6A0Section
+
+      .al
+      .xl
+
+      aUnknown85B6A0 ; 85/B6A0
+
+        .enc "SJIS"
+        .text "もちものが　いっぱいです"
+        .word $0000
+        .enc "none"
+
+      aUnknown85B6BA ; 85/B6BA
+
+        .enc "SJIS"
+        .text "あずけるアイテムをえらん"
+        .word $0000
+        .enc "none"
+
+      aUnknown85B6D4 ; 85/B6D4
+
+        .enc "SJIS"
+        .text "でください"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table85B6A0Section
+
+
+
+
 
 
     .section Unsorted85B6E0Section
@@ -7854,6 +8974,45 @@
     .endsection ProcScript85B6E1Section
 
 
+    .section Table85B6EBSection
+
+      .al
+      .xl
+
+        ; trailing args for procUnknown85B6E3
+        .long aUnknown85B6F8
+        .byte $00
+
+      aUnknown85B6EF ; 85/B6EF
+        .byte $0E, $04, $88, $83, $7E, $00, $4A, $C9, $7F
+
+      aUnknown85B6F8 ; 85/B6F8
+        .long $000000
+        .long $000000
+        .long aUnknown85B6EF
+        .byte $00, $02, $01
+
+      procUnknown85B704 ; 85/B704
+        .structProcInfo "PW", rlProcUnknown85B6E3Init, $B78A, $B7CF
+        .long aUnknown85B719
+        .byte $00
+
+      aUnknown85B710 ; 85/B710
+        .byte $0E, $04, $88, $83, $7E, $00, $4A, $CA, $7F
+
+      aUnknown85B719 ; 85/B719
+        .long $000000
+        .long $000000
+        .long aUnknown85B710
+        .byte $00, $02, $01
+
+    .endsection Table85B6EBSection
+
+
+
+
+
+
     .section Unsorted85B725Section
 
       .al
@@ -7885,9 +9044,9 @@
         lda #$0008
         jsl rlCheckIfWeaponEquipped
         bcc _B769
-        lda #$8500
+        lda #(`aUnknown85B786)<<8
         sta lR18+1
-        lda #$B786
+        lda #<>aUnknown85B786
         sta lR18
         ldx #$010C
         jsl rlDrawMapMenuTextLine
@@ -7909,6 +9068,26 @@
         ; 85/B786
 
     .endsection Unsorted85B725Section
+
+
+    .section Table85B786Section
+
+      .al
+      .xl
+
+      aUnknown85B786 ; 85/B786
+
+        .enc "SJIS"
+        .text "Ｅ"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table85B786Section
+
+
+
+
 
 
     .section Unsorted85B78ASection
@@ -8071,6 +9250,21 @@
     .endsection Unsorted85B8D6Section
 
 
+    .section Table85B8E5Section
+
+      .al
+      .xl
+
+      aUnknown85B8E5 ; 85/B8E5
+        .byte $20, $04, $88, $83, $7E, $00, $4A, $CE, $7F
+
+    .endsection Table85B8E5Section
+
+
+
+
+
+
     .section Unsorted85B8EESection
 
       .al
@@ -8080,9 +9274,8 @@
 
         .long 0
         .long 0
-        .long $85B8E5
-
-        ; 00 01 01 50 57 06
+        .long aUnknown85B8E5
+        .byte 0, 1, 1
 
     .endsection Unsorted85B8EESection
 
@@ -8095,6 +9288,10 @@
       procUnknown85B8FA ; 85/B8FA
 
         .structProcInfo "PW", rlProcUnknown85B8FAInit, rlProcUnknown85B9D4Cycle1, aProcDialogueBoxCode
+
+
+        .long aUnknown85B8EE
+        .byte 1
 
     .endsection ProcScript85B8FASection
 
@@ -8193,9 +9390,9 @@
         ply
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown85B9BC)<<8
         sta lR18+1
-        lda #$B9BC
+        lda #<>aUnknown85B9BC
         sta lR18
         tya
         clc
@@ -8214,6 +9411,26 @@
         ; 85/B9BC
 
     .endsection Unsorted85B906Section
+
+
+    .section Table85B9BCSection
+
+      .al
+      .xl
+
+      aUnknown85B9BC ; 85/B9BC
+
+        .enc "SJIS"
+        .text "　ゴールドてにいれた！"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table85B9BCSection
+
+
+
+
 
 
     .section Unsorted85B9D4Section
@@ -8297,6 +9514,27 @@
     .endsection Unsorted85B9F2Section
 
 
+    .section Table85BA2CSection
+
+      .al
+      .xl
+
+      aUnknown85BA2C ; 85/BA2C
+        .byte $20, $04, $88, $83, $7E, $00, $4A, $CE, $7F
+
+      aUnknown85BA35 ; 85/BA35
+        .long $000000
+        .long $000000
+        .long aUnknown85BA2C
+        .byte $00, $01, $01
+
+    .endsection Table85BA2CSection
+
+
+
+
+
+
     .section Unsorted85BA41Section
 
       .al
@@ -8304,7 +9542,7 @@
 
       procUnknown85BA41 .structProcInfo "PW", rlProcUnknown85BA41Init, rlProcUnknown85BA41Cycle, aProcDialogueBoxCode ; 85/BA41
 
-        .long $85BA35
+        .long aUnknown85BA35
         .byte 1
 
     .endsection Unsorted85BA41Section
@@ -8351,9 +9589,9 @@
         ora #$0C00
         jsl rlSetMapMenuPosition
 
-        lda #(`$85BAB3)<<8
+        lda #(`aUnknown85BAB3)<<8
         sta lR19+1
-        lda #<>$85BAB3
+        lda #<>aUnknown85BAB3
         sta lR19
         ldx #$0102
         lda #$2000
@@ -8367,6 +9605,26 @@
         ; 85/BAB3
 
     .endsection Unsorted85BA4DSection
+
+
+    .section Table85BAB3Section
+
+      .al
+      .xl
+
+      aUnknown85BAB3 ; 85/BAB3
+
+        .enc "SJIS"
+        .text "　をせいあつした！"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table85BAB3Section
+
+
+
+
 
 
     .section Unsorted85BAC7Section
@@ -8496,6 +9754,16 @@
         .databank 0
 
         ; 85/BB3D
+
+
+      aUnknown85BB3D ; 85/BB3D
+
+        .structMapMenuTilemapData 32, 4, aBG3TilemapBuffer, 0, $7FCE4A
+
+      aUnknown85BB46 ; 85/BB46
+
+        .long 0, 0, aUnknown85BB3D
+        .byte 0, 1, 1
 
     .endsection Unsorted85BB2ESection
 
@@ -8711,6 +9979,15 @@
         .databank 0
 
         ; 85/BD10
+
+
+      aUnknown85BD10 ; 85/BD10
+
+        .byte $00
+
+      aUnknown85BD11 ; 85/BD11
+
+        .byte $01
 
     .endsection Unsorted85BCD4Section
 
@@ -8999,7 +10276,7 @@
         pla
         asl a
         tax
-        ldy $BE87,b,x
+        ldy <>aUnknown85BE87,b,x
         stz wR4
         stz wR5
         sep #$20
@@ -9036,6 +10313,347 @@
         ; 85/BE87
 
     .endsection Table85BE76Section
+
+
+    .section Table85BE87Section
+
+      .al
+      .xl
+
+      aUnknown85BE87 ; 85/BE87
+
+        ; Read by rlUnknown85BDA1.
+
+        .word <>aUnknown85BEA9
+        .word <>aUnknown85BF6F
+        .word <>aUnknown85BEBF
+        .word <>aUnknown85BF85
+        .word <>aUnknown85BED5
+        .word <>aUnknown85BF9B
+        .word <>aUnknown85BEEB
+        .word <>aUnknown85BFB1
+        .word <>aUnknown85BF01
+        .word <>aUnknown85BFC7
+        .word <>aUnknown85BF17
+        .word <>aUnknown85BFDD
+        .word <>aUnknown85BF2D
+        .word <>aUnknown85BFF3
+        .word <>aUnknown85BF43
+        .word <>aUnknown85C009
+        .word <>aUnknown85BF59
+
+      aUnknown85BEA9 ; 85/BEA9
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(   8,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,    8), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(   8,    8), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BEA9._Sprites
+
+      aUnknown85BEBF ; 85/BEBF
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  12,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   20), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  12,   20), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BEBF._Sprites
+
+      aUnknown85BED5 ; 85/BED5
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  16,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   26), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  16,   26), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BED5._Sprites
+
+      aUnknown85BEEB ; 85/BEEB
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  20,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   32), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  20,   32), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BEEB._Sprites
+
+      aUnknown85BF01 ; 85/BF01
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  24,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   38), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  24,   38), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF01._Sprites
+
+      aUnknown85BF17 ; 85/BF17
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  28,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   44), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  28,   44), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF17._Sprites
+
+      aUnknown85BF2D ; 85/BF2D
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  32,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   50), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  32,   50), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF2D._Sprites
+
+      aUnknown85BF43 ; 85/BF43
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  36,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   56), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  36,   56), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF43._Sprites
+
+      aUnknown85BF59 ; 85/BF59
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  40,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   62), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  40,   62), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF59._Sprites
+
+      aUnknown85BF6F ; 85/BF6F
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  10,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   11), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  10,   11), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF6F._Sprites
+
+      aUnknown85BF85 ; 85/BF85
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  14,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   23), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  14,   23), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF85._Sprites
+
+      aUnknown85BF9B ; 85/BF9B
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  18,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   29), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  18,   29), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF9B._Sprites
+
+      aUnknown85BFB1 ; 85/BFB1
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  22,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   35), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  22,   35), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BFB1._Sprites
+
+      aUnknown85BFC7 ; 85/BFC7
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  26,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   41), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  26,   41), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BFC7._Sprites
+
+      aUnknown85BFDD ; 85/BFDD
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  30,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   47), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  30,   47), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BFDD._Sprites
+
+      aUnknown85BFF3 ; 85/BFF3
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  34,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   53), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  34,   53), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BFF3._Sprites
+
+      aUnknown85C009 ; 85/C009
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  38,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   59), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  38,   59), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85C009._Sprites
+
+        ; 85/C01F
+
+    .endsection Table85BE87Section
+
+
+    .section ProcScript85C01FSection
+
+      .al
+      .xl
+
+      procUnknown85C01F .structProcInfo "PW", rlUnknown85C028, rlUnknown85C051, aProcDialogueBoxCode ; 85/C01F
+
+        .byte $01
+
+        ; 85/C028
+
+    .endsection ProcScript85C01FSection
+
+
+    .section Unsorted85C028Section
+
+      .al
+      .xl
+
+      rlUnknown85C028 ; 85/C028
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0ED5,b
+        sta $1097,b,x
+        lda $0ED3,b
+        sta $1077,b,x
+        lda $0ED1,b
+        sta $1057,b,x
+        lda #$FFFF
+        sta $10B7,b,x
+        phx
+        ldx #$001E
+
+        _C044
+        lda aOAMPaletteBuffer,b,x
+        sta $7FEB2A,x
+        dec x
+        dec x
+        bpl _C044
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/C051
+
+
+      rlUnknown85C051 ; 85/C051
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $10B7,b,x
+        inc a
+        cmp #$0011
+        bpl _C07F
+        sta $10B7,b,x
+        sta wR0
+        lda $1057,b,x
+        bne _C068
+        lda wR0
+        bra _C06E
+
+
+        _C068
+        lda #$0011
+        sec
+        sbc wR0
+
+        _C06E
+        sta wR0
+        lda $1077,b,x
+        tay
+        lda $1097,b,x
+        tax
+        lda wR0
+        jsl rlUnknown85BDA1
+        rtl
+
+
+        _C07F
+        phx
+        ldx #$001E
+
+        _C083
+        lda $7FEB2A,x
+        sta aOAMPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _C083
+        plx
+        jsl rlProcEngineFreeProc
+        rtl
+
+        .databank 0
+
+        ; 85/C094
+
+
+      rlUnknown85C094 ; 85/C094
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procUnknown85C01F)<<8
+        sta lR44+1
+        lda #<>procUnknown85C01F
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/C0A3
+
+
+      rlUnknown85C0A3 ; 85/C0A3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #(`procUnknown85C01F)<<8
+        sta lR44+1
+        lda #<>procUnknown85C01F
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _C0B7
+        plx
+        sec
+        rtl
+
+
+        _C0B7
+        plx
+        clc
+        rtl
+
+        .databank 0
+
+        ; 85/C0BA
+
+
+    .endsection Unsorted85C028Section
 
 
     .section Unsorted85C0BASection
@@ -9289,9 +10907,9 @@
         lda bBufferTM
         ora #$0006
         sta bBufferTM
-        lda #$8500
+        lda #(`aUnknown85C19B)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$C19B
+        lda #<>aUnknown85C19B
         sta lMapMenuTilemapRAMEntryPointer,b
         pea #<>_C19A - 1
         jmp ($0ED1)
@@ -9305,6 +10923,21 @@
         ; 85/C19B
 
     .endsection Unsorted85C0E2Section
+
+
+    .section Table85C19BSection
+
+      .al
+      .xl
+
+      aUnknown85C19B ; 85/C19B
+        .byte $20, $20, $00, $00, $00, $00, $CA, $E3, $7F
+
+    .endsection Table85C19BSection
+
+
+
+
 
 
     .section Unsorted85C1A4Section
@@ -9658,6 +11291,24 @@
     .endsection Unsorted85C30DSection
 
 
+    .section ProcScript85C33DSection
+
+      .al
+      .xl
+
+      aProcUnknown85C31ACode ; 85/C33D
+        PROC_HALT
+
+      procTerrainWindow ; 85/C33F
+        .structProcInfo "Ba", rlUnknown85C347, rlUnknown85C37C, aProcUnknown85C31ACode
+
+    .endsection ProcScript85C33DSection
+
+
+
+
+
+
     .section Unsorted85C347Section
 
       .al
@@ -9752,6 +11403,16 @@
         .databank 0
 
         ; 85/C3C5
+
+
+      aUnknown85C3C5 ; 85/C3C5
+
+        .word $2368, $2369, $2369, $2369, $2369, $2369, $2369, $2369
+        .word $236A, $236B, $236C, $236D, $236C, $236D, $236D, $236C
+        .word $236D, $2376, $2377, $236C, $236C, $236D, $236C, $236C
+        .word $236D, $236C, $2376, $2377, $236C, $236C, $236D, $236C
+        .word $236D, $236D, $236D, $236E, $2378, $236F, $236F, $236F
+        .word $236F, $236F, $236F, $2379, $237A
 
     .endsection Unsorted85C347Section
 
@@ -10068,6 +11729,21 @@
     .endsection Unsorted85C55BSection
 
 
+    .section ProcScript85C652Section
+
+      .al
+      .xl
+
+      procUnitWindow ; 85/C652
+        .structProcInfo "Ba", rlUnknown85C65A, rlUnknown85C686, $C6CA
+
+    .endsection ProcScript85C652Section
+
+
+
+
+
+
     .section Unsorted85C65ASection
 
       .al
@@ -10166,6 +11842,14 @@
         .databank 0
 
         ; 85/C6C6
+
+
+      aUnknown85C6C6 ; 85/C6C6
+
+        PROC_SET_ONCYCLE rlUnknown85C686
+        PROC_YIELD 3
+        PROC_SET_ONCYCLE rlUnknown85C698
+        PROC_HALT
 
     .endsection Unsorted85C65ASection
 
@@ -10351,6 +12035,16 @@
 
         ; 85/C7BF
 
+
+      aUnknown85C7BF ; 85/C7BF
+
+        .word $2364, $2365, $2363, $2363, $2363, $2363, $2363, $6365
+        .word $6364, $2360, $2361, $2361, $2361, $2361, $2361, $2361
+        .word $6361, $6360, $2366, $2361, $2361, $2361, $2361, $2361
+        .word $2361, $2361, $6366, $A360, $A361, $2361, $2361, $2361
+        .word $2361, $2361, $E361, $E360, $A364, $A365, $A363, $A363
+        .word $A363, $A363, $A363, $E365, $E364
+
     .endsection Unsorted85C6D2Section
 
 
@@ -10457,18 +12151,18 @@
         _C8B0
         lda #$25C0
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown85C983)<<8
         sta lR18+1
-        lda #$C983
+        lda #<>aUnknown85C983
         sta lR18
         lda aProcSystem.wInput0,b
         clc
         adc #$0301
         tax
         jsl rlUnknown878F6E
-        lda #$8500
+        lda #(`aUnknown85C986)<<8
         sta lR18+1
-        lda #$C986
+        lda #<>aUnknown85C986
         sta lR18
         lda aProcSystem.wInput0,b
         clc
@@ -10554,6 +12248,38 @@
         ; 85/C983
 
     .endsection Unsorted85C819Section
+
+
+    .section Table85C983Section
+
+      .al
+      .xl
+
+      aUnknown85C983 ; 85/C983
+        .byte $07, $0F, $00
+
+      aUnknown85C986 ; 85/C986
+        .byte $1A, $00
+
+      aUnknown85C988 ; 85/C988
+        .byte $EC, $EF, $F0, $F1, $00
+
+      aUnknown85C98D ; 85/C98D
+        .byte $F1, $F2, $ED, $F3, $00
+
+      aUnknown85C992 ; 85/C992
+        .byte $EB, $EC, $ED, $EE, $00
+
+        .byte $FF, $00
+
+      aUnknown85C997 ; 85/C997
+        .word <>aUnknown85C988, <>aUnknown85C98D, <>aUnknown85C992
+
+    .endsection Table85C983Section
+
+
+
+
 
 
     .section Unsorted85C99FSection
@@ -10666,6 +12392,14 @@
 
         ; 85/CA0B
 
+
+      aUnknown85CA0B ; 85/CA0B
+
+        .word $0004, $A362, $0000, $0000, $0008, $A362, $000A, $A362
+        .word $0000, $0000, $0008, $E362, $0000, $0000, $000C, $E362
+        .word $0104, $2362, $0000, $0000, $0108, $2362, $010A, $2362
+        .word $0000, $0000, $0108, $6362, $0000, $0000, $010C, $6362
+
     .endsection Unsorted85C9BFSection
 
 
@@ -10686,9 +12420,9 @@
         plb
         phx
 
-        lda #(`$85C652)<<8
+        lda #(`procUnitWindow)<<8
         sta $62+1
-        lda #<>$85C652
+        lda #<>procUnitWindow
         sta $62
         jsl rlProcEngineFindProc
         bcc +
@@ -10708,6 +12442,16 @@
 
         ; 85/CA70
 
+
+      aUnknown85CA70 ; 85/CA70
+
+        .structMapMenuTilemapData 12, 3, aBG3TilemapBuffer, 0, $7FC54A
+
+      aUnknown85CA79 ; 85/CA79
+
+        .long 0, 0, aUnknown85CA70
+        .byte 5, 10, 11
+
     .endsection Unsorted85CA4BSection
 
 
@@ -10719,6 +12463,10 @@
       procUnknown85CA85 ; 85/CA85
 
         .structProcInfo "OW", rlProcUnknown85CA85Init, rlProcUnknown85CA85Cycle1, aProcUnknown85CA85Code
+
+
+        .long aUnknown85CA79
+        .byte 1
 
     .endsection ProcScript85CA85Section
 
@@ -11213,6 +12961,16 @@
 
         ; 85/CCF7
 
+
+      aUnknown85CCF7 ; 85/CCF7
+
+        .structMapMenuTilemapData 12, 4, aBG3TilemapBuffer, 0, $7FC54A
+
+      aUnknown85CD00 ; 85/CD00
+
+        .long 0, 0, aUnknown85CCF7
+        .byte 3, 16, 16
+
     .endsection Unsorted85CCA8Section
 
 
@@ -11225,6 +12983,19 @@
 
         .structProcInfo "OB", rlUnknown85CD39, rlUnknown85CEC3, aProcUnknown85CD0CCode
 
+
+        .long aUnknown85CD00
+        .byte 1
+
+      aUnknown85CD18 ; 85/CD18
+
+        .structMapMenuTilemapData 12, 4, aBG3TilemapBuffer, 0, $7FC94A
+
+      aUnknown85CD21 ; 85/CD21
+
+        .long 0, 0, aUnknown85CD18
+        .byte 4, 4, 16
+
     .endsection ProcScript85CD0CSection
 
 
@@ -11236,6 +13007,10 @@
       procUnknown85CD2D ; 85/CD2D
 
         .structProcInfo "OB", rlUnknown85CD39, rlUnknown85CEC3, aProcUnknown85CD0CCode
+
+
+        .long aUnknown85CD21
+        .byte 1
 
     .endsection ProcScript85CD2DSection
 
@@ -13367,6 +15142,16 @@
 
         ; 85/D895
 
+
+      aUnknown85D895 ; 85/D895
+
+        .structMapMenuTilemapData 22, 3, aBG3TilemapBuffer, 0, $7FCD4A
+
+      aUnknown85D89E ; 85/D89E
+
+        .long 0, 0, aUnknown85D895
+        .byte 5, 3, 11
+
     .endsection Unsorted85D7FASection
 
 
@@ -13378,6 +15163,10 @@
       procUnknown85D8AA ; 85/D8AA
 
         .structProcInfo "OW", rlProcUnknown85D8AAInit, rlProcUnknown85D8AACycle, aProcUnknown85D8AACode
+
+
+        .long aUnknown85D89E
+        .byte 0
 
     .endsection ProcScript85D8AASection
 
@@ -13425,9 +15214,9 @@
         sta wR43
         lda #$0001
         sta wR40
-        lda #$8500
+        lda #(`aUnknown85AB82)<<8
         sta lR44+1
-        lda #$AB82
+        lda #<>aUnknown85AB82
         sta lR44
         jsl rlHDMAEngineCreateEntryByIndex
         plx
@@ -13455,9 +15244,9 @@
         phx
         ldx #$0580
         stx aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown85D96D)<<8
         sta lR18+1
-        lda #$D96D
+        lda #<>aUnknown85D96D
         sta lR18
         ldx #$0101
         jsl rlUnknown85D7FA
@@ -13492,6 +15281,21 @@
         ; 85/D96D
 
     .endsection Unsorted85D8B6Section
+
+
+    .section Table85D96DSection
+
+      .al
+      .xl
+
+      aUnknown85D96D ; 85/D96D
+        .byte $40, $41, $42, $00
+
+    .endsection Table85D96DSection
+
+
+
+
 
 
     .section Unsorted85D971Section
@@ -14249,6 +16053,125 @@
 
         ; 85/DCE2
 
+
+      aUnknown85DCE2 ; 85/DCE2
+
+        .structMapMenuTilemapData 9, 16, aBG3TilemapBuffer, 0, $7FCD4A
+
+      aUnknown85DCEB ; 85/DCEB
+
+        .long 0, 0, aUnknown85DCE2
+        .byte 2, 4, 6
+
+      aUnknown85DCF7 ; 85/DCF7
+
+        .structMapMenuTilemapData 9, 14, aBG3TilemapBuffer, 0, $7FCD4A
+
+      aUnknown85DD00 ; 85/DD00
+
+        .long 0, 0, aUnknown85DCF7
+        .byte 2, 4, 6
+
+      aUnknown85DD0C ; 85/DD0C
+
+        .long rlMapMenuOpenUnitWindow
+        .word $0101
+        .enc "SJIS"
+        .text "　ユニット\n"
+        .enc "none"
+
+      aUnknown85DD1D ; 85/DD1D
+
+        .long rlMapMenuOpenItemWindow
+        .word $0101
+        .enc "SJIS"
+        .text "　アイテム\n"
+        .enc "none"
+
+      aUnknown85DD2E ; 85/DD2E
+
+        .long rlMapMenuOpenDataWindow
+        .word $0101
+        .enc "SJIS"
+        .text "　データ\n"
+        .enc "none"
+
+      aUnknown85DD3D ; 85/DD3D
+
+        .long rlMapMenuOpenSkillWindow
+        .word $0101
+        .enc "SJIS"
+        .text "　スキル\n"
+        .enc "none"
+
+      aUnknown85DD4C ; 85/DD4C
+
+        .long rlUnknown85DCCA
+        .word $0101
+        .enc "SJIS"
+        .text "　コンフィグ\n"
+        .enc "none"
+
+      aUnknown85DD5F ; 85/DD5F
+
+        .long rlUnknown85DC7A
+        .word $0101
+        .enc "SJIS"
+        .text "　ロード\n"
+        .enc "none"
+
+      aUnknown85DD6E ; 85/DD6E
+
+        .long rlUnknown85DCAB
+        .word $0101
+        .enc "SJIS"
+        .text "　セーブ\n"
+        .enc "none"
+
+      aUnknown85DD7D ; 85/DD7D
+
+        .long rlUnknown85DC26
+        .word $0101
+        .enc "SJIS"
+        .text "　ターンエンド\n"
+        .enc "none"
+
+      aUnknown85DD92 ; 85/DD92
+
+        .word 0
+        .byte 7, 7
+        .byte 1, 1
+        .long aUnknown85DD0C
+        .byte 1, 3
+        .long aUnknown85DD1D
+        .byte 1, 5
+        .long aUnknown85DD2E
+        .byte 1, 7
+        .long aUnknown85DD3D
+        .byte 1, 9
+        .long aUnknown85DD4C
+        .byte 1, 11
+        .long aUnknown85DD6E
+        .byte 1, 13
+        .long aUnknown85DD7D
+
+      aUnknown85DDB9 ; 85/DDB9
+
+        .word 0
+        .byte 6, 6
+        .byte 1, 1
+        .long aUnknown85DD0C
+        .byte 1, 3
+        .long aUnknown85DD1D
+        .byte 1, 5
+        .long aUnknown85DD2E
+        .byte 1, 7
+        .long aUnknown85DD3D
+        .byte 1, 9
+        .long aUnknown85DD4C
+        .byte 1, 11
+        .long aUnknown85DD7D
+
     .endsection Unsorted85DCCASection
 
 
@@ -14424,7 +16347,28 @@
 
         .databank 0
 
-        ; 85/DEFB
+      rlUnknown85DEFB ; 85/DEFB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx wActiveUnitDeploymentOffset,b
+        lda #$0000
+        sta $057C,b
+        lda $7E46EB,x
+        sta $0ECF,b
+        lda #$2018
+        sta $0ED1,b
+        lda #(`procUnknown859281)<<8
+        sta lR44+1
+        lda #<>procUnknown859281
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
 
     .endsection Unsorted85DED6Section
 
@@ -14733,7 +16677,26 @@
 
         .databank 0
 
-        ; 85/DFDE
+      rlUnknown85DFDE ; 85/DFDE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx wActiveUnitDeploymentOffset,b
+        lda $7E46EB,x
+        sta $0ECF,b
+        lda #$2020
+        sta $0ED1,b
+        lda #(`procUnknown859281)<<8
+        sta lR44+1
+        lda #<>procUnknown859281
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
 
     .endsection Unsorted85DFC2Section
 
@@ -14873,6 +16836,187 @@
 
         ; 85/E070
 
+
+      aUnknown85E070 ; 85/E070
+
+        .long rlUnknown85DE57
+        .word $0101
+        .enc "SJIS"
+        .text "　こうげき\n"
+        .enc "none"
+
+      aUnknown85E081 ; 85/E081
+
+        .long rlUnknown85DE7C
+        .word $0101
+        .enc "SJIS"
+        .text "　とつげき\n"
+        .enc "none"
+
+      aUnknown85E092 ; 85/E092
+
+        .long rlUnknown85DEAB
+        .word $0101
+        .enc "SJIS"
+        .text "　おどる\n"
+        .enc "none"
+
+      aUnknown85E0A1 ; 85/E0A1
+
+        .long rlUnknown85DED6
+        .word $0101
+        .enc "SJIS"
+        .text "　つえ\n"
+        .enc "none"
+
+      aUnknown85E0AE ; 85/E0AE
+
+        .long rlUnknown85DEFB
+        .word $0101
+        .enc "SJIS"
+        .text "　もちもの\n"
+        .enc "none"
+
+      aUnknown85E0BF ; 85/E0BF
+
+        .long rlUnknown85DFC2
+        .word $0101
+        .enc "SJIS"
+        .text "　はなす\n"
+        .enc "none"
+
+      aUnknown85E0CE ; 85/E0CE
+
+        .long rlUnknown85E030
+        .word $0101
+        .enc "SJIS"
+        .text "　あげる\n"
+        .enc "none"
+
+      aUnknown85E0DD ; 85/E0DD
+
+        .long rlUnknown85E050
+        .word $0101
+        .enc "SJIS"
+        .text "　あげる\n"
+        .enc "none"
+
+      aUnknown85E0EC ; 85/E0EC
+
+        .long rlUnknown85E012
+        .word $0101
+        .enc "SJIS"
+        .text "　たすける\n"
+        .enc "none"
+
+      aUnknown85E0FD ; 85/E0FD
+
+        .long rlUnknown85DF6F
+        .word $0101
+        .enc "SJIS"
+        .text "　せいあつ\n"
+        .enc "none"
+
+      aUnknown85E10E ; 85/E10E
+
+        .long rlUnknown85DF20
+        .word $0101
+        .enc "SJIS"
+        .text "　はいる\n"
+        .enc "none"
+
+      aUnknown85E11D ; 85/E11D
+
+        .long rlUnknown85DF3F
+        .word $0101
+        .enc "SJIS"
+        .text "　まち\n"
+        .enc "none"
+
+      aUnknown85E12A ; 85/E12A
+
+        .long rlUnknown85DF61
+        .word $0101
+        .enc "SJIS"
+        .text "　むら\n"
+        .enc "none"
+
+      aUnknown85E137 ; 85/E137
+
+        .long rlUnknown85DF7D
+        .word $0101
+        .enc "SJIS"
+        .text "　しゅび\n"
+        .enc "none"
+
+      aUnknown85E146 ; 85/E146
+
+        .long rlUnknown85DF8A
+        .word $0101
+        .enc "SJIS"
+        .text "　しゅつげき\n"
+        .enc "none"
+
+      aUnknown85E159 ; 85/E159
+
+        .long rlUnknown85DF98
+        .word $0101
+        .enc "SJIS"
+        .text "　城にもどる\n"
+        .enc "none"
+
+      aUnknown85E16C ; 85/E16C
+
+        .long rlUnknown85DE43
+        .word $0101
+        .enc "SJIS"
+        .text "　たいき\n"
+        .enc "none"
+
+      aUnknown85E17B ; 85/E17B
+
+        .long rlUnknown85E004
+        .word $0101
+        .enc "SJIS"
+        .text "　城にもどる\n"
+        .enc "none"
+
+      aUnknown85E18E ; 85/E18E
+
+        .long rlUnknown85DFB4
+        .word $0101
+        .enc "SJIS"
+        .text "　のる\n"
+        .enc "none"
+
+      aUnknown85E19B ; 85/E19B
+
+        .long rlUnknown85DFA6
+        .word $0101
+        .enc "SJIS"
+        .text "　おりる\n"
+        .enc "none"
+
+      aUnknown85E1AA ; 85/E1AA
+
+        .long rlUnknown85DFDE
+        .word $0101
+        .enc "SJIS"
+        .text "　そうび\n"
+        .enc "none"
+
+      aUnknown85E1B9 ; 85/E1B9
+
+        .long rlUnknown85DFFD
+        .word $0101
+        .enc "SJIS"
+        .text "　アニメ\n"
+        .enc "none"
+
+      aUnknown85E1C8 ; 85/E1C8
+
+        .word 0, 24
+
     .endsection Unsorted85E012Section
 
 
@@ -14884,6 +17028,11 @@
       procUnknown85E1CC ; 85/E1CC
 
         .structProcInfo "PW", rlProcUnknown85E1CCInit, rlProcUnknown85E1CCCycle, aProcUnknown85DDDBCode
+
+
+        .long aUnknown8583A3
+        .byte 1
+        .long aUnknown85E1C8
 
     .endsection ProcScript85E1CCSection
 
@@ -15021,6 +17170,35 @@
         .word <>rlUnknown85E656
         .word <>rlUnknown85E78A
         .word <>rlUnknown85E839
+
+
+
+      aUnknown85E2AF ; 85/E2AF
+
+        .word <>aUnknown85E159
+        .word <>aUnknown85E17B
+        .word <>aUnknown85E1B9
+        .word <>aUnknown85E1AA
+        .word <>aUnknown85E19B
+        .word <>aUnknown85E18E
+        .word <>aUnknown85E0DD
+        .word <>aUnknown85E0CE
+        .word <>aUnknown85E0AE
+        .word <>aUnknown85E0A1
+        .word <>aUnknown85E16C
+        .word <>aUnknown85E0BF
+        .word <>aUnknown85E146
+        .word <>aUnknown85E137
+        .word <>aUnknown85E12A
+        .word <>aUnknown85E11D
+        .word <>aUnknown85E0FD
+        .word <>aUnknown85E10E
+        .word <>aUnknown85E092
+        .word <>aUnknown85E0A1
+        .word <>aUnknown85E070
+        .word <>aUnknown85E081
+        .word <>aUnknown85E0EC
+        .word <>aUnknown85E0BF
 
     .endsection Table85E27FSection
 

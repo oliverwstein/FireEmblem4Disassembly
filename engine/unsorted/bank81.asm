@@ -2068,9 +2068,9 @@
         trb wUnknown000D79,b
         lda #$0001
         tsb wUnknown000D79,b
-        lda #$8100
+        lda #(`aUnknown81B42D)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B42D
+        lda #<>aUnknown81B42D
         sta lMapMenuTilemapRAMEntryPointer,b
         lda aEpilogueUnitStates
         sta wR0
@@ -2085,9 +2085,9 @@
         asl a
         tax
         jsl rlUnknown878AB5
-        lda #$8100
+        lda #(`aUnknown81B436)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B436
+        lda #<>aUnknown81B436
         sta lMapMenuTilemapRAMEntryPointer,b
         lda $7FC5AE
         sta wR0
@@ -2130,6 +2130,24 @@
         ; 81/B42D
 
     .endsection Unsorted81B3A6Section
+
+
+    .section Table81B42DSection
+
+      .al
+      .xl
+
+      aUnknown81B42D ; 81/B42D
+        .byte $06, $08, $88, $7B, $7E, $00, $4E, $C5, $7F
+
+      aUnknown81B436 ; 81/B436
+        .byte $06, $08, $88, $7B, $7E, $00, $B2, $C5, $7F
+
+    .endsection Table81B42DSection
+
+
+
+
 
 
     .section Unsorted81B4C5Section
@@ -2216,6 +2234,21 @@
     .endsection Unsorted81B503Section
 
 
+    .section Table81B522Section
+
+      .al
+      .xl
+
+      aUnknown81B522 ; 81/B522
+        .word $0068, $00D7, <>rlUnknown81B52A, <>aUnknown81B54A
+
+    .endsection Table81B522Section
+
+
+
+
+
+
     .section Unsorted81B52ASection
 
       .al
@@ -2251,3 +2284,14 @@
         ; 81/B54A
 
     .endsection Unsorted81B52ASection
+
+
+    .section Table81B54ASection
+
+      .al
+      .xl
+
+      aUnknown81B54A ; 81/B54A
+        .word <>rsUnknown82E028
+
+    .endsection Table81B54ASection

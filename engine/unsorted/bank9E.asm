@@ -3203,9 +3203,9 @@
 
         phy
         phx
-        lda #$9C00
+        lda #(`aUnknown9CFC00)<<8
         sta lR18+1
-        lda #$FC00
+        lda #<>aUnknown9CFC00
         clc
         adc #$0100
         sta lR18
@@ -3217,9 +3217,9 @@
         dec y
         dec y
         bpl _93B7
-        lda #$9C00
+        lda #(`g4bppUnknown9CF000)<<8
         sta lR18+1
-        lda #$F000
+        lda #<>g4bppUnknown9CF000
         clc
         adc #$0300
         sta lR18
@@ -3477,9 +3477,9 @@
 
 
         _955E
-        lda #$9C00
+        lda #(`aUnknown9CFC00)<<8
         sta lR18+1
-        lda #$FC00
+        lda #<>aUnknown9CFC00
         clc
         adc #$0100
         sta lR18
@@ -3642,10 +3642,10 @@
         clc
         adc wR2
         sta wR2
-        lda #$9C00
+        lda #(`g4bppUnknown9CF600)<<8
         sta lR18+1
-        lda #$F000
-        lda #$F600
+        lda #<>g4bppUnknown9CF000
+        lda #<>g4bppUnknown9CF600
         clc
         adc wR2
         sta lR18
@@ -3661,9 +3661,9 @@
         xba
         sta wR1
         jsl rlDMAByPointer
-        lda #$9C00
+        lda #(`g4bppUnknown9CF000)<<8
         sta lR18+1
-        lda #$F000
+        lda #<>g4bppUnknown9CF000
         clc
         adc #$0400
         sta lR18
@@ -3956,9 +3956,9 @@
         sta lR18+1
         lda lRoutineVariable,b
         sta lR18
-        lda #$9E00
+        lda #(`aUnknown9E98B0)<<8
         sta lR19+1
-        lda #$98B0
+        lda #<>aUnknown9E98B0
         sta lR19
         lda #$0D05
         ldx #$0416
@@ -3980,6 +3980,26 @@
         ; 9E/98B0
 
     .endsection Unsorted9E978DSection
+
+
+    .section Table9E98B0Section
+
+      .al
+      .xl
+
+      aUnknown9E98B0 ; 9E/98B0
+
+        .enc "SJIS"
+        .text "　を　てにいれた！"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table9E98B0Section
+
+
+
+
 
 
     .section Unsorted9E98C4Section
@@ -4008,9 +4028,9 @@
         sta lR18+1
         lda lRoutineVariable,b
         sta lR18
-        lda #$9E00
+        lda #(`aUnknown9E9910)<<8
         sta lR19+1
-        lda #$9910
+        lda #<>aUnknown9E9910
         sta lR19
         lda #$0D05
         ldx #$0416
@@ -4034,6 +4054,26 @@
     .endsection Unsorted9E98C4Section
 
 
+    .section Table9E9910Section
+
+      .al
+      .xl
+
+      aUnknown9E9910 ; 9E/9910
+
+        .enc "SJIS"
+        .text "　は　こわれてしまった"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table9E9910Section
+
+
+
+
+
+
     .section Unsorted9E9928Section
 
       .al
@@ -4049,9 +4089,9 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$9E00
+        lda #(`aUnknown9E994F)<<8
         sta lR19+1
-        lda #$994F
+        lda #<>aUnknown9E994F
         sta lR19
         lda $7E4ED3
         beq _994E
@@ -4070,6 +4110,26 @@
     .endsection Unsorted9E9928Section
 
 
+    .section Table9E994FSection
+
+      .al
+      .xl
+
+      aUnknown9E994F ; 9E/994F
+
+        .enc "SJIS"
+        .text "ゴールド　てにいれた！"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table9E994FSection
+
+
+
+
+
+
     .section Unsorted9E9967Section
 
       .al
@@ -4085,9 +4145,9 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$9E00
+        lda #(`aUnknown9E998E)<<8
         sta lR19+1
-        lda #$998E
+        lda #<>aUnknown9E998E
         sta lR19
         lda aActionStructUnit2.ObtainedStealMoney
         beq _998D
@@ -4104,6 +4164,26 @@
         ; 9E/998E
 
     .endsection Unsorted9E9967Section
+
+
+    .section Table9E998ESection
+
+      .al
+      .xl
+
+      aUnknown9E998E ; 9E/998E
+
+        .enc "SJIS"
+        .text "ゴールド　ぬすまれた"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table9E998ESection
+
+
+
+
 
 
     .section Unsorted9E99A4Section
@@ -4184,9 +4264,9 @@
 
         phy
         phx
-        lda #(`$ADFF80)<<8
+        lda #(`g4bppUnknownADFF80)<<8
         sta lR18+1
-        lda #<>$ADFF80
+        lda #<>g4bppUnknownADFF80
         sta lR18
         lda #$0040 ; size
         sta wR0
@@ -5932,6 +6012,206 @@
     .endsection Table9EA50FSection
 
 
+    .section Table9EA513Section
+
+      .al
+      .xl
+
+      aUnknown9EA513 ; 9E/A513
+
+        ; Read by rlUnknown9EA417.
+
+        .sint -$000C, -$0004, $0003, $0003, $000E, $000C, -$0001, -$000C
+
+        ; 9E/A523
+
+    .endsection Table9EA513Section
+
+
+    .section Unsorted9EA523Section
+
+      .al
+      .xl
+
+      rlUnknown9EA523 ; 9E/A523
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $13C0,b,x
+        sep #$20
+        clc
+        adc $7F4C23
+        sta $7F4C23
+        rep #$20
+        and #$FF00
+        xba
+        bpl _A53C
+        ora #$FF00
+
+        _A53C
+        adc $7F4C25
+        sta $7F4C25
+        lda $13E0,b,x
+        sep #$20
+        clc
+        adc $7F4C27
+        sta $7F4C27
+        rep #$20
+        and #$FF00
+        xba
+        bpl _A55D
+        ora #$FF00
+
+        _A55D
+        adc $7F4C29
+        sta $7F4C29
+        rtl
+
+        .databank 0
+
+        ; 9E/A566
+
+
+      rlUnknown9EA566 ; 9E/A566
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1200,b,x
+        sec
+        sbc wR0
+        bpl _A572
+        eor #$FFFF
+        inc a
+
+        _A572
+        cmp wR2
+        bpl _A588
+        lda $1240,b,x
+        sec
+        sbc wR1
+        bpl _A582
+        eor #$FFFF
+        inc a
+
+        _A582
+        cmp wR2
+        bpl _A588
+        sec
+        rtl
+
+
+        _A588
+        clc
+        rtl
+
+        .databank 0
+
+        ; 9E/A58A
+
+
+      rlUnknown9EA58A ; 9E/A58A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F4C21
+        dec a
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aUnknown9EA5DE,x
+        sta lR18
+        lda aUnknown9EA5DE+1,x
+        sta lR18+1
+        lda $7F4C19
+        tay
+        lda [lR18],y
+        and #$00FF
+        sta $7F4C2B
+        lda $7F4C19
+        inc a
+        sta $7F4C19
+        ldx #$000A
+
+        _A5BD
+        cmp aUnknown9EA5D2,x
+        bne _A5CC
+        lda #$0001
+        sta $7F4C17
+        bra _A5D0
+
+
+        _A5CC
+        dec x
+        dec x
+        bpl _A5BD
+
+        _A5D0
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/A5D2
+
+
+      aUnknown9EA5D2 ; 9E/A5D2
+
+        .word $0004, $0006, $0008, $000A, $000D, $0011
+
+      aUnknown9EA5DE ; 9E/A5DE
+
+        .long aUnknown9EA5FC
+        .long aUnknown9EA5FC
+        .long aUnknown9EA5FC
+        .long aUnknown9EA60C
+        .long aUnknown9EA61C
+        .long aUnknown9EA62C
+        .long aUnknown9EA63C
+        .long aUnknown9EA64C
+        .long aUnknown9EA65C
+        .long aUnknown9EA66C
+
+      aUnknown9EA5FC ; 9E/A5FC
+        .byte $04, $09, $0D, $10, $13, $16, $17, $18, $18, $17, $16, $13, $10, $0D, $09, $04
+
+      aUnknown9EA60C ; 9E/A60C
+        .byte $06, $0C, $11, $16, $1A, $1D, $1F, $20, $20, $1F, $1D, $1A, $16, $11, $0C, $06
+
+      aUnknown9EA61C ; 9E/A61C
+        .byte $07, $0F, $16, $1C, $21, $24, $27, $28, $28, $27, $24, $21, $1C, $16, $0F, $07
+
+      aUnknown9EA62C ; 9E/A62C
+        .byte $09, $12, $1A, $21, $27, $2C, $2F, $30, $30, $2F, $2C, $27, $21, $1A, $12, $09
+
+      aUnknown9EA63C ; 9E/A63C
+        .byte $0A, $15, $1F, $27, $2E, $33, $36, $38, $38, $36, $33, $2E, $27, $1F, $15, $0A
+
+      aUnknown9EA64C ; 9E/A64C
+        .byte $0C, $18, $23, $2D, $35, $3B, $3E, $40, $40, $3E, $3B, $35, $2D, $23, $18, $0C
+
+      aUnknown9EA65C ; 9E/A65C
+        .byte $0E, $1B, $28, $32, $3B, $42, $46, $48, $48, $46, $42, $3B, $32, $28, $1B, $0E
+
+      aUnknown9EA66C ; 9E/A66C
+        .byte $0F, $1E, $2C, $38, $42, $49, $4E, $50, $50, $4E, $49, $42, $38, $2C, $1E, $0F
+
+        ; 9E/A67C
+
+    .endsection Unsorted9EA523Section
+
+
     .section Unsorted9EA67CSection
 
       .al
@@ -6577,9 +6857,9 @@
         bne _AA25
         jsl rlUnknown96D659
         stz wR0
-        lda #$9E00
+        lda #(`aUnknown9EAA5C)<<8
         sta lR18+1
-        lda #$AA5C
+        lda #<>aUnknown9EAA5C
         sta lR18
         jsl rlBattleSceneStartPaletteEffect
         jsl rlUnknown9EB36C
@@ -6599,6 +6879,21 @@
         ; 9E/AA5C
 
     .endsection Unsorted9EA89FSection
+
+
+    .section Table9EAA5CSection
+
+      .al
+      .xl
+
+      aUnknown9EAA5C ; 9E/AA5C
+        .byte $00, $03, $D0, $10, $02
+
+    .endsection Table9EAA5CSection
+
+
+
+
 
 
     .section Table9EAA61Section
@@ -10142,6 +10437,9 @@
 
         ; 9E/CE9E
 
+
+        PROC_HALT
+
     .endsection ProcScript9ECAD2Section
 
 
@@ -11498,9 +11796,9 @@
         .databank ?
 
         phx
-        lda #$9F00
+        lda #(`g4bppUnknown9FFC00)<<8
         sta lR18+1
-        lda #$FC00
+        lda #<>g4bppUnknown9FFC00
         sta lR18
         lda #$0400
         sta wR0
@@ -11603,9 +11901,9 @@
         lda aMapAction.wXTilePosition,x
         tax
         jsl rlUnknown9E8D25
-        lda #$9E00
+        lda #(`aUnknown9EDAE0)<<8
         sta lR44+1
-        lda #$DAE0
+        lda #<>aUnknown9EDAE0
         sta lR44
         lda #$DAE0
         ldx wR0
@@ -11677,6 +11975,184 @@
         ; 9E/D900
 
     .endsection Unsorted9ED808Section
+
+
+    .section Data9ED900Section
+
+      .al
+      .xl
+
+      aUnknown9ED900 ; 9E/D900
+
+        .word _D900_Table - aUnknown9ED900
+        .word _D900_Script - aUnknown9ED900
+
+        _D900_Frame00
+          .word 1 ; sprite count
+          .structSpriteEntry (   2,  -19), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame01
+          .word 2 ; sprite count
+          .structSpriteEntry (   2,  -17), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (   5,  -14), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame02
+          .word 3 ; sprite count
+          .structSpriteEntry (   3,  -14), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (   4,  -11), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (   1,   -7), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame03
+          .word 3 ; sprite count
+          .structSpriteEntry (   4,  -11), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (   2,   -7), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (  -3,   -4), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame04
+          .word 4 ; sprite count
+          .structSpriteEntry ( -10,  -14), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (   3,   -5), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (  -2,   -2), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (  -8,   -3), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame05
+          .word 5 ; sprite count
+          .structSpriteEntry ( -15,   -9), $00, SpriteSmall, $000, 2, 0, false, false
+          .structSpriteEntry ( -12,  -13), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (  -6,   -1), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry ( -11,    0), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry ( -15,   -2), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame06
+          .word 5 ; sprite count
+          .structSpriteEntry ( -12,    1), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry ( -13,  -12), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry ( -11,   -4), $00, SpriteSmall, $000, 2, 0, false, false
+          .structSpriteEntry ( -15,   -7), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry ( -15,   -1), $00, SpriteSmall, $010, 2, 0, false, false
+
+        _D900_Frame07
+          .word 4 ; sprite count
+          .structSpriteEntry ( -11,   -8), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (  -9,   -4), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (  -4,   -2), $00, SpriteSmall, $000, 2, 0, false, false
+          .structSpriteEntry ( -13,   -2), $00, SpriteSmall, $011, 2, 0, false, false
+
+        _D900_Frame08
+          .word 3 ; sprite count
+          .structSpriteEntry (  -8,   -3), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (  -3,   -1), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (   3,   -1), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame09
+          .word 4 ; sprite count
+          .structSpriteEntry (   0,    0), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (   7,    0), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (   8,   -3), $00, SpriteSmall, $000, 2, 0, false, false
+          .structSpriteEntry (   5,   -1), $00, SpriteSmall, $010, 2, 0, false, false
+
+        _D900_Frame10
+          .word 5 ; sprite count
+          .structSpriteEntry (   7,    0), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (   7,   -2), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (   6,   -1), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (   2,    0), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (  -2,   -3), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame11
+          .word 4 ; sprite count
+          .structSpriteEntry (   7,   -2), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (   2,    1), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (  -3,   -1), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (  -7,   -6), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame12
+          .word 3 ; sprite count
+          .structSpriteEntry (  -3,   -3), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (  -7,   -5), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry ( -11,  -12), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame13
+          .word 4 ; sprite count
+          .structSpriteEntry ( -14,   -2), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry ( -10,   -7), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry ( -12,  -11), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry ( -11,  -16), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame14
+          .word 4 ; sprite count
+          .structSpriteEntry ( -16,   -2), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry ( -10,   -5), $00, SpriteSmall, $000, 2, 0, false, false
+          .structSpriteEntry ( -11,  -14), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (  -9,  -15), $00, SpriteSmall, $010, 2, 0, false, false
+
+        _D900_Frame15
+          .word 4 ; sprite count
+          .structSpriteEntry ( -10,   -2), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (  -6,   -4), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (  -2,   -9), $00, SpriteSmall, $000, 2, 0, false, false
+          .structSpriteEntry ( -10,  -14), $00, SpriteSmall, $011, 2, 0, false, false
+
+        _D900_Frame16
+          .word 3 ; sprite count
+          .structSpriteEntry (   0,   -6), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (   4,  -11), $00, SpriteSmall, $000, 2, 0, false, false
+          .structSpriteEntry (  -4,   -3), $00, SpriteSmall, $011, 2, 0, false, false
+
+        _D900_Frame17
+          .word 3 ; sprite count
+          .structSpriteEntry (   1,   -4), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (   6,  -10), $00, SpriteSmall, $010, 2, 0, false, false
+          .structSpriteEntry (   4,  -14), $00, SpriteSmall, $000, 2, 0, false, false
+
+        _D900_Frame18
+          .word 2 ; sprite count
+          .structSpriteEntry (   6,  -12), $00, SpriteSmall, $011, 2, 0, false, false
+          .structSpriteEntry (   1,  -14), $00, SpriteSmall, $010, 2, 0, false, false
+
+        _D900_Frame19
+          .word 1 ; sprite count
+          .structSpriteEntry (   3,  -14), $00, SpriteSmall, $011, 2, 0, false, false
+
+        _D900_Table
+          .word _D900_Frame00 - aUnknown9ED900
+          .word _D900_Frame01 - aUnknown9ED900
+          .word _D900_Frame02 - aUnknown9ED900
+          .word _D900_Frame03 - aUnknown9ED900
+          .word _D900_Frame04 - aUnknown9ED900
+          .word _D900_Frame05 - aUnknown9ED900
+          .word _D900_Frame06 - aUnknown9ED900
+          .word _D900_Frame07 - aUnknown9ED900
+          .word _D900_Frame08 - aUnknown9ED900
+          .word _D900_Frame09 - aUnknown9ED900
+          .word _D900_Frame10 - aUnknown9ED900
+          .word _D900_Frame11 - aUnknown9ED900
+          .word _D900_Frame12 - aUnknown9ED900
+          .word _D900_Frame13 - aUnknown9ED900
+          .word _D900_Frame14 - aUnknown9ED900
+          .word _D900_Frame15 - aUnknown9ED900
+          .word _D900_Frame16 - aUnknown9ED900
+          .word _D900_Frame17 - aUnknown9ED900
+          .word _D900_Frame18 - aUnknown9ED900
+          .word _D900_Frame19 - aUnknown9ED900
+
+        _D900_Script
+          .byte $0E, $02, $00, $0E, $02, $01, $0E, $02, $02, $0E, $02, $03, $0E, $02, $04, $0E
+          .byte $02, $05, $0E, $02, $06, $0E, $02, $07, $0E, $02, $08, $0E, $02, $09, $0E, $02
+          .byte $0A, $0E, $02, $0B, $0E, $02, $0C, $0E, $02, $0D, $0E, $02, $0E, $0E, $02, $0F
+          .byte $0E, $02, $10, $0E, $02, $11, $0E, $02, $12, $0E, $02, $13, $01
+
+      aUnknown9EDAE0 ; 9E/DAE0
+        .word <>rlUnknown9EDAE6, <>rlUnknown9EDAE6, <>aUnknown9ED900._D900_Script
+
+      rlUnknown9EDAE6 ; 9E/DAE6
+        rtl
+
+    .endsection Data9ED900Section
+
+
+
+
 
 
     .section Unsorted9EDAE7Section
@@ -12037,9 +12513,9 @@
         .databank ?
 
         phx
-        lda #$AF00
+        lda #(`g4bppUnknownAFC400)<<8
         sta lR18+1
-        lda #$C400
+        lda #<>g4bppUnknownAFC400
         sta lR18
         lda #$0400
         sta wR0
@@ -12118,9 +12594,9 @@
         tax
         lda aActionStructUnit2.UnitRAMPointer
         jsl rlUnknown9E8D25
-        lda #$9E00
+        lda #(`aUnknown9EDF78)<<8
         sta lR44+1
-        lda #$DF78
+        lda #<>aUnknown9EDF78
         sta lR44
         ldx wR0
         lda wR1
@@ -12180,6 +12656,108 @@
         ; 9E/DE89
 
     .endsection Unsorted9EDDE8Section
+
+
+    .section Data9EDE89Section
+
+      .al
+      .xl
+
+      aUnknown9EDE89 ; 9E/DE89
+
+        .word _DE89_Table - aUnknown9EDE89
+        .word _DE89_Script - aUnknown9EDE89
+
+        _DE89_Frame00
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,  -24), $21, SpriteLarge, $002, 2, 0, false, false
+
+        _DE89_Frame01
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,  -26), $21, SpriteLarge, $002, 2, 0, false, false
+
+        _DE89_Frame02
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,  -27), $21, SpriteLarge, $002, 2, 0, false, false
+
+        _DE89_Frame03
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,  -23), $21, SpriteLarge, $002, 2, 0, false, false
+
+        _DE89_Frame04
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,  -24), $21, SpriteLarge, $000, 2, 0, false, false
+
+        _DE89_Frame05
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,  -24), $21, SpriteLarge, $004, 2, 0, false, false
+
+        _DE89_Frame06
+          .word 4 ; sprite count
+          .structSpriteEntry (  -1,  -18), $00, SpriteSmall, $006, 2, 0, false, false
+          .structSpriteEntry (  -1,  -11), $00, SpriteSmall, $006, 2, 0, false, false
+          .structSpriteEntry (  -7,  -11), $00, SpriteSmall, $006, 2, 0, false, false
+          .structSpriteEntry (  -7,  -18), $00, SpriteSmall, $006, 2, 0, false, false
+
+        _DE89_Frame07
+          .word 5 ; sprite count
+          .structSpriteEntry ( -11,  -20), $00, SpriteSmall, $007, 2, 0, false, false
+          .structSpriteEntry (   2,  -20), $00, SpriteSmall, $007, 2, 0, false, false
+          .structSpriteEntry ( -11,  -10), $00, SpriteSmall, $007, 2, 0, false, false
+          .structSpriteEntry (   2,  -10), $00, SpriteSmall, $007, 2, 0, false, false
+          .structSpriteEntry (  -5,  -16), $00, SpriteSmall, $016, 2, 0, false, false
+
+        _DE89_Frame08
+          .word 4 ; sprite count
+          .structSpriteEntry ( -12,  -21), $00, SpriteSmall, $007, 2, 0, false, false
+          .structSpriteEntry (   3,  -21), $00, SpriteSmall, $007, 2, 0, false, false
+          .structSpriteEntry ( -12,   -9), $00, SpriteSmall, $007, 2, 0, false, false
+          .structSpriteEntry (   3,   -9), $00, SpriteSmall, $007, 2, 0, false, false
+
+        _DE89_Frame09
+          .word 4 ; sprite count
+          .structSpriteEntry ( -11,  -20), $00, SpriteSmall, $007, 2, 0, false, false
+          .structSpriteEntry (   2,  -20), $00, SpriteSmall, $007, 2, 0, false, false
+          .structSpriteEntry ( -11,  -10), $00, SpriteSmall, $007, 2, 0, false, false
+          .structSpriteEntry (   2,  -10), $00, SpriteSmall, $007, 2, 0, false, false
+
+        _DE89_Frame10
+          .word 4 ; sprite count
+          .structSpriteEntry (   2,   -9), $00, SpriteSmall, $006, 2, 0, false, false
+          .structSpriteEntry ( -13,   -9), $00, SpriteSmall, $006, 2, 0, false, false
+          .structSpriteEntry (   2,  -21), $00, SpriteSmall, $006, 2, 0, false, false
+          .structSpriteEntry ( -13,  -21), $00, SpriteSmall, $006, 2, 0, false, false
+
+        _DE89_Table
+          .word _DE89_Frame00 - aUnknown9EDE89
+          .word _DE89_Frame01 - aUnknown9EDE89
+          .word _DE89_Frame02 - aUnknown9EDE89
+          .word _DE89_Frame03 - aUnknown9EDE89
+          .word _DE89_Frame04 - aUnknown9EDE89
+          .word _DE89_Frame05 - aUnknown9EDE89
+          .word _DE89_Frame06 - aUnknown9EDE89
+          .word _DE89_Frame07 - aUnknown9EDE89
+          .word _DE89_Frame08 - aUnknown9EDE89
+          .word _DE89_Frame09 - aUnknown9EDE89
+          .word _DE89_Frame10 - aUnknown9EDE89
+
+        _DE89_Script
+          .byte $0E, $04, $05, $0E, $02, $00, $0E, $04, $01, $0E, $04, $02, $1D, $2F, $0E, $03
+          .byte $02, $0E, $02, $03, $0E, $03, $04, $0E, $07, $05, $0E, $30, $04, $1D, $30, $0E
+          .byte $04, $06, $0E, $04, $07, $0E, $02, $08, $0E, $02, $09, $0E, $02, $08, $0E, $02
+          .byte $09, $0E, $20, $08, $0E, $03, $0A, $01
+
+      aUnknown9EDF78 ; 9E/DF78
+        .word <>rlUnknown9EDF7E, <>rlUnknown9EDF7E, <>aUnknown9EDE89._DE89_Script
+
+      rlUnknown9EDF7E ; 9E/DF7E
+        rtl
+
+    .endsection Data9EDE89Section
+
+
+
+
 
 
     .section Unsorted9EDF7FSection
@@ -13780,7 +14358,34 @@
 
         .databank 0
 
-        ; 9E/F5AC
+      rlUnknown9EF5AC ; 9E/F5AC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F45A4
+        tax
+        lda aActiveSpriteSystem.aUnknown001200,b,x
+        and #$7FFF
+        sta aActiveSpriteSystem.aUnknown001200,b,x
+        lda $7F45A6
+        cmp #$FFFF
+        beq _F5CE
+        tax
+        lda aActiveSpriteSystem.aUnknown001200,b,x
+        and #$7FFF
+        sta aActiveSpriteSystem.aUnknown001200,b,x
+
+        _F5CE
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/F5D0
 
     .endsection Unsorted9EF55BSection
 
@@ -14425,3 +15030,88 @@
         ; fill 0
 
     .endsection Unsorted9EFC47Section
+
+    .section Data9CFC00Section
+
+      .al
+      .xl
+
+      aUnknown9CFC00 ; 9C/FC00
+
+        ; 16 palettes (offset +$0100 read by rlUnknown9E93A4 and rlUnknown9E965E).
+
+        .word $4D96, $318B, $7FFF, $1484, $7FFF, $4D96, $4D96, $4D96
+        .word $7FFF, $5B00, $0C20, $77FF, $7FFF, $001F, $0003, $7FBF
+        .word $3000, $0C62, $0486, $21EA, $1DC9, $1188, $11C5, $0901
+        .word $0D45, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FBF
+        .word $3000, $0884, $08C7, $1E69, $1E29, $19E8, $11C5, $0D84
+        .word $0940, $1DAE, $194E, $152D, $110C, $04E9, $04C7, $00A4
+        .word $3000, $0D45, $19C8, $6687, $5144, $50E3, $38E1, $3881
+        .word $2882, $5AD6, $4ED8, $3A55, $21F2, $196F, $08E9, $0085
+        .word $3000, $08A5, $1DC9, $1168, $4F9C, $2657, $0D2F, $0089
+        .word $6BF4, $6289, $3945, $18A0, $7BFF, $4F78, $3210, $0904
+        .word $4001, $0C62, $0486, $21EA, $1DC9, $1188, $11C5, $0901
+        .word $0460, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
+        .word $0001, $03FF, $6B7B, $635A, $5AF7, $4ED7, $3E75, $08C8
+        .word $0000, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
+        .word $4001, $039C, $5310, $4ACE, $46AD, $428C, $3A4A, $04A7
+        .word $0000, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
+        .word $3800, $14A4, $7FFF, $0400, $57D3, $3EAA, $5BFF, $273F
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $3800, $7FFF, $0000, $2DD2, $4EB5, $296B, $7F56, $5D8A
+        .word $34E5, $4B9F, $1A3C, $0178, $533D, $2DD2, $2908, $0000
+        .word $3800, $7FFF, $0000, $2DD2, $36D7, $2DF0, $5AFF, $2554
+        .word $1CCB, $5FD5, $46AC, $29C7, $533D, $2DD2, $0C88, $0000
+        .word $3800, $7FFF, $0000, $2DD2, $5F76, $3A49, $5F95, $362B
+        .word $1D46, $52BF, $2156, $0CAE, $533D, $2DD2, $0906, $0000
+        .word $3800, $7FFF, $0000, $2DD2, $2E95, $19D0, $375F, $21F2
+        .word $112C, $77B9, $626E, $5526, $533D, $2DD2, $054A, $0000
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $3800, $56B5, $35AD, $2108, $35AD, $1CE7, $4631, $2D6B
+        .word $1CE7, $56B5, $35AD, $1CE7, $3DEF, $2D6B, $1CE7, $0000
+
+        ; 9C/FE00
+
+      aUnknown9CFE00 ; 9C/FE00
+
+        ; S-CG-CAD trailer data.
+
+        .byte $4E, $41, $4B, $31, $39, $38, $39, $20, $53, $2D, $43, $47, $2D, $43, $41, $44
+        .byte $56, $65, $72, $31, $2E, $31, $32, $20, $39, $33, $30, $35, $31, $31, $20, $46
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $01, $00, $00, $01, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $01, $01, $02, $02, $04, $05, $06, $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0F
+        .byte $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $1F
+        .byte $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $2A, $2B, $2C, $2D, $2E, $2F
+        .byte $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $3A, $3B, $3C, $3D, $3E, $3F
+        .byte $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $4A, $4B, $4C, $4D, $4E, $4F
+        .byte $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $5A, $5B, $5C, $5D, $5E, $5F
+        .byte $60, $61, $62, $63, $64, $65, $66, $67, $68, $69, $6A, $6B, $6C, $6D, $6E, $6F
+        .byte $70, $71, $72, $73, $74, $75, $76, $77, $78, $79, $7A, $7B, $7C, $7D, $7E, $7F
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+        ; 9D/0000
+
+    .endsection Data9CFC00Section

@@ -2673,9 +2673,9 @@
         sta aProcSystem.aBody1,b,x
         lda #$0004
         sta aProcSystem.aBody2,b,x
-        lda #$8800
+        lda #(`aUnknown8893DB)<<8
         sta lR19+1
-        lda #$93DB
+        lda #<>aUnknown8893DB
         sta lR19
         jsl rlApplyMapMenuPaletteData
         sep #$20
@@ -2699,6 +2699,24 @@
         ; 88/93DB
 
     .endsection Unsorted88939ESection
+
+
+    .section Table8893DBSection
+
+      .al
+      .xl
+
+      aUnknown8893DB .dstruct structMapMenuPaletteData, $000F, 6, 1, aUnknown8893E2 ; 88/93DB
+
+      aUnknown8893E2 ; 88/93E2
+        .word $08A5, $1DC9, $1168, $3DEF, $2657, $0D2F, $0089, $6978
+        .word $6289, $3945, $7BFF, $7E00, $001F, $03E0, $03FF
+
+    .endsection Table8893DBSection
+
+
+
+
 
 
     .section Unsorted889400Section
@@ -2859,17 +2877,17 @@
         bpl _94AC
         lda wCurrentChapter,b
         beq _94CC
-        lda #$8800
+        lda #(`aUnknown8894F2)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$94F2
+        lda #<>aUnknown8894F2
         sta lMapMenuTilemapRAMEntryPointer,b
         bra _94D8
 
 
         _94CC
-        lda #$8800
+        lda #(`aUnknown8894FB)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$94FB
+        lda #<>aUnknown8894FB
         sta lMapMenuTilemapRAMEntryPointer,b
 
         _94D8
@@ -2888,6 +2906,24 @@
         ; 88/94F2
 
     .endsection Unsorted889411Section
+
+
+    .section Table8894F2Section
+
+      .al
+      .xl
+
+      aUnknown8894F2 ; 88/94F2
+        .byte $10, $10, $88, $7B, $7E, $00, $4A, $C5, $7F
+
+      aUnknown8894FB ; 88/94FB
+        .byte $10, $08, $88, $7B, $7E, $00, $4A, $C5, $7F
+
+    .endsection Table8894F2Section
+
+
+
+
 
 
     .section ProcScript889504Section
@@ -2984,6 +3020,40 @@
         ; 88/958F
 
     .endsection Unsorted889506Section
+
+
+    .section Table88958FSection
+
+      .al
+      .xl
+
+      aUnknown88958F ; 88/958F
+
+        ; Read by rsUnknown889506.
+
+        .word $0020, $0030, $0040, $0050, $0060, $0070, $0080, $0090
+        .word $00A0, $00B0, $00C0, $00D0, $00E0, $00F0, $0100, $0110
+
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $C0, $00, $00, $00, $30, $00, $00, $00, $0C, $00, $00, $00, $03, $00, $00, $00
+        .byte $00, $C0, $00, $00, $00, $30, $00, $00, $00, $0C, $00, $00, $00, $03, $00, $00
+        .byte $C0, $C0, $00, $00, $30, $30, $00, $00, $0C, $0C, $00, $00, $03, $03, $00, $00
+        .byte $00, $00, $C0, $00, $00, $00, $30, $00, $00, $00, $0C, $00, $00, $00, $03, $00
+        .byte $C0, $00, $C0, $00, $30, $00, $30, $00, $0C, $00, $0C, $00, $03, $00, $03, $00
+        .byte $00, $C0, $C0, $00, $00, $30, $30, $00, $00, $0C, $0C, $00, $00, $03, $03, $00
+        .byte $C0, $C0, $C0, $00, $30, $30, $30, $00, $0C, $0C, $0C, $00, $03, $03, $03, $00
+        .byte $00, $00, $00, $C0, $00, $00, $00, $30, $00, $00, $00, $0C, $00, $00, $00, $03
+        .byte $C0, $00, $00, $C0, $30, $00, $00, $30, $0C, $00, $00, $0C, $03, $00, $00, $03
+        .byte $00, $C0, $00, $C0, $00, $30, $00, $30, $00, $0C, $00, $0C, $00, $03, $00, $03
+        .byte $C0, $C0, $00, $C0, $30, $30, $00, $30, $0C, $0C, $00, $0C, $03, $03, $00, $03
+        .byte $00, $00, $C0, $C0, $00, $00, $30, $30, $00, $00, $0C, $0C, $00, $00, $03, $03
+        .byte $C0, $00, $C0, $C0, $30, $00, $30, $30, $0C, $00, $0C, $0C, $03, $00, $03, $03
+        .byte $00, $C0, $C0, $C0, $00, $30, $30, $30, $00, $0C, $0C, $0C, $00, $03, $03, $03
+        .byte $C0, $C0, $C0, $C0, $30, $30, $30, $30, $0C, $0C, $0C, $0C, $03, $03, $03, $03
+
+        ; 88/96AF
+
+    .endsection Table88958FSection
 
 
     .section Unsorted8896AFSection
@@ -3373,9 +3443,9 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8800
+        lda #(`aUnknown8899A4)<<8
         sta lRoutineVariable+1,b
-        lda #$99A4
+        lda #<>aUnknown8899A4
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -3401,6 +3471,26 @@
         ; 88/99A4
 
     .endsection Unsorted88973FSection
+
+
+    .section Table8899A4Section
+
+      .al
+      .xl
+
+      aUnknown8899A4 ; 88/99A4
+
+        .enc "SJIS"
+        .text "　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8899A4Section
+
+
+
+
 
 
     .section Unsorted8899B8Section
@@ -3979,9 +4069,9 @@
         phx
         sep #$20
         rep #$10
-        ldx #$1FBA
+        ldx #<>gcUnknownC01FBA
         stx DecompressionVariables
-        lda #$C0
+        lda #`gcUnknownC01FBA
         sta $CA
         ldx #$8B88
         stx $CB
@@ -4021,9 +4111,9 @@
         phx
         sep #$20
         rep #$10
-        ldx #$2542
+        ldx #<>gcUnknownC02542
         stx DecompressionVariables
-        lda #$C0
+        lda #`gcUnknownC02542
         sta $CA
         ldx #$8F88
         stx $CB
@@ -4042,9 +4132,9 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8800
+        lda #(`aUnknown889D92)<<8
         sta lRoutineVariable+1,b
-        lda #$9D92
+        lda #<>aUnknown889D92
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -4066,6 +4156,26 @@
         ; 88/9D92
 
     .endsection Unsorted889D20Section
+
+
+    .section Table889D92Section
+
+      .al
+      .xl
+
+      aUnknown889D92 ; 88/9D92
+
+        .enc "SJIS"
+        .text "　　　　　　　　　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table889D92Section
+
+
+
+
 
 
     .section Unsorted889DA6Section
@@ -10184,6 +10294,25 @@
 
         ; 88/CC49
 
+
+      aUnknown88CC49 ; 88/CC49
+
+        _Sprites := [[(   8,    0), $21, SpriteLarge, $026, 2, 0, false, false]]
+        _Sprites ..= [[(  -8,    0), $21, SpriteLarge, $024, 2, 0, false, false]]
+        _Sprites ..= [[(   8,  -16), $21, SpriteLarge, $022, 2, 0, false, false]]
+        _Sprites ..= [[(  -8,  -16), $21, SpriteLarge, $020, 2, 0, false, false]]
+
+        .structSpriteArray aUnknown88CC49._Sprites
+
+      aUnknown88CC5F ; 88/CC5F
+
+        _Sprites := [[(  -4,    8), $00, SpriteSmall, $034, 2, 0, false, false]]
+        _Sprites ..= [[(   4,    0), $21, SpriteLarge, $022, 2, 0, false, false]]
+        _Sprites ..= [[(  12,   -8), $00, SpriteSmall, $024, 2, 0, false, false]]
+        _Sprites ..= [[(  -4,   -8), $21, SpriteLarge, $020, 2, 0, false, false]]
+
+        .structSpriteArray aUnknown88CC5F._Sprites
+
     .endsection Unsorted88CBE8Section
 
 
@@ -10721,9 +10850,9 @@
 
         ; Read by rlUnknown88CF31.
 
-        .byte $00, $00, $DB, $00, $08, $DB, $00, $10, $DB, $00, $18, $DB, $00, $20, $DB, $00
-        .byte $28, $DB, $00, $30, $DB, $00, $38, $DB, $00, $40, $DB, $00, $48, $DB, $00, $50
-        .byte $DB, $00, $58, $DB, $00, $60, $DB, $00, $68, $DB, $00, $70, $DB, $00, $78, $DB
+        .for i in range(16)
+          .long g4bppMapTileAnimations1 + (i * $0800)
+        .endfor
 
         ; 88/CFBA
 
@@ -10799,12 +10928,9 @@
 
         ; Read by rlUnknown88CFBA.
 
-        .byte $00, $00, $DC, $00, $04, $DC, $00, $08, $DC, $00, $0C, $DC, $00, $10, $DC, $00
-        .byte $14, $DC, $00, $18, $DC, $00, $1C, $DC, $00, $20, $DC, $00, $24, $DC, $00, $28
-        .byte $DC, $00, $2C, $DC, $00, $30, $DC, $00, $34, $DC, $00, $38, $DC, $00, $3C, $DC
-        .byte $00, $40, $DC, $00, $44, $DC, $00, $48, $DC, $00, $4C, $DC, $00, $50, $DC, $00
-        .byte $54, $DC, $00, $58, $DC, $00, $5C, $DC, $00, $60, $DC, $00, $64, $DC, $00, $68
-        .byte $DC, $00, $6C, $DC, $00, $70, $DC, $00, $74, $DC, $00, $78, $DC, $00, $7C, $DC
+        .for i in range(32)
+          .long g4bppMapTileAnimations2 + (i * $0400)
+        .endfor
 
         ; 88/D073
 
@@ -12651,9 +12777,9 @@
         jsl rlUnknown88CD53
         jsl rlUnknown88CD61
         stz $0AD3,b
-        lda #$8800
+        lda #(`aUnknown88E2DE)<<8
         sta lR44+1
-        lda #$E2DE
+        lda #<>aUnknown88E2DE
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rtl
@@ -12725,9 +12851,9 @@
         lda #$E154
         sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlResetDialogueEngine
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88E9E5)<<8
         sta lR18+1
-        lda #$E9E5
+        lda #<>dialogueEpilogueMemorial88E9E5
         sta lR18
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
@@ -12843,6 +12969,24 @@
         ; 88/E200
 
     .endsection Unsorted88E1FESection
+
+    .section Table88E2DESection
+
+      .al
+      .xl
+
+      aUnknown88E2DE .dstruct structHDMADirectEntryInfo, rlUnknown88E2E9, rlUnknown88E2E9, $E33B, $0008BC, PPU_REG_BASE + $2C, $00 ; 88/E2DE
+
+    .endsection Table88E2DESection
+
+
+
+
+
+
+
+
+
 
 
     .section Unsorted88E2E9Section
@@ -13040,9 +13184,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E465
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EC34)<<8
         sta lR18+1
-        lda #$EC34
+        lda #<>dialogueEpilogueMemorial88EC34
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13069,9 +13213,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E48B
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EC51)<<8
         sta lR18+1
-        lda #$EC51
+        lda #<>dialogueEpilogueMemorial88EC51
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13098,9 +13242,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E4B1
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EC6C)<<8
         sta lR18+1
-        lda #$EC6C
+        lda #<>dialogueEpilogueMemorial88EC6C
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13127,9 +13271,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E4D7
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EC8A)<<8
         sta lR18+1
-        lda #$EC8A
+        lda #<>dialogueEpilogueMemorial88EC8A
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13156,9 +13300,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E4FD
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ECA4)<<8
         sta lR18+1
-        lda #$ECA4
+        lda #<>dialogueEpilogueMemorial88ECA4
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13185,9 +13329,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E523
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ECC0)<<8
         sta lR18+1
-        lda #$ECC0
+        lda #<>dialogueEpilogueMemorial88ECC0
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13214,9 +13358,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E549
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ECDA)<<8
         sta lR18+1
-        lda #$ECDA
+        lda #<>dialogueEpilogueMemorial88ECDA
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13243,9 +13387,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E56F
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ECF7)<<8
         sta lR18+1
-        lda #$ECF7
+        lda #<>dialogueEpilogueMemorial88ECF7
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13272,9 +13416,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E595
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED16)<<8
         sta lR18+1
-        lda #$ED16
+        lda #<>dialogueEpilogueMemorial88ED16
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13301,9 +13445,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E5BB
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED32)<<8
         sta lR18+1
-        lda #$ED32
+        lda #<>dialogueEpilogueMemorial88ED32
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13330,9 +13474,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E5E1
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED4E)<<8
         sta lR18+1
-        lda #$ED4E
+        lda #<>dialogueEpilogueMemorial88ED4E
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13359,9 +13503,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E607
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED68)<<8
         sta lR18+1
-        lda #$ED68
+        lda #<>dialogueEpilogueMemorial88ED68
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13388,9 +13532,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E62D
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED7D)<<8
         sta lR18+1
-        lda #$ED7D
+        lda #<>dialogueEpilogueMemorial88ED7D
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13417,9 +13561,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E653
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED92)<<8
         sta lR18+1
-        lda #$ED92
+        lda #<>dialogueEpilogueMemorial88ED92
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13446,9 +13590,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E679
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EDAD)<<8
         sta lR18+1
-        lda #$EDAD
+        lda #<>dialogueEpilogueMemorial88EDAD
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13475,9 +13619,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E69F
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EDCC)<<8
         sta lR18+1
-        lda #$EDCC
+        lda #<>dialogueEpilogueMemorial88EDCC
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13504,9 +13648,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E6C5
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EDE9)<<8
         sta lR18+1
-        lda #$EDE9
+        lda #<>dialogueEpilogueMemorial88EDE9
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13533,9 +13677,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E6EB
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EE03)<<8
         sta lR18+1
-        lda #$EE03
+        lda #<>dialogueEpilogueMemorial88EE03
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13562,9 +13706,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcc _E711
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EE1F)<<8
         sta lR18+1
-        lda #$EE1F
+        lda #<>dialogueEpilogueMemorial88EE1F
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13591,9 +13735,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E737
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EC34)<<8
         sta lR18+1
-        lda #$EC34
+        lda #<>dialogueEpilogueMemorial88EC34
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13620,9 +13764,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E75D
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EC51)<<8
         sta lR18+1
-        lda #$EC51
+        lda #<>dialogueEpilogueMemorial88EC51
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13649,9 +13793,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E783
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EC6C)<<8
         sta lR18+1
-        lda #$EC6C
+        lda #<>dialogueEpilogueMemorial88EC6C
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13678,9 +13822,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E7A9
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EC8A)<<8
         sta lR18+1
-        lda #$EC8A
+        lda #<>dialogueEpilogueMemorial88EC8A
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13707,9 +13851,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E7CF
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ECA4)<<8
         sta lR18+1
-        lda #$ECA4
+        lda #<>dialogueEpilogueMemorial88ECA4
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13736,9 +13880,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E7F5
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ECC0)<<8
         sta lR18+1
-        lda #$ECC0
+        lda #<>dialogueEpilogueMemorial88ECC0
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13765,9 +13909,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E81B
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ECDA)<<8
         sta lR18+1
-        lda #$ECDA
+        lda #<>dialogueEpilogueMemorial88ECDA
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13794,9 +13938,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E841
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ECF7)<<8
         sta lR18+1
-        lda #$ECF7
+        lda #<>dialogueEpilogueMemorial88ECF7
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13823,9 +13967,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E867
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED16)<<8
         sta lR18+1
-        lda #$ED16
+        lda #<>dialogueEpilogueMemorial88ED16
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13852,9 +13996,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E88D
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED32)<<8
         sta lR18+1
-        lda #$ED32
+        lda #<>dialogueEpilogueMemorial88ED32
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13881,9 +14025,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E8B3
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED4E)<<8
         sta lR18+1
-        lda #$ED4E
+        lda #<>dialogueEpilogueMemorial88ED4E
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13910,9 +14054,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E8D9
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED68)<<8
         sta lR18+1
-        lda #$ED68
+        lda #<>dialogueEpilogueMemorial88ED68
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13939,9 +14083,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E8FF
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED7D)<<8
         sta lR18+1
-        lda #$ED7D
+        lda #<>dialogueEpilogueMemorial88ED7D
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13968,9 +14112,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E925
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88ED92)<<8
         sta lR18+1
-        lda #$ED92
+        lda #<>dialogueEpilogueMemorial88ED92
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -13997,9 +14141,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E94B
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EDAD)<<8
         sta lR18+1
-        lda #$EDAD
+        lda #<>dialogueEpilogueMemorial88EDAD
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -14026,9 +14170,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E971
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EDCC)<<8
         sta lR18+1
-        lda #$EDCC
+        lda #<>dialogueEpilogueMemorial88EDCC
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -14055,9 +14199,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E997
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EDE9)<<8
         sta lR18+1
-        lda #$EDE9
+        lda #<>dialogueEpilogueMemorial88EDE9
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -14084,9 +14228,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E9BD
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EE03)<<8
         sta lR18+1
-        lda #$EE03
+        lda #<>dialogueEpilogueMemorial88EE03
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -14113,9 +14257,9 @@
         lda #$0005
         jsl rlCheckIfEventFlagOfSpecifiedChapterSet
         bcs _E9E3
-        lda #$8800
+        lda #(`dialogueEpilogueMemorial88EE1F)<<8
         sta lR18+1
-        lda #$EE1F
+        lda #<>dialogueEpilogueMemorial88EE1F
         sta lR18
         jsl rlDialoguePushToActivePointerStack
 
@@ -14127,6 +14271,82 @@
         ; 88/E9E4
 
     .endsection Unsorted88E401Section
+
+
+    .section Table88E9E4Section
+
+      .al
+      .xl
+
+        .byte $01 ; 88/E9E4
+
+      dialogueEpilogueMemorial88E9E5 .include "../../text/dialogue/Epilogue/Memorial88E9E5.dialogue.txt" ; 88/E9E5
+      dialogueEpilogueMemorial88EBFD .include "../../text/dialogue/Epilogue/Memorial88EBFD.dialogue.txt" ; 88/EBFD
+      dialogueEpilogueMemorial88EC34 .include "../../text/dialogue/Epilogue/Memorial88EC34.dialogue.txt" ; 88/EC34
+      dialogueEpilogueMemorial88EC51 .include "../../text/dialogue/Epilogue/Memorial88EC51.dialogue.txt" ; 88/EC51
+      dialogueEpilogueMemorial88EC6C .include "../../text/dialogue/Epilogue/Memorial88EC6C.dialogue.txt" ; 88/EC6C
+      dialogueEpilogueMemorial88EC8A .include "../../text/dialogue/Epilogue/Memorial88EC8A.dialogue.txt" ; 88/EC8A
+      dialogueEpilogueMemorial88ECA4 .include "../../text/dialogue/Epilogue/Memorial88ECA4.dialogue.txt" ; 88/ECA4
+      dialogueEpilogueMemorial88ECC0 .include "../../text/dialogue/Epilogue/Memorial88ECC0.dialogue.txt" ; 88/ECC0
+      dialogueEpilogueMemorial88ECDA .include "../../text/dialogue/Epilogue/Memorial88ECDA.dialogue.txt" ; 88/ECDA
+      dialogueEpilogueMemorial88ECF7 .include "../../text/dialogue/Epilogue/Memorial88ECF7.dialogue.txt" ; 88/ECF7
+      dialogueEpilogueMemorial88ED16 .include "../../text/dialogue/Epilogue/Memorial88ED16.dialogue.txt" ; 88/ED16
+      dialogueEpilogueMemorial88ED32 .include "../../text/dialogue/Epilogue/Memorial88ED32.dialogue.txt" ; 88/ED32
+      dialogueEpilogueMemorial88ED4E .include "../../text/dialogue/Epilogue/Memorial88ED4E.dialogue.txt" ; 88/ED4E
+      dialogueEpilogueMemorial88ED68 .include "../../text/dialogue/Epilogue/Memorial88ED68.dialogue.txt" ; 88/ED68
+      dialogueEpilogueMemorial88ED7D .include "../../text/dialogue/Epilogue/Memorial88ED7D.dialogue.txt" ; 88/ED7D
+      dialogueEpilogueMemorial88ED92 .include "../../text/dialogue/Epilogue/Memorial88ED92.dialogue.txt" ; 88/ED92
+      dialogueEpilogueMemorial88EDAD .include "../../text/dialogue/Epilogue/Memorial88EDAD.dialogue.txt" ; 88/EDAD
+      dialogueEpilogueMemorial88EDCC .include "../../text/dialogue/Epilogue/Memorial88EDCC.dialogue.txt" ; 88/EDCC
+      dialogueEpilogueMemorial88EDE9 .include "../../text/dialogue/Epilogue/Memorial88EDE9.dialogue.txt" ; 88/EDE9
+      dialogueEpilogueMemorial88EE03 .include "../../text/dialogue/Epilogue/Memorial88EE03.dialogue.txt" ; 88/EE03
+      dialogueEpilogueMemorial88EE1F .include "../../text/dialogue/Epilogue/Memorial88EE1F.dialogue.txt" ; 88/EE1F
+
+      aUnknown88EE3C ; 88/EE3C
+        .word 4 ; sprite count
+        .structSpriteEntry (  -3,   -3), $00, SpriteSmall, $000, 3, 0, false, false
+        .structSpriteEntry (  11,   -3), $00, SpriteSmall, $001, 3, 0, false, false
+        .structSpriteEntry (  -3,   11), $00, SpriteSmall, $010, 3, 0, false, false
+        .structSpriteEntry (  11,   11), $00, SpriteSmall, $011, 3, 0, false, false
+
+      aUnknown88EE52 ; 88/EE52
+        .word 4 ; sprite count
+        .structSpriteEntry (  -2,   -2), $00, SpriteSmall, $000, 3, 0, false, false
+        .structSpriteEntry (  10,   -2), $00, SpriteSmall, $001, 3, 0, false, false
+        .structSpriteEntry (  -2,   10), $00, SpriteSmall, $010, 3, 0, false, false
+        .structSpriteEntry (  10,   10), $00, SpriteSmall, $011, 3, 0, false, false
+
+      aUnknown88EE68 ; 88/EE68
+        .word 4 ; sprite count
+        .structSpriteEntry (  -3,   -3), $00, SpriteSmall, $000, 3, 0, false, false
+        .structSpriteEntry (  11,   -3), $00, SpriteSmall, $001, 3, 0, false, false
+        .structSpriteEntry (  -3,   11), $00, SpriteSmall, $010, 2, 0, false, false
+        .structSpriteEntry (  11,   11), $00, SpriteSmall, $011, 2, 0, false, false
+
+      aUnknown88EE7E ; 88/EE7E
+        .word 4 ; sprite count
+        .structSpriteEntry (  -3,   -3), $00, SpriteSmall, $000, 3, 0, false, false
+        .structSpriteEntry (  27,   -3), $00, SpriteSmall, $001, 3, 0, false, false
+        .structSpriteEntry (  -3,   23), $00, SpriteSmall, $010, 3, 0, false, false
+        .structSpriteEntry (  27,   23), $00, SpriteSmall, $011, 3, 0, false, false
+
+      aUnknown88EE94 ; 88/EE94
+        .word 4 ; sprite count
+        .structSpriteEntry (  -2,   -2), $00, SpriteSmall, $000, 3, 0, false, false
+        .structSpriteEntry (  26,   -2), $00, SpriteSmall, $001, 3, 0, false, false
+        .structSpriteEntry (  -2,   22), $00, SpriteSmall, $010, 3, 0, false, false
+        .structSpriteEntry (  26,   22), $00, SpriteSmall, $011, 3, 0, false, false
+
+      aUnknown88EEAA ; 88/EEAA
+        .word 1 ; sprite count
+        .structSpriteEntry (   0,    0), $21, SpriteLarge, $080, 3, 0, false, false
+
+
+    .endsection Table88E9E4Section
+
+
+
+
 
 
     .section Unsorted88EEB1Section

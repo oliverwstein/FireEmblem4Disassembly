@@ -1,5 +1,336 @@
 ; Code from bank $8D not yet assigned to a game system.
 
+    .section DemoBattlesSection
+
+      .al
+      .xl
+
+      aDemoBattlesPointerTable ; 8D/8000
+
+        .long aDemoBattle00, aDemoBattle00_UnitList
+        .long aDemoBattle01, aDemoBattle01_UnitList
+        .long aDemoBattle02, aDemoBattle02_UnitList
+        .long aDemoBattle03, aDemoBattle03_UnitList
+        .long aDemoBattle04, aDemoBattle04_UnitList
+        .long aDemoBattle05, aDemoBattle05_UnitList
+        .long aDemoBattle06, aDemoBattle06_UnitList
+        .long aDemoBattle07, aDemoBattle07_UnitList
+        .long aDemoBattle08, aDemoBattle08_UnitList
+        .long aDemoBattle09, aDemoBattle09_UnitList
+        .long aDemoBattle10, aDemoBattle10_UnitList
+        .long aDemoBattle11, aDemoBattle11_UnitList
+        .long aDemoBattle12, aDemoBattle12_UnitList
+        .long aDemoBattle13, aDemoBattle13_UnitList
+        .long aDemoBattle14, aDemoBattle14_UnitList
+        .long aDemoBattle15, aDemoBattle15_UnitList
+        .long aDemoBattle16, aDemoBattle16_UnitList
+        .long aDemoBattle17, aDemoBattle17_UnitList
+        .long aDemoBattle18, aDemoBattle18_UnitList
+        .long aDemoBattle19, aDemoBattle19_UnitList
+        .long aDemoBattle20, aDemoBattle20_UnitList
+        .long aDemoBattle21, aDemoBattle21_UnitList
+        .long aDemoBattle22, aDemoBattle22_UnitList
+        .long aDemoBattle23, aDemoBattle23_UnitList
+        .long aDemoBattle24, aDemoBattle24_UnitList
+        .long aDemoBattle25, aDemoBattle25_UnitList
+        .long aDemoBattle26, aDemoBattle26_UnitList
+        .long aDemoBattle27, aDemoBattle27_UnitList
+        .long aDemoBattle28, aDemoBattle28_UnitList
+        .long aDemoBattle29, aDemoBattle29_UnitList
+        .long aDemoBattle30, aDemoBattle30_UnitList
+        .long aDemoBattle31, aDemoBattle31_UnitList
+
+      aDemoBattle00 ; 8D/80C0
+        .byte $00, $60, $00, $0C, $01, $1A, $17, $21, $18, $04, $04, $2A, $26, $1E, $23, $06
+        .byte $12, $38, $64, $12, $14, $0E, $07, $D4, $51, $01
+        .word $0000
+        .word $0000
+
+      aDemoBattle00_UnitList ; 8D/80DE
+        .word $0009, $0C14, $0600, $0C14, $FFFF
+
+      aDemoBattle01 ; 8D/80E8
+        .byte $00, $EC, $00, $A5, $00, $3B, $14, $3F, $05, $0E, $0E, $20, $30, $20, $30, $0D
+        .byte $08, $48, $62, $12, $10, $08, $04, $78, $60, $05
+        .word $0000
+        .word $0000
+
+      aDemoBattle01_UnitList ; 8D/8106
+        .word $1049, $1049, $1004, $FFFF
+
+      aDemoBattle02 ; 8D/810E
+        .byte $00, $03, $00, $02, $00, $09, $09, $1C, $00, $19, $04, $2A, $2B, $2A, $2B, $19
+        .byte $1D, $58, $5C, $1C, $1C, $10, $14, $36, $36, $01
+        .long dialogueDemoBattleQuote96FD6F
+        .long dialogueDemoBattleQuote96FD84
+
+      aDemoBattle02_UnitList ; 8D/812E
+        .word $0000, $0801, $0C04, $1005, $FFFF
+
+      aDemoBattle03 ; 8D/8138
+        .byte $00, $04, $00, $13, $00, $1A, $17, $1E, $05, $17, $17, $32, $26, $18, $14, $1C
+        .byte $19, $63, $64, $1F, $19, $1B, $0C, $36, $36, $05
+        .long dialogueDemoBattleQuote98FFC9
+        .long dialogueDemoBattleQuote98FFEE
+
+      aDemoBattle03_UnitList ; 8D/8158
+        .word $0009, $13FE, $0814, $0400, $02FE, $0000, $0404, $0814
+        .word $FFFF
+
+      aDemoBattle04 ; 8D/816A
+        .byte $00, $52, $00, $10, $00, $3D, $3C, $52, $63, $09, $04, $32, $1B, $32, $1B, $0A
+        .byte $04, $FF, $FF, $FF, $FF, $FF, $FF, $D7, $36, $07
+        .word $0000
+        .long dialogueDemoBattleQuote96FF3E
+
+      aDemoBattle04_UnitList ; 8D/8189
+        .word $0002, $FFFF
+
+      aDemoBattle05 ; 8D/818D
+        .byte $00, $0A, $00, $17, $00, $0D, $38, $FF, $5F, $0E, $0E, $28, $20, $02, $20, $1D
+        .byte $1E, $FF, $FF, $FF, $FF, $FF, $FF, $36, $36, $05
+        .word $0000
+        .long dialogueDemoBattleQuote96FF5D
+
+      aDemoBattle05_UnitList ; 8D/81AC
+        .word $0002, $FFFF
+
+      aDemoBattle06 ; 8D/81B0
+        .byte $00, $5A, $00, $01, $00, $09, $06, $14, $02, $04, $04, $41, $35, $41, $35, $19
+        .byte $16, $64, $1F, $34, $24, $18, $0D, $44, $36, $01
+        .word $0000
+        .long dialogueDemoBattleQuote96FF7A
+
+      aDemoBattle06_UnitList ; 8D/81CF
+        .word $2701, $0008, $FFFF
+
+      aDemoBattle07 ; 8D/81D5
+        .byte $00, $5A, $00, $12, $00, $09, $2F, $14, $FF, $04, $04, $41, $1E, $41, $1E, $19
+        .byte $08, $64, $FF, $34, $FF, $18, $FF, $44, $36, $05
+        .word $0000
+        .long dialogueDemoBattleQuote96FFA6
+
+      aDemoBattle07_UnitList ; 8D/81F4
+        .word $FFFF
+
+      aDemoBattle08 ; 8D/81F6
+        .byte $00, $14, $00, $16, $00, $11, $32, $FF, $19, $12, $04, $29, $23, $29, $23, $14
+        .byte $12, $00, $00, $00, $04, $0C, $05, $36, $36, $0D
+        .long dialogueDemoBattleQuote96FDA0
+        .long dialogueDemoBattleQuote96FDCC
+
+      aDemoBattle08_UnitList ; 8D/8216
+        .word $0008, $0008, $FFFF
+
+      aDemoBattle09 ; 8D/821C
+        .byte $00, $16, $00, $08, $00, $32, $3A, $19, $FF, $12, $04, $23, $31, $23, $31, $12
+        .byte $17, $00, $00, $04, $00, $05, $09, $36, $36, $09
+        .long dialogueDemoBattleQuote96FDE2
+        .long dialogueDemoBattleQuote96FE02
+
+      aDemoBattle09_UnitList ; 8D/823C
+        .word $0009, $0009, $FFFF
+
+      aDemoBattle10 ; 8D/8242
+        .byte $00, $EF, $00, $06, $00, $14, $07, $23, $24, $08, $08, $4B, $32, $4B, $05, $1E
+        .byte $13, $64, $5A, $3D, $3C, $21, $1B, $60, $05, $01
+        .word $0000
+        .long dialogueDemoBattleQuote96FFE0
+
+      aDemoBattle10_UnitList ; 8D/8261
+        .word $1B00, $1B00, $0511, $FFFF
+
+      aDemoBattle11 ; 8D/8269
+        .byte $00, $61, $01, $1D, $00, $14, $08, $1E, $02, $03, $04, $41, $35, $41, $35, $1E
+        .byte $17, $41, $64, $31, $28, $1A, $19, $60, $36, $01
+        .word $0000
+        .long dialogueDemoBattleQuote8D8468
+
+      aDemoBattle11_UnitList ; 8D/8288
+        .word $0E00, $0E00, $0009, $2514, $FFFF
+
+      aDemoBattle12 ; 8D/8292
+        .byte $00, $3A, $00, $32, $00, $16, $16, $00, $00, $17, $17, $1C, $1D, $1C, $1D, $FF
+        .byte $FF, $3D, $2D, $0F, $0F, $07, $07, $36, $36, $09
+        .long dialogueDemoBattleQuote96FE35
+        .long dialogueDemoBattleQuote96FE68
+
+      aDemoBattle12_UnitList ; 8D/82B2
+        .word $13FE, $0008, $0800, $0008, $0800, $0008, $13FE, $0801
+        .word $0801, $0009, $0801, $0801, $FFFF
+
+      aDemoBattle13 ; 8D/82CC
+        .byte $00, $1A, $00, $3A, $00, $17, $16, $00, $00, $17, $17, $26, $1C, $26, $1C, $0C
+        .byte $FF, $42, $26, $18, $0F, $0C, $07, $36, $36, $05
+        .long dialogueDemoBattleQuote96FE9C
+        .long dialogueDemoBattleQuote96FEC1
+
+      aDemoBattle13_UnitList ; 8D/82EC
+        .word $13FE, $0300, $0300, $0008, $0008, $0008, $1101, $1101
+        .word $FFFF
+
+      aDemoBattle14 ; 8D/82FE
+        .byte $00, $7D, $01, $3D, $00, $31, $34, $40, $43, $09, $09, $41, $25, $41, $25, $1B
+        .byte $0C, $5C, $29, $32, $14, $1E, $10, $88, $36, $0E
+        .word $0000
+        .word $0000
+
+      aDemoBattle14_UnitList ; 8D/831C
+        .word $0A44, $2241, $FFFF
+
+      aDemoBattle15 ; 8D/8322
+        .byte $00, $3D, $00, $35, $00, $34, $3A, $FF, $5A, $09, $09, $25, $36, $03, $36, $0C
+        .byte $19, $FF, $FF, $FF, $FF, $FF, $FF, $36, $36, $09
+        .word $0000
+        .long dialogueDemoBattleQuote8D8487
+
+      aDemoBattle15_UnitList ; 8D/8341
+        .word $2202, $FFFF
+
+      aDemoBattle16 ; 8D/8345
+        .byte $00, $1E, $00, $31, $00, $03, $27, $29, $29, $04, $03, $28, $2A, $28, $2A, $0C
+        .byte $0C, $5A, $54, $20, $21, $0A, $0C, $11, $11, $01
+        .word $0000
+        .word $0000
+
+      aDemoBattle16_UnitList ; 8D/8363
+        .word $1401, $1401, $0009, $2B14, $FFFF
+
+      aDemoBattle17 ; 8D/836D
+        .byte $00, $1E, $00, $3B, $00, $03, $33, $29, $5A, $03, $04, $28, $22, $02, $22, $0C
+        .byte $05, $FF, $FF, $FF, $FF, $FF, $FF, $36, $36, $05
+        .long dialogueDemoBattleQuote96FEF4
+        .long dialogueDemoBattleQuote96FF29
+
+      aDemoBattle17_UnitList ; 8D/838D
+        .word $2602, $FFFF
+
+      aDemoBattle26 ; 8D/8391
+        .byte $00, $04, $01, $01, $00, $3A, $06, $41, $15, $03, $03, $3C, $3C, $3C, $3C, $1E
+        .byte $1E, $FF, $64, $FF, $3B, $FF, $0A, $78, $36, $01
+        .long dialogueDemoBattleQuote8D85F4
+        .word $0000
+
+      aDemoBattle26_UnitList ; 8D/83B0
+        .word $3041, $2D00, $FFFF
+
+      aDemoBattle27 ; 8D/83B6
+        .byte $00, $04, $01, $10, $00, $3A, $3C, $41, $5A, $09, $09, $3C, $1B, $0F, $1B, $1E
+        .byte $FF, $FF, $FF, $FF, $FF, $FF, $FF, $78, $B8, $05
+        .word $0000
+        .long dialogueDemoBattleQuote8D860D
+
+      aDemoBattle27_UnitList ; 8D/83D5
+        .word $2D02, $FFFF
+
+      aDemoBattle28 ; 8D/83D9
+        .byte $00, $2B, $00, $10, $00, $3C, $3C, $FF, $5E, $09, $09, $12, $18, $12, $04, $FF
+        .byte $01, $FF, $FF, $FF, $FF, $FF, $FF, $B8, $B8, $0D
+        .word $0000
+        .long dialogueDemoBattleQuote8D8556
+
+      aDemoBattle28_UnitList ; 8D/83F8
+        .word $0002, $FFFF
+
+      aDemoBattle29 ; 8D/83FC
+        .byte $00, $C6, $01, $10, $00, $47, $3C, $54, $FF, $09, $09, $50, $18, $50, $04, $1E
+        .byte $01, $64, $FF, $37, $FF, $1E, $FF, $C8, $B8, $05
+        .long dialogueDemoBattleQuote8D8575
+        .word $0000
+
+      aDemoBattle29_UnitList ; 8D/841B
+        .word $0451, $FFFF
+
+      aDemoBattle30 ; 8D/841F
+        .byte $00, $C6, $01, $2B, $00, $47, $3A, $54, $50, $09, $09, $50, $2A, $28, $16, $1E
+        .byte $1A, $49, $41, $37, $3C, $1E, $2E, $C8, $36, $05
+        .long dialogueDemoBattleQuote8D8597
+        .word $0000
+
+      aDemoBattle30_UnitList ; 8D/843E
+        .word $0941, $1E40, $FFFF
+
+      aDemoBattle31 ; 8D/8444
+        .byte $00, $C6, $01, $19, $00, $47, $06, $54, $15, $09, $09, $50, $42, $0A, $10, $1E
+        .byte $1E, $3D, $47, $37, $1E, $19, $26, $C8, $36, $01
+        .word $0000
+        .word $0000
+
+      aDemoBattle31_UnitList ; 8D/8462
+        .word $0049, $0A14, $FFFF
+
+      dialogueDemoBattleQuote8D8468 ; 8D/8468
+        .byte $07, $00, $05, $01
+        _8D8468_Body .include "../../text/dialogue/DemoBattles/Quote8D8468.dialogue.txt"
+
+      dialogueDemoBattleQuote8D8487 ; 8D/8487
+        .byte $07, $00, $05, $01
+        _8D8487_Body .include "../../text/dialogue/DemoBattles/Quote8D8487.dialogue.txt"
+
+      dialogueDemoBattleQuote8D84A0 ; 8D/84A0
+        .byte $07, $00, $05, $01
+        _8D84A0_Body .include "../../text/dialogue/DemoBattles/Quote8D84A0.dialogue.txt"
+
+      dialogueDemoBattleQuote8D84C1 ; 8D/84C1
+        .byte $07, $00, $05, $01
+        _8D84C1_Body .include "../../text/dialogue/DemoBattles/Quote8D84C1.dialogue.txt"
+
+      dialogueDemoBattleQuote8D84EC ; 8D/84EC
+        .byte $07, $00, $05, $01
+        _8D84EC_Body .include "../../text/dialogue/DemoBattles/Quote8D84EC.dialogue.txt"
+
+      dialogueDemoBattleQuote8D8508 ; 8D/8508
+        .byte $07, $00, $05, $01
+        _8D8508_Body .include "../../text/dialogue/DemoBattles/Quote8D8508.dialogue.txt"
+
+      dialogueDemoBattleQuote8D8524 ; 8D/8524
+        .byte $07, $00, $05, $01
+        _8D8524_Body .include "../../text/dialogue/DemoBattles/Quote8D8524.dialogue.txt"
+
+      dialogueDemoBattleQuote8D853E ; 8D/853E
+        .byte $07, $00, $05, $01
+        _8D853E_Body .include "../../text/dialogue/DemoBattles/Quote8D853E.dialogue.txt"
+
+      dialogueDemoBattleQuote8D8556 ; 8D/8556
+        .byte $07, $00, $05, $01
+        _8D8556_Body .include "../../text/dialogue/DemoBattles/Quote8D8556.dialogue.txt"
+
+      dialogueDemoBattleQuote8D8575 ; 8D/8575
+        .byte $07, $00, $05, $01
+        _8D8575_Body .include "../../text/dialogue/DemoBattles/Quote8D8575.dialogue.txt"
+
+      dialogueDemoBattleQuote8D8597 ; 8D/8597
+        .byte $07, $00, $05, $01
+        _8D8597_Body .include "../../text/dialogue/DemoBattles/Quote8D8597.dialogue.txt"
+
+      dialogueDemoBattleQuote8D85B7 ; 8D/85B7
+        .byte $07, $00, $05, $01
+        _8D85B7_Body .include "../../text/dialogue/DemoBattles/Quote8D85B7.dialogue.txt"
+
+      dialogueDemoBattleQuote8D85D1 ; 8D/85D1
+        .byte $07, $00, $05, $01
+        _8D85D1_Body .include "../../text/dialogue/DemoBattles/Quote8D85D1.dialogue.txt"
+
+      dialogueDemoBattleQuote8D85F4 ; 8D/85F4
+        .byte $07, $00, $05, $01
+        _8D85F4_Body .include "../../text/dialogue/DemoBattles/Quote8D85F4.dialogue.txt"
+
+      dialogueDemoBattleQuote8D860D ; 8D/860D
+        .byte $07, $00, $05, $01
+        _8D860D_Body .include "../../text/dialogue/DemoBattles/Quote8D860D.dialogue.txt"
+
+
+    .endsection DemoBattlesSection
+
+
+
+
+
+
+
+
+
+
     .section Unsorted8DA06ASection
 
       .al
@@ -189,14 +520,14 @@
 
         lda $7F5486
         bne _A161
-        lda #$8D00
+        lda #(`aUnknown8DA504)<<8
         sta lR44+1
-        lda #$A504
+        lda #<>aUnknown8DA504
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #$8D00
+        lda #(`aUnknown8DA4A8)<<8
         sta lR44+1
-        lda #$A4A8
+        lda #<>aUnknown8DA4A8
         sta lR44
         jsl rlHDMAEngineCreateEntry
         jsl rlUnknown8DA755
@@ -853,6 +1184,72 @@
     .endsection Unsorted8DA3DESection
 
 
+    .section Unsorted8DA449Section
+
+      .al
+      .xl
+
+      rlUnknown8DA449 ; 8D/A449
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0100
+        tsb $1882,b
+        lda #$01FF
+        sta $189D,b
+        lda #$0001
+        sta $1888,b
+        lda #$101A
+        sta $18DB,b,x
+        lda #$4000
+        sta $18D7,b,x
+        lda #$7E00
+        sta $18D5,b,x
+        lda #$8388
+        sta $18D4,b,x
+        lda #$2000
+        sta $189F,b,x
+        lda #$0809
+        sta wR1
+        sep #$20
+        lda #$00
+        sta wR0+1
+        xba
+        lda wR1
+        sta wR0
+        lda wR1+1
+        xba
+        rep #$20
+        lsr a
+        lsr a
+        clc
+        adc wR0
+        sta wR0
+        ldx aDialogue,b
+        lda #$7E00
+        sta $18D5,b,x
+        lda #$8388
+        clc
+        adc wR0
+        sta $18D4,b,x
+        rtl
+
+        .databank 0
+
+        ; 8D/A4A8
+
+      aUnknown8DA4A8 .dstruct structHDMADirectEntryInfo, rlUnknown8DA4B3, $A4B5, aUnknown8DA502, $0008BC, PPU_REG_BASE + $2C, $00 ; 8D/A4A8
+
+    .endsection Unsorted8DA449Section
+
+
+
+
+
+
     .section Unsorted8DA4B3Section
 
       .al
@@ -899,6 +1296,23 @@
         ; 8D/A502
 
     .endsection Unsorted8DA4B3Section
+
+
+    .section Table8DA502Section
+
+      .al
+      .xl
+
+      aUnknown8DA502 ; 8D/A502
+        HDMA_HALT
+
+      aUnknown8DA504 .dstruct structHDMADirectEntryInfo, rlUnknown8DA50F, rlUnknown8DA50F, $A622, $7F56C9, PPU_REG_BASE + $0F, $02 ; 8D/A504
+
+    .endsection Table8DA502Section
+
+
+
+
 
 
     .section Unsorted8DA50FSection
@@ -1449,9 +1863,9 @@
         jsl rlUnknown8780EC
         sep #$20
         rep #$10
-        ldx #$4143
+        ldx #<>gcUnknownD44143
         stx DecompressionVariables
-        lda #$D4
+        lda #`gcUnknownD44143
         sta $CA
         ldx #$7B88
         stx $CB
@@ -1465,9 +1879,9 @@
 
         sep #$20
         rep #$10
-        ldx #$3402
+        ldx #<>gcUnknownD43402
         stx DecompressionVariables
-        lda #$D4
+        lda #`gcUnknownD43402
         sta $CA
         ldx #$9388
         stx $CB
@@ -1481,9 +1895,9 @@
 
         sep #$20
         rep #$10
-        ldx #$486F
+        ldx #<>gcUnknownD4486F
         stx DecompressionVariables
-        lda #$D4
+        lda #`gcUnknownD4486F
         sta $CA
         ldx #$8388
         stx $CB
@@ -1497,9 +1911,9 @@
 
         sep #$20
         rep #$10
-        ldx #$429B
+        ldx #<>gcUnknownD4429B
         stx DecompressionVariables
-        lda #$D4
+        lda #`gcUnknownD4429B
         sta $CA
         ldx #$A388
         stx $CB
@@ -1530,7 +1944,7 @@
         ldx #$001E
 
         _A966
-        lda $8CEBC0,x
+        lda aUnknown8CEBC0,x
         sta aBGPaletteBuffer.aPalette6,b,x
         dec x
         dec x
@@ -1538,7 +1952,7 @@
         ldx #$001C
 
         _A974
-        lda $8CEB02,x
+        lda aUnknown8CEB00+2,x
         sta $0102,b,x
         dec x
         dec x
@@ -1572,9 +1986,9 @@
         jsl rlUnknown8780EC
         sep #$20
         rep #$10
-        ldx #$4143
+        ldx #<>gcUnknownD44143
         stx DecompressionVariables
-        lda #$D4
+        lda #`gcUnknownD44143
         sta $CA
         ldx #$7B88
         stx $CB
@@ -1588,9 +2002,9 @@
 
         sep #$20
         rep #$10
-        ldx #$3402
+        ldx #<>gcUnknownD43402
         stx DecompressionVariables
-        lda #$D4
+        lda #`gcUnknownD43402
         sta $CA
         ldx #$9388
         stx $CB
@@ -1604,9 +2018,9 @@
 
         sep #$20
         rep #$10
-        ldx #$486F
+        ldx #<>gcUnknownD4486F
         stx DecompressionVariables
-        lda #$D4
+        lda #`gcUnknownD4486F
         sta $CA
         ldx #$8388
         stx $CB
@@ -1620,9 +2034,9 @@
 
         sep #$20
         rep #$10
-        ldx #$429B
+        ldx #<>gcUnknownD4429B
         stx DecompressionVariables
-        lda #$D4
+        lda #`gcUnknownD4429B
         sta $CA
         ldx #$A388
         stx $CB
@@ -1654,7 +2068,7 @@
         ldx #$001E
 
         _AA70
-        lda $8CEBC0,x
+        lda aUnknown8CEBC0,x
         sta aBGPaletteBuffer.aPalette6,b,x
         dec x
         dec x
@@ -1662,7 +2076,7 @@
         ldx #$001C
 
         _AA7E
-        lda $8CEB02,x
+        lda aUnknown8CEB00+2,x
         sta $0102,b,x
         dec x
         dec x
@@ -1868,9 +2282,9 @@
 
         _ADD8
         jsl rlResetDialogueEngine
-        lda #$8D00
+        lda #(`dialogueEpilogueCredits8DC9A6)<<8
         sta lR18+1
-        lda #$C9A6
+        lda #<>dialogueEpilogueCredits8DC9A6
         sta lR18
         lda #$0002
         jsl rlDialogueStartTextAndHDMA
@@ -1888,6 +2302,73 @@
         ; 8D/ADFA
 
     .endsection Unsorted8DAD9ESection
+
+
+    .section Table8DADFASection
+
+      .al
+      .xl
+
+      aUnknown8DADFA .dstruct structHDMADirectEntryInfo, rlUnknown8DAE05, rlUnknown8DAE05, aUnknown8DAE30, $7F56C9, PPU_REG_BASE + $00, $00 ; 8D/ADFA
+
+      rlUnknown8DAE05 ; 8D/AE05
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phk
+        plb
+        .databank $8D
+        rep #$20
+        ldx #$0000
+        ldy #$0000
+        sep #$20
+
+        _AE11
+        lda aUnknown8DAE32,y
+        sta $7F56C9,x
+        beq _AE2D
+        lda $AE33,b,y
+        cmp bBufferINIDISP
+        bcc _AE23
+        lda bBufferINIDISP
+
+        _AE23
+        sta $7F56CA,x
+        inc x
+        inc x
+        inc y
+        inc y
+        bra _AE11
+
+
+        _AE2D
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8D/AE30
+
+      aUnknown8DAE30 ; 8D/AE30
+        HDMA_HALT
+
+      aUnknown8DAE32 ; 8D/AE32
+        .byte $24, $00, $01, $01, $02, $03, $03, $05, $04, $07, $05, $09, $06, $0B, $08, $0D
+        .byte $28, $0F, $08, $0D, $08, $0B, $08, $09, $06, $07, $04, $05, $03, $03, $02, $01
+        .byte $01, $00, $00, $00, $28, $00, $01, $01, $02, $03, $03, $05, $04, $07, $04, $09
+        .byte $04, $0B, $04, $0D, $28, $0F, $08, $0D, $08, $0B, $08, $09, $04, $07, $04, $05
+        .byte $04, $03, $04, $01, $01, $00, $00, $00
+
+      aUnknown8DAE7A .dstruct structHDMADirectEntryInfo, rlUnknown8DAE85, rlUnknown8DAE85, $AEC0, $7F56C9, PPU_REG_BASE + $2C, $00 ; 8D/AE7A
+
+    .endsection Table8DADFASection
+
+
+
+
 
 
     .section Unsorted8DAE85Section
@@ -2095,9 +2576,9 @@
         jsl rlHandleMapMenuDecompressionDMA
         sep #$20
         rep #$10
-        ldx #$28B8
+        ldx #<>gcUnknownD428B8
         stx DecompressionVariables
-        lda #$D4
+        lda #`gcUnknownD428B8
         sta $CA
         ldx #$8388
         stx $CB
@@ -2822,18 +3303,18 @@
 
 
         _B395
-        lda #$8D00
+        lda #(`dialogueEpilogueCredits8DCC3D)<<8
         sta lR18+1
-        lda #$CC3D
+        lda #<>dialogueEpilogueCredits8DCC3D
         sta lR18
         jsl rlDialoguePushToActivePointerStack
         rts
 
 
         _B3A4
-        lda #$8D00
+        lda #(`dialogueEpilogueCredits8DCC39)<<8
         sta lR18+1
-        lda #$CC39
+        lda #<>dialogueEpilogueCredits8DCC39
         sta lR18
         jsl rlDialoguePushToActivePointerStack
         rts
@@ -2866,36 +3347,36 @@
 
 
         _B3CD
-        lda #$8D00
+        lda #(`dialogueEpilogueCredits8DCC54)<<8
         sta lR18+1
-        lda #$CC54
+        lda #<>dialogueEpilogueCredits8DCC54
         sta lR18
         jsl rlDialoguePushToActivePointerStack
         rts
 
 
         _B3DC
-        lda #$8D00
+        lda #(`dialogueEpilogueCredits8DCC4C)<<8
         sta lR18+1
-        lda #$CC4C
+        lda #<>dialogueEpilogueCredits8DCC4C
         sta lR18
         jsl rlDialoguePushToActivePointerStack
         rts
 
 
         _B3EB
-        lda #$8D00
+        lda #(`dialogueEpilogueCredits8DCC46)<<8
         sta lR18+1
-        lda #$CC46
+        lda #<>dialogueEpilogueCredits8DCC46
         sta lR18
         jsl rlDialoguePushToActivePointerStack
         rts
 
 
         _B3FA
-        lda #$8D00
+        lda #(`dialogueEpilogueCredits8DCC42)<<8
         sta lR18+1
-        lda #$CC42
+        lda #<>dialogueEpilogueCredits8DCC42
         sta lR18
         jsl rlDialoguePushToActivePointerStack
         rts
@@ -2967,9 +3448,9 @@
         sta aDialogue.wBaseTile,b
 
         _B462
-        lda #$8D00
+        lda #(`dialogueEpilogueCredits8DCC24)<<8
         sta lR18+1
-        lda #$CC24
+        lda #<>dialogueEpilogueCredits8DCC24
         sta lR18
         jsl rlDialoguePushToActivePointerStack
         rtl
@@ -3046,9 +3527,9 @@
         sta aDialogue.wBaseTile,b
 
         _B4D7
-        lda #$8D00
+        lda #(`dialogueEpilogueCredits8DCC24)<<8
         sta lR18+1
-        lda #$CC24
+        lda #<>dialogueEpilogueCredits8DCC24
         sta lR18
         jsl rlDialoguePushToActivePointerStack
         rtl
@@ -3254,6 +3735,246 @@
 
     .endsection Data8DB5C8Section
 
+    .section Table8DC964Section
+
+      .al
+      .xl
+
+      dialogueEpilogueCredits8DC964 .include "../../text/dialogue/Epilogue/Credits8DC964.dialogue.txt" ; 8D/C964
+      dialogueEpilogueCredits8DC9A6 .include "../../text/dialogue/Epilogue/Credits8DC9A6.dialogue.txt" ; 8D/C9A6
+      dialogueEpilogueCredits8DC9FE .include "../../text/dialogue/Epilogue/Credits8DC9FE.dialogue.txt" ; 8D/C9FE
+      dialogueEpilogueCredits8DC9FF .include "../../text/dialogue/Epilogue/Credits8DC9FF.dialogue.txt" ; 8D/C9FF
+      dialogueEpilogueCredits8DCC24 .include "../../text/dialogue/Epilogue/Credits8DCC24.dialogue.txt" ; 8D/CC24
+      dialogueEpilogueCredits8DCC39 .include "../../text/dialogue/Epilogue/Credits8DCC39.dialogue.txt" ; 8D/CC39
+      dialogueEpilogueCredits8DCC3D .include "../../text/dialogue/Epilogue/Credits8DCC3D.dialogue.txt" ; 8D/CC3D
+      dialogueEpilogueCredits8DCC42 .include "../../text/dialogue/Epilogue/Credits8DCC42.dialogue.txt" ; 8D/CC42
+      dialogueEpilogueCredits8DCC46 .include "../../text/dialogue/Epilogue/Credits8DCC46.dialogue.txt" ; 8D/CC46
+      dialogueEpilogueCredits8DCC4C .include "../../text/dialogue/Epilogue/Credits8DCC4C.dialogue.txt" ; 8D/CC4C
+      dialogueEpilogueCredits8DCC54 .include "../../text/dialogue/Epilogue/Credits8DCC54.dialogue.txt" ; 8D/CC54
+      dialogueEpilogueCredits8DCC5D .include "../../text/dialogue/Epilogue/Credits8DCC5D.dialogue.txt" ; 8D/CC5D
+      dialogueEpilogueCredits8DCC6B .include "../../text/dialogue/Epilogue/Credits8DCC6B.dialogue.txt" ; 8D/CC6B
+      dialogueEpilogueCredits8DCC94 .include "../../text/dialogue/Epilogue/Credits8DCC94.dialogue.txt" ; 8D/CC94
+
+      aUnknown8DCCB0 ; 8D/CCB0
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,   16), $21, SpriteLarge, $022, 2, 0, false, false
+        .structSpriteEntry (   0,   16), $21, SpriteLarge, $020, 2, 0, false, false
+        .structSpriteEntry (  16,    0), $21, SpriteLarge, $002, 2, 0, false, false
+        .structSpriteEntry (   0,    0), $21, SpriteLarge, $000, 2, 0, false, false
+
+      aUnknown8DCCC6 ; 8D/CCC6
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,   16), $21, SpriteLarge, $026, 2, 0, false, false
+        .structSpriteEntry (   0,   16), $21, SpriteLarge, $024, 2, 0, false, false
+        .structSpriteEntry (  16,    0), $21, SpriteLarge, $006, 2, 0, false, false
+        .structSpriteEntry (   0,    0), $21, SpriteLarge, $004, 2, 0, false, false
+
+      aUnknown8DCCDC ; 8D/CCDC
+        .word 4 ; sprite count
+        .structSpriteEntry (  18,   14), $21, SpriteLarge, $02A, 2, 0, false, false
+        .structSpriteEntry (   2,   14), $21, SpriteLarge, $028, 2, 0, false, false
+        .structSpriteEntry (  18,   -2), $21, SpriteLarge, $00A, 2, 0, false, false
+        .structSpriteEntry (   2,   -2), $21, SpriteLarge, $008, 2, 0, false, false
+
+      aUnknown8DCCF2 ; 8D/CCF2
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,   16), $21, SpriteLarge, $02E, 2, 0, false, false
+        .structSpriteEntry (   0,   16), $21, SpriteLarge, $02C, 2, 0, false, false
+        .structSpriteEntry (  16,    0), $21, SpriteLarge, $00E, 2, 0, false, false
+        .structSpriteEntry (   0,    0), $21, SpriteLarge, $00C, 2, 0, false, false
+
+      aUnknown8DCD08 ; 8D/CD08
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,  -32), $21, SpriteLarge, $022, 2, 4, false, true
+        .structSpriteEntry (   0,  -32), $21, SpriteLarge, $020, 2, 4, false, true
+        .structSpriteEntry (  16,  -16), $21, SpriteLarge, $002, 2, 4, false, true
+        .structSpriteEntry (   0,  -16), $21, SpriteLarge, $000, 2, 4, false, true
+
+      aUnknown8DCD1E ; 8D/CD1E
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,  -32), $21, SpriteLarge, $026, 2, 4, false, true
+        .structSpriteEntry (   0,  -32), $21, SpriteLarge, $024, 2, 4, false, true
+        .structSpriteEntry (  16,  -16), $21, SpriteLarge, $006, 2, 4, false, true
+        .structSpriteEntry (   0,  -16), $21, SpriteLarge, $004, 2, 4, false, true
+
+      aUnknown8DCD34 ; 8D/CD34
+        .word 4 ; sprite count
+        .structSpriteEntry (  18,  -30), $21, SpriteLarge, $02A, 2, 4, false, true
+        .structSpriteEntry (   2,  -30), $21, SpriteLarge, $028, 2, 4, false, true
+        .structSpriteEntry (  18,  -14), $21, SpriteLarge, $00A, 2, 4, false, true
+        .structSpriteEntry (   2,  -14), $21, SpriteLarge, $008, 2, 4, false, true
+
+      aUnknown8DCD4A ; 8D/CD4A
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,  -32), $21, SpriteLarge, $02E, 2, 4, false, true
+        .structSpriteEntry (   0,  -32), $21, SpriteLarge, $02C, 2, 4, false, true
+        .structSpriteEntry (  16,  -16), $21, SpriteLarge, $00E, 2, 4, false, true
+        .structSpriteEntry (   0,  -16), $21, SpriteLarge, $00C, 2, 4, false, true
+
+      aUnknown8DCD60 ; 8D/CD60
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,   16), $21, SpriteLarge, $022, 2, 1, false, false
+        .structSpriteEntry (   0,   16), $21, SpriteLarge, $020, 2, 1, false, false
+        .structSpriteEntry (  16,    0), $21, SpriteLarge, $002, 2, 1, false, false
+        .structSpriteEntry (   0,    0), $21, SpriteLarge, $000, 2, 1, false, false
+
+      aUnknown8DCD76 ; 8D/CD76
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,   16), $21, SpriteLarge, $026, 2, 1, false, false
+        .structSpriteEntry (   0,   16), $21, SpriteLarge, $024, 2, 1, false, false
+        .structSpriteEntry (  16,    0), $21, SpriteLarge, $006, 2, 1, false, false
+        .structSpriteEntry (   0,    0), $21, SpriteLarge, $004, 2, 1, false, false
+
+      aUnknown8DCD8C ; 8D/CD8C
+        .word 4 ; sprite count
+        .structSpriteEntry (  18,   14), $21, SpriteLarge, $02A, 2, 1, false, false
+        .structSpriteEntry (   2,   14), $21, SpriteLarge, $028, 2, 1, false, false
+        .structSpriteEntry (  18,   -2), $21, SpriteLarge, $00A, 2, 1, false, false
+        .structSpriteEntry (   2,   -2), $21, SpriteLarge, $008, 2, 1, false, false
+
+      aUnknown8DCDA2 ; 8D/CDA2
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,   16), $21, SpriteLarge, $02E, 2, 1, false, false
+        .structSpriteEntry (   0,   16), $21, SpriteLarge, $02C, 2, 1, false, false
+        .structSpriteEntry (  16,    0), $21, SpriteLarge, $00E, 2, 1, false, false
+        .structSpriteEntry (   0,    0), $21, SpriteLarge, $00C, 2, 1, false, false
+
+      aUnknown8DCDB8 ; 8D/CDB8
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,  -32), $21, SpriteLarge, $022, 2, 5, false, true
+        .structSpriteEntry (   0,  -32), $21, SpriteLarge, $020, 2, 5, false, true
+        .structSpriteEntry (  16,  -16), $21, SpriteLarge, $002, 2, 5, false, true
+        .structSpriteEntry (   0,  -16), $21, SpriteLarge, $000, 2, 5, false, true
+
+      aUnknown8DCDCE ; 8D/CDCE
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,  -32), $21, SpriteLarge, $026, 2, 5, false, true
+        .structSpriteEntry (   0,  -32), $21, SpriteLarge, $024, 2, 5, false, true
+        .structSpriteEntry (  16,  -16), $21, SpriteLarge, $006, 2, 5, false, true
+        .structSpriteEntry (   0,  -16), $21, SpriteLarge, $004, 2, 5, false, true
+
+      aUnknown8DCDE4 ; 8D/CDE4
+        .word 4 ; sprite count
+        .structSpriteEntry (  18,  -30), $21, SpriteLarge, $02A, 2, 5, false, true
+        .structSpriteEntry (   2,  -30), $21, SpriteLarge, $028, 2, 5, false, true
+        .structSpriteEntry (  18,  -14), $21, SpriteLarge, $00A, 2, 5, false, true
+        .structSpriteEntry (   2,  -14), $21, SpriteLarge, $008, 2, 5, false, true
+
+      aUnknown8DCDFA ; 8D/CDFA
+        .word 4 ; sprite count
+        .structSpriteEntry (  16,  -32), $21, SpriteLarge, $02E, 2, 5, false, true
+        .structSpriteEntry (   0,  -32), $21, SpriteLarge, $02C, 2, 5, false, true
+        .structSpriteEntry (  16,  -16), $21, SpriteLarge, $00E, 2, 5, false, true
+        .structSpriteEntry (   0,  -16), $21, SpriteLarge, $00C, 2, 5, false, true
+
+      aUnknown8DCE10 ; 8D/CE10
+        .word 9 ; sprite count
+        .structSpriteEntry (  16,   16), $00, SpriteSmall, $062, 2, 2, false, false
+        .structSpriteEntry (   8,   16), $00, SpriteSmall, $061, 2, 2, false, false
+        .structSpriteEntry (   0,   16), $00, SpriteSmall, $060, 2, 2, false, false
+        .structSpriteEntry (  16,    8), $00, SpriteSmall, $052, 2, 2, false, false
+        .structSpriteEntry (   8,    8), $00, SpriteSmall, $051, 2, 2, false, false
+        .structSpriteEntry (   0,    8), $00, SpriteSmall, $050, 2, 2, false, false
+        .structSpriteEntry (  16,    0), $00, SpriteSmall, $042, 2, 2, false, false
+        .structSpriteEntry (   8,    0), $00, SpriteSmall, $041, 2, 2, false, false
+        .structSpriteEntry (   0,    0), $00, SpriteSmall, $040, 2, 2, false, false
+
+      aUnknown8DCE3F ; 8D/CE3F
+        .word 9 ; sprite count
+        .structSpriteEntry (  16,   16), $00, SpriteSmall, $065, 2, 2, false, false
+        .structSpriteEntry (   8,   16), $00, SpriteSmall, $064, 2, 2, false, false
+        .structSpriteEntry (   0,   16), $00, SpriteSmall, $063, 2, 2, false, false
+        .structSpriteEntry (  16,    8), $00, SpriteSmall, $055, 2, 2, false, false
+        .structSpriteEntry (   8,    8), $00, SpriteSmall, $054, 2, 2, false, false
+        .structSpriteEntry (   0,    8), $00, SpriteSmall, $053, 2, 2, false, false
+        .structSpriteEntry (  16,    0), $00, SpriteSmall, $045, 2, 2, false, false
+        .structSpriteEntry (   8,    0), $00, SpriteSmall, $044, 2, 2, false, false
+        .structSpriteEntry (   0,    0), $00, SpriteSmall, $043, 2, 2, false, false
+
+      aUnknown8DCE6E ; 8D/CE6E
+        .word 9 ; sprite count
+        .structSpriteEntry (  18,   14), $00, SpriteSmall, $068, 2, 2, false, false
+        .structSpriteEntry (  10,   14), $00, SpriteSmall, $067, 2, 2, false, false
+        .structSpriteEntry (   2,   14), $00, SpriteSmall, $066, 2, 2, false, false
+        .structSpriteEntry (  18,    6), $00, SpriteSmall, $058, 2, 2, false, false
+        .structSpriteEntry (  10,    6), $00, SpriteSmall, $057, 2, 2, false, false
+        .structSpriteEntry (   2,    6), $00, SpriteSmall, $056, 2, 2, false, false
+        .structSpriteEntry (  18,   -2), $00, SpriteSmall, $048, 2, 2, false, false
+        .structSpriteEntry (  10,   -2), $00, SpriteSmall, $047, 2, 2, false, false
+        .structSpriteEntry (   2,   -2), $00, SpriteSmall, $046, 2, 2, false, false
+
+      aUnknown8DCE9D ; 8D/CE9D
+        .word 9 ; sprite count
+        .structSpriteEntry (  16,   16), $00, SpriteSmall, $06B, 2, 2, false, false
+        .structSpriteEntry (   8,   16), $00, SpriteSmall, $06A, 2, 2, false, false
+        .structSpriteEntry (   0,   16), $00, SpriteSmall, $069, 2, 2, false, false
+        .structSpriteEntry (  16,    8), $00, SpriteSmall, $05B, 2, 2, false, false
+        .structSpriteEntry (   8,    8), $00, SpriteSmall, $05A, 2, 2, false, false
+        .structSpriteEntry (   0,    8), $00, SpriteSmall, $059, 2, 2, false, false
+        .structSpriteEntry (  16,    0), $00, SpriteSmall, $04B, 2, 2, false, false
+        .structSpriteEntry (   8,    0), $00, SpriteSmall, $04A, 2, 2, false, false
+        .structSpriteEntry (   0,    0), $00, SpriteSmall, $049, 2, 2, false, false
+
+      aUnknown8DCECC ; 8D/CECC
+        .word 9 ; sprite count
+        .structSpriteEntry (  16,  -24), $00, SpriteSmall, $062, 2, 6, false, true
+        .structSpriteEntry (   8,  -24), $00, SpriteSmall, $061, 2, 6, false, true
+        .structSpriteEntry (   0,  -24), $00, SpriteSmall, $060, 2, 6, false, true
+        .structSpriteEntry (  16,  -16), $00, SpriteSmall, $052, 2, 6, false, true
+        .structSpriteEntry (   8,  -16), $00, SpriteSmall, $051, 2, 6, false, true
+        .structSpriteEntry (   0,  -16), $00, SpriteSmall, $050, 2, 6, false, true
+        .structSpriteEntry (  16,   -8), $00, SpriteSmall, $042, 2, 6, false, true
+        .structSpriteEntry (   8,   -8), $00, SpriteSmall, $041, 2, 6, false, true
+        .structSpriteEntry (   0,   -8), $00, SpriteSmall, $040, 2, 6, false, true
+
+      aUnknown8DCEFB ; 8D/CEFB
+        .word 9 ; sprite count
+        .structSpriteEntry (  16,  -24), $00, SpriteSmall, $065, 2, 6, false, true
+        .structSpriteEntry (   8,  -24), $00, SpriteSmall, $064, 2, 6, false, true
+        .structSpriteEntry (   0,  -24), $00, SpriteSmall, $063, 2, 6, false, true
+        .structSpriteEntry (  16,  -16), $00, SpriteSmall, $055, 2, 6, false, true
+        .structSpriteEntry (   8,  -16), $00, SpriteSmall, $054, 2, 6, false, true
+        .structSpriteEntry (   0,  -16), $00, SpriteSmall, $053, 2, 6, false, true
+        .structSpriteEntry (  16,   -8), $00, SpriteSmall, $045, 2, 6, false, true
+        .structSpriteEntry (   8,   -8), $00, SpriteSmall, $044, 2, 6, false, true
+        .structSpriteEntry (   0,   -8), $00, SpriteSmall, $043, 2, 6, false, true
+
+      aUnknown8DCF2A ; 8D/CF2A
+        .word 9 ; sprite count
+        .structSpriteEntry (  18,  -26), $00, SpriteSmall, $068, 2, 6, false, true
+        .structSpriteEntry (  10,  -26), $00, SpriteSmall, $067, 2, 6, false, true
+        .structSpriteEntry (   2,  -26), $00, SpriteSmall, $066, 2, 6, false, true
+        .structSpriteEntry (  18,  -18), $00, SpriteSmall, $058, 2, 6, false, true
+        .structSpriteEntry (  10,  -18), $00, SpriteSmall, $057, 2, 6, false, true
+        .structSpriteEntry (   2,  -18), $00, SpriteSmall, $056, 2, 6, false, true
+        .structSpriteEntry (  18,  -10), $00, SpriteSmall, $048, 2, 6, false, true
+        .structSpriteEntry (  10,  -10), $00, SpriteSmall, $047, 2, 6, false, true
+        .structSpriteEntry (   2,  -10), $00, SpriteSmall, $046, 2, 6, false, true
+
+      aUnknown8DCF59 ; 8D/CF59
+        .word 9 ; sprite count
+        .structSpriteEntry (  16,  -24), $00, SpriteSmall, $06B, 2, 6, false, true
+        .structSpriteEntry (   8,  -24), $00, SpriteSmall, $06A, 2, 6, false, true
+        .structSpriteEntry (   0,  -24), $00, SpriteSmall, $069, 2, 6, false, true
+        .structSpriteEntry (  16,  -16), $00, SpriteSmall, $05B, 2, 6, false, true
+        .structSpriteEntry (   8,  -16), $00, SpriteSmall, $05A, 2, 6, false, true
+        .structSpriteEntry (   0,  -16), $00, SpriteSmall, $059, 2, 6, false, true
+        .structSpriteEntry (  16,   -8), $00, SpriteSmall, $04B, 2, 6, false, true
+        .structSpriteEntry (   8,   -8), $00, SpriteSmall, $04A, 2, 6, false, true
+        .structSpriteEntry (   0,   -8), $00, SpriteSmall, $049, 2, 6, false, true
+
+
+    .endsection Table8DC964Section
+
+
+
+
+
+
+
+
+
+
 
     .section Data8DCF88Section
 
@@ -3308,5 +4029,262 @@
         .databank 0
 
         ; 8D/D042
+
+
+      aUnknown8DD042 ; 8D/D042
+
+        HDMA_HALT
+
+      aUnknown8DD044 ; 8D/D044
+
+        .byte $C0
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte $C0
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $00FB
+        .word $00FB, $00FB, $00FB, $00FB, $00FB, $00FB, $00FB, $00FB
+        .word $00FB, $00FB, $00FB, $00FB, $00FB, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte $C0
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte $A0
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte 0
+
+      aUnknown8DD209 ; 8D/D209
+
+        .byte $C0
+        .word $00EB, $00EB, $00EB, $00EB, $00EB, $00EB, $00EB, $00EB
+        .word $00EB, $00EB, $00EB, $00EB, $00EB, $00EB, $00EB, $00EB
+        .word $00EB, $00EB, $00EB, $00EB, $00EB, $00EB, $00EB, $00EB
+        .word $00EB, $00EB, $00EB, $00EB, $00EB, $00EB, $00EB, $00EB
+        .word $00EB, $00EB, $00EB, $00EB, $00F1, $00F1, $00F1, $00F1
+        .word $00F1, $00F1, $00F1, $00F1, $00F1, $00F1, $00F1, $00F1
+        .word $00F1, $00F1, $00F1, $00F2, $00F2, $00F2, $00F2, $00F2
+        .word $00F2, $00F2, $00F2, $00F2, $00F2, $00F8, $00F8, $00F8
+        .byte $C0
+        .word $00F8, $00F8, $00F8, $00F8, $00F8, $00F8, $00FC, $00FC
+        .word $00FC, $00FC, $00FC, $00FC, $00FC, $00FC, $00FC, $00FC
+        .word $00FC, $00FC, $00FC, $00FC, $00FC, $00FC, $00FC, $00FC
+        .word $00FC, $00FC, $00FC, $00FC, $00FC, $00FC, $00FC, $00FC
+        .word $00FC, $00FC, $00FC, $00FC, $00FC, $00FC, $00FC, $00FC
+        .word $00FC, $00FC, $00FC, $00FC, $00FC, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte $C0
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0004, $0004, $0004, $0004, $0004, $0004, $0004, $0004
+        .word $0004, $0004, $0004, $0004, $0004, $0004, $0004, $0004
+        .word $0004, $0015, $0015, $0015, $0015, $0015, $0015, $0015
+        .word $0015, $0015, $0015, $0015, $0015, $0015, $0015, $0015
+        .word $0015, $0015, $0015, $0015, $0015, $0015, $0015, $0015
+        .word $0015, $0015, $0015, $0015, $0015, $0015, $0015, $0015
+        .byte $A0
+        .word $0015, $0015, $0015, $0015, $0015, $0015, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte 0
+
+      aUnknown8DD3CE ; 8D/D3CE
+
+        .byte $C0
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $0000, $0000, $0000, $00ED, $00ED, $00ED, $00ED
+        .word $00ED, $00ED, $00ED, $00ED, $00ED, $00ED, $00ED, $00ED
+        .word $00ED, $00ED, $00ED, $00ED, $00ED, $00ED, $00ED, $00ED
+        .byte $C0
+        .word $00ED, $00ED, $00ED, $00ED, $00ED, $00ED, $00ED, $00ED
+        .word $00ED, $00ED, $00ED, $00ED, $00ED, $00ED, $00ED, $00ED
+        .word $00ED, $00ED, $00ED, $00ED, $00ED, $00ED, $00ED, $00ED
+        .word $00ED, $00ED, $00ED, $00ED, $00F3, $00F3, $00F3, $00F3
+        .word $00F3, $00F3, $00F3, $00F3, $00F9, $00F9, $00F9, $00F9
+        .word $00F9, $00F9, $00F9, $00F9, $00F9, $00F9, $00F9, $00F9
+        .word $00FC, $00FC, $00FC, $00FC, $00FC, $00FC, $00FC, $00FC
+        .word $00FC, $00FC, $00FC, $0002, $0002, $0002, $0002, $0002
+        .byte $C0
+        .word $0002, $0002, $0002, $0008, $0008, $0008, $0008, $0008
+        .word $0008, $0008, $0008, $0008, $0008, $0008, $0008, $0008
+        .word $0008, $0008, $000B, $000B, $000B, $000B, $000B, $000B
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte $A0
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte 0
+
+      aUnknown8DD593 ; 8D/D593
+
+        .byte $C0
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $00F9
+        .byte $C0
+        .word $00F9, $00F9, $00F9, $00F9, $00F9, $00F9, $00F9, $00F9
+        .word $00F9, $00F9, $00F9, $00F9, $00F9, $00F9, $00F9, $00F9
+        .word $00F8, $00F6, $00F6, $00F6, $00F6, $00F6, $00F6, $00F6
+        .word $00F6, $00F6, $00F6, $00F6, $00F6, $00F6, $00F6, $00F7
+        .word $00FB, $00FB, $00FB, $00FB, $00FB, $00FB, $00FB, $00FB
+        .word $00FB, $00FB, $00FB, $00FB, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0001, $0001, $0001, $0001, $0001, $0001, $0001
+        .byte $C0
+        .word $0001, $0001, $0001, $0001, $0001, $0001, $0007, $0007
+        .word $0007, $0007, $0007, $0007, $0007, $0007, $0007, $0007
+        .word $0007, $0007, $0007, $0007, $0007, $0007, $0007, $0007
+        .word $0007, $0007, $0007, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte $A0
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte 0
+
+      aUnknown8DD758 ; 8D/D758
+
+        .byte $C0
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $00F4, $00F4, $00F4, $00F4
+        .word $00F3, $00F3, $00F3, $00F3, $00F5, $00F5, $00F5, $00F5
+        .word $00F0, $00F0, $00F0, $00F3, $00F3, $00F3, $00F3, $00F3
+        .word $00F3, $00F3, $00F2, $00F3, $00F3, $00F3, $00F3, $00F3
+        .word $00F3, $00F3, $00F3, $00F3, $00F3, $00F3, $00F4, $00F4
+        .byte $C0
+        .word $00F4, $00F4, $00F4, $00F4, $00F4, $00F4, $00F4, $00F4
+        .word $00F4, $00F4, $00F4, $00F4, $00FA, $00FA, $00FA, $00FA
+        .word $00FA, $00FA, $00FA, $00FA, $00FA, $00FA, $00FE, $00FE
+        .word $00FE, $00FE, $00FE, $00FE, $00FE, $00FE, $00FE, $00FD
+        .word $00FD, $00FD, $00FD, $00FD, $00FD, $00FD, $00FD, $00FD
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $0005, $0005, $0005, $0005, $0005, $0005, $0005, $0005
+        .byte $C0
+        .word $0005, $0005, $0005, $0005, $000B, $000B, $000B, $000B
+        .word $000B, $000B, $000B, $000B, $0011, $0011, $0011, $0011
+        .word $0011, $0011, $0011, $0011, $0011, $0011, $0011, $0017
+        .word $0017, $0017, $0017, $0017, $0017, $0017, $0017, $0017
+        .word $0017, $0017, $0017, $0017, $0017, $0017, $0017, $0017
+        .word $0017, $0017, $0017, $0017, $000B, $000B, $000B, $000B
+        .word $000B, $000B, $000B, $000B, $000B, $000B, $000B, $000B
+        .word $000B, $000B, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte $A0
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte 0
+
+      aUnknown8DD91D ; 8D/D91D
+
+        .byte $C0
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .byte $C0
+        .word $00EE, $00EE, $00EE, $00EE, $00EE, $00EE, $00EE, $00EE
+        .word $00EE, $00EE, $00EE, $00EE, $00EE, $00EE, $00EE, $00EE
+        .word $00EE, $00EE, $00EE, $00EE, $00EE, $00EE, $00EE, $00EE
+        .word $00EE, $00F4, $00F4, $00F4, $00F4, $00F4, $00F4, $00F4
+        .word $00F4, $00F4, $00F4, $00FA, $00FA, $00FA, $00FA, $00FA
+        .word $00FA, $00FA, $00FA, $00FA, $00FA, $00FA, $00FA, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0006, $0006, $0006, $0006, $0006, $0006, $0006, $0006
+        .byte $C0
+        .word $000C, $000C, $000C, $000C, $000C, $000C, $000C, $000C
+        .word $000C, $000C, $000C, $000C, $000C, $0012, $0012, $0012
+        .word $0012, $0012, $0012, $0012, $0012, $0012, $0012, $001C
+        .word $001C, $001C, $001C, $001C, $001C, $001C, $001C, $001C
+        .word $001C, $001C, $001C, $001C, $001C, $001C, $001C, $001C
+        .word $001C, $001C, $001C, $001C, $001C, $001C, $001C, $001C
+        .word $001C, $001C, $001C, $001C, $001C, $001C, $001C, $001C
+        .word $001C, $001C, $001C, $001C, $001C, $001C, $001C, $001C
+        .byte $A0
+        .word $001C, $001C, $001C, $001C, $001C, $001C, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .byte 0
+
+      aUnknown8DDAE2 ; 8D/DAE2
+
+        .byte $C0
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .byte $C0
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .byte $C0
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .byte $A0
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .word $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA, $00EA
+        .byte 0
 
     .endsection Unsorted8DD041Section
