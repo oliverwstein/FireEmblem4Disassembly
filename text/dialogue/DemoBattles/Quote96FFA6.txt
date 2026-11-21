@@ -1,0 +1,4 @@
+{DIALOGUE_OPEN_BOX}{DIALOGUE_LOAD_PORTRAIT PortraitLachesis}
+兄上はバカです！{DIALOGUE_NL}
+もしどうしても戦うと言うなら{DIALOGUE_NL}
+その剣で私をスキにして！{DIALOGUE_EOF}

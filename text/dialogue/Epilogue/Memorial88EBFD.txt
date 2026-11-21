@@ -1,0 +1,6 @@
+{DIALOGUE_FONT_0}また､最後まで{DIALOGUE_NL}
+シグルドとともにありながら{DIALOGUE_NL}
+バーハラでの戦いに敗れて､{DIALOGUE_NL}
+生死不明の者{DIALOGUE_NL}
+{DIALOGUE_NL}
+{DIALOGUE_EOF}

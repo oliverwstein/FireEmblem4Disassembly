@@ -1,0 +1,4 @@
+{DIALOGUE_OPEN_BOX}{DIALOGUE_LOAD_PORTRAIT PortraitLarcei}
+{DIALOGUE_FONT_0}あははっ､スカサハったら{DIALOGUE_NL}
+修行してよけいに{DIALOGUE_NL}
+腕がなまったんじゃないの？{DIALOGUE_EOF}

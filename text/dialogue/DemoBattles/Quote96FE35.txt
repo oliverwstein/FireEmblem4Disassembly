@@ -1,0 +1,3 @@
+{DIALOGUE_OPEN_BOX}{DIALOGUE_LOAD_PORTRAIT PortraitScathach}
+修行の成果を見せてやる！{DIALOGUE_NL}
+ラクチェ､今日は負けないぞ！！{DIALOGUE_EOF}

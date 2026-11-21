@@ -1,0 +1,4 @@
+{DIALOGUE_OPEN_BOX}{DIALOGUE_LOAD_PORTRAIT PortraitLana}
+{DIALOGUE_FONT_0}あら､またヨハンさんですか{DIALOGUE_NL}
+･･･ヨハンさんって､みためは{DIALOGUE_NL}
+強そうなのに･･･{DIALOGUE_EOF}

@@ -1,0 +1,6 @@
+{DIALOGUE_FONT_0}･･･かくして{DIALOGUE_NL}
+二十年にもおよぶ長く苦しい戦いは､{DIALOGUE_NL}
+ようやく終わりを告げた{DIALOGUE_NL}
+{DIALOGUE_NL}
+そして世界は･･･{DIALOGUE_NL}
+{DIALOGUE_EOF}

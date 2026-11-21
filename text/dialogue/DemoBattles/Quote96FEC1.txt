@@ -1,0 +1,4 @@
+{DIALOGUE_OPEN_BOX}{DIALOGUE_LOAD_PORTRAIT PortraitShannan}
+{DIALOGUE_FONT_0}ふう･･･{DIALOGUE_NL}
+そのていどの腕では､まだまだ{DIALOGUE_NL}
+実戦には加えられないな{DIALOGUE_EOF}
