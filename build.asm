@@ -14891,6 +14891,27 @@
 
     .here
 
+    * = $176000
+    .logical $D76000
+
+      gUnknownD76000 .text ROM[$176000:$176800] ; D76000
+
+    .here
+
+    * = $176800
+    .logical $D76800
+
+      gUnknownD76800 .text ROM[$176800:$177000] ; D76800
+
+    .here
+
+    * = $177800
+    .logical $D77800
+
+      gUnknownD77800 .text ROM[$177800:$178000] ; D77800
+
+    .here
+
     * = $178000
     .logical $978000
 
@@ -14954,6 +14975,13 @@
 
     .here
 
+    * = $180000
+    .logical $D80000
+
+      gUnknownD80000 .text ROM[$180000:$184000] ; D80000
+
+    .here
+
     * = $184000
     .logical $D84000
 
@@ -15007,6 +15035,27 @@
     .logical $98B41E
 
       .dsection BattleAnimationFrameData98Section
+
+    .here
+
+    * = $190000
+    .logical $D90000
+
+      gUnknownD90000 .text ROM[$190000:$195000] ; D90000
+
+    .here
+
+    * = $196C00
+    .logical $D96C00
+
+      gUnknownD96C00 .text ROM[$196C00:$197400] ; D96C00
+
+    .here
+
+    * = $197940
+    .logical $D97940
+
+      gUnknownD97940 .text ROM[$197940:$197B00] ; D97940
 
     .here
 
@@ -15072,6 +15121,34 @@
     .logical $DA6500
 
       .dsection DataDA6500Section
+
+    .here
+
+    * = $1A6800
+    .logical $DA6800
+
+      gUnknownDA6800 .text ROM[$1A6800:$1A6A40] ; DA6800
+
+    .here
+
+    * = $1A6A40
+    .logical $DA6A40
+
+      gUnknownDA6A40 .text ROM[$1A6A40:$1A6C80] ; DA6A40
+
+    .here
+
+    * = $1A6D00
+    .logical $DA6D00
+
+      gUnknownDA6D00 .text ROM[$1A6D00:$1A6F40] ; DA6D00
+
+    .here
+
+    * = $1A7A00
+    .logical $DA7A00
+
+      gUnknownDA7A00 .text ROM[$1A7A00:$1A7E00] ; DA7A00
 
     .here
 
@@ -15283,6 +15360,27 @@
 
     ; Compressed streams: generated from gfx/compressed/DD0000/DD0000.streams by build.sh.
     .include "gfx/compressed/DD0000/Layout.asm"
+
+    * = $1D6730
+    .logical $DD6730
+
+      gUnknownDD6730 .text ROM[$1D6730:$1D69F0] ; DD6730
+
+    .here
+
+    * = $1D69F0
+    .logical $DD69F0
+
+      gUnknownDD69F0 .text ROM[$1D69F0:$1D72B0] ; DD69F0
+
+    .here
+
+    * = $1D72B0
+    .logical $DD72B0
+
+      gUnknownDD72B0 .text ROM[$1D72B0:$1D7EB0] ; DD72B0
+
+    .here
 
     * = $1D7EB0
     .logical $DD7EB0
@@ -15554,6 +15652,125 @@
     .logical $DE0000
 
       .dsection WindowPaletteDE0000Section
+
+    .here
+
+    * = $1E0200
+    .logical $DE0200
+
+      gUnknownDE0200 .text ROM[$1E0200:$1E0A00] ; DE0200
+
+    .here
+
+    * = $1E0A00
+    .logical $DE0A00
+
+      gUnknownDE0A00 .text ROM[$1E0A00:$1E1600] ; DE0A00
+
+    .here
+
+    * = $1E1600
+    .logical $DE1600
+
+      gUnknownDE1600 .text ROM[$1E1600:$1E1A40] ; DE1600
+
+    .here
+
+    * = $1E1A40
+    .logical $DE1A40
+
+      gUnknownDE1A40 .text ROM[$1E1A40:$1E1E80] ; DE1A40
+
+    .here
+
+    * = $1E1E80
+    .logical $DE1E80
+
+      gUnknownDE1E80 .text ROM[$1E1E80:$1E22C0] ; DE1E80
+
+    .here
+
+    * = $1E22C0
+    .logical $DE22C0
+
+      gUnknownDE22C0 .text ROM[$1E22C0:$1E2480] ; DE22C0
+
+    .here
+
+    * = $1E2480
+    .logical $DE2480
+
+      gUnknownDE2480 .text ROM[$1E2480:$1E25C0] ; DE2480
+
+    .here
+
+    * = $1E25C0
+    .logical $DE25C0
+
+      gUnknownDE25C0 .text ROM[$1E25C0:$1E2700] ; DE25C0
+
+    .here
+
+    * = $1E2700
+    .logical $DE2700
+
+      gUnknownDE2700 .text ROM[$1E2700:$1E2840] ; DE2700
+
+    .here
+
+    * = $1E2840
+    .logical $DE2840
+
+      gUnknownDE2840 .text ROM[$1E2840:$1E2980] ; DE2840
+
+    .here
+
+    * = $1E2980
+    .logical $DE2980
+
+      gUnknownDE2980 .text ROM[$1E2980:$1E2AC0] ; DE2980
+
+    .here
+
+    * = $1E2CC0
+    .logical $DE2CC0
+
+      gUnknownDE2CC0 .text ROM[$1E2CC0:$1E34C0] ; DE2CC0
+
+    .here
+
+    * = $1E34C0
+    .logical $DE34C0
+
+      gUnknownDE34C0 .text ROM[$1E34C0:$1E40C0] ; DE34C0
+
+    .here
+
+    * = $1E40C0
+    .logical $DE40C0
+
+      gUnknownDE40C0 .text ROM[$1E40C0:$1E44C0] ; DE40C0
+
+    .here
+
+    * = $1E44C0
+    .logical $DE44C0
+
+      gUnknownDE44C0 .text ROM[$1E44C0:$1E48C0] ; DE44C0
+
+    .here
+
+    * = $1E48C0
+    .logical $DE48C0
+
+      gUnknownDE48C0 .text ROM[$1E48C0:$1E60C0] ; DE48C0
+
+    .here
+
+    * = $1E60C0
+    .logical $DE60C0
+
+      gUnknownDE60C0 .text ROM[$1E60C0:$1E6200] ; DE60C0
 
     .here
 

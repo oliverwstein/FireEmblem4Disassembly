@@ -145,11 +145,11 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE44C0, $0400, $80, $C000
+          .structDMAToVRAM gUnknownDE44C0, $0400, $80, $C000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DD72B0, $0C00, $80, $7200
+          .structDMAToVRAM gUnknownDD72B0, $0C00, $80, $7200
 
         lda #(`aUnknown80E13E)<<8
         sta lR19+1

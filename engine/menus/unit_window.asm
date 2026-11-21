@@ -187,7 +187,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
+          .structDMAToVRAM gUnknownDD72B0, $0C00, $80, $6000
 
         lda #(`aDecompressionDMAEntry80C5BE)<<8
         sta lR19+1
@@ -196,20 +196,20 @@
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE48C0, $1800, $80, $9800
+          .structDMAToVRAM gUnknownDE48C0, $1800, $80, $9800
 
         jsl rlUnknown8881EC
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE44C0, $0400, $80, $C000
+          .structDMAToVRAM gUnknownDE44C0, $0400, $80, $C000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE0200, $0800, $80, $C800
+          .structDMAToVRAM gUnknownDE0200, $0800, $80, $C800
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE34C0, $0C00, $80, $0000
+          .structDMAToVRAM gUnknownDE34C0, $0C00, $80, $0000
 
         ldx #$0200
 
@@ -868,7 +868,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE22C0, $01C0, $80, $5000
+          .structDMAToVRAM gUnknownDE22C0, $01C0, $80, $5000
 
         lda wUnitWindowMaxRows
         cmp #$000A
@@ -1689,7 +1689,7 @@
         _B0AA
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE2480, $0140, $80, $B040
+          .structDMAToVRAM gUnknownDE2480, $0140, $80, $B040
 
         jsl rlDMAByStruct
 
@@ -1863,7 +1863,7 @@
         _B1EE
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE25C0, $0140, $80, $B040
+          .structDMAToVRAM gUnknownDE25C0, $0140, $80, $B040
 
         jsl rlDMAByStruct
 
@@ -2015,7 +2015,7 @@
         _B30E
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE2700, $0140, $80, $B040
+          .structDMAToVRAM gUnknownDE2700, $0140, $80, $B040
 
         jsl rlDMAByStruct
 
@@ -2165,7 +2165,7 @@
         _B427
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE2840, $0140, $80, $B040
+          .structDMAToVRAM gUnknownDE2840, $0140, $80, $B040
 
         jsl rlDMAByStruct
 
@@ -2188,7 +2188,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE2980, $0140, $80, $B040
+          .structDMAToVRAM gUnknownDE2980, $0140, $80, $B040
 
         jsl rlDMAByStruct
 
@@ -7364,7 +7364,7 @@
         _AF20
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE60C0, $0140, $80, $B040
+          .structDMAToVRAM gUnknownDE60C0, $0140, $80, $B040
 
         jsl rlDMAByStruct
 

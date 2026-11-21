@@ -333,7 +333,7 @@
         _883D
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $D96C00, $0800, $80, $B000
+          .structDMAToVRAM gUnknownD96C00, $0800, $80, $B000
 
         jsl rlResetHDMAEngine
         rts

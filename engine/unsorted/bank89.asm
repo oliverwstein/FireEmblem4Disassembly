@@ -4196,7 +4196,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DD72B0, $0600, $80, $6000
+          .structDMAToVRAM gUnknownDD72B0, $0600, $80, $6000
 
         ldx #size(Palette)-2
         
@@ -4219,7 +4219,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DD72B0, $0600, $80, $6000
+          .structDMAToVRAM gUnknownDD72B0, $0600, $80, $6000
 
         ldx #size(Palette)-2
         
@@ -4242,7 +4242,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DD72B0, $0600, $80, $6000
+          .structDMAToVRAM gUnknownDD72B0, $0600, $80, $6000
 
         ldx #size(Palette)-2
         
@@ -4265,7 +4265,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DD72B0, $0600, $80, $6000
+          .structDMAToVRAM gUnknownDD72B0, $0600, $80, $6000
 
         ldx #size(Palette)-2
         
@@ -4288,7 +4288,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE2CC0, $0800, $80, $6000
+          .structDMAToVRAM gUnknownDE2CC0, $0800, $80, $6000
 
         ldx #size(Palette)-2
         

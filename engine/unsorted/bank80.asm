@@ -4871,7 +4871,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $D97940, $01C0, $80, $9D40
+          .structDMAToVRAM gUnknownD97940, $01C0, $80, $9D40
 
         lda #(`aDecompressionDMAEntry80B62E)<<8
         sta lR19+1
@@ -4880,7 +4880,7 @@
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $D96C00, $0800, $80, $B000
+          .structDMAToVRAM gUnknownD96C00, $0800, $80, $B000
 
         lda #(`aDecompressionDMAEntry80B636)<<8
         sta lR19+1
@@ -5327,15 +5327,15 @@
         jsl rlUnknown80B08C
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $D80000, $4000, $80, $0000
+          .structDMAToVRAM gUnknownD80000, $4000, $80, $0000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE40C0, $0400, $80, $C000
+          .structDMAToVRAM gUnknownDE40C0, $0400, $80, $C000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $D77800, $0800, $80, $A000
+          .structDMAToVRAM gUnknownD77800, $0800, $80, $A000
 
         ldx #$06FE
         lda #$00FF
@@ -5351,7 +5351,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $D76800, $0800, $80, $9800
+          .structDMAToVRAM gUnknownD76800, $0800, $80, $9800
 
         lda #(`aDecompressionDMAEntry80B99D)<<8
         sta lR19+1
@@ -5654,15 +5654,15 @@
         jsl rlUnknown8881EC
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $D80000, $2000, $80, $0000
+          .structDMAToVRAM gUnknownD80000, $2000, $80, $0000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE40C0, $0400, $80, $C000
+          .structDMAToVRAM gUnknownDE40C0, $0400, $80, $C000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $D76800, $0800, $80, $9800
+          .structDMAToVRAM gUnknownD76800, $0800, $80, $9800
 
         lda #(`aDecompressionDMAEntry80BB45)<<8
         sta lR19+1
@@ -6018,27 +6018,27 @@
         sta $7F818F
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE44C0, $0400, $80, $C000
+          .structDMAToVRAM gUnknownDE44C0, $0400, $80, $C000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE0200, $0800, $80, $E000
+          .structDMAToVRAM gUnknownDE0200, $0800, $80, $E000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE34C0, $0C00, $80, $D000
+          .structDMAToVRAM gUnknownDE34C0, $0C00, $80, $D000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE0A00, $0C00, $80, $E800
+          .structDMAToVRAM gUnknownDE0A00, $0C00, $80, $E800
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
+          .structDMAToVRAM gUnknownDD72B0, $0C00, $80, $6000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE48C0, $1800, $80, $9800
+          .structDMAToVRAM gUnknownDE48C0, $1800, $80, $9800
 
         lda #(`aDecompressionDMAEntry80BEF9)<<8
         sta lR19+1
@@ -6057,15 +6057,15 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DD6730, $02C0, $80, $4000
+          .structDMAToVRAM gUnknownDD6730, $02C0, $80, $4000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DD69F0, $08C0, $80, $5280
+          .structDMAToVRAM gUnknownDD69F0, $08C0, $80, $5280
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE1A40, $0440, $80, $5B40
+          .structDMAToVRAM gUnknownDE1A40, $0440, $80, $5B40
 
         ldx #$0200
 
@@ -6092,7 +6092,7 @@
         beq _BE30
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE1600, $0440, $80, $4800
+          .structDMAToVRAM gUnknownDE1600, $0440, $80, $4800
 
         bra _BE3D
 
@@ -6100,7 +6100,7 @@
         _BE30
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE1E80, $0440, $80, $4800
+          .structDMAToVRAM gUnknownDE1E80, $0440, $80, $4800
 
 
         _BE3D
@@ -6989,7 +6989,7 @@
 
         jsl rlDMAByStruct
 
-          .dstruct structDMAToVRAM, $DE44C0, $0400, $80, $0000
+          .dstruct structDMAToVRAM, gUnknownDE44C0, $0400, $80, $0000
 
         lda #(`aUnknown80E53D)<<8
         sta lR19+1
@@ -7223,15 +7223,15 @@
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE48C0, $1800, $80, $1800
+          .structDMAToVRAM gUnknownDE48C0, $1800, $80, $1800
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DD72B0, $0C00, $80, $6000
+          .structDMAToVRAM gUnknownDD72B0, $0C00, $80, $6000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DE40C0, $0400, $80, $8000
+          .structDMAToVRAM gUnknownDE40C0, $0400, $80, $8000
 
         lda #(`aDecompressionDMAEntry80E736)<<8
         sta lR19+1
