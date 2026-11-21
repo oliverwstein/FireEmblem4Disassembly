@@ -13319,7 +13319,7 @@
         sta $7F4C87
         lda #$FFFF
         sta $7E4EA9
-        sta $7E4EBB
+        sta aActionStructUnit1.UnitRAMPointer
         lda #(`procUnknown9EF24B)<<8
         sta lR44+1
         lda #<>procUnknown9EF24B

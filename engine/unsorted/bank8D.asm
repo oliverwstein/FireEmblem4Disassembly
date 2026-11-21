@@ -578,7 +578,7 @@
         lda #$FFFF
         sta wCurrentChapter,b
         lda #$ECC9
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade
@@ -744,7 +744,7 @@
         lda #$0001
         sta $08DA,b
         lda #$ECC9
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade
@@ -761,7 +761,7 @@
         lda #$0002
         sta $0D77,b
         lda #$B122
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade
@@ -1531,7 +1531,7 @@
 
         _A966
         lda $8CEBC0,x
-        sta $01C0,b,x
+        sta aBGPaletteBuffer.aPalette6,b,x
         dec x
         dec x
         bpl _A966
@@ -1655,7 +1655,7 @@
 
         _AA70
         lda $8CEBC0,x
-        sta $01C0,b,x
+        sta aBGPaletteBuffer.aPalette6,b,x
         dec x
         dec x
         bpl _AA70
@@ -1706,13 +1706,13 @@
         .databank ?
 
         lda wMapScrollXPixels,b
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _AAA4
         lda wMapScrollXPixels,b
-        cmp $0FD7,b,x
+        cmp aProcSystem.aBody0,b,x
         beq _AABF
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda wBufferBG2HOFS
         clc
         adc wMapScrollSpeed,b
@@ -1857,7 +1857,7 @@
         lda #$0002
         sta $0D77,b
         lda #$B122
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
         lda #<>procMainLoopChangeFade

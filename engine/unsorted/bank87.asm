@@ -6073,8 +6073,8 @@
         .autsiz
         .databank ?
 
-        lda $0ECF,b
-        sta $0FD7,b,x
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody0,b,x
         lda #$8700
         sta lR19+1
         lda #$C784
@@ -6097,7 +6097,7 @@
         lda #$C7AB
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlUnknown878B98
-        lda $0FD7,b,x
+        lda aProcSystem.aBody0,b,x
         bne _C761
         jsr rsUnknown87C821
         bra _C764
@@ -6149,7 +6149,7 @@
 
         plx
         lda #$C7CF
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _C7CE
         rtl

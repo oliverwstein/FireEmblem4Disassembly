@@ -12616,7 +12616,7 @@
 
         _E07A
         lda aUnknownD97C00,x
-        sta $7E7B88,x
+        sta aBG2TilemapBuffer.Page1,x
         dec x
         dec x
         bpl _E07A
@@ -12676,7 +12676,7 @@
 
         plx
         lda #$E0F5
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
@@ -12723,7 +12723,7 @@
 
         _E131
         lda #$E154
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlResetDialogueEngine
         lda #$8800
         sta lR18+1
@@ -12772,7 +12772,7 @@
         lda #$0000
 
         _E192
-        sta $0120,b,x
+        sta aBGPaletteBuffer.aPalette1,b,x
         dec x
         dec x
         bpl _E192
@@ -12788,7 +12788,7 @@
         lda #$033F
 
         _E1AD
-        sta $7E7B88,x
+        sta aBG2TilemapBuffer.Page1,x
         dec x
         dec x
         bpl _E1AD
@@ -12907,13 +12907,13 @@
         .databank ?
 
         lda #$0003
-        sta $18D0,b
+        sta aDialogue.wUnknown0018D0,b
         lda #$0480
-        tsb $1882,b
+        tsb aDialogue.wStatus,b
         lda #$0001
-        sta $1888,b
+        sta aDialogue.wTextSpeed,b
         lda #$0004
-        sta $188C,b
+        sta aDialogue.wUnknown00188C,b
         lda #$0040
         sta $18E1,b,x
         lda #$0200
@@ -12927,9 +12927,9 @@
         lda #$8388
         sta $18D4,b,x
         lda #$2000
-        sta $189F,b,x
+        sta aDialogue.wBaseTile,b,x
         lda #$01FF
-        sta $189D,b
+        sta aDialogue.wClearTile,b
         lda #$1208
         sta wR1
         sep #$20

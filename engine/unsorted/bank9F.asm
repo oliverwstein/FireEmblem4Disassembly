@@ -4228,37 +4228,37 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _F111
         lda #$F111
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$00C0
-        sta $1057,b,x
+        sta aProcSystem.aBody4,b,x
 
         _F111
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         clc
-        adc $1037,b,x
-        sta $1037,b,x
+        adc aProcSystem.aBody3,b,x
+        sta aProcSystem.aBody3,b,x
         cmp #$0100
         bpl _F126
         lda #$0000
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
 
         _F126
         cmp #$0C00
         bmi _F131
         lda #$0C00
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
 
         _F131
-        lda $0ED7,b,x
+        lda aProcSystem.aHeaderTypeOffset,b,x
         tax
         lda $000B,b,x
         sta wR0
         lda $000D,b,x
         sta wR1
-        ldx $0ECA,b
+        ldx aProcSystem.wOffset,b
         lda $7F509B
         and #$00FF
         clc
@@ -4921,13 +4921,13 @@
 
         phx
         lda wGameStateRoutine1,b
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         stz wGameStateRoutine1,b
         jsl rlUnknown88CD53
         jsl rlUnknown88CD61
         lda #$0000
-        sta $0F37,b,x
-        sta $1037,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
+        sta aProcSystem.aBody3,b,x
         sta $7F4C17
         sta $7F4C07
         sta $7F4580
@@ -4982,25 +4982,25 @@
         .databank ?
 
         phx
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         bne _F563
         jsr rsUnknown9FF97A
         bcc _F563
         lda #1,s
         tax
         lda #$F54E
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _F563
         lda #1,s
         tax
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         dec a
         bpl _F56F
         lda #$0004
 
         _F56F
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         plx
         rtl
 
@@ -5128,9 +5128,9 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$0015
         sta @l $0004BA
         plx
@@ -5158,9 +5158,9 @@
         phx
         lda @l $0004BA
         bne _F68D
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _F68D
         plx
@@ -5244,15 +5244,15 @@
         .autsiz
         .databank ?
 
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFE
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda bDecompressionArrayFlag,b
         and #$00FF
         bne _F6EF
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _F6EF
         rtl
@@ -5293,7 +5293,7 @@
 
         _F71C
         lda aUnknown9FF729,x
-        sta $02A0,b,x
+        sta aOAMPaletteBuffer.aPalette5,b,x
         dec x
         dec x
         bne _F71C
@@ -5358,7 +5358,7 @@
         tay
         lda $7F57EA
         tax
-        lda $7E4F1B
+        lda aActionStructUnit2.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda #$7E00
         sta lR44+1
@@ -5373,16 +5373,16 @@
         tay
         lda #$FC88
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        lda $10F9,b
+        lda aActiveSpriteSystem.wOffset,b
         tax
         sta $7F45A4
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         lda #$0005
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$7E00
         sta lR18+1
         lda #$8B88
@@ -5400,7 +5400,7 @@
         tay
         lda $7F57EA
         tax
-        lda $7E4F1B
+        lda aActionStructUnit2.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda #$7E00
         sta lR44+1
@@ -5412,16 +5412,16 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        lda $10F9,b
+        lda aActiveSpriteSystem.wOffset,b
         tax
         sta $7F45A6
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         lda #$0005
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         plx
         ply
         rtl
@@ -5438,25 +5438,25 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F45A4
         tax
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         cmp #$0060
         beq _F856
         dec a
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         bra _F862
 
 
         _F856
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _F862
         plx
@@ -5495,7 +5495,7 @@
         lda $7F45A6
         tax
         lda #$0000
-        sta $1100,b,x
+        sta aActiveSpriteSystem.aTypeOffset,b,x
         rtl
 
         .databank 0
@@ -5510,11 +5510,11 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$0010
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         plx
         rtl
 
@@ -5540,9 +5540,9 @@
         bcc _F8B2
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _F8B2
         plx
@@ -5563,10 +5563,10 @@
 
         phx
         lda #$0018
-        sta $1037,b,x
-        lda $0F37,b,x
+        sta aProcSystem.aBody3,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         plx
         rtl
 
@@ -5583,7 +5583,7 @@
 
         phb
         phx
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         bne _F8F3
         sep #$20
         lda bBufferINIDISP
@@ -5595,24 +5595,24 @@
         bne _F8F3
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$F54E
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         bra _F8FF
 
 
         _F8F3
         lda #1,s
         tax
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         dec a
         bpl _F8FF
         lda #$0018
 
         _F8FF
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         plx
         plb
         .databank ?
@@ -5630,7 +5630,7 @@
         .databank ?
 
         lda #$0004
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         rtl
 
         .databank 0
@@ -5644,9 +5644,9 @@
         .autsiz
         .databank ?
 
-        stz $1B45,b
+        stz aPaletteFading.wCurrentStep,b
         lda #$0020
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         rtl
 
         .databank 0
@@ -5660,7 +5660,7 @@
         .autsiz
         .databank ?
 
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         sta wGameStateRoutine1,b
         lda $7F4BD9
         sta aActiveSpriteSystem,b
@@ -5688,7 +5688,7 @@
         .databank ?
 
         lda #$0001
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #(`procUnknown87C70A)<<8
         sta lR44+1
         lda #<>procUnknown87C70A
@@ -5745,7 +5745,7 @@
         .databank ?
 
         lda #$7FFF
-        sta $1B43,b
+        sta aPaletteFading.wDesiredColor,b
         lda #$0010
         sta aPaletteFading,b
         clc
@@ -5815,13 +5815,13 @@
         .databank ?
 
         lda wMapScrollXPixels,b
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         lda wMapScrollYPixels,b
-        sta $1057,b,x
+        sta aProcSystem.aBody4,b,x
         lda #$0002
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         lda #$0000
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         rtl
 
         .databank 0
@@ -5836,7 +5836,7 @@
         .databank ?
 
         phx
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         beq _F9E4
         jml _FA6A
 
@@ -5845,7 +5845,7 @@
         lda $7F4C07
         bit #$0004
         bne _FA1B
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         and #$0001
         asl a
         asl a
@@ -5858,14 +5858,14 @@
         sta wMapScrollYPixels,b
         lda $7F45A6
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         eor aUnknown9FFA88,x
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         bra _FA47
 
 
         _FA1B
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         and #$0003
         asl a
         asl a
@@ -5878,33 +5878,33 @@
         sta wMapScrollYPixels,b
         lda $7F45A6
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         eor aUnknown9FFA78,x
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
 
         _FA47
         lda #1,s
         tax
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         inc a
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         lda $7F4C07
         bit #$0001
         beq _FA6A
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         sta wMapScrollXPixels,b
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wMapScrollYPixels,b
         jsl rlProcEngineFreeProc
 
         _FA6A
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         dec a
         bpl _FA73
         lda #$0002
 
         _FA73
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         plx
         rtl
 
