@@ -120,7 +120,7 @@
     .endsegment
 
     ; $F4: set bit 6 of $0AF3,x (which skips the move scripts of
-    ; rsUnknown95E4D2) and go back Steps steps, at least 1 (rsUnknown95BDD2).
+    ; rsBattleAnimationApplyScriptStep) and go back Steps steps, at least 1 (rsUnknown95BDD2).
     ANIM_CMD_F4 .segment Steps
       .byte $F4, \Steps
     .endsegment
@@ -235,17 +235,17 @@
   ; tools/battle_moves.py). Each aBattleAnimationPrograms entry points at a
   ; list table, an action table and a script table, all in bank $97.
   ;
-  ;   action table: a byte per action (rlUnknown95E3FE takes the action from
+  ;   action table: a byte per action (rlBattleAnimationQueueAction takes the action from
   ;     a small table in bank $95 plus the variant in bits 0-1 of $0AF5,x,
   ;     which ANIM_CMD_ED sets): a move list, or a single sequence.
   ;   list table: a word offset per move list from the table start. A list
-  ;     is a run of steps rlUnknown95DB8A queues for the combatant
-  ;     ($7FE144), up to a $7F byte. rlUnknown95DA1D takes them one at a
-  ;     time: the low byte is the movement (rlUnknown95B1AB), the high byte
+  ;     is a run of steps rlBattleAnimationQueueMoveList queues for the combatant
+  ;     ($7FE144), up to a $7F byte. rlBattleAnimationRunMoveQueue takes them one at a
+  ;     time: the low byte is the movement (rlBattleAnimationStartMovement), the high byte
   ;     the sequence it plays (rlUnknown95BA05; bits 0-5).
   ;   script table: a word offset per movement script from the table start.
   ;     A script is a signed byte per frame step of the sequence, moving the
-  ;     combatant (rsUnknown95E4D2); it has no end of its own.
+  ;     combatant (rsBattleAnimationApplyScriptStep); it has no end of its own.
 
   ; Action table bytes.
 
@@ -253,7 +253,7 @@
       .byte $80 | \List
     .endsegment
 
-    ; Play the sequence without moving (rlUnknown95DBC5 queues it as $7E).
+    ; Play the sequence without moving (rlBattleAnimationQueueSequence queues it as $7E).
     ANIM_ACTION_SEQUENCE .segment Sequence
       .byte \Sequence
     .endsegment

@@ -582,6 +582,35 @@
 
 
 
+  .virtual $000AF8
+
+    ; Battle animation combatants: two records of $43 bytes, the first from
+    ; $0AF3 and the second from $0B36; code indexes them with X = 0 or $43.
+    ; Positions are 8.8 pixels (engine/battle_scene/animation_moves.asm).
+    ; Names scoped to the battle scene files in tools/name_ram.py.
+
+    wBattleAnimationXFixed          .byte ? ; $000AF8: X in 8.8 (with wBattleAnimationX)
+    wBattleAnimationX               .word ? ; $000AF9: whole pixels, 9 bits
+                                    .fill 2
+    wBattleAnimationYFixed          .byte ? ; $000AFD: Y in 8.8 (with bBattleAnimationY)
+    bBattleAnimationY               .byte ? ; $000AFE: whole pixels; the ground is $58
+    wBattleAnimationTargetXFixed    .byte ? ; $000AFF: target X in 8.8
+    wBattleAnimationTargetX         .word ? ; $000B00
+                                    .fill 2
+    wBattleAnimationTargetY         .word ? ; $000B04
+                                    .fill 2
+    wBattleAnimationXSpeed          .word ? ; $000B08: 8.8 pixels a frame, bit 15 leftward
+    wBattleAnimationXDeceleration   .word ? ; $000B0A: $FFFF halves the speed each frame
+    wBattleAnimationXStartSpeed     .word ? ; $000B0C
+    wBattleAnimationYVelocity       .word ? ; $000B0E
+    wBattleAnimationGravity         .word ? ; $000B10
+                                    .fill 1
+    wBattleAnimationYStep           .word ? ; $000B13
+
+  .endvirtual
+
+
+
   .virtual $000D79
 
     wUnknown000D79 .word ?        ; $000D79

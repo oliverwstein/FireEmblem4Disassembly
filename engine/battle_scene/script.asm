@@ -270,7 +270,7 @@
         lda $98AD04,x
         pha
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         and #$01FF
         sec
         sbc $7FE198
@@ -1897,7 +1897,7 @@
         lda $98AD04,x
         pha
         ldx $0AE9,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         and #$01FF
         sec
         sbc $7FE198

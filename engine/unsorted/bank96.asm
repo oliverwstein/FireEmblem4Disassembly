@@ -2678,7 +2678,7 @@
         ldx #$0000
         jsl rlUnknown95B5FD
         pha
-        lda $0AFE,b,x
+        lda bBattleAnimationY,b,x
         and #$00FF
         clc
         adc #1,s
@@ -2691,7 +2691,7 @@
         rep #$20
         pla
         pla
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         and #$01FF
         sec
         sbc $7FE198
@@ -3423,7 +3423,7 @@
         lda $7FFC9C
         bit #$0001
         bne _9647
-        lda $0AF9,b
+        lda wBattleAnimationX,b
         cmp $0B3C,b
         bcs _9664
         sep #$20
@@ -3438,7 +3438,7 @@
 
         _9647
         lda $0B3C,b
-        cmp $0AF9,b
+        cmp wBattleAnimationX,b
         bcs _9664
         sep #$20
         lda $7FFC9C
@@ -3614,7 +3614,7 @@
         sta $0AF5,b,x
         rep #$20
         lda #$0100
-        sta $0AF9,b
+        sta wBattleAnimationX,b
         lda #$00FF
         sta $0B3C,b
         lda #$0080
@@ -3642,7 +3642,7 @@
 
         tyx
         lda #$0100
-        sta $0AF9,b
+        sta wBattleAnimationX,b
         lda #$00FF
         sta $0B3C,b
         lda #$0080
@@ -3705,10 +3705,10 @@
         sta $0AF5,b,x
         rep #$20
         lda #$0100
-        sta $0AF9,b
+        sta wBattleAnimationX,b
         sta $0B3C,b
         lda #$0000
-        sta $0AFE,b
+        sta bBattleAnimationY,b
         sta $0B41,b
         lda #$7000
         sta $0AFB,b
@@ -4509,7 +4509,7 @@
         _9CDB
         pha
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         and #$01FF
         sec
         sbc $7FE198
@@ -5859,13 +5859,13 @@
         pha
         phy
         ldy $0AE9,b
-        lda $0AF8,b,y
+        lda wBattleAnimationXFixed,b,y
         sta aUnit2DataBuffer._ROM.StrengthGrowth,x
-        lda $0AF9,b,y
+        lda wBattleAnimationX,b,y
         sta $7FEC1F,x
         lda $0AFB,b,y
         sta $7FEC21,x
-        lda $0AFD,b,y
+        lda wBattleAnimationYFixed,b,y
         clc
         adc #$3000
         sta $7FEC23,x
@@ -5892,13 +5892,13 @@
         phx
         phy
         ldy $0AEB,b
-        lda $0AF8,b,y
+        lda wBattleAnimationXFixed,b,y
         sta aUnit2DataBuffer._ROM.StrengthGrowth,x
-        lda $0AF9,b,y
+        lda wBattleAnimationX,b,y
         sta $7FEC1F,x
         lda $0AFB,b,y
         sta $7FEC21,x
-        lda $0AFD,b,y
+        lda wBattleAnimationYFixed,b,y
         clc
         adc #$1000
         sta $7FEC23,x
@@ -5993,9 +5993,9 @@
         phx
         phy
         ldy $0AE9,b
-        lda $0AF8,b,y
+        lda wBattleAnimationXFixed,b,y
         sta aUnit2DataBuffer._ROM.StrengthGrowth,x
-        lda $0AF9,b,y
+        lda wBattleAnimationX,b,y
         sta $7FEC1F,x
         lda $0AFB,b,y
         sta $7FEC21,x
@@ -6025,9 +6025,9 @@
         phx
         phy
         ldy $0AEB,b
-        lda $0AF8,b,y
+        lda wBattleAnimationXFixed,b,y
         sta aUnit2DataBuffer._ROM.StrengthGrowth,x
-        lda $0AF9,b,y
+        lda wBattleAnimationX,b,y
         sta $7FEC1F,x
         lda $0AFB,b,y
         sta $7FEC21,x
@@ -6057,9 +6057,9 @@
         phx
         phy
         ldy $0AEB,b
-        lda $0AF8,b,y
+        lda wBattleAnimationXFixed,b,y
         sta aUnit2DataBuffer._ROM.StrengthGrowth,x
-        lda $0AF9,b,y
+        lda wBattleAnimationX,b,y
         sta $7FEC1F,x
         lda $7FEC65
         and #$00FF
@@ -6210,9 +6210,9 @@
         phx
         phy
         ldy $0AEB,b
-        lda $0AF8,b,y
+        lda wBattleAnimationXFixed,b,y
         sta aUnit2DataBuffer._ROM.StrengthGrowth,x
-        lda $0AF9,b,y
+        lda wBattleAnimationX,b,y
         sta $7FEC1F,x
         lda $7FEC65
         and #$00FF
@@ -8064,11 +8064,11 @@
         pha
         sta wR0
         lda wR1
-        jsl rlUnknown95CE5E
+        jsl rlBattleAnimationGetSpeed
         sta wR0
         pla
         sta wR1
-        jsl rlUnknown95B184
+        jsl rlBattleAnimationCompareCombatantX
         bcc _B6B6
         pla
         eor #$8000
@@ -8093,7 +8093,7 @@
         pla
         asl a
         jsl rlUnknown95E33B
-        jsl rlUnknown95CE78
+        jsl rlBattleAnimationGetJumpArc
         lda wR0
         sta $7FEC3C,x
         lda wR1
@@ -8204,7 +8204,7 @@
         cmp #$0200
         bcs _B792
         ldx $0AEB,b
-        cmp $0AF9,b,x
+        cmp wBattleAnimationX,b,x
         bcc _B775
         bra _B792
 
@@ -8262,7 +8262,7 @@
 
         _B7B9
         ldx $0AEB,b
-        cmp $0AF9,b,x
+        cmp wBattleAnimationX,b,x
         bcs _B7C4
         sec
         bra _B7E1
@@ -8313,7 +8313,7 @@
         phx
         pha
         ldx $0AEB,b
-        lda $0AFE,b,x
+        lda bBattleAnimationY,b,x
         and #$00FF
         sta wR1
         lda aUnit2DataBuffer._ROM.SpeedGrowth
@@ -8338,7 +8338,7 @@
         _B87E
         sta wR3
         lda wR2
-        jsl rlUnknown95CE5E
+        jsl rlBattleAnimationGetSpeed
         ora wR3
         sta $7FEC3F
         lda wR1
@@ -8383,7 +8383,7 @@
         and #$00FF
         sta wR8
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         sta wR1
         lda $7FEC1F
         sta wR0
@@ -8421,10 +8421,10 @@
         lda wR2
         sta wR4
         sec
-        jsl rlUnknown95B530
+        jsl rlBattleAnimationGetTravelFrames
         sta wR0
         lda wR2
-        jsl rlUnknown95CE5E
+        jsl rlBattleAnimationGetSpeed
         ora wR3
         sta aUnit2DataBuffer._Inventory.ItemCount
         lda wR3
@@ -9738,13 +9738,13 @@
         pha
         phx
         ldx $0AE9,b
-        lda $0AF8,b,x
+        lda wBattleAnimationXFixed,b,x
         sta aUnit2DataBuffer._ROM.StrengthGrowth
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         sta $7FEC1F
         lda $0AFB,b,x
         sta $7FEC21
-        lda $0AFD,b,x
+        lda wBattleAnimationYFixed,b,x
         clc
         adc #$3000
         sta $7FEC23
@@ -9770,13 +9770,13 @@
         pha
         phx
         ldx $0AEB,b
-        lda $0AF8,b,x
+        lda wBattleAnimationXFixed,b,x
         sta aUnit2DataBuffer._ROM.StrengthGrowth
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         sta $7FEC1F
         lda $0AFB,b,x
         sta $7FEC21
-        lda $0AFD,b,x
+        lda wBattleAnimationYFixed,b,x
         clc
         adc #$1000
         sta $7FEC23
@@ -12802,7 +12802,7 @@
         lda #$0000
         sta $7FE476,x
         ldx $0AE9,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         clc
         adc #$0100
         clc
@@ -12862,7 +12862,7 @@
         lda #$0000
         sta $7FE476,x
         ldx $0AE9,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         clc
         adc #$0100
         clc
@@ -12921,7 +12921,7 @@
         lda #$0000
         sta $7FE476,x
         ldx $0AE9,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         clc
         adc #$0100
         clc
@@ -12980,7 +12980,7 @@
         lda #$0000
         sta $7FE476,x
         ldx $0AE9,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         clc
         adc #$0100
         clc
@@ -13039,7 +13039,7 @@
         lda #$0000
         sta $7FE476,x
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         clc
         adc #$0100
         clc
@@ -13096,7 +13096,7 @@
         lda #$0000
         sta $7FE476,x
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         clc
         adc #$0100
         clc
@@ -13278,7 +13278,7 @@
         lda #$0000
         sta $7FE476,x
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         sec
         sbc $7FE198
         clc
@@ -13336,7 +13336,7 @@
         lda #$0000
         sta $7FE476,x
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         clc
         adc #$0100
         clc
@@ -13384,7 +13384,7 @@
         lda #$0000
         sta $7FE476,x
         ldx $0AE9,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         clc
         adc #$0100
         clc
@@ -13548,7 +13548,7 @@
         lda #$0000
         sta $7FE476,x
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         clc
         adc #$0100
         clc
@@ -13637,9 +13637,9 @@
         rep #$20
         phx
         ldx $0AE9,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         sta wR0
-        lda $0AFE,b,x
+        lda bBattleAnimationY,b,x
         and #$00FF
         sta wR1
         plx
@@ -13703,13 +13703,13 @@
         rep #$20
         phx
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         sta wR0
         jsl rlUnknown95B5FD
         sec
         sbc #$0008
         clc
-        adc $0AFE,b,x
+        adc bBattleAnimationY,b,x
         and #$00FF
         sta wR1
         plx
@@ -13750,9 +13750,9 @@
         rep #$20
         phx
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         sta wR0
-        lda $0AFE,b,x
+        lda bBattleAnimationY,b,x
         and #$00FF
         sec
         sbc #$0010
@@ -13817,13 +13817,13 @@
         rep #$20
         phx
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         sta wR0
         jsl rlUnknown95B5FD
         sec
         sbc #$0008
         clc
-        adc $0AFE,b,x
+        adc bBattleAnimationY,b,x
         and #$00FF
         sta wR1
         plx
@@ -14038,13 +14038,13 @@
         rep #$20
         phx
         ldx $0AEB,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         sta wR0
         jsl rlUnknown95B5FD
         sec
         sbc #$0008
         clc
-        adc $0AFE,b,x
+        adc bBattleAnimationY,b,x
         and #$00FF
         sta wR1
         plx
@@ -14925,7 +14925,7 @@
         ldx $0AEB,b
 
         _EAC8
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         sta $7FE1A4
         ldy #$0001
         lda [lR18],y
@@ -17090,14 +17090,14 @@
         sta $7FFC69
         rep #$20
         ldx $0AEB,b
-        jsl rlUnknown95B5D0
+        jsl rlBattleAnimationGetBodyWidth
         pha
         ldx $0AE9,b
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         ldx $0AEB,b
-        cmp $0AF9,b,x
+        cmp wBattleAnimationX,b,x
         bcs _FA0E
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         sec
         sbc #1,s
         sta $7FFC60
@@ -17108,7 +17108,7 @@
 
 
         _FA0E
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         clc
         adc #1,s
         sta $7FFC60
@@ -17121,7 +17121,7 @@
         pha
         lda $0AFB,b,x
         sec
-        sbc $0AFD,b,x
+        sbc wBattleAnimationYFixed,b,x
         xba
         sec
         sbc #1,s
@@ -17193,7 +17193,7 @@
 
         phx
         phy
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         and #$01FF
         sec
         sbc $7FE198

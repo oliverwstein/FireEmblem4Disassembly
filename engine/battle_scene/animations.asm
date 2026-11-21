@@ -1196,32 +1196,32 @@
 
       aBattleAnimationMoveRoutines ; 97/C860
 
-        ; Moves below $80 in a combatant's queue run these (rlUnknown95B1AB,
+        ; Moves below $80 in a combatant's queue run these (rlBattleAnimationStartMovement,
         ; with jsr: the routines are in bank $95).
 
-        .word <>rsUnknown95B250
-        .word <>rsUnknown95B28F
-        .word <>rsUnknown95B2B2
-        .word <>rsUnknown95B2DF
-        .word <>rsUnknown95B2E9
-        .word <>rsUnknown95B314
-        .word <>rsUnknown95B332
-        .word <>rsUnknown95B352
-        .word <>rsUnknown95B362
-        .word <>rsUnknown95B36A
-        .word <>rsUnknown95B372
-        .word <>rsUnknown95B3AF
-        .word <>rsUnknown95B3ED
-        .word <>rsUnknown95B431
-        .word <>rsUnknown95B475
-        .word <>rsUnknown95B48D
-        .word <>rsUnknown95B4E0
-        .word <>rsUnknown95B519
+        .word <>rsBattleAnimationMoveJumpPastOpponent
+        .word <>rsBattleAnimationMoveHopToOpponent
+        .word <>rsBattleAnimationMoveLeapToOpponent
+        .word <>rsBattleAnimationMoveAdvance80
+        .word <>rsBattleAnimationMoveCoastLinear
+        .word <>rsBattleAnimationMoveCoastHalving
+        .word <>rsBattleAnimationMoveGlideToOpponent
+        .word <>rsBattleAnimationMoveNoDefaultGravity
+        .word <>rsBattleAnimationMoveToOpponentSpeedA
+        .word <>rsBattleAnimationMoveToOpponentSpeedB
+        .word <>rsBattleAnimationMoveJumpToOpponent
+        .word <>rsBattleAnimationMoveJumpInPlace
+        .word <>rsBattleAnimationMoveJumpTo40
+        .word <>rsBattleAnimationMoveJumpTo80
+        .word <>rsBattleAnimationMoveAdvancePastOpponent
+        .word <>rsBattleAnimationMoveJumpTo16
+        .word <>rsBattleAnimationMoveLaunchAwayFromAttacker
+        .word <>rsBattleAnimationMoveDrift
 
       aBattleAnimationProgramIndices ; 97/C884
 
         ; For each first animation ID plus 1, its aBattleAnimationPrograms
-        ; entry (rlUnknown95E3FE).
+        ; entry (rlBattleAnimationQueueAction).
 
         .byte $00, $0B, $0C, $0D, $0E, $0F, $10, $02
         .byte $0F, $02, $02, $02, $02, $02, $02, $11
@@ -1239,7 +1239,7 @@
       aBattleAnimationPrograms ; 97/C8E4
 
         ; Three pointers per entry: the move list table, the action table and
-        ; the movement script table (rlUnknown95E3FE), in
+        ; the movement script table (rlBattleAnimationQueueAction), in
         ; data/battle_animation/moves.asm; formats in include/BattleAnimation.h.
 
         .long dialogueEpilogue_Piece_Leif_End+127, dialogueEpilogue_Piece_Leif_End+63, dialogueEpilogue_Piece_DaisyPatty_LoverDead+256

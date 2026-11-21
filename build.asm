@@ -12490,7 +12490,7 @@
     * = $15B2DF
     .logical $95B2DF
 
-      .dsection Unsorted95B2DFSection
+      .dsection BattleAnimationMoves95B2DFSection
 
     .here
 
@@ -12504,7 +12504,7 @@
     * = $15B362
     .logical $95B362
 
-      .dsection Unsorted95B362Section
+      .dsection BattleAnimationMoves95B362Section
 
     .here
 
@@ -12518,7 +12518,7 @@
     * = $15B475
     .logical $95B475
 
-      .dsection Unsorted95B475Section
+      .dsection BattleAnimationMoves95B475Section
 
     .here
 
