@@ -11,28 +11,30 @@ Byte-identical output remains the test for every change to the original layout. 
 
 ## Overview (reviewed 2026-11-20)
 
-The build is byte-identical. **71.27% of the ROM is built from source** (2,989,075 of 4,194,304 bytes), up from 16.09% at the start. Progress by area:
+The build is byte-identical. **72.78% of the ROM is built from source** (3,052,577 of 4,194,304 bytes), up from 16.09% at the start. Progress by area:
 
 | Area | Done | Remains |
 |---|---|---|
 | **Build** | `./build.sh` byte-identical on macOS; `coverage`, `pad` modes; every tool in `tools/README.md` | The Windows `.bat` scripts are untested since the folder rename |
 | **Code found** | Everything the prologue log executed is source; `trace.py` and `jump_tables.py` find nothing left to follow, `sweep.py` nothing with enough evidence; 5,549 routines in 115 files under `engine/` | Code the prologue never ran and no pointer reaches: needs a longer emulator log (156 sweep candidates without enough evidence, 6.5 KB). 132 built routines still have no caller in the build ("Found through fe4.cdl") |
 | **Names** | 2,117 routines named (38%); game states, battle rounds, items, the four map menu windows, the battle scene script, battle animations (data, movement, move routines) | 3,432 routines `Unknown`, 2,860 still filed by bank in `engine/unsorted/`; 9,312 operands use raw RAM addresses (1,834 addresses); about 8,800 numbers may be constants |
-| **Data** | Dialogue (1,697 texts), events, unit and class tables, portraits, map sprites, item icons, backgrounds and magic layers as editable files; 891 compressed streams carved; battle animation data as structured source | 1.20 MB still copied from the ROM, catalogued piece by piece in [GAPS.md](GAPS.md) (below); 242 compressed streams unidentified (`gfx/compressed/CATALOG.md`); chapter maps and map-battle layouts not editable yet |
-| **Shiftability** | Banks `$84` and `$86` merged into free-flowing blocks; `$86` proven in Mesen with padding, `$84` passes every static check; every six-digit number into built bytes is a label | about 2,250 fixed placement blocks; 117 numbers point into unbuilt bytes, 584 long pointers are loaded as two raw halves, 28 code-pointer stores are raw; 59 tables named only (`include/Undisassembled.h`); 3 `ROM[...]` slices; the build does not compute the code checksums; the battle animation data cannot grow in place (its neighbours are not source) |
+| **Data** | Dialogue (1,697 texts), events, unit and class tables, portraits, map sprites, item icons, backgrounds and magic layers as editable files; 891 compressed streams carved; battle animation data as structured source; 14 uncompressed sheets that code DMAs (menu and window graphics, map tiles) as 4bpp and 2bpp PNGs in `gfx/ui/` and `gfx/map/` | 1.14 MB still copied from the ROM, catalogued piece by piece in [GAPS.md](GAPS.md) (below); 242 compressed streams unidentified (`gfx/compressed/CATALOG.md`); chapter maps and map-battle layouts not editable yet; 18 uncompressed tilemaps that code DMAs are labelled slices (`gfx/ui/README.md`), and the PNGs are grey until their palette rows are read |
+| **Shiftability** | Banks `$84` and `$86` merged into free-flowing blocks; `$86` proven in Mesen with padding, `$84` passes every static check; every six-digit number into built bytes is a label | about 2,250 fixed placement blocks; 33 numbers point into unbuilt bytes, 584 long pointers are loaded as two raw halves, 28 code-pointer stores are raw; 59 tables named only (`include/Undisassembled.h`); 3 `ROM[...]` slices; the build does not compute the code checksums; the battle animation data cannot grow in place (its neighbours are not source) |
 | **Documentation** | This file, `tools/README.md`, file and routine comments | Engine explainers (procs, events, battle, animations), as pokecrystal's `docs/` |
 
-**What is still copied from the ROM** (1,205,229 bytes; `tools/gaps.py` lists every piece in [GAPS.md](GAPS.md) with what points at it and what the log read):
+**What is still copied from the ROM** (1,141,727 bytes; `tools/gaps.py` lists every piece in [GAPS.md](GAPS.md) with what points at it and what the log read):
 
 | Class | Pieces | Bytes | What it takes |
 |---|---|---|---|
-| padding | 256 runs | 35,960 | Nothing; free space where merged banks can grow |
-| `table`: read by built code at its first byte | 135 | 656,397 | The music and sound block (`$F7/7C12` to the end, 558 KB, read by the sound driver, `rsUnknown8093C6`) and the 59 tables named only in `include/Undisassembled.h`, whose length must come from their readers |
-| `inside`: built code points into it | 41 | 105,152 | Several structures each, often uncompressed graphics a `.structDMAToVRAM` copies (`$D7/7800`, `$D9/0000`, `$DA/7A00`, `$DD/72B0`): split at the pointers, then carve as blocks and PNGs |
-| `log`: read in the log, nothing points at it | 113 | 341,436 | Reached through pointers inside data not decoded yet (the upper halves of `$92`-`$93`, the lower halves of `$F4`-`$F5`, the stretches after the battle animation regions): find and decode the pointer tables |
-| `none`: no evidence | 337 | 66,284 | Small pieces between routines: dead code or data, or reached from data not decoded; 156 sweep candidates without enough evidence |
+| padding | 255 runs | 35,944 | Nothing; free space where merged banks can grow |
+| `table`: read by built code at its first byte | 136 | 615,799 | The music and sound block (`$F7/7C12` to the end, 558 KB, read by the sound driver, `rsUnknown8093C6`) and the 59 tables named only in `include/Undisassembled.h`, whose length must come from their readers |
+| `inside`: built code points into it | 40 | 53,425 | Several structures each: split at the pointers, then carve. The DMA'd graphics are done (pass 5); what is left in their banks is bytes between the sheets that nothing names yet |
+| `log`: read in the log, nothing points at it | 116 | 370,152 | Reached through pointers inside data not decoded yet (the upper halves of `$92`-`$93`, the lower halves of `$F4`-`$F5`, the stretches after the battle animation regions): find and decode the pointer tables |
+| `none`: no evidence | 338 | 66,407 | Small pieces between routines: dead code or data, or reached from data not decoded; 156 sweep candidates without enough evidence |
 
 **Gaps passes (2026-11-20, evening).** Four passes over the catalogue, each followed by `trace.py`, `proc_scripts.py`, `raw_addresses.py` and `code_pointers.py` until they found nothing more: (1) the `code` class, nine routines event scripts and a jump table reached by raw address; (2) the 28 procs that code creates and the 42 routines their scripts run; (3) the 206 tables `rom_tables.py` could bound, placed beside their first reader (`aItemAnimationCategories` and `aClassDefaultGenders` read and named, two tables of routine pointers at `$99/8437` and `$99/8440` written as `.long` labels); (4) `sweep.py`'s 20 candidates with enough evidence, each read first, and the 6 routines and procs they reach. Coverage 70.86% to 71.27%; raw numbers into unbuilt bytes 535 to 117; 105 routines lost the "nothing reaches it" note.
+
+**Gaps pass 5: the DMA'd graphics (2026-11-20).** The 85 `.structDMAToVRAM` entries whose source was a raw number pointed at 32 blocks; each is a labelled slice now (`carve.py --type block`), and no DMA source is raw. The layout each copy runs under (`rlSetLayerPositionsAndSizes`; its wR5 is the sprite base and wR6-wR9 the tilemaps, one later than its comment says) settles the depth: every screen is BG mode 1, so a sheet is 2bpp only where BG3 can reach its destination. 14 sheets are tiles and are PNGs now (`tools/gfx_blocks.py`; `gfx.py` and `build.sh` handle `NAME.2bpp.png`): window frames, the dialogue box frames, menu label text (2bpp), shop and item stat labels (2bpp), cursors, weapon type and skill icons, the shop screen and the chapter map tiles (`$D9/0000`, 640 tiles). The other 18 are tilemaps (destinations in tilemap areas) and stay slices. `gfx/ui/README.md` lists each with its destination and the evidence. The PNGs are grey, since which palette row each tile uses is set by tilemaps not read yet. An edit test (one pixel in a 2bpp and a 4bpp sheet, in a copy) changed exactly the 4 bitplane bytes expected. Found on the way: the tables at `$DD/7EAE` and `$DD/7F6E` are one block of eight palettes at `$DD/7EB0` read from base minus 2 (its first word ended the window frames), and `carve.py` wrote empty slices in the upper halves of odd banks (fixed; only `$91/D7E8` was hit). Coverage 71.27% to 72.78%; raw numbers into unbuilt bytes 117 to 33.
 
 ## Where to go next
 
@@ -40,7 +42,7 @@ In order of value; the first needs the user at the emulator.
 
 1. **One Mesen session.** (a) Run bank `$84`'s padded ROM (`./build.sh pad GenerationTransferSection 4`, then `open -a Mesen FE4Padded.sfc`): the unit window and its sorting, a battle, saving and loading, a generation change; this proves the second bank shiftable. (b) Record more of the game into `fe4.cdl` (battles with animations on, a chapter or two, shops, the arena, saving and loading, the debug menu), then `tools/cdl.py` and `tools/trace.py --from-log`: the cheapest way to find the code still missing and callers for the 237 routines that have none. (c) The battle animation checks: a breakpoint on writes to `$0AF3` (what ends a `$F4` loop), and what moves 4, 5 and 16 look like.
 2. **Make more banks move.** Merge the banks that are all source and pad-test each (`tools/merge_bank.py`, `./build.sh pad`): `$8E`-`$8F`, `$9D`, then the nearly complete `$83`; then the code banks with the fewest gaps (`$91`, `$9B`, `$85`, `$88`). Have the build compute the code checksums from the assembled bytes, so code in the checked ranges can change. This turns "byte-identical" into "moddable".
-3. **Work through [GAPS.md](GAPS.md) class by class** (`tools/gaps.py` after each pass): the music and sound block after reading the sound driver's loader; the 59 named-only tables, bounded from their readers; the DMA'd graphics in `inside`, split at their pointers and carved as blocks and PNGs; the pointer tables that lead to the `log` pieces; the tables next to the battle animation data, which also lifts its growth limit. Labelled slices make pointer-free data shiftable at once; structure and readable formats can follow block by block.
+3. **Work through [GAPS.md](GAPS.md) class by class** (`tools/gaps.py` after each pass): the music and sound block after reading the sound driver's loader; the 59 named-only tables, bounded from their readers; the DMA'd tilemaps (`gfx/ui/README.md`) and the palette rows of the new sheets, from the tilemaps that use them; the pointer tables that lead to the `log` pieces; the tables next to the battle animation data, which also lifts its growth limit. Labelled slices make pointer-free data shiftable at once; structure and readable formats can follow block by block.
 4. **Naming by system**, from the most-called unknown routines and the most-used unnamed RAM (`tools/name_ram.py --report 25`): map code (bank `$88`), the helpers of the event commands, the scripted "ON" scene procs (bank `$9E`), the battle dispatcher (`rlUnknown84DC1C`), the sound driver. Sort what gets named out of `engine/unsorted/`.
 5. **Assets as editable files**: chapter maps (after reading the map-drawing code), the map-battle layouts, and the 242 unidentified streams as their users are read.
 6. **Documentation**: short explanations of the engines that are understood.
@@ -53,7 +55,7 @@ Smaller leads, from earlier sessions: code written as `.byte` (20 `label+N` targ
 - **Coverage** (`./build.sh coverage`): bytes that come out the same when the base ROM is filled with `$00` and with `$FF`. Committed files count as built (`.comp` streams, PNGs, text); `ROM[...]` slices and `include/Undisassembled.h` names do not, since they still read the base ROM.
 - **Routines** are counted as top-level `rl`/`rs` labels with an address comment in `engine/`: 5,549, of which 3,432 have `Unknown` in their names and 2,860 are in `engine/unsorted/`. (Earlier counts in this file, 5,052 and 3,173, used another method; the totals grew as code came in.)
 - **The emulator log** (`fe4.cdl`, prologue only; `tools/cdl.py`, [cdl_analysis_report.md](cdl_analysis_report.md)) is fully used: every byte it shows executed is built, no table it shows read is built as code, and no built data is executed.
-- **Raw numbers left**: 117 six-digit numbers into unbuilt bytes (`tools/raw_addresses.py --list`); 584 two-halves long pointers and 28 code-pointer stores (`tools/code_pointers.py`); 9,312 raw RAM operands (1,834 addresses).
+- **Raw numbers left**: 33 six-digit numbers into unbuilt bytes (`tools/raw_addresses.py --list`); 584 two-halves long pointers and 28 code-pointer stores (`tools/code_pointers.py`); 9,312 raw RAM operands (1,834 addresses).
 
 | Stage | Bytes from source | Share |
 |---|---|---|
@@ -84,6 +86,7 @@ Smaller leads, from earlier sessions: code written as `.byte` (20 `label+N` targ
 | Battle animation lookup, sound effects and move programs (2026-11-20) | 2,971,720 | 70.85% |
 | Battle animation move routines and helpers named (2026-11-20) | 2,972,237 | 70.86% |
 | Gaps passes 1-4: code, procs, 206 tables, sweep (2026-11-20) | 2,989,075 | 71.27% |
+| Gaps pass 5: the DMA'd sheets as PNGs (2026-11-20) | 3,052,577 | 72.78% |
 
 Share of each bank built from source, by half (code banks, then data). Upper halves `$8000`-`$FFFF` of banks `$80`-`$9F`:
 
@@ -91,10 +94,10 @@ Share of each bank built from source, by half (code banks, then data). Upper hal
 |---|---|---|---|---|---|---|---|
 | `$80` 80% | `$81` 59% | `$82` 36% | `$83` 99% | `$84` 100% | `$85` 67% | `$86` 100% | `$87` 86% |
 | `$88` 82% | `$89` 79% | `$8A` 88% | `$8B` 87% | `$8C` 42% | `$8D` 70% | `$8E` 100% | `$8F` 100% |
-| `$90` 89% | `$91` 87% | `$92` 0% | `$93` 0% | `$94` 49% | `$95` 84% | `$96` 81% | `$97` 37% |
+| `$90` 89% | `$91` 88% | `$92` 0% | `$93` 0% | `$94` 49% | `$95` 84% | `$96` 81% | `$97` 37% |
 | `$98` 60% | `$99` 83% | `$9A` 53% | `$9B` 65% | `$9C` 84% | `$9D` 100% | `$9E` 82% | `$9F` 19% |
 
-Upper halves of `$A0`-`$B6` are 93-100% (map-battle graphics and battle animation streams); `$B7`-`$BF` are 0% (the music and sound block). Lower halves (`$C0`-`$FF`): `$C1`-`$D3`, `$D5`, `$E1`-`$F2` 99-100%; `$C0` 38%, `$D4` 83%, `$D6` 99%, `$D7` 0%, `$D8` 50%, `$D9`-`$DC` 0%, `$DD` 80%, `$DE` 24%, `$DF` 61%, `$E0` 66%, `$F3` 42%, `$F4`-`$F5` 0%, `$F6` 72%, `$F7` 96%, `$F8`-`$FF` 0%.
+Upper halves of `$A0`-`$B6` are 93-100% (map-battle graphics and battle animation streams); `$B7`-`$BF` are 0% (the music and sound block). Lower halves (`$C0`-`$FF`): `$C1`-`$D3`, `$D5`, `$E1`-`$F2` 99-100%; `$C0` 38%, `$D4` 83%, `$D6` 99%, `$D7` 12%, `$D8` 100%, `$D9` 62%, `$DA` 4%, `$DB`-`$DC` 0%, `$DD` 90%, `$DE` 81%, `$DF` 61%, `$E0` 66%, `$F3` 42%, `$F4`-`$F5` 0%, `$F6` 72%, `$F7` 96%, `$F8`-`$FF` 0%.
 
 ## What has been done
 

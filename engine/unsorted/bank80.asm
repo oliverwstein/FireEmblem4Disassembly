@@ -5327,11 +5327,11 @@
         jsl rlUnknown80B08C
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownD80000, $4000, $80, $0000
+          .structDMAToVRAM g4bppShopScreen, $4000, $80, $0000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE40C0, $0400, $80, $C000
+          .structDMAToVRAM g4bppCursorSprites, $0400, $80, $C000
 
         jsl rlDMAByStruct
 
@@ -5351,7 +5351,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownD76800, $0800, $80, $9800
+          .structDMAToVRAM g2bppShopLabels, $0800, $80, $9800
 
         lda #(`aDecompressionDMAEntry80B99D)<<8
         sta lR19+1
@@ -5654,15 +5654,15 @@
         jsl rlUnknown8881EC
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownD80000, $2000, $80, $0000
+          .structDMAToVRAM g4bppShopScreen, $2000, $80, $0000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE40C0, $0400, $80, $C000
+          .structDMAToVRAM g4bppCursorSprites, $0400, $80, $C000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownD76800, $0800, $80, $9800
+          .structDMAToVRAM g2bppShopLabels, $0800, $80, $9800
 
         lda #(`aDecompressionDMAEntry80BB45)<<8
         sta lR19+1
@@ -6018,27 +6018,27 @@
         sta $7F818F
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE44C0, $0400, $80, $C000
+          .structDMAToVRAM g4bppMenuCursorSprites, $0400, $80, $C000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE0200, $0800, $80, $E000
+          .structDMAToVRAM g4bppWeaponTypeIcons, $0800, $80, $E000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE34C0, $0C00, $80, $D000
+          .structDMAToVRAM g4bppSkillIcons, $0C00, $80, $D000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE0A00, $0C00, $80, $E800
+          .structDMAToVRAM g4bppUnknownDE0A00, $0C00, $80, $E800
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDD72B0, $0C00, $80, $6000
+          .structDMAToVRAM g4bppWindowFrames, $0C00, $80, $6000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE48C0, $1800, $80, $9800
+          .structDMAToVRAM g2bppMenuLabels, $1800, $80, $9800
 
         lda #(`aDecompressionDMAEntry80BEF9)<<8
         sta lR19+1
@@ -6989,7 +6989,7 @@
 
         jsl rlDMAByStruct
 
-          .dstruct structDMAToVRAM, gUnknownDE44C0, $0400, $80, $0000
+          .dstruct structDMAToVRAM, g4bppMenuCursorSprites, $0400, $80, $0000
 
         lda #(`aUnknown80E53D)<<8
         sta lR19+1
@@ -7223,15 +7223,15 @@
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE48C0, $1800, $80, $1800
+          .structDMAToVRAM g2bppMenuLabels, $1800, $80, $1800
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDD72B0, $0C00, $80, $6000
+          .structDMAToVRAM g4bppWindowFrames, $0C00, $80, $6000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE40C0, $0400, $80, $8000
+          .structDMAToVRAM g4bppCursorSprites, $0400, $80, $8000
 
         lda #(`aDecompressionDMAEntry80E736)<<8
         sta lR19+1

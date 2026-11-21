@@ -7323,11 +7323,11 @@
         stz wDMAArrayPosition,b
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE40C0, $0400, $80, $C000
+          .structDMAToVRAM g4bppCursorSprites, $0400, $80, $C000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownD90000, $5000, $80, $0000
+          .structDMAToVRAM g4bppMapTiles, $5000, $80, $0000
 
         jsl rlUnknown889305
         ldx #$17FE
@@ -7488,7 +7488,7 @@
         stz wDMAArrayPosition,b
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownD90000, $5000, $80, $0000
+          .structDMAToVRAM g4bppMapTiles, $5000, $80, $0000
 
         jsl rlUnknown889305
         ldx #$17FE
@@ -7501,7 +7501,7 @@
         bpl _8266
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE40C0, $0400, $80, $C000
+          .structDMAToVRAM g4bppCursorSprites, $0400, $80, $C000
 
         ldx #$00DE
 

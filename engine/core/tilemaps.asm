@@ -100,10 +100,12 @@
         ; wR2 = BG2Base
         ; wR3 = BG3Base
         ; wR4 = BG4Base
-        ; wR5 = BG1TilemapPosition
-        ; wR6 = BG2TilemapPosition
-        ; wR7 = BG3TilemapPosition
-        ; wR8 = BG4TilemapPosition
+        ; wR5 = OBJBase
+        ; wR6 = BG1TilemapPosition
+        ; wR7 = BG2TilemapPosition
+        ; wR8 = BG3TilemapPosition
+        ; wR9 = BG4TilemapPosition
+        ; All are VRAM word addresses.
 
         phb
         php

@@ -1918,7 +1918,7 @@
         jsl rlFillBG3Page0TilemapBuffer
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknown91D7E8, $0010, $80, $DFF0
+          .structDMAToVRAM g2bppBlankTile, $0010, $80, $DFF0
 
         lda #(`gcUnknown9C8000)<<8
         sta lR18+1
@@ -4304,7 +4304,7 @@
         jsl rlFillBG3Page0TilemapBuffer
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknown91D7E8, $0010, $80, $DFF0
+          .structDMAToVRAM g2bppBlankTile, $0010, $80, $DFF0
 
         jsl rlDMAByStruct
 

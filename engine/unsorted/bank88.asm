@@ -44,7 +44,7 @@
         phx
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE40C0, $0400, $80, $C000
+          .structDMAToVRAM g4bppCursorSprites, $0400, $80, $C000
 
         plx
         rtl

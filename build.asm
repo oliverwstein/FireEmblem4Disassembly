@@ -12596,7 +12596,7 @@
     * = $11D7E8
     .logical $91D7E8
 
-      gUnknown91D7E8 .text ROM[$11D7E8:$11D7F8] ; 91D7E8
+      g2bppBlankTile .binary "gfx/ui/BlankTile.2bpp" ; 91D7E8
 
     .here
 
@@ -14894,14 +14894,14 @@
     * = $176000
     .logical $D76000
 
-      gUnknownD76000 .text ROM[$176000:$176800] ; D76000
+      g2bppItemStatLabels .binary "gfx/ui/ItemStatLabels.2bpp" ; D76000
 
     .here
 
     * = $176800
     .logical $D76800
 
-      gUnknownD76800 .text ROM[$176800:$177000] ; D76800
+      g2bppShopLabels .binary "gfx/ui/ShopLabels.2bpp" ; D76800
 
     .here
 
@@ -14978,7 +14978,7 @@
     * = $180000
     .logical $D80000
 
-      gUnknownD80000 .text ROM[$180000:$184000] ; D80000
+      g4bppShopScreen .binary "gfx/ui/ShopScreen.4bpp" ; D80000
 
     .here
 
@@ -15041,7 +15041,7 @@
     * = $190000
     .logical $D90000
 
-      gUnknownD90000 .text ROM[$190000:$195000] ; D90000
+      g4bppMapTiles .binary "gfx/map/MapTiles.4bpp" ; D90000
 
     .here
 
@@ -15148,7 +15148,7 @@
     * = $1A7A00
     .logical $DA7A00
 
-      gUnknownDA7A00 .text ROM[$1A7A00:$1A7E00] ; DA7A00
+      g4bppUnknownDA7A00 .binary "gfx/ui/UnknownDA7A00.4bpp" ; DA7A00
 
     .here
 
@@ -15378,7 +15378,7 @@
     * = $1D72B0
     .logical $DD72B0
 
-      gUnknownDD72B0 .text ROM[$1D72B0:$1D7EB0] ; DD72B0
+      g4bppWindowFrames .binary "gfx/ui/WindowFrames.4bpp" ; DD72B0
 
     .here
 
@@ -15658,14 +15658,14 @@
     * = $1E0200
     .logical $DE0200
 
-      gUnknownDE0200 .text ROM[$1E0200:$1E0A00] ; DE0200
+      g4bppWeaponTypeIcons .binary "gfx/ui/WeaponTypeIcons.4bpp" ; DE0200
 
     .here
 
     * = $1E0A00
     .logical $DE0A00
 
-      gUnknownDE0A00 .text ROM[$1E0A00:$1E1600] ; DE0A00
+      g4bppUnknownDE0A00 .binary "gfx/ui/UnknownDE0A00.4bpp" ; DE0A00
 
     .here
 
@@ -15735,35 +15735,35 @@
     * = $1E2CC0
     .logical $DE2CC0
 
-      gUnknownDE2CC0 .text ROM[$1E2CC0:$1E34C0] ; DE2CC0
+      g4bppDialogueBoxFrames .binary "gfx/ui/DialogueBoxFrames.4bpp" ; DE2CC0
 
     .here
 
     * = $1E34C0
     .logical $DE34C0
 
-      gUnknownDE34C0 .text ROM[$1E34C0:$1E40C0] ; DE34C0
+      g4bppSkillIcons .binary "gfx/ui/SkillIcons.4bpp" ; DE34C0
 
     .here
 
     * = $1E40C0
     .logical $DE40C0
 
-      gUnknownDE40C0 .text ROM[$1E40C0:$1E44C0] ; DE40C0
+      g4bppCursorSprites .binary "gfx/ui/CursorSprites.4bpp" ; DE40C0
 
     .here
 
     * = $1E44C0
     .logical $DE44C0
 
-      gUnknownDE44C0 .text ROM[$1E44C0:$1E48C0] ; DE44C0
+      g4bppMenuCursorSprites .binary "gfx/ui/MenuCursorSprites.4bpp" ; DE44C0
 
     .here
 
     * = $1E48C0
     .logical $DE48C0
 
-      gUnknownDE48C0 .text ROM[$1E48C0:$1E60C0] ; DE48C0
+      g2bppMenuLabels .binary "gfx/ui/MenuLabels.2bpp" ; DE48C0
 
     .here
 

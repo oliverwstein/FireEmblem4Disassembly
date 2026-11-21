@@ -187,7 +187,7 @@
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDD72B0, $0C00, $80, $6000
+          .structDMAToVRAM g4bppWindowFrames, $0C00, $80, $6000
 
         lda #(`aDecompressionDMAEntry80C5BE)<<8
         sta lR19+1
@@ -196,20 +196,20 @@
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE48C0, $1800, $80, $9800
+          .structDMAToVRAM g2bppMenuLabels, $1800, $80, $9800
 
         jsl rlUnknown8881EC
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE44C0, $0400, $80, $C000
+          .structDMAToVRAM g4bppMenuCursorSprites, $0400, $80, $C000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE0200, $0800, $80, $C800
+          .structDMAToVRAM g4bppWeaponTypeIcons, $0800, $80, $C800
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM gUnknownDE34C0, $0C00, $80, $0000
+          .structDMAToVRAM g4bppSkillIcons, $0C00, $80, $0000
 
         ldx #$0200
 
