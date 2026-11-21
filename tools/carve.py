@@ -206,7 +206,7 @@ def slices(p):
     """(start, end) ROM ranges of a piece, split where it crosses a bank half."""
     out, s = [], p.start
     while s < p.end:
-        half_end = (s & 0xFF0000) | (0x8000 if s & 0xFFFF < 0x8000 else 0x10000)
+        half_end = (s & 0xFF0000) + (0x8000 if s & 0xFFFF < 0x8000 else 0x10000)
         if p.end <= half_end:
             out.append((s, p.end))
             break

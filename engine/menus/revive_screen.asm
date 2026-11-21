@@ -164,7 +164,7 @@
         ldx #$0100
 
         _E0E7
-        lda aUnknownDD7EAE,x
+        lda aUnknownDD7EB0-2,x
         sta wJoy2RepeatTimer,x
         dec x
         dec x

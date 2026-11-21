@@ -12593,6 +12593,13 @@
 
     .here
 
+    * = $11D7E8
+    .logical $91D7E8
+
+      gUnknown91D7E8 .text ROM[$11D7E8:$11D7F8] ; 91D7E8
+
+    .here
+
     * = $11D7F8
     .logical $91D7F8
 
@@ -15277,11 +15284,10 @@
     ; Compressed streams: generated from gfx/compressed/DD0000/DD0000.streams by build.sh.
     .include "gfx/compressed/DD0000/Layout.asm"
 
-    * = $1D7EAE
-    .logical $DD7EAE
+    * = $1D7EB0
+    .logical $DD7EB0
 
-      .dsection TableDD7EAESection
-      .dsection TableDD7F6ESection
+      .dsection TableDD7EB0Section
       .dsection TableDD7FB0Section
 
     .here

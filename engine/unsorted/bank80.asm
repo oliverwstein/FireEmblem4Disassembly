@@ -8404,7 +8404,7 @@
         ldx #$0100
 
         _F3B1
-        lda aUnknownDD7EAE,x
+        lda aUnknownDD7EB0-2,x
         sta wJoy2RepeatTimer,x
         dec x
         dec x
@@ -8412,7 +8412,7 @@
         ldx #$0020
 
         _F3BE
-        lda aUnknownDD7F6E,x
+        lda aUnknownDD7EB0+$C0-2,x
         sta $01DE,b,x
         dec x
         dec x
@@ -9179,51 +9179,38 @@
     .endsection Table8CDC00Section
 
 
-    .section TableDD7EAESection
+    .section TableDD7EB0Section
 
       .al
       .xl
 
-      aUnknownDD7EAE ; DD/7EAE
+      aUnknownDD7EB0 ; DD/7EB0
 
-        ; Read by rsUnknown80F392.
+        ; Eight palettes. rsUnknown80F392 and rsUnknown80E0AE copy all of them
+        ; into the BG palette buffer, and rsUnknown80F392 then palette 6 over
+        ; palette 7; both loops count an index from the size down to 2, so
+        ; they read from the label minus 2.
 
-        .word $0000, $0001, $318B, $7FFF, $1484, $420F, $296E, $56D6
-        .word $0C84, $0000, $02FC, $5AF1, $528F, $524E, $4E2D, $4A0C
-        .word $04A7, $3000, $41EE, $04A2, $7314, $7EF8, $3DAC, $1CA2
-        .word $7314, $7FFF, $2E29, $77FC, $0441, $7FFF, $35CF, $0086
-        .word $4252, $3000, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $62B1
-        .word $5A8F, $0000, $02FC, $4EAE, $52CF, $528E, $4E6D, $4A4C
-        .word $04A7, $7FFF, $420F, $7FFF, $7FFA, $7FFF, $7FFF, $7FFF
-        .word $7FFF, $0000, $02FC, $0D4C, $092A, $0509, $04E8, $04C8
-        .word $10A6, $3000, $0000, $1084, $1CE7, $35AD, $3DEF, $4210
-        .word $4A52, $5294, $5EF7, $6318, $7FFF, $5000, $5000, $5000
-        .word $5000, $4001, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
+        .word $0001, $318B, $7FFF, $1484, $420F, $296E, $56D6, $0C84
+        .word $0000, $02FC, $5AF1, $528F, $524E, $4E2D, $4A0C, $04A7
+        .word $3000, $41EE, $04A2, $7314, $7EF8, $3DAC, $1CA2, $7314
+        .word $7FFF, $2E29, $77FC, $0441, $7FFF, $35CF, $0086, $4252
+        .word $3000, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $62B1, $5A8F
+        .word $0000, $02FC, $4EAE, $52CF, $528E, $4E6D, $4A4C, $04A7
+        .word $7FFF, $420F, $7FFF, $7FFA, $7FFF, $7FFF, $7FFF, $7FFF
+        .word $0000, $02FC, $0D4C, $092A, $0509, $04E8, $04C8, $10A6
+        .word $3000, $0000, $1084, $1CE7, $35AD, $3DEF, $4210, $4A52
+        .word $5294, $5EF7, $6318, $7FFF, $5000, $5000, $5000, $5000
+        .word $4001, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
         .word $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
-
-        ; DD/7F6E
-
-    .endsection TableDD7EAESection
-
-
-    .section TableDD7F6ESection
-
-      .al
-      .xl
-
-      aUnknownDD7F6E ; DD/7F6E
-
-        ; Read by rsUnknown80F392.
-
-        .word $7FFF, $0001, $00AF, $00AE, $008D, $008C, $008B, $006A
-        .word $0069, $0068, $0047, $0045, $0044, $0023, $0022, $0001
-        .word $0000, $4001, $4C00, $5400, $5C00, $6400, $6C00, $7400
-        .word $7C00, $0800, $1000, $1800, $2000, $2800, $3000, $3800
-        .word $4000
+        .word $0001, $00AF, $00AE, $008D, $008C, $008B, $006A, $0069
+        .word $0068, $0047, $0045, $0044, $0023, $0022, $0001, $0000
+        .word $4001, $4C00, $5400, $5C00, $6400, $6C00, $7400, $7C00
+        .word $0800, $1000, $1800, $2000, $2800, $3000, $3800, $4000
 
         ; DD/7FB0
 
-    .endsection TableDD7F6ESection
+    .endsection TableDD7EB0Section
 
 
     .section TableF77C08Section
