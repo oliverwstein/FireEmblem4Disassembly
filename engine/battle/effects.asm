@@ -291,7 +291,7 @@
         sta @l $7ECCDF
         rep #$20
 
-        lda #$003A
+        lda #SONG_BATTLE_STAFF
         sta wBattleSong
         clc
         
@@ -381,7 +381,7 @@
         sta @l $7ECCDF
         rep #$20
 
-        lda #$003D
+        lda #SONG_BATTLE_VALKYRIE
         sta wBattleSong
         clc
         rts
@@ -460,11 +460,11 @@
         cmp #AllegianceNeutral
         beq +
 
-        lda #$0031
+        lda #SONG_BATTLE_PLAYER
         bra ++
         
         +
-        lda #$0032
+        lda #SONG_BATTLE_ENEMY
         
         +
         sta wBattleSong

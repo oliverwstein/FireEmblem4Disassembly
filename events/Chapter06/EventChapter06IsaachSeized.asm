@@ -5,7 +5,7 @@
     PAUSE 35
     YIELD
 
-    PLAY_SONG $7C
+    PLAY_SONG SONG_CASTLE_SEIZED
     YIELD
 
     TEST_FLAG_IN_CHAPTER_SET Chapter06, FlagChapter06_DanannDied

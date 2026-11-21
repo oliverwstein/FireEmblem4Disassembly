@@ -1,7 +1,7 @@
 
   aEventChapterEpilogueWorldMap ; 8D/FF7F
 
-    PLAY_SONG $0F
+    PLAY_SONG SONG_WORLD_MAP_EPILOGUE
     YIELD
 
     PAUSE 30

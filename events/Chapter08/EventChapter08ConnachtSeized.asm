@@ -5,7 +5,7 @@
     PAUSE 35
     YIELD
 
-    PLAY_SONG $7C
+    PLAY_SONG SONG_CASTLE_SEIZED
     YIELD
 
     SET_FLAG_IF_IN_CHAPTER Chapter08, FlagChapter08_FeeOnMountainCheck

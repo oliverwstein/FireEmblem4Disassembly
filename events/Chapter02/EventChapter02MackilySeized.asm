@@ -5,7 +5,7 @@
     PAUSE 35
     YIELD
 
-    PLAY_SONG $7C
+    PLAY_SONG SONG_CASTLE_SEIZED
     YIELD
 
     DIALOGUE_WITH_BG dialogueChapter02MackilySeized, 4, 3, 2

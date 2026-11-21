@@ -340,35 +340,35 @@
         beq _EnemyAttack
 
         ; Player attack
-        lda #$0031
+        lda #SONG_BATTLE_PLAYER
         bra _End
         
         _EnemyAttack
-        lda #$0032
+        lda #SONG_BATTLE_ENEMY
         bra _End
         
         _RecruitableEnemy
-        lda #$003E
+        lda #SONG_BATTLE_RECRUITABLE
         bra _End
 
         _Boss
-        lda #$0033
+        lda #SONG_BATTLE_BOSS
         bra _End
         
         _MajorBoss
-        lda #$0036
+        lda #SONG_BATTLE_MAJOR_BOSS
         bra _End
         
         _Arvis
-        lda #$0034
+        lda #SONG_BATTLE_ARVIS
         bra _End
 
         _Julia
-        lda #$0050
+        lda #SONG_BATTLE_JULIA
         bra _End
         
         _Julius
-        lda #$0035
+        lda #SONG_BATTLE_JULIUS
 
         _End
         sta wBattleSong
@@ -1981,7 +1981,7 @@
 
         lda #$0010
         trb wUnknown000D79,b
-        lda #$0033
+        lda #SONG_BATTLE_BOSS
         sta wBattleSong
         jsl rlUnknown81B368
 
@@ -2262,10 +2262,10 @@
 
           ; If song would be player attack, overwrite it with dancer attack
           lda wBattleSong
-          cmp #$0031
+          cmp #SONG_BATTLE_PLAYER
           bne +
 
-            lda #$0038
+            lda #SONG_BATTLE_DANCE
             sta wBattleSong
 
           +
@@ -3587,7 +3587,7 @@
         sta @l $7ECCDF
         rep #$20
 
-        lda #$003A
+        lda #SONG_BATTLE_STAFF
         sta wBattleSong
         clc
         rts
@@ -3625,7 +3625,7 @@
         sta @l $7ECCDF
         rep #$20
 
-        lda #$003A
+        lda #SONG_BATTLE_STAFF
         sta wBattleSong
         clc
         rts
@@ -3674,7 +3674,7 @@
         sta @l $7ECCDF
         rep #$20
 
-        lda #$003A
+        lda #SONG_BATTLE_STAFF
         sta wBattleSong
         clc
         rts

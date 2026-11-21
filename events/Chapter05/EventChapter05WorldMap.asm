@@ -1,7 +1,7 @@
 
   aEventChapter05WorldMap ; 8D/FE0E
 
-    PLAY_SONG $61
+    PLAY_SONG SONG_WORLD_MAP_CHAPTER5
     YIELD
 
     SET_CAMERA_POSITION [18, 14]

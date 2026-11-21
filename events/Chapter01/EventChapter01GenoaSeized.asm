@@ -9,7 +9,7 @@
     TEST_FLAG_IN_CHAPTER_SET Chapter01, FlagChapter01_AyraDied
     JUMP_TRUE _AyraDied
 
-    PLAY_SONG $7C
+    PLAY_SONG SONG_CASTLE_SEIZED
     YIELD
 
     DIALOGUE_WITH_BG dialogueChapter01GenoaSeizedAyraAlive, DIALOGUE_BG_HALLWAY, 3, 2

@@ -5,7 +5,7 @@
     PAUSE 35
     YIELD
 
-    PLAY_SONG $7C
+    PLAY_SONG SONG_CASTLE_SEIZED
     YIELD
 
     DIALOGUE_WITH_BG dialogueChapter04TofaSeized, DIALOGUE_BG_THRONE, 3, 2

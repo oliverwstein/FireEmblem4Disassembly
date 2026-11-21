@@ -1,7 +1,7 @@
 
   aEventPrologueWorldMap ; 8D/FC70
 
-    PLAY_SONG $5E
+    PLAY_SONG SONG_WORLD_MAP_GENERATION1
     YIELD
 
     SET_CAMERA_POSITION [21, 30]

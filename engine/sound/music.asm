@@ -50,11 +50,11 @@
                 bra _SEC
 
           _NPC
-          lda #$001D
+          lda #SONG_ALLIED_PHASE
           bra _SEC
 
         _Yellow
-        lda #$002A
+        lda #SONG_NEUTRAL_PHASE
 
         _SEC
         sec
@@ -78,18 +78,18 @@
 
       aPlayerPhaseChapterSongIDs ; 81/AA4D
 
-        .word $0011
-        .word $0013
-        .word $002C
-        .word $001C
-        .word $0014
-        .word $002B
-        .word $0012
-        .word $0018
-        .word $001E
-        .word $0024
-        .word $001B
-        .word $002D
+        .word SONG_PLAYER_PHASE_PROLOGUE
+        .word SONG_PLAYER_PHASE_CHAPTER1
+        .word SONG_PLAYER_PHASE_CHAPTER2
+        .word SONG_PLAYER_PHASE_CHAPTER3
+        .word SONG_PLAYER_PHASE_CHAPTER4
+        .word SONG_PLAYER_PHASE_CHAPTER5
+        .word SONG_PLAYER_PHASE_CHAPTER6
+        .word SONG_PLAYER_PHASE_CHAPTER7
+        .word SONG_PLAYER_PHASE_CHAPTER8
+        .word SONG_PLAYER_PHASE_CHAPTER9
+        .word SONG_PLAYER_PHASE_CHAPTER10
+        .word SONG_PLAYER_PHASE_FINAL
 
       aNonPlayerFactionPhaseSongIDs ; 81/AA65
 
