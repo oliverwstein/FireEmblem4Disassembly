@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
-"""Convert SNES 4bpp tile graphics to and from indexed PNG.
+"""Convert SNES 4bpp and 2bpp tile graphics to and from indexed PNG.
 
 usage: tools/gfx.py png2bpp IN.4bpp.png OUT.4bpp
        tools/gfx.py lz IN.4bpp ORIGINAL.4bpp.comp OUT.4bpp.lz
-       tools/gfx.py bpp2png IN.4bpp OUT.4bpp.png --palette FILE|ADDR [--width TILES]
+       tools/gfx.py bpp2png IN.4bpp OUT.4bpp.png --palette FILE|ADDR|grey [--width TILES]
        tools/gfx.py --self-test
 
-png2bpp is what ./build.sh runs for every gfx/**/NAME.4bpp.png, writing
-NAME.4bpp next to it. The PNG must be indexed (palette mode) with at most 16
-colours: each pixel's palette index is its colour number in the tile, so the
-conversion does not depend on the colours themselves. Its width and height must
+png2bpp is what ./build.sh runs for every gfx/**/NAME.4bpp.png and
+NAME.2bpp.png, writing NAME.4bpp or NAME.2bpp next to it. The depth comes from
+the file name (`.2bpp` in it means 2bpp, otherwise 4bpp), for bpp2png too. The
+PNG must be indexed (palette mode) with at most 16 colours (4 for 2bpp): each
+pixel's palette index is its colour number in the tile, so the conversion does
+not depend on the colours themselves. Its width and height must
 be multiples of 8; tiles are read left to right, top to bottom, which is how
 the game stores a sheet that is that many tiles wide.
 
@@ -22,9 +24,9 @@ blank tiles that fill out a PNG's last row) are dropped first. ./build.sh runs
 it for every NAME.4bpp.png that has a NAME.4bpp.comp beside it, and every
 NAME.bin (decompressed data such as a tilemap) that has a NAME.bin.comp.
 
-bpp2png writes such a PNG from 4bpp bytes, --width tiles across (default 16),
-with the 16 colours of a BGR555 palette: a file of 32 bytes, or a CPU address
-in the ROM (such as DD7FB0).
+bpp2png writes such a PNG from 4bpp or 2bpp bytes, --width tiles across
+(default 16), with the colours of a BGR555 palette: a file, a CPU address in
+the ROM (such as DD7FB0), or `grey` when the palette is not known.
 
 Editing: keep the PNG indexed and keep each colour at its index; most editors
 do when you paint with the palette's own colours. Index 0 is transparent on
@@ -44,7 +46,12 @@ except ImportError:
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def png_to_4bpp(path):
+def depth_of(path):
+    """2 for a NAME.2bpp... file, else 4."""
+    return 2 if '.2bpp' in os.path.basename(path) else 4
+
+
+def png_to_bpp(path, depth):
     img = Image.open(path)
     if img.mode != 'P':
         sys.exit(f'{path}: not an indexed PNG (mode {img.mode}); save it with a palette')
@@ -55,38 +62,42 @@ def png_to_4bpp(path):
     out = bytearray()
     for ty in range(h // 8):
         for tx in range(w // 8):
-            planes = bytearray(32)
+            planes = bytearray(8 * depth)
             for y in range(8):
                 for x in range(8):
                     c = px[tx * 8 + x, ty * 8 + y]
-                    if c > 15:
+                    if c >= 1 << depth:
                         sys.exit(f'{path}: pixel ({tx * 8 + x}, {ty * 8 + y}) uses colour '
-                                 f'{c}; a 4bpp tile has 16 (0-15)')
+                                 f'{c}; a {depth}bpp tile has {1 << depth} (0-{(1 << depth) - 1})')
                     bit = 7 - x
-                    planes[2 * y] |= (c & 1) << bit
-                    planes[2 * y + 1] |= (c >> 1 & 1) << bit
-                    planes[16 + 2 * y] |= (c >> 2 & 1) << bit
-                    planes[17 + 2 * y] |= (c >> 3 & 1) << bit
+                    # Bitplanes in pairs: planes 0-1 interleaved by row, then 2-3.
+                    for k in range(depth):
+                        planes[16 * (k // 2) + 2 * y + k % 2] |= (c >> k & 1) << bit
             out += planes
     return bytes(out)
 
 
-def bpp_to_png(data, colours, width):
-    if len(data) % 32:
-        sys.exit(f'{len(data)} bytes is not a whole number of 4bpp tiles')
-    n = len(data) // 32
+def png_to_4bpp(path):
+    return png_to_bpp(path, 4)
+
+
+def bpp_to_png(data, colours, width, depth=4):
+    size = 8 * depth
+    if len(data) % size:
+        sys.exit(f'{len(data)} bytes is not a whole number of {depth}bpp tiles')
+    n = len(data) // size
     rows = (n + width - 1) // width
     img = Image.new('P', (width * 8, rows * 8))
     img.putpalette([v for c in colours for v in c] + [0] * (768 - 3 * len(colours)))
     px = img.load()
     for t in range(n):
-        b = data[t * 32:t * 32 + 32]
+        b = data[t * size:t * size + size]
         ox, oy = t % width * 8, t // width * 8
         for y in range(8):
-            p = (b[2 * y], b[2 * y + 1], b[16 + 2 * y], b[17 + 2 * y])
+            p = [b[16 * (k // 2) + 2 * y + k % 2] for k in range(depth)]
             for x in range(8):
                 s = 7 - x
-                px[ox + x, oy + y] = sum((p[k] >> s & 1) << k for k in range(4))
+                px[ox + x, oy + y] = sum((p[k] >> s & 1) << k for k in range(depth))
     return img
 
 
@@ -98,7 +109,15 @@ def bgr555(raw):
     return out
 
 
-def read_palette(spec):
+def grey(depth=4):
+    """Evenly spaced greys, colour 0 black: for graphics whose palette is not known."""
+    n = (1 << depth) - 1
+    return [(v * 255 // n,) * 3 for v in range(n + 1)]
+
+
+def read_palette(spec, depth=4):
+    if spec == 'grey':
+        return grey(depth)
     if os.path.exists(spec):
         return bgr555(open(spec, 'rb').read()[:32])
     from decompress import rom_offset
@@ -134,17 +153,18 @@ def lz(data, original_path):
 
 
 def self_test():
-    """Every 4bpp PNG in gfx/ converts to bytes that round-trip through PNG."""
+    """Every 4bpp and 2bpp PNG in gfx/ converts to bytes that round-trip through PNG."""
     import glob
     import tempfile
-    pngs = sorted(glob.glob(os.path.join(ROOT, 'gfx', '**', '*.4bpp.png'), recursive=True))
+    pngs = sorted(glob.glob(os.path.join(ROOT, 'gfx', '**', '*.[24]bpp.png'), recursive=True))
     bad = 0
     for path in pngs:
-        data = png_to_4bpp(path)
+        depth = depth_of(path)
+        data = png_to_bpp(path, depth)
         width = Image.open(path).size[0] // 8
         with tempfile.NamedTemporaryFile(suffix='.png') as f:
-            bpp_to_png(data, [(0, 0, 0)] * 16, width).save(f.name)
-            if png_to_4bpp(f.name) != data:
+            bpp_to_png(data, [(0, 0, 0)] * 16, width, depth).save(f.name)
+            if png_to_bpp(f.name, depth) != data:
                 bad += 1
                 print(f'FAIL {os.path.relpath(path, ROOT)}')
     print(f'{len(pngs) - bad} of {len(pngs)} PNGs round-trip')
@@ -170,11 +190,13 @@ def main():
     b.add_argument('--width', type=int, default=16)
     args = ap.parse_args()
     if args.cmd == 'png2bpp':
-        open(args.out, 'wb').write(png_to_4bpp(args.png))
+        open(args.out, 'wb').write(png_to_bpp(args.png, depth_of(args.png)))
     elif args.cmd == 'lz':
         open(args.out, 'wb').write(lz(open(args.bpp, 'rb').read(), args.original))
     else:
-        bpp_to_png(open(args.bpp, 'rb').read(), read_palette(args.palette), args.width).save(args.out)
+        depth = depth_of(args.bpp)
+        bpp_to_png(open(args.bpp, 'rb').read(), read_palette(args.palette, depth),
+                   args.width, depth).save(args.out)
 
 
 if __name__ == '__main__':

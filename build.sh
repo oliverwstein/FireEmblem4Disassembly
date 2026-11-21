@@ -27,7 +27,7 @@ ASFLAGS=(-x -f -C -a -Wall -Wno-portable -Wno-shadow -Wno-deprecated)
 clean() {
   find text -name '*.dialogue.txt' -delete
   find data -name '*.csv.asm' -delete
-  find gfx -name '*.4bpp' -delete
+  find gfx \( -name '*.4bpp' -o -name '*.2bpp' \) -delete
   find gfx \( -name '*.4bpp.lz' -o -name '*.bin.lz' -o -name Layout.asm \) -delete
   rm -f "$OUT" FE4Padded.sfc log.txt labels.txt
 }
@@ -53,13 +53,13 @@ generate() {
     fi
   done < <(find data -name '*.csv')
 
-  # Graphics: gfx/**/NAME.4bpp.png (indexed) to NAME.4bpp.
+  # Graphics: gfx/**/NAME.4bpp.png and NAME.2bpp.png (indexed) to NAME.4bpp, NAME.2bpp.
   while IFS= read -r t; do
     out=${t%.png}
     if [[ ! -e $out || $t -nt $out ]]; then
       python3 tools/gfx.py png2bpp "$t" "$out"
     fi
-  done < <(find gfx -name '*.4bpp.png')
+  done < <(find gfx \( -name '*.4bpp.png' -o -name '*.2bpp.png' \))
 
   # Compressed graphics: NAME.4bpp to NAME.4bpp.lz, keeping the committed
   # original stream NAME.4bpp.comp while it still decompresses to NAME.4bpp.

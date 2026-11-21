@@ -18,6 +18,7 @@ EN_ROM/*.*
 *.~lock*
 *.csv.asm
 gfx/**/*.4bpp
+gfx/**/*.2bpp
 gfx/**/*.4bpp.lz
 gfx/**/*.bin.lz
 gfx/**/Layout.asm
