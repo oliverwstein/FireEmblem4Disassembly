@@ -1,0 +1,187 @@
+
+  ; Battle animation frame data (data/battle_animation/), written by
+  ; tools/battle_frames.py.
+  ;
+  ; Each entry of aBattleAnimationFrameTables points at a sequence data block
+  ; and a frame table:
+  ;
+  ;   sequence data block: .word offset of the sequence index, offset of the
+  ;     frame record list; the index (a word offset per sequence) and the list
+  ;     (a word offset per frame record) follow, all offsets from the block
+  ;     start. Sequences are two-byte steps read by rsUnknown95BB41; a frame
+  ;     record is a frame number and a structSpriteArray (rlUnknown95C51F).
+  ;   frame table: a word offset per frame from the table start (the first
+  ;     word / 2 is the count). A frame is a count byte and that many pairs of
+  ;     words, an offset into the class sheet and a byte count, each filling
+  ;     one 16-tile row of sprite VRAM (rsUnknown95C2C0).
+
+  ; Frame number of a record that keeps the tiles already loaded.
+
+    ANIM_KEEP_TILES = $FF
+
+  ; A frame record: its frame number, then the sprites (.structSpriteEntry),
+  ; then ANIM_RECORD_END. The sprite count is worked out from the two.
+
+    ANIM_RECORD .segment Frame
+      .byte \Frame
+      .word ((+) - * - 2) / size(structSpriteEntry)
+    .endsegment
+
+    ANIM_RECORD_END .segment
+      +
+    .endsegment
+
+  ; A frame: ANIM_TILES, the rows (ANIM_TILE_ROW), then ANIM_TILES_END.
+
+    ANIM_TILES .segment
+      .byte ((+) - * - 1) / 4
+    .endsegment
+
+    ANIM_TILE_ROW .segment SheetOffset, Size
+      .word \SheetOffset, \Size
+    .endsegment
+
+    ANIM_TILES_END .segment
+      +
+    .endsegment
+
+  ; Sequence steps. Each is two bytes. rsUnknown95BFB3 reads the first byte
+  ; less 1, so the handlers in rsUnknown95BB41 compare with $FE and below.
+  ; The step position is $0B21,x and the sequence start $0B1F,x.
+
+  ; Show frame record Record (numbered from 0 in the block's list) for
+  ; Duration frames, scaled by the speed in $0B15/$0B16 (rsUnknown95BFC6).
+
+    ANIM_STEP .segment Record, Duration
+      .byte \Record + 1, \Duration
+    .endsegment
+
+  ; Commands $E8-$FF. Where the handler's purpose is not known, the macro is
+  ; named after the byte and the comment says what the handler does.
+
+    ; $FF: stop the animation (clears $0AF3,x).
+    ANIM_END .segment Arg=0
+      .byte $FF, \Arg
+    .endsegment
+
+    ; $FE: stay on this step (clears bit 0 of $0AF3,x, does not advance).
+    ANIM_HOLD .segment Arg=0
+      .byte $FE, \Arg
+    .endsegment
+
+    ; $FD: go back to the start of the sequence (rsUnknown95BCCB).
+    ANIM_RESTART .segment Arg=0
+      .byte $FD, \Arg
+    .endsegment
+
+    ; $FC: go back Steps steps (at least 1; rsUnknown95BCD5). Not used.
+    ANIM_BACK .segment Steps
+      .byte $FC, \Steps
+    .endsegment
+
+    ; $FB: wait Frames frames, scaled like a step (rsUnknown95BCEF). Not used.
+    ANIM_WAIT .segment Frames
+      .byte $FB, \Frames
+    .endsegment
+
+    ; $FA: play sound effect Index of the word table at $98/ACC0, with the
+    ; combatant's position (rsUnknown95BD10).
+    ANIM_SOUND .segment Index
+      .byte $FA, \Index
+    .endsegment
+
+    ; $F9: nothing (rsUnknown95BD6B). Not used.
+    ANIM_NOP .segment Arg=0
+      .byte $F9, \Arg
+    .endsegment
+
+    ; $F8: rsUnknown95BD76 runs into a brk (a bug), so it cannot be used.
+    ANIM_CMD_F8 .segment Arg=0
+      .byte $F8, \Arg
+    .endsegment
+
+    ; $F7: clear bit 2 of $0AF3,x (rsUnknown95BD89).
+    ANIM_CMD_F7 .segment Arg=0
+      .byte $F7, \Arg
+    .endsegment
+
+    ; $F6: set bit 2 of $0AF3,x (rsUnknown95BDA0). Not used.
+    ANIM_CMD_F6 .segment Arg=0
+      .byte $F6, \Arg
+    .endsegment
+
+    ; $F5: wait until $0C42 is set, then clear it (rsUnknown95BDB7). Not used.
+    ANIM_CMD_F5 .segment Arg=0
+      .byte $F5, \Arg
+    .endsegment
+
+    ; $F4: set bit 6 of $0AF3,x (which skips the move scripts of
+    ; rsUnknown95E4D2) and go back Steps steps, at least 1 (rsUnknown95BDD2).
+    ANIM_CMD_F4 .segment Steps
+      .byte $F4, \Steps
+    .endsegment
+
+    ; $F3: rlUnknown95C077 (rsUnknown95BDF5).
+    ANIM_CMD_F3 .segment Arg=0
+      .byte $F3, \Arg
+    .endsegment
+
+    ; $F2: rlUnknown95AAFF, then clear bits 0-1 of $0AF5,x; does not advance
+    ; (rsUnknown95BE04). Not used.
+    ANIM_CMD_F2 .segment Arg=0
+      .byte $F2, \Arg
+    .endsegment
+
+    ; $F1: rlUnknown95AEA2 (rsUnknown95BE17).
+    ANIM_CMD_F1 .segment Arg=0
+      .byte $F1, \Arg
+    .endsegment
+
+    ; $F0: rlUnknown96DC7C and rlUnknown96BCEC (rsUnknown95BE26).
+    ANIM_CMD_F0 .segment Arg=0
+      .byte $F0, \Arg
+    .endsegment
+
+    ; $EF: Arg to rsUnknown95DCA3 (first combatant) or rsUnknown95DD4F
+    ; (second), around calls of rlUnknown95DBDE (rsUnknown95BE39).
+    ANIM_CMD_EF .segment Arg
+      .byte $EF, \Arg
+    .endsegment
+
+    ; $EE: rlUnknown96F9BF, and rlUnknown95AB53 for the other combatant if
+    ; bit 3 of $0AE4 is set (rsUnknown95BEA4).
+    ANIM_CMD_EE .segment Arg=0
+      .byte $EE, \Arg
+    .endsegment
+
+    ; $ED: store Arg in bits 0-1 of $0AF5,x (rsUnknown95BECE).
+    ANIM_CMD_ED .segment Arg
+      .byte $ED, \Arg
+    .endsegment
+
+    ; $EC: by Arg & 3, rlUnknown95D9BE, rlUnknown95D963, clear or set bit 7
+    ; of $0AF4,x (rsUnknown95BEED).
+    ANIM_CMD_EC .segment Arg
+      .byte $EC, \Arg
+    .endsegment
+
+    ; $EB: set bit 6 of $0AF4,x (rsUnknown95BF4A).
+    ANIM_CMD_EB .segment Arg=0
+      .byte $EB, \Arg
+    .endsegment
+
+    ; $EA: clear bit 0 of $0AF3,x and go on (rsUnknown95BF8D). Not used.
+    ANIM_CMD_EA .segment Arg=0
+      .byte $EA, \Arg
+    .endsegment
+
+    ; $E9: rlUnknown95C697 (rsUnknown95BFA4).
+    ANIM_CMD_E9 .segment Arg=0
+      .byte $E9, \Arg
+    .endsegment
+
+    ; $E8: if $0B08,x is 0, rlUnknown95C057 and set bit 6 of $0AF3,x; then
+    ; set bit 6 of $0AF4,x (rsUnknown95BF61).
+    ANIM_CMD_E8 .segment Arg=0
+      .byte $E8, \Arg
+    .endsegment

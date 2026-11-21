@@ -8,6 +8,7 @@
   .include "ActiveSpriteEngine.h"
   .include "AI.h"
   .include "Battle.h"
+  .include "BattleAnimation.h"
   .include "Chapters.h"
   .include "Characters.h"
   .include "Checksums.h"

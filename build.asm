@@ -183,6 +183,10 @@
   .include "data/palettes/MapBattleMagicPalettes.asm"
   .include "data/palettes/WindowPalette.asm"
   .include "data/palettes/BattleAnimationPalettes.asm"
+  .include "data/battle_animation/frames_98.asm"
+  .include "data/battle_animation/frames_99.asm"
+  .include "data/battle_animation/frames_9A.asm"
+  .include "data/battle_animation/frames_9B.asm"
 
     ; Compressed streams: generated from gfx/compressed/C00A2B/C00A2B.streams by build.sh.
     .include "gfx/compressed/C00A2B/Layout.asm"
@@ -13961,6 +13965,13 @@
 
     .here
 
+    * = $18B41E
+    .logical $98B41E
+
+      .dsection BattleAnimationFrameData98Section
+
+    .here
+
     * = $198194
     .logical $998194
 
@@ -13981,6 +13992,27 @@
       .dsection BattleBannerTableSection
 
       ; 99/8DD8
+
+    .here
+
+    * = $198FA1
+    .logical $998FA1
+
+      .dsection BattleAnimationFrameData99Section
+
+    .here
+
+    * = $1ABA2A
+    .logical $9ABA2A
+
+      .dsection BattleAnimationFrameData9ASection
+
+    .here
+
+    * = $1B8000
+    .logical $9B8000
+
+      .dsection BattleAnimationFrameData9BSection
 
     .here
 

@@ -915,59 +915,59 @@
 
       aBattleAnimationFrameTables ; 97/87AF
 
-        ; Two pointers per entry, to $0C25 and $0C36. The second is the frame
-        ; table: word offsets to frames, each a count byte and that many pairs
-        ; (offset into the sheet, byte count), each pair filling one 16-tile
-        ; row of sprite VRAM (rsUnknown95C2C0). The first is nested word-offset
-        ; tables, probably the frame sequences (not decoded).
+        ; Two pointers per entry, to $0C25 and $0C36: the sequence data block
+        ; (sequences and frame records) and the frame table (which slices of
+        ; the class sheet each frame loads). Both are in data/battle_animation/,
+        ; formats in include/BattleAnimation.h. Entry 0 is a placeholder
+        ; (its pointers land in dialogue text).
 
         .long dialogueChapterPrologueWorldMap3+228, dialogueChapterPrologueWorldMap1
-        .long $9AF2C7, $9AF201
-        .long $9AE6A2, $9AE558
-        .long $9AD9BC, $9AD943
-        .long $98B593, $98B41E
-        .long $98B4D9, $98B41E
-        .long $98EBAC, $98EB33
-        .long $98F327, $98F2A3
-        .long $98F447, $98F2A3
-        .long $98ED76, $98EB33
-        .long $98FA07, $98F9A4
-        .long $99E2A7, $99E1CB
-        .long $98C6C5, $98C659
-        .long $98D449, $98D3DD
-        .long $98D5C3, $98D3DD
-        .long $98C82B, $98C659
-        .long $98E583, $98E567
-        .long $98C98D, $98C659
-        .long $9ABA9A, $9ABA2A
-        .long $9AC88D, $9ABA2A
-        .long $9AC9D1, $9ABA2A
-        .long $9ABC1A, $9ABA2A
-        .long $9ABD66, $9ABA2A
-        .long $9ABE86, $9ABA2A
-        .long $9B8071, $9B8000
-        .long $9B90BF, $9B904E
-        .long $9B9320, $9B92AF
-        .long $9B829C, $9B822B
-        .long $9BA19F, $9BA16E
-        .long $9BAE51, $9BAE20
-        .long $9BAFE4, $9BAFB3
-        .long $9990CA, $998FA1
-        .long $999F12, $999E2B
-        .long $99A167, $99A080
-        .long $9992D2, $998FA1
-        .long $99AF10, $99AEB8
-        .long $99B5B7, $99B48E
-        .long $99C1F9, $99C0D0
-        .long $9ADFD4, $9ADF7C
-        .long $99D20F, $99D0A4
-        .long $99D407, $99D0A4
-        .long $99DBFB, $99DB82
-        .long $98BA84, $98B90E
-        .long $99CD63, $99CD42
-        .long $9AFB55, $9AFAA5
-        .long $9BBD7A, $9BBC9E
-        .long $99EAEE, $99E978
+        .long aBattleAnimationSequencesMyrmidonSword, aBattleAnimationFramesMyrmidonSword
+        .long aBattleAnimationSequencesSwordmasterSword, aBattleAnimationFramesSwordmasterSword
+        .long aBattleAnimationSequencesArcherBow, aBattleAnimationFramesArcherBow
+        .long aBattleAnimationSequencesPrincessStaff, aBattleAnimationFramesPrincessStaff
+        .long aBattleAnimationSequencesWarMageMagic, aBattleAnimationFramesPrincessStaff
+        .long aBattleAnimationSequencesUnknown06, aBattleAnimationFramesUnknown06
+        .long aBattleAnimationSequencesUnknown07, aBattleAnimationFramesUnknown07
+        .long aBattleAnimationSequencesUnknown08, aBattleAnimationFramesUnknown07
+        .long aBattleAnimationSequencesUnknown09, aBattleAnimationFramesUnknown06
+        .long aBattleAnimationSequencesUnknown10, aBattleAnimationFramesUnknown10
+        .long aBattleAnimationSequencesDancerSword, aBattleAnimationFramesDancerSword
+        .long aBattleAnimationSequencesCavalierSword, aBattleAnimationFramesCavalierSword
+        .long aBattleAnimationSequencesCavalierLance, aBattleAnimationFramesCavalierLance
+        .long aBattleAnimationSequencesCavalierRangedLance, aBattleAnimationFramesCavalierLance
+        .long aBattleAnimationSequencesAxeKnightRangedAxe, aBattleAnimationFramesCavalierSword
+        .long aBattleAnimationSequencesBowKnightBow, aBattleAnimationFramesBowKnightBow
+        .long aBattleAnimationSequencesTroubadourStaff, aBattleAnimationFramesCavalierSword
+        .long aBattleAnimationSequencesKnightLordSword, aBattleAnimationFramesKnightLordSword
+        .long aBattleAnimationSequencesKnightLordLance, aBattleAnimationFramesKnightLordSword
+        .long aBattleAnimationSequencesKnightLordRangedLance, aBattleAnimationFramesKnightLordSword
+        .long aBattleAnimationSequencesMasterKnightRangedAxe, aBattleAnimationFramesKnightLordSword
+        .long aBattleAnimationSequencesMasterKnightStaff, aBattleAnimationFramesKnightLordSword
+        .long aBattleAnimationSequencesMasterKnightMagic, aBattleAnimationFramesKnightLordSword
+        .long aBattleAnimationSequencesPegasusKnightSword, aBattleAnimationFramesPegasusKnightSword
+        .long aBattleAnimationSequencesPegasusKnightLance, aBattleAnimationFramesPegasusKnightLance
+        .long aBattleAnimationSequencesPegasusKnightRangedLance, aBattleAnimationFramesPegasusKnightRangedLance
+        .long aBattleAnimationSequencesFalconKnightStaff, aBattleAnimationFramesFalconKnightStaff
+        .long aBattleAnimationSequencesDragonriderSword, aBattleAnimationFramesDragonriderSword
+        .long aBattleAnimationSequencesDragonriderLance, aBattleAnimationFramesDragonriderLance
+        .long aBattleAnimationSequencesDragonriderRangedLance, aBattleAnimationFramesDragonriderRangedLance
+        .long aBattleAnimationSequencesGeneralSword, aBattleAnimationFramesGeneralSword
+        .long aBattleAnimationSequencesGeneralLance, aBattleAnimationFramesGeneralLance
+        .long aBattleAnimationSequencesGeneralRangedLance, aBattleAnimationFramesGeneralRangedLance
+        .long aBattleAnimationSequencesGeneralRangedAxe, aBattleAnimationFramesGeneralSword
+        .long aBattleAnimationSequencesGeneralBow, aBattleAnimationFramesGeneralBow
+        .long aBattleAnimationSequencesEmperorStaff, aBattleAnimationFramesEmperorStaff
+        .long aBattleAnimationSequencesEmperorMagic, aBattleAnimationFramesEmperorMagic
+        .long aBattleAnimationSequencesBowArmorBow, aBattleAnimationFramesBowArmorBow
+        .long aBattleAnimationSequencesBarbarianAxe, aBattleAnimationFramesBarbarianAxe
+        .long aBattleAnimationSequencesBarbarianRangedAxe, aBattleAnimationFramesBarbarianAxe
+        .long aBattleAnimationSequencesWarriorBow, aBattleAnimationFramesWarriorBow
+        .long aBattleAnimationSequencesWarMageSword, aBattleAnimationFramesWarMageSword
+        .long aBattleAnimationSequencesBallisticianBow, aBattleAnimationFramesBallisticianBow
+        .long aBattleAnimationSequencesDarkPrinceMagic, aBattleAnimationFramesDarkPrinceMagic
+        .long aBattleAnimationSequencesUnknown45, aBattleAnimationFramesUnknown45
+        .long aBattleAnimationSequencesJuniorLordSword, aBattleAnimationFramesJuniorLordSword
 
     .endsection BattleAnimationFramesSection
 

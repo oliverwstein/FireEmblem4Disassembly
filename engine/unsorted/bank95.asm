@@ -9961,7 +9961,7 @@
 
         ; Probably a bug in the original: unlike its neighbours this has no
         ; rep #$20 after storing $0C42, so adc #$0002 runs as adc #$02 and the
-        ; CPU then executes the $00 as brk. Command $F7 of rsUnknown95BB41; the
+        ; CPU then executes the $00 as brk. Sequence byte $F8 of rsUnknown95BB41; the
         ; prologue log never runs it.
         .al
         .xl
