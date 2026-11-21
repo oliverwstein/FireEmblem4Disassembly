@@ -966,7 +966,7 @@
         .long aBattleAnimationSequencesWarMageSword, aBattleAnimationFramesWarMageSword
         .long aBattleAnimationSequencesBallisticianBow, aBattleAnimationFramesBallisticianBow
         .long aBattleAnimationSequencesDarkPrinceMagic, aBattleAnimationFramesDarkPrinceMagic
-        .long aBattleAnimationSequencesUnknown45, aBattleAnimationFramesUnknown45
+        .long aBattleAnimationSequencesDancerDance, aBattleAnimationFramesDancerDance
         .long aBattleAnimationSequencesJuniorLordSword, aBattleAnimationFramesJuniorLordSword
 
     .endsection BattleAnimationFramesSection

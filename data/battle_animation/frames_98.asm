@@ -4995,8 +4995,9 @@
 
       aBattleAnimationSequencesUnknown06 ; 98/EBAC
 
-        ; Sequence data of entry 6 of aBattleAnimationFrameTables; no record of the animation
-        ; lookup uses it. Frames: aBattleAnimationFramesUnknown06.
+        ; Sequence data of entry 6 of aBattleAnimationFrameTables; nothing selects it (no lookup
+        ; record has a first ID that leads here) and no sheet in aBattleAnimationSheets is the
+        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnknown06.
 
         .word _Index - aBattleAnimationSequencesUnknown06, _Records - aBattleAnimationSequencesUnknown06
 
@@ -5277,8 +5278,9 @@
 
       aBattleAnimationSequencesUnknown09 ; 98/ED76
 
-        ; Sequence data of entry 9 of aBattleAnimationFrameTables; no record of the animation
-        ; lookup uses it. Frames: aBattleAnimationFramesUnknown06.
+        ; Sequence data of entry 9 of aBattleAnimationFrameTables; nothing selects it (no lookup
+        ; record has a first ID that leads here) and no sheet in aBattleAnimationSheets is the
+        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnknown06.
 
         .word _Index - aBattleAnimationSequencesUnknown09, _Records - aBattleAnimationSequencesUnknown09
 
@@ -5819,8 +5821,9 @@
 
       aBattleAnimationSequencesUnknown07 ; 98/F327
 
-        ; Sequence data of entry 7 of aBattleAnimationFrameTables; no record of the animation
-        ; lookup uses it. Frames: aBattleAnimationFramesUnknown07.
+        ; Sequence data of entry 7 of aBattleAnimationFrameTables; nothing selects it (no lookup
+        ; record has a first ID that leads here) and no sheet in aBattleAnimationSheets is the
+        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnknown07.
 
         .word _Index - aBattleAnimationSequencesUnknown07, _Records - aBattleAnimationSequencesUnknown07
 
@@ -6006,8 +6009,9 @@
 
       aBattleAnimationSequencesUnknown08 ; 98/F447
 
-        ; Sequence data of entry 8 of aBattleAnimationFrameTables; no record of the animation
-        ; lookup uses it. Frames: aBattleAnimationFramesUnknown07.
+        ; Sequence data of entry 8 of aBattleAnimationFrameTables; nothing selects it (no lookup
+        ; record has a first ID that leads here) and no sheet in aBattleAnimationSheets is the
+        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnknown07.
 
         .word _Index - aBattleAnimationSequencesUnknown08, _Records - aBattleAnimationSequencesUnknown08
 
@@ -6523,8 +6527,9 @@
 
       aBattleAnimationSequencesUnknown10 ; 98/FA07
 
-        ; Sequence data of entry 10 of aBattleAnimationFrameTables; no record of the animation
-        ; lookup uses it. Frames: aBattleAnimationFramesUnknown10.
+        ; Sequence data of entry 10 of aBattleAnimationFrameTables; nothing selects it (no lookup
+        ; record has a first ID that leads here) and no sheet in aBattleAnimationSheets is the
+        ; size its frames need: probably left over. Frames: aBattleAnimationFramesUnknown10.
 
         .word _Index - aBattleAnimationSequencesUnknown10, _Records - aBattleAnimationSequencesUnknown10
 

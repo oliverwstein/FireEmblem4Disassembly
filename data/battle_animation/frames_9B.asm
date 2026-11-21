@@ -4909,30 +4909,30 @@
         .structSpriteEntry (  17,  -29), $00, SpriteSmall, $044, 2, 2, false, false
         ANIM_RECORD_END
 
-      aBattleAnimationFramesUnknown45 ; 9B/BC9E
+      aBattleAnimationFramesDancerDance ; 9B/BC9E
 
         ; Frame table of entry 45: slices of the class sheet per frame.
 
-        .word _Frame00 - aBattleAnimationFramesUnknown45
-        .word _Frame01 - aBattleAnimationFramesUnknown45
-        .word _Frame02 - aBattleAnimationFramesUnknown45
-        .word _Frame03 - aBattleAnimationFramesUnknown45
-        .word _Frame04 - aBattleAnimationFramesUnknown45
-        .word _Frame05 - aBattleAnimationFramesUnknown45
-        .word _Frame06 - aBattleAnimationFramesUnknown45
-        .word _Frame07 - aBattleAnimationFramesUnknown45
-        .word _Frame08 - aBattleAnimationFramesUnknown45
-        .word _Frame09 - aBattleAnimationFramesUnknown45
-        .word _Frame10 - aBattleAnimationFramesUnknown45
-        .word _Frame11 - aBattleAnimationFramesUnknown45
-        .word _Frame12 - aBattleAnimationFramesUnknown45
-        .word _Frame13 - aBattleAnimationFramesUnknown45
-        .word _Frame14 - aBattleAnimationFramesUnknown45
-        .word _Frame15 - aBattleAnimationFramesUnknown45
-        .word _Frame16 - aBattleAnimationFramesUnknown45
-        .word _Frame17 - aBattleAnimationFramesUnknown45
-        .word _Frame18 - aBattleAnimationFramesUnknown45
-        .word _Frame19 - aBattleAnimationFramesUnknown45
+        .word _Frame00 - aBattleAnimationFramesDancerDance
+        .word _Frame01 - aBattleAnimationFramesDancerDance
+        .word _Frame02 - aBattleAnimationFramesDancerDance
+        .word _Frame03 - aBattleAnimationFramesDancerDance
+        .word _Frame04 - aBattleAnimationFramesDancerDance
+        .word _Frame05 - aBattleAnimationFramesDancerDance
+        .word _Frame06 - aBattleAnimationFramesDancerDance
+        .word _Frame07 - aBattleAnimationFramesDancerDance
+        .word _Frame08 - aBattleAnimationFramesDancerDance
+        .word _Frame09 - aBattleAnimationFramesDancerDance
+        .word _Frame10 - aBattleAnimationFramesDancerDance
+        .word _Frame11 - aBattleAnimationFramesDancerDance
+        .word _Frame12 - aBattleAnimationFramesDancerDance
+        .word _Frame13 - aBattleAnimationFramesDancerDance
+        .word _Frame14 - aBattleAnimationFramesDancerDance
+        .word _Frame15 - aBattleAnimationFramesDancerDance
+        .word _Frame16 - aBattleAnimationFramesDancerDance
+        .word _Frame17 - aBattleAnimationFramesDancerDance
+        .word _Frame18 - aBattleAnimationFramesDancerDance
+        .word _Frame19 - aBattleAnimationFramesDancerDance
 
       _Frame00
         ANIM_TILES
@@ -5054,42 +5054,42 @@
         ANIM_TILE_ROW $23E0, $0080
         ANIM_TILES_END
 
-      aBattleAnimationSequencesUnknown45 ; 9B/BD7A
+      aBattleAnimationSequencesDancerDance ; 9B/BD7A
 
-        ; Sequence data of entry 45 of aBattleAnimationFrameTables; no record of the animation
-        ; lookup uses it. Frames: aBattleAnimationFramesUnknown45.
+        ; Sequence data of entry 45 of aBattleAnimationFrameTables, used by: Dancer (dancing,
+        ; rlUnknown95A3C1). Frames: aBattleAnimationFramesDancerDance.
 
-        .word _Index - aBattleAnimationSequencesUnknown45, _Records - aBattleAnimationSequencesUnknown45
+        .word _Index - aBattleAnimationSequencesDancerDance, _Records - aBattleAnimationSequencesDancerDance
 
       _Index
-        .word _Sequence00 - aBattleAnimationSequencesUnknown45
-        .word _Sequence01 - aBattleAnimationSequencesUnknown45
-        .word _Sequence02 - aBattleAnimationSequencesUnknown45
-        .word _Sequence03 - aBattleAnimationSequencesUnknown45
-        .word _Sequence04 - aBattleAnimationSequencesUnknown45
+        .word _Sequence00 - aBattleAnimationSequencesDancerDance
+        .word _Sequence01 - aBattleAnimationSequencesDancerDance
+        .word _Sequence02 - aBattleAnimationSequencesDancerDance
+        .word _Sequence03 - aBattleAnimationSequencesDancerDance
+        .word _Sequence04 - aBattleAnimationSequencesDancerDance
 
       _Records
-        .word _Record00 - aBattleAnimationSequencesUnknown45
-        .word _Record01 - aBattleAnimationSequencesUnknown45
-        .word _Record02 - aBattleAnimationSequencesUnknown45
-        .word _Record03 - aBattleAnimationSequencesUnknown45
-        .word _Record04 - aBattleAnimationSequencesUnknown45
-        .word _Record05 - aBattleAnimationSequencesUnknown45
-        .word _Record06 - aBattleAnimationSequencesUnknown45
-        .word _Record07 - aBattleAnimationSequencesUnknown45
-        .word _Record08 - aBattleAnimationSequencesUnknown45
-        .word _Record09 - aBattleAnimationSequencesUnknown45
-        .word _Record10 - aBattleAnimationSequencesUnknown45
-        .word _Record11 - aBattleAnimationSequencesUnknown45
-        .word _Record12 - aBattleAnimationSequencesUnknown45
-        .word _Record13 - aBattleAnimationSequencesUnknown45
-        .word _Record14 - aBattleAnimationSequencesUnknown45
-        .word _Record15 - aBattleAnimationSequencesUnknown45
-        .word _Record16 - aBattleAnimationSequencesUnknown45
-        .word _Record17 - aBattleAnimationSequencesUnknown45
-        .word _Record18 - aBattleAnimationSequencesUnknown45
-        .word _Record19 - aBattleAnimationSequencesUnknown45
-        .word _Record20 - aBattleAnimationSequencesUnknown45
+        .word _Record00 - aBattleAnimationSequencesDancerDance
+        .word _Record01 - aBattleAnimationSequencesDancerDance
+        .word _Record02 - aBattleAnimationSequencesDancerDance
+        .word _Record03 - aBattleAnimationSequencesDancerDance
+        .word _Record04 - aBattleAnimationSequencesDancerDance
+        .word _Record05 - aBattleAnimationSequencesDancerDance
+        .word _Record06 - aBattleAnimationSequencesDancerDance
+        .word _Record07 - aBattleAnimationSequencesDancerDance
+        .word _Record08 - aBattleAnimationSequencesDancerDance
+        .word _Record09 - aBattleAnimationSequencesDancerDance
+        .word _Record10 - aBattleAnimationSequencesDancerDance
+        .word _Record11 - aBattleAnimationSequencesDancerDance
+        .word _Record12 - aBattleAnimationSequencesDancerDance
+        .word _Record13 - aBattleAnimationSequencesDancerDance
+        .word _Record14 - aBattleAnimationSequencesDancerDance
+        .word _Record15 - aBattleAnimationSequencesDancerDance
+        .word _Record16 - aBattleAnimationSequencesDancerDance
+        .word _Record17 - aBattleAnimationSequencesDancerDance
+        .word _Record18 - aBattleAnimationSequencesDancerDance
+        .word _Record19 - aBattleAnimationSequencesDancerDance
+        .word _Record20 - aBattleAnimationSequencesDancerDance
 
       _Sequence00
         ANIM_CLEAR_BUSY

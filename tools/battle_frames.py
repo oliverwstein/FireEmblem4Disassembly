@@ -60,6 +60,9 @@ FRAME_INDICES = 0x97874F         # aBattleAnimationFrameIndices
 LOOKUP = 0x9788C9                # 206 records: class, weapon category, character,
 LOOKUP_COUNT = 206               # class/gender value, four animation IDs
 ENTRIES = 47
+# rlUnknown95A3C1 replaces the lookup for a Dancer whose action is a dance
+# (action struct field Unknown = 8, bits 2-3 of $7FFC59): IDs $5E $66 $46 $2E.
+DANCE_FIRST_ID = 0x5E
 REGIONS = [(0x98B41E, 0x98FF85), (0x998FA1, 0x99F6C1), (0x9ABA2A, 0x9AFEAA), (0x9B8000, 0x9BC16F)]
 # Sequences with a step naming a record past the end of the block's list:
 # (block, offset of the sequence in the block). Four steps in all, three
@@ -236,8 +239,12 @@ def names(d, rom):
         rec = [rom.byte(LOOKUP + 8 * k + i) for i in range(8)]
         users[rom.byte(FRAME_INDICES + rec[4] + 1)].append((classes[rec[0]], rec[1]))
     out = {}
+    dance = rom.byte(FRAME_INDICES + DANCE_FIRST_ID + 1)
+    users[dance].append(('Dancer', 'Dance'))
     for k in range(1, ENTRIES):
-        if users[k]:
+        if k == dance and len(users[k]) == 1:
+            out[k] = 'DancerDance'
+        elif users[k]:
             cls, cat = users[k][0]
             out[k] = cls + CATEGORIES.get(cat, f'Category{cat}')
         else:
@@ -321,12 +328,14 @@ def emit(d, problems_bad):
                     k = ks[0]
                     us = []
                     for c, cat in users[k]:
-                        n = f'{c} ({CATEGORIES.get(cat, cat)})'
+                        n = f'{c} (dancing, rlUnknown95A3C1)' if cat == 'Dance' else f'{c} ({CATEGORIES.get(cat, cat)})'
                         if n not in us:
                             us.append(n)
                     F = d.entries[k][1]
                     text = (f'Sequence data of entry {k} of aBattleAnimationFrameTables'
-                            + (f', used by: {", ".join(us)}.' if us else '; no record of the animation lookup uses it.')
+                            + (f', used by: {", ".join(us)}.' if us else
+                               '; nothing selects it (no lookup record has a first ID that leads here) and no '
+                               'sheet in aBattleAnimationSheets is the size its frames need: probably left over.')
                             + f' Frames: {top[F]}.')
                     out += ['        ; ' + l for l in textwrap.wrap(text, 88)]
                     out.append('')

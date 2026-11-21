@@ -2,6 +2,7 @@
 """Render the frames of a battle animation from the built ROM.
 
 usage: tools/battle_animation.py OUT.png [--class NAME] [--record N] [--item NAME]
+                                 [--ids A,B,C,D] [--entry N] [--sheet LABEL]
                                  [--rom FILE] [--scale N]
 
 Picks a record of the animation lookup at $97/88C9 (206 records of class,
@@ -19,6 +20,11 @@ its sequence data. Each frame is assembled the way the battle code does it:
     structSpriteArray) places 8x8 and 16x16 sprites with those tiles;
   - colours: the fourth ID's palettes (sprite palettes 0-1), the weapon's
     palette (2); palette 3 (character pieces) is drawn magenta.
+
+--ids gives the four animation IDs (hex) instead of the record's, e.g.
+5E,66,46,2E for a Dancer's dance (rlUnknown95A3C1). --entry N draws entry N of aBattleAnimationFrameTables instead of the
+record's, and --sheet LABEL takes the class sheet from that compressed stream:
+for entries no record uses (6-10), to try candidate sheets.
 
 A preview, not source. Tables are read at their labels in labels.txt, so an
 edit to them shows here after ./build.sh.
@@ -72,6 +78,9 @@ def main():
     ap.add_argument('--item', default='IronSword')
     ap.add_argument('--rom', default=os.path.join(ROOT, 'FE4Disassembly.sfc'))
     ap.add_argument('--scale', type=int, default=2)
+    ap.add_argument('--entry', type=int)
+    ap.add_argument('--ids')
+    ap.add_argument('--sheet')
     args = ap.parse_args()
     from PIL import Image
     lab = {}
@@ -88,11 +97,12 @@ def main():
         want = classes.index(args.cls) if args.cls else 0
         k = next(i for i, e in enumerate(records) if e[0] == want)
     e = records[k]
-    ids = e[4:]
-    fr = rom.byte(lab['aBattleAnimationFrameIndices'] + ids[0] + 1)
+    ids = bytes(int(x, 16) for x in args.ids.split(',')) if args.ids else e[4:]
+    fr = args.entry if args.entry is not None else rom.byte(lab['aBattleAnimationFrameIndices'] + ids[0] + 1)
     seqs = rom.long(lab['aBattleAnimationFrameTables'] + 6 * fr)
     frames = rom.long(lab['aBattleAnimationFrameTables'] + 6 * fr + 3)
-    sheet = rom.comp(rom.long(lab['aBattleAnimationSheets'] + 5 * rom.byte(lab['aBattleAnimationSheetIndices'] + ids[1] + 1)))
+    sheet = rom.comp(lab[args.sheet] if args.sheet else
+                     rom.long(lab['aBattleAnimationSheets'] + 5 * rom.byte(lab['aBattleAnimationSheetIndices'] + ids[1] + 1)))
     xa = lab['aBattleAnimationExtras'] + 7 * rom.byte(lab['aBattleAnimationExtraIndices'] + ids[2] + 1)
     extras = rom.comp(rom.long(xa + 2))
     pa = lab['aBattleAnimationPalettes'] + 4 * rom.byte(lab['aBattleAnimationPaletteIndices'] + ids[3] + 1)
