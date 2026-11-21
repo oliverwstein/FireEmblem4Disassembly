@@ -242,9 +242,9 @@
 
         ; The same COLDATA HDMA entry as rsItemWindowCreateHDMA ($80/D07E).
 
-        lda #$8000
+        lda #(`aUnknown80D07E)<<8
         sta lR44+1
-        lda #$D07E
+        lda #<>aUnknown80D07E
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rts
@@ -325,123 +325,123 @@
         dec x
         dec x
         bne _D509
-        lda #$8000
+        lda #(`aUnknown80D8F1)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$D8F1
+        lda #<>aUnknown80D8F1
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8000
+        lda #(`aUnknown80D662)<<8
         sta lR18+1
-        lda #$D662
+        lda #<>aUnknown80D662
         sta lR18
         ldx #$0000
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D67A)<<8
         sta lR18+1
-        lda #$D67A
+        lda #<>aUnknown80D67A
         sta lR18
         ldx #$0200
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D692)<<8
         sta lR18+1
-        lda #$D692
+        lda #<>aUnknown80D692
         sta lR18
         ldx #$0400
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D6AA)<<8
         sta lR18+1
-        lda #$D6AA
+        lda #<>aUnknown80D6AA
         sta lR18
         ldx #$0600
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D6C2)<<8
         sta lR18+1
-        lda #$D6C2
+        lda #<>aUnknown80D6C2
         sta lR18
         ldx #$0800
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D6DA)<<8
         sta lR18+1
-        lda #$D6DA
+        lda #<>aUnknown80D6DA
         sta lR18
         ldx #$0A00
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D6F2)<<8
         sta lR18+1
-        lda #$D6F2
+        lda #<>aUnknown80D6F2
         sta lR18
         ldx #$0C00
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D70A)<<8
         sta lR18+1
-        lda #$D70A
+        lda #<>aUnknown80D70A
         sta lR18
         ldx #$0E00
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D722)<<8
         sta lR18+1
-        lda #$D722
+        lda #<>aUnknown80D722
         sta lR18
         ldx #$1000
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D73A)<<8
         sta lR18+1
-        lda #$D73A
+        lda #<>aUnknown80D73A
         sta lR18
         ldx #$1200
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D752)<<8
         sta lR18+1
-        lda #$D752
+        lda #<>aUnknown80D752
         sta lR18
         ldx #$1400
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D76A)<<8
         sta lR18+1
-        lda #$D76A
+        lda #<>aUnknown80D76A
         sta lR18
         ldx #$1600
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D782)<<8
         sta lR18+1
-        lda #$D782
+        lda #<>aUnknown80D782
         sta lR18
         ldx #$1800
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D79C)<<8
         sta lR18+1
-        lda #$D79C
+        lda #<>aUnknown80D79C
         sta lR18
         ldx #$1A00
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D7B6)<<8
         sta lR18+1
-        lda #$D7B6
+        lda #<>aUnknown80D7B6
         sta lR18
         ldx #$1C00
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D7D0)<<8
         sta lR18+1
-        lda #$D7D0
+        lda #<>aUnknown80D7D0
         sta lR18
         ldx #$1E00
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D7E8)<<8
         sta lR18+1
-        lda #$D7E8
+        lda #<>aUnknown80D7E8
         sta lR18
         ldx #$2000
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D800)<<8
         sta lR18+1
-        lda #$D800
+        lda #<>aUnknown80D800
         sta lR18
         ldx #$2200
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D8E8)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$D8E8
+        lda #<>aUnknown80D8E8
         sta lMapMenuTilemapRAMEntryPointer,b
         rts
 
@@ -450,6 +450,145 @@
         ; 80/D662
 
     .endsection Unsorted80D435Section
+
+
+    .section Table80D662Section
+
+      .al
+      .xl
+
+      aUnknown80D662 ; 80/D662
+
+        .enc "SJIS"
+        .text "おおたて　　　せんとう"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D67A ; 80/D67A
+
+        .enc "SJIS"
+        .text "いかり　　　　せんとう"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D692 ; 80/D692
+
+        .enc "SJIS"
+        .text "ついげき　　　せんとう"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D6AA ; 80/D6AA
+
+        .enc "SJIS"
+        .text "れんぞく　　　せんとう"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D6C2 ; 80/D6C2
+
+        .enc "SJIS"
+        .text "ぬすむ　　　　せんとう"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D6DA ; 80/D6DA
+
+        .enc "SJIS"
+        .text "おどる　　　　いっぱん"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D6F2 ; 80/D6F2
+
+        .enc "SJIS"
+        .text "カリスマ　　　いっぱん"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D70A ; 80/D70A
+
+        .enc "SJIS"
+        .text "みきり　　　　せんとう"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D722 ; 80/D722
+
+        .enc "SJIS"
+        .text "いのり　　　　いっぱん"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D73A ; 80/D73A
+
+        .enc "SJIS"
+        .text "ひっさつ　　　せんとう"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D752 ; 80/D752
+
+        .enc "SJIS"
+        .text "まちぶせ　　　せんとう"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D76A ; 80/D76A
+
+        .enc "SJIS"
+        .text "とつげき　　　せんとう"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D782 ; 80/D782
+
+        .enc "SJIS"
+        .text "りゅうせい剣　とくしゅ剣"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D79C ; 80/D79C
+
+        .enc "SJIS"
+        .text "げっこう剣　　とくしゅ剣"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D7B6 ; 80/D7B6
+
+        .enc "SJIS"
+        .text "たいよう剣　　とくしゅ剣"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D7D0 ; 80/D7D0
+
+        .enc "SJIS"
+        .text "ライブ　　　　いっぱん"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D7E8 ; 80/D7E8
+
+        .enc "SJIS"
+        .text "エリート　　　いっぱん"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D800 ; 80/D800
+
+        .enc "SJIS"
+        .text "ねぎり　　　　いっぱん"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table80D662Section
+
+
+
+
 
 
     .section Unsorted80D818Section
@@ -1014,9 +1153,9 @@
         lda #$0017
         ldy #$000B
         jsl rlClearTilemapRect
-        lda #$8000
+        lda #(`aUnknown80D8E8)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$D8E8
+        lda #<>aUnknown80D8E8
         sta lMapMenuTilemapRAMEntryPointer,b
         lda wSkillWindowCurrentSkill
         asl a
@@ -1056,9 +1195,9 @@
         dec x
         dec x
         bne _D9AC
-        lda #$8000
+        lda #(`aUnknown80D8FA)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$D8FA
+        lda #<>aUnknown80D8FA
         sta lMapMenuTilemapRAMEntryPointer,b
         lda wSkillWindowCurrentSkill
         asl a
@@ -1246,6 +1385,40 @@
 
         ; 8B/DAF4
 
+
+      aUnknown8BDAF4 ; 8B/DAF4
+
+        _Sprites := [[(  15,    0), $21, SpriteLarge, $026, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   16), $21, SpriteLarge, $020, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   32), $21, SpriteLarge, $022, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   48), $21, SpriteLarge, $024, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   64), $21, SpriteLarge, $064, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   80), $21, SpriteLarge, $066, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   96), $21, SpriteLarge, $028, 2, 3, false, false]]
+
+        .structSpriteArray aUnknown8BDAF4._Sprites
+
+      aUnknown8BDB19 ; 8B/DB19
+
+        _Sprites := [[(  15,    0), $21, SpriteLarge, $02C, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   16), $21, SpriteLarge, $02E, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   32), $21, SpriteLarge, $040, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   48), $21, SpriteLarge, $042, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   64), $21, SpriteLarge, $044, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   80), $21, SpriteLarge, $046, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   96), $21, SpriteLarge, $048, 2, 3, false, false]]
+        _Sprites ..= [[(  15,  112), $21, SpriteLarge, $04A, 2, 3, false, false]]
+
+        .structSpriteArray aUnknown8BDB19._Sprites
+
+      aUnknown8BDB43 ; 8B/DB43
+
+        _Sprites := [[(  15,    0), $21, SpriteLarge, $060, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   16), $21, SpriteLarge, $062, 2, 3, false, false]]
+        _Sprites ..= [[(  15,   32), $21, SpriteLarge, $068, 2, 3, false, false]]
+
+        .structSpriteArray aUnknown8BDB43._Sprites
+
     .endsection Unsorted8BDAB4Section
 
 
@@ -1282,6 +1455,13 @@
         .databank 0
 
         ; 8B/DB77
+
+
+      aUnknown8BDB77 ; 8B/DB77
+
+        _Sprites := [[( 150,   34), $21, SpriteLarge, $020, 3, 3, false, false]]
+
+        .structSpriteArray aUnknown8BDB77._Sprites
 
     .endsection Unsorted8BDB54Section
 
@@ -1387,7 +1567,7 @@
         phk
         plb
         .databank $8B
-        lda $DC22,b,y
+        lda <>aUnknown8BDC22,b,y
         tay
         jsl rlPushToOAMBuffer
 
@@ -1399,6 +1579,110 @@
         ; 8B/DC22
 
     .endsection Unsorted8BDBA2Section
+
+
+    .section Table8BDC22Section
+
+      .al
+      .xl
+
+      aUnknown8BDC22 ; 8B/DC22
+
+        ; Read by rsSkillWindowRenderArrows.
+
+        .word <>aUnknown8BDC28
+        .word <>aUnknown8BDC2F
+        .word <>aUnknown8BDC3B
+
+      aUnknown8BDC28 ; 8B/DC28
+
+        _Sprites := [[(  65, -113), $21, SpriteLarge, $000C, 3, 0, false, true]]
+
+        .structSpriteArray aUnknown8BDC28._Sprites
+
+      aUnknown8BDC2F ; 8B/DC2F
+
+        _Sprites := [[(  65, -113), $21, SpriteLarge, $000C, 3, 0, false, true]]
+        _Sprites ..= [[(  65,   82), $21, SpriteLarge, $000C, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown8BDC2F._Sprites
+
+      aUnknown8BDC3B ; 8B/DC3B
+
+        _Sprites := [[(  65,   82), $21, SpriteLarge, $000C, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown8BDC3B._Sprites
+
+      aUnknown8BDC42 ; 8B/DC42
+
+        _Sprites := [[( 136,   98), $21, SpriteLarge, $000A, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown8BDC42._Sprites
+
+        ; 8B/DC49
+
+    .endsection Table8BDC22Section
+
+
+    .section Unsorted8BDC49Section
+
+      .al
+      .xl
+
+      rsUnknown8BDC49 ; 8B/DC49
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$7F
+        pha
+        plb
+        .databank $7F
+        rep #$20
+        stz wR15
+        lda $8185,b
+        asl a
+        tax
+        lda aUnknown8BDFBF,x
+        sta wSkillWindowSkillID
+        ldy #$0000
+        tyx
+
+        _DC63
+        lda aSkillWindowUnits,y
+        beq _DC84
+        sta @l wSelectedUnitDataRAMPointer
+        lda wSkillWindowSkillID
+        jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
+        bcc _DC80
+        lda @l wSelectedUnitDataRAMPointer
+        sta $81C7,b,x
+        inc wR15
+        inc x
+        inc x
+
+        _DC80
+        inc y
+        inc y
+        bra _DC63
+
+
+        _DC84
+        lda #$0000
+        sta @l $7F81C7,x
+        lda wR15
+        sta @l aSkillWindowHolderCounts
+        rts
+
+        .databank 0
+
+        ; 8B/DC92
+
+
+    .endsection Unsorted8BDC49Section
 
 
     .section Unsorted8BDC92Section
@@ -1845,6 +2129,13 @@
         .databank 0
 
         ; 8B/DFA9
+
+
+      aUnknown8BDFA9 ; 8B/DFAA?
+
+        .enc "SJIS"
+        .text "だれももっていません\n"
+        .enc "none"
 
     .endsection Unsorted8BDECDSection
 

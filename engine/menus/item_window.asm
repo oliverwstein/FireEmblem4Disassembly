@@ -249,9 +249,9 @@
 
         ; Creates the COLDATA HDMA entry whose header is at $80/D07E (rlMapMenuWindowCOLDATAHDMAInit, rlMapMenuWindowCOLDATAHDMACycle).
 
-        lda #$8000
+        lda #(`aUnknown80D07E)<<8
         sta lR44+1
-        lda #$D07E
+        lda #<>aUnknown80D07E
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rts
@@ -281,15 +281,15 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #$8000
+        lda #(`aUnknown80D046)<<8
         sta lR18+1
-        lda #$D046
+        lda #<>aUnknown80D046
         sta lR18
         ldx #$0A02
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80D064)<<8
         sta lR18+1
-        lda #$D064
+        lda #<>aUnknown80D064
         sta lR18
         ldx #$0D03
         jsl rlDrawMenuTextLine
@@ -416,6 +416,35 @@
     .endsection Unsorted80CE9ESection
 
 
+    .section Table80D046Section
+
+      .al
+      .xl
+
+      aUnknown80D046 ; 80/D046
+
+        .enc "SJIS"
+        .text "わが軍のアイテムはありません"
+        .word $0000
+        .enc "none"
+
+      aUnknown80D064 ; 80/D064
+
+        .enc "SJIS"
+        .text "Ｂボタンをおしてください"
+        .word $0000
+        .enc "none"
+
+
+      aUnknown80D07E .dstruct structHDMADirectEntryInfo, rlMapMenuWindowCOLDATAHDMAInit, rlMapMenuWindowCOLDATAHDMACycle, $D0B2, $7FB0B6, PPU_REG_BASE + $32, $00 ; 80/D07E
+
+    .endsection Table80D046Section
+
+
+
+
+
+
     .section Unsorted80D089Section
 
       .al
@@ -485,6 +514,11 @@
         .databank 0
 
         ; 80/D0B2
+
+
+      aUnknown80D0B2 ; 80/D0B2
+
+        HDMA_HALT
 
     .endsection Unsorted80D0B1Section
 
@@ -644,6 +678,39 @@
         ; 80/D1AE
 
     .endsection Unsorted80D143Section
+
+
+    .section Table80D1AESection
+
+      .al
+      .xl
+
+      aUnknown80D1AE ; 80/D1AE
+
+        ; Read by rlItemWindowGetItemData (item ID -> icon index, zero-terminated).
+
+        .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E
+        .word $0020, $0022, $0024, $0026, $0028, $002A, $002C, $002E
+        .word $0040, $0042, $0044, $0046, $0048, $004A, $004C, $004E
+        .word $0060, $0062, $0062, $0062, $0064, $0066, $0068, $006A
+        .word $006C, $006E, $0080, $0082, $0084, $0086, $0086, $0086
+        .word $0088, $008A, $008C, $008E, $00A0, $00A2, $00A4, $00A4
+        .word $00A4, $00A6, $00A8, $00AA, $00AC, $00AE, $00C0, $00C2
+        .word $00C2, $00C2, $01A2, $01A4, $01A6, $01A8, $00C4, $00C6
+        .word $00C8, $00CA, $00CC, $00CE, $00E0, $00E2, $00E4, $00E6
+        .word $00E8, $00EA, $00EC, $00EE, $0100, $0102, $0104, $0106
+        .word $0108, $010A, $010C, $010E, $0120, $0122, $0122, $0122
+        .word $0124, $0126, $0128, $012A, $012C, $012E, $0140, $0142
+        .word $0144, $0146, $01AA, $0148, $014A, $014C, $014E, $0160
+        .word $0160, $0160, $0162, $0164, $0166, $0168, $016A, $016C
+        .word $016E, $0180, $0182, $0184, $0186, $0188, $018A, $018C
+        .word $018E, $01A0, $0062, $0086, $00C2, $0122, $0122, $0122
+        .word $0122, $0122, $0122, $0122, $0122, $0122, $0122, $0122
+        .word $0160, $01AC, $0000, $0000
+
+        ; 80/D2C6
+
+    .endsection Table80D1AESection
 
 
     .section Unsorted89B3D7Section
@@ -1429,27 +1496,27 @@
         _B9A6
         lda #$2400
         sta aCurrentTilemapInfo,b
-        lda #$8900
+        lda #(`aUnknown89BAC1)<<8
         sta lR18+1
-        lda #$BAC1
+        lda #<>aUnknown89BAC1
         sta lR18
         ldx #$0B14
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown89BACD)<<8
         sta lR18+1
-        lda #$BACD
+        lda #<>aUnknown89BACD
         sta lR18
         ldx #$0D15
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown89BAD7)<<8
         sta lR18+1
-        lda #$BAD7
+        lda #<>aUnknown89BAD7
         sta lR18
         ldx #$0F15
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown89BAE1)<<8
         sta lR18+1
-        lda #$BAE1
+        lda #<>aUnknown89BAE1
         sta lR18
         ldx #$1116
         jsl rlDrawMenuTextLine
@@ -1534,6 +1601,54 @@
         ; 89/BAC1
 
     .endsection Unsorted89B91FSection
+
+
+    .section Table89BAC1Section
+
+      .al
+      .xl
+
+      aUnknown89BAC1 ; 89/BAC1
+
+        .enc "SJIS"
+        .text "めいちゅう"
+        .word $0000
+        .enc "none"
+
+      aUnknown89BACD ; 89/BACD
+
+        .enc "SJIS"
+        .text "いりょく"
+        .word $0000
+        .enc "none"
+
+      aUnknown89BAD7 ; 89/BAD7
+
+        .enc "SJIS"
+        .text "しゃてい"
+        .word $0000
+        .enc "none"
+
+      aUnknown89BAE1 ; 89/BAE1
+
+        .enc "SJIS"
+        .text "おもさ"
+        .word $0000
+        .enc "none"
+
+      aUnknown89BAE9 ; 89/BAE9
+
+        .enc "SJIS"
+        .text "アイテム"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table89BAC1Section
+
+
+
+
 
 
     .section Unsorted89BAF3Section
@@ -2025,6 +2140,19 @@
         .databank 0
 
         ; 89/BE49
+
+
+      aUnknown89BE49 ; 89/BE49
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $020, 3, 3, false, false]]
+
+        .structSpriteArray aUnknown89BE49._Sprites
+
+      aUnknown89BE50 ; 89/BE50
+
+        _Sprites := [[( 195,   76), $21, SpriteLarge, $00E, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown89BE50._Sprites
 
     .endsection Unsorted89BD00Section
 

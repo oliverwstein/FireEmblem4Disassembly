@@ -58,18 +58,9 @@
 
         ; Read by rsUnknown88CC98, rsUnknown88DE40.
 
-        .byte $00, $00, $D7, $80, $01, $D7, $00, $03, $D7, $80, $04, $D7, $00, $06, $D7, $80
-        .byte $07, $D7, $00, $09, $D7, $80, $0A, $D7, $00, $0C, $D7, $80, $0D, $D7, $00, $0F
-        .byte $D7, $80, $10, $D7, $00, $12, $D7, $80, $13, $D7, $00, $15, $D7, $80, $16, $D7
-        .byte $00, $18, $D7, $80, $19, $D7, $00, $1B, $D7, $80, $1C, $D7, $00, $1E, $D7, $80
-        .byte $1F, $D7, $00, $21, $D7, $80, $22, $D7, $00, $24, $D7, $80, $25, $D7, $00, $27
-        .byte $D7, $80, $28, $D7, $00, $2A, $D7, $80, $2B, $D7, $00, $2D, $D7, $80, $2E, $D7
-        .byte $00, $30, $D7, $80, $31, $D7, $00, $33, $D7, $80, $34, $D7, $00, $36, $D7, $80
-        .byte $37, $D7, $00, $39, $D7, $80, $3A, $D7, $00, $3C, $D7, $80, $3D, $D7, $00, $3F
-        .byte $D7, $80, $40, $D7, $00, $42, $D7, $80, $43, $D7, $00, $45, $D7, $80, $46, $D7
-        .byte $00, $48, $D7, $80, $49, $D7, $00, $4B, $D7, $80, $4C, $D7, $00, $4E, $D7, $80
-        .byte $4F, $D7, $00, $51, $D7, $80, $52, $D7, $00, $54, $D7, $80, $55, $D7, $00, $57
-        .byte $D7, $80, $58, $D7, $00, $5A, $D7, $80, $5B, $D7, $00, $5D, $D7
+        .for i in range(63)
+          .long g4bppStandingMapSprites1 + (i * $0180)
+        .endfor
 
         ; 88/D5E3
 
@@ -85,16 +76,12 @@
 
         ; Read by rsUnknown88CE81, rsUnknown88DE9E.
 
-        .byte $00, $00, $DA, $40, $02, $DA, $80, $04, $DA, $C0, $06, $DA, $00, $09, $DA, $40
-        .byte $0B, $DA, $80, $0D, $DA, $C0, $0F, $DA, $00, $12, $DA, $40, $14, $DA, $80, $16
-        .byte $DA, $C0, $18, $DA, $00, $1B, $DA, $40, $1D, $DA, $80, $1F, $DA, $C0, $21, $DA
-        .byte $00, $24, $DA, $40, $26, $DA, $80, $28, $DA, $C0, $2A, $DA, $00, $2D, $DA, $40
-        .byte $2F, $DA, $80, $31, $DA, $C0, $33, $DA, $00, $36, $DA, $40, $38, $DA, $80, $3A
-        .byte $DA, $C0, $3C, $DA, $00, $3F, $DA, $40, $41, $DA, $80, $43, $DA, $00, $0E, $00
-        .byte $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00
-        .byte $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00
-        .byte $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E, $00
-        .byte $0E, $00, $0E, $00, $0E, $00, $0E, $00, $0E
+        .for i in range(31)
+          .long g4bppStandingMapSprites2 + (i * $0240)
+        .endfor
+        .rept 30
+          .word $0E00
+        .endrept
 
         ; 88/D67C
 
@@ -4790,9 +4777,9 @@
         .autsiz
         .databank ?
 
-        lda #$8100
+        lda #(`aUnknown81B522)<<8
         sta lR44+1
-        lda #$B522
+        lda #<>aUnknown81B522
         sta lR44
         jsl rlUnknown82E0C6
         jsl rlUnknown82E08D
@@ -7348,7 +7335,7 @@
         ldx #$00DE
 
         _80EC
-        lda aUnknown8C9520,x
+        lda aUnknown8C951E+2,x
         sta aOAMPaletteBuffer.aPalette1,b,x
         dec x
         dec x
@@ -7513,7 +7500,7 @@
         ldx #$00DE
 
         _8282
-        lda aUnknown8C9520,x
+        lda aUnknown8C951E+2,x
         sta aOAMPaletteBuffer.aPalette1,b,x
         dec x
         dec x
@@ -7627,6 +7614,10 @@
         .databank 0
 
         ; 88/83C4
+
+
+        .byte $00, $00
+        rtl
 
     .endsection Unsorted88821ASection
 

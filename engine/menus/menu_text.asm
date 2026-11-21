@@ -272,7 +272,154 @@
 
         .word $0006, $0306, $0606, $00FF, $00FF, $00FF, $00FF, $00FF
 
-        ; 87/9481
+      aUnknown879481 ; 87/9481
+
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00CE, $00FF, $00FF, $01AF, $00CF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $01BF, $00DF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00CD, $40CD, $00FF, $00FF, $00FF, $0109, $0109
+        .word $0109, $00DD, $40DD, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $0164, $0165, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $0174, $0175, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $011A, $0109
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $0107, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $010C, $811C, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $011C, $810C, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $0120, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $0130, $0121, $0122, $0123, $0124, $0125
+        .word $0126, $0127, $0128, $0131, $0132, $0133, $0134, $0135
+        .word $0136, $0137, $0138, $0129, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $0139, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $012A, $012B, $012C, $012D, $012E
+        .word $012F, $0140, $0141, $013A, $013B, $013C, $013D, $013E
+        .word $013F, $0150, $0151, $0142, $0143, $0144, $0145, $0146
+        .word $0147, $0148, $0149, $0152, $0153, $0154, $0155, $0156
+        .word $0157, $0158, $0159, $014A, $014B, $014C, $014D, $014E
+        .word $014F, $0160, $0161, $015A, $015B, $015C, $015D, $015E
+        .word $015F, $0170, $0171, $0162, $0163, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $0172, $0173, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00F3, $0000, $00FF, $0001, $00FF, $0002
+        .word $00FF, $0003, $00FF, $0010, $00F3, $0011, $00F4, $0012
+        .word $00F5, $0013, $00F6, $0004, $0005, $0060, $0006, $0061
+        .word $0007, $0062, $0008, $0014, $0015, $0015, $0016, $0016
+        .word $0017, $0017, $0018, $0063, $0009, $0064, $000A, $0065
+        .word $000B, $0066, $000C, $0018, $0019, $0019, $001A, $001A
+        .word $001B, $001B, $001C, $0067, $000D, $0068, $000E, $0069
+        .word $000F, $006A, $0020, $001C, $001D, $001D, $001E, $001E
+        .word $001F, $001F, $0030, $006B, $00FF, $0021, $006C, $0022
+        .word $006D, $0023, $006E, $0030, $00F9, $0031, $0031, $0032
+        .word $0032, $0033, $0033, $0024, $0025, $0026, $0027, $0028
+        .word $0029, $006F, $0074, $0034, $0035, $0036, $0037, $0038
+        .word $0039, $0039, $0039, $002A, $0070, $0075, $002B, $0071
+        .word $0076, $002C, $0072, $003A, $003A, $003A, $003B, $003B
+        .word $003B, $003C, $003C, $0077, $002D, $0073, $0078, $002E
+        .word $002F, $0040, $0041, $003C, $003D, $003D, $003D, $003E
+        .word $003F, $0050, $0051, $0042, $00FF, $0043, $00FF, $0044
+        .word $00FF, $0045, $0046, $0052, $00F8, $0053, $00FA, $0054
+        .word $00FB, $0055, $0056, $0047, $0048, $0049, $004A, $00FF
+        .word $004B, $00FF, $00FF, $0057, $0058, $0059, $005A, $00FF
+        .word $005B, $00FF, $00FF, $004C, $004D, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $005C, $005D, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $0080, $00FF, $0081, $00FF
+        .word $0082, $00FF, $0083, $00FC, $0090, $00FD, $0091, $00FE
+        .word $0092, $0100, $0093, $00FF, $0084, $0085, $0079, $0086
+        .word $007A, $0087, $007B, $0101, $0094, $0095, $0095, $0096
+        .word $0096, $0097, $0097, $0088, $007C, $0089, $007D, $008A
+        .word $007E, $008B, $007F, $0098, $0098, $0099, $0099, $009A
+        .word $009A, $009B, $009B, $008C, $00E0, $008D, $00E1, $008E
+        .word $00E2, $008F, $00E3, $009C, $009C, $009D, $009D, $009E
+        .word $009E, $009F, $009F, $00A0, $00E4, $00FF, $00A1, $00E5
+        .word $00A2, $00E6, $00A3, $00B0, $00B0, $0103, $00B1, $00B1
+        .word $00B2, $00B2, $00B3, $00E7, $00A4, $00A5, $00A6, $00A7
+        .word $00A8, $00A9, $00E8, $00B3, $00B4, $00B5, $00B6, $00B7
+        .word $00B8, $00B9, $00B9, $00ED, $00AA, $00E9, $00EE, $00AB
+        .word $00EA, $00EF, $00AC, $00B9, $00BA, $00BA, $00BA, $00BB
+        .word $00BB, $00BB, $00BC, $00EB, $00F0, $00AD, $00EC, $00F1
+        .word $00AE, $00AF, $00FF, $00BC, $00BC, $00BD, $00BD, $00BD
+        .word $00BE, $00BF, $00FF, $00C0, $00C1, $00C2, $00FF, $00C3
+        .word $00FF, $00C4, $00FF, $00D0, $00D1, $00D2, $0102, $00D3
+        .word $0104, $00D4, $0105, $00C5, $00C6, $00C7, $00C8, $00C9
+        .word $00CA, $00FF, $00CB, $00D5, $00D6, $00D7, $00D8, $00D9
+        .word $00DA, $00FF, $00DB, $00FF, $00FF, $00FF, $00CC, $00F2
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00DC, $0092
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF, $00FF
+        .word $00FF, $00FF, $00FF
+
+        ; 87/9D77
 
     .endsection Table879471Section
 
@@ -349,7 +496,7 @@
         tax
         lda aUnknown879471,x
         sta wR10
-        lda $9481,b,x
+        lda aUnknown879481,x
         sta wR11
         plx
         plp

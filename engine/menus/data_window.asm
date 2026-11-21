@@ -7,6 +7,34 @@
 ; banks $80 ($80/D90C-DFD3) and $8B ($8B/CF0A-D794); its variables are at $7F8183
 ; (include/WRAM.h).
 
+    .section Table80D8E8Section
+
+      .al
+      .xl
+
+      aUnknown80D8E8 ; 80/D8E8
+        .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E
+
+      aUnknown80D8F1 ; 80/D8F1
+        .byte $10, $18, $00, $00, $00, $00, $8D, $87, $7F
+
+      aUnknown80D8FA ; 80/D8FA
+        .byte $28, $01, $00, $00, $00, $00, $8D, $8F, $7F
+
+      aUnknown80D903 ; 80/D903
+        .byte $17, $06, $00, $00, $00, $00, $8D, $90, $7F
+
+    .endsection Table80D8E8Section
+
+
+
+
+
+
+
+
+
+
 
     .section DataWindowOpenSection
 

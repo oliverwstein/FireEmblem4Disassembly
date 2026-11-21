@@ -282,6 +282,10 @@
 
         .structProcInfo "PW", rlProcUnknown85BB52Init, rlProcUnknown85BB52Cycle, aProcDialogueBoxCode
 
+
+        .long aUnknown85BB46
+        .byte 0
+
     .endsection ProcScript85BB52Section
 
 
@@ -495,7 +499,7 @@
         ldx #$0010
 
         _C508
-        lda aUnknownDE0000,x
+        lda aWindowPalette,x
         sta aBGPaletteBuffer,b,x
         inc x
         inc x

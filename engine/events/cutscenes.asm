@@ -195,7 +195,7 @@
         ldx #$00DE
 
           -
-          lda aUnknown8C9520,x
+          lda aUnknown8C951E+2,x
           sta aOAMPaletteBuffer.aPalette1,b,x
           dec x
           dec x

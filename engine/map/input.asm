@@ -145,6 +145,18 @@
 
         .structProcInfo "PM", rlProcUnknown85DDDBInit, rlProcUnknown85DDDBCycle, aProcUnknown85DDDBCode
 
+
+        .long aUnknown85DCEB
+        .byte 1
+        .long aUnknown85DD92
+
+      procUnknown85DDEA ; 85/DDEA
+
+        .structProcInfo "PM", rlProcUnknown85DDDBInit, rlProcUnknown85DDDBCycle, aProcUnknown85DDDBCode
+        .long aUnknown85DD00
+        .byte 1
+        .long aUnknown85DDB9
+
     .endsection ProcScript85DDDBSection
 
 

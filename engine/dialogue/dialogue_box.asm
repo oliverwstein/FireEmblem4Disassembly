@@ -977,21 +977,21 @@
 
         _Light
         sep #$20
-        lda #`$8ADBAF
+        lda #`aUnknown8ADBAF
         pha
         plb
         rep #$20
 
-        ldy #<>$8ADBAF
+        ldy #<>aUnknown8ADBAF
         bra _Push
 
         _Dark
         sep #$20
-        lda #`$8ADBB6
+        lda #`aUnknown8ADBB6
         pha
         plb
         rep #$20
-        ldy #<>$8ADBB6
+        ldy #<>aUnknown8ADBB6
 
         _Push
         lda #0

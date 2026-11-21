@@ -306,9 +306,9 @@
 
         ; Arena menu step 4 (aArenaMenuStepHandlers).
 
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -335,13 +335,13 @@
         jsl rlDrawMenuTextLine
         stz $08A5,b
         stz $08A7,b
-        lda #$8A00
+        lda #(`aUnknown8AD088)<<8
         sta lR19+1
-        lda #$D088
+        lda #<>aUnknown8AD088
         sta lR19
-        lda #$8A00
+        lda #(`aUnknown8AD08A)<<8
         sta lR20+1
-        lda #$D08A
+        lda #<>aUnknown8AD08A
         sta lR20
         lda #$0002
         jsr rsUnknown8ACFBE
@@ -527,9 +527,9 @@
 
         ; Arena menu step 7 (aArenaMenuStepHandlers).
 
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -636,16 +636,16 @@
 
         ; Arena menu step 8 (aArenaMenuStepHandlers).
 
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsr rsUnknown8AADF4
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -670,13 +670,13 @@
         adc #$000B
         tax
         jsl rlDrawMenuTextLine
-        lda #$8A00
+        lda #(`aUnknown8AD08C)<<8
         sta lR19+1
-        lda #$D08C
+        lda #<>aUnknown8AD08C
         sta lR19
-        lda #$8A00
+        lda #(`aUnknown8AD08F)<<8
         sta lR20+1
-        lda #$D08F
+        lda #<>aUnknown8AD08F
         sta lR20
         lda #$0003
         jsr rsUnknown8ACFBE
@@ -784,9 +784,9 @@
 
         ; Arena menu step 9 (aArenaMenuStepHandlers).
 
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -807,9 +807,9 @@
 
         ; Arena menu step 10 (aArenaMenuStepHandlers).
 
-        lda #$8000
+        lda #(`aUnknown80B6AD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$B6AD
+        lda #<>aUnknown80B6AD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -818,13 +818,13 @@
         lda #<>aArenaStartQuitChangeWeaponText
         sta lR18
         jsr rsUnknown8AD0B8
-        lda #$8A00
+        lda #(`aUnknown8AD08C)<<8
         sta lR19+1
-        lda #$D08C
+        lda #<>aUnknown8AD08C
         sta lR19
-        lda #$8A00
+        lda #(`aUnknown8AD08F)<<8
         sta lR20+1
-        lda #$D08F
+        lda #<>aUnknown8AD08F
         sta lR20
         lda #$0003
         jsr rsUnknown8ACFBE

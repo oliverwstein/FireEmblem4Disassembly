@@ -939,7 +939,70 @@
 
         .databank 0
 
-        ; 9F/8F95
+      rlUnknown9F8F95 ; 9F/8F95
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aPaletteFading.wMaxSteps,b
+        bcc _8F9B
+        lsr a
+
+        _8F9B
+        inc a
+        cmp aPaletteFading.wCurrentStep,b
+        bcs _8FAD
+        lda #1,s
+        adc #2
+        sta #1,s
+        stz aPaletteFading.wCurrentStep,b
+        sec
+        rtl
+
+        _8FAD
+        phx
+        lda #3,s
+        tay
+        lda $0001,b,y
+        tax
+        tya
+        clc
+        adc #2
+        sta #3,s
+        txy
+        bra _8FD5
+
+        _8FBF
+        phy
+        tax
+        lda $0002,b,y
+        pha
+        lda $0004,b,y
+        tay
+        pla
+        jsl rlUnknown9F8EC0
+        ply
+        inc y
+        inc y
+        inc y
+        inc y
+        inc y
+        inc y
+
+        _8FD5
+        lda $0000,b,y
+        cmp #$FFFF
+        bne _8FBF
+        inc aPaletteFading.wCurrentStep,b
+        plx
+        clc
+        rtl
+
+        .databank 0
+
+        ; 9F/8FE3
 
     .endsection FadePaletteToBlackSection
 

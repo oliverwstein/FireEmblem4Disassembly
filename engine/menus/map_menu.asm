@@ -179,6 +179,27 @@
 
         ; 85/839A
 
+
+      aUnknown85839A ; 85/839A
+
+        .structMapMenuTilemapData 9, 2, aBG3TilemapBuffer, 0, $7FCD4A
+
+      aUnknown8583A3 ; 85/83A3
+
+        .long 0, 0, aUnknown85839A
+        .byte 2, 4, 6
+
+      aUnknown8583AF ; 85/83AF
+
+        .word 0, 1
+
+      procUnknown8583B3 ; 85/83B3
+
+        .structProcInfo "PM", rlUnknown8583C2, rlUnknown8583DA, aProcUnknown85DDDBCode
+        .long aUnknown8583A3
+        .byte 1
+        .long aUnknown8583AF
+
     .endsection ProcScript858398Section
 
 
@@ -1445,7 +1466,7 @@
       .al
       .xl
 
-      aDialogueBoxTilemap .text ROM[$058000:$058250] ; 85/8000
+      aDialogueBoxTilemap .binary "../../gfx/ui/tilemaps/DialogueBoxTilemap.bin" ; 85/8000
 
     .endsection Unsorted858000Section
 
@@ -1592,7 +1613,7 @@
         sta wR7
 
         ; Source offset
-        lda #$027E
+        lda #size(aDialogueBoxTilemap) - 2
         sta wR6
 
           _Loop

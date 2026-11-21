@@ -290,9 +290,9 @@
         .autsiz
         .databank ?
 
-        lda #$9100
+        lda #(`aUnknown91E185)<<8
         sta lR44+1
-        lda #$E185
+        lda #<>aUnknown91E185
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rts

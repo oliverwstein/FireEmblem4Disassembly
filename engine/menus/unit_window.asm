@@ -396,24 +396,24 @@
 
         ; Sets up the HDMA that scrolls the BG layers. FE5: rlUnitWindowFE4SetHDMA.
 
-        lda #$8000
+        lda #(`aUnknown80C6CD)<<8
         sta lR44+1
-        lda #$C6CD
+        lda #<>aUnknown80C6CD
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #$8000
+        lda #(`aUnknown80C718)<<8
         sta lR44+1
-        lda #$C718
+        lda #<>aUnknown80C718
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #$8000
+        lda #(`aUnknown80C762)<<8
         sta lR44+1
-        lda #$C762
+        lda #<>aUnknown80C762
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #$8000
+        lda #(`aUnknown80C88C)<<8
         sta lR44+1
-        lda #$C88C
+        lda #<>aUnknown80C88C
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rts
@@ -423,6 +423,20 @@
         ; 80/C6CD
 
     .endsection Unsorted80C628Section
+
+
+    .section Table80C6CDSection
+
+      .al
+      .xl
+
+      aUnknown80C6CD .dstruct structHDMADirectEntryInfo, rlUnitWindowBG3VOFSHDMAInit, rlUnitWindowBG3VOFSHDMACycle, aUnknown80C716, $7FB038, PPU_REG_BASE + $12, $02 ; 80/C6CD
+
+    .endsection Table80C6CDSection
+
+
+
+
 
 
     .section Unsorted80C6D8Section
@@ -487,6 +501,23 @@
     .endsection Unsorted80C6D8Section
 
 
+    .section Table80C716Section
+
+      .al
+      .xl
+
+      aUnknown80C716 ; 80/C716
+        HDMA_HALT
+
+      aUnknown80C718 .dstruct structHDMADirectEntryInfo, rlUnitWindowBG1VOFSHDMAInit, rlUnitWindowBG1VOFSHDMACycle, aUnknown80C760, $7FB020, PPU_REG_BASE + $0E, $02 ; 80/C718
+
+    .endsection Table80C716Section
+
+
+
+
+
+
     .section Unsorted80C723Section
 
       .al
@@ -546,6 +577,23 @@
         ; 80/C760
 
     .endsection Unsorted80C723Section
+
+
+    .section Table80C760Section
+
+      .al
+      .xl
+
+      aUnknown80C760 ; 80/C760
+        HDMA_HALT
+
+      aUnknown80C762 .dstruct structHDMADirectEntryInfo, rlUnitWindowCGADSUBHDMAInit, rlUnitWindowCGADSUBHDMACycle, aUnknown80C88A, $7FB0B6, PPU_REG_BASE + $31, $03 ; 80/C762
+
+    .endsection Table80C760Section
+
+
+
+
 
 
     .section Unsorted80C76DSection
@@ -714,6 +762,23 @@
     .endsection Unsorted80C76DSection
 
 
+    .section Table80C88ASection
+
+      .al
+      .xl
+
+      aUnknown80C88A ; 80/C88A
+        HDMA_HALT
+
+      aUnknown80C88C .dstruct structHDMADirectEntryInfo, rlUnitWindowBG2VOFSHDMAInit, rlUnitWindowBG2VOFSHDMACycle, $C8D3, $7FB02C, PPU_REG_BASE + $10, $02 ; 80/C88C
+
+    .endsection Table80C88ASection
+
+
+
+
+
+
     .section Unsorted80C897Section
 
       .al
@@ -770,6 +835,11 @@
         .databank 0
 
         ; 80/C8D3
+
+
+      aUnknown80C8D3 ; 80/C8D3
+
+        HDMA_HALT
 
     .endsection Unsorted80C897Section
 
@@ -1025,9 +1095,9 @@
         phk
         plb
         .databank $80
-        lda #$8000
+        lda #(`aUnknown80C3DD)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$C3DD
+        lda #<>aUnknown80C3DD
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
 
@@ -5327,9 +5397,9 @@
 
         lda #$3000
         sta aCurrentTilemapInfo,b
-        lda #$8B00
+        lda #(`aUnknown8BC96A)<<8
         sta lR18+1
-        lda #$C96A
+        lda #<>aUnknown8BC96A
         sta lR18
         ldx #$0001
         jsl rlDrawMenuTextLine
@@ -5340,6 +5410,26 @@
         ; 8B/C96A
 
     .endsection UnitWindowUnknown8BC67FSection
+
+
+    .section Table8BC96ASection
+
+      .al
+      .xl
+
+      aUnknown8BC96A ; 8B/C96A
+
+        .enc "SJIS"
+        .text "スキル"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8BC96ASection
+
+
+
+
 
 
     .section UnitWindowUnknown8BC972Section

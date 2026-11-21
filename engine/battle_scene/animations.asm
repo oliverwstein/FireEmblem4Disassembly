@@ -1185,6 +1185,7 @@
         .structBattleAnimationLookupEntry KillerBallistician, AnimCategoryBow, AnimAnyCharacter, GenderMale, $5C, $63, $43, $48
         .structBattleAnimationLookupEntry GreatBallistician, AnimCategoryBow, AnimAnyCharacter, GenderMale, $5C, $64, $44, $49
         .structBattleAnimationLookupEntry DarkPrince, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $5D, $65, $45, $4A
+        .byte $FE
 
     .endsection BattleAnimationFramesSection
 
@@ -1723,6 +1724,27 @@
         .long g4bppcBattleWeaponIronBallista
         .long g4bppcBattleWeaponKillerBallista
         .long g4bppcBattleWeaponGreatBallista
+
+
+      aUnknown9988E2 ; 99/88E2
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $1FA, 3, 3, false, false]]
+        _Sprites ..= [[(   8,    0), $00, SpriteSmall, $1FB, 3, 3, false, false]]
+
+        .structSpriteArray aUnknown9988E2._Sprites
+
+      aUnknown9988EE ; 99/88EE
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $1FC, 3, 3, false, false]]
+        _Sprites ..= [[(   8,    0), $00, SpriteSmall, $1FD, 3, 3, false, false]]
+
+        .structSpriteArray aUnknown9988EE._Sprites
+
+      aUnknown9988FA ; 99/88FA
+
+        .word $7C89, $7C88, $7C87, $7C86, $7C99, $7C98, $7C97, $7C96
+        .word $7C8F, $7C8E, $7C8D, $7C8C, $7C9F, $7C9E, $7C9D, $7C9C
+        .word $7CAF, $7CAE, $7CAD, $7CAC, $7CBF, $7CBE, $7CBD, $7CBC
 
     .endsection BattleWeaponGraphicsSection
 

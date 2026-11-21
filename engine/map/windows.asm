@@ -15,9 +15,9 @@
         ora #0
         bne +
 
-          lda #(`$85C652)<<8
+          lda #(`procUnitWindow)<<8
           sta lR44+1
-          lda #<>$85C652
+          lda #<>procUnitWindow
           sta lR44
           jsl rlProcEngineFindProc
           bcs +
@@ -29,9 +29,9 @@
         ora #0
         bne +
 
-          lda #(`$85C33F)<<8
+          lda #(`procTerrainWindow)<<8
           sta lR44+1
-          lda #<>$85C33F
+          lda #<>procTerrainWindow
           sta lR44
           jsl rlProcEngineFindProc
           bcs +
@@ -49,9 +49,9 @@
         .autsiz
         .databank ?
 
-        lda #(`$85C652)<<8
+        lda #(`procUnitWindow)<<8
         sta lR44+1
-        lda #<>$85C652
+        lda #<>procUnitWindow
         sta lR44
         jsl rlProcEngineFindProc
         bcc +
@@ -59,9 +59,9 @@
           jsl rlProcEngineFreeProc
 
         +
-        lda #(`$85C33F)<<8
+        lda #(`procTerrainWindow)<<8
         sta lR44+1
-        lda #<>$85C33F
+        lda #<>procTerrainWindow
         sta lR44
         jsl rlProcEngineFindProc
         bcc +
