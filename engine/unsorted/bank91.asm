@@ -109,9 +109,9 @@
         clc
         adc wUnknown00171C,b
         tax
-        lda $91A405,x
+        lda aUnknown91A405,x
         sta lR19
-        lda $91A406,x
+        lda aUnknown91A405+1,x
         sta lR19+1
         jsl rlUnknown91A402
 
@@ -137,6 +137,22 @@
         ; 91/A405
 
     .endsection Unsorted91A3DESection
+
+
+    .section Data91A405Section
+
+      .al
+      .xl
+
+      aUnknown91A405 ; 91/A405
+
+        ; Read by rsUnknown91A3DE.
+
+        .byte $0E, $A4, $91, $CA, $A5, $91, $C0, $A6, $91
+
+        ; 91/A40E
+
+    .endsection Data91A405Section
 
 
     .section Unsorted91A80DSection
@@ -959,7 +975,7 @@
         adc wR0
         asl a
         tax
-        lda $91B34C,x
+        lda aUnknown91B34C,x
         cmp #$FFFF
         beq _B1BF
         lda $185A,b
@@ -1110,7 +1126,7 @@
         inc a
         inc a
         tax
-        lda $91B34C,x
+        lda aUnknown91B34C,x
         cmp #$00FF
         beq _B27B
         cmp #$0000
@@ -1165,7 +1181,7 @@
         ldx #$0000
 
         _B29C
-        lda $91B2D3,x
+        lda aUnknown91B2D3,x
         and #$00FF
         cmp #$003F
         bne _B2AD
@@ -1206,6 +1222,23 @@
     .endsection Unsorted91B1FCSection
 
 
+    .section Data91B2D3Section
+
+      .al
+      .xl
+
+      aUnknown91B2D3 ; 91/B2D3
+
+        ; Read by rsUnknown91B20A.
+
+        .word $1E13, $0D10, $0A1B, $3F15, $110C, $181B, $1817, $1815
+        .word $2210
+
+        ; 91/B2E5
+
+    .endsection Data91B2D3Section
+
+
     .section Unsorted91B2E5Section
 
       .al
@@ -1233,7 +1266,7 @@
         inc a
         inc a
         tax
-        lda $91B34C,x
+        lda aUnknown91B34C,x
         beq _B33B
         cmp #$FFFF
         beq _B33B
@@ -1442,14 +1475,14 @@
         adc wR0
         asl a
         tax
-        lda $91B34C,x
+        lda aUnknown91B34C,x
         xba
         lsr a
         tax
         ldy #$0000
 
         _B536
-        lda $91B546,x
+        lda aUnknown91B546,x
         sta [lR18],y
         inc x
         inc x
@@ -1481,7 +1514,7 @@
         ldx #$0000
 
         _BA49
-        lda $91BA6C,x
+        lda aUnknown91BA6C,x
         sta @l aBGPaletteBuffer,x
         inc x
         inc x
@@ -1503,7 +1536,7 @@
         ldx #$0000
 
         _BA5C
-        lda $91BA7C,x
+        lda aUnknown91BA7C,x
         sta @l $000180,x
         inc x
         inc x
@@ -1516,6 +1549,31 @@
         ; 91/BA6C
 
     .endsection Unsorted91BA46Section
+
+
+    .section Data91BA6CSection
+
+      .al
+      .xl
+
+      aUnknown91BA6C ; 91/BA6C
+
+        ; Read by rlUnknown91BA46.
+
+        .word $0000, $318C, $7674, $24E7, $0000, $0000, $0000, $0000
+
+        ; 91/BA7C
+
+      aUnknown91BA7C ; 91/BA7C
+
+        ; Read by rlUnknown91BA59.
+
+        .word $3000, $0800, $0C00, $1000, $1020, $1420, $1820, $1C20
+        .word $1C20, $2040, $2440, $2840, $2C40, $2C40, $3060, $3460
+
+        ; 91/BA9C
+
+    .endsection Data91BA6CSection
 
 
     .section Unsorted91D616Section
@@ -1662,7 +1720,6 @@
 
       rsUnknown91D683 ; 91/D683
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1727,7 +1784,6 @@
 
       rsUnknown91D6BB ; 91/D6BB
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1741,7 +1797,6 @@
 
       rsUnknown91D6BC ; 91/D6BC
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1760,7 +1815,6 @@
 
       rsUnknown91D6C8 ; 91/D6C8
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1776,7 +1830,6 @@
 
       rsUnknown91D6D1 ; 91/D6D1
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1792,7 +1845,6 @@
 
       rsUnknown91D6DA ; 91/D6DA
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2087,6 +2139,22 @@
         ; 91/D899
 
     .endsection Unsorted91D844Section
+
+
+    .section Data91D899Section
+
+      .al
+      .xl
+
+      aUnknown91D899 ; 91/D899
+
+        ; Read by rsUnknown91D844.
+
+        .byte $00, $02, $02, $06, $1C, $09, $0B
+
+        ; 91/D8A0
+
+    .endsection Data91D899Section
 
 
     .section Unsorted91D8A0Section
@@ -4087,6 +4155,25 @@
     .endsection Table91E4B3Section
 
 
+    .section Data91E4F3Section
+
+      .al
+      .xl
+
+      aUnknown91E4F3 ; 91/E4F3
+
+        ; Read by rlUnknown91E472.
+
+        .word $E4FB, $E507, $E513, $E51F, $0002, $01E8, $2200, $D830
+        .word $0001, $3020, $0002, $01E8, $2400, $D830, $0001, $3020
+        .word $0002, $01E8, $2600, $D830, $0001, $3020, $0002, $01E8
+        .word $2800, $D830, $0001, $3020
+
+        ; 91/E52B
+
+    .endsection Data91E4F3Section
+
+
     .section Unsorted91E52BSection
 
       .al
@@ -4176,7 +4263,6 @@
 
       rsUnknown91E583 ; 91/E583
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4207,7 +4293,6 @@
 
       rsUnknown91E5B2 ; 91/E5B2
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4245,7 +4330,6 @@
 
       rsUnknown91E5F4 ; 91/E5F4
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4277,7 +4361,6 @@
 
       rsUnknown91E622 ; 91/E622
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4309,7 +4392,6 @@
 
       rsUnknown91E650 ; 91/E650
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4352,7 +4434,6 @@
 
       rsUnknown91E692 ; 91/E692
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4385,7 +4466,6 @@
 
       rsUnknown91E6BA ; 91/E6BA
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4408,7 +4488,6 @@
 
       rsUnknown91E6D8 ; 91/E6D8
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4438,7 +4517,6 @@
 
       rsUnknown91E710 ; 91/E710
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4461,7 +4539,6 @@
 
       rsUnknown91E726 ; 91/E726
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4480,7 +4557,6 @@
 
       rsUnknown91E732 ; 91/E732
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4506,7 +4582,6 @@
 
       rsUnknown91E74E ; 91/E74E
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5100,7 +5175,7 @@
         asl a
         tax
         lda $7F8185
-        cmp $91F872,x
+        cmp aUnknown91F872,x
         bne _F871
         ldx #$0020
         lda #$0000
@@ -5127,6 +5202,23 @@
         ; 91/F872
 
     .endsection Unsorted91F813Section
+
+
+    .section Data91F872Section
+
+      .al
+      .xl
+
+      aUnknown91F872 ; 91/F872
+
+        ; Read by rlUnknown91F838.
+
+        .word $00C8, $00BE, $00B4, $00C8, $00B4, $00D2, $00B4, $00B4
+        .word $00B4, $00B4, $00B4, $00D2
+
+        ; 91/F88A
+
+    .endsection Data91F872Section
 
 
     .section Unsorted91F88ASection

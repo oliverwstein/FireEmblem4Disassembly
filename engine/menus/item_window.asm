@@ -433,7 +433,7 @@
         ldx #$0000
 
         _D08C
-        lda $80D09B,x
+        lda aUnknown80D09B,x
         sta $7FB0B6,x
         beq _D09A
         inc x
@@ -449,6 +449,23 @@
         ; 80/D09B
 
     .endsection Unsorted80D089Section
+
+
+    .section Data80D09BSection
+
+      .al
+      .xl
+
+      aUnknown80D09B ; 80/D09B
+
+        ; Read by rlMapMenuWindowCOLDATAHDMAInit.
+
+        .word $E018, $E118, $E218, $E318, $E418, $E510, $E610, $E718
+        .word $E818, $E918, $0000
+
+        ; 80/D0B1
+
+    .endsection Data80D09BSection
 
 
     .section Unsorted80D0B1Section
@@ -1190,7 +1207,6 @@
 
       rsItemWindowCloseToMap ; 89/B856
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1830,6 +1846,23 @@
     .endsection Table89BCCESection
 
 
+    .section Data89BCE6Section
+
+      .al
+      .xl
+
+      aUnknown89BCE6 ; 89/BCE6
+
+        ; Read by rsItemWindowRenderItemIcons.
+
+        .word $0018, $0028, $0038, $0048, $0058, $0068, $0078, $0088
+        .word $0098, $00A8, $00B8, $00C8, $00D8
+
+        ; 89/BD00
+
+    .endsection Data89BCE6Section
+
+
     .section Unsorted89BD00Section
 
       .al
@@ -1915,12 +1948,12 @@
         asl a
         sta $7FB010
         tax
-        lda @l $89BE57,x
+        lda @l aUnknown89BE57,x
         ldx #$0006
         jsl rlUnitWindowCopyWeaponRankIcon
         lda $7FB010
         tax
-        lda @l $89BE59,x
+        lda @l aUnknown89BE57+2,x
         ldx #$0008
         jsl rlUnitWindowCopyWeaponRankIcon
         lda #$009A
@@ -1947,12 +1980,12 @@
         asl a
         sta $7FB010
         tax
-        lda @l $89BE63,x
+        lda @l aUnknown89BE63,x
         ldx #$0006
         jsl rlUnitWindowCopyWeaponRankIcon
         lda $7FB010
         tax
-        lda @l $89BE65,x
+        lda @l aUnknown89BE63+2,x
         ldx #$0008
         jsl rlUnitWindowCopyWeaponRankIcon
         lda #$009A
@@ -1994,6 +2027,35 @@
         ; 89/BE49
 
     .endsection Unsorted89BD00Section
+
+
+    .section Data89BE57Section
+
+      .al
+      .xl
+
+      aUnknown89BE57 ; 89/BE57
+
+        ; Read by rsItemWindowRenderSelectedItemSprites.
+
+        .word $0002, $0001, $0000, $0002, $0001, $0000
+
+        ; 89/BE63
+
+      aUnknown89BE63 ; 89/BE63
+
+        ; Read by rsItemWindowRenderSelectedItemSprites.
+
+        .byte $07, $00, $06, $00, $05, $00, $07, $00, $06, $00, $05, $00, $01, $00, $9F, $C2
+        .byte $49, $00, $38, $04, $00, $A5, $C2, $00, $00, $30, $CC, $C2, $00, $00, $B0, $B5
+        .byte $C2, $00, $06, $38, $DC, $C2, $00, $08, $38, $04, $00, $A5, $C2, $00, $00, $30
+        .byte $CC, $C2, $00, $00, $B0, $B5, $C2, $00, $06, $38, $DC, $C2, $00, $08, $38, $04
+        .byte $00, $25, $C2, $00, $00, $30, $37, $C2, $00, $06, $38, $49, $C2, $00, $08, $38
+        .byte $5B, $C2, $00, $0A, $38
+
+        ; 89/BEB8
+
+    .endsection Data89BE57Section
 
 
     .section Unsorted89BEB8Section
@@ -2381,6 +2443,23 @@
     .endsection Unsorted89C144Section
 
 
+    .section Data89C181Section
+
+      .al
+      .xl
+
+      aUnknown89C181 ; 89/C181
+
+        ; Read by rsItemWindowRenderScrollArrows.
+
+        .word $C187, $C18E, $C19A, $0001, $C241, $0C8F, $02B0, $4100
+        .word $8FC2, $B00C, $C241, $0C52, $0130, $4100, $52C2, $300C
+
+        ; 89/C1A1
+
+    .endsection Data89C181Section
+
+
     .section Unsorted89C1A1Section
 
       .al
@@ -2694,7 +2773,7 @@
         sta wCurrentItemDataRAMPointer,b
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
         tax
-        lda $89C66E,x
+        lda aUnknown89C66E,x
         and #$00FF
         pha
         tya
@@ -2735,7 +2814,7 @@
         sta wCurrentItemDataRAMPointer,b
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
         tax
-        lda $89C5E4,x
+        lda aUnknown89C5E4,x
         and #$00FF
         eor #$FFFF
         inc a
@@ -3075,3 +3154,50 @@
     .endsection Unsorted89C5A2Section
 
 
+    .section Data89C5C9Section
+
+      .al
+      .xl
+
+      aUnknown89C5C9 ; 89/C5C9
+
+        ; Read by rsItemWindowDrawWeaponRank.
+
+        .byte $2A, $39, $3A, $39, $2B, $39, $3B, $39, $2C, $39, $3C, $39, $FF, $38, $09, $39
+        .byte $E4, $39, $F4, $39, $01, $00, $00, $C2, $00, $20, $26
+
+        ; 89/C5E4
+
+      aUnknown89C5E4 ; 89/C5E4
+
+        ; Read by rsItemWindowGetNameSortScores.
+
+        .word $4133, $3211, $1040, $3704, $452A, $1E5A, $5128, $5356
+        .word $012B, $4A0B, $2F57, $2148, $192E, $1919, $4234, $3612
+        .word $5B3C, $1452, $1A16, $1A1A, $3F31, $590F, $3029, $1717
+        .word $3517, $1343, $0E5C, $1B02, $1B1B, $006D, $150D, $094B
+        .word $4C54, $1F58, $3A08, $2038, $0705, $4E39, $5E4F, $0A64
+        .word $5D3B, $504D, $0C6C, $0C0C, $6860, $6761, $6563, $696E
+        .word $6A2C, $1D47, $4427, $1822, $1818, $065F, $0323, $622D
+        .word $3D3E, $2666, $4955, $4624, $256B, $1A19, $0C1B, $0C0C
+        .word $0C0C, $0C0C, $0C0C, $0C0C, $1C18
+
+        ; 89/C66E
+
+      aUnknown89C66E ; 89/C66E
+
+        ; Read by rsItemWindowGetTypeSortScores, rsUnknown8BCBBA.
+
+        .byte $FF, $FE, $FD, $FC, $FB, $FA, $F9, $F8, $F7, $F6, $F5, $F4, $F3, $F2, $F1, $F0
+        .byte $EF, $EE, $ED, $EC, $EB, $EA, $E9, $E8, $E7, $E5, $E4, $E3, $E2, $E1, $E0, $DF
+        .byte $DE, $DD, $DC, $DB, $DA, $D8, $D7, $D6, $D5, $D4, $D3, $D2, $D1, $D0, $CF, $CE
+        .byte $CD, $CC, $CB, $CA, $C9, $C8, $C7, $C5, $C4, $C3, $C2, $C1, $C0, $BF, $BE, $BD
+        .byte $BC, $BB, $BA, $B9, $B8, $B7, $B6, $B5, $B4, $B3, $B2, $B1, $B0, $AF, $AE, $AD
+        .byte $AC, $AB, $AA, $A9, $A8, $A7, $A6, $A5, $99, $98, $97, $96, $95, $94, $93, $92
+        .byte $91, $90, $8F, $8E, $8D, $8C, $8B, $89, $88, $87, $86, $85, $84, $83, $82, $81
+        .byte $80, $7F, $7E, $7D, $7C, $7B, $7A, $79, $78, $77, $E6, $D9, $C6, $A4, $A3, $A2
+        .byte $A1, $A0, $9F, $9E, $9D, $9C, $9B, $9A, $8A, $76, $75
+
+        ; 89/C6F9
+
+    .endsection Data89C5C9Section

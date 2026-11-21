@@ -517,3 +517,20 @@
     .endsection Unsorted85C4E0Section
 
 
+    .section Data85C51BSection
+
+      .al
+      .xl
+
+      aUnknown85C51B ; 85/C51B
+
+        ; Read by rlUnknown85C4E0.
+
+        .word $0000, $02FC, $7292, $6A70, $6A2F, $660E, $61ED, $04A7
+        .word $0000, $02FC, $2976, $2555, $2134, $1D13, $18F2, $04A4
+        .word $0000, $02FC, $5370, $4B2E, $470D, $42EC, $3AAA, $04A7
+        .word $0000, $02FC, $46D7, $3EB6, $3E95, $3275, $2655, $0CE9
+
+        ; 85/C55B
+
+    .endsection Data85C51BSection

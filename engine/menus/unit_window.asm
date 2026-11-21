@@ -224,7 +224,7 @@
         ldx #$001E
 
         _C599
-        lda $8C9520,x
+        lda aUnknown8C951E+2,x
         sta aOAMPaletteBuffer.aPalette6,b,x
         dec x
         dec x
@@ -232,7 +232,7 @@
         ldx #$001E
 
         _C5A7
-        lda $8C95E0,x
+        lda aUnknown8C95DE+2,x
         sta aOAMPaletteBuffer.aPalette7,b,x
         dec x
         dec x
@@ -277,7 +277,7 @@
         lda wUnitWindowCurrentItemIconSlot
         asl a
         tax
-        lda $80C5F8,x
+        lda aUnknown80C5F8,x
         tax
         pla
         jsl rlCopyItemIcon
@@ -294,6 +294,24 @@
         ; 80/C5F8
 
     .endsection Unsorted80C5C6Section
+
+
+    .section Data80C5F8Section
+
+      .al
+      .xl
+
+      aUnknown80C5F8 ; 80/C5F8
+
+        ; Read by rlUnitWindowCopyAllEquippedWeaponIcons.
+
+        .word $00E0, $00E2, $00E4, $00E6, $00E8, $00EA, $00EC, $00EE
+        .word $0100, $0102, $0104, $0106, $0108, $010A, $010C, $010E
+        .word $0120, $0122, $0124, $0126, $0128, $012A, $012C, $012E
+
+        ; 80/C628
+
+    .endsection Data80C5F8Section
 
 
     .section Unsorted80C628Section
@@ -944,6 +962,52 @@
     .endsection Unsorted80C8D5Section
 
 
+    .section Data80CA25Section
+
+      .al
+      .xl
+
+      aUnknown80CA25 ; 80/CA25
+
+        ; Read by rsUnitWindowBuildList.
+
+        .word $0322, $0308, $0309, $030A, $030B, $030C, $030D, $030E
+        .word $0308, $0309, $030A, $030B, $030C, $030D, $030E, $0308
+        .word $0309, $030A, $030B, $030C, $030D, $030E, $0308, $0309
+        .word $030A, $030B, $030C, $030D, $030E, $0308, $0309, $0323
+        .word $0322, $0318, $0319, $031A, $031B, $031C, $031D, $031E
+        .word $0318, $0319, $031A, $031B, $031C, $031D, $031E, $0318
+        .word $0319, $031A, $031B, $031C, $031D, $031E, $0318, $0319
+        .word $031A, $031B, $031C, $031D, $031E, $0318, $0319, $0323
+        .word $0322, $0328, $0329, $032A, $032B, $032C, $032D, $032E
+        .word $0328, $0329, $032A, $032B, $032C, $032D, $032E, $0328
+        .word $0329, $032A, $032B, $032C, $032D, $032E, $0328, $0329
+        .word $032A, $032B, $032C, $032D, $032E, $0328, $0329, $0323
+        .word $0322, $0338, $0339, $033A, $033B, $033C, $033D, $033E
+        .word $0338, $0339, $033A, $033B, $033C, $033D, $033E, $0338
+        .word $0339, $033A, $033B, $033C, $033D, $033E, $0338, $0339
+        .word $033A, $033B, $033C, $033D, $033E, $0338, $0339, $0323
+
+        ; 80/CB25
+
+      aUnknown80CB25 ; 80/CB25
+
+        ; Read by rsUnitWindowBuildList.
+
+        .word $0304, $0305, $0308, $0309, $030A, $030B, $030C, $030D
+        .word $030C, $030D, $030E, $0308, $0309, $030A, $030B, $030C
+        .word $030D, $030E, $0308, $0309, $030A, $030B, $030C, $030D
+        .word $030E, $0308, $0309, $030A, $030B, $030C, $0306, $0307
+        .word $0314, $0315, $0321, $0321, $0321, $0321, $0321, $0321
+        .word $0321, $0321, $0321, $0321, $0321, $0321, $0321, $0321
+        .word $0321, $0321, $0321, $0321, $0321, $0321, $0321, $0321
+        .word $0321, $0321, $0321, $0321, $0321, $0321, $0316, $0317
+
+        ; 80/CBA5
+
+    .endsection Data80CA25Section
+
+
     .section Unsorted80CBA5Section
 
       .al
@@ -1012,6 +1076,24 @@
     .endsection Unsorted80CBA5Section
 
 
+    .section Data80CC05Section
+
+      .al
+      .xl
+
+      aUnknown80CC05 ; 80/CC05
+
+        ; Read by rlUnitWindowDrawUnitNames.
+
+        .word $0704, $0904, $0B04, $0D04, $0F04, $1104, $1304, $1504
+        .word $1704, $1904, $1B04, $1D04, $1F04, $2104, $2304, $2504
+        .word $2704, $2904, $2B04, $2D04, $2F04, $3104, $3304, $3504
+
+        ; 80/CC35
+
+    .endsection Data80CC05Section
+
+
     .section Unsorted80CC35Section
 
       .al
@@ -1059,18 +1141,18 @@
         txa
         asl a
         tax
-        lda $8BCECA,x
+        lda aUnknown8BCECA,x
         beq _CCB5
         sta wR13
         lda wR12
         asl a
         tax
-        lda $80CCD3,x
+        lda aUnknown80CCD3,x
         sta wR0
         lda wR15
         asl a
         tax
-        lda $80CCE3,x
+        lda aUnknown80CCE3,x
         ora wR0
         sta wR0
         lda wR13
@@ -1114,6 +1196,34 @@
         ; 80/CCD3
 
     .endsection Unsorted80CC35Section
+
+
+    .section Data80CCD3Section
+
+      .al
+      .xl
+
+      aUnknown80CCD3 ; 80/CCD3
+
+        ; Read by rlUnitWindowDrawUnitSkills.
+
+        .word $001A, $0020, $0026, $002C, $0032, $0038, $003A, $003C
+
+        ; 80/CCE3
+
+      aUnknown80CCE3 ; 80/CCE3
+
+        ; Read by rlUnitWindowDrawUnitSkills.
+
+        .byte $C0, $01, $40, $02, $C0, $02, $40, $03, $C0, $03, $40, $04, $C0, $04, $40, $05
+        .byte $C0, $05, $40, $06, $C0, $06, $40, $07, $C0, $07, $40, $08, $C0, $08, $40, $09
+        .byte $C0, $09, $40, $0A, $C0, $0A, $40, $0B, $C0, $0B, $40, $0C, $C0, $0C, $40, $0D
+        .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E, $10, $00, $00, $00, $00, $00, $D0
+        .byte $89, $7F, $30, $01, $00, $00, $00, $00, $50, $AF, $7F
+
+        ; 80/CD2E
+
+    .endsection Data80CCD3Section
 
 
     .section Table8BA845Section
@@ -2151,7 +2261,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        lda @l $8BB4C7,x
+        lda @l aUnknown8BB4C7,x
         tay
         jsl rlPushToOAMBuffer
 
@@ -2196,6 +2306,33 @@
     .endsection Unsorted8BB469Section
 
 
+    .section Data8BB4C7Section
+
+      .al
+      .xl
+
+      aUnknown8BB4C7 ; 8B/B4C7
+
+        ; Read by rlUnitWindowRenderPageSprites.
+
+        .word $B4D3, $B4DA, $B4DA, $B4DA, $B4DA, $B4E6, $0001, $C2F1
+        .word $0A21, $0270, $0000, $21C2, $300A, $C2F1, $0A21, $0170
+        .word $0000, $21C2, $300A
+
+        ; 8B/B4ED
+
+      aUnknown8BB4ED ; 8B/B4ED
+
+        ; Read by rlUnitWindowRenderPageSprites.
+
+        .word $B4F3, $B4FA, $B506, $0001, $C201, $0CAF, $02B0, $0100
+        .word $AFC2, $B00C, $C201, $0C52, $0130, $0100, $52C2, $300C
+
+        ; 8B/B50D
+
+    .endsection Data8BB4C7Section
+
+
     .section Unsorted8BB50DSection
 
       .al
@@ -2218,7 +2355,7 @@
         bpl _B533
         asl a
         tax
-        lda $8BB53B,x
+        lda aUnknown8BB53B,x
         sta wR4
         stz wR0
         stz wR1
@@ -2237,6 +2374,23 @@
         ; 8B/B534
 
     .endsection Unsorted8BB50DSection
+
+
+    .section Data8BB53BSection
+
+      .al
+      .xl
+
+      aUnknown8BB53B ; 8B/B53B
+
+        ; Read by rsUnitWindowRenderWeaponRankSortIcon.
+
+        .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E
+        .word $0020, $0022
+
+        ; 8B/B54F
+
+    .endsection Data8BB53BSection
 
 
     .section Unsorted8BB54FSection
@@ -2320,12 +2474,12 @@
         sta wUnitWindowCurrentHighlightLine
         asl a
         tax
-        lda @l $8BB70B,x
+        lda @l aUnknown8BB70B,x
         sta wUnitWindowCursorYCoordinate
         lda wUnitWindowScrolledLines
         asl a
         tax
-        lda @l $8BB61B,x
+        lda @l aUnknown8BB61B,x
         sta wUnitWindowScrollPixels
         lda wR0
         cmp wUnitWindowMaxRows
@@ -2349,7 +2503,7 @@
         lda wUnitWindowScrolledLines
         asl a
         tax
-        lda @l $8BB61B,x
+        lda @l aUnknown8BB61B,x
         sta wUnitWindowScrollPixels
         lda wR0
         cmp wUnitWindowMaxRows
@@ -2365,6 +2519,23 @@
         ; 8B/B61B
 
     .endsection Unsorted8BB596Section
+
+
+    .section Data8BB61BSection
+
+      .al
+      .xl
+
+      aUnknown8BB61B ; 8B/B61B
+
+        ; Read by rsUnitWindowMoveToLastUnit, rsUnitWindowMoveToNextPage, rsUnitWindowMoveToPreviousPage.
+
+        .word $0000, $0010, $0020, $0030, $0040, $0050, $0060, $0070
+        .word $0080, $0090, $00A0, $00B0, $00C0, $00D0, $00E0, $00F0
+
+        ; 8B/B63B
+
+    .endsection Data8BB61BSection
 
 
     .section Unsorted8BB63BSection
@@ -2410,7 +2581,7 @@
         lda wUnitWindowScrolledLines
         asl a
         tax
-        lda $8BB61B,x
+        lda aUnknown8BB61B,x
         sta wUnitWindowScrollPixels
         lda #$0006
         jsl rlPlaySoundEffect
@@ -2443,7 +2614,7 @@
         sta wUnitWindowCurrentHighlightLine
         asl a
         tax
-        lda $8BB70B,x
+        lda aUnknown8BB70B,x
         sta wUnitWindowCursorYCoordinate
         lda wR0
         cmp wUnitWindowMaxRows
@@ -2466,7 +2637,7 @@
         sta wUnitWindowScrolledLines
         asl a
         tax
-        lda $8BB61B,x
+        lda aUnknown8BB61B,x
         sta wUnitWindowScrollPixels
         lda #$0006
         jsl rlPlaySoundEffect
@@ -2477,6 +2648,23 @@
         ; 8B/B70B
 
     .endsection Unsorted8BB63BSection
+
+
+    .section Data8BB70BSection
+
+      .al
+      .xl
+
+      aUnknown8BB70B ; 8B/B70B
+
+        ; Read by rsUnitWindowMoveToLastUnit, rsUnitWindowMoveToNextPage.
+
+        .word $003A, $004A, $005A, $006A, $007A, $008A, $009A, $00AA
+        .word $00BA, $00CA
+
+        ; 8B/B71F
+
+    .endsection Data8BB70BSection
 
 
     .section Unsorted8BB71FSection
@@ -2573,7 +2761,7 @@
         sta wUnitWindowScrolledLines
         asl a
         tax
-        lda $8BB61B,x
+        lda aUnknown8BB61B,x
         sta wUnitWindowScrollPixels
         lda #$0006
         jsl rlPlaySoundEffect
@@ -2606,14 +2794,14 @@
         lda wR15
         asl a
         tax
-        lda @l $8BB841,x
+        lda @l aUnknown8BB841,x
         sec
         sbc wUnitWindowScrollPixels
         sta wR1
         lda aUnitWindowSpriteSlots,x
         asl a
         tax
-        lda @l $8BB811,x
+        lda @l aUnknown8BB811,x
         sta wR4
         ldy #$B80A
         jsl rlPushToOAMBuffer
@@ -2629,6 +2817,34 @@
         ; 8B/B80A
 
     .endsection Unsorted8BB71FSection
+
+
+    .section Data8BB811Section
+
+      .al
+      .xl
+
+      aUnknown8BB811 ; 8B/B811
+
+        ; Read by rsUnitWindowRenderItemIcons.
+
+        .word $00E0, $00E2, $00E4, $00E6, $00E8, $00EA, $00EC, $00EE
+        .word $0100, $0102, $0104, $0106, $0108, $010A, $010C, $010E
+        .word $0120, $0122, $0124, $0126, $0128, $012A, $012C, $012E
+
+        ; 8B/B841
+
+      aUnknown8BB841 ; 8B/B841
+
+        ; Read by rsUnitWindowRenderItemIcons.
+
+        .word $0037, $0047, $0057, $0067, $0077, $0087, $0097, $00A7
+        .word $00B7, $00C7, $00D7, $00E7, $00F7, $0107, $0117, $0127
+        .word $0137, $0147, $0157, $0167, $0177, $0187, $0197, $01A7
+
+        ; 8B/B871
+
+    .endsection Data8BB811Section
 
 
     .section Unsorted8BB871Section
@@ -2729,7 +2945,7 @@
         sta $7FB063,x
         txy
         plx
-        lda @l $8BBA80,x
+        lda @l aUnknown8BBA80,x
         tyx
         sta $7FB062,x
         lda wR4
@@ -2847,9 +3063,9 @@
         ldx #$0000
 
         _B9D8
-        lda @l $8BBA81,x
+        lda @l aUnknown8BBA80+1,x
         sta $7FB063,x
-        lda @l $8BBA80,x
+        lda @l aUnknown8BBA80,x
         sta $7FB062,x
         inc x
         inc x
@@ -2866,6 +3082,40 @@
         ; 8B/B9FC
 
     .endsection Unsorted8BB8B6Section
+
+
+    .section Data8BB9FCSection
+
+      .al
+      .xl
+
+      aUnknown8BB9FC ; 8B/B9FC
+
+        ; Read by rsUnitWindowCopyLineHighlightColors.
+
+        .word $8001, $0163, $6280, $8001, $0162, $6280, $8001, $0161
+        .word $6180, $8001, $8160, $6081, $8281, $8160, $6083, $8381
+        .word $8160, $6084, $8481, $8160, $6083, $8381, $8160, $6082
+        .word $8181, $0160, $6080, $8001, $0161, $6180, $8001, $0162
+        .word $6280, $8001, $0163, $6280, $8001, $0162, $6280, $8001
+        .word $0161, $6180, $8001, $8160, $6081, $8281, $8160, $6083
+        .word $8381, $8160, $6084, $8481, $8160, $6083, $8381, $8160
+        .word $6082, $8181, $0160, $6080, $8001, $0161, $6180, $8001
+        .word $0162, $6280
+
+        ; 8B/BA80
+
+      aUnknown8BBA80 ; 8B/BA80
+
+        ; Read by rsUnitWindowCopyLineHighlightColors.
+
+        .word $0081, $81E1, $E200, $0081, $81E3, $E400, $0081, $81E5
+        .word $E600, $0081, $81E7, $E800, $0081, $81E9, $EA00, $0081
+        .word $01EB, $EF00
+
+        ; 8B/BAA4
+
+    .endsection Data8BB9FCSection
 
 
     .section Unsorted8BBAA4Section
@@ -2968,7 +3218,7 @@
         tax
         lda aUnitWindowReadyToPromoteFlags,x
         beq _BB2F
-        lda $8BBD40,x
+        lda aUnknown8BBD40,x
         sec
         sbc wUnitWindowScrollPixels
         sta wR1
@@ -3024,7 +3274,7 @@
         lda $7E486B,x
         cmp #$FFFF
         beq _BB83
-        lda $88D2B5,x
+        lda aUnknown88D2B5,x
         sta wR4
         lda #$BD77
         tay
@@ -3032,7 +3282,7 @@
 
 
         _BB83
-        lda $88D1C5,x
+        lda aUnknown88D1C5,x
         sta wR4
         lda #$BD70
         tay
@@ -3074,7 +3324,7 @@
         ply
         plx
         stz wR0
-        lda @l $8BBD40,x
+        lda @l aUnknown8BBD40,x
         sec
         sbc wUnitWindowScrollPixels
         sta wR1
@@ -3150,13 +3400,13 @@
         lda aUnitWindowSpriteSlots,x
         asl a
         tax
-        lda $88D2B5,x
+        lda aUnknown88D2B5,x
         plx
         sta wR4
         lda #$BD77
         tay
         stz wR0
-        lda @l $8BBD40,x
+        lda @l aUnknown8BBD40,x
         sec
         sbc wUnitWindowScrollPixels
         sta wR1
@@ -3245,13 +3495,13 @@
         lda aUnitWindowSpriteSlots,x
         asl a
         tax
-        lda $88D1C5,x
+        lda aUnknown88D1C5,x
         plx
         sta wR4
         lda #$BD70
         tay
         stz wR0
-        lda @l $8BBD40,x
+        lda @l aUnknown8BBD40,x
         sec
         sbc wUnitWindowScrollPixels
         sta wR1
@@ -3282,6 +3532,28 @@
         ; 8B/BD40
 
     .endsection Unsorted8BBAE9Section
+
+
+    .section Data8BBD40Section
+
+      .al
+      .xl
+
+      aUnknown8BBD40 ; 8B/BD40
+
+        ; Read by rsUnitWindowRenderSprites.
+
+        .byte $38, $00, $48, $00, $58, $00, $68, $00, $78, $00, $88, $00, $98, $00, $A8, $00
+        .byte $B8, $00, $C8, $00, $D8, $00, $E8, $00, $F8, $00, $08, $01, $18, $01, $28, $01
+        .byte $38, $01, $48, $01, $58, $01, $68, $01, $78, $01, $88, $01, $98, $01, $A8, $01
+        .byte $01, $00, $10, $C2, $00, $80, $00, $02, $00, $10, $C2, $00, $40, $01, $10, $C2
+        .byte $F0, $42, $01, $02, $00, $0C, $C2, $06, $04, $28, $1C, $00, $06, $06, $28, $02
+        .byte $00, $3A, $00, $09, $09, $38, $3A, $00, $11, $19, $38, $02, $00, $3A, $00, $11
+        .byte $09, $B8, $3A, $00, $09, $19, $B8
+
+        ; 8B/BDA7
+
+    .endsection Data8BBD40Section
 
 
     .section Unsorted8BBDA7Section
@@ -3618,6 +3890,25 @@
     .endsection Table8BC08FSection
 
 
+    .section Data8BC0B0Section
+
+      .al
+      .xl
+
+      aUnknown8BC0B0 ; 8B/C0B0
+
+        ; Read by rlUnitWindowCopyWeaponRankIcon.
+
+        .word $0000, $2000, $4000, $6000, $0000, $2000, $4000, $6000
+        .word $0800, $2800, $4800, $6800, $0800, $2800, $4800, $6800
+        .word $1000, $3000, $5000, $7000, $1000, $3000, $5000, $7000
+        .word $1800, $3800, $5800, $7800, $1800, $3800, $5800, $7800
+
+        ; 8B/C0F0
+
+    .endsection Data8BC0B0Section
+
+
     .section Unsorted8BC0F0Section
 
       .al
@@ -3646,7 +3937,7 @@
         clc
         adc wR0
         tax
-        lda @l $8BC15F,x
+        lda @l aUnknown8BC15F,x
         sta wR0
         lda #$0011
         sta wR1
@@ -3659,7 +3950,7 @@
         and #$0003
         asl a
         tax
-        lda @l $8BC127,x
+        lda @l aUnknown8BC127,x
         tay
         jsl rlPushToOAMBuffer
         rts
@@ -3669,6 +3960,44 @@
         ; 8B/C127
 
     .endsection Unsorted8BC0F0Section
+
+
+    .section Data8BC127Section
+
+      .al
+      .xl
+
+      aUnknown8BC127 ; 8B/C127
+
+        ; Read by rsUnitWindowRenderSortSelectorCursor.
+
+        .word $C12F, $C13B, $C147, $C153, $0002, $C200, $0C05, $0032
+        .word $1BC2, $B20C, $0002, $C200, $0C04, $0032, $1CC2, $B20C
+        .word $0002, $C200, $0C05, $0032, $1BC2, $B20C, $0002, $C200
+        .word $0C06, $0032, $1AC2, $B20C
+
+        ; 8B/C15F
+
+      aUnknown8BC15F ; 8B/C15F
+
+        ; Read by rsUnitWindowRenderSortSelectorCursor.
+
+        .word $0020, $005C, $0098, $00B0, $00C8, $00E0, $0000, $0000
+        .word $00A0, $00B0, $00C0, $00D0, $00E0, $00F0, $0100, $0110
+        .word $0020, $0063, $00A0, $00BC, $00DC, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0020, $0050, $0068, $0080, $0098, $00B0, $00C8, $00E0
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0020, $0058, $0084, $00AC, $00D0, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0020, $0055, $0065, $0075, $0085, $0095, $00A5, $00B5
+        .word $00C5, $00D5, $00E5, $0000, $0000, $0000, $0000, $0000
+        .word $0020, $0068, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+        ; 8B/C21F
+
+    .endsection Data8BC127Section
 
 
     .section Unsorted8BC21FSection
@@ -3743,7 +4072,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        lda $8BC385,x
+        lda aUnknown8BC385,x
         cmp wUnitWindowCurrentColumn
         bcs _C2E7
         sta wUnitWindowCurrentColumn
@@ -3784,7 +4113,7 @@
         sta wGameStateStep,b
         asl a
         tax
-        lda $8BC385,x
+        lda aUnknown8BC385,x
         sta wUnitWindowCurrentColumn
         jsl rlUnitWindowDrawPage
 
@@ -3871,6 +4200,22 @@
         ; 8B/C385
 
     .endsection Unsorted8BC21FSection
+
+
+    .section Data8BC385Section
+
+      .al
+      .xl
+
+      aUnknown8BC385 ; 8B/C385
+
+        ; Read by rsUnitWindowHandleSortSelection.
+
+        .word $0005, $0004, $0007, $0004, $000A, $0001
+
+        ; 8B/C391
+
+    .endsection Data8BC385Section
 
 
     .section Unsorted8BC391Section
@@ -5273,7 +5618,6 @@
 
       rsUnitWindowGetSavedOrderSortScores ; 8B/CAB4
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5620,7 +5964,7 @@
         txa
         asl a
         tax
-        lda $8BCECA,x
+        lda aUnknown8BCECA,x
         beq _CC92
         inc wR14
 
@@ -7035,3 +7379,20 @@
     .endsection Unsorted8BAE1ESection
 
 
+    .section Data8BCECASection
+
+      .al
+      .xl
+
+      aUnknown8BCECA ; 8B/CECA
+
+        ; Read by rlUnitWindowDrawUnitSkills, rsUnknown8BCC58.
+
+        .word $0000, $0000, $3806, $3800, $3802, $3804, $3844, $0000
+        .word $3846, $0000, $0000, $0000, $3808, $0000, $380C, $380E
+        .word $3820, $3822, $3824, $3826, $3828, $382A, $382C, $382E
+        .word $3840, $3842, $0000, $0000, $3848, $384A, $0000, $0000
+
+        ; 8B/CF0A
+
+    .endsection Data8BCECASection

@@ -991,12 +991,12 @@
         lda wVBlankEnabledFramecount
         and #$0001
         bne _A638
-        lda $8DA73D,x
+        lda aUnknown8DA73D,x
         bra _A63E
 
 
         _A638
-        lda $8DA743,x
+        lda aUnknown8DA743,x
         bra _A63E
 
 
@@ -1005,12 +1005,12 @@
         lda wVBlankEnabledFramecount
         and #$0001
         bne _A64D
-        lda $8DA749,x
+        lda aUnknown8DA749,x
         bra _A653
 
 
         _A64D
-        lda $8DA74F,x
+        lda aUnknown8DA74F,x
         bra _A653
 
 
@@ -1047,11 +1047,11 @@
         lda aWorldMapPortrait,x
         asl a
         tax
-        lda $8DA737,x
+        lda aUnknown8DA737,x
         clc
         adc wR0
         tax
-        lda $8DCF88,x
+        lda aUnknown8DCF88,x
         cmp #$FFFF
         bne _A6AC
         lda #$0000
@@ -1061,7 +1061,7 @@
 
         _A6AC
         sta wR0
-        lda $8DCF8A,x
+        lda aUnknown8DCF88+2,x
         plx
         sta $7F5410,x
         lda wR0
@@ -1104,11 +1104,11 @@
         lda aWorldMapPortrait,x
         asl a
         tax
-        lda @l $8DA737,x
+        lda @l aUnknown8DA737,x
         clc
         adc wR0
         tax
-        lda @l $8DCF9A,x
+        lda @l aUnknown8DCF9A,x
         tay
         plx
         lda #$0080
@@ -1134,6 +1134,54 @@
         ; 8D/A737
 
     .endsection Unsorted8DA624Section
+
+
+    .section Data8DA737Section
+
+      .al
+      .xl
+
+      aUnknown8DA737 ; 8D/A737
+
+        ; Read by rsUnknown8DA624.
+
+        .word $0000, $0024, $0048
+
+        ; 8D/A73D
+
+      aUnknown8DA73D ; 8D/A73D
+
+        ; Read by rsUnknown8DA624.
+
+        .word $0001, $0001, $0002
+
+        ; 8D/A743
+
+      aUnknown8DA743 ; 8D/A743
+
+        ; Read by rsUnknown8DA624.
+
+        .word $0002, $0001, $0002
+
+        ; 8D/A749
+
+      aUnknown8DA749 ; 8D/A749
+
+        ; Read by rsUnknown8DA624.
+
+        .word $0000, $0000, $0000
+
+        ; 8D/A74F
+
+      aUnknown8DA74F ; 8D/A74F
+
+        ; Read by rsUnknown8DA624.
+
+        .word $0000, $0000, $0001
+
+        ; 8D/A755
+
+    .endsection Data8DA737Section
 
 
     .section Unsorted8DA755Section
@@ -1398,7 +1446,7 @@
         ldx #$01FE
 
         _AF6F
-        lda $8CA400,x
+        lda aUnknown8CA400,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -2559,9 +2607,9 @@
         clc
         adc wR0
         tax
-        lda $8DB5C9,x
+        lda aUnknown8DB5C8+1,x
         sta $08B0,b
-        lda $8DB5C8,x
+        lda aUnknown8DB5C8,x
         sta $08AF,b
         lda $08DC,b
         and #$0003
@@ -2593,6 +2641,64 @@
         ; 8D/B5C8
 
     .endsection Unsorted8DB53ASection
+
+
+    .section Data8DB5C8Section
+
+      .al
+      .xl
+
+      aUnknown8DB5C8 ; 8D/B5C8
+
+        ; Read by rsUnknown8DB53A.
+
+        .byte $6B, $CC, $8D, $6B, $CC, $8D, $6B, $CC, $8D, $6B, $CC, $8D, $6B, $CC, $8D, $6B
+        .byte $CC, $8D, $6B, $CC, $8D, $6B, $CC, $8D, $6B, $CC, $8D, $6B, $CC, $8D, $6B, $CC
+        .byte $8D, $6B, $CC, $8D, $6B, $CC, $8D, $6B, $CC, $8D, $6B, $CC, $8D, $94, $CC, $8D
+        .byte $94, $CC, $8D, $94, $CC, $8D, $94, $CC, $8D, $94, $CC, $8D, $94, $CC, $8D, $94
+        .byte $CC, $8D, $94, $CC, $8D, $94, $CC, $8D, $94, $CC, $8D, $94, $CC, $8D, $94, $CC
+        .byte $8D, $94, $CC, $8D, $94, $CC, $8D, $94, $CC, $8D, $94, $CC, $8D, $94, $CC, $8D
+        .byte $94, $CC, $8D, $94, $CC, $8D, $94, $CC, $8D, $94, $CC, $8D, $94, $CC, $8D, $94
+        .byte $CC, $8D, $94, $CC, $8D
+
+        ; 8D/B63D
+
+    .endsection Data8DB5C8Section
+
+
+    .section Data8DCF88Section
+
+      .al
+      .xl
+
+      aUnknown8DCF88 ; 8D/CF88
+
+        ; Read by rsUnknown8DA624.
+
+        .word $CCF2, $0008, $CCC6, $000A, $CCDC, $000E, $CCB0, $0008
+        .word $FFFF
+
+        ; 8D/CF9A
+
+      aUnknown8DCF9A ; 8D/CF9A
+
+        ; Read by rsUnknown8DA624.
+
+        .byte $4A, $CD, $08, $00, $1E, $CD, $0A, $00, $34, $CD, $0E, $00, $08, $CD, $08, $00
+        .byte $FF, $FF, $A2, $CD, $08, $00, $76, $CD, $0A, $00, $8C, $CD, $0E, $00, $60, $CD
+        .byte $08, $00, $FF, $FF, $FA, $CD, $08, $00, $CE, $CD, $0A, $00, $E4, $CD, $0E, $00
+        .byte $B8, $CD, $08, $00, $FF, $FF, $9D, $CE, $05, $00, $3F, $CE, $07, $00, $6E, $CE
+        .byte $0B, $00, $10, $CE, $05, $00, $FF, $FF, $59, $CF, $05, $00, $FB, $CE, $07, $00
+        .byte $2A, $CF, $0B, $00, $CC, $CE, $05, $00, $FF, $FF, $41, $D0, $41, $D0, $42, $D0
+        .byte $44, $D0, $8D, $12, $02, $41, $D0, $41, $D0, $42, $D0, $09, $D2, $8D, $12, $02
+        .byte $41, $D0, $41, $D0, $42, $D0, $CE, $D3, $8D, $12, $02, $41, $D0, $41, $D0, $42
+        .byte $D0, $93, $D5, $8D, $12, $02, $41, $D0, $41, $D0, $42, $D0, $58, $D7, $8D, $12
+        .byte $02, $41, $D0, $41, $D0, $42, $D0, $1D, $D9, $8D, $12, $02, $41, $D0, $41, $D0
+        .byte $42, $D0, $E2, $DA, $8D, $12, $02
+
+        ; 8D/D041
+
+    .endsection Data8DCF88Section
 
 
     .section Unsorted8DD041Section

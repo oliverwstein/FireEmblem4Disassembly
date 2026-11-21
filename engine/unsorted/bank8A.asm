@@ -267,7 +267,6 @@
 
       rsUnknown8A80CD ; 8A/80CD
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -282,7 +281,6 @@
 
       rsUnknown8A80D2 ; 8A/80D2
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -297,7 +295,6 @@
 
       rsUnknown8A80D7 ; 8A/80D7
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -312,7 +309,6 @@
 
       rsUnknown8A80DC ; 8A/80DC
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -327,7 +323,6 @@
 
       rsUnknown8A80E1 ; 8A/80E1
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -342,7 +337,6 @@
 
       rsUnknown8A80E6 ; 8A/80E6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -357,7 +351,6 @@
 
       rsUnknown8A80EB ; 8A/80EB
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -372,7 +365,6 @@
 
       rsUnknown8A80F0 ; 8A/80F0
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -417,7 +409,6 @@
 
       rsUnknown8A80FA ; 8A/80FA
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -432,7 +423,6 @@
 
       rsUnknown8A80FF ; 8A/80FF
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -462,7 +452,6 @@
 
       rsUnknown8A811A ; 8A/811A
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -494,7 +483,6 @@
 
       rsUnknown8A8139 ; 8A/8139
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -521,7 +509,6 @@
 
       rsUnknown8A815F ; 8A/815F
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -540,7 +527,6 @@
 
       rsUnknown8A8174 ; 8A/8174
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -838,10 +824,10 @@
         bcc _8386
         lda $0895,b
         tax
-        lda $8A8387,x
+        lda aUnknown8A8387,x
         and #$00FF
         sta wR0
-        lda $8A838D,x
+        lda aUnknown8A838D,x
         and #$00FF
         sta wR1
         lda #$0000
@@ -863,6 +849,30 @@
     .endsection Unsorted8A8208Section
 
 
+    .section Data8A8387Section
+
+      .al
+      .xl
+
+      aUnknown8A8387 ; 8A/8387
+
+        ; Read by rlUnknown8A8208.
+
+        .word $580C, $0CA0, $A058
+
+        ; 8A/838D
+
+      aUnknown8A838D ; 8A/838D
+
+        ; Read by rlUnknown8A8208.
+
+        .word $A8A8, $C8A8, $C8C8
+
+        ; 8A/8393
+
+    .endsection Data8A8387Section
+
+
     .section Unsorted8A8393Section
 
       .al
@@ -880,9 +890,9 @@
         and #$001C
         lsr a
         tax
-        lda $8A847E,x
+        lda aUnknown8A847E,x
         sta wR0
-        lda $8A848A,x
+        lda aUnknown8A848A,x
         sta wR1
         lda wJoy1Repeated
         bit #$0200
@@ -1015,6 +1025,30 @@
         ; 8A/847E
 
     .endsection Unsorted8A8393Section
+
+
+    .section Data8A847ESection
+
+      .al
+      .xl
+
+      aUnknown8A847E ; 8A/847E
+
+        ; Read by rsUnknown8A8393.
+
+        .word $0000, $0004, $0008, $000C, $0010, $0014
+
+        ; 8A/848A
+
+      aUnknown8A848A ; 8A/848A
+
+        ; Read by rsUnknown8A8393.
+
+        .word $0003, $0007, $000B, $000F, $0013, $0017
+
+        ; 8A/8496
+
+    .endsection Data8A847ESection
 
 
     .section Unsorted8A8496Section
@@ -2205,7 +2239,7 @@
         ldx #$001E
 
         _8CBA
-        lda $8C9800,x
+        lda aUnknown8C9800,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -2213,39 +2247,39 @@
         ldx #$01FE
 
         _8CC8
-        lda $DA6500,x
+        lda aUnknownDA6500,x
         sta $7E8088,x
         dec x
         dec x
         bpl _8CC8
         jsl rlUnknown879F12
         bcs _8D06
-        lda $DA6552
+        lda aUnknownDA6552
         and #$E3FF
         sta $7E80DA
-        lda $DA6554
+        lda aUnknownDA6552+2
         and #$E3FF
         sta $7E80DC
-        lda $DA6592
+        lda aUnknownDA6592
         and #$E3FF
         sta $7E811A
-        lda $DA6594
+        lda aUnknownDA6592+2
         and #$E3FF
         sta $7E811C
 
         _8D06
         jsl rlUnknown879F67
         bcs _8D38
-        lda $DA655A
+        lda aUnknownDA655A
         and #$E3FF
         sta $7E80E2
-        lda $DA655C
+        lda aUnknownDA655A+2
         and #$E3FF
         sta $7E80E4
-        lda $DA659A
+        lda aUnknownDA659A
         and #$E3FF
         sta $7E8122
-        lda $DA659C
+        lda aUnknownDA659A+2
         and #$E3FF
         sta $7E8124
 
@@ -2253,16 +2287,16 @@
         lda wCurrentChapter,b
         cmp #$0006
         bne _8D6C
-        lda $DA6562
+        lda aUnknownDA6562
         and #$E3FF
         sta $7E80EA
-        lda $DA6564
+        lda aUnknownDA6562+2
         and #$E3FF
         sta $7E80EC
-        lda $DA65A2
+        lda aUnknownDA65A2
         and #$E3FF
         sta $7E812A
-        lda $DA65A4
+        lda aUnknownDA65A2+2
         and #$E3FF
         sta $7E812C
 
@@ -2283,16 +2317,16 @@
 
 
         _8D94
-        lda $DA656A
+        lda aUnknownDA656A
         and #$E3FF
         sta $7E80F2
-        lda $DA656C
+        lda aUnknownDA656A+2
         and #$E3FF
         sta $7E80F4
-        lda $DA65AA
+        lda aUnknownDA65AA
         and #$E3FF
         sta $7E8132
-        lda $DA65AC
+        lda aUnknownDA65AA+2
         and #$E3FF
         sta $7E8134
         bra _8DC8
@@ -2305,16 +2339,16 @@
         _8DC8
         jsl rlUnknown879F9C
         bcs _8DFA
-        lda $DA6572
+        lda aUnknownDA6572
         and #$E3FF
         sta $7E80FA
-        lda $DA6574
+        lda aUnknownDA6572+2
         and #$E3FF
         sta $7E80FC
-        lda $DA65B2
+        lda aUnknownDA65B2
         and #$E3FF
         sta $7E813A
-        lda $DA65B4
+        lda aUnknownDA65B2+2
         and #$E3FF
         sta $7E813C
 
@@ -2423,7 +2457,7 @@
         ldx #$01FE
 
         _8ED9
-        lda $8C9800,x
+        lda aUnknown8C9800,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -2431,7 +2465,7 @@
         ldx #$00FE
 
         _8EE7
-        lda $8C9500,x
+        lda aUnknown8C9500,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -2439,7 +2473,7 @@
         ldx #$001E
 
         _8EF5
-        lda $8C9D00,x
+        lda aUnknown8C9D00,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -3049,7 +3083,7 @@
         jsl rlUnknown8A979C
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $DA6500, $0200, $80, $AD00
+          .structDMAToVRAM aUnknownDA6500, $0200, $80, $AD00
 
         lda $0899,b
         sta $0897,b
@@ -3754,6 +3788,22 @@
     .endsection Table8A98B8Section
 
 
+    .section Data8A98C4Section
+
+      .al
+      .xl
+
+      aUnknown8A98C4 ; 8A/98C4
+
+        ; Read by rlUnknown8A9858.
+
+        .word $0015, $0015, $0015, $0019, $0019, $0019
+
+        ; 8A/98D0
+
+    .endsection Data8A98C4Section
+
+
     .section Unsorted8A98D0Section
 
       .al
@@ -3814,7 +3864,7 @@
         lda aDeploymentTable._MapSpriteID,x
         and #$8000
         bne _9958
-        lda $88D1C5,x
+        lda aUnknown88D1C5,x
         sta wR4
         lda #$9A43
         tay
@@ -3876,7 +3926,7 @@
         lda aDeploymentTable._MapSpriteID,x
         and #$8000
         beq _99D5
-        lda $88D255,x
+        lda aUnknown88D255,x
         sta wR4
         lda #$9A4A
         tay
@@ -4277,6 +4327,27 @@
         ; 8A/9D79
 
     .endsection Unsorted8A9D39Section
+
+
+    .section Data8A9D79Section
+
+      .al
+      .xl
+
+      aUnknown8A9D79 ; 8A/9D79
+
+        ; Read by rlUnknown8A9D39, rsUnknown8A9D22.
+
+        .word $006E, $006E, $006E, $006E, $006E, $006E, $006E, $006D
+        .word $006D, $006D, $006D, $006D, $006D, $006D, $008C, $008C
+        .word $008C, $008C, $008C, $008C, $0089, $0089, $0089, $0089
+        .word $0089, $008A, $008A, $008A, $008A, $008A, $008B, $008B
+        .word $008B, $0088, $0088, $0088, $0088, $0071, $0071, $0071
+        .word $0071, $0057, $0057, $0057, $0057, $0057
+
+        ; 8A/9DD5
+
+    .endsection Data8A9D79Section
 
 
     .section Unsorted8A9DF2Section
@@ -5059,7 +5130,7 @@
         _A47A
         lda $08A3,b
         tax
-        lda $8AA4C6,x
+        lda aUnknown8AA4C6,x
         and #$00FF
         sec
         sbc #$000D
@@ -5100,6 +5171,22 @@
         ; 8A/A4C6
 
     .endsection Unsorted8AA400Section
+
+
+    .section Data8AA4C6Section
+
+      .al
+      .xl
+
+      aUnknown8AA4C6 ; 8A/A4C6
+
+        ; Read by rsUnknown8AA46E.
+
+        .word $7C54
+
+        ; 8A/A4C8
+
+    .endsection Data8AA4C6Section
 
 
     .section Unsorted8AA4C8Section
@@ -5365,6 +5452,23 @@
         ; 8A/A629
 
     .endsection Unsorted8AA5FFSection
+
+
+    .section Data8AA629Section
+
+      .al
+      .xl
+
+      aUnknown8AA629 ; 8A/A629
+
+        ; Read by rlUnknown8AA5FF.
+
+        .word $25E4, $25F4, $252A, $253A, $252B, $253B, $252C, $253C
+        .word $24FF, $2509
+
+        ; 8A/A63D
+
+    .endsection Data8AA629Section
 
 
     .section Unsorted8AA63DSection
@@ -5692,7 +5796,7 @@
         sta wR0
         lda #$0050
         sta wR1
-        lda @l $8AA917,x
+        lda @l aUnknown8AA917,x
         and #$00FF
         sta wR4
         lda #$0000
@@ -5709,6 +5813,23 @@
         ; 8A/A917
 
     .endsection Unsorted8AA8C9Section
+
+
+    .section Data8AA917Section
+
+      .al
+      .xl
+
+      aUnknown8AA917 ; 8A/A917
+
+        ; Read by rsUnknown8AA8C9.
+
+        .byte $00, $02, $04, $06, $08, $0A, $0C, $0E, $20, $22, $01, $00, $00, $C2, $00, $B0
+        .byte $34
+
+        ; 8A/A928
+
+    .endsection Data8AA917Section
 
 
     .section Unsorted8AA928Section
@@ -5749,7 +5870,7 @@
         sta wR0
         lda #$0050
         sta wR1
-        lda @l $8AA975,x
+        lda @l aUnknown8AA975,x
         and #$00FF
         sta wR4
         lda #$0000
@@ -5766,6 +5887,22 @@
         ; 8A/A975
 
     .endsection Unsorted8AA928Section
+
+
+    .section Data8AA975Section
+
+      .al
+      .xl
+
+      aUnknown8AA975 ; 8A/A975
+
+        ; Read by rsUnknown8AA928.
+
+        .word $0200, $0604, $0A08, $0E0C, $2220
+
+        ; 8A/A97F
+
+    .endsection Data8AA975Section
 
 
     .section Unsorted8AA97FSection
@@ -6887,7 +7024,7 @@
         clc
         adc #$0050
         sta wR1
-        lda @l $8AB03B,x
+        lda @l aUnknown8AB03B,x
         and #$00FF
         sta wR4
         lda #$3200
@@ -6910,6 +7047,30 @@
         ; 8A/B033
 
     .endsection Unsorted8AAF0ASection
+
+
+    .section Data8AB033Section
+
+      .al
+      .xl
+
+      aUnknown8AB033 ; 8A/B033
+
+        ; Read by rsUnknown8AAF0A.
+
+        .word $1000, $3020, $5040, $7060
+
+        ; 8A/B03B
+
+      aUnknown8AB03B ; 8A/B03B
+
+        ; Read by rsUnknown8AAF0A.
+
+        .word $2220, $2624, $2A28, $2E2C
+
+        ; 8A/B043
+
+    .endsection Data8AB033Section
 
 
     .section Unsorted8AB043Section
@@ -6938,7 +7099,7 @@
         and #$001C
         lsr a
         tax
-        lda $8AB07C,x
+        lda aUnknown8AB07C,x
         clc
         adc wR0
 
@@ -6967,6 +7128,23 @@
         ; 8A/B07C
 
     .endsection Unsorted8AB043Section
+
+
+    .section Data8AB07CSection
+
+      .al
+      .xl
+
+      aUnknown8AB07C ; 8A/B07C
+
+        ; Read by rlUnknown8AB043.
+
+        .byte $00, $00, $00, $00, $01, $00, $01, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF
+        .byte $01, $00, $00, $C2, $00, $02, $30
+
+        ; 8A/B093
+
+    .endsection Data8AB07CSection
 
 
     .section Unsorted8AB093Section
@@ -7686,7 +7864,7 @@
         ldx #$01FE
 
         _BE87
-        lda $8C9600,x
+        lda aUnknown8C9600,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -7714,7 +7892,7 @@
         ldx #$01FE
 
         _BEBA
-        lda $8CD400,x
+        lda aUnknown8CD400,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -7742,7 +7920,7 @@
         ldx #$01FE
 
         _BEED
-        lda $8CD200,x
+        lda aUnknown8CD200,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -7893,6 +8071,22 @@
         ; 8A/BFF3
 
     .endsection Unsorted8ABF27Section
+
+
+    .section Data8ABFF3Section
+
+      .al
+      .xl
+
+      aUnknown8ABFF3 ; 8A/BFF3
+
+        ; Read by rsUnknown8ABFD1.
+
+        .word $00A9, $00B1, $00AB, $00B2, $00F4, $00F4, $00F4, $00AD
+
+        ; 8A/C003
+
+    .endsection Data8ABFF3Section
 
 
     .section Unsorted8AC003Section
@@ -8196,7 +8390,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -8639,7 +8833,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -8851,7 +9045,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -9112,7 +9306,6 @@
 
       rsUnknown8AC8A2 ; 8A/C8A2
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9133,7 +9326,6 @@
 
       rsUnknown8AC8B9 ; 8A/C8B9
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9144,7 +9336,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -9247,7 +9439,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -9407,7 +9599,6 @@
 
       rsUnknown8ACAD2 ; 8A/CAD2
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9428,7 +9619,6 @@
 
       rsUnknown8ACAE9 ; 8A/CAE9
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9439,7 +9629,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -9670,7 +9860,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -9863,7 +10053,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -9926,7 +10116,6 @@
 
       rsUnknown8ACE2B ; 8A/CE2B
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -10346,7 +10535,7 @@
         ldx #$000E
 
         _D8A6
-        lda $8C9700,x
+        lda aUnknown8C9700,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -11363,13 +11552,13 @@
         lda $7F80A7
         asl a
         tax
-        lda $8CCB00,x
+        lda aUnknown8CCB00,x
         sta $0186,b
-        lda $8CCB40,x
+        lda aUnknown8CCB40,x
         sta $0188,b
-        lda $8CCB80,x
+        lda aUnknown8CCB80,x
         sta $018A,b
-        lda $8CCBC0,x
+        lda aUnknown8CCBC0,x
         sta $018C,b
         rts
 
@@ -12054,7 +12243,7 @@
         ldx #$01FE
 
         _EDEE
-        lda $8CD000,x
+        lda aUnknown8CD000,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -12502,7 +12691,6 @@
 
       rsUnknown8AF0D7 ; 8A/F0D7
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -12603,7 +12791,7 @@
         ldx #$01FE
 
         _F1AB
-        lda $8CD800,x
+        lda aUnknown8CD800,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -12837,7 +13025,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -13037,7 +13225,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -13124,7 +13312,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -13366,7 +13554,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -13456,7 +13644,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -13582,7 +13770,6 @@
 
       rsUnknown8AF885 ; 8A/F885
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -13680,7 +13867,7 @@
         ldx #$01FE
 
         _F94E
-        lda $8CDA00,x
+        lda aUnknown8CDA00,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -13948,7 +14135,7 @@
         tax
         lda #$0004
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004
@@ -14008,7 +14195,7 @@
         tax
         lda #$0004
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         sta wR1
         lda #$0001
@@ -14285,3 +14472,149 @@
         ; 8A/FD0F
 
     .endsection Unsorted8AFCD5Section
+
+
+    .section Data8CCB00Section
+
+      .al
+      .xl
+
+      aUnknown8CCB00 ; 8C/CB00
+
+        ; Read by rsUnknown8AE0D7.
+
+        .word $031F, $01FC, $0199, $0135, $0011, $031F, $01FC, $0199
+        .word $0135, $0011, $031F, $01FC, $0199, $0135, $0011, $031F
+        .word $01FC, $0199, $0135, $0011, $025F, $01FC, $0199, $0135
+        .word $0011, $025F, $01FC, $0199, $0135, $0011, $025F, $01FC
+
+        ; 8C/CB40
+
+      aUnknown8CCB40 ; 8C/CB40
+
+        ; Read by rsUnknown8AE0D7.
+
+        .word $01FC, $0199, $0135, $0011, $025F, $01FC, $0199, $0135
+        .word $0011, $025F, $01FC, $0199, $0135, $0011, $025F, $01FC
+        .word $0199, $0135, $0011, $025F, $01FC, $0199, $0135, $0011
+        .word $025F, $01FC, $0199, $0135, $0011, $025F, $01FC, $0199
+
+        ; 8C/CB80
+
+      aUnknown8CCB80 ; 8C/CB80
+
+        ; Read by rsUnknown8AE0D7.
+
+        .word $0199, $0135, $0011, $025F, $01FC, $0199, $0135, $0011
+        .word $025F, $01FC, $0199, $0135, $0011, $025F, $01FC, $0199
+        .word $00F3, $000F, $01FF, $01BA, $0157, $00F3, $000F, $01FF
+        .word $01BA, $0157, $00F3, $000F, $01FF, $01BA, $0157, $00F3
+
+        ; 8C/CBC0
+
+      aUnknown8CCBC0 ; 8C/CBC0
+
+        ; Read by rsUnknown8AE0D7.
+
+        .word $0070, $000D, $0178, $0115, $00D3, $0070, $000D, $0178
+        .word $0115, $00D3, $0070, $000D, $0178, $0115, $00D3, $0070
+        .word $000D, $0178, $0115, $00D3, $0070, $000D, $0178, $0115
+        .word $00D3, $0070, $000D, $0178, $0115, $00D3, $0070, $000D
+
+        ; 8C/CC00
+
+    .endsection Data8CCB00Section
+
+
+    .section DataDA6500Section
+
+      .al
+      .xl
+
+      aUnknownDA6500 ; DA/6500
+
+        ; Read by rsUnknown8A8CB7.
+
+        .word $0035, $0035, $30A8, $30A9, $30AA, $30A9, $30AA, $30A9
+        .word $30AA, $308B, $30A9, $30AA, $30A9, $30AA, $308B, $30A9
+        .word $30AA, $30A9, $30AA, $308B, $30A9, $30AA, $30A9, $30AA
+        .word $308B, $30A9, $30AA, $70AA, $70A9, $70A8, $0035, $0035
+        .word $0035, $0035, $30B8, $30B9, $30BA, $3886, $3887, $30B9
+        .word $30BA
+
+        ; DA/6552
+
+      aUnknownDA6552 ; DA/6552
+
+        ; Read by rsUnknown8A8CB7.
+
+        .word $3880, $3881, $30B9, $30BA
+
+        ; DA/655A
+
+      aUnknownDA655A ; DA/655A
+
+        ; Read by rsUnknown8A8CB7.
+
+        .word $3882, $3883, $30B9, $30BA
+
+        ; DA/6562
+
+      aUnknownDA6562 ; DA/6562
+
+        ; Read by rsUnknown8A8CB7.
+
+        .word $3884, $3885, $309B, $30B9
+
+        ; DA/656A
+
+      aUnknownDA656A ; DA/656A
+
+        ; Read by rsUnknown8A8CB7.
+
+        .word $3888, $3889, $30BA, $309B
+
+        ; DA/6572
+
+      aUnknownDA6572 ; DA/6572
+
+        ; Read by rsUnknown8A8CB7.
+
+        .word $38EA, $38EB, $70BA, $70B9, $70B8, $0035, $0035, $0035
+        .word $0035, $30C8, $30C9, $30CA, $3896, $3897, $30C9, $30CA
+
+        ; DA/6592
+
+      aUnknownDA6592 ; DA/6592
+
+        ; Read by rsUnknown8A8CB7.
+
+        .word $3890, $3891, $30C9, $30CA
+
+        ; DA/659A
+
+      aUnknownDA659A ; DA/659A
+
+        ; Read by rsUnknown8A8CB7.
+
+        .word $3892, $3893, $30C9, $30CA
+
+        ; DA/65A2
+
+      aUnknownDA65A2 ; DA/65A2
+
+        ; Read by rsUnknown8A8CB7.
+
+        .word $3894, $3895, $30AB, $30C9
+
+        ; DA/65AA
+
+      aUnknownDA65AA ; DA/65AA
+
+        ; Read by rsUnknown8A8CB7.
+
+        .word $3898, $3899, $30CA, $30AB
+
+        ; DA/65B2
+
+    .endsection DataDA6500Section

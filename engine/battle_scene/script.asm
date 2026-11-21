@@ -267,7 +267,7 @@
         and #$01FF
         asl a
         tax
-        lda $98AD04,x
+        lda aUnknown98AD04,x
         pha
         ldx $0AEB,b
         lda wBattleAnimationX,b,x
@@ -573,7 +573,7 @@
         phx
         asl a
         tax
-        lda $97C2D4,x
+        lda aUnknown97C2D4,x
         clc
         adc #$C2D4
         sta $7FF631
@@ -648,7 +648,7 @@
         tax
         lda #$9700
         sta lR18+1
-        lda $97C828,x
+        lda aUnknown97C828,x
         clc
         adc #$C828
         sta lR18
@@ -1469,7 +1469,6 @@
 
       rlBattleSceneCommandDecompressToVRAMAlt ; 96/B9A4
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1496,7 +1495,6 @@
 
       rlBattleSceneCommandDecompress ; 96/B9B7
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1561,7 +1559,6 @@
 
       rlBattleSceneCommandLoadPortrait ; 96/BA15
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1631,7 +1628,6 @@
 
       rlBattleSceneCommandCopyToVRAM ; 96/BB0C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1706,7 +1702,6 @@
 
       rlBattleSceneCommandWait ; 96/BBC2
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1730,7 +1725,6 @@
 
       rlBattleSceneCommandSkippableWait ; 96/BBD2
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1840,7 +1834,6 @@
 
       rlBattleSceneCommandPlaySound ; 96/BC4C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1857,7 +1850,7 @@
         and #$01FF
         asl a
         tax
-        lda $98AD04,x
+        lda aUnknown98AD04,x
         ldx $0AE9,b
         cpx #$0000
         bne _BC66
@@ -1878,7 +1871,6 @@
 
       rlBattleSceneCommandPlaySoundAtCombatant ; 96/BC72
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1894,7 +1886,7 @@
         and #$01FF
         asl a
         tax
-        lda $98AD04,x
+        lda aUnknown98AD04,x
         pha
         ldx $0AE9,b
         lda wBattleAnimationX,b,x
@@ -1933,7 +1925,6 @@
 
       rlBattleSceneCommandWriteRAM ; 96/BCF1
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2115,7 +2106,6 @@
 
       rlBattleSceneCommandPaletteEffect ; 96/DB58
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2319,7 +2309,6 @@
 
       rlBattleSceneCommandBGScrollEffect ; 96/DEC0
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2337,7 +2326,7 @@
         tax
         lda #$9700
         sta lR18+1
-        lda $97BEAC,x
+        lda aUnknown97BEAC,x
         clc
         adc #$BEAC
         sta lR18
@@ -2478,7 +2467,6 @@
 
       rlBattleSceneCommandPaletteOperation ; 96/ECAB
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2528,3 +2516,42 @@
     .endsection Unsorted96ECABSection
 
 
+    .section Data97C828Section
+
+      .al
+      .xl
+
+      aUnknown97C828 ; 97/C828
+
+        ; Read by rlBattleSceneCommandWindowEffect3.
+
+        .word $0008, $0014, $0020, $002C, $8083, $000C, $0000, $0006
+        .word $1818, $1820, $0081, $000C, $0000, $0004, $3F40, $3F40
+        .word $0082, $000C, $0000, $0004, $0F10, $0064, $0082, $000C
+        .word $0000, $0004, $1314, $0864
+
+        ; 97/C860
+
+    .endsection Data97C828Section
+
+
+    .section Data98AD04Section
+
+      .al
+      .xl
+
+      aUnknown98AD04 ; 98/AD04
+
+        ; Read by rlBattleSceneCommandPlaySound, rlBattleSceneCommandPlaySoundAtCombatant, rlBattleSceneCommandPlaySoundAtOpponent.
+
+        .byte $35, $00, $61, $00, $35, $00, $62, $00, $37, $00, $66, $00, $60, $00, $59, $00
+        .byte $5A, $00, $56, $00, $57, $00, $56, $00, $58, $00, $31, $00, $5B, $00, $32, $00
+        .byte $33, $00, $5C, $00, $52, $00, $53, $00, $54, $00, $55, $00, $63, $00, $5E, $00
+        .byte $64, $00, $51, $00, $34, $00, $5F, $00, $5D, $00, $67, $00, $65, $00, $68, $00
+        .byte $69, $00, $03, $00, $71, $00, $73, $00, $75, $00, $77, $00, $79, $00, $7B, $00
+        .byte $7C, $00, $7D, $00, $80, $00, $7F, $00, $81, $00, $82, $00, $7E, $00, $7A, $00
+        .byte $02
+
+        ; 98/AD65
+
+    .endsection Data98AD04Section

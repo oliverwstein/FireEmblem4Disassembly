@@ -1492,6 +1492,35 @@
     .endsection Table8CDE00Section
 
 
+    .section Data8CDE20Section
+
+      .al
+      .xl
+
+      aUnknown8CDE20 ; 8C/DE20
+
+        ; Read by rsUnknown8B8114.
+
+        .word $031F, $133F, $235F, $337F, $3F7F, $4F9F, $5FBF, $6FDF
+        .word $6FDF, $5FBF, $4F9F, $3F7F, $337F, $235F, $133F, $031F
+        .word $031F, $133F, $235F, $337F, $3F7F, $4F9F, $5FBF, $6FDF
+        .word $6FDF, $5FBF, $4F9F, $3F7F, $337F, $235F, $133F, $031F
+        .word $031F, $133F, $235F, $337F, $3F7F, $4F9F, $5FBF, $6FDF
+        .word $6FDF, $5FBF, $4F9F, $3F7F, $337F, $235F, $133F, $031F
+        .word $031F, $133F, $235F, $337F, $3F7F, $4F9F, $5FBF, $6FDF
+        .word $6FDF, $5FBF, $4F9F, $3F7F, $337F, $235F, $133F, $031F
+        .word $031F, $133F, $235F, $337F, $3F7F, $4F9F, $5FBF, $6FDF
+        .word $6FDF, $5FBF, $4F9F, $3F7F, $337F, $235F, $133F, $031F
+        .word $031F, $133F, $235F, $337F, $3F7F, $4F9F, $5FBF, $6FDF
+        .word $6FDF, $5FBF, $4F9F, $3F7F, $337F, $235F, $133F, $031F
+        .word $031F, $133F, $235F, $337F, $3F7F, $4F9F, $5FBF, $6FDF
+        .word $6FDF, $5FBF, $4F9F, $3F7F, $337F, $235F, $133F, $031F
+
+        ; 8C/DF00
+
+    .endsection Data8CDE20Section
+
+
     .section TableDD7FB0Section
 
       .al

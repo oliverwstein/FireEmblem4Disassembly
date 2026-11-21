@@ -538,7 +538,7 @@
         lda wR15
         asl a
         tax
-        lda $8BDFBF,x
+        lda aUnknown8BDFBF,x
         sta wSkillWindowSkillID
 
         _D891
@@ -595,6 +595,29 @@
         ; 80/D8E8
 
     .endsection Unsorted80D818Section
+
+
+    .section Data89AC56Section
+
+      .al
+      .xl
+
+      aUnknown89AC56 ; 89/AC56
+
+        ; Read by rlSkillWindowDrawSkillName, rsUnknown89A3C0.
+
+        .word $0000, $0000, $0000, $AAFD, $0B89, $89AB, $AB19, $2789
+        .word $89AB, $AB35, $0089, $0000, $AB43, $0089, $0000, $0000
+        .word $0000, $0000, $AB51, $0089, $0000, $AB5F, $6D89, $89AB
+        .word $AB7B, $8989, $89AB, $AB97, $A589, $89AB, $ABB3, $C189
+        .word $89AB, $0000, $0000, $0000, $ABCF, $DD89, $89AB, $0000
+        .word $0000, $0000, $ABEB, $0089, $0000, $0000, $2000, $0020
+        .word $0000, $8800, $7E83, $0130, $0000, $0000, $AF50, $3C7F
+        .word $0001, $0000, $5000, $7FAF
+
+        ; 89/ACCE
+
+    .endsection Data89AC56Section
 
 
     .section Unsorted8BD794Section
@@ -998,15 +1021,15 @@
         lda wSkillWindowCurrentSkill
         asl a
         tax
-        lda $8BDFBF,x
+        lda aUnknown8BDFBF,x
         sta wR0
         asl a
         clc
         adc wR0
         tax
-        lda $89AC57,x
+        lda aUnknown89AC56+1,x
         sta lR18+1
-        lda $89AC56,x
+        lda aUnknown89AC56,x
         sta lR18
         ldx #$0415
         jsl rlDrawMenuTextLine
@@ -1040,7 +1063,7 @@
         lda wSkillWindowCurrentSkill
         asl a
         tax
-        lda $8BDFBF,x
+        lda aUnknown8BDFBF,x
         sta wR0
         asl a
         clc
@@ -1125,7 +1148,7 @@
         lda wR0
         asl a
         tax
-        lda $8BDA9C,x
+        lda aUnknown8BDA9C,x
         tax
         lda @l lRoutineVariable
         sta lR18
@@ -1157,6 +1180,23 @@
         ; 8B/DA9C
 
     .endsection Unsorted8BD90BSection
+
+
+    .section Data8BDA9CSection
+
+      .al
+      .xl
+
+      aUnknown8BDA9C ; 8B/DA9C
+
+        ; Read by rlSkillWindowDrawHolderNames.
+
+        .word $0F13, $0F19, $1113, $1119, $1313, $1319, $1513, $1519
+        .word $1713, $1719, $1913, $1919
+
+        ; 8B/DAB4
+
+    .endsection Data8BDA9CSection
 
 
     .section Unsorted8BDAB4Section
@@ -1226,7 +1266,7 @@
         lda wSkillWindowCurrentSkill
         asl a
         tax
-        lda $8BDB7E,x
+        lda aUnknown8BDB7E,x
         sta wR4
         stz wR0
         stz wR1
@@ -1244,6 +1284,24 @@
         ; 8B/DB77
 
     .endsection Unsorted8BDB54Section
+
+
+    .section Data8BDB7ESection
+
+      .al
+      .xl
+
+      aUnknown8BDB7E ; 8B/DB7E
+
+        ; Read by rsSkillWindowRenderSkillIcon.
+
+        .word $0006, $0000, $0002, $0004, $0044, $0046, $0008, $000C
+        .word $000E, $0020, $0022, $0024, $0026, $0028, $002A, $0040
+        .word $0042, $0048
+
+        ; 8B/DBA2
+
+    .endsection Data8BDB7ESection
 
 
     .section Unsorted8BDBA2Section
@@ -1615,7 +1673,7 @@
         lda wR15
         asl a
         tax
-        lda $8BDE9D,x
+        lda aUnknown8BDE9D,x
         tax
         lda @l lRoutineVariable
         sta lR18
@@ -1636,6 +1694,24 @@
         ; 8B/DE9D
 
     .endsection Unsorted8BDC92Section
+
+
+    .section Data8BDE9DSection
+
+      .al
+      .xl
+
+      aUnknown8BDE9D ; 8B/DE9D
+
+        ; Read by rsSkillWindowDrawAllHolderNames.
+
+        .word $0000, $0006, $0200, $0206, $0400, $0406, $0600, $0606
+        .word $0800, $0806, $0A00, $0A06, $000C, $020C, $040C, $060C
+        .word $080C, $0A0C, $0012, $0212, $0412, $0612, $0812, $0A12
+
+        ; 8B/DECD
+
+    .endsection Data8BDE9DSection
 
 
     .section Unsorted8BDECDSection
@@ -1773,3 +1849,21 @@
     .endsection Unsorted8BDECDSection
 
 
+    .section Data8BDFBFSection
+
+      .al
+      .xl
+
+      aUnknown8BDFBF ; 8B/DFBF
+
+        ; Read by rlSkillWindowDrawSkillDescription, rlSkillWindowDrawSkillName, rsSkillWindowGetSkillHolders.
+
+        .byte $02, $00, $03, $00, $04, $00, $05, $00, $06, $00, $08, $00, $0C, $00, $0E, $00
+        .byte $0F, $00, $10, $00, $11, $00, $12, $00, $13, $00, $14, $00, $15, $00, $18, $00
+        .byte $19, $00, $1C, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+        .byte $00
+
+        ; 8B/E000
+
+    .endsection Data8BDFBFSection

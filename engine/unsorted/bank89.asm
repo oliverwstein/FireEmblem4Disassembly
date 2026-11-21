@@ -409,7 +409,7 @@
         ldx #$0020
 
         _82CD
-        lda $DE2C9E,x
+        lda aUnknownDE2C9E,x
         sta $02DE,b,x
         dec x
         dec x
@@ -661,7 +661,7 @@
         ldx #$0020
 
         _84C4
-        lda $DE2C9E,x
+        lda aUnknownDE2C9E,x
         sta $02DE,b,x
         dec x
         dec x
@@ -736,7 +736,6 @@
 
       rsUnknown898536 ; 89/8536
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -830,7 +829,7 @@
         ldx #$0020
 
         _85E7
-        lda $DE2C9E,x
+        lda aUnknownDE2C9E,x
         sta $02DE,b,x
         dec x
         dec x
@@ -1068,7 +1067,6 @@
 
       rsUnknown898755 ; 89/8755
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1688,6 +1686,22 @@
     .endsection Table898B80Section
 
 
+    .section Data898B88Section
+
+      .al
+      .xl
+
+      aUnknown898B88 ; 89/8B88
+
+        ; Read by rsUnknown898B3B.
+
+        .byte $00, $02, $04, $06, $08, $0A, $0C, $0E, $01, $00, $00, $C2, $C0, $60, $26
+
+        ; 89/8B97
+
+    .endsection Data898B88Section
+
+
     .section Unsorted898B97Section
 
       .al
@@ -1711,7 +1725,7 @@
         sta wR0
         lda #$0009
         sta wR1
-        lda @l $898CBC,x
+        lda @l aUnknown898CBC,x
         and #$00FF
         sta wR4
         lda #$2600
@@ -1746,7 +1760,7 @@
         sta $7F82BD
         asl a
         tax
-        lda @l $898D41,x
+        lda @l aUnknown898D41,x
         sta wR4
         lda #$0017
         sta wR0
@@ -1782,7 +1796,7 @@
         lda $7F82BD
         asl a
         tax
-        lda @l $898CD7,x
+        lda @l aUnknown898CD7,x
         tay
         jsl rlPushToOAMBuffer
         bra _8CBB
@@ -1811,7 +1825,7 @@
         sbc #$0005
         asl a
         tax
-        lda @l $898D01,x
+        lda @l aUnknown898D01,x
         tay
         jsl rlPushToOAMBuffer
         bra _8CBB
@@ -1835,6 +1849,53 @@
         ; 89/8CBC
 
     .endsection Unsorted898B97Section
+
+
+    .section Data898CBCSection
+
+      .al
+      .xl
+
+      aUnknown898CBC ; 89/8CBC
+
+        ; Read by rsUnknown898B97.
+
+        .byte $60, $62, $64, $66, $68, $6A, $6C, $6E, $01, $00, $00, $C2, $50, $00, $00, $02
+        .byte $00, $18, $C2, $70, $00, $30, $48, $C2, $70, $00, $B0
+
+        ; 89/8CD7
+
+      aUnknown898CD7 ; 89/8CD7
+
+        ; Read by rsUnknown898B97.
+
+        .word $8CDD, $8CE9, $8CF5, $0002, $C228, $0470, $583D, $70C2
+        .word $3D02, $0002, $C228, $0070, $583D, $70C2, $3D04, $0002
+        .word $C228, $0270, $583D, $70C2, $3D00
+
+        ; 89/8D01
+
+      aUnknown898D01 ; 89/8D01
+
+        ; Read by rsUnknown898B97.
+
+        .word $8D07, $8D13, $8D1F, $0002, $C228, $0E70, $583D, $70C2
+        .word $3D0C, $0002, $C228, $0A70, $583D, $70C2, $3D0E, $0002
+        .word $C228, $0C70, $583D, $70C2, $3D0A, $0004, $C21C, $0070
+        .word $2E30, $70C2, $3D0A, $C240, $0C70, $523D, $70C2, $3D0E
+
+        ; 89/8D41
+
+      aUnknown898D41 ; 89/8D41
+
+        ; Read by rsUnknown898B97.
+
+        .word $0100, $0102, $0104, $0106, $0108, $010A, $010C, $010E
+        .word $0120, $0122
+
+        ; 89/8D55
+
+    .endsection Data898CBCSection
 
 
     .section Unsorted898D55Section
@@ -2328,6 +2389,24 @@
     .endsection Table899081Section
 
 
+    .section Data899099Section
+
+      .al
+      .xl
+
+      aUnknown899099 ; 89/9099
+
+        ; Read by rsUnknown899028.
+
+        .word $90A1, $90A8, $90AF, $90B6, $0001, $C3FC, $82F4, $013B
+        .word $FC00, $F4C3, $3B84, $0001, $C3FC, $86F4, $013B, $FC00
+        .word $F4C3, $3B84
+
+        ; 89/90BD
+
+    .endsection Data899099Section
+
+
     .section Unsorted8990BDSection
 
       .al
@@ -2499,7 +2578,7 @@
         beq _9219
 
         _920B
-        lda $89923F,x
+        lda aUnknown89923F,x
         sta $7FB0B6,x
         beq _923E
         inc x
@@ -2513,7 +2592,7 @@
         beq _9230
 
         _9222
-        lda $899265,x
+        lda aUnknown899265,x
         sta $7FB0B6,x
         beq _923E
         inc x
@@ -2522,7 +2601,7 @@
 
 
         _9230
-        lda $899289,x
+        lda aUnknown899289,x
         sta $7FB0B6,x
         beq _923E
         inc x
@@ -2538,6 +2617,44 @@
         ; 89/923F
 
     .endsection Unsorted899200Section
+
+
+    .section Data89923FSection
+
+      .al
+      .xl
+
+      aUnknown89923F ; 89/923F
+
+        ; Read by rlUnknown899200.
+
+        .word $E016, $E110, $E20D, $E30B, $E40A, $E508, $E508, $E801
+        .word $E601, $E401, $E214, $E312, $E412, <>rsDebugMenuTab3Page6, $E610, $E70E
+        .word $E80D, $E910, $0000
+
+        ; 89/9265
+
+      aUnknown899265 ; 89/9265
+
+        ; Read by rlUnknown899200.
+
+        .word $E016, $E110, $E20D, $E30B, $E40A, $E508, $E508, $E801
+        .word $E601, $E401, $E118, $E214, $E414, <>rsDebugMenuTab3Page6, $E612, $E711
+        .word $E810, $0000
+
+        ; 89/9289
+
+      aUnknown899289 ; 89/9289
+
+        ; Read by rlUnknown899200.
+
+        .word $E016, $E110, $E20D, $E30B, $E40A, $E508, $E508, $E801
+        .word $E601, $E401, $E415, $E514, $E614, $E714, $E812, $E912
+        .word $EA10, $0000
+
+        ; 89/92AD
+
+    .endsection Data89923FSection
 
 
     .section Unsorted8992ADSection
@@ -2650,6 +2767,22 @@
         ; 89/935F
 
     .endsection Unsorted89933CSection
+
+
+    .section Data89935FSection
+
+      .al
+      .xl
+
+      aUnknown89935F ; 89/935F
+
+        ; Read by rsUnknown89933C.
+
+        .byte $00, $00, $10, $20, $30, $40, $50, $60, $01, $00, $D6, $C2, $69, $07, $26
+
+        ; 89/936E
+
+    .endsection Data89935FSection
 
 
     .section Unsorted89936ESection
@@ -3311,6 +3444,22 @@
         ; 89/98D4
 
     .endsection Unsorted89970DSection
+
+
+    .section Data8998D4Section
+
+      .al
+      .xl
+
+      aUnknown8998D4 ; 89/98D4
+
+        ; Read by rlUnknown89970D.
+
+        .byte $00, $0D, $0F, $11, $13, $15, $17, $19, $1B, $82, $64, $00, $00
+
+        ; 89/98E1
+
+    .endsection Data8998D4Section
 
 
     .section Unsorted8998E1Section
@@ -5887,9 +6036,9 @@
         lda wUnitWindowCurrentHighlightLine
         asl a
         tax
-        lda $89B225,x
+        lda aUnknown89B225,x
         sta wR0
-        lda $89B255,x
+        lda aUnknown89B255,x
         sta wR1
         lda wGameStateStep,b
         jsl rlUnknown88A704
@@ -5900,6 +6049,34 @@
         ; 89/B225
 
     .endsection Unsorted89B20BSection
+
+
+    .section Data89B225Section
+
+      .al
+      .xl
+
+      aUnknown89B225 ; 89/B225
+
+        ; Read by rsUnknown89B20B.
+
+        .word $0000, $0050, $00A0, $0000, $0050, $00A0, $0000, $0050
+        .word $00A0, $0000, $0050, $00A0, $0000, $0050, $00A0, $0000
+        .word $0050, $00A0, $0000, $0050, $00A0, $0000, $0050, $00A0
+
+        ; 89/B255
+
+      aUnknown89B255 ; 89/B255
+
+        ; Read by rsUnknown89B20B.
+
+        .word $004B, $004B, $004B, $005B, $005B, $005B, $006B, $006B
+        .word $006B, $007B, $007B, $007B, $008B, $008B, $008B, $009B
+        .word $009B, $009B, $00AB, $00AB, $00AB, $00BB, $00BB, $00BB
+
+        ; 89/B285
+
+    .endsection Data89B225Section
 
 
     .section Unsorted89B285Section
@@ -5917,7 +6094,7 @@
         lda $7FB018
         asl a
         tax
-        lda $89B29E,x
+        lda aUnknown89B29E,x
         sta wR0
         lda #$0013
         sta wR1
@@ -5930,6 +6107,22 @@
         ; 89/B29E
 
     .endsection Unsorted89B285Section
+
+
+    .section Data89B29ESection
+
+      .al
+      .xl
+
+      aUnknown89B29E ; 89/B29E
+
+        ; Read by rsUnknown89B285.
+
+        .word $0095, $00BD
+
+        ; 89/B2A2
+
+    .endsection Data89B29ESection
 
 
     .section Unsorted89B2A2Section
@@ -5983,7 +6176,7 @@
         lsr a
         and #$0006
         tax
-        lda $89B30C,x
+        lda aUnknown89B30C,x
         sta wR15
         pla
         and #$7FFF
@@ -6004,7 +6197,7 @@
         lda wUnitWindowCurrentHighlightLine
         asl a
         tax
-        lda $89B314,x
+        lda aUnknown89B314,x
         sta wR1
         jsl rlDMAByPointer
         lda wR14
@@ -6023,6 +6216,32 @@
         ; 89/B30C
 
     .endsection Unsorted89B2B6Section
+
+
+    .section Data89B30CSection
+
+      .al
+      .xl
+
+      aUnknown89B30C ; 89/B30C
+
+        ; Read by rsUnknown89B2B6.
+
+        .word $0000, $0080, $0100, $0080
+
+        ; 89/B314
+
+      aUnknown89B314 ; 89/B314
+
+        ; Read by rsUnknown89B2B6.
+
+        .word $6200, $6220, $6240, $6260, $6280, $62A0, $62C0, $62E0
+        .word $6400, $6420, $6440, $6460, $6480, $64A0, $64C0, $64E0
+        .word $6600, $6620, $6640, $6660, $6680, $66A0, $66C0, $66E0
+
+        ; 89/B344
+
+    .endsection Data89B30CSection
 
 
     .section Unsorted89B344Section
@@ -6044,7 +6263,7 @@
         lsr a
         and #$0006
         tax
-        lda $89B39F,x
+        lda aUnknown89B39F,x
         sta wR15
         pla
         and #$7FFF
@@ -6065,7 +6284,7 @@
         lda wUnitWindowCurrentHighlightLine
         asl a
         tax
-        lda $89B3A7,x
+        lda aUnknown89B3A7,x
         sta wR1
         jsl rlDMAByPointer
         lda wR14
@@ -6086,6 +6305,32 @@
         ; 89/B39F
 
     .endsection Unsorted89B344Section
+
+
+    .section Data89B39FSection
+
+      .al
+      .xl
+
+      aUnknown89B39F ; 89/B39F
+
+        ; Read by rsUnknown89B344.
+
+        .word $0000, $00C0, $0180, $00C0
+
+        ; 89/B3A7
+
+      aUnknown89B3A7 ; 89/B3A7
+
+        ; Read by rsUnknown89B344.
+
+        .word $6800, $6840, $6880, $68C0, $6A00, $6A40, $6A80, $6AC0
+        .word $6C00, $6C40, $6C80, $6CC0, $6E00, $6E40, $6E80, $6EC0
+        .word $7000, $7040, $7080, $70C0, $7200, $7240, $7280, $72C0
+
+        ; 89/B3D7
+
+    .endsection Data89B39FSection
 
 
     .section Unsorted89B79DSection
@@ -6308,7 +6553,7 @@
         asl a
         asl a
         clc
-        adc $89C13E,x
+        adc aUnknown89C13E,x
         sta wR1
         lda #$00A5
         sta wR0
@@ -6322,6 +6567,22 @@
         ; 89/C13E
 
     .endsection Unsorted89C119Section
+
+
+    .section Data89C13ESection
+
+      .al
+      .xl
+
+      aUnknown89C13E ; 89/C13E
+
+        ; Read by rsUnknown89C119.
+
+        .word $0022, $002A, $001A
+
+        ; 89/C144
+
+    .endsection Data89C13ESection
 
 
     .section Unsorted89EB26Section
@@ -6634,7 +6895,6 @@
 
       rsUnknown89ECC6 ; 89/ECC6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6723,9 +6983,9 @@
         clc
         adc wR0
         tax
-        lda $89ED6B,x
+        lda aUnknown89ED6A+1,x
         sta lR18+1
-        lda $89ED6A,x
+        lda aUnknown89ED6A,x
         sta lR18
         lda $7F842C
         beq _ED3A
@@ -6780,6 +7040,31 @@
         .word <>rsUnknown89F018
 
     .endsection Table89ED58Section
+
+
+    .section Data89ED6ASection
+
+      .al
+      .xl
+
+      aUnknown89ED6A ; 89/ED6A
+
+        ; Read by rlUnknown89ED12.
+
+        .byte $85, $ED, $89, $99, $ED, $89, $99, $ED, $89, $AD, $ED, $89, $C1, $ED, $89, $85
+        .byte $ED, $89, $D5, $ED, $89, $99, $ED, $89, $E9, $ED, $89, $81, $40, $82, $50, $81
+        .byte $40, $81, $40, $82, $51, $81, $40, $81, $40, $82, $52, $81, $40, $00, $00, $82
+        .byte $6E, $82, $6D, $81, $40, $81, $40, $81, $40, $81, $40, $82, $6E, $82, $65, $82
+        .byte $65, $00, $00, $82, $50, $81, $40, $82, $51, $81, $40, $82, $52, $81, $40, $82
+        .byte $53, $81, $40, $82, $54, $00, $00, $83, $8A, $83, $41, $83, $8B, $81, $40, $81
+        .byte $40, $81, $40, $82, $CD, $82, $E2, $82, $A2, $00, $00, $82, $4F, $81, $40, $82
+        .byte $50, $81, $40, $82, $51, $81, $40, $82, $52, $81, $40, $82, $53, $00, $00, $82
+        .byte $D3, $82, $C2, $82, $A4, $81, $40, $81, $40, $82, $A9, $82, $B5, $82, $B1, $82
+        .byte $A2, $00, $00
+
+        ; 89/EDFD
+
+    .endsection Data89ED6ASection
 
 
     .section Unsorted89EDFDSection
@@ -7517,9 +7802,9 @@
         clc
         adc wR0
         tax
-        lda $89F1B4,x
+        lda aUnknown89F1B3+1,x
         sta lR18+1
-        lda $89F1B3,x
+        lda aUnknown89F1B3,x
         sta lR18
         ldx #$040E
         jsl rlDrawMenuTextLine
@@ -7529,9 +7814,9 @@
         clc
         adc wR0
         tax
-        lda $89F181,x
+        lda aUnknown89F180+1,x
         sta lR18+1
-        lda $89F180,x
+        lda aUnknown89F180,x
         sta lR18
         ldx #$060E
         jsl rlDrawMenuTextLine
@@ -7541,9 +7826,9 @@
         clc
         adc wR0
         tax
-        lda $89F181,x
+        lda aUnknown89F180+1,x
         sta lR18+1
-        lda $89F180,x
+        lda aUnknown89F180,x
         sta lR18
         ldx #$080E
         jsl rlDrawMenuTextLine
@@ -7553,9 +7838,9 @@
         clc
         adc wR0
         tax
-        lda $89F187,x
+        lda aUnknown89F186+1,x
         sta lR18+1
-        lda $89F186,x
+        lda aUnknown89F186,x
         sta lR18
         ldx #$0A0E
         jsl rlDrawMenuTextLine
@@ -7565,9 +7850,9 @@
         clc
         adc wR0
         tax
-        lda $89F196,x
+        lda aUnknown89F195+1,x
         sta lR18+1
-        lda $89F195,x
+        lda aUnknown89F195,x
         sta lR18
         ldx #$0C0E
         jsl rlDrawMenuTextLine
@@ -7577,9 +7862,9 @@
         clc
         adc wR0
         tax
-        lda $89F19C,x
+        lda aUnknown89F19B+1,x
         sta lR18+1
-        lda $89F19B,x
+        lda aUnknown89F19B,x
         sta lR18
         ldx #$0E0E
         jsl rlDrawMenuTextLine
@@ -7589,9 +7874,9 @@
         clc
         adc wR0
         tax
-        lda $89F1A5,x
+        lda aUnknown89F1A4+1,x
         sta lR18+1
-        lda $89F1A4,x
+        lda aUnknown89F1A4,x
         sta lR18
         ldx #$100E
         jsl rlDrawMenuTextLine
@@ -7601,9 +7886,9 @@
         clc
         adc wR0
         tax
-        lda $89F1C3,x
+        lda aUnknown89F1C2+1,x
         sta lR18+1
-        lda $89F1C2,x
+        lda aUnknown89F1C2,x
         sta lR18
         ldx #$120E
         jsl rlDrawMenuTextLine
@@ -7615,9 +7900,9 @@
         clc
         adc wR0
         tax
-        lda $89F1BD,x
+        lda aUnknown89F1BC+1,x
         sta lR18+1
-        lda $89F1BC,x
+        lda aUnknown89F1BC,x
         sta lR18
         ldx #$140E
         jsl rlDrawMenuTextLine
@@ -7630,6 +7915,86 @@
         ; 89/F180
 
     .endsection Unsorted89F065Section
+
+
+    .section Data89F180Section
+
+      .al
+      .xl
+
+      aUnknown89F180 ; 89/F180
+
+        ; Read by rlUnknown89F065.
+
+        .word $F8A3, $AD89, $89F8
+
+        ; 89/F186
+
+      aUnknown89F186 ; 89/F186
+
+        ; Read by rlUnknown89F065.
+
+        .byte $8F, $F8, $89, $93, $F8, $89, $97, $F8, $89, $9B, $F8, $89, $9F, $F8, $89
+
+        ; 89/F195
+
+      aUnknown89F195 ; 89/F195
+
+        ; Read by rlUnknown89F065.
+
+        .word $F1D0, $C889, $89F1
+
+        ; 89/F19B
+
+      aUnknown89F19B ; 89/F19B
+
+        ; Read by rlUnknown89F065.
+
+        .byte $D8, $F1, $89, $E2, $F1, $89, $AD, $F8, $89
+
+        ; 89/F1A4
+
+      aUnknown89F1A4 ; 89/F1A4
+
+        ; Read by rlUnknown89F065.
+
+        .byte $AD, $F8, $89, $0A, $F2, $89, $14, $F2, $89, $1E, $F2, $89, $28, $F2, $89
+
+        ; 89/F1B3
+
+      aUnknown89F1B3 ; 89/F1B3
+
+        ; Read by rlUnknown89F065.
+
+        .byte $EC, $F1, $89, $F6, $F1, $89, $00, $F2, $89
+
+        ; 89/F1BC
+
+      aUnknown89F1BC ; 89/F1BC
+
+        ; Read by rlUnknown89F065.
+
+        .word $F23C, $3289, $89F2
+
+        ; 89/F1C2
+
+      aUnknown89F1C2 ; 89/F1C2
+
+        ; Read by rlUnknown89F065.
+
+        .word $F8A3, $AD89, $89F8, $CD82, $E282, $A282, $0000, $8A83
+        .word $4183, $8B83, $0000, $5883, $6583, $8C83, $4983, $0000
+        .word $8283, $6D83, $8983, $8B83, $0000, $8A83, $4183, $8B83
+        .word $4081, $0000, $7D83, $6283, $7683, $4081, $0000, $B182
+        .word $9495, $C282, $4081, $0000, $5A83, $5B81, $7583, $5082
+        .word $0000, $5A83, $5B81, $7583, $5182, $0000, $5A83, $5B81
+        .word $7583, $5282, $0000, $5A83, $5B81, $7583, $5382, $0000
+        .word $A982, $B582, $B182, $A282, $0000, $D382, $C282, $A482
+        .word $4081, $0000
+
+        ; 89/F246
+
+    .endsection Data89F180Section
 
 
     .section Unsorted89F246Section
@@ -7657,9 +8022,9 @@
         clc
         adc wR0
         tax
-        lda $89F339,x
+        lda aUnknown89F338+1,x
         sta lR18+1
-        lda $89F338,x
+        lda aUnknown89F338,x
         sta lR18
         ldx #$0000
         jsl rlDrawMenuTextLine
@@ -7730,9 +8095,9 @@
         clc
         adc wR0
         tax
-        lda $89F57A,x
+        lda aUnknown89F579+1,x
         sta lR18+1
-        lda $89F579,x
+        lda aUnknown89F579,x
         sta lR18
         ldx #$1215
         lda $7F842C
@@ -7751,6 +8116,32 @@
         ; 89/F338
 
     .endsection Unsorted89F246Section
+
+
+    .section Data89F579Section
+
+      .al
+      .xl
+
+      aUnknown89F579 ; 89/F579
+
+        ; Read by rlUnknown89F246.
+
+        .byte $BC, $F5, $89, $A8, $F5, $89, $A8, $F5, $89, $D0, $F5, $89, $94, $F5, $89, $E4
+        .byte $F5, $89, $F8, $F5, $89, $A8, $F5, $89, $0C, $F6, $89, $81, $40, $82, $A2, $82
+        .byte $C7, $82, $A4, $83, $58, $83, $73, $81, $5B, $83, $68, $81, $40, $00, $00, $82
+        .byte $B7, $82, $E9, $81, $40, $81, $40, $81, $40, $81, $40, $82, $B5, $82, $C8, $82
+        .byte $A2, $00, $00, $83, $8A, $83, $41, $83, $8B, $81, $40, $81, $40, $81, $40, $82
+        .byte $B1, $95, $94, $82, $C2, $00, $00, $82, $A8, $82, $BB, $82, $A2, $81, $40, $81
+        .byte $40, $81, $40, $82, $CD, $82, $E2, $82, $A2, $00, $00, $83, $58, $83, $65, $83
+        .byte $8C, $83, $49, $81, $40, $81, $40, $81, $40, $83, $49, $83, $74, $00, $00, $83
+        .byte $49, $83, $74, $81, $40, $81, $40, $83, $74, $83, $40, $83, $43, $83, $8B, $81
+        .byte $40, $00, $00, $81, $40, $82, $A0, $82, $BD, $82, $DC, $82, $CC, $82, $E6, $82
+        .byte $B3, $81, $40, $81, $40, $00, $00
+
+        ; 89/F620
+
+    .endsection Data89F579Section
 
 
     .section Unsorted89F620Section
@@ -7799,12 +8190,12 @@
         tax
         lda $7F842C
         beq _F641
-        lda $89F66E,x
+        lda aUnknown89F66E,x
         bra _F645
 
 
         _F641
-        lda $89F677,x
+        lda aUnknown89F677,x
 
         _F645
         and #$00FF
@@ -7838,6 +8229,30 @@
     .endsection Unsorted89F630Section
 
 
+    .section Data89F66ESection
+
+      .al
+      .xl
+
+      aUnknown89F66E ; 89/F66E
+
+        ; Read by rlUnknown89F630.
+
+        .byte $23, $38, $4D, $62, $76, $8B, $A1, $B5, $CA
+
+        ; 89/F677
+
+      aUnknown89F677 ; 89/F677
+
+        ; Read by rlUnknown89F630.
+
+        .word $3B24, $6952, $9780, $C5AE
+
+        ; 89/F67F
+
+    .endsection Data89F66ESection
+
+
     .section Unsorted89F67FSection
 
       .al
@@ -7863,7 +8278,7 @@
         clc
         adc wR0
         tax
-        lda @l $89F6BC,x
+        lda @l aUnknown89F6BC,x
         and #$00FF
         sta wR0
         sta $7F8548
@@ -7886,6 +8301,27 @@
         ; 89/F6BC
 
     .endsection Unsorted89F67FSection
+
+
+    .section Data89F6BCSection
+
+      .al
+      .xl
+
+      aUnknown89F6BC ; 89/F6BC
+
+        ; Read by rlUnknown89F67F.
+
+        .byte $AC, $C4, $DC, $00, $00, $00, $00, $00, $A8, $DC, $00, $00, $00, $00, $00, $00
+        .byte $A8, $DC, $00, $00, $00, $00, $00, $00, $A4, $B4, $C4, $D4, $E4, $00, $00, $00
+        .byte $AC, $DC, $00, $00, $00, $00, $00, $00, $AC, $C4, $DC, $00, $00, $00, $00, $00
+        .byte $A4, $B4, $C4, $D4, $E4, $00, $00, $00, $A8, $DC, $00, $00, $00, $00, $00, $00
+        .byte $AC, $D8, $00, $00, $00, $00, $00, $00, $B1, $B2, $B1, $B0, $C7, $C6, $C7, $C8
+        .byte $01, $00, $00, $C2, $00, $0C, $32
+
+        ; 89/F713
+
+    .endsection Data89F6BCSection
 
 
     .section Unsorted89F713Section
@@ -7957,7 +8393,7 @@
         lda $7F8400
         asl a
         tax
-        lda @l $89F7CD,x
+        lda @l aUnknown89F7CD,x
         sta wR4
         stz wR0
         stz wR1
@@ -7977,6 +8413,23 @@
         ; 89/F7CD
 
     .endsection Unsorted89F7A6Section
+
+
+    .section Data89F7CDSection
+
+      .al
+      .xl
+
+      aUnknown89F7CD ; 89/F7CD
+
+        ; Read by rlUnknown89F7A6.
+
+        .byte $20, $00, $22, $00, $24, $00, $26, $00, $2C, $00, $2A, $00, $2E, $00, $42, $00
+        .byte $40, $00, $01, $00, $9F, $C2, $21, $00, $34
+
+        ; 89/F7E6
+
+    .endsection Data89F7CDSection
 
 
     .section Unsorted89F7E6Section
@@ -8066,3 +8519,21 @@
         ; 89/F88B
 
     .endsection Unsorted89F842Section
+
+
+    .section DataDE6200Section
+
+      .al
+      .xl
+
+      aUnknownDE6200 ; DE/6200
+
+        ; Read by rlGetDialogueBoxGraphicsAndPalette.
+
+        .word $2253, $2D8C, $7FFF, $0C41, $7FFF, $4651, $7FFF, $2129
+        .word $4E69, $28C4, $1042, $10E4, $14E6, $2504, $1CE4, $14C4
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+        ; DE/6230
+
+    .endsection DataDE6200Section

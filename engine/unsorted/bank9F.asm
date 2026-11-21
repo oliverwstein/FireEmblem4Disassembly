@@ -1473,7 +1473,7 @@
         asl a
         and #$01FE
         tax
-        lda $9F8C3A,x
+        lda aUnknown9F8C3A,x
         sta wR14
         bpl _8B9D
         eor #$FFFF
@@ -1574,7 +1574,7 @@
         asl a
         and #$01FE
         tax
-        lda $9F8C3A,x
+        lda aUnknown9F8C3A,x
         sep #$20
         sta @l M7A
         xba
@@ -3481,7 +3481,7 @@
 
         _EB9A
         tax
-        lda $9AA30A,x
+        lda aUnknown9AA30A,x
         clc
         adc #$A30A
         sta lR19
@@ -3995,7 +3995,7 @@
         adc #$0004
         asl a
         tax
-        lda $9AA30A,x
+        lda aUnknown9AA30A,x
         clc
         adc #$A30A
         tax
@@ -4794,7 +4794,7 @@
         ldx #$001E
 
         _F71C
-        lda $9FF729,x
+        lda aUnknown9FF729,x
         sta $02A0,b,x
         dec x
         dec x
@@ -4807,6 +4807,23 @@
         ; 9F/F729
 
     .endsection Unsorted9FF67DSection
+
+
+    .section Data9FF729Section
+
+      .al
+      .xl
+
+      aUnknown9FF729 ; 9F/F729
+
+        ; Read by rlUnknown9FF6F0.
+
+        .word $3800, $7FFF, $6739, $41F0, $292A, $1485, $0C43, $1919
+        .word $10B2, $0C49, $375F, $0000, $0000, $0000, $0000, $0000
+
+        ; 9F/F749
+
+    .endsection Data9FF729Section
 
 
     .section Unsorted9FF749Section
@@ -5336,15 +5353,15 @@
         asl a
         tax
         lda wMapScrollXPixels,b
-        eor $9FFA88,x
+        eor aUnknown9FFA88,x
         sta wMapScrollXPixels,b
         lda wMapScrollYPixels,b
-        eor $9FFA8A,x
+        eor aUnknown9FFA88+2,x
         sta wMapScrollYPixels,b
         lda $7F45A6
         tax
         lda $1200,b,x
-        eor $9FFA88,x
+        eor aUnknown9FFA88,x
         sta $1200,b,x
         bra _FA47
 
@@ -5356,15 +5373,15 @@
         asl a
         tax
         lda wMapScrollXPixels,b
-        eor $9FFA78,x
+        eor aUnknown9FFA78,x
         sta wMapScrollXPixels,b
         lda wMapScrollYPixels,b
-        eor $9FFA7A,x
+        eor aUnknown9FFA78+2,x
         sta wMapScrollYPixels,b
         lda $7F45A6
         tax
         lda $1200,b,x
-        eor $9FFA78,x
+        eor aUnknown9FFA78,x
         sta $1200,b,x
 
         _FA47
@@ -5398,6 +5415,30 @@
         ; 9F/FA78
 
     .endsection Unsorted9FF9C1Section
+
+
+    .section Data9FFA78Section
+
+      .al
+      .xl
+
+      aUnknown9FFA78 ; 9F/FA78
+
+        ; Read by rlUnknown9FF9DA.
+
+        .word $0001, $0000, $0001, $0001, $0001, $0000, $0001, $0001
+
+        ; 9F/FA88
+
+      aUnknown9FFA88 ; 9F/FA88
+
+        ; Read by rlUnknown9FF9DA.
+
+        .word $0002, $0000, $0002, $0002, $0002, $0000, $0002, $0002
+
+        ; 9F/FA98
+
+    .endsection Data9FFA78Section
 
 
     .section Unsorted9FFA98Section

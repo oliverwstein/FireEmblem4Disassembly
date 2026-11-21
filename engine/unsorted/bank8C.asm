@@ -72,14 +72,14 @@
         clc
         adc wR0
         tax
-        lda @l $8CEEE9,x
+        lda @l aUnknown8CEEE8+1,x
         sta lR18+1
-        lda @l $8CEEE8,x
+        lda @l aUnknown8CEEE8,x
         sta lR18
         inc x
         inc x
         inc x
-        lda @l $8CEEE8,x
+        lda @l aUnknown8CEEE8,x
         sec
         sbc lR18
         sta wR0
@@ -102,14 +102,14 @@
         clc
         adc wR0
         tax
-        lda @l $8CEFA9,x
+        lda @l aUnknown8CEFA8+1,x
         sta lR19+1
-        lda @l $8CEFA8,x
+        lda @l aUnknown8CEFA8,x
         sta lR19
         inc x
         inc x
         inc x
-        lda @l $8CEFA8,x
+        lda @l aUnknown8CEFA8,x
         sec
         sbc lR19
         sta wR0
@@ -291,6 +291,53 @@
 ; F1 F0 8C 02 F1 8C 1A F1 8C 31 F1 8C 4D F1 8C 68 F1 8C 86 F1 8C A2 F1 8C
 
     .endsection Unsorted8CEDD0Section
+
+
+    .section Data8CEEE8Section
+
+      .al
+      .xl
+
+      aUnknown8CEEE8 ; 8C/EEE8
+
+        ; Read by rlUnknown8CED4F.
+
+        .word $F0F1, $028C, $8CF1, $F11A, $318C, $8CF1, $F14D, $688C
+        .word $8CF1, $F186, $A28C, $8CF1, $F1BB, $CC8C, $8CF1, $F1EA
+        .word $018C, $8CF2, $F21F, $388C, $8CF2, $F253, $848C, $8CF2
+        .word $F29E, $BB8C, $8CF2, $F2D2, $ED8C, $8CF2, $F30E, $3D8C
+        .word $8CF3, $F361, $7B8C, $8CF3, $F391, $AD8C, $8CF3, $F3BE
+        .word $DC8C, $8CF3, $F3F6, $1A8C, $8CF4, $F438, $568C, $8CF4
+        .word $F469, $878C, $8CF4, $F49C, $BB8C, $8CF4, $F4CF, $E48C
+        .word $8CF4, $F4FB, $108C, $8CF5, $F545, $6E8C, $8CF5, $F595
+        .word $AF8C, $8CF5, $F5CE, $FD8C, $8CF5, $F626, $518C, $8CF6
+        .word $F671, $948C, $8CF6, $F6B2, $CC8C, $8CF6, $F6EA, $FD8C
+        .word $8CF6, $F71B, $3A8C, $8CF7, $F750, $868C, $8CF7, $F7AE
+        .word $D58C, $8CF7, $F804, $2D8C, $8CF8, $F858, $788C, $8CF8
+
+        ; 8C/EFA8
+
+      aUnknown8CEFA8 ; 8C/EFA8
+
+        ; Read by rlUnknown8CED4F.
+
+        .word $F878, $918C, $8CF8, $F8A9, $BF8C, $8CF8, $F8D5, $EF8C
+        .word $8CF8, $F908, $328C, $8CF9, $F954, $6C8C, $8CF9, $F981
+        .word $9A8C, $8CF9, $F9CA, $E18C, $8CF9, $F9F8, $1A8C, $8CFA
+        .word $FA2D, $428C, $8CFA, $FA5E, $7E8C, $8CFA, $FA98, $BC8C
+        .word $8CFA, $FAE1, $008C, $8CFB, $FB18, $358C, $8CFB, $FB4A
+        .word $688C, $8CFB, $FB75, $968C, $8CFB, $FBB5, $DC8C, $8CFB
+        .word $FBF5, $0B8C, $8CFC, $FC35, $498C, $8CFC, $FC70, $8F8C
+        .word $8CFC, $FCAA, $CC8C, $8CFC, $FCF6, $118C, $8CFD, $FD29
+        .word $4A8C, $8CFD, $FD66, $8A8C, $8CFD, $FDB5, $D68C, $8CFD
+        .word $FDFA, $158C, $8CFE, $FE33, $408C, $8CFE, $FE66, $7F8C
+        .word $8CFE, $FE95, $A98C, $8CFE, $FEC4, $EE8C, $8CFE, $FF09
+        .word $218C, $8CFF, $FF45, $708C, $8CFF, $FF91, $B58C, $8CFF
+        .word $20C2
+
+        ; 8C/F06A
+
+    .endsection Data8CEEE8Section
 
 
     .section Unsorted8CF06ASection

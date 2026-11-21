@@ -346,7 +346,7 @@
         cmp #$00FF
         bne _8306
         ldx wR0
-        lda $99847F,x
+        lda aClassDefaultGenders,x
         and #$00FF
 
         _8306
@@ -912,7 +912,7 @@
         ldx #$0000
 
         _867F
-        lda $998F86,x
+        lda aUnknown998F86,x
         cmp #$FF
         beq _8691
         cmp #1,s
@@ -1053,7 +1053,7 @@
         ldx #$0000
 
         _872A
-        lda $998F91,x
+        lda aUnknown998F91,x
         cmp #$FFFF
         beq _873E
         cmp wR1
@@ -2494,7 +2494,7 @@
         ldx #$0000
 
         _909A
-        lda $98AAA1,x
+        lda aUnknown98AAA1,x
         and #$00FF
         cmp #$00FF
         beq _90B1
@@ -2983,7 +2983,7 @@
         rep #$20
         beq _9375
         tax
-        lda $95937C,x
+        lda aUnknown95937C,x
         and #$00FF
         bne _9375
         lda #$3540
@@ -3004,6 +3004,22 @@
         ; 95/937C
 
     .endsection Unsorted9590F2Section
+
+
+    .section Data95937CSection
+
+      .al
+      .xl
+
+      aUnknown95937C ; 95/937C
+
+        ; Read by rsUnknown959292, rsUnknown95938C.
+
+        .word $0100, $0100, $0000, $0000, $0000, $0000, $0000, $0000
+
+        ; 95/938C
+
+    .endsection Data95937CSection
 
 
     .section Unsorted95938CSection
@@ -3152,7 +3168,7 @@
         rep #$20
         beq _946D
         tax
-        lda $95937C,x
+        lda aUnknown95937C,x
         and #$00FF
         bne _946D
         lda #$3540
@@ -3829,7 +3845,7 @@
         pha
         phx
         tax
-        lda $98ACB8,x
+        lda aUnknown98ACB8,x
         and #$00FF
         plx
         clc
@@ -3991,6 +4007,22 @@
     .endsection Table959890Section
 
 
+    .section Data959894Section
+
+      .al
+      .xl
+
+      aUnknown959894 ; 95/9894
+
+        ; Read by rlUnknown9597FA.
+
+        .byte $00
+
+        ; 95/9895
+
+    .endsection Data959894Section
+
+
     .section Unsorted959895Section
 
       .al
@@ -4025,14 +4057,14 @@
         sta wR1
         lda #$0002
         sta wR0
-        lda $98AC86,x
+        lda aUnknown98AC86,x
         inc x
         inc x
         pha
-        lda $98AC86,x
+        lda aUnknown98AC86,x
         sta lR18
         inc x
-        lda $98AC86,x
+        lda aUnknown98AC86,x
         sta lR18+1
         inc x
         inc x
@@ -4841,7 +4873,7 @@
         rep #$20
         asl a
         tax
-        lda $98B3BA,x
+        lda aUnknown98B3BA,x
         sta $2181,b
         sep #$20
         lda #$01
@@ -4859,7 +4891,7 @@
         rep #$20
         asl a
         tax
-        lda $98B3EC,x
+        lda aUnknown98B3EC,x
         sta $2181,b
         sep #$20
         lda #$01
@@ -5517,7 +5549,7 @@
         ldx #$0000
 
         _A16E
-        lda $998DF8,x
+        lda aUnknown998DF8,x
         cmp #$FFFF
         beq _A1C1
         cmp #1,s
@@ -5530,7 +5562,7 @@
 
         _A180
         pla
-        lda $998DFA,x
+        lda aUnknown998DF8+2,x
         and #$00FF
         asl a
         pha
@@ -5541,21 +5573,21 @@
         pla
         plp
         bcs _A1AA
-        lda $E0017C,x
+        lda aUnknownE0017C,x
         sta $0218,b
-        lda $E0017E,x
+        lda aUnknownE0017C+2,x
         sta $021A,b
-        lda $E00180,x
+        lda aUnknownE0017C+4,x
         sta $021C,b
         bra _A1C3
 
 
         _A1AA
-        lda $E0017C,x
+        lda aUnknownE0017C,x
         sta $0298,b
-        lda $E0017E,x
+        lda aUnknownE0017C+2,x
         sta $029A,b
-        lda $E00180,x
+        lda aUnknownE0017C+4,x
         sta $029C,b
         bra _A1C3
 
@@ -5618,7 +5650,7 @@
         cmp #$007F
         bcs _A244
         tax
-        lda $9983B9,x
+        lda aItemAnimationCategories,x
         and #$00FF
         cmp #$00FF
         beq _A244
@@ -5987,7 +6019,6 @@
 
       rlUnknown95A44F ; 95/A44F
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6005,7 +6036,6 @@
 
       rlUnknown95A45A ; 95/A45A
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -6297,7 +6327,7 @@
         ldx #$0000
 
         _A62F
-        lda $998F02,x
+        lda aUnknown998F02,x
         cmp #$FFFF
         beq _A642
         and #$00FF
@@ -6996,7 +7026,7 @@
 
         phx
         jsr rsUnknown95AE65
-        lda $95AB80,x
+        lda aUnknown95AB80,x
         and #$00FF
         plx
         pha
@@ -7051,7 +7081,7 @@
         php
         phx
         jsr rsUnknown95AE65
-        lda $95AC3B,x
+        lda aUnknown95AC3B,x
         and #$00FF
         plx
         pha
@@ -7124,6 +7154,22 @@
     .endsection Unsorted95ABBBSection
 
 
+    .section Data95AC3BSection
+
+      .al
+      .xl
+
+      aUnknown95AC3B ; 95/AC3B
+
+        ; Read by rlUnknown95ABBB.
+
+        .word $0B0B, $0B0B, $0707
+
+        ; 95/AC41
+
+    .endsection Data95AC3BSection
+
+
     .section Unsorted95AC41Section
 
       .al
@@ -7138,7 +7184,7 @@
 
         phx
         jsr rsUnknown95AE65
-        lda $95ACA8,x
+        lda aUnknown95ACA8,x
         and #$00FF
         plx
         pha
@@ -7207,6 +7253,22 @@
     .endsection Unsorted95AC41Section
 
 
+    .section Data95ACA8Section
+
+      .al
+      .xl
+
+      aUnknown95ACA8 ; 95/ACA8
+
+        ; Read by rlUnknown95AC41.
+
+        .word $1111, $1111, $0A0A
+
+        ; 95/ACAE
+
+    .endsection Data95ACA8Section
+
+
     .section Unsorted95ACAESection
 
       .al
@@ -7221,7 +7283,7 @@
 
         phx
         jsr rsUnknown95AE65
-        lda $95ACF0,x
+        lda aUnknown95ACF0,x
         and #$00FF
         plx
         pha
@@ -7259,6 +7321,22 @@
     .endsection Unsorted95ACAESection
 
 
+    .section Data95ACF0Section
+
+      .al
+      .xl
+
+      aUnknown95ACF0 ; 95/ACF0
+
+        ; Read by rlUnknown95ACAE.
+
+        .word $1717, $1717, $0D0D
+
+        ; 95/ACF6
+
+    .endsection Data95ACF0Section
+
+
     .section Unsorted95ACF6Section
 
       .al
@@ -7287,7 +7365,7 @@
         rep #$20
         phx
         jsr rsUnknown95AE65
-        lda $95AD8C,x
+        lda aUnknown95AD8C,x
         and #$00FF
         plx
         pha
@@ -7315,7 +7393,7 @@
         adc #1,s
         tax
         pla
-        lda $95AD64,x
+        lda aUnknown95AD64,x
         and #$00FF
         plx
         jsl rlBattleAnimationQueueAction
@@ -7332,6 +7410,24 @@
         ; 95/AD64
 
     .endsection Unsorted95ACF6Section
+
+
+    .section Data95AD64Section
+
+      .al
+      .xl
+
+      aUnknown95AD64 ; 95/AD64
+
+        ; Read by rlUnknown95ACF6.
+
+        .word $2121, $2525, $2413, $2824, $1428, $2727, $2B2B, $2A15
+        .word $2E2A, $162E, $2D2D, $3131, $3017, $3430, $1834, $3333
+        .word $3737, $3619, $3A36, $1A3A
+
+        ; 95/AD8C
+
+    .endsection Data95AD64Section
 
 
     .section Unsorted95ADD6Section
@@ -8304,7 +8400,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda $97EA9A,x
+        lda aUnknown97EA9A,x
         and #$00FF
         jsl rlUnknown95A165
         plx
@@ -8338,7 +8434,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda $97EA9B,x
+        lda aUnknown97EA9A+1,x
         and #$00FF
         plx
         rtl
@@ -8375,7 +8471,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda $97EA9C,x
+        lda aUnknown97EA9A+2,x
         and #$00FF
         jsl rlUnknown95A165
         ply
@@ -8412,7 +8508,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda $97EA9D,x
+        lda aUnknown97EA9A+3,x
         and #$00FF
         plx
         rts
@@ -8448,7 +8544,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda $97EA9E,x
+        lda aUnknown97EA9A+4,x
         and #$00FF
         plx
         rts
@@ -8584,7 +8680,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda $97EAA0,x
+        lda aUnknown97EA9A+6,x
         and #$00FF
         jsl rlUnknown95A165
         asl a
@@ -8669,7 +8765,7 @@
         inc a
         and #$00FF
         tax
-        lda $97EC1A,x
+        lda aUnknown97EC1A,x
         and #$00FF
         plx
         rtl
@@ -8745,7 +8841,7 @@
         sep #$20
 
         _B856
-        lda $97E8FB,x
+        lda aUnknown97E8FB,x
         cmp #$FF
         beq _B873
         cmp wR0
@@ -8753,7 +8849,7 @@
         lda wR0+1
         cmp #$09
         beq _B87A
-        cmp $97E8FC,x
+        cmp aUnknown97E8FB+1,x
         beq _B87A
 
         _B86E
@@ -8774,7 +8870,7 @@
         rep #$20
         inc x
         inc x
-        lda $97E8FB,x
+        lda aUnknown97E8FB,x
 
         _B882
         plx
@@ -8865,12 +8961,12 @@
         ldx #$0000
 
         _B8CE
-        lda $98AFFD,x
+        lda aUnknown98AFFD,x
         cmp #$FFFF
         beq _B8EA
         cmp #1,s
         bne _B8E4
-        lda $98AFFF,x
+        lda aUnknown98AFFD+2,x
         sta #1,s
         clc
         bra _B8F0
@@ -9039,7 +9135,7 @@
         ldx #$0000
 
         _B99A
-        lda $978F3A,x
+        lda aUnknown978F3A,x
         sta $0BFF,b,x
         inc x
         cpx #$0043
@@ -10556,7 +10652,7 @@
         lsr a
         phx
         tax
-        lda $998B0E,x
+        lda aUnknown998B0E,x
         plx
         and #$00FF
         beq _C177
@@ -12356,7 +12452,7 @@
         and #$003F
         phx
         tax
-        lda $98AD65,x
+        lda aUnknown98AD65,x
         and #$00FF
         plx
         sep #$20
@@ -12369,7 +12465,7 @@
         and #$003F
         phx
         tax
-        lda $98AD65,x
+        lda aUnknown98AD65,x
         and #$00FF
         eor #$FFFF
         inc a
@@ -15633,7 +15729,7 @@
         lda $0B2D,b,x
         phx
         tax
-        lda $98AAD4,x
+        lda aUnknown98AAD4,x
         cmp #$8080
         bne _DEF4
         plx
@@ -15751,7 +15847,7 @@
         lda $0B2D,b,x
         phx
         tax
-        lda $98AB5C,x
+        lda aUnknown98AB5C,x
         cmp #$8081
         bne _DF8C
         plx
@@ -17273,7 +17369,6 @@
 
       rlUnknown95E8CE ; 95/E8CE
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -17306,7 +17401,6 @@
 
       rlUnknown95E8FD ; 95/E8FD
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -17337,7 +17431,6 @@
 
       rlUnknown95E931 ; 95/E931
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -17367,7 +17460,6 @@
 
       rlUnknown95E962 ; 95/E962
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -17397,7 +17489,6 @@
 
       rlUnknown95E993 ; 95/E993
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -17427,7 +17518,6 @@
 
       rlUnknown95E9C4 ; 95/E9C4
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -17467,7 +17557,7 @@
         ldx #$0000
 
         _E9F3
-        lda $E000D0,x
+        lda aUnknownE000C8+8,x
         sta $0274,b,x
         inc x
         inc x
@@ -17910,17 +18000,17 @@
         ldx #$0000
 
         _F081
-        lda $E026C3,x
+        lda aUnknownE026C3,x
         sta $0162,b,x
-        lda $E026E1,x
+        lda aUnknownE026E1,x
         sta $0122,b,x
-        lda $E026FF,x
+        lda aUnknownE026FF,x
         sta $0142,b,x
-        lda $E0271D,x
+        lda aUnknownE0271D,x
         sta $0242,b,x
-        lda $E02769,x
+        lda aUnknownE02769,x
         sta $0282,b,x
-        lda $E02667,x
+        lda aUnknownE02667,x
         lsr a
         and #$3DEF
         sta $01E2,b,x
@@ -17931,7 +18021,7 @@
         ldx #$0000
 
         _F0B9
-        lda $E02759,x
+        lda aUnknownE02759,x
         sta $0182,b,x
         inc x
         inc x
@@ -19042,3 +19132,432 @@
         ; 95/FF6E
 
     .endsection Unsorted95FF51Section
+
+
+    .section Data98AAA1Section
+
+      .al
+      .xl
+
+      aUnknown98AAA1 ; 98/AAA1
+
+        ; Read by rsUnknown959083.
+
+        .byte $09, $0B, $0C, $0F, $10, $11, $12, $13, $3A, $3B, $3C, $3D, $3E, $3F, $40, $41
+        .byte $42, $43, $44, $45, $46, $47, $48, $49, $4A, $4B, $4C, $4D, $4E, $4F, $50, $51
+        .byte $52, $53, $54, $58, $59, $5A, $5B, $5C, $5D, $5E, $5F, $60, $61, $62, $63, $64
+        .byte $65, $66, $FF
+
+        ; 98/AAD4
+
+      aUnknown98AAD4 ; 98/AAD4
+
+        ; Read by rsUnknown95DED5.
+
+        .word $03F8, $02F8, $01F8, $01F8, $02F8, $00F8, $00F8, $01F8
+        .word $01F8, $00F8, $FFF8, $00F8, $00F8, $FFF8, $FFF8, $FEF8
+        .word $FEF9, $FDF9, $FCFA, $FCFB, $FDFC, $FCFD, $FDFE, $FEFF
+        .word $FEFF, $FEFF, $FE00, $FEFF, $FE00, $FE00, $FE00, $FE01
+        .word $FE00, $FE01, $FE01, $FE01, $FE02, $FE02, $FF03, $FF03
+        .word $FF04, $0004, $0005, $0105, $0105, $0105, $0106, $0106
+        .word $0106, $0206, $0206, $0206, $0206, $0206, $0206, $0206
+        .word $0306, $0206, $0306, $0306, $0306, $0306, $0306, $0306
+        .word $0306, $0306, $0306, $8080
+
+        ; 98/AB5C
+
+      aUnknown98AB5C ; 98/AB5C
+
+        ; Read by rsUnknown95DF76.
+
+        .word $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8
+        .word $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8
+        .word $8082, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8
+        .word $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8
+        .word $FCF8, $8081, $8084, $04F8, $04F8, $04F8, $04F8, $04F8
+        .word $04F8, $04F8, $04F8, $04F8, $04F8, $04F8, $04F8, $04F8
+        .word $04F8, $04F8, $04F8, $8083, $04F8, $04F8, $04F8, $04F8
+        .word $04F8, $04F8, $04F8, $04F8, $04F8, $04F8, $04F8, $04F8
+        .word $04F8, $04F8, $04F8, $04F8, $04F8, $04F8, $04F8, $04F8
+        .word $8085, $04F8, $04F8, $04F8, $04F8, $8080, $F1D0, $00E3
+
+        ; 98/ABFC
+
+      aUnknown98ABFC ; 98/ABFC
+
+        ; Read by rlUnknown96957D.
+
+        .word $E0E0, $E0E0, $E0E0, $E1E1, $E1E1, $E1E1, $E2E2, $E2E2
+        .word $E2E2, $E3E3, $E3E3, $E3E3, $E4E4, $E4E4, $E4E4, $E5E5
+        .word $E5E5, $E5E5, $E6E6, $E6E6, $E6E6, $E7E7, $E7E7, $E7E7
+        .word $E8E8, $E8E8, $E8E8, $E9E9, $E9E9, $E9E9, $EAEA, $EAEA
+        .word $EAEA, $EBEB, $EBEB, $EBEB, $EBEB, $ECEC, $ECEC, $ECEC
+
+        ; 98/AC4C
+
+      aUnknown98AC4C ; 98/AC4C
+
+        ; Read by rlUnknown9695AE.
+
+        .byte $E0, $E0, $E0, $E0, $E1, $E1, $E1, $E2, $E2, $E2, $E2, $E3, $E3, $E3, $E4, $E4
+        .byte $E4, $E4, $E5, $E5, $E5, $E6, $E6, $E6, $E6, $E7, $E7, $E7, $E8, $E8, $E8, $E8
+        .byte $E9, $E9, $E9, $EA, $EA, $EA, $EA, $EB, $FF, $FF, $00, $80, $00, $40, $00, $20
+        .byte $00, $10, $00, $08, $00, $04, $00, $02, $00, $01
+
+        ; 98/AC86
+
+      aUnknown98AC86 ; 98/AC86
+
+        ; Read by rsUnknown959895.
+
+        .word $0A62, $4EC5, $F67E, $C90A, $7E4E, $0AAA, $4EE7, $EA7E
+        .word $EF0A, $7E4E, $0AB6, $4EF1, $447E, $250A, $7E4F, $0AD8
+        .word $4F29, $8C7E, $470A, $7E4F, $0ACC, $4F4F, $987E, $510A
+        .word $7E4F
+
+        ; 98/ACB8
+
+      aUnknown98ACB8 ; 98/ACB8
+
+        ; Read by rlUnknown959742.
+
+        .word $2123, $1A1E, $0F15, $0008
+
+        ; 98/ACC0
+
+    .endsection Data98AAA1Section
+
+
+    .section Data98AFFDSection
+
+      .al
+      .xl
+
+      aUnknown98AFFD ; 98/AFFD
+
+        ; Read by rlUnknown95B8B0.
+
+        .word $0002, $1AE8, $0008, $1AE8, $000B, $1AE8, $0015, $14E8
+        .word $0018, $14E8, $001A, $17E8, $001B, $17E8, $001C, $17E8
+        .word $0024, $17E8, $0029, $12E8, $002A, $12E8, $0043, $29F3
+        .word $0044, $29F3, $0045, $29F3, $0046, $29F3, $FFFF, $0003
+        .word $1AE8, $0008, $1AE8, $000E, $1AE8, $001A, $04E2, $001B
+        .word $04E2, $001C, $04E2, $0023, $02E2, $0026, $06E0, $0027
+        .word $06E0, $0028, $06E0, $0029, $06E0, $002B, $06E0, $FFFF
+        .word $0000, $30E8, $0001, $30E8, $0006, $30E8, $0007, $30E8
+        .word $0008, $30E8, $0009, $30E8, $000A, $30E8, $000F, $32E8
+        .word $0010, $32E8, $0011, $32E8, $0012, $35E8, $0013, $35E8
+        .word $0014, $35E8, $001A, $1AE8, $001B, $1AE8, $001C, $1AE8
+        .word $0022, $1FE8, $FFFF
+
+        ; 98/B0B3
+
+      aUnknown98B0B3 ; 98/B0B3
+
+        ; Read by rsUnknown96DACB.
+
+        .word $0000, $0400, $0800, $0C00, $1000, $1400, $1800, $1C00
+        .word $2000, $2400, $2800, $2C00, $3000, $3400, $3800, $3C00
+        .word $4000, $4400, $4800, $4C00, $5000, $5400, $5800, $5C00
+        .word $6000, $6400, $6800, $6C00, $7000, $7400, $7800, $7C00
+
+        ; 98/B0F3
+
+      aUnknown98B0F3 ; 98/B0F3
+
+        ; Read by rsUnknown96DACB.
+
+        .word $0000, $0020, $0040, $0060, $0080, $00A0, $00C0, $00E0
+        .word $0100, $0120, $0140, $0160, $0180, $01A0, $01C0, $01E0
+        .word $0200, $0220, $0240, $0260, $0280, $02A0, $02C0, $02E0
+        .word $0300, $0320, $0340, $0360, $0380, $03A0, $03C0, $03E0
+
+        ; 98/B133
+
+      aUnknown98B133 ; 98/B133
+
+        ; Read by rsUnknown96DACB.
+
+        .word $0000, $0001, $0002, $0003, $0004, $0005, $0006, $0007
+        .word $0008, $0009, $000A, $000B, $000C, $000D, $000E, $000F
+        .word $0010, $0011, $0012, $0013, $0014, $0015, $0016, $0017
+        .word $0018, $0019, $001A, $001B, $001C, $001D, $001E, $001F
+
+        ; 98/B173
+
+      aUnknown98B173 ; 98/B173
+
+        ; Read by rsUnknown96F915.
+
+        .word $0010, $FFE0, $0010, $0010, $000C, $FFF4, $000C, $000C
+        .word $0008, $FFF8, $0008, $0008, $0005, $FFFB, $0005, $0005
+        .word $0003, $FFFD, $0003, $0003, $0000, $0080, $0001, $FFFF
+        .word $0001, $0001, $0000, $0080, $0000, $0000, $0000, $0080
+        .word $0000, $0000, $0000, $0080, $0000, $0000, $0000, $0080
+        .word $0000, $0000, $0000, $0080, $0000, $0000, $0000, $0080
+        .word $0000, $0000, $0000, $0080, $0000, $0000, $0000, $0080
+        .word $0000, $0000, $0000, $0080, $0000, $0000, $0000, $0080
+        .word $0000, $0000, $0000, $0080, $0000, $0000, $0000, $0080
+        .word $0000, $0000, $0000, $0080, $0000, $0080, $0000, $0000
+        .word $8080, $0201, $0202, $0203, $0204, $0205, $0206, $0207
+        .word $0208, $0209, $020A, $040B, $040C, $040D, $FFFF
+
+        ; 98/B231
+
+    .endsection Data98AFFDSection
+
+
+    .section Data998F02Section
+
+      .al
+      .xl
+
+      aUnknown998F02 ; 99/8F02
+
+        ; Read by rsUnknown95A62A.
+
+        .byte $02, $04, $05, $14, $15, $16, $1E, $23, $24, $2A, $2C, $FF, $FF
+
+        ; 99/8F0F
+
+      aUnknown998F0F ; 99/8F0F
+
+        ; Read by rlUnknown969F1C.
+
+        .byte $02, $FF, $02, $FF, $FE, $00, $FE, $00, $00, $01, $00, $01, $00, $FF, $00, $FF
+        .byte $02, $01, $FE, $FF, $FE, $FF, $02, $00, $FE, $01, $FE, $01, $01, $FF, $FF, $00
+        .byte $00, $01, $00, $FF, $01, $01, $FF, $FF, $01, $00, $FF, $01, $01, $FF, $FF, $00
+        .byte $00, $01, $00, $FF, $80, $80, $0F, $D4, $F8, $08, $D4, $F8, $08, $D6, $F8, $08
+        .byte $D8, $F8, $08, $DA, $F8, $08, $DC, $F8, $08, $DE, $F8, $04, $E0, $F8, $08, $E2
+        .byte $F8, $04, $E0, $F8, $08, $DE, $F8, $08, $DC, $F8, $08, $DA, $F8, $08, $D8, $F8
+        .byte $08, $D6, $F8, $08, $D4, $F8, $00, $00, $04, $00, $03, $00, $02, $80, $01, $00
+        .byte $01, $C0, $00, $80, $00, $60, $00
+
+        ; 99/8F86
+
+      aUnknown998F86 ; 99/8F86
+
+        ; Read by rlUnknown958678.
+
+        .byte $58, $59, $5A, $5B, $5C, $5D, $5E, $5F, $61, $62, $FF
+
+        ; 99/8F91
+
+      aUnknown998F91 ; 99/8F91
+
+        ; Read by rlUnknown958721.
+
+        .word $0005, $0008, $0009, $000A, $0011, $001B, $001C, $FFFF
+
+        ; 99/8FA1
+
+    .endsection Data998F02Section
+
+
+    .section DataE00060Section
+
+      .al
+      .xl
+
+      aUnknownE00060 ; E0/0060
+
+        ; Read by rlUnknown9599E7.
+
+        .word $4631, $318B, $7FFF, $1484, $4ACE, $1D64, $0CA0, $4ACE
+        .word $0000, $3F80, $1CA2, $73FF, $0000, $35AC, $1508, $5F7B
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+        ; E0/00B0
+
+      aUnknownE000B0 ; E0/00B0
+
+        ; Read by rlUnknown9686FC, rlUnknown968982, rlUnknown968A57, rlUnknown96F676.
+
+        .byte $C4, $09, $85, $00, $F6, $7F, $1F, $00, $03, $00, $BF, $7F, $CE, $4A, $A4, $14
+        .byte $FF, $7F, $00, $04, $D3, $57, $AA, $3E
+
+        ; E0/00C8
+
+      aUnknownE000C8 ; E0/00C8
+
+        ; Read by rlUnknown95E9EF, rlUnknown968BC2.
+
+        .byte $00, $00, $5F, $4B, $78, $32, $F3, $25, $00, $00, $27, $00, $9F, $57, $5F, $13
+        .byte $8B, $2D
+
+        ; E0/00DA
+
+      aUnknownE000DA ; E0/00DA
+
+        ; Read by rlUnknown9688BA.
+
+        .word $2D8C, $7FFF, $0C41, $7FFF, $4651, $7FFF, $2129, $4E69
+        .word $28C4, $1042, $10E4, $14E6, $2504, $1CE4, $14C4, $03FF
+        .word $6B7B, $635A, $5AF7, $4ED7, $3E75, $08C8, $0000, $318B
+        .word $10E7, $5F7B, $039C, $5310, $4ACE, $46AD, $428C, $3A4A
+        .word $04A7, $0000, $1D64, $0880, $4ACE, $039C, $4DAF, $498E
+        .word $456D, $414C, $3D2B, $0866, $0000, $2CA7, $0401, $498E
+        .word $03FF, $21AF, $1D8E, $196D, $154C, $152B, $04A7, $0000
+        .word $04A7, $0021, $21AF, $039C, $39D2, $3190, $2D6F, $294E
+        .word $252D, $1CC9, $0000, $18A8, $0003, $39D2, $039C, $420F
+        .word $3DEE, $39CD, $35AC, $318B, $0C42, $0000, $1CE6, $0000
+        .word $420F
+
+        ; E0/017C
+
+      aUnknownE0017C ; E0/017C
+
+        ; Read by rlUnknown95A167.
+
+        .word $0CC7, $1D2E, $2170, $3CC1, $758A, $7B93, $00C6, $0231
+        .word $03DE, $00E3, $01C3, $43D3, $0009, $0092, $015C, $1CE7
+        .word $4210, $6F7B, $100A, $3938, $5E3F, $14A5, $2529, $39CE
+        .word $00AA, $0157, $021F, $0108, $0231, $0336
+
+        ; E0/01B8
+
+    .endsection DataE00060Section
+
+
+    .section DataE02667Section
+
+      .al
+      .xl
+
+      aUnknownE02667 ; E0/2667
+
+        ; Read by rlUnknown95EF54.
+
+        .word $5000, $3C00, $3400, $2800, $2800, $2C00, $2000, $1800
+        .word $1800, $1C00, $1400, $1000, $0400, $0800, $0800, $021F
+        .word $1FFF, $7FFF, $7F15, $7E51, $7D71, $7F80, $7E4A, $7D47
+        .word $7CE7, $7CA4, $7C20, $6C00, $5800, $4400, $4210, $021F
+        .word $1FFF, $7FFF, $7F15, $7E51, $7D71, $7F80, $7E4A, $7D47
+        .word $7CE7, $7CA4, $7C20, $6C00, $5800, $4400
+
+        ; E0/26C3
+
+      aUnknownE026C3 ; E0/26C3
+
+        ; Read by rlUnknown95EF54.
+
+        .word $42DC, $0C66, $7FDF, $479F, $371C, $2EDA, $1E99, $1E77
+        .word $01B8, $0175, $0153, $00F0, $00EE, $110B, $0823
+
+        ; E0/26E1
+
+      aUnknownE026E1 ; E0/26E1
+
+        ; Read by rlUnknown95EF54.
+
+        .word $3678, $7FFF, $6316, $4E74, $4211, $3E10, $3DF0, $39EF
+        .word $6271, $5E6F, $4DEA, $452C, $612A, $4927, $48A6
+
+        ; E0/26FF
+
+      aUnknownE026FF ; E0/26FF
+
+        ; Read by rlUnknown95EF54.
+
+        .word $0000, $1D2B, $2DCF, $3A54, $3A32, $6E00, $256C, $46B6
+        .word $475C, $6F6F, $6EE0, $14C6, $6DC0, $54C0, $0C84
+
+        ; E0/271D
+
+      aUnknownE0271D ; E0/271D
+
+        ; Read by rlUnknown95EF54.
+
+        .word $0014, $2550, $0442, $7FFF, $373D, $0257, $01F8, $0173
+        .word $00EE, $0069, $6316, $422C, $3A8A, $3942, $01C8
+
+        ; E0/273B
+
+      aUnknownE0273B ; E0/273B
+
+        ; Read by rlUnknown9BF65C.
+
+        .word $1084, $2108, $318C, $4265, $318C, $4210, $18C6, $4265
+        .word $296B, $1084, $18C6, $4265, $18C6, $2108, $18C6
+
+        ; E0/2759
+
+      aUnknownE02759 ; E0/2759
+
+        ; Read by rlUnknown95EF54.
+
+        .word $14C7, $32FB, $0000, $1E99, $1A56, $11B8, $0D54, $0D32
+
+        ; E0/2769
+
+      aUnknownE02769 ; E0/2769
+
+        ; Read by rlUnknown95EF54.
+
+        .word $2E36, $7FFF, $56B3, $4A53, $4211, $31CF, $2D8D, $256C
+        .word $5E50, $520C, $49C9, $5949, $4908, $34E7, $18A6
+
+        ; E0/2787
+
+      aUnknownE02787 ; E0/2787
+
+        ; Read by rlUnknown9BE1C0.
+
+        .word $0000, $0421, $0842, $14A5, $18C6, $1CE7, $2108, $2529
+        .word $294A, $2D6B, $35AD, $3DEF, $4A52, $56B5, $6739, $7E60
+        .word $7E82, $7A84, $7AA5, $76C7, $76C9, $76EB, $730C, $730E
+        .word $6F30, $6F52, $6F53, $73B7, $53BF, $7FFF
+
+        ; E0/27C3
+
+      aUnknownE027C3 ; E0/27C3
+
+        ; Read by rlUnknown96F6E0.
+
+        .word $7FFF, $43E0, $0360, $0240, $0120
+
+        ; E0/27CD
+
+      aUnknownE027CD ; E0/27CD
+
+        ; Read by rlUnknown96F6FB.
+
+        .word $7FFF, $7F57, $7E90, $7DE8, $7D20
+
+        ; E0/27D7
+
+      aUnknownE027D7 ; E0/27D7
+
+        ; Read by rlUnknown96F716.
+
+        .word $03FF, $035F, $029F, $01DF, $013F
+
+        ; E0/27E1
+
+      aUnknownE027E1 ; E0/27E1
+
+        ; Read by rlUnknown96F73F.
+
+        .word $7FFF, $5F7F, $42FF, $227F, $01FF
+
+        ; E0/27EB
+
+      aUnknownE027EB ; E0/27EB
+
+        ; Read by rlUnknown96F762.
+
+        .word $7C1C, $7C19, $7C15, $7C12, $7C0F
+
+        ; E0/27F5
+
+      aUnknownE027F5 ; E0/27F5
+
+        ; Read by rlUnknown96F785.
+
+        .word $7FE0, $7F20, $7E80, $7E20, $7DA0
+
+        ; E0/27FF
+
+    .endsection DataE02667Section

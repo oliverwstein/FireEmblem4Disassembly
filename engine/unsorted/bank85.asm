@@ -4317,7 +4317,6 @@
 
       rsUnknown85A040 ; 85/A040
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4507,7 +4506,6 @@
 
       rsUnknown85A0D9 ; 85/A0D9
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -10577,7 +10575,7 @@
         jsl rlGetFactionRelation
         asl a
         tax
-        lda $85C9B7,x
+        lda aUnknown85C9B7,x
         sta $0108,b
         plx
         rts
@@ -10587,6 +10585,22 @@
         ; 85/C9B7
 
     .endsection Unsorted85C99FSection
+
+
+    .section Data85C9B7Section
+
+      .al
+      .xl
+
+      aUnknown85C9B7 ; 85/C9B7
+
+        ; Read by rsUnknown85C99F.
+
+        .word $62D5, $5AFA, $4F58, $5318
+
+        ; 85/C9BF
+
+    .endsection Data85C9B7Section
 
 
     .section Unsorted85C9BFSection

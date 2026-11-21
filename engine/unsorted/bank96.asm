@@ -734,7 +734,6 @@
 
       rlUnknown968300 ; 96/8300
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1244,7 +1243,6 @@
 
       rlUnknown96865C ; 96/865C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1304,7 +1302,6 @@
 
       rlUnknown9686BB ; 96/86BB
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1337,7 +1334,6 @@
 
       rlUnknown9686E7 ; 96/86E7
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1370,12 +1366,12 @@
         sta $7FE4C2
         rep #$20
         stz aBGPaletteBuffer,b
-        lda $E000BC
+        lda aUnknownE000B0+12
         sta $0108,b
         ldx #$0000
 
         _8713
-        lda $E000B0,x
+        lda aUnknownE000B0,x
         sta $010A,b,x
         inc x
         inc x
@@ -1384,9 +1380,9 @@
         ldx #$0000
 
         _8724
-        lda $9984C6,x
+        lda aUnknown9984C6,x
         sta lR18
-        lda $9984C7,x
+        lda aUnknown9984C6+1,x
         sta lR18+1
         ldy #$0000
         lda [lR18],y
@@ -1396,26 +1392,26 @@
         inc x
         inc x
         inc x
-        lda $9984C6,x
+        lda aUnknown9984C6,x
         sta $7FED56
         inc x
         inc x
-        lda $9984C6,x
+        lda aUnknown9984C6,x
         sta $7FED53
         inc x
         inc x
         sep #$20
-        lda $9984C6,x
+        lda aUnknown9984C6,x
         sta $7FED4D
         inc x
-        lda $9984C6,x
+        lda aUnknown9984C6,x
         sta $7FED52
         inc x
-        lda $9984C6,x
+        lda aUnknown9984C6,x
         sta $7FED55
         inc x
         rep #$20
-        lda $9984C6,x
+        lda aUnknown9984C6,x
         sta $7FED58
         inc x
         inc x
@@ -1476,7 +1472,6 @@
 
       rlUnknown96881F ; 96/881F
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1501,7 +1496,6 @@
 
       rlUnknown968840 ; 96/8840
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1547,7 +1541,6 @@
 
       rlUnknown968890 ; 96/8890
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -1589,7 +1582,7 @@
         ldx #$0000
 
         _88CA
-        lda $E000DA,x
+        lda aUnknownE000DA,x
         sta $0102,b,x
         inc x
         inc x
@@ -1775,17 +1768,17 @@
         sta $2122,b
         lda #$15
         sta $2121,b
-        lda $E000B6
+        lda aUnknownE000B0+6
         sta $2122,b
-        lda $E000B7
+        lda aUnknownE000B0+7
         sta $2122,b
-        lda $E000B8
+        lda aUnknownE000B0+8
         sta $2122,b
-        lda $E000B9
+        lda aUnknownE000B0+9
         sta $2122,b
-        lda $E000BA
+        lda aUnknownE000B0+10
         sta $2122,b
-        lda $E000BB
+        lda aUnknownE000B0+11
         sta $2122,b
         lda $7FFC6F
         sta $420C,b
@@ -1860,17 +1853,17 @@
         sta $16DA,b,x
         lda #$11
         sta $2121,b
-        lda $E000B0
+        lda aUnknownE000B0
         sta $2122,b
-        lda $E000B1
+        lda aUnknownE000B0+1
         sta $2122,b
-        lda $E000B2
+        lda aUnknownE000B0+2
         sta $2122,b
-        lda $E000B3
+        lda aUnknownE000B0+3
         sta $2122,b
-        lda $E000B4
+        lda aUnknownE000B0+4
         sta $2122,b
-        lda $E000B5
+        lda aUnknownE000B0+5
         sta $2122,b
         lda $7FE4D5
         bit #$80
@@ -2033,17 +2026,17 @@
         sta $420C,b
         lda #$81
         sta $2121,b
-        lda $E000C8
+        lda aUnknownE000C8
         sta $2122,b
-        lda $E000C9
+        lda aUnknownE000C8+1
         sta $2122,b
-        lda $E000CA
+        lda aUnknownE000C8+2
         sta $2122,b
-        lda $E000CB
+        lda aUnknownE000C8+3
         sta $2122,b
-        lda $E000CC
+        lda aUnknownE000C8+4
         sta $2122,b
-        lda $E000CD
+        lda aUnknownE000C8+5
         sta $2122,b
         stz $2123,b
         stz $2124,b
@@ -2409,7 +2402,7 @@
         _8F73
         lda $7E5313
         tax
-        lda $998683,x
+        lda aUnknown998683,x
         cmp #$0080
         bne _8F89
         jsl rlUnknown96C9FE
@@ -2417,9 +2410,9 @@
 
 
         _8F89
-        lda $998683,x
+        lda aUnknown998683,x
         sta lR18
-        lda $998684,x
+        lda aUnknown998683+1,x
         sta lR18+1
         ldy #$0000
         lda [lR18],y
@@ -2454,9 +2447,9 @@
         _8FCD
         jsr rsUnknown969137
         sta $7E530F
-        lda $998686,x
+        lda aUnknown998683+3,x
         sta lR18
-        lda $998687,x
+        lda aUnknown998683+4,x
         sta lR18+1
         ldy #$0000
         lda [lR18],y
@@ -2468,9 +2461,9 @@
         lda lR18
         sta $7E52FF
         pla
-        lda $998689,x
+        lda aUnknown998683+6,x
         sta $7E530B
-        lda $99868B,x
+        lda aUnknown998683+8,x
         and #$00FF
         jsl rlUnknown969398
         lda $7E5313
@@ -2509,7 +2502,7 @@
         _9039
         lda $7E5311
         tax
-        lda $998532,x
+        lda aUnknown998532,x
         and #$00FF
         cmp #$0082
         bne _9072
@@ -2533,7 +2526,7 @@
 
 
         _9072
-        lda $998532,x
+        lda aUnknown998532,x
         and #$00FF
         cmp #$0080
         bne _9090
@@ -2577,7 +2570,7 @@
         and #$01FF
         sta $7E52FC
         sep #$20
-        lda $998533,x
+        lda aUnknown998532+1,x
         sta $7E52F4
         sta $7E52F9
         lda #$00
@@ -2727,7 +2720,7 @@
         phy
         lda $7E5311
         tax
-        lda $998586,x
+        lda aUnknown998586,x
         and #$00FF
         cmp #$0080
         bne _91E3
@@ -2745,7 +2738,7 @@
         sta $7E5304
         sta $7E5309
         sep #$20
-        lda $998587,x
+        lda aUnknown998586+1,x
         clc
         adc #$80
         sta $7E52F4
@@ -2770,14 +2763,14 @@
         lda #$067F
         sta $7E5309
         sep #$20
-        lda $998587,x
+        lda aUnknown998586+1,x
         sta $7E52F4
         sta $7E52F9
         sta $7E52FE
         sta $7E5303
         sta $7E5308
         rep #$20
-        lda $998586,x
+        lda aUnknown998586,x
 
         _9266
         and #$00FF
@@ -2789,27 +2782,27 @@
         sta $7E52F2
         phx
         pha
-        lda $998588,x
+        lda aUnknown998586+2,x
         and #$00FF
         asl a
         asl a
         tax
-        lda $99862F,x
+        lda aUnknown99862F,x
         and #$00FF
         clc
         adc #1,s
         sta $7E52F7
-        lda $998630,x
+        lda aUnknown99862F+1,x
         and #$00FF
         clc
         adc #1,s
         sta $7E52FC
-        lda $998631,x
+        lda aUnknown99862F+2,x
         and #$00FF
         clc
         adc #1,s
         sta $7E5301
-        lda $998632,x
+        lda aUnknown99862F+3,x
         and #$00FF
         clc
         adc #1,s
@@ -2882,18 +2875,18 @@
         pla
         pla
         ldy #$0000
-        lda $9986CD,x
+        lda aUnknown9986CD,x
         sta lR18
-        lda $9986CE,x
+        lda aUnknown9986CD+1,x
         sta lR18+1
         lda [lR18],y
         and #$00FF
         sta wR0
         xba
         sta $7FED4B
-        lda $9986D0,x
+        lda aUnknown9986CD+3,x
         sta lR18
-        lda $9986D1,x
+        lda aUnknown9986CD+4,x
         sta lR18+1
         lda [lR18],y
         and #$00FF
@@ -2906,14 +2899,14 @@
         pla
         and #$00FF
         sta $7FED50
-        lda $9986D3,x
+        lda aUnknown9986CD+6,x
         sta $7FED56
         lda #$2800
         sta $7FED58
-        lda $9986D5,x
+        lda aUnknown9986CD+8,x
         sta $7FED53
         sep #$20
-        lda $9986D7,x
+        lda aUnknown9986CD+10,x
         sta $7FED4D
         lda #$02
         sta $7FED52
@@ -2981,10 +2974,10 @@
         asl a
         adc wR0
         tax
-        lda $998437,x
+        lda aUnknown998437,x
         sta lR23
         sep #$20
-        lda $998439,x
+        lda aUnknown998437+2,x
         sta lR23+2
         pha
         plb
@@ -3018,7 +3011,6 @@
 
       rlUnknown96947D ; 96/947D
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -3054,7 +3046,6 @@
 
       rlUnknown9694AE ; 96/94AE
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -3127,10 +3118,10 @@
         asl a
         adc wR0
         tax
-        lda $998440,x
+        lda aUnknown998440,x
         sta lR23
         sep #$20
-        lda $998442,x
+        lda aUnknown998440+2,x
         sta lR23+2
         pha
         plb
@@ -3238,13 +3229,13 @@
         ldx #$0000
 
         _9581
-        lda $98ABFC,x
+        lda aUnknown98ABFC,x
         sta $7FE3F1,x
-        lda $98ABFE,x
+        lda aUnknown98ABFC+2,x
         sta $7FE3F3,x
-        lda $98AC00,x
+        lda aUnknown98ABFC+4,x
         sta $7FE3F5,x
-        lda $98AC02,x
+        lda aUnknown98ABFC+6,x
         sta $7FE3F7,x
         txa
         clc
@@ -3281,7 +3272,7 @@
         sep #$20
 
         _95C4
-        lda $98AC4C,x
+        lda aUnknown98AC4C,x
         sta $7FE3FD,x
         inc x
         cpx wR0
@@ -3552,7 +3543,7 @@
         ldx #$0000
 
         _96AF
-        lda $9982E3,x
+        lda aUnknown9982E3,x
         inc x
         inc x
         inc x
@@ -4376,7 +4367,7 @@
         lda #3,s
         and #$03E0
         clc
-        adc $969BE3,x
+        adc aUnknown969BE3,x
         cmp #$0400
         bcc _9BC5
         lda #$03E0
@@ -4387,7 +4378,7 @@
         lda #3,s
         and #$7C00
         clc
-        adc $969C23,x
+        adc aUnknown969C23,x
         cmp #$8000
         bcc _9BDB
         lda #$7C00
@@ -4405,6 +4396,36 @@
         ; 96/9BE3
 
     .endsection Unsorted9699DDSection
+
+
+    .section Data969BE3Section
+
+      .al
+      .xl
+
+      aUnknown969BE3 ; 96/9BE3
+
+        ; Read by rlUnknown969B9C, rlUnknown969C63.
+
+        .word $0000, $0020, $0040, $0060, $0080, $00A0, $00C0, $00E0
+        .word $0100, $0120, $0140, $0160, $0180, $01A0, $01C0, $01E0
+        .word $0200, $0220, $0240, $0260, $0280, $02A0, $02C0, $02E0
+        .word $0300, $0320, $0340, $0360, $0380, $03A0, $03C0, $03E0
+
+        ; 96/9C23
+
+      aUnknown969C23 ; 96/9C23
+
+        ; Read by rlUnknown969B9C, rlUnknown969C63.
+
+        .word $0000, $0400, $0800, $0C00, $1000, $1400, $1800, $1C00
+        .word $2000, $2400, $2800, $2C00, $3000, $3400, $3800, $3C00
+        .word $4000, $4400, $4800, $4C00, $5000, $5400, $5800, $5C00
+        .word $6000, $6400, $6800, $6C00, $7000, $7400, $7800, $7C00
+
+        ; 96/9C63
+
+    .endsection Data969BE3Section
 
 
     .section Unsorted969C63Section
@@ -4438,7 +4459,7 @@
         lda #3,s
         and #$03E0
         sec
-        sbc $969BE3,x
+        sbc aUnknown969BE3,x
         bcs _9C86
         lda #$0000
 
@@ -4448,7 +4469,7 @@
         lda #3,s
         and #$7C00
         sec
-        sbc $969C23,x
+        sbc aUnknown969C23,x
         bcs _9C99
         lda #$0000
 
@@ -4466,7 +4487,6 @@
 
       rlUnknown969CA1 ; 96/9CA1
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -4554,7 +4574,7 @@
         sta wR0
         asl a
         tax
-        lda $98B388,x
+        lda aUnknown98B388,x
         sta wR1
         ldx #$0000
 
@@ -4640,7 +4660,7 @@
         sta wR0
         asl a
         tax
-        lda $98B388,x
+        lda aUnknown98B388,x
         sta wR1
         ldx #$0000
 
@@ -4854,7 +4874,7 @@
         phx
         asl a
         tax
-        lda $998F0F,x
+        lda aUnknown998F0F,x
         cmp #$8080
         bne _9F3A
         jsl rlUnknown969EF9
@@ -4867,11 +4887,11 @@
         clc
         adc #$FC
         sta $7FFC75
-        lda $998F10,x
+        lda aUnknown998F0F+1,x
         clc
         adc #$7F
         sta $7FFC74
-        lda $998F10,x
+        lda aUnknown998F0F+1,x
         clc
         adc #$97
         sta $7FFC76
@@ -5154,7 +5174,6 @@
 
       rlUnknown96A20E ; 96/A20E
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -7809,7 +7828,7 @@
 
         _B562
         tax
-        lda $9AA30A,x
+        lda aUnknown9AA30A,x
         clc
         adc #$A30A
         sta lR19
@@ -7863,12 +7882,12 @@
 
         _B59F
         tax
-        lda $9AA30A,x
+        lda aUnknown9AA30A,x
         clc
         adc #1,s
         dec a
         tax
-        lda $9AA30A,x
+        lda aUnknown9AA30A,x
         and #$00FF
         sta #1,s
         pla
@@ -8379,7 +8398,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        lda $97EA9C,x
+        lda aUnknown97EA9A+2,x
         and #$00FF
         sta wR8
         ldx $0AEB,b
@@ -8531,7 +8550,6 @@
 
       rlBattleSceneCommandHDMAEffect ; 96/BD93
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -8757,7 +8775,7 @@
         _C01E
         lda $7FED0A,x
         tax
-        lda $97C462,x
+        lda aUnknown97C462,x
         cmp #$8001
         bne _C035
         lda #$0000
@@ -8971,7 +8989,7 @@
         asl a
         asl a
         tax
-        lda $998000,x
+        lda aUnknown998000,x
         tay
         pla
         cpy #$0000
@@ -8979,7 +8997,7 @@
         asl a
         asl a
         tax
-        lda $998002,x
+        lda aUnknown998000+2,x
         pha
         tya
         pha
@@ -9169,7 +9187,6 @@
 
       rlBattleSceneCommandSetRoutine ; 96/C9D9
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9188,9 +9205,9 @@
         adc #1,s
         tax
         pla
-        lda $97BDD5,x
+        lda aUnknown97BDD4+1,x
         sta $7FED00
-        lda $97BDD4,x
+        lda aUnknown97BDD4,x
         sta $7FECFF
         pla
         pha
@@ -9230,7 +9247,6 @@
 
       rlBattleSceneCommandCallRoutine ; 96/CA1C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9263,10 +9279,10 @@
         asl a
         adc wR0
         tax
-        lda $97BDD4,x
+        lda aUnknown97BDD4,x
         sta lR23
         sep #$20
-        lda $97BDD6,x
+        lda aUnknown97BDD4+2,x
         sta lR23+2
         pha
         plb
@@ -9289,7 +9305,6 @@
 
       rlBattleSceneCommandCallRoutineUntilDone ; 96/CA56
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -9328,10 +9343,10 @@
         asl a
         adc wR0
         tax
-        lda $97BDD4,x
+        lda aUnknown97BDD4,x
         sta lR23
         sep #$20
-        lda $97BDD6,x
+        lda aUnknown97BDD4+2,x
         sta lR23+2
         pha
         plb
@@ -11600,7 +11615,6 @@
 
       rsUnknown96D774 ; 96/D774
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -11705,7 +11719,6 @@
 
       rsUnknown96D808 ; 96/D808
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -11916,7 +11929,6 @@
 
       rsUnknown96D912 ; 96/D912
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -11989,7 +12001,6 @@
 
       rsUnknown96D95E ; 96/D95E
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -12332,7 +12343,7 @@
         lda $7FFDFE
         asl a
         tax
-        lda $98B133,x
+        lda aUnknown98B133,x
         clc
         adc #1,s
         cmp #$0020
@@ -12341,7 +12352,7 @@
 
         _DAF2
         sta #7,s
-        lda $98B0F3,x
+        lda aUnknown98B0F3,x
         clc
         adc #3,s
         cmp #$0400
@@ -12351,7 +12362,7 @@
         _DB03
         ora #7,s
         sta #7,s
-        lda $98B0B3,x
+        lda aUnknown98B0B3,x
         clc
         adc #5,s
         cmp #$8000
@@ -12462,7 +12473,7 @@
         ldx #$0000
 
         _DC91
-        lda $99832D,x
+        lda aUnknown99832D,x
         cmp #$FFFF
         bne _DCA1
         lda #$0000
@@ -12484,12 +12495,12 @@
         lda wBattleDistance
         cmp #$0003
         bcs _DCBC
-        lda $99832E,x
+        lda aUnknown99832D+1,x
         bra _DCC0
 
 
         _DCBC
-        lda $99832F,x
+        lda aUnknown99832D+2,x
 
         _DCC0
         and #$00FF
@@ -12843,7 +12854,6 @@
 
       rsUnknown96E01F ; 96/E01F
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -13780,7 +13790,6 @@
 
       rsUnknown96E50E ; 96/E50E
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -14022,7 +14031,6 @@
 
       rsUnknown96E612 ; 96/E612
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -14236,7 +14244,6 @@
 
       rsUnknown96E716 ; 96/E716
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -14282,7 +14289,6 @@
 
       rsUnknown96E751 ; 96/E751
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -14889,7 +14895,6 @@
 
       rlBattleSceneCommandScrollToCombatant ; 96/EA99
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -15301,7 +15306,7 @@
         and #$FFFE
         phx
         tax
-        lda $96ED67,x
+        lda aUnknown96ED67,x
         plx
         sta $7FF636,x
         pla
@@ -15318,6 +15323,25 @@
         ; 96/ED67
 
     .endsection Unsorted96ED23Section
+
+
+    .section Data96ED67Section
+
+      .al
+      .xl
+
+      aUnknown96ED67 ; 96/ED67
+
+        ; Read by rsUnknown96ED23.
+
+        .word $0000, $0401, $0802, $0C03, $1004, $1405, $1806, $1C07
+        .word $2008, $2409, $280A, $2C0B, $300C, $340D, $380E, $3C0F
+        .word $4010, $4411, $4812, $4C13, $5014, $5415, $5816, $5C17
+        .word $6018, $6419, $681A, $6C1B, $701C, $741D, $781E, $7C1F
+
+        ; 96/EDA7
+
+    .endsection Data96ED67Section
 
 
     .section Unsorted96EDA7Section
@@ -15393,7 +15417,7 @@
         lsr a
         and #$FFFE
         tax
-        lda $96EDF2,x
+        lda aUnknown96EDF2,x
         sta #3,s
         pla
         pla
@@ -15407,6 +15431,25 @@
     .endsection Unsorted96EDC0Section
 
 
+    .section Data96EDF2Section
+
+      .al
+      .xl
+
+      aUnknown96EDF2 ; 96/EDF2
+
+        ; Read by rlUnknown96EDC0.
+
+        .word $0000, $0421, $0842, $0C63, $1084, $14A5, $18C6, $1CE7
+        .word $2108, $2529, $294A, $2D6B, $318C, $35AD, $39CE, $3DEF
+        .word $4210, $4631, $4A52, $4E73, $5294, $56B5, $5AD6, $5EF7
+        .word $6318, $6739, $6B5A, $6F7B, $739C, $77BD, $7BDE, $7FFF
+
+        ; 96/EE32
+
+    .endsection Data96EDF2Section
+
+
     .section Unsorted96EE32Section
 
       .al
@@ -15414,7 +15457,6 @@
 
       rsUnknown96EE32 ; 96/EE32
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -16222,7 +16264,6 @@
 
       rlUnknown96F315 ; 96/F315
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -16245,7 +16286,6 @@
 
       rlUnknown96F32B ; 96/F32B
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -16353,7 +16393,7 @@
         lda $7FFC54
         and #$00FF
         tax
-        lda $99892A,x
+        lda aUnknown99892A,x
         and #$00FF
         cmp #$00FF
         bne _F3BE
@@ -16454,7 +16494,6 @@
 
       rlUnknown96F558 ; 96/F558
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -16476,7 +16515,6 @@
 
       rlUnknown96F56C ; 96/F56C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -16506,7 +16544,6 @@
 
       rlUnknown96F676 ; 96/F676
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -16518,7 +16555,7 @@
         ldx #$0000
 
         _F680
-        lda $E000BE,x
+        lda aUnknownE000B0+14,x
         sta $0274,b,x
         inc x
         inc x
@@ -16612,7 +16649,7 @@
         ldx #$0000
 
         _F6E4
-        lda $E027C3,x
+        lda aUnknownE027C3,x
         sta $0274,b,x
         inc x
         inc x
@@ -16638,7 +16675,7 @@
         ldx #$0000
 
         _F6FF
-        lda $E027CD,x
+        lda aUnknownE027CD,x
         sta $0274,b,x
         inc x
         inc x
@@ -16664,7 +16701,7 @@
         ldx #$0000
 
         _F71A
-        lda $E027D7,x
+        lda aUnknownE027D7,x
         sta $0274,b,x
         inc x
         inc x
@@ -16698,7 +16735,7 @@
         ldx #$0000
 
         _F74B
-        lda $E027E1,x
+        lda aUnknownE027E1,x
         sta $02F4,b,x
         inc x
         inc x
@@ -16727,7 +16764,7 @@
         ldx #$0000
 
         _F76E
-        lda $E027EB,x
+        lda aUnknownE027EB,x
         sta $02F4,b,x
         inc x
         inc x
@@ -16756,7 +16793,7 @@
         ldx #$0000
 
         _F791
-        lda $E027F5,x
+        lda aUnknownE027F5,x
         sta $02F4,b,x
         inc x
         inc x
@@ -16895,7 +16932,7 @@
         dec a
         asl a
         tax
-        lda $98B231,x
+        lda aUnknown98B231,x
         clc
         adc #$B231
         sta $7FFC64
@@ -16979,7 +17016,7 @@
         asl a
         asl a
         tax
-        lda $98B173,x
+        lda aUnknown98B173,x
         cmp #$8080
         beq _F952
         pha
@@ -16997,7 +17034,7 @@
 
         _F93B
         sta wR8
-        lda $98B175,x
+        lda aUnknown98B173+2,x
         sta wR9
         sep #$20
         lda $7FFC69
@@ -17300,3 +17337,461 @@
         ; 96/FD6F
 
     .endsection Unsorted96FD54Section
+
+
+    .section Data97BDD4Section
+
+      .al
+      .xl
+
+      aUnknown97BDD4 ; 97/BDD4
+
+        ; Read by rlBattleSceneCommandCallRoutine, rlBattleSceneCommandCallRoutineUntilDone, rlBattleSceneCommandSetRoutine.
+
+        .byte $D9, $85, $96, $60, $83, $96, $FC, $86, $96, $C8, $8D, $96, $22, $8E, $96, $A7
+        .byte $CA, $96, $00, $8E, $96, $4C, $8E, $96, $E1, $8D, $96, $00, $00, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $0D, $83, $96, $50, $8F, $96, $C8, $DC, $96
+        .byte $63, $91, $96, $73, $97, $96, $9F, $97, $96, $8F, $8E, $96, $E9, $8E, $96, $C7
+        .byte $8E, $96, $13, $8F, $96, $A8, $8E, $96, $8C, $E0, $95, $BA, $88, $96, $E4, $88
+        .byte $96, $0E, $89, $96, $0D, $E8, $95, $88, $E8, $95, $C9, $E8, $95, $B3, $E7, $95
+        .byte $CB, $E7, $95, $EC, $E7, $95, $AD, $CA, $96, $77, $E8, $95, $56, $F3, $96, $1A
+        .byte $F4, $96, $CB, $97, $96, $31, $F4, $96, $48, $F4, $96, $5F, $F4, $96, $12, $F5
+        .byte $96, $2C, $F5, $96, $45, $8F, $96, $43, $F5, $96, $4F, $F5, $96, $A3, $F4, $96
+        .byte $80, $F5, $96, $D7, $F5, $96, $1F, $F6, $96, $35, $F6, $96, $9B, $F8, $96, $DA
+        .byte $FA, $96, $F9, $FB, $96, $EA, $97, $96, $DB, $FC, $96, $39, $FB, $96, $54, $FD
+        .byte $96, $2C, $80, $97, $24, $80, $97, $8D, $87, $96, $49, $FC, $96, $99, $FB, $96
+        .byte $C8, $9F, $96, $5C, $A0, $96, $03, $96, $96, $17, $96, $96, $8D, $B0, $96, $13
+        .byte $FD, $96, $60, $A1, $96, $81, $FC, $96
+
+        ; 97/BEAC
+
+    .endsection Data97BDD4Section
+
+
+    .section Data98B388Section
+
+      .al
+      .xl
+
+      aUnknown98B388 ; 98/B388
+
+        ; Read by rlUnknown969D01.
+
+        .word $0000, $000A, $0015, $0020, $002A, $0035, $0040, $004A
+        .word $0055, $0060, $006A, $0075, $0080, $008A, $0095, $00A0
+        .word $00AA, $00B5, $00C0, $00CA, $00D5, $00E0, $00EA, $00F5
+        .word $0100
+
+        ; 98/B3BA
+
+      aUnknown98B3BA ; 98/B3BA
+
+        ; Read by rsUnknown959CF8.
+
+        .word $5574, $55E0, $564C, $56B8, $5724, $5790, $57FC, $5868
+        .word $58D4, $5940, $59AC, $5A18, $5A84, $5AF0, $5B5C, $5BC8
+        .word $5C34, $5CA0, $5D0C, $5D78, $5DE4, $5E50, $5EBC, $5F28
+        .word $5F94
+
+        ; 98/B3EC
+
+      aUnknown98B3EC ; 98/B3EC
+
+        ; Read by rsUnknown959CF8.
+
+        .word $B574, $B5E0, $B64C, $B6B8, $B724, $B790, $B7FC, $B868
+        .word $B8D4, $B940, $B9AC, $BA18, <>aBattleAnimationSequencesWarMageSword, $BAF0, $BB5C, $BBC8
+        .word $BC34, $BCA0, $BD0C, $BD78, $BDE4, $BE50, $BEBC, $BF28
+        .word $BF94
+
+        ; 98/B41E
+
+    .endsection Data98B388Section
+
+
+    .section Data9982E3Section
+
+      .al
+      .xl
+
+      aUnknown9982E3 ; 99/82E3
+
+        ; Read by rlUnknown9696AA.
+
+        .word $0409, $0B04, $0404, $040C, $0F04, $0404, $0410, $1104
+        .word $0404, $0412, $1304, $0404, $003A, $3B00, $0000, $003C
+        .word $3D00, $0000, $0042, $4700, $0000, $004C, $5200, $0000
+        .word $FF5B, $5C00, $0101, $025F, $6102, $00FF, $0262, $6302
+        .word $00FF, $FF64, $6500, $00FF, $FFFF
+
+        ; 99/832D
+
+      aUnknown99832D ; 99/832D
+
+        ; Read by rlUnknown96DC7C.
+
+        .word $4109, $0B41, $3C3C, $420C, $0F42, $0202, $1210, $1112
+        .word $0707, $0C12, $130C, $1111, $023E, $3F02, $0303, $0440
+        .word $4104, $0505, $0642, $4306, $0707, $0844, $4508, $0909
+        .word $0A46, $470A, $0B0B, $0C48, $490C, $0D0D, $0E4A, $4B0E
+        .word $0F0F, $104C, $4D10, $1111, $124E, $4F12, $1313, $1450
+        .word $5114, $1515, $1652, $5316, $1717, $1854, $5818, $1919
+        .word $1A59, $5A1A, $1B1B, $455B, $5C1C, $1D1D, $1E5D, $5E1E
+        .word $1F1F, $205F, $6020, $2121, $2261, $6246, $2323, $4763
+        .word $6424, $4825, $2665, $6649, $2727, $FFFF
+
+        ; 99/83B9
+
+      aItemAnimationCategories ; 99/83B9
+
+        ; Read by rlUnknown95A1ED. One byte per item ID plus 1 (entry 0 is for no
+        ; item): the high nibble is the weapon category of the battle animation
+        ; lookup (AnimCategory...), the low nibble is not read yet.
+
+        .byte (AnimCategoryAny << 4) | 0  ; no item
+        .byte (AnimCategorySword << 4) | 0  ; IronSword
+        .byte (AnimCategorySword << 4) | 0  ; SteelSword
+        .byte (AnimCategorySword << 4) | 0  ; SilverSword
+        .byte (AnimCategorySword << 4) | 0  ; IronBlade
+        .byte (AnimCategorySword << 4) | 0  ; SteelBlade
+        .byte (AnimCategorySword << 4) | 0  ; SilverBlade
+        .byte (AnimCategorySword << 4) | 0  ; MiracleSword
+        .byte (AnimCategorySword << 4) | 0  ; ThiefSword
+        .byte (AnimCategorySword << 4) | 0  ; BarrierBlade
+        .byte (AnimCategorySword << 4) | 0  ; BerserkSword
+        .byte (AnimCategorySword << 4) | 0  ; BraveSword
+        .byte (AnimCategorySword << 4) | 0  ; SilenceSword
+        .byte (AnimCategorySword << 4) | 0  ; SleepSword
+        .byte (AnimCategorySword << 4) | 0  ; SlimSword
+        .byte (AnimCategorySword << 4) | 0  ; Safeguard
+        .byte (AnimCategorySword << 4) | 0  ; FireSword
+        .byte (AnimCategorySword << 4) | 0  ; EarthSword
+        .byte (AnimCategorySword << 4) | 0  ; ThunderSword
+        .byte (AnimCategorySword << 4) | 0  ; WindSword
+        .byte (AnimCategorySword << 4) | 0  ; LightBrand
+        .byte (AnimCategorySword << 4) | 0  ; Mystletainn
+        .byte (AnimCategorySword << 4) | 0  ; Tyrfing
+        .byte (AnimCategorySword << 4) | 0  ; Balmung
+        .byte (AnimCategorySword << 4) | 0  ; Armorslayer
+        .byte (AnimCategorySword << 4) | 0  ; Wingclipper
+        .byte (AnimCategorySword << 4) | 0  ; BrokenSwordA
+        .byte (AnimCategorySword << 4) | 0  ; BrokenSwordB
+        .byte (AnimCategorySword << 4) | 0  ; BrokenSwordC
+        .byte (AnimCategoryLance << 4) | 2  ; IronLance
+        .byte (AnimCategoryLance << 4) | 2  ; SteelLance
+        .byte (AnimCategoryLance << 4) | 2  ; SilverLance
+        .byte (AnimCategoryRangedLance << 4) | 2  ; Javelin
+        .byte (AnimCategoryLance << 4) | 2  ; Ridersbane
+        .byte (AnimCategoryLance << 4) | 2  ; BraveLance
+        .byte (AnimCategoryLance << 4) | 2  ; SlimLance
+        .byte (AnimCategoryLance << 4) | 2  ; Gungnir
+        .byte (AnimCategoryLance << 4) | 2  ; GaeBolg
+        .byte (AnimCategoryLance << 4) | 2  ; BrokenLanceA
+        .byte (AnimCategoryLance << 4) | 2  ; BrokenLanceB
+        .byte (AnimCategoryLance << 4) | 2  ; BrokenLanceC
+        .byte (AnimCategoryAxe << 4) | 3  ; IronAxe
+        .byte (AnimCategoryAxe << 4) | 3  ; SteelAxe
+        .byte (AnimCategoryAxe << 4) | 3  ; SilverAxe
+        .byte (AnimCategoryAxe << 4) | 3  ; BraveAxe
+        .byte (AnimCategoryRangedAxe << 4) | 3  ; Helswath
+        .byte (AnimCategoryRangedAxe << 4) | 3  ; HandAxe
+        .byte (AnimCategoryAxe << 4) | 3  ; BrokenAxeA
+        .byte (AnimCategoryAxe << 4) | 3  ; BrokenAxeB
+        .byte (AnimCategoryAxe << 4) | 3  ; BrokenAxeC
+        .byte (AnimCategoryBow << 4) | 4  ; IronBow
+        .byte (AnimCategoryBow << 4) | 4  ; SteelBow
+        .byte (AnimCategoryBow << 4) | 4  ; SilverBow
+        .byte (AnimCategoryBow << 4) | 4  ; BraveBow
+        .byte (AnimCategoryBow << 4) | 4  ; KillerBow
+        .byte (AnimCategoryBow << 4) | 4  ; Yewfelle
+        .byte (AnimCategoryBow << 4) | 4  ; BrokenBowA
+        .byte (AnimCategoryBow << 4) | 4  ; BrokenBowB
+        .byte (AnimCategoryBow << 4) | 4  ; BrokenBowC
+        .byte (AnimCategoryBow << 4) | 4  ; Ballista
+        .byte (AnimCategoryBow << 4) | 4  ; IronBallista
+        .byte (AnimCategoryBow << 4) | 4  ; KillerBallista
+        .byte (AnimCategoryBow << 4) | 4  ; GreatBallista
+        .byte (AnimCategoryMagic << 4) | 5  ; Fire
+        .byte (AnimCategoryMagic << 4) | 5  ; Elfire
+        .byte (AnimCategoryMagic << 4) | 5  ; Bolganone
+        .byte (AnimCategoryMagic << 4) | 5  ; Valflame
+        .byte (AnimCategoryMagic << 4) | 5  ; Meteor
+        .byte (AnimCategoryMagic << 4) | 5  ; Thunder
+        .byte (AnimCategoryMagic << 4) | 5  ; Elthunder
+        .byte (AnimCategoryMagic << 4) | 5  ; Thoron
+        .byte (AnimCategoryMagic << 4) | 5  ; Mjolnir
+        .byte (AnimCategoryMagic << 4) | 5  ; Bolting
+        .byte (AnimCategoryMagic << 4) | 5  ; Wind
+        .byte (AnimCategoryMagic << 4) | 5  ; Elwind
+        .byte (AnimCategoryMagic << 4) | 5  ; Tornado
+        .byte (AnimCategoryMagic << 4) | 5  ; Forseti
+        .byte (AnimCategoryMagic << 4) | 5  ; Blizzard
+        .byte (AnimCategoryMagic << 4) | 5  ; Light
+        .byte (AnimCategoryMagic << 4) | 5  ; Nosferatu
+        .byte (AnimCategoryMagic << 4) | 5  ; Aura
+        .byte (AnimCategoryMagic << 4) | 5  ; Naga
+        .byte (AnimCategoryMagic << 4) | 5  ; Jormungandr
+        .byte (AnimCategoryMagic << 4) | 5  ; Fenrir
+        .byte (AnimCategoryMagic << 4) | 5  ; Hel
+        .byte (AnimCategoryMagic << 4) | 5  ; Loptous
+        .byte (AnimCategoryMagic << 4) | 5  ; BrokenFireTomeA
+        .byte (AnimCategoryMagic << 4) | 5  ; BrokenFireTomeB
+        .byte (AnimCategoryMagic << 4) | 5  ; BrokenFireTomeC
+        .byte (AnimCategoryStaff << 4) | 6  ; HealStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; MendStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; RecoverStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; PhysicStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; Fortify
+        .byte (AnimCategoryStaff << 4) | 6  ; ReturnStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; WarpStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; RescueStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; CharmStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; RestoreStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; ValkyrieStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; SilenceStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; SleepStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; BerserkStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; ThiefStaff
+        .byte (AnimCategoryStaff << 4) | 6  ; BrokenStaffA
+        .byte (AnimCategoryStaff << 4) | 6  ; BrokenStaffB
+        .byte (AnimCategoryStaff << 4) | 6  ; BrokenStaffC
+        .byte (AnimCategoryAny << 4) | 0  ; RenewalBand
+        .byte (AnimCategoryAny << 4) | 0  ; ParagonBand
+        .byte (AnimCategoryAny << 4) | 0  ; ThiefBand
+        .byte (AnimCategoryAny << 4) | 0  ; MiracleBand
+        .byte (AnimCategoryAny << 4) | 0  ; PursuitRing
+        .byte (AnimCategoryAny << 4) | 0  ; RecoverRing
+        .byte (AnimCategoryAny << 4) | 0  ; BargainBand
+        .byte (AnimCategoryAny << 4) | 0  ; KnightRing
+        .byte (AnimCategoryAny << 4) | 0  ; ReturnBand
+        .byte (AnimCategoryAny << 4) | 0  ; SpeedRing
+        .byte (AnimCategoryAny << 4) | 0  ; MagicRing
+        .byte (AnimCategoryAny << 4) | 0  ; PowerRing
+        .byte (AnimCategoryAny << 4) | 0  ; ShieldRing
+        .byte (AnimCategoryAny << 4) | 0  ; BarrierRing
+        .byte (AnimCategoryAny << 4) | 0  ; LegRing
+        .byte (AnimCategoryAny << 4) | 0  ; SkillRing
+        .byte (AnimCategorySword << 4) | 0  ; BrokenHolySword
+        .byte (AnimCategoryLance << 4) | 2  ; BrokenHolyLance
+        .byte (AnimCategoryBow << 4) | 4  ; BrokenHolyBow
+
+        ; 99/8437
+
+      aUnknown998437 ; 99/8437
+
+        ; Read by rlUnknown96941C: routines it calls.
+
+        .long rlUnknown96947D
+        .long rlUnknown96881F
+        .long rlUnknown95A44F
+
+        ; 99/8440
+
+      aUnknown998440 ; 99/8440
+
+        ; Read by rlUnknown9694C7: routines it calls.
+
+        .long rlUnknown95A45A
+        .long rlUnknown968890
+        .long rlUnknown96A20E
+        .long rlUnknown9686BB
+        .long rlUnknown95E9C4
+        .long rlUnknown95E993
+        .long rlUnknown95E8FD
+        .long rlUnknown95E962
+        .long rlUnknown95E931
+        .long rlUnknown95E8CE
+        .long rlUnknown96F56C
+        .long rlUnknown9686E7
+        .long rlUnknown96865C
+        .long rlUnknown96F676
+        .long rlUnknown968300
+        .long rlUnknown96F32B
+        .long rlUnknown969CA1
+        .long rlUnknown968840
+        .long rlUnknown96F315
+        .long rlUnknown96F558
+        .long rlUnknown9694AE
+
+        ; 99/847F
+
+      aClassDefaultGenders ; 99/847F
+
+        ; Read by rlUnknown9582F7: the gender a unit of this class gets in battle
+        ; animations when its own is Genderless.
+
+        .byte GenderMale   ; Cavalier
+        .byte GenderMale   ; LanceKnight
+        .byte GenderMale   ; BowKnight
+        .byte GenderMale   ; AxeKnight
+        .byte GenderMale   ; FreeKnight
+        .byte GenderFemale ; Troubadour
+        .byte GenderMale   ; KnightLord
+        .byte GenderMale   ; DukeKnight
+        .byte GenderMale   ; MasterKnight
+        .byte GenderMale   ; Paladin
+        .byte GenderFemale ; PaladinF
+        .byte GenderMale   ; ArchKnight
+        .byte GenderMale   ; Ranger
+        .byte GenderMale   ; MageKnight
+        .byte GenderMale   ; GreatKnight
+        .byte GenderFemale ; PegasusRider
+        .byte GenderFemale ; PegasusKnight
+        .byte GenderFemale ; FalconKnight
+        .byte GenderMale   ; Dragonrider
+        .byte GenderMale   ; Dragonknight
+        .byte GenderMale   ; Dragonmaster
+        .byte GenderMale   ; Archer
+        .byte GenderMale   ; Myrmidon
+        .byte GenderMale   ; Swordmaster
+        .byte GenderMale   ; Sniper
+        .byte GenderMale   ; Hero
+        .byte GenderMale   ; General
+        .byte GenderMale   ; Emperor
+        .byte GenderMale   ; Baron
+        .byte GenderMale   ; Soldier
+        .byte GenderMale   ; SpearSoldier
+        .byte GenderMale   ; AxeSoldier
+        .byte GenderMale   ; BowSoldier
+        .byte GenderMale   ; SwordSoldier
+        .byte GenderMale   ; LanceArmor
+        .byte GenderMale   ; AxeArmor
+        .byte GenderMale   ; BowArmor
+        .byte GenderMale   ; SwordArmor
+        .byte GenderMale   ; Barbarian
+        .byte GenderMale   ; Fighter
+        .byte GenderMale   ; Brigand
+        .byte GenderMale   ; Warrior
+        .byte GenderMale   ; Hunter
+        .byte GenderMale   ; Pirate
+        .byte GenderMale   ; JuniorLord
+        .byte GenderMale   ; WarMage
+        .byte GenderMale   ; Prince
+        .byte GenderFemale ; Princess
+        .byte GenderMale   ; WarMageF
+        .byte GenderFemale ; Queen
+        .byte GenderMale   ; Dancer
+        .byte GenderFemale ; Priest
+        .byte GenderMale   ; Mage
+        .byte GenderMale   ; FireMage
+        .byte GenderMale   ; ThunderMage
+        .byte GenderMale   ; WindMage
+        .byte GenderMale   ; HighPriest
+        .byte GenderMale   ; Bishop
+        .byte GenderMale   ; Sage
+        .byte GenderMale   ; Bard
+        .byte GenderMale   ; Priestess
+        .byte GenderMale   ; DarkMage
+        .byte GenderMale   ; DarkBishop
+        .byte GenderMale   ; Thief
+        .byte GenderMale   ; Rogue
+        .byte GenderMale   ; Civilian
+        .byte GenderMale   ; Child
+        .byte GenderMale   ; Ballistician
+        .byte GenderMale   ; IronBallistician
+        .byte GenderMale   ; KillerBallistician
+        .byte GenderMale   ; GreatBallistician
+
+        ; 99/84C6
+
+      aUnknown9984C6 ; 99/84C6
+
+        ; Read by rlUnknown9686FC.
+
+        .byte $4D, $0D, $00, $FF, $FF, $E4, $0C, $32, $02, $04, $00, $28, $F5, $4E, $7E, $5C
+        .byte $00, $D8, $0D, $50, $02, $0C, $00, $28, $F7, $4E, $7E, $F7, $00, $18, $0E, $1E
+        .byte $02, $0C, $00, $28, $F9, $4E, $7E, $F7, $00, $58, $0E, $1E, $02, $0C, $00, $28
+        .byte $FF, $4E, $7E, $F7, $00, $98, $0E, $1E, $02, $0C, $00, $28, $FB, $4E, $7E, $F7
+        .byte $00, $EE, $0D, $1E, $02, $0C, $00, $28, $FD, $4E, $7E, $F7, $00, $2E, $0E, $1E
+        .byte $02, $0C, $00, $28, $03, $4F, $7E, $F7, $00, $6E, $0E, $1E, $02, $0C, $00, $28
+        .byte $01, $4F, $7E, $F7, $00, $AE, $0E, $1E, $02, $0C, $00, $28
+
+        ; 99/8532
+
+      aUnknown998532 ; 99/8532
+
+        ; Read by rlUnknown969037.
+
+        .byte $01, $F8, $02, $F4, $03, $F2, $04, $F1, $05, $F0, $07, $EF, $09, $EF, $0B, $F0
+        .byte $0C, $F1, $0D, $F3, $0E, $F5, $0E, $F7, $0E, $F9, $0E, $FB, $0D, $FD, $0C, $FE
+        .byte $0A, $FF, $08, $00, $08, $00, $08, $00, $08, $00, $08, $00, $08, $00, $82, $08
+        .byte $00, $08, $00, $08, $00, $08, $00, $08, $00, $08, $00, $08, $00, $08, $00, $08
+        .byte $00, $08, $00, $08, $00, $08, $00, $08, $00, $08, $00, $81, $00, $08, $00, $81
+        .byte $00, $08, $00, $80
+
+        ; 99/8586
+
+      aUnknown998586 ; 99/8586
+
+        ; Read by rlUnknown9691C8.
+
+        .byte $FC, $FC, $00, $F8, $F9, $01, $F5, $F7, $02, $F2, $F5, $03, $F1, $F3, $04, $F1
+        .byte $F1, $05, $F1, $F0, $06, $F1, $F0, $07, $F1, $F1, $08, $F0, $F2, $09, $EE, $F3
+        .byte $0A, $EF, $F4, $09, $F0, $F4, $08, $F1, $F3, $07, $ED, $F2, $09, $F0, $F1, $08
+        .byte $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0
+        .byte $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1
+        .byte $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08
+        .byte $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0
+        .byte $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1
+        .byte $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F1, $08, $F0, $F0, $08, $F0, $F0, $08
+        .byte $F0, $EF, $08, $F0, $EF, $08, $F0, $EE, $08, $F0, $EE, $08, $81, $00, $08, $F0
+        .byte $ED, $08, $81, $00, $08, $F0, $EC, $08, $80
+
+        ; 99/862F
+
+      aUnknown99862F ; 99/862F
+
+        ; Read by rlUnknown9691C8.
+
+        .word $0000, $0000, $0201, $0403, $0402, $0806, $0603, $0C09
+        .word $0804, $100C, $0A05, $140F, $0C06, $1812, $0E07, $1C15
+        .word $1008, $2018, $1209, $241B, $140A, $281E, $160B, $2C21
+        .word $180C, $3024, $1A0D, $3427, $1C0E, $382A, $1E0F, $3C2D
+        .word $2010, $4030, $2211, $4433, $2412, $4836, $2613, $4C39
+        .word $2814, $503C
+
+        ; 99/8683
+
+      aUnknown998683 ; 99/8683
+
+        ; Read by rlUnknown968F71.
+
+        .word $4F05, $F57E, $7E4E, $A890, $0B00, $7E4F, $4EFB, $E87E
+        .word $01A8, $4F07, $F77E, $7E4E, $B090, $0D02, $7E4F, $4EFD
+        .word $E87E, $03B0, $4F09, $F97E, $7E4E, $B890, $1304, $7E4F
+        .word $4F03, $E87E, $05B8, $4F0F, $FF7E, $7E4E, $C090, $1106
+        .word $7E4F, $4F01, $E87E, $07C0, $0080
+
+        ; 99/86CD
+
+      aUnknown9986CD ; 99/86CD
+
+        ; Read by rlUnknown969398.
+
+        .byte $F5, $4E, $7E, $05, $4F, $7E, $5C, $00, $D8, $0D, $50, $FB, $4E, $7E, $0B, $4F
+        .byte $7E, $F7, $00, $EE, $0D, $1E, $F7, $4E, $7E, $07, $4F, $7E, $F7, $00, $18, $0E
+        .byte $1E, $FD, $4E, $7E, $0D, $4F, $7E, $F7, $00, $2E, $0E, $1E, $F9, $4E, $7E, $09
+        .byte $4F, $7E, $F7, $00, $58, $0E, $1E, $03, $4F, $7E, $13, $4F, $7E, $F7, $00, $6E
+        .byte $0E, $1E, $FF, $4E, $7E, $0F, $4F, $7E, $F7, $00, $98, $0E, $1E, $01, $4F, $7E
+        .byte $11, $4F, $7E, $F7, $00, $AE, $0E, $1E
+
+        ; 99/8725
+
+    .endsection Data9982E3Section
+
+
+    .section Data99892ASection
+
+      .al
+      .xl
+
+      aUnknown99892A ; 99/892A
+
+        ; Read by rlUnknown96F38F.
+
+        .word $0380, $0380, $0280, $0280, $0180, $0180, $0080, $0080
+        .word $0081, $0081, $0082, $0082, $FF85
+
+        ; 99/8944
+
+    .endsection Data99892ASection

@@ -604,7 +604,7 @@
         tay
 
         _DE0B
-        lda $8C9400,x
+        lda aUnknown8C9400,x
         sta <>aDataWindowRelationPalettes,b,y
         inc x
         inc x

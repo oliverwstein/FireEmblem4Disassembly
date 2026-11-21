@@ -881,7 +881,6 @@
 
       rlUnknown808D6C ; 80/8D6C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         ; Runs on into built code at the end.
         .al
         .xl
@@ -2086,7 +2085,6 @@
 
       rsUnknown809382 ; 80/9382
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .as
         .xs
         .autsiz
@@ -2171,7 +2169,6 @@
 
       rsUnknown8093B0 ; 80/93B0
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .as
         .xs
         .autsiz
@@ -2401,7 +2398,6 @@
 
       rsUnknown8094E2 ; 80/94E2
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .as
         .xs
         .autsiz
@@ -2869,7 +2865,6 @@
 
       rsUnknown8097E0 ; 80/97E0
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -3054,7 +3049,6 @@
 
       rsUnknown809846 ; 80/9846
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -3127,7 +3121,6 @@
 
       rsUnknown8098AB ; 80/98AB
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5375,7 +5368,7 @@
         ldx #$00FE
 
         _B8A6
-        lda $8C9800,x
+        lda aUnknown8C9800,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -5383,7 +5376,7 @@
         ldx #$00FE
 
         _B8B4
-        lda $8C9500,x
+        lda aUnknown8C9500,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -5391,7 +5384,7 @@
         ldx #$001E
 
         _B8C2
-        lda $8C9D00,x
+        lda aUnknown8C9D00,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -6077,7 +6070,7 @@
         ldx #$0200
 
         _BDF9
-        lda $DE2ABE,x
+        lda aUnknownDE2ABE,x
         sta wJoy2RepeatTimer,x
         dec x
         dec x
@@ -6158,12 +6151,12 @@
         tax
 
         _BEA4
-        lda $80BEEF,x
+        lda aUnknown80BEEF,x
         tax
         ldy #$0000
 
         _BEAC
-        lda $8C9400,x
+        lda aUnknown8C9400,x
         sta aOAMPaletteBuffer.aPalette1,b,y
         inc x
         inc x
@@ -6195,6 +6188,22 @@
         ; 80/BEEF
 
     .endsection Unsorted80BB9BSection
+
+
+    .section Data80BEEFSection
+
+      .al
+      .xl
+
+      aUnknown80BEEF ; 80/BEEF
+
+        ; Read by rlUnknown80BD27.
+
+        .word $0120, $0140, $0160, $0180, $01E0
+
+        ; 80/BEF9
+
+    .endsection Data80BEEFSection
 
 
     .section Unsorted80BF01Section
@@ -6415,7 +6424,6 @@
 
       rsUnknown80C0B6 ; 80/C0B6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -7458,7 +7466,7 @@
         ldx #$0000
 
         _E97F
-        lda $80E98E,x
+        lda aUnknown80E98E,x
         sta $7F855A,x
         beq _E98D
         inc x
@@ -7474,6 +7482,24 @@
         ; 80/E98E
 
     .endsection Unsorted80E97CSection
+
+
+    .section Data80E98ESection
+
+      .al
+      .xl
+
+      aUnknown80E98E ; 80/E98E
+
+        ; Read by rlUnknown80E97C.
+
+        .byte $18, $E0, $18, $E1, $18, $E2, $18, $E3, $18, $E4, $18, $E5, $10, $E6, $10, $E7
+        .byte $18, $E8, $18, $E9, $00, $00, $B2, $E9, $AF, $E9, $B0, $E9, $5A, $87, $7F, $12
+        .byte $02
+
+        ; 80/E9AF
+
+    .endsection Data80E98ESection
 
 
     .section Unsorted80E9AFSection
@@ -7550,6 +7576,30 @@
         ; 80/E9F3
 
     .endsection Unsorted80E9B2Section
+
+
+    .section Data80E9F3Section
+
+      .al
+      .xl
+
+      aUnknown80E9F3 ; 80/E9F3
+
+        ; Read by rlUnknown80E9B2.
+
+        .byte $1D, $FF, $FF, $13, $00, $00, $01, $00, $00, $01, $FF, $FF, $01, $FE, $FF, $01
+        .byte $FD, $FF, $11, $FC, $FF, $01, $FB, $FF, $01, $FA, $FF, $01, $F8, $FF, $01, $F8
+        .byte $FF, $10, $F7, $FF, $01, $F6, $FF, $01, $F6, $FF, $01, $F5, $FF, $01, $F4, $FF
+        .byte $01, $F2, $FF, $01, $F2, $FF, $10, $F2, $FF, $01, $F0, $FF, $01, $F0, $FF, $01
+        .byte $EF, $FF, $01, $EE, $FF, $01, $EC, $FF, $10, $ED, $FF, $01, $EB, $FF, $01, $EC
+        .byte $FF, $01, $E9, $FF, $01, $E9, $FF, $10, $E8, $FF, $01, $E7, $FF, $01, $E6, $FF
+        .byte $01, $E5, $FF, $01, $E4, $FF, $01, $E3, $FF, $11, $E3, $FF, $01, $E1, $FF, $01
+        .byte $E2, $FF, $01, $E0, $FF, $01, $DF, $FF, $11, $DE, $FF, $01, $DD, $FF, $01, $DD
+        .byte $FF, $01, $DB, $FF, $01, $DB, $FF, $13, $D9, $FF, $00, $00, $00
+
+        ; 80/EA80
+
+    .endsection Data80E9F3Section
 
 
     .section Unsorted80EE37Section
@@ -7641,7 +7691,7 @@
         ldx #$01FE
 
         _EEF4
-        lda $8CA200,x
+        lda aUnknown8CA200,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -7817,7 +7867,7 @@
         ldx #$01FE
 
         _F09D
-        lda $8CA400,x
+        lda aUnknown8CA400,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -8874,6 +8924,152 @@
         ; 80/F628
 
     .endsection Unsorted80F542Section
+
+
+    .section Data8C9400Section
+
+      .al
+      .xl
+
+      aUnknown8C9400 ; 8C/9400
+
+        ; Read by rlUnknown80BD27, rsDataWindowGetArmies.
+
+        .word $5DF2, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
+        .word $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
+        .word $3000, $0C43, $1063, $120D, $0D24, $0CE1, $2125, $0880
+        .word $0040, $0B5A, $0B41, $6D61, $6B5A, $083A, $0821, $6F1A
+        .word $3000, $0C43, $1064, $36B8, $2F52, $25A7, $2125, $18E4
+        .word $18A4, $4211, $2DCE, $216A, $18E6, $0CA4, $0862, $0842
+        .word $3000, $1565, $21AA, $5A21, $4DC0, $3D40, $3500, $30E1
+        .word $28A2, $4274, $4232, $39F2, $29D0, $1D29, $18C6, $1064
+        .word $3000, $1064, $1965, $1D24, $579C, $3235, $10ED, $1086
+        .word $77F6, $66A9, $3523, $1CA4, $77BD, $4B36, $258C, $14C4
+        .word $4001, $1565, $31EA, $360B, $31C9, $2DA8, $2987, $1D65
+        .word $1D26, $2188, $1D27, $1945, $1503, $10C3, $1083, $0C42
+        .word $0001, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
+        .word $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
+        .word $4001, $7FFF, $7FFF, $0E8C, $0566, $20C5, $2185, $14C3
+        .word $0861, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF, $7FFF
+
+        ; 8C/9500
+
+      aUnknown8C9500 ; 8C/9500
+
+        ; Read by rlUnknown80B827, rsUnknown8A8E08.
+
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+        ; 8C/951E
+
+      aUnknown8C951E ; 8C/951E
+
+        ; Read by rlUnknown888082, rlUnknown88821A, rlUnknown9EF76F, rsUnitWindowCopyGraphics, rsUnknown80E0AE.
+
+        .word $0000, $3800, $7FFF, $0000, $0000, $4EB5, $2129, $7F56
+        .word $7D28, $2862, $19DA, $0CCF, $1484, $4AFB, $2590, $1041
+        .word $0021, $3800, $7FFF, $0000, $0000, $3253, $1929, $5AFD
+        .word $0CF5, $0C49, $6DD0, $4C8A, $1085, $4AFB, $29B1, $0002
+        .word $0400, $3800, $7FFF, $0000, $0000, $1DD1, $08EA, $5F95
+        .word $2667, $08C1, $18FA, $004B, $10A4, $4AFB, $29B1, $0881
+        .word $0401, $3800, $7FFF, $0000, $0000, $3A49, $1904, $375F
+        .word $01EF, $0087, $7D8C, $34C4, $08A5, $4AFB, $29B1, $0063
+        .word $0400, $3800, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $3800, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+        ; 8C/95DE
+
+      aUnknown8C95DE ; 8C/95DE
+
+        ; Read by rsUnitWindowCopyGraphics, rsUnknown80E0AE.
+
+        .word $0000, $3800, $6F7B, $4A52, $2108, $4210, $1CE7, $5EF7
+        .word $318C, $1CE7, $4A52, $1CE7, $0C62, $4A52, $2D6B, $0821
+        .word $0000
+
+        ; 8C/9600
+
+      aUnknown8C9600 ; 8C/9600
+
+        ; Read by rsUnknown8ABE63.
+
+        .word $420F, $318B, $7FFF, $0C42, $7F7F, $49E3, $7FFA, $5400
+        .word $7F7F, $00A9, $03FC, $0441, $7F7F, $2949, $564F, $0400
+        .word $3000, $2D8C, $7FFF, $0C41, $7F7F, $420F, $420F, $420F
+        .word $4E69, $28C4, $1042, $10E4, $14E6, $2504, $1CE4, $14C4
+        .word $0843, $1D07, $20E8, $2613, $21D2, $1D8F, $218F, $19F8
+        .word $1970, $110D, $10EC, $150B, $08F0, $0CCA, $0C87, $0444
+        .word $5B39, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $3000, $5F9E, $3A7B, $2A19, $1551, $471F, $08C7, $4904
+        .word $0879, $1D6B, $00EC, $0F1F, $3CC2, $0658, $3DCD, $0045
+        .word $4001, $1D07, $20E8, $2613, $21D2, $1D8F, $10EC, $0C87
+        .word $0000, $4629, $39E8, $31A6, $1D45, $1924, $10E2, $08A0
+        .word $0001, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $4001, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+
+        ; 8C/9700
+
+      aUnknown8C9700 ; 8C/9700
+
+        ; Read by rlUnknown8AD81B.
+
+        .word $3800, $0C21, $23DF, $22BF, $0152, $7FFF, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $3800, $0467, $77DF, $3DEF, $294A, $03FF, $6AB4, $110E
+        .word $3460, $00D3, $1ACC, $5FBF, $02BB, $1944, $4E51, $20C0
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+        ; 8C/9800
+
+    .endsection Data8C9400Section
+
+
+    .section Data8C9D00Section
+
+      .al
+      .xl
+
+      aUnknown8C9D00 ; 8C/9D00
+
+        ; Read by rlUnknown80B827, rlUnknown80BA52, rlUnknown888082, rlUnknown8881A7, rlUnknown88821A, rsUnknown8A8E08.
+
+        .word $0842, $1463, $239D, $22BC, $0931, $7FFF, $634D, $0599
+        .word $3546, $4A2C, $6312, $7398, $7C1F, $53BE, $023F, $7F7F
+        .word $3800, $0842, $0888, $0CCE, $05B7, $271F, $6FFF, $18A3
+        .word $3546, $4A2C, $6312, $7398, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $3800, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $0000, $0467, $77DF, $3DEF, $294A, $03FF, $6AB4, $154F
+        .word $3460, $0135, $1ACC, $5FBF, $02BB, $1944, $4E2D, $20C0
+        .word $3800, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $2D29, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $0442, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $0000, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+        .word $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F, $7F7F
+
+        ; 8C/9E00
+
+    .endsection Data8C9D00Section
 
 
     .section Table8CDC00Section

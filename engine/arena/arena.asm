@@ -985,7 +985,7 @@
         tax
         lda #$004C
         sta wR0
-        lda $8A9DD5,x
+        lda aUnknown8A9DD5,x
         and #$00FF
         clc
         adc #$0004

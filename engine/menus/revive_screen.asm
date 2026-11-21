@@ -180,7 +180,7 @@
         ldx #$0020
 
         _E102
-        lda $8C951E,x
+        lda aUnknown8C951E,x
         sta $021E,b,x
         dec x
         dec x
@@ -188,7 +188,7 @@
         ldx #$0020
 
         _E110
-        lda $8C95DE,x
+        lda aUnknown8C95DE,x
         sta $027E,b,x
         dec x
         dec x

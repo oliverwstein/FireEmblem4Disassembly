@@ -101,6 +101,30 @@
     .endsection Table88D5E3Section
 
 
+    .section Data88DEFCSection
+
+      .al
+      .xl
+
+      aUnknown88DEFC ; 88/DEFC
+
+        ; Read by rsUnknown88DE40, rsUnknown88DE9E.
+
+        .word $0800, $0820, $0840, $0860, $0880, $08A0, $08C0, $08E0
+        .word $0A00, $0A20, $0A40, $0A60, $0A80, $0AA0, $0AC0, $0AE0
+        .word $0C00, $0C20, $0C40, $0C60, $0C80, $0CA0, $0CC0, $0CE0
+        .word $0E00, $0E20, $0E40, $0E60, $0E80, $0EA0, $0EC0, $0EE0
+        .word $1000, $1020, $1040, $1060, $1080, $10A0, $10C0, $10E0
+        .word $1200, $1220, $1240, $1260, $1280, $12A0, $12C0, $12E0
+        .word $1400, $1440, $1480, $14C0, $1600, $1640, $1680, $16C0
+        .word $1800, $1840, $1880, $18C0, $1A00, $1A40, $1A80, $1AC0
+        .word $1C00, $1C40, $1C80, $1CC0, $1E00, $1E40, $1E80, $1EC0
+
+        ; 88/DF8C
+
+    .endsection Data88DEFCSection
+
+
     .section EventScriptEngineSection
 
       .al

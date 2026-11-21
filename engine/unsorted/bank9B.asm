@@ -1,5 +1,22 @@
 ; Code from bank $9B not yet assigned to a game system.
 
+    .section Data99FFE7Section
+
+      .al
+      .xl
+
+      aUnknown99FFE7 ; 99/FFE7
+
+        ; Read by rlUnknown9BF159.
+
+        .byte $BC, $CA, $D1, $C9, $D8, $CD, $CA, $D8, $B4, $D8, $9F, $C9, $BC, $00, $00, $00
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+        ; 9A/0000
+
+    .endsection Data99FFE7Section
+
+
     .section Unsorted9BDC24Section
 
       .al
@@ -814,11 +831,11 @@
         ldx #$0000
 
         _E286
-        lda $E02299,x
+        lda aUnknownE02299,x
         sta $0162,b,x
-        lda $E023B1,x
+        lda aUnknownE023B1,x
         sta $0142,b,x
-        lda $E02787,x
+        lda aUnknownE02787,x
         sta $0102,b,x
         inc x
         inc x
@@ -900,7 +917,7 @@
         _E604
         lda wBufferBG2HOFS
         clc
-        adc $97FB12,x
+        adc aUnknown97FB12,x
         sta [lR18],y
         inc y
         inc y
@@ -1946,7 +1963,7 @@
         and #$00FF
         tax
         sep #$20
-        lda $99FFE7,x
+        lda aUnknown99FFE7,x
         sta $7FD8AC
         lda $7FD8AB
         inc a
@@ -2191,13 +2208,13 @@
         ldx #$0000
 
         _F405
-        lda $E024E3,x
+        lda aUnknownE024E3,x
         and #$001F
         sta $7E8B88,x
-        lda $E024E3,x
+        lda aUnknownE024E3,x
         and #$03E0
         sta $7E8D88,x
-        lda $E024E3,x
+        lda aUnknownE024E3,x
         and #$7C00
         xba
         sta $7E8F88,x
@@ -2316,7 +2333,7 @@
         ldx #$0000
 
         _F678
-        lda $E0273B,x
+        lda aUnknownE0273B,x
         sta $0102,b,x
         inc x
         inc x
@@ -3303,3 +3320,20 @@
         ; E0/285D
 
     .endsection TableE0283FSection
+
+
+    .section DataE0285DSection
+
+      .al
+      .xl
+
+      aUnknownE0285D ; E0/285D
+
+        ; Read by rlUnknown9BFBC0.
+
+        .word $7FFF, $77BD, $6F7B, $6739, $5AD6, $5294, $4A52, $4210
+        .word $39CE, $318C, $294A, $1CE7, $14A5, $0C63, $0421
+
+        ; E0/287B
+
+    .endsection DataE0285DSection
