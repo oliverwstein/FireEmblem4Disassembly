@@ -30,7 +30,7 @@
         pha
         and #$00FF
         clc
-        jsl $95D0E7
+        jsl rlUnknown95D0E7
         sep #$20
         lda $0AF3,b,x
         ora #$08
@@ -89,7 +89,7 @@
 
         tax
         sec
-        jsr $95CF2E
+        jsr rsUnknown95CF2E
         sec
         jsl rlUnknown95B530
         lda wR0
@@ -130,9 +130,9 @@
         phx
         tax
         sec
-        jsr $95D14E
+        jsr rsUnknown95D14E
         sec
-        jsr $95D23C
+        jsr rsUnknown95D23C
         sep #$20
         lda $0AF3,b,x
         ora #$10
@@ -247,7 +247,7 @@
         lda #$0028
         sta wR8
         pla
-        jsr $95D007
+        jsr rsUnknown95D007
         sep #$20
         lda $0AF3,b,x
         ora #$08
@@ -295,7 +295,7 @@
         lda #$0050
         sta wR8
         pla
-        jsr $95D007
+        jsr rsUnknown95D007
         sep #$20
         lda $0AF3,b,x
         ora #$08
@@ -351,7 +351,7 @@
         lda #$0010
         sta wR8
         pla
-        jsr $95D007
+        jsr rsUnknown95D007
         sep #$20
         lda $0AF3,b,x
         ora #$08
@@ -445,3 +445,418 @@
         ; 95/B530
 
     .endsection BattleAnimationMoves95B48DSection
+
+
+    .section BattleAnimationMoves95CF2ESection
+
+      .al
+      .xl
+
+      rsUnknown95CF2E ; 95/CF2E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        php
+        jsl rlUnknown95D1C5
+        lda wR0
+        cmp wR1
+        bcc _CF42
+        sec
+        sbc wR8
+        sec
+        sbc wR7
+        bra _CF48
+
+
+        _CF42
+        clc
+        adc wR8
+        clc
+        adc wR7
+
+        _CF48
+        sta wR0
+        lda wR1
+        sec
+        sbc wR0
+        bpl _CF5D
+        eor #$FFFF
+        inc a
+        lsr a
+        sta wR2
+        lda #$8000
+        bra _CF63
+
+
+        _CF5D
+        lsr a
+        sta wR2
+        lda #$0000
+
+        _CF63
+        sta wR3
+        lda wR2
+        sta wR4
+        plp
+        jsl rlUnknown95B530
+        lsr a
+        sta wR0
+        lda wR2
+        jsl rlUnknown95CE5E
+        ora wR3
+        sta $0B08,b,x
+        sta $0B0C,b,x
+        lda wR3
+        bmi _CF8B
+        lda $0AF9,b,x
+        clc
+        adc wR2
+        bra _CF91
+
+
+        _CF8B
+        lda $0AF9,b,x
+        sec
+        sbc wR2
+
+        _CF91
+        pha
+        lda $0AF8,b,x
+        sta $0AFF,b,x
+        pla
+        sta $0B00,b,x
+        lda wR4
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/CFA0
+
+    .endsection BattleAnimationMoves95CF2ESection
+
+
+    .section BattleAnimationMoves95D007Section
+
+      .al
+      .xl
+
+      rsUnknown95D007 ; 95/D007
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        pha
+        lda $0AF9,b,x
+        sta wR0
+        cpx #$0000
+        beq _D018
+        lda $0AF9,b
+        bra _D01B
+
+
+        _D018
+        lda $0B3C,b
+
+        _D01B
+        sta wR1
+        lda wR0
+        cmp wR1
+        bcc _D028
+        clc
+        adc wR8
+        bra _D02B
+
+
+        _D028
+        sec
+        sbc wR8
+
+        _D02B
+        sta wR1
+        lda wR1
+        sec
+        sbc wR0
+        bpl _D03F
+        eor #$FFFF
+        inc a
+        sta wR2
+        lda #$8000
+        bra _D044
+
+
+        _D03F
+        sta wR2
+        lda #$0000
+
+        _D044
+        sta wR3
+        pla
+        sta wR0
+        lda wR2
+        jsl rlUnknown95CE5E
+        ora wR3
+        sta $0B08,b,x
+        sta $0B0C,b,x
+        lda wR3
+        bmi _D063
+        lda $0AF9,b,x
+        clc
+        adc wR2
+        bra _D069
+
+
+        _D063
+        lda $0AF9,b,x
+        sec
+        sbc wR2
+
+        _D069
+        pha
+        lda $0AF8,b,x
+        sta $0AFF,b,x
+        pla
+        sta $0B00,b,x
+        lda wR4
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/D078
+
+    .endsection BattleAnimationMoves95D007Section
+
+
+    .section BattleAnimationMoves95D0E7Section
+
+      .al
+      .xl
+
+      rlUnknown95D0E7 ; 95/D0E7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        pha
+        jsl rlUnknown95D1C5
+        lda wR1
+        cmp wR0
+        bcs _D0FB
+        sec
+        sbc wR8
+        sec
+        sbc wR7
+        bra _D101
+
+
+        _D0FB
+        clc
+        adc wR8
+        clc
+        adc wR7
+
+        _D101
+        sta wR1
+        lda wR1
+        sec
+        sbc wR0
+        bpl _D115
+        eor #$FFFF
+        inc a
+        sta wR2
+        lda #$8000
+        bra _D11A
+
+
+        _D115
+        sta wR2
+        lda #$0000
+
+        _D11A
+        sta wR3
+        pla
+        sta wR0
+        lda wR2
+        jsl rlUnknown95CE5E
+        ora wR3
+        sta $0B08,b,x
+        sta $0B0C,b,x
+        lda wR3
+        bmi _D139
+        lda $0AF9,b,x
+        clc
+        adc wR2
+        bra _D13F
+
+
+        _D139
+        lda $0AF9,b,x
+        sec
+        sbc wR2
+
+        _D13F
+        pha
+        lda $0AF8,b,x
+        sta $0AFF,b,x
+        pla
+        sta $0B00,b,x
+        lda wR4
+        plx
+        rtl
+
+        .databank 0
+
+        ; 95/D14E
+      rsUnknown95D14E ; 95/D14E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        php
+        jsl rlUnknown95D1C5
+        lda wR0
+        cmp wR1
+        bcc _D162
+        sec
+        sbc wR8
+        sec
+        sbc wR7
+        bra _D168
+
+
+        _D162
+        clc
+        adc wR8
+        clc
+        adc wR7
+
+        _D168
+        sta wR0
+        lda wR1
+        sec
+        sbc wR0
+        bpl _D17C
+        eor #$FFFF
+        inc a
+        sta wR2
+        lda #$8000
+        bra _D181
+
+
+        _D17C
+        sta wR2
+        lda #$0000
+
+        _D181
+        sta wR3
+        lda wR2
+        sta wR4
+        plp
+        jsl rlUnknown95B530
+        cmp #$0008
+        bcs _D194
+        lda #$0008
+
+        _D194
+        sta wR0
+        lda wR2
+        jsl rlUnknown95CE5E
+        ora wR3
+        sta $0B08,b,x
+        sta $0B0C,b,x
+        lda wR3
+        bmi _D1B0
+        lda $0AF9,b,x
+        clc
+        adc wR2
+        bra _D1B6
+
+
+        _D1B0
+        lda $0AF9,b,x
+        sec
+        sbc wR2
+
+        _D1B6
+        pha
+        lda $0AF8,b,x
+        sta $0AFF,b,x
+        pla
+        sta $0B00,b,x
+        lda wR4
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/D1C5
+
+    .endsection BattleAnimationMoves95D0E7Section
+
+
+    .section BattleAnimationMoves95D23CSection
+
+      .al
+      .xl
+
+      rsUnknown95D23C ; 95/D23C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown95B530
+        cmp #$0008
+        bcs _D248
+        lda #$0008
+
+        _D248
+        pha
+        phx
+        ldx $0AEB,b
+        lda $0AFE,b,x
+        and #$00FF
+        sta wR1
+        ldx $0AE9,b
+        lda $0AFE,b,x
+        and #$00FF
+        sta wR0
+        plx
+        lda wR1
+        sec
+        sbc wR0
+        bpl _D26C
+        eor #$FFFF
+        inc a
+
+        _D26C
+        sta wR2
+        pla
+        sta wR0
+        lda wR2
+        jsl rlUnknown95CE5E
+        sta $0B13,b,x
+        lda wR1
+        sta $0B04,b,x
+        rts
+
+        .databank 0
+
+        ; 95/D280
+
+    .endsection BattleAnimationMoves95D23CSection

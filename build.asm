@@ -12627,10 +12627,24 @@
 
     .here
 
+    * = $15CF2E
+    .logical $95CF2E
+
+      .dsection BattleAnimationMoves95CF2ESection
+
+    .here
+
     * = $15CFA0
     .logical $95CFA0
 
       .dsection Unsorted95CFA0Section
+
+    .here
+
+    * = $15D007
+    .logical $95D007
+
+      .dsection BattleAnimationMoves95D007Section
 
     .here
 
@@ -12641,10 +12655,24 @@
 
     .here
 
+    * = $15D0E7
+    .logical $95D0E7
+
+      .dsection BattleAnimationMoves95D0E7Section
+
+    .here
+
     * = $15D1C5
     .logical $95D1C5
 
       .dsection Unsorted95D1C5Section
+
+    .here
+
+    * = $15D23C
+    .logical $95D23C
+
+      .dsection BattleAnimationMoves95D23CSection
 
     .here
 
