@@ -30,7 +30,9 @@ if __name__ == "__main__":
         lines = h.readlines()
 
     for line in lines:
-        structHelper.append(line.split(','))
+        line = line.strip()
+        if line:
+            structHelper.append(line.split(','))
 
     # grab first non-command ID
 
