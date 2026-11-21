@@ -6049,6 +6049,235 @@
     .endsection Unsorted87C695Section
 
 
+    .section Unsorted87C70ASection
+
+      .al
+      .xl
+
+      procUnknown87C70A ; 87/C70A
+
+        .structProcInfo "RP", rlUnknown87C712, rlUnknown87C7B4, aProcUnknown87C70ACode
+
+    .endsection Unsorted87C70ASection
+
+
+    .section Unsorted87C712Section
+
+      .al
+      .xl
+
+      rlUnknown87C712 ; 87/C712
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0ECF,b
+        sta $0FD7,b,x
+        lda #$8700
+        sta lR19+1
+        lda #$C784
+        sta lR19
+        jsl rlApplyMapMenuPaletteData
+        lda #(`gcUnknownC0365A)<<8
+        sta lR18+1
+        lda #<>gcUnknownC0365A
+        sta lR18
+        lda #$7E00
+        sta lR19+1
+        lda #$EB88
+        sta lR19
+        jsl rlAppendDecompList
+        stz wUnknown053C,b
+        lda #$2370
+        sta aCurrentTilemapInfo,b
+        lda #$8700
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$C7AB
+        sta lMapMenuTilemapRAMEntryPointer,b
+        jsl rlUnknown878B98
+        lda $0FD7,b,x
+        bne _C761
+        jsr rsUnknown87C821
+        bra _C764
+
+
+        _C761
+        jsr rsUnknown87C87A
+
+        _C764
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7B88, $0800, $80, $A800
+
+        lda #$0000
+        sta wBufferBG2HOFS
+        lda #$0000
+        sta wBufferBG2VOFS
+        sep #$20
+        lda #$15
+        sta bBufferTM
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 87/C784
+
+    .endsection Unsorted87C712Section
+
+
+    .section Unsorted87C7B4Section
+
+      .al
+      .xl
+
+      rlUnknown87C7B4 ; 87/C7B4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda bDecompressionArrayFlag,b
+        bne _C7CE
+        phx
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7EEB88, $0E00, $80, $7000
+
+        plx
+        lda #$C7CF
+        sta $0F57,b,x
+
+        _C7CE
+        rtl
+
+        .databank 0
+
+        ; 87/C7CF
+
+    .endsection Unsorted87C7B4Section
+
+
+    .section Unsorted87C81FSection
+
+      .al
+      .xl
+
+      aProcUnknown87C70ACode ; 87/C81F
+
+        PROC_HALT
+
+
+        ; 87/C821
+
+    .endsection Unsorted87C81FSection
+
+
+    .section Unsorted87C821Section
+
+      .al
+      .xl
+
+      rsUnknown87C821 ; 87/C821
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8700
+        sta lR18+1
+        lda #$C866
+        sta lR18
+        ldx #$000F
+        jsl rlUnknown878F6E
+        lda #$8700
+        sta lR18+1
+        lda #$C86B
+        sta lR18
+        ldx #$010F
+        jsl rlUnknown878F6E
+        lda #$8700
+        sta lR18+1
+        lda #$C870
+        sta lR18
+        ldx #$020F
+        jsl rlUnknown878F6E
+        lda #$8700
+        sta lR18+1
+        lda #$C875
+        sta lR18
+        ldx #$030F
+        jsl rlUnknown878F6E
+        rts
+
+        .databank 0
+
+        ; 87/C866
+
+    .endsection Unsorted87C821Section
+
+
+    .section Unsorted87C87ASection
+
+      .al
+      .xl
+
+      rsUnknown87C87A ; 87/C87A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8700
+        sta lR18+1
+        lda #$C8E1
+        sta lR18
+        ldx #$000C
+        jsl rlUnknown878F6E
+        lda #$8700
+        sta lR18+1
+        lda #$C8EB
+        sta lR18
+        ldx #$010C
+        jsl rlUnknown878F6E
+        lda #$8700
+        sta lR18+1
+        lda #$C8F5
+        sta lR18
+        ldx #$020C
+        jsl rlUnknown878F6E
+        lda #$8700
+        sta lR18+1
+        lda #$C8FF
+        sta lR18
+        ldx #$030C
+        jsl rlUnknown878F6E
+        lda #$8700
+        sta lR18+1
+        lda #$C909
+        sta lR18
+        ldx #$040C
+        jsl rlUnknown878F6E
+        lda #$8700
+        sta lR18+1
+        lda #$C913
+        sta lR18
+        ldx #$050C
+        jsl rlUnknown878F6E
+        rts
+
+        .databank 0
+
+        ; 87/C8E1
+
+    .endsection Unsorted87C87ASection
+
+
     .section Unsorted87CBC5Section
 
       .al

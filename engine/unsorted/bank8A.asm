@@ -2780,9 +2780,9 @@
         sta wUnknown00052C,b
         jsl rlUnknown87829A
         jsr rsUnknown8A929B
-        lda #$8500
+        lda #(`procUnknown85E9C7)<<8
         sta lR44+1
-        lda #$E9C7
+        lda #<>procUnknown85E9C7
         sta lR44
         jsl rlProcEngineCreateProc
         rts

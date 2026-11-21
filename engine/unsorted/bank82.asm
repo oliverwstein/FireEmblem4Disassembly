@@ -341,6 +341,85 @@
     .endsection Unsorted828B35Section
 
 
+    .section Unsorted828B46Section
+
+      .al
+      .xl
+
+      procUnknown828B46 ; 82/8B46
+
+        .structProcInfo "ME", rlUnknown828B50, rlUnknown828B51, aProcUnknown828B46Code
+
+    .endsection Unsorted828B46Section
+
+
+    .section Unsorted828B50Section
+
+      .al
+      .xl
+
+      rlUnknown828B50 ; 82/8B50
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 82/8B51
+
+      rlUnknown828B51 ; 82/8B51
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F4C07
+        bit #$0010
+        beq _8B5E
+        jsl rlEventEngineFreeProc
+
+        _8B5E
+        rtl
+
+        .databank 0
+
+        ; 82/8B5F
+
+    .endsection Unsorted828B50Section
+
+
+    .section Unsorted828B5FSection
+
+      .al
+      .xl
+
+      aProcUnknown828B46Code ; 82/8B5F
+
+        PROC_HALT
+
+
+        ; 82/8B61
+
+    .endsection Unsorted828B5FSection
+
+
+    .section Unsorted828BA9Section
+
+      .al
+      .xl
+
+      procUnknown828BA9 ; 82/8BA9
+
+        .structProcInfo "ME", rlUnknown828BB3, rlUnknown828BB4, aProcUnknown828BA9Code
+
+    .endsection Unsorted828BA9Section
+
+
     .section Unsorted828BB3Section
 
       .al
@@ -385,6 +464,91 @@
     .endsection Unsorted828BB3Section
 
 
+    .section Unsorted828BC6Section
+
+      .al
+      .xl
+
+      aProcUnknown828BA9Code ; 82/8BC6
+
+        PROC_HALT
+
+
+        ; 82/8BC8
+
+    .endsection Unsorted828BC6Section
+
+
+    .section Unsorted828BC8Section
+
+      .al
+      .xl
+
+      procUnknown828BC8 ; 82/8BC8
+
+        .structProcInfo "ME", rlUnknown828BD2, rlUnknown828BD3, aProcUnknown828BC8Code
+
+    .endsection Unsorted828BC8Section
+
+
+    .section Unsorted828BD2Section
+
+      .al
+      .xl
+
+      rlUnknown828BD2 ; 82/8BD2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 82/8BD3
+
+      rlUnknown828BD3 ; 82/8BD3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procUnknown88E02B)<<8
+        sta lR44+1
+        lda #<>procUnknown88E02B
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcs _8BE7
+        jsl rlEventEngineFreeProc
+
+        _8BE7
+        rtl
+
+        .databank 0
+
+        ; 82/8BE8
+
+    .endsection Unsorted828BD2Section
+
+
+    .section Unsorted828BE8Section
+
+      .al
+      .xl
+
+      aProcUnknown828BC8Code ; 82/8BE8
+
+        PROC_HALT
+
+
+        ; 82/8BEA
+
+    .endsection Unsorted828BE8Section
+
+
     .section Unsorted829487Section
 
       .al
@@ -397,9 +561,9 @@
         .autsiz
         .databank ?
 
-        lda #$8200
+        lda #(`procUnknown828B46)<<8
         sta lR44+1
-        lda #$8B46
+        lda #<>procUnknown828B46
         sta lR44
         jsl rlEventEngineCreateProc
         rtl
@@ -458,9 +622,9 @@
         .autsiz
         .databank ?
 
-        lda #$8200
+        lda #(`procUnknown828BA9)<<8
         sta lR44+1
-        lda #$8BA9
+        lda #<>procUnknown828BA9
         sta lR44
         jsl rlEventEngineCreateProc
         rtl
@@ -484,14 +648,14 @@
         .autsiz
         .databank ?
 
-        lda #$8800
+        lda #(`procUnknown88E02B)<<8
         sta lR44+1
-        lda #$E02B
+        lda #<>procUnknown88E02B
         sta lR44
         jsl rlProcEngineCreateProc
-        lda #$8200
+        lda #(`procUnknown828BC8)<<8
         sta lR44+1
-        lda #$8BC8
+        lda #<>procUnknown828BC8
         sta lR44
         jsl rlEventEngineCreateProc
         rtl

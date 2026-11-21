@@ -12271,6 +12271,203 @@
     .endsection Unsorted88DF8CSection
 
 
+    .section Unsorted88E02BSection
+
+      .al
+      .xl
+
+      procUnknown88E02B ; 88/E02B
+
+        .structProcInfo "MS", rlUnknown88E033, rlUnknown88E0DF, aProcUnknown88E02BCode
+
+    .endsection Unsorted88E02BSection
+
+
+    .section Unsorted88E033Section
+
+      .al
+      .xl
+
+      rlUnknown88E033 ; 88/E033
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$01DE
+
+        _E036
+        lda $8CA620,x
+        sta $7E9B88,x
+        dec x
+        dec x
+        bpl _E036
+        lda #$0000
+        sta $7F8089
+        ldx #$001C
+
+        _E04C
+        lda aWindowPalette+2,x
+        sta $0102,b,x
+        dec x
+        dec x
+        bpl _E04C
+        jsl rlUnknown80B0A3
+        ldx #$07FE
+        lda #$01FF
+
+        _E061
+        sta aBG3TilemapBuffer,x
+        dec x
+        dec x
+        bpl _E061
+        ldx #$05FE
+        lda #$030F
+
+        _E06F
+        sta $7E7D88,x
+        dec x
+        dec x
+        bpl _E06F
+        ldx #$01FE
+
+        _E07A
+        lda $D97C00,x
+        sta $7E7B88,x
+        dec x
+        dec x
+        bpl _E07A
+        ldx #$07FE
+        lda #$0000
+
+        _E08C
+        sta $7E8B88,x
+        dec x
+        dec x
+        bpl _E08C
+        lda #(`aDecompressionBuffer)<<8
+        sta lR18+1
+        lda #<>aDecompressionBuffer
+        sta lR18
+        lda #$3800
+        sta wR1
+        lda #$0800
+        sta wR0
+        jsl rlDMAByPointer
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        rep #$20
+        stz wGameStateRoutine1,b
+        stz wBufferBG3VOFS
+        stz wBufferBG3HOFS
+        lda #$FFD0
+        sta wBufferBG2VOFS
+        lda #$FFE0
+        sta wBufferBG2HOFS
+        jsl rlUnknown88CD53
+        jsl rlUnknown88CD61
+        stz $0AD3,b
+        lda #$8800
+        sta lR44+1
+        lda #$E2DE
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        rtl
+
+        .databank 0
+
+        ; 88/E0DF
+
+      rlUnknown88E0DF ; 88/E0DF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7B88, $0500, $80, $A800
+
+        plx
+        lda #$E0F5
+        sta $0F57,b,x
+        rtl
+
+        .databank 0
+
+        ; 88/E0F5
+
+    .endsection Unsorted88E033Section
+
+
+    .section Unsorted88E1FESection
+
+      .al
+      .xl
+
+      aProcUnknown88E02BCode ; 88/E1FE
+
+        PROC_HALT
+
+
+        ; 88/E200
+
+    .endsection Unsorted88E1FESection
+
+
+    .section Unsorted88E2E9Section
+
+      .al
+      .xl
+
+      rlUnknown88E2E9 ; 88/E2E9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$01
+        sta @l $0008BC
+        lda #$00
+        sta @l $0008BD
+        lda #$7F
+        sta @l $0008BE
+        lda bBufferTM
+        sta @l $0008BF
+        lda #$48
+        sec
+        sbc $0AD3,b
+        sta @l $0008C0
+        lda bBufferTM
+        sta @l $0008C1
+        lda $0AD3,b
+        sta @l $0008C2
+        lda #$04
+        sta @l $0008C3
+        lda #$10
+        sta @l $0008C4
+        lda #$00
+        sta @l $0008C5
+        lda #$00
+        sta @l $0008C6
+        lda #$00
+        sta @l $0008C7
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 88/E33B
+
+    .endsection Unsorted88E2E9Section
+
+
     .section Unsorted88E401Section
 
       .al

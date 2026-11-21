@@ -559,9 +559,9 @@
 
         _8BDE
         jsl rlProcEngineFreeProc
-        lda #$8B00
+        lda #(`procUnknown8B8C3A)<<8
         sta lR44+1
-        lda #$8C3A
+        lda #<>procUnknown8B8C3A
         sta lR44
         jsl rlProcEngineCreateProc
         bra _8BD6
@@ -571,6 +571,18 @@
         ; 8B/8BF2
 
     .endsection Unsorted8B8BB5Section
+
+
+    .section Unsorted8B8C3ASection
+
+      .al
+      .xl
+
+      procUnknown8B8C3A ; 8B/8C3A
+
+        .structProcInfo "CF", rlUnknown8B8C42, rlUnknown8B8C4A, aProcUnknown8B8C3ACode
+
+    .endsection Unsorted8B8C3ASection
 
 
     .section Unsorted8B8C42Section
@@ -631,6 +643,21 @@
         ; 8B/8C7B
 
     .endsection Unsorted8B8C42Section
+
+
+    .section Unsorted8B8C81Section
+
+      .al
+      .xl
+
+      aProcUnknown8B8C3ACode ; 8B/8C81
+
+        PROC_HALT
+
+
+        ; 8B/8C83
+
+    .endsection Unsorted8B8C81Section
 
 
     .section Unsorted8B912ASection

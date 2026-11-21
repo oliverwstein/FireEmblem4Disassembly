@@ -10405,7 +10405,7 @@
 
       procUnknown9ED089 ; 9E/D089
 
-        .structProcInfo "ON", rlProcUnknown9ED089Init, rlUnknown9ED2B5, $9ED1F4
+        .structProcInfo "ON", rlProcUnknown9ED089Init, rlUnknown9ED2B5, aProcUnknown9ED089Code
 
       rlProcUnknown9ED089Init ; 9E/D091
 
@@ -10542,6 +10542,76 @@
         ; 9E/D1BB
 
     .endsection Unsorted9ED1A1Section
+
+
+    .section Unsorted9ED1F4Section
+
+      .al
+      .xl
+
+      aProcUnknown9ED089Code ; 9E/D1F4
+
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9F86B0
+        PROC_JUMP_IF_BITS_UNSET aProcUnknown9ED089Code, $0001
+        PROC_SET_ONCYCLE rlUnknown9ED337
+        PROC_YIELD 56
+        PROC_CALL rlUnknown9E99F7
+        PROC_YIELD 4
+        PROC_CALL rlUnknown9E9D3B
+        PROC_YIELD 4
+        PROC_CALL rlUnknown9E9D76
+        PROC_YIELD 4
+        PROC_CALL rlUnknown9E89F1
+        PROC_CALL rlUnknown9ED401
+        PROC_YIELD 2
+        PROC_SET_ONCYCLE rlUnknown9EC9FD
+        PROC_YIELD 16
+        PROC_CALL rlUnknown9F85A3
+        PROC_YIELD 2
+        PROC_CALL rlUnknown9F85CC
+        PROC_YIELD 2
+        PROC_CALL rlUnknown9F85F5
+        PROC_YIELD 2
+        PROC_CALL rlUnknown9F861F
+        PROC_YIELD 2
+        PROC_CALL rlUnknown9F86BF
+        PROC_JUMP_IF_BITS_UNSET _D269, $0002
+        _D255
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9F86B0
+        PROC_JUMP_IF_BITS_UNSET _D255, $0001
+        PROC_CALL rlUnknown9F8677
+        PROC_YIELD 2
+        _D269
+        PROC_CALL rlUnknown9F8020
+        PROC_YIELD 16
+        _D270
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9ED372
+        PROC_YIELD 1
+        PROC_SET_ONCYCLE rlProcUnknown9EAF98Cycle2
+        _D27D
+        PROC_YIELD 1
+        PROC_JUMP_IF_BITS_UNSET _D27D, $0002
+        PROC_YIELD 1
+        PROC_JUMP_IF_BITS_UNSET _D270, $0001
+        PROC_YIELD 4
+        PROC_CALL rlUnknown9F8349
+        PROC_CALL rlUnknown9F8473
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9ED3C1
+        PROC_CALL rlUnknown888197
+        PROC_YIELD 4
+        PROC_CALL rlUnknown8881A7
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9ED71E
+        PROC_END
+
+
+        ; 9E/D2B5
+
+    .endsection Unsorted9ED1F4Section
 
 
     .section Unsorted9ED2B5Section
@@ -13276,7 +13346,7 @@
 
       procUnknown9EF24B ; 9E/F24B
 
-        .structProcInfo "ON", rlProcUnknown9EF24BInit, rlUnknown9ED2B5, $9ED1F4
+        .structProcInfo "ON", rlProcUnknown9EF24BInit, rlUnknown9ED2B5, aProcUnknown9ED089Code
 
       rlProcUnknown9EF24BInit ; 9E/F253
 
@@ -13431,7 +13501,7 @@
 
       procUnknown9EF37F ; 9E/F37F
 
-        .structProcInfo "ON", rlProcUnknown9EF37FInit, rlUnknown9ED2B5, $9EF49E
+        .structProcInfo "ON", rlProcUnknown9EF37FInit, rlUnknown9ED2B5, aProcUnknown9EF37FCode
 
       rlProcUnknown9EF37FInit ; 9E/F387
 
@@ -13539,6 +13609,78 @@
         .databank 0
 
     .endsection Unsorted9EF37FSection
+
+
+    .section Unsorted9EF49ESection
+
+      .al
+      .xl
+
+      aProcUnknown9EF37FCode ; 9E/F49E
+
+        PROC_YIELD 1
+        _F4A0
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9EF55B
+        PROC_JUMP_IF_BITS_UNSET _F4A0, $0001
+        PROC_SET_ONCYCLE rlUnknown9ED337
+        PROC_YIELD 56
+        PROC_CALL rlUnknown9E99F7
+        PROC_YIELD 4
+        PROC_CALL rlUnknown9E9D3B
+        PROC_YIELD 4
+        PROC_CALL rlUnknown9E9D76
+        PROC_YIELD 4
+        PROC_CALL rlUnknown9E89F1
+        PROC_CALL rlUnknown9EF578
+        PROC_YIELD 2
+        PROC_CALL rlUnknown9F86BF
+        PROC_JUMP_IF_BITS_UNSET _F4F3, $0002
+        _F4DF
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9F86B0
+        PROC_JUMP_IF_BITS_UNSET _F4DF, $0001
+        PROC_CALL rlUnknown9F8677
+        PROC_YIELD 2
+        _F4F3
+        PROC_CALL rlUnknown9F8020
+        PROC_YIELD 16
+        _F4FA
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9ED372
+        PROC_YIELD 1
+        PROC_SET_ONCYCLE rlProcUnknown9EAF98Cycle2
+        _F507
+        PROC_YIELD 1
+        PROC_JUMP_IF_BITS_UNSET _F507, $0002
+        PROC_YIELD 1
+        PROC_JUMP_IF_BITS_UNSET _F4FA, $0001
+        PROC_YIELD 4
+        PROC_CALL rlUnknown9F8349
+        PROC_CALL rlUnknown9F8473
+        PROC_CALL rlUnknown9EF5D0
+        PROC_JUMP_IF_BITS_UNSET _F53F, $0002
+        _F52E
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9EF5F1
+        PROC_JUMP_IF_BITS_UNSET _F52E, $0004
+        PROC_JUMP _F541
+
+        _F53F
+        PROC_YIELD 30
+        _F541
+        PROC_CALL rlUnknown9ED3C1
+        PROC_CALL rlUnknown888197
+        PROC_YIELD 2
+        PROC_CALL rlUnknown8881A7
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9ED71E
+        PROC_END
+
+
+        ; 9E/F55B
+
+    .endsection Unsorted9EF49ESection
 
 
     .section Unsorted9EF55BSection
