@@ -16,7 +16,7 @@
 
         jsl rlButtonCombinationResetCheck
         jsl rlDecompressByList
-        jsl rlUnknown809903 ; ?
+        jsl rlRunDeferredSoundUpload ; ?
         rts
 
         .databank 0

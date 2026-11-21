@@ -1077,7 +1077,7 @@
         lda #<>rsUnknown80B122
         sta wMainLoopPointer
         lda #$00E8
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         rts
 
         .databank 0
@@ -5239,7 +5239,7 @@
         sta lR44
         jsl rlProcEngineCreateProc
         lda #$7FF7
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         rtl
 
         .databank 0
@@ -5359,7 +5359,7 @@
         lda #$0021
         jsl rlPlaySoundEffect
         lda #$00E8
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         sep #$20
         lda bBufferNMITIMEN
         and #$FE

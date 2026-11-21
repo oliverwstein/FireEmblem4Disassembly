@@ -252,7 +252,35 @@
   .endvirtual
 
 
-  ; .word ? ; $0004BA - song ID to play ?
+  .virtual $0004B6
+
+    ; The sound loader's variables (rlInitSound clears $04B6-$0515). A script
+    ; channel's values are at +0 for channel 0 and +2 for channel 1.
+    wSoundHeaderAddress .word ?   ; $0004B6
+      ; <>aSoundHeader.
+    .union
+      wSoundDataBankHigh .word ?  ; $0004B8
+        ; (`aSoundHeader) << 8. Added to a pointer's high byte, it gives the
+        ; high byte and bank of an address in the sound data.
+      .struct
+        .byte ?
+        bSoundDataBank .byte ?    ; $0004B9
+      .endstruct
+    .endunion
+    wMusicID .word ?              ; $0004BA
+      ; The song script channel 0 plays (1-160, aSoundScripts; 0 none), set by
+      ; the code that changes the music (the debug menu's sound test too).
+      ; Bit 15: upload with VBlank off.
+    wSoundScript1ID .word ?       ; $0004BC
+      ; The same for channel 1; nothing in the build sets it.
+    aSoundScriptPositions .fill 4 ; $0004BE
+      ; Per channel: offset of the next word of the script.
+    aSoundScriptWaits .fill 4     ; $0004C2
+      ; Per channel: frames left before the next command.
+    aSoundScriptRunning .fill 4   ; $0004C6
+      ; Per channel: the script ID being run; a different wMusicID restarts.
+
+  .endvirtual
 
   .virtual $0004D6
 
@@ -266,29 +294,68 @@
       ; Filled by rlPlaySoundEffect2.
     bSoundFlags .byte ?           ; $0004EA
       ; Bit 0: rlPlaySoundEffect does nothing. Bit 2: rlPlaySoundEffect2 does
-      ; nothing. Bit 4: rlUnknown808F6F drops values $C8-$DF.
-
-  .endvirtual
-
-  .virtual $0004F4
-
+      ; nothing. Bit 4: rlQueueSoundCommand drops values $C8-$DF. rlUpdateSound
+      ; acts when bits 4 and 6 change.
+    bSoundResendCommand .byte ?   ; $0004EB
+      ; The last command $CB-$CD rlQueueSoundCommand queued;
+      ; rlSoundOnFlag10Cleared queues it again.
+    bSoundFlagsApplied .byte ?    ; $0004EC
+      ; Bits 4 and 6 of bSoundFlags as rlUpdateSound last acted on them.
+    .byte ?                       ; $0004ED
+    wSoundScriptChannel .word ?   ; $0004EE
+      ; The channel rsStepSoundScript is stepping (0 or 2).
+    wSoundTemp .word ?            ; $0004F0
+      ; Scratch for the upload code: the word being run, a count of words.
+    wSoundUploadDestination .word ? ; $0004F2
+      ; The SPC address the next chunk goes to.
     bAPUUploading .byte ?         ; $0004F4
       ; Nonzero while data is being uploaded to the APU; the sound queues wait.
-    .byte ?                       ; $0004F5
+      ; The value is sent on port 0 as the kind of upload ($FE the driver, $FA-$FD
+      ; uploads from scripts).
+    bSoundUploadNoVBlank .byte ?  ; $0004F5
+      ; Nonzero: rlRunSoundUploadList turns VBlank off while it uploads.
     bAPUStatus .byte ?            ; $0004F6
       ; Read from APU port 3 every frame.
+    .byte ?                       ; $0004F7
+    wSoundScriptCommand .word ?   ; $0004F8
+      ; The script word being run; its low 10 bits are the frames to wait.
+    wSoundDeferredUpload .word ?  ; $0004FA
+      ; An upload list script commands 11-14 left for rlRunDeferredSoundUpload
+      ; (0 none), sent with bSoundDeferredUploadMode as bAPUUploading.
+    bSoundDeferredUploadMode .byte ? ; $0004FC
+    bSoundIndirectStep .byte ?    ; $0004FD
+      ; Which entry of an indirect upload list rsGetIndirectSoundUpload returns
+      ; next (0 starts again).
+    aSoundIndirectLast .fill 2    ; $0004FE
+      ; The last indirect upload ID from $3C up (+0) and below $3C (+1): asked
+      ; for again at the start of its list, it uploads nothing.
 
   .endvirtual
 
+  .virtual $000502
 
+    wSoundBuffer1Chunk .word ?    ; $000502
+      ; The chunk table entry decompressed into the buffer at $7E5358, so it is
+      ; not decompressed again.
+    wSoundBuffer2Chunk .word ?    ; $000504
+      ; The same for the buffer at $7E6358 (SOUND_CHUNK_BUFFER2).
+    bAPUPort1 .byte ?             ; $000506
+      ; Read from APU port 1 by rlSendSoundQueuesToAPU.
+    bSoundBufferFirstByte .byte ? ; $000507
+      ; The first byte of the chunk last decompressed; script command 17
+      ; compares it with bAPUPort1.
 
+  .endvirtual
 
+  .virtual $00050C
 
-  ; .word ? ; $000500 ?
+    aSoundTerrain .fill 4         ; $00050C
+      ; Two offsets into aSoundTerrainUploads, from the terrain of the battle's
+      ; units (rsSoundUploadCommandReadTerrain).
+    aSoundScriptPrevious .fill 4  ; $000510
+      ; Per channel: the script ID that ran last, saved when its script ends.
 
-  ; .word ? ; $000508 ?
-
-
+  .endvirtual
 
   .virtual $000521
 

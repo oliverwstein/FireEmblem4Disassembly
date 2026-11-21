@@ -1808,7 +1808,7 @@
         .databank ?
 
         bcc _8C51
-        lda $04BA,b
+        lda wMusicID,b
         bne _8C51
         sep #$20
         lda $0AE0,b
@@ -18126,7 +18126,7 @@
         .autsiz
         .databank ?
 
-        lda $04BA,b
+        lda wMusicID,b
         bne _F13A
         lda wJoy1New
         bit #$1000
@@ -18152,7 +18152,7 @@
         .autsiz
         .databank ?
 
-        lda $04BA,b
+        lda wMusicID,b
         bne _F14B
         lda wJoy1Input
         bit #$1000

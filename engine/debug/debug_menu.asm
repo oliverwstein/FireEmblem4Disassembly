@@ -3896,19 +3896,19 @@
         asl a
         tax
         lda aDebugSongList,x
-        sta $04BA,b
+        sta wMusicID,b
         rts
 
         ; Stop song
         _XPress
         lda #$00C0
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         rts
 
         ; Fade out and pause song, some can be continued with A
         _YPress
         lda #$00E0
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         rts
 
         .databank 0

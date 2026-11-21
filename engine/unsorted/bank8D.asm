@@ -465,7 +465,7 @@
         cmp #$0003
         bcs _A23F
         lda #$00E3
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
 
         _A23F
         rts

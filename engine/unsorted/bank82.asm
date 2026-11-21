@@ -50,15 +50,15 @@
         .autsiz
         .databank ?
 
-        lda $04BA,b
+        lda wMusicID,b
         bne _841E
         lda bAPUStatus,b
         bit #$0030
         bne _841E
         lda aProcSystem.aBody0,b,x
-        cmp $0510,b
+        cmp aSoundScriptPrevious,b
         beq _841A
-        sta $04BA,b
+        sta wMusicID,b
         lda #<>rlUnknown82841F
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _841E
@@ -89,7 +89,7 @@
         .autsiz
         .databank ?
 
-        lda $04BA,b
+        lda wMusicID,b
         bne _8428
         jsl rlProcEngineFreeProc
 

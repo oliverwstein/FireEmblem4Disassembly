@@ -5735,7 +5735,7 @@
         .autsiz
         .databank ?
 
-        lda $04BA,b
+        lda wMusicID,b
         bne _C43F
         lda bAPUStatus,b
         bit #$0030
@@ -5908,7 +5908,7 @@
         sta lR19
         jsl rlApplyMapMenuPaletteData
         lda #$0072
-        sta $04BA,b
+        sta wMusicID,b
         rtl
 
         .databank 0

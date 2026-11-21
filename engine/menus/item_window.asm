@@ -1219,7 +1219,7 @@
         lda #<>rsUnknown80B122
         sta wMainLoopPointer
         lda #$00E8
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         rts
 
         .databank 0

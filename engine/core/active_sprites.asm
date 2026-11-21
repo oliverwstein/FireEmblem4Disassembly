@@ -1508,7 +1508,7 @@
 
         lda $0000,b,y
         and #$00FF
-        sta $04BA,b
+        sta wMusicID,b
         inc y
         rts
 

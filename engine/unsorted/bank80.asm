@@ -1081,7 +1081,7 @@
         sta $420B,b
         rep #$20
         jsr rsInitPPURegisters
-        jsl rlUnknown808EF6
+        jsl rlInitSound
         jsl rlUnknown878074
         lda #$0028
         sta wJoyRepeatDelay
@@ -1112,12 +1112,15 @@
 
         ; 80/8EF6
 
-      rlUnknown808EF6 ; 80/8EF6
+      rlInitSound ; 80/8EF6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears the sound variables, uploads the SPC driver (aSoundHeader.Driver) and
+        ; runs the upload list aSoundStartUpload.
 
         php
         phb
@@ -1139,37 +1142,37 @@
         lda #$0000
 
         _8F10
-        sta $04B6,b,x
+        sta wSoundHeaderAddress,b,x
         dec x
         dec x
         bpl _8F10
         lda #(`aSoundHeader) << 8
-        sta $04B8,b
+        sta wSoundDataBankHigh,b
         lda #<>aSoundHeader
-        sta $04B6,b
+        sta wSoundHeaderAddress,b
         lda aSoundHeader.Driver
         tay
         lda aSoundHeader.Driver+1
         clc
-        adc $04B8,b
+        adc wSoundDataBankHigh,b
         sta lR38+1
         stz lR38
         sep #$20
         lda #$FE
         sta bAPUUploading,b
-        jsl rlUnknown809124
+        jsl rlUploadToAPU
         sep #$20
-        stz $04F5,b
+        stz bSoundUploadNoVBlank,b
         lda #$FD
         sta bAPUUploading,b
         rep #$20
-        lda $04B8,b
+        lda wSoundDataBankHigh,b
         sta lR39+1
         lda aSoundHeader.StartUpload
         sta lR39
         lda [lR39]
         sta lR39
-        jsl rlUnknown8091B3
+        jsl rlRunSoundUploadList
         pla
         sta lR39+1
         pla
@@ -1189,13 +1192,18 @@
 
         ; 80/8F6F
 
-      rlUnknown808F6F ; 80/8F6F
+      rlQueueSoundCommand ; 80/8F6F
 
         ; Runs on into built code at the end.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = command: queues it like rlSendSoundCommand, except that $C8-$DF are
+        ; dropped while bit 4 of bSoundFlags is set; $CB-$CD are also kept in
+        ; bSoundResendCommand. Values below $C8 and from $E0 up always go through ($C0,
+        ; $E0, $E8, $F7 are common).
 
         php
         phb
@@ -1211,12 +1219,12 @@
         cmp #$00E0
         bcs rlPlaySoundEffect._8FC6
         sep #$20
-        stz $04EB,b
+        stz bSoundResendCommand,b
         cmp #$CE
         bcs _8F94
         cmp #$CB
         bcc _8F94
-        sta $04EB,b
+        sta bSoundResendCommand,b
 
         _8F94
         rep #$20
@@ -1420,12 +1428,15 @@
       .al
       .xl
 
-      rlUnknown80903D ; 80/903D
+      rlSoundOnFlag10Cleared ; 80/903D
 
         .as
         .xl
         .autsiz
         .databank ?
+
+        ; rlUpdateSound calls this when bit 4 of bSoundFlags clears: queues
+        ; bSoundResendCommand again unless bit 1 of bAPUStatus is set.
 
         php
         phb
@@ -1436,10 +1447,10 @@
         lda bAPUStatus,b
         and #$0002
         bne _9057
-        lda $04EB,b
+        lda bSoundResendCommand,b
         and #$00FF
         beq _9057
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
 
         _9057
         plb
@@ -1451,12 +1462,15 @@
 
         ; 80/905A
 
-      rlUnknown80905A ; 80/905A
+      rlSoundOnFlag10Set ; 80/905A
 
         .as
         .xl
         .autsiz
         .databank ?
+
+        ; rlUpdateSound calls this when bit 4 of bSoundFlags sets: sends command $F8 if
+        ; bit 1 of bAPUStatus is set.
 
         php
         phb
@@ -1480,12 +1494,15 @@
 
         ; 80/9072
 
-      rlUnknown809072 ; 80/9072
+      rlSoundOnFlag40Cleared ; 80/9072
 
         .as
         .xl
         .autsiz
         .databank ?
+
+        ; rlUpdateSound calls this when bit 6 of bSoundFlags clears: sends command $F3
+        ; if bit 7 of bAPUStatus is set.
 
         php
         phb
@@ -1509,12 +1526,15 @@
 
         ; 80/908A
 
-      rlUnknown80908A ; 80/908A
+      rlSoundOnFlag40Set ; 80/908A
 
         .as
         .xl
         .autsiz
         .databank ?
+
+        ; rlUpdateSound calls this when bit 6 of bSoundFlags sets: sends command $F2
+        ; unless bit 7 of bAPUStatus is set.
 
         php
         phb
@@ -1572,7 +1592,7 @@
         ldx $2141,b
         cpx $2141,b
         bne _90AF
-        stx $0506,b
+        stx bAPUPort1,b
 
         _90BA
         ldx $2140,b
@@ -1638,12 +1658,16 @@
       .al
       .xl
 
-      rlUnknown809124 ; 80/9124
+      rlUploadToAPU ; 80/9124
 
         .as
         .xl
         .autsiz
         .databank ?
+
+        ; Sends data at [lR38],y to the APU in the IPL format (blocks of size, SPC
+        ; address, bytes, ended by size 0 and the address to run), with bAPUUploading as
+        ; the value for port 0. Reads straight across bank boundaries.
 
         php
         phb
@@ -1749,12 +1773,17 @@
 
         ; 80/91B3
 
-      rlUnknown8091B3 ; 80/91B3
+      rlRunSoundUploadList ; 80/91B3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; lR39 = upload list (format in tools/sound.py): uploads each chunk it names to
+        ; the APU, running the commands of aSoundUploadCommands and the indirect IDs
+        ; (rsGetIndirectSoundUpload); compressed chunks go through rlDecompressLinear
+        ; into a WRAM buffer first.
 
         php
         phb
@@ -1767,8 +1796,8 @@
         and #$00FF
         sta $2140,b
         ldx #$00
-        stx $04FD,b
-        ldx $04F5,b
+        stx bSoundIndirectStep,b
+        ldx bSoundUploadNoVBlank,b
         beq _91D2
         jsl rlDisableVBlank
 
@@ -1802,7 +1831,7 @@
         inc x
 
         _91F4
-        dec $04F0,b
+        dec wSoundTemp,b
         bne _91D7
 
         _91F9
@@ -1813,8 +1842,8 @@
         beq _927C
         cmp #$0064
         bcs _920B
-        jsr rsUnknown8093C6
-        ldx $04FD,b
+        jsr rsGetIndirectSoundUpload
+        ldx bSoundIndirectStep,b
         bne _920F
 
         _920B
@@ -1822,7 +1851,7 @@
         inc lR39
 
         _920F
-        sta $04F0,b
+        sta wSoundTemp,b
         xba
         sep #$20
         and #$F0
@@ -1831,14 +1860,14 @@
         lsr a
         lsr a
         tax
-        jsr (aUnknown809357,x)
+        jsr (aSoundUploadCommands,x)
 
         _9220
         rep #$20
-        lda $04F0,b
+        lda wSoundTemp,b
         beq _91FA
         phb
-        ldx $04B9,b
+        ldx bSoundDataBank,b
         phx
         plb
         .databank ?
@@ -1880,10 +1909,10 @@
         pla
         plb
         .databank ?
-        sty $04F2,b
+        sty wSoundUploadDestination,b
         clc
-        adc $04F2,b
-        sta $04F2,b
+        adc wSoundUploadDestination,b
+        sta wSoundUploadDestination,b
         tya
         sep #$10
 
@@ -1925,7 +1954,7 @@
         beq _92B0
         ldx #$00
         stx bAPUUploading,b
-        ldx $04F5,b
+        ldx bSoundUploadNoVBlank,b
         beq _92C6
         jsl rlEnableVBlank
 
@@ -1986,7 +2015,7 @@
         lda $0000,b,x
         sta DecompressionVariables
         phx
-        jsl rlUnknown80A9F2
+        jsl rlDecompressLinear
         plx
         txa
         ply
@@ -2030,24 +2059,24 @@
       .al
       .xl
 
-      aUnknown809357 ; 80/9357
+      aSoundUploadCommands ; 80/9357
 
-        ; Jump table of rlUnknown8091B3.
+        ; Jump table of rlRunSoundUploadList.
         .word $FFFF
-        .word <>rsUnknown809392
-        .word <>rsUnknown809392
-        .word <>rsUnknown809392
-        .word <>rsUnknown809392
-        .word <>rsUnknown809392
-        .word <>rsUnknown809392
-        .word <>rsUnknown809392
-        .word <>rsUnknown809392
-        .word <>rsUnknown809377
-        .word <>rsUnknown8094E2
-        .word <>rsUnknown8093B0
-        .word <>rsUnknown809382
-        .word <>rsUnknown809391
-        .word <>rsUnknown809392
+        .word <>rsSoundUploadCommandJump
+        .word <>rsSoundUploadCommandJump
+        .word <>rsSoundUploadCommandJump
+        .word <>rsSoundUploadCommandJump
+        .word <>rsSoundUploadCommandJump
+        .word <>rsSoundUploadCommandJump
+        .word <>rsSoundUploadCommandJump
+        .word <>rsSoundUploadCommandJump
+        .word <>rsSoundUploadCommandClearResend
+        .word <>rsSoundUploadCommandReadTerrain
+        .word <>rsSoundUploadCommandResetBuffers
+        .word <>rsSoundUploadCommandSetDestination
+        .word <>rsSoundUploadCommandNone
+        .word <>rsSoundUploadCommandJump
         .word $93B8
 
     .endsection Table809357Section
@@ -2058,17 +2087,19 @@
       .al
       .xl
 
-      rsUnknown809377 ; 80/9377
+      rsSoundUploadCommandClearResend ; 80/9377
 
         .as
         .xs
         .autsiz
         .databank ?
 
+        ; Upload list command $9xxx: clears bSoundResendCommand.
+
         sep #$20
-        stz $04EB,b
+        stz bSoundResendCommand,b
         rep #$20
-        stz $04F0,b
+        stz wSoundTemp,b
         rts
 
         .databank 0
@@ -2083,19 +2114,22 @@
       .al
       .xl
 
-      rsUnknown809382 ; 80/9382
+      rsSoundUploadCommandSetDestination ; 80/9382
 
         .as
         .xs
         .autsiz
         .databank ?
 
+        ; Upload list command $Cxxx: the next word is the SPC address for the chunks
+        ; that follow.
+
         rep #$20
         lda [lR39]
-        sta $04F2,b
+        sta wSoundUploadDestination,b
         inc lR39
         inc lR39
-        stz $04F0,b
+        stz wSoundTemp,b
         rts
 
         .databank 0
@@ -2110,12 +2144,14 @@
       .al
       .xs
 
-      rsUnknown809391 ; 80/9391
+      rsSoundUploadCommandNone ; 80/9391
 
         .as
         .xs
         .autsiz
         .databank ?
+
+        ; Upload list command $Dxxx: nothing, so the chunk in the low bits is uploaded.
 
         rts
 
@@ -2131,15 +2167,18 @@
       .as
       .xs
 
-      rsUnknown809392 ; 80/9392
+      rsSoundUploadCommandJump ; 80/9392
 
         .as
         .xs
         .autsiz
         .databank ?
 
+        ; Upload list commands $1xxx-$8xxx and $Exxx: jump by the signed offset in the
+        ; low 12 bits times 2, from the command. No list in the ROM uses them.
+
         rep #$20
-        lda $04F0,b
+        lda wSoundTemp,b
         dec lR39
         dec lR39
         asl a
@@ -2152,7 +2191,7 @@
         clc
         adc lR39
         sta lR39
-        stz $04F0,b
+        stz wSoundTemp,b
         rts
 
         .databank 0
@@ -2167,21 +2206,24 @@
       .al
       .xs
 
-      rsUnknown8093B0 ; 80/93B0
+      rsSoundUploadCommandResetBuffers ; 80/93B0
 
         .as
         .xs
         .autsiz
         .databank ?
 
+        ; Upload list command $Bxxx: forgets which chunks the WRAM buffers hold, then as
+        ; $Fxxx (at _93B8), which forgets aSoundIndirectLast.
+
         rep #$20
-        stz $0502,b
-        stz $0504,b
+        stz wSoundBuffer1Chunk,b
+        stz wSoundBuffer2Chunk,b
         sep #$20
-        stz $04FE,b
+        stz aSoundIndirectLast,b
         stz $04FF,b
         rep #$20
-        stz $04F0,b
+        stz wSoundTemp,b
         rts
 
         .databank 0
@@ -2196,16 +2238,21 @@
       .al
       .xl
 
-      rsUnknown8093C6 ; 80/93C6
+      rsGetIndirectSoundUpload ; 80/93C6
 
         .al
         .xs
         .autsiz
         .databank ?
 
+        ; A = indirect upload ID (1-$63): returns the chunk ID to upload, the next entry
+        ; of its list in aSoundUploadLists each call (bSoundIndirectStep); 1-4 pick the
+        ; list from the battle (aSoundHeader.Unknown12, aSoundTerrainUploads); 0 for
+        ; nothing.
+
         cmp #$0005
         bcc _9412
-        ldx $04FD,b
+        ldx bSoundIndirectStep,b
         bne _93E7
         sep #$20
         ldy #$00
@@ -2214,8 +2261,8 @@
         inc y
 
         _93D9
-        cmp $04FE,b,y
-        sta $04FE,b,y
+        cmp aSoundIndirectLast,b,y
+        sta aSoundIndirectLast,b,y
         bne _93E7
         rep #$20
         lda #$0000
@@ -2230,7 +2277,7 @@
         clc
         adc aSoundHeader.UploadLists
         sta lR38
-        ldy $04B9,b
+        ldy bSoundDataBank,b
         sty lR38+2
         lda [lR38]
 
@@ -2252,14 +2299,14 @@
 
         _940C
         lda [lR38]
-        stx $04FD,b
+        stx bSoundIndirectStep,b
         rts
 
 
         _9412
         cmp #$0003
         bcs _9477
-        ldx $04B9,b
+        ldx bSoundDataBank,b
         stx lR38+2
         rep #$10
         dec a
@@ -2299,8 +2346,8 @@
         sta lR38
         lda [lR38]
         sta lR38
-        lda $04FD,b
-        ldx $04FD,b
+        lda bSoundIndirectStep,b
+        ldx bSoundIndirectStep,b
         inc x
         and #$000F
         asl a
@@ -2316,12 +2363,12 @@
         lda [lR38]
 
         _9473
-        stx $04FD,b
+        stx bSoundIndirectStep,b
         rts
 
 
         _9477
-        ldx $04B9,b
+        ldx bSoundDataBank,b
         stx lR38+2
         pha
         rep #$10
@@ -2332,10 +2379,10 @@
 
 
         _9489
-        lda $050C,b
+        lda aSoundTerrain,b
 
         _948C
-        sta $04F0,b
+        sta wSoundTemp,b
         pla
         dec a
         asl a
@@ -2360,12 +2407,12 @@
         dec a
         clc
         adc aSoundHeader.TerrainUploads
-        adc $04F0,b
+        adc wSoundTemp,b
         sta lR38
         lda [lR38]
         sta lR38
-        lda $04FD,b
-        ldx $04FD,b
+        lda bSoundIndirectStep,b
+        ldx bSoundIndirectStep,b
         inc x
         and #$000F
         asl a
@@ -2381,7 +2428,7 @@
         lda [lR38]
 
         _94DE
-        stx $04FD,b
+        stx bSoundIndirectStep,b
         rts
 
         .databank 0
@@ -2396,17 +2443,21 @@
       .al
       .xs
 
-      rsUnknown8094E2 ; 80/94E2
+      rsSoundUploadCommandReadTerrain ; 80/94E2
 
         .as
         .xs
         .autsiz
         .databank ?
 
+        ; Upload list command $Axxx: sets aSoundTerrain from the terrain of the battle's
+        ; units; for some weapons at distance 3 or more the attacker's terrain counts
+        ; for both.
+
         rep #$30
         lda wBattleStatus
         and #$0001
-        sta $04F0,b
+        sta wSoundTemp,b
         beq _94F6
         lda aActionStructUnit1.TerrainType
         bra _94FA
@@ -2417,11 +2468,11 @@
 
         _94FA
         and #$001F
-        sta $050C,b
+        sta aSoundTerrain,b
         sta $050E,b
         lda wBattleDistance
         tax
-        lda $04F0,b
+        lda wSoundTemp,b
         bne _9513
         lda aActionStructUnit1.WeaponID
         bra _9517
@@ -2455,7 +2506,7 @@
         bne _9569
 
         _954E
-        lda $04F0,b
+        lda wSoundTemp,b
         bne _955F
         lda aActionStructUnit1.TerrainType
         and #$001F
@@ -2466,18 +2517,18 @@
         _955F
         lda aActionStructUnit2.TerrainType
         and #$001F
-        sta $050C,b
+        sta aSoundTerrain,b
 
         _9569
-        ldx $050C,b
-        jsr rsUnknown809583
-        stx $050C,b
+        ldx aSoundTerrain,b
+        jsr rsGetSoundTerrainOffset
+        stx aSoundTerrain,b
         ldx $050E,b
-        jsr rsUnknown809583
+        jsr rsGetSoundTerrainOffset
         inc x
         inc x
         stx $050E,b
-        stz $04F0,b
+        stz wSoundTemp,b
         sep #$30
         rts
 
@@ -2485,12 +2536,15 @@
 
         ; 80/9583
 
-      rsUnknown809583 ; 80/9583
+      rsGetSoundTerrainOffset ; 80/9583
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = terrain: returns its offset into aSoundTerrainUploads (table at $80/95AD);
+        ; in chapter 4 every terrain but two counts as $10.
 
         lda $95AD,b,x
         and #$001C
@@ -2519,12 +2573,15 @@
       .al
       .xl
 
-      rlUnknown8095CD ; 80/95CD
+      rlUpdateSound ; 80/95CD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame: acts on changes of bits 4 and 6 of bSoundFlags, then steps both
+        ; sound script channels.
 
         php
         phb
@@ -2542,7 +2599,7 @@
         _95DF
         sta $04F7,b
         lda bSoundFlags,b
-        cmp $04EC,b
+        cmp bSoundFlagsApplied,b
         beq _962F
         clc
         and #$40
@@ -2550,19 +2607,19 @@
         sec
 
         _95F0
-        eor $04EC,b
+        eor bSoundFlagsApplied,b
         and #$40
         beq _960B
         lda #$40
         bcc _9604
-        tsb $04EC,b
-        jsl rlUnknown80908A
+        tsb bSoundFlagsApplied,b
+        jsl rlSoundOnFlag40Set
         bra _960B
 
 
         _9604
-        trb $04EC,b
-        jsl rlUnknown809072
+        trb bSoundFlagsApplied,b
+        jsl rlSoundOnFlag40Cleared
 
         _960B
         clc
@@ -2572,34 +2629,34 @@
         sec
 
         _9614
-        eor $04EC,b
+        eor bSoundFlagsApplied,b
         and #$10
         beq _962F
         lda #$10
         bcc _9628
-        tsb $04EC,b
-        jsl rlUnknown80905A
+        tsb bSoundFlagsApplied,b
+        jsl rlSoundOnFlag10Set
         bra _962F
 
 
         _9628
-        trb $04EC,b
-        jsl rlUnknown80903D
+        trb bSoundFlagsApplied,b
+        jsl rlSoundOnFlag10Cleared
 
         _962F
         rep #$30
-        lda $04BA,b
+        lda wMusicID,b
         bne _963B
-        sta $04C6,b
+        sta aSoundScriptRunning,b
         bra _9641
 
 
         _963B
         ldx #$0000
-        jsr rsUnknown809677
+        jsr rsStepSoundScript
 
         _9641
-        lda $04BC,b
+        lda wSoundScript1ID,b
         bne _964B
         sta $04C8,b
         bra _9651
@@ -2607,7 +2664,7 @@
 
         _964B
         ldx #$0002
-        jsr rsUnknown809677
+        jsr rsStepSoundScript
 
         _9651
         plb
@@ -2627,7 +2684,7 @@
       .al
       .xs
 
-      rsUnknown809729 ; 80/9729
+      rsSoundScriptPlaySoundEffect ; 80/9729
 
         .al
         .xl
@@ -2649,7 +2706,7 @@
       .al
       .xl
 
-      rsUnknown80972E ; 80/972E
+      rsSoundScriptPlaySoundEffect2 ; 80/972E
 
         .al
         .xl
@@ -2671,25 +2728,28 @@
       .al
       .xl
 
-      rsUnknown809733 ; 80/9733
+      rsSoundScriptQueueCommand ; 80/9733
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Script command 6: queues the argument with rlQueueSoundCommand; if the script
+        ; ID's bits 8-11 are 1-8, they replace those bits of the argument.
+
         pha
-        ldx $04EE,b
-        lda $04BA,b,x
+        ldx wSoundScriptChannel,b
+        lda wMusicID,b,x
         cmp #$0100
         bcc _9753
         and #$0F00
         cmp #$0900
         bcs _9753
-        sta $04F0,b
+        sta wSoundTemp,b
         pla
         and #$80FF
-        ora $04F0,b
+        ora wSoundTemp,b
         bra _9754
 
 
@@ -2697,7 +2757,7 @@
         pla
 
         _9754
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         rts
 
         .databank 0
@@ -2712,7 +2772,7 @@
       .al
       .xl
 
-      rsUnknown809759 ; 80/9759
+      rsSoundScriptSendCommand ; 80/9759
 
         .al
         .xl
@@ -2734,28 +2794,32 @@
       .al
       .xl
 
-      rsUnknown80975E ; 80/975E
+      rsSoundScriptUploadFD ; 80/975E
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Script commands 7-10: runs the upload list in the argument now, with $FD, $FC,
+        ; $FB or $FA as bAPUUploading; while another upload is running, waits a frame
+        ; and tries again.
+
         tax
         lda bAPUUploading,b
         and #$00FF
-        bne rsUnknown80979A._97AE
+        bne rsSoundScriptUploadFA._97AE
         sep #$20
         lda #$FD
         sta bAPUUploading,b
         rep #$20
-        bra rsUnknown80979A._97B9
+        bra rsSoundScriptUploadFA._97B9
 
         .databank 0
 
         ; 80/9772
 
-      rsUnknown809772 ; 80/9772
+      rsSoundScriptUploadFC ; 80/9772
 
         .al
         .xl
@@ -2765,18 +2829,18 @@
         tax
         lda bAPUUploading,b
         and #$00FF
-        bne rsUnknown80979A._97AE
+        bne rsSoundScriptUploadFA._97AE
         sep #$20
         lda #$FC
         sta bAPUUploading,b
         rep #$20
-        bra rsUnknown80979A._97B9
+        bra rsSoundScriptUploadFA._97B9
 
         .databank 0
 
         ; 80/9786
 
-      rsUnknown809786 ; 80/9786
+      rsSoundScriptUploadFB ; 80/9786
 
         .al
         .xl
@@ -2786,18 +2850,18 @@
         tax
         lda bAPUUploading,b
         and #$00FF
-        bne rsUnknown80979A._97AE
+        bne rsSoundScriptUploadFA._97AE
         sep #$20
         lda #$FB
         sta bAPUUploading,b
         rep #$20
-        bra rsUnknown80979A._97B9
+        bra rsSoundScriptUploadFA._97B9
 
         .databank 0
 
         ; 80/979A
 
-      rsUnknown80979A ; 80/979A
+      rsSoundScriptUploadFA ; 80/979A
 
         .al
         .xl
@@ -2817,7 +2881,7 @@
 
         _97AE
         lda #$0001
-        sta $04F8,b
+        sta wSoundScriptCommand,b
         dec y
         dec y
         dec y
@@ -2836,10 +2900,10 @@
         phy
         ldy lR38+1
         phy
-        ldy $04B8,b
+        ldy wSoundDataBankHigh,b
         sty lR39+1
         sta lR39
-        jsl rlUnknown8091B3
+        jsl rlRunSoundUploadList
         ply
         sty lR38+1
         ply
@@ -2863,12 +2927,16 @@
       .al
       .xl
 
-      rsUnknown8097E0 ; 80/97E0
+      rsSoundScriptDeferUploadFD ; 80/97E0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Script commands 11-14: leaves the upload list in the argument in
+        ; wSoundDeferredUpload for rlRunDeferredSoundUpload, with $FD, $FC, $FB or $FA
+        ; as its mode; waits while one is already left.
 
         tax
         lda bAPUUploading,b
@@ -2878,15 +2946,15 @@
         lda #$FD
 
         _97ED
-        sta $04FC,b
-        stx $04FA,b
+        sta bSoundDeferredUploadMode,b
+        stx wSoundDeferredUpload,b
         rep #$20
         rts
 
 
         _97F6
         lda #$0001
-        sta $04F8,b
+        sta wSoundScriptCommand,b
         dec y
         dec y
         dec y
@@ -2905,7 +2973,7 @@
       .al
       .xl
 
-      rlUnknown809801 ; 80/9801
+      rlSoundScriptDeferUploadFC ; 80/9801
 
         .al
         .xl
@@ -2915,10 +2983,10 @@
         tax
         lda bAPUUploading,b
         and #$00FF
-        bne rsUnknown8097E0._97F6
+        bne rsSoundScriptDeferUploadFD._97F6
         sep #$20
         lda #$FC
-        bra rsUnknown8097E0._97ED
+        bra rsSoundScriptDeferUploadFD._97ED
 
         .databank 0
 
@@ -2932,7 +3000,7 @@
       .as
       .xl
 
-      rlUnknown809810 ; 80/9810
+      rlSoundScriptDeferUploadFB ; 80/9810
 
         .al
         .xl
@@ -2942,10 +3010,10 @@
         tax
         lda bAPUUploading,b
         and #$00FF
-        bne rsUnknown8097E0._97F6
+        bne rsSoundScriptDeferUploadFD._97F6
         sep #$20
         lda #$FB
-        bra rsUnknown8097E0._97ED
+        bra rsSoundScriptDeferUploadFD._97ED
 
         .databank 0
 
@@ -2959,7 +3027,7 @@
       .as
       .xl
 
-      rlUnknown80981F ; 80/981F
+      rlSoundScriptDeferUploadFA ; 80/981F
 
         .al
         .xl
@@ -2969,10 +3037,10 @@
         tax
         lda bAPUUploading,b
         and #$00FF
-        bne rsUnknown8097E0._97F6
+        bne rsSoundScriptDeferUploadFD._97F6
         sep #$20
         lda #$FA
-        bra rsUnknown8097E0._97ED
+        bra rsSoundScriptDeferUploadFD._97ED
 
         .databank 0
 
@@ -2986,12 +3054,14 @@
       .as
       .xl
 
-      rsUnknown80982E ; 80/982E
+      rsSoundScriptWaitForAPUStatus ; 80/982E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Script command 15: waits until a bit of the argument is set in bAPUStatus.
 
         php
         sep #$20
@@ -3018,14 +3088,16 @@
       .as
       .xl
 
-      rsUnknown80983C ; 80/983C
+      rsSoundScriptWaitForDeferredUpload ; 80/983C
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $04FA,b
+        ; Script command 16: waits until wSoundDeferredUpload has been sent.
+
+        lda wSoundDeferredUpload,b
         beq _9845
         dec y
         dec y
@@ -3047,22 +3119,26 @@
       .al
       .xl
 
-      rsUnknown809846 ; 80/9846
+      rsSoundScriptQueueCommandChecked ; 80/9846
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Script command 17: queues the argument with rlQueueSoundCommand once no upload
+        ; is waiting; for $CB-$CD, when the chunk in the buffer (bSoundBufferFirstByte)
+        ; is what the APU reports on port 1, sends $xxF1 with that byte instead.
+
         tax
         lda $0508,b
         bne _9851
-        lda $04FA,b
+        lda wSoundDeferredUpload,b
         beq _985C
 
         _9851
         lda #$0001
-        sta $04F8,b
+        sta wSoundScriptCommand,b
         dec y
         dec y
         dec y
@@ -3080,23 +3156,23 @@
         txa
         ora $050A,b
         stz $050A,b
-        jml rsUnknown809733
+        jml rsSoundScriptQueueCommand
 
 
         _9871
         sep #$20
-        lda $0507,b
+        lda bSoundBufferFirstByte,b
         beq _98A0
-        cmp $0506,b
+        cmp bAPUPort1,b
         bne _98A0
         rep #$20
         lda $0500,b
         bne _989B
         txa
         sep #$20
-        sta $04EB,b
+        sta bSoundResendCommand,b
         rep #$20
-        lda $0507,b
+        lda bSoundBufferFirstByte,b
         and #$00FF
         xba
         ora #$00F1
@@ -3106,29 +3182,33 @@
 
         _989B
         sep #$20
-        stz $0507,b
+        stz bSoundBufferFirstByte,b
 
         _98A0
         rep #$20
         stz $0500,b
         txa
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         rts
 
         .databank 0
 
         ; 80/98AB
 
-      rsUnknown8098AB ; 80/98AB
+      rsSoundScriptBattleTerrainCommand ; 80/98AB
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Script command 18: queues $C2, or $80C3 for terrain 1 and 4 and $80C4 for
+        ; terrain $17, from the terrain of one of the battle's units (argument 1 or not
+        ; picks which).
+
         rep #$20
-        ldx $04FA,b
-        bne rsUnknown809846._9851
+        ldx wSoundDeferredUpload,b
+        bne rsSoundScriptQueueCommandChecked._9851
         dec a
         bne _98C0
         lda wBattleStatus
@@ -3175,7 +3255,7 @@
         lda #$80C4
 
         _98FE
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         rts
 
         .databank 0
@@ -3190,12 +3270,15 @@
       .al
       .xl
 
-      rlUnknown809903 ; 80/9903
+      rlRunDeferredSoundUpload ; 80/9903
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Runs the upload list in wSoundDeferredUpload, if there is one and no upload is
+        ; running.
 
         php
         phb
@@ -3204,20 +3287,20 @@
         .databank $80
         sep #$10
         rep #$20
-        lda $04FA,b
+        lda wSoundDeferredUpload,b
         beq _9930
         ldx bAPUUploading,b
         bne _9930
         ldx #$00
-        stx $04F5,b
-        ldx $04FC,b
+        stx bSoundUploadNoVBlank,b
+        ldx bSoundDeferredUploadMode,b
         stx bAPUUploading,b
         rep #$10
-        ldx $04B8,b
+        ldx wSoundDataBankHigh,b
         stx lR39+1
         sta lR39
-        jsl rlUnknown8091B3
-        stz $04FA,b
+        jsl rlRunSoundUploadList
+        stz wSoundDeferredUpload,b
 
         _9930
         plb
@@ -3667,7 +3750,7 @@
         jsl rlRunGameStateRoutines
         jsl rlUnknown809C7A
         jsl rlHideSprites
-        jsl rlUnknown8095CD
+        jsl rlUpdateSound
         rts
 
         .databank 0
@@ -4084,13 +4167,17 @@
       .al
       .xl
 
-      rlUnknown80A9F2 ; 80/A9F2
+      rlDecompressLinear ; 80/A9F2
 
         ; Runs on into built code at the end.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; lSource = stream: decompresses it reading as the sound data needs, from
+        ; bank:0000+Y with bFlag set, so a stream runs on across banks
+        ; (tools/decompress.py, linear=True).
 
         php
         phb
@@ -4181,7 +4268,7 @@
 
         _ADD0
         lda #$00C0
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         jsl rlUnknown9BFBC0
         jsl rlUnknown81A85C
         lda #$0001
@@ -4233,7 +4320,7 @@
         jsl rlUnknown809C7A
         jsl rlHideSprites
         jsl rlUnknown858728
-        jsl rlUnknown8095CD
+        jsl rlUpdateSound
         rts
 
         .databank 0
@@ -4309,7 +4396,7 @@
         jsl rlHideSprites
 
         _AEE4
-        jsl rlUnknown8095CD
+        jsl rlUpdateSound
         plp
         rts
 
@@ -4359,7 +4446,7 @@
         lda #$0007
         sta $0D7B,b
         jsl rlUnknown81A9D4
-        jsl rlUnknown809654
+        jsl rlStepMusicScript
         jsl rlUnknown86C629
 
         _AF4C
@@ -4637,7 +4724,7 @@
         jsl rlButtonCombinationResetCheck
         jsl rlDecompressByList
         jsl rlUnknown869D1B
-        jsl rlUnknown809903
+        jsl rlRunDeferredSoundUpload
         jsl rlUnknown91A80D
         rts
 
@@ -4688,7 +4775,7 @@
         jsl rlHideSprites
         jsl rlUnknown9181F6
         jsl rlUnknown878256
-        jsl rlUnknown8095CD
+        jsl rlUpdateSound
         rts
 
         .databank 0
@@ -5021,7 +5108,7 @@
         jsl rlHideSprites
         jsl rlUnknown9181F6
         jsl rlUnknown858728
-        jsl rlUnknown8095CD
+        jsl rlUpdateSound
         rts
 
         .databank 0
@@ -5277,7 +5364,7 @@
         lda #$0000
         sta $088B,b
         jsl rlUnknown81AB26
-        jsl rlUnknown809654
+        jsl rlStepMusicScript
         lda #$0000
         jsl rlGetFactionSlotLocationID
         cmp $089F,b
@@ -5308,7 +5395,7 @@
 
         jsl rlUnknown80B827
         lda #$00F7
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         rtl
 
         .databank 0
@@ -5841,7 +5928,7 @@
         jsl rlRunGameStateRoutines
         jsl rlHideSprites
         jsl rlUnknown878256
-        jsl rlUnknown8095CD
+        jsl rlUpdateSound
         rts
 
         .databank 0
@@ -6297,7 +6384,7 @@
         jsl rlRunGameStateRoutines
         jsl rlUnknown809C7A
         jsl rlHideSprites
-        jsl rlUnknown8095CD
+        jsl rlUpdateSound
         plp
         rts
 
@@ -6335,7 +6422,7 @@
         jsl rlRunGameStateRoutines
         jsl rlUnknown809C7A
         jsl rlHideSprites
-        jsl rlUnknown8095CD
+        jsl rlUpdateSound
         plp
         rts
 
@@ -6501,7 +6588,7 @@
 
         jsl rlButtonCombinationResetCheck
         jsl rlDecompressByList
-        jsl rlUnknown809903
+        jsl rlRunDeferredSoundUpload
         jsl rlUnknown969872
         rts
 
@@ -6518,7 +6605,7 @@
 
         jsl rlButtonCombinationResetCheck
         jsl rlDecompressByList
-        jsl rlUnknown809903
+        jsl rlRunDeferredSoundUpload
         rts
 
         .databank 0
@@ -7659,8 +7746,8 @@
         lda #$000D
         sta wGameStateStep,b
         lda #$005A
-        sta $04BA,b
-        jsl rlUnknown809654
+        sta wMusicID,b
+        jsl rlStepMusicScript
         rtl
 
 
@@ -7785,8 +7872,8 @@
         sta wBufferBG1VOFS
         sta wBufferBG2VOFS
         lda #$000D
-        sta $04BA,b
-        jsl rlUnknown809654
+        sta wMusicID,b
+        jsl rlStepMusicScript
         jsl rlResetDialogueEngine
         lda #$8D00
         sta lR18+1
@@ -7973,14 +8060,14 @@
 
         _F125
         lda #$800E
-        sta $04BA,b
+        sta wMusicID,b
         bra _F13A
 
 
         _F12D
         lda #$800C
         lda #$800B
-        sta $04BA,b
+        sta wMusicID,b
         bra _F13A
 
 
@@ -8861,7 +8948,7 @@
 
         jsl rlButtonCombinationResetCheck
         jsl rlDecompressByList
-        jsl rlUnknown809903
+        jsl rlRunDeferredSoundUpload
         jsl rlHandleSaveFile
         rts
 
@@ -8878,7 +8965,7 @@
         .databank ?
 
         jsl rlDecompressByList
-        jsl rlUnknown809903
+        jsl rlRunDeferredSoundUpload
         jsl rlHandleSaveFile
         rts
 
@@ -8927,7 +9014,7 @@
         jsl rlRunGameStateRoutines
         jsl rlUnknown809C7A
         jsl rlHideSprites
-        jsl rlUnknown8095CD
+        jsl rlUpdateSound
         pla
         sta lR19+1
         pla

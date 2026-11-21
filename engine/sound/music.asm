@@ -209,7 +209,7 @@
           lda aUnknown81AB0E,x
 
         +
-        sta $04BA,b
+        sta wMusicID,b
         rts
 
         .databank 0
@@ -242,14 +242,14 @@
         beq +
 
         lda $0DAB,b
-        cmp $0510,b
+        cmp aSoundScriptPrevious,b
         beq _End
 
         +
         lda $0DAB,b
         beq _End
 
-        sta $04BA,b
+        sta wMusicID,b
         
         _End
         rtl

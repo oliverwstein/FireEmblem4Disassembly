@@ -153,7 +153,7 @@
         lda #$0001
         sta $08DA,b
         lda #$00E6
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         lda #$000C
         sta wScreenFadingProcInput,b
         lda #$ECC9

@@ -52,7 +52,7 @@
         and #$00FF
         bne _DCA7
         jsl rlUnknown9BFB7E
-        jsl rlUnknown809654
+        jsl rlStepMusicScript
         lda #$0000
         sep #$20
         sta $7FD000
@@ -372,7 +372,7 @@
         sta aBGPaletteBuffer,b
         jsl rlUnknown9BEAA5
         jsl rlUnknown9BFBA9
-        jsl rlUnknown809654
+        jsl rlStepMusicScript
         jsl rlEnableVBlank
         sep #$20
         lda #$80
@@ -2770,7 +2770,7 @@
         sta bSoundFlags,b
         rep #$20
         lda #$0001
-        sta $04BA,b
+        sta wMusicID,b
         sep #$20
         lda $7FD8BA
         and #$F7
@@ -2799,7 +2799,7 @@
         .databank ?
 
         lda #$0002
-        sta $04BA,b
+        sta wMusicID,b
         sta $0500,b
         rtl
 
@@ -2823,7 +2823,7 @@
         .databank ?
 
         lda #$0003
-        sta $04BA,b
+        sta wMusicID,b
         rtl
 
         .databank 0
@@ -2970,7 +2970,7 @@
 
 
         _FCB9
-        lda $04BA,b
+        lda wMusicID,b
         beq _FCC2
         jml _FD50
 

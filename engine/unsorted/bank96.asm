@@ -1455,7 +1455,7 @@
         lda #$0040
 
         _87AF
-        sta $04BA,b
+        sta wMusicID,b
         rtl
 
         .databank 0
@@ -3333,8 +3333,8 @@
 
         lda wBattleSong
         beq _9602
-        sta $04BA,b
-        jsl rlUnknown809654
+        sta wMusicID,b
+        jsl rlStepMusicScript
 
         _9602
         rtl
@@ -3363,7 +3363,7 @@
         cmp #$00FF
         beq _9616
         lda #$00C0
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
 
         _9616
         rtl

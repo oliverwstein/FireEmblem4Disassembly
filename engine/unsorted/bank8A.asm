@@ -172,10 +172,10 @@
         .databank ?
 
         jsl rlUnknown8A8208
-        lda $04BA,b
+        lda wMusicID,b
         bne _80BC
         lda #$00F7
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         lda #$0001
         sta wGameStateStep,b
 
@@ -489,7 +489,7 @@
         .databank ?
 
         lda #$00F7
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         jsr rsUnknown8A8E08
         lda #$0000
         sta $7F766A
@@ -534,7 +534,7 @@
 
         jsl rlUnknown81AB26
         lda #$00E8
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         sep #$20
         lda bBufferINIDISP
         rep #$20
@@ -1831,7 +1831,7 @@
         .autsiz
         .databank ?
 
-        lda $04BA,b
+        lda wMusicID,b
         bne _8A1D
         sep #$20
         lda bBufferINIDISP
@@ -4260,10 +4260,10 @@
         asl a
         tax
         lda aUnknown8A9D79,x
-        cmp $0510,b
+        cmp aSoundScriptPrevious,b
         beq _9D38
         lda #$00E0
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
 
         _9D38
         rts
@@ -4295,10 +4295,10 @@
         asl a
         tax
         lda @l aUnknown8A9D79,x
-        cmp $0510,b
+        cmp aSoundScriptPrevious,b
         beq _9D6C
         lda #$00C0
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         jsl rlGetEventLocationEntryNameID
         asl a
         cmp #$005C
@@ -4307,14 +4307,14 @@
         _9D5B
         tax
         lda @l aUnknown8A9D79,x
-        cmp $0510,b
+        cmp aSoundScriptPrevious,b
         beq _9D6C
-        sta $04BA,b
-        jsl rlUnknown809654
+        sta wMusicID,b
+        jsl rlStepMusicScript
 
         _9D6C
         lda #$00E8
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         rtl
 
 
@@ -11956,8 +11956,8 @@
         jsl rlDisableVBlank
         jsl rlResetHDMAEngine
         lda #$004B
-        sta $04BA,b
-        jsl rlUnknown809654
+        sta wMusicID,b
+        jsl rlStepMusicScript
         phk
         plb
         .databank $8A

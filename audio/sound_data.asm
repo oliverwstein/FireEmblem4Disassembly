@@ -2780,7 +2780,7 @@
 
       aSoundUnknownF7AD9C ; F7/AD9C
 
-        ; Read by rsUnknown8093C6: from +0 for upload IDs 1 and 2, from +$140 for 3 and 4.
+        ; Read by rsGetIndirectSoundUpload: from +0 for upload IDs 1 and 2, from +$140 for 3 and 4.
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $2D, $00, $00, $00, $0B
         .byte $23, $17, $1D, $21, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -2872,7 +2872,7 @@
       aSoundDriver ; F7/AFF0
 
         ; SPC700 code and data in blocks of (size, SPC address, bytes), then 0 and the
-        ; address to start at, as rlUnknown809124 sends them.
+        ; address to start at, as rlUploadToAPU sends them.
         .word len(binary("driver/0200.bin")), $0200
         .soundBinary "driver/0200.bin"
         .word len(binary("driver/0660.bin")), $0660

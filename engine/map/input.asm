@@ -11,7 +11,7 @@
         .autsiz
         .databank ?
 
-        lda $04BA,b
+        lda wMusicID,b
         bne _End
 
         lda wJoy1New
@@ -685,7 +685,7 @@
         lda #$00F0
         jsl rlSendSoundCommand
         lda #$00E0
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         jsl rlUnknown88B3AF
         lda #$0001
         sta $088B,b

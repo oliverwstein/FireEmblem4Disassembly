@@ -463,7 +463,7 @@
             bit #JOY_Start
             beq +
 
-              lda $04BA,b
+              lda wMusicID,b
               bne _825E
 
                 lda aDialogue.wUnknown0018D0,b
@@ -2382,7 +2382,7 @@
 
         lda [lR18],y
         and #$00FF
-        sta $04BA,b
+        sta wMusicID,b
 
         inc aDialogue.lActivePointer,b
         clc
@@ -4252,7 +4252,7 @@
           cpx #1
           beq _9362
 
-            ldx $04BA,b
+            ldx wMusicID,b
             bne _9355
 
               ldx aDialogue.wSlotOffset,b
@@ -4315,7 +4315,7 @@
         .autsiz
         .databank ?
 
-        lda $04BA,b
+        lda wMusicID,b
         bne +
 
           inc aDialogue.wCommandCycle,b

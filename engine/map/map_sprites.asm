@@ -2129,7 +2129,7 @@
         .autsiz
         .databank ?
 
-        lda $04BA,b
+        lda wMusicID,b
         bne _8D57
         phx
         stz wR0

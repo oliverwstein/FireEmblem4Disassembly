@@ -8227,7 +8227,7 @@
         .autsiz
         .databank ?
 
-        lda $04BA,b
+        lda wMusicID,b
         bne +
 
           jsl rlUnknown85A234
@@ -8381,7 +8381,7 @@
         .autsiz
         .databank ?
 
-        lda $04BA,b
+        lda wMusicID,b
         bne _BAD8
         lda #$0001
         sta $0508,b

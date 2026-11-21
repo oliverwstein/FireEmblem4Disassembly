@@ -2112,7 +2112,7 @@
         and #$000F
         cmp #$000F
         bne _D898
-        lda $04BA,b
+        lda wMusicID,b
         bne _D898
         jsr rsUnknown91E275
         jsr rsUnknown91DCDE
@@ -2515,7 +2515,7 @@
         and #$000F
         cmp #$000F
         bne _DAD2
-        lda $04BA,b
+        lda wMusicID,b
         bne _DAD2
         lda $1866,b
         bne _DAD6
@@ -4197,7 +4197,7 @@
         lda #$00FF
         sta wUnknown053E,b
         lda #$00C0
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         stz wUnknown00171A,b
         plp
         rtl
@@ -4508,7 +4508,7 @@
         jsl rlUnknown91BA59
         jsl rlUnknown91BA46
         lda #$0004
-        sta $04BA,b
+        sta wMusicID,b
         rts
 
         .databank 0
@@ -4867,7 +4867,7 @@
         phk
         plb
         .databank $91
-        jsl rlUnknown808EF6
+        jsl rlInitSound
         jsl rlHardwareResetScreenPosMathHDMA
         jsl rlHardwareResetScreenRegisters
         rts
@@ -5058,13 +5058,13 @@
         sta aPaletteFading,b
         stz aPaletteFading.wCurrentStep,b
         lda #$00E2
-        jsl rlUnknown808F6F
+        jsl rlQueueSoundCommand
         lda wCurrentChapter,b
         asl a
         tax
         lda aUnknown91F7B7,x
         beq _F7B6
-        sta $04BA,b
+        sta wMusicID,b
 
         _F7B6
         rts

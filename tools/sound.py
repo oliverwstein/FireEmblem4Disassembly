@@ -3,18 +3,18 @@
 
 usage: tools/sound.py [--write] [--self-test]
 
-The sound data is one linear block: the readers (rlUnknown808EF6, the upload
-routine rlUnknown8091B3, rsUnknown8093C6, rsUnknown809677, and the
-decompressor's linear entry rlUnknown80A9F2) step from $xx/FFFF to $xx+1/0000,
+The sound data is one linear block: the readers (rlInitSound, the upload
+routine rlRunSoundUploadList, rsGetIndirectSoundUpload, rsStepSoundScript, and the
+decompressor's linear entry rlDecompressLinear) step from $xx/FFFF to $xx+1/0000,
 and every pointer in it is a 16-bit address plus a bank relative to the
 header's bank ($04B8 holds that bank as $F700). The header (aSoundHeader)
 points at everything else, so the decoder starts there:
 
   Driver          3 bytes: address, bank - header bank; then a 0 byte. The SPC
-                  driver, in the IPL upload format rlUnknown809124 sends: blocks
+                  driver, in the IPL upload format rlUploadToAPU sends: blocks
                   of (size, SPC address, bytes), ended by size 0 and the address
                   to start at.
-  Scripts         word table, indexed by request - 1 (rsUnknown809677): each
+  Scripts         word table, indexed by request - 1 (rsStepSoundScript): each
                   entry points at a script.
   ScriptData      the scripts: words up to $0000. Bits 15-10 a command (0 none),
                   bits 9-0 frames to wait after it; a command takes the next
@@ -23,21 +23,21 @@ points at everything else, so the decoder starts there:
                   free); 1-2 play a sound effect, 3-4 a second sound effect, 5
                   sends a sound command; the rest are not read yet.
   UploadLists     word table of upload lists, indexed by an upload list ID
-                  below $64 (rsUnknown8093C6 steps through the list, one entry
+                  below $64 (rsGetIndirectSoundUpload steps through the list, one entry
                   per call).
-  UploadData      the upload lists, read by rlUnknown8091B3: words up to $0000.
+  UploadData      the upload lists, read by rlRunSoundUploadList: words up to $0000.
                   $0064-$07FF uploads that chunk; $0001-$0063 an indirect
-                  upload (rsUnknown8093C6); bits 15-12 a command: $Cxxx takes
+                  upload (rsGetIndirectSoundUpload); bits 15-12 a command: $Cxxx takes
                   the next word as the SPC address for what follows, $A, $B and
-                  $F others (jump table aUnknown809357).
+                  $F others (jump table aSoundUploadCommands).
   Chunks          the chunk table: 8 bytes per chunk ID from $64: address (3
                   bytes, as above), size, SPC address (0: after the previous
                   chunk), flags (bit 0 compressed, decompressed into a WRAM
                   buffer first, bit 1 picks the second buffer).
   DriverID        the driver's ID text.
-  Unknown12       byte tables rsUnknown8093C6 indexes by a unit value
+  Unknown12       byte tables rsGetIndirectSoundUpload indexes by a unit value
                   ($7E4EA9,x) for upload IDs 1-4.
-  StartUpload     a word: the upload list sent after the driver (rlUnknown808EF6).
+  StartUpload     a word: the upload list sent after the driver (rlInitSound).
   TerrainUploads  word table of upload lists that IDs 3 and 4 index by terrain.
 
 Chunks are written as audio/chunks/ID.bin (raw) or ID.comp (compressed, the
@@ -314,7 +314,7 @@ def emit(s, gaps, tail):
     w('')
     w(f'      aSoundUnknownF7AD9C ; {H["Unknown12"] >> 16:02X}/{H["Unknown12"] & 0xFFFF:04X}')
     w('')
-    w('        ; Read by rsUnknown8093C6: from +0 for upload IDs 1 and 2, from +$140 for 3 and 4.')
+    w('        ; Read by rsGetIndirectSoundUpload: from +0 for upload IDs 1 and 2, from +$140 for 3 and 4.')
     for i in range(0, len(s.unknown12), 16):
         w('        .byte ' + ', '.join(f'${c:02X}' for c in s.unknown12[i:i + 16]))
     w('')
@@ -337,7 +337,7 @@ def emit(s, gaps, tail):
             w(f'      aSoundDriver ; {a >> 16:02X}/{a & 0xFFFF:04X}')
             w('')
             w('        ; SPC700 code and data in blocks of (size, SPC address, bytes), then 0 and the')
-            w('        ; address to start at, as rlUnknown809124 sends them.')
+            w('        ; address to start at, as rlUploadToAPU sends them.')
             for dest, data in s.driver:
                 path = f'driver/{dest:04X}.bin'
                 files[path] = data
