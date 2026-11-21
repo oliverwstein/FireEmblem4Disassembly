@@ -5,7 +5,7 @@ usage: tools/battle_animation.py OUT.png [--class NAME] [--record N] [--item NAM
                                  [--ids A,B,C,D] [--entry N] [--sheet LABEL]
                                  [--rom FILE] [--scale N]
 
-Picks a record of the animation lookup at $97/88C9 (206 records of class,
+Picks a record of aBattleAnimationLookup (206 records of class,
 weapon category, character, class/gender value and four animation IDs), by
 --record or as the first record for --class, and draws every frame record of
 its sequence data. Each frame is assembled the way the battle code does it:
@@ -37,7 +37,6 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from decompress import decompress, rom_offset
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOOKUP = 0x9788C9                         # not yet source
 
 
 def names(path):
@@ -90,7 +89,7 @@ def main():
             lab.setdefault(p[2].lstrip('.'), int(p[1], 16))
     rom = Rom(args.rom)
     classes, items = names('data/class/ClassData.csv'), names('data/offset/ItemDataOffsets.csv')
-    records = [rom.raw(LOOKUP + 8 * k, 8) for k in range(0x670 // 8)]
+    records = [rom.raw(lab['aBattleAnimationLookup'] + 8 * k, 8) for k in range(0x670 // 8)]
     if args.record is not None:
         k = args.record
     else:

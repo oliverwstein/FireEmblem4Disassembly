@@ -1,9 +1,8 @@
 ; Battle animations: the graphics of the battle scenes, by class.
 ;
-; rlUnknown95A247 picks four animation IDs for each combatant from the table at
-; $97/88C9 (206 records of 8 bytes: class, weapon category from the table at
-; $99/83B9, character (0 for any), a value from class and gender, then the four
-; IDs) into $7FE1BA-$7FE1BD. The second ID selects the combatant's sheet here.
+; rlUnknown95A247 picks four animation IDs for each combatant from
+; aBattleAnimationLookup (206 records: class, weapon category, character,
+; gender, then the four IDs) into $7FE1B6-$7FE1B9 and $7FE1BA-$7FE1BD. The second ID selects the combatant's sheet here.
 
     .section BattleAnimationSheetsSection
 
@@ -968,6 +967,224 @@
         .long aBattleAnimationSequencesDarkPrinceMagic, aBattleAnimationFramesDarkPrinceMagic
         .long aBattleAnimationSequencesDancerDance, aBattleAnimationFramesDancerDance
         .long aBattleAnimationSequencesJuniorLordSword, aBattleAnimationFramesJuniorLordSword
+
+      aBattleAnimationLookup ; 97/88C9
+
+        ; The four animation IDs of each combatant (rlUnknown95A2C8, for both
+        ; through rlUnknown95A247). The search takes the first record of the
+        ; combatant's class whose gender, character (unless AnimAnyCharacter)
+        ; and category (unless the combatant's is AnimCategoryAny) match. When a
+        ; class has records but none matches, it keeps the previous record
+        ; (_A378, which reads this table less 4); a class with no records gets
+        ; the first record's IDs. rlUnknown95A3C1 replaces the search for a
+        ; dancing Dancer.
+
+        .structBattleAnimationLookupEntry Cavalier, AnimCategorySword, AnimAnyCharacter, GenderMale, $00, $00, $00, $00
+        .structBattleAnimationLookupEntry Cavalier, AnimCategoryLance, AnimAnyCharacter, GenderMale, $01, $00, $00, $00
+        .structBattleAnimationLookupEntry Cavalier, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $02, $00, $00, $00
+        .structBattleAnimationLookupEntry Cavalier, AnimCategorySword, AnimAnyCharacter, GenderFemale, $00, $00, $00, $00
+        .structBattleAnimationLookupEntry Cavalier, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $01, $00, $00, $00
+        .structBattleAnimationLookupEntry Cavalier, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $02, $00, $00, $00
+        .structBattleAnimationLookupEntry LanceKnight, AnimCategoryLance, AnimAnyCharacter, GenderMale, $01, $00, $00, $00
+        .structBattleAnimationLookupEntry LanceKnight, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $02, $00, $00, $00
+        .structBattleAnimationLookupEntry LanceKnight, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $01, $00, $00, $00
+        .structBattleAnimationLookupEntry LanceKnight, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $02, $00, $00, $00
+        .structBattleAnimationLookupEntry BowKnight, AnimCategoryBow, AnimAnyCharacter, GenderMale, $04, $02, $02, $00
+        .structBattleAnimationLookupEntry BowKnight, AnimCategoryBow, AnimAnyCharacter, GenderFemale, $04, $02, $02, $00
+        .structBattleAnimationLookupEntry AxeKnight, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $00, $00, $00, $00
+        .structBattleAnimationLookupEntry AxeKnight, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $03, $00, $00, $00
+        .structBattleAnimationLookupEntry AxeKnight, AnimCategoryAxe, AnimAnyCharacter, GenderFemale, $00, $00, $00, $00
+        .structBattleAnimationLookupEntry AxeKnight, AnimCategoryRangedAxe, AnimAnyCharacter, GenderFemale, $03, $00, $00, $00
+        .structBattleAnimationLookupEntry FreeKnight, AnimCategorySword, AnimAnyCharacter, GenderMale, $00, $05, $04, $04
+        .structBattleAnimationLookupEntry Troubadour, AnimCategorySword, AnimAnyCharacter, GenderFemale, $00, $06, $05, $05
+        .structBattleAnimationLookupEntry Troubadour, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $05, $06, $05, $05
+        .structBattleAnimationLookupEntry KnightLord, AnimCategorySword, AnimAnyCharacter, GenderMale, $0E, $07, $06, $06
+        .structBattleAnimationLookupEntry KnightLord, AnimCategoryLance, AnimAnyCharacter, GenderMale, $0F, $07, $06, $06
+        .structBattleAnimationLookupEntry KnightLord, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $10, $07, $06, $06
+        .structBattleAnimationLookupEntry DukeKnight, AnimCategoryLance, AnimAnyCharacter, GenderMale, $0F, $09, $07, $07
+        .structBattleAnimationLookupEntry DukeKnight, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $10, $09, $07, $07
+        .structBattleAnimationLookupEntry DukeKnight, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $0F, $09, $07, $07
+        .structBattleAnimationLookupEntry DukeKnight, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $10, $09, $07, $07
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategorySword, AnimAnyCharacter, GenderMale, $0E, $0B, $08, $08
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryLance, AnimAnyCharacter, GenderMale, $0F, $0B, $08, $08
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $0E, $0B, $08, $08
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryBow, AnimAnyCharacter, GenderMale, $04, $0D, $09, $08
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $10, $0B, $08, $08
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $11, $0B, $08, $08
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $13, $0B, $08, $08
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryStaff, AnimAnyCharacter, GenderMale, $12, $0B, $08, $08
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategorySword, AnimAnyCharacter, GenderFemale, $0E, $0B, $0A, $09
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $0F, $0B, $0A, $09
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryAxe, AnimAnyCharacter, GenderFemale, $0E, $0B, $0A, $09
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryBow, AnimAnyCharacter, GenderFemale, $04, $0D, $0B, $09
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $10, $0B, $0A, $09
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryRangedAxe, AnimAnyCharacter, GenderFemale, $11, $0B, $0A, $09
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $13, $0B, $0A, $09
+        .structBattleAnimationLookupEntry MasterKnight, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $12, $0B, $0A, $09
+        .structBattleAnimationLookupEntry Paladin, AnimCategorySword, AnimAnyCharacter, GenderMale, $0E, $10, $0C, $0A
+        .structBattleAnimationLookupEntry Paladin, AnimCategoryLance, AnimAnyCharacter, GenderMale, $0F, $10, $0C, $0A
+        .structBattleAnimationLookupEntry Paladin, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $10, $10, $0C, $0A
+        .structBattleAnimationLookupEntry PaladinF, AnimCategorySword, AnimAnyCharacter, GenderFemale, $0E, $10, $0D, $0B
+        .structBattleAnimationLookupEntry PaladinF, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $0F, $10, $0D, $0B
+        .structBattleAnimationLookupEntry PaladinF, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $10, $10, $0D, $0B
+        .structBattleAnimationLookupEntry PaladinF, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $12, $10, $0D, $0B
+        .structBattleAnimationLookupEntry ArchKnight, AnimCategoryBow, AnimAnyCharacter, GenderMale, $04, $11, $0E, $0A
+        .structBattleAnimationLookupEntry ArchKnight, AnimCategoryBow, AnimAnyCharacter, GenderFemale, $04, $11, $0E, $0A
+        .structBattleAnimationLookupEntry Ranger, AnimCategorySword, AnimAnyCharacter, GenderMale, $0E, $12, $0F, $0D
+        .structBattleAnimationLookupEntry MageKnight, AnimCategorySword, AnimAnyCharacter, GenderMale, $0E, $14, $10, $0E
+        .structBattleAnimationLookupEntry MageKnight, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $13, $14, $10, $0E
+        .structBattleAnimationLookupEntry MageKnight, AnimCategorySword, AnimAnyCharacter, GenderFemale, $0E, $14, $10, $0E
+        .structBattleAnimationLookupEntry MageKnight, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $13, $14, $10, $0E
+        .structBattleAnimationLookupEntry GreatKnight, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $0E, $15, $11, $0F
+        .structBattleAnimationLookupEntry GreatKnight, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $11, $15, $11, $0F
+        .structBattleAnimationLookupEntry GreatKnight, AnimCategoryAxe, AnimAnyCharacter, GenderFemale, $0E, $15, $11, $0F
+        .structBattleAnimationLookupEntry GreatKnight, AnimCategoryRangedAxe, AnimAnyCharacter, GenderFemale, $11, $15, $11, $0F
+        .structBattleAnimationLookupEntry PegasusKnight, AnimCategorySword, AnimAnyCharacter, GenderFemale, $18, $16, $12, $10
+        .structBattleAnimationLookupEntry PegasusKnight, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $19, $16, $12, $10
+        .structBattleAnimationLookupEntry PegasusKnight, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $1A, $16, $12, $10
+        .structBattleAnimationLookupEntry FalconKnight, AnimCategorySword, AnimAnyCharacter, GenderFemale, $18, $17, $13, $10
+        .structBattleAnimationLookupEntry FalconKnight, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $19, $17, $13, $10
+        .structBattleAnimationLookupEntry FalconKnight, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $1A, $17, $13, $10
+        .structBattleAnimationLookupEntry FalconKnight, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $1B, $17, $13, $10
+        .structBattleAnimationLookupEntry Dragonrider, AnimCategorySword, AnimAnyCharacter, GenderMale, $1C, $18, $14, $12
+        .structBattleAnimationLookupEntry Dragonrider, AnimCategoryLance, AnimAnyCharacter, GenderMale, $1D, $18, $14, $12
+        .structBattleAnimationLookupEntry Dragonrider, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $1E, $18, $14, $12
+        .structBattleAnimationLookupEntry Dragonknight, AnimCategorySword, AnimAnyCharacter, GenderMale, $1C, $19, $15, $12
+        .structBattleAnimationLookupEntry Dragonknight, AnimCategoryLance, AnimAnyCharacter, GenderMale, $1D, $19, $15, $12
+        .structBattleAnimationLookupEntry Dragonknight, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $1E, $19, $15, $12
+        .structBattleAnimationLookupEntry Dragonknight, AnimCategorySword, AnimAnyCharacter, GenderFemale, $1C, $19, $16, $13
+        .structBattleAnimationLookupEntry Dragonknight, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $1D, $19, $16, $13
+        .structBattleAnimationLookupEntry Dragonknight, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $1E, $19, $16, $13
+        .structBattleAnimationLookupEntry Dragonmaster, AnimCategorySword, AnimAnyCharacter, GenderMale, $1C, $1A, $17, $12
+        .structBattleAnimationLookupEntry Dragonmaster, AnimCategoryLance, AnimAnyCharacter, GenderMale, $1D, $1A, $17, $12
+        .structBattleAnimationLookupEntry Dragonmaster, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $1E, $1A, $17, $12
+        .structBattleAnimationLookupEntry Dragonmaster, AnimCategorySword, AnimAnyCharacter, GenderFemale, $1C, $1A, $18, $14
+        .structBattleAnimationLookupEntry Dragonmaster, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $1D, $1A, $18, $14
+        .structBattleAnimationLookupEntry Dragonmaster, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $1E, $1A, $18, $14
+        .structBattleAnimationLookupEntry Archer, AnimCategoryBow, AnimAnyCharacter, GenderMale, $22, $1B, $19, $15
+        .structBattleAnimationLookupEntry Archer, AnimCategoryBow, AnimAnyCharacter, GenderFemale, $22, $1C, $19, $16
+        .structBattleAnimationLookupEntry Myrmidon, AnimCategorySword, AnimAnyCharacter, GenderMale, $20, $1D, $1A, $17
+        .structBattleAnimationLookupEntry Myrmidon, AnimCategorySword, AnimAnyCharacter, GenderFemale, $20, $1E, $1A, $18
+        .structBattleAnimationLookupEntry Swordmaster, AnimCategorySword, AnimAnyCharacter, GenderMale, $21, $1F, $1B, $19
+        .structBattleAnimationLookupEntry Swordmaster, AnimCategorySword, AnimAnyCharacter, GenderFemale, $21, $20, $1B, $1A
+        .structBattleAnimationLookupEntry Sniper, AnimCategoryBow, AnimAnyCharacter, GenderMale, $22, $21, $1C, $1B
+        .structBattleAnimationLookupEntry Sniper, AnimCategoryBow, AnimAnyCharacter, GenderFemale, $22, $22, $1C, $1C
+        .structBattleAnimationLookupEntry Hero, AnimCategorySword, AnimAnyCharacter, GenderMale, $21, $23, $1B, $1D
+        .structBattleAnimationLookupEntry Hero, AnimCategorySword, AnimAnyCharacter, GenderFemale, $21, $24, $1B, $1E
+        .structBattleAnimationLookupEntry General, AnimCategorySword, AnimAnyCharacter, GenderMale, $24, $25, $1D, $1F
+        .structBattleAnimationLookupEntry General, AnimCategoryLance, AnimAnyCharacter, GenderMale, $25, $26, $1D, $1F
+        .structBattleAnimationLookupEntry General, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $24, $25, $1D, $1F
+        .structBattleAnimationLookupEntry General, AnimCategoryBow, AnimAnyCharacter, GenderMale, $28, $27, $1D, $1F
+        .structBattleAnimationLookupEntry General, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $26, $26, $1D, $1F
+        .structBattleAnimationLookupEntry General, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $27, $25, $1D, $1F
+        .structBattleAnimationLookupEntry General, AnimCategorySword, AnimAnyCharacter, GenderFemale, $24, $25, $1D, $1F
+        .structBattleAnimationLookupEntry General, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $25, $26, $1D, $1F
+        .structBattleAnimationLookupEntry General, AnimCategoryAxe, AnimAnyCharacter, GenderFemale, $24, $25, $1D, $1F
+        .structBattleAnimationLookupEntry General, AnimCategoryBow, AnimAnyCharacter, GenderFemale, $28, $27, $1D, $1F
+        .structBattleAnimationLookupEntry General, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $26, $26, $1D, $1F
+        .structBattleAnimationLookupEntry General, AnimCategoryRangedAxe, AnimAnyCharacter, GenderFemale, $27, $25, $1D, $1F
+        .structBattleAnimationLookupEntry Emperor, AnimCategorySword, AnimAnyCharacter, GenderMale, $24, $28, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryLance, AnimAnyCharacter, GenderMale, $25, $29, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $24, $28, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryBow, AnimAnyCharacter, GenderMale, $28, $2A, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $26, $29, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $27, $28, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryStaff, AnimAnyCharacter, GenderMale, $29, $28, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $2A, $28, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategorySword, AnimAnyCharacter, GenderFemale, $24, $28, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $25, $29, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryAxe, AnimAnyCharacter, GenderFemale, $24, $28, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryBow, AnimAnyCharacter, GenderFemale, $28, $2A, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $26, $29, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryRangedAxe, AnimAnyCharacter, GenderFemale, $27, $28, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryStaff, AnimAnyCharacter, GenderMale, $29, $28, $1E, $20
+        .structBattleAnimationLookupEntry Emperor, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $2A, $28, $1E, $20
+        .structBattleAnimationLookupEntry Baron, AnimCategorySword, AnimAnyCharacter, GenderMale, $24, $2B, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryLance, AnimAnyCharacter, GenderMale, $25, $2C, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $24, $2B, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryBow, AnimAnyCharacter, GenderMale, $28, $2D, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $26, $2C, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $27, $2B, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryStaff, AnimAnyCharacter, GenderMale, $29, $2B, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $2A, $2B, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategorySword, AnimAnyCharacter, GenderFemale, $24, $2B, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryLance, AnimAnyCharacter, GenderFemale, $25, $2C, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryAxe, AnimAnyCharacter, GenderFemale, $24, $2B, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryBow, AnimAnyCharacter, GenderFemale, $28, $2D, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryRangedLance, AnimAnyCharacter, GenderFemale, $26, $2C, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryRangedAxe, AnimAnyCharacter, GenderFemale, $27, $2B, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $29, $2B, $1F, $21
+        .structBattleAnimationLookupEntry Baron, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $2A, $2B, $1F, $21
+        .structBattleAnimationLookupEntry LanceArmor, AnimCategoryLance, AnimAnyCharacter, GenderMale, $25, $32, $21, $23
+        .structBattleAnimationLookupEntry LanceArmor, AnimCategoryRangedLance, AnimAnyCharacter, GenderMale, $26, $32, $21, $23
+        .structBattleAnimationLookupEntry AxeArmor, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $24, $31, $21, $23
+        .structBattleAnimationLookupEntry AxeArmor, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $27, $31, $21, $23
+        .structBattleAnimationLookupEntry BowArmor, AnimCategoryBow, AnimAnyCharacter, GenderMale, $34, $33, $22, $23
+        .structBattleAnimationLookupEntry SwordArmor, AnimCategorySword, AnimAnyCharacter, GenderMale, $24, $31, $21, $23
+        .structBattleAnimationLookupEntry Barbarian, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $36, $34, $23, $24
+        .structBattleAnimationLookupEntry Barbarian, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $37, $34, $23, $24
+        .structBattleAnimationLookupEntry Fighter, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $36, $35, $24, $26
+        .structBattleAnimationLookupEntry Fighter, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $37, $35, $24, $26
+        .structBattleAnimationLookupEntry Brigand, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $36, $36, $25, $25
+        .structBattleAnimationLookupEntry Brigand, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $37, $36, $25, $25
+        .structBattleAnimationLookupEntry Warrior, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $36, $37, $26, $26
+        .structBattleAnimationLookupEntry Warrior, AnimCategoryBow, AnimAnyCharacter, GenderMale, $38, $38, $27, $26
+        .structBattleAnimationLookupEntry Warrior, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $37, $37, $26, $26
+        .structBattleAnimationLookupEntry Hunter, AnimCategoryBow, AnimAnyCharacter, GenderMale, $38, $39, $28, $24
+        .structBattleAnimationLookupEntry Pirate, AnimCategoryAxe, AnimAnyCharacter, GenderMale, $36, $3A, $29, $27
+        .structBattleAnimationLookupEntry Pirate, AnimCategoryRangedAxe, AnimAnyCharacter, GenderMale, $37, $3A, $29, $27
+        .structBattleAnimationLookupEntry JuniorLord, AnimCategorySword, AnimAnyCharacter, GenderMale, $39, $3B, $2A, $28
+        .structBattleAnimationLookupEntry WarMage, AnimCategorySword, AnimAnyCharacter, GenderMale, $3A, $3C, $2B, $29
+        .structBattleAnimationLookupEntry WarMage, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $3C, $3D, $2C, $29
+        .structBattleAnimationLookupEntry Prince, AnimCategorySword, AnimAnyCharacter, GenderMale, $3D, $3E, $2D, $2A
+        .structBattleAnimationLookupEntry Princess, AnimCategorySword, AnimAnyCharacter, GenderFemale, $3E, $3F, $2D, $2B
+        .structBattleAnimationLookupEntry Princess, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $3F, $40, $2E, $2B
+        .structBattleAnimationLookupEntry WarMageF, AnimCategorySword, AnimAnyCharacter, GenderFemale, $40, $41, $2B, $2C
+        .structBattleAnimationLookupEntry WarMageF, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $41, $42, $2C, $2C
+        .structBattleAnimationLookupEntry WarMageF, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $42, $42, $2C, $2C
+        .structBattleAnimationLookupEntry Queen, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $43, $43, $2F, $2D
+        .structBattleAnimationLookupEntry Queen, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $44, $43, $2F, $2D
+        .structBattleAnimationLookupEntry Dancer, AnimCategorySword, AnimAnyCharacter, GenderFemale, $59, $44, $30, $2E
+        .structBattleAnimationLookupEntry Priest, AnimCategoryStaff, AnimAnyCharacter, GenderMale, $46, $45, $31, $30
+        .structBattleAnimationLookupEntry Priest, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $46, $46, $31, $30
+        .structBattleAnimationLookupEntry Mage, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $47, $47, $32, $31
+        .structBattleAnimationLookupEntry Mage, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $47, $48, $32, $32
+        .structBattleAnimationLookupEntry FireMage, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $48, $49, $33, $33
+        .structBattleAnimationLookupEntry FireMage, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $48, $4A, $33, $33
+        .structBattleAnimationLookupEntry ThunderMage, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $49, $4B, $34, $34
+        .structBattleAnimationLookupEntry ThunderMage, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $49, $4C, $34, $34
+        .structBattleAnimationLookupEntry WindMage, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $4A, $4D, $35, $35
+        .structBattleAnimationLookupEntry WindMage, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $4A, $4E, $35, $35
+        .structBattleAnimationLookupEntry HighPriest, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $4C, $4F, $36, $36
+        .structBattleAnimationLookupEntry HighPriest, AnimCategoryStaff, AnimAnyCharacter, GenderMale, $4B, $4F, $36, $36
+        .structBattleAnimationLookupEntry HighPriest, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $4C, $50, $36, $37
+        .structBattleAnimationLookupEntry HighPriest, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $4B, $50, $36, $37
+        .structBattleAnimationLookupEntry Bishop, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $4E, $51, $37, $38
+        .structBattleAnimationLookupEntry Bishop, AnimCategoryStaff, AnimAnyCharacter, GenderMale, $4D, $51, $37, $38
+        .structBattleAnimationLookupEntry Sage, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $42, $52, $38, $39
+        .structBattleAnimationLookupEntry Sage, AnimCategoryStaff, AnimAnyCharacter, GenderMale, $41, $52, $38, $39
+        .structBattleAnimationLookupEntry Sage, AnimCategoryMagic, Julia, GenderFemale, $42, $54, $2C, $3B
+        .structBattleAnimationLookupEntry Sage, AnimCategoryStaff, Julia, GenderFemale, $41, $54, $2C, $3B
+        .structBattleAnimationLookupEntry Sage, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $42, $42, $2C, $3A
+        .structBattleAnimationLookupEntry Sage, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $41, $42, $2C, $3A
+        .structBattleAnimationLookupEntry Bard, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $52, $56, $39, $3C
+        .structBattleAnimationLookupEntry Priestess, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $54, $57, $3A, $3D
+        .structBattleAnimationLookupEntry Priestess, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $53, $57, $3A, $3D
+        .structBattleAnimationLookupEntry DarkMage, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $56, $58, $3B, $3E
+        .structBattleAnimationLookupEntry DarkMage, AnimCategoryStaff, AnimAnyCharacter, GenderMale, $55, $58, $3B, $3E
+        .structBattleAnimationLookupEntry DarkBishop, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $58, $59, $3C, $3F
+        .structBattleAnimationLookupEntry DarkBishop, AnimCategoryStaff, AnimAnyCharacter, GenderMale, $57, $59, $3C, $3F
+        .structBattleAnimationLookupEntry DarkBishop, AnimCategoryMagic, AnimAnyCharacter, GenderFemale, $58, $59, $3C, $3F
+        .structBattleAnimationLookupEntry DarkBishop, AnimCategoryStaff, AnimAnyCharacter, GenderFemale, $57, $59, $3C, $3F
+        .structBattleAnimationLookupEntry Thief, AnimCategorySword, AnimAnyCharacter, GenderMale, $59, $5B, $3D, $40
+        .structBattleAnimationLookupEntry Thief, AnimCategorySword, AnimAnyCharacter, GenderFemale, $59, $5C, $3D, $41
+        .structBattleAnimationLookupEntry Rogue, AnimCategorySword, AnimAnyCharacter, GenderMale, $59, $5D, $3E, $42
+        .structBattleAnimationLookupEntry Rogue, AnimCategorySword, AnimAnyCharacter, GenderFemale, $59, $5E, $3E, $43
+        .structBattleAnimationLookupEntry Ballistician, AnimCategoryBow, AnimAnyCharacter, GenderMale, $5C, $61, $41, $46
+        .structBattleAnimationLookupEntry IronBallistician, AnimCategoryBow, AnimAnyCharacter, GenderMale, $5C, $62, $42, $47
+        .structBattleAnimationLookupEntry KillerBallistician, AnimCategoryBow, AnimAnyCharacter, GenderMale, $5C, $63, $43, $48
+        .structBattleAnimationLookupEntry GreatBallistician, AnimCategoryBow, AnimAnyCharacter, GenderMale, $5C, $64, $44, $49
+        .structBattleAnimationLookupEntry DarkPrince, AnimCategoryMagic, AnimAnyCharacter, GenderMale, $5D, $65, $45, $4A
 
     .endsection BattleAnimationFramesSection
 

@@ -189,3 +189,44 @@
     ANIM_CMD_E8 .segment Arg=0
       .byte $E8, \Arg
     .endsegment
+
+  ; The animation lookup (aBattleAnimationLookup, read by rlUnknown95A2C8).
+
+  ; Weapon categories: the high nibble of an item's byte in the table at
+  ; $99/83B9 (rlUnknown95A1ED). The ranged ones (Javelin; Hand Axe and
+  ; Helswath) count only at wBattleDistance 2 or more, else they become the
+  ; plain lance or axe. A combatant without one gets AnimCategoryAny, which
+  ; matches any record of its class.
+
+    AnimCategorySword       = 0
+    AnimCategoryLance       = 1
+    AnimCategoryAxe         = 2
+    AnimCategoryBow         = 3
+    AnimCategoryRangedSword = 4
+    AnimCategoryRangedLance = 5
+    AnimCategoryRangedAxe   = 6
+    AnimCategoryMagic       = 7
+    AnimCategoryStaff       = 8
+    AnimCategoryAny         = 9
+
+  ; A record's character: AnimAnyCharacter, or the low byte of a character ID.
+
+    AnimAnyCharacter = 0
+
+    ; Gender is the unit's, or the class default from the table at $99/847F
+    ; when the unit's is Genderless (rlUnknown9582F7). The four IDs: the
+    ; frames (aBattleAnimationFrameIndices), the sheet
+    ; (aBattleAnimationSheetIndices), the extra tiles
+    ; (aBattleAnimationExtraIndices) and the palettes
+    ; (aBattleAnimationPaletteIndices); each table is indexed by ID plus 1.
+
+    structBattleAnimationLookupEntry .struct Class, Category, Character, Gender, Frames, Sheet, Extras, Palette
+      Class     .byte \Class
+      Category  .byte \Category
+      Character .byte \Character
+      Gender    .byte \Gender
+      Frames    .byte \Frames
+      Sheet     .byte \Sheet
+      Extras    .byte \Extras
+      Palette   .byte \Palette
+    .endstruct

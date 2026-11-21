@@ -5759,7 +5759,7 @@
 
         _A2DD
         lda $7FE1B6
-        cmp $9788C9,x
+        cmp aBattleAnimationLookup+structBattleAnimationLookupEntry.Class,x
         beq _A2F2
         cpy #$0001
         bcc _A2F0
@@ -5777,7 +5777,7 @@
 
         _A2FA
         lda $7FE1B9
-        cmp $9788CC,x
+        cmp aBattleAnimationLookup+structBattleAnimationLookupEntry.Gender,x
         beq _A30B
         cpy #$0002
         bcs _A378
@@ -5790,11 +5790,11 @@
         ldy #$0002
 
         _A313
-        lda $9788CB,x
+        lda aBattleAnimationLookup+structBattleAnimationLookupEntry.Character,x
         cmp #$00
         beq _A32C
         lda $7FE1B8
-        cmp $9788CB,x
+        cmp aBattleAnimationLookup+structBattleAnimationLookupEntry.Character,x
         beq _A32C
         cpy #$0003
         bcs _A378
@@ -5810,7 +5810,7 @@
         lda $7FE1B7
         cmp #$09
         beq _A355
-        cmp $9788CA,x
+        cmp aBattleAnimationLookup+structBattleAnimationLookupEntry.Category,x
         bne _A344
         bra _A355
 
@@ -5828,39 +5828,39 @@
 
 
         _A355
-        lda $9788CD,x
+        lda aBattleAnimationLookup+structBattleAnimationLookupEntry.Frames,x
         sta $7FE1B6
-        lda $9788CE,x
+        lda aBattleAnimationLookup+structBattleAnimationLookupEntry.Sheet,x
         sta $7FE1B7
-        lda $9788CF,x
+        lda aBattleAnimationLookup+structBattleAnimationLookupEntry.Extras,x
         sta $7FE1B8
-        lda $9788D0,x
+        lda aBattleAnimationLookup+structBattleAnimationLookupEntry.Palette,x
         sta $7FE1B9
         clc
         bra _A3BC
 
 
         _A378
-        lda aBattleAnimationFrameTables+278,x
+        lda aBattleAnimationLookup-size(structBattleAnimationLookupEntry)+structBattleAnimationLookupEntry.Frames,x
         sta $7FE1B6
-        lda aBattleAnimationFrameTables+279,x
+        lda aBattleAnimationLookup-size(structBattleAnimationLookupEntry)+structBattleAnimationLookupEntry.Sheet,x
         sta $7FE1B7
-        lda aBattleAnimationFrameTables+280,x
+        lda aBattleAnimationLookup-size(structBattleAnimationLookupEntry)+structBattleAnimationLookupEntry.Extras,x
         sta $7FE1B8
-        lda aBattleAnimationFrameTables+281,x
+        lda aBattleAnimationLookup-size(structBattleAnimationLookupEntry)+structBattleAnimationLookupEntry.Palette,x
         sta $7FE1B9
         sec
         bra _A3BC
 
 
         _A39B
-        lda $9788CD
+        lda aBattleAnimationLookup+structBattleAnimationLookupEntry.Frames
         sta $7FE1B6
-        lda $9788CE
+        lda aBattleAnimationLookup+structBattleAnimationLookupEntry.Sheet
         sta $7FE1B7
-        lda $9788CF
+        lda aBattleAnimationLookup+structBattleAnimationLookupEntry.Extras
         sta $7FE1B8
-        lda $9788D0
+        lda aBattleAnimationLookup+structBattleAnimationLookupEntry.Palette
         sta $7FE1B9
         sec
 
