@@ -2,9 +2,10 @@
 # end (tools/stream_layout.py), found by tools/find_streams.py. NAME.comp is
 # the stream as the ROM has it; gcUnknown... are not identified yet (graphics
 # or tilemaps).
-start $C00A2B
+start $C00000
 end $C03C05
 
+gcUnknownC00000 gcUnknownC00000 ; 17664 bytes decompressed
 gcUnknownC00A2B gcUnknownC00A2B ; 6144 bytes decompressed
 gcUnknownC0197B gcUnknownC0197B ; 2048 bytes decompressed
 gcUnknownC01FBA gcUnknownC01FBA ; 1024 bytes decompressed

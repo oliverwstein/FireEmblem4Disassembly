@@ -67,6 +67,8 @@ def resolve(expr, labels):
         return (labels[m.group(1)] >> 16) << 8
     if (m := re.fullmatch(r'<>(\w+)', expr)) and m.group(1) in labels:
         return labels[m.group(1)] & 0xFFFF
+    if (m := re.fullmatch(r'`(\w+)', expr)) and m.group(1) in labels:
+        return labels[m.group(1)] >> 16
     return None
 
 
@@ -82,7 +84,25 @@ def seeds(rom, labels, tables):
                 if v:
                     out.add(v)
             m = re.match(r'\s*jsl (\w+)', line)
-            if not m or m.group(1) not in CALLS:
+            if not m:
+                continue
+            if m.group(1) == 'rlDecompressor':
+                hi = lo = None
+                for j in range(i - 1, max(0, i - 14), -1):
+                    if re.match(r'\s*(jsl|jml|rtl|rts)\b', lines[j]):
+                        break
+                    ms_lo = re.match(r'\s*stx (?:DecompressionVariables(?:\.lSource)?|\$C8)\b', lines[j].split(';')[0])
+                    ml_lo = re.match(r'\s*ldx #(.+)$', lines[j - 1].split(';')[0].rstrip()) if ms_lo else None
+                    if ml_lo and lo is None:
+                        lo = resolve(ml_lo.group(1), labels)
+                    ms_hi = re.match(r'\s*sta (?:DecompressionVariables\.lSource\+2|\$CA)\b', lines[j].split(';')[0])
+                    ml_hi = re.match(r'\s*lda #(.+)$', lines[j - 1].split(';')[0].rstrip()) if ms_hi else None
+                    if ml_hi and hi is None:
+                        hi = resolve(ml_hi.group(1), labels)
+                if hi is not None and lo is not None:
+                    out.add((hi << 16) | lo)
+                continue
+            if m.group(1) not in CALLS:
                 continue
             reg, hi, lo = CALLS[m.group(1)], None, None
             for j in range(i - 1, max(0, i - 14), -1):
@@ -110,6 +130,8 @@ def seeds(rom, labels, tables):
             sys.exit(f'--table {table}: found in {len(hits)} files')
         text = open(hits[0], encoding='utf-8').read()
         body = text[re.search(rf'^\s*{table}\b', text, re.M).end():]
+        if end_m := re.search(r'\n\s*\.endsection\b', body):
+            body = body[:end_m.start()]
         for m in re.finditer(r'^\s*\.long\s+([^\n;]+)', body, re.M):
             for v in m.group(1).split(','):
                 v = v.strip()
@@ -263,6 +285,26 @@ def name_references():
                         pairs += 1
                         changed = True
                     break
+        for i, line in enumerate(lines):
+            if not re.match(r'\s*jsl rlDecompressor\b', line):
+                continue
+            hi_i = lo_i = hi_val = lo_val = None
+            for j in range(i - 1, max(0, i - 14), -1):
+                if re.match(r'\s*(jsl|jml|rtl|rts)\b', lines[j]):
+                    break
+                if re.match(r'\s*stx (?:DecompressionVariables(?:\.lSource)?|\$C8)\b', lines[j].split(';')[0]):
+                    if (ml := re.match(r'(\s*)ldx #\$([0-9A-F]{4})\s*$', lines[j - 1])) and lo_i is None:
+                        lo_i, lo_val = j - 1, int(ml.group(2), 16)
+                if re.match(r'\s*sta (?:DecompressionVariables\.lSource\+2|\$CA)\b', lines[j].split(';')[0]):
+                    if (mh := re.match(r'(\s*)lda #\$([0-9A-F]{2})\s*$', lines[j - 1])) and hi_i is None:
+                        hi_i, hi_val = j - 1, int(mh.group(2), 16)
+            if hi_i is not None and lo_i is not None:
+                full = hi_val << 16 | lo_val
+                if full in streams:
+                    lines[hi_i] = re.sub(r'\$\w+', f'`{streams[full]}', lines[hi_i])
+                    lines[lo_i] = re.sub(r'\$\w+', f'<>{streams[full]}', lines[lo_i])
+                    pairs += 1
+                    changed = True
         if changed:
             open(f, 'w', encoding='utf-8').write('\n'.join(lines))
     return n, pairs
@@ -314,6 +356,15 @@ def write(rom, regions, by_addr, carved):
     if unchanged:
         print(f'Unchanged, left as they are: {", ".join(sorted(os.path.relpath(p, ROOT) for p in unchanged.values()))}')
     old_dirs = {os.path.dirname(p) for p in carved.values()} - {os.path.dirname(p) for p in unchanged.values()}
+    preserved = {}
+    PRESERVE_EXTS = ('.4bpp.png', '.4bpp.comp', '.2bpp.png', '.2bpp.comp', '.bin', '.bin.comp')
+    for d in old_dirs:
+        for fname in os.listdir(d):
+            for ext in PRESERVE_EXTS:
+                if fname.endswith(ext):
+                    lbl = fname[:-len(ext)]
+                    preserved.setdefault(lbl, []).append((ext, open(os.path.join(d, fname), 'rb').read()))
+                    break
     for d in old_dirs:
         shutil.rmtree(d)
     build = open(os.path.join(ROOT, 'build.asm'), encoding='utf-8').read()
@@ -335,7 +386,11 @@ def write(rom, regions, by_addr, carved):
             if label.startswith('aUnknown') and label != f'aUnknown{a:06X}':
                 label = f'gcUnknown{a:06X}'
             data, _ = decompress(rom, a)
-            open(os.path.join(folder, label + '.comp'), 'wb').write(stream_bytes(rom, a, end))
+            if label in preserved and any(ext.endswith('.comp') for ext, _ in preserved[label]):
+                for ext, raw_bytes in preserved[label]:
+                    open(os.path.join(folder, label + ext), 'wb').write(raw_bytes)
+            else:
+                open(os.path.join(folder, label + '.comp'), 'wb').write(stream_bytes(rom, a, end))
             lines += notes.get(label, [])
             lines.append(f'{label} {label} ; {len(data)} bytes decompressed'
                          + ('' if kind == 'seed' else f', {kind}'))
