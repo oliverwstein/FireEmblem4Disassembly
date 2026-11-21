@@ -7,22 +7,22 @@ first byte), `inside` (built code points into it, not at its start), `log` (read
 `fe4.cdl` only), `none` (no evidence). Addresses are given where the game reads them:
 upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 
-1,207,630 bytes in 887 runs: 256 runs of padding (35,960 bytes) and 631 pieces (1,171,670 bytes).
+1,205,229 bytes in 882 runs: 256 runs of padding (35,960 bytes) and 626 pieces (1,169,269 bytes).
 
 | Class | Pieces | Bytes | Read in the log |
 |---|---|---|---|
 | `code` | 0 | 0 | 0 |
-| `table` | 136 | 656,474 | 230,598 |
-| `inside` | 40 | 104,700 | 49,786 |
+| `table` | 135 | 656,397 | 230,598 |
+| `inside` | 41 | 105,152 | 49,786 |
 | `log` | 113 | 341,436 | 178,414 |
-| `none` | 342 | 69,060 | 0 |
+| `none` | 337 | 66,284 | 0 |
 
 ## `code` (0)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 
-## `table` (136)
+## `table` (135)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
@@ -33,12 +33,11 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $80/D1AE-$80/D2C5 | 280 | 20 (+0-+E7) | `rlItemWindowGetItemData` / `rsSkillWindowOpen` | **at start** named `include/Undisassembled.h:23`: `aUnknown80D1AE, read by rlItemWindowGetItemData` |
 | $80/D662-$80/D817 | 438 | 438 (+0-+1B5) | `rsSkillWindowDrawSkillList` / `rsSkillWindowGetUnits` | **at start** halves `engine/menus/skill_window.asm:334`: `long pointer in lR18`; +18 halves `engine/menus/skill_window.asm:340`: `long pointer in lR18`; +30 halves `engine/menus/skill_window.asm:346`: `long pointer in lR18`; +48 halves `engine/menus/skill_window.asm:352`: `long pointer in lR18`; and 14 more |
 | $80/D8E8-$80/D90B | 36 | 15 (+0-+1A) | `rsSkillWindowGetSkillHolders` / `aDataWindowMenuTilemapEntry` | +9 halves `engine/menus/skill_window.asm:328`: `long pointer in lMapMenuTilemapRAMEntryPointer`; **at start** halves `engine/menus/skill_window.asm:442`: `long pointer in lMapMenuTilemapRAMEntryPointer`; **at start** halves `engine/menus/skill_window.asm:1017`: `long pointer in lMapMenuTilemapRAMEntryPointer`; +12 halves `engine/menus/skill_window.asm:1059`: `long pointer in lMapMenuTilemapRAMEntryPointer` |
-| $80/E586-$80/E597 | 18 | 10 (+0-+11) | `rsUnknown80E54D` / `rsUnknown80E598` | **at start** halves `engine/unsorted/bank80.asm:7238`: `long pointer in lMapMenuTilemapRAMEntryPointer`; +9 halves `engine/unsorted/bank89.asm:8012`: `long pointer in lMapMenuTilemapRAMEntryPointer`; **at start** halves `engine/unsorted/bank89.asm:8086`: `long pointer in lMapMenuTilemapRAMEntryPointer` |
-| $80/E84E-$80/E8EF | 162 | 142 (+0-+8D) | `rsUnknown80E746` / `rsUnknown80E8F0` | **at start** halves `engine/unsorted/bank80.asm:7270`: `long pointer in lR18`; +10 halves `engine/unsorted/bank80.asm:7276`: `long pointer in lR18`; +22 halves `engine/unsorted/bank80.asm:7282`: `long pointer in lR18`; +36 halves `engine/unsorted/bank80.asm:7288`: `long pointer in lR18`; and 5 more |
-| $80/E96E-$80/E978 | 11 | 11 (+0-+A) | `rsUnknown80E951` / `rlUnknown80E979` | **at start** halves `engine/unsorted/bank80.asm:7414`: `long pointer in lR44` |
+| $80/E586-$80/E597 | 18 | 10 (+0-+11) | `rsUnknown80E54D` / `rsUnknown80E598` | **at start** halves `engine/unsorted/bank80.asm:7277`: `long pointer in lMapMenuTilemapRAMEntryPointer`; +9 halves `engine/unsorted/bank89.asm:8012`: `long pointer in lMapMenuTilemapRAMEntryPointer`; **at start** halves `engine/unsorted/bank89.asm:8086`: `long pointer in lMapMenuTilemapRAMEntryPointer` |
+| $80/E84E-$80/E8EF | 162 | 142 (+0-+8D) | `rsUnknown80E746` / `rsUnknown80E8F0` | **at start** halves `engine/unsorted/bank80.asm:7309`: `long pointer in lR18`; +10 halves `engine/unsorted/bank80.asm:7315`: `long pointer in lR18`; +22 halves `engine/unsorted/bank80.asm:7321`: `long pointer in lR18`; +36 halves `engine/unsorted/bank80.asm:7327`: `long pointer in lR18`; and 5 more |
+| $80/E96E-$80/E978 | 11 | 11 (+0-+A) | `rsUnknown80E951` / `rlUnknown80E979` | **at start** halves `engine/unsorted/bank80.asm:7453`: `long pointer in lR44` |
 | $80/EA80-$80/EE36 | 951 | 183 (+0-+B6) | `aUnknown80E9F3` / `rlUnknown80EE37` | **at start** named `include/Undisassembled.h:31`: `aUnknown80EA80, read by rlUnknown80E9B2` |
-| $80/F1D5-$80/F221 | 77 | 0 | `rlUnknown80F1A7` / `rsUnknown80F222` | **at start** number `engine/events/event_engine.asm:76`: `lda #<>$80F1D5` |
-| $80/F36C-$80/F376 | 11 | 11 (+0-+A) | `rsUnknown80F340` / `rlUnknown80F377` | **at start** halves `engine/unsorted/bank80.asm:8204`: `long pointer in lR44` |
+| $80/F36C-$80/F376 | 11 | 11 (+0-+A) | `rsUnknown80F340` / `rlUnknown80F377` | **at start** halves `engine/unsorted/bank80.asm:8293`: `long pointer in lR44` |
 | $81/B42D-$81/B43E | 18 | 16 (+0-+11) | `rlUnknown81B3A6` / `rlUnknown81B43F` | **at start** halves `engine/unsorted/bank81.asm:2071`: `long pointer in lMapMenuTilemapRAMEntryPointer`; +9 halves `engine/unsorted/bank81.asm:2088`: `long pointer in lMapMenuTilemapRAMEntryPointer` |
 | $81/B522-$81/B529 | 8 | 8 (+0-+7) | `rlUnknown81B503` / `rlUnknown81B52A` | **at start** halves `engine/events/event_scripts.asm:4786`: `long pointer in lR44` |
 | $85/8647-$85/864A | 4 | 4 (+0-+3) | `rsUnknown85860E` / `rlUnknown85864B` | **at start** halves `engine/unsorted/bank85.asm:526`: `long pointer in lR18`; **at start** halves `engine/unsorted/bank85.asm:537`: `long pointer in lR18` |
@@ -73,15 +72,15 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $85/D96D-$85/D970 | 4 | 4 (+0-+3) | `rlProcUnknown85D8AACycle` / `rlUnknown85D971` | **at start** halves `engine/unsorted/bank85.asm:13458`: `long pointer in lR18` |
 | $87/9481-$87/9D76 | 2,294 | 570 (+6-+74F) | `aUnknown879471` / `aUnknown879D77` | **at start** named `include/Undisassembled.h:9`: `aUnknown879481, read by rlDrawMenuTextLine`; 78% $00/$FF |
 | $87/C5BF-$87/C645 | 135 | 0 | `rlUnknown87C5AA` / `rlUnknown87C646` | **at start** halves `engine/unsorted/bank87.asm:5905`: `long pointer in lR19` |
-| $87/C784-$87/C7B3 | 48 | 0 | `rlUnknown87C712` / `rlUnknown87C7B4` | **at start** halves `engine/unsorted/bank87.asm:6078`: `long pointer in lR19`; +27 halves `engine/unsorted/bank87.asm:6095`: `long pointer in lMapMenuTilemapRAMEntryPointer` |
-| $87/C866-$87/C879 | 20 | 0 | `rsUnknown87C821` / `rsUnknown87C87A` | **at start** halves `engine/unsorted/bank87.asm:6191`: `long pointer in lR18`; +5 halves `engine/unsorted/bank87.asm:6197`: `long pointer in lR18`; +A halves `engine/unsorted/bank87.asm:6203`: `long pointer in lR18`; +F halves `engine/unsorted/bank87.asm:6209`: `long pointer in lR18` |
-| $87/C8E1-$87/CBC4 | 740 | 0 | `rsUnknown87C87A` / `rlUnknown87CBC5` | **at start** halves `engine/unsorted/bank87.asm:6236`: `long pointer in lR18`; +A halves `engine/unsorted/bank87.asm:6242`: `long pointer in lR18`; +14 halves `engine/unsorted/bank87.asm:6248`: `long pointer in lR18`; +1E halves `engine/unsorted/bank87.asm:6254`: `long pointer in lR18`; and 2 more |
+| $87/C784-$87/C7B3 | 48 | 0 | `rlUnknown87C712` / `rlUnknown87C7B4` | **at start** halves `engine/unsorted/bank87.asm:6078`: `long pointer in lR19`; +27 halves `engine/unsorted/bank87.asm:6095`: `long pointer in lMapMenuTilemapRAMEntryPointer`; +27 halves `engine/unsorted/bank87.asm:6181`: `long pointer in lMapMenuTilemapRAMEntryPointer` |
+| $87/C866-$87/C879 | 20 | 0 | `rsUnknown87C821` / `rsUnknown87C87A` | **at start** halves `engine/unsorted/bank87.asm:6230`: `long pointer in lR18`; +5 halves `engine/unsorted/bank87.asm:6236`: `long pointer in lR18`; +A halves `engine/unsorted/bank87.asm:6242`: `long pointer in lR18`; +F halves `engine/unsorted/bank87.asm:6248`: `long pointer in lR18` |
+| $87/C8E1-$87/CBC4 | 740 | 0 | `rsUnknown87C87A` / `rlUnknown87CBC5` | **at start** halves `engine/unsorted/bank87.asm:6275`: `long pointer in lR18`; +A halves `engine/unsorted/bank87.asm:6281`: `long pointer in lR18`; +14 halves `engine/unsorted/bank87.asm:6287`: `long pointer in lR18`; +1E halves `engine/unsorted/bank87.asm:6293`: `long pointer in lR18`; and 2 more |
 | $88/93DB-$88/93FF | 37 | 37 (+0-+24) | `rlProcUnknown889396Init` / `rlProcUnknown889396Cycle` | **at start** halves `engine/unsorted/bank88.asm:2676`: `long pointer in lR19` |
 | $88/94F2-$88/9503 | 18 | 8 (+9-+11) | `rlUnknown88949F` / `aProcUnknown889396Code` | **at start** halves `engine/unsorted/bank88.asm:2862`: `long pointer in lMapMenuTilemapRAMEntryPointer`; +9 halves `engine/unsorted/bank88.asm:2870`: `long pointer in lMapMenuTilemapRAMEntryPointer` |
 | $88/958F-$88/96AE | 288 | 212 (+2-+FF) | `rsUnknown889506` / `rsUnknown8896AF` | **at start** named `include/Undisassembled.h:32`: `aUnknown88958F, read by rsUnknown889506` |
 | $88/99A4-$88/99B7 | 20 | 0 | `rsUnknown88986C` / `rlUnknown8899B8` | **at start** halves `engine/unsorted/bank88.asm:3376`: `long pointer in lRoutineVariable` |
 | $88/9D92-$88/9DA5 | 20 | 20 (+0-+13) | `rlUnknown889D20` / `rlUnknown889DA6` | **at start** halves `engine/unsorted/bank88.asm:4045`: `long pointer in lRoutineVariable` |
-| $88/E2DE-$88/E2E8 | 11 | 0 | `aProcUnknown88E26ACode` / `rlUnknown88E2E9` | **at start** halves `engine/unsorted/bank88.asm:12518`: `long pointer in lR44` |
+| $88/E2DE-$88/E2E8 | 11 | 0 | `aProcUnknown88E26ACode` / `rlUnknown88E2E9` | **at start** halves `engine/unsorted/bank88.asm:12654`: `long pointer in lR44` |
 | $89/8973-$89/89AC | 58 | 40 (+0-+27) | `rlUnknown89876D` / `rsUnknown8989AD` | **at start** halves `engine/unsorted/bank89.asm:1197`: `long pointer in lR18`; +C halves `engine/unsorted/bank89.asm:1203`: `long pointer in lR18`; +16 halves `engine/unsorted/bank89.asm:1209`: `long pointer in lR18`; +20 halves `engine/unsorted/bank89.asm:1215`: `long pointer in lR18`; and 1 more |
 | $89/9140-$89/914A | 11 | 11 (+0-+A) | `rlClearTilemapRect` / `rlUnknown89914B` | **at start** halves `engine/unsorted/bank80.asm:6169`: `long pointer in lR44` |
 | $89/91B9-$89/91C3 | 11 | 11 (+0-+A) | `rlUnknown899185` / `rlUnknown8991C4` | **at start** halves `engine/unsorted/bank80.asm:6179`: `long pointer in lR44` |
@@ -142,7 +141,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $98/AD65-$98/AFFC | 664 | 58 (+1-+3A) | `aUnknown98AD04` / `aUnknown98AFFD` | **at start** named `include/Undisassembled.h:56`: `aUnknown98AD65, read by rlUnknown95CAD5`; 58% $00/$FF |
 | $98/B231-$98/B387 | 343 | 0 | `aUnknown98B173` / `aUnknown98B388` | **at start** named `include/Undisassembled.h:57`: `aUnknown98B231, read by rsUnknown96F7EB` |
 | $99/8944-$99/8D83 | 1,088 | 67 (+0-+C5) | `aUnknown99892A` / `aBattleBannerTable` | **at start** named `include/Undisassembled.h:16`: `aUnknown998944, read by rsUnknown959B84, rsUnknown959BC1`; +1CA named `include/Undisassembled.h:59`: `aUnknown998B0E, read by rsUnknown95C0F3` |
-| $DA/65B2-$9A/BA29 | 21,624 | 6256 (+0-+483B) | `aUnknownDA65AA` / `aBattleAnimationFramesKnightLordSword` | +144E number `engine/unsorted/bank8A.asm:10515`: `.structDMAToVRAM $DA7A00, $0400, $80, $C400`; +24E number `engine/unsorted/bank8A.asm:10813`: `.structDMAToVRAM $DA6800, $0240, $80, $E800`; +74E number `engine/unsorted/bank8A.asm:10824`: `.structDMAToVRAM $DA6D00, $0240, $80, $ED00`; +48E number `engine/unsorted/bank8A.asm:10847`: `.structDMAToVRAM $DA6A40, $0240, $80, $E800`; and 4 more |
+| $DA/65B2-$9A/BA29 | 21,624 | 6256 (+0-+483B) | `aUnknownDA65AA` / `aBattleAnimationFramesKnightLordSword` | +144E number `engine/unsorted/bank8A.asm:10515`: `.structDMAToVRAM $DA7A00, $0400, $80, $C400`; +24E number `engine/unsorted/bank8A.asm:10813`: `.structDMAToVRAM $DA6800, $0240, $80, $E800`; +74E number `engine/unsorted/bank8A.asm:10824`: `.structDMAToVRAM $DA6D00, $0240, $80, $ED00`; +48E number `engine/unsorted/bank8A.asm:10847`: `.structDMAToVRAM $DA6A40, $0240, $80, $E800`; and 6 more |
 | $9B/DF09-$9B/DFA9 | 161 | 44 (+0-+2B) | `rlUnknown9BDE69` / `rlUnknown9BDFAA` | **at start** halves `engine/unsorted/bank9B.asm:354`: `long pointer in lR18` |
 | $9B/F69D-$9B/F6B0 | 20 | 20 (+0-+13) | `rlUnknown9BF65C` / `rlUnknown9BF6B1` | **at start** halves `engine/unsorted/bank9B.asm:2324`: `long pointer in lR18` |
 | $9B/F715-$9B/F725 | 17 | 17 (+0-+10) | `rlUnknown9BF6D6` / `rlUnknown9BF726` | **at start** halves `engine/unsorted/bank9B.asm:2404`: `long pointer in lR18` |
@@ -161,32 +160,33 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $9F/8C3A-$9F/8E6B | 562 | 264 (+0-+1FD) | `rlUnknown9F8C05` / `rlSavePaletteBufferColorsToRAM` | **at start** named `include/Undisassembled.h:62`: `aUnknown9F8C3A, read by rlUnknown9F8B7A, rlUnknown9F8C05` |
 | $9F/936C-$9F/9377 | 12 | 6 (+0-+5) | `rlUnknown9F9341` / `rlUnknown9F9378` | **at start** halves `engine/unsorted/bank9F.asm:1999`: `long pointer in lR44` |
 | $9F/FACC-$9F/FFFF | 1,332 | 0 | `rlUnknown9FFAC0` / `aBattleBackgroundBridgePalette` | **at start** number `engine/unsorted/bank80.asm:3377`: `.long $9FFACC`; **at start** number `engine/unsorted/bank80.asm:3378`: `.long $9FFACC`; **at start** number `engine/unsorted/bank80.asm:3379`: `.long $9FFACC`; **at start** number `engine/unsorted/bank80.asm:3380`: `.long $9FFACC`; and 1 more; 93% $00/$FF |
-| $F7/7C12-$BF/FFFF | 558,062 | 176364 (+0-+867BC) | `aUnknownF77C0C` / `` | +783EE number `engine/events/event_movement.asm:449`: `lda aMainDataOffsets & $FF0000,x`; +783EE number `engine/units/unit_info.asm:392`: `lda aMainDataOffsets & $FF0000,x`; **at start** named `include/Undisassembled.h:21`: `aUnknownF77C12, read by rsUnknown8093C6` |
+| $F7/7C12-$BF/FFFF | 558,062 | 176364 (+0-+867BC) | `aUnknownF77C0C` / `` | **at start** named `include/Undisassembled.h:21`: `aUnknownF77C12, read by rsUnknown8093C6` |
 
-## `inside` (40)
+## `inside` (41)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 | $80/C716-$80/C722 | 13 | 13 (+0-+C) | `rlUnitWindowBG3VOFSHDMACycle` / `rlUnitWindowBG1VOFSHDMAInit` | +2 halves `engine/menus/unit_window.asm:404`: `long pointer in lR44` |
 | $80/C760-$80/C76C | 13 | 13 (+0-+C) | `rlUnitWindowBG1VOFSHDMACycle` / `rlUnitWindowCGADSUBHDMAInit` | +2 halves `engine/menus/unit_window.asm:409`: `long pointer in lR44` |
 | $80/C88A-$80/C896 | 13 | 13 (+0-+C) | `rlUnitWindowCGADSUBHDMACycle` / `rlUnitWindowBG2VOFSHDMAInit` | +2 halves `engine/menus/unit_window.asm:414`: `long pointer in lR44` |
-| $80/F37D-$80/F389 | 13 | 13 (+0-+C) | `rlUnknown80F37C` / `rlUnknown80F38A` | +2 halves `engine/unsorted/bank80.asm:8209`: `long pointer in lR44` |
+| $80/F37D-$80/F389 | 13 | 13 (+0-+C) | `rlUnknown80F37C` / `rlUnknown80F38A` | +2 halves `engine/unsorted/bank80.asm:8298`: `long pointer in lR44` |
 | $82/C26D-$82/E027 | 7,611 | 4 (+1D93-+1D96) | `rsHDMACodeSetTableBank` / `rsUnknown82E028` | +1D93 halves `engine/unsorted/bank80.asm:3714`: `long pointer in lR44`; 99% $00/$FF |
 | $85/8D62-$85/8D82 | 33 | 33 (+0-+20) | `rsUnknown858D18` / `rlUnknown858D83` | +15 halves `engine/unsorted/bank85.asm:2221`: `long pointer in lR44`; +15 halves `engine/unsorted/bank85.asm:2285`: `long pointer in lR44` |
 | $85/AF0D-$85/AF1A | 14 | 14 (+0-+D) | `rlUnknown85AF0C` / `rlUnknown85AF1B` | +2 halves `engine/unsorted/bank85.asm:6227`: `long pointer in lR44` |
 | $85/B6EB-$85/B724 | 58 | 0 | `procUnknown85B6E3` / `rlProcUnknown85B6E3Init` | +19 halves `engine/unsorted/bank85.asm:7489`: `long pointer in lR44` |
 | $85/BA2C-$85/BA40 | 21 | 21 (+0-+14) | `rlUnknown85B9F2` / `procUnknown85BA41` | +9 number `engine/unsorted/bank85.asm:8307`: `.long $85BA35` |
 | $85/C33D-$85/C346 | 10 | 10 (+0-+9) | `rlUnknown85C31A` / `rlUnknown85C347` | +2 number `engine/map/windows.asm:32`: `lda #(`$85C33F)<<8`; +2 number `engine/map/windows.asm:34`: `lda #<>$85C33F`; +2 number `engine/map/windows.asm:62`: `lda #(`$85C33F)<<8`; +2 number `engine/map/windows.asm:64`: `lda #<>$85C33F` |
-| $88/E9E4-$88/EEB0 | 1,229 | 110 (+458-+4C5) | `rlUnknown88E9BE` / `rlUnknown88EEB1` | +250 halves `engine/unsorted/bank88.asm:12695`: `long pointer in lR18`; +26D halves `engine/unsorted/bank88.asm:12724`: `long pointer in lR18`; +288 halves `engine/unsorted/bank88.asm:12753`: `long pointer in lR18`; +2A6 halves `engine/unsorted/bank88.asm:12782`: `long pointer in lR18`; and 34 more |
+| $88/E9E4-$88/EEB0 | 1,229 | 110 (+458-+4C5) | `rlUnknown88E9BE` / `rlUnknown88EEB1` | +1 halves `engine/unsorted/bank88.asm:12728`: `long pointer in lR18`; +250 halves `engine/unsorted/bank88.asm:13043`: `long pointer in lR18`; +26D halves `engine/unsorted/bank88.asm:13072`: `long pointer in lR18`; +288 halves `engine/unsorted/bank88.asm:13101`: `long pointer in lR18`; and 35 more |
 | $89/9178-$89/9184 | 13 | 13 (+0-+C) | `rlUnknown89914B` / `rlUnknown899185` | +2 halves `engine/unsorted/bank80.asm:6174`: `long pointer in lR44` |
 | $89/9B8F-$89/9BA4 | 22 | 10 (+4-+D) | `rlUnknown8998E1` / `rlUnknown899BA5` | +4 halves `engine/unsorted/bank89.asm:3495`: `long pointer in lR18`; +4 halves `engine/unsorted/bank89.asm:3508`: `long pointer in lRoutineVariable`; +4 halves `engine/unsorted/bank89.asm:3531`: `long pointer in lRoutineVariable`; +4 halves `engine/unsorted/bank89.asm:3583`: `long pointer in lRoutineVariable`; and 3 more |
 | $89/A72E-$89/ABF8 | 1,227 | 145 (+0-+3DC) | `rsUnknown89A68C` / `aSkillDescriptionPointers` | +3E named `include/Undisassembled.h:10`: `aUnknown89A76C, read by rlUnknown8A8496` |
 | $8A/9899-$8A/98AB | 19 | 18 (+1-+12) | `rlUnknown8A9858` / `aUnknown8A98AC` | +1 halves `engine/unsorted/bank8A.asm:3729`: `long pointer in lR18` |
 | $8A/DB9F-$8A/DBBC | 30 | 14 (+10-+1D) | `rlDisplayDialogueAPressArrows` / `rsUnknown8ADBBD` | +10 number `engine/dialogue/dialogue_box.asm:980`: `lda #`$8ADBAF`; +10 number `engine/dialogue/dialogue_box.asm:985`: `ldy #<>$8ADBAF`; +17 number `engine/dialogue/dialogue_box.asm:990`: `lda #`$8ADBB6`; +17 number `engine/dialogue/dialogue_box.asm:994`: `ldy #<>$8ADBB6`; 66% $00/$FF |
+| $8C/EAE0-$8C/ECFF | 544 | 0 | `aChapterMapFinalPalette` / `rlUnknown8CED00` | +E0 number `engine/unsorted/bank8D.asm:1533`: `lda $8CEBC0,x`; +22 number `engine/unsorted/bank8D.asm:1541`: `lda $8CEB02,x`; +E0 number `engine/unsorted/bank8D.asm:1657`: `lda $8CEBC0,x`; +22 number `engine/unsorted/bank8D.asm:1665`: `lda $8CEB02,x` |
 | $8D/A449-$8D/A4B2 | 106 | 0 | `rlUnknown8DA3DE` / `rlUnknown8DA4B3` | +5F halves `engine/unsorted/bank8D.asm:197`: `long pointer in lR44` |
 | $8D/A502-$8D/A50E | 13 | 0 | `rlUnknown8DA4B3` / `rlUnknown8DA50F` | +2 halves `engine/unsorted/bank8D.asm:192`: `long pointer in lR44` |
-| $8D/AD9E-$8D/AE84 | 231 | 0 | `rlUnknown8DAD73` / `rlUnknown8DAE85` | +DC halves `engine/unsorted/bank80.asm:7966`: `long pointer in lR44` |
-| $8D/C964-$8D/CF87 | 1,572 | 0 | `rlASMCUnknown8DC955` / `aUnknown8DCF88` | +42 halves `engine/unsorted/bank80.asm:7752`: `long pointer in lR18`; +9B halves `engine/unsorted/bank80.asm:7958`: `long pointer in lR18`; +2D9 halves `engine/unsorted/bank8D.asm:2236`: `long pointer in lR18`; +2D5 halves `engine/unsorted/bank8D.asm:2245`: `long pointer in lR18`; and 6 more |
+| $8D/ADFA-$8D/AE84 | 139 | 0 | `rsUnknown8DAD9E` / `rlUnknown8DAE85` | +80 halves `engine/unsorted/bank80.asm:8005`: `long pointer in lR44` |
+| $8D/C964-$8D/CF87 | 1,572 | 0 | `rlASMCUnknown8DC955` / `aUnknown8DCF88` | +42 halves `engine/unsorted/bank80.asm:7791`: `long pointer in lR18`; +9B halves `engine/unsorted/bank80.asm:7997`: `long pointer in lR18`; +42 halves `engine/unsorted/bank8D.asm:1871`: `long pointer in lR18`; +2D9 halves `engine/unsorted/bank8D.asm:2825`: `long pointer in lR18`; and 7 more |
 | $91/E09E-$91/E274 | 471 | 2 (+0-+1) | `rlUnknown91E09D` / `rsUnknown91E275` | +E7 halves `engine/menus/revive_screen.asm:293`: `long pointer in lR44` |
 | $95/E6AC-$95/E7B2 | 263 | 50 (+0-+EE) | `rlUnknown95E6AB` / `rlUnknown95E7B3` | +62 halves `engine/battle_scene/script.asm:467`: `long pointer in lR44`; +3E halves `engine/unsorted/bank95.asm:5968`: `long pointer in lR44`; +26 halves `engine/unsorted/bank95.asm:5988`: `long pointer in lR44`; +A8 halves `engine/unsorted/bank96.asm:4808`: `long pointer in lR44`; and 6 more |
 | $D6/7F1B-$96/8007 | 237 | 8 (+E5-+EC) | `gcUnknownD67D7D` / `rlUnknown968008` | +E5 halves `engine/unsorted/bank80.asm:6382`: `long pointer in lR44`; 97% $00/$FF |
@@ -202,11 +202,11 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $99/8DD8-$99/8F01 | 298 | 184 (+20-+129) | `aBattleBannerTable` / `aUnknown998F02` | +20 named `include/Undisassembled.h:60`: `aUnknown998DF8, read by rlUnknown95A167` |
 | $99/F6C1-$99/FFE6 | 2,342 | 1022 (+3CC-+925) | `aBattleAnimationSequencesJuniorLordSword` / `aUnknown99FFE7` | +757 halves `engine/unsorted/bank95.asm:18480`: `long pointer in lR18`; +75F halves `engine/unsorted/bank95.asm:18501`: `long pointer in lR18`; +764 halves `engine/unsorted/bank95.asm:18508`: `long pointer in lR18`; +769 halves `engine/unsorted/bank95.asm:18515`: `long pointer in lR18`; and 2 more |
 | $DD/6655-$DD/7EAD | 6,233 | 6014 (+DB-+1858) | `gcUnknownDD629E` / `aUnknownDD7EAE` | +C5B number `engine/menus/data_window.asm:128`: `.structDMAToVRAM $DD72B0, $0C00, $80, $6000`; +C5B number `engine/menus/item_window.asm:126`: `.structDMAToVRAM $DD72B0, $0C00, $80, $6000`; +C5B number `engine/menus/revive_screen.asm:152`: `.structDMAToVRAM $DD72B0, $0C00, $80, $7200`; +C5B number `engine/menus/skill_window.asm:126`: `.structDMAToVRAM $DD72B0, $0C00, $80, $6000`; and 9 more |
-| $9E/D900-$9E/DAE6 | 487 | 0 | `rlUnknown9ED8B6` / `rlUnknown9EDAE7` | +1E0 halves `engine/unsorted/bank9E.asm:11574`: `long pointer in lR44` |
-| $9E/DE89-$9E/DF7E | 246 | 0 | `rlUnknown9EDE60` / `rlUnknown9EDF7F` | +EF halves `engine/unsorted/bank9E.asm:12089`: `long pointer in lR44` |
+| $9E/D900-$9E/DAE6 | 487 | 0 | `rlUnknown9ED8B6` / `rlUnknown9EDAE7` | +1E0 halves `engine/unsorted/bank9E.asm:11606`: `long pointer in lR44` |
+| $9E/DE89-$9E/DF7E | 246 | 0 | `rlUnknown9EDE60` / `rlUnknown9EDF7F` | +EF halves `engine/unsorted/bank9E.asm:12121`: `long pointer in lR44` |
 | $E0/205C-$E0/2666 | 1,547 | 448 (+23D-+60A) | `aBattleAnimationPaletteDarkPrince` / `aUnknownE02667` | +23D named `include/Undisassembled.h:67`: `aUnknownE02299, read by rlUnknown9BE1C0`; +355 named `include/Undisassembled.h:68`: `aUnknownE023B1, read by rlUnknown9BE1C0`; +487 named `include/Undisassembled.h:69`: `aUnknownE024E3, read by rlUnknown9BF3F3` |
 | $AD/FF29-$AD/FFFF | 215 | 128 (+57-+D6) | `aMapBattleCavalierLayout6` / `` | +57 number `engine/unsorted/bank9E.asm:4187`: `lda #(`$ADFF80)<<8`; +57 number `engine/unsorted/bank9E.asm:4189`: `lda #<>$ADFF80`; 70% $00/$FF |
-| $AF/C293-$AF/C7FF | 1,389 | 0 | `dialogueChapter06HerminaSeliphTalk` / `aBattleBackgroundVillagePalette` | +16D halves `engine/unsorted/bank9E.asm:12008`: `long pointer in lR18`; 75% $00/$FF |
+| $AF/C293-$AF/C7FF | 1,389 | 0 | `dialogueChapter06HerminaSeliphTalk` / `aBattleBackgroundVillagePalette` | +16D halves `engine/unsorted/bank9E.asm:12040`: `long pointer in lR18`; 75% $00/$FF |
 
 ## `log` (113)
 
@@ -326,7 +326,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $F5/0000-$F5/7FFF | 32,768 | 22571 (+24B7-+7FFF) | `g4bppcBattleBackgroundMountain` / `` |  |
 | $F6/0000-$F6/23D2 | 9,171 | 7092 (+0-+1BB3) | `g4bppcBattleBackgroundRiver` / `g4bppcDialogueBackgroundFountainForeground` |  |
 
-## `none` (342)
+## `none` (337)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
@@ -341,7 +341,6 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $80/B63E-$80/B63E | 1 | 0 | `aDecompressionDMAEntry80B636` / `rlUnknown80B63F` |  |
 | $80/B640-$80/B640 | 1 | 0 | `rlUnknown80B63F` / `rsUnknown80B641` |  |
 | $80/B77D-$80/B77E | 2 | 0 | `rlUnknown80B74B` / `rlUnknown80B77F` |  |
-| $80/C162-$80/C19F | 62 | 0 | `rsUnknown80C155` / `rlUnknown80C1A0` |  |
 | $80/C1BA-$80/C1C9 | 16 | 0 | `rlUnknown80C1A0` / `rlUnknown80C1CA` |  |
 | $80/F337-$80/F33F | 9 | 0 | `rsUnknown80F2BE` / `rsUnknown80F340` |  |
 | $81/9062-$81/9091 | 48 | 0 | `rsCapSpawnDestinationCoordinates100` / `rsFillMovingMapSpriteData` |  |
@@ -431,7 +430,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $87/8833-$87/8851 | 31 | 0 | `rlReplaceMapMenuTilemapROMWithRAMPointer` / `rlUnknown878852` |  |
 | $87/890B-$87/8915 | 11 | 0 | `rlUnknown878900` / `rlUnknown878916` |  |
 | $87/C6DC-$87/C709 | 46 | 0 | `rsUnknown87C6AA` / `procUnknown87C70A` |  |
-| $87/C7CF-$87/C81E | 80 | 0 | `rlUnknown87C7B4` / `aProcUnknown87C70ACode` |  |
+| $87/C7CF-$87/C7F2 | 36 | 0 | `rlUnknown87C7B4` / `rlUnknown87C7F3` |  |
 | $87/E6D5-$87/E6D6 | 2 | 0 | `rsUnknown87E6D3` / `rsUnknown87E6D7` |  |
 | $87/E761-$87/E761 | 1 | 0 | `rsUnknown87E75F` / `rlUnknown87E762` |  |
 | $88/857E-$88/85D2 | 85 | 0 | `rlUnknown888560` / `rlUnknown8885D3` |  |
@@ -442,16 +441,15 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $88/A505-$88/A550 | 76 | 0 | `rlUnknown88A4FC` / `rsUnknown88A551` |  |
 | $88/A6CA-$88/A703 | 58 | 0 | `rsUnknown88A698` / `rlUnknown88A704` |  |
 | $88/A816-$88/A81C | 7 | 0 | `rsUnknown88A7F5` / `rlUnknown88A81D` |  |
-| $88/AC5B-$88/ACF0 | 150 | 0 | `rsUnknown88AB47` / `aUnknown88ACF1` |  |
+| $88/ACBB-$88/ACF0 | 54 | 0 | `rsUnknown88ACA6` / `aUnknown88ACF1` | 64% $00/$FF |
 | $88/AD09-$88/AD45 | 61 | 0 | `aUnknown88ACF1` / `rlUnknown88AD46` |  |
 | $88/B3C2-$88/B3DE | 29 | 0 | `rlUnknown88B3AF` / `rlUnknown88B3DF` |  |
 | $88/BEFF-$88/BF36 | 56 | 0 | `rsUnknown88BEEF` / `rlUnknown88BF37` |  |
-| $88/C6ED-$88/C71B | 47 | 0 | `rsUnknown88C67D` / `rsUnknown88C71C` |  |
 | $88/E00E-$88/E02A | 29 | 0 | `rsUnknown88DFDA` / `procUnknown88E02B` |  |
-| $88/E0F5-$88/E1FD | 265 | 0 | `rlUnknown88E0DF` / `aProcUnknown88E02BCode` |  |
+| $88/E0F5-$88/E10A | 22 | 0 | `rlUnknown88E0DF` / `rlUnknown88E10B` |  |
+| $88/E154-$88/E178 | 37 | 0 | `rlUnknown88E10B` / `rlUnknown88E179` |  |
 | $88/E2D6-$88/E2DB | 6 | 0 | `rlProcUnknown88E26ACycle` / `aProcUnknown88E26ACode` | 66% $00/$FF |
 | $88/E33B-$88/E33C | 2 | 0 | `rlUnknown88E2E9` / `rlUnknown88E33D` |  |
-| $88/E38A-$88/E400 | 119 | 0 | `rlUnknown88E377` / `rsUnknown88E401` |  |
 | $88/EED9-$88/EF0C | 52 | 0 | `rlUnknown88EEB1` / `aUnknown88EF0D` |  |
 | $89/8A61-$89/8A7D | 29 | 0 | `rsUnknown898A41` / `rsUnknown898A7E` |  |
 | $89/8E65-$89/8E6B | 7 | 0 | `rsUnknown898D5F` / `aUnknown898E6C` |  |
@@ -468,7 +466,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8B/812A-$8B/818C | 99 | 0 | `rsUnknown8B8114` / `rsUnknown8B818D` |  |
 | $8B/81EC-$8B/821E | 51 | 0 | `rsUnknown8B818D` / `rlFadeInWorldMapPortraitSlot` |  |
 | $8B/83A7-$8B/84E4 | 318 | 0 | `aPortraitSlotVRAMOffsets` / `rlLoadWorldMapMarkerData` |  |
-| $8B/8A58-$8B/8A83 | 44 | 0 | `rsDecompressUnifiedThraciaMapHighlight` / `rlClearHighlightWorldMapPart` | 56% $00/$FF |
+| $8B/8A58-$8B/8A83 | 44 | 0 | `WMH_UnifiedThraciaPointer` / `rlClearHighlightWorldMapPart` | 56% $00/$FF |
 | $8B/8BA5-$8B/8BB4 | 16 | 0 | `aProcWorldMapMarkerShadowFadeInCode` / `rlUnknown8B8BB5` |  |
 | $8B/8BF2-$8B/8BF3 | 2 | 0 | `rlUnknown8B8BB5` / `procWorldMapMarkerShadowFadeOut` |  |
 | $8B/8C7B-$8B/8C80 | 6 | 0 | `rlUnknown8B8C4A` / `aProcUnknown8B8C3ACode` | 66% $00/$FF |
@@ -480,12 +478,10 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8B/B882-$8B/B8B5 | 52 | 0 | `rsUnitWindowRenderWeaponRankIcons` / `rsUnitWindowCopyLineHighlightColors` |  |
 | $8B/C4F3-$8B/C517 | 37 | 0 | `rsUnitWindowUpdateSort` / `aUnitWindowPageSortTypePointers` |  |
 | $8C/C4E0-$8C/C4FF | 32 | 0 | `PortraitPaletteClassCardThiefPointer` / `aDialogueBackgroundGatePalette` |  |
-| $8C/EAE0-$8C/ECFF | 544 | 0 | `aChapterMapFinalPalette` / `rlUnknown8CED00` |  |
 | $8C/F09B-$8C/FFFF | 3,941 | 0 | `rlUnknown8CF07F` / `` |  |
 | $8D/8000-$8D/863E | 1,599 | 0 | `PortraitDataMacBethPointer` / `aEventChapter10Opening` |  |
-| $8D/A372-$8D/A3DD | 108 | 0 | `rsUnknown8DA34D` / `rlUnknown8DA3DE` |  |
 | $8D/A612-$8D/A623 | 18 | 0 | `rlUnknown8DA50F` / `rsUnknown8DA624` |  |
-| $8D/A810-$8D/AD72 | 1,379 | 0 | `rlUnknown8DA755` / `rlUnknown8DAD73` |  |
+| $8D/AAFD-$8D/AD72 | 630 | 0 | `aProcUnknown8DAA96Code` / `rlUnknown8DAD73` |  |
 | $8D/AEC0-$8D/AEC1 | 2 | 0 | `rlUnknown8DAE85` / `rlUnknown8DAEC2` |  |
 | $8D/B539-$8D/B539 | 1 | 0 | `rlUnknown8DB52C` / `rsUnknown8DB53A` |  |
 | $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardIronBallistaPointer` / `gcUnknownD05673` |  |
@@ -570,7 +566,6 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $9E/9C94-$9E/9CB8 | 37 | 0 | `rlUnknown9E9C70` / `rlProcUnknown9E9A43Cycle1` |  |
 | $9E/9ECF-$9E/9F25 | 87 | 0 | `rlUnknown9E9E61` / `rlUnknown9E9F26` |  |
 | $9E/A38C-$9E/A403 | 120 | 0 | `rlProcUnknown9EA334Cycle` / `aProcUnknown9EA334Code` |  |
-| $9E/ADB4-$9E/ADD0 | 29 | 0 | `rlUnknown9EAD7B` / `rlUnknown9EADD1` |  |
 | $9E/B3C8-$9E/B3DD | 22 | 0 | `rlUnknown9EB39F` / `rlUnknown9EB3DE` |  |
 | $9E/B433-$9E/B490 | 94 | 0 | `rlUnknown9EB41C` / `rlUnknown9EB491` |  |
 | $9E/CEB9-$9E/CEDC | 36 | 0 | `rlUnknown9ECEA0` / `procUnknown9ECEDD` |  |
@@ -599,15 +594,15 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $9F/9987-$9F/999D | 23 | 0 | `rlUnknown9F9976` / `rsUnknown9F999E` |  |
 | $9F/9A2B-$9F/9ABE | 148 | 0 | `rlUnknown9F9A1E` / `rlUnknown9F9ABF` |  |
 | $9F/BDC1-$9F/DB67 | 7,591 | 0 | `rlUnknown9FBD6B` / `rlUnknown9FDB68` |  |
-| $9F/E0AA-$9F/EA51 | 2,472 | 0 | `rlUnknown9FE006` / `rlUnknown9FEA52` |  |
+| $9F/E0AA-$9F/E823 | 1,914 | 0 | `rlUnknown9FE006` / `rlUnknown9FE824` |  |
 | $9F/EBA8-$9F/EBA8 | 1 | 0 | `rlProcUnknown9F805DInit` / `aProcUnknown9F805DCode` |  |
 | $9F/ED29-$9F/ED59 | 49 | 0 | `rlUnknown9FECFE` / `rlUnknown9FED5A` |  |
 | $9F/EE45-$9F/F05F | 539 | 0 | `rlUnknown9FEDB3` / `rlUnknown9FF060` |  |
-| $9F/F0DC-$9F/F24F | 372 | 0 | `rlUnknown9FF060` / `rsUnknown9FF250` |  |
+| $9F/F0DC-$9F/F0FF | 36 | 0 | `rlUnknown9FF060` / `rlUnknown9FF100` |  |
+| $9F/F1BC-$9F/F24F | 148 | 0 | `rlUnknown9FF100` / `rsUnknown9FF250` |  |
 | $9F/F2FD-$9F/F375 | 121 | 0 | `rsUnknown9FF2E4` / `rsUnknown9FF376` |  |
 | $9F/F66D-$9F/F67C | 16 | 0 | `rlUnknown9FF65A` / `rlUnknown9FF67D` |  |
 | $9F/F98E-$9F/F9A7 | 26 | 0 | `rsUnknown9FF97A` / `rlUnknown9FF9A8` | 53% $00/$FF |
-| $9F/FA9A-$9F/FAB3 | 26 | 0 | `aProcUnknown9FF9B9Code` / `rlUnknown9FFAB4` |  |
 | $E0/01D6-$E0/01F3 | 30 | 0 | `aBattleAnimationPaletteJuniorLord` / `aBattleAnimationPaletteWarMage` |  |
 | $E0/0212-$E0/022F | 30 | 0 | `aBattleAnimationPaletteWarMage` / `aBattleAnimationPaletteWarMageF` |  |
 | $E0/024E-$E0/026B | 30 | 0 | `aBattleAnimationPaletteWarMageF` / `aBattleAnimationPalettePrince` |  |

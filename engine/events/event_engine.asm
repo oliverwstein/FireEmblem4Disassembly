@@ -73,7 +73,7 @@
         jsl rlProcEngineResetProcEngine
         stz wGameStateRoutine1,b
 
-        lda #<>$80F1D5
+        lda #<>rsUnknown80F1D5
         sta aProcSystem.wInput0,b
 
         lda #(`procMainLoopChangeFade)<<8

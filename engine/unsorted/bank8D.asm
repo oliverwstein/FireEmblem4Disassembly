@@ -715,6 +715,80 @@
     .endsection Unsorted8DA34DSection
 
 
+    .section Unsorted8DA372Section
+
+      .al
+      .xl
+
+      rsUnknown8DA372 ; 8D/A372
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$2000
+        bne _A389
+        bit #$8000
+        bne _A3A4
+        bit #$0040
+        bne _A3CC
+        bit #$4000
+        bne _A3D1
+        rts
+
+
+        _A389
+        lda #$0001
+        sta $08DA,b
+        lda #$ECC9
+        sta $0ECF,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rts
+
+
+        _A3A4
+        lda #$0000
+        sta wCurrentChapter,b
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda #$0002
+        sta $0D77,b
+        lda #$B122
+        sta $0ECF,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rts
+
+
+        _A3CC
+        jsl rlUnknown80EFD8
+        rts
+
+
+        _A3D1
+        lda #$000A
+        sta wGameStateStep,b
+        lda #$000F
+        sta $0594,b
+        rts
+
+        .databank 0
+
+        ; 8D/A3DE
+
+    .endsection Unsorted8DA372Section
+
+
     .section Unsorted8DA3DESection
 
       .al
@@ -1259,6 +1333,457 @@
     .endsection Unsorted8DA755Section
 
 
+    .section Unsorted8DA810Section
+
+      .al
+      .xl
+
+      rlUnknown8DA810 ; 8D/A810
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0009
+        sta wCurrentChapter,b
+        lda #$0002
+        sta $0D77,b
+        lda #$FFFF
+        sta $0D87,b
+        lda #$0080
+        sta wCursorXOffset,b
+        sta wCursorYOffset,b
+        rtl
+
+        .databank 0
+
+        ; 8D/A82C
+
+      rlUnknown8DA82C ; 8D/A82C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0002
+        sta wCurrentChapter,b
+        lda #$0002
+        sta $0D77,b
+        lda #$FFFF
+        sta $0D87,b
+        lda #$0080
+        sta wCursorXOffset,b
+        sta wCursorYOffset,b
+        rtl
+
+        .databank 0
+
+        ; 8D/A848
+
+      rlUnknown8DA848 ; 8D/A848
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0007
+        sta wCurrentChapter,b
+        lda #$0002
+        sta $0D77,b
+        lda #$FFFF
+        sta $0D87,b
+        lda #$0080
+        sta wCursorXOffset,b
+        sta wCursorYOffset,b
+        rtl
+
+        .databank 0
+
+        ; 8D/A864
+
+      rlUnknown8DA864 ; 8D/A864
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000B
+        sta wCurrentChapter,b
+        lda #$0002
+        sta $0D77,b
+        lda #$FFFF
+        sta $0D87,b
+        lda #$0080
+        sta wCursorXOffset,b
+        sta wCursorYOffset,b
+        rtl
+
+        .databank 0
+
+        ; 8D/A880
+
+      rlUnknown8DA880 ; 8D/A880
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlResetHDMAEngine
+        jsl rlUnknown8780AA
+        jsl rlUnknown8780EC
+        sep #$20
+        rep #$10
+        ldx #$4143
+        stx DecompressionVariables
+        lda #$D4
+        sta $CA
+        ldx #$7B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7B88, $0800, $80, $A800
+
+        sep #$20
+        rep #$10
+        ldx #$3402
+        stx DecompressionVariables
+        lda #$D4
+        sta $CA
+        ldx #$9388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E9388, $1000, $80, $6000
+
+        sep #$20
+        rep #$10
+        ldx #$486F
+        stx DecompressionVariables
+        lda #$D4
+        sta $CA
+        ldx #$8388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $B000
+
+        sep #$20
+        rep #$10
+        ldx #$429B
+        stx DecompressionVariables
+        lda #$D4
+        sta $CA
+        ldx #$A388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7EA388, $0800, $80, $8000
+
+        lda #(`procUnknown8DAA96)<<8
+        sta lR44+1
+        lda #<>procUnknown8DAA96
+        sta lR44
+        jsl rlProcEngineCreateProc
+        sep #$20
+        lda #$11
+        sta bBufferTM
+        lda #$06
+        sta bBufferTS
+        sta bBufferTSW
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$27
+        sta bBufferCGADSUB
+        rep #$20
+        ldx #$001E
+
+        _A966
+        lda $8CEBC0,x
+        sta $01C0,b,x
+        dec x
+        dec x
+        bpl _A966
+        ldx #$001C
+
+        _A974
+        lda $8CEB02,x
+        sta $0102,b,x
+        dec x
+        dec x
+        bpl _A974
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8D/A98C
+
+      rlUnknown8DA98C ; 8D/A98C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlUnknown8780AA
+        jsl rlUnknown8780EC
+        sep #$20
+        rep #$10
+        ldx #$4143
+        stx DecompressionVariables
+        lda #$D4
+        sta $CA
+        ldx #$7B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7B88, $0800, $80, $A800
+
+        sep #$20
+        rep #$10
+        ldx #$3402
+        stx DecompressionVariables
+        lda #$D4
+        sta $CA
+        ldx #$9388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E9388, $1000, $80, $6000
+
+        sep #$20
+        rep #$10
+        ldx #$486F
+        stx DecompressionVariables
+        lda #$D4
+        sta $CA
+        ldx #$8388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $B000
+
+        sep #$20
+        rep #$10
+        ldx #$429B
+        stx DecompressionVariables
+        lda #$D4
+        sta $CA
+        ldx #$A388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7EA388, $0800, $80, $8000
+
+        lda #(`procUnknown8DAA96)<<8
+        sta lR44+1
+        lda #<>procUnknown8DAA96
+        sta lR44
+        jsl rlProcEngineCreateProc
+        sep #$20
+        lda #$06
+        sta bBufferTM
+        sta bBufferTMW
+        lda #$11
+        sta bBufferTS
+        sta bBufferTSW
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$27
+        sta bBufferCGADSUB
+        rep #$20
+        ldx #$001E
+
+        _AA70
+        lda $8CEBC0,x
+        sta $01C0,b,x
+        dec x
+        dec x
+        bpl _AA70
+        ldx #$001C
+
+        _AA7E
+        lda $8CEB02,x
+        sta $0102,b,x
+        dec x
+        dec x
+        bpl _AA7E
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8D/AA96
+
+    .endsection Unsorted8DA810Section
+
+
+    .section Unsorted8DAA96Section
+
+      .al
+      .xl
+
+      procUnknown8DAA96 ; 8D/AA96
+
+        .structProcInfo "KM", rlUnknown8DAA9E, rlUnknown8DAA9E._AAA4, aProcUnknown8DAA96Code
+
+    .endsection Unsorted8DAA96Section
+
+
+    .section Unsorted8DAA9ESection
+
+      .al
+      .xl
+
+      rlUnknown8DAA9E ; 8D/AA9E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wMapScrollXPixels,b
+        sta $0FD7,b,x
+
+        _AAA4
+        lda wMapScrollXPixels,b
+        cmp $0FD7,b,x
+        beq _AABF
+        sta $0FD7,b,x
+        lda wBufferBG2HOFS
+        clc
+        adc wMapScrollSpeed,b
+        sta wBufferBG2HOFS
+        lda wBufferBG3HOFS
+        clc
+        adc wMapScrollSpeed,b
+        sta wBufferBG3HOFS
+
+        _AABF
+        lda wVBlankEnabledFramecount
+        and #$0001
+        bne _AAD7
+        lda wBufferBG2HOFS
+        inc a
+        sta wBufferBG2HOFS
+        lda wVBlankEnabledFramecount
+        and #$0003
+        bne _AAD7
+        lda wBufferBG3HOFS
+        inc a
+        sta wBufferBG3HOFS
+
+        _AAD7
+        lda wVBlankEnabledFramecount
+        and #$0003
+        bne _AAEF
+        lda wBufferBG2VOFS
+        dec a
+        sta wBufferBG2VOFS
+        lda wVBlankEnabledFramecount
+        and #$0007
+        bne _AAEF
+        lda wBufferBG3VOFS
+        dec a
+        sta wBufferBG3VOFS
+
+        _AAEF
+        lda wGameStateRoutine1,b
+        beq _AAF5
+
+        _AAF4
+        rtl
+
+
+        _AAF5
+        jsl rlProcEngineFreeProc
+        bra _AAF4
+
+        .databank 0
+
+        ; 8D/AAFB
+
+    .endsection Unsorted8DAA9ESection
+
+
+    .section Unsorted8DAAFBSection
+
+      .al
+      .xl
+
+      aProcUnknown8DAA96Code ; 8D/AAFB
+
+        PROC_HALT
+
+
+        ; 8D/AAFD
+
+    .endsection Unsorted8DAAFBSection
+
+
     .section Unsorted8DAD73Section
 
       .al
@@ -1299,6 +1824,70 @@
         ; 8D/AD9E
 
     .endsection Unsorted8DAD73Section
+
+
+    .section Unsorted8DAD9ESection
+
+      .al
+      .xl
+
+      rsUnknown8DAD9E ; 8D/AD9E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$8000
+        bne _ADB0
+        bit #$2000
+        bne _ADD8
+        bit #$0040
+        bne _ADF5
+        rts
+
+
+        _ADB0
+        lda #$0000
+        sta wCurrentChapter,b
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda #$0002
+        sta $0D77,b
+        lda #$B122
+        sta $0ECF,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rts
+
+
+        _ADD8
+        jsl rlResetDialogueEngine
+        lda #$8D00
+        sta lR18+1
+        lda #$C9A6
+        sta lR18
+        lda #$0002
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsl rlUnknown8DA3DE
+        rts
+
+
+        _ADF5
+        jsl rlUnknown80F1A7
+        rts
+
+        .databank 0
+
+        ; 8D/ADFA
+
+    .endsection Unsorted8DAD9ESection
 
 
     .section Unsorted8DAE85Section

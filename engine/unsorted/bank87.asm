@@ -6161,6 +6161,45 @@
     .endsection Unsorted87C7B4Section
 
 
+    .section Unsorted87C7F3Section
+
+      .al
+      .xl
+
+      rlUnknown87C7F3 ; 87/C7F3
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1611,b
+        bit #$0001
+        beq _C81E
+        phx
+        lda #$8700
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #$C7AB
+        sta lMapMenuTilemapRAMEntryPointer,b
+        jsl rlUnknown878B98
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7B88, $0800, $80, $A800
+
+        plx
+        jsl rlProcEngineFreeProc
+
+        _C81E
+        rtl
+
+        .databank 0
+
+        ; 87/C81F
+
+    .endsection Unsorted87C7F3Section
+
+
     .section Unsorted87C81FSection
 
       .al

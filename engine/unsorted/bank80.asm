@@ -6528,6 +6528,45 @@
     .endsection Unsorted80BF01Section
 
 
+    .section Unsorted80C162Section
+
+      .al
+      .xl
+
+      rsUnknown80C162 ; 80/C162
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        rep #$20
+        jsl rlUnknown8887EC
+        jsl rlProcessDMAStructArray
+        jsl rlDMAPaletteAndOAMBuffer
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
+        jsl rlSendSoundQueuesToAPU
+        jsl rlGetJoypadInput
+        jsl rlIncreaseFrameCounters
+        jsl rlClearSpriteExtBuffer
+        jsl rlRunGameStateRoutines
+        jsl rlUnknown809C7A
+        jsl rlHideSprites
+        jsl rlUnknown878256
+        rts
+
+        .databank 0
+
+        ; 80/C1A0
+
+    .endsection Unsorted80C162Section
+
+
     .section Unsorted80C1A0Section
 
       .al
@@ -6820,7 +6859,7 @@
         sta wGameStateRoutine1,b
         stz wGameStateStep,b
         stz wGameStateRoutine2,b
-        lda #$C162
+        lda #<>rsUnknown80C162
         sta wVBlankPointer
         lda #<>rsUnknown809D4F
         sta wMainLoopPointer
@@ -8020,6 +8059,56 @@
         ; 80/F1D5
 
     .endsection Unsorted80F1A7Section
+
+
+    .section Unsorted80F1D5Section
+
+      .al
+      .xl
+
+      rsUnknown80F1D5 ; 80/F1D5
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlUnknown91E565
+        jsl rlUnknown91E52B
+        jsl rlUnknown91D6EC
+        jsl rlUnknown80B0D3
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E9D88, $0600, $80, $D000
+
+        stz wGameStateStep,b
+        lda #(`procFadeIn)<<8
+        sta lR44+1
+        lda #<>procFadeIn
+        sta lR44
+        jsl rlProcEngineCreateProc
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        plp
+        cli
+        rts
+
+        .databank 0
+
+        ; 80/F222
+
+    .endsection Unsorted80F1D5Section
 
 
     .section Unsorted80F222Section

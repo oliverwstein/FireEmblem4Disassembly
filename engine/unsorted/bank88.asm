@@ -5973,6 +5973,105 @@
     .endsection Unsorted88AB47Section
 
 
+    .section Unsorted88AC5BSection
+
+      .al
+      .xl
+
+      rsUnknown88AC5B ; 88/AC5B
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$0200
+        bne _AC6A
+        lda #$0001
+        sta wTempVariable1,b
+        bra _AC70
+
+
+        _AC6A
+        lda #$FFFF
+        sta wTempVariable1,b
+
+        _AC70
+        lda #$0400
+        sta wTempVariable2,b
+
+        _AC76
+        jsr rsUnknown88ACA6
+        bne _ACA2
+        lda $0776,b
+        clc
+        adc wTempVariable1,b
+        sta $0776,b
+        bmi _AC94
+        cmp wTempVariable2,b
+        bcc _ACA0
+        lda #$0000
+        sta $0776,b
+        bra _ACA0
+
+
+        _AC94
+        lda wTempVariable2,b
+        sec
+        sbc #$0001
+        sta $0776,b
+        bra _ACA0
+
+
+        _ACA0
+        bra _AC76
+
+
+        _ACA2
+        sta $0774,b
+        rts
+
+        .databank 0
+
+        ; 88/ACA6
+
+    .endsection Unsorted88AC5BSection
+
+
+    .section Unsorted88ACA6Section
+
+      .al
+      .xl
+
+      rsUnknown88ACA6 ; 88/ACA6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0776,b
+        tax
+        lda aTargetDistanceMap,x
+        and #$00FF
+        cmp #$00FF
+        beq _ACB7
+        rts
+
+
+        _ACB7
+        lda #$0000
+        rts
+
+        .databank 0
+
+        ; 88/ACBB
+
+    .endsection Unsorted88ACA6Section
+
+
     .section Table88ACF1Section
 
       .al
@@ -9209,6 +9308,43 @@
         ; 88/C6ED
 
     .endsection Unsorted88C67DSection
+
+
+    .section Unsorted88C6EDSection
+
+      .al
+      .xl
+
+      rlUnknown88C6ED ; 88/C6ED
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$FFFF
+        sta $086F,b
+        lda #$0140
+        sta $0875,b
+        lda #$0170
+        sta $0877,b
+        lda #$0088
+        sta $0871,b
+        lda #$000C
+        sta $0873,b
+        lda $0871,b
+        sta wActiveUnitDeploymentOffset,b
+        jsl rlUnknown88B4DB
+        lda #$0001
+        sta wUnknown0007D8,b
+        rtl
+
+        .databank 0
+
+        ; 88/C71C
+
+    .endsection Unsorted88C6EDSection
 
 
     .section Unsorted88C71CSection
@@ -12550,6 +12686,150 @@
     .endsection Unsorted88E033Section
 
 
+    .section Unsorted88E10BSection
+
+      .al
+      .xl
+
+      rlUnknown88E10B ; 88/E10B
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0AD3,b
+        cmp #$0040
+        bcs _E116
+        inc $0AD3,b
+
+        _E116
+        lda wVBlankEnabledFramecount
+        and #$0007
+        bne _E130
+        lda #$0008
+        sta aPaletteFading,b
+        clc
+        jsl rlFadePaletteToColors
+
+          .byte $88, $9B, $F0, $00, $20, $00
+
+        bcs _E131
+
+        _E130
+        rtl
+
+
+        _E131
+        lda #$E154
+        sta $0F57,b,x
+        jsl rlResetDialogueEngine
+        lda #$8800
+        sta lR18+1
+        lda #$E9E5
+        sta lR18
+        lda #$0003
+        jsl rlDialogueStartTextAndHDMA
+        ldx #$0000
+        jsl rlUnknown88E38A
+        rtl
+
+        .databank 0
+
+        ; 88/E154
+
+    .endsection Unsorted88E10BSection
+
+
+    .section Unsorted88E179Section
+
+      .al
+      .xl
+
+      rlUnknown88E179 ; 88/E179
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda bBufferINIDISP
+        and #$0F
+        beq _E186
+        dec bBufferINIDISP
+        rep #$20
+        rtl
+
+
+        _E186
+        .as
+        rep #$20
+        jsl rlProcEngineFreeProc
+        ldx #$01DE
+        lda #$0000
+
+        _E192
+        sta $0120,b,x
+        dec x
+        dec x
+        bpl _E192
+        ldx #$001E
+
+        _E19C
+        lda aUnknown8C9D00,x
+        sta aOAMPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _E19C
+        ldx #$07FE
+        lda #$033F
+
+        _E1AD
+        sta $7E7B88,x
+        dec x
+        dec x
+        bpl _E1AD
+        ldx #$07FE
+        lda #$01FF
+
+        _E1BB
+        sta aBG3TilemapBuffer,x
+        dec x
+        dec x
+        bpl _E1BB
+        stz wBufferBG2VOFS
+        stz wBufferBG2HOFS
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlResetHDMAEngine
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $B000
+
+        jsl rlUnknown80B0BC
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$0F
+        sta bBufferINIDISP
+        rep #$20
+        lda #$0012
+        sta wGameStateRoutine1,b
+        rtl
+
+        .databank 0
+
+        ; 88/E1FE
+
+    .endsection Unsorted88E179Section
+
+
     .section Unsorted88E1FESection
 
       .al
@@ -12612,6 +12892,74 @@
         ; 88/E33B
 
     .endsection Unsorted88E2E9Section
+
+
+    .section Unsorted88E38ASection
+
+      .al
+      .xl
+
+      rlUnknown88E38A ; 88/E38A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0003
+        sta $18D0,b
+        lda #$0480
+        tsb $1882,b
+        lda #$0001
+        sta $1888,b
+        lda #$0004
+        sta $188C,b
+        lda #$0040
+        sta $18E1,b,x
+        lda #$0200
+        sta $18DD,b
+        lda #$0A1E
+        sta $18DB,b,x
+        lda #$4000
+        sta $18D7,b,x
+        lda #$7E00
+        sta $18D5,b,x
+        lda #$8388
+        sta $18D4,b,x
+        lda #$2000
+        sta $189F,b,x
+        lda #$01FF
+        sta $189D,b
+        lda #$1208
+        sta wR1
+        sep #$20
+        lda #$00
+        sta wR0+1
+        xba
+        lda wR1
+        sta wR0
+        lda wR1+1
+        xba
+        rep #$20
+        lsr a
+        lsr a
+        clc
+        adc wR0
+        sta wR0
+        ldx aDialogue,b
+        lda #$7E00
+        sta $18D5,b,x
+        lda #$8388
+        clc
+        adc wR0
+        sta $18D4,b,x
+        rtl
+
+        .databank 0
+
+        ; 88/E401
+
+    .endsection Unsorted88E38ASection
 
 
     .section Unsorted88E401Section

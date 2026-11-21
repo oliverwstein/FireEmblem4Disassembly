@@ -70,7 +70,7 @@ def references():
     for l in raw.split('\n'):
         m = re.match(r'\s+left\s+(\S+): (.*)', l)
         if m:
-            for a in re.findall(r'\$([0-9A-F]{6})\b', m.group(2)):
+            for a in re.findall(r"(?<!& )\$([0-9A-F]{6})\b", m.group(2)):
                 o = off(int(a, 16))
                 if o is not None:
                     out.append((o, 'number', m.group(1), m.group(2).strip()))

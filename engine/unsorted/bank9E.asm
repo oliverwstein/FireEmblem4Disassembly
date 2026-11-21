@@ -7101,6 +7101,38 @@
     .endsection Unsorted9EAD7BSection
 
 
+    .section Unsorted9EADB4Section
+
+      .al
+      .xl
+
+      rlUnknown9EADB4 ; 9E/ADB4
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85D671
+        bcs _ADD0
+        lda $7F4C07
+        ora #$0002
+        sta $7F4C07
+        lda @l $0010B7,x
+        sta wGameStateRoutine1,b
+        jsl rlProcEngineFreeProc
+
+        _ADD0
+        rtl
+
+        .databank 0
+
+        ; 9E/ADD1
+
+    .endsection Unsorted9EADB4Section
+
+
     .section Unsorted9EADD1Section
 
       .al

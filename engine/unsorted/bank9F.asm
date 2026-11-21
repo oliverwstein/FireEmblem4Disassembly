@@ -3239,6 +3239,394 @@
     .endsection Unsorted9FE006Section
 
 
+    .section Unsorted9FE824Section
+
+      .al
+      .xl
+
+      rlUnknown9FE824 ; 9F/E824
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$00E0
+        sta @l wR0
+        lda lR18+1
+        and #$01FF
+        sta $2182,b
+        lda lR18
+        sta $2181,b
+        lda $7F50DF
+        and #$00FF
+        sta wR1
+        lda $7F50E1
+        sta wR2
+        lda $7F50E3
+        and #$00FF
+        sta wR3
+        lda $7F50E5
+        sta wR4
+        jsr rsUnknown9FEB4F
+        ldy #$0000
+        lda wR3
+        lsr a
+        sta wR9
+        lda wR2
+        sec
+        sbc wR9
+        beq _E899
+        bcc _E885
+        tax
+        sep #$20
+
+        _E86E
+        lda #$FF
+        sta $2180,b
+        lda #$00
+        sta $2180,b
+        dec wR0
+        bne _E880
+        jml _E8DA
+
+
+        _E880
+        dec x
+        bne _E86E
+        bra _E899
+
+
+        _E885
+        .al
+        rep #$20
+        eor #$FFFF
+        inc a
+        and #$00FF
+        asl a
+        pha
+        lda wR4
+        sec
+        sbc #1,s
+        sta wR4
+        pla
+        tay
+
+        _E899
+        sep #$20
+
+        _E89B
+        jsr rsUnknown9FEB2A
+        dec wR0
+        beq _E8DA
+        inc y
+        inc y
+        cpy wR3
+        bcs _E8B2
+        rep #$20
+        dec wR4
+        beq _E8B2
+        sep #$20
+        bra _E89B
+
+
+        _E8B2
+        dec y
+        dec y
+        cpy #$0000
+        bmi _E8CA
+        jsr rsUnknown9FEB2A
+        dec wR0
+        beq _E8DA
+        rep #$20
+        dec wR4
+        beq _E8CA
+        sep #$20
+        bra _E8B2
+
+
+        _E8CA
+        sep #$20
+
+        _E8CC
+        lda #$FF
+        sta $2180,b
+        lda #$00
+        sta $2180,b
+        dec wR0
+        bne _E8CC
+
+        _E8DA
+        rep #$20
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9F/E8DE
+
+      rlUnknown9FE8DE ; 9F/E8DE
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sta wR0
+        tya
+        sta wR5
+        lda $7F50DF,x
+        and #$00FF
+        sta wR1
+        lda $7F50E1,x
+        sta wR2
+        lda $7F50E3,x
+        sta wR3
+        lda $7F50E5,x
+        sta wR4
+        phd
+        pea #$0000
+        pld
+        lda lR18+1
+        and #$01FF
+        sta $2182,b
+        lda lR18
+        sta $2181,b
+        lda $7F50DF,x
+        and #$00FF
+        sta wR1
+        lda $7F50E1,x
+        sec
+        sbc #$0010
+        sta wR2
+        lda $7F50E3,x
+        and #$00FF
+        sta wR3
+        lda $7F50E5,x
+        sta wR4
+        lda wR3
+        jsr rsUnknown9FEA0C
+        pha
+        sep #$20
+        lda wR1
+        clc
+        adc #1,s
+        bcs _E946
+        cmp #$F7
+        bcc _E948
+
+        _E946
+        lda #$F7
+
+        _E948
+        xba
+        lda wR1
+        sec
+        sbc #1,s
+        bcc _E954
+        cmp #$08
+        bcs _E956
+
+        _E954
+        lda #$08
+
+        _E956
+        rep #$20
+        sta wR5
+        pla
+        jsr rsUnknown9FEB4F
+        ldy #$0000
+        sep #$20
+        lda wR2
+        sec
+        sbc wR3
+        beq _E9A7
+        bcc _E993
+        cmp #$DF
+        bcc _E974
+        jml _E9F7
+
+
+        _E974
+        rep #$20
+        and #$00FF
+        tax
+        sep #$20
+
+        _E97C
+        lda wR5
+        sta $2180,b
+        lda wR5+1
+        sta $2180,b
+        dec wR0
+        bne _E98E
+        jml _EA07
+
+
+        _E98E
+        dec x
+        bne _E97C
+        bra _E9A7
+
+
+        _E993
+        rep #$20
+        eor #$FFFF
+        inc a
+        and #$00FF
+        pha
+        lda wR4
+        sec
+        sbc #1,s
+        sta wR4
+        ply
+        sep #$20
+
+        _E9A7
+        lda wR5
+        sta $2180,b
+        lda wR5+1
+        sta $2180,b
+        dec wR0
+        beq _EA07
+        inc y
+        cpy wR3
+        bcs _E9C4
+        rep #$20
+        dec wR4
+        beq _E9DB
+        sep #$20
+        bra _E9A7
+
+
+        _E9C4
+        dec y
+        cpy #$0000
+        bmi _E9F7
+        jsr rsUnknown9FEB2A
+        dec wR0
+        beq _EA07
+        rep #$20
+        dec wR4
+        beq _E9DB
+        sep #$20
+        bra _E9C4
+
+
+        _E9DB
+        .al
+        and #$00FF
+        sta wR3
+        tay
+        jsr rsUnknown9FEB4F
+        sep #$20
+
+        _E9E6
+        dec y
+        dec y
+        dec y
+        cpy #$0000
+        bmi _E9F7
+        jsr rsUnknown9FEB2A
+        dec wR0
+        beq _EA07
+        bra _E9E6
+
+
+        _E9F7
+        lda #$80
+        sta $2180,b
+        lda #$7F
+        sta $2180,b
+        dec wR0
+        beq _EA07
+        bra _E9F7
+
+
+        _EA07
+        rep #$20
+        pld
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9F/EA0C
+
+    .endsection Unsorted9FE824Section
+
+
+    .section Unsorted9FEA0CSection
+
+      .al
+      .xl
+
+      rsUnknown9FEA0C ; 9F/EA0C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        pha
+        bit #$0080
+        beq _EA1E
+        and #$FF78
+        lsr a
+        lsr a
+        clc
+        adc #$0080
+        bra _EA3C
+
+
+        _EA1E
+        bit #$0040
+        beq _EA2D
+        and #$FFBC
+        lsr a
+        clc
+        adc #$0060
+        bra _EA3C
+
+
+        _EA2D
+        bit #$0020
+        beq _EA3B
+        and #$FFDE
+        clc
+        adc #$0040
+        bra _EA3C
+
+
+        _EA3B
+        asl a
+
+        _EA3C
+        tax
+        lda $9AA30A,x
+        clc
+        adc #1,s
+        dec a
+        tax
+        lda $9AA30A,x
+        and #$00FF
+        sta #1,s
+        pla
+        plx
+        rts
+
+        .databank 0
+
+        ; 9F/EA52
+
+    .endsection Unsorted9FEA0CSection
+
+
     .section Unsorted9FEA52Section
 
       .al
@@ -3825,6 +4213,116 @@
         ; 9F/F0DC
 
     .endsection Unsorted9FF060Section
+
+
+    .section Unsorted9FF100Section
+
+      .al
+      .xl
+
+      rlUnknown9FF100 ; 9F/F100
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $0FD7,b,x
+        bne _F111
+        lda #$F111
+        sta $0F57,b,x
+        lda #$00C0
+        sta $1057,b,x
+
+        _F111
+        lda $1057,b,x
+        clc
+        adc $1037,b,x
+        sta $1037,b,x
+        cmp #$0100
+        bpl _F126
+        lda #$0000
+        sta $1037,b,x
+
+        _F126
+        cmp #$0C00
+        bmi _F131
+        lda #$0C00
+        sta $1037,b,x
+
+        _F131
+        lda $0ED7,b,x
+        tax
+        lda $000B,b,x
+        sta wR0
+        lda $000D,b,x
+        sta wR1
+        ldx $0ECA,b
+        lda $7F509B
+        and #$00FF
+        clc
+        adc wR0
+        sta $7F50DF
+        lda $7F509C
+        and #$00FF
+        clc
+        adc wR1
+        sta $7F50E1
+        lda $1038,b,x
+        and #$00FF
+        beq _F193
+        sta $7F50E3
+        asl a
+        sec
+        sbc #$0000
+        sta $7F50E5
+        phy
+        lda $7F50E3
+        clc
+        adc #$0000
+        tay
+        lda #$7F00
+        sta lR18+1
+        lda #$50EA
+        sta lR18
+        ldx #$0000
+        lda #$00E0
+        jsl rlUnknown9FE8DE
+        ply
+        rtl
+
+
+        _F193
+        lda #$50EA
+        sta $2181,b
+        sep #$20
+        lda #$01
+        sta $2183,b
+        rep #$20
+        ldx #$0000
+        bra _F1B6
+
+
+        _F1A7
+        sep #$20
+        lda #$FF
+        sta $2180,b
+        lda #$00
+        sta $2180,b
+        rep #$20
+        inc x
+
+        _F1B6
+        cpx #$00E0
+        bmi _F1A7
+        rtl
+
+        .databank 0
+
+        ; 9F/F1BC
+
+    .endsection Unsorted9FF100Section
 
 
     .section Unsorted9FF250Section
@@ -5454,6 +5952,37 @@
         ; 9F/FA9A
 
     .endsection Unsorted9FFA98Section
+
+
+    .section Unsorted9FFA9ASection
+
+      .al
+      .xl
+
+      rlUnknown9FFA9A ; 9F/FA9A
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0220
+        sta @l wMapScrollXPixels
+        lda #$00D0
+        sta @l wMapScrollYPixels
+        lda #$0080
+        sta wCursorXOffset,b
+        sta wCursorYOffset,b
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9F/FAB4
+
+    .endsection Unsorted9FFA9ASection
 
 
     .section Unsorted9FFAB4Section
