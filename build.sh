@@ -29,6 +29,7 @@ clean() {
   find data -name '*.csv.asm' -delete
   find gfx \( -name '*.4bpp' -o -name '*.2bpp' \) -delete
   find gfx \( -name '*.4bpp.lz' -o -name '*.bin.lz' -o -name Layout.asm \) -delete
+  find audio -name '*.bin.lz' -delete
   rm -f "$OUT" FE4Padded.sfc log.txt labels.txt
 }
 
@@ -77,7 +78,7 @@ generate() {
     if [[ -e $bin && ( ! -e $out || $bin -nt $out || $t -nt $out ) ]]; then
       python3 tools/gfx.py lz "$bin" "$t" "$out"
     fi
-  done < <(find gfx -name '*.bin.comp')
+  done < <(find gfx audio -name '*.bin.comp')
 
   # Streams laid out across bank halves: LIST.streams to Layout.asm beside it.
   while IFS= read -r t; do

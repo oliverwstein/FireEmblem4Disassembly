@@ -37,3 +37,4 @@ labels.txt
 
 __pycache__/
 *.cdl
+audio/**/*.bin.lz

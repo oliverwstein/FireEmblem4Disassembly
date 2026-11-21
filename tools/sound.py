@@ -40,11 +40,13 @@ points at everything else, so the decoder starts there:
   StartUpload     a word: the upload list sent after the driver (rlInitSound).
   TerrainUploads  word table of upload lists that IDs 3 and 4 index by terrain.
 
-Chunks are written as audio/chunks/ID.bin (raw) or ID.comp (compressed, the
-ROM's bytes), named after the lowest ID that uses them; the driver blocks as
-audio/driver/ADDR.bin. Everything else goes into audio/sound_data.asm, with
-every pointer a label. Before writing it checks that the header's structures
-and the chunks cover $F7/7C00 to the end of the ROM without overlaps, that
+Chunks are written by kind (tools/sound_kinds.py proves each): audio/samples/
+ID.brr, audio/sequences/ID.bin (decompressed; ID.bin.comp is the ROM's stream,
+which the build keeps while the .bin is unchanged), audio/directories/ID.bin,
+audio/instruments/ID.bin and audio/chunks/ID.bin for the rest, each named after
+the lowest chunk ID that uses it; the driver blocks as audio/driver/ADDR.bin.
+Everything else goes into audio/sound_data.asm, with every pointer a label.
+Before writing it checks that the header's structures and the chunks cover $F7/7C00 to the end of the ROM without overlaps, that
 every compressed chunk decompresses to its stated size and that every pointer
 lands on the start of a list.
 
@@ -192,7 +194,8 @@ class Sound:
         def resolve(items, lists):
             return tuple((w, tuple(lists[self.bank << 16 | arg]) if 7 <= w >> 10 <= 14 else arg)
                          for w, arg in items)
-        chunks = [(size, dest, flags, self.bytes(a, e - a)) for a, e, size, dest, flags in self.chunks]
+        chunks = [(size, dest, flags, decompress(self.rom, a, linear=True)[0] if flags & 1 else self.bytes(a, e - a))
+                  for a, e, size, dest, flags in self.chunks]
         scripts = [resolve(self.script_lists[t], self.upload_lists) for t in self.scripts]
         uploads = [tuple(self.upload_lists[t]) if t else None for t in self.upload_table + self.terrain_table]
         return {'chunks': chunks, 'scripts': scripts, 'uploads': uploads,
@@ -216,21 +219,41 @@ def check(s):
     return problems, gaps, tail
 
 
-def name(s, k):
-    return f'aSoundChunk{FIRST_CHUNK + k:03X}'
+# Where each kind of chunk (tools/sound_kinds.py) goes: folder, label prefix, extension.
+KIND_FILES = {'sequence': ('sequences', 'Sequence', '.bin'), 'sample': ('samples', 'Sample', '.brr'),
+              'directory': ('directories', 'Directory', '.bin'),
+              'instruments': ('instruments', 'Instruments', '.bin'),
+              'other': ('chunks', 'Chunk', '.bin'), 'not reached': ('chunks', 'Chunk', '.bin')}
+FOLDERS = sorted(set(v[0] for v in KIND_FILES.values()))
+
+
+def chunk_kinds(s):
+    from sound_kinds import kinds
+    kind, problems, notes = kinds(s, s.rom)
+    if problems:
+        raise SystemExit('tools/sound_kinds.py: ' + '; '.join(problems))
+    return kind
 
 
 def emit(s, gaps, tail):
     """Lines of audio/sound_data.asm, and {path: bytes} of the files."""
     H = s.hdr
     files = {}
-    chunk_name = {}                       # address -> (label, path, compressed)
+    chunk_name = {}                       # address -> (label, file to include, file whose length is the size)
+    kind = chunk_kinds(s)
     for k, (a, e, size, dest, flags) in enumerate(s.chunks):
         if a not in chunk_name:
-            ext = 'comp' if flags & 1 else 'bin'
-            path = f'chunks/{FIRST_CHUNK + k:03X}.{ext}'
-            chunk_name[a] = (name(s, k), path)
-            files[path] = s.bytes(a, e - a)
+            cid = FIRST_CHUNK + k
+            folder, prefix, ext = KIND_FILES[kind[cid]]
+            base = f'{folder}/{cid:03X}'
+            if flags & 1:
+                # Decompressed, built through the original stream while unchanged.
+                files[f'{base}.bin'] = decompress(s.rom, a, linear=True)[0]
+                files[f'{base}.bin.comp'] = s.bytes(a, e - a)
+                chunk_name[a] = (f'aSound{prefix}{cid:03X}', f'{base}.bin.lz', f'{base}.bin')
+            else:
+                files[f'{base}{ext}'] = s.bytes(a, e - a)
+                chunk_name[a] = (f'aSound{prefix}{cid:03X}', f'{base}{ext}', f'{base}{ext}')
 
     def lab(prefix, a):
         return f'{prefix}{a:06X}'
@@ -263,9 +286,9 @@ def emit(s, gaps, tail):
     w('')
     w('        ; label, size, SPC address (0: after the previous chunk), flags; chunk ID in the comment')
     for k, (a, e, size, dest, flags) in enumerate(s.chunks):
-        label, path = chunk_name[a]
+        label, path, sized = chunk_name[a]
         fl = ' | '.join(f for bit, f in [(1, 'SOUND_CHUNK_COMPRESSED'), (2, 'SOUND_CHUNK_BUFFER2')] if flags & bit) or '0'
-        sz = f'${size:04X}' if flags & 1 else f'len(binary("{path}"))'
+        sz = f'len(binary("{sized}"))'
         w(f'        .soundChunk {label}, {sz}, ${dest:04X}, {fl} ; ${FIRST_CHUNK + k:03X}')
     w('')
     w(f'      aSoundScripts ; {H["Scripts"] >> 16:02X}/{H["Scripts"] & 0xFFFF:04X}')
@@ -326,7 +349,7 @@ def emit(s, gaps, tail):
                    [(g[0], 'gap', g) for g in gaps])
     for a, kind, x in order:
         if kind == 'chunk':
-            label, path = chunk_name[a]
+            label, path, sized = chunk_name[a]
             w(f'      {label} .soundBinary "{path}" ; {a >> 16:02X}/{a & 0xFFFF:04X}')
         elif kind == 'gap':
             g0, g1 = x
@@ -433,11 +456,14 @@ def self_test():
         subprocess.run(['rsync', '-a', '--exclude', '.git', '--exclude', '*.smc', '--exclude', '*.sfc',
                         './', src + '/'], cwd=ROOT, check=True)
         shutil.copy(os.path.join(ROOT, 'fe4.sfc'), os.path.join(src, 'fe4.sfc'))
-        raw = [k for k, c in enumerate(orig.chunks) if not c[4] & 1 and c[2] > 16
-               and os.path.exists(os.path.join(src, f'audio/chunks/{FIRST_CHUNK + k:03X}.bin'))]
-        k = raw[len(raw) // 2]
-        p = os.path.join(src, f'audio/chunks/{FIRST_CHUNK + k:03X}.bin')
-        open(p, 'ab').write(bytes(range(16)))
+        # Lengthen a sample in the middle of the region and a sequence (which
+        # the build then recompresses) by 16 bytes each.
+        edits = []
+        for folder, ext in [('samples', '.brr'), ('sequences', '.bin')]:
+            ids = sorted(int(f[:3], 16) for f in os.listdir(os.path.join(src, 'audio', folder)) if f.endswith(ext))
+            cid = ids[len(ids) // 2]
+            open(os.path.join(src, 'audio', folder, f'{cid:03X}{ext}'), 'ab').write(bytes(range(16)))
+            edits.append(cid - FIRST_CHUNK)
         r = subprocess.run(['./build.sh'], cwd=src, capture_output=True, text=True)
         built = os.path.join(src, 'FE4Disassembly.sfc')
         if not os.path.exists(built):
@@ -451,13 +477,14 @@ def self_test():
         diffs = [key for key in a if key != 'chunks' and a[key] != b[key]]
         changed = [j for j, (x, y) in enumerate(zip(a['chunks'], b['chunks'])) if x != y]
         moved = sum(1 for x, y in zip(orig.chunks, new.chunks) if x[0] != y[0])
-        shared = [j for j, c in enumerate(orig.chunks) if c[0] == orig.chunks[k][0]]
-        size, dest, flags, data = a['chunks'][k]
-        expect = (size + 16, dest, flags, data + bytes(range(16)))
-        ok = (not new.problems and not diffs and changed == shared and moved > 0
-              and all(b['chunks'][j] == expect for j in shared))
-        print(f'self-test: lengthened chunk ${FIRST_CHUNK + k:03X} by 16 bytes; {moved} chunks moved; '
-              f'chunks that differ: {", ".join(f"${FIRST_CHUNK + j:03X}" for j in changed) or "none"}; '
+        shared = sorted(j for k in edits for j, c in enumerate(orig.chunks) if c[0] == orig.chunks[k][0])
+        ok = not new.problems and not diffs and changed == shared and moved > 0
+        for j in shared:
+            size, dest, flags, data = a['chunks'][j]
+            ok = ok and b['chunks'][j] == (size + 16, dest, flags, data + bytes(range(16)))
+        print(f'self-test: lengthened sample ${FIRST_CHUNK + edits[0]:03X} and sequence '
+              f'${FIRST_CHUNK + edits[1]:03X} by 16 bytes; {moved} chunks moved; chunk IDs that differ: '
+              f'{", ".join(f"${FIRST_CHUNK + j:03X}" for j in changed) or "none"}; '
               f'other differences: {", ".join(diffs) or "none"}')
         print('self-test passed' if ok else 'self-test FAILED')
         return ok
@@ -492,6 +519,11 @@ def main():
           f'; {len(files)} files, {sum(len(v) for v in files.values()):,} bytes')
     place(args.write)
     if args.write:
+        for folder in FOLDERS:
+            d = os.path.join(ROOT, 'audio', folder)
+            for f in os.listdir(d) if os.path.isdir(d) else []:
+                if f'{folder}/{f}' not in files and not f.endswith('.lz'):
+                    os.remove(os.path.join(d, f))
         for p, data in files.items():
             full = os.path.join(ROOT, 'audio', p)
             os.makedirs(os.path.dirname(full), exist_ok=True)
