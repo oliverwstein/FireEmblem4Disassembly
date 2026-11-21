@@ -1238,59 +1238,57 @@
 
       aBattleAnimationPrograms ; 97/C8E4
 
-        ; Three pointers per entry (uncompressed data in bank $97, not decoded
-        ; yet): a word-offset table of move lists (each ended by $7F) and a
-        ; byte per step that picks one (bit 7 set) or is a single move, which
-        ; rlUnknown95DB2A queues for the combatant; and the table of movement
-        ; scripts for moves with bit 7 set (signed steps, one per frame).
+        ; Three pointers per entry: the move list table, the action table and
+        ; the movement script table (rlUnknown95E3FE), in
+        ; data/battle_animation/moves.asm; formats in include/BattleAnimation.h.
 
         .long dialogueEpilogue_Piece_Leif_End+127, dialogueEpilogue_Piece_Leif_End+63, dialogueEpilogue_Piece_DaisyPatty_LoverDead+256
-        .long $97CAC4, $97CA8B, $97CB63
-        .long $97CBFB, $97CBC4, $97CCB8
-        .long $97CCFF, $97CCF7, $97CD19
-        .long $97CD57, $97CD47, $97CD7C
-        .long $97CE02, $97CDC2, $97CE78
-        .long $97CF50, $97CF15, $97CF93
-        .long $97D01F, $97CFF0, $97D058
-        .long $97D0B7, $97D087, $97D0F5
-        .long $97D14C, $97D11D, $97D18C
-        .long $97D1CB, $97D194, $97D246
-        .long $97D2AA, $97D273, $97D317
-        .long $97D367, $97D32B, $97D3B7
-        .long $97D44B, $97D41B, $97D474
-        .long $97D4CD, $97D49E, $97D4F2
-        .long $97D52F, $97D500, $97D552
-        .long $97D5A1, $97D599, $97D5AF
-        .long $97D5EC, $97D5B5, $97D656
-        .long $97D6B3, $97D673, $97D70B
-        .long $97D784, $97D74B, $97D7AD
-        .long $97D802, $97D7D3, $97D827
-        .long $97D83D, $97D835, $97D84D
-        .long $97D863, $97D853, $97D87D
-        .long $97D8C3, $97D88A, $97D992
-        .long $97D9E1, $97D9A4, $97DA85
-        .long $97DABC, $97DA8D, $97DAC6
-        .long $97DAD5, $97DACD, $97DADF
-        .long $97DB1F, $97DAE5, $97DBB4
-        .long $97DC3C, $97DBFF, $97DCAA
-        .long $97DCFD, $97DCC0, $97DD66
-        .long $97DDBC, $97DD8B, $97DDFF
-        .long $97DE80, $97DE4E, $97DEA3
-        .long $97DF0E, $97DED6, $97DFB5
-        .long $97E094, $97E059, $97E0EF
-        .long $97E18A, $97E15B, $97E1A7
-        .long $97E202, $97E1D3, $97E221
-        .long $97E274, $97E243, $97E2B7
-        .long $97E30D, $97E305, $97E31C
-        .long $97E340, $97E330, $97E36E
-        .long $97E3D6, $97E397, $97E46B
-        .long $97E525, $97E4F0, $97E54D
-        .long $97E59B, $97E56C, $97E5E4
-        .long $97E637, $97E600, $97E6DC
-        .long $97E735, $97E707, $97E735
-        .long $97E745, $97E735, $97E766
-        .long $97E7AB, $97E7A6, $97E7C4
-        .long $97E835, $97E7FE, $97E8D1
+        .long aBattleAnimationMoveListsMyrmidonSword, aBattleAnimationActionsMyrmidonSword, aBattleAnimationMoveScriptsMyrmidonSword
+        .long aBattleAnimationMoveListsSwordmasterSword, aBattleAnimationActionsSwordmasterSword, aBattleAnimationMoveScriptsSwordmasterSword
+        .long aBattleAnimationMoveListsPrincessStaff, aBattleAnimationActionsPrincessStaff, aBattleAnimationMoveScriptsPrincessStaff
+        .long aBattleAnimationMoveListsWarMageMagic, aBattleAnimationActionsWarMageMagic, aBattleAnimationMoveScriptsWarMageMagic
+        .long aBattleAnimationMoveListsUnknown05, aBattleAnimationActionsUnknown05, aBattleAnimationMoveScriptsUnknown05
+        .long aBattleAnimationMoveListsUnknown06, aBattleAnimationActionsUnknown06, aBattleAnimationMoveScriptsUnknown06
+        .long aBattleAnimationMoveListsUnknown07, aBattleAnimationActionsUnknown07, aBattleAnimationMoveScriptsUnknown07
+        .long aBattleAnimationMoveListsUnknown08, aBattleAnimationActionsUnknown08, aBattleAnimationMoveScriptsUnknown08
+        .long aBattleAnimationMoveListsUnknown09, aBattleAnimationActionsUnknown09, aBattleAnimationMoveScriptsUnknown09
+        .long aBattleAnimationMoveListsDancerSword, aBattleAnimationActionsDancerSword, aBattleAnimationMoveScriptsDancerSword
+        .long aBattleAnimationMoveListsCavalierSword, aBattleAnimationActionsCavalierSword, aBattleAnimationMoveScriptsCavalierSword
+        .long aBattleAnimationMoveListsCavalierLance, aBattleAnimationActionsCavalierLance, aBattleAnimationMoveScriptsCavalierLance
+        .long aBattleAnimationMoveListsCavalierRangedLance, aBattleAnimationActionsCavalierRangedLance, aBattleAnimationMoveScriptsCavalierRangedLance
+        .long aBattleAnimationMoveListsAxeKnightRangedAxe, aBattleAnimationActionsAxeKnightRangedAxe, aBattleAnimationMoveScriptsAxeKnightRangedAxe
+        .long aBattleAnimationMoveListsBowKnightBow, aBattleAnimationActionsBowKnightBow, aBattleAnimationMoveScriptsBowKnightBow
+        .long aBattleAnimationMoveListsTroubadourStaff, aBattleAnimationActionsTroubadourStaff, aBattleAnimationMoveScriptsTroubadourStaff
+        .long aBattleAnimationMoveListsKnightLordSword, aBattleAnimationActionsKnightLordSword, aBattleAnimationMoveScriptsKnightLordSword
+        .long aBattleAnimationMoveListsKnightLordLance, aBattleAnimationActionsKnightLordLance, aBattleAnimationMoveScriptsKnightLordLance
+        .long aBattleAnimationMoveListsKnightLordRangedLance, aBattleAnimationActionsKnightLordRangedLance, aBattleAnimationMoveScriptsKnightLordRangedLance
+        .long aBattleAnimationMoveListsMasterKnightRangedAxe, aBattleAnimationActionsMasterKnightRangedAxe, aBattleAnimationMoveScriptsMasterKnightRangedAxe
+        .long aBattleAnimationMoveListsMasterKnightStaff, aBattleAnimationActionsMasterKnightStaff, aBattleAnimationMoveScriptsMasterKnightStaff
+        .long aBattleAnimationMoveListsMasterKnightMagic, aBattleAnimationActionsMasterKnightMagic, aBattleAnimationMoveScriptsMasterKnightMagic
+        .long aBattleAnimationMoveListsPegasusKnightSword, aBattleAnimationActionsPegasusKnightSword, aBattleAnimationMoveScriptsPegasusKnightSword
+        .long aBattleAnimationMoveListsPegasusKnightLance, aBattleAnimationActionsPegasusKnightLance, aBattleAnimationMoveScriptsPegasusKnightLance
+        .long aBattleAnimationMoveListsPegasusKnightRangedLance, aBattleAnimationActionsPegasusKnightRangedLance, aBattleAnimationMoveScriptsPegasusKnightRangedLance
+        .long aBattleAnimationMoveListsFalconKnightStaff, aBattleAnimationActionsFalconKnightStaff, aBattleAnimationMoveScriptsFalconKnightStaff
+        .long aBattleAnimationMoveListsDragonriderSword, aBattleAnimationActionsDragonriderSword, aBattleAnimationMoveScriptsDragonriderSword
+        .long aBattleAnimationMoveListsDragonriderLance, aBattleAnimationActionsDragonriderLance, aBattleAnimationMoveScriptsDragonriderLance
+        .long aBattleAnimationMoveListsDragonriderRangedLance, aBattleAnimationActionsDragonriderRangedLance, aBattleAnimationMoveScriptsDragonriderRangedLance
+        .long aBattleAnimationMoveListsBowArmorBow, aBattleAnimationActionsBowArmorBow, aBattleAnimationMoveScriptsBowArmorBow
+        .long aBattleAnimationMoveListsArcherBow, aBattleAnimationActionsArcherBow, aBattleAnimationMoveScriptsArcherBow
+        .long aBattleAnimationMoveListsGeneralSword, aBattleAnimationActionsGeneralSword, aBattleAnimationMoveScriptsGeneralSword
+        .long aBattleAnimationMoveListsGeneralLance, aBattleAnimationActionsGeneralLance, aBattleAnimationMoveScriptsGeneralLance
+        .long aBattleAnimationMoveListsGeneralRangedLance, aBattleAnimationActionsGeneralRangedLance, aBattleAnimationMoveScriptsGeneralRangedLance
+        .long aBattleAnimationMoveListsGeneralRangedAxe, aBattleAnimationActionsGeneralRangedAxe, aBattleAnimationMoveScriptsGeneralRangedAxe
+        .long aBattleAnimationMoveListsGeneralBow, aBattleAnimationActionsGeneralBow, aBattleAnimationMoveScriptsGeneralBow
+        .long aBattleAnimationMoveListsEmperorStaff, aBattleAnimationActionsEmperorStaff, aBattleAnimationMoveScriptsEmperorStaff
+        .long aBattleAnimationMoveListsEmperorMagic, aBattleAnimationActionsEmperorMagic, aBattleAnimationMoveScriptsEmperorMagic
+        .long aBattleAnimationMoveListsBarbarianAxe, aBattleAnimationActionsBarbarianAxe, aBattleAnimationMoveScriptsBarbarianAxe
+        .long aBattleAnimationMoveListsBarbarianRangedAxe, aBattleAnimationActionsBarbarianRangedAxe, aBattleAnimationMoveScriptsBarbarianRangedAxe
+        .long aBattleAnimationMoveListsWarriorBow, aBattleAnimationActionsWarriorBow, aBattleAnimationMoveScriptsWarriorBow
+        .long aBattleAnimationMoveListsWarMageSword, aBattleAnimationActionsWarMageSword, aBattleAnimationMoveScriptsWarMageSword
+        .long aBattleAnimationActionsDarkPrinceMagic, aBattleAnimationActionsBallisticianBow, aBattleAnimationActionsDarkPrinceMagic
+        .long aBattleAnimationMoveListsDarkPrinceMagic, aBattleAnimationActionsDarkPrinceMagic, aBattleAnimationMoveScriptsDarkPrinceMagic
+        .long aBattleAnimationMoveListsDancerDance, aBattleAnimationActionsDancerDance, aBattleAnimationMoveScriptsDancerDance
+        .long aBattleAnimationMoveListsJuniorLordSword, aBattleAnimationActionsJuniorLordSword, aBattleAnimationMoveScriptsJuniorLordSword
 
     .endsection BattleAnimationProgramsSection
 

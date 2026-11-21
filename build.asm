@@ -187,6 +187,7 @@
   .include "data/battle_animation/frames_99.asm"
   .include "data/battle_animation/frames_9A.asm"
   .include "data/battle_animation/frames_9B.asm"
+  .include "data/battle_animation/moves.asm"
 
     ; Compressed streams: generated from gfx/compressed/C00A2B/C00A2B.streams by build.sh.
     .include "gfx/compressed/C00A2B/Layout.asm"
@@ -13948,6 +13949,13 @@
     .logical $97C860
 
       .dsection BattleAnimationProgramsSection
+
+    .here
+
+    * = $17CA8B
+    .logical $97CA8B
+
+      .dsection BattleAnimationMoveDataSection
 
     .here
 

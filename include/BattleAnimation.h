@@ -230,3 +230,58 @@
       Extras    .byte \Extras
       Palette   .byte \Palette
     .endstruct
+
+  ; Move programs (data/battle_animation/moves.asm, written by
+  ; tools/battle_moves.py). Each aBattleAnimationPrograms entry points at a
+  ; list table, an action table and a script table, all in bank $97.
+  ;
+  ;   action table: a byte per action (rlUnknown95E3FE takes the action from
+  ;     a small table in bank $95 plus the variant in bits 0-1 of $0AF5,x,
+  ;     which ANIM_CMD_ED sets): a move list, or a single sequence.
+  ;   list table: a word offset per move list from the table start. A list
+  ;     is a run of steps rlUnknown95DB8A queues for the combatant
+  ;     ($7FE144), up to a $7F byte. rlUnknown95DA1D takes them one at a
+  ;     time: the low byte is the movement (rlUnknown95B1AB), the high byte
+  ;     the sequence it plays (rlUnknown95BA05; bits 0-5).
+  ;   script table: a word offset per movement script from the table start.
+  ;     A script is a signed byte per frame step of the sequence, moving the
+  ;     combatant (rsUnknown95E4D2); it has no end of its own.
+
+  ; Action table bytes.
+
+    ANIM_ACTION_LIST .segment List
+      .byte $80 | \List
+    .endsegment
+
+    ; Play the sequence without moving (rlUnknown95DBC5 queues it as $7E).
+    ANIM_ACTION_SEQUENCE .segment Sequence
+      .byte \Sequence
+    .endsegment
+
+  ; Move list steps.
+
+    ; Play Sequence while the combatant follows movement script Script
+    ; (bit 15 switches the movement on: bit 1 of $0AF4,x).
+    ANIM_MOVE_SCRIPT .segment Sequence, Script
+      .word $8000 | (\Sequence << 8) | $80 | \Script
+    .endsegment
+
+    ; Play Sequence without moving.
+    ANIM_MOVE_STILL .segment Sequence
+      .word (\Sequence << 8) | $7E
+    .endsegment
+
+    ; Play Sequence and run move routine Routine of
+    ; aBattleAnimationMoveRoutines. Routines 0, 10, 11, 12, 13 and 15 take
+    ; the next word of the list as their argument (ANIM_MOVE_ROUTINE_ARG).
+    ANIM_MOVE_ROUTINE .segment Sequence, Routine
+      .word (\Sequence << 8) | \Routine
+    .endsegment
+
+    ANIM_MOVE_ROUTINE_ARG .segment Sequence, Routine, Argument
+      .word (\Sequence << 8) | \Routine, \Argument
+    .endsegment
+
+    ANIM_MOVE_LIST_END .segment
+      .byte $7F
+    .endsegment
