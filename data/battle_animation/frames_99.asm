@@ -280,7 +280,7 @@
         .word aBattleAnimationSequencesGeneralRangedAxe._Record43 - aBattleAnimationSequencesGeneralSword
 
       _Sequence00
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 1
         ANIM_HOLD
 
@@ -292,12 +292,12 @@
         ANIM_STEP 20, 5
         ANIM_STEP 21, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence02
         ANIM_CMD_EB
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_SOUND 16
         ANIM_STEP 2, 5
         ANIM_STEP 3, 5
@@ -325,7 +325,7 @@
         ANIM_STEP 24, 10
         ANIM_STEP 23, 16
         ANIM_CMD_F3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_ED 3
         ANIM_HOLD
 
@@ -336,7 +336,7 @@
         ANIM_STEP 19, 9
         ANIM_STEP 20, 5
         ANIM_STEP 21, 4
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence05
@@ -353,7 +353,7 @@
         ANIM_STEP 29, 2
         ANIM_STEP 30, 16
         ANIM_CMD_F3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_ED 2
         ANIM_HOLD
 
@@ -367,7 +367,7 @@
         ANIM_STEP 29, 1
         ANIM_STEP 30, 1
         ANIM_CMD_F3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_ED 2
         ANIM_HOLD
 
@@ -375,12 +375,12 @@
         ANIM_STEP 14, 6
         ANIM_STEP 15, 32
         ANIM_STEP 16, 48
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence08
         ANIM_STEP 14, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence09
@@ -388,7 +388,7 @@
         ANIM_STEP 28, 2
         ANIM_STEP 29, 2
         ANIM_STEP 30, 6
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence10
@@ -404,7 +404,7 @@
         ANIM_STEP 20, 5
         ANIM_STEP 21, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence11
@@ -414,16 +414,16 @@
         ANIM_STEP 19, 11
         ANIM_STEP 20, 7
         ANIM_STEP 21, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence12
         ANIM_STEP 1, 32
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence13
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 22, 4
         ANIM_STEP 18, 3
         ANIM_STEP 19, 3
@@ -437,23 +437,23 @@
 
       _Sequence14
         ANIM_CMD_F1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 23, 10
         ANIM_HOLD
 
       _Sequence15
         ANIM_SOUND 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 17, 1
         ANIM_HOLD
 
       _Sequence16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 21, 24
         ANIM_HOLD
 
       _Sequence17
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 21, 32
         ANIM_HOLD
 
@@ -464,7 +464,7 @@
         ANIM_STEP 19, 6
         ANIM_STEP 20, 9
         ANIM_STEP 21, 3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence19
@@ -474,7 +474,7 @@
         ANIM_STEP 19, 6
         ANIM_STEP 20, 8
         ANIM_STEP 21, 3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence20
@@ -485,12 +485,12 @@
         ANIM_STEP 19, 6
         ANIM_STEP 20, 8
         ANIM_STEP 21, 3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence21
         ANIM_STEP 21, 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence22
@@ -499,7 +499,7 @@
         ANIM_CMD_F0 3
         ANIM_STEP 21, 3
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence23
@@ -508,14 +508,14 @@
         ANIM_STEP 24, 2
         ANIM_STEP 23, 2
         ANIM_CMD_F4 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence24
         ANIM_STEP 23, 2
         ANIM_STEP 22, 7
         ANIM_STEP 14, 8
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       aBattleAnimationSequencesGeneralRangedAxe ; 99/92D2
@@ -588,7 +588,7 @@
         .word _Record43 - aBattleAnimationSequencesGeneralRangedAxe
 
       _Sequence00
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 1
         ANIM_HOLD
 
@@ -606,7 +606,7 @@
         ANIM_STEP 21, 4
         ANIM_STEP 21, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence02
@@ -623,7 +623,7 @@
         ANIM_STEP 11, 7
         ANIM_STEP 12, 8
         ANIM_STEP 12, 64
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence03
@@ -631,14 +631,14 @@
         ANIM_STEP 14, 6
         ANIM_STEP 15, 32
         ANIM_STEP 16, 48
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence04
         ANIM_STEP 1, 48
         ANIM_STEP 14, 3
         ANIM_STEP 15, 19
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence05
@@ -648,7 +648,7 @@
         ANIM_STEP 19, 11
         ANIM_STEP 20, 7
         ANIM_STEP 21, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence06
@@ -659,7 +659,7 @@
         ANIM_STEP 17, 5
         ANIM_STEP 24, 10
         ANIM_STEP 23, 32
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence07
@@ -672,7 +672,7 @@
         ANIM_SOUND 12
         ANIM_STEP 31, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence08
@@ -680,11 +680,11 @@
         ANIM_STEP 28, 2
         ANIM_STEP 29, 2
         ANIM_STEP 30, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence09
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 21, 1
         ANIM_HOLD
 
@@ -698,7 +698,7 @@
         ANIM_STEP 37, 2
         ANIM_STEP 38, 2
         ANIM_RESTART
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence11
@@ -708,7 +708,7 @@
         ANIM_STEP 42, 7
         ANIM_STEP 43, 16
         ANIM_STEP 21, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence12
@@ -720,7 +720,7 @@
         ANIM_STEP 21, 31
         ANIM_STEP 21, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Record00
@@ -1603,7 +1603,7 @@
         .word aBattleAnimationSequencesGeneralRangedLance._Record38 - aBattleAnimationSequencesGeneralLance
 
       _Sequence00
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 1
         ANIM_HOLD
 
@@ -1615,11 +1615,11 @@
         ANIM_STEP 17, 5
         ANIM_STEP 18, 10
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence02
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_EB
         ANIM_SOUND 16
         ANIM_STEP 2, 5
@@ -1644,7 +1644,7 @@
         ANIM_STEP 16, 11
         ANIM_STEP 17, 7
         ANIM_STEP 18, 22
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence04
@@ -1661,7 +1661,7 @@
         ANIM_STEP 20, 8
         ANIM_CMD_F3
         ANIM_CMD_ED 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence05
@@ -1675,7 +1675,7 @@
         ANIM_STEP 17, 7
         ANIM_STEP 18, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence06
@@ -1685,7 +1685,7 @@
         ANIM_STEP 16, 11
         ANIM_STEP 17, 7
         ANIM_STEP 18, 22
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence07
@@ -1710,14 +1710,14 @@
         ANIM_STEP 20, 16
         ANIM_CMD_F3
         ANIM_CMD_ED 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence08
         ANIM_SOUND 16
         ANIM_STEP 20, 5
         ANIM_STEP 1, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence09
@@ -1725,19 +1725,19 @@
         ANIM_STEP 18, 5
         ANIM_STEP 9, 7
         ANIM_STEP 1, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence10
         ANIM_STEP 1, 4
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence11
         ANIM_STEP 14, 6
         ANIM_STEP 15, 32
         ANIM_STEP 16, 48
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence12
@@ -1754,7 +1754,7 @@
         ANIM_STEP 17, 5
         ANIM_STEP 18, 10
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       aBattleAnimationFramesGeneralRangedLance ; 99/A080
@@ -1976,7 +1976,7 @@
         .word _Record38 - aBattleAnimationSequencesGeneralRangedLance
 
       _Sequence00
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 1
         ANIM_HOLD
 
@@ -1994,7 +1994,7 @@
         ANIM_STEP 18, 4
         ANIM_STEP 18, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence02
@@ -2011,7 +2011,7 @@
         ANIM_STEP 11, 7
         ANIM_STEP 12, 8
         ANIM_STEP 12, 64
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence03
@@ -2022,7 +2022,7 @@
         ANIM_STEP 17, 7
         ANIM_STEP 18, 5
         ANIM_STEP 22, 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence04
@@ -2034,11 +2034,11 @@
         ANIM_STEP 18, 31
         ANIM_STEP 18, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence05
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 18, 16
         ANIM_HOLD
 
@@ -2050,13 +2050,13 @@
         ANIM_STEP 14, 6
         ANIM_STEP 21, 10
         ANIM_STEP 20, 32
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence07
         ANIM_STEP 18, 32
         ANIM_STEP 29, 32
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence08
@@ -2074,32 +2074,32 @@
         ANIM_STEP 35, 6
         ANIM_CMD_EE
         ANIM_STEP 35, 12
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence09
         ANIM_STEP 36, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence10
         ANIM_STEP 36, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence11
         ANIM_STEP 37, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence12
         ANIM_STEP 38, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence13
         ANIM_STEP 38, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence14
@@ -2112,7 +2112,7 @@
         ANIM_STEP 35, 8
         ANIM_CMD_EE
         ANIM_STEP 35, 32
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Record00
@@ -2972,12 +2972,12 @@
         .word _Record14 - aBattleAnimationSequencesGeneralBow
 
       _Sequence00
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 1
         ANIM_HOLD
 
       _Sequence01
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_SOUND 16
         ANIM_STEP 1, 4
         ANIM_STEP 11, 5
@@ -2985,7 +2985,7 @@
         ANIM_HOLD
 
       _Sequence02
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 2
         ANIM_CMD_EC 1
         ANIM_STEP 11, 1
@@ -3015,7 +3015,7 @@
         ANIM_STEP 9, 2
         ANIM_STEP 10, 2
         ANIM_STEP 9, 48
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence04
@@ -3032,7 +3032,7 @@
         ANIM_STEP 7, 1
         ANIM_STEP 6, 1
         ANIM_STEP 7, 48
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence05
@@ -3051,11 +3051,11 @@
         ANIM_STEP 9, 1
         ANIM_STEP 10, 1
         ANIM_STEP 9, 48
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence06
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 16
         ANIM_HOLD
 
@@ -3075,63 +3075,63 @@
         ANIM_STEP 7, 2
         ANIM_STEP 6, 2
         ANIM_STEP 7, 13
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence08
         ANIM_STEP 13, 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence09
         ANIM_STEP 13, 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence10
         ANIM_STEP 13, 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence11
         ANIM_STEP 13, 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence12
         ANIM_STEP 13, 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence13
         ANIM_STEP 11, 7
         ANIM_STEP 1, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence14
         ANIM_STEP 12, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence15
         ANIM_STEP 12, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence16
         ANIM_STEP 13, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence17
         ANIM_STEP 14, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence18
         ANIM_STEP 14, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence19
@@ -3150,7 +3150,7 @@
         ANIM_STEP 7, 2
         ANIM_STEP 6, 2
         ANIM_STEP 7, 13
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence20
@@ -3170,7 +3170,7 @@
         ANIM_STEP 9, 2
         ANIM_STEP 10, 2
         ANIM_STEP 9, 48
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Record00
@@ -3687,7 +3687,7 @@
         .word _Record43 - aBattleAnimationSequencesEmperorStaff
 
       _Sequence00
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 1
         ANIM_HOLD
 
@@ -3705,7 +3705,7 @@
         ANIM_STEP 21, 4
         ANIM_STEP 21, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence02
@@ -3736,14 +3736,14 @@
         ANIM_STEP 15, 5
         ANIM_STEP 14, 8
         ANIM_STEP 1, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence04
         ANIM_STEP 1, 48
         ANIM_STEP 14, 3
         ANIM_STEP 15, 19
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence05
@@ -3755,7 +3755,7 @@
         ANIM_STEP 21, 31
         ANIM_STEP 21, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence06
@@ -4714,7 +4714,7 @@
         .word _Record43 - aBattleAnimationSequencesEmperorMagic
 
       _Sequence00
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 1
         ANIM_HOLD
 
@@ -4732,7 +4732,7 @@
         ANIM_STEP 21, 4
         ANIM_STEP 21, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence02
@@ -4763,14 +4763,14 @@
         ANIM_STEP 15, 5
         ANIM_STEP 14, 8
         ANIM_STEP 1, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence04
         ANIM_STEP 1, 48
         ANIM_STEP 14, 3
         ANIM_STEP 15, 19
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence05
@@ -4782,7 +4782,7 @@
         ANIM_STEP 21, 31
         ANIM_STEP 21, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence06
@@ -4792,7 +4792,7 @@
         ANIM_STEP 3, 4
         ANIM_STEP 2, 5
         ANIM_STEP 1, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence07
@@ -4806,21 +4806,21 @@
         ANIM_CMD_F0 3
         ANIM_STEP 21, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence08
         ANIM_STEP 21, 2
         ANIM_SOUND 16
         ANIM_STEP 22, 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence09
         ANIM_STEP 23, 3
         ANIM_STEP 24, 3
         ANIM_CMD_F4 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence10
@@ -4837,7 +4837,7 @@
         ANIM_STEP 22, 7
         ANIM_STEP 16, 7
         ANIM_STEP 1, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Record00
@@ -5556,7 +5556,7 @@
 
       _Sequence00
         ANIM_STEP 1, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence01
@@ -5577,23 +5577,23 @@
         ANIM_STEP 3, 2
         ANIM_STEP 2, 2
         ANIM_STEP 3, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence02
         ANIM_STEP 1, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence03
         ANIM_STEP 6, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence04
         ANIM_STEP 7, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Record00
@@ -6091,7 +6091,7 @@
         .word aBattleAnimationSequencesBarbarianRangedAxe._Record49 - aBattleAnimationSequencesBarbarianAxe
 
       _Sequence00
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 2
         ANIM_HOLD
 
@@ -6100,7 +6100,7 @@
         ANIM_STEP 9, 26
         ANIM_STEP 1, 2
         ANIM_CMD_F4 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence02
@@ -6114,18 +6114,18 @@
         ANIM_STEP 18, 4
         ANIM_STEP 1, 10
         ANIM_CMD_F4 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence03
         ANIM_STEP 6, 5
         ANIM_STEP 1, 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence04
         ANIM_CMD_EB
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_SOUND 28
         ANIM_STEP 16, 7
         ANIM_STEP 17, 7
@@ -6148,12 +6148,12 @@
         ANIM_CMD_F1
         ANIM_STEP 6, 10
         ANIM_CMD_F3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence06
         ANIM_CMD_EB
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_SOUND 17
         ANIM_STEP 10, 7
         ANIM_STEP 11, 7
@@ -6181,31 +6181,31 @@
         ANIM_CMD_F1
         ANIM_STEP 31, 10
         ANIM_CMD_F3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence08
         ANIM_STEP 1, 9
         ANIM_STEP 12, 5
         ANIM_STEP 21, 31
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence09
         ANIM_STEP 39, 6
         ANIM_STEP 46, 2
         ANIM_STEP 40, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence10
         ANIM_STEP 7, 7
         ANIM_STEP 1, 10
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence11
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_SOUND 23
         ANIM_STEP 34, 18
         ANIM_STEP 35, 7
@@ -6222,7 +6222,7 @@
       _Sequence12
         ANIM_STEP 38, 7
         ANIM_STEP 38, 12
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence13
@@ -6236,12 +6236,12 @@
         ANIM_SOUND 0
         ANIM_STEP 38, 1
         ANIM_CMD_F3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence14
         ANIM_STEP 38, 24
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence15
@@ -6256,12 +6256,12 @@
         ANIM_STEP 38, 1
         ANIM_CMD_EC 0
         ANIM_CMD_F3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence16
         ANIM_STEP 9, 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence17
@@ -6275,12 +6275,12 @@
         ANIM_STEP 51, 1 ; record 51: past the end of the list, never read in fe4.cdl
         ANIM_STEP 50, 1 ; record 50: past the end of the list, never read in fe4.cdl
         ANIM_RESTART
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence18
         ANIM_CMD_EB
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 22, 2
         ANIM_STEP 23, 2
         ANIM_STEP 24, 2
@@ -6298,7 +6298,7 @@
         ANIM_STEP 39, 2
         ANIM_STEP 40, 6
         ANIM_STEP 39, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence20
@@ -6308,7 +6308,7 @@
         ANIM_STEP 33, 2
         ANIM_CMD_F4 1
         ANIM_STEP 33, 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       aBattleAnimationSequencesBarbarianRangedAxe ; 99/D407
@@ -6382,7 +6382,7 @@
         .word _Record49 - aBattleAnimationSequencesBarbarianRangedAxe
 
       _Sequence00
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 1
         ANIM_HOLD
 
@@ -6391,7 +6391,7 @@
         ANIM_STEP 9, 19
         ANIM_STEP 1, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence02
@@ -6405,7 +6405,7 @@
         ANIM_STEP 18, 5
         ANIM_STEP 1, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence03
@@ -6417,7 +6417,7 @@
         ANIM_CMD_F4 1
         ANIM_STEP 32, 16
         ANIM_STEP 1, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence04
@@ -6430,7 +6430,7 @@
         ANIM_CMD_F4 1
         ANIM_STEP 32, 16
         ANIM_STEP 1, 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence05
@@ -6444,17 +6444,17 @@
         ANIM_STEP 49, 2
         ANIM_STEP 48, 2
         ANIM_RESTART
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence06
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 32
         ANIM_HOLD
 
       _Sequence07
         ANIM_STEP 1, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Record00
@@ -7098,7 +7098,7 @@
         .word _Record18 - aBattleAnimationSequencesWarriorBow
 
       _Sequence00
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 1
         ANIM_HOLD
 
@@ -7117,7 +7117,7 @@
         ANIM_STEP 8, 1
         ANIM_STEP 7, 1
         ANIM_STEP 8, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence02
@@ -7127,11 +7127,11 @@
         ANIM_STEP 5, 32
         ANIM_SOUND 9
         ANIM_STEP 16, 38
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence03
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 2, 1
         ANIM_HOLD
 
@@ -7144,7 +7144,7 @@
         ANIM_STEP 12, 4
         ANIM_STEP 12, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence05
@@ -7163,7 +7163,7 @@
         ANIM_STEP 18, 1
         ANIM_STEP 17, 1
         ANIM_STEP 18, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence06
@@ -7173,69 +7173,69 @@
         ANIM_STEP 5, 32
         ANIM_SOUND 9
         ANIM_STEP 6, 38
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence07
         ANIM_STEP 1, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence08
         ANIM_STEP 1, 16
         ANIM_STEP 8, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence09
         ANIM_STEP 14, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence10
         ANIM_STEP 14, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence11
         ANIM_STEP 14, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence12
         ANIM_STEP 14, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence13
         ANIM_STEP 14, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence14
         ANIM_STEP 13, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence15
         ANIM_STEP 13, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence16
         ANIM_STEP 14, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence17
         ANIM_STEP 15, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence18
         ANIM_STEP 15, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence19
@@ -7244,7 +7244,7 @@
         ANIM_STEP 5, 32
         ANIM_SOUND 9
         ANIM_STEP 16, 38
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence20
@@ -7254,7 +7254,7 @@
         ANIM_STEP 5, 32
         ANIM_SOUND 9
         ANIM_STEP 6, 38
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence21
@@ -7264,7 +7264,7 @@
         ANIM_STEP 5, 32
         ANIM_SOUND 9
         ANIM_STEP 16, 64
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence22
@@ -7274,7 +7274,7 @@
         ANIM_STEP 5, 32
         ANIM_SOUND 9
         ANIM_STEP 6, 64
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Record00
@@ -7777,11 +7777,11 @@
 
       _Sequence00
         ANIM_STEP 1, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence01
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_SOUND 18
         ANIM_STEP 8, 8
         ANIM_CMD_EE
@@ -7789,7 +7789,7 @@
         ANIM_HOLD
 
       _Sequence02
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_E8
         ANIM_STEP 2, 6
         ANIM_STEP 3, 6
@@ -7811,7 +7811,7 @@
         ANIM_SOUND 0
         ANIM_STEP 12, 16
         ANIM_CMD_F3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_ED 3
         ANIM_HOLD
 
@@ -7823,7 +7823,7 @@
         ANIM_STEP 14, 2
         ANIM_STEP 15, 3
         ANIM_STEP 16, 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence05
@@ -7835,13 +7835,13 @@
         ANIM_STEP 20, 32
         ANIM_CMD_F3
         ANIM_CMD_ED 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence06
         ANIM_STEP 20, 5
         ANIM_STEP 21, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence07
@@ -7850,7 +7850,7 @@
         ANIM_STEP 23, 6
         ANIM_STEP 27, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence08
@@ -7862,12 +7862,12 @@
         ANIM_CMD_F4 1
         ANIM_STEP 26, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence09
         ANIM_STEP 1, 16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence10
@@ -7878,7 +7878,7 @@
         ANIM_STEP 8, 9
         ANIM_SOUND 24
         ANIM_STEP 9, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence11
@@ -7889,17 +7889,17 @@
         ANIM_SOUND 0
         ANIM_STEP 12, 16
         ANIM_CMD_F3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_ED 3
         ANIM_HOLD
 
       _Sequence12
         ANIM_STEP 27, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence13
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_SOUND 23
         ANIM_STEP 28, 14
         ANIM_STEP 29, 4
@@ -7910,7 +7910,7 @@
         ANIM_HOLD
 
       _Sequence14
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 27, 10
         ANIM_HOLD
 
@@ -7919,11 +7919,11 @@
         ANIM_STEP 3, 4
         ANIM_STEP 4, 4
         ANIM_STEP 5, 4
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_EC 1
         ANIM_SOUND 23
         ANIM_STEP 5, 2
@@ -7942,14 +7942,14 @@
       _Sequence17
         ANIM_STEP 12, 16
         ANIM_CMD_F3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_ED 3
         ANIM_HOLD
 
       _Sequence18
         ANIM_STEP 27, 5
         ANIM_STEP 1, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Record00
@@ -8659,7 +8659,7 @@
         .word _Record47 - aBattleAnimationSequencesJuniorLordSword
 
       _Sequence00
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 1, 1
         ANIM_HOLD
 
@@ -8680,7 +8680,7 @@
         ANIM_STEP 16, 5
         ANIM_CMD_F3
         ANIM_STEP 16, 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_ED 3
         ANIM_HOLD
 
@@ -8691,7 +8691,7 @@
         ANIM_STEP 18, 2
         ANIM_STEP 19, 2
         ANIM_STEP 20, 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence04
@@ -8708,7 +8708,7 @@
         ANIM_STEP 28, 21
         ANIM_CMD_F3
         ANIM_CMD_ED 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence05
@@ -8717,11 +8717,11 @@
         ANIM_STEP 28, 2
         ANIM_STEP 29, 3
         ANIM_STEP 30, 3
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence06
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_SOUND 23
         ANIM_STEP 9, 24
         ANIM_STEP 46, 6
@@ -8732,7 +8732,7 @@
         ANIM_HOLD
 
       _Sequence07
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 33, 5
         ANIM_STEP 34, 5
         ANIM_STEP 35, 4
@@ -8747,12 +8747,12 @@
         ANIM_STEP 31, 1
         ANIM_CMD_F4 1
         ANIM_STEP 1, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence09
         ANIM_CMD_EB
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 3, 6
         ANIM_STEP 4, 6
         ANIM_SOUND 18
@@ -8769,7 +8769,7 @@
         ANIM_STEP 33, 3
         ANIM_STEP 34, 4
         ANIM_STEP 35, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence11
@@ -8780,14 +8780,14 @@
         ANIM_CMD_F0 3
         ANIM_STEP 38, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence12
         ANIM_STEP 39, 1
         ANIM_CMD_F4 1
         ANIM_STEP 36, 5
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence13
@@ -8798,7 +8798,7 @@
         ANIM_STEP 36, 15
         ANIM_STEP 36, 1
         ANIM_CMD_F4 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence14
@@ -8811,7 +8811,7 @@
         ANIM_STEP 45, 6
         ANIM_STEP 46, 6
         ANIM_SOUND 24
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence15
@@ -8825,12 +8825,12 @@
         ANIM_STEP 15, 5
         ANIM_CMD_F3
         ANIM_STEP 16, 2
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_ED 3
         ANIM_HOLD
 
       _Sequence16
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_EC 1
         ANIM_CMD_EE
         ANIM_STEP 47, 2
@@ -8847,7 +8847,7 @@
         ANIM_STEP 47, 1
         ANIM_STEP 47, 1
         ANIM_CMD_EC 0
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence17
@@ -8855,16 +8855,16 @@
         ANIM_CMD_EE
         ANIM_STEP 9, 8
         ANIM_SOUND 18
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence18
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 36, 5
         ANIM_HOLD
 
       _Sequence19
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_CMD_EC 1
         ANIM_STEP 47, 2
         ANIM_STEP 47, 2
@@ -8912,11 +8912,11 @@
         ANIM_STEP 22, 1
         ANIM_STEP 23, 1
         ANIM_STEP 24, 1
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_HOLD
 
       _Sequence21
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 33, 2
         ANIM_STEP 34, 3
         ANIM_STEP 35, 5
@@ -8937,7 +8937,7 @@
         ANIM_HOLD
 
       _Sequence22
-        ANIM_CMD_F7
+        ANIM_CLEAR_BUSY
         ANIM_STEP 33, 3
         ANIM_STEP 34, 1
         ANIM_CMD_EE

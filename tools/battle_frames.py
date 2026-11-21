@@ -65,10 +65,14 @@ REGIONS = [(0x98B41E, 0x98FF85), (0x998FA1, 0x99F6C1), (0x9ABA2A, 0x9AFEAA), (0x
 # (block, offset of the sequence in the block). Four steps in all, three
 # distinct: two sequences share the one in $9A/C88D.
 KNOWN_BAD_SEQUENCES = {(0x99D20F, 0x1AA), (0x9AC88D, 0x11E), (0x9AC88D, 0x124)}
+# Weapon categories (high nibble of the item's byte in the table at $99/83B9,
+# read by rlUnknown95A1ED): 5 is the Javelin and 6 the Hand Axe and Helswath,
+# which use them only at wBattleDistance 2 or more (else lance or axe).
 CATEGORIES = {0: 'Sword', 1: 'Lance', 2: 'Axe', 3: 'Bow', 5: 'RangedLance', 6: 'RangedAxe',
               7: 'Magic', 8: 'Staff'}
 COMMANDS = {0xFF: 'ANIM_END', 0xFE: 'ANIM_HOLD', 0xFD: 'ANIM_RESTART', 0xFC: 'ANIM_BACK',
-            0xFB: 'ANIM_WAIT', 0xFA: 'ANIM_SOUND', 0xF9: 'ANIM_NOP'}
+            0xFB: 'ANIM_WAIT', 0xFA: 'ANIM_SOUND', 0xF9: 'ANIM_NOP', 0xF7: 'ANIM_CLEAR_BUSY',
+            0xF6: 'ANIM_SET_BUSY'}
 ARG_REQUIRED = {0xFC, 0xFB, 0xFA, 0xF4, 0xEF, 0xED, 0xEC}
 
 
@@ -350,7 +354,9 @@ def emit(d, problems_bad):
                 seq_here = [n for n in labels if n.startswith('_Sequence')]
                 if kind == 'record' and seq_here:
                     out.append(f'        ; {seq_here[0]} is this record\'s first two bytes, read as a step: '
-                               f'$FF (ANIM_END) and the low byte of the sprite count.')
+                               f'its frame number $FF')
+                    out.append(f'        ; (ANIM_END) and the low byte of the sprite count. Keep the frame '
+                               f'ANIM_KEEP_TILES, or {seq_here[0]} changes.')
                 if kind in ('index', 'list'):
                     blk = next(S for S, b in d.blocks.items() if b['index' if kind == 'index' else 'list'] == x)
                     targets = d.blocks[blk]['seqs' if kind == 'index' else 'recs']

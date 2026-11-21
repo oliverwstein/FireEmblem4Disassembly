@@ -100,13 +100,17 @@
       .byte $F8, \Arg
     .endsegment
 
-    ; $F7: clear bit 2 of $0AF3,x (rsUnknown95BD89).
-    ANIM_CMD_F7 .segment Arg=0
+    ; $F7: clear the combatant's busy bit (bit 2 of $0AF3,x; rsUnknown95BD89).
+    ; rlUnknown95BA05 and rlUnknown95BA76 set it when they start a sequence and
+    ; refuse to start another while it is set, and rsUnknown958C52 waits until
+    ; both combatants have it clear. Most sequences end ANIM_CLEAR_BUSY,
+    ; ANIM_HOLD.
+    ANIM_CLEAR_BUSY .segment Arg=0
       .byte $F7, \Arg
     .endsegment
 
-    ; $F6: set bit 2 of $0AF3,x (rsUnknown95BDA0). Not used.
-    ANIM_CMD_F6 .segment Arg=0
+    ; $F6: set the busy bit again (rsUnknown95BDA0). Not used.
+    ANIM_SET_BUSY .segment Arg=0
       .byte $F6, \Arg
     .endsegment
 
