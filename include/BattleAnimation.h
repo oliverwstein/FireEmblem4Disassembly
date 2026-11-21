@@ -84,7 +84,7 @@
       .byte $FB, \Frames
     .endsegment
 
-    ; $FA: play sound effect Index of the word table at $98/ACC0, with the
+    ; $FA: play sound effect Index of aBattleAnimationSoundEffects, at the
     ; combatant's position (rsUnknown95BD10).
     ANIM_SOUND .segment Index
       .byte $FA, \Index

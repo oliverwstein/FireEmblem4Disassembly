@@ -1727,3 +1727,23 @@
         .long g4bppcBattleWeaponGreatBallista
 
     .endsection BattleWeaponGraphicsSection
+
+    .section BattleAnimationSoundEffectsSection
+
+      .al
+      .xl
+
+      aBattleAnimationSoundEffects ; 98/ACC0
+
+        ; The sound effect of each ANIM_SOUND index (rsUnknown95BD10), played
+        ; with rlPlaySoundEffect2 at the combatant's position. 34 entries: the
+        ; sequences use indices up to 33, and the battle scene script's own
+        ; table follows at $98/AD04.
+
+        .word $008C, $008E, $008C, $008C, $006D, $0047, $008C, $008C
+        .word $004A, $004B, $0070, $0049, $006C, $0004, $004D, $008C
+        .word $0011, $0012, $0013, $0017, $001D, $001E, $001F, $0015
+        .word $0016, $0018, $0019, $000A, $0014, $008C, $008C, $008C
+        .word $0001, $004F
+
+    .endsection BattleAnimationSoundEffectsSection

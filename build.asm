@@ -13965,6 +13965,13 @@
 
     .here
 
+    * = $18ACC0
+    .logical $98ACC0
+
+      .dsection BattleAnimationSoundEffectsSection
+
+    .here
+
     * = $18B41E
     .logical $98B41E
 

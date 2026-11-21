@@ -9921,7 +9921,7 @@
         phx
         asl a
         tax
-        lda $98ACC0,x
+        lda aBattleAnimationSoundEffects,x
         plx
         jsr rsUnknown95C0F3
         jsr rsUnknown95C17A
