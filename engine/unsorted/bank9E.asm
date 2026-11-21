@@ -13201,6 +13201,37 @@
     .endsection Unsorted9EF1B5Section
 
 
+    .section Unsorted9EF1D9Section
+
+      .al
+      .xl
+
+      rlUnknown9EF1D9 ; 9E/F1D9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta $7F4C87
+        lda #$FFFF
+        sta $7E4EA9
+        sta $7E4EBB
+        lda #(`procUnknown9EF24B)<<8
+        sta lR44+1
+        lda #<>procUnknown9EF24B
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 9E/F1FA
+
+    .endsection Unsorted9EF1D9Section
+
+
     .section Unsorted9EF1FASection
 
       .al
@@ -13344,6 +13375,53 @@
         .databank 0
 
     .endsection Unsorted9EF1FASection
+
+
+    .section Unsorted9EF353Section
+
+      .al
+      .xl
+
+      rlUnknown9EF353 ; 9E/F353
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $7F4C07
+        lda #(`procUnknown9EF37F)<<8
+        sta lR44+1
+        lda #<>procUnknown9EF37F
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 9E/F369
+      rlUnknown9EF369 ; 9E/F369
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0004
+        sta $7F4C07
+        lda #(`procUnknown9EF37F)<<8
+        sta lR44+1
+        lda #<>procUnknown9EF37F
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 9E/F37F
+
+    .endsection Unsorted9EF353Section
 
 
     .section Unsorted9EF37FSection

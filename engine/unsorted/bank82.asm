@@ -385,6 +385,32 @@
     .endsection Unsorted828BB3Section
 
 
+    .section Unsorted829487Section
+
+      .al
+      .xl
+
+      rlUnknown829487 ; 82/9487
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8200
+        sta lR44+1
+        lda #$8B46
+        sta lR44
+        jsl rlEventEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 82/9496
+
+    .endsection Unsorted829487Section
+
+
     .section Unsorted829496Section
 
       .al
@@ -444,6 +470,37 @@
         ; 82/94CF
 
     .endsection Unsorted8294C0Section
+
+
+    .section Unsorted8294CFSection
+
+      .al
+      .xl
+
+      rlUnknown8294CF ; 82/94CF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$8800
+        sta lR44+1
+        lda #$E02B
+        sta lR44
+        jsl rlProcEngineCreateProc
+        lda #$8200
+        sta lR44+1
+        lda #$8BC8
+        sta lR44
+        jsl rlEventEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 82/94EC
+
+    .endsection Unsorted8294CFSection
 
 
     .section Unsorted82E028Section

@@ -116,8 +116,8 @@
     .autsiz
     .databank ?
 
-    jsl $9FF4C5
-    jsl $829487
+    jsl rlUnknown9FF4C5
+    jsl rlUnknown829487
     rtl
 
     .databank 0

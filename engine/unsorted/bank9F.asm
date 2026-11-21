@@ -4355,3 +4355,31 @@
         ; 9F/F4C5
 
     .endsection Unsorted9FF4B7Section
+
+
+    .section Unsorted9FF4C5Section
+
+      .al
+      .xl
+
+      rlUnknown9FF4C5 ; 9F/F4C5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$9F00
+        sta lR44+1
+        lda #$F4D6
+        sta lR44
+        jsl rlProcEngineCreateProc
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9F/F4D6
+
+    .endsection Unsorted9FF4C5Section

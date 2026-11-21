@@ -265,7 +265,7 @@
       sta $7E4EAB
       lda #_Coordinates[1]
       sta $7E4EAD
-      jsl $9EF353
+      jsl rlUnknown9EF353
       rtl
 
       .databank 0

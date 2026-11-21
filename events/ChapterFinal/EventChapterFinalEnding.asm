@@ -367,7 +367,7 @@
     .autsiz
     .databank ?
 
-    jsl $8DA288
+    jsl rlUnknown8DA288
     rtl
 
     .databank 0

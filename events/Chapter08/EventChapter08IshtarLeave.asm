@@ -137,8 +137,8 @@
     sta $7E4EAB
     lda $7ECCBE
     sta $7E4EAD
-    jsl $9EF369
-    jsl $829487
+    jsl rlUnknown9EF369
+    jsl rlUnknown829487
     rtl
 
     .databank 0

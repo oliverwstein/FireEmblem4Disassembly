@@ -562,6 +562,38 @@
     .endsection Unsorted8DA0C6Section
 
 
+    .section Unsorted8DA288Section
+
+      .al
+      .xl
+
+      rlUnknown8DA288 ; 8D/A288
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz $08DA,b
+        lda #$FFFF
+        sta wCurrentChapter,b
+        lda #$ECC9
+        sta $0ECF,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        jsl rlUnknown88B3AF
+        rtl
+
+        .databank 0
+
+        ; 8D/A2AA
+
+    .endsection Unsorted8DA288Section
+
+
     .section Unsorted8DA2AASection
 
       .al

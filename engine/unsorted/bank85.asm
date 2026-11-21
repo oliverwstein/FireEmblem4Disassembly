@@ -4355,8 +4355,8 @@
 
       aUnknown85A079 ; 85/A079
 
-        .word <>rsUnknown85A085, <>rsUnknown85A0A1, <>$85A0CE
-        .word <>rlUnknown85A0D0, <>rsUnknown85A0D9, <>$85A0F5
+        .word <>rsUnknown85A085, <>rsUnknown85A0A1, <>rsUnknown85A0CE
+        .word <>rlUnknown85A0D0, <>rsUnknown85A0D9, <>rsUnknown85A0F5
 
       rsUnknown85A085 ; 85/A085
 
@@ -4423,6 +4423,27 @@
     .endsection Unsorted85A0A1Section
 
 
+    .section Unsorted85A0CESection
+
+      .al
+      .xl
+
+      rsUnknown85A0CE ; 85/A0CE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        bra rsUnknown85A0A1
+
+        .databank 0
+
+        ; 85/A0D0
+
+    .endsection Unsorted85A0CESection
+
+
     .section Unsorted85A0D0Section
 
       .al
@@ -4471,6 +4492,27 @@
         ; 85/A0F5
 
     .endsection Unsorted85A0D0Section
+
+
+    .section Unsorted85A0F5Section
+
+      .al
+      .xl
+
+      rsUnknown85A0F5 ; 85/A0F5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 85/A0F6
+
+    .endsection Unsorted85A0F5Section
 
 
     .section Unsorted85A117Section

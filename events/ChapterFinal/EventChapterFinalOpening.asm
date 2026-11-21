@@ -188,7 +188,7 @@
     sta $7E4EAB
     lda #6
     sta $7E4EAD
-    jsl $9EF1D9
+    jsl rlUnknown9EF1D9
     jsl rlCreateProcHaltEvent
     rtl
 

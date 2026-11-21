@@ -56,7 +56,7 @@
     sta $7E4EAB
     lda #$001E
     sta $7E4EAD
-    jsl $9EF1D9
+    jsl rlUnknown9EF1D9
     jsl rlCreateProcHaltEvent
     rtl
 
@@ -78,7 +78,7 @@
     sta $7E4EAB
     lda #10
     sta $7E4EAD
-    jsl $9EF353
+    jsl rlUnknown9EF353
     jsl rlCreateProcHaltEvent
     rtl
 

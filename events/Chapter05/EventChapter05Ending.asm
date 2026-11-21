@@ -204,7 +204,7 @@
     RUN_ASM rlASMCArvisAttacksSigurd
     YIELD
 
-    RUN_ASM $8294CF
+    RUN_ASM rlUnknown8294CF
     YIELD
 
     RUN_EVENT_CONDITION
