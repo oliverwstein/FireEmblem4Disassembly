@@ -6408,3 +6408,88 @@
         ANIM_RECORD_END
 
     .endsection BattleAnimationFrameData9ASection
+
+
+    .section DemoBattles9ASection
+
+      .al
+      .xl
+
+      aDemoBattle18 ; 9A/FEAA
+        .byte $00, $00, $00, $16, $00, $00, $32, $FF, $FF, $12, $92, $00, $23, $00, $23, $00
+        .byte $12, $00, $FF, $00, $FF, $00, $FF, $00, $36, $05
+        .long dialogueDemoBattleQuote8D84A0
+        .long dialogueDemoBattleQuote8D85B7
+
+      aDemoBattle18_UnitList ; 9A/FECA
+        .word $0000, $FFFF
+
+      aDemoBattle19 ; 9A/FECE
+        .byte $00, $00, $00, $3E, $00, $00, $32, $FF, $FF, $08, $88, $00, $1C, $00, $1C, $00
+        .byte $0A, $00, $FF, $00, $FF, $00, $FF, $00, $36, $05
+        .long dialogueDemoBattleQuote8D84C1
+        .word $0000
+
+      aDemoBattle19_UnitList ; 9A/FEED
+        .word $0000, $FFFF
+
+      aDemoBattle20 ; 9A/FEF1
+        .byte $00, $06, $00, $11, $00, $07, $05, $24, $59, $08, $08, $32, $25, $15, $25, $13
+        .byte $0E, $FF, $FF, $FF, $FF, $FF, $FF, $05, $05, $05
+        .long dialogueDemoBattleQuote8D84EC
+        .word $0000
+
+      aDemoBattle20_UnitList ; 9A/FF10
+        .word $1D02, $FFFF
+
+      aDemoBattle21 ; 9A/FF14
+        .byte $00, $66, $01, $2C, $00, $14, $13, $23, $24, $07, $07, $46, $31, $46, $31, $1B
+        .byte $11, $5F, $4E, $42, $3F, $25, $1F, $60, $36, $05
+        .long dialogueDemoBattleQuote8D85D1
+        .word $0000
+
+      aDemoBattle21_UnitList ; 9A/FF33
+        .word $2301, $1A00, $0009, $FFFF
+
+      aDemoBattle22 ; 9A/FF3B
+        .byte $00, $A5, $00, $33, $00, $14, $15, $05, $36, $06, $06, $30, $2A, $30, $2A, $0D
+        .byte $0C, $34, $54, $12, $37, $08, $0F, $60, $36, $01
+        .long dialogueDemoBattleQuote8D8508
+        .word $0000
+
+      aDemoBattle22_UnitList ; 9A/FF5A
+        .word $3034, $FFFF
+
+      aDemoBattle23 ; 9A/FF5E
+        .byte $00, $5B, $01, $39, $00, $28, $3F, $29, $0D, $12, $04, $3C, $2B, $3C, $2B, $19
+        .byte $0E, $28, $64, $1E, $11, $0C, $0B, $60, $36, $05
+        .word $0000
+        .long dialogueDemoBattleQuote8D8524
+
+      aDemoBattle23_UnitList ; 9A/FF7D
+        .word $0500, $0009, $FFFF
+
+      aDemoBattle24 ; 9A/FF83
+        .byte $00, $C4, $01, $08, $00, $3E, $3A, $51, $4B, $09, $09, $50, $38, $50, $14, $1E
+        .byte $1E, $17, $64, $31, $30, $1B, $0F, $C7, $96, $01
+        .word $0000
+        .long dialogueDemoBattleQuote8D853E
+
+      aDemoBattle24_UnitList ; 9A/FFA2
+        .word $4544, $1441, $FFFF
+
+      aDemoBattle25 ; 9A/FFA8
+        .byte $00, $08, $00, $3A, $02, $3A, $3A, $FF, $62, $09, $09, $38, $50, $38, $50, $1E
+        .byte $FF, $FF, $FF, $FF, $FF, $FF, $FF, $96, $D6, $01
+        .word $0000
+        .word $0000
+
+      aDemoBattle25_UnitList ; 9A/FFC6
+        .word $3802, $FFFF
+
+
+    .endsection DemoBattles9ASection
+
+
+
+

@@ -927,3 +927,7 @@ aClassCardPaletteDarkMage ; 8C/C4A0
 aClassCardPaletteThief ; 8C/C4C0
   .word $3800, $00AA, $010D, $19B2, $0066, $2CE6, $084D, $000A
   .word $45AC, $66B4, $6F7B, $3237, $0D08, $10C8, $1E79, $0C63
+
+aClassCardPaletteUnknown8CC4E0 ; 8C/C4E0
+  .word $3800, $42B8, $2A14, $19B2, $012E, $35B8, $2134, $108F
+  .word $000A, $5294, $6F7B, $29F5, $20E5, $0C86, $1E79, $0C84

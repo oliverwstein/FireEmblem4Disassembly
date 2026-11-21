@@ -989,3 +989,667 @@
         .word $3CC4, $1900, $31E0, $2108, $296E, $2591, $1060
 
     .endsection BattleAnimationPalettesE02CD1Section
+
+    .section BattleAnimationPalettes8BE01ESection
+
+      aBattleAnimationPaletteBarbarian2 ; 8B/E01E
+        .word $7FFF, $4B5F, $21D3, $0D0C, $1EFA, $098F, $0887, $0021
+        .word $0024, $0044, $0466, $04E0, $11E4, $3FEE, $0065
+
+    .endsection BattleAnimationPalettes8BE01ESection
+
+    .section BattleAnimationPalettesE001D6Section
+
+      aBattleAnimationPaletteJuniorLord2 ; E0/01D6
+        .word $004F, $5B7C, $2617, $10CC, $004A, $6DE9, $50A1, $0400
+        .word $2421, $4106, $65CB, $38C5, $698A, $7F15, $1400
+
+    .endsection BattleAnimationPalettesE001D6Section
+
+    .section BattleAnimationPalettesE00212Section
+
+      aBattleAnimationPaletteWarMage2 ; E0/0212
+        .word $7FFC, $473D, $1994, $10CC, $0C88, $417A, $28D4, $0020
+        .word $188E, $0026, $008C, $18C2, $4A4D, $6B55, $0002
+
+    .endsection BattleAnimationPalettesE00212Section
+
+    .section BattleAnimationPalettesE0024ESection
+
+      aBattleAnimationPaletteWarMageF2 ; E0/024E
+        .word $7FFC, $4B5F, $2A36, $156F, $090B, $6550, $4CAB, $0000
+        .word $3427, $2471, $3CDA, $2945, $4E6E, $6B55, $0444
+
+    .endsection BattleAnimationPalettesE0024ESection
+
+    .section BattleAnimationPalettesE0028ASection
+
+      aBattleAnimationPalettePrince2 ; E0/028A
+        .word $004F, $4F7D, $19B5, $10CC, $0007, $4A12, $28CA, $0001
+        .word $1025, $5928, $7F37, $2800, $5127, $7AB2, $0C20
+
+    .endsection BattleAnimationPalettesE0028ASection
+
+    .section BattleAnimationPalettesE002C6Section
+
+      aBattleAnimationPalettePrincess2 ; E0/02C6
+        .word $7FFC, $4B5F, $21F4, $0D2C, $00A8, $6A1E, $4918, $0000
+        .word $2C70, $182C, $1007, $04A2, $11A1, $4B50, $0403
+
+    .endsection BattleAnimationPalettesE002C6Section
+
+    .section BattleAnimationPalettesE00302Section
+
+      aBattleAnimationPaletteQueen2 ; E0/0302
+        .word $7BBC, $473D, $1994, $10CC, $44C5, $3883, $2C41, $0020
+        .word $2804, $4087, $4D2A, $1C82, $2CE3, $4583, $1002
+
+    .endsection BattleAnimationPalettesE00302Section
+
+    .section BattleAnimationPalettesE0037ASection
+
+      aBattleAnimationPalettePriest2 ; E0/037A
+        .word $7FFF, $473D, $1994, $10CC, $5A3F, $7511, $5CAC, $0000
+        .word $5049, $2824, $00ED, $2824, $5CAC, $7511, $1022
+
+      aBattleAnimationPaletteE00398 ; E0/0398
+        .word $7FFF, $4B5F, $1994, $10CC, $7FD6, $6F52, $5ECE, $0000
+        .word $4E4A, $3DC6, $03FF, $0010, $0017, $001F, $2922
+
+      aBattleAnimationPaletteE003B6 ; E0/03B6
+        .word $7FFF, $4B5F, $1994, $10CC, $5A3F, $6991, $590D, $0000
+        .word $48A9, $3866, $03FF, $0950, $09B3, $0A79, $2423
+
+    .endsection BattleAnimationPalettesE0037ASection
+
+    .section BattleAnimationPalettesE003F2Section
+
+      aBattleAnimationPaletteMage_2 ; E0/03F2
+        .word $7FFF, $473D, $1994, $10CC, $4951, $30CC, $2488, $0400
+        .word $1827, $30E3, $4D87, $0D03, $15E6, $1706, $1862
+
+    .endsection BattleAnimationPalettesE003F2Section
+
+    .section BattleAnimationPalettesE0042ESection
+
+      aBattleAnimationPaletteMage2_2 ; E0/042E
+        .word $7FFF, $473D, $1994, $10CC, $42FF, $21B5, $0CEC, $0020
+        .word $0087, $00AD, $01DF, $14A5, $296E, $25F1, $0023
+
+    .endsection BattleAnimationPalettesE0042ESection
+
+    .section BattleAnimationPalettesE0046ASection
+
+      aBattleAnimationPaletteFireMage2 ; E0/046A
+        .word $6F7B, $473D, $1994, $10CC, $30B9, $1C0F, $0828, $0020
+        .word $1CE7, $318C, $4631, $1084, $296E, $3E74, $0842
+
+    .endsection BattleAnimationPalettesE0046ASection
+
+    .section BattleAnimationPalettesE004A6Section
+
+      aBattleAnimationPaletteThunderMage2 ; E0/04A6
+        .word $7B1B, $473D, $1994, $10CC, $250C, $1CC9, $0C63, $0021
+        .word $2028, $30EB, $55B3, $18C2, $4A4D, $6B55, $1444
+
+    .endsection BattleAnimationPalettesE004A6Section
+
+    .section BattleAnimationPalettesE004E2Section
+
+      aBattleAnimationPaletteWindMage2 ; E0/04E2
+        .word $7FFF, $473D, $1994, $10CC, $56A9, $39C2, $2502, $0420
+        .word $1480, $4142, $1C80, $0D02, $1605, $1706, $0860
+
+    .endsection BattleAnimationPalettesE004E2Section
+
+    .section BattleAnimationPalettesE0051ESection
+
+      aBattleAnimationPaletteHighPriest_2 ; E0/051E
+        .word $7FFF, $473D, $1994, $10CC, $496F, $350C, $2488, $0021
+        .word $1424, $2529, $4E73, $0D03, $15E6, $1706, $1463
+
+    .endsection BattleAnimationPalettesE0051ESection
+
+    .section BattleAnimationPalettesE0055ASection
+
+      aBattleAnimationPaletteHighPriest2_2 ; E0/055A
+        .word $7F5F, $473D, $1994, $10CC, $6ABA, $51F4, $392E, $0020
+        .word $28CB, $2491, $49BB, $14A5, $254D, $29B2, $1424
+
+    .endsection BattleAnimationPalettesE0055ASection
+
+    .section BattleAnimationPalettesE00596Section
+
+      aBattleAnimationPaletteBishop2 ; E0/0596
+        .word $7FFF, $473D, $1994, $10CC, $7E36, $7511, $4944, $0020
+        .word $38C0, $2040, $1422, $2945, $4E6E, $6B55, $0C21
+
+    .endsection BattleAnimationPalettesE00596Section
+
+    .section BattleAnimationPalettesE005D2Section
+
+      aBattleAnimationPaletteBard2 ; E0/05D2
+        .word $6FBD, $473D, $1994, $10CC, $0CA8, $59F3, $350C, $0401
+        .word $2488, $1C66, $310B, $0945, $2249, $376E, $1023
+
+    .endsection BattleAnimationPalettesE005D2Section
+
+    .section BattleAnimationPalettesE0060ESection
+
+      aBattleAnimationPalettePriestess2 ; E0/060E
+        .word $7BBC, $473D, $1994, $10CC, $7758, $5E6F, $4D66, $0020
+        .word $2C81, $2CB1, $625E, $3004, $4CA9, $68EF, $1041
+
+    .endsection BattleAnimationPalettesE0060ESection
+
+    .section BattleAnimationPalettesE0064ASection
+
+      aBattleAnimationPaletteDarkMage2 ; E0/064A
+        .word $7BBC, $473D, $1994, $10CC, $2265, $1583, $08E2, $0400
+        .word $2804, $4087, $3CD1, $1C80, $2CE0, $3D63, $1002
+
+    .endsection BattleAnimationPalettesE0064ASection
+
+    .section BattleAnimationPalettesE00686Section
+
+      aBattleAnimationPaletteDarkBishop2 ; E0/0686
+        .word $7FFF, $473D, $1994, $10CC, $2265, $1583, $08E2, $0001
+        .word $0060, $2424, $50CB, $2108, $296E, $2591, $0481
+
+    .endsection BattleAnimationPalettesE00686Section
+
+    .section BattleAnimationPalettesE006C2Section
+
+      aBattleAnimationPaletteSage_2 ; E0/06C2
+        .word $7FFC, $473D, $1994, $10CC, $0C88, $657A, $406E, $0021
+        .word $2428, $4027, $70F0, $18C2, $4A4D, $6B55, $1041
+
+    .endsection BattleAnimationPalettesE006C2Section
+
+    .section BattleAnimationPalettesE006FESection
+
+      aBattleAnimationPaletteSage2_2 ; E0/06FE
+        .word $7FFC, $473D, $1994, $10CC, $0C88, $657A, $406E, $0000
+        .word $2428, $4027, $70F0, $18C2, $4A4D, $6B55, $1041
+
+    .endsection BattleAnimationPalettesE006FESection
+
+    .section BattleAnimationPalettesE00778Section
+
+      aBattleAnimationPalettePegasusKnight2 ; E0/0778
+        .word $7FFF, $473D, $1994, $10CC, $7F31, $6D87, $4000, $1800
+        .word $0000, $4610, $0000, $00E9, $0318, $53FF, $0000, $3800
+        .word $7FFF, $7FDC, $7717, $6251, $498A, $38E7, $20A3, $0400
+        .word $439E, $0279, $016F, $00E9, $0066, $5508, $0000
+
+    .endsection BattleAnimationPalettesE00778Section
+
+    .section BattleAnimationPalettesE00832Section
+
+      aBattleAnimationPaletteDragonrider2 ; E0/0832
+        .word $7FFF, $42DF, $0917, $0C45, $4371, $2247, $25A8, $0020
+        .word $0CE3, $0060, $00C6, $01CE, $22F7, $4BFF, $1CA5, $4A77
+        .word $001F, $69D6, $4D11, $38AC, $2889, $1C46, $1424, $0822
+        .word $0060, $42BA, $0339, $03FF, $42D9, $1DB0, $04C8
+
+    .endsection BattleAnimationPalettesE00832Section
+
+    .section BattleAnimationPalettesE008AESection
+
+      aBattleAnimationPaletteDragonknight2 ; E0/08AE
+        .word $7FFF, $473D, $1994, $10CC, $5370, $1A08, $0922, $0020
+        .word $0000, $4610, $0000, $3CC1, $758A, $7B93, $0000, $4A77
+        .word $001F, $69D6, $4D11, $38AC, $2889, $1C46, $1424, $0822
+        .word $0060, $42BA, $0339, $03FF, $42D9, $1DB0, $04C8
+
+    .endsection BattleAnimationPalettesE008AESection
+
+    .section BattleAnimationPalettesE0092ASection
+
+      aBattleAnimationPaletteDragonmaster2 ; E0/092A
+        .word $7FFF, $473D, $1994, $10CC, $5370, $1A08, $0922, $0020
+        .word $0000, $2D6B, $4A52, $3CC1, $758A, $7B93, $0000, $4A77
+        .word $001F, $69D6, $4D11, $38AC, $2889, $1C46, $1424, $0822
+        .word $0060, $42BA, $0339, $03FF, $42D9, $1DB0, $04C8
+
+      aBattleAnimationPaletteE00968 ; E0/0968
+        .word $3800, $7FFF, $4B5F, $3278, $25F3, $6AD6, $5A52, $49CE
+        .word $0000, $394A, $2D07, $2D8E, $0273, $0339, $03FF, $0000
+
+      aBattleAnimationPaletteE00988 ; E0/0988
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+      aBattleAnimationPaletteE009A8 ; E0/09A8
+        .word $3800, $7FFF, $7FB9, $66F4, $4A0E, $39AA, $0198, $014D
+        .word $1CA5, $001F, $0010, $1785, $16E5, $7C00, $4000, $0000
+
+      aBattleAnimationPaletteE009C8 ; E0/09C8
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+      aBattleAnimationPaletteE009E8 ; E0/09E8
+        .word $3800, $7FFF, $4B5F, $3278, $25F3, $7E8B, $7E08, $6985
+        .word $0000, $5544, $4102, $018C, $2A0A, $2B2A, $2BEA, $0000
+
+      aBattleAnimationPaletteE00A08 ; E0/0A08
+        .word $3800, $7FFF, $4B5F, $3278, $25F3, $7EB4, $7DEF, $6D4C
+        .word $0000, $5508, $2D07, $2D8E, $0273, $0339, $03FF, $0000
+
+      aBattleAnimationPaletteE00A28 ; E0/0A28
+        .word $3800, $7FFF, $7FB9, $6F36, $5A92, $03FF, $0339, $0273
+        .word $4210, $001F, $0010, $1785, $16E5, $7C00, $4000, $0000
+
+      aBattleAnimationPaletteE00A48 ; E0/0A48
+        .word $3800, $7FFF, $4B5F, $3278, $25F3, $001F, $0017, $0010
+        .word $0000, $000C, $0008, $2D8E, $0273, $0339, $03FF, $0000
+
+      aBattleAnimationPaletteE00A68 ; E0/0A68
+        .word $3800, $7FFF, $4B5F, $3278, $25F3, $0A13, $098F, $090B
+        .word $0000, $08C8, $2D07, $018C, $4869, $5CAC, $6CCF, $0000
+
+      aBattleAnimationPaletteE00A88 ; E0/0A88
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+      aBattleAnimationPaletteE00AA8 ; E0/0AA8
+        .word $3800, $7FFF, $7B76, $66F4, $4A0E, $03FF, $0339, $0273
+        .word $018C, $0108, $0010, $1785, $16E5, $7C00, $4000, $0000
+
+      aBattleAnimationPaletteE00AC8 ; E0/0AC8
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+      aBattleAnimationPaletteE00AE8 ; E0/0AE8
+        .word $3800, $7FFF, $4B5F, $3278, $25F3, $7E8B, $7E08, $6985
+        .word $0000, $5544, $4102, $018C, $4869, $5CAC, $6CCF, $0000
+
+      aBattleAnimationPaletteE00B08 ; E0/0B08
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+      aBattleAnimationPaletteE00B28 ; E0/0B28
+        .word $3800, $7FFF, $7FB9, $6F36, $5A92, $03FF, $0339, $0273
+        .word $018C, $0108, $0010, $1785, $16E5, $7C00, $4000, $0000
+
+      aBattleAnimationPaletteE00B48 ; E0/0B48
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0008, $0000, $0000, $0000, $0000, $0000
+
+    .endsection BattleAnimationPalettesE0092ASection
+
+    .section BattleAnimationPalettesE00B86Section
+
+      aBattleAnimationPaletteGeneral2 ; E0/0B86
+        .word $0845, $252C, $4E77, $00E7, $0212, $339F, $7FFF, $0001
+        .word $1273, $7A1F, $0001, $0066, $0443, $361F, $0C94
+
+    .endsection BattleAnimationPalettesE00B86Section
+
+    .section BattleAnimationPalettesE00BC2Section
+
+      aBattleAnimationPaletteBaron2 ; E0/0BC2
+        .word $1005, $2C2D, $5CB7, $00E7, $0234, $1FBD, $7FFF, $0001
+        .word $1273, $7A1F, $0422, $1C28, $0424, $5D9D, $3076
+
+    .endsection BattleAnimationPalettesE00BC2Section
+
+    .section BattleAnimationPalettesE00BFESection
+
+      aBattleAnimationPaletteEmperor2 ; E0/0BFE
+        .word $28C6, $51EE, $7B17, $0108, $0655, $039F, $7FFF, $0400
+        .word $1273, $019F, $1842, $410A, $1863, $75B4, $598E
+
+    .endsection BattleAnimationPalettesE00BFESection
+
+    .section BattleAnimationPalettesE00C5ASection
+
+      aBattleAnimationPalettePaladin2 ; E0/0C5A
+        .word $7FFF, $473D, $1994, $10CC, $7F5F, $6258, $3C8F, $0401
+        .word $2449, $1806, $18C6, $18C6, $2D90, $42FD, $0000, $4A77
+        .word $7FFF, $739C, $5EF7, $4A52, $318C, $2108, $1084, $0421
+        .word $3F5F, $023C, $0151, $00AA, $69AF, $2883, $7FFF
+
+    .endsection BattleAnimationPalettesE00C5ASection
+
+    .section BattleAnimationPalettesE00CD6Section
+
+      aBattleAnimationPalettePaladinF2 ; E0/0CD6
+        .word $7FFF, $473D, $1994, $10CC, $7F5F, $6258, $3C8F, $0401
+        .word $2449, $1806, $18C6, $04E1, $09C1, $478F, $0000, $4A77
+        .word $7FFF, $739C, $5EF7, $4A52, $318C, $2108, $1084, $0421
+        .word $3F5F, $023C, $0151, $00AA, $69AF, $2883, $0000
+
+    .endsection BattleAnimationPalettesE00CD6Section
+
+    .section BattleAnimationPalettesE00D32Section
+
+      aBattleAnimationPaletteArcher_2 ; E0/0D32
+        .word $7FFF, $473D, $1994, $10CC, $4595, $30F0, $206B, $0400
+        .word $1007, $3DEF, $18C6, $18C6, $2D90, $4235, $0023, $2108
+        .word $296E, $2591, $0E12, $02F9, $037D, $0010, $0017, $001F
+        .word $09E9, $16ED, $2BF3, $0000, $0000, $0000, $0000
+
+    .endsection BattleAnimationPalettesE00D32Section
+
+    .section BattleAnimationPalettesE0155ASection
+
+      aBattleAnimationPaletteMyrmidon2 ; E0/155A
+        .word $7FFF, $473D, $1994, $10CC, $2AF1, $1A6D, $09A7, $0400
+        .word $0103, $3D0C, $1C46, $18C6, $2D90, $4235, $0061
+
+    .endsection BattleAnimationPalettesE0155ASection
+
+    .section BattleAnimationPalettesE01596Section
+
+      aBattleAnimationPaletteArcher2_2 ; E0/1596
+        .word $77BF, $473D, $1994, $10CC, $00FC, $00F5, $008E, $0800
+        .word $0048, $7FFF, $7FFF, $18C6, $2D90, $4235, $0844
+
+    .endsection BattleAnimationPalettesE01596Section
+
+    .section BattleAnimationPalettesE015D2Section
+
+      aBattleAnimationPaletteSwordmaster_2 ; E0/15D2
+        .word $7FFF, $473D, $1994, $10CC, $6213, $4D8F, $38CB, $0000
+        .word $2847, $1463, $318C, $18C6, $2D90, $4235, $0000
+
+    .endsection BattleAnimationPalettesE015D2Section
+
+    .section BattleAnimationPalettesE0160ESection
+
+      aBattleAnimationPaletteSwordmaster2_2 ; E0/160E
+        .word $7FFF, $473D, $1994, $10CC, $6213, $4D8F, $38CB, $0000
+        .word $2847, $1463, $318C, $18C6, $2D90, $4235, $0000
+
+    .endsection BattleAnimationPalettesE0160ESection
+
+    .section BattleAnimationPalettesE0164ASection
+
+      aBattleAnimationPaletteHero_2 ; E0/164A
+        .word $7FFF, $473D, $1994, $10CC, $7F39, $5673, $3D8C, $0000
+        .word $28E7, $1863, $15EA, $18C6, $2D90, $4235, $0000
+
+    .endsection BattleAnimationPalettesE0164ASection
+
+    .section BattleAnimationPalettesE01686Section
+
+      aBattleAnimationPaletteHero2_2 ; E0/1686
+        .word $7FFF, $473D, $1994, $10CC, $4E73, $49F6, $30EF, $0020
+        .word $206B, $0C65, $318C, $18C6, $2D90, $4235, $0020
+
+      aBattleAnimationPaletteE016A4 ; E0/16A4
+        .word $3D88, $62B0, $7B75, $01F2, $06D9, $039F, $7FFF, $0000
+        .word $1273, $7A1F, $3125, $0471, $1CA4, $257F, $14F7
+
+    .endsection BattleAnimationPalettesE01686Section
+
+    .section BattleAnimationPalettesE016E0Section
+
+      aBattleAnimationPaletteSniper_2 ; E0/16E0
+        .word $7FFF, $473D, $1994, $10CC, $7679, $5571, $38CC, $0020
+        .word $2C68, $0132, $0068, $0108, $0231, $039C, $0003
+
+    .endsection BattleAnimationPalettesE016E0Section
+
+    .section BattleAnimationPalettesE0171CSection
+
+      aBattleAnimationPaletteSniper2_2 ; E0/171C
+        .word $7FFF, $473D, $1994, $10CC, $7D78, $5D13, $3CCB, $0400
+        .word $2D6B, $4E73, $1D0B, $18C6, $296E, $25D1, $1043
+
+      aBattleAnimationPaletteE0173A ; E0/173A
+        .word $7FFC, $4B5F, $2A36, $156F, $090B, $6159, $48B3, $0000
+        .word $302D, $4869, $6CCF, $2945, $4E6E, $6B55, $2041
+
+    .endsection BattleAnimationPalettesE0171CSection
+
+    .section BattleAnimationPalettesE01796Section
+
+      aBattleAnimationPaletteCavalier2 ; E0/1796
+        .word $7FFF, $2AFB, $09BA, $04CF, $7F5F, $6258, $3C8F, $0401
+        .word $2C8A, $1806, $0802, $3466, $610C, $7AB5, $0000, $4A77
+        .word $733F, $4EBA, $3DD4, $252E, $1C89, $1045, $0023, $0002
+        .word $3F5D, $0298, $016D, $00A7, $0000, $0000, $7FFF
+
+    .endsection BattleAnimationPalettesE01796Section
+
+    .section BattleAnimationPalettesE01812Section
+
+      aBattleAnimationPaletteFreeKnight2 ; E0/1812
+        .word $7FFF, $473D, $1994, $10CC, $53F6, $2F0C, $09E9, $0401
+        .word $00E2, $6A1B, $2867, $18C6, $2D90, $42FD, $0000, $4A77
+        .word $733F, $4EBA, $3DD4, $252E, $1C89, $1045, $0023, $0002
+        .word $3F5D, $0298, $016D, $00A7, $0000, $0000, $7FFF
+
+      aBattleAnimationPaletteE01850 ; E0/1850
+        .word $7FFF, $4B5F, $3278, $25F3, $013F, $00F7, $00B0, $0000
+        .word $006B, $2DF3, $1D0B, $20B3, $3D9A, $4E5F, $10E6, $0D78
+        .word $1E18, $11B6, $0552, $116F, $012F, $00AB, $0027, $0000
+        .word $03FF, $0339, $0273, $018C, $1EBB, $5508, $7FFF
+
+    .endsection BattleAnimationPalettesE01812Section
+
+    .section BattleAnimationPalettesE018CCSection
+
+      aBattleAnimationPaletteTroubadour2 ; E0/18CC
+        .word $7FFF, $3E9D, $1994, $10CC, $7F5F, $6258, $3C8F, $0401
+        .word $2C8A, $1806, $0802, $0108, $02B5, $33FE, $0000, $4A77
+        .word $733F, $4EBA, $3DD4, $252E, $1C89, $1045, $0023, $0002
+        .word $3F5D, $0298, $016D, $00A7, $0000, $0000, $7FFF
+
+    .endsection BattleAnimationPalettesE018CCSection
+
+    .section BattleAnimationPalettesE01948Section
+
+      aBattleAnimationPaletteKnightLord2 ; E0/1948
+        .word $7FFF, $473D, $1994, $10CC, $7FDC, $7250, $5923, $0000
+        .word $2C62, $38A3, $7F32, $4CA1, $7E23, $7FF8, $0000, $4A77
+        .word $7FFF, $7FDC, $6B16, $5651, $45AB, $30E6, $1C20, $0421
+        .word $7EB1, $6D65, $40C3, $1C00, $013F, $002A, $7FFF
+
+    .endsection BattleAnimationPalettesE01948Section
+
+    .section BattleAnimationPalettesE019C4Section
+
+      aBattleAnimationPaletteDukeKnight2 ; E0/19C4
+        .word $7FFF, $031A, $01AD, $00A5, $7FDF, $6E36, $48EB, $0000
+        .word $2C88, $1403, $43FF, $0127, $02F7, $5FDE, $0000, $4A77
+        .word $733F, $4EBA, $3DD4, $252E, $1C89, $1045, $0023, $0002
+        .word $378D, $0E44, $0901, $0060, $0000, $0000, $7FFF
+
+    .endsection BattleAnimationPalettesE019C4Section
+
+    .section BattleAnimationPalettesE01A40Section
+
+      aBattleAnimationPaletteMasterKnight_2 ; E0/1A40
+        .word $7FFF, $473D, $1994, $10CC, $7F5F, $6258, $3C8F, $0401
+        .word $1806, $2B1E, $008A, $0129, $02B5, $3BFF, $0000, $4A77
+        .word $7FFF, $7FDC, $6B16, $5651, $45AB, $30E6, $1C20, $0421
+        .word $36DE, $01D9, $0111, $00AA, $69AF, $2883, $7FFF
+
+    .endsection BattleAnimationPalettesE01A40Section
+
+    .section BattleAnimationPalettesE01ABCSection
+
+      aBattleAnimationPaletteMasterKnight2_2 ; E0/1ABC
+        .word $7FFF, $473D, $1994, $10CC, $0C86, $42DF, $013C, $0001
+        .word $000F, $0006, $0C23, $38E3, $71CD, $7B54, $0000, $4A77
+        .word $7FFF, $7FDC, $6B16, $5651, $45AB, $30E6, $1C20, $0421
+        .word $36DE, $01D9, $0111, $00AA, $69AF, $2883, $7FFF
+
+    .endsection BattleAnimationPalettesE01ABCSection
+
+    .section BattleAnimationPalettesE01B38Section
+
+      aBattleAnimationPaletteRanger2 ; E0/1B38
+        .word $7FFF, $473D, $1994, $10CC, $5BF3, $3BC9, $1E22, $0000
+        .word $0D80, $04E0, $43FF, $10A7, $152E, $535F, $0000, $4A77
+        .word $733F, $4EBA, $3DD4, $252E, $1C89, $1045, $0023, $0002
+        .word $3B3F, $025D, $0131, $0067, $769D, $2C88, $7FFF
+
+    .endsection BattleAnimationPalettesE01B38Section
+
+    .section BattleAnimationPalettesE01BB4Section
+
+      aBattleAnimationPaletteMageKnight2 ; E0/1BB4
+        .word $5BFF, $031A, $01AD, $00A5, $777E, $5DB2, $48EB, $0000
+        .word $2C88, $1403, $43FF, $0127, $02F7, $5FDE, $0000, $4A77
+        .word $733F, $4EBA, $3DD4, $252E, $1C89, $1045, $0023, $0002
+        .word $3B9F, $027C, $0151, $00AA, $769D, $2C88, $7FFF
+
+    .endsection BattleAnimationPalettesE01BB4Section
+
+    .section BattleAnimationPalettesE01C30Section
+
+      aBattleAnimationPaletteGreatKnight2 ; E0/1C30
+        .word $7BBD, $429F, $00D3, $006D, $739C, $39F0, $18C7, $0800
+        .word $0C85, $0C63, $0108, $01EF, $031A, $43FF, $1CA5, $4A77
+        .word $739C, $4E95, $39F0, $212B, $18C7, $0C85, $0C63, $1062
+        .word $5294, $294A, $14A5, $0C67, $2617, $00B3, $0000
+
+    .endsection BattleAnimationPalettesE01C30Section
+
+    .section BattleAnimationPalettesE01C8CSection
+
+      aBattleAnimationPaletteFighter2 ; E0/1C8C
+        .word $7FFF, $4F3F, $21D3, $0D0C, $5E73, $4DCD, $3907, $0021
+        .word $3000, $1041, $04A7, $00E7, $0210, $03FF, $1462
+
+    .endsection BattleAnimationPalettesE01C8CSection
+
+    .section BattleAnimationPalettesE01CC8Section
+
+      aBattleAnimationPaletteBrigand2 ; E0/1CC8
+        .word $7FFF, $4F3F, $21D3, $0D0C, $13BC, $020F, $00E5, $0021
+        .word $0083, $04A9, $0082, $1426, $3D10, $763E, $0065
+
+    .endsection BattleAnimationPalettesE01CC8Section
+
+    .section BattleAnimationPalettesE01D04Section
+
+      aBattleAnimationPalettePirate2 ; E0/1D04
+        .word $7FFF, $4B5F, $21D3, $0D0C, $6692, $49CE, $3907, $0021
+        .word $2863, $1062, $2D8E, $0007, $0017, $3A3F, $1462
+
+    .endsection BattleAnimationPalettesE01D04Section
+
+    .section BattleAnimationPalettesE01D40Section
+
+      aBattleAnimationPaletteThief_2 ; E0/1D40
+        .word $7FFF, $473D, $1994, $10CC, $10E2, $1964, $2606, $0020
+        .word $014A, $0231, $039C, $38C0, $5963, $7E8B, $0063
+
+    .endsection BattleAnimationPalettesE01D40Section
+
+    .section BattleAnimationPalettesE01D7CSection
+
+      aBattleAnimationPaletteThief2_2 ; E0/1D7C
+        .word $7BBC, $473D, $1994, $10CC, $0520, $1E00, $3EE0, $0020
+        .word $004B, $0155, $027F, $0108, $0231, $039C, $0063
+
+    .endsection BattleAnimationPalettesE01D7CSection
+
+    .section BattleAnimationPalettesE01DB8Section
+
+      aBattleAnimationPaletteRogue_2 ; E0/1DB8
+        .word $7FFF, $473D, $1994, $10CC, $18E7, $318C, $4252, $0020
+        .word $004B, $0155, $027F, $38C0, $5963, $7E8B, $0062
+
+    .endsection BattleAnimationPalettesE01DB8Section
+
+    .section BattleAnimationPalettesE01DF4Section
+
+      aBattleAnimationPaletteRogue2_2 ; E0/1DF4
+        .word $7FFF, $473D, $1994, $10CC, $1CE7, $318C, $3A31, $0020
+        .word $004B, $0155, $027F, $2108, $296E, $2591, $0063
+
+    .endsection BattleAnimationPalettesE01DF4Section
+
+    .section BattleAnimationPalettesE01E30Section
+
+      aBattleAnimationPaletteLanceArmor2 ; E0/1E30
+        .word $28E3, $456B, $66D2, $0108, $0655, $37BF, $7FFF, $0400
+        .word $1273, $7A1F, $20A1, $0471, $1441, $257F, $14F7
+
+    .endsection BattleAnimationPalettesE01E30Section
+
+    .section BattleAnimationPalettesE01E8CSection
+
+      aBattleAnimationPaletteBallistician2 ; E0/1E8C
+        .word $7FFF, $001F, $000E, $0006, $66B5, $5631, $456B, $0000
+        .word $30E7, $2884, $018C, $0273, $0339, $03FF, $1421, $3800
+        .word $0044, $00A8, $010D, $2B7F, $01D3, $0239, $7FFF, $0000
+        .word $1CA3, $3126, $3D68, $45CA, $6AF3, $7B77, $0000
+
+    .endsection BattleAnimationPalettesE01E8CSection
+
+    .section BattleAnimationPalettesE01F08Section
+
+      aBattleAnimationPaletteIronBallistician2 ; E0/1F08
+        .word $7FFF, $001F, $000E, $0006, $66B5, $5631, $456B, $0000
+        .word $30E7, $2884, $018C, $0273, $0339, $03FF, $1421, $3800
+        .word $0044, $00A8, $010D, $031D, $01D3, $025A, $7FFF, $0000
+        .word $1486, $1CC8, $250A, $3DD0, $5276, $673B, $0000
+
+    .endsection BattleAnimationPalettesE01F08Section
+
+    .section BattleAnimationPalettesE01F84Section
+
+      aBattleAnimationPaletteKillerBallistician2 ; E0/1F84
+        .word $7FFF, $001F, $000E, $0006, $66B5, $5631, $456B, $0000
+        .word $30E7, $2884, $018C, $0273, $0339, $03FF, $1421, $3800
+        .word $0044, $00A8, $010D, $2B7F, $01D3, $0239, $7BBD, $0000
+        .word $0C86, $14EA, $212C, $31D0, $4A53, $6EF7, $0000
+
+    .endsection BattleAnimationPalettesE01F84Section
+
+    .section BattleAnimationPalettesE02000Section
+
+      aBattleAnimationPaletteGreatBallistician2 ; E0/2000
+        .word $7FFF, $001F, $000E, $0006, $66B5, $5631, $456B, $0000
+        .word $30E7, $2884, $018C, $0273, $0339, $03FF, $1421, $3800
+        .word $0044, $00A8, $010D, $2B7F, $01D3, $0239, $7BBD, $0000
+        .word $1884, $20C6, $2908, $356B, $4A10, $5673, $0000
+
+    .endsection BattleAnimationPalettesE02000Section
+
+    .section BattleAnimationPalettesE02AE5Section
+
+      aBattleAnimationPaletteE02AE5 ; E0/2AE5
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+    .endsection BattleAnimationPalettesE02AE5Section
+
+    .section BattleAnimationPalettesE02B23Section
+
+      aBattleAnimationPaletteE02B23 ; E0/2B23
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+    .endsection BattleAnimationPalettesE02B23Section
+
+    .section BattleAnimationPalettesE02C35Section
+
+      aBattleAnimationPaletteE02C35 ; E0/2C35
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+    .endsection BattleAnimationPalettesE02C35Section
+
+    .section BattleAnimationPalettesE02C73Section
+
+      aBattleAnimationPaletteE02C73 ; E0/2C73
+        .word $3800, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $1041
+
+    .endsection BattleAnimationPalettesE02C73Section
+
+    .section BattleAnimationPalettesE02CB1Section
+
+      aBattleAnimationPaletteE02CB1 ; E0/2CB1
+        .word $3800, $7FFC, $473D, $1994, $10CC, $0C88, $2AE0, $11C0
+        .word $0020, $0500, $00AD, $01F6, $18C2, $4A4D, $6B55, $0023
+
+    .endsection BattleAnimationPalettesE02CB1Section

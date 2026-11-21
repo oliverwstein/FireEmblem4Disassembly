@@ -7060,3 +7060,39 @@
         ANIM_RECORD_END
 
     .endsection BattleAnimationFrameData98Section
+
+
+    .section DemoBattles98Section
+
+      .al
+      .xl
+
+      dialogueBattleSceneClear ; 98/FF85
+        .include "../../text/dialogue/BattleScene/Clear.dialogue.txt"
+
+      dialogueBattleSceneItemObtained ; 98/FF87
+        .include "../../text/dialogue/BattleScene/ItemObtained.dialogue.txt"
+
+      dialogueBattleSceneGoldObtained ; 98/FF98
+        .include "../../text/dialogue/BattleScene/GoldObtained.dialogue.txt"
+
+      dialogueBattleSceneGoldStolen ; 98/FFAB
+        .include "../../text/dialogue/BattleScene/GoldStolen.dialogue.txt"
+
+      dialogueBattleSceneWaitPress ; 98/FFB9
+        .include "../../text/dialogue/BattleScene/WaitPress.dialogue.txt"
+
+      dialogueBattleSceneWeaponBroke ; 98/FFBB
+        .include "../../text/dialogue/BattleScene/WeaponBroke.dialogue.txt"
+
+      dialogueDemoBattleQuote98FFC9 ; 98/FFC9
+        .byte $07, $00, $05, $01
+        _98FFC9_Body .include "../../text/dialogue/DemoBattles/Quote98FFC9.dialogue.txt"
+
+      dialogueDemoBattleQuote98FFEE ; 98/FFEE
+        .byte $07, $00, $05, $01
+        _98FFEE_Body .include "../../text/dialogue/DemoBattles/Quote98FFEE.dialogue.txt"
+
+        .enc "proc"
+
+    .endsection DemoBattles98Section
