@@ -1410,9 +1410,9 @@
         lda #CASTLE_STEP_WAIT
         sta wGameStateStep,b
         lda #<>rsOpenCastleScreen
-        sta $7F8183
+        sta wStatusScreenCaller
         lda #$0000
-        sta $7F819D
+        sta wStatusScreenReopenMode
         lda #$0008
         jsl rlPlaySoundEffect
         lda #<>rsOpenStatusScreen

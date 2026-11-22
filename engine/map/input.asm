@@ -489,9 +489,9 @@
         jsl rlPlaySoundEffect
         jsl rlUnknown88B3AF
         lda #<>rsUnknown80B122
-        sta $7F8183
+        sta wStatusScreenCaller
         lda #$0000
-        sta $7F819D
+        sta wStatusScreenReopenMode
         lda #$000A
         sta wGameStateStep,b
         sep #$20

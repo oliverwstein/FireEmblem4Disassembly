@@ -113,19 +113,19 @@
         .autsiz
         .databank ?
 
-        ; Populates $7F8185..$7F81D1 unit, blood, leadership, skills, promotion, unique/drop item fields
+        ; Fills the status screen variables: the unit, its holy bloods, commander or leadership, faction, skills, promotion, the item it drops, its states and condition; keeps the scroll when reopening on the holy blood page.
 
-        lda $7F819D
-        cmp #$1111
+        lda wStatusScreenReopenMode
+        cmp #STATUS_SCREEN_REOPEN_HOLY_BLOOD
         beq _BC66
         lda #$0000
-        sta $7F8187
-        sta $7F8189
+        sta wStatusScreenScroll
+        sta wStatusScreenSavedScroll
 
         _BC66
-        lda #$0000
-        sta $7F81A1
-        sta $7F8185
+        lda #STATUS_SCREEN_STEP_TOP_PAGE
+        sta wStatusScreenStepAfterFade
+        sta wStatusScreenItemSlot
         lda #$0050
         sta wUnknown000885,b
         lda #$FFFF
@@ -134,38 +134,38 @@
         tax
 
         _BC81
-        sta $7F81ED,x
-        sta $7F8255,x
+        sta aStatusScreenGlintFrameIDs,x
+        sta aStatusScreenGlintTimers,x
         inc x
         inc x
         cpx #$0068
         bne _BC81
         jsl rlGetSelectedUnitCharacterID
-        sta $7F8195
+        sta wStatusScreenCharacter
         jsl rlStatusScreenGetHolyBloodLevels
         jsl rlUnknown849FC4
-        sta $7F8199
+        sta wStatusScreenCommander
         cmp #$0000
         bne _BCB1
         jsl rlGetSelectedUnitLeadershipStars
-        sta $7F8197
+        sta wStatusScreenLeadership
 
         _BCB1
         lda #$000C
         jsl rlCheckForSpecifiedHolyBlood
-        sta $7F818D
+        sta wStatusScreenLoptousBlood
         jsl rlGetSelectedUnitFactionSlot
-        sta $7F8193
+        sta wStatusScreenFactionSlot
         jsl rlGetUnitType
-        sta $7F818B
+        sta wStatusScreenUnitType
         jsl rlStatusScreenBuildSkillList
         lda #$0000
-        sta $7F819B
-        lda $7F8193
+        sta wStatusScreenCanPromote
+        lda wStatusScreenFactionSlot
         bne _BCE9
         jsl rlGetPromotedClassIfAvailable
         lda $7E2000
-        sta $7F819B
+        sta wStatusScreenCanPromote
 
         _BCE9
         jsl rlCheckForValidUniqueItemOrDrops
@@ -173,23 +173,23 @@
         lda #$0000
 
         _BCF2
-        sta $7F81A7
+        sta wStatusScreenDropItemSlot
         jsl rlGetSelectedUnitStates
-        sta $7F81A9
+        sta wStatusScreenUnitStates
         jsl rlGetSelectedUnitStatus
-        sta $7F81AB
+        sta wStatusScreenCondition
         lda #$0000
-        sta $7F81D1
-        lda $7F81A9
-        bit #$0200
+        sta wStatusScreenGreyIndex
+        lda wStatusScreenUnitStates
+        bit #UnitStateDead
         bne _BD1F
-        lda $7F81AB
-        cmp #$0003
+        lda wStatusScreenCondition
+        cmp #StatusCaptive
         bne _BD26
 
         _BD1F
         lda #$0008
-        sta $7F81D1
+        sta wStatusScreenGreyIndex
 
         _BD26
         rts
@@ -212,17 +212,17 @@
         lda #<>aUnknown89ACB3
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0001
-        sta $7F81AD
-        lda $7F819D
+        sta wStatusScreenReopened
+        lda wStatusScreenReopenMode
         beq _BD44
         jml _BE18
 
 
         _BD44
         lda #$0000
-        sta $7F81AD
+        sta wStatusScreenReopened
         lda #$0000
-        sta $7F818F
+        sta wStatusScreenHolyBloodLoaded
         jsl rlDMAByStruct
 
           .structDMAToVRAM g4bppMenuCursorSprites, $0400, $80, $C000
@@ -294,8 +294,8 @@
         bne _BE0D
 
         _BE18
-        lda $7F818D
-        cmp #$0002
+        lda wStatusScreenLoptousBlood
+        cmp #MajorHolyBlood
         beq _BE30
         jsl rlDMAByStruct
 
@@ -329,20 +329,20 @@
         plb
         .databank $00
         rep #$20
-        lda $7F81AB
-        cmp #$0005
+        lda wStatusScreenCondition
+        cmp #StatusSleep
         beq _BE92
-        lda $7F81D1
+        lda wStatusScreenGreyIndex
         beq _BE83
         tax
         bra _BEA4
 
 
         _BE83
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         bne _BE97
-        lda $7F81A9
-        bit #$4000
+        lda wStatusScreenUnitStates
+        bit #UnitStateMoved
         beq _BE97
 
         _BE92
@@ -351,7 +351,7 @@
 
 
         _BE97
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         ldx #$0000
         jsl rlGetFactionRelation
         asl a
@@ -495,17 +495,17 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $08, once: picks the first step and brightness from the values a caller left in $7F819D ($1234, $4321, $1111) or $7F8183, draws the screen and moves on to $09. Selected by rsOpenStatusScreen.
+        ; Game state routine $08, once: picks the first step and the fade speed: a reopened screen (wStatusScreenReopenMode) fades in at the page it left; a fresh one fades in at the top at a speed set by its opener (wStatusScreenCaller), or, opened from the map, starts fully bright. Draws the first frame's sprites and moves on to $09. Selected by rsOpenStatusScreen.
 
         jsl rlUnknown88DBEE
-        lda $7F819D
-        cmp #$1234
+        lda wStatusScreenReopenMode
+        cmp #STATUS_SCREEN_REOPEN_TOP_PAGE
         beq _803A
-        cmp #$4321
+        cmp #STATUS_SCREEN_REOPEN_BOTTOM_PAGE
         beq _8046
-        cmp #$1111
+        cmp #STATUS_SCREEN_REOPEN_HOLY_BLOOD
         beq _8064
-        lda $7F8183
+        lda wStatusScreenCaller
         cmp #<>rsUnitWindowOpen
         beq _8092
         cmp #<>rsReviveScreenOpen
@@ -513,77 +513,77 @@
         cmp #<>rsOpenCastleScreen
         beq _8086
         lda #$000F
-        sta $7F819F
-        lda #$0000
+        sta wStatusScreenFadeStep
+        lda #STATUS_SCREEN_STEP_TOP_PAGE
         bra _80A8
 
 
         _803A
         lda #$0003
-        sta $7F819F
-        lda #$0009
+        sta wStatusScreenFadeStep
+        lda #STATUS_SCREEN_STEP_FADE_IN
         bra _80A8
 
 
         _8046
         lda #$0003
-        sta $7F819F
-        lda #$0087
-        sta $7F8187
+        sta wStatusScreenFadeStep
+        lda #STATUS_SCREEN_SCROLL_BOTTOM
+        sta wStatusScreenScroll
         sta wBufferBG3VOFS
         sta wBufferBG2VOFS
-        lda #$0001
-        sta $7F81A1
-        lda #$0009
+        lda #STATUS_SCREEN_STEP_BOTTOM_PAGE
+        sta wStatusScreenStepAfterFade
+        lda #STATUS_SCREEN_STEP_FADE_IN
         bra _80A8
 
 
         _8064
         lda #$0003
-        sta $7F819F
+        sta wStatusScreenFadeStep
         lda #$0110
         sta wBufferBG3VOFS
         lda #$00AC
         sta wBufferBG1VOFS
         lda #$0110
         sta wBufferBG2VOFS
-        lda #$0002
-        sta $7F81A1
-        lda #$0009
+        lda #STATUS_SCREEN_STEP_HOLY_BLOOD_PAGE
+        sta wStatusScreenStepAfterFade
+        lda #STATUS_SCREEN_STEP_FADE_IN
         bra _80A8
 
 
         _8086
         lda #$0001
-        sta $7F819F
-        lda #$0009
+        sta wStatusScreenFadeStep
+        lda #STATUS_SCREEN_STEP_FADE_IN
         bra _80A8
 
 
         _8092
         lda #$0005
-        sta $7F819F
-        lda #$0009
+        sta wStatusScreenFadeStep
+        lda #STATUS_SCREEN_STEP_FADE_IN
         bra _80A8
 
 
         _809E
         lda #$0001
-        sta $7F819F
-        lda #$0009
+        sta wStatusScreenFadeStep
+        lda #STATUS_SCREEN_STEP_FADE_IN
 
         _80A8
         sta wGameStateStep,b
-        lda $7F819F
+        lda wStatusScreenFadeStep
         sep #$20
         sta bBufferINIDISP
         rep #$20
         lda #$0000
-        sta $7F819D
+        sta wStatusScreenReopenMode
         inc wGameStateRoutine1,b
         jsl rlStatusScreenSetGradient
-        lda $7F81A1
-        cmp #$0002
+        lda wStatusScreenStepAfterFade
+        cmp #STATUS_SCREEN_STEP_HOLY_BLOOD_PAGE
         beq _80DC
         jsr rsStatusScreenDrawPortraitAndMapSprite
         jsr rsStatusScreenDrawEquippedWeaponIcon
@@ -670,7 +670,7 @@
 
         jsr rsStatusScreenDrawPortraitAndMapSprite
         jsr rsStatusScreenDrawEquippedWeaponIcon
-        lda $7F8187
+        lda wStatusScreenScroll
         bne _813A
         lda wJoy1New
         bmi _8132
@@ -716,12 +716,12 @@
         lda #$0021
         jsl rlPlaySoundEffect
         jsr rsStatusScreenDrawInventoryIcons
-        lda $7F8183
+        lda wStatusScreenCaller
         cmp #<>rsUnitWindowOpen
         beq _81A5
         cmp #<>rsReviveScreenOpen
         beq _81DC
-        lda $7F81AD
+        lda wStatusScreenReopened
         beq _816C
         jml _8217
 
@@ -736,46 +736,46 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0006
+        lda #STATUS_SCREEN_STEP_RETURN_TO_MAP
         sta wGameStateStep,b
         rts
 
 
         _8183
         lda #$0001
-        sta $7F819F
+        sta wStatusScreenFadeStep
         sep #$20
         lda #$0F
         sec
-        sbc $7F819F
+        sbc wStatusScreenFadeStep
         sta bBufferINIDISP
         rep #$20
-        lda #$000A
+        lda #STATUS_SCREEN_STEP_FADE_OUT
         sta wGameStateStep,b
-        lda #$0007
-        sta $7F81A1
+        lda #STATUS_SCREEN_STEP_RETURN_TO_CASTLE
+        sta wStatusScreenStepAfterFade
         rts
 
 
         _81A5
         lda #<>rsOpenStatusScreen
-        sta $7F82C5
+        sta wUnitWindowCaller
         lda #$0000
-        sta $7F8183
+        sta wStatusScreenCaller
         lda #<>rsUnitWindowOpen
-        sta $7F81A3
+        sta wStatusScreenExitRoutine
         lda #$0005
-        sta $7F819F
+        sta wStatusScreenFadeStep
         sep #$20
         lda #$0F
         sec
-        sbc $7F819F
+        sbc wStatusScreenFadeStep
         sta bBufferINIDISP
         rep #$20
-        lda #$000A
+        lda #STATUS_SCREEN_STEP_FADE_OUT
         sta wGameStateStep,b
-        lda #$0004
-        sta $7F81A1
+        lda #STATUS_SCREEN_STEP_LEAVE
+        sta wStatusScreenStepAfterFade
         rts
 
 
@@ -785,27 +785,27 @@
         and #$FE
         sta bBufferNMITIMEN
         rep #$20
-        lda $7F8471
-        sta $7F82C9
+        lda wItemWindowCursorRow
+        sta wUnitWindowCurrentHighlightLine
         lda #<>rsReviveScreenOpen
-        sta $7F81A3
+        sta wStatusScreenExitRoutine
         lda #$0001
-        sta $7F819F
+        sta wStatusScreenFadeStep
         sep #$20
         lda #$0F
         sec
-        sbc $7F819F
+        sbc wStatusScreenFadeStep
         sta bBufferINIDISP
         rep #$20
-        lda #$000A
+        lda #STATUS_SCREEN_STEP_FADE_OUT
         sta wGameStateStep,b
-        lda #$0004
-        sta $7F81A1
+        lda #STATUS_SCREEN_STEP_LEAVE
+        sta wStatusScreenStepAfterFade
         rts
 
 
         _8217
-        lda $7F81D1
+        lda wStatusScreenGreyIndex
         beq _8221
         jml _816C
 
@@ -831,10 +831,10 @@
         jsl rlGetItemROMDataByInventorySlot
         lda wCurrentItemDataROMPointer,b
         beq _826D
-        lda #$0003
+        lda #STATUS_SCREEN_STEP_ITEM_DETAILS
         sta wGameStateStep,b
         lda #$0001
-        sta $7F8185
+        sta wStatusScreenItemSlot
         jsl rlStatusScreenDrawItemDetails
         stz wUnknown000885,b
         lda #$000A
@@ -848,28 +848,28 @@
         _8271
         lda #$000A
         jsl rlPlaySoundEffect
-        lda $7F818F
+        lda wStatusScreenHolyBloodLoaded
         bne _82AB
-        sta $7F8191
+        sta wStatusScreenHolyBloodDMAStep
         lda #$0001
-        sta $7F818F
-        lda #$0005
+        sta wStatusScreenHolyBloodLoaded
+        lda #STATUS_SCREEN_STEP_LOAD_HOLY_BLOOD
         sta wGameStateStep,b
         jsr rsStatusScreenDrawInventoryIcons
         lda #(`gcUnknownDD0000)<<8
         sta lR18+1
         lda #<>gcUnknownDD0000
         sta lR18
-        lda #$7E00
+        lda #(`(aDecompressionBuffer+$1000))<<8
         sta lR19+1
-        lda #$9B88
+        lda #<>(aDecompressionBuffer+$1000)
         sta lR19
         jsl rlAppendDecompList
         rts
 
 
         _82AB
-        lda #$0002
+        lda #STATUS_SCREEN_STEP_HOLY_BLOOD_PAGE
         sta wGameStateStep,b
         jsl rlStatusScreenSetGradient
         lda #$0110
@@ -877,7 +877,7 @@
         lda #$00AC
         sta wBufferBG1VOFS
         lda wBufferBG2VOFS
-        sta $7F8189
+        sta wStatusScreenSavedScroll
         lda #$0110
         sta wBufferBG2VOFS
         ldx #$0020
@@ -893,17 +893,17 @@
 
 
         _82DC
-        lda $7F8187
+        lda wStatusScreenScroll
         clc
-        adc #$0007
-        cmp #$0088
+        adc #STATUS_SCREEN_SCROLL_SPEED
+        cmp #STATUS_SCREEN_SCROLL_BOTTOM+1
         bmi _82F3
-        lda #$0001
+        lda #STATUS_SCREEN_STEP_BOTTOM_PAGE
         sta @l wGameStateStep
-        lda #$0087
+        lda #STATUS_SCREEN_SCROLL_BOTTOM
 
         _82F3
-        sta $7F8187
+        sta wStatusScreenScroll
         sta wBufferBG3VOFS
         sta wBufferBG2VOFS
         lda #$0011
@@ -924,8 +924,8 @@
 
         _8314
         jsr rsStatusScreenDrawInventoryIcons
-        lda #$1234
-        sta $7F819D
+        lda #STATUS_SCREEN_REOPEN_TOP_PAGE
+        sta wStatusScreenReopenMode
         rts
 
         .databank 0
@@ -943,8 +943,8 @@
 
         jsr rsStatusScreenDrawPortraitAndMapSprite
         jsr rsStatusScreenDrawEquippedWeaponIcon
-        lda $7F8187
-        cmp #$0087
+        lda wStatusScreenScroll
+        cmp #STATUS_SCREEN_SCROLL_BOTTOM
         bne _8356
         lda wJoy1New
         bmi _8366
@@ -988,12 +988,12 @@
         jsl rlPlaySoundEffect
         jsr rsStatusScreenDrawRankIconsAndStars
         jsr rsStatusScreenDrawSkillIcons
-        lda $7F8183
+        lda wStatusScreenCaller
         cmp #<>rsUnitWindowOpen
         beq _83C4
         cmp #<>rsReviveScreenOpen
         beq _83FB
-        lda $7F81AD
+        lda wStatusScreenReopened
         beq _838B
         jml _8436
 
@@ -1008,46 +1008,46 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0006
+        lda #STATUS_SCREEN_STEP_RETURN_TO_MAP
         sta wGameStateStep,b
         rts
 
 
         _83A2
         lda #$0001
-        sta $7F819F
+        sta wStatusScreenFadeStep
         sep #$20
         lda #$0F
         sec
-        sbc $7F819F
+        sbc wStatusScreenFadeStep
         sta bBufferINIDISP
         rep #$20
-        lda #$000A
+        lda #STATUS_SCREEN_STEP_FADE_OUT
         sta wGameStateStep,b
-        lda #$0007
-        sta $7F81A1
+        lda #STATUS_SCREEN_STEP_RETURN_TO_CASTLE
+        sta wStatusScreenStepAfterFade
         rts
 
 
         _83C4
         lda #<>rsOpenStatusScreen
-        sta $7F82C5
+        sta wUnitWindowCaller
         lda #$0000
-        sta $7F8183
+        sta wStatusScreenCaller
         lda #<>rsUnitWindowOpen
-        sta $7F81A3
+        sta wStatusScreenExitRoutine
         lda #$0005
-        sta $7F819F
+        sta wStatusScreenFadeStep
         sep #$20
         lda #$0F
         sec
-        sbc $7F819F
+        sbc wStatusScreenFadeStep
         sta bBufferINIDISP
         rep #$20
-        lda #$000A
+        lda #STATUS_SCREEN_STEP_FADE_OUT
         sta wGameStateStep,b
-        lda #$0004
-        sta $7F81A1
+        lda #STATUS_SCREEN_STEP_LEAVE
+        sta wStatusScreenStepAfterFade
         rts
 
 
@@ -1057,27 +1057,27 @@
         and #$FE
         sta bBufferNMITIMEN
         rep #$20
-        lda $7F8471
-        sta $7F82C9
+        lda wItemWindowCursorRow
+        sta wUnitWindowCurrentHighlightLine
         lda #<>rsReviveScreenOpen
-        sta $7F81A3
+        sta wStatusScreenExitRoutine
         lda #$0001
-        sta $7F819F
+        sta wStatusScreenFadeStep
         sep #$20
         lda #$0F
         sec
-        sbc $7F819F
+        sbc wStatusScreenFadeStep
         sta bBufferINIDISP
         rep #$20
-        lda #$000A
+        lda #STATUS_SCREEN_STEP_FADE_OUT
         sta wGameStateStep,b
-        lda #$0004
-        sta $7F81A1
+        lda #STATUS_SCREEN_STEP_LEAVE
+        sta wStatusScreenStepAfterFade
         rts
 
 
         _8436
-        lda $7F81D1
+        lda wStatusScreenGreyIndex
         beq _8440
         jml _838B
 
@@ -1101,20 +1101,20 @@
         _8465
         lda #$000A
         jsl rlPlaySoundEffect
-        lda $7F818F
+        lda wStatusScreenHolyBloodLoaded
         bne _84A2
-        sta $7F8191
+        sta wStatusScreenHolyBloodDMAStep
         lda #$0001
-        sta $7F818F
-        lda #$0005
+        sta wStatusScreenHolyBloodLoaded
+        lda #STATUS_SCREEN_STEP_LOAD_HOLY_BLOOD
         sta wGameStateStep,b
         lda #(`gcUnknownDD0000)<<8
         sta lR18+1
         lda #<>gcUnknownDD0000
         sta lR18
-        lda #$7E00
+        lda #(`(aDecompressionBuffer+$1000))<<8
         sta lR19+1
-        lda #$9B88
+        lda #<>(aDecompressionBuffer+$1000)
         sta lR19
         jsl rlAppendDecompList
         jsr rsStatusScreenDrawRankIconsAndStars
@@ -1123,7 +1123,7 @@
 
 
         _84A2
-        lda #$0002
+        lda #STATUS_SCREEN_STEP_HOLY_BLOOD_PAGE
         sta wGameStateStep,b
         jsl rlStatusScreenSetGradient
         lda #$0110
@@ -1131,7 +1131,7 @@
         lda #$00AC
         sta wBufferBG1VOFS
         lda wBufferBG2VOFS
-        sta $7F8189
+        sta wStatusScreenSavedScroll
         lda #$0110
         sta wBufferBG2VOFS
         ldx #$0020
@@ -1147,15 +1147,15 @@
 
 
         _84D3
-        lda $7F8187
+        lda wStatusScreenScroll
         sec
-        sbc #$0007
+        sbc #STATUS_SCREEN_SCROLL_SPEED
         bpl _84E3
         dec wGameStateStep,b
         lda #$0000
 
         _84E3
-        sta $7F8187
+        sta wStatusScreenScroll
         sta wBufferBG3VOFS
         sta wBufferBG2VOFS
         lda #$0012
@@ -1167,14 +1167,14 @@
 
 
         _84FC
-        lda $7F81B1
+        lda wStatusScreenSkillCount
         beq _8519
         lda #$0000
-        sta $7F81CF
+        sta wStatusScreenSkillCursor
         lda #$000A
         jsl rlPlaySoundEffect
         jsr rsStatusScreenDrawSkillDescription
-        lda #$0008
+        lda #STATUS_SCREEN_STEP_SKILL_DETAILS
         sta wGameStateStep,b
 
         _8519
@@ -1194,8 +1194,8 @@
         _8528
         jsr rsStatusScreenDrawRankIconsAndStars
         jsr rsStatusScreenDrawSkillIcons
-        lda #$4321
-        sta $7F819D
+        lda #STATUS_SCREEN_REOPEN_BOTTOM_PAGE
+        sta wStatusScreenReopenMode
         rts
 
         .databank 0
@@ -1230,7 +1230,7 @@
 
 
         _854B
-        lda $7F8191
+        lda wStatusScreenHolyBloodDMAStep
         cmp #$0005
         beq _856A
         cmp #$0004
@@ -1251,50 +1251,50 @@
         _856E
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7E9B88, $0800, $80, $0000
+          .structDMAToVRAM aDecompressionBuffer+$1000, $0800, $80, $0000
 
         lda #$0001
-        sta $7F8191
+        sta wStatusScreenHolyBloodDMAStep
         bra _85DA
 
 
         _8584
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7EA388, $0800, $80, $0800
+          .structDMAToVRAM aDecompressionBuffer+$1800, $0800, $80, $0800
 
         lda #$0002
-        sta $7F8191
+        sta wStatusScreenHolyBloodDMAStep
         bra _85DA
 
 
         _859A
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7EAB88, $0800, $80, $1000
+          .structDMAToVRAM aDecompressionBuffer+$2000, $0800, $80, $1000
 
         lda #$0003
-        sta $7F8191
+        sta wStatusScreenHolyBloodDMAStep
         bra _85DA
 
 
         _85B0
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7EB388, $0800, $80, $1800
+          .structDMAToVRAM aDecompressionBuffer+$2800, $0800, $80, $1800
 
         lda #$0004
-        sta $7F8191
+        sta wStatusScreenHolyBloodDMAStep
         bra _85DA
 
 
         _85C6
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7EBB88, $0600, $80, $2000
+          .structDMAToVRAM aDecompressionBuffer+$3000, $0600, $80, $2000
 
         lda #$0005
-        sta $7F8191
+        sta wStatusScreenHolyBloodDMAStep
 
         _85DA
         jsr rsStatusScreenDrawInventoryIcons
@@ -1315,7 +1315,7 @@
         jsr rsStatusScreenDrawHolyBloodPageSprites
         jsr rsStatusScreenDrawPortraitAndMapSprite
         jsr rsStatusScreenDrawEquippedWeaponIcon
-        lda #$0002
+        lda #STATUS_SCREEN_STEP_HOLY_BLOOD_PAGE
         sta wGameStateStep,b
         jsl rlStatusScreenSetGradient
         lda #$0110
@@ -1323,7 +1323,7 @@
         lda #$00AC
         sta wBufferBG1VOFS
         lda wBufferBG2VOFS
-        sta $7F8189
+        sta wStatusScreenSavedScroll
         lda #$0110
         sta wBufferBG2VOFS
         rts
@@ -1380,7 +1380,7 @@
         dec x
         bne _8641
         ldx #$0000
-        lda $7F8187
+        lda wStatusScreenScroll
         beq _8656
         inc x
 
@@ -1389,9 +1389,9 @@
         sta wGameStateStep,b
         stz wBufferBG1VOFS
         jsl rlStatusScreenSetGradient
-        lda $7F8189
+        lda wStatusScreenSavedScroll
         sta wBufferBG2VOFS
-        lda $7F8187
+        lda wStatusScreenScroll
         sta wBufferBG3VOFS
         jsr rsStatusScreenDrawInventoryIcons
         jsr rsStatusScreenDrawRankIconsAndStars
@@ -1411,8 +1411,8 @@
 
         _8685
         jsr rsStatusScreenDrawHolyBloodPageSprites
-        lda #$1111
-        sta $7F819D
+        lda #STATUS_SCREEN_REOPEN_HOLY_BLOOD
+        sta wStatusScreenReopenMode
         rts
 
         .databank 0
@@ -1443,16 +1443,16 @@
 
 
         _86AE
-        lda $7F8185
+        lda wStatusScreenItemSlot
         cmp #$0001
         beq _86D5
         lda wUnknown000885,b
         sec
         sbc #$0010
         sta wUnknown000885,b
-        lda $7F8185
+        lda wStatusScreenItemSlot
         dec a
-        sta $7F8185
+        sta wStatusScreenItemSlot
         jsl rlStatusScreenDrawItemDetails
         lda #$0006
         jsl rlPlaySoundEffect
@@ -1463,16 +1463,16 @@
 
 
         _86D9
-        lda $7F8185
+        lda wStatusScreenItemSlot
         cmp wCastleListSubCount,b
         beq _8700
         lda wUnknown000885,b
         clc
         adc #$0010
         sta wUnknown000885,b
-        lda $7F8185
+        lda wStatusScreenItemSlot
         inc a
-        sta $7F8185
+        sta wStatusScreenItemSlot
         jsl rlStatusScreenDrawItemDetails
         lda #$0006
         jsl rlPlaySoundEffect
@@ -1491,9 +1491,9 @@
         jsl rlStatusScreenDrawStatsAndInventory
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7E8648, $0400, $80, $B2C0
+          .structDMAToVRAM aBG3TilemapBuffer+$2C0, $0400, $80, $B2C0
 
-        lda #$0000
+        lda #STATUS_SCREEN_STEP_TOP_PAGE
         sta wGameStateStep,b
         lda #$0021
         jsl rlPlaySoundEffect
@@ -1520,7 +1520,7 @@
 
         ; Step $04, after a fade-out: installs wStatusScreenExitRoutine as the main loop routine, which is the screen that opened the status screen or rsOpenStatusScreen again for another unit.
 
-        lda $7F81A3
+        lda wStatusScreenExitRoutine
         sta wMainLoopPointer
         jsr rsStatusScreenDrawPortraitAndMapSprite
         jsr rsStatusScreenDrawEquippedWeaponIcon
@@ -1615,7 +1615,7 @@
         lda #$0010
         ldy #$0010
         jsl rlClearTilemapRect
-        lda $7F8185
+        lda wStatusScreenItemSlot
         jsl rlGetItemROMDataByInventorySlot
         lda wCurrentItemDataROMPointer,b
         beq _87B5
@@ -1646,15 +1646,15 @@
         jsr rsStatusScreenDrawItemDescription
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7E8648, $0400, $80, $B2C0
+          .structDMAToVRAM aBG3TilemapBuffer+$2C0, $0400, $80, $B2C0
 
         rtl
 
 
         _87CC
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         bne _87EB
-        lda $7F8185
+        lda wStatusScreenItemSlot
         jsl rlGetItemDurabilityOfInventorySlot
         ldx #$3920
         stx wR5
@@ -1676,7 +1676,7 @@
         jsr rsStatusScreenDrawItemDescription
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7E8648, $0400, $80, $B2C0
+          .structDMAToVRAM aBG3TilemapBuffer+$2C0, $0400, $80, $B2C0
 
         rtl
 
@@ -1717,9 +1717,9 @@
         ldx #$0005
         ldy #$000D
         jsr rsDrawWeaponRankLetter
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         bne _888F
-        lda $7F8185
+        lda wStatusScreenItemSlot
         jsl rlGetItemDurabilityOfInventorySlot
         ldx #$3920
         stx wR5
@@ -1762,8 +1762,8 @@
 
         _88DD
         lda wSelectedInventorySlot,b
-        sta $7F81AF
-        lda $7F8185
+        sta wStatusScreenSavedInventorySlot
+        lda wStatusScreenItemSlot
         sta wSelectedInventorySlot,b
         jsl rlGetSelectedItemRange
         lda wR11
@@ -1773,7 +1773,7 @@
         stx wR6
         ldx #$04D6
         jsl rlDrawMenuTextNumber
-        lda $7F81AF
+        lda wStatusScreenSavedInventorySlot
         sta wSelectedInventorySlot,b
         lda wR10
         ldx #$3920
@@ -1797,7 +1797,7 @@
         stx wR6
         ldx #$0552
         jsl rlDrawMenuTextNumber
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         bne _8962
         jsl rlGetItemRAMKillCountAndCritAbility
         ldx #$3920
@@ -1811,7 +1811,7 @@
         jsr rsStatusScreenDrawWeaponDescription
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7E8648, $0400, $80, $B2C0
+          .structDMAToVRAM aBG3TilemapBuffer+$2C0, $0400, $80, $B2C0
 
         rtl
 
@@ -1977,7 +1977,7 @@
         plb
         .databank $89
         jsr rsStatusScreenDrawPromotionMarker
-        lda $7F81D1
+        lda wStatusScreenGreyIndex
         cmp #$0008
         beq _89FE
         jsl rlUnknown88DBEE
@@ -2046,7 +2046,7 @@
 
         ; Blinks aStatusScreenPromotionMarker beside the portrait when the unit is at its promotion level (wStatusScreenCanPromote).
 
-        lda $7F819B
+        lda wStatusScreenCanPromote
         cmp #$0001
         bne _8A60
         lda wVBlankEnabledFramecount
@@ -2084,11 +2084,11 @@
         ; Every frame on the stat page: the leadership stars (none if the unit has a commander, or in step $08), and the ten weapon type icons beside the weapon ranks, which scroll with BG3.
 
         lda wGameStateStep,b
-        cmp #$0008
+        cmp #STATUS_SCREEN_STEP_SKILL_DETAILS
         beq _8A9A
-        lda $7F8199
+        lda wStatusScreenCommander
         bne _8A9A
-        lda $7F8197
+        lda wStatusScreenLeadership
         ldx #$003F
         ldy #$00F3
         jsl rlStatusScreenDrawLeadershipStars
@@ -2313,7 +2313,7 @@
         plb
         .databank $89
         ldy #$8CC4
-        lda $7F8185
+        lda wStatusScreenItemSlot
         tax
         dec x
         lda #$0010
@@ -2326,7 +2326,7 @@
         lda #$2600
         sta wR5
         jsl rlPushToOAMBuffer
-        lda $7F8185
+        lda wStatusScreenItemSlot
         jsl rlGetItemROMDataByInventorySlot
         jsl rlGetItemEquipmentType
         cmp #$0000
@@ -2337,7 +2337,7 @@
 
 
         _8BD8
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         bne _8BF9
         ldy #$8CC4
         lda #$003B
@@ -2352,7 +2352,7 @@
 
         _8BF9
         jsl rlGetItemWeaponType
-        sta $7F82BD
+        sta wStatusScreenTemp1
         asl a
         tax
         lda @l aStatusScreenItemWeaponTypeTiles,x
@@ -2365,7 +2365,7 @@
         sta wR5
         ldy #$8CC4
         jsl rlPushToOAMBuffer
-        lda $7F82BD
+        lda wStatusScreenTemp1
         cmp #$0005
         bpl _8C65
         cmp #$0003
@@ -2388,7 +2388,7 @@
         sta wR5
         lda #$004A
         sta wR1
-        lda $7F82BD
+        lda wStatusScreenTemp1
         asl a
         tax
         lda @l aStatusScreenPhysicalTriangleSprites,x
@@ -2398,7 +2398,7 @@
 
 
         _8C65
-        lda $7F82BD
+        lda wStatusScreenTemp1
         cmp #$0008
         bpl _8CA6
         lda #$0000
@@ -2415,7 +2415,7 @@
         sta wR5
         lda #$004A
         sta wR1
-        lda $7F82BD
+        lda wStatusScreenTemp1
         sec
         sbc #$0005
         asl a
@@ -2525,8 +2525,8 @@
 
         ; Major Loptous blood (wStatusScreenLoptousBlood 2): the crest and two glint animations; minor: one glint; none: nothing.
 
-        lda $7F818D
-        cmp #$0002
+        lda wStatusScreenLoptousBlood
+        cmp #MajorHolyBlood
         beq _8D6C
         jml _8E14
 
@@ -2543,61 +2543,61 @@
         .databank $89
         ldy #$8E65
         jsl rlPushToOAMBuffer
-        lda $7F82B9
+        lda wStatusScreenLoptousGlintTimer
         bne _8DA8
         lda #$0006
-        sta $7F82B9
-        lda $7F8251
+        sta wStatusScreenLoptousGlintTimer
+        lda wStatusScreenLoptousGlintFrame
         inc a
         cmp #$0004
         bcc _8DA4
         lda #$000F
-        sta $7F82B9
+        sta wStatusScreenLoptousGlintTimer
         lda #$0000
 
         _8DA4
-        sta $7F8251
+        sta wStatusScreenLoptousGlintFrame
 
         _8DA8
-        lda $7F82B9
+        lda wStatusScreenLoptousGlintTimer
         dec a
-        sta $7F82B9
+        sta wStatusScreenLoptousGlintTimer
         lda #$007C
         sta wR0
         lda #$00A0
         sta wR1
         stz wR4
         stz wR5
-        lda $7F8251
+        lda wStatusScreenLoptousGlintFrame
         asl a
         tax
         lda @l aStatusScreenLoptousGlintFrames,x
         tay
         jsl rlPushToOAMBuffer
-        lda $7F82BB
+        lda wStatusScreenLoptousGlint2Timer
         bne _8DEC
         lda #$0003
-        sta $7F82BB
-        lda $7F8253
+        sta wStatusScreenLoptousGlint2Timer
+        lda wStatusScreenLoptousGlint2Frame
         inc a
         cmp #$0004
         bcc _8DE8
         lda #$0000
 
         _8DE8
-        sta $7F8253
+        sta wStatusScreenLoptousGlint2Frame
 
         _8DEC
-        lda $7F82BB
+        lda wStatusScreenLoptousGlint2Timer
         dec a
-        sta $7F82BB
+        sta wStatusScreenLoptousGlint2Timer
         lda #$0078
         sta wR0
         lda #$009C
         sta wR1
         stz wR4
         stz wR5
-        lda $7F8253
+        lda wStatusScreenLoptousGlint2Frame
         asl a
         tax
         lda @l aStatusScreenLoptousGlint2Frames,x
@@ -2609,32 +2609,32 @@
         _8E14
         cmp #$0000
         beq _8E64
-        lda $7F82B9
+        lda wStatusScreenLoptousGlintTimer
         bne _8E3E
         lda #$000B
-        sta $7F82B9
-        lda $7F8251
+        sta wStatusScreenLoptousGlintTimer
+        lda wStatusScreenLoptousGlintFrame
         inc a
         cmp #$0004
         bcc _8E3A
         lda #$0019
-        sta $7F82B9
+        sta wStatusScreenLoptousGlintTimer
         lda #$0000
 
         _8E3A
-        sta $7F8251
+        sta wStatusScreenLoptousGlintFrame
 
         _8E3E
-        lda $7F82B9
+        lda wStatusScreenLoptousGlintTimer
         dec a
-        sta $7F82B9
+        sta wStatusScreenLoptousGlintTimer
         lda #$007C
         sta wR0
         lda #$00A0
         sta wR1
         stz wR4
         stz wR5
-        lda $7F8251
+        lda wStatusScreenLoptousGlintFrame
         asl a
         tax
         lda @l aStatusScreenLoptousGlintFrames,x
@@ -2761,22 +2761,22 @@
         lda #$0000
 
         _8F19
-        sta $7F82BD
+        sta wStatusScreenTemp1
         asl a
         tax
-        lda $7F81D3,x
+        lda aStatusScreenHolyBloodLevels,x
         beq _8F38
         jsr rsStatusScreenDrawHolyBloodGlint
-        lda $7F82BD
+        lda wStatusScreenTemp1
         asl a
         tax
-        lda $7F81D3,x
+        lda aStatusScreenHolyBloodLevels,x
         dec a
         beq _8F38
         jsr rsStatusScreenDrawMajorBloodGlint
 
         _8F38
-        lda $7F82BD
+        lda wStatusScreenTemp1
         inc a
         cmp #$000C
         bne _8F19
@@ -2835,30 +2835,30 @@
         .autsiz
         .databank ?
 
-        ; The first glint of the blood in $7F82BD: four frames, each held for the blood's time in aStatusScreenGlintFrameTimes; after the last frame the pause in aStatusScreenGlintPauseTimes.
+        ; The first glint of the blood in wStatusScreenTemp1: four frames, each held for the blood's time in aStatusScreenGlintFrameTimes; after the last frame the pause in aStatusScreenGlintPauseTimes.
 
-        lda $7F82BD
+        lda wStatusScreenTemp1
         asl a
         tax
-        lda $7F8255,x
+        lda aStatusScreenGlintTimers,x
         bne _8FA0
         lda aStatusScreenGlintFrameTimes,x
-        sta $7F8255,x
-        lda $7F81ED,x
+        sta aStatusScreenGlintTimers,x
+        lda aStatusScreenGlintFrameIDs,x
         inc a
         cmp #$0004
         bne _8F9C
         lda aStatusScreenGlintPauseTimes,x
-        sta $7F8255,x
+        sta aStatusScreenGlintTimers,x
         lda #$0000
 
         _8F9C
-        sta $7F81ED,x
+        sta aStatusScreenGlintFrameIDs,x
 
         _8FA0
-        lda $7F8255,x
+        lda aStatusScreenGlintTimers,x
         dec a
-        sta $7F8255,x
+        sta aStatusScreenGlintTimers,x
         lda aStatusScreenHolyBloodRingX,x
         sec
         sbc #$0001
@@ -2870,7 +2870,7 @@
         lda #$0000
         sta wR4
         sta wR5
-        lda $7F81ED,x
+        lda aStatusScreenGlintFrameIDs,x
         asl a
         tax
         lda aStatusScreenGlintFrames,x
@@ -2949,28 +2949,28 @@
         .autsiz
         .databank ?
 
-        ; The second glint of a major blood in $7F82BD, on its own timer (aStatusScreenMajorGlintFrameTimes).
+        ; The second glint of a major blood in wStatusScreenTemp1, on its own timer (aStatusScreenMajorGlintFrameTimes).
 
-        lda $7F82BD
+        lda wStatusScreenTemp1
         asl a
         tax
-        lda $7F826D,x
+        lda aStatusScreenMajorGlintTimers,x
         bne _904D
         lda aStatusScreenMajorGlintFrameTimes,x
-        sta $7F826D,x
-        lda $7F8205,x
+        sta aStatusScreenMajorGlintTimers,x
+        lda aStatusScreenMajorGlintIDs,x
         inc a
         cmp #$0004
         bne _9049
         lda #$0000
 
         _9049
-        sta $7F8205,x
+        sta aStatusScreenMajorGlintIDs,x
 
         _904D
-        lda $7F826D,x
+        lda aStatusScreenMajorGlintTimers,x
         dec a
-        sta $7F826D,x
+        sta aStatusScreenMajorGlintTimers,x
         lda aStatusScreenHolyBloodRingX,x
         sec
         sbc #$0001
@@ -2982,7 +2982,7 @@
         lda #$0000
         sta wR4
         sta wR5
-        lda $7F8205,x
+        lda aStatusScreenMajorGlintIDs,x
         asl a
         tax
         lda aStatusScreenMajorGlintFrames,x
@@ -3056,7 +3056,7 @@
         asl a
         tax
         tya
-        sta $7F81D3,x
+        sta aStatusScreenHolyBloodLevels,x
         lda wR0
         inc a
         cmp #$000D
@@ -3129,7 +3129,7 @@
       aStatusScreenHDMAHalt ; 89/9178
         HDMA_HALT
 
-      aStatusScreenBG1SplitHDMA .dstruct structHDMADirectEntryInfo, rlStatusScreenBuildBG1SplitTable, rlStatusScreenBuildBG1SplitTable, aStatusScreenHDMAHalt, $7FB160, PPU_REG_BASE + $0E, $02 ; 89/917A
+      aStatusScreenBG1SplitHDMA .dstruct structHDMADirectEntryInfo, rlStatusScreenBuildBG1SplitTable, rlStatusScreenBuildBG1SplitTable, aStatusScreenHDMAHalt, aStatusScreenBG1SplitTable, PPU_REG_BASE + $0E, $02 ; 89/917A
 
     .endsection Table899178Section
 
@@ -3150,23 +3150,23 @@
 
         sep #$20
         lda #$57
-        sta $7FB160
+        sta aStatusScreenBG1SplitTable
         rep #$20
         lda #$FFFF
-        sta $7FB161
+        sta aStatusScreenBG1SplitTable+1
         sep #$20
         lda #$01
-        sta $7FB163
+        sta aStatusScreenBG1SplitTable+3
         rep #$20
         lda wBufferBG1VOFS
         dec a
-        sta $7FB164
+        sta aStatusScreenBG1SplitTable+4
         sep #$20
         lda #$00
-        sta $7FB166
+        sta aStatusScreenBG1SplitTable+6
         rep #$20
         lda #$0000
-        sta $7FB167
+        sta aStatusScreenBG1SplitTable+7
         rtl
 
         .databank 0
@@ -3181,7 +3181,7 @@
       .al
       .xl
 
-      aStatusScreenGradientHDMA .dstruct structHDMADirectEntryInfo, rlStatusScreenInitGradientHDMA, rlStatusScreenGradientHDMAIdle, aStatusScreenHDMAHalt, $7FB0B6, PPU_REG_BASE + $32, $00 ; 89/91B9
+      aStatusScreenGradientHDMA .dstruct structHDMADirectEntryInfo, rlStatusScreenInitGradientHDMA, rlStatusScreenGradientHDMAIdle, aStatusScreenHDMAHalt, aStatusScreenGradientTable, PPU_REG_BASE + $32, $00 ; 89/91B9
 
     .endsection Table8991B9Section
 
@@ -3200,7 +3200,7 @@
 
         ; The gradient HDMA's start: writes the stat page's colour table (as if in step $01).
 
-        lda #$0001
+        lda #STATUS_SCREEN_STEP_BOTTOM_PAGE
         sta wGameStateStep,b
         jsl rlStatusScreenSetGradient
         stz wGameStateStep,b
@@ -3244,12 +3244,12 @@
 
         ldx #$0000
         lda wGameStateStep,b
-        cmp #$0002
+        cmp #STATUS_SCREEN_STEP_HOLY_BLOOD_PAGE
         beq _9219
 
         _920B
         lda aStatusScreenStatPageGradient,x
-        sta $7FB0B6,x
+        sta aStatusScreenGradientTable,x
         beq _923E
         inc x
         inc x
@@ -3257,13 +3257,13 @@
 
 
         _9219
-        lda $7F818D
-        cmp #$0002
+        lda wStatusScreenLoptousBlood
+        cmp #MajorHolyBlood
         beq _9230
 
         _9222
         lda aStatusScreenHolyBloodPageGradient,x
-        sta $7FB0B6,x
+        sta aStatusScreenGradientTable,x
         beq _923E
         inc x
         inc x
@@ -3272,7 +3272,7 @@
 
         _9230
         lda aStatusScreenLoptousPageGradient,x
-        sta $7FB0B6,x
+        sta aStatusScreenGradientTable,x
         beq _923E
         inc x
         inc x
@@ -3341,7 +3341,7 @@
 
         ; On the bottom half: the icons of the unit's skills in a row, scrolling with BG3.
 
-        lda $7F81B1
+        lda wStatusScreenSkillCount
         beq _92E6
         phk
         plb
@@ -3352,7 +3352,7 @@
         sta wR15
         asl a
         tax
-        lda $7F81C1,x
+        lda aStatusScreenSkillIconTiles,x
         sta wR4
         lda wR15
         asl a
@@ -3368,7 +3368,7 @@
         jsl rlPushToOAMBuffer
         lda wR15
         inc a
-        cmp $7F81B1
+        cmp wStatusScreenSkillCount
         bne _92B8
 
         _92E6
@@ -3419,7 +3419,7 @@
         phk
         plb
         .databank $89
-        lda $7F81A7
+        lda wStatusScreenDropItemSlot
         beq _935E
         tax
         lda @l aStatusScreenDropMarkerY,x
@@ -3481,7 +3481,7 @@
         ldx #$00C0
 
         _9380
-        sta $7FAF4E,x
+        sta aStatusScreenTextBuffer-2,x
         dec x
         dec x
         bne _9380
@@ -3505,10 +3505,10 @@
         ldx #$0000
 
         _93BA
-        lda $7FAF50,x
-        sta $7E8750,x
-        lda $7FAFB0,x
-        sta $7E8790,x
+        lda aStatusScreenTextBuffer+$0,x
+        sta aBG3TilemapBuffer+$3C8,x
+        lda aStatusScreenTextBuffer+$60,x
+        sta aBG3TilemapBuffer+$408,x
         inc x
         inc x
         cpx #$0010
@@ -3516,10 +3516,10 @@
         ldx #$0000
 
         _93D4
-        lda $7FAF60,x
-        sta $7E87D0,x
-        lda $7FAFC0,x
-        sta $7E8810,x
+        lda aStatusScreenTextBuffer+$10,x
+        sta aBG3TilemapBuffer+$448,x
+        lda aStatusScreenTextBuffer+$70,x
+        sta aBG3TilemapBuffer+$488,x
         inc x
         inc x
         cpx #$0010
@@ -3527,10 +3527,10 @@
         ldx #$0000
 
         _93EE
-        lda $7FAF70,x
-        sta $7E8850,x
-        lda $7FAFD0,x
-        sta $7E8890,x
+        lda aStatusScreenTextBuffer+$20,x
+        sta aBG3TilemapBuffer+$4C8,x
+        lda aStatusScreenTextBuffer+$80,x
+        sta aBG3TilemapBuffer+$508,x
         inc x
         inc x
         cpx #$0010
@@ -3538,10 +3538,10 @@
         ldx #$0000
 
         _9408
-        lda $7FAF80,x
-        sta $7E88D0,x
-        lda $7FAFE0,x
-        sta $7E8910,x
+        lda aStatusScreenTextBuffer+$30,x
+        sta aBG3TilemapBuffer+$548,x
+        lda aStatusScreenTextBuffer+$90,x
+        sta aBG3TilemapBuffer+$588,x
         inc x
         inc x
         cpx #$0010
@@ -3549,10 +3549,10 @@
         ldx #$0000
 
         _9422
-        lda $7FAF90,x
-        sta $7E8950,x
-        lda $7FAFF0,x
-        sta $7E8990,x
+        lda aStatusScreenTextBuffer+$40,x
+        sta aBG3TilemapBuffer+$5C8,x
+        lda aStatusScreenTextBuffer+$A0,x
+        sta aBG3TilemapBuffer+$608,x
         inc x
         inc x
         cpx #$0010
@@ -3560,10 +3560,10 @@
         ldx #$0000
 
         _943C
-        lda $7FAFA0,x
-        sta $7E89D0,x
-        lda $7FB000,x
-        sta $7E8A10,x
+        lda aStatusScreenTextBuffer+$50,x
+        sta aBG3TilemapBuffer+$648,x
+        lda aStatusScreenTextBuffer+$B0,x
+        sta aBG3TilemapBuffer+$688,x
         inc x
         inc x
         cpx #$0010
@@ -3591,7 +3591,7 @@
         ldx #$00C0
 
         _9466
-        sta $7FAF4E,x
+        sta aStatusScreenTextBuffer-2,x
         dec x
         dec x
         bne _9466
@@ -3615,10 +3615,10 @@
         ldx #$0000
 
         _94A0
-        lda $7FAF50,x
-        sta $7E89D0,x
-        lda $7FAFB0,x
-        sta $7E8A10,x
+        lda aStatusScreenTextBuffer+$0,x
+        sta aBG3TilemapBuffer+$648,x
+        lda aStatusScreenTextBuffer+$60,x
+        sta aBG3TilemapBuffer+$688,x
         inc x
         inc x
         cpx #$0010
@@ -3652,12 +3652,12 @@
         lda wVBlankEnabledFramecount
         and #$0018
         beq _9508
-        lda $7F8187
+        lda wStatusScreenScroll
         beq _94EE
-        cmp #$0087
+        cmp #STATUS_SCREEN_SCROLL_BOTTOM
         bne _9508
         lda wGameStateStep,b
-        cmp #$0001
+        cmp #STATUS_SCREEN_STEP_BOTTOM_PAGE
         bne _9508
         lda #$0075
         sta wR0
@@ -3737,7 +3737,7 @@
         stx wR6
         ldx #$014A
         jsl rlDrawMenuTextNumber
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         bne _9570
         jsl rlGetSelectedUnitExperience
         ldx #$3920
@@ -3802,7 +3802,7 @@
         ldx #$00F4
         jsl rlDrawMenuTextNumber
         lda wSelectedInventorySlot,b
-        sta $7F81AF
+        sta wStatusScreenSavedInventorySlot
         jsl rlGetFirstEquippableWeaponInInventory
         sta wSelectedInventorySlot,b
         jsl rlGetSelectedItemRange
@@ -3814,7 +3814,7 @@
         ldx #$0176
         jsl rlDrawMenuTextNumber
         sta wR11
-        lda $7F81AF
+        lda wStatusScreenSavedInventorySlot
         sta wSelectedInventorySlot,b
         lda #$001B
         sec
@@ -3902,7 +3902,7 @@
         jsl rlDrawMenuTextNumber
 
         _96EB
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         beq _9702
         lda #(`aStatusScreenDashes)<<8
         sta lR18+1
@@ -4002,7 +4002,7 @@
         ldx #$000C
         ldy #$0014
         jsl rlDrawStatBonus
-        lda $7F818B
+        lda wStatusScreenUnitType
         cmp #$0003
         bne _979F
         lda #$0000
@@ -4097,7 +4097,7 @@
         tax
         jsl rlDrawMenuTextLine
         phy
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         bne _98A4
         jsl rlGetItemEquipmentType
         cmp #$0000
@@ -4196,7 +4196,7 @@
 
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda $7F8199
+        lda wStatusScreenCommander
         beq _9904
         jsl rlGetCharacterNamePointer
         lda lRoutineVariable,b
@@ -4209,7 +4209,7 @@
 
 
         _9904
-        lda $7F8197
+        lda wStatusScreenLeadership
         bne _991B
         lda #(`aStatusScreenNoneText)<<8
         sta lR18+1
@@ -4219,7 +4219,7 @@
         jsl rlDrawMenuTextLine
 
         _991B
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         beq _994F
         jsl rlGetFactionSlotNameID
         cmp #$00FF
@@ -4280,7 +4280,7 @@
         ldx #$0009
         ldy #$0025
         jsl rlDrawStatBonus
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         bne _9A27
         lda @l wSelectedUnitDataRAMPointer
         pha
@@ -4328,9 +4328,9 @@
 
         _9A19
         lda #$39E4
-        sta $7E8D98
+        sta aBG3TilemapBuffer+$A10
         lda #$39F4
-        sta $7E8DD8
+        sta aBG3TilemapBuffer+$A50
 
         _9A27
         jsl rlGetSelectedUnitMoney
@@ -4340,8 +4340,8 @@
         stx wR6
         ldx #$0990
         jsl rlDrawMenuTextNumber
-        lda $7F81A9
-        bit #$0200
+        lda wStatusScreenUnitStates
+        bit #UnitStateDead
         beq _9A58
         lda #(`aStatusScreenDeadText)<<8
         sta lR18+1
@@ -4353,7 +4353,7 @@
 
 
         _9A58
-        lda $7F81AB
+        lda wStatusScreenCondition
         sta wR0
         asl a
         clc
@@ -4468,7 +4468,7 @@
         ldx #$001D
         ldy #$0026
         jsr rsDrawWeaponRankLetter
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         beq _9B8E
         lda #(`aStatusScreenNoneText)<<8
         sta lR18+1
@@ -4849,7 +4849,7 @@
         sta lR18
         ldx #$1E03
         jsl rlDrawMenuTextLine
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         beq _9DFA
         lda #(`aStatusScreenArmyLabel)<<8
         sta lR18+1
@@ -5183,7 +5183,7 @@
         .databank $89
         cmp #$0000
         beq _A106
-        sta $7F82BD
+        sta wStatusScreenTemp1
         tya
         and #$00FF
         xba
@@ -5194,27 +5194,27 @@
         and #$001F
         asl a
         ora wR10
-        sta $7F82BF
+        sta wStatusScreenTemp2
         ldx #$0000
-        lda $7F82BD
+        lda wStatusScreenTemp1
         bpl _A0B2
         dec a
         eor #$FFFF
         inc x
 
         _A0B2
-        sta $7F82C3
+        sta wStatusScreenTemp4
         txa
-        sta $7F82C1
+        sta wStatusScreenTemp3
         ldx #$0000
 
         _A0BE
-        lda $7F82C3
+        lda wStatusScreenTemp4
         cmp #$000A
         bmi _A0D2
         sec
         sbc #$000A
-        sta $7F82C3
+        sta wStatusScreenTemp4
         inc x
         bra _A0BE
 
@@ -5222,10 +5222,10 @@
         _A0D2
         sta wR10
         stx wR11
-        lda $7F82BF
+        lda wStatusScreenTemp2
         tax
         ldy #$391B
-        lda $7F82C1
+        lda wStatusScreenTemp3
         bne _A0E7
         ldy #$391A
 
@@ -5273,17 +5273,17 @@
 
         ; Loads the unit's portrait into sprite VRAM; character $2B uses portrait $2B4 when shown as an enemy.
 
-        lda $7F8195
+        lda wStatusScreenCharacter
         cmp #$002B
         bne _A14C
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         beq _A14C
         lda #$02B4
         bra rlLoadPortraitAsSprites
 
 
         _A14C
-        lda $7F8195
+        lda wStatusScreenCharacter
 
         .databank 0
 
@@ -5335,7 +5335,7 @@
           dec y
           bpl -
 
-        lda $7F8195
+        lda wStatusScreenCharacter
         jsl rlGetCharacterPortraitDataID
         cmp #$00F3
         beq +
@@ -5392,22 +5392,22 @@
         jsl rlClearTilemapRect
         jsl rlStatusScreenDrawPersonalDataLabels
         jsl rlStatusScreenDrawPersonalData
-        lda #$0001
+        lda #STATUS_SCREEN_STEP_BOTTOM_PAGE
         sta wGameStateStep,b
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7E8A88, $0400, $80, $B700
+          .structDMAToVRAM aBG3TilemapBuffer+$700, $0400, $80, $B700
 
         jsr rsStatusScreenDrawSkillIcons
         rts
 
 
         _A2AE
-        lda $7F81CF
+        lda wStatusScreenSkillCursor
         inc a
-        cmp $7F81B1
+        cmp wStatusScreenSkillCount
         beq _A2CA
-        sta $7F81CF
+        sta wStatusScreenSkillCursor
         lda #$0007
         jsl rlPlaySoundEffect
         jsr rsStatusScreenDrawSkillDescription
@@ -5420,10 +5420,10 @@
 
 
         _A2D1
-        lda $7F81CF
+        lda wStatusScreenSkillCursor
         dec a
         bmi _A2E6
-        sta $7F81CF
+        sta wStatusScreenSkillCursor
         lda #$0007
         jsl rlPlaySoundEffect
         jsr rsStatusScreenDrawSkillDescription
@@ -5458,7 +5458,7 @@
         sep #$20
         lda bBufferINIDISP
         clc
-        adc $7F819F
+        adc wStatusScreenFadeStep
         sta bBufferINIDISP
         rep #$20
         and #$00FF
@@ -5468,14 +5468,14 @@
         lda #$0F
         sta bBufferINIDISP
         rep #$20
-        lda $7F81A1
+        lda wStatusScreenStepAfterFade
         sta wGameStateStep,b
 
         _A311
         jsr rsStatusScreenDrawPortraitAndMapSprite
         jsr rsStatusScreenDrawEquippedWeaponIcon
-        lda $7F81A1
-        cmp #$0002
+        lda wStatusScreenStepAfterFade
+        cmp #STATUS_SCREEN_STEP_HOLY_BLOOD_PAGE
         beq _A32A
         jsr rsStatusScreenDrawInventoryIcons
         jsr rsStatusScreenDrawRankIconsAndStars
@@ -5504,7 +5504,7 @@
         sep #$20
         lda bBufferINIDISP
         sec
-        sbc $7F819F
+        sbc wStatusScreenFadeStep
         sta bBufferINIDISP
         rep #$20
         bpl _A35B
@@ -5512,11 +5512,11 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda $7F81A1
+        lda wStatusScreenStepAfterFade
         sta wGameStateStep,b
-        lda $7F819D
+        lda wStatusScreenReopenMode
         beq _A35B
-        lda $7F81A5
+        lda wStatusScreenNextUnit
         sta @l wSelectedUnitDataRAMPointer
         rts
 
@@ -5581,9 +5581,9 @@
         asl a
         tax
         lda wR15
-        sta $7F81B3,x
+        sta aStatusScreenSkillIDs,x
         lda wR14
-        sta $7F81C1,x
+        sta aStatusScreenSkillIconTiles,x
         inc wR13
 
         _A3B1
@@ -5594,7 +5594,7 @@
 
         _A3B9
         lda wR13
-        sta $7F81B1
+        sta wStatusScreenSkillCount
         rtl
 
         .databank 0
@@ -5627,17 +5627,17 @@
         ldx #$00C0
 
         _A3D3
-        sta $7FAF4E,x
+        sta aStatusScreenTextBuffer-2,x
         dec x
         dec x
         bne _A3D3
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda $7F81CF
+        lda wStatusScreenSkillCursor
         asl a
         tax
-        lda $7F81B3,x
-        sta $7F82BD
+        lda aStatusScreenSkillIDs,x
+        sta wStatusScreenTemp1
         sta wR0
         asl a
         clc
@@ -5653,10 +5653,10 @@
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aUnknown89ACC5
         sta lMapMenuTilemapRAMEntryPointer,b
-        lda $7F81CF
+        lda wStatusScreenSkillCursor
         asl a
         tax
-        lda $7F81B3,x
+        lda aStatusScreenSkillIDs,x
         sta wR0
         asl a
         clc
@@ -5671,30 +5671,30 @@
         ldx #$0014
 
         _A43C
-        lda $7FAF4E,x
-        sta $7E8B8C,x
-        lda $7FAFC6,x
-        sta $7E8BCC,x
+        lda aStatusScreenTextBuffer-2,x
+        sta aBG3TilemapBuffer+$804,x
+        lda aStatusScreenTextBuffer+$76,x
+        sta aBG3TilemapBuffer+$844,x
         dec x
         dec x
         bne _A43C
         ldx #$0014
 
         _A453
-        lda $7FAF62,x
-        sta $7E8C0C,x
-        lda $7FAFDA,x
-        sta $7E8C4C,x
+        lda aStatusScreenTextBuffer+$12,x
+        sta aBG3TilemapBuffer+$884,x
+        lda aStatusScreenTextBuffer+$8A,x
+        sta aBG3TilemapBuffer+$8C4,x
         dec x
         dec x
         bne _A453
         ldx #$0014
 
         _A46A
-        lda $7FAF76,x
-        sta $7E8C8C,x
-        lda $7FAFEE,x
-        sta $7E8CCC,x
+        lda aStatusScreenTextBuffer+$26,x
+        sta aBG3TilemapBuffer+$904,x
+        lda aStatusScreenTextBuffer+$9E,x
+        sta aBG3TilemapBuffer+$944,x
         dec x
         dec x
         bne _A46A
@@ -5704,7 +5704,7 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$3800
         sta aCurrentTilemapInfo,b
-        lda $7F82BD
+        lda wStatusScreenTemp1
         jsl rlCheckIfUnitHasSpecifiedPersonalSkill
         bcs _A4A6
         lda #(`aStatusScreenClassSkillText)<<8
@@ -5725,7 +5725,7 @@
         jsl rlDrawMenuTextLine
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7E8A88, $0400, $80, $B700
+          .structDMAToVRAM aBG3TilemapBuffer+$700, $0400, $80, $B700
 
         rts
 
@@ -5773,7 +5773,7 @@
 
         ; The cursor above the chosen skill icon (four frames) and the icon of that skill.
 
-        lda $7F81CF
+        lda wStatusScreenSkillCursor
         asl a
         tax
         lda aStatusScreenSkillCursorX,x
@@ -5795,10 +5795,10 @@
         plb
         .databank $89
         jsl rlPushToOAMBuffer
-        lda $7F81CF
+        lda wStatusScreenSkillCursor
         asl a
         tax
-        lda $7F81B3,x
+        lda aStatusScreenSkillIDs,x
         asl a
         tax
         lda @l aStatusScreenSkillIconTilesBySkill,x
@@ -5908,7 +5908,7 @@
         plx
         lda aWeaponRankLetterTiles+2,x
         tyx
-        sta $7E83C8,x
+        sta aBG3TilemapBuffer+$40,x
         rts
 
         .databank 0
@@ -5944,15 +5944,15 @@
         ; R: finds the player unit with the next generation ID (1-$18, wrapping) that is alive and not captive (any unit while Select is held), and fades out to reopen the screen for it. Sets carry and does nothing for a non-player unit or when the revive screen opened the status screen.
 
         lda wSelectedUnitDataRAMPointer,b
-        sta $7F82C1
-        lda $7F8183
+        sta wStatusScreenTemp3
+        lda wStatusScreenCaller
         cmp #<>rsReviveScreenOpen
         beq _A5FB
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         beq _A604
 
         _A5FB
-        lda $7F82C1
+        lda wStatusScreenTemp3
         sta wSelectedUnitDataRAMPointer,b
         sec
         rts
@@ -5960,20 +5960,20 @@
 
         _A604
         jsl rlGetSelectedUnitGenerationID
-        sta $7F82BD
-        sta $7F82BF
+        sta wStatusScreenTemp1
+        sta wStatusScreenTemp2
 
         _A610
-        lda $7F82BD
+        lda wStatusScreenTemp1
         inc a
         cmp #$0019
         bne _A61D
         lda #$0001
 
         _A61D
-        cmp $7F82BF
+        cmp wStatusScreenTemp2
         beq _A5FB
-        sta $7F82BD
+        sta wStatusScreenTemp1
         sta @l wRoutineVariable1
         lda #$0000
         jsl rlFindGenerationIDInFactionSlotData
@@ -5993,20 +5993,20 @@
         lda #$0027
         jsl rlPlaySoundEffect2
         lda @l wSelectedUnitDataRAMPointer
-        sta $7F81A5
+        sta wStatusScreenNextUnit
         lda #$0003
-        sta $7F819F
+        sta wStatusScreenFadeStep
         sep #$20
         lda #$0C
         sta bBufferINIDISP
         rep #$20
-        lda #$000A
+        lda #STATUS_SCREEN_STEP_FADE_OUT
         sta wGameStateStep,b
         lda #<>rsOpenStatusScreen
-        sta $7F81A3
-        lda #$0004
-        sta $7F81A1
-        lda $7F82C1
+        sta wStatusScreenExitRoutine
+        lda #STATUS_SCREEN_STEP_LEAVE
+        sta wStatusScreenStepAfterFade
+        lda wStatusScreenTemp3
         sta wSelectedUnitDataRAMPointer,b
         clc
         rts
@@ -6026,15 +6026,15 @@
         ; L: as rsStatusScreenNextUnit, going down.
 
         lda wSelectedUnitDataRAMPointer,b
-        sta $7F82C1
-        lda $7F8183
+        sta wStatusScreenTemp3
+        lda wStatusScreenCaller
         cmp #<>rsReviveScreenOpen
         beq _A6A2
-        lda $7F8193
+        lda wStatusScreenFactionSlot
         beq _A6AB
 
         _A6A2
-        lda $7F82C1
+        lda wStatusScreenTemp3
         sta wSelectedUnitDataRAMPointer,b
         sec
         rts
@@ -6042,19 +6042,19 @@
 
         _A6AB
         jsl rlGetSelectedUnitGenerationID
-        sta $7F82BD
-        sta $7F82BF
+        sta wStatusScreenTemp1
+        sta wStatusScreenTemp2
 
         _A6B7
-        lda $7F82BD
+        lda wStatusScreenTemp1
         dec a
         bne _A6C1
         lda #$0018
 
         _A6C1
-        cmp $7F82BF
+        cmp wStatusScreenTemp2
         beq _A6A2
-        sta $7F82BD
+        sta wStatusScreenTemp1
         sta @l wRoutineVariable1
         lda #$0000
         jsl rlFindGenerationIDInFactionSlotData
@@ -6074,20 +6074,20 @@
         lda #$0026
         jsl rlPlaySoundEffect2
         lda #$0003
-        sta $7F819F
+        sta wStatusScreenFadeStep
         sep #$20
         lda #$0C
         sta bBufferINIDISP
         rep #$20
-        lda #$000A
+        lda #STATUS_SCREEN_STEP_FADE_OUT
         sta wGameStateStep,b
-        lda #$0004
-        sta $7F81A1
+        lda #STATUS_SCREEN_STEP_LEAVE
+        sta wStatusScreenStepAfterFade
         lda #<>rsOpenStatusScreen
-        sta $7F81A3
+        sta wStatusScreenExitRoutine
         lda wSelectedUnitDataRAMPointer,b
-        sta $7F81A5
-        lda $7F82C1
+        sta wStatusScreenNextUnit
+        lda wStatusScreenTemp3
         sta wSelectedUnitDataRAMPointer,b
         clc
         rts

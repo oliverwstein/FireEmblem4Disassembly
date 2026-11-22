@@ -60,7 +60,7 @@
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
-        lda $7F82C5
+        lda wUnitWindowCaller
         cmp #<>rsOpenStatusScreen
         beq _C447
         jsr rsUnitWindowInitializeLineVariables
@@ -156,8 +156,8 @@
 
         jsl rlUnknown88DDFB
         lda #$0000
-        sta $7F82C5
-        sta $7F8183
+        sta wUnitWindowCaller
+        sta wStatusScreenCaller
         sta wUnitWindowCurrentHighlightLine
         sta wUnitWindowScrolledLines
         sta wUnitWindowScrollPixels
@@ -6822,7 +6822,7 @@
         lda wGameStateStep,b
         sta wUnitWindowPage
         lda #$0000
-        sta $7F819D
+        sta wStatusScreenReopenMode
         lda #$0004
         sta wUnitWindowAction
         rtl
@@ -7150,8 +7150,8 @@
 
         jsl rlUnknown88DE0B
         lda #$0000
-        sta $7F82C5
-        sta $7F8183
+        sta wUnitWindowCaller
+        sta wStatusScreenCaller
         lda #$0001
         sta wMainGameMode,b
         lda #<>rsUnknown80B122
@@ -7175,8 +7175,8 @@
 
         jsl rlUnknown88DE0B
         lda #$0000
-        sta $7F82C5
-        sta $7F8183
+        sta wUnitWindowCaller
+        sta wStatusScreenCaller
         jsl rlReturnToCastleScreen
         rtl
 
@@ -7195,9 +7195,9 @@
 
         jsl rlUnknown88DE0B
         lda #$0000
-        sta $7F82C5
+        sta wUnitWindowCaller
         lda #<>rsUnitWindowOpen
-        sta $7F8183
+        sta wStatusScreenCaller
         lda #<>rsOpenStatusScreen
         sta wMainLoopPointer
         rtl

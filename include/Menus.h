@@ -62,3 +62,57 @@
       TilesPointer .long \TilesPointer ; $06
     .endif
   .endstruct
+
+  ; The full-screen menus (engine/menus/): the status screen, the revive screen
+  ; and the options menu.
+
+  ; wGameStateStep while the status screen is up (aStatusScreenSteps).
+  STATUS_SCREEN_STEP_TOP_PAGE        = $00 ; also while scrolling down
+  STATUS_SCREEN_STEP_BOTTOM_PAGE     = $01 ; also while scrolling up
+  STATUS_SCREEN_STEP_HOLY_BLOOD_PAGE = $02
+  STATUS_SCREEN_STEP_ITEM_DETAILS    = $03
+  STATUS_SCREEN_STEP_LEAVE           = $04 ; install wStatusScreenExitRoutine
+  STATUS_SCREEN_STEP_LOAD_HOLY_BLOOD = $05
+  STATUS_SCREEN_STEP_RETURN_TO_MAP   = $06
+  STATUS_SCREEN_STEP_RETURN_TO_CASTLE = $07
+  STATUS_SCREEN_STEP_SKILL_DETAILS   = $08
+  STATUS_SCREEN_STEP_FADE_IN         = $09 ; then wStatusScreenStepAfterFade
+  STATUS_SCREEN_STEP_FADE_OUT        = $0A ; then wStatusScreenStepAfterFade
+
+  ; wStatusScreenReopenMode: how R or L reopen the screen for another unit.
+  STATUS_SCREEN_REOPEN_TOP_PAGE      = $1234
+  STATUS_SCREEN_REOPEN_BOTTOM_PAGE   = $4321
+  STATUS_SCREEN_REOPEN_HOLY_BLOOD    = $1111
+
+  ; wStatusScreenScroll at the bottom half of the stat page, and the scroll per frame.
+  STATUS_SCREEN_SCROLL_BOTTOM        = $87
+  STATUS_SCREEN_SCROLL_SPEED         = 7
+
+  ; wGameStateStep while the revive screen is up (aReviveScreenSteps).
+  REVIVE_SCREEN_STEP_CHOOSE_UNIT     = $00
+  REVIVE_SCREEN_STEP_CONFIRM         = $01
+  REVIVE_SCREEN_STEP_NOBODY_DEAD     = $02
+  REVIVE_SCREEN_STEP_LEAVE_TO_STATUS = $03 ; waiting for the fade
+  REVIVE_SCREEN_STEP_LEAVE_TO_CASTLE = $04 ; waiting for the fade
+
+  ; wReviveScreenDrawMode (aReviveScreenDrawModes).
+  REVIVE_SCREEN_DRAW_GRID            = 0
+  REVIVE_SCREEN_DRAW_CONFIRM         = 1
+  REVIVE_SCREEN_DRAW_NOTHING         = 2
+
+  ; wGameStateStep while the options menu is up (aOptionsMenuSteps).
+  OPTIONS_MENU_STEP_CHOOSE           = $00
+  OPTIONS_MENU_STEP_LEAVE            = $01
+  OPTIONS_MENU_STEP_RETURN_TO_MAP    = $02 ; nothing sets it
+  OPTIONS_MENU_STEP_WAIT             = $03
+
+  ; wOptionsMenuCursor: the options, in the order of aOptionsMenuValues.
+  OPTION_ANIMATION                   = 0
+  OPTION_TERRAIN_WINDOW              = 1
+  OPTION_UNIT_WINDOW                 = 2
+  OPTION_MESSAGE_SPEED               = 3
+  OPTION_ENEMY_SPEED                 = 4
+  OPTION_SOUND                       = 5
+  OPTION_AUTO_SAVE                   = 6
+  OPTION_AUTO_CURSOR                 = 7
+  OPTION_ENEMY_AI                    = 8 ; shown once the game has been finished

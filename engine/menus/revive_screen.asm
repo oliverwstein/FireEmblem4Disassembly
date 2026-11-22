@@ -67,16 +67,16 @@
         jsr rsReviveScreenCreateHDMA
         lda wUnitWindowMaxRows
         bne _E055
-        lda #$0002
+        lda #REVIVE_SCREEN_STEP_NOBODY_DEAD
         sta wGameStateStep,b
-        lda #$0002
-        sta wDebugMenuScreenIndex+1
+        lda #REVIVE_SCREEN_DRAW_NOTHING
+        sta wReviveScreenDrawMode
         jsr rsReviveScreenDrawNobodyDead
         bra _E061
 
 
         _E055
-        lda #$0000
+        lda #REVIVE_SCREEN_STEP_CHOOSE_UNIT
         sta wGameStateStep,b
         jsr rsReviveScreenLoadMapSprites
         jsr rsReviveScreenDrawNames
@@ -116,11 +116,11 @@
 
         ; Unless coming back from the status screen (wStatusScreenCaller is rsReviveScreenOpen), saves the staff's user (wReviveScreenStaffUser), puts the cursor on the first entry and builds the list of dead units.
 
-        lda wDataWindowCurrentArmy
+        lda wStatusScreenCaller
         cmp #<>rsReviveScreenOpen
         beq _E096
         lda wSelectedUnitDataRAMPointer,b
-        sta $7FB016
+        sta wReviveScreenStaffUser
         lda #$0000
         sta wUnitWindowCurrentHighlightLine
         jsr rsReviveScreenBuildDeadUnitList
@@ -130,7 +130,7 @@
         _E096
         lda #$0000
         sta $7FB014
-        sta wDebugMenuScreenIndex+1
+        sta wReviveScreenDrawMode
         lda #(`aReviveScreenMenuTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aReviveScreenMenuTilemapEntry
@@ -790,7 +790,7 @@
         sta bBufferNMITIMEN
         rep #$20
         lda #$FFFF
-        sta wDataWindowCurrentArmy
+        sta wStatusScreenCaller
         sep #$20
         lda bBufferNMITIMEN
         and #$FE
@@ -807,7 +807,7 @@
         lda #<>procMainLoopChangeFade
         sta lR44
         jsl rlProcEngineCreateProc
-        lda #$0003
+        lda #REVIVE_SCREEN_STEP_LEAVE_TO_STATUS
         sta wGameStateStep,b
         rts
 
@@ -874,11 +874,11 @@
           .structDMAToVRAM aBG3TilemapBuffer, $0200, $80, $5000
 
         lda #$0000
-        sta $7FB018
-        lda #$0001
+        sta wReviveScreenConfirmCursor
+        lda #REVIVE_SCREEN_STEP_CONFIRM
         sta wGameStateStep,b
-        lda #$0001
-        sta wDebugMenuScreenIndex+1
+        lda #REVIVE_SCREEN_DRAW_CONFIRM
+        sta wReviveScreenDrawMode
         rts
 
         .databank 0
@@ -928,7 +928,7 @@
         lda aUnitWindowDeploymentSlots,x
         sta wSelectedUnitDataRAMPointer,b
         lda #<>rsReviveScreenOpen
-        sta wDataWindowCurrentArmy
+        sta wStatusScreenCaller
         lda #<>rsOpenStatusScreen
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -941,10 +941,10 @@
         and #$FE
         sta bBufferNMITIMEN
         rep #$20
-        lda #$0003
+        lda #REVIVE_SCREEN_STEP_LEAVE_TO_STATUS
         sta wGameStateStep,b
         lda #$0000
-        sta $7F819D
+        sta wStatusScreenReopenMode
         rts
 
         .databank 0
@@ -1069,11 +1069,11 @@
 
 
         _AF77
-        lda $7FB018
+        lda wReviveScreenConfirmCursor
         bne _AF9D
         lda #$000A
         jsl rlPlaySoundEffect
-        lda $7FB016
+        lda wReviveScreenStaffUser
         sta wSelectedUnitDataRAMPointer,b
         lda wUnitWindowCurrentHighlightLine
         asl a
@@ -1103,9 +1103,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0200, $80, $5000
 
-        lda #$0000
+        lda #REVIVE_SCREEN_STEP_CHOOSE_UNIT
         sta wGameStateStep,b
-        sta wDebugMenuScreenIndex+1
+        sta wReviveScreenDrawMode
         rts
 
         .databank 0
@@ -1132,10 +1132,10 @@
         .autsiz
         .databank ?
 
-        lda $7FB018
+        lda wReviveScreenConfirmCursor
         bne _B042
         lda #$0001
-        sta $7FB018
+        sta wReviveScreenConfirmCursor
         lda #$0007
         jsl rlPlaySoundEffect
 
@@ -1153,10 +1153,10 @@
         .autsiz
         .databank ?
 
-        lda $7FB018
+        lda wReviveScreenConfirmCursor
         beq _B057
         lda #$0000
-        sta $7FB018
+        sta wReviveScreenConfirmCursor
         lda #$0007
         jsl rlPlaySoundEffect
 
@@ -1199,7 +1199,7 @@
         sta bBufferNMITIMEN
         rep #$20
         lda #$FFFF
-        sta wDataWindowCurrentArmy
+        sta wStatusScreenCaller
         sep #$20
         lda bBufferNMITIMEN
         and #$FE
@@ -1216,7 +1216,7 @@
         lda #<>procMainLoopChangeFade
         sta lR44
         jsl rlProcEngineCreateProc
-        lda #$0004
+        lda #REVIVE_SCREEN_STEP_LEAVE_TO_CASTLE
         sta wGameStateStep,b
         rts
 
@@ -1264,7 +1264,7 @@
 
         ; Game state routine $32, every frame while the revive screen is up: a routine from aReviveScreenDrawModes chosen by the high byte of wDebugMenuScreenIndex, and BG2 scrolled down one line every two frames.
 
-        lda wDebugMenuScreenIndex+1
+        lda wReviveScreenDrawMode
         asl a
         tax
         jsr (aReviveScreenDrawModes,x)
@@ -1539,7 +1539,7 @@
 
         ; The hand cursor on yes or no.
 
-        lda $7FB018
+        lda wReviveScreenConfirmCursor
         asl a
         tax
         lda aReviveScreenConfirmCursorX,x

@@ -15810,7 +15810,7 @@
 
         stz wGameStateRoutine1,b
         lda #<>rsUnknown80B122
-        sta $7F82C5
+        sta wUnitWindowCaller
         lda #<>rsUnitWindowOpen
         sta wMainLoopPointer
         rtl

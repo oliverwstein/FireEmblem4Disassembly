@@ -2333,7 +2333,9 @@
     .fill 4                                         ; $7F8475
     wItemWindowScrollDirection .word ?              ; $7F8479
       ; -1 scrolling up, 1 scrolling down, 0 not scrolling.
-    .fill 4                                         ; $7F847B
+    .word ?                                         ; $7F847B
+    wItemWindowSortPanelRow .word ?                 ; $7F847D
+      ; 0-2, the sort panel's cursor: owner, type, name.
     wItemWindowSelectedItemIcon .word ?             ; $7F847F
     .word ?                                         ; $7F8481
     aItemWindowList .fill $97                       ; $7F8483
@@ -2346,6 +2348,183 @@
       ; By place in the list.
     .word ?                                         ; $7F89CE
     aItemWindowListTilemap .fill $2580              ; $7F89D0
+
+  .endvirtual
+
+  .virtual $7F8183
+
+    ; The status screen's working variables (engine/menus/status_screen.asm).
+    ; Other screens reuse this area, so the names are only written in the files
+    ; tools/name_ram.py lists for them: the status screen's, and those that open it.
+
+    wStatusScreenCaller .word ?                     ; $7F8183
+      ; The low word of the bank $80 routine that opened the status screen and
+      ; that closing it returns to: rsUnitWindowOpen, rsReviveScreenOpen or
+      ; rsOpenCastleScreen; anything else (rsUnknown80B122) returns to the map.
+    wStatusScreenItemSlot .word ?                   ; $7F8185
+      ; The inventory slot (1-8) under the item cursor.
+    wStatusScreenScroll .word ?                     ; $7F8187
+      ; BG2 and BG3's scroll on the stat page: 0 the top half,
+      ; STATUS_SCREEN_SCROLL_BOTTOM the bottom half.
+    wStatusScreenSavedScroll .word ?                ; $7F8189
+      ; BG2's scroll while the holy blood page is up.
+    wStatusScreenUnitType .word ?                   ; $7F818B
+      ; rlGetUnitType: 3 for an enemy, whose luck is shown as 0.
+    wStatusScreenLoptousBlood .word ?               ; $7F818D
+      ; 0, MinorHolyBlood or MajorHolyBlood of Loptous (holy blood $0C).
+    wStatusScreenHolyBloodLoaded .word ?            ; $7F818F
+      ; Set once the holy blood page's graphics are in VRAM.
+    wStatusScreenHolyBloodDMAStep .word ?           ; $7F8191
+      ; 0-5, the pieces of those graphics sent so far.
+    wStatusScreenFactionSlot .word ?                ; $7F8193
+      ; The unit's faction slot; 0 for the player, whose units show experience,
+      ; uses, kills and lover.
+    wStatusScreenCharacter .word ?                  ; $7F8195
+    wStatusScreenLeadership .word ?                 ; $7F8197
+      ; Leadership stars, drawn when the unit has no commander.
+    wStatusScreenCommander .word ?                  ; $7F8199
+      ; The character ID of the unit's commander (rlUnknown849FC4), or 0.
+    wStatusScreenCanPromote .word ?                 ; $7F819B
+      ; 1 when a player unit is at its promotion level.
+    wStatusScreenReopenMode .word ?                 ; $7F819D
+      ; 0 for a fresh screen; STATUS_SCREEN_REOPEN_* when R or L reopens it for
+      ; another unit, to keep the page. The opener clears it.
+    wStatusScreenFadeStep .word ?                   ; $7F819F
+      ; Brightness change per frame in a fade.
+    wStatusScreenStepAfterFade .word ?              ; $7F81A1
+    wStatusScreenExitRoutine .word ?                ; $7F81A3
+      ; The main loop routine STATUS_SCREEN_STEP_LEAVE installs.
+    wStatusScreenNextUnit .word ?                   ; $7F81A5
+      ; The unit R or L chose, selected when the fade-out ends.
+    wStatusScreenDropItemSlot .word ?               ; $7F81A7
+      ; The inventory slot of the item the unit drops or holds as unique, or 0.
+    wStatusScreenUnitStates .word ?                 ; $7F81A9
+      ; UnitState bits.
+    wStatusScreenCondition .word ?                  ; $7F81AB
+      ; Status (StatusHealthy...).
+    wStatusScreenReopened .word ?                   ; $7F81AD
+      ; Set when the screen was reopened for another unit.
+    wStatusScreenSavedInventorySlot .word ?         ; $7F81AF
+    wStatusScreenSkillCount .word ?                 ; $7F81B1
+    aStatusScreenSkillIDs .fill 14                  ; $7F81B3
+      ; A word per skill with an icon, as rlUnknown87A415 numbers them.
+    aStatusScreenSkillIconTiles .fill 14            ; $7F81C1
+    wStatusScreenSkillCursor .word ?                ; $7F81CF
+    wStatusScreenGreyIndex .word ?                  ; $7F81D1
+      ; 8 for a dead or captive unit, else 0: its index into
+      ; aStatusScreenSpritePaletteOffsets, which gives the grey palette.
+    aStatusScreenHolyBloodLevels .fill 26           ; $7F81D3
+      ; A word per holy blood (13): 0, MinorHolyBlood or MajorHolyBlood.
+    aStatusScreenGlintFrameIDs .fill 24             ; $7F81ED
+      ; A word per blood in the ring (12), as the next three.
+    aStatusScreenMajorGlintIDs .fill 24             ; $7F8205
+    .fill $34                                       ; $7F821D
+    wStatusScreenLoptousGlintFrame .word ?          ; $7F8251
+    wStatusScreenLoptousGlint2Frame .word ?         ; $7F8253
+    aStatusScreenGlintTimers .fill 24               ; $7F8255
+    aStatusScreenMajorGlintTimers .fill 24          ; $7F826D
+    .fill $34                                       ; $7F8285
+    wStatusScreenLoptousGlintTimer .word ?          ; $7F82B9
+    wStatusScreenLoptousGlint2Timer .word ?         ; $7F82BB
+    wStatusScreenTemp1 .word ?                      ; $7F82BD
+    wStatusScreenTemp2 .word ?                      ; $7F82BF
+    wStatusScreenTemp3 .word ?                      ; $7F82C1
+    wStatusScreenTemp4 .word ?                      ; $7F82C3
+      ; Working values: a weapon type, a blood, a skill, a unit pointer, the
+      ; digits of rlDrawStatBonus.
+
+  .endvirtual
+
+  .virtual $7F82C5
+
+    wUnitWindowCaller .word ?                       ; $7F82C5
+      ; The low word of the main loop routine that opened the unit window:
+      ; rsOpenStatusScreen when coming back from the status screen, which keeps
+      ; the list where it was; rsUnknown80B122 from the map menu.
+
+  .endvirtual
+
+  .virtual $7F8400
+
+    ; The options menu's working variables (engine/menus/options_menu.asm). The
+    ; debug menu uses the same area, so the names are only written in that file.
+
+    wOptionsMenuCursor .word ?                      ; $7F8400
+      ; The option under the cursor (OPTION_*).
+    aOptionsMenuValues .block                       ; $7F8402
+      ; A word per option, in OPTION_* order.
+      wAnimation .word ?                            ; $7F8402
+      wTerrainWindow .word ?                        ; $7F8404
+      wUnitWindow .word ?                           ; $7F8406
+      wMessageSpeed .word ?                         ; $7F8408
+      wEnemySpeed .word ?                           ; $7F840A
+      wSound .word ?                                ; $7F840C
+      wAutoSave .word ?                             ; $7F840E
+        ; 0 off, else the file to save to plus 1.
+      wAutoCursor .word ?                           ; $7F8410
+      wEnemyAI .word ?                              ; $7F8412
+    .endblock
+    aOptionsMenuOpeningValues .block                ; $7F8414
+      ; The values when the menu opened, which Y puts back.
+      wAnimation .word ?                            ; $7F8414
+      wTerrainWindow .word ?                        ; $7F8416
+      wUnitWindow .word ?                           ; $7F8418
+      wMessageSpeed .word ?                         ; $7F841A
+      wEnemySpeed .word ?                           ; $7F841C
+      wSound .word ?                                ; $7F841E
+      wAutoSave .word ?                             ; $7F8420
+      wAutoCursor .word ?                           ; $7F8422
+      wEnemyAI .word ?                              ; $7F8424
+    .endblock
+    .word ?                                         ; $7F8426
+      ; Set to $23 as the menu opens; nothing reads it.
+    wOptionsMenuCursorMove .word ?                  ; $7F8428
+      ; $1000 moving down or $F000 moving up for one frame, else 0.
+    .word ?                                         ; $7F842A
+    wOptionsMenuShowEnemyAI .word ?                 ; $7F842C
+      ; Set when the save has finished the game once: the ninth option shows.
+    aOptionsMenuDescriptionBuffer .fill $11A        ; $7F842E
+      ; The description text is drawn here, then copied to BG3.
+    wOptionsMenuValueMarkerX .word ?                ; $7F8548
+    .fill $10                                       ; $7F854A
+    aOptionsMenuCOLDATAHDMABuffer .fill $200        ; $7F855A
+    aOptionsMenuBG3VOFSHDMABuffer .fill $B7         ; $7F875A
+
+  .endvirtual
+
+  .virtual $7F8403
+
+    wReviveScreenDrawMode .word ?                   ; $7F8403
+      ; What rlReviveScreenUpkeep draws (REVIVE_SCREEN_DRAW_*). Only written in
+      ; engine/menus/revive_screen.asm; the options menu uses the area.
+
+  .endvirtual
+
+  .virtual $7FAF50
+
+    ; More of the status screen's variables; only written in its file.
+
+    aStatusScreenTextBuffer .fill $C0               ; $7FAF50
+      ; Item and skill descriptions are drawn here (aUnknown89ACBC,
+      ; aUnknown89ACC5), then copied into the BG3 tilemap buffer.
+    .fill $A6                                       ; $7FB010
+    aStatusScreenGradientTable .fill $AA            ; $7FB0B6
+      ; The COLDATA HDMA table (rlStatusScreenSetGradient).
+    aStatusScreenBG1SplitTable .fill 8              ; $7FB160
+      ; The BG1 scroll HDMA table (rlStatusScreenBuildBG1SplitTable).
+
+  .endvirtual
+
+  .virtual $7FB014
+
+    ; The revive screen's variables (engine/menus/revive_screen.asm).
+
+    .word ?                                         ; $7FB014
+      ; Cleared as the screen opens; nothing reads it.
+    wReviveScreenStaffUser .word ?                  ; $7FB016
+      ; The unit pointer of the unit using the staff.
+    wReviveScreenConfirmCursor .word ?              ; $7FB018
+      ; 0 on yes, 1 on no.
 
   .endvirtual
 

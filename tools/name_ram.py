@@ -34,6 +34,16 @@ SCOPED = [
     (0x7F8183, 0x7F8505, ('wDataWindow', 'aDataWindow'), ('engine/menus/data_window.asm',)),
     # The item window's variables; the map buffers (aTargetDistanceMap...) share the area.
     (0x7F8467, 0x7FAF4F, ('wItemWindow', 'aItemWindow'), ('engine/menus/item_window.asm',)),
+    # The status screen's variables, written by the screens that open it too; the skill and data windows reuse the area.
+    (0x7F8183, 0x7F82C4, ('wStatusScreen', 'aStatusScreen'),
+     ('engine/menus/status_screen.asm', 'engine/menus/revive_screen.asm', 'engine/menus/unit_window.asm',
+      'engine/castle/courtyard.asm', 'engine/map/input.asm')),
+    (0x7FAF4E, 0x7FB167, ('aStatusScreen',), ('engine/menus/status_screen.asm',)),
+    # The options menu's variables; the debug menu uses the area.
+    (0x7F8400, 0x7F8810, ('wOptionsMenu', 'aOptionsMenu'), ('engine/menus/options_menu.asm',)),
+    # The revive screen's draw mode (inside the options menu's area) and its variables.
+    (0x7F8403, 0x7F8404, ('wReviveScreen',), ('engine/menus/revive_screen.asm',)),
+    (0x7FB014, 0x7FB019, ('wReviveScreen',), ('engine/menus/revive_screen.asm',)),
     # The castle screen's variables; they reuse the map buffers and the world map reuses $7F8089-$7F808F.
     (0x7F757A, 0x7F8092, ('aCastle', 'wCastle', 'wKeeper', 'lKeeper', 'wConversation', 'wAugury'),
      ('engine/castle/castle_screen.asm', 'engine/castle/courtyard.asm', 'engine/castle/unit_commands.asm',

@@ -92,7 +92,7 @@
         sta $7F8475
         sta $7F8477
         sta wItemWindowScrollDirection
-        sta $7F847D
+        sta wItemWindowSortPanelRow
         sta $7F847B
         lda #$0001
         sta wItemWindowCurrentLine
@@ -2757,7 +2757,7 @@
         lda $7E5333
         asl a
         asl a
-        ora $7F847D
+        ora wItemWindowSortPanelRow
         tax
         lda aItemWindowNextSortModes,x
         and #$00FF
@@ -2780,7 +2780,7 @@
         lda wGameStateStep,b
         beq _C325
         lda #$0000
-        sta $7F847D
+        sta wItemWindowSortPanelRow
         jsl rlItemWindowDrawItemInfo
         ldx #$01EA
         lda #$0004
@@ -3355,7 +3355,7 @@
         _B7BC
         lda #$0000
         sta wGameStateStep,b
-        sta $7F847D
+        sta wItemWindowSortPanelRow
         ldx #$01AA
         lda #$0004
         ldy #$0009
@@ -3379,10 +3379,10 @@
 
 
         _B7FB
-        lda $7F847D
+        lda wItemWindowSortPanelRow
         beq _B814
         dec a
-        sta $7F847D
+        sta wItemWindowSortPanelRow
         lda #$0002
         sta wUnitWindowScrollingFlag
         lda #$0006
@@ -3394,11 +3394,11 @@
 
 
         _B818
-        lda $7F847D
+        lda wItemWindowSortPanelRow
         cmp #$0002
         beq _B834
         inc a
-        sta $7F847D
+        sta wItemWindowSortPanelRow
         lda #$0004
         sta wUnitWindowScrollingFlag
         lda #$0006
@@ -3506,7 +3506,7 @@
 
         lda wUnitWindowScrollingFlag
         tax
-        lda $7F847D
+        lda wItemWindowSortPanelRow
         asl a
         asl a
         asl a

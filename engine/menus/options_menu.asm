@@ -74,7 +74,7 @@
         jsl rlOptionsMenuDrawChoices
         jsl rlOptionsMenuDrawDescription
         jsl rlOptionsMenuDrawValues
-        lda #$0000
+        lda #OPTIONS_MENU_STEP_CHOOSE
         sta wGameStateStep,b
         lda #GAMESTATE_OPTIONS_MENU_SETUP
         sta wGameStateRoutine1,b
@@ -97,40 +97,40 @@
         .autsiz
         .databank ?
 
-        ; Checks completion count ($7F842C) and loads current option settings into $7F8400..$7F8424
+        ; Cursor on the first option; shows the enemy AI option (wOptionsMenuShowEnemyAI) if the save has finished the game; copies each setting into aOptionsMenuValues and aOptionsMenuOpeningValues. Auto save is stored as 0 for off or the file plus 1.
 
         lda #$0000
-        sta $7F8400
-        sta $7F8428
+        sta wOptionsMenuCursor
+        sta wOptionsMenuCursorMove
         lda #$0023
         sta $7F8426
         lda #$0000
-        sta $7F842C
+        sta wOptionsMenuShowEnemyAI
         jsl rlGetCurrentSaveCompletionCount
         cmp #$0000
         beq _E650
         lda #$0001
-        sta $7F842C
+        sta wOptionsMenuShowEnemyAI
 
         _E650
         jsl rlGetAnimationOptionSetting
-        sta wDebugMenuScreenIndex
-        sta wDebugMenuTemp3
+        sta aOptionsMenuValues.wAnimation
+        sta aOptionsMenuOpeningValues.wAnimation
         jsl rlCheckIfTerrainWindowSettingOff
-        sta $7F8404
-        sta $7F8416
+        sta aOptionsMenuValues.wTerrainWindow
+        sta aOptionsMenuOpeningValues.wTerrainWindow
         jsl rlCheckIfUnitWindowSettingOff
-        sta $7F8406
-        sta $7F8418
+        sta aOptionsMenuValues.wUnitWindow
+        sta aOptionsMenuOpeningValues.wUnitWindow
         jsl rlGetTextSpeedOption
-        sta $7F8408
-        sta $7F841A
+        sta aOptionsMenuValues.wMessageSpeed
+        sta aOptionsMenuOpeningValues.wMessageSpeed
         jsl rlUnknown87BF1B
-        sta $7F840A
-        sta $7F841C
+        sta aOptionsMenuValues.wEnemySpeed
+        sta aOptionsMenuOpeningValues.wEnemySpeed
         jsl rlUnknown87BF43
-        sta $7F840C
-        sta $7F841E
+        sta aOptionsMenuValues.wSound
+        sta aOptionsMenuOpeningValues.wSound
         jsl rlUnknown87BFB0
         sta wR0
         cmp #$0000
@@ -139,14 +139,14 @@
         inc a
 
         _E6A8
-        sta $7F840E
-        sta $7F8420
+        sta aOptionsMenuValues.wAutoSave
+        sta aOptionsMenuOpeningValues.wAutoSave
         jsl rlUnknown87C02F
-        sta wDebugMenuTemp1
-        sta $7F8422
+        sta aOptionsMenuValues.wAutoCursor
+        sta aOptionsMenuOpeningValues.wAutoCursor
         jsl rlGetCleverModeFlag
-        sta wDebugMenuTemp2
-        sta $7F8424
+        sta aOptionsMenuValues.wEnemyAI
+        sta aOptionsMenuOpeningValues.wEnemyAI
         rts
 
         .databank 0
@@ -302,7 +302,7 @@
         sta lR18
         ldx #$1204
         jsl rlDrawMenuTextLine
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         beq _E840
         lda #(`aOptionsMenuCleverModeLabel)<<8
         sta lR18+1
@@ -498,7 +498,7 @@
       .al
       .xl
 
-      aOptionsMenuCOLDATAHDMA .dstruct structHDMADirectEntryInfo, rlInitOptionsMenuCOLDATAHDMA, rlCycleOptionsMenuCOLDATAHDMA, $E97A, $7F855A, PPU_REG_BASE + $32, $00 ; 80/E96E
+      aOptionsMenuCOLDATAHDMA .dstruct structHDMADirectEntryInfo, rlInitOptionsMenuCOLDATAHDMA, rlCycleOptionsMenuCOLDATAHDMA, $E97A, aOptionsMenuCOLDATAHDMABuffer, PPU_REG_BASE + $32, $00 ; 80/E96E
 
     .endsection Table80E96ESection
 
@@ -543,13 +543,13 @@
         .autsiz
         .databank ?
 
-        ; Copies aOptionsMenuCOLDATAHDMATable into $7F855A
+        ; Copies aOptionsMenuCOLDATAHDMATable into aOptionsMenuCOLDATAHDMABuffer.
 
         ldx #$0000
 
         _E97F
         lda aOptionsMenuCOLDATAHDMATable,x
-        sta $7F855A,x
+        sta aOptionsMenuCOLDATAHDMABuffer,x
         beq _E98D
         inc x
         inc x
@@ -626,22 +626,22 @@
         .autsiz
         .databank ?
 
-        ; Copies $8D-byte 9-option ($7F842C!=0) or $B7-byte 8-option BG3VOFS HDMA table into $7F875A
+        ; Copies the BG3 scroll HDMA table for nine options (wOptionsMenuShowEnemyAI) or eight into aOptionsMenuBG3VOFSHDMABuffer.
 
         phk
         plb
         .databank $80
         ldx #$0000
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         beq _E9D8
 
         _E9BD
         sep #$20
         lda $E9F3,b,x
-        sta $7F875A,x
+        sta aOptionsMenuBG3VOFSHDMABuffer,x
         rep #$20
         lda $E9F4,b,x
-        sta $7F875B,x
+        sta aOptionsMenuBG3VOFSHDMABuffer+1,x
         inc x
         inc x
         inc x
@@ -653,10 +653,10 @@
         _E9D8
         sep #$20
         lda <>aOptionsMenuBG3VOFS8OptionsHDMATable,b,x
-        sta $7F875A,x
+        sta aOptionsMenuBG3VOFSHDMABuffer,x
         rep #$20
         lda <>aOptionsMenuBG3VOFS8OptionsHDMATable+1,b,x
-        sta $7F875B,x
+        sta aOptionsMenuBG3VOFSHDMABuffer+1,x
         inc x
         inc x
         inc x
@@ -823,7 +823,7 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $5000
 
-        lda $7F8428
+        lda wOptionsMenuCursorMove
         bmi _EBD7
         bne _EB91
         lda wJoy1Repeated
@@ -858,12 +858,12 @@
 
 
         _EBA1
-        lda $7F8400
+        lda wOptionsMenuCursor
         beq _EBB5
         lda #$0006
         jsl rlPlaySoundEffect
         lda #$F000
-        sta $7F8428
+        sta wOptionsMenuCursorMove
 
         _EBB5
         rts
@@ -872,32 +872,32 @@
         _EBB6
         lda #$0007
         clc
-        adc $7F842C
+        adc wOptionsMenuShowEnemyAI
         sta wR0
-        lda $7F8400
+        lda wOptionsMenuCursor
         cmp wR0
         beq _EBD6
         lda #$0006
         jsl rlPlaySoundEffect
         lda #$1000
-        sta $7F8428
+        sta wOptionsMenuCursorMove
 
         _EBD6
         rts
 
 
         _EBD7
-        lda $7F8428
+        lda wOptionsMenuCursorMove
         inc a
-        sta $7F8428
+        sta wOptionsMenuCursorMove
         and #$000F
         cmp #$0001
         bne _EC00
         lda #$0000
-        sta $7F8428
-        lda $7F8400
+        sta wOptionsMenuCursorMove
+        lda wOptionsMenuCursor
         dec a
-        sta $7F8400
+        sta wOptionsMenuCursor
         jsl rlOptionsMenuDrawChoices
         jsl rlOptionsMenuDrawDescription
 
@@ -907,17 +907,17 @@
 
         _EC01
         lda #$0000
-        sta $7F8428
-        lda $7F8400
+        sta wOptionsMenuCursorMove
+        lda wOptionsMenuCursor
         inc a
-        sta $7F8400
+        sta wOptionsMenuCursor
         jsl rlOptionsMenuDrawChoices
         jsl rlOptionsMenuDrawDescription
         rts
 
 
         _EC1A
-        lda $7F8400
+        lda wOptionsMenuCursor
         tax
         lda aOptionsMenuValueCounts,x
         and #$00FF
@@ -925,11 +925,11 @@
         txa
         asl a
         tax
-        lda wDebugMenuScreenIndex,x
+        lda aOptionsMenuValues,x
         inc a
         cmp wR0
         beq _EC47
-        sta wDebugMenuScreenIndex,x
+        sta aOptionsMenuValues,x
         lda #$0007
         jsl rlPlaySoundEffect
         jsl rlOptionsMenuDrawChoices
@@ -950,13 +950,13 @@
         .autsiz
         .databank ?
 
-        lda $7F8400
+        lda wOptionsMenuCursor
         asl a
         tax
-        lda wDebugMenuScreenIndex,x
+        lda aOptionsMenuValues,x
         beq _EC71
         dec a
-        sta wDebugMenuScreenIndex,x
+        sta aOptionsMenuValues,x
         lda #$0007
         jsl rlPlaySoundEffect
         jsl rlOptionsMenuDrawChoices
@@ -996,7 +996,7 @@
 
         ; Step $01: back to the map, or to the castle screen if the menu was opened from there (bit 5 of wUnknown000D79).
 
-        lda #$0003
+        lda #OPTIONS_MENU_STEP_WAIT
         sta wGameStateStep,b
         lda wUnknown000D79,b
         bit #$0020
@@ -1038,7 +1038,7 @@
 
         ; Step $02: no code sets it. Goes straight back to the map (rsUnknown80B122).
 
-        lda #$0003
+        lda #OPTIONS_MENU_STEP_WAIT
         sta wGameStateStep,b
         lda #$0001
         sta wMainGameMode,b
@@ -1112,7 +1112,7 @@
         lda #$0021
         jsl rlPlaySoundEffect
         jsl rlOptionsMenuApplyValues
-        lda #$0001
+        lda #OPTIONS_MENU_STEP_LEAVE
         sta wGameStateStep,b
         rtl
 
@@ -1121,7 +1121,7 @@
         lda #$000A
         jsl rlPlaySoundEffect
         jsl rlOptionsMenuApplyValues
-        lda #$0001
+        lda #OPTIONS_MENU_STEP_LEAVE
         sta wGameStateStep,b
         rtl
 
@@ -1148,7 +1148,7 @@
 
         lda #$2400
         sta aCurrentTilemapInfo,b
-        lda $7F8400
+        lda wOptionsMenuCursor
         sta wR0
         asl a
         clc
@@ -1158,7 +1158,7 @@
         sta lR18+1
         lda aOptionsMenuChoiceLists,x
         sta lR18
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         beq _ED3A
         ldx #$1415
         bra _ED3D
@@ -1171,7 +1171,7 @@
         jsl rlDrawMenuTextLine
         lda #$3800
         sta aCurrentTilemapInfo,b
-        lda $7F8400
+        lda wOptionsMenuCursor
         cmp #$0009
         bmi _ED52
 
@@ -1250,7 +1250,7 @@
         .autsiz
         .databank ?
 
-        lda wDebugMenuScreenIndex
+        lda aOptionsMenuValues.wAnimation
         cmp #$0003
         bmi _EE08
 
@@ -1349,7 +1349,7 @@
         ldx #$141C
 
         _EE3F
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         bne _EE4B
         txa
         sec
@@ -1381,10 +1381,10 @@
 
         ; For the three ON/OFF options: highlights ON or OFF.
 
-        lda wUnitWindowCurrentLineSlotOffset+1
+        lda wOptionsMenuCursor
         asl a
         tax
-        lda wDebugMenuScreenIndex,x
+        lda aOptionsMenuValues,x
         beq _EE6B
         lda #(`aOptionsMenuOffText)<<8
         sta lR18+1
@@ -1402,7 +1402,7 @@
         ldx #$1415
 
         _EE78
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         bne _EE84
         txa
         sec
@@ -1432,7 +1432,7 @@
         .autsiz
         .databank ?
 
-        lda $7F8408
+        lda aOptionsMenuValues.wMessageSpeed
         cmp #$0005
         bmi _EE94
 
@@ -1525,7 +1525,7 @@
         ldx #$141D
 
         _EEED
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         bne _EEF9
         txa
         sec
@@ -1555,7 +1555,7 @@
         .autsiz
         .databank ?
 
-        lda $7F840A
+        lda aOptionsMenuValues.wEnemySpeed
         cmp #$0002
         bmi _EF09
 
@@ -1618,7 +1618,7 @@
         ldx #$141B
 
         _EF2F
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         bne _EF3B
         txa
         sec
@@ -1671,7 +1671,7 @@
         .autsiz
         .databank ?
 
-        lda $7F840C
+        lda aOptionsMenuValues.wSound
         cmp #$0003
         bmi _EF5B
 
@@ -1744,7 +1744,7 @@
         ldx #$141C
 
         _EF92
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         bne _EF9E
         txa
         sec
@@ -1774,7 +1774,7 @@
         .autsiz
         .databank ?
 
-        lda $7F840E
+        lda aOptionsMenuValues.wAutoSave
         cmp #$0005
         bmi _EFAE
 
@@ -1867,7 +1867,7 @@
         ldx #$141D
 
         _F007
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         bne _F013
         txa
         sec
@@ -1897,7 +1897,7 @@
         .autsiz
         .databank ?
 
-        lda wDebugMenuTemp2
+        lda aOptionsMenuValues.wEnemyAI
         cmp #$0002
         bmi _F023
 
@@ -2017,7 +2017,7 @@
 
         lda #$3800
         sta aCurrentTilemapInfo,b
-        lda wDebugMenuScreenIndex
+        lda aOptionsMenuValues.wAnimation
         sta wR0
         asl a
         clc
@@ -2029,7 +2029,7 @@
         sta lR18
         ldx #$040E
         jsl rlDrawMenuTextLine
-        lda $7F8404
+        lda aOptionsMenuValues.wTerrainWindow
         sta wR0
         asl a
         clc
@@ -2041,7 +2041,7 @@
         sta lR18
         ldx #$060E
         jsl rlDrawMenuTextLine
-        lda $7F8406
+        lda aOptionsMenuValues.wUnitWindow
         sta wR0
         asl a
         clc
@@ -2053,7 +2053,7 @@
         sta lR18
         ldx #$080E
         jsl rlDrawMenuTextLine
-        lda $7F8408
+        lda aOptionsMenuValues.wMessageSpeed
         sta wR0
         asl a
         clc
@@ -2065,7 +2065,7 @@
         sta lR18
         ldx #$0A0E
         jsl rlDrawMenuTextLine
-        lda $7F840A
+        lda aOptionsMenuValues.wEnemySpeed
         sta wR0
         asl a
         clc
@@ -2077,7 +2077,7 @@
         sta lR18
         ldx #$0C0E
         jsl rlDrawMenuTextLine
-        lda $7F840C
+        lda aOptionsMenuValues.wSound
         sta wR0
         asl a
         clc
@@ -2089,7 +2089,7 @@
         sta lR18
         ldx #$0E0E
         jsl rlDrawMenuTextLine
-        lda $7F840E
+        lda aOptionsMenuValues.wAutoSave
         sta wR0
         asl a
         clc
@@ -2101,7 +2101,7 @@
         sta lR18
         ldx #$100E
         jsl rlDrawMenuTextLine
-        lda wDebugMenuTemp1
+        lda aOptionsMenuValues.wAutoCursor
         sta wR0
         asl a
         clc
@@ -2113,9 +2113,9 @@
         sta lR18
         ldx #$120E
         jsl rlDrawMenuTextLine
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         beq _F17F
-        lda wDebugMenuTemp2
+        lda aOptionsMenuValues.wEnemyAI
         sta wR0
         asl a
         clc
@@ -2230,7 +2230,7 @@
         .autsiz
         .databank ?
 
-        ; The description of the option under the cursor in the box at the top, drawn into the buffer at $7F842E and copied into five rows of the BG3 tilemap buffer, and the caption over its choices.
+        ; The description of the option under the cursor in the box at the top, drawn into aOptionsMenuDescriptionBuffer and copied into five rows of the BG3 tilemap buffer, and the caption over its choices.
 
         lda #(`aOptionsMenuDescriptionTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
@@ -2239,7 +2239,7 @@
         jsr rsOptionsMenuClearDescription
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda $7F8400
+        lda wOptionsMenuCursor
         sta wR0
         asl a
         clc
@@ -2254,10 +2254,10 @@
         ldx #$0000
 
         _F27C
-        lda $7F842E,x
-        sta $7E84B4,x
-        lda $7F84A6,x
-        sta $7E84F4,x
+        lda aOptionsMenuDescriptionBuffer,x
+        sta aBG3TilemapBuffer+$12C,x
+        lda aOptionsMenuDescriptionBuffer+$78,x
+        sta aBG3TilemapBuffer+$16C,x
         inc x
         inc x
         cpx #$0012
@@ -2265,10 +2265,10 @@
         ldx #$0000
 
         _F296
-        lda $7F8440,x
-        sta $7E8532,x
-        lda $7F84B8,x
-        sta $7E8572,x
+        lda aOptionsMenuDescriptionBuffer+$12,x
+        sta aBG3TilemapBuffer+$1AA,x
+        lda aOptionsMenuDescriptionBuffer+$8A,x
+        sta aBG3TilemapBuffer+$1EA,x
         inc x
         inc x
         cpx #$0012
@@ -2276,10 +2276,10 @@
         ldx #$0000
 
         _F2B0
-        lda $7F8452,x
-        sta $7E85B2,x
-        lda $7F84CA,x
-        sta $7E85F2,x
+        lda aOptionsMenuDescriptionBuffer+$24,x
+        sta aBG3TilemapBuffer+$22A,x
+        lda aOptionsMenuDescriptionBuffer+$9C,x
+        sta aBG3TilemapBuffer+$26A,x
         inc x
         inc x
         cpx #$0012
@@ -2287,10 +2287,10 @@
         ldx #$0000
 
         _F2CA
-        lda $7F8464,x
-        sta $7E8632,x
-        lda $7F84DC,x
-        sta $7E8672,x
+        lda aOptionsMenuDescriptionBuffer+$36,x
+        sta aBG3TilemapBuffer+$2AA,x
+        lda aOptionsMenuDescriptionBuffer+$AE,x
+        sta aBG3TilemapBuffer+$2EA,x
         inc x
         inc x
         cpx #$0012
@@ -2298,10 +2298,10 @@
         ldx #$0000
 
         _F2E4
-        lda $7F8476,x
-        sta $7E86B2,x
-        lda $7F84EE,x
-        sta $7E86F2,x
+        lda aOptionsMenuDescriptionBuffer+$48,x
+        sta aBG3TilemapBuffer+$32A,x
+        lda aOptionsMenuDescriptionBuffer+$C0,x
+        sta aBG3TilemapBuffer+$36A,x
         inc x
         inc x
         cpx #$0012
@@ -2312,7 +2312,7 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda $7F8400
+        lda wOptionsMenuCursor
         sta wR0
         asl a
         clc
@@ -2323,7 +2323,7 @@
         lda aOptionsMenuChoiceCaptions,x
         sta lR18
         ldx #$1215
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         bne _F333
         txa
         sec
@@ -2439,13 +2439,13 @@
         .autsiz
         .databank ?
 
-        ; Clears the description buffer at $7F842E.
+        ; Clears aOptionsMenuDescriptionBuffer.
 
         lda #$0000
         tax
 
         _F624
-        sta $7F842E,x
+        sta aOptionsMenuDescriptionBuffer,x
         inc x
         inc x
         cpx #$011A
@@ -2473,9 +2473,9 @@
 
         ; The hand cursor at the option's row, 10 pixels up or down during a move.
 
-        lda $7F8400
+        lda wOptionsMenuCursor
         tax
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         beq _F641
         lda aOptionsMenuCursorYWithAI,x
         bra _F645
@@ -2487,7 +2487,7 @@
         _F645
         and #$00FF
         sta wR1
-        lda $7F8428
+        lda wOptionsMenuCursorMove
         bmi _F65C
         beq _F664
         lda wR1
@@ -2552,28 +2552,28 @@
         .autsiz
         .databank ?
 
-        ; A marker under the chosen value in the choices line, at its X from aOptionsMenuValueMarkerX (also kept in $7F8548).
+        ; A marker under the chosen value in the choices line, at its X from aOptionsMenuValueMarkerX (also kept in wOptionsMenuValueMarkerX).
 
         phk
         plb
         .databank $89
-        lda $7F8400
+        lda wOptionsMenuCursor
         asl a
         tax
         asl a
         asl a
         sta wR0
-        lda wDebugMenuScreenIndex,x
+        lda aOptionsMenuValues,x
         clc
         adc wR0
         tax
         lda @l aOptionsMenuValueMarkerX,x
         and #$00FF
         sta wR0
-        sta $7F8548
+        sta wOptionsMenuValueMarkerX
         lda #$00BD
         sta wR1
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         bne _F6B0
         lda #$00B8
         sta wR1
@@ -2635,7 +2635,7 @@
         sta wR1
         stz wR4
         stz wR5
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         beq _F72B
         ldy #$F74B
         bra _F72E
@@ -2646,7 +2646,7 @@
 
         _F72E
         jsl rlPushToOAMBuffer
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         beq _F74A
         stz wR0
         lda #$0052
@@ -2716,7 +2716,7 @@
         phk
         plb
         .databank $89
-        lda $7F8400
+        lda wOptionsMenuCursor
         asl a
         tax
         lda @l aOptionsMenuIconTiles,x
@@ -2724,7 +2724,7 @@
         stz wR0
         stz wR1
         stz wR5
-        lda $7F842C
+        lda wOptionsMenuShowEnemyAI
         bne _F7C5
         lda #$0002
         sta wR1
@@ -2772,34 +2772,34 @@
 
         ; Writes the values into the settings, as the menu leaves.
 
-        lda wDebugMenuScreenIndex
+        lda aOptionsMenuValues.wAnimation
         jsl rlSetBattleAnimationOption
-        lda $7F8404
+        lda aOptionsMenuValues.wTerrainWindow
         jsl rlSetTerrainWindowSetting
-        lda $7F8406
+        lda aOptionsMenuValues.wUnitWindow
         jsl rlUnknown87BED7
-        lda $7F8408
+        lda aOptionsMenuValues.wMessageSpeed
         jsl rlUnknown87BF01
-        lda $7F840A
+        lda aOptionsMenuValues.wEnemySpeed
         jsl rlUnknown87BF29
-        lda $7F840C
+        lda aOptionsMenuValues.wSound
         jsl rlUnknown87BF52
-        lda $7F840E
+        lda aOptionsMenuValues.wAutoSave
         cmp #$0000
         beq _F822
         lda #$0001
 
         _F822
         jsl rlUnknown87BFBF
-        lda $7F840E
+        lda aOptionsMenuValues.wAutoSave
         beq _F831
         dec a
         jsl rlUnknown87BFE9
 
         _F831
-        lda wDebugMenuTemp1
+        lda aOptionsMenuValues.wAutoCursor
         jsl rlUnknown87C03C
-        lda wDebugMenuTemp2
+        lda aOptionsMenuValues.wEnemyAI
         jsl rlUnknown87C015
         rtl
 
@@ -2824,24 +2824,24 @@
 
         ; Copies the values the menu opened with back over the current ones.
 
-        lda wDebugMenuTemp3
-        sta wDebugMenuScreenIndex
-        lda $7F8416
-        sta $7F8404
-        lda $7F8418
-        sta $7F8406
-        lda $7F841A
-        sta $7F8408
-        lda $7F841C
-        sta $7F840A
-        lda $7F841E
-        sta $7F840C
-        lda $7F8420
-        sta $7F840E
-        lda $7F8422
-        sta wDebugMenuTemp1
-        lda $7F8424
-        sta wDebugMenuTemp2
+        lda aOptionsMenuOpeningValues.wAnimation
+        sta aOptionsMenuValues.wAnimation
+        lda aOptionsMenuOpeningValues.wTerrainWindow
+        sta aOptionsMenuValues.wTerrainWindow
+        lda aOptionsMenuOpeningValues.wUnitWindow
+        sta aOptionsMenuValues.wUnitWindow
+        lda aOptionsMenuOpeningValues.wMessageSpeed
+        sta aOptionsMenuValues.wMessageSpeed
+        lda aOptionsMenuOpeningValues.wEnemySpeed
+        sta aOptionsMenuValues.wEnemySpeed
+        lda aOptionsMenuOpeningValues.wSound
+        sta aOptionsMenuValues.wSound
+        lda aOptionsMenuOpeningValues.wAutoSave
+        sta aOptionsMenuValues.wAutoSave
+        lda aOptionsMenuOpeningValues.wAutoCursor
+        sta aOptionsMenuValues.wAutoCursor
+        lda aOptionsMenuOpeningValues.wEnemyAI
+        sta aOptionsMenuValues.wEnemyAI
         rtl
 
         .databank 0

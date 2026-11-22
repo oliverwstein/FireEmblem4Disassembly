@@ -999,9 +999,9 @@
         bne _FD9A
         lda structItemRAMEntry.ItemState,b,x
         and #$00FF
-        cmp #$0001
+        cmp #ItemStateInventory
         beq _FD67
-        cmp #$0002
+        cmp #ItemStateSupply
         bne _FD9A
 
         _FD67
