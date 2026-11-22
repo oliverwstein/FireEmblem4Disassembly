@@ -375,7 +375,7 @@
 
       aDialogueBoxMapMenuData ; 85/9BDA
 
-        ; A structMapMenu without its last field (Unknown3): no palette or graphics data,
+        ; A structMapMenu without its last field (Next): no palette or graphics data,
         ; tilemap aDialogueBoxMapMenuTilemapData, type 7, position (1, 1).
         .long 0, 0, aDialogueBoxMapMenuTilemapData
         .byte 7, 1, 1

@@ -40,7 +40,7 @@ The save menu sets `aSave.wMenuOperation` to the slot (1-4), with bit 15 set for
 - **The game timer**: `rlTickGameTimer` runs from the interrupt handlers once a frame while a save is active and writes the timer into the same slots every `$800` frames. `rlGetGameTimeHoursMinutes` turns it into hours and minutes.
 - **The final ranking**: when a slot is marked finished, `rsKeepFinalRanking` keeps the ranking (plus 1) in `wRankingScore` under the tag `SRAM_RANKING_TAG`, unless the kept one is lower.
 - **The last saved slot**: under `SRAM_LAST_SAVED_SLOT_TAG`; the file menu starts on it.
-- **The anti-tamper mark**: when the code checksum check fails, the game writes `SRAM_ANTI_TAMPER_MARK` and stops in an endless loop after `rlUnknown91E8CC`; failing again with the mark already there takes the other path (`rlUnknown91E8C1`). A later boot with a good checksum clears it (`rlUnknown878074`). See [include/Checksums.h](../../include/Checksums.h).
+- **The anti-tamper mark**: when the code checksum check fails, the game writes `SRAM_ANTI_TAMPER_MARK` and stops in an endless loop after `rlUnknown91E8CC`; failing again with the mark already there takes the other path (`rlUnknown91E8C1`). A later boot with a good checksum clears it (`rlCheckCodeChecksumsAtReset`). See [include/Checksums.h](../../include/Checksums.h).
 
 ## Depends on
 

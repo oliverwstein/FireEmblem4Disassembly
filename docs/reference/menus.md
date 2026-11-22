@@ -1,6 +1,6 @@
 # Full-screen menus
 
-Three screens take over the whole display from the map or the castle: the **status screen** (one unit's full record), the **revive screen** (the revive staff's list of dead units) and the **options menu**. Each has a bank `$80` opener, which resets the screen and installs its game state routines, and its running code in bank `$89`. They share the menu VBlank routine (`rsRunMenuScreenVBlank`) with the unit, item, skill and data windows. The map's own menu and those windows will be added to this page as they are named. Per-routine details: [routines/menus.md](routines/menus.md).
+Three screens take over the whole display from the map or the castle: the **status screen** (one unit's full record), the **revive screen** (the revive staff's list of dead units) and the **options menu**. Each has a bank `$80` opener, which resets the screen and installs its game state routines, and its running code in bank `$89`. They share the menu VBlank routine (`rsRunMenuScreenVBlank`) with the unit, item, skill and data windows. The map's own menus are on [map_menu.md](map_menu.md). Per-routine details: [routines/menus.md](routines/menus.md).
 
 ## Files
 
@@ -74,7 +74,7 @@ R and L (`rsStatusScreenNextUnit`, `rsStatusScreenPreviousUnit`) walk the player
 
 ## The revive screen
 
-A staff effect handler (`rsUnknown87E855`) installs `rsReviveScreenOpen`. It saves the staff's user (`wReviveScreenStaffUser`) and lists the player's dead units (`rsReviveScreenBuildDeadUnitList`), with their names in a grid of three columns and their map sprites over them. With no dead unit it only says so (`REVIVE_SCREEN_STEP_NOBODY_DEAD`, B leaves).
+A staff effect handler (`rsCastleStaffValkyrie`) installs `rsReviveScreenOpen`. It saves the staff's user (`wReviveScreenStaffUser`) and lists the player's dead units (`rsReviveScreenBuildDeadUnitList`), with their names in a grid of three columns and their map sprites over them. With no dead unit it only says so (`REVIVE_SCREEN_STEP_NOBODY_DEAD`, B leaves).
 
 In `REVIVE_SCREEN_STEP_CHOOSE_UNIT` the arrows move the cursor, and the unit under it animates. X opens that unit's status screen, and closing it comes back here with the same cursor. A asks for confirmation (`REVIVE_SCREEN_STEP_CONFIRM`): on yes, `rlBuildCastleActionRounds` sets up the staff action from the user to the chosen unit. B leaves to the castle courtyard. The upkeep routine draws by `wReviveScreenDrawMode`: the grid, the grid and the yes/no cursor, or nothing.
 
