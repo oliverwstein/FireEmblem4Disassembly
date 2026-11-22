@@ -113,7 +113,7 @@ All the keeper screens work alike: the keeper's portrait (OAM palette 5, mirrore
 - `wCastleCursorState` 2: the VBlank routine and `rlCastleScreenUpkeep` treat it like the town, but nothing found sets it.
 - Step `$13` (`rsCastleStepExitToMapNoReset`) and shop sub-state `$14` (`rsShopLeaveToCourtyard`): nothing found selects them.
 - Keepers 4 and 6, and option codes 3-5: present in the tables (`rsSetKeeperOptionList`, `aKeeperPortraits`) but not seen used.
-- `$7F80A3`-`$7F80A7` hold both the fountain animation and the town's HDMA table; `$7F8183` holds the augury topics and also the status screen's return pointer. These are unnamed for now.
+- `$7F80A3`-`$7F80A7` hold both the fountain animation and the town's HDMA table, and are unnamed for now. `$7F8183` holds the augury topics; as the status screen's `wStatusScreenCaller` it is named only in the status screen's files (see [menus.md](menus.md)).
 - `rlUnknown848BFE` (who counts as a target of each type), `rlUnknown84B349` (the repair itself), `rlUnknown84D334` and `rlUnknown9EDAE7` (giving money), `rlUnknown8CED4F` (run on `wCastleReturnEventFlag`) and `rlUnknown8DB52C` (the conversation callback) are in banks not yet named.
 - Why class change is refused in chapter 6 (`rsCastleUnitCommandClassChange`).
 - The window HDMA routines (`rlUnknown8AB23B` and the three after it) are unnamed.

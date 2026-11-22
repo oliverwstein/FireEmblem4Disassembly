@@ -1684,27 +1684,27 @@
         _8811
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #(`aStatusScreenHitLabel)<<8
+        lda #(`aStatusScreenItemHitLabel)<<8
         sta lR18+1
-        lda #<>aStatusScreenHitLabel
+        lda #<>aStatusScreenItemHitLabel
         sta lR18
         ldx #$0F03
         jsl rlDrawMenuTextLine
-        lda #(`aStatusScreenMightLabel)<<8
+        lda #(`aStatusScreenItemMightLabel)<<8
         sta lR18+1
-        lda #<>aStatusScreenMightLabel
+        lda #<>aStatusScreenItemMightLabel
         sta lR18
         ldx #$1104
         jsl rlDrawMenuTextLine
-        lda #(`aStatusScreenRangeLabel)<<8
+        lda #(`aStatusScreenItemRangeLabel)<<8
         sta lR18+1
-        lda #<>aStatusScreenRangeLabel
+        lda #<>aStatusScreenItemRangeLabel
         sta lR18
         ldx #$1304
         jsl rlDrawMenuTextLine
-        lda #(`aStatusScreenWeightLabel)<<8
+        lda #(`aStatusScreenItemWeightLabel)<<8
         sta lR18+1
-        lda #<>aStatusScreenWeightLabel
+        lda #<>aStatusScreenItemWeightLabel
         sta lR18
         ldx #$1505
         jsl rlDrawMenuTextLine
@@ -1827,42 +1827,46 @@
       .al
       .xl
 
-      aStatusScreenHitLabel ; 89/8973
+      aStatusScreenItemHitLabel ; 89/8973
 
         .enc "SJIS"
         .text "めいちゅう"
         .word $0000
         .enc "none"
 
-      aStatusScreenMightLabel ; 89/897F
+      aStatusScreenItemMightLabel ; 89/897F
 
         .enc "SJIS"
         .text "いりょく"
         .word $0000
         .enc "none"
 
-      aStatusScreenRangeLabel ; 89/8989
+      aStatusScreenItemRangeLabel ; 89/8989
 
         .enc "SJIS"
         .text "しゃてい"
         .word $0000
         .enc "none"
 
-      aStatusScreenWeightLabel ; 89/8993
+      aStatusScreenItemWeightLabel ; 89/8993
 
         .enc "SJIS"
         .text "おもさ"
         .word $0000
         .enc "none"
 
-      aStatusScreenRemainingLabel ; 89/899B
+      aStatusScreenItemUsesLabel ; 89/899B
+
+        ; Nothing reads it.
 
         .enc "SJIS"
         .text "のこり"
         .word $0000
         .enc "none"
 
-      aStatusScreenGoldLabel ; 89/89A3
+      aStatusScreenGoldSign ; 89/89A3
+
+        ; Nothing reads it.
 
         .enc "SJIS"
         .text "Ｇ"
@@ -4753,6 +4757,8 @@
 
       aStatusScreenDash ; 89/9B8F
 
+        ; Nothing reads it.
+
         .enc "SJIS"
         .text "ー"
         .word $0000
@@ -4828,15 +4834,15 @@
         sta lR18
         ldx #$0114
         jsl rlDrawMenuTextLine
-        lda #(`aStatusScreenHitLabel2)<<8
+        lda #(`aStatusScreenHitLabel)<<8
         sta lR18+1
-        lda #<>aStatusScreenHitLabel2
+        lda #<>aStatusScreenHitLabel
         sta lR18
         ldx #$0313
         jsl rlDrawMenuTextLine
-        lda #(`aStatusScreenRangeLabel2)<<8
+        lda #(`aStatusScreenRangeLabel)<<8
         sta lR18+1
-        lda #<>aStatusScreenRangeLabel2
+        lda #<>aStatusScreenRangeLabel
         sta lR18
         ldx #$0514
         jsl rlDrawMenuTextLine
@@ -4881,14 +4887,14 @@
         .word $0000
         .enc "none"
 
-      aStatusScreenHitLabel2 ; 89/9C5C
+      aStatusScreenHitLabel ; 89/9C5C
 
         .enc "SJIS"
         .text "めいちゅう"
         .word $0000
         .enc "none"
 
-      aStatusScreenRangeLabel2 ; 89/9C68
+      aStatusScreenRangeLabel ; 89/9C68
 
         .enc "SJIS"
         .text "しゃてい"
@@ -5134,9 +5140,9 @@
         sta lR18
         ldx #$2404
         jsl rlDrawMenuTextLine
-        lda #(`aStatusScreenGoldLabel2)<<8
+        lda #(`aStatusScreenGoldLabel)<<8
         sta lR18+1
-        lda #<>aStatusScreenGoldLabel2
+        lda #<>aStatusScreenGoldLabel
         sta lR18
         ldx #$2602
         jsl rlDrawMenuTextLine
@@ -5254,7 +5260,7 @@
         .word $0000
         .enc "none"
 
-      aStatusScreenGoldLabel2 ; 89/9F2F
+      aStatusScreenGoldLabel ; 89/9F2F
 
         .enc "SJIS"
         .text "しょじきん"
