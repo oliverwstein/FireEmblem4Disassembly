@@ -5717,7 +5717,7 @@
         stz wCastleSubMenuStep,b
         lda #$0020
         tsb wMapSystemFlags,b
-        jsl rlUnknown85EA64
+        jsl rlMapMenuEmptyHook
         lda #(`procUnknown889396)<<8
         sta lR44+1
         lda #<>procUnknown889396
@@ -7230,7 +7230,7 @@
         inc wUnknown000770,b
         lda #$0002
         tsb wMapSystemFlags,b
-        jsl rlUnknown85EA64
+        jsl rlMapMenuEmptyHook
         lda #$0001
         sta wMovingUnitSpriteState,b
         stz wMovingUnitSpriteFrame,b
@@ -9640,7 +9640,7 @@
         inc wUnknown000770,b
         lda #$0002
         tsb wMapSystemFlags,b
-        jsl rlUnknown85EA64
+        jsl rlMapMenuEmptyHook
         lda #$0001
         sta wMovingUnitSpriteState,b
         stz wMovingUnitSpriteFrame,b

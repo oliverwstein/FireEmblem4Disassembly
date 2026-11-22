@@ -757,9 +757,9 @@
             ora #0
             beq _INC
 
-              lda #(`procUnknown85CA85)<<8
+              lda #(`procMapExperienceWindow)<<8
               sta $62+1
-              lda #<>procUnknown85CA85
+              lda #<>procMapExperienceWindow
               sta $62
               jsl rlProcEngineFindProc
               bcs _End

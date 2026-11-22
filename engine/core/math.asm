@@ -485,3 +485,41 @@
     .endsection Unsorted80A1ABSection
 
 
+    .section Unsorted85BCB8Section
+
+      .al
+      .xl
+
+      rlSignedDivide16By16R13 ; 85/BCB8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; rlUnsignedDivide16By16R13 for a signed wR13.
+
+        lda wR13
+        bmi _BCC1
+        jsl rlUnsignedDivide16By16R13
+        rtl
+
+
+        _BCC1
+        eor #$FFFF
+        inc a
+        sta wR13
+        jsl rlUnsignedDivide16By16R13
+        lda wR13
+        eor #$FFFF
+        inc a
+        sta wR13
+        rtl
+
+        .databank 0
+
+        ; 85/BCD4
+
+    .endsection Unsorted85BCB8Section
+
+

@@ -3020,13 +3020,13 @@
         bit #$0002
         beq _92C0
         lda wR0
-        jsl rlUnknown85D32D
+        jsl rlMapBattleHealLeft
         bra _9316
 
 
         _92C0
         lda wR0
-        jsl rlUnknown85D319
+        jsl rlMapBattleDamageLeft
         lda $7F508B
         cmp #$0010
         beq _92DB
@@ -3037,7 +3037,7 @@
 
         _92DB
         lda wR0
-        jsl rlUnknown85D323
+        jsl rlMapBattleHealRight
         bra _9316
 
 
@@ -3046,13 +3046,13 @@
         bit #$0002
         beq _92F3
         lda wR0
-        jsl rlUnknown85D323
+        jsl rlMapBattleHealRight
         bra _9316
 
 
         _92F3
         lda wR0
-        jsl rlUnknown85D30F
+        jsl rlMapBattleDamageRight
         lda $7F508D
         cmp #$0010
         beq _930E
@@ -3063,7 +3063,7 @@
 
         _930E
         lda wR0
-        jsl rlUnknown85D32D
+        jsl rlMapBattleHealLeft
         bcc _9316
 
         _9316
@@ -3964,7 +3964,7 @@
         ldx #$0416
         ldy #$0000
         jsl rlGetCenteredTextBoxPlacement
-        jsl rlUnknown85DB63
+        jsl rlOpenMapBattleTextBox
         plx
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -4032,7 +4032,7 @@
         ldx #$0416
         ldy #$0000
         jsl rlGetCenteredTextBoxPlacement
-        jsl rlUnknown85DB63
+        jsl rlOpenMapBattleTextBox
         plx
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -4221,7 +4221,7 @@
         ldx #$0416
         ldy #$0000
         jsl rlGetCenteredTextBoxPlacement
-        jsl rlUnknown85DB63
+        jsl rlOpenMapBattleTextBox
         plx
         ply
         rtl
@@ -7373,7 +7373,7 @@
         _AD3A
         PROC_CALL rlUnknown9EB491
         PROC_YIELD 117
-        PROC_CALL rlUnknown85DB91
+        PROC_CALL rlCloseMapBattleTextBox
         PROC_YIELD 8
 
         _AD48
@@ -7390,7 +7390,7 @@
         _AD60
         PROC_CALL rlUnknown9EB49D
         PROC_YIELD 117
-        PROC_CALL rlUnknown85DB91
+        PROC_CALL rlCloseMapBattleTextBox
         PROC_YIELD 8
 
         _AD6E
@@ -7426,7 +7426,7 @@
         and #$00FF
         cmp #$0003
         beq _AD9E
-        jsl rlUnknown85D648
+        jsl rlRestoreMapBattlePalettes
         bra _ADA6
 
 
@@ -7464,7 +7464,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85D671
+        jsl rlReloadMenuIconGraphics
         bcs _ADD0
         lda $7F4C07
         ora #$0002
@@ -9838,7 +9838,7 @@
         lda $7E4ECF
         beq _C943
         jsl rlUnknown9EA140
-        jsl rlUnknown85D385
+        jsl rlOpenMapBattleExperienceWindow
         lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
@@ -9859,7 +9859,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85D3F5
+        jsl rlCheckMapBattleExperienceWindowOpen
         cmp #$FFFF
         beq _C956
         lda aProcSystem.aHeaderBitfield,b,x
@@ -9977,7 +9977,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85D414
+        jsl rlCloseMapBattleHPWindows
         lda #<>rlUnknown9EC9C8
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
@@ -9993,7 +9993,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85D648
+        jsl rlRestoreMapBattlePalettes
         lda #<>rlUnknown9EC9D3
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
@@ -10009,7 +10009,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85D671
+        jsl rlReloadMenuIconGraphics
         bcs _C9FC
         lda $7F4C87
         bne _C9E3
@@ -10064,7 +10064,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85D65A
+        jsl rlLoadMapBattleHUDGraphics
         bcc _CA17
         rtl
 
@@ -10077,8 +10077,8 @@
         bne _CA34
         jsl rlUnknown9EAB5D
         bcs _CA34
-        jsl rlUnknown85D5CC
-        jsl rlUnknown85D066
+        jsl rlSetMapBattlePalettes
+        jsl rlOpenMapBattleHPWindows
 
         _CA34
         lda #<>rlUnknown9ECA3A
@@ -10120,13 +10120,13 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85D65A
+        jsl rlLoadMapBattleHUDGraphics
         bcc _CA4C
         rtl
 
 
         _CA4C
-        jsl rlUnknown85D5CC
+        jsl rlSetMapBattlePalettes
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
@@ -10195,10 +10195,10 @@
         bne _CAB4
         jsl rlUnknown9EAB5D
         bcs _CAB4
-        jsl rlUnknown85D41E
+        jsl rlCheckMapBattleHPWindowsBusy
         cmp #$FFFF
         beq _CABA
-        jsl rlUnknown85D648
+        jsl rlRestoreMapBattlePalettes
 
         _CAB4
         lda #<>rlUnknown9ECABB
@@ -10226,7 +10226,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85D671
+        jsl rlReloadMenuIconGraphics
         bcs _CAD0
         lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -10388,7 +10388,7 @@
         PROC_CALL rlUnknown9ECA60
         PROC_JUMP_IF_BITS_UNSET _CC98, $0002
         PROC_YIELD 40
-        PROC_CALL rlUnknown85D414
+        PROC_CALL rlCloseMapBattleHPWindows
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle7
         _CC8E
@@ -10500,7 +10500,7 @@
         _CE01
         PROC_CALL rlUnknown9EB491
         PROC_YIELD 117
-        PROC_CALL rlUnknown85DB91
+        PROC_CALL rlCloseMapBattleTextBox
         PROC_YIELD 8
         _CE0F
         PROC_CALL rlUnknown9E9967
@@ -10511,7 +10511,7 @@
         _CE27
         PROC_CALL rlUnknown9EB497
         PROC_YIELD 133
-        PROC_CALL rlUnknown85DB91
+        PROC_CALL rlCloseMapBattleTextBox
         PROC_YIELD 8
         _CE35
         PROC_CALL rlUnknown9E985E
@@ -10522,7 +10522,7 @@
         _CE4D
         PROC_CALL rlUnknown9EB49D
         PROC_YIELD 117
-        PROC_CALL rlUnknown85DB91
+        PROC_CALL rlCloseMapBattleTextBox
         PROC_YIELD 8
         _CE5B
         PROC_CALL rlUnknown9E98C4
@@ -10533,7 +10533,7 @@
         _CE73
         PROC_CALL rlUnknown9EB4A3
         PROC_YIELD 133
-        PROC_CALL rlUnknown85DB91
+        PROC_CALL rlCloseMapBattleTextBox
         PROC_YIELD 8
         _CE81
         PROC_CALL rlUnknown9EB41C

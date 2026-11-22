@@ -1,5 +1,8 @@
 ; Dialogue boxes: procDialogueBox, the HDMA effects that fold and unfold the
-; boxes, and freeing them.
+; boxes, freeing and closing them (rlCloseDialogueBox, rlCheckDialogueBoxesClosed).
+; At the end, helpers from bank $85 the dialogue code calls whose purpose is not
+; worked out yet (rlUnknown85BCD4, rlUnknown85BD12, rlUnknown85BD93) and an
+; unreached proc (procUnknown85C01F).
 
     .section DialogueBoxSection
 
@@ -1011,3 +1014,827 @@
         ; 8A/DB9F
 
     .endsection DisplayDialogueAPressArrowsSection
+
+
+    .section Unsorted859D60Section
+
+      .al
+      .xl
+
+      rlCloseDialogueBox ; 85/9D60
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; wR0 = the dialogue box's number: sets bit 0 of its procDialogueBox's aBody4 (close). With none open, sets wDialogueBoxHDMAStatus to $7FFF.
+
+        phx
+        ldx #$001E
+
+        _9D64
+        lda aProcSystem.aHeaderTypeOffset,b,x
+        cmp #<>procDialogueBox
+        bne _9D7B
+        lda aProcSystem.aBody5,b,x
+        cmp wR0
+        bne _9D7B
+        lda #$0001
+        sta aProcSystem.aBody4,b,x
+        bra _9D86
+
+
+        _9D7B
+        dec x
+        dec x
+        bpl _9D64
+        lda #$7FFF
+        sta wDialogueBoxHDMAStatus
+
+        _9D86
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/9D88
+
+    .endsection Unsorted859D60Section
+
+
+    .section Unsorted85AB32Section
+
+      .al
+      .xl
+
+      rlCheckDialogueBoxesClosed ; 85/AB32
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Carry set when wDialogueBoxHDMAStatus is $7FFF (no dialogue box open).
+
+        lda wDialogueBoxHDMAStatus
+        cmp #$7FFF
+        beq _AB3D
+        clc
+        rtl
+
+
+        _AB3D
+        sec
+        rtl
+
+        .databank 0
+
+        ; 85/AB3F
+
+    .endsection Unsorted85AB32Section
+
+
+    .section Unsorted85BCD4Section
+
+      .al
+      .xl
+
+      rlUnknown85BCD4 ; 85/BCD4
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        sep #$20
+        clc
+        ror a
+        sta wDialogueBoxHDMAYPixelPosition
+        bcc _BCE0
+        inc a
+
+        _BCE0
+        sta wDialogueBoxHDMACycleCounter+1
+        lda #$20
+        sta wDialogueBoxHDMAPositionIndicator
+        lda #$01
+        sta $7FEA53
+        lda #$00
+        sta $7FEA56
+        rep #$20
+        lda #$BD10
+        sta wDialogueBoxHDMAYPixelPosition+1
+        sta wDialogueBoxHDMAStatus
+        sta $7FEA54
+        lda #$BD11
+        sta wDialogueBoxHDMAPositionIndicator+1
+        pla
+        rtl
+
+        .databank 0
+
+        ; 85/BD10
+
+
+      aUnknown85BD10 ; 85/BD10
+
+        .byte $00
+
+      aUnknown85BD11 ; 85/BD11
+
+        .byte $01
+
+    .endsection Unsorted85BCD4Section
+
+
+    .section Unsorted85BD12Section
+
+      .al
+      .xl
+
+      rlUnknown85BD12 ; 85/BD12
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sty wR7
+        sta wR6
+        phx
+        lda wR7
+        bne _BD20
+        lda #$7B80
+        bra _BD23
+
+
+        _BD20
+        lda #$3FC0
+
+        _BD23
+        sta wR0
+        lda wR6
+        cmp #$FFFF
+        bne _BD35
+        lda #$0000
+        sta wR1
+        sta wR2
+        bra _BD46
+
+
+        _BD35
+        asl a
+        tax
+        lda aUnknown85BD8D,x
+        clc
+        adc wR0
+        sta wR1
+        clc
+        adc #$0010
+        sta wR2
+
+        _BD46
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        sep #$20
+        lda #$7E
+        pha
+        plb
+        .databank $7E
+        rep #$20
+        lda wR7
+        bne _BD5B
+        lda #$7F56
+        bra _BD5E
+
+
+        _BD5B
+        lda #$7F78
+
+        _BD5E
+        tax
+        clc
+        adc #$0040
+        tay
+        lda #$0003
+        sta wR0
+
+        _BD69
+        lda wR1
+        sta $0000,b,x
+        dec wR1
+        lda wR2
+        sta $0000,b,y
+        dec wR2
+        lda wR7
+        bne _BD81
+        inc x
+        inc x
+        inc y
+        inc y
+        bra _BD85
+
+
+        _BD81
+        dec x
+        dec x
+        dec y
+        dec y
+
+        _BD85
+        dec wR0
+        bpl _BD69
+        plp
+        plb
+        .databank $7E
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/BD8D
+
+    .endsection Unsorted85BD12Section
+
+
+    .section Table85BD8DSection
+
+      .al
+      .xl
+
+      aUnknown85BD8D ; 85/BD8D
+
+        ; Read by rlUnknown85BD12.
+
+        .word $0009, $000F, $002F
+
+        ; 85/BD93
+
+    .endsection Table85BD8DSection
+
+
+    .section Unsorted85BD93Section
+
+      .al
+      .xl
+
+      rlUnknown85BD93 ; 85/BD93
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7F48, $0080, $80, $ABC0
+
+        rtl
+
+        .databank 0
+
+        ; 85/BDA1
+
+    .endsection Unsorted85BD93Section
+
+
+    .section Unsorted85BDA1Section
+
+      .al
+      .xl
+
+      rlUnknown85BDA1 ; 85/BDA1
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        pha
+        txa
+        and #$00FF
+        asl a
+        asl a
+        asl a
+        sta wR0
+        txa
+        and #$FF00
+        xba
+        asl a
+        asl a
+        asl a
+        sta wR1
+        sta wR6
+        pla
+        pha
+        tya
+        ora #$0000
+        bne _BDD7
+        lda aEpilogueUnitStates
+        asl a
+        asl a
+        asl a
+        sta wR4
+        lda $7FC54C
+        asl a
+        asl a
+        asl a
+        sta wR5
+        bra _BDE9
+
+
+        _BDD7
+        lda $7FC5AE
+        asl a
+        asl a
+        asl a
+        sta wR4
+        lda $7FC5B0
+        asl a
+        asl a
+        asl a
+        sta wR5
+
+        _BDE9
+        pla
+        sta wR7
+        pha
+        beq _BE35
+        lda wR4
+        sec
+        sbc wR0
+        sta wR13
+        lda #$0010
+        sta wR14
+        jsl rlSignedDivide16By16R13
+        lda wR13
+        sta wR10
+        lda wR7
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR0
+        clc
+        adc wR12
+        sta wR0
+        lda wR5
+        sec
+        sbc wR1
+        sta wR13
+        lda #$0010
+        sta wR14
+        jsl rlSignedDivide16By16R13
+        lda wR13
+        sta wR10
+        lda wR7
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR1
+        clc
+        adc wR12
+        sta wR1
+
+        _BE35
+        pla
+        pha
+        phx
+        tax
+        lda wR6
+        cmp #$0070
+        bmi _BE50
+        lda @l aUnknown85BE76,x
+        and #$00FF
+        sta wR7
+        lda wR1
+        sec
+        sbc wR7
+        bra _BE5A
+
+
+        _BE50
+        lda @l aUnknown85BE76,x
+        and #$00FF
+        clc
+        adc wR1
+
+        _BE5A
+        sta wR1
+        plx
+        pla
+        asl a
+        tax
+        ldy <>aUnknown85BE87,b,x
+        stz wR4
+        stz wR5
+        sep #$20
+        lda #$85
+        pha
+        plb
+        .databank $85
+        rep #$20
+        jsl rlPushToOAMBuffer
+        plp
+        plb
+        .databank $85
+        rtl
+
+        .databank 0
+
+        ; 85/BE76
+
+    .endsection Unsorted85BDA1Section
+
+
+    .section Table85BE76Section
+
+      .al
+      .xl
+
+      aUnknown85BE76 ; 85/BE76
+
+        ; Read by rlUnknown85BDA1.
+
+        .byte $00, $01, $02, $03, $04, $05, $06, $07, $08, $07, $06, $05, $04, $03, $02, $01
+        .byte $00
+
+        ; 85/BE87
+
+    .endsection Table85BE76Section
+
+
+    .section Table85BE87Section
+
+      .al
+      .xl
+
+      aUnknown85BE87 ; 85/BE87
+
+        ; Read by rlUnknown85BDA1.
+
+        .word <>aUnknown85BEA9
+        .word <>aUnknown85BF6F
+        .word <>aUnknown85BEBF
+        .word <>aUnknown85BF85
+        .word <>aUnknown85BED5
+        .word <>aUnknown85BF9B
+        .word <>aUnknown85BEEB
+        .word <>aUnknown85BFB1
+        .word <>aUnknown85BF01
+        .word <>aUnknown85BFC7
+        .word <>aUnknown85BF17
+        .word <>aUnknown85BFDD
+        .word <>aUnknown85BF2D
+        .word <>aUnknown85BFF3
+        .word <>aUnknown85BF43
+        .word <>aUnknown85C009
+        .word <>aUnknown85BF59
+
+      aUnknown85BEA9 ; 85/BEA9
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(   8,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,    8), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(   8,    8), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BEA9._Sprites
+
+      aUnknown85BEBF ; 85/BEBF
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  12,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   20), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  12,   20), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BEBF._Sprites
+
+      aUnknown85BED5 ; 85/BED5
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  16,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   26), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  16,   26), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BED5._Sprites
+
+      aUnknown85BEEB ; 85/BEEB
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  20,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   32), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  20,   32), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BEEB._Sprites
+
+      aUnknown85BF01 ; 85/BF01
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  24,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   38), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  24,   38), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF01._Sprites
+
+      aUnknown85BF17 ; 85/BF17
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  28,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   44), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  28,   44), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF17._Sprites
+
+      aUnknown85BF2D ; 85/BF2D
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  32,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   50), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  32,   50), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF2D._Sprites
+
+      aUnknown85BF43 ; 85/BF43
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  36,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   56), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  36,   56), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF43._Sprites
+
+      aUnknown85BF59 ; 85/BF59
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  40,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   62), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  40,   62), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF59._Sprites
+
+      aUnknown85BF6F ; 85/BF6F
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  10,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   11), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  10,   11), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF6F._Sprites
+
+      aUnknown85BF85 ; 85/BF85
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  14,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   23), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  14,   23), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF85._Sprites
+
+      aUnknown85BF9B ; 85/BF9B
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  18,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   29), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  18,   29), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BF9B._Sprites
+
+      aUnknown85BFB1 ; 85/BFB1
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  22,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   35), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  22,   35), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BFB1._Sprites
+
+      aUnknown85BFC7 ; 85/BFC7
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  26,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   41), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  26,   41), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BFC7._Sprites
+
+      aUnknown85BFDD ; 85/BFDD
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  30,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   47), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  30,   47), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BFDD._Sprites
+
+      aUnknown85BFF3 ; 85/BFF3
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  34,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   53), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  34,   53), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85BFF3._Sprites
+
+      aUnknown85C009 ; 85/C009
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $0000, 3, 0, false, false]]
+        _Sprites ..= [[(  38,    0), $00, SpriteSmall, $0001, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   59), $00, SpriteSmall, $0010, 3, 0, false, false]]
+        _Sprites ..= [[(  38,   59), $00, SpriteSmall, $0011, 3, 0, false, false]]
+
+        .structSpriteArray aUnknown85C009._Sprites
+
+        ; 85/C01F
+
+    .endsection Table85BE87Section
+
+
+    .section ProcScript85C01FSection
+
+      .al
+      .xl
+
+      procUnknown85C01F .structProcInfo "PW", rlUnknown85C028, rlUnknown85C051, aProcDialogueBoxCode ; 85/C01F
+
+        .byte $01
+
+        ; 85/C028
+
+    .endsection ProcScript85C01FSection
+
+
+    .section Unsorted85C028Section
+
+      .al
+      .xl
+
+      rlUnknown85C028 ; 85/C028
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.wInput3,b
+        sta aProcSystem.aBody6,b,x
+        lda aProcSystem.wInput2,b
+        sta aProcSystem.aBody5,b,x
+        lda aProcSystem.wInput1,b
+        sta aProcSystem.aBody4,b,x
+        lda #$FFFF
+        sta aProcSystem.aBody7,b,x
+        phx
+        ldx #$001E
+
+        _C044
+        lda aOAMPaletteBuffer,b,x
+        sta $7FEB2A,x
+        dec x
+        dec x
+        bpl _C044
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/C051
+
+
+      rlUnknown85C051 ; 85/C051
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody7,b,x
+        inc a
+        cmp #$0011
+        bpl _C07F
+        sta aProcSystem.aBody7,b,x
+        sta wR0
+        lda aProcSystem.aBody4,b,x
+        bne _C068
+        lda wR0
+        bra _C06E
+
+
+        _C068
+        lda #$0011
+        sec
+        sbc wR0
+
+        _C06E
+        sta wR0
+        lda aProcSystem.aBody5,b,x
+        tay
+        lda aProcSystem.aBody6,b,x
+        tax
+        lda wR0
+        jsl rlUnknown85BDA1
+        rtl
+
+
+        _C07F
+        phx
+        ldx #$001E
+
+        _C083
+        lda $7FEB2A,x
+        sta aOAMPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _C083
+        plx
+        jsl rlProcEngineFreeProc
+        rtl
+
+        .databank 0
+
+        ; 85/C094
+
+
+      rlUnknown85C094 ; 85/C094
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procUnknown85C01F)<<8
+        sta lR44+1
+        lda #<>procUnknown85C01F
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/C0A3
+
+
+      rlUnknown85C0A3 ; 85/C0A3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #(`procUnknown85C01F)<<8
+        sta lR44+1
+        lda #<>procUnknown85C01F
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _C0B7
+        plx
+        sec
+        rtl
+
+
+        _C0B7
+        plx
+        clc
+        rtl
+
+        .databank 0
+
+        ; 85/C0BA
+
+
+    .endsection Unsorted85C028Section
+
+
+    .section Unsorted85C0BASection
+
+      .al
+      .xl
+
+      rlUnknown85C0BA ; 85/C0BA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlFreeHDMAEntry0
+        jsl rlProcEngineFreeProc
+        jsl rlShowMapWindows
+        rtl
+
+        .databank 0
+
+        ; 85/C0C7
+
+    .endsection Unsorted85C0BASection
+
+

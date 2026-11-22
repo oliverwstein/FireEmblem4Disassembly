@@ -368,9 +368,9 @@
           and #$00FF
           sta aProcSystem.wInput3,b
 
-          lda #(`procUnknown85CA85)<<8
+          lda #(`procMapExperienceWindow)<<8
           sta $62+1
-          lda #<>procUnknown85CA85
+          lda #<>procMapExperienceWindow
           sta $62
           jsl rlProcEngineCreateProc
 

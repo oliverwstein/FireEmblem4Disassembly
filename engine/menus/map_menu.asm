@@ -1,5 +1,8 @@
-; Map menus: loading their data, building their tilemaps and palettes, and
-; their position and size on screen.
+; Map menus: the windows drawn on BG3 over the map. Loading their data, the list
+; of open menus (lMapMenuListHead), drawing, moving, hiding and redrawing them,
+; their frames (aMapMenuTypePointers), the option list menu procs, numbers and
+; gauges, the window gradient and opening animation, text boxes and the item
+; description box. See docs/reference/menus.md.
 
     .section LoadMapMenuDataFromProcSection
 
@@ -2281,4 +2284,3753 @@
 
     .endsection Unsorted82F4A7Section
 
+
+    .section Unsorted8582D4Section
+
+      .al
+      .xl
+
+      rlMoveMapMenuToCursor ; 85/82D4
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = proc. Moves its map menu to the cursor's tile, kept on screen (30x28 tiles) for its size; nothing in the build reaches this.
+
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+        lda wR40
+        pha
+        lda wR41
+        pha
+        lda wR42
+        pha
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlGetMapMenuTilemapArea
+        sta wR42
+        sep #$20
+        lda #$1E
+        sec
+        sbc wR42
+        sta wR40
+        lda #$1C
+        sec
+        sbc wR42+1
+        sta wR41
+        lda @l wCursorXOffset
+        lsr a
+        lsr a
+        lsr a
+        cmp wR40
+        bcc _830A
+        lda wR40
+
+        _830A
+        sta @l $000534
+        lda @l wCursorYOffset
+        lsr a
+        lsr a
+        lsr a
+        cmp wR41
+        bcc _831B
+        lda wR41
+
+        _831B
+        sta @l $000535
+        rep #$20
+        jsl rlMoveMapMenuBG3
+        pla
+        sta wR42
+        pla
+        sta wR41
+        pla
+        sta wR40
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        rtl
+
+        .databank 0
+
+        ; 85/8335
+
+    .endsection Unsorted8582D4Section
+
+
+    .section Unsorted8583C2Section
+
+      .al
+      .xl
+
+      rlListMenuProcInit ; 85/83C2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Init of a list menu proc: saves the game state (rlMapMenuSaveMapState) and holds the on-cycle routine back for one frame.
+
+        jsl rlMapMenuSaveMapState
+        lda aProcSystem.aHeaderOnCycle,b,x
+        sta aProcSystem.aBody2,b,x
+        lda #<>rlListMenuProcFirstCycle
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/83D3
+
+    .endsection Unsorted8583C2Section
+
+
+    .section Unsorted8583D3Section
+
+      .al
+      .xl
+
+      rlListMenuProcFirstCycle ; 85/83D3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Puts back the on-cycle routine that rlListMenuProcInit held back.
+
+        lda aProcSystem.aBody2,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/83DA
+
+    .endsection Unsorted8583D3Section
+
+
+    .section Unsorted8583DASection
+
+      .al
+      .xl
+
+      rlListMenuProcSetUp ; 85/83DA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Loads the menu named in the proc's header, pushes its option list, draws the options and goes on to rlListMenuProcHandleInput.
+
+        lda #$0009
+        jsl rlPlaySoundEffect
+        lda aProcSystem.aHeaderTypeOffset,b,x
+        tay
+        jsl rlLoadMapMenuDataFromProc
+        jsl rlListMenuProcPushOptions
+        jsl rlDrawMenuOptions
+        lda #<>rlListMenuProcHandleInput
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/83F8
+
+    .endsection Unsorted8583DASection
+
+
+    .section Unsorted8583F8Section
+
+      .al
+      .xl
+
+      rlListMenuProcHandleInput ; 85/83F8
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; While the menu is on top: A closes it and runs the option under the cursor (aBody6, 1-based), B closes it, Up and Down move the cursor (wrapping on a new press).
+
+        php
+        phb
+        phy
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlCheckListMenuIdle
+        beq +
+
+          jml _849A
+
+        +
+        lda wJoy1New
+        bit #JOY_A
+        beq +
+
+          lda #$000A
+          jsl rlPlaySoundEffect
+          
+          jsl rlMapMenuCloseAndRestoreMapState
+          lda #1
+          sta $00
+          lda aProcSystem.aBody6,b,x
+          sta $02
+          jsl rlHandleMenuOptionInput
+          jsr rsListMenuProcEnd
+          bra _End
+
+        +
+        lda wJoy1New
+        bit #JOY_B
+        beq +
+
+          lda #$0021
+          jsl rlPlaySoundEffect
+
+          jsl rlMapMenuCloseAndRestoreMapState
+          jsr rsListMenuProcEnd
+          bra _End
+        
+        +
+        jsl rlGetCurrentMenuOptionCount
+        asl a
+        sta $00
+
+        lda wJoy1Repeated
+        bit #JOY_Up
+        beq _8472
+
+          lda aProcSystem.aBody6,b,x
+          sec
+          sbc #2
+          bpl +
+
+            lda wJoy1New
+            bit #JOY_Up
+            beq _8472
+
+              lda $00
+              dec a
+
+          +
+          sta aProcSystem.aBody6,b,x
+          lda #6
+          jsl rlPlaySoundEffect
+          bra _849A
+        
+        _8472
+        lda wJoy1Repeated
+        bit #JOY_Down
+        beq _849A
+
+          lda aProcSystem.aBody6,b,x
+          clc
+          adc #2
+          cmp $00
+          beq +
+          bcc +
+
+            lda wJoy1New
+            bit #JOY_Down
+            beq _849A
+
+              lda #1
+
+          +
+          sta aProcSystem.aBody6,b,x
+          lda #6
+          jsl rlPlaySoundEffect
+        
+        _849A
+        jsr rsListMenuDrawCursor
+        
+        _End
+        ply
+        plb
+        plp
+        rtl
+
+        .databank 0
+
+        ; 85/84A1
+
+    .endsection Unsorted8583F8Section
+
+
+    .section Unsorted8584A1Section
+
+      .al
+      .xl
+
+      rsListMenuProcEnd ; 85/84A1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Pops the option list and frees the proc.
+
+        jsl rlListMenuPopOptions
+        jsl rlProcEngineFreeProc
+        rts
+
+        .databank 0
+
+        ; 85/84AA
+
+    .endsection Unsorted8584A1Section
+
+
+    .section ProcScript8584AASection
+
+      .al
+      .xl
+
+      aProcListMenuCode ; 85/84AA
+
+        PROC_HALT
+
+
+        ; 85/84AC
+
+    .endsection ProcScript8584AASection
+
+
+    .section Unsorted8584ACSection
+
+      .al
+      .xl
+
+      rlListMenuProcPushOptions ; 85/84AC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Y = proc header: pushes the option list at +$0C, keeps it in aBody4/aBody5 and puts the cursor (aBody6) on option 1.
+
+        lda $000C,b,y
+        sta lMenuOptionPointer,b
+        lda $000D,b,y
+        sta lMenuOptionPointer+1,b
+        jsl rlPushMenuOptionList
+        lda lMenuOptionListTop,b
+        sta aProcSystem.aBody4,b,x
+        lda lMenuOptionListTop+1,b
+        sta aProcSystem.aBody5,b,x
+        lda #$0001
+        sta aProcSystem.aBody6,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/84CF
+
+    .endsection Unsorted8584ACSection
+
+
+    .section Unsorted8584DCSection
+
+      .al
+      .xl
+
+      rlKeepUnitMenuAwayFromCursor ; 85/84DC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Moves the current map menu to column $13 when the cursor is on the left side of the screen (bit 2 of wMapStateFlags remembers which side).
+
+        lda wCursorXOffset,b
+        cmp #$0070
+        bcc _84F1
+        cmp #$0090
+        bcs _8503
+        lda wMapStateFlags,b
+        bit #$0004
+        beq _8503
+
+        _84F1
+        lda #$0004
+        tsb wMapStateFlags,b
+        jsl rlGetMapMenuPosition
+        and #$FF00
+        ora #$0013
+        bra _850B
+
+
+        _8503
+        lda #$0004
+        trb wMapStateFlags,b
+        bra _8515
+
+
+        _850B
+        sta $0534,b
+        jsl rlMoveMapMenu
+        jsr rsListMenuDrawCursor
+
+        _8515
+        rtl
+
+        .databank 0
+
+        ; 85/8516
+
+    .endsection Unsorted8584DCSection
+
+
+    .section Unsorted858516Section
+
+      .al
+      .xl
+
+      rlCheckListMenuIdle ; 85/8516
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = 1 (nonzero) while the screen is blanked or dimmed or another option list is above this proc's (aBody4/aBody5), else 0.
+
+        lda bBufferINIDISP
+        bit #$0080
+        bne _8539
+        eor #$FFFF
+        bit #$000F
+        bne _8539
+        lda aProcSystem.aBody5,b,x
+        cmp lMenuOptionListTop+1,b
+        bne _8539
+        lda aProcSystem.aBody4,b,x
+        cmp lMenuOptionListTop,b
+        bne _8539
+        lda #$0000
+        rtl
+
+
+        _8539
+        lda #$0001
+        rtl
+
+        .databank 0
+
+        ; 85/853D
+
+      rlListMenuPopOptions ; 85/853D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlPopMenuOptionList
+        rtl
+
+        .databank 0
+
+        ; 85/8542
+
+      rsListMenuDrawCursor ; 85/8542
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draws the pointing hand at option aBody6 of the current map menu.
+
+        phx
+        jsl rlGetMapMenuPosition
+        sep #$20
+        asl a
+        asl a
+        asl a
+        sta wR0
+        xba
+        clc
+        adc aProcSystem.aBody6,b,x
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$02
+        sta wR1
+        rep #$20
+        lda #$FF00
+        trb wR0
+        trb wR1
+        jsl rlCheckListMenuIdle
+        jsl rlUnknown88A704
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/856E
+
+    .endsection Unsorted858516Section
+
+
+    .section Unsorted85856ESection
+
+      .al
+      .xl
+
+      rlDrawMenuOptions ; 85/856E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draws the text of each option of the current list into the current map menu, draws the menu, and turns on BG2 and BG3.
+
+        phx
+        phy
+        jsl rlClearMapMenuTiles
+        jsl rlGetCurrentMenuOptionCount
+        ora #$0000
+        beq _859B
+        tay
+
+        _857E
+        tya
+        jsl rlSelectMenuOptionByIndex
+        jsl rlGetSelectedMenuOptionHandlerPointer
+        lda lR18
+        clc
+        adc #$0005
+        sta lR18
+        jsl rlGetSelectedMenuOptionCoordinates
+        tax
+        jsl rlDrawMapMenuTextLine
+        dec y
+        bne _857E
+
+        _859B
+        ply
+        plx
+        jsl rlDrawMapMenu
+        lda wUnknown000D79,b
+        bit #$0020
+        bne _85AD
+        jsl rlFreeHDMAEntry0
+
+        _85AD
+        lda #$0006
+        tsb bBufferTM
+        rtl
+
+        .databank 0
+
+        ; 85/85B3
+
+    .endsection Unsorted85856ESection
+
+
+    .section Unsorted85860ESection
+
+      .al
+      .xl
+
+      rsDrawMapMenuNumber100 ; 85/860E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = row and column: draws the three-tile "100" (two rows), for a hit or critical rate of 100.
+
+        phx
+        lda aCurrentTilemapInfo,b
+        pha
+        lda #$2500
+        sta aCurrentTilemapInfo,b
+        lda #(`aMapMenuNumber100Tiles)<<8
+        sta lR18+1
+        lda #<>aMapMenuNumber100Tiles
+        sta lR18
+        jsl rlDrawMapMenuTileString
+        txa
+        clc
+        adc #$0100
+        tax
+        lda #$2510
+        sta aCurrentTilemapInfo,b
+        lda #(`aMapMenuNumber100Tiles)<<8
+        sta lR18+1
+        lda #<>aMapMenuNumber100Tiles
+        sta lR18
+        jsl rlDrawMapMenuTileString
+        pla
+        sta aCurrentTilemapInfo,b
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/8647
+
+    .endsection Unsorted85860ESection
+
+
+    .section Table858647Section
+
+      .al
+      .xl
+
+      aMapMenuNumber100Tiles ; 85/8647
+        .byte $AC, $AD, $AE, $00
+
+    .endsection Table858647Section
+
+
+    .section Unsorted85864BSection
+
+      .al
+      .xl
+
+      rlDrawSelectedUnitNameInMapMenu ; 85/864B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = row and column.
+
+        jsl rlGetSelectedUnitNamePointer
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        jsl rlDrawMapMenuTextLine
+        rtl
+
+        .databank 0
+
+        ; 85/865E
+
+      rlDrawSelectedUnitClassInMapMenu ; 85/865E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetSelectedUnitClassNamePointer
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        jsl rlDrawMapMenuTextLine
+        rtl
+
+        .databank 0
+
+        ; 85/8671
+
+    .endsection Unsorted85864BSection
+
+
+    .section Unsorted858671Section
+
+      .al
+      .xl
+
+      rlDrawSelectedUnitFactionInMapMenu ; 85/8671
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = row and column. Nothing in the build reaches this.
+
+        jsl rlGetSelectedUnitFactionNamePointer
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        jsl rlDrawMapMenuTextLine
+        rtl
+
+        .databank 0
+
+        ; 85/8684
+
+    .endsection Unsorted858671Section
+
+
+    .section Unsorted858684Section
+
+      .al
+      .xl
+
+      rlDrawItemNameInMapMenu ; 85/8684
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = row and column; the item in wCurrentItemDataROMPointer.
+
+        jsl rlGetItemNamePointer
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        jsl rlDrawMapMenuTextLine
+        rtl
+
+        .databank 0
+
+        ; 85/8697
+
+    .endsection Unsorted858684Section
+
+
+    .section Unsorted858697Section
+
+      .al
+      .xl
+
+      rlDrawCastleNameInMapMenu ; 85/8697
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = row and column; the location in wEventLocationEntry. Nothing in the build reaches this.
+
+        jsl rlGetEventLocationEntryCastleName
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        lda lRoutineVariable,b
+        sta lR18
+        jsl rlDrawMapMenuTextLine
+        rtl
+
+        .databank 0
+
+        ; 85/86AA
+
+    .endsection Unsorted858697Section
+
+
+    .section Unsorted8586AASection
+
+      .al
+      .xl
+
+      rlDrawListCursorAtIndex ; 85/86AA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = 1-based entry, wR0/wR1 = column step and entries per column: draws the pointing hand at that entry of the current map menu.
+
+        phx
+        sta wR13
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda wR1
+        sta wR14
+        jsl rlUnsignedDivide16By8
+        lda wR10
+        bne _86BF
+        lda wR1
+
+        _86BF
+        dec a
+        asl a
+        xba
+        clc
+        adc wR0
+        sta wR0
+        jsl rlGetMapMenuPosition
+        clc
+        adc wR0
+        sep #$20
+        asl a
+        asl a
+        asl a
+        sta wR0
+        xba
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$02
+        sta wR1
+        rep #$20
+        lda #$FF00
+        trb wR0
+        trb wR1
+        lda #$0027
+        jsl rlFindLastMapMenu
+        lda lR19
+        sec
+        sbc lMapMenuRAMEntryPointer,b
+        jsl rlUnknown88A704
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/86FA
+
+    .endsection Unsorted8586AASection
+
+
+    .section Unsorted8586FASection
+
+      .al
+      .xl
+
+      rlCloseMapMenuFromProc ; 85/86FA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Calls rlMapMenuCloseAndRestoreMapState; map menu procs call it just before
+        ; freeing themselves.
+
+        jsl rlMapMenuCloseAndRestoreMapState
+        rtl
+
+        .databank 0
+
+        ; 85/86FF
+
+    .endsection Unsorted8586FASection
+
+
+    .section Unsorted8586FFSection
+
+      .al
+      .xl
+
+      rlInitMapMenuProcAndTileBase ; 85/86FF
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Like rlInitMapMenuProc, and sets the tile base to $20F0 (the number tiles).
+
+        jsl rlStallProcUntilMapMenuDataLoaded
+        lda #$20F0
+        sta aCurrentTilemapInfo,b
+        lda #$20FF
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
+        lda #$0000
+        sta wBufferBG3VOFS
+        sta wBufferBG3HOFS
+        rtl
+
+        .databank 0
+
+        ; 85/871B
+
+      rlCloseMapMenuOnAnyButton ; 85/871B
+
+        ; Nothing in the build reaches this; it did not run in fe4.cdl.
+        ; Closes the map menu and frees the proc when a button is pressed.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this; it did not run in fe4.cdl. Closes the map menu and frees the proc when a button is pressed.
+
+        lda wJoy1New
+        beq _8727
+        jsl rlCloseMapMenuFromProc
+        jsl rlProcEngineFreeProc
+
+        _8727
+        rtl
+
+        .databank 0
+
+        ; 85/8728
+
+    .endsection Unsorted8586FFSection
+
+
+    .section Unsorted858751Section
+
+      .al
+      .xl
+
+      rlMoveMapMenu ; 85/8751
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Moves the current map menu to wMapMenuNewPosition (bit 15 set hides it) and redraws the rows it left and entered on both layers: BG3 (text) and the frames in aBG2TilemapBuffer.Page1.
+
+        jsl rlGetMapMenuRows
+        lda wR12
+        pha
+        lda wR13
+        pha
+        jsl rlMoveMapMenuBG3
+        pla
+        sta wR13
+        pla
+        sta wR12
+        jsl rlRedrawMapMenuFrameRows
+        lda wR10
+        cmp @l wR12
+        bcc _8779
+        lda @l wR13
+        cmp wR11
+        bcs _877D
+
+        _8779
+        jsl rlDrawMapMenu
+
+        _877D
+        rtl
+
+        .databank 0
+
+        ; 85/877E
+
+      rlHideMapMenu ; 85/877E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sets bit 15 of the current map menu's position (hidden) and redraws.
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        jsl rlGetMapMenuPosition
+        ora #$8000
+        sta $0534,b
+        jsl rlMoveMapMenu
+        plp
+        plb
+        .databank $85
+        rtl
+
+        .databank 0
+
+        ; 85/8793
+
+    .endsection Unsorted858751Section
+
+
+    .section Unsorted858793Section
+
+      .al
+      .xl
+
+      rlShowMapMenu ; 85/8793
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Clears bit 15 of the current map menu's position and redraws.
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        jsl rlGetMapMenuPosition
+        and #$7FFF
+        sta $0534,b
+        jsl rlMoveMapMenu
+        plp
+        plb
+        .databank $85
+        rtl
+
+        .databank 0
+
+        ; 85/87A8
+
+    .endsection Unsorted858793Section
+
+
+    .section Unsorted8587A8Section
+
+      .al
+      .xl
+
+      rlResizeMapMenu ; 85/87A8
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = new width and height of the current map menu; redraws both layers. Nothing in the build reaches this.
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        sta $0534,b
+        jsl rlGetMapMenuRows
+        lda wR12
+        pha
+        lda wR13
+        pha
+        lda $0534,b
+        jsl rlResizeMapMenuBG3
+        pla
+        sta wR13
+        pla
+        sta wR12
+        jsl rlRedrawMapMenuFrameRows
+        lda wR10
+        cmp @l wR12
+        bcc _87DA
+        lda @l wR13
+        cmp wR11
+        bcs _87DE
+
+        _87DA
+        jsl rlDrawMapMenu
+
+        _87DE
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 85/87E1
+
+    .endsection Unsorted8587A8Section
+
+
+    .section Unsorted8587E1Section
+
+      .al
+      .xl
+
+      rlDrawMapMenu ; 85/87E1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draws the current map menu: its tiles on BG3 and its frame on BG2.
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        phy
+        jsl rlDrawMapMenuBG3
+        jsl rlMapMenuBuildTilemap
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 85/87F2
+
+    .endsection Unsorted8587E1Section
+
+
+    .section Unsorted8587F2Section
+
+      .al
+      .xl
+
+      rlMoveMapMenuFrame ; 85/87F2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sets the current map menu's position to wMapMenuNewPosition and redraws only the frame layer. Nothing in the build reaches this.
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        jsl rlGetMapMenuRows
+        lda $0534,b
+        jsl rlSetMapMenuPosition
+        jsl rlRedrawMapMenuFrameRows
+        jsl rlGetMapMenuYPositions
+        lda wR10
+        cmp @l wR12
+        bcc _8819
+        lda @l wR13
+        cmp wR11
+        bcs _881D
+
+        _8819
+        jsl rlDrawMapMenuFrame
+
+        _881D
+        plp
+        plb
+        .databank $85
+        rtl
+
+        .databank 0
+
+        ; 85/8820
+
+    .endsection Unsorted8587F2Section
+
+
+    .section Unsorted85884ASection
+
+      .al
+      .xl
+
+      rlResizeMapMenuFrame ; 85/884A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = new width and height of the current map menu; redraws only the frame layer.
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        phy
+        pha
+        jsl rlGetMapMenuRows
+        pla
+        jsl rlSetMapMenuTilemapArea
+        jsl rlRedrawMapMenuFrameRows
+        jsl rlGetMapMenuYPositions
+        lda wR10
+        cmp @l wR12
+        bcc _8871
+        lda @l wR13
+        cmp wR11
+        bcs _8875
+
+        _8871
+        jsl rlDrawMapMenuFrame
+
+        _8875
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 85/8879
+
+      rlDrawMapMenuFrame ; 85/8879
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draws the current map menu's frame on BG2 (rlMapMenuBuildTilemap).
+
+        jsl rlGetMapMenuRows
+        jsl rlMapMenuBuildTilemap
+        rtl
+
+        .databank 0
+
+        ; 85/8882
+
+      rlCloseMapMenu ; 85/8882
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sets $0534 to $FFFF, runs rlMoveMapMenu (works with the menu's rectangle in
+        ; wR10-wR13), then rlRemoveMapMenu.
+
+        lda #$FFFF
+        sta $0534,b
+        jsl rlMoveMapMenu
+        jsl rlRemoveMapMenu
+        rtl
+
+        .databank 0
+
+        ; 85/8891
+
+      rlClearMapMenuFrameRows ; 85/8891
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Fills rows wR12-wR13 of the frame layer (aBG2TilemapBuffer.Page1) with tile $030F.
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        phx
+        phy
+        lda wR13
+        sec
+        sbc wR12
+        bcc _88EE
+        asl a
+        tay
+        lda wR12
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$7B88
+        tax
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+
+        _88B2
+        lda #$030F
+        sta $0000,b,x
+        sta $0002,b,x
+        sta $0004,b,x
+        sta $0006,b,x
+        sta $0008,b,x
+        sta $000A,b,x
+        sta $000C,b,x
+        sta $000E,b,x
+        sta $0010,b,x
+        sta $0012,b,x
+        sta $0014,b,x
+        sta $0016,b,x
+        sta $0018,b,x
+        sta $001A,b,x
+        sta $001C,b,x
+        sta $001E,b,x
+        txa
+        clc
+        adc #$0020
+        tax
+        dec y
+        bne _88B2
+
+        _88EE
+        ply
+        plx
+        plp
+        plb
+        .databank $7E
+        rtl
+
+        .databank 0
+
+        ; 85/88F3
+
+      rlRedrawMapMenuFrameRows ; 85/88F3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Clears rows wR12-wR13 of the frame layer and draws the frame of every open map menu, back to front.
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        phx
+        phy
+        lda lMapMenuListHead,b
+        ora lMapMenuListHead+1,b
+        beq _8957
+        lda wR12
+        cmp #$0020
+        bcs _8957
+        lda wR13
+        cmp #$0020
+        bcs _8957
+        jsl rlClearMapMenuFrameRows
+        lda lMapMenuRAMEntryPointer,b
+        pha
+        lda lMapMenuRAMEntryPointer+1,b
+        pha
+        phb
+        lda lMapMenuListHead,b
+        sta lMapMenuRAMEntryPointer,b
+        lda lMapMenuListHead+1,b
+        sta lMapMenuRAMEntryPointer+1,b
+
+        _8928
+        jsl rlMapMenuBuildTilemap
+        sep #$20
+        lda @l lMapMenuRAMEntryPointer+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $000C,b,y
+        ora $000D,b,y
+        beq _894E
+        lda $000C,b,y
+        sta @l lMapMenuRAMEntryPointer
+        lda $000D,b,y
+        sta @l lMapMenuRAMEntryPointer+1
+        bra _8928
+
+
+        _894E
+        plb
+        .databank ?
+        pla
+        sta lMapMenuRAMEntryPointer+1,b
+        pla
+        sta lMapMenuRAMEntryPointer,b
+
+        _8957
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 85/895C
+
+    .endsection Unsorted85884ASection
+
+
+    .section Unsorted8589C5Section
+
+      .al
+      .xl
+
+      rsBeginMapMenuFrame ; 85/89C5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Creates a tilemap entry for the frame, as large as the menu, from aMapMenuFrameTilemapData.
+
+        jsl rlGetMapMenuTilemapArea
+        pha
+        lda #(`aMapMenuFrameTilemapData)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameTilemapData
+        sta lR18
+        jsl rlLoadMapMenuTilemapData
+        pla
+        jsl rlSetTilemapEntryArea
+        rts
+
+        .databank 0
+
+        ; 85/89DE
+
+    .endsection Unsorted8589C5Section
+
+
+    .section Table8589DESection
+
+      .al
+      .xl
+
+      aMapMenuFrameTilemapData ; 85/89DE
+        .byte $00, $00, $88, $7B, $7E, $00, $4A, $D5, $7F
+
+    .endsection Table8589DESection
+
+
+    .section Unsorted8589E7Section
+
+      .al
+      .xl
+
+      rsEndMapMenuFrame ; 85/89E7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies the frame's tiles into the frame layer at the menu's position and frees its tilemap entry.
+
+        jsl rlGetMapMenuTileIndex
+        tax
+        jsl rlCopyTilemapEntryToBG
+        jsl rlRemoveMapMenuTilemapRAMEntry
+        rts
+
+        .databank 0
+
+        ; 85/89F5
+
+      rsDrawMapMenuFrameType0 ; 85/89F5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsBeginMapMenuFrame
+        stz aCurrentTilemapInfo,b
+        lda #(`aMapMenuFrameType0Fill)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType0Fill
+        sta lR18
+        jsl rlUnknown878BF0
+        lda #(`aMapMenuFrameType0Border)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType0Border
+        sta lR18
+        jsl rlDrawFancyFrameToTilemapEntry
+        jsr rsEndMapMenuFrame
+        rts
+
+        .databank 0
+
+        ; 85/8A1B
+
+    .endsection Unsorted8589E7Section
+
+
+    .section Table858A1BSection
+
+      .al
+      .xl
+
+      aMapMenuFrameType0Fill ; 85/8A1B
+        .byte $07, $03
+        .word $236C, $236D, $236C, $236D, $236D, $236C, $236D, $236C
+        .word $236C, $236D, $236C, $236C, $236D, $236C, $236C, $236C
+        .word $236D, $236C, $236D, $236D, $236C
+
+      aMapMenuFrameType0Border ; 85/8A47
+        .word $2368, $2369, $2369, $2369, $236A, $236B, $236C, $236D
+        .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $2378
+        .word $236F, $236F, $2379, $237A
+
+    .endsection Table858A1BSection
+
+
+    .section Unsorted858A6FSection
+
+      .al
+      .xl
+
+      rsDrawMapMenuFrameType1 ; 85/8A6F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsBeginMapMenuFrame
+        stz aCurrentTilemapInfo,b
+        lda #(`aMapMenuFrameType1Fill)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType1Fill
+        sta lR18
+        jsl rlUnknown878BF0
+        lda #(`aMapMenuFrameType1Border)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType1Border
+        sta lR18
+        jsl rlDrawFancyFrameToTilemapEntry
+        jsr rsEndMapMenuFrame
+        rts
+
+        .databank 0
+
+        ; 85/8A95
+
+    .endsection Unsorted858A6FSection
+
+
+    .section Table858A95Section
+
+      .al
+      .xl
+
+      aMapMenuFrameType1Fill ; 85/8A95
+        .byte $04, $03
+        .word $236C, $236D, $236C, $236D, $236C, $236C, $236D, $236C
+        .word $236C, $236C, $236D, $236C
+
+      aMapMenuFrameType1Border ; 85/8AAF
+        .word $237B, $237C, $2369, $2369, $236A, $237D, $236C, $236D
+        .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $237E
+        .word $237F, $236F, $2379, $237A
+
+    .endsection Table858A95Section
+
+
+    .section Unsorted858AD7Section
+
+      .al
+      .xl
+
+      rsDrawMapMenuFrameType2 ; 85/8AD7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsBeginMapMenuFrame
+        stz aCurrentTilemapInfo,b
+        lda #(`aMapMenuFrameType2Fill)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType2Fill
+        sta lR18
+        jsl rlUnknown878BF0
+        lda #(`aMapMenuFrameType2Border)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType2Border
+        sta lR18
+        jsl rlDrawFancyFrameToTilemapEntry
+        jsr rsEndMapMenuFrame
+        rts
+
+        .databank 0
+
+        ; 85/8AFD
+
+    .endsection Unsorted858AD7Section
+
+
+    .section Table858AFDSection
+
+      .al
+      .xl
+
+      aMapMenuFrameType2Fill ; 85/8AFD
+        .byte $07, $03
+        .word $236C, $236D, $236C, $236D, $236D, $236C, $236D, $236C
+        .word $236C, $236D, $236C, $236C, $236D, $236C, $236C, $236C
+        .word $236D, $236C, $236D, $236D, $236C
+
+      aMapMenuFrameType2Border ; 85/8B29
+        .word $2368, $2369, $2369, $2369, $236A, $236B, $236C, $236D
+        .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $2378
+        .word $236F, $236F, $2379, $237A
+
+    .endsection Table858AFDSection
+
+
+    .section Unsorted858B51Section
+
+      .al
+      .xl
+
+      rsDrawMapMenuFrameType3 ; 85/8B51
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$1800
+        sta aCurrentTilemapInfo,b
+        bra rsDrawMapMenuFrameType4._8B5F
+
+        .databank 0
+
+        ; 85/8B59
+
+      rsDrawMapMenuFrameType4 ; 85/8B59
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$1C00
+        sta aCurrentTilemapInfo,b
+
+        _8B5F
+        jsr rsBeginMapMenuFrame
+        lda #(`aMapMenuFrameType3Fill)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType3Fill
+        sta lR18
+        jsl rlUnknown878BF0
+        lda #$2340
+        tsb aCurrentTilemapInfo,b
+        lda #(`aMapMenuFrameType3TopEdge)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType3TopEdge
+        sta lR18
+        ldx #$0101
+        jsl rlDrawTileStringToTilemapEntry
+        lda #$23FF
+        trb aCurrentTilemapInfo,b
+        lda #(`aMapMenuFrameType3Border)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType3Border
+        sta lR18
+        jsl rlDrawFancyFrameToTilemapEntry
+        jsl rlGetTilemapEntryWidth
+        and #$00FF
+        cmp #$000C
+        bcc _8BCF
+        lda #$2340
+        tsb aCurrentTilemapInfo,b
+        lda #(`aMapMenuFrameType3WideEdge1)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType3WideEdge1
+        sta lR18
+        ldx #$0001
+        jsl rlDrawTileStringToTilemapEntry
+        lda #(`aMapMenuFrameType3WideEdge2)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType3WideEdge2
+        sta lR18
+        ldx #$0101
+        jsl rlDrawTileStringToTilemapEntry
+
+        _8BCF
+        jsr rsEndMapMenuFrame
+        rts
+
+        .databank 0
+
+        ; 85/8BD3
+
+    .endsection Unsorted858B51Section
+
+
+    .section Table858BD3Section
+
+      .al
+      .xl
+
+      aMapMenuFrameType3Fill ; 85/8BD3
+        .byte $06, $03
+        .word $2345, $2346, $2347, $2348, $2349, $234A, $2348, $2349
+        .word $234A, $2355, $2356, $2357, $2355, $2356, $2357, $2345
+        .word $2346, $2347
+
+      aMapMenuFrameType3WideEdge1 ; 85/8BF9
+        .byte $0B, $0C, $0D, $0E, $0E, $0C, $0E, $0D, $0F, $00
+
+      aMapMenuFrameType3WideEdge2 ; 85/8C03
+        .byte $1B, $1C, $1D, $1E, $1D, $1C, $1E, $1D, $1F, $00
+
+      aMapMenuFrameType3TopEdge ; 85/8C0D
+        .byte $18, $19, $18, $14, $19, $14, $18, $14, $19, $18, $19, $14, $18, $19, $14, $19
+        .byte $14, $18, $19, $14, $18, $19, $14, $19, $00
+
+      aMapMenuFrameType3Border ; 85/8C26
+        .word $2343, $2344, $2344, $6344, $6343, $2353, $2354, $6354
+        .word $6353, $2350, $2352, $A350, $A351, $E351, $A352, $A340
+        .word $A341, $A341, $A341, $A342
+
+    .endsection Table858BD3Section
+
+
+    .section Unsorted858C4ESection
+
+      .al
+      .xl
+
+      rsDrawMapMenuFrameType5 ; 85/8C4E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$1800
+        sta aCurrentTilemapInfo,b
+        bra rsDrawMapMenuFrameType6._8C5C
+
+      rsDrawMapMenuFrameType6 ; 85/8C56
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Type 5's frame with the tile base $1C00. No menu found uses type 6.
+
+        lda #$1C00
+        sta aCurrentTilemapInfo,b
+
+        _8C5C
+        jsr rsBeginMapMenuFrame
+        lda #(`aMapMenuFrameType5Fill)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType5Fill
+        sta lR18
+        jsl rlUnknown878BF0
+        lda #$23FF
+        trb aCurrentTilemapInfo,b
+        lda #(`aMapMenuFrameType5Border)<<8
+        sta lR18+1
+        lda #<>aMapMenuFrameType5Border
+        sta lR18
+        jsl rlDrawFancyFrameToTilemapEntry
+        jsr rsEndMapMenuFrame
+        rts
+
+        .databank 0
+
+        ; 85/8C85
+
+    .endsection Unsorted858C4ESection
+
+
+    .section Table858C85Section
+
+      .al
+      .xl
+
+      aMapMenuFrameType5Fill ; 85/8C85
+        .byte $06, $03
+        .word $2345, $2346, $2347, $2348, $2349, $234A, $2348, $2349
+        .word $234A, $2355, $2356, $2357, $2355, $2356, $2357, $2345
+        .word $2346, $2347
+
+      aMapMenuFrameType5Border ; 85/8CAB
+        .word $2340, $2341, $2341, $6341, $2342, $2350, $2351, $6351
+        .word $2352, $2350, $2352, $A350, $A351, $E351, $A352, $A340
+        .word $A341, $A341, $A341, $A342
+
+    .endsection Table858C85Section
+
+
+    .section Unsorted859B2ASection
+
+      .al
+      .xl
+
+      rlSetMapMenuTextColors ; 85/9B2A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Saves BG colours 5-7 (in $7FEB0A) and sets aMapMenuTextColors.
+
+        phx
+        ldx #$0004
+
+        _9B2E
+        lda $010A,b,x
+        sta $7FEB0A,x
+        lda aMapMenuTextColors,x
+        sta $010A,b,x
+        dec x
+        dec x
+        bpl _9B2E
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/9B42
+
+    .endsection Unsorted859B2ASection
+
+
+    .section Table859B42Section
+
+      .al
+      .xl
+
+      aMapMenuTextColors ; 85/9B42
+
+        ; Read by rlSetMapMenuTextColors.
+
+        .word $39AA, $7BDA, $0C21
+
+        ; 85/9B48
+
+    .endsection Table859B42Section
+
+
+    .section Unsorted859B48Section
+
+      .al
+      .xl
+
+      rlRestoreMapMenuTextColors ; 85/9B48
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0004
+
+        _9B4C
+        lda $7FEB0A,x
+        sta $010A,b,x
+        dec x
+        dec x
+        bpl _9B4C
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/9B59
+
+    .endsection Unsorted859B48Section
+
+
+    .section Unsorted859BBDSection
+
+      .al
+      .xl
+
+      rlLoadWindowPaletteColors ; 85/9BBD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies colours 8-15 of aWindowPalette into BG palette 0.
+
+        phx
+        ldx #$0010
+
+        _9BC1
+        lda aWindowPalette,x
+        sta aBGPaletteBuffer,b,x
+        inc x
+        inc x
+        cpx #$0020
+        bmi _9BC1
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/9BD1
+
+    .endsection Unsorted859BBDSection
+
+
+    .section Table859D88Section
+
+      .al
+      .xl
+
+      aMapMenuGradientHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlMapMenuGradientHDMAInit, rlMapMenuGradientHDMACycle, aMapMenuGradientHDMACode, wDialogueBoxHDMAYPixelPosition, PPU_REG_BASE + $32, $40, $85 ; 85/9D88
+
+    .endsection Table859D88Section
+
+
+    .section Unsorted859D94Section
+
+      .al
+      .xl
+
+      rlMapMenuGradientHDMAInit ; 85/9D94
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Subtracts the fixed colour from BG2 and builds a COLDATA table in wDialogueBoxHDMA: wR43 = first line and height, wR42 = steps and shape.
+
+        sep #$20
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$82
+        sta bBufferCGADSUB
+        rep #$20
+        lda wR43
+        xba
+        and #$00FF
+        sta wR7
+        lda wR43
+        and #$00FF
+        sta wR5
+        lda wR42
+        xba
+        and #$00FF
+        sta wR6
+        lda wR42
+        and #$00FF
+        sta wR4
+        phx
+        ldx #$0000
+        jsr rsMapMenuGradientSkipLines
+        jsr rsMapMenuGradientBuild
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/9DCA
+
+      rlMapMenuGradientHDMACycle ; 85/9DCA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 85/9DCB
+
+
+      aMapMenuGradientHDMACode ; 85/9DCB
+
+        HDMA_HALT
+
+    .endsection Unsorted859D94Section
+
+
+    .section Unsorted859DCDSection
+
+      .al
+      .xl
+
+      rsMapMenuGradientSkipLines ; 85/9DCD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR7
+        beq _9E06
+        cmp #$0080
+        bmi _9DF2
+        lda wR7
+        sec
+        sbc #$007F
+        sta wR7
+        sep #$20
+        lda #$7F
+        sta wDialogueBoxHDMAYPixelPosition,x
+        rep #$20
+        inc x
+        lda #<>aMapMenuGradientNone
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+
+        _9DF2
+        sep #$20
+        lda wR7
+        sta wDialogueBoxHDMAYPixelPosition,x
+        rep #$20
+        inc x
+        lda #<>aMapMenuGradientNone
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+
+        _9E06
+        rts
+
+        .databank 0
+
+        ; 85/9E07
+
+
+      aMapMenuGradientNone ; 85/9E07
+
+        .byte $E0
+
+    .endsection Unsorted859DCDSection
+
+
+    .section Unsorted859E08Section
+
+      .al
+      .xl
+
+      rsMapMenuGradientBuild ; 85/9E08
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR5
+        sta wR13
+        lda wR4
+        and #$00FF
+        sta wR14
+        jsl rlUnsignedDivide16By8
+        lda wR13
+        sta wR3
+        jsr rsMapMenuGradientChooseShape
+        rts
+
+        .databank 0
+
+        ; 85/9E1F
+
+      rsMapMenuGradientChooseShape ; 85/9E1F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy #$0000
+        lda wR6
+        cmp #$0003
+        beq _9E58
+        cmp #$0002
+        beq _9E41
+        cmp #$0001
+        beq _9E3A
+        jsr rsUnknown859E5F
+        jsr rsUnknown859ECB
+        rts
+
+
+        _9E3A
+        jsr rsUnknown859E7E
+        jsr rsUnknown859ECB
+        rts
+
+
+        _9E41
+        lda wR3
+        lsr a
+        sta wR3
+        lda wR4
+        sta wR0
+        jsr rsUnknown859E7E
+        lda wR0
+        sta wR4
+        jsr rsUnknown859E5F
+        jsr rsUnknown859ECB
+        rts
+
+
+        _9E58
+        jsr rsUnknown859EA2
+        jsr rsUnknown859ECB
+        rts
+
+        .databank 0
+
+        ; 85/9E5F
+
+      rsUnknown859E5F ; 85/9E5F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy #$0000
+        stz wR2
+        stz wR1
+
+        _9E66
+        jsr rsUnknown859FA3
+        jsr rsUnknown859F97
+        lda <>aMapMenuGradientSteps,b,y
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+        dec wR4
+        beq _9E7D
+        inc y
+        inc y
+        bra _9E66
+
+
+        _9E7D
+        rts
+
+        .databank 0
+
+        ; 85/9E7E
+
+      rsUnknown859E7E ; 85/9E7E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wR2
+        stz wR1
+        lda #$0014
+        sec
+        sbc wR4
+        asl a
+        tay
+
+        _9E8A
+        jsr rsUnknown859FA3
+        jsr rsUnknown859F97
+        lda <>aMapMenuGradientSteps+$40,b,y
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+        dec wR4
+        beq _9EA1
+        inc y
+        inc y
+        bra _9E8A
+
+
+        _9EA1
+        rts
+
+        .databank 0
+
+        ; 85/9EA2
+
+      rsUnknown859EA2 ; 85/9EA2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz wR2
+        stz wR1
+        lda wR4
+        lsr a
+        sta wR0
+        lda #$000A
+        sec
+        sbc wR0
+        asl a
+        tay
+
+        _9EB3
+        jsr rsUnknown859FA3
+        jsr rsUnknown859F97
+        lda <>aMapMenuGradientSteps+$68,b,y
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+        dec wR4
+        beq _9ECA
+        inc y
+        inc y
+        bra _9EB3
+
+
+        _9ECA
+        rts
+
+        .databank 0
+
+        ; 85/9ECB
+
+      rsUnknown859ECB ; 85/9ECB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$01
+        sta wDialogueBoxHDMAYPixelPosition,x
+        rep #$20
+        inc x
+        lda #<>aMapMenuGradientColors
+        sta wDialogueBoxHDMAYPixelPosition,x
+        inc x
+        inc x
+        lda #$0000
+        sta wDialogueBoxHDMAYPixelPosition,x
+        rts
+
+        .databank 0
+
+        ; 85/9EE7
+
+
+      aMapMenuGradientSteps ; 85/9EE7
+
+        .word <>aMapMenuGradientColors, <>aMapMenuGradientColors+1, <>aMapMenuGradientColors+2, <>aMapMenuGradientColors+3, <>aMapMenuGradientColors+4, <>aMapMenuGradientColors+5, <>aMapMenuGradientColors+6, <>aMapMenuGradientColors+7
+        .word <>aMapMenuGradientColors+8, <>aMapMenuGradientColors+9, <>aMapMenuGradientColors+10, <>aMapMenuGradientColors+11, <>aMapMenuGradientColors+12, <>aMapMenuGradientColors+13, <>aMapMenuGradientColors+14, <>aMapMenuGradientColors+15
+        .word <>aMapMenuGradientColors+16, <>aMapMenuGradientColors+17, <>aMapMenuGradientColors+18, <>aMapMenuGradientColors+19, <>aMapMenuGradientColors+20, <>aMapMenuGradientColors+21, <>aMapMenuGradientColors+22, <>aMapMenuGradientColors+23
+        .word <>aMapMenuGradientColors+24, <>aMapMenuGradientColors+25, <>aMapMenuGradientColors+26, <>aMapMenuGradientColors+27, <>aMapMenuGradientColors+28, <>aMapMenuGradientColors+29, <>aMapMenuGradientColors+30, <>aMapMenuGradientColors+31
+        .word <>aMapMenuGradientColors+19, <>aMapMenuGradientColors+18, <>aMapMenuGradientColors+17, <>aMapMenuGradientColors+16, <>aMapMenuGradientColors+15, <>aMapMenuGradientColors+14, <>aMapMenuGradientColors+13, <>aMapMenuGradientColors+12
+        .word <>aMapMenuGradientColors+11, <>aMapMenuGradientColors+10, <>aMapMenuGradientColors+9, <>aMapMenuGradientColors+8, <>aMapMenuGradientColors+7, <>aMapMenuGradientColors+6, <>aMapMenuGradientColors+5, <>aMapMenuGradientColors+4
+        .word <>aMapMenuGradientColors+3, <>aMapMenuGradientColors+2, <>aMapMenuGradientColors+1, <>aMapMenuGradientColors, <>aMapMenuGradientColors+19, <>aMapMenuGradientColors+16, <>aMapMenuGradientColors+13, <>aMapMenuGradientColors+10
+        .word <>aMapMenuGradientColors+7, <>aMapMenuGradientColors+5, <>aMapMenuGradientColors+3, <>aMapMenuGradientColors+2, <>aMapMenuGradientColors+1, <>aMapMenuGradientColors, <>aMapMenuGradientColors, <>aMapMenuGradientColors+1
+        .word <>aMapMenuGradientColors+2, <>aMapMenuGradientColors+3, <>aMapMenuGradientColors+5, <>aMapMenuGradientColors+7, <>aMapMenuGradientColors+10, <>aMapMenuGradientColors+13, <>aMapMenuGradientColors+16, <>aMapMenuGradientColors+19
+
+      aMapMenuGradientColors ; 85/9F77
+
+        .byte $E0, $E1, $E2, $E3, $E4, $E5, $E6, $E7, $E8, $E9, $EA, $EB, $EC, $ED, $EE, $EF
+        .byte $F0, $F1, $F2, $F3, $F4, $F5, $F6, $F7, $F8, $F9, $FA, $FB, $FC, $FD, $FE, $FF
+
+    .endsection Unsorted859E08Section
+
+
+    .section Unsorted859F97Section
+
+      .al
+      .xl
+
+      rsUnknown859F97 ; 85/9F97
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda wR3
+        sta wDialogueBoxHDMAYPixelPosition,x
+        rep #$20
+        inc x
+        rts
+
+        .databank 0
+
+        ; 85/9FA3
+
+      rsUnknown859FA3 ; 85/9FA3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR1
+        beq _9FAB
+        dec wR3
+        stz wR1
+
+        _9FAB
+        lda wR2
+        clc
+        adc wR10
+        sta wR2
+        cmp #$000A
+        bmi _9FC4
+        sec
+        sbc #$000A
+        sta wR2
+        inc wR3
+        lda #$FFFF
+        sta wR1
+
+        _9FC4
+        rts
+
+        .databank 0
+
+        ; 85/9FC5
+
+    .endsection Unsorted859F97Section
+
+
+    .section Unsorted859FCDSection
+
+      .al
+      .xl
+
+      rlStartMapMenuGradient ; 85/9FCD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; wR42/wR43 as rlMapMenuGradientHDMAInit: replaces HDMA entry 0 with the gradient.
+
+        jsl rlFreeHDMAEntry0
+        lda #$0000
+        sta wR40
+        lda #(`aMapMenuGradientHDMAInfo)<<8
+        sta lR44+1
+        lda #<>aMapMenuGradientHDMAInfo
+        sta lR44
+        jsl rlHDMAEngineCreateEntryByIndex
+        rtl
+
+        .databank 0
+
+        ; 85/9FE5
+
+    .endsection Unsorted859FCDSection
+
+
+    .section Unsorted859FEASection
+
+      .al
+      .xl
+
+      rlBeginMapMenuOpening ; 85/9FEA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = style: 0 widens from the right edge, 1 and 2 from the left; the window starts 4 tiles wide.
+
+        pha
+        lda #$0000
+        sta @l $001057,x
+        pla
+        asl a
+        phx
+        tax
+        jsr (aMapMenuOpeningStyles,x)
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/9FFB
+
+    .endsection Unsorted859FEASection
+
+
+    .section Unsorted859FFBSection
+
+      .al
+      .xl
+
+      aMapMenuOpeningStyles ; 85/9FFB
+
+        ; Jump table of rlBeginMapMenuOpening. (tools/sweep.py had started a routine at
+        ; $85/A004, three bytes into this table.)
+        .word <>rsBeginMapMenuOpeningFromRight
+        .word <>rsBeginMapMenuOpeningFromLeft
+        .word <>rsBeginMapMenuOpeningStyle2
+        .word <>rsBeginMapMenuOpeningNone
+        .word <>rsBeginMapMenuOpeningNone
+        .word <>rsBeginMapMenuOpeningNone
+
+      rsBeginMapMenuOpeningFromRight ; 85/A007
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetMapMenuTilemapArea
+        sta wR0
+        and #$FF00
+        ora #$0004
+        jsl rlSetMapMenuTilemapArea
+        lda wR0
+        and #$00FF
+        sec
+        sbc #$0004
+        sta wR0
+        jsl rlGetMapMenuPosition
+        clc
+        adc wR0
+        jsl rlSetMapMenuPosition
+        rts
+
+        .databank 0
+
+        ; 85/A02E
+
+    .endsection Unsorted859FFBSection
+
+
+    .section Unsorted85A02ESection
+
+      .al
+      .xl
+
+      rsBeginMapMenuOpeningFromLeft ; 85/A02E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetMapMenuTilemapArea
+        and #$FF00
+        ora #$0004
+        jsl rlSetMapMenuTilemapArea
+        rts
+
+        .databank 0
+
+        ; 85/A03D
+
+    .endsection Unsorted85A02ESection
+
+
+    .section Unsorted85A03DSection
+
+      .al
+      .xl
+
+      rsBeginMapMenuOpeningStyle2 ; 85/A03D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        bra rsBeginMapMenuOpeningFromLeft
+
+        .databank 0
+
+        ; 85/A03F
+
+    .endsection Unsorted85A03DSection
+
+
+    .section Unsorted85A040Section
+
+      .al
+      .xl
+
+      rsBeginMapMenuOpeningNone ; 85/A040
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+        ; 85/A041
+
+    .endsection Unsorted85A040Section
+
+
+    .section Unsorted85A041Section
+
+      .al
+      .xl
+
+      rlStepMapMenuOpening ; 85/A041
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = full width and height, Y = steps and style: widens the window one step (aBody4 counts). Carry set (and A = full size) once done.
+
+        phx
+        sta wR7
+        tya
+        and #$00FF
+        sta wR5
+        tya
+        xba
+        and #$00FF
+        sta wR6
+        lda wR5
+        cmp aProcSystem.aBody4,b,x
+        bmi _A074
+        lda aProcSystem.aBody4,b,x
+        sta wR3
+        lda wR6
+        asl a
+        phx
+        tax
+        jsr (aMapMenuOpeningStepStyles,x)
+        plx
+        inc aProcSystem.aBody4,b,x
+        lda wR4
+        pha
+        jsl rlSetMapMenuTilemapArea
+        pla
+        plx
+        clc
+        rtl
+
+
+        _A074
+        plx
+        lda wR7
+        sec
+        rtl
+
+        .databank 0
+
+        ; 85/A079
+
+    .endsection Unsorted85A041Section
+
+
+    .section Unsorted85A079Section
+
+      .al
+      .xl
+
+      aMapMenuOpeningStepStyles ; 85/A079
+
+        .word <>rsStepMapMenuOpeningFromRight, <>rsGetMapMenuOpeningWidth, <>rsStepMapMenuOpeningFromLeft
+        .word <>rsGetMapMenuClosingWidth, <>rsStepMapMenuClosingFromRight, <>rsStepMapMenuOpeningNone
+
+      rsStepMapMenuOpeningFromRight ; 85/A085
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetMapMenuTilemapArea
+        sta wR0
+        jsr rsGetMapMenuOpeningWidth
+        lda wR4
+        sec
+        sbc wR0
+        sta wR0
+        jsl rlGetMapMenuPosition
+        sec
+        sbc wR0
+        jsl rlSetMapMenuPosition
+        rts
+
+        .databank 0
+
+    .endsection Unsorted85A079Section
+
+
+    .section Unsorted85A0A1Section
+
+      .al
+      .xl
+
+      rsGetMapMenuOpeningWidth ; 85/A0A1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR7
+        and #$00FF
+        sec
+        sbc #$0004
+        sta wR10
+        lda wR3
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        lda wR12
+        sta wR13
+        lda wR5
+        sta wR14
+        jsl rlUnsignedDivide16By8
+        lda wR7
+        and #$FF00
+        ora wR13
+        clc
+        adc #$0004
+        sta wR4
+        rts
+
+        .databank 0
+
+        ; 85/A0CE
+
+    .endsection Unsorted85A0A1Section
+
+
+    .section Unsorted85A0CESection
+
+      .al
+      .xl
+
+      rsStepMapMenuOpeningFromLeft ; 85/A0CE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        bra rsGetMapMenuOpeningWidth
+
+        .databank 0
+
+        ; 85/A0D0
+
+    .endsection Unsorted85A0CESection
+
+
+    .section Unsorted85A0D0Section
+
+      .al
+      .xl
+
+      rsGetMapMenuClosingWidth ; 85/A0D0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR5
+        sec
+        sbc wR3
+        sta wR3
+        bra rsGetMapMenuOpeningWidth
+
+        .databank 0
+
+        ; 85/A0D9
+
+      rsStepMapMenuClosingFromRight ; 85/A0D9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetMapMenuTilemapArea
+        sta wR0
+        jsr rsGetMapMenuClosingWidth
+        lda wR0
+        sec
+        sbc wR4
+        sta wR0
+        jsl rlGetMapMenuPosition
+        clc
+        adc wR0
+        jsl rlSetMapMenuPosition
+        rts
+
+        .databank 0
+
+        ; 85/A0F5
+
+    .endsection Unsorted85A0D0Section
+
+
+    .section Unsorted85A0F5Section
+
+      .al
+      .xl
+
+      rsStepMapMenuOpeningNone ; 85/A0F5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rts
+
+        .databank 0
+
+      aMapTextBoxTilemapData ; 85/A0F6
+
+        .structMapMenuTilemapData 32, 4, aBG3TilemapBuffer, 0, $7FCE4A
+
+      aMapTextBoxData ; 85/A0FF
+
+        .long 0, 0, aMapTextBoxTilemapData
+        .byte 0, 1, 1
+
+      procMapTextBox ; 85/A10B
+
+        .structProcInfo "PW", rlProcMapTextBoxInit, rlProcMapTextBoxDraw, aProcDialogueBoxCode
+        .long aMapTextBoxData
+        .byte 0
+
+    .endsection Unsorted85A0F5Section
+
+
+    .section Unsorted85A117Section
+
+      .al
+      .xl
+
+      rlProcMapTextBoxInit ; 85/A117
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lR18, lR19 = two texts (kept at $7FEAAA, $7FEAAE); wInput0 = tile base, wInput1 = flags (bit 15: keep the tiles), wInput2 = size, wInput3 = position.
+
+        phx
+        lda lR18
+        sta $7FEAAA
+        lda lR18+1
+        sta $7FEAAB
+        lda lR19
+        sta $7FEAAE
+        lda lR19+1
+        sta $7FEAAF
+        jsl rlStallProcUntilMapMenuDataLoaded
+        lda aProcSystem.wInput1,b
+        sta aProcSystem.aBody7,b,x
+        lda aProcSystem.wInput3,b
+        jsl rlSetMapMenuPosition
+        lda aProcSystem.wInput2,b
+        jsl rlSetMapMenuTilemapArea
+        jsl rlHideMapMenu
+        plx
+        phx
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody6,b,x
+        lda aProcSystem.aBody7,b,x
+        bit #$8000
+        bne _A166
+        lda #$20FF
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
+
+        _A166
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/A168
+
+      rlProcMapTextBoxDraw ; 85/A168
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draws the two texts on one line, shows the window, and goes on to rlProcMapTextBoxCycle.
+
+        phx
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda aProcSystem.aBody6,b,x
+        sta aCurrentTilemapInfo,b
+        lda aProcSystem.aBody7,b,x
+        bit #$8000
+        bne _A19A
+        lda $7FEAAA
+        sta lR18
+        lda $7FEAAB
+        sta lR18+1
+        lda $7FEAAE
+        sta lR19
+        lda $7FEAAF
+        sta lR19+1
+        ldx #$0101
+        jsl rlDrawTwoMapMenuTextLines
+
+        _A19A
+        jsl rlShowMapMenu
+        jsl rlShowMapMenuLayers
+        plx
+        lda #<>rlProcMapTextBoxCycle
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/A1AA
+
+    .endsection Unsorted85A117Section
+
+
+    .section Unsorted85A1AASection
+
+      .al
+      .xl
+
+      rlProcMapTextBoxCycle ; 85/A1AA
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Bit 1 of the proc's bitfield: close; bit 2: clear and draw the texts again.
+
+        lda aProcSystem.aHeaderBitfield,b,x
+        bit #$0002
+        bne _A1B8
+        bit #$0004
+        bne _A1C5
+        rtl
+
+
+        _A1B8
+        jsl rlCloseMapMenuFromProc
+        jsl rlProcEngineFreeProc
+        jsl rlFreeHDMAEntry0
+        rtl
+
+
+        _A1C5
+        lda aProcSystem.aHeaderBitfield,b,x
+        and #$FFFB
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda #<>rlProcMapTextBoxDraw
+        sta aProcSystem.aHeaderOnCycle,b,x
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda #$20FF
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
+        jsl rlDrawMapMenuBG3
+        rtl
+
+        .databank 0
+
+        ; 85/A1E7
+
+    .endsection Unsorted85A1AASection
+
+
+    .section Unsorted85A1E7Section
+
+      .al
+      .xl
+
+      rlDrawTwoMapMenuTextLines ; 85/A1E7
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; X = row and column: draws lR18, then lR19 right after it.
+
+        phx
+        jsl rlDrawMapMenuTextLine
+        jsl rlGetMenuTextStringLength
+        plx
+        phx
+        txa
+        clc
+        adc wR10
+        tax
+        lda lR19
+        sta lR18
+        lda lR19+1
+        sta lR18+1
+        jsl rlDrawMapMenuTextLine
+        plx
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted85A1E7Section
+
+
+    .section Unsorted85A227Section
+
+      .al
+      .xl
+
+      rlHideMapMenuLayers ; 85/A227
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Turns BG2 and BG3 off on the main screen.
+
+        pha
+        sep #$20
+        lda bBufferTM
+        and #$F9
+        sta bBufferTM
+        rep #$20
+        pla
+        rtl
+
+        .databank 0
+
+        ; 85/A234
+
+      rlShowMapMenuLayers ; 85/A234
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Turns BG2 and BG3 on on the main screen.
+
+        pha
+        sep #$20
+        lda bBufferTM
+        ora #$06
+        sta bBufferTM
+        rep #$20
+        pla
+        rtl
+
+        .databank 0
+
+        ; 85/A241
+
+
+      rlOpenMapTextBoxWithGradient ; 85/A241
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        phx
+        and #$FF00
+        asl a
+        asl a
+        asl a
+        sta wR0
+        txa
+        and #$FF00
+        asl a
+        asl a
+        asl a
+        xba
+        ora wR0
+        sta wR43
+        lda #$000F
+        sta wR42
+        jsl rlStartMapMenuGradient
+        plx
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #(`aUnknown85A284)<<8
+        sta lR18+1
+        lda #<>aUnknown85A284
+        sta lR18
+        lda #(`aUnknown85A284)<<8
+        sta lR19+1
+        lda #<>aUnknown85A284
+        sta lR19
+        ldy #$8000
+        pla
+        jsl rlCreateMapTextBox
+        rtl
+
+        .databank 0
+
+      aUnknown85A284 ; 85/A284
+
+        .enc "SJIS"
+        .text "　\n"
+        .enc "none"
+
+      rlOpenMapTextBox ; 85/A288
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        pla
+        jsl rlCreateMapTextBox
+        rtl
+
+        .databank 0
+
+      rlCreateMapTextBox ; 85/A295
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta aProcSystem.wInput3,b
+        stx aProcSystem.wInput2,b
+        sty aProcSystem.wInput1,b
+        lda aCurrentTilemapInfo,b
+        sta aProcSystem.wInput0,b
+        lda #(`procMapTextBox)<<8
+        sta lR44+1
+        lda #<>procMapTextBox
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+      rlCloseMapTextBox ; 85/A2B3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procMapTextBox)<<8
+        sta lR44+1
+        lda #<>procMapTextBox
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _A2CC
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0002
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        _A2CC
+        rtl
+
+        .databank 0
+
+      rlChangeMapTextBox ; 85/A2CD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procMapTextBox)<<8
+        sta lR44+1
+        lda #<>procMapTextBox
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _A2FE
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0004
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda lR18
+        sta $7FEAAA
+        lda lR18+1
+        sta $7FEAAB
+        lda lR19
+        sta $7FEAAE
+        lda lR19+1
+        sta $7FEAAF
+
+        _A2FE
+        rtl
+
+        .databank 0
+
+      aItemDescriptionBoxTilemapData ; 85/A2FF
+
+        .structMapMenuTilemapData 10, 11, aBG3TilemapBuffer, 0, $7FCD4A
+
+      aItemDescriptionBoxData ; 85/A308
+
+        .long 0, 0, aItemDescriptionBoxTilemapData
+        .byte 0, 1, 1
+
+    .endsection Unsorted85A227Section
+
+
+    .section Unsorted85A314Section
+
+      .al
+      .xl
+
+      procItemDescriptionBox ; 85/A314
+
+        .structProcInfo "PW", rlProcItemDescriptionBoxInit, rlProcItemDescriptionBoxCycle, aProcDialogueBoxCode
+
+
+        .long aItemDescriptionBoxData
+        .byte 0
+
+    .endsection Unsorted85A314Section
+
+
+    .section Unsorted85A320Section
+
+      .al
+      .xl
+
+      rlProcItemDescriptionBoxInit ; 85/A320
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lR18 = the description, wInput3 = position.
+
+        phx
+        lda lR18
+        sta aProcSystem.aBody5,b,x
+        lda lR18+1
+        sta aProcSystem.aBody6,b,x
+        jsl rlStallProcUntilMapMenuDataLoaded
+        lda aProcSystem.wInput3,b
+        jsl rlSetMapMenuPosition
+        plx
+        phx
+        lda #$4000
+        sta aProcSystem.aBody7,b,x
+        lda #$0000
+        sta wBufferBG3VOFS
+        sta wBufferBG3HOFS
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/A347
+
+      rlProcItemDescriptionBoxCycle ; 85/A347
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; aBody7 bit 15: close; bit 14: draw the description in aBody5/aBody6.
+
+        phx
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        lda aProcSystem.aBody7,b,x
+        bit #$8000
+        bne _A35B
+        bit #$4000
+        bne _A365
+
+        _A359
+        plx
+        rtl
+
+
+        _A35B
+        jsl rlCloseMapMenuFromProc
+        jsl rlProcEngineFreeProc
+        bra _A359
+
+
+        _A365
+        eor #$4000
+        sta aProcSystem.aBody7,b,x
+        phx
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #$20FF
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
+        plx
+        lda aProcSystem.aBody5,b,x
+        sta lR18
+        lda aProcSystem.aBody6,b,x
+        sta lR18+1
+        ldx #$0101
+        jsl rlDrawItemDescription
+        jsl rlDrawMapMenu
+        bra _A359
+
+        .databank 0
+
+        ; 85/A394
+
+      rlOpenItemDescriptionBox ; 85/A394
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = position, lR18 = the description.
+
+        sta aProcSystem.wInput3,b
+        lda #(`procItemDescriptionBox)<<8
+        sta lR44+1
+        lda #<>procItemDescriptionBox
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/A3A6
+
+    .endsection Unsorted85A320Section
+
+
+    .section Unsorted85A3A6Section
+
+      .al
+      .xl
+
+      rlCloseItemDescriptionBox ; 85/A3A6
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #(`procItemDescriptionBox)<<8
+        sta lR44+1
+        lda #<>procItemDescriptionBox
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _A3D3
+        lda lMapMenuRAMEntryPointer,b
+        pha
+        lda lMapMenuRAMEntryPointer+1,b
+        pha
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlCloseMapMenuFromProc
+        jsl rlProcEngineFreeProc
+        pla
+        sta lMapMenuRAMEntryPointer+1,b
+        pla
+        sta lMapMenuRAMEntryPointer,b
+
+        _A3D3
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/A3D5
+
+    .endsection Unsorted85A3A6Section
+
+
+    .section Unsorted85A3D5Section
+
+      .al
+      .xl
+
+      rlChangeItemDescriptionBox ; 85/A3D5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lR18 = the new description.
+
+        phx
+        lda #(`procItemDescriptionBox)<<8
+        sta lR44+1
+        lda #<>procItemDescriptionBox
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _A3F6
+        lda #$4000
+        sta aProcSystem.aBody7,b,x
+        lda lR18
+        sta aProcSystem.aBody5,b,x
+        lda lR18+1
+        sta aProcSystem.aBody6,b,x
+
+        _A3F6
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/A3F8
+
+      rlDrawItemDescription ; 85/A3F8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = row and column: draws the text 8 characters to a line, two rows apart, through a buffer at $7E8BF6.
+
+        stx wR7
+        stz wR6
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        phx
+        ldx lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+
+        _A40B
+        ldy #$0000
+
+        _A40E
+        lda $0000,b,x
+        sta wR5
+        phb
+        sep #$20
+        lda #$7E
+        pha
+        plb
+        .databank $7E
+        rep #$20
+        lda wR5
+        sta $8BF6,b,y
+        plb
+        .databank $7E
+        cmp #$0000
+        bne _A42C
+        lda #$FFFF
+        sta wR6
+
+        _A42C
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0010
+        bmi _A40E
+        phx
+        phb
+        sep #$20
+        lda #$7E
+        pha
+        plb
+        .databank $7E
+        rep #$20
+        lda #$0000
+        sta $8BF6,b,y
+        plb
+        .databank $7E
+        lda #$7E00
+        sta lR18+1
+        lda #$8BF6
+        sta lR18
+        ldx wR7
+        jsl rlDrawMapMenuTextLine
+        lda wR7
+        clc
+        adc #$0200
+        sta wR7
+        plx
+        lda wR6
+        cmp #$0000
+        beq _A40B
+        plx
+        plp
+        plb
+        .databank $7E
+        rtl
+
+        .databank 0
+
+        ; 85/A46A
+
+    .endsection Unsorted85A3D5Section
+
+
+    .section Unsorted85B7D1Section
+
+      .al
+      .xl
+
+      rlGetCenteredTextBoxPlacement ; 85/B7D1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = row, X = height, lR18 and lR19 = two texts: A = position and X = size of a box that holds both on one line, centred.
+
+        and #$FF00
+        sta wR7
+        txa
+        and #$FF00
+        sta wR6
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+        jsl rlGetMenuTextStringLength
+        lda wR10
+        pha
+        lda lR19
+        sta lR18
+        lda lR19+1
+        sta lR18+1
+        jsl rlGetMenuTextStringLength
+        pla
+        clc
+        adc #$0002
+        clc
+        adc wR10
+        pha
+        and #$00FF
+        tsb wR6
+        pla
+        sta wR0
+        lda #$0020
+        sec
+        sbc wR0
+        lsr a
+        and #$00FF
+        tsb wR7
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        lda wR7
+        ldx wR6
+        rtl
+
+        .databank 0
+
+        ; 85/B81D
+
+    .endsection Unsorted85B7D1Section
+
+
+    .section Unsorted85BC9ESection
+
+      .al
+      .xl
+
+      rlInitMapMenuProc ; 85/BC9E
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Waits for the proc's map menu to load (rlStallProcUntilMapMenuDataLoaded), clears its tiles to $20FF and zeroes BG3's scroll.
+
+        jsl rlStallProcUntilMapMenuDataLoaded
+        lda #0
+        sta wBufferBG3VOFS
+        sta wBufferBG3HOFS
+        lda #$20FF
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
+        jsl rlShowMapMenuLayers
+        rtl
+
+        .databank 0
+
+        ; 85/BCB8
+
+    .endsection Unsorted85BC9ESection
+
+
+    .section Unsorted85D9FCSection
+
+      .al
+      .xl
+
+      rlDrawMapMenuGauge ; 85/D9FC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = value, Y = maximum, X = row and column: a bar of 60 steps (6 tiles) with end caps.
+
+        phx
+        sta wR10
+        lda #$003C
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        stz wR15
+        sty wR14
+        jsl rlUnsignedDivide32By32
+        lda wR12
+        sta wR0
+        stx wR1
+        lda #$0005
+        sta wR2
+        jsr rsDrawGaugeStart
+
+        _DA1E
+        jsr rsDrawGaugeTile
+        dec wR2
+        bpl _DA1E
+        jsr rsDrawGaugeEnd
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/DA2A
+
+      rlDrawMapMenuLongGauge ; 85/DA2A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = value in steps, X = row and column: a bar 11 tiles long.
+
+        phx
+        sta wR0
+        stx wR1
+        lda #$000A
+        sta wR2
+        jsr rsDrawGaugeStart
+
+        _DA37
+        jsr rsDrawGaugeTile
+        dec wR2
+        bpl _DA37
+        jsr rsDrawGaugeEnd
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/DA43
+
+      rsDrawGaugeStart ; 85/DA43
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR0
+        cmp #$0006
+        bpl _DA5C
+        tax
+        lda aUnknown85DA77,x
+        and #$00FF
+        ldx wR1
+        jsl rlUnknown85D81F
+        stz wR0
+        bra _DA74
+
+
+        _DA5C
+        ldx #$0006
+        lda aUnknown85DA77,x
+        and #$00FF
+        ldx wR1
+        jsl rlUnknown85D81F
+        lda wR0
+        sec
+        sbc #$0006
+        sta wR0
+
+        _DA74
+        inc wR1
+        rts
+
+        .databank 0
+
+        ; 85/DA77
+
+    .endsection Unsorted85D9FCSection
+
+
+    .section Table85DA77Section
+
+      .al
+      .xl
+
+      aUnknown85DA77 ; 85/DA77
+
+        ; Read by rsDrawGaugeStart.
+
+        .byte $00, $01, $02, $03, $04, $05, $06
+
+        ; 85/DA7E
+
+    .endsection Table85DA77Section
+
+
+    .section Unsorted85DA7ESection
+
+      .al
+      .xl
+
+      rsDrawGaugeTile ; 85/DA7E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR0
+        cmp #$0008
+        bpl _DA97
+        tax
+        lda aUnknown85DAB2,x
+        and #$00FF
+        ldx wR1
+        jsl rlUnknown85D81F
+        stz wR0
+        bra _DAAF
+
+
+        _DA97
+        ldx #$0008
+        lda aUnknown85DAB2,x
+        and #$00FF
+        ldx wR1
+        jsl rlUnknown85D81F
+        lda wR0
+        sec
+        sbc #$0008
+        sta wR0
+
+        _DAAF
+        inc wR1
+        rts
+
+        .databank 0
+
+        ; 85/DAB2
+
+    .endsection Unsorted85DA7ESection
+
+
+    .section Table85DAB2Section
+
+      .al
+      .xl
+
+      aUnknown85DAB2 ; 85/DAB2
+
+        ; Read by rsDrawGaugeTile.
+
+        .byte $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0F
+
+        ; 85/DABB
+
+    .endsection Table85DAB2Section
+
+
+    .section Unsorted85DABBSection
+
+      .al
+      .xl
+
+      rsDrawGaugeEnd ; 85/DABB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx wR0
+        lda aUnknown85DACB,x
+        and #$00FF
+        ldx wR1
+        jsl rlUnknown85D81F
+        rts
+
+        .databank 0
+
+        ; 85/DACB
+
+    .endsection Unsorted85DABBSection
+
+
+    .section Table85DACBSection
+
+      .al
+      .xl
+
+      aUnknown85DACB ; 85/DACB
+
+        ; Read by rsDrawGaugeEnd.
+
+        .byte $18, $19, $1A, $1B, $1C, $1D, $1E, $AD, $B1, $0D, $C9, $FF, $FF, $F0, $02, $18
+        .byte $6B, $38, $6B, $00, $00, $00, $00, $00, $00, $F6, $A0, $85, $05, $01, $01
+
+        ; 85/DAEA
+
+    .endsection Table85DACBSection
+
+
+    .section Unsorted85EA64Section
+
+      .al
+      .xl
+
+      rlMapMenuEmptyHook ; 85/EA64
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Does nothing (rtl); bank $88 calls it at three places.
+
+        rtl
+
+        .databank 0
+
+        ; 85/EA65
+
+    .endsection Unsorted85EA64Section
 

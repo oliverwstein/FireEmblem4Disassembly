@@ -123,6 +123,7 @@
   .include "engine/ai/threat.asm"
   .include "engine/arena/arena.asm"
   .include "engine/battle/map_battle_magic.asm"
+  .include "engine/battle/map_battle_hud.asm"
   .include "engine/battle_scene/animation_moves.asm"
   .include "engine/battle_scene/animations.asm"
   .include "engine/battle_scene/backgrounds.asm"
@@ -157,8 +158,14 @@
   .include "engine/map/input.asm"
   .include "engine/map/map_sprites.asm"
   .include "engine/map/popups.asm"
+  .include "engine/map/phase_banner.asm"
   .include "engine/map/windows.asm"
   .include "engine/menus/map_menu.asm"
+  .include "engine/menus/main_map_menu.asm"
+  .include "engine/menus/unit_menu.asm"
+  .include "engine/menus/item_list.asm"
+  .include "engine/menus/battle_forecast.asm"
+  .include "engine/menus/inventory_full.asm"
   .include "engine/menus/menu_text.asm"
   .include "engine/menus/window_graphics.asm"
   .include "engine/menus/revive_screen.asm"
@@ -171,7 +178,6 @@
   .include "engine/sound/driver.asm"
   .include "engine/unsorted/bank81.asm"
   .include "engine/unsorted/bank84.asm"
-  .include "engine/unsorted/bank85.asm"
   .include "engine/unsorted/bank87.asm"
   .include "engine/unsorted/bank88.asm"
   .include "engine/unsorted/bank8B.asm"
@@ -1714,6 +1720,8 @@
 
       .dsection Unsorted85915ASection
 
+      .dsection MapItemListDataSection
+
       .dsection Unsorted859281Section
 
       .dsection Unsorted85928DSection
@@ -1825,6 +1833,8 @@
 
       .dsection Unsorted85A3D5Section
 
+      .dsection SavePromptDataSection
+
       .dsection ProcScript85A47FSection
 
       .dsection Unsorted85A48BSection
@@ -1838,6 +1848,8 @@
       .dsection ProcScript85A5BDSection
 
       .dsection Unsorted85A5C5Section
+
+      .dsection UnitAnimationMenuDataSection
 
       .dsection Unsorted85A5EFSection
 

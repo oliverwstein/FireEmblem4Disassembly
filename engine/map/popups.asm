@@ -1,6 +1,6 @@
-; The castle name pop-up shown on the map.
-; Also a second pop-up proc (procUnknown85BB52) and the helpers only these
-; pop-ups use.
+; Pop-ups on the map: the castle name, gold, seizing a castle, getting an item; a
+; second pop-up proc (procUnknown85BB52) and the window colours by army
+; (rlSetWindowColoursByRelation).
 
     .section CastleNamePopUpSection
 
@@ -540,3 +540,664 @@
         ; 85/C55B
 
     .endsection Data85C51BSection
+
+
+    .section Unsorted85B8D6Section
+
+      .al
+      .xl
+
+      rlOpenGoldPopUp ; 85/B8D6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procGoldPopUp)<<8
+        sta lR44+1
+        lda #<>procGoldPopUp
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/B8E5
+
+    .endsection Unsorted85B8D6Section
+
+
+    .section Table85B8E5Section
+
+      .al
+      .xl
+
+      aGoldPopUpTilemapData ; 85/B8E5
+        .byte $20, $04, $88, $83, $7E, $00, $4A, $CE, $7F
+
+    .endsection Table85B8E5Section
+
+
+    .section Unsorted85B8EESection
+
+      .al
+      .xl
+
+      aGoldPopUpData ; 85/B8EE
+
+        .long 0
+        .long 0
+        .long aGoldPopUpTilemapData
+        .byte 0, 1, 1
+
+    .endsection Unsorted85B8EESection
+
+
+    .section ProcScript85B8FASection
+
+      .al
+      .xl
+
+      procGoldPopUp ; 85/B8FA
+
+        .structProcInfo "PW", rlProcGoldPopUpInit, rlProcGoldPopUpShow, aProcDialogueBoxCode
+
+
+        .long aGoldPopUpData
+        .byte 1
+
+    .endsection ProcScript85B8FASection
+
+
+    .section Unsorted85B906Section
+
+      .al
+      .xl
+
+      rlProcGoldPopUpInit ; 85/B906
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; "<n> ゴールドてにいれた！" (got n gold): wInput2 = the gold, wInput3 = row (high byte). Sized to the digits and centred; stays 180 frames (aBody5).
+
+        jsl rlInitMapMenuProc
+        jsl rlHideMapWindows
+        lda #$00B4
+        sta aProcSystem.aBody5,b,x
+        lda aProcSystem.wInput3,b
+        and #$FF00
+        sta aProcSystem.aBody7,b,x
+        lda aProcSystem.wInput2,b
+        sta aProcSystem.aBody6,b,x
+        ldy #$0000
+        cmp #$000A
+        bmi _B93E
+        cmp #$0064
+        bmi _B93D
+        cmp #$03E8
+        bmi _B93C
+        cmp #$2710
+        bmi _B93B
+        inc y
+
+        _B93B
+        inc y
+
+        _B93C
+        inc y
+
+        _B93D
+        inc y
+
+        _B93E
+        inc y
+        tya
+        clc
+        adc #$000E
+        sta wR0
+        ora #$0400
+        jsl rlSetMapMenuTilemapArea
+        lda #$0020
+        sec
+        sbc wR0
+        lsr a
+        ora aProcSystem.aBody7,b,x
+        jsl rlSetMapMenuPosition
+        phx
+        phy
+        lda #$20F0
+        sta aCurrentTilemapInfo,b
+        lda aProcSystem.aBody6,b,x
+        sta wR0
+
+        _B968
+        dec y
+        lda wR0
+        sta wR13
+        lda #$000A
+        sta wR14
+        jsl rlUnsignedDivide16By16R13
+        lda wR13
+        sta wR0
+        lda wR10
+        beq _B980
+        bra _B983
+
+
+        _B980
+        tya
+        bmi _B991
+
+        _B983
+        tya
+        clc
+        adc #$0101
+        tax
+        lda wR10
+        jsl rlDrawMapMenuNumber
+        bra _B968
+
+
+        _B991
+        ply
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #(`aGoldPopUpText)<<8
+        sta lR18+1
+        lda #<>aGoldPopUpText
+        sta lR18
+        tya
+        clc
+        adc #$0102
+        tax
+        jsl rlDrawMapMenuTextLine
+        jsl rlDrawMapMenu
+        jsl rlHideMapMenuLayers
+        plx
+        lda #$0094
+        sta aProcSystem.aBody4,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/B9BC
+
+    .endsection Unsorted85B906Section
+
+
+    .section Table85B9BCSection
+
+      .al
+      .xl
+
+      aGoldPopUpText ; 85/B9BC
+
+        .enc "SJIS"
+        .text "　ゴールドてにいれた！"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table85B9BCSection
+
+
+    .section Unsorted85B9D4Section
+
+      .al
+      .xl
+
+      rlProcGoldPopUpShow ; 85/B9D4
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Once no music is loading: shows the window and plays sound $94 (aBody4).
+
+        lda wMusicID,b
+        bne +
+
+          jsl rlShowMapMenuLayers
+          lda #$00F7
+          jsl rlSendSoundCommand
+          lda aProcSystem.aBody4,b,x
+          jsl rlPlaySoundEffect
+          lda #<>rlProcGoldPopUpCheckSkip
+          sta aProcSystem.aHeaderOnCycle,b,x
+
+        +
+        rtl
+
+        .databank 0
+
+        ; 85/B9F2
+
+    .endsection Unsorted85B9D4Section
+
+
+    .section Unsorted85B9F2Section
+
+      .al
+      .xl
+
+      rlProcGoldPopUpCheckSkip ; 85/B9F2
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A button takes 60 frames off.
+
+        lda wJoy1New
+        bit #$D0C0
+        beq rlProcGoldPopUpWait
+        lda #<>rlProcGoldPopUpWait
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aBody5,b,x
+        sec
+        sbc #$003C
+        sta aProcSystem.aBody5,b,x
+
+        .databank 0
+
+      rlProcGoldPopUpWait ; 85/BA09
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody5,b,x
+        dec a
+        bmi _BA13
+        sta aProcSystem.aBody5,b,x
+
+        _BA12
+        rtl
+
+
+        _BA13
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlCloseMapMenuFromProc
+        jsl rlUnknown85C0C7
+        jsl rlShowMapWindows
+        lda #$00E8
+        jsl rlSendSoundCommand
+        bra _BA12
+
+        .databank 0
+
+        ; 85/BA2C
+
+    .endsection Unsorted85B9F2Section
+
+
+    .section Table85BA2CSection
+
+      .al
+      .xl
+
+      aSeizePopUpTilemapData ; 85/BA2C
+        .byte $20, $04, $88, $83, $7E, $00, $4A, $CE, $7F
+
+      aSeizePopUpData ; 85/BA35
+        .long $000000
+        .long $000000
+        .long aSeizePopUpTilemapData
+        .byte $00, $01, $01
+
+    .endsection Table85BA2CSection
+
+
+    .section Unsorted85BA41Section
+
+      .al
+      .xl
+
+      procSeizePopUp .structProcInfo "PW", rlProcSeizePopUpInit, rlProcSeizePopUpWaitMusic, aProcDialogueBoxCode ; 85/BA41
+
+        .long aSeizePopUpData
+        .byte 1
+
+    .endsection Unsorted85BA41Section
+
+
+    .section Unsorted85BA4DSection
+
+      .al
+      .xl
+
+      rlProcSeizePopUpInit ; 85/BA4D
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; "<castle> をせいあつした！" (seized the castle): wInput3 = location, wInput2 = frames to wait before showing (aBody6); stays 366 frames (aBody7).
+
+        jsl rlInitMapMenuProc
+        jsl rlHideMapWindows
+
+        lda #$016E
+        sta aProcSystem.aBody7,b,x
+        lda aProcSystem.wInput2,b
+        sta aProcSystem.aBody6,b,x
+        lda aProcSystem.wInput3,b
+        jsl rlGetLocationEventDataEntry
+        jsl rlGetEventLocationEntryCastleName
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        jsl rlGetMenuTextStringLength
+
+        lda wR10
+        clc
+        adc #12
+        sta wR0
+        ora #$0400
+        jsl rlSetMapMenuTilemapArea
+
+        lda #$0020
+        sec
+        sbc wR0
+        lsr a
+        ora #$0C00
+        jsl rlSetMapMenuPosition
+
+        lda #(`aSeizePopUpText)<<8
+        sta lR19+1
+        lda #<>aSeizePopUpText
+        sta lR19
+        ldx #$0102
+        lda #$2000
+        sta aCurrentTilemapInfo.wBaseTile,b
+        jsl rlDrawTwoMapMenuTextLines
+        jsl rlHideMapMenu
+        rtl
+
+        .databank 0
+
+        ; 85/BAB3
+
+    .endsection Unsorted85BA4DSection
+
+
+    .section Table85BAB3Section
+
+      .al
+      .xl
+
+      aSeizePopUpText ; 85/BAB3
+
+        .enc "SJIS"
+        .text "　をせいあつした！"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table85BAB3Section
+
+
+    .section Unsorted85BAC7Section
+
+      .al
+      .xl
+
+      rlProcSeizePopUpWaitMusic ; 85/BAC7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wMusicID,b
+        bne _BAD8
+        lda #$0001
+        sta wSoundUploadBusyFlag,b
+        lda #<>rlProcSeizePopUpWaitToShow
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _BAD8
+        rtl
+
+        .databank 0
+
+        ; 85/BAD9
+
+    .endsection Unsorted85BAC7Section
+
+
+    .section Unsorted85BAD9Section
+
+      .al
+      .xl
+
+      rlProcSeizePopUpWaitToShow ; 85/BAD9
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody6,b,x
+        dec a
+        bmi _BAE3
+        sta aProcSystem.aBody6,b,x
+        rtl
+
+
+        _BAE3
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlShowMapMenu
+        lda #$0095
+        jsl rlPlaySoundEffect
+        lda #<>rlProcSeizePopUpCheckSkip
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/BAF9
+
+      rlProcSeizePopUpCheckSkip ; 85/BAF9
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1New
+        bit #$D0C0
+        beq rlProcSeizePopUpWait
+        lda #<>rlProcSeizePopUpWait
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aBody7,b,x
+        sec
+        sbc #$003C
+        sta aProcSystem.aBody7,b,x
+
+        .databank 0
+
+      rlProcSeizePopUpWait ; 85/BB10
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aProcSystem.aBody7,b,x
+        dec a
+        bmi _BB1A
+        sta aProcSystem.aBody7,b,x
+
+        _BB19
+        rtl
+
+
+        _BB1A
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlCloseMapMenuFromProc
+        jsl rlUnknown85C0C7
+        lda #$0000
+        sta wSoundUploadBusyFlag,b
+        bra _BB19
+
+        .databank 0
+
+        ; 85/BB2E
+
+    .endsection Unsorted85BAD9Section
+
+
+    .section Unsorted85BB2ESection
+
+      .al
+      .xl
+
+      rlOpenSeizePopUp ; 85/BB2E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procSeizePopUp)<<8
+        sta lR44+1
+        lda #<>procSeizePopUp
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/BB3D
+
+
+      aUnknown85BB3D ; 85/BB3D
+
+        .structMapMenuTilemapData 32, 4, aBG3TilemapBuffer, 0, $7FCE4A
+
+      aUnknown85BB46 ; 85/BB46
+
+        .long 0, 0, aUnknown85BB3D
+        .byte 0, 1, 1
+
+    .endsection Unsorted85BB2ESection
+
+
+    .section Unsorted85BC00Section
+
+      .al
+      .xl
+
+      rlOpenItemPopUp ; 85/BC00
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procUnknown85BC0F)<<8
+        sta lR44+1
+        lda #<>procUnknown85BC0F
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 85/BC0F
+
+    .endsection Unsorted85BC00Section
+
+
+    .section Unsorted85BC1BSection
+
+      .al
+      .xl
+
+      rlProcItemPopUpInit ; 85/BC1B
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; "<item> をてにいれた！" (got the item): wInput2 = item ID, wInput3 = row. Item $50 gets sound $96 and 60 more frames.
+
+        phx
+        jsl rlInitMapMenuProc
+        lda #$0093
+        sta aProcSystem.aBody5,b,x
+        lda aProcSystem.wInput2,b
+        jsl rlGetItemNamePointerByItemID
+        lda lRoutineVariable,b
+        sta lR18
+        lda $0571+1,b
+        sta lR18+1
+        lda #(`aItemObtainedText)<<8
+        sta lR19+1
+        lda #<>aItemObtainedText
+        sta lR19
+        lda aProcSystem.wInput3,b
+        ldx #$0400
+        jsl rlGetCenteredTextBoxPlacement
+        pha
+        dec a
+        jsl rlSetMapMenuPosition
+        txa
+        inc a
+        inc a
+        jsl rlSetMapMenuTilemapArea
+        pla
+        and #$FF00
+        lda #$2000
+        sta aCurrentTilemapInfo.wBaseTile,b
+        ldx #$0102
+        jsl rlDrawTwoMapMenuTextLines
+        jsl rlDrawMapMenu
+        plx
+        lda aProcSystem.wInput2,b
+        cmp #$0050
+        bne +
+
+        lda aProcSystem.aBody5,b,x
+        clc
+        adc #$003C
+        sta aProcSystem.aBody5,b,x
+        lda #$0096
+        bra ++
+        
+        +
+        lda #$0092
+        
+        +
+        sta aProcSystem.aBody4,b,x
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted85BC1BSection
+
+
+    .section ItemObtainedTextSection
+
+      .al
+      .xl
+
+      aItemObtainedText ; 85/BC8C
+
+        .enc "SJIS"
+        .text "　をてにいれた！\n"
+
+    .endsection ItemObtainedTextSection
+
+
