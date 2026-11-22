@@ -4,14 +4,15 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-22, after `9f9338a`)
+## Current state (2026-11-22, after `0c07436`)
 
-- `./build.sh` is byte-identical and the checksums verify. 97.25% of the ROM is built from source.
-- Routines: 5,959 top-level `rl`/`rs` labels under `engine/`, 3,441 of them `Unknown`; `engine/unsorted/` has about 130k lines. These are rough grep counts; `tools/counts.py` (not written yet) will replace them.
-- Phase 1: every gap class except `none` (234 pieces, 62,476 bytes) and padding is closed.
-- Phase 2: done, apart from running padded ROMs in an emulator (deferred on purpose; see Decisions).
-- Phase 3: Wave 1 (game states, core, AI, global WRAM) is in `ef5fff9`. Stale "nothing reaches this" notes were cleared in `9f9338a` (`tools/stale_notes.py`); the 55 left are true by name.
-- Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md) written (overview of the program's shape, the three engines, the unit data model, the content formats, the game's life cycle). The reference set has not been started. The game-state routine names it mentions are still unaudited.
+Numbers come from `python3 tools/counts.py`; quote nothing else.
+
+- `./build.sh` is byte-identical and the checksums verify. 97.53% of the ROM is built from source. GAPS.md (regenerated): 217 `none` pieces (61,584 bytes), 56 padding runs.
+- Routines: 5,956 in `engine/`, 2,516 named, 3,440 `Unknown`; 3,005 still in `engine/unsorted/`. 307 pinned blocks.
+- Phase 3 Wave 1 audit done: the game-state routines are named by role (`rl<Screen>Upkeep/Setup/Step`, constants in `include/GameStates.h`); wrong claims fixed (see commits `2e4e0d0`, `96e3557`). The other ~380 names `ef5fff9` gave were triaged: Gemini's comments are mostly specific and code-derived; the "unused" claims, interpretive names and table names were checked one by one. A full line-by-line read of every AI/RAM-struct/OAM routine was not done.
+- Reference set started: `tools/reference.py` generates `docs/reference/routines/`, `ram.md`, `INDEX.md`; hand-written `docs/reference/README.md`, `core.md`, `ai.md`. Rerun the tool after any rename and commit its output.
+- Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md), updated for the game-state names and the menu option stack.
 
 ## Who wrote what
 
@@ -26,10 +27,9 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Write `tools/counts.py`.** It prints coverage, routines (total / `Unknown` / in `unsorted/`), gap classes, pinned blocks in `build.asm` and remaining notes, and every doc quotes only its output. Fix the numbers in PLAN.md and README.md (README still says 18%).
-2. **Audit the Wave 1 names.** Read each routine `ef5fff9` named. Keep a name only if its routine's code supports it. Otherwise rename it back to `Unknown` with a comment on what is known. Remove committed question marks (`; event main loop routine?`). Preferably you will figure out the correct name, rather than going back to unknown. Collapse the runs of blank lines in the carved `engine/unsorted/bank*.asm` files.
-3. **Set up the reference set** (PLAN.md, "The engine guide" part 1): the generator for `docs/reference/` and the reference for the Wave 1 systems (core, game states, procs, AI). The introduction already exists; revise it if the audit changes anything it says.
-4. **Continue Phase 3 one system at a time.** Each wave: name the routines, move them out of `unsorted/`, complete that system's reference (routine, struct, file, system docs), then commit with an evidence body. Writing the docs in plain words is part of the wave, because that is how a wrong name gets caught. The guide's outline is drafted once the core systems have reference docs, and shown to the user.
+1. **Talk to the user before starting a Phase 3 wave** (they asked for a report between the setup steps and the waves).
+2. **Continue Phase 3 one system at a time.** Each wave: name the routines, move them out of `unsorted/`, write or extend that system's `docs/reference/<system>.md`, rerun `tools/reference.py`, commit with an evidence body. Plain-words docs are part of the wave; they catch wrong names. Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
+3. Open questions left by Wave 1 are listed at the end of `docs/reference/core.md` and `ai.md`.
 
 ## How to work on this project
 
