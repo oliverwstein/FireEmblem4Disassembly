@@ -38,7 +38,7 @@
         cmp #GAMESTATE_MAP_STEP
         beq +
 
-          cmp #$000F
+          cmp #GAMESTATE_WORLD_MAP_STEP
           bne _End
 
         +

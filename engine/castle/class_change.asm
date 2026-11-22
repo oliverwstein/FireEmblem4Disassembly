@@ -238,7 +238,7 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsr rsClearCastleList
-        lda #$000A
+        lda #CASTLE_STEP_CLASS_CHANGE
         sta wGameStateStep,b
         rep #$20
         jsl rlEnableVBlank
@@ -283,7 +283,7 @@
         phk
         plb
         .databank $8A
-        lda $7F7670
+        lda wCastleRedrawIcons
         bne _EECA
         jsl rlDMAByStruct
 
@@ -294,7 +294,7 @@
 
         _EECA
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
         jsr rsUnknown8AA142
 
         _EED4
@@ -656,15 +656,15 @@
 
         ; Sub-state $05: returns to the courtyard (step $11) with the cursor on the class change command.
 
-        lda #$0000
+        lda #CASTLE_CURSOR_GRID
         sta wCastleCursorState,b
-        lda #$0003
+        lda #CASTLE_COMMAND_CLASS_CHANGE
         sta wCastleUnitCommand,b
         sep #$20
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0011
+        lda #CASTLE_STEP_RETURN_TO_COURTYARD
         sta wGameStateStep,b
         rts
 

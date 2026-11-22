@@ -17205,7 +17205,7 @@
         cmp #$0002
         bne _E658
         jsl rlUnknown95A52D
-        lda #$0005
+        lda #CASTLE_SCREEN_RELOAD_MAP
         sta wCastleScreenHandler,b
         lda #<>rsOpenCastleScreen
         sta wMainLoopPointer
@@ -17216,7 +17216,7 @@
         cmp #$0003
         bne _E66E
         jsl rlUnknown95A52D
-        lda #$0005
+        lda #CASTLE_SCREEN_RELOAD_MAP
         sta wCastleScreenHandler,b
         lda #<>rsOpenCastleScreen
         sta wMainLoopPointer

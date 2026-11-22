@@ -34,6 +34,12 @@ SCOPED = [
     (0x7F8183, 0x7F8505, ('wDataWindow', 'aDataWindow'), ('engine/menus/data_window.asm',)),
     # The item window's variables; the map buffers (aTargetDistanceMap...) share the area.
     (0x7F8467, 0x7FAF4F, ('wItemWindow', 'aItemWindow'), ('engine/menus/item_window.asm',)),
+    # The castle screen's variables; they reuse the map buffers and the world map reuses $7F8089-$7F808F.
+    (0x7F757A, 0x7F8092, ('aCastle', 'wCastle', 'wKeeper', 'lKeeper', 'wConversation', 'wAugury'),
+     ('engine/castle/castle_screen.asm', 'engine/castle/courtyard.asm', 'engine/castle/unit_commands.asm',
+      'engine/castle/keepers.asm', 'engine/castle/lists.asm', 'engine/castle/shop.asm', 'engine/castle/depot.asm',
+      'engine/castle/augury.asm', 'engine/castle/class_change.asm', 'engine/castle/conversation.asm',
+      'engine/arena/arena.asm')),
     # The battle animation combatants' motion; a few other screens reuse the area.
     (0x7E0AF3, 0x7E0B78, ('wBattleAnimation', 'bBattleAnimation', 'lBattleAnimation'),
      ('engine/unsorted/bank95.asm', 'engine/unsorted/bank96.asm', 'engine/unsorted/bank97.asm',

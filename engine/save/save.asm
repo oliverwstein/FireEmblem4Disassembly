@@ -338,15 +338,15 @@
         tay
         plx
         jsl rlGetSelectedUnitCharacterID
-        cmp #$0001
+        cmp #Sigurd
         beq _F852
-        cmp #$0006
+        cmp #Quan
         beq _F852
-        cmp #$0019
+        cmp #Seliph
         beq _F84D
         cmp #$002C
         beq _F84D
-        cmp #$0024
+        cmp #Hannibal
         beq _F848
         lda #$0000
         bra _F855
@@ -467,7 +467,7 @@
         tax
         jsl rlGetSelectedUnitStatus
         pha
-        lda #$0000
+        lda #StatusHealthy
         jsl rlSetSelectedUnitStatus
         txa
         jsl rlLoadEquipmentDataIntoSpecifiedInventory
@@ -997,7 +997,7 @@
         and #$003F
         cmp lR19
         bne _FD9A
-        lda $0002,b,x
+        lda structItemRAMEntry.ItemState,b,x
         and #$00FF
         cmp #$0001
         beq _FD67

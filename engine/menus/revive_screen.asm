@@ -443,7 +443,7 @@
         lda wSelectedUnitDataRAMPointer,b
         beq _E2E7
         jsl rlGetSelectedUnitStates
-        bit #$0200
+        bit #UnitStateDead
         beq _E2E5
         lda wUnitWindowCurrentNameLine
         tay

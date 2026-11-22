@@ -74,7 +74,7 @@
         sta wR1
         ldx #$0000
         jsr rsPushKeeperPortraitSprites
-        lda $7F7670
+        lda wCastleRedrawIcons
         beq _E50D
         jsr rsPushCastleListSprites
 
@@ -349,7 +349,7 @@
         lda #$0000
         jsl rlPushCastleHandCursor
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda wJoy1New
         cmp #$8000
         beq _E70D
@@ -684,7 +684,7 @@
         lda #$0000
         jsl rlPushCastleHandCursor
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda wJoy1New
         cmp #$8000
         beq _E9DB
@@ -709,7 +709,7 @@
         cmp #$0000
         beq _EA06
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda #$0081
         jsl rlPlaySoundEffect
         lda #$000B
@@ -832,7 +832,7 @@
         lda #$0000
         jsl rlPushCastleHandCursor
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda wJoy1New
         cmp #$8000
         beq _EAE5
@@ -872,7 +872,7 @@
 
         _EB16
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda #$0081
         jsl rlPlaySoundEffect
         lda #$000B
@@ -959,7 +959,7 @@
         ; Arena menu step 12 (aArenaMenuStepHandlers).
 
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         jsr rsDrawStockItemDetails
         jsr rsPushStockItemTypeIcon
         jsr rsClearCastleList
@@ -1006,7 +1006,7 @@
         lda wCastleListSelectedIndex,b
         asl a
         tax
-        lda $7F8072,x
+        lda aCastleListInventorySlots,x
         sta wRoutineVariable1,b
         jsl rlGetItemROMDataByInventorySlot
         lda wCurrentItemDataROMPointer,b
@@ -1017,7 +1017,7 @@
         jsr rsClearItemDetailsWindow
         jsr rsClearCastleList
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda #$000A
         jsl rlPlaySoundEffect
         lda #(`dialogueShopUnknown8AD4BC)<<8
@@ -1061,7 +1061,7 @@
         jsr rsClearItemDetailsWindow
         jsr rsClearCastleList
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
         stz wCastleMenuOptionIndex,b
         lda $0AD7,b
         beq _EC68
@@ -1095,7 +1095,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0015
+        lda #CASTLE_STEP_REOPEN_TOWN
         sta wGameStateStep,b
         jsl rlUnknown84B550
         cmp #$0002
@@ -1124,7 +1124,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0015
+        lda #CASTLE_STEP_REOPEN_TOWN
         sta wGameStateStep,b
         rts
 
@@ -1675,7 +1675,7 @@
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aCastleMenuTilemapData
@@ -1690,7 +1690,7 @@
         lda #<>aUnknown8AB230
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #$0004
+        lda #CASTLE_STEP_ARENA
         sta wGameStateStep,b
         jsl rlEnableVBlank
         sep #$20

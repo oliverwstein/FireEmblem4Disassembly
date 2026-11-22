@@ -2038,10 +2038,10 @@
         beq _B2D9
         jsl rlGetUnitRAMDataPointerByID
         jsl rlGetSelectedUnitStates
-        bit #$0200
+        bit #UnitStateDead
         bne _B2D9
         jsl rlGetSelectedUnitStatus
-        cmp #$0003
+        cmp #StatusCaptive
         beq _B2D9
         jsl rlGetSelectedUnitNamePointer
         bra _B2E5

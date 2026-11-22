@@ -547,7 +547,7 @@
 
         _8921
         lda [lR22],y
-        sta lBaseSceneDialoguePointer,b
+        sta lConversationDialoguePointer,b
         inc y
         lda [lR22],y
         sta $08AF+1,b
@@ -556,7 +556,7 @@
 
         lda [lR22],y
         and #$00FF
-        sta wBaseSceneArgument,b
+        sta wConversationBackground,b
         inc y
 
         lda [lR22],y
@@ -568,14 +568,14 @@
           lda #3
 
         +
-        sta wBaseSceneMode,b
+        sta wConversationExitMode,b
         inc y
 
         lda [lR22],y
         and #$00FF
         sta wScreenFadingProcInput,b
 
-        stz wBaseSceneFlags,b
+        stz wConversationFlags,b
         lda wEventUnit1Pointer,b
         cmp #$FFFE
         beq +
@@ -595,7 +595,7 @@
           jsl rlUnknown88B3AF
 
         +
-        lda #2
+        lda #CASTLE_SCREEN_CONVERSATION
         sta wCastleScreenHandler,b
         lda #<>rsOpenCastleScreen
         sta aProcSystem.wInput0,b

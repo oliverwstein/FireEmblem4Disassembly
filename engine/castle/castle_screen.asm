@@ -20,7 +20,10 @@
         .autsiz
         .databank ?
 
-        ; Castle screen VBlank checking $0891, DMA, OAM, HDMA, PPU, sprites, game state, sound
+        ; The castle screen's VBlank routine: blanks the screen; sends the DMA queue (first
+        ; calling rlUnknown88CD68 unless wCastleCursorState is 2 or the town), the palettes,
+        ; OAM, HDMA and PPU registers and sound; reads the joypads; runs the game state
+        ; routines and VBlank hooks; draws the courtyard unit sprites unless the town is up.
 
         sep #$20
         lda #$80
@@ -32,7 +35,7 @@
         lda wCastleCursorState,b
         cmp #$0002
         beq _B663
-        cmp #$0003
+        cmp #CASTLE_CURSOR_TOWN
         beq _B663
         jsl rlUnknown88CD68
 
@@ -50,7 +53,7 @@
         lda wCastleCursorState,b
         cmp #$0002
         beq _B69C
-        cmp #$0003
+        cmp #CASTLE_CURSOR_TOWN
         beq _B69C
         jsl rlCastleDrawCourtyardUnitSprites
 
@@ -91,7 +94,9 @@
         .autsiz
         .databank ?
 
-        ; Resets engines/PPU, sets game state $0B/$0A, installs rsRunCastleScreenVBlank, dispatches $088B
+        ; The castle screen's opener: blanks the screen, resets the sprite, HDMA and IRQ
+        ; engines, sets game state routines GAMESTATE_CASTLE_SCREEN_SETUP/UPKEEP and the
+        ; castle VBlank routine, then sets up what wCastleScreenHandler asks for.
 
         php
         sep #$20
@@ -166,7 +171,9 @@
         .autsiz
         .databank ?
 
-        ; Restores home castle/$089B unit, sets $088B=3, installs rsOpenCastleScreen after arena battle
+        ; After an arena battle: rebuilds the castle's unit lists if the castle entered is the
+        ; player's home castle, restores the unit (wCastleSavedUnitRAMPointer) and reopens
+        ; the castle screen at the arena (CASTLE_SCREEN_ARENA).
 
         lda #$0000
         jsl rlGetFactionSlotLocationID
@@ -179,7 +186,7 @@
         jsl rlCastleBuildCourtyardTables
 
         _B76A
-        lda #$0003
+        lda #CASTLE_SCREEN_ARENA
         sta wCastleScreenHandler,b
         lda wCastleSavedUnitRAMPointer,b
         sta wSelectedUnitDataRAMPointer,b
@@ -207,7 +214,7 @@
         .autsiz
         .databank ?
 
-        ; Dispatches castle substate $088B via jmp (aCastleStateHandlers,x)
+        ; Jumps to the routine for wCastleScreenHandler (aCastleStateHandlers).
 
         lda wCastleScreenHandler,b
         asl a
@@ -251,7 +258,8 @@
         .autsiz
         .databank ?
 
-        ; $088B=2: clears movement map, handles $089D augury lover names, sets BG, runs 8AD81B
+        ; CASTLE_SCREEN_CONVERSATION: clears the courtyard tables; if wCastleReturnEventFlag is
+        ; set, clears it and runs rlUnknown8CED4F; sets up the conversation scene.
 
         jsl rlClearMovementMapBuffer
         lda wCastleReturnEventFlag,b
@@ -260,7 +268,7 @@
         jsl rlUnknown8CED4F
 
         _B7A3
-        lda #$0003
+        lda #CASTLE_CURSOR_TOWN
         sta wCastleCursorState,b
         jsr rsSetCastleCourtyardBGSettings
         jsl rlConversationSceneSetup
@@ -285,13 +293,14 @@
         .autsiz
         .databank ?
 
-        ; $088B=3: sets $0891=3, BG settings, $7F8082=7, runs arena 8AE2F8, sets $088B=1 if away castle
+        ; CASTLE_SCREEN_ARENA: sets up the arena screen (arena sub-state 2); if the castle
+        ; entered is not the player's home castle, the next reopen goes to the town.
 
-        lda #$0003
+        lda #CASTLE_CURSOR_TOWN
         sta wCastleCursorState,b
         jsr rsSetCastleCourtyardBGSettings
-        lda #$0007
-        sta $7F8082
+        lda #KEEPER_ARENA
+        sta wKeeper
         jsl rlArenaScreenSetup
         lda #$0002
         sta wMenuState,b
@@ -299,7 +308,7 @@
         jsl rlGetFactionSlotLocationID
         cmp wEnteredCastleLocationID,b
         beq _B7DD
-        lda #$0001
+        lda #CASTLE_SCREEN_TOWN
         sta wCastleScreenHandler,b
 
         _B7DD
@@ -325,7 +334,8 @@
         .autsiz
         .databank ?
 
-        ; $088B=5: reloads map 889268, locations, music, $088B=0, unit lists; falls through to courtyard
+        ; CASTLE_SCREEN_RELOAD_MAP: reloads the chapter map, the location events and the
+        ; music; rebuilds the unit lists for the player's home castle; then opens the courtyard.
 
         jsl rlUnknown889268
         lda wEventLocationEntry,b
@@ -334,7 +344,7 @@
         jsl rlUnknown86C629
         pla
         sta wEventLocationEntry,b
-        lda #$0000
+        lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b
         jsl rlUnknown81AB26
         jsl rlStepMusicScript
@@ -366,7 +376,7 @@
         .autsiz
         .databank ?
 
-        ; $088B=0/4: calls rlSetupCastleCourtyardDisplay and queues sound $00F7
+        ; CASTLE_SCREEN_COURTYARD: sets up the courtyard and queues sound command $F7.
 
         jsl rlSetupCastleCourtyardDisplay
         lda #$00F7
@@ -384,7 +394,8 @@
         .autsiz
         .databank ?
 
-        ; Loads castle courtyard VRAM/tilemaps/palettes, builds unit lists, sets $088D/$088F, draws UI 8A8496
+        ; Loads the courtyard's graphics, tilemaps and palettes, puts the grid cursor on its
+        ; slot and draws the info line.
 
         rep #$20
         jsl rlUnknown8881EC
@@ -559,7 +570,7 @@
         .autsiz
         .databank ?
 
-        ; Zeroes $0C38 bytes at aMovementMap ($7F754A..$7F8181)
+        ; Zeroes $0C38 bytes from aMovementMap, which the castle's tables reuse.
 
         ldx #$0C37
         lda #$0000
@@ -590,7 +601,7 @@
         .autsiz
         .databank ?
 
-        ; Sets PPU buffers TM=$15, TS=0, CGWSEL=0, CGADSUB=$81, WH1=$FF, windows off
+        ; The courtyard's layer and color math settings: TM=$15, TS=0, CGWSEL=0, CGADSUB=$81, WH1=$FF, windows off.
 
         sep #$20
         stz bBufferW12SEL
@@ -631,7 +642,7 @@
         .autsiz
         .databank ?
 
-        ; Sets PPU buffers TM=$16, TS=0, CGWSEL=0, CGADSUB=$82, windows off
+        ; The town's layer and color math settings: TM=$16, TS=0, CGWSEL=0, CGADSUB=$82, windows off.
 
         sep #$20
         stz bBufferW12SEL
@@ -671,7 +682,9 @@
         .autsiz
         .databank ?
 
-        ; $088B=1: validates $089B, checks action-6 event, else opens castle unit menu, portrait, window
+        ; CASTLE_SCREEN_TOWN: a unit entered the castle from the map. Runs chapter event action 6
+        ; (character, castle); if an event runs, saves the unit in wCastleEventUnit and waits in
+        ; step $02. Otherwise plays the castle's song and opens the town with the unit's portrait.
 
         lda wCastleSavedUnitRAMPointer,b
         cmp #$FFFF
@@ -686,15 +699,15 @@
         jsl rlGetAndRunChapterMapEventConditions
         bcc _BA36
         lda wSelectedUnitDataRAMPointer,b
-        sta $08BA,b
-        lda #$0002
+        sta wCastleEventUnit,b
+        lda #CASTLE_STEP_WAIT
         sta wGameStateStep,b
         inc wGameStateRoutine1,b
         rtl
 
 
         _BA36
-        lda @l $00089B
+        lda @l wCastleSavedUnitRAMPointer
         sta wSelectedUnitDataRAMPointer,b
         jsl rlPlayCastleSong
         jsl rlSetupCastleTownDisplay
@@ -722,7 +735,9 @@
         .autsiz
         .databank ?
 
-        ; Loads castle unit menu gfx, aUnknownD77000, castle name, 8A9858 flags, HDMA 8A9C56, step=1
+        ; Loads the town screen: graphics, the button tilemap (aUnknownD77000), the castle's
+        ; name, the missing facilities blanked, palettes and the window HDMA; puts the cursor
+        ; on the buttons and moves to step $01.
 
         rep #$20
         jsl rlUnknown8881EC
@@ -807,7 +822,7 @@
         sta bBufferCGADSUB
         rep #$20
         stz wBufferBG2VOFS
-        lda #$0003
+        lda #CASTLE_CURSOR_TOWN
         sta wCastleCursorState,b
         lda #(`aUnknown8A9C56)<<8
         sta lR44+1
@@ -815,7 +830,7 @@
         sta lR44
         jsl rlHDMAEngineCreateEntry
         jsr rsSetCastleTownBGSettings
-        lda #$0001
+        lda #CASTLE_STEP_COURTYARD
         sta wGameStateStep,b
         rtl
 
@@ -838,14 +853,15 @@
         .autsiz
         .databank ?
 
-        ; Reloads player castle location events, rebuilds dead list, sets $088B=0 and rsOpenCastleScreen
+        ; Rebuilds the castle unit list for the player's home castle and reopens the castle
+        ; screen at the courtyard.
 
         lda #$0000
         jsl rlGetFactionSlotLocationID
         jsl rlGetLocationEventDataEntry
         jsl rlUnknown88C25D
         jsl rlBuildCastleUnitList
-        lda #$0000
+        lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b
         lda #<>rsOpenCastleScreen
         sta wMainLoopPointer
@@ -870,9 +886,9 @@
         .autsiz
         .databank ?
 
-        ; Sets $088B=0, rebuilds dead list, spawns procMainLoopChangeFade into rsOpenCastleScreen
+        ; Rebuilds the castle unit list and fades into the castle screen at the courtyard.
 
-        lda #$0000
+        lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b
         jsl rlBuildCastleUnitList
         lda #$B6B6
@@ -908,7 +924,7 @@
         lda wCastleCursorState,b
         cmp #$0002
         beq _800D
-        cmp #$0003
+        cmp #CASTLE_CURSOR_TOWN
         beq _800D
 
         _800D
@@ -934,7 +950,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $0B, once: builds the RAM area at $7FB16C; unless wCastleScreenHandler is 2, turns on active sprites and fades in (else stays blank); zeroes the BG scroll unless wBaseSceneMode is 4; moves on to $0C.
+        ; Game state routine $0B, once: builds the RAM area at $7FB16C; unless wCastleScreenHandler is 2, turns on active sprites and fades in (else stays blank); zeroes the BG scroll unless wConversationExitMode is 4; moves on to $0C.
 
         lda #$7F00
         sta lR18+1
@@ -945,7 +961,7 @@
         lda #$4E93
         jsl rlBuildRAMAreaHeaderAndGuidingEntry
         lda wCastleScreenHandler,b
-        cmp #$0002
+        cmp #CASTLE_SCREEN_CONVERSATION
         beq _8041
         jsl rlEnableActiveSpriteEngine
         lda #(`procFadeIn)<<8
@@ -963,8 +979,8 @@
         rep #$20
 
         _8049
-        lda wBaseSceneMode,b
-        cmp #$0004
+        lda wConversationExitMode,b
+        cmp #CONVERSATION_EXIT_CALLBACK
         beq _805D
         stz wBufferBG1VOFS
         stz wBufferBG2VOFS
@@ -1075,7 +1091,7 @@
         bne _80BC
         lda #$00F7
         jsl rlQueueSoundCommand
-        lda #$0001
+        lda #CASTLE_STEP_COURTYARD
         sta wGameStateStep,b
 
         _80BC
@@ -1425,10 +1441,10 @@
         jsl rlQueueSoundCommand
         jsr rsCastleLoadCourtyardScreen
         lda #$0000
-        sta $7F766A
-        lda #$0010
+        sta wCastleFadePortrait
+        lda #CASTLE_STEP_FADE_IN
         sta wGameStateStep,b
-        lda #$0000
+        lda #CASTLE_STEP_COURTYARD_START
         sta wNextMenuState,b
         sep #$20
         lda #$00
@@ -1504,7 +1520,7 @@
         bcs _81C3
         lda #$0000
         sta wMainGameMode,b
-        lda #$0002
+        lda #CASTLE_STEP_WAIT
         sta wGameStateStep,b
 
         _81C3
@@ -1521,10 +1537,10 @@
         .autsiz
         .databank ?
 
-        ; During the fade steps, draws the portrait chosen by $7F766A (1 rsPushUnitPortraitSprites, 2 rsPushCastleListSprites, 3 rsPushCourtyardPortraitSprites).
+        ; During the fade steps, draws the portrait chosen by wCastleFadePortrait (1 rsPushUnitPortraitSprites, 2 rsPushCastleListSprites, 3 rsPushCourtyardPortraitSprites).
 
         rep #$20
-        lda $7F766A
+        lda wCastleFadePortrait
         cmp #$0000
         beq _81DE
         cmp #$0001

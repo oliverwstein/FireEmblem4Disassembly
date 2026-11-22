@@ -1,5 +1,5 @@
 ; The lists and windows the castle facilities share: building the stock, stored
-; item and weapon lists (in the $7F7672-$7F8072 arrays), drawing them with
+; item and weapon lists (aCastleListItemIndices and the arrays after it), drawing them with
 ; prices, repair costs and durability, item details and weapon stats, scrolling
 ; them, the yes/no prompt, the option menu, money and numbers, and the window HDMA.
 ; wCastleListItemState chooses which items a list collects. Bank $8A.
@@ -89,22 +89,22 @@
 
         _9E19
         tya
-        sta $7F7672,x
+        sta aCastleListItemIndices,x
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
-        sta $7F7A72,x
+        sta aCastleListItemIDs,x
         jsl rlGetEffectiveItemROMPointerByItemRAMStructEntry
         lda #$0000
-        sta $7F7E72,x
+        sta aCastleListItemUnavailable,x
         jsl rlCheckItemObtainable
         bcs _9E3E
         lda #$FFFF
-        sta $7F7E72,x
+        sta aCastleListItemUnavailable,x
 
         _9E3E
         lda wCurrentItemDataROMPointer,b
-        sta $7F7C72,x
+        sta aCastleListItemROMPointers,x
         lda wCurrentItemDataRAMPointer,b
-        sta $7F7872,x
+        sta aCastleListItemRAMPointers,x
         inc wCastleListItemCount,b
         inc x
         inc x
@@ -150,16 +150,16 @@
         cmp wSelectedUnitDataRAMPointer,b
         bne _9EAE
         tya
-        sta $7F7672,x
+        sta aCastleListItemIndices,x
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
-        sta $7F7A72,x
+        sta aCastleListItemIDs,x
         jsl rlGetEffectiveItemROMPointerByItemRAMStructEntry
         lda #$0000
-        sta $7F7E72,x
+        sta aCastleListItemUnavailable,x
         lda wCurrentItemDataROMPointer,b
-        sta $7F7C72,x
+        sta aCastleListItemROMPointers,x
         lda wCurrentItemDataRAMPointer,b
-        sta $7F7872,x
+        sta aCastleListItemRAMPointers,x
         inc wCastleListItemCount,b
         inc x
         inc x
@@ -199,17 +199,17 @@
         ldx #$0000
         stz wCastleListItemCount,b
         jsl rlGetFirstEquippableWeaponInInventory
-        sta $7F8072,x
+        sta aCastleListInventorySlots,x
         sta wTempVariable1,b
         lda wCurrentItemDataROMPointer,b
         beq _9EEC
-        sta $7F7C72,x
+        sta aCastleListItemROMPointers,x
         lda #$0000
-        sta $7F7E72,x
+        sta aCastleListItemUnavailable,x
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
-        sta $7F7A72,x
+        sta aCastleListItemIDs,x
         lda wCurrentItemDataRAMPointer,b
-        sta $7F7872,x
+        sta aCastleListItemRAMPointers,x
         inc wCastleListItemCount,b
         inc x
         inc x
@@ -226,17 +226,17 @@
         jsl rlCheckWeaponEquippable
         bcc _9F2E
         lda #$0000
-        sta $7F7E72,x
+        sta aCastleListItemUnavailable,x
         lda wCurrentItemDataROMPointer,b
-        sta $7F7C72,x
+        sta aCastleListItemROMPointers,x
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
-        sta $7F7A72,x
+        sta aCastleListItemIDs,x
         lda wCurrentItemDataRAMPointer,b
-        sta $7F7872,x
+        sta aCastleListItemRAMPointers,x
         tya
         cmp wTempVariable1,b
         beq _9F2E
-        sta $7F8072,x
+        sta aCastleListInventorySlots,x
         inc wCastleListItemCount,b
         inc x
         inc x
@@ -263,7 +263,7 @@
         ldx #$0000
         stz wCastleListItemCount,b
         jsl rlGetFirstEquippableWeaponInInventory
-        sta $7F8072,x
+        sta aCastleListInventorySlots,x
         sta wTempVariable1,b
         jsl rlGetItemMinimumRange
         sta wTempVariable2,b
@@ -276,13 +276,13 @@
         _9F59
         lda wCurrentItemDataROMPointer,b
         beq _9F7D
-        sta $7F7C72,x
+        sta aCastleListItemROMPointers,x
         lda #$0000
-        sta $7F7E72,x
+        sta aCastleListItemUnavailable,x
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
-        sta $7F7A72,x
+        sta aCastleListItemIDs,x
         lda wCurrentItemDataRAMPointer,b
-        sta $7F7872,x
+        sta aCastleListItemRAMPointers,x
         inc wCastleListItemCount,b
         inc x
         inc x
@@ -302,17 +302,17 @@
         jsl rlCheckWeaponEquippable
         bcc _9FC8
         lda #$0000
-        sta $7F7E72,x
+        sta aCastleListItemUnavailable,x
         lda wCurrentItemDataROMPointer,b
-        sta $7F7C72,x
+        sta aCastleListItemROMPointers,x
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
-        sta $7F7A72,x
+        sta aCastleListItemIDs,x
         lda wCurrentItemDataRAMPointer,b
-        sta $7F7872,x
+        sta aCastleListItemRAMPointers,x
         tya
         cmp wTempVariable1,b
         beq _9FC8
-        sta $7F8072,x
+        sta aCastleListInventorySlots,x
         inc wCastleListItemCount,b
         inc x
         inc x
@@ -357,14 +357,14 @@
         bne _A00F
         bne _A00F
         tya
-        sta $7F7672,x
+        sta aCastleListItemIndices,x
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
-        sta $7F7A72,x
+        sta aCastleListItemIDs,x
         jsl rlGetEffectiveItemROMPointerByItemRAMStructEntry
         lda #$0000
-        sta $7F7E72,x
+        sta aCastleListItemUnavailable,x
         lda wCurrentItemDataROMPointer,b
-        sta $7F7C72,x
+        sta aCastleListItemROMPointers,x
         inc wCastleListItemCount,b
         inc x
         inc x
@@ -576,9 +576,9 @@
         .autsiz
         .databank ?
 
-        lda $7F8087
+        lda lKeeperOptionList+1
         sta lR20+1
-        lda $7F8086
+        lda lKeeperOptionList
         sta lR20
         lda wCastleMenuOptionIndex,b
         tay
@@ -623,7 +623,7 @@
         _A190
         phx
         phy
-        lda $7F7A72,x
+        lda aCastleListItemIDs,x
         sta wR0
         txa
         and #$000E
@@ -660,7 +660,7 @@
         sbc wCastleListWindowRow,b
         asl a
         tax
-        lda $7F7A72,x
+        lda aCastleListItemIDs,x
         sta wR0
         txa
         and #$000E
@@ -691,7 +691,7 @@
         adc #$0007
         asl a
         tax
-        lda $7F7A72,x
+        lda aCastleListItemIDs,x
         sta wR0
         txa
         and #$000E
@@ -961,7 +961,7 @@
         lda #$0007
         jsl rlPlaySoundEffect
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         bra _A3D6
 
 
@@ -975,7 +975,7 @@
         lda #$0007
         jsl rlPlaySoundEffect
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         bra _A3D6
 
 
@@ -1348,7 +1348,7 @@
         _A5CA
         lda wCastleListSelectedIndex,b
         sta wR0
-        cmp $7F8091
+        cmp wAuguryLastTopic
         bcs _A5F7
         clc
         adc #$0001
@@ -1357,7 +1357,7 @@
         jsl rlPlaySoundEffect
         lda wCastleListWindowRow,b
         sta wR1
-        cmp $7F8091
+        cmp wAuguryLastTopic
         bcs _A5FD
         clc
         adc #$0001
@@ -1468,7 +1468,7 @@
         lda wCastleListSelectedIndex,b
         asl a
         tax
-        lda $7F7C72,x
+        lda aCastleListItemROMPointers,x
         sta wCurrentItemDataROMPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -1871,7 +1871,7 @@
         lda wCastleListSelectedIndex,b
         asl a
         tax
-        lda $7F7C72,x
+        lda aCastleListItemROMPointers,x
         sta wCurrentItemDataROMPointer,b
         jsl rlGetItemEquipmentType
         cmp #$0001
@@ -2119,7 +2119,7 @@
         lsr a
         cmp wCastleListItemCount,b
         bcs _AA0F
-        lda $7F7E72,x
+        lda aCastleListItemUnavailable,x
         bmi _A9F9
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -2195,7 +2195,7 @@
         tax
         jsl rlDrawMenuTextLine
         plx
-        lda $7F7C72,x
+        lda aCastleListItemROMPointers,x
         sta wCurrentItemDataROMPointer,b
         jsl rlGetItemNamePointer
         lda lRoutineVariable+1,b
@@ -2249,16 +2249,16 @@
 
         ; Draws a stock item's price, halved with Bargain; no price for keepers 3, 4 and 7.
 
-        lda $7F8082
-        cmp #$0003
+        lda wKeeper
+        cmp #KEEPER_DEPOT
         beq _AAE6
         cmp #$0004
         beq _AAE6
-        cmp #$0007
+        cmp #KEEPER_ARENA
         beq _AAE6
         phy
         phx
-        lda $7F7872,x
+        lda aCastleListItemRAMPointers,x
         sta wCurrentItemDataRAMPointer,b
         jsl rlGetItemBuyPrice
         sta wTempVariable1,b
@@ -2304,13 +2304,13 @@
 
         phy
         phx
-        lda $7F7872,x
+        lda aCastleListItemRAMPointers,x
         sta wCurrentItemDataRAMPointer,b
         jsl rlGetItemCurrentDurability
         sta wR0
         plx
         ply
-        lda $7F7C72,x
+        lda aCastleListItemROMPointers,x
         sta wCurrentItemDataROMPointer,b
         phy
         phx
@@ -2528,10 +2528,10 @@
         .autsiz
         .databank ?
 
-        lda $7F8082
-        cmp #$0003
+        lda wKeeper
+        cmp #KEEPER_DEPOT
         beq _AC36
-        cmp #$0007
+        cmp #KEEPER_ARENA
         beq _AC36
         txa
         inc a
@@ -2833,9 +2833,9 @@
 
         ; Draws the sprites for the list of the option under the cursor (item icons for the stock list; rsPushInventoryListSprites for the inventory lists).
 
-        lda $7F8087
+        lda lKeeperOptionList+1
         sta lR20+1
-        lda $7F8086
+        lda lKeeperOptionList
         sta lR20
         lda wCastleMenuOptionIndex,b
         tay

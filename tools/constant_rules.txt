@@ -22,3 +22,8 @@ setter    rlCheckIfInventoryItemsHaveSpecifiedSkill      SkillID                
 setter    rlCheckIfUnitHasSpecifiedPersonalSkill         SkillID                       enum
 getter    rlGetFactionRelation                      Allegiance                           enum
 field     wGameStateRoutine[12],b                   GAMESTATE_                           enum
+field     wCastleScreenHandler,b                    CASTLE_SCREEN_                       enum
+field     wCastleCursorState,b                      CASTLE_CURSOR_                       enum
+field     wCastleUnitCommand,b                      CASTLE_COMMAND_                      enum
+field     wCastleTownFacility,b                     CASTLE_TOWN_                         enum
+field     wConversationExitMode,b                   CONVERSATION_EXIT_                   enum

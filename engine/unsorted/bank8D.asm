@@ -3634,15 +3634,15 @@
         .databank ?
 
         lda #$0002
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #$FFFF
         sta $7F7670
         lda #$0004
-        trb wBaseSceneFlags,b
+        trb wConversationFlags,b
         lda #$0008
-        trb wBaseSceneFlags,b
+        trb wConversationFlags,b
         lda #$0001
-        trb wBaseSceneFlags,b
+        trb wConversationFlags,b
         lda $08DC,b
         cmp #$003F
         bcc _B563
@@ -3653,7 +3653,7 @@
         inc $08DC,b
         lda $08DC,b
         sta aDialogue.wUnit1,b
-        sta wBaseSceneRightUnitRAMPointer,b
+        sta wConversationRightUnit,b
         lda $08DC,b
         sec
         sbc #$0019
@@ -3664,15 +3664,15 @@
         adc wR0
         tax
         lda aUnknown8DB5C8+1,x
-        sta lBaseSceneDialoguePointer+1,b
+        sta lConversationDialoguePointer+1,b
         lda aUnknown8DB5C8,x
-        sta lBaseSceneDialoguePointer,b
+        sta lConversationDialoguePointer,b
         lda $08DC,b
         and #$0003
-        sta wBaseSceneArgument,b
-        lda #$0004
-        sta wBaseSceneMode,b
-        lda #$0002
+        sta wConversationBackground,b
+        lda #CONVERSATION_EXIT_CALLBACK
+        sta wConversationExitMode,b
+        lda #CASTLE_SCREEN_CONVERSATION
         sta wCastleScreenHandler,b
         lda #$0002
         sta wScreenFadingProcInput,b

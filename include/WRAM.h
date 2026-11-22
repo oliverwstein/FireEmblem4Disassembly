@@ -662,39 +662,40 @@
     wUnknown000885 .word ?                     ; $000885
     .fill 2                                    ; $000887
 
-    wCastleListSubCount .word ?                ; $000889 ; inventory/convoy item count 0-7
-    wCastleScreenHandler .word ?               ; $00088B ; jump index into aCastleStateHandlers
+    wCastleListSubCount .word ?                ; $000889 ; items in the unit's inventory (0-7)
+    wCastleScreenHandler .word ?               ; $00088B ; CASTLE_SCREEN_* (include/Castle.h)
     wCastleGridCursorXPixel .word ?            ; $00088D ; courtyard cursor X
     wCastleGridCursorYPixel .word ?            ; $00088F ; courtyard cursor Y
-    wCastleCursorState .word ?                 ; $000891 ; castle UI cursor/mode state (0..7, $FFFF)
-    wCastleUnitCommand .word ?                     ; $000893
-    wCastleTownFacility .word ?                     ; $000895
-    wCastleGridSlot .word ?                ; $000897 ; 0-23 slot in 4x6 castle prep grid
-    wCastleGridSavedSlot .word ?           ; $000899 ; saved wCastleGridSlot
-    wCastleSavedUnitRAMPointer .word ?         ; $00089B ; unit pointer saved across castle interior entry
-    wCastleReturnEventFlag .word ?             ; $00089D ; triggers rlUnknown8CED4F on exit
-    wEnteredCastleLocationID .word ?           ; $00089F ; castle location ID entered by player
-    wCastleMenuOptionIndex .word ?             ; $0008A1 ; submenu option index
-    wCastleConfirmCursorIndex .word ?          ; $0008A3 ; yes/no or prompt cursor index
-    wCastleListWindowRow .word ?               ; $0008A5 ; visible cursor row 0-7 in scrolling list
-    wCastleListSelectedIndex .word ?           ; $0008A7 ; selected item index 0..(ItemCount-1)
-    wCastleListItemState .word ?                     ; $0008A9
-    wCastleListItemCount .word ?               ; $0008AB ; total entries in active castle list
+    wCastleCursorState .word ?                 ; $000891 ; CASTLE_CURSOR_* (include/Castle.h)
+    wCastleUnitCommand .word ?                 ; $000893 ; CASTLE_COMMAND_* (include/Castle.h)
+    wCastleTownFacility .word ?                ; $000895 ; CASTLE_TOWN_* (include/Castle.h)
+    wCastleGridSlot .word ?                    ; $000897 ; 0-23, slot on the 4x6 courtyard grid
+    wCastleGridSavedSlot .word ?               ; $000899 ; wCastleGridSlot kept while choosing a target
+    wCastleSavedUnitRAMPointer .word ?         ; $00089B ; the unit that entered the castle ($FFFF none)
+    wCastleReturnEventFlag .word ?             ; $00089D ; nonzero: rlUnknown8CED4F runs before the next conversation
+    wEnteredCastleLocationID .word ?           ; $00089F ; location ID of the castle entered
+    wCastleMenuOptionIndex .word ?             ; $0008A1 ; the keeper option under the cursor
+    wCastleConfirmCursorIndex .word ?          ; $0008A3 ; yes/no cursor (0 yes, 1 no)
+    wCastleListWindowRow .word ?               ; $0008A5 ; cursor row 0-7 in a scrolling list
+    wCastleListSelectedIndex .word ?           ; $0008A7 ; the list entry under the cursor
+    wCastleListItemState .word ?               ; $0008A9 ; ItemState a stock list collects
+    wCastleListItemCount .word ?               ; $0008AB ; entries in the stock list
 
-    wBaseSceneFlags .word ?                    ; $0008AD ; base/interior scene UI bitfield:
-      ; $0001 = left unit display enabled (wBaseSceneLeftUnitRAMPointer)
-      ; $0002 = right unit display enabled (wBaseSceneRightUnitRAMPointer)
-      ; $0004 = draw left portrait/window (rlConversationOpenLeftWindow)
-      ; $0008 = draw right portrait/window (rlConversationOpenRightWindow)
-      ; $0010 = slide/animate left unit slot
-      ; $0020 = slide/animate right unit slot
-      ; $0040 = close left portrait
-      ; $0080 = close right portrait
-    lBaseSceneDialoguePointer .long ?          ; $0008AF ; 24-bit pointer
-    wBaseSceneLeftUnitRAMPointer .word ?       ; $0008B2 ; left unit RAM pointer
-    wBaseSceneRightUnitRAMPointer .word ?      ; $0008B4 ; right unit RAM pointer
-    wBaseSceneArgument .word ?                 ; $0008B6 ; scene/gold/talk argument
-    wBaseSceneMode .word ?                     ; $0008B8 ; screen/conversation mode
+    wConversationFlags .word ?                 ; $0008AD ; the conversation scene's portraits:
+      ; $0001 = left portrait shown (cleared when it has faded out)
+      ; $0002 = right portrait shown
+      ; $0004 = draw the left window frame sprite (rsPushConversationLeftFrame)
+      ; $0008 = draw the right window frame sprite
+      ; $0010 = load the left portrait and fade it in (rsConversationLoadPortraits)
+      ; $0020 = load the right portrait and fade it in
+      ; $0040 = send the left window's tiles (rsConversationDrawWindows)
+      ; $0080 = send the right window's tiles
+    lConversationDialoguePointer .long ?       ; $0008AF ; the dialogue the scene shows
+    wConversationLeftUnit .word ?              ; $0008B2 ; left portrait: unit pointer, character or portrait ID, by step
+    wConversationRightUnit .word ?             ; $0008B4 ; right portrait: likewise
+    wConversationBackground .word ?            ; $0008B6 ; dialogue background (aDialogueBackgroundPointers)
+    wConversationExitMode .word ?              ; $0008B8 ; CONVERSATION_EXIT_* (include/Castle.h)
+    wCastleEventUnit .word ?                   ; $0008BA ; the unit whose castle entry event is running
 
   .endvirtual
 
@@ -2198,6 +2199,53 @@
     aUnitWindowSortScores .fill $32                 ; $7F8407
 
     ; $7F8439
+
+  .endvirtual
+
+  .virtual $7F757A
+
+    ; The castle screen's working variables (engine/castle/). They reuse the map
+    ; buffers (aMovementMap) and the world map reuses $7F8089-$7F808F, so the names
+    ; are only written in the castle and arena files (see tools/name_ram.py).
+
+    aCastleGridCharacters .fill 24 * size(word)       ; $7F757A
+      ; Grid slot -> character index (generation ID - 1, times 2), from
+      ; aCastleGridCharactersGen1/Gen2.
+    aCastleUnitsByCharacter .fill 24 * size(word)     ; $7F75AA
+      ; Character index -> unit RAM pointer, 0 if that character is not in the castle.
+    aCastleCourtyardSpriteX .fill 24 * size(word)     ; $7F75DA
+    aCastleCourtyardSpriteY .fill 24 * size(word)     ; $7F760A
+      ; Character index -> pixel position of its courtyard sprite.
+    wCastleUnitCount .word ?                          ; $7F763A
+    .fill $2E                                         ; $7F763C
+    wCastleFadePortrait .word ?                       ; $7F766A
+      ; What the fade steps draw: 1 the unit's portrait, 2 the list sprites,
+      ; 3 the courtyard portrait (rsCastleDrawFadingPortrait).
+    wCastleStatusScreenUnit .word ?                   ; $7F766C
+      ; The unit X opened the status screen for.
+    .fill 2                                           ; $7F766E
+    wCastleRedrawIcons .word ?                        ; $7F7670
+      ; Nonzero: the next frame redraws the list's item icons instead of sending
+      ; the BG3 tilemap.
+    aCastleListItemIndices .fill $200                 ; $7F7672
+    aCastleListItemRAMPointers .fill $200             ; $7F7872
+    aCastleListItemIDs .fill $200                     ; $7F7A72
+    aCastleListItemROMPointers .fill $200             ; $7F7C72
+    aCastleListItemUnavailable .fill $200             ; $7F7E72
+      ; $FFFF for a stock item that cannot be bought yet.
+    aCastleListInventorySlots .fill $10               ; $7F8072
+      ; The arena's weapon list: inventory slot of each weapon.
+    wKeeper .word ?                                   ; $7F8082
+      ; KEEPER_* (include/Castle.h).
+    .fill 2                                           ; $7F8084
+    lKeeperOptionList .long ?                         ; $7F8086
+      ; The keeper's option codes (rsSetKeeperOptionList): 0 the stock list,
+      ; 1 and 2 the inventory, 3 to 5 no list.
+    wConversationLeftFadeInStep .word ?               ; $7F8089
+    wConversationRightFadeInStep .word ?              ; $7F808B
+    wConversationLeftFadeOutStep .word ?              ; $7F808D
+    wConversationRightFadeOutStep .word ?             ; $7F808F
+    wAuguryLastTopic .word ?                          ; $7F8091
 
   .endvirtual
 

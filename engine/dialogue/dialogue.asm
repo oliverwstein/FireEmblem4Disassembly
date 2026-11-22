@@ -4260,13 +4260,13 @@
               bne +
 
                 ; Left portrait
-                sta wBaseSceneLeftUnitRAMPointer,b
+                sta wConversationLeftUnit,b
                 jsl rlConversationShowLeftPortrait
                 bra _End
 
               ; Right portrait
               +
-              sta wBaseSceneRightUnitRAMPointer,b
+              sta wConversationRightUnit,b
               jsl rlConversationShowRightPortrait
               bra _End
 
@@ -4403,12 +4403,12 @@
         sta aDialogue._Slot[0].wPortraitID,b,x
         bne +
 
-        sta wBaseSceneLeftUnitRAMPointer,b
+        sta wConversationLeftUnit,b
         jsl rlConversationShowLeftPortrait
         bra _End
         
         +
-        sta wBaseSceneRightUnitRAMPointer,b
+        sta wConversationRightUnit,b
         jsl rlConversationShowRightPortrait
         
         _End

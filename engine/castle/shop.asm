@@ -1,5 +1,5 @@
 ; The shop screen (steps $0D/$0E), shared by the item shop, the secondhand shop
-; and the repair shop; keeper $7F8082 chooses the options and lines
+; and the repair shop; keeper wKeeper chooses the options and lines
 ; (aShopDialoguePointers). Buying halves the price with Bargain; a sold item goes
 ; into the castle's secondhand stock. Banks $87 and $8A.
 
@@ -170,7 +170,7 @@
         lda #<>aUnknown8AB230
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #$000E
+        lda #CASTLE_STEP_SHOP
         sta wGameStateStep,b
         rep #$20
         jsl rlEnableVBlank
@@ -199,14 +199,14 @@
         .autsiz
         .databank ?
 
-        ; Loads the background and palette for keeper $7F8082 (0 item shop, 1 secondhand shop, 2 repair shop).
+        ; Loads the background and palette for keeper wKeeper (0 item shop, 1 secondhand shop, 2 repair shop).
 
-        lda $7F8082
-        cmp #$0000
+        lda wKeeper
+        cmp #KEEPER_ITEM_SHOP
         beq _BE76
-        cmp #$0001
+        cmp #KEEPER_SECONDHAND_SHOP
         beq _BEA9
-        cmp #$0002
+        cmp #KEEPER_REPAIR_SHOP
         beq _BEDC
 
         _BE76
@@ -311,86 +311,86 @@
         .autsiz
         .databank ?
 
-        ; Points $7F8086 at keeper $7F8082's option list (aItemShopOptions and the lists after it, by raw address).
+        ; Points lKeeperOptionList at keeper wKeeper's option list (aItemShopOptions and the lists after it, by raw address).
 
-        lda $7F8082
+        lda wKeeper
         beq _BF50
-        cmp #$0001
+        cmp #KEEPER_SECONDHAND_SHOP
         beq _BF60
-        cmp #$0002
+        cmp #KEEPER_REPAIR_SHOP
         beq _BF70
-        cmp #$0003
+        cmp #KEEPER_DEPOT
         beq _BF80
         cmp #$0004
         beq _BF90
-        cmp #$0005
+        cmp #KEEPER_CLASS_CHANGE
         beq _BFA0
         cmp #$0006
         beq _BFB0
-        cmp #$0007
+        cmp #KEEPER_ARENA
         beq _BFC0
 
         _BF50
         lda #$8A00
-        sta $7F8087
+        sta lKeeperOptionList+1
         lda #$D074
-        sta $7F8086
+        sta lKeeperOptionList
         bra _BFD0
 
 
         _BF60
         lda #$8A00
-        sta $7F8087
+        sta lKeeperOptionList+1
         lda #$D07A
-        sta $7F8086
+        sta lKeeperOptionList
         bra _BFD0
 
 
         _BF70
         lda #$8A00
-        sta $7F8087
+        sta lKeeperOptionList+1
         lda #$D07F
-        sta $7F8086
+        sta lKeeperOptionList
         bra _BFD0
 
 
         _BF80
         lda #$8A00
-        sta $7F8087
+        sta lKeeperOptionList+1
         lda #$D083
-        sta $7F8086
+        sta lKeeperOptionList
         bra _BFD0
 
 
         _BF90
         lda #$8A00
-        sta $7F8087
+        sta lKeeperOptionList+1
         lda #$D085
-        sta $7F8086
+        sta lKeeperOptionList
         bra _BFD0
 
 
         _BFA0
         lda #$8A00
-        sta $7F8087
+        sta lKeeperOptionList+1
         lda #$D086
-        sta $7F8086
+        sta lKeeperOptionList
         bra _BFD0
 
 
         _BFB0
         lda #$8A00
-        sta $7F8087
+        sta lKeeperOptionList+1
         lda #$D087
-        sta $7F8086
+        sta lKeeperOptionList
         bra _BFD0
 
 
         _BFC0
         lda #$8A00
-        sta $7F8087
+        sta lKeeperOptionList+1
         lda #$D08A
-        sta $7F8086
+        sta lKeeperOptionList
         bra _BFD0
 
 
@@ -408,13 +408,13 @@
         .autsiz
         .databank ?
 
-        ; Loads the portrait for keeper $7F8082 (aKeeperPortraits).
+        ; Loads the portrait for keeper wKeeper (aKeeperPortraits).
 
         lda wSelectedUnitDataRAMPointer,b
         pha
         lda #$FFFF
         sta $7F8084
-        lda $7F8082
+        lda wKeeper
         asl a
         tax
         lda aKeeperPortraits,x
@@ -461,17 +461,17 @@
 
         ; Draws the list the keeper opens with: the stock, the inventory with sell prices, or with repair costs.
 
-        lda $7F8082
+        lda wKeeper
         beq _C027
-        cmp #$0001
+        cmp #KEEPER_SECONDHAND_SHOP
         beq _C02C
-        cmp #$0002
+        cmp #KEEPER_REPAIR_SHOP
         beq _C031
-        cmp #$0003
+        cmp #KEEPER_DEPOT
         beq _C036
         cmp #$0004
         beq _C03B
-        cmp #$0005
+        cmp #KEEPER_CLASS_CHANGE
         beq _C040
         cmp #$0006
         beq _C045
@@ -536,7 +536,7 @@
         asl a
         tax
         jsr (aShopStepHandlers,x)
-        lda $7F7670
+        lda wCastleRedrawIcons
         bne _C06C
         jsl rlDMAByStruct
 
@@ -547,7 +547,7 @@
 
         _C06C
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
         jsr rsUnknown8AA142
 
         _C076
@@ -618,18 +618,18 @@
 
         ; Sub-state $00: the keeper's greeting. The repair shop sends a unit with no items away; the secondhand shop says it only buys when its stock is empty.
 
-        lda $7F8082
-        cmp #$0001
+        lda wKeeper
+        cmp #KEEPER_SECONDHAND_SHOP
         beq _C130
-        cmp #$0002
+        cmp #KEEPER_REPAIR_SHOP
         beq _C104
 
         _C0C7
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+1,x
         sta lR18+1
@@ -784,11 +784,11 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda $7F8082
+        lda wKeeper
         beq _C1E6
-        cmp #$0001
+        cmp #KEEPER_SECONDHAND_SHOP
         beq _C1E2
-        cmp #$0002
+        cmp #KEEPER_REPAIR_SHOP
         beq _C1DE
 
         _C1DE
@@ -857,11 +857,11 @@
 
 
         _C256
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+55,x
         sta lR18+1
@@ -1025,11 +1025,11 @@
 
 
         _C39F
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+55,x
         sta lR18+1
@@ -1150,11 +1150,11 @@
 
 
         _C4B7
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+55,x
         sta lR18+1
@@ -1210,7 +1210,7 @@
         ; Sub-state $03.
 
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         jsr rsDrawStockItemDetails
         jsr rsPushStockItemTypeIcon
         jsr rsDrawStockList
@@ -1273,7 +1273,7 @@
         lda wCastleListSelectedIndex,b
         asl a
         tax
-        lda $7F7E72,x
+        lda aCastleListItemUnavailable,x
         bmi _C558
         lda wCastleListItemCount,b
         beq _C557
@@ -1292,11 +1292,11 @@
         _C585
         lda #$000A
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+88,x
         sta lR18+1
@@ -1316,11 +1316,11 @@
         _C5C1
         lda #$0021
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+37,x
         sta lR18+1
@@ -1339,18 +1339,18 @@
         stz wCastleListSelectedIndex,b
         jsr rsDrawStockList
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         rts
 
 
         _C610
         lda #$0021
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+133,x
         sta lR18+1
@@ -1371,11 +1371,11 @@
         _C64F
         lda #$0021
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+118,x
         sta lR18+1
@@ -1416,7 +1416,7 @@
         lda wCastleListSelectedIndex,b
         asl a
         tax
-        lda $7F7672,x
+        lda aCastleListItemIndices,x
         sta wRoutineVariable1,b
         jsl rlGetItemRAMStructEntryByPlayerItemIndex
         jsl rlGetItemBuyPrice
@@ -1500,7 +1500,7 @@
         lda wCastleListSelectedIndex,b
         asl a
         tax
-        lda $7F7672,x
+        lda aCastleListItemIndices,x
         sta wRoutineVariable1,b
         jsl rlBuyItemForSelectedUnit
         bcs _C744
@@ -1521,11 +1521,11 @@
         _C746
         lda #$0021
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+118,x
         sta lR18+1
@@ -1566,7 +1566,7 @@
         jsl rlBuildStockList
         jsr rsDrawStockList
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda wCastleListItemCount,b
         beq _C7DC
         lda wCastleListSelectedIndex,b
@@ -1577,11 +1577,11 @@
         dec wCastleListWindowRow,b
 
         _C7A7
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+103,x
         sta lR18+1
@@ -1601,11 +1601,11 @@
         _C7DC
         lda #$0021
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+37,x
         sta lR18+1
@@ -1644,11 +1644,11 @@
 
         ; Sub-state $07: asks whether to buy more and goes straight to sub-state $03.
 
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+103,x
         sta lR18+1
@@ -1688,11 +1688,11 @@
         stz wCastleConfirmCursorIndex,b
         lda #$0021
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+37,x
         sta lR18+1
@@ -1710,7 +1710,7 @@
         stz wCastleListSelectedIndex,b
         jsr rsDrawStockList
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         rts
 
         .databank 0
@@ -1735,7 +1735,7 @@
         ; Sub-state $09.
 
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         jsr rlDrawInventoryItemDetails
         jsr rsPushInventoryItemTypeIcon
         jsr rsDrawInventoryWithSellPrices
@@ -1788,11 +1788,11 @@
         beq _C8E8
         lda #$000A
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+178,x
         sta lR18+1
@@ -1812,11 +1812,11 @@
         _C935
         lda #$0021
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+37,x
         sta lR18+1
@@ -1835,7 +1835,7 @@
         stz wCastleListSelectedIndex,b
         jsr rsDrawInventoryWithSellPrices
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         rts
 
         .databank 0
@@ -1899,7 +1899,7 @@
         jsl rlBuildStockList
         jsr rsDrawInventoryWithSellPrices
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda #$0070
         jsl rlPlaySoundEffect2
         stz wCastleConfirmCursorIndex,b
@@ -1923,11 +1923,11 @@
         lda #$0021
         jsl rlPlaySoundEffect
         stz wCastleConfirmCursorIndex,b
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+148,x
         sta lR18+1
@@ -1969,11 +1969,11 @@
         stz wCastleListSelectedIndex,b
         lda wCastleListSubCount,b
         beq _CA93
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+193,x
         sta lR18+1
@@ -1991,11 +1991,11 @@
 
 
         _CA93
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+37,x
         sta lR18+1
@@ -2011,7 +2011,7 @@
         sta wNextMenuState,b
         jsr rsDrawInventoryWithSellPrices
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         rts
 
         .databank 0
@@ -2036,7 +2036,7 @@
         ; Sub-state $0D.
 
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         jsr rlDrawInventoryItemDetails
         jsr rsPushInventoryItemTypeIcon
         jsr rsDrawInventoryWithRepairCosts
@@ -2101,11 +2101,11 @@
         jsl rlPlaySoundEffect
         jsr rsCheckItemHasFiftyKills
         bcs _CBBD
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+223,x
         sta lR18+1
@@ -2125,11 +2125,11 @@
         _CB7E
         lda #$0021
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+55,x
         sta lR18+1
@@ -2148,11 +2148,11 @@
 
 
         _CBBD
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+253,x
         sta lR18+1
@@ -2183,7 +2183,7 @@
       rsShopRepairCancel ; 8A/CBF2
 
         ; Nothing in the build reaches this. Plays sound $21 and starts the shop
-        ; dialogue picked by $7F8082 from the table at $8A/CF28 (not built).
+        ; dialogue picked by wKeeper from the table at $8A/CF28 (not built).
 
         .al
         .xl
@@ -2192,11 +2192,11 @@
 
         lda #$0021
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+118,x
         sta lR18+1
@@ -2349,11 +2349,11 @@
         lda #$0021
         jsl rlPlaySoundEffect
         stz wCastleConfirmCursorIndex,b
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+148,x
         sta lR18+1
@@ -2374,11 +2374,11 @@
         _CD14
         lda #$0021
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+118,x
         sta lR18+1
@@ -2420,11 +2420,11 @@
         stz wCastleListSelectedIndex,b
         jsr rsDrawInventoryWithRepairCosts
         jsr rsClearItemDetailsWindow
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+238,x
         sta lR18+1
@@ -2462,7 +2462,7 @@
         ; Sub-state $11: the item shop's belongings option.
 
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         jsr rlDrawInventoryItemDetails
         jsr rsPushInventoryItemTypeIcon
         jsr rsDrawInventoryWithSellPrices
@@ -2519,11 +2519,11 @@
         _CDDC
         lda #$0021
         jsl rlPlaySoundEffect
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+37,x
         sta lR18+1
@@ -2542,7 +2542,7 @@
         stz wCastleListSelectedIndex,b
         jsr rsDrawInventoryWithSellPrices
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         rts
 
         .databank 0
@@ -2570,7 +2570,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0012
+        lda #CASTLE_STEP_REOPEN_TOWN_SAME_SONG
         sta wGameStateStep,b
         rts
 
@@ -2595,13 +2595,13 @@
 
         ; Sub-state $14: blanks the screen and returns to the courtyard (step $11).
 
-        lda #$0000
+        lda #CASTLE_CURSOR_GRID
         sta wCastleCursorState,b
         sep #$20
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0011
+        lda #CASTLE_STEP_RETURN_TO_COURTYARD
         sta wGameStateStep,b
         rts
 
@@ -2619,7 +2619,7 @@
 
       aShopDialoguePointers ; 8A/CEB3
 
-        ; One per shop message (indexed by $7F8082 * 3): the item shop, secondhand
+        ; One per shop message (indexed by wKeeper * 3): the item shop, secondhand
         ; shop, repair shop, depot and arena keepers. Text in text/dialogue/Shops.
 
         .long dialogueShop00
@@ -2750,7 +2750,7 @@
         lda #$0007
         jsl rlPlaySoundEffect
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         bra _D02D
 
 
@@ -2764,7 +2764,7 @@
         lda #$0007
         jsl rlPlaySoundEffect
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         bra _D02D
 
 

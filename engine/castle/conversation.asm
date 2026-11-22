@@ -1,6 +1,6 @@
 ; The castle conversation scene (steps $0B/$0C): two portraits over a dialogue
 ; background (fountain, gate, alley, hallway, throne, cloister), with windows and
-; fades driven by wBaseSceneFlags, and an exit chosen by wBaseSceneMode. Events
+; fades driven by wConversationFlags, and an exit chosen by wConversationExitMode. Events
 ; and the dialogue engine start it. Also the background loader and the fountain
 ; and throne animations. Banks $8A and $8C.
 
@@ -17,12 +17,12 @@
         .autsiz
         .databank ?
 
-        ; Decompresses and loads dialogue background wBaseSceneArgument (aDialogueBackgroundPointers): two tile sets, the palette and two tilemaps.
+        ; Decompresses and loads dialogue background wConversationBackground (aDialogueBackgroundPointers): two tile sets, the palette and two tilemaps.
 
-        lda wBaseSceneArgument,b
+        lda wConversationBackground,b
         asl a
         clc
-        adc wBaseSceneArgument,b
+        adc wConversationBackground,b
         tax
         lda aDialogueBackgroundPointers+1,x
         sta lR19+1
@@ -221,7 +221,7 @@
         .autsiz
         .databank ?
 
-        ; Blanks the screen and loads a conversation scene: background wBaseSceneArgument, the two portraits and their windows.
+        ; Blanks the screen and loads a conversation scene: background wConversationBackground, the two portraits and their windows.
 
         phk
         plb
@@ -288,29 +288,29 @@
         lda #<>aDecompressionDMAEntry8AD952
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0004
         beq _D8CB
         jsl rlConversationOpenLeftWindow
 
         _D8CB
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0008
         beq _D8D7
         jsl rlConversationOpenRightWindow
 
         _D8D7
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0001
         beq _D8E6
-        lda wBaseSceneLeftUnitRAMPointer,b
+        lda wConversationLeftUnit,b
         jsl rlLoadKeeperPortrait
 
         _D8E6
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0002
         beq _D8F5
-        lda wBaseSceneRightUnitRAMPointer,b
+        lda wConversationRightUnit,b
         jsl rlLoadUnitPortrait
 
         _D8F5
@@ -330,10 +330,10 @@
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
         jsr rsResetFountainAnimation
-        lda #$000C
+        lda #CASTLE_STEP_CONVERSATION
         sta wGameStateStep,b
-        lda wBaseSceneMode,b
-        cmp #$0004
+        lda wConversationExitMode,b
+        cmp #CONVERSATION_EXIT_CALLBACK
         beq _D938
         rep #$20
         jsl rlEnableVBlank
@@ -376,7 +376,7 @@
         .autsiz
         .databank ?
 
-        lda wBaseSceneArgument,b
+        lda wConversationBackground,b
         cmp #$0000
         beq _D963
         rts
@@ -411,7 +411,7 @@
         .autsiz
         .databank ?
 
-        ; Animates the background, loads portraits as wBaseSceneFlags asks, runs sub-state wMenuState (aConversationSceneStepHandlers) and draws both portraits.
+        ; Animates the background, loads portraits as wConversationFlags asks, runs sub-state wMenuState (aConversationSceneStepHandlers) and draws both portraits.
 
         phb
         php
@@ -419,7 +419,7 @@
         plb
         jsr rsAnimateConversationBackground
 
-        lda $7F7670
+        lda wCastleRedrawIcons
         bne +
 
           jsl rlDMAByStruct
@@ -429,7 +429,7 @@
 
         +
         lda #0
-        sta $7F7670
+        sta wCastleRedrawIcons
         jsr rsConversationLoadPortraits
         jsr rsConversationDrawWindows
 
@@ -454,7 +454,7 @@
         tax
         jsr (aConversationSceneStepHandlers,x)
 
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0001
         beq +
 
@@ -467,7 +467,7 @@
           jsr rsPushConversationLeftFrame
 
         +
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0002
         beq +
 
@@ -509,9 +509,9 @@
         .databank ?
 
         lda #$0044
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #1
-        sta $7F7670
+        sta wCastleRedrawIcons
         rtl
 
         .databank 0
@@ -534,9 +534,9 @@
         .databank ?
 
         lda #$0088
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #$0001
-        sta $7F7670
+        sta wCastleRedrawIcons
         rtl
 
         .databank 0
@@ -550,7 +550,7 @@
         .autsiz
         .databank ?
 
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0040
         beq _DA3F
         jsl rlDMAByStruct
@@ -558,10 +558,10 @@
           .structDMAToVRAM gUnknownDA6800, $0240, $80, $E800
 
         lda #$0040
-        trb wBaseSceneFlags,b
+        trb wConversationFlags,b
 
         _DA3F
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0080
         beq _DA5A
         jsl rlDMAByStruct
@@ -569,7 +569,7 @@
           .structDMAToVRAM gUnknownDA6D00, $0240, $80, $ED00
 
         lda #$0080
-        trb wBaseSceneFlags,b
+        trb wConversationFlags,b
 
         _DA5A
         rts
@@ -586,7 +586,7 @@
         .databank ?
 
         lda #$0004
-        trb wBaseSceneFlags,b
+        trb wConversationFlags,b
         jsl rlDMAByStruct
 
           .structDMAToVRAM gUnknownDA6A40, $0240, $80, $E800
@@ -605,7 +605,7 @@
         .databank ?
 
         lda #$0008
-        trb wBaseSceneFlags,b
+        trb wConversationFlags,b
         jsl rlDMAByStruct
 
           .structDMAToVRAM gUnknownDA6A40, $0240, $80, $ED00
@@ -630,16 +630,16 @@
         .autsiz
         .databank ?
 
-        ; Loads the left and/or right portrait wBaseSceneFlags asks for and starts its fade-in proc.
+        ; Loads the left and/or right portrait wConversationFlags asks for and starts its fade-in proc.
 
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0010
         beq +
 
-          lda wBaseSceneLeftUnitRAMPointer,b
+          lda wConversationLeftUnit,b
           jsl rlLoadKeeperPortrait
           lda #$0010
-          trb wBaseSceneFlags,b
+          trb wConversationFlags,b
           lda #(`procConversationFadeInLeftPortrait)<<8
           sta lR44+1
           lda #<>procConversationFadeInLeftPortrait
@@ -647,14 +647,14 @@
           jsl rlProcEngineCreateProc
 
         +
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0020
         beq +
 
-          lda wBaseSceneRightUnitRAMPointer,b
+          lda wConversationRightUnit,b
           jsl rlLoadUnitPortrait
           lda #$0020
-          trb wBaseSceneFlags,b
+          trb wConversationFlags,b
           lda #(`procConversationFadeInRightPortrait)<<8
           sta lR44+1
           lda #<>procConversationFadeInRightPortrait
@@ -673,9 +673,9 @@
         .databank ?
 
         lda #$0011
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #1
-        sta $7F7670
+        sta wCastleRedrawIcons
         rtl
 
         .databank 0
@@ -687,9 +687,9 @@
         .databank ?
 
         lda #$0022
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #1
-        sta $7F7670
+        sta wCastleRedrawIcons
         rtl
 
         .databank 0
@@ -741,7 +741,7 @@
         .autsiz
         .databank ?
 
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0004
         beq _DB2F
         lda #$0050
@@ -790,7 +790,7 @@
         .autsiz
         .databank ?
 
-        lda wBaseSceneFlags,b
+        lda wConversationFlags,b
         bit #$0008
         beq _DB62
         lda #$0090
@@ -850,13 +850,13 @@
         .autsiz
         .databank ?
 
-        ; Sub-state $00: starts lBaseSceneDialoguePointer.
+        ; Sub-state $00: starts lConversationDialoguePointer.
 
         jsl rlResetDialogueEngine
 
         lda $08AF+1,b
         sta $24+1
-        lda lBaseSceneDialoguePointer,b
+        lda lConversationDialoguePointer,b
         sta $24
         lda #2
         jsl rlDialogueStartTextAndHDMA
@@ -868,8 +868,8 @@
         ldx #0
         jsr rsConversationSetupSlots
 
-        lda wBaseSceneMode,b
-        cmp #4
+        lda wConversationExitMode,b
+        cmp #CONVERSATION_EXIT_CALLBACK
         bne +
 
           lda #$081E
@@ -940,22 +940,22 @@
         .autsiz
         .databank ?
 
-        ; Sub-state $02: leaves by wBaseSceneMode: 0 the courtyard, 1 the town, 3 the map, 4 a fade then rlUnknown8DB52C, 5 a fade out.
+        ; Sub-state $02: leaves by wConversationExitMode: 0 the courtyard, 1 the town, 3 the map, 4 a fade then rlUnknown8DB52C, 5 a fade out.
 
-        lda wBaseSceneMode,b
-        cmp #$0000
+        lda wConversationExitMode,b
+        cmp #CONVERSATION_EXIT_COURTYARD
         beq _DC41
-        cmp #$0001
+        cmp #CONVERSATION_EXIT_TOWN
         beq _DC7A
-        cmp #$0004
+        cmp #CONVERSATION_EXIT_CALLBACK
         beq _DC73
-        cmp #$0005
+        cmp #CONVERSATION_EXIT_FADE_OUT
         beq _DC5E
-        cmp #$0003
+        cmp #CONVERSATION_EXIT_MAP
         beq _DCB6
 
         _DC41
-        lda #$0000
+        lda #CASTLE_CURSOR_GRID
         sta wCastleCursorState,b
         jsl rlBuildCastleUnitList
         jsl rlCastleBuildCourtyardTables
@@ -963,7 +963,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0011
+        lda #CASTLE_STEP_RETURN_TO_COURTYARD
         sta wGameStateStep,b
         rts
 
@@ -990,25 +990,25 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0012
+        lda #CASTLE_STEP_REOPEN_TOWN_SAME_SONG
         sta wGameStateStep,b
         lda #$0000
         jsl rlGetFactionSlotLocationID
         cmp wEnteredCastleLocationID,b
         bne _DCA9
-        lda #$0000
+        lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b
         jsl rlBuildCastleUnitList
         jsl rlCastleBuildCourtyardTables
-        lda $08BA,b
+        lda wCastleEventUnit,b
         sta wSelectedUnitDataRAMPointer,b
         rts
 
 
         _DCA9
-        lda #$0001
+        lda #CASTLE_SCREEN_TOWN
         sta wCastleScreenHandler,b
-        lda $08BA,b
+        lda wCastleEventUnit,b
         sta wSelectedUnitDataRAMPointer,b
         rts
 
@@ -1209,7 +1209,7 @@
         .autsiz
         .databank ?
 
-        lda wBaseSceneArgument,b
+        lda wConversationBackground,b
         asl a
         tax
         jsr (aConversationBackgroundAnimations,x)
@@ -1394,7 +1394,7 @@
         dec x
         bpl _E160
         lda #$0000
-        sta $7F8089
+        sta wConversationLeftFadeInStep
         rtl
 
         .databank 0
@@ -1408,7 +1408,7 @@
         .autsiz
         .databank ?
 
-        lda $7F8089
+        lda wConversationLeftFadeInStep
         sta aPaletteFading.wCurrentStep,b
         lda #$0010
         sta aPaletteFading,b
@@ -1421,7 +1421,7 @@
 
         _E189
         lda aPaletteFading.wCurrentStep,b
-        sta $7F8089
+        sta wConversationLeftFadeInStep
         rtl
 
 
@@ -1490,7 +1490,7 @@
           bpl -
 
         lda #0
-        sta $7F808B
+        sta wConversationRightFadeInStep
         rtl
 
         .databank 0
@@ -1509,7 +1509,7 @@
         .autsiz
         .databank ?
 
-        lda $7F808B
+        lda wConversationRightFadeInStep
 
         sta aPaletteFading.wCurrentStep,b
         lda #16
@@ -1525,7 +1525,7 @@
 
           -
           lda aPaletteFading.wCurrentStep,b
-          sta $7F808B
+          sta wConversationRightFadeInStep
           rtl
 
         +
@@ -1565,7 +1565,7 @@
         .databank ?
 
         lda #0
-        sta $7F808D
+        sta wConversationLeftFadeOutStep
         rtl
 
         .databank 0
@@ -1576,7 +1576,7 @@
         .autsiz
         .databank ?
 
-        lda $7F808D
+        lda wConversationLeftFadeOutStep
         sta aPaletteFading.wCurrentStep,b
         lda #0
         sta aPaletteFading.wDesiredColor,b
@@ -1591,7 +1591,7 @@
 
         -
         lda aPaletteFading.wCurrentStep,b
-        sta $7F808D
+        sta wConversationLeftFadeOutStep
         rtl
 
         +
@@ -1605,7 +1605,7 @@
         bcs +
 
           lda #$0001
-          trb wBaseSceneFlags,b
+          trb wConversationFlags,b
 
         +
         jsl rlProcEngineFreeProc
@@ -1654,7 +1654,7 @@
         .databank ?
 
         lda #0
-        sta $7F808F
+        sta wConversationRightFadeOutStep
         rtl
 
         .databank 0
@@ -1665,7 +1665,7 @@
         .autsiz
         .databank ?
 
-        lda $7F808F
+        lda wConversationRightFadeOutStep
         sta aPaletteFading.wCurrentStep,b
         lda #0
         sta aPaletteFading.wDesiredColor,b
@@ -1679,7 +1679,7 @@
 
           -
           lda aPaletteFading.wCurrentStep,b
-          sta $7F808F
+          sta wConversationRightFadeOutStep
           rtl
 
         +
@@ -1693,7 +1693,7 @@
         bcs +
 
           lda #$0002
-          trb wBaseSceneFlags,b
+          trb wConversationFlags,b
 
         +
         jsl rlProcEngineFreeProc

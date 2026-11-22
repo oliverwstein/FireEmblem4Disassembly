@@ -447,14 +447,14 @@
         rep #$20
         lda $7F8183
         and #$00FF
-        sta $7F8091
+        sta wAuguryLastTopic
         jsr rsDrawAuguryTopics
         jsr rsDrawCastleUnitMoney
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $7000
 
-        lda #$0006
+        lda #CASTLE_STEP_AUGURY
         sta wGameStateStep,b
         rep #$20
         jsl rlEnableVBlank
@@ -490,7 +490,7 @@
         phk
         plb
         .databank $8A
-        lda $7F7670
+        lda wCastleRedrawIcons
         bne _FA4D
         jsl rlDMAByStruct
 
@@ -501,7 +501,7 @@
 
         _FA4D
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
 
         _FA54
         lda wMenuState,b
@@ -678,7 +678,7 @@
 
         _FB1D
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda #$000A
         jsl rlPlaySoundEffect
         lda #$0005
@@ -728,7 +728,7 @@
         lda #$0001
         jsl rlPushCastleHandCursor
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda wCastleListSelectedIndex,b
         tax
         lda $7F8184,x
@@ -922,7 +922,7 @@
         .databank ?
 
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda #(`dialogueShopUnknown8AD648)<<8
         sta lR18+1
         lda #<>dialogueShopUnknown8AD648
@@ -954,7 +954,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0012
+        lda #CASTLE_STEP_REOPEN_TOWN_SAME_SONG
         sta wGameStateStep,b
         rts
 

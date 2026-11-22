@@ -6758,21 +6758,21 @@
         .databank ?
 
         lda #$0001
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #$0002
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #$0004
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #$0008
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda wSelectedUnitDataRAMPointer,b
-        sta wBaseSceneLeftUnitRAMPointer,b
+        sta wConversationLeftUnit,b
         lda wSelectedUnitDataRAMPointer,b
-        sta wBaseSceneRightUnitRAMPointer,b
-        lda #$0003
-        sta wBaseSceneMode,b
+        sta wConversationRightUnit,b
+        lda #CONVERSATION_EXIT_MAP
+        sta wConversationExitMode,b
         jsl rlUnknown88B3AF
-        lda #$0002
+        lda #CASTLE_SCREEN_CONVERSATION
         sta wCastleScreenHandler,b
         lda #$B6B6
         sta aProcSystem.wInput0,b

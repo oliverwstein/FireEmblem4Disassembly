@@ -29,9 +29,9 @@
 
         _8214
         lda wCastleCursorState,b
-        cmp #$0001
+        cmp #CASTLE_CURSOR_COMMANDS
         beq _8223
-        cmp #$0003
+        cmp #CASTLE_CURSOR_TOWN
         beq _8227
         bra _822B
 
@@ -51,9 +51,9 @@
         jsr rsCastleCourtyardButtons
         stz wMapScrollDirectionIdentifier,b
         lda wCastleCursorState,b
-        cmp #$0004
+        cmp #CASTLE_CURSOR_STAFF_TARGET
         beq _827D
-        cmp #$0007
+        cmp #CASTLE_CURSOR_GAVE
         bne _8266
         stz wCastleCursorState,b
         bra _827D
@@ -64,9 +64,9 @@
         sta wMapScrollDirectionIdentifier,b
         beq _8266
         lda wCastleCursorState,b
-        cmp #$0004
+        cmp #CASTLE_CURSOR_STAFF_TARGET
         beq _8263
-        cmp #$0005
+        cmp #CASTLE_CURSOR_GIVE_TARGET
         beq _8263
         jsr rsCastleGridMoveCursor
         bra _8266
@@ -113,9 +113,9 @@
         lda #$0000
         sta wR4
         lda wCastleCursorState,b
-        cmp #$0004
+        cmp #CASTLE_CURSOR_STAFF_TARGET
         beq _82B4
-        cmp #$0005
+        cmp #CASTLE_CURSOR_GIVE_TARGET
         beq _82B4
         bra _82B9
 
@@ -142,7 +142,7 @@
         jsr rsCastleCourtyardButtons
         lda wCastleCursorState,b
         beq _82DC
-        cmp #$0003
+        cmp #CASTLE_CURSOR_TOWN
         beq _8313
 
         _82DC
@@ -360,7 +360,7 @@
 
 
         _8420
-        lda $7F763A
+        lda wCastleUnitCount
         beq _847D
         lda wTempVariable1,b
         beq _846D
@@ -371,17 +371,17 @@
         _8432
         asl a
         tax
-        lda $7F757A,x
+        lda aCastleGridCharacters,x
         asl a
         tax
-        lda $7F75AA,x
+        lda aCastleUnitsByCharacter,x
         beq _8420
         lda wTempVariable1,b
         bra _8401
 
 
         _8445
-        lda $7F763A
+        lda wCastleUnitCount
         beq _847D
         lda wTempVariable1,b
         cmp #$0017
@@ -393,10 +393,10 @@
         _845A
         asl a
         tax
-        lda $7F757A,x
+        lda aCastleGridCharacters,x
         asl a
         tax
-        lda $7F75AA,x
+        lda aCastleUnitsByCharacter,x
         beq _8445
         lda wTempVariable1,b
         bra _8401
@@ -491,9 +491,9 @@
         rep #$20
         lda wCastleCursorState,b
         beq _84EF
-        cmp #$0004
+        cmp #CASTLE_CURSOR_STAFF_TARGET
         beq _84EF
-        cmp #$0005
+        cmp #CASTLE_CURSOR_GIVE_TARGET
         beq _84EF
         jml _857E
 
@@ -502,10 +502,10 @@
         lda wCastleGridSlot,b
         asl a
         tax
-        lda $7F757A,x
+        lda aCastleGridCharacters,x
         asl a
         tax
-        lda $7F75AA,x
+        lda aCastleUnitsByCharacter,x
         beq _857E
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitNamePointer
@@ -722,7 +722,7 @@
         sta wTempVariable2,b
 
         _86A3
-        lda $7F763A
+        lda wCastleUnitCount
         beq _870B
         lda wTempVariable1,b
         beq _86E6
@@ -733,10 +733,10 @@
         _86B5
         asl a
         tax
-        lda $7F757A,x
+        lda aCastleGridCharacters,x
         asl a
         tax
-        lda $7F75AA,x
+        lda aCastleUnitsByCharacter,x
         beq _86A3
         sta wRoutineVariable1,b
         lda wSelectedUnitDataRAMPointer,b
@@ -802,7 +802,7 @@
         sta wTempVariable2,b
 
         _8716
-        lda $7F763A
+        lda wCastleUnitCount
         beq _8781
         lda wTempVariable1,b
         cmp #$0017
@@ -814,10 +814,10 @@
         _872B
         asl a
         tax
-        lda $7F757A,x
+        lda aCastleGridCharacters,x
         asl a
         tax
-        lda $7F75AA,x
+        lda aCastleUnitsByCharacter,x
         beq _8716
         sta wRoutineVariable1,b
         lda wSelectedUnitDataRAMPointer,b
@@ -1396,18 +1396,18 @@
         lda wCastleGridSlot,b
         asl a
         tax
-        lda $7F757A,x
+        lda aCastleGridCharacters,x
         asl a
         tax
-        lda $7F75AA,x
+        lda aCastleUnitsByCharacter,x
         beq _8A1D
         sta wSelectedUnitDataRAMPointer,b
-        sta $7F766C
-        lda #$FFFF
+        sta wCastleStatusScreenUnit
+        lda #CASTLE_CURSOR_STATUS_SCREEN
         sta wCastleCursorState,b
         jsl rlGetSelectedUnitDeploymentOffset
         sta wActiveUnitDeploymentOffset,b
-        lda #$0002
+        lda #CASTLE_STEP_WAIT
         sta wGameStateStep,b
         lda #$B6B6
         sta $7F8183
@@ -1436,13 +1436,13 @@
         .databank ?
 
         lda wCastleCursorState,b
-        cmp #$0001
+        cmp #CASTLE_CURSOR_COMMANDS
         beq _8AA0
-        cmp #$0003
+        cmp #CASTLE_CURSOR_TOWN
         beq _8AA4
-        cmp #$0004
+        cmp #CASTLE_CURSOR_STAFF_TARGET
         beq _8AA8
-        cmp #$0005
+        cmp #CASTLE_CURSOR_GIVE_TARGET
         beq _8AA8
         jml _8B48
 
@@ -1465,10 +1465,10 @@
         lda wCastleGridSlot,b
         asl a
         tax
-        lda $7F757A,x
+        lda aCastleGridCharacters,x
         asl a
         tax
-        lda $7F75AA,x
+        lda aCastleUnitsByCharacter,x
         beq _8A9F
         sta wRoutineVariable1,b
         ldx wActiveUnitDeploymentOffset,b
@@ -1500,7 +1500,7 @@
         lda aCastleGridCursorY,x
         sta wCastleGridCursorYPixel,b
         lda wCastleCursorState,b
-        cmp #$0005
+        cmp #CASTLE_CURSOR_GIVE_TARGET
         beq _8B17
         jsl rlBuildCastleActionRounds
         rts
@@ -1508,7 +1508,7 @@
 
         _8B17
         jsl rlCastleGiveMoney
-        lda #$0007
+        lda #CASTLE_CURSOR_GAVE
         sta wCastleCursorState,b
         rts
 
@@ -1542,10 +1542,10 @@
         lda wCastleGridSlot,b
         asl a
         tax
-        lda $7F757A,x
+        lda aCastleGridCharacters,x
         asl a
         tax
-        lda $7F75AA,x
+        lda aCastleUnitsByCharacter,x
         beq _8B44
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitStates
@@ -1559,7 +1559,7 @@
         sta bBufferTM
         rep #$20
         jsr rsCastleDrawUnitCommandName
-        lda #$0001
+        lda #CASTLE_CURSOR_COMMANDS
         sta wCastleCursorState,b
         jsl rlGetSelectedUnitCharacterID
         jsl rlLoadCourtyardPortrait
@@ -1593,13 +1593,13 @@
 
         lda wCastleCursorState,b
         beq _8BD2
-        cmp #$0001
+        cmp #CASTLE_CURSOR_COMMANDS
         beq _8C28
-        cmp #$0003
+        cmp #CASTLE_CURSOR_TOWN
         beq _8BD9
-        cmp #$0004
+        cmp #CASTLE_CURSOR_STAFF_TARGET
         beq _8BF6
-        cmp #$0005
+        cmp #CASTLE_CURSOR_GIVE_TARGET
         beq _8BF6
 
         _8BC4
@@ -1609,28 +1609,28 @@
         _8BC5
         jsl rlSortieUnitFromCastle
         bcs _8BC4
-        lda #$0016
+        lda #CASTLE_STEP_EXIT_TO_MAP
         sta wGameStateStep,b
         rts
 
 
         _8BD2
-        lda #$0016
+        lda #CASTLE_STEP_EXIT_TO_MAP
         sta wGameStateStep,b
         rts
 
 
         _8BD9
         lda wCastleScreenHandler,b
-        cmp #$0001
+        cmp #CASTLE_SCREEN_TOWN
         beq _8BC5
-        lda #$0000
+        lda #CASTLE_CURSOR_GRID
         sta wCastleCursorState,b
         sep #$20
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0014
+        lda #CASTLE_STEP_RETURN_TO_COURTYARD_2
         sta wGameStateStep,b
         rts
 
@@ -1645,7 +1645,7 @@
         lda aCastleGridCursorY,x
         sta wCastleGridCursorYPixel,b
         jsl rlCastleDrawInfoLine
-        lda #$0000
+        lda #CASTLE_CURSOR_GRID
         sta wCastleCursorState,b
         jsl rlUnknown85921D
         lda #$0800
@@ -2108,15 +2108,15 @@
 
         lda wCastleUnitCommand,b
         beq _8FE4
-        cmp #$0001
+        cmp #CASTLE_COMMAND_SORTIE
         beq _8FB6
-        cmp #$0002
+        cmp #CASTLE_COMMAND_GUARD
         beq _8FDC
-        cmp #$0003
+        cmp #CASTLE_COMMAND_CLASS_CHANGE
         beq _8FE0
-        cmp #$0004
+        cmp #CASTLE_COMMAND_STAFF_OR_DANCE
         beq _9002
-        cmp #$0005
+        cmp #CASTLE_COMMAND_GIVE
         beq _9021
         rts
 
@@ -2138,7 +2138,7 @@
         sta wActiveUnitDeploymentOffset,b
         lda #$FFFF
         sta wMapActionMode,b
-        lda #$0016
+        lda #CASTLE_STEP_EXIT_TO_MAP
         sta wGameStateStep,b
         rts
 
@@ -2155,12 +2155,12 @@
 
         _8FE4
         jsr rsCastleFadeSongIfChanging
-        lda #$000F
+        lda #CASTLE_STEP_FADE_OUT
         sta wGameStateStep,b
-        lda #$0015
+        lda #CASTLE_STEP_REOPEN_TOWN
         sta wNextMenuState,b
         lda #$0003
-        sta $7F766A
+        sta wCastleFadePortrait
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -2212,14 +2212,14 @@
         lda wCurrentChapter,b
         cmp #$0006
         beq _9061
-        lda #$0003
+        lda #CASTLE_CURSOR_TOWN
         sta wCastleCursorState,b
-        lda #$0009
+        lda #CASTLE_STEP_CLASS_CHANGE_SETUP
         sta wGameStateStep,b
         lda #$0003
         sta wCastleListItemState,b
-        lda #$0005
-        sta $7F8082
+        lda #KEEPER_CLASS_CHANGE
+        sta wKeeper
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -2275,7 +2275,7 @@
         tax
         lda #$0001
         jsl rlUnknown84D03E
-        lda #$0016
+        lda #CASTLE_STEP_EXIT_TO_MAP
         sta wGameStateStep,b
         rts
 
@@ -2457,7 +2457,7 @@
         .autsiz
         .databank ?
 
-        lda #$0005
+        lda #CASTLE_CURSOR_GIVE_TARGET
         sta wCastleCursorState,b
         jsl rlGetSelectedUnitDeploymentOffset
         sta wActiveUnitDeploymentOffset,b
@@ -2559,7 +2559,7 @@
 
         ; Called by the castle staff menu: wCastleCursorState 4, cursor on the first unit in the target list.
 
-        lda #$0004
+        lda #CASTLE_CURSOR_STAFF_TARGET
         sta wCastleCursorState,b
         stz wCastleGridSlot,b
         jsr rsCastleGridFindNextTarget
@@ -2593,7 +2593,7 @@
         lda wRoutineVariable1,b
         sta wActiveUnitDeploymentOffset,b
         jsl rlUnknown8881DE
-        lda #$0016
+        lda #CASTLE_STEP_EXIT_TO_MAP
         sta wGameStateStep,b
 
         _92D5
@@ -2632,7 +2632,7 @@
         sec
         sbc #$0010
         sta wCursorYOffset,b
-        lda #$0016
+        lda #CASTLE_STEP_EXIT_TO_MAP
         sta wGameStateStep,b
 
         _92FE
@@ -2659,7 +2659,7 @@
         sta bBufferTM
         rep #$20
         jsr rsCastleDrawUnitCommandName
-        lda #$0001
+        lda #CASTLE_CURSOR_COMMANDS
         sta wCastleCursorState,b
         jsl rlGetSelectedUnitCharacterID
         jsl rlLoadCourtyardPortrait
@@ -2738,7 +2738,7 @@
         .autsiz
         .databank ?
 
-        lda #$0005
+        lda #CASTLE_CURSOR_GIVE_TARGET
         sta wCastleCursorState,b
         jsl rlCastleDrawInfoLine
         rtl
@@ -2763,7 +2763,7 @@
         .autsiz
         .databank ?
 
-        ; A on a facility button the castle has (rlGetCastleFacilities): chooses the facility's step and keeper ($7F8082).
+        ; A on a facility button the castle has (rlGetCastleFacilities): chooses the facility's step and keeper (wKeeper).
 
         jsl rlGetCastleFacilities
         sta wR0
@@ -2777,15 +2777,15 @@
         beq _93BE
         lda wCastleTownFacility,b
         beq _93EB
-        cmp #$0001
+        cmp #CASTLE_TOWN_SECONDHAND_SHOP
         beq _93D5
-        cmp #$0002
+        cmp #CASTLE_TOWN_DEPOT
         beq _9423
-        cmp #$0003
+        cmp #CASTLE_TOWN_ARENA
         beq _940A
-        cmp #$0004
+        cmp #CASTLE_TOWN_AUGURY
         beq _9401
-        cmp #$0005
+        cmp #CASTLE_TOWN_ITEM_SHOP
         beq _93BF
 
         _93BE
@@ -2793,43 +2793,43 @@
 
 
         _93BF
-        lda #$000D
+        lda #CASTLE_STEP_SHOP_SETUP
         sta wGameStateStep,b
         lda #$0004
         sta wCastleListItemState,b
-        lda #$0000
-        sta $7F8082
+        lda #KEEPER_ITEM_SHOP
+        sta wKeeper
         bra _944E
 
         rts
 
 
         _93D5
-        lda #$000D
+        lda #CASTLE_STEP_SHOP_SETUP
         sta wGameStateStep,b
         lda #$0005
         sta wCastleListItemState,b
-        lda #$0001
-        sta $7F8082
+        lda #KEEPER_SECONDHAND_SHOP
+        sta wKeeper
         bra _944E
 
         rts
 
 
         _93EB
-        lda #$000D
+        lda #CASTLE_STEP_SHOP_SETUP
         sta wGameStateStep,b
         lda #$0004
         sta wCastleListItemState,b
-        lda #$0002
-        sta $7F8082
+        lda #KEEPER_REPAIR_SHOP
+        sta wKeeper
         bra _944E
 
         rts
 
 
         _9401
-        lda #$0005
+        lda #CASTLE_STEP_AUGURY_SETUP
         sta wGameStateStep,b
         bra _944E
 
@@ -2839,10 +2839,10 @@
         _940A
         lda wSelectedUnitDataRAMPointer,b
         sta wCastleSavedUnitRAMPointer,b
-        lda #$0003
+        lda #CASTLE_STEP_ARENA_SETUP
         sta wGameStateStep,b
-        lda #$0007
-        sta $7F8082
+        lda #KEEPER_ARENA
+        sta wKeeper
         stz $0AD7,b
         bra _944E
 
@@ -2850,12 +2850,12 @@
 
 
         _9423
-        lda #$0007
+        lda #CASTLE_STEP_DEPOT_SETUP
         sta wGameStateStep,b
         lda #$0002
         sta wCastleListItemState,b
-        lda #$0003
-        sta $7F8082
+        lda #KEEPER_DEPOT
+        sta wKeeper
         bra _944E
 
         rts
@@ -2895,7 +2895,7 @@
 
         ; Read by rsCastleEnterFacility.
 
-        .word $0020, $0040, $0010, $0004, $0008, $0080
+        .word CastleFacilityRepairShop, CastleFacilitySecondhandShop, CastleFacilityDepot, CastleFacilityArena, CastleFacilityAugury, CastleFacilityItemShop
 
         ; 8A/946A
 
@@ -2935,8 +2935,8 @@
         bcc +
 
           lda wSelectedUnitDataRAMPointer,b
-          sta $08BA,b
-          lda #2
+          sta wCastleEventUnit,b
+          lda #CASTLE_STEP_WAIT
           sta wGameStateStep,b
           rtl
 
@@ -2966,10 +2966,10 @@
         jsl rlLoadUnitPortrait
         jsl rlCastleFillVRAM2400
         lda #1
-        sta $7F766A
-        lda #$0010
+        sta wCastleFadePortrait
+        lda #CASTLE_STEP_FADE_IN
         sta wGameStateStep,b
-        lda #1
+        lda #CASTLE_STEP_COURTYARD
         sta wNextMenuState,b
         rep #$20
         jsl rlEnableVBlank
@@ -3074,7 +3074,7 @@
 
         ; Read by rlCastleBlankMissingFacilities.
 
-        .word $0020, $0040, $0010, $0004, $0008, $0080
+        .word CastleFacilityRepairShop, CastleFacilitySecondhandShop, CastleFacilityDepot, CastleFacilityArena, CastleFacilityAugury, CastleFacilityItemShop
 
         ; 8A/98B8
 
@@ -3183,11 +3183,11 @@
         phx
         lda aMovementMap,x
         tax
-        lda $7F75DA,x
+        lda aCastleCourtyardSpriteX,x
         sec
         sbc #$0008
         sta wR0
-        lda $7F760A,x
+        lda aCastleCourtyardSpriteY,x
         sec
         sbc #$0008
         sta wR1
@@ -3245,11 +3245,11 @@
         phx
         lda aMovementMap,x
         tax
-        lda $7F75DA,x
+        lda aCastleCourtyardSpriteX,x
         sec
         sbc #$0008
         sta wR0
-        lda $7F760A,x
+        lda aCastleCourtyardSpriteY,x
         sec
         sbc #$0008
         sta wR1
@@ -3327,7 +3327,7 @@
         plb
         .databank $8A
         lda #$0000
-        sta $7F763A
+        sta wCastleUnitCount
         lda #$0017
         sta wRoutineVariable1,b
         ldx #$002E
@@ -3337,23 +3337,23 @@
         cmp #$0006
         bcs _9A7E
         lda @l aCastleGridCharactersGen1,x
-        sta $7F757A,x
+        sta aCastleGridCharacters,x
         lda @l aCastleCourtyardSpotsGen1,x
         bra _9A8A
 
 
         _9A7E
         lda @l aCastleGridCharactersGen2,x
-        sta $7F757A,x
+        sta aCastleGridCharacters,x
         lda @l aCastleCourtyardSpotsGen2,x
 
         _9A8A
         asl a
         tay
         lda $9AD4,b,y
-        sta $7F75DA,x
+        sta aCastleCourtyardSpriteX,x
         lda $9B04,b,y
-        sta $7F760A,x
+        sta aCastleCourtyardSpriteY,x
         lda aCastleUnitDeploymentOffsets,x
         bmi _9ACF
         phx
@@ -3370,12 +3370,12 @@
         phx
         tax
         lda wSelectedUnitDataRAMPointer,b
-        sta $7F75AA,x
+        sta aCastleUnitsByCharacter,x
         plx
-        lda $7F763A
+        lda wCastleUnitCount
         clc
         adc #$0001
-        sta $7F763A
+        sta wCastleUnitCount
 
         _9ACF
         dec x
@@ -3521,7 +3521,7 @@
         .databank ?
 
         lda wCastleCursorState,b
-        cmp #$0003
+        cmp #CASTLE_CURSOR_TOWN
         beq _9C87
         jsl rlHDMAEngineFreeEntryByOffset
         bra _9CA5

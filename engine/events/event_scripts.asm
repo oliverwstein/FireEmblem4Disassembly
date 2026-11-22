@@ -1110,8 +1110,8 @@
         php
         phy
 
-        lda #0
-        sta wBaseSceneMode,b
+        lda #CONVERSATION_EXIT_COURTYARD
+        sta wConversationExitMode,b
 
         lda #(`procDialogueWithBG)<<8
         sta lR44+1
@@ -1143,8 +1143,8 @@
         php
         phy
 
-        lda #1
-        sta wBaseSceneMode,b
+        lda #CONVERSATION_EXIT_TOWN
+        sta wConversationExitMode,b
 
         lda #(`procDialogueWithBG)<<8
         sta lR44+1
@@ -5863,7 +5863,7 @@
         cmp #GAMESTATE_MAP_STEP
         beq +
 
-          cmp #$000F
+          cmp #GAMESTATE_WORLD_MAP_STEP
           bne _End
 
         +

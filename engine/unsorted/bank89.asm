@@ -6079,9 +6079,9 @@
         and #$FE
         sta bBufferNMITIMEN
         rep #$20
-        lda #$0000
+        lda #CASTLE_CURSOR_GRID
         sta wCastleCursorState,b
-        lda #$0000
+        lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b
         lda #$B6B6
         sta aProcSystem.wInput0,b
@@ -6482,9 +6482,9 @@
         and #$FE
         sta bBufferNMITIMEN
         rep #$20
-        lda #$0000
+        lda #CASTLE_CURSOR_GRID
         sta wCastleCursorState,b
-        lda #$0000
+        lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b
         lda #$B6B6
         sta aProcSystem.wInput0,b

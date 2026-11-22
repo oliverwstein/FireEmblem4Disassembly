@@ -692,7 +692,7 @@
         .databank ?
 
         jsl rlUnknown88B3AF
-        lda #$0000
+        lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b
         jsl rlBuildCastleUnitList
         lda #$B6B6
@@ -720,7 +720,7 @@
         lda #$00E0
         jsl rlQueueSoundCommand
         jsl rlUnknown88B3AF
-        lda #$0001
+        lda #CASTLE_SCREEN_TOWN
         sta wCastleScreenHandler,b
         lda #$B6B6
         sta aProcSystem.wInput0,b

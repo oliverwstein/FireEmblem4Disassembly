@@ -145,7 +145,7 @@
         lda #<>aUnknown8AB230
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #$0008
+        lda #CASTLE_STEP_DEPOT
         sta wGameStateStep,b
         rep #$20
         jsl rlEnableVBlank
@@ -185,7 +185,7 @@
         asl a
         tax
         jsr (aDepotStepHandlers,x)
-        lda $7F7670
+        lda wCastleRedrawIcons
         bne _F2A4
         jsl rlDMAByStruct
 
@@ -196,7 +196,7 @@
 
         _F2A4
         lda #$0000
-        sta $7F7670
+        sta wCastleRedrawIcons
         jsr rsUnknown8AA142
 
         _F2AE
@@ -514,7 +514,7 @@
         .databank ?
 
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         jsr rsDrawStockItemDetails
         jsr rsPushStockItemTypeIcon
         jsr rsDrawStockList
@@ -696,7 +696,7 @@
         lda wCastleListSelectedIndex,b
         asl a
         tax
-        lda $7F7672,x
+        lda aCastleListItemIndices,x
         sta wRoutineVariable1,b
         jsl rlGiveItemToUnitCheckEncumbered
         lda #$000A
@@ -752,7 +752,7 @@
         jsl rlBuildUnitStoredItemList
         jsr rsDrawStockList
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
         lda wCastleListItemCount,b
@@ -851,7 +851,7 @@
         .databank ?
 
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         jsr rlDrawInventoryItemDetails
         jsr rsPushInventoryItemTypeIcon
         jsr rsDrawInventoryWithSellPrices
@@ -1006,7 +1006,7 @@
         jsl rlBuildUnitStoredItemList
         jsr rsDrawInventoryWithSellPrices
         lda #$FFFF
-        sta $7F7670
+        sta wCastleRedrawIcons
         lda #$000A
         jsl rlPlaySoundEffect
         stz wCastleConfirmCursorIndex,b
@@ -1068,11 +1068,11 @@
 
 
         _F84D
-        lda $7F8082
+        lda wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         clc
-        adc $7F8082
+        adc wKeeper
         tax
         lda aShopDialoguePointers+37,x
         sta lR18+1
@@ -1114,7 +1114,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0012
+        lda #CASTLE_STEP_REOPEN_TOWN_SAME_SONG
         sta wGameStateStep,b
         rts
 

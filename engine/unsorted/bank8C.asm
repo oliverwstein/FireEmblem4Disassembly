@@ -13,20 +13,20 @@
         .databank ?
 
         lda #$0001
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #$0002
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #$0004
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #$0008
-        tsb wBaseSceneFlags,b
+        tsb wConversationFlags,b
         lda #$0000
-        sta wBaseSceneArgument,b
+        sta wConversationBackground,b
         jsl rlUnknown88B3AF
-        lda #$0002
+        lda #CASTLE_SCREEN_CONVERSATION
         sta wCastleScreenHandler,b
-        lda #$0003
-        sta wBaseSceneMode,b
+        lda #CONVERSATION_EXIT_MAP
+        sta wConversationExitMode,b
         lda #$0001
         sta wCastleReturnEventFlag,b
         lda #$0002
@@ -62,7 +62,7 @@
         phk
         plb
         .databank $8C
-        lda wBaseSceneLeftUnitRAMPointer,b
+        lda wConversationLeftUnit,b
         sta aDialogue.wUnit1,b
         sec
         sbc #$0001
@@ -92,7 +92,7 @@
         sta lR18+1
         lda #$8183
         sta lR18
-        lda wBaseSceneRightUnitRAMPointer,b
+        lda wConversationRightUnit,b
         sta aDialogue.wUnit2,b
         sec
         sbc #$0001
@@ -115,9 +115,9 @@
         sta wR0
         jsl rlUnknown8CF07F
         lda #$7F00
-        sta lBaseSceneDialoguePointer+1,b
+        sta lConversationDialoguePointer+1,b
         lda #$8183
-        sta lBaseSceneDialoguePointer,b
+        sta lConversationDialoguePointer,b
         rtl
 
         .databank 0
@@ -159,25 +159,25 @@
         rtl
 
         +
-        sta wBaseSceneRightUnitRAMPointer,b
+        sta wConversationRightUnit,b
         lda wTempVariable1,b
         sta wSelectedUnitDataRAMPointer,b
 
         ; Get lover target CharacterID
         lda wSelectedUnitDataRAMPointer,b
         pha
-        lda wBaseSceneRightUnitRAMPointer,b
+        lda wConversationRightUnit,b
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitCharacterID
-        sta wBaseSceneRightUnitRAMPointer,b
+        sta wConversationRightUnit,b
 
         ; Get own CharacterID
         pla
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitCharacterID
-        sta wBaseSceneLeftUnitRAMPointer,b
+        sta wConversationLeftUnit,b
 
-        lda wBaseSceneLeftUnitRAMPointer,b
+        lda wConversationLeftUnit,b
         sec
         sbc #1
         asl a
@@ -195,7 +195,7 @@
             bra _EE64
 
         +
-        lda wBaseSceneRightUnitRAMPointer,b
+        lda wConversationRightUnit,b
         sec
         sbc #1
         asl a
