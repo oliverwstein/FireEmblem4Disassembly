@@ -245,7 +245,7 @@
 
         +
         lda aProcSystem.aBody0,b,x
-        jsl rlUnknown80A9D4
+        jsl rlSetMainLoopPointer
 
         sei
 
@@ -380,7 +380,7 @@
 
         +
         lda aProcSystem.aBody0,b,x
-        jsl rlUnknown80A9D4
+        jsl rlSetMainLoopPointer
 
         sei
 
@@ -407,28 +407,18 @@
     .endsection FadeProcsSection
 
 
-    .section ProcScript8283E3Section
-
-      .al
-      .xl
-
-      procUnknown8283E3 ; 82/83E3
-
-        .structProcInfo "SB", rlProcUnknown8283E3Init, rlProcUnknown8283E3Cycle1, aProcUnknown8283E3Code
-
-    .endsection ProcScript8283E3Section
-
-
     .section FadeProcClearSection
 
       .al
       .xl
 
-      rsUnknown91A670 ; 91/A670
+      rsClearEventUIAndProcs ; 91/A670
 
         .al
         .autsiz
         .databank ?
+
+        ; Clear fades, main-loop fade proc, unit/terrain/map windows, and dialogue HDMA
 
         php
         jsl rlClearAllFadeProcs
@@ -453,11 +443,13 @@
 
         .databank 0
 
-      rsUnknown91A69D ; 91/A69D
+      rsCheckSkipActiveEvent ; 91/A69D
 
         .al
         .autsiz
         .databank ?
+
+        ; Skip active event on Start press: clear UI/event procs, reset state, return sec
 
         lda wJoy1New
         bit #JOY_Start
@@ -467,7 +459,7 @@
           cpy wActiveEventLength,b
           bcs _CLC
 
-            jsr rsUnknown91A670
+            jsr rsClearEventUIAndProcs
             jsl rlEventEngineFreeAllProcs
             stz wGameStateRoutine1,b
             ldy wActiveEventLength,b
@@ -481,11 +473,13 @@
 
         .databank 0
 
-      rlUnknown91A6C0 ; 91/A6C0
+      rlResetEventAndSpriteState ; 91/A6C0
 
         .al
         .autsiz
         .databank ?
+
+        ; Clear event flags $171A-$171E, offset, event procs, active sprites, and map sprite sound
 
         php
         rep #$30
@@ -623,11 +617,13 @@
 
         .databank 0
 
-      rlUnknown91A788 ; 91/A788
+      rlClearEventMenuWindowList ; 91/A788
 
         .al
         .autsiz
         .databank ?
+
+        ; Remove open map menus tracked in 9-entry table at $7E93AA
 
         phx
         ldx #$0018
@@ -654,11 +650,13 @@
 
         .databank 0
 
-      rlUnknown91A7A8 ; 91/A7A8
+      rlZeroEventMenuWindowList ; 91/A7A8
 
         .al
         .autsiz
         .databank ?
+
+        ; Zero the 27-byte 9-entry event map-menu table at $7E93AA
 
         phb
         phx
@@ -735,11 +733,13 @@
 
         .databank 0
 
-      rlUnknown9F8E9E ; 9F/8E9E
+      rlFadeBGPaletteColorsToDesired ; 9F/8E9E
 
         .al
         .autsiz
         .databank ?
+
+        ; Fade A colors of aBGPaletteBuffer from X toward wDesiredColor by current step
 
         ; A = color count
 
@@ -920,7 +920,7 @@
           phy
           tax
           lda $0002,b,y
-          jsl rlUnknown9F8E9E
+          jsl rlFadeBGPaletteColorsToDesired
           ply
           inc y
           inc y
@@ -939,12 +939,14 @@
 
         .databank 0
 
-      rlUnknown9F8F95 ; 9F/8F95
+      rlFadeBGPaletteColorRanges ; 9F/8F95
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fade inline (offset, count, targetColor) list terminated by $FFFF
 
         lda aPaletteFading.wMaxSteps,b
         bcc _8F9B
@@ -1045,7 +1047,7 @@
         ; Current red value in X
 
         lda #5,s
-        jsr rsUnknown9F903F
+        jsr rsInterpolateColorChannel
         sta #7,s
 
         lda #1,s
@@ -1069,7 +1071,7 @@
         ; Current green value in X
 
         lda #5,s
-        jsr rsUnknown9F903F
+        jsr rsInterpolateColorChannel
         asl a
         asl a
         asl a
@@ -1097,7 +1099,7 @@
         ; Current blue value in X
 
         lda #5,s
-        jsr rsUnknown9F903F
+        jsr rsInterpolateColorChannel
         asl a
         asl a
         xba
@@ -1112,11 +1114,13 @@
 
         .databank 0
 
-      rsUnknown9F903F ; 9F/903F
+      rsInterpolateColorChannel ; 9F/903F
 
         .al
         .autsiz
         .databank ?
+
+        ; Interpolate one 5-bit RGB channel from X to Y at step A of wMaxSteps
 
         cmp #0
         bne +
@@ -1182,3 +1186,138 @@
 
 
     .endsection FadeFromToColorByStepSection
+
+
+    .section Unsorted80A29ASection
+
+      .al
+      .xs
+
+      rlFadeOutCOLDATAByTimer ; 80/A29A
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Decrements COLDATA brightness $1F->0 by timer in A; returns SEC when complete
+
+        phb
+        php
+        phk
+        plb
+        .databank $80
+        sep #$20
+        sta wScreenFadingTimeIncrement,b
+        lda wScreenFadingFlag,b
+        bpl _A2B9
+        lda wScreenFadingTimeIncrement,b
+        sta wScreenFadingTimer,b
+        lda #$FF
+        sta bBufferCOLDATA_0
+        stz bBufferCOLDATA_1
+        stz bBufferCOLDATA_2
+        stz wScreenFadingFlag,b
+
+        _A2B9
+        lda bBufferCOLDATA_0
+        and #$1F
+        beq _A2D7
+        dec wScreenFadingTimer,b
+        bne _A2D3
+        lda wScreenFadingTimeIncrement,b
+        sta wScreenFadingTimer,b
+        lda bBufferCOLDATA_0
+        and #$1F
+        dec a
+        ora #$E0
+        sta bBufferCOLDATA_0
+
+        _A2D3
+        plp
+        plb
+        .databank $80
+        clc
+        rtl
+
+
+        _A2D7
+        lda #$FF
+        sta wScreenFadingFlag,b
+        plp
+        plb
+        .databank $80
+        sec
+        rtl
+
+        .databank 0
+
+        ; 80/A2E0
+
+      rlFadeInCOLDATAByTimer ; 80/A2E0
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Increments COLDATA brightness 0->$1F by timer in A; returns SEC when complete
+
+        phb
+        php
+        phk
+        plb
+        .databank $80
+        sep #$20
+        sta wScreenFadingTimeIncrement,b
+        lda wScreenFadingFlag,b
+        bpl _A2FF
+        lda wScreenFadingTimeIncrement,b
+        sta wScreenFadingTimer,b
+        lda #$E0
+        sta bBufferCOLDATA_0
+        stz bBufferCOLDATA_1
+        stz bBufferCOLDATA_2
+        stz wScreenFadingFlag,b
+
+        _A2FF
+        lda bBufferCOLDATA_0
+        and #$1F
+        cmp #$1F
+        beq _A31F
+        dec wScreenFadingTimer,b
+        bne _A31B
+        lda wScreenFadingTimeIncrement,b
+        sta wScreenFadingTimer,b
+        lda bBufferCOLDATA_0
+        and #$1F
+        inc a
+        ora #$E0
+        sta bBufferCOLDATA_0
+
+        _A31B
+        plp
+        plb
+        .databank $80
+        clc
+        rtl
+
+
+        _A31F
+        lda #$FF
+        sta wScreenFadingFlag,b
+        plp
+        plb
+        .databank $80
+        sec
+        rtl
+
+        .databank 0
+
+        ; 80/A328
+
+    .endsection Unsorted80A29ASection
+
+

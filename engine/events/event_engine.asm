@@ -45,21 +45,25 @@
         .text "VER 960402 2000"
         .byte 0
 
-      rlUnknown868010 ; 86/8010
+      rlOpeningLogoStub ; 86/8010
 
         .al
         .autsiz
         .databank ?
+
+        ; GameState $01: no-op rtl stub for opening logo
 
         rtl
 
         .databank 0
 
-      rlUnknown868011 ; 86/8011
+      rlOpeningLogoWaitStartAndAdvance ; 86/8011
 
         .al
         .autsiz
         .databank ?
+
+        ; GameState $02: wait for Start press (skip to save select) else advance state
 
         stz $1753,b
 
@@ -75,7 +79,7 @@
         jsl rlProcEngineResetProcEngine
         stz wGameStateRoutine1,b
 
-        lda #<>rsUnknown80F1D5
+        lda #<>rsSetupSaveSelectMenu
         sta aProcSystem.wInput0,b
 
         lda #(`procMainLoopChangeFade)<<8
@@ -87,11 +91,13 @@
 
         .databank 0
 
-      rlUnknown86803E ; 86/803E
+      rlOpeningLogoRunStep ; 86/803E
 
         .al
         .autsiz
         .databank ?
+
+        ; GameState $03: run opening logo animation steps
 
         lda wGameStateStep,b
         cmp #2
@@ -139,7 +145,7 @@
         jsl rlProcEngineResetProcEngine
         stz wGameStateRoutine1,b
 
-        lda #<>rsUnknown80C0B6
+        lda #<>rsOpenMapBattle
         sta aProcSystem.wInput0,b
 
         lda #(`procMainLoopChangeFade)<<8
@@ -940,7 +946,7 @@
         jsl rlGetCurrentEventPointer
         ldx #<>lEventPointer
         lda #8
-        jsl rlUnknown80A861
+        jsl rlCallIndirectRoutineFromTable
         plx
         rtl
 
@@ -3170,7 +3176,7 @@
 
           +
           lda $0001,b,y
-          jsl rlUnknown80C1CB
+          jsl rlStartChapterEventByID
           bcs +
 
             lda $0000,b,y
@@ -4094,7 +4100,7 @@
 
           lda $0000,b,y
           and #$00FF
-          sta $0D7D,b
+          sta wUnknown000D7D,b
           inc a
           jsl rlGetUNITGroupPointer
           sta lR18
@@ -4132,7 +4138,7 @@
 
           lda $0000,b,y
           and #$00FF
-          sta $0D7D,b
+          sta wUnknown000D7D,b
           inc a
           jsl rlGetUNITGroupPointer
           sta lR18
@@ -4651,7 +4657,7 @@
           bcc _End
 
             lda $0005,b,y
-            jsl rlUnknown80C1CB
+            jsl rlStartChapterEventByID
 
         _End
         tya
@@ -4699,7 +4705,7 @@
           bcs _End
 
             jsl rlGetSelectedUnitDeploymentOffset
-            sta $0871,b
+            sta wActiveActionUnit1DeploymentOffset,b
 
             lda $0002,b,y
             and #$00FF
@@ -4707,7 +4713,7 @@
             asl a
             asl a
             asl a
-            sta $0875,b
+            sta wActiveActionDestinationX,b
 
             lda $0003,b,y
             and #$00FF
@@ -4715,7 +4721,7 @@
             asl a
             asl a
             asl a
-            sta $0877,b
+            sta wActiveActionDestinationY,b
 
             lda $0005,b,y
             cmp #$FFFF
@@ -4727,11 +4733,11 @@
                 jsl rlGetSelectedUnitDeploymentOffset
 
             +
-            sta $0873,b
+            sta wActiveActionUnit2DeploymentOffset,b
 
             lda $0004,b,y
             and #$00FF
-            sta $0879,b
+            sta wActiveActionID,b
             cmp #11
             bne +
 
@@ -4746,7 +4752,7 @@
 
             +
             lda #$FFFF
-            sta $086F,b
+            sta wMapActionActiveFlag,b
 
             lda #1
             tsb bUnknown000E7B,b
@@ -7156,5 +7162,81 @@
         ; 84/B6A6
 
     .endsection Unsorted84B57ASection
+
+
+    .section Unsorted80C1CBSection
+
+      .al
+      .xs
+
+      rlStartChapterEventByID ; 80/C1CB
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Validates A < $0232 and wUnknown00171A==0, reads aEventPointers, starts script via rlStartEventScript
+
+        phb
+        sta wR0
+
+        lda wUnknown00171A,b
+        bne _SEC
+
+          stz wUnknown00171C,b
+
+          lda wR0
+          cmp #$0232
+          bcs _SEC
+
+            sta wUnknown001732,b
+            asl a
+            clc
+            adc wUnknown001732,b
+            tax
+
+            lda aEventPointers,x
+            sta lR18
+            lda aEventPointers+1,x
+            sta lR18+1
+            jsl rlStartEventScript
+            clc
+            bra +
+
+        _SEC
+        sec
+
+        +
+        plb
+        rtl
+
+        .databank 0
+
+      rlStartEventScript ; 80/C1FC
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Writes lR18 to lActiveEventPointer, zeroes wActiveEventOffset, sets wUnknown00171A=9
+
+        phb
+        lda lR18
+        sta lActiveEventPointer,b
+        lda lR18+1
+        sta lActiveEventPointer+1,b
+
+        stz wActiveEventOffset,b
+
+        lda #9
+        sta wUnknown00171A,b
+        plb
+        rtl
+
+        .databank 0
+
+        ; 80/C212
+
+    .endsection Unsorted80C1CBSection
 
 

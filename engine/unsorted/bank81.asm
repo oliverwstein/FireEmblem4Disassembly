@@ -128,10 +128,10 @@
         php
         sep #$20
         lda #$10
-        sta $04CA,b
+        sta aSoundChannelFadeState.bMode,b
         rep #$20
         ldx #0
-        jsl rlUnknown809933
+        jsl rlUpdateMapSpriteSoundPanning
         plp
         rts
 
@@ -146,10 +146,10 @@
         php
         sep #$20
         lda #$10
-        sta $04CD,b
+        sta aSoundChannelFadeState2,b
         rep #$20
         ldx #3
-        jsl rlUnknown809933
+        jsl rlUpdateMapSpriteSoundPanning
         plp
         rts
 
@@ -300,12 +300,14 @@
       .al
       .xl
 
-      rlUnknown81A800 ; 81/A800
+      rlMapRender ; 81/A800
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $10: update map sprite animations and camera
 
         jsl rlUnknown88C7CF
         jsl rlUnknown88A44C
@@ -319,12 +321,14 @@
 
         ; 81/A813
 
-      rlUnknown81A813 ; 81/A813
+      rlMapShow ; 81/A813
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $11: initialize map RAM area, fade-in, and HUD windows
 
         lda wUnknown000D79,b
         and #$4005
@@ -338,7 +342,7 @@
         lda #$0E57
         jsl rlBuildRAMAreaHeaderAndGuidingEntry
         jsl rlEnableActiveSpriteEngine
-        jsl rlUnknown818064
+        jsl rlActiveSpriteEngineSetFlag2000
         lda wUnknown00171A,b
         bne _A84E
         lda #(`procFadeIn)<<8
@@ -350,7 +354,7 @@
         _A84E
         jsl rlCreateUnitWindowAndTerrainWindowProcs
         inc wGameStateRoutine1,b
-        lda $0D7B,b
+        lda wSavedEventCycle,b
         sta wGameStateStep,b
         rtl
 
@@ -382,16 +386,16 @@
         lda #$FFFF
         sta wUnitRelocationDeploymentOffset,b
         sta wDefeatedUnitDeploymentOffset,b
-        sta $0D89,b
-        sta $0D8B,b
-        sta $0D8D,b
-        stz $0D87,b
+        sta wPhaseScratch000D89,b
+        sta wPhaseScratch000D8B,b
+        sta wPhaseScratch000D8D,b
+        stz wMapStateFlags,b
         stz wActiveFactionSlot,b
         stz $0DAF,b
         stz $0DB1,b
         stz wCurrentChapter,b
         stz wCurrentTurn,b
-        stz $0D7B,b
+        stz wSavedEventCycle,b
         stz wDestroyedLocationsCount,b
         lda #$0008
         sta wOptionSettings,b
@@ -415,11 +419,13 @@
       .al
       .xl
 
-      rlUnknown81A89D ; 81/A89D
+      rlMapRunStep ; 81/A89D
 
         .al
         .autsiz
         .databank ?
+
+        ; GameState $12: dispatch main chapter gameplay/turn/event loop
 
         phb
         php
@@ -468,7 +474,7 @@
         jsr (aUnknown81A8F8,x)
 
         lda wGameStateStep,b
-        sta $0D7B,b
+        sta wSavedEventCycle,b
 
         lda wUnknown00171A,b
         beq _End
@@ -593,9 +599,9 @@
           bcc +
 
             lda #1
-            sta $0508,b
+            sta wSoundUploadBusyFlag,b
             lda #1
-            sta $0500,b
+            sta wSoundIndirectPending,b
             jsl rlUnknown81A9D4
 
             lda #(`procUnknown85ABF6)<<8
@@ -605,7 +611,7 @@
             jsl rlProcEngineCreateProc
 
             lda #$0040
-            trb $0788,b
+            trb wMapSystemFlags,b
             bra +
 
           +
@@ -625,7 +631,7 @@
         ; sets up turn events
 
         lda #0
-        sta $0508,b
+        sta wSoundUploadBusyFlag,b
         lda #$0021
         sta bEventActionIdentifier,b
 
@@ -705,10 +711,10 @@
             cmp #0
             beq +
 
-              lda $0D75,b
+              lda bSavedPlayerCursorXTile,b
               and #$00FF
               sta $14
-              lda $0D76,b
+              lda bSavedPlayerCursorYTile,b
               and #$00FF
               sta $16
               jsl rlUnknown848E5D
@@ -798,7 +804,7 @@
           bne +
         
         +
-        lda $0D87,b
+        lda wMapStateFlags,b
         bit #$0020
         bne +
 
@@ -810,7 +816,7 @@
             jsl rlUnknown888560
         
         +
-        lda $0D87,b
+        lda wMapStateFlags,b
         bit #$0020
         bne +
 
@@ -818,7 +824,7 @@
         
         +
         lda #$0020
-        trb $0D87,b
+        trb wMapStateFlags,b
         inc wGameStateStep,b
         rts
 
@@ -861,10 +867,10 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown869D0E
+        jsl rlDisableAIEngineCycle
 
         lda #$0040
-        tsb $0788,b
+        tsb wMapSystemFlags,b
 
         lda #$0020
         sta bEventActionIdentifier,b
@@ -882,7 +888,7 @@
         .autsiz
         .databank ?
 
-        lda #<>rsUnknown80BBD9
+        lda #<>rsOpenStatusScreen
         sta wMainLoopPointer
         lda #7
         sta wGameStateStep,b
@@ -906,7 +912,7 @@
 
         jsl rlCreateUnitWindowAndTerrainWindowProcs
 
-        lda $0D77,b
+        lda wMainGameMode,b
         cmp #3
         beq ++
 
@@ -936,7 +942,7 @@
           jsl rlDeployedUnitUnsetHiddenIfAlive
 
         +
-        lda $0D7B,b
+        lda wSavedEventCycle,b
         sta wGameStateStep,b
         rts
 
@@ -964,7 +970,7 @@
 
           stz wGameStateRoutine1,b
 
-          lda #<>rsUnknown80B1E1
+          lda #<>rsSetupGameOverScreen
           sta aProcSystem.wInput0,b
 
           lda #(`procMainLoopChangeFade)<<8
@@ -1155,7 +1161,7 @@
         sta wRoutineVariable1,b
         jsl rlUnknown84C996
 
-        stz $0580,b
+        stz wTargetEventLocationEntry,b
 
         jsl rlDeployedUnitUnsetHiddenIfAlive
 
@@ -1215,7 +1221,7 @@
         .autsiz
         .databank ?
 
-        lda $0580,b
+        lda wTargetEventLocationEntry,b
         pha
 
         ldx wUnitRelocationDeploymentOffset,b
@@ -1223,7 +1229,7 @@
         jsl rlSetUnitResidingInCastle
 
         pla
-        sta $0580,b
+        sta wTargetEventLocationEntry,b
 
         sec
         rts
@@ -1250,7 +1256,7 @@
         lda wUnitRelocationLocationID,b
         jsl rlSetUnitResidingInCastle
 
-        stz $0580,b
+        stz wTargetEventLocationEntry,b
 
         jsl rlUnknown85CA4B
 
@@ -1321,7 +1327,7 @@
         and #$00FF
         beq _CLC
 
-          lda $0D89,b
+          lda wPhaseScratch000D89,b
           bmi _CLC
 
             tax
@@ -1331,7 +1337,7 @@
             jsl rlUnknown85B14F
 
             lda #$FFFF
-            sta $0D89,b
+            sta wPhaseScratch000D89,b
             sec
             rts
         
@@ -1347,7 +1353,7 @@
         .autsiz
         .databank ?
 
-        lda $0D87,b
+        lda wMapStateFlags,b
         bpl _CLC
 
           lda wUnknown00171A,b
@@ -1373,9 +1379,9 @@
               
               +
               lda #$0008
-              tsb $0788,b
+              tsb wMapSystemFlags,b
 
-              lda $0D87,b
+              lda wMapStateFlags,b
               and #$0003
               sta $00
 
@@ -1401,7 +1407,7 @@
 
               +
               lda #$8000
-              trb $0D87,b
+              trb wMapStateFlags,b
 
               lda wGameStateStep,b
               cmp #11
@@ -1459,19 +1465,19 @@
         .autsiz
         .databank ?
 
-        lda $0D8D,b
+        lda wPhaseScratch000D8D,b
         bmi _CLC
 
           jsl rlUnknown888410
 
-          lda $0D8D,b
+          lda wPhaseScratch000D8D,b
           sta aProcSystem.wInput2,b
           lda #$0D00
           sta aProcSystem.wInput3,b
           jsl rlUnknown85B8D6
 
           lda #$FFFF
-          sta $0D8D,b
+          sta wPhaseScratch000D8D,b
           sec
           bra +
 
@@ -1580,7 +1586,7 @@
         tax
         lda wUnitRelocationLocationID,b
         jsl rlSetUnitResidingInCastle
-        stz $0580,b
+        stz wTargetEventLocationEntry,b
         jsl rlUnknown85CA4B
         lda #$0040
         trb wUnknown000D79,b
@@ -1716,7 +1722,7 @@
 
         ; Prepares after action location based events
 
-        lda $0D8B,b
+        lda wPhaseScratch000D8B,b
         bmi _CLC
 
           tax
@@ -1737,7 +1743,7 @@
           jsl rlGetAndRunChapterMapEventConditions
 
           lda #$FFFF
-          sta $0D8B,b
+          sta wPhaseScratch000D8B,b
 
           lda #$8000
           trb wUnknown000D79,b
@@ -1966,7 +1972,7 @@
 
         +
         lda aUnknown81B353,x
-        jsl rlUnknown80C1CB
+        jsl rlStartChapterEventByID
         lda #12
         sta wGameStateStep,b
 
@@ -1992,7 +1998,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown869CF9
+        jsl rlClearAIActionActiveFlag
         jsl rlUnknown88AF7B
         jsl rlUnknown9E800C
         rtl
@@ -2008,7 +2014,7 @@
         lda #$00E0
         jsl rlSendSoundCommand
 
-        stz $07E0,b
+        stz wMapActionMode,b
         stz wGameStateRoutine1,b
 
         lda wBattleType
@@ -2016,7 +2022,7 @@
         cmp #0
         beq +
 
-        lda #<>rsUnknown80BFFB
+        lda #<>rsOpenBattleScene
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -2292,6 +2298,6 @@
       .xl
 
       aUnknown81B54A ; 81/B54A
-        .word <>rsUnknown82E028
+        .word <>rsIRQCodeHalt
 
     .endsection Table81B54ASection

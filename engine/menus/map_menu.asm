@@ -1689,3 +1689,596 @@
     .endsection Unsorted85B81DSection
 
 
+    .section Unsorted82F211Section
+
+      .al
+      .xl
+
+      rlResetMenuOptionStack ; 82/F211
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Zero 10 bytes $0540..$0549 (menu option stack state)
+
+        phb
+        php
+        phk
+        plb
+        sep #$20
+        ldx #9
+        lda #0
+        
+          -
+          sta lUnknown0540,b,x
+          dec x
+          bpl -
+
+        rep #$20
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 82/F227
+
+    .endsection Unsorted82F211Section
+
+
+    .section Unsorted82F227Section
+
+      .al
+      .xl
+
+      rlPushMenuOptionList ; 82/F227
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Push menu option container from lUnknown0540 onto $0547 stack with initial entries
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda wR0
+        pha
+        lda wR1
+        pha
+        phx
+        phy
+        ldx lUnknown0540,b
+        sep #$20
+        lda lUnknown0540+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        sep #$20
+        lda $0002,b,x
+        asl a
+        clc
+        adc $0002,b,x
+        rep #$20
+        and #$00FF
+        clc
+        adc #$0009
+        jsl rlAllocateRAMArea
+        sep #$20
+        ldy #$0000
+        lda $0000,b,x
+        sta [lR25],y
+        ldy #$0001
+        lda $0001,b,x
+        sta [lR25],y
+        rep #$20
+        ldy #$0002
+        lda lRAMAreaListHeadPointer,b
+        sta [lR25],y
+        ldy #$0003
+        lda lRAMAreaListHeadPointer+1,b
+        sta [lR25],y
+        lda lR25+1
+        sta lR18+1
+        lda lR25
+        clc
+        adc #$0005
+        sta lR18
+        lda $0002,b,x
+        and #$00FF
+        sta wR0
+        lda #$0003
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda lR25
+        sta @l $000547
+        lda lR25+1
+        sta @l $000548
+        lda $0003,b,x
+        and #$00FF
+        beq _F2D8
+        sta wR0
+
+        _F2AD
+        lda $0004,b,x
+        and #$00FF
+        sta wUnknown000543,b
+        lda $0005,b,x
+        and #$00FF
+        sta wUnknown000545,b
+        lda $0006,b,x
+        sta lUnknown0540,b
+        lda $0007,b,x
+        sta lUnknown0540+1,b
+        jsl rlAddMenuOption
+        inc x
+        inc x
+        inc x
+        inc x
+        inc x
+        dec wR0
+        bne _F2AD
+
+        _F2D8
+        ply
+        plx
+        pla
+        sta wR1
+        pla
+        sta wR0
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F2E3
+
+    .endsection Unsorted82F227Section
+
+
+    .section Unsorted82F2E3Section
+
+      .al
+      .xl
+
+      rlPopMenuOptionList ; 82/F2E3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Free current $0547 menu option container + entries and restore previous container
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda wR0
+        pha
+        lda lRAMAreaListHeadPointer,b
+        ora lRAMAreaListHeadPointer+1,b
+        beq _F33D
+        jsl rlGetCurrentMenuOptionCount
+        ora #$0000
+        beq _F315
+        sta wR0
+
+        _F2FD
+        lda wR0
+        jsl rlSelectMenuOptionByIndex
+        lda lUnknown0540,b
+        sta lR25
+        lda lUnknown0540+1,b
+        sta lR25+1
+        jsl rlRemoveRAMAreaEntry
+        dec wR0
+        bne _F2FD
+
+        _F315
+        lda lRAMAreaListHeadPointer,b
+        sta lR25
+        lda lRAMAreaListHeadPointer+1,b
+        sta lR25+1
+        jsl rlRemoveRAMAreaEntry
+        ldy lRAMAreaListHeadPointer,b
+        sep #$20
+        lda lRAMAreaListHeadPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0002,b,y
+        sta @l $000547
+        lda $0003,b,y
+        sta @l $000548
+
+        _F33D
+        pla
+        sta wR0
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F343
+
+    .endsection Unsorted82F2E3Section
+
+
+    .section Unsorted82F343Section
+
+      .al
+      .xl
+
+      rlAddMenuOption ; 82/F343
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Allocate 7-byte menu option (handlerPtr, X, Y, W, H) and append to current list
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        phy
+        lda #$0007
+        jsl rlAllocateRAMArea
+        ldx lUnknown0540,b
+        sep #$20
+        lda lUnknown0540+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        ldy #$0000
+        lda lUnknown0540,b
+        sta [lR25],y
+        ldy #$0001
+        lda lUnknown0540+1,b
+        sta [lR25],y
+        sep #$20
+        ldy #$0003
+        lda wUnknown000543,b
+        sta [lR25],y
+        ldy #$0004
+        lda wUnknown000545,b
+        sta [lR25],y
+        ldy #$0005
+        lda $0003,b,x
+        sta [lR25],y
+        ldy #$0006
+        lda $0004,b,x
+        sta [lR25],y
+        rep #$20
+        jsl rlLoadCurrentMenuOptionRAMStruct
+        lda lR25
+        sta lStructPointer1,b
+        lda lR25+1
+        sta lStructPointer1+1,b
+        jsl rlAppendNewStructEntry
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F3A7
+
+    .endsection Unsorted82F343Section
+
+
+    .section Unsorted82F3A7Section
+
+      .al
+      .xl
+
+      rlLoadCurrentMenuOptionRAMStruct ; 82/F3A7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Set lStructPointer2 to $0547 + 5 (current container option RAMStruct)
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda lRAMAreaListHeadPointer+1,b
+        sta lStructPointer2+1,b
+        lda lRAMAreaListHeadPointer,b
+        clc
+        adc #$0005
+        sta lStructPointer2,b
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/F3BE
+
+      rlGetCurrentMenuOptionCount ; 82/F3BE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Return option count of current menu container
+
+        jsl rlLoadCurrentMenuOptionRAMStruct
+        jsl rlGetRAMStructCurrentStructCount
+        rtl
+
+        .databank 0
+
+        ; 82/F3C7
+
+      rlSelectMenuOptionByIndex ; 82/F3C7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Load 1-based option index A pointer into lUnknown0540
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        sta wStructIndex,b
+        jsl rlLoadCurrentMenuOptionRAMStruct
+        jsl rlLoadRAMStructDataByIndex
+        lda lStructPointer1,b
+        sta lUnknown0540,b
+        lda lStructPointer1+1,b
+        sta lUnknown0540+1,b
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/F3E5
+
+    .endsection Unsorted82F3A7Section
+
+
+    .section Unsorted82F3E5Section
+
+      .al
+      .xl
+
+      rlHandleMenuOptionInput ; 82/F3E5
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Find option containing (wR0, wR1) + container origin and invoke its handler
+
+        phb
+        php
+        phk
+        plb
+        phx
+        phy
+        ldy lRAMAreaListHeadPointer,b
+        sep #$20
+        lda $0547+2,b
+        pha
+        rep #$20
+        plb
+
+        sep #$20
+        lda $0000,b,y
+        sta wR2
+        lda $0001,b,y
+        sta wR2+1
+        rep #$20
+
+        jsl rlGetCurrentMenuOptionCount
+        ora #$0000
+        beq _F463
+
+        sta wR5
+        ldx #1
+        
+        _Loop
+        txa
+        jsl rlSelectMenuOptionByIndex
+        phk
+        plb
+
+        ldy lUnknown0540,b
+        sep #$20
+        lda lUnknown0540+2,b
+        pha
+        rep #$20
+        plb
+
+        sep #$20
+        lda $0003,b,y
+        clc
+        adc wR2
+        sta wR3
+
+        lda $0004,b,y
+        clc
+        adc wR2+1
+        sta wR4
+
+        lda $0005,b,y
+        sta wR3+1
+        lda $0006,b,y
+        sta wR4+1
+
+        lda wR0
+        sec
+        sbc wR3
+        cmp wR3+1
+        bcs +
+
+        lda wR1
+        sec
+        sbc wR4
+        cmp wR4+1
+        bcs +
+
+        rep #$20
+        jsl rlRunSelectedMenuOptionHandler
+        bra _F468
+
+        +
+        rep #$20
+        inc x
+        dec wR5
+        bne _Loop
+
+        _F463
+        ply
+        plx
+        plp
+        plb
+        rtl
+        
+        _F468
+        ply
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlRunSelectedMenuOptionHandler ; 82/F46D
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Call selected option callback from lUnknown0540 via rlCallIndirectRoutineFromTable (preserving lR18)
+
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+
+        jsl rlGetSelectedMenuOptionHandlerPointer
+        ldx #$0024
+        lda #0
+        jsl rlCallIndirectRoutineFromTable
+
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        rtl
+
+        .databank 0
+
+      rlGetSelectedMenuOptionHandlerPointer ; 82/F488
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Load 24-bit handler pointer pointer at [lUnknown0540]+0 into lR18
+
+        phb
+        php
+        phk
+        plb
+        phx
+
+        ldx lUnknown0540,b
+        sep #$20
+        lda $0540+2,b
+        pha
+        rep #$20
+        plb
+
+        lda $0000,b,x
+        sta lR18
+        lda $0001,b,x
+        sta lR18+1
+
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 82/F4A7
+
+    .endsection Unsorted82F3E5Section
+
+
+    .section Unsorted82F4A7Section
+
+      .al
+      .xl
+
+      rlGetSelectedMenuOptionCoordinates ; 82/F4A7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Load packed X/Y coordinate word at [lUnknown0540]+3 into A
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        ldx lUnknown0540,b
+        sep #$20
+        lda lUnknown0540+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0003,b,x
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F4BF
+
+    .endsection Unsorted82F4A7Section
+
+

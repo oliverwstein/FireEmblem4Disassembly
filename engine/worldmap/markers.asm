@@ -877,7 +877,7 @@
 
       aUnknown8CDCB0 ; 8C/DCB0
 
-        ; Read by rsWorldMapMarkerShadowLoadRedPalette (and copied as part of aUnknown8CDC00).
+        ; Read by rsWorldMapMarkerShadowLoadRedPalette (and copied as part of aWorldMapPartialBGPalettes).
 
         .word $0004, $000C, $0013, $0019, $001F, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
@@ -904,3 +904,23 @@
         ; 8C/DE00
 
     .endsection Table8CDC30Section
+
+
+    .section Table8CDC00Section
+
+      .al
+      .xl
+
+      aWorldMapPartialBGPalettes ; 8C/DC00
+
+        ; Read by rlInitWorldMapGraphics.
+
+        .word $5F37, $1CE7, $7FFD, $0400, $7FFF, $0000, $0000, $0000
+        .word $110A, $0CC8, $08A7, $0465, $0044, $0002, $0000, $0993
+        .word $577E, $041F, $0000, $0000, $0000, $1CC5, $2526, $0000
+
+        ; 8C/DC30
+
+    .endsection Table8CDC00Section
+
+

@@ -4316,3 +4316,329 @@
 
     .endsection Unsorted87FB94Section
 
+
+    .section Unsorted80F1D5Section
+
+      .al
+      .xl
+
+      rsSetupSaveSelectMenu ; 80/F1D5
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sets up title/file-select save menu (step 0, 91E565/E52B/D6EC, 80B0D3, DMAs $7E9D88->$D000, procFadeIn)
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlUnknown91E565
+        jsl rlUnknown91E52B
+        jsl rlUnknown91D6EC
+        jsl rlQueueMenuFontDecompression
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E9D88, $0600, $80, $D000
+
+        stz wGameStateStep,b
+        lda #(`procFadeIn)<<8
+        sta lR44+1
+        lda #<>procFadeIn
+        sta lR44
+        jsl rlProcEngineCreateProc
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        plp
+        cli
+        rts
+
+        .databank 0
+
+        ; 80/F222
+
+    .endsection Unsorted80F1D5Section
+
+
+    .section Unsorted80F222Section
+
+      .al
+      .xl
+
+      rsOpenMapSaveMenu ; 80/F222
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Opens map Save menu (state 5/4, step 2, $1864=1, installs rsRunSaveMenuVBlank and rsRunSaveMenuMainLoop)
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        sta $2100,b
+        rep #$20
+        jsl rlDisableVBlank
+        stz aSave.wMenuOperation,b
+        jsl rlUnknown91E52B
+        jsl rlUnknown91D6EC
+        lda #$0004
+        sta wGameStateRoutine2,b
+        lda #$0005
+        sta wGameStateRoutine1,b
+        lda #$0002
+        sta wGameStateStep,b
+        lda #$0001
+        sta $1864,b
+        lda #<>rsRunSaveMenuVBlank
+        sta wVBlankPointer
+        lda #<>rsRunSaveMenuMainLoop
+        sta wMainLoopPointer
+        lda #(`procFadeIn)<<8
+        sta lR44+1
+        lda #<>procFadeIn
+        sta lR44
+        jsl rlProcEngineCreateProc
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        plp
+        cli
+        rts
+
+        .databank 0
+
+        ; 80/F27C
+
+      rsOpenChapterSaveTransition ; 80/F27C
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Opens chapter-end save/transition (wUnknown053E=$FF, state 6/4, step $23, installs rsRunSaveMenuVBlank)
+
+        php
+        jsl rlProcEngineResetProcEngine
+        jsl rlActiveSpriteEngineReset
+        jsl rlEnableActiveSpriteEngine
+        jsl rlResetHDMAEngine
+        jsl rlResetIRQEngine
+        jsl rlUnknown8780AA
+        jsl rlResetMenuOptionStack
+        lda #$00FF
+        sta wUnknown053E,b
+        lda #$0004
+        sta wGameStateRoutine2,b
+        lda #$0006
+        sta wGameStateRoutine1,b
+        lda #$0023
+        sta wGameStateStep,b
+        lda #<>rsRunSaveMenuVBlank
+        sta wVBlankPointer
+        lda #<>rsRunFrameTasks
+        sta wMainLoopPointer
+        plp
+        cli
+        rts
+
+        .databank 0
+
+        ; 80/F2BE
+
+    .endsection Unsorted80F222Section
+
+
+    .section Unsorted80F542Section
+
+      .al
+      .xl
+
+      rsRunSaveMenuMainLoop ; 80/F542
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Save menu main loop: reset check, decompression list, deferred sound upload, rlHandleSaveFile
+
+        jsl rlButtonCombinationResetCheck
+        jsl rlDecompressByList
+        jsl rlRunDeferredSoundUpload
+        jsl rlHandleSaveFile
+        rts
+
+        .databank 0
+
+        ; 80/F553
+
+      rsRunAntiTamperMainLoop ; 80/F553
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Anti-tamper error main loop (omits reset check): decompression list, deferred sound upload, rlHandleSaveFile
+
+        jsl rlDecompressByList
+        jsl rlRunDeferredSoundUpload
+        jsl rlHandleSaveFile
+        rts
+
+        .databank 0
+
+        ; 80/F560
+
+      rsRunSaveMenuVBlank ; 80/F560
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Save menu VBlank preserving wR0..wR5 and lR18..lR19+1 around DMA/OAM/HDMA/PPU/APU/joypad/sprites/game state
+
+        lda wR0
+        pha
+        lda wR1
+        pha
+        lda wR2
+        pha
+        lda wR3
+        pha
+        lda wR4
+        pha
+        lda wR5
+        pha
+        lda lR18
+        pha
+        lda lR18+2
+        pha
+        lda lR19+1
+        pha
+        sep #$20
+        lda #$80
+        sta $2100,b
+        rep #$20
+        jsl rlProcessDMAStructArray
+        jsl rlDMAPaletteAndOAMBuffer
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
+        jsl rlSendSoundQueuesToAPU
+        jsl rlGetJoypadInput
+        jsl rlIncreaseFrameCounters
+        jsl rlClearSpriteExtBuffer
+        jsl rlRunGameStateRoutines
+        jsl rlRunVBlankHooks
+        jsl rlHideSprites
+        jsl rlUpdateSound
+        pla
+        sta lR19+1
+        pla
+        sta lR18+2
+        pla
+        sta lR18
+        pla
+        sta wR5
+        pla
+        sta wR4
+        pla
+        sta wR3
+        pla
+        sta wR2
+        pla
+        sta wR1
+        pla
+        sta wR0
+        rts
+
+        .databank 0
+
+        ; 80/F5D0
+
+      rsRunAntiTamperVBlank ; 80/F5D0
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Anti-tamper minimal VBlank preserving wR0..wR5 and lR18..lR19+1 around OAM/HDMA/PPU/APU/joypad/sprites/state
+
+        lda wR0
+        pha
+        lda wR1
+        pha
+        lda wR2
+        pha
+        lda wR3
+        pha
+        lda wR4
+        pha
+        lda wR5
+        pha
+        lda lR18
+        pha
+        lda lR18+2
+        pha
+        lda lR19+1
+        pha
+        sep #$20
+        lda #$80
+        sta $2100,b
+        rep #$20
+        jsl rlProcessDMAStructArray
+        jsl rlDMAPaletteAndOAMBuffer
+        jsl rlHandlePossibleHDMA
+        jsl rlCopyPPURegisterBuffer
+        jsl rlSendSoundQueuesToAPU
+        jsl rlGetJoypadInput
+        pla
+        sta lR19+1
+        pla
+        sta lR18+2
+        pla
+        sta lR18
+        pla
+        sta wR5
+        pla
+        sta wR4
+        pla
+        sta wR3
+        pla
+        sta wR2
+        pla
+        sta wR1
+        pla
+        sta wR0
+        rts
+
+        .databank 0
+
+        ; 80/F628
+
+    .endsection Unsorted80F542Section
+
+

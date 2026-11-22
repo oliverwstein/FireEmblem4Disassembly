@@ -54,7 +54,7 @@
         .autsiz
         .databank ?
 
-        lda $0D89,b
+        lda wPhaseScratch000D89,b
         bmi +
 
           tax
@@ -62,7 +62,7 @@
           sta wSelectedUnitDataRAMPointer,b
           jsr rsUnknown81B270
           lda #$FFFF
-          sta $0D89,b
+          sta wPhaseScratch000D89,b
 
         +
         rtl

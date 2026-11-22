@@ -101,7 +101,7 @@
         adc $800000,x
         inc x
         inc x
-        cpx #<>rlUnknown808E2D
+        cpx #<>rlColdResetClearMemory
         bcc _8089
         cmp @l aCodeChecksumsCopy87.Bank80Sum
         bne _80A6
@@ -3288,7 +3288,7 @@
         jsl rlUnknown87A082
         bcs _A135
         tay
-        stz $0585,b
+        stz wTempItemDataROMPointer,b
         ldx #$0002
         tya
         jsl rlGetCharacterEquipSlotItemROMPointer
@@ -3298,7 +3298,7 @@
         cmp #$0002
         bne _A10B
         lda wCurrentItemDataROMPointer,b
-        sta $0585,b
+        sta wTempItemDataROMPointer,b
 
         _A10B
         ldx #$0001
@@ -5740,7 +5740,7 @@
         lda bAPUStatus,b
         bit #$0030
         bne _C43F
-        lda #<>rsUnknown80BFFB
+        lda #<>rsOpenBattleScene
         sta wMainLoopPointer
         sei
         sep #$20
@@ -5983,7 +5983,7 @@
         stz bDMAArrayFlag,b
         rep #$20
         stz wDMAArrayPosition,b
-        jml rlUnknown808ECC
+        jml rlSoftReset
 
         .databank 0
 
@@ -6505,7 +6505,7 @@
         lda #$EC0C
 
         _C9A6
-        sta $165F,b,x
+        sta aHDMASystem.aOffset,b,x
         lda wVBlankEnabledFramecount
         and $7EF034
         bne _C9B7
@@ -6597,9 +6597,9 @@
         lda #$15
         sta bBufferTM
         rep #$20
-        lda $160F,b,x
+        lda aHDMASystem.aBitfield,b,x
         ora #$0001
-        sta $160F,b,x
+        sta aHDMASystem.aBitfield,b,x
         bra _CA38
 
         .databank 0
@@ -6694,7 +6694,7 @@
         sta wR12
         lda #$0000
         sta wR13
-        jsl rlUnknown80A678
+        jsl rlBuildHDMADirectTableEntries
 
         _CACA
         lda $7EEBEA
@@ -6710,7 +6710,7 @@
         sta wR12
         lda #$00F0
         sta wR13
-        jsl rlUnknown80A678
+        jsl rlBuildHDMADirectTableEntries
         lda #$0000
         sta [lR18]
         rts
@@ -6902,7 +6902,7 @@
         bne _D702
         jsr rsCheckIfAITargetWithinSpecifiedLeaderRange
         bcc _D702
-        jsl rlUnknown86C3A0
+        jsl rlAIGetClassTargetPriority
         clc
         adc $441C,b
         sta $441C,b
@@ -6911,7 +6911,7 @@
         sta @l wAITemp000E98
         txa
         sta @l wAITemp000E96
-        jsl rlUnknown86C40D
+        jsl rlAIGetWeaponTriangleScore
         clc
         adc $441C,b
         sta $441C,b
@@ -6919,7 +6919,7 @@
         sta @l wAITemp000E98
         txa
         sta @l wAITemp000E96
-        jsl rlUnknown86C46E
+        jsl rlAIGetEffectivenessScore
         clc
         adc $441C,b
         sta $441C,b
@@ -7428,7 +7428,7 @@
 
         _E7CE
         lda #$FFFF
-        sta $0774,b
+        sta wMapTargetDeploymentOffset,b
         jsl rlUnknown8A92D6
         rts
 
@@ -7486,7 +7486,7 @@
 
         jsl rlUnknown87E689
         lda #$0001
-        sta $057C,b
+        sta wMapActionTargetType,b
         jsl rlGetSelectedUnitStates
         bit #UnitStateFielded
         beq _E7FC

@@ -74,7 +74,7 @@
         jsr rsUnknown84E62C
         lda $0006,b,y
         sta wSelectedUnitDataRAMPointer,b
-        lda $0580,b
+        lda wTargetEventLocationEntry,b
         pha
         phx
         jsl rlGetSelectedUnitStates
@@ -118,7 +118,7 @@
         _EC56
         plx
         pla
-        sta $0580,b
+        sta wTargetEventLocationEntry,b
         lda $0006,b,x
         sta wSelectedUnitDataRAMPointer,b
         lda $0026,b,x

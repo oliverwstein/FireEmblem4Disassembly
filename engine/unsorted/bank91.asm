@@ -1961,12 +1961,14 @@
       .al
       .xl
 
-      rlUnknown91D616 ; 91/D616
+      rlTitleMenuStub ; 91/D616
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $04: no-op rtl stub for title/save/chapter intro
 
         rtl
 
@@ -1974,12 +1976,14 @@
 
         ; 91/D617
 
-      rlUnknown91D617 ; 91/D617
+      rlTitleMenuShow ; 91/D617
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $05: advance wGameStateRoutine1 to GAMESTATE_TITLE_MENU_RUN_STEP
 
         inc wGameStateRoutine1,b
         rtl
@@ -1988,12 +1992,14 @@
 
         ; 91/D61B
 
-      rlUnknown91D61B ; 91/D61B
+      rlTitleMenuRunStep ; 91/D61B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $06: dispatch title screen, save menu, and chapter intro steps
 
         phb
         php
@@ -2023,7 +2029,7 @@
 
       aUnknown91D62A ; 91/D62A
 
-        ; Jump table of rlUnknown91D61B.
+        ; Jump table of rlTitleMenuRunStep.
         .word <>rsUnknown91D844
         .word $D853
         .word <>rsUnknown91D8A0
@@ -2105,7 +2111,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown88800F
+        jsl rlCheckCodeChecksumsCopy88
         jsl rlUnknown91E99B
         lda #$0000
         sta aSave,b
@@ -2146,7 +2152,7 @@
         tax
         lda aWorldMapEvents,x
         sta lR18
-        jsl rlUnknown80C1FC
+        jsl rlStartEventScript
         inc wGameStateStep,b
         rts
 
@@ -2675,7 +2681,7 @@
         lda wUnknown000D79,b
         bit #$0020
         beq _D941
-        jsl rlUnknown80BB7C
+        jsl rlFadeToCastleScreen
         jsl rlUnknown81AB26
         bra _D944
 
@@ -2719,7 +2725,7 @@
         beq _D994
         cmp #$0001
         bne _D994
-        jsl rlUnknown88800F
+        jsl rlCheckCodeChecksumsCopy88
         lda $1864,b
         dec a
         jsl rlUnknown91E932
@@ -3182,7 +3188,7 @@
         .databank ?
 
         lda #$0002
-        sta $0D77,b
+        sta wMainGameMode,b
         stz wGameStateRoutine1,b
         lda #$B122
         sta aProcSystem.wInput0,b
@@ -4653,7 +4659,7 @@
         jsl rlEnableActiveSpriteEngine
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
-        jsl rlUnknown91A6C0
+        jsl rlResetEventAndSpriteState
         lda #$00FF
         sta wUnknown053E,b
         lda #$00C0
@@ -4701,9 +4707,9 @@
         sta wGameStateRoutine2,b
         lda #$0005
         sta wGameStateRoutine1,b
-        lda #<>rsUnknown80F560
+        lda #<>rsRunSaveMenuVBlank
         sta wVBlankPointer
-        lda #<>rsUnknown80F542
+        lda #<>rsRunSaveMenuMainLoop
         sta wMainLoopPointer
         stz aSave.wMenuOperation,b
         jsl rlUnknown91E92E
@@ -4964,7 +4970,7 @@
         jsl rlResetHDMAEngine
         lda #$0080
         sta $18DF,b
-        jsl rlUnknown80B0D3
+        jsl rlQueueMenuFontDecompression
         jsl rlUnknown91BA59
         jsl rlUnknown91BA46
         lda #$0004
@@ -5287,11 +5293,11 @@
         .databank ?
 
         stz wGameStateRoutine1,b
-        lda #<>rsUnknown80F5D0
+        lda #<>rsRunAntiTamperVBlank
         sta wVBlankPointer
-        lda #<>rsUnknown80F553
+        lda #<>rsRunAntiTamperMainLoop
         sta wMainLoopPointer
-        lda #<>rsUnknown808222
+        lda #<>rsDefaultIRQRoutine
         sta wIRQPointer
         sep #$20
         lda #$04

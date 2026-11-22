@@ -17,7 +17,7 @@
         lda #$0000
 
         _8190
-        sta $0592,b,x
+        sta wMenuState,b,x
         dec x
         bpl _8190
         rtl
@@ -64,7 +64,7 @@
         ldx #$001E
 
         _81AB
-        lda aUnknown8C9D00,x
+        lda aMapAndCastleSpriteOAMPalettes,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -92,7 +92,7 @@
         .databank ?
 
         lda #$0001
-        tsb $0786,b
+        tsb wMapOverlayFlags,b
         rtl
 
         .databank 0
@@ -115,7 +115,7 @@
         .databank ?
 
         lda #$0002
-        tsb $0786,b
+        tsb wMapOverlayFlags,b
         rtl
 
         .databank 0
@@ -138,7 +138,7 @@
         .databank ?
 
         lda #$0008
-        tsb $0786,b
+        tsb wMapOverlayFlags,b
         rtl
 
         .databank 0
@@ -422,7 +422,7 @@
 
           jsl rlUnknown88864F
 
-          lda $0788,b
+          lda wMapSystemFlags,b
           bit #$0020
           bne +
 
@@ -1583,7 +1583,7 @@
         asl a
         asl a
         asl a
-        sta $0790,b
+        sta wUnknown000790,b
         clc
         adc wR0
         tax
@@ -1605,7 +1605,7 @@
         sbc $0720,b
         and #$003F
         clc
-        adc $0790,b
+        adc wUnknown000790,b
         tax
         rts
 
@@ -2329,7 +2329,7 @@
         sec
         sbc $0720,b
         and #$003F
-        sta $0790,b
+        sta wUnknown000790,b
         lda wTempVariable2,b
         sec
         sbc $0722,b
@@ -2341,7 +2341,7 @@
         asl a
         asl a
         clc
-        adc $0790,b
+        adc wUnknown000790,b
         tax
         rts
 
@@ -2367,7 +2367,7 @@
         asl a
         asl a
         clc
-        adc $0790,b
+        adc wUnknown000790,b
         tax
         rts
 
@@ -3408,14 +3408,14 @@
 
         _9841
         jsr rsUnknown88986C
-        lda $087D,b
+        lda wCastleCursorX,b
         asl a
         clc
         adc #$0040
         sec
         sbc #$0010
         sta wR0
-        lda $087F,b
+        lda wCastleCursorY,b
         asl a
         clc
         adc #$0030
@@ -3451,18 +3451,18 @@
 
 
         _9883
-        inc $087B,b
+        inc wCastleSubMenuStep,b
         jml rsUnknown8898D2
 
 
         _988A
-        dec $087B,b
-        lda $087B,b
+        dec wCastleSubMenuStep,b
+        lda wCastleSubMenuStep,b
         bpl _989D
         jsl rlUnknown87E979
         sec
         sbc #$0001
-        sta $087B,b
+        sta wCastleSubMenuStep,b
 
         _989D
         jml rsUnknown8898D2
@@ -3482,7 +3482,7 @@
 
         _98B4
         lda #$4000
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         lda #(`procUnknown889C52)<<8
         sta lR44+1
         lda #<>procUnknown889C52
@@ -3503,7 +3503,7 @@
         .autsiz
         .databank ?
 
-        lda $087B,b
+        lda wCastleSubMenuStep,b
         jsl rlGetLocationEventDataEntry
         bcs _992C
         jsl rlGetEventLocationEntryType
@@ -3517,10 +3517,10 @@
         jsl rlGetEventLocationEntryEffectiveYCoordinate
         sta wTempVariable2,b
         jsl rlGetEventLocationEntryID
-        sta $0790,b
+        sta wUnknown000790,b
         lda #$0000
         jsl rlGetFactionSlotLocationID
-        cmp $0790,b
+        cmp wUnknown000790,b
         beq _991E
         lda wTempVariable1,b
         sta wR0
@@ -3531,14 +3531,14 @@
 
         _991E
         lda wTempVariable1,b
-        sta $087D,b
+        sta wCastleCursorX,b
         lda wTempVariable2,b
-        sta $087F,b
+        sta wCastleCursorY,b
         bra _9952
 
 
         _992C
-        stz $087B,b
+        stz wCastleSubMenuStep,b
         bra rsUnknown8898D2
 
 
@@ -3546,18 +3546,18 @@
         lda wJoy1New
         bit #$0A00
         bne _993D
-        inc $087B,b
+        inc wCastleSubMenuStep,b
         bra rsUnknown8898D2
 
 
         _993D
-        dec $087B,b
-        lda $087B,b
+        dec wCastleSubMenuStep,b
+        lda wCastleSubMenuStep,b
         bpl rsUnknown8898D2
         jsl rlUnknown87E979
         sec
         sbc #$0001
-        sta $087B,b
+        sta wCastleSubMenuStep,b
         bra rsUnknown8898D2
 
 
@@ -4250,7 +4250,7 @@
 
           .structDMAToVRAM $7E8F88, $0400, $80, $6C00
 
-        jsl rlUnknown80B0A3
+        jsl rlLoadDefaultWindowBorderPalette
         lda #(`aUnknown8898C9)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aUnknown8898C9
@@ -4316,43 +4316,43 @@
         .databank ?
 
         lda #$0020
-        trb $0788,b
+        trb wMapSystemFlags,b
         jsl rlProcEngineFreeProc
         lda wUnknown000D79,b
         bit #$0800
         beq _9E0B
-        lda $0788,b
+        lda wMapSystemFlags,b
         bit #$4000
         beq _9DF3
         lda #$4000
-        trb $0788,b
+        trb wMapSystemFlags,b
         lda wActiveUnitDeploymentOffset,b
         sta wR0
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         sta wR1
-        lda $087D,b
+        lda wCastleCursorX,b
         sta wR2
-        lda $087F,b
+        lda wCastleCursorY,b
         sta wR3
-        lda $0786,b
+        lda wMapOverlayFlags,b
         bit #$0008
         bne _9E0C
         jsl rlUnknown84DC1C
         lda #$0800
         trb wUnknown000D79,b
         lda #$0008
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         rtl
 
 
         _9DF3
         lda #$0800
         trb wUnknown000D79,b
-        lda $0786,b
+        lda wMapOverlayFlags,b
         bit #$0008
         bne _9E34
         lda #$0008
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         jsl rlUnknown85E85D
 
         _9E0B
@@ -4363,7 +4363,7 @@
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         asl a
         tax
         lda $7F757A,x
@@ -4377,15 +4377,15 @@
         trb wUnknown000D79,b
 
         _9E34
-        stz $0891,b
-        lda $0899,b
-        sta $0897,b
+        stz wCastleCursorState,b
+        lda wCastlePrepSavedUnitSlot,b
+        sta wCastlePrepUnitSlot,b
         asl a
         tax
         lda aUnknown8A99DB,x
-        sta $088D,b
+        sta wCastlePrepCursorXPixel,b
         lda aUnknown8A9A0B,x
-        sta $088F,b
+        sta wCastlePrepCursorYPixel,b
         jsl rlUnknown8A8496
         ldx #$00FE
 
@@ -4395,10 +4395,10 @@
         dec x
         dec x
         bpl _9E54
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         lda #$0008
-        trb $0786,b
-        stz $07E0,b
+        trb wMapOverlayFlags,b
+        stz wMapActionMode,b
         rtl
 
         .databank 0
@@ -4490,7 +4490,7 @@
         bit #$0041
         beq ++
 
-          lda $086F,b
+          lda wMapActionActiveFlag,b
           bpl +
 
             jsr rsUnknown88C71C
@@ -4505,14 +4505,14 @@
           jml _End
         
         +
-        lda $0788,b
+        lda wMapSystemFlags,b
         bit #$0020
         beq +
 
           jml rlUnknown88973F
 
         +
-        lda $07E0,b
+        lda wMapActionMode,b
         bpl +
 
           lda wActiveUnitDeploymentOffset,b
@@ -4520,7 +4520,7 @@
           jml _End
         
         +
-        lda $0786,b
+        lda wMapOverlayFlags,b
         bit #$0002
         beq _A234
 
@@ -4532,14 +4532,14 @@
           lda wCursorXOffset,b
           clc
           adc wMapScrollXPixels,b
-          sta $0780,b
+          sta wMapSavedCursorXPixel,b
 
           lda aDeploymentTable._YTilePosition,x
           asl a
           asl a
           asl a
           asl a
-          sta $0782,b
+          sta wMapSavedCursorYPixel,b
 
           lda wCursorXOffset,b
           clc
@@ -4548,7 +4548,7 @@
           lsr a
           lsr a
           lsr a
-          sta $0778,b
+          sta wMapCursorXTile,b
 
           lda wCursorYOffset,b
           clc
@@ -4557,35 +4557,35 @@
           lsr a
           lsr a
           lsr a
-          sta $077A,b
+          sta wMapCursorYTile,b
 
           lda #3
-          sta $07DA,b
+          sta wMovingUnitSpriteState,b
 
-          stz $07DC,b
-          stz $07DE,b
+          stz wMovingUnitSpriteFrame,b
+          stz wMovingUnitSpriteTimer,b
           jsl rlDeployedUnitSetHidden
 
           stz wUnknown0007E2,b
 
           jsl rlUnknown88C9A6
 
-          lda $0786,b
+          lda wMapOverlayFlags,b
           bit #$0008
           bne +
 
             jsl rlUnknown84B32B
 
             lda #$0002
-            trb $0786,b
+            trb wMapOverlayFlags,b
 
             lda #$0004
-            tsb $0786,b
+            tsb wMapOverlayFlags,b
             bra _A234
 
           +
           lda #$0002
-          trb $0786,b
+          trb wMapOverlayFlags,b
 
           jsl rlUnknown88A2F5
 
@@ -4722,16 +4722,16 @@
         sta wUnknown0007D8,b
         lda wActiveUnitDeploymentOffset,b
         sta wR0
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         sta wR1
         lda #$0004
-        trb $0786,b
+        trb wMapOverlayFlags,b
         lda wMapScrollXPixels,b
         sta wMapXOffset,b
         lda wMapScrollYPixels,b
         sta wMapYOffset,b
         lda #$0008
-        trb $0786,b
+        trb wMapOverlayFlags,b
         jsl rlUnknown85921D
         jsl rlUnknown84DC1C
         lda #$0008
@@ -4756,54 +4756,54 @@
         .autsiz
         .databank ?
 
-        lda $0788,b
+        lda wMapSystemFlags,b
         bit #$8000
         beq +
 
           lda #1
           sta wUnknown000758,b
           lda #$8000
-          trb $0788,b
+          trb wMapSystemFlags,b
         
         +
-        lda $0788,b
+        lda wMapSystemFlags,b
         and #$FFE0
-        sta $0788,b
+        sta wMapSystemFlags,b
 
         lda wJoy1Input
         bit #$4000 ; JOY_Y
         beq +
 
           lda #$0001
-          tsb $0788,b
+          tsb wMapSystemFlags,b
         
         +
         lda wUnknown000770,b
         bne +
 
-          lda $0786,b
+          lda wMapOverlayFlags,b
           bne +
 
-            lda $07E0,b
+            lda wMapActionMode,b
             beq ++
         
         +
         lda #$0002
-        tsb $0788,b
+        tsb wMapSystemFlags,b
 
         +
         lda wUnknown0007D8,b
         beq +
 
           lda #$0004
-          tsb $0788,b
+          tsb wMapSystemFlags,b
         
         +
         lda wUnknown00171A,b
         beq +
 
           lda #$0010
-          tsb $0788,b
+          tsb wMapSystemFlags,b
 
         +
         rts
@@ -5064,7 +5064,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown80B0A3
+        jsl rlLoadDefaultWindowBorderPalette
         jsl rlUnknown859BBD
         rtl
 
@@ -5554,22 +5554,22 @@
         .databank ?
 
         lda #$0003
-        sta $07DA,b
+        sta wMovingUnitSpriteState,b
         lda wJoy1New
         bit #$8000
         beq _A89A
-        lda $077C,b
-        sta $0778,b
-        lda $077E,b
-        sta $077A,b
+        lda wMapCursorOriginXTile,b
+        sta wMapCursorXTile,b
+        lda wMapCursorOriginYTile,b
+        sta wMapCursorYTile,b
         lda #$0005
         jsl rlPlaySoundEffect
         stz wUnknown0007D8,b
-        lda $0786,b
+        lda wMapOverlayFlags,b
         bit #$0004
         bne _A85D
         lda #$0008
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         jsl rlUnknown85921D
         jsl rlUnknown85E85D
         lda #$0800
@@ -5599,9 +5599,9 @@
         sbc wMapScrollYPixels,b
         sta wCursorYOffset,b
         jsl rlUnknown85921D
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         lda #$0004
-        trb $0786,b
+        trb wMapOverlayFlags,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CC5D
         rtl
@@ -5620,10 +5620,10 @@
         jsr rsUnknown88AB47
         lda wActiveUnitDeploymentOffset,b
         sta wR0
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         sta wR1
         jsl rlUnknown8591B2
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         tax
         lda aDeploymentTable._XTilePosition,x
         sta wR10
@@ -5639,7 +5639,7 @@
 
 
         _A8DD
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0006
         sta wUnknown0007D8,b
@@ -5647,7 +5647,7 @@
 
 
         _A8EB
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         tax
         lda aDeploymentTable._XTilePosition,x
         asl a
@@ -5688,14 +5688,14 @@
         sta wUnknown0007D8,b
         lda wActiveUnitDeploymentOffset,b
         sta wR0
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         sta wR1
         lda #$0004
-        trb $0786,b
-        lda $077C,b
-        sta $0778,b
-        lda $077E,b
-        sta $077A,b
+        trb wMapOverlayFlags,b
+        lda wMapCursorOriginXTile,b
+        sta wMapCursorXTile,b
+        lda wMapCursorOriginYTile,b
+        sta wMapCursorYTile,b
         lda wActiveUnitDeploymentOffset,b
         tax
         lda aDeploymentTable._XTilePosition,x
@@ -5730,9 +5730,9 @@
 
         _A994
         jsl rlUnknown85921D
-        stz $087B,b
+        stz wCastleSubMenuStep,b
         lda #$0020
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         jsl rlUnknown85EA64
         lda #(`procUnknown889396)<<8
         sta lR44+1
@@ -5752,31 +5752,31 @@
         .autsiz
         .databank ?
 
-        lda $0778,b
+        lda wMapCursorXTile,b
         beq _A9CB
         bpl _A9C3
-        inc $0778,b
+        inc wMapCursorXTile,b
         lda #$0200
         bra _A9E2
 
 
         _A9C3
-        dec $0778,b
+        dec wMapCursorXTile,b
         lda #$0100
         bra _A9E2
 
 
         _A9CB
-        lda $077A,b
+        lda wMapCursorYTile,b
         beq _A9E6
         bpl _A9DA
-        inc $077A,b
+        inc wMapCursorYTile,b
         lda #$0800
         bra _A9E2
 
 
         _A9DA
-        dec $077A,b
+        dec wMapCursorYTile,b
         lda #$0400
         bra _A9E2
 
@@ -5792,10 +5792,10 @@
         dec a
         dec a
         sta wMapScrollScriptOffset,b
-        lda $077C,b
-        sta $0778,b
-        lda $077E,b
-        sta $077A,b
+        lda wMapCursorOriginXTile,b
+        sta wMapCursorXTile,b
+        lda wMapCursorOriginYTile,b
+        sta wMapCursorYTile,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitSetHidden
         lda #$0002
@@ -5804,7 +5804,7 @@
         sta wMapScrollDirectionIdentifier,b
         jsl rlUnknown88C085
         lda #$0002
-        sta $07DA,b
+        sta wMovingUnitSpriteState,b
         lda #$0000
         rts
 
@@ -5873,8 +5873,8 @@
 
         _AA7A
         sta wMapScrollDirectionIdentifier,b
-        stz $07DC,b
-        stz $07DE,b
+        stz wMovingUnitSpriteFrame,b
+        stz wMovingUnitSpriteTimer,b
         jsr rsUnknown88AB13
         lda #$0001
         rts
@@ -5885,7 +5885,7 @@
         sta wMapPixelScrollDistance,b
         jsl rlUnknown88C126
         lda #$0002
-        sta $07DA,b
+        sta wMovingUnitSpriteState,b
         stz wUnknown0007D8,b
         stz wMapScrollScriptOffset,b
         stz wUnknown00073A,b
@@ -5909,18 +5909,18 @@
         sta wTempVariable2,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlMoveDeploymentToTile
-        lda $07E0,b
+        lda wMapActionMode,b
         cmp #$0004
         beq _AAEF
         cmp #$0005
         beq _AAEF
         cmp #$0009
         beq _AAEF
-        lda $086F,b
+        lda wMapActionActiveFlag,b
         bne _AAEB
         jsl rlUnknown85E85D
         lda #$0008
-        tsb $0788,b
+        tsb wMapSystemFlags,b
 
         _AAEB
         lda #$0000
@@ -5931,13 +5931,13 @@
         jsl rlUnknown84D483
         bcc _AB00
         jsl rlUnknown84CAA9
-        stz $07E0,b
+        stz wMapActionMode,b
         lda #$0000
         rts
 
 
         _AB00
-        lda $07E0,b
+        lda wMapActionMode,b
         cmp #$0004
         beq _AB0C
         lda #$0000
@@ -5945,7 +5945,7 @@
 
 
         _AB0C
-        stz $07E0,b
+        stz wMapActionMode,b
         lda #$0000
         rts
 
@@ -6050,7 +6050,7 @@
         lda wJoy1Repeated
         bit #$0A00
         bne _AB82
-        lda $0776,b
+        lda wMapTargetSearchIndex,b
         clc
         adc #$0001
         cmp #$0400
@@ -6058,24 +6058,24 @@
         lda #$0000
 
         _AB7B
-        sta $0776,b
+        sta wMapTargetSearchIndex,b
         jml _AB95
 
 
         _AB82
-        lda $0776,b
+        lda wMapTargetSearchIndex,b
         sec
         sbc #$0001
         bpl _AB8E
         lda #$03FF
 
         _AB8E
-        sta $0776,b
+        sta wMapTargetSearchIndex,b
         jml _ABB6
 
 
         _AB95
-        ldx $0776,b
+        ldx wMapTargetSearchIndex,b
 
         _AB98
         lda aTargetDistanceMap,x
@@ -6090,13 +6090,13 @@
 
 
         _ABAF
-        sta $0774,b
-        stx $0776,b
+        sta wMapTargetDeploymentOffset,b
+        stx wMapTargetSearchIndex,b
         rts
 
 
         _ABB6
-        ldx $0776,b
+        ldx wMapTargetSearchIndex,b
 
         _ABB9
         lda aTargetDistanceMap,x
@@ -6110,8 +6110,8 @@
 
 
         _ABCD
-        sta $0774,b
-        stx $0776,b
+        sta wMapTargetDeploymentOffset,b
+        stx wMapTargetSearchIndex,b
         rts
 
 
@@ -6119,7 +6119,7 @@
         lda wJoy1Repeated
         bit #$0A00
         bne _ABF1
-        lda $0776,b
+        lda wMapTargetSearchIndex,b
         clc
         adc #$0001
         cmp #$000C
@@ -6127,24 +6127,24 @@
         lda #$0000
 
         _ABEA
-        sta $0776,b
+        sta wMapTargetSearchIndex,b
         jml _AC2E
 
 
         _ABF1
-        lda $0776,b
+        lda wMapTargetSearchIndex,b
         sec
         sbc #$0001
         bpl _ABFD
         lda #$000B
 
         _ABFD
-        sta $0776,b
+        sta wMapTargetSearchIndex,b
         jml _AC04
 
 
         _AC04
-        lda $0776,b
+        lda wMapTargetSearchIndex,b
         asl a
         tax
 
@@ -6165,15 +6165,15 @@
 
 
         _AC25
-        sta $0774,b
+        sta wMapTargetDeploymentOffset,b
         txa
         lsr a
-        sta $0776,b
+        sta wMapTargetSearchIndex,b
         rts
 
 
         _AC2E
-        lda $0776,b
+        lda wMapTargetSearchIndex,b
         asl a
         tax
 
@@ -6195,10 +6195,10 @@
 
 
         _AC52
-        sta $0774,b
+        sta wMapTargetDeploymentOffset,b
         txa
         lsr a
-        sta $0776,b
+        sta wMapTargetSearchIndex,b
         rts
 
         .databank 0
@@ -6240,15 +6240,15 @@
         _AC76
         jsr rsUnknown88ACA6
         bne _ACA2
-        lda $0776,b
+        lda wMapTargetSearchIndex,b
         clc
         adc wTempVariable1,b
-        sta $0776,b
+        sta wMapTargetSearchIndex,b
         bmi _AC94
         cmp wTempVariable2,b
         bcc _ACA0
         lda #$0000
-        sta $0776,b
+        sta wMapTargetSearchIndex,b
         bra _ACA0
 
 
@@ -6256,7 +6256,7 @@
         lda wTempVariable2,b
         sec
         sbc #$0001
-        sta $0776,b
+        sta wMapTargetSearchIndex,b
         bra _ACA0
 
 
@@ -6265,7 +6265,7 @@
 
 
         _ACA2
-        sta $0774,b
+        sta wMapTargetDeploymentOffset,b
         rts
 
         .databank 0
@@ -6287,7 +6287,7 @@
         .autsiz
         .databank ?
 
-        lda $0776,b
+        lda wMapTargetSearchIndex,b
         tax
         lda aTargetDistanceMap,x
         and #$00FF
@@ -6340,19 +6340,19 @@
         lda #$0003
         sta wUnknown0007D8,b
         lda #$0003
-        sta $07DA,b
-        stz $0776,b
+        sta wMovingUnitSpriteState,b
+        stz wMapTargetSearchIndex,b
         jsr rsUnknown88AB47
-        lda $0778,b
-        sta $077C,b
-        lda $077A,b
-        sta $077E,b
+        lda wMapCursorXTile,b
+        sta wMapCursorOriginXTile,b
+        lda wMapCursorYTile,b
+        sta wMapCursorOriginYTile,b
         lda wActiveUnitDeploymentOffset,b
         sta wR0
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         sta wR1
         jsl rlUnknown8591B2
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         tax
         lda aDeploymentTable._XTilePosition,x
         sta wR10
@@ -6368,7 +6368,7 @@
 
 
         _AD94
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0006
         sta wUnknown0007D8,b
@@ -6425,8 +6425,8 @@
         lsr a
         lsr a
         lsr a
-        sta $0778,b
-        sta $077C,b
+        sta wMapCursorXTile,b
+        sta wMapCursorOriginXTile,b
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
@@ -6434,8 +6434,8 @@
         lsr a
         lsr a
         lsr a
-        sta $077A,b
-        sta $077E,b
+        sta wMapCursorYTile,b
+        sta wMapCursorOriginYTile,b
         rtl
 
         .databank 0
@@ -6461,16 +6461,16 @@
         jsl rlUnknown88B4DB
         lda #$0008
         sta wUnknown0007D8,b
-        lda $07E0,b
+        lda wMapActionMode,b
         beq _ADE2
         lda #$0005
-        sta $07E0,b
+        sta wMapActionMode,b
         rtl
 
 
         _ADE2
         lda #$0009
-        sta $07E0,b
+        sta wMapActionMode,b
         rtl
 
         .databank 0
@@ -6492,7 +6492,7 @@
         .autsiz
         .databank ?
 
-        lda $07E0,b
+        lda wMapActionMode,b
         bne _AE41
 
         _ADEE
@@ -6500,13 +6500,13 @@
         lda aDeploymentTable,x
         bit #$0010
         bne _AE1F
-        lda $0778,b
+        lda wMapCursorXTile,b
         sta wR0
-        lda $077A,b
+        lda wMapCursorYTile,b
         sta wR1
         ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         jsl rlMoveDeploymentToTile
         lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
@@ -6514,16 +6514,16 @@
 
 
         _AE1A
-        stz $07E0,b
+        stz wMapActionMode,b
         bra _ADEE
 
 
         _AE1F
-        lda $0778,b
+        lda wMapCursorXTile,b
         sta wR0
-        lda $077A,b
+        lda wMapCursorYTile,b
         sta wR1
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlMoveDeploymentToTile
         lda wActiveUnitDeploymentOffset,b
@@ -6534,15 +6534,15 @@
 
 
         _AE41
-        lda $07E0,b
+        lda wMapActionMode,b
         cmp #$0005
         beq _AE70
-        lda $0D87,b
+        lda wMapStateFlags,b
         bit #$0008
         bne _AE76
         jsl rlUnknown87BB27
         bcc _AE76
-        lda $07E0,b
+        lda wMapActionMode,b
         cmp #$0002
         beq _AEB3
         cmp #$0003
@@ -6556,16 +6556,16 @@
 
         _AE70
         lda #$0001
-        sta $07E0,b
+        sta wMapActionMode,b
 
         _AE76
-        lda $0778,b
+        lda wMapCursorXTile,b
         sta wR0
-        lda $077A,b
+        lda wMapCursorYTile,b
         sta wR1
         ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         jsl rlMoveDeploymentToTile
         lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
@@ -6577,10 +6577,10 @@
         _AE9C
         ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CC5D
-        stz $07E0,b
+        stz wMapActionMode,b
         rtl
 
 
@@ -6591,10 +6591,10 @@
         _AEB3
         ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CFBF
-        stz $07E0,b
+        stz wMapActionMode,b
         rtl
 
 
@@ -6617,18 +6617,18 @@
         sta wR1
         jsl rlUnknown87EA09
         lda wEventLocationEntry,b
-        sta $0580,b
+        sta wTargetEventLocationEntry,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CC5D
-        stz $07E0,b
+        stz wMapActionMode,b
         rtl
 
 
         _AEFE
         ldx wActiveUnitDeploymentOffset,b
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
@@ -6637,8 +6637,8 @@
         lsr a
         lsr a
         sta wR0
-        sta $0778,b
-        sta $077C,b
+        sta wMapCursorXTile,b
+        sta wMapCursorOriginXTile,b
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
@@ -6647,10 +6647,10 @@
         lsr a
         lsr a
         sta wR1
-        sta $077A,b
-        sta $077E,b
+        sta wMapCursorYTile,b
+        sta wMapCursorOriginYTile,b
         jsl rlMoveDeploymentToTile
-        stz $07E0,b
+        stz wMapActionMode,b
         lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         ldx wActiveUnitDeploymentOffset,b
@@ -6698,9 +6698,9 @@
         sta wUnknown00076E,b
 
         lda #1
-        sta $07DA,b
-        stz $07DC,b
-        stz $07DE,b
+        sta wMovingUnitSpriteState,b
+        stz wMovingUnitSpriteFrame,b
+        stz wMovingUnitSpriteTimer,b
 
         jsl rlDeployedUnitSetHidden
 
@@ -6725,8 +6725,8 @@
         .databank ?
 
         phx
-        stz $07DA,b
-        stz $07E0,b
+        stz wMovingUnitSpriteState,b
+        stz wMapActionMode,b
 
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
@@ -6774,22 +6774,22 @@
         .databank ?
 
         lda #$0001
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #$0002
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #$0004
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #$0008
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda wSelectedUnitDataRAMPointer,b
-        sta $08B2,b
+        sta wBaseSceneLeftUnitRAMPointer,b
         lda wSelectedUnitDataRAMPointer,b
-        sta $08B4,b
+        sta wBaseSceneRightUnitRAMPointer,b
         lda #$0003
-        sta $08B8,b
+        sta wBaseSceneMode,b
         jsl rlUnknown88B3AF
         lda #$0002
-        sta $088B,b
+        sta wCastleScreenHandler,b
         lda #$B6B6
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -6902,7 +6902,7 @@
         jsl rlUnknown88B4DB
         lda #$0005
         sta wUnknown0007D8,b
-        lda $07E0,b
+        lda wMapActionMode,b
         cmp #$8002
         beq _B44F
         cmp #$8003
@@ -6910,25 +6910,25 @@
         cmp #$8004
         beq _B45D
         lda #$0001
-        sta $07E0,b
+        sta wMapActionMode,b
         rtl
 
 
         _B44F
         lda #$0002
-        sta $07E0,b
+        sta wMapActionMode,b
         rtl
 
 
         _B456
         lda #$0003
-        sta $07E0,b
+        sta wMapActionMode,b
         rtl
 
 
         _B45D
         lda #$0004
-        sta $07E0,b
+        sta wMapActionMode,b
         lda #$0008
         sta wUnknown0007D8,b
         rtl
@@ -6952,16 +6952,16 @@
         .autsiz
         .databank ?
 
-        sta $0784,b
+        sta wMapPanTargetDeploymentOffset,b
         lda bUnknown000E7B,b
         and #$00FF
         bit #$0041
         beq _B48D
-        lda $0784,b
-        sta $0871,b
+        lda wMapPanTargetDeploymentOffset,b
+        sta wActiveActionUnit1DeploymentOffset,b
         sta wActiveUnitDeploymentOffset,b
         lda #$0001
-        sta $086F,b
+        sta wMapActionActiveFlag,b
         lda #$0002
         tsb bUnknown000E7B,b
 
@@ -6982,15 +6982,15 @@
         lsr a
         lsr a
         sta wTempVariable2,b
-        ldx $0784,b
+        ldx wMapPanTargetDeploymentOffset,b
         lda aDeploymentTable._XTilePosition,x
         sec
         sbc wTempVariable1,b
-        sta $0778,b
+        sta wMapCursorXTile,b
         lda aDeploymentTable._YTilePosition,x
         sec
         sbc wTempVariable2,b
-        sta $077A,b
+        sta wMapCursorYTile,b
         lda #$0004
         sta wUnknown0007D8,b
         lda bUnknown000E7B,b
@@ -7023,7 +7023,7 @@
         .autsiz
         .databank ?
 
-        sta $0784,b
+        sta wMapPanTargetDeploymentOffset,b
 
         lda wCursorXOffset,b
         clc
@@ -7043,16 +7043,16 @@
         lsr a
         sta wTempVariable2,b
 
-        ldx $0784,b
+        ldx wMapPanTargetDeploymentOffset,b
         lda aDeploymentTable._XTilePosition,x
         sec
         sbc wTempVariable1,b
-        sta $0778,b
+        sta wMapCursorXTile,b
 
         lda aDeploymentTable._YTilePosition,x
         sec
         sbc wTempVariable2,b
-        sta $077A,b
+        sta wMapCursorYTile,b
 
         lda #$0004
         sta wUnknown0007D8,b
@@ -7076,30 +7076,30 @@
         .autsiz
         .databank ?
 
-        lda $0778,b
+        lda wMapCursorXTile,b
         beq ++
         bpl +
 
-          inc $0778,b
+          inc wMapCursorXTile,b
           lda #$0200
           bra _End
           
             +
-            dec $0778,b
+            dec wMapCursorXTile,b
             lda #$0100
             bra _End
 
         +
-        lda $077A,b
+        lda wMapCursorYTile,b
         beq _B681
         bpl +
 
-          inc $077A,b
+          inc wMapCursorYTile,b
           lda #$0800
           bra _End
 
         +
-        dec $077A,b
+        dec wMapCursorYTile,b
         lda #$0400
         bra _End
         
@@ -7122,7 +7122,7 @@
               stz wMapScrollScriptOffset,b
               stz wUnknown0007D8,b
               lda #$0004
-              trb $0788,b
+              trb wMapSystemFlags,b
               lda #0
               rts
         
@@ -7141,7 +7141,7 @@
         sta wUnknown0007D8,b
         lda wActiveUnitDeploymentOffset,b
         sta $00
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         sta $02
         jsl rlUnknown8591B2
         lda #0
@@ -7151,7 +7151,7 @@
         stz wUnknown00073A,b
         stz wMapScrollScriptOffset,b
         stz wUnknown0007D8,b
-        lda $0D87,b
+        lda wMapStateFlags,b
         bit #$0008
         bne +
 
@@ -7163,7 +7163,7 @@
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84D4A2
         lda #$0008
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         lda #0
         rts
 
@@ -7209,8 +7209,8 @@
         lsr a
         lsr a
         sta wR0
-        sta $0778,b
-        sta $077C,b
+        sta wMapCursorXTile,b
+        sta wMapCursorOriginXTile,b
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
@@ -7220,14 +7220,14 @@
         lsr a
         lsr a
         sta wR1
-        sta $077A,b
-        sta $077E,b
+        sta wMapCursorYTile,b
+        sta wMapCursorOriginYTile,b
         ldx #$0000
 
         _B730
         lda aDeploymentTable,x
         beq _B799
-        inc $078A,b
+        inc wDeployedUnitScanCounter,b
         lda aDeploymentTable,x
         bit #$0008
         bne _B799
@@ -7245,12 +7245,12 @@
         sta wR11
         inc wUnknown000770,b
         lda #$0002
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         jsl rlUnknown85EA64
         lda #$0001
-        sta $07DA,b
-        stz $07DC,b
-        stz $07DE,b
+        sta wMovingUnitSpriteState,b
+        stz wMovingUnitSpriteFrame,b
+        stz wMovingUnitSpriteTimer,b
         stx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitSetHidden
         stz wUnknown0007E2,b
@@ -7268,12 +7268,12 @@
         _B799
         inc x
         inc x
-        lda $078A,b
+        lda wDeployedUnitScanCounter,b
         cmp @l wDeployedUnitsCount
         bcc _B730
 
         _B7A4
-        stz $078A,b
+        stz wDeployedUnitScanCounter,b
         clc
         rts
 
@@ -7289,32 +7289,32 @@
         jsl rlGetSelectedUnitFactionSlot
         cmp wActiveFactionSlot,b
         bne _B794
-        lda $0778,b
+        lda wMapCursorXTile,b
         sta wR0
-        lda $077A,b
+        lda wMapCursorYTile,b
         sta wR1
         ldx wActiveUnitDeploymentOffset,b
         jsl rlMoveDeploymentToTile
         lda #$0002
-        trb $0788,b
+        trb wMapSystemFlags,b
         stz wUnknown000770,b
         lda #$0002
-        sta $07DA,b
+        sta wMovingUnitSpriteState,b
         stz wUnknown0007D8,b
         stz wMapScrollScriptOffset,b
         stz wUnknown00073A,b
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
-        sta $0780,b
+        sta wMapSavedCursorXPixel,b
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
-        sta $0782,b
+        sta wMapSavedCursorYPixel,b
         jsl rlUnknown85E85D
         lda #$0008
-        tsb $0788,b
-        stz $078A,b
+        tsb wMapSystemFlags,b
+        stz wDeployedUnitScanCounter,b
         sec
         rts
 
@@ -7354,7 +7354,7 @@
         _B83A
         lda aDeploymentTable,x
         beq _B85E
-        inc $078A,b
+        inc wDeployedUnitScanCounter,b
         lda aDeploymentTable,x
         bit #$0080
         beq _B85E
@@ -7370,18 +7370,18 @@
         _B85E
         inc x
         inc x
-        lda $078A,b
+        lda wDeployedUnitScanCounter,b
         cmp @l wDeployedUnitsCount
         bcc _B83A
 
         _B869
-        stz $078A,b
+        stz wDeployedUnitScanCounter,b
         clc
         rtl
 
 
         _B86E
-        stz $078A,b
+        stz wDeployedUnitScanCounter,b
         sec
         rtl
 
@@ -7483,7 +7483,7 @@
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
-        sta $0780,b
+        sta wMapSavedCursorXPixel,b
         lsr a
         lsr a
         lsr a
@@ -7493,7 +7493,7 @@
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
-        sta $0782,b
+        sta wMapSavedCursorYPixel,b
         lsr a
         lsr a
         lsr a
@@ -7709,7 +7709,7 @@
         _BA9C
         lda wMapScrollScriptOffset,b
         bne _BA93
-        sty $07D6,b
+        sty wSavedMapScrollScriptOffset,b
         stz wMapScrollScriptOffset,b
         sty wMapScrollScriptOffset,b
         lda wActiveUnitDeploymentOffset,b
@@ -7836,7 +7836,7 @@
         _BBB7
         lda wMapScrollScriptOffset,b
         bne _BBAE
-        sty $07D6,b
+        sty wSavedMapScrollScriptOffset,b
         stz wMapScrollScriptOffset,b
         sty wMapScrollScriptOffset,b
         lda wActiveUnitDeploymentOffset,b
@@ -8719,15 +8719,15 @@
         lda aDeploymentTable._MapSpriteID,x
         jsl rlGetMapSpriteMovementSound
         sep #$20
-        sta $04CA,b
-        stz $04D0,b
+        sta aSoundChannelFadeState.bMode,b
+        stz aSoundChannelFadeTarget,b
         lda wCursorXOffset,b
-        sta $04CB,b
+        sta aSoundChannelFadeState.bLevel,b
         rep #$20
         jsl rlUnknown88C0D5
         sep #$20
         lda wR0
-        sta $04CC,b
+        sta aSoundChannelFadeState.bFlags,b
         rep #$20
         rtl
 
@@ -8745,14 +8745,14 @@
         jsl rlUnknown88C0D5
         sep #$20
         lda wCursorXOffset,b
-        sta $04CB,b
+        sta aSoundChannelFadeState.bLevel,b
         lda wR0
-        sta $04CC,b
+        sta aSoundChannelFadeState.bFlags,b
         rep #$20
         ldx #$0000
-        jsl rlUnknown809933
+        jsl rlUpdateMapSpriteSoundPanning
         ldx #$0003
-        jsl rlUnknown809933
+        jsl rlUpdateMapSpriteSoundPanning
         rtl
 
         .databank 0
@@ -8824,12 +8824,12 @@
 
         sep #$20
         lda #$10
-        sta $04CA,b
+        sta aSoundChannelFadeState.bMode,b
         rep #$20
         ldx #$0000
-        jsl rlUnknown809933
+        jsl rlUpdateMapSpriteSoundPanning
         ldx #$0003
-        jsl rlUnknown809933
+        jsl rlUpdateMapSpriteSoundPanning
         rtl
 
         .databank 0
@@ -8856,10 +8856,10 @@
         bne _C1D0
         lda #$0000
         jsl rlGetFactionSlotLocationID
-        sta $087B,b
+        sta wCastleSubMenuStep,b
 
         _C1D0
-        lda $087B,b
+        lda wCastleSubMenuStep,b
         jsl rlGetLocationEventDataEntry
         bcs _C247
         jsl rlGetEventLocationEntryType
@@ -8914,19 +8914,19 @@
         sbc wMapScrollYPixels,b
         sta wCursorYOffset,b
         jsl rlUnknown888410
-        inc $087B,b
+        inc wCastleSubMenuStep,b
         lda #$8000
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         bra _C255
 
 
         _C247
-        stz $087B,b
+        stz wCastleSubMenuStep,b
         jml _C1D0
 
 
         _C24E
-        inc $087B,b
+        inc wCastleSubMenuStep,b
         jml _C1D0
 
 
@@ -9319,7 +9319,7 @@
         _C52E
         lda #$0000
         sta wUnknown0007D8,b
-        sta $086F,b
+        sta wMapActionActiveFlag,b
         jml _C658
 
 
@@ -9343,7 +9343,7 @@
 
 
         _C564
-        lda $0873,b
+        lda wActiveActionUnit2DeploymentOffset,b
         cmp #$FFFF
         beq _C592
         jsl rlUnknown88B4DB
@@ -9358,17 +9358,17 @@
         adc wMapScrollYPixels,b
         sta wUnknown00076E,b
         lda #$0001
-        sta $07DA,b
+        sta wMovingUnitSpriteState,b
         bra _C5AA
 
 
         _C592
         lda #$0000
         sta wUnknown0007D8,b
-        sta $086F,b
+        sta wMapActionActiveFlag,b
         jsl rlUnknown88AF7B
-        lda $0879,b
-        jsl rlUnknown86B307
+        lda wActiveActionID,b
+        jsl rlAIExecuteQueuedAction
         jml _C658
 
 
@@ -9403,18 +9403,18 @@
         _C5E0
         lda #$0000
         sta wUnknown0007D8,b
-        sta $086F,b
+        sta wMapActionActiveFlag,b
         jsl rlUnknown88AF7B
         lda wMapScrollXPixels,b
         sta wMapXOffset,b
         lda wMapScrollYPixels,b
         sta wMapYOffset,b
-        lda $0871,b
+        lda wActiveActionUnit1DeploymentOffset,b
         sta wR0
-        lda $0873,b
+        lda wActiveActionUnit2DeploymentOffset,b
         sta wR1
-        lda $0879,b
-        jsl rlUnknown86B307
+        lda wActiveActionID,b
+        jsl rlAIExecuteQueuedAction
         bra _C659
 
 
@@ -9506,11 +9506,11 @@
         sta wUnknown00076E,b
         lda #$0000
         sta wCursorXOffset,b
-        lda $0875,b
+        lda wActiveActionDestinationX,b
         sta wMapScrollXPixels,b
         lda #$0000
         sta wCursorYOffset,b
-        lda $0877,b
+        lda wActiveActionDestinationY,b
         sta wMapScrollYPixels,b
         jsr rsUnknown88B8E9
         bcc _C6B6
@@ -9530,12 +9530,12 @@
         lda #$FFFF
         sta wMapScrollDirectionIdentifier,b
         jsl rlUnknown88C085
-        lda $07D6,b
+        lda wSavedMapScrollScriptOffset,b
         dec a
         dec a
         sta wMapScrollScriptOffset,b
         lda #$0002
-        sta $07DA,b
+        sta wMovingUnitSpriteState,b
         rts
 
         .databank 0
@@ -9559,16 +9559,16 @@
         .databank ?
 
         lda #$FFFF
-        sta $086F,b
+        sta wMapActionActiveFlag,b
         lda #$0140
-        sta $0875,b
+        sta wActiveActionDestinationX,b
         lda #$0170
-        sta $0877,b
+        sta wActiveActionDestinationY,b
         lda #$0088
-        sta $0871,b
+        sta wActiveActionUnit1DeploymentOffset,b
         lda #$000C
-        sta $0873,b
-        lda $0871,b
+        sta wActiveActionUnit2DeploymentOffset,b
+        lda wActiveActionUnit1DeploymentOffset,b
         sta wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0001
@@ -9595,8 +9595,8 @@
         .databank ?
 
         lda #$0001
-        sta $086F,b
-        lda $0871,b
+        sta wMapActionActiveFlag,b
+        lda wActiveActionUnit1DeploymentOffset,b
         sta wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0001
@@ -9623,8 +9623,8 @@
         lsr a
         lsr a
         sta wR0
-        sta $0778,b
-        sta $077C,b
+        sta wMapCursorXTile,b
+        sta wMapCursorOriginXTile,b
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
@@ -9634,14 +9634,14 @@
         lsr a
         lsr a
         sta wR1
-        sta $077A,b
-        sta $077E,b
-        ldx $0871,b
+        sta wMapCursorYTile,b
+        sta wMapCursorOriginYTile,b
+        ldx wActiveActionUnit1DeploymentOffset,b
 
         _C762
         lda aDeploymentTable,x
         beq _C7BF
-        inc $078A,b
+        inc wDeployedUnitScanCounter,b
         lda aDeploymentTable,x
         bit #$0080
         beq _C7BF
@@ -9655,12 +9655,12 @@
         sta wR11
         inc wUnknown000770,b
         lda #$0002
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         jsl rlUnknown85EA64
         lda #$0001
-        sta $07DA,b
-        stz $07DC,b
-        stz $07DE,b
+        sta wMovingUnitSpriteState,b
+        stz wMovingUnitSpriteFrame,b
+        stz wMovingUnitSpriteTimer,b
         stx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitSetHidden
         stz wUnknown0007E2,b
@@ -9675,12 +9675,12 @@
         _C7BF
         inc x
         inc x
-        lda $078A,b
+        lda wDeployedUnitScanCounter,b
         cmp @l wDeployedUnitsCount
         bcc _C762
 
         _C7CA
-        stz $078A,b
+        stz wDeployedUnitScanCounter,b
         clc
         rts
 
@@ -9822,7 +9822,7 @@
 
         phx
         phy
-        lda $07DA,b
+        lda wMovingUnitSpriteState,b
         beq _C873
         cmp #$0001
         beq _C89A
@@ -9849,11 +9849,11 @@
 
 
         _C876
-        lda $0780,b
+        lda wMapSavedCursorXPixel,b
         sec
         sbc wMapScrollXPixels,b
         sta wR0
-        lda $0782,b
+        lda wMapSavedCursorYPixel,b
         sec
         sbc wMapScrollYPixels,b
         sta wR1
@@ -9930,12 +9930,12 @@
         .autsiz
         .databank ?
 
-        lda $07DE,b
+        lda wMovingUnitSpriteTimer,b
         bne _C91E
         lda bDMAArrayFlag,b
         and #$00FF
         bne _C91E
-        lda $07DC,b
+        lda wMovingUnitSpriteFrame,b
         clc
         adc #$0001
         cmp #$0004
@@ -9943,7 +9943,7 @@
         lda #$0000
 
         _C91B
-        sta $07DC,b
+        sta wMovingUnitSpriteFrame,b
 
         _C91E
         ldx wActiveUnitDeploymentOffset,b
@@ -9976,7 +9976,7 @@
         tax
         lda @l aUnknown88D488,x
         sta wR3
-        lda $07DC,b
+        lda wMovingUnitSpriteFrame,b
         asl a
         clc
         adc wUnknown0007E2,b
@@ -10129,9 +10129,9 @@
         stz $0865,b
 
         _CA30
-        lda $07DA,b
+        lda wMovingUnitSpriteState,b
         beq _CA73
-        lda $07DE,b
+        lda wMovingUnitSpriteTimer,b
         bne _CA73
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._DeploymentOffsets,x
@@ -10141,7 +10141,7 @@
         tax
         lda aUnknown88CBE8,x
         and #$00FF
-        sta $07DE,b
+        sta wMovingUnitSpriteTimer,b
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._DeploymentOffsets,x
         tax
@@ -10160,7 +10160,7 @@
 
 
         _CA73
-        dec $07DE,b
+        dec wMovingUnitSpriteTimer,b
         rts
 
         .databank 0
@@ -10183,7 +10183,7 @@
         .autsiz
         .databank ?
 
-        lda $07DC,b
+        lda wMovingUnitSpriteFrame,b
         cmp #$0000
         beq _CA8E
         cmp #$0001
@@ -10214,7 +10214,7 @@
 
 
         _CAA2
-        sta $07E6,b
+        sta wMapSpriteFrameByteOffset,b
         lda wUnknown0007E2,b
         cmp #$0000
         beq _CABC
@@ -10247,23 +10247,23 @@
 
         _CAD0
         clc
-        adc $07E6,b
-        sta $07E6,b
+        adc wMapSpriteFrameByteOffset,b
+        sta wMapSpriteFrameByteOffset,b
         lda #$7E00
         sta lR18+1
         lda #$AB88
         sta lR18
         lda #$7E00
-        sta $07EB,b
+        sta lMapSpriteGraphicsPointer+1,b
         lda #$AB88
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
         lda #$7E00
         sta $084E,b
         lda #$AB88
         sta $084D,b
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         sta $084D,b
         lda #$00A0
@@ -10277,11 +10277,11 @@
         plx
 
         _CB1A
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$00A0
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         sta $0850,b
         lda #$00A0
@@ -10310,7 +10310,7 @@
         .autsiz
         .databank ?
 
-        lda $07DC,b
+        lda wMovingUnitSpriteFrame,b
         cmp #$0000
         beq _CB5A
         cmp #$0001
@@ -10341,27 +10341,27 @@
 
 
         _CB6E
-        sta $07E6,b
+        sta wMapSpriteFrameByteOffset,b
         lda wUnknown0007E2,b
         xba
         clc
-        adc $07E6,b
-        sta $07E6,b
+        adc wMapSpriteFrameByteOffset,b
+        sta wMapSpriteFrameByteOffset,b
         lda #$7E00
         sta lR18+1
         lda #$AB88
         sta lR18
         lda #$7E00
-        sta $07EB,b
+        sta lMapSpriteGraphicsPointer+1,b
         lda #$AB88
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
         lda #$7E00
         sta $084E,b
         lda #$AB88
         sta $084D,b
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         sta $084D,b
         lda #$0100
@@ -10375,11 +10375,11 @@
         plx
 
         _CBBF
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$0100
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         sta $0850,b
         lda #$0100
@@ -10453,7 +10453,7 @@
         .autsiz
         .databank ?
 
-        lda $07E4,b
+        lda wMapSpriteFrameCounter,b
         and #$000F
         cmp #$0002
         bcc _CC97
@@ -10486,14 +10486,14 @@
         .autsiz
         .databank ?
 
-        lda $07E4,b
+        lda wMapSpriteFrameCounter,b
         clc
         adc #$0002
         and #$000F
         asl a
         xba
         sta wTempVariable2,b
-        lda $07E4,b
+        lda wMapSpriteFrameCounter,b
         and #$000F
         sec
         sbc #$0002
@@ -10502,7 +10502,7 @@
         asl a
         asl a
         sta wTempVariable1,b
-        lda $07E4,b
+        lda wMapSpriteFrameCounter,b
         and #$0030
         cmp #$0000
         beq _CCD2
@@ -10534,8 +10534,8 @@
 
 
         _CCE6
-        sta $07E6,b
-        sta $0790,b
+        sta wMapSpriteFrameByteOffset,b
+        sta wUnknown000790,b
         ldx wTempVariable1,b
         ldy #$0000
 
@@ -10550,24 +10550,24 @@
         phx
         tax
         lda aUnknown88D526+1,x
-        sta $07EE,b,y
-        sta $07F1,b,y
+        sta aDynamicMapSpriteDMASources.lTopHalf+1,b,y
+        sta aDynamicMapSpriteDMASources.lBottomHalf+1,b,y
         lda aUnknown88D526,x
         plx
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
         clc
-        adc $07E6,b
-        sta $07ED,b,y
+        adc wMapSpriteFrameByteOffset,b
+        sta aDynamicMapSpriteDMASources.lTopHalf,b,y
         clc
         adc #$0040
-        sta $07F0,b,y
+        sta aDynamicMapSpriteDMASources.lBottomHalf,b,y
         lda #$6000
         clc
         adc wTempVariable2,b
-        sta $081D,b,y
+        sta aDynamicMapSpriteVRAMDestinations.wTopHalf,b,y
         clc
         adc #$0100
-        sta $0820,b,y
+        sta aDynamicMapSpriteVRAMDestinations.wBottomHalf,b,y
         lda wTempVariable2,b
         clc
         adc #$0020
@@ -10594,7 +10594,7 @@
         .databank ?
 
         lda #$8000
-        trb $07E8,b
+        trb wMapSpriteAnimationPauseFlags,b
         rtl
 
         .databank 0
@@ -10616,7 +10616,7 @@
         .databank ?
 
         lda #$8000
-        tsb $07E8,b
+        tsb wMapSpriteAnimationPauseFlags,b
         rtl
 
         .databank 0
@@ -10628,7 +10628,7 @@
         .databank ?
 
         lda #$0001
-        trb $07E8,b
+        trb wMapSpriteAnimationPauseFlags,b
         rtl
 
         .databank 0
@@ -10640,7 +10640,7 @@
         .databank ?
 
         lda #$0001
-        tsb $07E8,b
+        tsb wMapSpriteAnimationPauseFlags,b
         rtl
 
         .databank 0
@@ -10668,14 +10668,14 @@
         plb
         .databank $88
         jsl rlUnknown88DB0C
-        lda $07E4,b
+        lda wMapSpriteFrameCounter,b
         and #$0007
         beq _CD97
         cmp #$0001
         beq _CD9D
-        lda $07E8,b
+        lda wMapSpriteAnimationPauseFlags,b
         bmi _CD94
-        lda $07E4,b
+        lda wMapSpriteFrameCounter,b
         and #$000F
         cmp #$0008
         bcc _CDA3
@@ -10683,7 +10683,7 @@
 
 
         _CD91
-        inc $07E4,b
+        inc wMapSpriteFrameCounter,b
 
         _CD94
         plp
@@ -10719,22 +10719,22 @@
         lda #$40
         sta $4315,b
         sta $4325,b
-        ldx $07ED,b,y
+        ldx aDynamicMapSpriteDMASources.lTopHalf,b,y
         stx $4312,b
-        lda $07EF,b,y
+        lda aDynamicMapSpriteDMASources.lTopHalf+2,b,y
         sta $4314,b
-        ldx $081D,b,y
+        ldx aDynamicMapSpriteVRAMDestinations.wTopHalf,b,y
         stx $2116,b
         lda #$01
         sta $4310,b
         sta $4320,b
         lda #$02
         sta $420B,b
-        ldx $07F0,b,y
+        ldx aDynamicMapSpriteDMASources.lBottomHalf,b,y
         stx $4322,b
-        lda $07F2,b,y
+        lda aDynamicMapSpriteDMASources.lBottomHalf+2,b,y
         sta $4324,b
-        ldx $0820,b,y
+        ldx aDynamicMapSpriteVRAMDestinations.wBottomHalf,b,y
         stx $2116,b
         lda #$04
         sta $420B,b
@@ -10768,11 +10768,11 @@
         _CE2D
         lda #$40
         sta $4315,b
-        ldx $07ED,b,y
+        ldx aDynamicMapSpriteDMASources.lTopHalf,b,y
         stx $4312,b
-        lda $07EF,b,y
+        lda aDynamicMapSpriteDMASources.lTopHalf+2,b,y
         sta $4314,b
-        ldx $081D,b,y
+        ldx aDynamicMapSpriteVRAMDestinations.wTopHalf,b,y
         stx $2116,b
         lda #$01
         sta $4310,b
@@ -10781,11 +10781,11 @@
         sta $420B,b
         lda #$80
         sta $4325,b
-        ldx $07F0,b,y
+        ldx aDynamicMapSpriteDMASources.lBottomHalf,b,y
         stx $4322,b
-        lda $07F2,b,y
+        lda aDynamicMapSpriteDMASources.lBottomHalf+2,b,y
         sta $4324,b
-        ldx $0820,b,y
+        ldx aDynamicMapSpriteVRAMDestinations.wBottomHalf,b,y
         stx $2116,b
         lda #$04
         sta $420B,b
@@ -10813,12 +10813,12 @@
         .autsiz
         .databank ?
 
-        lda $07E4,b
+        lda wMapSpriteFrameCounter,b
         and #$000F
         asl a
         xba
         sta wTempVariable2,b
-        lda $07E4,b
+        lda wMapSpriteFrameCounter,b
         and #$000F
         sec
         sbc #$000A
@@ -10828,7 +10828,7 @@
         clc
         adc #$0060
         sta wTempVariable1,b
-        lda $07E4,b
+        lda wMapSpriteFrameCounter,b
         and #$0030
         cmp #$0000
         beq _CEBA
@@ -10860,8 +10860,8 @@
 
 
         _CECE
-        sta $07E6,b
-        sta $0790,b
+        sta wMapSpriteFrameByteOffset,b
+        sta wUnknown000790,b
         ldx wTempVariable1,b
         ldy #$0000
 
@@ -10876,23 +10876,23 @@
         phx
         tax
         lda aUnknown88D5E3+1,x
-        sta $07EE,b,y
-        sta $07F1,b,y
+        sta aDynamicMapSpriteDMASources.lTopHalf+1,b,y
+        sta aDynamicMapSpriteDMASources.lBottomHalf+1,b,y
         lda aUnknown88D5E3,x
         clc
-        adc $07E6,b
-        sta $07ED,b,y
+        adc wMapSpriteFrameByteOffset,b
+        sta aDynamicMapSpriteDMASources.lTopHalf,b,y
         clc
         adc #$0040
-        sta $07F0,b,y
+        sta aDynamicMapSpriteDMASources.lBottomHalf,b,y
         plx
         lda #$6000
         clc
         adc wTempVariable2,b
-        sta $081D,b,y
+        sta aDynamicMapSpriteVRAMDestinations.wTopHalf,b,y
         clc
         adc #$0100
-        sta $0820,b,y
+        sta aDynamicMapSpriteVRAMDestinations.wBottomHalf,b,y
         lda wTempVariable2,b
         clc
         adc #$0040
@@ -10918,11 +10918,11 @@
         .autsiz
         .databank ?
 
-        lda $07E8,b
+        lda wMapSpriteAnimationPauseFlags,b
         bit #$0001
         bne _CF89
         sep #$20
-        lda $07E4,b
+        lda wMapSpriteFrameCounter,b
         and #$78
         lsr a
         lsr a
@@ -10996,11 +10996,11 @@
         .autsiz
         .databank ?
 
-        lda $07E8,b
+        lda wMapSpriteAnimationPauseFlags,b
         bit #$0001
         bne _D012
         sep #$20
-        lda $07E4,b
+        lda wMapSpriteFrameCounter,b
         and #$F8
         lsr a
         lsr a
@@ -11081,7 +11081,7 @@
         plb
         .databank $7E
         rep #$20
-        jsl rlUnknown8089AD
+        jsl rlBeginOAMScanlineFrame
         ldy #$008E
         bra _D0A0
 
@@ -11145,7 +11145,7 @@
         inc a
         inc a
         sta wR4
-        jsl rlUnknown80889D
+        jsl rlPushToOAMBufferWithScanlineCulling
 
         _D10F
         dec y
@@ -11161,13 +11161,13 @@
         sta wR0
         lda $09B3,b,y
         sta wR1
-        jsl rlUnknown80889D._88D8
+        jsl rlPushToOAMBufferWithScanlineCulling._88D8
 
         _D12B
         dec y
         dec y
         bpl _D116
-        jsl rlUnknown808A01
+        jsl rlFinishOAMScanlineFrame
         plb
         .databank $7E
         rtl
@@ -11649,7 +11649,7 @@
         bra +
 
         +
-        sta $07E6,b
+        sta wMapSpriteFrameByteOffset,b
 
         ; Check for direction of movement
         lda wUnknown000911,x
@@ -11683,14 +11683,14 @@
 
         +
         clc
-        adc $07E6,b
-        sta $07E6,b
+        adc wMapSpriteFrameByteOffset,b
+        sta wMapSpriteFrameByteOffset,b
 
         jsr (aUnknown88D94B,x)
 
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
 
         lda #$00A0
@@ -11704,11 +11704,11 @@
         jsl rlDMAByPointer
         plx
 
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$00A0
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
 
         lda #$00A0
@@ -11847,19 +11847,19 @@
         bra +
 
         +
-        sta $07E6,b
+        sta wMapSpriteFrameByteOffset,b
 
         lda wUnknown000911,x
         xba
         clc
-        adc $07E6,b
-        sta $07E6,b
+        adc wMapSpriteFrameByteOffset,b
+        sta wMapSpriteFrameByteOffset,b
 
         jsr (aUnknown88DA6A,x)
 
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
 
         lda #size(Tile4bpp) * 8
@@ -11873,11 +11873,11 @@
         jsl rlDMAByPointer
         plx
 
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$0100
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
 
         lda #size(Tile4bpp) * 8
@@ -11977,7 +11977,7 @@
         lda #(`aMovingMapSpriteBuffers[0])<<8
         sta $07EA+1,b
         lda #<>aMovingMapSpriteBuffers[0]
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
         rts
 
         .databank 0
@@ -11995,12 +11995,12 @@
         lda #(`aMovingMapSpriteBuffers[0])<<8
         sta $07EA+1,b
         lda #<>aMovingMapSpriteBuffers[0]
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
 
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$2000
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
         rts
 
         .databank 0
@@ -12016,14 +12016,14 @@
         lda #<>aMovingMapSpriteBuffers[0]
         sta lR18
         lda #(`aMovingMapSpriteBuffers[0])<<8
-        sta $07EB,b
+        sta lMapSpriteGraphicsPointer+1,b
         lda #<>aMovingMapSpriteBuffers[0]
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
 
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$4000
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
         rts
 
         .databank 0
@@ -12039,14 +12039,14 @@
         lda #<>aMovingMapSpriteBuffers[0]
         sta lR18
         lda #(`aMovingMapSpriteBuffers[0])<<8
-        sta $07EB,b
+        sta lMapSpriteGraphicsPointer+1,b
         lda #<>aMovingMapSpriteBuffers[0]
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
 
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$6000
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
         rts
 
         .databank 0
@@ -12095,7 +12095,7 @@
         phk
         plb
         .databank $88
-        lda $07DA,b
+        lda wMovingUnitSpriteState,b
         beq _DB2F
         lda $0865,b
         beq _DB2F
@@ -12289,7 +12289,7 @@
 
 
         _DC34
-        sta $07E6,b
+        sta wMapSpriteFrameByteOffset,b
         jsl rlGetSelectedUnitMapSprite
         and #$7FFF
         sta wR0
@@ -12301,10 +12301,10 @@
         lda aUnknown88D526+1,x
         sta lR18+1
         lda aUnknown88D526,x
-        sta $07EA,b
-        lda $07EA,b
+        sta lMapSpriteGraphicsPointer,b
+        lda lMapSpriteGraphicsPointer,b
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         lda #$0040
         sta wR0
@@ -12313,11 +12313,11 @@
         phx
         jsl rlDMAByPointer
         plx
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$0040
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         lda #$0040
         sta wR0
@@ -12372,7 +12372,7 @@
 
 
         _DCB8
-        sta $07E6,b
+        sta wMapSpriteFrameByteOffset,b
         jsl rlGetSelectedUnitMapSprite
         and #$7FFF
         sta wR0
@@ -12384,10 +12384,10 @@
         lda aUnknown88D5E3+1,x
         sta lR18+1
         lda aUnknown88D5E3,x
-        sta $07EA,b
-        lda $07EA,b
+        sta lMapSpriteGraphicsPointer,b
+        lda lMapSpriteGraphicsPointer,b
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         lda #$0040
         sta wR0
@@ -12396,11 +12396,11 @@
         phx
         jsl rlDMAByPointer
         plx
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$0040
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         lda #$0080
         sta wR0
@@ -12441,7 +12441,7 @@
         .databank $88
         lda #$0068
         sta wR0
-        lda $0885,b
+        lda wUnknown000885,b
         clc
         adc #$0006
         sta wR1
@@ -12746,7 +12746,7 @@
 
 
         _DFD3
-        sta $07E6,b
+        sta wMapSpriteFrameByteOffset,b
         jsr rsUnknown88DE40
         rts
 
@@ -12793,7 +12793,7 @@
 
 
         _E007
-        sta $07E6,b
+        sta wMapSpriteFrameByteOffset,b
         jsr rsUnknown88DE9E
         rts
 
@@ -12846,7 +12846,7 @@
         dec x
         dec x
         bpl _E04C
-        jsl rlUnknown80B0A3
+        jsl rlLoadDefaultWindowBorderPalette
         ldx #$07FE
         lda #$01FF
 
@@ -13018,7 +13018,7 @@
         .autsiz
         .databank ?
 
-        lda $1882,b
+        lda aDialogue.wStatus,b
         beq _E172
         jsl rlDMAByStruct
 
@@ -13082,7 +13082,7 @@
         ldx #$001E
 
         _E19C
-        lda aUnknown8C9D00,x
+        lda aMapAndCastleSpriteOAMPalettes,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -13116,7 +13116,7 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $B000
 
-        jsl rlUnknown80B0BC
+        jsl rlLoadMenuFontGraphics
         jsl rlEnableVBlank
         sep #$20
         lda #$0F
@@ -14659,7 +14659,7 @@
         lda #$0000
         sta aActionStructUnit2.Unknown
         lda #$0001
-        sta $7F4564
+        sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
         lda #$0002
         sta wBattleDistance
@@ -14748,7 +14748,7 @@
         lda #$0000
         sta aActionStructUnit2.Unknown
         lda #$0001
-        sta $7F4564
+        sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
         lda #$0001
         sta wBattleDistance
@@ -14853,7 +14853,7 @@
         lda #$0000
         sta aActionStructUnit2.Unknown
         lda #$0001
-        sta $7F4564
+        sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
         lda #$0001
         sta wBattleDistance
@@ -14958,7 +14958,7 @@
         lda #$0000
         sta aActionStructUnit2.Unknown
         lda #$0001
-        sta $7F4564
+        sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
         lda #$0001
         sta wBattleDistance
@@ -15056,7 +15056,7 @@
         lda #$0000
         sta aActionStructUnit2.Unknown
         lda #$0001
-        sta $7F4564
+        sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
         lda #$0001
         sta wBattleDistance
@@ -15161,7 +15161,7 @@
         lda #$0000
         sta aActionStructUnit2.Unknown
         lda #$0001
-        sta $7F4564
+        sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
         lda #$0001
         sta wBattleDistance
@@ -15273,7 +15273,7 @@
         lda #$0000
         sta aActionStructUnit2.Unknown
         lda #$0001
-        sta $7F4564
+        sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
         lda #$0001
         sta wBattleDistance
@@ -15378,7 +15378,7 @@
         lda #$0000
         sta aActionStructUnit2.Unknown
         lda #$0001
-        sta $7F4564
+        sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
         lda #$0001
         sta wBattleDistance
@@ -15483,7 +15483,7 @@
         lda #$0000
         sta aActionStructUnit2.Unknown
         lda #$0001
-        sta $7F4564
+        sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
         lda #$0001
         sta wBattleDistance
@@ -15583,7 +15583,7 @@
         lda #$0000
         sta aActionStructUnit2.Unknown
         lda #$0001
-        sta $7F4564
+        sta aMapAction.wDefenderAllegiance
         sta aActionStructUnit2
         lda #$0001
         sta wBattleDistance

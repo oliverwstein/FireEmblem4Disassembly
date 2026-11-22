@@ -6,11 +6,13 @@
       .as
       .xl
 
-      rsUnknown809D4F ; 80/9D4F
+      rsRunFrameTasks ; 80/9D4F
 
         .al
         .autsiz
         .databank ?
+
+        ; Per-frame main loop helper: reset check, decompression queue, deferred sound upload
 
         ; Run every frame
 
@@ -369,5 +371,146 @@
         ; 80/8D56
 
     .endsection Unsorted808C50Section
+
+
+    .section Unsorted80C212Section
+
+      .al
+      .xl
+
+      rsResetPPUAndBuffersMode09 ; 80/C212
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Writes direct PPU and buffer defaults (BGMODE=$09, OAMADD=$0010, WH1=$F8, CGWSEL=2, CGADSUB=$A1)
+
+        phb
+        php
+        phk
+        plb
+        .databank $80
+        sep #$30
+        lda #$80
+        sta bBufferINIDISP
+        sta $2100,b
+        lda #$00
+        sta $2101,b
+        sta bBufferOBSEL
+        lda #$10
+        sta $2102,b
+        sta wBufferOAMADD
+        lda #$00
+        sta $2103,b
+        sta wBufferOAMADD+1
+        stz $2104,b
+        stz $2104,b
+        lda #$09
+        sta $2105,b
+        sta bBufferBGMODE
+        stz $2106,b
+        stz bBufferMOSAIC
+        lda #$00
+        sta $2107,b
+        sta bBufferBG1SC
+        sta $2108,b
+        sta bBufferBG2SC
+        lda #$00
+        sta $2109,b
+        sta bBufferBG3SC
+        stz $210A,b
+        stz bBufferBG4SC
+        stz $210B,b
+        stz bBufferBG12NBA
+        stz $210C,b
+        stz bBufferBG34NBA
+        stz $210D,b
+        stz $210D,b
+        stz $210E,b
+        stz $210E,b
+        stz $210F,b
+        stz $210F,b
+        stz $2110,b
+        stz $2110,b
+        stz $2111,b
+        stz $2111,b
+        stz $2112,b
+        stz $2112,b
+        stz $2113,b
+        stz $2113,b
+        stz $2114,b
+        stz $2114,b
+        stz $2115,b
+        stz $211A,b
+        stz bBufferM7SEL
+        stz $211B,b
+        stz $211C,b
+        stz $211D,b
+        stz $211E,b
+        stz $211F,b
+        stz $2120,b
+        lda #$00
+        sta $2123,b
+        sta bBufferW12SEL
+        lda #$00
+        sta $2124,b
+        sta bBufferW34SEL
+        stz $2125,b
+        stz bBufferWOBJSEL
+        lda #$00
+        sta $2126,b
+        sta bBufferWH0
+        lda #$F8
+        sta $2127,b
+        sta bBufferWH1
+        stz $2128,b
+        stz bBufferWH2
+        stz $2129,b
+        stz bBufferWH3
+        stz $212A,b
+        stz bBufferWBGLOG
+        stz $212B,b
+        stz bBufferWOBJLOG
+        lda #$00
+        sta $212C,b
+        sta bBufferTM
+        sta $212E,b
+        sta bBufferTMW
+        lda #$00
+        sta $212D,b
+        sta bBufferTS
+        sta $212F,b
+        sta bBufferTSW
+        lda #$02
+        sta $2130,b
+        sta bBufferCGWSEL
+        lda #$A1
+        sta $2131,b
+        sta bBufferCGADSUB
+        lda #$20
+        sta $2132,b
+        sta bBufferCOLDATA_1
+        lda #$40
+        sta $2132,b
+        sta bBufferCOLDATA_2
+        lda #$80
+        sta $2132,b
+        sta bBufferCOLDATA_3
+        lda #$00
+        sta $2133,b
+        sta bBufferSETINI
+        plp
+        plb
+        .databank $80
+        rts
+
+        .databank 0
+
+        ; 80/C32C
+
+    .endsection Unsorted80C212Section
 
 

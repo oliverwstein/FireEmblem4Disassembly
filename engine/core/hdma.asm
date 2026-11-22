@@ -1,5 +1,49 @@
 ; The HDMA engine: per-frame HDMA effects and their script commands.
 
+    .section HDMAHandlePossibleSection
+
+      .as
+      .xl
+
+      rlHandlePossibleHDMA ; 80/A328
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Starts the pending DMA channels, runs the HDMA engine and enables its channels. FE5: rlHandlePossibleHDMA.
+
+        phb
+        php
+        phk
+        plb
+        .databank $80
+        sep #$20
+        lda bDMAPendingChannels,b
+        sta $420B,b
+        stz bDMAPendingChannels,b
+        lda bBufferHDMAEN
+        ora bHDMAPendingChannels,b
+        sta bBufferHDMAEN
+        jsl rlHDMAArrayEngineProcessHDMAArray
+        lda bBufferHDMAEN
+        sta $420C,b
+        stz bBufferHDMAEN
+        stz bHDMAPendingChannels,b
+        plp
+        plb
+        .databank $80
+        rtl
+
+        .databank 0
+
+        ; 80/A34F
+
+    .endsection HDMAHandlePossibleSection
+
+
     .section HDMAEngineSection
 
       .as
@@ -627,3 +671,87 @@
         ; 85/9FCD
 
     .endsection FreeHDMAEntry0Section
+
+
+    .section Unsorted80A678Section
+
+      .al
+      .xl
+
+      rlBuildHDMADirectTableEntries ; 80/A678
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Writes 3-byte HDMA direct-table entries at [lR18], splitting scanline counts >= $7F into $78 + remainder with wR13 stride
+
+        phb
+        php
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda wR11
+        sta wR15
+        lda wR10
+        cmp #$007F
+        bcs _A695
+        lda wR10
+        jsr rsWriteHDMADirectTableEntry
+
+        _A692
+        plp
+        plb
+        .databank ?
+        rtl
+
+
+        _A695
+        lda #$0078
+        jsr rsWriteHDMADirectTableEntry
+        lda wR15
+        clc
+        adc wR13
+        sta wR15
+        lda wR10
+        sec
+        sbc #$0078
+        jsr rsWriteHDMADirectTableEntry
+        bra _A692
+
+        .databank 0
+
+        ; 80/A6AD
+
+      rsWriteHDMADirectTableEntry ; 80/A6AD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Appends one 3-byte HDMA entry (count|wR12, wR15) to [lR18] and advances lR18 by 3
+
+        ldx lR18
+        ora wR12
+        sta $0000,b,x
+        inc x
+        lda wR15
+        sta $0000,b,x
+        lda lR18
+        clc
+        adc #$0003
+        sta lR18
+        rts
+
+        .databank 0
+
+        ; 80/A6C3
+
+    .endsection Unsorted80A678Section
+
+

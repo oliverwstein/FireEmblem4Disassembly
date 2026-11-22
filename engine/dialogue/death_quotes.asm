@@ -249,7 +249,7 @@
         sta lR18+1
         lda #<>aEventScriptBuffer
         sta lR18
-        jsl rlUnknown80C1FC
+        jsl rlStartEventScript
         plp
         rts
 
@@ -287,7 +287,7 @@
         sta lR18+1
         lda #<>aEventScriptBuffer
         sta lR18
-        jsl rlUnknown80C1FC
+        jsl rlStartEventScript
 
         plp
         rts
@@ -831,9 +831,9 @@
         .autsiz
         .databank ?
 
-        lda #(`procUnknown8288E9)<<8
+        lda #(`procDialogueWithBGFromPointer)<<8
         sta lR44+1
-        lda #<>procUnknown8288E9
+        lda #<>procDialogueWithBGFromPointer
         sta lR44
         jsl rlEventEngineCreateProc
         rtl

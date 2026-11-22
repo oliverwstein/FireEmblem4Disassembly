@@ -814,3 +814,70 @@
         ; 95/A414
 
     .endsection DecompressSingleSection
+
+
+    .section Unsorted80A5D9Section
+
+      .as
+      .xl
+
+      rlResetDecompList ; 80/A5D9
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Clears aDecompressionArray, wDecompressionArrayPosition, and bDecompressionArrayFlag
+
+        php
+        rep #$20
+        stz aDecompressionArray,b
+        stz wDecompressionArrayPosition,b
+        sep #$20
+        stz bDecompressionArrayFlag,b
+        plp
+        rtl
+
+        .databank 0
+
+        ; 80/A5E9
+
+    .endsection Unsorted80A5D9Section
+
+
+    .section Unsorted80A9F2Section
+
+      .al
+      .xl
+
+      rlDecompressLinear ; 80/A9F2
+
+        ; Runs on into built code at the end.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lSource = stream: decompresses it reading as the sound data needs, from
+        ; bank:0000+Y with bFlag set, so a stream runs on across banks
+        ; (tools/decompress.py, linear=True).
+
+        php
+        phb
+        rep #$30
+        ldy DecompressionVariables
+        stz DecompressionVariables
+        sep #$20
+        lda #$01
+        sta $D2
+        bra rlDecompressor._AA21
+
+        .databank 0
+
+        ; 80/AA02
+
+    .endsection Unsorted80A9F2Section
+
+

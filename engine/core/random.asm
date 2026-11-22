@@ -70,12 +70,12 @@
           rep #$30
 
           ; If the game's code has been changed, the next random numbers
-          ; come from rsUnknown80A7F3 instead.
+          ; come from rsRigRNArrayByPlaytime instead.
 
           jsl rlCheckCodeChecksums
           blt +
 
-            jsr rsUnknown80A7F3
+            jsr rsRigRNArrayByPlaytime
 
         +
         lda #0
@@ -109,11 +109,13 @@
       .al
       .xl
 
-      rlUnknown80A773 ; 80/A773
+      rlInitRNArray ; 80/A773
 
         .al
         .autsiz
         .databank ?
+
+        ; Seed 55-entry subtractive aRNArray from bFrameCounterByOnes and shuffle 3x
 
         php
         phb
@@ -217,11 +219,13 @@
 
         .databank 0
 
-      rsUnknown80A7F3 ; 80/A7F3
+      rsRigRNArrayByPlaytime ; 80/A7F3
 
         .as
         .autsiz
         .databank ?
+
+        ; Anti-tamper: zero aRNArray values below playtime-scaled threshold when checksums fail
 
         rep #$30
         jsl rlUnknown91EBC9
@@ -350,12 +354,14 @@
 
         .databank 0
 
-      rlUnknown88800F ; 88/800F
+      rlCheckCodeChecksumsCopy88 ; 88/800F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Duplicate bank $88 code checksum verifier; traps on mismatch (noted in Checksums.h)
 
         ; Another copy of the code checksum check. Nothing in the built code
         ; calls it yet. When a sum does not match, it calls $878063 and the
@@ -384,7 +390,7 @@
         adc $800000,x
         inc x
         inc x
-        cpx #<>rlUnknown808E2D
+        cpx #<>rlColdResetClearMemory
         bcc _8024
         cmp @l aCodeChecksumsCopy88.Bank80Sum
         bne _8066
@@ -417,10 +423,10 @@
         jsl rlUnknown87802A._8063
 
         _806A
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         bne _8075
         lda #$0001
-        sta $0897,b
+        sta wCastlePrepUnitSlot,b
 
         _8075
         jsl rlUnknown889268
@@ -471,7 +477,7 @@
             adc $800000,x
             inc x
             inc x
-            cpx #<>rlUnknown808E2D
+            cpx #<>rlColdResetClearMemory
             bcc -
 
           cmp aCodeChecksums.Bank80Sum
@@ -535,7 +541,7 @@
         ; Nothing in the built code reads this; the checks use these numbers as
         ; constants.
 
-        .word <>rlReset, <>rlUnknown808E2D
+        .word <>rlReset, <>rlColdResetClearMemory
         .word <>rlUnknown878017, <>rlUnknown8780AA
 
       aCodeChecksumsCopy87 .structCodeChecksums $AA24, $B66C, $5349 ; 87/8008

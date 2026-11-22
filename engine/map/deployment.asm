@@ -676,13 +676,13 @@
         asl a
         sta aDeploymentTable._YPixelPosition,x
 
-        stz $0580,b
+        stz wTargetEventLocationEntry,b
 
         jsl rlCheckIfCoordsNotEventLocationTile
         bcs +
 
           lda wEventLocationEntry,b
-          sta $0580,b
+          sta wTargetEventLocationEntry,b
 
         +
         pla
@@ -953,7 +953,7 @@
         bit #$0040
         bne _CB18
 
-          lda $0580,b
+          lda wTargetEventLocationEntry,b
           beq _CB24
 
           sta wEventLocationEntry,b
@@ -1025,7 +1025,7 @@
           sta aDeploymentTable._StateBuffer,x
 
         +
-        stx $0D8B,b
+        stx wPhaseScratch000D8B,b
         
         _End
         pla

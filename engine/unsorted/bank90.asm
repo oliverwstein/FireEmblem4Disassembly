@@ -131,9 +131,9 @@
         lda @l aUnknown90EC25+2,x
         sta @l wMapYOffset
         lda #$0002
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$FFFF
-        sta $0D87,b
+        sta wMapStateFlags,b
         lda #$0080
         sta wCursorXOffset,b
         sta wCursorYOffset,b

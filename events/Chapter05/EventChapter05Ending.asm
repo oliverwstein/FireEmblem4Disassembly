@@ -204,7 +204,7 @@
     RUN_ASM rlASMCArvisAttacksSigurd
     YIELD
 
-    RUN_ASM rlUnknown8294CF
+    RUN_ASM rlStartBelhallaMemorialAndWaitProc
     YIELD
 
     RUN_EVENT_CONDITION

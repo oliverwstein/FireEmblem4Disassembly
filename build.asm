@@ -50,6 +50,17 @@
   .endfor
 
   ROM = binary("fe4.sfc")
+  .include "engine/core/palettes.asm"
+  .include "engine/core/header.asm"
+  .include "engine/worldmap/chapter_intro.asm"
+  .include "engine/epilogue/credits.asm"
+  .include "engine/menus/options_menu.asm"
+  .include "engine/core/unused_game_state.asm"
+  .include "engine/menus/status_screen.asm"
+  .include "engine/menus/castle_menu.asm"
+  .include "engine/worldmap/world_map.asm"
+  .include "engine/menus/game_over.asm"
+  .include "engine/core/game_states.asm"
   .include "engine/menus/data_window.asm"
   .include "engine/menus/skill_window.asm"
   .include "engine/menus/item_window.asm"
@@ -144,12 +155,13 @@
   .include "engine/rankings/rankings.asm"
   .include "engine/sound/music.asm"
   .include "engine/units/turn_start.asm"
-  .include "engine/unsorted/bank80.asm"
+  .include "engine/battle_scene/battle_screen.asm"
+  .include "engine/map/map_loop.asm"
+  .include "engine/core/boot.asm"
+  .include "engine/sound/driver.asm"
   .include "engine/unsorted/bank81.asm"
-  .include "engine/unsorted/bank82.asm"
   .include "engine/unsorted/bank84.asm"
   .include "engine/unsorted/bank85.asm"
-  .include "engine/unsorted/bank86.asm"
   .include "engine/unsorted/bank87.asm"
   .include "engine/unsorted/bank88.asm"
   .include "engine/unsorted/bank89.asm"
@@ -250,6 +262,8 @@
 
       .dsection Unsorted808E2DSection
 
+      .dsection SoundInitSection
+
       .dsection Unsorted808FA3Section
 
       .dsection Unsorted808FDDSection
@@ -329,6 +343,8 @@
 
       .dsection Unsorted809CA0Section
 
+      .dsection InitEngineSection
+
       .dsection HardwareResetSection
 
       .dsection FillBG2Page0TilemapBufferSection
@@ -345,6 +361,8 @@
       .dsection FadeInByTimerSection
 
       .dsection Unsorted80A29ASection
+
+      .dsection HDMAHandlePossibleSection
 
       .dsection DMAEngineSection
 
@@ -389,6 +407,10 @@
 
       .dsection Unsorted80AE25Section
 
+      .dsection IRQEngineCycleSection
+
+      .dsection MapVBlankAndStartSection
+
       .dsection Unsorted80AF9BSection
 
       .dsection Unsorted80B041Section
@@ -416,6 +438,8 @@
       .dsection Unsorted80B122Section
 
       .dsection Unsorted80B1E1Section
+
+      .dsection MapMainLoopSection
 
     .here
 
@@ -512,6 +536,8 @@
       aDecompressionDMAEntry80BEF9 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/BEF9
 
       .dsection Unsorted80BF01Section
+
+      .dsection BattleSceneVBlankSection
 
       .dsection Unsorted80C162Section
 
@@ -1000,6 +1026,8 @@
       .dsection Unsorted8288B2Section
 
       .dsection ProcScript8288E7Section
+
+      .dsection ProcDialogueWithBGFromPointerSection
 
     .here
 

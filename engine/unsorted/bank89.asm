@@ -6,12 +6,14 @@
       .al
       .xl
 
-      rlUnknown898000 ; 89/8000
+      rlUnitScreenRender ; 89/8000
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $07: render Unit Status screen OAM arrows
 
         jsr rsUnknown8994B8
         rtl
@@ -20,12 +22,14 @@
 
         ; 89/8004
 
-      rlUnknown898004 ; 89/8004
+      rlUnitScreenShow ; 89/8004
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $08: initialize and show Unit Status screen
 
         jsl rlUnknown88DBEE
         lda $7F819D
@@ -131,12 +135,14 @@
 
         ; 89/80E0
 
-      rlUnknown8980E0 ; 89/80E0
+      rlUnitScreenRunStep ; 89/80E0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $09: run Unit Status screen step handler
 
         phb
         php
@@ -166,7 +172,7 @@
 
       aUnknown8980EF ; 89/80EF
 
-        ; Jump table of rlUnknown8980E0.
+        ; Jump table of rlUnitScreenRunStep.
         .word <>rsUnknown898105
         .word <>rsUnknown89831F
         .word <>rsUnknown89861B
@@ -362,7 +368,7 @@
         lda #$0001
         sta $7F8185
         jsl rlUnknown89876D
-        stz $0885,b
+        stz wUnknown000885,b
         lda #$000A
         jsl rlPlaySoundEffect
 
@@ -964,10 +970,10 @@
         lda $7F8185
         cmp #$0001
         beq _86D5
-        lda $0885,b
+        lda wUnknown000885,b
         sec
         sbc #$0010
-        sta $0885,b
+        sta wUnknown000885,b
         lda $7F8185
         dec a
         sta $7F8185
@@ -982,12 +988,12 @@
 
         _86D9
         lda $7F8185
-        cmp $0889,b
+        cmp wCastleListSubCount,b
         beq _8700
-        lda $0885,b
+        lda wUnknown000885,b
         clc
         adc #$0010
-        sta $0885,b
+        sta wUnknown000885,b
         lda $7F8185
         inc a
         sta $7F8185
@@ -1073,7 +1079,7 @@
         .databank ?
 
         lda #$0001
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #<>rsUnknown80B122
         sta wMainLoopPointer
         lda #$00E8
@@ -1099,7 +1105,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown80BB5D
+        jsl rlReturnToCastleScreen
         rts
 
         .databank 0
@@ -1449,7 +1455,7 @@
         .databank $89
         lda #$0076
         sta wR0
-        lda $0885,b
+        lda wUnknown000885,b
         clc
         adc #$006A
         sta wR1
@@ -1719,7 +1725,7 @@
         .databank ?
 
         jsr rsUnknown89933C
-        lda $0889,b
+        lda wCastleListSubCount,b
         sec
         sbc #$0001
         bmi _8B7F
@@ -3525,7 +3531,7 @@
         plb
         .databank $89
         lda #$0000
-        sta $0889,b
+        sta wCastleListSubCount,b
         jsl rlGetFirstEquippableWeaponInInventory
         sta wR15
         ldy #$0001
@@ -5967,12 +5973,14 @@
       .al
       .xl
 
-      rlUnknown89ACCE ; 89/ACCE
+      rlReviveScreenShow ; 89/ACCE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $33: fade-in Revive screen and queue song
 
         inc wGameStateRoutine1,b
         lda #(`procFadeIn)<<8
@@ -5988,12 +5996,14 @@
 
         ; 89/ACE7
 
-      rlUnknown89ACE7 ; 89/ACE7
+      rlReviveScreenRunStep ; 89/ACE7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $34: dispatch Revive screen step handler
 
         phb
         php
@@ -6023,7 +6033,7 @@
 
       aUnknown89ACF6 ; 89/ACF6
 
-        ; Jump table of rlUnknown89ACE7.
+        ; Jump table of rlReviveScreenRunStep.
         .word <>rsUnknown89AD00
         .word <>rsUnknown89AF58
         .word <>rsUnknown89B058
@@ -6115,9 +6125,9 @@
         sta bBufferNMITIMEN
         rep #$20
         lda #$0000
-        sta $0891,b
+        sta wCastleCursorState,b
         lda #$0000
-        sta $088B,b
+        sta wCastleScreenHandler,b
         lda #$B6B6
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -6518,9 +6528,9 @@
         sta bBufferNMITIMEN
         rep #$20
         lda #$0000
-        sta $0891,b
+        sta wCastleCursorState,b
         lda #$0000
-        sta $088B,b
+        sta wCastleScreenHandler,b
         lda #$B6B6
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -6565,12 +6575,14 @@
       .al
       .xl
 
-      rlUnknown89B0AA ; 89/B0AA
+      rlReviveScreenRender ; 89/B0AA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $32: render Revive/Valkyrie screen sprites and BG2VOFS
 
         lda wDebugMenuScreenIndex+1
         asl a
@@ -6595,7 +6607,7 @@
 
       aUnknown89B0B9 ; 89/B0B9
 
-        ; Jump table of rlUnknown89B0AA.
+        ; Jump table of rlReviveScreenRender.
         .word <>rsUnknown89B0BF
         .word <>rsUnknown89B0C6
         .word <>rsUnknown89B0D0
@@ -7224,7 +7236,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        jsl rlUnknown80BB5D
+        jsl rlReturnToCastleScreen
 
         _B882
         rts
@@ -7332,12 +7344,14 @@
       .al
       .xl
 
-      rlUnknown89EB26 ; 89/EB26
+      rlOptionsMenuShow ; 89/EB26
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $2A: fade-in and initialize Options menu
 
         inc wGameStateRoutine1,b
         lda #(`procFadeIn)<<8
@@ -7353,12 +7367,14 @@
 
         ; 89/EB40
 
-      rlUnknown89EB40 ; 89/EB40
+      rlOptionsMenuRunStep ; 89/EB40
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $2B: dispatch Options menu step handler
 
         phb
         php
@@ -7396,7 +7412,7 @@
 
       aUnknown89EB56 ; 89/EB56
 
-        ; Jump table of rlUnknown89EB40.
+        ; Jump table of rlOptionsMenuRunStep.
         .word <>rsUnknown89EB5E
         .word <>rsUnknown89EC86
         .word <>rsUnknown89ECB4
@@ -7596,7 +7612,7 @@
         bit #$0020
         bne _ECAF
         lda #$0000
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -7608,7 +7624,7 @@
 
 
         _ECAF
-        jsl rlUnknown80BB7C
+        jsl rlFadeToCastleScreen
         rts
 
         .databank 0
@@ -7633,7 +7649,7 @@
         lda #$0003
         sta wGameStateStep,b
         lda #$0001
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #<>rsUnknown80B122
         sta wMainLoopPointer
         rts
@@ -7671,12 +7687,14 @@
       .al
       .xl
 
-      rlUnknown89ECC7 ; 89/ECC7
+      rlOptionsMenuRender ; 89/ECC7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $29: render Options menu cursor/sprites and check close
 
         jsl rlUnknown89F630
         jsl rlUnknown89F67F
@@ -8820,9 +8838,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown80E58F)<<8
+        lda #(`aOptionsMenuDescriptionTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80E58F
+        lda #<>aOptionsMenuDescriptionTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         jsr rsUnknown89F620
         lda #$2000
@@ -8894,9 +8912,9 @@
         inc x
         cpx #$0012
         bne _F2E4
-        lda #(`aUnknown80E586)<<8
+        lda #(`aOptionsMenuTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80E586
+        lda #<>aOptionsMenuTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b

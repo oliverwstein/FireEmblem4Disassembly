@@ -201,8 +201,8 @@
         .databank ?
 
         phx
-        lda $10B7,b,x
-        inc $10B7,b,x
+        lda aProcSystem.aBody7,b,x
+        inc aProcSystem.aBody7,b,x
         and #$0003
         asl a
         tax
@@ -263,14 +263,14 @@
         .autsiz
         .databank ?
 
-        stz $0FD7,b,x
-        stz $0FF7,b,x
-        stz $1017,b,x
-        stz $1037,b,x
-        stz $1057,b,x
-        stz $1077,b,x
-        stz $1097,b,x
-        stz $10B7,b,x
+        stz aProcSystem.aBody0,b,x
+        stz aProcSystem.aBody1,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
+        stz aProcSystem.aBody4,b,x
+        stz aProcSystem.aBody5,b,x
+        stz aProcSystem.aBody6,b,x
+        stz aProcSystem.aBody7,b,x
         rts
 
         .databank 0
@@ -984,7 +984,7 @@
         sta lR18
         lda #$0400
         sta wR0
-        lda $7F459E
+        lda aMapAction.wMapBattleRoundIndex
         asl a
         tax
         lda aBattleRoundsData._Entry[0],x
@@ -1133,7 +1133,7 @@
         phx
         lda $7F508B
         sta $7F5089
-        lda $7F459E
+        lda aMapAction.wMapBattleRoundIndex
         asl a
         tax
         lda aBattleRoundsData._Entry[0],x
@@ -2283,7 +2283,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9F8F95
+        jsl rlFadeBGPaletteColorRanges
         .word <>aUnknown9F91D5
         rts
 
@@ -2300,7 +2300,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9F8F95
+        jsl rlFadeBGPaletteColorRanges
         .word <>aUnknown9F91E4
         rts
 
@@ -2317,7 +2317,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9F8F95
+        jsl rlFadeBGPaletteColorRanges
         .word <>aUnknown9F91F3
         rts
 
@@ -2334,7 +2334,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9F8F95
+        jsl rlFadeBGPaletteColorRanges
         .word <>aUnknown9F9202
         rts
 
@@ -3029,7 +3029,7 @@
         lda #<>rlUnknown9F94EE
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
 
         _94ED
         rtl
@@ -3076,7 +3076,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9F9517._9526
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #<>rlUnknown9F9517
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0020
@@ -3411,8 +3411,8 @@
 
         jsr rsUnknown9F83F1
         jsr rsUnknown9F910A
-        stz $1017,b,x
-        stz $1037,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
         jsl rlUnknown9F97D6._9860
         rtl
 
@@ -3428,7 +3428,7 @@
         jsr rsUnknown9F915A
         bcc _97E1
         lda #$97E2
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _97E1
         rtl
@@ -3468,31 +3468,31 @@
           .byte $60
 
         lda #$9818
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0028
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         rtl
 
 
         _9818
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _9830
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$9831
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0008
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _9830
         rtl
 
 
         _9831
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _983C
         lda #$983D
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _983C
         rtl
@@ -3502,7 +3502,7 @@
         jsl _9860
         bcc _984C
         lda #$984D
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         jsr rsUnknown9F8359
 
         _984C
@@ -3513,7 +3513,7 @@
         jsr rsUnknown9F919F
         bcc _985F
         lda #$985F
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta $7F5093
 
@@ -3523,8 +3523,8 @@
 
         _9860
         lda #$0003
-        sta $1017,b,x
-        ldy $1037,b,x
+        sta aProcSystem.aBody2,b,x
+        ldy aProcSystem.aBody3,b,x
         lda $98AA,b,y
         cmp #$FFFF
         beq aUnknown9F98A8
@@ -3532,7 +3532,7 @@
         tya
         clc
         adc #$000E
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         tyx
         lda $98AA,b,x
         sta $01D2,b
@@ -3730,7 +3730,7 @@
         dec aProcSystem.aBody0,b,x
         bne _99FE
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #<>rlUnknown9F99FF
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0040
@@ -3858,21 +3858,21 @@
         .autsiz
         .databank ?
 
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         beq _9B60
         dec a
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         rts
 
 
         _9B60
         lda #$0003
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         phx
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         inc a
         and #$000F
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         asl a
         tax
         lda $9B9B,b,x
@@ -3931,7 +3931,7 @@
 
           .word $EC2B
 
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         jsr rsUnknown9F830F
 
           .word $DBB8
@@ -3952,8 +3952,8 @@
 
           .word $DC77
 
-        stz $1017,b,x
-        stz $1037,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
         lda $7F509B
         and #$00FF
         jsr rsUnknown9F8253
@@ -3961,7 +3961,7 @@
           .byte $76
 
         lda #$0010
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         rtl
 
 
@@ -3971,34 +3971,34 @@
         .xl
         .autsiz
         .databank ?
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _9C8B
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$9C60
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         rtl
 
 
         _9C60
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _9C8B
-        ldy $10B7,b,x
-        lda $1057,b,y
+        ldy aProcSystem.aBody7,b,x
+        lda aProcSystem.aBody4,b,y
         eor #$FFFF
         inc a
-        sta $1057,b,y
+        sta aProcSystem.aBody4,b,y
         lda #$9C7F
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         rtl
 
 
         _9C7F
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _9C8B
         lda #$0001
         sta $7F5093
@@ -4021,21 +4021,21 @@
         .autsiz
         .databank ?
 
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         beq _9CA1
         dec a
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         rtl
 
 
         _9CA1
         lda #$0001
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         phx
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         inc a
         and #$000F
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         asl a
         tax
         lda $9CE0,b,x
@@ -4108,22 +4108,22 @@
         jsr rsUnknown9F9116
         bcc _9D49
         lda #$9D4A
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0010
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _9D49
         rtl
 
 
         _9D4A
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _9D49
         jsr rsUnknown9F82D7
 
           .word $EC1C
 
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         jsr rsUnknown9F82D7
 
           .word $A139
@@ -4155,20 +4155,20 @@
           .byte $68
 
         lda #$9D87
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
 
         _9D87
         lda $7ECC06
         beq _9DA2
-        ldy $10B7,b,x
+        ldy aProcSystem.aBody7,b,x
         lda #$FFFC
-        sta $1057,b,y
+        sta aProcSystem.aBody4,b,y
         lda #$9DA3
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$9DA6
-        sta $0F77,b,x
+        sta aProcSystem.aHeaderCodeOffset,b,x
 
         _9DA2
         rtl
@@ -4275,16 +4275,16 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F5099
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509A
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0040
-        sta $12C0,b,x
-        lda $1200,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $69
@@ -4300,19 +4300,19 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9F9F79
         lda #$9F7A
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda $7F509B
         and #$00FF
         sec
-        sbc $1200,b,x
+        sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
         lda $7F509C
         and #$00FF
         sec
-        sbc $1240,b,x
+        sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
         jsl rlUnknown9F89F8
         lsr a
@@ -4321,11 +4321,11 @@
         lda #$0002
 
         _9F68
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda wR0
-        sta $12E0,b,x
+        sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0400
-        sta $1300,b,x
+        sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
 
         .databank 0
@@ -4353,11 +4353,11 @@
 
         ora (#169,s),y
         ora (wR0,x)
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$9FAC
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0008
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
         .byte $DE, $C0, $12
@@ -4373,9 +4373,9 @@
 
         bne _9FC1
         lda #$9FC2
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0010
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta $7ECC06
 
         _9FC1
@@ -4402,7 +4402,7 @@
 
         _9FCF
         sta $0A9091,x
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
         sta $7F5093
         rtl
@@ -4422,7 +4422,7 @@
         .autsiz
         .databank ?
 
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         bne _A018
         lda $0000,b,y
         tay
@@ -4523,7 +4523,7 @@
         and #$0400
         beq _A0BD
         lda #$DF65
-        sta $165F,b,x
+        sta aHDMASystem.aOffset,b,x
 
         _A0BD
         lda #$0078
@@ -4588,13 +4588,13 @@
         .databank ?
 
         lda #$0000
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0200
-        sta $0FF7,b,x
+        sta aProcSystem.aBody1,b,x
         lda #$2000
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         lda #$4000
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         rtl
 
 
@@ -4611,10 +4611,10 @@
         sta $2182,b
         lda #$546A
         sta $2181,b
-        lda $0FF7,b,x
+        lda aProcSystem.aBody1,b,x
         clc
         adc #$0008
-        sta $0FF7,b,x
+        sta aProcSystem.aBody1,b,x
         lda $1018,b,x
         and #$00FF
         sta wR2
@@ -4656,11 +4656,11 @@
 
 
         _A1EE
-        lda $0FD7,b,x
+        lda aProcSystem.aBody0,b,x
         clc
-        adc $0FF7,b,x
-        sta $0FD7,b,x
-        lda $1037,b,x
+        adc aProcSystem.aBody1,b,x
+        sta aProcSystem.aBody0,b,x
+        lda aProcSystem.aBody3,b,x
         sec
         sbc #$0100
         bcs _A21D
@@ -4672,12 +4672,12 @@
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         plx
         lda #$A221
-        sta $0F57,b,x
-        stz $1057,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        stz aProcSystem.aBody4,b,x
         lda #$0000
 
         _A21D
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         rtl
 
 
@@ -4687,10 +4687,10 @@
         .xl
         .autsiz
         .databank ?
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         and #$0003
         bne _A23B
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         and #$000C
         phx
         lsr a
@@ -4701,7 +4701,7 @@
         plx
 
         _A23B
-        inc $1057,b,x
+        inc aProcSystem.aBody4,b,x
         rtl
 
         .databank 0
@@ -4750,9 +4750,9 @@
 
         jsr rsUnknown9F83F1
         lda #$0020
-        sta $0FD7,b,x
-        stz $1017,b,x
-        stz $1037,b,x
+        sta aProcSystem.aBody0,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
         jsr rsUnknown9F910A
         jsl rlUnknown9FA380
         lda #$0000
@@ -4772,7 +4772,7 @@
         jsr rsUnknown9F9136
         bcc _A310
         lda #$A311
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _A310
         rtl
@@ -4807,21 +4807,21 @@
           .word $DC77
 
         lda #$A345
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$001E
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         rtl
 
 
         _A345
         jsr rsUnknown9F827A
         jsl rlUnknown9FA380
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _A35D
         lda #$0010
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$A35E
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _A35D
         rtl
@@ -4830,12 +4830,12 @@
         _A35E
         jsr rsUnknown9F827A
         jsl rlUnknown9FA380
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _A377
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$A378
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _A377
         rtl
@@ -4853,20 +4853,20 @@
         .xl
         .autsiz
         .databank ?
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         beq _A38A
         dec a
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         rtl
 
 
         _A38A
         lda #$0003
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         phx
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         inc a
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         dec a
         asl a
         asl a
@@ -4895,7 +4895,7 @@
 
         _A3CF
         plx
-        stz $0ED7,b,x
+        stz aProcSystem.aHeaderTypeOffset,b,x
         lda #$0001
         sta $7ECC08
         rtl
@@ -4937,10 +4937,10 @@
 
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FA536
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F509B
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $53
@@ -4949,7 +4949,7 @@
         clc
         adc #$0002
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         rtl
 
 
@@ -4967,12 +4967,12 @@
 
         _A531
         lda #$A537
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         jsr rsUnknown9F919F
         bcc _A546
         lda #$0001
         sta $7F5093
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _A546
         rtl
@@ -5095,14 +5095,14 @@
         jsr rsUnknown9F9116
         bcc _A602
         lda #$A603
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         jsr rsUnknown9F82D7
 
           .word $EC3A
 
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         jsr rsUnknown9F830F
 
           .word $DBB8
@@ -5139,51 +5139,51 @@
 
 
         _A603
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _A614
         lda #$A615
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _A614
         rtl
 
 
         _A615
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _A64C
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$A62E
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$000E
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         rtl
 
 
         _A62E
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _A64C
         lda #$A64D
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0016
-        sta $0FD7,b,x
-        ldy $10B7,b,x
-        lda $1057,b,y
+        sta aProcSystem.aBody0,b,x
+        ldy aProcSystem.aBody7,b,x
+        lda aProcSystem.aBody4,b,y
         eor #$FFFF
         inc a
-        sta $1057,b,y
+        sta aProcSystem.aBody4,b,y
 
         _A64C
         rtl
 
 
         _A64D
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _A658
         lda #$A659
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _A658
         rtl
@@ -5193,7 +5193,7 @@
         jsr rsUnknown9F919F
         bcc _A66B
         lda #$A66B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta $7F5093
 
@@ -5264,11 +5264,11 @@
         bcc _A6CA
         lda $0EF6,b,x
         sta lR44+1
-        ldy $0ED7,b,x
+        ldy aProcSystem.aHeaderTypeOffset,b,x
         lda $0008,b,y
         sta lR44
         lda #$A6CA
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         phx
         phy
         lda $7F509A
@@ -5282,7 +5282,7 @@
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
         plx
-        stz $0ED7,b,x
+        stz aProcSystem.aHeaderTypeOffset,b,x
 
         _A6CA
         rtl
@@ -5319,7 +5319,7 @@
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FA71E
         lda $7F5099
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $56
@@ -5330,7 +5330,7 @@
         _A6FF
         lda $7F5099
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $54
@@ -5341,11 +5341,11 @@
         and #$00FF
         sec
         sbc #$0010
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda #$0004
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
         .byte $AF, $9F, $50, $7F, $9D, $60, $12, $AF, $9B, $50, $7F, $29, $FF, $00, $9D, $00
@@ -5357,9 +5357,9 @@
         jsl rlUnknown9FAACC
         bcc _A779
         lda #$000C
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$A75E
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .byte $DE, $C0, $12, $D0, $16, $A9, $6A, $A7, $9D, $60, $11, $6B, $20, $9F, $91, $90
@@ -5371,14 +5371,14 @@
 
 
         _A77A
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         beq _A79A
-        stz $1320,b,x
+        stz aActiveSpriteSystem.aUnknown001320,b,x
         jsr _A7F6
         lda #$A792
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0040
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
         .byte $DE, $C0, $12, $D0, $03, $9E, $00, $11
@@ -5389,13 +5389,13 @@
 
 
         _A79B
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         beq _A7BB
-        stz $1320,b,x
+        stz aActiveSpriteSystem.aUnknown001320,b,x
         lda #$A7B0
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0040
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
         .byte $DE, $C0, $12, $D0, $06, $20, $43, $A8, $9E, $00, $11
@@ -5406,14 +5406,14 @@
 
 
         _A7BC
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         beq _A7F5
-        stz $1320,b,x
+        stz aActiveSpriteSystem.aUnknown001320,b,x
         jsr _A86B
         lda #$A7D4
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$003C
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
         .byte $DE, $C0, $12, $D0, $13, $A9, $01, $00, $8F, $80, $45, $7F, $A9, $ED, $A7, $9D
@@ -5421,7 +5421,7 @@
 
 
         _A7E9
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
         .byte $DE, $C0, $12, $D0, $03, $9E, $00, $11
@@ -5434,7 +5434,7 @@
         _A7F6
         phx
         phy
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         sec
         sbc #$0030
         bpl _A809
@@ -5448,7 +5448,7 @@
         clc
         adc #$0018
         tay
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         and #$00FF
         tax
         lda #(`aUnknown9FA6D7)<<8
@@ -5465,7 +5465,7 @@
         clc
         adc #$0018
         tay
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         and #$00FF
         tax
         lda #(`aUnknown9FA6DD)<<8
@@ -5508,7 +5508,7 @@
         sec
         sbc #$0018
         sta wR0
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         clc
         adc #$0018
         cmp wR0
@@ -5529,7 +5529,7 @@
 
 
         _A8A0
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $57
@@ -5566,7 +5566,7 @@
 
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FA935
         ora (wR0,x)
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         rtl
 
         .byte $BD, $40, $12, $C9, $0A, $00, $10, $24, $A9, $01, $00, $9D, $A0, $13, $AF, $9B
@@ -5577,19 +5577,19 @@
         _A913
         lda #$609D
         ora (lR47+1),y
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $55
 
         lda #$0020
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$0002
-        sta $13A0,b,x
-        stz $1320,b,x
-        stz $1340,b,x
+        sta aActiveSpriteSystem.aUnknown0013A0,b,x
+        stz aActiveSpriteSystem.aUnknown001320,b,x
+        stz aActiveSpriteSystem.aUnknown001340,b,x
         lda #$A938
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .byte $DE, $C0, $12, $D0, $0D, $A9, $4A, $A9, $9D, $60, $11, $A9, $01, $00, $8F, $80
@@ -5603,7 +5603,7 @@
         _A957
         jsr rsUnknown9F919F
         bcc _A966
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
         sta $7F5093
 
@@ -5636,16 +5636,16 @@
         sta wR0
         lda #$0010
         clc
-        adc $1240,b,x
-        sta $1240,b,x
+        adc aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         cmp wR0
         bmi _A9F4
         jsr rlUnknown9FAA16
         lda $7F509C
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$A918
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
 
         _A9EF
         lda $0000,b,y
@@ -5665,7 +5665,7 @@
 
 
         _AA12
-        stz $13A0,b,x
+        stz aActiveSpriteSystem.aUnknown0013A0,b,x
         rtl
 
 
@@ -5796,10 +5796,10 @@
         .autsiz
         .databank ?
 
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         beq _AAD7
         dec a
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
 
         _AAD5
         clc
@@ -5809,9 +5809,9 @@
         _AAD7
         txy
         phx
-        lda $1340,b,x
+        lda aActiveSpriteSystem.aUnknown001340,b,x
         inc a
-        sta $1340,b,x
+        sta aActiveSpriteSystem.aUnknown001340,b,x
         dec a
         asl a
         asl a
@@ -5821,7 +5821,7 @@
         lda $AB29,b,x
         cmp #$FFFF
         beq _AB26
-        sta $1320,b,y
+        sta aActiveSpriteSystem.aUnknown001320,b,y
         inc x
         inc x
         lda $AB29,b,x
@@ -5839,7 +5839,7 @@
         lda $AB35,b,x
         sta $01DE,b
         lda $AB37,b,x
-        sta $01E0,b
+        sta aBGPaletteBuffer.aPalette7,b
         plx
         clc
         rtl
@@ -5909,8 +5909,8 @@
 
         jsr rsUnknown9F83F1
         jsr rsUnknown9F910A
-        stz $1017,b,x
-        stz $1037,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
         rtl
 
 
@@ -5926,7 +5926,7 @@
 
           .word $EBD8
 
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         jsr rsUnknown9F830F
 
           .word $DBB8
@@ -5948,9 +5948,9 @@
           .word $DC77
 
         lda #$ACC9
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0078
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0080
         jsr rsUnknown9F8253
 
@@ -5967,15 +5967,15 @@
 
 
         _ACC9
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _ACE1
-        ldy $10B7,b,x
-        lda $1057,b,y
+        ldy aProcSystem.aBody7,b,x
+        lda aProcSystem.aBody4,b,y
         eor #$FFFF
         inc a
-        sta $1057,b,y
+        sta aProcSystem.aBody4,b,y
         lda #$ACE2
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _ACE1
         rtl
@@ -5991,21 +5991,21 @@
         .xl
         .autsiz
         .databank ?
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         beq _ACED
         dec a
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         rtl
 
 
         _ACED
         lda #$0001
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         phx
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         inc a
         and #$000F
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         asl a
         tax
         lda $AD32,b,x
@@ -6023,7 +6023,7 @@
         lda $AD3E,b,x
         sta $01DE,b
         lda $AD40,b,x
-        sta $01E0,b
+        sta aBGPaletteBuffer.aPalette7,b
         plx
         rtl
 
@@ -6048,17 +6048,17 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F509B
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509C
         and #$00FF
-        sta $1240,b,x
-        stz $13E0,b,x
-        stz $13C0,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
+        stz aActiveSpriteSystem.aUnknown0013E0,b,x
+        stz aActiveSpriteSystem.aUnknown0013C0,b,x
         lda #$0028
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
 
         _AD9F
         jml rlUnknown9FAE19
@@ -6076,23 +6076,23 @@
 
 
         _ADDA
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _AE18
         lda #$0001
-        sta $13A0,b,x
+        sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda #$ADF2
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0028
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
 
         _ADF2
         jsl rlUnknown9FAE19
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _AE18
         lda #$AE05
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         jsr rsUnknown9F8359
         rtl
 
@@ -6110,21 +6110,21 @@
         .xl
         .autsiz
         .databank ?
-        lda $1360,b,x
+        lda aActiveSpriteSystem.aUnknown001360,b,x
         beq _AE23
         dec a
-        sta $1360,b,x
+        sta aActiveSpriteSystem.aUnknown001360,b,x
         rtl
 
 
         _AE23
         lda #$0002
-        sta $1360,b,x
+        sta aActiveSpriteSystem.aUnknown001360,b,x
         phx
-        lda $1380,b,x
+        lda aActiveSpriteSystem.aUnknown001380,b,x
         inc a
         and #$000F
-        sta $1380,b,x
+        sta aActiveSpriteSystem.aUnknown001380,b,x
         asl a
         tax
         lda $AE5C,b,x
@@ -6268,9 +6268,9 @@
         jsr rsUnknown9F9116
         bcc _AF56
         lda #$AF57
-        sta $0F57,b,x
-        stz $1017,b,x
-        stz $1037,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
         lda #(`aUnknown9FAFD9)<<8
         sta lR44+1
         lda #<>aUnknown9FAFD9
@@ -6292,22 +6292,22 @@
         .xl
         .autsiz
         .databank ?
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         beq _AF66
         dec a
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         rtl
 
 
         _AF66
         lda #$0002
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         phx
-        lda $1037,b,x
-        inc $1037,b,x
+        lda aProcSystem.aBody3,b,x
+        inc aProcSystem.aBody3,b,x
         cmp #$000B
         bmi _AF7B
-        stz $1037,b,x
+        stz aProcSystem.aBody3,b,x
 
         _AF7B
         asl a
@@ -6349,22 +6349,22 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F5099
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509A
         and #$00FF
         clc
         adc #$FFF8
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0002
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda $7F50C9
         asl a
         tay
         lda $B101,b,y
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         rtl
 
 
@@ -6374,19 +6374,19 @@
         .xl
         .autsiz
         .databank ?
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B052
         lda #$B053
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda $7F509B
         and #$00FF
         sec
-        sbc $1200,b,x
+        sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
         lda $7F509C
         and #$00FF
         sec
-        sbc $1240,b,x
+        sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
         jsl rlUnknown9F89F8
         lsr a
@@ -6395,11 +6395,11 @@
         lda #$0002
 
         _B041
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda wR0
-        sta $12E0,b,x
+        sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0400
-        sta $1300,b,x
+        sta aActiveSpriteSystem.aUnknown001300,b,x
 
         _B04F
         jsr rsUnknown9F9379
@@ -6418,7 +6418,7 @@
 
           .word $EC58
 
-        sta $1380,b,x
+        sta aActiveSpriteSystem.aUnknown001380,b,x
         jsr rsUnknown9F830F
 
           .word $DBB8
@@ -6448,17 +6448,17 @@
 
 
         _B0C4
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B0E4
-        ldy $1380,b,x
+        ldy aActiveSpriteSystem.aUnknown001380,b,x
         lda #$FFFD
-        sta $1057,b,y
+        sta aProcSystem.aBody4,b,y
         lda #$0001
-        sta $13A0,b,x
+        sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda #$B0E5
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0010
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
 
         _B0E4
         rtl
@@ -6469,7 +6469,7 @@
         _B0F1
         jsr rsUnknown9F919F
         bcc _B100
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
         sta $7F5093
 
@@ -6503,7 +6503,7 @@
 
         ldy #$F013
         php
-        stz $13A0,b,x
+        stz aActiveSpriteSystem.aUnknown0013A0,b,x
         lda $0000,b,y
         tay
         rtl
@@ -6634,8 +6634,8 @@
 
         jsr rsUnknown9F83F1
         jsr rsUnknown9F910A
-        stz $1017,b,x
-        stz $1037,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
         lda #$0000
         sta $7ECC06
         sta $7ECC08
@@ -6657,16 +6657,16 @@
 
         _B2B7
         lda #$B2C4
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0018
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _B2C3
         rtl
 
 
         _B2C4
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bpl _B2ED
         jsr rsUnknown9F82D7
 
@@ -6693,7 +6693,7 @@
           .word $DCF4
 
         lda #$B2EE
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _B2ED
         rtl
@@ -6701,7 +6701,7 @@
 
         _B2EE
         lda #$B319
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #(`aUnknown9FB3DD)<<8
         sta lR44+1
         lda #<>aUnknown9FB3DD
@@ -6724,9 +6724,9 @@
         lda $7ECC0C
         beq _B32B
         lda #$B32C
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$EBA9
-        sta $0F77,b,x
+        sta aProcSystem.aHeaderCodeOffset,b,x
 
         _B32B
         rtl
@@ -6743,22 +6743,22 @@
         .xl
         .autsiz
         .databank ?
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         beq _B33A
         dec a
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         rtl
 
 
         _B33A
         lda #$0002
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         phx
-        lda $1037,b,x
-        inc $1037,b,x
+        lda aProcSystem.aBody3,b,x
+        inc aProcSystem.aBody3,b,x
         cmp #$0027
         bmi _B34F
-        stz $1037,b,x
+        stz aProcSystem.aBody3,b,x
 
         _B34F
         asl a
@@ -6809,15 +6809,15 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda #$00F8
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda #$FFF0
-        sta $1240,b,x
-        stz $13E0,b,x
-        stz $13C0,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
+        stz aActiveSpriteSystem.aUnknown0013E0,b,x
+        stz aActiveSpriteSystem.aUnknown0013C0,b,x
         lda $7ECC0A
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
 
@@ -6834,31 +6834,31 @@
         clc
         adc #$0080
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F50CF
         eor #$FFFF
         inc a
         clc
         adc #$0070
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda $7F509C
         and #$00FF
         sta wR0
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         cmp wR0
         bmi _B461
         lda wR0
-        sta $1240,b,x
-        lda $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $5F
 
         lda #$000C
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$B462
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0001
         sta $7ECC0C
 
@@ -6872,9 +6872,9 @@
         ora ($D0)
         ora $01A9,b
         .byte $00 ; brk
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$B475
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .byte $A9, $00
@@ -6882,7 +6882,7 @@
 
         _B477
         .byte $00 ; brk
-        sta $1B43,b
+        sta aPaletteFading.wDesiredColor,b
         lda #$0006
         sta aPaletteFading,b
         jsl rlFadePaletteToBlack
@@ -6891,9 +6891,9 @@
 
         bcc _B495
         lda #$B49C
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$000E
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
 
         _B495
         rtl
@@ -6911,12 +6911,12 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B4AE
         lda #$0002
         sta $7ECC0C
         lda #$B4AF
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
 
         _B4AE
         rtl
@@ -6929,7 +6929,7 @@
         bcc _B4C7
 
         _B4BA
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
         sta $7F5093
         jsr rsUnknown9F8371
@@ -7030,9 +7030,9 @@
         jsr rsUnknown9F9116
         bcc rlUnknown9FB535._B53B
         lda #$B559
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0004
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda $7F509B
         and #$00FF
         jsr rsUnknown9F8253
@@ -7043,77 +7043,77 @@
 
 
         _B559
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bpl _B56D
         jsr rlUnknown9FB5EC
         lda #$B56E
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0028
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _B56D
         rtl
 
 
         _B56E
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B57F
         lda #$B580
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _B57F
         rtl
 
 
         _B580
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B5B7
         lda #$B599
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         rtl
 
 
         _B599
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B5B7
         lda #$B5B8
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
-        sta $0FD7,b,x
-        ldy $10B7,b,x
-        lda $1057,b,y
+        sta aProcSystem.aBody0,b,x
+        ldy aProcSystem.aBody7,b,x
+        lda aProcSystem.aBody4,b,y
         eor #$FFFF
         inc a
-        sta $1057,b,y
+        sta aProcSystem.aBody4,b,y
 
         _B5B7
         rtl
 
 
         _B5B8
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B5CC
         jsr rsUnknown9F8359
         lda #$B5CD
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _B5CC
         rtl
 
 
         _B5CD
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B5D8
         lda #$B5D9
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _B5D8
         rtl
@@ -7123,7 +7123,7 @@
         jsr rsUnknown9F919F
         bcc _B5EB
         lda #$B5EB
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta $7F5093
 
@@ -7141,7 +7141,7 @@
 
           .word $EC3A
 
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         jsr rsUnknown9F830F
 
           .word $DBB8
@@ -7232,7 +7232,7 @@
 
           .word $EC67
 
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         jsr rsUnknown9F830F
 
           .word $DBB8
@@ -7254,9 +7254,9 @@
           .word $E2E5
 
         lda #$B67C
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         phx
         lda #(`aUnknown9FBA18)<<8
         sta lR44+1
@@ -7274,29 +7274,29 @@
 
 
         _B67C
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B694
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$B695
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0080
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _B694
         rtl
 
 
         _B695
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B6B6
-        ldy $10B7,b,x
+        ldy aProcSystem.aBody7,b,x
         lda #$FF00
-        sta $1057,b,y
+        sta aProcSystem.aBody4,b,y
         lda #$B6B7
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0001
         sta $7ECC08
 
@@ -7305,7 +7305,7 @@
 
 
         _B6B7
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B6C3
         lda #$0001
         sta $7ECC06
@@ -7332,13 +7332,13 @@
         sta $7ECC08
         sta $7ECC0A
         sta $7ECC0C
-        stz $1017,b,x
-        stz $1037,b,x
-        lda $7F45A8
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
+        lda aMapAction.wMapBattleDefenderSpriteSlot
         tay
-        lda $1240,b,y
-        sta $1077,b,x
-        stz $1097,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,y
+        sta aProcSystem.aBody5,b,x
+        stz aProcSystem.aBody6,b,x
         rtl
 
         .databank 0
@@ -7454,7 +7454,7 @@
 
           .word $EC67
 
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         jsr rsUnknown9F830F
 
           .word $DBB8
@@ -7476,9 +7476,9 @@
           .word $DC77
 
         lda #$B864
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         phx
         lda #(`aUnknown9FBA18)<<8
         sta lR44+1
@@ -7496,12 +7496,12 @@
 
 
         _B864
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B876
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$B877
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _B876
         rtl
@@ -7511,24 +7511,24 @@
         jsr _B8B8
         bcc _B888
         lda #$B889
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0010
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _B888
         rtl
 
 
         _B889
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B8AA
-        ldy $10B7,b,x
+        ldy aProcSystem.aBody7,b,x
         lda #$FF00
-        sta $1057,b,y
+        sta aProcSystem.aBody4,b,y
         lda #$B8AB
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0001
         sta $7ECC08
 
@@ -7537,7 +7537,7 @@
 
 
         _B8AB
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B8B7
         lda #$0001
         sta $7ECC06
@@ -7547,25 +7547,25 @@
 
 
         _B8B8
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         inc a
         cmp #$003F
         bmi _B8C4
         lda #$003F
 
         _B8C4
-        sta $1097,b,x
-        lda $7F45AA
+        sta aProcSystem.aBody6,b,x
+        lda aMapAction.wMapBattleDefenderAuxSpriteSlot
         cmp #$FFFF
         beq _B8D3
         jsr _B8D7
 
         _B8D3
-        lda $7F45A8
+        lda aMapAction.wMapBattleDefenderSpriteSlot
 
         _B8D7
         tay
-        lda $1240,b,y
+        lda aActiveSpriteSystem.aUnknown001240,b,y
         clc
         adc #$FFFE
         bmi _B91B
@@ -7579,10 +7579,10 @@
         eor #$FFFF
         inc a
         clc
-        adc $1077,b,x
-        sta $1077,b,x
+        adc aProcSystem.aBody5,b,x
+        sta aProcSystem.aBody5,b,x
         sta wR0
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         and #$001F
         lsr a
         tax
@@ -7593,25 +7593,25 @@
         inc a
         clc
         adc wR0
-        sta $1240,b,y
+        sta aActiveSpriteSystem.aUnknown001240,b,y
         plx
         clc
         rts
 
 
         _B91B
-        lda $7F45AA
+        lda aMapAction.wMapBattleDefenderAuxSpriteSlot
         cmp #$FFFF
         beq _B927
         jsr _B92B
 
         _B927
-        lda $7F45A8
+        lda aMapAction.wMapBattleDefenderSpriteSlot
 
         _B92B
         tay
         lda #$FFF8
-        sta $1240,b,y
+        sta aActiveSpriteSystem.aUnknown001240,b,y
         sec
         rts
 
@@ -7645,7 +7645,7 @@
 
           .word $EC67
 
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         jsr rsUnknown9F830F
 
           .word $DBB8
@@ -7667,9 +7667,9 @@
           .word $E2D9
 
         lda #$B9D0
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         phx
         lda #(`aUnknown9FBA18)<<8
         sta lR44+1
@@ -7687,29 +7687,29 @@
 
 
         _B9D0
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _B9E8
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$B9E9
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0080
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _B9E8
         rtl
 
 
         _B9E9
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _BA0A
-        ldy $10B7,b,x
+        ldy aProcSystem.aBody7,b,x
         lda #$FF00
-        sta $1057,b,y
+        sta aProcSystem.aBody4,b,y
         lda #$BA0B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0001
         sta $7ECC08
 
@@ -7718,7 +7718,7 @@
 
 
         _BA0B
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _BA17
         lda #$0001
         sta $7ECC06
@@ -7740,15 +7740,15 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F509B
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509C
         clc
         adc #$FFFC
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         rtl
 
 
@@ -7762,7 +7762,7 @@
         beq _BA4E
         lda #$0001
         sta $7F5093
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _BA4E
         rtl
@@ -7848,22 +7848,22 @@
         .autsiz
         .databank ?
 
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         beq _BADF
         dec a
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         rtl
 
 
         _BADF
         lda #$0002
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         phx
-        lda $1037,b,x
-        inc $1037,b,x
+        lda aProcSystem.aBody3,b,x
+        inc aProcSystem.aBody3,b,x
         cmp #$0010
         bmi _BAF4
-        stz $1037,b,x
+        stz aProcSystem.aBody3,b,x
 
         _BAF4
         asl a
@@ -7907,24 +7907,24 @@
         .autsiz
         .databank ?
 
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         beq _BB98
         dec a
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         rtl
 
 
         _BB98
         lda #$0002
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         phx
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         dec a
         bpl _BBA8
         lda #$0020
 
         _BBA8
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         asl a
         tax
         lda $BBE5,b,x
@@ -8032,8 +8032,8 @@
 
         jsr rsUnknown9F83F1
         jsr rsUnknown9F910A
-        stz $0FD7,b,x
-        stz $0FF7,b,x
+        stz aProcSystem.aBody0,b,x
+        stz aProcSystem.aBody1,b,x
         lda #$0000
         sta $7ECC06
         sta $7ECC08
@@ -8056,7 +8056,7 @@
 
           .word $EBFE
 
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         jsr rsUnknown9F830F
 
           .word $DBB8
@@ -8078,11 +8078,11 @@
           .word $DC77
 
         lda #$BD48
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
-        stz $1017,b,x
-        stz $1037,b,x
+        sta aProcSystem.aBody0,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
         jsl rlUnknown9FBEB2
         lda #(`aUnknown9FBF08)<<8
         sta lR44+1
@@ -8094,12 +8094,12 @@
 
         _BD48
         jsl rlUnknown9FBEB2
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _BD5D
         lda #$BD5E
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0030
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _BD5D
         rtl
@@ -8107,14 +8107,14 @@
 
         _BD5E
         jsl rlUnknown9FBEB2
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _BD9E
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$BD7B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0050
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         rtl
 
 
@@ -8122,25 +8122,25 @@
         jsl rlUnknown9FBEB2
         lda $7ECC06
         beq _BD9E
-        ldy $10B7,b,x
-        lda $1057,b,y
+        ldy aProcSystem.aBody7,b,x
+        lda aProcSystem.aBody4,b,y
         eor #$FFFF
         inc a
-        sta $1057,b,y
+        sta aProcSystem.aBody4,b,y
         lda #$BD9F
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$000C
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _BD9E
         rtl
 
 
         _BD9F
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _BDAD
         lda #$BDAE
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         jsr rsUnknown9F8359
 
         _BDAD
@@ -8151,7 +8151,7 @@
         jsr rsUnknown9F919F
         bcc _BDC0
         lda #$BDC0
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta $7F5093
 
@@ -8242,24 +8242,24 @@
         .autsiz
         .databank ?
 
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         inc a
         cmp #$0004
         bpl _BEBF
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         rtl
 
 
         _BEBF
-        stz $1017,b,x
-        lda $1037,b,x
+        stz aProcSystem.aBody2,b,x
+        lda aProcSystem.aBody3,b,x
         inc a
         cmp #$0008
         bmi _BECE
         lda #$0000
 
         _BECE
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         asl a
         phx
         tax
@@ -8292,16 +8292,16 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F509B
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509C
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0060
-        sta $12C0,b,x
-        lda $1200,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $5D
@@ -8317,11 +8317,11 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _BF46
         lda #$0001
         sta $7ECC06
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _BF46
         rtl
@@ -8446,7 +8446,7 @@
 
           .word <>procUnknown9FEC76
 
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         jsr rsUnknown9F830F
 
           .word <>aUnknown9FDBB8
@@ -8474,9 +8474,9 @@
           .byte $65
 
         lda #$C050
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _C04F
         rtl
@@ -8490,12 +8490,12 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C061
         lda #$C062
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _C061
         rtl
@@ -8509,14 +8509,14 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne rlUnknown9FC07B._C092
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$C07B
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         rtl
 
         .databank 0
@@ -8528,14 +8528,14 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C092
         lda #$C093
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0010
-        sta $0FD7,b,x
-        stz $1017,b,x
-        stz $1037,b,x
+        sta aProcSystem.aBody0,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
 
         _C092
         rtl
@@ -8552,7 +8552,7 @@
         jsl rlUnknown9FC0B3
         bcc _C09F
         lda #$C0A0
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _C09F
         rtl
@@ -8569,7 +8569,7 @@
         jsr rsUnknown9F919F
         bcc _C0B2
         lda #$C0B2
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta $7F5093
 
@@ -8586,8 +8586,8 @@
         .databank ?
 
         lda #$0003
-        sta $1017,b,x
-        ldy $1037,b,x
+        sta aProcSystem.aBody2,b,x
+        ldy aProcSystem.aBody3,b,x
         lda $C0FD,b,y
         cmp #$FFFF
         beq _C0FB
@@ -8595,7 +8595,7 @@
         tya
         clc
         adc #$000E
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         tyx
         lda $C0FD,b,x
         sta $01D2,b
@@ -8705,9 +8705,9 @@
           .word <>aUnknown9FDC77
 
         lda #$C1F4
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0060
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda $7F509B
         and #$00FF
         jsr rsUnknown9F8253
@@ -8730,14 +8730,14 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C20C
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$C20D
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$00A0
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _C20C
         rtl
@@ -8751,7 +8751,7 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C219
         lda #$0001
         sta $7ECC0C
@@ -8772,10 +8772,10 @@
         lda $7F509B
         and #$00FF
         xba
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         lda $7F509B
         and #$FF00
-        sta $1057,b,x
+        sta aProcSystem.aBody4,b,x
         lda $7F509B
         and #$00FF
         sta wR0
@@ -8793,15 +8793,15 @@
         sbc wR1
         sta wR1
         jsl rlUnknown9F89F8
-        sta $0FF7,b,x
+        sta aProcSystem.aBody1,b,x
         lda #$0100
         jsl rlUnknown9F8B7A._8B84
-        ldx $0ECA,b
-        sta $1077,b,x
+        ldx aProcSystem.wOffset,b
+        sta aProcSystem.aBody5,b,x
         lda #$0100
         jsl rlUnknown9F8B7A
-        ldx $0ECA,b
-        sta $1097,b,x
+        ldx aProcSystem.wOffset,b
+        sta aProcSystem.aBody6,b,x
         rtl
 
         .databank 0
@@ -8813,21 +8813,21 @@
         .autsiz
         .databank ?
 
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         clc
         adc #$0001
         cmp #$0012
         bcc _C2A0
         lda #$C2A7
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0040
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0001
         sta $7ECC0A
         lda #$0012
 
         _C2A0
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         jsr rsUnknown9FC33F
         rtl
 
@@ -8840,12 +8840,12 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C2BF
         lda #$C2C0
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0004
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0001
         sta $7ECC0A
 
@@ -8861,12 +8861,12 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C2D1
         lda #$C2D2
-        sta $0F57,b,x
-        lda $0FF7,b,x
-        sta $0FD7,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aBody1,b,x
+        sta aProcSystem.aBody0,b,x
 
         _C2D1
         rtl
@@ -8881,14 +8881,14 @@
         .databank ?
 
         jsr rsUnknown9FC393
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         jsr rsUnknown9FC33F
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C2F3
         lda #$C2F4
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0004
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0001
         sta $7ECC06
 
@@ -8904,12 +8904,12 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C30C
         lda #$C30D
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0040
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0001
         sta $7ECC0A
 
@@ -8925,10 +8925,10 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C31F
         lda #$C320
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta $7ECC0A
 
@@ -8944,18 +8944,18 @@
         .autsiz
         .databank ?
 
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         sec
         sbc #$0001
         cmp #$0001
         bpl _C338
         jsr rsUnknown9F8359
         lda #$C33E
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
 
         _C338
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         jsr rsUnknown9FC33F
         rtl
 
@@ -9011,13 +9011,13 @@
         .autsiz
         .databank ?
 
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         clc
-        adc $1037,b,x
-        sta $1037,b,x
-        lda $1097,b,x
-        adc $1057,b,x
-        sta $1057,b,x
+        adc aProcSystem.aBody3,b,x
+        sta aProcSystem.aBody3,b,x
+        lda aProcSystem.aBody6,b,x
+        adc aProcSystem.aBody4,b,x
+        sta aProcSystem.aBody4,b,x
         rts
 
         .databank 0
@@ -9035,13 +9035,13 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F5099
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509A
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         rtl
 
         .databank 0
@@ -9056,14 +9056,14 @@
         jsr rsUnknown9FC415
         lda $7F509B
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509C
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda $7ECC06
         beq _C3EC
         lda #$C3ED
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
 
         _C3EC
         rtl
@@ -9080,13 +9080,13 @@
         jsr rsUnknown9FC415
         lda $7F5099
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509A
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda $7ECC0C
         beq _C414
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
         sta $7F5093
 
@@ -9103,8 +9103,8 @@
         .databank ?
 
         phx
-        inc $1300,b,x
-        lda $1300,b,x
+        inc aActiveSpriteSystem.aUnknown001300,b,x
+        lda aActiveSpriteSystem.aUnknown001300,b,x
         and #$001F
         asl a
         tay
@@ -9316,9 +9316,9 @@
         jsr rsUnknown9F9116
         bcc _C64B
         lda #$C64C
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$000C
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda $7F509B
         and #$00FF
         jsr rsUnknown9F8253
@@ -9338,13 +9338,13 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C67E
         jsr rsUnknown9F82D7
 
           .word <>procUnknown9FEC85
 
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         jsr rsUnknown9F830F
 
           .word <>aUnknown9FDBB8
@@ -9366,9 +9366,9 @@
           .word <>aUnknown9FDC77
 
         lda #$C67F
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _C67E
         rtl
@@ -9382,14 +9382,14 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C697
         lda #$C698
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0030
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
 
         _C697
         rtl
@@ -9404,15 +9404,15 @@
         .databank ?
 
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FC69C
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C6B2
-        ldy $10B7,b,x
+        ldy aProcSystem.aBody7,b,x
         lda #$FFFD
-        sta $1057,b,y
+        sta aProcSystem.aBody4,b,y
         lda #$C6B3
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0010
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _C6B2
         rtl
@@ -9426,10 +9426,10 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C6C1
         lda #$C6C2
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         jsr rsUnknown9F8359
 
         _C6C1
@@ -9447,7 +9447,7 @@
         jsr rsUnknown9F919F
         bcc _C6D4
         lda #$C6D4
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta $7F5093
 
@@ -9463,35 +9463,35 @@
         .autsiz
         .databank ?
 
-        dec $0FF7,b,x
+        dec aProcSystem.aBody1,b,x
         beq _C6DE
         jml _C79F
 
 
         _C6DE
-        lda $0ED7,b,x
+        lda aProcSystem.aHeaderTypeOffset,b,x
         tax
         lda $000B,b,x
         sta wR0
         lda $000D,b,x
         sta wR1
-        ldx $0ECA,b
-        lda $0FD7,b,x
-        sta $0FF7,b,x
-        lda $1017,b,x
+        ldx aProcSystem.wOffset,b
+        lda aProcSystem.aBody0,b,x
+        sta aProcSystem.aBody1,b,x
+        lda aProcSystem.aBody2,b,x
         clc
-        adc $1057,b,x
-        sta $1017,b,x
+        adc aProcSystem.aBody4,b,x
+        sta aProcSystem.aBody2,b,x
         cmp #$0001
         bpl _C70A
         lda #$0001
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
 
         _C70A
-        cmp $1037,b,x
+        cmp aProcSystem.aBody3,b,x
         bmi _C715
-        lda $1037,b,x
-        sta $1017,b,x
+        lda aProcSystem.aBody3,b,x
+        sta aProcSystem.aBody2,b,x
 
         _C715
         lda $7F509B
@@ -9499,8 +9499,8 @@
         clc
         adc wR0
         sta $7F50DF
-        lda $10B7,b,x
-        inc $10B7,b,x
+        lda aProcSystem.aBody7,b,x
+        inc aProcSystem.aBody7,b,x
         and #$000C
         lsr a
         tay
@@ -9527,9 +9527,9 @@
         eor #$FFFF
         inc a
         sta $7F50CF
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         bne _C77D
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         sta $7F50E3
         asl a
         sta $7F50E5
@@ -9537,7 +9537,7 @@
 
 
         _C77D
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         sta $7F50E3
         inc a
         sta $7F50E5
@@ -9570,8 +9570,8 @@
         .databank ?
 
         phx
-        lda $1017,b
-        inc $1017,b
+        lda aProcSystem.aBody2,b
+        inc aProcSystem.aBody2,b
         and #$001F
         asl a
         tax
@@ -9649,14 +9649,14 @@
 
         lda #$0007
         ldy #$0014
-        sta $1B43,b
+        sta aPaletteFading.wDesiredColor,b
         tya
         sta aPaletteFading,b
         sec
         jsr rsUnknown9F91DD
         bcc _C88E
         lda #$C88F
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         phx
         lda #(`aUnknown9FC8C1)<<8
         sta lR44+1
@@ -9680,9 +9680,9 @@
         lda $7ECC06
         beq _C8A1
         lda #$C8A2
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0010
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _C8A1
         rtl
@@ -9696,10 +9696,10 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _C8AD
         lda #$C8AE
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _C8AD
         rtl
@@ -9716,7 +9716,7 @@
         jsr rsUnknown9F919F
         bcc _C8C0
         lda #$C8C0
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta $7F5093
 
@@ -9739,19 +9739,19 @@
 
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FC8CC
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F5099
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $63
 
         lda $7F509A
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0030
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         jml rlUnknown9FC9E8
 
         .databank 0
@@ -9764,31 +9764,31 @@
         .databank ?
 
         jsl rlUnknown9FC9E8
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _C933
         lda $7F509B
         and #$00FF
         sec
-        sbc $1200,b,x
+        sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
         lda $7F509C
         and #$00FF
         sec
-        sbc $1240,b,x
+        sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
         jsl rlUnknown9F89F8
         bne _C91C
         lda #$0008
 
         _C91C
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda wR0
-        sta $12E0,b,x
+        sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0100
-        sta $1300,b,x
+        sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
         lda #$C934
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
 
         _C933
         rtl
@@ -9804,14 +9804,14 @@
 
         jsl rlUnknown9FC9E8
         jsl rlUnknown9F8999
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _C954
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$0020
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$C955
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
 
         _C954
         rtl
@@ -9826,11 +9826,11 @@
         .databank ?
 
         jsl rlUnknown9FC9E8
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _C968
         lda #$0001
         sta $7ECC06
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _C968
         rtl
@@ -9890,23 +9890,23 @@
         .autsiz
         .databank ?
 
-        lda $1360,b,x
+        lda aActiveSpriteSystem.aUnknown001360,b,x
         beq _C9F2
 
         _C9ED
         dec a
-        sta $1360,b,x
+        sta aActiveSpriteSystem.aUnknown001360,b,x
         rtl
 
 
         _C9F2
         lda #$0002
-        sta $1360,b,x
+        sta aActiveSpriteSystem.aUnknown001360,b,x
         phx
-        lda $1380,b,x
+        lda aActiveSpriteSystem.aUnknown001380,b,x
         inc a
         and #$000F
-        sta $1380,b,x
+        sta aActiveSpriteSystem.aUnknown001380,b,x
         asl a
         tax
         lda $CA1F,b,x
@@ -9954,9 +9954,9 @@
 
         phx
         phy
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         tay
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         tax
         lda #(`aUnknown9FCA8F)<<8
         sta lR44+1
@@ -9991,24 +9991,24 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F5099
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509A
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0001
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda $7F50C9
         asl a
         tay
         lda $CBA6,b,y
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         lda $7F5089
         cmp #$000B
         beq _CAD5
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $61
@@ -10017,7 +10017,7 @@
 
 
         _CAD5
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $62
@@ -10034,14 +10034,14 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda #$0001
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda $7F50C9
         asl a
         tay
         lda $CBB6,b,y
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         rtl
 
         .databank 0
@@ -10053,9 +10053,9 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CAFF
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _CAFF
         rtl
@@ -10069,17 +10069,17 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CB41
         lda $7F509B
         and #$00FF
         sec
-        sbc $1200,b,x
+        sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
         lda $7F509C
         and #$00FF
         sec
-        sbc $1240,b,x
+        sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
         jsl rlUnknown9F89F8
         lsr a
@@ -10088,14 +10088,14 @@
         lda #$0002
 
         _CB2A
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda wR0
-        sta $12E0,b,x
+        sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0400
-        sta $1300,b,x
+        sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
         lda #$CB42
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
 
         _CB41
         rtl
@@ -10116,15 +10116,15 @@
 
         _CB4E
         jsl rlUnknown9F8999
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FCB00._CB41
         lda #$0001
-        sta $7F4580
-        sta $1320,b,x
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0020
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$CB6E
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
@@ -10136,22 +10136,22 @@
         .autsiz
         .databank ?
 
-        lda $1300,b,x
+        lda aActiveSpriteSystem.aUnknown001300,b,x
         sec
         sbc #$00C0
         bcs _CB7A
         lda #$0000
 
         _CB7A
-        sta $1300,b,x
+        sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
         jsl rlUnknown9F8999
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FCB00._CB41
         lda #$0010
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$CB96
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
@@ -10163,11 +10163,11 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FCB00._CB41
         lda #$0001
         sta $7F5093
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         rtl
 
         .databank 0
@@ -10415,15 +10415,15 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F509B
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509C
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0001
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
         .databank 0
@@ -10435,12 +10435,12 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CDAC
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         lda #$CDAC
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
 
         _CDAC
         rtl
@@ -10455,15 +10455,15 @@
         .databank ?
 
         jsl rlUnknown9F8999
-        lda $13A0,b,x
+        lda aActiveSpriteSystem.aUnknown0013A0,b,x
         beq _CDCC
-        stz $13A0,b,x
+        stz aActiveSpriteSystem.aUnknown0013A0,b,x
         lda $7F5089
         cmp #$0020
         bne _CDCD
         lda #$0001
         sta $7F5093
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _CDCC
         rtl
@@ -10471,30 +10471,30 @@
 
         _CDCD
         lda #$0001
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         lda #$CF73
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #$CE02
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0018
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$0800
-        sta $13E0,b,x
-        stz $11E0,b,x
-        stz $1220,b,x
+        sta aActiveSpriteSystem.aUnknown0013E0,b,x
+        stz aActiveSpriteSystem.aUnknown0011E0,b,x
+        stz aActiveSpriteSystem.aUnknown001220,b,x
         lda $7F509D
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda #$FFF8
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         rtl
 
 
         _CE02
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CE0D
         lda #$CE0E
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
 
         _CE0D
         rtl
@@ -10511,7 +10511,7 @@
         jsl rlUnknown9F8999
         lda $7F509E
         and #$00FF
-        cmp $1240,b,x
+        cmp aActiveSpriteSystem.aUnknown001240,b,x
         beq _CE21
         bmi _CE21
         rtl
@@ -10519,11 +10519,11 @@
 
         _CE21
         lda #$0001
-        sta $13A0,b,x
+        sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda #$CE34
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0030
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
         .databank 0
@@ -10535,11 +10535,11 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CE43
         lda #$0001
         sta $7F5093
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _CE43
         rtl
@@ -10554,14 +10554,14 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F509B
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         and #$FFF8
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0001
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
         .databank 0
@@ -10574,18 +10574,18 @@
         .databank ?
 
         lda #$CE8B
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0018
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$0800
-        sta $13E0,b,x
-        stz $11E0,b,x
-        stz $1220,b,x
+        sta aActiveSpriteSystem.aUnknown0013E0,b,x
+        stz aActiveSpriteSystem.aUnknown0011E0,b,x
+        stz aActiveSpriteSystem.aUnknown001220,b,x
         lda $7F509B
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda #$FFF8
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         rtl
 
         .databank 0
@@ -10597,10 +10597,10 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CE96
         lda #$CE97
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
 
         _CE96
         rtl
@@ -10617,7 +10617,7 @@
         jsl rlUnknown9F8999
         lda $7F509C
         and #$00FF
-        cmp $1240,b,x
+        cmp aActiveSpriteSystem.aUnknown001240,b,x
         beq _CEAA
         bmi _CEAA
         rtl
@@ -10625,11 +10625,11 @@
 
         _CEAA
         lda #$0001
-        sta $13A0,b,x
+        sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda #$CEC1
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0030
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         jsl rlUnknown9EF5AC
         rtl
 
@@ -10642,11 +10642,11 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CED0
         lda #$0001
         sta $7F5093
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _CED0
         rtl
@@ -10671,10 +10671,10 @@
         .databank ?
 
         lda #$F800
-        sta $13E0,b,x
-        stz $13C0,b,x
+        sta aActiveSpriteSystem.aUnknown0013E0,b,x
+        stz aActiveSpriteSystem.aUnknown0013C0,b,x
         lda #$CDAD
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
@@ -10686,7 +10686,7 @@
         .autsiz
         .databank ?
 
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         bmi _CF4F
         lda $0000,b,y
         tay
@@ -10697,7 +10697,7 @@
         inc y
         inc y
         lda #$0001
-        sta $13A0,b,x
+        sta aActiveSpriteSystem.aUnknown0013A0,b,x
         rtl
 
         .databank 0
@@ -10709,13 +10709,13 @@
         .autsiz
         .databank ?
 
-        lda $7F45AA
+        lda aMapAction.wMapBattleDefenderAuxSpriteSlot
         cmp #$FFFF
         beq _CF65
         jsl rlUnknown9FCF69
 
         _CF65
-        lda $7F45A8
+        lda aMapAction.wMapBattleDefenderSpriteSlot
 
         .databank 0
 
@@ -10729,7 +10729,7 @@
         phy
         tay
         lda #$FFFE
-        sta $1240,b,y
+        sta aActiveSpriteSystem.aUnknown001240,b,y
         ply
         rtl
 
@@ -10751,13 +10751,13 @@
         .autsiz
         .databank ?
 
-        lda $7F45AA
+        lda aMapAction.wMapBattleDefenderAuxSpriteSlot
         cmp #$FFFF
         beq _CFDB
         jsl rlUnknown9FCFDF
 
         _CFDB
-        lda $7F45A8
+        lda aMapAction.wMapBattleDefenderSpriteSlot
 
         .databank 0
 
@@ -10772,10 +10772,10 @@
         tay
         lda $7F509D
         and #$00FF
-        sta $1200,b,y
+        sta aActiveSpriteSystem.aUnknown001200,b,y
         lda $7F509E
         and #$00FF
-        sta $1240,b,y
+        sta aActiveSpriteSystem.aUnknown001240,b,y
         ply
         rtl
 
@@ -10788,7 +10788,7 @@
         .autsiz
         .databank ?
 
-        lda $13A0,b,x
+        lda aActiveSpriteSystem.aUnknown0013A0,b,x
         beq _CFFF
         inc y
         inc y
@@ -10826,7 +10826,7 @@
         jsl rlUnknown9FD070
 
         _D06C
-        lda $7F45A8
+        lda aMapAction.wMapBattleDefenderSpriteSlot
 
         .databank 0
 
@@ -10841,10 +10841,10 @@
         tay
         lda $7F509B
         and #$00FF
-        sta $1200,b,y
+        sta aActiveSpriteSystem.aUnknown001200,b,y
         lda $7F509C
         and #$00FF
-        sta $1240,b,y
+        sta aActiveSpriteSystem.aUnknown001240,b,y
         ply
         rtl
 
@@ -10857,7 +10857,7 @@
         .autsiz
         .databank ?
 
-        lda $13A0,b,x
+        lda aActiveSpriteSystem.aUnknown0013A0,b,x
         beq _D090
         inc y
         inc y
@@ -10972,7 +10972,7 @@
         jsr rsUnknown9F9116
         bcc _D101
         lda #$D101
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #(`aUnknown9FD102)<<8
         sta lR44+1
         lda #<>aUnknown9FD102
@@ -10997,15 +10997,15 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F5099
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509A
         sec
         sbc #$0008
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         rtl
 
 
@@ -11025,7 +11025,7 @@
         bcc _D138
         lda #$0001
         sta $7F5093
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _D138
         rtl
@@ -11055,7 +11055,7 @@
         .databank ?
 
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         rtl
 
         .databank 0
@@ -11068,7 +11068,7 @@
         .databank ?
 
         lda #$D129
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
@@ -11082,10 +11082,10 @@
 
         lda $7F509B
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509C
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         rtl
 
         .databank 0
@@ -11098,7 +11098,7 @@
         .databank ?
 
         phy
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $5A
@@ -11116,7 +11116,7 @@
         .databank ?
 
         phy
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $5B
@@ -11250,15 +11250,15 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F5099
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509A
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$000A
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
 
         .databank 0
@@ -11270,17 +11270,17 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _D340
         lda $7F509B
         and #$00FF
         sec
-        sbc $1200,b,x
+        sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
         lda $7F509C
         and #$00FF
         sec
-        sbc $1240,b,x
+        sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
         jsl rlUnknown9F89F8
         lsr a
@@ -11289,14 +11289,14 @@
         lda #$0002
 
         _D329
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda wR0
-        sta $12E0,b,x
+        sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0400
-        sta $1300,b,x
+        sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
         lda #$D341
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
 
         _D340
         rtl
@@ -11311,15 +11311,15 @@
         .databank ?
 
         jsl rlUnknown9F8999
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FD2FF._D340
         lda #$0001
-        sta $7F4580
-        sta $1320,b,x
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0020
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$D361
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
@@ -11331,22 +11331,22 @@
         .autsiz
         .databank ?
 
-        lda $1300,b,x
+        lda aActiveSpriteSystem.aUnknown001300,b,x
         sec
         sbc #$00C0
         bcs _D36D
         lda #$0000
 
         _D36D
-        sta $1300,b,x
+        sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
         jsl rlUnknown9F8999
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FD2FF._D340
         lda #$0010
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$D389
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
 
         .databank 0
@@ -11358,11 +11358,11 @@
         .autsiz
         .databank ?
 
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FD2FF._D340
         lda #$0001
         sta $7F5093
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         rtl
 
         .databank 0
@@ -11381,7 +11381,7 @@
         .autsiz
         .databank ?
 
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         bne _D3DF
         lda $0000,b,y
         tay
@@ -11500,8 +11500,8 @@
         sta $7ECC08
         sta $7ECC0A
         sta $7ECC0C
-        stz $1017,b,x
-        stz $1037,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
         jsr rsUnknown9F910A
         rtl
 
@@ -11517,9 +11517,9 @@
         jsr rsUnknown9F9136
         bcc _D474
         lda #$D475
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _D474
         rtl
@@ -11533,13 +11533,13 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bpl _D489
         jsr rsUnknown9FD497
         lda #$D48A
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0080
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _D489
         rtl
@@ -11553,10 +11553,10 @@
         .autsiz
         .databank ?
 
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _D495
         lda #$D496
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _D495
         rtl
@@ -11623,22 +11623,22 @@
         .autsiz
         .databank ?
 
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         beq _D4D0
         dec a
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         rtl
 
 
         _D4D0
         lda #$0002
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         phx
-        lda $1037,b,x
-        inc $1037,b,x
+        lda aProcSystem.aBody3,b,x
+        inc aProcSystem.aBody3,b,x
         cmp #$0010
         bmi _D4E5
-        stz $1037,b,x
+        stz aProcSystem.aBody3,b,x
 
         _D4E5
         asl a
@@ -11676,22 +11676,22 @@
         .autsiz
         .databank ?
 
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         beq _D54F
         dec a
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         rtl
 
 
         _D54F
         lda #$0003
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         phx
-        lda $1340,b,x
-        inc $1340,b,x
+        lda aActiveSpriteSystem.aUnknown001340,b,x
+        inc aActiveSpriteSystem.aUnknown001340,b,x
         cmp #$0010
         bmi _D564
-        stz $1340,b,x
+        stz aActiveSpriteSystem.aUnknown001340,b,x
 
         _D564
         asl a
@@ -11735,15 +11735,15 @@
         .databank ?
 
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         lda $7F509B
         and #$00FF
-        sta $1200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
         lda $7F509C
         clc
         adc #$0002
         and #$00FF
-        sta $1240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
         rtl
 
         .databank 0
@@ -11760,7 +11760,7 @@
         beq _D60C
         lda #$0001
         sta $7F5093
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _D60C
         rtl
@@ -11801,7 +11801,7 @@
 
         _D622
         lda $7F509F
-        sta $1260,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
         ldy wR0
         lda $D67D,b,y
         bit wR2
@@ -11816,14 +11816,14 @@
         clc
         adc wR3
         sec
-        sbc $1200,b,x
+        sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
         lda $7F509C
         clc
         adc $D67F,b,y
         and #$00FF
         sec
-        sbc $1240,b,x
+        sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
         jsl rlUnknown9F89F8
         lsr a
@@ -11832,13 +11832,13 @@
         lda #$0002
 
         _D664
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda wR0
-        sta $12E0,b,x
+        sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0400
-        sta $1300,b,x
+        sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsr rsUnknown9F8253
 
           .byte $4D
@@ -11860,14 +11860,14 @@
         .databank ?
 
         jsl rlUnknown9F8999
-        dec $12C0,b,x
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _D6B8
         lda #$0001
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0020
-        sta $12C0,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #$D6B9
-        sta $1160,b,x
+        sta aActiveSpriteSystem.aOnCycle,b,x
 
         _D6B8
         rtl
@@ -11890,7 +11890,7 @@
         .autsiz
         .databank ?
 
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         cmp #$0001
         beq _D6E1
         lda $0000,b,y
@@ -11917,7 +11917,7 @@
         .autsiz
         .databank ?
 
-        lda $1320,b,x
+        lda aActiveSpriteSystem.aUnknown001320,b,x
         cmp #$0001
         beq _D70B
         lda $0000,b,y
@@ -12042,9 +12042,9 @@
         .databank ?
 
         lda #$0020
-        sta $0FD7,b,x
-        stz $0FF7,b,x
-        stz $1017,b,x
+        sta aProcSystem.aBody0,b,x
+        stz aProcSystem.aBody1,b,x
+        stz aProcSystem.aBody2,b,x
         lda $7F509B
         and #$00FF
         cmp #$00C0
@@ -12061,11 +12061,11 @@
         sbc wR12+1
         and #$00FF
         xba
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         lda #$C800
-        sta $1037,b,x
-        sta $1057,b,x
-        sta $10B7,b,x
+        sta aProcSystem.aBody3,b,x
+        sta aProcSystem.aBody4,b,x
+        sta aProcSystem.aBody7,b,x
         jml rlUnknown9FECB2
 
 
@@ -12081,11 +12081,11 @@
         adc $7F509B
         and #$00FF
         xba
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         lda #$B800
-        sta $1037,b,x
-        sta $1057,b,x
-        sta $10B7,b,x
+        sta aProcSystem.aBody3,b,x
+        sta aProcSystem.aBody4,b,x
+        sta aProcSystem.aBody7,b,x
         jml rlUnknown9FECB2
 
         .databank 0
@@ -12100,30 +12100,30 @@
         lda $7F509C
         and #$00FF
         sta wR0
-        lda $0FF7,b,x
+        lda aProcSystem.aBody1,b,x
         clc
         adc #$0006
-        sta $0FF7,b,x
+        sta aProcSystem.aBody1,b,x
         cmp wR0
         bmi _D852
         lda #$0001
         sta $7ECC08
         lda wR0
-        sta $0FF7,b,x
+        sta aProcSystem.aBody1,b,x
         lda #$0006
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$D86A
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _D852
         sta wR1
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wR2
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         sta wR4
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wR5
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         jsr rsUnknown9FD9F3
         rtl
 
@@ -12137,10 +12137,10 @@
         .databank ?
 
         jsr rsUnknown9FD9DC
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _D898
         lda #$D8A9
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda $7F509C
         and #$00FF
         lsr a
@@ -12150,7 +12150,7 @@
         tay
         lda $D899,b,y
         and #$00FF
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda $7F509B
         and #$00FF
         jsr rsUnknown9F8253
@@ -12174,36 +12174,36 @@
         .autsiz
         .databank ?
 
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         clc
         adc #$FF80
-        sta $1037,b,x
-        lda $1057,b,x
+        sta aProcSystem.aBody3,b,x
+        lda aProcSystem.aBody4,b,x
         clc
         adc #$0080
-        sta $1057,b,x
-        lda $0FF7,b,x
+        sta aProcSystem.aBody4,b,x
+        lda aProcSystem.aBody1,b,x
         sta wR1
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         sta wR4
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wR5
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wR2
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         clc
         adc #$0100
-        sta $1017,b,x
-        dec $0FD7,b,x
+        sta aProcSystem.aBody2,b,x
+        dec aProcSystem.aBody0,b,x
         bne _D8EF
         lda #$D8F6
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0080
-        sta $0FD7,b,x
-        stz $1097,b,x
+        sta aProcSystem.aBody0,b,x
+        stz aProcSystem.aBody6,b,x
 
         _D8EF
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         jsr rsUnknown9FD9F3
         rtl
 
@@ -12216,18 +12216,18 @@
         .autsiz
         .databank ?
 
-        lda $0FD7,b,x
+        lda aProcSystem.aBody0,b,x
         cmp #$0010
         bne _D905
         lda #$0001
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
 
         _D905
-        lda $0FD7,b,x
+        lda aProcSystem.aBody0,b,x
         and #$001F
         bne rlUnknown9FD915._D948
         phx
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         asl a
         asl a
         sta wR0
@@ -12241,8 +12241,8 @@
         .autsiz
         .databank ?
 
-        inc $1097,b,x
-        lda $1077,b,x
+        inc aProcSystem.aBody6,b,x
+        lda aProcSystem.aBody5,b,x
         and #$FF00
         xba
         tax
@@ -12265,12 +12265,12 @@
         plx
 
         _D948
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _D960
         lda #$D961
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0006
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         lda #$0001
         sta $7ECC0A
 
@@ -12286,52 +12286,52 @@
         .autsiz
         .databank ?
 
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         clc
         adc #$0100
-        cmp $10B7,b,x
+        cmp aProcSystem.aBody7,b,x
         bcc _D970
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
 
         _D970
-        sta $1037,b,x
-        lda $1057,b,x
+        sta aProcSystem.aBody3,b,x
+        lda aProcSystem.aBody4,b,x
         clc
         adc #$FF00
-        cmp $10B7,b,x
+        cmp aProcSystem.aBody7,b,x
         bcs _D982
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
 
         _D982
-        sta $1057,b,x
-        lda $1017,b,x
+        sta aProcSystem.aBody4,b,x
+        lda aProcSystem.aBody2,b,x
         clc
         adc #$FE00
         bpl _D991
         lda #$0000
 
         _D991
-        sta $1017,b,x
-        lda $0FF7,b,x
+        sta aProcSystem.aBody2,b,x
+        lda aProcSystem.aBody1,b,x
         sta wR1
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         and #$FF00
         sta wR4
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         and #$FF00
         sta wR5
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wR2
-        dec $0FD7,b,x
+        dec aProcSystem.aBody0,b,x
         bne _D9C2
         lda #$D9C9
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0000
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         jsr rsUnknown9F8359
 
         _D9C2
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         jsr rsUnknown9FD9F3
         rtl
 
@@ -12347,7 +12347,7 @@
         jsr rsUnknown9F919F
         bcc _D9DB
         lda #$D9DB
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
         sta $7ECC06
 
@@ -12363,15 +12363,15 @@
         .autsiz
         .databank ?
 
-        lda $0FF7,b,x
+        lda aProcSystem.aBody1,b,x
         sta wR1
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         sta wR4
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sta wR5
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         sta wR2
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
 
         .databank 0
 
@@ -12985,7 +12985,7 @@
         and #$0400
         beq _DDE5
         lda #$DDF7
-        sta $165F,b,x
+        sta aHDMASystem.aOffset,b,x
 
         _DDE5
         jsl rlUnknown9FDE04
@@ -15576,9 +15576,9 @@
         sta aProcSystem.aBody3,b,x
         sta $7F4C17
         sta $7F4C07
-        sta $7F4580
-        sta $7F4582
-        sta $7F4584
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleActiveSpriteAckFlag
+        sta aMapAction.wMapBattlePhaseFlag
         jsl rlUnknown9FF697
         jsl rlUnknown9FF6B6
         lda #$0005
@@ -15591,9 +15591,9 @@
         and #$00FF
         sta $7F57EC
         jsr rsUnknown9FF95C
-        lda #(`rlUnknown81841B)<<8
+        lda #(`rlPushToOAMBufferDualTileBase)<<8
         sta $15E5,b
-        lda #<>rlUnknown81841B
+        lda #<>rlPushToOAMBufferDualTileBase
         sta $15E4,b
         lda aActiveSpriteSystem,b
         sta $7F4BD9
@@ -16001,20 +16001,20 @@
         phx
         jsl rlUnknown9E88CE
         lda #$7E00
-        sta $7F4599
+        sta aMapAction.lUnknown7F4598+1
         sta lR18+1
         lda #$8B88
         clc
         adc #$1000
-        sta $7F4598
+        sta aMapAction.lUnknown7F4598
         sta lR18
         lda #$7E00
-        sta $7F4593
+        sta aMapAction.lMapBattleAttackerSpriteScriptPointer+1
         ldy #$0004
         lda [lR18],y
         clc
         adc lR18
-        sta $7F4592
+        sta aMapAction.lMapBattleAttackerSpriteScriptPointer
         lda $7F57EC
         tay
         lda $7F57EA
@@ -16025,7 +16025,7 @@
         sta lR44+1
         lda #$FC88
         sta lR44
-        lda $7F4592
+        lda aMapAction.lMapBattleAttackerSpriteScriptPointer
         sta $7EFC8C
         ldx wR0
         lda wR1
@@ -16036,7 +16036,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         lda aActiveSpriteSystem.wOffset,b
         tax
-        sta $7F45A4
+        sta aMapAction.wMapBattleAttackerSpriteSlot
         lda #$0000
         sta aActiveSpriteSystem.aUnknown001260,b,x
         sta aActiveSpriteSystem.aUnknown001280,b,x
@@ -16051,12 +16051,12 @@
         adc #$1000
         sta lR18
         lda #$7E00
-        sta $7F4593
+        sta aMapAction.lMapBattleAttackerSpriteScriptPointer+1
         ldy #$0008
         lda [lR18],y
         clc
         adc lR18
-        sta $7F4592
+        sta aMapAction.lMapBattleAttackerSpriteScriptPointer
         lda $7F57EC
         tay
         lda $7F57EA
@@ -16067,7 +16067,7 @@
         sta lR44+1
         lda #$FC8E
         sta lR44
-        lda $7F4592
+        lda aMapAction.lMapBattleAttackerSpriteScriptPointer
         sta $7EFC92
         lda #$FC8E
         ldx wR0
@@ -16075,7 +16075,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         lda aActiveSpriteSystem.wOffset,b
         tax
-        sta $7F45A6
+        sta aMapAction.wMapBattleAttackerAuxSpriteSlot
         lda #$0000
         sta aActiveSpriteSystem.aUnknown001260,b,x
         sta aActiveSpriteSystem.aUnknown001280,b,x
@@ -16102,7 +16102,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         sta aProcSystem.aHeaderBitfield,b,x
-        lda $7F45A4
+        lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
         lda aActiveSpriteSystem.aUnknown001240,b,x
         cmp #$0060
@@ -16152,8 +16152,8 @@
 
         lda #$0001
         sta $7F4C17
-        sta $7F4580
-        lda $7F45A6
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         tax
         lda #$0000
         sta aActiveSpriteSystem.aTypeOffset,b,x
@@ -16517,7 +16517,7 @@
         lda wMapScrollYPixels,b
         eor aUnknown9FFA88+2,x
         sta wMapScrollYPixels,b
-        lda $7F45A6
+        lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         tax
         lda aActiveSpriteSystem.aUnknown001200,b,x
         eor aUnknown9FFA88,x
@@ -16537,7 +16537,7 @@
         lda wMapScrollYPixels,b
         eor aUnknown9FFA78+2,x
         sta wMapScrollYPixels,b
-        lda $7F45A6
+        lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         tax
         lda aActiveSpriteSystem.aUnknown001200,b,x
         eor aUnknown9FFA78,x

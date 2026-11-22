@@ -12,11 +12,13 @@
 
         .word 0
 
-      rsUnknown818008 ; 81/8008
+      rsActiveSpriteStub ; 81/8008
 
         .al
         .autsiz
         .databank ?
+
+        ; Empty rts on-cycle stub for active sprites (used to clear aOnCycle)
 
         rts
 
@@ -121,11 +123,13 @@
 
         .databank 0
 
-      rlUnknown818064 ; 81/8064
+      rlActiveSpriteEngineSetFlag2000 ; 81/8064
 
         .al
         .autsiz
         .databank ?
+
+        ; Set ActiveSpriteEngine2000 bit ($2000) in aActiveSpriteSystem.wFlag
 
         php
         rep #$20
@@ -136,11 +140,13 @@
 
         .databank 0
 
-      rlUnknown81806F ; 81/806F
+      rlActiveSpriteEngineClearFlag2000 ; 81/806F
 
         .al
         .autsiz
         .databank ?
+
+        ; Clear ActiveSpriteEngine2000 bit ($2000) in aActiveSpriteSystem.wFlag
 
         php
         rep #$20
@@ -190,7 +196,7 @@
 
           -
           lda aActiveSpriteSystem.aTypeOffset,x
-          beq rlUnknown8180F5
+          beq rlCreateActiveSpriteAbsolute
 
           dec x
           dec x
@@ -223,7 +229,7 @@
         
           -
           lda aActiveSpriteSystem.aTypeOffset,x
-          beq rlUnknown8180F5
+          beq rlCreateActiveSpriteAbsolute
 
           inc x
           inc x
@@ -257,7 +263,7 @@
         
           -
           lda aActiveSpriteSystem.aTypeOffset,x
-          beq rlUnknown8180F5
+          beq rlCreateActiveSpriteAbsolute
 
           inc x
           inc x
@@ -272,11 +278,13 @@
 
         .databank 0
 
-      rlUnknown8180DB ; 81/80DB
+      rlCreateActiveSpriteHighestSlotRelative ; 81/80DB
 
         .al
         .autsiz
         .databank ?
+
+        ; Allocate highest free active sprite slot keeping lR44 as relative struct base
 
         phb
         phy
@@ -291,7 +299,7 @@
 
           -
           lda aActiveSpriteSystem.aTypeOffset,x
-          beq rlUnknown8180FB
+          beq rlCreateActiveSpriteRelative
 
           dec x
           dec x
@@ -305,21 +313,25 @@
 
         .databank 0
 
-      rlUnknown8180F5 ; 81/80F5
+      rlCreateActiveSpriteAbsolute ; 81/80F5
 
         .al
         .autsiz
         .databank ?
+
+        ; Clear lR44 for absolute bank offsets then run rlCreateActiveSpriteMain
 
         lda lR44
         stz lR44
         bra rlCreateActiveSpriteMain
 
-      rlUnknown8180FB ; 81/80FB
+      rlCreateActiveSpriteRelative ; 81/80FB
 
         .al
         .autsiz
         .databank ?
+
+        ; Load lR44 (preserving struct base) then run rlCreateActiveSpriteMain
 
         lda lR44
 
@@ -433,31 +445,31 @@
           bit #ActiveSpriteEngineRenderOnScreenOnly
           beq +
 
-            jsr rsUnknown8182C0
+            jsr rsRenderOnScreenActiveSprites
 
             lda aActiveSpriteSystem.wFlag,b
             bit #ActiveSpriteEngine2000
             beq ++
 
-              jsl rlUnknown818392
+              jsl rlFlushActiveSpriteOAMQueue2000
               plb
               plp
               rtl
 
           +
-          jsr rsUnknown818279
+          jsr rsRenderAllActiveSprites
 
           lda aActiveSpriteSystem.wFlag,b
           bit #ActiveSpriteEngine2000
           beq +
 
-            jsl rlUnknown818392
+            jsl rlFlushActiveSpriteOAMQueue2000
             plb
             plp
             rtl
 
           +
-          jsl rlUnknown81834A
+          jsl rlFlushActiveSpriteOAMQueue
           plb
           plp
           rtl
@@ -556,11 +568,13 @@
         .word <>rsActiveSpriteCommand1D
         .word <>rsActiveSpriteCommand1E
 
-      rsUnknown818279 ; 81/8279
+      rsRenderAllActiveSprites ; 81/8279
 
         .al
         .autsiz
         .databank ?
+
+        ; Render every active sprite slot via jml [$15E4] without bounds checks
 
         php
         phb
@@ -609,11 +623,13 @@
 
         .databank 0
 
-      rsUnknown8182C0 ; 81/82C0
+      rsRenderOnScreenActiveSprites ; 81/82C0
 
         .al
         .autsiz
         .databank ?
+
+        ; Render active sprites with 0 <= X,Y < $0100 via jml [$15E4]
 
         php
         phb
@@ -672,11 +688,13 @@
 
         .databank 0
 
-      rlUnknown818315 ; 81/8315
+      rlQueueActiveSpriteOAM ; 81/8315
 
         .al
         .autsiz
         .databank ?
+
+        ; Unused: append 12-byte sprite draw request into deferred $1400 OAM queue
 
         php
         sep #$20
@@ -706,11 +724,13 @@
 
         .databank 0
 
-      rlUnknown81834A ; 81/834A
+      rlFlushActiveSpriteOAMQueue ; 81/834A
 
         .al
         .autsiz
         .databank ?
+
+        ; Flush $1400 deferred sprite queue to rlPushToOAMBuffer in order
 
         phb
         lda $15E2,b
@@ -757,19 +777,21 @@
 
         .databank 0
 
-      rlUnknown818392 ; 81/8392
+      rlFlushActiveSpriteOAMQueue2000 ; 81/8392
 
         .al
         .autsiz
         .databank ?
 
-        jml rlUnknown81834A
+        ; Flag-$2000 queue flush entrypoint (currently jml rlFlushActiveSpriteOAMQueue)
 
-      rlUnknown818396 ; 81/8396
+        jml rlFlushActiveSpriteOAMQueue
+
+      rlFlushActiveSpriteOAMQueueSortedByY ; 81/8396
 
         .al
         .autsiz
-        .databank `aUnknown8183F9
+        .databank `aActiveSpriteYBucketThresholds
 
         phb
         phk
@@ -780,7 +802,7 @@
           ldy #$0020
 
             _OuterLoop
-            lda aUnknown8183F9,y
+            lda aActiveSpriteYBucketThresholds,y
             sta wR6
             lda #0
 
@@ -836,7 +858,7 @@
 
         .databank 0
 
-      aUnknown8183F9 ; 81/83F9
+      aActiveSpriteYBucketThresholds ; 81/83F9
 
         .word $0000
         .word $0010
@@ -856,11 +878,13 @@
         .word $00F0
         .word $0100
 
-      rlUnknown81841B ; 81/841B
+      rlPushToOAMBufferDualTileBase ; 81/841B
 
         .al
         .autsiz
         .databank ?
+
+        ; OAM sprite pusher for battles/cutscenes: dec Y, apply wR4/wR6 tile base by tile range
 
         phy
         phx
@@ -1044,11 +1068,13 @@
 
         .databank 0
 
-      rsUnknown81850B ; 81/850B
+      rsActiveSpriteCommandWait ; 81/850B
 
         .al
         .autsiz
         .databank ?
+
+        ; Unused cmd: back up Y by 2 and re-run current opcode after aFrameTimer expires
 
         dec y
         dec y
@@ -1089,13 +1115,15 @@
 
         .databank 0
 
-      rsUnknown818529 ; 81/8529
+      rsActiveSpriteCommandClearOnCycle ; 81/8529
 
         .al
         .autsiz
         .databank ?
 
-        lda #<>rsUnknown818008
+        ; Unused cmd: set aOnCycle to rsActiveSpriteStub
+
+        lda #<>rsActiveSpriteStub
         sta aActiveSpriteSystem.aOnCycle,b,x
         rts
 
@@ -1124,11 +1152,13 @@
 
         .databank 0
 
-      rsUnknown818548 ; 81/8548
+      rsActiveSpriteCommandCallLong ; 81/8548
 
         .al
         .autsiz
         .databank ?
+
+        ; Unused cmd: call inline 24-bit subroutine via aActiveSpriteSystem.lPointer
 
         lda $0000,b,y
         sta aActiveSpriteSystem.lPointer,b
@@ -1185,11 +1215,13 @@
 
         .databank 0
 
-      rsUnknown81857C ; 81/857C
+      rsActiveSpriteCommandSetLoopCounter ; 81/857C
 
         .al
         .autsiz
         .databank ?
+
+        ; Unused cmd: set aUpdater loop counter from inline word
 
         lda $0000,b,y
         sta aActiveSpriteSystem.aUpdater,b,x
@@ -1214,11 +1246,13 @@
 
         .databank 0
 
-      rsUnknown81858D ; 81/858D
+      rsActiveSpriteCommandLoopRel ; 81/858D
 
         .al
         .autsiz
         .databank ?
+
+        ; Unused cmd: decrement aUpdater and relative-branch via cmd $16 while non-zero
 
         dec aActiveSpriteSystem.aUpdater,b,x
         bne rsActiveSpriteCommand16
@@ -1228,11 +1262,13 @@
 
         .databank 0
 
-      rsUnknown818594 ; 81/8594
+      rsActiveSpriteCommandJumpIfByteNonZeroYield ; 81/8594
 
         .al
         .autsiz
         .databank ?
+
+        ; Unused cmd: jump to inline offset and yield 1 frame if byte at 24-bit addr != 0
 
         phb
         phx
@@ -1272,11 +1308,13 @@
 
         .databank 0
 
-      rsUnknown8185C2 ; 81/85C2
+      rsActiveSpriteCommandJumpIfWordZeroYield ; 81/85C2
 
         .al
         .autsiz
         .databank ?
+
+        ; Unused cmd: jump to inline offset and yield 1 frame if word at 24-bit addr == 0
 
         phx
         phb
@@ -1316,11 +1354,13 @@
 
         .databank 0
 
-      rsUnknown8185EE ; 81/85EE
+      rsActiveSpriteCommandWriteWord ; 81/85EE
 
         .al
         .autsiz
         .databank ?
+
+        ; Unused cmd: write inline word to inline 24-bit RAM address
 
         phb
         phx
@@ -1346,11 +1386,13 @@
 
         .databank 0
 
-      rsUnknown81860B ; 81/860B
+      rsActiveSpriteCommandJumpIndirectBySide ; 81/860B
 
         .al
         .autsiz
         .databank ?
+
+        ; Unused cmd: load script Y indirectly from 1 of 2 RAM pointers by aUnknown001320
 
         phb
         phx
@@ -1387,12 +1429,12 @@
 
         phb
         phx
-        lda $7F4589
+        lda aMapAction.lUnknown7F4589
         tay
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
-          lda $7F458F
+          lda aMapAction.lUnknown7F458F
           tay
 
         +
@@ -1410,12 +1452,12 @@
 
         phb
         phx
-        lda $7F4586
+        lda aMapAction.lUnknown7F4586
         tay
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
-          lda $7F458C
+          lda aMapAction.lUnknown7F458C
           tay
 
         +
@@ -1528,9 +1570,9 @@
         adc aActiveSpriteSystem.aUnknown0012E0,b,x
         tax
 
-        lda aUnknown9EB4DF,x
+        lda aMapBattleSpriteDMATable,x
         sta $24
-        lda aUnknown9EB4DF+1,x
+        lda aMapBattleSpriteDMATable+1,x
         sta $24+1
 
         lda $0000,b,y
@@ -1592,8 +1634,8 @@
         .databank ?
 
         lda #1
-        sta $7F4580
-        jsl rlUnknown9EB2BA
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        jsl rlPlayMapBattleHitSFX
         rts
 
         .databank 0
@@ -1604,7 +1646,7 @@
         .autsiz
         .databank ?
 
-        lda $7F4580
+        lda aMapAction.wMapBattleActiveSpriteSyncFlag
         beq +
 
         dec y
@@ -1615,7 +1657,7 @@
 
         +
         lda #1
-        sta $7F4582
+        sta aMapAction.wMapBattleActiveSpriteAckFlag
 
         +
         rts
@@ -1628,20 +1670,20 @@
         .autsiz
         .databank ?
 
-        lda $7F4580
+        lda aMapAction.wMapBattleActiveSpriteSyncFlag
         beq +
 
         stx $00
-        lda $7F45A6
+        lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         cmp $00
         beq _End
 
-        lda $7F45AA
+        lda aMapAction.wMapBattleDefenderAuxSpriteSlot
         cmp $00
         beq _End
 
         lda #0
-        sta $7F4580
+        sta aMapAction.wMapBattleActiveSpriteSyncFlag
         bra _End
         
         +
@@ -1661,7 +1703,7 @@
         .autsiz
         .databank ?
 
-        lda $7F4582
+        lda aMapAction.wMapBattleActiveSpriteAckFlag
         bne +
 
           dec y
@@ -1680,7 +1722,7 @@
         .autsiz
         .databank ?
 
-        lda $7F4584
+        lda aMapAction.wMapBattlePhaseFlag
         bne +
 
           dec y
@@ -1699,7 +1741,7 @@
         .autsiz
         .databank ?
 
-        lda $7F4598
+        lda aMapAction.lUnknown7F4598
         sta $24
         lda $7F4598+1
         sta $24+1
@@ -1707,7 +1749,7 @@
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
-        lda $7F459B
+        lda aMapAction.lUnknown7F459B
         sta $24
         lda $7F459B+1
         sta $24+1
@@ -1728,7 +1770,7 @@
         .autsiz
         .databank ?
 
-        lda $7F4598
+        lda aMapAction.lUnknown7F4598
         sta $24
         lda $7F4598+1
         sta $24+1
@@ -1736,7 +1778,7 @@
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
-        lda $7F459B
+        lda aMapAction.lUnknown7F459B
         sta $24
         lda $7F459B+1
         sta $24+1
@@ -1775,7 +1817,7 @@
         phx
         phy
         sty $00
-        lda $7F4598
+        lda aMapAction.lUnknown7F4598
         sta $24
         lda $7F4598+1
         sta $24+1
@@ -1783,7 +1825,7 @@
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
-          lda $7F459B
+          lda aMapAction.lUnknown7F459B
           sta $24
           lda $7F459B+1
           sta $24+1
@@ -1845,7 +1887,7 @@
         lda #0
         sta $7F5091
         lda #1
-        sta $7F4582
+        sta aMapAction.wMapBattleActiveSpriteAckFlag
         bra ++
         
         +
@@ -1909,7 +1951,7 @@
         lda #0
         sta $7F4C1B
         lda #1
-        sta $7F4582
+        sta aMapAction.wMapBattleActiveSpriteAckFlag
         bra ++
         
         +
@@ -1933,12 +1975,14 @@
       .al
       .xl
 
-      rlUnknown9EB2BA ; 9E/B2BA
+      rlPlayMapBattleHitSFX ; 9E/B2BA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Play battle hit/miss/crit SFX ($41/$43/$44/$45) with X-coordinate panning
 
         phy
         phx
@@ -1996,7 +2040,7 @@
 
 
         _B315
-        lda $7F45A8
+        lda aMapAction.wMapBattleDefenderSpriteSlot
         cmp #$FFFF
         beq _B329
         tax
@@ -2006,7 +2050,7 @@
         bne _B337
 
         _B329
-        lda $7F45A4
+        lda aMapAction.wMapBattleAttackerSpriteSlot
         cmp #$FFFF
         beq _B342
         tax
@@ -2036,7 +2080,7 @@
       .al
       .xl
 
-      aUnknown9EB4DF ; 9E/B4DF
+      aMapBattleSpriteDMATable ; 9E/B4DF
 
         ; Read by rsActiveSpriteCommand03.
 

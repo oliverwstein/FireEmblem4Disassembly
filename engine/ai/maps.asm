@@ -385,7 +385,7 @@
         .word <>aUnfriendlyUnitMap
         .word <>aUnfriendlyUnitMap
 
-      aUnknown86A8B7 ; 86/A8B7
+      aAIMovementThreatRangeLookupTable ; 86/A8B7
 
         ; Approximation of (Move * 10 [-1]) * 256/179)/10
         ; Leaving out the -1 part
@@ -490,11 +490,13 @@
         .word 60
         .word 70
 
-      rlUnknown86A92A ; 86/A92A
+      rlMarkUnitAttackRangeOnMovementMap ; 86/A92A
 
         .al
         .autsiz
         .databank ?
+
+        ; Flag all tiles the selected unit can attack with bit $80 in aMovementMap
 
         phb
         php
@@ -528,7 +530,7 @@
           beq +
 
           ldy aMapTraversalList+2,x
-          jsr rsUnknown86A9A0
+          jsr rsMarkNonSiegeAttackTilesOnMovementMap
           inc x
           inc x
           inc x
@@ -560,7 +562,7 @@
 
             tax
             ldy aMapTraversalList+2,x
-            jsr rsUnknown86AA43
+            jsr rsMarkSiegeAttackTileOnMovementMap
             bra -
 
           +
@@ -580,7 +582,7 @@
 
         .databank 0
 
-      rsUnknown86A9A0 ; 86/A9A0
+      rsMarkNonSiegeAttackTilesOnMovementMap ; 86/A9A0
 
         .as
         .autsiz
@@ -665,7 +667,7 @@
 
         .databank 0
 
-      rsUnknown86AA43 ; 86/AA43
+      rsMarkSiegeAttackTileOnMovementMap ; 86/AA43
 
         .al
         .autsiz
@@ -1343,7 +1345,7 @@
           sta $0200,b,x
           sta wGameStateRoutine2,b,x
           sta $0400,b,x
-          sta $0500,b,x
+          sta wSoundIndirectPending,b,x
           sta $0600,b,x
           sta $0700,b,x
           sta $0800,b,x
@@ -1683,11 +1685,13 @@
 
         .databank 0
 
-      rlUnknown86C1F5 ; 86/C1F5
+      rlFillSelectedUnitMovementMap ; 86/C1F5
 
         .al
         .autsiz
         .databank ?
+
+        ; Compute selected unit's field movement (halved if flag $0200 set) and fill aMovementMap
 
         phb
         php
@@ -1697,7 +1701,7 @@
         jsl rlGetSelectedUnitTotalFieldMovement
         sta wAITemp000EA2
 
-        jsr rsUnknown86C20B
+        jsr rsApplyHalfMovementFlag
         jsl rlFillMovementMap
         plp
         plb
@@ -1705,11 +1709,13 @@
 
         .databank 0
 
-      rsUnknown86C20B ; 86/C20B
+      rsApplyHalfMovementFlag ; 86/C20B
 
         .al
         .autsiz
         .databank ?
+
+        ; Halve wAITemp000EA2 if bit $0200 of wAIUnknownBitfield7E2000 set and not Canto
 
         lda wAIUnknownBitfield7E2000
         bit #$0200
@@ -1726,11 +1732,13 @@
 
         .databank 0
 
-      rlUnknown86C221 ; 86/C221
+      rlBuildTargetDistanceMapToUnit ; 86/C221
 
         .al
         .autsiz
         .databank ?
+
+        ; Build aTargetDistanceMap from target to unit; CLC if reachable, SEC if blocked
 
         ; Sets units position as the target tile and then checks if from the position
         ; of the target tile if the units tile is reachable.
@@ -2216,3 +2224,286 @@
         .databank 0
 
     .endsection AITargetMapSection
+
+
+    .section Unsorted86AD5ESection
+
+      .al
+      .xl
+
+      rlTraceTargetPathToReachableTile ; 86/AD5E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Backtrack aTargetDistanceMap from target coords to a tile reachable in aMovementMap
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        phy
+        lda wAITemp000E9C,b
+        xba
+        lsr a
+        lsr a
+        clc
+        adc wAITemp000E9A,b
+        tay
+        sty wR36
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+        sep #$20
+
+        _AD7B
+        lda aMovementMap,y
+        beq _AD84
+        jml _AE1C
+
+
+        _AD84
+        lda aTargetDistanceMap,y
+        sta wR34
+        lda #$FE
+        sta aTargetDistanceMap,y
+        ldx #$0008
+        lda wR36
+        lsr a
+        bcs _ADCE
+        lda $850A,b,y
+        beq _ADA4
+        cmp wR34
+        bcs _ADA4
+        sta wR34
+        ldx #$0000
+
+        _ADA4
+        lda $854B,b,y
+        beq _ADB2
+        cmp wR34
+        bcs _ADB2
+        sta wR34
+        ldx #$0002
+
+        _ADB2
+        lda $858A,b,y
+        beq _ADC0
+        cmp wR34
+        bcs _ADC0
+        sta wR34
+        ldx #$0004
+
+        _ADC0
+        lda $8549,b,y
+        beq _ADCC
+        cmp wR34
+        bcs _ADCC
+        ldx #$0006
+
+        _ADCC
+        bra _AE06
+
+
+        _ADCE
+        lda $8549,b,y
+        beq _ADDC
+        cmp wR34
+        bcs _ADDC
+        sta wR34
+        ldx #$0006
+
+        _ADDC
+        lda $858A,b,y
+        beq _ADEA
+        cmp wR34
+        bcs _ADEA
+        sta wR34
+        ldx #$0004
+
+        _ADEA
+        lda $854B,b,y
+        beq _ADF8
+        cmp wR34
+        bcs _ADF8
+        sta wR34
+        ldx #$0002
+
+        _ADF8
+        lda $850A,b,y
+        beq _AE06
+        cmp wR34
+        bcs _AE06
+        sta wR34
+        ldx #$0000
+
+        _AE06
+        cpx #$0008
+        beq _AE1C
+        rep #$20
+        tya
+        clc
+        adc aTargetPathTileOffsets,x
+        tay
+        sep #$20
+        inc wR36
+        jml _AD7B
+
+
+        _AE1C
+        rep #$20
+        tya
+        and #$003F
+        sta @l wAITemp000E96
+        tya
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta @l wAITemp000E98
+        ply
+        plx
+        plp
+        plb
+        .databank $7F
+        rtl
+
+        .databank 0
+
+        ; 86/AE36
+
+    .endsection Unsorted86AD5ESection
+
+
+    .section Table86AE36Section
+
+      .al
+      .xl
+
+      aTargetPathTileOffsets ; 86/AE36
+
+        ; Read by rlTraceTargetPathToReachableTile.
+
+        .word $FFC0, $0001, $0040, $FFFF
+
+        ; 86/AE3E
+
+    .endsection Table86AE36Section
+
+
+    .section Unsorted86C293Section
+
+      .al
+      .xl
+
+      rlFillTargetMapWithVillages ; 86/C293
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Fill aTargetMap with unclosed, undestroyed, unblocked villages; return count
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        phy
+        sta aAIAction.wUnitFaction
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+        ldx #$01FE
+        lda #$FFFF
+
+        _C2AB
+        sta aTargetMap,x
+        sta $974A,b,x
+        sta $994A,b,x
+        sta $9B4A,b,x
+        sta $9D4A,b,x
+        sta $9F4A,b,x
+        sta $A14A,b,x
+        sta $A34A,b,x
+        dec x
+        dec x
+        bpl _C2AB
+        stz $4430,b
+        ldy #$0000
+
+        _C2CD
+        tya
+        jsl rlGetLocationEventDataEntry
+        bcs _C32B
+        jsl rlGetEventLocationEntryType
+        cmp #LocationTypeVillage
+        bne _C328
+        jsl rlCheckIfVillageClosed
+        bcs _C328
+        jsl rlCheckLocationDestroyed
+        bcs _C328
+        jsl rlGetEventLocationEntryEffectiveXCoordinate
+        sta $442A,b
+        jsl rlGetEventLocationEntryEffectiveYCoordinate
+        sta $442C,b
+        lda $442C,b
+        xba
+        lsr a
+        lsr a
+        clc
+        adc $442A,b
+        tax
+        lda $454A,b,x
+        and #$00FF
+        cmp $442E,b
+        beq _C31D
+        cmp #$00FF
+        bne _C328
+        lda aUnfriendlyUnitMap,x
+        and #$00FF
+        cmp #$00FF
+        bne _C328
+
+        _C31D
+        tya
+        sep #$20
+        sta aTargetMap,x
+        rep #$20
+        inc $4430,b
+
+        _C328
+        inc y
+        bra _C2CD
+
+
+        _C32B
+        lda $4430,b
+        ply
+        plx
+        plp
+        plb
+        .databank $7F
+        rtl
+
+        .databank 0
+
+        ; 86/C333
+
+    .endsection Unsorted86C293Section
+
+

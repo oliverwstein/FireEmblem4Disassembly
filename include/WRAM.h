@@ -279,6 +279,14 @@
       ; Per channel: frames left before the next command.
     aSoundScriptRunning .fill 4   ; $0004C6
       ; Per channel: the script ID being run; a different wMusicID restarts.
+    aSoundChannelFadeState .block ; $0004CA: Ch0 fade state; +3 ($0004CD) Ch1
+      bMode  .byte ?              ; $0004CA
+      bLevel .byte ?              ; $0004CB
+      bFlags .byte ?              ; $0004CC
+    .endblock
+    aSoundChannelFadeState2  .fill 3 ; $0004CD
+    aSoundChannelFadeTarget  .fill 3 ; $0004D0: Ch0 target; +3 ($0004D3) Ch1
+    aSoundChannelFadeTarget2 .fill 3 ; $0004D3
 
   .endvirtual
 
@@ -316,7 +324,8 @@
       ; Nonzero: rlRunSoundUploadList turns VBlank off while it uploads.
     bAPUStatus .byte ?            ; $0004F6
       ; Read from APU port 3 every frame.
-    .byte ?                       ; $0004F7
+    bSoundUpdateSlot .byte ?      ; $0004F7
+      ; Cycles 0, 3, 6 (+3 mod 9) each frame in rlUpdateSound.
     wSoundScriptCommand .word ?   ; $0004F8
       ; The script word being run; its low 10 bits are the frames to wait.
     wSoundDeferredUpload .word ?  ; $0004FA
@@ -329,6 +338,8 @@
     aSoundIndirectLast .fill 2    ; $0004FE
       ; The last indirect upload ID from $3C up (+0) and below $3C (+1): asked
       ; for again at the start of its list, it uploads nothing.
+    wSoundIndirectPending .word ? ; $000500
+      ; Nonzero forces script command 17 to resend the sound upload command.
 
   .endvirtual
 
@@ -344,6 +355,10 @@
     bSoundBufferFirstByte .byte ? ; $000507
       ; The first byte of the chunk last decompressed; script command 17
       ; compares it with bAPUPort1.
+    wSoundUploadBusyFlag .word ?  ; $000508
+      ; Nonzero pauses script command 17.
+    wSoundQueueFlags .word ?      ; $00050A
+      ; ORed into commands queued by rsSoundScriptQueueCommand and cleared.
 
   .endvirtual
 
@@ -386,6 +401,9 @@
     wUnknown053C .word ?                    ; $00053C
     wUnknown053E .word ?                    ; $00053E
     lUnknown0540 .long ?                    ; $000540
+    wUnknown000543 .word ?                  ; $000543 ; saved X/width parameter for RAM entry creation
+    wUnknown000545 .word ?                  ; $000545 ; Y/count parameter
+    lRAMAreaListHeadPointer .long ?         ; $000547 ; 24-bit pointer to linked RAM area entry
 
   .endvirtual
 
@@ -394,9 +412,10 @@
 
   .virtual $00054A
 
-    lStructPointer1 .word ?       ; $00054A
+    lStructPointer1 .long ?       ; $00054A
     ; For saving, this is the data source.
     ; For loading, this is the destination.
+    lPendingStructEntryPointer .long ? ; $00054D ; staged 24-bit entry pointer copied to lStructPointer1
 
   .endvirtual
 
@@ -404,21 +423,12 @@
 
     wStructIndex .word ?          ; $000550
     ; Is 1 indexed instead of 0 indexed.
-
-  .endvirtual
-
-
-
-  .virtual $000554
-
+    wStructCurrentCount .word ?   ; $000552 ; current struct count
     wStructSize .word ?           ; $000554
     wStructIndexAlternate .word ? ; $000556
-
-  .endvirtual
-
-  .virtual $00055C
-
-    lStructPointer2 .word ?       ; $00055C
+    wStructMultiplyTemp1 .word ?  ; $000558 ; multiplicand shifted left in rsGetRAMStructOffset
+    wStructMultiplyTemp2 .word ?  ; $00055A ; struct size added per bit in rsGetRAMStructOffset
+    lStructPointer2 .long ?       ; $00055C
     ; For saving, this is the destination.
     ; For loading, this is the data source.
 
@@ -438,22 +448,24 @@
     wRoutineVariable2 .word ?           ; $000576
     wRoutineVariable3 .word ?           ; $000578
     wCurrentClassDataROMPointer .word ? ; $00057A
-    .word ? ; $00057C
+    wMapActionTargetType .word ?        ; $00057C ; jump table index into aUnknown84DC3F
     wSelectedInventorySlot .word ?      ; $00057E
+    wTargetEventLocationEntry .word ?   ; $000580 ; castle/location event entry passed between map, AI, and return
+    .word ? ; $000582
 
   .endvirtual
-
-  ; .word ? ; $000580 - castle location data entry?
 
   .virtual $000583
 
     wCurrentItemDataROMPointer .word ?  ; $000583
-    .word ? ; $000585
+    wTempItemDataROMPointer .word ?     ; $000585 ; scratch item ROM pointer / stat sum
     wCurrentItemDataRAMPointer .word ?  ; $000587
     wLoadedFactionCount .word ?         ; $000589
     wDeployedUnitsCount .word ?         ; $00058B
     lRAMBufferPointer .long ?           ; $00058D
     wEventLocationEntry .word ?         ; $000590
+    wMenuState .word ?                  ; $000592 ; active arena/shop/castle menu substate jump index
+    wNextMenuState .word ?              ; $000594 ; pending wMenuState or wGameStateStep applied after fade/wait
 
   .endvirtual
 
@@ -505,6 +517,12 @@
     wGameStateStep .word ?     ; $000304
       ; A step counter for the current game state. The routines that set up a
       ; state clear it, and state routines advance it as they go.
+    lTaskJumpPointer .long ?   ; $000306
+      ; Indirect target jumped to by rlRunVBlankHookInit / rlRunVBlankHookCycle.
+    aTaskTable .block          ; $000309 ($30 bytes: 16 x 3-byte long pointers)
+      lEntry0 .long ?          ; $000309
+      .fill 45                 ; $00030C-$000338
+    .endblock
 
   .endvirtual
 
@@ -540,15 +558,30 @@
     wActiveUnitDeploymentOffset .word ? ; $000772
       ; The deployment offset of the unit the map code is acting with: set when a
       ; unit is chosen for an action, and read wherever that unit is needed.
+    wMapTargetDeploymentOffset .word ? ; $000774 ; selected target unit deployment offset
+    wMapTargetSearchIndex .word ?      ; $000776 ; $0000-$03FF index into aTargetDistanceMap
+    wMapCursorXTile .word ?            ; $000778 ; selected destination X tile / camera pan X tile delta
+    wMapCursorYTile .word ?            ; $00077A ; selected destination Y tile / camera pan Y tile delta
+    wMapCursorOriginXTile .word ?      ; $00077C ; saved unit origin X tile for move cancel
+    wMapCursorOriginYTile .word ?      ; $00077E ; saved unit origin Y tile for move cancel
+    wMapSavedCursorXPixel .word ?      ; $000780 ; cursor absolute X pixel saved across move
+    wMapSavedCursorYPixel .word ?      ; $000782 ; cursor absolute Y pixel saved across move
+    wMapPanTargetDeploymentOffset .word ? ; $000784 ; unit deployment offset targeted by camera pan
+    wMapOverlayFlags .word ?           ; $000786 ; map cursor/tile overlay flags tested in rsUnknown88A32D
+    wMapSystemFlags .word ?            ; $000788 ; bitfield:
+      ; $0001 = JOY_Y held (recomputed per frame by rsUnknown88A32D)
+      ; $0002 = map sprite/unit motion active (wUnknown000770 | wMapOverlayFlags | wMapActionMode)
+      ; $0004 = wUnknown0007D8 nonzero / phase action
+      ; $0008 = map cursor / unit action HUD update
+      ; $0010 = event active (wUnknown00171A nonzero)
+      ; $0020 = map camera scrolling / menu scroll lock
+      ; $0040 = faction phase setup active
+      ; $0080 = unit window / map menu open (rlUnknown85C0CE/D5)
+      ; $4000 = returning from castle menu
+      ; $8000 = pending cursor highlight update (sets wUnknown000758 = 1)
+    wDeployedUnitScanCounter .word ?   ; $00078A ; deployed unit iteration count vs wDeployedUnitsCount
 
   .endvirtual
-
-  ; .word ? ; $000778 ?
-  ; .word ? ; $00077A ?
-
-  ; .word ? ; $000784 ?
-
-  ; .word ? ; $000788 bitfield
 
   .virtual $00078C
 
@@ -556,15 +589,21 @@
     wTempVariable2 .word ? ; $00078E
       ; Temporary values used by many unrelated routines: prices, portrait IDs,
       ; weapons and their ranges, map coordinates and more.
+    wUnknown000790 .word ? ; $000790 ; tilemap / path helper scratch
+    ; Skip $000792 (multi-purposed in bank88.asm).
 
   .endvirtual
 
 
   .virtual $0007D4
 
-    wMapScrollScriptOffset .word ?  ; $0007D4
-    .word ? ; $0007D6
-    wUnknown0007D8 .word ?          ; $0007D8
+    wMapScrollScriptOffset .word ?      ; $0007D4
+    wSavedMapScrollScriptOffset .word ? ; $0007D6 ; saves wMapScrollScriptOffset around movement-arrow calc
+    wUnknown0007D8 .word ?              ; $0007D8
+    wMovingUnitSpriteState .word ?      ; $0007DA ; 0 idle, 1 selected, 2 moving/acting
+    wMovingUnitSpriteFrame .word ?      ; $0007DC ; moving map sprite frame index
+    wMovingUnitSpriteTimer .word ?      ; $0007DE ; countdown timer reloaded from aUnknown88CBE8
+    wMapActionMode .word ?              ; $0007E0 ; active map action / menu selection mode
 
   .endvirtual
 
@@ -574,6 +613,23 @@
   .virtual $0007E2
 
     wUnknown0007E2 .word ? ; $0007E2
+    wMapSpriteFrameCounter .word ?        ; $0007E4 ; incremented after map sprite VRAM DMA cycles
+    wMapSpriteFrameByteOffset .word ?     ; $0007E6 ; animation frame byte offset added to lMapSpriteGraphicsPointer
+    wMapSpriteAnimationPauseFlags .word ? ; $0007E8 ; $8000 disables map sprite DMA, $0001 disables tile anim/mouth
+    lMapSpriteGraphicsPointer .long ?     ; $0007EA ; 24-bit base pointer to map sprite GFX
+
+    aDynamicMapSpriteDMASources .block ; $0007ED ($30 bytes: 8 x 6-byte top/bottom .long pairs)
+      lTopHalf    .long ?              ; $0007ED
+      lBottomHalf .long ?              ; $0007F0
+      .fill 42                         ; $0007F3-$00081C
+    .endblock
+
+    aDynamicMapSpriteVRAMDestinations .block ; $00081D ($30 bytes: 8 x 6-byte stride matching DMASources)
+      wTopHalf    .word ?              ; $00081D
+      .byte ?                          ; $00081F
+      wBottomHalf .word ?              ; $000820
+      .fill 43                         ; $000822-$00084C
+    .endblock
 
   .endvirtual
 
@@ -592,17 +648,76 @@
 
     aMovingMapSpritesMapSprites .fill (size(word) * 4) ; $000867
       ; If bit $8000 is set, its a tall sprite.
-    ; $00086F
+    wMapActionActiveFlag .word ?               ; $00086F ; 0 idle, 1 active, $FFFF AI/scripted map move
+    wActiveActionUnit1DeploymentOffset .word ? ; $000871 ; acting unit deployment offset
+    wActiveActionUnit2DeploymentOffset .word ? ; $000873 ; target unit deployment offset ($FFFF none)
+    wActiveActionDestinationX .word ?          ; $000875 ; destination X in pixels (tile << 4)
+    wActiveActionDestinationY .word ?          ; $000877 ; destination Y in pixels (tile << 4)
+    wActiveActionID .word ?                    ; $000879 ; action type (e.g. 4 seize, 11+ scripted)
+
+    wCastleSubMenuStep .word ?                 ; $00087B ; castle/map sub-action step
+    wCastleCursorX .word ?                     ; $00087D ; castle menu cursor X
+    wCastleCursorY .word ?                     ; $00087F ; castle menu cursor Y
+    .fill 4                                    ; $000881
+    wUnknown000885 .word ?                     ; $000885
+    .fill 2                                    ; $000887
+
+    wCastleListSubCount .word ?                ; $000889 ; inventory/convoy item count 0-7
+    wCastleScreenHandler .word ?               ; $00088B ; jump index into aCastleStateHandlers
+    wCastlePrepCursorXPixel .word ?            ; $00088D ; courtyard cursor X
+    wCastlePrepCursorYPixel .word ?            ; $00088F ; courtyard cursor Y
+    wCastleCursorState .word ?                 ; $000891 ; castle UI cursor/mode state (0..7, $FFFF)
+    wUnknown000893 .word ?                     ; $000893
+    wUnknown000895 .word ?                     ; $000895
+    wCastlePrepUnitSlot .word ?                ; $000897 ; 0-23 slot in 4x6 castle prep grid
+    wCastlePrepSavedUnitSlot .word ?           ; $000899 ; saved wCastlePrepUnitSlot
+    wCastleSavedUnitRAMPointer .word ?         ; $00089B ; unit pointer saved across castle interior entry
+    wCastleReturnEventFlag .word ?             ; $00089D ; triggers rlUnknown8CED4F on exit
+    wEnteredCastleLocationID .word ?           ; $00089F ; castle location ID entered by player
+    wCastleMenuOptionIndex .word ?             ; $0008A1 ; submenu option index
+    wCastleConfirmCursorIndex .word ?          ; $0008A3 ; yes/no or prompt cursor index
+    wCastleListWindowRow .word ?               ; $0008A5 ; visible cursor row 0-7 in scrolling list
+    wCastleListSelectedIndex .word ?           ; $0008A7 ; selected item index 0..(ItemCount-1)
+    wUnknown0008A9 .word ?                     ; $0008A9
+    wCastleListItemCount .word ?               ; $0008AB ; total entries in active castle list
+
+    wBaseSceneFlags .word ?                    ; $0008AD ; base/interior scene UI bitfield:
+      ; $0001 = left unit display enabled (wBaseSceneLeftUnitRAMPointer)
+      ; $0002 = right unit display enabled (wBaseSceneRightUnitRAMPointer)
+      ; $0004 = draw left portrait/window (rlUnknown8ADA08)
+      ; $0008 = draw right portrait/window (rlUnknown8ADA16)
+      ; $0010 = slide/animate left unit slot
+      ; $0020 = slide/animate right unit slot
+      ; $0040 = close left portrait
+      ; $0080 = close right portrait
+    lBaseSceneDialoguePointer .long ?          ; $0008AF ; 24-bit pointer
+    wBaseSceneLeftUnitRAMPointer .word ?       ; $0008B2 ; left unit RAM pointer
+    wBaseSceneRightUnitRAMPointer .word ?      ; $0008B4 ; right unit RAM pointer
+    wBaseSceneArgument .word ?                 ; $0008B6 ; scene/gold/talk argument
+    wBaseSceneMode .word ?                     ; $0008B8 ; screen/conversation mode
 
   .endvirtual
 
-  ; .word ? ; $00086F - unit moving on map flag
-  ; .word ? ; $000871 - active unit 1 deployment offset?
-  ; .word ? ; $000873 - active unit 2 deployment offset?
+  .virtual $0008DE
 
-  ; .word ? ; $000875 - animation destination X pixel coord?
-  ; .word ? ; $000877 - animation destination Y pixel coord?
-  ; .word ? ; $000879 - action ID
+    aOAMYBandCounters .block ; $0008DE (12 x .byte counters under sep #$20 in rlScanSpriteLineOverflow)
+      bBand0  .byte ? ; $0008DE
+      bBand1  .byte ? ; $0008DF
+      bBand2  .byte ? ; $0008E0
+      bBand3  .byte ? ; $0008E1
+      bBand4  .byte ? ; $0008E2
+      bBand5  .byte ? ; $0008E3
+      bBand6  .byte ? ; $0008E4
+      bBand7  .byte ? ; $0008E5
+      bBand8  .byte ? ; $0008E6
+      bBand9  .byte ? ; $0008E7
+      bBand10 .byte ? ; $0008E8
+      bBand11 .byte ? ; $0008E9
+    .endblock
+    .fill 6                                    ; $0008EA-$0008EF
+    bOAMRenderedSpriteCount .byte ?            ; $0008F0 ; active OAM entry count >> 2
+
+  .endvirtual
 
 
 
@@ -644,21 +759,35 @@
       ; 8000 = not used?
     wAreaRestrictionBitfield .word ?  ; $000D71
     wDestroyedLocationsCount .word ?  ; $000D73
+    bSavedPlayerCursorXTile .byte ?   ; $000D75 ; cursor X tile saved when entering castle / checked on turn 2+
+    bSavedPlayerCursorYTile .byte ?   ; $000D76 ; cursor Y tile saved alongside bSavedPlayerCursorXTile
+    wMainGameMode .word ?             ; $000D77 ; 2 = chapter map
 
   .endvirtual
 
 
 
-  .virtual $000AF8
+  .virtual $000AE9
+    wBattleAnimationAttackerOffset .word ? ; $000AE9 ; $0000 or $0043
+    wBattleAnimationDefenderOffset .word ? ; $000AEB ; $0043 or $0000
+  .endvirtual
+
+  .virtual $000AF3
 
     ; Battle animation combatants: two records of $43 bytes, the first from
     ; $0AF3 and the second from $0B36; code indexes them with X = 0 or $43.
     ; Positions are 8.8 pixels (engine/battle_scene/animation_moves.asm).
     ; Names scoped to the battle scene files in tools/name_ram.py.
 
+    bBattleAnimationStateFlags      .byte ? ; $000AF3 ; $01 active, $02 paused, $04 busy, $08 airborne, $20 cleared by leap, $80 slot enabled
+    bBattleAnimationFacingFlags     .byte ? ; $000AF4 ; $06 variant mask, $08 flip/dir, $60 cleared on sequence start
+    bBattleAnimationCombatantFlags  .byte ? ; $000AF5 ; $40 flip/palette flag, $80 set by leap
+    bBattleAnimationMotionFlags     .byte ? ; $000AF6 ; $01 free X motion
+    bBattleAnimationRole            .byte ? ; $000AF7 ; 1 cast, 2/3 attacker/defender
+
     wBattleAnimationXFixed          .byte ? ; $000AF8: X in 8.8 (with wBattleAnimationX)
     wBattleAnimationX               .word ? ; $000AF9: whole pixels, 9 bits
-                                    .fill 2
+    wBattleAnimationYAnchor         .word ? ; $000AFB: baseline Y subtracted by wBattleAnimationYFixed
     wBattleAnimationYFixed          .byte ? ; $000AFD: Y in 8.8 (with bBattleAnimationY)
     bBattleAnimationY               .byte ? ; $000AFE: whole pixels; the ground is $58
     wBattleAnimationTargetXFixed    .byte ? ; $000AFF: target X in 8.8
@@ -673,6 +802,50 @@
     wBattleAnimationGravity         .word ? ; $000B10
                                     .fill 1
     wBattleAnimationYStep           .word ? ; $000B13
+
+    bBattleAnimationDelayMultiplier1 .byte ? ; $000B15 ; 8.8 frame delay multiplier low/high
+    bBattleAnimationDelayMultiplier2 .byte ? ; $000B16
+    bBattleAnimationDrawOffsetX      .byte ? ; $000B17 ; signed X sprite draw offset
+    bBattleAnimationDrawOffsetY      .byte ? ; $000B18 ; unsigned Y sprite draw offset
+    lBattleAnimationFrameDataPointer .long ? ; $000B19 ; 24-bit animation/frame bank+table ptr
+    bBattleAnimationSequenceID       .byte ? ; $000B1C ; current sequence ID
+    bBattleAnimationPoseID           .byte ? ; $000B1D ; current frame/pose ID ($FE = hidden)
+    bBattleAnimationPoseOffset       .byte ? ; $000B1E ; added to sequence/pose lookup
+    wBattleAnimationScriptLoopOffset .word ? ; $000B1F ; start offset of animation sequence
+    wBattleAnimationScriptOffset     .word ? ; $000B21 ; current animation script offset (+2 per command)
+    bBattleAnimationFrameTimer       .byte ? ; $000B23 ; countdown frames for current pose
+    wBattleAnimationBaseTile         .word ? ; $000B24 ; OAM base tile + bit 15 H-flip
+    bBattleAnimationAttributes       .byte ? ; $000B26 ; OAM attributes (bit 3 $08 palette swap)
+    lBattleAnimationSecondaryPointer1 .long ? ; $000B27 ; $0B27-$0B29
+    lBattleAnimationSecondaryPointer2 .long ? ; $000B2A ; $0B2A-$0B2C
+    wBattleAnimationSecondaryOffset  .word ? ; $000B2D ; $0B2D-$0B2E
+    lBattleAnimationMoveListPointer  .long ? ; $000B2F ; $0B2F-$0B31 (move program pointer)
+    wBattleAnimationMoveListLoopOffset .word ? ; $000B32 ; $0B32-$0B33
+    wBattleAnimationMoveListOffset   .word ? ; $000B34 ; $0B34-$0B35
+
+    ; Combatant 2 ($0B36-$0B78, mirror at +$43 accessed directly without X index)
+    bBattleAnimation2StateFlags      .byte ? ; $000B36
+    bBattleAnimation2FacingFlags     .byte ? ; $000B37
+    bBattleAnimation2CombatantFlags  .byte ? ; $000B38
+                                     .fill 1 ; $000B39
+    bBattleAnimation2Role            .byte ? ; $000B3A
+    wBattleAnimation2XFixed          .byte ? ; $000B3B
+    wBattleAnimation2X               .word ? ; $000B3C
+    wBattleAnimation2YAnchor         .word ? ; $000B3E
+    wBattleAnimation2YFixed          .byte ? ; $000B40
+    bBattleAnimation2Y               .byte ? ; $000B41
+                                     .fill 7 ; $000B42-$000B48
+                                     .fill 2 ; $000B49-$000B4A
+    wBattleAnimation2XSpeed          .word ? ; $000B4B
+                                     .fill 4 ; $000B4D-$000B50
+    wBattleAnimation2YVelocity       .word ? ; $000B51
+                                     .fill 3 ; $000B53-$000B55
+    wBattleAnimation2YStep           .word ? ; $000B56
+                                     .fill 4 ; $000B58-$000B5B
+    lBattleAnimation2FrameDataPointer .long ? ; $000B5C
+                                     .fill 10 ; $000B5F-$000B68
+    bBattleAnimation2Attributes      .byte ? ; $000B69
+                                     .fill 15 ; $000B6A-$000B78
 
   .endvirtual
 
@@ -695,16 +868,15 @@
       ; $2000
       ; $4000 = set when changing faction song?
       ; $8000 = checked for during map scroll, reset after running location events
+    wSavedEventCycle .word ?      ; $000D7B ; saved event/turn cycle state
+    wUnknown000D7D .word ?        ; $000D7D ; set by rlRunEvents
 
-  .endvirtual  
+  .endvirtual
 
 
 
     ; - $0004 update deployment status?
     ; - $0400 turncount saved?
-
-
-    ; .word ? ; $000D7B copy of event engine cycle?
 
   .virtual $000D7F
 
@@ -720,14 +892,18 @@
   .virtual $000D85
 
     wDefeatedUnitDeploymentOffset .word ? ; $000D85
+    wMapStateFlags .word ?                ; $000D87 ; bitfield:
+      ; $0003 = post-action dispatch index into aUnknown81AFAE
+      ; $0004 = cursor hovering selectable unit/tile in rlGetMapMenuPosition
+      ; $0008 = unit/action map menu open
+      ; $0010 = secondary sub-menu open
+      ; $0020 = AI/busy action lock blocking normal map menus
+      ; $8000 = pending post-action handler dispatch
+    wPhaseScratch000D89 .word ?           ; $000D89 ; inventory-full & turn setup scratch
+    wPhaseScratch000D8B .word ?           ; $000D8B ; faction/castle deployment helper
+    wPhaseScratch000D8D .word ?           ; $000D8D ; phase state word
 
-  .endvirtual  
-
-    ; .word ? ; $000D87 bitfield
-    ; .word ? ; $000D89 ?
-
-    ; .word ? ; $000D8B ? 
-    ; .word ? ; $000D8D ?
+  .endvirtual
 
   .virtual $000D8F
 
@@ -735,10 +911,24 @@
     wActiveFactionSlot .word ?  ; $000D91
     aChapterTurncounts .fill 12 * size(word) ; $000D93
 
-  .endvirtual  
+  .endvirtual
 
     ; .word ? ; $000DAB - phase music?
-    ; .word ? ; $000DAD ? 
+    ; .word ? ; $000DAD ?
+
+  .virtual $000DB3
+
+    aOAMStripTailOffsets      .fill 32 ; $000DB3 ; 16 words: sprite buffer write/head offsets per Y-band
+    aOAMStripReadOffsets      .fill 32 ; $000DD3 ; 16 words: cyclic read offsets per Y-band
+    aOAMStripActiveCapacities .fill 32 ; $000DF3 ; 16 words: active per-band OAM quotas
+    aOAMStripOverflowOffsets  .fill 32 ; $000E13 ; 16 words: overflow/secondary offsets
+    aOAMStripTargetCapacities .fill 32 ; $000E33 ; 16 words: target per-band OAM quotas
+    aOAMStripCooldownTimers   .fill 32 ; $000E53 ; 16 words: hysteresis countdowns
+    wOAMStripFrameCounter     .word ?  ; $000E73 ; toggled lsr a each frame to alternate sprite priority
+    wOAMStripCooldownReload   .word ?  ; $000E75 ; cooldown reload value (1 or $30)
+    wOAMStripOverflowMode     .word ?  ; $000E77 ; 0 or 1
+
+  .endvirtual 
 
 
 
@@ -1269,7 +1459,7 @@
     wAIUnknown7E2014 .word ?                ; $7E2014
     wAIUnknown7E2016 .word ?                ; $7E2016
     wAIUnknown7E2018 .word ?                ; $7E2018 ; Target value?
-    wAIUnknown7E201A .word ?                ; $7E201A ; some ID, action, for aUnknown86B1E6
+    wAIUnknown7E201A .word ?                ; $7E201A ; some ID, action, for aAIGroupObjectiveRoutines
     wAIUnknown7E201C .word ?                ; $7E201C
     wAIIgnoredGenerationID .word ?          ; $7E201E
     wAIGroupLeaderDeploymentOffset .word ?  ; $7E2020
@@ -1767,7 +1957,7 @@
       wUnitInventorySlot .word ?              ; $7F4442
       wUnitItemMinimumRange .word ?           ; $7F4444
       wUnitItemMaximumRange .word ?           ; $7F4446
-      wUnknown7F4448 .word ?                  ; $7F4448 ; value of wAIUnknown7E2002 or 5 if guarding castle, index for aUnknown86A18F
+      wUnknown7F4448 .word ?                  ; $7F4448 ; value of wAIUnknown7E2002 or 5 if guarding castle, index for aAIAttackTypeRoutines
       wUntDeploymentOffset .word ?            ; $7F444A
       wTargetDeploymentOffset .word ?         ; $7F444C
       wAttackTileTerrainType .word ?          ; $7F444E
@@ -1859,6 +2049,43 @@
       wUnknown7F455E .word ?  ; $7F455E
       wUnknown7F4560 .word ?  ; $7F4560
       wUnknown7F4562 .word ?  ; $7F4562
+      wDefenderAllegiance            .word ?  ; $7F4564
+      wMapBattleTerrainMode          .word ?  ; $7F4566 ; selects terrain/BG config (<4)
+                                     .fill 6  ; $7F4568-$7F456D
+      wMapBattleClassSpriteID        .word ?  ; $7F456E ; *49 index into aBattleMapSpriteData
+      wMapBattleWeaponAnimIndex      .word ?  ; $7F4570 ; *6 offset within class entry in aBattleMapSpriteData
+      wMapBattleAttackVariant        .word ?  ; $7F4572 ; loaded from byte+$30 of aBattleMapSpriteData entry
+      wUnknown7F4574                 .word ?  ; $7F4574 ; active side allegiance
+      wUnknown7F4576                 .word ?  ; $7F4576 ; active sprite parameter
+      wMapBattleAttackerXPixel       .word ?  ; $7F4578 ; attacker sprite X
+      wMapBattleAttackerYPixel       .word ?  ; $7F457A ; attacker sprite Y
+      wUnknown7F457C                 .word ?  ; $7F457C
+      wUnknown7F457E                 .word ?  ; $7F457E
+      wMapBattleActiveSpriteSyncFlag .word ?  ; $7F4580 ; command 05 waits until 0, command 06 clears when aux sprite matches
+      wMapBattleActiveSpriteAckFlag  .word ?  ; $7F4582 ; set to 1 by rsActiveSpriteCommand05 when SyncFlag == 0
+      wMapBattlePhaseFlag            .word ?  ; $7F4584 ; 0/1 map-battle active state
+      lUnknown7F4586                 .long ?  ; $7F4586
+      lUnknown7F4589                 .long ?  ; $7F4589
+      lUnknown7F458C                 .long ?  ; $7F458C
+      lUnknown7F458F                 .long ?  ; $7F458F
+      lMapBattleAttackerSpriteScriptPointer .long ? ; $7F4592 ; $7E00 bank + offset -> $7EFC8C
+      lMapBattleAuxSpriteScriptPointer      .long ? ; $7F4595 ; $7E00 bank + offset -> $7EFC92/$7EFC9E
+      lUnknown7F4598                 .long ?  ; $7F4598
+      lUnknown7F459B                 .long ?  ; $7F459B
+      wMapBattleRoundIndex           .word ?  ; $7F459E ; index into aBattleRoundsData
+                                     .word ?  ; $7F45A0
+      wMapBattleRoundCounter         .word ?  ; $7F45A2
+      wMapBattleAttackerSpriteSlot   .word ?  ; $7F45A4 ; attacker active sprite slot offset
+      wMapBattleAttackerAuxSpriteSlot .word ? ; $7F45A6 ; attacker overlay/shadow sprite slot
+      wMapBattleDefenderSpriteSlot   .word ?  ; $7F45A8 ; defender active sprite slot
+      wMapBattleDefenderAuxSpriteSlot .word ? ; $7F45AA ; defender overlay/shadow sprite slot
+      aMapBattleSavedPalette         .fill 32 ; $7F45AC ; saved 16-color palette buffer
+      wMapBattlePaletteRestoreFlag   .word ?  ; $7F45CC ; nonzero after palette saved/faded
+      wMapBattleLevelUpFrameCounter  .word ?  ; $7F45CE ; level-up UI animation frame counter
+      lMapBattleLevelUpDataPointer   .long ?  ; $7F45D0 ; 24-bit ptr ($7E4EA9+$4C level-up struct)
+      wMapBattleLevelUpStatIndex     .word ?  ; $7F45D3 ; index into aUnknown9E964C stat order
+      wMapBattleLevelUpStatWaitTimer .word ?  ; $7F45D5 ; delay timer per stat row
+      wMapBattleLevelUpStatGain      .word ?  ; $7F45D7 ; current stat gain value
     .bend
 
   .endvirtual

@@ -469,10 +469,530 @@
       .as
       .xl
 
-      procUnknown828B2B .structProcInfo "ME", rlProcUnknown828B2BInit, rlProcUnknown828B2BCycle, aProcUnknown828B2BCode ; 82/8B2B
+      procUnknown828B2B .structProcInfo "ME", rlProcHaltEventInit, rlProcHaltEventCycle, aProcHaltEventCode ; 82/8B2B
 
         .word 0
 
     .endsection Unsorted828B2BSection
 
+
+    .section Unsorted82886FSection
+
+      .al
+      .xl
+
+      rlProcEvent5DFadeOutInit ; 82/886F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Mark procUnknown828865 non-blocking ($0200) in wEventProcBanks
+
+        lda #$0200
+        sta wEventProcBanks,b,x
+        rtl
+
+        .databank 0
+
+        ; 82/8876
+
+      rlProcEvent5DFadeOutCycle1 ; 82/8876
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Wait for wUnknown00171A == 0 or Start press, play SFX $0A, fade music, switch on-cycle
+
+        lda #$0200
+        sta wEventProcBanks,b,x
+        lda wUnknown00171A,b
+        beq _8888
+        lda wJoy1New
+        bit #$1000
+        beq _88B1
+
+        _8888
+        stz wGameStateRoutine1,b
+        lda #<>rlProcEvent5DFadeOutCycle2
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda bSoundFlags,b
+        pha
+        and #$FFFA
+        sta bSoundFlags,b
+        lda #$000A
+        jsl rlPlaySoundEffect
+        pla
+        sta bSoundFlags,b
+        jsl rlClearAllFadeInProcs
+        lda #$00E1
+        jsl rlSendSoundCommand
+
+        _88B1
+        rtl
+
+        .databank 0
+
+        ; 82/88B2
+
+    .endsection Unsorted82886FSection
+
+
+    .section Unsorted8288B2Section
+
+      .al
+      .xl
+
+      rlProcEvent5DFadeOutCycle2 ; 82/88B2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Fade bBufferINIDISP down to 0, clear event proc/flags, set main loop $C0BC, disable IRQ
+
+        lda bBufferINIDISP
+        bit #$000F
+        beq _88BE
+        dec a
+        sta bBufferINIDISP
+        bra _88E6
+
+
+        _88BE
+        jsl rlEventEngineFreeProc
+        lda #$0002
+        sta wUnknown00171C,b
+        lda bSoundFlags,b
+        and #$FFFA
+        sta bSoundFlags,b
+        lda #$C0BC
+        jsl rlSetMainLoopPointer
+        sei
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$CF
+        sta bBufferNMITIMEN
+        sta $4200,b
+        rep #$20
+
+        _88E6
+        rtl
+
+        .databank 0
+
+        ; 82/88E7
+
+    .endsection Unsorted8288B2Section
+
+
+    .section ProcScript8288E7Section
+
+      .al
+      .xl
+
+      aProcEvent5DFadeOutCode ; 82/88E7
+
+        PROC_HALT
+
+
+        ; 82/88E9
+
+    .endsection ProcScript8288E7Section
+
+
+    .section Unsorted828B35Section
+
+      .al
+      .xl
+
+      rlProcHaltEventInit ; 82/8B35
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Empty rtl init for procUnknown828B2B (created by rlCreateProcHaltEvent)
+
+        rtl
+
+        .databank 0
+
+      rlProcHaltEventCycle ; 82/8B36
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Wait until bit $0002 of $7F4C07 is set, then free event proc
+
+        lda $7F4C07
+        bit #$0002
+        beq +
+
+          jsl rlEventEngineFreeProc
+
+        +
+        rtl
+
+        .databank 0
+
+      aProcHaltEventCode ; 82/8B44
+
+        PROC_HALT
+
+        ; 82/8B46
+
+    .endsection Unsorted828B35Section
+
+
+    .section Unsorted828B46Section
+
+      .al
+      .xl
+
+      procEventWaitFlag7F4C07Bit10 ; 82/8B46
+
+        .structProcInfo "ME", rlProcEventWaitFlag7F4C07Bit10Init, rlProcEventWaitFlag7F4C07Bit10Cycle, aProcEventWaitFlag7F4C07Bit10Code
+
+    .endsection Unsorted828B46Section
+
+
+    .section Unsorted828B50Section
+
+      .al
+      .xl
+
+      rlProcEventWaitFlag7F4C07Bit10Init ; 82/8B50
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Empty rtl init for procEventWaitFlag7F4C07Bit10
+
+        rtl
+
+        .databank 0
+
+        ; 82/8B51
+
+      rlProcEventWaitFlag7F4C07Bit10Cycle ; 82/8B51
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Wait until bit $0010 of $7F4C07 is set, then free event proc
+
+        lda $7F4C07
+        bit #$0010
+        beq _8B5E
+        jsl rlEventEngineFreeProc
+
+        _8B5E
+        rtl
+
+        .databank 0
+
+        ; 82/8B5F
+
+    .endsection Unsorted828B50Section
+
+
+    .section Unsorted828B5FSection
+
+      .al
+      .xl
+
+      aProcEventWaitFlag7F4C07Bit10Code ; 82/8B5F
+
+        PROC_HALT
+
+
+        ; 82/8B61
+
+    .endsection Unsorted828B5FSection
+
+
+    .section Unsorted828BA9Section
+
+      .al
+      .xl
+
+      procEventWaitBattleSceneEnd ; 82/8BA9
+
+        .structProcInfo "ME", rlProcEventWaitBattleSceneEndInit, rlProcEventWaitBattleSceneEndCycle, aProcEventWaitBattleSceneEndCode
+
+    .endsection Unsorted828BA9Section
+
+
+    .section Unsorted828BB3Section
+
+      .al
+      .xl
+
+      rlProcEventWaitBattleSceneEndInit ; 82/8BB3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Empty rtl init for procEventWaitBattleSceneEnd
+
+        rtl
+
+        .databank 0
+
+        ; 82/8BB4
+
+      rlProcEventWaitBattleSceneEndCycle ; 82/8BB4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Free event proc once wGameStateRoutine1 is outside $0018..$001B
+
+        lda wGameStateRoutine1,b
+        cmp #$0018
+        bcc _8BC1
+        cmp #$001C
+        bcc _8BC5
+
+        _8BC1
+        jsl rlEventEngineFreeProc
+
+        _8BC5
+        rtl
+
+        .databank 0
+
+        ; 82/8BC6
+
+    .endsection Unsorted828BB3Section
+
+
+    .section Unsorted828BC6Section
+
+      .al
+      .xl
+
+      aProcEventWaitBattleSceneEndCode ; 82/8BC6
+
+        PROC_HALT
+
+
+        ; 82/8BC8
+
+    .endsection Unsorted828BC6Section
+
+
+    .section Unsorted828BC8Section
+
+      .al
+      .xl
+
+      procEventWaitMemorialEnd ; 82/8BC8
+
+        .structProcInfo "ME", rlProcEventWaitMemorialEndInit, rlProcEventWaitMemorialEndCycle, aProcEventWaitMemorialEndCode
+
+    .endsection Unsorted828BC8Section
+
+
+    .section Unsorted828BD2Section
+
+      .al
+      .xl
+
+      rlProcEventWaitMemorialEndInit ; 82/8BD2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Empty rtl init for procEventWaitMemorialEnd
+
+        rtl
+
+        .databank 0
+
+        ; 82/8BD3
+
+      rlProcEventWaitMemorialEndCycle ; 82/8BD3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Poll rlProcEngineFindProc for procUnknown88E02B and free event proc when gone
+
+        lda #(`procUnknown88E02B)<<8
+        sta lR44+1
+        lda #<>procUnknown88E02B
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcs _8BE7
+        jsl rlEventEngineFreeProc
+
+        _8BE7
+        rtl
+
+        .databank 0
+
+        ; 82/8BE8
+
+    .endsection Unsorted828BD2Section
+
+
+    .section Unsorted828BE8Section
+
+      .al
+      .xl
+
+      aProcEventWaitMemorialEndCode ; 82/8BE8
+
+        PROC_HALT
+
+
+        ; 82/8BEA
+
+    .endsection Unsorted828BE8Section
+
+
+    .section Unsorted829487Section
+
+      .al
+      .xl
+
+      rlCreateProcEventWaitFlag7F4C07Bit10 ; 82/9487
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Create blocking event proc procEventWaitFlag7F4C07Bit10
+
+        lda #(`procEventWaitFlag7F4C07Bit10)<<8
+        sta lR44+1
+        lda #<>procEventWaitFlag7F4C07Bit10
+        sta lR44
+        jsl rlEventEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 82/9496
+
+    .endsection Unsorted829487Section
+
+
+    .section Unsorted829496Section
+
+      .al
+      .xl
+
+      rlFreeMapBattleProcAndClearSprites ; 82/9496
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unused: find/free procUnknown9EC70B if active and clear all active sprites
+
+        lda #(`procUnknown9EC70B)<<8
+        sta lR44+1
+        lda #<>procUnknown9EC70B
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _94B0
+        txa
+        lsr a
+        jsl rlProcEngineFreeProcByIndex
+        jsl rlActiveSpriteEngineClearAllSprites
+
+        _94B0
+        rtl
+
+        .databank 0
+
+        ; 82/94B1
+
+    .endsection Unsorted829496Section
+
+
+    .section Unsorted8294C0Section
+
+      .al
+      .xl
+
+      rlCreateProcEventWaitBattleSceneEnd ; 82/94C0
+
+        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Create blocking event proc procEventWaitBattleSceneEnd
+
+        lda #(`procEventWaitBattleSceneEnd)<<8
+        sta lR44+1
+        lda #<>procEventWaitBattleSceneEnd
+        sta lR44
+        jsl rlEventEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 82/94CF
+
+    .endsection Unsorted8294C0Section
+
+
+    .section Unsorted8294CFSection
+
+      .al
+      .xl
+
+      rlStartBelhallaMemorialAndWaitProc ; 82/94CF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Create procUnknown88E02B (Ch5 ending memorial) and wait procEventWaitMemorialEnd
+
+        lda #(`procUnknown88E02B)<<8
+        sta lR44+1
+        lda #<>procUnknown88E02B
+        sta lR44
+        jsl rlProcEngineCreateProc
+        lda #(`procEventWaitMemorialEnd)<<8
+        sta lR44+1
+        lda #<>procEventWaitMemorialEnd
+        sta lR44
+        jsl rlEventEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 82/94EC
+
+    .endsection Unsorted8294CFSection
 

@@ -1318,13 +1318,13 @@
         lda $02
         pha
 
-        lda $057C,b
+        lda wMapActionTargetType,b
         asl a
         tax
         jsr (aUnknown84DC3F,x)
 
         lda #0
-        sta $057C,b
+        sta wMapActionTargetType,b
 
         pla
         sta $02
@@ -3647,7 +3647,7 @@
         jsr rsUnknown84E62C
 
         phx
-        lda $0580,b
+        lda wTargetEventLocationEntry,b
         pha
 
         lda structActionStructEntry.UnitRAMPointer,b,y
@@ -3659,7 +3659,7 @@
         jsl rlUnknown84CD8A
 
         pla
-        sta $0580,b
+        sta wTargetEventLocationEntry,b
         plx
 
         lda structActionStructEntry.UnitRAMPointer,b,x

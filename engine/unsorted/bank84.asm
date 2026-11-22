@@ -219,11 +219,11 @@
         lda wR10
         sec
         sbc wR12
-        sta $0778,b
+        sta wMapCursorXTile,b
         lda wR11
         sec
         sbc wR13
-        sta $077A,b
+        sta wMapCursorYTile,b
         lda #$0004
         sta wUnknown0007D8,b
         pla
@@ -533,7 +533,7 @@
         sta wRoutineVariable1,b
         jsl rlDeploySelectedUnit
         lda wEventLocationEntry,b
-        sta $0580,b
+        sta wTargetEventLocationEntry,b
         plp
         plb
         .databank $84
@@ -591,7 +591,7 @@
         sta wRoutineVariable1,b
         jsl rlDeploySelectedUnit
         lda wEventLocationEntry,b
-        sta $0580,b
+        sta wTargetEventLocationEntry,b
         lda #$0040
         tsb wUnknown000D79,b
         plp
@@ -899,7 +899,7 @@
         phx
         jsl rlGetSelectedUnitDeploymentOffset
         tax
-        stz $0580,b
+        stz wTargetEventLocationEntry,b
         jsl rlUnknown84CAA9
         lda wSelectedUnitDataRAMPointer,b
         sta wR0
@@ -1786,7 +1786,7 @@
         .autsiz
         .databank ?
 
-        lda $0580,b
+        lda wTargetEventLocationEntry,b
         beq _CC83
         sta wEventLocationEntry,b
         jsl rlGetEventLocationEntryID
@@ -1815,7 +1815,7 @@
         lda wRoutineVariable1,b
         jsl rlSetUnitUnfieldedInCastle
         jsl rlDeployedUnitSetHidden
-        lda $0D87,b
+        lda wMapStateFlags,b
         bit #$0008
         beq _CCA9
         jsl rlSaveDeploymentTile
@@ -1871,7 +1871,7 @@
         sta $7E4EAF
         jsl rlUnknown9ED07A
         lda #$0010
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         plp
         plb
         .databank $84
@@ -1938,7 +1938,7 @@
         php
         phk
         plb
-        lda $0580,b
+        lda wTargetEventLocationEntry,b
         beq _End
 
           sta wEventLocationEntry,b
@@ -1983,7 +1983,7 @@
         phk
         plb
         .databank $84
-        lda $0580,b
+        lda wTargetEventLocationEntry,b
         beq _CE1E
         sta wEventLocationEntry,b
         jsl rlSetVillageClosed
@@ -1994,7 +1994,7 @@
         jsl rlAddSelectedCharacterMoney
         jsl rlUnknown84CAA9
         lda wRoutineVariable1,b
-        sta $0D8D,b
+        sta wPhaseScratch000D8D,b
         lda #$0009
         sta bEventActionIdentifier,b
         jsl rlGetSelectedUnitCharacterID
@@ -2039,7 +2039,7 @@
         lda wR1
         pha
 
-        lda $0580,b
+        lda wTargetEventLocationEntry,b
         bne +
 
           jml _End
@@ -2190,7 +2190,7 @@
         lda wR0
         pha
 
-        lda $0580,b
+        lda wTargetEventLocationEntry,b
         bne +
 
           jml _End
@@ -2374,7 +2374,7 @@
         .databank $84
         phy
         tay
-        lda $0580,b
+        lda wTargetEventLocationEntry,b
         beq _D0AE
         sta wEventLocationEntry,b
         jsl rlCheckIfCastleGuarded
@@ -2397,10 +2397,10 @@
         jsl rlUnknown84C996
         tya
         bne _D0A2
-        lda $0D87,b
+        lda wMapStateFlags,b
         bit #$0008
         bne _D098
-        lda $07E0,b
+        lda wMapActionMode,b
         cmp #$0001
         beq _D09C
         jsr rsUnknown84D0B2
@@ -2449,7 +2449,7 @@
         .databank ?
 
         lda #$8004
-        sta $07E0,b
+        sta wMapActionMode,b
         rts
 
         .databank 0
@@ -2555,7 +2555,7 @@
         sta wR1
         jsl rlMoveDeploymentToTile
         lda #$8002
-        sta $07E0,b
+        sta wMapActionMode,b
 
         _D168
         plp
@@ -3004,10 +3004,10 @@
         .databank $84
         lda aDeploymentTable._FactionSlot,x
         bne _D49D
-        lda $0D87,b
+        lda wMapStateFlags,b
         and #$FFFC
         ora #$8002
-        sta $0D87,b
+        sta wMapStateFlags,b
         plp
         plb
         .databank $84
@@ -3050,10 +3050,10 @@
         lda aDeploymentTable._FactionSlot,x
         bne +
 
-        lda $0D87,b
+        lda wMapStateFlags,b
         and #~(1 | 2) & $FFFF
         ora #$8001
-        sta $0D87,b
+        sta wMapStateFlags,b
 
         lda #$8000
         tsb wUnknown000D79,b

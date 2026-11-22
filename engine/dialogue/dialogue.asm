@@ -3370,7 +3370,7 @@
         cmp #1
         bne _End
 
-        lda $07E8,b
+        lda wMapSpriteAnimationPauseFlags,b
         bit #$8000
         bne +
 
@@ -3379,7 +3379,7 @@
           jsl rlUnknown88CD53
 
         +
-        lda $07E8,b
+        lda wMapSpriteAnimationPauseFlags,b
         bit #$0001
         bne _End
 
@@ -3518,7 +3518,7 @@
 
           +
           jsl rlUnknown899FDC
-          jsl rlUnknown80B0A3
+          jsl rlLoadDefaultWindowBorderPalette
 
         _End
         stz aDialogue.wCommandCycle,b
@@ -4260,13 +4260,13 @@
               bne +
 
                 ; Left portrait
-                sta $08B2,b
+                sta wBaseSceneLeftUnitRAMPointer,b
                 jsl rlUnknown8ADACA
                 bra _End
 
               ; Right portrait
               +
-              sta $08B4,b
+              sta wBaseSceneRightUnitRAMPointer,b
               jsl rlUnknown8ADAD8
               bra _End
 
@@ -4403,12 +4403,12 @@
         sta aDialogue._Slot[0].wPortraitID,b,x
         bne +
 
-        sta $08B2,b
+        sta wBaseSceneLeftUnitRAMPointer,b
         jsl rlUnknown8ADACA
         bra _End
         
         +
-        sta $08B4,b
+        sta wBaseSceneRightUnitRAMPointer,b
         jsl rlUnknown8ADAD8
         
         _End

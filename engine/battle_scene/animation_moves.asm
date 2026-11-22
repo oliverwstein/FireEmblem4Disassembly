@@ -49,12 +49,12 @@
         clc
         jsl rlBattleAnimationSetPathPastOpponentInFrames
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$08
-        sta $0AF3,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         ora #$08
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
         pla
         xba
@@ -84,9 +84,9 @@
         sec
         jsr rsBattleAnimationSetPathToOpponent
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$08
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         lda #$0004
         jsl rlBattleAnimationGetJumpArc
@@ -120,9 +120,9 @@
         lsr a
         sta wR0
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$08
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         lda #$0008
         jsl rlBattleAnimationGetJumpArc
@@ -164,12 +164,12 @@
         sec
         jsr rsBattleAnimationSetYPathToOpponent
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$10
-        sta $0AF3,b,x
-        lda $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$DF
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         plx
         rts
@@ -192,9 +192,9 @@
         phx
         tax
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$20
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         plx
         rts
@@ -235,12 +235,12 @@
         jsl rlBattleAnimationTakeQueuedMove
         pha
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$08
-        sta $0AF3,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         ora #$08
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
         lda #1,s
         and #$00FF
@@ -290,12 +290,12 @@
         pla
         jsr rsBattleAnimationSetPathNearOpponent
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$08
-        sta $0AF3,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         ora #$08
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
         pla
         xba
@@ -340,12 +340,12 @@
         pla
         jsr rsBattleAnimationSetPathNearOpponent
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$08
-        sta $0AF3,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         ora #$08
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
         pla
         xba
@@ -400,15 +400,15 @@
         pla
         jsr rsBattleAnimationSetPathNearOpponent
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$08
-        sta $0AF3,b,x
-        lda $0AF5,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         ora #$80
-        sta $0AF5,b,x
-        lda $0AF3,b,x
+        sta bBattleAnimationCombatantFlags,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$DF
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         pla
         xba
@@ -442,17 +442,17 @@
 
         tax
         sep #$20
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         ora #$01
-        sta $0AF6,b,x
+        sta bBattleAnimationMotionFlags,b,x
         lda $7FF5AF
         ora #$01
         sta $7FF5AF
         rep #$20
         phx
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         cmp wBattleAnimationX,b,x
         plx
         bcs _B50C
@@ -485,9 +485,9 @@
 
         tax
         sep #$20
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         ora #$01
-        sta $0AF6,b,x
+        sta bBattleAnimationMotionFlags,b,x
         rep #$20
         stz wBattleAnimationXSpeed,b,x
         lda #$0600
@@ -621,7 +621,7 @@
 
 
         _D018
-        lda $0B3C,b
+        lda wBattleAnimation2X,b
 
         _D01B
         sta wR1
@@ -893,11 +893,11 @@
         _D248
         pha
         phx
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         lda bBattleAnimationY,b,x
         and #$00FF
         sta wR1
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         lda bBattleAnimationY,b,x
         and #$00FF
         sta wR0
@@ -1101,12 +1101,12 @@
         and #$00FF
         jsr rsBattleAnimationSetPathToOpponentInFrames
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$08
-        sta $0AF3,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         ora #$08
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
         pla
         xba

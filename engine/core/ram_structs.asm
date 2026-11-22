@@ -60,7 +60,7 @@
         cpx #4
         bcs +
 
-        lda aUnknown82E460,x
+        lda aRAMStructSmallSizeFlags,x
         bra ++
 
         +
@@ -80,18 +80,20 @@
 
         .databank 0
 
-      aUnknown82E460 ; 82/E460
+      aRAMStructSmallSizeFlags ; 82/E460
 
         .byte 0
         .byte 0
         .byte 1
         .byte 2
 
-      rlUnknown82E464 ; 82/E464
+      rlRAMStructStub ; 82/E464
 
         .al
         .autsiz
         .databank ?
+
+        ; Empty rtl stub in RAMStructSection
 
         rtl
 
@@ -268,11 +270,13 @@
 
         .databank 0
 
-      rlUnknown82E520 ; 82/E520
+      rlInsertRAMStructEntryAfter ; 82/E520
 
         .al
         .autsiz
         .databank ?
+
+        ; Insert $054D entry immediately after match of lStructPointer1
 
         phb
         phk
@@ -284,7 +288,7 @@
         pha
         lda $054D+1,b
         sta lStructPointer1+1,b
-        lda $054D,b
+        lda lPendingStructEntryPointer,b
         sta lStructPointer1,b
         jsl rlAddStructEntry
         pla
@@ -294,11 +298,13 @@
 
         .databank 0
 
-      rlUnknown82E53F ; 82/E53F
+      rlInsertRAMStructEntryAt ; 82/E53F
 
         .al
         .autsiz
         .databank ?
+
+        ; Insert $054D entry at matched index of lStructPointer1, shifting entries up
 
         phb
         phk
@@ -309,7 +315,7 @@
         pha
         lda $054D+1,b
         sta lStructPointer1+1,b
-        lda $054D,b
+        lda lPendingStructEntryPointer,b
         sta lStructPointer1,b
         jsl rlAddStructEntry
         pla
@@ -476,11 +482,13 @@
 
         .databank 0
 
-      rlUnknown82E762 ; 82/E762
+      rlGetRAMStructMaxStructCount ; 82/E762
 
         .al
         .autsiz
         .databank ?
+
+        ; Return structRAMStructHeader.MaxStructCount of lStructPointer2
 
         phb
         php
@@ -506,11 +514,13 @@
 
         .databank 0
 
-      rlUnknown82E77D ; 82/E77D
+      rlSetRAMStructMaxStructCount ; 82/E77D
 
         .al
         .autsiz
         .databank ?
+
+        ; Set MaxStructCount to A if A >= CurrentStructCount, else return sec
 
         phb
         php
@@ -549,11 +559,13 @@
 
         .databank 0
 
-      rlUnknown82E7A6 ; 82/E7A6
+      rlLoadFirstRAMStructEntry ; 82/E7A6
 
         .al
         .autsiz
         .databank ?
+
+        ; Load 1st entry of lStructPointer2 into lStructPointer1
 
         lda #1
         sta wStructIndex
@@ -562,11 +574,13 @@
 
         .databank 0
 
-      rlUnknown82E7B2 ; 82/E7B2
+      rlLoadLatestRAMStructEntry ; 82/E7B2
 
         .al
         .autsiz
         .databank ?
+
+        ; Load latest (CurrentStructCount) entry of lStructPointer2 into lStructPointer1
 
         jsl rlGetRAMStructCurrentStructCount
         sta wStructIndex
@@ -625,11 +639,13 @@
 
         .databank 0
 
-      rlUnknown82E7F7 ; 82/E7F7
+      rlGetFirstRAMStructEntryPointer ; 82/E7F7
 
         .al
         .autsiz
         .databank ?
+
+        ; Return pointer to 1st entry of lStructPointer2 in lStructPointer1
 
         lda #1
         sta wStructIndex
@@ -708,11 +724,13 @@
 
         .databank 0
 
-      rlUnknown82E85D ; 82/E85D
+      rlSaveRAMStructDataByIndex ; 82/E85D
 
         .al
         .autsiz
         .databank ?
+
+        ; Write lStructPointer1 data to 1-based wStructIndex slot via rsSaveDataToRAMStruct
 
         phb
         php
@@ -877,21 +895,21 @@
         _Multiply
         phx
         xba
-        sta $0558,b
+        sta wStructMultiplyTemp1,b
 
         lda wStructSize,b
-        sta $055A,b
+        sta wStructMultiplyTemp2,b
 
         lda #0
         ldx #8
 
         -
         asl a
-        asl $0558,b
+        asl wStructMultiplyTemp1,b
         bcc +
 
         clc
-        adc $055A,b
+        adc wStructMultiplyTemp2,b
         
         +
         dec x
@@ -1289,7 +1307,7 @@
 
         ply
 
-        jsr rsUnknown82F143
+        jsr rsAllocateRAMAreaHandleBlock
         sta structRAMAreaHeader.Unknown3,b,y
 
         pla
@@ -1302,11 +1320,13 @@
 
         .databank 0
 
-      rlUnknown82ED1D ; 82/ED1D
+      rlRAMAreaStub ; 82/ED1D
 
         .al
         .autsiz
         .databank ?
+
+        ; Empty rtl stub in RAMAreaHeaderSection
 
         phb
         php
@@ -1319,11 +1339,13 @@
 
         .databank 0
 
-      rlUnknown82ED24 ; 82/ED24
+      rlAllocateRAMAreaWithHandle ; 82/ED24
 
         .al
         .autsiz
         .databank ?
+
+        ; Allocate A bytes in lRAMAreaPointer backed by a relocatable handle slot
 
         phb
         php
@@ -1357,7 +1379,7 @@
         rep #$20
         plb
 
-        jsr rsUnknown82F19A
+        jsr rsFindOrAllocateRAMAreaHandle
         bcs _EDB6
 
         sta $02
@@ -1367,15 +1389,15 @@
         sta $0000,b,y
         rep #$20
 
-        jsr rsUnknown82F032
+        jsr rsFindFreeRAMAreaEntry
         tay
-        jsr rsUnknown82F1EA
+        jsr rsUpdateRAMAreaHandle
 
         lda $0001,b,y
         sec
         sbc $00
         pha
-        jsr rsUnknown82F00C
+        jsr rsInitManagedRAMAreaEntry
         jsr rsSaveOffsetToRAMAreaEntry
         pla
         pha
@@ -1495,7 +1517,7 @@
         rep #$20
 
         ; Check for free entry
-        jsr rsUnknown82F032
+        jsr rsFindFreeRAMAreaEntry
 
         ; Load max size, subtract requested size
         tay
@@ -1628,11 +1650,13 @@
 
         .databank 0
 
-      rlUnknown82EE9C ; 82/EE9C
+      rlCopyDataToRAMAreaHandle ; 82/EE9C
 
         .al
         .autsiz
         .databank ?
+
+        ; Copy A bytes from [X] into dereferenced RAMArea handle [lR25]
 
         phb
         php
@@ -1680,11 +1704,13 @@
 
         .databank 0
 
-      rlUnknown82EED2 ; 82/EED2
+      rlCompactRAMArea ; 82/EED2
 
         .al
         .autsiz
         .databank ?
+
+        ; Defragment lRAMAreaPointer by sliding handle-managed blocks over free gaps
 
         phb
         php
@@ -1739,7 +1765,7 @@
 
           lda $0003,b,x
           sta wR1
-          jsr rsUnknown82F1EA
+          jsr rsUpdateRAMAreaHandle
 
           lda $0001,b,y
           sta wR4
@@ -1887,11 +1913,13 @@
 
         .databank 0
 
-      rlUnknown82EFBB ; 82/EFBB
+      rlClearRAMAreaEmptyFlag ; 82/EFBB
 
         .al
         .autsiz
         .databank ?
+
+        ; Clear bit $80 of structRAMAreaHeader.Flags and return previous flags in A
 
         phb
         php
@@ -1959,11 +1987,13 @@
 
         .databank 0
 
-      rsUnknown82F00C ; 82/F00C
+      rsInitManagedRAMAreaEntry ; 82/F00C
 
         .al
         .autsiz
         .databank ?
+
+        ; Initialize handle-managed structRAMAreaEntryHeader (Flags=0, BaseTable=handle)
 
         sep #$20
         lda #0
@@ -1990,11 +2020,13 @@
 
         .databank 0
 
-      rsUnknown82F028 ; 82/F028
+      rsSaveDataSizePlusHeaderToRAMAreaEntry ; 82/F028
 
         .al
         .autsiz
         .databank ?
+
+        ; Write wR0 + 6 (data + entry header size) to structRAMAreaEntryHeader.Offset
 
         lda wR0
         clc
@@ -2004,11 +2036,13 @@
 
         .databank 0
 
-      rsUnknown82F032 ; 82/F032
+      rsFindFreeRAMAreaEntry ; 82/F032
 
         .al
         .autsiz
         .databank ?
+
+        ; Find free RAMArea block >= wR0, compacting on retry or crashing on OOM
 
         jsr rsCheckIfEntryFitsInRAMArea
         bcs +
@@ -2018,7 +2052,7 @@
         
         ; All slots are filled
         +
-        jsl rlUnknown82EED2
+        jsl rlCompactRAMArea
         jsr rsCheckIfEntryFitsInRAMArea
         bcs +
         bra -
@@ -2247,11 +2281,13 @@
 
         .databank 0
 
-      rsUnknown82F143 ; 82/F143
+      rsAllocateRAMAreaHandleBlock ; 82/F143
 
         .al
         .autsiz
         .databank ?
+
+        ; Allocate and initialize a linked block of Unknown2 4-byte handle slots
 
         phy
         lda wR0
@@ -2316,11 +2352,13 @@
 
         .databank 0
 
-      rsUnknown82F19A ; 82/F19A
+      rsFindOrAllocateRAMAreaHandle ; 82/F19A
 
         .al
         .autsiz
         .databank ?
+
+        ; Return free 4-byte handle slot in handle block list, allocating a block if full
 
         phx
         phy
@@ -2365,7 +2403,7 @@
           tyx
           lda lRAMAreaPointer
           tay
-          jsr rsUnknown82F143
+          jsr rsAllocateRAMAreaHandleBlock
           sta $0000,b,x
           clc
           adc #3
@@ -2390,11 +2428,13 @@
 
         .databank 0
 
-      rsUnknown82F1EA ; 82/F1EA
+      rsUpdateRAMAreaHandle ; 82/F1EA
 
         .al
         .autsiz
         .databank ?
+
+        ; Write data address (Y+6), bank ($0567), and active status 0 into handle [wR1]
 
         phx
         ldx wR1
@@ -2612,11 +2652,13 @@
 
         .databank 0
 
-      rlUnknown82F649 ; 82/F649
+      rlInsertOffsetTableEntry ; 82/F649
 
         .al
         .autsiz
         .databank ?
+
+        ; Insert wR0 bytes from lR19 at 1-based slot A of offset table lR18
 
         phb
         php
@@ -2884,3 +2926,489 @@
         ; 82/F7A2
 
     .endsection OffsetTableSection
+
+
+    .section Unsorted82E400Section
+
+      .al
+      .xl
+
+      rlResetRAMStructAndAreaVariables ; 82/E400
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Zero $054A..$056C struct/RAMArea vars and initialize wUnknown00056B to $0010
+
+        phb
+        php
+        phk
+        plb
+        ldx #$0021
+        lda #0
+        
+          -
+          sta lStructPointer1,b,x
+          dec x
+          dec x
+          bpl -
+
+        lda #$0010
+        sta wUnknown00056B,b
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 82/E41A
+
+    .endsection Unsorted82E400Section
+
+
+    .section Unsorted82E5FFSection
+
+      .al
+      .xl
+
+      rlMoveRAMStructEntryToFirst ; 82/E5FF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unused: find lStructPointer1 entry and move it to index 1
+
+        phb
+        phk
+        plb
+        .databank $82
+        jsl rlFindRAMStructEntry
+        sta wStructIndex,b
+        lda #$0001
+        sta wStructCurrentCount,b
+        jsl rlMoveRAMStructEntry
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E615
+
+    .endsection Unsorted82E5FFSection
+
+
+    .section Unsorted82E615Section
+
+      .al
+      .xl
+
+      rlMoveRAMStructEntryToLast ; 82/E615
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unused: find lStructPointer1 entry and move it to CurrentStructCount
+
+        phb
+        phk
+        plb
+        .databank $82
+        jsl rlFindRAMStructEntry
+        sta wStructIndex,b
+        jsl rlGetRAMStructCurrentStructCount
+        sta wStructCurrentCount,b
+        jsl rlMoveRAMStructEntry
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E62C
+
+    .endsection Unsorted82E615Section
+
+
+    .section Unsorted82E62CSection
+
+      .al
+      .xl
+
+      rlMoveRAMStructEntryPrev ; 82/E62C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unused: find lStructPointer1 entry and move it back 1 slot
+
+        phb
+        phk
+        plb
+        .databank $82
+        jsl rlFindRAMStructEntry
+        sta wStructIndex,b
+        dec a
+        sta wStructCurrentCount,b
+        jsl rlMoveRAMStructEntry
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E640
+
+      rlMoveRAMStructEntryNext ; 82/E640
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unused: find lStructPointer1 entry and move it forward 1 slot
+
+        phb
+        phk
+        plb
+        .databank $82
+        jsl rlFindRAMStructEntry
+        sta wStructIndex,b
+        inc a
+        sta wStructCurrentCount,b
+        jsl rlMoveRAMStructEntry
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E654
+
+      rlMoveRAMStructEntryToTargetIndex ; 82/E654
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unused: find lStructPointer1 entry and move it to preloaded $0552 index
+
+        phb
+        phk
+        plb
+        .databank $82
+        jsl rlFindRAMStructEntry
+        sta wStructIndex,b
+        jsl rlMoveRAMStructEntry
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E664
+
+    .endsection Unsorted82E62CSection
+
+
+    .section Unsorted82E664Section
+
+      .al
+      .xl
+
+      rlMoveRAMStructEntry ; 82/E664
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Move RAM struct entry from wStructIndex to $0552, shifting intervening entries
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        phy
+        lda wStructIndex,b
+        ora wStructCurrentCount,b
+        bne _E676
+        jml _E741
+
+
+        _E676
+        lda wStructIndex,b
+        beq _E6B8
+        lda wStructCurrentCount,b
+        beq _E6B8
+        ldy lStructPointer2,b
+        sep #$20
+        lda lStructPointer2+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0000,b,y
+        cmp @l wStructIndex
+        bcc _E6B8
+        cmp @l $000552
+        bcc _E6B8
+        lda $0002,b,y
+        and #$00FF
+        sta @l wStructSize
+        lda @l wStructIndex
+        jsr rsLoadRAMStructEntryToScratch
+        lda @l wStructIndex
+        cmp @l $000552
+        bcc _E700
+        bra _E6BE
+
+
+        _E6B8
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        rtl
+
+
+        _E6BE
+        sec
+        sbc @l $000552
+        inc a
+        jsr rsGetRAMStructOffset
+        sta @l wStructIndexAlternate
+        lda @l wStructIndex
+        and #$00FF
+        dec a
+        jsr rsGetRAMStructOffset
+        clc
+        adc @l lStructPointer2
+        clc
+        adc @l wStructSize
+        tay
+        clc
+        adc @l wStructSize
+        tax
+        sep #$20
+
+        _E6E9
+        lda $0003,b,y
+        sta $0003,b,x
+        dec y
+        dec x
+        lda @l wStructIndexAlternate
+        dec a
+        sta @l wStructIndexAlternate
+        bne _E6E9
+        rep #$20
+        bra _E73A
+
+
+        _E700
+        lda @l $000552
+        sec
+        sbc @l wStructIndex
+        inc a
+        jsr rsGetRAMStructOffset
+        sta wStructIndexAlternate,b
+        lda @l wStructIndex
+        jsr rsGetRAMStructOffset
+        clc
+        adc @l lStructPointer2
+        tax
+        clc
+        adc @l wStructSize
+        tay
+        sep #$20
+
+        _E725
+        lda $0004,b,y
+        sta $0004,b,x
+        inc y
+        inc x
+        lda @l wStructIndexAlternate
+        dec a
+        sta @l wStructIndexAlternate
+        bne _E725
+        rep #$20
+
+        _E73A
+        lda @l $000552
+        jsr rsSaveRAMStructEntryFromScratch
+
+        _E741
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+        rtl
+
+        .databank 0
+
+        ; 82/E747
+
+    .endsection Unsorted82E664Section
+
+
+    .section Unsorted82EADESection
+
+      .al
+      .xl
+
+      rsLoadRAMStructEntryToScratch ; 82/EADE
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Load RAM struct entry A into lStructPointer1 (or trailing scratch slot if size >= 4)
+
+        phy
+        pha
+        lda @l lStructPointer2
+        tay
+        lda $0002,b,y
+        and #$00FF
+        cmp #$0004
+        bcc _EB0F
+        lda $0001,b,y
+        and #$00FF
+        inc a
+        jsr rsGetRAMStructOffset
+        clc
+        adc @l lStructPointer2
+        sta @l lStructPointer1
+        sep #$20
+        lda @l lStructPointer2+1
+        sta @l lStructPointer1+1
+        rep #$20
+
+        _EB0F
+        pla
+        jsr rsLoadDataFromRAMStruct
+        ply
+        rts
+
+        .databank 0
+
+        ; 82/EB15
+
+      rsSaveRAMStructEntryFromScratch ; 82/EB15
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Save lStructPointer1 (or trailing scratch slot if size >= 4) to entry A
+
+        phy
+        pha
+        lda @l lStructPointer2
+        tay
+        lda $0002,b,y
+        and #$00FF
+        cmp #$0004
+        bcc _EB46
+        lda $0001,b,y
+        and #$00FF
+        inc a
+        jsr rsGetRAMStructOffset
+        clc
+        adc @l lStructPointer2
+        sta @l lStructPointer1
+        sep #$20
+        lda @l lStructPointer2+1
+        sta @l lStructPointer1+1
+        rep #$20
+
+        _EB46
+        pla
+        jsr rsSaveDataToRAMStruct
+        ply
+        rts
+
+        .databank 0
+
+        ; 82/EB4C
+
+    .endsection Unsorted82EADESection
+
+
+    .section Unsorted82F517Section
+
+      .al
+      .xl
+
+      rlCopyOffsetTableEntry ; 82/F517
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unused: block-copy 1-based entry A from offset table lR18 to lR19 via MVN
+
+        phy
+        phb
+        dec a
+        asl a
+        clc
+        adc lR18
+        tay
+        sep #$20
+        lda lR18+2
+        pha
+        sta lBlockCopySource+2,b
+        rep #$20
+        plb
+        .databank ?
+        lda $0002,b,y
+        sec
+        sbc $0000,b,y
+        sta @l wBlockCopySize
+        lda $0000,b,y
+        plb
+        .databank ?
+        clc
+        adc lR18
+        sta lBlockCopySource,b
+        lda lR19+1
+        sta lBlockCopyDestination+1,b
+        lda lR19
+        sta lBlockCopyDestination,b
+        jsl rlBlockCopyMVNByRAM
+        ply
+        rtl
+
+        .databank 0
+
+        ; 82/F54F
+
+    .endsection Unsorted82F517Section
+

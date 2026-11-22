@@ -29,7 +29,7 @@
               lda #2
               sta wScreenFadingProcInput,b
 
-              lda #<>rsUnknown80F2BE
+              lda #<>rsOpenChapterIntroScreen
               sta aProcSystem.wInput0,b
 
               lda #(`procMainLoopChangeFadeByTimer)<<8
@@ -108,9 +108,9 @@
         .databank $88
         rep #$20
         ldy #$EE52
-        lda $087D,b
+        lda wCastleCursorX,b
         sta wR0
-        lda $087F,b
+        lda wCastleCursorY,b
         sta wR1
         lda #$0000
         sta wR4
@@ -343,7 +343,7 @@
         lda #$0021
         jsl rlPlaySoundEffect
         lda #$0000
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -466,20 +466,20 @@
 
         _8B03
         jsl rlUnknown8885EF
-        lda $087D,b
+        lda wCastleCursorX,b
         sec
         sbc wMapScrollSpeed,b
         bpl _8B13
         lda #$0000
 
         _8B13
-        sta $087D,b
+        sta wCastleCursorX,b
         rts
 
 
         _8B17
         jsl rlUnknown8885FD
-        lda $087D,b
+        lda wCastleCursorX,b
         clc
         adc wMapScrollSpeed,b
         cmp #$00F1
@@ -487,26 +487,26 @@
         lda #$00F0
 
         _8B2A
-        sta $087D,b
+        sta wCastleCursorX,b
         rts
 
 
         _8B2E
         jsl rlUnknown8885D3
-        lda $087F,b
+        lda wCastleCursorY,b
         sec
         sbc wMapScrollSpeed,b
         bpl _8B3E
         lda #$0000
 
         _8B3E
-        sta $087F,b
+        sta wCastleCursorY,b
         rts
 
 
         _8B42
         jsl rlUnknown8885E1
-        lda $087F,b
+        lda wCastleCursorY,b
         clc
         adc wMapScrollSpeed,b
         cmp #$00D1
@@ -514,7 +514,7 @@
         lda #$00D0
 
         _8B55
-        sta $087F,b
+        sta wCastleCursorY,b
         rts
 
         .databank 0
@@ -816,7 +816,7 @@
 
 
       aUnknown8B9456 ; 8B/9456
-        .word <>rsUnknown82E028
+        .word <>rsIRQCodeHalt
 
     .endsection Unsorted8B9451Section
 
@@ -1058,7 +1058,7 @@
 
 
       aUnknown8B95A1 ; 8B/95A1
-        .word <>rsUnknown82E028
+        .word <>rsIRQCodeHalt
 
     .endsection Unsorted8B959CSection
 
@@ -1259,12 +1259,14 @@
       .al
       .xl
 
-      rlUnknown8B96CF ; 8B/96CF
+      rlWorldMapUpdateScroll ; 8B/96CF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $0D: sync BG1/BG3 world map scroll offsets
 
         lda wMapScrollXPixels,b
         sta wBufferBG1HOFS
@@ -1281,12 +1283,14 @@
 
         ; 8B/96E5
 
-      rlUnknown8B96E5 ; 8B/96E5
+      rlWorldMapShow ; 8B/96E5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $0E: initialize world map RAM area and active sprites
 
         lda #$7F00
         sta lR18+1
@@ -1306,19 +1310,21 @@
         stz wGameStateStep,b
         stz $0AD3,b
         lda #$0001
-        sta $0594,b
+        sta wNextMenuState,b
         rtl
 
         .databank 0
 
         ; 8B/9717
 
-      rlUnknown8B9717 ; 8B/9717
+      rlWorldMapRunStep ; 8B/9717
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $0F: dispatch world map step handler
 
         phb
         php
@@ -1348,7 +1354,7 @@
 
       aUnknown8B9726 ; 8B/9726
 
-        ; Jump table of rlUnknown8B9717.
+        ; Jump table of rlWorldMapRunStep.
         .word <>rsUnknown8B9759
         .word <>rsUnknown8B972C
         .word <>rsUnknown8B973C
@@ -1413,7 +1419,7 @@
         _9750
         .as
         rep #$20
-        lda $0594,b
+        lda wNextMenuState,b
         sta wGameStateStep,b
         rts
 
@@ -1455,7 +1461,7 @@
         _9773
         .as
         rep #$20
-        lda $0594,b
+        lda wNextMenuState,b
         sta wGameStateStep,b
         bra _976C
 
@@ -1642,12 +1648,14 @@
       .al
       .xl
 
-      rlUnknown8BA7CB ; 8B/A7CB
+      rlUnusedGameState13Stub ; 8B/A7CB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $13: unused rtl stub in bank $8B
 
         rtl
 
@@ -1655,12 +1663,14 @@
 
         ; 8B/A7CC
 
-      rlUnknown8BA7CC ; 8B/A7CC
+      rlUnusedGameState14Stub ; 8B/A7CC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $14: unused rtl stub in bank $8B
 
         rtl
 
@@ -1668,12 +1678,14 @@
 
         ; 8B/A7CD
 
-      rlUnknown8BA7CD ; 8B/A7CD
+      rlUnusedGameState15Stub ; 8B/A7CD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $15: unused rtl stub in bank $8B
 
         rtl
 

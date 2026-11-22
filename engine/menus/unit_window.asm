@@ -35,7 +35,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #<>rsUnknown80BB9B
+        lda #<>rsRunMenuScreenVBlank
         sta wVBlankPointer
         jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
@@ -76,7 +76,7 @@
         sta wGameStateRoutine1,b
         lda #$0020
         sta wGameStateRoutine2,b
-        lda #<>rsUnknown809D4F
+        lda #<>rsRunFrameTasks
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -224,7 +224,7 @@
         ldx #$001E
 
         _C599
-        lda aUnknown8C951E+2,x
+        lda aPortraitAndMapUIOAMPalettes+2,x
         sta aOAMPaletteBuffer.aPalette6,b,x
         dec x
         dec x
@@ -232,7 +232,7 @@
         ldx #$001E
 
         _C5A7
-        lda aUnknown8C95DE+2,x
+        lda aMenuSpritePalette7Slice+2,x
         sta aOAMPaletteBuffer.aPalette7,b,x
         dec x
         dec x
@@ -1095,9 +1095,9 @@
         phk
         plb
         .databank $80
-        lda #(`aUnknown80C3DD)<<8
+        lda #(`aUnitWindowBG3TilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80C3DD
+        lda #<>aUnitWindowBG3TilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
 
@@ -7173,7 +7173,7 @@
         sta $7F82C5
         sta $7F8183
         lda #$0001
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #<>rsUnknown80B122
         sta wMainLoopPointer
         lda #$00E8
@@ -7191,13 +7191,13 @@
         .autsiz
         .databank ?
 
-        ; B uses this instead of rlUnitWindowCloseToMap when bit 5 of wUnknown000D79 is set: loads the event data of faction slot 0's location, builds the dead character list and installs rsUnknown80B6B6. Where that returns to is not known yet.
+        ; B uses this instead of rlUnitWindowCloseToMap when bit 5 of wUnknown000D79 is set: loads the event data of faction slot 0's location, builds the dead character list and installs rsOpenCastleScreen. Where that returns to is not known yet.
 
         jsl rlUnknown88DE0B
         lda #$0000
         sta $7F82C5
         sta $7F8183
-        jsl rlUnknown80BB5D
+        jsl rlReturnToCastleScreen
         rtl
 
         .databank 0
@@ -7211,14 +7211,14 @@
         .autsiz
         .databank ?
 
-        ; A on a unit that is not on the map: installs rsUnknown80BBD9, which opens a screen run from bank $89 (game states $07 and $08) for the active unit, with $7F8183 set to return to rsUnitWindowOpen.
+        ; A on a unit that is not on the map: installs rsOpenStatusScreen, which opens a screen run from bank $89 (game states $07 and $08) for the active unit, with $7F8183 set to return to rsUnitWindowOpen.
 
         jsl rlUnknown88DE0B
         lda #$0000
         sta $7F82C5
         lda #$C3E6
         sta $7F8183
-        lda #<>rsUnknown80BBD9
+        lda #<>rsOpenStatusScreen
         sta wMainLoopPointer
         rtl
 
@@ -7493,3 +7493,16 @@
         ; 8B/CF0A
 
     .endsection Data8BCECASection
+
+
+    .section Table80C3DDSection
+
+      .al
+      .xl
+
+      aUnitWindowBG3TilemapEntry ; 80/C3DD
+        .byte $20, $40, $00, $00, $00, $00, $88, $83, $7E
+
+    .endsection Table80C3DDSection
+
+

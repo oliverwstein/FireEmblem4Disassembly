@@ -268,7 +268,7 @@
 
       procUnknown828865 ; 82/8865
 
-        .structProcInfo "TT", rlProcUnknown828865Init, rlProcUnknown828865Cycle, aProcUnknown828865Code
+        .structProcInfo "TT", rlProcEvent5DFadeOutInit, rlProcEvent5DFadeOutCycle1, aProcEvent5DFadeOutCode
 
     .endsection ProcScript828865Section
 

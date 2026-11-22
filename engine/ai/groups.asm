@@ -157,11 +157,13 @@
 
         .databank 0
 
-      rlUnknown87DA0A ; 87/DA0A
+      rlAISetGroupTargetReadyFlag ; 87/DA0A
 
         .al
         .autsiz
         .databank ?
+
+        ; Set bit $0001 in wAIUnknownBitfield7E2000 (group target path ready)
 
         lda wAIUnknownBitfield7E2000
         ora #$0001
@@ -418,11 +420,13 @@
 
         .databank 0
 
-      rlUnknown87DB37 ; 87/DB37
+      rlAISetGroupTargetsToCurrentPositions ; 87/DB37
 
         .al
         .autsiz
         .databank ?
+
+        ; Set every AI group member's target coordinates to its current position
 
         phb
         php
@@ -465,11 +469,13 @@
 
         .databank 0
 
-      rlUnknown87DB70 ; 87/DB70
+      rlAIUpdateFormationDirectionTowardTarget ; 87/DB70
 
         .al
         .autsiz
         .databank ?
+
+        ; Orient wAIFormationDirection (0-3) from group leader toward target
 
         phb
         php
@@ -542,11 +548,13 @@
 
         .databank 0
 
-      rlUnknown87DBD2 ; 87/DBD2
+      rlAICheckIfGroupInFormation ; 87/DBD2
 
         .al
         .autsiz
         .databank ?
+
+        ; Check if all group members are in formation; SEC if complete, else CLC + ratio
 
         phb
         php
@@ -668,7 +676,7 @@
         .autsiz
         .databank ?
 
-        ; Runs the routine that rlUnknown87DBD2 chose from aAIFormationOffsetRoutines
+        ; Runs the routine that rlAICheckIfGroupInFormation chose from aAIFormationOffsetRoutines
         ; for wAIFormationDirection. X is the offset of a formation pattern entry
         ; (aFormationPatternOffsets+X holds dX, +1 holds dY); the position it starts
         ; from is in $200C and $200E.

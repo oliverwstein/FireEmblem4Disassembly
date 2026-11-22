@@ -90,11 +90,13 @@
  
         .databank 0
 
-      rlUnknown80A9D4 ; 80/A9D4
+      rlSetMainLoopPointer ; 80/A9D4
 
         .al
         .autsiz
         .databank ?
+
+        ; Set wMainLoopPointer to A, or save to wR26 and clear wUnknown00171A bit $0010
 
         phb
         php
@@ -126,3 +128,151 @@
         ; 80/A9F2
 
     .endsection BlockCopySection
+
+
+    .section Unsorted80A836Section
+
+      .al
+      .xl
+
+      rsInitBlockCopyRAMStubs ; 80/A836
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies MVN and MVP RAM stubs into rsBlockCopyMVNRAM and rsBlockCopyMVPRAM
+
+        phb
+        php
+        phk
+        plb
+        .databank $80
+        sep #$20
+        ldx #$0003
+
+        _A83F
+        lda @l aBlockCopyMVNStubTemplate,x
+        sta rsBlockCopyMVNRAM,b,x
+        dec x
+        bpl _A83F
+        ldx #$0004
+
+        _A84C
+        lda @l aBlockCopyMVPStubTemplate,x
+        sta rsBlockCopyMVPRAM,b,x
+        dec x
+        bpl _A84C
+        plp
+        plb
+        .databank $80
+        rts
+
+        .databank 0
+
+        ; 80/A859
+
+    .endsection Unsorted80A836Section
+
+
+    .section Table80A859Section
+
+      .al
+      .xl
+
+      aBlockCopyMVNStubTemplate ; 80/A859
+
+        ; Read by rsInitBlockCopyRAMStubs.
+
+        .byte $54, $00, $00, $60
+
+        ; 80/A85D
+
+    .endsection Table80A859Section
+
+
+    .section Table80A85DSection
+
+      .al
+      .xl
+
+      aBlockCopyMVPStubTemplate ; 80/A85D
+
+        ; Read by rsInitBlockCopyRAMStubs.
+
+        .byte $44, $00, $00, $60
+
+        ; 80/A861
+
+    .endsection Table80A85DSection
+
+
+    .section Unsorted80A861Section
+
+      .al
+      .xl
+
+      rlCallIndirectRoutineFromTable ; 80/A861
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Indexes 24-bit callback at [0,b,x + A] and dispatches via rlJumpIndirectRoutine if nonzero
+
+        phb
+        php
+        phk
+        plb
+        phy
+
+        clc
+        adc $0000,b,x
+        tay
+        sep #$20
+        lda $0002,b,x
+        pha
+        rep #$20
+        plb
+
+        lda $0000,b,y
+        ora $0001,b,y
+        beq +
+
+          lda $0000,b,y
+          sta lR23
+          lda $0001,b,y
+          sta lR23+1
+          jsl rlJumpIndirectRoutine
+
+        +
+        ply
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlJumpIndirectRoutine ; 80/A88E
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Loads DB from lR23+2 and executes jml [lR23]
+
+        sep #$20
+        lda lR23+2
+        pha
+        rep #$20
+        plb
+        jml [lR23]
+
+        .databank 0
+
+        ; 80/A899
+
+    .endsection Unsorted80A861Section
+
+

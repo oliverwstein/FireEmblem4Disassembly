@@ -24,7 +24,9 @@ def main():
         if note.strip():
             notes[new] = note.strip()
     files = (glob.glob('engine/**/*.asm', recursive=True) + glob.glob('include/**/*.h', recursive=True)
-             + glob.glob('events/*.asm') + glob.glob('data/**/*.csv', recursive=True) + ['build.asm'])
+             + glob.glob('events/**/*.asm', recursive=True) + glob.glob('data/**/*.asm', recursive=True)
+             + glob.glob('data/**/*.csv', recursive=True) + glob.glob('audio/**/*.asm', recursive=True)
+             + glob.glob('text/dialogue/**/*.txt', recursive=True) + ['build.asm'])
     text = {f: open(f, encoding='utf-8').read() for f in files}
     everything = '\n'.join(text.values())
     for old, new in renames.items():

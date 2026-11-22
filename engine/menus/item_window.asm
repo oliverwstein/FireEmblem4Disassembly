@@ -28,7 +28,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #<>rsUnknown80BB9B
+        lda #<>rsRunMenuScreenVBlank
         sta wVBlankPointer
         jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
@@ -66,7 +66,7 @@
         sta wGameStateRoutine1,b
         lda #$0023
         sta wGameStateRoutine2,b
-        lda #<>rsUnknown809D4F
+        lda #<>rsRunFrameTasks
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -1282,7 +1282,7 @@
         ; Step 3, like rlUnitWindowCloseToMap.
 
         lda #$0001
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #<>rsUnknown80B122
         sta wMainLoopPointer
         lda #$00E8

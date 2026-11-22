@@ -17,6 +17,7 @@
   .include "Deployment.h"
   .include "Dialogue.h"
   .include "DMA.h"
+  .include "GameStates.h"
   .include "HDMA.h"
   .include "IORegisters.h"
   .include "Items.h"

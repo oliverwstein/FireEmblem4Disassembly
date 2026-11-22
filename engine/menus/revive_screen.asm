@@ -32,7 +32,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #<>rsUnknown80BB9B
+        lda #<>rsRunMenuScreenVBlank
         sta wVBlankPointer
         jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
@@ -85,7 +85,7 @@
         sta wGameStateRoutine1,b
         lda #$0032
         sta wGameStateRoutine2,b
-        lda #<>rsUnknown809D4F
+        lda #<>rsRunFrameTasks
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -164,7 +164,7 @@
         ldx #$0100
 
         _E0E7
-        lda aUnknownDD7EB0-2,x
+        lda aChapterIntroAndUIBGPalettes-2,x
         sta wJoy2RepeatTimer,x
         dec x
         dec x
@@ -180,7 +180,7 @@
         ldx #$0020
 
         _E102
-        lda aUnknown8C951E,x
+        lda aPortraitAndMapUIOAMPalettes,x
         sta $021E,b,x
         dec x
         dec x
@@ -188,7 +188,7 @@
         ldx #$0020
 
         _E110
-        lda aUnknown8C95DE,x
+        lda aMenuSpritePalette7Slice,x
         sta $027E,b,x
         dec x
         dec x
@@ -529,7 +529,7 @@
         lda aUnknown88D526+1,x
         sta lR18+1
         lda aUnknown88D526,x
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
         sta lR18
         lda #$0040
         sta wR0
@@ -539,7 +539,7 @@
         lda aUnknown80E36F,x
         sta wR1
         jsl rlDMAByPointer
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$0040
         sta lR18
@@ -584,7 +584,7 @@
         lda aUnknown88D5E3+1,x
         sta lR18+1
         lda aUnknown88D5E3,x
-        sta $07EA,b
+        sta lMapSpriteGraphicsPointer,b
         sta lR18
         lda #$0040
         sta wR0
@@ -594,7 +594,7 @@
         lda aUnknown80E3F2,x
         sta wR1
         jsl rlDMAByPointer
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$0040
         sta lR18

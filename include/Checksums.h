@@ -2,7 +2,7 @@
   ; Anti-tamper and code integrity checks:
   ;
   ; 1. Word-sum checks (aCodeChecksums at $8F/8000, copied at $87/8008 and $88/8000):
-  ;    - rlCheckCodeChecksums ($8F/8006), rlUnknown88800F ($88/800F), and
+  ;    - rlCheckCodeChecksums ($8F/8006), rlCheckCodeChecksumsCopy88 ($88/800F), and
   ;      rlUnknown878074 ($87/8074) add up 16-bit words across $80/8D56-$80/8E2C
   ;      (inside rlReset) and $87/8017-$87/80A9 (inside rlUnknown878017/2A/74)
   ;      and compare them against the three structCodeChecksums tables.

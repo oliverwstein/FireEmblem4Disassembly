@@ -336,12 +336,14 @@
       .al
       .xl
 
-      rlUnknown8DA06A ; 8D/A06A
+      rlEpilogueStub ; 8D/A06A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $35: no-op rtl stub for epilogue/credits
 
         rtl
 
@@ -349,12 +351,14 @@
 
         ; 8D/A06B
 
-      rlUnknown8DA06B ; 8D/A06B
+      rlEpilogueShow ; 8D/A06B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $36: initialize epilogue RAM area, active sprites, and fade-in
 
         lda #$7F00
         sta lR18+1
@@ -393,12 +397,14 @@
 
         ; 8D/A0B7
 
-      rlUnknown8DA0B7 ; 8D/A0B7
+      rlEpilogueRunStep ; 8D/A0B7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $37: dispatch epilogue/credits step handler
 
         phb
         php
@@ -428,7 +434,7 @@
 
       aUnknown8DA0C6 ; 8D/A0C6
 
-        ; Step handlers of rlUnknown8DA0B7, by wGameStateStep.
+        ; Step handlers of rlEpilogueRunStep, by wGameStateStep.
         .word <>rsUnknown8DA0EC, <>rsUnknown8DA113, <>rsUnknown8DA136, <>rsUnknown8DA13B, <>rsUnknown8DA180, <>rsUnknown8DA185, <>rsUnknown8DA18F, <>rsUnknown8DA194, <>rsUnknown8DA199, <>rsUnknown8DA19E, <>rsUnknown8DA1A3, <>rsUnknown8DA1C0, <>rsUnknown8DA1DF, <>rsUnknown8DA1FA, <>rsUnknown8DA20B, <>rsUnknown8DA240, <>rsUnknown8DA258, <>rsUnknown8DA282, <>rsUnknown8DA287
 
 
@@ -454,7 +460,7 @@
         lda #$000B
         sta wGameStateStep,b
         lda #$0001
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0000
         sta $7F5486
         rts
@@ -486,7 +492,7 @@
         lda #$000A
         sta wGameStateStep,b
         lda #$000C
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -502,7 +508,7 @@
 
         ; Step 2 of aUnknown8DA0C6.
 
-        jsl rlUnknown80EE37
+        jsl rlSetupEpilogueCreditsDisplay
         rts
 
         .databank 0
@@ -594,7 +600,7 @@
 
         ; Step 6 of aUnknown8DA0C6.
 
-        jsl rlUnknown80EFD8
+        jsl rlSetupEpilogueRankingsDisplay
         rts
 
         .databank 0
@@ -626,7 +632,7 @@
 
         ; Step 8 of aUnknown8DA0C6.
 
-        jsl rlUnknown80F1A7
+        jsl rlStartEpilogueCharacterEndings
         rts
 
         .databank 0
@@ -675,7 +681,7 @@
         _A1B7
         .as
         rep #$20
-        lda $0594,b
+        lda wNextMenuState,b
         sta wGameStateStep,b
         rts
 
@@ -710,7 +716,7 @@
         _A1D6
         .as
         rep #$20
-        lda $0594,b
+        lda wNextMenuState,b
         sta wGameStateStep,b
         rts
 
@@ -733,7 +739,7 @@
         sta lR18+1
         lda #<>aEventChapterEpilogueWorldMap
         sta lR18
-        jsl rlUnknown80C1FC
+        jsl rlStartEventScript
         lda #$0005
         sta wGameStateStep,b
         rts
@@ -755,7 +761,7 @@
         lda #$000B
         sta wGameStateStep,b
         lda #$000E
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -791,7 +797,7 @@
         lda #$000A
         sta wGameStateStep,b
         lda #$0006
-        sta $0594,b
+        sta wNextMenuState,b
         jsl rlCalculateFinalRankingScore
         cmp #$0003
         bcs _A23F
@@ -820,7 +826,7 @@
         lda #$000B
         sta wGameStateStep,b
         lda #$0010
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -1003,7 +1009,7 @@
         lda #$000A
         sta wGameStateStep,b
         lda #$000D
-        sta $0594,b
+        sta wNextMenuState,b
         rtl
 
         .databank 0
@@ -1090,7 +1096,7 @@
         lda #$0021
         jsl rlPlaySoundEffect
         lda #$0002
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -1102,7 +1108,7 @@
 
 
         _A3CC
-        jsl rlUnknown80EFD8
+        jsl rlSetupEpilogueRankingsDisplay
         rts
 
 
@@ -1110,7 +1116,7 @@
         lda #$000A
         sta wGameStateStep,b
         lda #$000F
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -1197,11 +1203,11 @@
         .databank ?
 
         lda #$0100
-        tsb $1882,b
+        tsb aDialogue.wStatus,b
         lda #$01FF
-        sta $189D,b
+        sta aDialogue.wClearTile,b
         lda #$0001
-        sta $1888,b
+        sta aDialogue.wTextSpeed,b
         lda #$101A
         sta $18DB,b,x
         lda #$4000
@@ -1211,7 +1217,7 @@
         lda #$8388
         sta $18D4,b,x
         lda #$2000
-        sta $189F,b,x
+        sta aDialogue.wBaseTile,b,x
         lda #$0809
         sta wR1
         sep #$20
@@ -1763,9 +1769,9 @@
         lda #$0009
         sta wCurrentChapter,b
         lda #$0002
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$FFFF
-        sta $0D87,b
+        sta wMapStateFlags,b
         lda #$0080
         sta wCursorXOffset,b
         sta wCursorYOffset,b
@@ -1786,9 +1792,9 @@
         lda #$0002
         sta wCurrentChapter,b
         lda #$0002
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$FFFF
-        sta $0D87,b
+        sta wMapStateFlags,b
         lda #$0080
         sta wCursorXOffset,b
         sta wCursorYOffset,b
@@ -1809,9 +1815,9 @@
         lda #$0007
         sta wCurrentChapter,b
         lda #$0002
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$FFFF
-        sta $0D87,b
+        sta wMapStateFlags,b
         lda #$0080
         sta wCursorXOffset,b
         sta wCursorYOffset,b
@@ -1832,9 +1838,9 @@
         lda #$000B
         sta wCurrentChapter,b
         lda #$0002
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$FFFF
-        sta $0D87,b
+        sta wMapStateFlags,b
         lda #$0080
         sta wCursorXOffset,b
         sta wCursorYOffset,b
@@ -2230,7 +2236,7 @@
         lda #$000A
         sta wGameStateStep,b
         lda #$000F
-        sta $0594,b
+        sta wNextMenuState,b
         rtl
 
         .databank 0
@@ -2269,7 +2275,7 @@
         lda #$0021
         jsl rlPlaySoundEffect
         lda #$0002
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -2294,7 +2300,7 @@
 
 
         _ADF5
-        jsl rlUnknown80F1A7
+        jsl rlStartEpilogueCharacterEndings
         rts
 
         .databank 0
@@ -3597,7 +3603,7 @@
         lda #$0021
         jsl rlPlaySoundEffect
         lda #$0002
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -3648,15 +3654,15 @@
         .databank ?
 
         lda #$0002
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #$FFFF
         sta $7F7670
         lda #$0004
-        trb $08AD,b
+        trb wBaseSceneFlags,b
         lda #$0008
-        trb $08AD,b
+        trb wBaseSceneFlags,b
         lda #$0001
-        trb $08AD,b
+        trb wBaseSceneFlags,b
         lda $08DC,b
         cmp #$003F
         bcc _B563
@@ -3667,7 +3673,7 @@
         inc $08DC,b
         lda $08DC,b
         sta aDialogue.wUnit1,b
-        sta $08B4,b
+        sta wBaseSceneRightUnitRAMPointer,b
         lda $08DC,b
         sec
         sbc #$0019
@@ -3678,16 +3684,16 @@
         adc wR0
         tax
         lda aUnknown8DB5C8+1,x
-        sta $08B0,b
+        sta lBaseSceneDialoguePointer+1,b
         lda aUnknown8DB5C8,x
-        sta $08AF,b
+        sta lBaseSceneDialoguePointer,b
         lda $08DC,b
         and #$0003
-        sta $08B6,b
+        sta wBaseSceneArgument,b
         lda #$0004
-        sta $08B8,b
+        sta wBaseSceneMode,b
         lda #$0002
-        sta $088B,b
+        sta wCastleScreenHandler,b
         lda #$0002
         sta wScreenFadingProcInput,b
         rts

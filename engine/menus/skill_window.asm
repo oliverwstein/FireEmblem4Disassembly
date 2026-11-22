@@ -25,7 +25,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #<>rsUnknown80BB9B
+        lda #<>rsRunMenuScreenVBlank
         sta wVBlankPointer
         jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
@@ -63,7 +63,7 @@
         sta wGameStateRoutine1,b
         lda #$002C
         sta wGameStateRoutine2,b
-        lda #<>rsUnknown809D4F
+        lda #<>rsRunFrameTasks
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -849,7 +849,7 @@
         .autsiz
         .databank ?
 
-        ; Step 0. Finishes cursor moves and scrolling; B closes (fading into rsUnknown80B122, or through rlUnknown80BB7C when bit 5 of wUnknown000D79 is set), up and down move between skills, right and left show more of a skill's holders when it has over 12.
+        ; Step 0. Finishes cursor moves and scrolling; B closes (fading into rsUnknown80B122, or through rlFadeToCastleScreen when bit 5 of wUnknown000D79 is set), up and down move between skills, right and left show more of a skill's holders when it has over 12.
 
         lda bBufferINIDISP
         and #$000F
@@ -926,7 +926,7 @@
         bit #$0020
         bne _D851
         lda #$0000
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -938,7 +938,7 @@
 
 
         _D851
-        jsl rlUnknown80BB7C
+        jsl rlFadeToCastleScreen
         rts
 
 

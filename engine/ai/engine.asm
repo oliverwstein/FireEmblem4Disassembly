@@ -6,11 +6,13 @@
       .al
       .xl
 
-      rlUnknown869D1B ; 86/9D1B
+      rlRunAIEngineCycle ; 86/9D1B
 
         .al
         .autsiz
         .databank ?
+
+        ; Per-frame AI engine dispatcher; steps wAIEngineCycleType when active
 
         phb
         php
@@ -158,7 +160,7 @@
 
         +
         lda #$0020
-        tsb $0D87,b
+        tsb wMapStateFlags,b
 
         lda #7
         sta wAIEngineCycleType,b
@@ -178,9 +180,9 @@
         ; If any target is within threat range:
         ; Either update wAIUnknown7E2002 with 2 if its 1, or leave it be.
 
-        jsl rlUnknown86AF39
+        jsl rlAIUpdateModeIfFoeInThreatRange
 
-        jsl rlUnknown86B018
+        jsl rlAIUpdateGroupTargetAndWaypoint
 
         inc wAIEngineCycleType,b
         rts
@@ -196,7 +198,7 @@
         lda #$0010
         tsb bUnknown000E7B,b
 
-        lda $086F,b
+        lda wMapActionActiveFlag,b
         bne _End
 
           lda #$0002
@@ -206,7 +208,7 @@
           bit #$0001
           bne +
 
-            jsl rlUnknown87DB37
+            jsl rlAISetGroupTargetsToCurrentPositions
             bra _9E3F
           
           +
@@ -214,7 +216,7 @@
           cmp #6
           bne +
 
-            jsl rlUnknown87DBD2
+            jsl rlAICheckIfGroupInFormation
             bcs _9E49
           
           +
@@ -230,7 +232,7 @@
         rts
 
         _9E49
-        jsr rsUnknown869F2A
+        jsr rsAIEngineAdvanceGroup
         bra _End
 
         .databank 0
@@ -251,7 +253,7 @@
 
           jsl rlFillAllyUnitMap
           jsl rlFillUnfriendlyUnitMap
-          jsl rlUnknown86B129
+          jsl rlAIRunSelectedUnitTurn
 
         +
         inc wAIEngineCycleType,b
@@ -266,10 +268,10 @@
         .autsiz
         .databank ?
 
-        lda $086F,b
+        lda wMapActionActiveFlag,b
         bne _End
 
-          jsr rsUnknown869EC9
+          jsr rsAICheckCastleCaptureAfterSiege
           bcs _End
 
             jsl rlCheckIfAIUnitCanAct
@@ -317,22 +319,24 @@
         rts
         
         _9EC4
-        jsr rsUnknown869F2A
+        jsr rsAIEngineAdvanceGroup
         bra _End
 
         .databank 0
 
-      rsUnknown869EC9 ; 86/9EC9
+      rsAICheckCastleCaptureAfterSiege ; 86/9EC9
 
         .al
         .autsiz
         .databank ?
 
+        ; After siege attack ($0E8E=2), seize castle (action 4) if guard was defeated
+
         lda wAIUnknown000E8E,b
         cmp #2
         bne _CLC
 
-          lda $0580,b
+          lda wTargetEventLocationEntry,b
           beq _CLC
 
             sta wEventLocationEntry,b
@@ -345,7 +349,7 @@
               asl a
               asl a
               asl a
-              sta $0875,b
+              sta wActiveActionDestinationX,b
 
               jsl rlGetEventLocationEntryEffectiveYCoordinate
               sta wAITargetYPosition,b
@@ -353,20 +357,20 @@
               asl a
               asl a
               asl a
-              sta $0877,b
+              sta wActiveActionDestinationY,b
 
               ldx wAISelectedAIUnitOffset,b
               lda aAIUnitList[0].DeploymentOffset,x
               and #$00FF
-              sta $0871,b
+              sta wActiveActionUnit1DeploymentOffset,b
               lda #4
               sta wAIUnknown000E8E,b
-              sta $0879,b
+              sta wActiveActionID,b
               lda #$FFFF
               sta wAIUnknown000E8C,b
-              sta $0873,b
+              sta wActiveActionUnit2DeploymentOffset,b
               lda #$FFFF
-              sta $086F,b
+              sta wMapActionActiveFlag,b
               lda #$0001
               tsb bUnknown000E7B,b
               sec
@@ -378,11 +382,13 @@
 
         .databank 0
 
-      rsUnknown869F2A ; 86/9F2A
+      rsAIEngineAdvanceGroup ; 86/9F2A
 
         .al
         .autsiz
         .databank ?
+
+        ; Increment wAICurrentAISetting to next group and reset cycle to 2
 
         inc wAICurrentAISetting,b
 
@@ -436,3 +442,132 @@
         ; 87/C015
 
     .endsection AICleverModeSection
+
+
+    .section Unsorted869CCCSection
+
+      .al
+      .xl
+
+      rlClearAIEngineRAM ; 86/9CCC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Clear AI engine WRAM ($0E7B-$0EA5)
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        ldx #$002A
+        sep #$20
+        lda #$00
+
+        _9CD8
+        sta bUnknown000E7B,b,x
+        dec x
+        bpl _9CD8
+        rep #$20
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 86/9CE4
+
+    .endsection Unsorted869CCCSection
+
+
+    .section Unsorted869CE4Section
+
+      .al
+      .xl
+
+      rlEnableAIEngineCycle ; 86/9CE4
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Enable AI cycle (bit $40 of $0E7B) and reset wAIEngineCycleType if non-player phase
+
+        phb
+        php
+        phk
+        plb
+
+        lda wActiveFactionSlot,b
+        beq +
+
+          lda #$0040
+          tsb bUnknown000E7B,b
+          stz wAIEngineCycleType,b
+
+        +
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlClearAIActionActiveFlag ; 86/9CF9
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Clear bit $01 (AI/scripted action active) of bUnknown000E7B
+
+        phb
+        php
+        phk
+        plb
+        lda bUnknown000E7B,b
+        bit #$0001
+        beq +
+
+          lda #$0001
+          trb bUnknown000E7B,b
+
+        +
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlDisableAIEngineCycle ; 86/9D0E
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Disable AI cycle (clear bit $40 of bUnknown000E7B)
+
+        phb
+        php
+        phk
+        plb
+
+        lda #$0040
+        trb bUnknown000E7B,b
+
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 86/9D1B
+
+    .endsection Unsorted869CE4Section
+
+

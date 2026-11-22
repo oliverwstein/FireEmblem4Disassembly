@@ -63,7 +63,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #<>rsUnknown80BB9B
+        lda #<>rsRunMenuScreenVBlank
         sta wVBlankPointer
         jsl rlHaltUntilVBlank
         jsl rlDisableVBlank
@@ -100,7 +100,7 @@
         sta wGameStateRoutine1,b
         lda #$002F
         sta wGameStateRoutine2,b
-        lda #<>rsUnknown809D4F
+        lda #<>rsRunFrameTasks
         sta wMainLoopPointer
         jsl rlEnableVBlank
         plp
@@ -632,7 +632,7 @@
         tay
 
         _DE0B
-        lda aUnknown8C9400,x
+        lda aUnitRelationOAMPalettes,x
         sta <>aDataWindowRelationPalettes,b,y
         inc x
         inc x
@@ -999,7 +999,7 @@
         .databank ?
 
         ; Step 0, once the fade in is done. Finishes cursor moves (each takes two frames
-        ; of 8 pixels); B closes (fading into rsUnknown80B122, or through rlUnknown80BB7C
+        ; of 8 pixels); B closes (fading into rsUnknown80B122, or through rlFadeToCastleScreen
         ; when bit 5 of wUnknown000D79 is set); X shows the selected army's details (step
         ; 1); up and down move between armies.
 
@@ -1045,7 +1045,7 @@
         bit #$0020
         bne _CF9E
         lda #$0000
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -1059,7 +1059,7 @@
 
 
         _CF9E
-        jsl rlUnknown80BB7C
+        jsl rlFadeToCastleScreen
         lda #$0002
         sta wGameStateStep,b
         rts
@@ -1975,7 +1975,7 @@
 
 
         _D654
-        sta $07E6,b
+        sta wMapSpriteFrameByteOffset,b
         lda wDataWindowCurrentArmy
         asl a
         tax
@@ -1990,10 +1990,10 @@
         lda aUnknown88D526+1,x
         sta lR18+1
         lda aUnknown88D526,x
-        sta $07EA,b
-        lda $07EA,b
+        sta lMapSpriteGraphicsPointer,b
+        lda lMapSpriteGraphicsPointer,b
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         lda #$0040
         sta wR0
@@ -2002,11 +2002,11 @@
         phx
         jsl rlDMAByPointer
         plx
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$0040
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         lda #$0040
         sta wR0
@@ -2063,7 +2063,7 @@
 
 
         _D6DE
-        sta $07E6,b
+        sta wMapSpriteFrameByteOffset,b
         lda wDataWindowCurrentArmy
         asl a
         tax
@@ -2078,10 +2078,10 @@
         lda aUnknown88D5E3+1,x
         sta lR18+1
         lda aUnknown88D5E3,x
-        sta $07EA,b
-        lda $07EA,b
+        sta lMapSpriteGraphicsPointer,b
+        lda lMapSpriteGraphicsPointer,b
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         lda #$0040
         sta wR0
@@ -2090,11 +2090,11 @@
         phx
         jsl rlDMAByPointer
         plx
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$0040
         clc
-        adc $07E6,b
+        adc wMapSpriteFrameByteOffset,b
         sta lR18
         lda #$0080
         sta wR0

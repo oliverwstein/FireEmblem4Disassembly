@@ -85,7 +85,7 @@
         jsl rlPlaySoundEffect
 
         lda #0
-        sta $0790,b
+        sta wUnknown000790,b
         jsr rsUnknown88B51A
         rts
         
@@ -284,7 +284,7 @@
         _B081
         lda #$0021
         jsl rlPlaySoundEffect
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
         jsr rsUnknown88BBD3
@@ -303,16 +303,16 @@
 
         lda #$0000
         sta wUnknown0007D8,b
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         jsr rsUnknown88BBD3
         lda wActiveUnitDeploymentOffset,b
         sta wR0
-        lda $0774,b
+        lda wMapTargetDeploymentOffset,b
         sta wR1
-        lda $077C,b
-        sta $0778,b
-        lda $077E,b
-        sta $077A,b
+        lda wMapCursorOriginXTile,b
+        sta wMapCursorXTile,b
+        lda wMapCursorOriginYTile,b
+        sta wMapCursorYTile,b
         lda wActiveUnitDeploymentOffset,b
         tax
         lda aDeploymentTable._XTilePosition,x
@@ -379,7 +379,7 @@
         sta lR44
         jsl rlProcEngineCreateProc
         lda #$0008
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         rts
 
         .databank 0
@@ -402,12 +402,12 @@
         bne _B198
         lda #$0021
         jsl rlPlaySoundEffect
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         jsl rlDeployedUnitUnsetHiddenIfAlive
         jsr rsUnknown88BBD3
-        lda $07E0,b
+        lda wMapActionMode,b
         cmp #$0001
         beq _B16D
         cmp #$0002
@@ -418,19 +418,19 @@
         _B16D
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CC5D
-        stz $07E0,b
+        stz wMapActionMode,b
         rts
 
 
         _B178
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CFBF
-        stz $07E0,b
+        stz wMapActionMode,b
         rts
 
 
         _B183
-        stz $07DA,b
+        stz wMovingUnitSpriteState,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
         lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
@@ -440,17 +440,17 @@
 
 
         _B198
-        lda $077C,b
-        sta $0778,b
-        lda $077E,b
-        sta $077A,b
+        lda wMapCursorOriginXTile,b
+        sta wMapCursorXTile,b
+        lda wMapCursorOriginYTile,b
+        sta wMapCursorYTile,b
         lda #$0005
         jsl rlPlaySoundEffect
         jsr rsUnknown88BBD3
         stz wUnknown0007D8,b
         jsl rlUnknown85E85D
         lda #$0008
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         lda #$0800
         trb wUnknown000D79,b
         rts
@@ -516,11 +516,11 @@
         bne _B248
         lda wUnknown000770,b
         bne _B248
-        lda $0788,b
+        lda wMapSystemFlags,b
         bit #$0020
         bne _B241
         lda #$0020
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         lda wMapScrollXPixels,b
         sta wMapXOffset,b
         lda wMapScrollYPixels,b
@@ -535,7 +535,7 @@
 
         _B241
         lda #$0020
-        trb $0788,b
+        trb wMapSystemFlags,b
         rts
 
 
@@ -579,13 +579,13 @@
         cmp #$0000
         bne _B2A3
         jsl rlGetEventLocationEntryID
-        sta $089F,b
+        sta wEnteredCastleLocationID,b
         lda #$0000
         jsl rlGetFactionSlotLocationID
-        cmp $089F,b
+        cmp wEnteredCastleLocationID,b
         bne _B2A3
         lda #$FFFF
-        sta $089B,b
+        sta wCastleSavedUnitRAMPointer,b
         lda #$0009
         jsl rlPlaySoundEffect
         jml rlUnknown88B316
@@ -647,10 +647,10 @@
         cmp #$0001
         beq _B305
         jsl rlGetEventLocationEntryID
-        sta $089F,b
+        sta wEnteredCastleLocationID,b
         lda #$0000
         jsl rlGetFactionSlotLocationID
-        cmp $089F,b
+        cmp wEnteredCastleLocationID,b
         bne _B305
         jml rlUnknown88B316
 
@@ -693,7 +693,7 @@
 
         jsl rlUnknown88B3AF
         lda #$0000
-        sta $088B,b
+        sta wCastleScreenHandler,b
         jsl rlBuildDeadPlayerCharacterList
         lda #$B6B6
         sta aProcSystem.wInput0,b
@@ -721,7 +721,7 @@
         jsl rlQueueSoundCommand
         jsl rlUnknown88B3AF
         lda #$0001
-        sta $088B,b
+        sta wCastleScreenHandler,b
         lda #$B6B6
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -769,9 +769,9 @@
         ldy #$0090
         jsr rsUnknown88B5CA
         bcs _B561
-        lda $0790,b
+        lda wUnknown000790,b
         bne _B54F
-        ldx $0784,b
+        ldx wMapPanTargetDeploymentOffset,b
         dec x
         dec x
         bpl _B55C
@@ -780,7 +780,7 @@
 
 
         _B54F
-        ldx $0784,b
+        ldx wMapPanTargetDeploymentOffset,b
         inc x
         inc x
         cpx #$0090
@@ -808,19 +808,19 @@
         lda aDeploymentTable._XTilePosition,x
         sec
         sbc wTempVariable1,b
-        sta $0778,b
+        sta wMapCursorXTile,b
         lda aDeploymentTable._YTilePosition,x
         sec
         sbc wTempVariable2,b
-        sta $077A,b
+        sta wMapCursorYTile,b
         lda #$0004
         sta wUnknown0007D8,b
-        stx $0784,b
+        stx wMapPanTargetDeploymentOffset,b
         bra _B5C9
 
 
         _B5A7
-        lda $0790,b
+        lda wUnknown000790,b
         bne _B5B5
         dec x
         dec x
@@ -840,8 +840,8 @@
         dec y
         dec y
         bpl _B55C
-        stz $0778,b
-        stz $077A,b
+        stz wMapCursorXTile,b
+        stz wMapCursorYTile,b
 
         _B5C9
         rts
@@ -857,7 +857,7 @@
         .autsiz
         .databank ?
 
-        lda $0784,b
+        lda wMapPanTargetDeploymentOffset,b
         cmp #$FFFF
         beq _B5D4
         clc
@@ -866,7 +866,7 @@
 
         _B5D4
         lda #$0000
-        sta $0784,b
+        sta wMapPanTargetDeploymentOffset,b
         tax
         sec
         rts
@@ -882,7 +882,7 @@
         .autsiz
         .databank ?
 
-        lda $0784,b
+        lda wMapPanTargetDeploymentOffset,b
         cmp #$FFFF
         bne _B5E7
         clc
@@ -902,15 +902,15 @@
         jsl rlGetEventLocationEntryEffectiveXCoordinate
         sec
         sbc wTempVariable1,b
-        sta $0778,b
+        sta wMapCursorXTile,b
         jsl rlGetEventLocationEntryEffectiveYCoordinate
         sec
         sbc wTempVariable2,b
-        sta $077A,b
+        sta wMapCursorYTile,b
         lda #$0004
         sta wUnknown0007D8,b
         lda #$FFFF
-        sta $0784,b
+        sta wMapPanTargetDeploymentOffset,b
         sec
         rts
 

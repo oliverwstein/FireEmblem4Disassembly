@@ -3487,11 +3487,13 @@
 
         .databank 0
 
-      rlUnknown89E7BD ; 89/E7BD
+      rlDebugMenuShow ; 89/E7BD
 
         .al
         .autsiz
         .databank ?
+
+        ; GameState $27: draw debug menu and unblank screen
 
         inc wGameStateRoutine1,b
         jsr rlDrawDebugMenu
@@ -3580,7 +3582,7 @@
         lda #0
         sta wGameStateStep,b
         lda #1
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #<>rsUnknown80B122
         sta wMainLoopPointer
         rtl
@@ -3590,7 +3592,7 @@
         sta wGameStateStep,b
         lda $7F8404
         sta $7F8183
-        lda #<>rsUnknown80BBD9
+        lda #<>rsOpenStatusScreen
         sta wMainLoopPointer
         rtl
         
@@ -4185,5 +4187,220 @@
         ; 89/9140
 
     .endsection Unsorted8990DASection
+
+
+    .section Unsorted80E42BSection
+
+      .al
+      .xs
+
+      rsOpenDebugMenu ; 80/E42B
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Opens debug menu (game state $27/$26), resets engines, calls init/gfx/BG, installs rsRunMenuScreenVBlank
+
+        php
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+
+        lda #<>rsRunMenuScreenVBlank
+        sta $D3
+
+        jsl rlHaltUntilVBlank
+        jsl rlDisableVBlank
+
+        jsl rlHardwareResetScreenPosMathHDMA
+        jsl rlHardwareResetScreenRegisters
+
+        stz wR0
+        stz wR2
+        stz wR4
+        stz wR7
+        stz wR9
+
+        lda #0
+        sta wR5
+        lda #0
+        sta wR1
+        lda #$4000
+        sta wR3
+        lda #$6000
+        sta wR6
+        lda #$7000
+        sta wR8
+
+        jsl rlSetLayerPositionsAndSizes
+        jsl rlProcEngineResetProcEngine
+        jsl rlActiveSpriteEngineReset
+        jsl rlResetHDMAEngine
+        jsl rlResetIRQEngine
+        jsl rlResetRAMStructAndAreaVariables
+        jsl rlUnknown8780AA
+        jsl rlResetMenuOptionStack
+
+        jsr rsInitializeDebugMenuVariables
+        jsr rsCopyDebugMenuGraphics
+        jsr rsSetDebugMenuBGSettings
+
+        lda $7F8400
+        sta wGameStateStep,b
+
+        lda #$0027
+        sta wGameStateRoutine1,b
+        lda #$0026
+        sta wGameStateRoutine2,b
+
+        lda #<>rsRunFrameTasks
+        sta $D7
+
+        jsl rlEnableVBlank
+
+        plp
+        rts
+
+        .databank 0
+
+      rsInitializeDebugMenuVariables ; 80/E4B3
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Initializes debug menu WRAM vars (wDebugMenuScreenIndex..$7F840E) and sets aUnknown80E422
+
+        lda $7F8183
+        sta $7F8404
+
+        lda #0
+        sta wDebugMenuScreenIndex
+        sta wDebugMenuTemp1
+        sta wDebugMenuTemp2
+        sta $7F840A
+        sta $7F840C
+        sta $7F8408
+
+        lda #(`aUnknown80E422)<<8
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #<>aUnknown80E422
+        sta lMapMenuTilemapRAMEntryPointer,b
+        jsl rlGetSelectedUnitFactionSlot
+        sta $7F840E
+        rts
+
+        .databank 0
+
+      rsCopyDebugMenuGraphics ; 80/E4EB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; DMAs g4bppMenuCursorSprites, window/tile decompression entries, aWindowPalette, clears/DMAs BG3
+
+        ; Gets debug BG, pal and tilemap
+
+        ; DMA graphics with pointing hand, promotion indicator, droppable item icon, arrows and a star
+
+        jsl rlDMAByStruct
+
+          .dstruct structDMAToVRAM, g4bppMenuCursorSprites, $0400, $80, $0000
+
+        lda #(`aDebugMenuC00A2BDecompressionEntry)<<8
+        sta lR19+1
+        lda #<>aDebugMenuC00A2BDecompressionEntry
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlUnknown899FDC
+
+        ldx #$0200  
+        
+        -
+        lda aWindowPalette-2,x
+        sta $FE,x
+        dec x
+        dec x
+        bne -
+
+        ; Clear the tilemap
+        lda #0
+        sta $0100,b
+        jsl rlUnitWindowFillBG3Buffer
+
+         ; DMA clean tilemap
+        jsl rlDMAByStruct
+
+          .dstruct structDMAToVRAM, aBG3TilemapBuffer, $0800, $80, $E000
+
+        lda #(`aDebugMenuDD3F20DecompressionEntry)<<8
+        sta lR19+1
+        lda #<>aDebugMenuDD3F20DecompressionEntry
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        rts
+
+        .databank 0
+
+      aDebugMenuC00A2BDecompressionEntry ; 80/E53D
+
+        ; Entry for rlHandleMapMenuDecompressionDMA.
+        .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000
+
+      aDebugMenuDD3F20DecompressionEntry ; 80/E545
+
+        ; Entry for rlHandleMapMenuDecompressionDMA.
+        .structDecompressionDMAEntry gcUnknownDD3F20, $0800, $6000
+
+      rsSetDebugMenuBGSettings ; 80/E54D
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Sets BG1SC/3SC |= 2, TM=$15, WH1=$FF, CGADSUB=$81, clears BG1-3 H/V scrolls for debug menu
+
+        sep #$20
+        lda bBufferBG1SC
+        and #$FC
+        ora #$02
+        sta bBufferBG1SC
+
+        lda bBufferBG3SC
+        and #$FC
+        ora #$02
+        sta bBufferBG3SC
+
+        lda #$15
+        sta bBufferTM
+        lda #0
+        sta bBufferWH0
+        sta bBufferWH2
+        sta bBufferWH3
+        lda #$FF
+        sta bBufferWH1
+        lda #0
+        sta bBufferCGWSEL
+        lda #$81
+        sta bBufferCGADSUB
+        rep #$20
+
+        stz wBufferBG1HOFS
+        stz wBufferBG1VOFS
+        stz wBufferBG2HOFS
+        stz wBufferBG2VOFS
+        stz wBufferBG3HOFS
+        stz wBufferBG3VOFS
+        rts
+
+        .databank 0
+
+        ; 80/E586
+
+    .endsection Unsorted80E42BSection
 
 

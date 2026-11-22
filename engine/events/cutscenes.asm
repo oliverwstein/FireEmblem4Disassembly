@@ -195,7 +195,7 @@
         ldx #$00DE
 
           -
-          lda aUnknown8C951E+2,x
+          lda aPortraitAndMapUIOAMPalettes+2,x
           sta aOAMPaletteBuffer.aPalette1,b,x
           dec x
           dec x
@@ -269,7 +269,7 @@
 
         phx
         lda aProcSystem.aBody4,b,x
-        jsl rlUnknown8280F8
+        jsl rlProcEngineCheckProcEnded
         bcc +
 
           lda aProcSystem.aHeaderBitfield,b,x
@@ -315,7 +315,7 @@
         sta $4582,b
         sta $4584,b
         sta @l aMapAction.wUnknown7F455A
-        sta @l $7F4572
+        sta @l aMapAction.wMapBattleAttackVariant
         sta @l $7F5091
         sta @l $7F5093
         sta @l $7F4C07
@@ -387,9 +387,9 @@
         sta @l $7F5099
         sta @l $7F509B
 
-        lda #(`rlUnknown81841B)<<8
+        lda #(`rlPushToOAMBufferDualTileBase)<<8
         sta $0015E4+1
-        lda #<>rlUnknown81841B
+        lda #<>rlPushToOAMBufferDualTileBase
         sta $0015E4
 
         lda aActiveSpriteSystem.wFlag

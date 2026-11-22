@@ -35,9 +35,10 @@ SCOPED = [
     # The item window's variables; the map buffers (aTargetDistanceMap...) share the area.
     (0x7F8467, 0x7FAF4F, ('wItemWindow', 'aItemWindow'), ('engine/menus/item_window.asm',)),
     # The battle animation combatants' motion; a few other screens reuse the area.
-    (0x7E0AF3, 0x7E0B78, ('wBattleAnimation', 'bBattleAnimation'),
-     ('engine/unsorted/bank95.asm', 'engine/unsorted/bank96.asm', 'engine/battle_scene/animation_moves.asm',
-      'engine/battle_scene/script.asm', 'engine/battle_scene/animations.asm')),
+    (0x7E0AF3, 0x7E0B78, ('wBattleAnimation', 'bBattleAnimation', 'lBattleAnimation'),
+     ('engine/unsorted/bank95.asm', 'engine/unsorted/bank96.asm', 'engine/unsorted/bank97.asm',
+      'engine/battle_scene/animation_moves.asm', 'engine/battle_scene/script.asm',
+      'engine/battle_scene/animations.asm')),
 ]
 
 OPERAND = re.compile(r'^(\s+[a-z]{3} (?:@l )?)\$([0-9A-F]{4}|[0-9A-F]{6})\b((?:,b)?(?:,[xy])?)(\s*)$')

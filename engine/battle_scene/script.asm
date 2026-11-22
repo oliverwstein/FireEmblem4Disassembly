@@ -269,13 +269,13 @@
         tax
         lda aUnknown98AD04,x
         pha
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         and #$01FF
         sec
         sbc $7FE198
         jsl rlUnknown9EB4BB
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         cpx #$0000
         bne _BCDC
         clc
@@ -938,7 +938,7 @@
         ; Control command $FFFD: rlUnknown95C057 for the acting combatant ($0AE9; adds 1 to $7FE184 or $7FE185).
 
         phx
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         jsl rlUnknown95C057
         lda $7FE4BC
         clc
@@ -961,7 +961,7 @@
         ; Control command $FFFC: rlUnknown95C077, the same for the other counter.
 
         phx
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         jsl rlUnknown95C077
         lda $7FE4BC
         clc
@@ -1008,7 +1008,7 @@
         bit #$0008
         beq _A3B8
         phx
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         cpx #$0000
         beq _A3B0
         ldx #$0000
@@ -1478,8 +1478,8 @@
         ; combatant's $0B24 is set.
 
         phx
-        ldx $0AE9,b
-        lda $0B24,b,x
+        ldx wBattleAnimationAttackerOffset,b
+        lda wBattleAnimationBaseTile,b,x
         bit #$8000
         beq _B9B1
         inc y
@@ -1851,7 +1851,7 @@
         asl a
         tax
         lda aUnknown98AD04,x
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         cpx #$0000
         bne _BC66
         clc
@@ -1888,13 +1888,13 @@
         tax
         lda aUnknown98AD04,x
         pha
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
         and #$01FF
         sec
         sbc $7FE198
         jsl rlUnknown9EB4BB
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         cpx #$0000
         bne _BC9F
         clc

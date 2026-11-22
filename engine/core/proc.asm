@@ -222,11 +222,13 @@
 
         .databank 0
 
-      rlUnknown8280F8 ; 82/80F8
+      rlProcEngineCheckProcEnded ; 82/80F8
       
         .al
         .autsiz
         .databank ?
+
+        ; Check if proc A has ended (bit $2000 of aUnknownBitfield)
 
         phb
         php
@@ -595,11 +597,13 @@
 
         .databank 0
 
-      rsProcCodeSetUnknownTimer ; 82/824E
+      rsProcCodeSetTimer ; 82/824E
 
         .al
         .autsiz
         .databank ?
+
+        ; Set proc loop timer aHeaderUnknownTimer from inline word (PROC_SET_UNK_TIMER in Procs.h)
 
         lda $0000,b,y
         sta aProcSystem.aHeaderUnknownTimer,b,x
@@ -610,11 +614,13 @@
 
         .databank 0
 
-      rsProcCodeJumpWhileUnknownTimer ; 82/8257
+      rsProcCodeJumpWhileTimer ; 82/8257
 
         .al
         .autsiz
         .databank ?
+
+        ; Decrement aHeaderUnknownTimer and jump while non-zero (PROC_JUMP_WHILE_UNK_TIMER in Procs.h)
 
         dec aProcSystem.aHeaderUnknownTimer,b,x
         bne rsProcCodeJump

@@ -7,11 +7,13 @@
       .al
       .xl
 
-      rlUnknown869F35 ; 86/9F35
+      rlAIEvaluateAttackTilesForTarget ; 86/9F35
 
         .al
         .autsiz
         .databank ?
+
+        ; Iterate candidate attack tiles around target within min..max range
 
         phb
         php
@@ -65,7 +67,7 @@
         lda aAIAction.wUnknown7F4402
         asl a
         tax
-        lda aUnknown86A035,x
+        lda aAIAttackTileEvaluationRoutines,x
         sta lAITemp000E93
 
         ; Keep track of the max - min range.
@@ -177,11 +179,11 @@
 
         .databank 0
 
-      aUnknown86A035 ; 86/A035
+      aAIAttackTileEvaluationRoutines ; 86/A035
 
-        .word <>rsUnknown86A092
-        .word <>rsUnknown86A126
-        .word <>rsUnknown86A174
+        .word <>rsAIEvaluateStatusStaffTile
+        .word <>rsAIEvaluateHealingStaffTile
+        .word <>rsAIEvaluateWeaponAttackTile
 
       aAttackMapTileIndexModifiers ; 86/A03B
 
@@ -257,11 +259,13 @@
 
         .databank 0
 
-      rsUnknown86A092 ; 86/A092
+      rsAIEvaluateStatusStaffTile ; 86/A092
 
         .al
         .autsiz
         .databank ?
+
+        ; Evaluate candidate tile for status staff (action 8)
 
         jsr rsAICheckIfAttackTileIsValid
         bcc +
@@ -348,11 +352,13 @@
 
         .databank 0
 
-      rsUnknown86A126 ; 86/A126
+      rsAIEvaluateHealingStaffTile ; 86/A126
 
         .al
         .autsiz
         .databank ?
+
+        ; Evaluate candidate tile for healing staff (action 14)
 
         jsr rsAICheckIfAttackTileIsValid
         bcc +
@@ -415,7 +421,7 @@
 
         .databank 0
 
-      rsUnknown86A174 ; 86/A174
+      rsAIEvaluateWeaponAttackTile ; 86/A174
 
         .al
         .autsiz
@@ -427,7 +433,7 @@
           lda aAIAction.wUnknown7F4448
           asl a
           tax
-          jsr (aUnknown86A18F,x)
+          jsr (aAIAttackTypeRoutines,x)
           bcc +
 
             jsr rsAICheckIfNewBestTarget
@@ -441,19 +447,19 @@
 
         .databank 0
 
-      aUnknown86A18F ; 86/A18F
+      aAIAttackTypeRoutines ; 86/A18F
 
-        .word <>rsUnknown86A1A1 ; AttackTypeIntimidate
-        .word <>rsUnknown86A1CD ; AttackTypeReachable
-        .word <>rsUnknown86A1D1 ; AttackTypeRegular
-        .word <>rsUnknown86A1DF ; AttackTypeAlways
-        .word <>rsUnknown86A1E1 ; AttackTypeCautious
-        .word <>rsUnknown86A221 ; AttackTypeDefendingCastle
-        .word <>rsUnknown86A1DF ; AttackTypeAlways
-        .word <>rsUnknown86A1D1 ; AttackTypeRegular
-        .word <>rsUnknown86A1D1 ; AttackTypeRegular
+        .word <>rsAICheckAttackTypeIntimidate ; AttackTypeIntimidate
+        .word <>rsAICheckAttackTypeReachable ; AttackTypeReachable
+        .word <>rsAICheckAttackTypeRegular ; AttackTypeRegular
+        .word <>rsAICheckAttackTypePassive ; AttackTypeAlways
+        .word <>rsAICheckAttackTypeCautious ; AttackTypeCautious
+        .word <>rsAICheckAttackTypeDefendingCastle ; AttackTypeDefendingCastle
+        .word <>rsAICheckAttackTypePassive ; AttackTypeAlways
+        .word <>rsAICheckAttackTypeRegular ; AttackTypeRegular
+        .word <>rsAICheckAttackTypeRegular ; AttackTypeRegular
 
-      rsUnknown86A1A1 ; 86/A1A1
+      rsAICheckAttackTypeIntimidate ; 86/A1A1
 
         .al
         .autsiz
@@ -500,11 +506,13 @@
 
         .databank 0
 
-      rsUnknown86A1CD ; 86/A1CD
+      rsAICheckAttackTypeReachable ; 86/A1CD
 
         .al
         .autsiz
         .databank ?
+
+        ; AttackTypeReachable: require only that attack tile is reachable
 
         ; AttackTypeReachable
 
@@ -515,11 +523,13 @@
 
         .databank 0
 
-      rsUnknown86A1D1 ; 86/A1D1
+      rsAICheckAttackTypeRegular ; 86/A1D1
 
         .al
         .autsiz
         .databank ?
+
+        ; AttackTypeRegular: require reachable attack tile and expected dmg > 0
 
         ; AttackTypeRegular
 
@@ -541,11 +551,13 @@
 
         .databank 0
 
-      rsUnknown86A1DF ; 86/A1DF
+      rsAICheckAttackTypePassive ; 86/A1DF
 
         .al
         .autsiz
         .databank ?
+
+        ; AttackType 3/6: return CLC (never attack; movement/interaction only)
 
         ; AttackTypeAlways
 
@@ -554,7 +566,7 @@
 
         .databank 0
 
-      rsUnknown86A1E1 ; 86/A1E1
+      rsAICheckAttackTypeCautious ; 86/A1E1
 
         .al
         .autsiz
@@ -609,11 +621,13 @@
 
         .databank 0
 
-      rsUnknown86A221 ; 86/A221
+      rsAICheckAttackTypeDefendingCastle ; 86/A221
 
         .al
         .autsiz
         .databank ?
+
+        ; AttackTypeDefendingCastle: require unit already on tile and expected dmg > 0
 
         ; AttackTypeDefendingCastle
 
@@ -1547,3 +1561,245 @@
         .databank 0
 
     .endsection AIAttackSection
+
+
+    .section Unsorted86C333Section
+
+      .al
+      .xl
+
+      rlAIGetClassWeight ; 86/C333
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unused; look up class-based AI weight byte for unit at deployment offset X
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        lda @l wSelectedUnitDataRAMPointer
+        pha
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetSelectedUnitClassID
+        tax
+        lda @l aAIClassWeightTable,x
+        and #$00FF
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 86/C359
+
+    .endsection Unsorted86C333Section
+
+
+    .section Table86C359Section
+
+      .al
+      .xl
+
+      aAIClassWeightTable ; 86/C359
+
+        ; Read by rlAIGetClassWeight.
+
+        .byte $01, $01, $03, $01, $01, $00, $01, $00, $00, $00, $02, $00, $00, $00, $01, $00
+        .byte $00, $01, $00, $00, $03, $01, $00, $02, $00, $00, $00, $00, $01, $01, $01, $05
+        .byte $01, $00, $00, $00, $00, $01, $00, $00, $00, $03, $01, $05, $05, $03, $03, $05
+        .byte $05, $05, $01, $01, $01, $01, $01, $06, $06, $06, $01, $01, $00, $00, $05, $01
+        .byte $14, $14, $00, $00, $00, $00, $00
+
+        ; 86/C3A0
+
+    .endsection Table86C359Section
+
+
+    .section Unsorted86C3A0Section
+
+      .al
+      .xl
+
+      rlAIGetClassTargetPriority ; 86/C3A0
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unused; look up class-based AI target priority score for unit at deployment offset X
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        lda @l wSelectedUnitDataRAMPointer
+        pha
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetSelectedUnitClassID
+        tax
+        lda @l aAIClassTargetPriorityTable,x
+        and #$00FF
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 86/C3C6
+
+    .endsection Unsorted86C3A0Section
+
+
+    .section Table86C3C6Section
+
+      .al
+      .xl
+
+      aAIClassTargetPriorityTable ; 86/C3C6
+
+        ; Read by rlAIGetClassTargetPriority.
+
+        .byte $14, $14, $14, $14, $14, $14, $50, $50, $50, $50, $28, $50, $50, $50, $14, $14
+        .byte $50, $14, $14, $50, $14, $14, $14, $14, $50, $3C, $50, $50, $0A, $0A, $0A, $0A
+        .byte $0A, $28, $28, $14, $28, $00, $14, $0A, $14, $00, $00, $28, $14, $14, $14, $14
+        .byte $14, $00, $00, $14, $14, $14, $14, $50, $50, $50, $0A, $00, $00, $00, $0A, $14
+        .byte $00, $00, $00, $00, $00, $00, $00
+
+        ; 86/C40D
+
+    .endsection Table86C3C6Section
+
+
+    .section Unsorted86C40DSection
+
+      .al
+      .xl
+
+      rlAIGetWeaponTriangleScore ; 86/C40D
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unused; return weapon triangle bonus (0 or 20) for attacker vs defender offsets
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        lda @l wSelectedUnitDataRAMPointer
+        pha
+        ldx wAITemp000E96,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta @l wAITemp000E96
+        ldx wAITemp000E98,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta @l wAITemp000E98
+        lda @l wAITemp000E96
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetFirstEquippableWeaponInInventory
+        lda @l wCurrentItemDataROMPointer
+        beq _C466
+        jsl rlGetItemWeaponType
+        sta @l wRoutineVariable1
+        lda @l wAITemp000E98
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetFirstEquippableWeaponInInventory
+        lda @l wCurrentItemDataROMPointer
+        beq _C466
+        jsl rlGetItemWeaponType
+        xba
+        ora @l wRoutineVariable1
+        jsl rlGetWeaponTriangleBonus
+
+        _C466
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 86/C46E
+
+      rlAIGetEffectivenessScore ; 86/C46E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unused; return 50 if attacker weapon is effective against defender class
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        lda @l wSelectedUnitDataRAMPointer
+        pha
+        ldx wAITemp000E96,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta @l wAITemp000E96
+        ldx wAITemp000E98,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta @l wAITemp000E98
+        lda @l wAITemp000E98
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetClassWeakness
+        sta @l wAITemp000E9A
+        lda @l wAITemp000E96
+        sta @l wSelectedUnitDataRAMPointer
+        jsl rlGetFirstEquippableWeaponInInventory
+        lda @l wCurrentItemDataROMPointer
+        beq _C4BC
+        jsl rlGetItemEffectiveness
+        bit wAITemp000E9A,b
+        beq _C4BC
+        lda #$0032
+
+        _C4BC
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 86/C4C4
+
+    .endsection Unsorted86C40DSection
+

@@ -138,7 +138,7 @@
     lda $7ECCBE
     sta $7E4EAD
     jsl rlUnknown9EF369
-    jsl rlUnknown829487
+    jsl rlCreateProcEventWaitFlag7F4C07Bit10
     rtl
 
     .databank 0

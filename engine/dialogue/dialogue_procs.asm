@@ -228,7 +228,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown80B0D3
+        jsl rlQueueMenuFontDecompression
         lda #<>rlProcDialogueCycle7
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
@@ -313,7 +313,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown80B0EE
+        jsl rlLoadMenuIconGraphics
         plx
         bcs _End
 
@@ -511,6 +511,18 @@
     .endsection ProcDialogueCodeSection
 
 
+    .section ProcDialogueWithBGFromPointerSection
+
+      .al
+      .xl
+
+      procDialogueWithBGFromPointer ; 82/88E9
+
+        .structProcInfo "TT", rlProcDialogueWithBGFromPointerInit, rlProcDialogueWithBGCycle1, aProcDialogueWithBGCode
+
+    .endsection ProcDialogueWithBGFromPointerSection
+
+
     .section DialogueWithBGSection
 
       .al
@@ -535,7 +547,7 @@
 
         _8921
         lda [lR22],y
-        sta $08AF,b
+        sta lBaseSceneDialoguePointer,b
         inc y
         lda [lR22],y
         sta $08AF+1,b
@@ -544,7 +556,7 @@
 
         lda [lR22],y
         and #$00FF
-        sta $08B6,b
+        sta wBaseSceneArgument,b
         inc y
 
         lda [lR22],y
@@ -556,14 +568,14 @@
           lda #3
 
         +
-        sta $08B8,b
+        sta wBaseSceneMode,b
         inc y
 
         lda [lR22],y
         and #$00FF
         sta wScreenFadingProcInput,b
 
-        stz $08AD,b
+        stz wBaseSceneFlags,b
         lda wEventUnit1Pointer,b
         cmp #$FFFE
         beq +
@@ -584,8 +596,8 @@
 
         +
         lda #2
-        sta $088B,b
-        lda #<>rsUnknown80B6B6
+        sta wCastleScreenHandler,b
+        lda #<>rsOpenCastleScreen
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFadeByTimer)<<8
         sta lR44+1
@@ -818,4 +830,61 @@
         ; 8A/E2F8
 
     .endsection Unsorted8AE29FSection
+
+
+    .section Unsorted828648Section
+
+      .al
+      .xl
+
+      rlStartDialogueWithBoxGraphics ; 82/8648
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Start dialogue HDMA/text in mode 1 (rlUnknown828653) and load box graphics/palette
+
+        php
+        jsl rlUnknown828653
+        jsl rlGetDialogueBoxGraphicsAndPalette
+        plp
+        rtl
+
+        .databank 0
+
+        ; 82/8653
+
+    .endsection Unsorted828648Section
+
+
+    .section Unsorted8288F3Section
+
+      .al
+      .xl
+
+      rlProcDialogueWithBGFromPointerInit ; 82/88F3
+
+        ; Runs on into built code at the end.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Load lR22 from aBody0/aBody1 and branch into rlProcDialogueWithBGInit._8921
+
+        ldy #$0000
+        lda aProcSystem.aBody0,b
+        sta @l lR22
+        lda aProcSystem.aBody1,b
+        sta @l lR22+1
+        bra rlProcDialogueWithBGInit._8921
+
+        .databank 0
+
+        ; 82/8906
+
+    .endsection Unsorted8288F3Section
+
 

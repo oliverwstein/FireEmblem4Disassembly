@@ -160,7 +160,7 @@
         sta lStructPointer1+1,b
         lda #<>aUnknown87E001
         sta lStructPointer1,b
-        jsl rlUnknown82E85D
+        jsl rlSaveRAMStructDataByIndex
         plb
         rtl
 
@@ -769,12 +769,12 @@
         jsl rlGetItemROMPointerByItemRAMStructEntry
         jsl rlGetItemCurrentDurability
         and #$00FF
-        sta $0585,b
+        sta wTempItemDataROMPointer,b
         jsl rlGetItemCost
         sta $14
         jsl rlGetItemMaxDurability2
         sec
-        sbc $0585,b
+        sbc wTempItemDataROMPointer,b
         sta $16
         jsl rlUnsignedMultiply16By16
         jsl rlGetItemMaxDurability2
@@ -826,7 +826,7 @@
 
         jsl rlGetItemWeaponRank
         inc a
-        sta $0585,b
+        sta wTempItemDataROMPointer,b
 
         jsl rlGetItemWeaponType
         asl a
@@ -834,7 +834,7 @@
 
         lda aBrokenWeaponOffsets,x
         clc
-        adc $0585,b
+        adc wTempItemDataROMPointer,b
         tax
 
         lda aBrokenWeaponOffsets,x
@@ -1537,7 +1537,7 @@
         lda #1
 
         -
-        lsr $0585,b
+        lsr wTempItemDataROMPointer,b
         bcs +
 
         inc a

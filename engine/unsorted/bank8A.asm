@@ -5,14 +5,16 @@
       .al
       .xl
 
-      rlUnknown8A8000 ; 8A/8000
+      rlCastleScreenIdle ; 8A/8000
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $0891,b
+        ; GameState $0A: castle screen idle/Routine2 check
+
+        lda wCastleCursorState,b
         cmp #$0002
         beq _800D
         cmp #$0003
@@ -33,13 +35,15 @@
       .al
       .xl
 
-      rlUnknown8A800E ; 8A/800E
+      rlCastleScreenShow ; 8A/800E
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $0B: initialize castle RAM area, active sprites, and fade-in
 
         lda #$7F00
         sta lR18+1
@@ -49,7 +53,7 @@
         sta wStructIndex,b
         lda #$4E93
         jsl rlBuildRAMAreaHeaderAndGuidingEntry
-        lda $088B,b
+        lda wCastleScreenHandler,b
         cmp #$0002
         beq _8041
         jsl rlEnableActiveSpriteEngine
@@ -68,7 +72,7 @@
         rep #$20
 
         _8049
-        lda $08B8,b
+        lda wBaseSceneMode,b
         cmp #$0004
         beq _805D
         stz wBufferBG1VOFS
@@ -94,12 +98,14 @@
       .al
       .xl
 
-      rlUnknown8A8061 ; 8A/8061
+      rlCastleScreenRunStep ; 8A/8061
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $0C: dispatch castle interior/facility step
 
         phb
         php
@@ -131,7 +137,7 @@
 
       aUnknown8A8078 ; 8A/8078
 
-        ; Jump table of rlUnknown8A8061.
+        ; Jump table of rlCastleScreenRunStep.
         .word <>rsUnknown8A80A6
         .word <>rsUnknown8A80BD
         .word <>rsUnknown8A80C2
@@ -442,7 +448,7 @@
         _8111
         .as
         rep #$20
-        lda $0594,b
+        lda wNextMenuState,b
         sta wGameStateStep,b
         rts
 
@@ -473,7 +479,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda $0594,b
+        lda wNextMenuState,b
         sta wGameStateStep,b
         rts
 
@@ -496,7 +502,7 @@
         lda #$0010
         sta wGameStateStep,b
         lda #$0000
-        sta $0594,b
+        sta wNextMenuState,b
         sep #$20
         lda #$00
         sta bBufferINIDISP
@@ -560,7 +566,7 @@
         jsl rlProcEngineCreateProc
         bcs _81C3
         lda #$0000
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$0002
         sta wGameStateStep,b
 
@@ -636,14 +642,14 @@
         .autsiz
         .databank ?
 
-        lda $0788,b
+        lda wMapSystemFlags,b
         bit #$0020
         beq _8214
         jml rlUnknown88973F
 
 
         _8214
-        lda $0891,b
+        lda wCastleCursorState,b
         cmp #$0001
         beq _8223
         cmp #$0003
@@ -665,12 +671,12 @@
         beq _824A
         jsr rsUnknown8A89F0
         stz wMapScrollDirectionIdentifier,b
-        lda $0891,b
+        lda wCastleCursorState,b
         cmp #$0004
         beq _827D
         cmp #$0007
         bne _8266
-        stz $0891,b
+        stz wCastleCursorState,b
         bra _827D
 
 
@@ -678,7 +684,7 @@
         lda wJoy1Input
         sta wMapScrollDirectionIdentifier,b
         beq _8266
-        lda $0891,b
+        lda wCastleCursorState,b
         cmp #$0004
         beq _8263
         cmp #$0005
@@ -691,11 +697,11 @@
         jsr rsUnknown8A8643
 
         _8266
-        lda $088D,b
+        lda wCastlePrepCursorXPixel,b
         sec
         sbc #$0012
         sta wR0
-        lda $088F,b
+        lda wCastlePrepCursorYPixel,b
         sec
         sbc #$0008
         sta wR1
@@ -715,11 +721,11 @@
         .databank $88
         rep #$20
         ldy #$EE52
-        lda $088D,b
+        lda wCastlePrepCursorXPixel,b
         sec
         sbc #$0008
         sta wR0
-        lda $088F,b
+        lda wCastlePrepCursorYPixel,b
         sec
         sbc #$0008
         sta wR1
@@ -727,7 +733,7 @@
         sta wR5
         lda #$0000
         sta wR4
-        lda $0891,b
+        lda wCastleCursorState,b
         cmp #$0004
         beq _82B4
         cmp #$0005
@@ -755,13 +761,13 @@
         lda wJoy1New
         beq _82DC
         jsr rsUnknown8A89F0
-        lda $0891,b
+        lda wCastleCursorState,b
         beq _82DC
         cmp #$0003
         beq _8313
 
         _82DC
-        lda $0893,b
+        lda wUnknown000893,b
         tax
         lda aUnknown8A8343,x
         and #$00FF
@@ -778,7 +784,7 @@
         sta wR1
         ldx #$0000
         jsr rsUnknown8A956F
-        lda $088F,b
+        lda wCastlePrepCursorYPixel,b
         cmp #$00B0
         bcs _8313
         bra _8314
@@ -796,11 +802,11 @@
         .databank $88
         rep #$20
         ldy #$EE52
-        lda $088D,b
+        lda wCastlePrepCursorXPixel,b
         sec
         sbc #$0008
         sta wR0
-        lda $088F,b
+        lda wCastlePrepCursorYPixel,b
         sec
         sbc #$0008
         sta wR1
@@ -827,10 +833,10 @@
         jsr rsUnknown8A8980
         lda wJoy1New
         jsr rsUnknown8A89F0
-        lda $0891,b
+        lda wCastleCursorState,b
         cmp #$0002
         bcc _8386
-        lda $0895,b
+        lda wUnknown000895,b
         tax
         lda aUnknown8A8387,x
         and #$00FF
@@ -893,7 +899,7 @@
         .autsiz
         .databank ?
 
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         sta wTempVariable1,b
         and #$001C
         lsr a
@@ -921,7 +927,7 @@
 
 
         _83CB
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         cmp wR0
         beq _83CA
         sec
@@ -930,7 +936,7 @@
 
 
         _83D8
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         cmp wR1
         bcs _83CA
         clc
@@ -939,7 +945,7 @@
 
 
         _83E5
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         cmp #$0004
         bcc _83CA
         sec
@@ -948,7 +954,7 @@
 
 
         _83F3
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         cmp #$0014
         bcs _83CA
         clc
@@ -957,13 +963,13 @@
 
 
         _8401
-        sta $0897,b
+        sta wCastlePrepUnitSlot,b
         asl a
         tax
         lda aUnknown8A99DB,x
-        sta $088D,b
+        sta wCastlePrepCursorXPixel,b
         lda aUnknown8A9A0B,x
-        sta $088F,b
+        sta wCastlePrepCursorYPixel,b
         jsl rlUnknown8A8496
         lda #$0007
         jsl rlPlaySoundEffect
@@ -1074,9 +1080,9 @@
         phk
         plb
         .databank $8A
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$3000
         sta aCurrentTilemapInfo,b
@@ -1098,7 +1104,7 @@
         lda #$15
         sta bBufferTM
         rep #$20
-        lda $0891,b
+        lda wCastleCursorState,b
         beq _84EF
         cmp #$0004
         beq _84EF
@@ -1108,7 +1114,7 @@
 
 
         _84EF
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         asl a
         tax
         lda $7F757A,x
@@ -1273,7 +1279,7 @@
         .autsiz
         .databank ?
 
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         sta wTempVariable1,b
         lda wJoy1Repeated
         bit #$0200
@@ -1328,7 +1334,7 @@
         .autsiz
         .databank ?
 
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         sta wTempVariable1,b
         sta wTempVariable2,b
 
@@ -1371,13 +1377,13 @@
 
 
         _86EE
-        sta $0897,b
+        sta wCastlePrepUnitSlot,b
         asl a
         tax
         lda aUnknown8A99DB,x
-        sta $088D,b
+        sta wCastlePrepCursorXPixel,b
         lda aUnknown8A9A0B,x
-        sta $088F,b
+        sta wCastlePrepCursorYPixel,b
         lda wTempVariable1,b
         cmp wTempVariable2,b
         beq _870B
@@ -1408,7 +1414,7 @@
         .autsiz
         .databank ?
 
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         sta wTempVariable1,b
         sta wTempVariable2,b
 
@@ -1452,13 +1458,13 @@
 
 
         _8764
-        sta $0897,b
+        sta wCastlePrepUnitSlot,b
         asl a
         tax
         lda aUnknown8A99DB,x
-        sta $088D,b
+        sta wCastlePrepCursorXPixel,b
         lda aUnknown8A9A0B,x
-        sta $088F,b
+        sta wCastlePrepCursorYPixel,b
         lda wTempVariable1,b
         cmp wTempVariable2,b
         beq _8781
@@ -1500,21 +1506,21 @@
 
 
         _8790
-        lda $0893,b
+        lda wUnknown000893,b
         beq _878F
         sec
         sbc #$0001
-        sta $0893,b
+        sta wUnknown000893,b
         bra _87AD
 
 
         _879E
-        lda $0893,b
+        lda wUnknown000893,b
         cmp #$0005
         bcs _878F
         clc
         adc #$0001
-        sta $0893,b
+        sta wUnknown000893,b
 
         _87AD
         jsr rsUnknown8A87B8
@@ -1542,13 +1548,13 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda $0893,b
+        lda wUnknown000893,b
         asl a
         tax
         jsr (aUnknown8A87F3,x)
@@ -1891,36 +1897,36 @@
 
 
         _8997
-        lda $0895,b
+        lda wUnknown000895,b
         beq _8996
         sec
         sbc #$0001
-        sta $0895,b
+        sta wUnknown000895,b
         bra _89E0
 
 
         _89A5
-        lda $0895,b
+        lda wUnknown000895,b
         cmp #$0005
         bcs _8996
         clc
         adc #$0001
-        sta $0895,b
+        sta wUnknown000895,b
         bra _89E0
 
 
         _89B6
-        lda $0895,b
+        lda wUnknown000895,b
         cmp #$0003
         bcc _8996
         sec
         sbc #$0003
-        sta $0895,b
+        sta wUnknown000895,b
         bra _89E8
 
 
         _89C7
-        lda $0895,b
+        lda wUnknown000895,b
         cmp #$0003
         bcs _8996
         clc
@@ -1930,7 +1936,7 @@
         lda #$0005
 
         _89DB
-        sta $0895,b
+        sta wUnknown000895,b
         bra _89E8
 
 
@@ -1998,9 +2004,9 @@
 
 
         _8A2A
-        lda $0891,b
+        lda wCastleCursorState,b
         bne _8A1D
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         asl a
         tax
         lda $7F757A,x
@@ -2011,7 +2017,7 @@
         sta wSelectedUnitDataRAMPointer,b
         sta $7F766C
         lda #$FFFF
-        sta $0891,b
+        sta wCastleCursorState,b
         jsl rlGetSelectedUnitDeploymentOffset
         sta wActiveUnitDeploymentOffset,b
         lda #$0002
@@ -2042,7 +2048,7 @@
         .autsiz
         .databank ?
 
-        lda $0891,b
+        lda wCastleCursorState,b
         cmp #$0001
         beq _8AA0
         cmp #$0003
@@ -2069,7 +2075,7 @@
 
 
         _8AA8
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         asl a
         tax
         lda $7F757A,x
@@ -2098,15 +2104,15 @@
         lda wUnknown000D79,b
         bit #$0800
         bne _8B22
-        lda $0899,b
-        sta $0897,b
+        lda wCastlePrepSavedUnitSlot,b
+        sta wCastlePrepUnitSlot,b
         asl a
         tax
         lda aUnknown8A99DB,x
-        sta $088D,b
+        sta wCastlePrepCursorXPixel,b
         lda aUnknown8A9A0B,x
-        sta $088F,b
-        lda $0891,b
+        sta wCastlePrepCursorYPixel,b
+        lda wCastleCursorState,b
         cmp #$0005
         beq _8B17
         jsl rlUnknown84B6A6
@@ -2116,7 +2122,7 @@
         _8B17
         jsl rlUnknown84B6F6
         lda #$0007
-        sta $0891,b
+        sta wCastleCursorState,b
         rts
 
 
@@ -2126,7 +2132,7 @@
         lda wRoutineVariable1,b
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitDeploymentOffset
-        sta $0774,b
+        sta wMapTargetDeploymentOffset,b
         pla
         sta wSelectedUnitDataRAMPointer,b
         jml _8B92
@@ -2146,7 +2152,7 @@
 
 
         _8B48
-        lda $0897,b
+        lda wCastlePrepUnitSlot,b
         asl a
         tax
         lda $7F757A,x
@@ -2167,7 +2173,7 @@
         rep #$20
         jsr rsUnknown8A87B8
         lda #$0001
-        sta $0891,b
+        sta wCastleCursorState,b
         jsl rlGetSelectedUnitCharacterID
         jsl rlUnknown8A979C
         jsr rsUnknown8A8CB7
@@ -2179,7 +2185,7 @@
         _8B92
         jsl rlUnknown8881E5
         lda #$0020
-        tsb $0788,b
+        tsb wMapSystemFlags,b
         lda #(`procUnknown889396)<<8
         sta lR44+1
         lda #<>procUnknown889396
@@ -2198,7 +2204,7 @@
         .autsiz
         .databank ?
 
-        lda $0891,b
+        lda wCastleCursorState,b
         beq _8BD2
         cmp #$0001
         beq _8C28
@@ -2228,11 +2234,11 @@
 
 
         _8BD9
-        lda $088B,b
+        lda wCastleScreenHandler,b
         cmp #$0001
         beq _8BC5
         lda #$0000
-        sta $0891,b
+        sta wCastleCursorState,b
         sep #$20
         lda #$80
         sta bBufferINIDISP
@@ -2243,17 +2249,17 @@
 
 
         _8BF6
-        lda $0899,b
-        sta $0897,b
+        lda wCastlePrepSavedUnitSlot,b
+        sta wCastlePrepUnitSlot,b
         asl a
         tax
         lda aUnknown8A99DB,x
-        sta $088D,b
+        sta wCastlePrepCursorXPixel,b
         lda aUnknown8A9A0B,x
-        sta $088F,b
+        sta wCastlePrepCursorYPixel,b
         jsl rlUnknown8A8496
         lda #$0000
-        sta $0891,b
+        sta wCastleCursorState,b
         jsl rlUnknown85921D
         lda #$0800
         trb wUnknown000D79,b
@@ -2277,7 +2283,7 @@
         .autsiz
         .databank ?
 
-        stz $0891,b
+        stz wCastleCursorState,b
         ldx #$07FE
         lda #$00FF
 
@@ -2287,9 +2293,9 @@
         dec x
         bpl _8C35
         jsl rlUnknown8A8496
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$3000
         sta aCurrentTilemapInfo,b
@@ -2328,7 +2334,7 @@
         .autsiz
         .databank ?
 
-        lda $0891,b
+        lda wCastleCursorState,b
         bne _8CB6
         ldx #$01FE
         lda #$00FF
@@ -2590,7 +2596,7 @@
         ldx #$00FE
 
         _8EE7
-        lda aUnknown8C9500,x
+        lda aCastleScreenOAMPalettes,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -2598,7 +2604,7 @@
         ldx #$001E
 
         _8EF5
-        lda aUnknown8C9D00,x
+        lda aMapAndCastleSpriteOAMPalettes,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -2703,7 +2709,7 @@
         .autsiz
         .databank ?
 
-        lda $0893,b
+        lda wUnknown000893,b
         beq _8FE4
         cmp #$0001
         beq _8FB6
@@ -2734,7 +2740,7 @@
         lda wRoutineVariable1,b
         sta wActiveUnitDeploymentOffset,b
         lda #$FFFF
-        sta $07E0,b
+        sta wMapActionMode,b
         lda #$0016
         sta wGameStateStep,b
         rts
@@ -2755,7 +2761,7 @@
         lda #$000F
         sta wGameStateStep,b
         lda #$0015
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0003
         sta $7F766A
         lda #$000A
@@ -2764,8 +2770,8 @@
 
 
         _9002
-        lda $0897,b
-        sta $0899,b
+        lda wCastlePrepUnitSlot,b
+        sta wCastlePrepSavedUnitSlot,b
         lda #SkillIDDance
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _9019
@@ -2785,8 +2791,8 @@
 
 
         _9021
-        lda $0897,b
-        sta $0899,b
+        lda wCastlePrepUnitSlot,b
+        sta wCastlePrepSavedUnitSlot,b
         jsl rlUnknown879F9C
         bcc _8FAE
         jsr rsUnknown8A9209
@@ -2810,11 +2816,11 @@
         cmp #$0006
         beq _9061
         lda #$0003
-        sta $0891,b
+        sta wCastleCursorState,b
         lda #$0009
         sta wGameStateStep,b
         lda #$0003
-        sta $08A9,b
+        sta wUnknown0008A9,b
         lda #$0005
         sta $7F8082
         lda #$000A
@@ -2852,7 +2858,7 @@
         lsr a
         lsr a
         lsr a
-        sta $0778,b
+        sta wMapCursorXTile,b
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
@@ -2860,13 +2866,13 @@
         lsr a
         lsr a
         lsr a
-        sta $077A,b
+        sta wMapCursorYTile,b
         lda wCursorYOffset,b
         sec
         sbc #$0020
         sta wCursorYOffset,b
         lda #$0003
-        sta $07E0,b
+        sta wMapActionMode,b
         lda wRoutineVariable1,b
         sta wActiveUnitDeploymentOffset,b
         tax
@@ -2906,7 +2912,7 @@
 
         _90E4
         stz wBufferBG2VOFS
-        stz $0891,b
+        stz wCastleCursorState,b
         lda #(`aUnknown8A9158)<<8
         sta lRoutineVariable+1,b
         lda #<>aUnknown8A9158
@@ -3063,10 +3069,10 @@
         .databank ?
 
         lda #$0005
-        sta $0891,b
+        sta wCastleCursorState,b
         jsl rlGetSelectedUnitDeploymentOffset
         sta wActiveUnitDeploymentOffset,b
-        stz $0897,b
+        stz wCastlePrepUnitSlot,b
         jsr rsUnknown8A870D
         lda #(`aUnknown8A9269)<<8
         sta lRoutineVariable+1,b
@@ -3167,8 +3173,8 @@
         .databank ?
 
         lda #$0004
-        sta $0891,b
-        stz $0897,b
+        sta wCastleCursorState,b
+        stz wCastlePrepUnitSlot,b
         jsr rsUnknown8A870D
         jsl rlUnknown8A8496
         rtl
@@ -3263,21 +3269,21 @@
         rep #$20
         jsr rsUnknown8A87B8
         lda #$0001
-        sta $0891,b
+        sta wCastleCursorState,b
         jsl rlGetSelectedUnitCharacterID
         jsl rlUnknown8A979C
         jsl rlDMAByStruct
 
           .structDMAToVRAM aUnknownDA6500, $0200, $80, $AD00
 
-        lda $0899,b
-        sta $0897,b
+        lda wCastlePrepSavedUnitSlot,b
+        sta wCastlePrepUnitSlot,b
         asl a
         tax
         lda @l aUnknown8A99DB,x
-        sta $088D,b
+        sta wCastlePrepCursorXPixel,b
         lda @l aUnknown8A9A0B,x
-        sta $088F,b
+        sta wCastlePrepCursorYPixel,b
         rtl
 
         .databank 0
@@ -3304,23 +3310,23 @@
         phy
         lda #$0000
         jsl rlGetFactionSlotLocationID
-        cmp $089F,b
+        cmp wEnteredCastleLocationID,b
         bne _9364
         lda #$0000
         jsl rlGetLocationEventDataEntry
         jsl rlBuildDeadPlayerCharacterList
-        jsl rlUnknown80B9AD
+        jsl rlClearMovementMapBuffer
         jsl rlUnknown8A9A56
 
         _9364
-        lda $0899,b
-        sta $0897,b
+        lda wCastlePrepSavedUnitSlot,b
+        sta wCastlePrepUnitSlot,b
         asl a
         tax
         lda aUnknown8A99DB,x
-        sta $088D,b
+        sta wCastlePrepCursorXPixel,b
         lda aUnknown8A9A0B,x
-        sta $088F,b
+        sta wCastlePrepCursorYPixel,b
         ply
         plx
         plb
@@ -3340,7 +3346,7 @@
         .databank ?
 
         lda #$0005
-        sta $0891,b
+        sta wCastleCursorState,b
         jsl rlUnknown8A8496
         rtl
 
@@ -3366,7 +3372,7 @@
 
         jsl rlUnknown87EF46
         sta wR0
-        lda $0895,b
+        lda wUnknown000895,b
         asl a
         tax
         lda aUnknown8A945E,x
@@ -3374,7 +3380,7 @@
         lda wR0
         bit wR1
         beq _93BE
-        lda $0895,b
+        lda wUnknown000895,b
         beq _93EB
         cmp #$0001
         beq _93D5
@@ -3395,7 +3401,7 @@
         lda #$000D
         sta wGameStateStep,b
         lda #$0004
-        sta $08A9,b
+        sta wUnknown0008A9,b
         lda #$0000
         sta $7F8082
         bra _944E
@@ -3407,7 +3413,7 @@
         lda #$000D
         sta wGameStateStep,b
         lda #$0005
-        sta $08A9,b
+        sta wUnknown0008A9,b
         lda #$0001
         sta $7F8082
         bra _944E
@@ -3419,7 +3425,7 @@
         lda #$000D
         sta wGameStateStep,b
         lda #$0004
-        sta $08A9,b
+        sta wUnknown0008A9,b
         lda #$0002
         sta $7F8082
         bra _944E
@@ -3437,7 +3443,7 @@
 
         _940A
         lda wSelectedUnitDataRAMPointer,b
-        sta $089B,b
+        sta wCastleSavedUnitRAMPointer,b
         lda #$0003
         sta wGameStateStep,b
         lda #$0007
@@ -3452,7 +3458,7 @@
         lda #$0007
         sta wGameStateStep,b
         lda #$0002
-        sta $08A9,b
+        sta wUnknown0008A9,b
         lda #$0003
         sta $7F8082
         bra _944E
@@ -3519,7 +3525,7 @@
 
         _9474
         lda [lR19],y
-        sta $0140,b,y
+        sta aBGPaletteBuffer.aPalette2,b,y
         dec x
         dec x
         dec y
@@ -3552,7 +3558,7 @@
 
         _949A
         lda [lR19],y
-        sta $0180,b,y
+        sta aBGPaletteBuffer.aPalette4,b,y
         dec x
         dec x
         dec y
@@ -4050,7 +4056,7 @@
         sta wEventEngineArgument1,b
 
         ; Holds the LocationID
-        lda $089F,b
+        lda wEnteredCastleLocationID,b
         sta wEventEngineArgument2,b
         jsl rlGetAndRunChapterMapEventConditions
         bcc +
@@ -4082,7 +4088,7 @@
         sta wR8
         jsl rlSetLayerPositionsAndSizes
 
-        jsl rlUnknown80BA52
+        jsl rlSetupCastleUnitMenuDisplay
         jsl rlGetSelectedUnitCharacterID
         jsl rlUnknown8A9776
         jsl rlUnknown8A94E2
@@ -4091,7 +4097,7 @@
         lda #$0010
         sta wGameStateStep,b
         lda #1
-        sta $0594,b
+        sta wNextMenuState,b
         rep #$20
         jsl rlEnableVBlank
 
@@ -4639,7 +4645,7 @@
         .autsiz
         .databank ?
 
-        lda $0891,b
+        lda wCastleCursorState,b
         cmp #$0003
         beq _9C87
         jsl rlHDMAEngineFreeEntryByOffset
@@ -4881,7 +4887,7 @@
         .autsiz
         .databank ?
 
-        stz $08AB,b
+        stz wCastleListItemCount,b
         jsl rlGetItemRAMDataCount
         sta wTempVariable1,b
         ldy #$0001
@@ -4893,7 +4899,7 @@
         bcs _9E51
         jsl rlGetItemRAMStateAndOwner
         lda wR0
-        cmp $08A9,b
+        cmp wUnknown0008A9,b
         bne _9E51
         cmp #$0005
         beq _9E19
@@ -4916,7 +4922,7 @@
         sta $7F7C72,x
         lda wCurrentItemDataRAMPointer,b
         sta $7F7872,x
-        inc $08AB,b
+        inc wCastleListItemCount,b
         inc x
         inc x
 
@@ -4941,7 +4947,7 @@
         .autsiz
         .databank ?
 
-        stz $08AB,b
+        stz wCastleListItemCount,b
         jsl rlGetItemRAMDataCount
         sta wTempVariable1,b
         ldy #$0001
@@ -4953,7 +4959,7 @@
         bcs _9EAE
         jsl rlGetItemRAMStateAndOwner
         lda wR0
-        cmp $08A9,b
+        cmp wUnknown0008A9,b
         bne _9EAE
         lda wR1
         cmp wSelectedUnitDataRAMPointer,b
@@ -4969,7 +4975,7 @@
         sta $7F7C72,x
         lda wCurrentItemDataRAMPointer,b
         sta $7F7872,x
-        inc $08AB,b
+        inc wCastleListItemCount,b
         inc x
         inc x
 
@@ -5004,7 +5010,7 @@
         .databank ?
 
         ldx #$0000
-        stz $08AB,b
+        stz wCastleListItemCount,b
         jsl rlGetFirstEquippableWeaponInInventory
         sta $7F8072,x
         sta wTempVariable1,b
@@ -5017,7 +5023,7 @@
         sta $7F7A72,x
         lda wCurrentItemDataRAMPointer,b
         sta $7F7872,x
-        inc $08AB,b
+        inc wCastleListItemCount,b
         inc x
         inc x
 
@@ -5044,7 +5050,7 @@
         cmp wTempVariable1,b
         beq _9F2E
         sta $7F8072,x
-        inc $08AB,b
+        inc wCastleListItemCount,b
         inc x
         inc x
 
@@ -5066,7 +5072,7 @@
         .databank ?
 
         ldx #$0000
-        stz $08AB,b
+        stz wCastleListItemCount,b
         jsl rlGetFirstEquippableWeaponInInventory
         sta $7F8072,x
         sta wTempVariable1,b
@@ -5088,7 +5094,7 @@
         sta $7F7A72,x
         lda wCurrentItemDataRAMPointer,b
         sta $7F7872,x
-        inc $08AB,b
+        inc wCastleListItemCount,b
         inc x
         inc x
 
@@ -5118,7 +5124,7 @@
         cmp wTempVariable1,b
         beq _9FC8
         sta $7F8072,x
-        inc $08AB,b
+        inc wCastleListItemCount,b
         inc x
         inc x
 
@@ -5147,7 +5153,7 @@
         .autsiz
         .databank ?
 
-        stz $08AB,b
+        stz wCastleListItemCount,b
         jsl rlGetItemRAMDataCount
         tay
         ldx #$0000
@@ -5158,7 +5164,7 @@
         bcs _A00F
         jsl rlGetItemRAMStateAndOwner
         lda wR0
-        cmp $08A9,b
+        cmp wUnknown0008A9,b
         bne _A00F
         bne _A00F
         tya
@@ -5170,7 +5176,7 @@
         sta $7F7E72,x
         lda wCurrentItemDataROMPointer,b
         sta $7F7C72,x
-        inc $08AB,b
+        inc wCastleListItemCount,b
         inc x
         inc x
 
@@ -5200,7 +5206,7 @@
 
         lda #$0005
         sta wR0
-        lda $089F,b
+        lda wEnteredCastleLocationID,b
         sta wR1
         jsl rlSetItemRAMStateAndOwner
         rtl
@@ -5265,9 +5271,9 @@
         jsl rlDrawMenuTextLine
         pla
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         ldx #$0000
 
@@ -5391,7 +5397,7 @@
         sta lR20+1
         lda $7F8086
         sta lR20
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         tay
         lda [lR20],y
         and #$00FF
@@ -5423,9 +5429,9 @@
 
         _A180
         ldy #$000E
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sec
-        sbc $08A5,b
+        sbc wCastleListWindowRow,b
         clc
         adc #$0007
         asl a
@@ -5466,9 +5472,9 @@
         .autsiz
         .databank ?
 
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sec
-        sbc $08A5,b
+        sbc wCastleListWindowRow,b
         asl a
         tax
         lda $7F7A72,x
@@ -5495,9 +5501,9 @@
         .autsiz
         .databank ?
 
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sec
-        sbc $08A5,b
+        sbc wCastleListWindowRow,b
         clc
         adc #$0007
         asl a
@@ -5747,7 +5753,7 @@
         bne _A3B7
 
         _A37C
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         tax
         lda aUnknown8AA3FC,x
         and #$00FF
@@ -5764,11 +5770,11 @@
 
 
         _A39B
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         beq _A37C
         sec
         sbc #$0001
-        sta $08A1,b
+        sta wCastleMenuOptionIndex,b
         lda #$0007
         jsl rlPlaySoundEffect
         lda #$FFFF
@@ -5777,12 +5783,12 @@
 
 
         _A3B7
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         cmp #$0003
         bcs _A37C
         clc
         adc #$0001
-        sta $08A1,b
+        sta wCastleMenuOptionIndex,b
         lda #$0007
         jsl rlPlaySoundEffect
         lda #$FFFF
@@ -5791,7 +5797,7 @@
 
 
         _A3D6
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         cmp #$0001
         beq _A3ED
         cmp #$0002
@@ -5851,40 +5857,40 @@
 
 
         _A40D
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sta wR0
         beq _A45D
         sec
         sbc #$0001
-        sta $08A7,b
+        sta wCastleListSelectedIndex,b
         lda #$0006
         jsl rlPlaySoundEffect
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         sta wR1
         beq _A464
         sec
         sbc #$0001
-        sta $08A5,b
+        sta wCastleListWindowRow,b
         bra _A464
 
 
         _A432
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sta wR0
         clc
         adc #$0001
-        cmp $08AB,b
+        cmp wCastleListItemCount,b
         bcs _A45D
-        sta $08A7,b
+        sta wCastleListSelectedIndex,b
         lda #$0006
         jsl rlPlaySoundEffect
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         sta wR1
         cmp #$0007
         bcs _A469
         clc
         adc #$0001
-        sta $08A5,b
+        sta wCastleListWindowRow,b
         bra _A469
 
 
@@ -5921,7 +5927,7 @@
         bne _A4AE
 
         _A47A
-        lda $08A3,b
+        lda wCastleConfirmCursorIndex,b
         tax
         lda aUnknown8AA4C6,x
         and #$00FF
@@ -5938,23 +5944,23 @@
 
 
         _A499
-        lda $08A3,b
+        lda wCastleConfirmCursorIndex,b
         beq _A47A
         sec
         sbc #$0001
-        sta $08A3,b
+        sta wCastleConfirmCursorIndex,b
         lda #$0007
         jsl rlPlaySoundEffect
         bra _A47A
 
 
         _A4AE
-        lda $08A3,b
+        lda wCastleConfirmCursorIndex,b
         cmp #$0001
         bcs _A47A
         clc
         adc #$0001
-        sta $08A3,b
+        sta wCastleConfirmCursorIndex,b
         lda #$0007
         jsl rlPlaySoundEffect
         bra _A47A
@@ -6003,40 +6009,40 @@
 
 
         _A4D5
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sta wR0
         beq _A525
         sec
         sbc #$0001
-        sta $08A7,b
+        sta wCastleListSelectedIndex,b
         lda #$0006
         jsl rlPlaySoundEffect
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         sta wR1
         beq _A52C
         sec
         sbc #$0001
-        sta $08A5,b
+        sta wCastleListWindowRow,b
         bra _A52C
 
 
         _A4FA
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sta wR0
         clc
         adc #$0001
-        cmp $0889,b
+        cmp wCastleListSubCount,b
         bcs _A525
-        sta $08A7,b
+        sta wCastleListSelectedIndex,b
         lda #$0006
         jsl rlPlaySoundEffect
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         sta wR1
         cmp #$0007
         bcs _A52E
         clc
         adc #$0001
-        sta $08A5,b
+        sta wCastleListWindowRow,b
         bra _A52E
 
 
@@ -6073,40 +6079,40 @@
 
 
         _A53D
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sta wR0
         beq _A58D
         sec
         sbc #$0001
-        sta $08A7,b
+        sta wCastleListSelectedIndex,b
         lda #$0006
         jsl rlPlaySoundEffect
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         sta wR1
         beq _A594
         sec
         sbc #$0001
-        sta $08A5,b
+        sta wCastleListWindowRow,b
         bra _A594
 
 
         _A562
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sta wR0
         clc
         adc #$0001
-        cmp $0889,b
+        cmp wCastleListSubCount,b
         bcs _A58D
-        sta $08A7,b
+        sta wCastleListSelectedIndex,b
         lda #$0006
         jsl rlPlaySoundEffect
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         sta wR1
         cmp #$0007
         bcs _A596
         clc
         adc #$0001
-        sta $08A5,b
+        sta wCastleListWindowRow,b
         bra _A596
 
 
@@ -6143,40 +6149,40 @@
 
 
         _A5A5
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sta wR0
         beq _A5F7
         sec
         sbc #$0001
-        sta $08A7,b
+        sta wCastleListSelectedIndex,b
         lda #$0006
         jsl rlPlaySoundEffect
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         sta wR1
         beq _A5FB
         sec
         sbc #$0001
-        sta $08A5,b
+        sta wCastleListWindowRow,b
         bra _A5FB
 
 
         _A5CA
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sta wR0
         cmp $7F8091
         bcs _A5F7
         clc
         adc #$0001
-        sta $08A7,b
+        sta wCastleListSelectedIndex,b
         lda #$0006
         jsl rlPlaySoundEffect
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         sta wR1
         cmp $7F8091
         bcs _A5FD
         clc
         adc #$0001
-        sta $08A5,b
+        sta wCastleListWindowRow,b
         bra _A5FD
 
 
@@ -6276,18 +6282,18 @@
         .autsiz
         .databank ?
 
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _A6AE
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         asl a
         tax
         lda $7F7C72,x
         sta wCurrentItemDataROMPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlGetItemEquipmentType
         cmp #$0001
@@ -6361,9 +6367,9 @@
         jsr rsUnknown8AA9A6
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlGetItemWeaponRank
         ldx #$0008
@@ -6423,9 +6429,9 @@
         jsl rlDrawMenuTextLine
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlGetItemDescriptionPointer
         lda lRoutineVariable,b
@@ -6596,7 +6602,7 @@
         .autsiz
         .databank ?
 
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         inc a
         sta wRoutineVariable1,b
         jsl rlGetItemROMDataByInventorySlot
@@ -6604,9 +6610,9 @@
         beq _A8AD
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlGetItemEquipmentType
         cmp #$0001
@@ -6685,9 +6691,9 @@
         .autsiz
         .databank ?
 
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _A916
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         asl a
         tax
         lda $7F7C72,x
@@ -6760,7 +6766,7 @@
         .autsiz
         .databank ?
 
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         inc a
         sta wRoutineVariable1,b
         jsl rlGetItemROMDataByInventorySlot
@@ -6921,9 +6927,9 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         ldy #$000E
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sec
-        sbc $08A5,b
+        sbc wCastleListWindowRow,b
         clc
         adc #$0007
         asl a
@@ -6932,7 +6938,7 @@
         _A9E4
         txa
         lsr a
-        cmp $08AB,b
+        cmp wCastleListItemCount,b
         bcs _AA0F
         lda $7F7E72,x
         bmi _A9F9
@@ -7209,7 +7215,7 @@
 
         lda #$2000
         sta aCurrentTilemapInfo,b
-        stz $0889,b
+        stz wCastleListSubCount,b
         ldx #$0007
         ldy #$000E
 
@@ -7220,7 +7226,7 @@
         jsl rlGetItemROMDataByInventorySlot
         lda wCurrentItemDataROMPointer,b
         beq _AB90
-        inc $0889,b
+        inc wCastleListSubCount,b
         jsl rlCheckItemObtainable
         bcc _AB76
         lda #$2000
@@ -7499,7 +7505,7 @@
 
         lda #$2000
         sta aCurrentTilemapInfo,b
-        stz $0889,b
+        stz wCastleListSubCount,b
         ldx #$0007
         ldy #$000E
 
@@ -7510,7 +7516,7 @@
         jsl rlGetItemROMDataByInventorySlot
         lda wCurrentItemDataROMPointer,b
         beq _ACEA
-        inc $0889,b
+        inc wCastleListSubCount,b
         jsr rsUnknown8AAD05
         jsr rsUnknown8AAC51
         lda wTempVariable1,b
@@ -7865,7 +7871,7 @@
         sta lR18+1
         ldx #$100E
         jsl rlDrawMenuTextLine
-        lda $0585,b
+        lda wTempItemDataROMPointer,b
         beq _AE8B
         sta wCurrentItemDataROMPointer,b
         jsl rlGetItemNamePointer
@@ -7962,7 +7968,7 @@
         sta lR20+1
         lda $7F8086
         sta lR20
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         tay
         lda [lR20],y
         and #$00FF
@@ -7985,7 +7991,7 @@
 
 
         _AF43
-        lda $08A9,b
+        lda wUnknown0008A9,b
         cmp #$0003
         beq _AF4F
         jml rsUnknown8AAFEB
@@ -8003,26 +8009,26 @@
         plb
         .databank $8A
         rep #$20
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sec
-        sbc $08A5,b
+        sbc wCastleListWindowRow,b
         and #$0007
         clc
         adc #$0007
         tax
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         sec
-        sbc $08A5,b
+        sbc wCastleListWindowRow,b
         sta wR0
         clc
         adc #$0007
-        cmp $08AB,b
+        cmp wCastleListItemCount,b
         bcs _AF7E
         bra _AF98
 
 
         _AF7E
-        lda $08AB,b
+        lda wCastleListItemCount,b
         sec
         sbc wR0
         dec a
@@ -8039,7 +8045,7 @@
         tax
 
         _AF98
-        cpy $08AB,b
+        cpy wCastleListItemCount,b
         bcs _AFC7
         lda #$0058
         sta wR0
@@ -8255,10 +8261,10 @@
         plb
         .databank $8A
         rep #$20
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         cmp #$0008
         bcs _B0B7
-        cmp $08A5,b
+        cmp wCastleListWindowRow,b
         bne _B0B7
         bra _B0D2
 
@@ -8276,13 +8282,13 @@
         jsl rlPushToOAMBuffer
 
         _B0D2
-        lda $08AB,b
-        lda $08A7,b
+        lda wCastleListItemCount,b
+        lda wCastleListSelectedIndex,b
         clc
         adc #$0008
         sec
-        sbc $08A5,b
-        cmp $08AB,b
+        sbc wCastleListWindowRow,b
+        cmp wCastleListItemCount,b
         bcc _B0E7
         bra _B106
 
@@ -8717,10 +8723,10 @@
         .autsiz
         .databank ?
 
-        lda $08B6,b
+        lda wBaseSceneArgument,b
         asl a
         clc
-        adc $08B6,b
+        adc wBaseSceneArgument,b
         tax
         lda aDialogueBackgroundPointers+1,x
         sta lR19+1
@@ -8982,7 +8988,7 @@
         jsl rlUnitWindowCopySpritePalette2
         jsr rsUnknown8ABFD1
         ldy #$0000
-        stz $0889,b
+        stz wCastleListSubCount,b
 
         _BDBA
         tya
@@ -8991,7 +8997,7 @@
         jsl rlGetItemROMDataByInventorySlot
         lda wCurrentItemDataROMPointer,b
         beq _BDD1
-        inc $0889,b
+        inc wCastleListSubCount,b
         inc y
         cpy #$0007
         bcc _BDBA
@@ -9007,16 +9013,16 @@
         lda #$00
         sta bBufferCGADSUB
         rep #$20
-        stz $0592,b
-        stz $08A1,b
-        stz $08A3,b
-        stz $08A5,b
-        stz $08A7,b
+        stz wMenuState,b
+        stz wCastleMenuOptionIndex,b
+        stz wCastleConfirmCursorIndex,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         jsl rlUnknown8A9DF2
         jsr rsUnknown8AA142
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -9079,7 +9085,7 @@
         ldx #$01FE
 
         _BE87
-        lda aUnknown8C9600,x
+        lda aCastleShopBGPalettes,x
         sta aBGPaletteBuffer,b,x
         dec x
         dec x
@@ -9385,7 +9391,7 @@
         phk
         plb
         .databank $8A
-        lda $0592,b
+        lda wMenuState,b
         asl a
         tax
         jsr (aUnknown8AC08F,x)
@@ -9491,9 +9497,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
 
         _C0FB
         sep #$20
@@ -9504,7 +9510,7 @@
 
 
         _C104
-        lda $0889,b
+        lda wCastleListSubCount,b
         beq _C10B
         bra _C0C7
 
@@ -9519,14 +9525,14 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0013
-        sta $0594,b
+        sta wNextMenuState,b
         bra _C0FB
 
 
         _C130
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _C137
         bra _C143
 
@@ -9551,9 +9557,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         bra _C0FB
 
         .databank 0
@@ -9567,7 +9573,7 @@
         .autsiz
         .databank ?
 
-        lda $0594,b
+        lda wNextMenuState,b
         cmp #$0005
         beq _C195
         cmp #$000B
@@ -9587,8 +9593,8 @@
 
 
         _C18E
-        lda $0594,b
-        sta $0592,b
+        lda wNextMenuState,b
+        sta wMenuState,b
         rts
 
 
@@ -9601,7 +9607,7 @@
         jsr rsUnknown8AA928
 
         _C19D
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -9625,9 +9631,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -9693,7 +9699,7 @@
         beq _C256
         cmp #$0080
         bne _C255
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         cmp #$0000
         beq _C292
         cmp #$0001
@@ -9719,16 +9725,16 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0013
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0021
         jsl rlPlaySoundEffect
         rts
 
 
         _C292
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _C2E2
         ldx #$0000
         lda aShopDialoguePointers+73,x
@@ -9740,7 +9746,7 @@
 
 
         _C2AB
-        lda $0889,b
+        lda wCastleListSubCount,b
         beq _C2F0
         ldx #$0000
         lda aShopDialoguePointers+163,x
@@ -9752,9 +9758,9 @@
 
 
         _C2C4
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
@@ -9795,14 +9801,14 @@
 
         lda #$000A
         jsl rlPlaySoundEffect
-        lda $0592,b
-        sta $0594,b
+        lda wMenuState,b
+        sta wNextMenuState,b
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -9838,8 +9844,8 @@
         adc #$000B
         tax
         jsl rlDrawMenuTextLine
-        stz $08A5,b
-        stz $08A7,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         lda #(`aUnknown8AD077)<<8
         sta lR19+1
         lda #<>aUnknown8AD077
@@ -9857,7 +9863,7 @@
         beq _C39F
         cmp #$0080
         bne _C39E
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         cmp #$0000
         beq _C3DB
         cmp #$0001
@@ -9883,16 +9889,16 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0013
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0021
         jsl rlPlaySoundEffect
         rts
 
 
         _C3DB
-        lda $0889,b
+        lda wCastleListSubCount,b
         beq _C42B
         ldx #$0003
         lda aShopDialoguePointers+163,x
@@ -9904,7 +9910,7 @@
 
 
         _C3F4
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _C439
         ldx #$0003
         lda aShopDialoguePointers+73,x
@@ -9916,9 +9922,9 @@
 
 
         _C40D
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
@@ -9982,7 +9988,7 @@
         .autsiz
         .databank ?
 
-        lda $0889,b
+        lda wCastleListSubCount,b
         beq _C4B7
         jml _C4F3
 
@@ -10010,19 +10016,19 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0013
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0021
         jsl rlPlaySoundEffect
         rts
 
 
         _C4F3
-        lda $0889,b
+        lda wCastleListSubCount,b
         beq _C4FF
         lda #$000D
-        sta $0592,b
+        sta wMenuState,b
         rts
 
 
@@ -10058,7 +10064,7 @@
         jsr rsUnknown8AA8C9
         jsr rsUnknown8AA9CE
         lda #$0004
-        sta $0592,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -10081,7 +10087,7 @@
         .databank ?
 
         jsr rsUnknown8AA8C9
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -10111,14 +10117,14 @@
 
 
         _C560
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         asl a
         tax
         lda $7F7E72,x
         bmi _C558
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _C557
-        lda $0889,b
+        lda wCastleListSubCount,b
         cmp #$0007
         bne _C57C
         jml _C610
@@ -10148,9 +10154,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0005
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -10172,12 +10178,12 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
-        stz $08A5,b
-        stz $08A7,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         jsr rsUnknown8AA9CE
         lda #$FFFF
         sta $7F7670
@@ -10202,9 +10208,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0008
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -10227,9 +10233,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0007
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -10252,7 +10258,7 @@
         .autsiz
         .databank ?
 
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         asl a
         tax
         lda $7F7672,x
@@ -10293,7 +10299,7 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsr rsUnknown8AA8C9
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -10313,7 +10319,7 @@
         beq _C707
         cmp #$0080
         bne _C706
-        lda $08A3,b
+        lda wCastleConfirmCursorIndex,b
         cmp #$0000
         beq _C71B
         cmp #$0001
@@ -10326,27 +10332,27 @@
         _C707
         lda #$0021
         jsl rlPlaySoundEffect
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$0006
-        sta $0592,b
+        sta wMenuState,b
         jsr rsUnknown8AA830
         rts
 
 
         _C71B
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         asl a
         tax
         lda $7F7672,x
         sta wRoutineVariable1,b
         jsl rlBuyItemForSelectedUnit
         bcs _C744
-        inc $0889,b
+        inc wCastleListSubCount,b
         lda #$0070
         jsl rlPlaySoundEffect2
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$0006
-        sta $0592,b
+        sta wMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -10373,9 +10379,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0007
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -10402,14 +10408,14 @@
         jsr rsUnknown8AA9CE
         lda #$FFFF
         sta $7F7670
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _C7DC
-        lda $08A7,b
-        cmp $08AB,b
+        lda wCastleListSelectedIndex,b
+        cmp wCastleListItemCount,b
         bcc _C7A7
         dec a
-        sta $08A7,b
-        dec $08A5,b
+        sta wCastleListSelectedIndex,b
+        dec wCastleListWindowRow,b
 
         _C7A7
         lda $7F8082
@@ -10427,9 +10433,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -10451,11 +10457,11 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
-        stz $08A5,b
-        stz $08A7,b
+        sta wNextMenuState,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         rts
 
         .databank 0
@@ -10492,9 +10498,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
-        sta $0592,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -10516,7 +10522,7 @@
         .autsiz
         .databank ?
 
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$0021
         jsl rlPlaySoundEffect
         lda $7F8082
@@ -10534,11 +10540,11 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
-        stz $08A5,b
-        stz $08A7,b
+        sta wNextMenuState,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         jsr rsUnknown8AA9CE
         lda #$FFFF
         sta $7F7670
@@ -10569,7 +10575,7 @@
         jsr rsUnknown8AA928
         jsr rsUnknown8AAB48
         lda #$000A
-        sta $0592,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -10584,7 +10590,7 @@
         .databank ?
 
         jsr rsUnknown8AA928
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -10607,7 +10613,7 @@
 
 
         _C8E9
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         inc a
         sta wRoutineVariable1,b
         jsl rlGetItemROMDataByInventorySlot
@@ -10630,9 +10636,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000B
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -10654,12 +10660,12 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
-        stz $08A5,b
-        stz $08A7,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         jsr rsUnknown8AAB48
         lda #$FFFF
         sta $7F7670
@@ -10687,7 +10693,7 @@
         jsr rsUnknown8AA928
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -10707,7 +10713,7 @@
         beq _C9FD
         cmp #$0080
         bne _C9D0
-        lda $08A3,b
+        lda wCastleConfirmCursorIndex,b
         cmp #$0000
         beq _C9D1
         cmp #$0001
@@ -10727,9 +10733,9 @@
         sta $7F7670
         lda #$0070
         jsl rlPlaySoundEffect2
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$000C
-        sta $0592,b
+        sta wMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -10737,9 +10743,9 @@
         _C9FD
         lda #$0021
         jsl rlPlaySoundEffect
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$000C
-        sta $0592,b
+        sta wMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -10747,7 +10753,7 @@
         _CA11
         lda #$0021
         jsl rlPlaySoundEffect
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda $7F8082
         clc
         adc $7F8082
@@ -10763,9 +10769,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000C
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -10788,9 +10794,9 @@
         .autsiz
         .databank ?
 
-        stz $08A5,b
-        stz $08A7,b
-        lda $0889,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
+        lda wCastleListSubCount,b
         beq _CA93
         lda $7F8082
         clc
@@ -10807,9 +10813,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0009
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -10829,9 +10835,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AAB48
         lda #$FFFF
         sta $7F7670
@@ -10862,7 +10868,7 @@
         jsr rsUnknown8AA928
         jsr rsUnknown8AACA8
         lda #$000E
-        sta $0592,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -10877,7 +10883,7 @@
         .databank ?
 
         jsr rsUnknown8AA928
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -10906,7 +10912,7 @@
 
 
         _CB21
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         inc a
         sta wRoutineVariable1,b
         jsl rlGetItemROMDataByInventorySlot
@@ -10935,9 +10941,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000F
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -10959,9 +10965,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0013
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -10982,9 +10988,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000F
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -11026,9 +11032,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000D
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -11072,7 +11078,7 @@
         .autsiz
         .databank ?
 
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         inc a
         jsl rlGetItemRAMStructEntryByInventorySlot
         jsl rlGetItemRAMKillCountAndCritAbility
@@ -11108,7 +11114,7 @@
         jsr rsUnknown8AA928
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -11128,7 +11134,7 @@
         beq _CCA5
         cmp #$0080
         bne _CCA4
-        lda $08A3,b
+        lda wCastleConfirmCursorIndex,b
         cmp #$0000
         beq _CCB6
         cmp #$0001
@@ -11141,9 +11147,9 @@
         _CCA5
         lda #$0021
         jsl rlPlaySoundEffect
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$0010
-        sta $0592,b
+        sta wMenuState,b
         rts
 
 
@@ -11152,9 +11158,9 @@
         bcs _CCCD
         lda #$0070
         jsl rlPlaySoundEffect2
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$0010
-        sta $0592,b
+        sta wMenuState,b
         rts
 
 
@@ -11163,7 +11169,7 @@
         bne _CD14
         lda #$0021
         jsl rlPlaySoundEffect
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda $7F8082
         clc
         adc $7F8082
@@ -11179,9 +11185,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0010
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -11204,9 +11210,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000D
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -11229,8 +11235,8 @@
         .autsiz
         .databank ?
 
-        stz $08A5,b
-        stz $08A7,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         jsr rsUnknown8AACA8
         jsr rsUnknown8AA830
         lda $7F8082
@@ -11248,9 +11254,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000D
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -11278,7 +11284,7 @@
         jsr rsUnknown8AA928
         jsr rsUnknown8AAB48
         lda #$0012
-        sta $0592,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -11301,7 +11307,7 @@
         .databank ?
 
         jsr rsUnknown8AA928
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -11343,12 +11349,12 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
-        stz $08A5,b
-        stz $08A7,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         jsr rsUnknown8AAB48
         lda #$FFFF
         sta $7F7670
@@ -11401,7 +11407,7 @@
         .databank ?
 
         lda #$0000
-        sta $0891,b
+        sta wCastleCursorState,b
         sep #$20
         lda #$80
         sta bBufferINIDISP
@@ -11545,11 +11551,11 @@
 
 
         _CFD2
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         beq _D00C
         sec
         sbc #$0001
-        sta $08A1,b
+        sta wCastleMenuOptionIndex,b
         lda #$0007
         jsl rlPlaySoundEffect
         lda #$FFFF
@@ -11558,12 +11564,12 @@
 
 
         _CFEE
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         cmp wR0
         bcs _D00C
         clc
         adc #$0001
-        sta $08A1,b
+        sta wCastleMenuOptionIndex,b
         lda #$0007
         jsl rlPlaySoundEffect
         lda #$FFFF
@@ -11572,7 +11578,7 @@
 
 
         _D00C
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         tay
         lda [lR19],y
         and #$00FF
@@ -11591,7 +11597,7 @@
 
 
         _D02D
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         tay
         lda [lR20],y
         and #$00FF
@@ -11826,7 +11832,7 @@
         ldx #$000E
 
         _D8A6
-        lda aUnknown8C9700,x
+        lda aCastleVendorOAMPalettes,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -11836,29 +11842,29 @@
         lda #<>aDecompressionDMAEntry8AD952
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0004
         beq _D8CB
         jsl rlUnknown8ADA08
 
         _D8CB
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0008
         beq _D8D7
         jsl rlUnknown8ADA16
 
         _D8D7
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0001
         beq _D8E6
-        lda $08B2,b
+        lda wBaseSceneLeftUnitRAMPointer,b
         jsl rlUnknown8A9750
 
         _D8E6
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0002
         beq _D8F5
-        lda $08B4,b
+        lda wBaseSceneRightUnitRAMPointer,b
         jsl rlUnknown8A9776
 
         _D8F5
@@ -11872,15 +11878,15 @@
         lda #$00
         sta bBufferCGADSUB
         rep #$20
-        stz $0592,b
-        stz $08A1,b
-        stz $08A3,b
-        stz $08A5,b
-        stz $08A7,b
+        stz wMenuState,b
+        stz wCastleMenuOptionIndex,b
+        stz wCastleConfirmCursorIndex,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         jsr rsUnknown8AD95A
         lda #$000C
         sta wGameStateStep,b
-        lda $08B8,b
+        lda wBaseSceneMode,b
         cmp #$0004
         beq _D938
         rep #$20
@@ -11924,7 +11930,7 @@
         .autsiz
         .databank ?
 
-        lda $08B6,b
+        lda wBaseSceneArgument,b
         cmp #$0000
         beq _D963
         rts
@@ -11995,12 +12001,12 @@
             jsl rlProcEngineCreateProc
 
         +
-        lda $0592,b
+        lda wMenuState,b
         asl a
         tax
         jsr (aUnknown8AD9FE,x)
 
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0001
         beq +
 
@@ -12013,7 +12019,7 @@
           jsr rsUnknown8ADB04
 
         +
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0002
         beq +
 
@@ -12055,7 +12061,7 @@
         .databank ?
 
         lda #$0044
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #1
         sta $7F7670
         rtl
@@ -12080,7 +12086,7 @@
         .databank ?
 
         lda #$0088
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #$0001
         sta $7F7670
         rtl
@@ -12096,7 +12102,7 @@
         .autsiz
         .databank ?
 
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0040
         beq _DA3F
         jsl rlDMAByStruct
@@ -12104,10 +12110,10 @@
           .structDMAToVRAM gUnknownDA6800, $0240, $80, $E800
 
         lda #$0040
-        trb $08AD,b
+        trb wBaseSceneFlags,b
 
         _DA3F
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0080
         beq _DA5A
         jsl rlDMAByStruct
@@ -12115,7 +12121,7 @@
           .structDMAToVRAM gUnknownDA6D00, $0240, $80, $ED00
 
         lda #$0080
-        trb $08AD,b
+        trb wBaseSceneFlags,b
 
         _DA5A
         rts
@@ -12132,7 +12138,7 @@
         .databank ?
 
         lda #$0004
-        trb $08AD,b
+        trb wBaseSceneFlags,b
         jsl rlDMAByStruct
 
           .structDMAToVRAM gUnknownDA6A40, $0240, $80, $E800
@@ -12151,7 +12157,7 @@
         .databank ?
 
         lda #$0008
-        trb $08AD,b
+        trb wBaseSceneFlags,b
         jsl rlDMAByStruct
 
           .structDMAToVRAM gUnknownDA6A40, $0240, $80, $ED00
@@ -12176,14 +12182,14 @@
         .autsiz
         .databank ?
 
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0010
         beq +
 
-          lda $08B2,b
+          lda wBaseSceneLeftUnitRAMPointer,b
           jsl rlUnknown8A9750
           lda #$0010
-          trb $08AD,b
+          trb wBaseSceneFlags,b
           lda #(`procUnknown8AE147)<<8
           sta lR44+1
           lda #<>procUnknown8AE147
@@ -12191,14 +12197,14 @@
           jsl rlProcEngineCreateProc
 
         +
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0020
         beq +
 
-          lda $08B4,b
+          lda wBaseSceneRightUnitRAMPointer,b
           jsl rlUnknown8A9776
           lda #$0020
-          trb $08AD,b
+          trb wBaseSceneFlags,b
           lda #(`procUnknown8AE199)<<8
           sta lR44+1
           lda #<>procUnknown8AE199
@@ -12217,7 +12223,7 @@
         .databank ?
 
         lda #$0011
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #1
         sta $7F7670
         rtl
@@ -12231,7 +12237,7 @@
         .databank ?
 
         lda #$0022
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #1
         sta $7F7670
         rtl
@@ -12285,7 +12291,7 @@
         .autsiz
         .databank ?
 
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0004
         beq _DB2F
         lda #$0050
@@ -12334,7 +12340,7 @@
         .autsiz
         .databank ?
 
-        lda $08AD,b
+        lda wBaseSceneFlags,b
         bit #$0008
         beq _DB62
         lda #$0090
@@ -12406,7 +12412,7 @@
 
         lda $08AF+1,b
         sta $24+1
-        lda $08AF,b
+        lda lBaseSceneDialoguePointer,b
         sta $24
         lda #2
         jsl rlDialogueStartTextAndHDMA
@@ -12418,7 +12424,7 @@
         ldx #0
         jsr rsUnknown8ADCF9
 
-        lda $08B8,b
+        lda wBaseSceneMode,b
         cmp #4
         bne +
 
@@ -12427,9 +12433,9 @@
 
         +
         lda #1
-        sta $0592,b
+        sta wMenuState,b
         lda #2
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -12466,8 +12472,8 @@
           rts
 
         +
-        lda $0594,b
-        sta $0592,b
+        lda wNextMenuState,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -12490,7 +12496,7 @@
         .autsiz
         .databank ?
 
-        lda $08B8,b
+        lda wBaseSceneMode,b
         cmp #$0000
         beq _DC41
         cmp #$0001
@@ -12504,7 +12510,7 @@
 
         _DC41
         lda #$0000
-        sta $0891,b
+        sta wCastleCursorState,b
         jsl rlBuildDeadPlayerCharacterList
         jsl rlUnknown8A9A56
         sep #$20
@@ -12518,7 +12524,7 @@
 
         _DC5E
         lda #$0003
-        sta $0592,b
+        sta wMenuState,b
         lda #(`procFadeOutByScreenFadingTimer)<<8
         sta lR44+1
         lda #<>procFadeOutByScreenFadingTimer
@@ -12529,7 +12535,7 @@
 
         _DC73
         lda #$0004
-        sta $0592,b
+        sta wMenuState,b
         rts
 
 
@@ -12542,10 +12548,10 @@
         sta wGameStateStep,b
         lda #$0000
         jsl rlGetFactionSlotLocationID
-        cmp $089F,b
+        cmp wEnteredCastleLocationID,b
         bne _DCA9
         lda #$0000
-        sta $088B,b
+        sta wCastleScreenHandler,b
         jsl rlBuildDeadPlayerCharacterList
         jsl rlUnknown8A9A56
         lda $08BA,b
@@ -12555,7 +12561,7 @@
 
         _DCA9
         lda #$0001
-        sta $088B,b
+        sta wCastleScreenHandler,b
         lda $08BA,b
         sta wSelectedUnitDataRAMPointer,b
         rts
@@ -12563,9 +12569,9 @@
 
         _DCB6
         lda #$0003
-        sta $0592,b
+        sta wMenuState,b
         lda #$0000
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #$B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFadeByTimer)<<8
@@ -12755,7 +12761,7 @@
         .autsiz
         .databank ?
 
-        lda $08B6,b
+        lda wBaseSceneArgument,b
         asl a
         tax
         jsr (aUnknown8AE067,x)
@@ -13151,7 +13157,7 @@
         bcs +
 
           lda #$0001
-          trb $08AD,b
+          trb wBaseSceneFlags,b
 
         +
         jsl rlProcEngineFreeProc
@@ -13239,7 +13245,7 @@
         bcs +
 
           lda #$0002
-          trb $08AD,b
+          trb wBaseSceneFlags,b
 
         +
         jsl rlProcEngineFreeProc
@@ -13423,18 +13429,18 @@
         jsl rlUnknown8A9F32
 
         _E461
-        stz $08A1,b
+        stz wCastleMenuOptionIndex,b
         jsr rsUnknown8AA142
-        stz $0592,b
-        stz $08A1,b
-        stz $08A3,b
-        stz $08A5,b
-        stz $08A7,b
+        stz wMenuState,b
+        stz wCastleMenuOptionIndex,b
+        stz wCastleConfirmCursorIndex,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         lda #$0000
         sta $7F7670
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -13611,16 +13617,16 @@
         lda #$00
         sta bBufferCGADSUB
         rep #$20
-        stz $0592,b
-        stz $08A1,b
-        stz $08A3,b
-        stz $08A5,b
-        stz $08A7,b
+        stz wMenuState,b
+        stz wCastleMenuOptionIndex,b
+        stz wCastleConfirmCursorIndex,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         jsl rlUnknown8A9FCC
         jsr rsUnknown8AA142
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -13683,7 +13689,7 @@
         jsr rsUnknown8AA142
 
         _EED4
-        lda $0592,b
+        lda wMenuState,b
         asl a
         tax
         jsr (aUnknown8AEEF2,x)
@@ -13747,9 +13753,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         sep #$20
         lda #$0F
         sta bBufferINIDISP
@@ -13778,8 +13784,8 @@
 
 
         _EF44
-        lda $0594,b
-        sta $0592,b
+        lda wNextMenuState,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -13793,9 +13799,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -13828,9 +13834,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -13844,9 +13850,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -13873,9 +13879,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0005
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -13902,9 +13908,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0005
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -13937,7 +13943,7 @@
         beq _F083
         cmp #$0080
         bne _F074
-        lda $08A3,b
+        lda wCastleConfirmCursorIndex,b
         cmp #$0000
         beq _F075
         cmp #$0001
@@ -13951,7 +13957,7 @@
         lda #$000A
         jsl rlPlaySoundEffect
         lda #$0004
-        sta $0592,b
+        sta wMenuState,b
         rts
 
 
@@ -13969,9 +13975,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0005
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -14010,7 +14016,7 @@
         _F0C8
         .as
         rep #$20
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         tax
         lda $7E2002,x
         jsl rlUnknown84ABB0
@@ -14036,9 +14042,9 @@
         .databank ?
 
         lda #$0000
-        sta $0891,b
+        sta wCastleCursorState,b
         lda #$0003
-        sta $0893,b
+        sta wUnknown000893,b
         sep #$20
         lda #$80
         sta bBufferINIDISP
@@ -14161,16 +14167,16 @@
         ora #$80
         sta bBufferCOLDATA_3
         rep #$20
-        stz $0592,b
-        stz $08A1,b
-        stz $08A3,b
-        stz $08A5,b
-        stz $08A7,b
+        stz wMenuState,b
+        stz wCastleMenuOptionIndex,b
+        stz wCastleConfirmCursorIndex,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         jsl rlUnknown8A9E5A
         jsr rsUnknown8AA142
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -14221,7 +14227,7 @@
         phk
         plb
         .databank $8A
-        lda $0592,b
+        lda wMenuState,b
         asl a
         tax
         jsr (aUnknown8AF2C7,x)
@@ -14308,9 +14314,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         sep #$20
         lda #$0F
         sta bBufferINIDISP
@@ -14328,7 +14334,7 @@
         .autsiz
         .databank ?
 
-        lda $0594,b
+        lda wNextMenuState,b
         cmp #$0005
         beq _F33B
         cmp #$000A
@@ -14346,8 +14352,8 @@
 
 
         _F334
-        lda $0594,b
-        sta $0592,b
+        lda wNextMenuState,b
+        sta wMenuState,b
         rts
 
 
@@ -14360,7 +14366,7 @@
         jsr rsUnknown8AA928
 
         _F343
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -14384,9 +14390,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -14411,8 +14417,8 @@
         adc #$000B
         tax
         jsl rlDrawMenuTextLine
-        stz $08A5,b
-        stz $08A7,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         lda #(`aUnknown8AD081)<<8
         sta lR19+1
         lda #<>aUnknown8AD081
@@ -14432,7 +14438,7 @@
         bne _F3DD
         lda #$0009
         tax
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         cmp #$0000
         beq _F40F
         cmp #$0001
@@ -14454,16 +14460,16 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000C
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0021
         jsl rlPlaySoundEffect
         rts
 
 
         _F40F
-        lda $0889,b
+        lda wCastleListSubCount,b
         beq _F459
         lda aShopDialoguePointers+163,x
         sta lR18+1
@@ -14474,7 +14480,7 @@
 
 
         _F425
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _F467
         lda aShopDialoguePointers+73,x
         sta lR18+1
@@ -14485,9 +14491,9 @@
 
 
         _F43B
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
@@ -14557,7 +14563,7 @@
         jsr rsUnknown8AA8C9
         jsr rsUnknown8AA9CE
         lda #$0004
-        sta $0592,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -14580,7 +14586,7 @@
         .databank ?
 
         jsr rsUnknown8AA8C9
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -14604,7 +14610,7 @@
 
 
         _F4EC
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _F4EB
         lda #$000A
         jsl rlPlaySoundEffect
@@ -14619,9 +14625,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0005
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -14639,9 +14645,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -14667,7 +14673,7 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsr rsUnknown8AA8C9
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -14687,7 +14693,7 @@
         beq _F5A3
         cmp #$0080
         bne _F5A2
-        lda $08A3,b
+        lda wCastleConfirmCursorIndex,b
         cmp #$0000
         beq _F5B7
         cmp #$0001
@@ -14700,9 +14706,9 @@
         _F5A3
         lda #$0021
         jsl rlPlaySoundEffect
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$0006
-        sta $0592,b
+        sta wMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -14727,7 +14733,7 @@
         lda wTempVariable1,b
         cmp #$0007
         beq _F600
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         asl a
         tax
         lda $7F7672,x
@@ -14735,9 +14741,9 @@
         jsl rlGiveItemToUnitCheckEncumbered
         lda #$000A
         jsl rlPlaySoundEffect
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$0006
-        sta $0592,b
+        sta wMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -14756,9 +14762,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0007
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -14785,9 +14791,9 @@
         jsr rsUnknown8AA9CE
         lda #$FFFF
         sta $7F7670
-        stz $08A5,b
-        stz $08A7,b
-        lda $08AB,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
+        lda wCastleListItemCount,b
         beq _F677
         lda #$0009
         tax
@@ -14800,9 +14806,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -14818,9 +14824,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -14842,7 +14848,7 @@
         .autsiz
         .databank ?
 
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$0021
         jsl rlPlaySoundEffect
         lda #$0009
@@ -14856,9 +14862,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -14886,7 +14892,7 @@
         jsr rsUnknown8AA928
         jsr rsUnknown8AAB48
         lda #$0009
-        sta $0592,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -14909,7 +14915,7 @@
         .databank ?
 
         jsr rsUnknown8AA928
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -14932,7 +14938,7 @@
 
 
         _F71C
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         inc a
         sta wRoutineVariable1,b
         jsl rlGetItemROMDataByInventorySlot
@@ -14951,9 +14957,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000A
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -14971,9 +14977,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -14999,7 +15005,7 @@
         jsr rsUnknown8AA928
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -15019,7 +15025,7 @@
         beq _F804
         cmp #$0080
         bne _F7DD
-        lda $08A3,b
+        lda wCastleConfirmCursorIndex,b
         cmp #$0000
         beq _F7DE
         cmp #$0001
@@ -15037,9 +15043,9 @@
         sta $7F7670
         lda #$000A
         jsl rlPlaySoundEffect
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$000B
-        sta $0592,b
+        sta wMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -15047,9 +15053,9 @@
         _F804
         lda #$0021
         jsl rlPlaySoundEffect
-        stz $08A3,b
+        stz wCastleConfirmCursorIndex,b
         lda #$000B
-        sta $0592,b
+        sta wMenuState,b
         jsr rsUnknown8AA830
         rts
 
@@ -15072,9 +15078,9 @@
         .autsiz
         .databank ?
 
-        stz $08A5,b
-        stz $08A7,b
-        lda $0889,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
+        lda wCastleListSubCount,b
         beq _F84D
         lda #$0009
         tax
@@ -15087,9 +15093,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0008
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -15109,9 +15115,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AAB48
         rts
 
@@ -15250,14 +15256,14 @@
         lda #$80
         sta bBufferCOLDATA_3
         rep #$20
-        stz $0592,b
-        stz $08A1,b
-        stz $08A3,b
-        stz $08A5,b
-        stz $08A7,b
-        lda #(`aUnknown80B6AD)<<8
+        stz wMenuState,b
+        stz wCastleMenuOptionIndex,b
+        stz wCastleConfirmCursorIndex,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2C00
         sta aCurrentTilemapInfo,b
@@ -15342,7 +15348,7 @@
         sta $7F7670
 
         _FA54
-        lda $0592,b
+        lda wMenuState,b
         asl a
         tax
         jsr (aUnknown8AFA6F,x)
@@ -15405,9 +15411,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0002
-        sta $0594,b
+        sta wNextMenuState,b
         sep #$20
         lda #$0F
         sta bBufferINIDISP
@@ -15436,8 +15442,8 @@
 
 
         _FABF
-        lda $0594,b
-        sta $0592,b
+        lda wNextMenuState,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -15451,14 +15457,14 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2C00
         sta aCurrentTilemapInfo,b
         lda #$0003
-        sta $0592,b
+        sta wMenuState,b
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -15476,7 +15482,7 @@
 
         jsr rsUnknown8AAD6F
         lda #$0004
-        sta $0592,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -15490,7 +15496,7 @@
         .autsiz
         .databank ?
 
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$0004
         sta wR0
@@ -15516,7 +15522,7 @@
         lda #$000A
         jsl rlPlaySoundEffect
         lda #$0005
-        sta $0592,b
+        sta wMenuState,b
         rts
 
 
@@ -15532,9 +15538,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0007
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0
@@ -15550,7 +15556,7 @@
 
         lda #$2C00
         sta aCurrentTilemapInfo,b
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$0004
         sta wR0
@@ -15561,7 +15567,7 @@
         jsl rlUnknown8AB043
         lda #$FFFF
         sta $7F7670
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         tax
         lda $7F8184,x
         and #$00FF
@@ -15569,7 +15575,7 @@
         tax
         ldx #$0000
         jsl rlDialogueClearDialogueWrapper
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         tax
         lda $7F8184,x
         and #$00FF
@@ -15610,9 +15616,9 @@
         ldx #$0000
         jsl rlUnknown8ACE50
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0006
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
 
@@ -15730,7 +15736,7 @@
 
         lda wSelectedUnitDataRAMPointer,b
         pha
-        lda $089F,b
+        lda wEnteredCastleLocationID,b
         jsl rlUnknown87AE88
         sta wTempVariable1,b
         lda wTempVariable1,b
@@ -15802,9 +15808,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0

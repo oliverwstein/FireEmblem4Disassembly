@@ -126,7 +126,7 @@
         php
         rep #$30
         inc wUnknown00171C,b
-        jsl rlUnknown91A7A8
+        jsl rlZeroEventMenuWindowList
         jsr rsGetEventLength
         jsl rlEventEngineFreeAllProcs
         jsl rlUnknown91C611
@@ -1111,7 +1111,7 @@
         phy
 
         lda #0
-        sta $08B8,b
+        sta wBaseSceneMode,b
 
         lda #(`procDialogueWithBG)<<8
         sta lR44+1
@@ -1144,7 +1144,7 @@
         phy
 
         lda #1
-        sta $08B8,b
+        sta wBaseSceneMode,b
 
         lda #(`procDialogueWithBG)<<8
         sta lR44+1
@@ -1394,7 +1394,7 @@
         jsl rlActiveSpriteEngineReset
         jsl rlEnableActiveSpriteEngine
         jsl rlActiveSpriteEngineRenderOnScreenOnly
-        jsl rlUnknown818064
+        jsl rlActiveSpriteEngineSetFlag2000
 
         lda [lR22],y
         sta lR18
@@ -2239,13 +2239,13 @@
           dec x
           bne +
 
-            sta $04CA,b
-            stz $04D0,b
+            sta aSoundChannelFadeState.bMode,b
+            stz aSoundChannelFadeTarget,b
             bra _End
 
           +
-          sta $04CD,b
-          stz $04D3,b
+          sta aSoundChannelFadeState2,b
+          stz aSoundChannelFadeTarget2,b
 
         _End
         plx
@@ -2572,19 +2572,19 @@
 
         sep #$20
         lda #$10
-        sta $04CA,b
+        sta aSoundChannelFadeState.bMode,b
         rep #$20
 
         ldx #0
-        jsl rlUnknown809933
+        jsl rlUpdateMapSpriteSoundPanning
 
         sep #$20
         lda #$10
-        sta $04CD,b
+        sta aSoundChannelFadeState2,b
         rep #$20
 
         ldx #3
-        jsl rlUnknown809933
+        jsl rlUpdateMapSpriteSoundPanning
         rtl
 
         .databank 0
@@ -2989,7 +2989,7 @@
             ldx #0
 
         +
-        stx $0D77,b
+        stx wMainGameMode,b
 
         lda #<>rsUnknown80B122
         sta aProcSystem.wInput0,b
@@ -3947,7 +3947,7 @@
         phb
         phy
 
-        lda #<>rsUnknown80B3A2
+        lda #<>rsSetupWorldMapScreen
         sta aProcSystem.wInput0,b
 
         lda #(`procMainLoopChangeFade)<<8
@@ -3983,7 +3983,7 @@
 
           stz wGameStateRoutine1,b
 
-          lda #<>rsUnknown80F2BE
+          lda #<>rsOpenChapterIntroScreen
           sta aProcSystem.wInput0,b
           lda #2
           sta wScreenFadingProcInput,b
@@ -4433,7 +4433,7 @@
         phb
         phy
 
-        stz $0D7B,b
+        stz wSavedEventCycle,b
         lda #1
         sta $1832,b
 
@@ -4459,7 +4459,7 @@
         tsb wUnknown00171A,b
 
         lda #$0010
-        tsb $0788,b
+        tsb wMapSystemFlags,b
 
         lda bSoundFlags,b
         ora #$0005
@@ -4485,7 +4485,7 @@
         phy
 
         stz wGameStateRoutine1,b
-        lda #<>rsUnknown80C0B6
+        lda #<>rsOpenMapBattle
         sta aProcSystem.wInput0,b
 
         lda #(`procMainLoopChangeFade)<<8
@@ -4731,9 +4731,9 @@
         jsl rlEnableActiveSpriteEngine
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
-        jsl rlUnknown82E400
+        jsl rlResetRAMStructAndAreaVariables
         jsl rlUnknown8780AA
-        jsl rlUnknown82F211
+        jsl rlResetMenuOptionStack
         lda #$00FF
         sta wUnknown053E,b
         jsl rlUnknown8780DF
@@ -4760,9 +4760,9 @@
 
         lda #$0010
         sta wGameStateRoutine2,b
-        lda #<>rsUnknown80AE68
+        lda #<>rsMapVBlank
         sta wVBlankPointer
-        lda #<>rsUnknown80B301
+        lda #<>rsMapMainLoop
         sta wMainLoopPointer
         rts
 
@@ -4802,9 +4802,9 @@
         lda #<>aDecompressionDMAEntry80B084
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        jsl rlUnknown80B0BC
-        jsl rlUnknown80B0EE
-        jsl rlUnknown80B0A3
+        jsl rlLoadMenuFontGraphics
+        jsl rlLoadMenuIconGraphics
+        jsl rlLoadDefaultWindowBorderPalette
         rts
 
         .databank 0
@@ -4907,7 +4907,7 @@
 
         lda #$0012
         sta wGameStateRoutine1,b
-        lda $0D7B,b
+        lda wSavedEventCycle,b
         sta wGameStateStep,b
         jsr rsUnknown80B195
 
@@ -4930,7 +4930,7 @@
         .autsiz
         .databank ?
 
-        lda $0D77,b
+        lda wMainGameMode,b
         asl a
         tax
         jmp (+,x)
@@ -5001,7 +5001,7 @@
         sta wGameStateStep,b
         jsl rlUnknown858728
 
-        lda $0D77,b
+        lda wMainGameMode,b
         cmp #2
         bcc _End
 
@@ -6758,7 +6758,7 @@
         lda #$8000
         trb $168F,b
         jsl rlUnknown82E147
-        lda #<>rsUnknown80AE63
+        lda #<>rsIRQEngineCycle
         sta wIRQPointer
         plp
         plb
@@ -7335,7 +7335,7 @@
         ldx #$00DE
 
         _80EC
-        lda aUnknown8C951E+2,x
+        lda aPortraitAndMapUIOAMPalettes+2,x
         sta aOAMPaletteBuffer.aPalette1,b,x
         dec x
         dec x
@@ -7343,7 +7343,7 @@
         ldx #$001E
 
         _80FA
-        lda aUnknown8C9D00,x
+        lda aMapAndCastleSpriteOAMPalettes,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -7385,12 +7385,12 @@
         sta wBufferBG1VOFS
         sta wBufferBG3VOFS
         lda #$0020
-        trb $0788,b
+        trb wMapSystemFlags,b
         stz wUnknown000770,b
         stz wUnknown000766,b
         stz wUnknown0007D8,b
-        stz $07DA,b
-        stz $086F,b
+        stz wMovingUnitSpriteState,b
+        stz wMapActionActiveFlag,b
         stz wMapScrollSpeed,b
         stz wMapScrollDirectionIdentifier,b
         jsl rlUnknown8883C8
@@ -7420,7 +7420,7 @@
         .autsiz
         .databank ?
 
-        lda $0786,b
+        lda wMapOverlayFlags,b
         bit #$0001
         bne _81C6
         bit #$0002
@@ -7434,7 +7434,7 @@
         lda wActiveUnitDeploymentOffset,b
         jsl rlUnknown88B4DB
         lda #$0001
-        trb $0786,b
+        trb wMapOverlayFlags,b
         bra _81C5
 
 
@@ -7500,7 +7500,7 @@
         ldx #$00DE
 
         _8282
-        lda aUnknown8C951E+2,x
+        lda aPortraitAndMapUIOAMPalettes+2,x
         sta aOAMPaletteBuffer.aPalette1,b,x
         dec x
         dec x
@@ -7508,7 +7508,7 @@
         ldx #$001E
 
         _8290
-        lda aUnknown8C9D00,x
+        lda aMapAndCastleSpriteOAMPalettes,x
         sta aOAMPaletteBuffer,b,x
         dec x
         dec x
@@ -7552,8 +7552,8 @@
         stz wUnknown000770,b
         stz wUnknown000766,b
         stz wUnknown0007D8,b
-        stz $07DA,b
-        stz $086F,b
+        stz wMovingUnitSpriteState,b
+        stz wMapActionActiveFlag,b
         stz wMapScrollSpeed,b
         stz wMapScrollDirectionIdentifier,b
         jsl rlUnknown8883C8
@@ -8077,7 +8077,7 @@
         phk
         plb
         .databank $88
-        stz $07E6,b
+        stz wMapSpriteFrameByteOffset,b
         ldx #$008E
 
         _DE23
@@ -8127,8 +8127,8 @@
         sta lR18+1
         lda aUnknown88D526,x
         clc
-        adc $07E6,b
-        sta $07EA,b
+        adc wMapSpriteFrameByteOffset,b
+        sta lMapSpriteGraphicsPointer,b
         sta lR18
         plx
         lda #$0040
@@ -8140,7 +8140,7 @@
         phx
         jsl rlDMAByPointer
         plx
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$0040
         sta lR18
@@ -8181,8 +8181,8 @@
         sta lR18+1
         lda aUnknown88D5E3,x
         clc
-        adc $07E6,b
-        sta $07EA,b
+        adc wMapSpriteFrameByteOffset,b
+        sta lMapSpriteGraphicsPointer,b
         sta lR18
         plx
         lda #$0040
@@ -8194,7 +8194,7 @@
         phx
         jsl rlDMAByPointer
         plx
-        lda $07EA,b
+        lda lMapSpriteGraphicsPointer,b
         clc
         adc #$0040
         sta lR18

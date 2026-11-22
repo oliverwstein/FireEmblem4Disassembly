@@ -2087,12 +2087,12 @@
         bne +
 
         sep #$20
-        sty $04CB,b
+        sty aSoundChannelFadeState.bLevel,b
         lda #0
-        sta $04CC,b
+        sta aSoundChannelFadeState.bFlags,b
         rep #$20
         ldx #0
-        jsl rlUnknown809933
+        jsl rlUpdateMapSpriteSoundPanning
         bra _End
 
         +
@@ -2102,7 +2102,7 @@
         sta $04CF,b
         rep #$20
         ldx #3
-        jsl rlUnknown809933
+        jsl rlUpdateMapSpriteSoundPanning
 
         _End
         ply

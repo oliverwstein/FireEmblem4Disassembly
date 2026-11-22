@@ -764,13 +764,13 @@
         phk
         plb
 
-        sta $0585,b
+        sta wTempItemDataROMPointer,b
 
         jsl rlGetUnitType
         cmp #UnitTypeHoly
         bcs +
 
-        lda $0585,b
+        lda wTempItemDataROMPointer,b
         jsl rlGetItemRAMStructEntryByInventorySlot
         bcs _End
 
@@ -782,7 +782,7 @@
 
         +
         stz wCurrentItemDataRAMPointer,b
-        lda $0585,b
+        lda wTempItemDataROMPointer,b
         jsl rlGetEnemyItemIndexByInventorySlot
         bra _End
 
@@ -805,13 +805,13 @@
         phk
         plb
 
-        sta $0585,b
+        sta wTempItemDataROMPointer,b
 
         jsl rlGetUnitType
         cmp #UnitTypeHoly
         bcs _NotPlayer
 
-        lda $0585,b
+        lda wTempItemDataROMPointer,b
         jsl rlGetItemRAMStructEntryByInventorySlot
         bcs +
 
@@ -828,7 +828,7 @@
 
         _NotPlayer
         stz wCurrentItemDataRAMPointer,b
-        lda $0585,b
+        lda wTempItemDataROMPointer,b
         jsl rlGetEnemyItemDataByInventorySlot
         bra -
   

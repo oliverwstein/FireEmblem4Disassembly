@@ -58,13 +58,13 @@
 
     PROC_SET_UNK_TIMER .segment Cycles
       ; 82/824E
-      .word <>rsProcCodeSetUnknownTimer
+      .word <>rsProcCodeSetTimer
       .word \Cycles
     .endsegment
 
     PROC_JUMP_WHILE_UNK_TIMER .segment Position
       ; 82/8257
-      .word <>rsProcCodeJumpWhileUnknownTimer
+      .word <>rsProcCodeJumpWhileTimer
       .word <>\Position
     .endsegment
 

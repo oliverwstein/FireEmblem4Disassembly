@@ -21,3 +21,4 @@ setter    rlCheckIfUnitHasSpecifiedPersonalOrClassSkill  SkillID                
 setter    rlCheckIfInventoryItemsHaveSpecifiedSkill      SkillID                       enum
 setter    rlCheckIfUnitHasSpecifiedPersonalSkill         SkillID                       enum
 getter    rlGetFactionRelation                      Allegiance                           enum
+field     wGameStateRoutine[12],b                   GAMESTATE_                           enum

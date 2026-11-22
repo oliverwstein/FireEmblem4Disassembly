@@ -12,7 +12,7 @@
         .autsiz
         .databank ?
 
-        lda $0AF9,b,x
+        lda wBattleAnimationX,b,x
         and #$01FF
         sec
         sbc $7FE198
@@ -926,7 +926,7 @@
         rep #$20
         lda #$0000
         sta $7E4ECB
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
         sta $7E4ED3
         sta $7E4ECF
         lda #$FFFF
@@ -943,20 +943,20 @@
         sta $7FFC9D
         rep #$20
         lda [lR18],y
-        sta $7E4F1D
+        sta aActionStructUnit2.CharacterID
         inc y
         inc y
         lda [lR18],y
-        sta $7E4EBD
+        sta aActionStructUnit1.CharacterID
         inc y
-        inc y
-        lda [lR18],y
-        and #$00FF
-        sta $7E4F1F
         inc y
         lda [lR18],y
         and #$00FF
-        sta $7E4EBF
+        sta aActionStructUnit2.ClassID
+        inc y
+        lda [lR18],y
+        and #$00FF
+        sta aActionStructUnit1.ClassID
         inc y
         lda [lR18],y
         and #$00FF
@@ -965,7 +965,7 @@
         lda #$FFFF
 
         _FE87
-        sta $7E4F3D
+        sta aActionStructUnit2.WeaponID
         inc y
         lda [lR18],y
         and #$00FF
@@ -974,7 +974,7 @@
         lda #$FFFF
 
         _FE99
-        sta $7E4EDD
+        sta aActionStructUnit1.WeaponID
         inc y
         lda [lR18],y
         bit #$0080
@@ -990,18 +990,18 @@
         sta wCurrentChapter,b
         lda [lR18],y
         and #$007F
-        sta $7E4F23
+        sta aActionStructUnit2.TerrainType
         inc y
         lda [lR18],y
         bit #$0080
         beq _FEC8
         lda #$0008
-        sta $7E4ED7
+        sta aActionStructUnit1.Unknown
 
         _FEC8
         lda [lR18],y
         and #$007F
-        sta $7E4EC3
+        sta aActionStructUnit1.TerrainType
         inc y
         lda [lR18],y
         bit #$0080
@@ -1014,7 +1014,7 @@
         _FEE3
         lda [lR18],y
         and #$007F
-        sta $7E4F27
+        sta aActionStructUnit2.MaxHP
         inc y
         lda [lR18],y
         and #$00FF
@@ -1022,7 +1022,7 @@
         inc y
         lda [lR18],y
         and #$00FF
-        sta $7E4F25
+        sta aActionStructUnit2.CurrentHP
         inc y
         lda [lR18],y
         and #$00FF
@@ -1030,7 +1030,7 @@
         inc y
         lda [lR18],y
         and #$007F
-        sta $7E4F29
+        sta aActionStructUnit2.Level
         inc y
         lda [lR18],y
         and #$00FF
@@ -1038,51 +1038,51 @@
         inc y
         lda [lR18],y
         and #$00FF
-        sta $7E4F47
+        sta aActionStructUnit2.BattleAdjustedHit
         inc y
         lda [lR18],y
         and #$00FF
-        sta $7E4EE7
+        sta aActionStructUnit1.BattleAdjustedHit
         inc y
         lda [lR18],y
         and #$00FF
-        sta $7E4F4F
+        sta aActionStructUnit2.BattleMight
         inc y
         lda [lR18],y
         and #$00FF
-        sta $7E4EEF
+        sta aActionStructUnit1.BattleMight
         inc y
         lda [lR18],y
         and #$00FF
-        sta $7E4F51
+        sta aActionStructUnit2.BattleDefense
         inc y
         lda [lR18],y
         and #$00FF
-        sta $7E4EF1
+        sta aActionStructUnit1.BattleDefense
         inc y
         lda [lR18],y
         pha
         and #$000F
-        sta $7E4F1B
+        sta aActionStructUnit2.UnitRAMPointer
         pla
         lsr a
         lsr a
         lsr a
         lsr a
         and #$000F
-        sta $7E4F17
+        sta aActionStructUnit2.XPosition
         inc y
         lda [lR18],y
         pha
         and #$000F
-        sta $7E4EBB
+        sta aActionStructUnit1.UnitRAMPointer
         pla
         lsr a
         lsr a
         lsr a
         lsr a
         and #$000F
-        sta $7E4EB7
+        sta aActionStructUnit1.XPosition
         inc y
         lda [lR18],y
         pha
@@ -1093,11 +1093,11 @@
         lsr a
         pha
         and #$0001
-        sta $7E4EC1
+        sta aActionStructUnit1.Gender
         pla
         lsr a
         and #$0001
-        sta $7E4F21
+        sta aActionStructUnit2.Gender
         inc y
         lda [lR18],y
         cmp #$0000
@@ -1138,7 +1138,7 @@
         sta $7E4F85,x
         lda #$00FF
         sta $7E4EA9
-        lda #<>rsUnknown80BFFB
+        lda #<>rsOpenBattleScene
         sta wMainLoopPointer
         lda #$0000
         sta wGameStateStep,b

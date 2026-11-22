@@ -36,7 +36,7 @@
             rep #$20
 
             stz wDMAArrayPosition,b
-            jml rlUnknown808ECC
+            jml rlSoftReset
 
         +
         plp

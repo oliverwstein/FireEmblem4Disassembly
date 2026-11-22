@@ -333,7 +333,7 @@
           cmp #5
           beq _CEA3
 
-          jsl rlUnknown87D411
+          jsl rlAICheckIfAnyGroupUnitCanEngageFoe
           bcs _CEA9
 
           jsl rlGetEventLocationEntryEffectiveXCoordinate
@@ -503,7 +503,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown87D411
+        jsl rlAICheckIfAnyGroupUnitCanEngageFoe
         bcs +
 
           lda #4
@@ -1059,13 +1059,13 @@
           stz $442C,b
 
           lda #-64
-          jsr rsUnknown87D2A1
+          jsr rsAICheckAdjacentTileOpenForSurround
           lda #-1
-          jsr rsUnknown87D2A1
+          jsr rsAICheckAdjacentTileOpenForSurround
           lda #64
-          jsr rsUnknown87D2A1
+          jsr rsAICheckAdjacentTileOpenForSurround
           lda #1
-          jsr rsUnknown87D2A1
+          jsr rsAICheckAdjacentTileOpenForSurround
 
           lda $442C,b
           cmp #3
@@ -1107,7 +1107,7 @@
 
         .databank 0
 
-      rsUnknown87D2A1 ; 87/D2A1
+      rsAICheckAdjacentTileOpenForSurround ; 87/D2A1
 
         .al
         .autsiz
@@ -1300,7 +1300,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown87D411
+        jsl rlAICheckIfAnyGroupUnitCanEngageFoe
         bcc _CLC
 
           jml rsAIScriptCommand01
@@ -1408,11 +1408,13 @@
 
         .databank 0
 
-      rlUnknown87D411 ; 87/D411
+      rlAICheckIfAnyGroupUnitCanEngageFoe ; 87/D411
 
         .al
         .autsiz
         .databank ?
+
+        ; Check if any group member can engage an in-range foe; SEC + select unit if so
 
         phb
         php
@@ -1437,7 +1439,7 @@
           ldx #<>aAIUnitList[0]
           
           -
-          jsr rsUnknown87D45B
+          jsr rsAICheckIfUnitCanEngageAnyTarget
           bcs _SEC
 
           txa
@@ -1478,7 +1480,7 @@
 
         .databank 0
 
-      rsUnknown87D45B ; 87/D45B
+      rsAICheckIfUnitCanEngageAnyTarget ; 87/D45B
 
         .al
         .autsiz
@@ -1520,7 +1522,7 @@
           sta wAITemp000EA4,b
 
         +
-        jsl rlUnknown86A92A
+        jsl rlMarkUnitAttackRangeOnMovementMap
 
         lda wAITargetCounter
         bne +
@@ -1563,7 +1565,7 @@
           bit #$0080
           beq _Next
 
-            jsr rsUnknown87D506
+            jsr rsAICheckTargetEngagementViability
             bcs _SEC
         
         _Next
@@ -1588,11 +1590,13 @@
 
         .databank 0
 
-      rsUnknown87D506 ; 87/D506
+      rsAICheckTargetEngagementViability ; 87/D506
 
         .al
         .autsiz
         .databank ?
+
+        ; Check expected damage and if unit HP + def/res >= target might; SEC to engage
 
         stz wAITemp000E96,b
         stz wAITemp000E98,b

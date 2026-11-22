@@ -703,7 +703,7 @@
         bcc +
 
           jsl rlGetSelectedUnitDeploymentOffset
-          sta $0D89,b
+          sta wPhaseScratch000D89,b
 
         +
         plx
@@ -1068,7 +1068,7 @@
         sta aDeploymentTable._YPixelPosition,x
 
         lda wEventLocationEntry,b
-        sta $0580,b
+        sta wTargetEventLocationEntry,b
 
         ply
         sty wRoutineVariable1,b

@@ -1119,12 +1119,14 @@
       .al
       .xl
 
-      rlUnknown9BDC24 ; 9B/DC24
+      rlDemoBattleInit ; 9B/DC24
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $1A: initialize attract-mode demo battle
 
         sep #$20
         lda #$80
@@ -1183,12 +1185,14 @@
 
         ; 9B/DCBB
 
-      rlUnknown9BDCBB ; 9B/DCBB
+      rlDemoBattleRunFrame ; 9B/DCBB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $1B: run attract-mode demo battle frame
 
         sep #$20
         lda $7FD075
@@ -1630,7 +1634,7 @@
         sta lR18+1
         lda #<>aUnknown90E8CE
         sta lR18
-        jsl rlUnknown80C1FC
+        jsl rlStartEventScript
         rtl
 
         .databank 0
@@ -4506,7 +4510,7 @@
 
         lda #$0002
         sta wMusicID,b
-        sta $0500,b
+        sta wSoundIndirectPending,b
         rtl
 
         .databank 0

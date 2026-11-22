@@ -6,11 +6,13 @@
       .al
       .xl
 
-      rlUnknown86AF39 ; 86/AF39
+      rlAIUpdateModeIfFoeInThreatRange ; 86/AF39
 
         .al
         .autsiz
         .databank ?
+
+        ; If any foe is in group threat range ($04), update wAIUnknown7E2002 via jump table
 
         phb
         php
@@ -29,7 +31,7 @@
           lda wAIUnknown7E2002
           asl a
           tax
-          jsr (aUnknown86AF57,x)
+          jsr (aAIThreatUpdateModeRoutines,x)
 
         +
         plp
@@ -38,29 +40,31 @@
 
         .databank 0
 
-      aUnknown86AF57 ; 86/AF57
+      aAIThreatUpdateModeRoutines ; 86/AF57
 
-        .word <>rsUnknown86AF69
-        .word <>rsUnknown86AF6A
-        .word <>rsUnknown86AF69
-        .word <>rsUnknown86AF69
-        .word <>rsUnknown86AF69
-        .word <>rsUnknown86AF69
-        .word <>rsUnknown86AF69
-        .word <>rsUnknown86AF69
-        .word <>rsUnknown86AF69
+        .word <>rsAIThreatKeepMode
+        .word <>rsAIThreatSwitchMode1To2
+        .word <>rsAIThreatKeepMode
+        .word <>rsAIThreatKeepMode
+        .word <>rsAIThreatKeepMode
+        .word <>rsAIThreatKeepMode
+        .word <>rsAIThreatKeepMode
+        .word <>rsAIThreatKeepMode
+        .word <>rsAIThreatKeepMode
 
-      rsUnknown86AF69 ; 86/AF69
+      rsAIThreatKeepMode ; 86/AF69
 
         .al
         .autsiz
         .databank ?
 
+        ; Leave wAIUnknown7E2002 unchanged
+
         rts
 
         .databank 0
 
-      rsUnknown86AF6A ; 86/AF6A
+      rsAIThreatSwitchMode1To2 ; 86/AF6A
 
         .al
         .autsiz
@@ -203,11 +207,13 @@
 
         .databank 0
 
-      rlUnknown86B018 ; 86/B018
+      rlAIUpdateGroupTargetAndWaypoint ; 86/B018
 
         .al
         .autsiz
         .databank ?
+
+        ; Find nearest group target tile, compute leader's turn waypoint, and orient formation
 
         ; Builds target distance map around group leader
 
@@ -308,7 +314,7 @@
           sta wAITemp000EA2,b
           jsl rlTryGetAIFactionGroupLeader
           jsl rlFillMovementMap
-          jsl rlUnknown86AD5E
+          jsl rlTraceTargetPathToReachableTile
 
           lda wAITemp000E96,b
           sta wAIUnknown7E2010
@@ -316,10 +322,10 @@
           sta wAIUnknown7E2012
 
         +
-        jsl rlUnknown87DB70
+        jsl rlAIUpdateFormationDirectionTowardTarget
 
         lda wAICurrentAISetting,b
-        jsl rlUnknown87DA0A
+        jsl rlAISetGroupTargetReadyFlag
 
         _End
         plx
@@ -392,18 +398,20 @@
         .byte ceil((12 * 10) * 256.0/179.0/10) ; = 18
         .byte ceil((13 * 10) * 256.0/179.0/10) ; = 19
 
-      rlUnknown86B129 ; 86/B129
+      rlAIRunSelectedUnitTurn ; 86/B129
 
         .al
         .autsiz
         .databank ?
+
+        ; Decide and initiate movement/action for the currently selected AI unit
 
         phb
         php
         phk
         plb
 
-        jsr rsUnknown86B200
+        jsr rsAIUpdateThreatRangeMap
 
         ldx wAISelectedAIUnitOffset,b
         lda aAIUnitList[0].UnitRAMPointer,x
@@ -438,7 +446,7 @@
         sta wAIUnknown000E8C,b
 
         ; Fill movement map
-        jsl rlUnknown86C1F5
+        jsl rlFillSelectedUnitMovementMap
 
         lda aAIUnitList[0].DeploymentOffset,x
         and #$00FF
@@ -451,7 +459,7 @@
         bit #UnitStateFielded
         bne +
 
-          jsr rsUnknown86BD9D
+          jsr rsAITryDeployUnitFromCastle
           bcc +
 
             jml _End
@@ -468,14 +476,14 @@
             bit #DeploymentStateGuardingCastle
             beq +
 
-              jsr rsUnknown86BA86
+              jsr rsAICastleGuardAttackUnitOnGate
               bra ++
 
             +
             lda wAIUnknown7E201A
             asl a
             tax
-            jsr (aUnknown86B1E6,x)
+            jsr (aAIGroupObjectiveRoutines,x)
             bcs _B1E0
 
             +
@@ -488,10 +496,10 @@
         bit #UnitStateCanto
         bne _B1E0
 
-          jsr rsUnknown86B480
+          jsr rsAIEvaluateInventoryActions
 
         _B1E0
-        jsr rsUnknown86B221
+        jsr rsAIMoveSelectedUnitTowardTarget
         
         _End
         plp
@@ -500,27 +508,29 @@
 
         .databank 0
 
-      aUnknown86B1E6 ; 86/B1E6
+      aAIGroupObjectiveRoutines ; 86/B1E6
 
-        .word <>rsUnknown86B7D1
-        .word <>rsUnknown86B7D1
-        .word <>rsUnknown86B9E8
+        .word <>rsAIObjectiveNoOp
+        .word <>rsAIObjectiveNoOp
+        .word <>rsAIObjectiveTargetVillage
         .word <>rsCheckAnyFoeInGroupRangeFlagUnset
         .word <>rsCheckAnyFoeInGroupRangeFlagUnset
         .word <>rsCheckAnyFoeInGroupRangeFlagUnset
-        .word <>rsUnknown86BA86
-        .word <>rsUnknown86B7D1
-        .word <>rsUnknown86BB38
-        .word <>rsUnknown86BCE3
-        .word <>rsUnknown86BD37
-        .word <>rsUnknown86BD5A
-        .word <>rsUnknown86BD8B
+        .word <>rsAICastleGuardAttackUnitOnGate
+        .word <>rsAIObjectiveNoOp
+        .word <>rsAIObjectiveInteractWithUnit
+        .word <>rsAIObjectiveLeaderEnterHomeCastle
+        .word <>rsAIObjectiveLeaderRetreatAndRevive
+        .word <>rsAIObjectiveLeaderHoldPosition
+        .word <>rsAIObjectiveAllEnterHomeCastle
 
-      rsUnknown86B200 ; 86/B200
+      rsAIUpdateThreatRangeMap ; 86/B200
 
         .al
         .autsiz
         .databank ?
+
+        ; Build aRangeMap of nearby enemy threats unless wAIUnknown7E2002 is 4 or 5
 
         lda wAIUnknown7E2002
         cmp #4
@@ -540,11 +550,13 @@
 
         .databank 0
 
-      rsUnknown86B221 ; 86/B221
+      rsAIMoveSelectedUnitTowardTarget ; 86/B221
 
         .al
         .autsiz
         .databank ?
+
+        ; Pathfind AI unit toward target tile and queue map sprite movement
 
         phb
         php
@@ -553,9 +565,9 @@
 
         ldx wAISelectedAIUnitOffset,b
         lda #0
-        sta $0879,b
+        sta wActiveActionID,b
         lda #$FFFF
-        sta $0873,b
+        sta wActiveActionUnit2DeploymentOffset,b
         lda aAIUnitList[0].XPosition,x
         and #$00FF
         cmp wAITargetXPosition,b
@@ -597,14 +609,14 @@
         sta wAITemp000E9A,b
         lda wAITargetYPosition,b
         sta wAITemp000E9C,b
-        jsl rlUnknown86BDE8
+        jsl rlAIFindBestMoveTowardTarget
         bcc +
 
           lda wAIUnknown7E2014
           sta wAITemp000E9A,b
           lda wAIUnknown7E2016
           sta wAITemp000E9C,b
-          jsl rlUnknown86BDE8
+          jsl rlAIFindBestMoveTowardTarget
           bcs -
 
         +
@@ -617,11 +629,11 @@
           bne +
 
             lda wAIUnknown000E8E,b
-            sta $0879,b
+            sta wActiveActionID,b
             lda wAIUnknown000E8C,b
             bmi +
 
-              sta $0873,b
+              sta wActiveActionUnit2DeploymentOffset,b
 
         ; Update units position with the post movement positions
         +
@@ -637,19 +649,19 @@
         asl a
         asl a
         asl a
-        sta $0875,b
+        sta wActiveActionDestinationX,b
         lda wAITemp000EA0,b
         asl a
         asl a
         asl a
         asl a
-        sta $0877,b
+        sta wActiveActionDestinationY,b
 
         lda aAIUnitList[0].DeploymentOffset,x
         and #$00FF
-        sta $0871,b
+        sta wActiveActionUnit1DeploymentOffset,b
         lda #$FFFF
-        sta $086F,b
+        sta wMapActionActiveFlag,b
 
         lda #$0001
         tsb bUnknown000E7B,b
@@ -661,11 +673,13 @@
 
         .databank 0
 
-      rlUnknown86B307 ; 86/B307
+      rlAIExecuteQueuedAction ; 86/B307
 
         .al
         .autsiz
         .databank ?
+
+        ; Dispatch post-movement map action ID (0-15) via _B315 jump table
 
         phb
         php
@@ -685,23 +699,349 @@
         .databank 0
 
         _B315
-        .word <>rsUnknown86B335
-        .word <>rsUnknown86B343
-        .word <>rlUnknown86B358
-        .word <>rsUnknown86B371
-        .word <>rsUnknown86B39D
-        .word <>rsUnknown86B38F
-        .word <>rsUnknown86B3AB
-        .word <>rsUnknown86B3B9
-        .word <>rsUnknown86B343
-        .word <>rsUnknown86B36A
-        .word <>rsUnknown86B3C7
-        .word <>rsUnknown86B3CE
-        .word <>rsUnknown86B3DD
-        .word <>rsUnknown86B410
-        .word <>rsUnknown86B343
-        .word <>rsUnknown86B343
+        .word <>rsAIActionWait
+        .word <>rsAIActionStartBattle
+        .word <>rsAIActionStartSiegeBattle
+        .word <>rsAIActionEnterHomeCastle
+        .word <>rsAIActionSeizeCastle
+        .word <>rsAIActionRaidVillage
+        .word <>rsAIActionEnterLocation
+        .word <>rsAIActionGuardCastle
+        .word <>rsAIActionStartBattle
+        .word <>rsAIActionNoOp9
+        .word <>rsAIActionNoOp10
+        .word <>rsAIActionStartScriptedBattle
+        .word <>rsAIActionTalk
+        .word <>rsAIActionReviveAndEnterCastle
+        .word <>rsAIActionStartBattle
+        .word <>rsAIActionStartBattle
 
         ; 86/B335
 
     .endsection AIThreatSection
+
+
+    .section Unsorted86B335Section
+
+      .al
+      .xl
+
+      rsAIActionWait ; 86/B335
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Action 0: finish unit move via rlUnknown84CAA9 and clear bit $01 of $0E7B
+
+        ldx wActiveActionUnit1DeploymentOffset,b
+        jsl rlUnknown84CAA9
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B343
+
+      rsAIActionStartBattle ; 86/B343
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Actions 1/8/14/15: clear $057C and run rlUnknown84DC1C between $0871 and $0873
+
+        lda #$0000
+        sta wMapActionTargetType,b
+        lda wActiveActionUnit1DeploymentOffset,b
+        sta wR0
+        lda wActiveActionUnit2DeploymentOffset,b
+        sta wR1
+        jsl rlUnknown84DC1C
+        rts
+
+        .databank 0
+
+        ; 86/B358
+
+      rsAIActionStartSiegeBattle ; 86/B358
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Action 2: set UnitState0400 (siege attack) via rlUnknown84B474 and start battle
+
+        ldx wActiveActionUnit1DeploymentOffset,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlUnknown84B474
+        jml rsAIActionStartBattle
+
+        .databank 0
+
+        ; 86/B36A
+
+    .endsection Unsorted86B335Section
+
+
+    .section Unsorted86B36ASection
+
+      .al
+      .xl
+
+      rsAIActionNoOp9 ; 86/B36A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Action 9: clear bit $01 of bUnknown000E7B and return
+
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B371
+
+    .endsection Unsorted86B36ASection
+
+
+    .section Unsorted86B371Section
+
+      .al
+      .xl
+
+      rsAIActionEnterHomeCastle ; 86/B371
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Action 3 (unused): finish move and relocate unit into castle if on location
+
+        ldx wActiveActionUnit1DeploymentOffset,b
+        jsl rlUnknown84CAA9
+        lda wTargetEventLocationEntry,b
+        beq _B388
+        sta wEventLocationEntry,b
+        jsl rlGetEventLocationEntryID
+        jsl rlUnknown84CD8A
+
+        _B388
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B38F
+
+    .endsection Unsorted86B371Section
+
+
+    .section Unsorted86B38FSection
+
+      .al
+      .xl
+
+      rsAIActionRaidVillage ; 86/B38F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Action 5: raid/destroy village ($84/CF0F) and clear bit $01 of $0E7B
+
+        ldx wActiveActionUnit1DeploymentOffset,b
+        jsl rlUnknown84CF0F
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B39D
+
+    .endsection Unsorted86B38FSection
+
+
+    .section Unsorted86B39DSection
+
+      .al
+      .xl
+
+      rsAIActionSeizeCastle ; 86/B39D
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Action 4: seize/capture castle ($84/CE21) and clear bit $01 of $0E7B
+
+        ldx wActiveActionUnit1DeploymentOffset,b
+        jsl rlUnknown84CE21
+        lda #1
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B3AB
+
+    .endsection Unsorted86B39DSection
+
+
+    .section Unsorted86B3ABSection
+
+      .al
+      .xl
+
+      rsAIActionEnterLocation ; 86/B3AB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Action 6: run castle entry/seize handler ($84/D03E) and clear bit $01 of $0E7B
+
+        ldx wActiveActionUnit1DeploymentOffset,b
+        jsl rlUnknown84D03E
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B3B9
+
+      rsAIActionGuardCastle ; 86/B3B9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Action 7: enter/guard occupied friendly castle ($84/D0B9) and clear bit $01 of $0E7B
+
+        ldx wActiveUnitDeploymentOffset,b
+        jsl rlUnknown84D0B9
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B3C7
+
+      rsAIActionNoOp10 ; 86/B3C7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Action 10: clear bit $01 of bUnknown000E7B and return
+
+        lda #$0001
+        trb bUnknown000E7B,b
+        rts
+
+        .databank 0
+
+        ; 86/B3CE
+
+      rsAIActionStartScriptedBattle ; 86/B3CE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Action 11: run scripted battle from lAITemp000E90 ($84/B613)
+
+        lda lAITemp000E90+1,b
+        sta lR18+1
+        lda lAITemp000E90,b
+        sta lR18
+        jsl rlUnknown84B613
+        rts
+
+        .databank 0
+
+        ; 86/B3DD
+
+    .endsection Unsorted86B3ABSection
+
+
+    .section Unsorted86B3DDSection
+
+      .al
+      .xl
+
+      rsAIActionTalk ; 86/B3DD
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Action 12 (unused): clear bit $01 of $0E7B and run talk event ($0A) for $0871/$0873
+
+        lda #$0001
+        trb bUnknown000E7B,b
+        lda #$000A
+        sta bEventActionIdentifier,b
+        ldx wActiveActionUnit2DeploymentOffset,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitCharacterID
+        sta wEventEngineArgument2,b
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitCharacterID
+        sta wEventEngineArgument1,b
+        jsl rlGetAndRunChapterMapEventConditions
+        rts
+
+        .databank 0
+
+        ; 86/B410
+
+      rsAIActionReviveAndEnterCastle ; 86/B410
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Action 13 (unused): revive group units of wAICurrentAISetting and enter castle
+
+        lda wAICurrentAISetting,b
+        sta wRoutineVariable1,b
+        lda wAIActiveFaction,b
+        jsl rlReviveFactionsUnitsOfAISetting
+        jsr rsAIActionEnterHomeCastle
+        rts
+
+        .databank 0
+
+        ; 86/B421
+
+    .endsection Unsorted86B3DDSection
+
+

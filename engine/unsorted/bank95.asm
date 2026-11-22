@@ -1417,7 +1417,7 @@
         bne _88FD
         sep #$20
         lda #$00
-        sta $0AF3,b
+        sta bBattleAnimationStateFlags,b
         rep #$20
         bra _8919
 
@@ -1438,7 +1438,7 @@
         bne _892C
         sep #$20
         lda #$00
-        sta $0B36,b
+        sta bBattleAnimation2StateFlags,b
         rep #$20
         bra _8969
 
@@ -1472,7 +1472,7 @@
         lda #$0100
         sta wBattleAnimationX,b
         lda #$0100
-        sta $0B3C,b
+        sta wBattleAnimation2X,b
         lda #$0000
         sta $7FE197
         lda #$0100
@@ -1500,7 +1500,7 @@
         lda #$0068
 
         _89B9
-        sta $0B3C,b
+        sta wBattleAnimation2X,b
         lda $0D5B,b
         and #$00F0
         cmp #$0080
@@ -1533,7 +1533,7 @@
         ldx #$0043
         jsl rlUnknown95B6D0
         sta wR0
-        lda $0B3C,b
+        lda wBattleAnimation2X,b
         clc
         adc wR0
         bcc _8A25
@@ -1579,7 +1579,7 @@
         lda #$0100
         sec
         sbc #1,s
-        sta $0B3C,b
+        sta wBattleAnimation2X,b
         pla
         lda #$0080
         sta $7FE198
@@ -1658,7 +1658,7 @@
 
         _8AF6
         sep #$20
-        stz $0AF3,b,x
+        stz bBattleAnimationStateFlags,b,x
         rep #$20
         txa
         clc
@@ -1840,17 +1840,17 @@
         bne _8CA4
         lda wBattleAnimationYVelocity,b
         bne _8CA4
-        lda $0AF3,b
+        lda bBattleAnimationStateFlags,b
         bit #$0004
         bne _8CA4
         lda $0D57,b
         bne _8CA4
-        lda $0B4B,b
+        lda wBattleAnimation2XSpeed,b
         bit #$7FFF
         bne _8CA4
-        lda $0B51,b
+        lda wBattleAnimation2YVelocity,b
         bne _8CA4
-        lda $0B36,b
+        lda bBattleAnimation2StateFlags,b
         bit #$0004
         bne _8CA4
         lda $0D65,b
@@ -4774,10 +4774,10 @@
         sep #$20
         lda #$20
         sta $7FE191
-        lda $0AF3,b
+        lda bBattleAnimationStateFlags,b
         and #$FE
-        sta $0AF3,b
-        lda $0B26,b
+        sta bBattleAnimationStateFlags,b
+        lda bBattleAnimationAttributes,b
         bit #$08
         bne _9CAF
         lda #$81
@@ -4798,10 +4798,10 @@
         sep #$20
         lda #$20
         sta $7FE193
-        lda $0B36,b
+        lda bBattleAnimation2StateFlags,b
         and #$FE
-        sta $0B36,b
-        lda $0B69,b
+        sta bBattleAnimation2StateFlags,b
+        lda bBattleAnimation2Attributes,b
         bit #$08
         bne _9CD5
         lda #$81
@@ -6427,15 +6427,15 @@
 
 
         _A684
-        lda $0AF3,b
+        lda bBattleAnimationStateFlags,b
         bit #$0020
         beq _A694
-        lda $0AF4,b
+        lda bBattleAnimationFacingFlags,b
         bit #$0040
         bne _A6A0
 
         _A694
-        lda $0AF3,b
+        lda bBattleAnimationStateFlags,b
         bit #$0001
         beq _A6A0
         jml _A75F
@@ -6450,24 +6450,24 @@
 
 
         _A6AF
-        lda $0B36,b
+        lda bBattleAnimation2StateFlags,b
         bit #$0020
         beq _A6BF
-        lda $0B37,b
+        lda bBattleAnimation2FacingFlags,b
         bit #$0040
         bne _A6CB
 
         _A6BF
-        lda $0B36,b
+        lda bBattleAnimation2StateFlags,b
         bit #$0001
         beq _A6CB
         jml _A75F
 
 
         _A6CB
-        lda $0B4B,b
-        ora $0B51,b
-        ora $0B56,b
+        lda wBattleAnimation2XSpeed,b
+        ora wBattleAnimation2YVelocity,b
+        ora wBattleAnimation2YStep,b
         beq _A6DA
         jml _A75F
 
@@ -6671,9 +6671,9 @@
 
         _A865
         lda #$0000
-        sta $0AE9,b
+        sta wBattleAnimationAttackerOffset,b
         lda #$0043
-        sta $0AEB,b
+        sta wBattleAnimationDefenderOffset,b
         sep #$20
         lda $0AE8,b
         and #$7F
@@ -6715,9 +6715,9 @@
 
         _A8D0
         lda #$0043
-        sta $0AE9,b
+        sta wBattleAnimationAttackerOffset,b
         lda #$0000
-        sta $0AEB,b
+        sta wBattleAnimationDefenderOffset,b
         sep #$20
         lda $0AE8,b
         ora #$80
@@ -6875,7 +6875,7 @@
         rep #$20
         jsl rlUnknown95B8F3
         bcs _AA53
-        lda $0AF5,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         bit #$0004
         beq _AA1D
         jsl rlUnknown95ACF6
@@ -7175,7 +7175,7 @@
         _AC17
         .al
         sep #$20
-        lda $0AF5,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$03
         cmp #$03
         beq _AC26
@@ -7276,7 +7276,7 @@
         _AC84
         .al
         sep #$20
-        lda $0AF5,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$03
         cmp #$03
         beq _AC93
@@ -7428,7 +7428,7 @@
         jsl rlBattleAnimationQueueAction
         pla
         phx
-        lda $0AF5,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$0038
         lsr a
         lsr a
@@ -7512,7 +7512,7 @@
         adc #1,s
         phx
         pha
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationYFixed,b,x
         beq _ADBA
         lda #$0014
@@ -7785,11 +7785,11 @@
         and #$EF
         sta $0AE4,b
         rep #$20
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         and #$0003
         cmp #$0002
         beq _AEE6
-        lda $0AE9,b
+        lda wBattleAnimationAttackerOffset,b
         clc
         adc #$0086
         tax
@@ -7887,7 +7887,7 @@
 
 
         _AF83
-        lda $0AE9,b
+        lda wBattleAnimationAttackerOffset,b
         cmp #$0000
         bne _AFB5
         lda $0D5E,b
@@ -7914,7 +7914,7 @@
 
         _AFBD
         pha
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         and #$01FF
         sec
@@ -8037,9 +8037,9 @@
 
         phx
         phy
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         sec
         sbc wBattleAnimationX,b,x
         bpl _B065
@@ -8048,16 +8048,16 @@
 
         _B065
         sta wR0
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         jsl rlBattleAnimationGetSpacing
         sta wR8
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         jsl rlBattleAnimationGetBodyWidth
         sta wR9
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         sta wR1
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
         sta wR2
         lda wR2
@@ -8131,9 +8131,9 @@
 
         phx
         phy
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         sec
         sbc wBattleAnimationX,b,x
         bpl _B0EC
@@ -8142,10 +8142,10 @@
 
         _B0EC
         sta wR9
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         jsl rlBattleAnimationGetBodyWidth
         pha
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         jsl rlBattleAnimationGetBodyWidth
         clc
         adc #1,s
@@ -8191,14 +8191,14 @@
         ; to the right; A 0 (zero flag set) if level, else 1.
 
         lda wBattleAnimationX,b
-        cmp $0B3C,b
+        cmp wBattleAnimation2X,b
         beq _B190
         bcc _B1A6
         bcs _B1A0
 
         _B190
         lda wBattleAnimationXFixed,b
-        cmp $0B3B,b
+        cmp wBattleAnimation2XFixed,b
         bcc _B1A6
         bne _B1A0
         lda #$0000
@@ -8266,12 +8266,12 @@
 
         _B1D9
         sep #$20
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$FE
-        sta $0AF4,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$FD
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
         bra _B24D
 
@@ -8279,18 +8279,18 @@
         _B1EF
         pha
         sep #$20
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         ora #$01
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
         pla
         pha
         bit #$8000
         beq _B20F
         sep #$20
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         ora #$02
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
 
         _B20F
@@ -8299,9 +8299,9 @@
         bit #$4000
         beq _B222
         sep #$20
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         ora #$04
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
 
         _B222
@@ -8309,7 +8309,7 @@
         pha
         and #$007F
         pha
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$0006
         cmp #$0006
         pla
@@ -8317,15 +8317,15 @@
         pha
         pla
         tay
-        lda $0B2F,b,x
+        lda lBattleAnimationMoveListPointer,b,x
         sta lR18
-        lda $0B30,b,x
+        lda lBattleAnimationMoveListPointer+1,b,x
         sta lR18+1
         lda [lR18],y
         clc
-        adc $0B2F,b,x
-        sta $0B32,b,x
-        sta $0B34,b,x
+        adc lBattleAnimationMoveListPointer,b,x
+        sta wBattleAnimationMoveListLoopOffset,b,x
+        sta wBattleAnimationMoveListOffset,b,x
         pla
 
         _B24D
@@ -9014,11 +9014,11 @@
 
         phx
         clc
-        adc $0B1E,b,x
+        adc bBattleAnimationPoseOffset,b,x
         and #$00FF
         sep #$20
         pha
-        cmp $0B1C,b,x
+        cmp bBattleAnimationSequenceID,b,x
         bne _B899
         pla
         rep #$20
@@ -9165,10 +9165,10 @@
 
         _B948
         sep #$20
-        lda $0AF5,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         ora #$04
         and #$C7
-        sta $0AF5,b,x
+        sta bBattleAnimationCombatantFlags,b,x
         rep #$20
 
         _B956
@@ -9180,9 +9180,9 @@
         jsl rlUnknown96DC7C
         jsl rlUnknown96BCEC
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$40
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         sec
 
@@ -9212,7 +9212,7 @@
         ldx #$0000
 
         _B974
-        stz $0AF3,b,x
+        stz bBattleAnimationStateFlags,b,x
         rep #$20
         txa
         clc
@@ -9310,7 +9310,7 @@
 
         _B9F3
         lda $0BFF,b,x
-        sta $0AF3,b,y
+        sta bBattleAnimationStateFlags,b,y
         inc y
         inc x
         cpx #$0043
@@ -9348,7 +9348,7 @@
         nop
         ldx $4216,b
         pha
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$04
         beq _BA2B
         pla
@@ -9359,24 +9359,24 @@
         _BA2B
         pla
         xba
-        sta $0B1C,b,x
-        stz $0B23,b,x
+        sta bBattleAnimationSequenceID,b,x
+        stz bBattleAnimationFrameTimer,b,x
         pha
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$01
-        sta $0AF3,b,x
-        lda $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$04
-        sta $0AF3,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$9F
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         pla
         rep #$20
         pha
-        lda $0B1A,b,x
+        lda lBattleAnimationFrameDataPointer+1,b,x
         sta lR18+1
-        lda $0B19,b,x
+        lda lBattleAnimationFrameDataPointer,b,x
         sta lR18
         ldy #$0000
         pla
@@ -9387,8 +9387,8 @@
         lda [lR18],y
         clc
         adc lR18
-        sta $0B1F,b,x
-        sta $0B21,b,x
+        sta wBattleAnimationScriptLoopOffset,b,x
+        sta wBattleAnimationScriptOffset,b,x
         clc
 
         _BA71
@@ -9424,7 +9424,7 @@
         nop
         ldx $4216,b
         pha
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$04
         beq _BA9C
         pla
@@ -9435,24 +9435,24 @@
         _BA9C
         pla
         xba
-        sta $0B1C,b,x
-        stz $0B23,b,x
+        sta bBattleAnimationSequenceID,b,x
+        stz bBattleAnimationFrameTimer,b,x
         pha
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$01
-        sta $0AF3,b,x
-        lda $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$04
-        sta $0AF3,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$9F
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         pla
         rep #$20
         pha
-        lda $0B1A,b,x
+        lda lBattleAnimationFrameDataPointer+1,b,x
         sta lR18+1
-        lda $0B19,b,x
+        lda lBattleAnimationFrameDataPointer,b,x
         sta lR18
         ldy #$0000
         pla
@@ -9463,8 +9463,8 @@
         lda [lR18],y
         clc
         adc lR18
-        sta $0B1F,b,x
-        sta $0B21,b,x
+        sta wBattleAnimationScriptLoopOffset,b,x
+        sta wBattleAnimationScriptOffset,b,x
         clc
 
         _BAE2
@@ -9485,7 +9485,7 @@
         .databank ?
 
         sep #$20
-        stz $0AF3,b,x
+        stz bBattleAnimationStateFlags,b,x
         rep #$20
         rtl
 
@@ -9511,11 +9511,11 @@
 
         _BB01
         phx
-        lda $0AF7,b,x
+        lda bBattleAnimationRole,b,x
         and #$00FF
         cmp $0C43,b
         bne _BB18
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0080
         beq _BB18
         jsr rsUnknown95BB2E
@@ -9547,7 +9547,7 @@
         .autsiz
         .databank ?
 
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0001
         bne _BB3D
         clc
@@ -9572,7 +9572,7 @@
         .autsiz
         .databank ?
 
-        lda $0B23,b,x
+        lda bBattleAnimationFrameTimer,b,x
         and #$00FF
         beq _BB4D
         jml _BC9D
@@ -9764,24 +9764,24 @@
 
         _BC69
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$FD
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         jsr rsUnknown95BFB3
         pha
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         pla
         sep #$20
-        sta $0B1D,b,x
+        sta bBattleAnimationPoseID,b,x
         xba
         jsr rsUnknown95BFC6
-        sta $0B23,b,x
+        sta bBattleAnimationFrameTimer,b,x
         rep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0002
         bne _BCAA
         sec
@@ -9789,7 +9789,7 @@
 
 
         _BC9D
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0002
         bne _BCAA
         clc
@@ -9798,10 +9798,10 @@
         jsl rlUnknown95C1AB
 
         _BCAA
-        lda $0B23,b,x
+        lda bBattleAnimationFrameTimer,b,x
         and #$00FF
         beq _BCB5
-        dec $0B23,b,x
+        dec bBattleAnimationFrameTimer,b,x
 
         _BCB5
         rts
@@ -9809,7 +9809,7 @@
 
         _BCB6
         sep #$20
-        stz $0AF3,b,x
+        stz bBattleAnimationStateFlags,b,x
         rep #$20
         rts
 
@@ -9825,9 +9825,9 @@
         .databank ?
 
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$FE
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         rts
 
@@ -9842,8 +9842,8 @@
         .autsiz
         .databank ?
 
-        lda $0B1F,b,x
-        sta $0B21,b,x
+        lda wBattleAnimationScriptLoopOffset,b,x
+        sta wBattleAnimationScriptOffset,b,x
         jsr rsUnknown95E58C
         rts
 
@@ -9867,10 +9867,10 @@
         _BCDF
         asl a
         pha
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         sec
         sbc #1,s
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         pla
         jsr rsUnknown95E59B
         rts
@@ -9890,15 +9890,15 @@
         sep #$20
         xba
         jsr rsUnknown95BFC6
-        sta $0B23,b,x
-        lda $0AF3,b,x
+        sta bBattleAnimationFrameTimer,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$02
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -9958,10 +9958,10 @@
         pla
 
         _BD60
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -9975,10 +9975,10 @@
         .autsiz
         .databank ?
 
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -9999,11 +9999,11 @@
         sep #$20
         lda #$01
         sta $0C42,b
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$02
         .byte $00 ; brk
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         sec
         rts
 
@@ -10019,14 +10019,14 @@
         .databank ?
 
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$FB
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10041,14 +10041,14 @@
         .databank ?
 
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$04
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10072,10 +10072,10 @@
         sep #$20
         stz $0C42,b
         rep #$20
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         sec
 
         _BDD1
@@ -10093,9 +10093,9 @@
         .databank ?
 
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$40
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         jsr rsUnknown95BFB3
         xba
@@ -10106,10 +10106,10 @@
         _BDE8
         asl a
         pha
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         sec
         sbc #1,s
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         pla
         rts
 
@@ -10125,10 +10125,10 @@
         .databank ?
 
         jsl rlUnknown95C077
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10144,10 +10144,10 @@
 
         jsl rlUnknown95AAFF
         sep #$20
-        lda $0AF5,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$FC
         ora #$00
-        sta $0AF5,b,x
+        sta bBattleAnimationCombatantFlags,b,x
         rep #$20
         rts
 
@@ -10163,10 +10163,10 @@
         .databank ?
 
         jsl rlUnknown95AEA2
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10182,10 +10182,10 @@
 
         jsl rlUnknown96DC7C
         jsl rlUnknown96BCEC
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10246,10 +10246,10 @@
 
         _BE98
         plx
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10282,10 +10282,10 @@
         plx
 
         _BEC3
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10303,16 +10303,16 @@
         xba
         pha
         sep #$20
-        lda $0AF5,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$FC
         ora #1,s
-        sta $0AF5,b,x
+        sta bBattleAnimationCombatantFlags,b,x
         rep #$20
         pla
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10363,9 +10363,9 @@
         _BF21
         pla
         sep #$20
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$7F
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
         bra _BF3F
 
@@ -10373,18 +10373,18 @@
         _BF30
         pla
         sep #$20
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         ora #$80
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
         bra _BF3F
 
 
         _BF3F
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10399,14 +10399,14 @@
         .databank ?
 
         sep #$20
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         ora #$40
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10424,21 +10424,21 @@
         bne _BF76
         jsl rlUnknown95C057
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$40
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
 
         _BF76
         sep #$20
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         ora #$40
-        sta $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
         rep #$20
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10453,14 +10453,14 @@
         .databank ?
 
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$FE
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10475,10 +10475,10 @@
         .databank ?
 
         jsl rlUnknown95C697
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         rts
 
         .databank 0
@@ -10493,9 +10493,9 @@
         .databank ?
 
         phy
-        lda $0B1A,b,x
+        lda lBattleAnimationFrameDataPointer+1,b,x
         sta lR18+1
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         sta lR18
         ldy #$0000
         lda [lR18],y
@@ -10516,7 +10516,7 @@
 
         pha
         sta $4202,b
-        lda $0B15,b,x
+        lda bBattleAnimationDelayMultiplier1,b,x
         sta $4203,b
         nop
         nop
@@ -10530,7 +10530,7 @@
         sta wR12
         pla
         sta $4202,b
-        lda $0B16,b,x
+        lda bBattleAnimationDelayMultiplier2,b,x
         sta $4203,b
         nop
         nop
@@ -10554,13 +10554,13 @@
         .databank ?
 
         phy
-        lda $0B1A,b,x
+        lda lBattleAnimationFrameDataPointer+1,b,x
         sta lR18+1
-        lda $0B19,b,x
+        lda lBattleAnimationFrameDataPointer,b,x
         sta lR18
         sta wR9
         ldy #$0002
-        lda $0B1D,b,x
+        lda bBattleAnimationPoseID,b,x
         and #$00FF
         asl a
         clc
@@ -10588,9 +10588,9 @@
 
         phx
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$BF
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
 
         _C02F
@@ -10600,18 +10600,18 @@
         beq _C055
         cmp #$00F3
         beq _C04B
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
         bra _C02F
 
 
         _C04B
-        lda $0B21,b,x
+        lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
-        sta $0B21,b,x
+        sta wBattleAnimationScriptOffset,b,x
 
         _C055
         plx
@@ -10713,7 +10713,7 @@
         and #$00FF
         beq _C0CC
         ldx #$0000
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0040
         beq _C0CC
         jsl rlUnknown95C022
@@ -10728,7 +10728,7 @@
         and #$00FF
         beq _C0F1
         ldx #$0043
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0040
         beq _C0F1
         jsl rlUnknown95C022
@@ -10907,7 +10907,7 @@
         phy
         php
         rep #$20
-        lda $0B24,b,x
+        lda wBattleAnimationBaseTile,b,x
         sta wR6
         lda wBattleAnimationX,b,x
         and #$01FF
@@ -10924,7 +10924,7 @@
         sbc $7FE198
         sta wR0
         sep #$20
-        lda $0B17,b,x
+        lda bBattleAnimationDrawOffsetX,b,x
         bmi _C1DF
         rep #$20
         and #$00FF
@@ -10941,7 +10941,7 @@
         adc wR0
         jsl rlUnknown95A164
         sta wR0
-        lda $0AFB,b,x
+        lda wBattleAnimationYAnchor,b,x
         sec
         sbc wBattleAnimationYFixed,b,x
         xba
@@ -10949,13 +10949,13 @@
         adc $7FE19A
         and #$00FF
         sta wR1
-        lda $0B18,b,x
+        lda bBattleAnimationDrawOffsetY,b,x
         and #$00FF
         clc
         adc wR1
         and #$00FF
         sta wR1
-        lda $0B1D,b,x
+        lda bBattleAnimationPoseID,b,x
         and #$00FF
         cmp #$00FE
         bne _C21B
@@ -10964,16 +10964,16 @@
 
 
         _C21B
-        lda $0B24,b,x
+        lda wBattleAnimationBaseTile,b,x
         and #$7FFF
         sta wR4
-        lda $0B25,b,x
+        lda wBattleAnimationBaseTile+1,b,x
         and #$FF00
         sta wR5
         phx
         sep #$20
         phb
-        lda $0B1B,b,x
+        lda lBattleAnimationFrameDataPointer+2,b,x
         pha
         plb
         .databank ?
@@ -10995,7 +10995,7 @@
 
         _C248
         php
-        lda $0AF5,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         bit #$0040
         beq _C256
         plp
@@ -11008,7 +11008,7 @@
 
         _C25B
         plx
-        lda $0B1A,b,x
+        lda lBattleAnimationFrameDataPointer+1,b,x
         sta lR18+1
         pla
         sta lR18
@@ -11049,15 +11049,15 @@
 
         _C284
         pha
-        lda $0B28,b,x
+        lda lBattleAnimationSecondaryPointer1+1,b,x
         sta lR18+1
-        lda $0B27,b,x
+        lda lBattleAnimationSecondaryPointer1,b,x
         sta lR18
-        lda $0B2B,b,x
+        lda lBattleAnimationSecondaryPointer2+1,b,x
         sta lR19+1
-        lda $0B2A,b,x
+        lda lBattleAnimationSecondaryPointer2,b,x
         sta lR19
-        lda $0B2D,b,x
+        lda wBattleAnimationSecondaryOffset,b,x
         sta wR0
         pla
         jsl rlUnknown95C2A9
@@ -11604,10 +11604,10 @@
         .databank ?
 
         phx
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
         sta wR0
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         sta wR1
         lda wR0
@@ -11627,20 +11627,20 @@
         sta wR1
 
         _C613
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         jsr rsUnknown95C63B
         bcc _C639
-        lda $0B24,b,x
+        lda wBattleAnimationBaseTile,b,x
         and #$7FFF
         ora wR0
-        sta $0B24,b,x
-        ldx $0AEB,b
+        sta wBattleAnimationBaseTile,b,x
+        ldx wBattleAnimationDefenderOffset,b
         jsr rsUnknown95C63B
         bcc _C639
-        lda $0B24,b,x
+        lda wBattleAnimationBaseTile,b,x
         and #$7FFF
         ora wR1
-        sta $0B24,b,x
+        sta wBattleAnimationBaseTile,b,x
 
         _C639
         plx
@@ -11658,7 +11658,7 @@
         .databank ?
 
         phy
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0001
         bne _C694
         lda wBattleAnimationYFixed,b,x
@@ -11739,16 +11739,16 @@
         lda wR0
         cmp wR1
         bcc _C6C2
-        lda $0B24,b,x
+        lda wBattleAnimationBaseTile,b,x
         and #$7FFF
-        sta $0B24,b,x
+        sta wBattleAnimationBaseTile,b,x
         bra _C6CB
 
 
         _C6C2
-        lda $0B24,b,x
+        lda wBattleAnimationBaseTile,b,x
         ora #$8000
-        sta $0B24,b,x
+        sta wBattleAnimationBaseTile,b,x
 
         _C6CB
         plx
@@ -11771,7 +11771,7 @@
 
         phx
         phy
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         bit #$0001
         beq _C6DB
         jml _C7C7
@@ -11879,23 +11879,23 @@
         bne _C7C1
         lda wBattleAnimationYVelocity,b,x
         bne _C7AB
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         bit #$0040
         beq _C7AB
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$FE
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
 
         _C7AB
         sep #$20
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$FE
-        sta $0AF4,b,x
-        lda $0AF5,b,x
+        sta bBattleAnimationFacingFlags,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$FC
         ora #$02
-        sta $0AF5,b,x
+        sta bBattleAnimationCombatantFlags,b,x
         rep #$20
 
         _C7C1
@@ -12299,7 +12299,7 @@
 
         phx
         php
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         bit #$0001
         beq _CA0E
         plp
@@ -12351,9 +12351,9 @@
         bcc _CA71
 
         _CA43
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         lda wBattleAnimationX,b,x
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         sec
         sbc wBattleAnimationX,b,x
         bpl _CA56
@@ -12362,10 +12362,10 @@
 
         _CA56
         pha
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         jsl rlBattleAnimationGetBodyWidth
         pha
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         jsl rlBattleAnimationGetBodyWidth
         clc
         adc #1,s
@@ -12573,7 +12573,7 @@
         and #$00FF
         plx
         sep #$20
-        sta $0B17,b,x
+        sta bBattleAnimationDrawOffsetX,b,x
         rep #$20
         bra _CB7E
 
@@ -12588,7 +12588,7 @@
         inc a
         plx
         sep #$20
-        sta $0B17,b,x
+        sta bBattleAnimationDrawOffsetX,b,x
         rep #$20
 
         _CB7E
@@ -12691,7 +12691,7 @@
 
         phx
         phy
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0020
         bne _CC03
         lda wBattleAnimationYFixed,b,x
@@ -12724,35 +12724,35 @@
 
         phx
         phy
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0020
         beq _CC14
         jml _CCD2
 
 
         _CC14
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         bit #$0001
         beq _CC20
         jml rlUnknown95CE46
 
 
         _CC20
-        lda $0AF5,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         bit #$0080
         beq _CC2C
         jml _CD3E
 
 
         _CC2C
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         bit #$0008
         beq _CC38
         jml _CCD5
 
 
         _CC38
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0010
         beq _CC44
         jml _CCD2
@@ -12784,20 +12784,20 @@
 
         _CC6B
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$F7
-        sta $0AF3,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$DF
-        sta $0AF4,b,x
-        lda $0AF5,b,x
+        sta bBattleAnimationFacingFlags,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$FC
         ora #$02
-        sta $0AF5,b,x
+        sta bBattleAnimationCombatantFlags,b,x
         rep #$20
         stz wBattleAnimationYFixed,b,x
         stz wBattleAnimationYVelocity,b,x
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0004
         bne _CC97
 
@@ -12808,7 +12808,7 @@
         _CC99
         sta wBattleAnimationYFixed,b,x
         beq _CCC8
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0004
         bne _CCC8
         xba
@@ -12847,7 +12847,7 @@
 
 
         _CCD5
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0010
         bne _CD3B
         lda wBattleAnimationYVelocity,b,x
@@ -12873,19 +12873,19 @@
 
         _CD00
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$F7
-        sta $0AF3,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$F7
-        sta $0AF4,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$DF
-        sta $0AF4,b,x
-        lda $0AF5,b,x
+        sta bBattleAnimationFacingFlags,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$FC
         ora #$02
-        sta $0AF5,b,x
+        sta bBattleAnimationCombatantFlags,b,x
         rep #$20
         stz wBattleAnimationYFixed,b,x
         stz wBattleAnimationYVelocity,b,x
@@ -12906,7 +12906,7 @@
 
 
         _CD3E
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0010
         bne _CDA0
         lda wBattleAnimationYVelocity,b,x
@@ -12926,22 +12926,22 @@
 
         _CD60
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$F7
-        sta $0AF3,b,x
-        lda $0AF5,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$7F
-        sta $0AF5,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationCombatantFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$DF
-        sta $0AF4,b,x
-        lda $0AF3,b,x
+        sta bBattleAnimationFacingFlags,b,x
+        lda bBattleAnimationStateFlags,b,x
         ora #$20
-        sta $0AF3,b,x
-        lda $0AF5,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$FC
         ora #$02
-        sta $0AF5,b,x
+        sta bBattleAnimationCombatantFlags,b,x
         rep #$20
         stz wBattleAnimationYVelocity,b,x
         bra _CDA0
@@ -12976,7 +12976,7 @@
         phy
         lda wBattleAnimationYStep,b,x
         bne _CDC4
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0010
         bne _CDB6
         jml _CE43
@@ -12984,9 +12984,9 @@
 
         _CDB6
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$EF
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         bra _CE43
 
@@ -13012,9 +13012,9 @@
         sta wBattleAnimationYFixed,b,x
         stz wBattleAnimationYStep,b,x
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$EF
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         bra _CDF9
 
@@ -13044,16 +13044,16 @@
         sta wBattleAnimationYFixed,b,x
         stz wBattleAnimationYStep,b,x
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$EF
-        sta $0AF3,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$DF
-        sta $0AF4,b,x
-        lda $0AF5,b,x
+        sta bBattleAnimationFacingFlags,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$FC
         ora #$02
-        sta $0AF5,b,x
+        sta bBattleAnimationCombatantFlags,b,x
         rep #$20
         bra _CE43
 
@@ -13502,7 +13502,7 @@
 
 
         _D1F9
-        lda $0B3C,b
+        lda wBattleAnimation2X,b
 
         _D1FC
         sta wR1
@@ -13697,7 +13697,7 @@
         and #$7F00
         xba
         sta wR9
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         bit #$0040
         beq _D41D
         ldy #$0000
@@ -13776,7 +13776,7 @@
         and #$7F00
         xba
         sta wR9
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         bit #$0040
         beq _D49A
         ldy #$0000
@@ -14217,7 +14217,7 @@
         .autsiz
         .databank ?
 
-        lda $0B3C,b
+        lda wBattleAnimation2X,b
         sta $7FE1A4
         lda #$0003
         jsl rlUnknown95D6EC
@@ -14369,14 +14369,14 @@
         ldx #$0000
 
         _D791
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0080
         bne _D79D
         jml _D851
 
 
         _D79D
-        lda $0AF5,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         bit #$0040
         beq _D7A9
         jml _D851
@@ -14410,7 +14410,7 @@
         sbc $7FE198
         sta wR0
         sep #$20
-        lda $0B17,b,x
+        lda bBattleAnimationDrawOffsetX,b,x
         bmi _D7E7
         rep #$20
         and #$00FF
@@ -14427,29 +14427,29 @@
         adc wR0
         jsl rlUnknown95A164
         sta wR0
-        lda $0AFB,b,x
+        lda wBattleAnimationYAnchor,b,x
         xba
         clc
         adc $7FE19A
         and #$00FF
         sta wR1
-        lda $0B24,b,x
+        lda wBattleAnimationBaseTile,b,x
         and #$7FFF
         sta wR4
-        lda $0B26,b,x
+        lda bBattleAnimationAttributes,b,x
         and #$00FF
         xba
         sta wR5
         sep #$20
         phb
-        lda $0B1B,b,x
+        lda lBattleAnimationFrameDataPointer+2,b,x
         pha
         plb
         .databank ?
         rep #$20
-        lda $0B1A,b,x
+        lda lBattleAnimationFrameDataPointer+1,b,x
         sta lR18+1
-        lda $0B19,b,x
+        lda lBattleAnimationFrameDataPointer,b,x
         sta lR18
         sta wR9
         ldy #$0002
@@ -14464,7 +14464,7 @@
         inc a
         tay
         phx
-        lda $0B24,b,x
+        lda wBattleAnimationBaseTile,b,x
         bit #$8000
         bne _D84A
         clc
@@ -14557,7 +14557,7 @@
         lda wBattleAnimationX,b,x
         sta lR18
         sep #$20
-        lda $0AFC,b,x
+        lda wBattleAnimationYAnchor+1,b,x
         sec
         sbc bBattleAnimationY,b,x
         sta lR18+2
@@ -14642,18 +14642,18 @@
         plx
         lda $0C46,b,x
         tax
-        lda $0B1D,b,x
+        lda bBattleAnimationPoseID,b,x
         and #$00FF
         cmp #$00FE
         beq _D95F
-        lda $0B24,b,x
+        lda wBattleAnimationBaseTile,b,x
         and #$7FFF
         sta wR4
-        lda $0B25,b,x
+        lda wBattleAnimationBaseTile+1,b,x
         and #$FF00
         sta wR5
         sep #$20
-        lda $0B1B,b,x
+        lda lBattleAnimationFrameDataPointer+2,b,x
         pha
         plb
         .databank ?
@@ -14661,7 +14661,7 @@
         jsr rsUnknown95BFF9
         inc a
         tay
-        lda $0B24,b,x
+        lda wBattleAnimationBaseTile,b,x
         bit #$8000
         bne _D95A
         clc
@@ -14698,7 +14698,7 @@
         lda wBattleAnimationX,b,x
         sta lR18
         sep #$20
-        lda $0AFC,b,x
+        lda wBattleAnimationYAnchor+1,b,x
         sec
         sbc bBattleAnimationY,b,x
         sta lR18+2
@@ -14782,13 +14782,13 @@
 
         phx
         pha
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         bit #$0080
         beq _DA07
         lda $7FE09E
         bit #$0001
         beq _DA07
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         and #$01FF
         sec
@@ -14898,7 +14898,7 @@
         bne _DA97
         phx
         ldx #$0086
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0080
         beq _DA6F
         sec
@@ -14907,7 +14907,7 @@
 
         _DA6F
         ldx #$00C9
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0080
         beq _DA7D
         sec
@@ -14931,7 +14931,7 @@
         _DA8F
         xba
         sep #$20
-        sta $0B1E,b,x
+        sta bBattleAnimationPoseOffset,b,x
         rep #$20
 
         _DA97
@@ -14948,7 +14948,7 @@
         .autsiz
         .databank ?
 
-        lda $0AF3,b
+        lda bBattleAnimationStateFlags,b
         bit #$0080
         bne _DAA2
         bra _DADF
@@ -14960,18 +14960,18 @@
         bne _DADF
         lda wBattleAnimationYVelocity,b
         bne _DADF
-        lda $0AF4,b
+        lda bBattleAnimationFacingFlags,b
         bit #$0020
         bne _DADF
-        lda $0AF3,b
+        lda bBattleAnimationStateFlags,b
         bit #$0020
         beq _DAC7
-        lda $0AF4,b
+        lda bBattleAnimationFacingFlags,b
         bit #$0040
         bne _DACF
 
         _DAC7
-        lda $0AF3,b
+        lda bBattleAnimationStateFlags,b
         bit #$0001
         bne _DADF
 
@@ -15000,30 +15000,30 @@
         .autsiz
         .databank ?
 
-        lda $0B36,b
+        lda bBattleAnimation2StateFlags,b
         bit #$0080
         bne _DAEB
         bra _DB28
 
 
         _DAEB
-        lda $0B4B,b
+        lda wBattleAnimation2XSpeed,b
         bit #$7FFF
         bne _DB28
-        lda $0B51,b
+        lda wBattleAnimation2YVelocity,b
         bne _DB28
-        lda $0B37,b
+        lda bBattleAnimation2FacingFlags,b
         bit #$0020
         bne _DB28
-        lda $0B36,b
+        lda bBattleAnimation2StateFlags,b
         bit #$0020
         beq _DB10
-        lda $0B37,b
+        lda bBattleAnimation2FacingFlags,b
         bit #$0040
         bne _DB18
 
         _DB10
-        lda $0B36,b
+        lda bBattleAnimation2StateFlags,b
         bit #$0001
         bne _DB28
 
@@ -15296,10 +15296,10 @@
         _DC28
         sep #$20
         pha
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         and #$FC
         ora #1,s
-        sta $0AF6,b,x
+        sta bBattleAnimationMotionFlags,b,x
         pla
         rep #$20
         sta wR0
@@ -15360,7 +15360,7 @@
         tyx
         sep #$20
         lda #$01
-        sta $0AF7,b,x
+        sta bBattleAnimationRole,b,x
         rep #$20
         plx
         rts
@@ -15379,7 +15379,7 @@
         phx
         tyx
         lda #$0000
-        sta $0B2D,b,x
+        sta wBattleAnimationSecondaryOffset,b,x
         jsl rlUnknown95B050
         lda wR0
         asl a
@@ -15393,10 +15393,10 @@
         jsl rlUnsignedDivide16By16R13
         plx
         lda wR13
-        sta $0B2A,b,x
+        sta lBattleAnimationSecondaryPointer2,b,x
         sep #$20
         lda #$01
-        sta $0AF7,b,x
+        sta bBattleAnimationRole,b,x
         rep #$20
         plx
         rts
@@ -15423,10 +15423,10 @@
         phx
         tyx
         lda #$0000
-        sta $0B2D,b,x
+        sta wBattleAnimationSecondaryOffset,b,x
         sep #$20
         lda #$04
-        sta $0AF7,b,x
+        sta bBattleAnimationRole,b,x
         rep #$20
         plx
         rts
@@ -15459,15 +15459,15 @@
         sep #$20
         sta $0C2A,b
         rep #$20
-        lda $0B1A,b
+        lda lBattleAnimationFrameDataPointer+1,b
         sta $0C26,b
-        lda $0B19,b
+        lda lBattleAnimationFrameDataPointer,b
         sta $0C25,b
         lda wBattleAnimationX,b
         sta wR0
         lda wBattleAnimationXFixed,b
         sta $0C04,b
-        lda $0AFB,b
+        lda wBattleAnimationYAnchor,b
         sta $0C07,b
         lda wBattleAnimationYFixed,b
         sta wR1
@@ -15553,17 +15553,17 @@
         sep #$20
         sta $0C2A,b
         rep #$20
-        lda $0B5D,b
+        lda lBattleAnimation2FrameDataPointer+1,b
         sta $0C26,b
-        lda $0B5C,b
+        lda lBattleAnimation2FrameDataPointer,b
         sta $0C25,b
-        lda $0B3C,b
+        lda wBattleAnimation2X,b
         sta wR0
-        lda $0B3B,b
+        lda wBattleAnimation2XFixed,b
         sta $0C04,b
-        lda $0B3E,b
+        lda wBattleAnimation2YAnchor,b
         sta $0C07,b
-        lda $0B40,b
+        lda wBattleAnimation2YFixed,b
         sta wR1
         lda #$8100
         sta $0C30,b
@@ -15719,10 +15719,10 @@
 
         phx
         phy
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0080
         beq _DE81
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         and #$0003
         sta wR0
         txy
@@ -15843,7 +15843,7 @@
         phx
         phy
         tyx
-        lda $0B2D,b,x
+        lda wBattleAnimationSecondaryOffset,b,x
         phx
         tax
         lda aUnknown98AAD4,x
@@ -15851,7 +15851,7 @@
         bne _DEF4
         plx
         jsl rlUnknown95DDFB
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         jsl rlUnknown95C057
         bra _DF73
 
@@ -15867,9 +15867,9 @@
         sta wBattleAnimationYFixed,b,x
         pla
         phx
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         cmp wBattleAnimationX,b,x
         bcs _DF17
         plx
@@ -15888,7 +15888,7 @@
         bit #$0080
         bne _DF46
         sta wR10
-        lda $0B2A,b,x
+        lda lBattleAnimationSecondaryPointer2,b,x
         sta wR11
         jsl rlUnsignedMultiply16By16
         lda wR12
@@ -15911,7 +15911,7 @@
         eor #$00FF
         inc a
         sta wR10
-        lda $0B2A,b,x
+        lda lBattleAnimationSecondaryPointer2,b,x
         sta wR11
         jsl rlUnsignedMultiply16By16
         lda wR12
@@ -15927,10 +15927,10 @@
         bcc _DF69
 
         _DF69
-        lda $0B2D,b,x
+        lda wBattleAnimationSecondaryOffset,b,x
         clc
         adc #$0002
-        sta $0B2D,b,x
+        sta wBattleAnimationSecondaryOffset,b,x
 
         _DF73
         ply
@@ -15961,7 +15961,7 @@
         tyx
 
         _DF79
-        lda $0B2D,b,x
+        lda wBattleAnimationSecondaryOffset,b,x
         phx
         tax
         lda aUnknown98AB5C,x
@@ -15977,10 +15977,10 @@
         plx
         lda #$0028
         jsl rlStartBattleSceneScript
-        lda $0B2D,b,x
+        lda wBattleAnimationSecondaryOffset,b,x
         clc
         adc #$0002
-        sta $0B2D,b,x
+        sta wBattleAnimationSecondaryOffset,b,x
         bra _DF79
 
 
@@ -15992,15 +15992,15 @@
         bit #$0008
         beq _DFBC
         phx
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         jsl rlUnknown95AB53
         plx
 
         _DFBC
-        lda $0B2D,b,x
+        lda wBattleAnimationSecondaryOffset,b,x
         clc
         adc #$0002
-        sta $0B2D,b,x
+        sta wBattleAnimationSecondaryOffset,b,x
         bra _DF79
 
 
@@ -16009,9 +16009,9 @@
         bne _DFFF
         plx
         phx
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         cmp wBattleAnimationX,b,x
         plx
         bcs _DFE7
@@ -16028,10 +16028,10 @@
 
         _DFEE
         sta wBattleAnimationX,b,x
-        lda $0B2D,b,x
+        lda wBattleAnimationSecondaryOffset,b,x
         clc
         adc #$0002
-        sta $0B2D,b,x
+        sta wBattleAnimationSecondaryOffset,b,x
         jml _DF79
 
 
@@ -16040,10 +16040,10 @@
         bne _E017
         plx
         jsl rlUnknown95AE8B
-        lda $0B2D,b,x
+        lda wBattleAnimationSecondaryOffset,b,x
         clc
         adc #$0002
-        sta $0B2D,b,x
+        sta wBattleAnimationSecondaryOffset,b,x
         jml _DF79
 
 
@@ -16052,7 +16052,7 @@
         bne _E02A
         plx
         jsl rlUnknown95DDFB
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         jsl rlUnknown95C057
         bra _E089
 
@@ -16068,9 +16068,9 @@
         sta wBattleAnimationYFixed,b,x
         pla
         phx
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         cmp wBattleAnimationX,b,x
         bcs _E04D
         plx
@@ -16118,10 +16118,10 @@
         bcc _E07F
 
         _E07F
-        lda $0B2D,b,x
+        lda wBattleAnimationSecondaryOffset,b,x
         clc
         adc #$0002
-        sta $0B2D,b,x
+        sta wBattleAnimationSecondaryOffset,b,x
 
         _E089
         ply
@@ -16163,7 +16163,7 @@
         bcs _E141
         pha
         lda wBattleAnimationX,b
-        cmp $0B3C,b
+        cmp wBattleAnimation2X,b
         bcc _E0F4
         ldx #$0000
         bra _E0F7
@@ -16254,7 +16254,7 @@
         _E167
         pha
         lda wBattleAnimationX,b
-        cmp $0B3C,b
+        cmp wBattleAnimation2X,b
         bcs _E175
         ldx #$0000
         bra _E178
@@ -16336,16 +16336,16 @@
 
         phx
         phy
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0080
         beq _E229
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         and #$0003
         cmp #$0002
         beq _E229
         cmp #$0003
         beq _E229
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0010
         bne _E229
         lda wBattleAnimationYVelocity,b,x
@@ -16365,9 +16365,9 @@
 
         _E204
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$F7
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         stz wBattleAnimationYFixed,b,x
         stz wBattleAnimationYVelocity,b,x
@@ -16400,10 +16400,10 @@
 
         phx
         phy
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0080
         beq _E28E
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         and #$0003
         cmp #$0002
         beq _E28E
@@ -16411,13 +16411,13 @@
         beq _E28E
         lda wBattleAnimationYStep,b,x
         bne _E261
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0010
         beq _E28E
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$EF
-        sta $0AF3,b,x
+        sta bBattleAnimationStateFlags,b,x
         rep #$20
         bra _E28E
 
@@ -16471,11 +16471,11 @@
         .databank ?
 
         phx
-        lda $0AE9,b
+        lda wBattleAnimationAttackerOffset,b
         clc
         adc #$0086
         tax
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         and #$0003
         cmp #$0001
         bne _E2AA
@@ -16488,10 +16488,10 @@
 
         _E2AD
         pha
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         jsl rlUnknown95B5FD
         sta wR1
-        ldx $0AE9,b
+        ldx wBattleAnimationAttackerOffset,b
         jsl rlUnknown95B5FD
         clc
         adc #1,s
@@ -16569,7 +16569,7 @@
         ldx #$00C9
 
         _E310
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         and #$0003
         cmp #$0001
         beq _E335
@@ -16624,7 +16624,7 @@
         ldx #$00C9
 
         _E347
-        lda $0AF6,b,x
+        lda bBattleAnimationMotionFlags,b,x
         and #$0003
         cmp #$0001
         beq _E36C
@@ -16727,7 +16727,7 @@
 
         _E3C5
         clc
-        adc $0B1E,b,x
+        adc bBattleAnimationPoseOffset,b,x
         sep #$20
         xba
         cpx #$0086
@@ -16767,18 +16767,18 @@
         bcs _E3EF
         sep #$20
         lda #$02
-        sta $0AF7,b
+        sta bBattleAnimationRole,b
         lda #$03
-        sta $0B3A,b
+        sta bBattleAnimation2Role,b
         bra _E3FB
 
 
         _E3EF
         sep #$20
         lda #$03
-        sta $0AF7,b
+        sta bBattleAnimationRole,b
         lda #$02
-        sta $0B3A,b
+        sta bBattleAnimation2Role,b
 
         _E3FB
         rep #$20
@@ -16845,9 +16845,9 @@
         ply
         plx
         lda lR20
-        sta $0B2F,b,x
+        sta lBattleAnimationMoveListPointer,b,x
         lda lR20+1
-        sta $0B30,b,x
+        sta lBattleAnimationMoveListPointer+1,b,x
         lda [lR18],y
         and #$00FF
         bit #$0080
@@ -16879,8 +16879,8 @@
         .databank ?
 
         phx
-        ldx $0AEB,b
-        lda $0B26,b,x
+        ldx wBattleAnimationDefenderOffset,b
+        lda bBattleAnimationAttributes,b,x
         bit #$0008
         bne _E48F
         jsl rlUnknown95E491
@@ -16917,12 +16917,12 @@
         dec x
         bne _E49C
         sep #$20
-        lda $0B26,b
+        lda bBattleAnimationAttributes,b
         eor #$08
-        sta $0B26,b
-        lda $0B69,b
+        sta bBattleAnimationAttributes,b
+        lda bBattleAnimation2Attributes,b
         eor #$08
-        sta $0B69,b
+        sta bBattleAnimation2Attributes,b
         rep #$20
         ldx #$0000
 
@@ -16954,29 +16954,29 @@
         ; once per sequence step.
 
         phy
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         bit #$0001
         bne _E4DF
         jml _E58A
 
 
         _E4DF
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         bit #$0040
         beq _E4EB
         jml _E58A
 
 
         _E4EB
-        lda $0B30,b,x
+        lda lBattleAnimationMoveListPointer+1,b,x
         sta lR18+1
-        lda $0B34,b,x
+        lda wBattleAnimationMoveListOffset,b,x
         sta lR18
         ldy #$0000
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         bit #$0002
         beq _E547
-        lda $0B24,b,x
+        lda wBattleAnimationBaseTile,b,x
         bmi _E523
         lda [lR18],y
         and #$00FF
@@ -17017,16 +17017,16 @@
 
         _E53F
         inc y
-        lda $0B34,b,x
+        lda wBattleAnimationMoveListOffset,b,x
         inc a
-        sta $0B34,b,x
+        sta wBattleAnimationMoveListOffset,b,x
 
         _E547
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         bit #$0040
         beq _E58A
         phx
-        ldx $0AEB,b
+        ldx wBattleAnimationDefenderOffset,b
         jsl rlBattleAnimationGetBodyWidth
         pha
         jsl rlUnknown95B050
@@ -17036,19 +17036,19 @@
         plx
         bcs _E58A
         sep #$20
-        lda $0AF3,b,x
+        lda bBattleAnimationStateFlags,b,x
         and #$FE
-        sta $0AF3,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationStateFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$9F
-        sta $0AF4,b,x
-        lda $0AF4,b,x
+        sta bBattleAnimationFacingFlags,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$FE
-        sta $0AF4,b,x
-        lda $0AF5,b,x
+        sta bBattleAnimationFacingFlags,b,x
+        lda bBattleAnimationCombatantFlags,b,x
         and #$FC
         ora #$02
-        sta $0AF5,b,x
+        sta bBattleAnimationCombatantFlags,b,x
         rep #$20
 
         _E58A
@@ -17066,11 +17066,11 @@
         .autsiz
         .databank ?
 
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         bit #$0001
         beq _E59A
-        lda $0B32,b,x
-        sta $0B34,b,x
+        lda wBattleAnimationMoveListLoopOffset,b,x
+        sta wBattleAnimationMoveListOffset,b,x
 
         _E59A
         rts
@@ -17086,7 +17086,7 @@
         .autsiz
         .databank ?
 
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         bit #$0001
         beq _E5C8
         jsr rsUnknown95BFB3
@@ -17097,7 +17097,7 @@
 
         _E5AD
         pha
-        lda $0AF4,b,x
+        lda bBattleAnimationFacingFlags,b,x
         and #$0006
         cmp #$0006
         bne _E5BC
@@ -17108,10 +17108,10 @@
         _E5BC
         pla
         pha
-        lda $0B34,b,x
+        lda wBattleAnimationMoveListOffset,b,x
         sec
         sbc #1,s
-        sta $0B34,b,x
+        sta wBattleAnimationMoveListOffset,b,x
         pla
 
         _E5C8
@@ -17121,12 +17121,14 @@
 
         ; 95/E5C9
 
-      rlUnknown95E5C9 ; 95/E5C9
+      rlBattleSceneShow ; 95/E5C9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $18: blank screen and advance to battle scene run
 
         sep #$20
         lda #$80
@@ -17141,12 +17143,14 @@
 
         ; 95/E5DB
 
-      rlUnknown95E5DB ; 95/E5DB
+      rlBattleSceneRunFrame ; 95/E5DB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; GameState $19: run battle scene frame and exit on completion
 
         sep #$20
         lda #$00
@@ -17170,7 +17174,7 @@
         beq _E616
         jsl rlUnknown95A52D
         lda #$0003
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #<>rsUnknown80B122
         sta wMainLoopPointer
         bra _E68B
@@ -17183,7 +17187,7 @@
         bne _E633
         jsl rlUnknown95A52D
         lda #$0002
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #<>rsUnknown80B122
         sta wMainLoopPointer
         bra _E68B
@@ -17193,7 +17197,7 @@
         cmp #$0001
         bne _E642
         jsl rlUnknown95A52D
-        jsl rlUnknown80B74B
+        jsl rlReturnToCastleFromArena
         bra _E68B
 
 
@@ -17202,8 +17206,8 @@
         bne _E658
         jsl rlUnknown95A52D
         lda #$0005
-        sta $088B,b
-        lda #<>rsUnknown80B6B6
+        sta wCastleScreenHandler,b
+        lda #<>rsOpenCastleScreen
         sta wMainLoopPointer
         bra _E68B
 
@@ -17213,8 +17217,8 @@
         bne _E66E
         jsl rlUnknown95A52D
         lda #$0005
-        sta $088B,b
-        lda #<>rsUnknown80B6B6
+        sta wCastleScreenHandler,b
+        lda #<>rsOpenCastleScreen
         sta wMainLoopPointer
         bra _E68B
 
@@ -17230,7 +17234,7 @@
         _E67C
         jsl rlUnknown95A52D
         lda #$0002
-        sta $0D77,b
+        sta wMainGameMode,b
         lda #<>rsUnknown80B122
         sta wMainLoopPointer
 

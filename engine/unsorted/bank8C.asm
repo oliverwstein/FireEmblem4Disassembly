@@ -13,22 +13,22 @@
         .databank ?
 
         lda #$0001
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #$0002
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #$0004
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #$0008
-        tsb $08AD,b
+        tsb wBaseSceneFlags,b
         lda #$0000
-        sta $08B6,b
+        sta wBaseSceneArgument,b
         jsl rlUnknown88B3AF
         lda #$0002
-        sta $088B,b
+        sta wCastleScreenHandler,b
         lda #$0003
-        sta $08B8,b
+        sta wBaseSceneMode,b
         lda #$0001
-        sta $089D,b
+        sta wCastleReturnEventFlag,b
         lda #$0002
         sta wScreenFadingProcInput,b
         lda #$B6B6
@@ -62,7 +62,7 @@
         phk
         plb
         .databank $8C
-        lda $08B2,b
+        lda wBaseSceneLeftUnitRAMPointer,b
         sta aDialogue.wUnit1,b
         sec
         sbc #$0001
@@ -92,7 +92,7 @@
         sta lR18+1
         lda #$8183
         sta lR18
-        lda $08B4,b
+        lda wBaseSceneRightUnitRAMPointer,b
         sta aDialogue.wUnit2,b
         sec
         sbc #$0001
@@ -115,9 +115,9 @@
         sta wR0
         jsl rlUnknown8CF07F
         lda #$7F00
-        sta $08B0,b
+        sta lBaseSceneDialoguePointer+1,b
         lda #$8183
-        sta $08AF,b
+        sta lBaseSceneDialoguePointer,b
         rtl
 
         .databank 0
@@ -159,25 +159,25 @@
         rtl
 
         +
-        sta $08B4,b
+        sta wBaseSceneRightUnitRAMPointer,b
         lda wTempVariable1,b
         sta wSelectedUnitDataRAMPointer,b
 
         ; Get lover target CharacterID
         lda wSelectedUnitDataRAMPointer,b
         pha
-        lda $08B4,b
+        lda wBaseSceneRightUnitRAMPointer,b
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitCharacterID
-        sta $08B4,b
+        sta wBaseSceneRightUnitRAMPointer,b
 
         ; Get own CharacterID
         pla
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitCharacterID
-        sta $08B2,b
+        sta wBaseSceneLeftUnitRAMPointer,b
 
-        lda $08B2,b
+        lda wBaseSceneLeftUnitRAMPointer,b
         sec
         sbc #1
         asl a
@@ -195,7 +195,7 @@
             bra _EE64
 
         +
-        lda $08B4,b
+        lda wBaseSceneRightUnitRAMPointer,b
         sec
         sbc #1
         asl a

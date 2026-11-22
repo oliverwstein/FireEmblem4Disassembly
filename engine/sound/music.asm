@@ -279,9 +279,9 @@
             lda #$00E1
             sta aProcSystem.wInput1,b
 
-            lda #(`procUnknown8283E3)<<8
+            lda #(`procFadeOutAndChangeSong)<<8
             sta lR44+1
-            lda #<>procUnknown8283E3
+            lda #<>procFadeOutAndChangeSong
             sta lR44
             jsl rlProcEngineCreateProc
 
@@ -305,7 +305,7 @@
 
           lda wActiveFactionSlot,b
           jsl rlRunTurnStartEffectsForAllUnitsInFaction
-          jsl rlUnknown869CE4
+          jsl rlEnableAIEngineCycle
 
           lda wActiveFactionSlot,b
           jsl rlUnknown84C5D7
@@ -383,7 +383,7 @@
         jsl rlUnknown85C0D5
 
         lda #$0004
-        tsb $0788,b
+        tsb wMapSystemFlags,b
 
         jsr rsUnknown81AC02
         inc wGameStateStep,b
@@ -392,3 +392,145 @@
         .databank 0
 
     .endsection Unknown81AB90Section
+
+
+    .section ProcScript8283E3Section
+
+      .al
+      .xl
+
+      procFadeOutAndChangeSong ; 82/83E3
+
+        .structProcInfo "SB", rlProcFadeOutAndChangeSongInit, rlProcFadeOutAndChangeSongCycle1, aProcFadeOutAndChangeSongCode
+
+    .endsection ProcScript8283E3Section
+
+
+    .section Unsorted8283EBSection
+
+      .al
+      .xl
+
+      rlProcFadeOutAndChangeSongInit ; 82/83EB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Save song ID wInput0 to aBody0 and send fade-out command wInput1
+
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody0,b,x
+        lda aProcSystem.wInput1,b
+        jsl rlSendSoundCommand
+        rtl
+
+        .databank 0
+
+        ; 82/83F9
+
+      rlProcFadeOutAndChangeSongCycle1 ; 82/83F9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Initial no-op on-cycle before PROC_YIELD 3 switches to Cycle2
+
+        rtl
+
+        .databank 0
+
+        ; 82/83FA
+
+    .endsection Unsorted8283EBSection
+
+
+    .section Unsorted8283FASection
+
+      .al
+      .xl
+
+      rlProcFadeOutAndChangeSongCycle2 ; 82/83FA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Wait for wMusicID/APU silence, write aBody0 to wMusicID, switch to Cycle3
+
+        lda wMusicID,b
+        bne _841E
+        lda bAPUStatus,b
+        bit #$0030
+        bne _841E
+        lda aProcSystem.aBody0,b,x
+        cmp aSoundScriptPrevious,b
+        beq _841A
+        sta wMusicID,b
+        lda #<>rlProcFadeOutAndChangeSongCycle3
+        sta aProcSystem.aHeaderOnCycle,b,x
+        bra _841E
+
+
+        _841A
+        jsl rlProcEngineFreeProc
+
+        _841E
+        rtl
+
+        .databank 0
+
+        ; 82/841F
+
+    .endsection Unsorted8283FASection
+
+
+    .section Unsorted82841FSection
+
+      .al
+      .xl
+
+      rlProcFadeOutAndChangeSongCycle3 ; 82/841F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Wait for new song wMusicID to finish/start (== 0), then free proc
+
+        lda wMusicID,b
+        bne _8428
+        jsl rlProcEngineFreeProc
+
+        _8428
+        rtl
+
+        .databank 0
+
+        ; 82/8429
+
+    .endsection Unsorted82841FSection
+
+
+    .section ProcScript828429Section
+
+      .al
+      .xl
+
+      aProcFadeOutAndChangeSongCode ; 82/8429
+
+        PROC_YIELD 3
+        PROC_SET_ONCYCLE rlProcFadeOutAndChangeSongCycle2
+        PROC_HALT
+
+
+        ; 82/8431
+
+    .endsection ProcScript828429Section
+
+

@@ -22,25 +22,25 @@
 
       aUnknown8AE4BB ; 8A/E4BB
 
-        ; Entry for rlHandleMapMenuDecompressionDMA, as aUnknown80E53D.
+        ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
         .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000
 
 
       aUnknown8AE4C3 ; 8A/E4C3
 
-        ; Entry for rlHandleMapMenuDecompressionDMA, as aUnknown80E53D.
+        ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
         .structDecompressionDMAEntry gcUnknownD306D6, $1000, $0000
 
 
       aUnknown8AE4CB ; 8A/E4CB
 
-        ; Entry for rlHandleMapMenuDecompressionDMA, as aUnknown80E53D.
+        ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
         .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800
 
 
       aUnknown8AE4D3 ; 8A/E4D3
 
-        ; Entry for rlHandleMapMenuDecompressionDMA, as aUnknown80E53D.
+        ; Entry for rlHandleMapMenuDecompressionDMA, as aDebugMenuC00A2BDecompressionEntry.
         .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00
 
 
@@ -63,7 +63,7 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $7000
 
-        lda $0592,b
+        lda wMenuState,b
         asl a
         tax
         jsr (aArenaMenuStepHandlers,x)
@@ -116,9 +116,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0004
-        sta $0594,b
+        sta wNextMenuState,b
 
         _E565
         sep #$20
@@ -138,9 +138,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000E
-        sta $0594,b
+        sta wNextMenuState,b
         bra _E565
 
         .databank 0
@@ -177,9 +177,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0005
-        sta $0592,b
+        sta wMenuState,b
         lda #$0007
-        sta $0594,b
+        sta wNextMenuState,b
 
         _E5DA
         sep #$20
@@ -206,9 +206,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000F
-        sta $0594,b
+        sta wNextMenuState,b
         bra _E5DA
 
 
@@ -222,9 +222,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0005
-        sta $0592,b
+        sta wMenuState,b
         lda #$000E
-        sta $0594,b
+        sta wNextMenuState,b
         bra _E5DA
 
 
@@ -256,9 +256,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0008
-        sta $0594,b
+        sta wNextMenuState,b
         sep #$20
         lda #$0F
         sta bBufferINIDISP
@@ -289,8 +289,8 @@
 
 
         _E687
-        lda $0594,b
-        sta $0592,b
+        lda wNextMenuState,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -306,9 +306,9 @@
 
         ; Arena menu step 4 (aArenaMenuStepHandlers).
 
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -333,8 +333,8 @@
         adc #$000B
         tax
         jsl rlDrawMenuTextLine
-        stz $08A5,b
-        stz $08A7,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
         lda #(`aUnknown8AD088)<<8
         sta lR19+1
         lda #<>aUnknown8AD088
@@ -354,7 +354,7 @@
         beq _E70D
         cmp #$0080
         bne _E70C
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         cmp #$0000
         beq _E73E
         cmp #$0001
@@ -376,16 +376,16 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000E
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0021
         jsl rlPlaySoundEffect
         rts
 
 
         _E73E
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _E77B
         jsl rlGetSelectedUnitArenaLevel
         clc
@@ -400,9 +400,9 @@
 
 
         _E75D
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
@@ -452,7 +452,7 @@
 
         _E7C7
         lda #$0006
-        sta $0592,b
+        sta wMenuState,b
         lda #$000B
         jsl rlPlaySoundEffect
         rts
@@ -460,8 +460,8 @@
 
         _E7D5
         jsr rsUnknown8AA2ED
-        lda $0594,b
-        sta $0592,b
+        lda wNextMenuState,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -500,7 +500,7 @@
         _E810
         jsr rsUnknown8AA2ED
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000C
         jsl rlPlaySoundEffect
         rts
@@ -508,8 +508,8 @@
 
         _E821
         jsr rsUnknown8AA2ED
-        lda $0594,b
-        sta $0592,b
+        lda wNextMenuState,b
+        sta wMenuState,b
         lda #$000C
         jsl rlPlaySoundEffect
         rts
@@ -527,9 +527,9 @@
 
         ; Arena menu step 7 (aArenaMenuStepHandlers).
 
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -543,7 +543,7 @@
         beq _E8B3
         cmp #$0080
         bne _E86E
-        lda $08A3,b
+        lda wCastleConfirmCursorIndex,b
         cmp #$0000
         beq _E86F
         cmp #$0001
@@ -558,7 +558,7 @@
         clc
         adc #$0001
         sta aDialogue.wNumber1,b
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _E8DE
         jsl rlGetSelectedUnitEquippedWeaponBitfield
         cmp #$0000
@@ -568,9 +568,9 @@
         lda #<>dialogueShopUnknown8AD4BC
         sta lR18
         lda #$0009
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
@@ -586,9 +586,9 @@
         lda #<>dialogueShopUnknown8AD5B7
         sta lR18
         lda #$000E
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
@@ -612,9 +612,9 @@
         lda #<>dialogueShopUnknown8AD4D7
         sta lR18
         lda #$000C
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
@@ -636,16 +636,16 @@
 
         ; Arena menu step 8 (aArenaMenuStepHandlers).
 
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsr rsUnknown8AADF4
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -689,7 +689,7 @@
         beq _E9DB
         cmp #$0080
         bne _E9A9
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         cmp #$0000
         beq _E9DB
         cmp #$0001
@@ -702,7 +702,7 @@
 
 
         _E9AA
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _E9CD
         jsl rlGetSelectedUnitEquippedWeaponBitfield
         cmp #$0000
@@ -712,7 +712,7 @@
         lda #$0081
         jsl rlPlaySoundEffect
         lda #$000B
-        sta $0592,b
+        sta wMenuState,b
         rts
 
 
@@ -730,9 +730,9 @@
         lda #<>dialogueShopUnknown8AD5B7
         sta lR18
         lda #$000E
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
@@ -743,18 +743,18 @@
 
 
         _EA06
-        lda $08AB,b
+        lda wCastleListItemCount,b
         beq _E9CD
         lda #$0002
-        sta $08A1,b
+        sta wCastleMenuOptionIndex,b
         lda #(`dialogueShopUnknown8AD4D7)<<8
         sta lR18+1
         lda #<>dialogueShopUnknown8AD4D7
         sta lR18
         lda #$000C
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
@@ -784,15 +784,15 @@
 
         ; Arena menu step 9 (aArenaMenuStepHandlers).
 
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsr rsUnknown8AADF4
         lda #$000A
-        sta $0592,b
+        sta wMenuState,b
 
         .databank 0
 
@@ -807,9 +807,9 @@
 
         ; Arena menu step 10 (aArenaMenuStepHandlers).
 
-        lda #(`aUnknown80B6AD)<<8
+        lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown80B6AD
+        lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -837,7 +837,7 @@
         beq _EAE5
         cmp #$0080
         bne _EAE4
-        lda $08A1,b
+        lda wCastleMenuOptionIndex,b
         cmp #$0000
         beq _EB16
         cmp #$0001
@@ -861,9 +861,9 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$000E
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0021
         jsl rlPlaySoundEffect
         rts
@@ -875,7 +875,7 @@
         lda #$0081
         jsl rlPlaySoundEffect
         lda #$000B
-        sta $0592,b
+        sta wMenuState,b
         rts
 
 
@@ -885,9 +885,9 @@
         lda #<>dialogueShopUnknown8AD4D7
         sta lR18
         lda #$000C
-        sta $0594,b
+        sta wNextMenuState,b
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
@@ -964,7 +964,7 @@
         jsr rsUnknown8AAD44
         jsr rsUnknown8AA9CE
         lda #$000D
-        sta $0592,b
+        sta wMenuState,b
         rts
 
         .databank 0
@@ -981,7 +981,7 @@
         ; Arena menu step 13 (aArenaMenuStepHandlers).
 
         jsr rsUnknown8AA8C9
-        lda $08A5,b
+        lda wCastleListWindowRow,b
         tax
         lda #$004C
         sta wR0
@@ -1002,7 +1002,7 @@
 
 
         _EC01
-        lda $08A7,b
+        lda wCastleListSelectedIndex,b
         asl a
         tax
         lda $7F8072,x
@@ -1028,10 +1028,10 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
-        stz $08A1,b
+        sta wMenuState,b
+        stz wCastleMenuOptionIndex,b
         lda #$0009
-        sta $0594,b
+        sta wNextMenuState,b
         lda $0AD7,b
         beq _EC68
         jsl rlUnknown84B550
@@ -1054,14 +1054,14 @@
         ldx #$0000
         jsr rsUnknown8ACE54
         lda #$0001
-        sta $0592,b
+        sta wMenuState,b
         lda #$0004
-        sta $0594,b
+        sta wNextMenuState,b
         jsr rsUnknown8AA830
         jsr rsUnknown8AAD44
         lda #$0000
         sta $7F7670
-        stz $08A1,b
+        stz wCastleMenuOptionIndex,b
         lda $0AD7,b
         beq _EC68
         jsl rlUnknown84B550
@@ -1072,9 +1072,9 @@
 
         _ECB2
         lda #$0001
-        sta $08A1,b
+        sta wCastleMenuOptionIndex,b
         lda #$0008
-        sta $0594,b
+        sta wNextMenuState,b
         rts
 
         .databank 0

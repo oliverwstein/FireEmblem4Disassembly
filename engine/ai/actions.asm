@@ -50,11 +50,13 @@
 
         .databank 0
 
-      rlUnknown86B45D ; 86/B45D
+      rlAICommitAction ; 86/B45D
 
         .al
         .autsiz
         .databank ?
+
+        ; Copy chosen action from aAIAction into wAITargetX/YPosition, $0E8E, and $0E8C
 
         phb
         php
@@ -74,11 +76,13 @@
 
         .databank 0
 
-      rsUnknown86B480 ; 86/B480
+      rsAIEvaluateInventoryActions ; 86/B480
 
         .al
         .autsiz
         .databank ?
+
+        ; Evaluate all weapons and staves in AI unit's inventory and commit best action
 
         phb
         php
@@ -106,7 +110,7 @@
             sta wAITemp000E9A,b
             lda wAIUnknown7E2016
             sta wAITemp000E9C,b
-            jsl rlUnknown86C221
+            jsl rlBuildTargetDistanceMapToUnit
 
             phx
             lda wAITemp000E98,b
@@ -232,7 +236,7 @@
           jsl rlCheckWeaponEquippable
           bcc _Next
 
-            jsr rsUnknown86B5E7
+            jsr rsAIEvaluateWeaponTargets
             bra _Next
           
           _Staff
@@ -240,7 +244,7 @@
           bcc _Next
 
             phx
-            jsr rsUnknown86B60B
+            jsr rsAIEvaluateStaffTargets
             plx
 
           _Next
@@ -252,7 +256,7 @@
         cmp #$FFFF
         beq +
 
-          jsl rlUnknown86B45D
+          jsl rlAICommitAction
 
         +
         plx
@@ -262,7 +266,7 @@
 
         .databank 0
 
-      rsUnknown86B5E7 ; 86/B5E7
+      rsAIEvaluateWeaponTargets ; 86/B5E7
 
         .al
         .autsiz
@@ -274,7 +278,7 @@
 
         lda #2
         sta aAIAction.wUnknown7F4402
-        jsr rsUnknown86B666
+        jsr rsAIScanHostileTargets
         bra ++
         
         +
@@ -282,14 +286,14 @@
         sta aAIAction.wLeadershipPower
         lda #2
         sta aAIAction.wUnknown7F4402
-        jsr rsUnknown86B73E
+        jsr rsAIScanFriendlyTargets
 
         +
         rts
 
         .databank 0
 
-      rsUnknown86B60B ; 86/B60B
+      rsAIEvaluateStaffTargets ; 86/B60B
 
         .al
         .autsiz
@@ -311,7 +315,7 @@
 
               lda #1
               sta aAIAction.wUnknown7F4402
-              jsr rsUnknown86B73E
+              jsr rsAIScanFriendlyTargets
               cpx #5
               bne _End
 
@@ -336,20 +340,20 @@
 
         lda #0
         sta aAIAction.wUnknown7F4402
-        jsr rsUnknown86B666
+        jsr rsAIScanHostileTargets
         bra ++
 
         +
         lda #0
         sta aAIAction.wUnknown7F4402
-        jsr rsUnknown86B73E
+        jsr rsAIScanFriendlyTargets
         
         +
         rts
 
         .databank 0
 
-      rsUnknown86B666 ; 86/B666
+      rsAIScanHostileTargets ; 86/B666
 
         .al
         .autsiz
@@ -373,7 +377,7 @@
             jsr rsCheckIfPossibleSilenceTarget
             bcs _Next
 
-              jsr rsUnknown86B6BE
+              jsr rsAICheckIfTargetIgnoredByLeader
               bcs _Next
 
                 lda aDeploymentTable._State,x
@@ -389,7 +393,7 @@
                     bne _Next
 
                   +
-                  jsr rsUnknown86B771
+                  jsr rsAIEvaluateTargetIfInThreatRange
 
             _Next
             lda wAISelectedAITargetOffset
@@ -405,7 +409,7 @@
 
         .databank 0
 
-      rsUnknown86B6BE ; 86/B6BE
+      rsAICheckIfTargetIgnoredByLeader ; 86/B6BE
 
         .al
         .autsiz
@@ -498,7 +502,7 @@
 
         .databank 0
 
-      rsUnknown86B73E ; 86/B73E
+      rsAIScanFriendlyTargets ; 86/B73E
 
         .al
         .autsiz
@@ -527,7 +531,7 @@
                 bcs _Next
 
                   phx
-                  jsr rsUnknown86B771
+                  jsr rsAIEvaluateTargetIfInThreatRange
                   plx
 
           _Next
@@ -540,7 +544,7 @@
 
         .databank 0
 
-      rsUnknown86B771 ; 86/B771
+      rsAIEvaluateTargetIfInThreatRange ; 86/B771
 
         .al
         .autsiz
@@ -592,18 +596,20 @@
           sta aAIAction.wMinimumAttackRange
           lda aAIAction.wUnitItemMaximumRange
           sta aAIAction.wMaximumAttackRange
-          jsl rlUnknown869F35
+          jsl rlAIEvaluateAttackTilesForTarget
 
         +
         rts
 
         .databank 0
 
-      rsUnknown86B7D1 ; 86/B7D1
+      rsAIObjectiveNoOp ; 86/B7D1
 
         .al
         .autsiz
         .databank ?
+
+        ; Objective handler for IDs 0/1/7: CLC to fall through to normal action evaluation
 
         clc
         rts
@@ -705,10 +711,10 @@
                   jsr rsCheckIfFoesCastleUnblockedReachable
                   bcc _Next
 
-                    jsr rsUnknown86B8CB
+                    jsr rsAITryCaptureUnguardedCastle
                     bcs _SEC
 
-                    jsr rsUnknown86B8E5
+                    jsr rsAITryAttackCastleGuard
                     bcs _SEC
 
                 _Next
@@ -791,7 +797,7 @@
 
         .databank 0
 
-      rsUnknown86B8CB ; 86/B8CB
+      rsAITryCaptureUnguardedCastle ; 86/B8CB
 
         .al
         .autsiz
@@ -804,7 +810,7 @@
           sta $4440,b
           lda #$FFFF
           sta aAIAction.wChosenTargetDeploymentOffset
-          jsl rlUnknown86B45D
+          jsl rlAICommitAction
           sec
           rts
         
@@ -814,7 +820,7 @@
 
         .databank 0
 
-      rsUnknown86B8E5 ; 86/B8E5
+      rsAITryAttackCastleGuard ; 86/B8E5
 
         .al
         .autsiz
@@ -864,7 +870,7 @@
         lda $554A,b,x
         and #$00FF
         sta aAIAction.wTargetDeploymentOffset
-        jsr rsUnknown86B6BE
+        jsr rsAICheckIfTargetIgnoredByLeader
         bcc +
 
           jml _CLC
@@ -884,7 +890,7 @@
         sta $000E9C
         lda aAIAction.wUnitInventorySlot
         sta $000E9E
-        jsl rlUnknown86BFE6
+        jsl rlAICalculateCastleCombatDamage
         clc
         adc aAIAction.wTurnValue
         ora #0
@@ -917,7 +923,7 @@
         sta $4440,b
         lda aAIAction.wTargetDeploymentOffset
         sta aAIAction.wChosenTargetDeploymentOffset
-        jsl rlUnknown86B45D
+        jsl rlAICommitAction
         bra _SEC
 
         +
@@ -927,7 +933,7 @@
         sta $4440,b
         lda aAIAction.wTargetDeploymentOffset
         sta aAIAction.wChosenTargetDeploymentOffset
-        jsl rlUnknown86B45D
+        jsl rlAICommitAction
         bra _SEC
         
         _SEC
@@ -940,20 +946,24 @@
 
         .databank 0
 
-      rsUnknown86B9E6 ; 86/B9E6
+      rsAIActionStub ; 86/B9E6
 
         .al
         .autsiz
         .databank ?
+
+        ; Unused stub returning CLC
 
         clc
         rts
 
-      rsUnknown86B9E8 ; 86/B9E8
+      rsAIObjectiveTargetVillage ; 86/B9E8
 
         .al
         .autsiz
         .databank ?
+
+        ; Objective handler 2: target nearest/selected village for raiding (action 5)
 
         phb
         php
@@ -972,7 +982,7 @@
         cmp #$FFFF
         bne +
 
-          jsr rsUnknown86BA3B
+          jsr rsAIGetNearestVillage
           cmp #$FFFF
           beq ++
 
@@ -993,7 +1003,7 @@
             sta $4440,b
             lda #$FFFF
             sta aAIAction.wChosenTargetDeploymentOffset
-            jsl rlUnknown86B45D
+            jsl rlAICommitAction
             bra _End
             
             +
@@ -1018,11 +1028,13 @@
       .al
       .xl
 
-      rsUnknown86BA86 ; 86/BA86
+      rsAICastleGuardAttackUnitOnGate ; 86/BA86
 
         .al
         .autsiz
         .databank ?
+
+        ; If unit guards castle and an enemy stands on its gate (Y+2), commit attack (action 2)
 
         phx
         jsl rlGetSelectedUnitStates
@@ -1088,7 +1100,7 @@
                 sta wAITemp000E9C,b
                 lda aAIAction.wUnitInventorySlot
                 sta wAITemp000E9E,b
-                jsl rlUnknown86BFE6
+                jsl rlAICalculateCastleCombatDamage
                 ora #0
                 beq _End
 
@@ -1098,7 +1110,7 @@
                   sta aAIAction.wUnknown7F4440
                   lda aAIAction.wTargetDeploymentOffset
                   sta aAIAction.wChosenTargetDeploymentOffset
-                  jsl rlUnknown86B45D
+                  jsl rlAICommitAction
 
         _End
         plx
@@ -1107,11 +1119,13 @@
 
         .databank 0
 
-      rsUnknown86BB38 ; 86/BB38
+      rsAIObjectiveInteractWithUnit ; 86/BB38
 
         .al
         .autsiz
         .databank ?
+
+        ; Objective handler 8: move adjacent to target unit and execute wAIUnknown7E201C
 
         phb
         php
@@ -1129,13 +1143,13 @@
           jml _End
         
         +
-        jsr rsUnknown86BCB1
+        jsr rsAICheckIfNonLeaderTalkDisabled
         bcc +
 
           jml _End
         
         +
-        jsr rsUnknown86BCC7
+        jsr rsAICheckIfUnarmedForAttackInteraction
         bcc +
 
           jml _End
@@ -1200,7 +1214,7 @@
         bcc +
 
           sta aAIAction.wDestinationYPosition
-          jsr rsUnknown86BC64
+          jsr rsAICheckIfInteractionTileReachable
           bne _BC3E
         
         +
@@ -1212,7 +1226,7 @@
           sta aAIAction.wDestinationXPosition
           lda aDeploymentTable._YTilePosition,x
           sta aAIAction.wDestinationYPosition
-          jsr rsUnknown86BC64
+          jsr rsAICheckIfInteractionTileReachable
           bne _BC3E
         
         +
@@ -1224,7 +1238,7 @@
           sta aAIAction.wDestinationXPosition
           lda aDeploymentTable._YTilePosition,x
           sta aAIAction.wDestinationYPosition
-          jsr rsUnknown86BC64
+          jsr rsAICheckIfInteractionTileReachable
           bne _BC3E
         
         +
@@ -1236,7 +1250,7 @@
         bcs +
 
           sta aAIAction.wDestinationYPosition
-          jsr rsUnknown86BC64
+          jsr rsAICheckIfInteractionTileReachable
           bne _BC3E
         
         +
@@ -1250,7 +1264,7 @@
           inc a
           inc a
           sta aAIAction.wDestinationYPosition
-          jsr rsUnknown86BC64
+          jsr rsAICheckIfInteractionTileReachable
           beq _End
           
             _BC3E
@@ -1269,7 +1283,7 @@
             sta aAIAction.wChosenTargetDeploymentOffset
             lda #1
             sta wSelectedInventorySlot
-            jsl rlUnknown86B45D
+            jsl rlAICommitAction
         
         _End
         plx
@@ -1290,11 +1304,13 @@
       .al
       .xl
 
-      rsUnknown86BCE3 ; 86/BCE3
+      rsAIObjectiveLeaderEnterHomeCastle ; 86/BCE3
 
         .al
         .autsiz
         .databank ?
+
+        ; Objective handler 9: if group leader, return to and enter home castle (action 3)
 
         phb
         php
@@ -1306,12 +1322,12 @@
         bit #UnitStateGroupLeader
         beq +
 
-          jsr rsUnknown86BD06
+          jsr rsAISetHomeCastleAsDestination
           bcs +
 
             lda #3
             sta aAIAction.wUnknown7F4440
-            jsl rlUnknown86B45D
+            jsl rlAICommitAction
         
         +
         plx
@@ -1322,11 +1338,13 @@
 
         .databank 0
 
-      rsUnknown86BD06 ; 86/BD06
+      rsAISetHomeCastleAsDestination ; 86/BD06
 
         .al
         .autsiz
         .databank ?
+
+        ; Set aAIAction destination to active faction's home castle; SEC on failure
 
         lda wAIActiveFaction,b
         jsl rlGetFactionSlotLocationID
@@ -1352,11 +1370,13 @@
 
         .databank 0
 
-      rsUnknown86BD37 ; 86/BD37
+      rsAIObjectiveLeaderRetreatAndRevive ; 86/BD37
 
         .al
         .autsiz
         .databank ?
+
+        ; Objective handler 10: if group leader, retreat to home castle to revive group (action 13)
 
         phb
         php
@@ -1368,12 +1388,12 @@
         bit #UnitStateGroupLeader
         beq +
 
-          jsr rsUnknown86BD06
+          jsr rsAISetHomeCastleAsDestination
           bcs +
 
             lda #13
             sta aAIAction.wUnknown7F4440
-            jsl rlUnknown86B45D
+            jsl rlAICommitAction
 
         +
         plx
@@ -1384,11 +1404,13 @@
 
         .databank 0
 
-      rsUnknown86BD5A ; 86/BD5A
+      rsAIObjectiveLeaderHoldPosition ; 86/BD5A
 
         .al
         .autsiz
         .databank ?
+
+        ; Objective handler 11: if group leader, stay on current tile (action 0)
 
         phb
         php
@@ -1407,7 +1429,7 @@
           sta aAIAction.wChosenTargetDeploymentOffset
           lda #0
           sta aAIAction.wUnknown7F4440
-          jsl rlUnknown86B45D
+          jsl rlAICommitAction
 
         +
         plp
@@ -1417,18 +1439,20 @@
 
         .databank 0
 
-      rsUnknown86BD8B ; 86/BD8B
+      rsAIObjectiveAllEnterHomeCastle ; 86/BD8B
 
         .al
         .autsiz
         .databank ?
 
-        jsr rsUnknown86BD06
+        ; Objective handler 12: send all group units to home castle (action 3)
+
+        jsr rsAISetHomeCastleAsDestination
         bcs +
 
           lda #3
           sta aAIAction.wUnknown7F4440
-          jsl rlUnknown86B45D
+          jsl rlAICommitAction
 
         +
         clc
@@ -1436,11 +1460,13 @@
 
         .databank 0
 
-      rsUnknown86BD9D ; 86/BD9D
+      rsAITryDeployUnitFromCastle ; 86/BD9D
 
         .al
         .autsiz
         .databank ?
+
+        ; Deploy unfielded AI unit from castle (relocation type 4) unless retreating
 
         phx
         lda wAIUnknown7E201A
@@ -1490,11 +1516,13 @@
 
         .databank 0
 
-      rlUnknown86BDE8 ; 86/BDE8
+      rlAIFindBestMoveTowardTarget ; 86/BDE8
 
         .al
         .autsiz
         .databank ?
+
+        ; Compute best reachable tile toward target coords in wAITemp000E9E/EA0
 
         ; wAITemp000E96 = unit X
         ; wAITemp000E98 = unit Y
@@ -1531,7 +1559,7 @@
           beq _CLC
 
         +
-        jsl rlUnknown86C221
+        jsl rlBuildTargetDistanceMapToUnit
         bcs _SEC
 
         jsr rsGetClosestTileToTarget
@@ -1983,3 +2011,304 @@
         .databank 0
 
     .endsection AILowHPSection
+
+
+    .section Unsorted86BA3BSection
+
+      .al
+      .xl
+
+      rsAIGetNearestVillage ; 86/BA3B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Find nearest open village reachable by active AI unit
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        lda #$FFFF
+        sta wAITemp000EA0,b
+        ldx wAISelectedAIUnitOffset,b
+        lda $7E2026,x
+        and #$00FF
+        jsl rlFillTargetMapWithVillages
+        ora #$0000
+        beq _BA80
+        lda $7E2024,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda $7E202D,x
+        and #$00FF
+        sta wAITemp000E96,b
+        lda $7E202E,x
+        and #$00FF
+        sta wAITemp000E98,b
+        jsl rlFillMovementCostMap
+        jsl rlGetNearestPossibleTarget
+        bcc _BA80
+        sta wAITemp000EA0,b
+
+        _BA80
+        lda wAITemp000EA0,b
+        plp
+        plb
+        .databank $86
+        rts
+
+        .databank 0
+
+        ; 86/BA86
+
+    .endsection Unsorted86BA3BSection
+
+
+    .section Unsorted86BC64Section
+
+      .al
+      .xl
+
+      rsAICheckIfInteractionTileReachable ; 86/BC64
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Return nonzero aMovementMap value if destination tile is valid and reachable
+
+        phx
+        phy
+        lda $443C,b
+        xba
+        lsr a
+        lsr a
+        clc
+        adc $443A,b
+        tay
+        asl a
+        tax
+        lda aMapData,x
+        and #$03FF
+        tax
+        lda aTerrainTileset,x
+        and #$00FF
+        cmp #$000C
+        beq _BCAB
+        lda $554A,b,y
+        and #$00FF
+        cmp #$00FF
+        bne _BCAB
+        lda $454A,b,y
+        and #$00FF
+        cmp #$00FF
+        beq _BCA2
+        cmp $444A,b
+        bne _BCAB
+
+        _BCA2
+        lda $754A,b,y
+        ply
+        plx
+        and #$00FF
+        rts
+
+
+        _BCAB
+        ply
+        plx
+        lda #$0000
+        rts
+
+        .databank 0
+
+        ; 86/BCB1
+
+      rsAICheckIfNonLeaderTalkDisabled ; 86/BCB1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Return SEC if AI unit is not group leader and interaction type is talk ($0C)
+
+        jsl rlGetSelectedUnitStates
+        bit #UnitStateGroupLeader
+        bne _BCC5
+        lda wAIUnknown7E201C
+        cmp #$000C
+        bne _BCC5
+        sec
+        rts
+
+
+        _BCC5
+        clc
+        rts
+
+        .databank 0
+
+        ; 86/BCC7
+
+      rsAICheckIfUnarmedForAttackInteraction ; 86/BCC7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Return SEC if interaction type is attack ($01) and unit has no equippable weapon
+
+        lda wAIUnknown7E201C
+        cmp #$0001
+        bne _BCE1
+        jsl rlGetFirstEquippableWeaponInInventory
+        ora #$0000
+        beq _BCDF
+        jsl rlCheckWeaponEquippable
+        bcs _BCE1
+
+        _BCDF
+        sec
+        rts
+
+
+        _BCE1
+        clc
+        rts
+
+        .databank 0
+
+        ; 86/BCE3
+
+    .endsection Unsorted86BC64Section
+
+
+    .section Unsorted86BFE6Section
+
+      .al
+      .xl
+
+      rlAICalculateCastleCombatDamage ; 86/BFE6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Compute expected castle-gate/guard single-hit damage (0 if out of range, 0 dmg, or 0 hit)
+
+        phb
+        php
+        phk
+        plb
+        .databank $86
+        phx
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        ldx wAITemp000E96,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta wAITemp000E96,b
+        ldx wAITemp000E98,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta wAITemp000E98,b
+        lda wAITemp000E96,b
+        sta wSelectedUnitDataRAMPointer,b
+        lda wAITemp000E9E,b
+        beq _C014
+        jsl rlGetItemROMDataByInventorySlot
+        bra _C018
+
+
+        _C014
+        jsl rlGetFirstEquippableWeaponInInventory
+
+        _C018
+        lda wCurrentItemDataROMPointer,b
+        bne _C021
+        jml _C0A2
+
+
+        _C021
+        jsl rlGetItemMinimumRange
+        dec a
+        cmp wAITemp000E9C,b
+        bcc _C02F
+        jml _C0AA
+
+
+        _C02F
+        jsl rlGetItemMaximumRange
+        cmp wAITemp000E9C,b
+        bcs _C03C
+        jml _C0AA
+
+
+        _C03C
+        lda wAITemp000E98,b
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetItemWeaponType
+        cmp #$0004
+        bcs _C051
+        jsl rlGetSelectedUnitTotalDefense
+        bra _C055
+
+
+        _C051
+        jsl rlGetSelectedUnitTotalResistance
+
+        _C055
+        sta $7FEC4A
+        lda wAITemp000E96,b
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetFirstWeaponBattleMight
+        sec
+        sbc $7FEC4A
+        cmp #$0001
+        bpl _C071
+        jml _C0AA
+
+
+        _C071
+        and #$00FF
+        sta aUnit2DataBuffer._Lover.LoveValue
+        jsl rlUnknown84FE98
+        sta $7FEC4C
+        lda wAITemp000E98,b
+        sta wSelectedUnitDataRAMPointer,b
+        lda wAITemp000E9A,b
+        jsl rlUnknown84FEA1
+        sta $7FEC4E
+        lda $7FEC4C
+        sec
+        sbc $7FEC4E
+        bmi _C0AA
+        beq _C0AA
+        lda aUnit2DataBuffer._Lover.LoveValue
+
+        _C0A2
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+
+        _C0AA
+        lda #$0000
+        bra _C0A2
+
+        .databank 0
+
+        ; 86/C0AF
+
+    .endsection Unsorted86BFE6Section
+
+
