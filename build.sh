@@ -3,6 +3,9 @@
 #
 # Usage:
 #   ./build.sh             build FE4Disassembly.sfc and compare it to fe4.sfc
+#   ./build.sh mod [--disable-checks]
+#                          build FE4Disassembly.sfc and update code/header
+#                          checksums without comparing to fe4.sfc
 #   ./build.sh coverage    also report how much of the ROM is built from source
 #   ./build.sh pad SECTION N
 #                          padding test: also build FE4Padded.sfc with N bytes
@@ -102,6 +105,7 @@ verify() {
   sha=$(shasum -a1 "$OUT" | cut -d' ' -f1)
   if [[ $sha == "$EXPECTED_SHA1" ]]; then
     echo "OK: $OUT matches the original ROM"
+    python3 tools/checksums.py --verify "$OUT"
   else
     echo "MISMATCH: $OUT differs from the original ROM" >&2
     python3 - "$ROM" "$OUT" <<'EOF' >&2
@@ -142,11 +146,21 @@ case ${1:-build} in
   clean) clean ;;
   build) [[ -f $ROM ]] || { echo "Missing $ROM" >&2; exit 1; }
          generate; python3 tools/check_paths.py; assemble "$OUT" log.txt; verify ;;
+  mod)   [[ -f $ROM ]] || { echo "Missing $ROM" >&2; exit 1; }
+         if [[ $# -eq 1 ]]; then
+           generate; python3 tools/check_paths.py; assemble "$OUT" log.txt
+           python3 tools/checksums.py --update "$OUT"
+         elif [[ $# -eq 2 && $2 == "--disable-checks" ]]; then
+           generate; python3 tools/check_paths.py; assemble "$OUT" log.txt
+           python3 tools/checksums.py --update "$OUT" --disable-checks
+         else
+           echo "Usage: $0 mod [--disable-checks]" >&2; exit 2
+         fi ;;
   coverage) [[ -f $ROM ]] || { echo "Missing $ROM" >&2; exit 1; }
          generate; python3 tools/check_paths.py; assemble "$OUT" log.txt; verify; coverage ;;
   pad)   [[ -f $ROM ]] || { echo "Missing $ROM" >&2; exit 1; }
-         [[ $# -eq 3 ]] || { echo "Usage: $0 pad SECTION N" >&2; exit 2; }
+         [[ $# -ge 3 ]] || { echo "Usage: $0 pad SECTION N [--fix-checksums|--disable-checks]" >&2; exit 2; }
          generate; python3 tools/check_paths.py; assemble "$OUT" log.txt; verify
-         python3 tools/pad_test.py "$2" "$3" -- "${ASFLAGS[@]}" ;;
-  *) echo "Usage: $0 [build|coverage|clean|pad SECTION N]" >&2; exit 2 ;;
+         python3 tools/pad_test.py "${@:2}" -- "${ASFLAGS[@]}" ;;
+  *) echo "Usage: $0 [build|mod [--disable-checks]|coverage|clean|pad SECTION N]" >&2; exit 2 ;;
 esac

@@ -40,6 +40,9 @@ import sys
 import tempfile
 from collections import defaultdict
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import checksums
+
 ROM = 'fe4.sfc'
 OUT = 'FE4Padded.sfc'
 PAD_BYTE = 0xEA
@@ -118,6 +121,31 @@ NOT_POINTERS = {
     0x1CD3AF: 'compressed graphics or data, no pointers beside it',  # $9C/D3AF
     0x1CE346: 'compressed graphics or data, no pointers beside it',  # $9C/E346
     0x1FC4BA: 'inside 9-byte records of $9F/C4xx words',  # $9F/C4BA
+    0x02EB91: 'operand + opcode of bit #$8000; beq',  # $82/EB91
+    0x02EC19: 'operand + opcode of bit #$8000; beq',  # $82/EC19
+    0x05D33B: 'operand + opcode of cmp #$8000; beq',  # $85/D33B
+    0x05D34B: 'operand + opcode of cmp #$8000; beq',  # $85/D34B
+    0x08ACDF: 'word table / graphics metadata, not a pointer',  # $88/ACDF
+    0x08E01B: 'operand + opcode of and #$8000; beq',  # $88/E01B
+    0x0ADE75: 'zero padding followed by $A0',  # $8A/DE75
+    0x0AE01A: 'zero padding followed by $A0',  # $8A/E01A
+    0x16BFC2: 'operand + opcode of ldx #$0000; bra',  # $96/BFC2
+    0x16C4D1: 'operand + opcode of ldx #$0000; bra',  # $96/C4D1
+    0x16C59B: 'operand + opcode of bit #$8000; beq',  # $96/C59B
+    0x16C7B8: 'operand + opcode of ldx #$0000; bra',  # $96/C7B8
+    0x16DCF5: 'operand + opcode of ldx #$0000; ldy #$0000',  # $96/DCF5
+    0x1BE6FA: 'operand + opcode of ldx #$0000; ldy #$0000',  # $9B/E6FA
+    0x1BF89D: 'operand + opcode of ldx #$0000; ldy #$0006',  # $9B/F89D
+    0x1BF8DC: 'operand + opcode of ldx #$0000; ldy #$0008',  # $9B/F8DC
+    0x1BF91B: 'operand + opcode of ldx #$0000; ldy #$000A',  # $9B/F91B
+    0x1BF95A: 'operand + opcode of ldx #$0000; ldy #$000C',  # $9B/F95A
+    0x1BF999: 'operand + opcode of ldx #$0000; ldy #$000E',  # $9B/F999
+    0x1EE421: 'operand of lda #$EAD5 + opcode sta @l (bank $9E, not $8F)',  # $9E/E421
+    0x1EE632: 'operand of lda #$EBB9 + opcode sta @l (bank $9E, not $8F)',  # $9E/E632
+    0x1EE896: 'operand of lda #$EB4A + opcode sta @l (bank $9E, not $8F)',  # $9E/E896
+    0x1EE8AE: 'operand of sta $63 + lda #$EBB2',  # $9E/E8AE
+    0x1EE8F6: 'operand of sta $63 + lda #$EBB2',  # $9E/E8F6
+    0x1EE93E: 'operand of sta $63 + lda #$EBB2',  # $9E/E93E
 }
 
 
@@ -175,8 +203,11 @@ def main():
         args, asflags = args[:i], args[i + 1:]
     else:
         asflags = ['-x', '-f', '-C', '-a']
+    disable_checks = '--disable-checks' in args
+    fix_checksums = '--fix-checksums' in args or disable_checks
+    args = [a for a in args if a not in ('--fix-checksums', '--disable-checks')]
     if len(args) != 2 or not args[1].isdigit() or int(args[1]) < 1:
-        sys.exit('Usage: ./build.sh pad SECTION N   (N: bytes to insert, 1 or more)')
+        sys.exit('Usage: ./build.sh pad SECTION N [--fix-checksums|--disable-checks]   (N: bytes to insert, 1 or more)')
     section, n = args[0], int(args[1])
 
     lines = open('build.asm').read().split('\n')
@@ -457,15 +488,21 @@ def main():
     for lo, hi, what in CHECKED_RANGES:
         hit = [o for o in range(lo, hi) if built[o] != rom[o]]
         if hit:
-            problems.append(f'{len(hit)} bytes changed in checksummed code {what}; the game '
-                            'will detect the change unless the sums in include/Checksums.h '
-                            'are updated (step 3 of the plan).')
+            if fix_checksums:
+                print(f'Note: {len(hit)} bytes changed in checksummed code {what}; '
+                      f'updating checksums in {OUT}.')
+            else:
+                problems.append(f'{len(hit)} bytes changed in checksummed code {what}; the game '
+                                'will detect the change unless the sums in include/Checksums.h '
+                                'are updated (or pass --fix-checksums).')
 
-    # Fix the header checksum so emulators and flash carts accept the ROM.
-    built[0xFFDC:0xFFE0] = b'\xFF\xFF\x00\x00'
-    total = sum(built) & 0xFFFF
-    built[0xFFDC:0xFFE0] = bytes([~total & 0xFF, (~total >> 8) & 0xFF,
-                                  total & 0xFF, total >> 8])
+    # Update code checksums (when requested) and the SNES header checksum.
+    if fix_checksums:
+        pad_labels = {k: padded.get(k, v) for k, v in checksums.DEFAULTS.items()}
+        checksums.update_rom(built, pad_labels, disable_checks=disable_checks)
+    else:
+        comp, total = checksums.compute_header_checksum(built)
+        built[0xFFDC:0xFFE0] = bytes([comp & 0xFF, comp >> 8, total & 0xFF, total >> 8])
     open(OUT, 'wb').write(built)
 
     if problems:
