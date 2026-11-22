@@ -174,7 +174,7 @@
 
         jsl rlInitMapMenuProc
         jsl rlHideMapWindows
-        stz $0DB1,b
+        stz bMapExperienceWindowStepTimer,b
         lda aProcSystem.wInput0,b
         and #$00FF
         sta aProcSystem.aBody7,b,x
@@ -444,18 +444,18 @@
 
         _CBED
         sep #$20
-        dec $0DB2,b
+        dec bMapExperienceWindowSoundTimer,b
         bpl _CBFF
         lda #$0D
         jsl rlPlaySoundEffect
         lda #$06
-        sta $0DB2,b
+        sta bMapExperienceWindowSoundTimer,b
 
         _CBFF
-        dec $0DB1,b
+        dec bMapExperienceWindowStepTimer,b
         bpl _CC0E
         lda #$02
-        sta $0DB1,b
+        sta bMapExperienceWindowStepTimer,b
         rep #$20
         inc aProcSystem.aBody7,b,x
 
@@ -553,7 +553,7 @@
         jsl rlFreeHDMAEntry0
         jsl rlProcEngineFreeProc
         lda #$FFFF
-        sta $0DB1,b
+        sta bMapExperienceWindowStepTimer,b
 
         _CC61
         rtl
@@ -1083,13 +1083,13 @@
         cmp #$0004
         beq _CEAC
         pla
-        sta $0DB1,b
+        sta wMapBattleHPWindowRightRequest,b
         bra _CEB0
 
 
         _CEAC
         pla
-        sta $0DAF,b
+        sta wMapBattleHPWindowLeftRequest,b
 
         _CEB0
         rts
@@ -1108,12 +1108,12 @@
         jsl rlGetMapMenuType
         cmp #$0004
         beq _CEBF
-        lda $0DB1,b
+        lda wMapBattleHPWindowRightRequest,b
         bra _CEC2
 
 
         _CEBF
-        lda $0DAF,b
+        lda wMapBattleHPWindowLeftRequest,b
 
         _CEC2
         rts
@@ -1177,13 +1177,13 @@
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsr rsGetMapBattleHPWindowRequest
-        bit #$4000
+        bit #MAP_BATTLE_HP_REQUEST_DAMAGE
         bne _CF11
-        bit #$0800
+        bit #MAP_BATTLE_HP_REQUEST_HEAL
         bne _CF00
-        bit #$1000
+        bit #MAP_BATTLE_HP_REQUEST_CLOSE
         bne _CF37
-        bit #$0100
+        bit #MAP_BATTLE_HP_REQUEST_EXPERIENCE
         bne _CF44
 
         _CEFE
@@ -1213,7 +1213,7 @@
 
         _CF24
         sta aProcSystem.aBody4,b,x
-        lda #$2000
+        lda #MAP_BATTLE_HP_REQUEST_BUSY
         jsr rsSetMapBattleHPWindowRequest
         lda #<>rlProcMapBattleHPWindowDrainHP
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -1431,8 +1431,8 @@
 
         ; Colours, places and opens both windows for aActionStructUnit1 and aActionStructUnit2, with the gradient.
 
-        stz $0DB1,b
-        stz $0DAF,b
+        stz wMapBattleHPWindowRightRequest,b
+        stz wMapBattleHPWindowLeftRequest,b
         phb
         phy
         phx
@@ -1535,7 +1535,7 @@
         .autsiz
         .databank ?
 
-        stz $0DB1,b
+        stz wMapBattleHPWindowRightRequest,b
         phb
         phy
         phx
@@ -1582,7 +1582,7 @@
         .autsiz
         .databank ?
 
-        stz $0DAF,b
+        stz wMapBattleHPWindowLeftRequest,b
         phb
         phy
         phx
@@ -1906,8 +1906,8 @@
         ; A = damage: asks the right HP window (type 3, $0DB1) to lose that much HP ($4000 + damage).
 
         and #$00FF
-        ora #$4000
-        sta $0DB1,b
+        ora #MAP_BATTLE_HP_REQUEST_DAMAGE
+        sta wMapBattleHPWindowRightRequest,b
         rtl
 
         .databank 0
@@ -1924,8 +1924,8 @@
         ; A = damage: the left HP window (type 4, $0DAF).
 
         and #$00FF
-        ora #$4000
-        sta $0DAF,b
+        ora #MAP_BATTLE_HP_REQUEST_DAMAGE
+        sta wMapBattleHPWindowLeftRequest,b
         rtl
 
         .databank 0
@@ -1942,8 +1942,8 @@
         ; A = HP: asks the right HP window to gain that much ($0800 + HP).
 
         and #$00FF
-        ora #$0800
-        sta $0DB1,b
+        ora #MAP_BATTLE_HP_REQUEST_HEAL
+        sta wMapBattleHPWindowRightRequest,b
         rtl
 
         .databank 0
@@ -1958,8 +1958,8 @@
         .databank ?
 
         and #$00FF
-        ora #$0800
-        sta $0DAF,b
+        ora #MAP_BATTLE_HP_REQUEST_HEAL
+        sta wMapBattleHPWindowLeftRequest,b
         rtl
 
         .databank 0
@@ -1973,7 +1973,7 @@
         .autsiz
         .databank ?
 
-        lda $0DB1,b
+        lda wMapBattleHPWindowRightRequest,b
         cmp #$8000
         beq _D343
         lda #$FFFF
@@ -1995,7 +1995,7 @@
         .autsiz
         .databank ?
 
-        lda $0DAF,b
+        lda wMapBattleHPWindowLeftRequest,b
         cmp #$8000
         beq _D353
         lda #$FFFF
@@ -2019,8 +2019,8 @@
 
         ; Request $0100 to the right HP window: show the experience window. Nothing in the build reaches this.
 
-        lda #$0100
-        sta $0DB1,b
+        lda #MAP_BATTLE_HP_REQUEST_EXPERIENCE
+        sta wMapBattleHPWindowRightRequest,b
         rtl
 
         .databank 0
@@ -2034,8 +2034,8 @@
         .autsiz
         .databank ?
 
-        lda #$0100
-        sta $0DAF,b
+        lda #MAP_BATTLE_HP_REQUEST_EXPERIENCE
+        sta wMapBattleHPWindowLeftRequest,b
         rtl
 
         .databank 0
@@ -2051,8 +2051,8 @@
 
         ; A = $FFFF while the right window's request has bit 8 ($0100). Nothing in the build reaches this.
 
-        lda $0DB1,b
-        bit #$0100
+        lda wMapBattleHPWindowRightRequest,b
+        bit #MAP_BATTLE_HP_REQUEST_EXPERIENCE
         beq _D371
         lda #$FFFF
         rtl
@@ -2073,8 +2073,8 @@
         .autsiz
         .databank ?
 
-        lda $0DAF,b
-        bit #$0100
+        lda wMapBattleHPWindowLeftRequest,b
+        bit #MAP_BATTLE_HP_REQUEST_EXPERIENCE
         beq _D381
         lda #$FFFF
         rtl
@@ -2220,9 +2220,9 @@
 
         ; Request $1000 (close) to both.
 
-        lda #$1000
-        sta $0DB1,b
-        sta $0DAF,b
+        lda #MAP_BATTLE_HP_REQUEST_CLOSE
+        sta wMapBattleHPWindowRightRequest,b
+        sta wMapBattleHPWindowLeftRequest,b
         rtl
 
         .databank 0
@@ -2238,13 +2238,13 @@
 
         ; A = $FFFF while either window still has a request; otherwise frees HDMA entry 0 and returns 0.
 
-        lda $0DB1,b
+        lda wMapBattleHPWindowRightRequest,b
         beq _D425
         bra _D434
 
 
         _D425
-        lda $0DAF,b
+        lda wMapBattleHPWindowLeftRequest,b
         beq _D42C
         bra _D434
 

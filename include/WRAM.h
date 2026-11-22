@@ -927,6 +927,34 @@
     ; .word ? ; $000DAB - phase music?
     ; .word ? ; $000DAD ?
 
+  ; The map battle HP windows' requests (engine/battle/map_battle_hud.asm): $4000 + n
+  ; lose n HP, $0800 + n gain n HP, $1000 close, $0100 experience; the window sets
+  ; $2000 while it works on one and 0 when done.
+
+  .virtual $000DAF
+
+    wMapBattleHPWindowLeftRequest .word ?  ; $000DAF
+    wMapBattleHPWindowRightRequest .word ? ; $000DB1
+
+  .endvirtual
+
+  ; procMapExperienceWindow's counters, in the same place.
+
+  .virtual $000DB1
+
+    bMapExperienceWindowStepTimer .byte ?  ; $000DB1 ; frames to the next point
+    bMapExperienceWindowSoundTimer .byte ? ; $000DB2 ; frames to the next tick sound
+
+  .endvirtual
+
+  ; procMapItemList's messages to procMapItemWeaponStats.
+
+  .virtual $7E8BEC
+
+    wMapItemListHoveredSlot .word ? ; $7E8BEC ; the slot under the cursor
+    wMapItemListRequest .word ?     ; $7E8BEE ; bit 15: close; bit 14: show wMapItemListHoveredSlot
+  .endvirtual
+
   .virtual $000DB3
 
     aOAMStripTailOffsets      .fill 32 ; $000DB3 ; 16 words: sprite buffer write/head offsets per Y-band
@@ -1445,6 +1473,21 @@
 
 
 
+
+  ; The unit menu's lists of usable inventory slots, built by rlUnknown84F786 at the
+  ; unit's tile: each is a count byte, then up to seven slot numbers. The AI uses
+  ; this area for other things (below). Scoped in tools/name_ram.py.
+
+  .virtual $7E2000
+
+    aUnitMenuWeaponSlots .fill 8       ; $7E2000 ; weapons with a target in range (attack)
+    aUnitMenuStaffSlots .fill 8        ; $7E2008 ; staves with a target on the map
+    aUnitMenuAssaultSlots .fill 8      ; $7E2010 ; weapons with an enemy at a castle in range (assault)
+    aUnitMenuItemSlots .fill 8         ; $7E2018 ; usable items
+    aUnitMenuEquipSlots .fill 8        ; $7E2020 ; equippable weapons
+    aUnitMenuCastleStaffSlots .fill 8  ; $7E2028 ; staves with a target in the castle
+
+  .endvirtual
 
   ; AI:
 

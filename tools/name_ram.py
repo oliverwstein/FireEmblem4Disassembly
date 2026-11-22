@@ -50,6 +50,9 @@ SCOPED = [
       'engine/castle/keepers.asm', 'engine/castle/lists.asm', 'engine/castle/shop.asm', 'engine/castle/depot.asm',
       'engine/castle/augury.asm', 'engine/castle/class_change.asm', 'engine/castle/conversation.asm',
       'engine/arena/arena.asm')),
+    # The unit menu's slot lists; the AI uses the area for its own variables.
+    (0x7E2000, 0x7E202F, ('aUnitMenu',), ('engine/menus/unit_menu.asm', 'engine/menus/item_list.asm',
+     'engine/items/staves.asm')),
     # The battle animation combatants' motion; a few other screens reuse the area.
     (0x7E0AF3, 0x7E0B78, ('wBattleAnimation', 'bBattleAnimation', 'lBattleAnimation'),
      ('engine/unsorted/bank95.asm', 'engine/unsorted/bank96.asm', 'engine/unsorted/bank97.asm',

@@ -1415,7 +1415,7 @@
         jsl rlDrawMenuOptions
         jsl rlKeepUnitMenuAwayFromCursor
         lda aProcSystem.aBody7,b,x
-        cmp #$0002
+        cmp #UNIT_MENU_MODE_2
         beq _E278
         cmp #$0001
         bne _E278
@@ -1613,7 +1613,7 @@
           beq _End
 
             lda aProcSystem.aBody7,b,x
-            cmp #1
+            cmp #UNIT_MENU_MODE_1
             beq _E37D
 
             cmp #2
@@ -1860,7 +1860,7 @@
 
         ldx aProcSystem.wOffset,b
         lda aProcSystem.aBody7,b,x
-        cmp #$0002
+        cmp #UNIT_MENU_MODE_2
         bne _E48E
         jml rsUnitMenuCheckFail
 
@@ -1873,7 +1873,7 @@
 
 
         _E49A
-        lda $7E2000
+        lda aUnitMenuWeaponSlots
         and #$00FF
         bne _E4A7
         jml rsUnitMenuCheckFail
@@ -1885,13 +1885,13 @@
 
       rsUnitMenuHasSupportStaff ; 85/E4AB
         phx
-        lda wAIGroupLeaderFieldMovement
+        lda aUnitMenuStaffSlots
         and #$00FF
         dec a
         tax
 
         _E4B5
-        lda wAIGroupLeaderFieldMovement+1,x
+        lda aUnitMenuStaffSlots+1,x
         and #$00FF
         jsl rlGetItemROMDataByInventorySlot
         jsl rlGetItemStaffEffect
@@ -1913,7 +1913,7 @@
 
         ldx aProcSystem.wOffset,b
         lda aProcSystem.aBody7,b,x
-        cmp #$0002
+        cmp #UNIT_MENU_MODE_2
         bne _E4E1
         jml rsUnitMenuCheckFail
 
@@ -1922,7 +1922,7 @@
         lda wMapStateFlags,b
         bit #$0008
         bne rsUnitMenuCheckFail
-        lda wAIGroupLeaderFieldMovement
+        lda aUnitMenuStaffSlots
         and #$00FF
         beq rsUnitMenuCheckFail
         jsr rsUnitMenuHasSupportStaff
@@ -1933,7 +1933,7 @@
 
         ldx aProcSystem.wOffset,b
         lda aProcSystem.aBody7,b,x
-        cmp #$0002
+        cmp #UNIT_MENU_MODE_2
         bne _E50A
         jml rsUnitMenuCheckFail
 
@@ -1942,7 +1942,7 @@
         lda wMapStateFlags,b
         bit #$0008
         bne rsUnitMenuCheckFail
-        lda wAIGroupLeaderFieldMovement
+        lda aUnitMenuStaffSlots
         and #$00FF
         beq rsUnitMenuCheckFail
         jsr rsUnitMenuHasSupportStaff
@@ -1954,14 +1954,14 @@
         lda wMapStateFlags,b
         bit #$0008
         bne rsUnitMenuCheckFail
-        lda wAIUnknown7E2018
+        lda aUnitMenuItemSlots
         and #$00FF
         beq rsUnitMenuCheckFail
         jml rsUnitMenuCheckPass
 
       rsUnitMenuCheckEquip ; 85/E539
 
-        lda wAIGroupLeaderDeploymentOffset
+        lda aUnitMenuEquipSlots
         and #$00FF
         cmp #$0002
         bcc rsUnitMenuCheckFail
@@ -2266,7 +2266,7 @@
 
 
         _E694
-        lda wAIUnknown7E2010
+        lda aUnitMenuAssaultSlots
         and #$00FF
         bne _E6A1
         jml rsUnitMenuCheckFail
@@ -2369,7 +2369,7 @@
 
         ldx aProcSystem.wOffset,b
         lda aProcSystem.aBody7,b,x
-        cmp #$0002
+        cmp #UNIT_MENU_MODE_2
         bne _E6F7
         jml rsUnitMenuCheckFail
 
@@ -3133,7 +3133,7 @@
 
         ; Staves usable on the map ($7E2008).
 
-        lda wAIGroupLeaderFieldMovement
+        lda aUnitMenuStaffSlots
         and #$00FF
         bne _EA4F
         jml rsUnitMenuCheckFail
@@ -3163,7 +3163,7 @@
 
         ; Staves usable in the castle ($7E2028).
 
-        lda $7E2028
+        lda aUnitMenuCastleStaffSlots
         and #$00FF
         bne _EA60
         jml rsUnitMenuCheckFail

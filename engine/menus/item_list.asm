@@ -56,8 +56,8 @@
         lda #$0001
         sta aProcSystem.aBody6,b,x
         lda #$0000
-        sta $7E8BEE
-        sta $7E8BEC
+        sta wMapItemListRequest
+        sta wMapItemListHoveredSlot
         jsl rlSetMapMenuTextColors
         lda wUnknown000D79,b
         bit #$0020
@@ -312,7 +312,7 @@
         jsl rlProcEngineCreateProc
         plx
         lda #$0000
-        sta $7E8BEE
+        sta wMapItemListRequest
 
         _9414
         jsl rlLoadMapMenuEntryPointerFromProcBody
@@ -448,7 +448,7 @@
         jsl rlRestoreMapMenuTextColors
         jsl rlCloseItemDescriptionBox
         lda #$8000
-        sta $7E8BEE
+        sta wMapItemListRequest
         jsr rsCloseMapItemWeaponStats
         phx
         jsl rlUnknown88ADA2
@@ -470,7 +470,7 @@
         tax
         lda $7E0001,x
         and #$00FF
-        sta $7E8BEC
+        sta wMapItemListHoveredSlot
         plx
         lda wR2
         cmp #$2000
@@ -485,7 +485,7 @@
         pha
         lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
-        lda $7E8BEC
+        lda wMapItemListHoveredSlot
         phx
         jsl rlGetItemROMDataByInventorySlot
         jsl rlGetItemDescriptionPointer
@@ -504,7 +504,7 @@
 
         _9542
         lda #$4000
-        sta $7E8BEE
+        sta wMapItemListRequest
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlBringMapMenuToFront
 
@@ -678,7 +678,7 @@
         jsl rlProcEngineFreeProc
         jsl rlRestoreMapMenuTextColors
         lda #$8000
-        sta $7E8BEE
+        sta wMapItemListRequest
         jsr rsCloseMapItemWeaponStats
         rts
 
@@ -1398,10 +1398,10 @@
 
         ; wMapItemListRequest bit 15: close; bit 14: show the item in wMapItemListHoveredSlot.
 
-        lda $7E8BEE
+        lda wMapItemListRequest
         bit #$8000
         bne _9AC7
-        lda $7E8BEE
+        lda wMapItemListRequest
         bit #$4000
         bne _9ADB
         rtl
@@ -1411,21 +1411,21 @@
         jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         lda #$0000
-        sta $7E8BEE
-        sta $7E8BEC
+        sta wMapItemListRequest
+        sta wMapItemListHoveredSlot
         rtl
 
 
         _9ADB
         phx
-        lda $7E8BEC
+        lda wMapItemListHoveredSlot
         jsl rlGetItemROMDataByInventorySlot
         plx
         lda wCurrentItemDataROMPointer,b
         sta aProcSystem.aBody5,b,x
         lda #$0000
-        sta $7E8BEE
-        sta $7E8BEC
+        sta wMapItemListRequest
+        sta wMapItemListHoveredSlot
         lda #<>rlProcMapItemWeaponStatsDraw
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl

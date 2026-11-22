@@ -2710,11 +2710,11 @@
         lda #$0400
         jsl rlUnsetSelectedUnitStates
         lda #$0000
-        sta $7E2000
-        sta wAIGroupLeaderFieldMovement
-        sta wAIUnknown7E2010
-        sta wAIUnknown7E2018
-        sta wAIGroupLeaderDeploymentOffset
+        sta aUnitMenuWeaponSlots
+        sta aUnitMenuStaffSlots
+        sta aUnitMenuAssaultSlots
+        sta aUnitMenuItemSlots
+        sta aUnitMenuEquipSlots
         lda #$0001
         sta wR0
 
@@ -2759,7 +2759,7 @@
         .autsiz
         .databank ?
 
-        lda #$2000
+        lda #<>aUnitMenuWeaponSlots
         sta wR1
         lda wR0
         jsl rlCheckWeaponInInventorySlotEquippable
@@ -2786,7 +2786,7 @@
         .autsiz
         .databank ?
 
-        lda #$2008
+        lda #<>aUnitMenuStaffSlots
         sta wR1
         lda wR0
         jsl rlUnknown84F75C
@@ -2810,7 +2810,7 @@
         .autsiz
         .databank ?
 
-        lda #$2028
+        lda #<>aUnitMenuCastleStaffSlots
         sta wR1
         lda wR0
         jsl rlUnknown84F75C
@@ -2834,7 +2834,7 @@
         .autsiz
         .databank ?
 
-        lda #$2010
+        lda #<>aUnitMenuAssaultSlots
         sta wR1
         lda wR0
         jsl rlCheckWeaponInInventorySlotEquippable
@@ -2861,7 +2861,7 @@
         .autsiz
         .databank ?
 
-        lda #$2018
+        lda #<>aUnitMenuItemSlots
         sta wR1
         lda wR0
         jsl rlUnknown84F765
@@ -2883,7 +2883,7 @@
         .autsiz
         .databank ?
 
-        lda #$2020
+        lda #<>aUnitMenuEquipSlots
         sta wR1
         lda wR0
         jsl rlCheckWeaponInInventorySlotEquippable
@@ -2995,9 +2995,9 @@
         sta lRoutineVariable,b
         jsl rlUnknown8483F3
         lda #$0000
-        sta wAIGroupLeaderFieldMovement
-        sta wAIUnknown7E2018
-        sta $7E2028
+        sta aUnitMenuStaffSlots
+        sta aUnitMenuItemSlots
+        sta aUnitMenuCastleStaffSlots
         lda #$0001
         sta wR0
 

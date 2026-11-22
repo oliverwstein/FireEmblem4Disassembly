@@ -6279,10 +6279,10 @@
         .autsiz
         .databank ?
 
-        ; Carry set if the right HP window's request word ($0DB1) is $FFFF.
+        ; Carry set if wMapBattleHPWindowRightRequest is $FFFF.
         ; Nothing in the build reaches this.
 
-        lda $0DB1,b
+        lda wMapBattleHPWindowRightRequest,b
         cmp #$FFFF
         beq +
 

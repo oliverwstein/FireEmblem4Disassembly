@@ -63,6 +63,19 @@
     .endif
   .endstruct
 
+  ; procUnitMenu's mode (aBody7, from wInput0): rlOpenUnitMenu picks it from
+  ; wMapStateFlags.
+  UNIT_MENU_MODE_NORMAL              = 0
+  UNIT_MENU_MODE_1                   = 1 ; bit 3 of wMapStateFlags; B cannot close the menu
+  UNIT_MENU_MODE_2                   = 2 ; bit 4 of wMapStateFlags; no attack or Return
+
+  ; Requests to the map battle HP windows (wMapBattleHPWindowLeftRequest/RightRequest).
+  MAP_BATTLE_HP_REQUEST_EXPERIENCE   = $0100
+  MAP_BATTLE_HP_REQUEST_HEAL         = $0800 ; + HP in the low byte
+  MAP_BATTLE_HP_REQUEST_CLOSE        = $1000
+  MAP_BATTLE_HP_REQUEST_BUSY         = $2000 ; set by the window while it drains or fills
+  MAP_BATTLE_HP_REQUEST_DAMAGE       = $4000 ; + damage in the low byte
+
   ; The full-screen menus (engine/menus/): the status screen, the revive screen
   ; and the options menu.
 

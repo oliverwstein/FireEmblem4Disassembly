@@ -4,7 +4,7 @@
   ; 1. Word-sum checks (aCodeChecksums at $8F/8000, copied at $87/8008 and $88/8000):
   ;    - rlCheckCodeChecksums ($8F/8006), rlCheckCodeChecksumsCopy88 ($88/800F), and
   ;      rlCheckCodeChecksumsAtReset ($87/8074) add up 16-bit words across $80/8D56-$80/8E2C
-  ;      (inside rlReset) and $87/8017-$87/80A9 (inside rlWriteResetSignature/2A/74)
+  ;      (inside rlReset) and $87/8017-$87/80A9 (inside rlWriteResetSignature, rlCheckResetSignature and rlCheckCodeChecksumsAtReset)
   ;      and compare them against the three structCodeChecksums tables.
   ;    - When ChecksEnabled is 0, the checks pass without summing; the original
   ;      ROM stores $5349 ("IS").
@@ -25,7 +25,7 @@
   ; 3. Unattributed bulk code reads in fe4.cdl:
   ;    - The prologue code/data log also recorded bulk data reads across
   ;      $88/8888-$88/8AC7 (576 bytes, extending beyond the 128 bytes read by
-  ;      rlWriteResetSignature/2A) and $82/8888-$82/890D (134 bytes). No static ROM
+  ;      rlWriteResetSignature and rlCheckResetSignature) and $82/8888-$82/890D (134 bytes). No static ROM
   ;      reference in the built source targets $82/8888 or $88/8908-$88/8AC7
   ;      directly; finding their reader requires a Mesen read breakpoint.
 
