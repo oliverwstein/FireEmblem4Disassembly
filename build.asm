@@ -57,7 +57,16 @@
   .include "engine/menus/options_menu.asm"
   .include "engine/core/unused_game_state.asm"
   .include "engine/menus/status_screen.asm"
-  .include "engine/menus/castle_menu.asm"
+  .include "engine/castle/castle_screen.asm"
+  .include "engine/castle/courtyard.asm"
+  .include "engine/castle/unit_commands.asm"
+  .include "engine/castle/keepers.asm"
+  .include "engine/castle/lists.asm"
+  .include "engine/castle/shop.asm"
+  .include "engine/castle/depot.asm"
+  .include "engine/castle/augury.asm"
+  .include "engine/castle/class_change.asm"
+  .include "engine/castle/conversation.asm"
   .include "engine/worldmap/world_map.asm"
   .include "engine/menus/game_over.asm"
   .include "engine/core/game_states.asm"
@@ -165,7 +174,6 @@
   .include "engine/unsorted/bank87.asm"
   .include "engine/unsorted/bank88.asm"
   .include "engine/unsorted/bank89.asm"
-  .include "engine/unsorted/bank8A.asm"
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
   .include "engine/unsorted/bank8D.asm"
@@ -3954,6 +3962,8 @@
 
       .dsection Unsorted8ABB3ESection
 
+      .dsection ShopScreenSetupSection
+
     .here
 
     * = $0ABE4B
@@ -4208,6 +4218,8 @@
 
       .dsection Unsorted8AF0D7Section
 
+      .dsection DepotScreenSetupSection
+
     .here
 
     * = $0AF263
@@ -4238,6 +4250,8 @@
       .dsection Unsorted8AF818Section
 
       .dsection Unsorted8AF885Section
+
+      .dsection AuguryScreenSetupSection
 
     .here
 

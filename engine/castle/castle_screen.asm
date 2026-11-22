@@ -1,4 +1,11 @@
-; Castle interior screen VBlank, substate dispatch, courtyard/unit menu setup, and exits.
+; The castle screen: the game state that runs while the player is inside a
+; castle (states $0A-$0C, see include/GameStates.h). rsOpenCastleScreen sets the
+; screen up and dispatches on wCastleScreenHandler (aCastleStateHandlers): the
+; courtyard, the town, a conversation scene, the arena, or a reload after a battle.
+; Every frame rlCastleScreenStep runs step wGameStateStep from
+; aCastleScreenStepHandlers: the courtyard, the fade steps, the exits, and a
+; setup/run pair for each facility (arena, augury, depot, class change,
+; conversation, shop). Banks $80 and $8A.
 
 
     .section Unsorted80B641Section
@@ -884,3 +891,679 @@
     .endsection Unsorted80BB7CSection
 
 
+    .section Unsorted8A8000Section
+
+      .al
+      .xl
+
+      rlCastleScreenUpkeep ; 8A/8000
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $0A, every frame while the castle screen is up: does nothing in effect. It compares wCastleCursorState with 2 and 3, but every path returns.
+
+        lda wCastleCursorState,b
+        cmp #$0002
+        beq _800D
+        cmp #$0003
+        beq _800D
+
+        _800D
+        rtl
+
+        .databank 0
+
+        ; 8A/800E
+
+    .endsection Unsorted8A8000Section
+
+
+    .section Unsorted8A800ESection
+
+      .al
+      .xl
+
+      rlCastleScreenSetup ; 8A/800E
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $0B, once: builds the RAM area at $7FB16C; unless wCastleScreenHandler is 2, turns on active sprites and fades in (else stays blank); zeroes the BG scroll unless wBaseSceneMode is 4; moves on to $0C.
+
+        lda #$7F00
+        sta lR18+1
+        lda #$B16C
+        sta lR18
+        lda #$0001
+        sta wStructIndex,b
+        lda #$4E93
+        jsl rlBuildRAMAreaHeaderAndGuidingEntry
+        lda wCastleScreenHandler,b
+        cmp #$0002
+        beq _8041
+        jsl rlEnableActiveSpriteEngine
+        lda #(`procFadeIn)<<8
+        sta lR44+1
+        lda #<>procFadeIn
+        sta lR44
+        jsl rlProcEngineCreateProc
+        bra _8049
+
+
+        _8041
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+
+        _8049
+        lda wBaseSceneMode,b
+        cmp #$0004
+        beq _805D
+        stz wBufferBG1VOFS
+        stz wBufferBG2VOFS
+        stz wBufferBG3VOFS
+        stz wBufferBG1HOFS
+        stz wBufferBG2HOFS
+        stz wBufferBG3HOFS
+
+        _805D
+        inc wGameStateRoutine1,b
+        rtl
+
+        .databank 0
+
+        ; 8A/8061
+
+    .endsection Unsorted8A800ESection
+
+
+    .section Unsorted8A8061Section
+
+      .al
+      .xl
+
+      rlCastleScreenStep ; 8A/8061
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $0C, every frame: rlUnknown81B15A, rlUnknown81ADD8, then the routine for wGameStateStep from aCastleScreenStepHandlers.
+
+        phb
+        php
+        phk
+        plb
+        .databank $8A
+        jsl rlUnknown81B15A
+        jsl rlUnknown81ADD8
+        lda wGameStateStep,b
+        asl a
+        tax
+        jsr (aCastleScreenStepHandlers,x)
+        plp
+        plb
+        .databank $8A
+        rtl
+
+        .databank 0
+
+        ; 8A/8078
+
+    .endsection Unsorted8A8061Section
+
+
+    .section Table8A8078Section
+
+      .al
+      .xl
+
+      aCastleScreenStepHandlers ; 8A/8078
+
+        ; Jump table of rlCastleScreenStep.
+        .word <>rsCastleStepCourtyardStart
+        .word <>rsCastleStepCourtyard
+        .word <>rsCastleStepWait
+        .word <>rsCastleStepArenaSetup
+        .word <>rsCastleStepArena
+        .word <>rsCastleStepAugurySetup
+        .word <>rsCastleStepAugury
+        .word <>rsCastleStepDepotSetup
+        .word <>rsCastleStepDepot
+        .word <>rsCastleStepClassChangeSetup
+        .word <>rsCastleStepClassChange
+        .word <>rsCastleStepConversationSetup
+        .word <>rsCastleStepConversation
+        .word <>rsCastleStepShopSetup
+        .word <>rsCastleStepShop
+        .word <>rsCastleStepFadeOut
+        .word <>rsCastleStepFadeIn
+        .word <>rsCastleStepReturnToCourtyard
+        .word <>rsCastleStepReopenTownSameSong
+        .word <>rsCastleStepExitToMapNoReset
+        .word <>rsCastleStepReturnToCourtyard
+        .word <>rsCastleStepReopenTown
+        .word <>rsCastleStepExitToMap
+
+    .endsection Table8A8078Section
+
+
+    .section Unsorted8A80A6Section
+
+      .al
+      .xl
+
+      rsCastleStepCourtyardStart ; 8A/80A6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $00: runs the courtyard; once no song is playing, queues sound command $F7 and moves to step $01.
+
+        jsl rlCastleCourtyardStep
+        lda wMusicID,b
+        bne _80BC
+        lda #$00F7
+        jsl rlQueueSoundCommand
+        lda #$0001
+        sta wGameStateStep,b
+
+        _80BC
+        rts
+
+        .databank 0
+
+        ; 8A/80BD
+
+      rsCastleStepCourtyard ; 8A/80BD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $01: runs the courtyard (rlCastleCourtyardStep).
+
+        jsl rlCastleCourtyardStep
+        rts
+
+        .databank 0
+
+        ; 8A/80C2
+
+      rsCastleStepWait ; 8A/80C2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $02: does nothing; used while a fade proc or another screen takes over.
+
+        rts
+
+        .databank 0
+
+        ; 8A/80C3
+
+    .endsection Unsorted8A80A6Section
+
+
+    .section Unsorted8A80C3Section
+
+      .al
+      .xl
+
+      rsCastleStepArenaSetup ; 8A/80C3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $03: sets up the arena screen.
+
+        jsl rlArenaScreenSetup
+        rts
+
+        .databank 0
+
+        ; 8A/80C8
+
+    .endsection Unsorted8A80C3Section
+
+
+    .section Unsorted8A80C8Section
+
+      .al
+      .xl
+
+      rsCastleStepArena ; 8A/80C8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $04: runs the arena menu.
+
+        jsl rlArenaMenuRunStep
+        rts
+
+        .databank 0
+
+        ; 8A/80CD
+
+    .endsection Unsorted8A80C8Section
+
+
+    .section Unsorted8A80CDSection
+
+      .al
+      .xl
+
+      rsCastleStepAugurySetup ; 8A/80CD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $05: sets up the augury (fortune teller) screen.
+
+        jsl rlAuguryScreenSetup
+        rts
+
+        .databank 0
+
+        ; 8A/80D2
+
+      rsCastleStepAugury ; 8A/80D2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $06: runs the augury.
+
+        jsl rlAuguryScreenStep
+        rts
+
+        .databank 0
+
+        ; 8A/80D7
+
+      rsCastleStepDepotSetup ; 8A/80D7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $07: sets up the depot screen.
+
+        jsl rlDepotScreenSetup
+        rts
+
+        .databank 0
+
+        ; 8A/80DC
+
+      rsCastleStepDepot ; 8A/80DC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $08: runs the depot.
+
+        jsl rlDepotScreenStep
+        rts
+
+        .databank 0
+
+        ; 8A/80E1
+
+      rsCastleStepClassChangeSetup ; 8A/80E1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $09: sets up the class change screen.
+
+        jsl rlClassChangeScreenSetup
+        rts
+
+        .databank 0
+
+        ; 8A/80E6
+
+      rsCastleStepClassChange ; 8A/80E6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $0A: runs the class change screen.
+
+        jsl rlClassChangeScreenStep
+        rts
+
+        .databank 0
+
+        ; 8A/80EB
+
+      rsCastleStepShopSetup ; 8A/80EB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $0D: sets up a shop screen (item shop, secondhand shop or repair shop).
+
+        jsl rlShopScreenSetup
+        rts
+
+        .databank 0
+
+        ; 8A/80F0
+
+      rsCastleStepShop ; 8A/80F0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $0E: runs the shop.
+
+        jsl rlShopScreenStep
+        rts
+
+        .databank 0
+
+        ; 8A/80F5
+
+    .endsection Unsorted8A80CDSection
+
+
+    .section Unsorted8A80F5Section
+
+      .al
+      .xl
+
+      rsCastleStepConversationSetup ; 8A/80F5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $0B: sets up the castle conversation scene.
+
+        jsl rlConversationSceneSetup
+        rts
+
+        .databank 0
+
+        ; 8A/80FA
+
+    .endsection Unsorted8A80F5Section
+
+
+    .section Unsorted8A80FASection
+
+      .al
+      .xl
+
+      rsCastleStepConversation ; 8A/80FA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $0C: runs the castle conversation scene.
+
+        jsl rlConversationSceneStep
+        rts
+
+        .databank 0
+
+        ; 8A/80FF
+
+      rsCastleStepFadeIn ; 8A/80FF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $10: raises the brightness one level a frame, then moves to the step in wNextMenuState.
+
+        jsr rsCastleDrawFadingPortrait
+        sep #$20
+        lda bBufferINIDISP
+        and #$0F
+        cmp #$0F
+        beq _8111
+        inc bBufferINIDISP
+        rep #$20
+        rts
+
+
+        _8111
+        .as
+        rep #$20
+        lda wNextMenuState,b
+        sta wGameStateStep,b
+        rts
+
+        .databank 0
+
+        ; 8A/811A
+
+      rsCastleStepFadeOut ; 8A/811A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $0F: lowers the brightness one level a frame, then blanks the screen and moves to the step in wNextMenuState.
+
+        jsr rsCastleDrawFadingPortrait
+        sep #$20
+        lda bBufferINIDISP
+        and #$0F
+        beq _812A
+        dec bBufferINIDISP
+        rep #$20
+        rts
+
+
+        _812A
+        .as
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda wNextMenuState,b
+        sta wGameStateStep,b
+        rts
+
+        .databank 0
+
+        ; 8A/8139
+
+      rsCastleStepReturnToCourtyard ; 8A/8139
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Steps $11 and $14: reloads the courtyard screen and fades in to step $00.
+
+        lda #$00F7
+        jsl rlQueueSoundCommand
+        jsr rsCastleLoadCourtyardScreen
+        lda #$0000
+        sta $7F766A
+        lda #$0010
+        sta wGameStateStep,b
+        lda #$0000
+        sta wNextMenuState,b
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        rts
+
+        .databank 0
+
+        ; 8A/815F
+
+      rsCastleStepReopenTown ; 8A/815F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $15: starts the castle's song and reopens the town screen; step $12 enters at rsCastleStepReopenTownSameSong.
+
+        jsl rlDisableVBlank
+        jsl rlResetHDMAEngine
+        jsl rlPlayCastleSong
+        jsl rlEnableVBlank
+
+      rsCastleStepReopenTownSameSong ; 8A/816F
+        ; Step $12 enters here: reopens the town without changing the song.
+        jsl rlCastleOpenTown
+        rts
+
+        .databank 0
+
+        ; 8A/8174
+
+      rsCastleStepExitToMap ; 8A/8174
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $16: once the screen is fully bright, fades out (sound command $E8) and returns to the map (procMainLoopChangeFade into $80/B122); moves to step $02.
+
+        jsl rlUnknown81AB26
+
+      rsCastleStepExitToMapNoReset ; 8A/8178
+        ; Step $13 enters here, skipping rlUnknown81AB26. Nothing found selects step $13.
+        lda #$00E8
+        jsl rlQueueSoundCommand
+        sep #$20
+        lda bBufferINIDISP
+        rep #$20
+        and #$000F
+        cmp #$000F
+        beq _8191
+        jml _81C3
+
+
+        _8191
+        lda #(`procFadeIn)<<8
+        sta lR44+1
+        lda #<>procFadeIn
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcs _81C3
+        lda #$B122
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        bcs _81C3
+        lda #$0000
+        sta wMainGameMode,b
+        lda #$0002
+        sta wGameStateStep,b
+
+        _81C3
+        rts
+
+        .databank 0
+
+        ; 8A/81C4
+
+      rsCastleDrawFadingPortrait ; 8A/81C4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; During the fade steps, draws the portrait chosen by $7F766A (1 rsPushUnitPortraitSprites, 2 rsPushCastleListSprites, 3 rsPushCourtyardPortraitSprites).
+
+        rep #$20
+        lda $7F766A
+        cmp #$0000
+        beq _81DE
+        cmp #$0001
+        beq _81DF
+        cmp #$0002
+        beq _81F1
+        cmp #$0003
+        beq _81F6
+
+        _81DE
+        rts
+
+
+        _81DF
+        lda #$00A0
+        sta wR0
+        lda #$0060
+        sta wR1
+        ldx #$0000
+        jsr rsPushUnitPortraitSprites
+        bra _81DE
+
+
+        _81F1
+        jsr rsPushCastleListSprites
+        bra _81DE
+
+
+        _81F6
+        lda #$00A0
+        sta wR0
+        lda #$0060
+        sta wR1
+        ldx #$0000
+        jsr rsPushCourtyardPortraitSprites
+        bra _81DE
+
+        .databank 0
+
+        ; 8A/8208
+
+    .endsection Unsorted8A80FASection

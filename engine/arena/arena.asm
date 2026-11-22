@@ -1,8 +1,9 @@
 ; The arena menu: rlArenaMenuRunStep runs the step in $0592 from
 ; aArenaMenuStepHandlers (fight or quit, the wager, continuing or leaving between
 ; rounds, changing weapons), with the menu text and the decompression DMA entries
-; used when the arena screen is set up (by rlArenaScreenSetup in bank $8A). Bank $8A
-; ($8A/E4B9-ECEF). The arena dialogue it shows ($8A/D088-D60D) is not built yet.
+; used when the arena screen is set up (rlArenaScreenSetup), and the opponent
+; window (rsDrawArenaOpponent). Banks $87 and $8A. Its lines are in
+; text/dialogue/Shops with the other keepers'.
 
     .section ArenaMenuSection
 
@@ -1132,3 +1133,576 @@
         ; 8A/ECEF
 
     .endsection ArenaMenuSection
+
+
+    .section Unsorted87A082Section
+
+      .al
+      .xl
+
+      rlUnknown87A082 ; 87/A082
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        jsl rlGetSelectedUnitArenaLevel
+        cmp #$0007
+        bcs _A0D5
+        asl a
+        sta wRoutineVariable1,b
+        jsl rlUnknown81B4C5
+        ldx lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        jsl rlGetSelectedItemRange
+        lda wR10
+        cmp #$0002
+        bcs _A0B6
+        lda $0000,b,x
+        bra _A0B9
+
+
+        _A0B6
+        lda $0002,b,x
+
+        _A0B9
+        clc
+        adc wRoutineVariable1,b
+        tax
+        lda $0000,b,x
+        jsl rlGetUnitRAMDataPointerByID
+        bcs _A0C9
+        inc x
+        inc x
+
+        _A0C9
+        lda $0000,b,x
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+
+        _A0D4
+        rtl
+
+
+        _A0D5
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        bra _A0D4
+
+        .databank 0
+
+        ; 87/A0DF
+
+      rlUnknown87A0DF ; 87/A0DF
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        jsl rlUnknown87A082
+        bcs _A135
+        tay
+        stz wTempItemDataROMPointer,b
+        ldx #$0002
+        tya
+        jsl rlGetCharacterEquipSlotItemROMPointer
+        lda wCurrentItemDataROMPointer,b
+        beq _A10B
+        jsl rlGetItemEquipmentType
+        cmp #$0002
+        bne _A10B
+        lda wCurrentItemDataROMPointer,b
+        sta wTempItemDataROMPointer,b
+
+        _A10B
+        ldx #$0001
+
+        _A10E
+        tya
+        jsl rlGetCharacterEquipSlotItemROMPointer
+        lda wCurrentItemDataROMPointer,b
+        beq _A129
+        jsl rlGetItemMinimumRange
+        dec a
+        cmp wR10
+        bcs _A129
+        jsl rlGetItemMaximumRange
+        cmp wR10
+        bcs _A12F
+
+        _A129
+        inc x
+        cpx #$0003
+        bcc _A10E
+
+        _A12F
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+
+        _A134
+        rtl
+
+
+        _A135
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        bra _A134
+
+        .databank 0
+
+        ; 87/A13C
+
+      rlGetUnitWinCount ; 87/A13C
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        stz wRoutineVariable1,b
+        lda wCurrentChapter,b
+        cmp #$0006
+        bcc _A152
+        lda #$0018
+        sta wRoutineVariable1,b
+
+        _A152
+        jsl rlGetSelectedUnitGenerationID
+        dec a
+        clc
+        adc wRoutineVariable1,b
+        asl a
+        tax
+        lda aUnitWinCounts,x
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/A165
+
+      rlGetUnitLossCount ; 87/A165
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        stz wRoutineVariable1,b
+        lda wCurrentChapter,b
+        cmp #$0006
+        bcc _A17B
+        lda #$0018
+        sta wRoutineVariable1,b
+
+        _A17B
+        jsl rlGetSelectedUnitGenerationID
+        dec a
+        clc
+        adc wRoutineVariable1,b
+        jsl rlUnknown91EBBE
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/A18C
+
+    .endsection Unsorted87A082Section
+
+
+    .section Unsorted8AADF4Section
+
+      .al
+      .xl
+
+      rsDrawArenaOpponent ; 8A/ADF4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draws the arena opponent: name, class, weapons, level and the B-to-quit line.
+
+        lda #$2800
+        sta aCurrentTilemapInfo,b
+        lda #(`aArenaEnemyText)<<8
+        sta lRoutineVariable+1,b
+        lda #<>aArenaEnemyText
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0A0D
+        jsl rlDrawMenuTextLine
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        jsl rlUnknown87A082
+        sta wTempVariable1,b
+        jsl rlGetCharacterNamePointer
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0C0E
+        jsl rlDrawMenuTextLine
+        lda wTempVariable1,b
+        jsl rlGetCharacterClass
+        jsl rlGetClassNamePointer
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0E0E
+        jsl rlDrawMenuTextLine
+        jsl rlUnknown87A0DF
+        jsl rlGetItemNamePointer
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$100E
+        jsl rlDrawMenuTextLine
+        lda wTempItemDataROMPointer,b
+        beq _AE8B
+        sta wCurrentItemDataROMPointer,b
+        jsl rlGetItemNamePointer
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$120E
+        jsl rlDrawMenuTextLine
+
+        _AE8B
+        lda #(`aArenaBToQuitText)<<8
+        sta lRoutineVariable+1,b
+        lda #<>aArenaBToQuitText
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$160E
+        jsl rlDrawMenuTextLine
+        lda #(`aArenaLevelText)<<8
+        sta lRoutineVariable+1,b
+        lda #<>aArenaLevelText
+        sta lRoutineVariable,b
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0E17
+        jsl rlDrawMenuTextLine
+        lda wTempVariable1,b
+        jsl rlGetCharacterLevel
+        ldx #$24F0
+        stx aCurrentTilemapInfo,b
+        ldx #$0E19
+        jsl rlUnknown87913E
+        rts
+
+        .databank 0
+
+        ; 8A/AEDA
+
+    .endsection Unsorted8AADF4Section
+
+
+    .section Table8AAEDASection
+
+      .al
+      .xl
+
+      aArenaEnemyText ; 8A/AEDA
+
+        .enc "SJIS"
+        .text "ＥＮＥＭＹ"
+        .word $0000
+        .enc "none"
+
+      aArenaLevelText ; 8A/AEE6
+
+        .enc "SJIS"
+        .text "ＬＶ"
+        .word $0000
+        .enc "none"
+
+      aArenaBToQuitText ; 8A/AEEC
+
+        .enc "SJIS"
+        .text "☆Ｂボタンでちゅうしできます"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table8AAEDASection
+
+
+    .section Unsorted8AE2F8Section
+
+      .al
+      .xl
+
+      rlArenaScreenSetup ; 8A/E2F8
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Blanks the screen and loads the arena: graphics, keeper, the unit's weapon list, money; moves to step $04.
+
+        phk
+        plb
+        .databank $8A
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlResetHDMAEngine
+        lda #$004B
+        sta wMusicID,b
+        jsl rlStepMusicScript
+        phk
+        plb
+        .databank $8A
+        rep #$30
+        lda #$1809
+        sta $4300,b
+        lda #(`aUnknown8AE4BA)<<8
+        sta $4303,b
+        lda #<>aUnknown8AE4BA
+        sta $4302,b
+        lda #$2000
+        sta $4305,b
+        lda #$2000
+        sta $2116,b
+        sep #$20
+        lda #$01
+        sta $420B,b
+        rep #$20
+        jsl rlResetDialogueEngine
+        jsr rsSetKeeperOptionList
+        jsl rlUnknown889268
+        lda wEventLocationEntry,b
+        pha
+        jsl rlUpdateAllLocationEvents
+        jsl rlUnknown86C629
+        pla
+        sta wEventLocationEntry,b
+        lda #$0000
+        sta wR1
+        lda #$0000
+        sta wR2
+        lda #$4000
+        sta wR3
+        sta wR4
+        lda #$6000
+        sta wR5
+        lda #$2800
+        sta wR6
+        lda #$2C00
+        sta wR7
+        lda #$3800
+        sta wR8
+        jsl rlSetLayerPositionsAndSizes
+        lda #(`aUnknown8AE4C3)<<8
+        sta lR19+1
+        lda #<>aUnknown8AE4C3
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM g4bppCursorSprites, $0400, $80, $C000
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM g4bppWeaponTypeIcons, $0800, $80, $D600
+
+        lda #(`aUnknown8AE4CB)<<8
+        sta lR19+1
+        lda #<>aUnknown8AE4CB
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        lda #(`aUnknown8AE4D3)<<8
+        sta lR19+1
+        lda #<>aUnknown8AE4D3
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM g2bppItemStatLabels, $0800, $80, $9800
+
+        lda #(`aUnknown8AE4BB)<<8
+        sta lR19+1
+        lda #<>aUnknown8AE4BB
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        jsl rlGetDialogueBoxGraphicsAndPalette
+        ldx #$0800
+        lda #$00FF
+
+        _E3EF
+        sta aBG3TilemapBuffer,x
+        dec x
+        dec x
+        bne _E3EF
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $7000
+
+        ldx #$01FE
+
+        _E407
+        lda aUnknown8CD600,x
+        sta aBGPaletteBuffer,b,x
+        dec x
+        dec x
+        bpl _E407
+        lda #$0001
+        jsl rlUnitWindowCopySpritePalette1
+        lda #$0002
+        jsl rlUnitWindowCopySpritePalette2
+        jsr rsLoadKeeperPortrait
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        lda #$00
+        sta bBufferTS
+        lda #$00
+        sta bBufferCGWSEL
+        lda #$00
+        sta bBufferCGADSUB
+        lda #$04
+        ora #$20
+        sta bBufferCOLDATA_1
+        lda #$04
+        ora #$40
+        sta bBufferCOLDATA_2
+        lda #$04
+        ora #$80
+        sta bBufferCOLDATA_3
+        rep #$20
+        lda $0AD7,b
+        beq _E457
+        jsl rlUnknown84B550
+        cmp #$0002
+        beq _E45D
+
+        _E457
+        jsl rlBuildEquippableWeaponList
+        bra _E461
+
+
+        _E45D
+        jsl rlBuildEquippableWeaponListSameRange
+
+        _E461
+        stz wCastleMenuOptionIndex,b
+        jsr rsUnknown8AA142
+        stz wMenuState,b
+        stz wCastleMenuOptionIndex,b
+        stz wCastleConfirmCursorIndex,b
+        stz wCastleListWindowRow,b
+        stz wCastleListSelectedIndex,b
+        lda #$0000
+        sta $7F7670
+        lda #(`aCastleMenuTilemapData)<<8
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #<>aCastleMenuTilemapData
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        jsr rsClearItemDetailsWindow
+        jsr rsDrawCastleUnitMoney
+        jsr rsClearCastleList
+        lda #(`aUnknown8AB230)<<8
+        sta lR44+1
+        lda #<>aUnknown8AB230
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        lda #$0004
+        sta wGameStateStep,b
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8A/E4B9
+
+    .endsection Unsorted8AE2F8Section
+
+
