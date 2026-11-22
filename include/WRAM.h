@@ -684,8 +684,8 @@
     wBaseSceneFlags .word ?                    ; $0008AD ; base/interior scene UI bitfield:
       ; $0001 = left unit display enabled (wBaseSceneLeftUnitRAMPointer)
       ; $0002 = right unit display enabled (wBaseSceneRightUnitRAMPointer)
-      ; $0004 = draw left portrait/window (rlUnknown8ADA08)
-      ; $0008 = draw right portrait/window (rlUnknown8ADA16)
+      ; $0004 = draw left portrait/window (rlConversationOpenLeftWindow)
+      ; $0008 = draw right portrait/window (rlConversationOpenRightWindow)
       ; $0010 = slide/animate left unit slot
       ; $0020 = slide/animate right unit slot
       ; $0040 = close left portrait

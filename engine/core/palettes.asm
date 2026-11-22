@@ -92,7 +92,7 @@
 
       aCastleVendorOAMPalettes ; 8C/9700
 
-        ; Read by rlUnknown8AD81B.
+        ; Read by rlConversationSceneSetup.
 
         .word $3800, $0C21, $23DF, $22BF, $0152, $7FFF, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000

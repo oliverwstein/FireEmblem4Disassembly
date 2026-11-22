@@ -3358,7 +3358,7 @@
 
         ; 87/A13C
 
-      rlUnknown87A13C ; 87/A13C
+      rlGetUnitWinCount ; 87/A13C
 
         ; Found by tools/sweep.py.
         .al
@@ -3397,7 +3397,7 @@
 
         ; 87/A165
 
-      rlUnknown87A165 ; 87/A165
+      rlGetUnitLossCount ; 87/A165
 
         ; Found by tools/sweep.py.
         .al
@@ -3472,13 +3472,15 @@
       .al
       .xl
 
-      rlUnknown87AE88 ; 87/AE88
+      rlGetUnitLoverOrTopCandidate ; 87/AE88
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Returns the generation ID of the unit's lover; without one, of the unpaired unit of the other sex with the most love points (0 if none).
 
         phb
         php

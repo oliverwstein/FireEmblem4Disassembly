@@ -242,7 +242,7 @@
 
         ; Step $03: sets up the arena screen.
 
-        jsl rlUnknown8AE2F8
+        jsl rlArenaScreenSetup
         rts
 
         .databank 0
@@ -290,7 +290,7 @@
 
         ; Step $05: sets up the augury (fortune teller) screen.
 
-        jsl rlUnknown8AF894
+        jsl rlAuguryScreenSetup
         rts
 
         .databank 0
@@ -306,7 +306,7 @@
 
         ; Step $06: runs the augury.
 
-        jsl rlUnknown8AFA34
+        jsl rlAuguryScreenStep
         rts
 
         .databank 0
@@ -322,7 +322,7 @@
 
         ; Step $07: sets up the depot screen.
 
-        jsl rlUnknown8AF0F2
+        jsl rlDepotScreenSetup
         rts
 
         .databank 0
@@ -338,7 +338,7 @@
 
         ; Step $08: runs the depot.
 
-        jsl rlUnknown8AF283
+        jsl rlDepotScreenStep
         rts
 
         .databank 0
@@ -354,7 +354,7 @@
 
         ; Step $09: sets up the class change screen.
 
-        jsl rlUnknown8AECEF
+        jsl rlClassChangeScreenSetup
         rts
 
         .databank 0
@@ -370,7 +370,7 @@
 
         ; Step $0A: runs the class change screen.
 
-        jsl rlUnknown8AEEB1
+        jsl rlClassChangeScreenStep
         rts
 
         .databank 0
@@ -426,7 +426,7 @@
 
         ; Step $0B: sets up the castle conversation scene.
 
-        jsl rlUnknown8AD81B
+        jsl rlConversationSceneSetup
         rts
 
         .databank 0
@@ -450,7 +450,7 @@
 
         ; Step $0C: runs the castle conversation scene.
 
-        jsl rlUnknown8AD975
+        jsl rlConversationSceneStep
         rts
 
         .databank 0
@@ -11803,10 +11803,10 @@
       aSecondhandShopOptions ; 8A/D07A
         .byte $01, $00, $03, $54, $84, $02, $03
 
-      aUnknown8AD081 ; 8A/D081
+      aDepotOptionX ; 8A/D081
         .byte $54, $84
 
-      aUnknown8AD083 ; 8A/D083
+      aDepotOptions ; 8A/D083
         .byte $01, $00, $00, $04, $05
 
       aUnknown8AD088 ; 8A/D088
@@ -11902,12 +11902,14 @@
       .al
       .xl
 
-      rlUnknown8AD81B ; 8A/D81B
+      rlConversationSceneSetup ; 8A/D81B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Blanks the screen and loads a conversation scene: background wBaseSceneArgument, the two portraits and their windows.
 
         phk
         plb
@@ -11977,13 +11979,13 @@
         lda wBaseSceneFlags,b
         bit #$0004
         beq _D8CB
-        jsl rlUnknown8ADA08
+        jsl rlConversationOpenLeftWindow
 
         _D8CB
         lda wBaseSceneFlags,b
         bit #$0008
         beq _D8D7
-        jsl rlUnknown8ADA16
+        jsl rlConversationOpenRightWindow
 
         _D8D7
         lda wBaseSceneFlags,b
@@ -12015,7 +12017,7 @@
         stz wCastleConfirmCursorIndex,b
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        jsr rsUnknown8AD95A
+        jsr rsResetFountainAnimation
         lda #$000C
         sta wGameStateStep,b
         lda wBaseSceneMode,b
@@ -12055,7 +12057,7 @@
       .al
       .xl
 
-      rsUnknown8AD95A ; 8A/D95A
+      rsResetFountainAnimation ; 8A/D95A
 
         .al
         .xl
@@ -12091,17 +12093,19 @@
       .al
       .xl
 
-      rlUnknown8AD975 ; 8A/D975
+      rlConversationSceneStep ; 8A/D975
 
         .al
         .autsiz
         .databank ?
 
+        ; Animates the background, loads portraits as wBaseSceneFlags asks, runs sub-state wMenuState (aConversationSceneStepHandlers) and draws both portraits.
+
         phb
         php
         phk
         plb
-        jsr rsUnknown8AE05E
+        jsr rsAnimateConversationBackground
 
         lda $7F7670
         bne +
@@ -12114,8 +12118,8 @@
         +
         lda #0
         sta $7F7670
-        jsr rsUnknown8ADA83
-        jsr rsUnknown8ADA24
+        jsr rsConversationLoadPortraits
+        jsr rsConversationDrawWindows
 
         sep #$20
         lda bBufferINIDISP
@@ -12136,7 +12140,7 @@
         lda wMenuState,b
         asl a
         tax
-        jsr (aUnknown8AD9FE,x)
+        jsr (aConversationSceneStepHandlers,x)
 
         lda wBaseSceneFlags,b
         bit #$0001
@@ -12148,7 +12152,7 @@
           sta wR1
           ldx #0
           jsr rsPushKeeperPortraitSprites
-          jsr rsUnknown8ADB04
+          jsr rsPushConversationLeftFrame
 
         +
         lda wBaseSceneFlags,b
@@ -12161,7 +12165,7 @@
           sta wR1
           ldx #2
           jsr rsPushUnitPortraitSprites
-          jsr rsUnknown8ADB37
+          jsr rsPushConversationRightFrame
 
         +
         plp
@@ -12178,15 +12182,15 @@
       .al
       .xl
 
-      aUnknown8AD9FE ; 8A/D9FE
+      aConversationSceneStepHandlers ; 8A/D9FE
 
-        .word <>rsUnknown8ADBBD
-        .word <>rsUnknown8ADBFF
-        .word <>rsUnknown8ADC25
-        .word <>rsUnknown8ADCDD
-        .word <>rsUnknown8ADCDE
+        .word <>rsConversationStart
+        .word <>rsConversationWaitForText
+        .word <>rsConversationEnd
+        .word <>rsConversationWait
+        .word <>rsConversationFadeOut
 
-      rlUnknown8ADA08 ; 8A/DA08
+      rlConversationOpenLeftWindow ; 8A/DA08
 
         .al
         .autsiz
@@ -12210,7 +12214,7 @@
       .al
       .xl
 
-      rlUnknown8ADA16 ; 8A/DA16
+      rlConversationOpenRightWindow ; 8A/DA16
 
         .al
         .xl
@@ -12227,7 +12231,7 @@
 
         ; 8A/DA24
 
-      rsUnknown8ADA24 ; 8A/DA24
+      rsConversationDrawWindows ; 8A/DA24
 
         .al
         .xl
@@ -12262,7 +12266,7 @@
 
         ; 8A/DA5B
 
-      rlUnknown8ADA5B ; 8A/DA5B
+      rlConversationCloseLeftWindow ; 8A/DA5B
 
         .al
         .xl
@@ -12281,7 +12285,7 @@
 
         ; 8A/DA6F
 
-      rlUnknown8ADA6F ; 8A/DA6F
+      rlConversationCloseRightWindow ; 8A/DA6F
 
         .al
         .xl
@@ -12308,11 +12312,13 @@
       .al
       .xl
 
-      rsUnknown8ADA83 ; 8A/DA83
+      rsConversationLoadPortraits ; 8A/DA83
 
         .al
         .autsiz
         .databank ?
+
+        ; Loads the left and/or right portrait wBaseSceneFlags asks for and starts its fade-in proc.
 
         lda wBaseSceneFlags,b
         bit #$0010
@@ -12322,9 +12328,9 @@
           jsl rlLoadKeeperPortrait
           lda #$0010
           trb wBaseSceneFlags,b
-          lda #(`procUnknown8AE147)<<8
+          lda #(`procConversationFadeInLeftPortrait)<<8
           sta lR44+1
-          lda #<>procUnknown8AE147
+          lda #<>procConversationFadeInLeftPortrait
           sta lR44
           jsl rlProcEngineCreateProc
 
@@ -12337,9 +12343,9 @@
           jsl rlLoadUnitPortrait
           lda #$0020
           trb wBaseSceneFlags,b
-          lda #(`procUnknown8AE199)<<8
+          lda #(`procConversationFadeInRightPortrait)<<8
           sta lR44+1
-          lda #<>procUnknown8AE199
+          lda #<>procConversationFadeInRightPortrait
           sta lR44
           jsl rlProcEngineCreateProc
 
@@ -12348,7 +12354,7 @@
 
         .databank 0
 
-      rlUnknown8ADACA ; 8A/DACA
+      rlConversationShowLeftPortrait ; 8A/DACA
 
         .al
         .autsiz
@@ -12362,7 +12368,7 @@
 
         .databank 0
 
-      rlUnknown8ADAD8 ; 8A/DAD8
+      rlConversationShowRightPortrait ; 8A/DAD8
 
         .al
         .autsiz
@@ -12376,30 +12382,30 @@
 
         .databank 0
 
-      rlUnknown8ADAE6 ; 8A/DAE6
+      rlConversationFadeOutLeftPortrait ; 8A/DAE6
 
         .al
         .autsiz
         .databank ?
 
-        lda #(`procUnknown8AE1EB)<<8
+        lda #(`procConversationFadeOutLeftPortrait)<<8
         sta lR44+1
-        lda #<>procUnknown8AE1EB
+        lda #<>procConversationFadeOutLeftPortrait
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
 
         .databank 0
 
-      rlUnknown8ADAF5 ; 8A/DAF5
+      rlConversationFadeOutRightPortrait ; 8A/DAF5
 
         .al
         .autsiz
         .databank ?
 
-        lda #(`procUnknown8AE245)<<8
+        lda #(`procConversationFadeOutRightPortrait)<<8
         sta lR44+1
-        lda #<>procUnknown8AE245
+        lda #<>procConversationFadeOutRightPortrait
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -12416,7 +12422,7 @@
       .al
       .xl
 
-      rsUnknown8ADB04 ; 8A/DB04
+      rsPushConversationLeftFrame ; 8A/DB04
 
         .al
         .xl
@@ -12465,7 +12471,7 @@
       .al
       .xl
 
-      rsUnknown8ADB37 ; 8A/DB37
+      rsPushConversationRightFrame ; 8A/DB37
 
         .al
         .xl
@@ -12525,11 +12531,13 @@
       .al
       .xl
 
-      rsUnknown8ADBBD ; 8A/DBBD
+      rsConversationStart ; 8A/DBBD
 
         .al
         .autsiz
         .databank ?
+
+        ; Sub-state $00: starts lBaseSceneDialoguePointer.
 
         jsl rlResetDialogueEngine
 
@@ -12545,7 +12553,7 @@
         lda #2
         sta aDialogue.wUnknown0018D0,b
         ldx #0
-        jsr rsUnknown8ADCF9
+        jsr rsConversationSetupSlots
 
         lda wBaseSceneMode,b
         cmp #4
@@ -12571,7 +12579,7 @@
       .al
       .xl
 
-      rsUnknown8ADBFF ; 8A/DBFF
+      rsConversationWaitForText ; 8A/DBFF
 
         .al
         .autsiz
@@ -12611,13 +12619,15 @@
       .al
       .xl
 
-      rsUnknown8ADC25 ; 8A/DC25
+      rsConversationEnd ; 8A/DC25
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $02: leaves by wBaseSceneMode: 0 the courtyard, 1 the town, 3 the map, 4 a fade then rlUnknown8DB52C, 5 a fade out.
 
         lda wBaseSceneMode,b
         cmp #$0000
@@ -12720,7 +12730,7 @@
       .al
       .xl
 
-      rsUnknown8ADCDD ; 8A/DCDD
+      rsConversationWait ; 8A/DCDD
 
         .al
         .xl
@@ -12741,12 +12751,14 @@
       .al
       .xl
 
-      rsUnknown8ADCDE ; 8A/DCDE
+      rsConversationFadeOut ; 8A/DCDE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $04: fades out, then rlUnknown8DB52C.
 
         lda wVBlankEnabledFramecount
         and #$0003
@@ -12780,7 +12792,7 @@
       .al
       .xl
 
-      rsUnknown8ADCF9 ; 8A/DCF9
+      rsConversationSetupSlots ; 8A/DCF9
 
         .al
         .autsiz
@@ -12878,7 +12890,7 @@
       .al
       .xl
 
-      rsUnknown8AE05E ; 8A/E05E
+      rsAnimateConversationBackground ; 8A/E05E
 
         .al
         .autsiz
@@ -12887,22 +12899,22 @@
         lda wBaseSceneArgument,b
         asl a
         tax
-        jsr (aUnknown8AE067,x)
+        jsr (aConversationBackgroundAnimations,x)
         rts
 
         .databank 0
 
-      aUnknown8AE067 ; 8A/E067
+      aConversationBackgroundAnimations ; 8A/E067
 
-        .word <>rsUnknown8AE076
-        .word <>rsUnknown8AE075
-        .word <>rsUnknown8AE075
-        .word <>rsUnknown8AE075
-        .word <>rsUnknown8AE0D7
-        .word <>rsUnknown8AE075
-        .word <>rsUnknown8AE075
+        .word <>rsAnimateFountainBackground
+        .word <>rsConversationBackgroundNoAnimation
+        .word <>rsConversationBackgroundNoAnimation
+        .word <>rsConversationBackgroundNoAnimation
+        .word <>rsAnimateThroneBackground
+        .word <>rsConversationBackgroundNoAnimation
+        .word <>rsConversationBackgroundNoAnimation
 
-      rsUnknown8AE075 ; 8A/E075
+      rsConversationBackgroundNoAnimation ; 8A/E075
 
         .al
         .autsiz
@@ -12912,7 +12924,7 @@
 
         .databank 0
 
-      rsUnknown8AE076 ; 8A/E076
+      rsAnimateFountainBackground ; 8A/E076
 
         .al
         .autsiz
@@ -12968,13 +12980,13 @@
 
       aUnknown8AE0C7 ; 8A/E0C7
 
-        ; Pairs of words, ended by $FFFF, $FFFF. Read by rsUnknown8AE076.
+        ; Pairs of words, ended by $FFFF, $FFFF. Read by rsAnimateFountainBackground.
 
         .word $0004, $0000, $0004, $0001, $0004, $0002, $FFFF, $FFFF
 
         ; 8A/E0D7
 
-      rsUnknown8AE0D7 ; 8A/E0D7
+      rsAnimateThroneBackground ; 8A/E0D7
 
         .al
         .xl
@@ -13022,7 +13034,7 @@
 
       aUnknown8AE12F ; 8A/E12F
 
-        ; Pairs of words, ended by $FFFF, $FFFF; read by rsUnknown8AE0D7.
+        ; Pairs of words, ended by $FFFF, $FFFF; read by rsAnimateThroneBackground.
 
         .word $0004, $0000, $0004, $0001, $0004, $0002, $0004, $0003
         .word $0004, $0004, $FFFF, $FFFF
@@ -13037,9 +13049,9 @@
       .al
       .xl
 
-      procUnknown8AE147 ; 8A/E147
+      procConversationFadeInLeftPortrait ; 8A/E147
 
-        .structProcInfo "FN", rlProcUnknown8AE147Init, rlProcUnknown8AE147Cycle, aProcUnknown8AE147Code
+        .structProcInfo "FN", rlProcConversationFadeInLeftPortraitInit, rlProcConversationFadeInLeftPortraitCycle, aProcConversationFadeInLeftPortraitCode
 
     .endsection ProcScript8AE147Section
 
@@ -13049,7 +13061,7 @@
       .al
       .xl
 
-      rlProcUnknown8AE147Init ; 8A/E14F
+      rlProcConversationFadeInLeftPortraitInit ; 8A/E14F
 
         .al
         .xl
@@ -13076,7 +13088,7 @@
 
         ; 8A/E16F
 
-      rlProcUnknown8AE147Cycle ; 8A/E16F
+      rlProcConversationFadeInLeftPortraitCycle ; 8A/E16F
 
         .al
         .xl
@@ -13116,7 +13128,7 @@
       .al
       .xl
 
-      aProcUnknown8AE147Code ; 8A/E197
+      aProcConversationFadeInLeftPortraitCode ; 8A/E197
 
         PROC_HALT
 
@@ -13131,9 +13143,9 @@
       .al
       .xl
 
-      procUnknown8AE199 ; 8A/E199
+      procConversationFadeInRightPortrait ; 8A/E199
 
-        .structProcInfo "F2", rlProcUnknown8AE199Init, rlProcUnknown8AE199Cycle, aProcUnknown8AE199Code
+        .structProcInfo "F2", rlProcConversationFadeInRightPortraitInit, rlProcConversationFadeInRightPortraitCycle, aProcConversationFadeInRightPortraitCode
 
     .endsection Unsorted8AE199Section
 
@@ -13143,7 +13155,7 @@
       .al
       .xl
 
-      rlProcUnknown8AE199Init ; 8A/E1A1
+      rlProcConversationFadeInRightPortraitInit ; 8A/E1A1
 
         .al
         .autsiz
@@ -13178,7 +13190,7 @@
       .al
       .xl
 
-      rlProcUnknown8AE199Cycle ; 8A/E1C1
+      rlProcConversationFadeInRightPortraitCycle ; 8A/E1C1
 
         .al
         .autsiz
@@ -13209,7 +13221,7 @@
 
         .databank 0
 
-      aProcUnknown8AE199Code ; 8A/E1E9
+      aProcConversationFadeInRightPortraitCode ; 8A/E1E9
 
         PROC_HALT
 
@@ -13221,9 +13233,9 @@
       .al
       .xl
 
-      procUnknown8AE1EB ; 8A/E1EB
+      procConversationFadeOutLeftPortrait ; 8A/E1EB
 
-        .structProcInfo "FF", rlProcUnknown8AE1EBInit, rlProcUnknown8AE1EBCycle, aProcUnknown8AE1EBCode
+        .structProcInfo "FF", rlProcConversationFadeOutLeftPortraitInit, rlProcConversationFadeOutLeftPortraitCycle, aProcConversationFadeOutLeftPortraitCode
 
     .endsection Unsorted8AE1EBSection
 
@@ -13233,7 +13245,7 @@
       .al
       .xl
 
-      rlProcUnknown8AE1EBInit ; 8A/E1F3
+      rlProcConversationFadeOutLeftPortraitInit ; 8A/E1F3
 
         .al
         .autsiz
@@ -13245,7 +13257,7 @@
 
         .databank 0
 
-      rlProcUnknown8AE1EBCycle ; 8A/E1FB
+      rlProcConversationFadeOutLeftPortraitCycle ; 8A/E1FB
 
         .al
         .autsiz
@@ -13270,9 +13282,9 @@
         rtl
 
         +
-        lda #(`procUnknown8AE147)<<8
+        lda #(`procConversationFadeInLeftPortrait)<<8
         sta lR44+1
-        lda #<>procUnknown8AE147
+        lda #<>procConversationFadeInLeftPortrait
         sta lR44
         phx
         jsl rlProcEngineFindProc
@@ -13303,7 +13315,7 @@
       .al
       .xl
 
-      aProcUnknown8AE1EBCode ; 8A/E243
+      aProcConversationFadeOutLeftPortraitCode ; 8A/E243
 
         PROC_HALT
 
@@ -13318,11 +13330,11 @@
       .al
       .xl
 
-      procUnknown8AE245 ; 8A/E245
+      procConversationFadeOutRightPortrait ; 8A/E245
 
-        .structProcInfo "FF", rlProcUnknown8AE245Init, rlProcUnknown8AE245Cycle, aProcUnknown8AE245Code
+        .structProcInfo "FF", rlProcConversationFadeOutRightPortraitInit, rlProcConversationFadeOutRightPortraitCycle, aProcConversationFadeOutRightPortraitCode
 
-      rlProcUnknown8AE245Init ; 8A/E24D
+      rlProcConversationFadeOutRightPortraitInit ; 8A/E24D
 
         .al
         .autsiz
@@ -13334,7 +13346,7 @@
 
         .databank 0
 
-      rlProcUnknown8AE245Cycle ; 8A/E255
+      rlProcConversationFadeOutRightPortraitCycle ; 8A/E255
 
         .al
         .autsiz
@@ -13358,9 +13370,9 @@
           rtl
 
         +
-        lda #(`procUnknown8AE199)<<8
+        lda #(`procConversationFadeInRightPortrait)<<8
         sta lR44+1
-        lda #<>procUnknown8AE199
+        lda #<>procConversationFadeInRightPortrait
         sta lR44
         phx
         jsl rlProcEngineFindProc
@@ -13382,7 +13394,7 @@
         .word $000F
         .word $FFFF
 
-      aProcUnknown8AE245Code ; 8A/E29D
+      aProcConversationFadeOutRightPortraitCode ; 8A/E29D
 
         PROC_HALT
 
@@ -13396,13 +13408,15 @@
       .al
       .xl
 
-      rlUnknown8AE2F8 ; 8A/E2F8
+      rlArenaScreenSetup ; 8A/E2F8
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Blanks the screen and loads the arena: graphics, keeper, the unit's weapon list, money; moves to step $04.
 
         phk
         plb
@@ -13596,12 +13610,14 @@
       .al
       .xl
 
-      rlUnknown8AECEF ; 8A/ECEF
+      rlClassChangeScreenSetup ; 8A/ECEF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Blanks the screen and loads the class change screen; moves to step $0A.
 
         phk
         plb
@@ -13785,12 +13801,14 @@
       .al
       .xl
 
-      rlUnknown8AEEB1 ; 8A/EEB1
+      rlClassChangeScreenStep ; 8A/EEB1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Runs class change sub-state wMenuState (aClassChangeStepHandlers), then the list sprites and the keeper's portrait.
 
         phb
         php
@@ -13815,7 +13833,7 @@
         lda wMenuState,b
         asl a
         tax
-        jsr (aUnknown8AEEF2,x)
+        jsr (aClassChangeStepHandlers,x)
         jsr rsPushCastleListSprites
         lda #$0008
         sta wR0
@@ -13840,15 +13858,15 @@
       .al
       .xl
 
-      aUnknown8AEEF2 ; 8A/EEF2
+      aClassChangeStepHandlers ; 8A/EEF2
 
-        ; Jump table of rlUnknown8AEEB1.
-        .word <>rsUnknown8AEEFE
-        .word <>rsUnknown8AEF30
-        .word <>rsUnknown8AEF4B
-        .word <>rsUnknown8AF048
-        .word <>rsUnknown8AF0B4
-        .word <>rsUnknown8AF0D7
+        ; Jump table of rlClassChangeScreenStep.
+        .word <>rsClassChangeGreet
+        .word <>rsClassChangeWaitForText
+        .word <>rsClassChangeCheck
+        .word <>rsClassChangeConfirm
+        .word <>rsClassChangeFadeOutAndPromote
+        .word <>rsClassChangeLeave
 
     .endsection Table8AEEF2Section
 
@@ -13858,7 +13876,7 @@
       .al
       .xl
 
-      rsUnknown8AEEFE ; 8A/EEFE
+      rsClassChangeGreet ; 8A/EEFE
 
         .al
         .xl
@@ -13889,7 +13907,7 @@
 
         ; 8A/EF30
 
-      rsUnknown8AEF30 ; 8A/EF30
+      rsClassChangeWaitForText ; 8A/EF30
 
         .al
         .xl
@@ -13915,12 +13933,14 @@
 
         ; 8A/EF4B
 
-      rsUnknown8AEF4B ; 8A/EF4B
+      rsClassChangeCheck ; 8A/EF4B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $02: no promoted class gives "you cannot class change"; a promoted class but no option at $7E2000 gives "you need level 20"; otherwise offers the class at $7E2002. Generation 2 (chapter 6 on) has its own lines.
 
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
@@ -14048,7 +14068,7 @@
       .al
       .xl
 
-      rsUnknown8AF048 ; 8A/F048
+      rsClassChangeConfirm ; 8A/F048
 
         .al
         .xl
@@ -14115,12 +14135,14 @@
       .al
       .xl
 
-      rsUnknown8AF0B4 ; 8A/F0B4
+      rsClassChangeFadeOutAndPromote ; 8A/F0B4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $04: fades out, then changes the class (rlStartCastleClassChange).
 
         lda wVBlankEnabledFramecount
         and #$0001
@@ -14142,7 +14164,7 @@
         lda wCastleListSelectedIndex,b
         tax
         lda $7E2002,x
-        jsl rlUnknown84ABB0
+        jsl rlStartCastleClassChange
         rts
 
         .databank 0
@@ -14157,12 +14179,14 @@
       .al
       .xl
 
-      rsUnknown8AF0D7 ; 8A/F0D7
+      rsClassChangeLeave ; 8A/F0D7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $05: returns to the courtyard (step $11) with the cursor on the class change command.
 
         lda #$0000
         sta wCastleCursorState,b
@@ -14180,12 +14204,14 @@
 
         ; 8A/F0F2
 
-      rlUnknown8AF0F2 ; 8A/F0F2
+      rlDepotScreenSetup ; 8A/F0F2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Blanks the screen and loads the depot: graphics, keeper portrait, the unit's stored items and inventory, money; moves to step $08.
 
         phk
         plb
@@ -14338,12 +14364,14 @@
       .al
       .xl
 
-      rlUnknown8AF283 ; 8A/F283
+      rlDepotScreenStep ; 8A/F283
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Runs depot sub-state wMenuState (aDepotStepHandlers), then redraws the list sprites, money and the keeper's portrait.
 
         phb
         php
@@ -14353,7 +14381,7 @@
         lda wMenuState,b
         asl a
         tax
-        jsr (aUnknown8AF2C7,x)
+        jsr (aDepotStepHandlers,x)
         lda $7F7670
         bne _F2A4
         jsl rlDMAByStruct
@@ -14394,22 +14422,22 @@
       .al
       .xl
 
-      aUnknown8AF2C7 ; 8A/F2C7
+      aDepotStepHandlers ; 8A/F2C7
 
-        ; Jump table of rlUnknown8AF283.
-        .word <>rsUnknown8AF2E1
-        .word <>rsUnknown8AF313
-        .word <>rsUnknown8AF362
-        .word <>rsUnknown8AF4A1
-        .word <>rsUnknown8AF4B8
-        .word <>rsUnknown8AF556
-        .word <>rsUnknown8AF634
-        .word <>rsUnknown8AF6A1
-        .word <>rsUnknown8AF6D5
-        .word <>rsUnknown8AF6EC
-        .word <>rsUnknown8AF791
-        .word <>rsUnknown8AF818
-        .word <>rsUnknown8AF885
+        ; Jump table of rlDepotScreenStep.
+        .word <>rsDepotGreet
+        .word <>rsDepotWaitForText
+        .word <>rsDepotChooseOption
+        .word <>rsDepotOpenWithdrawList
+        .word <>rsDepotWithdrawListInput
+        .word <>rsDepotConfirmWithdraw
+        .word <>rsDepotAfterWithdraw
+        .word <>rsDepotLeaveWithdrawList
+        .word <>rsDepotOpenDepositList
+        .word <>rsDepotDepositListInput
+        .word <>rsDepotConfirmDeposit
+        .word <>rsDepotAfterDeposit
+        .word <>rsDepotLeave
 
     .endsection Table8AF2C7Section
 
@@ -14419,12 +14447,14 @@
       .al
       .xl
 
-      rsUnknown8AF2E1 ; 8A/F2E1
+      rsDepotGreet ; 8A/F2E1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $00.
 
         lda #$0009
         tax
@@ -14450,12 +14480,14 @@
 
         ; 8A/F313
 
-      rsUnknown8AF313 ; 8A/F313
+      rsDepotWaitForText ; 8A/F313
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $01.
 
         lda wNextMenuState,b
         cmp #$0005
@@ -14506,12 +14538,14 @@
 
         ; 8A/F362
 
-      rsUnknown8AF362 ; 8A/F362
+      rsDepotChooseOption ; 8A/F362
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $02: deposit (needs an item in the inventory) or withdraw (needs a stored item).
 
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
@@ -14519,9 +14553,9 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown8AF475)<<8
+        lda #(`aDepotOptionsText)<<8
         sta lR18+1
-        lda #<>aUnknown8AF475
+        lda #<>aDepotOptionsText
         sta lR18
         lda $18DD,b
         cmp #$0100
@@ -14542,13 +14576,13 @@
         jsl rlDrawMenuTextLine
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        lda #(`aUnknown8AD081)<<8
+        lda #(`aDepotOptionX)<<8
         sta lR19+1
-        lda #<>aUnknown8AD081
+        lda #<>aDepotOptionX
         sta lR19
-        lda #(`aUnknown8AD083)<<8
+        lda #(`aDepotOptions)<<8
         sta lR20+1
-        lda #<>aUnknown8AD083
+        lda #<>aDepotOptions
         sta lR20
         lda #$0002
         jsr rsCastleOptionMenuInput
@@ -14653,7 +14687,7 @@
       .al
       .xl
 
-      aUnknown8AF475 ; 8A/F475
+      aDepotOptionsText ; 8A/F475
 
         .enc "SJIS"
         .text "あずける　　ひきだす　　　　　　　　　　　"
@@ -14669,7 +14703,7 @@
       .al
       .xl
 
-      rsUnknown8AF4A1 ; 8A/F4A1
+      rsDepotOpenWithdrawList ; 8A/F4A1
 
         .al
         .xl
@@ -14697,12 +14731,14 @@
       .al
       .xl
 
-      rsUnknown8AF4B8 ; 8A/F4B8
+      rsDepotWithdrawListInput ; 8A/F4B8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $04.
 
         jsr rsPushStockItemTypeIcon
         lda wCastleListWindowRow,b
@@ -14782,12 +14818,14 @@
       .al
       .xl
 
-      rsUnknown8AF556 ; 8A/F556
+      rsDepotConfirmWithdraw ; 8A/F556
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $05: yes gives the stored item back to the unit, unless its inventory is full.
 
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -14899,12 +14937,14 @@
       .al
       .xl
 
-      rsUnknown8AF634 ; 8A/F634
+      rsDepotAfterWithdraw ; 8A/F634
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $06.
 
         jsl rlBuildUnitStoredItemList
         jsr rsDrawStockList
@@ -14960,12 +15000,14 @@
       .al
       .xl
 
-      rsUnknown8AF6A1 ; 8A/F6A1
+      rsDepotLeaveWithdrawList ; 8A/F6A1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $07.
 
         stz wCastleConfirmCursorIndex,b
         lda #$0021
@@ -14998,7 +15040,7 @@
       .al
       .xl
 
-      rsUnknown8AF6D5 ; 8A/F6D5
+      rsDepotOpenDepositList ; 8A/F6D5
 
         .al
         .xl
@@ -15026,7 +15068,7 @@
       .al
       .xl
 
-      rsUnknown8AF6EC ; 8A/F6EC
+      rsDepotDepositListInput ; 8A/F6EC
 
         .al
         .xl
@@ -15114,12 +15156,14 @@
       .al
       .xl
 
-      rsUnknown8AF791 ; 8A/F791
+      rsDepotConfirmDeposit ; 8A/F791
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $0A: yes stores the item (rlSendInventorySlotItemToSupply).
 
         jsr rsPushInventoryItemTypeIcon
         lda #$2000
@@ -15190,12 +15234,14 @@
       .al
       .xl
 
-      rsUnknown8AF818 ; 8A/F818
+      rsDepotAfterDeposit ; 8A/F818
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $0B.
 
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
@@ -15252,12 +15298,14 @@
       .al
       .xl
 
-      rsUnknown8AF885 ; 8A/F885
+      rsDepotLeave ; 8A/F885
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $0C: blanks the screen and returns to the town (step $12).
 
         sep #$20
         lda #$80
@@ -15271,12 +15319,14 @@
 
         ; 8A/F894
 
-      rlUnknown8AF894 ; 8A/F894
+      rlAuguryScreenSetup ; 8A/F894
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Blanks the screen and loads the augury; the topics are love and record, and also parents for a child (UnitTypeDynamic); moves to step $06.
 
         phk
         plb
@@ -15441,12 +15491,14 @@
       .al
       .xl
 
-      rlUnknown8AFA34 ; 8A/FA34
+      rlAuguryScreenStep ; 8A/FA34
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Runs augury sub-state wMenuState (aAuguryStepHandlers) and draws the keeper's portrait.
 
         phb
         php
@@ -15470,7 +15522,7 @@
         lda wMenuState,b
         asl a
         tax
-        jsr (aUnknown8AFA6F,x)
+        jsr (aAuguryStepHandlers,x)
         lda #$0008
         sta wR0
         lda #$0008
@@ -15494,17 +15546,17 @@
       .al
       .xl
 
-      aUnknown8AFA6F ; 8A/FA6F
+      aAuguryStepHandlers ; 8A/FA6F
 
-        ; Jump table of rlUnknown8AFA34.
-        .word <>rsUnknown8AFA7F
-        .word <>rsUnknown8AFAAB
-        .word <>rsUnknown8AFAC6
-        .word <>rsUnknown8AFAE6
-        .word <>rsUnknown8AFAF0
-        .word <>rsUnknown8AFB5D
-        .word <>rsUnknown8AFCD5
-        .word <>rsUnknown8AFD00
+        ; Jump table of rlAuguryScreenStep.
+        .word <>rsAuguryGreet
+        .word <>rsAuguryWaitForText
+        .word <>rsAuguryOpenTopics
+        .word <>rsAuguryRedrawTopics
+        .word <>rsAuguryTopicMenu
+        .word <>rsAuguryAnswer
+        .word <>rsAuguryAskAgain
+        .word <>rsAuguryLeave
 
     .endsection Table8AFA6FSection
 
@@ -15514,7 +15566,7 @@
       .al
       .xl
 
-      rsUnknown8AFA7F ; 8A/FA7F
+      rsAuguryGreet ; 8A/FA7F
 
         .al
         .xl
@@ -15543,7 +15595,7 @@
 
         ; 8A/FAAB
 
-      rsUnknown8AFAAB ; 8A/FAAB
+      rsAuguryWaitForText ; 8A/FAAB
 
         .al
         .xl
@@ -15569,12 +15621,14 @@
 
         ; 8A/FAC6
 
-      rsUnknown8AFAC6 ; 8A/FAC6
+      rsAuguryOpenTopics ; 8A/FAC6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $02.
 
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
@@ -15592,7 +15646,7 @@
 
         ; 8A/FAE6
 
-      rsUnknown8AFAE6 ; 8A/FAE6
+      rsAuguryRedrawTopics ; 8A/FAE6
 
         .al
         .xl
@@ -15608,12 +15662,14 @@
 
         ; 8A/FAF0
 
-      rsUnknown8AFAF0 ; 8A/FAF0
+      rsAuguryTopicMenu ; 8A/FAF0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $04: A answers the topic under the cursor; B says goodbye.
 
         lda wCastleListWindowRow,b
         tax
@@ -15666,12 +15722,14 @@
 
         ; 8A/FB5D
 
-      rsUnknown8AFB5D ; 8A/FB5D
+      rsAuguryAnswer ; 8A/FB5D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $05. Record: wins and losses. Parents: father and mother. Love: from the points with the unit's lover or top candidate, exactly 500 is "bound to", 400+ "loves", 300+ "likes", 200+ "interested in", less is "not interested in anyone".
 
         lda #$2C00
         sta aCurrentTilemapInfo,b
@@ -15706,9 +15764,9 @@
 
 
         _FBAE
-        jsl rlUnknown87A13C
+        jsl rlGetUnitWinCount
         sta aDialogue.wNumber1,b
-        jsl rlUnknown87A165
+        jsl rlGetUnitLossCount
         sta aDialogue.wNumber2,b
         lda #(`dialogueShopUnknown8AD6E7)<<8
         sta lR18+1
@@ -15750,7 +15808,7 @@
 
 
         _FC09
-        jsr rsUnknown8AFC78
+        jsr rsAuguryGetLovePoints
         cmp #$01F4
         beq _FC46
         cmp #$0190
@@ -15847,7 +15905,7 @@
       .al
       .xl
 
-      rsUnknown8AFC78 ; 8A/FC78
+      rsAuguryGetLovePoints ; 8A/FC78
 
         ; Found by tools/sweep.py.
         .al
@@ -15855,10 +15913,12 @@
         .autsiz
         .databank ?
 
+        ; Returns the love points between the unit and its lover or top candidate (rlGetUnitLoverOrTopCandidate); 0 if there is none. The points are read from the woman's side (generation ID $10 and up).
+
         lda wSelectedUnitDataRAMPointer,b
         pha
         lda wEnteredCastleLocationID,b
-        jsl rlUnknown87AE88
+        jsl rlGetUnitLoverOrTopCandidate
         sta wTempVariable1,b
         lda wTempVariable1,b
         ora #$0000
@@ -15911,7 +15971,7 @@
       .al
       .xl
 
-      rsUnknown8AFCD5 ; 8A/FCD5
+      rsAuguryAskAgain ; 8A/FCD5
 
         .al
         .xl
@@ -15938,12 +15998,14 @@
 
         ; 8A/FD00
 
-      rsUnknown8AFD00 ; 8A/FD00
+      rsAuguryLeave ; 8A/FD00
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $07: blanks the screen and returns to the town (step $12).
 
         sep #$20
         lda #$80
@@ -15967,7 +16029,7 @@
 
       aUnknown8CCB00 ; 8C/CB00
 
-        ; Read by rsUnknown8AE0D7.
+        ; Read by rsAnimateThroneBackground.
 
         .word $031F, $01FC, $0199, $0135, $0011, $031F, $01FC, $0199
         .word $0135, $0011, $031F, $01FC, $0199, $0135, $0011, $031F
@@ -15978,7 +16040,7 @@
 
       aUnknown8CCB40 ; 8C/CB40
 
-        ; Read by rsUnknown8AE0D7.
+        ; Read by rsAnimateThroneBackground.
 
         .word $01FC, $0199, $0135, $0011, $025F, $01FC, $0199, $0135
         .word $0011, $025F, $01FC, $0199, $0135, $0011, $025F, $01FC
@@ -15989,7 +16051,7 @@
 
       aUnknown8CCB80 ; 8C/CB80
 
-        ; Read by rsUnknown8AE0D7.
+        ; Read by rsAnimateThroneBackground.
 
         .word $0199, $0135, $0011, $025F, $01FC, $0199, $0135, $0011
         .word $025F, $01FC, $0199, $0135, $0011, $025F, $01FC, $0199
@@ -16000,7 +16062,7 @@
 
       aUnknown8CCBC0 ; 8C/CBC0
 
-        ; Read by rsUnknown8AE0D7.
+        ; Read by rsAnimateThroneBackground.
 
         .word $0070, $000D, $0178, $0115, $00D3, $0070, $000D, $0178
         .word $0115, $00D3, $0070, $000D, $0178, $0115, $00D3, $0070

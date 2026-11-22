@@ -224,7 +224,7 @@
         ; Jump table of rlDispatchCastleState.
         .word <>rlOpenCastleCourtyard
         .word <>rlResumeCastleTown
-        .word <>rlEnterCastleFacilityScreen
+        .word <>rlEnterCastleConversation
         .word <>rlEnterCastleArenaScreen
         .word <>rlOpenCastleCourtyard
         .word <>rlReloadChapterMapAndOpenCastle
@@ -237,7 +237,7 @@
       .al
       .xl
 
-      rlEnterCastleFacilityScreen ; 80/B793
+      rlEnterCastleConversation ; 80/B793
 
         .al
         .xl
@@ -256,7 +256,7 @@
         lda #$0003
         sta wCastleCursorState,b
         jsr rsSetCastleCourtyardBGSettings
-        jsl rlUnknown8AD81B
+        jsl rlConversationSceneSetup
         rtl
 
         .databank 0
@@ -285,7 +285,7 @@
         jsr rsSetCastleCourtyardBGSettings
         lda #$0007
         sta $7F8082
-        jsl rlUnknown8AE2F8
+        jsl rlArenaScreenSetup
         lda #$0002
         sta wMenuState,b
         lda #$0000

@@ -1,7 +1,7 @@
 ; The arena menu: rlArenaMenuRunStep runs the step in $0592 from
 ; aArenaMenuStepHandlers (fight or quit, the wager, continuing or leaving between
 ; rounds, changing weapons), with the menu text and the decompression DMA entries
-; used when the arena screen is set up (by rlUnknown8AE2F8 in bank $8A). Bank $8A
+; used when the arena screen is set up (by rlArenaScreenSetup in bank $8A). Bank $8A
 ; ($8A/E4B9-ECEF). The arena dialogue it shows ($8A/D088-D60D) is not built yet.
 
     .section ArenaMenuSection

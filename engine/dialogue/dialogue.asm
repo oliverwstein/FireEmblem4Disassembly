@@ -3903,11 +3903,11 @@
         ldx aDialogue.wSlotOffset,b
         bne +
 
-        jsl rlUnknown8ADA08
+        jsl rlConversationOpenLeftWindow
         bra ++
 
         +
-        jsl rlUnknown8ADA16
+        jsl rlConversationOpenRightWindow
 
         +
         rts
@@ -4099,11 +4099,11 @@
         ldx aDialogue.wSlotOffset,b
         bne +
 
-        jsl rlUnknown8ADA5B
+        jsl rlConversationCloseLeftWindow
         bra ++
 
         +
-        jsl rlUnknown8ADA6F
+        jsl rlConversationCloseRightWindow
 
         +
         rts
@@ -4261,13 +4261,13 @@
 
                 ; Left portrait
                 sta wBaseSceneLeftUnitRAMPointer,b
-                jsl rlUnknown8ADACA
+                jsl rlConversationShowLeftPortrait
                 bra _End
 
               ; Right portrait
               +
               sta wBaseSceneRightUnitRAMPointer,b
-              jsl rlUnknown8ADAD8
+              jsl rlConversationShowRightPortrait
               bra _End
 
             _9355
@@ -4404,12 +4404,12 @@
         bne +
 
         sta wBaseSceneLeftUnitRAMPointer,b
-        jsl rlUnknown8ADACA
+        jsl rlConversationShowLeftPortrait
         bra _End
         
         +
         sta wBaseSceneRightUnitRAMPointer,b
-        jsl rlUnknown8ADAD8
+        jsl rlConversationShowRightPortrait
         
         _End
         rtl
@@ -4464,11 +4464,11 @@
         cpx #0
         bne +
 
-        jsl rlUnknown8ADAE6
+        jsl rlConversationFadeOutLeftPortrait
         bra _End
 
         +
-        jsl rlUnknown8ADAF5
+        jsl rlConversationFadeOutRightPortrait
 
         _End
         rtl

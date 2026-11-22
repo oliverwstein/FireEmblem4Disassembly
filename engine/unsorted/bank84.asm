@@ -332,13 +332,15 @@
       .al
       .xl
 
-      rlUnknown84ABB0 ; 84/ABB0
+      rlStartCastleClassChange ; 84/ABB0
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets the unit's class to A, updates its map sprite and starts the class change scene (battle song $3C).
 
         phb
         php

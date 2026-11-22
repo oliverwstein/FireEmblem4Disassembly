@@ -779,9 +779,9 @@
         .autsiz
         .databank ?
 
-        lda #(`procUnknown8AE147)<<8
+        lda #(`procConversationFadeInLeftPortrait)<<8
         sta lR44+1
-        lda #<>procUnknown8AE147
+        lda #<>procConversationFadeInLeftPortrait
         sta lR44
         jsl rlProcEngineFindProc
         bcc _E2B5
@@ -790,9 +790,9 @@
         jsl rlProcEngineFreeProcByIndex
 
         _E2B5
-        lda #(`procUnknown8AE199)<<8
+        lda #(`procConversationFadeInRightPortrait)<<8
         sta lR44+1
-        lda #<>procUnknown8AE199
+        lda #<>procConversationFadeInRightPortrait
         sta lR44
         jsl rlProcEngineFindProc
         bcc _E2CB
@@ -801,9 +801,9 @@
         jsl rlProcEngineFreeProcByIndex
 
         _E2CB
-        lda #(`procUnknown8AE1EB)<<8
+        lda #(`procConversationFadeOutLeftPortrait)<<8
         sta lR44+1
-        lda #<>procUnknown8AE1EB
+        lda #<>procConversationFadeOutLeftPortrait
         sta lR44
         jsl rlProcEngineFindProc
         bcc _E2E1
@@ -812,9 +812,9 @@
         jsl rlProcEngineFreeProcByIndex
 
         _E2E1
-        lda #(`procUnknown8AE245)<<8
+        lda #(`procConversationFadeOutRightPortrait)<<8
         sta lR44+1
-        lda #<>procUnknown8AE245
+        lda #<>procConversationFadeOutRightPortrait
         sta lR44
         jsl rlProcEngineFindProc
         bcc _E2F7
