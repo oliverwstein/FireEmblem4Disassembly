@@ -10,7 +10,7 @@ Numbers come from `python3 tools/counts.py`; quote nothing else.
 
 - `./build.sh` is byte-identical and the checksums verify. 97.53% of the ROM is built from source. GAPS.md: 211 `none` pieces (61,267 bytes), 56 padding runs (42,139 bytes).
 - Routines: 5,959 in `engine/`, 2,927 named, 3,032 `Unknown`; 2,610 still in `engine/unsorted/`. 307 pinned blocks.
-- **Phase 3 Wave 2b (full-screen menus and save) done**, commits `ea6708d`..`9cf22d8`. Bank `$89` is out of `engine/unsorted/`: the status screen, revive screen and options menu are in `engine/menus/` with their bank `$80` halves; `engine/save/save.asm` has no `Unknown` left. Constants appended to `include/Menus.h` (it already held the map menu structs) and `include/Save.h`; RAM blocks at `$7F8183` (status screen), `$7F8400` (options) and `$7FB014` (revive), scoped in `tools/name_ram.py`. Reference pages [docs/reference/menus.md](docs/reference/menus.md) and [save.md](docs/reference/save.md).
+- **Phase 3 Wave 2b (full-screen menus and save) done**, commits `ea6708d`..`e5423ad`. Bank `$89` is out of `engine/unsorted/`: the status screen, revive screen and options menu are in `engine/menus/` with their bank `$80` halves; `engine/save/save.asm` has no `Unknown` left. Constants appended to `include/Menus.h` (it already held the map menu structs) and `include/Save.h`; RAM blocks at `$7F8183` (status screen), `$7F8400` (options) and `$7FB014` (revive), scoped in `tools/name_ram.py`. Reference pages [docs/reference/menus.md](docs/reference/menus.md) and [save.md](docs/reference/save.md).
 - **Phase 2 had a hole:** its tools only look for code pointers and six-digit numbers. Bank `$89` had 25 sprite arrays passed as `ldy #$xxxx`, sprite arrays hidden inside word tables, long pointers written as bytes, and 44 main-loop routine addresses written as numbers engine-wide (`$B6B6`, `$BBD9`, `$C3E6`, `$DFDC`, `$B122`). All of those are labels now; 80 `ldy #$xxxx` immediates remain elsewhere (item, unit and skill windows, banks `$85`, `$88`, `$9B`...) and need the same check. `tools/sprite_arrays.py` decodes a sprite array from the ROM as `.structSpriteArray` source.
 - Reference pages so far: `docs/reference/core.md`, `ai.md`, `castle.md`, `menus.md`, `save.md`. `tools/reference.py` output is gitignored; run it locally. What each wave did is in HISTORY.md under "Phase 3 waves".
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
@@ -23,7 +23,7 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 - **Phase 3 is done when everything in `engine/unsorted/` has been put in a proper place.** Low-level rendering, HDMA, OAM and spell *visual effect* helpers may stay `Unknown` if they are hard; they are low priority. Everything that implements game mechanics must be named and understood.
 - **Sound is the lowest priority.** No SPC700 driver work unless the user asks.
-- **Emulator time costs the user a lot**: the game is in Japanese, which the user doesn't read. Ask only for short, targeted checks (a breakpoint, one screen, one action), and collect them into one list rather than asking piecemeal. The existing .cdl covers the entire prologue chapter.
+- **Emulator time costs the user a lot**: the game is in Japanese, which the user doesn't read. Ask only for short, targeted checks (a breakpoint, one screen, one action), and collect them into one list rather than asking piecemeal. The existing .cdl covers the entire prologue chapter. **Before asking, try to answer the question from the code**; ask only what the code cannot settle (which path runs, what a value means on screen), and say in the list what the code already shows.
 - **Phase 1 is closed statically.** Leftover `none` pieces that don't decode as code with evidence become labelled data with an "unreferenced" note, so `.binary "fe4.sfc"` can go without new recordings.
 
 ## Next session, in order
@@ -31,7 +31,7 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 1. **Talk to the user before starting the next wave.** Next in the agreed order: **the map menu in banks `$85`/`$87`** (about 375 routines, likely two sessions; `engine/menus/map_menu.asm` and the unit, item, skill and data windows, whose `ldy #$xxxx` sprite pointers should be checked with `tools/sprite_arrays.py` as bank `$89`'s were). Then the map engine (two sessions) and battle (three). The file and save menu screens in bank `$91` are not named yet; they could join the map menu wave or the events wave.
 2. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
 3. Open questions are at the end of each reference page (`core.md`, `ai.md`, `castle.md`, `menus.md`, `save.md`).
-4. `tools/stream_catalog.py` deleted the catalog previews when run (reverted), so `gfx/compressed/CATALOG.md` still names pre-castle labels; find out why before rerunning it. New files from `move_sections.py` are included at the top of build.asm; move the lines to a sensible place by hand. Check that an `include/` file does not exist before creating one (`include/Menus.h` was nearly overwritten this wave).
+4. `tools/stream_catalog.py` deleted the catalog previews when run (reverted), so `gfx/compressed/CATALOG.md` still names pre-castle labels; find out why before rerunning it. New files from `move_sections.py` are included at the top of build.asm; move the lines to a sensible place by hand. Check that an `include/` file does not exist before creating one.
 5. Bank `$89` cannot be pad-tested until it is merged: its last block has no free space after it.
 
 **Per-wave checklist.** One system (or one part of a big one) per session; hand over and clear context after each.
@@ -49,17 +49,9 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Emulator questions (for one batched session)
 
-Each is one screen. Answered so far:
-- A sold item appears in that castle's secondhand buy list.
-- Sigurd's sword rank on the status screen is the star (rank 4 is the major-blood star).
-- Holding Select while pressing R on a status screen shows a dead unit.
-- The augury offers Sigurd two topics, with a blank third line in the box.
-- The item shop's second option (もちもの) has the keeper say Shop36 ("quit looking at your own stuff and look at my goods") and go back.
-- Class change in chapter 6 was settled from the code instead: the command's label is drawn blank, its button gets another palette, and pressing it only plays the error sound (`rsCastleUnitCommandNameClassChange`, `rsCastleUnitCommandClassChange`).
+Each is one screen. Answers so far are in HISTORY.md under the wave that asked them.
 
-Open, for whenever a save reaches chapter 6:
-
-1. Augury with a generation 2 child: are there three topics (love, record, parents)?
+1. (When a save reaches chapter 6.) Augury with a generation 2 child: are there three topics (love, record, parents)? The code reads the topic count from `$7F8183`; only the screen shows which topics a child gets.
 
 ## How to work on this project
 
