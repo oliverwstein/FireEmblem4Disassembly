@@ -5715,7 +5715,7 @@
 
       aUnknown89A76C ; 89/A76C
 
-        ; Read by rlUnknown8A8496 (status names) followed by skill descriptions & names.
+        ; Read by rlCastleDrawInfoLine (status names) followed by skill descriptions & names.
 
         .long aUnknown89A781
         .long aUnknown89A78D
@@ -6359,7 +6359,7 @@
         tax
         lda aUnitWindowDeploymentSlots,x
         sta wRoutineVariable1,b
-        jsl rlUnknown84B6A6
+        jsl rlBuildCastleActionRounds
         rts
 
 

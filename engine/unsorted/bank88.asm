@@ -4347,7 +4347,7 @@
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         asl a
         tax
         lda $7F757A,x
@@ -4356,21 +4356,21 @@
         lda $7F75AA,x
         beq _9DF3
         sta wRoutineVariable1,b
-        jsl rlUnknown84B6A6
+        jsl rlBuildCastleActionRounds
         lda #$0800
         trb wUnknown000D79,b
 
         _9E34
         stz wCastleCursorState,b
-        lda wCastlePrepSavedUnitSlot,b
-        sta wCastlePrepUnitSlot,b
+        lda wCastleGridSavedSlot,b
+        sta wCastleGridSlot,b
         asl a
         tax
-        lda aUnknown8A99DB,x
-        sta wCastlePrepCursorXPixel,b
-        lda aUnknown8A9A0B,x
-        sta wCastlePrepCursorYPixel,b
-        jsl rlUnknown8A8496
+        lda aCastleGridCursorX,x
+        sta wCastleGridCursorXPixel,b
+        lda aCastleGridCursorY,x
+        sta wCastleGridCursorYPixel,b
+        jsl rlCastleDrawInfoLine
         ldx #$00FE
 
         _9E54
@@ -11186,7 +11186,7 @@
 
       aUnknown88D1C5 ; 88/D1C5
 
-        ; Read by rlUnknown8A98D0, rsUnitWindowRenderSprites.
+        ; Read by rlCastleDrawCourtyardUnitSprites, rsUnitWindowRenderSprites.
 
         .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E
         .word $0020, $0022, $0024, $0026, $0028, $002A, $002C, $002E
@@ -11202,7 +11202,7 @@
 
       aUnknown88D255 ; 88/D255
 
-        ; Read by rlUnknown8A98D0.
+        ; Read by rlCastleDrawCourtyardUnitSprites.
 
         .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E
         .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E

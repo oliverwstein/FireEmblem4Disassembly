@@ -105,7 +105,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $0C, every frame: rlUnknown81B15A, rlUnknown81ADD8, then the routine for wGameStateStep from aUnknown8A8078.
+        ; Game state routine $0C, every frame: rlUnknown81B15A, rlUnknown81ADD8, then the routine for wGameStateStep from aCastleScreenStepHandlers.
 
         phb
         php
@@ -117,7 +117,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        jsr (aUnknown8A8078,x)
+        jsr (aCastleScreenStepHandlers,x)
         plp
         plb
         .databank $8A
@@ -135,32 +135,32 @@
       .al
       .xl
 
-      aUnknown8A8078 ; 8A/8078
+      aCastleScreenStepHandlers ; 8A/8078
 
         ; Jump table of rlCastleScreenStep.
-        .word <>rsUnknown8A80A6
-        .word <>rsUnknown8A80BD
-        .word <>rsUnknown8A80C2
-        .word <>rsUnknown8A80C3
-        .word <>rsUnknown8A80C8
-        .word <>rsUnknown8A80CD
-        .word <>rsUnknown8A80D2
-        .word <>rsUnknown8A80D7
-        .word <>rsUnknown8A80DC
-        .word <>rsUnknown8A80E1
-        .word <>rsUnknown8A80E6
-        .word <>rsUnknown8A80F5
-        .word <>rsUnknown8A80FA
-        .word <>rsUnknown8A80EB
-        .word <>rsUnknown8A80F0
-        .word <>rsUnknown8A811A
-        .word <>rsUnknown8A80FF
-        .word <>rsUnknown8A8139
-        .word $816F
-        .word $8178
-        .word <>rsUnknown8A8139
-        .word <>rsUnknown8A815F
-        .word <>rsUnknown8A8174
+        .word <>rsCastleStepCourtyardStart
+        .word <>rsCastleStepCourtyard
+        .word <>rsCastleStepWait
+        .word <>rsCastleStepArenaSetup
+        .word <>rsCastleStepArena
+        .word <>rsCastleStepAugurySetup
+        .word <>rsCastleStepAugury
+        .word <>rsCastleStepDepotSetup
+        .word <>rsCastleStepDepot
+        .word <>rsCastleStepClassChangeSetup
+        .word <>rsCastleStepClassChange
+        .word <>rsCastleStepConversationSetup
+        .word <>rsCastleStepConversation
+        .word <>rsCastleStepShopSetup
+        .word <>rsCastleStepShop
+        .word <>rsCastleStepFadeOut
+        .word <>rsCastleStepFadeIn
+        .word <>rsCastleStepReturnToCourtyard
+        .word <>rsCastleStepReopenTownSameSong
+        .word <>rsCastleStepExitToMapNoReset
+        .word <>rsCastleStepReturnToCourtyard
+        .word <>rsCastleStepReopenTown
+        .word <>rsCastleStepExitToMap
 
     .endsection Table8A8078Section
 
@@ -170,14 +170,16 @@
       .al
       .xl
 
-      rsUnknown8A80A6 ; 8A/80A6
+      rsCastleStepCourtyardStart ; 8A/80A6
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown8A8208
+        ; Step $00: runs the courtyard; once no song is playing, queues sound command $F7 and moves to step $01.
+
+        jsl rlCastleCourtyardStep
         lda wMusicID,b
         bne _80BC
         lda #$00F7
@@ -192,26 +194,30 @@
 
         ; 8A/80BD
 
-      rsUnknown8A80BD ; 8A/80BD
+      rsCastleStepCourtyard ; 8A/80BD
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown8A8208
+        ; Step $01: runs the courtyard (rlCastleCourtyardStep).
+
+        jsl rlCastleCourtyardStep
         rts
 
         .databank 0
 
         ; 8A/80C2
 
-      rsUnknown8A80C2 ; 8A/80C2
+      rsCastleStepWait ; 8A/80C2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $02: does nothing; used while a fade proc or another screen takes over.
 
         rts
 
@@ -227,12 +233,14 @@
       .al
       .xl
 
-      rsUnknown8A80C3 ; 8A/80C3
+      rsCastleStepArenaSetup ; 8A/80C3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $03: sets up the arena screen.
 
         jsl rlUnknown8AE2F8
         rts
@@ -249,12 +257,14 @@
       .al
       .xl
 
-      rsUnknown8A80C8 ; 8A/80C8
+      rsCastleStepArena ; 8A/80C8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $04: runs the arena menu.
 
         jsl rlArenaMenuRunStep
         rts
@@ -271,12 +281,14 @@
       .al
       .xl
 
-      rsUnknown8A80CD ; 8A/80CD
+      rsCastleStepAugurySetup ; 8A/80CD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $05: sets up the augury (fortune teller) screen.
 
         jsl rlUnknown8AF894
         rts
@@ -285,12 +297,14 @@
 
         ; 8A/80D2
 
-      rsUnknown8A80D2 ; 8A/80D2
+      rsCastleStepAugury ; 8A/80D2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $06: runs the augury.
 
         jsl rlUnknown8AFA34
         rts
@@ -299,12 +313,14 @@
 
         ; 8A/80D7
 
-      rsUnknown8A80D7 ; 8A/80D7
+      rsCastleStepDepotSetup ; 8A/80D7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $07: sets up the depot screen.
 
         jsl rlUnknown8AF0F2
         rts
@@ -313,12 +329,14 @@
 
         ; 8A/80DC
 
-      rsUnknown8A80DC ; 8A/80DC
+      rsCastleStepDepot ; 8A/80DC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $08: runs the depot.
 
         jsl rlUnknown8AF283
         rts
@@ -327,12 +345,14 @@
 
         ; 8A/80E1
 
-      rsUnknown8A80E1 ; 8A/80E1
+      rsCastleStepClassChangeSetup ; 8A/80E1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $09: sets up the class change screen.
 
         jsl rlUnknown8AECEF
         rts
@@ -341,12 +361,14 @@
 
         ; 8A/80E6
 
-      rsUnknown8A80E6 ; 8A/80E6
+      rsCastleStepClassChange ; 8A/80E6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $0A: runs the class change screen.
 
         jsl rlUnknown8AEEB1
         rts
@@ -355,12 +377,14 @@
 
         ; 8A/80EB
 
-      rsUnknown8A80EB ; 8A/80EB
+      rsCastleStepShopSetup ; 8A/80EB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $0D: sets up a shop screen (item shop, secondhand shop or repair shop).
 
         jsl rlUnknown8ABCF8
         rts
@@ -369,12 +393,14 @@
 
         ; 8A/80F0
 
-      rsUnknown8A80F0 ; 8A/80F0
+      rsCastleStepShop ; 8A/80F0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $0E: runs the shop.
 
         jsl rlUnknown8AC04B
         rts
@@ -391,12 +417,14 @@
       .al
       .xl
 
-      rsUnknown8A80F5 ; 8A/80F5
+      rsCastleStepConversationSetup ; 8A/80F5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $0B: sets up the castle conversation scene.
 
         jsl rlUnknown8AD81B
         rts
@@ -413,12 +441,14 @@
       .al
       .xl
 
-      rsUnknown8A80FA ; 8A/80FA
+      rsCastleStepConversation ; 8A/80FA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $0C: runs the castle conversation scene.
 
         jsl rlUnknown8AD975
         rts
@@ -427,14 +457,16 @@
 
         ; 8A/80FF
 
-      rsUnknown8A80FF ; 8A/80FF
+      rsCastleStepFadeIn ; 8A/80FF
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8A81C4
+        ; Step $10: raises the brightness one level a frame, then moves to the step in wNextMenuState.
+
+        jsr rsCastleDrawFadingPortrait
         sep #$20
         lda bBufferINIDISP
         and #$0F
@@ -456,14 +488,16 @@
 
         ; 8A/811A
 
-      rsUnknown8A811A ; 8A/811A
+      rsCastleStepFadeOut ; 8A/811A
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8A81C4
+        ; Step $0F: lowers the brightness one level a frame, then blanks the screen and moves to the step in wNextMenuState.
+
+        jsr rsCastleDrawFadingPortrait
         sep #$20
         lda bBufferINIDISP
         and #$0F
@@ -487,16 +521,18 @@
 
         ; 8A/8139
 
-      rsUnknown8A8139 ; 8A/8139
+      rsCastleStepReturnToCourtyard ; 8A/8139
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Steps $11 and $14: reloads the courtyard screen and fades in to step $00.
+
         lda #$00F7
         jsl rlQueueSoundCommand
-        jsr rsUnknown8A8E08
+        jsr rsCastleLoadCourtyardScreen
         lda #$0000
         sta $7F766A
         lda #$0010
@@ -513,32 +549,42 @@
 
         ; 8A/815F
 
-      rsUnknown8A815F ; 8A/815F
+      rsCastleStepReopenTown ; 8A/815F
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Step $15: starts the castle's song and reopens the town screen; step $12 enters at rsCastleStepReopenTownSameSong.
+
         jsl rlDisableVBlank
         jsl rlResetHDMAEngine
-        jsl rlUnknown8A9D39
+        jsl rlPlayCastleSong
         jsl rlEnableVBlank
-        jsl rlUnknown8A97C2
+
+      rsCastleStepReopenTownSameSong ; 8A/816F
+        ; Step $12 enters here: reopens the town without changing the song.
+        jsl rlCastleOpenTown
         rts
 
         .databank 0
 
         ; 8A/8174
 
-      rsUnknown8A8174 ; 8A/8174
+      rsCastleStepExitToMap ; 8A/8174
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Step $16: once the screen is fully bright, fades out (sound command $E8) and returns to the map (procMainLoopChangeFade into $80/B122); moves to step $02.
+
         jsl rlUnknown81AB26
+
+      rsCastleStepExitToMapNoReset ; 8A/8178
+        ; Step $13 enters here, skipping rlUnknown81AB26. Nothing found selects step $13.
         lda #$00E8
         jsl rlQueueSoundCommand
         sep #$20
@@ -577,12 +623,14 @@
 
         ; 8A/81C4
 
-      rsUnknown8A81C4 ; 8A/81C4
+      rsCastleDrawFadingPortrait ; 8A/81C4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; During the fade steps, draws the portrait chosen by $7F766A (1 rsPushUnitPortraitSprites, 2 rsUnknown8AAF0A, 3 rsPushCourtyardPortraitSprites).
 
         rep #$20
         lda $7F766A
@@ -605,7 +653,7 @@
         lda #$0060
         sta wR1
         ldx #$0000
-        jsr rsUnknown8A9539
+        jsr rsPushUnitPortraitSprites
         bra _81DE
 
 
@@ -620,7 +668,7 @@
         lda #$0060
         sta wR1
         ldx #$0000
-        jsr rsUnknown8A956F
+        jsr rsPushCourtyardPortraitSprites
         bra _81DE
 
         .databank 0
@@ -635,12 +683,14 @@
       .al
       .xl
 
-      rlUnknown8A8208 ; 8A/8208
+      rlCastleCourtyardStep ; 8A/8208
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Runs the courtyard every frame: dispatches on wCastleCursorState to the unit grid, the unit command menu or the town's facility buttons, and draws the cursor.
 
         lda wMapSystemFlags,b
         bit #$0020
@@ -662,14 +712,14 @@
 
 
         _8227
-        jml rlUnknown8A8349
+        jml rlCastleTownStep
 
 
         _822B
         lda wJoy1New
         bit #$A0C0
         beq _824A
-        jsr rsUnknown8A89F0
+        jsr rsCastleCourtyardButtons
         stz wMapScrollDirectionIdentifier,b
         lda wCastleCursorState,b
         cmp #$0004
@@ -689,19 +739,19 @@
         beq _8263
         cmp #$0005
         beq _8263
-        jsr rsUnknown8A8393
+        jsr rsCastleGridMoveCursor
         bra _8266
 
 
         _8263
-        jsr rsUnknown8A8643
+        jsr rsCastleGridMoveToTarget
 
         _8266
-        lda wCastlePrepCursorXPixel,b
+        lda wCastleGridCursorXPixel,b
         sec
         sbc #$0012
         sta wR0
-        lda wCastlePrepCursorYPixel,b
+        lda wCastleGridCursorYPixel,b
         sec
         sbc #$0008
         sta wR1
@@ -721,11 +771,11 @@
         .databank $88
         rep #$20
         ldy #$EE52
-        lda wCastlePrepCursorXPixel,b
+        lda wCastleGridCursorXPixel,b
         sec
         sbc #$0008
         sta wR0
-        lda wCastlePrepCursorYPixel,b
+        lda wCastleGridCursorYPixel,b
         sec
         sbc #$0008
         sta wR1
@@ -757,19 +807,19 @@
 
 
         _82C8
-        jsr rsUnknown8A8783
+        jsr rsCastleUnitCommandMenuInput
         lda wJoy1New
         beq _82DC
-        jsr rsUnknown8A89F0
+        jsr rsCastleCourtyardButtons
         lda wCastleCursorState,b
         beq _82DC
         cmp #$0003
         beq _8313
 
         _82DC
-        lda wUnknown000893,b
+        lda wCastleUnitCommand,b
         tax
-        lda aUnknown8A8343,x
+        lda aCastleUnitCommandCursorX,x
         and #$00FF
         clc
         adc #$0004
@@ -783,8 +833,8 @@
         lda #$0060
         sta wR1
         ldx #$0000
-        jsr rsUnknown8A956F
-        lda wCastlePrepCursorYPixel,b
+        jsr rsPushCourtyardPortraitSprites
+        lda wCastleGridCursorYPixel,b
         cmp #$00B0
         bcs _8313
         bra _8314
@@ -802,11 +852,11 @@
         .databank $88
         rep #$20
         ldy #$EE52
-        lda wCastlePrepCursorXPixel,b
+        lda wCastleGridCursorXPixel,b
         sec
         sbc #$0008
         sta wR0
-        lda wCastlePrepCursorYPixel,b
+        lda wCastleGridCursorYPixel,b
         sec
         sbc #$0008
         sta wR1
@@ -820,28 +870,30 @@
 
         .databank 0
 
-      aUnknown8A8343 ; 8A/8343
+      aCastleUnitCommandCursorX ; 8A/8343
         .byte $18, $38, $58, $78, $98, $B8
 
-      rlUnknown8A8349 ; 8A/8349
+      rlCastleTownStep ; 8A/8349
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8A8980
+        ; Runs the town screen (wCastleCursorState 3): moves between the facility buttons, handles the buttons and draws the button cursor and the unit's portrait.
+
+        jsr rsCastleTownFacilityInput
         lda wJoy1New
-        jsr rsUnknown8A89F0
+        jsr rsCastleCourtyardButtons
         lda wCastleCursorState,b
         cmp #$0002
         bcc _8386
-        lda wUnknown000895,b
+        lda wCastleTownFacility,b
         tax
-        lda aUnknown8A8387,x
+        lda aCastleTownFacilityCursorX,x
         and #$00FF
         sta wR0
-        lda aUnknown8A838D,x
+        lda aCastleTownFacilityCursorY,x
         and #$00FF
         sta wR1
         lda #$0000
@@ -851,7 +903,7 @@
         lda #$0060
         sta wR1
         ldx #$0000
-        jsr rsUnknown8A9539
+        jsr rsPushUnitPortraitSprites
 
         _8386
         rtl
@@ -868,17 +920,17 @@
       .al
       .xl
 
-      aUnknown8A8387 ; 8A/8387
+      aCastleTownFacilityCursorX ; 8A/8387
 
-        ; Read by rlUnknown8A8208.
+        ; Read by rlCastleCourtyardStep.
 
         .word $580C, $0CA0, $A058
 
         ; 8A/838D
 
-      aUnknown8A838D ; 8A/838D
+      aCastleTownFacilityCursorY ; 8A/838D
 
-        ; Read by rlUnknown8A8208.
+        ; Read by rlCastleCourtyardStep.
 
         .word $A8A8, $C8A8, $C8C8
 
@@ -892,21 +944,23 @@
       .al
       .xl
 
-      rsUnknown8A8393 ; 8A/8393
+      rsCastleGridMoveCursor ; 8A/8393
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda wCastlePrepUnitSlot,b
+        ; Moves the cursor on the 4x6 courtyard grid with the D-pad; L and R jump to the previous or next occupied slot.
+
+        lda wCastleGridSlot,b
         sta wTempVariable1,b
         and #$001C
         lsr a
         tax
-        lda aUnknown8A847E,x
+        lda aCastleGridRowFirstSlot,x
         sta wR0
-        lda aUnknown8A848A,x
+        lda aCastleGridRowLastSlot,x
         sta wR1
         lda wJoy1Repeated
         bit #$0200
@@ -927,7 +981,7 @@
 
 
         _83CB
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         cmp wR0
         beq _83CA
         sec
@@ -936,7 +990,7 @@
 
 
         _83D8
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         cmp wR1
         bcs _83CA
         clc
@@ -945,7 +999,7 @@
 
 
         _83E5
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         cmp #$0004
         bcc _83CA
         sec
@@ -954,7 +1008,7 @@
 
 
         _83F3
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         cmp #$0014
         bcs _83CA
         clc
@@ -963,14 +1017,14 @@
 
 
         _8401
-        sta wCastlePrepUnitSlot,b
+        sta wCastleGridSlot,b
         asl a
         tax
-        lda aUnknown8A99DB,x
-        sta wCastlePrepCursorXPixel,b
-        lda aUnknown8A9A0B,x
-        sta wCastlePrepCursorYPixel,b
-        jsl rlUnknown8A8496
+        lda aCastleGridCursorX,x
+        sta wCastleGridCursorXPixel,b
+        lda aCastleGridCursorY,x
+        sta wCastleGridCursorYPixel,b
+        jsl rlCastleDrawInfoLine
         lda #$0007
         jsl rlPlaySoundEffect
         rts
@@ -1046,17 +1100,17 @@
       .al
       .xl
 
-      aUnknown8A847E ; 8A/847E
+      aCastleGridRowFirstSlot ; 8A/847E
 
-        ; Read by rsUnknown8A8393.
+        ; Read by rsCastleGridMoveCursor.
 
         .word $0000, $0004, $0008, $000C, $0010, $0014
 
         ; 8A/848A
 
-      aUnknown8A848A ; 8A/848A
+      aCastleGridRowLastSlot ; 8A/848A
 
-        ; Read by rsUnknown8A8393.
+        ; Read by rsCastleGridMoveCursor.
 
         .word $0003, $0007, $000B, $000F, $0013, $0017
 
@@ -1070,12 +1124,14 @@
       .al
       .xl
 
-      rlUnknown8A8496 ; 8A/8496
+      rlCastleDrawInfoLine ; 8A/8496
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the line at the bottom of the courtyard: the unit's name with HP or status and turns left, or the castle's name when no unit is under the cursor.
 
         phk
         plb
@@ -1090,9 +1146,9 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0200, $80, $B000
 
-        lda #(`aUnknown8A85EF)<<8
+        lda #(`aCastleInfoLineBlankText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A85EF
+        lda #<>aCastleInfoLineBlankText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1114,7 +1170,7 @@
 
 
         _84EF
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         asl a
         tax
         lda $7F757A,x
@@ -1133,9 +1189,9 @@
         jsl rlGetSelectedUnitStatus
         cmp #StatusHealthy
         bne _8594
-        lda #(`aUnknown8A8621)<<8
+        lda #(`aCastleInfoLineHPText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A8621
+        lda #<>aCastleInfoLineHPText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1143,9 +1199,9 @@
         sta lR18+1
         ldx #$0110
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown8A8627)<<8
+        lda #(`aCastleInfoLineSlashText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A8627
+        lda #<>aCastleInfoLineSlashText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1195,9 +1251,9 @@
         sta lR18+1
         ldx #$010E
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown8A863B)<<8
+        lda #(`aCastleInfoLineTurnsLeftText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A863B
+        lda #<>aCastleInfoLineTurnsLeftText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -1224,35 +1280,35 @@
       .al
       .xl
 
-      aUnknown8A85EF ; 8A/85EF
+      aCastleInfoLineBlankText ; 8A/85EF
 
         .enc "SJIS"
         .text "　　　　　　　　　　　　　　　　　　　　　　　　"
         .word $0000
         .enc "none"
 
-      aUnknown8A8621 ; 8A/8621
+      aCastleInfoLineHPText ; 8A/8621
 
         .enc "SJIS"
         .text "ＨＰ"
         .word $0000
         .enc "none"
 
-      aUnknown8A8627 ; 8A/8627
+      aCastleInfoLineSlashText ; 8A/8627
 
         .enc "SJIS"
         .text "／"
         .word $0000
         .enc "none"
 
-      aUnknown8A862B ; 8A/862B
+      aCastleInfoLinePartTimeText ; 8A/862B
 
         .enc "SJIS"
         .text "　　アルバイト"
         .word $0000
         .enc "none"
 
-      aUnknown8A863B ; 8A/863B
+      aCastleInfoLineTurnsLeftText ; 8A/863B
 
         .enc "SJIS"
         .text "のこり"
@@ -1268,14 +1324,16 @@
       .al
       .xl
 
-      rsUnknown8A8643 ; 8A/8643
+      rsCastleGridMoveToTarget ; 8A/8643
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda wCastlePrepUnitSlot,b
+        ; While choosing a target for a staff, dance or gift, moves the cursor to the previous or next unit in the target list.
+
+        lda wCastleGridSlot,b
         sta wTempVariable1,b
         lda wJoy1Repeated
         bit #$0200
@@ -1294,19 +1352,19 @@
 
 
         _866A
-        jsr rsUnknown8A870D
+        jsr rsCastleGridFindNextTarget
         bcs _8676
         rts
 
 
         _8670
-        jsr rsUnknown8A869A
+        jsr rsCastleGridFindPreviousTarget
         bcs _8676
         rts
 
 
         _8676
-        jsl rlUnknown8A8496
+        jsl rlCastleDrawInfoLine
         lda #$0007
         jsl rlPlaySoundEffect
         rts
@@ -1323,14 +1381,14 @@
       .al
       .xl
 
-      rsUnknown8A869A ; 8A/869A
+      rsCastleGridFindPreviousTarget ; 8A/869A
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         sta wTempVariable1,b
         sta wTempVariable2,b
 
@@ -1358,7 +1416,7 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitDeploymentOffset
         sta wRoutineVariable1,b
-        jsl rlUnknown87A01A
+        jsl rlCheckInCastleTargetList
         pla
         sta wSelectedUnitDataRAMPointer,b
         bcc _86A3
@@ -1373,13 +1431,13 @@
 
 
         _86EE
-        sta wCastlePrepUnitSlot,b
+        sta wCastleGridSlot,b
         asl a
         tax
-        lda aUnknown8A99DB,x
-        sta wCastlePrepCursorXPixel,b
-        lda aUnknown8A9A0B,x
-        sta wCastlePrepCursorYPixel,b
+        lda aCastleGridCursorX,x
+        sta wCastleGridCursorXPixel,b
+        lda aCastleGridCursorY,x
+        sta wCastleGridCursorYPixel,b
         lda wTempVariable1,b
         cmp wTempVariable2,b
         beq _870B
@@ -1403,14 +1461,14 @@
       .al
       .xl
 
-      rsUnknown8A870D ; 8A/870D
+      rsCastleGridFindNextTarget ; 8A/870D
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         sta wTempVariable1,b
         sta wTempVariable2,b
 
@@ -1439,7 +1497,7 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitDeploymentOffset
         sta wRoutineVariable1,b
-        jsl rlUnknown87A01A
+        jsl rlCheckInCastleTargetList
         pla
         sta wSelectedUnitDataRAMPointer,b
         bcc _8716
@@ -1454,13 +1512,13 @@
 
 
         _8764
-        sta wCastlePrepUnitSlot,b
+        sta wCastleGridSlot,b
         asl a
         tax
-        lda aUnknown8A99DB,x
-        sta wCastlePrepCursorXPixel,b
-        lda aUnknown8A9A0B,x
-        sta wCastlePrepCursorYPixel,b
+        lda aCastleGridCursorX,x
+        sta wCastleGridCursorXPixel,b
+        lda aCastleGridCursorY,x
+        sta wCastleGridCursorYPixel,b
         lda wTempVariable1,b
         cmp wTempVariable2,b
         beq _8781
@@ -1484,12 +1542,14 @@
       .al
       .xl
 
-      rsUnknown8A8783 ; 8A/8783
+      rsCastleUnitCommandMenuInput ; 8A/8783
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Left and right step through the six unit commands.
 
         lda wJoy1Repeated
         bit #$0200
@@ -1502,24 +1562,24 @@
 
 
         _8790
-        lda wUnknown000893,b
+        lda wCastleUnitCommand,b
         beq _878F
         sec
         sbc #$0001
-        sta wUnknown000893,b
+        sta wCastleUnitCommand,b
         bra _87AD
 
 
         _879E
-        lda wUnknown000893,b
+        lda wCastleUnitCommand,b
         cmp #$0005
         bcs _878F
         clc
         adc #$0001
-        sta wUnknown000893,b
+        sta wCastleUnitCommand,b
 
         _87AD
-        jsr rsUnknown8A87B8
+        jsr rsCastleDrawUnitCommandName
         lda #$0007
         jsl rlPlaySoundEffect
         rts
@@ -1536,7 +1596,7 @@
       .al
       .xl
 
-      rsUnknown8A87B8 ; 8A/87B8
+      rsCastleDrawUnitCommandName ; 8A/87B8
 
         ; Found by tools/sweep.py.
         .al
@@ -1544,16 +1604,18 @@
         .autsiz
         .databank ?
 
+        ; Draws the selected command's name, in the grey palette when the unit cannot use it.
+
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aCastleMenuTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda wUnknown000893,b
+        lda wCastleUnitCommand,b
         asl a
         tax
-        jsr (aUnknown8A87F3,x)
+        jsr (aCastleUnitCommandNameHandlers,x)
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E8988, $0100, $80, $B600
@@ -1571,85 +1633,85 @@
 
         ; 8A/87F3
 
-      aUnknown8A87F3 ; 8A/87F3
+      aCastleUnitCommandNameHandlers ; 8A/87F3
 
-        .word <>rsUnknown8A883A
-        .word <>rsUnknown8A87FF
-        .word <>rsUnknown8A8812
-        .word <>rsUnknown8A8825
-        .word <>rsUnknown8A889A
-        .word <>rsUnknown8A8876
+        .word <>rsCastleUnitCommandNameTown
+        .word <>rsCastleUnitCommandNameSortie
+        .word <>rsCastleUnitCommandNameGuard
+        .word <>rsCastleUnitCommandNameClassChange
+        .word <>rsCastleUnitCommandNameStaffOrDance
+        .word <>rsCastleUnitCommandNameGive
 
         ; 8A/87FF
 
-      rsUnknown8A87FF ; 8A/87FF
+      rsCastleUnitCommandNameSortie ; 8A/87FF
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8A88E0)<<8
+        lda #(`aCastleUnitCommandSortieText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A88E0
+        lda #<>aCastleUnitCommandSortieText
         sta lRoutineVariable,b
-        jsl rlUnknown879F12
-        bcc rsUnknown8A886F
+        jsl rlCheckUnitCanSortie
+        bcc rsCastleUnitCommandNameSetGrey
         rts
 
         .databank 0
 
         ; 8A/8812
 
-      rsUnknown8A8812 ; 8A/8812
+      rsCastleUnitCommandNameGuard ; 8A/8812
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8A88F4)<<8
+        lda #(`aCastleUnitCommandGuardText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A88F4
+        lda #<>aCastleUnitCommandGuardText
         sta lRoutineVariable,b
-        jsl rlUnknown879F67
-        bcc rsUnknown8A886F
+        jsl rlCheckUnitCanGuard
+        bcc rsCastleUnitCommandNameSetGrey
         rts
 
         .databank 0
 
         ; 8A/8825
 
-      rsUnknown8A8825 ; 8A/8825
+      rsCastleUnitCommandNameClassChange ; 8A/8825
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8A8908)<<8
+        lda #(`aCastleUnitCommandClassChangeText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A8908
+        lda #<>aCastleUnitCommandClassChangeText
         sta lRoutineVariable,b
         lda wCurrentChapter,b
         cmp #$0006
-        beq rsUnknown8A8863
+        beq rsCastleUnitCommandNameBlank
         rts
 
         .databank 0
 
         ; 8A/883A
 
-      rsUnknown8A883A ; 8A/883A
+      rsCastleUnitCommandNameTown ; 8A/883A
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8A891C)<<8
+        lda #(`aCastleUnitCommandTownText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A891C
+        lda #<>aCastleUnitCommandTownText
         sta lRoutineVariable,b
         rts
 
@@ -1657,58 +1719,58 @@
 
         ; 8A/8847
 
-      rsUnknown8A8847 ; 8A/8847
+      rsCastleUnitCommandNameGiveGrey ; 8A/8847
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8A896C)<<8
+        lda #(`aCastleUnitCommandGiveText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A896C
+        lda #<>aCastleUnitCommandGiveText
         sta lRoutineVariable,b
-        bra rsUnknown8A886F
+        bra rsCastleUnitCommandNameSetGrey
 
         .databank 0
 
         ; 8A/8855
 
-      rsUnknown8A8855 ; 8A/8855
+      rsCastleUnitCommandNameDanceGrey ; 8A/8855
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8A8958)<<8
+        lda #(`aCastleUnitCommandDanceText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A8958
+        lda #<>aCastleUnitCommandDanceText
         sta lRoutineVariable,b
-        bra rsUnknown8A886F
+        bra rsCastleUnitCommandNameSetGrey
 
         .databank 0
 
         ; 8A/8863
 
-      rsUnknown8A8863 ; 8A/8863
+      rsCastleUnitCommandNameBlank ; 8A/8863
 
-        ; Runs on into rsUnknown8A886F.
+        ; Runs on into rsCastleUnitCommandNameSetGrey.
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8A8944)<<8
+        lda #(`aCastleUnitCommandBlankText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A8944
+        lda #<>aCastleUnitCommandBlankText
         sta lRoutineVariable,b
 
         .databank 0
 
         ; 8A/886F
 
-      rsUnknown8A886F ; 8A/886F
+      rsCastleUnitCommandNameSetGrey ; 8A/886F
 
         .al
         .xl
@@ -1723,7 +1785,7 @@
 
         ; 8A/8876
 
-      rsUnknown8A8876 ; 8A/8876
+      rsCastleUnitCommandNameGive ; 8A/8876
 
         ; Found by tools/sweep.py.
         .al
@@ -1734,17 +1796,17 @@
         lda #SkillIDSteal
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _8887
-        jsl rlUnknown879F9C
+        jsl rlCheckUnitCanGive
         bcs _8887
-        bra rsUnknown8A8863
+        bra rsCastleUnitCommandNameBlank
 
 
         _8887
-        jsl rlUnknown879F9C
-        bcc rsUnknown8A8847
-        lda #(`aUnknown8A896C)<<8
+        jsl rlCheckUnitCanGive
+        bcc rsCastleUnitCommandNameGiveGrey
+        lda #(`aCastleUnitCommandGiveText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A896C
+        lda #<>aCastleUnitCommandGiveText
         sta lRoutineVariable,b
         rts
 
@@ -1752,7 +1814,7 @@
 
         ; 8A/889A
 
-      rsUnknown8A889A ; 8A/889A
+      rsCastleUnitCommandNameStaffOrDance ; 8A/889A
 
         ; Found by tools/sweep.py.
         .al
@@ -1771,22 +1833,22 @@
         bne _88C0
         lda $7E2028
         and #$00FF
-        beq rsUnknown8A8863
+        beq rsCastleUnitCommandNameBlank
 
         _88C0
-        lda #(`aUnknown8A8930)<<8
+        lda #(`aCastleUnitCommandStaffText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A8930
+        lda #<>aCastleUnitCommandStaffText
         sta lRoutineVariable,b
         rts
 
 
         _88CD
-        jsl rlUnknown87A006
-        bcc rsUnknown8A8855
-        lda #(`aUnknown8A8958)<<8
+        jsl rlCheckUnitCanDance
+        bcc rsCastleUnitCommandNameDanceGrey
+        lda #(`aCastleUnitCommandDanceText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A8958
+        lda #<>aCastleUnitCommandDanceText
         sta lRoutineVariable,b
         rts
 
@@ -1802,56 +1864,56 @@
       .al
       .xl
 
-      aUnknown8A88E0 ; 8A/88E0
+      aCastleUnitCommandSortieText ; 8A/88E0
 
         .enc "SJIS"
         .text "　　しゅつげき　　"
         .word $0000
         .enc "none"
 
-      aUnknown8A88F4 ; 8A/88F4
+      aCastleUnitCommandGuardText ; 8A/88F4
 
         .enc "SJIS"
         .text "　　しゅび　　　　"
         .word $0000
         .enc "none"
 
-      aUnknown8A8908 ; 8A/8908
+      aCastleUnitCommandClassChangeText ; 8A/8908
 
         .enc "SJIS"
         .text "　　クラスチェンジ"
         .word $0000
         .enc "none"
 
-      aUnknown8A891C ; 8A/891C
+      aCastleUnitCommandTownText ; 8A/891C
 
         .enc "SJIS"
         .text "　　まち　　　　　"
         .word $0000
         .enc "none"
 
-      aUnknown8A8930 ; 8A/8930
+      aCastleUnitCommandStaffText ; 8A/8930
 
         .enc "SJIS"
         .text "　　つえ　　　　　"
         .word $0000
         .enc "none"
 
-      aUnknown8A8944 ; 8A/8944
+      aCastleUnitCommandBlankText ; 8A/8944
 
         .enc "SJIS"
         .text "　　　　　　　　　"
         .word $0000
         .enc "none"
 
-      aUnknown8A8958 ; 8A/8958
+      aCastleUnitCommandDanceText ; 8A/8958
 
         .enc "SJIS"
         .text "　　おどる　　　　"
         .word $0000
         .enc "none"
 
-      aUnknown8A896C ; 8A/896C
+      aCastleUnitCommandGiveText ; 8A/896C
 
         .enc "SJIS"
         .text "　　あげる　　　　"
@@ -1867,12 +1929,14 @@
       .al
       .xl
 
-      rsUnknown8A8980 ; 8A/8980
+      rsCastleTownFacilityInput ; 8A/8980
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Moves between the six facility buttons (two rows of three).
 
         lda wJoy1Repeated
         bit #$0800
@@ -1889,36 +1953,36 @@
 
 
         _8997
-        lda wUnknown000895,b
+        lda wCastleTownFacility,b
         beq _8996
         sec
         sbc #$0001
-        sta wUnknown000895,b
+        sta wCastleTownFacility,b
         bra _89E0
 
 
         _89A5
-        lda wUnknown000895,b
+        lda wCastleTownFacility,b
         cmp #$0005
         bcs _8996
         clc
         adc #$0001
-        sta wUnknown000895,b
+        sta wCastleTownFacility,b
         bra _89E0
 
 
         _89B6
-        lda wUnknown000895,b
+        lda wCastleTownFacility,b
         cmp #$0003
         bcc _8996
         sec
         sbc #$0003
-        sta wUnknown000895,b
+        sta wCastleTownFacility,b
         bra _89E8
 
 
         _89C7
-        lda wUnknown000895,b
+        lda wCastleTownFacility,b
         cmp #$0003
         bcs _8996
         clc
@@ -1928,7 +1992,7 @@
         lda #$0005
 
         _89DB
-        sta wUnknown000895,b
+        sta wCastleTownFacility,b
         bra _89E8
 
 
@@ -1947,12 +2011,14 @@
 
         ; 8A/89F0
 
-      rsUnknown8A89F0 ; 8A/89F0
+      rsCastleCourtyardButtons ; 8A/89F0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Once the screen is fully bright and no song is starting: A, B, Select, and X (opens the status screen for the unit under the cursor).
 
         lda wMusicID,b
         bne _8A1D
@@ -1981,24 +2047,24 @@
 
 
         _8A1E
-        jsr rsUnknown8A8A84
+        jsr rsCastleCourtyardPressA
         rts
 
 
         _8A22
-        jsr rsUnknown8A8BAB
+        jsr rsCastleCourtyardPressB
         rts
 
 
         _8A26
-        jsr rsUnknown8A8C8B
+        jsr rsCastleOpenMainMenu
         rts
 
 
         _8A2A
         lda wCastleCursorState,b
         bne _8A1D
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         asl a
         tax
         lda $7F757A,x
@@ -2033,7 +2099,7 @@
 
         ; 8A/8A84
 
-      rsUnknown8A8A84 ; 8A/8A84
+      rsCastleCourtyardPressA ; 8A/8A84
 
         .al
         .xl
@@ -2057,17 +2123,17 @@
 
 
         _8AA0
-        jsr rsUnknown8A8F8F
+        jsr rsCastleRunUnitCommand
         rts
 
 
         _8AA4
-        jsr rsUnknown8A9389
+        jsr rsCastleEnterFacility
         rts
 
 
         _8AA8
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         asl a
         tax
         lda $7F757A,x
@@ -2087,7 +2153,7 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitDeploymentOffset
         sta wRoutineVariable1,b
-        jsl rlUnknown87A01A
+        jsl rlCheckInCastleTargetList
         lda wSelectedUnitDataRAMPointer,b
         sta wRoutineVariable1,b
         pla
@@ -2096,23 +2162,23 @@
         lda wUnknown000D79,b
         bit #$0800
         bne _8B22
-        lda wCastlePrepSavedUnitSlot,b
-        sta wCastlePrepUnitSlot,b
+        lda wCastleGridSavedSlot,b
+        sta wCastleGridSlot,b
         asl a
         tax
-        lda aUnknown8A99DB,x
-        sta wCastlePrepCursorXPixel,b
-        lda aUnknown8A9A0B,x
-        sta wCastlePrepCursorYPixel,b
+        lda aCastleGridCursorX,x
+        sta wCastleGridCursorXPixel,b
+        lda aCastleGridCursorY,x
+        sta wCastleGridCursorYPixel,b
         lda wCastleCursorState,b
         cmp #$0005
         beq _8B17
-        jsl rlUnknown84B6A6
+        jsl rlBuildCastleActionRounds
         rts
 
 
         _8B17
-        jsl rlUnknown84B6F6
+        jsl rlCastleGiveMoney
         lda #$0007
         sta wCastleCursorState,b
         rts
@@ -2139,12 +2205,12 @@
 
 
         _8B44
-        jsr rsUnknown8A8C8B
+        jsr rsCastleOpenMainMenu
         rts
 
 
         _8B48
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         asl a
         tax
         lda $7F757A,x
@@ -2163,12 +2229,12 @@
         lda #$17
         sta bBufferTM
         rep #$20
-        jsr rsUnknown8A87B8
+        jsr rsCastleDrawUnitCommandName
         lda #$0001
         sta wCastleCursorState,b
         jsl rlGetSelectedUnitCharacterID
-        jsl rlUnknown8A979C
-        jsr rsUnknown8A8CB7
+        jsl rlLoadCourtyardPortrait
+        jsr rsCastleDrawUnitCommandIcons
         lda #$0008
         jsl rlPlaySoundEffect
         rts
@@ -2189,7 +2255,7 @@
 
         ; 8A/8BAB
 
-      rsUnknown8A8BAB ; 8A/8BAB
+      rsCastleCourtyardPressB ; 8A/8BAB
 
         .al
         .xl
@@ -2212,7 +2278,7 @@
 
 
         _8BC5
-        jsl rlUnknown84AF17
+        jsl rlSortieUnitFromCastle
         bcs _8BC4
         lda #$0016
         sta wGameStateStep,b
@@ -2241,15 +2307,15 @@
 
 
         _8BF6
-        lda wCastlePrepSavedUnitSlot,b
-        sta wCastlePrepUnitSlot,b
+        lda wCastleGridSavedSlot,b
+        sta wCastleGridSlot,b
         asl a
         tax
-        lda aUnknown8A99DB,x
-        sta wCastlePrepCursorXPixel,b
-        lda aUnknown8A9A0B,x
-        sta wCastlePrepCursorYPixel,b
-        jsl rlUnknown8A8496
+        lda aCastleGridCursorX,x
+        sta wCastleGridCursorXPixel,b
+        lda aCastleGridCursorY,x
+        sta wCastleGridCursorYPixel,b
+        jsl rlCastleDrawInfoLine
         lda #$0000
         sta wCastleCursorState,b
         jsl rlUnknown85921D
@@ -2261,14 +2327,14 @@
 
 
         _8C28
-        jsr rsUnknown8A8C2C
+        jsr rsCastleCloseUnitCommandMenu
         rts
 
         .databank 0
 
         ; 8A/8C2C
 
-      rsUnknown8A8C2C ; 8A/8C2C
+      rsCastleCloseUnitCommandMenu ; 8A/8C2C
 
         .al
         .xl
@@ -2284,7 +2350,7 @@
         dec x
         dec x
         bpl _8C35
-        jsl rlUnknown8A8496
+        jsl rlCastleDrawInfoLine
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aCastleMenuTilemapData
@@ -2319,12 +2385,14 @@
 
         ; 8A/8C8B
 
-      rsUnknown8A8C8B ; 8A/8C8B
+      rsCastleOpenMainMenu ; 8A/8C8B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Select on the unit grid: opens the same menu the map opens (procUnknown85DDDB).
 
         lda wCastleCursorState,b
         bne _8CB6
@@ -2336,7 +2404,7 @@
         dec x
         dec x
         bpl _8C96
-        jsr rsUnknown8A929B
+        jsr rsCastleLoadWindowPalette
         lda #$0009
         jsl rlPlaySoundEffect
         lda #(`procUnknown85DDDB)<<8
@@ -2352,12 +2420,14 @@
 
         ; 8A/8CB7
 
-      rsUnknown8A8CB7 ; 8A/8CB7
+      rsCastleDrawUnitCommandIcons ; 8A/8CB7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the command icon tilemap from aUnknownDA6500 and greys out each command the unit cannot use.
 
         ldx #$001E
 
@@ -2375,7 +2445,7 @@
         dec x
         dec x
         bpl _8CC8
-        jsl rlUnknown879F12
+        jsl rlCheckUnitCanSortie
         bcs _8D06
         lda aUnknownDA6552
         and #$E3FF
@@ -2391,7 +2461,7 @@
         sta $7E811C
 
         _8D06
-        jsl rlUnknown879F67
+        jsl rlCheckUnitCanGuard
         bcs _8D38
         lda aUnknownDA655A
         and #$E3FF
@@ -2456,11 +2526,11 @@
 
 
         _8DC2
-        jsl rlUnknown87A006
+        jsl rlCheckUnitCanDance
         bcc _8D94
 
         _8DC8
-        jsl rlUnknown879F9C
+        jsl rlCheckUnitCanGive
         bcs _8DFA
         lda aUnknownDA6572
         and #$E3FF
@@ -2494,12 +2564,14 @@
       .al
       .xl
 
-      rsUnknown8A8E08 ; 8A/8E08
+      rsCastleLoadCourtyardScreen ; 8A/8E08
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Blanks the screen and loads the courtyard's graphics, palettes and tilemaps, then draws the info line.
 
         sep #$20
         lda #$80
@@ -2635,7 +2707,7 @@
         lda #$00
         sta bBufferINIDISP
         rep #$20
-        jsl rlUnknown8A8496
+        jsl rlCastleDrawInfoLine
         rts
 
         .databank 0
@@ -2650,12 +2722,14 @@
       .al
       .xl
 
-      rlUnknown8A8F68 ; 8A/8F68
+      rlCastleRestoreCourtyardPalettes ; 8A/8F68
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Used by event scenes shown over the courtyard.
 
         phb
         phk
@@ -2676,7 +2750,7 @@
         lda #$81
         sta bBufferCGADSUB
         rep #$20
-        jsl rlUnknown8A8496
+        jsl rlCastleDrawInfoLine
         plb
         .databank $8A
         rtl
@@ -2693,7 +2767,7 @@
       .al
       .xl
 
-      rsUnknown8A8F8F ; 8A/8F8F
+      rsCastleRunUnitCommand ; 8A/8F8F
 
         ; Found by tools/sweep.py.
         .al
@@ -2701,7 +2775,9 @@
         .autsiz
         .databank ?
 
-        lda wUnknown000893,b
+        ; A on a unit command; the command index is wCastleUnitCommand.
+
+        lda wCastleUnitCommand,b
         beq _8FE4
         cmp #$0001
         beq _8FB6
@@ -2723,9 +2799,9 @@
 
 
         _8FB6
-        jsl rlUnknown879F12
+        jsl rlCheckUnitCanSortie
         bcc _8FAE
-        jsl rlUnknown84AF17
+        jsl rlSortieUnitFromCastle
         bcs _8FAE
         lda #$000A
         jsl rlPlaySoundEffect
@@ -2739,17 +2815,17 @@
 
 
         _8FDC
-        jsr rsUnknown8A9069
+        jsr rsCastleUnitCommandGuard
         rts
 
 
         _8FE0
-        jsr rsUnknown8A9038
+        jsr rsCastleUnitCommandClassChange
         rts
 
 
         _8FE4
-        jsr rsUnknown8A9D22
+        jsr rsCastleFadeSongIfChanging
         lda #$000F
         sta wGameStateStep,b
         lda #$0015
@@ -2762,32 +2838,32 @@
 
 
         _9002
-        lda wCastlePrepUnitSlot,b
-        sta wCastlePrepSavedUnitSlot,b
+        lda wCastleGridSlot,b
+        sta wCastleGridSavedSlot,b
         lda #SkillIDDance
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _9019
-        jsl rlUnknown87A006
+        jsl rlCheckUnitCanDance
         bcs _901D
         bra _8FAE
 
 
         _9019
-        jsr rsUnknown8A90C7
+        jsr rsCastleUnitCommandStaff
         rts
 
 
         _901D
-        jsr rsUnknown8A918A
+        jsr rsCastleUnitCommandDance
         rts
 
 
         _9021
-        lda wCastlePrepUnitSlot,b
-        sta wCastlePrepSavedUnitSlot,b
-        jsl rlUnknown879F9C
+        lda wCastleGridSlot,b
+        sta wCastleGridSavedSlot,b
+        jsl rlCheckUnitCanGive
         bcc _8FAE
-        jsr rsUnknown8A9209
+        jsr rsCastleUnitCommandGive
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -2796,7 +2872,7 @@
 
         ; 8A/9038
 
-      rsUnknown8A9038 ; 8A/9038
+      rsCastleUnitCommandClassChange ; 8A/9038
 
         ; Found by tools/sweep.py.
         .al
@@ -2829,7 +2905,7 @@
 
         ; 8A/9069
 
-      rsUnknown8A9069 ; 8A/9069
+      rsCastleUnitCommandGuard ; 8A/9069
 
         ; Found by tools/sweep.py.
         .al
@@ -2837,9 +2913,9 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown879F67
+        jsl rlCheckUnitCanGuard
         bcc _90BF
-        jsl rlUnknown84AF17
+        jsl rlSortieUnitFromCastle
         lda #$000A
         jsl rlPlaySoundEffect
         jsl rlUnknown88C25D
@@ -2884,7 +2960,7 @@
 
         ; 8A/90C7
 
-      rsUnknown8A90C7 ; 8A/90C7
+      rsCastleUnitCommandStaff ; 8A/90C7
 
         ; Found by tools/sweep.py.
         .al
@@ -2905,9 +2981,9 @@
         _90E4
         stz wBufferBG2VOFS
         stz wCastleCursorState,b
-        lda #(`aUnknown8A9158)<<8
+        lda #(`aCastleStaffBlankText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A9158
+        lda #<>aCastleStaffBlankText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -2936,7 +3012,7 @@
         lda #$0001
         sta wUnknown00052C,b
         jsl rlUnknown87829A
-        jsr rsUnknown8A929B
+        jsr rsCastleLoadWindowPalette
         lda #(`procUnknown85E9C7)<<8
         sta lR44+1
         lda #<>procUnknown85E9C7
@@ -2962,7 +3038,7 @@
       .al
       .xl
 
-      aUnknown8A9158 ; 8A/9158
+      aCastleStaffBlankText ; 8A/9158
 
         .enc "SJIS"
         .text "　　　　　　　　　　　　　　　　　　　　　　　　"
@@ -2978,7 +3054,7 @@
       .al
       .xl
 
-      rsUnknown8A918A ; 8A/918A
+      rsCastleUnitCommandDance ; 8A/918A
 
         ; Found by tools/sweep.py.
         .al
@@ -2986,9 +3062,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8A91D7)<<8
+        lda #(`aCastleDanceBlankText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A91D7
+        lda #<>aCastleDanceBlankText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -3012,8 +3088,8 @@
 
           .structDMAToVRAM $7E8088, $0200, $80, $AD00
 
-        jsr rsUnknown8A929B
-        jsl rlUnknown84B6E2
+        jsr rsCastleLoadWindowPalette
+        jsl rlBuildCastleDanceRounds
         rts
 
         .databank 0
@@ -3028,7 +3104,7 @@
       .al
       .xl
 
-      aUnknown8A91D7 ; 8A/91D7
+      aCastleDanceBlankText ; 8A/91D7
 
         .enc "SJIS"
         .text "　　　　　　　　　　　　　　　　　　　　　　　　"
@@ -3044,7 +3120,7 @@
       .al
       .xl
 
-      rsUnknown8A9209 ; 8A/9209
+      rsCastleUnitCommandGive ; 8A/9209
 
         ; Found by tools/sweep.py.
         .al
@@ -3056,11 +3132,11 @@
         sta wCastleCursorState,b
         jsl rlGetSelectedUnitDeploymentOffset
         sta wActiveUnitDeploymentOffset,b
-        stz wCastlePrepUnitSlot,b
-        jsr rsUnknown8A870D
-        lda #(`aUnknown8A9269)<<8
+        stz wCastleGridSlot,b
+        jsr rsCastleGridFindNextTarget
+        lda #(`aCastleGiveBlankText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8A9269
+        lda #<>aCastleGiveBlankText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -3084,8 +3160,8 @@
 
           .structDMAToVRAM $7E8088, $0200, $80, $AD00
 
-        jsr rsUnknown8A929B
-        jsl rlUnknown8A8496
+        jsr rsCastleLoadWindowPalette
+        jsl rlCastleDrawInfoLine
         rts
 
         .databank 0
@@ -3100,7 +3176,7 @@
       .al
       .xl
 
-      aUnknown8A9269 ; 8A/9269
+      aCastleGiveBlankText ; 8A/9269
 
         .enc "SJIS"
         .text "　　　　　　　　　　　　　　　　　　　　　　　　"
@@ -3116,7 +3192,7 @@
       .al
       .xl
 
-      rsUnknown8A929B ; 8A/929B
+      rsCastleLoadWindowPalette ; 8A/929B
 
         .al
         .xl
@@ -3145,18 +3221,20 @@
       .al
       .xl
 
-      rlUnknown8A92AA ; 8A/92AA
+      rlCastleStartStaffTargetSelection ; 8A/92AA
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Called by the castle staff menu: wCastleCursorState 4, cursor on the first unit in the target list.
+
         lda #$0004
         sta wCastleCursorState,b
-        stz wCastlePrepUnitSlot,b
-        jsr rsUnknown8A870D
-        jsl rlUnknown8A8496
+        stz wCastleGridSlot,b
+        jsr rsCastleGridFindNextTarget
+        jsl rlCastleDrawInfoLine
         rtl
 
         .databank 0
@@ -3171,15 +3249,17 @@
       .al
       .xl
 
-      rlUnknown8A92BB ; 8A/92BB
+      rlCastleUseStaffFromMap ; 8A/92BB
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Called by the castle staff menu for a staff used on the map: puts the unit one tile north of its castle and returns to the map.
+
         jsl rlUnknown88C25D
-        jsl rlUnknown84AF57
+        jsl rlSortieUnitNorthOfCastle
         bcs _92D5
         lda wRoutineVariable1,b
         sta wActiveUnitDeploymentOffset,b
@@ -3202,7 +3282,7 @@
       .al
       .xl
 
-      rlUnknown8A92D6 ; 8A/92D6
+      rlCastleUseStaffFromMapRaised ; 8A/92D6
 
         ; Found by tools/sweep.py.
         .al
@@ -3210,8 +3290,10 @@
         .autsiz
         .databank ?
 
+        ; Like rlCastleUseStaffFromMap, and also moves the map cursor up 16 pixels.
+
         jsl rlUnknown88C25D
-        jsl rlUnknown84AF57
+        jsl rlSortieUnitNorthOfCastle
         bcs _92FE
         lda wRoutineVariable1,b
         sta wActiveUnitDeploymentOffset,b
@@ -3231,7 +3313,7 @@
 
         ; 8A/92FF
 
-      rlUnknown8A92FF ; 8A/92FF
+      rlCastleReopenUnitCommandMenu ; 8A/92FF
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -3242,28 +3324,28 @@
         phk
         plb
         .databank $8A
-        jsl rlUnknown8A8496
+        jsl rlCastleDrawInfoLine
         sep #$20
         lda #$17
         sta bBufferTM
         rep #$20
-        jsr rsUnknown8A87B8
+        jsr rsCastleDrawUnitCommandName
         lda #$0001
         sta wCastleCursorState,b
         jsl rlGetSelectedUnitCharacterID
-        jsl rlUnknown8A979C
+        jsl rlLoadCourtyardPortrait
         jsl rlDMAByStruct
 
           .structDMAToVRAM aUnknownDA6500, $0200, $80, $AD00
 
-        lda wCastlePrepSavedUnitSlot,b
-        sta wCastlePrepUnitSlot,b
+        lda wCastleGridSavedSlot,b
+        sta wCastleGridSlot,b
         asl a
         tax
-        lda @l aUnknown8A99DB,x
-        sta wCastlePrepCursorXPixel,b
-        lda @l aUnknown8A9A0B,x
-        sta wCastlePrepCursorYPixel,b
+        lda @l aCastleGridCursorX,x
+        sta wCastleGridCursorXPixel,b
+        lda @l aCastleGridCursorY,x
+        sta wCastleGridCursorYPixel,b
         rtl
 
         .databank 0
@@ -3278,12 +3360,14 @@
       .al
       .xl
 
-      rlUnknown8A9342 ; 8A/9342
+      rlCastleRefreshUnitsAfterMapAction ; 8A/9342
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; After a map action, rebuilds the castle's unit list if the player's home castle is the castle entered, and puts the cursor back on the saved slot.
 
         phb
         phx
@@ -3294,19 +3378,19 @@
         bne _9364
         lda #$0000
         jsl rlGetLocationEventDataEntry
-        jsl rlBuildDeadPlayerCharacterList
+        jsl rlBuildCastleUnitList
         jsl rlClearMovementMapBuffer
-        jsl rlUnknown8A9A56
+        jsl rlCastleBuildCourtyardTables
 
         _9364
-        lda wCastlePrepSavedUnitSlot,b
-        sta wCastlePrepUnitSlot,b
+        lda wCastleGridSavedSlot,b
+        sta wCastleGridSlot,b
         asl a
         tax
-        lda aUnknown8A99DB,x
-        sta wCastlePrepCursorXPixel,b
-        lda aUnknown8A9A0B,x
-        sta wCastlePrepCursorYPixel,b
+        lda aCastleGridCursorX,x
+        sta wCastleGridCursorXPixel,b
+        lda aCastleGridCursorY,x
+        sta wCastleGridCursorYPixel,b
         ply
         plx
         plb
@@ -3317,7 +3401,7 @@
 
         ; 8A/937E
 
-      rlUnknown8A937E ; 8A/937E
+      rlCastleStartGiveTargetSelection ; 8A/937E
 
         ; Nothing in the build reaches this; it did not run in fe4.cdl.
         .al
@@ -3327,7 +3411,7 @@
 
         lda #$0005
         sta wCastleCursorState,b
-        jsl rlUnknown8A8496
+        jsl rlCastleDrawInfoLine
         rtl
 
         .databank 0
@@ -3342,7 +3426,7 @@
       .al
       .xl
 
-      rsUnknown8A9389 ; 8A/9389
+      rsCastleEnterFacility ; 8A/9389
 
         ; Found by tools/sweep.py.
         .al
@@ -3350,17 +3434,19 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown87EF46
+        ; A on a facility button the castle has (rlGetCastleFacilities): chooses the facility's step and keeper ($7F8082).
+
+        jsl rlGetCastleFacilities
         sta wR0
-        lda wUnknown000895,b
+        lda wCastleTownFacility,b
         asl a
         tax
-        lda aUnknown8A945E,x
+        lda aCastleTownFacilityBits,x
         sta wR1
         lda wR0
         bit wR1
         beq _93BE
-        lda wUnknown000895,b
+        lda wCastleTownFacility,b
         beq _93EB
         cmp #$0001
         beq _93D5
@@ -3476,9 +3562,9 @@
       .al
       .xl
 
-      aUnknown8A945E ; 8A/945E
+      aCastleTownFacilityBits ; 8A/945E
 
-        ; Read by rsUnknown8A9389.
+        ; Read by rsCastleEnterFacility.
 
         .word $0020, $0040, $0010, $0004, $0008, $0080
 
@@ -3492,7 +3578,7 @@
       .al
       .xl
 
-      rsUnknown8A946A ; 8A/946A
+      rsLoadPortraitToBGPalette2 ; 8A/946A
 
         .al
         .xl
@@ -3525,7 +3611,7 @@
         ; 8A/9490
 
 
-      rsUnknown8A9490 ; 8A/9490
+      rsLoadPortraitToBGPalette4 ; 8A/9490
 
         .al
         .xl
@@ -3566,12 +3652,14 @@
       .al
       .xl
 
-      rlUnknown8A94B6 ; 8A/94B6
+      rlCastleFillVRAM2000 ; 8A/94B6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; DMAs $800 bytes from the fixed address $8A/94E1 (this routine's rtl byte, $6B) to VRAM word $2000.
 
         rep #$30
         lda #$1809
@@ -3602,12 +3690,14 @@
       .al
       .xl
 
-      rlUnknown8A94E2 ; 8A/94E2
+      rlCastleFillVRAM2400 ; 8A/94E2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; DMAs $800 bytes from the fixed address $8A/950D (this routine's rtl byte, $6B) to VRAM word $2400.
 
         rep #$30
         lda #$1809
@@ -3638,12 +3728,14 @@
       .al
       .xl
 
-      rsUnknown8A950E ; 8A/950E
+      rsPushKeeperPortraitSprites ; 8A/950E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the keeper's portrait as sprites (OAM palette 5, mirrored), with the mouth frame of dialogue slot X.
 
         sep #$20
         lda #$8A
@@ -3676,12 +3768,14 @@
 
         ; 8A/9539
 
-      rsUnknown8A9539 ; 8A/9539
+      rsPushUnitPortraitSprites ; 8A/9539
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the unit's portrait as sprites (OAM palette 4), with the mouth frame of dialogue slot X.
 
         sep #$20
         lda #$8A
@@ -3726,12 +3820,14 @@
       .al
       .xl
 
-      rsUnknown8A956F ; 8A/956F
+      rsPushCourtyardPortraitSprites ; 8A/956F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the courtyard command menu's portrait as sprites (OAM palette 6), one frame.
 
         sep #$20
         lda #$8A
@@ -3751,7 +3847,7 @@
         ; 8A/9586
 
 
-      aUnknown8A9586 ; 8A/9586
+      aUnitPortraitSpritesFrame0 ; 8A/9586
 
         _Sprites := [[(  32,   48), $21, SpriteLarge, $09A, 2, 4, false, false]]
         _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 4, false, false]]
@@ -3766,9 +3862,9 @@
         _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 4, false, false]]
         _Sprites ..= [[(   0,    0), $21, SpriteLarge, $070, 2, 4, false, false]]
 
-        .structSpriteArray aUnknown8A9586._Sprites
+        .structSpriteArray aUnitPortraitSpritesFrame0._Sprites
 
-      aUnknown8A95C4 ; 8A/95C4
+      aUnitPortraitSpritesFrame1 ; 8A/95C4
 
         _Sprites := [[(  32,   48), $21, SpriteLarge, $09A, 2, 4, false, false]]
         _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 4, false, false]]
@@ -3783,9 +3879,9 @@
         _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 4, false, false]]
         _Sprites ..= [[(   0,    0), $21, SpriteLarge, $070, 2, 4, false, false]]
 
-        .structSpriteArray aUnknown8A95C4._Sprites
+        .structSpriteArray aUnitPortraitSpritesFrame1._Sprites
 
-      aUnknown8A9602 ; 8A/9602
+      aUnitPortraitSpritesFrame2 ; 8A/9602
 
         _Sprites := [[(  32,   48), $21, SpriteLarge, $09A, 2, 4, false, false]]
         _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 4, false, false]]
@@ -3800,7 +3896,7 @@
         _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 4, false, false]]
         _Sprites ..= [[(   0,    0), $21, SpriteLarge, $070, 2, 4, false, false]]
 
-        .structSpriteArray aUnknown8A9602._Sprites
+        .structSpriteArray aUnitPortraitSpritesFrame2._Sprites
 
       aUnknown8A9640 ; 8A/9640
 
@@ -3809,7 +3905,7 @@
 
         .structSpriteArray aUnknown8A9640._Sprites
 
-      aUnknown8A964C ; 8A/964C
+      aKeeperPortraitSpritesFrame0 ; 8A/964C
 
         _Sprites := [[(   0,   48), $21, SpriteLarge, $09A, 2, 5, true, false]]
         _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 5, true, false]]
@@ -3824,9 +3920,9 @@
         _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 5, true, false]]
         _Sprites ..= [[(  32,    0), $21, SpriteLarge, $070, 2, 5, true, false]]
 
-        .structSpriteArray aUnknown8A964C._Sprites
+        .structSpriteArray aKeeperPortraitSpritesFrame0._Sprites
 
-      aUnknown8A968A ; 8A/968A
+      aKeeperPortraitSpritesFrame1 ; 8A/968A
 
         _Sprites := [[(   0,   48), $21, SpriteLarge, $09A, 2, 5, true, false]]
         _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 5, true, false]]
@@ -3841,9 +3937,9 @@
         _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 5, true, false]]
         _Sprites ..= [[(  32,    0), $21, SpriteLarge, $070, 2, 5, true, false]]
 
-        .structSpriteArray aUnknown8A968A._Sprites
+        .structSpriteArray aKeeperPortraitSpritesFrame1._Sprites
 
-      aUnknown8A96C8 ; 8A/96C8
+      aKeeperPortraitSpritesFrame2 ; 8A/96C8
 
         _Sprites := [[(   0,   48), $21, SpriteLarge, $09A, 2, 5, true, false]]
         _Sprites ..= [[(  16,   48), $21, SpriteLarge, $098, 2, 5, true, false]]
@@ -3858,7 +3954,7 @@
         _Sprites ..= [[(  16,    0), $21, SpriteLarge, $072, 2, 5, true, false]]
         _Sprites ..= [[(  32,    0), $21, SpriteLarge, $070, 2, 5, true, false]]
 
-        .structSpriteArray aUnknown8A96C8._Sprites
+        .structSpriteArray aKeeperPortraitSpritesFrame2._Sprites
 
       aUnknown8A9706 ; 8A/9706
 
@@ -3867,7 +3963,7 @@
 
         .structSpriteArray aUnknown8A9706._Sprites
 
-      aUnknown8A9712 ; 8A/9712
+      aCourtyardPortraitSprites ; 8A/9712
 
         _Sprites := [[(  32,   48), $21, SpriteLarge, $06A, 3, 6, false, false]]
         _Sprites ..= [[(  16,   48), $21, SpriteLarge, $068, 3, 6, false, false]]
@@ -3882,7 +3978,7 @@
         _Sprites ..= [[(  16,    0), $21, SpriteLarge, $042, 3, 6, false, false]]
         _Sprites ..= [[(   0,    0), $21, SpriteLarge, $040, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown8A9712._Sprites
+        .structSpriteArray aCourtyardPortraitSprites._Sprites
 
     .endsection Unsorted8A956FSection
 
@@ -3892,11 +3988,13 @@
       .al
       .xl
 
-      rlUnknown8A9750 ; 8A/9750
+      rlLoadKeeperPortrait ; 8A/9750
 
         .al
         .autsiz
         .databank ?
+
+        ; Loads portrait A to OAM palette 5 and VRAM $CE00.
 
         ; Input:
         ; A = PortraitID
@@ -3936,12 +4034,14 @@
       .al
       .xl
 
-      rlUnknown8A9776 ; 8A/9776
+      rlLoadUnitPortrait ; 8A/9776
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Loads portrait A (through rlUnknown8AB3FE) to OAM palette 4 and VRAM $6B00.
 
         jsl rlUnknown8AB3FE
         ldx #$001E
@@ -3976,12 +4076,14 @@
       .al
       .xl
 
-      rlUnknown8A979C ; 8A/979C
+      rlLoadCourtyardPortrait ; 8A/979C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Loads portrait A to OAM palette 6 and VRAM $6400.
 
         jsl rlGetDecompressedPortraitDataPointers
         ldx #$001E
@@ -4016,11 +4118,13 @@
       .al
       .xl
 
-      rlUnknown8A97C2 ; 8A/97C2
+      rlCastleOpenTown ; 8A/97C2
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs chapter event action 6 (character, castle); if an event runs, waits in step $02. Otherwise sets up the town screen and fades in to step $01.
 
         phk
         plb
@@ -4068,10 +4172,10 @@
         sta wR8
         jsl rlSetLayerPositionsAndSizes
 
-        jsl rlSetupCastleUnitMenuDisplay
+        jsl rlSetupCastleTownDisplay
         jsl rlGetSelectedUnitCharacterID
-        jsl rlUnknown8A9776
-        jsl rlUnknown8A94E2
+        jsl rlLoadUnitPortrait
+        jsl rlCastleFillVRAM2400
         lda #1
         sta $7F766A
         lda #$0010
@@ -4099,37 +4203,39 @@
       .al
       .xl
 
-      rlUnknown8A9858 ; 8A/9858
+      rlCastleBlankMissingFacilities ; 8A/9858
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Blanks the button of each facility the castle does not have.
+
         phk
         plb
         .databank $8A
         lda #$2400
         sta aCurrentTilemapInfo,b
-        jsl rlUnknown87EF46
+        jsl rlGetCastleFacilities
         sta wTempVariable1,b
         ldx #$000A
 
         _986A
-        lda @l aUnknown8A98AC,x
+        lda @l aCastleTownFacilityButtonBits,x
         sta wR1
         lda wTempVariable1,b
         bit wR1
         bne _9897
-        lda #(`aUnknown8A989A)<<8
+        lda #(`aCastleTownFacilityBlankText)<<8
         sta lR18+1
-        lda #<>aUnknown8A989A
+        lda #<>aCastleTownFacilityBlankText
         sta lR18
         phx
-        lda @l aUnknown8A98C4,x
+        lda @l aCastleTownFacilityButtonRow,x
         xba
         clc
-        adc @l aUnknown8A98B8,x
+        adc @l aCastleTownFacilityButtonColumn,x
         tax
         jsl rlDrawMenuTextLine
         plx
@@ -4159,7 +4265,7 @@
       ; unused trailing rtl
         .byte $6B
 
-      aUnknown8A989A ; 8A/989A
+      aCastleTownFacilityBlankText ; 8A/989A
 
         .enc "SJIS"
         .text "　　　　　　　　"
@@ -4175,9 +4281,9 @@
       .al
       .xl
 
-      aUnknown8A98AC ; 8A/98AC
+      aCastleTownFacilityButtonBits ; 8A/98AC
 
-        ; Read by rlUnknown8A9858.
+        ; Read by rlCastleBlankMissingFacilities.
 
         .word $0020, $0040, $0010, $0004, $0008, $0080
 
@@ -4191,9 +4297,9 @@
       .al
       .xl
 
-      aUnknown8A98B8 ; 8A/98B8
+      aCastleTownFacilityButtonColumn ; 8A/98B8
 
-        ; Read by rlUnknown8A9858.
+        ; Read by rlCastleBlankMissingFacilities.
 
         .word $0002, $000B, $0014, $0001, $000B, $0014
 
@@ -4207,9 +4313,9 @@
       .al
       .xl
 
-      aUnknown8A98C4 ; 8A/98C4
+      aCastleTownFacilityButtonRow ; 8A/98C4
 
-        ; Read by rlUnknown8A9858.
+        ; Read by rlCastleBlankMissingFacilities.
 
         .word $0015, $0015, $0015, $0019, $0019, $0019
 
@@ -4223,12 +4329,14 @@
       .al
       .xl
 
-      rlUnknown8A98D0 ; 8A/98D0
+      rlCastleDrawCourtyardUnitSprites ; 8A/98D0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; From the castle VBlank: draws each unit in the castle as a map sprite at its courtyard spot (normal sprites, then tall ones), grey if DeploymentStateGrayed or DeploymentStateAsleep.
 
         phk
         plb
@@ -4246,7 +4354,7 @@
         ldx #$002E
 
         _98E9
-        lda aDeadPlayerCharacterList,x
+        lda aCastleUnitDeploymentOffsets,x
         phx
         cmp #$FFFF
         beq _9958
@@ -4308,7 +4416,7 @@
         ldx #$002E
 
         _9966
-        lda aDeadPlayerCharacterList,x
+        lda aCastleUnitDeploymentOffsets,x
         phx
         cmp #$FFFF
         beq _99D5
@@ -4379,9 +4487,9 @@
       .al
       .xl
 
-      aUnknown8A99DB ; 8A/99DB
+      aCastleGridCursorX ; 8A/99DB
 
-        ; Read by rlUnknown8A9342.
+        ; Read by rlCastleRefreshUnitsAfterMapAction.
 
         .word $0048, $0080, $0091, $00B8, $003F, $0058, $00A8, $00C1
         .word $003D, $0056, $00AA, $00C3, $003B, $0054, $00AC, $00C5
@@ -4397,9 +4505,9 @@
       .al
       .xl
 
-      aUnknown8A9A0B ; 8A/9A0B
+      aCastleGridCursorY ; 8A/9A0B
 
-        ; Read by rlUnknown8A9342.
+        ; Read by rlCastleRefreshUnitsAfterMapAction.
 
         .byte $5C, $00, $58, $00, $52, $00, $5C, $00, $74, $00, $74, $00, $74, $00, $74, $00
         .byte $88, $00, $88, $00, $88, $00, $88, $00, $9C, $00, $9C, $00, $9C, $00, $9C, $00
@@ -4417,12 +4525,14 @@
       .al
       .xl
 
-      rlUnknown8A9A56 ; 8A/9A56
+      rlCastleBuildCourtyardTables ; 8A/9A56
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fills the grid (slot to character), the courtyard spots and the character to unit table from aCastleUnitDeploymentOffsets; generation 1 or 2 tables by chapter.
 
         phk
         plb
@@ -4437,16 +4547,16 @@
         lda wCurrentChapter,b
         cmp #$0006
         bcs _9A7E
-        lda @l aUnknown8A9B94,x
+        lda @l aCastleGridCharactersGen1,x
         sta $7F757A,x
-        lda @l aUnknown8A9BF4,x
+        lda @l aCastleCourtyardSpotsGen1,x
         bra _9A8A
 
 
         _9A7E
-        lda @l aUnknown8A9BC4,x
+        lda @l aCastleGridCharactersGen2,x
         sta $7F757A,x
-        lda @l aUnknown8A9C24,x
+        lda @l aCastleCourtyardSpotsGen2,x
 
         _9A8A
         asl a
@@ -4455,7 +4565,7 @@
         sta $7F75DA,x
         lda $9B04,b,y
         sta $7F760A,x
-        lda aDeadPlayerCharacterList,x
+        lda aCastleUnitDeploymentOffsets,x
         bmi _9ACF
         phx
         tax
@@ -4496,9 +4606,9 @@
       .al
       .xl
 
-      aUnknown8A9AD4 ; 8A/9AD4
+      aCastleCourtyardSpotX ; 8A/9AD4
 
-        ; Read by rlUnknown8A9A56.
+        ; Read by rlCastleBuildCourtyardTables.
 
         .word $0048, $0080, $0091, $00B8, $003F, $0058, $00A8, $00C1
         .word $003D, $0056, $00AA, $00C3, $003B, $0054, $00AC, $00C5
@@ -4514,9 +4624,9 @@
       .al
       .xl
 
-      aUnknown8A9B04 ; 8A/9B04
+      aCastleCourtyardSpotY ; 8A/9B04
 
-        ; Read by rlUnknown8A9A56.
+        ; Read by rlCastleBuildCourtyardTables.
 
         .word $005C, $0058, $0052, $005C, $0074, $0074, $0074, $0074
         .word $0088, $0088, $0088, $0088, $009C, $009C, $009C, $009C
@@ -4538,9 +4648,9 @@
       .al
       .xl
 
-      aUnknown8A9B94 ; 8A/9B94
+      aCastleGridCharactersGen1 ; 8A/9B94
 
-        ; Read by rlUnknown8A9A56.
+        ; Read by rlCastleBuildCourtyardTables.
 
         .word $0005, $0000, $000F, $0010, $0003, $0001, $0002, $0004
         .word $000D, $0009, $0016, $0006, $0008, $0012, $000A, $000E
@@ -4556,9 +4666,9 @@
       .al
       .xl
 
-      aUnknown8A9BC4 ; 8A/9BC4
+      aCastleGridCharactersGen2 ; 8A/9BC4
 
-        ; Read by rlUnknown8A9A56.
+        ; Read by rlCastleBuildCourtyardTables.
 
         .word $0001, $0000, $0012, $000E, $0002, $0010, $0011, $000A
         .word $0008, $0017, $0014, $0007, $000D, $0015, $000F, $0003
@@ -4574,9 +4684,9 @@
       .al
       .xl
 
-      aUnknown8A9BF4 ; 8A/9BF4
+      aCastleCourtyardSpotsGen1 ; 8A/9BF4
 
-        ; Read by rlUnknown8A9A56.
+        ; Read by rlCastleBuildCourtyardTables.
 
         .word $0001, $0005, $0006, $0004, $0007, $0000, $000B, $0010
         .word $000C, $0009, $000E, $0017, $0013, $0008, $000F, $0002
@@ -4592,9 +4702,9 @@
       .al
       .xl
 
-      aUnknown8A9C24 ; 8A/9C24
+      aCastleCourtyardSpotsGen2 ; 8A/9C24
 
-        ; Read by rlUnknown8A9A56.
+        ; Read by rlCastleBuildCourtyardTables.
 
         .byte $01, $00, $00, $00, $04, $00, $0F, $00, $10, $00, $14, $00, $13, $00, $0B, $00
         .byte $08, $00, $15, $00, $07, $00, $17, $00, $16, $00, $0C, $00, $03, $00, $0E, $00
@@ -4614,7 +4724,7 @@
       .al
       .xl
 
-      rlUnknown8A9C61 ; 8A/9C61
+      rlCastleCopyTownHDMATable ; 8A/9C61
 
         .al
         .xl
@@ -4699,17 +4809,19 @@
       .al
       .xl
 
-      rsUnknown8A9D22 ; 8A/9D22
+      rsCastleFadeSongIfChanging ; 8A/9D22
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Queues sound command $E0 unless the castle's song is already playing.
+
         jsl rlGetEventLocationEntryNameID
         asl a
         tax
-        lda aUnknown8A9D79,x
+        lda aCastleSongs,x
         cmp aSoundScriptPrevious,b
         beq _9D38
         lda #$00E0
@@ -4730,7 +4842,7 @@
       .al
       .xl
 
-      rlUnknown8A9D39 ; 8A/9D39
+      rlPlayCastleSong ; 8A/9D39
 
         ; Found by tools/sweep.py.
         .al
@@ -4738,13 +4850,15 @@
         .autsiz
         .databank ?
 
+        ; Plays the song for the castle's name ID from aCastleSongs (name IDs from $2E use the first entry).
+
         phk
         plb
         .databank $8A
         jsl rlGetEventLocationEntryNameID
         asl a
         tax
-        lda @l aUnknown8A9D79,x
+        lda @l aCastleSongs,x
         cmp aSoundScriptPrevious,b
         beq _9D6C
         lda #$00C0
@@ -4756,7 +4870,7 @@
 
         _9D5B
         tax
-        lda @l aUnknown8A9D79,x
+        lda @l aCastleSongs,x
         cmp aSoundScriptPrevious,b
         beq _9D6C
         sta wMusicID,b
@@ -4784,9 +4898,9 @@
       .al
       .xl
 
-      aUnknown8A9D79 ; 8A/9D79
+      aCastleSongs ; 8A/9D79
 
-        ; Read by rlUnknown8A9D39, rsUnknown8A9D22.
+        ; Read by rlPlayCastleSong, rsCastleFadeSongIfChanging.
 
         .word $006E, $006E, $006E, $006E, $006E, $006E, $006E, $006D
         .word $006D, $006D, $006D, $006D, $006D, $006D, $008C, $008C
@@ -4805,7 +4919,7 @@
       .al
       .xl
 
-      aUnknown8A9DD5 ; 8A/9DD5
+      aCastleListRowY ; 8A/9DD5
 
         ; Read by arena & bank8A inventory setup routines.
 
@@ -4821,7 +4935,7 @@
       .al
       .xl
 
-      rlUnknown8A9DDD ; 8A/9DDD
+      rlAppendItemsFromList ; 8A/9DDD
 
         .al
         .xl
@@ -9210,7 +9324,7 @@
         tax
         lda aUnknown8ABFF3,x
         jsl rlUnknown8AFC52
-        jsl rlUnknown8A94B6
+        jsl rlCastleFillVRAM2000
         pla
         sta wSelectedUnitDataRAMPointer,b
         rts
@@ -9345,7 +9459,7 @@
         lda #$0008
         sta wR1
         ldx #$0000
-        jsr rsUnknown8A950E
+        jsr rsPushKeeperPortraitSprites
         plp
         plb
         .databank $8A
@@ -9539,7 +9653,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -10015,7 +10129,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -10227,7 +10341,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -10518,7 +10632,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -10621,7 +10735,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -10811,7 +10925,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -11042,7 +11156,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -11235,7 +11349,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -11778,14 +11892,14 @@
         bit #$0001
         beq _D8E6
         lda wBaseSceneLeftUnitRAMPointer,b
-        jsl rlUnknown8A9750
+        jsl rlLoadKeeperPortrait
 
         _D8E6
         lda wBaseSceneFlags,b
         bit #$0002
         beq _D8F5
         lda wBaseSceneRightUnitRAMPointer,b
-        jsl rlUnknown8A9776
+        jsl rlLoadUnitPortrait
 
         _D8F5
         sep #$20
@@ -11935,7 +12049,7 @@
           lda #$0060
           sta wR1
           ldx #0
-          jsr rsUnknown8A950E
+          jsr rsPushKeeperPortraitSprites
           jsr rsUnknown8ADB04
 
         +
@@ -11948,7 +12062,7 @@
           lda #$0060
           sta wR1
           ldx #2
-          jsr rsUnknown8A9539
+          jsr rsPushUnitPortraitSprites
           jsr rsUnknown8ADB37
 
         +
@@ -12107,7 +12221,7 @@
         beq +
 
           lda wBaseSceneLeftUnitRAMPointer,b
-          jsl rlUnknown8A9750
+          jsl rlLoadKeeperPortrait
           lda #$0010
           trb wBaseSceneFlags,b
           lda #(`procUnknown8AE147)<<8
@@ -12122,7 +12236,7 @@
         beq +
 
           lda wBaseSceneRightUnitRAMPointer,b
-          jsl rlUnknown8A9776
+          jsl rlLoadUnitPortrait
           lda #$0020
           trb wBaseSceneFlags,b
           lda #(`procUnknown8AE199)<<8
@@ -12422,8 +12536,8 @@
         _DC41
         lda #$0000
         sta wCastleCursorState,b
-        jsl rlBuildDeadPlayerCharacterList
-        jsl rlUnknown8A9A56
+        jsl rlBuildCastleUnitList
+        jsl rlCastleBuildCourtyardTables
         sep #$20
         lda #$80
         sta bBufferINIDISP
@@ -12463,8 +12577,8 @@
         bne _DCA9
         lda #$0000
         sta wCastleScreenHandler,b
-        jsl rlBuildDeadPlayerCharacterList
-        jsl rlUnknown8A9A56
+        jsl rlBuildCastleUnitList
+        jsl rlCastleBuildCourtyardTables
         lda $08BA,b
         sta wSelectedUnitDataRAMPointer,b
         rts
@@ -13511,7 +13625,7 @@
 
         _EE17
         jsl rlUnknown8AFC52
-        jsl rlUnknown8A94B6
+        jsl rlCastleFillVRAM2000
         sep #$20
         lda #$20
         sta bBufferCOLDATA_1
@@ -13610,7 +13724,7 @@
         lda #$0008
         sta wR1
         ldx #$0000
-        jsr rsUnknown8A950E
+        jsr rsPushKeeperPortraitSprites
         plp
         plb
         .databank $8A
@@ -13955,7 +14069,7 @@
         lda #$0000
         sta wCastleCursorState,b
         lda #$0003
-        sta wUnknown000893,b
+        sta wCastleUnitCommand,b
         sep #$20
         lda #$80
         sta bBufferINIDISP
@@ -14058,7 +14172,7 @@
         jsl rlUnitWindowCopySpritePalette2
         lda #$00B2
         jsl rlUnknown8AFC52
-        jsl rlUnknown8A94B6
+        jsl rlCastleFillVRAM2000
         sep #$20
         lda #$17
         sta bBufferTM
@@ -14164,7 +14278,7 @@
         lda #$0008
         sta wR1
         ldx #$0000
-        jsr rsUnknown8A950E
+        jsr rsPushKeeperPortraitSprites
         plp
         plb
         .databank $8A
@@ -14281,7 +14395,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -14497,7 +14611,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -14584,7 +14698,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -14826,7 +14940,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -14916,7 +15030,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -15146,7 +15260,7 @@
         bpl _F94E
         lda #$00B3
         jsl rlUnknown8AFC52
-        jsl rlUnknown8A94B6
+        jsl rlCastleFillVRAM2000
         sep #$20
         lda #$17
         sta bBufferTM
@@ -15264,7 +15378,7 @@
         lda #$0008
         sta wR1
         ldx #$0000
-        jsr rsUnknown8A950E
+        jsr rsPushKeeperPortraitSprites
         plp
         plb
         .databank $8A
@@ -15407,7 +15521,7 @@
         tax
         lda #$0004
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004
@@ -15467,7 +15581,7 @@
         tax
         lda #$0004
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         sta wR1
         lda #$0001
@@ -15805,7 +15919,7 @@
 
       aUnknownDA6500 ; DA/6500
 
-        ; Read by rsUnknown8A8CB7.
+        ; Read by rsCastleDrawUnitCommandIcons.
 
         .word $0035, $0035, $30A8, $30A9, $30AA, $30A9, $30AA, $30A9
         .word $30AA, $308B, $30A9, $30AA, $30A9, $30AA, $308B, $30A9
@@ -15818,7 +15932,7 @@
 
       aUnknownDA6552 ; DA/6552
 
-        ; Read by rsUnknown8A8CB7.
+        ; Read by rsCastleDrawUnitCommandIcons.
 
         .word $3880, $3881, $30B9, $30BA
 
@@ -15826,7 +15940,7 @@
 
       aUnknownDA655A ; DA/655A
 
-        ; Read by rsUnknown8A8CB7.
+        ; Read by rsCastleDrawUnitCommandIcons.
 
         .word $3882, $3883, $30B9, $30BA
 
@@ -15834,7 +15948,7 @@
 
       aUnknownDA6562 ; DA/6562
 
-        ; Read by rsUnknown8A8CB7.
+        ; Read by rsCastleDrawUnitCommandIcons.
 
         .word $3884, $3885, $309B, $30B9
 
@@ -15842,7 +15956,7 @@
 
       aUnknownDA656A ; DA/656A
 
-        ; Read by rsUnknown8A8CB7.
+        ; Read by rsCastleDrawUnitCommandIcons.
 
         .word $3888, $3889, $30BA, $309B
 
@@ -15850,7 +15964,7 @@
 
       aUnknownDA6572 ; DA/6572
 
-        ; Read by rsUnknown8A8CB7.
+        ; Read by rsCastleDrawUnitCommandIcons.
 
         .word $38EA, $38EB, $70BA, $70B9, $70B8, $0035, $0035, $0035
         .word $0035, $30C8, $30C9, $30CA, $3896, $3897, $30C9, $30CA
@@ -15859,7 +15973,7 @@
 
       aUnknownDA6592 ; DA/6592
 
-        ; Read by rsUnknown8A8CB7.
+        ; Read by rsCastleDrawUnitCommandIcons.
 
         .word $3890, $3891, $30C9, $30CA
 
@@ -15867,7 +15981,7 @@
 
       aUnknownDA659A ; DA/659A
 
-        ; Read by rsUnknown8A8CB7.
+        ; Read by rsCastleDrawUnitCommandIcons.
 
         .word $3892, $3893, $30C9, $30CA
 
@@ -15875,7 +15989,7 @@
 
       aUnknownDA65A2 ; DA/65A2
 
-        ; Read by rsUnknown8A8CB7.
+        ; Read by rsCastleDrawUnitCommandIcons.
 
         .word $3894, $3895, $30AB, $30C9
 
@@ -15883,7 +15997,7 @@
 
       aUnknownDA65AA ; DA/65AA
 
-        ; Read by rsUnknown8A8CB7.
+        ; Read by rsCastleDrawUnitCommandIcons.
 
         .word $3898, $3899, $30CA, $30AB
 
@@ -15891,7 +16005,7 @@
 
       aUnknownDA65B2 ; DA/65B2
 
-        ; Read by rsUnknown8A8CB7 (continuation of $0200-byte aUnknownDA6500).
+        ; Read by rsCastleDrawUnitCommandIcons (continuation of $0200-byte aUnknownDA6500).
 
         .word $38FA, $38FB, $70CA, $70C9, $70C8, $0035, $0035, $0035
         .word $0035, $30D8, $30D9, $30DA, $30D9, $30DA, $30D9, $30DA

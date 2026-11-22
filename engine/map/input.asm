@@ -694,7 +694,7 @@
         jsl rlUnknown88B3AF
         lda #$0000
         sta wCastleScreenHandler,b
-        jsl rlBuildDeadPlayerCharacterList
+        jsl rlBuildCastleUnitList
         lda #$B6B6
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
@@ -896,7 +896,7 @@
         lda #$0000
         jsl rlGetFactionSlotLocationID
         jsl rlGetLocationEventDataEntry
-        jsl rlBuildDeadPlayerCharacterList
+        jsl rlBuildCastleUnitList
         jsr rsUnknown88B627
         bcc _B625
         jsl rlGetEventLocationEntryEffectiveXCoordinate
@@ -934,7 +934,7 @@
         ldx #$002E
 
         _B62B
-        lda aDeadPlayerCharacterList,x
+        lda aCastleUnitDeploymentOffsets,x
         cmp #$FFFF
         beq _B648
         phx

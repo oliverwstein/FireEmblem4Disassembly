@@ -72,7 +72,7 @@
         lda #$0008
         sta wR1
         ldx #$0000
-        jsr rsUnknown8A950E
+        jsr rsPushKeeperPortraitSprites
         lda $7F7670
         beq _E50D
         jsr rsUnknown8AAF0A
@@ -985,7 +985,7 @@
         tax
         lda #$004C
         sta wR0
-        lda aUnknown8A9DD5,x
+        lda aCastleListRowY,x
         and #$00FF
         clc
         adc #$0004

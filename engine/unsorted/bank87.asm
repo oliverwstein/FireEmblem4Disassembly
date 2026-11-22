@@ -2864,13 +2864,15 @@
       .al
       .xl
 
-      rlUnknown879F12 ; 87/9F12
+      rlCheckUnitCanSortie ; 87/9F12
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if the unit is not dead, moved or fielded, nothing stands on its home castle tile, and it is not Deirdre from chapter 3 on.
 
         lda wSelectedUnitDataRAMPointer,b
         pha
@@ -2921,13 +2923,15 @@
 
         ; 87/9F67
 
-      rlUnknown879F67 ; 87/9F67
+      rlCheckUnitCanGuard ; 87/9F67
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if the unit is not dead, moved or fielded, its home castle is not already guarded, and it is not Deirdre from chapter 3 on.
 
         lda wEventLocationEntry,b
         pha
@@ -2962,13 +2966,15 @@
 
         ; 87/9F9C
 
-      rlUnknown879F9C ; 87/9F9C
+      rlCheckUnitCanGive ; 87/9F9C
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if the unit has money and a unit in the castle can take it (target list $0A for units with Steal, $0B otherwise).
 
         jsl rlGetSelectedUnitMoney
         cmp #$0001
@@ -2985,7 +2991,7 @@
 
         _9FB6
         sta wRoutineVariable1,b
-        jsl rlUnknown879FBE
+        jsl rlBuildCastleTargetList
 
         _9FBD
         rtl
@@ -2994,7 +3000,7 @@
 
         ; 87/9FBE
 
-      rlUnknown879FBE ; 87/9FBE
+      rlBuildCastleTargetList ; 87/9FBE
 
         ; Found by tools/sweep.py.
         .al
@@ -3002,13 +3008,15 @@
         .autsiz
         .databank ?
 
+        ; Lists the units in aCastleUnitDeploymentOffsets that pass rlUnknown848BFE for target type wRoutineVariable1, at $7E2100 (count) and $7E2102.
+
         phx
         lda #$0000
         tax
         sta $7E2100
 
         _9FC7
-        lda aDeadPlayerCharacterList,x
+        lda aCastleUnitDeploymentOffsets,x
         bmi _9FEC
         phx
         tax
@@ -3016,7 +3024,7 @@
         jsl rlUnknown848BFE
         plx
         bcc _9FEC
-        lda aDeadPlayerCharacterList,x
+        lda aCastleUnitDeploymentOffsets,x
         sta $7E2102,x
         lda $7E2100
         inc a
@@ -3058,19 +3066,21 @@
       .al
       .xl
 
-      rlUnknown87A006 ; 87/A006
+      rlCheckUnitCanDance ; 87/A006
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Carry set if the unit can dance and a unit in the castle is a dance target (target list $07).
+
         lda #SkillIDDance
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _A019
         lda #$0007
         sta wRoutineVariable1,b
-        jsl rlUnknown879FBE
+        jsl rlBuildCastleTargetList
 
         _A019
         rtl
@@ -3079,12 +3089,14 @@
 
         ; 87/A01A
 
-      rlUnknown87A01A ; 87/A01A
+      rlCheckInCastleTargetList ; 87/A01A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if deployment offset wRoutineVariable1 is in the target list at $7E2102.
 
         phb
         phk
@@ -7224,7 +7236,7 @@
         lda $7E4E77
         cmp #$FFFF
         beq rsUnknown87E75F
-        jsl rlUnknown879FBE
+        jsl rlBuildCastleTargetList
         rts
 
         .databank 0
@@ -7413,7 +7425,7 @@
         _E7CE
         lda #$FFFF
         sta wMapTargetDeploymentOffset,b
-        jsl rlUnknown8A92D6
+        jsl rlCastleUseStaffFromMapRaised
         rts
 
         .databank 0
@@ -7479,7 +7491,7 @@
 
 
         _E7FC
-        jsl rlUnknown8A92BB
+        jsl rlCastleUseStaffFromMap
         rts
 
         .databank 0
@@ -7581,7 +7593,7 @@
 
         lda #$0800
         trb wUnknown000D79,b
-        jsl rlUnknown8A92AA
+        jsl rlCastleStartStaffTargetSelection
         rts
 
         .databank 0
@@ -7605,7 +7617,7 @@
 
         lda #$0800
         tsb wUnknown000D79,b
-        jsl rlUnknown8A92AA
+        jsl rlCastleStartStaffTargetSelection
         rts
 
         .databank 0
@@ -7629,7 +7641,7 @@
 
         lda #$FFFF
         sta wRoutineVariable1,b
-        jsl rlUnknown84B6A6
+        jsl rlBuildCastleActionRounds
         rts
 
         .databank 0
@@ -7814,7 +7826,7 @@
         ldx #$0000
 
         _E91D
-        lda aDeadPlayerCharacterList,x
+        lda aCastleUnitDeploymentOffsets,x
         bmi _E93E
         cmp aActionStructUnit1
         beq _E93A
@@ -8187,12 +8199,14 @@
       .al
       .xl
 
-      rlUnknown87EF46 ; 87/EF46
+      rlGetCastleFacilities ; 87/EF46
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Returns the facility bits of the castle in wEventLocationEntry (the byte after YPosition in its location entry).
 
         phb
         php

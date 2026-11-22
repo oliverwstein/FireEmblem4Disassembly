@@ -45,7 +45,7 @@
         beq _B69C
         cmp #$0003
         beq _B69C
-        jsl rlUnknown8A98D0
+        jsl rlCastleDrawCourtyardUnitSprites
 
         _B69C
         jsl rlHideSprites
@@ -167,9 +167,9 @@
         bne _B76A
         lda #$0000
         jsl rlGetLocationEventDataEntry
-        jsl rlBuildDeadPlayerCharacterList
+        jsl rlBuildCastleUnitList
         jsl rlClearMovementMapBuffer
-        jsl rlUnknown8A9A56
+        jsl rlCastleBuildCourtyardTables
 
         _B76A
         lda #$0003
@@ -223,7 +223,7 @@
 
         ; Jump table of rlDispatchCastleState.
         .word <>rlOpenCastleCourtyard
-        .word <>rlResumeCastleUnitMenu
+        .word <>rlResumeCastleTown
         .word <>rlEnterCastleFacilityScreen
         .word <>rlEnterCastleArenaScreen
         .word <>rlOpenCastleCourtyard
@@ -337,8 +337,8 @@
         bne rlOpenCastleCourtyard
         lda #$0000
         jsl rlGetLocationEventDataEntry
-        jsl rlBuildDeadPlayerCharacterList
-        jsl rlUnknown8A9A56
+        jsl rlBuildCastleUnitList
+        jsl rlCastleBuildCourtyardTables
 
         .databank 0
 
@@ -477,15 +477,15 @@
         dec x
         bpl _B90B
         jsl rlClearMovementMapBuffer
-        jsl rlUnknown8A9A56
+        jsl rlCastleBuildCourtyardTables
         jsl rlUnknown88DE1B
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         asl a
         tax
-        lda aUnknown8A99DB,x
-        sta wCastlePrepCursorXPixel,b
-        lda aUnknown8A9A0B,x
-        sta wCastlePrepCursorYPixel,b
+        lda aCastleGridCursorX,x
+        sta wCastleGridCursorXPixel,b
+        lda aCastleGridCursorY,x
+        sta wCastleGridCursorYPixel,b
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         beq _B97B
@@ -495,32 +495,32 @@
         cmp wEnteredCastleLocationID,b
         bne _B97B
         jsl rlGetSelectedUnitGenerationID
-        sta wCastlePrepUnitSlot,b
-        lda wCastlePrepUnitSlot,b
+        sta wCastleGridSlot,b
+        lda wCastleGridSlot,b
         dec a
         asl a
         tax
         lda wCurrentChapter,b
         cmp #$0006
         bcs _B964
-        lda aUnknown8A9BF4,x
+        lda aCastleCourtyardSpotsGen1,x
         bra _B968
 
 
         _B964
-        lda aUnknown8A9C24,x
+        lda aCastleCourtyardSpotsGen2,x
 
         _B968
-        sta wCastlePrepUnitSlot,b
+        sta wCastleGridSlot,b
         asl a
         tax
-        lda aUnknown8A99DB,x
-        sta wCastlePrepCursorXPixel,b
-        lda aUnknown8A9A0B,x
-        sta wCastlePrepCursorYPixel,b
+        lda aCastleGridCursorX,x
+        sta wCastleGridCursorXPixel,b
+        lda aCastleGridCursorY,x
+        sta wCastleGridCursorYPixel,b
 
         _B97B
-        jsl rlUnknown8A8496
+        jsl rlCastleDrawInfoLine
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $B000
@@ -617,7 +617,7 @@
       .al
       .xl
 
-      rsSetCastleUnitMenuBGSettings ; 80/B9E1
+      rsSetCastleTownBGSettings ; 80/B9E1
 
         .al
         .xl
@@ -656,7 +656,7 @@
       .al
       .xl
 
-      rlResumeCastleUnitMenu ; 80/BA02
+      rlResumeCastleTown ; 80/BA02
 
         ; Found by tools/sweep.py.
         .al
@@ -689,11 +689,11 @@
         _BA36
         lda @l $00089B
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown8A9D39
-        jsl rlSetupCastleUnitMenuDisplay
+        jsl rlPlayCastleSong
+        jsl rlSetupCastleTownDisplay
         jsl rlGetSelectedUnitCharacterID
-        jsl rlUnknown8A9776
-        jsl rlUnknown8A94E2
+        jsl rlLoadUnitPortrait
+        jsl rlCastleFillVRAM2400
         rtl
 
         .databank 0
@@ -708,7 +708,7 @@
       .al
       .xl
 
-      rlSetupCastleUnitMenuDisplay ; 80/BA52
+      rlSetupCastleTownDisplay ; 80/BA52
 
         .al
         .xl
@@ -768,7 +768,7 @@
         sta lR18+1
         ldx #$010C
         jsl rlDrawMenuTextLine
-        jsl rlUnknown8A9858
+        jsl rlCastleBlankMissingFacilities
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $B000
@@ -807,7 +807,7 @@
         lda #<>aUnknown8A9C56
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        jsr rsSetCastleUnitMenuBGSettings
+        jsr rsSetCastleTownBGSettings
         lda #$0001
         sta wGameStateStep,b
         rtl
@@ -837,7 +837,7 @@
         jsl rlGetFactionSlotLocationID
         jsl rlGetLocationEventDataEntry
         jsl rlUnknown88C25D
-        jsl rlBuildDeadPlayerCharacterList
+        jsl rlBuildCastleUnitList
         lda #$0000
         sta wCastleScreenHandler,b
         lda #<>rsOpenCastleScreen
@@ -867,7 +867,7 @@
 
         lda #$0000
         sta wCastleScreenHandler,b
-        jsl rlBuildDeadPlayerCharacterList
+        jsl rlBuildCastleUnitList
         lda #$B6B6
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8

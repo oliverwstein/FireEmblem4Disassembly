@@ -664,13 +664,13 @@
 
     wCastleListSubCount .word ?                ; $000889 ; inventory/convoy item count 0-7
     wCastleScreenHandler .word ?               ; $00088B ; jump index into aCastleStateHandlers
-    wCastlePrepCursorXPixel .word ?            ; $00088D ; courtyard cursor X
-    wCastlePrepCursorYPixel .word ?            ; $00088F ; courtyard cursor Y
+    wCastleGridCursorXPixel .word ?            ; $00088D ; courtyard cursor X
+    wCastleGridCursorYPixel .word ?            ; $00088F ; courtyard cursor Y
     wCastleCursorState .word ?                 ; $000891 ; castle UI cursor/mode state (0..7, $FFFF)
-    wUnknown000893 .word ?                     ; $000893
-    wUnknown000895 .word ?                     ; $000895
-    wCastlePrepUnitSlot .word ?                ; $000897 ; 0-23 slot in 4x6 castle prep grid
-    wCastlePrepSavedUnitSlot .word ?           ; $000899 ; saved wCastlePrepUnitSlot
+    wCastleUnitCommand .word ?                     ; $000893
+    wCastleTownFacility .word ?                     ; $000895
+    wCastleGridSlot .word ?                ; $000897 ; 0-23 slot in 4x6 castle prep grid
+    wCastleGridSavedSlot .word ?           ; $000899 ; saved wCastleGridSlot
     wCastleSavedUnitRAMPointer .word ?         ; $00089B ; unit pointer saved across castle interior entry
     wCastleReturnEventFlag .word ?             ; $00089D ; triggers rlUnknown8CED4F on exit
     wEnteredCastleLocationID .word ?           ; $00089F ; castle location ID entered by player
@@ -1583,7 +1583,7 @@
 
     aChapterLocationRAMData .fill 16 * size(byte)               ; $7E4E45
     aChapterLocationMoneyRewards .fill 16 * size(word)          ; $7E4E55
-    aDeadPlayerCharacterList .fill 24 * size(word)              ; $7E4E75
+    aCastleUnitDeploymentOffsets .fill 24 * size(word)              ; $7E4E75
     aChapterActiveMapChanges .fill 8                            ; $7E4EA5
       ; Unsure about the size
 

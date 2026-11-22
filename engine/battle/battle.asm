@@ -3730,11 +3730,11 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitHomeCastle
         jsl rlGetLocationEventDataEntry
-        jsl rlBuildDeadPlayerCharacterList
+        jsl rlBuildCastleUnitList
         ldx #0
 
         -
-        lda aDeadPlayerCharacterList,x
+        lda aCastleUnitDeploymentOffsets,x
         bmi _EABF
 
         cmp @l wBattleTempVariable

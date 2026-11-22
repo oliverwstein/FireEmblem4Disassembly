@@ -506,12 +506,14 @@
       .al
       .xl
 
-      rlUnknown84AF17 ; 84/AF17
+      rlSortieUnitFromCastle ; 84/AF17
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Deploys the unit on its home castle tile; carry set if it is already fielded.
 
         phb
         php
@@ -562,13 +564,15 @@
       .al
       .xl
 
-      rlUnknown84AF57 ; 84/AF57
+      rlSortieUnitNorthOfCastle ; 84/AF57
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Deploys the unit one tile north of its home castle tile and sets bit $0040 of wUnknown000D79; carry set if already fielded.
 
         phb
         php
@@ -883,13 +887,15 @@
       .al
       .xl
 
-      rlUnknown84B6A6 ; 84/B6A6
+      rlBuildCastleActionRounds ; 84/B6A6
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets up the action struct for a castle staff or dance on target wRoutineVariable1, with both units on castle terrain.
 
         phb
         php
@@ -932,7 +938,7 @@
       .al
       .xl
 
-      rlUnknown84B6E2 ; 84/B6E2
+      rlBuildCastleDanceRounds ; 84/B6E2
 
         .al
         .xl
@@ -947,7 +953,7 @@
         lda #$FFFF
         sta wRoutineVariable1,b
         stz wSelectedInventorySlot,b
-        jsl rlUnknown84B6A6
+        jsl rlBuildCastleActionRounds
         plp
         plb
         .databank $84
@@ -965,13 +971,15 @@
       .al
       .xl
 
-      rlUnknown84B6F6 ; 84/B6F6
+      rlCastleGiveMoney ; 84/B6F6
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Gives money from the unit to the unit in wRoutineVariable1 (rlUnknown84D334, then rlUnknown9EDAE7).
 
         phb
         php
@@ -2140,11 +2148,11 @@
         lda wEventLocationEntry,b
         pha
 
-        jsl rlBuildDeadPlayerCharacterList
+        jsl rlBuildCastleUnitList
         ldx #0
 
           _Loop
-          lda aDeadPlayerCharacterList,x
+          lda aCastleUnitDeploymentOffsets,x
           bmi _End
 
             phx

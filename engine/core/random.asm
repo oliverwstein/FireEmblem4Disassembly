@@ -422,10 +422,10 @@
         jsl rlUnknown87802A._8063
 
         _806A
-        lda wCastlePrepUnitSlot,b
+        lda wCastleGridSlot,b
         bne _8075
         lda #$0001
-        sta wCastlePrepUnitSlot,b
+        sta wCastleGridSlot,b
 
         _8075
         jsl rlUnknown889268

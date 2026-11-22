@@ -1169,7 +1169,7 @@
         bit #$0020
         beq +
 
-          jsl rlUnknown8A9342
+          jsl rlCastleRefreshUnitsAfterMapAction
         
         +
         sec
@@ -1278,7 +1278,7 @@
         bit #$0020
         beq +
 
-          jsl rlUnknown8A9342
+          jsl rlCastleRefreshUnitsAfterMapAction
           bra _End
         
         +
@@ -1309,7 +1309,7 @@
 
         lda wUnitRelocationLocationID,b
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown84AF17
+        jsl rlSortieUnitFromCastle
         lda #$001A
         jsl rlPlaySoundEffect2
         sec

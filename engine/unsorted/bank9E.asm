@@ -7431,7 +7431,7 @@
 
 
         _AD9E
-        jsl rlUnknown8A8F68
+        jsl rlCastleRestoreCourtyardPalettes
         jsl rlUnknown9EAC1D
 
         _ADA6
@@ -9895,7 +9895,7 @@
         and #$00FF
         cmp #$0003
         bne _C982
-        jsl rlUnknown8A8F68
+        jsl rlCastleRestoreCourtyardPalettes
 
         _C982
         plx

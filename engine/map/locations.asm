@@ -726,11 +726,13 @@
 
         .databank 0
 
-      rlBuildDeadPlayerCharacterList ; 87/ED7F
+      rlBuildCastleUnitList ; 87/ED7F
 
         .al
         .autsiz
         .databank ?
+
+        ; Lists the deployment offsets of the units whose home castle is the given location and who are neither fielded nor dead ($FFFF ends the list).
 
         phb
         php
@@ -745,7 +747,7 @@
         lda #$FFFF
 
           -
-          sta aDeadPlayerCharacterList,x
+          sta aCastleUnitDeploymentOffsets,x
           dec x
           dec x
           bpl -
@@ -781,7 +783,7 @@
                   jsl rlGetSelectedUnitDeploymentOffset
                   bcs _Next
 
-                    sta aDeadPlayerCharacterList,x
+                    sta aCastleUnitDeploymentOffsets,x
                     inc x
                     inc x
 
