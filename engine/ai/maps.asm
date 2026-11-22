@@ -2507,3 +2507,121 @@
     .endsection Unsorted86C293Section
 
 
+    .section Unsorted87D65ASection
+
+      .al
+      .xl
+
+      rsAIScoreTargetsNearLeader ; 87/D65A
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; For each AI target near the group leader (rsCheckIfAITargetWithinSpecifiedLeaderRange): class priority, effectiveness and weapon triangle scores.
+
+        ldx #$000A
+        lda #$FFFF
+
+        _D660
+        sta $EC48,b,x
+        dec x
+        dec x
+        bpl _D660
+        lda wAITargetCounter
+        bne _D671
+        jml _D710
+
+
+        _D671
+        tay
+        ldx #$0000
+
+        _D675
+        phx
+        stz $441C,b
+        stx $442A,b
+        lda $7E5029,x
+        and #$00FF
+        tax
+        lda aDeploymentTable._UnitRAMPointer,x
+        beq _D702
+        lda aDeploymentTable,x
+        bit #$0020
+        bne _D702
+        jsr rsCheckIfAITargetWithinSpecifiedLeaderRange
+        bcc _D702
+        jsl rlAIGetClassTargetPriority
+        clc
+        adc $441C,b
+        sta $441C,b
+        lda $443C,b
+        bmi _D6D3
+        sta @l wAITemp000E98
+        txa
+        sta @l wAITemp000E96
+        jsl rlAIGetWeaponTriangleScore
+        clc
+        adc $441C,b
+        sta $441C,b
+        lda $443C,b
+        sta @l wAITemp000E98
+        txa
+        sta @l wAITemp000E96
+        jsl rlAIGetEffectivenessScore
+        clc
+        adc $441C,b
+        sta $441C,b
+
+        _D6D3
+        plx
+        phx
+        ldx #$0000
+
+        _D6D8
+        lda $441C,b
+        cmp $EC48,b,x
+        bmi _D6F9
+        pha
+        lda $EC48,b,x
+        sta $441C,b
+        pla
+        sta $EC48,b,x
+        lda $442A,b
+        pha
+        lda $EC4A,b,x
+        sta $442A,b
+        pla
+        sta $EC4A,b,x
+
+        _D6F9
+        inc x
+        inc x
+        inc x
+        inc x
+        cpx #$000A
+        bcc _D6D8
+
+        _D702
+        plx
+        txa
+        clc
+        adc #$000D
+        tax
+        dec y
+        beq _D710
+        jml _D675
+
+
+        _D710
+        rts
+
+        .databank 0
+
+        ; 87/D711
+
+    .endsection Unsorted87D65ASection
+
+

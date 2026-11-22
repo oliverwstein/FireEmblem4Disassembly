@@ -1143,3 +1143,66 @@
         ; 84/D2BA
 
     .endsection FieldedUnitFactionSection
+
+
+    .section Unsorted87A040Section
+
+      .al
+      .xl
+
+      rlCheckCharacterWaitingInHomeCastle ; 87/A040
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; wRoutineVariable1 = character ID: carry set if that unit exists, is alive and not on the map, is a player unit, and its home castle is the player's castle.
+
+        ; Check if selected unit alive in home castle.
+
+        phx
+        ldx wSelectedUnitDataRAMPointer,b
+        phx
+        ldx wRoutineVariable1,b
+        phx
+
+        jsl rlGetUnitRAMDataPointerByID
+        bcs _CLC
+
+          jsl rlGetSelectedUnitStates
+          bit #(UnitStateFielded | UnitStateDead)
+          bne _CLC
+
+            jsl rlGetSelectedUnitFactionSlot
+            ora #FS_Player
+            bne _CLC
+
+              lda #0
+              jsl rlGetFactionSlotLocationID
+              sta wRoutineVariable1,b
+
+              jsl rlGetSelectedUnitHomeCastle
+              cmp wRoutineVariable1,b
+              bne _CLC
+
+                sec
+                bra +
+
+        _CLC
+        clc
+
+        +
+        pla
+        sta wRoutineVariable1,b
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        plx
+        rtl
+
+        .databank 0
+
+        ; 87/A082
+
+    .endsection Unsorted87A040Section
+
+

@@ -92,6 +92,7 @@
   .include "engine/map/deployment.asm"
   .include "engine/map/locations.asm"
   .include "engine/map/scroll.asm"
+  .include "engine/map/range_maps.asm"
   .include "engine/units/classes.asm"
   .include "engine/units/factions.asm"
   .include "engine/units/generations.asm"
@@ -108,6 +109,7 @@
   .include "engine/units/units.asm"
   .include "engine/items/inventory.asm"
   .include "engine/items/items.asm"
+  .include "engine/items/staves.asm"
   .include "engine/battle/battle.asm"
   .include "engine/battle/battle_stats.asm"
   .include "engine/battle/effects.asm"
@@ -178,7 +180,6 @@
   .include "engine/sound/driver.asm"
   .include "engine/unsorted/bank81.asm"
   .include "engine/unsorted/bank84.asm"
-  .include "engine/unsorted/bank87.asm"
   .include "engine/unsorted/bank88.asm"
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
@@ -2701,6 +2702,8 @@
 
       .dsection Unsorted87C442Section
 
+      .dsection GameOverProcSection
+
       .dsection Unsorted87C5AASection
 
       .dsection Table87C5BFSection
@@ -2790,6 +2793,8 @@
       .dsection Unsorted87E855Section
 
       .dsection Unsorted87E86ASection
+
+      .dsection ChapterLocationsSection
 
       .dsection LocationEventDataSection
 

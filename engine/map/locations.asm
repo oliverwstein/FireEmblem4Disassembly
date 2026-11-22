@@ -1,6 +1,107 @@
 ; Map locations (castles, villages and so on): their event data, owners, money
 ; rewards, guarded and destroyed states, castle banners and village tile changes.
 
+    .section ChapterLocationsSection
+
+      .al
+      .xl
+
+      rlClearChapterLocationRAMData ; 87/E93F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$000F
+        sep #$20
+        lda #$00
+
+        _E947
+        sta aChapterLocationRAMData,x
+        dec x
+        bpl _E947
+        rep #$20
+        plx
+        rtl
+
+        .databank 0
+
+        ; 87/E952
+
+      rlInitChapterLocations ; 87/E952
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; rlInitLocation for each location of the chapter.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        jsl rlGetChapterLocationDataPointer
+        tax
+        lda $0000,b,x
+        and #$00FF
+        dec a
+        tay
+
+        _E965
+        lda $0001,b,x
+        sta wEventLocationEntry,b
+        jsl rlInitLocation
+        inc x
+        inc x
+        dec y
+        bpl _E965
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/E979
+
+      rlGetChapterLocationCount ; 87/E979
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        jsl rlGetChapterLocationDataPointer
+        tax
+        lda $0000,b,x
+        and #$00FF
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/E98D
+
+    .endsection ChapterLocationsSection
+
+
     .section LocationEventDataSection
 
       .al
@@ -2012,3 +2113,336 @@
         ; 87/F4CF
 
     .endsection LocationTypeOffsetsSection
+
+
+    .section Unsorted87E9E0Section
+
+      .al
+      .xl
+
+      rlFindLocationByNameID ; 87/E9E0
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = name ID: wEventLocationEntry = the location with it, or 0. Nothing in the build reaches this.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        ldx wR0
+        phx
+        sta wR0
+        ldx #$0000
+
+        _E9ED
+        txa
+        jsl rlGetLocationEventDataEntry
+        bcs _E9FF
+        jsl rlGetEventLocationEntryNameID
+        cmp wR0
+        beq _EA02
+        inc x
+        bra _E9ED
+
+
+        _E9FF
+        stz wEventLocationEntry,b
+
+        _EA02
+        pla
+        sta wR0
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/EA09
+
+    .endsection Unsorted87E9E0Section
+
+
+    .section Unsorted87EA09Section
+
+      .al
+      .xl
+
+      rlFindLocationAtTile ; 87/EA09
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; wR0, wR1 = column and row: wEventLocationEntry = the location whose area (by its type, aEventLocationTypeOffsets) covers the tile; carry clear if found.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        lda wR2
+        pha
+        jsl rlGetChapterLocationDataPointer
+        tay
+        lda $0000,b,y
+        and #$00FF
+        sta wR2
+
+        _EA1F
+        phy
+        ldx $0001,b,y
+        stx wEventLocationEntry,b
+        txy
+        jsl rlGetEventLocationEntryType
+        asl a
+        tax
+        lda @l aEventLocationTypeOffsets,x
+        tax
+        sep #$20
+        lda @l aEventLocationTypeOffsets+2,x
+        clc
+        adc $0003,b,y
+        dec a
+        cmp wR0
+        bpl _EA69
+        lda @l aEventLocationTypeOffsets+3,x
+        clc
+        adc $0004,b,y
+        dec a
+        cmp wR1
+        bpl _EA69
+        lda @l aEventLocationTypeOffsets+4,x
+        clc
+        adc $0003,b,y
+        cmp wR0
+        bmi _EA69
+        lda @l aEventLocationTypeOffsets+5,x
+        clc
+        adc $0004,b,y
+        cmp wR1
+        bmi _EA69
+        ply
+        bra _EA7B
+
+
+        _EA69
+        rep #$20
+        ply
+        inc y
+        inc y
+        dec wR2
+        bne _EA1F
+        pla
+        sta wR2
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+
+        _EA7A
+        rtl
+
+
+        _EA7B
+        .as
+        rep #$20
+        pla
+        sta wR2
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+        bra _EA7A
+
+        .databank 0
+
+        ; 87/EA87
+
+    .endsection Unsorted87EA09Section
+
+
+    .section Unsorted87EBC8Section
+
+      .al
+      .xl
+
+      rlInitLocation ; 87/EBC8
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; wEventLocationEntry = location: sets its money reward from its type; for a castle, puts its shop's unobtained items in the shop.
+
+        phb
+        php
+        phk
+        plb
+        phx
+        phy
+
+        ldy wEventLocationEntry,b
+        sep #$20
+        lda lChapterEventDataPointer+2,b
+        pha
+        rep #$20
+        plb
+
+        lda structChapterLocationEntry.ID,b,y
+        and #$00FF
+        sta wR3
+        asl a
+        tax
+
+        lda structChapterLocationEntry.Type,b,y
+        and #$00FF
+        jsl rlGetEventLocationTypeBaseMoney
+        sta aChapterLocationMoneyRewards,x
+
+        lda structChapterLocationEntry.Type,b,y
+        and #$00FF
+        cmp #LocationTypeCastle
+        bne _End
+
+          lda lChapterEventDataPointer+1,b
+          sta lR18+1
+          lda structChapterCastleLocationEntry.ShopDataPointer,b,y
+          beq _End
+
+            sta lR18
+
+            ldx lR18
+            sep #$20
+            lda lR18+2
+            pha
+            rep #$20
+            plb
+
+            _Loop
+            lda $0000,b,x
+            cmp #$FFFF
+            beq _End
+
+              and #$00FF
+              jsl rlGetItemRAMStructEntryByPlayerItemIndex
+              jsl rlGetItemRAMStateAndOwner
+
+              lda wR0
+              cmp #ItemStateUnobtained
+              bne _Next
+
+                lda #ItemStateShop
+                sta wR0
+                lda wR3
+                sta wR1
+                jsl rlSetItemRAMStateAndOwner
+
+              _Next
+              inc x
+              bra _Loop
+
+        _End
+        ply
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/EC42
+
+    .endsection Unsorted87EBC8Section
+
+
+    .section Unsorted87F321Section
+
+      .al
+      .xl
+
+      rlGetLocationMoneyLevel ; 87/F321
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; wEventLocationEntry = location: A = a level from its money reward (in steps of 500) and the low bits of its ID (aLocationMoneyLevels); 10 steps or more returns the steps.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        lda wR2
+        pha
+        jsl rlGetEventLocationEntryID
+        and #$0003
+        asl a
+        sta wR2
+        jsl rlGetEventLocationMoneyReward
+        sta wR13
+        lda #$01F4
+        sta wR14
+        jsl rlUnsignedDivide16By16R13
+        lda wR13
+        cmp #$000A
+        bcs _F35A
+        ldx wR2
+        lda @l aLocationMoneyLevels,x
+        clc
+        adc wR13
+        tax
+        lda @l aLocationMoneyLevels,x
+        and #$00FF
+
+        _F35A
+        plx
+        stx wR2
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/F361
+
+    .endsection Unsorted87F321Section
+
+
+    .section Table87F361Section
+
+      .al
+      .xl
+
+      aLocationMoneyLevels ; 87/F361
+
+        ; Read by rlGetLocationMoneyLevel.
+
+        .word $0008, $0012, $001C, $0026, $0000, $0202, $0303, $0505
+        .word $0101, $0101, $0000, $0202, $0303, $0505, $0505, $0101
+        .word $0000, $0202, $0303, $0303, $0505, $0101, $0000, $0202
+
+        ; 87/F391
+
+    .endsection Table87F361Section
+

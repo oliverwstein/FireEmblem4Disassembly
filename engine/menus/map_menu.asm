@@ -6329,3 +6329,2797 @@
 
     .endsection Unsorted85EA64Section
 
+
+    .section Unsorted8780AASection
+
+      .al
+      .xl
+
+      rlInitMapMenus ; 87/80AA
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Clears the map menu variables ($0516-$053F), and points them at aBG3TilemapBuffer and BG3's VRAM tilemap.
+
+        phb
+        php
+        phk
+        plb
+        ldx #$0029
+        sep #$20
+        lda #0
+
+          -
+          sta wMapMenuVRAMTilemap,b,x
+          dec x
+          bpl -
+
+        rep #$20
+
+        lda bBufferBG3SC
+        and #BGSC_Address
+        xba
+        sta wMapMenuVRAMTilemap,b
+        lda #(`aBG3TilemapBuffer)<<8
+        sta lMapMenuBGBuffer+1,b
+        lda #<>aBG3TilemapBuffer
+        sta lMapMenuBGBuffer,b
+        lda #0
+        sta wMapMenuTransparentTile,b
+        jsl rlResetMapMenuDirtyRows
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted8780AASection
+
+
+    .section Unsorted8780DFSection
+
+      .al
+      .xl
+
+      rlEnableMapMenuUploads ; 87/80DF
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Sets bit 7 of bMapMenuFlags.
+
+        phb
+        php
+        phk
+        plb
+        lda #$0080
+        tsb bMapMenuFlags,b
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+      rlDisableMapMenuUploads ; 87/80EC
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Clears bit 7 of bMapMenuFlags.
+
+        phb
+        php
+        phk
+        plb
+        lda #$0080
+        trb bMapMenuFlags,b
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/80F9
+
+    .endsection Unsorted8780DFSection
+
+
+    .section Unsorted878148Section
+
+      .al
+      .xl
+
+      rlUnlinkMapMenu ; 87/8148
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Takes the current map menu out of the list of open menus.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenu.Next,b,y
+        sta lR20
+        lda structMapMenu.Next+1,b,y
+        sta lR20+1
+        jsl rlFindPreviousMapMenu
+        bcs _817F
+        ldy lR19
+        sep #$20
+        lda lR19+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda lR20
+        sta $000C,b,y
+        lda lR20+1
+        sta $000D,b,y
+        bra _818B
+
+
+        _817F
+        lda lR20
+        sta @l lMapMenuListHead
+        lda lR20+1
+        sta @l lMapMenuListHead+1
+
+        _818B
+        lda @l bMapMenuFlags
+        ora #$0008
+        sta @l bMapMenuFlags
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/819A
+
+    .endsection Unsorted878148Section
+
+
+    .section Unsorted878256Section
+
+      .al
+      .xl
+
+      rlMapMenuVBlankUpload ; 87/8256
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Called by the VBlank routines: while map menus are on (bit 7 of bMapMenuFlags) and not held (bit 5), uploads the dirty rows if bits 1-4 say something changed.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        lda bMapMenuFlags,b
+        and #$00FF
+        bit #$0080
+        beq _827A
+        bit #$0020
+        bne _827A
+        pha
+        sep #$20
+        and #$E1
+        sta bMapMenuFlags,b
+        rep #$20
+        pla
+        bit #$001E
+        bne _8283
+
+        _827A
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .byte $22, $F8, $83, $87, $80, $00
+
+
+        _8283
+        jsr rsUploadMapMenuDirtyRows
+        jsl rlResetMapMenuDirtyRows
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/828D
+
+      rlResetMapMenuDirtyRows ; 87/828D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sets the rows to upload to none (top 32, bottom 0).
+
+        lda #$0020
+        sta wMapMenuDirtyTop,b
+        lda #$0000
+        sta wMapMenuDirtyBottom,b
+        rtl
+
+        .databank 0
+
+        ; 87/829A
+
+    .endsection Unsorted878256Section
+
+
+    .section Unsorted87829ASection
+
+      .al
+      .xl
+
+      rlGetMapMenuRows ; 87/829A
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; wR12 = the current map menu's top row, wR13 = its bottom row; widens the rows to upload (wMapMenuDirtyTop/wMapMenuDirtyBottom) to include them.
+
+        phb
+        php
+        phk
+        plb
+
+        ; Get the height into wR13
+        jsl rlGetMapMenuTilemapArea
+        xba
+        and #$00FF
+        sta wR13
+
+        jsl rlGetMapMenuPosition
+        xba
+        and #$00FF
+        cmp #33
+        bge +
+
+          cmp wMapMenuDirtyTop,b
+          bge +
+
+            sta wMapMenuDirtyTop,b
+
+        +
+        sta wR12
+        clc
+        adc wR13
+        cmp #33
+        bge +
+
+          cmp wMapMenuDirtyBottom,b
+          blt +
+
+            sta wMapMenuDirtyBottom,b
+
+        +
+        sta wR13
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/82D4
+
+    .endsection Unsorted87829ASection
+
+
+    .section Unsorted8782D4Section
+
+      .al
+      .xl
+
+      rlGetAllMapMenuRows ; 87/82D4
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sets the rows to upload to those that any open map menu covers.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        lda #$0020
+        sta wMapMenuDirtyTop,b
+        lda #$0000
+        sta wMapMenuDirtyBottom,b
+        lda lMapMenuListHead,b
+        sta lMapMenuRAMEntryPointer,b
+        lda lMapMenuListHead+1,b
+        sta lMapMenuRAMEntryPointer+1,b
+
+        _82F1
+        phk
+        plb
+        .databank $87
+        jsl rlGetMapMenuYPositions
+        lda @l wR10
+        cmp wMapMenuDirtyTop,b
+        bcs _8303
+        sta wMapMenuDirtyTop,b
+
+        _8303
+        lda @l wR11
+        cmp wMapMenuDirtyBottom,b
+        bcc _830F
+        sta wMapMenuDirtyBottom,b
+
+        _830F
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenu.Next,b,y
+        ora structMapMenu.Next+1,b,y
+        beq _8333
+        lda structMapMenu.Next,b,y
+        sta @l lMapMenuRAMEntryPointer
+        lda structMapMenu.Next+1,b,y
+        sta @l lMapMenuRAMEntryPointer+1
+        bra _82F1
+
+
+        _8333
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8337
+
+    .endsection Unsorted8782D4Section
+
+
+    .section Unsorted878337Section
+
+      .al
+      .xl
+
+      rlClearMapMenuRows ; 87/8337
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Fills rows wR12-wR13 of the BG3 buffer (lMapMenuBGBuffer) with the transparent tile wMapMenuTransparentTile.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        lda wR13
+        sec
+        sbc wR12
+        bcc _8395
+        asl a
+        tay
+        lda wR12
+        xba
+        lsr a
+        lsr a
+        clc
+        adc lMapMenuBGBuffer,b
+        tax
+        sep #$20
+        lda lMapMenuBGBuffer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+
+        _8359
+        lda wMapMenuTransparentTile,b
+        sta $0000,b,x
+        sta $0002,b,x
+        sta $0004,b,x
+        sta $0006,b,x
+        sta $0008,b,x
+        sta $000A,b,x
+        sta $000C,b,x
+        sta $000E,b,x
+        sta $0010,b,x
+        sta $0012,b,x
+        sta $0014,b,x
+        sta $0016,b,x
+        sta $0018,b,x
+        sta $001A,b,x
+        sta $001C,b,x
+        sta $001E,b,x
+        txa
+        clc
+        adc #$0020
+        tax
+        dec y
+        bne _8359
+
+        _8395
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/839A
+
+      rlRedrawMapMenuRows ; 87/839A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Clears rows wR12-wR13 of BG3 and copies the tiles of every open map menu that overlaps them, back to front.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        lda lMapMenuListHead,b
+        ora lMapMenuListHead+1,b
+        beq _83F3
+        lda wR12
+        cmp #$0020
+        bcs _83F3
+        lda wR13
+        cmp #$0020
+        bcs _83F3
+        jsl rlClearMapMenuRows
+        lda lMapMenuRAMEntryPointer,b
+        pha
+        lda lMapMenuRAMEntryPointer+1,b
+        pha
+        phb
+        lda lMapMenuListHead,b
+        sta lMapMenuRAMEntryPointer,b
+        lda lMapMenuListHead+1,b
+        sta lMapMenuRAMEntryPointer+1,b
+
+        _83CF
+        jsr rsDrawMapMenuIfInRows
+        lda $000C,b,y
+        ora $000D,b,y
+        beq _83EA
+        lda $000C,b,y
+        sta @l lMapMenuRAMEntryPointer
+        lda $000D,b,y
+        sta @l lMapMenuRAMEntryPointer+1
+        bra _83CF
+
+
+        _83EA
+        plb
+        .databank ?
+        pla
+        sta lMapMenuRAMEntryPointer+1,b
+        pla
+        sta lMapMenuRAMEntryPointer,b
+
+        _83F3
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/83F8
+
+    .endsection Unsorted878337Section
+
+
+    .section Unsorted8783F8Section
+
+      .al
+      .xl
+
+      rlRedrawAllMapMenus ; 87/83F8
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Redraws every open map menu on BG3. Nothing in the build reaches this.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        lda lMapMenuListHead,b
+        ora lMapMenuListHead+1,b
+        beq _840C
+        jsl rlGetAllMapMenuRows
+        jsl rlRedrawMapMenuRows
+
+        _840C
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/840F
+
+    .endsection Unsorted8783F8Section
+
+
+    .section Unsorted87840FSection
+
+      .al
+      .xl
+
+      rsUploadMapMenuDirtyRows ; 87/840F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; DMAs the rows wMapMenuDirtyTop-wMapMenuDirtyBottom of the BG3 buffer to VRAM.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        lda wMapMenuDirtyTop,b
+        cmp wMapMenuDirtyBottom,b
+        bcs _8456
+        lda wMapMenuDirtyTop,b
+        cmp #$0020
+        bcs _8456
+        lda wMapMenuDirtyBottom,b
+        cmp #$0020
+        bcs _8456
+        lda lMapMenuBGBuffer+1,b
+        sta lR18+1
+        lda wMapMenuDirtyTop,b
+        xba
+        lsr a
+        lsr a
+        pha
+        clc
+        adc lMapMenuBGBuffer,b
+        sta lR18
+        lda wMapMenuDirtyBottom,b
+        sec
+        sbc wMapMenuDirtyTop,b
+        inc a
+        xba
+        lsr a
+        lsr a
+        sta wR0
+        pla
+        lsr a
+        clc
+        adc wMapMenuVRAMTilemap,b
+        sta wR1
+        jsl rlDMAByPointer
+
+        _8456
+        plp
+        plb
+        .databank ?
+        rts
+
+        .databank 0
+
+        ; 87/8459
+
+    .endsection Unsorted87840FSection
+
+
+    .section Unsorted878459Section
+
+      .al
+      .xl
+
+      rlMarkAllMapMenuRowsDirty ; 87/8459
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Marks rows 0-31 for upload (bit 1 of bMapMenuFlags).
+
+        phb
+        php
+        phk
+        plb
+        lda #0
+        sta wMapMenuDirtyTop,b
+        lda #$001F
+        sta wMapMenuDirtyBottom,b
+        lda #$0002
+        tsb bMapMenuFlags,b
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/8472
+
+    .endsection Unsorted878459Section
+
+
+    .section Unsorted878472Section
+
+      .al
+      .xl
+
+      rlMoveMapMenuBG3 ; 87/8472
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The BG3 half of rlMoveMapMenu: writes wMapMenuNewPosition into the menu, redraws the rows it covered and draws it at its new place.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        jsl rlGetMapMenuRows
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda @l $000534
+        sta $000A,b,y
+        phk
+        plb
+        .databank $87
+        jsl rlRedrawMapMenuRows
+        jsl rlGetMapMenuYPositions
+        lda wR10
+        cmp wR12
+        bcc _84A4
+        lda wR13
+        cmp wR11
+        bcs _84A8
+
+        _84A4
+        jsl rlDrawMapMenuBG3
+
+        _84A8
+        lda @l bMapMenuFlags
+        ora #$0004
+        sta @l bMapMenuFlags
+        ply
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/84B7
+
+      rlHideMapMenuBG3 ; 87/84B7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Hides the current map menu on BG3 (bit 15 of its position) and redraws the rows it covered.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        jsl rlGetMapMenuPosition
+        ora #$8000
+        sta wMapMenuNewPosition,b
+        jsl rlMoveMapMenuBG3
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/84CC
+
+      rlShowMapMenuBG3 ; 87/84CC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Clears bit 15 of the current map menu's position and redraws BG3.
+        ; Nothing in the build reaches this.
+
+        phb
+        php
+        phk
+        plb
+
+        .databank $87
+
+        jsl rlGetMapMenuPosition
+        and #$7FFF
+        sta wMapMenuNewPosition,b
+        jsl rlMoveMapMenuBG3
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/84E1
+
+    .endsection Unsorted878472Section
+
+
+    .section Unsorted8784E1Section
+
+      .al
+      .xl
+
+      rlResizeMapMenuBG3 ; 87/84E1
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = new width and height of the current map menu; redraws BG3.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        pha
+        jsl rlGetMapMenuRows
+        pla
+        jsl rlSetMapMenuTilemapArea
+        jsl rlRedrawMapMenuRows
+        jsl rlGetMapMenuYPositions
+        lda wR10
+        cmp wR12
+        bcc _8504
+        lda wR13
+        cmp wR11
+        bcs _8508
+
+        _8504
+        jsl rlDrawMapMenuBG3
+
+        _8508
+        lda @l bMapMenuFlags
+        ora #$0004
+        sta @l bMapMenuFlags
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8517
+
+    .endsection Unsorted8784E1Section
+
+
+    .section Unsorted878531Section
+
+      .al
+      .xl
+
+      rlBringMapMenuToFront ; 87/8531
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Moves the current map menu to the end of the list (drawn last, in front) and redraws it.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        lda #$0027
+        jsl rlFindLastMapMenu
+        ldx lR19
+        cpx lMapMenuRAMEntryPointer,b
+        beq _859F
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda @l lMapMenuRAMEntryPointer
+        sta $000C,b,x
+        lda @l lMapMenuRAMEntryPointer+1
+        sta $000D,b,x
+        jsl rlFindPreviousMapMenu
+        bcs _8575
+        ldx lR19
+        lda $000C,b,y
+        sta $000C,b,x
+        lda $000D,b,y
+        sta $000D,b,x
+        bra _8583
+
+
+        _8575
+        lda $000C,b,y
+        sta @l lMapMenuListHead
+        lda $000D,b,y
+        sta @l lMapMenuListHead+1
+
+        _8583
+        lda #$0000
+        sta $000C,b,y
+        sta $000D,b,y
+        jsl rlGetMapMenuRows
+        jsl rlRedrawMapMenuRows
+        lda @l bMapMenuFlags
+        ora #$0008
+        sta @l bMapMenuFlags
+
+        _859F
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/85A4
+
+    .endsection Unsorted878531Section
+
+
+    .section Unsorted8785A4Section
+
+      .al
+      .xl
+
+      rlRemoveMapMenu ; 87/85A4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Frees the current map menu's tilemap entry and its RAM area entry, after
+        ; rlHideMapMenuBG3 and rlUnlinkMapMenu.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        jsl rlHideMapMenuBG3
+        jsl rlUnlinkMapMenu
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenu.TilemapDataPointer,b,y
+        sta @l lMapMenuTilemapRAMEntryPointer
+        lda structMapMenu.TilemapDataPointer+1,b,y
+        sta @l lMapMenuTilemapRAMEntryPointer+1
+        jsl rlRemoveMapMenuTilemapRAMEntry
+        phk
+        plb
+        .databank $87
+        lda lMapMenuRAMEntryPointer,b
+        sta lR25
+        lda lMapMenuRAMEntryPointer+1,b
+        sta lR25+1
+        jsl rlRemoveRAMAreaEntry
+        ply
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/85E3
+
+      rlDrawMapMenuBG3 ; 87/85E3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies the current map menu's tiles to BG3, and the menus after it in the list (in front of it) when bit 6 of bMapMenuFlags is set.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        jsl rlGetMapMenuRows
+        jsr rsDrawMapMenuIfInRows
+        lda @l bMapMenuFlags
+        bit #$0040
+        beq _8628
+        lda lMapMenuRAMEntryPointer,b
+        pha
+        lda lMapMenuRAMEntryPointer+1,b
+        pha
+        phb
+        bra _8607
+
+
+        _8604
+        jsr rsDrawMapMenuIfInRows
+
+        _8607
+        lda $000C,b,y
+        ora $000D,b,y
+        beq _861F
+        lda $000C,b,y
+        sta @l lMapMenuRAMEntryPointer
+        lda $000D,b,y
+        sta @l lMapMenuRAMEntryPointer+1
+        bra _8604
+
+
+        _861F
+        plb
+        .databank ?
+        pla
+        sta lMapMenuRAMEntryPointer+1,b
+        pla
+        sta lMapMenuRAMEntryPointer,b
+
+        _8628
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/862D
+
+      rsDrawMapMenuIfInRows ; 87/862D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies the current map menu's tiles to BG3 if it is shown, has tiles, and overlaps rows wR12-wR13.
+
+        phk
+        plb
+        .databank $87
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $000A,b,y
+        bmi _8696
+        jsl rlGetMapMenuYPositions
+        lda wR10
+        cmp wR13
+        beq _864C
+        bcs _8696
+
+        _864C
+        lda wR11
+        cmp wR12
+        bcc _8696
+        lda $0007,b,y
+        sta @l lMapMenuTilemapRAMEntryPointer+1
+        lda $0006,b,y
+        sta @l lMapMenuTilemapRAMEntryPointer
+        jsr rsCheckMapMenuHasNoTiles
+        bcs _8696
+        lda $000A,b,y
+        and #$00FF
+        cmp #$0020
+        bcs _8696
+        sta wR0
+        lda $000B,b,y
+        and #$00FF
+        cmp #$0020
+        bcs _8696
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR0
+        asl a
+        tax
+        jsl rlCopyTilemapEntryToBG
+        lda @l bMapMenuFlags
+        ora #$0010
+        sta @l bMapMenuFlags
+
+        _8696
+        rts
+
+        .databank 0
+
+        ; 87/8697
+
+      rsCheckMapMenuHasNoTiles ; 87/8697
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Carry set if the current tilemap entry has no tile buffer.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
+        ora structMapMenuTilemapData.TilesPointer,b,y
+        beq _86B5
+        ply
+        plp
+        plb
+        .databank ?
+        clc
+        rts
+
+
+        _86B5
+        ply
+        plp
+        plb
+        .databank ?
+        sec
+        rts
+
+        .databank 0
+
+        ; 87/86BA
+
+    .endsection Unsorted8785A4Section
+
+
+    .section Unsorted87872BSection
+
+      .al
+      .xl
+
+      rlSetMapMenuType ; 87/872B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = the current map menu's type (its frame style, aMapMenuTypePointers).
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        pha
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        pla
+        sep #$20
+        sta structMapMenu.Type,b,y
+        rep #$20
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8749
+
+    .endsection Unsorted87872BSection
+
+
+    .section Unsorted878852Section
+
+      .al
+      .xl
+
+      rlFindPreviousMapMenu ; 87/8852
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lR19 = the open map menu before the current one. Carry set if the current one is first or not in the list.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        lda lMapMenuListHead,b
+        ora lMapMenuListHead+1,b
+        beq _88A9
+        lda lMapMenuListHead,b
+        sta lR19
+        lda lMapMenuListHead+1,b
+        sta lR19+1
+        lda lMapMenuListHead,b
+        cmp lMapMenuRAMEntryPointer,b
+        bne _8879
+        lda lMapMenuListHead+1,b
+        cmp lMapMenuRAMEntryPointer+1,b
+        beq _88A9
+
+        _8879
+        ldy lR19
+        sep #$20
+        lda lR19+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $000C,b,y
+        ora $000D,b,y
+        beq _88A9
+        lda $000C,b,y
+        cmp @l lMapMenuRAMEntryPointer
+        bne _889D
+        lda $000D,b,y
+        cmp @l lMapMenuRAMEntryPointer+1
+        beq _88AE
+
+        _889D
+        lda $000C,b,y
+        sta lR19
+        lda $000D,b,y
+        sta lR19+1
+        bra _8879
+
+
+        _88A9
+        ply
+        plp
+        plb
+        .databank ?
+        sec
+        rtl
+
+
+        _88AE
+        ply
+        plp
+        plb
+        .databank ?
+        clc
+        rtl
+
+        .databank 0
+
+        ; 87/88B3
+
+    .endsection Unsorted878852Section
+
+
+    .section Unsorted8788F7Section
+
+      .al
+      .xl
+
+      rlDrawMapMenuTileString ; 87/88F7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lR18 = a string of tile numbers ending in 0, X = row and column: draws it into the current map menu, plus aCurrentTilemapInfo.
+
+        jsl rlGetMapMenuTilemapRAMEntryPointer
+        jsl rlDrawTileStringToTilemapEntry
+        rtl
+
+        .databank 0
+
+        ; 87/8900
+
+    .endsection Unsorted8788F7Section
+
+
+    .section Unsorted878900Section
+
+      .al
+      .xl
+
+      rlDrawMapMenuSmallNumber ; 87/8900
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = 0-99, X = row and column: draws two digit tiles into the current map menu. Carry set if A is 100 or more.
+
+        pha
+        jsl rlGetMapMenuTilemapRAMEntryPointer
+        pla
+        jsl rlDrawSmallNumberToTilemapEntry
+        rtl
+
+        .databank 0
+
+        ; 87/890B
+
+      rlDrawMapMenuTallTwoDigitNumber ; 87/890B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = 0-99, X = row and column: two two-row digits in the current map menu.
+        ; Nothing in the build reaches this.
+
+        pha
+        jsl rlGetMapMenuTilemapRAMEntryPointer
+        pla
+        jsl rlDrawTallTwoDigitNumberToTilemapEntry
+        rtl
+
+        .databank 0
+
+        ; 87/8916
+
+    .endsection Unsorted878900Section
+
+
+    .section Unsorted878916Section
+
+      .al
+      .xl
+
+      rlDrawMapMenuNumber ; 87/8916
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = a signed number below 1000, X = row and column (of the last digit): draws it in two-row digits, with a minus sign for a negative. Carry set if A is 1000 or more.
+
+        pha
+        jsl rlGetMapMenuTilemapRAMEntryPointer
+        pla
+        jsl rlDrawNumberToTilemapEntry
+        rtl
+
+        .databank 0
+
+        ; 87/8921
+
+    .endsection Unsorted878916Section
+
+
+    .section Unsorted878921Section
+
+      .al
+      .xl
+
+      rlDrawMapMenuTextLine ; 87/8921
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Draws a line of menu text (lR18, at X as in rlDrawMenuTextLine) into the
+        ; current map menu's tilemap (lMapMenuRAMEntryPointer).
+
+        jsl rlGetMapMenuTilemapRAMEntryPointer
+        jsl rlDrawMenuTextLine
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted878921Section
+
+
+    .section Unsorted878AB5Section
+
+      .al
+      .xl
+
+      rlCopyTilemapEntryToBG ; 87/8AB5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = offset into the entry's BG buffer: copies its tiles there, skipping wMapMenuTransparentTile.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
+        sta lR19+1
+        lda structMapMenuTilemapData.TilesPointer,b,y
+        sta lR19
+        lda structMapMenuTilemapData.Width,b,y
+        and #$00FF
+        sta wR0
+        lda structMapMenuTilemapData.Height,b,y
+        and #$00FF
+        sta wR1
+        sta wR3
+        txa
+        clc
+        adc structMapMenuTilemapData.BGBuffer,b,y
+        tax
+        sep #$20
+        lda structMapMenuTilemapData.BGBuffer+2,b,y
+        pha
+        rep #$20
+        plb
+        .databank ?
+        ldy #$0000
+        stx wR4
+
+        _8AF7
+        lda wR0
+        sta wR2
+
+        _8AFB
+        lda [lR19],y
+        cmp wMapMenuTransparentTile,b
+        beq _8B05
+        sta $0000,b,x
+
+        _8B05
+        inc y
+        inc y
+        inc x
+        inc x
+        dec wR2
+        bne _8AFB
+        lda wR4
+        clc
+        adc #$0040
+        sta wR4
+        tax
+        dec wR3
+        bne _8AF7
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8B1F
+
+    .endsection Unsorted878AB5Section
+
+
+    .section Unsorted878B1FSection
+
+      .al
+      .xl
+
+      rlGetTilemapEntrySize ; 87/8B1F
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Width times height times 2. Nothing in the build reaches this.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        sep #$20
+        lda structMapMenuTilemapData.Width,b,y
+        sta @l WRMPYA
+        lda structMapMenuTilemapData.Height,b,y
+        sta @l WRMPYB
+        nop
+        nop
+        nop
+        rep #$20
+        lda @l RDMPY
+        asl a
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8B4E
+
+    .endsection Unsorted878B1FSection
+
+
+    .section Unsorted878B4ESection
+
+      .al
+      .xl
+
+      rlGetTilemapEntryWidth ; 87/8B4E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenuTilemapData.Width,b,y
+        and #$00FF
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8B69
+
+      rlSetTilemapEntryArea ; 87/8B69
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = width and height of lMapMenuTilemapRAMEntryPointer.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phy
+        pha
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        pla
+        sta structMapMenuTilemapData.Area,b,y
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8B83
+
+    .endsection Unsorted878B4ESection
+
+
+    .section Unsorted878BF0Section
+
+      .al
+      .xl
+
+      rlFillTilemapEntryWithPattern ; 87/8BF0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lR18 = width, height (bytes), then width x height tiles: repeats the pattern over the current tilemap entry's tiles, plus aCurrentTilemapInfo.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        lda aCurrentTilemapInfo,b
+        sta wR8
+        ldy lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0000,b,y
+        and #$00FF
+        sta wR3
+        lda $0001,b,y
+        and #$00FF
+        sta wR4
+        phk
+        plb
+        .databank $87
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenuTilemapData.TilesPointer,b,y
+        sta lR19
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
+        sta lR19+1
+        lda structMapMenuTilemapData.Width,b,y
+        and #$00FF
+        sta wR5
+        lda structMapMenuTilemapData.Height,b,y
+        and #$00FF
+        sta wR7
+        ldx lR19
+        sep #$20
+        lda lR19+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        stz wR0
+        lda wR4
+        sta wR2
+
+        _8C4D
+        ldy wR0
+        lda wR3
+        sta wR1
+        lda wR5
+        sta wR6
+
+        _8C57
+        lda [lR18],y
+        clc
+        adc wR8
+        sta $0000,b,x
+        dec wR1
+        bne _8C69
+        lda wR3
+        sta wR1
+        ldy wR0
+
+        _8C69
+        inc y
+        inc y
+        inc x
+        inc x
+        dec wR6
+        bne _8C57
+        lda wR3
+        asl a
+        clc
+        adc wR0
+        sta wR0
+        dec wR2
+        bne _8C83
+        lda wR4
+        sta wR2
+        stz wR0
+
+        _8C83
+        dec wR7
+        bne _8C4D
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8C8C
+
+    .endsection Unsorted878BF0Section
+
+
+    .section Unsorted878C8CSection
+
+      .al
+      .xl
+
+      rlDrawSimpleFrameToTilemapEntry ; 87/8C8C
+
+        .al
+        .autsiz
+        .databank ?
+
+        php
+        phb
+        phx
+        phy
+
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+
+        lda lR18
+        clc
+        adc #$000E
+        tay
+
+        ldx #$000E
+
+          -
+          lda $0000,b,y
+          clc
+          adc aCurrentTilemapInfo.wBaseTile,b
+          sta wR1,x
+          dec y
+          dec y
+          dec x
+          dec x
+          bpl -
+
+        phk
+        plb
+
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+
+        lda structMapMenuTilemapData.TilesPointer,b,y
+        sta lR18
+        lda $0006+1,b,y
+        sta lR18+1
+        lda structMapMenuTilemapData.Width,b,y
+        and #$00FF
+        sta wR9
+        lda structMapMenuTilemapData.Height,b,y
+        and #$00FF
+        sta wR10
+
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+
+        sep #$20
+        lda wR9
+        sta WRMPYA
+        lda wR10
+        dec a
+        sta WRMPYB
+        nop
+        nop
+        nop
+        rep #$20
+
+        lda RDMPY
+        asl a
+        clc
+        adc lR18
+        tay
+
+        ldx lR18
+        lda wR1
+        sta $0000,b,x
+        inc x
+        inc x
+        lda wR6
+        sta $0000,b,y
+        inc y
+        inc y
+        lda wR9
+        dec a
+        dec a
+        sta wR0
+
+          -
+          lda wR2
+          sta $0000,b,x
+          lda wR7
+          sta $0000,b,y
+          inc x
+          inc x
+          inc y
+          inc y
+          dec wR0
+          bne -
+
+        lda wR3
+        sta $0000,b,x
+        lda wR8
+        sta $0000,b,y
+        asl wR9
+
+        lda wR9
+        clc
+        adc lR18
+        tax
+
+        clc
+        adc wR9
+        dec a
+        dec a
+        tay
+
+        lda wR10
+        dec a
+        dec a
+        sta wR0
+
+          -
+          lda wR4
+          sta $0000,b,x
+          lda wR5
+          sta $0000,b,y
+
+          txa
+          clc
+          adc wR9
+          tax
+
+          tya
+          clc
+          adc wR9
+          tay
+          dec wR0
+          bne -
+
+        ply
+        plx
+        plb
+        plp
+        rtl
+
+        .databank 0
+
+        ; 87/8D61
+
+    .endsection Unsorted878C8CSection
+
+
+    .section Unsorted878D61Section
+
+      .al
+      .xl
+
+      rlDrawFancyFrameToTilemapEntry ; 87/8D61
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lR18 = 20 tiles: draws a frame with two-tile corners round the edge of the current tilemap entry's tiles.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenuTilemapData.TilesPointer,b,y
+        sta lR19
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
+        sta lR19+1
+        lda structMapMenuTilemapData.Width,b,y
+        and #$00FF
+        sta wR13
+        lda structMapMenuTilemapData.Height,b,y
+        and #$00FF
+        sta wR14
+        ldy lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0002,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR1
+        lda $0006,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR2
+        lda $000A,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR3
+        lda $000C,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR4
+        lda $000E,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR5
+        lda $0010,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR6
+        lda $0016,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR7
+        lda $0018,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR8
+        lda $001A,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR9
+        lda $001C,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR10
+        lda $0020,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR11
+        lda $0024,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR12
+        sep #$20
+        lda lR19+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        sep #$20
+        lda wR13
+        sta @l WRMPYA
+        lda wR14
+        dec a
+        dec a
+        sta @l WRMPYB
+        nop
+        nop
+        nop
+        rep #$20
+        lda @l RDMPY
+        asl a
+        clc
+        adc lR19
+        tay
+        ldx lR19
+        lda wR1
+        sta $0002,b,x
+        txa
+        clc
+        adc wR13
+        adc wR13
+        tax
+        lda wR3
+        sta $0000,b,x
+        lda wR4
+        sta $0002,b,x
+        dec x
+        dec x
+        dec x
+        dec x
+        lda wR2
+        sta $0000,b,x
+        txa
+        clc
+        adc wR13
+        adc wR13
+        tax
+        lda wR5
+        sta $0000,b,x
+        lda wR6
+        sta $0002,b,x
+        lda wR7
+        sta $0000,b,y
+        lda wR8
+        sta $0002,b,y
+        tya
+        clc
+        adc wR13
+        adc wR13
+        tay
+        lda wR11
+        sta $0002,b,y
+        dec y
+        dec y
+        dec y
+        dec y
+        lda wR9
+        sta $0000,b,y
+        lda wR10
+        sta $0002,b,y
+        tya
+        clc
+        adc wR13
+        adc wR13
+        tay
+        lda wR12
+        sta $0000,b,y
+        ldy lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0000,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR1
+        lda $0004,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR2
+        lda $0008,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR3
+        lda $0012,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR4
+        lda $0014,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR5
+        lda $001E,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR6
+        lda $0022,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR7
+        lda $0026,b,y
+        clc
+        adc aCurrentTilemapInfo,b
+        sta wR8
+        sep #$20
+        lda lR19+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        sep #$20
+        lda wR13
+        sta @l WRMPYA
+        lda wR14
+        dec a
+        sta @l WRMPYB
+        nop
+        nop
+        nop
+        rep #$20
+        lda @l RDMPY
+        asl a
+        clc
+        adc lR19
+        tay
+        ldx lR19
+        lda wR1
+        sta $0000,b,x
+        lda wR6
+        sta $0000,b,y
+        lda wR13
+        sec
+        sbc #$0004
+        beq _8F2C
+        bcc _8F2C
+        sta wR0
+
+        _8F1A
+        lda wR2
+        sta $0004,b,x
+        lda wR7
+        sta $0004,b,y
+        inc x
+        inc x
+        inc y
+        inc y
+        dec wR0
+        bne _8F1A
+
+        _8F2C
+        lda wR3
+        sta $0006,b,x
+        lda wR8
+        sta $0006,b,y
+        asl wR13
+        lda wR13
+        asl a
+        clc
+        adc lR19
+        tax
+        clc
+        adc wR13
+        dec a
+        dec a
+        tay
+        lda wR14
+        sec
+        sbc #$0004
+        beq _8F69
+        bcc _8F69
+        sta wR0
+
+        _8F51
+        lda wR4
+        sta $0000,b,x
+        lda wR5
+        sta $0000,b,y
+        txa
+        clc
+        adc wR13
+        tax
+        tya
+        clc
+        adc wR13
+        tay
+        dec wR0
+        bne _8F51
+
+        _8F69
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8F6E
+
+    .endsection Unsorted878D61Section
+
+
+    .section Unsorted878F6ESection
+
+      .al
+      .xl
+
+      rlDrawTileStringToTilemapEntry ; 87/8F6E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        lda wR0
+        pha
+        lda wR1
+        pha
+        phx
+        phy
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenuTilemapData.TilesPointer,b,y
+        sta lR23
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
+        sta lR23+1
+        stz wR13
+        stz wR1
+        txa
+        sep #$20
+        sta wR1
+        xba
+        sta @l WRMPYA
+        lda structMapMenuTilemapData.Width,b,y
+        sta wR13
+        sta @l WRMPYB
+        nop
+        nop
+        nop
+        rep #$20
+        lda @l RDMPY
+        clc
+        adc wR1
+        asl a
+        tay
+        lda wR13
+        sec
+        sbc wR1
+        sta wR13
+        ldx lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+
+        _8FC6
+        lda $0000,b,x
+        and #$00FF
+        beq _8FDC
+        clc
+        adc @l aCurrentTilemapInfo
+        sta [lR23],y
+        inc x
+        inc y
+        inc y
+        dec wR13
+        bne _8FC6
+
+        _8FDC
+        ply
+        plx
+        pla
+        sta wR1
+        pla
+        sta wR0
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 87/8FE7
+
+    .endsection Unsorted878F6ESection
+
+
+    .section Unsorted878FE7Section
+
+      .al
+      .xl
+
+      rlDrawSmallNumberToTilemapEntry ; 87/8FE7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        ldy wR0
+        phy
+        and #$00FF
+        cmp #$0064
+        bcs _906C
+        asl a
+        pha
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenuTilemapData.TilesPointer,b,y
+        sta lR23
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
+        sta lR23+1
+        stz wR0
+        txa
+        sep #$20
+        sta wR0
+        xba
+        sta @l WRMPYA
+        lda structMapMenuTilemapData.Width,b,y
+        sta @l WRMPYB
+        nop
+        nop
+        nop
+        rep #$20
+        lda @l RDMPY
+        clc
+        adc wR0
+        asl a
+        clc
+        adc lR23
+        sta lR23
+        plx
+        lda aTwoDigitDecimalTable+1,x
+        and #$00FF
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23]
+        ldy #$0002
+        lda aTwoDigitDecimalTable,x
+        and #$00FF
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23],y
+        pla
+        sta wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+
+        _906B
+        rtl
+
+
+        _906C
+        plx
+        stx wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        bra _906B
+
+        .databank 0
+
+        ; 87/9076
+
+    .endsection Unsorted878FE7Section
+
+
+    .section Table879076Section
+
+      .al
+      .xl
+
+      aTwoDigitDecimalTable ; 87/9076
+
+        ; Read by rlDrawSmallNumberToTilemapEntry, rlDrawTallTwoDigitNumberToTilemapEntry, rlDrawNumberToTilemapEntry.
+
+        .word $0000, $0001, $0002, $0003, $0004, $0005, $0006, $0007
+        .word $0008, $0009, $0100, $0101, $0102, $0103, $0104, $0105
+        .word $0106, $0107, $0108, $0109, $0200, $0201, $0202, $0203
+        .word $0204, $0205, $0206, $0207, $0208, $0209, $0300, $0301
+        .word $0302, $0303, $0304, $0305, $0306, $0307, $0308, $0309
+        .word $0400, $0401, $0402, $0403, $0404, $0405, $0406, $0407
+        .word $0408, $0409, $0500, $0501, $0502, $0503, $0504, $0505
+        .word $0506, $0507, $0508, $0509, $0600, $0601, $0602, $0603
+        .word $0604, $0605, $0606, $0607, $0608, $0609, $0700, $0701
+        .word $0702, $0703, $0704, $0705, $0706, $0707, $0708, $0709
+        .word $0800, $0801, $0802, $0803, $0804, $0805, $0806, $0807
+        .word $0808, $0809, $0900, $0901, $0902, $0903, $0904, $0905
+        .word $0906, $0907, $0908, $0909
+
+        ; 87/913E
+
+    .endsection Table879076Section
+
+
+    .section Unsorted87913ESection
+
+      .al
+      .xl
+
+      rlDrawTallTwoDigitNumberToTilemapEntry ; 87/913E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = 0-99, X = row and column: draws two two-row digits. Carry set if A is 100 or more.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        ldy wR0
+        phy
+        and #$00FF
+        cmp #$0064
+        bcc _9153
+        jml _91E4
+
+
+        _9153
+        asl a
+        pha
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenuTilemapData.TilesPointer,b,y
+        sta lR23
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
+        sta lR23+1
+        stz wR0
+        txa
+        sep #$20
+        sta wR0
+        xba
+        sta @l WRMPYA
+        lda structMapMenuTilemapData.Width,b,y
+        sta @l WRMPYB
+        nop
+        nop
+        nop
+        rep #$20
+        lda @l RDMPY
+        clc
+        adc wR0
+        asl a
+        clc
+        adc lR23
+        sta lR23
+        lda structMapMenuTilemapData.Width,b,y
+        and #$00FF
+        asl a
+        sta wR0
+        plx
+        lda aTwoDigitDecimalTable+1,x
+        and #$00FF
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23]
+        clc
+        adc #$0010
+        ldy wR0
+        sta [lR23],y
+        ldy #$0002
+        lda aTwoDigitDecimalTable,x
+        and #$00FF
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23],y
+        clc
+        adc #$0010
+        inc wR0
+        inc wR0
+        ldy wR0
+        sta [lR23],y
+        pla
+        sta wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+
+        _91E3
+        rtl
+
+
+        _91E4
+        plx
+        stx wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        bra _91E3
+
+        .databank 0
+
+        ; 87/91EE
+
+    .endsection Unsorted87913ESection
+
+
+    .section Unsorted8791EESection
+
+      .al
+      .xl
+
+      rlDrawNumberToTilemapEntry ; 87/91EE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        phy
+        ldy wR0
+        phy
+        cmp #$03E8
+        bmi _9200
+        jml _934A
+
+
+        _9200
+        pha
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenuTilemapData.TilesPointer,b,y
+        sta lR23
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
+        sta lR23+1
+        stz wR0
+        txa
+        dec a
+        sep #$20
+        sta wR0
+        xba
+        sta @l WRMPYA
+        lda structMapMenuTilemapData.Width,b,y
+        sta @l WRMPYB
+        nop
+        nop
+        nop
+        rep #$20
+        lda @l RDMPY
+        clc
+        adc wR0
+        asl a
+        clc
+        adc lR23
+        sta lR23
+        lda structMapMenuTilemapData.Width,b,y
+        and #$00FF
+        asl a
+        sta wR0
+        pla
+        pha
+        cmp #$0000
+        bpl _9263
+        lda #$20FF
+        sta [lR23]
+        lda #$0019
+        clc
+        adc @l aCurrentTilemapInfo
+        ora #$2000
+        ldy wR0
+        sta [lR23],y
+        bra _926C
+
+
+        _9263
+        lda #$20FF
+        sta [lR23]
+        ldy wR0
+        sta [lR23],y
+
+        _926C
+        pla
+        cmp #$0000
+        bpl _9276
+        eor #$FFFF
+        inc a
+
+        _9276
+        cmp #$0064
+        bmi _92D9
+        sta wR13
+        lda #$0064
+        sta wR14
+        jsl rlUnsignedDivide16By8
+        lda wR13
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23]
+        clc
+        adc #$0010
+        ldy wR0
+        sta [lR23],y
+        lda wR10
+        cmp #$000A
+        bpl _92D9
+        ldy #$0002
+        lda #$0000
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23],y
+        inc y
+        inc y
+        sta [lR23],y
+        sta wR13
+        lda wR10
+        bpl _92DE
+        lda wR13
+        clc
+        adc #$0010
+        inc wR0
+        inc wR0
+        ldy wR0
+        sta [lR23],y
+        inc y
+        inc y
+        sta [lR23],y
+        jml _9341
+
+
+        _92D9
+        cmp #$000A
+        bmi _9306
+
+        _92DE
+        asl a
+        tax
+        ldy #$0002
+        lda aTwoDigitDecimalTable+1,x
+        and #$00FF
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23],y
+        clc
+        adc #$0010
+        inc wR0
+        inc wR0
+        ldy wR0
+        sta [lR23],y
+        bra _931D
+
+
+        _9306
+        pha
+        ldy #$0002
+        lda #$00FF
+        ora #$2000
+        sta [lR23],y
+        inc wR0
+        inc wR0
+        ldy wR0
+        sta [lR23],y
+        pla
+        asl a
+        tax
+
+        _931D
+        ldy #$0004
+        lda aTwoDigitDecimalTable,x
+        and #$00FF
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23],y
+        clc
+        adc #$0010
+        inc wR0
+        inc wR0
+        ldy wR0
+        sta [lR23],y
+
+        _9341
+        pla
+        sta wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+
+        _9349
+        rtl
+
+
+        _934A
+        plx
+        stx wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        bra _9349
+
+        .databank 0
+
+        ; 87/9354
+
+    .endsection Unsorted8791EESection
+
+

@@ -1,4 +1,5 @@
-; Boot, cold/soft reset, engine initialization, main loop entry, and opening logo setup.
+; Boot, cold/soft reset, engine initialization, main loop entry, and opening logo setup;
+; the reset signature and the code checksum at reset (see include/Checksums.h).
 
     .section InitEngineSection
 
@@ -522,5 +523,137 @@
         ; 80/AE63
 
     .endsection Unsorted80AE25Section
+
+
+    .section Unsorted878017Section
+
+      .al
+      .xl
+
+      rlWriteResetSignature ; 87/8017
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies 128 bytes of code from $88/8888 into aSpriteExtBuffer, so a later rlCheckResetSignature can tell the RAM was not cleared.
+
+        ldx #$0000
+
+        _801A
+        lda rlUnknown8887EC._8880+8,x
+        sta @l aSpriteExtBuffer,x
+        inc x
+        inc x
+        cpx #$0080
+        bne _801A
+
+        _8029
+        rtl
+
+        .databank 0
+
+        ; 87/802A
+
+      rlCheckResetSignature ; 87/802A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Compares $88/8888-$88/8907 with aSpriteExtBuffer. If any word differs (a cold start), writes the signature and returns. If all match, writes the SRAM anti-tamper mark and hangs (rlUnknown91E8CC); _8063 is the hang used when the mark is already there (rlUnknown91E8C1).
+
+        ldx #$0000
+
+        _802D
+        lda rlUnknown8887EC._8880+8,x
+        cmp @l aSpriteExtBuffer,x
+        bne rlWriteResetSignature._8029
+        inc x
+        inc x
+        cpx #$0080
+        bne _802D
+
+        _803E
+        jsl rlWriteResetSignature
+        lda #$0000
+        sta @l $001FFC
+        sta @l $001FFE
+        jsl rlGetAntiTamperMark
+        cmp #SRAM_ANTI_TAMPER_MARK
+        beq _8063
+        lda #SRAM_ANTI_TAMPER_MARK
+        jsl rlSetAntiTamperMark
+        jsl rlUnknown91E8CC
+
+        _8061
+        bra _8061
+
+
+        _8063
+        lda #$0000
+        sta @l $001FFC
+        sta @l $001FFE
+        jsl rlUnknown91E8C1
+
+        _8072
+        bra _8072
+
+        .databank 0
+
+        ; 87/8074
+
+      rlCheckCodeChecksumsAtReset ; 87/8074
+
+        ; Runs on into built code at the end.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Runs rlCheckResetSignature, then, if the checks are on, adds up $80/8D56-8E2C and compares the sum with aCodeChecksumsCopy87; a mismatch hangs, a match clears the anti-tamper mark.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        phx
+        jsl rlCheckResetSignature
+        lda @l aCodeChecksumsCopy87.ChecksEnabled
+        beq _809B
+        lda #$0000
+        ldx #<>rlReset
+
+        _8089
+        clc
+        adc $800000,x
+        inc x
+        inc x
+        cpx #<>rlColdResetClearMemory
+        bcc _8089
+        cmp @l aCodeChecksumsCopy87.Bank80Sum
+        bne _80A6
+
+        _809B
+        lda #$0000
+        jsl rlSetAntiTamperMark
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+
+        _80A6
+        jsl rlCheckResetSignature._8063
+
+        .databank 0
+
+        ; 87/80AA
+
+    .endsection Unsorted878017Section
 
 

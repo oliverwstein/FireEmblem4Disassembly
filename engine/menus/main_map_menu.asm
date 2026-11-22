@@ -857,3 +857,26 @@
     .endsection Unsorted85DE34Section
 
 
+    .section Unsorted87CBC5Section
+
+      .al
+      .xl
+
+      rlMapMenuLoadHook ; 87/CBC5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Does nothing (rtl); rlMapMenuLoad calls it with A = 1.
+
+        rtl
+
+        .databank 0
+
+        ; 87/CBC6
+
+    .endsection Unsorted87CBC5Section
+
+

@@ -1,5 +1,6 @@
-; Reading and changing game options: battle animations, the unit and terrain
-; windows, and text speed.
+; Reading and changing the game options kept in wOptionSettings: battle
+; animations, the unit and terrain windows, text and enemy speed, sound,
+; auto-save, auto cursor and the enemy AI.
 
     .section CheckIfBattleAnimationOFFSection
 
@@ -171,3 +172,558 @@
         ; 87/BF01
 
     .endsection GetTextSpeedOptionSection
+
+
+    .section Unsorted87BED7Section
+
+      .al
+      .xl
+
+      rlSetUnitWindowSetting ; 87/BED7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = the options menu's value: nonzero sets bit 2 of wOptionSettings (read back by rlCheckIfUnitWindowSettingOff).
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        ora #$0000
+        bne _BEE8
+        lda #$0004
+        trb wOptionSettings,b
+        bra _BEEE
+
+
+        _BEE8
+        lda #$0004
+        tsb wOptionSettings,b
+
+        _BEEE
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BEF1
+
+    .endsection Unsorted87BED7Section
+
+
+    .section Unsorted87BF01Section
+
+      .al
+      .xl
+
+      rlSetTextSpeedOption ; 87/BF01
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = 0-4: bits 3-5 of wOptionSettings.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        and #$0007
+        asl a
+        asl a
+        asl a
+        sta wR0
+        lda wOptionSettings,b
+        and #$FFC7
+        ora wR0
+        sta wOptionSettings,b
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BF1B
+
+    .endsection Unsorted87BF01Section
+
+
+    .section Unsorted87BF1BSection
+
+      .al
+      .xl
+
+      rlGetEnemySpeedOption ; 87/BF1B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Bit 6 of wOptionSettings: 0 real, 1 fast.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        lda wOptionSettings,b
+        bit #$0040
+        jml rlCheckIfTerrainWindowSettingOff._BEA2
+
+        .databank 0
+
+        ; 87/BF29
+
+    .endsection Unsorted87BF1BSection
+
+
+    .section Unsorted87BF29Section
+
+      .al
+      .xl
+
+      rlSetEnemySpeedOption ; 87/BF29
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        ora #$0000
+        bne _BF3A
+        lda #$0040
+        trb wOptionSettings,b
+        bra _BF40
+
+
+        _BF3A
+        lda #$0040
+        tsb wOptionSettings,b
+
+        _BF40
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BF43
+
+    .endsection Unsorted87BF29Section
+
+
+    .section Unsorted87BF43Section
+
+      .al
+      .xl
+
+      rlGetSoundOption ; 87/BF43
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Bits 7-8 of wOptionSettings: 0 stereo, 1 mono, 2 off.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        lda wOptionSettings,b
+        and #$0180
+        asl a
+        xba
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BF52
+
+    .endsection Unsorted87BF43Section
+
+
+    .section Unsorted87BF52Section
+
+      .al
+      .xl
+
+      rlSetSoundOption ; 87/BF52
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Also applies it (rlApplySoundOption).
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        and #$0003
+        xba
+        lsr a
+        sta wR0
+        lda wOptionSettings,b
+        and #$FE7F
+        ora wR0
+        sta wOptionSettings,b
+        jsl rlApplySoundOption
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BF6F
+
+    .endsection Unsorted87BF52Section
+
+
+    .section Unsorted87BF6FSection
+
+      .al
+      .xl
+
+      rlApplySoundOption ; 87/BF6F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sets bSoundFlags from the sound option: off sets bit 4, mono sets bit 6, stereo clears both.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        jsl rlGetSoundOption
+        cmp #$0002
+        bne _BF8A
+        sep #$20
+        lda bSoundFlags,b
+        ora #$10
+        sta bSoundFlags,b
+        rep #$20
+        bra _BFAD
+
+
+        _BF8A
+        cmp #$0001
+        bne _BF9F
+        sep #$20
+        lda bSoundFlags,b
+        and #$EF
+        ora #$40
+        sta bSoundFlags,b
+        rep #$20
+        bra _BFAD
+
+
+        _BF9F
+        sep #$20
+        lda bSoundFlags,b
+        and #$AF
+        sta bSoundFlags,b
+        rep #$20
+        bra _BFAD
+
+
+        _BFAD
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BFB0
+
+      rlGetAutoSaveOption ; 87/BFB0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Bit 9 of wOptionSettings: 1 if auto-save is on.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        lda wOptionSettings,b
+        and #$0200
+        xba
+        lsr a
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BFBF
+
+    .endsection Unsorted87BF6FSection
+
+
+    .section Unsorted87BFBFSection
+
+      .al
+      .xl
+
+      rlSetAutoSaveOption ; 87/BFBF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        ora #$0000
+        bne _BFD0
+        lda #$0200
+        trb wOptionSettings,b
+        bra _BFD6
+
+
+        _BFD0
+        lda #$0200
+        tsb wOptionSettings,b
+
+        _BFD6
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BFD9
+
+    .endsection Unsorted87BFBFSection
+
+
+    .section Unsorted87BFD9Section
+
+      .al
+      .xl
+
+      rlGetAutoSaveFile ; 87/BFD9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Bits 10-11 of wOptionSettings: the file auto-save writes, 0-3.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        lda wOptionSettings,b
+        and #$0C00
+        xba
+        lsr a
+        lsr a
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/BFE9
+
+    .endsection Unsorted87BFD9Section
+
+
+    .section Unsorted87BFE9Section
+
+      .al
+      .xl
+
+      rlSetAutoSaveFile ; 87/BFE9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        and #$0003
+        xba
+        asl a
+        asl a
+        sta wR0
+        lda wOptionSettings,b
+        and #$F3FF
+        ora wR0
+        sta wOptionSettings,b
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/C003
+
+    .endsection Unsorted87BFE9Section
+
+
+    .section Unsorted87C015Section
+
+      .al
+      .xl
+
+      rlSetCleverModeFlag ; 87/C015
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A nonzero sets bit 12 of wOptionSettings (the enemy AI option; rlGetCleverModeFlag).
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        ora #$0000
+        bne _C026
+        lda #$1000
+        trb wOptionSettings,b
+        bra _C02C
+
+
+        _C026
+        lda #$1000
+        tsb wOptionSettings,b
+
+        _C02C
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/C02F
+
+    .endsection Unsorted87C015Section
+
+
+    .section Unsorted87C02FSection
+
+      .al
+      .xl
+
+      rlGetAutoCursorOption ; 87/C02F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Bit 0 of wOptionSettings.
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        lda wOptionSettings,b
+        and #$0001
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/C03C
+
+    .endsection Unsorted87C02FSection
+
+
+    .section Unsorted87C03CSection
+
+      .al
+      .xl
+
+      rlSetAutoCursorOption ; 87/C03C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        ora #$0000
+        bne _C04D
+        lda #$0001
+        trb wOptionSettings,b
+        bra _C053
+
+
+        _C04D
+        lda #$0001
+        tsb wOptionSettings,b
+
+        _C053
+        plp
+        plb
+        .databank $87
+        rtl
+
+        .databank 0
+
+        ; 87/C056
+
+    .endsection Unsorted87C03CSection
+
+

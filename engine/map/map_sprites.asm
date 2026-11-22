@@ -2153,3 +2153,72 @@
     .endsection Unsorted818D23Section
 
 
+    .section Unsorted87C056Section
+
+      .al
+      .xl
+
+      procCastleTakenOver ; 87/C056
+
+        .structProcInfo "TF", rlProcCastleTakenOverInit, rlProcCastleTakenOverCycle, aProcUnknown87C056Code
+
+      rlProcCastleTakenOverInit ; 87/C05E
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; wInput0 = location, wInput1 = old owner, wInput2 = new owner. Skips to the end of the script unless the old owner's home castle was taken (rlUnknown87C11D) and some of its units must fade out (rlUnknown87C141). Holds the game state.
+
+        ; wInput0 = LocationID
+        ; wInput1 = old owner
+        ; wInput2 = new owner
+
+        lda aProcSystem.wInput0,b
+        sta aProcSystem.aBody0,b,x
+        lda aProcSystem.wInput1,b
+        sta aProcSystem.aBody1,b,x
+        lda aProcSystem.wInput2,b
+        sta aProcSystem.aBody2,b,x
+        lda #0
+        sta aProcSystem.aBody3,b,x
+        sta aProcSystem.aBody4,b,x
+        jsl rlUnknown87C11D
+        bcs +
+
+          lda #<>aProcUnknown87C056Code._C23A
+          sta aProcSystem.aHeaderCodeOffset,b,x
+          lda #1
+          sta aProcSystem.aHeaderSleepTimer,b,x
+          bra ++
+
+        +
+        lda aProcSystem.aBody1,b,x
+        jsl rlUnknown87C141
+        cmp #0
+        bne +
+
+          lda #<>aProcUnknown87C056Code._C235
+          sta aProcSystem.aHeaderCodeOffset,b,x
+          lda #1
+          sta aProcSystem.aHeaderSleepTimer,b,x
+
+        +
+        stz wGameStateRoutine1,b
+        rtl
+
+        .databank 0
+
+      rlProcCastleTakenOverCycle ; 87/C0A9
+
+        .al
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted87C056Section
+
+

@@ -2080,3 +2080,58 @@
         ; 87/F501
 
     .endsection CheckIfCharacterHasFemaleGenerationIDSection
+
+
+    .section Unsorted879EE7Section
+
+      .al
+      .xl
+
+      rlCheckIsTalkTargetOf ; 87/9EE7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Carry set if the selected unit's living talk target is the character of the unit in wRoutineVariable1 (a unit RAM pointer).
+
+        phb
+        php
+        phk
+        plb
+        .databank $87
+        lda wSelectedUnitDataRAMPointer,b
+        pha
+        lda wRoutineVariable1,b
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitCharacterID
+        sta wRoutineVariable1,b
+        pla
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitLivingTalkTarget
+        cmp wRoutineVariable1,b
+        bne _9F0D
+        plp
+        plb
+        .databank ?
+        sec
+
+        _9F0C
+        rtl
+
+
+        _9F0D
+        plp
+        plb
+        .databank ?
+        clc
+        bra _9F0C
+
+        .databank 0
+
+        ; 87/9F12
+
+    .endsection Unsorted879EE7Section
+
+

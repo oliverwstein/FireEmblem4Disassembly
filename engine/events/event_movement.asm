@@ -723,3 +723,191 @@
         ; 87/B512
 
     .endsection EventMovementWriteToMovementScriptBufferSection
+
+
+    .section Unsorted87B01DSection
+
+      .al
+      .xl
+
+      rlEventMovementPlanRoute ; 87/B01D
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; A = movement entry, wRoutineVariable1 = character ID: fills in the unit's tile (if not given) and movement costs, then rlEventMovementBuildRoute. Carry set if no route.
+
+        ; Input:
+        ; A = EntryIndex
+        ; wRoutineVariable1 = CharacterID
+
+        phb
+        php
+        phk
+        plb
+        phx
+
+        sta aEventMovement.wEntryIndex
+
+        lda aEventMovement.wUnitXCoordinate
+        bpl +
+
+          lda wRoutineVariable1,b
+          jsl rlGetUnitRAMDataPointerByID
+          bcs _SEC
+
+            jsl rlGetSelectedUnitDeploymentOffset
+            tax
+            lda aDeploymentTable._XTilePosition,x
+            sta aEventMovement.wUnitXCoordinate
+            lda aDeploymentTable._YTilePosition,x
+            sta aEventMovement.wUnitYCoordinate
+
+        +
+        lda wRoutineVariable1,b
+        jsl rlGetCharacterClass
+        jsl rlGetClassDataROMPointer
+        jsl rlGetClassMovementType
+        asl a
+        clc
+        adc aMainDataOffsets.MovementCostOffsets
+        tax
+        lda aMainDataOffsets,x
+        clc
+        adc aMainDataOffsets.MovementCostOffsets
+        adc #<>aMainDataOffsets
+        sta aEventMovement.wMovementCostPointer
+        jsl rlEventMovementBuildRoute
+        bcs _SEC
+
+          plx
+          plp
+          plb
+          clc
+          rtl
+
+        _SEC
+        plx
+        plp
+        plb
+        sec
+        rtl
+
+        .databank 0
+
+      rlEventMovementBuildRoute ; 87/B080
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Finds the destination (or the nearest free tile to it) and builds the movement script from the unit's tile. Carry set if none.
+
+        phb
+        php
+        phk
+        plb
+        phx
+        phy
+        jsl rlFillEventMovementMoveCostMap
+
+        lda aEventMovement.wUnknown7EC494
+        bne _B0F7
+
+          lda #`aEventMovement.aTargetMap
+          ldx #<>aEventMovement.aTargetMap
+          jsl rlClearMapBufferAddBorders
+
+          lda aEventMovement.wDestinationXCoordinate
+          sta aEventMovement.wTargetXCoordinate
+          lda aEventMovement.wDestinationYCoordinate
+          sta aEventMovement.wTargetYCoordinate
+          lda #0
+          jsl rlSetEventMovementTargetTile
+
+          ldx #len(aDeploymentTable._State)-2
+
+            _Loop
+            lda aDeploymentTable._State,x
+            bit #DeploymentStateAlive
+            beq _Next
+
+              lda aDeploymentTable._XTilePosition,x
+              sta aEventMovement.wTargetXCoordinate
+              lda aDeploymentTable._YTilePosition,x
+              sta aEventMovement.wTargetYCoordinate
+              lda #$00FF
+              jsl rlSetEventMovementTargetTile
+
+            _Next
+            dec x
+            dec x
+            bpl _Loop
+
+          lda aEventMovement.wDestinationXCoordinate
+          sta aEventMovement.wStartingXCoordinate
+          lda aEventMovement.wDestinationYCoordinate
+          sta aEventMovement.wStartingYCoordinate
+          lda #0
+          sta aEventMovement.wTargetXCoordinate
+          jsl rlEventMovementBuildTargetDistanceMap
+          bcc _SEC
+          bra +
+
+        _B0F7
+        lda aEventMovement.wDestinationXCoordinate
+        sta aEventMovement.wTargetXCoordinate
+        lda aEventMovement.wDestinationYCoordinate
+        sta aEventMovement.wTargetYCoordinate
+
+        +
+        lda aEventMovement.wEntryIndex
+        asl a
+        tax
+        lda aEventMovement.wTargetXCoordinate
+        sta aEventMovement.wStartingXCoordinate
+        sta aEventMovement.aScriptEndXCoordinate,x
+        lda aEventMovement.wTargetYCoordinate
+        sta aEventMovement.wStartingYCoordinate
+        sta aEventMovement.aScriptEndYCoordinate,x
+
+        jsl rlClearEventMovementTargetMap
+
+        lda aEventMovement.wUnitXCoordinate
+        sta aEventMovement.wTargetXCoordinate
+        sta aEventMovement.aScriptStartXCoordinate,x
+        lda aEventMovement.wUnitYCoordinate
+        sta aEventMovement.wTargetYCoordinate
+        sta aEventMovement.aScriptStartYCoordinate,x
+        lda #0
+        jsl rlSetEventMovementTargetTile
+
+        lda #1
+        sta aEventMovement.wTargetXCoordinate
+        jsl rlEventMovementBuildTargetDistanceMap
+        bcc _SEC
+
+        lda aEventMovement.wEntryIndex
+        jsl rlEventMovementCreateMovementScriptFromTargetDistanceMap
+
+        ply
+        plx
+        plp
+        plb
+        clc
+        rtl
+
+        _SEC
+        ply
+        plx
+        plp
+        plb
+        sec
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted87B01DSection
+
+
