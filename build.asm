@@ -3311,6 +3311,8 @@
 
       .dsection Unsorted898A41Section
 
+      .dsection Data898A61Section
+
     .here
 
     * = $098A7E
@@ -3333,6 +3335,8 @@
       .dsection Data898CBCSection
 
       .dsection Unsorted898D55Section
+
+      .dsection SpriteArray898E65Section
 
     .here
 

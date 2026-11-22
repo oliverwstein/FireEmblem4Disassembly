@@ -1996,12 +1996,12 @@
         jsl rlGetSelectedUnitMapSprite
         and #$8000
         bne _8A1F
-        ldy #$8A29
+        ldy #<>aStatusScreenSmallMapSprite
         bra _8A22
 
 
         _8A1F
-        ldy #$8A30
+        ldy #<>aStatusScreenLargeMapSprite
 
         _8A22
         jsl rlPushToOAMBuffer
@@ -2056,7 +2056,7 @@
         stz wR1
         stz wR4
         stz wR5
-        ldy #$8A6D
+        ldy #<>aStatusScreenPromotionMarker
         jsl rlPushToOAMBuffer
 
         _8A60
@@ -2067,6 +2067,30 @@
         ; 89/8A61
 
     .endsection Unsorted898A41Section
+
+
+    .section Data898A61Section
+
+      .al
+      .xl
+
+      aUnknown898A61 ; 89/8A61
+
+        ; Nothing reads these twelve bytes.
+
+        .byte $00, $01, $02, $01, $00, $01, $02, $03, $04, $03, $02, $01
+
+      aStatusScreenPromotionMarker ; 89/8A6D
+
+        _Sprites := [[(  13,   36), $00, SpriteSmall, $004, 3, 2, false, false]]
+        _Sprites ..= [[(  21,   36), $00, SpriteSmall, $005, 3, 2, false, false]]
+        _Sprites ..= [[(  29,   36), $00, SpriteSmall, $006, 3, 2, false, false]]
+
+        .structSpriteArray aStatusScreenPromotionMarker._Sprites
+
+        ; 89/8A7E
+
+    .endsection Data898A61Section
 
 
     .section Unsorted898A7ESection
@@ -2100,7 +2124,7 @@
         plb
         .databank $89
         rep #$20
-        ldy #$8AC1
+        ldy #<>aStatusScreenWeaponRankIcons
         lda #$007E
         sta wR0
         lda #$00F1
@@ -2174,7 +2198,7 @@
         phk
         plb
         .databank $89
-        ldy #$8B34
+        ldy #<>aStatusScreenWeaponTypeIcon
         jsl rlPushToOAMBuffer
 
         _8B29
@@ -2194,16 +2218,20 @@
 
       aStatusScreenWeaponTypeIconTiles ; 89/8B2A
 
-        ; Read by rsStatusScreenDrawEquippedWeaponIcon.
+        ; Read by rsStatusScreenDrawEquippedWeaponIcon: a byte per weapon type, added to the
+        ; icon sprite's tile.
 
-        .byte $00, $02, $04, $06, $08, $0A, $0C, $0E, $20, $22, $01, $00, $00, $C2, $C0, $00
-        .byte $3D
+        .byte $00, $02, $04, $06, $08, $0A, $0C, $0E, $20, $22
+
+      aStatusScreenWeaponTypeIcon ; 89/8B34
+
+        _Sprites := [[(   0,  -64), $21, SpriteLarge, $100, 3, 6, false, false]]
+
+        .structSpriteArray aStatusScreenWeaponTypeIcon._Sprites
 
         ; 89/8B3B
 
     .endsection Table898B2ASection
-
-
     .section Unsorted898B3BSection
 
       .al
@@ -2232,7 +2260,7 @@
         plb
         .databank $89
         rep #$20
-        ldy #$8B90
+        ldy #<>aStatusScreenInventoryIcon
         lda #$0086
         sta wR0
         lda @l aStatusScreenInventoryRowY,x
@@ -2270,15 +2298,13 @@
 
       aStatusScreenInventoryRowY ; 89/8B80
 
-        ; Read by rsStatusScreenDrawInventoryIcons.
+        ; A byte per inventory row: its Y on the page.
 
-        .word $1000, $3020, $5040, $7060
+        .byte $00, $10, $20, $30, $40, $50, $60, $70
 
         ; 89/8B88
 
     .endsection Table898B80Section
-
-
     .section Data898B88Section
 
       .al
@@ -2286,15 +2312,20 @@
 
       aStatusScreenInventoryIconTiles ; 89/8B88
 
-        ; Read by rsStatusScreenDrawInventoryIcons.
+        ; A byte per inventory row: the tile offset of its item icon (rlUnknown8990DA loaded
+        ; the icons in that order).
 
-        .byte $00, $02, $04, $06, $08, $0A, $0C, $0E, $01, $00, $00, $C2, $C0, $60, $26
+        .byte $00, $02, $04, $06, $08, $0A, $0C, $0E
+
+      aStatusScreenInventoryIcon ; 89/8B90
+
+        _Sprites := [[(   0,  -64), $21, SpriteLarge, $060, 2, 3, false, false]]
+
+        .structSpriteArray aStatusScreenInventoryIcon._Sprites
 
         ; 89/8B97
 
     .endsection Data898B88Section
-
-
     .section Unsorted898B97Section
 
       .al
@@ -2312,7 +2343,7 @@
         phk
         plb
         .databank $89
-        ldy #$8CC4
+        ldy #<>aStatusScreenItemDetailIcon
         lda wStatusScreenItemSlot
         tax
         dec x
@@ -2339,7 +2370,7 @@
         _8BD8
         lda wStatusScreenFactionSlot
         bne _8BF9
-        ldy #$8CC4
+        ldy #<>aStatusScreenItemDetailIcon
         lda #$003B
         sta wR0
         lda #$001B
@@ -2363,7 +2394,7 @@
         sta wR1
         lda #$3C00
         sta wR5
-        ldy #$8CC4
+        ldy #<>aStatusScreenItemDetailIcon
         jsl rlPushToOAMBuffer
         lda wStatusScreenTemp1
         cmp #$0005
@@ -2380,7 +2411,7 @@
         sta wR5
         lda #$004A
         sta wR1
-        ldy #$8CCB
+        ldy #<>aStatusScreenTriangleFrame
         jsl rlPushToOAMBuffer
         lda #$0000
         sta wR0
@@ -2407,7 +2438,7 @@
         sta wR5
         lda #$004A
         sta wR1
-        ldy #$8CCB
+        ldy #<>aStatusScreenTriangleFrame
         jsl rlPushToOAMBuffer
         lda #$0000
         sta wR0
@@ -2433,7 +2464,7 @@
         sta wR5
         lda #$004A
         sta wR1
-        ldy #$8D2B
+        ldy #<>aStatusScreenLightDarkSprites
         jsl rlPushToOAMBuffer
 
         _8CBB
@@ -2453,37 +2484,97 @@
 
       aStatusScreenItemIconTiles ; 89/8CBC
 
-        ; Read by rsStatusScreenDrawItemDetailSprites.
+        ; A byte per inventory slot (1-8): the tile offset of its item icon.
 
-        .byte $60, $62, $64, $66, $68, $6A, $6C, $6E, $01, $00, $00, $C2, $50, $00, $00, $02
-        .byte $00, $18, $C2, $70, $00, $30, $48, $C2, $70, $00, $B0
+        .byte $60, $62, $64, $66, $68, $6A, $6C, $6E
 
-        ; 89/8CD7
+      aStatusScreenItemDetailIcon ; 89/8CC4
+
+        _Sprites := [[(   0,   80), $21, SpriteLarge, $000, 0, 0, false, false]]
+
+        .structSpriteArray aStatusScreenItemDetailIcon._Sprites
+
+      aStatusScreenTriangleFrame ; 89/8CCB
+
+        ; Behind the weapon triangle.
+
+        _Sprites := [[(  24,  112), $21, SpriteLarge, $000, 3, 0, false, false]]
+        _Sprites ..= [[(  72,  112), $21, SpriteLarge, $000, 3, 0, false, true]]
+
+        .structSpriteArray aStatusScreenTriangleFrame._Sprites
 
       aStatusScreenPhysicalTriangleSprites ; 89/8CD7
 
-        ; Read by rsStatusScreenDrawItemDetailSprites.
+        ; By weapon type: sword, lance, axe.
 
-        .word $8CDD, $8CE9, $8CF5, $0002, $C228, $0470, $583D, $70C2
-        .word $3D02, $0002, $C228, $0070, $583D, $70C2, $3D04, $0002
-        .word $C228, $0270, $583D, $70C2, $3D00
+        .word <>aStatusScreenSwordTriangle
+        .word <>aStatusScreenLanceTriangle
+        .word <>aStatusScreenAxeTriangle
 
-        ; 89/8D01
+      aStatusScreenSwordTriangle ; 89/8CDD
+
+        _Sprites := [[(  40,  112), $21, SpriteLarge, $104, 3, 6, false, false]]
+        _Sprites ..= [[(  88,  112), $21, SpriteLarge, $102, 3, 6, false, false]]
+
+        .structSpriteArray aStatusScreenSwordTriangle._Sprites
+
+      aStatusScreenLanceTriangle ; 89/8CE9
+
+        _Sprites := [[(  40,  112), $21, SpriteLarge, $100, 3, 6, false, false]]
+        _Sprites ..= [[(  88,  112), $21, SpriteLarge, $104, 3, 6, false, false]]
+
+        .structSpriteArray aStatusScreenLanceTriangle._Sprites
+
+      aStatusScreenAxeTriangle ; 89/8CF5
+
+        _Sprites := [[(  40,  112), $21, SpriteLarge, $102, 3, 6, false, false]]
+        _Sprites ..= [[(  88,  112), $21, SpriteLarge, $100, 3, 6, false, false]]
+
+        .structSpriteArray aStatusScreenAxeTriangle._Sprites
 
       aStatusScreenMagicTriangleSprites ; 89/8D01
 
-        ; Read by rsStatusScreenDrawItemDetailSprites.
+        ; By weapon type less 5: fire, thunder, wind.
 
-        .word $8D07, $8D13, $8D1F, $0002, $C228, $0E70, $583D, $70C2
-        .word $3D0C, $0002, $C228, $0A70, $583D, $70C2, $3D0E, $0002
-        .word $C228, $0C70, $583D, $70C2, $3D0A, $0004, $C21C, $0070
-        .word $2E30, $70C2, $3D0A, $C240, $0C70, $523D, $70C2, $3D0E
+        .word <>aStatusScreenFireTriangle
+        .word <>aStatusScreenThunderTriangle
+        .word <>aStatusScreenWindTriangle
 
-        ; 89/8D41
+      aStatusScreenFireTriangle ; 89/8D07
+
+        _Sprites := [[(  40,  112), $21, SpriteLarge, $10E, 3, 6, false, false]]
+        _Sprites ..= [[(  88,  112), $21, SpriteLarge, $10C, 3, 6, false, false]]
+
+        .structSpriteArray aStatusScreenFireTriangle._Sprites
+
+      aStatusScreenThunderTriangle ; 89/8D13
+
+        _Sprites := [[(  40,  112), $21, SpriteLarge, $10A, 3, 6, false, false]]
+        _Sprites ..= [[(  88,  112), $21, SpriteLarge, $10E, 3, 6, false, false]]
+
+        .structSpriteArray aStatusScreenThunderTriangle._Sprites
+
+      aStatusScreenWindTriangle ; 89/8D1F
+
+        _Sprites := [[(  40,  112), $21, SpriteLarge, $10C, 3, 6, false, false]]
+        _Sprites ..= [[(  88,  112), $21, SpriteLarge, $10A, 3, 6, false, false]]
+
+        .structSpriteArray aStatusScreenWindTriangle._Sprites
+
+      aStatusScreenLightDarkSprites ; 89/8D2B
+
+        ; For light and dark magic, outside the triangles.
+
+        _Sprites := [[(  28,  112), $21, SpriteLarge, $000, 3, 0, false, false]]
+        _Sprites ..= [[(  46,  112), $21, SpriteLarge, $10A, 3, 6, false, false]]
+        _Sprites ..= [[(  64,  112), $21, SpriteLarge, $10C, 3, 6, false, false]]
+        _Sprites ..= [[(  82,  112), $21, SpriteLarge, $10E, 3, 6, false, false]]
+
+        .structSpriteArray aStatusScreenLightDarkSprites._Sprites
 
       aStatusScreenItemWeaponTypeTiles ; 89/8D41
 
-        ; Read by rsStatusScreenDrawItemDetailSprites.
+        ; A word per weapon type: the tile of its icon.
 
         .word $0100, $0102, $0104, $0106, $0108, $010A, $010C, $010E
         .word $0120, $0122
@@ -2491,8 +2582,6 @@
         ; 89/8D55
 
     .endsection Data898CBCSection
-
-
     .section Unsorted898D55Section
 
       .al
@@ -2541,7 +2630,7 @@
         phk
         plb
         .databank $89
-        ldy #$8E65
+        ldy #<>aStatusScreenLoptousCrest
         jsl rlPushToOAMBuffer
         lda wStatusScreenLoptousGlintTimer
         bne _8DA8
@@ -2651,6 +2740,22 @@
     .endsection Unsorted898D55Section
 
 
+    .section SpriteArray898E65Section
+
+      .al
+      .xl
+
+      aStatusScreenLoptousCrest ; 89/8E65
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $168, 3, 7, false, false]]
+
+        .structSpriteArray aStatusScreenLoptousCrest._Sprites
+
+        ; 89/8E6C
+
+    .endsection SpriteArray898E65Section
+
+
     .section Table898E6CSection
 
       .al
@@ -2658,17 +2763,40 @@
 
       aStatusScreenLoptousGlintFrames ; 89/8E6C
 
-        ; Read by rsStatusScreenDrawLoptousCrest.
+        ; Four frames of the first glint on Loptous's crest.
 
-        .word $8E74, $8E7B, $8E82, $8E89, $0001, $0000, $9900, $013B
-        .word $0000, $0000, $3B88, $0001, $0000, $8900, $013B, $0000
-        .word $0000, $3B98
+        .word <>aStatusScreenLoptousGlintA0
+        .word <>aStatusScreenLoptousGlintA1
+        .word <>aStatusScreenLoptousGlintA2
+        .word <>aStatusScreenLoptousGlintA3
+
+      aStatusScreenLoptousGlintA0 ; 89/8E74
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $199, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenLoptousGlintA0._Sprites
+
+      aStatusScreenLoptousGlintA1 ; 89/8E7B
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $188, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenLoptousGlintA1._Sprites
+
+      aStatusScreenLoptousGlintA2 ; 89/8E82
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $189, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenLoptousGlintA2._Sprites
+
+      aStatusScreenLoptousGlintA3 ; 89/8E89
+
+        _Sprites := [[(   0,    0), $00, SpriteSmall, $198, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenLoptousGlintA3._Sprites
 
         ; 89/8E90
 
     .endsection Table898E6CSection
-
-
     .section Table898E90Section
 
       .al
@@ -2676,17 +2804,40 @@
 
       aStatusScreenLoptousGlint2Frames ; 89/8E90
 
-        ; Read by rsStatusScreenDrawLoptousCrest.
+        ; Four frames of the second glint (major blood only).
 
-        .word $8E98, $8E9F, $8EA6, $8EAD, $0001, $C200, $8A00, $013B
-        .word $0000, $00C2, $3B8C, $0001, $C200, $8E00, $013B, $0000
-        .word $00C2, $3B8C
+        .word <>aStatusScreenLoptousGlintB0
+        .word <>aStatusScreenLoptousGlintB1
+        .word <>aStatusScreenLoptousGlintB2
+        .word <>aStatusScreenLoptousGlintB3
+
+      aStatusScreenLoptousGlintB0 ; 89/8E98
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $18A, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenLoptousGlintB0._Sprites
+
+      aStatusScreenLoptousGlintB1 ; 89/8E9F
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $18C, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenLoptousGlintB1._Sprites
+
+      aStatusScreenLoptousGlintB2 ; 89/8EA6
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $18E, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenLoptousGlintB2._Sprites
+
+      aStatusScreenLoptousGlintB3 ; 89/8EAD
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $18C, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenLoptousGlintB3._Sprites
 
         ; 89/8EB4
 
     .endsection Table898E90Section
-
-
     .section Unsorted898EB4Section
 
       .al
@@ -2707,7 +2858,7 @@
         plb
         .databank $89
         rep #$20
-        ldy #$8ED8
+        ldy #<>aStatusScreenHolyBloodRingSprites
         lda #$007E
         sta wR0
         lda #$00AC
@@ -2926,17 +3077,40 @@
 
       aStatusScreenGlintFrames ; 89/9004
 
-        ; Read by rsStatusScreenDrawHolyBloodGlint.
+        ; Four frames of a blood's first glint.
 
-        .word $900C, $9013, $901A, $9021, $0001, $0000, $91F8, $013B
-        .word $0000, $F800, $3B80, $0001, $0000, $81F8, $013B, $0000
-        .word $F800, $3B90
+        .word <>aStatusScreenGlint0
+        .word <>aStatusScreenGlint1
+        .word <>aStatusScreenGlint2
+        .word <>aStatusScreenGlint3
+
+      aStatusScreenGlint0 ; 89/900C
+
+        _Sprites := [[(   0,   -8), $00, SpriteSmall, $191, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenGlint0._Sprites
+
+      aStatusScreenGlint1 ; 89/9013
+
+        _Sprites := [[(   0,   -8), $00, SpriteSmall, $180, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenGlint1._Sprites
+
+      aStatusScreenGlint2 ; 89/901A
+
+        _Sprites := [[(   0,   -8), $00, SpriteSmall, $181, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenGlint2._Sprites
+
+      aStatusScreenGlint3 ; 89/9021
+
+        _Sprites := [[(   0,   -8), $00, SpriteSmall, $190, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenGlint3._Sprites
 
         ; 89/9028
 
     .endsection Table899004Section
-
-
     .section Unsorted899028Section
 
       .al
@@ -3021,17 +3195,40 @@
 
       aStatusScreenMajorGlintFrames ; 89/9099
 
-        ; Read by rsStatusScreenDrawMajorBloodGlint.
+        ; Four frames of a major blood's second glint.
 
-        .word $90A1, $90A8, $90AF, $90B6, $0001, $C3FC, $82F4, $013B
-        .word $FC00, $F4C3, $3B84, $0001, $C3FC, $86F4, $013B, $FC00
-        .word $F4C3, $3B84
+        .word <>aStatusScreenMajorGlint0
+        .word <>aStatusScreenMajorGlint1
+        .word <>aStatusScreenMajorGlint2
+        .word <>aStatusScreenMajorGlint3
+
+      aStatusScreenMajorGlint0 ; 89/90A1
+
+        _Sprites := [[(  -4,  -12), $21, SpriteLarge, $182, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenMajorGlint0._Sprites
+
+      aStatusScreenMajorGlint1 ; 89/90A8
+
+        _Sprites := [[(  -4,  -12), $21, SpriteLarge, $184, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenMajorGlint1._Sprites
+
+      aStatusScreenMajorGlint2 ; 89/90AF
+
+        _Sprites := [[(  -4,  -12), $21, SpriteLarge, $186, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenMajorGlint2._Sprites
+
+      aStatusScreenMajorGlint3 ; 89/90B6
+
+        _Sprites := [[(  -4,  -12), $21, SpriteLarge, $184, 3, 5, false, false]]
+
+        .structSpriteArray aStatusScreenMajorGlint3._Sprites
 
         ; 89/90BD
 
     .endsection Data899099Section
-
-
     .section Unsorted8990BDSection
 
       .al
@@ -3066,6 +3263,14 @@
         .databank 0
 
         ; 89/90D9
+
+      aUnknown8990D9 ; 89/90D9
+
+        ; A second rtl after the routine's own; nothing reaches it.
+
+        .byte $6B
+
+        ; 89/90DA
 
     .endsection Unsorted8990BDSection
 
@@ -3225,6 +3430,39 @@
 
         ; 89/91D3
 
+      rlUnknown8991D3 ; 89/91D3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing calls it. Builds an HDMA table for BG2's scroll at $08BC, as rlStatusScreenBuildBG3SplitTable does for BG3: $57 lines at 0, then wBufferBG2VOFS.
+
+        sep #$20
+        lda #$57
+        sta $08BC,b
+        rep #$20
+        lda #$0000
+        sta $08BD,b
+        sep #$20
+        lda #$01
+        sta $08BF,b
+        rep #$20
+        lda wBufferBG2VOFS
+        sta $08C0,b
+        sep #$20
+        lda #$00
+        sta $08C2,b
+        rep #$20
+        lda #$0000
+        sta $08C3,b
+        rtl
+
+        .databank 0
+
+        ; 89/9200
+
     .endsection Unsorted8991C4Section
 
 
@@ -3364,7 +3602,7 @@
         sbc wBufferBG3VOFS
         sta wR1
         stz wR5
-        ldy #$92F7
+        ldy #<>aStatusScreenSkillIcon
         jsl rlPushToOAMBuffer
         lda wR15
         inc a
@@ -3388,20 +3626,29 @@
 
       aStatusScreenSkillIconX ; 89/92E7
 
-        ; Read by rsStatusScreenDrawSkillIcons.
+        ; A word per skill icon in the row: its X.
 
-        .byte $80, $00, $94, $00, $A8, $00, $BC, $00, $D0, $00, $E4, $00, $F8, $00, $0C, $01
-        .byte $01, $00, $00, $C2, $00, $80, $3E, $FF, $FF, $FF, $FF, $06, $00, $00, $00, $02
-        .byte $00, $04, $00, $44, $00, $FF, $FF, $46, $00, $FF, $FF, $FF, $FF, $FF, $FF, $08
-        .byte $00, $FF, $FF, $0C, $00, $0E, $00, $20, $00, $22, $00, $24, $00, $26, $00, $28
-        .byte $00, $2A, $00, $2C, $00, $2E, $00, $40, $00, $42, $00, $FF, $FF, $FF, $FF, $48
-        .byte $00, $FF, $FF, $FF, $FF
+        .word $0080, $0094, $00A8, $00BC, $00D0, $00E4, $00F8, $010C
+
+      aStatusScreenSkillIcon ; 89/92F7
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $080, 3, 7, false, false]]
+
+        .structSpriteArray aStatusScreenSkillIcon._Sprites
+
+      aStatusScreenSkillIcons ; 89/92FE
+
+        ; A word per skill, as rlUnknown87A415 numbers them: the tile offset of its icon,
+        ; or $FFFF for a skill the status screen does not show.
+
+        .word $FFFF, $FFFF, $0006, $0000, $0002, $0004, $0044, $FFFF
+        .word $0046, $FFFF, $FFFF, $FFFF, $0008, $FFFF, $000C, $000E
+        .word $0020, $0022, $0024, $0026, $0028, $002A, $002C, $002E
+        .word $0040, $0042, $FFFF, $FFFF, $0048, $FFFF, $FFFF
 
         ; 89/933C
 
     .endsection Table8992E7Section
-
-
     .section Unsorted89933CSection
 
       .al
@@ -3430,7 +3677,7 @@
         stz wR0
         stz wR4
         stz wR5
-        ldy #$9367
+        ldy #<>aStatusScreenDropMarker
         jsl rlPushToOAMBuffer
 
         _935E
@@ -3450,15 +3697,19 @@
 
       aStatusScreenDropMarkerY ; 89/935F
 
-        ; Read by rsStatusScreenDrawDropMarker.
+        ; A byte per inventory slot (0-7 from wStatusScreenDropItemSlot): the marker's Y.
 
-        .byte $00, $00, $10, $20, $30, $40, $50, $60, $01, $00, $D6, $C2, $69, $07, $26
+        .byte $00, $00, $10, $20, $30, $40, $50, $60
+
+      aStatusScreenDropMarker ; 89/9367
+
+        _Sprites := [[( 214,  105), $21, SpriteLarge, $007, 2, 3, false, false]]
+
+        .structSpriteArray aStatusScreenDropMarker._Sprites
 
         ; 89/936E
 
     .endsection Data89935FSection
-
-
     .section Unsorted89936ESection
 
       .al
@@ -3666,7 +3917,7 @@
         stz wR4
         lda #$8000
         sta wR5
-        ldy #$9509
+        ldy #<>aStatusScreenScrollArrow
         jsl rlPushToOAMBuffer
         bra _9508
 
@@ -3680,7 +3931,7 @@
         sta wR1
         stz wR4
         stz wR5
-        ldy #$9509
+        ldy #<>aStatusScreenScrollArrow
         jsl rlPushToOAMBuffer
 
         _9508
@@ -4089,7 +4340,7 @@
         sta lR18
         lda lRoutineVariable+1,b
         sta lR18+1
-        lda $98D4,b,y
+        lda <>aStatusScreenInventoryRows,b,y
         and #$00FF
         xba
         clc
@@ -4110,7 +4361,7 @@
         jsl rlGetItemRAMStructEntryByInventorySlot
         jsl rlGetItemCurrentDurability
         sta $7F83F5
-        lda $98D4,b,y
+        lda <>aStatusScreenInventoryRows,b,y
         and #$00FF
         xba
         lsr a
@@ -4135,7 +4386,7 @@
         sta lR18+1
         lda #<>aStatusScreenEquippedMark
         sta lR18
-        lda $98D4,b,y
+        lda <>aStatusScreenInventoryRows,b,y
         and #$00FF
         xba
         clc
@@ -4167,18 +4418,20 @@
 
       aStatusScreenInventoryRows ; 89/98D4
 
-        ; Read by rlStatusScreenDrawStatsAndInventory.
+        ; A byte per inventory slot (1-8): its row in the BG3 tilemap.
 
         .byte $00, $0D, $0F, $11, $13, $15, $17, $19, $1B
 
       aStatusScreenEquippedMark ; 89/98DD
-        .byte $82, $64, $00, $00
+
+        .enc "SJIS"
+        .text "Ｅ"
+        .word $0000
+        .enc "none"
 
         ; 89/98E1
 
     .endsection Data8998D4Section
-
-
     .section Unsorted8998E1Section
 
       .al
@@ -5139,7 +5392,7 @@
         clc
         adc #$000B
         sta wR13
-        ldy #$9FD5
+        ldy #<>aStatusScreenLeadershipStar
         jsl rlPushToOAMBuffer
         inc wR15
         lda wR15
@@ -5574,7 +5827,7 @@
         lda wR15
         asl a
         tax
-        lda aStatusScreenSkillIconX+23,x
+        lda aStatusScreenSkillIcons,x
         bmi _A3B1
         sta wR14
         lda wR13
@@ -5806,7 +6059,7 @@
         stz wR0
         stz wR1
         stz wR5
-        ldy #$A56B
+        ldy #<>aStatusScreenSkillDetailIcon
         jsl rlPushToOAMBuffer
         rts
 
@@ -5824,19 +6077,22 @@
 
       aStatusScreenSkillIconTilesBySkill ; 89/A52D
 
-        ; Read by rsStatusScreenDrawSkillCursor.
+        ; A word per skill: the tile offset of its icon in the skill details.
 
-        .byte $00, $00, $00, $00, $06, $00, $00, $00, $02, $00, $04, $00, $44, $00, $00, $00
-        .byte $46, $00, $00, $00, $00, $00, $00, $00, $08, $00, $0A, $00, $0C, $00, $0E, $00
-        .byte $20, $00, $22, $00, $24, $00, $26, $00, $28, $00, $2A, $00, $2C, $00, $2E, $00
-        .byte $40, $00, $42, $00, $0E, $01, $00, $00, $48, $00, $4A, $00, $00, $00, $01, $00
-        .byte $14, $C2, $62, $80, $3E
+        .word $0000, $0000, $0006, $0000, $0002, $0004, $0044, $0000
+        .word $0046, $0000, $0000, $0000, $0008, $000A, $000C, $000E
+        .word $0020, $0022, $0024, $0026, $0028, $002A, $002C, $002E
+        .word $0040, $0042, $010E, $0000, $0048, $004A, $0000
+
+      aStatusScreenSkillDetailIcon ; 89/A56B
+
+        _Sprites := [[(  20,   98), $21, SpriteLarge, $080, 3, 7, false, false]]
+
+        .structSpriteArray aStatusScreenSkillDetailIcon._Sprites
 
         ; 89/A572
 
     .endsection Table89A52DSection
-
-
     .section Table89A572Section
 
       .al
@@ -5844,17 +6100,37 @@
 
       aStatusScreenSkillCursorFrames ; 89/A572
 
-        ; Read by rsStatusScreenDrawSkillCursor.
+        ; Four frames of the cursor over the chosen skill.
 
-        .word $A57A, $A586, $A592, $A586, $0002, $C203, $0A00, $1D70
-        .word $00C2, $300A, $0002, $C202, $0A00, $1E70, $00C2, $300A
-        .word $0002, $C201, $0A00, $1F70, $00C2, $300A
+        .word <>aStatusScreenSkillCursor0
+        .word <>aStatusScreenSkillCursor1
+        .word <>aStatusScreenSkillCursor2
+        .word <>aStatusScreenSkillCursor1
+
+      aStatusScreenSkillCursor0 ; 89/A57A
+
+        _Sprites := [[(   3,    0), $21, SpriteLarge, $00A, 3, 0, true, false]]
+        _Sprites ..= [[(  29,    0), $21, SpriteLarge, $00A, 3, 0, false, false]]
+
+        .structSpriteArray aStatusScreenSkillCursor0._Sprites
+
+      aStatusScreenSkillCursor1 ; 89/A586
+
+        _Sprites := [[(   2,    0), $21, SpriteLarge, $00A, 3, 0, true, false]]
+        _Sprites ..= [[(  30,    0), $21, SpriteLarge, $00A, 3, 0, false, false]]
+
+        .structSpriteArray aStatusScreenSkillCursor1._Sprites
+
+      aStatusScreenSkillCursor2 ; 89/A592
+
+        _Sprites := [[(   1,    0), $21, SpriteLarge, $00A, 3, 0, true, false]]
+        _Sprites ..= [[(  31,    0), $21, SpriteLarge, $00A, 3, 0, false, false]]
+
+        .structSpriteArray aStatusScreenSkillCursor2._Sprites
 
         ; 89/A59E
 
     .endsection Table89A572Section
-
-
     .section Table89A59ESection
 
       .al
@@ -6327,17 +6603,41 @@
 
       aSkillDescriptionPointers ; 89/ABF9
 
-        ; Read by rsStatusScreenDrawSkillDescription.
+        ; A long pointer per skill, as rlUnknown87A415 numbers them (0 for none). Read by
+        ; rsStatusScreenDrawSkillDescription.
 
-        .byte $00, $00, $00, $00, $00, $00, $C9, $A7, $89, $FF, $A7, $89, $25, $A8, $89, $5B
-        .byte $A8, $89, $81, $A8, $89, $00, $00, $00, $B1, $A8, $89, $00, $00, $00, $00, $00
-        .byte $00, $00, $00, $00, $ED, $A8, $89, $00, $00, $00, $17, $A9, $89, $37, $A9, $89
-        .byte $5F, $A9, $89, $95, $A9, $89, $C5, $A9, $89, $FB, $A9, $89, $1D, $AA, $89, $41
-        .byte $AA, $89, $00, $00, $00, $00, $00, $00, $69, $AA, $89, $9F, $AA, $89, $00, $00
-        .byte $00, $00, $00, $00, $C3, $AA, $89, $00, $00, $00, $00, $00, $00
+        .long 0
+        .long 0
+        .long aSkillDescriptionGreatShield
+        .long aSkillDescriptionWrath
+        .long aSkillDescriptionPursuit
+        .long aSkillDescriptionAdept
+        .long aSkillDescriptionSteal
+        .long 0
+        .long aSkillDescriptionDance
+        .long 0
+        .long 0
+        .long 0
+        .long aSkillDescriptionCharm
+        .long 0
+        .long aSkillDescriptionNihil
+        .long aSkillDescriptionMiracle
+        .long aSkillDescriptionCritical
+        .long aSkillDescriptionVantage
+        .long aSkillDescriptionAccost
+        .long aSkillDescriptionAstra
+        .long aSkillDescriptionLuna
+        .long aSkillDescriptionSol
+        .long 0
+        .long 0
+        .long aSkillDescriptionRenewal
+        .long aSkillDescriptionParagon
+        .long 0
+        .long 0
+        .long aSkillDescriptionBargain
+        .long 0
+        .long 0
 
         ; 89/AC56
 
     .endsection Table89ABF9Section
-
-

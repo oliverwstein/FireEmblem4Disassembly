@@ -1439,21 +1439,21 @@
 
         lda aUnitWindowEquippedWeaponPointers,x
         bmi _B11C
-        lda $B133,b,x
+        lda <>aReviveScreenSmallSpriteTiles,b,x
         sta wR4
-        ldy #$B1F3
+        ldy #<>aReviveScreenSmallSprite
         bra _B124
 
 
         _B11C
-        lda $B163,b,x
+        lda <>aReviveScreenLargeSpriteTiles,b,x
         sta wR4
-        ldy #$B1FA
+        ldy #<>aReviveScreenLargeSprite
 
         _B124
-        lda $B193,b,x
+        lda <>aReviveScreenSpriteX,b,x
         sta wR0
-        lda $B1C3,b,x
+        lda <>aReviveScreenSpriteY,b,x
         sta wR1
         jsl rlPushToOAMBuffer
         rts
@@ -1461,6 +1461,51 @@
         .databank 0
 
         ; 89/B133
+
+      aReviveScreenSmallSpriteTiles ; 89/B133
+
+        ; By grid entry: the first sprite tile of a small map sprite (rsReviveScreenLoadSmallMapSprite
+        ; put its frames there), then the same for large ones.
+
+        .word $0020, $0022, $0024, $0026, $0028, $002A, $002C, $002E
+        .word $0040, $0042, $0044, $0046, $0048, $004A, $004C, $004E
+        .word $0060, $0062, $0064, $0066, $0068, $006A, $006C, $006E
+
+      aReviveScreenLargeSpriteTiles ; 89/B163
+
+        .word $0080, $0084, $0088, $008C, $00A0, $00A4, $00A8, $00AC
+        .word $00C0, $00C4, $00C8, $00CC, $00E0, $00E4, $00E8, $00EC
+        .word $0100, $0104, $0108, $010C, $0120, $0124, $0128, $012C
+
+      aReviveScreenSpriteX ; 89/B193
+
+        ; By grid entry: X and Y of the map sprite.
+
+        .word $0010, $0060, $00B0, $0010, $0060, $00B0, $0010, $0060
+        .word $00B0, $0010, $0060, $00B0, $0010, $0060, $00B0, $0010
+        .word $0060, $00B0, $0010, $0060, $00B0, $0010, $0060, $00B0
+
+      aReviveScreenSpriteY ; 89/B1C3
+
+        .word $004A, $004A, $004A, $005A, $005A, $005A, $006A, $006A
+        .word $006A, $007A, $007A, $007A, $008A, $008A, $008A, $009A
+        .word $009A, $009A, $00AA, $00AA, $00AA, $00BA, $00BA, $00BA
+
+      aReviveScreenSmallSprite ; 89/B1F3
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $000, 3, 0, false, false]]
+
+        .structSpriteArray aReviveScreenSmallSprite._Sprites
+
+      aReviveScreenLargeSprite ; 89/B1FA
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $000, 3, 0, false, false]]
+        _Sprites ..= [[(   0,   -8), $00, SpriteSmall, $012, 3, 0, false, false]]
+        _Sprites ..= [[(   8,   -8), $00, SpriteSmall, $013, 3, 0, false, false]]
+
+        .structSpriteArray aReviveScreenLargeSprite._Sprites
+
+        ; 89/B20B
 
     .endsection Unsorted89B10CSection
 

@@ -498,7 +498,7 @@
       .al
       .xl
 
-      aOptionsMenuCOLDATAHDMA .dstruct structHDMADirectEntryInfo, rlInitOptionsMenuCOLDATAHDMA, rlCycleOptionsMenuCOLDATAHDMA, $E97A, aOptionsMenuCOLDATAHDMABuffer, PPU_REG_BASE + $32, $00 ; 80/E96E
+      aOptionsMenuCOLDATAHDMA .dstruct structHDMADirectEntryInfo, rlInitOptionsMenuCOLDATAHDMA, rlCycleOptionsMenuCOLDATAHDMA, aOptionsMenuCOLDATAHDMACode, aOptionsMenuCOLDATAHDMABuffer, PPU_REG_BASE + $32, $00 ; 80/E96E
 
     .endsection Table80E96ESection
 
@@ -578,8 +578,7 @@
         .byte $18, $E0, $18, $E1, $18, $E2, $18, $E3, $18, $E4, $18, $E5, $10, $E6, $10, $E7
         .byte $18, $E8, $18, $E9, $00, $00
 
-      aOptionsMenuBG3VOFSHDMA ; 80/E9A4
-        .byte $B2, $E9, $AF, $E9, $B0, $E9, $5A, $87, $7F, $12, $02
+      aOptionsMenuBG3VOFSHDMA .dstruct structHDMADirectEntryInfo, rlInitOptionsMenuBG3VOFSHDMA, rlCycleOptionsMenuBG3VOFSHDMA, aOptionsMenuBG3VOFSHDMACode, aOptionsMenuBG3VOFSHDMABuffer, PPU_REG_BASE + $12, $02 ; 80/E9A4
 
         ; 80/E9AF
 
@@ -637,10 +636,10 @@
 
         _E9BD
         sep #$20
-        lda $E9F3,b,x
+        lda <>aOptionsMenuBG3VOFS9OptionsHDMATable,b,x
         sta aOptionsMenuBG3VOFSHDMABuffer,x
         rep #$20
-        lda $E9F4,b,x
+        lda <>aOptionsMenuBG3VOFS9OptionsHDMATable+1,b,x
         sta aOptionsMenuBG3VOFSHDMABuffer+1,x
         inc x
         inc x
@@ -1220,24 +1219,63 @@
 
       aOptionsMenuChoiceLists ; 89/ED6A
 
-        ; Read by rlOptionsMenuDrawChoices.
+        ; A long pointer per option to the line of its choices.
 
-        .byte $85, $ED, $89, $99, $ED, $89, $99, $ED, $89, $AD, $ED, $89, $C1, $ED, $89, $85
-        .byte $ED, $89, $D5, $ED, $89, $99, $ED, $89, $E9, $ED, $89, $81, $40, $82, $50, $81
-        .byte $40, $81, $40, $82, $51, $81, $40, $81, $40, $82, $52, $81, $40, $00, $00, $82
-        .byte $6E, $82, $6D, $81, $40, $81, $40, $81, $40, $81, $40, $82, $6E, $82, $65, $82
-        .byte $65, $00, $00, $82, $50, $81, $40, $82, $51, $81, $40, $82, $52, $81, $40, $82
-        .byte $53, $81, $40, $82, $54, $00, $00, $83, $8A, $83, $41, $83, $8B, $81, $40, $81
-        .byte $40, $81, $40, $82, $CD, $82, $E2, $82, $A2, $00, $00, $82, $4F, $81, $40, $82
-        .byte $50, $81, $40, $82, $51, $81, $40, $82, $52, $81, $40, $82, $53, $00, $00, $82
-        .byte $D3, $82, $C2, $82, $A4, $81, $40, $81, $40, $82, $A9, $82, $B5, $82, $B1, $82
-        .byte $A2, $00, $00
+        .long aOptionsMenuChoices123
+        .long aOptionsMenuChoicesOnOff
+        .long aOptionsMenuChoicesOnOff
+        .long aOptionsMenuChoices12345
+        .long aOptionsMenuChoicesRealFast
+        .long aOptionsMenuChoices123
+        .long aOptionsMenuChoices01234
+        .long aOptionsMenuChoicesOnOff
+        .long aOptionsMenuChoicesNormalClever
+
+      aOptionsMenuChoices123 ; 89/ED85
+
+        .enc "SJIS"
+        .text "　１　　２　　３　"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuChoicesOnOff ; 89/ED99
+
+        .enc "SJIS"
+        .text "ＯＮ　　　　ＯＦＦ"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuChoices12345 ; 89/EDAD
+
+        .enc "SJIS"
+        .text "１　２　３　４　５"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuChoicesRealFast ; 89/EDC1
+
+        .enc "SJIS"
+        .text "リアル　　　はやい"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuChoices01234 ; 89/EDD5
+
+        .enc "SJIS"
+        .text "０　１　２　３　４"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuChoicesNormalClever ; 89/EDE9
+
+        .enc "SJIS"
+        .text "ふつう　　かしこい"
+        .word $0000
+        .enc "none"
 
         ; 89/EDFD
 
     .endsection Data89ED6ASection
-
-
     .section Unsorted89EDFDSection
 
       .al
@@ -2145,79 +2183,149 @@
 
       aOptionsMenuOnOffValues ; 89/F180
 
-        ; Read by rlOptionsMenuDrawValues.
+        ; Long pointers to the text of each value, one table per option, read by
+        ; rlOptionsMenuDrawValues.
 
-        .word $F8A3, $AD89, $89F8
-
-        ; 89/F186
+        .long aOptionsMenuOnText
+        .long aOptionsMenuOffText
 
       aOptionsMenuMessageSpeedValues ; 89/F186
 
-        ; Read by rlOptionsMenuDrawValues.
-
-        .byte $8F, $F8, $89, $93, $F8, $89, $97, $F8, $89, $9B, $F8, $89, $9F, $F8, $89
-
-        ; 89/F195
+        .long aOptionsMenuText1
+        .long aOptionsMenuText2
+        .long aOptionsMenuText3
+        .long aOptionsMenuText4
+        .long aOptionsMenuText5
 
       aOptionsMenuEnemySpeedValues ; 89/F195
 
-        ; Read by rlOptionsMenuDrawValues.
-
-        .word $F1D0, $C889, $89F1
-
-        ; 89/F19B
+        .long aOptionsMenuRealValueText
+        .long aOptionsMenuFastValueText
 
       aOptionsMenuSoundValues ; 89/F19B
 
-        ; Read by rlOptionsMenuDrawValues.
-
-        .byte $D8, $F1, $89, $E2, $F1, $89, $AD, $F8, $89
-
-        ; 89/F1A4
+        .long aOptionsMenuStereoText
+        .long aOptionsMenuMonoText
+        .long aOptionsMenuOffText
 
       aOptionsMenuAutoSaveValues ; 89/F1A4
 
-        ; Read by rlOptionsMenuDrawValues.
-
-        .byte $AD, $F8, $89, $0A, $F2, $89, $14, $F2, $89, $1E, $F2, $89, $28, $F2, $89
-
-        ; 89/F1B3
+        .long aOptionsMenuOffText
+        .long aOptionsMenuSaveFile1Text
+        .long aOptionsMenuSaveFile2Text
+        .long aOptionsMenuSaveFile3Text
+        .long aOptionsMenuSaveFile4Text
 
       aOptionsMenuAnimationValues ; 89/F1B3
 
-        ; Read by rlOptionsMenuDrawValues.
-
-        .byte $EC, $F1, $89, $F6, $F1, $89, $00, $F2, $89
-
-        ; 89/F1BC
+        .long aOptionsMenuAnimationRealText
+        .long aOptionsMenuAnimationMapText
+        .long aOptionsMenuAnimationEachText
 
       aOptionsMenuEnemyAIValues ; 89/F1BC
 
-        ; Read by rlOptionsMenuDrawValues.
-
-        .word $F23C, $3289, $89F2
-
-        ; 89/F1C2
+        .long aOptionsMenuNormalValueText
+        .long aOptionsMenuCleverValueText
 
       aOptionsMenuAutoCursorValues ; 89/F1C2
 
-        ; Read by rlOptionsMenuDrawValues.
+        .long aOptionsMenuOnText
+        .long aOptionsMenuOffText
 
-        .word $F8A3, $AD89, $89F8, $CD82, $E282, $A282, $0000, $8A83
-        .word $4183, $8B83, $0000, $5883, $6583, $8C83, $4983, $0000
-        .word $8283, $6D83, $8983, $8B83, $0000, $8A83, $4183, $8B83
-        .word $4081, $0000, $7D83, $6283, $7683, $4081, $0000, $B182
-        .word $9495, $C282, $4081, $0000, $5A83, $5B81, $7583, $5082
-        .word $0000, $5A83, $5B81, $7583, $5182, $0000, $5A83, $5B81
-        .word $7583, $5282, $0000, $5A83, $5B81, $7583, $5382, $0000
-        .word $A982, $B582, $B182, $A282, $0000, $D382, $C282, $A482
-        .word $4081, $0000
+      aOptionsMenuFastValueText ; 89/F1C8
+
+        .enc "SJIS"
+        .text "はやい"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuRealValueText ; 89/F1D0
+
+        .enc "SJIS"
+        .text "リアル"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuStereoText ; 89/F1D8
+
+        .enc "SJIS"
+        .text "ステレオ"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuMonoText ; 89/F1E2
+
+        .enc "SJIS"
+        .text "モノラル"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuAnimationRealText ; 89/F1EC
+
+        .enc "SJIS"
+        .text "リアル　"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuAnimationMapText ; 89/F1F6
+
+        .enc "SJIS"
+        .text "マップ　"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuAnimationEachText ; 89/F200
+
+        .enc "SJIS"
+        .text "こ部つ　"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuSaveFile1Text ; 89/F20A
+
+        .enc "SJIS"
+        .text "セーブ１"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuSaveFile2Text ; 89/F214
+
+        .enc "SJIS"
+        .text "セーブ２"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuSaveFile3Text ; 89/F21E
+
+        .enc "SJIS"
+        .text "セーブ３"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuSaveFile4Text ; 89/F228
+
+        .enc "SJIS"
+        .text "セーブ４"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuCleverValueText ; 89/F232
+
+        .enc "SJIS"
+        .text "かしこい"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuNormalValueText ; 89/F23C
+
+        .enc "SJIS"
+        .text "ふつう　"
+        .word $0000
+        .enc "none"
 
         ; 89/F246
 
     .endsection Data89F180Section
-
-
     .section Unsorted89F246Section
 
       .al
@@ -2408,25 +2516,70 @@
 
       aOptionsMenuChoiceCaptions ; 89/F579
 
-        ; Read by rlOptionsMenuDrawDescription.
+        ; A long pointer per option to the caption over its choices.
 
-        .byte $BC, $F5, $89, $A8, $F5, $89, $A8, $F5, $89, $D0, $F5, $89, $94, $F5, $89, $E4
-        .byte $F5, $89, $F8, $F5, $89, $A8, $F5, $89, $0C, $F6, $89, $81, $40, $82, $A2, $82
-        .byte $C7, $82, $A4, $83, $58, $83, $73, $81, $5B, $83, $68, $81, $40, $00, $00, $82
-        .byte $B7, $82, $E9, $81, $40, $81, $40, $81, $40, $81, $40, $82, $B5, $82, $C8, $82
-        .byte $A2, $00, $00, $83, $8A, $83, $41, $83, $8B, $81, $40, $81, $40, $81, $40, $82
-        .byte $B1, $95, $94, $82, $C2, $00, $00, $82, $A8, $82, $BB, $82, $A2, $81, $40, $81
-        .byte $40, $81, $40, $82, $CD, $82, $E2, $82, $A2, $00, $00, $83, $58, $83, $65, $83
-        .byte $8C, $83, $49, $81, $40, $81, $40, $81, $40, $83, $49, $83, $74, $00, $00, $83
-        .byte $49, $83, $74, $81, $40, $81, $40, $83, $74, $83, $40, $83, $43, $83, $8B, $81
-        .byte $40, $00, $00, $81, $40, $82, $A0, $82, $BD, $82, $DC, $82, $CC, $82, $E6, $82
-        .byte $B3, $81, $40, $81, $40, $00, $00
+        .long aOptionsMenuCaptionAnimation
+        .long aOptionsMenuCaptionOnOff
+        .long aOptionsMenuCaptionOnOff
+        .long aOptionsMenuCaptionMessageSpeed
+        .long aOptionsMenuCaptionEnemySpeed
+        .long aOptionsMenuCaptionSound
+        .long aOptionsMenuCaptionAutoSave
+        .long aOptionsMenuCaptionOnOff
+        .long aOptionsMenuCaptionEnemyAI
+
+      aOptionsMenuCaptionEnemySpeed ; 89/F594
+
+        .enc "SJIS"
+        .text "　いどうスピード　"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuCaptionOnOff ; 89/F5A8
+
+        .enc "SJIS"
+        .text "する　　　　しない"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuCaptionAnimation ; 89/F5BC
+
+        .enc "SJIS"
+        .text "リアル　　　こ部つ"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuCaptionMessageSpeed ; 89/F5D0
+
+        .enc "SJIS"
+        .text "おそい　　　はやい"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuCaptionSound ; 89/F5E4
+
+        .enc "SJIS"
+        .text "ステレオ　　　オフ"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuCaptionAutoSave ; 89/F5F8
+
+        .enc "SJIS"
+        .text "オフ　　ファイル　"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuCaptionEnemyAI ; 89/F60C
+
+        .enc "SJIS"
+        .text "　あたまのよさ　　"
+        .word $0000
+        .enc "none"
 
         ; 89/F620
 
     .endsection Data89F579Section
-
-
     .section Unsorted89F620Section
 
       .al
@@ -2581,7 +2734,7 @@
         _F6B0
         stz wR4
         stz wR5
-        ldy #$F70C
+        ldy #<>aOptionsMenuValueMarker
         jsl rlPushToOAMBuffer
         rtl
 
@@ -2599,20 +2752,33 @@
 
       aOptionsMenuValueMarkerX ; 89/F6BC
 
-        ; Read by rlOptionsMenuDrawValueMarker.
+        ; Eight bytes per option: the X of the marker under each of its values.
 
-        .byte $AC, $C4, $DC, $00, $00, $00, $00, $00, $A8, $DC, $00, $00, $00, $00, $00, $00
-        .byte $A8, $DC, $00, $00, $00, $00, $00, $00, $A4, $B4, $C4, $D4, $E4, $00, $00, $00
-        .byte $AC, $DC, $00, $00, $00, $00, $00, $00, $AC, $C4, $DC, $00, $00, $00, $00, $00
-        .byte $A4, $B4, $C4, $D4, $E4, $00, $00, $00, $A8, $DC, $00, $00, $00, $00, $00, $00
-        .byte $AC, $D8, $00, $00, $00, $00, $00, $00, $B1, $B2, $B1, $B0, $C7, $C6, $C7, $C8
-        .byte $01, $00, $00, $C2, $00, $0C, $32
+        .byte $AC, $C4, $DC, $00, $00, $00, $00, $00
+        .byte $A8, $DC, $00, $00, $00, $00, $00, $00
+        .byte $A8, $DC, $00, $00, $00, $00, $00, $00
+        .byte $A4, $B4, $C4, $D4, $E4, $00, $00, $00
+        .byte $AC, $DC, $00, $00, $00, $00, $00, $00
+        .byte $AC, $C4, $DC, $00, $00, $00, $00, $00
+        .byte $A4, $B4, $C4, $D4, $E4, $00, $00, $00
+        .byte $A8, $DC, $00, $00, $00, $00, $00, $00
+        .byte $AC, $D8, $00, $00, $00, $00, $00, $00
+
+      aUnknown89F704 ; 89/F704
+
+        ; Nothing reads these eight bytes.
+
+        .byte $B1, $B2, $B1, $B0, $C7, $C6, $C7, $C8
+
+      aOptionsMenuValueMarker ; 89/F70C
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $00C, 3, 1, false, false]]
+
+        .structSpriteArray aOptionsMenuValueMarker._Sprites
 
         ; 89/F713
 
     .endsection Data89F6BCSection
-
-
     .section Unsorted89F713Section
 
       .al
@@ -2637,12 +2803,12 @@
         stz wR5
         lda wOptionsMenuShowEnemyAI
         beq _F72B
-        ldy #$F74B
+        ldy #<>aOptionsMenuIconsWithAI
         bra _F72E
 
 
         _F72B
-        ldy #$F775
+        ldy #<>aOptionsMenuIcons
 
         _F72E
         jsl rlPushToOAMBuffer
@@ -2653,7 +2819,7 @@
         sta wR1
         stz wR4
         stz wR5
-        ldy #$F79F
+        ldy #<>aOptionsMenuEnemyAIIcon
         jsl rlPushToOAMBuffer
 
         _F74A
@@ -2730,7 +2896,7 @@
         sta wR1
 
         _F7C5
-        ldy #$F7DF
+        ldy #<>aOptionsMenuSelectedIcon
         jsl rlPushToOAMBuffer
         rtl
 
@@ -2748,16 +2914,20 @@
 
       aOptionsMenuIconTiles ; 89/F7CD
 
-        ; Read by rlOptionsMenuDrawSelectedIcon.
+        ; A word per option: the tile of its icon.
 
-        .byte $20, $00, $22, $00, $24, $00, $26, $00, $2C, $00, $2A, $00, $2E, $00, $42, $00
-        .byte $40, $00, $01, $00, $9F, $C2, $21, $00, $34
+        .word $0020, $0022, $0024, $0026, $002C, $002A, $002E, $0042
+        .word $0040
+
+      aOptionsMenuSelectedIcon ; 89/F7DF
+
+        _Sprites := [[( 159,   33), $21, SpriteLarge, $000, 3, 2, false, false]]
+
+        .structSpriteArray aOptionsMenuSelectedIcon._Sprites
 
         ; 89/F7E6
 
     .endsection Data89F7CDSection
-
-
     .section Unsorted89F7E6Section
 
       .al

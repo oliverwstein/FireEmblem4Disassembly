@@ -7,7 +7,7 @@ first byte), `inside` (built code points into it, not at its start), `log` (read
 `fe4.cdl` only), `none` (no evidence). Addresses are given where the game reads them:
 upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 
-103,704 bytes in 272 runs: 56 runs of padding (42,139 bytes) and 216 pieces (61,565 bytes).
+103,406 bytes in 267 runs: 56 runs of padding (42,139 bytes) and 211 pieces (61,267 bytes).
 
 | Class | Pieces | Bytes | Read in the log |
 |---|---|---|---|
@@ -15,7 +15,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | `table` | 0 | 0 | 0 |
 | `inside` | 0 | 0 | 0 |
 | `log` | 0 | 0 | 0 |
-| `none` | 216 | 61,565 | 0 |
+| `none` | 211 | 61,267 | 0 |
 
 ## `code` (0)
 
@@ -37,7 +37,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 
-## `none` (216)
+## `none` (211)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
@@ -118,18 +118,13 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $88/E00E-$88/E02A | 29 | 0 | `rsUnknown88DFDA` / `procUnknown88E02B` |  |
 | $88/E2D6-$88/E2DB | 6 | 0 | `rlProcUnknown88E26ACycle` / `aProcUnknown88E26ACode` | 66% $00/$FF |
 | $88/E33B-$88/E33C | 2 | 0 | `rlUnknown88E2E9` / `rlUnknown88E33D` |  |
-| $89/8A61-$89/8A7D | 29 | 0 | `rsUnknown898A41` / `rsUnknown898A7E` |  |
-| $89/8E65-$89/8E6B | 7 | 0 | `rsUnknown898D5F` / `aUnknown898E6C` |  |
-| $89/90D9-$89/90D9 | 1 | 0 | `rlUnknown8990BD` / `rlUnknown8990DA` |  |
-| $89/91D3-$89/91FF | 45 | 0 | `rlUnknown8991D2` / `rlUnknown899200` |  |
-| $89/B133-$89/B20A | 216 | 0 | `rsUnknown89B10C` / `rsUnknown89B20B` |  |
-| $8A/8682-$8A/8699 | 24 | 0 | `rsUnknown8A8643` / `rsUnknown8A869A` | 54% $00/$FF |
-| $8A/B10A-$8A/B110 | 7 | 0 | `rlUnknown8AB093` / `rlUnknown8AB111` |  |
+| $8A/8682-$8A/8699 | 24 | 0 | `rsCastleGridMoveToTarget` / `rsCastleGridFindPreviousTarget` | 54% $00/$FF |
+| $8A/B10A-$8A/B110 | 7 | 0 | `rlPushStockListScrollArrows` / `rlDrawCastleNumber` |  |
 | $8A/BAC9-$8A/BACE | 6 | 0 | `PortraitPaletteGhostDeirdrePortraitPalettePointersEntry` / `aDialogueBackgroundPointers` |  |
-| $8A/CE4F-$8A/CE4F | 1 | 0 | `rsUnknown8ACE3A` / `rlUnknown8ACE50` |  |
-| $8A/DD98-$8A/E05D | 710 | 0 | `rsUnknown8ADCF9` / `rsUnknown8AE05E` | 73% $00/$FF |
-| $8A/F045-$8A/F047 | 3 | 0 | `rsUnknown8AEF4B` / `rsUnknown8AF048` |  |
-| $8A/F259-$8A/F262 | 10 | 0 | `rlUnknown8AF0F2` / `aDecompressionDMAEntry8AF263` | 60% $00/$FF |
+| $8A/CE4F-$8A/CE4F | 1 | 0 | `rsShopLeaveToCourtyard` / `rlSetupKeeperDialogueBox` |  |
+| $8A/DD98-$8A/E05D | 710 | 0 | `rsConversationSetupSlots` / `rsAnimateConversationBackground` | 73% $00/$FF |
+| $8A/F045-$8A/F047 | 3 | 0 | `rsClassChangeCheck` / `rsClassChangeConfirm` |  |
+| $8A/F259-$8A/F262 | 10 | 0 | `rlDepotScreenSetup` / `aDecompressionDMAEntry8AF263` | 60% $00/$FF |
 | $8B/812A-$8B/818C | 99 | 0 | `rsUnknown8B8114` / `rsUnknown8B818D` |  |
 | $8B/81EC-$8B/821E | 51 | 0 | `rsUnknown8B818D` / `rlFadeInWorldMapPortraitSlot` |  |
 | $8B/83A7-$8B/84E4 | 318 | 0 | `aPortraitSlotVRAMOffsets` / `rlLoadWorldMapMarkerData` |  |
@@ -149,7 +144,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8D/AAFD-$8D/AD72 | 630 | 0 | `aProcUnknown8DAA96Code` / `rlUnknown8DAD73` |  |
 | $8D/AEC0-$8D/AEC1 | 2 | 0 | `rlUnknown8DAE85` / `rlUnknown8DAEC2` |  |
 | $8D/B539-$8D/B539 | 1 | 0 | `rlUnknown8DB52C` / `rsUnknown8DB53A` |  |
-| $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardIronBallistaPointer` / `gcUnknownD05673` |  |
+| $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardGreatBallistaPointer` / `gcUnknownD05673` |  |
 | $91/A7EA-$91/A80C | 35 | 0 | `rlUnknown91A7DF` / `rlUnknown91A80D` |  |
 | $91/A8E4-$91/A927 | 68 | 0 | `rsDialogueEventCommand07` / `rlUnknown91A928` |  |
 | $91/A9F2-$91/AA14 | 35 | 0 | `aUnknown91A9E4` / `rsUnknown91AA15` |  |
