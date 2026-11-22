@@ -4,18 +4,14 @@ This document records the roadmap from the current baseline (2026-11-21) to a 10
 
 **Milestone beyond the disassembly: the engine guide** (`docs/`, section below), a readable account of how the game's systems work and fit together. Its reference set is built alongside Phase 3; the guide itself, a designed narrative in the style of Nystrom's *Game Programming Patterns*, is written on top of it.
 
-## Current Baseline (2026-11-21)
+## Current Baseline (2026-11-22, from `tools/counts.py`)
 
-- **Coverage:** **97.25% built from source** (4,078,909 of 4,194,304 bytes), byte-identical to `fe4.sfc`.
-- **Gaps remaining ([GAPS.md](GAPS.md)):**
-  - `code`: **0 pieces** (0 bytes)
-  - `table`: **0 pieces** (0 bytes)
-  - `inside`: **0 pieces** (0 bytes)
-  - `log`: **0 pieces** (0 bytes)
-  - `none`: **234 pieces** (62,476 bytes)
-  - `padding`: **63 runs** (52,919 bytes)
-- **Raw artifacts closed:** `0` entries in [include/Undisassembled.h](include/Undisassembled.h) and `0` `.text ROM[...]` slices remaining.
-- **Routines:** **5,864** top-level routines in `engine/` — **2,154** named, **3,710** `Unknown`, and **3,173** still filed in `engine/unsorted/`.
+Quote numbers only from `tools/counts.py` (and GAPS.md from `tools/gaps.py`); rerun them rather than editing figures by hand.
+
+- **Coverage:** **97.53% built from source** (4,090,581 of 4,194,304 bytes), byte-identical to `fe4.sfc`.
+- **Gaps remaining ([GAPS.md](GAPS.md)):** every class except `none` is closed: `none` **217 pieces (61,584 bytes)**, plus **56 padding runs (42,139 bytes)**.
+- **Routines:** **5,954** top-level `rl`/`rs` routines in `engine/`: **2,518** named, **3,436** `Unknown`; **3,005** still in `engine/unsorted/` (166,114 lines).
+- **Pinned blocks** in `build.asm`: **308**.
 
 Phase 2 is ordered ahead of Phase 3 because shiftability is what makes the disassembly genuinely moddable, its checklist is bounded and objectively testable (`./build.sh pad`), and resolving raw pointers/inline-`.byte` code exposes full call graphs before system-wide naming. Phases 3–5 can overlap with Phases 1–2 bank by bank.
 
@@ -33,10 +29,10 @@ Everything reachable via static pointers or the existing Prologue CDL is now bui
      - Full combat with animations on (physical, bow, magic, staff, special crits, arena, level-ups)
      - Castle & map facilities (shops, repair, pawn, augury, storage, castle menus, unit promotion)
      - Chapter transitions, World Map, Generation 1 → 2 transfer, Epilogue/Rankings, Save/Load, Attract Mode, and Debug Menu
-   - Run [tools/cdl.py](tools/cdl.py) and `tools/trace.py --from-log` to disassemble any unreached code across the remaining **234 `none` pieces (62,476 bytes)** and uncover callers for the **132** built routines still marked `"Found through fe4.cdl"`.
+   - Run [tools/cdl.py](tools/cdl.py) and `tools/trace.py --from-log` to disassemble any unreached code across the remaining `none` pieces and uncover callers for the **132** built routines still marked `"Found through fe4.cdl"`.
 2. **Audit Remaining Dead Code / Data & Padding Runs**
    - Review any remaining `none` pieces not hit by the expanded CDL (dead code or unused data islands between routines).
-   - Convert all **63 padding runs (52,919 bytes)** to explicit `.fill` directives and delete the `.binary "fe4.sfc"` overlay and empty [include/Undisassembled.h](include/Undisassembled.h) from [build.asm](build.asm).
+   - Convert all padding runs to explicit `.fill` directives and delete the `.binary "fe4.sfc"` overlay and empty [include/Undisassembled.h](include/Undisassembled.h) from [build.asm](build.asm).
 
 ---
 
@@ -64,7 +60,7 @@ Once a bank is 100% source with zero raw references into it, unpin its blocks an
 
 **Done means `engine/unsorted/` is empty** (user decision, 2026-11-22). Every routine that implements game mechanics is named from its code. Low-level rendering, HDMA, OAM and spell *visual effect* helpers may stay `Unknown`, filed in the right system folder with a one-line comment. Each wave also completes the reference set for its system (routine, struct, file and system docs; see the engine guide below) and commits with an evidence body.
 
-Work hub-outward through the **3,710 `Unknown` routines** and **3,173 unsorted routines** in `engine/unsorted/` (can run in parallel with Phases 1–2):
+Work hub-outward through the `Unknown` and unsorted routines (counts from `tools/counts.py`) in `engine/unsorted/` (can run in parallel with Phases 1–2):
 
 1. **System-by-System Routine Naming & Sorting**
    1. **Main Loop & Game States (`$80/9B01` `aGameStateRoutines`):** Name all 52 game state entries/steps/cleanups and `GAMESTATE_*` constants to map out call trees across banks `$80`, `$85`, `$89`, `$8A`, `$8B`, `$8D`, `$91`, `$95`, `$96`, and `$9B`.
@@ -124,4 +120,4 @@ Topics it must cover (not an order): the machine and the source's conventions; t
 ## Phase 5: Final Polish
 
 1. **Finish the engine guide**: reading order, cross-links, the remaining walkthroughs and recipes.
-2. **Build & Repo Polish:** Update [README.md](README.md) (which still states ~18% built), test/update the Windows `.bat` build scripts, and add a full shiftability test target to [build.sh](build.sh).
+2. **Build & Repo Polish:** Update [README.md](README.md), test/update the Windows `.bat` build scripts, and add a full shiftability test target to [build.sh](build.sh).

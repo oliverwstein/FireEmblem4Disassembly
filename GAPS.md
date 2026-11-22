@@ -7,7 +7,7 @@ first byte), `inside` (built code points into it, not at its start), `log` (read
 `fe4.cdl` only), `none` (no evidence). Addresses are given where the game reads them:
 upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 
-115,395 bytes in 297 runs: 63 runs of padding (52,919 bytes) and 234 pieces (62,476 bytes).
+103,723 bytes in 273 runs: 56 runs of padding (42,139 bytes) and 217 pieces (61,584 bytes).
 
 | Class | Pieces | Bytes | Read in the log |
 |---|---|---|---|
@@ -15,7 +15,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | `table` | 0 | 0 | 0 |
 | `inside` | 0 | 0 | 0 |
 | `log` | 0 | 0 | 0 |
-| `none` | 234 | 62,476 | 0 |
+| `none` | 217 | 61,584 | 0 |
 
 ## `code` (0)
 
@@ -37,42 +37,42 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 
-## `none` (234)
+## `none` (217)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 | $C0/3C05-$80/8001 | 17,405 | 0 | `gcUnknownC0365A` / `rlGetJoypadInput` | 99% $00/$FF |
 | $80/8372-$80/83C6 | 85 | 0 | `rlClearSpriteExtBuffer` / `aOAMUpperXBitTable` |  |
 | $80/9727-$80/9728 | 2 | 0 | `aSoundScriptCommands` / `rsSoundScriptPlaySoundEffect` |  |
-| $80/9C3E-$80/9C79 | 60 | 0 | `rlUnknown809C3B` / `rlUnknown809C7A` |  |
+| $80/9C3E-$80/9C79 | 60 | 0 | `rlRunVBlankHookInit` / `rlRunVBlankHooks` |  |
 | $80/9FB2-$80/A095 | 228 | 0 | `rlSetLayerPositionsAndSizes` / `rlUnsignedMultiply16By16High` |  |
-| $80/ADFF-$80/AE24 | 38 | 0 | `rsUnknown80AD24` / `rsUnknown80AE25` |  |
-| $80/B316-$80/B346 | 49 | 0 | `rsUnknown80B301` / `rsUnknown80B347` |  |
+| $80/ADFF-$80/AE24 | 38 | 0 | `rsSetupOpeningLogoScreen` / `rsOpeningLogoVBlank` |  |
+| $80/B316-$80/B346 | 49 | 0 | `rsMapMainLoop` / `rsWorldMapVBlank` |  |
 | $80/B63E-$80/B63E | 1 | 0 | `aDecompressionDMAEntry80B636` / `rlUnknown80B63F` |  |
-| $80/B640-$80/B640 | 1 | 0 | `rlUnknown80B63F` / `rsUnknown80B641` |  |
-| $80/B77D-$80/B77E | 2 | 0 | `rlUnknown80B74B` / `rlUnknown80B77F` |  |
-| $80/C1BA-$80/C1C9 | 16 | 0 | `rlUnknown80C1A0` / `rlUnknown80C1CA` |  |
-| $80/F337-$80/F33F | 9 | 0 | `rsUnknown80F2BE` / `rsUnknown80F340` |  |
+| $80/B640-$80/B640 | 1 | 0 | `rlUnknown80B63F` / `rsRunCastleScreenVBlank` |  |
+| $80/B77D-$80/B77E | 2 | 0 | `rlReturnToCastleFromArena` / `rlDispatchCastleState` |  |
+| $80/C1BA-$80/C1C9 | 16 | 0 | `rlInitUnusedGameState16RAMArea` / `rlUnusedGameState17Stub` |  |
+| $80/F337-$80/F33F | 9 | 0 | `rsOpenChapterIntroScreen` / `rsCreateChapterIntroHDMA` |  |
 | $81/9062-$81/9091 | 48 | 0 | `rsCapSpawnDestinationCoordinates100` / `rsFillMovingMapSpriteData` |  |
 | $81/90CC-$81/9165 | 154 | 0 | `rsFillMovingMapSpriteDataPathScriptPointer` / `rlUnknown819166` |  |
 | $81/EBBC-$81/FFFF | 5,188 | 0 | `aUNITGroupDataChapterFinalUnused` / `` | 92% $00/$FF |
-| $82/83B5-$82/83E2 | 46 | 0 | `aProcMainLoopChangeFadeByTimerCode` / `procUnknown8283E3` |  |
+| $82/83B5-$82/83E2 | 46 | 0 | `aProcMainLoopChangeFadeByTimerCode` / `procFadeOutAndChangeSong` |  |
 | $82/8816-$82/8864 | 79 | 0 | `aProcCastleNamePopUpCode` / `procUnknown828865` |  |
 | $82/8D21-$82/8D51 | 49 | 0 | `aProcUnknown828CA3Code` / `procUnknown828D52` |  |
 | $82/90B0-$82/921D | 366 | 0 | `aProcEventFadeOutByTimerCode` / `procEventPause` |  |
 | $82/9285-$82/92A8 | 36 | 0 | `aProcUnknown82925ECode` / `procUnknown8292A9` |  |
 | $82/9469-$82/9477 | 15 | 0 | `aProcUnknown8293AECode` / `rlCreateProcHaltEvent` |  |
-| $82/94B1-$82/94BF | 15 | 0 | `rlUnknown829496` / `rlUnknown8294C0` |  |
-| $82/E030-$82/E072 | 67 | 0 | `rsUnknown82E028` / `rlResetIRQEngine` |  |
-| $82/E120-$82/E132 | 19 | 0 | `rlUnknown82E0C6` / `rlUnknown82E133` |  |
-| $82/E134-$82/E146 | 19 | 0 | `rlUnknown82E133` / `rlUnknown82E147` |  |
-| $82/E41A-$82/E41A | 1 | 0 | `rlUnknown82E400` / `rlBuildRAMStructHeader` |  |
-| $82/EB4C-$82/ECB8 | 365 | 0 | `rsUnknown82EB15` / `rlBuildRAMAreaHeaderAndGuidingEntry` |  |
-| $82/EDBB-$82/EDE6 | 44 | 0 | `rlUnknown82ED24` / `rlAllocateRAMArea` |  |
-| $82/F207-$82/F210 | 10 | 0 | `rsUnknown82F1EA` / `rlUnknown82F211` |  |
-| $82/F4BF-$82/F4DD | 31 | 0 | `rlUnknown82F4A7` / `rlGetUNITGroupPointer` |  |
-| $82/F4F9-$82/F516 | 30 | 0 | `rlGetUNITGroupPointer` / `rlUnknown82F517` |  |
-| $82/F54F-$82/F566 | 24 | 0 | `rlUnknown82F517` / `rlAddOffsetTableEntry` |  |
+| $82/94B1-$82/94BF | 15 | 0 | `rlFreeMapBattleProcAndClearSprites` / `rlCreateProcEventWaitBattleSceneEnd` |  |
+| $82/E030-$82/E072 | 67 | 0 | `rsIRQCodeHalt` / `rlResetIRQEngine` |  |
+| $82/E120-$82/E132 | 19 | 0 | `rlUnknown82E0C6` / `rlIRQEngineStub` |  |
+| $82/E134-$82/E146 | 19 | 0 | `rlIRQEngineStub` / `rlUnknown82E147` |  |
+| $82/E41A-$82/E41A | 1 | 0 | `rlResetRAMStructAndAreaVariables` / `rlBuildRAMStructHeader` |  |
+| $82/EB4C-$82/ECB8 | 365 | 0 | `rsSaveRAMStructEntryFromScratch` / `rlBuildRAMAreaHeaderAndGuidingEntry` |  |
+| $82/EDBB-$82/EDE6 | 44 | 0 | `rlAllocateRAMAreaWithHandle` / `rlAllocateRAMArea` |  |
+| $82/F207-$82/F210 | 10 | 0 | `rsUpdateRAMAreaHandle` / `rlResetMenuOptionStack` |  |
+| $82/F4BF-$82/F4DD | 31 | 0 | `rlGetSelectedMenuOptionCoordinates` / `rlGetUNITGroupPointer` |  |
+| $82/F4F9-$82/F516 | 30 | 0 | `rlGetUNITGroupPointer` / `rlCopyOffsetTableEntry` |  |
+| $82/F54F-$82/F566 | 24 | 0 | `rlCopyOffsetTableEntry` / `rlAddOffsetTableEntry` |  |
 | $82/F7A2-$82/F865 | 196 | 0 | `rlUpdateOffsetTable` / `rlSetParentsPermanentFlags` |  |
 | $85/82CB-$85/82D3 | 9 | 0 | `rlMapMenuCloseAndRestoreMapState` / `rlUnknown8582D4` |  |
 | $85/8335-$85/8340 | 12 | 0 | `rlUnknown8582D4` / `rlStallProcUntilMapMenuDataLoaded` |  |
@@ -84,9 +84,6 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $85/A03F-$85/A03F | 1 | 0 | `rlUnknown85A03D` / `rsUnknown85A040` |  |
 | $85/B069-$85/B07B | 19 | 0 | `rsUnknown85B039` / `rsUnknown85B07C` |  |
 | $85/B197-$85/B1AF | 25 | 0 | `procUnknown85B18F` / `rlProcUnknown85B18FInit` |  |
-| $85/B26B-$85/B281 | 23 | 0 | `rlUnknown85B207` / `rlUnknown85B282` |  |
-| $85/B2CA-$85/B2D7 | 14 | 0 | `rlUnknown85B282` / `aProcUnknown85B18FCode` |  |
-| $85/B4FA-$85/B51F | 38 | 0 | `rsUnknown85B4ED` / `rlUnknown85B520` |  |
 | $85/B643-$85/B65B | 25 | 0 | `procUnknown85B63B` / `rlProcUnknown85B63BInit` |  |
 | $85/C305-$85/C30C | 8 | 0 | `rsUnknown85C2FB` / `rlUnknown85C30D` |  |
 | $85/CD72-$85/CD80 | 15 | 0 | `rlUnknown85CD39` / `rsUnknown85CD81` |  |
@@ -105,7 +102,6 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $87/8833-$87/8851 | 31 | 0 | `rlReplaceMapMenuTilemapROMWithRAMPointer` / `rlUnknown878852` |  |
 | $87/890B-$87/8915 | 11 | 0 | `rlUnknown878900` / `rlUnknown878916` |  |
 | $87/C6DC-$87/C709 | 46 | 0 | `rsUnknown87C6AA` / `procUnknown87C70A` |  |
-| $87/C7CF-$87/C7F2 | 36 | 0 | `rlUnknown87C7B4` / `rlUnknown87C7F3` |  |
 | $87/E6D5-$87/E6D6 | 2 | 0 | `rsUnknown87E6D3` / `rsUnknown87E6D7` |  |
 | $87/E761-$87/E761 | 1 | 0 | `rsUnknown87E75F` / `rlUnknown87E762` |  |
 | $88/857E-$88/85D2 | 85 | 0 | `rlUnknown888560` / `rlUnknown8885D3` |  |
@@ -121,11 +117,8 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $88/B3C2-$88/B3DE | 29 | 0 | `rlUnknown88B3AF` / `rlUnknown88B3DF` |  |
 | $88/BEFF-$88/BF36 | 56 | 0 | `rsUnknown88BEEF` / `rlUnknown88BF37` |  |
 | $88/E00E-$88/E02A | 29 | 0 | `rsUnknown88DFDA` / `procUnknown88E02B` |  |
-| $88/E0F5-$88/E10A | 22 | 0 | `rlUnknown88E0DF` / `rlUnknown88E10B` |  |
-| $88/E154-$88/E178 | 37 | 0 | `rlUnknown88E10B` / `rlUnknown88E179` |  |
 | $88/E2D6-$88/E2DB | 6 | 0 | `rlProcUnknown88E26ACycle` / `aProcUnknown88E26ACode` | 66% $00/$FF |
 | $88/E33B-$88/E33C | 2 | 0 | `rlUnknown88E2E9` / `rlUnknown88E33D` |  |
-| $88/EED9-$88/EF0C | 52 | 0 | `rlUnknown88EEB1` / `aUnknown88EF0D` |  |
 | $89/8A61-$89/8A7D | 29 | 0 | `rsUnknown898A41` / `rsUnknown898A7E` |  |
 | $89/8E65-$89/8E6B | 7 | 0 | `rsUnknown898D5F` / `aUnknown898E6C` |  |
 | $89/90D9-$89/90D9 | 1 | 0 | `rlUnknown8990BD` / `rlUnknown8990DA` |  |
@@ -146,7 +139,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8B/8BF2-$8B/8BF3 | 2 | 0 | `rlUnknown8B8BB5` / `procWorldMapMarkerShadowFadeOut` |  |
 | $8B/8C7B-$8B/8C80 | 6 | 0 | `rlUnknown8B8C4A` / `aProcUnknown8B8C3ACode` | 66% $00/$FF |
 | $8B/A088-$8B/A0B3 | 44 | 0 | `ClassPortraitDarkPrinceClassPortraitDataIDsEntry` / `rlUnknown8BA0B4` |  |
-| $8B/A7CE-$8B/A7F1 | 36 | 0 | `rlUnknown8BA7CD` / `rlUnitWindowShow` |  |
+| $8B/A7CE-$8B/A7F1 | 36 | 0 | `rlUnusedGameState15Stub` / `rlUnitWindowShow` |  |
 | $8B/B534-$8B/B53A | 7 | 0 | `rsUnitWindowRenderWeaponRankSortIcon` / `aUnknown8BB53B` |  |
 | $8B/B58F-$8B/B595 | 7 | 0 | `rlUnitWindowRenderUnitSwapCursors` / `rsUnitWindowMoveToLastUnit` |  |
 | $8B/B80A-$8B/B810 | 7 | 0 | `rsUnitWindowRenderItemIcons` / `aUnknown8BB811` |  |
@@ -158,7 +151,6 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8D/AEC0-$8D/AEC1 | 2 | 0 | `rlUnknown8DAE85` / `rlUnknown8DAEC2` |  |
 | $8D/B539-$8D/B539 | 1 | 0 | `rlUnknown8DB52C` / `rsUnknown8DB53A` |  |
 | $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardGreatBallistaPointer` / `gcUnknownD05673` |  |
-| $91/A3DD-$91/A3DD | 1 | 0 | `rlUnknown91A3D9` / `rsUnknown91A3DE` |  |
 | $91/A7EA-$91/A80C | 35 | 0 | `rlUnknown91A7DF` / `rlUnknown91A80D` |  |
 | $91/A8E4-$91/A927 | 68 | 0 | `rsDialogueEventCommand07` / `rlUnknown91A928` |  |
 | $91/A9F2-$91/AA14 | 35 | 0 | `aUnknown91A9E4` / `rsUnknown91AA15` |  |
@@ -168,7 +160,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $91/DF08-$91/DF31 | 42 | 0 | `rsUnknown91DEA1` / `rlUnknown91DF32` |  |
 | $91/E006-$91/E079 | 116 | 0 | `rsUnknown91DF6D` / `rlUnknown91E07A` |  |
 | $91/E4A3-$91/E4B2 | 16 | 0 | `rlUnknown91E472` / `aUnknown91E4B3` | 87% $00/$FF |
-| $91/E913-$91/E914 | 2 | 0 | `rlUnknown91E8C1` / `rsUnknown91E915` |  |
+| $91/E913-$91/E914 | 2 | 0 | `rlUnknown91E8D5` / `rsUnknown91E915` |  |
 | $95/9650-$95/968D | 62 | 0 | `rlUnknown9595CA` / `rlUnknown95968E` |  |
 | $95/9BFE-$95/9C13 | 22 | 0 | `rsUnknown959BC1` / `rsUnknown959C14` |  |
 | $95/9E71-$95/9F42 | 210 | 0 | `rlUnknown959E22` / `rlUnknown959F43` |  |
@@ -194,7 +186,6 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $95/FDE4-$95/FF50 | 365 | 0 | `rlUnknown95FDA6` / `rlUnknown95FF51` |  |
 | $95/FF6E-$95/FFFF | 146 | 0 | `rlUnknown95FF51` / `` | 58% $00/$FF |
 | $96/87B3-$96/881E | 108 | 0 | `rlUnknown96878D` / `rlUnknown96881F` |  |
-| $96/88E4-$96/890D | 42 | 0 | `rlUnknown9688BA` / `rlUnknown96890E` |  |
 | $96/8DBB-$96/8DBC | 2 | 0 | `rlUnknown968DAA` / `rlUnknown968DBD` |  |
 | $96/8DE1-$96/8E4B | 107 | 0 | `rlUnknown968DC8` / `rlUnknown968E4C` |  |
 | $96/8E8F-$96/8F4F | 193 | 0 | `rlUnknown968E7E` / `rlUnknown968F50` |  |
@@ -219,7 +210,6 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $96/DF98-$96/DFBA | 35 | 0 | `aUnknown96DF60` / `rsUnknown96DFBB` |  |
 | $96/F28B-$96/F28C | 2 | 0 | `rlUnknown96F275` / `rlUnknown96F28D` |  |
 | $96/F41A-$96/F557 | 318 | 0 | `rsUnknown96F3FE` / `rlUnknown96F558` |  |
-| $96/F580-$96/F675 | 246 | 0 | `rlUnknown96F56C` / `rlUnknown96F676` |  |
 | $96/F89B-$96/F914 | 122 | 0 | `rsUnknown96F7EB` / `rsUnknown96F915` |  |
 | $96/FA92-$96/FAB5 | 36 | 0 | `rlUnknown96F9BF` / `rsUnknown96FAB6` |  |
 | $96/FADA-$96/FBF8 | 287 | 0 | `rsUnknown96FAB6` / `rlUnknown96FBF9` |  |
@@ -245,24 +235,19 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $9E/8035-$9E/805D | 41 | 0 | `rlUnknown9E800C` / `rlUnknown9E805E` |  |
 | $9E/9C94-$9E/9CB8 | 37 | 0 | `rlUnknown9E9C70` / `rlProcUnknown9E9A43Cycle1` |  |
 | $9E/9ECF-$9E/9F25 | 87 | 0 | `rlUnknown9E9E61` / `rlUnknown9E9F26` |  |
-| $9E/A38C-$9E/A403 | 120 | 0 | `rlProcUnknown9EA334Cycle` / `aProcUnknown9EA334Code` |  |
 | $9E/B3C8-$9E/B3DD | 22 | 0 | `rlUnknown9EB39F` / `rlUnknown9EB3DE` |  |
 | $9E/B433-$9E/B490 | 94 | 0 | `rlUnknown9EB41C` / `rlUnknown9EB491` |  |
 | $9E/CEB9-$9E/CEDC | 36 | 0 | `rlUnknown9ECEA0` / `procUnknown9ECEDD` |  |
 | $9E/D006-$9E/D079 | 116 | 0 | `rlUnknown9ECFEB` / `rlUnknown9ED07A` |  |
-| $9E/D1BB-$9E/D1F3 | 57 | 0 | `rlProcUnknown9EAF98Cycle2` / `aProcUnknown9ED089Code` |  |
 | $9E/D412-$9E/D429 | 24 | 0 | `rlUnknown9ED401` / `rlUnknown9ED42A` |  |
 | $9E/D528-$9E/D534 | 13 | 0 | `rlProcUnknown9ED441Init` / `rlProcUnknown9ED441Cycle2` |  |
 | $9E/D72A-$9E/D741 | 24 | 0 | `rlUnknown9ED71E` / `rlUnknown9ED742` |  |
-| $9E/DC14-$9E/DC14 | 1 | 0 | `rlProcUnknown9EDAF6Cycle1` / `aProcUnknown9EDAF6Code` |  |
-| $9E/E079-$9E/E091 | 25 | 0 | `rlProcUnknown9EE03CCycle` / `aProcUnknown9EE03CCode` |  |
 | $9E/E177-$9E/E227 | 177 | 0 | `rlUnknown9EE156` / `rlUnknown9EE228` |  |
 | $9E/E2E4-$9E/EC94 | 2,481 | 0 | `rlUnknown9EE2D1` / `rlUnknown9EEC95` |  |
 | $DF/7FF8-$9F/801F | 40 | 0 | `g4bppcBattleAnimationSheetHighPriest` / `rlUnknown9F8020` |  |
 | $9F/8398-$9F/83CF | 56 | 0 | `rsUnknown9F8389` / `rsUnknown9F83D0` |  |
 | $9F/88C0-$9F/88FF | 64 | 0 | `aMapBattleMagicSpritePaletteLight` / `rlUnknown9F8900` |  |
 | $9F/90FE-$9F/9109 | 12 | 0 | `rlUnknown9F90FA` / `rsUnknown9F910A` |  |
-| $9F/94D5-$9F/94FD | 41 | 0 | `rlUnknown9F944F` / `rlUnknown9F94FE` |  |
 | $9F/957A-$9F/95E0 | 103 | 0 | `rlUnknown9F9570` / `rlUnknown9F95E1` |  |
 | $9F/9965-$9F/9975 | 17 | 0 | `rlUnknown9F9954` / `rlUnknown9F9976` |  |
 | $9F/9987-$9F/999D | 23 | 0 | `rlUnknown9F9976` / `rsUnknown9F999E` |  |
@@ -271,7 +256,5 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $9F/ED29-$9F/ED59 | 49 | 0 | `rlUnknown9FECFE` / `rlUnknown9FED5A` |  |
 | $9F/EE45-$9F/F05F | 539 | 0 | `rlUnknown9FEDB3` / `rlUnknown9FF060` |  |
 | $9F/F0DC-$9F/F0FF | 36 | 0 | `rlUnknown9FF060` / `rlUnknown9FF100` |  |
-| $9F/F1BC-$9F/F24F | 148 | 0 | `rlUnknown9FF100` / `rsUnknown9FF250` |  |
-| $9F/F2FD-$9F/F375 | 121 | 0 | `rsUnknown9FF2E4` / `rsUnknown9FF376` |  |
-| $9F/F66D-$9F/F67C | 16 | 0 | `rlUnknown9FF65A` / `rlUnknown9FF67D` |  |
+| $9F/F1BC-$9F/F24F | 148 | 0 | `rlUnknown9FF111` / `rsUnknown9FF250` |  |
 | $9F/F98E-$9F/F9A7 | 26 | 0 | `rsUnknown9FF97A` / `rlUnknown9FF9A8` | 53% $00/$FF |
