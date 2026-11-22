@@ -170,15 +170,15 @@
         bra _ScrollLeftDown
 
         _ScrollJustLeft
-        jsl rlUnknown8885EF
+        jsl rlStartMapScrollLeft
         bra _End
 
         _ScrollLeftUp
-        jsl rlUnknown88860B
+        jsl rlStartMapScrollUpLeft
         bra _End
 
         _ScrollLeftDown
-        jsl rlUnknown88861C
+        jsl rlStartMapScrollDownLeft
         bra _End
 
         _ScrollRight
@@ -188,23 +188,23 @@
         bra _ScrollRightDown
 
         _ScrollJustRight
-        jsl rlUnknown8885FD
+        jsl rlStartMapScrollRight
         bra _End
 
         _ScrollRightUp
-        jsl rlUnknown88862D
+        jsl rlStartMapScrollUpRight
         bra _End
 
         _ScrollRightDown
-        jsl rlUnknown88863E
+        jsl rlStartMapScrollDownRight
         bra _End
 
         _ScrollUp
-        jsl rlUnknown8885D3
+        jsl rlStartMapScrollUp
         bra _End
 
         _ScrollDown
-        jsl rlUnknown8885E1
+        jsl rlStartMapScrollDown
         bra _End
 
         _FinishedScrolling

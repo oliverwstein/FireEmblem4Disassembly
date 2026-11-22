@@ -6,12 +6,14 @@
       .al
       .xl
 
-      rlUnknown88818A ; 88/818A
+      rlClearMapRAM ; 88/818A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears the map engine's RAM from wMenuState ($000592) to $000ADD. Called when a save is loaded and when a new game starts.
 
         ldx #$054A
         lda #$0000
@@ -34,12 +36,14 @@
       .al
       .xl
 
-      rlUnknown888197 ; 88/8197
+      rlLoadCursorSpriteGraphics ; 88/8197
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies g4bppCursorSprites to VRAM.
 
         phx
         jsl rlDMAByStruct
@@ -53,12 +57,14 @@
 
         ; 88/81A7
 
-      rlUnknown8881A7 ; 88/81A7
+      rlLoadMapSpriteOAMPalettes ; 88/81A7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies aMapAndCastleSpriteOAMPalettes into the first OAM palettes of aOAMPaletteBuffer.
 
         phx
         ldx #$001E
@@ -84,12 +90,14 @@
       .al
       .xl
 
-      rlUnknown8881D7 ; 88/81D7
+      rlSetMapReturnCenterOnUnit ; 88/81D7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets MAP_RETURN_CENTER_ON_UNIT: back on the map, the cursor travels to the active unit.
 
         lda #$0001
         tsb wMapOverlayFlags,b
@@ -107,12 +115,14 @@
       .al
       .xl
 
-      rlUnknown8881DE ; 88/81DE
+      rlSetMapReturnStartCastleStaff ; 88/81DE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets MAP_RETURN_START_CASTLE_STAFF: back on the map, the active unit's staff target selection starts.
 
         lda #$0002
         tsb wMapOverlayFlags,b
@@ -130,12 +140,14 @@
       .al
       .xl
 
-      rlUnknown8881E5 ; 88/81E5
+      rlSetMapReturnCastleGridStaff ; 88/81E5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets MAP_RETURN_CASTLE_GRID_STAFF: the staff was chosen from the castle grid, so finishing or cancelling the target selection goes back to the castle screen.
 
         lda #$0008
         tsb wMapOverlayFlags,b
@@ -153,12 +165,14 @@
       .al
       .xl
 
-      rlUnknown8881EC ; 88/81EC
+      rlClearVRAM6000 ; 88/81EC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fills $4000 bytes of VRAM from word $6000 with the zero byte at 88/8219 (a fixed-source DMA).
 
         phk
         plb
@@ -192,11 +206,13 @@
       .al
       .xl
 
-      rlUnknown888410 ; 88/8410
+      rlRedrawVisibleMapTilemap ; 88/8410
 
         .al
         .autsiz
         .databank ?
+
+        ; Rebuilds every row of the visible map (wMapScrollXPixels, wMapScrollYPixels) into aBG2TilemapBuffer, bottom to top, and copies it to VRAM. Used after map tiles change (map change events, a location taken over).
 
         lda #1
         sta wMapEnableXScrollFlag,b
@@ -227,8 +243,8 @@
         
           -
           jsr rsMapScrollUpSetBGOFS
-          jsl rlUnknown8887AD
-          jsr rsUnknown88847D
+          jsl rlBuildMapTopRow
+          jsr rsCopyMapRowToTilemapBuffer
 
           lda wUnknown000736,b
           cmp wMapScrollYPixels,b
@@ -258,12 +274,14 @@
       .al
       .xl
 
-      rsUnknown88847D ; 88/847D
+      rsCopyMapRowToTilemapBuffer ; 88/847D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the row built in $05DC into aBG2TilemapBuffer at $0724 and moves $0724 up one row (wrapping at the top).
 
         ldx $0724,b
         ldy #$0000
@@ -292,12 +310,14 @@
 
         ; 88/84A6
 
-      rlUnknown8884A6 ; 88/84A6
+      rlRedrawRangeOverlayTilemap ; 88/84A6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Rebuilds every row of the range overlay (BG3, built from aMovementMap) into aBG3TilemapBuffer, bottom to top, and marks the rows for upload.
 
         lda #$0001
         sta wMapEnableXScrollFlag,b
@@ -323,7 +343,7 @@
 
         _84DB
         jsr rsMapScrollUpSetBGOFS
-        jsl rlUnknown888505
+        jsl rlBuildRangeOverlayRowIntoTilemap
         lda wUnknown000736,b
         cmp wMapScrollYPixels,b
         bcc _84DB
@@ -342,12 +362,14 @@
 
         ; 88/8505
 
-      rlUnknown888505 ; 88/8505
+      rlBuildRangeOverlayRowIntoTilemap ; 88/8505
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Builds one range overlay row into $06DC and copies it into aBG3TilemapBuffer at $0724, moving $0724 up one row.
 
         stz wR2
         lda wMapScrollYPixels,b
@@ -357,7 +379,7 @@
         sta wR2
 
         _8514
-        jsr rsUnknown888D57
+        jsr rsGetMapTopRowIndex
         lda wR3
         sec
         sbc #$0000
@@ -367,13 +389,13 @@
         and #$0008
         bne _8531
         lda #$0000
-        jsr rsUnknown888A14
+        jsr rsBuildRangeOverlayRow
         bra _8537
 
 
         _8531
         lda #$0000
-        jsr rsUnknown888C5F
+        jsr rsBuildRangeOverlayRowHalfOffset
 
         _8537
         ldx $0724,b
@@ -411,16 +433,18 @@
       .al
       .xl
 
-      rlUnknown888560 ; 88/8560
+      rlContinueMapScroll ; 88/8560
 
         .al
         .autsiz
         .databank ?
 
+        ; Each frame while wMapScrollingFlag is set: scrolls one more step in wMapScrollDirectionIdentifier and, unless the minimap is open, keeps wMapXOffset/wMapYOffset with the scroll.
+
         lda wUnknown00073A,b
         beq +
 
-          jsl rlUnknown88864F
+          jsl rlMapScrollStepInDirection
 
           lda wMapSystemFlags,b
           bit #$0020
@@ -446,7 +470,7 @@
       .al
       .xl
 
-      rlUnknown8885D3 ; 88/85D3
+      rlStartMapScrollUp ; 88/85D3
 
         .al
         .xl
@@ -456,14 +480,14 @@
         lda #$0001
         sta wUnknown00073A,b
         sta wMapEnableYScrollFlag,b
-        jsl rlUnknown8886B3
+        jsl rlMapScrollStepUp
         rtl
 
         .databank 0
 
         ; 88/85E1
 
-      rlUnknown8885E1 ; 88/85E1
+      rlStartMapScrollDown ; 88/85E1
 
         .al
         .xl
@@ -473,7 +497,7 @@
         lda #$0001
         sta wUnknown00073A,b
         sta wMapEnableYScrollFlag,b
-        jsl rlUnknown8886BB
+        jsl rlMapScrollStepDown
         rtl
 
         .databank 0
@@ -488,7 +512,7 @@
       .al
       .xl
 
-      rlUnknown8885EF ; 88/85EF
+      rlStartMapScrollLeft ; 88/85EF
 
         .al
         .autsiz
@@ -498,12 +522,12 @@
         sta wUnknown00073A,b
         sta wMapEnableXScrollFlag,b
 
-        jsl rlUnknown8886A3
+        jsl rlMapScrollStepLeft
         rtl
 
         .databank 0
 
-      rlUnknown8885FD ; 88/85FD
+      rlStartMapScrollRight ; 88/85FD
       
         .al
         .autsiz
@@ -513,7 +537,7 @@
         sta wUnknown00073A,b
         sta wMapEnableXScrollFlag,b
 
-        jsl rlUnknown8886AB
+        jsl rlMapScrollStepRight
         rtl
 
         .databank 0
@@ -526,7 +550,7 @@
       .al
       .xl
 
-      rlUnknown88860B ; 88/860B
+      rlStartMapScrollUpLeft ; 88/860B
 
         .al
         .autsiz
@@ -537,7 +561,7 @@
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
 
-        jsl rlUnknown8886C3
+        jsl rlMapScrollStepUpLeft
         rtl
 
         .databank 0
@@ -550,7 +574,7 @@
       .al
       .xl
 
-      rlUnknown88861C ; 88/861C
+      rlStartMapScrollDownLeft ; 88/861C
 
         .al
         .autsiz
@@ -561,12 +585,12 @@
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
 
-        jsl rlUnknown8886E1
+        jsl rlMapScrollStepDownLeft
         rtl
 
         .databank 0
 
-      rlUnknown88862D ; 88/862D
+      rlStartMapScrollUpRight ; 88/862D
 
         .al
         .autsiz
@@ -577,12 +601,12 @@
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
 
-        jsl rlUnknown8886D2
+        jsl rlMapScrollStepUpRight
         rtl
 
         .databank 0
 
-      rlUnknown88863E ; 88/863E
+      rlStartMapScrollDownRight ; 88/863E
 
         .al
         .autsiz
@@ -593,16 +617,18 @@
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
 
-        jsl rlUnknown8886F0
+        jsl rlMapScrollStepDownRight
         rtl
 
         .databank 0
 
-      rlUnknown88864F ; 88/864F
+      rlMapScrollStepInDirection ; 88/864F
       
         .al
         .autsiz
         .databank ?
+
+        ; One scroll step in wMapScrollDirectionIdentifier (the JOY_ direction bits: $0100 right, $0200 left, $0400 down, $0800 up and their diagonals).
 
         lda wMapScrollDirectionIdentifier,b
         cmp #$0200
@@ -632,88 +658,90 @@
         rtl
 
         _867B
-        jsl rlUnknown8886A3
+        jsl rlMapScrollStepLeft
         rtl
         
         _8680
-        jsl rlUnknown8886AB
+        jsl rlMapScrollStepRight
         rtl
         
         _8685
-        jsl rlUnknown8886B3
+        jsl rlMapScrollStepUp
         rtl
         
         _868A
-        jsl rlUnknown8886BB
+        jsl rlMapScrollStepDown
         rtl
         
         _868F
-        jsl rlUnknown8886C3
+        jsl rlMapScrollStepUpLeft
         rtl
         
         _8694
-        jsl rlUnknown8886E1
+        jsl rlMapScrollStepDownLeft
         rtl
         
         _8699
-        jsl rlUnknown8886D2
+        jsl rlMapScrollStepUpRight
         rtl
         
         _869E
-        jsl rlUnknown8886F0
+        jsl rlMapScrollStepDownRight
         rtl
 
         .databank 0
 
-      rlUnknown8886A3 ; 88/86A3
+      rlMapScrollStepLeft ; 88/86A3
 
         .al
         .autsiz
         .databank ?
 
+        ; Moves the camera left by wMapScrollSpeed and builds the new left column.
+
         jsr rsMapScrollLeftSetBGOFS
-        jsl rlUnknown8887D6
+        jsl rlQueueMapLeftColumnUpload
         rtl
 
         .databank 0
 
-      rlUnknown8886AB ; 88/86AB
+      rlMapScrollStepRight ; 88/86AB
 
         .al
         .autsiz
         .databank ?
 
         jsr rsMapScrollRightSetBGOFS
-        jsl rlUnknown8887BC
+        jsl rlQueueMapRightColumnUpload
         rtl
 
         .databank 0
 
-      rlUnknown8886B3 ; 88/86B3
+      rlMapScrollStepUp ; 88/86B3
 
         .al
         .autsiz
         .databank ?
 
         jsr rsMapScrollUpSetBGOFS
-        jsl rlUnknown888798
+        jsl rlQueueMapTopRowUpload
         rtl
 
         .databank 0
 
-      rlUnknown8886BB ; 88/86BB
+      rlMapScrollStepDown ; 88/86BB
 
         .al
         .autsiz
         .databank ?
 
         jsr rsMapScrollDownSetBGOFS
-        jsl rlUnknown88877F
+        jsl rlQueueMapBottomRowUpload
         rtl
 
         .databank 0
 
-      rlUnknown8886C3 ; 88/86C3
+      rlMapScrollStepUpLeft ; 88/86C3
 
         .al
         .autsiz
@@ -721,13 +749,13 @@
 
         jsr rsMapScrollLeftSetBGOFS
         jsr rsMapScrollUpSetBGOFS
-        jsl rlUnknown8887D6
-        jsl rlUnknown888798
+        jsl rlQueueMapLeftColumnUpload
+        jsl rlQueueMapTopRowUpload
         rtl
 
         .databank 0
 
-      rlUnknown8886D2 ; 88/86D2
+      rlMapScrollStepUpRight ; 88/86D2
 
         .al
         .autsiz
@@ -735,13 +763,13 @@
 
         jsr rsMapScrollRightSetBGOFS
         jsr rsMapScrollUpSetBGOFS
-        jsl rlUnknown8887BC
-        jsl rlUnknown888798
+        jsl rlQueueMapRightColumnUpload
+        jsl rlQueueMapTopRowUpload
         rtl
 
         .databank 0
 
-      rlUnknown8886E1 ; 88/86E1
+      rlMapScrollStepDownLeft ; 88/86E1
 
         .al
         .autsiz
@@ -749,13 +777,13 @@
 
         jsr rsMapScrollLeftSetBGOFS
         jsr rsMapScrollDownSetBGOFS
-        jsl rlUnknown8887D6
-        jsl rlUnknown88877F
+        jsl rlQueueMapLeftColumnUpload
+        jsl rlQueueMapBottomRowUpload
         rtl
 
         .databank 0
 
-      rlUnknown8886F0 ; 88/86F0
+      rlMapScrollStepDownRight ; 88/86F0
       
         .al
         .autsiz
@@ -763,8 +791,8 @@
 
         jsr rsMapScrollRightSetBGOFS
         jsr rsMapScrollDownSetBGOFS
-        jsl rlUnknown8887BC
-        jsl rlUnknown88877F
+        jsl rlQueueMapRightColumnUpload
+        jsl rlQueueMapBottomRowUpload
         rtl
 
         .databank 0
@@ -777,11 +805,13 @@
       .al
       .xl
 
-      rsUnknown888901 ; 88/8901
+      rsGetMapBottomRowIndex ; 88/8901
 
         .al
         .autsiz
         .databank ?
+
+        ; Adds 14 rows (the screen height in map tiles) to the aMapData index in wR3; the row size depends on wMapWidthMode.
 
         lda wUnknown00075C,b
         cmp #4
@@ -804,7 +834,7 @@
 
         .databank 0
 
-      rsUnknown88891C ; 88/891C
+      rsBuildMapBottomRow ; 88/891C
 
         .al
         .autsiz
@@ -819,8 +849,8 @@
           sta wR2
 
         +
-        jsr rsUnknown888D57
-        jsr rsUnknown888901
+        jsr rsGetMapTopRowIndex
+        jsr rsGetMapBottomRowIndex
         tax
         stz wUnknown00072A,b
         
@@ -828,30 +858,30 @@
         and #$0008
         bne +
 
-          jsr rsUnknown88899F
+          jsr rsBuildMapRowTiles
 
           lda wUnknown000770,b
           beq _End
 
             lda #$00E0
-            jsr rsUnknown888A14
+            jsr rsBuildRangeOverlayRow
             bra _End
 
         +
-        jsr rsUnknown888BB3
+        jsr rsBuildMapRowTilesHalfOffset
 
         lda wUnknown000770,b
         beq _End
 
           lda #$00E0
-          jsr rsUnknown888C5F
+          jsr rsBuildRangeOverlayRowHalfOffset
 
         _End
         rts
 
         .databank 0
 
-      rsUnknown88895C ; 88/895C
+      rsBuildMapTopRow ; 88/895C
 
         .al
         .autsiz
@@ -866,7 +896,7 @@
           sta $04
 
         +
-        jsr rsUnknown888D57
+        jsr rsGetMapTopRowIndex
 
         lda $06
         sec
@@ -879,34 +909,36 @@
         and #$0008
         bne +
 
-          jsr rsUnknown88899F
+          jsr rsBuildMapRowTiles
 
           lda wUnknown000770,b
           beq _End
 
             lda #0
-            jsr rsUnknown888A14
+            jsr rsBuildRangeOverlayRow
             bra _End
 
         +
-        jsr rsUnknown888BB3
+        jsr rsBuildMapRowTilesHalfOffset
 
         lda wUnknown000770,b
         beq _End
 
           lda #0
-          jsr rsUnknown888C5F
+          jsr rsBuildRangeOverlayRowHalfOffset
 
         _End
         rts
 
         .databank 0
 
-      rsUnknown88899F ; 88/899F
+      rsBuildMapRowTiles ; 88/899F
 
         .al
         .autsiz
         .databank ?
+
+        ; Builds a row of 8x8 tilemap entries from the map tiles in aMapData (each tile is four entries at $7F0000), for a camera X on a tile boundary. wR2 picks the top or bottom half of the tiles. With bit 1 of wUnknown00075A it also builds a second row at $065C from $7F6400.
 
         _Loop
         lda aMapData,x
@@ -991,12 +1023,14 @@
       .al
       .xl
 
-      rsUnknown888A14 ; 88/8A14
+      rsBuildRangeOverlayRow ; 88/8A14
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Builds a row of the range overlay into $06DC from aMovementMap, inside the window wMovementMapWindowLeft-Bottom; tiles outside it are blank ($FF).
 
         clc
         adc wMapScrollYPixels,b
@@ -1015,7 +1049,7 @@
         lsr a
         lsr a
         sta wTempVariable1,b
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         stz wUnknown00072A,b
         ldy wR8
 
@@ -1030,11 +1064,11 @@
         bcc _8A66
         cmp $0720,b
         bcs _8A66
-        jsr rsUnknown888D47
+        jsr rsGetMovementMapIndexInRow
         lda aMovementMap,x
         and #$00FF
         beq _8A66
-        jsr rsUnknown888A93
+        jsr rsPutRangeOverlayRowTiles
         bra _8A6F
 
 
@@ -1077,16 +1111,18 @@
 
         ; 88/8A93
 
-      rsUnknown888A93 ; 88/8A93
+      rsPutRangeOverlayRowTiles ; 88/8A93
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Puts the two tiles of one range overlay square: palette 2 for a square the unit can move to, palette 1 for a movement value with bit 7 set, palette 3 for $80 alone (reachable only by attack).
+
         bit #$0080
         beq _8A9C
-        jml rsUnknown888ADD._8AFC
+        jml rsPutRangeOverlayRowLeftTile._8AFC
 
 
         _8A9C
@@ -1111,7 +1147,7 @@
 
         ; 88/8ABE
 
-      rsUnknown888ABE ; 88/8ABE
+      rsPutRangeOverlayRowRightTile ; 88/8ABE
 
         .al
         .xl
@@ -1120,7 +1156,7 @@
 
         bit #$0080
         beq _8AC7
-        jml rsUnknown888ADD._8B27
+        jml rsPutRangeOverlayRowLeftTile._8B27
 
 
         _8AC7
@@ -1141,7 +1177,7 @@
 
         ; 88/8ADD
 
-      rsUnknown888ADD ; 88/8ADD
+      rsPutRangeOverlayRowLeftTile ; 88/8ADD
 
         .al
         .xl
@@ -1194,7 +1230,7 @@
         _8B27
         cmp #$0080
         bne _8B30
-        jml rsUnknown888B87
+        jml rsPutRangeOverlayRowRightAttackTile
 
 
         _8B30
@@ -1215,7 +1251,7 @@
         _8B46
         cmp #$0080
         bne _8B4F
-        jml rsUnknown888B9D
+        jml rsPutRangeOverlayRowLeftAttackTile
 
 
         _8B4F
@@ -1255,7 +1291,7 @@
 
         ; 88/8B87
 
-      rsUnknown888B87 ; 88/8B87
+      rsPutRangeOverlayRowRightAttackTile ; 88/8B87
 
         .al
         .xl
@@ -1279,7 +1315,7 @@
 
         ; 88/8B9D
 
-      rsUnknown888B9D ; 88/8B9D
+      rsPutRangeOverlayRowLeftAttackTile ; 88/8B9D
 
         .al
         .xl
@@ -1311,11 +1347,13 @@
       .al
       .xl
 
-      rsUnknown888BB3 ; 88/8BB3
+      rsBuildMapRowTilesHalfOffset ; 88/8BB3
 
         .al
         .autsiz
         .databank ?
+
+        ; Like rsBuildMapRowTiles for a camera X halfway into a tile: each tile's right half comes first.
 
         ; Grabs the next row of map tiles when scrolling down?
 
@@ -1436,7 +1474,7 @@
       .al
       .xl
 
-      rsUnknown888C5F ; 88/8C5F
+      rsBuildRangeOverlayRowHalfOffset ; 88/8C5F
 
         .al
         .xl
@@ -1460,7 +1498,7 @@
         lsr a
         lsr a
         sta wTempVariable1,b
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         stz wR9
         stz wUnknown00072A,b
         ldy wR8
@@ -1476,11 +1514,11 @@
         bcc _8CD2
         cmp $0720,b
         bcs _8CD2
-        jsr rsUnknown888D47
+        jsr rsGetMovementMapIndexInRow
         lda aMovementMap,x
         and #$00FF
         beq _8CED
-        jsr rsUnknown888ABE
+        jsr rsPutRangeOverlayRowRightTile
 
         _8CB1
         inc wTempVariable1,b
@@ -1492,11 +1530,11 @@
         ldy #$0000
 
         _8CC1
-        jsr rsUnknown888D47
+        jsr rsGetMovementMapIndexInRow
         lda aMovementMap,x
         and #$00FF
         beq _8CF5
-        jsr rsUnknown888ADD
+        jsr rsPutRangeOverlayRowLeftTile
         bra _8CFB
 
 
@@ -1561,12 +1599,14 @@
 
         ; 88/8D23
 
-      rsUnknown888D23 ; 88/8D23
+      rsGetMovementMapRowIndex ; 88/8D23
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the aMovementMap index of tile (wTempVariable1, wTempVariable2); also keeps the row part in wUnknown000790.
 
         lda wTempVariable1,b
         sec
@@ -1593,12 +1633,14 @@
 
         ; 88/8D47
 
-      rsUnknown888D47 ; 88/8D47
+      rsGetMovementMapIndexInRow ; 88/8D47
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the aMovementMap index of column wTempVariable1 in the row kept by rsGetMovementMapRowIndex.
 
         lda wTempVariable1,b
         sec
@@ -1621,11 +1663,13 @@
       .al
       .xl
 
-      rsUnknown888D57 ; 88/8D57
+      rsGetMapTopRowIndex ; 88/8D57
 
         .al
         .autsiz
         .databank ?
+
+        ; X = the aMapData index of the top left visible tile (wR3 too), Y = the buffer offset of its column (wR8).
 
         lda wUnknown00075C,b
         cmp #4
@@ -1675,11 +1719,13 @@
 
         .databank 0
 
-      rsUnknown888D9D ; 88/8D9D
+      rsGetMapColumnEndIndex ; 88/8D9D
 
         .al
         .autsiz
         .databank ?
+
+        ; Adds 16 rows to the aMapData index in wR0.
 
         lda wUnknown00075C,b
         cmp #4
@@ -1702,18 +1748,18 @@
 
         .databank 0
 
-      rsUnknown888DB8 ; 88/8DB8
+      rsBuildMapRightColumn ; 88/8DB8
 
         .al
         .autsiz
         .databank ?
 
-        jsr rsUnknown888E73
+        jsr rsGetMapLeftColumnIndex
         clc
         adc #32
         sta wR0
 
-        jsr rsUnknown888D9D
+        jsr rsGetMapColumnEndIndex
         sta wR8
         stz wR2
 
@@ -1742,41 +1788,41 @@
         bne +
 
           lda #4
-          jsr rsUnknown888EB5
+          jsr rsBuildMapColumnTiles
 
           lda wUnknown000770,b
           beq _End
 
             lda #$00F8
-            jsr rsUnknown888F32
+            jsr rsBuildRangeOverlayColumn
             bra _End
 
         +
         lda #4
-        jsr rsUnknown889108
+        jsr rsBuildMapColumnTilesHalfOffset
 
         lda wUnknown000770,b
         beq _End
 
           lda #$00F8
-          jsr rsUnknown8891BC
+          jsr rsBuildRangeOverlayColumnHalfOffset
 
         _End
         rts
 
         .databank 0
 
-      rsUnknown888E14 ; 88/8E14
+      rsBuildMapLeftColumn ; 88/8E14
 
         .al
         .autsiz
         .databank ?
 
         ; Gets map tile index from camera position?
-        jsr rsUnknown888E73
+        jsr rsGetMapLeftColumnIndex
         sta wR0
 
-        jsr rsUnknown888D9D
+        jsr rsGetMapColumnEndIndex
         sta wR8
 
         stz wR2
@@ -1794,35 +1840,37 @@
         bne +
 
           lda #0
-          jsr rsUnknown888EB5
+          jsr rsBuildMapColumnTiles
 
           lda wUnknown000770,b
           beq _End
 
             lda #0
-            jsr rsUnknown888F32
+            jsr rsBuildRangeOverlayColumn
             bra _End
 
         +
         lda #0
-        jsr rsUnknown889108
+        jsr rsBuildMapColumnTilesHalfOffset
 
         lda wUnknown000770,b
         beq _End
 
           lda #0
-          jsr rsUnknown8891BC
+          jsr rsBuildRangeOverlayColumnHalfOffset
 
         _End
         rts
 
         .databank 0
 
-      rsUnknown888E5A ; 88/8E5A
+      rsGetNextMapRowIndex ; 88/8E5A
 
         .al
         .autsiz
         .databank ?
+
+        ; A = X plus one row of aMapData.
 
         lda wUnknown00075C,b
         cmp #4
@@ -1845,11 +1893,13 @@
 
         .databank 0
 
-      rsUnknown888E73 ; 88/8E73
+      rsGetMapLeftColumnIndex ; 88/8E73
 
         .al
         .autsiz
         .databank ?
+
+        ; A = the aMapData index of the top left visible tile; wR3 = the buffer offset of its row.
 
         lda wMapScrollYPixels,b
         and #$00F8
@@ -1896,7 +1946,7 @@
 
         .databank 0
 
-      rsUnknown888EB5 ; 88/8EB5
+      rsBuildMapColumnTiles ; 88/8EB5
 
         .al
         .autsiz
@@ -1962,7 +2012,7 @@
             ldy #0
 
           +
-          jsr rsUnknown888E5A
+          jsr rsGetNextMapRowIndex
           cmp wR8
           bmi +
           bcs _End
@@ -1986,7 +2036,7 @@
       .al
       .xl
 
-      rsUnknown888F32 ; 88/8F32
+      rsBuildRangeOverlayColumn ; 88/8F32
 
         .al
         .xl
@@ -2010,7 +2060,7 @@
         lsr a
         lsr a
         sta wTempVariable2,b
-        jsr rsUnknown8890CF
+        jsr rsGetMovementMapColumnIndex
         stz wR9
         stz wUnknown00072A,b
         lda wR3
@@ -2028,11 +2078,11 @@
         bcc _8F89
         cmp $0720,b
         bcs _8F89
-        jsr rsUnknown8890F2
+        jsr rsGetMovementMapIndexInColumn
         lda aMovementMap,x
         and #$00FF
         beq _8F89
-        jsr rsUnknown888FAF
+        jsr rsPutRangeOverlayColumnTiles
         bra _8F92
 
 
@@ -2066,7 +2116,7 @@
 
         ; 88/8FAF
 
-      rsUnknown888FAF ; 88/8FAF
+      rsPutRangeOverlayColumnTiles ; 88/8FAF
 
         .al
         .xl
@@ -2075,7 +2125,7 @@
 
         bit #$0080
         beq _8FB8
-        jml rsUnknown889018
+        jml rsPutRangeOverlayColumnFlaggedTiles
 
 
         _8FB8
@@ -2098,7 +2148,7 @@
 
         .databank 0
 
-      rsUnknown888FDA ; 88/8FDA
+      rsPutRangeOverlayColumnBottomTile ; 88/8FDA
 
         .al
         .xl
@@ -2107,7 +2157,7 @@
 
         bit #$0080
         beq _8FE3
-        jml rsUnknown889043
+        jml rsPutRangeOverlayColumnFlaggedBottomTile
 
 
         _8FE3
@@ -2126,7 +2176,7 @@
 
         .databank 0
 
-      rsUnknown888FF9 ; 88/8FF9
+      rsPutRangeOverlayColumnTopTile ; 88/8FF9
 
         .al
         .xl
@@ -2135,7 +2185,7 @@
 
         bit #$0080
         beq _9002
-        jml rsUnknown889062
+        jml rsPutRangeOverlayColumnFlaggedTopTile
 
 
         _9002
@@ -2154,7 +2204,7 @@
 
         .databank 0
 
-      rsUnknown889018 ; 88/9018
+      rsPutRangeOverlayColumnFlaggedTiles ; 88/9018
 
         .al
         .xl
@@ -2163,7 +2213,7 @@
 
         cmp #$0080
         bne _9021
-        jml rsUnknown889081
+        jml rsPutRangeOverlayColumnAttackTiles
 
 
         _9021
@@ -2186,7 +2236,7 @@
 
         .databank 0
 
-      rsUnknown889043 ; 88/9043
+      rsPutRangeOverlayColumnFlaggedBottomTile ; 88/9043
 
         .al
         .xl
@@ -2195,7 +2245,7 @@
 
         cmp #$0080
         bne _904C
-        jml rsUnknown8890A3
+        jml rsPutRangeOverlayColumnAttackBottomTile
 
 
         _904C
@@ -2214,7 +2264,7 @@
 
         .databank 0
 
-      rsUnknown889062 ; 88/9062
+      rsPutRangeOverlayColumnFlaggedTopTile ; 88/9062
 
         .al
         .xl
@@ -2223,7 +2273,7 @@
 
         cmp #$0080
         bne _906B
-        jml rsUnknown8890B9
+        jml rsPutRangeOverlayColumnAttackTopTile
 
 
         _906B
@@ -2242,7 +2292,7 @@
 
         .databank 0
 
-      rsUnknown889081 ; 88/9081
+      rsPutRangeOverlayColumnAttackTiles ; 88/9081
 
         .al
         .xl
@@ -2270,7 +2320,7 @@
 
         ; 88/90A3
 
-      rsUnknown8890A3 ; 88/90A3
+      rsPutRangeOverlayColumnAttackBottomTile ; 88/90A3
 
         .al
         .xl
@@ -2294,7 +2344,7 @@
 
         ; 88/90B9
 
-      rsUnknown8890B9 ; 88/90B9
+      rsPutRangeOverlayColumnAttackTopTile ; 88/90B9
 
         .al
         .xl
@@ -2318,7 +2368,7 @@
 
         ; 88/90CF
 
-      rsUnknown8890CF ; 88/90CF
+      rsGetMovementMapColumnIndex ; 88/90CF
 
         .al
         .xl
@@ -2349,7 +2399,7 @@
 
         ; 88/90F2
 
-      rsUnknown8890F2 ; 88/90F2
+      rsGetMovementMapIndexInColumn ; 88/90F2
 
         .al
         .xl
@@ -2375,7 +2425,7 @@
 
         ; 88/9108
 
-      rsUnknown889108 ; 88/9108
+      rsBuildMapColumnTilesHalfOffset ; 88/9108
 
         .al
         .xl
@@ -2430,7 +2480,7 @@
         ldy #$0000
 
         _915D
-        jsr rsUnknown888E5A
+        jsr rsGetNextMapRowIndex
         tax
         lda aMapData,x
         and wUnknown000596,b
@@ -2491,7 +2541,7 @@
 
         ; 88/91BC
 
-      rsUnknown8891BC ; 88/91BC
+      rsBuildRangeOverlayColumnHalfOffset ; 88/91BC
 
         .al
         .xl
@@ -2515,7 +2565,7 @@
         lsr a
         lsr a
         sta wTempVariable2,b
-        jsr rsUnknown8890CF
+        jsr rsGetMovementMapColumnIndex
         stz wR9
         stz wUnknown00072A,b
         lda wR3
@@ -2533,11 +2583,11 @@
         bcc _9232
         cmp $0720,b
         bcs _9232
-        jsr rsUnknown8890F2
+        jsr rsGetMovementMapIndexInColumn
         lda aMovementMap,x
         and #$00FF
         beq _9242
-        jsr rsUnknown888FDA
+        jsr rsPutRangeOverlayColumnBottomTile
 
         _9211
         inc wTempVariable2,b
@@ -2549,11 +2599,11 @@
         ldy #$0000
 
         _9221
-        jsr rsUnknown8890F2
+        jsr rsGetMovementMapIndexInColumn
         lda aMovementMap,x
         and #$00FF
         beq _924A
-        jsr rsUnknown888FF9
+        jsr rsPutRangeOverlayColumnTopTile
         bra _9250
 
 
@@ -2599,12 +2649,14 @@
 
         ; 88/9268
 
-      rlUnknown889268 ; 88/9268
+      rlLoadChapterMapLayout ; 88/9268
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Decompresses wCurrentChapter's map layout to aMapData and its tile entries to $7F0000, sets wMapWidthMode, $075E and the scroll limits, and decompresses the terrain table.
 
         lda wCurrentChapter,b
         asl a
@@ -2681,12 +2733,14 @@
 
         ; 88/9305
 
-      rlUnknown889305 ; 88/9305
+      rlLoadChapterMapGraphics ; 88/9305
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Decompresses wCurrentChapter's map tile graphics and copies them to VRAM $2800, then copies its palettes into BG palettes 1-7.
 
         lda wCurrentChapter,b
         asl a
@@ -2764,9 +2818,9 @@
       .al
       .xl
 
-      procUnknown889396 ; 88/9396
+      procMinimap ; 88/9396
 
-        .structProcInfo "MG", rlProcUnknown889396Init, rlProcUnknown889396Cycle, aProcUnknown889396Code
+        .structProcInfo "MG", rlProcMinimapInit, rlProcMinimapClear, aProcMinimapCode
 
     .endsection ProcScript889396Section
 
@@ -2776,12 +2830,14 @@
       .al
       .xl
 
-      rlProcUnknown889396Init ; 88/939E
+      rlProcMinimapInit ; 88/939E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets up the colour math and the minimap palette (aMinimapPaletteData).
 
         lda #$8B88
         sta aProcSystem.aBody0,b,x
@@ -2789,9 +2845,9 @@
         sta aProcSystem.aBody1,b,x
         lda #$0004
         sta aProcSystem.aBody2,b,x
-        lda #(`aUnknown8893DB)<<8
+        lda #(`aMinimapPaletteData)<<8
         sta lR19+1
-        lda #<>aUnknown8893DB
+        lda #<>aMinimapPaletteData
         sta lR19
         jsl rlApplyMapMenuPaletteData
         sep #$20
@@ -2822,9 +2878,9 @@
       .al
       .xl
 
-      aUnknown8893DB .dstruct structMapMenuPaletteData, $000F, 6, 1, aUnknown8893E2 ; 88/93DB
+      aMinimapPaletteData .dstruct structMapMenuPaletteData, $000F, 6, 1, aMinimapPalette ; 88/93DB
 
-      aUnknown8893E2 ; 88/93E2
+      aMinimapPalette ; 88/93E2
         .word $08A5, $1DC9, $1168, $3DEF, $2657, $0D2F, $0089, $6978
         .word $6289, $3945, $7BFF, $7E00, $001F, $03E0, $03FF
 
@@ -2836,15 +2892,17 @@
       .al
       .xl
 
-      rlProcUnknown889396Cycle ; 88/9400
+      rlProcMinimapClear ; 88/9400
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown889B22
-        lda #<>rlUnknown889411
+        ; Clears the minimap pixels (rlClearMinimap).
+
+        jsl rlClearMinimap
+        lda #<>rlProcMinimapDrawTerrain
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$1FFE
         sta aProcSystem.aBody2,b,x
@@ -2862,12 +2920,14 @@
       .al
       .xl
 
-      rlUnknown889411 ; 88/9411
+      rlProcMinimapDrawTerrain ; 88/9411
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws $200 map tiles a frame (rlDrawMinimapTerrain), fading the screen as it goes.
 
         sep #$20
         lda #$BD
@@ -2887,13 +2947,13 @@
         phx
         lda aProcSystem.aBody2,b,x
         tax
-        jsl rlUnknown889B6D
+        jsl rlDrawMinimapTerrain
         txa
         plx
         sta aProcSystem.aBody2,b,x
         lda aProcSystem.aBody2,b,x
         bpl _9447
-        lda #<>rlUnknown889448
+        lda #<>rlProcMinimapDrawUnits
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _9447
@@ -2903,15 +2963,17 @@
 
         ; 88/9448
 
-      rlUnknown889448 ; 88/9448
+      rlProcMinimapDrawUnits ; 88/9448
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown889BF7
-        lda #<>rlUnknown88946B
+        ; Draws the units (rlDrawMinimapUnits); when choosing a warp destination, shows the first castle.
+
+        jsl rlDrawMinimapUnits
+        lda #<>rlProcMinimapUpload
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0004
         sta aProcSystem.aBody2,b,x
@@ -2920,7 +2982,7 @@
         lda wUnknown000D79,b
         bit #$0800
         beq _946A
-        jsr rsUnknown8898D2
+        jsr rsMinimapShowWarpCastle
 
         _946A
         rtl
@@ -2929,12 +2991,14 @@
 
         ; 88/946B
 
-      rlUnknown88946B ; 88/946B
+      rlProcMinimapUpload ; 88/946B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the minimap pixels to VRAM, $800 bytes a frame for four frames.
 
         lda #$7E8B
         sta lR18+1
@@ -2955,7 +3019,7 @@
         plx
         dec aProcSystem.aBody2,b,x
         bne _949E
-        lda #<>rlUnknown88949F
+        lda #<>rlProcMinimapDrawTilemap
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _949E
@@ -2965,12 +3029,14 @@
 
         ; 88/949F
 
-      rlUnknown88949F ; 88/949F
+      rlProcMinimapDrawTilemap ; 88/949F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the minimap's tilemap (16x16 tiles, 16x8 in the prologue) and ends the proc.
 
         sep #$20
         rep #$20
@@ -2989,17 +3055,17 @@
         bpl _94AC
         lda wCurrentChapter,b
         beq _94CC
-        lda #(`aUnknown8894F2)<<8
+        lda #(`aMinimapTilemapInfo)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown8894F2
+        lda #<>aMinimapTilemapInfo
         sta lMapMenuTilemapRAMEntryPointer,b
         bra _94D8
 
 
         _94CC
-        lda #(`aUnknown8894FB)<<8
+        lda #(`aMinimapPrologueTilemapInfo)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown8894FB
+        lda #<>aMinimapPrologueTilemapInfo
         sta lMapMenuTilemapRAMEntryPointer,b
 
         _94D8
@@ -3025,10 +3091,10 @@
       .al
       .xl
 
-      aUnknown8894F2 ; 88/94F2
+      aMinimapTilemapInfo ; 88/94F2
         .byte $10, $10, $88, $7B, $7E, $00, $4A, $C5, $7F
 
-      aUnknown8894FB ; 88/94FB
+      aMinimapPrologueTilemapInfo ; 88/94FB
         .byte $10, $08, $88, $7B, $7E, $00, $4A, $C5, $7F
 
     .endsection Table8894F2Section
@@ -3039,7 +3105,7 @@
       .al
       .xl
 
-      aProcUnknown889396Code ; 88/9504
+      aProcMinimapCode ; 88/9504
 
         PROC_HALT
 
@@ -3054,12 +3120,14 @@
       .al
       .xl
 
-      rsUnknown889506 ; 88/9506
+      rsPutMinimapDot ; 88/9506
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; ORs a 2x2 pixel dot of colour wR2 into the minimap pixels ($7E8B88) for map tile (wR0, wR1).
 
         php
         phx
@@ -3091,32 +3159,32 @@
         asl a
         asl a
         clc
-        adc aUnknown88958F,x
+        adc aMinimapDotColorBits,x
         tax
         sep #$20
         lda $8B88,b,y
-        ora aUnknown88958F,x
+        ora aMinimapDotColorBits,x
         sta $8B88,b,y
         lda $8B89,b,y
-        ora aUnknown88958F+1,x
+        ora aMinimapDotColorBits+1,x
         sta $8B89,b,y
         lda $8B98,b,y
-        ora aUnknown88958F+2,x
+        ora aMinimapDotColorBits+2,x
         sta $8B98,b,y
         lda $8B99,b,y
-        ora aUnknown88958F+3,x
+        ora aMinimapDotColorBits+3,x
         sta $8B99,b,y
         lda $8B8A,b,y
-        ora aUnknown88958F,x
+        ora aMinimapDotColorBits,x
         sta $8B8A,b,y
         lda $8B8B,b,y
-        ora aUnknown88958F+1,x
+        ora aMinimapDotColorBits+1,x
         sta $8B8B,b,y
         lda $8B9A,b,y
-        ora aUnknown88958F+2,x
+        ora aMinimapDotColorBits+2,x
         sta $8B9A,b,y
         lda $8B9B,b,y
-        ora aUnknown88958F+3,x
+        ora aMinimapDotColorBits+3,x
         sta $8B9B,b,y
         plx
         plp
@@ -3135,9 +3203,9 @@
       .al
       .xl
 
-      aUnknown88958F ; 88/958F
+      aMinimapDotColorBits ; 88/958F
 
-        ; Read by rsUnknown889506.
+        ; Read by rsPutMinimapDot.
 
         .word $0020, $0030, $0040, $0050, $0060, $0070, $0080, $0090
         .word $00A0, $00B0, $00C0, $00D0, $00E0, $00F0, $0100, $0110
@@ -3169,12 +3237,14 @@
       .al
       .xl
 
-      rsUnknown8896AF ; 88/96AF
+      rsClearMinimapDot ; 88/96AF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears the 2x2 pixel dot of map tile (wR0, wR1).
 
         php
         phx
@@ -3205,28 +3275,28 @@
         tax
         sep #$20
         lda $8B88,b,y
-        and aUnknown88972F,x
+        and aMinimapDotClearMasks,x
         sta $8B88,b,y
         lda $8B89,b,y
-        and aUnknown88972F+1,x
+        and aMinimapDotClearMasks+1,x
         sta $8B89,b,y
         lda $8B98,b,y
-        and aUnknown88972F+2,x
+        and aMinimapDotClearMasks+2,x
         sta $8B98,b,y
         lda $8B99,b,y
-        and aUnknown88972F+3,x
+        and aMinimapDotClearMasks+3,x
         sta $8B99,b,y
         lda $8B8A,b,y
-        and aUnknown88972F,x
+        and aMinimapDotClearMasks,x
         sta $8B8A,b,y
         lda $8B8B,b,y
-        and aUnknown88972F+1,x
+        and aMinimapDotClearMasks+1,x
         sta $8B8B,b,y
         lda $8B9A,b,y
-        and aUnknown88972F+2,x
+        and aMinimapDotClearMasks+2,x
         sta $8B9A,b,y
         lda $8B9B,b,y
-        and aUnknown88972F+3,x
+        and aMinimapDotClearMasks+3,x
         sta $8B9B,b,y
         plx
         plp
@@ -3245,9 +3315,9 @@
       .al
       .xl
 
-      aUnknown88972F ; 88/972F
+      aMinimapDotClearMasks ; 88/972F
 
-        ; Read by rsUnknown8896AF.
+        ; Read by rsClearMinimapDot.
 
         .byte $3F, $3F, $3F, $3F, $CF, $CF, $CF, $CF, $F3, $F3, $F3, $F3, $FC, $FC, $FC, $FC
 
@@ -3261,16 +3331,18 @@
       .al
       .xl
 
-      rlUnknown88973F ; 88/973F
+      rlMinimapStep ; 88/973F
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`procUnknown889396)<<8
+        ; Runs while the minimap is open (bit 5 of wMapSystemFlags). The D-pad scrolls the map under it, B or Start closes it, holding R, X, A or Y makes it see-through and L jumps to the home castle. When choosing a warp destination (bit 11 of wUnknown000D79) the D-pad picks a castle instead (rsMinimapChooseWarpCastle).
+
+        lda #(`procMinimap)<<8
         sta lR44+1
-        lda #<>procUnknown889396
+        lda #<>procMinimap
         sta lR44
         jsl rlProcEngineFindProc
         bcc _9753
@@ -3278,9 +3350,9 @@
 
 
         _9753
-        lda #(`procUnknown889C52)<<8
+        lda #(`procMinimapClose)<<8
         sta lR44+1
-        lda #<>procUnknown889C52
+        lda #<>procMinimapClose
         sta lR44
         jsl rlProcEngineFindProc
         bcc _9767
@@ -3300,16 +3372,16 @@
         lda wJoy1New
         bit #$9000
         beq _978E
-        lda #(`procUnknown889C52)<<8
+        lda #(`procMinimapClose)<<8
         sta lR44+1
-        lda #<>procUnknown889C52
+        lda #<>procMinimapClose
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
 
 
         _978E
-        jsr rsUnknown889A41
+        jsr rsMinimapHandleTransparency
         lda wJoy1Input
         and #$0F00
         sta wMapScrollDirectionIdentifier,b
@@ -3354,7 +3426,7 @@
         stz wMapEnableYScrollFlag,b
 
         _97F5
-        jsl rlUnknown8899B8
+        jsl rlMinimapScrollMap
         lda wMapScrollCurrentPixelDistance,b
         cmp wMapScrollSpeed,b
         bne _9801
@@ -3392,14 +3464,14 @@
 
         _9838
         jsl rlPushToOAMBuffer
-        jsl rlUnknown889A85
+        jsl rlMinimapAnimateViewColors
 
         _9840
         rtl
 
 
         _9841
-        jsr rsUnknown88986C
+        jsr rsMinimapChooseWarpCastle
         lda wCastleCursorX,b
         asl a
         clc
@@ -3415,20 +3487,22 @@
         sbc #$0006
         sta wR1
         lda #$0000
-        jsl rlUnknown88A704
-        jsl rlUnknown889A85
+        jsl rlDrawHandCursor
+        jsl rlMinimapAnimateViewColors
         rtl
 
         .databank 0
 
         ; 88/986C
 
-      rsUnknown88986C ; 88/986C
+      rsMinimapChooseWarpCastle ; 88/986C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Down or right goes to the next castle, up or left to the previous one, A chooses it (sets bit 14 of wMapSystemFlags) and B cancels; both close the minimap.
 
         lda wJoy1New
         bit #$0500
@@ -3444,7 +3518,7 @@
 
         _9883
         inc wCastleSubMenuStep,b
-        jml rsUnknown8898D2
+        jml rsMinimapShowWarpCastle
 
 
         _988A
@@ -3457,13 +3531,13 @@
         sta wCastleSubMenuStep,b
 
         _989D
-        jml rsUnknown8898D2
+        jml rsMinimapShowWarpCastle
 
 
         _98A1
-        lda #(`procUnknown889C52)<<8
+        lda #(`procMinimapClose)<<8
         sta lR44+1
-        lda #<>procUnknown889C52
+        lda #<>procMinimapClose
         sta lR44
         jsl rlProcEngineCreateProc
         stz wUnknown0007D8,b
@@ -3475,25 +3549,27 @@
         _98B4
         lda #$4000
         tsb wMapSystemFlags,b
-        lda #(`procUnknown889C52)<<8
+        lda #(`procMinimapClose)<<8
         sta lR44+1
-        lda #<>procUnknown889C52
+        lda #<>procMinimapClose
         sta lR44
         jsl rlProcEngineCreateProc
         rts
 
-      aUnknown8898C9 ; 88/98C9
+      aMinimapCastleNameTilemapInfo ; 88/98C9
 
         .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E
 
         ; 88/98D2
 
-      rsUnknown8898D2 ; 88/98D2
+      rsMinimapShowWarpCastle ; 88/98D2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Moves wCastleSubMenuStep on to a castle the player owns that is empty (or is the home castle), puts wCastleCursorX/Y on it and draws its name.
 
         lda wCastleSubMenuStep,b
         jsl rlGetLocationEventDataEntry
@@ -3531,7 +3607,7 @@
 
         _992C
         stz wCastleSubMenuStep,b
-        bra rsUnknown8898D2
+        bra rsMinimapShowWarpCastle
 
 
         _9931
@@ -3539,30 +3615,30 @@
         bit #$0A00
         bne _993D
         inc wCastleSubMenuStep,b
-        bra rsUnknown8898D2
+        bra rsMinimapShowWarpCastle
 
 
         _993D
         dec wCastleSubMenuStep,b
         lda wCastleSubMenuStep,b
-        bpl rsUnknown8898D2
+        bpl rsMinimapShowWarpCastle
         jsl rlGetChapterLocationCount
         sec
         sbc #$0001
         sta wCastleSubMenuStep,b
-        bra rsUnknown8898D2
+        bra rsMinimapShowWarpCastle
 
 
         _9952
-        lda #(`aUnknown8898C9)<<8
+        lda #(`aMinimapCastleNameTilemapInfo)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown8898C9
+        lda #<>aMinimapCastleNameTilemapInfo
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown8899A4)<<8
+        lda #(`aMinimapBlankCastleNameText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8899A4
+        lda #<>aMinimapBlankCastleNameText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -3595,7 +3671,7 @@
       .al
       .xl
 
-      aUnknown8899A4 ; 88/99A4
+      aMinimapBlankCastleNameText ; 88/99A4
 
         .enc "SJIS"
         .text "　　　　　　　　　"
@@ -3611,12 +3687,14 @@
       .al
       .xl
 
-      rlUnknown8899B8 ; 88/99B8
+      rlMinimapScrollMap ; 88/99B8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Scrolls the map in the D-pad direction and plays the scrolling sounds.
 
         lda wMapScrollXPixels,b
         sta wUnknown000734,b
@@ -3645,42 +3723,42 @@
 
 
         _99F0
-        jsl rlUnknown8885EF
+        jsl rlStartMapScrollLeft
         bra _9A20
 
 
         _99F6
-        jsl rlUnknown8885FD
+        jsl rlStartMapScrollRight
         bra _9A20
 
 
         _99FC
-        jsl rlUnknown8885D3
+        jsl rlStartMapScrollUp
         bra _9A20
 
 
         _9A02
-        jsl rlUnknown8885E1
+        jsl rlStartMapScrollDown
         bra _9A20
 
 
         _9A08
-        jsl rlUnknown88860B
+        jsl rlStartMapScrollUpLeft
         bra _9A20
 
 
         _9A0E
-        jsl rlUnknown88861C
+        jsl rlStartMapScrollDownLeft
         bra _9A20
 
 
         _9A14
-        jsl rlUnknown88862D
+        jsl rlStartMapScrollUpRight
         bra _9A20
 
 
         _9A1A
-        jsl rlUnknown88863E
+        jsl rlStartMapScrollDownRight
         bra _9A20
 
 
@@ -3702,7 +3780,7 @@
 
         ; 88/9A41
 
-      rsUnknown889A41 ; 88/9A41
+      rsMinimapHandleTransparency ; 88/9A41
 
         .al
         .xl
@@ -3754,32 +3832,34 @@
 
         ; 88/9A85
 
-      rlUnknown889A85 ; 88/9A85
+      rlMinimapAnimateViewColors ; 88/9A85
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Cycles four OAM colours by frame (aMinimapViewColorCycle) for the box that shows the visible part of the map.
+
         lda wVBlankEnabledFramecount
         and #$001E
         tax
-        lda aUnknown889AE2,x
+        lda aMinimapViewColorCycle,x
         and #$03FF
         clc
         adc #$7C00
         sta $01D8,b
-        lda aUnknown889AE2,x
+        lda aMinimapViewColorCycle,x
         and #$7FE0
         clc
         adc #$001F
         sta $01DA,b
-        lda aUnknown889AE2,x
+        lda aMinimapViewColorCycle,x
         and #$7C1F
         clc
         adc #$03E0
         sta $01DC,b
-        lda aUnknown889AE2,x
+        lda aMinimapViewColorCycle,x
         and #$7C00
         clc
         adc #$033F
@@ -3798,9 +3878,9 @@
       .al
       .xl
 
-      aUnknown889AE2 ; 88/9AE2
+      aMinimapViewColorCycle ; 88/9AE2
 
-        ; Read by rlUnknown889A85.
+        ; Read by rlMinimapAnimateViewColors.
 
         .word $0000, $0421, $0842, $1084, $18C6, $1CE7, $2529, $7DEF
         .word $7DEF, $2529, $1CE7, $18C6, $1084, $0842, $0421, $0000
@@ -3817,7 +3897,7 @@
       .al
       .xl
 
-      rlUnknown889B22 ; 88/9B22
+      rlClearMinimap ; 88/9B22
 
         .al
         .xl
@@ -3876,12 +3956,14 @@
       .al
       .xl
 
-      rlUnknown889B6D ; 88/9B6D
+      rlDrawMinimapTerrain ; 88/9B6D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Puts a dot for each map tile from X down to wTempVariable1, coloured by its terrain (aMinimapTerrainColors) or 9 for a closed village.
 
         phb
         php
@@ -3909,15 +3991,15 @@
         lda aTerrainTileset,x
         and #$00FF
         tax
-        jsr rsUnknown889BCF
+        jsr rsCheckMinimapClosedVillage
         bcs _9BA5
-        lda aUnknown889BB5,x
+        lda aMinimapTerrainColors,x
         and #$00FF
         sta wR2
 
         _9BA5
         plx
-        jsr rsUnknown889506
+        jsr rsPutMinimapDot
         dec x
         dec x
         cpx wTempVariable1,b
@@ -3942,22 +4024,24 @@
       .al
       .xl
 
-      aUnknown889BB5 ; 88/9BB5
+      aMinimapTerrainColors ; 88/9BB5
 
         ; One byte per terrain type (the index comes from aTerrainTileset), read by
-        ; rlUnknown889B6D unless rsUnknown889BCF returns with carry set.
+        ; rlDrawMinimapTerrain unless rsCheckMinimapClosedVillage returns with carry set.
 
         .byte $06, $01, $06, $02, $03, $0A, $0A, $05, $04, $0B, $08, $08, $08
         .byte $08, $05, $0B, $07, $08, $08, $08, $08, $08, $08, $08, $08, $04
 
         ; 88/9BCF
 
-      rsUnknown889BCF ; 88/9BCF
+      rsCheckMinimapClosedVillage ; 88/9BCF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; For terrain $12 or $13: carry set and colour 9 when the tile is a village that is closed.
 
         cmp #$0012
         beq _9BD9
@@ -3994,12 +4078,14 @@
       .al
       .xl
 
-      rlUnknown889BF7 ; 88/9BF7
+      rlDrawMinimapUnits ; 88/9BF7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Puts a dot for each deployed, visible unit, coloured $0C plus its allegiance.
 
         phb
         php
@@ -4027,8 +4113,8 @@
         sta wR0
         lda @l aDeploymentTable._YTilePosition,x
         sta wR1
-        jsr rsUnknown8896AF
-        jsr rsUnknown889506
+        jsr rsClearMinimapDot
+        jsr rsPutMinimapDot
 
         _9C2F
         dec x
@@ -4053,9 +4139,9 @@
       .al
       .xl
 
-      procUnknown889C52 ; 88/9C52
+      procMinimapClose ; 88/9C52
 
-        .structProcInfo "MC", rlProcUnknown889C52Init, rlProcUnknown889C52Cycle, aProcUnknown889C52Code
+        .structProcInfo "MC", rlProcMinimapCloseInit, rlProcMinimapCloseLoadWindowGraphics, aProcMinimapCloseCode
 
     .endsection ProcScript889C52Section
 
@@ -4065,12 +4151,14 @@
       .al
       .xl
 
-      rlProcUnknown889C52Init ; 88/9C5A
+      rlProcMinimapCloseInit ; 88/9C5A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Restores the colour math, clears the minimap tilemap and puts the cursor back on screen.
 
         phx
         sep #$20
@@ -4146,7 +4234,7 @@
 
         ; 88/9CE1
 
-      rlProcUnknown889C52Cycle ; 88/9CE1
+      rlProcMinimapCloseLoadWindowGraphics ; 88/9CE1
 
         .al
         .xl
@@ -4156,7 +4244,7 @@
         phx
         jsl rlLoadWindowGraphics
         plx
-        lda #<>rlUnknown889CEE
+        lda #<>rlProcMinimapCloseLoadGraphics1
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -4172,7 +4260,7 @@
       .al
       .xl
 
-      rlUnknown889CEE ; 88/9CEE
+      rlProcMinimapCloseLoadGraphics1 ; 88/9CEE
 
         .al
         .xl
@@ -4197,7 +4285,7 @@
           .structDMAToVRAM $7E8B88, $0400, $80, $6800
 
         plx
-        lda #<>rlUnknown889D20
+        lda #<>rlProcMinimapCloseLoadGraphics2
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -4213,7 +4301,7 @@
       .al
       .xl
 
-      rlUnknown889D20 ; 88/9D20
+      rlProcMinimapCloseLoadGraphics2 ; 88/9D20
 
         ; Found by tools/sweep.py.
         .al
@@ -4239,15 +4327,15 @@
           .structDMAToVRAM $7E8F88, $0400, $80, $6C00
 
         jsl rlLoadDefaultWindowBorderPalette
-        lda #(`aUnknown8898C9)<<8
+        lda #(`aMinimapCastleNameTilemapInfo)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown8898C9
+        lda #<>aMinimapCastleNameTilemapInfo
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown889D92)<<8
+        lda #(`aMinimapCloseBlankText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown889D92
+        lda #<>aMinimapCloseBlankText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -4260,7 +4348,7 @@
           .structDMAToVRAM $7E8488, $0080, $80, $B100
 
         plx
-        lda #<>rlUnknown889DA6
+        lda #<>rlProcMinimapCloseFinish
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -4276,7 +4364,7 @@
       .al
       .xl
 
-      aUnknown889D92 ; 88/9D92
+      aMinimapCloseBlankText ; 88/9D92
 
         .enc "SJIS"
         .text "　　　　　　　　　"
@@ -4292,12 +4380,14 @@
       .al
       .xl
 
-      rlUnknown889DA6 ; 88/9DA6
+      rlProcMinimapCloseFinish ; 88/9DA6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears the minimap flag and ends the proc. After a warp destination was chosen, uses the warp staff on it (rlUnknown84DC1C), from the map or from the castle grid; after a cancel, reopens the unit menu or returns to the castle grid.
 
         lda #$0020
         trb wMapSystemFlags,b
@@ -4397,7 +4487,7 @@
       .al
       .xl
 
-      aProcUnknown889C52Code ; 88/9E6C
+      aProcMinimapCloseCode ; 88/9E6C
 
         PROC_HALT
 
@@ -4412,18 +4502,20 @@
       .al
       .xl
 
-      rlUnknown88A12B ; 88/A12B
+      rlMapCursorStep ; 88/A12B
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs the map cursor each frame of the map (rlMapStep); see rlMapCursorStepInner.
 
         phb
         php
         phk
         plb
 
-        jsl rlUnknown88A136
+        jsl rlMapCursorStepInner
 
         plp
         plb
@@ -4431,14 +4523,16 @@
 
         .databank 0
 
-      rlUnknown88A136 ; 88/A136
+      rlMapCursorStepInner ; 88/A136
 
         .al
         .autsiz
         .databank ?
 
+        ; Does nothing while a fade runs or not every input layer is on. Hands over to the AI movement (rlMapAIMoveStep) in a computer phase, to the minimap, or to the cursor state (wMapCursorState); otherwise moves the free cursor with the D-pad and draws it.
+
         stz wUnknown000758,b
-        jsr rsUnknown88A32D
+        jsr rsUpdateMapSystemFlags
 
         stz wUnknown00073A,b
         stz wMapEnableXScrollFlag,b
@@ -4493,14 +4587,14 @@
         bit #$0020
         beq +
 
-          jml rlUnknown88973F
+          jml rlMinimapStep
 
         +
         lda wMapActionMode,b
         bpl +
 
           lda wActiveUnitDeploymentOffset,b
-          jsl rlUnknown88B42C
+          jsl rlStartCursorToUnitAfterMove
           jml _End
         
         +
@@ -4571,7 +4665,7 @@
           lda #$0002
           trb wMapOverlayFlags,b
 
-          jsl rlUnknown88A2F5
+          jsl rlUseCastleGridStaff
 
         _A234
         lda wUnknown0007D8,b
@@ -4583,10 +4677,10 @@
             cmp #$0003
             beq +
 
-              jml rlUnknown88A754
+              jml rlMapCursorMoveStep
             
             +
-            jml rlUnknown88A81D
+            jml rlMapChooseTargetStep
           
           +
           jml _A2BD
@@ -4604,7 +4698,7 @@
             bra _A2BD
           
           +
-          jsr rsUnknown88A551
+          jsr rsGetMapCursorMove
           bcc _A2BD
 
             stz wMapScrollCurrentPixelDistance,b
@@ -4695,12 +4789,14 @@
       .al
       .xl
 
-      rlUnknown88A2F5 ; 88/A2F5
+      rlUseCastleGridStaff ; 88/A2F5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; For a staff chosen on the castle grid (target already picked): uses it at once (rlUnknown84DC1C) and clears the castle flags.
 
         lda #$0000
         sta wUnknown0007D8,b
@@ -4734,11 +4830,13 @@
       .al
       .xl
 
-      rsUnknown88A32D ; 88/A32D
+      rsUpdateMapSystemFlags ; 88/A32D
 
         .al
         .autsiz
         .databank ?
+
+        ; Recomputes the low bits of wMapSystemFlags each frame: Y held, a unit selected, the cursor state busy, an event running.
 
         lda wMapSystemFlags,b
         bit #$8000
@@ -4804,12 +4902,14 @@
       .al
       .xl
 
-      rlUnknown88A38C ; 88/A38C
+      rlCheckMapCursorResting ; 88/A38C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if the cursor has just come to rest on a tile (wMapCursorResting).
 
         lda wUnknown000758,b
         beq _A393
@@ -4833,13 +4933,15 @@
       .al
       .xl
 
-      rlUnknown88A395 ; 88/A395
+      rlMoveFreeMapCursorUnused ; 88/A395
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing reaches this. An older free cursor movement: moves the cursor 16 pixels in the D-pad direction (faster with Y) and draws it.
 
         stz wUnknown000758,b
         lda wUnknown000766,b
@@ -4945,12 +5047,14 @@
       .al
       .xl
 
-      rlUnknown88A44C ; 88/A44C
+      rlAnimateRangeOverlayPalette ; 88/A44C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; While a unit is selected, pulses the range overlay colours by frame.
 
         lda wUnknown000770,b
         beq _A4BB
@@ -5017,7 +5121,7 @@
 
       aUnknown88A4BC ; 88/A4BC
 
-        ; Read by rlUnknown88A44C.
+        ; Read by rlAnimateRangeOverlayPalette.
 
         .word $0000, $0421, $0842, $0C63, $1084, $14A5, $18C6, $1CE7
         .word $1CE7, $18C6, $14A5, $1084, $0C63, $0842, $0421, $0000
@@ -5026,7 +5130,7 @@
 
       aUnknown88A4DC ; 88/A4DC
 
-        ; Read by rlUnknown88A44C.
+        ; Read by rlAnimateRangeOverlayPalette.
 
         .word $0000, $0421, $0842, $0C63, $1084, $14A5, $18C6, $1CE7
         .word $1CE7, $18C6, $14A5, $1084, $0C63, $0842, $0421, $0000
@@ -5041,7 +5145,7 @@
       .al
       .xl
 
-      rlUnknown88A4FC ; 88/A4FC
+      rlLoadMapWindowPalettes ; 88/A4FC
 
         .al
         .xl
@@ -5064,12 +5168,14 @@
       .al
       .xl
 
-      rsUnknown88A551 ; 88/A551
+      rsGetMapCursorMove ; 88/A551
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Puts the D-pad direction in wMapScrollDirectionIdentifier and returns carry set if the cursor moves (Y held skips the repeat delay). While a unit is selected, a held (not newly pressed) direction stops at the edge of its movement range. | Moves the cursor one tile in the D-pad direction, scrolling the map when the cursor is near the edge; returns carry set when the map has to scroll.
 
         lda wJoy1Input
         bit #$4000
@@ -5242,7 +5348,7 @@
         bcc _A696
         cmp $0720,b
         bcs _A696
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
         and #$007F
         beq _A696
@@ -5316,12 +5422,14 @@
       .al
       .xl
 
-      rlUnknown88A704 ; 88/A704
+      rlDrawHandCursor ; 88/A704
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the hand cursor at (wR0, wR1); with A = 0 it bobs sideways by frame (aHandCursorOffsets). Used by many menus.
 
         phb
         phx
@@ -5337,7 +5445,7 @@
         and #$001C
         lsr a
         tax
-        lda aUnknown88A73D,x
+        lda aHandCursorOffsets,x
         clc
         adc wR0
 
@@ -5373,9 +5481,9 @@
       .al
       .xl
 
-      aUnknown88A73D ; 88/A73D
+      aHandCursorOffsets ; 88/A73D
 
-        ; Read by rlUnknown88A704.
+        ; Read by rlDrawHandCursor.
 
         .byte $00, $00, $00, $00, $01, $00, $01, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF
         .byte $01, $00, $00, $C2, $00, $02, $30
@@ -5390,7 +5498,7 @@
       .al
       .xl
 
-      rlUnknown88A754 ; 88/A754
+      rlMapCursorMoveStep ; 88/A754
 
         .al
         .autsiz
@@ -5417,7 +5525,7 @@
 
                     lda #16
                     sta wMapPixelScrollDistance,b
-                    jsr rsUnknown88A9B4
+                    jsr rsMoveCursorBackToUnit
                     beq _End
 
                       lda #8
@@ -5426,16 +5534,16 @@
           
           _A788
           stz wMapPixelScrollDistance,b
-          jsr rsUnknown88AA1E
+          jsr rsWalkUnitAlongPath
           beq _End
 
-            jsr rsUnknown88A7F5
+            jsr rsSetUnitWalkSpeed
             bra +
 
           _A795
           lda #16
           sta wMapPixelScrollDistance,b
-          jsr rsUnknown88B64F
+          jsr rsMoveCursorTowardsTarget
           beq _End
 
             lda #8
@@ -5495,12 +5603,14 @@
       .al
       .xl
 
-      rsUnknown88A7F5 ; 88/A7F5
+      rsSetUnitWalkSpeed ; 88/A7F5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The walking speed of the active unit: 3 pixels a frame with speed 5 or more, else 1.
 
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
@@ -5530,12 +5640,14 @@
       .al
       .xl
 
-      rlUnknown88A81D ; 88/A81D
+      rlMapChooseTargetStep ; 88/A81D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Cursor state 3, choosing a target: the D-pad picks the next target (rsSelectNextTarget) and shows the battle forecast, A acts (rlUnknown84DC1C, or the minimap for a warp destination), B goes back to the unit menu or, for a castle staff, puts the unit back in the castle.
 
         lda #$0003
         sta wMovingUnitSpriteState,b
@@ -5601,7 +5713,7 @@
         _A8A3
         lda #$0005
         jsl rlPlaySoundEffect
-        jsr rsUnknown88AB47
+        jsr rsSelectNextTarget
         lda wActiveUnitDeploymentOffset,b
         sta wR0
         lda wMapTargetDeploymentOffset,b
@@ -5624,7 +5736,7 @@
 
         _A8DD
         lda wMapTargetDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0006
         sta wUnknown0007D8,b
         rtl
@@ -5718,9 +5830,9 @@
         lda #$0020
         tsb wMapSystemFlags,b
         jsl rlMapMenuEmptyHook
-        lda #(`procUnknown889396)<<8
+        lda #(`procMinimap)<<8
         sta lR44+1
-        lda #<>procUnknown889396
+        lda #<>procMinimap
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -5729,12 +5841,14 @@
 
         ; 88/A9B4
 
-      rsUnknown88A9B4 ; 88/A9B4
+      rsMoveCursorBackToUnit ; 88/A9B4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Cursor state 1: one tile at a time towards the unit's start; there, sets state 2 to walk the unit along its path.
 
         lda wMapCursorXTile,b
         beq _A9CB
@@ -5796,12 +5910,14 @@
 
         ; 88/AA1E
 
-      rsUnknown88AA1E ; 88/AA1E
+      rsWalkUnitAlongPath ; 88/AA1E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Cursor state 2: takes the next direction from the path at $0794 (1 down, 2 up, 3 right, 4 left) and turns the moving sprite; at the end moves the unit to the cursor's tile and opens the unit menu (for a player move).
 
         lda wMapScrollScriptOffset,b
         bmi _AA8A
@@ -5850,7 +5966,7 @@
         cmp wMapScrollDirectionIdentifier,b
         bne _AA7A
         sta wMapScrollDirectionIdentifier,b
-        jsr rsUnknown88AB13
+        jsr rsMergePathSteps
         lda #$0001
         rts
 
@@ -5859,7 +5975,7 @@
         sta wMapScrollDirectionIdentifier,b
         stz wMovingUnitSpriteFrame,b
         stz wMovingUnitSpriteTimer,b
-        jsr rsUnknown88AB13
+        jsr rsMergePathSteps
         lda #$0001
         rts
 
@@ -5937,12 +6053,14 @@
 
         ; 88/AB13
 
-      rsUnknown88AB13 ; 88/AB13
+      rsMergePathSteps ; 88/AB13
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Adds 16 pixels of distance for each following step in the same direction.
 
         lda wMapPixelScrollDistance,b
         clc
@@ -5954,7 +6072,7 @@
         bmi _AB2B
         lda $0794,b,x
         cmp wR0
-        beq rsUnknown88AB13
+        beq rsMergePathSteps
 
         _AB2B
         rts
@@ -6009,12 +6127,14 @@
       .al
       .xl
 
-      rsUnknown88AB47 ; 88/AB47
+      rsSelectNextTarget ; 88/AB47
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Picks the next or previous target in aTargetDistanceMap: all 1,024 tiles for a weapon with range 3 or more, else the 12 tiles of aNearTargetOffsets.
 
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
@@ -6134,7 +6254,7 @@
 
         _AC09
         phx
-        lda aUnknown88ACF1,x
+        lda aNearTargetOffsets,x
         tax
         lda aTargetDistanceMap,x
         plx
@@ -6163,7 +6283,7 @@
 
         _AC33
         phx
-        lda aUnknown88ACF1,x
+        lda aNearTargetOffsets,x
         tax
         lda aTargetDistanceMap,x
         plx
@@ -6296,9 +6416,9 @@
       .al
       .xl
 
-      aUnknown88ACF1 ; 88/ACF1
+      aNearTargetOffsets ; 88/ACF1
 
-        ; Read by rsUnknown88AB47, which reads 12 words.
+        ; Read by rsSelectNextTarget, which reads 12 words.
 
         .word $01D0, $01F0, $01F1, $0212, $0211, $0231, $0250, $0230
         .word $022F, $020E, $020F, $01EF
@@ -6313,7 +6433,7 @@
       .al
       .xl
 
-      rlUnknown88AD46 ; 88/AD46
+      rlStartChoosingTarget ; 88/AD46
 
         ; Found by tools/sweep.py.
         .al
@@ -6321,12 +6441,14 @@
         .autsiz
         .databank ?
 
+        ; Sets cursor state 3, picks the first target, shows the battle forecast and moves the cursor to it (state 6 when the map has to scroll).
+
         lda #$0003
         sta wUnknown0007D8,b
         lda #$0003
         sta wMovingUnitSpriteState,b
         stz wMapTargetSearchIndex,b
-        jsr rsUnknown88AB47
+        jsr rsSelectNextTarget
         lda wMapCursorXTile,b
         sta wMapCursorOriginXTile,b
         lda wMapCursorYTile,b
@@ -6353,7 +6475,7 @@
 
         _AD94
         lda wMapTargetDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0006
         sta wUnknown0007D8,b
 
@@ -6372,7 +6494,7 @@
       .al
       .xl
 
-      rlUnknown88ADA2 ; 88/ADA2
+      rlSetMapCursorFree ; 88/ADA2
 
         .al
         .xl
@@ -6394,7 +6516,7 @@
       .al
       .xl
 
-      rlUnknown88ADA6 ; 88/ADA6
+      rlSetMapCursorOriginToCursor ; 88/ADA6
 
         ; Found by tools/sweep.py.
         .al
@@ -6434,15 +6556,17 @@
       .al
       .xl
 
-      rlUnknown88ADC9 ; 88/ADC9
+      rlStartCursorToActiveUnitForAction ; 88/ADC9
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sends the cursor to the active unit (state 8) and sets wMapActionMode to 5, or 9 when it was 0.
+
         lda wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0008
         sta wUnknown0007D8,b
         lda wMapActionMode,b
@@ -6469,12 +6593,14 @@
       .al
       .xl
 
-      rlUnknown88ADE9 ; 88/ADE9
+      rlUndoUnitMove ; 88/ADE9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; B in the unit menu: puts the active unit back on its start tile (wMapCursorXTile/YTile) and sends the cursor to it, by wMapActionMode.
 
         lda wMapActionMode,b
         bne _AE41
@@ -6493,7 +6619,7 @@
         stz wMovingUnitSpriteState,b
         jsl rlMoveDeploymentToTile
         lda wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         rtl
 
 
@@ -6511,7 +6637,7 @@
         ldx wActiveUnitDeploymentOffset,b
         jsl rlMoveDeploymentToTile
         lda wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0007
         sta wUnknown0007D8,b
         rtl
@@ -6552,7 +6678,7 @@
         stz wMovingUnitSpriteState,b
         jsl rlMoveDeploymentToTile
         lda wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0007
         sta wUnknown0007D8,b
         rtl
@@ -6636,7 +6762,7 @@
         jsl rlMoveDeploymentToTile
         stz wMapActionMode,b
         lda wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable,x
         bit #$0010
@@ -6661,11 +6787,13 @@
       .al
       .xl
 
-      rsUnknown88AF4C ; 88/AF4C
+      rsStartMovingUnitSprite ; 88/AF4C
 
         .al
         .autsiz
         .databank ?
+
+        ; X = deployment offset: hides the unit, saves the cursor's map position and loads its moving map sprite (state 1).
 
         ; X = deployment offset
 
@@ -6702,11 +6830,13 @@
       .al
       .xl
 
-      rlUnknown88AF7B ; 88/AF7B
+      rlEndUnitAction ; 88/AF7B
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears the moving sprite and wMapActionMode, shows the unit again and, unless it has canto or a computer phase is running, sends the cursor to it.
 
         phx
         stz wMovingUnitSpriteState,b
@@ -6733,7 +6863,7 @@
           bne +
 
             lda wActiveUnitDeploymentOffset,b
-            jsl rlUnknown88B4DB
+            jsl rlMoveCursorToUnit
 
         +
         plx
@@ -6749,7 +6879,7 @@
       .al
       .xl
 
-      rlUnknown88B366 ; 88/B366
+      rlOpenSoloConversationFromMap ; 88/B366
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -6771,7 +6901,7 @@
         sta wConversationRightUnit,b
         lda #CONVERSATION_EXIT_MAP
         sta wConversationExitMode,b
-        jsl rlUnknown88B3AF
+        jsl rlSaveMapCameraAndLockCursor
         lda #CASTLE_SCREEN_CONVERSATION
         sta wCastleScreenHandler,b
         lda #<>rsOpenCastleScreen
@@ -6795,12 +6925,14 @@
       .al
       .xl
 
-      rlUnknown88B3AF ; 88/B3AF
+      rlSaveMapCameraAndLockCursor ; 88/B3AF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets wMapCursorState to $FFFF (the cursor only draws) and saves the camera in wMapXOffset/wMapYOffset, before leaving the map for a conversation.
 
         lda #$FFFF
         sta wUnknown0007D8,b
@@ -6822,7 +6954,7 @@
       .al
       .xl
 
-      rlUnknown88B3DF ; 88/B3DF
+      rlGetTileEntriesAtCursor ; 88/B3DF
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -6876,14 +7008,16 @@
       .al
       .xl
 
-      rlUnknown88B42C ; 88/B42C
+      rlStartCursorToUnitAfterMove ; 88/B42C
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown88B4DB
+        ; Sends the cursor to unit A (state 5) and turns wMapActionMode $8002-$8004 into 2-4 (4 also uses state 8), anything else into 1.
+
+        jsl rlMoveCursorToUnit
         lda #$0005
         sta wUnknown0007D8,b
         lda wMapActionMode,b
@@ -6929,12 +7063,14 @@
       .al
       .xl
 
-      rlUnknown88B46A ; 88/B46A
+      rlStartCursorToUnit ; 88/B46A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sends the cursor to unit A (state 4). In a computer phase also makes it the acting unit and uses state 1.
 
         sta wMapPanTargetDeploymentOffset,b
         lda bUnknown000E7B,b
@@ -7001,11 +7137,13 @@
       .al
       .xl
 
-      rlUnknown88B4DB ; 88/B4DB
+      rlMoveCursorToUnit ; 88/B4DB
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets wMapCursorXTile/YTile to the distance from the cursor to unit A and starts cursor state 4 (travelling to it).
 
         sta wMapPanTargetDeploymentOffset,b
 
@@ -7054,11 +7192,13 @@
       .al
       .xl
 
-      rsUnknown88B64F ; 88/B64F
+      rsMoveCursorTowardsTarget ; 88/B64F
 
         .al
         .autsiz
         .databank ?
+
+        ; Cursor states 4-7: one tile towards the target; on arrival state 5 selects the unit there, 6 starts choosing a target, 7 selects the unit or opens its command menu.
 
         lda wMapCursorXTile,b
         beq ++
@@ -7114,7 +7254,7 @@
         stz wUnknown00073A,b
         stz wMapScrollScriptOffset,b
         stz wUnknown0007D8,b
-        jsr rsUnknown88B701
+        jsr rsSelectUnitAtCursor
         lda #0
         rts
 
@@ -7139,7 +7279,7 @@
         bit #$0008
         bne +
 
-          jsr rsUnknown88B701
+          jsr rsSelectUnitAtCursor
           lda #0
           rts
 
@@ -7163,26 +7303,28 @@
       .al
       .xl
 
-      rlUnknown88B6FD ; 88/B6FD
+      rlSelectUnitAtCursor ; 88/B6FD
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown88B701
+        jsr rsSelectUnitAtCursor
         rtl
 
         .databank 0
 
         ; 88/B701
 
-      rsUnknown88B701 ; 88/B701
+      rsSelectUnitAtCursor ; 88/B701
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Picks up the unit under the cursor: shows its range (wUnitSelectedFlag), loads its moving sprite and builds its range maps. A player unit that cannot move opens its unit menu at once.
 
         lda wCursorXOffset,b
         clc
@@ -7245,7 +7387,7 @@
         bcs _B7A9
 
         _B794
-        jsr rsUnknown88B873
+        jsr rsShowRangeOverlay
         bra _B7A4
 
 
@@ -7306,12 +7448,14 @@
 
         ; 88/B813
 
-      rlUnknown88B813 ; 88/B813
+      rlCheckUnitAtCursor ; 88/B813
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if a deployed unit stands on the cursor's tile (only when the cursor is on a tile boundary).
 
         lda wCursorXOffset,b
         clc
@@ -7373,12 +7517,14 @@
 
         ; 88/B873
 
-      rsUnknown88B873 ; 88/B873
+      rsShowRangeOverlay ; 88/B873
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Turns on the colour math for the range overlay and draws it.
 
         sep #$20
         lda #$11
@@ -7390,19 +7536,21 @@
         lda #$41
         sta bBufferCGADSUB
         rep #$20
-        jsr rsUnknown88B88B
+        jsr rsSetMovementMapWindowAndRedraw
         rts
 
         .databank 0
 
         ; 88/B88B
 
-      rsUnknown88B88B ; 88/B88B
+      rsSetMovementMapWindowAndRedraw ; 88/B88B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Centres the 64x64 movement map window on the cursor and redraws the range overlay.
 
         lda wCursorXOffset,b
         clc
@@ -7448,7 +7596,7 @@
         and #$00FF
         bit #$0041
         bne _B8E8
-        jsl rlUnknown8884A6
+        jsl rlRedrawRangeOverlayTilemap
 
         _B8E8
         rts
@@ -7501,7 +7649,7 @@
         bcc _B95E
         cmp $0720,b
         bcs _B95E
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
         bit #$0080
         bne _B95E
@@ -7602,7 +7750,7 @@
         sec
         sbc #$0001
         sta wTempVariable2,b
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7624,7 +7772,7 @@
         clc
         adc #$0001
         sta wTempVariable2,b
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7646,7 +7794,7 @@
         sta wTempVariable1,b
         lda wR3
         sta wTempVariable2,b
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7668,7 +7816,7 @@
         sta wTempVariable1,b
         lda wR3
         sta wTempVariable2,b
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7697,7 +7845,7 @@
         stz wMapScrollScriptOffset,b
         sty wMapScrollScriptOffset,b
         lda wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0001
         sta wUnknown0007D8,b
         rts
@@ -7729,7 +7877,7 @@
         sta wTempVariable1,b
         lda wR3
         sta wTempVariable2,b
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7751,7 +7899,7 @@
         sta wTempVariable1,b
         lda wR3
         sta wTempVariable2,b
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7773,7 +7921,7 @@
         sec
         sbc #$0001
         sta wTempVariable2,b
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7795,7 +7943,7 @@
         clc
         adc #$0001
         sta wTempVariable2,b
-        jsr rsUnknown888D23
+        jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
         and #$007F
         cmp $0792,b
@@ -7824,7 +7972,7 @@
         stz wMapScrollScriptOffset,b
         sty wMapScrollScriptOffset,b
         lda wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0001
         sta wUnknown0007D8,b
         rts
@@ -7861,7 +8009,7 @@
         dec x
         bpl _BBF1
         jsl rlMarkAllMapMenuRowsDirty
-        jsl rlUnknown88A4FC
+        jsl rlLoadMapWindowPalettes
         stz wUnknown000770,b
         rts
 
@@ -8897,7 +9045,7 @@
         sec
         sbc wMapScrollYPixels,b
         sta wCursorYOffset,b
-        jsl rlUnknown888410
+        jsl rlRedrawVisibleMapTilemap
         inc wCastleSubMenuStep,b
         lda #$8000
         tsb wMapSystemFlags,b
@@ -9074,17 +9222,17 @@
 
 
         _C315
-        jsl rlUnknown8885EF
+        jsl rlStartMapScrollLeft
         bra _C351
 
 
         _C31B
-        jsl rlUnknown88860B
+        jsl rlStartMapScrollUpLeft
         bra _C351
 
 
         _C321
-        jsl rlUnknown88861C
+        jsl rlStartMapScrollDownLeft
         bra _C351
 
 
@@ -9096,27 +9244,27 @@
 
 
         _C32F
-        jsl rlUnknown8885FD
+        jsl rlStartMapScrollRight
         bra _C351
 
 
         _C335
-        jsl rlUnknown88862D
+        jsl rlStartMapScrollUpRight
         bra _C351
 
 
         _C33B
-        jsl rlUnknown88863E
+        jsl rlStartMapScrollDownRight
         bra _C351
 
 
         _C341
-        jsl rlUnknown8885D3
+        jsl rlStartMapScrollUp
         bra _C351
 
 
         _C347
-        jsl rlUnknown8885E1
+        jsl rlStartMapScrollDown
         bra _C351
 
 
@@ -9250,7 +9398,7 @@
         .autsiz
         .databank ?
 
-        ; Reached with jml from rlUnknown88A136. Steps through states 0-4 in
+        ; Reached with jml from rlMapCursorStepInner. Steps through states 0-4 in
         ; wUnknown0007D8 and sets up the map scroll distance and speed, then
         ; draws a sprite at the cursor. What the states mean is not known yet.
 
@@ -9284,7 +9432,7 @@
         _C507
         lda #$0010
         sta wMapPixelScrollDistance,b
-        jsr rsUnknown88B64F
+        jsr rsMoveCursorTowardsTarget
         beq _C51C
         lda #$0008
         sta wMapScrollSpeed,b
@@ -9310,7 +9458,7 @@
         _C53B
         jsl rlUnknown88C0B3
         stz wMapPixelScrollDistance,b
-        jsr rsUnknown88AA1E
+        jsr rsWalkUnitAlongPath
         beq _C564
         jsl rlGetEnemySpeedOption
         cmp #$0000
@@ -9330,7 +9478,7 @@
         lda wActiveActionUnit2DeploymentOffset,b
         cmp #$FFFF
         beq _C592
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0003
         sta wUnknown0007D8,b
         lda wCursorXOffset,b
@@ -9350,7 +9498,7 @@
         lda #$0000
         sta wUnknown0007D8,b
         sta wMapActionActiveFlag,b
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         lda wActiveActionID,b
         jsl rlAIExecuteQueuedAction
         jml _C658
@@ -9359,7 +9507,7 @@
         _C5AA
         lda #$0010
         sta wMapPixelScrollDistance,b
-        jsr rsUnknown88B64F
+        jsr rsMoveCursorTowardsTarget
         beq _C5C2
         lda #$0004
         lda #$0008
@@ -9388,7 +9536,7 @@
         lda #$0000
         sta wUnknown0007D8,b
         sta wMapActionActiveFlag,b
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         lda wMapScrollXPixels,b
         sta wMapXOffset,b
         lda wMapScrollYPixels,b
@@ -9554,7 +9702,7 @@
         sta wActiveActionUnit2DeploymentOffset,b
         lda wActiveActionUnit1DeploymentOffset,b
         sta wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0001
         sta wUnknown0007D8,b
         rtl
@@ -9582,7 +9730,7 @@
         sta wMapActionActiveFlag,b
         lda wActiveActionUnit1DeploymentOffset,b
         sta wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0001
         sta wUnknown0007D8,b
         rts
@@ -9652,7 +9800,7 @@
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlBuildSelectedUnitRangeMaps
-        jsr rsUnknown88B873
+        jsr rsShowRangeOverlay
         bra _C7CA
 
 

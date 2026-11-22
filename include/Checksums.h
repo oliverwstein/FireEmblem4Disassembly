@@ -11,7 +11,7 @@
   ;
   ; 2. Second integrity check & copier detection (rlWriteResetSignature / rlCheckResetSignature):
   ;    - rlWriteResetSignature ($87/8017) copies 128 bytes from $88/8888-$88/8907
-  ;      (starting at rlUnknown8887EC._8880+8) into aSpriteExtBuffer ($001E00).
+  ;      (starting at rlUploadMapRowAndColumn._8880+8) into aSpriteExtBuffer ($001E00).
   ;    - rlCheckResetSignature ($87/802A) compares $88/8888-$88/8907 against $001E00.
   ;      If any word differs, it returns cleanly; if all 128 bytes match (e.g.
   ;      on a reset after rlWriteResetSignature already tripped, or if $88/8888-$88/8907

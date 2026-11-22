@@ -465,7 +465,7 @@
 
 
         _8B03
-        jsl rlUnknown8885EF
+        jsl rlStartMapScrollLeft
         lda wCastleCursorX,b
         sec
         sbc wMapScrollSpeed,b
@@ -478,7 +478,7 @@
 
 
         _8B17
-        jsl rlUnknown8885FD
+        jsl rlStartMapScrollRight
         lda wCastleCursorX,b
         clc
         adc wMapScrollSpeed,b
@@ -492,7 +492,7 @@
 
 
         _8B2E
-        jsl rlUnknown8885D3
+        jsl rlStartMapScrollUp
         lda wCastleCursorY,b
         sec
         sbc wMapScrollSpeed,b
@@ -505,7 +505,7 @@
 
 
         _8B42
-        jsl rlUnknown8885E1
+        jsl rlStartMapScrollDown
         lda wCastleCursorY,b
         clc
         adc wMapScrollSpeed,b

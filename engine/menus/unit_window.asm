@@ -198,7 +198,7 @@
 
           .structDMAToVRAM g2bppMenuLabels, $1800, $80, $9800
 
-        jsl rlUnknown8881EC
+        jsl rlClearVRAM6000
         jsl rlDMAByStruct
 
           .structDMAToVRAM g4bppMenuCursorSprites, $0400, $80, $C000
@@ -2490,7 +2490,7 @@
         lda #$0000
         sta wR0
         lda wUnitWindowSortTypeFlag
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         lda wUnitWindowUnitSwapStep
         beq _B58E
         lda wVBlankEnabledFramecount
@@ -4254,7 +4254,7 @@
         lda #$000A
         sta wR1
         lda #$0000
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         jsr rsUnitWindowRenderSortSelectorCursor
 
         _C302
@@ -6940,7 +6940,7 @@
         cmp #$0000
         bmi _A9E9
         sta @l wActiveUnitDeploymentOffset
-        jsl rlUnknown8881D7
+        jsl rlSetMapReturnCenterOnUnit
 
         _A9E9
         sep #$20

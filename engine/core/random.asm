@@ -428,7 +428,7 @@
         sta wCastleGridSlot,b
 
         _8075
-        jsl rlUnknown889268
+        jsl rlLoadChapterMapLayout
         jsl rlUnknown88CD4C
         jsl rlUnknown88CD5A
         rtl

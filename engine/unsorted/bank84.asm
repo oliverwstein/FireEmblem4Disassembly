@@ -1588,7 +1588,7 @@
             jsl rlSetLocationDestroyed
             inc wDestroyedLocationsCount,b
             jsl rlHandleEventLocationModification
-            jsl rlUnknown888410
+            jsl rlRedrawVisibleMapTilemap
             bra _End
 
         _EC96
@@ -1910,10 +1910,10 @@
 
 
         _D098
-        jsl rlUnknown88ADA6
+        jsl rlSetMapCursorOriginToCursor
 
         _D09C
-        jsl rlUnknown88ADC9
+        jsl rlStartCursorToActiveUnitForAction
         bra _D0AE
 
 
@@ -2217,7 +2217,7 @@
         sta aDeploymentTable._StateBuffer,x
 
         _D242
-        jsl rsUnknown88AF4C
+        jsl rsStartMovingUnitSprite
         rts
 
         .databank 0

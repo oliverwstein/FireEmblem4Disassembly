@@ -1392,7 +1392,7 @@
         .databank ?
 
         ldx $00
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         jsl rlUnknown84D2BA
         rts
 
@@ -1404,7 +1404,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         jsl rlUnknown84D334
         jsl rlUnknown9EDAE7
         rts
@@ -1417,7 +1417,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         jsl rlUnknown84D16B
         rts
 

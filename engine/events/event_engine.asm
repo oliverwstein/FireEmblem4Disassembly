@@ -4875,7 +4875,7 @@
             jsl rlUnsetCastleGuarded
             jsl rlHandleEventLocationModification
             phy
-            jsl rlUnknown888410
+            jsl rlRedrawVisibleMapTilemap
             ply
 
         _End
@@ -6659,7 +6659,7 @@
             bra _Loop
 
         _End
-        jsl rlUnknown888410
+        jsl rlRedrawVisibleMapTilemap
         ply
         plx
         plp

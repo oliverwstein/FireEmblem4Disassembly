@@ -592,7 +592,7 @@
         cmp #GAMESTATE_MAP_STEP
         bne +
 
-          jsl rlUnknown88B3AF
+          jsl rlSaveMapCameraAndLockCursor
 
         +
         lda #CASTLE_SCREEN_CONVERSATION

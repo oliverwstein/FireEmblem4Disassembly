@@ -1881,7 +1881,7 @@
         .autsiz
         .databank ?
 
-        ; Draws the cursor at wDataWindowCursorYCoordinate (rlUnknown88A704, as
+        ; Draws the cursor at wDataWindowCursorYCoordinate (rlDrawHandCursor, as
         ; rsSkillWindowRenderCursor does).
 
         lda #$0004
@@ -1889,7 +1889,7 @@
         lda wDataWindowCursorYCoordinate
         sta wR1
         lda #$0000
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         rts
 
         .databank 0

@@ -1503,7 +1503,7 @@
         lda wSkillWindowCursorYCoordinate
         sta wR1
         lda #$0000
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         rts
 
         .databank 0

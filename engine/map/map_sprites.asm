@@ -908,7 +908,7 @@
 
         _C23A
         PROC_YIELD 16
-        PROC_CALL rlUnknown888410
+        PROC_CALL rlRedrawVisibleMapTilemap
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlProcUnknown87C056Cycle3
         PROC_HALT

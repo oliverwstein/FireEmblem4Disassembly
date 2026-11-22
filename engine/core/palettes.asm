@@ -123,7 +123,7 @@
 
       aMapAndCastleSpriteOAMPalettes ; 8C/9D00
 
-        ; Read by rlSetupCastleCourtyardDisplay, rlSetupCastleTownDisplay, rlUnknown888082, rlUnknown8881A7, rlUnknown88821A, rsCastleLoadCourtyardScreen.
+        ; Read by rlSetupCastleCourtyardDisplay, rlSetupCastleTownDisplay, rlUnknown888082, rlLoadMapSpriteOAMPalettes, rlUnknown88821A, rsCastleLoadCourtyardScreen.
 
         .word $0842, $1463, $239D, $22BC, $0931, $7FFF, $634D, $0599
         .word $3546, $4A2C, $6312, $7398, $7C1F, $53BE, $023F, $7F7F

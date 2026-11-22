@@ -120,7 +120,7 @@
 
         lda wUnknown000770,b
         bne _B03F
-        jsr rsUnknown88B701
+        jsr rsSelectUnitAtCursor
         bcs _B037
         lda wUnknown000770,b
         beq _B06F
@@ -295,7 +295,7 @@
         jsl rlPlaySoundEffect
         stz wMovingUnitSpriteState,b
         lda wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         jsl rlDeployedUnitUnsetHiddenIfAlive
         jsr rsUnknown88BBD3
         lda wMapActionMode,b
@@ -324,7 +324,7 @@
         stz wMovingUnitSpriteState,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
         lda wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0007
         sta wUnknown0007D8,b
         rts
@@ -370,7 +370,7 @@
 
 
         _B1D1
-        jsl rlUnknown88B813
+        jsl rlCheckUnitAtCursor
         bcc _B1CC
         stx wActiveUnitDeploymentOffset,b
         ldx wActiveUnitDeploymentOffset,b
@@ -378,7 +378,7 @@
         sta wSelectedUnitDataRAMPointer,b
         lda #$0008
         jsl rlPlaySoundEffect
-        jsl rlUnknown88B3AF
+        jsl rlSaveMapCameraAndLockCursor
         lda #<>rsUnknown80B122
         sta wStatusScreenCaller
         lda #$0000
@@ -416,9 +416,9 @@
         sta wMapXOffset,b
         lda wMapScrollYPixels,b
         sta wMapYOffset,b
-        lda #(`procUnknown889396)<<8
+        lda #(`procMinimap)<<8
         sta lR44+1
-        lda #<>procUnknown889396
+        lda #<>procMinimap
         sta lR44
         jsl rlProcEngineCreateProc
         rts
@@ -582,7 +582,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown88B3AF
+        jsl rlSaveMapCameraAndLockCursor
         lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b
         jsl rlBuildCastleUnitList
@@ -610,7 +610,7 @@
         jsl rlSendSoundCommand
         lda #$00E0
         jsl rlQueueSoundCommand
-        jsl rlUnknown88B3AF
+        jsl rlSaveMapCameraAndLockCursor
         lda #CASTLE_SCREEN_TOWN
         sta wCastleScreenHandler,b
         lda #<>rsOpenCastleScreen

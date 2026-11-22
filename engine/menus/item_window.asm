@@ -1233,7 +1233,7 @@
         cmp #$0000
         bmi _B778
         sta @l wActiveUnitDeploymentOffset
-        jsl rlUnknown8881D7
+        jsl rlSetMapReturnCenterOnUnit
 
         _B778
         sep #$20
@@ -2236,7 +2236,7 @@
         lda #$0001
         sta wR0
         lda wGameStateStep,b
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         rts
 
         .databank 0
@@ -3564,7 +3564,7 @@
         sta wR0
         lda #$0000
         sta wUnitWindowScrollingFlag
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         rts
 
         .databank 0

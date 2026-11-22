@@ -22,7 +22,7 @@
         tsb wConversationFlags,b
         lda #$0000
         sta wConversationBackground,b
-        jsl rlUnknown88B3AF
+        jsl rlSaveMapCameraAndLockCursor
         lda #CASTLE_SCREEN_CONVERSATION
         sta wCastleScreenHandler,b
         lda #CONVERSATION_EXIT_MAP

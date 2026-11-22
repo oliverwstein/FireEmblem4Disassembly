@@ -1,5 +1,5 @@
 ; Chapter maps: for each chapter, the map and the graphics and data it is
-; drawn with. rlUnknown889268 and rlUnknown889305 load the entry for
+; drawn with. rlLoadChapterMapLayout and rlLoadChapterMapGraphics load the entry for
 ; wCurrentChapter.
 
     .section ChapterMapsSection

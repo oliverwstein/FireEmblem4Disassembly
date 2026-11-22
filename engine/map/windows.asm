@@ -280,14 +280,14 @@
         .autsiz
         .databank ?
 
-        ; Carry set if the window was hidden (aBody3 bit 7), is new (bit 6), or rlUnknown88A38C says so.
+        ; Carry set if the window was hidden (aBody3 bit 7), is new (bit 6), or rlCheckMapCursorResting says so.
 
         lda aProcSystem.aBody3,b,x
         bit #$0080
         bne _C15E
         bit #$0040
         bne _C15E
-        jsl rlUnknown88A38C
+        jsl rlCheckMapCursorResting
         bcc _C160
 
         _C15E

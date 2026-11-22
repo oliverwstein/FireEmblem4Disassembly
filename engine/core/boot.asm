@@ -542,7 +542,7 @@
         ldx #$0000
 
         _801A
-        lda rlUnknown8887EC._8880+8,x
+        lda rlUploadMapRowAndColumn._8880+8,x
         sta @l aSpriteExtBuffer,x
         inc x
         inc x
@@ -568,7 +568,7 @@
         ldx #$0000
 
         _802D
-        lda rlUnknown8887EC._8880+8,x
+        lda rlUploadMapRowAndColumn._8880+8,x
         cmp @l aSpriteExtBuffer,x
         bne rlWriteResetSignature._8029
         inc x

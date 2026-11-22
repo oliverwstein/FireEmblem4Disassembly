@@ -1552,7 +1552,7 @@
         rep #$20
         jsl rlResetDialogueEngine
         jsr rsSetKeeperOptionList
-        jsl rlUnknown889268
+        jsl rlLoadChapterMapLayout
         lda wEventLocationEntry,b
         pha
         jsl rlUpdateAllLocationEvents

@@ -2892,7 +2892,7 @@
         trb wR0
         trb wR1
         jsl rlCheckListMenuIdle
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         plx
         rts
 
@@ -3277,7 +3277,7 @@
         lda lR19
         sec
         sbc lMapMenuRAMEntryPointer,b
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         plx
         rtl
 

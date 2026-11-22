@@ -577,9 +577,9 @@
     wMapSavedCursorXPixel .word ?      ; $000780 ; cursor absolute X pixel saved across move
     wMapSavedCursorYPixel .word ?      ; $000782 ; cursor absolute Y pixel saved across move
     wMapPanTargetDeploymentOffset .word ? ; $000784 ; unit deployment offset targeted by camera pan
-    wMapOverlayFlags .word ?           ; $000786 ; map cursor/tile overlay flags tested in rsUnknown88A32D
+    wMapOverlayFlags .word ?           ; $000786 ; map cursor/tile overlay flags tested in rsUpdateMapSystemFlags
     wMapSystemFlags .word ?            ; $000788 ; bitfield:
-      ; $0001 = JOY_Y held (recomputed per frame by rsUnknown88A32D)
+      ; $0001 = JOY_Y held (recomputed per frame by rsUpdateMapSystemFlags)
       ; $0002 = map sprite/unit motion active (wUnknown000770 | wMapOverlayFlags | wMapActionMode)
       ; $0004 = wUnknown0007D8 nonzero / phase action
       ; $0008 = map cursor / unit action HUD update

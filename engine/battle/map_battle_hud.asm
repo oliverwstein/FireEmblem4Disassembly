@@ -196,7 +196,7 @@
         rep #$20
         lda aProcSystem.wInput2,b
         sta aProcSystem.aBody6,b,x
-        jsl rlUnknown88B46A
+        jsl rlStartCursorToUnit
         jsl rlHideMapMenu
         rtl
 
@@ -215,8 +215,8 @@
 
         phb
         phx
-        jsl rlUnknown88A12B
-        jsl rlUnknown888560
+        jsl rlMapCursorStep
+        jsl rlContinueMapScroll
         plx
         plb
         .databank ?

@@ -1204,7 +1204,7 @@
         phy
         pha
         sta aSave.wActiveSlot,b
-        jsl rlUnknown88818A
+        jsl rlClearMapRAM
         jsl rlUnknown81A85C
         jsr rsLoadGameTimerAndUnitLosses
         jsr rsLoadSaveFileBody
@@ -1226,7 +1226,7 @@
 
         ; New game: resets the game's RAM and units, rereads the slots' save data words, takes a save ID no slot uses (rsGetNewUniqueSaveID) as wActiveSaveData, and clears the unit losses and the game timer.
 
-        jsl rlUnknown88818A
+        jsl rlClearMapRAM
         jsl rlUnknown81A85C
         jsl rlInitializeUnitRAM
         jsr rsFillSaveSlotDataBuffers

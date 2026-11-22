@@ -451,7 +451,7 @@
         sta wMapItemListRequest
         jsr rsCloseMapItemWeaponStats
         phx
-        jsl rlUnknown88ADA2
+        jsl rlSetMapCursorFree
         jsl rlOpenUnitMenu
         plx
         jml _957A
@@ -584,7 +584,7 @@
         .autsiz
         .databank ?
 
-        ; Attack or assault: the item becomes wSelectedInventorySlot and target selection starts (rlFindTargetsForSelectedWeapon, rlUnknown88AD46). Items: opens procItemUseMenu. Staves: wSelectedInventorySlot (bit 15 for the castle's list) and rlUseItemFromMap. Equip: equips it and reopens the unit menu.
+        ; Attack or assault: the item becomes wSelectedInventorySlot and target selection starts (rlFindTargetsForSelectedWeapon, rlStartChoosingTarget). Items: opens procItemUseMenu. Staves: wSelectedInventorySlot (bit 15 for the castle's list) and rlUseItemFromMap. Equip: equips it and reopens the unit menu.
 
         phx
         jsr rsMapItemListHidePortrait
@@ -617,7 +617,7 @@
         jsr _9682
         ldx wActiveUnitDeploymentOffset,b
         jsl rlFindTargetsForSelectedWeapon
-        jsl rlUnknown88AD46
+        jsl rlStartChoosingTarget
         plx
         jml _969C
 

@@ -3103,7 +3103,7 @@
         bne _9340
         bit #$0010
         beq _9340
-        jsl rlUnknown88B6FD
+        jsl rlSelectUnitAtCursor
         bra _9340
 
 
@@ -4622,9 +4622,9 @@
         PROC_CALL rlUnknown9E9F66
         PROC_YIELD 2
         PROC_CALL rlUnknown9E9F26
-        PROC_CALL rlUnknown888197
+        PROC_CALL rlLoadCursorSpriteGraphics
         PROC_YIELD 4
-        PROC_CALL rlUnknown8881A7
+        PROC_CALL rlLoadMapSpriteOAMPalettes
         PROC_YIELD 1
         PROC_END
 
@@ -5075,7 +5075,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown888410
+        jsl rlRedrawVisibleMapTilemap
         plx
         jsl rlUnknown9EB345
         rtl
@@ -7421,7 +7421,7 @@
         sta aProcSystem.aHeaderCodeOffset,b,x
         lda #$0001
         sta aProcSystem.aHeaderSleepTimer,b,x
-        jsl rlUnknown888197
+        jsl rlLoadCursorSpriteGraphics
         lda wBattleType
         and #$00FF
         cmp #$0003
@@ -7436,7 +7436,7 @@
 
         _ADA6
         phb
-        jsl rlUnknown8881A7
+        jsl rlLoadMapSpriteOAMPalettes
         plb
         .databank ?
         plx
@@ -9886,9 +9886,9 @@
         lda #$0001
         sta aProcSystem.aHeaderSleepTimer,b,x
         jsl rlUnknown9E8FB3
-        jsl rlUnknown888197
+        jsl rlLoadCursorSpriteGraphics
         phb
-        jsl rlUnknown8881A7
+        jsl rlLoadMapSpriteOAMPalettes
         plb
         .databank ?
         lda wBattleType
@@ -10399,9 +10399,9 @@
         PROC_CALL rlUnknown9EA0B9
         PROC_JUMP_IF_BITS_UNSET _CCE4, $0002
         PROC_YIELD 2
-        PROC_CALL rlUnknown888197
+        PROC_CALL rlLoadCursorSpriteGraphics
         PROC_CALL rlUnknown9E99F7
-        PROC_CALL rlUnknown8881A7
+        PROC_CALL rlLoadMapSpriteOAMPalettes
         PROC_YIELD 2
         _CCB6
         PROC_YIELD 1
@@ -10431,8 +10431,8 @@
         PROC_JUMP_IF_BITS_SET _CD02, $0004
         PROC_CALL rlUnknown9EA0E0
         PROC_JUMP_IF_BITS_UNSET _CD4D, $0002
-        PROC_CALL rlUnknown888197
-        PROC_CALL rlUnknown8881A7
+        PROC_CALL rlLoadCursorSpriteGraphics
+        PROC_CALL rlLoadMapSpriteOAMPalettes
         _CD1F
         PROC_YIELD 1
         PROC_CALL rlUnknown9EA122
@@ -11108,9 +11108,9 @@
         PROC_CALL rlUnknown9F8473
         PROC_YIELD 1
         PROC_CALL rlUnknown9ED3C1
-        PROC_CALL rlUnknown888197
+        PROC_CALL rlLoadCursorSpriteGraphics
         PROC_YIELD 4
-        PROC_CALL rlUnknown8881A7
+        PROC_CALL rlLoadMapSpriteOAMPalettes
         PROC_YIELD 1
         PROC_CALL rlUnknown9ED71E
         PROC_END
@@ -11550,9 +11550,9 @@
         PROC_CALL rlUnknown9EAB21
         PROC_YIELD 16
         PROC_CALL rlUnknown9ED6D6
-        PROC_CALL rlUnknown888197
+        PROC_CALL rlLoadCursorSpriteGraphics
         PROC_YIELD 4
-        PROC_CALL rlUnknown8881A7
+        PROC_CALL rlLoadMapSpriteOAMPalettes
         PROC_YIELD 1
         PROC_CALL rlUnknown9ED71E
         PROC_END
@@ -12994,7 +12994,7 @@
 
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         jsl rlUnknown9EE02D
         sta aProcSystem.aBody6,b,x
         lda aActionStructUnit1.XPosition
@@ -14506,9 +14506,9 @@
         PROC_YIELD 30
         _F541
         PROC_CALL rlUnknown9ED3C1
-        PROC_CALL rlUnknown888197
+        PROC_CALL rlLoadCursorSpriteGraphics
         PROC_YIELD 2
-        PROC_CALL rlUnknown8881A7
+        PROC_CALL rlLoadMapSpriteOAMPalettes
         PROC_YIELD 1
         PROC_CALL rlUnknown9ED71E
         PROC_END
@@ -14734,9 +14734,9 @@
         PROC_CALL rlUnknown9EFA4F
         PROC_YIELD 32
         PROC_CALL rlUnknown9EFA9A
-        PROC_CALL rlUnknown888197
+        PROC_CALL rlLoadCursorSpriteGraphics
         PROC_YIELD 4
-        PROC_CALL rlUnknown8881A7
+        PROC_CALL rlLoadMapSpriteOAMPalettes
         PROC_YIELD 1
         PROC_END
 

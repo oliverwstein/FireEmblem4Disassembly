@@ -571,7 +571,7 @@
         .autsiz
         .databank ?
 
-        ; A = target filter: finds the targets (wMapActionTargetType 1), then on the map rlUnknown88AD46, in the castle rlCastleUseStaffFromMap.
+        ; A = target filter: finds the targets (wMapActionTargetType 1), then on the map rlStartChoosingTarget, in the castle rlCastleUseStaffFromMap.
 
         jsl rlCheckStaffTargetsInRange
         lda #$0001
@@ -579,7 +579,7 @@
         jsl rlGetSelectedUnitStates
         bit #UnitStateFielded
         beq _E7FC
-        jsl rlUnknown88AD46
+        jsl rlStartChoosingTarget
         rts
 
 

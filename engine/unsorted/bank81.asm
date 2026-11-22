@@ -307,10 +307,10 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $10, every frame while the chapter map is up: rlUnknown88C7CF and rlUnknown88A44C, then copies the map scroll to the BG1 scroll registers.
+        ; Game state routine $10, every frame while the chapter map is up: rlUnknown88C7CF and rlAnimateRangeOverlayPalette, then copies the map scroll to the BG1 scroll registers.
 
         jsl rlUnknown88C7CF
-        jsl rlUnknown88A44C
+        jsl rlAnimateRangeOverlayPalette
         lda wMapScrollXPixels,b
         sta wBufferBG1HOFS
         lda wMapScrollYPixels,b
@@ -479,8 +479,8 @@
         lda wUnknown00171A,b
         beq _End
 
-          jsl rlUnknown88A12B
-          jsl rlUnknown888560
+          jsl rlMapCursorStep
+          jsl rlContinueMapScroll
 
         _End
         plp
@@ -733,7 +733,7 @@
             ora #0
             bmi _End
 
-              jsl rlUnknown88B4DB
+              jsl rlMoveCursorToUnit
         
         _End
         rts
@@ -764,8 +764,8 @@
               jsl rlProcEngineFindProc
               bcs _End
 
-                jsl rlUnknown88A12B
-                jsl rlUnknown888560
+                jsl rlMapCursorStep
+                jsl rlContinueMapScroll
 
                 lda wUnknown0007D8,b
                 bne _End
@@ -812,8 +812,8 @@
           bit #$0200
           bne +
 
-            jsl rlUnknown88A12B
-            jsl rlUnknown888560
+            jsl rlMapCursorStep
+            jsl rlContinueMapScroll
         
         +
         lda wMapStateFlags,b
@@ -1364,7 +1364,7 @@
             beq _CLC
 
               ldx wActiveUnitDeploymentOffset,b
-              jsl rsUnknown88AF4C
+              jsl rsStartMovingUnitSprite
 
               ldx wActiveUnitDeploymentOffset,b
               lda aDeploymentTable._UnitRAMPointer,x
@@ -1468,7 +1468,7 @@
         lda wPhaseScratch000D8D,b
         bmi _CLC
 
-          jsl rlUnknown888410
+          jsl rlRedrawVisibleMapTilemap
 
           lda wPhaseScratch000D8D,b
           sta aProcSystem.wInput2,b
@@ -1687,7 +1687,7 @@
         bit #$2000
         beq _CLC
 
-          jsl rlUnknown88B6FD
+          jsl rlSelectUnitAtCursor
 
           ldx wActiveUnitDeploymentOffset,b
           lda aDeploymentTable._UnitRAMPointer,x
@@ -1999,7 +1999,7 @@
         .databank ?
 
         jsl rlClearAIActionActiveFlag
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         jsl rlUnknown9E800C
         rtl
 
@@ -2269,7 +2269,7 @@
         lda #$80
         sta $2100,b
         rep #$20
-        jsl rlUnknown8887EC
+        jsl rlUploadMapRowAndColumn
         sep #$20
         lda bBufferINIDISP
         and #$80

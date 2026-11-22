@@ -337,7 +337,7 @@
         ; CASTLE_SCREEN_RELOAD_MAP: reloads the chapter map, the location events and the
         ; music; rebuilds the unit lists for the player's home castle; then opens the courtyard.
 
-        jsl rlUnknown889268
+        jsl rlLoadChapterMapLayout
         lda wEventLocationEntry,b
         pha
         jsl rlUpdateAllLocationEvents
@@ -398,7 +398,7 @@
         ; slot and draws the info line.
 
         rep #$20
-        jsl rlUnknown8881EC
+        jsl rlClearVRAM6000
         jsl rlUnknown80B08C
         jsl rlDMAByStruct
 
@@ -740,7 +740,7 @@
         ; on the buttons and moves to step $01.
 
         rep #$20
-        jsl rlUnknown8881EC
+        jsl rlClearVRAM6000
         jsl rlDMAByStruct
 
           .structDMAToVRAM g4bppShopScreen, $2000, $80, $0000

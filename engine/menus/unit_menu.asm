@@ -668,7 +668,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CC5D
         pha
@@ -706,7 +706,7 @@
         ; Runs rlUnknown84CDA4 and fades to the castle screen.
 
         phx
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CDA4
 
@@ -770,7 +770,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CDD6
         plx
@@ -795,7 +795,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CE21
         plx
@@ -851,7 +851,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84D10F
         plx
@@ -870,7 +870,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84D0B9
         plx
@@ -954,7 +954,7 @@
         sta wSelectedUnitDataRAMPointer,b
         sec
         jsl rlUnknown84BA3E
-        jsl rlUnknown88AD46
+        jsl rlStartChoosingTarget
         plx
         rtl
 
@@ -1029,7 +1029,7 @@
         ; Nothing in the build reaches this except its option (aUnitMenuOptionReturnSkill).
 
         phx
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CD35
         plx
@@ -1066,7 +1066,7 @@
         sta wR12
         lda #$0005
         jsl rlFindTargetsInRange
-        jsl rlUnknown88AD46
+        jsl rlStartChoosingTarget
         rtl
 
         .databank 0
@@ -1093,7 +1093,7 @@
         sta wR12
         lda #$000A
         jsl rlFindTargetsInRange
-        jsl rlUnknown88AD46
+        jsl rlStartChoosingTarget
         plx
         rtl
 
@@ -1121,7 +1121,7 @@
         sta wR12
         lda #$000B
         jsl rlFindTargetsInRange
-        jsl rlUnknown88AD46
+        jsl rlStartChoosingTarget
         plx
         rtl
 
@@ -1597,7 +1597,7 @@
         .autsiz
         .databank ?
 
-        ; B: in mode 1 only puts the cursor back on the first option; otherwise closes the menu (mode 2 clears bit 4 of wMapStateFlags) and undoes the move (rlUnknown88ADE9).
+        ; B: in mode 1 only puts the cursor back on the first option; otherwise closes the menu (mode 2 clears bit 4 of wMapStateFlags) and undoes the move (rlUndoUnitMove).
 
         jsl rlCheckListMenuIdle
         bne _End
@@ -1629,7 +1629,7 @@
 
             +
             phx
-            jsl rlUnknown88ADE9
+            jsl rlUndoUnitMove
             plx
 
         _End
@@ -2874,7 +2874,7 @@
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlDiscardSelectedInventoryItem
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         plx
         rtl
 

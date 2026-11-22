@@ -24,7 +24,7 @@
         lda wMapSystemFlags,b
         bit #$0020
         beq _8214
-        jml rlUnknown88973F
+        jml rlMinimapStep
 
 
         _8214
@@ -156,7 +156,7 @@
         lda #$00A8
         sta wR1
         lda #$0000
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         lda #$00A0
         sta wR0
         lda #$0060
@@ -226,7 +226,7 @@
         and #$00FF
         sta wR1
         lda #$0000
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         lda #$00A0
         sta wR0
         lda #$0060
@@ -1570,12 +1570,12 @@
 
 
         _8B92
-        jsl rlUnknown8881E5
+        jsl rlSetMapReturnCastleGridStaff
         lda #$0020
         tsb wMapSystemFlags,b
-        lda #(`procUnknown889396)<<8
+        lda #(`procMinimap)<<8
         sta lR44+1
-        lda #<>procUnknown889396
+        lda #<>procMinimap
         sta lR44
         jsl rlProcEngineCreateProc
         rts
@@ -1960,7 +1960,7 @@
         lda #<>aDecompressionDMAEntry8A8F60
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        jsl rlUnknown8881EC
+        jsl rlClearVRAM6000
         jsl rlUnknown88DE1B
         jsl rlDMAByStruct
 
@@ -2592,7 +2592,7 @@
         bcs _92D5
         lda wRoutineVariable1,b
         sta wActiveUnitDeploymentOffset,b
-        jsl rlUnknown8881DE
+        jsl rlSetMapReturnStartCastleStaff
         lda #CASTLE_STEP_EXIT_TO_MAP
         sta wGameStateStep,b
 
@@ -2626,8 +2626,8 @@
         bcs _92FE
         lda wRoutineVariable1,b
         sta wActiveUnitDeploymentOffset,b
-        jsl rlUnknown8881DE
-        jsl rlUnknown8881E5
+        jsl rlSetMapReturnStartCastleStaff
+        jsl rlSetMapReturnCastleGridStaff
         lda wCursorYOffset,b
         sec
         sbc #$0010

@@ -1532,7 +1532,7 @@
         lda aReviveScreenCursorY,x
         sta wR1
         lda wGameStateStep,b
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         rts
 
         .databank 0
@@ -1592,7 +1592,7 @@
         lda #$0013
         sta wR1
         lda #$0000
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         rts
 
         .databank 0

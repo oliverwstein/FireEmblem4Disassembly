@@ -667,7 +667,7 @@
         lda #1
         sta wUnknown00073A,b
         sta wMapEnableYScrollFlag,b
-        jsl rlUnknown8886B3
+        jsl rlMapScrollStepUp
         rts
 
         .databank 0
@@ -681,7 +681,7 @@
         lda #1
         sta wUnknown00073A,b
         sta wMapEnableYScrollFlag,b
-        jsl rlUnknown8886BB
+        jsl rlMapScrollStepDown
         rts
 
         .databank 0
@@ -695,7 +695,7 @@
         lda #1
         sta wUnknown00073A,b
         sta wMapEnableXScrollFlag,b
-        jsl rlUnknown8886A3
+        jsl rlMapScrollStepLeft
         rts
 
         .databank 0
@@ -709,7 +709,7 @@
         lda #1
         sta wUnknown00073A,b
         sta wMapEnableXScrollFlag,b
-        jsl rlUnknown8886AB
+        jsl rlMapScrollStepRight
         rts
 
         .databank 0
@@ -724,7 +724,7 @@
         sta wUnknown00073A,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
-        jsl rlUnknown8886C3
+        jsl rlMapScrollStepUpLeft
         rts
 
         .databank 0
@@ -739,7 +739,7 @@
         sta wUnknown00073A,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
-        jsl rlUnknown8886E1
+        jsl rlMapScrollStepDownLeft
         rts
 
         .databank 0
@@ -754,7 +754,7 @@
         sta wUnknown00073A,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
-        jsl rlUnknown8886D2
+        jsl rlMapScrollStepUpRight
         rts
 
         .databank 0
@@ -769,7 +769,7 @@
         sta wUnknown00073A,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
-        jsl rlUnknown8886F0
+        jsl rlMapScrollStepDownRight
         rts
 
         .databank 0
@@ -895,13 +895,15 @@
 
         .databank 0
 
-      rlUnknown88877F ; 88/877F
+      rlQueueMapBottomRowUpload ; 88/877F
 
         .al
         .autsiz
         .databank ?
 
-        jsr rsUnknown88891C
+        ; Builds the row entering at the bottom of the screen and flags it for rlUploadMapRowAndColumn.
+
+        jsr rsBuildMapBottomRow
 
         lda wMapScrollYPixels,b
         sec
@@ -917,13 +919,15 @@
 
         .databank 0
 
-      rlUnknown888798 ; 88/8798
+      rlQueueMapTopRowUpload ; 88/8798
 
         .al
         .autsiz
         .databank ?
 
-        jsr rsUnknown88895C
+        ; Builds the row entering at the top of the screen and flags it for rlUploadMapRowAndColumn.
+
+        jsr rsBuildMapTopRow
 
         lda wMapScrollYPixels,b
         and #$00F8
@@ -937,13 +941,15 @@
 
         .databank 0
 
-      rlUnknown8887AD ; 88/87AD
+      rlBuildMapTopRow ; 88/87AD
 
         .al
         .autsiz
         .databank ?
 
-        jsr rsUnknown88895C
+        ; Like rlQueueMapTopRowUpload without the upload flag (used while redrawing the whole map).
+
+        jsr rsBuildMapTopRow
 
         lda wMapScrollYPixels,b
         and #$00F8
@@ -954,13 +960,13 @@
 
         .databank 0
 
-      rlUnknown8887BC ; 88/87BC
+      rlQueueMapRightColumnUpload ; 88/87BC
 
         .al
         .autsiz
         .databank ?
 
-        jsr rsUnknown888DB8
+        jsr rsBuildMapRightColumn
 
         lda wMapScrollXPixels,b
         sec
@@ -977,13 +983,13 @@
 
         .databank 0
 
-      rlUnknown8887D6 ; 88/87D6
+      rlQueueMapLeftColumnUpload ; 88/87D6
 
         .al
         .autsiz
         .databank ?
 
-        jsr rsUnknown888E14
+        jsr rsBuildMapLeftColumn
 
         lda wMapScrollXPixels,b
         and #$00F8

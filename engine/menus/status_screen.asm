@@ -816,7 +816,7 @@
         beq _823A
         jsl rlGetSelectedUnitDeploymentOffset
         sta @l wActiveUnitDeploymentOffset
-        jsl rlUnknown8881D7
+        jsl rlSetMapReturnCenterOnUnit
         jml _8174
 
 
@@ -1088,7 +1088,7 @@
         beq _8459
         jsl rlGetSelectedUnitDeploymentOffset
         sta @l wActiveUnitDeploymentOffset
-        jsl rlUnknown8881D7
+        jsl rlSetMapReturnCenterOnUnit
         jml _8393
 
 
@@ -1948,7 +1948,7 @@
         adc #$006A
         sta wR1
         lda #$0000
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         plp
         plb
         .databank $89

@@ -913,7 +913,7 @@
         lda #<>procMainLoopChangeFade
         sta lR44
         jsl rlProcEngineCreateProc
-        jsl rlUnknown88B3AF
+        jsl rlSaveMapCameraAndLockCursor
         rtl
 
         .databank 0
@@ -3689,7 +3689,7 @@
         lda #<>procMainLoopChangeFade
         sta lR44
         jsl rlProcEngineCreateProc
-        jsl rlUnknown88B3AF
+        jsl rlSaveMapCameraAndLockCursor
         rts
 
         .databank 0

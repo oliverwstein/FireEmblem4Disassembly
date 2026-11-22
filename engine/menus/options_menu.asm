@@ -2659,7 +2659,7 @@
         _F664
         stz wR0
         lda #$0000
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
         rtl
 
         .databank 0

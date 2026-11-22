@@ -3459,7 +3459,7 @@
         adc #4
         sta wR1
         lda #1
-        jsl rlUnknown88A704
+        jsl rlDrawHandCursor
 
         lda $7F840A
         lsr a

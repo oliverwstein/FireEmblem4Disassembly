@@ -816,7 +816,7 @@
         phx
         lda #$0000
         sta wMapActionTargetType,b
-        jsl rlUnknown88AF7B
+        jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84CAA9
         plx

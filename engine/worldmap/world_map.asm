@@ -20,7 +20,7 @@
         lda #$80
         sta $2100,b
         rep #$20
-        jsl rlUnknown8887EC
+        jsl rlUploadMapRowAndColumn
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlHandlePossibleHDMA

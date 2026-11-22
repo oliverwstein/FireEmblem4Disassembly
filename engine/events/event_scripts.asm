@@ -4971,7 +4971,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown889268
+        jsl rlLoadChapterMapLayout
         jsl rlUpdateAllLocationEvents
         jsl rlUnknown86C629
         jsl rlUnknown888082
@@ -5776,7 +5776,7 @@
           bra _8D05
         
         _8D01
-        jsl rlUnknown888560
+        jsl rlContinueMapScroll
 
         _8D05
         ldx aProcSystem.wOffset,b
@@ -5970,7 +5970,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown8885D3
+        jsl rlStartMapScrollUp
         rts
  
         .databank 0
@@ -5981,7 +5981,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown8885E1
+        jsl rlStartMapScrollDown
         rts
 
         .databank 0
@@ -5992,7 +5992,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown8885EF
+        jsl rlStartMapScrollLeft
         rts
 
         .databank 0
@@ -6003,7 +6003,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown8885FD
+        jsl rlStartMapScrollRight
         rts
 
         .databank 0
@@ -6014,7 +6014,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown88860B
+        jsl rlStartMapScrollUpLeft
         rts
 
         .databank 0
@@ -6025,7 +6025,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown88861C
+        jsl rlStartMapScrollDownLeft
         rts
 
         .databank 0
@@ -6036,7 +6036,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown88862D
+        jsl rlStartMapScrollUpRight
         rts
 
         .databank 0
@@ -6047,7 +6047,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown88863E
+        jsl rlStartMapScrollDownRight
         rts
 
         .databank 0
@@ -7323,7 +7323,7 @@
 
           .structDMAToVRAM g4bppMapTiles, size(g4bppMapTiles), $80, $0000
 
-        jsl rlUnknown889305
+        jsl rlLoadChapterMapGraphics
         ldx #size(aUnknownD95000) - 2
 
         _80DD
@@ -7432,7 +7432,7 @@
 
         _81C6
         lda wActiveUnitDeploymentOffset,b
-        jsl rlUnknown88B4DB
+        jsl rlMoveCursorToUnit
         lda #$0001
         trb wMapOverlayFlags,b
         bra _81C5
@@ -7484,7 +7484,7 @@
 
           .structDMAToVRAM g4bppMapTiles, size(g4bppMapTiles), $80, $0000
 
-        jsl rlUnknown889305
+        jsl rlLoadChapterMapGraphics
         ldx #size(aUnknownD95000) - 2
 
         _8266
@@ -7662,8 +7662,8 @@
 
         _83EA
         jsr rsMapScrollUpSetBGOFS
-        jsl rlUnknown888798
-        jsl rlUnknown8887EC
+        jsl rlQueueMapTopRowUpload
+        jsl rlUploadMapRowAndColumn
         lda wUnknown000736,b
         cmp wMapScrollYPixels,b
         bcc _83EA
@@ -7687,12 +7687,14 @@
       .al
       .xl
 
-      rlUnknown8887EC ; 88/87EC
+      rlUploadMapRowAndColumn ; 88/87EC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; VBlank: copies the flagged map row ($05DC) and column ($059C) to the map tilemap at VRAM $5000, and while the range overlay is shown its row ($06DC) and column ($069C) to $5800.
 
         phb
         php
