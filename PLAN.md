@@ -37,21 +37,21 @@ Everything reachable via static pointers or the existing Prologue CDL is now bui
 
 ## Phase 2: Full Shiftability (Moddability)
 
-Once a bank is 100% source with zero raw references into it, unpin its blocks and verify relocation with `./build.sh pad`.
+Once a bank is 100% source with zero raw references into it, unpin its blocks and verify relocation with `./build.sh pad`. *(Status 2026-11-21: all non-Mesen Phase 2 work below is complete; only interactive Mesen smoke-testing of padded ROMs and final post-Phase-1 merges of partial banks remain.)*
 
-1. **Eliminate Remaining Raw Pointers & Inline-Byte Code**
-   - Resolve the remaining **33 raw code-pointer stores** (`30` `aProcSystem.aHeaderOnCycle`, `3` `aActiveSpriteSystem.aOnCycle` — splitting routines where a store targets a mid-routine address and promoting needed local labels).
-   - Resolve the remaining **9 raw 6-digit numbers** (`5` with no label near them, `4` into unbuilt bytes) and **36 unlabelled ROM two-halves long pointers** reported by `tools/code_pointers.py` / `tools/raw_addresses.py`.
-   - Disassemble the remaining inline-`.byte` code blocks (~20 `label+N` targets, such as staff handlers at `$87/E6D7`–`E6FB`, `$80/8ECC`, and `rlUnknown9EB491` sub-entries).
-2. **Automate Integrity & Checksum Handling**
-   - Document the second integrity check (`$88/8888`–`8907` copied and compared by `rlUnknown878017` / `rlUnknown87802A`) and investigate the bulk code reads at `$88/8888`–`8AC7` and `$82/8888`–`890D` in [include/Checksums.h](include/Checksums.h).
-   - Add a post-assembly checksum update step in [build.sh](build.sh) (plus an optional build flag to bypass or disable anti-tamper checks in modified/padded ROMs).
-3. **Merge & Pad-Test All 64 Banks in Waves**
-   - **Already merged:** `$83`, `$84`, `$86`, `$8E`, `$8F`, `$92`–`$94`, `$98` (split at `$D8`/`$98`), `$9C`, `$9D` (lower half `$DD`), `$E0` (`$A0`), and the `$AD`–`$B7` data banks.
-   - Run `tools/merge_bank.py <BANK>` to strip redundant consecutive `* =` placements (2,308 placements currently remain across 25 partial banks, including contiguous blocks inside `$80`–`$8D`, `$95`–`$9B`, `$9E`, and `$9F`) and merge each remaining bank once its `none` gaps close.
-   - Run `./build.sh pad <SECTION> <N>` on merged banks and smoke-test padded ROMs in Mesen (starting with Bank `$84` `GenerationTransferSection`).
-4. **Audit Hardcoded Offsets, Sizes & Stack Return Tricks**
-   - Replace hardcoded size/offset constants (e.g., `$027E` in [engine/menus/map_menu.asm](engine/menus/map_menu.asm), hardcoded loop bounds, DMA sizes, and `pea` return offsets) with `size(...)` or label expressions.
+1. **Eliminate Remaining Raw Pointers & Inline-Byte Code — DONE (2026-11-21)**
+   - Resolved all **33 raw code-pointer stores** (`30` `aProcSystem.aHeaderOnCycle`, `3` `aActiveSpriteSystem.aOnCycle`) -> `0` left in `tools/code_pointers.py`.
+   - Resolved all **9 raw 6-digit numbers** -> `0` left in `tools/raw_addresses.py`, fixed `Event000Pointer` (`$8FEF55` -> `aEventDebug8FEF78`), and labelled/converted all **36 unlabelled ROM two-halves long pointers** (`0` unlabelled left).
+   - Disassembled all inline-`.byte` code blocks & `label+N` targets (leaving only the 2 intentional `bank87.asm` anti-tamper reads `rlUnknown8887EC._8880+8,x`).
+2. **Automate Integrity & Checksum Handling — DONE (2026-11-21)**
+   - Documented the second integrity check (`$88/8888`–`8907` copied and tested by `rlUnknown878017` / `rlUnknown87802A`, including `rlReset` copier hook scan) and bulk code reads (`$88/8888`–`8AC7`, `$82/8888`–`890D`) in [include/Checksums.h](include/Checksums.h).
+   - Created [tools/checksums.py](tools/checksums.py) (`--verify` and `--update [--disable-checks]`) and wired verification into [build.sh](build.sh) alongside `./build.sh mod [--disable-checks]` and `--fix-checksums`/`--disable-checks` forwarding in `./build.sh pad` / [tools/pad_test.py](tools/pad_test.py).
+3. **Merge & Pad-Test All 64 Banks in Waves — DONE for current source / Mesen pending**
+   - **Merged single-block or lower/upper split banks:** `$83`, `$84`, `$86`, `$8E`, `$8F`, `$92`–`$94`, `$98` (split at `$D8`/`$98`), `$9C`, `$9D` (`$DD` lower half), `$E0` (`$A0`), and the `$AD`–`$B7` data banks.
+   - Updated [tools/merge_bank.py](tools/merge_bank.py) to preserve `.logical` bank splits (`$Dx`/`$9x`) and merged partial banks across `$80`–`$AF` (`2,308` -> `308` pinned blocks in `build.asm`; redundant pins after closing 5 small gaps in `$88`, `$96`, `$9F` removed too). Final merging of remaining multi-block partial banks will run once their Phase 1 `none` gaps close.
+   - Verified all **21 `.fill`-ending blocks** pass `pad_test.py` (`Unsorted91E915Section` with `--fix-checksums`, mid-block `.fill` splits at `$80FFB0`/`$81C000`/`$E00F30`, and 25 confirmed chance false positives recorded in `NOT_POINTERS`). *Remaining:* interactive Mesen smoke-testing of padded ROMs (e.g. `./build.sh pad GenerationTransferSection 4`).
+4. **Audit Hardcoded Offsets, Sizes & Stack Return Tricks — DONE (2026-11-21)**
+   - Replaced raw `pea` return addresses in [engine/unsorted/bank80.asm](engine/unsorted/bank80.asm) and [engine/unsorted/bank84.asm](engine/unsorted/bank84.asm) with label expressions (`#<>(+)-1`, `#<>_8C27 - 1`), and replaced hardcoded sizes and checksum bounds with `size(...)` / `<>label` expressions (`aDialogueBoxTilemap`, `structLoverDataRAM`, `g4bppCursorSprites`, `g4bppMapTiles`, `aUnknownD95000`, and `rlReset`/`rlUnknown808E2D`/`rlUnknown878017`/`rlUnknown8780AA` in [engine/core/random.asm](engine/core/random.asm), [engine/unsorted/bank80.asm](engine/unsorted/bank80.asm), [engine/unsorted/bank87.asm](engine/unsorted/bank87.asm)).
 
 ---
 
