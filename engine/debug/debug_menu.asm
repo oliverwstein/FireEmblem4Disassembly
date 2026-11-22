@@ -4316,7 +4316,7 @@
         lda #<>aDebugMenuC00A2BDecompressionEntry
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        jsl rlUnknown899FDC
+        jsl rlLoadWindowGraphics
 
         ldx #$0200  
         

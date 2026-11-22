@@ -121,7 +121,7 @@
         jsl rlUnknown88DE1B
         jsl rlUpdateAllLocationEvents
         jsl rlUnknown888082
-        jsl rlUnknown899FDC
+        jsl rlLoadWindowGraphics
         jsr rsUnknown80B065
         jsr rsUnknown80B105
         jsr rsUnknown80B052

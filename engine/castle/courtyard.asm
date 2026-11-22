@@ -568,9 +568,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89A76C+1,x
+        lda aConditionNamePointers+1,x
         sta lRoutineVariable+1,b
-        lda aUnknown89A76C,x
+        lda aConditionNamePointers,x
         sta lRoutineVariable,b
         lda #$3400
         sta aCurrentTilemapInfo,b
@@ -2002,7 +2002,7 @@
         dec x
         dec x
         bpl _8EF5
-        jsl rlUnknown899FDC
+        jsl rlLoadWindowGraphics
         sep #$20
         rep #$10
         ldx #<>gcUnknownC02542

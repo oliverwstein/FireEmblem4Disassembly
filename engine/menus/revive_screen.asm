@@ -1,7 +1,7 @@
 ; The revive staff's screen: rsReviveScreenOpen (installed as the main loop by a
 ; staff effect handler, rsUnknown87E855) builds the list of units that can be
 ; revived, or the message that no one has died, and hands over to game state
-; routines $32 and $33, whose menu is in bank $89 (rsUnknown89AD00 and on). Bank
+; routines $32 and $33, whose menu is in bank $89 (rsReviveScreenChooseUnit and on). Bank
 ; $80 ($80/DFD3-E42B).
 
     .section ReviveScreenSection
@@ -57,25 +57,25 @@
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
-        jsr rsUnknown80E07A
-        jsr rsUnknown80E0AE
-        jsr rsUnknown80E15E
-        jsr rsUnknown80E1AA
+        jsr rsReviveScreenInitialize
+        jsr rsReviveScreenLoadGraphics
+        jsr rsReviveScreenSetBGSettings
+        jsr rsReviveScreenCreateHDMA
         lda wUnitWindowMaxRows
         bne _E055
         lda #$0002
         sta wGameStateStep,b
         lda #$0002
         sta wDebugMenuScreenIndex+1
-        jsr rsUnknown80E258
+        jsr rsReviveScreenDrawNobodyDead
         bra _E061
 
 
         _E055
         lda #$0000
         sta wGameStateStep,b
-        jsr rsUnknown80E2F9
-        jsr rsUnknown80E1B9
+        jsr rsReviveScreenLoadMapSprites
+        jsr rsReviveScreenDrawNames
 
         _E061
         phk
@@ -103,12 +103,14 @@
       .al
       .xl
 
-      rsUnknown80E07A ; 80/E07A
+      rsReviveScreenInitialize ; 80/E07A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unless coming back from the status screen (wStatusScreenCaller is rsReviveScreenOpen), saves the staff's user (wReviveScreenStaffUser), puts the cursor on the first entry and builds the list of dead units.
 
         lda wDataWindowCurrentArmy
         cmp #$DFDC
@@ -117,7 +119,7 @@
         sta $7FB016
         lda #$0000
         sta wUnitWindowCurrentHighlightLine
-        jsr rsUnknown80E298
+        jsr rsReviveScreenBuildDeadUnitList
         bra _E096
 
 
@@ -136,7 +138,7 @@
         ; 80/E0AE
 
 
-      rsUnknown80E0AE ; 80/E0AE
+      rsReviveScreenLoadGraphics ; 80/E0AE
 
         .al
         .xl
@@ -151,14 +153,14 @@
 
           .structDMAToVRAM g4bppWindowFrames, $0C00, $80, $7200
 
-        lda #(`aUnknown80E13E)<<8
+        lda #(`aReviveScreenGraphics1)<<8
         sta lR19+1
-        lda #<>aUnknown80E13E
+        lda #<>aReviveScreenGraphics1
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #(`aUnknown80E146)<<8
+        lda #(`aReviveScreenGraphics2)<<8
         sta lR19+1
-        lda #<>aUnknown80E146
+        lda #<>aReviveScreenGraphics2
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         ldx #$0100
@@ -195,14 +197,14 @@
         bne _E110
         lda #$0000
         sta aBGPaletteBuffer,b
-        lda #(`aUnknown80E14E)<<8
+        lda #(`aReviveScreenGraphics3)<<8
         sta lR19+1
-        lda #<>aUnknown80E14E
+        lda #<>aReviveScreenGraphics3
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
-        lda #(`aUnknown80E156)<<8
+        lda #(`aReviveScreenGraphics4)<<8
         sta lR19+1
-        lda #<>aUnknown80E156
+        lda #<>aReviveScreenGraphics4
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         rts
@@ -212,27 +214,27 @@
         ; 80/E13E
 
 
-      aUnknown80E13E ; 80/E13E
+      aReviveScreenGraphics1 ; 80/E13E
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
         .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000
 
-      aUnknown80E146 ; 80/E146
+      aReviveScreenGraphics2 ; 80/E146
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
         .structDecompressionDMAEntry gcUnknownDD20A0, $1200, $3000
 
-      aUnknown80E14E ; 80/E14E
+      aReviveScreenGraphics3 ; 80/E14E
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
         .structDecompressionDMAEntry gcUnknownDD2CEE, $0700, $1800
 
-      aUnknown80E156 ; 80/E156
+      aReviveScreenGraphics4 ; 80/E156
 
         ; Entry for rlHandleMapMenuDecompressionDMA.
         .structDecompressionDMAEntry gcUnknownDD2D90, $0800, $2000
 
-      rsUnknown80E15E ; 80/E15E
+      rsReviveScreenSetBGSettings ; 80/E15E
 
         .al
         .xl
@@ -283,7 +285,7 @@
         ; 80/E1AA
 
 
-      rsUnknown80E1AA ; 80/E1AA
+      rsReviveScreenCreateHDMA ; 80/E1AA
 
         .al
         .xl
@@ -302,12 +304,14 @@
         ; 80/E1B9
 
 
-      rsUnknown80E1B9 ; 80/E1B9
+      rsReviveScreenDrawNames ; 80/E1B9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; "Whom will you revive?" and the names of the dead units, at aReviveScreenNamePositions.
 
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -327,7 +331,7 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitNamePointer
         phx
-        lda aUnknown80E20E,x
+        lda aReviveScreenNamePositions,x
         tax
         lda lRoutineVariable,b
         sta lR18
@@ -352,7 +356,7 @@
         ; 80/E20E
 
 
-      aUnknown80E20E ; 80/E20E
+      aReviveScreenNamePositions ; 80/E20E
 
         ; X and Y tile of each of the 24 list entries.
         .byte 4, 9
@@ -386,7 +390,7 @@
         .enc "SJIS"
         .text "だれをいきかえらせますか\n"
 
-      rsUnknown80E258 ; 80/E258
+      rsReviveScreenDrawNobodyDead ; 80/E258
 
         .al
         .xl
@@ -420,12 +424,14 @@
         .enc "SJIS"
         .text "だれもしんでません\n"
 
-      rsUnknown80E298 ; 80/E298
+      rsReviveScreenBuildDeadUnitList ; 80/E298
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Puts the unit pointers of the player's dead units in aUnitWindowDeploymentSlots (0 after the last) and their map sprite IDs in aUnitWindowEquippedWeaponPointers; the count in wUnitWindowMaxRows.
 
         lda #$0000
         jsl rlGetFactionSlotUnitCount
@@ -475,12 +481,14 @@
         ; 80/E2F9
 
 
-      rsUnknown80E2F9 ; 80/E2F9
+      rsReviveScreenLoadMapSprites ; 80/E2F9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sends the first frame of each dead unit's map sprite to its place in VRAM.
 
         lda #$0000
 
@@ -490,12 +498,12 @@
         tax
         lda aUnitWindowEquippedWeaponPointers,x
         bmi _E30D
-        jsr rsUnknown80E31C
+        jsr rsReviveScreenLoadSmallMapSprite
         bra _E310
 
 
         _E30D
-        jsr rsUnknown80E39F
+        jsr rsReviveScreenLoadLargeMapSprite
 
         _E310
         lda wUnitWindowCurrentNameLine
@@ -509,7 +517,7 @@
         ; 80/E31C
 
 
-      rsUnknown80E31C ; 80/E31C
+      rsReviveScreenLoadSmallMapSprite ; 80/E31C
 
         .al
         .xl
@@ -536,7 +544,7 @@
         lda wUnitWindowCurrentNameLine
         asl a
         tax
-        lda aUnknown80E36F,x
+        lda aReviveScreenSmallSpriteVRAM,x
         sta wR1
         jsl rlDMAByPointer
         lda lMapSpriteGraphicsPointer,b
@@ -557,14 +565,14 @@
         ; 80/E36F
 
 
-      aUnknown80E36F ; 80/E36F
+      aReviveScreenSmallSpriteVRAM ; 80/E36F
 
         ; A VRAM address for each of the 24 list entries.
         .word $6200, $6220, $6240, $6260, $6280, $62A0, $62C0, $62E0
         .word $6400, $6420, $6440, $6460, $6480, $64A0, $64C0, $64E0
         .word $6600, $6620, $6640, $6660, $6680, $66A0, $66C0, $66E0
 
-      rsUnknown80E39F ; 80/E39F
+      rsReviveScreenLoadLargeMapSprite ; 80/E39F
 
         .al
         .xl
@@ -591,7 +599,7 @@
         lda wUnitWindowCurrentNameLine
         asl a
         tax
-        lda aUnknown80E3F2,x
+        lda aReviveScreenLargeSpriteVRAM,x
         sta wR1
         jsl rlDMAByPointer
         lda lMapSpriteGraphicsPointer,b
@@ -611,7 +619,7 @@
 
         ; 80/E3F2
 
-      aUnknown80E3F2 ; 80/E3F2
+      aReviveScreenLargeSpriteVRAM ; 80/E3F2
 
         ; A VRAM address for each of the 24 list entries.
         .word $6800, $6840, $6880, $68C0, $6A00, $6A40, $6A80, $6AC0

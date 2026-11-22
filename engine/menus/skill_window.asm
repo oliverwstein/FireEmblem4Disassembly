@@ -739,7 +739,7 @@
 
       aUnknown89AC56 ; 89/AC56
 
-        ; Read by rlSkillWindowDrawSkillName, rsUnknown89A3C0.
+        ; Read by rlSkillWindowDrawSkillName, rsStatusScreenDrawSkillDescription.
 
         .byte $00, $00, $00, $00, $00, $00, $FD, $AA, $89, $0B, $AB, $89, $19, $AB, $89, $27
         .byte $AB, $89, $35, $AB, $89, $00, $00, $00, $43, $AB, $89, $00, $00, $00, $00, $00

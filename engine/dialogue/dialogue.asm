@@ -3517,7 +3517,7 @@
             jsl rlUnknown88CD5A
 
           +
-          jsl rlUnknown899FDC
+          jsl rlLoadWindowGraphics
           jsl rlLoadDefaultWindowBorderPalette
 
         _End

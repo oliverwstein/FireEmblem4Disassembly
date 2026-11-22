@@ -64,9 +64,9 @@
         jsr rsSetOptionsMenuBGSettings
         jsr rsCreateOptionsMenuHDMA
         jsr rsDrawOptionsMenuLabels
-        jsl rlUnknown89ED12
-        jsl rlUnknown89F246
-        jsl rlUnknown89F065
+        jsl rlOptionsMenuDrawChoices
+        jsl rlOptionsMenuDrawDescription
+        jsl rlOptionsMenuDrawValues
         lda #$0000
         sta wGameStateStep,b
         lda #GAMESTATE_OPTIONS_MENU_SETUP

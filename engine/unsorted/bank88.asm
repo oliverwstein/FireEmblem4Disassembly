@@ -4154,7 +4154,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown899FDC
+        jsl rlLoadWindowGraphics
         plx
         lda #<>rlUnknown889CEE
         sta aProcSystem.aHeaderOnCycle,b,x

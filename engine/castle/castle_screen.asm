@@ -464,7 +464,7 @@
         dec x
         dec x
         bpl _B8C2
-        jsl rlUnknown899FDC
+        jsl rlLoadWindowGraphics
         sep #$20
         rep #$10
         ldx #<>gcUnknownC02542

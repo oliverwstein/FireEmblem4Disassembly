@@ -4899,7 +4899,7 @@
         jsl rlDisableVBlank
         jsr rsUnknown80AF9B
         jsr rsUnknown80B16A
-        jsl rlUnknown899FDC
+        jsl rlLoadWindowGraphics
         jsr rsUnknown80B065
         jsr rsUnknown80B105
         jsr rsUnknown80B052

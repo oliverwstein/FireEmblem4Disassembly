@@ -131,7 +131,7 @@
         bne _BC81
         jsl rlGetSelectedUnitCharacterID
         sta $7F8195
-        jsl rlUnknown8990BD
+        jsl rlStatusScreenGetHolyBloodLevels
         jsl rlUnknown849FC4
         sta $7F8199
         cmp #$0000
@@ -147,7 +147,7 @@
         sta $7F8193
         jsl rlGetUnitType
         sta $7F818B
-        jsl rlUnknown89A376
+        jsl rlStatusScreenBuildSkillList
         lda #$0000
         sta $7F819B
         lda $7F8193
@@ -302,12 +302,12 @@
         _BE3D
         lda #$004E
         jsl rlUnitWindowFillBG3Buffer
-        jsl rlUnknown899BA5
-        jsl rlUnknown899C7C
-        jsl rlUnknown899D72
-        jsl rlUnknown899510
-        jsl rlUnknown89970D
-        jsl rlUnknown8998E1
+        jsl rlStatusScreenDrawSummaryLabels
+        jsl rlStatusScreenDrawStatLabels
+        jsl rlStatusScreenDrawPersonalDataLabels
+        jsl rlStatusScreenDrawSummary
+        jsl rlStatusScreenDrawStatsAndInventory
+        jsl rlStatusScreenDrawPersonalData
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $1000, $80, $B000
@@ -360,21 +360,21 @@
         inc y
         cpy #$0020
         bne _BEAC
-        jsl rlUnknown89A138
+        jsl rlStatusScreenLoadPortrait
         jsl rlUnknown8990DA
-        lda #(`aUnknown899140)<<8
+        lda #(`aStatusScreenBG3SplitHDMA)<<8
         sta lR44+1
-        lda #<>aUnknown899140
+        lda #<>aStatusScreenBG3SplitHDMA
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #(`aUnknown89917A)<<8
+        lda #(`aStatusScreenBG1SplitHDMA)<<8
         sta lR44+1
-        lda #<>aUnknown89917A
+        lda #<>aStatusScreenBG1SplitHDMA
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #(`aUnknown8991B9)<<8
+        lda #(`aStatusScreenGradientHDMA)<<8
         sta lR44+1
-        lda #<>aUnknown8991B9
+        lda #<>aStatusScreenGradientHDMA
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rtl

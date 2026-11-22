@@ -40,7 +40,7 @@
 
       aPortraitAndMapUIOAMPalettes ; 8C/951E
 
-        ; Read by rlUnknown888082, rlUnknown88821A, rlUnknown9EF76F, rsUnitWindowCopyGraphics, rsUnknown80E0AE.
+        ; Read by rlUnknown888082, rlUnknown88821A, rlUnknown9EF76F, rsUnitWindowCopyGraphics, rsReviveScreenLoadGraphics.
 
         .word $0000, $3800, $7FFF, $0000, $0000, $4EB5, $2129, $7F56
         .word $7D28, $2862, $19DA, $0CCF, $1484, $4AFB, $2590, $1041
@@ -59,7 +59,7 @@
 
       aMenuSpritePalette7Slice ; 8C/95DE
 
-        ; Read by rsUnitWindowCopyGraphics, rsUnknown80E0AE.
+        ; Read by rsUnitWindowCopyGraphics, rsReviveScreenLoadGraphics.
 
         .word $0000, $3800, $6F7B, $4A52, $2108, $4210, $1CE7, $5EF7
         .word $318C, $1CE7, $4A52, $1CE7, $0C62, $4A52, $2D6B, $0821
@@ -154,7 +154,7 @@
 
       aChapterIntroAndUIBGPalettes ; DD/7EB0
 
-        ; Eight palettes. rsLoadChapterIntroGraphics and rsUnknown80E0AE copy all of them
+        ; Eight palettes. rsLoadChapterIntroGraphics and rsReviveScreenLoadGraphics copy all of them
         ; into the BG palette buffer, and rsLoadChapterIntroGraphics then palette 6 over
         ; palette 7; both loops count an index from the size down to 2, so
         ; they read from the label minus 2.

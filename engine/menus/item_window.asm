@@ -742,7 +742,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $25, every frame: runs the routine for wGameStateStep from the table after this routine (0 input, 1 sort mode panel, 3 close to the map, 4 the unit's screen).
+        ; Game state routine $25, every frame: runs the routine for wGameStateStep from the table after this routine (0 input, 1 sort panel, 2 no items, 3 close to the map, 4 back to the castle).
 
         phb
         php
@@ -752,7 +752,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        jsr (aUnknown89B3F6,x)
+        jsr (aItemWindowSteps,x)
         plp
         plb
         .databank $89
@@ -770,14 +770,14 @@
       .al
       .xl
 
-      aUnknown89B3F6 ; 89/B3F6
+      aItemWindowSteps ; 89/B3F6
 
         ; Jump table of rlItemWindowRunStep.
         .word <>rsItemWindowHandleInput
-        .word <>rsUnknown89B79D
-        .word <>rsUnknown89B838
+        .word <>rsItemWindowSortPanel
+        .word <>rsItemWindowNoItems
         .word <>rsItemWindowCloseToMap
-        .word <>rsUnknown89B869
+        .word <>rsItemWindowFadeToCastle
 
     .endsection Table89B3F6Section
 

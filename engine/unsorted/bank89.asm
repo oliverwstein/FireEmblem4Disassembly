@@ -13,9 +13,9 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $07, every frame while the status screen is up: rsUnknown8994B8.
+        ; Game state routine $07, every frame while the status screen is up: rsStatusScreenDrawScrollArrow.
 
-        jsr rsUnknown8994B8
+        jsr rsStatusScreenDrawScrollArrow
         rtl
 
         .databank 0
@@ -115,20 +115,20 @@
         lda #$0000
         sta $7F819D
         inc wGameStateRoutine1,b
-        jsl rlUnknown899200
+        jsl rlStatusScreenSetGradient
         lda $7F81A1
         cmp #$0002
         beq _80DC
-        jsr rsUnknown8989AD
-        jsr rsUnknown898AF5
-        jsr rsUnknown898B3B
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawPortraitAndMapSprite
+        jsr rsStatusScreenDrawEquippedWeaponIcon
+        jsr rsStatusScreenDrawInventoryIcons
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         rtl
 
 
         _80DC
-        jsr rsUnknown898D55
+        jsr rsStatusScreenDrawHolyBloodPageSprites
         rtl
 
         .databank 0
@@ -142,7 +142,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $09, every frame: runs the routine for wGameStateStep from aUnknown8980EF.
+        ; Game state routine $09, every frame: runs the routine for wGameStateStep from aStatusScreenSteps.
 
         phb
         php
@@ -152,7 +152,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        jsr (aUnknown8980EF,x)
+        jsr (aStatusScreenSteps,x)
         plp
         plb
         .databank $89
@@ -170,20 +170,20 @@
       .al
       .xl
 
-      aUnknown8980EF ; 89/80EF
+      aStatusScreenSteps ; 89/80EF
 
         ; Jump table of rlStatusScreenStep.
-        .word <>rsUnknown898105
-        .word <>rsUnknown89831F
-        .word <>rsUnknown89861B
-        .word <>rsUnknown898690
-        .word <>rsUnknown898734
-        .word <>rsUnknown898536
-        .word <>rsUnknown898755
-        .word <>rsUnknown898768
-        .word <>rsUnknown89A25A
-        .word <>rsUnknown89A2ED
-        .word <>rsUnknown89A32E
+        .word <>rsStatusScreenTopPage
+        .word <>rsStatusScreenBottomPage
+        .word <>rsStatusScreenHolyBloodPage
+        .word <>rsStatusScreenItemDetails
+        .word <>rsStatusScreenLeave
+        .word <>rsStatusScreenLoadHolyBloodPage
+        .word <>rsStatusScreenReturnToMap
+        .word <>rsStatusScreenReturnToCastle
+        .word <>rsStatusScreenSkillDetails
+        .word <>rsStatusScreenFadeIn
+        .word <>rsStatusScreenFadeOut
 
     .endsection Table8980EFSection
 
@@ -193,15 +193,17 @@
       .al
       .xl
 
-      rsUnknown898105 ; 89/8105
+      rsStatusScreenTopPage ; 89/8105
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8989AD
-        jsr rsUnknown898AF5
+        ; Step $00, the top half of the stat page. B closes the screen (back to whoever opened it: rsStatusScreenClose), X moves the cursor onto the inventory (step $03), Down scrolls to the bottom half (step $01, $07 lines a frame), A opens the holy blood page (step $05 the first time, to load its graphics, then $02), R and L show the next and previous unit.
+
+        jsr rsStatusScreenDrawPortraitAndMapSprite
+        jsr rsStatusScreenDrawEquippedWeaponIcon
         lda $7F8187
         bne _813A
         lda wJoy1New
@@ -216,7 +218,7 @@
         bne _813E
         bit #$0020
         bne _8142
-        jsr rsUnknown898B3B
+        jsr rsStatusScreenDrawInventoryIcons
         rts
 
 
@@ -247,7 +249,7 @@
         _814A
         lda #$0021
         jsl rlPlaySoundEffect
-        jsr rsUnknown898B3B
+        jsr rsStatusScreenDrawInventoryIcons
         lda $7F8183
         cmp #$C3E6
         beq _81A5
@@ -367,13 +369,13 @@
         sta wGameStateStep,b
         lda #$0001
         sta $7F8185
-        jsl rlUnknown89876D
+        jsl rlStatusScreenDrawItemDetails
         stz wUnknown000885,b
         lda #$000A
         jsl rlPlaySoundEffect
 
         _826D
-        jsr rsUnknown898B3B
+        jsr rsStatusScreenDrawInventoryIcons
         rts
 
 
@@ -387,7 +389,7 @@
         sta $7F818F
         lda #$0005
         sta wGameStateStep,b
-        jsr rsUnknown898B3B
+        jsr rsStatusScreenDrawInventoryIcons
         lda #(`gcUnknownDD0000)<<8
         sta lR18+1
         lda #<>gcUnknownDD0000
@@ -403,7 +405,7 @@
         _82AB
         lda #$0002
         sta wGameStateStep,b
-        jsl rlUnknown899200
+        jsl rlStatusScreenSetGradient
         lda #$0110
         sta wBufferBG3VOFS
         lda #$00AC
@@ -420,7 +422,7 @@
         dec x
         dec x
         bne _82CD
-        jsr rsUnknown898D55
+        jsr rsStatusScreenDrawHolyBloodPageSprites
         rts
 
 
@@ -440,22 +442,22 @@
         sta wBufferBG2VOFS
         lda #$0011
         jsl rlPlaySoundEffect
-        jsr rsUnknown898B3B
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawInventoryIcons
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
         _830C
-        jsr rlUnknown89A5E5
+        jsr rsStatusScreenNextUnit
         bra _8314
 
 
         _8311
-        jsr rsUnknown89A68C
+        jsr rsStatusScreenPreviousUnit
 
         _8314
-        jsr rsUnknown898B3B
+        jsr rsStatusScreenDrawInventoryIcons
         lda #$1234
         sta $7F819D
         rts
@@ -464,15 +466,17 @@
 
         ; 89/831F
 
-      rsUnknown89831F ; 89/831F
+      rsStatusScreenBottomPage ; 89/831F
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8989AD
-        jsr rsUnknown898AF5
+        ; Step $01, the bottom half (personal data, weapon ranks, skills). As the top half, but Up scrolls back up and X, if the unit has skills, moves the cursor onto them (step $08).
+
+        jsr rsStatusScreenDrawPortraitAndMapSprite
+        jsr rsStatusScreenDrawEquippedWeaponIcon
         lda $7F8187
         cmp #$0087
         bne _8356
@@ -488,8 +492,8 @@
         bne _835E
         bit #$0020
         bne _8362
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
@@ -516,8 +520,8 @@
         _8366
         lda #$0021
         jsl rlPlaySoundEffect
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         lda $7F8183
         cmp #$C3E6
         beq _83C4
@@ -647,15 +651,15 @@
         lda #$9B88
         sta lR19
         jsl rlAppendDecompList
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
         _84A2
         lda #$0002
         sta wGameStateStep,b
-        jsl rlUnknown899200
+        jsl rlStatusScreenSetGradient
         lda #$0110
         sta wBufferBG3VOFS
         lda #$00AC
@@ -672,7 +676,7 @@
         dec x
         dec x
         bne _84C4
-        jsr rsUnknown898D55
+        jsr rsStatusScreenDrawHolyBloodPageSprites
         rts
 
 
@@ -690,9 +694,9 @@
         sta wBufferBG2VOFS
         lda #$0012
         jsl rlPlaySoundEffect
-        jsr rsUnknown898B3B
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawInventoryIcons
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
@@ -703,27 +707,27 @@
         sta $7F81CF
         lda #$000A
         jsl rlPlaySoundEffect
-        jsr rsUnknown89A3C0
+        jsr rsStatusScreenDrawSkillDescription
         lda #$0008
         sta wGameStateStep,b
 
         _8519
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
         _8520
-        jsr rlUnknown89A5E5
+        jsr rsStatusScreenNextUnit
         bra _8528
 
 
         _8525
-        jsr rsUnknown89A68C
+        jsr rsStatusScreenPreviousUnit
 
         _8528
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         lda #$4321
         sta $7F819D
         rts
@@ -740,20 +744,22 @@
       .al
       .xl
 
-      rsUnknown898536 ; 89/8536
+      rsStatusScreenLoadHolyBloodPage ; 89/8536
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8989AD
-        jsr rsUnknown898AF5
+        ; Step $05, once per screen: waits for the decompression of gcUnknownDD0000 that A started, sends it to VRAM in five pieces over five frames (wStatusScreenHolyBloodDMAStep), then shows the holy blood page (step $02).
+
+        jsr rsStatusScreenDrawPortraitAndMapSprite
+        jsr rsStatusScreenDrawEquippedWeaponIcon
         lda bDecompressionArrayFlag,b
         beq _854B
-        jsr rsUnknown898B3B
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawInventoryIcons
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
@@ -825,9 +831,9 @@
         sta $7F8191
 
         _85DA
-        jsr rsUnknown898B3B
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawInventoryIcons
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
@@ -840,12 +846,12 @@
         dec x
         dec x
         bne _85E7
-        jsr rsUnknown898D55
-        jsr rsUnknown8989AD
-        jsr rsUnknown898AF5
+        jsr rsStatusScreenDrawHolyBloodPageSprites
+        jsr rsStatusScreenDrawPortraitAndMapSprite
+        jsr rsStatusScreenDrawEquippedWeaponIcon
         lda #$0002
         sta wGameStateStep,b
-        jsl rlUnknown899200
+        jsl rlStatusScreenSetGradient
         lda #$0110
         sta wBufferBG3VOFS
         lda #$00AC
@@ -868,15 +874,17 @@
       .al
       .xl
 
-      rsUnknown89861B ; 89/861B
+      rsStatusScreenHolyBloodPage ; 89/861B
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8989AD
-        jsr rsUnknown898AF5
+        ; Step $02, the holy blood page: B goes back to the stat page at the scroll position it left (step $00 or $01), R and L show the next and previous unit.
+
+        jsr rsStatusScreenDrawPortraitAndMapSprite
+        jsr rsStatusScreenDrawEquippedWeaponIcon
         lda wJoy1New
         bit #$8000
         bne _863E
@@ -884,7 +892,7 @@
         bne _8636
         bit #$0020
         bne _863A
-        jsr rsUnknown898D55
+        jsr rsStatusScreenDrawHolyBloodPageSprites
         rts
 
 
@@ -914,29 +922,29 @@
         txa
         sta wGameStateStep,b
         stz wBufferBG1VOFS
-        jsl rlUnknown899200
+        jsl rlStatusScreenSetGradient
         lda $7F8189
         sta wBufferBG2VOFS
         lda $7F8187
         sta wBufferBG3VOFS
-        jsr rsUnknown898B3B
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawInventoryIcons
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         lda #$0021
         jsl rlPlaySoundEffect
         rts
 
 
         _867D
-        jsr rlUnknown89A5E5
+        jsr rsStatusScreenNextUnit
         bra _8685
 
 
         _8682
-        jsr rsUnknown89A68C
+        jsr rsStatusScreenPreviousUnit
 
         _8685
-        jsr rsUnknown898D55
+        jsr rsStatusScreenDrawHolyBloodPageSprites
         lda #$1111
         sta $7F819D
         rts
@@ -945,24 +953,26 @@
 
         ; 89/8690
 
-      rsUnknown898690 ; 89/8690
+      rsStatusScreenItemDetails ; 89/8690
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8989AD
-        jsr rsUnknown898AF5
-        jsr rsUnknown898B3B
-        jsr rsUnknown898B97
+        ; Step $03, the cursor on the inventory: Up and Down choose an item (wStatusScreenItemSlot) and redraw its details; B puts the stats back and returns to step $00.
+
+        jsr rsStatusScreenDrawPortraitAndMapSprite
+        jsr rsStatusScreenDrawEquippedWeaponIcon
+        jsr rsStatusScreenDrawInventoryIcons
+        jsr rsStatusScreenDrawItemDetailSprites
         lda wJoy1Repeated
         bmi _8704
         bit #$0800
         bne _86AE
         bit #$0400
         bne _86D9
-        jsr rsUnknown8989CE
+        jsr rsStatusScreenDrawItemCursor
         rts
 
 
@@ -977,12 +987,12 @@
         lda $7F8185
         dec a
         sta $7F8185
-        jsl rlUnknown89876D
+        jsl rlStatusScreenDrawItemDetails
         lda #$0006
         jsl rlPlaySoundEffect
 
         _86D5
-        jsr rsUnknown8989CE
+        jsr rsStatusScreenDrawItemCursor
         rts
 
 
@@ -997,12 +1007,12 @@
         lda $7F8185
         inc a
         sta $7F8185
-        jsl rlUnknown89876D
+        jsl rlStatusScreenDrawItemDetails
         lda #$0006
         jsl rlPlaySoundEffect
 
         _8700
-        jsr rsUnknown8989CE
+        jsr rsStatusScreenDrawItemCursor
         rts
 
 
@@ -1011,8 +1021,8 @@
         lda #$0010
         ldy #$0011
         jsl rlClearTilemapRect
-        jsl rlUnknown899C7C
-        jsl rlUnknown89970D
+        jsl rlStatusScreenDrawStatLabels
+        jsl rlStatusScreenDrawStatsAndInventory
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E8648, $0400, $80, $B2C0
@@ -1035,28 +1045,30 @@
       .al
       .xl
 
-      rsUnknown898734 ; 89/8734
+      rsStatusScreenLeave ; 89/8734
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Step $04, after a fade-out: installs wStatusScreenExitRoutine as the main loop routine, which is the screen that opened the status screen or rsOpenStatusScreen again for another unit.
+
         lda $7F81A3
         sta wMainLoopPointer
-        jsr rsUnknown8989AD
-        jsr rsUnknown898AF5
+        jsr rsStatusScreenDrawPortraitAndMapSprite
+        jsr rsStatusScreenDrawEquippedWeaponIcon
         lda wBufferBG2VOFS
         cmp #$0110
         beq _8751
-        jsr rsUnknown898B3B
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawInventoryIcons
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
         _8751
-        jsr rsUnknown898D55
+        jsr rsStatusScreenDrawHolyBloodPageSprites
         rts
 
         .databank 0
@@ -1071,12 +1083,14 @@
       .al
       .xl
 
-      rsUnknown898755 ; 89/8755
+      rsStatusScreenReturnToMap ; 89/8755
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $06: back to the map (rsUnknown80B122) and its music.
 
         lda #$0001
         sta wMainGameMode,b
@@ -1098,12 +1112,14 @@
       .al
       .xl
 
-      rsUnknown898768 ; 89/8768
+      rsStatusScreenReturnToCastle ; 89/8768
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $07: back to the castle screen.
 
         jsl rlReturnToCastleScreen
         rts
@@ -1120,12 +1136,14 @@
       .al
       .xl
 
-      rlUnknown89876D ; 89/876D
+      rlStatusScreenDrawItemDetails ; 89/876D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the details of the item in wStatusScreenItemSlot over the stats: name, uses and rank for a staff, and for a weapon also hit, might, range, weight and kills (uses and kills only for a player unit). Ends with the description and a DMA of the area.
 
         ldx #$02C0
         lda #$0010
@@ -1159,7 +1177,7 @@
         _87B6
         cmp #$0001
         beq _87CC
-        jsr rsUnknown89936E
+        jsr rsStatusScreenDrawItemDescription
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E8648, $0400, $80, $B2C0
@@ -1188,8 +1206,8 @@
         _87F7
         ldx #$0005
         ldy #$000D
-        jsr rsUnknown89A5AA
-        jsr rsUnknown89936E
+        jsr rsDrawWeaponRankLetter
+        jsr rsStatusScreenDrawItemDescription
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E8648, $0400, $80, $B2C0
@@ -1200,27 +1218,27 @@
         _8811
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown898973)<<8
+        lda #(`aStatusScreenHitLabel)<<8
         sta lR18+1
-        lda #<>aUnknown898973
+        lda #<>aStatusScreenHitLabel
         sta lR18
         ldx #$0F03
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown89897F)<<8
+        lda #(`aStatusScreenMightLabel)<<8
         sta lR18+1
-        lda #<>aUnknown89897F
+        lda #<>aStatusScreenMightLabel
         sta lR18
         ldx #$1104
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown898989)<<8
+        lda #(`aStatusScreenRangeLabel)<<8
         sta lR18+1
-        lda #<>aUnknown898989
+        lda #<>aStatusScreenRangeLabel
         sta lR18
         ldx #$1304
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown898993)<<8
+        lda #(`aStatusScreenWeightLabel)<<8
         sta lR18+1
-        lda #<>aUnknown898993
+        lda #<>aStatusScreenWeightLabel
         sta lR18
         ldx #$1505
         jsl rlDrawMenuTextLine
@@ -1232,7 +1250,7 @@
         _8867
         ldx #$0005
         ldy #$000D
-        jsr rsUnknown89A5AA
+        jsr rsDrawWeaponRankLetter
         lda $7F8193
         bne _888F
         lda $7F8185
@@ -1267,9 +1285,9 @@
         _88C0
         lda #$3800
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown8989A7)<<8
+        lda #(`aStatusScreenNoMightText)<<8
         sta lR18+1
-        lda #<>aUnknown8989A7
+        lda #<>aStatusScreenNoMightText
         sta lR18
         ldx #$1109
         jsl rlDrawMenuTextLine
@@ -1324,7 +1342,7 @@
         jsl rlDrawMenuTextNumber
 
         _8962
-        jsr rsUnknown899454
+        jsr rsStatusScreenDrawWeaponDescription
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E8648, $0400, $80, $B2C0
@@ -1343,49 +1361,49 @@
       .al
       .xl
 
-      aUnknown898973 ; 89/8973
+      aStatusScreenHitLabel ; 89/8973
 
         .enc "SJIS"
         .text "めいちゅう"
         .word $0000
         .enc "none"
 
-      aUnknown89897F ; 89/897F
+      aStatusScreenMightLabel ; 89/897F
 
         .enc "SJIS"
         .text "いりょく"
         .word $0000
         .enc "none"
 
-      aUnknown898989 ; 89/8989
+      aStatusScreenRangeLabel ; 89/8989
 
         .enc "SJIS"
         .text "しゃてい"
         .word $0000
         .enc "none"
 
-      aUnknown898993 ; 89/8993
+      aStatusScreenWeightLabel ; 89/8993
 
         .enc "SJIS"
         .text "おもさ"
         .word $0000
         .enc "none"
 
-      aUnknown89899B ; 89/899B
+      aStatusScreenRemainingLabel ; 89/899B
 
         .enc "SJIS"
         .text "のこり"
         .word $0000
         .enc "none"
 
-      aUnknown8989A3 ; 89/89A3
+      aStatusScreenGoldLabel ; 89/89A3
 
         .enc "SJIS"
         .text "Ｇ"
         .word $0000
         .enc "none"
 
-      aUnknown8989A7 ; 89/89A7
+      aStatusScreenNoMightText ; 89/89A7
 
         .enc "SJIS"
         .text "ーー"
@@ -1401,12 +1419,14 @@
       .al
       .xl
 
-      rsUnknown8989AD ; 89/89AD
+      rsStatusScreenDrawPortraitAndMapSprite ; 89/89AD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame: the portrait (twelve 16x16 sprites, aStatusScreenPortraitSprites) and the unit's map sprite (rsStatusScreenDrawMapSprite).
 
         sep #$20
         lda #$89
@@ -1420,9 +1440,9 @@
         sta wR1
         stz wR4
         stz wR5
-        ldy #<>aUnknown89A72E
+        ldy #<>aStatusScreenPortraitSprites
         jsl rlPushToOAMBuffer
-        jsr rsUnknown8989EA
+        jsr rsStatusScreenDrawMapSprite
         rts
 
         .databank 0
@@ -1437,12 +1457,14 @@
       .al
       .xl
 
-      rsUnknown8989CE ; 89/89CE
+      rsStatusScreenDrawItemCursor ; 89/89CE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The hand cursor beside the inventory row wUnknown000885.
 
         phb
         php
@@ -1474,19 +1496,21 @@
       .al
       .xl
 
-      rsUnknown8989EA ; 89/89EA
+      rsStatusScreenDrawMapSprite ; 89/89EA
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The promotion marker (rsStatusScreenDrawPromotionMarker), then the unit's map sprite, animated by rlUnknown88DBEE unless the unit is dead or captive; a large (mounted) map sprite uses the array with its top half.
+
         phb
         php
         phk
         plb
         .databank $89
-        jsr rsUnknown898A41
+        jsr rsStatusScreenDrawPromotionMarker
         lda $7F81D1
         cmp #$0008
         beq _89FE
@@ -1525,19 +1549,19 @@
         ; 89/8A29
 
 
-      aUnknown898A29 ; 89/8A29
+      aStatusScreenSmallMapSprite ; 89/8A29
 
         _Sprites := [[(   4,    4), $21, SpriteLarge, $0E0, 3, 1, false, false]]
 
-        .structSpriteArray aUnknown898A29._Sprites
+        .structSpriteArray aStatusScreenSmallMapSprite._Sprites
 
-      aUnknown898A30 ; 89/8A30
+      aStatusScreenLargeMapSprite ; 89/8A30
 
         _Sprites := [[(   4,    6), $21, SpriteLarge, $0E0, 3, 1, false, false]]
         _Sprites ..= [[(   4,   -2), $00, SpriteSmall, $0F2, 3, 1, false, false]]
         _Sprites ..= [[(  12,   -2), $00, SpriteSmall, $0F3, 3, 1, false, false]]
 
-        .structSpriteArray aUnknown898A30._Sprites
+        .structSpriteArray aStatusScreenLargeMapSprite._Sprites
 
     .endsection Unsorted8989EASection
 
@@ -1547,12 +1571,14 @@
       .al
       .xl
 
-      rsUnknown898A41 ; 89/8A41
+      rsStatusScreenDrawPromotionMarker ; 89/8A41
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Blinks aStatusScreenPromotionMarker beside the portrait when the unit is at its promotion level (wStatusScreenCanPromote).
 
         lda $7F819B
         cmp #$0001
@@ -1582,12 +1608,14 @@
       .al
       .xl
 
-      rsUnknown898A7E ; 89/8A7E
+      rsStatusScreenDrawRankIconsAndStars ; 89/8A7E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame on the stat page: the leadership stars (none if the unit has a commander, or in step $08), and the ten weapon type icons beside the weapon ranks, which scroll with BG3.
 
         lda wGameStateStep,b
         cmp #$0008
@@ -1597,7 +1625,7 @@
         lda $7F8197
         ldx #$003F
         ldy #$00F3
-        jsl rlUnknown899FA1
+        jsl rlStatusScreenDrawLeadershipStars
 
         _8A9A
         sep #$20
@@ -1625,7 +1653,7 @@
         ; 89/8AC1
 
 
-      aUnknown898AC1 ; 89/8AC1
+      aStatusScreenWeaponRankIcons ; 89/8AC1
 
         _Sprites := [[(   1,    0), $21, SpriteLarge, $100, 2, 6, false, false]]
         _Sprites ..= [[(   1,   16), $21, SpriteLarge, $102, 2, 6, false, false]]
@@ -1638,7 +1666,7 @@
         _Sprites ..= [[(  57,   48), $21, SpriteLarge, $120, 2, 6, false, false]]
         _Sprites ..= [[(  57,   64), $21, SpriteLarge, $122, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown898AC1._Sprites
+        .structSpriteArray aStatusScreenWeaponRankIcons._Sprites
 
     .endsection Unsorted898A7ESection
 
@@ -1648,13 +1676,15 @@
       .al
       .xl
 
-      rsUnknown898AF5 ; 89/8AF5
+      rsStatusScreenDrawEquippedWeaponIcon ; 89/8AF5
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The weapon type icon of the first weapon the unit can use, beside the attack figures.
 
         jsl rlGetFirstEquippableWeaponInInventory
         lda wCurrentItemDataROMPointer,b
@@ -1671,7 +1701,7 @@
         sta wR0
         lda #$0049
         sta wR1
-        lda @l aUnknown898B2A,x
+        lda @l aStatusScreenWeaponTypeIconTiles,x
         and #$00FF
         sta wR4
         stz wR5
@@ -1696,9 +1726,9 @@
       .al
       .xl
 
-      aUnknown898B2A ; 89/8B2A
+      aStatusScreenWeaponTypeIconTiles ; 89/8B2A
 
-        ; Read by rsUnknown898AF5.
+        ; Read by rsStatusScreenDrawEquippedWeaponIcon.
 
         .byte $00, $02, $04, $06, $08, $0A, $0C, $0E, $20, $22, $01, $00, $00, $C2, $C0, $00
         .byte $3D
@@ -1713,14 +1743,16 @@
       .al
       .xl
 
-      rsUnknown898B3B ; 89/8B3B
+      rsStatusScreenDrawInventoryIcons ; 89/8B3B
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown89933C
+        ; The drop marker (rsStatusScreenDrawDropMarker), then an item icon for each of the wCastleListSubCount items, scrolling with BG3. rlUnknown8990DA loaded the icons into consecutive sprite tiles.
+
+        jsr rsStatusScreenDrawDropMarker
         lda wCastleListSubCount,b
         sec
         sbc #$0001
@@ -1737,14 +1769,14 @@
         ldy #$8B90
         lda #$0086
         sta wR0
-        lda @l aUnknown898B80,x
+        lda @l aStatusScreenInventoryRowY,x
         and #$00FF
         clc
         adc #$00A9
         sec
         sbc wBufferBG3VOFS
         sta wR1
-        lda @l aUnknown898B88,x
+        lda @l aStatusScreenInventoryIconTiles,x
         and #$00FF
         sta wR4
         lda #$0000
@@ -1770,9 +1802,9 @@
       .al
       .xl
 
-      aUnknown898B80 ; 89/8B80
+      aStatusScreenInventoryRowY ; 89/8B80
 
-        ; Read by rsUnknown898B3B.
+        ; Read by rsStatusScreenDrawInventoryIcons.
 
         .word $1000, $3020, $5040, $7060
 
@@ -1786,9 +1818,9 @@
       .al
       .xl
 
-      aUnknown898B88 ; 89/8B88
+      aStatusScreenInventoryIconTiles ; 89/8B88
 
-        ; Read by rsUnknown898B3B.
+        ; Read by rsStatusScreenDrawInventoryIcons.
 
         .byte $00, $02, $04, $06, $08, $0A, $0C, $0E, $01, $00, $00, $C2, $C0, $60, $26
 
@@ -1802,12 +1834,14 @@
       .al
       .xl
 
-      rsUnknown898B97 ; 89/8B97
+      rsStatusScreenDrawItemDetailSprites ; 89/8B97
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; In step $03: the selected item's icon beside the cursor, the uses marker for a player's weapon, its weapon type icon, and the weapon triangle for it (sword, lance, axe, or fire, thunder, wind), or the light and dark marker.
 
         phk
         plb
@@ -1820,7 +1854,7 @@
         sta wR0
         lda #$0009
         sta wR1
-        lda @l aUnknown898CBC,x
+        lda @l aStatusScreenItemIconTiles,x
         and #$00FF
         sta wR4
         lda #$2600
@@ -1855,7 +1889,7 @@
         sta $7F82BD
         asl a
         tax
-        lda @l aUnknown898D41,x
+        lda @l aStatusScreenItemWeaponTypeTiles,x
         sta wR4
         lda #$0017
         sta wR0
@@ -1891,7 +1925,7 @@
         lda $7F82BD
         asl a
         tax
-        lda @l aUnknown898CD7,x
+        lda @l aStatusScreenPhysicalTriangleSprites,x
         tay
         jsl rlPushToOAMBuffer
         bra _8CBB
@@ -1920,7 +1954,7 @@
         sbc #$0005
         asl a
         tax
-        lda @l aUnknown898D01,x
+        lda @l aStatusScreenMagicTriangleSprites,x
         tay
         jsl rlPushToOAMBuffer
         bra _8CBB
@@ -1951,18 +1985,18 @@
       .al
       .xl
 
-      aUnknown898CBC ; 89/8CBC
+      aStatusScreenItemIconTiles ; 89/8CBC
 
-        ; Read by rsUnknown898B97.
+        ; Read by rsStatusScreenDrawItemDetailSprites.
 
         .byte $60, $62, $64, $66, $68, $6A, $6C, $6E, $01, $00, $00, $C2, $50, $00, $00, $02
         .byte $00, $18, $C2, $70, $00, $30, $48, $C2, $70, $00, $B0
 
         ; 89/8CD7
 
-      aUnknown898CD7 ; 89/8CD7
+      aStatusScreenPhysicalTriangleSprites ; 89/8CD7
 
-        ; Read by rsUnknown898B97.
+        ; Read by rsStatusScreenDrawItemDetailSprites.
 
         .word $8CDD, $8CE9, $8CF5, $0002, $C228, $0470, $583D, $70C2
         .word $3D02, $0002, $C228, $0070, $583D, $70C2, $3D04, $0002
@@ -1970,9 +2004,9 @@
 
         ; 89/8D01
 
-      aUnknown898D01 ; 89/8D01
+      aStatusScreenMagicTriangleSprites ; 89/8D01
 
-        ; Read by rsUnknown898B97.
+        ; Read by rsStatusScreenDrawItemDetailSprites.
 
         .word $8D07, $8D13, $8D1F, $0002, $C228, $0E70, $583D, $70C2
         .word $3D0C, $0002, $C228, $0A70, $583D, $70C2, $3D0E, $0002
@@ -1981,9 +2015,9 @@
 
         ; 89/8D41
 
-      aUnknown898D41 ; 89/8D41
+      aStatusScreenItemWeaponTypeTiles ; 89/8D41
 
-        ; Read by rsUnknown898B97.
+        ; Read by rsStatusScreenDrawItemDetailSprites.
 
         .word $0100, $0102, $0104, $0106, $0108, $010A, $010C, $010E
         .word $0120, $0122
@@ -1998,28 +2032,32 @@
       .al
       .xl
 
-      rsUnknown898D55 ; 89/8D55
+      rsStatusScreenDrawHolyBloodPageSprites ; 89/8D55
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown898EB4
-        jsr rsUnknown898F16
-        jsr rsUnknown898D5F
+        ; Every frame on the holy blood page: the ring of twelve crests, the glints of each blood the unit has, and Loptous's crest.
+
+        jsr rsStatusScreenDrawHolyBloodRing
+        jsr rsStatusScreenDrawHolyBloodGlints
+        jsr rsStatusScreenDrawLoptousCrest
         rts
 
         .databank 0
 
         ; 89/8D5F
 
-      rsUnknown898D5F ; 89/8D5F
+      rsStatusScreenDrawLoptousCrest ; 89/8D5F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Major Loptous blood (wStatusScreenLoptousBlood 2): the crest and two glint animations; minor: one glint; none: nothing.
 
         lda $7F818D
         cmp #$0002
@@ -2067,7 +2105,7 @@
         lda $7F8251
         asl a
         tax
-        lda @l aUnknown898E6C,x
+        lda @l aStatusScreenLoptousGlintFrames,x
         tay
         jsl rlPushToOAMBuffer
         lda $7F82BB
@@ -2096,7 +2134,7 @@
         lda $7F8253
         asl a
         tax
-        lda @l aUnknown898E90,x
+        lda @l aStatusScreenLoptousGlint2Frames,x
         tay
         jsl rlPushToOAMBuffer
         bra _8E64
@@ -2133,7 +2171,7 @@
         lda $7F8251
         asl a
         tax
-        lda @l aUnknown898E6C,x
+        lda @l aStatusScreenLoptousGlintFrames,x
         tay
         jsl rlPushToOAMBuffer
 
@@ -2152,9 +2190,9 @@
       .al
       .xl
 
-      aUnknown898E6C ; 89/8E6C
+      aStatusScreenLoptousGlintFrames ; 89/8E6C
 
-        ; Read by rsUnknown898D5F.
+        ; Read by rsStatusScreenDrawLoptousCrest.
 
         .word $8E74, $8E7B, $8E82, $8E89, $0001, $0000, $9900, $013B
         .word $0000, $0000, $3B88, $0001, $0000, $8900, $013B, $0000
@@ -2170,9 +2208,9 @@
       .al
       .xl
 
-      aUnknown898E90 ; 89/8E90
+      aStatusScreenLoptousGlint2Frames ; 89/8E90
 
-        ; Read by rsUnknown898D5F.
+        ; Read by rsStatusScreenDrawLoptousCrest.
 
         .word $8E98, $8E9F, $8EA6, $8EAD, $0001, $C200, $8A00, $013B
         .word $0000, $00C2, $3B8C, $0001, $C200, $8E00, $013B, $0000
@@ -2188,12 +2226,14 @@
       .al
       .xl
 
-      rsUnknown898EB4 ; 89/8EB4
+      rsStatusScreenDrawHolyBloodRing ; 89/8EB4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The ring of twelve crests on the holy blood page.
 
         sep #$20
         lda #$89
@@ -2218,7 +2258,7 @@
         ; 89/8ED8
 
 
-      aUnknown898ED8 ; 89/8ED8
+      aStatusScreenHolyBloodRingSprites ; 89/8ED8
 
         _Sprites := [[(  32,   32), $21, SpriteLarge, $14E, 3, 7, false, false]]
         _Sprites ..= [[(  48,   16), $21, SpriteLarge, $160, 3, 7, false, false]]
@@ -2233,7 +2273,7 @@
         _Sprites ..= [[( -56,  -48), $21, SpriteLarge, $162, 3, 7, false, false]]
         _Sprites ..= [[( -40,  -64), $21, SpriteLarge, $146, 3, 7, false, false]]
 
-        .structSpriteArray aUnknown898ED8._Sprites
+        .structSpriteArray aStatusScreenHolyBloodRingSprites._Sprites
 
     .endsection Unsorted898EB4Section
 
@@ -2243,12 +2283,14 @@
       .al
       .xl
 
-      rsUnknown898F16 ; 89/8F16
+      rsStatusScreenDrawHolyBloodGlints ; 89/8F16
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; For each of the twelve bloods in the ring: a glint for minor or major blood, and a second one for major.
 
         lda #$0000
 
@@ -2258,14 +2300,14 @@
         tax
         lda $7F81D3,x
         beq _8F38
-        jsr rsUnknown898F73
+        jsr rsStatusScreenDrawHolyBloodGlint
         lda $7F82BD
         asl a
         tax
         lda $7F81D3,x
         dec a
         beq _8F38
-        jsr rsUnknown899028
+        jsr rsStatusScreenDrawMajorBloodGlint
 
         _8F38
         lda $7F82BD
@@ -2286,9 +2328,9 @@
       .al
       .xl
 
-      aUnknown898F43 ; 89/8F43
+      aStatusScreenHolyBloodRingX ; 89/8F43
 
-        ; Read by rsUnknown898F73, rsUnknown899028.
+        ; Read by rsStatusScreenDrawHolyBloodGlint, rsStatusScreenDrawMajorBloodGlint.
 
         .word $0071, $0054, $009B, $0060, $0088, $00A5, $0054, $0089
         .word $009A, $0060, $00A6, $0071
@@ -2303,9 +2345,9 @@
       .al
       .xl
 
-      aUnknown898F5B ; 89/8F5B
+      aStatusScreenHolyBloodRingY ; 89/8F5B
 
-        ; Read by rsUnknown898F73, rsUnknown899028.
+        ; Read by rsStatusScreenDrawHolyBloodGlint, rsStatusScreenDrawMajorBloodGlint.
 
         .word $0081, $00A1, $008E, $00CB, $0081, $00A0, $00B8, $00D6
         .word $00CB, $008D, $00B8, $00D6
@@ -2320,25 +2362,27 @@
       .al
       .xl
 
-      rsUnknown898F73 ; 89/8F73
+      rsStatusScreenDrawHolyBloodGlint ; 89/8F73
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The first glint of the blood in $7F82BD: four frames, each held for the blood's time in aStatusScreenGlintFrameTimes; after the last frame the pause in aStatusScreenGlintPauseTimes.
+
         lda $7F82BD
         asl a
         tax
         lda $7F8255,x
         bne _8FA0
-        lda aUnknown898FD4,x
+        lda aStatusScreenGlintFrameTimes,x
         sta $7F8255,x
         lda $7F81ED,x
         inc a
         cmp #$0004
         bne _8F9C
-        lda aUnknown898FEC,x
+        lda aStatusScreenGlintPauseTimes,x
         sta $7F8255,x
         lda #$0000
 
@@ -2349,11 +2393,11 @@
         lda $7F8255,x
         dec a
         sta $7F8255,x
-        lda aUnknown898F43,x
+        lda aStatusScreenHolyBloodRingX,x
         sec
         sbc #$0001
         sta wR0
-        lda aUnknown898F5B,x
+        lda aStatusScreenHolyBloodRingY,x
         sec
         sbc #$0004
         sta wR1
@@ -2363,7 +2407,7 @@
         lda $7F81ED,x
         asl a
         tax
-        lda aUnknown899004,x
+        lda aStatusScreenGlintFrames,x
         tay
         jsl rlPushToOAMBuffer
         rts
@@ -2380,9 +2424,9 @@
       .al
       .xl
 
-      aUnknown898FD4 ; 89/8FD4
+      aStatusScreenGlintFrameTimes ; 89/8FD4
 
-        ; Read by rsUnknown898F73.
+        ; Read by rsStatusScreenDrawHolyBloodGlint.
 
         .word $000B, $0008, $000D, $0009, $000E, $000A, $0008, $000A
         .word $000C, $0009, $0008, $000B
@@ -2397,9 +2441,9 @@
       .al
       .xl
 
-      aUnknown898FEC ; 89/8FEC
+      aStatusScreenGlintPauseTimes ; 89/8FEC
 
-        ; Read by rsUnknown898F73.
+        ; Read by rsStatusScreenDrawHolyBloodGlint.
 
         .word $0019, $0013, $001A, $0020, $0018, $0015, $001B, $0012
         .word $0025, $0019, $000F, $001B
@@ -2414,9 +2458,9 @@
       .al
       .xl
 
-      aUnknown899004 ; 89/9004
+      aStatusScreenGlintFrames ; 89/9004
 
-        ; Read by rsUnknown898F73.
+        ; Read by rsStatusScreenDrawHolyBloodGlint.
 
         .word $900C, $9013, $901A, $9021, $0001, $0000, $91F8, $013B
         .word $0000, $F800, $3B80, $0001, $0000, $81F8, $013B, $0000
@@ -2432,19 +2476,21 @@
       .al
       .xl
 
-      rsUnknown899028 ; 89/9028
+      rsStatusScreenDrawMajorBloodGlint ; 89/9028
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The second glint of a major blood in $7F82BD, on its own timer (aStatusScreenMajorGlintFrameTimes).
+
         lda $7F82BD
         asl a
         tax
         lda $7F826D,x
         bne _904D
-        lda aUnknown899081,x
+        lda aStatusScreenMajorGlintFrameTimes,x
         sta $7F826D,x
         lda $7F8205,x
         inc a
@@ -2459,11 +2505,11 @@
         lda $7F826D,x
         dec a
         sta $7F826D,x
-        lda aUnknown898F43,x
+        lda aStatusScreenHolyBloodRingX,x
         sec
         sbc #$0001
         sta wR0
-        lda aUnknown898F5B,x
+        lda aStatusScreenHolyBloodRingY,x
         sec
         sbc #$0004
         sta wR1
@@ -2473,7 +2519,7 @@
         lda $7F8205,x
         asl a
         tax
-        lda aUnknown899099,x
+        lda aStatusScreenMajorGlintFrames,x
         tay
         jsl rlPushToOAMBuffer
         rts
@@ -2490,9 +2536,9 @@
       .al
       .xl
 
-      aUnknown899081 ; 89/9081
+      aStatusScreenMajorGlintFrameTimes ; 89/9081
 
-        ; Read by rsUnknown899028.
+        ; Read by rsStatusScreenDrawMajorBloodGlint.
 
         .word $0007, $0008, $0007, $0009, $0007, $0009, $0008, $0007
         .word $0008, $0009, $0008, $0007
@@ -2507,9 +2553,9 @@
       .al
       .xl
 
-      aUnknown899099 ; 89/9099
+      aStatusScreenMajorGlintFrames ; 89/9099
 
-        ; Read by rsUnknown899028.
+        ; Read by rsStatusScreenDrawMajorBloodGlint.
 
         .word $90A1, $90A8, $90AF, $90B6, $0001, $C3FC, $82F4, $013B
         .word $FC00, $F4C3, $3B84, $0001, $C3FC, $86F4, $013B, $FC00
@@ -2525,12 +2571,14 @@
       .al
       .xl
 
-      rlUnknown8990BD ; 89/90BD
+      rlStatusScreenGetHolyBloodLevels ; 89/90BD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fills aStatusScreenHolyBloodLevels with the unit's level (0 none, 1 minor, 2 major) of each of the 13 holy bloods.
 
         lda #$0000
 
@@ -2560,7 +2608,7 @@
       .al
       .xl
 
-      aUnknown899140 .dstruct structHDMADirectEntryInfo, rlUnknown89914B, rlUnknown89914B, aUnknown899178, $0008C8, PPU_REG_BASE + $12, $02 ; 89/9140
+      aStatusScreenBG3SplitHDMA .dstruct structHDMADirectEntryInfo, rlStatusScreenBuildBG3SplitTable, rlStatusScreenBuildBG3SplitTable, aStatusScreenHDMAHalt, $0008C8, PPU_REG_BASE + $12, $02 ; 89/9140
 
     .endsection Table899140Section
 
@@ -2570,12 +2618,14 @@
       .al
       .xl
 
-      rlUnknown89914B ; 89/914B
+      rlStatusScreenBuildBG3SplitTable ; 89/914B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; HDMA table for BG3's vertical scroll at $08C8: the top $57 lines stay put, the lines below scroll by wBufferBG3VOFS. The page header stays while the stats scroll.
 
         sep #$20
         lda #$57
@@ -2609,10 +2659,10 @@
       .al
       .xl
 
-      aUnknown899178 ; 89/9178
+      aStatusScreenHDMAHalt ; 89/9178
         HDMA_HALT
 
-      aUnknown89917A .dstruct structHDMADirectEntryInfo, rlUnknown899185, rlUnknown899185, aUnknown899178, $7FB160, PPU_REG_BASE + $0E, $02 ; 89/917A
+      aStatusScreenBG1SplitHDMA .dstruct structHDMADirectEntryInfo, rlStatusScreenBuildBG1SplitTable, rlStatusScreenBuildBG1SplitTable, aStatusScreenHDMAHalt, $7FB160, PPU_REG_BASE + $0E, $02 ; 89/917A
 
     .endsection Table899178Section
 
@@ -2622,12 +2672,14 @@
       .al
       .xl
 
-      rlUnknown899185 ; 89/9185
+      rlStatusScreenBuildBG1SplitTable ; 89/9185
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; As rlStatusScreenBuildBG3SplitTable, for BG1 (table at $7FB160, scrolled by wBufferBG1VOFS-1).
 
         sep #$20
         lda #$57
@@ -2662,7 +2714,7 @@
       .al
       .xl
 
-      aUnknown8991B9 .dstruct structHDMADirectEntryInfo, rlUnknown8991C4, rlUnknown8991D2, aUnknown899178, $7FB0B6, PPU_REG_BASE + $32, $00 ; 89/91B9
+      aStatusScreenGradientHDMA .dstruct structHDMADirectEntryInfo, rlStatusScreenInitGradientHDMA, rlStatusScreenGradientHDMAIdle, aStatusScreenHDMAHalt, $7FB0B6, PPU_REG_BASE + $32, $00 ; 89/91B9
 
     .endsection Table8991B9Section
 
@@ -2672,16 +2724,18 @@
       .al
       .xl
 
-      rlUnknown8991C4 ; 89/91C4
+      rlStatusScreenInitGradientHDMA ; 89/91C4
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The gradient HDMA's start: writes the stat page's colour table (as if in step $01).
+
         lda #$0001
         sta wGameStateStep,b
-        jsl rlUnknown899200
+        jsl rlStatusScreenSetGradient
         stz wGameStateStep,b
         rtl
 
@@ -2689,12 +2743,14 @@
 
         ; 89/91D2
 
-      rlUnknown8991D2 ; 89/91D2
+      rlStatusScreenGradientHDMAIdle ; 89/91D2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The gradient HDMA's per-frame routine: nothing.
 
         rtl
 
@@ -2710,12 +2766,14 @@
       .al
       .xl
 
-      rlUnknown899200 ; 89/9200
+      rlStatusScreenSetGradient ; 89/9200
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the background gradient for the current page into the COLDATA HDMA table at $7FB0B6: one for the stat page, one for the holy blood page, and another for the holy blood page of a unit with major Loptous blood.
 
         ldx #$0000
         lda wGameStateStep,b
@@ -2723,7 +2781,7 @@
         beq _9219
 
         _920B
-        lda aUnknown89923F,x
+        lda aStatusScreenStatPageGradient,x
         sta $7FB0B6,x
         beq _923E
         inc x
@@ -2737,7 +2795,7 @@
         beq _9230
 
         _9222
-        lda aUnknown899265,x
+        lda aStatusScreenHolyBloodPageGradient,x
         sta $7FB0B6,x
         beq _923E
         inc x
@@ -2746,7 +2804,7 @@
 
 
         _9230
-        lda aUnknown899289,x
+        lda aStatusScreenLoptousPageGradient,x
         sta $7FB0B6,x
         beq _923E
         inc x
@@ -2769,9 +2827,9 @@
       .al
       .xl
 
-      aUnknown89923F ; 89/923F
+      aStatusScreenStatPageGradient ; 89/923F
 
-        ; Read by rlUnknown899200.
+        ; Read by rlStatusScreenSetGradient.
 
         .word $E016, $E110, $E20D, $E30B, $E40A, $E508, $E508, $E801
         .word $E601, $E401, $E214, $E312, $E412, <>rsDebugMenuTab3Page6, $E610, $E70E
@@ -2779,9 +2837,9 @@
 
         ; 89/9265
 
-      aUnknown899265 ; 89/9265
+      aStatusScreenHolyBloodPageGradient ; 89/9265
 
-        ; Read by rlUnknown899200.
+        ; Read by rlStatusScreenSetGradient.
 
         .word $E016, $E110, $E20D, $E30B, $E40A, $E508, $E508, $E801
         .word $E601, $E401, $E118, $E214, $E414, <>rsDebugMenuTab3Page6, $E612, $E711
@@ -2789,9 +2847,9 @@
 
         ; 89/9289
 
-      aUnknown899289 ; 89/9289
+      aStatusScreenLoptousPageGradient ; 89/9289
 
-        ; Read by rlUnknown899200.
+        ; Read by rlStatusScreenSetGradient.
 
         .word $E016, $E110, $E20D, $E30B, $E40A, $E508, $E508, $E801
         .word $E601, $E401, $E415, $E514, $E614, $E714, $E812, $E912
@@ -2807,12 +2865,14 @@
       .al
       .xl
 
-      rsUnknown8992AD ; 89/92AD
+      rsStatusScreenDrawSkillIcons ; 89/92AD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; On the bottom half: the icons of the unit's skills in a row, scrolling with BG3.
 
         lda $7F81B1
         beq _92E6
@@ -2830,7 +2890,7 @@
         lda wR15
         asl a
         tax
-        lda @l aUnknown8992E7,x
+        lda @l aStatusScreenSkillIconX,x
         sta wR0
         lda #$0150
         sec
@@ -2859,9 +2919,9 @@
       .al
       .xl
 
-      aUnknown8992E7 ; 89/92E7
+      aStatusScreenSkillIconX ; 89/92E7
 
-        ; Read by rsUnknown8992AD.
+        ; Read by rsStatusScreenDrawSkillIcons.
 
         .byte $80, $00, $94, $00, $A8, $00, $BC, $00, $D0, $00, $E4, $00, $F8, $00, $0C, $01
         .byte $01, $00, $00, $C2, $00, $80, $3E, $FF, $FF, $FF, $FF, $06, $00, $00, $00, $02
@@ -2880,12 +2940,14 @@
       .al
       .xl
 
-      rsUnknown89933C ; 89/933C
+      rsStatusScreenDrawDropMarker ; 89/933C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A marker beside the inventory row of the item the unit drops when defeated or holds as unique (wStatusScreenDropItemSlot), if any.
 
         phk
         plb
@@ -2893,7 +2955,7 @@
         lda $7F81A7
         beq _935E
         tax
-        lda @l aUnknown89935F,x
+        lda @l aStatusScreenDropMarkerY,x
         and #$00FF
         sec
         sbc wBufferBG3VOFS
@@ -2919,9 +2981,9 @@
       .al
       .xl
 
-      aUnknown89935F ; 89/935F
+      aStatusScreenDropMarkerY ; 89/935F
 
-        ; Read by rsUnknown89933C.
+        ; Read by rsStatusScreenDrawDropMarker.
 
         .byte $00, $00, $10, $20, $30, $40, $50, $60, $01, $00, $D6, $C2, $69, $07, $26
 
@@ -2935,12 +2997,14 @@
       .al
       .xl
 
-      rsUnknown89936E ; 89/936E
+      rsStatusScreenDrawItemDescription ; 89/936E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the selected item's description into the buffer at $7FAF4E and copies its six rows over the stats.
 
         lda #(`aUnknown89ACBC)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
@@ -3043,12 +3107,14 @@
 
         ; 89/9454
 
-      rsUnknown899454 ; 89/9454
+      rsStatusScreenDrawWeaponDescription ; 89/9454
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; As rsStatusScreenDrawItemDescription, but copies only the first row, under a weapon's figures.
 
         lda #(`aUnknown89ACBC)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
@@ -3104,12 +3170,14 @@
       .al
       .xl
 
-      rsUnknown8994B8 ; 89/94B8
+      rsStatusScreenDrawScrollArrow ; 89/94B8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Game state routine $07's work, every frame: a blinking arrow that points down at the top of the stat page and up at the bottom.
 
         phk
         plb
@@ -3156,11 +3224,11 @@
         ; 89/9509
 
 
-      aUnknown899509 ; 89/9509
+      aStatusScreenScrollArrow ; 89/9509
 
         _Sprites := [[(   0,    0), $21, SpriteLarge, $00C, 2, 0, false, false]]
 
-        .structSpriteArray aUnknown899509._Sprites
+        .structSpriteArray aStatusScreenScrollArrow._Sprites
 
     .endsection Unsorted8994B8Section
 
@@ -3170,12 +3238,14 @@
       .al
       .xl
 
-      rlUnknown899510 ; 89/9510
+      rlStatusScreenDrawSummary ; 89/9510
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The top of the page: name, class, level, experience (player units), HP, and the attack, hit, range and avoid of the first weapon the unit can use ("--" without one, for unarmed avoid, and the experience of non-player units).
 
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -3249,9 +3319,9 @@
         _95C9
         lda #$3800
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown899703)<<8
+        lda #(`aStatusScreenDashes)<<8
         sta lR18+1
-        lda #<>aUnknown899703
+        lda #<>aStatusScreenDashes
         sta lR18
         ldx #$011B
         jsl rlDrawMenuTextLine
@@ -3312,9 +3382,9 @@
         _9660
         lda #$3800
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown899703)<<8
+        lda #(`aStatusScreenDashes)<<8
         sta lR18+1
-        lda #<>aUnknown899703
+        lda #<>aStatusScreenDashes
         sta lR18
         ldx #$011B
         jsl rlDrawMenuTextLine
@@ -3343,9 +3413,9 @@
         sec
         sbc $7F83F5
         sta $7F83F5
-        lda #(`aUnknown899709)<<8
+        lda #(`aStatusScreenMinusSign)<<8
         sta lR18+1
-        lda #<>aUnknown899709
+        lda #<>aStatusScreenMinusSign
         sta lR18
         lda #$0700
         ora $7F83F5
@@ -3367,9 +3437,9 @@
         _96EB
         lda $7F8193
         beq _9702
-        lda #(`aUnknown899703)<<8
+        lda #(`aStatusScreenDashes)<<8
         sta lR18+1
-        lda #<>aUnknown899703
+        lda #<>aStatusScreenDashes
         sta lR18
         ldx #$0508
         jsl rlDrawMenuTextLine
@@ -3389,14 +3459,14 @@
       .al
       .xl
 
-      aUnknown899703 ; 89/9703
+      aStatusScreenDashes ; 89/9703
 
         .enc "SJIS"
         .text "ーー"
         .word $0000
         .enc "none"
 
-      aUnknown899709 ; 89/9709
+      aStatusScreenMinusSign ; 89/9709
 
         .enc "SJIS"
         .text "ー"
@@ -3412,12 +3482,14 @@
       .al
       .xl
 
-      rlUnknown89970D ; 89/970D
+      rlStatusScreenDrawStatsAndInventory ; 89/970D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The seven stats with their bonuses from items and blood (rlDrawStatBonus), luck as 0 for enemy units, and the inventory: names (grey if the unit cannot use the item), uses for weapons and staves, and the equipped mark on the first usable weapon. Counts the items into wCastleListSubCount.
 
         jsl rlGetSelectedUnitTotalStrengthEffect
         ldx #$3920
@@ -3429,7 +3501,7 @@
         lda wR34
         ldx #$000C
         ldy #$000E
-        jsl rlUnknown89A085
+        jsl rlDrawStatBonus
         jsl rlGetSelectedUnitTotalMagicEffect
         ldx #$3920
         stx wR5
@@ -3440,7 +3512,7 @@
         lda wR34
         ldx #$000C
         ldy #$0010
-        jsl rlUnknown89A085
+        jsl rlDrawStatBonus
         jsl rlGetSelectedUnitTotalSkillEffect
         ldx #$3920
         stx wR5
@@ -3451,7 +3523,7 @@
         lda wR34
         ldx #$000C
         ldy #$0012
-        jsl rlUnknown89A085
+        jsl rlDrawStatBonus
         jsl rlGetSelectedUnitTotalSpeedEffect
         ldx #$3920
         stx wR5
@@ -3462,7 +3534,7 @@
         lda wR34
         ldx #$000C
         ldy #$0014
-        jsl rlUnknown89A085
+        jsl rlDrawStatBonus
         lda $7F818B
         cmp #$0003
         bne _979F
@@ -3490,7 +3562,7 @@
         lda wR34
         ldx #$000C
         ldy #$0018
-        jsl rlUnknown89A085
+        jsl rlDrawStatBonus
         jsl rlGetSelectedUnitTotalResistanceEffect
         ldx #$3920
         stx wR5
@@ -3501,7 +3573,7 @@
         lda wR34
         ldx #$000C
         ldy #$001A
-        jsl rlUnknown89A085
+        jsl rlDrawStatBonus
         phk
         plb
         .databank $89
@@ -3592,9 +3664,9 @@
         bne _98C9
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown8998DD)<<8
+        lda #(`aStatusScreenEquippedMark)<<8
         sta lR18+1
-        lda #<>aUnknown8998DD
+        lda #<>aStatusScreenEquippedMark
         sta lR18
         lda $98D4,b,y
         and #$00FF
@@ -3626,13 +3698,13 @@
       .al
       .xl
 
-      aUnknown8998D4 ; 89/98D4
+      aStatusScreenInventoryRows ; 89/98D4
 
-        ; Read by rlUnknown89970D.
+        ; Read by rlStatusScreenDrawStatsAndInventory.
 
         .byte $00, $0D, $0F, $11, $13, $15, $17, $19, $1B
 
-      aUnknown8998DD ; 89/98DD
+      aStatusScreenEquippedMark ; 89/98DD
         .byte $82, $64, $00, $00
 
         ; 89/98E1
@@ -3645,13 +3717,15 @@
       .al
       .xl
 
-      rlUnknown8998E1 ; 89/98E1
+      rlStatusScreenDrawPersonalData ; 89/98E1
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The bottom half: commander, lover (or army, for non-player units), movement, talk partner, gold, arena level, condition and its turns, and the ten weapon ranks.
 
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -3670,9 +3744,9 @@
         _9904
         lda $7F8197
         bne _991B
-        lda #(`aUnknown899B93)<<8
+        lda #(`aStatusScreenNoneText)<<8
         sta lR18+1
-        lda #<>aUnknown899B93
+        lda #<>aStatusScreenNoneText
         sta lR18
         ldx #$1E08
         jsl rlDrawMenuTextLine
@@ -3683,9 +3757,9 @@
         jsl rlGetFactionSlotNameID
         cmp #$00FF
         bne _9938
-        lda #(`aUnknown899B93)<<8
+        lda #(`aStatusScreenNoneText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown899B93
+        lda #<>aStatusScreenNoneText
         sta lRoutineVariable,b
         bra _993C
 
@@ -3706,9 +3780,9 @@
         _994F
         lda @l wSelectedUnitDataRAMPointer
         pha
-        lda #(`aUnknown899B93)<<8
+        lda #(`aStatusScreenNoneText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown899B93
+        lda #<>aStatusScreenNoneText
         sta lRoutineVariable,b
         jsl rlGetSelectedUnitLoverGenerationID
         cmp #$0000
@@ -3738,7 +3812,7 @@
         lda wR34
         ldx #$0009
         ldy #$0025
-        jsl rlUnknown89A085
+        jsl rlDrawStatBonus
         lda $7F8193
         bne _9A27
         lda @l wSelectedUnitDataRAMPointer
@@ -3758,9 +3832,9 @@
 
 
         _99DA
-        lda #(`aUnknown899B93)<<8
+        lda #(`aStatusScreenNoneText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown899B93
+        lda #<>aStatusScreenNoneText
         sta lRoutineVariable,b
 
         _99E6
@@ -3802,9 +3876,9 @@
         lda $7F81A9
         bit #$0200
         beq _9A58
-        lda #(`aUnknown899B9D)<<8
+        lda #(`aStatusScreenDeadText)<<8
         sta lR18+1
-        lda #<>aUnknown899B9D
+        lda #<>aStatusScreenDeadText
         sta lR18
         ldx #$2A08
         jsl rlDrawMenuTextLine
@@ -3818,9 +3892,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89A76C+1,x
+        lda aConditionNamePointers+1,x
         sta lR18+1
-        lda aUnknown89A76C,x
+        lda aConditionNamePointers,x
         sta lR18
         ldx #$2A08
         jsl rlDrawMenuTextLine
@@ -3845,7 +3919,7 @@
         _9AA0
         ldx #$0015
         ldy #$001E
-        jsr rsUnknown89A5AA
+        jsr rsDrawWeaponRankLetter
         lda #$0001
         jsl rlGetSelectedUnitWeaponRank
         bcc _9AB5
@@ -3854,7 +3928,7 @@
         _9AB5
         ldx #$0015
         ldy #$0020
-        jsr rsUnknown89A5AA
+        jsr rsDrawWeaponRankLetter
         lda #$0002
         jsl rlGetSelectedUnitWeaponRank
         bcc _9ACA
@@ -3863,7 +3937,7 @@
         _9ACA
         ldx #$0015
         ldy #$0022
-        jsr rsUnknown89A5AA
+        jsr rsDrawWeaponRankLetter
         lda #$0003
         jsl rlGetSelectedUnitWeaponRank
         bcc _9ADF
@@ -3872,7 +3946,7 @@
         _9ADF
         ldx #$0015
         ldy #$0024
-        jsr rsUnknown89A5AA
+        jsr rsDrawWeaponRankLetter
         lda #$0004
         jsl rlGetSelectedUnitWeaponRank
         bcc _9AF4
@@ -3881,7 +3955,7 @@
         _9AF4
         ldx #$0015
         ldy #$0026
-        jsr rsUnknown89A5AA
+        jsr rsDrawWeaponRankLetter
         lda #$0005
         jsl rlGetSelectedUnitWeaponRank
         bcc _9B09
@@ -3890,7 +3964,7 @@
         _9B09
         ldx #$001D
         ldy #$001E
-        jsr rsUnknown89A5AA
+        jsr rsDrawWeaponRankLetter
         lda #$0006
         jsl rlGetSelectedUnitWeaponRank
         bcc _9B1E
@@ -3899,7 +3973,7 @@
         _9B1E
         ldx #$001D
         ldy #$0020
-        jsr rsUnknown89A5AA
+        jsr rsDrawWeaponRankLetter
         lda #$0007
         jsl rlGetSelectedUnitWeaponRank
         bcc _9B33
@@ -3908,7 +3982,7 @@
         _9B33
         ldx #$001D
         ldy #$0022
-        jsr rsUnknown89A5AA
+        jsr rsDrawWeaponRankLetter
         lda #$0008
         jsl rlGetSelectedUnitWeaponRank
         bcc _9B48
@@ -3917,7 +3991,7 @@
         _9B48
         ldx #$001D
         ldy #$0024
-        jsr rsUnknown89A5AA
+        jsr rsDrawWeaponRankLetter
         lda #$0009
         jsl rlGetSelectedUnitWeaponRank
         bcc _9B5D
@@ -3926,18 +4000,18 @@
         _9B5D
         ldx #$001D
         ldy #$0026
-        jsr rsUnknown89A5AA
+        jsr rsDrawWeaponRankLetter
         lda $7F8193
         beq _9B8E
-        lda #(`aUnknown899B93)<<8
+        lda #(`aStatusScreenNoneText)<<8
         sta lR18+1
-        lda #<>aUnknown899B93
+        lda #<>aStatusScreenNoneText
         sta lR18
         ldx #$2208
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899B93)<<8
+        lda #(`aStatusScreenNoneText)<<8
         sta lR18+1
-        lda #<>aUnknown899B93
+        lda #<>aStatusScreenNoneText
         sta lR18
         ldx #$2808
         jsl rlDrawMenuTextLine
@@ -3957,21 +4031,21 @@
       .al
       .xl
 
-      aUnknown899B8F ; 89/9B8F
+      aStatusScreenDash ; 89/9B8F
 
         .enc "SJIS"
         .text "ー"
         .word $0000
         .enc "none"
 
-      aUnknown899B93 ; 89/9B93
+      aStatusScreenNoneText ; 89/9B93
 
         .enc "SJIS"
         .text "ーーーー"
         .word $0000
         .enc "none"
 
-      aUnknown899B9D ; 89/9B9D
+      aStatusScreenDeadText ; 89/9B9D
 
         .enc "SJIS"
         .text "しぼう"
@@ -3987,12 +4061,14 @@
       .al
       .xl
 
-      rlUnknown899BA5 ; 89/9BA5
+      rlStatusScreenDrawSummaryLabels ; 89/9BA5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Labels of the top of the page: the brackets and slash around HP, and attack, hit, range, avoid.
 
         lda #$2400
         sta aCurrentTilemapInfo,b
@@ -4004,9 +4080,9 @@
         sta wR0
         ldx #$0144
         jsl rlDrawBG3TileRun
-        lda #(`aUnknown899C44)<<8
+        lda #(`aStatusScreenHPBrackets)<<8
         sta lR18+1
-        lda #<>aUnknown899C44
+        lda #<>aStatusScreenHPBrackets
         sta lR18
         ldx #$0507
         jsl rlDrawMenuTextLine
@@ -4018,35 +4094,35 @@
         sta wR0
         ldx #$01C4
         jsl rlDrawBG3TileRun
-        lda #(`aUnknown899C4E)<<8
+        lda #(`aStatusScreenSlash)<<8
         sta lR18+1
-        lda #<>aUnknown899C4E
+        lda #<>aStatusScreenSlash
         sta lR18
         ldx #$0707
         jsl rlDrawMenuTextLine
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown899C52)<<8
+        lda #(`aStatusScreenAttackLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899C52
+        lda #<>aStatusScreenAttackLabel
         sta lR18
         ldx #$0114
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899C5C)<<8
+        lda #(`aStatusScreenHitLabel2)<<8
         sta lR18+1
-        lda #<>aUnknown899C5C
+        lda #<>aStatusScreenHitLabel2
         sta lR18
         ldx #$0313
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899C68)<<8
+        lda #(`aStatusScreenRangeLabel2)<<8
         sta lR18+1
-        lda #<>aUnknown899C68
+        lda #<>aStatusScreenRangeLabel2
         sta lR18
         ldx #$0514
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899C72)<<8
+        lda #(`aStatusScreenAvoidLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899C72
+        lda #<>aStatusScreenAvoidLabel
         sta lR18
         ldx #$0714
         jsl rlDrawMenuTextLine
@@ -4064,42 +4140,42 @@
       .al
       .xl
 
-      aUnknown899C44 ; 89/9C44
+      aStatusScreenHPBrackets ; 89/9C44
 
         .enc "SJIS"
         .text "（　　）"
         .word $0000
         .enc "none"
 
-      aUnknown899C4E ; 89/9C4E
+      aStatusScreenSlash ; 89/9C4E
 
         .enc "SJIS"
         .text "／"
         .word $0000
         .enc "none"
 
-      aUnknown899C52 ; 89/9C52
+      aStatusScreenAttackLabel ; 89/9C52
 
         .enc "SJIS"
         .text "こうげき"
         .word $0000
         .enc "none"
 
-      aUnknown899C5C ; 89/9C5C
+      aStatusScreenHitLabel2 ; 89/9C5C
 
         .enc "SJIS"
         .text "めいちゅう"
         .word $0000
         .enc "none"
 
-      aUnknown899C68 ; 89/9C68
+      aStatusScreenRangeLabel2 ; 89/9C68
 
         .enc "SJIS"
         .text "しゃてい"
         .word $0000
         .enc "none"
 
-      aUnknown899C72 ; 89/9C72
+      aStatusScreenAvoidLabel ; 89/9C72
 
         .enc "SJIS"
         .text "かいひち"
@@ -4115,12 +4191,14 @@
       .al
       .xl
 
-      rlUnknown899C7C ; 89/9C7C
+      rlStatusScreenDrawStatLabels ; 89/9C7C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Labels of the seven stats, and their frame.
 
         lda #$2400
         sta wR1
@@ -4140,45 +4218,45 @@
         jsl rlDrawBG3TileRun
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown899D26)<<8
+        lda #(`aStatusScreenStrengthLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899D26
+        lda #<>aStatusScreenStrengthLabel
         sta lR18
         ldx #$0D06
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899D2E)<<8
+        lda #(`aStatusScreenMagicLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899D2E
+        lda #<>aStatusScreenMagicLabel
         sta lR18
         ldx #$0F05
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899D38)<<8
+        lda #(`aStatusScreenSkillLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899D38
+        lda #<>aStatusScreenSkillLabel
         sta lR18
         ldx #$1107
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899D3E)<<8
+        lda #(`aStatusScreenSpeedLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899D3E
+        lda #<>aStatusScreenSpeedLabel
         sta lR18
         ldx #$1305
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899D48)<<8
+        lda #(`aStatusScreenLuckLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899D48
+        lda #<>aStatusScreenLuckLabel
         sta lR18
         ldx #$1504
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899D54)<<8
+        lda #(`aStatusScreenDefenseLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899D54
+        lda #<>aStatusScreenDefenseLabel
         sta lR18
         ldx #$1703
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899D62)<<8
+        lda #(`aStatusScreenResistanceLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899D62
+        lda #<>aStatusScreenResistanceLabel
         sta lR18
         ldx #$1902
         jsl rlDrawMenuTextLine
@@ -4196,49 +4274,49 @@
       .al
       .xl
 
-      aUnknown899D26 ; 89/9D26
+      aStatusScreenStrengthLabel ; 89/9D26
 
         .enc "SJIS"
         .text "ちから"
         .word $0000
         .enc "none"
 
-      aUnknown899D2E ; 89/9D2E
+      aStatusScreenMagicLabel ; 89/9D2E
 
         .enc "SJIS"
         .text "まりょく"
         .word $0000
         .enc "none"
 
-      aUnknown899D38 ; 89/9D38
+      aStatusScreenSkillLabel ; 89/9D38
 
         .enc "SJIS"
         .text "わざ"
         .word $0000
         .enc "none"
 
-      aUnknown899D3E ; 89/9D3E
+      aStatusScreenSpeedLabel ; 89/9D3E
 
         .enc "SJIS"
         .text "すばやさ"
         .word $0000
         .enc "none"
 
-      aUnknown899D48 ; 89/9D48
+      aStatusScreenLuckLabel ; 89/9D48
 
         .enc "SJIS"
         .text "うんのよさ"
         .word $0000
         .enc "none"
 
-      aUnknown899D54 ; 89/9D54
+      aStatusScreenDefenseLabel ; 89/9D54
 
         .enc "SJIS"
         .text "しゅびりょく"
         .word $0000
         .enc "none"
 
-      aUnknown899D62 ; 89/9D62
+      aStatusScreenResistanceLabel ; 89/9D62
 
         .enc "SJIS"
         .text "まほうぼうぎょ"
@@ -4254,13 +4332,15 @@
       .al
       .xl
 
-      rlUnknown899D72 ; 89/9D72
+      rlStatusScreenDrawPersonalDataLabels ; 89/9D72
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Labels of the bottom half: commander, lover or army, talk, movement, gold, arena level, condition, and the ten weapon types.
 
         lda #$2400
         sta wR1
@@ -4296,17 +4376,17 @@
         jsl rlDrawBG3TileRun
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown899F15)<<8
+        lda #(`aStatusScreenCommanderLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F15
+        lda #<>aStatusScreenCommanderLabel
         sta lR18
         ldx #$1E03
         jsl rlDrawMenuTextLine
         lda $7F8193
         beq _9DFA
-        lda #(`aUnknown899F0B)<<8
+        lda #(`aStatusScreenArmyLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F0B
+        lda #<>aStatusScreenArmyLabel
         sta lR18
         ldx #$2003
         jsl rlDrawMenuTextLine
@@ -4314,101 +4394,101 @@
 
 
         _9DFA
-        lda #(`aUnknown899F47)<<8
+        lda #(`aStatusScreenLoverLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F47
+        lda #<>aStatusScreenLoverLabel
         sta lR18
         ldx #$2003
         jsl rlDrawMenuTextLine
 
         _9E0B
-        lda #(`aUnknown899F1F)<<8
+        lda #(`aStatusScreenTalkLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F1F
+        lda #<>aStatusScreenTalkLabel
         sta lR18
         ldx #$2204
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F27)<<8
+        lda #(`aStatusScreenMoveLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F27
+        lda #<>aStatusScreenMoveLabel
         sta lR18
         ldx #$2404
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F2F)<<8
+        lda #(`aStatusScreenGoldLabel2)<<8
         sta lR18+1
-        lda #<>aUnknown899F2F
+        lda #<>aStatusScreenGoldLabel2
         sta lR18
         ldx #$2602
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F51)<<8
+        lda #(`aStatusScreenArenaLevelLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F51
+        lda #<>aStatusScreenArenaLevelLabel
         sta lR18
         ldx #$2802
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F3B)<<8
+        lda #(`aStatusScreenConditionLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F3B
+        lda #<>aStatusScreenConditionLabel
         sta lR18
         ldx #$2A02
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F5D)<<8
+        lda #(`aStatusScreenSwordLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F5D
+        lda #<>aStatusScreenSwordLabel
         sta lR18
         ldx #$1E12
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F63)<<8
+        lda #(`aStatusScreenLanceLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F63
+        lda #<>aStatusScreenLanceLabel
         sta lR18
         ldx #$2012
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F69)<<8
+        lda #(`aStatusScreenAxeLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F69
+        lda #<>aStatusScreenAxeLabel
         sta lR18
         ldx #$2212
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F6F)<<8
+        lda #(`aStatusScreenBowLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F6F
+        lda #<>aStatusScreenBowLabel
         sta lR18
         ldx #$2412
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F75)<<8
+        lda #(`aStatusScreenStaffLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F75
+        lda #<>aStatusScreenStaffLabel
         sta lR18
         ldx #$2612
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F7B)<<8
+        lda #(`aStatusScreenFireLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F7B
+        lda #<>aStatusScreenFireLabel
         sta lR18
         ldx #$1E19
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F83)<<8
+        lda #(`aStatusScreenThunderLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F83
+        lda #<>aStatusScreenThunderLabel
         sta lR18
         ldx #$2019
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F8D)<<8
+        lda #(`aStatusScreenWindLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F8D
+        lda #<>aStatusScreenWindLabel
         sta lR18
         ldx #$2219
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F93)<<8
+        lda #(`aStatusScreenLightLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F93
+        lda #<>aStatusScreenLightLabel
         sta lR18
         ldx #$2419
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown899F9B)<<8
+        lda #(`aStatusScreenDarkLabel)<<8
         sta lR18+1
-        lda #<>aUnknown899F9B
+        lda #<>aStatusScreenDarkLabel
         sta lR18
         ldx #$2619
         jsl rlDrawMenuTextLine
@@ -4426,126 +4506,126 @@
       .al
       .xl
 
-      aUnknown899F0B ; 89/9F0B
+      aStatusScreenArmyLabel ; 89/9F0B
 
         .enc "SJIS"
         .text "しょぞく"
         .word $0000
         .enc "none"
 
-      aUnknown899F15 ; 89/9F15
+      aStatusScreenCommanderLabel ; 89/9F15
 
         .enc "SJIS"
         .text "しきかん"
         .word $0000
         .enc "none"
 
-      aUnknown899F1F ; 89/9F1F
+      aStatusScreenTalkLabel ; 89/9F1F
 
         .enc "SJIS"
         .text "かいわ"
         .word $0000
         .enc "none"
 
-      aUnknown899F27 ; 89/9F27
+      aStatusScreenMoveLabel ; 89/9F27
 
         .enc "SJIS"
         .text "いどう"
         .word $0000
         .enc "none"
 
-      aUnknown899F2F ; 89/9F2F
+      aStatusScreenGoldLabel2 ; 89/9F2F
 
         .enc "SJIS"
         .text "しょじきん"
         .word $0000
         .enc "none"
 
-      aUnknown899F3B ; 89/9F3B
+      aStatusScreenConditionLabel ; 89/9F3B
 
         .enc "SJIS"
         .text "じょうたい"
         .word $0000
         .enc "none"
 
-      aUnknown899F47 ; 89/9F47
+      aStatusScreenLoverLabel ; 89/9F47
 
         .enc "SJIS"
         .text "こいびと"
         .word $0000
         .enc "none"
 
-      aUnknown899F51 ; 89/9F51
+      aStatusScreenArenaLevelLabel ; 89/9F51
 
         .enc "SJIS"
         .text "とうぎＬＶ"
         .word $0000
         .enc "none"
 
-      aUnknown899F5D ; 89/9F5D
+      aStatusScreenSwordLabel ; 89/9F5D
 
         .enc "SJIS"
         .text "けん"
         .word $0000
         .enc "none"
 
-      aUnknown899F63 ; 89/9F63
+      aStatusScreenLanceLabel ; 89/9F63
 
         .enc "SJIS"
         .text "やり"
         .word $0000
         .enc "none"
 
-      aUnknown899F69 ; 89/9F69
+      aStatusScreenAxeLabel ; 89/9F69
 
         .enc "SJIS"
         .text "おの"
         .word $0000
         .enc "none"
 
-      aUnknown899F6F ; 89/9F6F
+      aStatusScreenBowLabel ; 89/9F6F
 
         .enc "SJIS"
         .text "ゆみ"
         .word $0000
         .enc "none"
 
-      aUnknown899F75 ; 89/9F75
+      aStatusScreenStaffLabel ; 89/9F75
 
         .enc "SJIS"
         .text "つえ"
         .word $0000
         .enc "none"
 
-      aUnknown899F7B ; 89/9F7B
+      aStatusScreenFireLabel ; 89/9F7B
 
         .enc "SJIS"
         .text "ほのお"
         .word $0000
         .enc "none"
 
-      aUnknown899F83 ; 89/9F83
+      aStatusScreenThunderLabel ; 89/9F83
 
         .enc "SJIS"
         .text "いかずち"
         .word $0000
         .enc "none"
 
-      aUnknown899F8D ; 89/9F8D
+      aStatusScreenWindLabel ; 89/9F8D
 
         .enc "SJIS"
         .text "かぜ"
         .word $0000
         .enc "none"
 
-      aUnknown899F93 ; 89/9F93
+      aStatusScreenLightLabel ; 89/9F93
 
         .enc "SJIS"
         .text "ひかり"
         .word $0000
         .enc "none"
 
-      aUnknown899F9B ; 89/9F9B
+      aStatusScreenDarkLabel ; 89/9F9B
 
         .enc "SJIS"
         .text "やみ"
@@ -4561,12 +4641,14 @@
       .al
       .xl
 
-      rlUnknown899FA1 ; 89/9FA1
+      rlStatusScreenDrawLeadershipStars ; 89/9FA1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A star sprites in a row from X, Y (Y scrolls with BG3), 11 pixels apart.
 
         cmp #$0000
         beq _9FD4
@@ -4605,11 +4687,11 @@
         ; 89/9FD5
 
 
-      aUnknown899FD5 ; 89/9FD5
+      aStatusScreenLeadershipStar ; 89/9FD5
 
         _Sprites := [[(   0,    0), $21, SpriteLarge, $00E, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown899FD5._Sprites
+        .structSpriteArray aStatusScreenLeadershipStar._Sprites
 
     .endsection Unsorted899FA1Section
 
@@ -4619,11 +4701,13 @@
       .al
       .xl
 
-      rlUnknown899FDC ; 89/9FDC
+      rlLoadWindowGraphics ; 89/9FDC
 
         .al
         .autsiz
         .databank ?
+
+        ; Sends the window frame tiles to VRAM $6000 and the window palette to BG palette 0, by the window style in $0756. All four styles load the same frames and palette.
 
         ; DMA background and border tiles based on index $0756
         ; Also gets palette
@@ -4633,44 +4717,21 @@
         lda $0756,b
         asl a
         tax
-        jsr (aUnknown899FEB,x)
+        jsr (aLoadWindowGraphicsStyles,x)
         lda #0
         sta aBGPaletteBuffer,b
         rtl
 
         .databank 0
 
-      aUnknown899FEB ; 89/9FEB
+      aLoadWindowGraphicsStyles ; 89/9FEB
 
-        .word <>rsUnknown899FF3
-        .word <>rsUnknown89A00F
-        .word <>rsUnknown89A02B
-        .word <>rsUnknown89A047
+        .word <>rsLoadWindowGraphicsStyle0
+        .word <>rsLoadWindowGraphicsStyle1
+        .word <>rsLoadWindowGraphicsStyle2
+        .word <>rsLoadWindowGraphicsStyle3
 
-      rsUnknown899FF3 ; 89/9FF3
-
-        .al
-        .autsiz
-        .databank ?
-
-        jsl rlDMAByStruct
-
-          .structDMAToVRAM g4bppWindowFrames, $0600, $80, $6000
-
-        ldx #size(Palette)-2
-        
-          _Loop
-          lda aWindowPalette,x
-          sta aBGPaletteBuffer,b,x
-          dec x
-          dec x
-          bpl _Loop
-
-        rts
-
-        .databank 0
-
-      rsUnknown89A00F ; 89/A00F
+      rsLoadWindowGraphicsStyle0 ; 89/9FF3
 
         .al
         .autsiz
@@ -4693,7 +4754,7 @@
 
         .databank 0
 
-      rsUnknown89A02B ; 89/A02B
+      rsLoadWindowGraphicsStyle1 ; 89/A00F
 
         .al
         .autsiz
@@ -4716,7 +4777,30 @@
 
         .databank 0
 
-      rsUnknown89A047 ; 89/A047
+      rsLoadWindowGraphicsStyle2 ; 89/A02B
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM g4bppWindowFrames, $0600, $80, $6000
+
+        ldx #size(Palette)-2
+        
+          _Loop
+          lda aWindowPalette,x
+          sta aBGPaletteBuffer,b,x
+          dec x
+          dec x
+          bpl _Loop
+
+        rts
+
+        .databank 0
+
+      rsLoadWindowGraphicsStyle3 ; 89/A047
 
         .al
         .autsiz
@@ -4774,13 +4858,15 @@
       .al
       .xl
 
-      rlUnknown89A085 ; 89/A085
+      rlDrawStatBonus ; 89/A085
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws A as a signed bonus ("+3", "-2") at tile X, row Y of the BG3 tilemap buffer, or nothing for 0. The stat screens put the bonus a stat getter left in wR34 beside the stat.
 
         phk
         plb
@@ -4867,7 +4953,7 @@
       .al
       .xl
 
-      rlUnknown89A138 ; 89/A138
+      rlStatusScreenLoadPortrait ; 89/A138
 
         ; Runs on into built code at the end.
         .al
@@ -4875,13 +4961,15 @@
         .autsiz
         .databank ?
 
+        ; Loads the unit's portrait into sprite VRAM; character $2B uses portrait $2B4 when shown as an enemy.
+
         lda $7F8195
         cmp #$002B
         bne _A14C
         lda $7F8193
         beq _A14C
         lda #$02B4
-        bra rlUnknown89A150
+        bra rlLoadPortraitAsSprites
 
 
         _A14C
@@ -4899,11 +4987,13 @@
       .al
       .xl
 
-      rlUnknown89A150 ; 89/A150
+      rlLoadPortraitAsSprites ; 89/A150
 
         .al
         .autsiz
         .databank ?
+
+        ; Decompresses portrait A, sends it to sprite VRAM at $6200 and its palette to sprite palette 4; the last colour becomes $35AD unless the portrait data ID is $F3.
 
         ; portrait stuff for research
 
@@ -4958,7 +5048,7 @@
       .al
       .xl
 
-      rsUnknown89A25A ; 89/A25A
+      rsStatusScreenSkillDetails ; 89/A25A
 
         ; Found by tools/sweep.py.
         .al
@@ -4966,9 +5056,11 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown8989AD
-        jsr rsUnknown898AF5
-        jsr rsUnknown898A7E
+        ; Step $08, the cursor on the skill icons: Left and Right choose a skill and draw its name, description and kind (wStatusScreenSkillCursor); B puts the personal data back and returns to step $01.
+
+        jsr rsStatusScreenDrawPortraitAndMapSprite
+        jsr rsStatusScreenDrawEquippedWeaponIcon
+        jsr rsStatusScreenDrawRankIconsAndStars
         lda wJoy1Repeated
         bit #$8000
         bne _A27B
@@ -4976,8 +5068,8 @@
         bne _A2AE
         bit #$0200
         bne _A2D1
-        jsr rsUnknown89A4E3
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawSkillCursor
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
@@ -4988,15 +5080,15 @@
         lda #$0010
         ldy #$0010
         jsl rlClearTilemapRect
-        jsl rlUnknown899D72
-        jsl rlUnknown8998E1
+        jsl rlStatusScreenDrawPersonalDataLabels
+        jsl rlStatusScreenDrawPersonalData
         lda #$0001
         sta wGameStateStep,b
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E8A88, $0400, $80, $B700
 
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
@@ -5008,12 +5100,12 @@
         sta $7F81CF
         lda #$0007
         jsl rlPlaySoundEffect
-        jsr rsUnknown89A3C0
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawSkillDescription
+        jsr rsStatusScreenDrawSkillIcons
 
         _A2CA
-        jsr rsUnknown89A4E3
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawSkillCursor
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
@@ -5024,11 +5116,11 @@
         sta $7F81CF
         lda #$0007
         jsl rlPlaySoundEffect
-        jsr rsUnknown89A3C0
+        jsr rsStatusScreenDrawSkillDescription
 
         _A2E6
-        jsr rsUnknown89A4E3
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawSkillCursor
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
         .databank 0
@@ -5043,13 +5135,15 @@
       .al
       .xl
 
-      rsUnknown89A2ED ; 89/A2ED
+      rsStatusScreenFadeIn ; 89/A2ED
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $09: brightens by wStatusScreenFadeStep a frame; at full brightness goes to step wStatusScreenStepAfterFade.
 
         sep #$20
         lda bBufferINIDISP
@@ -5068,32 +5162,34 @@
         sta wGameStateStep,b
 
         _A311
-        jsr rsUnknown8989AD
-        jsr rsUnknown898AF5
+        jsr rsStatusScreenDrawPortraitAndMapSprite
+        jsr rsStatusScreenDrawEquippedWeaponIcon
         lda $7F81A1
         cmp #$0002
         beq _A32A
-        jsr rsUnknown898B3B
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawInventoryIcons
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
         _A32A
-        jsr rsUnknown898D55
+        jsr rsStatusScreenDrawHolyBloodPageSprites
         rts
 
         .databank 0
 
         ; 89/A32E
 
-      rsUnknown89A32E ; 89/A32E
+      rsStatusScreenFadeOut ; 89/A32E
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $0A: darkens by wStatusScreenFadeStep a frame; at black goes to step wStatusScreenStepAfterFade, and if another unit is to be shown (wStatusScreenReopenMode set) selects it (wStatusScreenNextUnit).
 
         sep #$20
         lda bBufferINIDISP
@@ -5116,19 +5212,19 @@
 
 
         _A35B
-        jsr rsUnknown8989AD
-        jsr rsUnknown898AF5
+        jsr rsStatusScreenDrawPortraitAndMapSprite
+        jsr rsStatusScreenDrawEquippedWeaponIcon
         lda wBufferBG2VOFS
         cmp #$0110
         beq _A372
-        jsr rsUnknown898B3B
-        jsr rsUnknown898A7E
-        jsr rsUnknown8992AD
+        jsr rsStatusScreenDrawInventoryIcons
+        jsr rsStatusScreenDrawRankIconsAndStars
+        jsr rsStatusScreenDrawSkillIcons
         rts
 
 
         _A372
-        jsr rsUnknown898D55
+        jsr rsStatusScreenDrawHolyBloodPageSprites
         rts
 
         .databank 0
@@ -5143,12 +5239,14 @@
       .al
       .xl
 
-      rlUnknown89A376 ; 89/A376
+      rlStatusScreenBuildSkillList ; 89/A376
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Lists the unit's skills that have an icon (rlUnknown87A415, aStatusScreenSkillIcons): their IDs in aStatusScreenSkillIDs, icon tiles in aStatusScreenSkillIconTiles, the count in wStatusScreenSkillCount.
 
         stz wR13
         jsl rlUnknown87A415
@@ -5166,7 +5264,7 @@
         lda wR15
         asl a
         tax
-        lda aUnknown8992E7+23,x
+        lda aStatusScreenSkillIconX+23,x
         bmi _A3B1
         sta wR14
         lda wR13
@@ -5201,13 +5299,15 @@
       .al
       .xl
 
-      rsUnknown89A3C0 ; 89/A3C0
+      rsStatusScreenDrawSkillDescription ; 89/A3C0
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the skill under the cursor: its name, its description (aSkillDescriptionPointers) and whether it is a personal or a class skill.
 
         ldx #$0700
         lda #$0010
@@ -5297,17 +5397,17 @@
         lda $7F82BD
         jsl rlCheckIfUnitHasSpecifiedPersonalSkill
         bcs _A4A6
-        lda #(`aUnknown89A4D3)<<8
+        lda #(`aStatusScreenClassSkillText)<<8
         sta lR18+1
-        lda #<>aUnknown89A4D3
+        lda #<>aStatusScreenClassSkillText
         sta lR18
         bra _A4B0
 
 
         _A4A6
-        lda #(`aUnknown89A4C5)<<8
+        lda #(`aStatusScreenPersonalSkillText)<<8
         sta lR18+1
-        lda #<>aUnknown89A4C5
+        lda #<>aStatusScreenPersonalSkillText
         sta lR18
 
         _A4B0
@@ -5331,14 +5431,14 @@
       .al
       .xl
 
-      aUnknown89A4C5 ; 89/A4C5
+      aStatusScreenPersonalSkillText ; 89/A4C5
 
         .enc "SJIS"
         .text "こじんスキル"
         .word $0000
         .enc "none"
 
-      aUnknown89A4D3 ; 89/A4D3
+      aStatusScreenClassSkillText ; 89/A4D3
 
         .enc "SJIS"
         .text "へいしゅスキル"
@@ -5354,17 +5454,19 @@
       .al
       .xl
 
-      rsUnknown89A4E3 ; 89/A4E3
+      rsStatusScreenDrawSkillCursor ; 89/A4E3
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The cursor above the chosen skill icon (four frames) and the icon of that skill.
+
         lda $7F81CF
         asl a
         tax
-        lda aUnknown89A59E,x
+        lda aStatusScreenSkillCursorX,x
         sta wR0
         lda #$00C9
         sta wR1
@@ -5377,7 +5479,7 @@
         and #$0003
         asl a
         tax
-        lda aUnknown89A572,x
+        lda aStatusScreenSkillCursorFrames,x
         tay
         phk
         plb
@@ -5389,7 +5491,7 @@
         lda $7F81B3,x
         asl a
         tax
-        lda @l aUnknown89A52D,x
+        lda @l aStatusScreenSkillIconTilesBySkill,x
         sta wR4
         stz wR0
         stz wR1
@@ -5410,9 +5512,9 @@
       .al
       .xl
 
-      aUnknown89A52D ; 89/A52D
+      aStatusScreenSkillIconTilesBySkill ; 89/A52D
 
-        ; Read by rsUnknown89A4E3.
+        ; Read by rsStatusScreenDrawSkillCursor.
 
         .byte $00, $00, $00, $00, $06, $00, $00, $00, $02, $00, $04, $00, $44, $00, $00, $00
         .byte $46, $00, $00, $00, $00, $00, $00, $00, $08, $00, $0A, $00, $0C, $00, $0E, $00
@@ -5430,9 +5532,9 @@
       .al
       .xl
 
-      aUnknown89A572 ; 89/A572
+      aStatusScreenSkillCursorFrames ; 89/A572
 
-        ; Read by rsUnknown89A4E3.
+        ; Read by rsStatusScreenDrawSkillCursor.
 
         .word $A57A, $A586, $A592, $A586, $0002, $C203, $0A00, $1D70
         .word $00C2, $300A, $0002, $C202, $0A00, $1E70, $00C2, $300A
@@ -5448,9 +5550,9 @@
       .al
       .xl
 
-      aUnknown89A59E ; 89/A59E
+      aStatusScreenSkillCursorX ; 89/A59E
 
-        ; Read by rsUnknown89A4E3.
+        ; Read by rsStatusScreenDrawSkillCursor.
 
         .word $0070, $0084, $0098, $00AC, $00C0, $00D4
 
@@ -5464,12 +5566,14 @@
       .al
       .xl
 
-      rsUnknown89A5AA ; 89/A5AA
+      rsDrawWeaponRankLetter ; 89/A5AA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws weapon rank A (WeaponRankA, B, C, WeaponRankNone as a dash, or 4 for the star rank that major holy blood gives) at tile X, row Y of the BG3 tilemap buffer: two tiles, one above the other, from aWeaponRankLetterTiles.
 
         pha
         tya
@@ -5486,13 +5590,13 @@
         asl a
         asl a
         tax
-        lda aUnknown89A5D1,x
+        lda aWeaponRankLetterTiles,x
         phx
         tyx
         sta aBG3TilemapBuffer,x
         txy
         plx
-        lda aUnknown89A5D1+2,x
+        lda aWeaponRankLetterTiles+2,x
         tyx
         sta $7E83C8,x
         rts
@@ -5509,9 +5613,9 @@
       .al
       .xl
 
-      aUnknown89A5D1 ; 89/A5D1
+      aWeaponRankLetterTiles ; 89/A5D1
 
-        ; Five entries of two BG3 tilemap words: rsUnknown89A5AA writes entry A's first word
+        ; Five entries of two BG3 tilemap words: rsDrawWeaponRankLetter writes entry A's first word
         ; at the tile it is given and the second word one row below it.
 
         .word $392A, $393A, $392B, $393B, $392C, $393C, $38FF, $3909
@@ -5519,13 +5623,15 @@
 
         ; 89/A5E5
 
-      rlUnknown89A5E5 ; 89/A5E5
+      rsStatusScreenNextUnit ; 89/A5E5
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; R: finds the player unit with the next generation ID (1-$18, wrapping) that is alive and not captive (any unit while Select is held), and fades out to reopen the screen for it. Sets carry and does nothing for a non-player unit or when the revive screen opened the status screen.
 
         lda wSelectedUnitDataRAMPointer,b
         sta $7F82C1
@@ -5599,13 +5705,15 @@
 
         ; 89/A68C
 
-      rsUnknown89A68C ; 89/A68C
+      rsStatusScreenPreviousUnit ; 89/A68C
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; L: as rsStatusScreenNextUnit, going down.
 
         lda wSelectedUnitDataRAMPointer,b
         sta $7F82C1
@@ -5686,7 +5794,7 @@
       .al
       .xl
 
-      aUnknown89A72E ; 89/A72E
+      aStatusScreenPortraitSprites ; 89/A72E
 
         _Sprites := [[(  32,   48), $21, SpriteLarge, $004A, 3, 4, false, false]]
         _Sprites ..= [[(  16,   48), $21, SpriteLarge, $0048, 3, 4, false, false]]
@@ -5701,7 +5809,7 @@
         _Sprites ..= [[(  16,    0), $21, SpriteLarge, $0022, 3, 4, false, false]]
         _Sprites ..= [[(   0,    0), $21, SpriteLarge, $0020, 3, 4, false, false]]
 
-        .structSpriteArray aUnknown89A72E._Sprites
+        .structSpriteArray aStatusScreenPortraitSprites._Sprites
 
         ; 89/A76C
 
@@ -5713,187 +5821,187 @@
       .al
       .xl
 
-      aUnknown89A76C ; 89/A76C
+      aConditionNamePointers ; 89/A76C
 
         ; Read by rlCastleDrawInfoLine (status names) followed by skill descriptions & names.
 
-        .long aUnknown89A781
-        .long aUnknown89A78D
-        .long aUnknown89A797
-        .long aUnknown89A7A3
-        .long aUnknown89A7AB
-        .long aUnknown89A7B5
-        .long aUnknown89A7BF
+        .long aConditionHealthyText
+        .long aConditionCuredText
+        .long aConditionFreelancerText
+        .long aConditionCaptiveText
+        .long aConditionSilenceText
+        .long aConditionSleepText
+        .long aConditionBerserkText
 
-      aUnknown89A781 ; 89/A781
+      aConditionHealthyText ; 89/A781
         .enc "SJIS"
           .text "せいじょう\n"
 
-      aUnknown89A78D ; 89/A78D
+      aConditionCuredText ; 89/A78D
         .enc "SJIS"
           .text "ちりょう\n"
 
-      aUnknown89A797 ; 89/A797
+      aConditionFreelancerText ; 89/A797
         .enc "SJIS"
           .text "アルバイト\n"
 
-      aUnknown89A7A3 ; 89/A7A3
+      aConditionCaptiveText ; 89/A7A3
         .enc "SJIS"
           .text "ほりょ\n"
 
-      aUnknown89A7AB ; 89/A7AB
+      aConditionSilenceText ; 89/A7AB
         .enc "SJIS"
           .text "サイレス\n"
 
-      aUnknown89A7B5 ; 89/A7B5
+      aConditionSleepText ; 89/A7B5
         .enc "SJIS"
           .text "スリープ\n"
 
-      aUnknown89A7BF ; 89/A7BF
+      aConditionBerserkText ; 89/A7BF
         .enc "SJIS"
           .text "バサーク\n"
 
-      aUnknown89A7C9 ; 89/A7C9
+      aSkillDescriptionGreatShield ; 89/A7C9
         .enc "SJIS"
           .text "あいてのこうげきを　うけとめダメージを　むこうにする\n"
 
-      aUnknown89A7FF ; 89/A7FF
+      aSkillDescriptionWrath ; 89/A7FF
         .enc "SJIS"
           .text "ピンチになったとき　いかりのこうげき\n"
 
-      aUnknown89A825 ; 89/A825
+      aSkillDescriptionPursuit ; 89/A825
         .enc "SJIS"
           .text "あいてよりも　　　　みがるならば　　　　さいこうげき\n"
 
-      aUnknown89A85B ; 89/A85B
+      aSkillDescriptionAdept ; 89/A85B
         .enc "SJIS"
           .text "すばやさのかくりつでれんぞくこうげき\n"
 
-      aUnknown89A881 ; 89/A881
+      aSkillDescriptionSteal ; 89/A881
         .enc "SJIS"
           .text "こうげきがあたると　あいてのゴールドを　うばう\n"
 
-      aUnknown89A8B1 ; 89/A8B1
+      aSkillDescriptionDance ; 89/A8B1
         .enc "SJIS"
           .text "りんせつした　　　　ユニットを　　　　　いどうかのうにする\n"
 
-      aUnknown89A8ED ; 89/A8ED
+      aSkillDescriptionCharm ; 89/A8ED
         .enc "SJIS"
           .text "ちかくにいるみかたに１０％のしえんこうか\n"
 
-      aUnknown89A917 ; 89/A917
+      aSkillDescriptionNihil ; 89/A917
         .enc "SJIS"
           .text "ひっさつこうげきなどをふうじる\n"
 
-      aUnknown89A937 ; 89/A937
+      aSkillDescriptionMiracle ; 89/A937
         .enc "SJIS"
           .text "ピンチになると　　　かいひりつがあがる\n"
 
-      aUnknown89A95F ; 89/A95F
+      aSkillDescriptionCritical ; 89/A95F
         .enc "SJIS"
           .text "ひっさつのいちげき　こうげきりょくが　　２ばいになる\n"
 
-      aUnknown89A995 ; 89/A995
+      aSkillDescriptionVantage ; 89/A995
         .enc "SJIS"
           .text "ピンチになったとき　せんせいこうげき　　をする\n"
 
-      aUnknown89A9C5 ; 89/A9C5
+      aSkillDescriptionAccost ; 89/A9C5
         .enc "SJIS"
           .text "みがるであれば　　　ときおり　せんとうがけいぞくする\n"
 
-      aUnknown89A9FB ; 89/A9FB
+      aSkillDescriptionAstra ; 89/A9FB
         .enc "SJIS"
           .text "５かいれんぞくで　　こうげきする\n"
 
-      aUnknown89AA1D ; 89/AA1D
+      aSkillDescriptionLuna ; 89/AA1D
         .enc "SJIS"
           .text "あいてのしゅびりょくをむこうにする\n"
 
-      aUnknown89AA41 ; 89/AA41
+      aSkillDescriptionSol ; 89/AA41
         .enc "SJIS"
           .text "あたえたダメージだけＨＰがかいふくする\n"
 
-      aUnknown89AA69 ; 89/AA69
+      aSkillDescriptionRenewal ; 89/AA69
         .enc "SJIS"
           .text "まいターン　　　　　ＨＰが５から１０　　かいふくする\n"
 
-      aUnknown89AA9F ; 89/AA9F
+      aSkillDescriptionParagon ; 89/AA9F
         .enc "SJIS"
           .text "けいけんちを　　　　２ばいもらえる\n"
 
-      aUnknown89AAC3 ; 89/AAC3
+      aSkillDescriptionBargain ; 89/AAC3
         .enc "SJIS"
           .text "かいものや　　　　　しゅうりが　　　　　はんがくでできる\n"
 
-      aUnknown89AAFD ; 89/AAFD
+      aSkillNameGreatShield ; 89/AAFD
         .enc "SJIS"
           .text "おおたて　　\n"
 
-      aUnknown89AB0B ; 89/AB0B
+      aSkillNameWrath ; 89/AB0B
         .enc "SJIS"
           .text "いかり　　　\n"
 
-      aUnknown89AB19 ; 89/AB19
+      aSkillNamePursuit ; 89/AB19
         .enc "SJIS"
           .text "ついげき　　\n"
 
-      aUnknown89AB27 ; 89/AB27
+      aSkillNameAdept ; 89/AB27
         .enc "SJIS"
           .text "れんぞく　　\n"
 
-      aUnknown89AB35 ; 89/AB35
+      aSkillNameSteal ; 89/AB35
         .enc "SJIS"
           .text "ぬすむ　　　\n"
 
-      aUnknown89AB43 ; 89/AB43
+      aSkillNameDance ; 89/AB43
         .enc "SJIS"
           .text "おどる　　　\n"
 
-      aUnknown89AB51 ; 89/AB51
+      aSkillNameCharm ; 89/AB51
         .enc "SJIS"
           .text "カリスマ　　\n"
 
-      aUnknown89AB5F ; 89/AB5F
+      aSkillNameNihil ; 89/AB5F
         .enc "SJIS"
           .text "みきり　　　\n"
 
-      aUnknown89AB6D ; 89/AB6D
+      aSkillNameMiracle ; 89/AB6D
         .enc "SJIS"
           .text "いのり　　　\n"
 
-      aUnknown89AB7B ; 89/AB7B
+      aSkillNameCritical ; 89/AB7B
         .enc "SJIS"
           .text "ひっさつ　　\n"
 
-      aUnknown89AB89 ; 89/AB89
+      aSkillNameVantage ; 89/AB89
         .enc "SJIS"
           .text "まちぶせ　　\n"
 
-      aUnknown89AB97 ; 89/AB97
+      aSkillNameAccost ; 89/AB97
         .enc "SJIS"
           .text "とつげき　　\n"
 
-      aUnknown89ABA5 ; 89/ABA5
+      aSkillNameAstra ; 89/ABA5
         .enc "SJIS"
           .text "りゅうせい剣\n"
 
-      aUnknown89ABB3 ; 89/ABB3
+      aSkillNameLuna ; 89/ABB3
         .enc "SJIS"
           .text "げっこう剣　\n"
 
-      aUnknown89ABC1 ; 89/ABC1
+      aSkillNameSol ; 89/ABC1
         .enc "SJIS"
           .text "たいよう剣　\n"
 
-      aUnknown89ABCF ; 89/ABCF
+      aSkillNameRenewal ; 89/ABCF
         .enc "SJIS"
           .text "ライブ　　　\n"
 
-      aUnknown89ABDD ; 89/ABDD
+      aSkillNameParagon ; 89/ABDD
         .enc "SJIS"
           .text "エリート　　\n"
 
-      aUnknown89ABEB ; 89/ABEB
+      aSkillNameBargain ; 89/ABEB
         .enc "SJIS"
           .text "ねぎり　　　\n"
 
@@ -5909,7 +6017,7 @@
 
       aSkillDescriptionPointers ; 89/ABF9
 
-        ; Read by rsUnknown89A3C0.
+        ; Read by rsStatusScreenDrawSkillDescription.
 
         .byte $00, $00, $00, $00, $00, $00, $C9, $A7, $89, $FF, $A7, $89, $25, $A8, $89, $5B
         .byte $A8, $89, $81, $A8, $89, $00, $00, $00, $B1, $A8, $89, $00, $00, $00, $00, $00
@@ -5958,7 +6066,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $34, every frame: runs the routine for wGameStateStep from aUnknown89ACF6.
+        ; Game state routine $34, every frame: runs the routine for wGameStateStep from aReviveScreenSteps.
 
         phb
         php
@@ -5968,7 +6076,7 @@
         lda wGameStateStep,b
         asl a
         tax
-        jsr (aUnknown89ACF6,x)
+        jsr (aReviveScreenSteps,x)
         plp
         plb
         .databank $89
@@ -5986,14 +6094,14 @@
       .al
       .xl
 
-      aUnknown89ACF6 ; 89/ACF6
+      aReviveScreenSteps ; 89/ACF6
 
         ; Jump table of rlReviveScreenStep.
-        .word <>rsUnknown89AD00
-        .word <>rsUnknown89AF58
-        .word <>rsUnknown89B058
-        .word <>rsUnknown89B0A9
-        .word <>rsUnknown89B0A9
+        .word <>rsReviveScreenChooseUnit
+        .word <>rsReviveScreenConfirm
+        .word <>rsReviveScreenNobodyDead
+        .word <>rsReviveScreenWait
+        .word <>rsReviveScreenWait
 
     .endsection Table89ACF6Section
 
@@ -6003,15 +6111,17 @@
       .al
       .xl
 
-      rsUnknown89AD00 ; 89/AD00
+      rsReviveScreenChooseUnit ; 89/AD00
 
-        ; Entry 0 of aUnknown89ACF6. The revive staff's menu (the text asks whom to
+        ; Entry 0 of aReviveScreenSteps. The revive staff's menu (the text asks whom to
         ; revive and confirms); the routines through $89/B058 belong to it.
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $00, choosing a dead unit in the grid of map sprites. The arrows move the cursor (three columns), A asks to confirm (step $01), X shows the unit's status screen, B leaves to the castle courtyard.
 
         lda bBufferINIDISP
         and #$000F
@@ -6043,23 +6153,23 @@
 
 
         _AD36
-        jml rsUnknown89AEB3
+        jml rsReviveScreenShowStatus
 
 
         _AD3A
-        jml rsUnknown89AEFE
+        jml rsReviveScreenCursorRight
 
 
         _AD3E
-        jml rsUnknown89AF15
+        jml rsReviveScreenCursorLeft
 
 
         _AD42
-        jml rsUnknown89AF28
+        jml rsReviveScreenCursorUp
 
 
         _AD46
-        jml rsUnknown89AF3E
+        jml rsReviveScreenCursorDown
 
 
         _AD4A
@@ -6193,12 +6303,14 @@
         .text "　　　　　　　　　　　　　　　　　　　　　　　　　　\n"
 
 
-      rsUnknown89AEB3 ; 89/AEB3
+      rsReviveScreenShowStatus ; 89/AEB3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X: opens the status screen for the unit under the cursor, with the revive screen to return to (wStatusScreenCaller).
 
         lda #$0008
         jsl rlPlaySoundEffect
@@ -6232,7 +6344,7 @@
 
         ; 89/AEFE
 
-      rsUnknown89AEFE ; 89/AEFE
+      rsReviveScreenCursorRight ; 89/AEFE
 
         .al
         .xl
@@ -6254,7 +6366,7 @@
 
         ; 89/AF15
 
-      rsUnknown89AF15 ; 89/AF15
+      rsReviveScreenCursorLeft ; 89/AF15
 
         .al
         .xl
@@ -6275,7 +6387,7 @@
 
         ; 89/AF28
 
-      rsUnknown89AF28 ; 89/AF28
+      rsReviveScreenCursorUp ; 89/AF28
 
         .al
         .xl
@@ -6297,7 +6409,7 @@
 
         ; 89/AF3E
 
-      rsUnknown89AF3E ; 89/AF3E
+      rsReviveScreenCursorDown ; 89/AF3E
 
         .al
         .xl
@@ -6320,12 +6432,14 @@
 
         ; 89/AF58
 
-      rsUnknown89AF58 ; 89/AF58
+      rsReviveScreenConfirm ; 89/AF58
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $01, the yes/no question. Left and Right move between yes and no (wReviveScreenConfirmCursor); A on yes sets up the staff action of the staff's user (wReviveScreenStaffUser) on the chosen unit (rlBuildCastleActionRounds); A on no, or B, goes back to step $00.
 
         lda wJoy1New
         bit #$0080
@@ -6340,11 +6454,11 @@
 
 
         _AF6F
-        jml rsUnknown89B02E
+        jml rsReviveScreenConfirmNo
 
 
         _AF73
-        jml rsUnknown89B043
+        jml rsReviveScreenConfirmYes
 
 
         _AF77
@@ -6404,7 +6518,7 @@
         .text "　　　　　　　　　　　　　　　　　　　　　　　　　　\n"
 
 
-      rsUnknown89B02E ; 89/B02E
+      rsReviveScreenConfirmNo ; 89/B02E
 
         .al
         .xl
@@ -6425,7 +6539,7 @@
 
         ; 89/B043
 
-      rsUnknown89B043 ; 89/B043
+      rsReviveScreenConfirmYes ; 89/B043
 
         .al
         .xl
@@ -6454,12 +6568,14 @@
       .al
       .xl
 
-      rsUnknown89B058 ; 89/B058
+      rsReviveScreenNobodyDead ; 89/B058
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $02, "no one has died": B leaves to the castle courtyard.
 
         lda wJoy1New
         bit #$8000
@@ -6509,12 +6625,14 @@
       .al
       .xl
 
-      rsUnknown89B0A9 ; 89/B0A9
+      rsReviveScreenWait ; 89/B0A9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Steps $03 and $04: nothing, while the fade to the next screen runs.
 
         rts
 
@@ -6537,12 +6655,12 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $32, every frame while the revive screen is up: a routine from aUnknown89B0B9 chosen by the high byte of wDebugMenuScreenIndex, and BG2 scrolled down one line every two frames.
+        ; Game state routine $32, every frame while the revive screen is up: a routine from aReviveScreenDrawModes chosen by the high byte of wDebugMenuScreenIndex, and BG2 scrolled down one line every two frames.
 
         lda wDebugMenuScreenIndex+1
         asl a
         tax
-        jsr (aUnknown89B0B9,x)
+        jsr (aReviveScreenDrawModes,x)
         lda wVBlankEnabledFramecount
         lsr a
         sta wBufferBG2VOFS
@@ -6560,12 +6678,12 @@
       .al
       .xl
 
-      aUnknown89B0B9 ; 89/B0B9
+      aReviveScreenDrawModes ; 89/B0B9
 
         ; Jump table of rlReviveScreenUpkeep.
-        .word <>rsUnknown89B0BF
-        .word <>rsUnknown89B0C6
-        .word <>rsUnknown89B0D0
+        .word <>rsReviveScreenDrawGrid
+        .word <>rsReviveScreenDrawGridAndConfirm
+        .word <>rsReviveScreenDrawNothing
 
     .endsection Table89B0B9Section
 
@@ -6575,15 +6693,17 @@
       .al
       .xl
 
-      rsUnknown89B0BF ; 89/B0BF
+      rsReviveScreenDrawGrid ; 89/B0BF
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown89B0D1
-        jsr rsUnknown89B20B
+        ; Draw mode 0: the map sprites and the cursor.
+
+        jsr rsReviveScreenDrawMapSprites
+        jsr rsReviveScreenDrawCursor
         rts
 
         .databank 0
@@ -6598,16 +6718,18 @@
       .al
       .xl
 
-      rsUnknown89B0C6 ; 89/B0C6
+      rsReviveScreenDrawGridAndConfirm ; 89/B0C6
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown89B0D1
-        jsr rsUnknown89B20B
-        jsr rsUnknown89B285
+        ; Draw mode 1: as mode 0, and the cursor on yes or no.
+
+        jsr rsReviveScreenDrawMapSprites
+        jsr rsReviveScreenDrawCursor
+        jsr rsReviveScreenDrawConfirmCursor
         rts
 
         .databank 0
@@ -6622,12 +6744,14 @@
       .al
       .xl
 
-      rsUnknown89B0D0 ; 89/B0D0
+      rsReviveScreenDrawNothing ; 89/B0D0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draw mode 2, with no dead unit: nothing.
 
         rts
 
@@ -6643,16 +6767,18 @@
       .al
       .xl
 
-      rsUnknown89B0D1 ; 89/B0D1
+      rsReviveScreenDrawMapSprites ; 89/B0D1
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The map sprite of each dead unit in the grid, the one under the cursor in palette 1 and animated in step $00 (rsReviveScreenAnimateMapSprite), the others in palette 4.
+
         lda wGameStateStep,b
         bne _B0D9
-        jsr rsUnknown89B2A2
+        jsr rsReviveScreenAnimateMapSprite
 
         _B0D9
         phk
@@ -6663,7 +6789,7 @@
         tax
         lda #$0200
         sta wR5
-        jsr rsUnknown89B10C
+        jsr rsReviveScreenDrawMapSprite
         lda #$0000
 
         _B0EC
@@ -6674,7 +6800,7 @@
         tax
         lda #$0800
         sta wR5
-        jsr rsUnknown89B10C
+        jsr rsReviveScreenDrawMapSprite
 
         _B100
         lda wUnitWindowCurrentNameLine
@@ -6695,12 +6821,14 @@
       .al
       .xl
 
-      rsUnknown89B10C ; 89/B10C
+      rsReviveScreenDrawMapSprite ; 89/B10C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The map sprite of grid entry X/2 with attributes wR5, small or large by the map sprite ID's top bit.
 
         lda aUnitWindowEquippedWeaponPointers,x
         bmi _B11C
@@ -6735,19 +6863,21 @@
       .al
       .xl
 
-      rsUnknown89B20B ; 89/B20B
+      rsReviveScreenDrawCursor ; 89/B20B
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The hand cursor on the grid entry wUnitWindowCurrentHighlightLine.
+
         lda wUnitWindowCurrentHighlightLine
         asl a
         tax
-        lda aUnknown89B225,x
+        lda aReviveScreenCursorX,x
         sta wR0
-        lda aUnknown89B255,x
+        lda aReviveScreenCursorY,x
         sta wR1
         lda wGameStateStep,b
         jsl rlUnknown88A704
@@ -6765,9 +6895,9 @@
       .al
       .xl
 
-      aUnknown89B225 ; 89/B225
+      aReviveScreenCursorX ; 89/B225
 
-        ; Read by rsUnknown89B20B.
+        ; Read by rsReviveScreenDrawCursor.
 
         .word $0000, $0050, $00A0, $0000, $0050, $00A0, $0000, $0050
         .word $00A0, $0000, $0050, $00A0, $0000, $0050, $00A0, $0000
@@ -6775,9 +6905,9 @@
 
         ; 89/B255
 
-      aUnknown89B255 ; 89/B255
+      aReviveScreenCursorY ; 89/B255
 
-        ; Read by rsUnknown89B20B.
+        ; Read by rsReviveScreenDrawCursor.
 
         .word $004B, $004B, $004B, $005B, $005B, $005B, $006B, $006B
         .word $006B, $007B, $007B, $007B, $008B, $008B, $008B, $009B
@@ -6793,17 +6923,19 @@
       .al
       .xl
 
-      rsUnknown89B285 ; 89/B285
+      rsReviveScreenDrawConfirmCursor ; 89/B285
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The hand cursor on yes or no.
+
         lda $7FB018
         asl a
         tax
-        lda aUnknown89B29E,x
+        lda aReviveScreenConfirmCursorX,x
         sta wR0
         lda #$0013
         sta wR1
@@ -6823,9 +6955,9 @@
       .al
       .xl
 
-      aUnknown89B29E ; 89/B29E
+      aReviveScreenConfirmCursorX ; 89/B29E
 
-        ; Read by rsUnknown89B285.
+        ; Read by rsReviveScreenDrawConfirmCursor.
 
         .word $0095, $00BD
 
@@ -6839,24 +6971,26 @@
       .al
       .xl
 
-      rsUnknown89B2A2 ; 89/B2A2
+      rsReviveScreenAnimateMapSprite ; 89/B2A2
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sends the current frame of the map sprite under the cursor to its place in VRAM, small or large.
+
         lda wUnitWindowCurrentHighlightLine
         asl a
         tax
         lda aUnitWindowEquippedWeaponPointers,x
         bmi _B2B2
-        jsr rsUnknown89B2B6
+        jsr rsReviveScreenAnimateSmallMapSprite
         rts
 
 
         _B2B2
-        jsr rsUnknown89B344
+        jsr rsReviveScreenAnimateLargeMapSprite
         rts
 
         .databank 0
@@ -6871,7 +7005,7 @@
       .al
       .xl
 
-      rsUnknown89B2B6 ; 89/B2B6
+      rsReviveScreenAnimateSmallMapSprite ; 89/B2B6
 
         .al
         .xl
@@ -6885,7 +7019,7 @@
         lsr a
         and #$0006
         tax
-        lda aUnknown89B30C,x
+        lda aReviveScreenSmallSpriteFrameOffsets,x
         sta wR15
         pla
         and #$7FFF
@@ -6906,7 +7040,7 @@
         lda wUnitWindowCurrentHighlightLine
         asl a
         tax
-        lda aUnknown89B314,x
+        lda aReviveScreenSmallSpriteVRAM2,x
         sta wR1
         jsl rlDMAByPointer
         lda wR14
@@ -6932,17 +7066,17 @@
       .al
       .xl
 
-      aUnknown89B30C ; 89/B30C
+      aReviveScreenSmallSpriteFrameOffsets ; 89/B30C
 
-        ; Read by rsUnknown89B2B6.
+        ; Read by rsReviveScreenAnimateSmallMapSprite.
 
         .word $0000, $0080, $0100, $0080
 
         ; 89/B314
 
-      aUnknown89B314 ; 89/B314
+      aReviveScreenSmallSpriteVRAM2 ; 89/B314
 
-        ; Read by rsUnknown89B2B6.
+        ; Read by rsReviveScreenAnimateSmallMapSprite.
 
         .word $6200, $6220, $6240, $6260, $6280, $62A0, $62C0, $62E0
         .word $6400, $6420, $6440, $6460, $6480, $64A0, $64C0, $64E0
@@ -6958,7 +7092,7 @@
       .al
       .xl
 
-      rsUnknown89B344 ; 89/B344
+      rsReviveScreenAnimateLargeMapSprite ; 89/B344
 
         .al
         .xl
@@ -6972,7 +7106,7 @@
         lsr a
         and #$0006
         tax
-        lda aUnknown89B39F,x
+        lda aReviveScreenLargeSpriteFrameOffsets,x
         sta wR15
         pla
         and #$7FFF
@@ -6993,7 +7127,7 @@
         lda wUnitWindowCurrentHighlightLine
         asl a
         tax
-        lda aUnknown89B3A7,x
+        lda aReviveScreenLargeSpriteVRAM2,x
         sta wR1
         jsl rlDMAByPointer
         lda wR14
@@ -7021,17 +7155,17 @@
       .al
       .xl
 
-      aUnknown89B39F ; 89/B39F
+      aReviveScreenLargeSpriteFrameOffsets ; 89/B39F
 
-        ; Read by rsUnknown89B344.
+        ; Read by rsReviveScreenAnimateLargeMapSprite.
 
         .word $0000, $00C0, $0180, $00C0
 
         ; 89/B3A7
 
-      aUnknown89B3A7 ; 89/B3A7
+      aReviveScreenLargeSpriteVRAM2 ; 89/B3A7
 
-        ; Read by rsUnknown89B344.
+        ; Read by rsReviveScreenAnimateLargeMapSprite.
 
         .word $6800, $6840, $6880, $68C0, $6A00, $6A40, $6A80, $6AC0
         .word $6C00, $6C40, $6C80, $6CC0, $6E00, $6E40, $6E80, $6EC0
@@ -7047,12 +7181,14 @@
       .al
       .xl
 
-      rsUnknown89B79D ; 89/B79D
+      rsItemWindowSortPanel ; 89/B79D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $01, the sort panel: Up and Down choose a sort order (wItemWindowSortPanelRow), A sorts the list by it (rlItemWindowSort), B, Y or Left close the panel (step $00).
 
         jsr rsItemWindowRenderCursor
         lda wJoy1New
@@ -7065,7 +7201,7 @@
         bne _B7FB
         bit #$0400
         bne _B818
-        jsr rsUnknown89C119
+        jsr rsItemWindowDrawSortCursor
         rts
 
 
@@ -7091,7 +7227,7 @@
         lda #$000A
         jsl rlPlaySoundEffect
         jsl rlItemWindowSort
-        jsr rsUnknown89C119
+        jsr rsItemWindowDrawSortCursor
         rts
 
 
@@ -7106,7 +7242,7 @@
         jsl rlPlaySoundEffect
 
         _B814
-        jsr rsUnknown89C119
+        jsr rsItemWindowDrawSortCursor
         rts
 
 
@@ -7122,7 +7258,7 @@
         jsl rlPlaySoundEffect
 
         _B834
-        jsr rsUnknown89C119
+        jsr rsItemWindowDrawSortCursor
         rts
 
         .databank 0
@@ -7137,12 +7273,14 @@
       .al
       .xl
 
-      rsUnknown89B838 ; 89/B838
+      rsItemWindowNoItems ; 89/B838
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $02, with no items to list: B blanks the screen and closes to the map (step $03).
 
         lda wJoy1New
         bit #$8000
@@ -7173,12 +7311,14 @@
       .al
       .xl
 
-      rsUnknown89B869 ; 89/B869
+      rsItemWindowFadeToCastle ; 89/B869
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $04: darkens one level a frame, then returns to the castle screen.
 
         sep #$20
         lda bBufferINIDISP
@@ -7247,12 +7387,14 @@
       .al
       .xl
 
-      rsUnknown89C119 ; 89/C119
+      rsItemWindowDrawSortCursor ; 89/C119
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The hand cursor on the sort panel row, nudged up or down for one frame after a move (wUnitWindowScrollingFlag 2 or 4).
 
         lda wUnitWindowScrollingFlag
         tax
@@ -7262,7 +7404,7 @@
         asl a
         asl a
         clc
-        adc aUnknown89C13E,x
+        adc aItemWindowSortCursorY,x
         sta wR1
         lda #$00A5
         sta wR0
@@ -7283,9 +7425,9 @@
       .al
       .xl
 
-      aUnknown89C13E ; 89/C13E
+      aItemWindowSortCursorY ; 89/C13E
 
-        ; Read by rsUnknown89C119.
+        ; Read by rsItemWindowDrawSortCursor.
 
         .word $0022, $002A, $001A
 
@@ -7306,7 +7448,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $2A, once: starts a fade-in, rlUnknown89F713 and rlUnknown89F7A6, and moves on to $2B.
+        ; Game state routine $2A, once: starts a fade-in, rlOptionsMenuDrawIcons and rlOptionsMenuDrawSelectedIcon, and moves on to $2B.
 
         inc wGameStateRoutine1,b
         lda #(`procFadeIn)<<8
@@ -7314,8 +7456,8 @@
         lda #<>procFadeIn
         sta lR44
         jsl rlProcEngineCreateProc
-        jsl rlUnknown89F713
-        jsl rlUnknown89F7A6
+        jsl rlOptionsMenuDrawIcons
+        jsl rlOptionsMenuDrawSelectedIcon
         rtl
 
         .databank 0
@@ -7329,7 +7471,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $2B, every frame: runs the routine for wGameStateStep from aUnknown89EB56.
+        ; Game state routine $2B, every frame: runs the routine for wGameStateStep from aOptionsMenuSteps.
 
         phb
         php
@@ -7347,7 +7489,7 @@
         _EB4E
         asl a
         tax
-        jsr (aUnknown89EB56,x)
+        jsr (aOptionsMenuSteps,x)
         plp
         plb
         .databank $89
@@ -7365,13 +7507,13 @@
       .al
       .xl
 
-      aUnknown89EB56 ; 89/EB56
+      aOptionsMenuSteps ; 89/EB56
 
         ; Jump table of rlOptionsMenuStep.
-        .word <>rsUnknown89EB5E
-        .word <>rsUnknown89EC86
-        .word <>rsUnknown89ECB4
-        .word <>rsUnknown89ECC6
+        .word <>rsOptionsMenuChooseOption
+        .word <>rsOptionsMenuLeave
+        .word <>rsOptionsMenuReturnToMap
+        .word <>rsOptionsMenuWait
 
     .endsection Table89EB56Section
 
@@ -7381,12 +7523,14 @@
       .al
       .xl
 
-      rsUnknown89EB5E ; 89/EB5E
+      rsOptionsMenuChooseOption ; 89/EB5E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $00. Up and Down move to another option (one frame later, wOptionsMenuCursorMove), Right or R and Left or L change its value, Y puts back the values the menu opened with. A and B (rlOptionsMenuUpkeep) keep the values and leave.
 
         jsl rlDMAByStruct
 
@@ -7419,11 +7563,11 @@
 
 
         _EB99
-        jml rsUnknown89EC51
+        jml rsOptionsMenuDecreaseValue
 
 
         _EB9D
-        jml rsUnknown89EC72
+        jml rsOptionsMenuRestoreValues
 
 
         _EBA1
@@ -7467,8 +7611,8 @@
         lda $7F8400
         dec a
         sta $7F8400
-        jsl rlUnknown89ED12
-        jsl rlUnknown89F246
+        jsl rlOptionsMenuDrawChoices
+        jsl rlOptionsMenuDrawDescription
 
         _EC00
         rts
@@ -7480,15 +7624,15 @@
         lda $7F8400
         inc a
         sta $7F8400
-        jsl rlUnknown89ED12
-        jsl rlUnknown89F246
+        jsl rlOptionsMenuDrawChoices
+        jsl rlOptionsMenuDrawDescription
         rts
 
 
         _EC1A
         lda $7F8400
         tax
-        lda aUnknown89EC48,x
+        lda aOptionsMenuValueCounts,x
         and #$00FF
         sta wR0
         txa
@@ -7501,18 +7645,18 @@
         sta wDebugMenuScreenIndex,x
         lda #$0007
         jsl rlPlaySoundEffect
-        jsl rlUnknown89ED12
-        jsl rlUnknown89F065
+        jsl rlOptionsMenuDrawChoices
+        jsl rlOptionsMenuDrawValues
 
         _EC47
         rts
 
         .databank 0
 
-      aUnknown89EC48 ; 89/EC48
+      aOptionsMenuValueCounts ; 89/EC48
         .byte $03, $02, $02, $05, $02, $03, $05, $02, $02
 
-      rsUnknown89EC51 ; 89/EC51
+      rsOptionsMenuDecreaseValue ; 89/EC51
 
         .al
         .xl
@@ -7528,38 +7672,42 @@
         sta wDebugMenuScreenIndex,x
         lda #$0007
         jsl rlPlaySoundEffect
-        jsl rlUnknown89ED12
-        jsl rlUnknown89F065
+        jsl rlOptionsMenuDrawChoices
+        jsl rlOptionsMenuDrawValues
 
         _EC71
         rts
 
         .databank 0
 
-      rsUnknown89EC72 ; 89/EC72
+      rsOptionsMenuRestoreValues ; 89/EC72
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Y: puts back the values the menu opened with and redraws.
+
         lda #$0021
         jsl rlPlaySoundEffect
-        jsl rlUnknown89F842
-        jsl rlUnknown89ED12
-        jsl rlUnknown89F065
+        jsl rlOptionsMenuRestoreValues
+        jsl rlOptionsMenuDrawChoices
+        jsl rlOptionsMenuDrawValues
         rts
 
         .databank 0
 
         ; 89/EC86
 
-      rsUnknown89EC86 ; 89/EC86
+      rsOptionsMenuLeave ; 89/EC86
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $01: back to the map, or to the castle screen if the menu was opened from there (bit 5 of wUnknown000D79).
 
         lda #$0003
         sta wGameStateStep,b
@@ -7594,12 +7742,14 @@
       .al
       .xl
 
-      rsUnknown89ECB4 ; 89/ECB4
+      rsOptionsMenuReturnToMap ; 89/ECB4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $02: no code sets it. Goes straight back to the map (rsUnknown80B122).
 
         lda #$0003
         sta wGameStateStep,b
@@ -7621,12 +7771,14 @@
       .al
       .xl
 
-      rsUnknown89ECC6 ; 89/ECC6
+      rsOptionsMenuWait ; 89/ECC6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Step $03: nothing, while the fade runs.
 
         rts
 
@@ -7651,10 +7803,10 @@
 
         ; Game state routine $29, every frame while the options menu is up: draws its sprites; once fully bright, B or A (checked here) leave or select.
 
-        jsl rlUnknown89F630
-        jsl rlUnknown89F67F
-        jsl rlUnknown89F713
-        jsl rlUnknown89F7A6
+        jsl rlOptionsMenuDrawCursor
+        jsl rlOptionsMenuDrawValueMarker
+        jsl rlOptionsMenuDrawIcons
+        jsl rlOptionsMenuDrawSelectedIcon
         lda bBufferINIDISP
         and #$000F
         cmp #$000F
@@ -7672,7 +7824,7 @@
         _ECEE
         lda #$0021
         jsl rlPlaySoundEffect
-        jsl rlUnknown89F7E6
+        jsl rlOptionsMenuApplyValues
         lda #$0001
         sta wGameStateStep,b
         rtl
@@ -7681,7 +7833,7 @@
         _ED00
         lda #$000A
         jsl rlPlaySoundEffect
-        jsl rlUnknown89F7E6
+        jsl rlOptionsMenuApplyValues
         lda #$0001
         sta wGameStateStep,b
         rtl
@@ -7698,12 +7850,14 @@
       .al
       .xl
 
-      rlUnknown89ED12 ; 89/ED12
+      rlOptionsMenuDrawChoices ; 89/ED12
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The choices of the option under the cursor ("1 2 3", "ON OFF"...) under its caption, and the chosen one highlighted (a routine from aOptionsMenuHighlightRoutines).
 
         lda #$2400
         sta aCurrentTilemapInfo,b
@@ -7713,9 +7867,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89ED6A+1,x
+        lda aOptionsMenuChoiceLists+1,x
         sta lR18+1
-        lda aUnknown89ED6A,x
+        lda aOptionsMenuChoiceLists,x
         sta lR18
         lda $7F842C
         beq _ED3A
@@ -7741,7 +7895,7 @@
         _ED52
         asl a
         tax
-        jsr (aUnknown89ED58,x)
+        jsr (aOptionsMenuHighlightRoutines,x)
         rtl
 
         .databank 0
@@ -7756,18 +7910,18 @@
       .al
       .xl
 
-      aUnknown89ED58 ; 89/ED58
+      aOptionsMenuHighlightRoutines ; 89/ED58
 
-        ; Jump table of rlUnknown89ED12.
-        .word <>rsUnknown89EDFD
-        .word <>rsUnknown89EE50
-        .word <>rsUnknown89EE50
-        .word <>rsUnknown89EE89
-        .word <>rsUnknown89EEFE
-        .word <>rsUnknown89EF50
-        .word <>rsUnknown89EFA3
-        .word <>rsUnknown89EE50
-        .word <>rsUnknown89F018
+        ; Jump table of rlOptionsMenuDrawChoices.
+        .word <>rsOptionsMenuHighlightAnimation
+        .word <>rsOptionsMenuHighlightOnOff
+        .word <>rsOptionsMenuHighlightOnOff
+        .word <>rsOptionsMenuHighlightMessageSpeed
+        .word <>rsOptionsMenuHighlightEnemySpeed
+        .word <>rsOptionsMenuHighlightSound
+        .word <>rsOptionsMenuHighlightAutoSave
+        .word <>rsOptionsMenuHighlightOnOff
+        .word <>rsOptionsMenuHighlightEnemyAI
 
     .endsection Table89ED58Section
 
@@ -7777,9 +7931,9 @@
       .al
       .xl
 
-      aUnknown89ED6A ; 89/ED6A
+      aOptionsMenuChoiceLists ; 89/ED6A
 
-        ; Read by rlUnknown89ED12.
+        ; Read by rlOptionsMenuDrawChoices.
 
         .byte $85, $ED, $89, $99, $ED, $89, $99, $ED, $89, $AD, $ED, $89, $C1, $ED, $89, $85
         .byte $ED, $89, $D5, $ED, $89, $99, $ED, $89, $E9, $ED, $89, $81, $40, $82, $50, $81
@@ -7802,7 +7956,7 @@
       .al
       .xl
 
-      rsUnknown89EDFD ; 89/EDFD
+      rsOptionsMenuHighlightAnimation ; 89/EDFD
 
         .al
         .xl
@@ -7820,7 +7974,7 @@
         _EE08
         asl a
         tax
-        jsr (aUnknown89EE0E,x)
+        jsr (aOptionsMenuAnimationHighlights,x)
         rts
 
         .databank 0
@@ -7835,12 +7989,12 @@
       .al
       .xl
 
-      aUnknown89EE0E ; 89/EE0E
+      aOptionsMenuAnimationHighlights ; 89/EE0E
 
-        ; Jump table of rsUnknown89EDFD.
-        .word <>rsUnknown89EE14
-        .word <>rsUnknown89EE23
-        .word <>rsUnknown89EE32
+        ; Jump table of rsOptionsMenuHighlightAnimation.
+        .word <>rsOptionsMenuHighlightAnimation1
+        .word <>rsOptionsMenuHighlightAnimation2
+        .word <>rsOptionsMenuHighlightAnimation3
 
     .endsection Table89EE0ESection
 
@@ -7850,37 +8004,37 @@
       .al
       .xl
 
-      rsUnknown89EE14 ; 89/EE14
+      rsOptionsMenuHighlightAnimation1 ; 89/EE14
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown89F88F)<<8
+        lda #(`aOptionsMenuText1)<<8
         sta lR18+1
-        lda #<>aUnknown89F88F
+        lda #<>aOptionsMenuText1
         sta lR18
         ldx #$1416
-        bra rsUnknown89EE32._EE3F
+        bra rsOptionsMenuHighlightAnimation3._EE3F
 
         .databank 0
 
         ; 89/EE23
 
-      rsUnknown89EE23 ; 89/EE23
+      rsOptionsMenuHighlightAnimation2 ; 89/EE23
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown89F893)<<8
+        lda #(`aOptionsMenuText2)<<8
         sta lR18+1
-        lda #<>aUnknown89F893
+        lda #<>aOptionsMenuText2
         sta lR18
         ldx #$1419
-        bra rsUnknown89EE32._EE3F
+        bra rsOptionsMenuHighlightAnimation3._EE3F
 
         .databank 0
 
@@ -7894,16 +8048,16 @@
       .al
       .xl
 
-      rsUnknown89EE32 ; 89/EE32
+      rsOptionsMenuHighlightAnimation3 ; 89/EE32
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown89F897)<<8
+        lda #(`aOptionsMenuText3)<<8
         sta lR18+1
-        lda #<>aUnknown89F897
+        lda #<>aOptionsMenuText3
         sta lR18
         ldx #$141C
 
@@ -7931,30 +8085,32 @@
       .al
       .xl
 
-      rsUnknown89EE50 ; 89/EE50
+      rsOptionsMenuHighlightOnOff ; 89/EE50
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; For the three ON/OFF options: highlights ON or OFF.
+
         lda wUnitWindowCurrentLineSlotOffset+1
         asl a
         tax
         lda wDebugMenuScreenIndex,x
         beq _EE6B
-        lda #(`aUnknown89F8AD)<<8
+        lda #(`aOptionsMenuOffText)<<8
         sta lR18+1
-        lda #<>aUnknown89F8AD
+        lda #<>aOptionsMenuOffText
         sta lR18
         ldx #$141B
         bra _EE78
 
 
         _EE6B
-        lda #(`aUnknown89F8A3)<<8
+        lda #(`aOptionsMenuOnText)<<8
         sta lR18+1
-        lda #<>aUnknown89F8A3
+        lda #<>aOptionsMenuOnText
         sta lR18
         ldx #$1415
 
@@ -7982,7 +8138,7 @@
       .al
       .xl
 
-      rsUnknown89EE89 ; 89/EE89
+      rsOptionsMenuHighlightMessageSpeed ; 89/EE89
 
         .al
         .xl
@@ -8000,7 +8156,7 @@
         _EE94
         asl a
         tax
-        jsr (aUnknown89EE9A,x)
+        jsr (aOptionsMenuMessageSpeedHighlights,x)
         rts
 
         .databank 0
@@ -8015,14 +8171,14 @@
       .al
       .xl
 
-      aUnknown89EE9A ; 89/EE9A
+      aOptionsMenuMessageSpeedHighlights ; 89/EE9A
 
-        ; Jump table of rsUnknown89EE89.
-        .word <>rsUnknown89EEA4
-        .word <>rsUnknown89EEA4._EEB3
-        .word <>rsUnknown89EEA4._EEC2
-        .word <>rsUnknown89EEA4._EED1
-        .word <>rsUnknown89EEA4._EEE0
+        ; Jump table of rsOptionsMenuHighlightMessageSpeed.
+        .word <>rsOptionsMenuHighlightMessageSpeedText
+        .word <>rsOptionsMenuHighlightMessageSpeedText._EEB3
+        .word <>rsOptionsMenuHighlightMessageSpeedText._EEC2
+        .word <>rsOptionsMenuHighlightMessageSpeedText._EED1
+        .word <>rsOptionsMenuHighlightMessageSpeedText._EEE0
 
     .endsection Table89EE9ASection
 
@@ -8032,52 +8188,52 @@
       .al
       .xl
 
-      rsUnknown89EEA4 ; 89/EEA4
+      rsOptionsMenuHighlightMessageSpeedText ; 89/EEA4
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown89F88F)<<8
+        lda #(`aOptionsMenuText1)<<8
         sta lR18+1
-        lda #<>aUnknown89F88F
+        lda #<>aOptionsMenuText1
         sta lR18
         ldx #$1415
         bra _EEED
 
 
         _EEB3
-        lda #(`aUnknown89F893)<<8
+        lda #(`aOptionsMenuText2)<<8
         sta lR18+1
-        lda #<>aUnknown89F893
+        lda #<>aOptionsMenuText2
         sta lR18
         ldx #$1417
         bra _EEED
 
 
         _EEC2
-        lda #(`aUnknown89F897)<<8
+        lda #(`aOptionsMenuText3)<<8
         sta lR18+1
-        lda #<>aUnknown89F897
+        lda #<>aOptionsMenuText3
         sta lR18
         ldx #$1419
         bra _EEED
 
 
         _EED1
-        lda #(`aUnknown89F89B)<<8
+        lda #(`aOptionsMenuText4)<<8
         sta lR18+1
-        lda #<>aUnknown89F89B
+        lda #<>aOptionsMenuText4
         sta lR18
         ldx #$141B
         bra _EEED
 
 
         _EEE0
-        lda #(`aUnknown89F89F)<<8
+        lda #(`aOptionsMenuText5)<<8
         sta lR18+1
-        lda #<>aUnknown89F89F
+        lda #<>aOptionsMenuText5
         sta lR18
         ldx #$141D
 
@@ -8105,7 +8261,7 @@
       .al
       .xl
 
-      rsUnknown89EEFE ; 89/EEFE
+      rsOptionsMenuHighlightEnemySpeed ; 89/EEFE
 
         .al
         .xl
@@ -8123,7 +8279,7 @@
         _EF09
         asl a
         tax
-        jsr (aUnknown89EF0F,x)
+        jsr (aOptionsMenuEnemySpeedHighlights,x)
         rts
 
         .databank 0
@@ -8138,11 +8294,11 @@
       .al
       .xl
 
-      aUnknown89EF0F ; 89/EF0F
+      aOptionsMenuEnemySpeedHighlights ; 89/EF0F
 
-        ; Jump table of rsUnknown89EEFE.
-        .word <>rsUnknown89EF13
-        .word <>rsUnknown89EF13._EF22
+        ; Jump table of rsOptionsMenuHighlightEnemySpeed.
+        .word <>rsOptionsMenuHighlightEnemySpeedText
+        .word <>rsOptionsMenuHighlightEnemySpeedText._EF22
 
     .endsection Table89EF0FSection
 
@@ -8152,25 +8308,25 @@
       .al
       .xl
 
-      rsUnknown89EF13 ; 89/EF13
+      rsOptionsMenuHighlightEnemySpeedText ; 89/EF13
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown89EF40)<<8
+        lda #(`aOptionsMenuRealText)<<8
         sta lR18+1
-        lda #<>aUnknown89EF40
+        lda #<>aOptionsMenuRealText
         sta lR18
         ldx #$1415
         bra _EF2F
 
 
         _EF22
-        lda #(`aUnknown89EF48)<<8
+        lda #(`aOptionsMenuFastText)<<8
         sta lR18+1
-        lda #<>aUnknown89EF48
+        lda #<>aOptionsMenuFastText
         sta lR18
         ldx #$141B
 
@@ -8198,14 +8354,14 @@
       .al
       .xl
 
-      aUnknown89EF40 ; 89/EF40
+      aOptionsMenuRealText ; 89/EF40
 
         .enc "SJIS"
         .text "リアル"
         .word $0000
         .enc "none"
 
-      aUnknown89EF48 ; 89/EF48
+      aOptionsMenuFastText ; 89/EF48
 
         .enc "SJIS"
         .text "はやい"
@@ -8221,7 +8377,7 @@
       .al
       .xl
 
-      rsUnknown89EF50 ; 89/EF50
+      rsOptionsMenuHighlightSound ; 89/EF50
 
         .al
         .xl
@@ -8239,7 +8395,7 @@
         _EF5B
         asl a
         tax
-        jsr (aUnknown89EF61,x)
+        jsr (aOptionsMenuSoundHighlights,x)
         rts
 
         .databank 0
@@ -8254,12 +8410,12 @@
       .al
       .xl
 
-      aUnknown89EF61 ; 89/EF61
+      aOptionsMenuSoundHighlights ; 89/EF61
 
-        ; Jump table of rsUnknown89EF50.
-        .word <>rsUnknown89EF67
-        .word <>rsUnknown89EF67._EF76
-        .word <>rsUnknown89EF67._EF85
+        ; Jump table of rsOptionsMenuHighlightSound.
+        .word <>rsOptionsMenuHighlightSoundText
+        .word <>rsOptionsMenuHighlightSoundText._EF76
+        .word <>rsOptionsMenuHighlightSoundText._EF85
 
     .endsection Table89EF61Section
 
@@ -8269,34 +8425,34 @@
       .al
       .xl
 
-      rsUnknown89EF67 ; 89/EF67
+      rsOptionsMenuHighlightSoundText ; 89/EF67
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown89F88F)<<8
+        lda #(`aOptionsMenuText1)<<8
         sta lR18+1
-        lda #<>aUnknown89F88F
+        lda #<>aOptionsMenuText1
         sta lR18
         ldx #$1416
         bra _EF92
 
 
         _EF76
-        lda #(`aUnknown89F893)<<8
+        lda #(`aOptionsMenuText2)<<8
         sta lR18+1
-        lda #<>aUnknown89F893
+        lda #<>aOptionsMenuText2
         sta lR18
         ldx #$1419
         bra _EF92
 
 
         _EF85
-        lda #(`aUnknown89F897)<<8
+        lda #(`aOptionsMenuText3)<<8
         sta lR18+1
-        lda #<>aUnknown89F897
+        lda #<>aOptionsMenuText3
         sta lR18
         ldx #$141C
 
@@ -8324,7 +8480,7 @@
       .al
       .xl
 
-      rsUnknown89EFA3 ; 89/EFA3
+      rsOptionsMenuHighlightAutoSave ; 89/EFA3
 
         .al
         .xl
@@ -8342,7 +8498,7 @@
         _EFAE
         asl a
         tax
-        jsr (aUnknown89EFB4,x)
+        jsr (aOptionsMenuAutoSaveHighlights,x)
         rts
 
         .databank 0
@@ -8357,14 +8513,14 @@
       .al
       .xl
 
-      aUnknown89EFB4 ; 89/EFB4
+      aOptionsMenuAutoSaveHighlights ; 89/EFB4
 
-        ; Jump table of rsUnknown89EFA3.
-        .word <>rsUnknown89EFBE
-        .word <>rsUnknown89EFBE._EFCD
-        .word <>rsUnknown89EFBE._EFDC
-        .word <>rsUnknown89EFBE._EFEB
-        .word <>rsUnknown89EFBE._EFFA
+        ; Jump table of rsOptionsMenuHighlightAutoSave.
+        .word <>rsOptionsMenuHighlightAutoSaveText
+        .word <>rsOptionsMenuHighlightAutoSaveText._EFCD
+        .word <>rsOptionsMenuHighlightAutoSaveText._EFDC
+        .word <>rsOptionsMenuHighlightAutoSaveText._EFEB
+        .word <>rsOptionsMenuHighlightAutoSaveText._EFFA
 
     .endsection Table89EFB4Section
 
@@ -8374,52 +8530,52 @@
       .al
       .xl
 
-      rsUnknown89EFBE ; 89/EFBE
+      rsOptionsMenuHighlightAutoSaveText ; 89/EFBE
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown89F88B)<<8
+        lda #(`aOptionsMenuText0)<<8
         sta lR18+1
-        lda #<>aUnknown89F88B
+        lda #<>aOptionsMenuText0
         sta lR18
         ldx #$1415
         bra _F007
 
 
         _EFCD
-        lda #(`aUnknown89F88F)<<8
+        lda #(`aOptionsMenuText1)<<8
         sta lR18+1
-        lda #<>aUnknown89F88F
+        lda #<>aOptionsMenuText1
         sta lR18
         ldx #$1417
         bra _F007
 
 
         _EFDC
-        lda #(`aUnknown89F893)<<8
+        lda #(`aOptionsMenuText2)<<8
         sta lR18+1
-        lda #<>aUnknown89F893
+        lda #<>aOptionsMenuText2
         sta lR18
         ldx #$1419
         bra _F007
 
 
         _EFEB
-        lda #(`aUnknown89F897)<<8
+        lda #(`aOptionsMenuText3)<<8
         sta lR18+1
-        lda #<>aUnknown89F897
+        lda #<>aOptionsMenuText3
         sta lR18
         ldx #$141B
         bra _F007
 
 
         _EFFA
-        lda #(`aUnknown89F89B)<<8
+        lda #(`aOptionsMenuText4)<<8
         sta lR18+1
-        lda #<>aUnknown89F89B
+        lda #<>aOptionsMenuText4
         sta lR18
         ldx #$141D
 
@@ -8447,7 +8603,7 @@
       .al
       .xl
 
-      rsUnknown89F018 ; 89/F018
+      rsOptionsMenuHighlightEnemyAI ; 89/F018
 
         .al
         .xl
@@ -8465,7 +8621,7 @@
         _F023
         asl a
         tax
-        jsr (aUnknown89F029,x)
+        jsr (aOptionsMenuEnemyAIHighlights,x)
         rts
 
         .databank 0
@@ -8480,11 +8636,11 @@
       .al
       .xl
 
-      aUnknown89F029 ; 89/F029
+      aOptionsMenuEnemyAIHighlights ; 89/F029
 
-        ; Jump table of rsUnknown89F018.
-        .word <>rsUnknown89F02D
-        .word <>rsUnknown89F03F
+        ; Jump table of rsOptionsMenuHighlightEnemyAI.
+        .word <>rsOptionsMenuHighlightNormalAI
+        .word <>rsOptionsMenuHighlightCleverAI
 
     .endsection Table89F029Section
 
@@ -8494,16 +8650,16 @@
       .al
       .xl
 
-      rsUnknown89F02D ; 89/F02D
+      rsOptionsMenuHighlightNormalAI ; 89/F02D
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown89F05B)<<8
+        lda #(`aOptionsMenuNormalText)<<8
         sta lR18+1
-        lda #<>aUnknown89F05B
+        lda #<>aOptionsMenuNormalText
         sta lR18
         ldx #$1415
         jsl rlDrawMenuTextLine
@@ -8513,16 +8669,16 @@
 
         ; 89/F03F
 
-      rsUnknown89F03F ; 89/F03F
+      rsOptionsMenuHighlightCleverAI ; 89/F03F
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown89F051)<<8
+        lda #(`aOptionsMenuCleverText)<<8
         sta lR18+1
-        lda #<>aUnknown89F051
+        lda #<>aOptionsMenuCleverText
         sta lR18
         ldx #$141A
         jsl rlDrawMenuTextLine
@@ -8540,14 +8696,14 @@
       .al
       .xl
 
-      aUnknown89F051 ; 89/F051
+      aOptionsMenuCleverText ; 89/F051
 
         .enc "SJIS"
         .text "かしこい"
         .word $0000
         .enc "none"
 
-      aUnknown89F05B ; 89/F05B
+      aOptionsMenuNormalText ; 89/F05B
 
         .enc "SJIS"
         .text "ふつう　"
@@ -8563,12 +8719,14 @@
       .al
       .xl
 
-      rlUnknown89F065 ; 89/F065
+      rlOptionsMenuDrawValues ; 89/F065
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The value of each option beside its label; the enemy AI line only when it is shown (wOptionsMenuShowEnemyAI).
 
         lda #$3800
         sta aCurrentTilemapInfo,b
@@ -8578,9 +8736,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89F1B3+1,x
+        lda aOptionsMenuAnimationValues+1,x
         sta lR18+1
-        lda aUnknown89F1B3,x
+        lda aOptionsMenuAnimationValues,x
         sta lR18
         ldx #$040E
         jsl rlDrawMenuTextLine
@@ -8590,9 +8748,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89F180+1,x
+        lda aOptionsMenuOnOffValues+1,x
         sta lR18+1
-        lda aUnknown89F180,x
+        lda aOptionsMenuOnOffValues,x
         sta lR18
         ldx #$060E
         jsl rlDrawMenuTextLine
@@ -8602,9 +8760,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89F180+1,x
+        lda aOptionsMenuOnOffValues+1,x
         sta lR18+1
-        lda aUnknown89F180,x
+        lda aOptionsMenuOnOffValues,x
         sta lR18
         ldx #$080E
         jsl rlDrawMenuTextLine
@@ -8614,9 +8772,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89F186+1,x
+        lda aOptionsMenuMessageSpeedValues+1,x
         sta lR18+1
-        lda aUnknown89F186,x
+        lda aOptionsMenuMessageSpeedValues,x
         sta lR18
         ldx #$0A0E
         jsl rlDrawMenuTextLine
@@ -8626,9 +8784,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89F195+1,x
+        lda aOptionsMenuEnemySpeedValues+1,x
         sta lR18+1
-        lda aUnknown89F195,x
+        lda aOptionsMenuEnemySpeedValues,x
         sta lR18
         ldx #$0C0E
         jsl rlDrawMenuTextLine
@@ -8638,9 +8796,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89F19B+1,x
+        lda aOptionsMenuSoundValues+1,x
         sta lR18+1
-        lda aUnknown89F19B,x
+        lda aOptionsMenuSoundValues,x
         sta lR18
         ldx #$0E0E
         jsl rlDrawMenuTextLine
@@ -8650,9 +8808,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89F1A4+1,x
+        lda aOptionsMenuAutoSaveValues+1,x
         sta lR18+1
-        lda aUnknown89F1A4,x
+        lda aOptionsMenuAutoSaveValues,x
         sta lR18
         ldx #$100E
         jsl rlDrawMenuTextLine
@@ -8662,9 +8820,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89F1C2+1,x
+        lda aOptionsMenuAutoCursorValues+1,x
         sta lR18+1
-        lda aUnknown89F1C2,x
+        lda aOptionsMenuAutoCursorValues,x
         sta lR18
         ldx #$120E
         jsl rlDrawMenuTextLine
@@ -8676,9 +8834,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89F1BC+1,x
+        lda aOptionsMenuEnemyAIValues+1,x
         sta lR18+1
-        lda aUnknown89F1BC,x
+        lda aOptionsMenuEnemyAIValues,x
         sta lR18
         ldx #$140E
         jsl rlDrawMenuTextLine
@@ -8698,65 +8856,65 @@
       .al
       .xl
 
-      aUnknown89F180 ; 89/F180
+      aOptionsMenuOnOffValues ; 89/F180
 
-        ; Read by rlUnknown89F065.
+        ; Read by rlOptionsMenuDrawValues.
 
         .word $F8A3, $AD89, $89F8
 
         ; 89/F186
 
-      aUnknown89F186 ; 89/F186
+      aOptionsMenuMessageSpeedValues ; 89/F186
 
-        ; Read by rlUnknown89F065.
+        ; Read by rlOptionsMenuDrawValues.
 
         .byte $8F, $F8, $89, $93, $F8, $89, $97, $F8, $89, $9B, $F8, $89, $9F, $F8, $89
 
         ; 89/F195
 
-      aUnknown89F195 ; 89/F195
+      aOptionsMenuEnemySpeedValues ; 89/F195
 
-        ; Read by rlUnknown89F065.
+        ; Read by rlOptionsMenuDrawValues.
 
         .word $F1D0, $C889, $89F1
 
         ; 89/F19B
 
-      aUnknown89F19B ; 89/F19B
+      aOptionsMenuSoundValues ; 89/F19B
 
-        ; Read by rlUnknown89F065.
+        ; Read by rlOptionsMenuDrawValues.
 
         .byte $D8, $F1, $89, $E2, $F1, $89, $AD, $F8, $89
 
         ; 89/F1A4
 
-      aUnknown89F1A4 ; 89/F1A4
+      aOptionsMenuAutoSaveValues ; 89/F1A4
 
-        ; Read by rlUnknown89F065.
+        ; Read by rlOptionsMenuDrawValues.
 
         .byte $AD, $F8, $89, $0A, $F2, $89, $14, $F2, $89, $1E, $F2, $89, $28, $F2, $89
 
         ; 89/F1B3
 
-      aUnknown89F1B3 ; 89/F1B3
+      aOptionsMenuAnimationValues ; 89/F1B3
 
-        ; Read by rlUnknown89F065.
+        ; Read by rlOptionsMenuDrawValues.
 
         .byte $EC, $F1, $89, $F6, $F1, $89, $00, $F2, $89
 
         ; 89/F1BC
 
-      aUnknown89F1BC ; 89/F1BC
+      aOptionsMenuEnemyAIValues ; 89/F1BC
 
-        ; Read by rlUnknown89F065.
+        ; Read by rlOptionsMenuDrawValues.
 
         .word $F23C, $3289, $89F2
 
         ; 89/F1C2
 
-      aUnknown89F1C2 ; 89/F1C2
+      aOptionsMenuAutoCursorValues ; 89/F1C2
 
-        ; Read by rlUnknown89F065.
+        ; Read by rlOptionsMenuDrawValues.
 
         .word $F8A3, $AD89, $89F8, $CD82, $E282, $A282, $0000, $8A83
         .word $4183, $8B83, $0000, $5883, $6583, $8C83, $4983, $0000
@@ -8778,18 +8936,20 @@
       .al
       .xl
 
-      rlUnknown89F246 ; 89/F246
+      rlOptionsMenuDrawDescription ; 89/F246
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The description of the option under the cursor in the box at the top, drawn into the buffer at $7F842E and copied into five rows of the BG3 tilemap buffer, and the caption over its choices.
+
         lda #(`aOptionsMenuDescriptionTilemapEntry)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aOptionsMenuDescriptionTilemapEntry
         sta lMapMenuTilemapRAMEntryPointer,b
-        jsr rsUnknown89F620
+        jsr rsOptionsMenuClearDescription
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda $7F8400
@@ -8798,9 +8958,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89F338+1,x
+        lda aOptionsMenuDescriptionPointers+1,x
         sta lR18+1
-        lda aUnknown89F338,x
+        lda aOptionsMenuDescriptionPointers,x
         sta lR18
         ldx #$0000
         jsl rlDrawMenuTextLine
@@ -8871,9 +9031,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown89F579+1,x
+        lda aOptionsMenuChoiceCaptions+1,x
         sta lR18+1
-        lda aUnknown89F579,x
+        lda aOptionsMenuChoiceCaptions,x
         sta lR18
         ldx #$1215
         lda $7F842C
@@ -8899,53 +9059,53 @@
       .al
       .xl
 
-      aUnknown89F338 ; 89/F338
+      aOptionsMenuDescriptionPointers ; 89/F338
 
-        ; Read by rlUnknown89F246.
+        ; Read by rlOptionsMenuDrawDescription.
 
-        .long aUnknown89F353
-        .long aUnknown89F397
-        .long aUnknown89F3C5
-        .long aUnknown89F3F5
-        .long aUnknown89F42D
-        .long aUnknown89F45B
-        .long aUnknown89F4AF
-        .long aUnknown89F52F
-        .long aUnknown89F4FD
+        .long aOptionsMenuAnimationDescription
+        .long aOptionsMenuTerrainWindowDescription
+        .long aOptionsMenuUnitWindowDescription
+        .long aOptionsMenuMessageSpeedDescription
+        .long aOptionsMenuEnemySpeedDescription
+        .long aOptionsMenuSoundDescription
+        .long aOptionsMenuAutoSaveDescription
+        .long aOptionsMenuAutoCursorDescription
+        .long aOptionsMenuEnemyAIDescription
 
-      aUnknown89F353 ; 89/F353
+      aOptionsMenuAnimationDescription ; 89/F353
         .enc "SJIS"
           .text "アニメせってい　　　１ーリアル　　　　２ーマップ　　　　３ーこ部つ\n"
 
-      aUnknown89F397 ; 89/F397
+      aOptionsMenuTerrainWindowDescription ; 89/F397
         .enc "SJIS"
           .text "ちけいウィンドウ　ちけいウィンドウのひょうじ\n"
 
-      aUnknown89F3C5 ; 89/F3C5
+      aOptionsMenuUnitWindowDescription ; 89/F3C5
         .enc "SJIS"
           .text "ユニットウィンドウユニットウィンドウのひょうじ\n"
 
-      aUnknown89F3F5 ; 89/F3F5
+      aOptionsMenuMessageSpeedDescription ; 89/F3F5
         .enc "SJIS"
           .text "メッセージスピードメッセージを　　　ひょうじするはやさ\n"
 
-      aUnknown89F42D ; 89/F42D
+      aOptionsMenuEnemySpeedDescription ; 89/F42D
         .enc "SJIS"
           .text "てきいどうスピードてきのいどうする　スピード\n"
 
-      aUnknown89F45B ; 89/F45B
+      aOptionsMenuSoundDescription ; 89/F45B
         .enc "SJIS"
           .text "サウンドせってい　ＢＧＭのせってい　　１ーステレオ　　　２ーモノラル　　　３ーオフ\n"
 
-      aUnknown89F4AF ; 89/F4AF
+      aOptionsMenuAutoSaveDescription ; 89/F4AF
         .enc "SJIS"
           .text "オートセーブ　　　ターンのはじめに　えらんだファイルへじどうてきにセーブする\n"
 
-      aUnknown89F4FD ; 89/F4FD
+      aOptionsMenuEnemyAIDescription ; 89/F4FD
         .enc "SJIS"
           .text "てきのあたまのよさてきユニットの　　あたまのよさ\n"
 
-      aUnknown89F52F ; 89/F52F
+      aOptionsMenuAutoCursorDescription ; 89/F52F
         .enc "SJIS"
           .text "オートカーソル　　ターンのはじめに　しゅじんこうに　　カーソルをあわせる\n"
 
@@ -8959,9 +9119,9 @@
       .al
       .xl
 
-      aUnknown89F579 ; 89/F579
+      aOptionsMenuChoiceCaptions ; 89/F579
 
-        ; Read by rlUnknown89F246.
+        ; Read by rlOptionsMenuDrawDescription.
 
         .byte $BC, $F5, $89, $A8, $F5, $89, $A8, $F5, $89, $D0, $F5, $89, $94, $F5, $89, $E4
         .byte $F5, $89, $F8, $F5, $89, $A8, $F5, $89, $0C, $F6, $89, $81, $40, $82, $A2, $82
@@ -8985,12 +9145,14 @@
       .al
       .xl
 
-      rsUnknown89F620 ; 89/F620
+      rsOptionsMenuClearDescription ; 89/F620
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears the description buffer at $7F842E.
 
         lda #$0000
         tax
@@ -9015,23 +9177,25 @@
       .al
       .xl
 
-      rlUnknown89F630 ; 89/F630
+      rlOptionsMenuDrawCursor ; 89/F630
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The hand cursor at the option's row, 10 pixels up or down during a move.
+
         lda $7F8400
         tax
         lda $7F842C
         beq _F641
-        lda aUnknown89F66E,x
+        lda aOptionsMenuCursorYWithAI,x
         bra _F645
 
 
         _F641
-        lda aUnknown89F677,x
+        lda aOptionsMenuCursorY,x
 
         _F645
         and #$00FF
@@ -9070,17 +9234,17 @@
       .al
       .xl
 
-      aUnknown89F66E ; 89/F66E
+      aOptionsMenuCursorYWithAI ; 89/F66E
 
-        ; Read by rlUnknown89F630.
+        ; Read by rlOptionsMenuDrawCursor.
 
         .byte $23, $38, $4D, $62, $76, $8B, $A1, $B5, $CA
 
         ; 89/F677
 
-      aUnknown89F677 ; 89/F677
+      aOptionsMenuCursorY ; 89/F677
 
-        ; Read by rlUnknown89F630.
+        ; Read by rlOptionsMenuDrawCursor.
 
         .word $3B24, $6952, $9780, $C5AE
 
@@ -9094,12 +9258,14 @@
       .al
       .xl
 
-      rlUnknown89F67F ; 89/F67F
+      rlOptionsMenuDrawValueMarker ; 89/F67F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A marker under the chosen value in the choices line, at its X from aOptionsMenuValueMarkerX (also kept in $7F8548).
 
         phk
         plb
@@ -9114,7 +9280,7 @@
         clc
         adc wR0
         tax
-        lda @l aUnknown89F6BC,x
+        lda @l aOptionsMenuValueMarkerX,x
         and #$00FF
         sta wR0
         sta $7F8548
@@ -9144,9 +9310,9 @@
       .al
       .xl
 
-      aUnknown89F6BC ; 89/F6BC
+      aOptionsMenuValueMarkerX ; 89/F6BC
 
-        ; Read by rlUnknown89F67F.
+        ; Read by rlOptionsMenuDrawValueMarker.
 
         .byte $AC, $C4, $DC, $00, $00, $00, $00, $00, $A8, $DC, $00, $00, $00, $00, $00, $00
         .byte $A8, $DC, $00, $00, $00, $00, $00, $00, $A4, $B4, $C4, $D4, $E4, $00, $00, $00
@@ -9165,12 +9331,14 @@
       .al
       .xl
 
-      rlUnknown89F713 ; 89/F713
+      rlOptionsMenuDrawIcons ; 89/F713
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The column of option icons beside the labels; the enemy AI icon only when that option is shown.
 
         phk
         plb
@@ -9209,7 +9377,7 @@
         ; 89/F74B
 
 
-      aUnknown89F74B ; 89/F74B
+      aOptionsMenuIconsWithAI ; 89/F74B
 
         _Sprites := [[(  14,  -65), $21, SpriteLarge, $020, 3, 2, false, false]]
         _Sprites ..= [[(  14,  -44), $21, SpriteLarge, $022, 3, 2, false, false]]
@@ -9220,9 +9388,9 @@
         _Sprites ..= [[(  14,   61), $21, SpriteLarge, $02E, 3, 2, false, false]]
         _Sprites ..= [[(  14,   81), $21, SpriteLarge, $042, 3, 2, false, false]]
 
-        .structSpriteArray aUnknown89F74B._Sprites
+        .structSpriteArray aOptionsMenuIconsWithAI._Sprites
 
-      aUnknown89F775 ; 89/F775
+      aOptionsMenuIcons ; 89/F775
 
         _Sprites := [[(  14,  -63), $21, SpriteLarge, $020, 3, 2, false, false]]
         _Sprites ..= [[(  14,  -40), $21, SpriteLarge, $022, 3, 2, false, false]]
@@ -9233,13 +9401,13 @@
         _Sprites ..= [[(  14,   75), $21, SpriteLarge, $02E, 3, 2, false, false]]
         _Sprites ..= [[(  14,   98), $21, SpriteLarge, $042, 3, 2, false, false]]
 
-        .structSpriteArray aUnknown89F775._Sprites
+        .structSpriteArray aOptionsMenuIcons._Sprites
 
-      aUnknown89F79F ; 89/F79F
+      aOptionsMenuEnemyAIIcon ; 89/F79F
 
         _Sprites := [[(  14,  118), $21, SpriteLarge, $040, 3, 2, false, false]]
 
-        .structSpriteArray aUnknown89F79F._Sprites
+        .structSpriteArray aOptionsMenuEnemyAIIcon._Sprites
 
     .endsection Unsorted89F713Section
 
@@ -9249,12 +9417,14 @@
       .al
       .xl
 
-      rlUnknown89F7A6 ; 89/F7A6
+      rlOptionsMenuDrawSelectedIcon ; 89/F7A6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The icon of the option under the cursor, in the description box.
 
         phk
         plb
@@ -9262,7 +9432,7 @@
         lda $7F8400
         asl a
         tax
-        lda @l aUnknown89F7CD,x
+        lda @l aOptionsMenuIconTiles,x
         sta wR4
         stz wR0
         stz wR1
@@ -9289,9 +9459,9 @@
       .al
       .xl
 
-      aUnknown89F7CD ; 89/F7CD
+      aOptionsMenuIconTiles ; 89/F7CD
 
-        ; Read by rlUnknown89F7A6.
+        ; Read by rlOptionsMenuDrawSelectedIcon.
 
         .byte $20, $00, $22, $00, $24, $00, $26, $00, $2C, $00, $2A, $00, $2E, $00, $42, $00
         .byte $40, $00, $01, $00, $9F, $C2, $21, $00, $34
@@ -9306,12 +9476,14 @@
       .al
       .xl
 
-      rlUnknown89F7E6 ; 89/F7E6
+      rlOptionsMenuApplyValues ; 89/F7E6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Writes the values into the settings, as the menu leaves.
 
         lda wDebugMenuScreenIndex
         jsl rlSetBattleAnimationOption
@@ -9356,12 +9528,14 @@
       .al
       .xl
 
-      rlUnknown89F842 ; 89/F842
+      rlOptionsMenuRestoreValues ; 89/F842
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the values the menu opened with back over the current ones.
 
         lda wDebugMenuTemp3
         sta wDebugMenuScreenIndex
@@ -9395,56 +9569,56 @@
       .al
       .xl
 
-      aUnknown89F88B ; 89/F88B
+      aOptionsMenuText0 ; 89/F88B
 
         .enc "SJIS"
         .text "０"
         .word $0000
         .enc "none"
 
-      aUnknown89F88F ; 89/F88F
+      aOptionsMenuText1 ; 89/F88F
 
         .enc "SJIS"
         .text "１"
         .word $0000
         .enc "none"
 
-      aUnknown89F893 ; 89/F893
+      aOptionsMenuText2 ; 89/F893
 
         .enc "SJIS"
         .text "２"
         .word $0000
         .enc "none"
 
-      aUnknown89F897 ; 89/F897
+      aOptionsMenuText3 ; 89/F897
 
         .enc "SJIS"
         .text "３"
         .word $0000
         .enc "none"
 
-      aUnknown89F89B ; 89/F89B
+      aOptionsMenuText4 ; 89/F89B
 
         .enc "SJIS"
         .text "４"
         .word $0000
         .enc "none"
 
-      aUnknown89F89F ; 89/F89F
+      aOptionsMenuText5 ; 89/F89F
 
         .enc "SJIS"
         .text "５"
         .word $0000
         .enc "none"
 
-      aUnknown89F8A3 ; 89/F8A3
+      aOptionsMenuOnText ; 89/F8A3
 
         .enc "SJIS"
         .text "ＯＮ　　"
         .word $0000
         .enc "none"
 
-      aUnknown89F8AD ; 89/F8AD
+      aOptionsMenuOffText ; 89/F8AD
 
         .enc "SJIS"
         .text "ＯＦＦ　"
