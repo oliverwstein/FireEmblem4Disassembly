@@ -47,12 +47,11 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Emulator questions (for one batched session)
 
-From the castle wave; each is one screen in a castle's town or courtyard.
+From the castle wave; each is one screen in a castle's town or courtyard. (Answered: a sold item does appear in that castle's secondhand buy list.)
 
 1. Augury with a generation 1 unit: are there two topics (love, record)? With a generation 2 child: three (love, record, parents)? Confirms that `$7F8183` is the last topic index.
 2. In chapter 6, is the class change command grey in the courtyard?
 3. Item shop, second option (もちもの): does the keeper say the "look at my goods" line (Shop36)?
-4. Sell an item at a castle's secondhand shop, then choose buy there: is the item in the list?
 
 ## How to work on this project
 
