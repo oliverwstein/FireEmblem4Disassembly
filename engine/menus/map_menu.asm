@@ -1700,7 +1700,7 @@
         .autsiz
         .databank ?
 
-        ; Zero 10 bytes $0540..$0549 (menu option stack state)
+        ; Empties the menu option stack: zeroes lMenuOptionPointer..lMenuOptionListTop ($0540-$0549).
 
         phb
         php
@@ -1711,7 +1711,7 @@
         lda #0
         
           -
-          sta lUnknown0540,b,x
+          sta lMenuOptionPointer,b,x
           dec x
           bpl -
 
@@ -1739,7 +1739,10 @@
         .autsiz
         .databank ?
 
-        ; Push menu option container from lUnknown0540 onto $0547 stack with initial entries
+        ; Pushes a new menu option list. lMenuOptionPointer points at its template: +0 a word kept in the block,
+        ; +2 the capacity, +3 the number of initial options, then 5 bytes per option (X, Y, a long pointer
+        ; to its definition). The new block (allocated RAM) holds the word, the previous lMenuOptionListTop
+        ; and a RAM struct of 3-byte entries; it becomes lMenuOptionListTop and gets the initial options.
 
         phb
         php
@@ -1752,9 +1755,9 @@
         pha
         phx
         phy
-        ldx lUnknown0540,b
+        ldx lMenuOptionPointer,b
         sep #$20
-        lda lUnknown0540+2,b
+        lda lMenuOptionPointer+2,b
         pha
         rep #$20
         plb
@@ -1778,10 +1781,10 @@
         sta [lR25],y
         rep #$20
         ldy #$0002
-        lda lRAMAreaListHeadPointer,b
+        lda lMenuOptionListTop,b
         sta [lR25],y
         ldy #$0003
-        lda lRAMAreaListHeadPointer+1,b
+        lda lMenuOptionListTop+1,b
         sta [lR25],y
         lda lR25+1
         sta lR18+1
@@ -1796,9 +1799,9 @@
         sta wR1
         jsl rlBuildRAMStructHeader
         lda lR25
-        sta @l $000547
+        sta @l lMenuOptionListTop
         lda lR25+1
-        sta @l $000548
+        sta @l lMenuOptionListTop+1
         lda $0003,b,x
         and #$00FF
         beq _F2D8
@@ -1807,14 +1810,14 @@
         _F2AD
         lda $0004,b,x
         and #$00FF
-        sta wUnknown000543,b
+        sta wMenuOptionX,b
         lda $0005,b,x
         and #$00FF
-        sta wUnknown000545,b
+        sta wMenuOptionY,b
         lda $0006,b,x
-        sta lUnknown0540,b
+        sta lMenuOptionPointer,b
         lda $0007,b,x
-        sta lUnknown0540+1,b
+        sta lMenuOptionPointer+1,b
         jsl rlAddMenuOption
         inc x
         inc x
@@ -1855,7 +1858,8 @@
         .autsiz
         .databank ?
 
-        ; Free current $0547 menu option container + entries and restore previous container
+        ; Pops the top menu option list: frees its options and its block, and makes the block's saved
+        ; previous top the current lMenuOptionListTop.
 
         phb
         php
@@ -1864,8 +1868,8 @@
         .databank $82
         lda wR0
         pha
-        lda lRAMAreaListHeadPointer,b
-        ora lRAMAreaListHeadPointer+1,b
+        lda lMenuOptionListTop,b
+        ora lMenuOptionListTop+1,b
         beq _F33D
         jsl rlGetCurrentMenuOptionCount
         ora #$0000
@@ -1875,31 +1879,31 @@
         _F2FD
         lda wR0
         jsl rlSelectMenuOptionByIndex
-        lda lUnknown0540,b
+        lda lMenuOptionPointer,b
         sta lR25
-        lda lUnknown0540+1,b
+        lda lMenuOptionPointer+1,b
         sta lR25+1
         jsl rlRemoveRAMAreaEntry
         dec wR0
         bne _F2FD
 
         _F315
-        lda lRAMAreaListHeadPointer,b
+        lda lMenuOptionListTop,b
         sta lR25
-        lda lRAMAreaListHeadPointer+1,b
+        lda lMenuOptionListTop+1,b
         sta lR25+1
         jsl rlRemoveRAMAreaEntry
-        ldy lRAMAreaListHeadPointer,b
+        ldy lMenuOptionListTop,b
         sep #$20
-        lda lRAMAreaListHeadPointer+2,b
+        lda lMenuOptionListTop+2,b
         pha
         rep #$20
         plb
         .databank ?
         lda $0002,b,y
-        sta @l $000547
+        sta @l lMenuOptionListTop
         lda $0003,b,y
-        sta @l $000548
+        sta @l lMenuOptionListTop+1
 
         _F33D
         pla
@@ -1939,25 +1943,25 @@
         phy
         lda #$0007
         jsl rlAllocateRAMArea
-        ldx lUnknown0540,b
+        ldx lMenuOptionPointer,b
         sep #$20
-        lda lUnknown0540+2,b
+        lda lMenuOptionPointer+2,b
         pha
         rep #$20
         plb
         .databank ?
         ldy #$0000
-        lda lUnknown0540,b
+        lda lMenuOptionPointer,b
         sta [lR25],y
         ldy #$0001
-        lda lUnknown0540+1,b
+        lda lMenuOptionPointer+1,b
         sta [lR25],y
         sep #$20
         ldy #$0003
-        lda wUnknown000543,b
+        lda wMenuOptionX,b
         sta [lR25],y
         ldy #$0004
-        lda wUnknown000545,b
+        lda wMenuOptionY,b
         sta [lR25],y
         ldy #$0005
         lda $0003,b,x
@@ -2005,9 +2009,9 @@
         phk
         plb
         .databank $82
-        lda lRAMAreaListHeadPointer+1,b
+        lda lMenuOptionListTop+1,b
         sta lStructPointer2+1,b
-        lda lRAMAreaListHeadPointer,b
+        lda lMenuOptionListTop,b
         clc
         adc #$0005
         sta lStructPointer2,b
@@ -2044,7 +2048,7 @@
         .autsiz
         .databank ?
 
-        ; Load 1-based option index A pointer into lUnknown0540
+        ; Load 1-based option index A pointer into lMenuOptionPointer
 
         phb
         php
@@ -2055,9 +2059,9 @@
         jsl rlLoadCurrentMenuOptionRAMStruct
         jsl rlLoadRAMStructDataByIndex
         lda lStructPointer1,b
-        sta lUnknown0540,b
+        sta lMenuOptionPointer,b
         lda lStructPointer1+1,b
-        sta lUnknown0540+1,b
+        sta lMenuOptionPointer+1,b
         plp
         plb
         .databank $82
@@ -2089,7 +2093,7 @@
         plb
         phx
         phy
-        ldy lRAMAreaListHeadPointer,b
+        ldy lMenuOptionListTop,b
         sep #$20
         lda $0547+2,b
         pha
@@ -2116,9 +2120,9 @@
         phk
         plb
 
-        ldy lUnknown0540,b
+        ldy lMenuOptionPointer,b
         sep #$20
-        lda lUnknown0540+2,b
+        lda lMenuOptionPointer+2,b
         pha
         rep #$20
         plb
@@ -2183,7 +2187,7 @@
         .autsiz
         .databank ?
 
-        ; Call selected option callback from lUnknown0540 via rlCallIndirectRoutineFromTable (preserving lR18)
+        ; Call selected option callback from lMenuOptionPointer via rlCallIndirectRoutineFromTable (preserving lR18)
 
         lda lR18
         pha
@@ -2209,7 +2213,7 @@
         .autsiz
         .databank ?
 
-        ; Load 24-bit handler pointer pointer at [lUnknown0540]+0 into lR18
+        ; Load 24-bit handler pointer pointer at [lMenuOptionPointer]+0 into lR18
 
         phb
         php
@@ -2217,7 +2221,7 @@
         plb
         phx
 
-        ldx lUnknown0540,b
+        ldx lMenuOptionPointer,b
         sep #$20
         lda $0540+2,b
         pha
@@ -2253,7 +2257,7 @@
         .autsiz
         .databank ?
 
-        ; Load packed X/Y coordinate word at [lUnknown0540]+3 into A
+        ; Load packed X/Y coordinate word at [lMenuOptionPointer]+3 into A
 
         phb
         php
@@ -2261,9 +2265,9 @@
         plb
         .databank $82
         phx
-        ldx lUnknown0540,b
+        ldx lMenuOptionPointer,b
         sep #$20
-        lda lUnknown0540+2,b
+        lda lMenuOptionPointer+2,b
         pha
         rep #$20
         plb

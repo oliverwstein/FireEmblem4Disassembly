@@ -4449,9 +4449,9 @@
             jsl rlSendSoundCommand
 
         +
-        lda #(`procUnknown828865)<<8
+        lda #(`procEvent5DFadeOut)<<8
         sta lR44+1
-        lda #<>procUnknown828865
+        lda #<>procEvent5DFadeOut
         sta lR44
         jsl rlEventEngineCreateProc
 

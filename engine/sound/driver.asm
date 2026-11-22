@@ -1207,9 +1207,9 @@
         dec a
         asl a
         tax
-        lda $95A9,b,x
+        lda <>aSoundBattleStructOffsets2,b,x
         tay
-        lda $95A1,b,x
+        lda <>aSoundBattleStructOffsets,b,x
         tax
         lda $7E4EA9,x
         cmp #$FFFF
@@ -1282,7 +1282,7 @@
         dec a
         asl a
         tax
-        lda $95A1,b,x
+        lda <>aSoundBattleStructOffsets,b,x
         tax
         ldy #$0140
         lda $7E4EA9,x
@@ -1438,10 +1438,10 @@
         .autsiz
         .databank ?
 
-        ; X = terrain: returns its offset into aSoundTerrainUploads (table at $80/95AD);
+        ; X = terrain: returns its offset into aSoundTerrainUploads (from aSoundTerrainGroups);
         ; in chapter 4 every terrain but two counts as $10.
 
-        lda $95AD,b,x
+        lda <>aSoundTerrainGroups,b,x
         and #$001C
         tax
         lda @l wCurrentChapter
@@ -1461,11 +1461,25 @@
         ; 80/95A1
 
 
-      aSoundIndirectTerrainData ; 80/95A1
+      aSoundBattleStructOffsets ; 80/95A1
 
-        .word $0094, $0034, $0076, $0016, $0000, $00A0, $0400, $0000
-        .word $0804, $0000, $0C08, $0C0C, $0C0C, $1400, $0000, $0000
-        .word $0000, $0C00, $0000, $0000, $0000, $0000
+        ; Offsets into the battle struct at $7E4EA9 that the sound script's
+        ; indirect commands read, by command argument 1-4.
+        .word $0094, $0034, $0076, $0016
+
+      aSoundBattleStructOffsets2 ; 80/95A9
+
+        ; Read beside aSoundBattleStructOffsets for arguments 1 and 2.
+        .word $0000, $00A0
+
+      aSoundTerrainGroups ; 80/95AD
+
+        ; One byte per terrain type ($00-$1F): its offset into the terrain
+        ; sound uploads (masked with $1C by rsGetSoundTerrainOffset).
+        .byte $00, $04, $00, $00, $04, $08, $00, $00
+        .byte $08, $0C, $0C, $0C, $0C, $0C, $00, $14
+        .byte $00, $00, $00, $00, $00, $00, $00, $0C
+        .byte $00, $00, $00, $00, $00, $00, $00, $00
 
     .endsection Unsorted8094E2Section
 

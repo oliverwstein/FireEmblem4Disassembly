@@ -400,10 +400,10 @@
     .bend
     wUnknown053C .word ?                    ; $00053C
     wUnknown053E .word ?                    ; $00053E
-    lUnknown0540 .long ?                    ; $000540
-    wUnknown000543 .word ?                  ; $000543 ; saved X/width parameter for RAM entry creation
-    wUnknown000545 .word ?                  ; $000545 ; Y/count parameter
-    lRAMAreaListHeadPointer .long ?         ; $000547 ; 24-bit pointer to linked RAM area entry
+    lMenuOptionPointer .long ?                    ; $000540 ; the menu option list template (rlPushMenuOptionList), option definition (rlAddMenuOption) or selected option (rlSelectMenuOptionByIndex)
+    wMenuOptionX .word ?                  ; $000543 ; X of the option rlAddMenuOption adds
+    wMenuOptionY .word ?                  ; $000545 ; Y of the option rlAddMenuOption adds
+    lMenuOptionListTop .long ?         ; $000547 ; the current (top) menu option list; each list block keeps the previous top at +2, so the lists form a stack
 
   .endvirtual
 

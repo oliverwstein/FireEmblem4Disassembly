@@ -292,13 +292,13 @@
         .databank ?
 
         lda $000C,b,y
-        sta lUnknown0540,b
+        sta lMenuOptionPointer,b
         lda $000D,b,y
-        sta lUnknown0540+1,b
+        sta lMenuOptionPointer+1,b
         jsl rlPushMenuOptionList
-        lda lRAMAreaListHeadPointer,b
+        lda lMenuOptionListTop,b
         sta aProcSystem.aBody4,b,x
-        lda lRAMAreaListHeadPointer+1,b
+        lda lMenuOptionListTop+1,b
         sta aProcSystem.aBody5,b,x
         lda #$0001
         sta aProcSystem.aBody6,b,x
@@ -381,10 +381,10 @@
         bit #$000F
         bne _8539
         lda aProcSystem.aBody5,b,x
-        cmp lRAMAreaListHeadPointer+1,b
+        cmp lMenuOptionListTop+1,b
         bne _8539
         lda aProcSystem.aBody4,b,x
-        cmp lRAMAreaListHeadPointer,b
+        cmp lMenuOptionListTop,b
         bne _8539
         lda #$0000
         rtl
@@ -17211,8 +17211,8 @@
         lda aProcSystem.aBody7,b,x
         sta aProcSystem.wInput0,b
         lda #$0001
-        sta wUnknown000543,b
-        sta wUnknown000545,b
+        sta wMenuOptionX,b
+        sta wMenuOptionY,b
         phx
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
@@ -17227,9 +17227,9 @@
         plx
         bcc _E24B
         lda #$85E2
-        sta lUnknown0540+1,b
+        sta lMenuOptionPointer+1,b
         lda $E2AF,b,x
-        sta lUnknown0540,b
+        sta lMenuOptionPointer,b
         jsr rsUnknown85E332
 
         _E24B
@@ -17350,9 +17350,9 @@
         .databank $85
         phx
         phy
-        ldy lRAMAreaListHeadPointer,b
+        ldy lMenuOptionListTop,b
         sep #$20
-        lda lRAMAreaListHeadPointer+2,b
+        lda lMenuOptionListTop+2,b
         pha
         rep #$20
         plb
@@ -17369,16 +17369,16 @@
         rep #$20
         plb
         .databank ?
-        lda @l $000547
+        lda @l lMenuOptionListTop
         sta $0002,b,x
-        lda @l $000548
+        lda @l lMenuOptionListTop+1
         sta $0003,b,x
         plb
         .databank ?
         lda $0002,b,y
-        sta @l $000547
+        sta @l lMenuOptionListTop
         lda $0003,b,y
-        sta @l $000548
+        sta @l lMenuOptionListTop+1
         lda #$0000
         sta $0002,b,y
         sta $0003,b,y
@@ -17403,8 +17403,8 @@
         .databank ?
 
         jsl rlAddMenuOption
-        inc wUnknown000545,b
-        inc wUnknown000545,b
+        inc wMenuOptionY,b
+        inc wMenuOptionY,b
         rts
 
         .databank 0
@@ -18716,8 +18716,8 @@
         lda #$20FF
         sta wUnknown053C,b
         lda #$0001
-        sta wUnknown000543,b
-        sta wUnknown000545,b
+        sta wMenuOptionX,b
+        sta wMenuOptionY,b
         phx
         jsl rlUnknown84F8D9
         ldx #$0002
@@ -18728,9 +18728,9 @@
         plx
         bcc _EA1C
         lda #$85EA
-        sta lUnknown0540+1,b
+        sta lMenuOptionPointer+1,b
         lda $EA3E,b,x
-        sta lUnknown0540,b
+        sta lMenuOptionPointer,b
         jsr rsUnknown85E332
 
         _EA1C

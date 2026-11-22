@@ -361,11 +361,10 @@
         .autsiz
         .databank ?
 
-        ; Duplicate bank $88 code checksum verifier; traps on mismatch (noted in Checksums.h)
-
-        ; Another copy of the code checksum check. Nothing in the built code
-        ; calls it yet. When a sum does not match, it calls $878063 and the
-        ; routines below.
+        ; Another copy of the code checksum check (include/Checksums.h), with its
+        ; sums in aCodeChecksumsCopy88. The save menu screen calls it (bank $91,
+        ; twice) and rsStartChapterMap calls into its middle (._806A). When a sum
+        ; does not match, it calls $878063 and the routines below.
 
         pha
         lda aCodeChecksumsCopy88.ChecksEnabled

@@ -488,7 +488,7 @@
         .autsiz
         .databank ?
 
-        ; Mark procUnknown828865 non-blocking ($0200) in wEventProcBanks
+        ; Mark procEvent5DFadeOut non-blocking ($0200) in wEventProcBanks
 
         lda #$0200
         sta wEventProcBanks,b,x
@@ -802,9 +802,9 @@
       .al
       .xl
 
-      procEventWaitMemorialEnd ; 82/8BC8
+      procEventWaitProcUnknown88E02B ; 82/8BC8
 
-        .structProcInfo "ME", rlProcEventWaitMemorialEndInit, rlProcEventWaitMemorialEndCycle, aProcEventWaitMemorialEndCode
+        .structProcInfo "ME", rlProcEventWaitProcUnknown88E02BInit, rlProcEventWaitProcUnknown88E02BCycle, aProcEventWaitProcUnknown88E02BCode
 
     .endsection Unsorted828BC8Section
 
@@ -814,14 +814,14 @@
       .al
       .xl
 
-      rlProcEventWaitMemorialEndInit ; 82/8BD2
+      rlProcEventWaitProcUnknown88E02BInit ; 82/8BD2
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Empty rtl init for procEventWaitMemorialEnd
+        ; Empty rtl init for procEventWaitProcUnknown88E02B
 
         rtl
 
@@ -829,7 +829,7 @@
 
         ; 82/8BD3
 
-      rlProcEventWaitMemorialEndCycle ; 82/8BD3
+      rlProcEventWaitProcUnknown88E02BCycle ; 82/8BD3
 
         .al
         .xl
@@ -861,7 +861,7 @@
       .al
       .xl
 
-      aProcEventWaitMemorialEndCode ; 82/8BE8
+      aProcEventWaitProcUnknown88E02BCode ; 82/8BE8
 
         PROC_HALT
 
@@ -969,23 +969,23 @@
       .al
       .xl
 
-      rlStartBelhallaMemorialAndWaitProc ; 82/94CF
+      rlCreateProcUnknown88E02BAndWait ; 82/94CF
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Create procUnknown88E02B (Ch5 ending memorial) and wait procEventWaitMemorialEnd
+        ; Creates procUnknown88E02B and an event proc that waits until it ends. Only the chapter 5 ending event runs it, right after rlASMCArvisAttacksSigurd.
 
         lda #(`procUnknown88E02B)<<8
         sta lR44+1
         lda #<>procUnknown88E02B
         sta lR44
         jsl rlProcEngineCreateProc
-        lda #(`procEventWaitMemorialEnd)<<8
+        lda #(`procEventWaitProcUnknown88E02B)<<8
         sta lR44+1
-        lda #<>procEventWaitMemorialEnd
+        lda #<>procEventWaitProcUnknown88E02B
         sta lR44
         jsl rlEventEngineCreateProc
         rtl

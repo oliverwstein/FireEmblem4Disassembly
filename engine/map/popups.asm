@@ -266,7 +266,7 @@
       .al
       .xl
 
-      procUnknown828865 ; 82/8865
+      procEvent5DFadeOut ; 82/8865
 
         .structProcInfo "TT", rlProcEvent5DFadeOutInit, rlProcEvent5DFadeOutCycle1, aProcEvent5DFadeOutCode
 
