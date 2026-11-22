@@ -1961,14 +1961,14 @@
       .al
       .xl
 
-      rlTitleMenuStub ; 91/D616
+      rlSaveMenuUpkeep ; 91/D616
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $04: no-op rtl stub for title/save/chapter intro
+        ; Game state routine $04, every frame while the save menu screen is up: does nothing.
 
         rtl
 
@@ -1976,14 +1976,14 @@
 
         ; 91/D617
 
-      rlTitleMenuShow ; 91/D617
+      rlSaveMenuSetup ; 91/D617
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $05: advance wGameStateRoutine1 to GAMESTATE_TITLE_MENU_RUN_STEP
+        ; Game state routine $05, once: moves on to $06. The callers set wGameStateStep themselves.
 
         inc wGameStateRoutine1,b
         rtl
@@ -1992,14 +1992,14 @@
 
         ; 91/D61B
 
-      rlTitleMenuRunStep ; 91/D61B
+      rlSaveMenuStep ; 91/D61B
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $06: dispatch title screen, save menu, and chapter intro steps
+        ; Game state routine $06, every frame: runs the routine for wGameStateStep from aUnknown91D62A. One screen hosts the save select (from the opening, step 2), the map save (step $23) and the chapter intro title card (step $24).
 
         phb
         php
@@ -2029,7 +2029,7 @@
 
       aUnknown91D62A ; 91/D62A
 
-        ; Jump table of rlTitleMenuRunStep.
+        ; Jump table of rlSaveMenuStep.
         .word <>rsUnknown91D844
         .word $D853
         .word <>rsUnknown91D8A0
@@ -4703,9 +4703,9 @@
         .autsiz
         .databank ?
 
-        lda #$0004
+        lda #GAMESTATE_SAVE_MENU_UPKEEP
         sta wGameStateRoutine2,b
-        lda #$0005
+        lda #GAMESTATE_SAVE_MENU_SETUP
         sta wGameStateRoutine1,b
         lda #<>rsRunSaveMenuVBlank
         sta wVBlankPointer
@@ -5804,7 +5804,7 @@
         lda #$80
         sta bBufferINIDISP
         rep #$20
-        lda #$0000
+        lda #GAMESTATE_NONE
         sta wGameStateRoutine1,b
         lda #$AEEA
         sta aProcSystem.wInput0,b

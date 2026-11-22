@@ -23,7 +23,7 @@
         tsb bUnknown000E7B,b
 
         lda wGameStateRoutine1,b
-        cmp #18
+        cmp #GAMESTATE_MAP_STEP
         bne +
 
           lda wGameStateStep,b

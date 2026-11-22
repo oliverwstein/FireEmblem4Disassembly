@@ -6,7 +6,7 @@
       .al
       .xl
 
-      rlGameStateStub ; 80/9B00
+      rlGameStateNone ; 80/9B00
 
         .al
         .xl
@@ -31,34 +31,34 @@
 
       aGameStateRoutines ; 80/9B01
 
-        .long rlGameStateStub
-        .long rlOpeningLogoStub
-        .long rlOpeningLogoWaitStartAndAdvance
-        .long rlOpeningLogoRunStep
-        .long rlTitleMenuStub
-        .long rlTitleMenuShow
-        .long rlTitleMenuRunStep
-        .long rlUnitScreenRender
-        .long rlUnitScreenShow
-        .long rlUnitScreenRunStep
-        .long rlCastleScreenIdle
-        .long rlCastleScreenShow
-        .long rlCastleScreenRunStep
-        .long rlWorldMapUpdateScroll
-        .long rlWorldMapShow
-        .long rlWorldMapRunStep
-        .long rlMapRender
-        .long rlMapShow
-        .long rlMapRunStep ; event main loop routine?
-        .long rlUnusedGameState13Stub
-        .long rlUnusedGameState14Stub
-        .long rlUnusedGameState15Stub
-        .long rlInitUnusedGameState16RAMArea
-        .long rlUnusedGameState17Stub
-        .long rlBattleSceneShow
-        .long rlBattleSceneRunFrame
-        .long rlDemoBattleInit
-        .long rlDemoBattleRunFrame
+        .long rlGameStateNone
+        .long rlOpeningLogoUpkeep
+        .long rlOpeningLogoSetup
+        .long rlOpeningLogoStep
+        .long rlSaveMenuUpkeep
+        .long rlSaveMenuSetup
+        .long rlSaveMenuStep
+        .long rlStatusScreenUpkeep
+        .long rlStatusScreenSetup
+        .long rlStatusScreenStep
+        .long rlCastleScreenUpkeep
+        .long rlCastleScreenSetup
+        .long rlCastleScreenStep
+        .long rlWorldMapUpkeep
+        .long rlWorldMapSetup
+        .long rlWorldMapStep
+        .long rlMapUpkeep
+        .long rlMapSetup
+        .long rlMapStep
+        .long rlUnusedGameState13
+        .long rlUnusedGameState14
+        .long rlUnusedGameState15
+        .long rlUnusedScreenSetup
+        .long rlUnusedScreenStep
+        .long rlBattleSceneSetup
+        .long rlBattleSceneStep
+        .long rlMapBattleSetup
+        .long rlMapBattleStep
         .long aUnused9FFACC ; unused: points into zero padding
         .long aUnused9FFACC ; unused: points into zero padding
         .long aUnused9FFACC ; unused: points into zero padding
@@ -70,23 +70,23 @@
         .long rlItemWindowShow
         .long rlItemWindowRunStep
         .long rlDebugMenuTabInputHandler
-        .long rlDebugMenuShow
+        .long rlDebugMenuSetup
         .long rlDebugMenuPageInputHandler
-        .long rlOptionsMenuRender
-        .long rlOptionsMenuShow
-        .long rlOptionsMenuRunStep
+        .long rlOptionsMenuUpkeep
+        .long rlOptionsMenuSetup
+        .long rlOptionsMenuStep
         .long rlSkillWindowRender
         .long rlSkillWindowShow
         .long rlSkillWindowRunStep
         .long rlDataWindowRender
         .long rlDataWindowShow
         .long rlDataWindowRunStep
-        .long rlReviveScreenRender
-        .long rlReviveScreenShow
-        .long rlReviveScreenRunStep
-        .long rlEpilogueStub
-        .long rlEpilogueShow
-        .long rlEpilogueRunStep
+        .long rlReviveScreenUpkeep
+        .long rlReviveScreenSetup
+        .long rlReviveScreenStep
+        .long rlEpilogueUpkeep
+        .long rlEpilogueSetup
+        .long rlEpilogueStep
 
       rlRunGameStateRoutines ; 80/9BA9
 

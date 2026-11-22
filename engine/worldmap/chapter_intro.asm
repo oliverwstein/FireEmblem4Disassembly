@@ -53,9 +53,9 @@
 
         lda #$0024
         sta wGameStateStep,b
-        lda #5
+        lda #GAMESTATE_SAVE_MENU_SETUP
         sta wGameStateRoutine1,b
-        lda #4
+        lda #GAMESTATE_SAVE_MENU_UPKEEP
         sta wGameStateRoutine2,b
 
         lda #<>rsRunFrameTasks

@@ -1259,14 +1259,14 @@
       .al
       .xl
 
-      rlWorldMapUpdateScroll ; 8B/96CF
+      rlWorldMapUpkeep ; 8B/96CF
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $0D: sync BG1/BG3 world map scroll offsets
+        ; Game state routine $0D, every frame while the world map is up: copies the map scroll to the BG1 and BG3 scroll registers (BG3 X only by its low 4 bits, less 8).
 
         lda wMapScrollXPixels,b
         sta wBufferBG1HOFS
@@ -1283,14 +1283,14 @@
 
         ; 8B/96E5
 
-      rlWorldMapShow ; 8B/96E5
+      rlWorldMapSetup ; 8B/96E5
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $0E: initialize world map RAM area and active sprites
+        ; Game state routine $0E, once: builds the RAM area at $7F5709, clears $7F4400-$7F5708, turns on active sprites and moves on to $0F at step 0.
 
         lda #$7F00
         sta lR18+1
@@ -1317,14 +1317,14 @@
 
         ; 8B/9717
 
-      rlWorldMapRunStep ; 8B/9717
+      rlWorldMapStep ; 8B/9717
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $0F: dispatch world map step handler
+        ; Game state routine $0F, every frame: runs the routine for wGameStateStep from aUnknown8B9726.
 
         phb
         php
@@ -1354,7 +1354,7 @@
 
       aUnknown8B9726 ; 8B/9726
 
-        ; Jump table of rlWorldMapRunStep.
+        ; Jump table of rlWorldMapStep.
         .word <>rsUnknown8B9759
         .word <>rsUnknown8B972C
         .word <>rsUnknown8B973C
@@ -1648,14 +1648,14 @@
       .al
       .xl
 
-      rlUnusedGameState13Stub ; 8B/A7CB
+      rlUnusedGameState13 ; 8B/A7CB
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $13: unused rtl stub in bank $8B
+        ; Game state routine $13: does nothing; nothing selects it.
 
         rtl
 
@@ -1663,14 +1663,14 @@
 
         ; 8B/A7CC
 
-      rlUnusedGameState14Stub ; 8B/A7CC
+      rlUnusedGameState14 ; 8B/A7CC
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $14: unused rtl stub in bank $8B
+        ; Game state routine $14: does nothing; nothing selects it.
 
         rtl
 
@@ -1678,14 +1678,14 @@
 
         ; 8B/A7CD
 
-      rlUnusedGameState15Stub ; 8B/A7CD
+      rlUnusedGameState15 ; 8B/A7CD
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $15: unused rtl stub in bank $8B
+        ; Game state routine $15: does nothing; nothing selects it.
 
         rtl
 

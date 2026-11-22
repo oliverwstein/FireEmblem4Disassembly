@@ -13122,7 +13122,7 @@
         lda #$0F
         sta bBufferINIDISP
         rep #$20
-        lda #$0012
+        lda #GAMESTATE_MAP_STEP
         sta wGameStateRoutine1,b
         rtl
 

@@ -118,9 +118,9 @@
         jsl rlResetRAMStructAndAreaVariables
         jsl rlUnknown8780AA
         jsl rlResetMenuOptionStack
-        lda #$000B
+        lda #GAMESTATE_CASTLE_SCREEN_SETUP
         sta wGameStateRoutine1,b
-        lda #$000A
+        lda #GAMESTATE_CASTLE_SCREEN_UPKEEP
         sta wGameStateRoutine2,b
         lda #<>rsRunCastleScreenVBlank
         sta wVBlankPointer

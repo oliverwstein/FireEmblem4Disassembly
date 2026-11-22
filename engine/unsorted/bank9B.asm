@@ -1119,14 +1119,14 @@
       .al
       .xl
 
-      rlDemoBattleInit ; 9B/DC24
+      rlMapBattleSetup ; 9B/DC24
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $1A: initialize attract-mode demo battle
+        ; Game state routine $1A, once: blanks the screen, resets procs and HDMA, sets up the map battle (bank $95/$9B helpers) and moves on to $1B. Selected by rsOpenMapBattle.
 
         sep #$20
         lda #$80
@@ -1185,14 +1185,14 @@
 
         ; 9B/DCBB
 
-      rlDemoBattleRunFrame ; 9B/DCBB
+      rlMapBattleStep ; 9B/DCBB
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $1B: run attract-mode demo battle frame
+        ; Game state routine $1B, every frame: runs one of three map battle phases by $7FD000 (0, 1, other) and counts frames in $7FD001 and $7FE09E.
 
         sep #$20
         lda $7FD075

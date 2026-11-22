@@ -105,7 +105,7 @@ This is a *State* machine in its most stripped-down form: no objects and no inte
 
 **What about the nested menus?** A Fire Emblem turn is a chain of choices: unit, then destination, then action, then item, then confirm, with a way back at every step. A stack is the natural way to build that. The game-state table isn't it: it holds one screen at a time, with no history. How the map's menus remember the way back has not been worked out yet. One lead is a small "menu option" list that `rlPushMenuOptionList` builds in a block of allocated RAM ([engine/menus/map_menu.asm](../../engine/menus/map_menu.asm)). Each block records the previous allocation, which would make the blocks a stack. That reading, and the routine's name, are still unconfirmed.
 
-> The names of the individual game-state routines are recent and still being checked; treat them as labels, not proof.
+The routines are named after their role, `rl<Screen>Upkeep`, `rl<Screen>Setup` and `rl<Screen>Step` (the chapter map's are `rlMapUpkeep`, `rlMapSetup`, `rlMapStep`), and [include/GameStates.h](../../include/GameStates.h) gives each entry a constant such as `GAMESTATE_MAP_STEP`. A few screens break the pattern: the battle scene and the map battle have only a setup and a step, and the screens built earlier in the project (the unit, item, skill and data windows) keep names that say what their routines do.
 
 ## Procs: sixteen tiny threads
 

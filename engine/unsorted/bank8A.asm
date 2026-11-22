@@ -5,14 +5,14 @@
       .al
       .xl
 
-      rlCastleScreenIdle ; 8A/8000
+      rlCastleScreenUpkeep ; 8A/8000
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $0A: castle screen idle/Routine2 check
+        ; Game state routine $0A, every frame while the castle screen is up: does nothing in effect. It compares wCastleCursorState with 2 and 3, but every path returns.
 
         lda wCastleCursorState,b
         cmp #$0002
@@ -35,7 +35,7 @@
       .al
       .xl
 
-      rlCastleScreenShow ; 8A/800E
+      rlCastleScreenSetup ; 8A/800E
 
         ; Found by tools/sweep.py.
         .al
@@ -43,7 +43,7 @@
         .autsiz
         .databank ?
 
-        ; GameState $0B: initialize castle RAM area, active sprites, and fade-in
+        ; Game state routine $0B, once: builds the RAM area at $7FB16C; unless wCastleScreenHandler is 2, turns on active sprites and fades in (else stays blank); zeroes the BG scroll unless wBaseSceneMode is 4; moves on to $0C.
 
         lda #$7F00
         sta lR18+1
@@ -98,14 +98,14 @@
       .al
       .xl
 
-      rlCastleScreenRunStep ; 8A/8061
+      rlCastleScreenStep ; 8A/8061
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $0C: dispatch castle interior/facility step
+        ; Game state routine $0C, every frame: rlUnknown81B15A, rlUnknown81ADD8, then the routine for wGameStateStep from aUnknown8A8078.
 
         phb
         php
@@ -137,7 +137,7 @@
 
       aUnknown8A8078 ; 8A/8078
 
-        ; Jump table of rlCastleScreenRunStep.
+        ; Jump table of rlCastleScreenStep.
         .word <>rsUnknown8A80A6
         .word <>rsUnknown8A80BD
         .word <>rsUnknown8A80C2

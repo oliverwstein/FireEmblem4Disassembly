@@ -4394,9 +4394,9 @@
         stz aSave.wMenuOperation,b
         jsl rlUnknown91E52B
         jsl rlUnknown91D6EC
-        lda #$0004
+        lda #GAMESTATE_SAVE_MENU_UPKEEP
         sta wGameStateRoutine2,b
-        lda #$0005
+        lda #GAMESTATE_SAVE_MENU_SETUP
         sta wGameStateRoutine1,b
         lda #$0002
         sta wGameStateStep,b
@@ -4444,9 +4444,9 @@
         jsl rlResetMenuOptionStack
         lda #$00FF
         sta wUnknown053E,b
-        lda #$0004
+        lda #GAMESTATE_SAVE_MENU_UPKEEP
         sta wGameStateRoutine2,b
-        lda #$0006
+        lda #GAMESTATE_SAVE_MENU_STEP
         sta wGameStateRoutine1,b
         lda #$0023
         sta wGameStateStep,b

@@ -1,4 +1,4 @@
-; Unused Mode $09 screen setup and game states $16/$17 stubs.
+; Unused screen (BG mode $09 setup, game states $16/$17), reached by nothing.
 
 
     .section Unsorted80C162Section
@@ -14,7 +14,7 @@
         .autsiz
         .databank ?
 
-        ; VBlank routine omitting rlUpdateSound, installed by rsOpenUnusedGameState16Screen
+        ; VBlank routine omitting rlUpdateSound, installed by rsOpenUnusedScreen
 
         sep #$20
         lda #$80
@@ -47,14 +47,14 @@
       .al
       .xl
 
-      rlInitUnusedGameState16RAMArea ; 80/C1A0
+      rlUnusedScreenSetup ; 80/C1A0
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Game state $16: inits $5AFF RAM area at $7FA500, advances wGameStateRoutine1 to $17, zeroes step
+        ; Game state routine $16, once: builds a $5AFF-byte RAM area at $7FA500 and moves on to $17. Only rsOpenUnusedScreen, itself unreferenced, selects it.
 
         php
         lda #$7F00
@@ -80,14 +80,14 @@
       .al
       .xl
 
-      rlUnusedGameState17Stub ; 80/C1CA
+      rlUnusedScreenStep ; 80/C1CA
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Game state $17: no-op rtl stub
+        ; Game state routine $17, every frame: does nothing.
 
         rtl
 
@@ -103,7 +103,7 @@
       .as
       .xs
 
-      rsOpenUnusedGameState16Screen ; 80/C39A
+      rsOpenUnusedScreen ; 80/C39A
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -125,7 +125,7 @@
         jsl rlUnknown80C32C
         jsl rlResetRAMStructAndAreaVariables
         jsl rlUnknown8780AA
-        lda #$0016
+        lda #GAMESTATE_UNUSED_SCREEN_SETUP
         sta wGameStateRoutine1,b
         stz wGameStateStep,b
         stz wGameStateRoutine2,b

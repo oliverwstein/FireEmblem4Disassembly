@@ -69,9 +69,9 @@
         jsl rlUnknown89F065
         lda #$0000
         sta wGameStateStep,b
-        lda #$002A
+        lda #GAMESTATE_OPTIONS_MENU_SETUP
         sta wGameStateRoutine1,b
-        lda #$0029
+        lda #GAMESTATE_OPTIONS_MENU_UPKEEP
         sta wGameStateRoutine2,b
         lda #<>rsRunFrameTasks
         sta wMainLoopPointer

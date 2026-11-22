@@ -104,9 +104,9 @@
         sta lR44
         jsl rlUnknown82E0C6
         jsl rlUnknown82E08D
-        lda #$000E
+        lda #GAMESTATE_WORLD_MAP_SETUP
         sta wGameStateRoutine1,b
-        lda #$000D
+        lda #GAMESTATE_WORLD_MAP_UPKEEP
         sta wGameStateRoutine2,b
         stz wGameStateStep,b
         lda #<>rsWorldMapVBlank

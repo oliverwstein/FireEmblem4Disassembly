@@ -72,9 +72,9 @@
         jsr rsUnitWindowSetHDMA
         jsr rsUnitWindowBuildList
         jsl rlUnknown88DE1B
-        lda #$0021
+        lda #GAMESTATE_UNIT_WINDOW_SETUP
         sta wGameStateRoutine1,b
-        lda #$0020
+        lda #GAMESTATE_UNIT_WINDOW_UPKEEP
         sta wGameStateRoutine2,b
         lda #<>rsRunFrameTasks
         sta wMainLoopPointer

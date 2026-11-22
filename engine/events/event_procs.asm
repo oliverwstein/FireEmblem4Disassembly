@@ -35,7 +35,7 @@
         php
         phb
         lda wGameStateRoutine1,b
-        cmp #$0012
+        cmp #GAMESTATE_MAP_STEP
         beq +
 
           cmp #$000F
@@ -761,12 +761,12 @@
         .autsiz
         .databank ?
 
-        ; Free event proc once wGameStateRoutine1 is outside $0018..$001B
+        ; Frees the event proc once wGameStateRoutine1 is no longer one of the battle entries ($18-$1B: the battle scene or the map battle).
 
         lda wGameStateRoutine1,b
-        cmp #$0018
+        cmp #GAMESTATE_BATTLE_SCENE_SETUP
         bcc _8BC1
-        cmp #$001C
+        cmp #GAMESTATE_MAP_BATTLE_STEP+1
         bcc _8BC5
 
         _8BC1

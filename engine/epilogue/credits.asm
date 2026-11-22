@@ -337,9 +337,9 @@
         jsl rlResetRAMStructAndAreaVariables
         jsl rlUnknown8780AA
         jsl rlResetMenuOptionStack
-        lda #$0036
+        lda #GAMESTATE_EPILOGUE_SETUP
         sta wGameStateRoutine1,b
-        lda #$0035
+        lda #GAMESTATE_EPILOGUE_UPKEEP
         sta wGameStateRoutine2,b
         stz wGameStateStep,b
         lda #<>rsRunEpilogueVBlank

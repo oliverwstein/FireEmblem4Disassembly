@@ -604,7 +604,7 @@
         .databank ?
 
         jsl rlProcEngineFreeProc
-        lda #$0012
+        lda #GAMESTATE_MAP_STEP
         sta wGameStateRoutine1,b
         jsl rlUnknown87C205
         jsl rlUnknown87C1E1
@@ -1129,7 +1129,7 @@
         jsl rlProcEngineFreeProc
         jsl rlUnknown81AB3F
 
-        lda #$0012
+        lda #GAMESTATE_MAP_STEP
         sta wGameStateRoutine1,b
         rtl
 

@@ -45,25 +45,25 @@
         .text "VER 960402 2000"
         .byte 0
 
-      rlOpeningLogoStub ; 86/8010
+      rlOpeningLogoUpkeep ; 86/8010
 
         .al
         .autsiz
         .databank ?
 
-        ; GameState $01: no-op rtl stub for opening logo
+        ; Game state routine $01, every frame during the opening: does nothing.
 
         rtl
 
         .databank 0
 
-      rlOpeningLogoWaitStartAndAdvance ; 86/8011
+      rlOpeningLogoSetup ; 86/8011
 
         .al
         .autsiz
         .databank ?
 
-        ; GameState $02: wait for Start press (skip to save select) else advance state
+        ; Game state routine $02, once: if Start is held, resets procs and fades to rsSetupSaveSelectMenu (game state 0 meanwhile); otherwise moves on to $03 at step 0.
 
         stz $1753,b
 
@@ -91,13 +91,13 @@
 
         .databank 0
 
-      rlOpeningLogoRunStep ; 86/803E
+      rlOpeningLogoStep ; 86/803E
 
         .al
         .autsiz
         .databank ?
 
-        ; GameState $03: run opening logo animation steps
+        ; Game state routine $03, every frame: runs step 0 or 1 from aUnknown86804E (a higher step hangs).
 
         lda wGameStateStep,b
         cmp #2

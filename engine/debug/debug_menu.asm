@@ -3487,13 +3487,13 @@
 
         .databank 0
 
-      rlDebugMenuShow ; 89/E7BD
+      rlDebugMenuSetup ; 89/E7BD
 
         .al
         .autsiz
         .databank ?
 
-        ; GameState $27: draw debug menu and unblank screen
+        ; Game state routine $27, once: moves on to $28, draws the debug menu and turns the screen on.
 
         inc wGameStateRoutine1,b
         jsr rlDrawDebugMenu
@@ -4250,9 +4250,9 @@
         lda $7F8400
         sta wGameStateStep,b
 
-        lda #$0027
+        lda #GAMESTATE_DEBUG_MENU_SETUP
         sta wGameStateRoutine1,b
-        lda #$0026
+        lda #GAMESTATE_DEBUG_MENU_UPKEEP
         sta wGameStateRoutine2,b
 
         lda #<>rsRunFrameTasks

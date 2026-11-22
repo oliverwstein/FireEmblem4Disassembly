@@ -300,14 +300,14 @@
       .al
       .xl
 
-      rlMapRender ; 81/A800
+      rlMapUpkeep ; 81/A800
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $10: update map sprite animations and camera
+        ; Game state routine $10, every frame while the chapter map is up: rlUnknown88C7CF and rlUnknown88A44C, then copies the map scroll to the BG1 scroll registers.
 
         jsl rlUnknown88C7CF
         jsl rlUnknown88A44C
@@ -321,14 +321,14 @@
 
         ; 81/A813
 
-      rlMapShow ; 81/A813
+      rlMapSetup ; 81/A813
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $11: initialize map RAM area, fade-in, and HUD windows
+        ; Game state routine $11, once: builds aMapMenuRAMArea, turns on active sprites (flag $2000 set), fades in unless wUnknown00171A, creates the unit and terrain window procs, and moves on to $12 at the step saved in wSavedEventCycle.
 
         lda wUnknown000D79,b
         and #$4005
@@ -419,13 +419,13 @@
       .al
       .xl
 
-      rlMapRunStep ; 81/A89D
+      rlMapStep ; 81/A89D
 
         .al
         .autsiz
         .databank ?
 
-        ; GameState $12: dispatch main chapter gameplay/turn/event loop
+        ; Game state routine $12, every frame: the chapter map. Runs a chain of checks (each may end the frame), then the routine for wGameStateStep from aUnknown81A8F8 (13 steps), and saves the step in wSavedEventCycle. The AI engine only runs while wGameStateRoutine1 is $12.
 
         phb
         php

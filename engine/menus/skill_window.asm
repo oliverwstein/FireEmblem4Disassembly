@@ -59,9 +59,9 @@
         phk
         plb
         .databank $80
-        lda #$002D
+        lda #GAMESTATE_SKILL_WINDOW_SETUP
         sta wGameStateRoutine1,b
-        lda #$002C
+        lda #GAMESTATE_SKILL_WINDOW_UPKEEP
         sta wGameStateRoutine2,b
         lda #<>rsRunFrameTasks
         sta wMainLoopPointer

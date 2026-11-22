@@ -80,9 +80,9 @@
         jsr rsInitializeStatusScreenVariables
         jsl rlLoadStatusScreenDisplay
         jsr rsSetStatusScreenBGSettings
-        lda #$0008
+        lda #GAMESTATE_STATUS_SCREEN_SETUP
         sta wGameStateRoutine1,b
-        lda #$0007
+        lda #GAMESTATE_STATUS_SCREEN_UPKEEP
         sta wGameStateRoutine2,b
         stz wGameStateStep,b
         lda #<>rsRunFrameTasks

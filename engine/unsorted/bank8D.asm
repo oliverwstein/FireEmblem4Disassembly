@@ -336,14 +336,14 @@
       .al
       .xl
 
-      rlEpilogueStub ; 8D/A06A
+      rlEpilogueUpkeep ; 8D/A06A
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $35: no-op rtl stub for epilogue/credits
+        ; Game state routine $35, every frame while the epilogue is up: does nothing.
 
         rtl
 
@@ -351,14 +351,14 @@
 
         ; 8D/A06B
 
-      rlEpilogueShow ; 8D/A06B
+      rlEpilogueSetup ; 8D/A06B
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $36: initialize epilogue RAM area, active sprites, and fade-in
+        ; Game state routine $36, once: builds the RAM area at $7F5709, clears $7F4400-$7F5708, turns on active sprites and, unless $08DA is 0-2, starts a fade-in; moves on to $37.
 
         lda #$7F00
         sta lR18+1
@@ -397,14 +397,14 @@
 
         ; 8D/A0B7
 
-      rlEpilogueRunStep ; 8D/A0B7
+      rlEpilogueStep ; 8D/A0B7
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $37: dispatch epilogue/credits step handler
+        ; Game state routine $37, every frame: runs the routine for wGameStateStep from aUnknown8DA0C6.
 
         phb
         php
@@ -434,7 +434,7 @@
 
       aUnknown8DA0C6 ; 8D/A0C6
 
-        ; Step handlers of rlEpilogueRunStep, by wGameStateStep.
+        ; Step handlers of rlEpilogueStep, by wGameStateStep.
         .word <>rsUnknown8DA0EC, <>rsUnknown8DA113, <>rsUnknown8DA136, <>rsUnknown8DA13B, <>rsUnknown8DA180, <>rsUnknown8DA185, <>rsUnknown8DA18F, <>rsUnknown8DA194, <>rsUnknown8DA199, <>rsUnknown8DA19E, <>rsUnknown8DA1A3, <>rsUnknown8DA1C0, <>rsUnknown8DA1DF, <>rsUnknown8DA1FA, <>rsUnknown8DA20B, <>rsUnknown8DA240, <>rsUnknown8DA258, <>rsUnknown8DA282, <>rsUnknown8DA287
 
 

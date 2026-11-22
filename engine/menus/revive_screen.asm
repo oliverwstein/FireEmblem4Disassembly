@@ -81,9 +81,9 @@
         phk
         plb
         .databank $80
-        lda #$0033
+        lda #GAMESTATE_REVIVE_SCREEN_SETUP
         sta wGameStateRoutine1,b
-        lda #$0032
+        lda #GAMESTATE_REVIVE_SCREEN_UPKEEP
         sta wGameStateRoutine2,b
         lda #<>rsRunFrameTasks
         sta wMainLoopPointer

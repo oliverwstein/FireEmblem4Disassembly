@@ -463,9 +463,9 @@
         jsl rlQueueSoundCommand
         jsl rlUnknown9BFBC0
         jsl rlUnknown81A85C
-        lda #$0001
+        lda #GAMESTATE_OPENING_LOGO_UPKEEP
         sta wGameStateRoutine2,b
-        lda #$0002
+        lda #GAMESTATE_OPENING_LOGO_SETUP
         sta wGameStateRoutine1,b
         stz wGameStateStep,b
         lda #<>rsOpeningLogoVBlank

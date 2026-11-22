@@ -589,7 +589,7 @@
 
         +
         lda wGameStateRoutine1,b
-        cmp #$0012
+        cmp #GAMESTATE_MAP_STEP
         bne +
 
           jsl rlUnknown88B3AF

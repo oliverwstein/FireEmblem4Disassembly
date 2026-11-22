@@ -156,7 +156,7 @@
         sta lR44
         jsl rlUnknown82E0C6
         jsl rlUnknown82E08D
-        lda #$0018
+        lda #GAMESTATE_BATTLE_SCENE_SETUP
         sta wGameStateRoutine1,b
         lda #<>rsRunBattleSceneVBlank
         sta wVBlankPointer
@@ -229,7 +229,7 @@
         sta lR44
         jsl rlUnknown82E0C6
         jsl rlUnknown82E08D
-        lda #$001A
+        lda #GAMESTATE_MAP_BATTLE_SETUP
         sta wGameStateRoutine1,b
         lda #<>rsRunMapBattleVBlank
         sta wVBlankPointer

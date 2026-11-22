@@ -4758,7 +4758,7 @@
         .autsiz
         .databank ?
 
-        lda #$0010
+        lda #GAMESTATE_MAP_UPKEEP
         sta wGameStateRoutine2,b
         lda #<>rsMapVBlank
         sta wVBlankPointer
@@ -4905,7 +4905,7 @@
         jsr rsUnknown80B052
         jsr rsUnknown80B041
 
-        lda #$0012
+        lda #GAMESTATE_MAP_STEP
         sta wGameStateRoutine1,b
         lda wSavedEventCycle,b
         sta wGameStateStep,b
@@ -5860,7 +5860,7 @@
         php
         phb
         lda wGameStateRoutine1,b
-        cmp #$0012
+        cmp #GAMESTATE_MAP_STEP
         beq +
 
           cmp #$000F

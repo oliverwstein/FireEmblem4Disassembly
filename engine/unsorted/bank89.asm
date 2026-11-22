@@ -6,14 +6,14 @@
       .al
       .xl
 
-      rlUnitScreenRender ; 89/8000
+      rlStatusScreenUpkeep ; 89/8000
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $07: render Unit Status screen OAM arrows
+        ; Game state routine $07, every frame while the status screen is up: rsUnknown8994B8.
 
         jsr rsUnknown8994B8
         rtl
@@ -22,14 +22,14 @@
 
         ; 89/8004
 
-      rlUnitScreenShow ; 89/8004
+      rlStatusScreenSetup ; 89/8004
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $08: initialize and show Unit Status screen
+        ; Game state routine $08, once: picks the first step and brightness from the values a caller left in $7F819D ($1234, $4321, $1111) or $7F8183, draws the screen and moves on to $09. Selected by rsOpenStatusScreen.
 
         jsl rlUnknown88DBEE
         lda $7F819D
@@ -135,14 +135,14 @@
 
         ; 89/80E0
 
-      rlUnitScreenRunStep ; 89/80E0
+      rlStatusScreenStep ; 89/80E0
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $09: run Unit Status screen step handler
+        ; Game state routine $09, every frame: runs the routine for wGameStateStep from aUnknown8980EF.
 
         phb
         php
@@ -172,7 +172,7 @@
 
       aUnknown8980EF ; 89/80EF
 
-        ; Jump table of rlUnitScreenRunStep.
+        ; Jump table of rlStatusScreenStep.
         .word <>rsUnknown898105
         .word <>rsUnknown89831F
         .word <>rsUnknown89861B
@@ -5973,14 +5973,14 @@
       .al
       .xl
 
-      rlReviveScreenShow ; 89/ACCE
+      rlReviveScreenSetup ; 89/ACCE
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $33: fade-in Revive screen and queue song
+        ; Game state routine $33, once: starts a fade-in, queues sound command $7FF7 and moves on to $34.
 
         inc wGameStateRoutine1,b
         lda #(`procFadeIn)<<8
@@ -5996,14 +5996,14 @@
 
         ; 89/ACE7
 
-      rlReviveScreenRunStep ; 89/ACE7
+      rlReviveScreenStep ; 89/ACE7
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $34: dispatch Revive screen step handler
+        ; Game state routine $34, every frame: runs the routine for wGameStateStep from aUnknown89ACF6.
 
         phb
         php
@@ -6033,7 +6033,7 @@
 
       aUnknown89ACF6 ; 89/ACF6
 
-        ; Jump table of rlReviveScreenRunStep.
+        ; Jump table of rlReviveScreenStep.
         .word <>rsUnknown89AD00
         .word <>rsUnknown89AF58
         .word <>rsUnknown89B058
@@ -6575,14 +6575,14 @@
       .al
       .xl
 
-      rlReviveScreenRender ; 89/B0AA
+      rlReviveScreenUpkeep ; 89/B0AA
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $32: render Revive/Valkyrie screen sprites and BG2VOFS
+        ; Game state routine $32, every frame while the revive screen is up: a routine from aUnknown89B0B9 chosen by the high byte of wDebugMenuScreenIndex, and BG2 scrolled down one line every two frames.
 
         lda wDebugMenuScreenIndex+1
         asl a
@@ -6607,7 +6607,7 @@
 
       aUnknown89B0B9 ; 89/B0B9
 
-        ; Jump table of rlReviveScreenRender.
+        ; Jump table of rlReviveScreenUpkeep.
         .word <>rsUnknown89B0BF
         .word <>rsUnknown89B0C6
         .word <>rsUnknown89B0D0
@@ -7344,14 +7344,14 @@
       .al
       .xl
 
-      rlOptionsMenuShow ; 89/EB26
+      rlOptionsMenuSetup ; 89/EB26
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $2A: fade-in and initialize Options menu
+        ; Game state routine $2A, once: starts a fade-in, rlUnknown89F713 and rlUnknown89F7A6, and moves on to $2B.
 
         inc wGameStateRoutine1,b
         lda #(`procFadeIn)<<8
@@ -7367,14 +7367,14 @@
 
         ; 89/EB40
 
-      rlOptionsMenuRunStep ; 89/EB40
+      rlOptionsMenuStep ; 89/EB40
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $2B: dispatch Options menu step handler
+        ; Game state routine $2B, every frame: runs the routine for wGameStateStep from aUnknown89EB56.
 
         phb
         php
@@ -7412,7 +7412,7 @@
 
       aUnknown89EB56 ; 89/EB56
 
-        ; Jump table of rlOptionsMenuRunStep.
+        ; Jump table of rlOptionsMenuStep.
         .word <>rsUnknown89EB5E
         .word <>rsUnknown89EC86
         .word <>rsUnknown89ECB4
@@ -7687,14 +7687,14 @@
       .al
       .xl
 
-      rlOptionsMenuRender ; 89/ECC7
+      rlOptionsMenuUpkeep ; 89/ECC7
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $29: render Options menu cursor/sprites and check close
+        ; Game state routine $29, every frame while the options menu is up: draws its sprites; once fully bright, B or A (checked here) leave or select.
 
         jsl rlUnknown89F630
         jsl rlUnknown89F67F

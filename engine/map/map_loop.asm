@@ -126,7 +126,7 @@
         jsr rsUnknown80B105
         jsr rsUnknown80B052
         jsr rsUnknown80B041
-        lda #$0011
+        lda #GAMESTATE_MAP_SETUP
         sta wGameStateRoutine1,b
         stz wGameStateStep,b
         lda wUnknown000D79,b

@@ -17121,14 +17121,14 @@
 
         ; 95/E5C9
 
-      rlBattleSceneShow ; 95/E5C9
+      rlBattleSceneSetup ; 95/E5C9
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $18: blank screen and advance to battle scene run
+        ; Game state routine $18, once: blanks the screen and moves on to $19 at step 0. Selected by rsOpenBattleScene.
 
         sep #$20
         lda #$80
@@ -17143,14 +17143,14 @@
 
         ; 95/E5DB
 
-      rlBattleSceneRunFrame ; 95/E5DB
+      rlBattleSceneStep ; 95/E5DB
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; GameState $19: run battle scene frame and exit on completion
+        ; Game state routine $19, every frame: unblanks, enables NMI, runs rsUnknown958B07; when that returns carry set (the scene is over), picks where to go next from $7FFC59 and $7E4EA9: the map (wMainGameMode 2 or 3), the castle after the arena, the castle screen, or game state 0.
 
         sep #$20
         lda #$00
