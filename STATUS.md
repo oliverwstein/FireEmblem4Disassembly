@@ -19,15 +19,15 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Decisions the user has made
 
-- **Phase 3 is done when `engine/unsorted/` is empty.** Low-level rendering, HDMA, OAM and spell *visual effect* helpers may stay `Unknown` if they are hard; they are low priority. Everything that implements game mechanics must be named and understood.
+- **Phase 3 is done when everything in `engine/unsorted/` has been put in a proper place.** Low-level rendering, HDMA, OAM and spell *visual effect* helpers may stay `Unknown` if they are hard; they are low priority. Everything that implements game mechanics must be named and understood.
 - **Sound is the lowest priority.** No SPC700 driver work unless the user asks.
-- **Emulator time costs the user a lot**: the game is in Japanese, which the user doesn't read. Ask only for short, targeted checks (a breakpoint, one screen, one action), and collect them into one list rather than asking piecemeal. Full play-through recordings only if nothing else will do.
+- **Emulator time costs the user a lot**: the game is in Japanese, which the user doesn't read. Ask only for short, targeted checks (a breakpoint, one screen, one action), and collect them into one list rather than asking piecemeal. The existing .cdl covers the entire prologue chapter.
 - **Phase 1 is closed statically.** Leftover `none` pieces that don't decode as code with evidence become labelled data with an "unreferenced" note, so `.binary "fe4.sfc"` can go without new recordings.
 
 ## Next session, in order
 
 1. **Write `tools/counts.py`.** It prints coverage, routines (total / `Unknown` / in `unsorted/`), gap classes, pinned blocks in `build.asm` and remaining notes, and every doc quotes only its output. Fix the numbers in PLAN.md and README.md (README still says 18%).
-2. **Audit the Wave 1 names.** Read each routine `ef5fff9` named. Keep a name only if its routine's code supports it. Otherwise rename it back to `Unknown` with a comment on what is known. Remove committed question marks (`; event main loop routine?`). Collapse the runs of blank lines in the carved `engine/unsorted/bank*.asm` files.
+2. **Audit the Wave 1 names.** Read each routine `ef5fff9` named. Keep a name only if its routine's code supports it. Otherwise rename it back to `Unknown` with a comment on what is known. Remove committed question marks (`; event main loop routine?`). Preferably you will figure out the correct name, rather than going back to unknown. Collapse the runs of blank lines in the carved `engine/unsorted/bank*.asm` files.
 3. **Set up the reference set** (PLAN.md, "The engine guide" part 1): the generator for `docs/reference/` and the reference for the Wave 1 systems (core, game states, procs, AI). The introduction already exists; revise it if the audit changes anything it says.
 4. **Continue Phase 3 one system at a time.** Each wave: name the routines, move them out of `unsorted/`, complete that system's reference (routine, struct, file, system docs), then commit with an evidence body. Writing the docs in plain words is part of the wave, because that is how a wrong name gets caught. The guide's outline is drafted once the core systems have reference docs, and shown to the user.
 
