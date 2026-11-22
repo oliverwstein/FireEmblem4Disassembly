@@ -1,6 +1,8 @@
 # Plan to Finish the FE4 Disassembly
 
-This document records the roadmap from the current baseline (2026-11-21) to a 100% source-built, fully shiftable, well-named, and documented disassembly of *Fire Emblem: Genealogy of the Holy War* (JP 1.0). For detailed metrics and history, see [STATUS.md](STATUS.md) and [GAPS.md](GAPS.md).
+This document records the roadmap from the current baseline (2026-11-21) to a 100% source-built, fully shiftable, well-named, and documented disassembly of *Fire Emblem: Genealogy of the Holy War* (JP 1.0). The current state is in [STATUS.md](STATUS.md), the past in [HISTORY.md](HISTORY.md), the unbuilt bytes in [GAPS.md](GAPS.md).
+
+**Milestone beyond the disassembly: the engine guide** (`docs/`, section below), a readable account of how the game's systems work and fit together. Its reference set is built alongside Phase 3; the guide itself, a designed narrative in the style of Nystrom's *Game Programming Patterns*, is written on top of it.
 
 ## Current Baseline (2026-11-21)
 
@@ -23,7 +25,10 @@ Phase 2 is ordered ahead of Phase 3 because shiftability is what makes the disas
 
 Everything reachable via static pointers or the existing Prologue CDL is now built. Removing `.binary "fe4.sfc"` from [build.asm](build.asm) requires covering the unlogged `none` islands:
 
-1. **Expand CDL Coverage in Mesen 2**
+*Decision (2026-11-22): close this statically. The user plays in Japanese, so emulator sessions are expensive; ask only for short targeted checks, batched into one list.*
+
+0. **Close the `none` pieces without new recordings.** Run `sweep.py` over each piece; disassemble what decodes as code with evidence; write the rest as labelled data (`aUnknownXXXXXX`) noted "unreferenced". Then do item 2 below. This reaches 100% honestly.
+1. **(Optional, later) Expand CDL Coverage in Mesen 2**
    - Record one comprehensive emulator session into [fe4.cdl](fe4.cdl) covering areas missing from the Prologue log:
      - Full combat with animations on (physical, bow, magic, staff, special crits, arena, level-ups)
      - Castle & map facilities (shops, repair, pawn, augury, storage, castle menus, unit promotion)
@@ -57,6 +62,8 @@ Once a bank is 100% source with zero raw references into it, unpin its blocks an
 
 ## Phase 3: Readability — Naming, Sorting, RAM & Constants
 
+**Done means `engine/unsorted/` is empty** (user decision, 2026-11-22). Every routine that implements game mechanics is named from its code. Low-level rendering, HDMA, OAM and spell *visual effect* helpers may stay `Unknown`, filed in the right system folder with a one-line comment. Each wave also completes the reference set for its system (routine, struct, file and system docs; see the engine guide below) and commits with an evidence body.
+
 Work hub-outward through the **3,710 `Unknown` routines** and **3,173 unsorted routines** in `engine/unsorted/` (can run in parallel with Phases 1–2):
 
 1. **System-by-System Routine Naming & Sorting**
@@ -80,11 +87,41 @@ Convert remaining raw binary/compressed chunks into editable formats that round-
 1. **UI Tilemaps & Coloured UI PNGs:** Read palette bits from the extracted DMA tilemaps ([gfx/ui/README.md](gfx/ui/README.md)) and colour the greyscale UI sheets in `gfx/ui/`.
 2. **Unidentified Compressed Streams ([gfx/compressed/CATALOG.md](gfx/compressed/CATALOG.md)):** As their loaders are named in Phase 3, rename each `gcUnknownADDR` via [tools/name_streams.py](tools/name_streams.py) and unpack tile sheets to `.4bpp.png`/`.2bpp.png` and tilemaps to `.bin` via [tools/unpack_streams.py](tools/unpack_streams.py).
 3. **Chapter Maps & Map-Battle Layouts:** Decode the chapter map layout/tile-config format (`aChapterMapPointers` in [engine/map/chapter_maps.asm](engine/map/chapter_maps.asm)) and the 120 `aMapBattleCLASSLayoutN.comp` files into editable formats with preview renderers (similar to [tools/backgrounds.py](tools/backgrounds.py)).
-4. **Audio & SPC700 Driver:** Disassemble the 5 SPC700 driver blocks in `audio/driver/` into build-time SPC700 source (documenting sequence commands `$C0`–`$FF` and instrument fields), identify the 118 `other` sound chunks, and finish naming `SONG_*` constants from [audio/SONGS.md](audio/SONGS.md).
+4. **Audio & SPC700 Driver (lowest priority; only on request):** Disassemble the 5 SPC700 driver blocks in `audio/driver/` into build-time SPC700 source (documenting sequence commands `$C0`–`$FF` and instrument fields), identify the 118 `other` sound chunks, and finish naming `SONG_*` constants from [audio/SONGS.md](audio/SONGS.md).
 
 ---
 
-## Phase 5: Documentation & Final Polish
+## The engine guide — runs alongside Phase 3
 
-1. **Architecture Documentation (`docs/`):** Write concise system explainers modeled on pokecrystal (`docs/procs.md`, `docs/events.md`, `docs/battle.md`, `docs/battle_animations.md`, `docs/map.md`, `docs/sound.md`, `docs/compression.md`, `docs/memory_map.md`).
+Two different things, and the second depends on the first.
+
+### 1. The reference set (nested, built bottom-up)
+
+Documentation of every component, at every level, so that any piece can be understood by reading rather than investigating:
+
+- **Routine:** a comment on what it does, its inputs and outputs (registers, RAM), side effects, and who calls it and why.
+- **Data structure:** every struct, table and RAM block in `include/` described field by field: meaning, units, range, who writes it, who reads it.
+- **File:** a header saying what the file is responsible for, its main entry points, the data it owns, and how it fits into its system.
+- **System:** `docs/reference/SYSTEM.md`, an overview of one system (its files, its data, its entry points, how control flows through it, what it depends on), linking down to the files.
+- **Generated index** (`docs/reference/`, by a tool): every named routine with its comment, callers and callees; every struct and RAM name. Regenerated, so it never goes stale.
+
+Each Phase 3 wave completes the reference for its system. This is the "documenting components" part: thorough, systematic, not meant to be read front to back.
+
+### 2. The guide (the aggregate, written top-down)
+
+A book that explains how FE4 works *as a whole*: how the systems interlock and behave, and why they were built the way they were in 1996. **Style and level: Robert Nystrom's *Game Programming Patterns*.**
+- Each chapter starts from a problem the developers faced ("60 frames a second, 128 KB of RAM, no operating system: how do forty things animate at once?"). The solution follows, then its trade-offs, then where it lives in the source.
+- The voice is conversational and concrete. Ideas are explained at the level of design and data flow, not instruction by instruction.
+- Code appears as short Rust-like pseudocode translated from the real routines, using their real names and linking to the source. Readers never need to read 65816.
+- Chapters are short sections with cross-links ("see also"), and draw out the patterns the game uses (game loop, state machine, update method, bytecode interpreters for events and battle scripts, data-driven tables, object pools).
+
+**The order is a design task, not the system list.** The narrative should build understanding step by step: each chapter should make the next one possible, and the connections between systems (a chapter on combat needs the unit record, the map and the proc system) decide the order. Draft a table of contents as `docs/guide/OUTLINE.md` once the reference covers the core systems. Revise it as understanding grows, and show it to the user before writing chapters to it.
+
+Topics it must cover (not an order): the machine and the source's conventions; the program's shape (boot, frame, game states, procs, active sprites, HDMA); memory and the data model; a chapter's life (loading, deployment, turns and phases, castles and seizing); the map (terrain, movement, range, fog); combat (targeting, rounds, hit/crit/damage, triangle, skills, experience, durability); units across a playthrough (growth, promotion, love, inheritance, the generation change); the AI; events and dialogue; castles, shops, money, the arena; presentation (battle scene, animations, menus, graphics, compression); sound, briefly; modding recipes. Walkthroughs that follow one action across systems ("one attack, cursor press to HP loss") belong in the guide too.
+
+**Order of work:** the reference grows with each Phase 3 wave. An early, short guide chapter on the machine and the program's shape can be written now (it depends only on Wave 1 systems) to give the user something to read. The rest of the guide is written once its systems' reference exists, from the outline.
+
+## Phase 5: Final Polish
+
+1. **Finish the engine guide**: reading order, cross-links, the remaining walkthroughs and recipes.
 2. **Build & Repo Polish:** Update [README.md](README.md) (which still states ~18% built), test/update the Windows `.bat` build scripts, and add a full shiftability test target to [build.sh](build.sh).
