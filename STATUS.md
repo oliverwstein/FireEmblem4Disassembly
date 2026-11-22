@@ -11,7 +11,7 @@ The goal is source that is **readable and moddable** (shiftable, organized by ga
 - Phase 1: every gap class except `none` (234 pieces, 62,476 bytes) and padding is closed.
 - Phase 2: done, apart from running padded ROMs in an emulator (deferred on purpose; see Decisions).
 - Phase 3: Wave 1 (game states, core, AI, global WRAM) is in `ef5fff9`. Stale "nothing reaches this" notes were cleared in `9f9338a` (`tools/stale_notes.py`); the 55 left are true by name.
-- Engine guide: not started.
+- Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md) written (overview of the program's shape, the three engines, the unit data model, the content formats, the game's life cycle). The reference set has not been started. The game-state routine names it mentions are still unaudited.
 
 ## Who wrote what
 
@@ -28,7 +28,7 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 1. **Write `tools/counts.py`.** It prints coverage, routines (total / `Unknown` / in `unsorted/`), gap classes, pinned blocks in `build.asm` and remaining notes, and every doc quotes only its output. Fix the numbers in PLAN.md and README.md (README still says 18%).
 2. **Audit the Wave 1 names.** Read each routine `ef5fff9` named. Keep a name only if its routine's code supports it. Otherwise rename it back to `Unknown` with a comment on what is known. Remove committed question marks (`; event main loop routine?`). Collapse the runs of blank lines in the carved `engine/unsorted/bank*.asm` files.
-3. **Set up the reference set** (PLAN.md, "The engine guide" part 1): the generator for `docs/reference/` and the reference for the Wave 1 systems (core, game states, procs, AI). Then write one early guide chapter on the machine and the program's shape, in the style of Nystrom's *Game Programming Patterns*, so the user has something to read during downtime.
+3. **Set up the reference set** (PLAN.md, "The engine guide" part 1): the generator for `docs/reference/` and the reference for the Wave 1 systems (core, game states, procs, AI). The introduction already exists; revise it if the audit changes anything it says.
 4. **Continue Phase 3 one system at a time.** Each wave: name the routines, move them out of `unsorted/`, complete that system's reference (routine, struct, file, system docs), then commit with an evidence body. Writing the docs in plain words is part of the wave, because that is how a wrong name gets caught. The guide's outline is drafted once the core systems have reference docs, and shown to the user.
 
 ## How to work on this project
