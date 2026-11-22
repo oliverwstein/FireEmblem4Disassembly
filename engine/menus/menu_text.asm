@@ -1,5 +1,6 @@
 ; Menu text helpers: measuring a menu text string, drawing a line of menu text
-; into a map menu's tilemap, and drawing a number into the BG3 tilemap.
+; into a map menu's tilemap, drawing a number into the BG3 tilemap, and drawing a
+; run of two-row tiles into it (rlDrawBG3TileRun).
 
     .section GetMenuTextStringLengthSection
 
@@ -824,5 +825,44 @@
         ; 80/B0FD
 
     .endsection Unsorted80B0D3Section
+
+
+    .section Unsorted89BECCSection
+
+      .al
+      .xl
+
+      rlDrawBG3TileRun ; 89/BECC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; wR0 tiles, starting at tile wR2 with attributes wR1, at X in the BG3 tilemap buffer; each tile has the tile $10 after it on the row below. Used by many menus.
+
+        lda wR2
+        ora wR1
+        sta wR2
+
+        _BED2
+        lda wR2
+        sta aBG3TilemapBuffer,x
+        lda wR2
+        clc
+        adc #$0010
+        sta $7E83C8,x
+        inc x
+        inc x
+        inc wR2
+        dec wR0
+        bne _BED2
+        rtl
+
+        .databank 0
+
+        ; 89/BEEB
+
+    .endsection Unsorted89BECCSection
 
 

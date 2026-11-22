@@ -31,7 +31,7 @@
         sta wCastleReturnEventFlag,b
         lda #$0002
         sta wScreenFadingProcInput,b
-        lda #$B6B6
+        lda #<>rsOpenCastleScreen
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

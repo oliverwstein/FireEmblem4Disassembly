@@ -891,7 +891,7 @@
         lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b
         jsl rlBuildCastleUnitList
-        lda #$B6B6
+        lda #<>rsOpenCastleScreen
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -1510,7 +1510,7 @@
         sta lR44
         jsl rlProcEngineFindProc
         bcs _81C3
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

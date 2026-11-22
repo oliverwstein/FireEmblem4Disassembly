@@ -1409,13 +1409,13 @@
         sta wActiveUnitDeploymentOffset,b
         lda #CASTLE_STEP_WAIT
         sta wGameStateStep,b
-        lda #$B6B6
+        lda #<>rsOpenCastleScreen
         sta $7F8183
         lda #$0000
         sta $7F819D
         lda #$0008
         jsl rlPlaySoundEffect
-        lda #$BBD9
+        lda #<>rsOpenStatusScreen
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

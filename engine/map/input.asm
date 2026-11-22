@@ -488,7 +488,7 @@
         lda #$0008
         jsl rlPlaySoundEffect
         jsl rlUnknown88B3AF
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta $7F8183
         lda #$0000
         sta $7F819D
@@ -695,7 +695,7 @@
         lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b
         jsl rlBuildCastleUnitList
-        lda #$B6B6
+        lda #<>rsOpenCastleScreen
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -722,7 +722,7 @@
         jsl rlUnknown88B3AF
         lda #CASTLE_SCREEN_TOWN
         sta wCastleScreenHandler,b
-        lda #$B6B6
+        lda #<>rsOpenCastleScreen
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

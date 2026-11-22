@@ -3321,3 +3321,226 @@
         ; 89/C6F9
 
     .endsection Data89C5C9Section
+
+
+    .section Unsorted89B79DSection
+
+      .al
+      .xl
+
+      rsItemWindowSortPanel ; 89/B79D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $01, the sort panel: Up and Down choose a sort order (wItemWindowSortPanelRow), A sorts the list by it (rlItemWindowSort), B, Y or Left close the panel (step $00).
+
+        jsr rsItemWindowRenderCursor
+        lda wJoy1New
+        bit #$C200
+        bne _B7BC
+        bit #$0080
+        bne _B7EC
+        lda wJoy1Repeated
+        bit #$0800
+        bne _B7FB
+        bit #$0400
+        bne _B818
+        jsr rsItemWindowDrawSortCursor
+        rts
+
+
+        _B7BC
+        lda #$0000
+        sta wGameStateStep,b
+        sta $7F847D
+        ldx #$01AA
+        lda #$0004
+        ldy #$0009
+        jsl rlClearTilemapRect
+        jsl rlItemWindowDrawItemInfo
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG2TilemapBuffer, $02C0, $80, $4000
+
+        lda #$0021
+        jsl rlPlaySoundEffect
+        rts
+
+
+        _B7EC
+        lda #$000A
+        jsl rlPlaySoundEffect
+        jsl rlItemWindowSort
+        jsr rsItemWindowDrawSortCursor
+        rts
+
+
+        _B7FB
+        lda $7F847D
+        beq _B814
+        dec a
+        sta $7F847D
+        lda #$0002
+        sta wUnitWindowScrollingFlag
+        lda #$0006
+        jsl rlPlaySoundEffect
+
+        _B814
+        jsr rsItemWindowDrawSortCursor
+        rts
+
+
+        _B818
+        lda $7F847D
+        cmp #$0002
+        beq _B834
+        inc a
+        sta $7F847D
+        lda #$0004
+        sta wUnitWindowScrollingFlag
+        lda #$0006
+        jsl rlPlaySoundEffect
+
+        _B834
+        jsr rsItemWindowDrawSortCursor
+        rts
+
+        .databank 0
+
+        ; 89/B838
+
+    .endsection Unsorted89B79DSection
+
+
+    .section Unsorted89B838Section
+
+      .al
+      .xl
+
+      rsItemWindowNoItems ; 89/B838
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $02, with no items to list: B blanks the screen and closes to the map (step $03).
+
+        lda wJoy1New
+        bit #$8000
+        bne _B840
+        rts
+
+
+        _B840
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #$0003
+        sta wGameStateStep,b
+        lda #$0021
+        jsl rlPlaySoundEffect
+        rts
+
+        .databank 0
+
+        ; 89/B856
+
+    .endsection Unsorted89B838Section
+
+
+    .section Unsorted89B869Section
+
+      .al
+      .xl
+
+      rsItemWindowFadeToCastle ; 89/B869
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $04: darkens one level a frame, then returns to the castle screen.
+
+        sep #$20
+        lda bBufferINIDISP
+        sec
+        sbc #$01
+        sta bBufferINIDISP
+        rep #$20
+        bne _B882
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlReturnToCastleScreen
+
+        _B882
+        rts
+
+        .databank 0
+
+        ; 89/B883
+
+    .endsection Unsorted89B869Section
+
+
+    .section Unsorted89C119Section
+
+      .al
+      .xl
+
+      rsItemWindowDrawSortCursor ; 89/C119
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The hand cursor on the sort panel row, nudged up or down for one frame after a move (wUnitWindowScrollingFlag 2 or 4).
+
+        lda wUnitWindowScrollingFlag
+        tax
+        lda $7F847D
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc aItemWindowSortCursorY,x
+        sta wR1
+        lda #$00A5
+        sta wR0
+        lda #$0000
+        sta wUnitWindowScrollingFlag
+        jsl rlUnknown88A704
+        rts
+
+        .databank 0
+
+        ; 89/C13E
+
+    .endsection Unsorted89C119Section
+
+
+    .section Data89C13ESection
+
+      .al
+      .xl
+
+      aItemWindowSortCursorY ; 89/C13E
+
+        ; Read by rsItemWindowDrawSortCursor.
+
+        .word $0022, $002A, $001A
+
+        ; 89/C144
+
+    .endsection Data89C13ESection
+
+

@@ -15809,7 +15809,7 @@
         ; Map menu option ユニット (Unit): installs rsUnitWindowOpen as the main loop routine, with $7F82C5 set to return through rsUnknown80B122.
 
         stz wGameStateRoutine1,b
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta $7F82C5
         lda #<>rsUnitWindowOpen
         sta wMainLoopPointer
@@ -15931,7 +15931,7 @@
         lda #$0000
         sta wMainGameMode,b
         stz wGameStateRoutine1,b
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

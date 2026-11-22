@@ -61,7 +61,7 @@
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
         lda $7F82C5
-        cmp #$BBD9
+        cmp #<>rsOpenStatusScreen
         beq _C447
         jsr rsUnitWindowInitializeLineVariables
 
@@ -7196,7 +7196,7 @@
         jsl rlUnknown88DE0B
         lda #$0000
         sta $7F82C5
-        lda #$C3E6
+        lda #<>rsUnitWindowOpen
         sta $7F8183
         lda #<>rsOpenStatusScreen
         sta wMainLoopPointer

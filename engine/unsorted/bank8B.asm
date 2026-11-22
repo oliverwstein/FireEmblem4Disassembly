@@ -344,7 +344,7 @@
         jsl rlPlaySoundEffect
         lda #$0000
         sta wMainGameMode,b
-        lda #$B122
+        lda #<>rsUnknown80B122
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

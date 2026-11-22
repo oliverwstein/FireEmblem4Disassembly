@@ -1,4 +1,11 @@
-; Options menu setup, labels, BG settings, and COLDATA/BG3VOFS HDMA tables.
+; The options menu: nine settings (animation, terrain and unit windows, message
+; and enemy speed, sound, auto save, auto cursor, and the enemy AI once the game
+; has been finished). rsOpenOptionsMenu (bank $80) copies the settings into
+; aOptionsMenuValues and draws the screen; game state routines $2A
+; (rlOptionsMenuSetup, once), $2B (rlOptionsMenuStep, aOptionsMenuSteps) and $29
+; (rlOptionsMenuUpkeep, every frame) run it. A or B writes the values back
+; (rlOptionsMenuApplyValues) and leaves to the map or the castle. Banks $80 and $89;
+; variables at $7F8400 (include/WRAM.h), constants in include/Menus.h.
 
 
     .section Table80E586Section
@@ -714,5 +721,2198 @@
         ; 80/EB37
 
     .endsection Data80EA80Section
+
+
+    .section Unsorted89EB26Section
+
+      .al
+      .xl
+
+      rlOptionsMenuSetup ; 89/EB26
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $2A, once: starts a fade-in, rlOptionsMenuDrawIcons and rlOptionsMenuDrawSelectedIcon, and moves on to $2B.
+
+        inc wGameStateRoutine1,b
+        lda #(`procFadeIn)<<8
+        sta lR44+1
+        lda #<>procFadeIn
+        sta lR44
+        jsl rlProcEngineCreateProc
+        jsl rlOptionsMenuDrawIcons
+        jsl rlOptionsMenuDrawSelectedIcon
+        rtl
+
+        .databank 0
+
+        ; 89/EB40
+
+      rlOptionsMenuStep ; 89/EB40
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $2B, every frame: runs the routine for wGameStateStep from aOptionsMenuSteps.
+
+        phb
+        php
+        phk
+        plb
+        .databank $89
+        lda wGameStateStep,b
+        cmp #$0004
+        bmi _EB4E
+
+        _EB4C
+        bra _EB4C
+
+
+        _EB4E
+        asl a
+        tax
+        jsr (aOptionsMenuSteps,x)
+        plp
+        plb
+        .databank $89
+        rtl
+
+        .databank 0
+
+        ; 89/EB56
+
+    .endsection Unsorted89EB26Section
+
+
+    .section Table89EB56Section
+
+      .al
+      .xl
+
+      aOptionsMenuSteps ; 89/EB56
+
+        ; Jump table of rlOptionsMenuStep.
+        .word <>rsOptionsMenuChooseOption
+        .word <>rsOptionsMenuLeave
+        .word <>rsOptionsMenuReturnToMap
+        .word <>rsOptionsMenuWait
+
+    .endsection Table89EB56Section
+
+
+    .section Unsorted89EB5ESection
+
+      .al
+      .xl
+
+      rsOptionsMenuChooseOption ; 89/EB5E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $00. Up and Down move to another option (one frame later, wOptionsMenuCursorMove), Right or R and Left or L change its value, Y puts back the values the menu opened with. A and B (rlOptionsMenuUpkeep) keep the values and leave.
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $5000
+
+        lda $7F8428
+        bmi _EBD7
+        bne _EB91
+        lda wJoy1Repeated
+        bit #$0800
+        bne _EBA1
+        bit #$0400
+        bne _EBB6
+        bit #$0110
+        bne _EB95
+        bit #$0220
+        bne _EB99
+        lda wJoy1New
+        bit #$4000
+        bne _EB9D
+        rts
+
+
+        _EB91
+        jml _EC01
+
+
+        _EB95
+        jml _EC1A
+
+
+        _EB99
+        jml rsOptionsMenuDecreaseValue
+
+
+        _EB9D
+        jml rsOptionsMenuRestoreValues
+
+
+        _EBA1
+        lda $7F8400
+        beq _EBB5
+        lda #$0006
+        jsl rlPlaySoundEffect
+        lda #$F000
+        sta $7F8428
+
+        _EBB5
+        rts
+
+
+        _EBB6
+        lda #$0007
+        clc
+        adc $7F842C
+        sta wR0
+        lda $7F8400
+        cmp wR0
+        beq _EBD6
+        lda #$0006
+        jsl rlPlaySoundEffect
+        lda #$1000
+        sta $7F8428
+
+        _EBD6
+        rts
+
+
+        _EBD7
+        lda $7F8428
+        inc a
+        sta $7F8428
+        and #$000F
+        cmp #$0001
+        bne _EC00
+        lda #$0000
+        sta $7F8428
+        lda $7F8400
+        dec a
+        sta $7F8400
+        jsl rlOptionsMenuDrawChoices
+        jsl rlOptionsMenuDrawDescription
+
+        _EC00
+        rts
+
+
+        _EC01
+        lda #$0000
+        sta $7F8428
+        lda $7F8400
+        inc a
+        sta $7F8400
+        jsl rlOptionsMenuDrawChoices
+        jsl rlOptionsMenuDrawDescription
+        rts
+
+
+        _EC1A
+        lda $7F8400
+        tax
+        lda aOptionsMenuValueCounts,x
+        and #$00FF
+        sta wR0
+        txa
+        asl a
+        tax
+        lda wDebugMenuScreenIndex,x
+        inc a
+        cmp wR0
+        beq _EC47
+        sta wDebugMenuScreenIndex,x
+        lda #$0007
+        jsl rlPlaySoundEffect
+        jsl rlOptionsMenuDrawChoices
+        jsl rlOptionsMenuDrawValues
+
+        _EC47
+        rts
+
+        .databank 0
+
+      aOptionsMenuValueCounts ; 89/EC48
+        .byte $03, $02, $02, $05, $02, $03, $05, $02, $02
+
+      rsOptionsMenuDecreaseValue ; 89/EC51
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8400
+        asl a
+        tax
+        lda wDebugMenuScreenIndex,x
+        beq _EC71
+        dec a
+        sta wDebugMenuScreenIndex,x
+        lda #$0007
+        jsl rlPlaySoundEffect
+        jsl rlOptionsMenuDrawChoices
+        jsl rlOptionsMenuDrawValues
+
+        _EC71
+        rts
+
+        .databank 0
+
+      rsOptionsMenuRestoreValues ; 89/EC72
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Y: puts back the values the menu opened with and redraws.
+
+        lda #$0021
+        jsl rlPlaySoundEffect
+        jsl rlOptionsMenuRestoreValues
+        jsl rlOptionsMenuDrawChoices
+        jsl rlOptionsMenuDrawValues
+        rts
+
+        .databank 0
+
+        ; 89/EC86
+
+      rsOptionsMenuLeave ; 89/EC86
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $01: back to the map, or to the castle screen if the menu was opened from there (bit 5 of wUnknown000D79).
+
+        lda #$0003
+        sta wGameStateStep,b
+        lda wUnknown000D79,b
+        bit #$0020
+        bne _ECAF
+        lda #$0000
+        sta wMainGameMode,b
+        lda #<>rsUnknown80B122
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rts
+
+
+        _ECAF
+        jsl rlFadeToCastleScreen
+        rts
+
+        .databank 0
+
+        ; 89/ECB4
+
+    .endsection Unsorted89EB5ESection
+
+
+    .section Unsorted89ECB4Section
+
+      .al
+      .xl
+
+      rsOptionsMenuReturnToMap ; 89/ECB4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $02: no code sets it. Goes straight back to the map (rsUnknown80B122).
+
+        lda #$0003
+        sta wGameStateStep,b
+        lda #$0001
+        sta wMainGameMode,b
+        lda #<>rsUnknown80B122
+        sta wMainLoopPointer
+        rts
+
+        .databank 0
+
+        ; 89/ECC6
+
+    .endsection Unsorted89ECB4Section
+
+
+    .section Unsorted89ECC6Section
+
+      .al
+      .xl
+
+      rsOptionsMenuWait ; 89/ECC6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $03: nothing, while the fade runs.
+
+        rts
+
+        .databank 0
+
+        ; 89/ECC7
+
+    .endsection Unsorted89ECC6Section
+
+
+    .section Unsorted89ECC7Section
+
+      .al
+      .xl
+
+      rlOptionsMenuUpkeep ; 89/ECC7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $29, every frame while the options menu is up: draws its sprites; once fully bright, B or A (checked here) leave or select.
+
+        jsl rlOptionsMenuDrawCursor
+        jsl rlOptionsMenuDrawValueMarker
+        jsl rlOptionsMenuDrawIcons
+        jsl rlOptionsMenuDrawSelectedIcon
+        lda bBufferINIDISP
+        and #$000F
+        cmp #$000F
+        bne _ECED
+        lda wJoy1New
+        bit #$8000
+        bne _ECEE
+        bit #$0080
+        bne _ED00
+
+        _ECED
+        rtl
+
+
+        _ECEE
+        lda #$0021
+        jsl rlPlaySoundEffect
+        jsl rlOptionsMenuApplyValues
+        lda #$0001
+        sta wGameStateStep,b
+        rtl
+
+
+        _ED00
+        lda #$000A
+        jsl rlPlaySoundEffect
+        jsl rlOptionsMenuApplyValues
+        lda #$0001
+        sta wGameStateStep,b
+        rtl
+
+        .databank 0
+
+        ; 89/ED12
+
+    .endsection Unsorted89ECC7Section
+
+
+    .section Unsorted89ED12Section
+
+      .al
+      .xl
+
+      rlOptionsMenuDrawChoices ; 89/ED12
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The choices of the option under the cursor ("1 2 3", "ON OFF"...) under its caption, and the chosen one highlighted (a routine from aOptionsMenuHighlightRoutines).
+
+        lda #$2400
+        sta aCurrentTilemapInfo,b
+        lda $7F8400
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuChoiceLists+1,x
+        sta lR18+1
+        lda aOptionsMenuChoiceLists,x
+        sta lR18
+        lda $7F842C
+        beq _ED3A
+        ldx #$1415
+        bra _ED3D
+
+
+        _ED3A
+        ldx #$1215
+
+        _ED3D
+        jsl rlDrawMenuTextLine
+        lda #$3800
+        sta aCurrentTilemapInfo,b
+        lda $7F8400
+        cmp #$0009
+        bmi _ED52
+
+        _ED50
+        bra _ED50
+
+
+        _ED52
+        asl a
+        tax
+        jsr (aOptionsMenuHighlightRoutines,x)
+        rtl
+
+        .databank 0
+
+        ; 89/ED58
+
+    .endsection Unsorted89ED12Section
+
+
+    .section Table89ED58Section
+
+      .al
+      .xl
+
+      aOptionsMenuHighlightRoutines ; 89/ED58
+
+        ; Jump table of rlOptionsMenuDrawChoices.
+        .word <>rsOptionsMenuHighlightAnimation
+        .word <>rsOptionsMenuHighlightOnOff
+        .word <>rsOptionsMenuHighlightOnOff
+        .word <>rsOptionsMenuHighlightMessageSpeed
+        .word <>rsOptionsMenuHighlightEnemySpeed
+        .word <>rsOptionsMenuHighlightSound
+        .word <>rsOptionsMenuHighlightAutoSave
+        .word <>rsOptionsMenuHighlightOnOff
+        .word <>rsOptionsMenuHighlightEnemyAI
+
+    .endsection Table89ED58Section
+
+
+    .section Data89ED6ASection
+
+      .al
+      .xl
+
+      aOptionsMenuChoiceLists ; 89/ED6A
+
+        ; Read by rlOptionsMenuDrawChoices.
+
+        .byte $85, $ED, $89, $99, $ED, $89, $99, $ED, $89, $AD, $ED, $89, $C1, $ED, $89, $85
+        .byte $ED, $89, $D5, $ED, $89, $99, $ED, $89, $E9, $ED, $89, $81, $40, $82, $50, $81
+        .byte $40, $81, $40, $82, $51, $81, $40, $81, $40, $82, $52, $81, $40, $00, $00, $82
+        .byte $6E, $82, $6D, $81, $40, $81, $40, $81, $40, $81, $40, $82, $6E, $82, $65, $82
+        .byte $65, $00, $00, $82, $50, $81, $40, $82, $51, $81, $40, $82, $52, $81, $40, $82
+        .byte $53, $81, $40, $82, $54, $00, $00, $83, $8A, $83, $41, $83, $8B, $81, $40, $81
+        .byte $40, $81, $40, $82, $CD, $82, $E2, $82, $A2, $00, $00, $82, $4F, $81, $40, $82
+        .byte $50, $81, $40, $82, $51, $81, $40, $82, $52, $81, $40, $82, $53, $00, $00, $82
+        .byte $D3, $82, $C2, $82, $A4, $81, $40, $81, $40, $82, $A9, $82, $B5, $82, $B1, $82
+        .byte $A2, $00, $00
+
+        ; 89/EDFD
+
+    .endsection Data89ED6ASection
+
+
+    .section Unsorted89EDFDSection
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightAnimation ; 89/EDFD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wDebugMenuScreenIndex
+        cmp #$0003
+        bmi _EE08
+
+        _EE06
+        bra _EE06
+
+
+        _EE08
+        asl a
+        tax
+        jsr (aOptionsMenuAnimationHighlights,x)
+        rts
+
+        .databank 0
+
+        ; 89/EE0E
+
+    .endsection Unsorted89EDFDSection
+
+
+    .section Table89EE0ESection
+
+      .al
+      .xl
+
+      aOptionsMenuAnimationHighlights ; 89/EE0E
+
+        ; Jump table of rsOptionsMenuHighlightAnimation.
+        .word <>rsOptionsMenuHighlightAnimation1
+        .word <>rsOptionsMenuHighlightAnimation2
+        .word <>rsOptionsMenuHighlightAnimation3
+
+    .endsection Table89EE0ESection
+
+
+    .section Unsorted89EE14Section
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightAnimation1 ; 89/EE14
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aOptionsMenuText1)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText1
+        sta lR18
+        ldx #$1416
+        bra rsOptionsMenuHighlightAnimation3._EE3F
+
+        .databank 0
+
+        ; 89/EE23
+
+      rsOptionsMenuHighlightAnimation2 ; 89/EE23
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aOptionsMenuText2)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText2
+        sta lR18
+        ldx #$1419
+        bra rsOptionsMenuHighlightAnimation3._EE3F
+
+        .databank 0
+
+        ; 89/EE32
+
+    .endsection Unsorted89EE14Section
+
+
+    .section Unsorted89EE32Section
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightAnimation3 ; 89/EE32
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aOptionsMenuText3)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText3
+        sta lR18
+        ldx #$141C
+
+        _EE3F
+        lda $7F842C
+        bne _EE4B
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _EE4B
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/EE50
+
+    .endsection Unsorted89EE32Section
+
+
+    .section Unsorted89EE50Section
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightOnOff ; 89/EE50
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; For the three ON/OFF options: highlights ON or OFF.
+
+        lda wUnitWindowCurrentLineSlotOffset+1
+        asl a
+        tax
+        lda wDebugMenuScreenIndex,x
+        beq _EE6B
+        lda #(`aOptionsMenuOffText)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuOffText
+        sta lR18
+        ldx #$141B
+        bra _EE78
+
+
+        _EE6B
+        lda #(`aOptionsMenuOnText)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuOnText
+        sta lR18
+        ldx #$1415
+
+        _EE78
+        lda $7F842C
+        bne _EE84
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _EE84
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/EE89
+
+    .endsection Unsorted89EE50Section
+
+
+    .section Unsorted89EE89Section
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightMessageSpeed ; 89/EE89
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F8408
+        cmp #$0005
+        bmi _EE94
+
+        _EE92
+        bra _EE92
+
+
+        _EE94
+        asl a
+        tax
+        jsr (aOptionsMenuMessageSpeedHighlights,x)
+        rts
+
+        .databank 0
+
+        ; 89/EE9A
+
+    .endsection Unsorted89EE89Section
+
+
+    .section Table89EE9ASection
+
+      .al
+      .xl
+
+      aOptionsMenuMessageSpeedHighlights ; 89/EE9A
+
+        ; Jump table of rsOptionsMenuHighlightMessageSpeed.
+        .word <>rsOptionsMenuHighlightMessageSpeedText
+        .word <>rsOptionsMenuHighlightMessageSpeedText._EEB3
+        .word <>rsOptionsMenuHighlightMessageSpeedText._EEC2
+        .word <>rsOptionsMenuHighlightMessageSpeedText._EED1
+        .word <>rsOptionsMenuHighlightMessageSpeedText._EEE0
+
+    .endsection Table89EE9ASection
+
+
+    .section Unsorted89EEA4Section
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightMessageSpeedText ; 89/EEA4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aOptionsMenuText1)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText1
+        sta lR18
+        ldx #$1415
+        bra _EEED
+
+
+        _EEB3
+        lda #(`aOptionsMenuText2)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText2
+        sta lR18
+        ldx #$1417
+        bra _EEED
+
+
+        _EEC2
+        lda #(`aOptionsMenuText3)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText3
+        sta lR18
+        ldx #$1419
+        bra _EEED
+
+
+        _EED1
+        lda #(`aOptionsMenuText4)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText4
+        sta lR18
+        ldx #$141B
+        bra _EEED
+
+
+        _EEE0
+        lda #(`aOptionsMenuText5)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText5
+        sta lR18
+        ldx #$141D
+
+        _EEED
+        lda $7F842C
+        bne _EEF9
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _EEF9
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/EEFE
+
+    .endsection Unsorted89EEA4Section
+
+
+    .section Unsorted89EEFESection
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightEnemySpeed ; 89/EEFE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F840A
+        cmp #$0002
+        bmi _EF09
+
+        _EF07
+        bra _EF07
+
+
+        _EF09
+        asl a
+        tax
+        jsr (aOptionsMenuEnemySpeedHighlights,x)
+        rts
+
+        .databank 0
+
+        ; 89/EF0F
+
+    .endsection Unsorted89EEFESection
+
+
+    .section Table89EF0FSection
+
+      .al
+      .xl
+
+      aOptionsMenuEnemySpeedHighlights ; 89/EF0F
+
+        ; Jump table of rsOptionsMenuHighlightEnemySpeed.
+        .word <>rsOptionsMenuHighlightEnemySpeedText
+        .word <>rsOptionsMenuHighlightEnemySpeedText._EF22
+
+    .endsection Table89EF0FSection
+
+
+    .section Unsorted89EF13Section
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightEnemySpeedText ; 89/EF13
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aOptionsMenuRealText)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuRealText
+        sta lR18
+        ldx #$1415
+        bra _EF2F
+
+
+        _EF22
+        lda #(`aOptionsMenuFastText)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuFastText
+        sta lR18
+        ldx #$141B
+
+        _EF2F
+        lda $7F842C
+        bne _EF3B
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _EF3B
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/EF40
+
+    .endsection Unsorted89EF13Section
+
+
+    .section Table89EF40Section
+
+      .al
+      .xl
+
+      aOptionsMenuRealText ; 89/EF40
+
+        .enc "SJIS"
+        .text "リアル"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuFastText ; 89/EF48
+
+        .enc "SJIS"
+        .text "はやい"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table89EF40Section
+
+
+    .section Unsorted89EF50Section
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightSound ; 89/EF50
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F840C
+        cmp #$0003
+        bmi _EF5B
+
+        _EF59
+        bra _EF59
+
+
+        _EF5B
+        asl a
+        tax
+        jsr (aOptionsMenuSoundHighlights,x)
+        rts
+
+        .databank 0
+
+        ; 89/EF61
+
+    .endsection Unsorted89EF50Section
+
+
+    .section Table89EF61Section
+
+      .al
+      .xl
+
+      aOptionsMenuSoundHighlights ; 89/EF61
+
+        ; Jump table of rsOptionsMenuHighlightSound.
+        .word <>rsOptionsMenuHighlightSoundText
+        .word <>rsOptionsMenuHighlightSoundText._EF76
+        .word <>rsOptionsMenuHighlightSoundText._EF85
+
+    .endsection Table89EF61Section
+
+
+    .section Unsorted89EF67Section
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightSoundText ; 89/EF67
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aOptionsMenuText1)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText1
+        sta lR18
+        ldx #$1416
+        bra _EF92
+
+
+        _EF76
+        lda #(`aOptionsMenuText2)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText2
+        sta lR18
+        ldx #$1419
+        bra _EF92
+
+
+        _EF85
+        lda #(`aOptionsMenuText3)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText3
+        sta lR18
+        ldx #$141C
+
+        _EF92
+        lda $7F842C
+        bne _EF9E
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _EF9E
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/EFA3
+
+    .endsection Unsorted89EF67Section
+
+
+    .section Unsorted89EFA3Section
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightAutoSave ; 89/EFA3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F840E
+        cmp #$0005
+        bmi _EFAE
+
+        _EFAC
+        bra _EFAC
+
+
+        _EFAE
+        asl a
+        tax
+        jsr (aOptionsMenuAutoSaveHighlights,x)
+        rts
+
+        .databank 0
+
+        ; 89/EFB4
+
+    .endsection Unsorted89EFA3Section
+
+
+    .section Table89EFB4Section
+
+      .al
+      .xl
+
+      aOptionsMenuAutoSaveHighlights ; 89/EFB4
+
+        ; Jump table of rsOptionsMenuHighlightAutoSave.
+        .word <>rsOptionsMenuHighlightAutoSaveText
+        .word <>rsOptionsMenuHighlightAutoSaveText._EFCD
+        .word <>rsOptionsMenuHighlightAutoSaveText._EFDC
+        .word <>rsOptionsMenuHighlightAutoSaveText._EFEB
+        .word <>rsOptionsMenuHighlightAutoSaveText._EFFA
+
+    .endsection Table89EFB4Section
+
+
+    .section Unsorted89EFBESection
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightAutoSaveText ; 89/EFBE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aOptionsMenuText0)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText0
+        sta lR18
+        ldx #$1415
+        bra _F007
+
+
+        _EFCD
+        lda #(`aOptionsMenuText1)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText1
+        sta lR18
+        ldx #$1417
+        bra _F007
+
+
+        _EFDC
+        lda #(`aOptionsMenuText2)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText2
+        sta lR18
+        ldx #$1419
+        bra _F007
+
+
+        _EFEB
+        lda #(`aOptionsMenuText3)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText3
+        sta lR18
+        ldx #$141B
+        bra _F007
+
+
+        _EFFA
+        lda #(`aOptionsMenuText4)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuText4
+        sta lR18
+        ldx #$141D
+
+        _F007
+        lda $7F842C
+        bne _F013
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _F013
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/F018
+
+    .endsection Unsorted89EFBESection
+
+
+    .section Unsorted89F018Section
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightEnemyAI ; 89/F018
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wDebugMenuTemp2
+        cmp #$0002
+        bmi _F023
+
+        _F021
+        bra _F021
+
+
+        _F023
+        asl a
+        tax
+        jsr (aOptionsMenuEnemyAIHighlights,x)
+        rts
+
+        .databank 0
+
+        ; 89/F029
+
+    .endsection Unsorted89F018Section
+
+
+    .section Table89F029Section
+
+      .al
+      .xl
+
+      aOptionsMenuEnemyAIHighlights ; 89/F029
+
+        ; Jump table of rsOptionsMenuHighlightEnemyAI.
+        .word <>rsOptionsMenuHighlightNormalAI
+        .word <>rsOptionsMenuHighlightCleverAI
+
+    .endsection Table89F029Section
+
+
+    .section Unsorted89F02DSection
+
+      .al
+      .xl
+
+      rsOptionsMenuHighlightNormalAI ; 89/F02D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aOptionsMenuNormalText)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuNormalText
+        sta lR18
+        ldx #$1415
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/F03F
+
+      rsOptionsMenuHighlightCleverAI ; 89/F03F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aOptionsMenuCleverText)<<8
+        sta lR18+1
+        lda #<>aOptionsMenuCleverText
+        sta lR18
+        ldx #$141A
+        jsl rlDrawMenuTextLine
+        rts
+
+        .databank 0
+
+        ; 89/F051
+
+    .endsection Unsorted89F02DSection
+
+
+    .section Table89F051Section
+
+      .al
+      .xl
+
+      aOptionsMenuCleverText ; 89/F051
+
+        .enc "SJIS"
+        .text "かしこい"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuNormalText ; 89/F05B
+
+        .enc "SJIS"
+        .text "ふつう　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table89F051Section
+
+
+    .section Unsorted89F065Section
+
+      .al
+      .xl
+
+      rlOptionsMenuDrawValues ; 89/F065
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The value of each option beside its label; the enemy AI line only when it is shown (wOptionsMenuShowEnemyAI).
+
+        lda #$3800
+        sta aCurrentTilemapInfo,b
+        lda wDebugMenuScreenIndex
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuAnimationValues+1,x
+        sta lR18+1
+        lda aOptionsMenuAnimationValues,x
+        sta lR18
+        ldx #$040E
+        jsl rlDrawMenuTextLine
+        lda $7F8404
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuOnOffValues+1,x
+        sta lR18+1
+        lda aOptionsMenuOnOffValues,x
+        sta lR18
+        ldx #$060E
+        jsl rlDrawMenuTextLine
+        lda $7F8406
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuOnOffValues+1,x
+        sta lR18+1
+        lda aOptionsMenuOnOffValues,x
+        sta lR18
+        ldx #$080E
+        jsl rlDrawMenuTextLine
+        lda $7F8408
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuMessageSpeedValues+1,x
+        sta lR18+1
+        lda aOptionsMenuMessageSpeedValues,x
+        sta lR18
+        ldx #$0A0E
+        jsl rlDrawMenuTextLine
+        lda $7F840A
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuEnemySpeedValues+1,x
+        sta lR18+1
+        lda aOptionsMenuEnemySpeedValues,x
+        sta lR18
+        ldx #$0C0E
+        jsl rlDrawMenuTextLine
+        lda $7F840C
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuSoundValues+1,x
+        sta lR18+1
+        lda aOptionsMenuSoundValues,x
+        sta lR18
+        ldx #$0E0E
+        jsl rlDrawMenuTextLine
+        lda $7F840E
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuAutoSaveValues+1,x
+        sta lR18+1
+        lda aOptionsMenuAutoSaveValues,x
+        sta lR18
+        ldx #$100E
+        jsl rlDrawMenuTextLine
+        lda wDebugMenuTemp1
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuAutoCursorValues+1,x
+        sta lR18+1
+        lda aOptionsMenuAutoCursorValues,x
+        sta lR18
+        ldx #$120E
+        jsl rlDrawMenuTextLine
+        lda $7F842C
+        beq _F17F
+        lda wDebugMenuTemp2
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuEnemyAIValues+1,x
+        sta lR18+1
+        lda aOptionsMenuEnemyAIValues,x
+        sta lR18
+        ldx #$140E
+        jsl rlDrawMenuTextLine
+
+        _F17F
+        rtl
+
+        .databank 0
+
+        ; 89/F180
+
+    .endsection Unsorted89F065Section
+
+
+    .section Data89F180Section
+
+      .al
+      .xl
+
+      aOptionsMenuOnOffValues ; 89/F180
+
+        ; Read by rlOptionsMenuDrawValues.
+
+        .word $F8A3, $AD89, $89F8
+
+        ; 89/F186
+
+      aOptionsMenuMessageSpeedValues ; 89/F186
+
+        ; Read by rlOptionsMenuDrawValues.
+
+        .byte $8F, $F8, $89, $93, $F8, $89, $97, $F8, $89, $9B, $F8, $89, $9F, $F8, $89
+
+        ; 89/F195
+
+      aOptionsMenuEnemySpeedValues ; 89/F195
+
+        ; Read by rlOptionsMenuDrawValues.
+
+        .word $F1D0, $C889, $89F1
+
+        ; 89/F19B
+
+      aOptionsMenuSoundValues ; 89/F19B
+
+        ; Read by rlOptionsMenuDrawValues.
+
+        .byte $D8, $F1, $89, $E2, $F1, $89, $AD, $F8, $89
+
+        ; 89/F1A4
+
+      aOptionsMenuAutoSaveValues ; 89/F1A4
+
+        ; Read by rlOptionsMenuDrawValues.
+
+        .byte $AD, $F8, $89, $0A, $F2, $89, $14, $F2, $89, $1E, $F2, $89, $28, $F2, $89
+
+        ; 89/F1B3
+
+      aOptionsMenuAnimationValues ; 89/F1B3
+
+        ; Read by rlOptionsMenuDrawValues.
+
+        .byte $EC, $F1, $89, $F6, $F1, $89, $00, $F2, $89
+
+        ; 89/F1BC
+
+      aOptionsMenuEnemyAIValues ; 89/F1BC
+
+        ; Read by rlOptionsMenuDrawValues.
+
+        .word $F23C, $3289, $89F2
+
+        ; 89/F1C2
+
+      aOptionsMenuAutoCursorValues ; 89/F1C2
+
+        ; Read by rlOptionsMenuDrawValues.
+
+        .word $F8A3, $AD89, $89F8, $CD82, $E282, $A282, $0000, $8A83
+        .word $4183, $8B83, $0000, $5883, $6583, $8C83, $4983, $0000
+        .word $8283, $6D83, $8983, $8B83, $0000, $8A83, $4183, $8B83
+        .word $4081, $0000, $7D83, $6283, $7683, $4081, $0000, $B182
+        .word $9495, $C282, $4081, $0000, $5A83, $5B81, $7583, $5082
+        .word $0000, $5A83, $5B81, $7583, $5182, $0000, $5A83, $5B81
+        .word $7583, $5282, $0000, $5A83, $5B81, $7583, $5382, $0000
+        .word $A982, $B582, $B182, $A282, $0000, $D382, $C282, $A482
+        .word $4081, $0000
+
+        ; 89/F246
+
+    .endsection Data89F180Section
+
+
+    .section Unsorted89F246Section
+
+      .al
+      .xl
+
+      rlOptionsMenuDrawDescription ; 89/F246
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The description of the option under the cursor in the box at the top, drawn into the buffer at $7F842E and copied into five rows of the BG3 tilemap buffer, and the caption over its choices.
+
+        lda #(`aOptionsMenuDescriptionTilemapEntry)<<8
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #<>aOptionsMenuDescriptionTilemapEntry
+        sta lMapMenuTilemapRAMEntryPointer,b
+        jsr rsOptionsMenuClearDescription
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda $7F8400
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuDescriptionPointers+1,x
+        sta lR18+1
+        lda aOptionsMenuDescriptionPointers,x
+        sta lR18
+        ldx #$0000
+        jsl rlDrawMenuTextLine
+        ldx #$0000
+
+        _F27C
+        lda $7F842E,x
+        sta $7E84B4,x
+        lda $7F84A6,x
+        sta $7E84F4,x
+        inc x
+        inc x
+        cpx #$0012
+        bne _F27C
+        ldx #$0000
+
+        _F296
+        lda $7F8440,x
+        sta $7E8532,x
+        lda $7F84B8,x
+        sta $7E8572,x
+        inc x
+        inc x
+        cpx #$0012
+        bne _F296
+        ldx #$0000
+
+        _F2B0
+        lda $7F8452,x
+        sta $7E85B2,x
+        lda $7F84CA,x
+        sta $7E85F2,x
+        inc x
+        inc x
+        cpx #$0012
+        bne _F2B0
+        ldx #$0000
+
+        _F2CA
+        lda $7F8464,x
+        sta $7E8632,x
+        lda $7F84DC,x
+        sta $7E8672,x
+        inc x
+        inc x
+        cpx #$0012
+        bne _F2CA
+        ldx #$0000
+
+        _F2E4
+        lda $7F8476,x
+        sta $7E86B2,x
+        lda $7F84EE,x
+        sta $7E86F2,x
+        inc x
+        inc x
+        cpx #$0012
+        bne _F2E4
+        lda #(`aOptionsMenuTilemapEntry)<<8
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #<>aOptionsMenuTilemapEntry
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda $7F8400
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aOptionsMenuChoiceCaptions+1,x
+        sta lR18+1
+        lda aOptionsMenuChoiceCaptions,x
+        sta lR18
+        ldx #$1215
+        lda $7F842C
+        bne _F333
+        txa
+        sec
+        sbc #$0200
+        tax
+
+        _F333
+        jsl rlDrawMenuTextLine
+        rtl
+
+        .databank 0
+
+        ; 89/F338
+
+    .endsection Unsorted89F246Section
+
+
+    .section Table89F338Section
+
+      .al
+      .xl
+
+      aOptionsMenuDescriptionPointers ; 89/F338
+
+        ; Read by rlOptionsMenuDrawDescription.
+
+        .long aOptionsMenuAnimationDescription
+        .long aOptionsMenuTerrainWindowDescription
+        .long aOptionsMenuUnitWindowDescription
+        .long aOptionsMenuMessageSpeedDescription
+        .long aOptionsMenuEnemySpeedDescription
+        .long aOptionsMenuSoundDescription
+        .long aOptionsMenuAutoSaveDescription
+        .long aOptionsMenuAutoCursorDescription
+        .long aOptionsMenuEnemyAIDescription
+
+      aOptionsMenuAnimationDescription ; 89/F353
+        .enc "SJIS"
+          .text "アニメせってい　　　１ーリアル　　　　２ーマップ　　　　３ーこ部つ\n"
+
+      aOptionsMenuTerrainWindowDescription ; 89/F397
+        .enc "SJIS"
+          .text "ちけいウィンドウ　ちけいウィンドウのひょうじ\n"
+
+      aOptionsMenuUnitWindowDescription ; 89/F3C5
+        .enc "SJIS"
+          .text "ユニットウィンドウユニットウィンドウのひょうじ\n"
+
+      aOptionsMenuMessageSpeedDescription ; 89/F3F5
+        .enc "SJIS"
+          .text "メッセージスピードメッセージを　　　ひょうじするはやさ\n"
+
+      aOptionsMenuEnemySpeedDescription ; 89/F42D
+        .enc "SJIS"
+          .text "てきいどうスピードてきのいどうする　スピード\n"
+
+      aOptionsMenuSoundDescription ; 89/F45B
+        .enc "SJIS"
+          .text "サウンドせってい　ＢＧＭのせってい　　１ーステレオ　　　２ーモノラル　　　３ーオフ\n"
+
+      aOptionsMenuAutoSaveDescription ; 89/F4AF
+        .enc "SJIS"
+          .text "オートセーブ　　　ターンのはじめに　えらんだファイルへじどうてきにセーブする\n"
+
+      aOptionsMenuEnemyAIDescription ; 89/F4FD
+        .enc "SJIS"
+          .text "てきのあたまのよさてきユニットの　　あたまのよさ\n"
+
+      aOptionsMenuAutoCursorDescription ; 89/F52F
+        .enc "SJIS"
+          .text "オートカーソル　　ターンのはじめに　しゅじんこうに　　カーソルをあわせる\n"
+
+        ; 89/F579
+
+    .endsection Table89F338Section
+
+
+    .section Data89F579Section
+
+      .al
+      .xl
+
+      aOptionsMenuChoiceCaptions ; 89/F579
+
+        ; Read by rlOptionsMenuDrawDescription.
+
+        .byte $BC, $F5, $89, $A8, $F5, $89, $A8, $F5, $89, $D0, $F5, $89, $94, $F5, $89, $E4
+        .byte $F5, $89, $F8, $F5, $89, $A8, $F5, $89, $0C, $F6, $89, $81, $40, $82, $A2, $82
+        .byte $C7, $82, $A4, $83, $58, $83, $73, $81, $5B, $83, $68, $81, $40, $00, $00, $82
+        .byte $B7, $82, $E9, $81, $40, $81, $40, $81, $40, $81, $40, $82, $B5, $82, $C8, $82
+        .byte $A2, $00, $00, $83, $8A, $83, $41, $83, $8B, $81, $40, $81, $40, $81, $40, $82
+        .byte $B1, $95, $94, $82, $C2, $00, $00, $82, $A8, $82, $BB, $82, $A2, $81, $40, $81
+        .byte $40, $81, $40, $82, $CD, $82, $E2, $82, $A2, $00, $00, $83, $58, $83, $65, $83
+        .byte $8C, $83, $49, $81, $40, $81, $40, $81, $40, $83, $49, $83, $74, $00, $00, $83
+        .byte $49, $83, $74, $81, $40, $81, $40, $83, $74, $83, $40, $83, $43, $83, $8B, $81
+        .byte $40, $00, $00, $81, $40, $82, $A0, $82, $BD, $82, $DC, $82, $CC, $82, $E6, $82
+        .byte $B3, $81, $40, $81, $40, $00, $00
+
+        ; 89/F620
+
+    .endsection Data89F579Section
+
+
+    .section Unsorted89F620Section
+
+      .al
+      .xl
+
+      rsOptionsMenuClearDescription ; 89/F620
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Clears the description buffer at $7F842E.
+
+        lda #$0000
+        tax
+
+        _F624
+        sta $7F842E,x
+        inc x
+        inc x
+        cpx #$011A
+        bne _F624
+        rts
+
+        .databank 0
+
+        ; 89/F630
+
+    .endsection Unsorted89F620Section
+
+
+    .section Unsorted89F630Section
+
+      .al
+      .xl
+
+      rlOptionsMenuDrawCursor ; 89/F630
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The hand cursor at the option's row, 10 pixels up or down during a move.
+
+        lda $7F8400
+        tax
+        lda $7F842C
+        beq _F641
+        lda aOptionsMenuCursorYWithAI,x
+        bra _F645
+
+
+        _F641
+        lda aOptionsMenuCursorY,x
+
+        _F645
+        and #$00FF
+        sta wR1
+        lda $7F8428
+        bmi _F65C
+        beq _F664
+        lda wR1
+        clc
+        adc #$000A
+        sta wR1
+        bra _F664
+
+
+        _F65C
+        lda wR1
+        sec
+        sbc #$000A
+        sta wR1
+
+        _F664
+        stz wR0
+        lda #$0000
+        jsl rlUnknown88A704
+        rtl
+
+        .databank 0
+
+        ; 89/F66E
+
+    .endsection Unsorted89F630Section
+
+
+    .section Data89F66ESection
+
+      .al
+      .xl
+
+      aOptionsMenuCursorYWithAI ; 89/F66E
+
+        ; Read by rlOptionsMenuDrawCursor.
+
+        .byte $23, $38, $4D, $62, $76, $8B, $A1, $B5, $CA
+
+        ; 89/F677
+
+      aOptionsMenuCursorY ; 89/F677
+
+        ; Read by rlOptionsMenuDrawCursor.
+
+        .word $3B24, $6952, $9780, $C5AE
+
+        ; 89/F67F
+
+    .endsection Data89F66ESection
+
+
+    .section Unsorted89F67FSection
+
+      .al
+      .xl
+
+      rlOptionsMenuDrawValueMarker ; 89/F67F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A marker under the chosen value in the choices line, at its X from aOptionsMenuValueMarkerX (also kept in $7F8548).
+
+        phk
+        plb
+        .databank $89
+        lda $7F8400
+        asl a
+        tax
+        asl a
+        asl a
+        sta wR0
+        lda wDebugMenuScreenIndex,x
+        clc
+        adc wR0
+        tax
+        lda @l aOptionsMenuValueMarkerX,x
+        and #$00FF
+        sta wR0
+        sta $7F8548
+        lda #$00BD
+        sta wR1
+        lda $7F842C
+        bne _F6B0
+        lda #$00B8
+        sta wR1
+
+        _F6B0
+        stz wR4
+        stz wR5
+        ldy #$F70C
+        jsl rlPushToOAMBuffer
+        rtl
+
+        .databank 0
+
+        ; 89/F6BC
+
+    .endsection Unsorted89F67FSection
+
+
+    .section Data89F6BCSection
+
+      .al
+      .xl
+
+      aOptionsMenuValueMarkerX ; 89/F6BC
+
+        ; Read by rlOptionsMenuDrawValueMarker.
+
+        .byte $AC, $C4, $DC, $00, $00, $00, $00, $00, $A8, $DC, $00, $00, $00, $00, $00, $00
+        .byte $A8, $DC, $00, $00, $00, $00, $00, $00, $A4, $B4, $C4, $D4, $E4, $00, $00, $00
+        .byte $AC, $DC, $00, $00, $00, $00, $00, $00, $AC, $C4, $DC, $00, $00, $00, $00, $00
+        .byte $A4, $B4, $C4, $D4, $E4, $00, $00, $00, $A8, $DC, $00, $00, $00, $00, $00, $00
+        .byte $AC, $D8, $00, $00, $00, $00, $00, $00, $B1, $B2, $B1, $B0, $C7, $C6, $C7, $C8
+        .byte $01, $00, $00, $C2, $00, $0C, $32
+
+        ; 89/F713
+
+    .endsection Data89F6BCSection
+
+
+    .section Unsorted89F713Section
+
+      .al
+      .xl
+
+      rlOptionsMenuDrawIcons ; 89/F713
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The column of option icons beside the labels; the enemy AI icon only when that option is shown.
+
+        phk
+        plb
+        .databank $89
+        stz wR0
+        lda #$0062
+        sta wR1
+        stz wR4
+        stz wR5
+        lda $7F842C
+        beq _F72B
+        ldy #$F74B
+        bra _F72E
+
+
+        _F72B
+        ldy #$F775
+
+        _F72E
+        jsl rlPushToOAMBuffer
+        lda $7F842C
+        beq _F74A
+        stz wR0
+        lda #$0052
+        sta wR1
+        stz wR4
+        stz wR5
+        ldy #$F79F
+        jsl rlPushToOAMBuffer
+
+        _F74A
+        rtl
+
+        .databank 0
+
+        ; 89/F74B
+
+
+      aOptionsMenuIconsWithAI ; 89/F74B
+
+        _Sprites := [[(  14,  -65), $21, SpriteLarge, $020, 3, 2, false, false]]
+        _Sprites ..= [[(  14,  -44), $21, SpriteLarge, $022, 3, 2, false, false]]
+        _Sprites ..= [[(  14,  -23), $21, SpriteLarge, $024, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   -2), $21, SpriteLarge, $026, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   18), $21, SpriteLarge, $02C, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   39), $21, SpriteLarge, $02A, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   61), $21, SpriteLarge, $02E, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   81), $21, SpriteLarge, $042, 3, 2, false, false]]
+
+        .structSpriteArray aOptionsMenuIconsWithAI._Sprites
+
+      aOptionsMenuIcons ; 89/F775
+
+        _Sprites := [[(  14,  -63), $21, SpriteLarge, $020, 3, 2, false, false]]
+        _Sprites ..= [[(  14,  -40), $21, SpriteLarge, $022, 3, 2, false, false]]
+        _Sprites ..= [[(  14,  -16), $21, SpriteLarge, $024, 3, 2, false, false]]
+        _Sprites ..= [[(  14,    7), $21, SpriteLarge, $026, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   29), $21, SpriteLarge, $02C, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   52), $21, SpriteLarge, $02A, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   75), $21, SpriteLarge, $02E, 3, 2, false, false]]
+        _Sprites ..= [[(  14,   98), $21, SpriteLarge, $042, 3, 2, false, false]]
+
+        .structSpriteArray aOptionsMenuIcons._Sprites
+
+      aOptionsMenuEnemyAIIcon ; 89/F79F
+
+        _Sprites := [[(  14,  118), $21, SpriteLarge, $040, 3, 2, false, false]]
+
+        .structSpriteArray aOptionsMenuEnemyAIIcon._Sprites
+
+    .endsection Unsorted89F713Section
+
+
+    .section Unsorted89F7A6Section
+
+      .al
+      .xl
+
+      rlOptionsMenuDrawSelectedIcon ; 89/F7A6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The icon of the option under the cursor, in the description box.
+
+        phk
+        plb
+        .databank $89
+        lda $7F8400
+        asl a
+        tax
+        lda @l aOptionsMenuIconTiles,x
+        sta wR4
+        stz wR0
+        stz wR1
+        stz wR5
+        lda $7F842C
+        bne _F7C5
+        lda #$0002
+        sta wR1
+
+        _F7C5
+        ldy #$F7DF
+        jsl rlPushToOAMBuffer
+        rtl
+
+        .databank 0
+
+        ; 89/F7CD
+
+    .endsection Unsorted89F7A6Section
+
+
+    .section Data89F7CDSection
+
+      .al
+      .xl
+
+      aOptionsMenuIconTiles ; 89/F7CD
+
+        ; Read by rlOptionsMenuDrawSelectedIcon.
+
+        .byte $20, $00, $22, $00, $24, $00, $26, $00, $2C, $00, $2A, $00, $2E, $00, $42, $00
+        .byte $40, $00, $01, $00, $9F, $C2, $21, $00, $34
+
+        ; 89/F7E6
+
+    .endsection Data89F7CDSection
+
+
+    .section Unsorted89F7E6Section
+
+      .al
+      .xl
+
+      rlOptionsMenuApplyValues ; 89/F7E6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Writes the values into the settings, as the menu leaves.
+
+        lda wDebugMenuScreenIndex
+        jsl rlSetBattleAnimationOption
+        lda $7F8404
+        jsl rlSetTerrainWindowSetting
+        lda $7F8406
+        jsl rlUnknown87BED7
+        lda $7F8408
+        jsl rlUnknown87BF01
+        lda $7F840A
+        jsl rlUnknown87BF29
+        lda $7F840C
+        jsl rlUnknown87BF52
+        lda $7F840E
+        cmp #$0000
+        beq _F822
+        lda #$0001
+
+        _F822
+        jsl rlUnknown87BFBF
+        lda $7F840E
+        beq _F831
+        dec a
+        jsl rlUnknown87BFE9
+
+        _F831
+        lda wDebugMenuTemp1
+        jsl rlUnknown87C03C
+        lda wDebugMenuTemp2
+        jsl rlUnknown87C015
+        rtl
+
+        .databank 0
+
+        ; 89/F842
+
+    .endsection Unsorted89F7E6Section
+
+
+    .section Unsorted89F842Section
+
+      .al
+      .xl
+
+      rlOptionsMenuRestoreValues ; 89/F842
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies the values the menu opened with back over the current ones.
+
+        lda wDebugMenuTemp3
+        sta wDebugMenuScreenIndex
+        lda $7F8416
+        sta $7F8404
+        lda $7F8418
+        sta $7F8406
+        lda $7F841A
+        sta $7F8408
+        lda $7F841C
+        sta $7F840A
+        lda $7F841E
+        sta $7F840C
+        lda $7F8420
+        sta $7F840E
+        lda $7F8422
+        sta wDebugMenuTemp1
+        lda $7F8424
+        sta wDebugMenuTemp2
+        rtl
+
+        .databank 0
+
+        ; 89/F88B
+
+    .endsection Unsorted89F842Section
+
+
+    .section Table89F88BSection
+
+      .al
+      .xl
+
+      aOptionsMenuText0 ; 89/F88B
+
+        .enc "SJIS"
+        .text "０"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuText1 ; 89/F88F
+
+        .enc "SJIS"
+        .text "１"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuText2 ; 89/F893
+
+        .enc "SJIS"
+        .text "２"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuText3 ; 89/F897
+
+        .enc "SJIS"
+        .text "３"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuText4 ; 89/F89B
+
+        .enc "SJIS"
+        .text "４"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuText5 ; 89/F89F
+
+        .enc "SJIS"
+        .text "５"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuOnText ; 89/F8A3
+
+        .enc "SJIS"
+        .text "ＯＮ　　"
+        .word $0000
+        .enc "none"
+
+      aOptionsMenuOffText ; 89/F8AD
+
+        .enc "SJIS"
+        .text "ＯＦＦ　"
+        .word $0000
+        .enc "none"
+
+
+    .endsection Table89F88BSection
 
 

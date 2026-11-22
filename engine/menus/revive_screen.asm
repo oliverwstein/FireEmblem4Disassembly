@@ -1,8 +1,12 @@
-; The revive staff's screen: rsReviveScreenOpen (installed as the main loop by a
-; staff effect handler, rsUnknown87E855) builds the list of units that can be
-; revived, or the message that no one has died, and hands over to game state
-; routines $32 and $33, whose menu is in bank $89 (rsReviveScreenChooseUnit and on). Bank
-; $80 ($80/DFD3-E42B).
+; The revive staff's screen. rsReviveScreenOpen (bank $80, installed as the main
+; loop by a staff effect handler, rsUnknown87E855) lists the player's dead units,
+; or says that no one has died, and hands over to game state routines $33
+; (rlReviveScreenSetup, once), $34 (rlReviveScreenStep, the steps in
+; aReviveScreenSteps) and $32 (rlReviveScreenUpkeep, every frame, which draws by
+; the mode in the high byte of wDebugMenuScreenIndex). The dead units are a grid of
+; map sprites, three to a row; X shows one's status screen, A and yes set up the
+; staff action on it. It reuses the unit window's list variables. Banks $80 and $89.
+
 
     .section ReviveScreenSection
 
@@ -113,7 +117,7 @@
         ; Unless coming back from the status screen (wStatusScreenCaller is rsReviveScreenOpen), saves the staff's user (wReviveScreenStaffUser), puts the cursor on the first entry and builds the list of dead units.
 
         lda wDataWindowCurrentArmy
-        cmp #$DFDC
+        cmp #<>rsReviveScreenOpen
         beq _E096
         lda wSelectedUnitDataRAMPointer,b
         sta $7FB016
@@ -632,3 +636,1150 @@
         .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E
 
     .endsection ReviveScreenBuildSection
+
+
+    .section Unsorted89ACCESection
+
+      .al
+      .xl
+
+      rlReviveScreenSetup ; 89/ACCE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $33, once: starts a fade-in, queues sound command $7FF7 and moves on to $34.
+
+        inc wGameStateRoutine1,b
+        lda #(`procFadeIn)<<8
+        sta lR44+1
+        lda #<>procFadeIn
+        sta lR44
+        jsl rlProcEngineCreateProc
+        lda #$7FF7
+        jsl rlQueueSoundCommand
+        rtl
+
+        .databank 0
+
+        ; 89/ACE7
+
+      rlReviveScreenStep ; 89/ACE7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $34, every frame: runs the routine for wGameStateStep from aReviveScreenSteps.
+
+        phb
+        php
+        phk
+        plb
+        .databank $89
+        lda wGameStateStep,b
+        asl a
+        tax
+        jsr (aReviveScreenSteps,x)
+        plp
+        plb
+        .databank $89
+        rtl
+
+        .databank 0
+
+        ; 89/ACF6
+
+    .endsection Unsorted89ACCESection
+
+
+    .section Table89ACF6Section
+
+      .al
+      .xl
+
+      aReviveScreenSteps ; 89/ACF6
+
+        ; Jump table of rlReviveScreenStep.
+        .word <>rsReviveScreenChooseUnit
+        .word <>rsReviveScreenConfirm
+        .word <>rsReviveScreenNobodyDead
+        .word <>rsReviveScreenWait
+        .word <>rsReviveScreenWait
+
+    .endsection Table89ACF6Section
+
+
+    .section ReviveMenuSection
+
+      .al
+      .xl
+
+      rsReviveScreenChooseUnit ; 89/AD00
+
+        ; Entry 0 of aReviveScreenSteps. The revive staff's menu (the text asks whom to
+        ; revive and confirms); the routines through $89/B058 belong to it.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $00, choosing a dead unit in the grid of map sprites. The arrows move the cursor (three columns), A asks to confirm (step $01), X shows the unit's status screen, B leaves to the castle courtyard.
+
+        lda bBufferINIDISP
+        and #$000F
+        cmp #$000F
+        bne _AD31
+        lda wJoy1New
+        bit #$8000
+        bne _AD4A
+        bit #$0080
+        bne _AD32
+        bit #$0040
+        bne _AD36
+        lda wJoy1Repeated
+        bit #$0100
+        bne _AD3A
+        bit #$0200
+        bne _AD3E
+        bit #$0800
+        bne _AD42
+        bit #$0400
+        bne _AD46
+
+        _AD31
+        rts
+
+
+        _AD32
+        jml _AD9A
+
+
+        _AD36
+        jml rsReviveScreenShowStatus
+
+
+        _AD3A
+        jml rsReviveScreenCursorRight
+
+
+        _AD3E
+        jml rsReviveScreenCursorLeft
+
+
+        _AD42
+        jml rsReviveScreenCursorUp
+
+
+        _AD46
+        jml rsReviveScreenCursorDown
+
+
+        _AD4A
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda #$00E8
+        jsl rlQueueSoundCommand
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$FE
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #$FFFF
+        sta wDataWindowCurrentArmy
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$FE
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #CASTLE_CURSOR_GRID
+        sta wCastleCursorState,b
+        lda #CASTLE_SCREEN_COURTYARD
+        sta wCastleScreenHandler,b
+        lda #<>rsOpenCastleScreen
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        lda #$0003
+        sta wGameStateStep,b
+        rts
+
+
+        _AD9A
+        lda #$000A
+        jsl rlPlaySoundEffect
+        lda #(`aReviveMenuBlankLine)<<8
+        sta lR18+1
+        lda #<>aReviveMenuBlankLine
+        sta lR18
+        ldx #$0203
+        jsl rlDrawMenuTextLine
+        lda wUnitWindowMaxRows
+        dec a
+        beq _AE01
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda aUnitWindowDeploymentSlots,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitNamePointer
+        lda lRoutineVariable,b
+        sta lR18
+        lda lRoutineVariable+1,b
+        sta lR18+1
+        ldx #$0203
+        jsl rlDrawMenuTextLine
+        jsl rlGetMenuTextStringLength
+        lda wR10
+        clc
+        adc #$0003
+        sta wR10
+        lda #(`aReviveMenuReviveThemText)<<8
+        sta lR18+1
+        lda #<>aReviveMenuReviveThemText
+        sta lR18
+        lda #$0002
+        and #$00FF
+        xba
+        ora wR10
+        tax
+        jsl rlDrawMenuTextLine
+        bra _AE12
+
+
+        _AE01
+        lda #(`aReviveMenuConfirmText)<<8
+        sta lR18+1
+        lda #<>aReviveMenuConfirmText
+        sta lR18
+        ldx #$0203
+        jsl rlDrawMenuTextLine
+
+        _AE12
+        lda #(`aReviveMenuYesNoText)<<8
+        sta lR18+1
+        lda #<>aReviveMenuYesNoText
+        sta lR18
+        ldx #$0215
+        jsl rlDrawMenuTextLine
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0200, $80, $5000
+
+        lda #$0000
+        sta $7FB018
+        lda #$0001
+        sta wGameStateStep,b
+        lda #$0001
+        sta wDebugMenuScreenIndex+1
+        rts
+
+        .databank 0
+
+        ; 89/AE45
+
+      aReviveMenuReviveThemText ; 89/AE45
+
+        ; をいきかえらせますか (revive them?)
+        .enc "SJIS"
+        .text "をいきかえらせますか\n"
+
+
+      aReviveMenuYesNoText ; 89/AE5B
+
+        ; はい (yes), いいえ (no).
+        .text "はい　　　いいえ\n"
+
+
+      aReviveMenuConfirmText ; 89/AE6D
+
+        ; よろしいですか (is that OK?)
+        .text "よろしいですか\n"
+
+
+      aReviveMenuBlankLine ; 89/AE7D
+
+        ; A blank line.
+        .text "　　　　　　　　　　　　　　　　　　　　　　　　　　\n"
+
+
+      rsReviveScreenShowStatus ; 89/AEB3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X: opens the status screen for the unit under the cursor, with the revive screen to return to (wStatusScreenCaller).
+
+        lda #$0008
+        jsl rlPlaySoundEffect
+        lda wUnitWindowCurrentHighlightLine
+        sta wItemWindowCursorRow
+        asl a
+        tax
+        lda aUnitWindowDeploymentSlots,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda #<>rsReviveScreenOpen
+        sta wDataWindowCurrentArmy
+        lda #<>rsOpenStatusScreen
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$FE
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #$0003
+        sta wGameStateStep,b
+        lda #$0000
+        sta $7F819D
+        rts
+
+        .databank 0
+
+        ; 89/AEFE
+
+      rsReviveScreenCursorRight ; 89/AEFE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowCurrentHighlightLine
+        inc a
+        cmp wUnitWindowMaxRows
+        beq _AF14
+        sta wUnitWindowCurrentHighlightLine
+        lda #$0007
+        jsl rlPlaySoundEffect
+
+        _AF14
+        rts
+
+        .databank 0
+
+        ; 89/AF15
+
+      rsReviveScreenCursorLeft ; 89/AF15
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowCurrentHighlightLine
+        beq _AF27
+        dec a
+        sta wUnitWindowCurrentHighlightLine
+        lda #$0007
+        jsl rlPlaySoundEffect
+
+        _AF27
+        rts
+
+        .databank 0
+
+        ; 89/AF28
+
+      rsReviveScreenCursorUp ; 89/AF28
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowCurrentHighlightLine
+        sec
+        sbc #$0003
+        bmi _AF3D
+        sta wUnitWindowCurrentHighlightLine
+        lda #$0006
+        jsl rlPlaySoundEffect
+
+        _AF3D
+        rts
+
+        .databank 0
+
+        ; 89/AF3E
+
+      rsReviveScreenCursorDown ; 89/AF3E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnitWindowCurrentHighlightLine
+        clc
+        adc #$0003
+        cmp wUnitWindowMaxRows
+        bpl _AF57
+        sta wUnitWindowCurrentHighlightLine
+        lda #$0006
+        jsl rlPlaySoundEffect
+
+        _AF57
+        rts
+
+        .databank 0
+
+        ; 89/AF58
+
+      rsReviveScreenConfirm ; 89/AF58
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $01, the yes/no question. Left and Right move between yes and no (wReviveScreenConfirmCursor); A on yes sets up the staff action of the staff's user (wReviveScreenStaffUser) on the chosen unit (rlBuildCastleActionRounds); A on no, or B, goes back to step $00.
+
+        lda wJoy1New
+        bit #$0080
+        bne _AF77
+        bit #$8000
+        bne _AF9D
+        bit #$0100
+        bne _AF6F
+        bit #$0200
+        bne _AF73
+        rts
+
+
+        _AF6F
+        jml rsReviveScreenConfirmNo
+
+
+        _AF73
+        jml rsReviveScreenConfirmYes
+
+
+        _AF77
+        lda $7FB018
+        bne _AF9D
+        lda #$000A
+        jsl rlPlaySoundEffect
+        lda $7FB016
+        sta wSelectedUnitDataRAMPointer,b
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda aUnitWindowDeploymentSlots,x
+        sta wRoutineVariable1,b
+        jsl rlBuildCastleActionRounds
+        rts
+
+
+        _AF9D
+        lda #$0021
+        jsl rlPlaySoundEffect
+        lda #(`aReviveMenuBlankLine2)<<8
+        sta lR18+1
+        lda #<>aReviveMenuBlankLine2
+        sta lR18
+        ldx #$0203
+        jsl rlDrawMenuTextLine
+        lda #(`aReviveMenuWhomText)<<8
+        sta lR18+1
+        lda #<>aReviveMenuWhomText
+        sta lR18
+        ldx #$0203
+        jsl rlDrawMenuTextLine
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0200, $80, $5000
+
+        lda #$0000
+        sta wGameStateStep,b
+        sta wDebugMenuScreenIndex+1
+        rts
+
+        .databank 0
+
+        ; 89/AFDE
+
+      aReviveMenuWhomText ; 89/AFDE
+
+        ; だれをいきかえらせますか (whom will you revive?)
+        .enc "SJIS"
+        .text "だれをいきかえらせますか\n"
+
+
+      aReviveMenuBlankLine2 ; 89/AFF8
+
+        ; A blank line.
+        .text "　　　　　　　　　　　　　　　　　　　　　　　　　　\n"
+
+
+      rsReviveScreenConfirmNo ; 89/B02E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FB018
+        bne _B042
+        lda #$0001
+        sta $7FB018
+        lda #$0007
+        jsl rlPlaySoundEffect
+
+        _B042
+        rts
+
+        .databank 0
+
+        ; 89/B043
+
+      rsReviveScreenConfirmYes ; 89/B043
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FB018
+        beq _B057
+        lda #$0000
+        sta $7FB018
+        lda #$0007
+        jsl rlPlaySoundEffect
+
+        _B057
+        rts
+
+        .databank 0
+
+        ; 89/B058
+
+    .endsection ReviveMenuSection
+
+
+    .section Unsorted89B058Section
+
+      .al
+      .xl
+
+      rsReviveScreenNobodyDead ; 89/B058
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $02, "no one has died": B leaves to the castle courtyard.
+
+        lda wJoy1New
+        bit #$8000
+        bne _B060
+        rts
+
+
+        _B060
+        lda #$0021
+        jsl rlPlaySoundEffect
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$FE
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #$FFFF
+        sta wDataWindowCurrentArmy
+        sep #$20
+        lda bBufferNMITIMEN
+        and #$FE
+        sta bBufferNMITIMEN
+        rep #$20
+        lda #CASTLE_CURSOR_GRID
+        sta wCastleCursorState,b
+        lda #CASTLE_SCREEN_COURTYARD
+        sta wCastleScreenHandler,b
+        lda #<>rsOpenCastleScreen
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        lda #$0004
+        sta wGameStateStep,b
+        rts
+
+        .databank 0
+
+        ; 89/B0A9
+
+    .endsection Unsorted89B058Section
+
+
+    .section Unsorted89B0A9Section
+
+      .al
+      .xl
+
+      rsReviveScreenWait ; 89/B0A9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Steps $03 and $04: nothing, while the fade to the next screen runs.
+
+        rts
+
+        .databank 0
+
+        ; 89/B0AA
+
+    .endsection Unsorted89B0A9Section
+
+
+    .section Unsorted89B0AASection
+
+      .al
+      .xl
+
+      rlReviveScreenUpkeep ; 89/B0AA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $32, every frame while the revive screen is up: a routine from aReviveScreenDrawModes chosen by the high byte of wDebugMenuScreenIndex, and BG2 scrolled down one line every two frames.
+
+        lda wDebugMenuScreenIndex+1
+        asl a
+        tax
+        jsr (aReviveScreenDrawModes,x)
+        lda wVBlankEnabledFramecount
+        lsr a
+        sta wBufferBG2VOFS
+        rtl
+
+        .databank 0
+
+        ; 89/B0B9
+
+    .endsection Unsorted89B0AASection
+
+
+    .section Table89B0B9Section
+
+      .al
+      .xl
+
+      aReviveScreenDrawModes ; 89/B0B9
+
+        ; Jump table of rlReviveScreenUpkeep.
+        .word <>rsReviveScreenDrawGrid
+        .word <>rsReviveScreenDrawGridAndConfirm
+        .word <>rsReviveScreenDrawNothing
+
+    .endsection Table89B0B9Section
+
+
+    .section Unsorted89B0BFSection
+
+      .al
+      .xl
+
+      rsReviveScreenDrawGrid ; 89/B0BF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draw mode 0: the map sprites and the cursor.
+
+        jsr rsReviveScreenDrawMapSprites
+        jsr rsReviveScreenDrawCursor
+        rts
+
+        .databank 0
+
+        ; 89/B0C6
+
+    .endsection Unsorted89B0BFSection
+
+
+    .section Unsorted89B0C6Section
+
+      .al
+      .xl
+
+      rsReviveScreenDrawGridAndConfirm ; 89/B0C6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draw mode 1: as mode 0, and the cursor on yes or no.
+
+        jsr rsReviveScreenDrawMapSprites
+        jsr rsReviveScreenDrawCursor
+        jsr rsReviveScreenDrawConfirmCursor
+        rts
+
+        .databank 0
+
+        ; 89/B0D0
+
+    .endsection Unsorted89B0C6Section
+
+
+    .section Unsorted89B0D0Section
+
+      .al
+      .xl
+
+      rsReviveScreenDrawNothing ; 89/B0D0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draw mode 2, with no dead unit: nothing.
+
+        rts
+
+        .databank 0
+
+        ; 89/B0D1
+
+    .endsection Unsorted89B0D0Section
+
+
+    .section Unsorted89B0D1Section
+
+      .al
+      .xl
+
+      rsReviveScreenDrawMapSprites ; 89/B0D1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The map sprite of each dead unit in the grid, the one under the cursor in palette 1 and animated in step $00 (rsReviveScreenAnimateMapSprite), the others in palette 4.
+
+        lda wGameStateStep,b
+        bne _B0D9
+        jsr rsReviveScreenAnimateMapSprite
+
+        _B0D9
+        phk
+        plb
+        .databank $89
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda #$0200
+        sta wR5
+        jsr rsReviveScreenDrawMapSprite
+        lda #$0000
+
+        _B0EC
+        sta wUnitWindowCurrentNameLine
+        cmp wUnitWindowCurrentHighlightLine
+        beq _B100
+        asl a
+        tax
+        lda #$0800
+        sta wR5
+        jsr rsReviveScreenDrawMapSprite
+
+        _B100
+        lda wUnitWindowCurrentNameLine
+        inc a
+        cmp wUnitWindowMaxRows
+        bne _B0EC
+        rts
+
+        .databank 0
+
+        ; 89/B10C
+
+    .endsection Unsorted89B0D1Section
+
+
+    .section Unsorted89B10CSection
+
+      .al
+      .xl
+
+      rsReviveScreenDrawMapSprite ; 89/B10C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The map sprite of grid entry X/2 with attributes wR5, small or large by the map sprite ID's top bit.
+
+        lda aUnitWindowEquippedWeaponPointers,x
+        bmi _B11C
+        lda $B133,b,x
+        sta wR4
+        ldy #$B1F3
+        bra _B124
+
+
+        _B11C
+        lda $B163,b,x
+        sta wR4
+        ldy #$B1FA
+
+        _B124
+        lda $B193,b,x
+        sta wR0
+        lda $B1C3,b,x
+        sta wR1
+        jsl rlPushToOAMBuffer
+        rts
+
+        .databank 0
+
+        ; 89/B133
+
+    .endsection Unsorted89B10CSection
+
+
+    .section Unsorted89B20BSection
+
+      .al
+      .xl
+
+      rsReviveScreenDrawCursor ; 89/B20B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The hand cursor on the grid entry wUnitWindowCurrentHighlightLine.
+
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda aReviveScreenCursorX,x
+        sta wR0
+        lda aReviveScreenCursorY,x
+        sta wR1
+        lda wGameStateStep,b
+        jsl rlUnknown88A704
+        rts
+
+        .databank 0
+
+        ; 89/B225
+
+    .endsection Unsorted89B20BSection
+
+
+    .section Data89B225Section
+
+      .al
+      .xl
+
+      aReviveScreenCursorX ; 89/B225
+
+        ; Read by rsReviveScreenDrawCursor.
+
+        .word $0000, $0050, $00A0, $0000, $0050, $00A0, $0000, $0050
+        .word $00A0, $0000, $0050, $00A0, $0000, $0050, $00A0, $0000
+        .word $0050, $00A0, $0000, $0050, $00A0, $0000, $0050, $00A0
+
+        ; 89/B255
+
+      aReviveScreenCursorY ; 89/B255
+
+        ; Read by rsReviveScreenDrawCursor.
+
+        .word $004B, $004B, $004B, $005B, $005B, $005B, $006B, $006B
+        .word $006B, $007B, $007B, $007B, $008B, $008B, $008B, $009B
+        .word $009B, $009B, $00AB, $00AB, $00AB, $00BB, $00BB, $00BB
+
+        ; 89/B285
+
+    .endsection Data89B225Section
+
+
+    .section Unsorted89B285Section
+
+      .al
+      .xl
+
+      rsReviveScreenDrawConfirmCursor ; 89/B285
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The hand cursor on yes or no.
+
+        lda $7FB018
+        asl a
+        tax
+        lda aReviveScreenConfirmCursorX,x
+        sta wR0
+        lda #$0013
+        sta wR1
+        lda #$0000
+        jsl rlUnknown88A704
+        rts
+
+        .databank 0
+
+        ; 89/B29E
+
+    .endsection Unsorted89B285Section
+
+
+    .section Data89B29ESection
+
+      .al
+      .xl
+
+      aReviveScreenConfirmCursorX ; 89/B29E
+
+        ; Read by rsReviveScreenDrawConfirmCursor.
+
+        .word $0095, $00BD
+
+        ; 89/B2A2
+
+    .endsection Data89B29ESection
+
+
+    .section Unsorted89B2A2Section
+
+      .al
+      .xl
+
+      rsReviveScreenAnimateMapSprite ; 89/B2A2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sends the current frame of the map sprite under the cursor to its place in VRAM, small or large.
+
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda aUnitWindowEquippedWeaponPointers,x
+        bmi _B2B2
+        jsr rsReviveScreenAnimateSmallMapSprite
+        rts
+
+
+        _B2B2
+        jsr rsReviveScreenAnimateLargeMapSprite
+        rts
+
+        .databank 0
+
+        ; 89/B2B6
+
+    .endsection Unsorted89B2A2Section
+
+
+    .section Unsorted89B2B6Section
+
+      .al
+      .xl
+
+      rsReviveScreenAnimateSmallMapSprite ; 89/B2B6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda wVBlankEnabledFramecount
+        lsr a
+        lsr a
+        lsr a
+        and #$0006
+        tax
+        lda aReviveScreenSmallSpriteFrameOffsets,x
+        sta wR15
+        pla
+        and #$7FFF
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aUnknown88D526+1,x
+        sta lR18+1
+        lda aUnknown88D526,x
+        clc
+        adc wR15
+        sta lR18
+        sta wR14
+        lda #$0040
+        sta wR0
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda aReviveScreenSmallSpriteVRAM2,x
+        sta wR1
+        jsl rlDMAByPointer
+        lda wR14
+        clc
+        adc #$0040
+        sta lR18
+        lda wR1
+        clc
+        adc #$0100
+        sta wR1
+        jsl rlDMAByPointer
+        rts
+
+        .databank 0
+
+        ; 89/B30C
+
+    .endsection Unsorted89B2B6Section
+
+
+    .section Data89B30CSection
+
+      .al
+      .xl
+
+      aReviveScreenSmallSpriteFrameOffsets ; 89/B30C
+
+        ; Read by rsReviveScreenAnimateSmallMapSprite.
+
+        .word $0000, $0080, $0100, $0080
+
+        ; 89/B314
+
+      aReviveScreenSmallSpriteVRAM2 ; 89/B314
+
+        ; Read by rsReviveScreenAnimateSmallMapSprite.
+
+        .word $6200, $6220, $6240, $6260, $6280, $62A0, $62C0, $62E0
+        .word $6400, $6420, $6440, $6460, $6480, $64A0, $64C0, $64E0
+        .word $6600, $6620, $6640, $6660, $6680, $66A0, $66C0, $66E0
+
+        ; 89/B344
+
+    .endsection Data89B30CSection
+
+
+    .section Unsorted89B344Section
+
+      .al
+      .xl
+
+      rsReviveScreenAnimateLargeMapSprite ; 89/B344
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        lda wVBlankEnabledFramecount
+        lsr a
+        lsr a
+        lsr a
+        and #$0006
+        tax
+        lda aReviveScreenLargeSpriteFrameOffsets,x
+        sta wR15
+        pla
+        and #$7FFF
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aUnknown88D5E3+1,x
+        sta lR18+1
+        lda aUnknown88D5E3,x
+        clc
+        adc wR15
+        sta lR18
+        sta wR14
+        lda #$0040
+        sta wR0
+        lda wUnitWindowCurrentHighlightLine
+        asl a
+        tax
+        lda aReviveScreenLargeSpriteVRAM2,x
+        sta wR1
+        jsl rlDMAByPointer
+        lda wR14
+        clc
+        adc #$0040
+        sta lR18
+        lda #$0080
+        sta wR0
+        lda wR1
+        clc
+        adc #$0100
+        sta wR1
+        jsl rlDMAByPointer
+        rts
+
+        .databank 0
+
+        ; 89/B39F
+
+    .endsection Unsorted89B344Section
+
+
+    .section Data89B39FSection
+
+      .al
+      .xl
+
+      aReviveScreenLargeSpriteFrameOffsets ; 89/B39F
+
+        ; Read by rsReviveScreenAnimateLargeMapSprite.
+
+        .word $0000, $00C0, $0180, $00C0
+
+        ; 89/B3A7
+
+      aReviveScreenLargeSpriteVRAM2 ; 89/B3A7
+
+        ; Read by rsReviveScreenAnimateLargeMapSprite.
+
+        .word $6800, $6840, $6880, $68C0, $6A00, $6A40, $6A80, $6AC0
+        .word $6C00, $6C40, $6C80, $6CC0, $6E00, $6E40, $6E80, $6EC0
+        .word $7000, $7040, $7080, $70C0, $7200, $7240, $7280, $72C0
+
+        ; 89/B3D7
+
+    .endsection Data89B39FSection
+
+
