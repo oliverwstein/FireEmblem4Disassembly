@@ -49,14 +49,17 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Emulator questions (for one batched session)
 
-Each is one screen. (Answered: a sold item does appear in that castle's secondhand buy list; Sigurd's sword rank on the status screen is the star, so rank 4 is the major-blood star; holding Select while pressing R on a status screen does show a dead unit.)
+Each is one screen. Answered so far:
+- A sold item appears in that castle's secondhand buy list.
+- Sigurd's sword rank on the status screen is the star (rank 4 is the major-blood star).
+- Holding Select while pressing R on a status screen shows a dead unit.
+- The augury offers Sigurd two topics, with a blank third line in the box.
+- The item shop's second option (もちもの) has the keeper say Shop36 ("quit looking at your own stuff and look at my goods") and go back.
+- Class change in chapter 6 was settled from the code instead: the command's label is drawn blank, its button gets another palette, and pressing it only plays the error sound (`rsCastleUnitCommandNameClassChange`, `rsCastleUnitCommandClassChange`).
 
-From the castle wave, in a castle's town or courtyard:
+Open, for whenever a save reaches chapter 6:
 
-1. Augury with a generation 1 unit: are there two topics (love, record)? With a generation 2 child: three (love, record, parents)? Confirms that `$7F8183` is the last topic index.
-2. In chapter 6, is the class change command grey in the courtyard?
-3. Item shop, second option (もちもの): does the keeper say the "look at my goods" line (Shop36)?
-
+1. Augury with a generation 2 child: are there three topics (love, record, parents)?
 
 ## How to work on this project
 
