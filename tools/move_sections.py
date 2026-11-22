@@ -60,6 +60,10 @@ def main():
         for b in sorted(blocks, key=first_address):
             text = text.rstrip('\n') + '\n\n\n' + b + '\n'
         files[target] = text
+    for target in moved:
+        # Before anything is written: a missing folder would otherwise fail
+        # after the sources had already lost their sections.
+        os.makedirs(os.path.dirname(target), exist_ok=True)
     for f, t in files.items():
         if not os.path.exists(f) or open(f, encoding='utf-8').read() != t:
             open(f, 'w', encoding='utf-8').write(t)

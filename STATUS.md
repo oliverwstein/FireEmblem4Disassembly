@@ -4,15 +4,15 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-22, after `0c07436`)
+## Current state (2026-11-22, after the castle wave)
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
 - `./build.sh` is byte-identical and the checksums verify. 97.53% of the ROM is built from source. GAPS.md: 216 `none` pieces (61,565 bytes), 56 padding runs (42,139 bytes).
-- Routines: 5,956 in `engine/`, 2,516 named, 3,440 `Unknown`; 3,005 still in `engine/unsorted/`. 307 pinned blocks.
-- Phase 3 Wave 1 audit done: the game-state routines are named by role (`rl<Screen>Upkeep/Setup/Step`, constants in `include/GameStates.h`); wrong claims fixed (see commits `2e4e0d0`, `96e3557`). The other ~380 names `ef5fff9` gave were triaged: Gemini's comments are mostly specific and code-derived; the "unused" claims, interpretive names and table names were checked one by one. A full line-by-line read of every AI/RAM-struct/OAM routine was not done.
-- Reference set started: `tools/reference.py` generates `docs/reference/routines/`, `ram.md`, `INDEX.md`; hand-written `docs/reference/README.md`, `core.md`, `ai.md`. Its output is gitignored; run it locally to read the index.
-- Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md), updated for the game-state names and the menu option stack.
+- Routines: 5,958 in `engine/`, 2,771 named, 3,187 `Unknown`; 2,736 still in `engine/unsorted/`. 307 pinned blocks.
+- **Phase 3 Wave 2a (castle) done**, commits `a26ee55`..`50648da`. Bank `$8A` is empty and gone; the castle lives in `engine/castle/` (10 files), with its rules from banks `$84`/`$87` and the old `menus/castle_menu.asm`. Constants in `include/Castle.h`, RAM block at `$7F757A` (scoped in `tools/name_ram.py`), reference page [docs/reference/castle.md](docs/reference/castle.md). Fixed on the way: `rlBuildDeadPlayerCharacterList` was the castle's unit list (now `rlBuildCastleUnitList`); the "unit menu" names were the town screen; the しゅび command is guard, not equip.
+- Wave 1 (core, AI) reference pages: `docs/reference/core.md`, `ai.md`. `tools/reference.py` output is gitignored; run it locally.
+- Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
 ## Who wrote what
 
@@ -27,9 +27,10 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Talk to the user before starting a Phase 3 wave.** Suggested first: menus and facilities (the most self-contained). Split battle into three sessions (formulas and skills; the battle-scene interpreter; map-battle and spell animation) and the map engine into two (rendering; movement and range).
+1. **Talk to the user before starting the next wave.** The menu split agreed: castle (done), then **the full-screen menus in bank `$89`** (status screen, revive screen, options menu, plus the 18 `Unknown` in `engine/save/save.asm`), then **the map menu in banks `$85`/`$87`** (about 375 routines, likely two sessions). Then the map engine (two sessions) and battle (three).
 2. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
-3. Open questions left by Wave 1 are at the end of `docs/reference/core.md` and `ai.md`.
+3. Open questions are at the end of each reference page (`core.md`, `ai.md`, `castle.md`).
+4. `tools/stream_catalog.py` deleted the catalog previews when run this session (reverted), so `gfx/compressed/CATALOG.md` still names pre-castle labels; find out why before rerunning it. New files from `move_sections.py` are included at the top of build.asm in reverse order; move the lines to a sensible place by hand.
 
 **Per-wave checklist.** One system (or one part of a big one) per session; hand over and clear context after each.
 
@@ -46,7 +47,12 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Emulator questions (for one batched session)
 
-None yet.
+From the castle wave; each is one screen in a castle's town or courtyard.
+
+1. Augury with a generation 1 unit: are there two topics (love, record)? With a generation 2 child: three (love, record, parents)? Confirms that `$7F8183` is the last topic index.
+2. In chapter 6, is the class change command grey in the courtyard?
+3. Item shop, second option (もちもの): does the keeper say the "look at my goods" line (Shop36)?
+4. Sell an item at a castle's secondhand shop, then choose buy there: is the item in the list?
 
 ## How to work on this project
 
