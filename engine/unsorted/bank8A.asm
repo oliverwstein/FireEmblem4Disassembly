@@ -386,7 +386,7 @@
 
         ; Step $0D: sets up a shop screen (item shop, secondhand shop or repair shop).
 
-        jsl rlUnknown8ABCF8
+        jsl rlShopScreenSetup
         rts
 
         .databank 0
@@ -402,7 +402,7 @@
 
         ; Step $0E: runs the shop.
 
-        jsl rlUnknown8AC04B
+        jsl rlShopScreenStep
         rts
 
         .databank 0
@@ -630,7 +630,7 @@
         .autsiz
         .databank ?
 
-        ; During the fade steps, draws the portrait chosen by $7F766A (1 rsPushUnitPortraitSprites, 2 rsUnknown8AAF0A, 3 rsPushCourtyardPortraitSprites).
+        ; During the fade steps, draws the portrait chosen by $7F766A (1 rsPushUnitPortraitSprites, 2 rsPushCastleListSprites, 3 rsPushCourtyardPortraitSprites).
 
         rep #$20
         lda $7F766A
@@ -658,7 +658,7 @@
 
 
         _81F1
-        jsr rsUnknown8AAF0A
+        jsr rsPushCastleListSprites
         bra _81DE
 
 
@@ -2888,7 +2888,7 @@
         lda #$0009
         sta wGameStateStep,b
         lda #$0003
-        sta wUnknown0008A9,b
+        sta wCastleListItemState,b
         lda #$0005
         sta $7F8082
         lda #$000A
@@ -3467,7 +3467,7 @@
         lda #$000D
         sta wGameStateStep,b
         lda #$0004
-        sta wUnknown0008A9,b
+        sta wCastleListItemState,b
         lda #$0000
         sta $7F8082
         bra _944E
@@ -3479,7 +3479,7 @@
         lda #$000D
         sta wGameStateStep,b
         lda #$0005
-        sta wUnknown0008A9,b
+        sta wCastleListItemState,b
         lda #$0001
         sta $7F8082
         bra _944E
@@ -3491,7 +3491,7 @@
         lda #$000D
         sta wGameStateStep,b
         lda #$0004
-        sta wUnknown0008A9,b
+        sta wCastleListItemState,b
         lda #$0002
         sta $7F8082
         bra _944E
@@ -3524,7 +3524,7 @@
         lda #$0007
         sta wGameStateStep,b
         lda #$0002
-        sta wUnknown0008A9,b
+        sta wCastleListItemState,b
         lda #$0003
         sta $7F8082
         bra _944E
@@ -4041,9 +4041,9 @@
         .autsiz
         .databank ?
 
-        ; Loads portrait A (through rlUnknown8AB3FE) to OAM palette 4 and VRAM $6B00.
+        ; Loads portrait A (through rlDecompressCharacterPortrait) to OAM palette 4 and VRAM $6B00.
 
-        jsl rlUnknown8AB3FE
+        jsl rlDecompressCharacterPortrait
         ldx #$001E
         ldy #$001E
 
@@ -4970,12 +4970,14 @@
       .al
       .xl
 
-      rlUnknown8A9DF2 ; 8A/9DF2
+      rlBuildStockList ; 8A/9DF2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Lists every item in state wCastleListItemState (the shop's or secondhand stock): item index, ID, ROM and RAM pointers; items that cannot be had yet are marked $FFFF.
 
         stz wCastleListItemCount,b
         jsl rlGetItemRAMDataCount
@@ -4989,7 +4991,7 @@
         bcs _9E51
         jsl rlGetItemRAMStateAndOwner
         lda wR0
-        cmp wUnknown0008A9,b
+        cmp wCastleListItemState,b
         bne _9E51
         cmp #$0005
         beq _9E19
@@ -5030,12 +5032,14 @@
 
         ; 8A/9E5A
 
-      rlUnknown8A9E5A ; 8A/9E5A
+      rlBuildUnitStoredItemList ; 8A/9E5A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Lists the items in state wCastleListItemState owned by the selected unit (the depot).
 
         stz wCastleListItemCount,b
         jsl rlGetItemRAMDataCount
@@ -5049,7 +5053,7 @@
         bcs _9EAE
         jsl rlGetItemRAMStateAndOwner
         lda wR0
-        cmp wUnknown0008A9,b
+        cmp wCastleListItemState,b
         bne _9EAE
         lda wR1
         cmp wSelectedUnitDataRAMPointer,b
@@ -5091,13 +5095,15 @@
       .al
       .xl
 
-      rlUnknown8A9EB7 ; 8A/9EB7
+      rlBuildEquippableWeaponList ; 8A/9EB7
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Lists the unit's equippable weapons, the equipped one first (the arena).
 
         ldx #$0000
         stz wCastleListItemCount,b
@@ -5153,13 +5159,15 @@
 
         ; 8A/9F32
 
-      rlUnknown8A9F32 ; 8A/9F32
+      rlBuildEquippableWeaponListSameRange ; 8A/9F32
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Like rlBuildEquippableWeaponList, but only weapons with the same minimum range as the equipped one.
 
         ldx #$0000
         stz wCastleListItemCount,b
@@ -5235,7 +5243,7 @@
       .al
       .xl
 
-      rlUnknown8A9FCC ; 8A/9FCC
+      rlBuildItemListInState ; 8A/9FCC
 
         ; Found by tools/sweep.py.
         .al
@@ -5254,7 +5262,7 @@
         bcs _A00F
         jsl rlGetItemRAMStateAndOwner
         lda wR0
-        cmp wUnknown0008A9,b
+        cmp wCastleListItemState,b
         bne _A00F
         bne _A00F
         tya
@@ -5287,12 +5295,14 @@
       .al
       .xl
 
-      rlUnknown8AA013 ; 8A/A013
+      rlMoveItemToSecondhandStock ; 8A/A013
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets the item's state to ItemStatePawnbroker, owned by the castle entered.
 
         lda #$0005
         sta wR0
@@ -5324,7 +5334,7 @@
       .al
       .xl
 
-      rsUnknown8AA02B ; 8A/A02B
+      rsDrawItemDescription ; 8A/A02B
 
         ; Found by tools/sweep.py.
         .al
@@ -5663,7 +5673,7 @@
       .al
       .xl
 
-      rlUnknown8AA251 ; 8A/A251
+      rlLoadItemIconGraphics ; 8A/A251
 
         .al
         .xl
@@ -5762,7 +5772,7 @@
       .al
       .xl
 
-      rsUnknown8AA2ED ; 8A/A2ED
+      rsDrawCastleUnitMoney ; 8A/A2ED
 
         ; Found by tools/sweep.py.
         .al
@@ -5772,9 +5782,9 @@
 
         lda #$2800
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown8AA31C)<<8
+        lda #(`aCastleMoneyGText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AA31C
+        lda #<>aCastleMoneyGText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -5784,7 +5794,7 @@
         jsl rlDrawMenuTextLine
         jsl rlGetSelectedUnitMoney
         ldx #$0646
-        jsl rlUnknown8AB111
+        jsl rlDrawCastleNumber
         rts
 
         .databank 0
@@ -5799,21 +5809,21 @@
       .al
       .xl
 
-      aUnknown8AA31C ; 8A/A31C
+      aCastleMoneyGText ; 8A/A31C
 
         .enc "SJIS"
         .text "Ｇ"
         .word $0000
         .enc "none"
 
-      aUnknown8AA320 ; 8A/A320
+      aCastleListBlankLineText ; 8A/A320
 
         .enc "SJIS"
         .text "　　　　　　　　　　　　　　　　　　　"
         .word $0000
         .enc "none"
 
-      aUnknown8AA348 ; 8A/A348
+      aCastleYesNoText ; 8A/A348
 
         .enc "SJIS"
         .text "　はい　　　いいえ　　　　　　　　　　"
@@ -5821,7 +5831,7 @@
         .enc "none"
 
 
-      rsUnknown8AA370 ; 8A/A370
+      rsCastleOptionMenuInputOld ; 8A/A370
 
         .al
         .xl
@@ -5886,22 +5896,22 @@
         beq _A3F2
         cmp #$0003
         beq _A3F7
-        jsr rsUnknown8AA9CE
+        jsr rsDrawStockList
         bra _A37C
 
 
         _A3ED
-        jsr rsUnknown8AAB48
+        jsr rsDrawInventoryWithSellPrices
         bra _A37C
 
 
         _A3F2
-        jsr rsUnknown8AACA8
+        jsr rsDrawInventoryWithRepairCosts
         bra _A37C
 
 
         _A3F7
-        jsr rsUnknown8AAD44
+        jsr rsClearCastleList
         bra _A37C
 
         .databank 0
@@ -5919,7 +5929,7 @@
       .al
       .xl
 
-      rsUnknown8AA400 ; 8A/A400
+      rsCastleStockListInput ; 8A/A400
 
         .al
         .xl
@@ -5973,8 +5983,8 @@
 
 
         _A45D
-        jsr rsUnknown8AA63D
-        jsr rsUnknown8AA9CE
+        jsr rsDrawStockItemDetails
+        jsr rsDrawStockList
         rts
 
 
@@ -5991,7 +6001,7 @@
 
         ; 8A/A46E
 
-      rsUnknown8AA46E ; 8A/A46E
+      rsCastleYesNoInput ; 8A/A46E
 
         .al
         .xl
@@ -6057,7 +6067,7 @@
 
       aUnknown8AA4C6 ; 8A/A4C6
 
-        ; Read by rsUnknown8AA46E.
+        ; Read by rsCastleYesNoInput.
 
         .word $7C54
 
@@ -6071,7 +6081,7 @@
       .al
       .xl
 
-      rsUnknown8AA4C8 ; 8A/A4C8
+      rsCastleInventoryListInput ; 8A/A4C8
 
         .al
         .xl
@@ -6125,8 +6135,8 @@
 
 
         _A525
-        jsr rlUnknown8AA83D
-        jsr rsUnknown8AAB48
+        jsr rlDrawInventoryItemDetails
+        jsr rsDrawInventoryWithSellPrices
         rts
 
 
@@ -6141,7 +6151,7 @@
 
         ; 8A/A530
 
-      rsUnknown8AA530 ; 8A/A530
+      rsCastleRepairListInput ; 8A/A530
 
         .al
         .xl
@@ -6195,8 +6205,8 @@
 
 
         _A58D
-        jsr rlUnknown8AA83D
-        jsr rsUnknown8AACA8
+        jsr rlDrawInventoryItemDetails
+        jsr rsDrawInventoryWithRepairCosts
         rts
 
 
@@ -6211,7 +6221,7 @@
 
         ; 8A/A598
 
-      rsUnknown8AA598 ; 8A/A598
+      rsAuguryTopicInput ; 8A/A598
 
         .al
         .xl
@@ -6265,7 +6275,7 @@
 
 
         _A5F7
-        jsr rsUnknown8AAD6F
+        jsr rsDrawAuguryTopics
         rts
 
 
@@ -6288,12 +6298,14 @@
       .al
       .xl
 
-      rlUnknown8AA5FF ; 8A/A5FF
+      rlDrawWeaponRankTiles ; 8A/A5FF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the two tiles for weapon rank A at column X, row Y of the BG3 tilemap.
 
         pha
         tya
@@ -6314,12 +6326,12 @@
         asl a
         tax
         phx
-        lda aUnknown8AA629,x
+        lda aWeaponRankTiles,x
         tyx
         sta aBG3TilemapBuffer,x
         txy
         plx
-        lda aUnknown8AA629+2,x
+        lda aWeaponRankTiles+2,x
         tyx
         sta $7E83C8,x
         rtl
@@ -6336,9 +6348,9 @@
       .al
       .xl
 
-      aUnknown8AA629 ; 8A/A629
+      aWeaponRankTiles ; 8A/A629
 
-        ; Read by rlUnknown8AA5FF.
+        ; Read by rlDrawWeaponRankTiles.
 
         .word $25E4, $25F4, $252A, $253A, $252B, $253B, $252C, $253C
         .word $24FF, $2509
@@ -6353,7 +6365,7 @@
       .al
       .xl
 
-      rsUnknown8AA63D ; 8A/A63D
+      rsDrawStockItemDetails ; 8A/A63D
 
         .al
         .xl
@@ -6388,28 +6400,28 @@
         sta lR18+1
         ldx #$0A00
         jsl rlDrawMenuTextLine
-        jml rsUnknown8AA02B
+        jml rsDrawItemDescription
 
 
         _A68F
         ldx #$0282
         lda #$0002
         ldy #$0008
-        jsr rsUnknown8AA9A6
+        jsr rsCopyBG3RectFromTemplate
         jsl rlGetItemWeaponRank
         ldx #$0008
         ldy #$000A
         inc a
-        jsl rlUnknown8AA5FF
-        jml rsUnknown8AA02B
+        jsl rlDrawWeaponRankTiles
+        jml rsDrawItemDescription
 
 
         _A6AE
-        jml rsUnknown8AA830
+        jml rsClearItemDetailsWindow
 
 
         _A6B2
-        jml rsUnknown8AA6CA
+        jml rsDrawWeaponStats
 
         .databank 0
 
@@ -6431,7 +6443,7 @@
       .al
       .xl
 
-      rsUnknown8AA6CA ; 8A/A6CA
+      rsDrawWeaponStats ; 8A/A6CA
 
         ; Found by tools/sweep.py.
         .al
@@ -6439,10 +6451,12 @@
         .autsiz
         .databank ?
 
+        ; Draws a weapon's rank, hit, might, range, weight and description.
+
         ldx #$0282
         lda #$000A
         ldy #$0008
-        jsr rsUnknown8AA9A6
+        jsr rsCopyBG3RectFromTemplate
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda #(`aCastleMenuTilemapData)<<8
@@ -6453,7 +6467,7 @@
         ldx #$0008
         ldy #$000A
         inc a
-        jsl rlUnknown8AA5FF
+        jsl rlDrawWeaponRankTiles
         jsl rlGetItemAccuracy
         ldx #$2520
         stx wR5
@@ -6643,7 +6657,7 @@
       .al
       .xl
 
-      rsUnknown8AA830 ; 8A/A830
+      rsClearItemDetailsWindow ; 8A/A830
 
         .al
         .xl
@@ -6653,7 +6667,7 @@
         ldx #$0282
         lda #$000E
         ldy #$0008
-        jsr rsUnknown8AA97F
+        jsr rsClearBG3Rect
         rts
 
         .databank 0
@@ -6668,7 +6682,7 @@
       .al
       .xl
 
-      rlUnknown8AA83D ; 8A/A83D
+      rlDrawInventoryItemDetails ; 8A/A83D
 
         ; Found by tools/sweep.py.
         .al
@@ -6703,28 +6717,28 @@
         sta lR18+1
         ldx #$0A00
         jsl rlDrawMenuTextLine
-        jml rsUnknown8AA02B
+        jml rsDrawItemDescription
 
 
         _A88E
         ldx #$0282
         lda #$0002
         ldy #$0008
-        jsr rsUnknown8AA9A6
+        jsr rsCopyBG3RectFromTemplate
         jsl rlGetItemWeaponRank
         ldx #$0008
         ldy #$000A
         inc a
-        jsl rlUnknown8AA5FF
-        jml rsUnknown8AA02B
+        jsl rlDrawWeaponRankTiles
+        jml rsDrawItemDescription
 
 
         _A8AD
-        jml rsUnknown8AA830
+        jml rsClearItemDetailsWindow
 
 
         _A8B1
-        jml rsUnknown8AA6CA
+        jml rsDrawWeaponStats
 
         .databank 0
 
@@ -6754,7 +6768,7 @@
       .al
       .xl
 
-      rsUnknown8AA8C9 ; 8A/A8C9
+      rsPushStockItemTypeIcon ; 8A/A8C9
 
         .al
         .xl
@@ -6814,7 +6828,7 @@
 
       aUnknown8AA917 ; 8A/A917
 
-        ; Read by rsUnknown8AA8C9.
+        ; Read by rsPushStockItemTypeIcon.
 
         .byte $00, $02, $04, $06, $08, $0A, $0C, $0E, $20, $22, $01, $00, $00, $C2, $00, $B0
         .byte $34
@@ -6829,7 +6843,7 @@
       .al
       .xl
 
-      rsUnknown8AA928 ; 8A/A928
+      rsPushInventoryItemTypeIcon ; 8A/A928
 
         .al
         .xl
@@ -6888,7 +6902,7 @@
 
       aUnknown8AA975 ; 8A/A975
 
-        ; Read by rsUnknown8AA928.
+        ; Read by rsPushInventoryItemTypeIcon.
 
         .word $0200, $0604, $0A08, $0E0C, $2220
 
@@ -6902,12 +6916,14 @@
       .al
       .xl
 
-      rsUnknown8AA97F ; 8A/A97F
+      rsClearBG3Rect ; 8A/A97F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fills a rectangle of the BG3 tilemap with $00FF: X start, Y width in tiles, A height in rows.
 
         stx wR0
         sty wR1
@@ -6944,12 +6960,14 @@
       .al
       .xl
 
-      rsUnknown8AA9A6 ; 8A/A9A6
+      rsCopyBG3RectFromTemplate ; 8A/A9A6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies a rectangle of the BG3 tilemap from aUnknownDA7000: X start, Y width in tiles, A height in rows.
 
         stx wR0
         sty wR1
@@ -6986,7 +7004,7 @@
       .al
       .xl
 
-      rsUnknown8AA9CE ; 8A/A9CE
+      rsDrawStockList ; 8A/A9CE
 
         ; Found by tools/sweep.py.
         .al
@@ -7022,9 +7040,9 @@
         sta aCurrentTilemapInfo,b
 
         _A9FF
-        jsr rsUnknown8AAA8A
-        jsr rsUnknown8AAAE7
-        jsr rsUnknown8AAA3A
+        jsr rsDrawStockListRowPrice
+        jsr rsDrawStockListRowDurability
+        jsr rsDrawStockListRowName
 
         _AA08
         dec x
@@ -7036,9 +7054,9 @@
 
 
         _AA0F
-        lda #(`aUnknown8AA320)<<8
+        lda #(`aCastleListBlankLineText)<<8
         sta lR18+1
-        lda #<>aUnknown8AA320
+        lda #<>aCastleListBlankLineText
         sta lR18
         phx
         lda $AA2A,b,y
@@ -7067,7 +7085,7 @@
       .al
       .xl
 
-      rsUnknown8AAA3A ; 8A/AA3A
+      rsDrawStockListRowName ; 8A/AA3A
 
         .al
         .xl
@@ -7131,12 +7149,14 @@
       .al
       .xl
 
-      rsUnknown8AAA8A ; 8A/AA8A
+      rsDrawStockListRowPrice ; 8A/AA8A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws a stock item's price, halved with Bargain; no price for keepers 3, 4 and 7.
 
         lda $7F8082
         cmp #$0003
@@ -7153,7 +7173,7 @@
         sta wTempVariable1,b
         plx
         ply
-        jsl rlUnknown87A18C
+        jsl rlCheckUnitHasBargain
         bcc _AABC
         lda wTempVariable1,b
         lsr a
@@ -7169,7 +7189,7 @@
         adc #$0032
         tax
         lda wTempVariable1,b
-        jsl rlUnknown8AB111
+        jsl rlDrawCastleNumber
         plx
         rts
 
@@ -7184,7 +7204,7 @@
 
         ; 8A/AAE7
 
-      rsUnknown8AAAE7 ; 8A/AAE7
+      rsDrawStockListRowDurability ; 8A/AAE7
 
         .al
         .xl
@@ -7217,7 +7237,7 @@
         adc #$0026
         tax
         lda wR0
-        jsl rlUnknown8AB111
+        jsl rlDrawCastleNumber
         plx
         rts
 
@@ -7267,7 +7287,7 @@
       .al
       .xl
 
-      rsUnknown8AAB48 ; 8A/AB48
+      rsDrawInventoryWithSellPrices ; 8A/AB48
 
         ; Found by tools/sweep.py.
         .al
@@ -7304,9 +7324,9 @@
         txa
         inc a
         sta wRoutineVariable1,b
-        jsr rsUnknown8AABFC
-        jsr rsUnknown8AAC51
-        jsr rsUnknown8AABAB
+        jsr rsDrawInventoryRowSellPrice
+        jsr rsDrawInventoryRowDurability
+        jsr rsDrawInventoryRowName
 
         _AB8A
         dec x
@@ -7317,9 +7337,9 @@
 
 
         _AB90
-        lda #(`aUnknown8AA320)<<8
+        lda #(`aCastleListBlankLineText)<<8
         sta lR18+1
-        lda #<>aUnknown8AA320
+        lda #<>aCastleListBlankLineText
         sta lR18
         phx
         lda $AA2A,b,y
@@ -7343,7 +7363,7 @@
       .al
       .xl
 
-      rsUnknown8AABAB ; 8A/ABAB
+      rsDrawInventoryRowName ; 8A/ABAB
 
         .al
         .xl
@@ -7410,7 +7430,7 @@
       .al
       .xl
 
-      rsUnknown8AABFC ; 8A/ABFC
+      rsDrawInventoryRowSellPrice ; 8A/ABFC
 
         .al
         .xl
@@ -7443,7 +7463,7 @@
         adc #$0032
         tax
         lda wR0
-        jsl rlUnknown8AB111
+        jsl rlDrawCastleNumber
         plx
 
         _AC36
@@ -7451,9 +7471,9 @@
 
 
         _AC37
-        lda #(`aUnknown8AA320)<<8
+        lda #(`aCastleListBlankLineText)<<8
         sta lR18+1
-        lda #<>aUnknown8AA320
+        lda #<>aCastleListBlankLineText
         sta lR18
         phx
         lda $AA2A,b,y
@@ -7469,7 +7489,7 @@
 
         ; 8A/AC51
 
-      rsUnknown8AAC51 ; 8A/AC51
+      rsDrawInventoryRowDurability ; 8A/AC51
 
         .al
         .xl
@@ -7499,7 +7519,7 @@
         adc #$0026
         tax
         lda wR0
-        jsl rlUnknown8AB111
+        jsl rlDrawCastleNumber
         plx
         rts
 
@@ -7549,7 +7569,7 @@
       .al
       .xl
 
-      rsUnknown8AACA8 ; 8A/ACA8
+      rsDrawInventoryWithRepairCosts ; 8A/ACA8
 
         ; Found by tools/sweep.py.
         .al
@@ -7571,8 +7591,8 @@
         lda wCurrentItemDataROMPointer,b
         beq _ACEA
         inc wCastleListSubCount,b
-        jsr rsUnknown8AAD05
-        jsr rsUnknown8AAC51
+        jsr rsDrawInventoryRowRepairCost
+        jsr rsDrawInventoryRowDurability
         lda wTempVariable1,b
         beq _ACDB
         lda #$2000
@@ -7585,7 +7605,7 @@
         sta aCurrentTilemapInfo,b
 
         _ACE1
-        jsr rsUnknown8AABAB
+        jsr rsDrawInventoryRowName
 
         _ACE4
         dec x
@@ -7596,9 +7616,9 @@
 
 
         _ACEA
-        lda #(`aUnknown8AA320)<<8
+        lda #(`aCastleListBlankLineText)<<8
         sta lR18+1
-        lda #<>aUnknown8AA320
+        lda #<>aCastleListBlankLineText
         sta lR18
         phx
         lda $AA2A,b,y
@@ -7622,12 +7642,14 @@
       .al
       .xl
 
-      rsUnknown8AAD05 ; 8A/AD05
+      rsDrawInventoryRowRepairCost ; 8A/AD05
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws an item's repair cost, halved with Bargain.
 
         lda wRoutineVariable1,b
         jsl rlGetInventorySlotItemRepairCost
@@ -7642,7 +7664,7 @@
         ply
         cmp #$0002
         beq _AD43
-        jsl rlUnknown87A18C
+        jsl rlCheckUnitHasBargain
         bcc _AD2F
         lda wTempVariable1,b
         lsr a
@@ -7658,7 +7680,7 @@
         adc #$0032
         tax
         lda wTempVariable1,b
-        jsl rlUnknown8AB111
+        jsl rlDrawCastleNumber
         plx
 
         _AD43
@@ -7668,7 +7690,7 @@
 
         ; 8A/AD44
 
-      rsUnknown8AAD44 ; 8A/AD44
+      rsClearCastleList ; 8A/AD44
 
         .al
         .xl
@@ -7681,9 +7703,9 @@
         ldy #$000E
 
         _AD50
-        lda #(`aUnknown8AA320)<<8
+        lda #(`aCastleListBlankLineText)<<8
         sta lR18+1
-        lda #<>aUnknown8AA320
+        lda #<>aCastleListBlankLineText
         sta lR18
         phx
         lda $AA2A,b,y
@@ -7711,7 +7733,7 @@
       .al
       .xl
 
-      rsUnknown8AAD6F ; 8A/AD6F
+      rsDrawAuguryTopics ; 8A/AD6F
 
         ; Found by tools/sweep.py.
         .al
@@ -7731,7 +7753,7 @@
         asl a
         phx
         tax
-        jsr (aUnknown8AADA7,x)
+        jsr (aAuguryTopicTextHandlers,x)
         plx
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -7762,12 +7784,12 @@
       .al
       .xl
 
-      aUnknown8AADA7 ; 8A/ADA7
+      aAuguryTopicTextHandlers ; 8A/ADA7
 
-        ; Jump table of rsUnknown8AAD6F.
-        .word <>rsUnknown8AADAD
-        .word <>rsUnknown8AADB8
-        .word <>rsUnknown8AADC3
+        ; Jump table of rsDrawAuguryTopics.
+        .word <>rsGetAuguryTopicLoveText
+        .word <>rsGetAuguryTopicRecordText
+        .word <>rsGetAuguryTopicParentsText
 
     .endsection Table8AADA7Section
 
@@ -7777,16 +7799,16 @@
       .al
       .xl
 
-      rsUnknown8AADAD ; 8A/ADAD
+      rsGetAuguryTopicLoveText ; 8A/ADAD
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8AADCE)<<8
+        lda #(`aAuguryTopicLoveText)<<8
         sta lR18+1
-        lda #<>aUnknown8AADCE
+        lda #<>aAuguryTopicLoveText
         sta lR18
         rts
 
@@ -7794,16 +7816,16 @@
 
         ; 8A/ADB8
 
-      rsUnknown8AADB8 ; 8A/ADB8
+      rsGetAuguryTopicRecordText ; 8A/ADB8
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8AADDC)<<8
+        lda #(`aAuguryTopicRecordText)<<8
         sta lR18+1
-        lda #<>aUnknown8AADDC
+        lda #<>aAuguryTopicRecordText
         sta lR18
         rts
 
@@ -7819,16 +7841,16 @@
       .al
       .xl
 
-      rsUnknown8AADC3 ; 8A/ADC3
+      rsGetAuguryTopicParentsText ; 8A/ADC3
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8AADE8)<<8
+        lda #(`aAuguryTopicParentsText)<<8
         sta lR18+1
-        lda #<>aUnknown8AADE8
+        lda #<>aAuguryTopicParentsText
         sta lR18
         rts
 
@@ -7844,21 +7866,21 @@
       .al
       .xl
 
-      aUnknown8AADCE ; 8A/ADCE
+      aAuguryTopicLoveText ; 8A/ADCE
 
         .enc "SJIS"
         .text "こいのゆくえ"
         .word $0000
         .enc "none"
 
-      aUnknown8AADDC ; 8A/ADDC
+      aAuguryTopicRecordText ; 8A/ADDC
 
         .enc "SJIS"
         .text "しょうはい"
         .word $0000
         .enc "none"
 
-      aUnknown8AADE8 ; 8A/ADE8
+      aAuguryTopicParentsText ; 8A/ADE8
 
         .enc "SJIS"
         .text "おやのこと"
@@ -7874,18 +7896,20 @@
       .al
       .xl
 
-      rsUnknown8AADF4 ; 8A/ADF4
+      rsDrawArenaOpponent ; 8A/ADF4
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Draws the arena opponent: name, class, weapons, level and the B-to-quit line.
+
         lda #$2800
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown8AAEDA)<<8
+        lda #(`aArenaEnemyText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AAEDA
+        lda #<>aArenaEnemyText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -7933,9 +7957,9 @@
         jsl rlDrawMenuTextLine
 
         _AE8B
-        lda #(`aUnknown8AAEEC)<<8
+        lda #(`aArenaBToQuitText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AAEEC
+        lda #<>aArenaBToQuitText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -7943,9 +7967,9 @@
         sta lR18+1
         ldx #$160E
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown8AAEE6)<<8
+        lda #(`aArenaLevelText)<<8
         sta lRoutineVariable+1,b
-        lda #<>aUnknown8AAEE6
+        lda #<>aArenaLevelText
         sta lRoutineVariable,b
         lda lRoutineVariable,b
         sta lR18
@@ -7973,21 +7997,21 @@
       .al
       .xl
 
-      aUnknown8AAEDA ; 8A/AEDA
+      aArenaEnemyText ; 8A/AEDA
 
         .enc "SJIS"
         .text "ＥＮＥＭＹ"
         .word $0000
         .enc "none"
 
-      aUnknown8AAEE6 ; 8A/AEE6
+      aArenaLevelText ; 8A/AEE6
 
         .enc "SJIS"
         .text "ＬＶ"
         .word $0000
         .enc "none"
 
-      aUnknown8AAEEC ; 8A/AEEC
+      aArenaBToQuitText ; 8A/AEEC
 
         .enc "SJIS"
         .text "☆Ｂボタンでちゅうしできます"
@@ -8003,12 +8027,14 @@
       .al
       .xl
 
-      rsUnknown8AAF0A ; 8A/AF0A
+      rsPushCastleListSprites ; 8A/AF0A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the sprites for the list of the option under the cursor (item icons for the stock list; rsPushInventoryListSprites for the inventory lists).
 
         lda $7F8087
         sta lR20+1
@@ -8037,10 +8063,10 @@
 
 
         _AF43
-        lda wUnknown0008A9,b
+        lda wCastleListItemState,b
         cmp #$0003
         beq _AF4F
-        jml rsUnknown8AAFEB
+        jml rsPushInventoryListSprites
 
 
         _AF4F
@@ -8130,7 +8156,7 @@
       aUnknown8AAFE4 ; 8A/AFE4
         .byte $01, $00, $00, $C2, $00, $30, $32
 
-      rsUnknown8AAFEB ; 8A/AFEB
+      rsPushInventoryListSprites ; 8A/AFEB
 
         .al
         .xl
@@ -8191,7 +8217,7 @@
 
       aUnknown8AB033 ; 8A/B033
 
-        ; Read by rsUnknown8AAF0A.
+        ; Read by rsPushCastleListSprites.
 
         .word $1000, $3020, $5040, $7060
 
@@ -8199,7 +8225,7 @@
 
       aUnknown8AB03B ; 8A/B03B
 
-        ; Read by rsUnknown8AAF0A.
+        ; Read by rsPushCastleListSprites.
 
         .word $2220, $2624, $2A28, $2E2C
 
@@ -8213,7 +8239,7 @@
       .al
       .xl
 
-      rlUnknown8AB043 ; 8A/B043
+      rlPushCastleHandCursor ; 8A/B043
 
         .al
         .xl
@@ -8272,7 +8298,7 @@
 
       aUnknown8AB07C ; 8A/B07C
 
-        ; Read by rlUnknown8AB043.
+        ; Read by rlPushCastleHandCursor.
 
         .byte $00, $00, $00, $00, $01, $00, $01, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF
         .byte $01, $00, $00, $C2, $00, $02, $30
@@ -8287,7 +8313,7 @@
       .al
       .xl
 
-      rlUnknown8AB093 ; 8A/B093
+      rlPushStockListScrollArrows ; 8A/B093
 
         .al
         .xl
@@ -8372,12 +8398,14 @@
       .al
       .xl
 
-      rlUnknown8AB111 ; 8A/B111
+      rlDrawCastleNumber ; 8A/B111
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws A as a number of up to five digits.
 
         sta wR0
         stz wR1
@@ -8700,12 +8728,14 @@
       .al
       .xl
 
-      rlUnknown8AB3FE ; 8A/B3FE
+      rlDecompressCharacterPortrait ; 8A/B3FE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Decompresses the portrait of character A (or its class portrait) to aDecompressionBuffer+$800.
 
         phk
         plb
@@ -8758,12 +8788,14 @@
       .al
       .xl
 
-      rlUnknown8ABB3E ; 8A/BB3E
+      rlLoadDialogueBackground ; 8A/BB3E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Decompresses and loads dialogue background wBaseSceneArgument (aDialogueBackgroundPointers): two tile sets, the palette and two tilemaps.
 
         lda wBaseSceneArgument,b
         asl a
@@ -8952,12 +8984,14 @@
 
         ; 8A/BCF8
 
-      rlUnknown8ABCF8 ; 8A/BCF8
+      rlShopScreenSetup ; 8A/BCF8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Blanks the screen and loads the shop: graphics, the keeper's background and portrait, the unit's inventory count, the stock list and money; moves to step $0E.
 
         phk
         plb
@@ -8969,7 +9003,7 @@
         rep #$20
         jsl rlDisableVBlank
         jsl rlResetHDMAEngine
-        jsr rsUnknown8ABF27
+        jsr rsSetKeeperOptionList
         lda #$0000
         sta wR1
         lda #$0000
@@ -9015,7 +9049,7 @@
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlGetDialogueBoxGraphicsAndPalette
-        jsr rsUnknown8ABE63
+        jsr rsLoadShopBackground
         ldx #$0800
         lda #$00FF
 
@@ -9028,7 +9062,7 @@
         jsl rlUnitWindowCopySpritePalette1
         lda #$0002
         jsl rlUnitWindowCopySpritePalette2
-        jsr rsUnknown8ABFD1
+        jsr rsLoadKeeperPortrait
         ldy #$0000
         stz wCastleListSubCount,b
 
@@ -9060,7 +9094,7 @@
         stz wCastleConfirmCursorIndex,b
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        jsl rlUnknown8A9DF2
+        jsl rlBuildStockList
         jsr rsUnknown8AA142
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
@@ -9068,10 +9102,10 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsr rsUnknown8AAD44
-        jsr rsUnknown8AC003
-        jsr rsUnknown8AA830
-        jsr rsUnknown8AA2ED
+        jsr rsClearCastleList
+        jsr rsDrawShopStartList
+        jsr rsClearItemDetailsWindow
+        jsr rsDrawCastleUnitMoney
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $7000
@@ -9103,12 +9137,14 @@
       .al
       .xl
 
-      rsUnknown8ABE63 ; 8A/BE63
+      rsLoadShopBackground ; 8A/BE63
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Loads the background and palette for keeper $7F8082 (0 item shop, 1 secondhand shop, 2 repair shop).
 
         lda $7F8082
         cmp #$0000
@@ -9213,12 +9249,14 @@
       .al
       .xl
 
-      rsUnknown8ABF27 ; 8A/BF27
+      rsSetKeeperOptionList ; 8A/BF27
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Points $7F8086 at keeper $7F8082's option list (aItemShopOptions and the lists after it, by raw address).
 
         lda $7F8082
         beq _BF50
@@ -9308,12 +9346,14 @@
 
         ; 8A/BFD1
 
-      rsUnknown8ABFD1 ; 8A/BFD1
+      rsLoadKeeperPortrait ; 8A/BFD1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Loads the portrait for keeper $7F8082 (aKeeperPortraits).
 
         lda wSelectedUnitDataRAMPointer,b
         pha
@@ -9322,8 +9362,8 @@
         lda $7F8082
         asl a
         tax
-        lda aUnknown8ABFF3,x
-        jsl rlUnknown8AFC52
+        lda aKeeperPortraits,x
+        jsl rlLoadKeeperPortraitData
         jsl rlCastleFillVRAM2000
         pla
         sta wSelectedUnitDataRAMPointer,b
@@ -9341,9 +9381,9 @@
       .al
       .xl
 
-      aUnknown8ABFF3 ; 8A/BFF3
+      aKeeperPortraits ; 8A/BFF3
 
-        ; Read by rsUnknown8ABFD1.
+        ; Read by rsLoadKeeperPortrait.
 
         .word $00A9, $00B1, $00AB, $00B2, $00F4, $00F4, $00F4, $00AD
 
@@ -9357,12 +9397,14 @@
       .al
       .xl
 
-      rsUnknown8AC003 ; 8A/C003
+      rsDrawShopStartList ; 8A/C003
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the list the keeper opens with: the stock, the inventory with sell prices, or with repair costs.
 
         lda $7F8082
         beq _C027
@@ -9380,37 +9422,37 @@
         beq _C045
 
         _C027
-        jsr rsUnknown8AA9CE
+        jsr rsDrawStockList
         bra _C04A
 
 
         _C02C
-        jsr rsUnknown8AAB48
+        jsr rsDrawInventoryWithSellPrices
         bra _C04A
 
 
         _C031
-        jsr rsUnknown8AACA8
+        jsr rsDrawInventoryWithRepairCosts
         bra _C04A
 
 
         _C036
-        jsr rsUnknown8AAB48
+        jsr rsDrawInventoryWithSellPrices
         bra _C04A
 
 
         _C03B
-        jsr rsUnknown8AA9CE
+        jsr rsDrawStockList
         bra _C04A
 
 
         _C040
-        jsr rsUnknown8AAD44
+        jsr rsClearCastleList
         bra _C04A
 
 
         _C045
-        jsr rsUnknown8AAD44
+        jsr rsClearCastleList
         bra _C04A
 
 
@@ -9421,12 +9463,14 @@
 
         ; 8A/C04B
 
-      rlUnknown8AC04B ; 8A/C04B
+      rlShopScreenStep ; 8A/C04B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Runs shop sub-state wMenuState (aShopStepHandlers), then redraws the list sprites, money and the keeper's portrait.
 
         phb
         php
@@ -9436,7 +9480,7 @@
         lda wMenuState,b
         asl a
         tax
-        jsr (aUnknown8AC08F,x)
+        jsr (aShopStepHandlers,x)
         lda $7F7670
         bne _C06C
         jsl rlDMAByStruct
@@ -9452,8 +9496,8 @@
         jsr rsUnknown8AA142
 
         _C076
-        jsr rsUnknown8AAF0A
-        jsr rsUnknown8AA2ED
+        jsr rsPushCastleListSprites
+        jsr rsDrawCastleUnitMoney
         lda #$0008
         sta wR0
         lda #$0008
@@ -9477,30 +9521,30 @@
       .al
       .xl
 
-      aUnknown8AC08F ; 8A/C08F
+      aShopStepHandlers ; 8A/C08F
 
-        ; Jump table of rlUnknown8AC04B.
-        .word <>rsUnknown8AC0B9
-        .word <>rsUnknown8AC168
-        .word <>rsUnknown8AC1BC
-        .word <>rsUnknown8AC50D
-        .word <>rsUnknown8AC524
-        .word <>rsUnknown8AC6BA
-        .word <>rsUnknown8AC785
-        .word <>rsUnknown8AC81E
-        .word <>rsUnknown8AC853
-        .word <>rsUnknown8AC8A2
-        .word <>rsUnknown8AC8B9
-        .word <>rsUnknown8AC984
-        .word <>rsUnknown8ACA53
-        .word <>rsUnknown8ACAD2
-        .word <>rsUnknown8ACAE9
-        .word <>rsUnknown8ACC58
-        .word <>rsUnknown8ACD53
-        .word <>rsUnknown8ACD94
-        .word <>rsUnknown8ACDAB
-        .word <>rsUnknown8ACE2B
-        .word <>rsUnknown8ACE3A
+        ; Jump table of rlShopScreenStep.
+        .word <>rsShopGreet
+        .word <>rsShopWaitForText
+        .word <>rsShopChooseOption
+        .word <>rsShopOpenBuyList
+        .word <>rsShopBuyListInput
+        .word <>rsShopConfirmBuy
+        .word <>rsShopAfterBuy
+        .word <>rsShopBuyAgain
+        .word <>rsShopLeaveBuyList
+        .word <>rsShopOpenSellList
+        .word <>rsShopSellListInput
+        .word <>rsShopConfirmSell
+        .word <>rsShopAfterSell
+        .word <>rsShopOpenRepairList
+        .word <>rsShopRepairListInput
+        .word <>rsShopConfirmRepair
+        .word <>rsShopAfterRepair
+        .word <>rsShopOpenBelongingsList
+        .word <>rsShopBelongingsListInput
+        .word <>rsShopLeave
+        .word <>rsShopLeaveToCourtyard
 
     .endsection Table8AC08FSection
 
@@ -9510,12 +9554,14 @@
       .al
       .xl
 
-      rsUnknown8AC0B9 ; 8A/C0B9
+      rsShopGreet ; 8A/C0B9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $00: the keeper's greeting. The repair shop sends a unit with no items away; the secondhand shop says it only buys when its stock is empty.
 
         lda $7F8082
         cmp #$0001
@@ -9537,7 +9583,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
@@ -9565,7 +9611,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0013
@@ -9597,7 +9643,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
@@ -9608,12 +9654,14 @@
 
         ; 8A/C168
 
-      rsUnknown8AC168 ; 8A/C168
+      rsShopWaitForText ; 8A/C168
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $01: shows the A-press arrows until the dialogue finishes, then moves to wNextMenuState.
 
         lda wNextMenuState,b
         cmp #$0005
@@ -9641,12 +9689,12 @@
 
 
         _C195
-        jsr rsUnknown8AA8C9
+        jsr rsPushStockItemTypeIcon
         bra _C19D
 
 
         _C19A
-        jsr rsUnknown8AA928
+        jsr rsPushInventoryItemTypeIcon
 
         _C19D
         lda wCastleListWindowRow,b
@@ -9659,19 +9707,21 @@
         adc #$0004
         sta wR1
         lda #$0001
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         bra _C17A
 
         .databank 0
 
         ; 8A/C1BC
 
-      rsUnknown8AC1BC ; 8A/C1BC
+      rsShopChooseOption ; 8A/C1BC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $02: the option menu. The item shop's options are buy and belongings; the secondhand and repair shops go to their own routines.
 
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
@@ -9687,11 +9737,11 @@
         beq _C1DE
 
         _C1DE
-        jml rsUnknown8AC457
+        jml rsRepairShopStart
 
 
         _C1E2
-        jml rsUnknown8AC333
+        jml rsSecondhandShopChooseOption
 
 
         _C1E6
@@ -9701,9 +9751,9 @@
         _C1EA
         lda #$0002
         sta wTempVariable1,b
-        lda #(`aUnknown8AC2FE)<<8
+        lda #(`aItemShopOptionsText)<<8
         sta lR18+1
-        lda #<>aUnknown8AC2FE
+        lda #<>aItemShopOptionsText
         sta lR18
         lda $18DD,b
         cmp #$0100
@@ -9724,18 +9774,18 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown8AD071)<<8
+        lda #(`aItemShopOptionX)<<8
         sta lR19+1
-        lda #<>aUnknown8AD071
+        lda #<>aItemShopOptionX
         sta lR19
-        lda #(`aUnknown8AD074)<<8
+        lda #(`aItemShopOptions)<<8
         sta lR20+1
-        lda #<>aUnknown8AD074
+        lda #<>aItemShopOptions
         sta lR20
         lda wTempVariable1,b
-        jsr rsUnknown8ACFBE
+        jsr rsCastleOptionMenuInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda wJoy1New
         cmp #$8000
         beq _C256
@@ -9765,7 +9815,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0013
@@ -9806,7 +9856,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -9817,7 +9867,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD131
         sta lR18
-        jml rsUnknown8AC312
+        jml rsShopSayAndStay
 
 
         _C2F0
@@ -9825,21 +9875,23 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD257
         sta lR18
-        jml rsUnknown8AC312
+        jml rsShopSayAndStay
 
         .databank 0
 
-      aUnknown8AC2FE ; 8A/C2FE
+      aItemShopOptionsText ; 8A/C2FE
         .byte $82, $A9, $82, $A4, $81, $40, $81, $40, $81, $40, $82, $E0, $82, $BF, $82, $E0
         .byte $82, $CC, $00, $00
 
 
-      rsUnknown8AC312 ; 8A/C312
+      rsShopSayAndStay ; 8A/C312
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Starts the dialogue in lR18 and comes back to the current sub-state when it ends.
 
         lda #$000A
         jsl rlPlaySoundEffect
@@ -9848,7 +9900,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         rts
@@ -9856,18 +9908,20 @@
         .databank 0
 
 
-      rsUnknown8AC333 ; 8A/C333
+      rsSecondhandShopChooseOption ; 8A/C333
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The secondhand shop's option menu: sell or buy.
+
         lda #$0002
         sta wTempVariable1,b
-        lda #(`aUnknown8AC447)<<8
+        lda #(`aSecondhandShopOptionsText)<<8
         sta lR18+1
-        lda #<>aUnknown8AC447
+        lda #<>aSecondhandShopOptionsText
         sta lR18
         lda $18DD,b
         cmp #$0100
@@ -9888,18 +9942,18 @@
         jsl rlDrawMenuTextLine
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        lda #(`aUnknown8AD077)<<8
+        lda #(`aSecondhandShopOptionX)<<8
         sta lR19+1
-        lda #<>aUnknown8AD077
+        lda #<>aSecondhandShopOptionX
         sta lR19
-        lda #(`aUnknown8AD07A)<<8
+        lda #(`aSecondhandShopOptions)<<8
         sta lR20+1
-        lda #<>aUnknown8AD07A
+        lda #<>aSecondhandShopOptions
         sta lR20
         lda wTempVariable1,b
-        jsr rsUnknown8ACFBE
+        jsr rsCastleOptionMenuInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda wJoy1New
         cmp #$8000
         beq _C39F
@@ -9929,7 +9983,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0013
@@ -9970,7 +10024,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -9981,7 +10035,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD257
         sta lR18
-        jml rsUnknown8AC312
+        jml rsShopSayAndStay
 
 
         _C439
@@ -9989,7 +10043,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD233
         sta lR18
-        jml rsUnknown8AC312
+        jml rsShopSayAndStay
 
         .databank 0
 
@@ -10003,7 +10057,7 @@
       .al
       .xl
 
-      aUnknown8AC447 ; 8A/C447
+      aSecondhandShopOptionsText ; 8A/C447
 
         .enc "SJIS"
         .text "うる　　　かう"
@@ -10019,12 +10073,14 @@
       .al
       .xl
 
-      rsUnknown8AC457 ; 8A/C457
+      rsRepairShopStart ; 8A/C457
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The repair shop: sends a unit with no items away, otherwise opens the repair list (sub-state $0D).
 
         lda wCastleListSubCount,b
         beq _C4B7
@@ -10052,7 +10108,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0013
@@ -10075,7 +10131,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD257
         sta lR18
-        jml rsUnknown8AC312
+        jml rsShopSayAndStay
 
         .databank 0
 
@@ -10089,18 +10145,20 @@
       .al
       .xl
 
-      rsUnknown8AC50D ; 8A/C50D
+      rsShopOpenBuyList ; 8A/C50D
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sub-state $03.
+
         lda #$FFFF
         sta $7F7670
-        jsr rsUnknown8AA63D
-        jsr rsUnknown8AA8C9
-        jsr rsUnknown8AA9CE
+        jsr rsDrawStockItemDetails
+        jsr rsPushStockItemTypeIcon
+        jsr rsDrawStockList
         lda #$0004
         sta wMenuState,b
         rts
@@ -10117,14 +10175,16 @@
       .al
       .xl
 
-      rsUnknown8AC524 ; 8A/C524
+      rsShopBuyListInput ; 8A/C524
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8AA8C9
+        ; Sub-state $04: A buys if the item can be had, the inventory has room and the unit can pay; B goes back to the options.
+
+        jsr rsPushStockItemTypeIcon
         lda wCastleListWindowRow,b
         tax
         lda #$004C
@@ -10135,9 +10195,9 @@
         adc #$0004
         sta wR1
         lda #$0000
-        jsl rlUnknown8AB043
-        jsl rlUnknown8AB093
-        jsr rsUnknown8AA400
+        jsl rlPushCastleHandCursor
+        jsl rlPushStockListScrollArrows
+        jsr rsCastleStockListInput
         lda wJoy1New
         cmp #$0080
         beq _C560
@@ -10169,7 +10229,7 @@
 
 
         _C57C
-        jsr rsUnknown8AC68E
+        jsr rsShopCompareMoneyWithPrice
         bcs _C585
         jml _C64F
 
@@ -10190,7 +10250,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0005
@@ -10214,15 +10274,15 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        jsr rsUnknown8AA9CE
+        jsr rsDrawStockList
         lda #$FFFF
         sta $7F7670
         rts
@@ -10244,12 +10304,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0008
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
 
@@ -10269,12 +10329,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0007
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
         .databank 0
@@ -10289,12 +10349,14 @@
       .al
       .xl
 
-      rsUnknown8AC68E ; 8A/C68E
+      rsShopCompareMoneyWithPrice ; 8A/C68E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Compares the unit's money with the selected item's price (halved with Bargain); carry set if the unit can pay.
 
         lda wCastleListSelectedIndex,b
         asl a
@@ -10304,7 +10366,7 @@
         jsl rlGetItemRAMStructEntryByPlayerItemIndex
         jsl rlGetItemBuyPrice
         sta wTempVariable1,b
-        jsl rlUnknown87A18C
+        jsl rlCheckUnitHasBargain
         bcc _C6B2
         lda wTempVariable1,b
         lsr a
@@ -10327,16 +10389,18 @@
       .al
       .xl
 
-      rsUnknown8AC6BA ; 8A/C6BA
+      rsShopConfirmBuy ; 8A/C6BA
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sub-state $05: yes buys the item (rlBuyItemForSelectedUnit).
+
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsr rsUnknown8AA8C9
+        jsr rsPushStockItemTypeIcon
         lda wCastleListWindowRow,b
         tax
         lda #$004C
@@ -10347,11 +10411,11 @@
         adc #$0004
         sta wR1
         lda #$0001
-        jsl rlUnknown8AB043
-        jsr rsUnknown8AD092
-        jsr rsUnknown8AA46E
+        jsl rlPushCastleHandCursor
+        jsr rsDrawYesNo
+        jsr rsCastleYesNoInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda wJoy1New
         cmp #$8000
         beq _C707
@@ -10373,7 +10437,7 @@
         stz wCastleConfirmCursorIndex,b
         lda #$0006
         sta wMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
 
@@ -10391,7 +10455,7 @@
         stz wCastleConfirmCursorIndex,b
         lda #$0006
         sta wMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
 
@@ -10415,12 +10479,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0007
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
         .databank 0
@@ -10435,15 +10499,17 @@
       .al
       .xl
 
-      rsUnknown8AC785 ; 8A/C785
+      rsShopAfterBuy ; 8A/C785
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown8A9DF2
-        jsr rsUnknown8AA9CE
+        ; Sub-state $06: rebuilds the stock list; asks whether to buy more, or goes back to the options if the stock is empty.
+
+        jsl rlBuildStockList
+        jsr rsDrawStockList
         lda #$FFFF
         sta $7F7670
         lda wCastleListItemCount,b
@@ -10469,7 +10535,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0003
@@ -10493,7 +10559,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
@@ -10514,12 +10580,14 @@
       .al
       .xl
 
-      rsUnknown8AC81E ; 8A/C81E
+      rsShopBuyAgain ; 8A/C81E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $07: asks whether to buy more and goes straight to sub-state $03.
 
         lda $7F8082
         clc
@@ -10534,7 +10602,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0003
@@ -10553,12 +10621,14 @@
       .al
       .xl
 
-      rsUnknown8AC853 ; 8A/C853
+      rsShopLeaveBuyList ; 8A/C853
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $08.
 
         stz wCastleConfirmCursorIndex,b
         lda #$0021
@@ -10576,14 +10646,14 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
         sta wNextMenuState,b
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        jsr rsUnknown8AA9CE
+        jsr rsDrawStockList
         lda #$FFFF
         sta $7F7670
         rts
@@ -10600,18 +10670,20 @@
       .al
       .xl
 
-      rsUnknown8AC8A2 ; 8A/C8A2
+      rsShopOpenSellList ; 8A/C8A2
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sub-state $09.
+
         lda #$FFFF
         sta $7F7670
-        jsr rlUnknown8AA83D
-        jsr rsUnknown8AA928
-        jsr rsUnknown8AAB48
+        jsr rlDrawInventoryItemDetails
+        jsr rsPushInventoryItemTypeIcon
+        jsr rsDrawInventoryWithSellPrices
         lda #$000A
         sta wMenuState,b
         rts
@@ -10620,14 +10692,16 @@
 
         ; 8A/C8B9
 
-      rsUnknown8AC8B9 ; 8A/C8B9
+      rsShopSellListInput ; 8A/C8B9
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8AA928
+        ; Sub-state $0A.
+
+        jsr rsPushInventoryItemTypeIcon
         lda wCastleListWindowRow,b
         tax
         lda #$004C
@@ -10638,8 +10712,8 @@
         adc #$0004
         sta wR1
         lda #$0000
-        jsl rlUnknown8AB043
-        jsr rsUnknown8AA4C8
+        jsl rlPushCastleHandCursor
+        jsr rsCastleInventoryListInput
         lda wJoy1New
         cmp #$0080
         beq _C8E9
@@ -10672,7 +10746,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000B
@@ -10696,15 +10770,15 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        jsr rsUnknown8AAB48
+        jsr rsDrawInventoryWithSellPrices
         lda #$FFFF
         sta $7F7670
         rts
@@ -10721,14 +10795,16 @@
       .al
       .xl
 
-      rsUnknown8AC984 ; 8A/C984
+      rsShopConfirmSell ; 8A/C984
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8AA928
+        ; Sub-state $0B: yes sells the item (rlSellInventorySlotItem) and moves it into this castle's secondhand stock.
+
+        jsr rsPushInventoryItemTypeIcon
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda wCastleListWindowRow,b
@@ -10741,11 +10817,11 @@
         adc #$0004
         sta wR1
         lda #$0001
-        jsl rlUnknown8AB043
-        jsr rsUnknown8AD092
-        jsr rsUnknown8AA46E
+        jsl rlPushCastleHandCursor
+        jsr rsDrawYesNo
+        jsr rsCastleYesNoInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda wJoy1New
         cmp #$8000
         beq _C9FD
@@ -10764,9 +10840,9 @@
         _C9D1
         jsl rlSellInventorySlotItem
         bcs _CA11
-        jsl rlUnknown8AA013
-        jsl rlUnknown8A9DF2
-        jsr rsUnknown8AAB48
+        jsl rlMoveItemToSecondhandStock
+        jsl rlBuildStockList
+        jsr rsDrawInventoryWithSellPrices
         lda #$FFFF
         sta $7F7670
         lda #$0070
@@ -10774,7 +10850,7 @@
         stz wCastleConfirmCursorIndex,b
         lda #$000C
         sta wMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
 
@@ -10784,7 +10860,7 @@
         stz wCastleConfirmCursorIndex,b
         lda #$000C
         sta wMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
 
@@ -10805,12 +10881,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000C
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
         .databank 0
@@ -10825,12 +10901,14 @@
       .al
       .xl
 
-      rsUnknown8ACA53 ; 8A/CA53
+      rsShopAfterSell ; 8A/CA53
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $0C: asks whether to sell more, or goes back to the options if the unit has nothing left.
 
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
@@ -10849,7 +10927,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0009
@@ -10871,12 +10949,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
         sta wNextMenuState,b
-        jsr rsUnknown8AAB48
+        jsr rsDrawInventoryWithSellPrices
         lda #$FFFF
         sta $7F7670
         rts
@@ -10893,18 +10971,20 @@
       .al
       .xl
 
-      rsUnknown8ACAD2 ; 8A/CAD2
+      rsShopOpenRepairList ; 8A/CAD2
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sub-state $0D.
+
         lda #$FFFF
         sta $7F7670
-        jsr rlUnknown8AA83D
-        jsr rsUnknown8AA928
-        jsr rsUnknown8AACA8
+        jsr rlDrawInventoryItemDetails
+        jsr rsPushInventoryItemTypeIcon
+        jsr rsDrawInventoryWithRepairCosts
         lda #$000E
         sta wMenuState,b
         rts
@@ -10913,14 +10993,16 @@
 
         ; 8A/CAE9
 
-      rsUnknown8ACAE9 ; 8A/CAE9
+      rsShopRepairListInput ; 8A/CAE9
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8AA928
+        ; Sub-state $0E: only items with a repair cost can be chosen; an item with 50 or more kills gets a different line.
+
+        jsr rsPushInventoryItemTypeIcon
         lda wCastleListWindowRow,b
         tax
         lda #$004C
@@ -10931,8 +11013,8 @@
         adc #$0004
         sta wR1
         lda #$0000
-        jsl rlUnknown8AB043
-        jsr rsUnknown8AA530
+        jsl rlPushCastleHandCursor
+        jsr rsCastleRepairListInput
         lda wJoy1New
         cmp #$0080
         beq _CB21
@@ -10962,7 +11044,7 @@
         beq _CB19
         lda #$000A
         jsl rlPlaySoundEffect
-        jsr rsUnknown8ACC43
+        jsr rsCheckItemHasFiftyKills
         bcs _CBBD
         lda $7F8082
         clc
@@ -10977,7 +11059,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000F
@@ -11001,12 +11083,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0013
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
 
@@ -11024,7 +11106,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000F
@@ -11043,7 +11125,7 @@
       .al
       .xl
 
-      rsUnknown8ACBF2 ; 8A/CBF2
+      rsShopRepairCancel ; 8A/CBF2
 
         ; Nothing in the build reaches this. Plays sound $21 and starts the shop
         ; dialogue picked by $7F8082 from the table at $8A/CF28 (not built).
@@ -11068,19 +11150,19 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000D
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
         .databank 0
 
         ; 8A/CC31
 
-      rsUnknown8ACC31 ; 8A/CC31
+      rsCompareMoneyWithRepairCost ; 8A/CC31
 
         ; Nothing in the build reaches this. Compares the selected unit's money with
         ; the repair cost of inventory slot wRoutineVariable1 (kept in wTempVariable1).
@@ -11109,12 +11191,14 @@
       .al
       .xl
 
-      rsUnknown8ACC43 ; 8A/CC43
+      rsCheckItemHasFiftyKills ; 8A/CC43
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if the selected inventory item has 50 or more kills.
 
         lda wCastleListSelectedIndex,b
         inc a
@@ -11142,14 +11226,16 @@
       .al
       .xl
 
-      rsUnknown8ACC58 ; 8A/CC58
+      rsShopConfirmRepair ; 8A/CC58
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8AA928
+        ; Sub-state $0F: yes repairs the item (rlUnknown84B349).
+
+        jsr rsPushInventoryItemTypeIcon
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda wCastleListWindowRow,b
@@ -11162,11 +11248,11 @@
         adc #$0004
         sta wR1
         lda #$0001
-        jsl rlUnknown8AB043
-        jsr rsUnknown8AD092
-        jsr rsUnknown8AA46E
+        jsl rlPushCastleHandCursor
+        jsr rsDrawYesNo
+        jsr rsCastleYesNoInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda wJoy1New
         cmp #$8000
         beq _CCA5
@@ -11221,12 +11307,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0010
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
 
@@ -11246,12 +11332,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000D
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
         .databank 0
@@ -11266,17 +11352,19 @@
       .al
       .xl
 
-      rsUnknown8ACD53 ; 8A/CD53
+      rsShopAfterRepair ; 8A/CD53
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sub-state $10.
+
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        jsr rsUnknown8AACA8
-        jsr rsUnknown8AA830
+        jsr rsDrawInventoryWithRepairCosts
+        jsr rsClearItemDetailsWindow
         lda $7F8082
         clc
         adc $7F8082
@@ -11290,7 +11378,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000D
@@ -11309,18 +11397,20 @@
       .al
       .xl
 
-      rsUnknown8ACD94 ; 8A/CD94
+      rsShopOpenBelongingsList ; 8A/CD94
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sub-state $11: the item shop's belongings option.
+
         lda #$FFFF
         sta $7F7670
-        jsr rlUnknown8AA83D
-        jsr rsUnknown8AA928
-        jsr rsUnknown8AAB48
+        jsr rlDrawInventoryItemDetails
+        jsr rsPushInventoryItemTypeIcon
+        jsr rsDrawInventoryWithSellPrices
         lda #$0012
         sta wMenuState,b
         rts
@@ -11337,14 +11427,16 @@
       .al
       .xl
 
-      rsUnknown8ACDAB ; 8A/CDAB
+      rsShopBelongingsListInput ; 8A/CDAB
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8AA928
+        ; Sub-state $12: the list can be scrolled but not chosen from; B goes back to the options.
+
+        jsr rsPushInventoryItemTypeIcon
         lda wCastleListWindowRow,b
         tax
         lda #$004C
@@ -11355,8 +11447,8 @@
         adc #$0004
         sta wR1
         lda #$0000
-        jsl rlUnknown8AB043
-        jsr rsUnknown8AA4C8
+        jsl rlPushCastleHandCursor
+        jsr rsCastleInventoryListInput
         lda wJoy1New
         cmp #$0080
         beq _CDDB
@@ -11385,15 +11477,15 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        jsr rsUnknown8AAB48
+        jsr rsDrawInventoryWithSellPrices
         lda #$FFFF
         sta $7F7670
         rts
@@ -11410,12 +11502,14 @@
       .al
       .xl
 
-      rsUnknown8ACE2B ; 8A/CE2B
+      rsShopLeave ; 8A/CE2B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $13: blanks the screen and returns to the town (step $12).
 
         sep #$20
         lda #$80
@@ -11437,12 +11531,14 @@
       .al
       .xl
 
-      rsUnknown8ACE3A ; 8A/CE3A
+      rsShopLeaveToCourtyard ; 8A/CE3A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sub-state $14: blanks the screen and returns to the courtyard (step $11).
 
         lda #$0000
         sta wCastleCursorState,b
@@ -11569,13 +11665,15 @@
       .al
       .xl
 
-      rsUnknown8ACFBE ; 8A/CFBE
+      rsCastleOptionMenuInput ; 8A/CFBE
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Left and right over the keeper's options; redraws the list for the option under the cursor.
 
         sec
         sbc #$0001
@@ -11655,22 +11753,22 @@
         beq _D06F
 
         _D059
-        jsr rsUnknown8AA9CE
+        jsr rsDrawStockList
         bra _D00C
 
 
         _D05E
-        jsr rsUnknown8AAB48
+        jsr rsDrawInventoryWithSellPrices
         bra _D00C
 
 
         _D063
-        jsr rsUnknown8AACA8
+        jsr rsDrawInventoryWithRepairCosts
         bra _D00C
 
 
         _D068
-        jsr rsUnknown8AAD44
+        jsr rsClearCastleList
         bra _D00C
 
 
@@ -11693,16 +11791,16 @@
       .al
       .xl
 
-      aUnknown8AD071 ; 8A/D071
+      aItemShopOptionX ; 8A/D071
         .byte $54, $7C, $A4
 
-      aUnknown8AD074 ; 8A/D074
+      aItemShopOptions ; 8A/D074
         .byte $00, $01, $03
 
-      aUnknown8AD077 ; 8A/D077
+      aSecondhandShopOptionX ; 8A/D077
         .byte $54, $7C, $A4
 
-      aUnknown8AD07A ; 8A/D07A
+      aSecondhandShopOptions ; 8A/D07A
         .byte $01, $00, $03, $54, $84, $02, $03
 
       aUnknown8AD081 ; 8A/D081
@@ -11732,16 +11830,16 @@
       .al
       .xl
 
-      rsUnknown8AD092 ; 8A/D092
+      rsDrawYesNo ; 8A/D092
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown8AA348)<<8
+        lda #(`aCastleYesNoText)<<8
         sta lR18+1
-        lda #<>aUnknown8AA348
+        lda #<>aCastleYesNoText
         sta lR18
         lda $18DD,b
         cmp #$0100
@@ -11766,7 +11864,7 @@
 
         ; 8A/D0B8
 
-      rsUnknown8AD0B8 ; 8A/D0B8
+      rsDrawArenaChoice ; 8A/D0B8
 
         .al
         .xl
@@ -11861,7 +11959,7 @@
 
           .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $E800
 
-        jsl rlUnknown8ABB3E
+        jsl rlLoadDialogueBackground
         jsl rlGetDialogueBoxGraphicsAndPalette
         ldx #$000E
 
@@ -13338,7 +13436,7 @@
         sta $420B,b
         rep #$20
         jsl rlResetDialogueEngine
-        jsr rsUnknown8ABF27
+        jsr rsSetKeeperOptionList
         jsl rlUnknown889268
         lda wEventLocationEntry,b
         pha
@@ -13419,7 +13517,7 @@
         jsl rlUnitWindowCopySpritePalette1
         lda #$0002
         jsl rlUnitWindowCopySpritePalette2
-        jsr rsUnknown8ABFD1
+        jsr rsLoadKeeperPortrait
         sep #$20
         lda #$17
         sta bBufferTM
@@ -13446,12 +13544,12 @@
         beq _E45D
 
         _E457
-        jsl rlUnknown8A9EB7
+        jsl rlBuildEquippableWeaponList
         bra _E461
 
 
         _E45D
-        jsl rlUnknown8A9F32
+        jsl rlBuildEquippableWeaponListSameRange
 
         _E461
         stz wCastleMenuOptionIndex,b
@@ -13469,9 +13567,9 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsr rsUnknown8AA830
-        jsr rsUnknown8AA2ED
-        jsr rsUnknown8AAD44
+        jsr rsClearItemDetailsWindow
+        jsr rsDrawCastleUnitMoney
+        jsr rsClearCastleList
         lda #(`aUnknown8AB230)<<8
         sta lR44+1
         lda #<>aUnknown8AB230
@@ -13533,7 +13631,7 @@
         lda #$01
         sta $420B,b
         rep #$20
-        jsr rsUnknown8ABF27
+        jsr rsSetKeeperOptionList
         lda #$0000
         sta wR1
         lda #$0000
@@ -13624,7 +13722,7 @@
         lda #$0028
 
         _EE17
-        jsl rlUnknown8AFC52
+        jsl rlLoadKeeperPortraitData
         jsl rlCastleFillVRAM2000
         sep #$20
         lda #$20
@@ -13647,7 +13745,7 @@
         stz wCastleConfirmCursorIndex,b
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        jsl rlUnknown8A9FCC
+        jsl rlBuildItemListInState
         jsr rsUnknown8AA142
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
@@ -13655,7 +13753,7 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsr rsUnknown8AAD44
+        jsr rsClearCastleList
         lda #$000A
         sta wGameStateStep,b
         rep #$20
@@ -13718,7 +13816,7 @@
         asl a
         tax
         jsr (aUnknown8AEEF2,x)
-        jsr rsUnknown8AAF0A
+        jsr rsPushCastleListSprites
         lda #$0008
         sta wR0
         lda #$0008
@@ -13776,7 +13874,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
@@ -13857,7 +13955,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0003
@@ -13873,7 +13971,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0003
@@ -13902,7 +14000,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0005
@@ -13931,7 +14029,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0005
@@ -13959,10 +14057,10 @@
 
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsr rsUnknown8AD092
-        jsr rsUnknown8AA46E
+        jsr rsDrawYesNo
+        jsr rsCastleYesNoInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda wJoy1New
         cmp #$8000
         beq _F083
@@ -13998,7 +14096,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0005
@@ -14099,7 +14197,7 @@
         rep #$20
         jsl rlDisableVBlank
         jsl rlResetHDMAEngine
-        jsr rsUnknown8ABF27
+        jsr rsSetKeeperOptionList
         lda #$0000
         sta wR1
         lda #$0000
@@ -14171,7 +14269,7 @@
         lda #$0002
         jsl rlUnitWindowCopySpritePalette2
         lda #$00B2
-        jsl rlUnknown8AFC52
+        jsl rlLoadKeeperPortraitData
         jsl rlCastleFillVRAM2000
         sep #$20
         lda #$17
@@ -14197,7 +14295,7 @@
         stz wCastleConfirmCursorIndex,b
         stz wCastleListWindowRow,b
         stz wCastleListSelectedIndex,b
-        jsl rlUnknown8A9E5A
+        jsl rlBuildUnitStoredItemList
         jsr rsUnknown8AA142
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
@@ -14205,10 +14303,10 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsr rsUnknown8AAD44
-        jsr rsUnknown8AAB48
-        jsr rsUnknown8AA830
-        jsr rsUnknown8AA2ED
+        jsr rsClearCastleList
+        jsr rsDrawInventoryWithSellPrices
+        jsr rsClearItemDetailsWindow
+        jsr rsDrawCastleUnitMoney
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $7000
@@ -14271,8 +14369,8 @@
         jsr rsUnknown8AA142
 
         _F2AE
-        jsr rsUnknown8AAF0A
-        jsr rsUnknown8AA2ED
+        jsr rsPushCastleListSprites
+        jsr rsDrawCastleUnitMoney
         lda #$0008
         sta wR0
         lda #$0008
@@ -14337,7 +14435,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
@@ -14383,12 +14481,12 @@
 
 
         _F33B
-        jsr rsUnknown8AA8C9
+        jsr rsPushStockItemTypeIcon
         bra _F343
 
 
         _F340
-        jsr rsUnknown8AA928
+        jsr rsPushInventoryItemTypeIcon
 
         _F343
         lda wCastleListWindowRow,b
@@ -14401,7 +14499,7 @@
         adc #$0004
         sta wR1
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         bra _F320
 
         .databank 0
@@ -14453,9 +14551,9 @@
         lda #<>aUnknown8AD083
         sta lR20
         lda #$0002
-        jsr rsUnknown8ACFBE
+        jsr rsCastleOptionMenuInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda wJoy1New
         cmp #$8000
         beq _F3DE
@@ -14483,7 +14581,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000C
@@ -14522,7 +14620,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -14533,7 +14631,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD418
         sta lR18
-        jml rsUnknown8AC312
+        jml rsShopSayAndStay
 
 
         _F467
@@ -14541,7 +14639,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD46F
         sta lR18
-        jml rsUnknown8AC312
+        jml rsShopSayAndStay
 
         .databank 0
 
@@ -14580,9 +14678,9 @@
 
         lda #$FFFF
         sta $7F7670
-        jsr rsUnknown8AA63D
-        jsr rsUnknown8AA8C9
-        jsr rsUnknown8AA9CE
+        jsr rsDrawStockItemDetails
+        jsr rsPushStockItemTypeIcon
+        jsr rsDrawStockList
         lda #$0004
         sta wMenuState,b
         rts
@@ -14606,7 +14704,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown8AA8C9
+        jsr rsPushStockItemTypeIcon
         lda wCastleListWindowRow,b
         tax
         lda #$004C
@@ -14617,9 +14715,9 @@
         adc #$0004
         sta wR1
         lda #$0000
-        jsl rlUnknown8AB043
-        jsl rlUnknown8AB093
-        jsr rsUnknown8AA400
+        jsl rlPushCastleHandCursor
+        jsl rlPushStockListScrollArrows
+        jsr rsCastleStockListInput
         lda wJoy1New
         cmp #$0080
         beq _F4EC
@@ -14644,7 +14742,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0005
@@ -14664,12 +14762,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
         .databank 0
@@ -14693,7 +14791,7 @@
 
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsr rsUnknown8AA8C9
+        jsr rsPushStockItemTypeIcon
         lda wCastleListWindowRow,b
         tax
         lda #$004C
@@ -14704,11 +14802,11 @@
         adc #$0004
         sta wR1
         lda #$0001
-        jsl rlUnknown8AB043
-        jsr rsUnknown8AD092
-        jsr rsUnknown8AA46E
+        jsl rlPushCastleHandCursor
+        jsr rsDrawYesNo
+        jsr rsCastleYesNoInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda wJoy1New
         cmp #$8000
         beq _F5A3
@@ -14730,7 +14828,7 @@
         stz wCastleConfirmCursorIndex,b
         lda #$0006
         sta wMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
 
@@ -14765,7 +14863,7 @@
         stz wCastleConfirmCursorIndex,b
         lda #$0006
         sta wMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
 
@@ -14781,12 +14879,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0007
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
         .databank 0
@@ -14808,8 +14906,8 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown8A9E5A
-        jsr rsUnknown8AA9CE
+        jsl rlBuildUnitStoredItemList
+        jsr rsDrawStockList
         lda #$FFFF
         sta $7F7670
         stz wCastleListWindowRow,b
@@ -14825,7 +14923,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0003
@@ -14843,7 +14941,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
@@ -14881,7 +14979,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
@@ -14909,9 +15007,9 @@
 
         lda #$FFFF
         sta $7F7670
-        jsr rlUnknown8AA83D
-        jsr rsUnknown8AA928
-        jsr rsUnknown8AAB48
+        jsr rlDrawInventoryItemDetails
+        jsr rsPushInventoryItemTypeIcon
+        jsr rsDrawInventoryWithSellPrices
         lda #$0009
         sta wMenuState,b
         rts
@@ -14935,7 +15033,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown8AA928
+        jsr rsPushInventoryItemTypeIcon
         lda wCastleListWindowRow,b
         tax
         lda #$004C
@@ -14946,8 +15044,8 @@
         adc #$0004
         sta wR1
         lda #$0000
-        jsl rlUnknown8AB043
-        jsr rsUnknown8AA4C8
+        jsl rlPushCastleHandCursor
+        jsr rsCastleInventoryListInput
         lda wJoy1New
         cmp #$0080
         beq _F71C
@@ -14976,7 +15074,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000A
@@ -14996,12 +15094,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
         .databank 0
@@ -15023,7 +15121,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown8AA928
+        jsr rsPushInventoryItemTypeIcon
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda wCastleListWindowRow,b
@@ -15036,11 +15134,11 @@
         adc #$0004
         sta wR1
         lda #$0001
-        jsl rlUnknown8AB043
-        jsr rsUnknown8AD092
-        jsr rsUnknown8AA46E
+        jsl rlPushCastleHandCursor
+        jsr rsDrawYesNo
+        jsr rsCastleYesNoInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda wJoy1New
         cmp #$8000
         beq _F804
@@ -15058,8 +15156,8 @@
 
         _F7DE
         jsl rlSendInventorySlotItemToSupply
-        jsl rlUnknown8A9E5A
-        jsr rsUnknown8AAB48
+        jsl rlBuildUnitStoredItemList
+        jsr rsDrawInventoryWithSellPrices
         lda #$FFFF
         sta $7F7670
         lda #$000A
@@ -15067,7 +15165,7 @@
         stz wCastleConfirmCursorIndex,b
         lda #$000B
         sta wMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
 
@@ -15077,7 +15175,7 @@
         stz wCastleConfirmCursorIndex,b
         lda #$000B
         sta wMenuState,b
-        jsr rsUnknown8AA830
+        jsr rsClearItemDetailsWindow
         rts
 
         .databank 0
@@ -15112,7 +15210,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0008
@@ -15134,12 +15232,12 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
         sta wNextMenuState,b
-        jsr rsUnknown8AAB48
+        jsr rsDrawInventoryWithSellPrices
         rts
 
         .databank 0
@@ -15190,7 +15288,7 @@
         rep #$20
         jsl rlDisableVBlank
         jsl rlResetHDMAEngine
-        jsr rsUnknown8ABF27
+        jsr rsSetKeeperOptionList
         lda #$0000
         sta wR1
         lda #$0000
@@ -15259,7 +15357,7 @@
         dec x
         bpl _F94E
         lda #$00B3
-        jsl rlUnknown8AFC52
+        jsl rlLoadKeeperPortraitData
         jsl rlCastleFillVRAM2000
         sep #$20
         lda #$17
@@ -15288,7 +15386,7 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2C00
         sta aCurrentTilemapInfo,b
-        jsr rsUnknown8AAD44
+        jsr rsClearCastleList
         jsl rlGetUnitType
         cmp #$0001
         bne _F9BB
@@ -15315,8 +15413,8 @@
         lda $7F8183
         and #$00FF
         sta $7F8091
-        jsr rsUnknown8AAD6F
-        jsr rsUnknown8AA2ED
+        jsr rsDrawAuguryTopics
+        jsr rsDrawCastleUnitMoney
         jsl rlDMAByStruct
 
           .structDMAToVRAM aBG3TilemapBuffer, $0700, $80, $7000
@@ -15430,7 +15528,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0002
@@ -15501,7 +15599,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown8AAD6F
+        jsr rsDrawAuguryTopics
         lda #$0004
         sta wMenuState,b
         rts
@@ -15527,8 +15625,8 @@
         adc #$0004
         sta wR1
         lda #$0000
-        jsl rlUnknown8AB043
-        jsr rsUnknown8AA598
+        jsl rlPushCastleHandCursor
+        jsr rsAuguryTopicInput
         lda wJoy1New
         cmp #$0080
         beq _FB1D
@@ -15557,7 +15655,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0007
@@ -15585,7 +15683,7 @@
         and #$00FF
         sta wR1
         lda #$0001
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda #$FFFF
         sta $7F7670
         lda wCastleListSelectedIndex,b
@@ -15635,7 +15733,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsl rlUnknown8ACE50
+        jsl rlSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0006
@@ -15707,12 +15805,14 @@
       .al
       .xl
 
-      rlUnknown8AFC52 ; 8A/FC52
+      rlLoadKeeperPortraitData ; 8A/FC52
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Loads portrait data A to OAM palette 5 and VRAM $6700.
 
         jsl rlGetDecompressedPortraitDataPointers._B45E
         ldx #$001E
@@ -15827,7 +15927,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0003

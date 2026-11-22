@@ -678,7 +678,7 @@
     wCastleConfirmCursorIndex .word ?          ; $0008A3 ; yes/no or prompt cursor index
     wCastleListWindowRow .word ?               ; $0008A5 ; visible cursor row 0-7 in scrolling list
     wCastleListSelectedIndex .word ?           ; $0008A7 ; selected item index 0..(ItemCount-1)
-    wUnknown0008A9 .word ?                     ; $0008A9
+    wCastleListItemState .word ?                     ; $0008A9
     wCastleListItemCount .word ?               ; $0008AB ; total entries in active castle list
 
     wBaseSceneFlags .word ?                    ; $0008AD ; base/interior scene UI bitfield:

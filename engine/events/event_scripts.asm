@@ -3914,7 +3914,7 @@
         lda #2
         jsl rlDialogueStartTextAndHDMA
         ldx #0
-        jsl rlUnknown8ACE50
+        jsl rlSetupKeeperDialogueBox
 
         phy
         lda #(`procUnknown828AC3)<<8
@@ -8221,26 +8221,28 @@
       .al
       .xl
 
-      rlUnknown8ACE50 ; 8A/CE50
+      rlSetupKeeperDialogueBox ; 8A/CE50
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         rtl
 
         .databank 0
 
         ; 8A/CE54
 
-      rsUnknown8ACE54 ; 8A/CE54
+      rsSetupKeeperDialogueBox ; 8A/CE54
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets up the dialogue box for a castle keeper: text speed 2, text sound, buffer and VRAM targets.
 
         lda #$0003
         sta aDialogue.wUnknown0018D0,b

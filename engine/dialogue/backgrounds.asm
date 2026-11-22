@@ -1,5 +1,5 @@
 ; Dialogue backgrounds: the pictures behind DIALOGUE_WITH_BG scenes
-; (DIALOGUE_BG_* in include/events/Helpers.h). rlUnknown8ABB3E loads the one
+; (DIALOGUE_BG_* in include/events/Helpers.h). rlLoadDialogueBackground loads the one
 ; numbered $08B6.
 
     .section DialogueBackgroundsSection

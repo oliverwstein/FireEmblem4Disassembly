@@ -3442,12 +3442,14 @@
       .al
       .xl
 
-      rlUnknown87A18C ; 87/A18C
+      rlCheckUnitHasBargain ; 87/A18C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if the unit, its class or an item it holds has Bargain.
 
         lda #SkillIDBargain
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill

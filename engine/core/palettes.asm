@@ -69,7 +69,7 @@
 
       aCastleShopBGPalettes ; 8C/9600
 
-        ; Read by rsUnknown8ABE63.
+        ; Read by rsLoadShopBackground.
 
         .word $420F, $318B, $7FFF, $0C42, $7F7F, $49E3, $7FFA, $5400
         .word $7F7F, $00A9, $03FC, $0441, $7F7F, $2949, $564F, $0400

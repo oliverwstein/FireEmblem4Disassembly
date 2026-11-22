@@ -75,7 +75,7 @@
         jsr rsPushKeeperPortraitSprites
         lda $7F7670
         beq _E50D
-        jsr rsUnknown8AAF0A
+        jsr rsPushCastleListSprites
 
         _E50D
         plp
@@ -114,7 +114,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0004
@@ -136,7 +136,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000E
@@ -175,7 +175,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0005
         sta wMenuState,b
         lda #$0007
@@ -204,7 +204,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000F
@@ -220,7 +220,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0005
         sta wMenuState,b
         lda #$000E
@@ -231,7 +231,7 @@
         _E63C
         lda $0AD9,b
         ldx #$0646
-        jsl rlUnknown8AB111
+        jsl rlDrawCastleNumber
         rts
 
         .databank 0
@@ -254,7 +254,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0008
@@ -344,9 +344,9 @@
         lda #<>aUnknown8AD08A
         sta lR20
         lda #$0002
-        jsr rsUnknown8ACFBE
+        jsr rsCastleOptionMenuInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda #$0000
         sta $7F7670
         lda wJoy1New
@@ -374,7 +374,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000E
@@ -406,7 +406,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -417,7 +417,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD4E9
         sta lR18
-        jml rsUnknown8AC312
+        jml rsShopSayAndStay
 
         .databank 0
 
@@ -459,7 +459,7 @@
 
 
         _E7D5
-        jsr rsUnknown8AA2ED
+        jsr rsDrawCastleUnitMoney
         lda wNextMenuState,b
         sta wMenuState,b
         rts
@@ -493,12 +493,12 @@
         bcc _E810
         lda $0AD9,b
         ldx #$0646
-        jsl rlUnknown8AB111
+        jsl rlDrawCastleNumber
         rts
 
 
         _E810
-        jsr rsUnknown8AA2ED
+        jsr rsDrawCastleUnitMoney
         lda #$0001
         sta wMenuState,b
         lda #$000C
@@ -507,7 +507,7 @@
 
 
         _E821
-        jsr rsUnknown8AA2ED
+        jsr rsDrawCastleUnitMoney
         lda wNextMenuState,b
         sta wMenuState,b
         lda #$000C
@@ -534,10 +534,10 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         jsl rlDialogueFreeHDMA
-        jsr rsUnknown8AD092
-        jsr rsUnknown8AA46E
+        jsr rsDrawYesNo
+        jsr rsCastleYesNoInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda wJoy1New
         cmp #$8000
         beq _E8B3
@@ -574,7 +574,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -592,7 +592,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0021
         jsl rlPlaySoundEffect
         rts
@@ -603,7 +603,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD4E9
         sta lR18
-        jml rsUnknown8AC312
+        jml rsShopSayAndStay
 
 
         _E8EC
@@ -618,7 +618,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -642,7 +642,7 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsr rsUnknown8AADF4
+        jsr rsDrawArenaOpponent
         lda #(`aCastleMenuTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aCastleMenuTilemapData
@@ -679,9 +679,9 @@
         lda #<>aUnknown8AD08F
         sta lR20
         lda #$0003
-        jsr rsUnknown8ACFBE
+        jsr rsCastleOptionMenuInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda #$0000
         sta $7F7670
         lda wJoy1New
@@ -721,7 +721,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD4E9
         sta lR18
-        jml rsUnknown8AC312
+        jml rsShopSayAndStay
 
 
         _E9DB
@@ -736,7 +736,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0021
         jsl rlPlaySoundEffect
         rts
@@ -758,7 +758,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -790,7 +790,7 @@
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsr rsUnknown8AADF4
+        jsr rsDrawArenaOpponent
         lda #$000A
         sta wMenuState,b
 
@@ -817,7 +817,7 @@
         sta lR18+1
         lda #<>aArenaStartQuitChangeWeaponText
         sta lR18
-        jsr rsUnknown8AD0B8
+        jsr rsDrawArenaChoice
         lda #(`aUnknown8AD08C)<<8
         sta lR19+1
         lda #<>aUnknown8AD08C
@@ -827,9 +827,9 @@
         lda #<>aUnknown8AD08F
         sta lR20
         lda #$0003
-        jsr rsUnknown8ACFBE
+        jsr rsCastleOptionMenuInput
         lda #$0000
-        jsl rlUnknown8AB043
+        jsl rlPushCastleHandCursor
         lda #$0000
         sta $7F7670
         lda wJoy1New
@@ -859,7 +859,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$000E
@@ -891,7 +891,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$000A
         jsl rlPlaySoundEffect
         rts
@@ -959,10 +959,10 @@
 
         lda #$FFFF
         sta $7F7670
-        jsr rsUnknown8AA63D
-        jsr rsUnknown8AA8C9
-        jsr rsUnknown8AAD44
-        jsr rsUnknown8AA9CE
+        jsr rsDrawStockItemDetails
+        jsr rsPushStockItemTypeIcon
+        jsr rsClearCastleList
+        jsr rsDrawStockList
         lda #$000D
         sta wMenuState,b
         rts
@@ -980,7 +980,7 @@
 
         ; Arena menu step 13 (aArenaMenuStepHandlers).
 
-        jsr rsUnknown8AA8C9
+        jsr rsPushStockItemTypeIcon
         lda wCastleListWindowRow,b
         tax
         lda #$004C
@@ -991,8 +991,8 @@
         adc #$0004
         sta wR1
         lda #$0000
-        jsl rlUnknown8AB043
-        jsr rsUnknown8AA400
+        jsl rlPushCastleHandCursor
+        jsr rsCastleStockListInput
         lda wJoy1New
         cmp #$0080
         beq _EC01
@@ -1013,8 +1013,8 @@
         lda wRoutineVariable1,b
         sta wSelectedInventorySlot,b
         jsl rlUnknown84B321
-        jsr rsUnknown8AA830
-        jsr rsUnknown8AAD44
+        jsr rsClearItemDetailsWindow
+        jsr rsClearCastleList
         lda #$0000
         sta $7F7670
         lda #$000A
@@ -1026,7 +1026,7 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         stz wCastleMenuOptionIndex,b
@@ -1052,13 +1052,13 @@
         lda #$0003
         jsl rlDialogueStartTextAndHDMA
         ldx #$0000
-        jsr rsUnknown8ACE54
+        jsr rsSetupKeeperDialogueBox
         lda #$0001
         sta wMenuState,b
         lda #$0004
         sta wNextMenuState,b
-        jsr rsUnknown8AA830
-        jsr rsUnknown8AAD44
+        jsr rsClearItemDetailsWindow
+        jsr rsClearCastleList
         lda #$0000
         sta $7F7670
         stz wCastleMenuOptionIndex,b
