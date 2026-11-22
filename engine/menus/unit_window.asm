@@ -976,7 +976,7 @@
         beq _C9E9
         lda wUnitWindowSortType
         sta $7F82F7
-        lda #$0026
+        lda #UNIT_WINDOW_SORT_SAVED_ORDER
         sta wUnitWindowSortType
         jsl rlUnitWindowGetSortScores
         jsl rlUnitWindowSetSortDescending
@@ -1195,18 +1195,18 @@
         txa
         asl a
         tax
-        lda aUnknown8BCECA,x
+        lda aUnitWindowSkillIconTiles,x
         beq _CCB5
         sta wR13
         lda wR12
         asl a
         tax
-        lda aUnknown80CCD3,x
+        lda aUnitWindowSkillIconColumnOffsets,x
         sta wR0
         lda wR15
         asl a
         tax
-        lda aUnknown80CCE3,x
+        lda aUnitWindowSkillIconRowOffsets,x
         ora wR0
         sta wR0
         lda wR13
@@ -1257,7 +1257,7 @@
       .al
       .xl
 
-      aUnknown80CCD3 ; 80/CCD3
+      aUnitWindowSkillIconColumnOffsets ; 80/CCD3
 
         ; Read by rlUnitWindowDrawUnitSkills.
 
@@ -1265,7 +1265,7 @@
 
         ; 80/CCE3
 
-      aUnknown80CCE3 ; 80/CCE3
+      aUnitWindowSkillIconRowOffsets ; 80/CCE3
 
         ; Read by rlUnitWindowDrawUnitSkills.
 
@@ -1296,26 +1296,28 @@
 
         ; One per page (wGameStateStep).
         .word <>rsUnitWindowHandlePage0Turn
-        .word $ACAD
-        .word $ACED
-        .word $AD30
-        .word $AD73
-        .word $ADBB
+        .word <>rsUnitWindowHandlePage1Turn
+        .word <>rsUnitWindowHandlePage2Turn
+        .word <>rsUnitWindowHandlePage3Turn
+        .word <>rsUnitWindowHandlePage4Turn
+        .word <>rsUnitWindowHandlePage5Turn
 
     .endsection Table8BA845Section
 
 
-    .section UnitWindowUnknown8BACADSection
+    .section UnitWindowPageTurnHandlersSection
 
       .al
       .xl
 
-      rsUnknown8BACAD ; 8B/ACAD
+      rsUnitWindowHandlePage1Turn ; 8B/ACAD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 1 of the page-turn table: right turns to page 2, left to page 0.
 
         lda wJoy1Input
         bit #$0C00
@@ -1353,12 +1355,14 @@
 
         ; 8B/ACED
 
-      rsUnknown8BACED ; 8B/ACED
+      rsUnitWindowHandlePage2Turn ; 8B/ACED
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 2 of the page-turn table: right turns to page 3; left redraws the item icons and turns to page 1.
 
         lda wJoy1Input
         bit #$0C00
@@ -1397,12 +1401,14 @@
 
         ; 8B/AD30
 
-      rsUnknown8BAD30 ; 8B/AD30
+      rsUnitWindowHandlePage3Turn ; 8B/AD30
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 3 of the page-turn table: right draws the weapon rank icons and turns to page 4; left turns to page 2.
 
         lda wJoy1Input
         bit #$0C00
@@ -1441,12 +1447,14 @@
 
         ; 8B/AD73
 
-      rsUnknown8BAD73 ; 8B/AD73
+      rsUnitWindowHandlePage4Turn ; 8B/AD73
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 4 of the page-turn table: right sets the main screen layers to $17 and turns to page 5; left turns to page 3.
 
         lda wJoy1Input
         bit #$0C00
@@ -1488,12 +1496,14 @@
 
         ; 8B/ADBB
 
-      rsUnknown8BADBB ; 8B/ADBB
+      rsUnitWindowHandlePage5Turn ; 8B/ADBB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Entry 5 of the page-turn table: right does nothing (last page); left sets the main screen layers back to $15, draws the weapon rank icons and turns to page 4.
 
         lda wJoy1Input
         bit #$0C00
@@ -1530,7 +1540,7 @@
 
         ; 8B/ADF1
 
-    .endsection UnitWindowUnknown8BACADSection
+    .endsection UnitWindowPageTurnHandlersSection
 
 
     .section UnitWindowPageDrawersSection
@@ -1648,7 +1658,7 @@
         _AFE6
         lda wCurrentItemDataROMPointer,b
         beq _B00E
-        jsl rlUnknown84FE98
+        jsl rlGetSelectedUnitFirstWeaponHit
         tay
         lda wR14
         and #$00FF
@@ -1683,7 +1693,7 @@
 
         _B02C
         lda #$FFFF
-        jsl rlUnknown84FEA1
+        jsl rlGetSelectedUnitFirstWeaponAvoid
         tay
         cmp #$0000
         bpl _B082
@@ -2410,13 +2420,13 @@
 
         lda wUnitWindowSortType
         sec
-        sbc #$0019
+        sbc #UNIT_WINDOW_SORT_WEAPON_RANK
         bmi _B533
         cmp #$000A
         bpl _B533
         asl a
         tax
-        lda aUnknown8BB53B,x
+        lda aUnitWindowWeaponRankSortIconTiles,x
         sta wR4
         stz wR0
         stz wR1
@@ -2424,7 +2434,7 @@
         phk
         plb
         .databank $8B
-        ldy #$B534
+        ldy #<>aUnitWindowWeaponRankSortIconSprite
         jsl rlPushToOAMBuffer
 
         _B533
@@ -2434,6 +2444,12 @@
 
         ; 8B/B534
 
+      aUnitWindowWeaponRankSortIconSprite ; 8B/B534
+
+        _Sprites := [[(  29,    8), $21, SpriteLarge, $040, 3, 5, false, false]]
+
+        .structSpriteArray aUnitWindowWeaponRankSortIconSprite._Sprites
+
     .endsection Unsorted8BB50DSection
 
 
@@ -2442,7 +2458,7 @@
       .al
       .xl
 
-      aUnknown8BB53B ; 8B/B53B
+      aUnitWindowWeaponRankSortIconTiles ; 8B/B53B
 
         ; Read by rsUnitWindowRenderWeaponRankSortIcon.
 
@@ -2492,7 +2508,7 @@
         phk
         plb
         .databank $8B
-        ldy #$B58F
+        ldy #<>aUnitWindowUnitSwapCursorSprite
         jsl rlPushToOAMBuffer
 
         _B58E
@@ -2501,6 +2517,12 @@
         .databank 0
 
         ; 8B/B58F
+
+      aUnitWindowUnitSwapCursorSprite ; 8B/B58F
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $002, 2, 0, false, false]]
+
+        .structSpriteArray aUnitWindowUnitSwapCursorSprite._Sprites
 
     .endsection Unsorted8BB54FSection
 
@@ -2855,16 +2877,16 @@
         lda wR15
         asl a
         tax
-        lda @l aUnknown8BB841,x
+        lda @l aUnitWindowItemIconYCoordinates,x
         sec
         sbc wUnitWindowScrollPixels
         sta wR1
         lda aUnitWindowSpriteSlots,x
         asl a
         tax
-        lda @l aUnknown8BB811,x
+        lda @l aUnitWindowItemIconTiles,x
         sta wR4
-        ldy #$B80A
+        ldy #<>aUnitWindowItemIconSprite
         jsl rlPushToOAMBuffer
         inc wR15
         bra _B7DB
@@ -2877,6 +2899,12 @@
 
         ; 8B/B80A
 
+      aUnitWindowItemIconSprite ; 8B/B80A
+
+        _Sprites := [[(  79,    0), $21, SpriteLarge, $000, 2, 3, false, false]]
+
+        .structSpriteArray aUnitWindowItemIconSprite._Sprites
+
     .endsection Unsorted8BB71FSection
 
 
@@ -2885,7 +2913,7 @@
       .al
       .xl
 
-      aUnknown8BB811 ; 8B/B811
+      aUnitWindowItemIconTiles ; 8B/B811
 
         ; Read by rsUnitWindowRenderItemIcons.
 
@@ -2895,7 +2923,7 @@
 
         ; 8B/B841
 
-      aUnknown8BB841 ; 8B/B841
+      aUnitWindowItemIconYCoordinates ; 8B/B841
 
         ; Read by rsUnitWindowRenderItemIcons.
 
@@ -3259,12 +3287,12 @@
         stz wR5
         lda wUnitWindowSortDirection
         bne _BAFC
-        ldy #$BD9B
+        ldy #<>aUnitWindowSortDescendingArrowSprite
         bra _BAFF
 
 
         _BAFC
-        ldy #$BD8F
+        ldy #<>aUnitWindowSortAscendingArrowSprite
 
         _BAFF
         jsl rlPushToOAMBuffer
@@ -3279,14 +3307,14 @@
         tax
         lda aUnitWindowReadyToPromoteFlags,x
         beq _BB2F
-        lda aUnknown8BBD40,x
+        lda aUnitWindowRowYCoordinates,x
         sec
         sbc wUnitWindowScrollPixels
         sta wR1
         stz wR0
         stz wR4
         stz wR5
-        ldy #$BD83
+        ldy #<>aUnitWindowReadyToPromoteSprite
         jsl rlPushToOAMBuffer
 
         _BB2F
@@ -3337,7 +3365,7 @@
         beq _BB83
         lda aUnknown88D2B5,x
         sta wR4
-        lda #$BD77
+        lda #<>aUnitWindowTallMapSprite
         tay
         bra _BB8D
 
@@ -3345,7 +3373,7 @@
         _BB83
         lda aUnknown88D1C5,x
         sta wR4
-        lda #$BD70
+        lda #<>aUnitWindowMapSprite
         tay
 
         _BB8D
@@ -3385,7 +3413,7 @@
         ply
         plx
         stz wR0
-        lda @l aUnknown8BBD40,x
+        lda @l aUnitWindowRowYCoordinates,x
         sec
         sbc wUnitWindowScrollPixels
         sta wR1
@@ -3464,10 +3492,10 @@
         lda aUnknown88D2B5,x
         plx
         sta wR4
-        lda #$BD77
+        lda #<>aUnitWindowTallMapSprite
         tay
         stz wR0
-        lda @l aUnknown8BBD40,x
+        lda @l aUnitWindowRowYCoordinates,x
         sec
         sbc wUnitWindowScrollPixels
         sta wR1
@@ -3559,10 +3587,10 @@
         lda aUnknown88D1C5,x
         plx
         sta wR4
-        lda #$BD70
+        lda #<>aUnitWindowMapSprite
         tay
         stz wR0
-        lda @l aUnknown8BBD40,x
+        lda @l aUnitWindowRowYCoordinates,x
         sec
         sbc wUnitWindowScrollPixels
         sta wR1
@@ -3600,17 +3628,55 @@
       .al
       .xl
 
-      aUnknown8BBD40 ; 8B/BD40
+      aUnitWindowRowYCoordinates ; 8B/BD40
 
         ; Read by rsUnitWindowRenderSprites.
 
         .byte $38, $00, $48, $00, $58, $00, $68, $00, $78, $00, $88, $00, $98, $00, $A8, $00
         .byte $B8, $00, $C8, $00, $D8, $00, $E8, $00, $F8, $00, $08, $01, $18, $01, $28, $01
         .byte $38, $01, $48, $01, $58, $01, $68, $01, $78, $01, $88, $01, $98, $01, $A8, $01
-        .byte $01, $00, $10, $C2, $00, $80, $00, $02, $00, $10, $C2, $00, $40, $01, $10, $C2
-        .byte $F0, $42, $01, $02, $00, $0C, $C2, $06, $04, $28, $1C, $00, $06, $06, $28, $02
-        .byte $00, $3A, $00, $09, $09, $38, $3A, $00, $11, $19, $38, $02, $00, $3A, $00, $11
-        .byte $09, $B8, $3A, $00, $09, $19, $B8
+
+      aUnitWindowMapSprite ; 8B/BD70
+
+        _Sprites := [[(  16,    0), $21, SpriteLarge, $080, 0, 0, false, false]]
+
+        .structSpriteArray aUnitWindowMapSprite._Sprites
+
+        ; 8B/BD77
+
+      aUnitWindowTallMapSprite ; 8B/BD77
+
+        _Sprites := [[(  16,    0), $21, SpriteLarge, $140, 0, 0, false, false]]
+        _Sprites ..= [[(  16,  -16), $21, SpriteLarge, $142, 0, 0, false, false]]
+
+        .structSpriteArray aUnitWindowTallMapSprite._Sprites
+
+        ; 8B/BD83
+
+      aUnitWindowReadyToPromoteSprite ; 8B/BD83
+
+        _Sprites := [[(  12,    6), $21, SpriteLarge, $004, 2, 4, false, false]]
+        _Sprites ..= [[(  28,    6), $00, SpriteSmall, $006, 2, 4, false, false]]
+
+        .structSpriteArray aUnitWindowReadyToPromoteSprite._Sprites
+
+        ; 8B/BD8F
+
+      aUnitWindowSortAscendingArrowSprite ; 8B/BD8F
+
+        _Sprites := [[(  58,    9), $00, SpriteSmall, $009, 3, 4, false, false]]
+        _Sprites ..= [[(  58,   17), $00, SpriteSmall, $019, 3, 4, false, false]]
+
+        .structSpriteArray aUnitWindowSortAscendingArrowSprite._Sprites
+
+        ; 8B/BD9B
+
+      aUnitWindowSortDescendingArrowSprite ; 8B/BD9B
+
+        _Sprites := [[(  58,   17), $00, SpriteSmall, $009, 3, 4, false, true]]
+        _Sprites ..= [[(  58,    9), $00, SpriteSmall, $019, 3, 4, false, true]]
+
+        .structSpriteArray aUnitWindowSortDescendingArrowSprite._Sprites
 
         ; 8B/BDA7
 
@@ -4210,7 +4276,7 @@
         _C317
         lda #$0006
         jsl rlPlaySoundEffect
-        lda #$0000
+        lda #UNIT_WINDOW_SORT_JOIN_ORDER
         sta wUnitWindowSortTypeFlag
         sta wUnitWindowCurrentColumn
         bra _C302
@@ -4219,7 +4285,7 @@
         _C32B
         lda #$0021
         jsl rlPlaySoundEffect
-        lda #$0000
+        lda #UNIT_WINDOW_SORT_JOIN_ORDER
         sta wUnitWindowSortTypeFlag
         sta wUnitWindowCurrentColumn
         bra _C302
@@ -4333,7 +4399,7 @@
         dec a
         jsr rsUnitWindowSwapUnits
         jsl rlUnitWindowGetPromotionFlagsAndWeapons
-        lda #$0000
+        lda #UNIT_WINDOW_SORT_JOIN_ORDER
         sta wUnitWindowSortType
         sta wUnitWindowSortDirection
         lda #$0002
@@ -4568,6 +4634,25 @@
 
         ; 8B/C4F3
 
+      ; The sort type (wUnitWindowSortType) of each column on each page, one byte
+      ; per column (wUnitWindowCurrentColumn); aUnitWindowPageSortTypePointers points
+      ; at the list for each page. Column 0 is the unit's name, which sorts by type 0.
+
+      aUnitWindowPage0SortTypes ; 8B/C4F3
+        .byte UNIT_WINDOW_SORT_JOIN_ORDER, UNIT_WINDOW_SORT_CLASS, UNIT_WINDOW_SORT_LEVEL, UNIT_WINDOW_SORT_EXPERIENCE, UNIT_WINDOW_SORT_HP, UNIT_WINDOW_SORT_MAX_HP
+      aUnitWindowPage1SortTypes ; 8B/C4F9
+        .byte UNIT_WINDOW_SORT_JOIN_ORDER, UNIT_WINDOW_SORT_WEAPON, UNIT_WINDOW_SORT_MIGHT, UNIT_WINDOW_SORT_HIT, UNIT_WINDOW_SORT_AVOID
+      aUnitWindowPage2SortTypes ; 8B/C4FE
+        .byte UNIT_WINDOW_SORT_JOIN_ORDER, UNIT_WINDOW_SORT_STRENGTH, UNIT_WINDOW_SORT_MAGIC, UNIT_WINDOW_SORT_SKILL, UNIT_WINDOW_SORT_SPEED, UNIT_WINDOW_SORT_LUCK, UNIT_WINDOW_SORT_DEFENSE, UNIT_WINDOW_SORT_RESISTANCE
+      aUnitWindowPage3SortTypes ; 8B/C506
+        .byte UNIT_WINDOW_SORT_JOIN_ORDER, UNIT_WINDOW_SORT_MOVEMENT, UNIT_WINDOW_SORT_GOLD, UNIT_WINDOW_SORT_ARENA_LEVEL, UNIT_WINDOW_SORT_TALK_TARGET
+      aUnitWindowPage4SortTypes ; 8B/C50B
+        .byte UNIT_WINDOW_SORT_JOIN_ORDER, UNIT_WINDOW_SORT_WEAPON_RANK, UNIT_WINDOW_SORT_WEAPON_RANK+1, UNIT_WINDOW_SORT_WEAPON_RANK+2, UNIT_WINDOW_SORT_WEAPON_RANK+3, UNIT_WINDOW_SORT_WEAPON_RANK+4, UNIT_WINDOW_SORT_WEAPON_RANK+5, UNIT_WINDOW_SORT_WEAPON_RANK+6, UNIT_WINDOW_SORT_WEAPON_RANK+7, UNIT_WINDOW_SORT_WEAPON_RANK+8, UNIT_WINDOW_SORT_WEAPON_RANK+9
+      aUnitWindowPage5SortTypes ; 8B/C516
+        .byte UNIT_WINDOW_SORT_JOIN_ORDER, UNIT_WINDOW_SORT_SKILLS
+
+        ; 8B/C518
+
     .endsection Unsorted8BC484Section
 
 
@@ -4578,10 +4663,14 @@
 
       aUnitWindowPageSortTypePointers ; 8B/C518
 
-        ; Read by rsUnitWindowUpdateSort.
+        ; One long pointer per page (wGameStateStep) to its column sort types; read by rsUnitWindowUpdateSort.
 
-        .word $C4F3, $F98B, $8BC4, $C4FE, $068B, $8BC5, $C50B, $168B
-        .word $8BC5
+        .long aUnitWindowPage0SortTypes
+        .long aUnitWindowPage1SortTypes
+        .long aUnitWindowPage2SortTypes
+        .long aUnitWindowPage3SortTypes
+        .long aUnitWindowPage4SortTypes
+        .long aUnitWindowPage5SortTypes
 
         ; 8B/C52A
 
@@ -4799,43 +4888,43 @@
 
         ; One per sort type (wUnitWindowSortType); $0000 marks an unused type.
         .word <>rsUnitWindowDrawJoinOrderSortLabel
-        .word $C67F
-        .word $C696
-        .word $C6C3
-        .word $C6F0
-        .word $C71D
-        .word $C734
-        .word $C761
-        .word $C78E
-        .word $C7BB
-        .word $C7E8
-        .word $C7FF
-        .word $C82C
-        .word $C859
-        .word $C886
-        .word $C8B3
-        .word $C8E0
+        .word <>rsUnitWindowDrawClassSortLabel
+        .word <>rsUnitWindowDrawLevelSortLabel
+        .word <>rsUnitWindowDrawExperienceSortLabel
+        .word <>rsUnitWindowDrawCurrentHPSortLabel
+        .word <>rsUnitWindowDrawMaxHPSortLabel
+        .word <>rsUnitWindowDrawWeaponSortLabel
+        .word <>rsUnitWindowDrawMightSortLabel
+        .word <>rsUnitWindowDrawHitSortLabel
+        .word <>rsUnitWindowDrawAvoidSortLabel
+        .word <>rsUnitWindowDrawStrengthSortLabel
+        .word <>rsUnitWindowDrawMagicSortLabel
+        .word <>rsUnitWindowDrawSkillSortLabel
+        .word <>rsUnitWindowDrawSpeedSortLabel
+        .word <>rsUnitWindowDrawLuckSortLabel
+        .word <>rsUnitWindowDrawDefenseSortLabel
+        .word <>rsUnitWindowDrawResistanceSortLabel
         .word $0000
         .word $0000
         .word $0000
         .word $0000
         .word $0000
-        .word $C90D
+        .word <>rsUnitWindowDrawMoneySortLabel
         .word $0000
-        .word $C924
-        .word $C951
-        .word $C951
-        .word $C951
-        .word $C951
-        .word $C951
-        .word $C951
-        .word $C951
-        .word $C951
-        .word $C951
-        .word $C951
-        .word $C952
-        .word $C972
-        .word $C989
+        .word <>rsUnitWindowDrawMovementSortLabel
+        .word <>rsUnitWindowDrawNoSortLabel
+        .word <>rsUnitWindowDrawNoSortLabel
+        .word <>rsUnitWindowDrawNoSortLabel
+        .word <>rsUnitWindowDrawNoSortLabel
+        .word <>rsUnitWindowDrawNoSortLabel
+        .word <>rsUnitWindowDrawNoSortLabel
+        .word <>rsUnitWindowDrawNoSortLabel
+        .word <>rsUnitWindowDrawNoSortLabel
+        .word <>rsUnitWindowDrawNoSortLabel
+        .word <>rsUnitWindowDrawNoSortLabel
+        .word <>rsUnitWindowDrawSkillsSortLabel
+        .word <>rsUnitWindowDrawArenaLevelSortLabel
+        .word <>rsUnitWindowDrawTalkTargetSortLabel
 
     .endsection Table8BC61CSection
 
@@ -4871,17 +4960,19 @@
     .endsection Unsorted8BC668Section
 
 
-    .section UnitWindowUnknown8BC67FSection
+    .section UnitWindowSortLabelDrawersSection
 
       .al
       .xl
 
-      rsUnknown8BC67F ; 8B/C67F
+      rsUnitWindowDrawClassSortLabel ; 8B/C67F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 1 (class).
 
         lda #$3000
         sta wR1
@@ -4897,12 +4988,14 @@
 
         ; 8B/C696
 
-      rsUnknown8BC696 ; 8B/C696
+      rsUnitWindowDrawLevelSortLabel ; 8B/C696
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 2 (level).
 
         lda #$3000
         sta wR1
@@ -4926,12 +5019,14 @@
 
         ; 8B/C6C3
 
-      rsUnknown8BC6C3 ; 8B/C6C3
+      rsUnitWindowDrawExperienceSortLabel ; 8B/C6C3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 3 (experience).
 
         lda #$3000
         sta wR1
@@ -4955,12 +5050,14 @@
 
         ; 8B/C6F0
 
-      rsUnknown8BC6F0 ; 8B/C6F0
+      rsUnitWindowDrawCurrentHPSortLabel ; 8B/C6F0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 4 (current HP).
 
         lda #$3000
         sta wR1
@@ -4984,12 +5081,14 @@
 
         ; 8B/C71D
 
-      rsUnknown8BC71D ; 8B/C71D
+      rsUnitWindowDrawMaxHPSortLabel ; 8B/C71D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 5 (maximum HP).
 
         lda #$3000
         sta wR1
@@ -5005,12 +5104,14 @@
 
         ; 8B/C734
 
-      rsUnknown8BC734 ; 8B/C734
+      rsUnitWindowDrawWeaponSortLabel ; 8B/C734
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 6 (equipped weapon).
 
         lda #$3000
         sta wR1
@@ -5034,12 +5135,14 @@
 
         ; 8B/C761
 
-      rsUnknown8BC761 ; 8B/C761
+      rsUnitWindowDrawMightSortLabel ; 8B/C761
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 7 (might).
 
         lda #$3000
         sta wR1
@@ -5063,12 +5166,14 @@
 
         ; 8B/C78E
 
-      rsUnknown8BC78E ; 8B/C78E
+      rsUnitWindowDrawHitSortLabel ; 8B/C78E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 8 (hit).
 
         lda #$3000
         sta wR1
@@ -5092,12 +5197,14 @@
 
         ; 8B/C7BB
 
-      rsUnknown8BC7BB ; 8B/C7BB
+      rsUnitWindowDrawAvoidSortLabel ; 8B/C7BB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 9 (avoid).
 
         lda #$3000
         sta wR1
@@ -5121,12 +5228,14 @@
 
         ; 8B/C7E8
 
-      rsUnknown8BC7E8 ; 8B/C7E8
+      rsUnitWindowDrawStrengthSortLabel ; 8B/C7E8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 10 (strength).
 
         lda #$3000
         sta wR1
@@ -5142,12 +5251,14 @@
 
         ; 8B/C7FF
 
-      rsUnknown8BC7FF ; 8B/C7FF
+      rsUnitWindowDrawMagicSortLabel ; 8B/C7FF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 11 (magic).
 
         lda #$3000
         sta wR1
@@ -5171,12 +5282,14 @@
 
         ; 8B/C82C
 
-      rsUnknown8BC82C ; 8B/C82C
+      rsUnitWindowDrawSkillSortLabel ; 8B/C82C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 12 (skill stat).
 
         lda #$3000
         sta wR1
@@ -5200,12 +5313,14 @@
 
         ; 8B/C859
 
-      rsUnknown8BC859 ; 8B/C859
+      rsUnitWindowDrawSpeedSortLabel ; 8B/C859
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 13 (speed).
 
         lda #$3000
         sta wR1
@@ -5229,12 +5344,14 @@
 
         ; 8B/C886
 
-      rsUnknown8BC886 ; 8B/C886
+      rsUnitWindowDrawLuckSortLabel ; 8B/C886
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 14 (luck).
 
         lda #$3000
         sta wR1
@@ -5258,12 +5375,14 @@
 
         ; 8B/C8B3
 
-      rsUnknown8BC8B3 ; 8B/C8B3
+      rsUnitWindowDrawDefenseSortLabel ; 8B/C8B3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 15 (defense).
 
         lda #$3000
         sta wR1
@@ -5287,12 +5406,14 @@
 
         ; 8B/C8E0
 
-      rsUnknown8BC8E0 ; 8B/C8E0
+      rsUnitWindowDrawResistanceSortLabel ; 8B/C8E0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 16 (resistance).
 
         lda #$3000
         sta wR1
@@ -5316,12 +5437,14 @@
 
         ; 8B/C90D
 
-      rsUnknown8BC90D ; 8B/C90D
+      rsUnitWindowDrawMoneySortLabel ; 8B/C90D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 22 (gold).
 
         lda #$3000
         sta wR1
@@ -5337,12 +5460,14 @@
 
         ; 8B/C924
 
-      rsUnknown8BC924 ; 8B/C924
+      rsUnitWindowDrawMovementSortLabel ; 8B/C924
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 24 (movement).
 
         lda #$3000
         sta wR1
@@ -5366,12 +5491,14 @@
 
         ; 8B/C951
 
-      rsUnknown8BC951 ; 8B/C951
+      rsUnitWindowDrawNoSortLabel ; 8B/C951
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort types 25-34 (the weapon ranks): no label; the weapon rank icon is drawn as a sprite instead (rsUnitWindowRenderWeaponRankSortIcon).
 
         rts
 
@@ -5379,18 +5506,20 @@
 
         ; 8B/C952
 
-      rsUnknown8BC952 ; 8B/C952
+      rsUnitWindowDrawSkillsSortLabel ; 8B/C952
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sort type 35 (skills): draws the text スキル.
+
         lda #$3000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown8BC96A)<<8
+        lda #(`aUnitWindowSkillsSortLabelText)<<8
         sta lR18+1
-        lda #<>aUnknown8BC96A
+        lda #<>aUnitWindowSkillsSortLabelText
         sta lR18
         ldx #$0001
         jsl rlDrawMenuTextLine
@@ -5400,7 +5529,7 @@
 
         ; 8B/C96A
 
-    .endsection UnitWindowUnknown8BC67FSection
+    .endsection UnitWindowSortLabelDrawersSection
 
 
     .section Table8BC96ASection
@@ -5408,7 +5537,7 @@
       .al
       .xl
 
-      aUnknown8BC96A ; 8B/C96A
+      aUnitWindowSkillsSortLabelText ; 8B/C96A
 
         .enc "SJIS"
         .text "スキル"
@@ -5419,17 +5548,19 @@
     .endsection Table8BC96ASection
 
 
-    .section UnitWindowUnknown8BC972Section
+    .section UnitWindowSortLabelDrawers2Section
 
       .al
       .xl
 
-      rsUnknown8BC972 ; 8B/C972
+      rsUnitWindowDrawArenaLevelSortLabel ; 8B/C972
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 36 (arena level).
 
         lda #$3000
         sta wR1
@@ -5445,12 +5576,14 @@
 
         ; 8B/C989
 
-      rsUnknown8BC989 ; 8B/C989
+      rsUnitWindowDrawTalkTargetSortLabel ; 8B/C989
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 37 (talk target, the lover).
 
         lda #$3000
         sta wR1
@@ -5474,7 +5607,7 @@
 
         ; 8B/C9B6
 
-    .endsection UnitWindowUnknown8BC972Section
+    .endsection UnitWindowSortLabelDrawers2Section
 
 
     .section Unsorted8BC9B6Section
@@ -5597,43 +5730,43 @@
 
         ; One per sort type (wUnitWindowSortType); $0000 marks an unused type.
         .word <>rsUnitWindowGetJoinOrderSortScores
-        .word <>rsUnknown8BCC31
-        .word <>rsUnknown8BCAE5
+        .word <>rsUnitWindowGetClassSortScores
+        .word <>rsUnitWindowGetLevelSortScores
         .word <>rsUnitWindowGetStatSortScores
         .word <>rsUnitWindowGetStatSortScores
         .word <>rsUnitWindowGetStatSortScores
-        .word <>rsUnknown8BCBBA
-        .word <>rsUnknown8BCCA9
+        .word <>rsUnitWindowGetWeaponSortScores
+        .word <>rsUnitWindowGetMightSortScores
         .word <>rsUnitWindowGetStatSortScores
-        .word <>rsUnknown8BCCD1
-        .word <>rsUnitWindowGetStatSortScores
-        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnitWindowGetAvoidSortScores
         .word <>rsUnitWindowGetStatSortScores
         .word <>rsUnitWindowGetStatSortScores
         .word <>rsUnitWindowGetStatSortScores
         .word <>rsUnitWindowGetStatSortScores
         .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnitWindowGetStatSortScores
+        .word <>rsUnitWindowGetStatSortScores
+        .word $0000
         .word $0000
         .word $0000
         .word $0000
         .word $0000
-        .word $0000
         .word <>rsUnitWindowGetStatSortScores
         .word $0000
         .word <>rsUnitWindowGetStatSortScores
-        .word <>rsUnknown8BCBF8
-        .word <>rsUnknown8BCBF8
-        .word <>rsUnknown8BCBF8
-        .word <>rsUnknown8BCBF8
-        .word <>rsUnknown8BCBF8
-        .word <>rsUnknown8BCBF8
-        .word <>rsUnknown8BCBF8
-        .word <>rsUnknown8BCBF8
-        .word <>rsUnknown8BCBF8
-        .word <>rsUnknown8BCBF8
-        .word <>rsUnknown8BCC58
+        .word <>rsUnitWindowGetWeaponRankSortScores
+        .word <>rsUnitWindowGetWeaponRankSortScores
+        .word <>rsUnitWindowGetWeaponRankSortScores
+        .word <>rsUnitWindowGetWeaponRankSortScores
+        .word <>rsUnitWindowGetWeaponRankSortScores
+        .word <>rsUnitWindowGetWeaponRankSortScores
+        .word <>rsUnitWindowGetWeaponRankSortScores
+        .word <>rsUnitWindowGetWeaponRankSortScores
+        .word <>rsUnitWindowGetWeaponRankSortScores
+        .word <>rsUnitWindowGetWeaponRankSortScores
+        .word <>rsUnitWindowGetSkillsSortScores
         .word <>rsUnitWindowGetStatSortScores
-        .word <>rsUnknown8BCCFA
+        .word <>rsUnitWindowGetTalkTargetSortScores
         .word <>rsUnitWindowGetSavedOrderSortScores
 
     .endsection Table8BCA31Section
@@ -5735,19 +5868,21 @@
     .endsection Unsorted8BCAB4Section
 
 
-    .section UnitWindowUnknown8BCAE5Section
+    .section UnitWindowLevelSortScoresSection
 
       .al
       .xl
 
-      rsUnknown8BCAE5 ; 8B/CAE5
+      rsUnitWindowGetLevelSortScores ; 8B/CAE5
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #$0003
+        ; Sort type 2: sorts by experience first, then scores by level, so units of the same level stay in experience order.
+
+        lda #UNIT_WINDOW_SORT_EXPERIENCE
         sta wUnitWindowSortType
         jsr rsUnitWindowGetStatSortScores
         lda wUnitWindowSortDirection
@@ -5760,7 +5895,7 @@
         jsl rlUnitWindowSetSortAscending
 
         _CAFF
-        lda #$0002
+        lda #UNIT_WINDOW_SORT_LEVEL
         sta wUnitWindowSortType
         jsr rsUnitWindowGetStatSortScores
         rts
@@ -5838,7 +5973,7 @@
         .long rlGetSelectedUnitMaxHP
         .long $000000
         .long $000000
-        .long rlUnknown84FE98
+        .long rlGetSelectedUnitFirstWeaponHit
         .long $000000
         .long rlGetSelectedUnitTotalStrength
         .long rlGetSelectedUnitTotalMagic
@@ -5871,20 +6006,22 @@
 
         ; 8B/CBBA
 
-    .endsection UnitWindowUnknown8BCAE5Section
+    .endsection UnitWindowLevelSortScoresSection
 
 
-    .section UnitWindowUnknown8BCBBASection
+    .section UnitWindowSortScoreGettersSection
 
       .al
       .xl
 
-      rsUnknown8BCBBA ; 8B/CBBA
+      rsUnitWindowGetWeaponSortScores ; 8B/CBBA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 6: each unit's score is its equipped weapon's entry in aItemTypeSortRanks (bank $89), or $75 with no weapon.
 
         phb
         php
@@ -5934,19 +6071,21 @@
 
         ; 8B/CBF8
 
-      rsUnknown8BCBF8 ; 8B/CBF8
+      rsUnitWindowGetWeaponRankSortScores ; 8B/CBF8
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sort types 25-34: the score is the weapon rank of type (sort type - 25), negated so better ranks sort first.
+
         lda wUnitWindowMaxRows
         asl a
         sta wR15
         lda wUnitWindowSortType
         sec
-        sbc #$0019
+        sbc #UNIT_WINDOW_SORT_WEAPON_RANK
         sta wR14
         ldx #$0000
 
@@ -5976,12 +6115,14 @@
 
         ; 8B/CC31
 
-      rsUnknown8BCC31 ; 8B/CC31
+      rsUnitWindowGetClassSortScores ; 8B/CC31
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 1: the score is the negated class ID + 1, so classes sort in ID order.
 
         lda wUnitWindowMaxRows
         asl a
@@ -6009,12 +6150,14 @@
 
         ; 8B/CC58
 
-      rsUnknown8BCC58 ; 8B/CC58
+      rsUnitWindowGetSkillsSortScores ; 8B/CC58
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 35: the score is how many of the unit's skills have an icon in aUnitWindowSkillIconTiles.
 
         lda wUnitWindowMaxRows
         asl a
@@ -6041,7 +6184,7 @@
         txa
         asl a
         tax
-        lda aUnknown8BCECA,x
+        lda aUnitWindowSkillIconTiles,x
         beq _CC92
         inc wR14
 
@@ -6067,12 +6210,14 @@
 
         ; 8B/CCA9
 
-      rsUnknown8BCCA9 ; 8B/CCA9
+      rsUnitWindowGetMightSortScores ; 8B/CCA9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 7: the score is the battle might of the unit's first weapon.
 
         lda wUnitWindowMaxRows
         asl a
@@ -6099,12 +6244,14 @@
 
         ; 8B/CCD1
 
-      rsUnknown8BCCD1 ; 8B/CCD1
+      rsUnitWindowGetAvoidSortScores ; 8B/CCD1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 9: the score is the unit's battle avoid + $80, keeping it positive.
 
         lda wUnitWindowMaxRows
         asl a
@@ -6116,7 +6263,7 @@
         beq _CCF9
         sta wSelectedUnitDataRAMPointer,b
         lda #$FFFF
-        jsl rlUnknown84FEA1
+        jsl rlGetSelectedUnitFirstWeaponAvoid
         clc
         adc #$0080
         sta aUnitWindowSortScores,x
@@ -6132,12 +6279,14 @@
 
         ; 8B/CCFA
 
-      rsUnknown8BCCFA ; 8B/CCFA
+      rsUnitWindowGetTalkTargetSortScores ; 8B/CCFA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sort type 37: the score is the negated character ID of the unit's living talk target.
 
         lda wUnitWindowMaxRows
         asl a
@@ -6164,7 +6313,7 @@
 
         ; 8B/CD20
 
-    .endsection UnitWindowUnknown8BCBBASection
+    .endsection UnitWindowSortScoreGettersSection
 
 
     .section Unsorted8BCD20Section
@@ -7461,9 +7610,9 @@
       .al
       .xl
 
-      aUnknown8BCECA ; 8B/CECA
+      aUnitWindowSkillIconTiles ; 8B/CECA
 
-        ; Read by rlUnitWindowDrawUnitSkills, rsUnknown8BCC58.
+        ; Read by rlUnitWindowDrawUnitSkills, rsUnitWindowGetSkillsSortScores.
 
         .word $0000, $0000, $3806, $3800, $3802, $3804, $3844, $0000
         .word $3846, $0000, $0000, $0000, $3808, $0000, $380C, $380E

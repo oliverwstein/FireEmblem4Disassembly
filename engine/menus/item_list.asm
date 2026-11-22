@@ -1238,7 +1238,7 @@
         sta wCurrentItemDataROMPointer,b
         jsl rlGetSelectedUnitBattleHit
         sta wR0
-        jsl rlUnknown84FE98
+        jsl rlGetSelectedUnitFirstWeaponHit
         sec
         sbc wR0
         phx
@@ -1266,7 +1266,7 @@
         sta wR0
         jsl rlGetSelectedUnitDeploymentOffset
         jsl rlGetTerrainTypeByDeploymentOffset
-        jsl rlUnknown84FEA1
+        jsl rlGetSelectedUnitFirstWeaponAvoid
         sec
         sbc wR0
         phx

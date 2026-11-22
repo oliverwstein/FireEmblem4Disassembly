@@ -4049,7 +4049,7 @@
         jsl rlDrawMenuTextLine
 
         _95E0
-        jsl rlUnknown84FE98
+        jsl rlGetSelectedUnitFirstWeaponHit
         ldx #$3920
         stx wR5
         ldx #$0003
@@ -4119,7 +4119,7 @@
 
         _968B
         lda #$FFFF
-        jsl rlUnknown84FEA1
+        jsl rlGetSelectedUnitFirstWeaponAvoid
         cmp #$0000
         bpl _96DA
         eor #$FFFF

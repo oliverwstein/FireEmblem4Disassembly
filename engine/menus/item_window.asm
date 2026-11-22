@@ -1829,7 +1829,7 @@
         phk
         plb
         .databank $89
-        ldy #$C5DD
+        ldy #<>aItemWindowItemIconSprite
         jsl rlPushToOAMBuffer
         lda $7FB010
         inc a
@@ -1874,7 +1874,7 @@
         phk
         plb
         .databank $89
-        ldy #$C5DD
+        ldy #<>aItemWindowItemIconSprite
         jsl rlPushToOAMBuffer
         lda $7FB010
         inc a
@@ -1917,7 +1917,7 @@
         phk
         plb
         .databank $89
-        ldy #$C5DD
+        ldy #<>aItemWindowItemIconSprite
         jsl rlPushToOAMBuffer
         lda $7FB010
         inc a
@@ -2009,7 +2009,7 @@
         sta wR0
         lda #$003A
         sta wR1
-        ldy #$BE49
+        ldy #<>aItemWindowSelectedItemIconSprite
         jsl rlPushToOAMBuffer
         jsl rlGetItemEquipmentType
         cmp #$0000
@@ -2024,7 +2024,7 @@
         stz wR1
         stz wR4
         stz wR5
-        ldy #$BE50
+        ldy #<>aUnknown89BE50
         jsl rlPushToOAMBuffer
 
         _BD61
@@ -2037,7 +2037,7 @@
         stz wR5
         stz wR0
         stz wR1
-        ldy #$BE6F
+        ldy #<>aItemWindowWeaponTypeIconSprite
         jsl rlPushToOAMBuffer
 
         _BD82
@@ -2055,12 +2055,12 @@
         asl a
         sta $7FB010
         tax
-        lda @l aUnknown89BE57,x
+        lda @l aItemWindowWeaponTriangleTypes,x
         ldx #$0006
         jsl rlUnitWindowCopyWeaponRankIcon
         lda $7FB010
         tax
-        lda @l aUnknown89BE57+2,x
+        lda @l aItemWindowWeaponTriangleTypes+2,x
         ldx #$0008
         jsl rlUnitWindowCopyWeaponRankIcon
         lda #$009A
@@ -2072,7 +2072,7 @@
         phk
         plb
         .databank $89
-        ldy #$BE76
+        ldy #<>aItemWindowWeaponTriangleSprites
         jsl rlPushToOAMBuffer
         rts
 
@@ -2087,12 +2087,12 @@
         asl a
         sta $7FB010
         tax
-        lda @l aUnknown89BE63,x
+        lda @l aItemWindowMagicTriangleTypes,x
         ldx #$0006
         jsl rlUnitWindowCopyWeaponRankIcon
         lda $7FB010
         tax
-        lda @l aUnknown89BE63+2,x
+        lda @l aItemWindowMagicTriangleTypes+2,x
         ldx #$0008
         jsl rlUnitWindowCopyWeaponRankIcon
         lda #$009A
@@ -2100,7 +2100,7 @@
         stz wR0
         stz wR4
         stz wR5
-        ldy #$BE8C
+        ldy #<>aItemWindowMagicTriangleSprites
         jsl rlPushToOAMBuffer
         rts
 
@@ -2121,7 +2121,7 @@
         sta wR0
         stz wR4
         stz wR5
-        ldy #$BEA2
+        ldy #<>aItemWindowAnimaIconsSprites
         jsl rlPushToOAMBuffer
         rts
 
@@ -2134,13 +2134,16 @@
         ; 89/BE49
 
 
-      aUnknown89BE49 ; 89/BE49
+      aItemWindowSelectedItemIconSprite ; 89/BE49
 
         _Sprites := [[(   0,    0), $21, SpriteLarge, $020, 3, 3, false, false]]
 
-        .structSpriteArray aUnknown89BE49._Sprites
+        .structSpriteArray aItemWindowSelectedItemIconSprite._Sprites
 
       aUnknown89BE50 ; 89/BE50
+
+        ; Pushed only when the selected item is a weapon (equipment type 0); one
+        ; large sprite, tile $0E, at (195, 76). What it shows is not known.
 
         _Sprites := [[( 195,   76), $21, SpriteLarge, $00E, 3, 0, false, false]]
 
@@ -2154,24 +2157,61 @@
       .al
       .xl
 
-      aUnknown89BE57 ; 89/BE57
+      aItemWindowWeaponTriangleTypes ; 89/BE57
 
-        ; Read by rsItemWindowRenderSelectedItemSprites.
+        ; For a selected sword, lance or axe (weapon types 0-2), the two other
+        ; types, each shown as a weapon rank icon in aItemWindowWeaponTriangleSprites
+        ; (two words per type). Read by rsItemWindowRenderSelectedItemSprites.
 
         .word $0002, $0001, $0000, $0002, $0001, $0000
 
         ; 89/BE63
 
-      aUnknown89BE63 ; 89/BE63
+      aItemWindowMagicTriangleTypes ; 89/BE63
 
-        ; Read by rsItemWindowRenderSelectedItemSprites.
+        ; Like aItemWindowWeaponTriangleTypes for fire, thunder and wind (weapon
+        ; types 5-7): two weapon types per type, read by rsItemWindowRenderSelectedItemSprites.
 
-        .byte $07, $00, $06, $00, $05, $00, $07, $00, $06, $00, $05, $00, $01, $00, $9F, $C2
-        .byte $49, $00, $38, $04, $00, $A5, $C2, $00, $00, $30, $CC, $C2, $00, $00, $B0, $B5
-        .byte $C2, $00, $06, $38, $DC, $C2, $00, $08, $38, $04, $00, $A5, $C2, $00, $00, $30
-        .byte $CC, $C2, $00, $00, $B0, $B5, $C2, $00, $06, $38, $DC, $C2, $00, $08, $38, $04
-        .byte $00, $25, $C2, $00, $00, $30, $37, $C2, $00, $06, $38, $49, $C2, $00, $08, $38
-        .byte $5B, $C2, $00, $0A, $38
+        .word $0007, $0006, $0005, $0007, $0006, $0005
+
+      aItemWindowWeaponTypeIconSprite ; 89/BE6F
+
+        _Sprites := [[( 159,   73), $21, SpriteLarge, $000, 3, 4, false, false]]
+
+        .structSpriteArray aItemWindowWeaponTypeIconSprite._Sprites
+
+        ; 89/BE76
+
+      aItemWindowWeaponTriangleSprites ; 89/BE76
+
+        _Sprites := [[( 165,    0), $21, SpriteLarge, $000, 3, 0, false, false]]
+        _Sprites ..= [[( 204,    0), $21, SpriteLarge, $000, 3, 0, false, true]]
+        _Sprites ..= [[( 181,    0), $21, SpriteLarge, $006, 3, 4, false, false]]
+        _Sprites ..= [[( 220,    0), $21, SpriteLarge, $008, 3, 4, false, false]]
+
+        .structSpriteArray aItemWindowWeaponTriangleSprites._Sprites
+
+        ; 89/BE8C
+
+      aItemWindowMagicTriangleSprites ; 89/BE8C
+
+        _Sprites := [[( 165,    0), $21, SpriteLarge, $000, 3, 0, false, false]]
+        _Sprites ..= [[( 204,    0), $21, SpriteLarge, $000, 3, 0, false, true]]
+        _Sprites ..= [[( 181,    0), $21, SpriteLarge, $006, 3, 4, false, false]]
+        _Sprites ..= [[( 220,    0), $21, SpriteLarge, $008, 3, 4, false, false]]
+
+        .structSpriteArray aItemWindowMagicTriangleSprites._Sprites
+
+        ; 89/BEA2
+
+      aItemWindowAnimaIconsSprites ; 89/BEA2
+
+        _Sprites := [[(  37,    0), $21, SpriteLarge, $000, 3, 0, false, false]]
+        _Sprites ..= [[(  55,    0), $21, SpriteLarge, $006, 3, 4, false, false]]
+        _Sprites ..= [[(  73,    0), $21, SpriteLarge, $008, 3, 4, false, false]]
+        _Sprites ..= [[(  91,    0), $21, SpriteLarge, $00A, 3, 4, false, false]]
+
+        .structSpriteArray aItemWindowAnimaIconsSprites._Sprites
 
         ; 89/BEB8
 
@@ -2893,7 +2933,7 @@
         sta wCurrentItemDataRAMPointer,b
         jsl rlGetEffectiveItemIDByItemRAMStructEntry
         tax
-        lda aUnknown89C66E,x
+        lda aItemTypeSortRanks,x
         and #$00FF
         pha
         tya
@@ -3284,7 +3324,13 @@
         ; Read by rsItemWindowDrawWeaponRank.
 
         .byte $2A, $39, $3A, $39, $2B, $39, $3B, $39, $2C, $39, $3C, $39, $FF, $38, $09, $39
-        .byte $E4, $39, $F4, $39, $01, $00, $00, $C2, $00, $20, $26
+        .byte $E4, $39, $F4, $39
+
+      aItemWindowItemIconSprite ; 89/C5DD
+
+        _Sprites := [[(   0,    0), $21, SpriteLarge, $020, 2, 3, false, false]]
+
+        .structSpriteArray aItemWindowItemIconSprite._Sprites
 
         ; 89/C5E4
 
@@ -3304,9 +3350,9 @@
 
         ; 89/C66E
 
-      aUnknown89C66E ; 89/C66E
+      aItemTypeSortRanks ; 89/C66E
 
-        ; Read by rsItemWindowGetTypeSortScores, rsUnknown8BCBBA.
+        ; Read by rsItemWindowGetTypeSortScores, rsUnitWindowGetWeaponSortScores.
 
         .byte $FF, $FE, $FD, $FC, $FB, $FA, $F9, $F8, $F7, $F6, $F5, $F4, $F3, $F2, $F1, $F0
         .byte $EF, $EE, $ED, $EC, $EB, $EA, $E9, $E8, $E7, $E5, $E4, $E3, $E2, $E1, $E0, $DF

@@ -129,3 +129,34 @@
   OPTION_AUTO_SAVE                   = 6
   OPTION_AUTO_CURSOR                 = 7
   OPTION_ENEMY_AI                    = 8 ; shown once the game has been finished
+
+  ; wUnitWindowSortType: what the unit window sorts by. Indexes
+  ; aUnitWindowSortScoreGetters, aUnitWindowSortStatGetters and
+  ; aUnitWindowSortLabelDrawers; aUnitWindowPage0SortTypes and the other page
+  ; lists give the type of each column.
+  UNIT_WINDOW_SORT_JOIN_ORDER        = $00 ; the name column
+  UNIT_WINDOW_SORT_CLASS             = $01
+  UNIT_WINDOW_SORT_LEVEL             = $02 ; experience breaks ties
+  UNIT_WINDOW_SORT_EXPERIENCE        = $03
+  UNIT_WINDOW_SORT_HP                = $04
+  UNIT_WINDOW_SORT_MAX_HP            = $05
+  UNIT_WINDOW_SORT_WEAPON            = $06 ; by aItemTypeSortRanks
+  UNIT_WINDOW_SORT_MIGHT             = $07
+  UNIT_WINDOW_SORT_HIT               = $08
+  UNIT_WINDOW_SORT_AVOID             = $09
+  UNIT_WINDOW_SORT_STRENGTH          = $0A
+  UNIT_WINDOW_SORT_MAGIC             = $0B
+  UNIT_WINDOW_SORT_SKILL             = $0C
+  UNIT_WINDOW_SORT_SPEED             = $0D
+  UNIT_WINDOW_SORT_LUCK              = $0E
+  UNIT_WINDOW_SORT_DEFENSE           = $0F
+  UNIT_WINDOW_SORT_RESISTANCE        = $10
+  ; $11-$15 have no entries.
+  UNIT_WINDOW_SORT_GOLD              = $16
+  UNIT_WINDOW_SORT_STATUS            = $17 ; has a stat getter but no score getter; no column uses it
+  UNIT_WINDOW_SORT_MOVEMENT          = $18
+  UNIT_WINDOW_SORT_WEAPON_RANK       = $19 ; $19-$22: plus the weapon type
+  UNIT_WINDOW_SORT_SKILLS            = $23 ; how many skills with an icon
+  UNIT_WINDOW_SORT_ARENA_LEVEL       = $24
+  UNIT_WINDOW_SORT_TALK_TARGET       = $25
+  UNIT_WINDOW_SORT_SAVED_ORDER       = $26 ; not a column: the order saved by rlUnitWindowSaveListOrder

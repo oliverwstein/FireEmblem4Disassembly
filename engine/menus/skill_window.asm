@@ -1362,7 +1362,7 @@
         stz wR0
         stz wR4
         stz wR5
-        ldy #$DAF4
+        ldy #<>aSkillWindowBG2SpritesTop
         jsl rlPushToOAMBuffer
         lda #$0089
         sec
@@ -1371,7 +1371,7 @@
         stz wR0
         stz wR4
         stz wR5
-        ldy #$DB19
+        ldy #<>aSkillWindowBG2SpritesMiddle
         jsl rlPushToOAMBuffer
         lda #$0109
         sec
@@ -1380,7 +1380,7 @@
         stz wR0
         stz wR4
         stz wR5
-        ldy #$DB43
+        ldy #<>aSkillWindowBG2SpritesBottom
         jsl rlPushToOAMBuffer
         rts
 
@@ -1389,7 +1389,7 @@
         ; 8B/DAF4
 
 
-      aUnknown8BDAF4 ; 8B/DAF4
+      aSkillWindowBG2SpritesTop ; 8B/DAF4
 
         _Sprites := [[(  15,    0), $21, SpriteLarge, $026, 2, 3, false, false]]
         _Sprites ..= [[(  15,   16), $21, SpriteLarge, $020, 2, 3, false, false]]
@@ -1399,9 +1399,9 @@
         _Sprites ..= [[(  15,   80), $21, SpriteLarge, $066, 2, 3, false, false]]
         _Sprites ..= [[(  15,   96), $21, SpriteLarge, $028, 2, 3, false, false]]
 
-        .structSpriteArray aUnknown8BDAF4._Sprites
+        .structSpriteArray aSkillWindowBG2SpritesTop._Sprites
 
-      aUnknown8BDB19 ; 8B/DB19
+      aSkillWindowBG2SpritesMiddle ; 8B/DB19
 
         _Sprites := [[(  15,    0), $21, SpriteLarge, $02C, 2, 3, false, false]]
         _Sprites ..= [[(  15,   16), $21, SpriteLarge, $02E, 2, 3, false, false]]
@@ -1412,15 +1412,15 @@
         _Sprites ..= [[(  15,   96), $21, SpriteLarge, $048, 2, 3, false, false]]
         _Sprites ..= [[(  15,  112), $21, SpriteLarge, $04A, 2, 3, false, false]]
 
-        .structSpriteArray aUnknown8BDB19._Sprites
+        .structSpriteArray aSkillWindowBG2SpritesMiddle._Sprites
 
-      aUnknown8BDB43 ; 8B/DB43
+      aSkillWindowBG2SpritesBottom ; 8B/DB43
 
         _Sprites := [[(  15,    0), $21, SpriteLarge, $060, 2, 3, false, false]]
         _Sprites ..= [[(  15,   16), $21, SpriteLarge, $062, 2, 3, false, false]]
         _Sprites ..= [[(  15,   32), $21, SpriteLarge, $068, 2, 3, false, false]]
 
-        .structSpriteArray aUnknown8BDB43._Sprites
+        .structSpriteArray aSkillWindowBG2SpritesBottom._Sprites
 
     .endsection Unsorted8BDAB4Section
 
@@ -1442,12 +1442,12 @@
         lda wSkillWindowCurrentSkill
         asl a
         tax
-        lda aUnknown8BDB7E,x
+        lda aSkillWindowSkillIconTiles,x
         sta wR4
         stz wR0
         stz wR1
         stz wR5
-        ldy #$DB77
+        ldy #<>aSkillWindowSkillIconSprite
         jsl rlPushToOAMBuffer
         sep #$20
         lda #$E0
@@ -1460,11 +1460,11 @@
         ; 8B/DB77
 
 
-      aUnknown8BDB77 ; 8B/DB77
+      aSkillWindowSkillIconSprite ; 8B/DB77
 
         _Sprites := [[( 150,   34), $21, SpriteLarge, $020, 3, 3, false, false]]
 
-        .structSpriteArray aUnknown8BDB77._Sprites
+        .structSpriteArray aSkillWindowSkillIconSprite._Sprites
 
     .endsection Unsorted8BDB54Section
 
@@ -1474,7 +1474,7 @@
       .al
       .xl
 
-      aUnknown8BDB7E ; 8B/DB7E
+      aSkillWindowSkillIconTiles ; 8B/DB7E
 
         ; Read by rsSkillWindowRenderSkillIcon.
 
@@ -1543,7 +1543,7 @@
         sta wR5
 
         _DBE9
-        ldy #$DC42
+        ldy #<>aSkillWindowHolderArrowSprite
         jsl rlPushToOAMBuffer
 
         _DBF0
@@ -1570,7 +1570,7 @@
         phk
         plb
         .databank $8B
-        lda <>aUnknown8BDC22,b,y
+        lda <>aSkillWindowScrollArrowSprites,b,y
         tay
         jsl rlPushToOAMBuffer
 
@@ -1589,38 +1589,38 @@
       .al
       .xl
 
-      aUnknown8BDC22 ; 8B/DC22
+      aSkillWindowScrollArrowSprites ; 8B/DC22
 
         ; Read by rsSkillWindowRenderArrows.
 
-        .word <>aUnknown8BDC28
-        .word <>aUnknown8BDC2F
-        .word <>aUnknown8BDC3B
+        .word <>aSkillWindowUpArrowSprite
+        .word <>aSkillWindowUpDownArrowsSprite
+        .word <>aSkillWindowDownArrowSprite
 
-      aUnknown8BDC28 ; 8B/DC28
+      aSkillWindowUpArrowSprite ; 8B/DC28
 
         _Sprites := [[(  65, -113), $21, SpriteLarge, $000C, 3, 0, false, true]]
 
-        .structSpriteArray aUnknown8BDC28._Sprites
+        .structSpriteArray aSkillWindowUpArrowSprite._Sprites
 
-      aUnknown8BDC2F ; 8B/DC2F
+      aSkillWindowUpDownArrowsSprite ; 8B/DC2F
 
         _Sprites := [[(  65, -113), $21, SpriteLarge, $000C, 3, 0, false, true]]
         _Sprites ..= [[(  65,   82), $21, SpriteLarge, $000C, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown8BDC2F._Sprites
+        .structSpriteArray aSkillWindowUpDownArrowsSprite._Sprites
 
-      aUnknown8BDC3B ; 8B/DC3B
+      aSkillWindowDownArrowSprite ; 8B/DC3B
 
         _Sprites := [[(  65,   82), $21, SpriteLarge, $000C, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown8BDC3B._Sprites
+        .structSpriteArray aSkillWindowDownArrowSprite._Sprites
 
-      aUnknown8BDC42 ; 8B/DC42
+      aSkillWindowHolderArrowSprite ; 8B/DC42
 
         _Sprites := [[( 136,   98), $21, SpriteLarge, $000A, 3, 0, false, false]]
 
-        .structSpriteArray aUnknown8BDC42._Sprites
+        .structSpriteArray aSkillWindowHolderArrowSprite._Sprites
 
         ; 8B/DC49
 

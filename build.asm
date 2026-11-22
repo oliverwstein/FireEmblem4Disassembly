@@ -4441,7 +4441,7 @@
 
       .dsection Unsorted8BAC7FSection
 
-      .dsection UnitWindowUnknown8BACADSection
+      .dsection UnitWindowPageTurnHandlersSection
 
       .dsection Unsorted8BADF1Section
 
@@ -4556,11 +4556,11 @@
 
       .dsection Unsorted8BC668Section
 
-      .dsection UnitWindowUnknown8BC67FSection
+      .dsection UnitWindowSortLabelDrawersSection
 
       .dsection Table8BC96ASection
 
-      .dsection UnitWindowUnknown8BC972Section
+      .dsection UnitWindowSortLabelDrawers2Section
 
       .dsection Unsorted8BC9B6Section
 
@@ -4572,9 +4572,9 @@
 
       .dsection Unsorted8BCAB4Section
 
-      .dsection UnitWindowUnknown8BCAE5Section
+      .dsection UnitWindowLevelSortScoresSection
 
-      .dsection UnitWindowUnknown8BCBBASection
+      .dsection UnitWindowSortScoreGettersSection
 
       .dsection Unsorted8BCD20Section
 

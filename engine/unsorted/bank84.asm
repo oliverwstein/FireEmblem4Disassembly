@@ -3035,12 +3035,14 @@
       .al
       .xl
 
-      rlUnknown84FE98 ; 84/FE98
+      rlGetSelectedUnitFirstWeaponHit ; 84/FE98
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Takes the first weapon in the unit's inventory as the item for the calculation (rlGetFirstEquippableWeaponInInventory) and returns the unit's battle hit.
 
         jsl rlGetFirstEquippableWeaponInInventory
         jsl rlGetSelectedUnitBattleHit
@@ -3050,12 +3052,14 @@
 
         ; 84/FEA1
 
-      rlUnknown84FEA1 ; 84/FEA1
+      rlGetSelectedUnitFirstWeaponAvoid ; 84/FEA1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Takes the first weapon in the unit's inventory as the item for the calculation and returns the unit's battle avoid. A goes on to rlGetSelectedUnitBattleAvoid as its terrain argument: negative leaves the terrain bonus out.
 
         pha
         jsl rlGetFirstEquippableWeaponInInventory

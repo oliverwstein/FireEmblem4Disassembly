@@ -2277,12 +2277,12 @@
         _C071
         and #$00FF
         sta aUnit2DataBuffer._Lover.LoveValue
-        jsl rlUnknown84FE98
+        jsl rlGetSelectedUnitFirstWeaponHit
         sta $7FEC4C
         lda wAITemp000E98,b
         sta wSelectedUnitDataRAMPointer,b
         lda wAITemp000E9A,b
-        jsl rlUnknown84FEA1
+        jsl rlGetSelectedUnitFirstWeaponAvoid
         sta $7FEC4E
         lda $7FEC4C
         sec

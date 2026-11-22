@@ -422,10 +422,10 @@
         _B89D
         jsl rlUnknown84FEB5
         sta $0030,b,x
-        jsl rlUnknown84FE98
+        jsl rlGetSelectedUnitFirstWeaponHit
         sta $0034,b,x
         lda $000E,b,x
-        jsl rlUnknown84FEA1
+        jsl rlGetSelectedUnitFirstWeaponAvoid
         sta $0036,b,x
         jsl rlUnknown84FEAC
         sta $0038,b,x
