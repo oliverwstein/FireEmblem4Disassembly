@@ -287,6 +287,17 @@
 
         .databank 0
 
+      rlUnknown91A3DD ; 91/A3DD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
         ; 91/A3DD
 
     .endsection Unsorted91A3D9Section
@@ -5252,12 +5263,29 @@
         sei
         jsr rsUnknown91E915
         jsl rlUnknown91E793
-        bra _E8D5
+        bra rlUnknown91E8D5
 
-        .byte $08, $78, $20, $15, $E9, $22, $2A, $E8, $91
+        .databank 0
 
+      rlUnknown91E8CC ; 91/E8CC
 
-        _E8D5
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        sei
+        jsr rsUnknown91E915
+        jsl rlUnknown91E82A
+
+      rlUnknown91E8D5 ; 91/E8D5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         stz wGameStateRoutine1,b
         lda #<>rsUnknown80F5D0
         sta wVBlankPointer

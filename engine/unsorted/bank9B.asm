@@ -336,10 +336,21 @@
         .byte $29, $3F, $00, $C8, $7B, $28, $3E, $C2, $D0, $34, $29, $00, $05, $10, $61, $04
         .byte $01, $05, $80, $61, $04, $02, $05, $F0, $01, $04, $00, $07, $31, $0F, $02, $C3
         .byte $26, $E0, $00, $07, $31, $0F, $01, $C3, $26, $E0, $02, $07, $21, $0F, $03, $FF
-        .byte $26, $E0, $03, $07, $71, $0F, $10, $36, $F6, $7F, $00, $05, $15, $0B, $1E, $00
-        .byte $01, $F3, $03, $F8, $FD, $99, $01, $01, $E3, $03, $05, $FE, $99, $84, $7F, $FF
-        .byte $86, $7F, $BA, $80, $7F, $FF, $84, $7F, $BA, $FE, $85, $7F, $15, $83, $7F, $FF
-        .byte $85, $7F, $BA, $82, $7F, $15, $89, $7F, $FF, $83, $7F, $BA, $FE
+        .byte $26, $E0
+
+      aUnknown99FDDD ; 99/FDDD
+        .byte $03, $07, $71, $0F, $10, $36, $F6, $7F
+
+      aUnknown99FDE5 ; 99/FDE5
+        .byte $00, $05, $15, $0B, $1E
+
+      aUnknown99FDEA ; 99/FDEA
+        .byte $00, $01, $F3, $03, $F8, $FD, $99
+
+      aUnknown99FDF1 ; 99/FDF1
+        .byte $01, $01, $E3, $03, $05, $FE, $99, $84, $7F, $FF, $86, $7F, $BA, $80, $7F, $FF
+        .byte $84, $7F, $BA, $FE, $85, $7F, $15, $83, $7F, $FF, $85, $7F, $BA, $82, $7F, $15
+        .byte $89, $7F, $FF, $83, $7F, $BA, $FE
 
       aUnknown99FE18 ; 99/FE18
         .byte $03, $07, $0D, $01, $00, $53, $27, $E0
@@ -357,9 +368,13 @@
         .byte $0F, $0F, $0F, $0F, $0F, $0F, $0F, $0F, $0F, $0F, $0F, $0F, $0F, $0F, $0F, $0F
         .byte $0F, $0F, $0F, $0F, $0F, $0F, $0D, $0B, $09, $07, $05, $03, $02, $01, $80, $80
         .byte $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80
-        .byte $80, $80, $80, $80, $80, $80, $80, $80, $8D, $FA, $99, $C1, $FA, $98, $01, $3E
-        .byte $00, $00, $00, $00, $00, $91, $FA, $99, $C1, $FA, $98, $01, $3E, $00, $00, $00
-        .byte $00, $00
+        .byte $80, $80, $80, $80, $80, $80, $80, $80
+
+      aUnknown99FE92 ; 99/FE92
+        .byte $8D, $FA, $99, $C1, $FA, $98, $01, $3E, $00, $00, $00, $00, $00
+
+      aUnknown99FE9F ; 99/FE9F
+        .byte $91, $FA, $99, $C1, $FA, $98, $01, $3E, $00, $00, $00, $00, $00
 
       aUnknown99FEAC ; 99/FEAC
         .byte $8D, $FA, $99, $C1, $FA, $88, $00, $9E, $00, $00, $00, $00, $00, $95, $FA, $99
@@ -3535,9 +3550,9 @@
         inc x
         cpx #$001E
         bcc _F2CC
-        lda #$9900
+        lda #(`aUnknown99FDDD)<<8
         sta lR18+1
-        lda #$FDDD
+        lda #<>aUnknown99FDDD
         sta lR18
         lda #$0000
         sta wR0
@@ -3557,9 +3572,9 @@
         .databank ?
 
         phx
-        lda #$9900
+        lda #(`aUnknown99FDE5)<<8
         sta lR18+1
-        lda #$FDE5
+        lda #<>aUnknown99FDE5
         sta lR18
         lda #$0000
         sta wR0
@@ -3579,16 +3594,16 @@
         .databank ?
 
         phx
-        lda #$9900
+        lda #(`aUnknown99FDEA)<<8
         sta lR18+1
-        lda #$FDEA
+        lda #<>aUnknown99FDEA
         sta lR18
         lda #$0000
         sta wR0
         jsl rlBattleSceneStartPaletteEffect
-        lda #$9900
+        lda #(`aUnknown99FDF1)<<8
         sta lR18+1
-        lda #$FDF1
+        lda #<>aUnknown99FDF1
         sta lR18
         lda #$0000
         sta wR0
@@ -3609,15 +3624,15 @@
 
         phx
         ldx #$0000
-        lda #$9900
+        lda #(`aUnknown99FE92)<<8
         sta lR18+1
-        lda #$FE92
+        lda #<>aUnknown99FE92
         sta lR18
         jsl rlUnknown95F967
         ldx #$0062
-        lda #$9900
+        lda #(`aUnknown99FE9F)<<8
         sta lR18+1
-        lda #$FE9F
+        lda #<>aUnknown99FE9F
         sta lR18
         jsl rlUnknown95F967
         lda #$0000

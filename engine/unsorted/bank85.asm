@@ -2957,8 +2957,16 @@
         .databank ?
 
         jsl rlUnknown85A234
-        lda #$943B
+        lda #<>rlUnknown85943B
         sta aProcSystem.aHeaderOnCycle,b,x
+
+      rlUnknown85943B ; 85/943B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         phx
         lda aProcSystem.aBody5,b,x
         tax
@@ -3139,7 +3147,7 @@
         beq _95AE
         lda #$0021
         jsl rlPlaySoundEffect
-        lda #$943B
+        lda #<>rlUnknown85943B
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _95AE
@@ -3210,7 +3218,7 @@
         sta lR44
         jsl rlProcEngineCreateProc
         plx
-        lda #$957B
+        lda #<>rlUnknown85957B
         sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlUnknown85A3A6
         jml _969C
@@ -7937,7 +7945,7 @@
         beq _B220
         lda #$000A
         jsl rlPlaySoundEffect
-        lda #$B26B
+        lda #<>rlUnknown85B26B
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _B254
 
@@ -7987,6 +7995,39 @@
         .databank 0
 
         ; 85/B26B
+
+      rlUnknown85B26B ; 85/B26B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown85B37D
+        lda #<>rlUnknown85B275
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/B275
+
+      rlUnknown85B275 ; 85/B275
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown85B4FA
+        jsr rsUnknown85B62A
+        lda #<>rlUnknown85B282
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/B282
 
     .endsection Unsorted85B207Section
 
@@ -8044,7 +8085,7 @@
 
 
         _B2C3
-        lda #$B2CA
+        lda #<>rlUnknown85B2CA
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _B2C9
@@ -8053,6 +8094,23 @@
         .databank 0
 
         ; 85/B2CA
+
+      rlUnknown85B2CA ; 85/B2CA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85A234
+        jsr rsUnknown85B307
+        lda #<>rlUnknown85B207
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/B2D8
 
     .endsection Unsorted85B282Section
 
@@ -8624,6 +8682,34 @@
         .databank 0
 
         ; 85/B4FA
+
+      rsUnknown85B4FA ; 85/B4FA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda aProcSystem.aBody6,b,x
+        sta aProcSystem.wInput2,b
+        asl a
+        tax
+        lda $7FEABA,x
+        sta aProcSystem.wInput0,b
+        lda #$0909
+        sta aProcSystem.wInput1,b
+        lda #(`procUnknown85B704)<<8
+        sta lR44+1
+        lda #<>procUnknown85B704
+        sta lR44
+        jsl rlProcEngineCreateProc
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/B520
 
     .endsection Unsorted85B4EDSection
 
@@ -9480,15 +9566,23 @@
 
         lda wJoy1New
         bit #$D0C0
-        beq _BA09
-        lda #$BA09
+        beq rlUnknown85BA09
+        lda #<>rlUnknown85BA09
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aBody5,b,x
         sec
         sbc #$003C
         sta aProcSystem.aBody5,b,x
 
-        _BA09
+        .databank 0
+
+      rlUnknown85BA09 ; 85/BA09
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda aProcSystem.aBody5,b,x
         dec a
         bmi _BA13
@@ -9699,15 +9793,23 @@
 
         lda wJoy1New
         bit #$D0C0
-        beq _BB10
-        lda #$BB10
+        beq rlUnknown85BB10
+        lda #<>rlUnknown85BB10
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aBody7,b,x
         sec
         sbc #$003C
         sta aProcSystem.aBody7,b,x
 
-        _BB10
+        .databank 0
+
+      rlUnknown85BB10 ; 85/BB10
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda aProcSystem.aBody7,b,x
         dec a
         bmi _BB1A
@@ -12196,16 +12298,16 @@
         ldx aProcSystem.wInput1,b
         lda #$85C9
         sta lR18+1
-        lda $C999,b,x
+        lda <>aUnknown85C999,b,x
         sta lR18
         lda aProcSystem.wInput0,b
         clc
         adc #$0301
         tax
         jsl rlUnknown878F6E
-        lda #$8500
+        lda #(`aUnknown85C997)<<8
         sta lR18+1
-        lda #$C997
+        lda #<>aUnknown85C997
         sta lR18
         lda aProcSystem.wInput0,b
         clc
@@ -12228,9 +12330,9 @@
         bcs _C97E
         lda #$2500
         sta aCurrentTilemapInfo,b
-        lda #$8500
+        lda #(`aUnknown85C997)<<8
         sta lR18+1
-        lda #$C997
+        lda #<>aUnknown85C997
         sta lR18
         lda aProcSystem.wInput0,b
         clc
@@ -12270,9 +12372,10 @@
       aUnknown85C992 ; 85/C992
         .byte $EB, $EC, $ED, $EE, $00
 
+      aUnknown85C997 ; 85/C997
         .byte $FF, $00
 
-      aUnknown85C997 ; 85/C997
+      aUnknown85C999 ; 85/C999
         .word <>aUnknown85C988, <>aUnknown85C98D, <>aUnknown85C992
 
     .endsection Table85C983Section
@@ -12583,7 +12686,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFE
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$CB36
+        lda #<>rlUnknown85CB36
         sta aProcSystem.aHeaderOnCycle,b,x
         phx
         lda aProcSystem.aBody6,b,x
@@ -12600,7 +12703,16 @@
         lda #<>procUnknown9ECEDD
         sta lR44
         jsl rlProcEngineCreateProc
-        bra _CB50
+        bra rlUnknown85CB36._CB50
+
+        .databank 0
+
+      rlUnknown85CB36 ; 85/CB36
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
         stx wR0
         lda #(`procUnknown9ECEDD)<<8
@@ -12674,12 +12786,20 @@
         ldx #$0103
         jsl rlUnknown85D9FC
         plx
-        lda #$CBBC
+        lda #<>rlUnknown85CBBC
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
         sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown858751
+
+      rlUnknown85CBBC ; 85/CBBC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         rtl
 
         .databank 0
@@ -12704,8 +12824,16 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFE
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$CBCC
+        lda #<>rlUnknown85CBCC
         sta aProcSystem.aHeaderOnCycle,b,x
+
+      rlUnknown85CBCC ; 85/CBCC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
         lda $1058,b,x

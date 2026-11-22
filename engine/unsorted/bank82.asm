@@ -182,7 +182,7 @@
 
         _8888
         stz wGameStateRoutine1,b
-        lda #$88B2
+        lda #<>rlUnknown8288B2
         sta aProcSystem.aHeaderOnCycle,b,x
         lda bSoundFlags,b
         pha

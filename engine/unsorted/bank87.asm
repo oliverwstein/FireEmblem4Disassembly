@@ -57,7 +57,7 @@
         beq _8063
         lda #$6A19
         jsl rlUnknown91ECDA
-        jsl rlUnknown91E8C1+11
+        jsl rlUnknown91E8CC
 
         _8061
         bra _8061
@@ -94,14 +94,14 @@
         lda @l aCodeChecksumsCopy87.ChecksEnabled
         beq _809B
         lda #$0000
-        ldx #$8D56
+        ldx #<>rlReset
 
         _8089
         clc
         adc $800000,x
         inc x
         inc x
-        cpx #$8E2D
+        cpx #<>rlUnknown808E2D
         bcc _8089
         cmp @l aCodeChecksumsCopy87.Bank80Sum
         bne _80A6
@@ -5983,7 +5983,7 @@
         stz bDMAArrayFlag,b
         rep #$20
         stz wDMAArrayPosition,b
-        jml rlUnknown808E2D._8E60+108
+        jml rlUnknown808ECC
 
         .databank 0
 
@@ -6193,7 +6193,7 @@
           .structDMAToVRAM $7EEB88, $0E00, $80, $7000
 
         plx
-        lda #$C7CF
+        lda #<>rlUnknown87C7CF
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _C7CE
@@ -6202,6 +6202,37 @@
         .databank 0
 
         ; 87/C7CF
+
+      rlUnknown87C7CF ; 87/C7CF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #aUnknown87C91D >> 8
+        sta lR44+1
+        lda aProcSystem.aBody0,b,x
+        bne _C7DE
+        lda #<>aUnknown87C91D
+        bra _C7E1
+
+
+        _C7DE
+        lda #<>aUnknown87CB47
+
+        _C7E1
+        sta lR44
+        lda #$0001
+        sta wR40
+        jsl rlHDMAEngineCreateEntryByIndex
+        lda #<>rlUnknown87C7F3
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 87/C7F3
 
     .endsection Unsorted87C7B4Section
 
@@ -6981,15 +7012,73 @@
         bit #$0020
         bne rsUnknown87E6D3
 
-        _E6DF
+      rsUnknown87E6DF ; 87/E6DF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda #$0008
-        bra _E6FE
+        bra rsUnknown87E6FE
 
-        .byte $A9, $09, $00, $80, $15, $AD, $79, $0D, $89, $20, $00, $D0, $E2, $A9, $02, $00
-        .byte $80, $08, $A9, $0C, $00, $80, $03, $A9, $0D, $00
+      rsUnknown87E6E4 ; 87/E6E4
 
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
-        _E6FE
+        lda #$0009
+        bra rsUnknown87E6FE
+
+      rsUnknown87E6E9 ; 87/E6E9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wUnknown000D79,b
+        bit #$0020
+        bne rsUnknown87E6D3
+
+      rsUnknown87E6F1 ; 87/E6F1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0002
+        bra rsUnknown87E6FE
+
+      rsUnknown87E6F6 ; 87/E6F6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000C
+        bra rsUnknown87E6FE
+
+      rsUnknown87E6FB ; 87/E6FB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000D
+
+      rsUnknown87E6FE ; 87/E6FE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         stz wR12
         jsl rlUnknown87E689
         rts

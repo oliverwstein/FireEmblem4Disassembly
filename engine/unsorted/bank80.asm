@@ -35,9 +35,10 @@
         bmi _81E9
         ora #$8000
         sta wVBlankFlag
-        pea #$81D9
+        pea #<>(+)-1
         jmp (wVBlankPointer)
 
+        +
         jsl rlUnknown91EB76
         inc wVBlankEnabledFramecount
         ply
@@ -951,14 +952,14 @@
         cpy #$1FFF
         bcs _8DBD
         lda $0000,b,y
-        cmp #$8D56
+        cmp #<>rlReset
         beq _8DCA
         bra _8DBD
 
 
         _8DE9
         ldy $0001,b,x
-        cpy #$8D56
+        cpy #<>rlReset
         beq _8DCA
         bra _8DBD
 
@@ -1093,19 +1094,54 @@
         sta wIRQPointer
         lda #<>rlUnknown809CD6
         sta wMainLoopPointer
-        jml _8EEE
+        jml rlUnknown808EEE
 
-        .byte $C2, $30, $A2, $F7, $1F, $9A, $E2, $20, $A9, $80, $8D, $00, $21, $9C, $00, $42
-        .byte $9C, $0B, $42, $9C, $0C, $42, $C2, $30, $5C, $2D, $8E, $80
+        .databank 0
 
+        ; 80/8ECC
 
-        _8EE8
+      rlUnknown808ECC ; 80/8ECC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rep #$30
+        ldx #$1FF7
+        txs
+        sep #$20
+        lda #$80
+        sta $2100,b
+        stz $4200,b
+        stz $420B,b
+        stz $420C,b
+        rep #$30
+        jml rlUnknown808E2D
+
+        .databank 0
+
+        ; 80/8EE8
+
+      rlUnknown808EE8 ; 80/8EE8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         rep #$30
         jsl rlHaltUntilVBlank
 
-        _8EEE
+      rlUnknown808EEE ; 80/8EEE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         rep #$30
-        pea #<>_8EE8 - 1
+        pea #<>rlUnknown808EE8 - 1
         jmp (wMainLoopPointer)
 
         .databank 0
@@ -3464,10 +3500,10 @@
         .long rlUnknown95E5DB
         .long rlUnknown9BDC24
         .long rlUnknown9BDCBB
-        .long $9FFACC ; unused: points into zero padding
-        .long $9FFACC ; unused: points into zero padding
-        .long $9FFACC ; unused: points into zero padding
-        .long $9FFACC ; unused: points into zero padding
+        .long aUnused9FFACC ; unused: points into zero padding
+        .long aUnused9FFACC ; unused: points into zero padding
+        .long aUnused9FFACC ; unused: points into zero padding
+        .long aUnused9FFACC ; unused: points into zero padding
         .long rlUnitWindowHandleInput
         .long rlUnitWindowShow
         .long rlUnitWindowRunPageTurnInput
@@ -3806,9 +3842,9 @@
         lda #<>aIRQEngineMainActionTable
         sta lR44
         jsl rlUnknown809C04
-        lda #$9100
+        lda #(`aDialogueEngineMainActionTable)<<8
         sta lR44+1
-        lda #$A3A5
+        lda #<>aDialogueEngineMainActionTable
         sta lR44
         jsl rlUnknown809C04
         stz wGameStateRoutine2,b
@@ -4551,7 +4587,7 @@
         beq _AF89
         stz wGameStateRoutine1,b
         lda #$0000
-        jsl rlUnknown88B2A5._B30B+2
+        jsl rlUnknown88B30D
         lda #$0004
         tsb $0788,b
 
@@ -5922,9 +5958,9 @@
         stz wBufferBG2VOFS
         lda #$0003
         sta $0891,b
-        lda #$8A00
+        lda #(`aUnknown8A9C56)<<8
         sta lR44+1
-        lda #$9C56
+        lda #<>aUnknown8A9C56
         sta lR44
         jsl rlHDMAEngineCreateEntry
         jsr rsUnknown80B9E1
@@ -6187,9 +6223,9 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89ACB3)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$ACB3
+        lda #<>aUnknown89ACB3
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0001
         sta $7F81AD
@@ -7751,9 +7787,9 @@
         lda #<>aUnknown80E96E
         sta lR44
         jsl rlHDMAEngineCreateEntry
-        lda #$8000
+        lda #(`aUnknown80E9A4)<<8
         sta lR44+1
-        lda #$E9A4
+        lda #<>aUnknown80E9A4
         sta lR44
         jsl rlHDMAEngineCreateEntry
         rts
@@ -7848,8 +7884,10 @@
         ; Read by rlUnknown80E97C.
 
         .byte $18, $E0, $18, $E1, $18, $E2, $18, $E3, $18, $E4, $18, $E5, $10, $E6, $10, $E7
-        .byte $18, $E8, $18, $E9, $00, $00, $B2, $E9, $AF, $E9, $B0, $E9, $5A, $87, $7F, $12
-        .byte $02
+        .byte $18, $E8, $18, $E9, $00, $00
+
+      aUnknown80E9A4 ; 80/E9A4
+        .byte $B2, $E9, $AF, $E9, $B0, $E9, $5A, $87, $7F, $12, $02
 
         ; 80/E9AF
 

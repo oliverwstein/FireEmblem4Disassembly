@@ -532,9 +532,9 @@
         pla
         cmp #$0000
         bne _8432
-        lda #$8600
+        lda #(`(aChapter05MapEvents + 326))<<8
         sta lR18+1
-        lda #$E000
+        lda #<>(aChapter05MapEvents + 326)
         sta lR18
         jml _84A9
 

@@ -5836,7 +5836,7 @@
         jsl rlPlaySoundEffect2
         plx
         jsl rlUnknown9EA417
-        lda #$A38C
+        lda #<>rlUnknown9EA38C
         sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlUnknown9EA67C
 
@@ -5847,6 +5847,81 @@
         .databank 0
 
         ; 9E/A38C
+
+      rlUnknown9EA38C ; 9E/A38C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F4C2D
+        asl a
+        asl a
+        tax
+        lda $7F45A6,x
+        tax
+        jsl rlUnknown9EA523
+        jsl rlUnknown9EA58A
+        lda $7F4C2D
+        asl a
+        asl a
+        tax
+        lda $7F45A6,x
+        tax
+        lda $7F4C23
+        sta aActiveSpriteSystem.aUnknown0011E0,b,x
+        lda $7F4C27
+        sta aActiveSpriteSystem.aUnknown001220,b,x
+        lda $7F4C25
+        sta aActiveSpriteSystem.aUnknown001200,b,x
+        lda $7F4C29
+        sec
+        sbc $7F4C2B
+        sta aActiveSpriteSystem.aUnknown001240,b,x
+        lda $7F4C2D
+        eor #$0001
+        asl a
+        asl a
+        tax
+        lda $7F4578,x
+        sta wR0
+        lda $7F457A,x
+        sta wR1
+        lda #$0004
+        sta wR2
+        lda $7F4C2D
+        asl a
+        asl a
+        tax
+        lda $7F45A6,x
+        tax
+        jsl rlUnknown9EA566
+        bcc _A401
+        lda #<>rlUnknown9EA403
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _A401
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/A403
+
+      rlUnknown9EA403 ; 9E/A403
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/A404
 
     .endsection Unsorted9EA33CSection
 
@@ -7277,7 +7352,7 @@
           PROC_JUMP_IF_BITS_UNSET _ACEE, $0004
 
             PROC_YIELD 16
-            PROC_CALL rlUnknown9EB491._B4A9
+            PROC_CALL rlUnknown9EB4A9
 
         _ACEE
         PROC_YIELD 1
@@ -7333,7 +7408,7 @@
           PROC_YIELD 16
 
         _AD60
-        PROC_CALL rlUnknown9EB491+12
+        PROC_CALL rlUnknown9EB49D
         PROC_YIELD 117
         PROC_CALL rlUnknown85DB91
         PROC_YIELD 8
@@ -7385,7 +7460,7 @@
         plb
         .databank ?
         plx
-        lda #$ADB4
+        lda #<>rlUnknown9EADB4
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -8604,10 +8679,46 @@
         lda #$0092
         bra rlUnknown9EB4AF._B4B5
 
-        .byte $DA, $A9, $93, $00, $80, $18, $DA, $A9, $92, $00, $80, $12, $DA, $A9, $93, $00
-        .byte $80, $0C
+      rlUnknown9EB497 ; 9E/B497
 
-        _B4A9
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0093
+        bra rlUnknown9EB4AF._B4B5
+
+      rlUnknown9EB49D ; 9E/B49D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0092
+        bra rlUnknown9EB4AF._B4B5
+
+      rlUnknown9EB4A3 ; 9E/B4A3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0093
+        bra rlUnknown9EB4AF._B4B5
+
+      rlUnknown9EB4A9 ; 9E/B4A9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         phx
         lda #$0091
         bra rlUnknown9EB4AF._B4B5
@@ -9436,14 +9547,22 @@
 
         lda bDecompressionArrayFlag,b
         and #$00FF
-        bne _C7B2
+        bne rlUnknown9EC7B2
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$C7B2
+        lda #<>rlUnknown9EC7B2
         sta aProcSystem.aHeaderOnCycle,b,x
 
-        _C7B2
+        .databank 0
+
+      rlUnknown9EC7B2 ; 9E/C7B2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         rtl
 
         .databank 0
@@ -9982,8 +10101,16 @@
         jsl rlUnknown85D066
 
         _CA34
-        lda #$CA3A
+        lda #<>rlUnknown9ECA3A
         sta aProcSystem.aHeaderOnCycle,b,x
+
+      rlUnknown9ECA3A ; 9E/CA3A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         rtl
 
         .databank 0
@@ -10023,8 +10150,16 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$CA5F
+        lda #<>rlUnknown9ECA5F
         sta aProcSystem.aHeaderOnCycle,b,x
+
+      rlUnknown9ECA5F ; 9E/CA5F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         rtl
 
         .databank 0
@@ -10362,7 +10497,7 @@
         PROC_CALL rlUnknown9EB3F3
         PROC_JUMP_IF_BITS_UNSET _CDC2, $0004
         PROC_YIELD 16
-        PROC_CALL rlUnknown9EB491._B4A9
+        PROC_CALL rlUnknown9EB4A9
         _CDC2
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlUnknown9E936B
@@ -10394,7 +10529,7 @@
         PROC_JUMP_IF_BITS_UNSET _CE27, $0004
         PROC_YIELD 16
         _CE27
-        PROC_CALL rlUnknown9EB491+6
+        PROC_CALL rlUnknown9EB497
         PROC_YIELD 133
         PROC_CALL rlUnknown85DB91
         PROC_YIELD 8
@@ -10405,7 +10540,7 @@
         PROC_JUMP_IF_BITS_UNSET _CE4D, $0004
         PROC_YIELD 16
         _CE4D
-        PROC_CALL rlUnknown9EB491+12
+        PROC_CALL rlUnknown9EB49D
         PROC_YIELD 117
         PROC_CALL rlUnknown85DB91
         PROC_YIELD 8
@@ -10416,7 +10551,7 @@
         PROC_JUMP_IF_BITS_UNSET _CE73, $0004
         PROC_YIELD 16
         _CE73
-        PROC_CALL rlUnknown9EB491+18
+        PROC_CALL rlUnknown9EB4A3
         PROC_YIELD 133
         PROC_CALL rlUnknown85DB91
         PROC_YIELD 8
@@ -10855,7 +10990,7 @@
 
         lda $7F5091
         beq _D1AD
-        lda #$D1BB
+        lda #<>rlUnknown9ED1BB
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _D1AD
@@ -10870,6 +11005,68 @@
         .databank 0
 
         ; 9E/D1BB
+
+      rlUnknown9ED1BB ; 9E/D1BB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F5093
+        beq _D1D0
+        lda #<>rlUnknown9ED1DE
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0002
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        _D1D0
+        lda $7F4580
+        beq _D1DD
+        lda #$0000
+        sta $7F4580
+
+        _D1DD
+        rtl
+
+        .databank 0
+
+        ; 9E/D1DE
+
+      rlUnknown9ED1DE ; 9E/D1DE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #<>rlUnknown9ED1F3
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0002
+        ora #$0001
+        sta aProcSystem.aHeaderBitfield,b,x
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/D1F3
+
+      rlUnknown9ED1F3 ; 9E/D1F3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/D1F4
 
     .endsection Unsorted9ED1A1Section
 
@@ -11020,7 +11217,7 @@
         jsl rlAppendDecompList
         ply
         plx
-        lda #$D1F3
+        lda #<>rlUnknown9ED1F3
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -11059,7 +11256,7 @@
         lda #0
         jsl rlUnknown9E8867
         plx
-        lda #$D1F3
+        lda #<>rlUnknown9ED1F3
         sta aProcSystem.aHeaderOnCycle,b,x
         ply
         rtl
@@ -12315,6 +12512,19 @@
 
         ; 9E/DC14
 
+      rlUnknown9EDC14 ; 9E/DC14
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/DC15
+
     .endsection Unsorted9EDAFESection
 
 
@@ -12361,7 +12571,7 @@
         PROC_CALL rlUnknown9EB3F3
         PROC_JUMP_IF_BITS_UNSET _DC99, $0004
         PROC_YIELD 16
-        PROC_CALL rlUnknown9EB491._B4A9
+        PROC_CALL rlUnknown9EB4A9
         _DC99
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlUnknown9E936B
@@ -12418,7 +12628,7 @@
         lda #$0001
         jsl rlUnknown9E8867
         plx
-        lda #$DC14
+        lda #<>rlUnknown9EDC14
         sta aProcSystem.aHeaderOnCycle,b,x
         ply
         rtl
@@ -12880,14 +13090,22 @@
 
         lda aProcSystem.aBody6,b,x
         jsl rlUnknown8280F8
-        bcc _E010
+        bcc rlUnknown9EE010
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #$E010
+        lda #<>rlUnknown9EE010
         sta aProcSystem.aHeaderOnCycle,b,x
 
-        _E010
+        .databank 0
+
+      rlUnknown9EE010 ; 9E/E010
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         rtl
 
         .databank 0
@@ -13019,13 +13237,49 @@
         lda wBattleCriticalType
         dec a
         jsl rlUnknown9EE0F1
-        lda #$E079
+        lda #<>rlUnknown9EE079
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
 
         ; 9E/E079
+
+      rlUnknown9EE079 ; 9E/E079
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda bDecompressionArrayFlag,b
+        and #$00FF
+        bne _E090
+        lda #<>rlUnknown9EE091
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0002
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        _E090
+        rtl
+
+        .databank 0
+
+        ; 9E/E091
+
+      rlUnknown9EE091 ; 9E/E091
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/E092
 
     .endsection Unsorted9EE044Section
 

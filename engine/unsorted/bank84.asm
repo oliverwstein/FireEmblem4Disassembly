@@ -154,7 +154,7 @@
         plb
         .databank $7F
         txa
-        pea #$8C26
+        pea #<>_8C27 - 1
         jmp (wR0)
 
 

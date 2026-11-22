@@ -1264,7 +1264,7 @@
           stz wGameStateRoutine1,b
 
           lda #0
-          jsl rlUnknown88B2A5._B30B+2
+          jsl rlUnknown88B30D
           bra _End
         
         +
@@ -1587,7 +1587,7 @@
         phx
         stz wGameStateRoutine1,b
         lda #$0000
-        jsl rlUnknown88B2A5._B30B+2
+        jsl rlUnknown88B30D
         plx
         bra _B086
 

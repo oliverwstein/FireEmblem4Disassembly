@@ -656,7 +656,7 @@
 
 
         _8227
-        jml _8349
+        jml rlUnknown8A8349
 
 
         _822B
@@ -763,7 +763,7 @@
         _82DC
         lda $0893,b
         tax
-        lda rlUnknown8A8208._8314+47,x
+        lda aUnknown8A8343,x
         and #$00FF
         clc
         adc #$0004
@@ -812,10 +812,18 @@
         jsl rlPushToOAMBuffer
         rtl
 
+        .databank 0
+
+      aUnknown8A8343 ; 8A/8343
         .byte $18, $38, $58, $78, $98, $B8
 
+      rlUnknown8A8349 ; 8A/8349
 
-        _8349
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         jsr rsUnknown8A8980
         lda wJoy1New
         jsr rsUnknown8A89F0
@@ -4609,7 +4617,10 @@
         .byte $01, $00, $00, $00, $04, $00, $0F, $00, $10, $00, $14, $00, $13, $00, $0B, $00
         .byte $08, $00, $15, $00, $07, $00, $17, $00, $16, $00, $0C, $00, $03, $00, $0E, $00
         .byte $05, $00, $06, $00, $02, $00, $11, $00, $0A, $00, $0D, $00, $12, $00, $09, $00
-        .byte $6B, $6B, $61, $9C, $61, $9C, $A8, $9C, $A3, $80, $7F, $32, $00
+        .byte $6B, $6B
+
+      aUnknown8A9C56 ; 8A/9C56
+        .byte $61, $9C, $61, $9C, $A8, $9C, $A3, $80, $7F, $32, $00
 
         ; 8A/9C61
 
@@ -7977,7 +7988,7 @@
         lda $08A9,b
         cmp #$0003
         beq _AF4F
-        jml _AFEB
+        jml rsUnknown8AAFEB
 
 
         _AF4F
@@ -8032,19 +8043,19 @@
         bcs _AFC7
         lda #$0058
         sta wR0
-        lda $AFCC,b,y
+        lda <>aUnknown8AAFCC,b,y
         and #$00FF
         clc
         adc #$0050
         sta wR1
-        lda @l rsUnknown8AAF0A._AFC7+13,x
+        lda @l aUnknown8AAFD4,x
         and #$00FF
         sta wR4
         lda #$3200
         sta wR5
         phx
         phy
-        ldy #$AFE4
+        ldy #<>aUnknown8AAFE4
         jsl rlPushToOAMBuffer
         ply
         plx
@@ -8055,11 +8066,25 @@
         bpl _AF98
         rts
 
-        .byte $00, $10, $20, $30, $40, $50, $60, $70, $20, $22, $24, $26, $28, $2A, $2C, $2E
-        .byte $20, $22, $24, $26, $28, $2A, $2C, $2E, $01, $00, $00, $C2, $00, $30, $32
+        .databank 0
 
+      aUnknown8AAFCC ; 8A/AFCC
+        .byte $00, $10, $20, $30, $40, $50, $60, $70
 
-        _AFEB
+      aUnknown8AAFD4 ; 8A/AFD4
+        .byte $20, $22, $24, $26, $28, $2A, $2C, $2E
+        .byte $20, $22, $24, $26, $28, $2A, $2C, $2E
+
+      aUnknown8AAFE4 ; 8A/AFE4
+        .byte $01, $00, $00, $C2, $00, $30, $32
+
+      rsUnknown8AAFEB ; 8A/AFEB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         ldx #$0007
         ldy #$0007
         sep #$20
@@ -8089,7 +8114,7 @@
         sta wR5
         phx
         phy
-        ldy #$AFE4
+        ldy #<>aUnknown8AAFE4
         jsl rlPushToOAMBuffer
         ply
         plx
@@ -9618,7 +9643,7 @@
 
 
         _C1E2
-        jml _C333
+        jml rsUnknown8AC333
 
 
         _C1E6
@@ -9628,9 +9653,9 @@
         _C1EA
         lda #$0002
         sta wTempVariable1,b
-        lda #$8A00
+        lda #(`aUnknown8AC2FE)<<8
         sta lR18+1
-        lda #$C2FE
+        lda #<>aUnknown8AC2FE
         sta lR18
         lda $18DD,b
         cmp #$0100
@@ -9744,7 +9769,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD131
         sta lR18
-        jml _C312
+        jml rsUnknown8AC312
 
 
         _C2F0
@@ -9752,13 +9777,22 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD257
         sta lR18
-        jml _C312
+        jml rsUnknown8AC312
 
+        .databank 0
+
+      aUnknown8AC2FE ; 8A/C2FE
         .byte $82, $A9, $82, $A4, $81, $40, $81, $40, $81, $40, $82, $E0, $82, $BF, $82, $E0
         .byte $82, $CC, $00, $00
 
 
-        _C312
+      rsUnknown8AC312 ; 8A/C312
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda #$000A
         jsl rlPlaySoundEffect
         lda $0592,b
@@ -9771,8 +9805,16 @@
         sta $0592,b
         rts
 
+        .databank 0
 
-        _C333
+
+      rsUnknown8AC333 ; 8A/C333
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda #$0002
         sta wTempVariable1,b
         lda #(`aUnknown8AC447)<<8
@@ -9891,7 +9933,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD257
         sta lR18
-        jml _C312
+        jml rsUnknown8AC312
 
 
         _C439
@@ -9899,7 +9941,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD233
         sta lR18
-        jml _C312
+        jml rsUnknown8AC312
 
         .databank 0
 
@@ -9989,7 +10031,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD257
         sta lR18
-        jml rsUnknown8AC1BC._C312
+        jml rsUnknown8AC312
 
         .databank 0
 
@@ -14460,7 +14502,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD418
         sta lR18
-        jml rsUnknown8AC1BC._C312
+        jml rsUnknown8AC312
 
 
         _F467
@@ -14468,7 +14510,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD46F
         sta lR18
-        jml rsUnknown8AC1BC._C312
+        jml rsUnknown8AC312
 
         .databank 0
 

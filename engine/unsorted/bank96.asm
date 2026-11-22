@@ -1726,7 +1726,36 @@
 
         .databank 0
 
-        ; 96/88E4
+      rlUnknown9688E4 ; 96/88E4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        .as
+        lda #$04
+        sta $7FE4C2
+        rep #$20
+        .al
+        stz aBGPaletteBuffer,b
+        ldx #$0000
+
+        -
+        lda @l aUnknownE000DA,x
+        sta $0102,b,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc -
+
+        lda #$0004
+        jsl rlHDMAEngineFreeEntryByIndex
+        jsl rlUnknown9695E3
+        rtl
+
+        .databank 0
 
     .endsection Unsorted96881FSection
 
@@ -16663,7 +16692,194 @@
 
         .databank 0
 
-        ; 96/F580
+      rlUnknown96F580 ; 96/F580
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sep #$20
+        .as
+        lda #$22
+        sta bBufferCGWSEL
+        lda #$30
+        sta bBufferWOBJSEL
+        rep #$20
+        .al
+        lda #$0000
+        sta $7FFDF8
+        lda #(`rlUnknown96F5A4)<<8
+        sta $7FED00
+        lda #<>rlUnknown96F5A4
+        sta $7FECFF
+        plx
+        rtl
+
+        .databank 0
+
+      rlUnknown96F5A4 ; 96/F5A4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FFDF8
+        cmp #$0080
+        bcc +
+        jsl rlUnknown96C9FE
+        bra _F5D5
+
+        +
+        lsr a
+        lsr a
+        cmp #$0020
+        bcc +
+        lda #$001F
+        +
+        sta $7FFDFE
+        sep #$20
+        .as
+        ora #$E0
+        sta $7FE3EE
+        rep #$20
+        .al
+        lda $7FFDF8
+        inc a
+        sta $7FFDF8
+
+        _F5D5
+        plx
+        rtl
+
+        .databank 0
+
+      rlUnknown96F5D7 ; 96/F5D7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$007F
+        sta $7FFDF8
+        lda #(`rlUnknown96F5EF)<<8
+        sta $7FED00
+        lda #<>rlUnknown96F5EF
+        sta $7FECFF
+        plx
+        rtl
+
+        .databank 0
+
+      rlUnknown96F5EF ; 96/F5EF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FFDF8
+        bne +
+        jsl rlUnknown96C9FE
+        bra _F61D
+
+        +
+        lsr a
+        lsr a
+        cmp #$0020
+        bcc +
+        lda #$001F
+        +
+        sta $7FFDFE
+        sep #$20
+        .as
+        ora #$E0
+        sta $7FE3EE
+        rep #$20
+        .al
+        lda $7FFDF8
+        dec a
+        sta $7FFDF8
+
+        _F61D
+        plx
+        rtl
+
+        .databank 0
+
+      rlUnknown96F61F ; 96/F61F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$7FFF
+        sta aBGPaletteBuffer,b
+        sep #$20
+        .as
+        lda #$08
+        sta $0B26,b
+        rep #$20
+        .al
+        jsl rlUnknown96C9FE
+        plx
+        rtl
+
+        .databank 0
+
+      rlUnknown96F635 ; 96/F635
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+
+        -
+        lda $7ECC08,x
+        sta $0102,b,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc -
+
+        ldx #$0000
+
+        -
+        lda $7ECC28,x
+        sta $01C2,b,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc -
+
+        lda aUnknownE000B0+12
+        sta $0108,b
+        ldx #$0000
+
+        -
+        lda @l aUnknownE000B0,x
+        sta $010A,b,x
+        inc x
+        inc x
+        cpx #$0006
+        bcc -
+
+        jsl rlUnknown96C9FE
+        plx
+        rtl
+
+        .databank 0
 
     .endsection Unsorted96F558Section
 

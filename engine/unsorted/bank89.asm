@@ -2957,9 +2957,9 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89ACBC)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$ACBC
+        lda #<>aUnknown89ACBC
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         ldx #$00C0
@@ -2982,9 +2982,9 @@
         jsl rlDrawMenuTextLine
         pla
         sta aCurrentTilemapInfo,b
-        lda #$8900
+        lda #(`aUnknown89ACB3)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$ACB3
+        lda #<>aUnknown89ACB3
         sta lMapMenuTilemapRAMEntryPointer,b
         ldx #$0000
 
@@ -3065,9 +3065,9 @@
         .autsiz
         .databank ?
 
-        lda #$8900
+        lda #(`aUnknown89ACBC)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$ACBC
+        lda #<>aUnknown89ACBC
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         ldx #$00C0
@@ -3090,9 +3090,9 @@
         jsl rlDrawMenuTextLine
         pla
         sta aCurrentTilemapInfo,b
-        lda #$8900
+        lda #(`aUnknown89ACB3)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$ACB3
+        lda #<>aUnknown89ACB3
         sta lMapMenuTilemapRAMEntryPointer,b
         ldx #$0000
 
@@ -3611,9 +3611,9 @@
         bne _98C9
         lda #$3400
         sta aCurrentTilemapInfo,b
-        lda #$8900
+        lda #(`aUnknown8998DD)<<8
         sta lR18+1
-        lda #$98DD
+        lda #<>aUnknown8998DD
         sta lR18
         lda $98D4,b,y
         and #$00FF
@@ -3649,7 +3649,10 @@
 
         ; Read by rlUnknown89970D.
 
-        .byte $00, $0D, $0F, $11, $13, $15, $17, $19, $1B, $82, $64, $00, $00
+        .byte $00, $0D, $0F, $11, $13, $15, $17, $19, $1B
+
+      aUnknown8998DD ; 89/98DD
+        .byte $82, $64, $00, $00
 
         ; 89/98E1
 
@@ -5271,9 +5274,9 @@
         sta lR18
         ldx #$1D05
         jsl rlDrawMenuTextLine
-        lda #$8900
+        lda #(`aUnknown89ACC5)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$ACC5
+        lda #<>aUnknown89ACC5
         sta lMapMenuTilemapRAMEntryPointer,b
         lda $7F81CF
         asl a
@@ -5320,9 +5323,9 @@
         dec x
         dec x
         bne _A46A
-        lda #$8900
+        lda #(`aUnknown89ACB3)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$ACB3
+        lda #<>aUnknown89ACB3
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$3800
         sta aCurrentTilemapInfo,b
@@ -7445,11 +7448,11 @@
 
 
         _EB99
-        jml _EC51
+        jml rsUnknown89EC51
 
 
         _EB9D
-        jml _EC72
+        jml rsUnknown89EC72
 
 
         _EBA1
@@ -7514,7 +7517,7 @@
         _EC1A
         lda $7F8400
         tax
-        lda rsUnknown89EB5E._EC47+1,x
+        lda aUnknown89EC48,x
         and #$00FF
         sta wR0
         txa
@@ -7533,10 +7536,18 @@
         _EC47
         rts
 
+        .databank 0
+
+      aUnknown89EC48 ; 89/EC48
         .byte $03, $02, $02, $05, $02, $03, $05, $02, $02
 
+      rsUnknown89EC51 ; 89/EC51
 
-        _EC51
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda $7F8400
         asl a
         tax
@@ -7552,8 +7563,15 @@
         _EC71
         rts
 
+        .databank 0
 
-        _EC72
+      rsUnknown89EC72 ; 89/EC72
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda #$0021
         jsl rlPlaySoundEffect
         jsl rlUnknown89F842

@@ -2051,7 +2051,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         rtl
 
         .databank 0
@@ -2106,32 +2106,167 @@
 
         lda #$0000
         ldy #$0010
-        bra _912A
+        bra rsUnknown9F912A
 
-        .byte $8D, $43, $1B, $98, $8D, $41, $1B, $18, $5C, $FB, $91, $9F
+        .databank 0
 
+      rsUnknown9F911E ; 9F/911E
 
-        _912A
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta aPaletteFading.wDesiredColor,b
+        tya
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F91FB
+
+        .databank 0
+
+      rsUnknown9F912A ; 9F/912A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         sta aPaletteFading.wDesiredColor,b
         tya
         sta aPaletteFading,b
         sec
-        jml _91B1
+        jml rsUnknown9F91B1
 
-        .byte $A9, $07, $00, $A0, $0E, $00, $8D, $43, $1B, $98, $8D, $41, $1B, $18, $5C, $CE
-        .byte $91, $9F, $A9, $07, $00, $A0, $14, $00, $8D, $43, $1B, $98, $8D, $41, $1B, $18
-        .byte $5C, $DD, $91, $9F, $A9, $07, $00, $A0, $0E, $00, $8D, $43, $1B, $98, $8D, $41
-        .byte $1B, $18, $5C, $EC, $91, $9F, $A9, $FF, $7F, $8D, $43, $1B, $A9, $10, $00, $8D
-        .byte $41, $1B, $18, $5C, $B1, $91, $9F, $A9, $FF, $7F, $8D, $43, $1B, $A9, $10, $00
-        .byte $8D, $41, $1B, $18, $5C, $0A, $92, $9F, $A9, $00, $00, $8D, $43, $1B, $A9, $10
-        .byte $00, $8D, $41, $1B, $18, $5C, $0A, $92, $9F, $A9, $08, $00, $8D, $41, $1B, $18
-        .byte $22, $E1, $8E, $9F, $00, $D0, $50, $00, $20, $00, $60
+        .databank 0
 
+      rsUnknown9F9136 ; 9F/9136
 
-        _91B1
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0007
+        ldy #$000E
+        sta aPaletteFading.wDesiredColor,b
+        tya
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F91CE
+
+        .databank 0
+
+      rsUnknown9F9148 ; 9F/9148
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0007
+        ldy #$0014
+        sta aPaletteFading.wDesiredColor,b
+        tya
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F91DD
+
+        .databank 0
+
+      rsUnknown9F915A ; 9F/915A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0007
+        ldy #$000E
+        sta aPaletteFading.wDesiredColor,b
+        tya
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F91EC
+
+        .databank 0
+
+      rsUnknown9F916C ; 9F/916C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$7FFF
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0010
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F91B1
+
+        .databank 0
+
+      rsUnknown9F917D ; 9F/917D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$7FFF
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0010
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F920A
+
+        .databank 0
+
+      rsUnknown9F918E ; 9F/918E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0010
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F920A
+
+        .databank 0
+
+      rsUnknown9F919F ; 9F/919F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0008
+        sta aPaletteFading,b
+        clc
+        jsl rlFadePaletteToColors
+
+          .byte $00, $D0, $50, $00, $20, $00
+
+        rts
+
+        .databank 0
+
+      rsUnknown9F91B1 ; 9F/91B1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         jsl rlFadePaletteToBlack
 
-          .byte $B8, $91
+          .word <>aUnknown9F91B8
 
         rts
 
@@ -2353,14 +2488,22 @@
         .databank ?
 
         jsl rlUnknown9F9691
-        bcc _9295
-        lda #$9295
+        bcc rlUnknown9F9295
+        lda #<>rlUnknown9F9295
         sta aProcSystem.aHeaderOnCycle,b,x
         stz aProcSystem.aHeaderTypeOffset,b,x
         jsl rlUnknown9F8349
         jsl rlUnknown9F8473._847A
 
-        _9295
+        .databank 0
+
+      rlUnknown9F9295 ; 9F/9295
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         rtl
 
         .databank 0
@@ -2401,9 +2544,9 @@
         .databank ?
 
         phx
-        lda #$9F00
+        lda #(`aUnknown9F9372)<<8
         sta lR44+1
-        lda #$9372
+        lda #<>aUnknown9F9372
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         plx
@@ -2421,7 +2564,7 @@
 
       procUnknown9F92CA ; 9F/92CA
 
-        .structProcInfo "ON", rlUnknown9F92D2, $9302, aProcUnknown9F805DCode
+        .structProcInfo "ON", rlUnknown9F92D2, rlUnknown9F9302, aProcUnknown9F805DCode
 
     .endsection Unsorted9F926ESection
 
@@ -2475,24 +2618,94 @@
 
 
         _92FA
-        lda #$932D
+        lda #<>rlUnknown9F932D
         sta aProcSystem.aHeaderOnCycle,b,x
-        bra _932D
+        bra rlUnknown9F932D
 
-        .byte $AF, $06, $CC, $7E, $D0, $01, $6B, $20, $4D, $93, $A9, $13, $93, $9D, $57, $0F
-        .byte $6B, $AF, $08, $CC, $7E, $F0, $F9, $22, $91, $96, $9F, $90, $F3, $A9, $01, $00
-        .byte $8F, $93, $50, $7F, $A9, $2C, $93, $9D, $57, $0F, $6B
+        .databank 0
+
+        ; 9F/9302
+
+      rlUnknown9F9302 ; 9F/9302
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7ECC06
+        bne _9309
+        rtl
 
 
-        _932D
+        _9309
+        jsr rsUnknown9F934D
+        lda #<>rlUnknown9F9313
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        _9312
+        rtl
+
+        .databank 0
+
+        ; 9F/9313
+
+      rlUnknown9F9313 ; 9F/9313
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda $7ECC08
-        beq _9340
+        beq rlUnknown9F9302._9312
+        jsl rlUnknown9F9691
+        bcc rlUnknown9F9302._9312
         lda #$0001
         sta $7F5093
-        lda #$9340
+        lda #<>rlUnknown9F932C
         sta aProcSystem.aHeaderOnCycle,b,x
 
-        _9340
+        .databank 0
+
+        ; 9F/932C
+
+      rlUnknown9F932C ; 9F/932C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9F/932D
+
+      rlUnknown9F932D ; 9F/932D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7ECC08
+        beq rlUnknown9F9340
+        lda #$0001
+        sta $7F5093
+        lda #<>rlUnknown9F9340
+        sta aProcSystem.aHeaderOnCycle,b,x
+
+        .databank 0
+
+      rlUnknown9F9340 ; 9F/9340
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         rtl
 
         .databank 0
@@ -2522,9 +2735,26 @@
 
           .word $DE4E
 
-        bra _9357
+        bra rsUnknown9F934D._9357
 
-        .byte $20, $D7, $82, $BA, $EB, $20, $0F, $83, $5E, $DE
+        .databank 0
+
+        ; 9F/934D
+
+      rsUnknown9F934D ; 9F/934D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown9F82D7
+
+          .word $EBBA
+
+        jsr rsUnknown9F830F
+
+          .word $DE5E
 
 
         _9357
@@ -2560,6 +2790,8 @@
 
       aUnknown9F936C ; 9F/936C
         .word <>rlUnknown9F939E, <>rlUnknown9F9378, $9527
+
+      aUnknown9F9372 ; 9F/9372
         .word <>rlUnknown9F939E, <>rlUnknown9F9378, $9584
 
     .endsection Table9F936CSection
@@ -2764,7 +2996,7 @@
         _94AA
         lda #$002D
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #$94D5
+        lda #<>rlUnknown9F94D5
         sta aActiveSpriteSystem.aOnCycle,b,x
         sta $7ECC06
         lda #$0002
@@ -2783,6 +3015,49 @@
 
         ; 9F/94D5
 
+      rlUnknown9F94D5 ; 9F/94D5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
+        bne _94ED
+        lda #$0008
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        lda #<>rlUnknown9F94EE
+        sta aActiveSpriteSystem.aOnCycle,b,x
+        lda #$0001
+        sta $7F4580
+
+        _94ED
+        rtl
+
+        .databank 0
+
+        ; 9F/94EE
+
+      rlUnknown9F94EE ; 9F/94EE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec aActiveSpriteSystem.aUnknown0012C0,b,x
+        bne _94FD
+        stz aActiveSpriteSystem.aTypeOffset,b,x
+        lda #$0001
+        sta $7ECC08
+
+        _94FD
+        rtl
+
+        .databank 0
+
+        ; 9F/94FE
+
     .endsection Unsorted9F9378Section
 
 
@@ -2799,14 +3074,25 @@
         .databank ?
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne _9526
+        bne rlUnknown9F9517._9526
         lda #$0001
         sta $7F4580
-        lda #$9517
+        lda #<>rlUnknown9F9517
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0020
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         rtl
+
+        .databank 0
+
+        ; 9F/9517
+
+      rlUnknown9F9517 ; 9F/9517
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _9526
@@ -3139,7 +3425,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F9116._912A+48
+        jsr rsUnknown9F915A
         bcc _97E1
         lda #$97E2
         sta $0F57,b,x
@@ -3224,7 +3510,7 @@
 
 
         _984D
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _985F
         lda #$985F
         sta $0F57,b,x
@@ -4483,7 +4769,7 @@
         .xl
         .autsiz
         .databank ?
-        jsr rsUnknown9F9116._912A+12
+        jsr rsUnknown9F9136
         bcc _A310
         lda #$A311
         sta $0F57,b,x
@@ -4682,7 +4968,7 @@
         _A531
         lda #$A537
         sta $1160,b,x
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _A546
         lda #$0001
         sta $7F5093
@@ -4904,7 +5190,7 @@
 
 
         _A659
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _A66B
         lda #$A66B
         sta $0F57,b,x
@@ -4954,7 +5240,7 @@
       procUnknown9FA682 ; 9F/A682
 
         .structProcInfo "ON", rlUnknown9FA68C, rlUnknown9FA693, aProcUnknown9F805DCode
-        .word <>aUnknown9FA6CB+6
+        .word <>aUnknown9FA6D1
 
       rlUnknown9FA68C ; 9F/A68C
 
@@ -5004,10 +5290,22 @@
         .databank 0
 
       aUnknown9FA6CB ; 9F/A6CB
+        .word $A6FF, $A8EB, $A972
 
-        .word $A6FF, $A8EB, $A972, $A6EF, $A77A, $A8BC
-        .word $A71B, $A77A, $A8C8, $A71B, $A79B, $A8C8
-        .word $A71B, $A7BC, $A8D6, $A729, $A74B, $A967
+      aUnknown9FA6D1 ; 9F/A6D1
+        .word $A6EF, $A77A, $A8BC
+
+      aUnknown9FA6D7 ; 9F/A6D7
+        .word $A71B, $A77A, $A8C8
+
+      aUnknown9FA6DD ; 9F/A6DD
+        .word $A71B, $A79B, $A8C8
+
+      aUnknown9FA6E3 ; 9F/A6E3
+        .word $A71B, $A7BC, $A8D6
+
+      aUnknown9FA6E9 ; 9F/A6E9
+        .word $A729, $A74B, $A967
 
       rlUnknown9FA6EF ; 9F/A6EF
 
@@ -5153,9 +5451,9 @@
         lda $1200,b,x
         and #$00FF
         tax
-        lda #$9F00
+        lda #(`aUnknown9FA6D7)<<8
         sta lR44+1
-        lda #$A6D7
+        lda #<>aUnknown9FA6D7
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -5170,9 +5468,9 @@
         lda $1200,b,x
         and #$00FF
         tax
-        lda #$9F00
+        lda #(`aUnknown9FA6DD)<<8
         sta lR44+1
-        lda #$A6DD
+        lda #<>aUnknown9FA6DD
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -5191,9 +5489,9 @@
         lda $7F509B
         and #$00FF
         tax
-        lda #$9F00
+        lda #(`aUnknown9FA6E3)<<8
         sta lR44+1
-        lda #$A6E3
+        lda #<>aUnknown9FA6E3
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -5219,9 +5517,9 @@
         lda $7F509B
         and #$00FF
         tax
-        lda #$9F00
+        lda #(`aUnknown9FA6E3)<<8
         sta lR44+1
-        lda #$A6E3
+        lda #<>aUnknown9FA6E3
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -5237,9 +5535,9 @@
           .byte $57
 
         jsr rlUnknown9FAA16
-        lda #$9F00
+        lda #(`aUnknown9FA6E9)<<8
         sta lR44+1
-        lda #$A6E9
+        lda #<>aUnknown9FA6E9
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         ply
@@ -5303,7 +5601,7 @@
 
 
         _A957
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _A966
         stz $1100,b,x
         lda #$0001
@@ -6169,7 +6467,7 @@
 
 
         _B0F1
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _B100
         stz $1100,b,x
         lda #$0001
@@ -6627,7 +6925,7 @@
         _B4AF
         lda $7F50CB
         bne _B4BA
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _B4C7
 
         _B4BA
@@ -6822,7 +7120,7 @@
 
 
         _B5D9
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _B5EB
         lda #$B5EB
         sta $0F57,b,x
@@ -7850,7 +8148,7 @@
 
 
         _BDAE
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _BDC0
         lda #$BDC0
         sta $0F57,b,x
@@ -8268,7 +8566,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _C0B2
         lda #$C0B2
         sta $0F57,b,x
@@ -9146,7 +9444,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _C6D4
         lda #$C6D4
         sta $0F57,b,x
@@ -9415,7 +9713,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _C8C0
         lda #$C8C0
         sta $0F57,b,x
@@ -10444,17 +10742,17 @@
         .byte $D0, $00, $03, $AC, $D0, $00, $03, $C1, $D0, $00, $03, $BA, $D0, $17, $CE, $CF
         .byte $00, $03, $B3, $D0, $00, $03, $AC, $D0, $00, $03, $C1, $D0, $00, $02, $BA, $D0
         .byte $00, $03, $B3, $D0, $00, $03, $AC, $D0, $00, $08, $A5, $D0, $00, $02, $9E, $D0
-        .byte $00, $01, $97, $D0, $00, $01, $95, $D0, $15, $C7
+        .byte $00, $01, $97, $D0, $00, $01, $95, $D0, $15, $C7, $CF
 
-      rlUnknown9FCFCD ; 9F/CFCD
+      rlUnknown9FCFCE ; 9F/CFCE
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        cmp $45AAAF
-        adc $FFFFC9,x
+        lda $7F45AA
+        cmp #$FFFF
         beq _CFDB
         jsl rlUnknown9FCFDF
 
@@ -10723,7 +11021,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _D138
         lda #$0001
         sta $7F5093
@@ -11216,7 +11514,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F9116._912A+12
+        jsr rsUnknown9F9136
         bcc _D474
         lda #$D475
         sta $0F57,b,x
@@ -12046,7 +12344,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F9116._912A+117
+        jsr rsUnknown9F919F
         bcc _D9DB
         lda #$D9DB
         sta $0F57,b,x
@@ -12751,10 +13049,10 @@
       aUnknown9FDE4E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, rlUnknown9FE006, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE4E
         .word $FDC0, $0130
 
-      aUnknown9FDE5E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, rlUnknown9FE006+17, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE5E
+      aUnknown9FDE5E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, rlUnknown9FE017, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE5E
         .word $FDC0, $01C0
 
-      aUnknown9FDE6E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, rlUnknown9FDF73._DFC7+46, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE6E
+      aUnknown9FDE6E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, rlUnknown9FDFF5, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE6E
         .word $FDF0, $02C0
 
       aUnknown9FDE7E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDEE3, aUnknown9FDF58+26, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DE7E
@@ -12958,18 +13256,16 @@
         .databank ?
         rtl
 
-        .byte $A9
-
         .databank 0
 
-      rlUnknown9FDFF6 ; 9F/DFF6
+      rlUnknown9FDFF5 ; 9F/DFF5
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ora #0,s
+        lda #$0003
         sta wR6
         lda #$0006
         sta wR7
@@ -12977,7 +13273,7 @@
         sta wR8
 
         .databank 0
-        bra rlUnknown9FE006._E026
+        bra rlUnknown9FE026
 
     .endsection Unsorted9FDEE3Section
 
@@ -13001,12 +13297,32 @@
         sta wR7
         lda #$002C
         sta wR8
-        bra _E026
+        bra rlUnknown9FE026
 
-        .byte $A9, $03, $00, $85, $0C, $A9, $0A, $00, $85, $0E, $A9, $30, $00, $85, $10
+        .databank 0
 
+      rlUnknown9FE017 ; 9F/E017
 
-        _E026
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0003
+        sta wR6
+        lda #$000A
+        sta wR7
+        lda #$0030
+        sta wR8
+
+        .databank 0
+
+      rlUnknown9FE026 ; 9F/E026
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
         txy
         phb
         pea #$7F7F
@@ -14470,13 +14786,21 @@
         .databank ?
 
         dec aProcSystem.aBody0,b,x
-        bne _F111
-        lda #$F111
+        bne rlUnknown9FF111
+        lda #<>rlUnknown9FF111
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$00C0
         sta aProcSystem.aBody4,b,x
 
-        _F111
+        .databank 0
+
+      rlUnknown9FF111 ; 9F/F111
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda aProcSystem.aBody4,b,x
         clc
         adc aProcSystem.aBody3,b,x
@@ -14706,7 +15030,88 @@
 
         .databank 0
 
-        ; 9F/F2FD
+      rsUnknown9FF2FD ; 9F/F2FD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        pea #(`aUnknown9AA30A)<<8
+        plb
+        plb
+        lda wR5
+        clc
+        adc #$0004
+        asl a
+        tax
+        lda @l aUnknown9AA30A,x
+        clc
+        adc #<>aUnknown9AA30A
+        tax
+        dex
+        lda wR5
+        clc
+        adc #$0003
+        lsr a
+        tay
+        bne +
+        ldy #$0001
+        +
+        lda wR2
+        clc
+        adc wR4
+        and #$01FF
+        lsr a
+        sta wR0
+
+        _F32D
+        lda $0000,b,x
+        and #$00FF
+        sta wR6
+        lda wR0
+        sec
+        sbc wR6
+        cmp wR2
+        bpl +
+        lda wR2
+        +
+        cmp #$0008
+        bpl +
+        lda #$0008
+        +
+        sep #$20
+        .as
+        sta $2180,b
+        rep #$20
+        .al
+        lda $0000,b,x
+        and #$00FF
+        clc
+        adc wR0
+        cmp wR4
+        bcc +
+        lda wR4
+        +
+        cmp #$00F7
+        bcc +
+        lda #$00F7
+        +
+        sep #$20
+        .as
+        sta $2180,b
+        rep #$20
+        .al
+        dec wR1
+        dex
+        dex
+        dey
+        bne _F32D
+        plb
+        rts
+
+        .databank 0
 
     .endsection Unsorted9FF250Section
 
@@ -15229,7 +15634,7 @@
         bcc _F563
         lda #1,s
         tax
-        lda #$F54E
+        lda #<>rlUnknown9FF54E
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _F563
@@ -15379,7 +15784,22 @@
 
         .databank 0
 
-        ; 9F/F66D
+      rlUnknown9FF66D ; 9F/F66D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda aProcSystem.aHeaderBitfield,b,x
+        and #$FFFB
+        sta aProcSystem.aHeaderBitfield,b,x
+        jsl rlUnknown81AB26
+        plx
+        rtl
+
+        .databank 0
 
     .endsection Unsorted9FF65ASection
 
@@ -16262,5 +16682,7 @@
         .databank 0
 
         ; 9F/FACC
+
+      aUnused9FFACC ; 9F/FACC
 
     .endsection Unsorted9FFAB4Section
