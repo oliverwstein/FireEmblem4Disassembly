@@ -49,7 +49,7 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Emulator questions (for one batched session)
 
-Each is one screen. (Answered earlier: a sold item does appear in that castle's secondhand buy list.)
+Each is one screen. (Answered: a sold item does appear in that castle's secondhand buy list; Sigurd's sword rank on the status screen is the star, so rank 4 is the major-blood star.)
 
 From the castle wave, in a castle's town or courtyard:
 
@@ -57,10 +57,9 @@ From the castle wave, in a castle's town or courtyard:
 2. In chapter 6, is the class change command grey in the courtyard?
 3. Item shop, second option (もちもの): does the keeper say the "look at my goods" line (Shop36)?
 
-From the full-screen menus wave, on Sigurd's status screen in the prologue:
+From the full-screen menus wave, on a status screen in the prologue (X on a unit on the map):
 
-4. In the weapon ranks on the bottom half, is Sigurd's sword rank a star (★), not a letter? Confirms that rank 4 is the major-blood star.
-5. Only if a unit happens to be dead: hold Select and press R or L on another unit's status screen; does the dead unit's status screen come up (and not without Select)?
+4. Only if a unit happens to be dead: hold Select and press R or L on another unit's status screen; does the dead unit's status screen come up (and not without Select)?
 
 ## How to work on this project
 

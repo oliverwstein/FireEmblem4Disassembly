@@ -25,7 +25,7 @@ The status screen is opened from several places, and closing it goes back to whi
 | the unit window (A on a unit not on the map) | `rsUnitWindowOpen` | speed 5 | the unit window, which keeps its place because `wUnitWindowCaller` is `rsOpenStatusScreen` |
 | the revive screen (X) | `rsReviveScreenOpen` | speed 1 | the revive screen, with its cursor (saved in `wItemWindowCursorRow`) |
 | the castle courtyard | `rsOpenCastleScreen` | speed 1 | the castle (bit 5 of `wUnknown000D79` is set there) |
-| the map | `rsUnknown80B122` | none: starts at full brightness | the map, or the castle if bit 5 of `wUnknown000D79` is set |
+| the map (X on a unit) | `rsUnknown80B122` | none: starts at full brightness | the map, or the castle if bit 5 of `wUnknown000D79` is set |
 
 ## The status screen
 
@@ -50,7 +50,7 @@ X moves a cursor onto the inventory (`STATUS_SCREEN_STEP_ITEM_DETAILS`: hit, mig
 - its skills with icons (`rlStatusScreenBuildSkillList`);
 - its states and condition: a dead, captive, moved or sleeping unit gets the grey sprite palette.
 
-Weapon ranks are drawn by `rsDrawWeaponRankLetter`: A, B, C, a dash for none, and a star for the rank a major blood gives (the rank getter returns carry set for it). The same star marks arena level 7.
+Weapon ranks are drawn by `rsDrawWeaponRankLetter`: A, B, C, a dash for none, and a star for the rank a major blood gives (the rank getter returns carry set for it; Sigurd's sword shows it in the prologue, checked in the emulator). The same star marks arena level 7.
 
 ### Another unit
 
