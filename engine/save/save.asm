@@ -1209,7 +1209,7 @@
         jsr rsLoadGameTimerAndUnitLosses
         jsr rsLoadSaveFileBody
         jsr rsFillSaveSlotDataBuffers
-        jsl rlUnknown87BF6F
+        jsl rlApplySoundOption
         jsl rlUnitWindowClearSavedListOrder
         pla
         ply
@@ -1234,7 +1234,7 @@
         sta aSave.wActiveSaveData,b
         jsr rsClearUnitLosses
         jsr rsClearGameTimer
-        jsl rlUnknown87BF6F
+        jsl rlApplySoundOption
         rtl
 
         .databank 0
@@ -1971,7 +1971,7 @@
         .autsiz
         .databank ?
 
-        ; Stores A in aSRAM.wAntiTamperMark: the integrity check writes $6A19 the first time it fails, and rlUnknown878074 clears it when the code checksum is right.
+        ; Stores A in aSRAM.wAntiTamperMark: the integrity check writes $6A19 the first time it fails, and rlCheckCodeChecksumsAtReset clears it when the code checksum is right.
 
         sta aSRAM.wAntiTamperMark
         rtl
@@ -4443,7 +4443,7 @@
 
       rsOpenMapSaveMenu ; 80/F222
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz

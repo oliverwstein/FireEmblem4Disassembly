@@ -584,7 +584,7 @@
         .autsiz
         .databank ?
 
-        ; Attack or assault: the item becomes wSelectedInventorySlot and target selection starts (rlUnknown87B512, rlUnknown88AD46). Items: opens procItemUseMenu. Staves: wSelectedInventorySlot (bit 15 for the castle's list) and rlUseItemFromMap. Equip: equips it and reopens the unit menu.
+        ; Attack or assault: the item becomes wSelectedInventorySlot and target selection starts (rlFindTargetsForSelectedWeapon, rlUnknown88AD46). Items: opens procItemUseMenu. Staves: wSelectedInventorySlot (bit 15 for the castle's list) and rlUseItemFromMap. Equip: equips it and reopens the unit menu.
 
         phx
         jsr rsMapItemListHidePortrait
@@ -616,7 +616,7 @@
         sta wSelectedInventorySlot,b
         jsr _9682
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown87B512
+        jsl rlFindTargetsForSelectedWeapon
         jsl rlUnknown88AD46
         plx
         jml _969C

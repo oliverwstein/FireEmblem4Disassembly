@@ -900,7 +900,7 @@
         PROC_SET_ONCYCLE rlProcCycleFlickerUnitsOfFactionSlot
         PROC_YIELD 64
         PROC_CALL rlHideUnitsOfFactionSlot
-        PROC_SET_ONCYCLE rlProcUnknown87C056Cycle
+        PROC_SET_ONCYCLE rlProcCastleTakenOverCycle
         PROC_YIELD 16
 
         _C235

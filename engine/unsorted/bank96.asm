@@ -3290,14 +3290,14 @@
         phx
         ldx #$0000
         lda #$000F
-        sta $7FE3CA,x
+        sta aMapWindowTextBuffer,x
         lda #$E3EE
         sta $7FE3CB,x
         inc x
         inc x
         inc x
         lda #$0070
-        sta $7FE3CA,x
+        sta aMapWindowTextBuffer,x
         lda #$E3EE
         sta $7FE3CB,x
         inc x
@@ -3324,7 +3324,7 @@
         lda $7FE3EA
         tax
         lda #$00D0
-        sta $7FE3CA,x
+        sta aMapWindowTextBuffer,x
         lda #$E3F1
         sta $7FE3CB,x
         sep #$20
@@ -3443,7 +3443,7 @@
         tax
         sep #$20
         lda #$00
-        sta $7FE3CA,x
+        sta aMapWindowTextBuffer,x
         rep #$20
         plx
         rtl

@@ -405,7 +405,7 @@
               lda aMovingMapSprites.wUnknown001830,b
               sta aEventMovement.wUnknown7EC494
               lda aMovingMapSprites.wEntryIndex,b
-              jsl rlUnknown87B01D
+              jsl rlEventMovementPlanRoute
               bcc +
 
                 brk
@@ -3581,10 +3581,10 @@
         sta lR19
         phx
         ldx #$2000
-        jsl rlUnknown87BFB0
+        jsl rlGetAutoSaveOption
         and #$FFFF
         beq _DD73
-        jsl rlUnknown87BFD9
+        jsl rlGetAutoSaveFile
         inc a
         cmp wR7
         bne _DD73
@@ -4395,10 +4395,10 @@
         lda aSave.wMenuOperation,b
         bit #$8000
         bne _E384
-        jsl rlUnknown87BFB0
+        jsl rlGetAutoSaveOption
         and #$FFFF
         beq _E384
-        jsl rlUnknown87BFD9
+        jsl rlGetAutoSaveFile
         inc a
         cmp wR7
         bne _E384

@@ -394,7 +394,7 @@
         cmp @l aCodeChecksumsCopy88.Bank80Sum
         bne _8066
         lda #$0000
-        ldx #<>rlUnknown878017
+        ldx #<>rlWriteResetSignature
 
         _803C
         clc
@@ -419,7 +419,7 @@
 
 
         _8066
-        jsl rlUnknown87802A._8063
+        jsl rlCheckResetSignature._8063
 
         _806A
         lda wCastleGridSlot,b
@@ -483,7 +483,7 @@
           bne _SEC
 
           lda #0
-          ldx #<>rlUnknown878017
+          ldx #<>rlWriteResetSignature
 
             -
             clc
@@ -541,7 +541,7 @@
         ; constants.
 
         .word <>rlReset, <>rlColdResetClearMemory
-        .word <>rlUnknown878017, <>rlInitMapMenus
+        .word <>rlWriteResetSignature, <>rlInitMapMenus
 
       aCodeChecksumsCopy87 .structCodeChecksums $AA24, $B66C, $5349 ; 87/8008
 

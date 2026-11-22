@@ -148,7 +148,7 @@
           bcs _CLC
 
             jsl rlGetSelectedUnitCharacterID
-            jsl rlUnknown87A040
+            jsl rlCheckCharacterWaitingInHomeCastle
             bcc _CLC
             bra +
 

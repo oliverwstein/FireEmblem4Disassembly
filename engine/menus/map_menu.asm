@@ -95,6 +95,23 @@
 
         ; 85/82CB
 
+      rlBringProcMapMenuToFront ; 85/82CB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = proc: brings its map menu to the front. Nothing in the build reaches this.
+
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlBringMapMenuToFront
+        rtl
+
+        .databank 0
+
+        ; 85/82D4
+
     .endsection MapMenuSaveMapStateSection
 
 
@@ -166,6 +183,46 @@
         .databank 0
 
         ; 85/837C
+
+      rlProcMapMenuWaitForButtonDraw ; 85/837C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draws the proc's map menu and goes on to rlProcMapMenuWaitForButtonCycle.
+
+        jsl rlLoadMapMenuEntryPointerFromProcBody
+        jsl rlDrawMapMenuBG3
+        lda #$838B
+        sta aProcSystem.aHeaderOnCycle,b,x
+        rtl
+
+        .databank 0
+
+        ; 85/838B
+
+      rlProcMapMenuWaitForButtonCycle ; 85/838B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Any button closes the menu (and puts back the game state) and frees the proc.
+
+        lda wJoy1New
+        beq _8397
+        jsl rlMapMenuCloseAndRestoreMapState
+        jsl rlProcEngineFreeProc
+
+        _8397
+        rtl
+
+        .databank 0
+
+        ; 85/8398
 
     .endsection ProcCycleMapMenuWaitForPaletteGraphicFinishSection
 
@@ -1001,6 +1058,40 @@
         .databank 0
 
         ; 87/8833
+
+      rlGetNextMapMenu ; 87/8833
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lR19 = the open map menu after the current one (structMapMenu.Next).
+        ; Nothing in the build reaches this.
+
+        phb
+        php
+        phk
+        plb
+        phy
+        ldy lMapMenuRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        lda structMapMenu.Next,b,y
+        sta lR19
+        lda structMapMenu.Next+1,b,y
+        sta lR19+1
+        ply
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/8852
 
     .endsection GetMapMenuTilemapRAMEntryPointerSection
 
@@ -2360,6 +2451,14 @@
 
         ; 85/8335
 
+      procMapMenuWaitForButton ; 85/8335
+
+        ; A proc that shows a map menu (none given here: the menu data pointer
+        ; is 0) and closes it on any button. Nothing in the build creates it.
+        .structProcInfo "PW", rlStallProcUntilMapMenuDataLoaded, rlProcMapMenuWaitForButtonDraw, aProcDialogueBoxCode
+        .long 0
+        .byte 0
+
     .endsection Unsorted8582D4Section
 
 
@@ -2636,6 +2735,25 @@
 
         ; 85/84CF
 
+      rlListMenuProcRestoreOptions ; 85/84CF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Makes the proc's option list (aBody4/aBody5) the top one again. Nothing in the build reaches this.
+
+        lda aProcSystem.aBody4,b,x
+        sta lMenuOptionListTop,b
+        lda aProcSystem.aBody5,b,x
+        sta lMenuOptionListTop+1,b
+        rtl
+
+        .databank 0
+
+        ; 85/84DC
+
     .endsection Unsorted8584ACSection
 
 
@@ -2678,7 +2796,7 @@
 
 
         _850B
-        sta $0534,b
+        sta wMapMenuNewPosition,b
         jsl rlMoveMapMenu
         jsr rsListMenuDrawCursor
 
@@ -2838,6 +2956,73 @@
         .databank 0
 
         ; 85/85B3
+
+      rlDrawMapMenuFourDigitNumber ; 85/85B3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = 0-9999, X = row and column: two pairs of two-row digits. Nothing in the build reaches this.
+
+        sta wR13
+        lda #$0064
+        sta wR14
+        jsl rlUnsignedDivide16By8
+        lda wR13
+        jsl rlDrawMapMenuTallTwoDigitNumber
+        txa
+        clc
+        adc #$0002
+        tax
+        lda wR10
+        and #$00FF
+        jsl rlDrawMapMenuTallTwoDigitNumber
+        rtl
+
+        .databank 0
+
+        ; 85/85D4
+
+      rlDrawMapMenuSixDigitNumber ; 85/85D4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = a number, X = row and column: three pairs of two-row digits. Nothing in the build reaches this.
+
+        sta wR13
+        lda #$2710
+        sta wR14
+        jsl rlUnsignedDivide16By16R13
+        lda wR13
+        jsl rlDrawMapMenuTallTwoDigitNumber
+        txa
+        clc
+        adc #$0002
+        tax
+        lda wR10
+        sta wR13
+        lda #$0064
+        sta wR14
+        jsl rlUnsignedDivide16By8
+        lda wR13
+        jsl rlDrawMapMenuTallTwoDigitNumber
+        txa
+        clc
+        adc #$0002
+        tax
+        lda wR10
+        and #$00FF
+        jsl rlDrawMapMenuTallTwoDigitNumber
+        rtl
+
+        .databank 0
+
+        ; 85/860E
 
     .endsection Unsorted85856ESection
 
@@ -3242,7 +3427,7 @@
         .databank $85
         jsl rlGetMapMenuPosition
         ora #$8000
-        sta $0534,b
+        sta wMapMenuNewPosition,b
         jsl rlMoveMapMenu
         plp
         plb
@@ -3277,7 +3462,7 @@
         .databank $85
         jsl rlGetMapMenuPosition
         and #$7FFF
-        sta $0534,b
+        sta wMapMenuNewPosition,b
         jsl rlMoveMapMenu
         plp
         plb
@@ -3311,13 +3496,13 @@
         phk
         plb
         .databank $85
-        sta $0534,b
+        sta wMapMenuNewPosition,b
         jsl rlGetMapMenuRows
         lda wR12
         pha
         lda wR13
         pha
-        lda $0534,b
+        lda wMapMenuNewPosition,b
         jsl rlResizeMapMenuBG3
         pla
         sta wR13
@@ -3389,7 +3574,7 @@
 
       rlMoveMapMenuFrame ; 85/87F2
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3403,7 +3588,7 @@
         plb
         .databank $85
         jsl rlGetMapMenuRows
-        lda $0534,b
+        lda wMapMenuNewPosition,b
         jsl rlSetMapMenuPosition
         jsl rlRedrawMapMenuFrameRows
         jsl rlGetMapMenuYPositions
@@ -3426,6 +3611,56 @@
         .databank 0
 
         ; 85/8820
+
+      rlHideMapMenuFrame ; 85/8820
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        jsl rlGetMapMenuPosition
+        ora #$8000
+        sta wMapMenuNewPosition,b
+        jsl rlMoveMapMenuFrame
+        plp
+        plb
+        .databank $85
+        rtl
+
+        .databank 0
+
+        ; 85/8835
+
+      rlShowMapMenuFrame ; 85/8835
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $85
+        jsl rlGetMapMenuPosition
+        and #$7FFF
+        sta wMapMenuNewPosition,b
+        jsl rlMoveMapMenuFrame
+        plp
+        plb
+        .databank $85
+        rtl
+
+        .databank 0
+
+        ; 85/884A
 
     .endsection Unsorted8587F2Section
 
@@ -3505,7 +3740,7 @@
         ; wR10-wR13), then rlRemoveMapMenu.
 
         lda #$FFFF
-        sta $0534,b
+        sta wMapMenuNewPosition,b
         jsl rlMoveMapMenu
         jsl rlRemoveMapMenu
         rtl
@@ -3744,7 +3979,7 @@
         sta lR18+1
         lda #<>aMapMenuFrameType0Fill
         sta lR18
-        jsl rlUnknown878BF0
+        jsl rlFillTilemapEntryWithPattern
         lda #(`aMapMenuFrameType0Border)<<8
         sta lR18+1
         lda #<>aMapMenuFrameType0Border
@@ -3797,7 +4032,7 @@
         sta lR18+1
         lda #<>aMapMenuFrameType1Fill
         sta lR18
-        jsl rlUnknown878BF0
+        jsl rlFillTilemapEntryWithPattern
         lda #(`aMapMenuFrameType1Border)<<8
         sta lR18+1
         lda #<>aMapMenuFrameType1Border
@@ -3849,7 +4084,7 @@
         sta lR18+1
         lda #<>aMapMenuFrameType2Fill
         sta lR18
-        jsl rlUnknown878BF0
+        jsl rlFillTilemapEntryWithPattern
         lda #(`aMapMenuFrameType2Border)<<8
         sta lR18+1
         lda #<>aMapMenuFrameType2Border
@@ -3920,7 +4155,7 @@
         sta lR18+1
         lda #<>aMapMenuFrameType3Fill
         sta lR18
-        jsl rlUnknown878BF0
+        jsl rlFillTilemapEntryWithPattern
         lda #$2340
         tsb aCurrentTilemapInfo,b
         lda #(`aMapMenuFrameType3TopEdge)<<8
@@ -4029,7 +4264,7 @@
         sta lR18+1
         lda #<>aMapMenuFrameType5Fill
         sta lR18
-        jsl rlUnknown878BF0
+        jsl rlFillTilemapEntryWithPattern
         lda #$23FF
         trb aCurrentTilemapInfo,b
         lda #(`aMapMenuFrameType5Border)<<8
@@ -4629,6 +4864,22 @@
 
         ; 85/9FE5
 
+      rlFreeHDMAEntryByIndex2 ; 85/9FE5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The same as rlFreeHDMAEntryByIndex. Nothing in the build reaches this.
+
+        jsl rlHDMAEngineFreeEntryByIndex
+        rtl
+
+        .databank 0
+
+        ; 85/9FEA
+
     .endsection Unsorted859FCDSection
 
 
@@ -4752,6 +5003,21 @@
         .databank 0
 
         ; 85/A03F
+
+      rsBeginMapMenuOpeningUnused ; 85/A03F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; An rts nothing reaches, between two opening styles.
+
+        rts
+
+        .databank 0
+
+        ; 85/A040
 
     .endsection Unsorted85A03DSection
 
@@ -5982,7 +6248,7 @@
         .databank ?
 
         ldx wR0
-        lda aUnknown85DACB,x
+        lda aGaugeEndTiles,x
         and #$00FF
         ldx wR1
         jsl rlUnknown85D81F
@@ -6000,12 +6266,41 @@
       .al
       .xl
 
-      aUnknown85DACB ; 85/DACB
+      aGaugeEndTiles ; 85/DACB
 
         ; Read by rsDrawGaugeEnd.
 
-        .byte $18, $19, $1A, $1B, $1C, $1D, $1E, $AD, $B1, $0D, $C9, $FF, $FF, $F0, $02, $18
-        .byte $6B, $38, $6B, $00, $00, $00, $00, $00, $00, $F6, $A0, $85, $05, $01, $01
+        .byte $18, $19, $1A, $1B, $1C, $1D, $1E
+
+      rlCheckMapBattleHPWindowRightIdle ; 85/DAD2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Carry set if the right HP window's request word ($0DB1) is $FFFF.
+        ; Nothing in the build reaches this.
+
+        lda $0DB1,b
+        cmp #$FFFF
+        beq +
+
+          clc
+          rtl
+
+        +
+        sec
+        rtl
+
+        .databank 0
+
+      aMapBattleTextBoxData ; 85/DADE
+
+        ; A structMapMenu without its last field: frame type 5 at (1, 1), the text
+        ; box's tilemap data.
+        .long 0, 0, aMapTextBoxTilemapData
+        .byte 5, 1, 1
 
         ; 85/DAEA
 

@@ -534,7 +534,7 @@
 
         _C275
         lda $0000,b,y
-        sta $7FDD4A,x
+        sta aMapWindowFrameBuffer,x
         inc y
         inc y
         inc x
@@ -653,6 +653,11 @@
         .databank 0
 
         ; 85/C305
+
+      procMapWindow ; 85/C305
+
+        ; A map window proc with no draw routine of its own. Nothing in the build creates it.
+        .structProcInfo "Ba", rlInitMapWindowProc, rlUpdateMapWindow, aProcTerrainWindowCode
 
     .endsection Unsorted85C1A4Section
 
@@ -806,7 +811,7 @@
 
       rsDrawTerrainWindow ; 85/C3A9
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -963,7 +968,7 @@
         lda aTerrainTileset,x
         and #$00FF
         sta aProcSystem.wInput2,b
-        jsl rlUnknown87EA09
+        jsl rlFindLocationAtTile
         bcs _C4DF
         jsl rlGetEventLocationEntryType
         cmp #LocationTypeCastle
@@ -1086,7 +1091,7 @@
         adc wR10
         tax
         lda #$21DB
-        sta $7FE3CA,x
+        sta aMapWindowTextBuffer,x
         inc x
         inc x
         lda wR0
@@ -1100,7 +1105,7 @@
         lda #$21DD
 
         _C606
-        sta $7FE3CA,x
+        sta aMapWindowTextBuffer,x
 
         _C60A
         inc x
@@ -1119,11 +1124,11 @@
         clc
         adc #$21DF
         plx
-        sta $7FE3CA,x
+        sta aMapWindowTextBuffer,x
         inc x
         inc x
         lda #$21DE
-        sta $7FE3CA,x
+        sta aMapWindowTextBuffer,x
 
         _C630
         rts
@@ -1155,7 +1160,7 @@
         adc wR10
         tax
         lda #$21EA
-        sta $7FE3CA,x
+        sta aMapWindowTextBuffer,x
 
         _C651
         rts
@@ -1462,7 +1467,7 @@
 
       rsDrawUnitWindow ; 85/C7AE
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -1821,7 +1826,7 @@
         adc aProcSystem.wInput2,b
         tax
         lda <>aUnitWindowPointerTiles+2,b,y
-        sta $7FDD4A,x
+        sta aMapWindowFrameBuffer,x
         bra _CA08
 
 
@@ -1831,7 +1836,7 @@
         adc aProcSystem.wInput2,b
         tax
         lda <>aUnitWindowPointerTiles+$22,b,y
-        sta $7FDD4A,x
+        sta aMapWindowFrameBuffer,x
 
         _CA08
         ply

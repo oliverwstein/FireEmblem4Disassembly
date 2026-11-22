@@ -449,7 +449,7 @@
         lda wSelectedInventorySlot,b
         bmi _B33A
         jsl rlGetItemROMDataByInventorySlot
-        jsl rlUnknown87E762
+        jsl rlStartStaffTargetSelection
         bra _B348
 
 
@@ -457,7 +457,7 @@
         and #$7FFF
         sta wSelectedInventorySlot,b
         jsl rlGetItemROMDataByInventorySlot
-        jsl rlUnknown87E801
+        jsl rlStartCastleStaffTargetSelection
 
         _B348
         rtl
@@ -1623,9 +1623,9 @@
         lda aDeploymentTable._FactionSlot,x
         sta aProcSystem.wInput2,b
 
-        lda #(`procUnknown87C056)<<8
+        lda #(`procCastleTakenOver)<<8
         sta lR44+1
-        lda #<>procUnknown87C056
+        lda #<>procCastleTakenOver
         sta lR44
         jsl rlProcEngineCreateProc
         rts
@@ -1743,7 +1743,7 @@
         jsl rlGetItemIDByInventorySlot
         sta wDeathQuotePointer+1
 
-        jsl rlUnknown87F321
+        jsl rlGetLocationMoneyLevel
         sta wBattleSong
         lda #5000
         sta aActionStructUnit1.DeploymentNumber
@@ -1791,7 +1791,7 @@
         sta wR0
         lda aDeploymentTable._YTilePosition,x
         sta wR1
-        jsl rlUnknown87EA09
+        jsl rlFindLocationAtTile
         bcs +
 
           jsl rlCheckIfCastleGuarded
@@ -1983,7 +1983,7 @@
         sta wR0
         lda aDeploymentTable._YTilePosition,x
         sta wR1
-        jsl rlUnknown87EA09
+        jsl rlFindLocationAtTile
         bcs _D10C
         jsl rlCheckIfCastleGuarded
         bcc _D10C
@@ -2033,7 +2033,7 @@
         sta wR0
         lda aDeploymentTable._YTilePosition,x
         sta wR1
-        jsl rlUnknown87EA09
+        jsl rlFindLocationAtTile
         bcs _D168
         jsl rlCheckIfCastleGuarded
         bcc _D168
@@ -2666,7 +2666,7 @@
         jsl rlGetItemEquipmentType
         cmp #$0001
         beq _F783
-        jsl rlUnknown87E6A5
+        jsl rlCheckStaffHasTargets
         bcc _F783
         sec
 
@@ -2791,7 +2791,7 @@
         lda wR0
         jsl rlUnknown84F75C
         bcc _F82C
-        jsl rlUnknown87E6A5
+        jsl rlCheckStaffHasTargets
         bcc _F82C
         jml rsUnknown84F877._F889
 
@@ -2815,7 +2815,7 @@
         lda wR0
         jsl rlUnknown84F75C
         bcc _F844
-        jsl rlUnknown87E709
+        jsl rlCheckStaffHasCastleTargets
         bcc _F844
         jml rsUnknown84F877._F889
 

@@ -272,8 +272,8 @@
             bra -
 
         _End
-        jsl rlUnknown87E93F
-        jsl rlUnknown87E952
+        jsl rlClearChapterLocationRAMData
+        jsl rlInitChapterLocations
         jsl rlUnknown86C548
 
         pla

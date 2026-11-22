@@ -217,7 +217,7 @@
         .autsiz
         .databank ?
 
-        ; Mode 0: yes opens the save menu, no runs rlUnknown81B301. Other modes: yes saves (rlUnknown87BFD9, rlSaveToSaveSlot). Carry set when done.
+        ; Mode 0: yes opens the save menu, no runs rlUnknown81B301. Other modes: yes saves (rlGetAutoSaveFile, rlSaveToSaveSlot). Carry set when done.
 
         lda aProcSystem.aBody6,b,x
         bne _A595
@@ -257,7 +257,7 @@
         bne _A5BB
         lda #$000E
         jsl rlPlaySoundEffect
-        jsl rlUnknown87BFD9
+        jsl rlGetAutoSaveFile
         jsl rlSaveToSaveSlot
         bra _A5BB
 
@@ -488,14 +488,14 @@
         .autsiz
         .databank ?
 
-        ; Reloads the saved chapter: rlUnknown87CBC5 with 1, then fades to rsStartChapterMap.
+        ; Reloads the saved chapter: rlMapMenuLoadHook with 1, then fades to rsStartChapterMap.
 
         lda wMapScrollXPixels,b
         sta wMapXOffset,b
         lda wMapScrollYPixels,b
         sta wMapYOffset,b
         lda #$0001
-        jsl rlUnknown87CBC5
+        jsl rlMapMenuLoadHook
         lda #$0100
         tsb wUnknown000D79,b
         stz wGameStateRoutine1,b

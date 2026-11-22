@@ -1,5 +1,5 @@
 ; The revive staff's screen. rsReviveScreenOpen (bank $80, installed as the main
-; loop by a staff effect handler, rsUnknown87E855) lists the player's dead units,
+; loop by a staff effect handler, rsCastleStaffValkyrie) lists the player's dead units,
 ; or says that no one has died, and hands over to game state routines $33
 ; (rlReviveScreenSetup, once), $34 (rlReviveScreenStep, the steps in
 ; aReviveScreenSteps) and $32 (rlReviveScreenUpkeep, every frame, which draws by
@@ -20,7 +20,7 @@
 
       rsReviveScreenOpen ; 80/DFDC
 
-        ; Main loop routine that opens the revive staff's screen (rsUnknown87E855
+        ; Main loop routine that opens the revive staff's screen (rsCastleStaffValkyrie
         ; installs it through procMainLoopChangeFade): resets the screen and the
         ; engines, builds the screen, then runs game state routines $32 and $33
         ; (the revive menu in bank $89). With no unit listed (wUnitWindowMaxRows),

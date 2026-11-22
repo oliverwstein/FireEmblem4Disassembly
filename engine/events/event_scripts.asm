@@ -4695,8 +4695,8 @@
         lda #0
 
           -
-          sta $7FDD4A,x
-          sta $7FE3CA,x
+          sta aMapWindowFrameBuffer,x
+          sta aMapWindowTextBuffer,x
           dec x
           dec x
           bpl -

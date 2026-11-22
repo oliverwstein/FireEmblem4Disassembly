@@ -7,7 +7,7 @@ first byte), `inside` (built code points into it, not at its start), `log` (read
 `fe4.cdl` only), `none` (no evidence). Addresses are given where the game reads them:
 upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 
-103,231 bytes in 262 runs: 56 runs of padding (42,139 bytes) and 206 pieces (61,092 bytes).
+102,626 bytes in 237 runs: 56 runs of padding (42,139 bytes) and 181 pieces (60,487 bytes).
 
 | Class | Pieces | Bytes | Read in the log |
 |---|---|---|---|
@@ -15,7 +15,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | `table` | 0 | 0 | 0 |
 | `inside` | 0 | 0 | 0 |
 | `log` | 0 | 0 | 0 |
-| `none` | 206 | 61,092 | 0 |
+| `none` | 181 | 60,487 | 0 |
 
 ## `code` (0)
 
@@ -37,7 +37,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 
-## `none` (206)
+## `none` (181)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
@@ -73,31 +73,6 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $82/F4F9-$82/F516 | 30 | 0 | `rlGetUNITGroupPointer` / `rlCopyOffsetTableEntry` |  |
 | $82/F54F-$82/F566 | 24 | 0 | `rlCopyOffsetTableEntry` / `rlAddOffsetTableEntry` |  |
 | $82/F7A2-$82/F865 | 196 | 0 | `rlUpdateOffsetTable` / `rlSetParentsPermanentFlags` |  |
-| $85/82CB-$85/82D3 | 9 | 0 | `rlMapMenuCloseAndRestoreMapState` / `rlMoveMapMenuToCursor` |  |
-| $85/8335-$85/8340 | 12 | 0 | `rlMoveMapMenuToCursor` / `rlStallProcUntilMapMenuDataLoaded` |  |
-| $85/837C-$85/8397 | 28 | 0 | `rlProcCycleMapMenuWaitForPaletteGraphicFinish` / `aProcDialogueBoxCode` |  |
-| $85/84CF-$85/84DB | 13 | 0 | `rlListMenuProcPushOptions` / `rlKeepUnitMenuAwayFromCursor` |  |
-| $85/85B3-$85/860D | 91 | 0 | `rlDrawMenuOptions` / `rsDrawMapMenuNumber100` |  |
-| $85/8820-$85/8849 | 42 | 0 | `rlMoveMapMenuFrame` / `rlResizeMapMenuFrame` |  |
-| $85/9FE5-$85/9FE9 | 5 | 0 | `rlUnknown859FCD` / `rlUnknown859FEA` |  |
-| $85/A03F-$85/A03F | 1 | 0 | `rlUnknown85A03D` / `rsUnknown85A040` |  |
-| $85/B069-$85/B07B | 19 | 0 | `rsUnknown85B039` / `rsUnknown85B07C` |  |
-| $85/B197-$85/B1AF | 25 | 0 | `procUnknown85B18F` / `rlProcUnknown85B18FInit` |  |
-| $85/B643-$85/B65B | 25 | 0 | `procUnknown85B63B` / `rlProcUnknown85B63BInit` |  |
-| $85/C305-$85/C30C | 8 | 0 | `rsUnknown85C2FB` / `rlUnknown85C30D` |  |
-| $85/CD72-$85/CD80 | 15 | 0 | `rlUnknown85CD39` / `rsUnknown85CD81` |  |
-| $85/D337-$85/D384 | 78 | 0 | `rlUnknown85D32D` / `rlUnknown85D385` |  |
-| $85/D3BD-$85/D3F4 | 56 | 0 | `rlUnknown85D385` / `rlUnknown85D3F5` |  |
-| $85/D438-$85/D441 | 10 | 0 | `rlUnknown85D41E` / `rlUnknown85D442` |  |
-| $85/D604-$85/D605 | 2 | 0 | `rlUnknown85D5CC` / `aUnknown85D606` |  |
-| $85/DAF2-$85/DAF5 | 4 | 0 | `procUnknown85DAEA` / `rlProcUnknown85DAEAInit` |  |
-| $85/DBAB-$85/DBDC | 50 | 0 | `rlUnknown85DB91` / `rlMapMenuOpenUnitWindow` |  |
-| $87/84CC-$87/84E0 | 21 | 0 | `rlHideMapMenuBG3` / `rlResizeMapMenuBG3` |  |
-| $87/8833-$87/8851 | 31 | 0 | `rlReplaceMapMenuTilemapROMWithRAMPointer` / `rlFindPreviousMapMenu` |  |
-| $87/890B-$87/8915 | 11 | 0 | `rlDrawMapMenuSmallNumber` / `rlDrawMapMenuNumber` |  |
-| $87/C6DC-$87/C709 | 46 | 0 | `rsUnknown87C6AA` / `procUnknown87C70A` |  |
-| $87/E6D5-$87/E6D6 | 2 | 0 | `rsUnknown87E6D3` / `rsUnknown87E6D7` |  |
-| $87/E761-$87/E761 | 1 | 0 | `rsUnknown87E75F` / `rlUnknown87E762` |  |
 | $88/857E-$88/85D2 | 85 | 0 | `rlUnknown888560` / `rlUnknown8885D3` |  |
 | $88/9AC4-$88/9AE1 | 30 | 0 | `rlUnknown889A85` / `aUnknown889AE2` |  |
 | $88/9C38-$88/9C51 | 26 | 0 | `rlUnknown889BF7` / `procUnknown889C52` |  |
@@ -139,7 +114,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8D/AAFD-$8D/AD72 | 630 | 0 | `aProcUnknown8DAA96Code` / `rlUnknown8DAD73` |  |
 | $8D/AEC0-$8D/AEC1 | 2 | 0 | `rlUnknown8DAE85` / `rlUnknown8DAEC2` |  |
 | $8D/B539-$8D/B539 | 1 | 0 | `rlUnknown8DB52C` / `rsUnknown8DB53A` |  |
-| $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardIronBallistaPointer` / `gcUnknownD05673` |  |
+| $D0/5639-$D0/5672 | 58 | 0 | `g4bppcClassCardBallista` / `gcUnknownD05673` |  |
 | $91/A7EA-$91/A80C | 35 | 0 | `rlUnknown91A7DF` / `rlUnknown91A80D` |  |
 | $91/A8E4-$91/A927 | 68 | 0 | `rsDialogueEventCommand07` / `rlUnknown91A928` |  |
 | $91/A9F2-$91/AA14 | 35 | 0 | `aUnknown91A9E4` / `rsUnknown91AA15` |  |

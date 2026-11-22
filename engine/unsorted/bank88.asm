@@ -3451,7 +3451,7 @@
         dec wCastleSubMenuStep,b
         lda wCastleSubMenuStep,b
         bpl _989D
-        jsl rlUnknown87E979
+        jsl rlGetChapterLocationCount
         sec
         sbc #$0001
         sta wCastleSubMenuStep,b
@@ -3546,7 +3546,7 @@
         dec wCastleSubMenuStep,b
         lda wCastleSubMenuStep,b
         bpl rsUnknown8898D2
-        jsl rlUnknown87E979
+        jsl rlGetChapterLocationCount
         sec
         sbc #$0001
         sta wCastleSubMenuStep,b
@@ -3965,7 +3965,7 @@
         bne _9BF5
 
         _9BD9
-        jsl rlUnknown87EA09
+        jsl rlFindLocationAtTile
         bcs _9BF5
         jsl rlGetEventLocationEntryType
         cmp #LocationTypeVillage
@@ -6599,7 +6599,7 @@
         lsr a
         lsr a
         sta wR1
-        jsl rlUnknown87EA09
+        jsl rlFindLocationAtTile
         lda wEventLocationEntry,b
         sta wTargetEventLocationEntry,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
@@ -7241,7 +7241,7 @@
         jsl rlUnknown88C9A6
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown87B541
+        jsl rlBuildSelectedUnitRangeMaps
         bcs _B7A9
 
         _B794
@@ -9312,7 +9312,7 @@
         stz wMapPixelScrollDistance,b
         jsr rsUnknown88AA1E
         beq _C564
-        jsl rlUnknown87BF1B
+        jsl rlGetEnemySpeedOption
         cmp #$0000
         bne _C55A
         lda #$0002
@@ -9651,7 +9651,7 @@
         jsl rlUnknown88C9A6
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown87B541
+        jsl rlBuildSelectedUnitRangeMaps
         jsr rsUnknown88B873
         bra _C7CA
 

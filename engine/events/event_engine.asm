@@ -3669,7 +3669,7 @@
         bcs +
 
           lda $0000,b,y
-          jsl rlUnknown87A040
+          jsl rlCheckCharacterWaitingInHomeCastle
           bcs +
 
             jml rsChapterEventConditionCommand2F

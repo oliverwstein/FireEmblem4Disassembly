@@ -1635,7 +1635,7 @@
         .autsiz
         .databank ?
 
-        ; Called by rsUnknown87D65A. Looks up the class-based AI target priority score for unit at deployment offset X
+        ; Called by rsAIScoreTargetsNearLeader. Looks up the class-based AI target priority score for unit at deployment offset X
 
         phb
         php
@@ -1699,7 +1699,7 @@
         .autsiz
         .databank ?
 
-        ; Called by rsUnknown87D65A. Returns the weapon triangle bonus (0 or 20) for attacker vs defender offsets
+        ; Called by rsAIScoreTargetsNearLeader. Returns the weapon triangle bonus (0 or 20) for attacker vs defender offsets
 
         phb
         php
@@ -1753,7 +1753,7 @@
         .autsiz
         .databank ?
 
-        ; Called by rsUnknown87D65A. Returns 50 if the attacker's weapon is effective against defender class
+        ; Called by rsAIScoreTargetsNearLeader. Returns 50 if the attacker's weapon is effective against defender class
 
         phb
         php

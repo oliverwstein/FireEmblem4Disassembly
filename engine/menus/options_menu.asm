@@ -29,7 +29,7 @@
 
       rsOpenOptionsMenu ; 80/E598
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -125,23 +125,23 @@
         jsl rlGetTextSpeedOption
         sta aOptionsMenuValues.wMessageSpeed
         sta aOptionsMenuOpeningValues.wMessageSpeed
-        jsl rlUnknown87BF1B
+        jsl rlGetEnemySpeedOption
         sta aOptionsMenuValues.wEnemySpeed
         sta aOptionsMenuOpeningValues.wEnemySpeed
-        jsl rlUnknown87BF43
+        jsl rlGetSoundOption
         sta aOptionsMenuValues.wSound
         sta aOptionsMenuOpeningValues.wSound
-        jsl rlUnknown87BFB0
+        jsl rlGetAutoSaveOption
         sta wR0
         cmp #$0000
         beq _E6A8
-        jsl rlUnknown87BFD9
+        jsl rlGetAutoSaveFile
         inc a
 
         _E6A8
         sta aOptionsMenuValues.wAutoSave
         sta aOptionsMenuOpeningValues.wAutoSave
-        jsl rlUnknown87C02F
+        jsl rlGetAutoCursorOption
         sta aOptionsMenuValues.wAutoCursor
         sta aOptionsMenuOpeningValues.wAutoCursor
         jsl rlGetCleverModeFlag
@@ -2947,30 +2947,30 @@
         lda aOptionsMenuValues.wTerrainWindow
         jsl rlSetTerrainWindowSetting
         lda aOptionsMenuValues.wUnitWindow
-        jsl rlUnknown87BED7
+        jsl rlSetUnitWindowSetting
         lda aOptionsMenuValues.wMessageSpeed
-        jsl rlUnknown87BF01
+        jsl rlSetTextSpeedOption
         lda aOptionsMenuValues.wEnemySpeed
-        jsl rlUnknown87BF29
+        jsl rlSetEnemySpeedOption
         lda aOptionsMenuValues.wSound
-        jsl rlUnknown87BF52
+        jsl rlSetSoundOption
         lda aOptionsMenuValues.wAutoSave
         cmp #$0000
         beq _F822
         lda #$0001
 
         _F822
-        jsl rlUnknown87BFBF
+        jsl rlSetAutoSaveOption
         lda aOptionsMenuValues.wAutoSave
         beq _F831
         dec a
-        jsl rlUnknown87BFE9
+        jsl rlSetAutoSaveFile
 
         _F831
         lda aOptionsMenuValues.wAutoCursor
-        jsl rlUnknown87C03C
+        jsl rlSetAutoCursorOption
         lda aOptionsMenuValues.wEnemyAI
-        jsl rlUnknown87C015
+        jsl rlSetCleverModeFlag
         rtl
 
         .databank 0

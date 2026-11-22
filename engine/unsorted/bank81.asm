@@ -707,7 +707,7 @@
           cmp #1
           beq +
 
-            jsl rlUnknown87C02F
+            jsl rlGetAutoCursorOption
             cmp #0
             beq +
 
@@ -753,7 +753,7 @@
           lda wActiveFactionSlot,b
           bne _INC
 
-            jsl rlUnknown87BFB0
+            jsl rlGetAutoSaveOption
             ora #0
             beq _INC
 
@@ -1836,7 +1836,7 @@
         sta wR10
         lda aDeploymentTable._YTilePosition,x
         sta wR11
-        jsl rlUnknown87B541
+        jsl rlBuildSelectedUnitRangeMaps
         bcc +
 
           jsl rlUnknown84D4A2
@@ -2032,9 +2032,9 @@
         bra ++
 
         +
-        lda #(`aHDMAUnknown87C38C)<<8
+        lda #(`aBattleTransitionHDMAInfo)<<8
         sta lR44+1
-        lda #<>aHDMAUnknown87C38C
+        lda #<>aBattleTransitionHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntry
         

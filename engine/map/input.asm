@@ -460,7 +460,7 @@
         lsr a
         lsr a
         sta wR1
-        jsl rlUnknown87EA09
+        jsl rlFindLocationAtTile
         bcs _B2A3
         jsl rlGetEventLocationEntryType
         cmp #LocationTypeCastle

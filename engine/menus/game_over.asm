@@ -14,7 +14,7 @@
         .autsiz
         .databank ?
 
-        ; Decompresses Game Over assets, spawns procUnknown87C5A2 ("GO"), switches to rsMapVBlank + rsMapMainLoop
+        ; Decompresses Game Over assets, spawns procGameOver ("GO"), switches to rsMapVBlank + rsMapMainLoop
 
         php
         sep #$20
@@ -105,9 +105,9 @@
         lda #$03
         sta bBufferTM
         rep #$20
-        lda #(`procUnknown87C5A2)<<8
+        lda #(`procGameOver)<<8
         sta lR44+1
-        lda #<>procUnknown87C5A2
+        lda #<>procGameOver
         sta lR44
         jsl rlProcEngineCreateProc
         lda #<>rsMapVBlank

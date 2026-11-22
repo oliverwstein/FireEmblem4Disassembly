@@ -1428,7 +1428,7 @@
         .autsiz
         .databank ?
 
-        ; Accepts a target with a talk event; if there is none, rlUnknown879EE7 decides.
+        ; Accepts a target with a talk event; if there is none, rlCheckIsTalkTargetOf decides.
 
         phx
         tax
@@ -1437,7 +1437,7 @@
         jsl rlCheckTalkEventEntryAvailable
         bcs +
 
-          jsl rlUnknown879EE7
+          jsl rlCheckIsTalkTargetOf
         
         +
         plx

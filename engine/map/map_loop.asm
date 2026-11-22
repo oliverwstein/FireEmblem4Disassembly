@@ -72,7 +72,7 @@
 
       rsStartChapterMap ; 80/AEEA
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -93,7 +93,7 @@
         jsl rlCheckCodeChecksumsCopy88._806A
         lda wCurrentChapter,b
         jsl rlSetChapterEventDataPointerByID
-        jsl rlUnknown87BF6F
+        jsl rlApplySoundOption
         lda wUnknown000D79,b
         bit #$0100
         bne _AF33

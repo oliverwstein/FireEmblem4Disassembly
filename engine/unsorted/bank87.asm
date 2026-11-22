@@ -5,12 +5,14 @@
       .al
       .xl
 
-      rlUnknown878017 ; 87/8017
+      rlWriteResetSignature ; 87/8017
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies 128 bytes of code from $88/8888 into aSpriteExtBuffer, so a later rlCheckResetSignature can tell the RAM was not cleared.
 
         ldx #$0000
 
@@ -29,26 +31,28 @@
 
         ; 87/802A
 
-      rlUnknown87802A ; 87/802A
+      rlCheckResetSignature ; 87/802A
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Compares $88/8888-$88/8907 with aSpriteExtBuffer. If any word differs (a cold start), writes the signature and returns. If all match, writes the SRAM anti-tamper mark and hangs (rlUnknown91E8CC); _8063 is the hang used when the mark is already there (rlUnknown91E8C1).
+
         ldx #$0000
 
         _802D
         lda rlUnknown8887EC._8880+8,x
         cmp @l aSpriteExtBuffer,x
-        bne rlUnknown878017._8029
+        bne rlWriteResetSignature._8029
         inc x
         inc x
         cpx #$0080
         bne _802D
 
         _803E
-        jsl rlUnknown878017
+        jsl rlWriteResetSignature
         lda #$0000
         sta @l $001FFC
         sta @l $001FFE
@@ -76,7 +80,7 @@
 
         ; 87/8074
 
-      rlUnknown878074 ; 87/8074
+      rlCheckCodeChecksumsAtReset ; 87/8074
 
         ; Runs on into built code at the end.
         .al
@@ -84,13 +88,15 @@
         .autsiz
         .databank ?
 
+        ; Runs rlCheckResetSignature, then, if the checks are on, adds up $80/8D56-8E2C and compares the sum with aCodeChecksumsCopy87; a mismatch hangs, a match clears the anti-tamper mark.
+
         phb
         php
         phk
         plb
         .databank $87
         phx
-        jsl rlUnknown87802A
+        jsl rlCheckResetSignature
         lda @l aCodeChecksumsCopy87.ChecksEnabled
         beq _809B
         lda #$0000
@@ -117,7 +123,7 @@
 
 
         _80A6
-        jsl rlUnknown87802A._8063
+        jsl rlCheckResetSignature._8063
 
         .databank 0
 
@@ -148,7 +154,7 @@
         lda #0
 
           -
-          sta $0516,b,x
+          sta wMapMenuVRAMTilemap,b,x
           dec x
           bpl -
 
@@ -157,11 +163,11 @@
         lda bBufferBG3SC
         and #BGSC_Address
         xba
-        sta $0516,b
+        sta wMapMenuVRAMTilemap,b
         lda #(`aBG3TilemapBuffer)<<8
-        sta $0519,b
+        sta lMapMenuBGBuffer+1,b
         lda #<>aBG3TilemapBuffer
-        sta $0518,b
+        sta lMapMenuBGBuffer,b
         lda #0
         sta wMapMenuTransparentTile,b
         jsl rlResetMapMenuDirtyRows
@@ -541,10 +547,10 @@
         lsr a
         lsr a
         clc
-        adc $0518,b
+        adc lMapMenuBGBuffer,b
         tax
         sep #$20
-        lda $051A,b
+        lda lMapMenuBGBuffer+2,b
         pha
         rep #$20
         plb
@@ -725,7 +731,7 @@
         lda wMapMenuDirtyBottom,b
         cmp #$0020
         bcs _8456
-        lda $0519,b
+        lda lMapMenuBGBuffer+1,b
         sta lR18+1
         lda wMapMenuDirtyTop,b
         xba
@@ -733,7 +739,7 @@
         lsr a
         pha
         clc
-        adc $0518,b
+        adc lMapMenuBGBuffer,b
         sta lR18
         lda wMapMenuDirtyBottom,b
         sec
@@ -746,7 +752,7 @@
         pla
         lsr a
         clc
-        adc $0516,b
+        adc wMapMenuVRAMTilemap,b
         sta wR1
         jsl rlDMAByPointer
 
@@ -872,7 +878,7 @@
         .databank $87
         jsl rlGetMapMenuPosition
         ora #$8000
-        sta $0534,b
+        sta wMapMenuNewPosition,b
         jsl rlMoveMapMenuBG3
         plp
         plb
@@ -882,6 +888,35 @@
         .databank 0
 
         ; 87/84CC
+
+      rlShowMapMenuBG3 ; 87/84CC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Clears bit 15 of the current map menu's position and redraws BG3.
+        ; Nothing in the build reaches this.
+
+        phb
+        php
+        phk
+        plb
+
+        .databank $87
+
+        jsl rlGetMapMenuPosition
+        and #$7FFF
+        sta wMapMenuNewPosition,b
+        jsl rlMoveMapMenuBG3
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 87/84E1
 
     .endsection Unsorted878472Section
 
@@ -1428,6 +1463,26 @@
 
         ; 87/890B
 
+      rlDrawMapMenuTallTwoDigitNumber ; 87/890B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = 0-99, X = row and column: two two-row digits in the current map menu.
+        ; Nothing in the build reaches this.
+
+        pha
+        jsl rlGetMapMenuTilemapRAMEntryPointer
+        pla
+        jsl rlDrawTallTwoDigitNumberToTilemapEntry
+        rtl
+
+        .databank 0
+
+        ; 87/8916
+
     .endsection Unsorted878900Section
 
 
@@ -1703,12 +1758,14 @@
       .al
       .xl
 
-      rlUnknown878BF0 ; 87/8BF0
+      rlFillTilemapEntryWithPattern ; 87/8BF0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; lR18 = width, height (bytes), then width x height tiles: repeats the pattern over the current tilemap entry's tiles, plus aCurrentTilemapInfo.
 
         phb
         php
@@ -2873,12 +2930,14 @@
       .al
       .xl
 
-      rlUnknown879EE7 ; 87/9EE7
+      rlCheckIsTalkTargetOf ; 87/9EE7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if the selected unit's living talk target is the character of the unit in wRoutineVariable1 (a unit RAM pointer).
 
         phb
         php
@@ -2924,11 +2983,13 @@
       .al
       .xl
 
-      rlUnknown87A040 ; 87/A040
+      rlCheckCharacterWaitingInHomeCastle ; 87/A040
 
         .al
         .autsiz
         .databank ?
+
+        ; wRoutineVariable1 = character ID: carry set if that unit exists, is alive and not on the map, is a player unit, and its home castle is the player's castle.
 
         ; Check if selected unit alive in home castle.
 
@@ -2983,11 +3044,13 @@
       .al
       .xl
 
-      rlUnknown87B01D ; 87/B01D
+      rlEventMovementPlanRoute ; 87/B01D
 
         .al
         .autsiz
         .databank ?
+
+        ; A = movement entry, wRoutineVariable1 = character ID: fills in the unit's tile (if not given) and movement costs, then rlEventMovementBuildRoute. Carry set if no route.
 
         ; Input:
         ; A = EntryIndex
@@ -3029,7 +3092,7 @@
         adc aMainDataOffsets.MovementCostOffsets
         adc #<>aMainDataOffsets
         sta aEventMovement.wMovementCostPointer
-        jsl rlUnknown87B080
+        jsl rlEventMovementBuildRoute
         bcs _SEC
 
           plx
@@ -3047,11 +3110,13 @@
 
         .databank 0
 
-      rlUnknown87B080 ; 87/B080
+      rlEventMovementBuildRoute ; 87/B080
 
         .al
         .autsiz
         .databank ?
+
+        ; Finds the destination (or the nearest free tile to it) and builds the movement script from the unit's tile. Carry set if none.
 
         phb
         php
@@ -3165,13 +3230,15 @@
       .al
       .xl
 
-      rlUnknown87B512 ; 87/B512
+      rlFindTargetsForSelectedWeapon ; 87/B512
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = deployment offset: the targets in range of the item in wSelectedInventorySlot (rlUnknown84FED2): enemies, or with UnitState0400 set, enemies at a castle (target filter 4).
 
         phb
         php
@@ -3213,11 +3280,13 @@
       .al
       .xl
 
-      rlUnknown87B541 ; 87/B541
+      rlBuildSelectedUnitRangeMaps ; 87/B541
 
         .al
         .autsiz
         .databank ?
+
+        ; Builds aMovementMap and aRangeMap for the selected unit: where it can move (none during canto) and, from its weapons' range flags, what it can reach.
 
         phx
         phy
@@ -3252,7 +3321,7 @@
         jsl rlGetSelectedUnitTotalFieldMovement
         sta $18
 
-        jsl rlUnknown87B59D
+        jsl rlBuildSelectedUnitMovementMap
 
         lda wActiveFactionSlot,b
         bne +
@@ -3276,7 +3345,7 @@
 
         .databank 0
 
-      rlUnknown87B59D ; 87/B59D
+      rlBuildSelectedUnitMovementMap ; 87/B59D
 
         .al
         .autsiz
@@ -3294,13 +3363,13 @@
         plb
         .databank $7F
 
-        jsr rsUnknown87B786
-        jsr rsUnknown87B7A2
-        jsr rsUnknown87B7B0
-        jsr rsUnknown87B7BE
-        jsr rsUnknown87B833
+        jsr rsSetRangeMapOrigin
+        jsr rsClearMovementMap
+        jsr rsClearRangeMap
+        jsr rsMarkUnitsOnRangeMap
+        jsr rsMarkRangeMapBorders
         stz $22
-        jsr rsUnknown87B5DD
+        jsr rsFloodFillMovementMap
 
         lda $1A
         beq _End
@@ -3340,7 +3409,7 @@
       .al
       .xl
 
-      rsUnknown87B5DD ; 87/B5DD
+      rsFloodFillMovementMap ; 87/B5DD
 
         .al
         .autsiz
@@ -3401,7 +3470,7 @@
 
                 tax
                 ldy $894A+2,b,x
-                jsr rsUnknown87B63F
+                jsr rsSpreadMovementToNeighbours
                 bra -
 
           +
@@ -3423,12 +3492,14 @@
       .al
       .xl
 
-      rsUnknown87B63F ; 87/B63F
+      rsSpreadMovementToNeighbours ; 87/B63F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The four neighbours of a tile, with their movement costs.
 
         sep #$20
         phx
@@ -3620,11 +3691,13 @@
       .al
       .xl
 
-      rsUnknown87B786 ; 87/B786
+      rsSetRangeMapOrigin ; 87/B786
 
         .al
         .autsiz
         .databank ?
+
+        ; $14, $16 = the unit's tile.
 
         ; $14 = X pos
         ; $16 = Y pos
@@ -3651,7 +3724,7 @@
 
         .databank 0
 
-      rsUnknown87B7A2 ; 87/B7A2
+      rsClearMovementMap ; 87/B7A2
 
         .al
         .autsiz
@@ -3665,7 +3738,7 @@
 
         .databank 0
 
-      rsUnknown87B7B0 ; 87/B7B0
+      rsClearRangeMap ; 87/B7B0
 
         .al
         .autsiz
@@ -3679,7 +3752,7 @@
 
         .databank 0
 
-      rsUnknown87B7BE ; 87/B7BE
+      rsMarkUnitsOnRangeMap ; 87/B7BE
 
         .al
         .autsiz
@@ -3714,7 +3787,7 @@
                 cmp #$0040
                 bcs _Next
 
-                  jsr rsUnknown87B811
+                  jsr rsGetRangeMapUnitMark
 
                   pha
                   lda aAIAction.wTargetYPosition
@@ -3741,7 +3814,7 @@
 
         .databank 0
 
-      rsUnknown87B811 ; 87/B811
+      rsGetRangeMapUnitMark ; 87/B811
 
         .al
         .autsiz
@@ -3774,11 +3847,13 @@
 
         .databank 0
 
-      rsUnknown87B833 ; 87/B833
+      rsMarkRangeMapBorders ; 87/B833
 
         .al
         .autsiz
         .databank ?
+
+        ; Marks the edges of the map as walls.
 
         ; write map boundaries?
 
@@ -3788,7 +3863,7 @@
           lda #$003F
           sec
           sbc wR14
-          jsr rsUnknown87B877
+          jsr rsMarkRangeMapColumnBorder
 
           lda wR14
           bne ++
@@ -3796,7 +3871,7 @@
         +
         eor #$FFFF
         inc a
-        jsr rsUnknown87B877
+        jsr rsMarkRangeMapColumnBorder
         
         +
         lda wCurrentChapter
@@ -3814,7 +3889,7 @@
         +
         sec
         sbc wR15
-        jsr rsUnknown87B88F
+        jsr rsMarkRangeMapRowBorder
 
         lda wCurrentChapter
         beq _B86D
@@ -3826,7 +3901,7 @@
             lda wR15
             eor #$FFFF
             inc a
-            jsr rsUnknown87B88F
+            jsr rsMarkRangeMapRowBorder
         
         +
         rts
@@ -3841,7 +3916,7 @@
       .al
       .xl
 
-      rsUnknown87B877 ; 87/B877
+      rsMarkRangeMapColumnBorder ; 87/B877
 
         .al
         .autsiz
@@ -3868,7 +3943,7 @@
 
         .databank 0
 
-      rsUnknown87B88F ; 87/B88F
+      rsMarkRangeMapRowBorder ; 87/B88F
 
         .al
         .autsiz
@@ -4176,15 +4251,15 @@
         rep #$20
         plb
         .databank $7F
-        jsr rsUnknown87B786
-        jsr rsUnknown87B7A2
-        jsr rsUnknown87B7B0
-        jsr rsUnknown87B833
+        jsr rsSetRangeMapOrigin
+        jsr rsClearMovementMap
+        jsr rsClearRangeMap
+        jsr rsMarkRangeMapBorders
         lda #$0065
         sta wR12
         lda #$000A
         sta wR17
-        jsr rsUnknown87B5DD
+        jsr rsFloodFillMovementMap
         lda #$0065
         sta wR2
 
@@ -4434,12 +4509,14 @@
       .al
       .xl
 
-      rlUnknown87BED7 ; 87/BED7
+      rlSetUnitWindowSetting ; 87/BED7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = the options menu's value: nonzero sets bit 2 of wOptionSettings (read back by rlCheckIfUnitWindowSettingOff).
 
         phb
         php
@@ -4475,12 +4552,14 @@
       .al
       .xl
 
-      rlUnknown87BF01 ; 87/BF01
+      rlSetTextSpeedOption ; 87/BF01
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = 0-4: bits 3-5 of wOptionSettings.
 
         phb
         php
@@ -4513,12 +4592,14 @@
       .al
       .xl
 
-      rlUnknown87BF1B ; 87/BF1B
+      rlGetEnemySpeedOption ; 87/BF1B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Bit 6 of wOptionSettings: 0 real, 1 fast.
 
         phb
         php
@@ -4541,7 +4622,7 @@
       .al
       .xl
 
-      rlUnknown87BF29 ; 87/BF29
+      rlSetEnemySpeedOption ; 87/BF29
 
         .al
         .xl
@@ -4582,12 +4663,14 @@
       .al
       .xl
 
-      rlUnknown87BF43 ; 87/BF43
+      rlGetSoundOption ; 87/BF43
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Bits 7-8 of wOptionSettings: 0 stereo, 1 mono, 2 off.
 
         phb
         php
@@ -4615,13 +4698,15 @@
       .al
       .xl
 
-      rlUnknown87BF52 ; 87/BF52
+      rlSetSoundOption ; 87/BF52
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Also applies it (rlApplySoundOption).
 
         phb
         php
@@ -4636,7 +4721,7 @@
         and #$FE7F
         ora wR0
         sta wOptionSettings,b
-        jsl rlUnknown87BF6F
+        jsl rlApplySoundOption
         plp
         plb
         .databank $87
@@ -4654,19 +4739,21 @@
       .al
       .xl
 
-      rlUnknown87BF6F ; 87/BF6F
+      rlApplySoundOption ; 87/BF6F
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sets bSoundFlags from the sound option: off sets bit 4, mono sets bit 6, stereo clears both.
+
         phb
         php
         phk
         plb
         .databank $87
-        jsl rlUnknown87BF43
+        jsl rlGetSoundOption
         cmp #$0002
         bne _BF8A
         sep #$20
@@ -4708,12 +4795,14 @@
 
         ; 87/BFB0
 
-      rlUnknown87BFB0 ; 87/BFB0
+      rlGetAutoSaveOption ; 87/BFB0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Bit 9 of wOptionSettings: 1 if auto-save is on.
 
         phb
         php
@@ -4741,7 +4830,7 @@
       .al
       .xl
 
-      rlUnknown87BFBF ; 87/BFBF
+      rlSetAutoSaveOption ; 87/BFBF
 
         .al
         .xl
@@ -4782,12 +4871,14 @@
       .al
       .xl
 
-      rlUnknown87BFD9 ; 87/BFD9
+      rlGetAutoSaveFile ; 87/BFD9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Bits 10-11 of wOptionSettings: the file auto-save writes, 0-3.
 
         phb
         php
@@ -4816,7 +4907,7 @@
       .al
       .xl
 
-      rlUnknown87BFE9 ; 87/BFE9
+      rlSetAutoSaveFile ; 87/BFE9
 
         .al
         .xl
@@ -4854,12 +4945,14 @@
       .al
       .xl
 
-      rlUnknown87C015 ; 87/C015
+      rlSetCleverModeFlag ; 87/C015
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A nonzero sets bit 12 of wOptionSettings (the enemy AI option; rlGetCleverModeFlag).
 
         phb
         php
@@ -4895,12 +4988,14 @@
       .al
       .xl
 
-      rlUnknown87C02F ; 87/C02F
+      rlGetAutoCursorOption ; 87/C02F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Bit 0 of wOptionSettings.
 
         phb
         php
@@ -4926,7 +5021,7 @@
       .al
       .xl
 
-      rlUnknown87C03C ; 87/C03C
+      rlSetAutoCursorOption ; 87/C03C
 
         .al
         .xl
@@ -4967,15 +5062,17 @@
       .al
       .xl
 
-      procUnknown87C056 ; 87/C056
+      procCastleTakenOver ; 87/C056
 
-        .structProcInfo "TF", rlProcUnknown87C056Init, rlProcUnknown87C056Cycle, aProcUnknown87C056Code
+        .structProcInfo "TF", rlProcCastleTakenOverInit, rlProcCastleTakenOverCycle, aProcUnknown87C056Code
 
-      rlProcUnknown87C056Init ; 87/C05E
+      rlProcCastleTakenOverInit ; 87/C05E
 
         .al
         .autsiz
         .databank ?
+
+        ; wInput0 = location, wInput1 = old owner, wInput2 = new owner. Skips to the end of the script unless the old owner's home castle was taken (rlUnknown87C11D) and some of its units must fade out (rlUnknown87C141). Holds the game state.
 
         ; wInput0 = LocationID
         ; wInput1 = old owner
@@ -5016,7 +5113,7 @@
 
         .databank 0
 
-      rlProcUnknown87C056Cycle ; 87/C0A9
+      rlProcCastleTakenOverCycle ; 87/C0A9
 
         .al
         .autsiz
@@ -5031,16 +5128,16 @@
 
     .section Unsorted87C38CSection
 
-      aHDMAUnknown87C38C ; 87/C38C
+      aBattleTransitionHDMAInfo ; 87/C38C
 
         ; Created by rlUnknown81B32C. Writes WH0 indirectly from the buffer at
-        ; $7E8B92, which rsUnknown87C442 fills from aUnknown87C4B2.
-        .structHDMAIndirectEntryInfo rlUnknown87C398, rlUnknown87C3C4, aHDMAUnknown87C38CCode, aHDMAUnknown87C38CTableEven, WH0, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode0), $7E
+        ; $7E8B92, which rsBuildBattleTransitionWindow fills from aBattleTransitionShape.
+        .structHDMAIndirectEntryInfo rlBattleTransitionHDMAInit, rlBattleTransitionHDMACycle, aBattleTransitionHDMACode, aBattleTransitionHDMATableEven, WH0, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode0), $7E
 
       .al
       .xl
 
-      rlUnknown87C398 ; 87/C398
+      rlBattleTransitionHDMAInit ; 87/C398
 
         .al
         .xl
@@ -5055,42 +5152,44 @@
         sta $7E8B8C
         lda #$0000
         sta $7E8B90
-        jsr rsUnknown87C47A
+        jsr rsPlayBattleTransitionSound
         lda #$0000
-        jsr rsUnknown87C442
+        jsr rsBuildBattleTransitionWindow
         lda #$0064
-        jsr rsUnknown87C442
+        jsr rsBuildBattleTransitionWindow
         rtl
 
         .databank 0
 
         ; 87/C3C4
 
-      rlUnknown87C3C4 ; 87/C3C4
+      rlBattleTransitionHDMACycle ; 87/C3C4
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Closes the window a step each frame (two buffers, alternating) until it is shut.
+
         lda wVBlankEnabledFramecount
         bit #$0001
         bne _C3D7
         lda #$0000
         sta $7E8B8E
-        lda #<>aHDMAUnknown87C38CTableEven
+        lda #<>aBattleTransitionHDMATableEven
         bra _C3E1
 
 
         _C3D7
         lda #$0100
         sta $7E8B8E
-        lda #<>aHDMAUnknown87C38CTableOdd
+        lda #<>aBattleTransitionHDMATableOdd
 
         _C3E1
         sta aHDMASystem.aOffset,b,x
         lda $7E8B8E
-        jsr rsUnknown87C442
+        jsr rsBuildBattleTransitionWindow
         lda $7E8B8A
         clc
         adc #$4000
@@ -5104,7 +5203,7 @@
         sta $7E8B88
         cmp #$0100
         bmi _C41A
-        lda #<>rlUnknown87C41B
+        lda #<>rlBattleTransitionOpenBattle
         sta aHDMASystem.aOnCycle,b,x
 
         _C41A
@@ -5122,12 +5221,14 @@
       .al
       .xl
 
-      rlUnknown87C41B ; 87/C41B
+      rlBattleTransitionOpenBattle ; 87/C41B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Once the music is ready: installs rsOpenBattleScene and frees the HDMA entry.
 
         lda wMusicID,b
         bne _C43F
@@ -5150,7 +5251,7 @@
 
         .databank 0
 
-      aHDMAUnknown87C38CCode ; 87/C440
+      aBattleTransitionHDMACode ; 87/C440
 
         HDMA_HALT
 
@@ -5164,12 +5265,14 @@
       .al
       .xl
 
-      rsUnknown87C442 ; 87/C442
+      rsBuildBattleTransitionWindow ; 87/C442
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = step: fills the WH0 buffer at $7E8B92 from aBattleTransitionShape.
 
         phx
         clc
@@ -5178,7 +5281,7 @@
         ldy #$00EF
 
         _C44B
-        lda <>aUnknown87C4B2,b,y
+        lda <>aBattleTransitionShape,b,y
         and #$00FF
         clc
         adc $7E8B88
@@ -5208,7 +5311,7 @@
 
         ; 87/C47A
 
-      rsUnknown87C47A ; 87/C47A
+      rsPlayBattleTransitionSound ; 87/C47A
 
         .al
         .xl
@@ -5238,17 +5341,17 @@
 
         .databank 0
 
-      aHDMAUnknown87C38CTableEven ; 87/C4A4
+      aBattleTransitionHDMATableEven ; 87/C4A4
 
         ; Indirect HDMA tables: 120 lines from each address in bank $7E.
-        ; rlUnknown87C3C4 switches between them every frame.
+        ; rlBattleTransitionHDMACycle switches between them every frame.
         .byte $F8
         .word $8B92
         .byte $F8
         .word $8C0A
         .byte $00
 
-      aHDMAUnknown87C38CTableOdd ; 87/C4AB
+      aBattleTransitionHDMATableOdd ; 87/C4AB
 
         .byte $F8
         .word $8C92
@@ -5256,9 +5359,9 @@
         .word $8D0A
         .byte $00
 
-      aUnknown87C4B2 ; 87/C4B2
+      aBattleTransitionShape ; 87/C4B2
 
-        ; 240 offsets, one per line, that rsUnknown87C442 adds to $7E8B88.
+        ; 240 offsets, one per line, that rsBuildBattleTransitionWindow adds to $7E8B88.
         .byte $02, $03, $05, $07, $05, $03, $04, $05, $08, $06, $0A, $0C, $0A, $08, $04, $05
         .byte $06, $09, $0B, $0D, $0F, $12, $10, $0C, $0E, $0F, $0E, $0A, $0A, $0E, $10, $12
         .byte $0E, $0C, $08, $04, $03, $01, $00, $00, $04, $07, $0A, $0D, $0A, $08, $06, $06
@@ -5275,9 +5378,9 @@
         .byte $12, $0E, $10, $0C, $0A, $06, $02, $06, $0A, $08, $06, $0A, $0E, $0B, $0D, $0B
         .byte $07, $03, $02, $01, $00, $02, $03, $05, $07, $05, $03, $04, $05, $08, $0A, $04
 
-      procUnknown87C5A2 ; 87/C5A2
+      procGameOver ; 87/C5A2
 
-        .structProcInfo "GO", rlUnknown87C5AA, rlUnknown87C646, aProcUnknown87C5A2Code
+        .structProcInfo "GO", rlProcGameOverInit, rlProcGameOverCycle, aProcGameOverCode
 
         ; 87/C5AA
 
@@ -5289,16 +5392,18 @@
       .al
       .xl
 
-      rlUnknown87C5AA ; 87/C5AA
+      rlProcGameOverInit ; 87/C5AA
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`aUnknown87C5BF)<<8
+        ; Loads the palettes (aGameOverPaletteData) and starts music $72.
+
+        lda #(`aGameOverPaletteData)<<8
         sta lR19+1
-        lda #<>aUnknown87C5BF
+        lda #<>aGameOverPaletteData
         sta lR19
         jsl rlApplyMapMenuPaletteData
         lda #$0072
@@ -5317,9 +5422,9 @@
       .al
       .xl
 
-      aUnknown87C5BF .dstruct structMapMenuPaletteData, $0040, 0, 0, aUnknown87C5C6 ; 87/C5BF
+      aGameOverPaletteData .dstruct structMapMenuPaletteData, $0040, 0, 0, aGameOverPalettes ; 87/C5BF
 
-      aUnknown87C5C6 ; 87/C5C6
+      aGameOverPalettes ; 87/C5C6
         .word $0000, $1CE7, $1DFE, $02FD, $03BC, $3BBD, $63BD, $77FF
         .word $7FFF, $63FB, $0955, $01B1, $0272, $42B5, $0C63, $35AD
         .word $3000, $1042, $1463, $1463, $1463, $1463, $1463, $1463
@@ -5337,14 +5442,16 @@
       .al
       .xl
 
-      rlUnknown87C646 ; 87/C646
+      rlProcGameOverCycle ; 87/C646
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown87C6AA
+        ; Shakes BG2 (rsGameOverShake); once faded in, Start soft-resets the game. The script also resets after 1,020 frames.
+
+        jsr rsGameOverShake
         lda bBufferINIDISP
         bit #$0080
         bne _C65F
@@ -5377,12 +5484,12 @@
 
         .databank 0
 
-      aProcUnknown87C5A2Code ; 87/C686
+      aProcGameOverCode ; 87/C686
 
         PROC_YIELD 32
-        PROC_CALL rlUnknown87C695
+        PROC_CALL rlGameOverFadeIn
         PROC_YIELD 1020
-        PROC_SET_ONCYCLE rlUnknown87C646._C660
+        PROC_SET_ONCYCLE rlProcGameOverCycle._C660
         PROC_HALT
 
         ; 87/C695
@@ -5395,7 +5502,7 @@
       .al
       .xl
 
-      rlUnknown87C695 ; 87/C695
+      rlGameOverFadeIn ; 87/C695
 
         .al
         .xl
@@ -5415,12 +5522,14 @@
 
         ; 87/C6AA
 
-      rsUnknown87C6AA ; 87/C6AA
+      rsGameOverShake ; 87/C6AA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; aBody0 counts frames; from frame $84 on, sets BG2's scroll from the pairs in aGameOverShakeOffsets until a 0.
 
         phy
         txy
@@ -5432,7 +5541,7 @@
         phx
         asl a
         tax
-        lda $C6DC,b,x
+        lda <>aGameOverShakeOffsets,b,x
         bne _C6C6
         dec a
         sta aProcSystem.aBody0,b,y
@@ -5441,10 +5550,10 @@
 
 
         _C6C6
-        lda $C6DC,b,x
+        lda <>aGameOverShakeOffsets,b,x
         ora #$FF80
         sta wBufferBG2HOFS
-        lda $C6DD,b,x
+        lda <>aGameOverShakeOffsets+1,b,x
         ora #$FF80
         sta wBufferBG2VOFS
         plx
@@ -5459,6 +5568,14 @@
         .databank 0
 
         ; 87/C6DC
+
+      aGameOverShakeOffsets ; 87/C6DC
+
+        ; BG2's horizontal and vertical scroll for each frame of the shake, as low
+        ; bytes (rsGameOverShake sets the high bits); a 0 ends it.
+        .byte $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FE, $FF, $FE, $FF, $FE, $FE, $FD, $FE, $FD
+        .byte $FE, $FD, $FE, $FC, $FE, $FC, $FE, $FC, $FD, $FB, $FD, $FB, $FD, $FB, $FD, $FA
+        .byte $FD, $FA, $FD, $FA, $FC, $F9, $FC, $F9, $FC, $F9, $FC, $F8, $00, $00
 
     .endsection Unsorted87C695Section
 
@@ -6220,12 +6337,14 @@
       .al
       .xl
 
-      rlUnknown87CBC5 ; 87/CBC5
+      rlMapMenuLoadHook ; 87/CBC5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Does nothing (rtl); rlMapMenuLoad calls it with A = 1.
 
         rtl
 
@@ -6241,13 +6360,15 @@
       .al
       .xl
 
-      rsUnknown87D65A ; 87/D65A
+      rsAIScoreTargetsNearLeader ; 87/D65A
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; For each AI target near the group leader (rsCheckIfAITargetWithinSpecifiedLeaderRange): class priority, effectiveness and weapon triangle scores.
 
         ldx #$000A
         lda #$FFFF
@@ -6357,7 +6478,7 @@
       .al
       .xl
 
-      rsUnknown87E6D3 ; 87/E6D3
+      rsStaffTargetCheckFail ; 87/E6D3
 
         .al
         .xl
@@ -6371,6 +6492,22 @@
 
         ; 87/E6D5
 
+      rsStaffTargetCheckPass ; 87/E6D5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this.
+
+        sec
+        rts
+
+        .databank 0
+
+        ; 87/E6D7
+
     .endsection Unsorted87E6D3Section
 
 
@@ -6379,28 +6516,32 @@
       .al
       .xl
 
-      rsUnknown87E6D7 ; 87/E6D7
+      rsStaffTargetCheckHealOnMap ; 87/E6D7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Heal, mend, recover: not in the castle; then rsStaffTargetCheckHeal.
 
         lda wUnknown000D79,b
         bit #$0020
-        bne rsUnknown87E6D3
+        bne rsStaffTargetCheckFail
 
-      rsUnknown87E6DF ; 87/E6DF
+      rsStaffTargetCheckHeal ; 87/E6DF
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #$0008
-        bra rsUnknown87E6FE
+        ; Target filter 8 (not at full HP) within the staff's range.
 
-      rsUnknown87E6E4 ; 87/E6E4
+        lda #$0008
+        bra rsCheckStaffTargetsWithFilter
+
+      rsStaffTargetCheckRestore ; 87/E6E4
 
         .al
         .xl
@@ -6408,20 +6549,22 @@
         .databank ?
 
         lda #$0009
-        bra rsUnknown87E6FE
+        bra rsCheckStaffTargetsWithFilter
 
-      rsUnknown87E6E9 ; 87/E6E9
+      rsStaffTargetCheckAllyOnMap ; 87/E6E9
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Return, warp, charm: not in the castle; then rsStaffTargetCheckAlly.
+
         lda wUnknown000D79,b
         bit #$0020
-        bne rsUnknown87E6D3
+        bne rsStaffTargetCheckFail
 
-      rsUnknown87E6F1 ; 87/E6F1
+      rsStaffTargetCheckAlly ; 87/E6F1
 
         .al
         .xl
@@ -6429,36 +6572,42 @@
         .databank ?
 
         lda #$0002
-        bra rsUnknown87E6FE
+        bra rsCheckStaffTargetsWithFilter
 
-      rsUnknown87E6F6 ; 87/E6F6
+      rsStaffTargetCheckSilence ; 87/E6F6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Target filter $C (a magic user with lower resistance).
 
         lda #$000C
-        bra rsUnknown87E6FE
+        bra rsCheckStaffTargetsWithFilter
 
-      rsUnknown87E6FB ; 87/E6FB
+      rsStaffTargetCheckEnemy ; 87/E6FB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Target filter $D (an enemy with lower resistance): sleep, berserk, thief.
 
         lda #$000D
 
-      rsUnknown87E6FE ; 87/E6FE
+      rsCheckStaffTargetsWithFilter ; 87/E6FE
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = target filter, range from the staff (rlCheckStaffTargetsInRange).
+
         stz wR12
-        jsl rlUnknown87E689
+        jsl rlCheckStaffTargetsInRange
         rts
 
         .databank 0
@@ -6473,12 +6622,14 @@
       .al
       .xl
 
-      rsUnknown87E705 ; 87/E705
+      rsStaffTargetCheckValkyrie ; 87/E705
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry clear: valkyrie has no target on the map.
 
         clc
         rts
@@ -6495,7 +6646,7 @@
       .al
       .xl
 
-      rsUnknown87E707 ; 87/E707
+      rsStaffTargetCheckNone ; 87/E707
 
         .al
         .xl
@@ -6517,18 +6668,20 @@
       .as
       .xl
 
-      rlUnknown87E709 ; 87/E709
+      rlCheckStaffHasCastleTargets ; 87/E709
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; wCurrentItemDataROMPointer = a staff: in the castle, carry set if someone there can be its target (aCastleStaffTargetChecks).
+
         phx
         jsl rlGetItemStaffEffect
         asl a
         tax
-        jsr (aUnknown87E715,x)
+        jsr (aCastleStaffTargetChecks,x)
         plx
         rtl
 
@@ -6544,26 +6697,26 @@
       .al
       .xl
 
-      aUnknown87E715 ; 87/E715
+      aCastleStaffTargetChecks ; 87/E715
 
-        ; Jump table of rlUnknown87E709.
-        .word <>rsUnknown87E75F
-        .word <>rsUnknown87E737
-        .word <>rsUnknown87E737
-        .word <>rsUnknown87E737
-        .word <>rsUnknown87E737
-        .word <>rsUnknown87E737
-        .word <>rsUnknown87E75F
-        .word <>rsUnknown87E741
-        .word <>rsUnknown87E75F
-        .word <>rsUnknown87E75F
-        .word <>rsUnknown87E73C
-        .word <>rsUnknown87E75D
-        .word <>rsUnknown87E75F
-        .word <>rsUnknown87E75F
-        .word <>rsUnknown87E75F
-        .word <>rsUnknown87E75F
-        .word <>rsUnknown87E75F
+        ; Jump table of rlCheckStaffHasCastleTargets.
+        .word <>rsCastleStaffTargetCheckFail
+        .word <>rsCastleStaffTargetCheckHeal
+        .word <>rsCastleStaffTargetCheckHeal
+        .word <>rsCastleStaffTargetCheckHeal
+        .word <>rsCastleStaffTargetCheckHeal
+        .word <>rsCastleStaffTargetCheckHeal
+        .word <>rsCastleStaffTargetCheckFail
+        .word <>rsCastleStaffTargetCheckAlly
+        .word <>rsCastleStaffTargetCheckFail
+        .word <>rsCastleStaffTargetCheckFail
+        .word <>rsCastleStaffTargetCheckRestore
+        .word <>rsCastleStaffTargetCheckPass
+        .word <>rsCastleStaffTargetCheckFail
+        .word <>rsCastleStaffTargetCheckFail
+        .word <>rsCastleStaffTargetCheckFail
+        .word <>rsCastleStaffTargetCheckFail
+        .word <>rsCastleStaffTargetCheckFail
 
     .endsection Table87E715Section
 
@@ -6573,40 +6726,46 @@
       .al
       .xl
 
-      rsUnknown87E737 ; 87/E737
+      rsCastleStaffTargetCheckHeal ; 87/E737
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Target filter 8 (not at full HP).
+
         lda #$0008
-        bra rsUnknown87E741._E744
+        bra rsCastleStaffTargetCheckAlly._E744
 
         .databank 0
 
         ; 87/E73C
 
-      rsUnknown87E73C ; 87/E73C
+      rsCastleStaffTargetCheckRestore ; 87/E73C
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Target filter 9 (has a status).
+
         lda #$0009
-        bra rsUnknown87E741._E744
+        bra rsCastleStaffTargetCheckAlly._E744
 
         .databank 0
 
         ; 87/E741
 
-      rsUnknown87E741 ; 87/E741
+      rsCastleStaffTargetCheckAlly ; 87/E741
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Target filter 2 (the same army).
 
         lda #$0002
 
@@ -6614,10 +6773,10 @@
         sta wRoutineVariable1,b
         lda wUnknown000D79,b
         bit #$0020
-        beq rsUnknown87E75F
+        beq rsCastleStaffTargetCheckFail
         lda $7E4E77
         cmp #$FFFF
-        beq rsUnknown87E75F
+        beq rsCastleStaffTargetCheckFail
         jsl rlBuildCastleTargetList
         rts
 
@@ -6625,7 +6784,7 @@
 
         ; 87/E75D
 
-      rsUnknown87E75D ; 87/E75D
+      rsCastleStaffTargetCheckPass ; 87/E75D
 
         .al
         .xl
@@ -6639,7 +6798,7 @@
 
         ; 87/E75F
 
-      rsUnknown87E75F ; 87/E75F
+      rsCastleStaffTargetCheckFail ; 87/E75F
 
         .al
         .xl
@@ -6653,6 +6812,21 @@
 
         ; 87/E761
 
+      rlUnknown87E761 ; 87/E761
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A lone rtl after rsCastleStaffTargetCheckFail. Nothing in the build reaches this.
+
+        rtl
+
+        .databank 0
+
+        ; 87/E762
+
     .endsection Unsorted87E737Section
 
 
@@ -6661,12 +6835,14 @@
       .al
       .xl
 
-      rlUnknown87E762 ; 87/E762
+      rlStartStaffTargetSelection ; 87/E762
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wCurrentItemDataROMPointer = the staff: by its effect, finds the targets and starts choosing one (aStaffTargetSelectionHandlers).
 
         phx
         lda #$0800
@@ -6676,7 +6852,7 @@
         jsl rlGetItemStaffEffect
         asl a
         tax
-        jsr (aUnknown87E779,x)
+        jsr (aStaffTargetSelectionHandlers,x)
         plx
         rtl
 
@@ -6692,30 +6868,30 @@
       .al
       .xl
 
-      aUnknown87E779 ; 87/E779
+      aStaffTargetSelectionHandlers ; 87/E779
 
         ; One handler per staff effect (rlGetItemStaffEffect). (tools/sweep.py had
         ; decoded this table as code.)
-        .word <>rsUnknown87E79B
-        .word <>rsUnknown87E7A6
-        .word <>rsUnknown87E7A6
-        .word <>rsUnknown87E7A6
-        .word <>rsUnknown87E7A6
-        .word <>rsUnknown87E7B5
-        .word <>rsUnknown87E7B0
-        .word <>rsUnknown87E79C
-        .word <>rsUnknown87E7B0
-        .word <>rsUnknown87E7AB
-        .word <>rsUnknown87E7AB
-        .word <>rsUnknown87E79B
-        .word <>rsUnknown87E7D9
-        .word <>rsUnknown87E7DE
-        .word <>rsUnknown87E7DE
-        .word <>rsUnknown87E7DE
-        .word <>rsUnknown87E7E3
+        .word <>rsStaffTargetSelectionNone
+        .word <>rsStaffTargetSelectionHeal
+        .word <>rsStaffTargetSelectionHeal
+        .word <>rsStaffTargetSelectionHeal
+        .word <>rsStaffTargetSelectionHeal
+        .word <>rsStaffTargetSelectionFortify
+        .word <>rsStaffTargetSelectionAlly
+        .word <>rsStaffTargetSelectionWarp
+        .word <>rsStaffTargetSelectionAlly
+        .word <>rsStaffTargetSelectionRestore
+        .word <>rsStaffTargetSelectionRestore
+        .word <>rsStaffTargetSelectionNone
+        .word <>rsStaffTargetSelectionSilence
+        .word <>rsStaffTargetSelectionEnemy
+        .word <>rsStaffTargetSelectionEnemy
+        .word <>rsStaffTargetSelectionEnemy
+        .word <>rsStaffTargetSelectionNone2
 
 
-      rsUnknown87E79B ; 87/E79B
+      rsStaffTargetSelectionNone ; 87/E79B
 
         .al
         .xl
@@ -6728,22 +6904,24 @@
 
         ; 87/E79C
 
-      rsUnknown87E79C ; 87/E79C
+      rsStaffTargetSelectionWarp ; 87/E79C
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sets bit 11 of wUnknown000D79, then as rsStaffTargetSelectionAlly.
+
         lda #$0800
         tsb wUnknown000D79,b
-        jml rsUnknown87E7B0
+        jml rsStaffTargetSelectionAlly
 
         .databank 0
 
         ; 87/E7A6
 
-      rsUnknown87E7A6 ; 87/E7A6
+      rsStaffTargetSelectionHeal ; 87/E7A6
 
         .al
         .xl
@@ -6751,13 +6929,13 @@
         .databank ?
 
         lda #$0008
-        bra rsUnknown87E7E4
+        bra rsStartStaffTargetSelectionWithFilter
 
         .databank 0
 
         ; 87/E7AB
 
-      rsUnknown87E7AB ; 87/E7AB
+      rsStaffTargetSelectionRestore ; 87/E7AB
 
         .al
         .xl
@@ -6765,13 +6943,13 @@
         .databank ?
 
         lda #$0009
-        bra rsUnknown87E7E4
+        bra rsStartStaffTargetSelectionWithFilter
 
         .databank 0
 
         ; 87/E7B0
 
-      rsUnknown87E7B0 ; 87/E7B0
+      rsStaffTargetSelectionAlly ; 87/E7B0
 
         .al
         .xl
@@ -6779,18 +6957,20 @@
         .databank ?
 
         lda #$0002
-        bra rsUnknown87E7E4
+        bra rsStartStaffTargetSelectionWithFilter
 
         .databank 0
 
         ; 87/E7B5
 
-      rsUnknown87E7B5 ; 87/E7B5
+      rsStaffTargetSelectionFortify ; 87/E7B5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; No target to choose: on the map, rlUnknown84DC1C on the user; in the castle, rlCastleUseStaffFromMapRaised.
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateFielded
@@ -6814,7 +6994,7 @@
 
         ; 87/E7D9
 
-      rsUnknown87E7D9 ; 87/E7D9
+      rsStaffTargetSelectionSilence ; 87/E7D9
 
         .al
         .xl
@@ -6822,13 +7002,13 @@
         .databank ?
 
         lda #$000C
-        bra rsUnknown87E7E4
+        bra rsStartStaffTargetSelectionWithFilter
 
         .databank 0
 
         ; 87/E7DE
 
-      rsUnknown87E7DE ; 87/E7DE
+      rsStaffTargetSelectionEnemy ; 87/E7DE
 
         .al
         .xl
@@ -6836,13 +7016,13 @@
         .databank ?
 
         lda #$000D
-        bra rsUnknown87E7E4
+        bra rsStartStaffTargetSelectionWithFilter
 
         .databank 0
 
         ; 87/E7E3
 
-      rsUnknown87E7E3 ; 87/E7E3
+      rsStaffTargetSelectionNone2 ; 87/E7E3
 
         .al
         .xl
@@ -6855,14 +7035,16 @@
 
         ; 87/E7E4
 
-      rsUnknown87E7E4 ; 87/E7E4
+      rsStartStaffTargetSelectionWithFilter ; 87/E7E4
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown87E689
+        ; A = target filter: finds the targets (wMapActionTargetType 1), then on the map rlUnknown88AD46, in the castle rlCastleUseStaffFromMap.
+
+        jsl rlCheckStaffTargetsInRange
         lda #$0001
         sta wMapActionTargetType,b
         jsl rlGetSelectedUnitStates
@@ -6888,19 +7070,21 @@
       .al
       .xl
 
-      rlUnknown87E801 ; 87/E801
+      rlStartCastleStaffTargetSelection ; 87/E801
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; In the castle: as aCastleStaffTargetSelectionHandlers says for the staff's effect.
+
         phx
-        jsl rlUnknown87E709
+        jsl rlCheckStaffHasCastleTargets
         jsl rlGetItemStaffEffect
         asl a
         tax
-        jsr (aUnknown87E811,x)
+        jsr (aCastleStaffTargetSelectionHandlers,x)
         plx
         rtl
 
@@ -6916,26 +7100,26 @@
       .al
       .xl
 
-      aUnknown87E811 ; 87/E811
+      aCastleStaffTargetSelectionHandlers ; 87/E811
 
-        ; Jump table of rlUnknown87E801.
-        .word <>rsUnknown87E833
-        .word <>rsUnknown87E834
-        .word <>rsUnknown87E834
-        .word <>rsUnknown87E834
-        .word <>rsUnknown87E834
-        .word <>rsUnknown87E84A
-        .word <>rsUnknown87E833
-        .word <>rsUnknown87E83F
-        .word <>rsUnknown87E833
-        .word <>rsUnknown87E833
-        .word <>rsUnknown87E834
-        .word <>rsUnknown87E855
-        .word <>rsUnknown87E833
-        .word <>rsUnknown87E833
-        .word <>rsUnknown87E833
-        .word <>rsUnknown87E833
-        .word <>rsUnknown87E833
+        ; Jump table of rlStartCastleStaffTargetSelection.
+        .word <>rsCastleStaffSelectionNone
+        .word <>rsCastleStaffSelectTarget
+        .word <>rsCastleStaffSelectTarget
+        .word <>rsCastleStaffSelectTarget
+        .word <>rsCastleStaffSelectTarget
+        .word <>rsCastleStaffFortify
+        .word <>rsCastleStaffSelectionNone
+        .word <>rsCastleStaffSelectWarpTarget
+        .word <>rsCastleStaffSelectionNone
+        .word <>rsCastleStaffSelectionNone
+        .word <>rsCastleStaffSelectTarget
+        .word <>rsCastleStaffValkyrie
+        .word <>rsCastleStaffSelectionNone
+        .word <>rsCastleStaffSelectionNone
+        .word <>rsCastleStaffSelectionNone
+        .word <>rsCastleStaffSelectionNone
+        .word <>rsCastleStaffSelectionNone
 
     .endsection Table87E811Section
 
@@ -6945,7 +7129,7 @@
       .al
       .xl
 
-      rsUnknown87E833 ; 87/E833
+      rsCastleStaffSelectionNone ; 87/E833
 
         .al
         .xl
@@ -6966,12 +7150,14 @@
       .al
       .xl
 
-      rsUnknown87E834 ; 87/E834
+      rsCastleStaffSelectTarget ; 87/E834
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears bit 11 of wUnknown000D79 and starts rlCastleStartStaffTargetSelection.
 
         lda #$0800
         trb wUnknown000D79,b
@@ -6990,12 +7176,14 @@
       .al
       .xl
 
-      rsUnknown87E83F ; 87/E83F
+      rsCastleStaffSelectWarpTarget ; 87/E83F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bit 11 of wUnknown000D79 and starts rlCastleStartStaffTargetSelection.
 
         lda #$0800
         tsb wUnknown000D79,b
@@ -7014,12 +7202,14 @@
       .al
       .xl
 
-      rsUnknown87E84A ; 87/E84A
+      rsCastleStaffFortify ; 87/E84A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Everyone at once: rlBuildCastleActionRounds with wRoutineVariable1 = $FFFF.
 
         lda #$FFFF
         sta wRoutineVariable1,b
@@ -7038,12 +7228,14 @@
       .al
       .xl
 
-      rsUnknown87E855 ; 87/E855
+      rsCastleStaffValkyrie ; 87/E855
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fades to the revive screen (rsReviveScreenOpen).
 
         lda #<>rsReviveScreenOpen
         sta aProcSystem.wInput0,b
@@ -7066,12 +7258,14 @@
       .al
       .xl
 
-      rlUnknown87E86A ; 87/E86A
+      rlGetStaffHealAmount ; 87/E86A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wCurrentItemDataROMPointer = the staff: the user's magic + 10, doubled for mend; 80 for recover.
 
         phb
         php
@@ -7110,12 +7304,14 @@
 
         ; 87/E89A
 
-      rlUnknown87E89A ; 87/E89A
+      rlApplyFortify ; 87/E89A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Heals by rlGetStaffHealAmount every unit in range on the map (rsApplyFortifyOnMap), or every unit in the castle but the user (rsApplyFortifyInCastle).
 
         phb
         php
@@ -7128,12 +7324,12 @@
         lda wUnknown000D79,b
         bit #$0020
         bne _E8B0
-        jsr rsUnknown87E8BB
+        jsr rsApplyFortifyOnMap
         bra _E8B3
 
 
         _E8B0
-        jsr rsUnknown87E913
+        jsr rsApplyFortifyInCastle
 
         _E8B3
         pla
@@ -7148,7 +7344,7 @@
 
         ; 87/E8BB
 
-      rsUnknown87E8BB ; 87/E8BB
+      rsApplyFortifyOnMap ; 87/E8BB
 
         .al
         .xl
@@ -7169,8 +7365,8 @@
         lda #$0001
         sta wR12
         lda #$0001
-        jsl rlUnknown87E689
-        jsl rlUnknown87E86A
+        jsl rlCheckStaffTargetsInRange
+        jsl rlGetStaffHealAmount
         sta wRoutineVariable1,b
         ldx #$03FF
 
@@ -7196,14 +7392,14 @@
 
         ; 87/E913
 
-      rsUnknown87E913 ; 87/E913
+      rsApplyFortifyInCastle ; 87/E913
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown87E86A
+        jsl rlGetStaffHealAmount
         sta wRoutineVariable1,b
         ldx #$0000
 
@@ -7232,7 +7428,7 @@
 
         ; 87/E93F
 
-      rlUnknown87E93F ; 87/E93F
+      rlClearChapterLocationRAMData ; 87/E93F
 
         .al
         .xl
@@ -7256,12 +7452,14 @@
 
         ; 87/E952
 
-      rlUnknown87E952 ; 87/E952
+      rlInitChapterLocations ; 87/E952
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; rlInitLocation for each location of the chapter.
 
         phb
         php
@@ -7280,7 +7478,7 @@
         _E965
         lda $0001,b,x
         sta wEventLocationEntry,b
-        jsl rlUnknown87EBC8
+        jsl rlInitLocation
         inc x
         inc x
         dec y
@@ -7296,7 +7494,7 @@
 
         ; 87/E979
 
-      rlUnknown87E979 ; 87/E979
+      rlGetChapterLocationCount ; 87/E979
 
         .al
         .xl
@@ -7331,13 +7529,15 @@
       .al
       .xl
 
-      rlUnknown87E9E0 ; 87/E9E0
+      rlFindLocationByNameID ; 87/E9E0
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = name ID: wEventLocationEntry = the location with it, or 0. Nothing in the build reaches this.
 
         phb
         php
@@ -7385,12 +7585,14 @@
       .al
       .xl
 
-      rlUnknown87EA09 ; 87/EA09
+      rlFindLocationAtTile ; 87/EA09
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wR0, wR1 = column and row: wEventLocationEntry = the location whose area (by its type, aEventLocationTypeOffsets) covers the tile; carry clear if found.
 
         phb
         php
@@ -7489,11 +7691,13 @@
       .al
       .xl
 
-      rlUnknown87EBC8 ; 87/EBC8
+      rlInitLocation ; 87/EBC8
 
         .al
         .autsiz
         .databank ?
+
+        ; wEventLocationEntry = location: sets its money reward from its type; for a castle, puts its shop's unobtained items in the shop.
 
         phb
         php
@@ -7581,12 +7785,14 @@
       .al
       .xl
 
-      rlUnknown87F321 ; 87/F321
+      rlGetLocationMoneyLevel ; 87/F321
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wEventLocationEntry = location: A = a level from its money reward (in steps of 500) and the low bits of its ID (aLocationMoneyLevels); 10 steps or more returns the steps.
 
         phb
         php
@@ -7609,11 +7815,11 @@
         cmp #$000A
         bcs _F35A
         ldx wR2
-        lda @l aUnknown87F361,x
+        lda @l aLocationMoneyLevels,x
         clc
         adc wR13
         tax
-        lda @l aUnknown87F361,x
+        lda @l aLocationMoneyLevels,x
         and #$00FF
 
         _F35A
@@ -7637,9 +7843,9 @@
       .al
       .xl
 
-      aUnknown87F361 ; 87/F361
+      aLocationMoneyLevels ; 87/F361
 
-        ; Read by rlUnknown87F321.
+        ; Read by rlGetLocationMoneyLevel.
 
         .word $0008, $0012, $001C, $0026, $0000, $0202, $0303, $0505
         .word $0101, $0101, $0000, $0202, $0303, $0505, $0505, $0101

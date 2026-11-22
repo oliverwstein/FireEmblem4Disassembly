@@ -8001,7 +8001,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown87EA09
+        jsl rlFindLocationAtTile
         jsl rlGetEventLocationEntryID
         sta $7F57EA
         lda wR2

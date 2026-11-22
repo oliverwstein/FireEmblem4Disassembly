@@ -51,7 +51,17 @@
 
       procInventoryFullMenu .structProcInfo "PW", rlProcInventoryFullMenuInit, rlProcInventoryFullMenuFirstCycle, aProcInventoryFullMenuCode ; 85/B18F
 
-        ; 85/B197
+        .long aInventoryFullMenuData
+        .byte 1
+
+      aInventoryFullMenuTilemapData ; 85/B19B
+
+        .structMapMenuTilemapData 14, 16, aBG3TilemapBuffer, 0, $7FC54A
+
+      aInventoryFullMenuData ; 85/B1A4
+
+        .long 0, 0, aInventoryFullMenuTilemapData
+        .byte 0, 2, 5
 
     .endsection Unsorted85B18FSection
 
@@ -1167,6 +1177,17 @@
       procInventoryFullMessage ; 85/B63B
 
         .structProcInfo "PW", rlProcInventoryFullMessageInit, rlProcInventoryFullMessageCycle, aProcInventoryFullMessageCode
+        .long aInventoryFullMessageData
+        .byte 0
+
+      aInventoryFullMessageTilemapData ; 85/B647
+
+        .structMapMenuTilemapData 14, 8, aBG3TilemapBuffer, 0, $7FC84A
+
+      aInventoryFullMessageData ; 85/B650
+
+        .long 0, 0, aInventoryFullMessageTilemapData
+        .byte 0, 16, 1
 
     .endsection ProcScript85B63BSection
 

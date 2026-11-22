@@ -113,7 +113,7 @@
         .autsiz
         .databank ?
 
-        ; Cold boot: inits SP/FastROM, scans WRAM for copier hooks, runs checksum (rlUnknown878074), stamps "ELM0"; falls through into rlColdResetClearMemory
+        ; Cold boot: inits SP/FastROM, scans WRAM for copier hooks, runs checksum (rlCheckCodeChecksumsAtReset), stamps "ELM0"; falls through into rlColdResetClearMemory
 
         rep #$30
         tsx
@@ -170,7 +170,7 @@
         _8DCA
         lda #$0000
         tcd
-        jsl rlUnknown87802A._803E
+        jsl rlCheckResetSignature._803E
 
         _8DD2
         ldy $0001,b,x
@@ -220,7 +220,7 @@
         _8E13
         lda #$0000
         tcd
-        jsl rlUnknown878074
+        jsl rlCheckCodeChecksumsAtReset
         sta $1FF8,b
         sta $1FFA,b
         lda #$4C45
@@ -312,7 +312,7 @@
         rep #$20
         jsr rsInitPPURegisters
         jsl rlInitSound
-        jsl rlUnknown878074
+        jsl rlCheckCodeChecksumsAtReset
         lda #$0028
         sta wJoyRepeatDelay
         lda #$000A
@@ -449,7 +449,7 @@
         jsl rlClearAIEngineRAM
         jsl rlInitRNArray
         jsl rlLoadLastUsedOptions
-        jsl rlUnknown87BF43
+        jsl rlGetSoundOption
         cmp #$0001
         bne _ADD0
         sep #$20

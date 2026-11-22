@@ -131,7 +131,7 @@
     lda #0
     sta $7EC494
     lda #0
-    jsl rlUnknown87B01D
+    jsl rlEventMovementPlanRoute
 
     lda $7ECCB6
     sta $7E4EAB

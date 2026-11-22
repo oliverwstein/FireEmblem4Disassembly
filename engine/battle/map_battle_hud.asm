@@ -351,7 +351,7 @@
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsr rsGetMapExperienceWindowUnitTile
         jsr rsPlaceMapExperienceWindow
-        lda $0534,b
+        lda wMapMenuNewPosition,b
         and #$FF00
         asl a
         asl a
@@ -680,7 +680,7 @@
 
         _CCF1
         ora wR4
-        sta $0534,b
+        sta wMapMenuNewPosition,b
         rts
 
         .databank 0
@@ -784,6 +784,15 @@
         .databank 0
 
         ; 85/CD72
+
+      aUnknown85CD72 ; 85/CD72
+
+        ; Five tile strings for rlDrawTileStringToTilemapEntry. Nothing in the build reads them.
+        .byte $20, $2A, $00
+        .byte $24, $25, $00
+        .byte $22, $23, $00
+        .byte $20, $21, $00
+        .byte $26, $27, $00
 
     .endsection Unsorted85CD39Section
 
@@ -1957,6 +1966,128 @@
 
         ; 85/D337
 
+      rlUnknown85D337 ; 85/D337
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0DB1,b
+        cmp #$8000
+        beq _D343
+        lda #$FFFF
+        rtl
+
+
+        _D343
+        lda #$0000
+        rtl
+
+        .databank 0
+
+        ; 85/D347
+
+      rlUnknown85D347 ; 85/D347
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0DAF,b
+        cmp #$8000
+        beq _D353
+        lda #$FFFF
+        rtl
+
+
+        _D353
+        lda #$0000
+        rtl
+
+        .databank 0
+
+        ; 85/D357
+
+      rlMapBattleExperienceRight ; 85/D357
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Request $0100 to the right HP window: show the experience window. Nothing in the build reaches this.
+
+        lda #$0100
+        sta $0DB1,b
+        rtl
+
+        .databank 0
+
+        ; 85/D35E
+
+      rlMapBattleExperienceLeft ; 85/D35E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0100
+        sta $0DAF,b
+        rtl
+
+        .databank 0
+
+        ; 85/D365
+
+      rlCheckMapBattleExperienceRightPending ; 85/D365
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = $FFFF while the right window's request has bit 8 ($0100). Nothing in the build reaches this.
+
+        lda $0DB1,b
+        bit #$0100
+        beq _D371
+        lda #$FFFF
+        rtl
+
+
+        _D371
+        lda #$0000
+        rtl
+
+        .databank 0
+
+        ; 85/D375
+
+      rlCheckMapBattleExperienceLeftPending ; 85/D375
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0DAF,b
+        bit #$0100
+        beq _D381
+        lda #$FFFF
+        rtl
+
+
+        _D381
+        lda #$0000
+        rtl
+
+        .databank 0
+
+        ; 85/D385
+
     .endsection Unsorted85D17ESection
 
 
@@ -2002,6 +2133,44 @@
         .databank 0
 
         ; 85/D3BD
+
+      rlOpenMapBattleExperienceWindowType6 ; 85/D3BD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; As rlOpenMapBattleExperienceWindow, with frame type 6 (wInput0 = 0) at row 13. Nothing in the build reaches this.
+
+        lda #$0000
+        sta aProcSystem.wInput0,b
+        lda #$000D
+        sta aProcSystem.wInput2,b
+        pha
+        lda #(`procMapBattleExperienceWindow)<<8
+        sta lR44+1
+        lda #<>procMapBattleExperienceWindow
+        sta lR44
+        lda #$0001
+        jsl rlProcEngineCreateProcByIndex
+        pla
+        xba
+        and #$FF00
+        asl a
+        asl a
+        asl a
+        and #$FF00
+        ora #$0020
+        sta wR43
+        lda #$000E
+        sta wR42
+        jsl rlStartMapMenuGradient
+        rtl
+
+        .databank 0
+
+        ; 85/D3F5
 
     .endsection Unsorted85D385Section
 
@@ -2093,6 +2262,23 @@
         .databank 0
 
         ; 85/D438
+
+      rlClearBG2Page1 ; 85/D438
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0000
+        jsl rlFillBG2Page1TilemapBuffer
+        plx
+        rtl
+
+        .databank 0
+
+        ; 85/D442
 
     .endsection Unsorted85D3F5Section
 
@@ -2452,6 +2638,11 @@
         .databank 0
 
         ; 85/D604
+
+      aMapBattlePaletteColour0 ; 85/D604
+
+        ; Colour 0 of aMapBattlePalette; rlSetMapBattlePalettes copies from colour 1.
+        .word $4D96
 
     .endsection Unsorted85D5CCSection
 
@@ -3201,6 +3392,8 @@
       procMapBattleTextBox ; 85/DAEA
 
         .structProcInfo "OW", rlProcMapBattleTextBoxInit, rlProcMapTextBoxDraw, aProcDialogueBoxCode
+        .long aMapBattleTextBoxData
+        .byte 0
 
     .endsection ProcScript85DAEASection
 
@@ -3346,6 +3539,40 @@
         .databank 0
 
         ; 85/DBAB
+
+      rlChangeMapBattleTextBox ; 85/DBAB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lR18/lR19 = new texts: sets bit 2 (redraw) of procMapBattleTextBox. Nothing in the build reaches this.
+
+        lda #(`procMapBattleTextBox)<<8
+        sta lR44+1
+        lda #<>procMapBattleTextBox
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _DBDC
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0004
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda lR18
+        sta $7FEAAA
+        lda lR18+1
+        sta $7FEAAB
+        lda lR19
+        sta $7FEAAE
+        lda lR19+1
+        sta $7FEAAF
+
+        _DBDC
+        rtl
+
+        .databank 0
+
+        ; 85/DBDD
 
     .endsection Unsorted85DAF6Section
 

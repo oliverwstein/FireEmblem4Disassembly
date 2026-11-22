@@ -1649,11 +1649,13 @@
 
         .databank 0
 
-      rlUnknown87E689 ; 87/E689
+      rlCheckStaffTargetsInRange ; 87/E689
 
         .al
         .autsiz
         .databank ?
+
+        ; A = target filter: carry set if rlFindTargetsInRange finds any within the item's range.
 
         pha
         jsl rlGetItemMinimumRange
@@ -1677,41 +1679,43 @@
 
         .databank 0
 
-      rlUnknown87E6A5 ; 87/E6A5
+      rlCheckStaffHasTargets ; 87/E6A5
 
         .al
         .autsiz
         .databank ?
 
+        ; wCurrentItemDataROMPointer = a staff: carry set if it has a target (aStaffTargetChecks, one per staff effect).
+
         phx
         jsl rlGetItemStaffEffect
         asl a
         tax
-        jsr (aUnknown87E6B1,x)
+        jsr (aStaffTargetChecks,x)
         plx
         rtl
 
         .databank 0
 
-      aUnknown87E6B1 ; 87/E6B1
+      aStaffTargetChecks ; 87/E6B1
 
-        .word <>rsUnknown87E6D3
-        .word <>rsUnknown87E6D7
-        .word <>rsUnknown87E6D7
-        .word <>rsUnknown87E6D7
-        .word <>rsUnknown87E6DF
-        .word <>rsUnknown87E6DF
-        .word <>rsUnknown87E6E9
-        .word <>rsUnknown87E6E9
-        .word <>rsUnknown87E6F1
-        .word <>rsUnknown87E6E9
-        .word <>rsUnknown87E6E4
-        .word <>rsUnknown87E705
-        .word <>rsUnknown87E6F6
-        .word <>rsUnknown87E6FB
-        .word <>rsUnknown87E6FB
-        .word <>rsUnknown87E6FB
-        .word <>rsUnknown87E707
+        .word <>rsStaffTargetCheckFail
+        .word <>rsStaffTargetCheckHealOnMap
+        .word <>rsStaffTargetCheckHealOnMap
+        .word <>rsStaffTargetCheckHealOnMap
+        .word <>rsStaffTargetCheckHeal
+        .word <>rsStaffTargetCheckHeal
+        .word <>rsStaffTargetCheckAllyOnMap
+        .word <>rsStaffTargetCheckAllyOnMap
+        .word <>rsStaffTargetCheckAlly
+        .word <>rsStaffTargetCheckAllyOnMap
+        .word <>rsStaffTargetCheckRestore
+        .word <>rsStaffTargetCheckValkyrie
+        .word <>rsStaffTargetCheckSilence
+        .word <>rsStaffTargetCheckEnemy
+        .word <>rsStaffTargetCheckEnemy
+        .word <>rsStaffTargetCheckEnemy
+        .word <>rsStaffTargetCheckNone
 
         ; 87/E6D3
 

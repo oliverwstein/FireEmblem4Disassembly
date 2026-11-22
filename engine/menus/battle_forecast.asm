@@ -60,7 +60,7 @@
 
       rlProcBattleForecastTargetFirstCycle ; 85/8DAB
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -170,7 +170,7 @@
         jsl rlBattleForecastDrawTarget
         jsl rlBattleForecastAvoidCursor
         bcc _8E92
-        sta $0534,b
+        sta wMapMenuNewPosition,b
         jsl rlMoveMapMenu
         bra _8E96
 
@@ -269,7 +269,7 @@
         jsl rlBattleForecastDrawTarget
         jsl rlBattleForecastAvoidCursor
         bcc _8EFD
-        sta $0534,b
+        sta wMapMenuNewPosition,b
         jsl rlMoveMapMenu
         bra _8F0F
 
@@ -594,7 +594,7 @@
 
       rlProcBattleForecastAttackerFirstCycle ; 85/90C8
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -627,7 +627,7 @@
         bcc _90F9
         clc
         adc #$0008
-        sta $0534,b
+        sta wMapMenuNewPosition,b
         jsl rlMoveMapMenu
         bra _90FD
 
@@ -684,7 +684,7 @@
         bcc _9149
         clc
         adc #$0008
-        sta $0534,b
+        sta wMapMenuNewPosition,b
         jsl rlMoveMapMenu
         bra _9157
 
@@ -741,7 +741,7 @@
         .databank $7E
         lda #$24F0
         sta aCurrentTilemapInfo,b
-        lda $0010,b,y
+        lda structActionStructEntry.CurrentHP,b,y
         ldx #$0101
         jsl rlDrawMapMenuNumber
         lda $003A,b,y

@@ -1995,7 +1995,7 @@
 
         ; 87/D637
 
-        jsr rsUnknown87D65A
+        jsr rsAIScoreTargetsNearLeader
         ldy #3
         ldx #0
 

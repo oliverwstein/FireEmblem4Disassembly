@@ -161,7 +161,7 @@
         sta lR18+1
         lda #<>aPhaseBannerFrameTiles
         sta lR18
-        jsl rlUnknown878BF0
+        jsl rlFillTilemapEntryWithPattern
         jsr rsPhaseBannerDrawEmblem
         jsl rlDMAByStruct
 
@@ -947,6 +947,32 @@
         .databank 0
 
         ; 85/B069
+
+      rsPhaseBannerWhitenText ; 85/B069
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sets colours $68-$6F to white. Nothing in the build reaches this.
+
+        phx
+        ldx #$0000
+
+        _B06D
+        lda #$7FFF
+        sta $01D0,b,x
+        inc x
+        inc x
+        cpx #$0010
+        bmi _B06D
+        plx
+        rts
+
+        .databank 0
+
+        ; 85/B07C
 
     .endsection Unsorted85B039Section
 

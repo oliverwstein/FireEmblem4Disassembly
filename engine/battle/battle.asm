@@ -3558,7 +3558,7 @@
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
         jsl rlGetItemROMDataByInventorySlot
-        jsl rlUnknown87E86A
+        jsl rlGetStaffHealAmount
         sta wRoutineVariable1,b
 
         lda structActionStructEntry.UnitRAMPointer,b,y
@@ -3610,7 +3610,7 @@
         lda structActionStructEntry.WeaponInventorySlot,b,x
         and #$00FF
         jsl rlGetItemROMDataByInventorySlot
-        jsl rlUnknown87E89A
+        jsl rlApplyFortify
         jsr rsUnknown84E62C
 
         lda structActionStructEntry.UnitRAMPointer,b,x
