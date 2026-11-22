@@ -1,5 +1,5 @@
 .long 0,Pointer
-Event000,$8FEF55
+Event000,aEventDebug8FEF78
 EventPrologueOpening,aEventPrologueOpening
 EventPrologueEdainAbduction,aEventPrologueEdainAbduction
 EventPrologueQuanGroupSpawn,aEventPrologueQuanGroupSpawn

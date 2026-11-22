@@ -1699,18 +1699,18 @@
         .word <>rsUnknown87E6D7
         .word <>rsUnknown87E6D7
         .word <>rsUnknown87E6D7
-        .word <>rsUnknown87E6D7._E6DF
-        .word <>rsUnknown87E6D7._E6DF
-        .word <>rsUnknown87E6D7+18
-        .word <>rsUnknown87E6D7+18
-        .word <>rsUnknown87E6D7+26
-        .word <>rsUnknown87E6D7+18
-        .word <>rsUnknown87E6D7+13
+        .word <>rsUnknown87E6DF
+        .word <>rsUnknown87E6DF
+        .word <>rsUnknown87E6E9
+        .word <>rsUnknown87E6E9
+        .word <>rsUnknown87E6F1
+        .word <>rsUnknown87E6E9
+        .word <>rsUnknown87E6E4
         .word <>rsUnknown87E705
-        .word <>rsUnknown87E6D7+31
-        .word <>rsUnknown87E6D7+36
-        .word <>rsUnknown87E6D7+36
-        .word <>rsUnknown87E6D7+36
+        .word <>rsUnknown87E6F6
+        .word <>rsUnknown87E6FB
+        .word <>rsUnknown87E6FB
+        .word <>rsUnknown87E6FB
         .word <>rsUnknown87E707
 
         ; 87/E6D3

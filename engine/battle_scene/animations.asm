@@ -40,7 +40,7 @@
         ; placeholder pointing into bank $86.
 
         ; 00: no ID (placeholder)
-        .long $868000
+        .long aEventEngineVersion
         .word $FFFF
         ; 01: no ID
         .long g4bppcBattleAnimationSheet01

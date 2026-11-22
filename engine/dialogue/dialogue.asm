@@ -6762,9 +6762,11 @@
         .word <>aDialogueCustomWidth79
         .word <>aDialogueCustomWidth79
         .word <>aDialogueCustomWidth79
-        .word <>$A3AB ; this isnt a table but a routine
-        .word <>$A3D9
-        .word <>$A3DD
+
+      aDialogueEngineMainActionTable ; 91/A3A5
+        .word <>rlUnknown91A3AB
+        .word <>rlUnknown91A3D9
+        .word <>rlUnknown91A3DD
 
         ; 91/A3AB
 

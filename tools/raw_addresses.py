@@ -130,6 +130,8 @@ def main():
             if re.match(r'\s*\.(logical|fill|text|virtual)\b', code) or not code.strip():
                 continue
             for m in NUMBER.finditer(code):
+                if m.group(1).upper() == 'FF0000' and code[:m.start()].rstrip().endswith('&'):
+                    continue
                 v = int(m.group(1), 16)
                 o = rom_offset(v)
                 if o is None:

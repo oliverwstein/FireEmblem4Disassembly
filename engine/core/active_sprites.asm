@@ -1095,7 +1095,7 @@
         .autsiz
         .databank ?
 
-        lda #$8008
+        lda #<>rsUnknown818008
         sta aActiveSpriteSystem.aOnCycle,b,x
         rts
 

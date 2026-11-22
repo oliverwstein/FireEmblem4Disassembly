@@ -377,26 +377,26 @@
         .databank $88
         phx
         lda #$0000
-        ldx #$8D56
+        ldx #<>rlReset
 
         _8024
         clc
         adc $800000,x
         inc x
         inc x
-        cpx #$8E2D
+        cpx #<>rlUnknown808E2D
         bcc _8024
         cmp @l aCodeChecksumsCopy88.Bank80Sum
         bne _8066
         lda #$0000
-        ldx #$8017
+        ldx #<>rlUnknown878017
 
         _803C
         clc
         adc $870000,x
         inc x
         inc x
-        cpx #$80AA
+        cpx #<>rlUnknown8780AA
         bcc _803C
         cmp @l aCodeChecksumsCopy88.Bank87Sum
         bne _8066
@@ -464,28 +464,28 @@
         beq _CLC
 
           lda #0
-          ldx #$8D56
+          ldx #<>rlReset
 
             -
             clc
             adc $800000,x
             inc x
             inc x
-            cpx #$8E2D
+            cpx #<>rlUnknown808E2D
             bcc -
 
           cmp aCodeChecksums.Bank80Sum
           bne _SEC
 
           lda #0
-          ldx #$8017
+          ldx #<>rlUnknown878017
 
             -
             clc
             adc $870000,x
             inc x
             inc x
-            cpx #$80AA
+            cpx #<>rlUnknown8780AA
             bcc -
 
           cmp aCodeChecksums.Bank87Sum
@@ -535,8 +535,8 @@
         ; Nothing in the built code reads this; the checks use these numbers as
         ; constants.
 
-        .word $8D56, $8E2D
-        .word $8017, $80AA
+        .word <>rlReset, <>rlUnknown808E2D
+        .word <>rlUnknown878017, <>rlUnknown8780AA
 
       aCodeChecksumsCopy87 .structCodeChecksums $AA24, $B66C, $5349 ; 87/8008
 

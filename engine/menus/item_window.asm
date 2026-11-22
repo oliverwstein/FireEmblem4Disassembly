@@ -275,9 +275,9 @@
         bne _CF3F
         lda #$0002
         sta wGameStateStep,b
-        lda #$8000
+        lda #(`aUnknown80CD13)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$CD13
+        lda #<>aUnknown80CD13
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
@@ -2404,9 +2404,9 @@
         dec x
         dec x
         bne _C027
-        lda #$8000
+        lda #(`aUnknown80CD1C)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$CD1C
+        lda #<>aUnknown80CD1C
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         sta $7FB010
@@ -2505,9 +2505,9 @@
 
 
         _C10C
-        lda #$8000
+        lda #(`aUnknown80CD13)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$CD13
+        lda #<>aUnknown80CD13
         sta lMapMenuTilemapRAMEntryPointer,b
         rtl
 
@@ -2600,9 +2600,9 @@
         .autsiz
         .databank ?
 
-        lda #$8000
+        lda #(`aUnknown80CD25)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$CD25
+        lda #<>aUnknown80CD25
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         ldx #$00C0
@@ -2619,9 +2619,9 @@
         sta lR18+1
         ldx #$0000
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80CD13)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$CD13
+        lda #<>aUnknown80CD13
         sta lMapMenuTilemapRAMEntryPointer,b
         ldx #$0000
 
@@ -2704,9 +2704,9 @@
 
         ; The same text as rsItemWindowDrawItemDescription, drawn lower in the window.
 
-        lda #$8000
+        lda #(`aUnknown80CD25)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$CD25
+        lda #<>aUnknown80CD25
         sta lMapMenuTilemapRAMEntryPointer,b
         lda #$0000
         ldx #$00C0
@@ -2723,9 +2723,9 @@
         sta lR18+1
         ldx #$0000
         jsl rlDrawMenuTextLine
-        lda #$8000
+        lda #(`aUnknown80CD13)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #$CD13
+        lda #<>aUnknown80CD13
         sta lMapMenuTilemapRAMEntryPointer,b
         ldx #$0000
 

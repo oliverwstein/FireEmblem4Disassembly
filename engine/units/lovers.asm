@@ -506,7 +506,7 @@
         inc x
         inc y
         inc y
-        cpy #$001E
+        cpy #size(structLoverDataRAM)
         bne -
 
         pla

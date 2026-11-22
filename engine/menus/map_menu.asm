@@ -1603,7 +1603,7 @@
         sta wR3
         jsl rlGetMapMenuTileIndex
         clc
-        adc #$027E
+        adc #size(aDialogueBoxTilemap) - 2
         sec
         sbc #32
         clc

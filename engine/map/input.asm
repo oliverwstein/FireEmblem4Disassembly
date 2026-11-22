@@ -588,9 +588,10 @@
         sta $089B,b
         lda #$0009
         jsl rlPlaySoundEffect
-        jml rlUnknown88B2A5._B316
+        jml rlUnknown88B316
 
-        .byte $18, $6B
+        clc
+        rtl
 
 
         _B2A3
@@ -651,25 +652,45 @@
         jsl rlGetFactionSlotLocationID
         cmp $089F,b
         bne _B305
-        jml _B316
+        jml rlUnknown88B316
 
-        .byte $18, $6B
+        clc
+        rtl
 
 
         _B305
         jml rlUnknown88B339
 
-        .byte $18, $6B
+        clc
+        rtl
 
 
         _B30B
         sec
         rtl
 
-        .byte $22, $8D, $E9, $87, $5C, $16, $B3, $88, $6B
+        .databank 0
 
+      rlUnknown88B30D ; 88/B30D
 
-        _B316
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetLocationEventDataEntry
+        jml rlUnknown88B316
+        rtl
+
+        .databank 0
+
+      rlUnknown88B316 ; 88/B316
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         jsl rlUnknown88B3AF
         lda #$0000
         sta $088B,b

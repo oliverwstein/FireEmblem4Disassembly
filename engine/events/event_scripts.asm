@@ -7317,14 +7317,14 @@
         stz wDMAArrayPosition,b
         jsl rlDMAByStruct
 
-          .structDMAToVRAM g4bppCursorSprites, $0400, $80, $C000
+          .structDMAToVRAM g4bppCursorSprites, size(g4bppCursorSprites), $80, $C000
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM g4bppMapTiles, $5000, $80, $0000
+          .structDMAToVRAM g4bppMapTiles, size(g4bppMapTiles), $80, $0000
 
         jsl rlUnknown889305
-        ldx #$17FE
+        ldx #size(aUnknownD95000) - 2
 
         _80DD
         lda aUnknownD95000,x
@@ -7482,10 +7482,10 @@
         stz wDMAArrayPosition,b
         jsl rlDMAByStruct
 
-          .structDMAToVRAM g4bppMapTiles, $5000, $80, $0000
+          .structDMAToVRAM g4bppMapTiles, size(g4bppMapTiles), $80, $0000
 
         jsl rlUnknown889305
-        ldx #$17FE
+        ldx #size(aUnknownD95000) - 2
 
         _8266
         lda aUnknownD95000,x
@@ -7495,7 +7495,7 @@
         bpl _8266
         jsl rlDMAByStruct
 
-          .structDMAToVRAM g4bppCursorSprites, $0400, $80, $C000
+          .structDMAToVRAM g4bppCursorSprites, size(g4bppCursorSprites), $80, $C000
 
         ldx #$00DE
 

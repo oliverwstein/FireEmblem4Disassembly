@@ -417,7 +417,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD4E9
         sta lR18
-        jml rsUnknown8AC1BC._C312
+        jml rsUnknown8AC312
 
         .databank 0
 
@@ -603,7 +603,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD4E9
         sta lR18
-        jml rsUnknown8AC1BC._C312
+        jml rsUnknown8AC312
 
 
         _E8EC
@@ -721,7 +721,7 @@
         sta lR18+1
         lda #<>dialogueShopUnknown8AD4E9
         sta lR18
-        jml rsUnknown8AC1BC._C312
+        jml rsUnknown8AC312
 
 
         _E9DB

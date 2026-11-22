@@ -39,9 +39,11 @@
       .al
       .xl
 
-      .enc "screen"
-      .text "VER 960402 2000"
-      .byte 0
+      aEventEngineVersion ; 86/8000
+
+        .enc "screen"
+        .text "VER 960402 2000"
+        .byte 0
 
       rlUnknown868010 ; 86/8010
 
