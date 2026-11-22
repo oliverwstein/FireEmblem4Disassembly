@@ -104,7 +104,7 @@
         dec a
         clc
         adc wRoutineVariable1,b
-        jsl rlUnknown91EBBE
+        jsl rlGetLossCountByIndex
         ply
         plp
         plb

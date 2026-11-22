@@ -14510,7 +14510,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown91ECA2
+        jsl rlGetKeptRanking
         beq _EEC2
         cmp #$0006
         bcs _EEC2

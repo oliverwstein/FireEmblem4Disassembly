@@ -966,7 +966,7 @@
           dec a
           clc
           adc lR18
-          jsl rlUnknown91EB0F
+          jsl rlRecordUnitLoss
 
         _B981
         lda #$18

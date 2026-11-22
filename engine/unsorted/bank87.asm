@@ -52,11 +52,11 @@
         lda #$0000
         sta @l $001FFC
         sta @l $001FFE
-        jsl rlUnknown91ECDF
-        cmp #$6A19
+        jsl rlGetAntiTamperMark
+        cmp #SRAM_ANTI_TAMPER_MARK
         beq _8063
-        lda #$6A19
-        jsl rlUnknown91ECDA
+        lda #SRAM_ANTI_TAMPER_MARK
+        jsl rlSetAntiTamperMark
         jsl rlUnknown91E8CC
 
         _8061
@@ -108,7 +108,7 @@
 
         _809B
         lda #$0000
-        jsl rlUnknown91ECDA
+        jsl rlSetAntiTamperMark
         plx
         plp
         plb

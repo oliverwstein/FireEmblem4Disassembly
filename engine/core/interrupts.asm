@@ -209,7 +209,7 @@
         jmp (wVBlankPointer)
 
         +
-        jsl rlUnknown91EB76
+        jsl rlTickGameTimer
         inc wVBlankEnabledFramecount
         ply
         plx
@@ -225,7 +225,7 @@
         inc wVBlankDisabledFramecount
         jsl rlSendSoundQueuesToAPU
         jsl rlCopyINIDISPBuffer
-        jsl rlUnknown91EB76
+        jsl rlTickGameTimer
         ply
         plx
         pla

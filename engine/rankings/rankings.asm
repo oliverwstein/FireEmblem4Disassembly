@@ -106,7 +106,7 @@
         
           -
           txa
-          jsl rlUnknown91EBBE
+          jsl rlGetLossCountByIndex
           clc
           adc wRoutineVariable1,b
           sta wRoutineVariable1,b

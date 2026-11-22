@@ -228,7 +228,7 @@
         ; Anti-tamper: zero aRNArray values below playtime-scaled threshold when checksums fail
 
         rep #$30
-        jsl rlUnknown91EBC9
+        jsl rlGetGameTimeHoursMinutes
         lsr a
         lsr a
         sta bRNGUnknown1,b

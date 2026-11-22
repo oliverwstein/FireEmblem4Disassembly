@@ -126,3 +126,16 @@
     .word ? ; $07FA
     .word ? ; $07FC
   .endstruct
+
+  ; A slot's magic number (structSaveDataEntry.MagicNumber). This ROM writes
+  ; SAVE_MAGIC_NUMBER; loading also accepts the older format, which stores the
+  ; items in another order (aSaveOlderItemOrder) and turn $FF between chapters.
+  SAVE_MAGIC_NUMBER          = $9207
+  SAVE_MAGIC_NUMBER_OLDER    = $1206
+
+  ; Tags in the top bits of the SRAM words after the slots, which mark the value
+  ; below them as written.
+  SRAM_RANKING_TAG           = $F290 ; aSRAM.wRankingScore, ranking in bits 0-2
+  SRAM_LAST_SAVED_SLOT_TAG   = $D8C0 ; aSRAM.wLastSavedSlot, slot in bits 0-1
+  SRAM_ANTI_TAMPER_MARK      = $6A19 ; aSRAM.wAntiTamperMark after a failed check
+

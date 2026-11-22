@@ -2744,7 +2744,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown91EBC9
+        jsl rlGetGameTimeHoursMinutes
         txa
         sta wR0
         stz wR2
@@ -2838,7 +2838,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown91EBC9
+        jsl rlGetGameTimeHoursMinutes
         sta wR0
         stz wR4
 

@@ -448,7 +448,7 @@
         jsl rlInitiateChapterEventRAMData
         jsl rlClearAIEngineRAM
         jsl rlInitRNArray
-        jsl rlUnknown91EC8E
+        jsl rlLoadLastUsedOptions
         jsl rlUnknown87BF43
         cmp #$0001
         bne _ADD0

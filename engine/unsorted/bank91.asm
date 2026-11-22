@@ -881,11 +881,11 @@
 
         php
         pha
-        jsl rlUnknown91EA86
+        jsl rlGetSaveSlotTurn
         tax
         pla
         phx
-        jsl rlUnknown91EA7B
+        jsl rlGetSaveSlotChapter
         plx
         cpx #$FFFF
         bne _AC05
@@ -975,11 +975,11 @@
 
         php
         pha
-        jsl rlUnknown91EA86
+        jsl rlGetSaveSlotTurn
         tax
         pla
         phx
-        jsl rlUnknown91EA7B
+        jsl rlGetSaveSlotChapter
         plx
         cpx #$FFFF
         bne _AC90
@@ -2112,7 +2112,7 @@
         .databank ?
 
         jsl rlCheckCodeChecksumsCopy88
-        jsl rlUnknown91E99B
+        jsl rlStartNewGameSave
         lda #$0000
         sta aSave,b
         stz wUnknown000D79,b
@@ -2714,7 +2714,7 @@
         lda #$0003
         jsr rsUnknown91DB6D
         jsr rsUnknown91DCB9
-        jsl rlUnknown91ECEF
+        jsl rlGetLastSavedSlot
         and #$0003
         inc a
         sta $1864,b
@@ -2866,7 +2866,7 @@
         jsl rlPlaySoundEffect
         lda $1864,b
         dec a
-        jsl rlUnknown91E9BB
+        jsl rlEraseSaveSlot
         jsr rsUnknown91DB6D
         lda #$000C
         jsr rsUnknown91DCAC

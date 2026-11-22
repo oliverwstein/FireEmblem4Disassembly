@@ -1347,11 +1347,14 @@
       wCharacterYPosition .word ?       ; $001B23
       wStructIndex .word ?              ; $001B25
       wStructCount .word ?              ; $001B27
-      .word ?                           ; $001B29
+      wSlotDataToMatch .word ?          ; $001B29
+        ; rlRecordUnitLoss: this save's slot data word (chapter and save ID).
       aFactionEntryOffsets .brept 7     ; $001B2B
         .word ?
       .endrept
-      .word ?                           ; $001B39
+      wCreatedUnitType .word ?          ; $001B39
+        ; The unit type (0 static, 1 dynamic, 2 holy, 3 enemy) of the unit
+        ; rlCreateUnitFromBuffers is building.
       wCurrentBitOffset .word ?         ; $001B3B
       wAvtiveSaveSlotOffset .word ?     ; $001B3D
       wDataBitLength .word ?            ; $001B3F

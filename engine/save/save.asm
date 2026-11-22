@@ -1,5 +1,14 @@
-; Saving to and loading from SRAM save slots.
-; Also unnamed helpers that only the loading routines use.
+; Saving to and loading from the four SRAM save slots (include/SRAM.h, the slot
+; layout in include/Save.h). rlHandleSaveFile runs the save menu's choice:
+; rlSaveToSaveSlot packs the game into a slot as bitfields (rsWriteBitpackedSaveData
+; and the per-part save routines); rlLoadFromSaveSlot unpacks it and rebuilds each
+; unit from the buffers (rlCreateUnitFromBuffers and the rsRestore... routines
+; for the fields the save does not keep). A slot is valid when its checksum and
+; magic number match (rsFillSaveSlotDataBuffers). Also kept in SRAM, outside the
+; game state: unit losses and the game timer, written into the slots as they
+; happen (rlRecordUnitLoss, rlTickGameTimer); the last used options; the best
+; final ranking; the last saved slot; and the anti-tamper mark. Banks $87 and $91;
+; the save menu's screen setup is in bank $80.
 
     .section CreateUnitFromBuffersByTypeSection
 
@@ -54,16 +63,16 @@
         lda #$EB66
         sta lRAMBufferPointer,b
         jsl rlLoadExtendedCharacterDataFromBuffer
-        jsr rsUnknown87F80F
+        jsr rsRestoreLeadershipStars
         lda #(`aUnit1DataBuffer)<<8
         sta lRAMBufferPointer+1,b
         lda #<>aUnit1DataBuffer
         sta lRAMBufferPointer,b
         jsl rlLoadPersonalCharacterDataFromBuffer
-        jsr rsUnknown87F7B2
-        jsr rsUnknown87FD09
-        jsr rsUnknown87F890
-        jsr rsUnknown87F967
+        jsr rsRestorePersonalData
+        jsr rsGatherUnitItems
+        jsr rsCreateUnitInventory
+        jsr rsCreateUnitLoverData
         plx
         rts
 
@@ -117,22 +126,22 @@
         lda #$EB84
         sta lRAMBufferPointer,b
         jsl rlLoadCharacterROMDataFromBuffer
-        jsr rsUnknown87F860
+        jsr rsRestoreDynamicConstantData
         lda #$7F00
         sta lRAMBufferPointer+1,b
         lda #$EB66
         sta lRAMBufferPointer,b
         jsl rlLoadExtendedCharacterDataFromBuffer
-        jsr rsUnknown87F80F
+        jsr rsRestoreLeadershipStars
         lda #(`aUnit1DataBuffer)<<8
         sta lRAMBufferPointer+1,b
         lda #<>aUnit1DataBuffer
         sta lRAMBufferPointer,b
         jsl rlLoadPersonalCharacterDataFromBuffer
-        jsr rsUnknown87F7B2
-        jsr rsUnknown87FD09
-        jsr rsUnknown87F890
-        jsr rsUnknown87F967
+        jsr rsRestorePersonalData
+        jsr rsGatherUnitItems
+        jsr rsCreateUnitInventory
+        jsr rsCreateUnitLoverData
         plx
         rts
 
@@ -189,8 +198,8 @@
         lda #<>aUnit1DataBuffer
         sta lRAMBufferPointer,b
         jsl rlLoadPersonalCharacterDataFromBuffer
-        jsr rsUnknown87F7B2
-        jsr rsUnknown87F890
+        jsr rsRestorePersonalData
+        jsr rsCreateUnitInventory
         plx
         rts
 
@@ -246,8 +255,8 @@
         lda #<>aUnit1DataBuffer
         sta lRAMBufferPointer,b
         jsl rlLoadPersonalCharacterDataFromBuffer
-        jsr rsUnknown87F7B2
-        jsr rsUnknown87F890
+        jsr rsRestorePersonalData
+        jsr rsCreateUnitInventory
         pla
         sta wRoutineVariable1,b
         plx
@@ -257,12 +266,14 @@
 
         ; 87/F7B2
 
-      rsUnknown87F7B2 ; 87/F7B2
+      rsRestorePersonalData ; 87/F7B2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; After the personal data comes back from the save: sets the fields the save does not keep: the love data ID (from the character ID), canto movement and the ring and weapon bonuses cleared, the lover cleared for holy and enemy units, and class money (the class's for player units; holy and enemy units keep the saved value unless it is 0).
 
         phb
         phx
@@ -286,7 +297,7 @@
         sta $000B,b,y
         sta $0009,b,y
         rep #$20
-        lda $1B39,b
+        lda aSave.wCreatedUnitType,b
         cmp #$0000
         beq _F7FC
         cmp #$0001
@@ -316,12 +327,14 @@
 
         ; 87/F80F
 
-      rsUnknown87F80F ; 87/F80F
+      rsRestoreLeadershipStars ; 87/F80F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets leadership stars, which the save does not keep: Sigurd and Quan 2, Seliph and Altena 3, Hannibal 5, everyone else 0.
 
         phb
         phx
@@ -344,7 +357,7 @@
         beq _F852
         cmp #Seliph
         beq _F84D
-        cmp #$002C
+        cmp #Altena
         beq _F84D
         cmp #Hannibal
         beq _F848
@@ -379,12 +392,14 @@
 
         ; 87/F860
 
-      rsUnknown87F860 ; 87/F860
+      rsRestoreDynamicConstantData ; 87/F860
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; For a dynamic unit (a child), whose constant data lives in RAM: copies the six bytes the save does not keep from the character's ROM entry (Y, bank $83).
 
         phb
         phx
@@ -423,12 +438,14 @@
 
         ; 87/F890
 
-      rsUnknown87F890 ; 87/F890
+      rsCreateUnitInventory ; 87/F890
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Allocates the unit's inventory and fills it: player units from the save buffer (rlLoadInventoryFromBuffer), holy and enemy units from their ROM equipment (with the status set to healthy meanwhile). Then sets the equipped weapon's stat bonus.
 
         ldx wSelectedUnitDataRAMPointer,b
         lda #(`aInventoryRAMArea)<<8
@@ -442,12 +459,12 @@
         sta $7E000E,x
         lda lR25
         sta $7E000D,x
-        lda $1B39,b
+        lda aSave.wCreatedUnitType,b
         cmp #$0003
         beq _F8CE
         cmp #$0002
         beq _F8C7
-        jsl rlUnknown87F8EF
+        jsl rlLoadInventoryFromBuffer
         bra _F8EA
 
 
@@ -482,12 +499,14 @@
 
         ; 87/F8EF
 
-      rlUnknown87F8EF ; 87/F8EF
+      rlLoadInventoryFromBuffer ; 87/F8EF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Builds the inventory's struct header and appends each item the buffer lists (aUnit1DataBuffer._Inventory), then restores the equipped weapon bits.
 
         phb
         phx
@@ -549,12 +568,14 @@
 
         ; 87/F967
 
-      rsUnknown87F967 ; 87/F967
+      rsCreateUnitLoverData ; 87/F967
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Female units (generation ID 16 and up) keep love points: allocates their lover data and copies it from the buffer, turning a saved $01FF into $FFFF. Others get no lover data.
 
         phy
         jsl rlGetSelectedUnitGenerationID
@@ -957,12 +978,14 @@
       .al
       .xl
 
-      rsUnknown87FD09 ; 87/FD09
+      rsGatherUnitItems ; 87/FD09
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; After loading, items carry their owner's character ID and inventory slot (structItemRAMEntry.OwnerID_InventorySlot). Finds this unit's items in inventory or supply, writes the unit pointer over that field, and puts the inventory items in the buffer's list in slot order, without gaps.
 
         phb
         php
@@ -979,12 +1002,12 @@
         lda #$0000
         sta lR20
         sta aUnit1DataBuffer._Inventory.Items
-        sta $7FEBAC
-        sta $7FEBAE
-        sta $7FEBB0
-        sta $7FEBB2
-        sta $7FEBB4
-        sta $7FEBB6
+        sta aUnit1DataBuffer._Inventory.Items+2
+        sta aUnit1DataBuffer._Inventory.Items+4
+        sta aUnit1DataBuffer._Inventory.Items+6
+        sta aUnit1DataBuffer._Inventory.Items+8
+        sta aUnit1DataBuffer._Inventory.Items+10
+        sta aUnit1DataBuffer._Inventory.Items+12
         lda #$0001
         sta lR18
         jsl rlGetItemRAMStructEntryByPlayerItemIndex
@@ -1063,7 +1086,7 @@
         _FDC2
         lda aUnit1DataBuffer._Inventory.Items,x
         beq _FDCD
-        sta $EBAA,b,y
+        sta <>aUnit1DataBuffer._Inventory.Items,b,y
         inc y
         inc y
 
@@ -1112,7 +1135,7 @@
 
             lda aSave.wMenuOperation,b
             dec a
-            jsl rlUnknown91ECE4
+            jsl rlSetLastSavedSlot
             bra +
 
           _LoadFile
@@ -1195,11 +1218,13 @@
 
         .databank 0
 
-      rlUnknown91E99B ; 91/E99B
+      rlStartNewGameSave ; 91/E99B
 
         .al
         .autsiz
         .databank ?
+
+        ; New game: resets the game's RAM and units, rereads the slots' save data words, takes a save ID no slot uses (rsGetNewUniqueSaveID) as wActiveSaveData, and clears the unit losses and the game timer.
 
         jsl rlUnknown88818A
         jsl rlUnknown81A85C
@@ -1214,11 +1239,13 @@
 
         .databank 0
 
-      rlUnknown91E9BB ; 91/E9BB
+      rlEraseSaveSlot ; 91/E9BB
 
         .al
         .autsiz
         .databank ?
+
+        ; Erases slot A by storing a checksum one off the real one, so the slot no longer validates. When no slot is left, also clears the last used options and the kept ranking.
 
         phb
         pha
@@ -1274,10 +1301,10 @@
 
             lda aSave.wActiveSlot,b
             jsr rsGetSaveSlotMagicNumber
-            cmp #$9207
+            cmp #SAVE_MAGIC_NUMBER
             beq +
 
-              cmp #$1206
+              cmp #SAVE_MAGIC_NUMBER_OLDER
               bne _AE21
 
             +
@@ -1369,35 +1396,39 @@
 
         .databank 0
 
-      rlUnknown91EA7B ; 91/EA7B
+      rlGetSaveSlotChapter ; 91/EA7B
 
         .al
         .autsiz
         .databank ?
 
+        ; A = slot: returns the chapter saved in it.
+
         jsr rsGetSaveSlotOffset
-        lda $306001,x
+        lda aSRAM + structSaveDataEntry.CurrentChapter,x
         and #$00FF
         rtl
 
         .databank 0
 
-      rlUnknown91EA86 ; 91/EA86
+      rlGetSaveSlotTurn ; 91/EA86
 
         .al
         .autsiz
         .databank ?
 
+        ; A = slot: returns its turn number, or $FFFF for a slot in the older format (magic number $1206, which this ROM reads but never writes) whose turn is $FF. The file menu shows such a slot as turn 0 of the next chapter.
+
         jsr rsGetSaveSlotOffset
-        lda $306015,x
+        lda aSRAM + structSaveDataEntry.CurrentTurnHigh,x
         xba
         sep #$20
-        ora $306002,x
+        ora aSRAM + structSaveDataEntry.CurrentTurnLow,x
         rep #$20
         pha
 
-        lda $3067BC,x
-        cmp #$9207
+        lda aSRAM + structSaveDataEntry.MagicNumber,x
+        cmp #SAVE_MAGIC_NUMBER
         beq _End
 
         pla
@@ -1496,7 +1527,7 @@
           cpy #4 * 2
           bne _Loop
 
-        jsr rsUnknown91ECA6
+        jsr rsKeepFinalRanking
 
         ply
         plx
@@ -1504,11 +1535,13 @@
 
         .databank 0
 
-      rlUnknown91EB0F ; 91/EB0F
+      rlRecordUnitLoss ; 91/EB0F
 
         .al
         .autsiz
         .databank ?
+
+        ; A = loss index (0-47: generation ID - 1, plus 24 from chapter 6; 48 and up hit a brk): adds one (up to $FF) to its count in aUnitLossesCount and, straight away, in every slot holding this save at this chapter. Resetting cannot undo a loss.
 
         phx
         phy
@@ -1533,20 +1566,20 @@
         ldy #0
         
           _Loop
-          lda $0D69,b
+          lda wCurrentChapter-1,b
           and #$FF00
           ora aSave.wActiveSaveData,b
           and #$FF7F
-          sta $1B29,b
+          sta aSave.wSlotDataToMatch,b
 
           lda aSave.aSlotDataBuffer[0],b,y
           and #$FF7F
-          cmp $1B29,b
+          cmp aSave.wSlotDataToMatch,b
           bne _Next
 
             tya
             lsr a
-            jsr rsUnknown91EB5C
+            jsr rsAddSlotUnitLoss
 
           _Next
           inc y
@@ -1560,11 +1593,13 @@
 
         .databank 0
 
-      rsUnknown91EB5C ; 91/EB5C
+      rsAddSlotUnitLoss ; 91/EB5C
 
         .al
         .autsiz
         .databank ?
+
+        ; Adds one (up to $FF) to loss count aSave.wStructCount in slot A's SRAM.
 
         jsr rsGetSaveSlotOffset
         clc
@@ -1584,11 +1619,13 @@
 
         .databank 0
 
-      rlUnknown91EB76 ; 91/EB76
+      rlTickGameTimer ; 91/EB76
 
         .al
         .autsiz
         .databank ?
+
+        ; Once a frame, from the interrupt handlers, while a game is going: adds one to the game timer, and every $800 frames writes it into every slot holding this save.
 
         php
         phb
@@ -1621,9 +1658,9 @@
               lsr a
               jsr rsGetSaveSlotOffset
               lda aSave.wGameTimerLow,b
-              sta $3067F0,x
+              sta aSRAM + structSaveDataEntry.GameTimerLow,x
               lda aSave.wGameTimerHigh,b
-              sta $3067F2,x
+              sta aSRAM + structSaveDataEntry.GameTimerHigh,x
 
             _Next
             inc y
@@ -1640,11 +1677,13 @@
 
         .databank 0
 
-      rlUnknown91EBBE ; 91/EBBE
+      rlGetLossCountByIndex ; 91/EBBE
 
         .al
         .autsiz
         .databank ?
+
+        ; A = loss index: returns its count. rlGetUnitLossCount gives a unit's index.
 
         phx
         tax
@@ -1655,11 +1694,13 @@
 
         .databank 0
 
-      rlUnknown91EBC9 ; 91/EBC9
+      rlGetGameTimeHoursMinutes ; 91/EBC9
 
         .al
         .autsiz
         .databank ?
+
+        ; Returns the game time from the frame timer: X hours (at most 9999), A minutes.
 
         lda aSave.wGameTimerLow,b
         sta wR12
@@ -1819,13 +1860,15 @@
 
         .databank 0
 
-      rlUnknown91EC8E ; 91/EC8E
+      rlLoadLastUsedOptions ; 91/EC8E
 
         .al
         .autsiz
         .databank ?
 
-        jsr rsUnknown91EC9A
+        ; At boot: puts the options kept with the last save (aSRAM.wLastUsedOptions) into wOptionSettings.
+
+        jsr rsLoadLastUsedOptions
         rtl
 
         .databank 0
@@ -1842,7 +1885,7 @@
 
         .databank 0
 
-      rsUnknown91EC9A ; 91/EC9A
+      rsLoadLastUsedOptions ; 91/EC9A
 
         .al
         .autsiz
@@ -1854,29 +1897,33 @@
 
         .databank 0
 
-      rlUnknown91ECA2 ; 91/ECA2
+      rlGetKeptRanking ; 91/ECA2
 
         .al
         .autsiz
         .databank ?
 
-        jsr rsUnknown91ECC3
+        ; Returns the final ranking kept in SRAM (rsGetKeptRanking).
+
+        jsr rsGetKeptRanking
         rtl
 
         .databank 0
 
-      rsUnknown91ECA6 ; 91/ECA6
+      rsKeepFinalRanking ; 91/ECA6
 
         .al
         .autsiz
         .databank ?
+
+        ; When a save is marked finished (rlSetSaveSlotCompletionFlag): keeps the game's final ranking plus 1 (rlCalculateFinalRankingScore, 1-7) in aSRAM.wRankingScore, tagged $F290, unless the kept one is lower.
 
         jsl rlCalculateFinalRankingScore
         inc a
         and #$0007
         sta wR0
 
-        jsr rsUnknown91ECC3
+        jsr rsGetKeptRanking
         beq +
 
           cmp wR0
@@ -1884,7 +1931,7 @@
 
         +
         lda wR0
-        ora #$F290
+        ora #SRAM_RANKING_TAG
         sta aSRAM.wRankingScore
 
         _End
@@ -1892,17 +1939,19 @@
 
         .databank 0
 
-      rsUnknown91ECC3 ; 91/ECC3
+      rsGetKeptRanking ; 91/ECC3
 
         .al
         .autsiz
         .databank ?
 
+        ; Returns the ranking kept in aSRAM.wRankingScore (1-7), or 0 without the $F290 tag.
+
         lda aSRAM.wRankingScore
         pha
 
         and #$FFF8
-        cmp #$F290
+        cmp #SRAM_RANKING_TAG
         beq +
 
           pla
@@ -1916,51 +1965,57 @@
 
         .databank 0
 
-      rlUnknown91ECDA ; 91/ECDA
+      rlSetAntiTamperMark ; 91/ECDA
 
         .al
         .autsiz
         .databank ?
 
-        sta aSRAM.wUnknown3077FE
+        ; Stores A in aSRAM.wAntiTamperMark: the integrity check writes $6A19 the first time it fails, and rlUnknown878074 clears it when the code checksum is right.
+
+        sta aSRAM.wAntiTamperMark
         rtl
 
         .databank 0
 
-      rlUnknown91ECDF ; 91/ECDF
+      rlGetAntiTamperMark ; 91/ECDF
 
         .al
         .autsiz
         .databank ?
 
-        lda aSRAM.wUnknown3077FE
+        lda aSRAM.wAntiTamperMark
         rtl
 
         .databank 0
 
-      rlUnknown91ECE4 ; 91/ECE4
+      rlSetLastSavedSlot ; 91/ECE4
 
         .al
         .autsiz
         .databank ?
+
+        ; Keeps slot A (0-3) in aSRAM.wLastSavedSlot, tagged $D8C0, for the file menu to start on.
 
         and #$0003
-        ora #$D8C0
-        sta aSRAM.wUnknown307FFE
+        ora #SRAM_LAST_SAVED_SLOT_TAG
+        sta aSRAM.wLastSavedSlot
         rtl
 
         .databank 0
 
-      rlUnknown91ECEF ; 91/ECEF
+      rlGetLastSavedSlot ; 91/ECEF
 
         .al
         .autsiz
         .databank ?
 
-        lda aSRAM.wUnknown307FFE
+        ; Returns the slot kept by rlSetLastSavedSlot, or 0 without the tag.
+
+        lda aSRAM.wLastSavedSlot
         pha
         and #$FFFC
-        cmp #$D8C0
+        cmp #SRAM_LAST_SAVED_SLOT_TAG
         beq +
 
           pla
@@ -2377,7 +2432,7 @@
         .databank ?
 
         jsr rsGetSaveSlotOffset
-        lda #$9207
+        lda #SAVE_MAGIC_NUMBER
         sta aSRAM + structSaveDataEntry.MagicNumber,x
         rts
 
@@ -2467,7 +2522,7 @@
         jsl rlInitializeUnitRAM
         jsr rsLoadGeneralSaveData
         jsr rsLoadFactionHeaderRAMData
-        jsl rlUnknown87FB5E
+        jsl rlPrepareFactionUnitLists
         jsr rsLoadItemRAMData
         jsr rsLoadChapterLocationData
         jsr rsLoadChapterEventData
@@ -2761,7 +2816,7 @@
         ldx #<>aSaveStaticDynamicPersonalCharacterData
         jsr rsLoadBitpackedDataOffsets._Entry
 
-        jsl rlUnknown87F9F6
+        jsl rlExpandStaticDynamicUnitBuffer1UnitStates
         rts
 
         .databank 0
@@ -2797,7 +2852,7 @@
         ldx #<>aSaveHolyEnemyPersonalCharacterData
         jsr rsLoadBitpackedDataOffsets._Entry
 
-        jsl rlUnknown87FA57
+        jsl rlExpandHolyEnemyUnitBuffer1UnitStates
         rts
 
         .databank 0
@@ -3165,7 +3220,7 @@
 
         lda aSave.wActiveSlot,b
         jsr rsGetSaveSlotMagicNumber
-        cmp #$9207
+        cmp #SAVE_MAGIC_NUMBER
         beq _F321
 
           lda #PI_IronSword1
@@ -3184,7 +3239,7 @@
             pla
 
             pha
-            jsr rsUnknown91F34B
+            jsr rsSeekOlderFormatItem
             lda aSave.wActiveSlot,b
             jsr rsGetSaveSlotMagicNumber
             ldx #<>aSaveItemRAMData
@@ -3223,16 +3278,18 @@
 
         .databank 0
 
-      rsUnknown91F34B ; 91/F34B
+      rsSeekOlderFormatItem ; 91/F34B
 
         .al
         .autsiz
         .databank ?
 
+        ; For a slot in the older format (magic number $1206): moves lR18 from item A's place to the place aSaveOlderItemOrder gives it in that format.
+
         sta aSave.wStructCount,b
         tax
 
-        lda aUnknown91F369,x
+        lda aSaveOlderItemOrder,x
         and #$00FF
         sec
         sbc aSave.wStructCount,b
@@ -3248,7 +3305,7 @@
 
         .databank 0
 
-      aUnknown91F369 ; 91/F369
+      aSaveOlderItemOrder ; 91/F369
 
         .byte $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0A, $0B, $0C, $0D, $0E, $0F, $10, $11
         .byte $12, $13, $14, $15, $16, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $1F, $20, $21, $22, $23
@@ -3609,7 +3666,7 @@
 
         lda aSave.wActiveSlot,b
         jsr rsGetSaveSlotMagicNumber
-        cmp #$9207
+        cmp #SAVE_MAGIC_NUMBER
         beq _End
 
           lda wCurrentTurn,b
@@ -3954,8 +4011,8 @@
 
         tya
         jsr rsCreateUnitFromBuffersByType
-        jsr rsUnknown87FABC
-        jsr rsUnknown87FB94
+        jsr rsRestoreUnitDeployment
+        jsr rsAddUnitToFaction
         jsl rlLoadBufferedRAMAreaPointer
 
         ply
@@ -3988,7 +4045,7 @@
         tay
         lda $0000,b,y
         and #$00FF
-        sta $1B39,b
+        sta aSave.wCreatedUnitType,b
         asl a
         tax
         jsr (aCreateUnitFromBuffersByTypeHandlers,x)
@@ -4008,12 +4065,14 @@
       .al
       .xl
 
-      rlUnknown87F9F6 ; 87/F9F6
+      rlExpandStaticDynamicUnitBuffer1UnitStates ; 87/F9F6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Undoes rlCompactStaticDynamicUnitBuffer1UnitStates after loading.
 
         lda aUnit1DataBuffer
         sta wR0
@@ -4049,12 +4108,14 @@
       .al
       .xl
 
-      rlUnknown87FA57 ; 87/FA57
+      rlExpandHolyEnemyUnitBuffer1UnitStates ; 87/FA57
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Undoes rlCompactHolyEnemyUnitBuffer1UnitStates after loading.
 
         lda aUnit1DataBuffer
         sta wR0
@@ -4094,12 +4155,14 @@
       .al
       .xl
 
-      rsUnknown87FABC ; 87/FABC
+      rsRestoreUnitDeployment ; 87/FABC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Puts a loaded unit back on the map at its saved position, with deployment state bits from the saved state and its unit states (guarding, moved, asleep, defeated, alive or hidden). A saved state $1F at X and Y $3F means not deployed.
 
         phb
         php
@@ -4138,41 +4201,41 @@
         sta wR1
         and #UnitStateGuardingCastle
         beq _FB0E
-        lda #$0004
+        lda #DeploymentStateGuardingCastle
         tsb wR0
 
         _FB0E
         lda wR1
-        and #$4000
+        and #UnitStateMoved
         beq _FB1A
-        lda #$0008
+        lda #DeploymentStateGrayed
         tsb wR0
 
         _FB1A
         jsl rlGetSelectedUnitStatus
         cmp #StatusSleep
         bne _FB28
-        lda #$2000
+        lda #DeploymentStateAsleep
         tsb wR0
 
         _FB28
         lda wR1
-        and #$0200
+        and #UnitStateDead
         beq _FB36
-        lda #$0020
+        lda #DeploymentStateDefeated
         tsb wR0
         beq _FB42
 
         _FB36
         lda wR1
-        and #$8000
+        and #UnitStateFielded
         beq _FB42
-        lda #$0080
+        lda #DeploymentStateAlive
         bra _FB45
 
 
         _FB42
-        lda #$0040
+        lda #DeploymentStateHidden
 
         _FB45
         tsb wR0
@@ -4206,11 +4269,13 @@
       .al
       .xl
 
-      rlUnknown87FB5E ; 87/FB5E
+      rlPrepareFactionUnitLists ; 87/FB5E
 
         .al
         .autsiz
         .databank ?
+
+        ; After the faction headers load: points each faction's list end (aSave.aFactionEntryOffsets) just past its header, and turns a saved location $0F into $FF (none).
 
         phb
         php
@@ -4266,13 +4331,15 @@
       .al
       .xl
 
-      rsUnknown87FB94 ; 87/FB94
+      rsAddUnitToFaction ; 87/FB94
 
         ; TRACE: odd-opcode
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Appends the loaded unit to its faction's unit list (brk if the list would run into the next faction's). Faction slot 7 has no list.
 
         phb
         php
@@ -4289,8 +4356,8 @@
         beq _FBC0
         asl a
         tax
-        lda $1B2B,b,x
-        cmp $2182,b,x
+        lda aSave.aFactionEntryOffsets[0],b,x
+        cmp <>(aFactionArea+2),b,x
         bne _FBB4
         .byte $00 ; brk
 
@@ -4298,7 +4365,7 @@
         tay
         inc a
         inc a
-        sta $1B2B,b,x
+        sta aSave.aFactionEntryOffsets[0],b,x
         lda wSelectedUnitDataRAMPointer,b
         sta aFactionArea,y
 
