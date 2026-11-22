@@ -287,7 +287,6 @@
         .word $0015 ; Nanna
 
 
-
 ; F1 F0 8C 02 F1 8C 1A F1 8C 31 F1 8C 4D F1 8C 68 F1 8C 86 F1 8C A2 F1 8C
 
     .endsection Unsorted8CEDD0Section

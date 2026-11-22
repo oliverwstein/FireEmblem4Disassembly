@@ -435,10 +435,6 @@
     .endsection Table80C6CDSection
 
 
-
-
-
-
     .section Unsorted80C6D8Section
 
       .al
@@ -514,10 +510,6 @@
     .endsection Table80C716Section
 
 
-
-
-
-
     .section Unsorted80C723Section
 
       .al
@@ -590,10 +582,6 @@
       aUnknown80C762 .dstruct structHDMADirectEntryInfo, rlUnitWindowCGADSUBHDMAInit, rlUnitWindowCGADSUBHDMACycle, aUnknown80C88A, $7FB0B6, PPU_REG_BASE + $31, $03 ; 80/C762
 
     .endsection Table80C760Section
-
-
-
-
 
 
     .section Unsorted80C76DSection
@@ -773,10 +761,6 @@
       aUnknown80C88C .dstruct structHDMADirectEntryInfo, rlUnitWindowBG2VOFSHDMAInit, rlUnitWindowBG2VOFSHDMACycle, $C8D3, $7FB02C, PPU_REG_BASE + $10, $02 ; 80/C88C
 
     .endsection Table80C88ASection
-
-
-
-
 
 
     .section Unsorted80C897Section
@@ -5433,10 +5417,6 @@
 
 
     .endsection Table8BC96ASection
-
-
-
-
 
 
     .section UnitWindowUnknown8BC972Section

@@ -5938,10 +5938,6 @@
     .endsection Table87C5BFSection
 
 
-
-
-
-
     .section Unsorted87C646Section
 
       .al
@@ -6169,10 +6165,6 @@
     .endsection Table87C784Section
 
 
-
-
-
-
     .section Unsorted87C7B4Section
 
       .al
@@ -6354,10 +6346,6 @@
         .byte $40, $41, $42, $43, $00
 
     .endsection Table87C866Section
-
-
-
-
 
 
     .section Unsorted87C87ASection
@@ -6831,10 +6819,6 @@
         .byte $00, $10, $00, $01, $00, $00, $00, $27, $FF, $FF
 
     .endsection Table87C8E1Section
-
-
-
-
 
 
     .section Unsorted87CBC5Section

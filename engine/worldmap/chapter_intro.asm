@@ -14,7 +14,7 @@
 
         ; Opens chapter title/intro display (state 5/4, step $24, calls HDMA/gfx/BG setup)
 
-        ; Transition from WM to map?
+        ; Reached from the world map (Start skips it: bank $8B) and from an event command (event_scripts.asm), both through a main-loop fade.
 
         php
         sep #$20

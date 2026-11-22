@@ -893,18 +893,6 @@
         ; 87/C21D
 
 
-
-
-
-
-
-
-
-
-
-
-
-
       aProcUnknown87C056Code ; 87/C21D
 
         PROC_YIELD 32

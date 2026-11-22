@@ -2831,10 +2831,6 @@
     .endsection Table8893DBSection
 
 
-
-
-
-
     .section Unsorted889400Section
 
       .al
@@ -3036,10 +3032,6 @@
         .byte $10, $08, $88, $7B, $7E, $00, $4A, $C5, $7F
 
     .endsection Table8894F2Section
-
-
-
-
 
 
     .section ProcScript889504Section
@@ -3612,10 +3604,6 @@
 
 
     .endsection Table8899A4Section
-
-
-
-
 
 
     .section Unsorted8899B8Section
@@ -4297,10 +4285,6 @@
 
 
     .endsection Table889D92Section
-
-
-
-
 
 
     .section Unsorted889DA6Section
@@ -13157,15 +13141,6 @@
     .endsection Table88E2DESection
 
 
-
-
-
-
-
-
-
-
-
     .section Unsorted88E2E9Section
 
       .al
@@ -14520,10 +14495,6 @@
 
 
     .endsection Table88E9E4Section
-
-
-
-
 
 
     .section Unsorted88EEB1Section

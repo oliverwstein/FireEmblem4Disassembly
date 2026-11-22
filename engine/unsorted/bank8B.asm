@@ -669,15 +669,6 @@
     .endsection Table8B911FSection
 
 
-
-
-
-
-
-
-
-
-
     .section Unsorted8B912ASection
 
       .al
@@ -783,15 +774,6 @@
         .word $00A0, $0000, <>rlUnknown8B9451, $9456
 
     .endsection Table8B9449Section
-
-
-
-
-
-
-
-
-
 
 
     .section Unsorted8B9451Section
@@ -1030,10 +1012,6 @@
         .word $0060, $00A0, <>rlUnknown8B959C, $95A1
 
     .endsection Table8B9594Section
-
-
-
-
 
 
     .section Unsorted8B959CSection

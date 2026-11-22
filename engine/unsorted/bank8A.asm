@@ -1263,10 +1263,6 @@
     .endsection Table8A85EFSection
 
 
-
-
-
-
     .section Unsorted8A8643Section
 
       .al
@@ -1864,10 +1860,6 @@
 
 
     .endsection Table8A88E0Section
-
-
-
-
 
 
     .section Unsorted8A8980Section
@@ -2981,10 +2973,6 @@
     .endsection Table8A9158Section
 
 
-
-
-
-
     .section Unsorted8A918ASection
 
       .al
@@ -3049,10 +3037,6 @@
 
 
     .endsection Table8A91D7Section
-
-
-
-
 
 
     .section Unsorted8A9209Section
@@ -3125,10 +3109,6 @@
 
 
     .endsection Table8A9269Section
-
-
-
-
 
 
     .section Unsorted8A929BSection
@@ -4190,10 +4170,6 @@
     .endsection Table8A9899Section
 
 
-
-
-
-
     .section Table8A98ACSection
 
       .al
@@ -5229,10 +5205,6 @@
     .endsection Table8AA022Section
 
 
-
-
-
-
     .section Unsorted8AA02BSection
 
       .al
@@ -5374,10 +5346,6 @@
 
 
     .endsection Table8AA12ESection
-
-
-
-
 
 
     .section Unsorted8AA142Section
@@ -5830,10 +5798,6 @@
         .byte $58, $78, $98, $C8
 
     .endsection Table8AA31CSection
-
-
-
-
 
 
     .section Unsorted8AA400Section
@@ -6560,10 +6524,6 @@
     .endsection Table8AA7DDSection
 
 
-
-
-
-
     .section Unsorted8AA830Section
 
       .al
@@ -6673,10 +6633,6 @@
 
 
     .endsection Table8AA8B5Section
-
-
-
-
 
 
     .section Unsorted8AA8C9Section
@@ -7056,10 +7012,6 @@
     .endsection Table8AAA78Section
 
 
-
-
-
-
     .section Unsorted8AAA8ASection
 
       .al
@@ -7194,10 +7146,6 @@
 
 
     .endsection Table8AAB40Section
-
-
-
-
 
 
     .section Unsorted8AAB48Section
@@ -7343,10 +7291,6 @@
     .endsection Table8AABEASection
 
 
-
-
-
-
     .section Unsorted8AABFCSection
 
       .al
@@ -7484,10 +7428,6 @@
 
 
     .endsection Table8AACA0Section
-
-
-
-
 
 
     .section Unsorted8AACA8Section
@@ -7815,10 +7755,6 @@
     .endsection Table8AADCESection
 
 
-
-
-
-
     .section Unsorted8AADF4Section
 
       .al
@@ -7946,10 +7882,6 @@
 
 
     .endsection Table8AAEDASection
-
-
-
-
 
 
     .section Unsorted8AAF0ASection
@@ -8492,10 +8424,6 @@
       aUnknown8AB230 .dstruct structHDMADirectEntryInfo, rlUnknown8AB23B, rlUnknown8AB23B, $B261, $0008C8, PPU_REG_BASE + $31, $00 ; 8A/B230
 
     .endsection Table8AB230Section
-
-
-
-
 
 
     .section Unsorted8AB23BSection
@@ -9970,10 +9898,6 @@
 
 
     .endsection Table8AC447Section
-
-
-
-
 
 
     .section Unsorted8AC457Section
@@ -11689,10 +11613,6 @@
     .endsection Table8AD071Section
 
 
-
-
-
-
     .section Unsorted8AD092Section
 
       .al
@@ -12386,15 +12306,6 @@
         .structSpriteEntry (   0,    0), $21, SpriteLarge, $008, 3, 0, false, false
 
     .endsection Table8ADB9FSection
-
-
-
-
-
-
-
-
-
 
 
     .section Unsorted8ADBBDSection
@@ -14539,10 +14450,6 @@
 
 
     .endsection Table8AF475Section
-
-
-
-
 
 
     .section Unsorted8AF4A1Section

@@ -505,8 +505,6 @@
         ; 84/C104
 
 
-
-
       rlDecreaseFactionStatusDurations ; 84/C104
 
         .al
@@ -555,13 +553,6 @@
         .databank 0
 
         ; 84/C12E
-
-
-
-
-
-
-
 
 
       rlUnsetFactionUnitsMoved ; 84/C12E

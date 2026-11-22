@@ -11,14 +11,6 @@
     .endsection Table968000Section
 
 
-
-
-
-
-
-
-
-
     .section Unsorted968008Section
 
       .al
@@ -54,10 +46,6 @@
         .word $0060, $007E, <>rlUnknown968017, <>aUnknown96804E
 
     .endsection Table96800DSection
-
-
-
-
 
 
     .section Unsorted968017Section
@@ -126,10 +114,6 @@
     .endsection Table96804ESection
 
 
-
-
-
-
     .section Unsorted968058Section
 
       .al
@@ -182,10 +166,6 @@
     .endsection Table968076Section
 
 
-
-
-
-
     .section Unsorted968080Section
 
       .al
@@ -231,10 +211,6 @@
     .endsection Table968093Section
 
 
-
-
-
-
     .section Unsorted96809DSection
 
       .al
@@ -272,10 +248,6 @@
     .endsection Table9680A2Section
 
 
-
-
-
-
     .section Unsorted9680ACSection
 
       .al
@@ -311,10 +283,6 @@
         .word $0060, $00BD, <>rlUnknown9680BB, $80C0
 
     .endsection Table9680B1Section
-
-
-
-
 
 
     .section Unsorted9680BBSection

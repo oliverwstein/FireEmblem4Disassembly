@@ -323,14 +323,6 @@
     .endsection DemoBattlesSection
 
 
-
-
-
-
-
-
-
-
     .section Unsorted8DA06ASection
 
       .al
@@ -1252,10 +1244,6 @@
     .endsection Unsorted8DA449Section
 
 
-
-
-
-
     .section Unsorted8DA4B3Section
 
       .al
@@ -1315,10 +1303,6 @@
       aUnknown8DA504 .dstruct structHDMADirectEntryInfo, rlUnknown8DA50F, rlUnknown8DA50F, $A622, $7F56C9, PPU_REG_BASE + $0F, $02 ; 8D/A504
 
     .endsection Table8DA502Section
-
-
-
-
 
 
     .section Unsorted8DA50FSection
@@ -2371,10 +2355,6 @@
       aUnknown8DAE7A .dstruct structHDMADirectEntryInfo, rlUnknown8DAE85, rlUnknown8DAE85, $AEC0, $7F56C9, PPU_REG_BASE + $2C, $00 ; 8D/AE7A
 
     .endsection Table8DADFASection
-
-
-
-
 
 
     .section Unsorted8DAE85Section
@@ -3971,15 +3951,6 @@
 
 
     .endsection Table8DC964Section
-
-
-
-
-
-
-
-
-
 
 
     .section Data8DCF88Section

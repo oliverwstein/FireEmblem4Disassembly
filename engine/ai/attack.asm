@@ -873,10 +873,6 @@
         ; 86/A24A
 
 
-
-
-
-
       rsAIGetAttackTileThreatValue ; 86/A34A
 
         .al

@@ -27,15 +27,6 @@
     .endsection Table80D8E8Section
 
 
-
-
-
-
-
-
-
-
-
     .section DataWindowOpenSection
 
       .al

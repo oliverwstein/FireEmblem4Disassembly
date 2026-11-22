@@ -4572,7 +4572,6 @@
         ; 97/B67D
 
 
-
       aBattleSceneWriteRAMTable ; 97/B67D
 
         .word _B67D_B75D - aBattleSceneWriteRAMTable

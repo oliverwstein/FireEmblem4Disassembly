@@ -1396,10 +1396,6 @@
     .endsection Table898973Section
 
 
-
-
-
-
     .section Unsorted8989ADSection
 
       .al
@@ -2569,15 +2565,6 @@
     .endsection Table899140Section
 
 
-
-
-
-
-
-
-
-
-
     .section Unsorted89914BSection
 
       .al
@@ -2630,10 +2617,6 @@
     .endsection Table899178Section
 
 
-
-
-
-
     .section Unsorted899185Section
 
       .al
@@ -2682,10 +2665,6 @@
       aUnknown8991B9 .dstruct structHDMADirectEntryInfo, rlUnknown8991C4, rlUnknown8991D2, aUnknown899178, $7FB0B6, PPU_REG_BASE + $32, $00 ; 89/91B9
 
     .endsection Table8991B9Section
-
-
-
-
 
 
     .section Unsorted8991C4Section
@@ -3428,10 +3407,6 @@
     .endsection Table899703Section
 
 
-
-
-
-
     .section Unsorted89970DSection
 
       .al
@@ -4007,10 +3982,6 @@
     .endsection Table899B8FSection
 
 
-
-
-
-
     .section Unsorted899BA5Section
 
       .al
@@ -4137,10 +4108,6 @@
 
 
     .endsection Table899C44Section
-
-
-
-
 
 
     .section Unsorted899C7CSection
@@ -4280,10 +4247,6 @@
 
 
     .endsection Table899D26Section
-
-
-
-
 
 
     .section Unsorted899D72Section
@@ -4591,10 +4554,6 @@
 
 
     .endsection Table899F0BSection
-
-
-
-
 
 
     .section Unsorted899FA1Section
@@ -5388,10 +5347,6 @@
 
 
     .endsection Table89A4C5Section
-
-
-
-
 
 
     .section Unsorted89A4E3Section
@@ -8261,10 +8216,6 @@
     .endsection Table89EF40Section
 
 
-
-
-
-
     .section Unsorted89EF50Section
 
       .al
@@ -8605,10 +8556,6 @@
 
 
     .endsection Table89F051Section
-
-
-
-
 
 
     .section Unsorted89F065Section
@@ -9506,10 +9453,6 @@
 
 
     .endsection Table89F88BSection
-
-
-
-
 
 
     .section DataDE6200Section

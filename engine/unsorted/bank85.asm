@@ -562,10 +562,6 @@
     .endsection Table858647Section
 
 
-
-
-
-
     .section Unsorted85864BSection
 
       .al
@@ -1337,10 +1333,6 @@
     .endsection Table8589DESection
 
 
-
-
-
-
     .section Unsorted8589E7Section
 
       .al
@@ -1411,10 +1403,6 @@
     .endsection Table858A1BSection
 
 
-
-
-
-
     .section Unsorted858A6FSection
 
       .al
@@ -1465,10 +1453,6 @@
         .word $237F, $236F, $2379, $237A
 
     .endsection Table858A95Section
-
-
-
-
 
 
     .section Unsorted858AD7Section
@@ -1522,10 +1506,6 @@
         .word $236F, $236F, $2379, $237A
 
     .endsection Table858AFDSection
-
-
-
-
 
 
     .section Unsorted858B51Section
@@ -1639,10 +1619,6 @@
     .endsection Table858BD3Section
 
 
-
-
-
-
     .section Unsorted858C4ESection
 
       .al
@@ -1724,17 +1700,6 @@
         .byte $00
 
     .endsection Table858D62Section
-
-
-
-
-
-
-
-
-
-
-
 
 
     .section Unsorted858D83Section
@@ -1942,10 +1907,6 @@
         .byte $5A, $5B, $5C, $00
 
     .endsection Table858EA1Section
-
-
-
-
 
 
     .section Unsorted858EC5Section
@@ -2271,10 +2232,6 @@
         .byte $00
 
     .endsection Table859078Section
-
-
-
-
 
 
     .section Unsorted8590B9Section
@@ -3759,10 +3716,6 @@
     .endsection Table859953Section
 
 
-
-
-
-
     .section Unsorted859973Section
 
       .al
@@ -3962,10 +3915,6 @@
 
 
     .endsection Table859AA8Section
-
-
-
-
 
 
     .section Unsorted859AB4Section
@@ -4245,10 +4194,6 @@
       aUnknown859D88 .dstruct structHDMAIndirectEntryInfo, rlUnknown859D94, rlUnknown859DCA, $9DCB, wDialogueBoxHDMAYPixelPosition, PPU_REG_BASE + $32, $40, $85 ; 85/9D88
 
     .endsection Table859D88Section
-
-
-
-
 
 
     .section Unsorted859D94Section
@@ -5826,10 +5771,6 @@
     .endsection Table85A4E6Section
 
 
-
-
-
-
     .section Unsorted85A508Section
 
       .al
@@ -6164,10 +6105,6 @@
     .endsection Table85A670Section
 
 
-
-
-
-
     .section Unsorted85A69ASection
 
       .al
@@ -6428,10 +6365,6 @@
     .endsection Table85A7CESection
 
 
-
-
-
-
     .section Unsorted85A7DESection
 
       .al
@@ -6589,15 +6522,6 @@
       aUnknown85AB82 .dstruct structHDMAIndirectEntryInfo, rlUnknown85AB8E, $AB93, $AB94, $7FEA9A, PPU_REG_BASE + $12, $42, $85 ; 85/AB82
 
     .endsection Table85AB82Section
-
-
-
-
-
-
-
-
-
 
 
     .section Unsorted85AB8ESection
@@ -6968,10 +6892,6 @@
     .endsection Table85AD47Section
 
 
-
-
-
-
     .section Unsorted85AD67Section
 
       .al
@@ -7264,10 +7184,6 @@
     .endsection Table85AEBBSection
 
 
-
-
-
-
     .section Unsorted85AEC7Section
 
       .al
@@ -7358,10 +7274,6 @@
       aUnknown85AF0F .dstruct structHDMAIndirectEntryInfo, rlUnknown85AF1B, rlUnknown85AF23, aUnknown85AF0D, $7FEAAE, PPU_REG_BASE + $2C, $40, $85 ; 85/AF0F
 
     .endsection Table85AF0DSection
-
-
-
-
 
 
     .section Unsorted85AF1BSection
@@ -8655,10 +8567,6 @@
     .endsection Table85B4E9Section
 
 
-
-
-
-
     .section Unsorted85B4EDSection
 
       .al
@@ -8925,10 +8833,6 @@
     .endsection Table85B547Section
 
 
-
-
-
-
     .section ProcScript85B63BSection
 
       .al
@@ -9016,10 +8920,6 @@
     .endsection Table85B6A0Section
 
 
-
-
-
-
     .section Unsorted85B6E0Section
 
       .al
@@ -9095,10 +8995,6 @@
     .endsection Table85B6EBSection
 
 
-
-
-
-
     .section Unsorted85B725Section
 
       .al
@@ -9170,10 +9066,6 @@
 
 
     .endsection Table85B786Section
-
-
-
-
 
 
     .section Unsorted85B78ASection
@@ -9347,10 +9239,6 @@
     .endsection Table85B8E5Section
 
 
-
-
-
-
     .section Unsorted85B8EESection
 
       .al
@@ -9515,10 +9403,6 @@
     .endsection Table85B9BCSection
 
 
-
-
-
-
     .section Unsorted85B9D4Section
 
       .al
@@ -9625,10 +9509,6 @@
     .endsection Table85BA2CSection
 
 
-
-
-
-
     .section Unsorted85BA41Section
 
       .al
@@ -9715,10 +9595,6 @@
 
 
     .endsection Table85BAB3Section
-
-
-
-
 
 
     .section Unsorted85BAC7Section
@@ -11038,10 +10914,6 @@
     .endsection Table85C19BSection
 
 
-
-
-
-
     .section Unsorted85C1A4Section
 
       .al
@@ -11405,10 +11277,6 @@
         .structProcInfo "Ba", rlUnknown85C347, rlUnknown85C37C, aProcUnknown85C31ACode
 
     .endsection ProcScript85C33DSection
-
-
-
-
 
 
     .section Unsorted85C347Section
@@ -11840,10 +11708,6 @@
         .structProcInfo "Ba", rlUnknown85C65A, rlUnknown85C686, $C6CA
 
     .endsection ProcScript85C652Section
-
-
-
-
 
 
     .section Unsorted85C65ASection
@@ -12379,10 +12243,6 @@
         .word <>aUnknown85C988, <>aUnknown85C98D, <>aUnknown85C992
 
     .endsection Table85C983Section
-
-
-
-
 
 
     .section Unsorted85C99FSection
@@ -15422,10 +15282,6 @@
     .endsection Table85D96DSection
 
 
-
-
-
-
     .section Unsorted85D971Section
 
       .al
@@ -17298,7 +17154,6 @@
         .word <>rlUnknown85E656
         .word <>rlUnknown85E78A
         .word <>rlUnknown85E839
-
 
 
       aUnknown85E2AF ; 85/E2AF
