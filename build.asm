@@ -199,75 +199,23 @@
 
       .dsection Unsorted808002Section
 
-    .here
-
-    * = $00807C
-    .logical $80807C
-
       .dsection DMAPaletteAndOAMBufferSection
-
-    .here
-
-    * = $0080C3
-    .logical $8080C3
 
       .dsection Unsorted8080C3Section
 
-    .here
-
-    * = $0081A8
-    .logical $8081A8
-
       .dsection Unsorted8081A8Section
-
-    .here
-
-    * = $0081B6
-    .logical $8081B6
 
       .dsection Unsorted8081B6Section
 
-    .here
-
-    * = $0081FD
-    .logical $8081FD
-
       .dsection Unsorted8081FDSection
-
-    .here
-
-    * = $008223
-    .logical $808223
 
       .dsection VBlankControlSection
 
-      ; 80/823F
-
-    .here
-
-    * = $00823F
-    .logical $80823F
-
       .dsection Unsorted80823FSection
-
-    .here
-
-    * = $008248
-    .logical $808248
 
       .dsection EnableForcedBlankSection
 
-    .here
-
-    * = $00825B
-    .logical $80825B
-
       .dsection Unsorted80825BSection
-
-    .here
-
-    * = $00826E
-    .logical $80826E
 
       .dsection HideSpritesSection
 
@@ -278,193 +226,58 @@
 
       .dsection OAMUpperXBitTableSection
 
-    .here
-
-    * = $008875
-    .logical $808875
-
       .dsection Unsorted808875Section
-
-    .here
-
-    * = $00889D
-    .logical $80889D
 
       .dsection Unsorted80889DSection
 
-    .here
-
-    * = $0089F1
-    .logical $8089F1
-
       .dsection Table8089F1Section
-
-    .here
-
-    * = $008A01
-    .logical $808A01
 
       .dsection Unsorted808A01Section
 
-    .here
-
-    * = $008A25
-    .logical $808A25
-
       .dsection Table808A25Section
-
-    .here
-
-    * = $008A35
-    .logical $808A35
 
       .dsection Unsorted808A35Section
 
-    .here
-
-    * = $008A6C
-    .logical $808A6C
-
       .dsection Unsorted808A6CSection
-
-    .here
-
-    * = $008B48
-    .logical $808B48
 
       .dsection Unsorted808B48Section
 
-    .here
-
-    * = $008C50
-    .logical $808C50
-
       .dsection Unsorted808C50Section
-
-    .here
-
-    * = $008D56
-    .logical $808D56
 
       .dsection Unsorted808D56Section
 
-    .here
-
-    * = $008D6C
-    .logical $808D6C
-
       .dsection Unsorted808D6CSection
-
-    .here
-
-    * = $008E2D
-    .logical $808E2D
 
       .dsection Unsorted808E2DSection
 
-    .here
-
-    * = $008FA3
-    .logical $808FA3
-
       .dsection Unsorted808FA3Section
-
-    .here
-
-    * = $008FDD
-    .logical $808FDD
 
       .dsection Unsorted808FDDSection
 
-    .here
-
-    * = $00903D
-    .logical $80903D
-
       .dsection Unsorted80903DSection
-
-    .here
-
-    * = $0090A2
-    .logical $8090A2
 
       .dsection Unsorted8090A2Section
 
-    .here
-
-    * = $009124
-    .logical $809124
-
       .dsection Unsorted809124Section
-
-    .here
-
-    * = $009357
-    .logical $809357
 
       .dsection Table809357Section
 
-    .here
-
-    * = $009377
-    .logical $809377
-
       .dsection Unsorted809377Section
 
-    .here
-
-    * = $009382
-    .logical $809382
-
       .dsection Unsorted809382Section
-
-    .here
-
-    * = $009391
-    .logical $809391
 
       .dsection Unsorted809391Section
       .dsection Unsorted809392Section
 
-    .here
-
-    * = $0093B0
-    .logical $8093B0
-
       .dsection Unsorted8093B0Section
-
-    .here
-
-    * = $0093C6
-    .logical $8093C6
 
       .dsection Unsorted8093C6Section
 
-    .here
-
-    * = $0094E2
-    .logical $8094E2
-
       .dsection Unsorted8094E2Section
-
-    .here
-
-    * = $0095CD
-    .logical $8095CD
 
       .dsection Unsorted8095CDSection
 
-    .here
-
-    * = $009654
-    .logical $809654
-
       .dsection Unsorted809654Section
-
-    .here
-
-    * = $009703
-    .logical $809703
 
       .dsection Table809703Section
 
@@ -476,38 +289,13 @@
       .dsection Unsorted809729Section
       .dsection Unsorted80972ESection
 
-    .here
-
-    * = $009733
-    .logical $809733
-
       .dsection Unsorted809733Section
-
-    .here
-
-    * = $009759
-    .logical $809759
 
       .dsection Unsorted809759Section
 
-    .here
-
-    * = $00975E
-    .logical $80975E
-
       .dsection Unsorted80975ESection
 
-    .here
-
-    * = $0097E0
-    .logical $8097E0
-
       .dsection Unsorted8097E0Section
-
-    .here
-
-    * = $009801
-    .logical $809801
 
       .dsection Unsorted809801Section
       .dsection Unsorted809810Section
@@ -515,24 +303,9 @@
       .dsection Unsorted80982ESection
       .dsection Unsorted80983CSection
 
-    .here
-
-    * = $009846
-    .logical $809846
-
       .dsection Unsorted809846Section
 
-    .here
-
-    * = $009903
-    .logical $809903
-
       .dsection Unsorted809903Section
-
-    .here
-
-    * = $009933
-    .logical $809933
 
       .dsection Unsorted809933Section
 
@@ -543,17 +316,7 @@
 
       .dsection Unsorted809B00Section
 
-    .here
-
-    * = $009B01
-    .logical $809B01
-
       .dsection Unsorted809B01Section
-
-    .here
-
-    * = $009BEE
-    .logical $809BEE
 
       .dsection Unsorted809BEESection
 
@@ -564,26 +327,9 @@
 
       .dsection Unsorted809C7ASection
 
-    .here
-
-    * = $009CA0
-    .logical $809CA0
-
       .dsection Unsorted809CA0Section
 
-    .here
-
-    * = $009D4F
-    .logical $809D4F
-
       .dsection HardwareResetSection
-
-      ; 80/9DD9
-
-    .here
-
-    * = $009ED9
-    .logical $809ED9
 
       .dsection FillBG2Page0TilemapBufferSection
 
@@ -594,100 +340,30 @@
 
       .dsection MathSection
 
-      ; 80/A1AB
-
-    .here
-
-    * = $00A1AB
-    .logical $80A1AB
-
       .dsection Unsorted80A1ABSection
-
-    .here
-
-    * = $00A21C
-    .logical $80A21C
 
       .dsection FadeInByTimerSection
 
-    .here
-
-    * = $00A29A
-    .logical $80A29A
-
       .dsection Unsorted80A29ASection
-
-    .here
-
-    * = $00A34F
-    .logical $80A34F
 
       .dsection DMAEngineSection
 
-      ; 80/A5D9
-
-    .here
-
-    * = $00A5D9
-    .logical $80A5D9
-
       .dsection Unsorted80A5D9Section
-
-    .here
-
-    * = $00A5E9
-    .logical $80A5E9
 
       .dsection DecompressionListSection
 
-      ; 80/A678
-
-    .here
-
-    * = $00A678
-    .logical $80A678
-
       .dsection Unsorted80A678Section
-
-      ; 80/A6C3
-
-    .here
-
-    * = $00A6C3
-    .logical $80A6C3
 
       .dsection FrameSection
 
       .dsection RandomNumberSection
 
-      ; 80/A773
-
-    .here
-
-    * = $00A773
-    .logical $80A773
-
       .dsection Unknown80A773Section
-
-    .here
-
-    * = $00A836
-    .logical $80A836
 
       .dsection Unsorted80A836Section
 
-    .here
-
-    * = $00A859
-    .logical $80A859
-
       .dsection Table80A859Section
       .dsection Table80A85DSection
-
-    .here
-
-    * = $00A861
-    .logical $80A861
 
       .dsection Unsorted80A861Section
 
@@ -700,28 +376,9 @@
 
       .dsection BlockCopySection
 
-      ; 80/A9F2
-
-    .here
-
-    * = $00A9F2
-    .logical $80A9F2
-
       .dsection Unsorted80A9F2Section
 
-    .here
-
-    * = $00AA02
-    .logical $80AA02
-
       .dsection DecompressorSection
-
-      ; 80/AD24
-
-    .here
-
-    * = $00AD24
-    .logical $80AD24
 
       .dsection Unsorted80AD24Section
 
@@ -732,91 +389,31 @@
 
       .dsection Unsorted80AE25Section
 
-    .here
-
-    * = $00AF9B
-    .logical $80AF9B
-
       .dsection Unsorted80AF9BSection
 
-    .here
-
-    * = $00B041
-    .logical $80B041
-
       .dsection Unsorted80B041Section
-
-    .here
-
-    * = $00B084
-    .logical $80B084
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80B084 .structDecompressionDMAEntry gcUnknownC02542, $0400, $3600 ; 80/B084
 
-    .here
-
-    * = $00B08C
-    .logical $80B08C
-
       .dsection Unsorted80B08CSection
-
-    .here
-
-    * = $00B09B
-    .logical $80B09B
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80B09B .structDecompressionDMAEntry gcUnknownC01FBA, $0400, $3400 ; 80/B09B
 
-    .here
-
-    * = $00B0A3
-    .logical $80B0A3
-
       .dsection Unsorted80B0A3Section
-
-    .here
-
-    * = $00B0CB
-    .logical $80B0CB
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80B0CB .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/B0CB
 
-    .here
-
-    * = $00B0D3
-    .logical $80B0D3
-
       .dsection Unsorted80B0D3Section
-
-    .here
-
-    * = $00B0FD
-    .logical $80B0FD
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80B0FD .structDecompressionDMAEntry gcUnknownC0197B, $0800, $4C00 ; 80/B0FD
 
-    .here
-
-    * = $00B105
-    .logical $80B105
-
       .dsection Unsorted80B105Section
 
-    .here
-
-    * = $00B122
-    .logical $80B122
-
       .dsection Unsorted80B122Section
-
-    .here
-
-    * = $00B1E1
-    .logical $80B1E1
 
       .dsection Unsorted80B1E1Section
 
@@ -852,24 +449,9 @@
 
       .dsection Unsorted80B641Section
 
-    .here
-
-    * = $00B6AD
-    .logical $80B6AD
-
       .dsection Table80B6ADSection
 
-    .here
-
-    * = $00B6B6
-    .logical $80B6B6
-
       .dsection Unsorted80B6B6Section
-
-    .here
-
-    * = $00B74B
-    .logical $80B74B
 
       .dsection Unsorted80B74BSection
 
@@ -880,32 +462,12 @@
 
       .dsection Unsorted80B77FSection
 
-    .here
-
-    * = $00B787
-    .logical $80B787
-
       .dsection Table80B787Section
-
-    .here
-
-    * = $00B793
-    .logical $80B793
 
       .dsection Unsorted80B793Section
 
-    .here
-
-    * = $00B7B1
-    .logical $80B7B1
-
       .dsection Unsorted80B7B1Section
       .dsection Unsorted80B7DESection
-
-    .here
-
-    * = $00B81B
-    .logical $80B81B
 
       .dsection Unsorted80B81BSection
 
@@ -918,38 +480,13 @@
       aDecompressionDMAEntry80B99D .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/B99D
       aDecompressionDMAEntry80B9A5 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 80/B9A5
 
-    .here
-
-    * = $00B9AD
-    .logical $80B9AD
-
       .dsection Unsorted80B9ADSection
-
-    .here
-
-    * = $00B9BC
-    .logical $80B9BC
 
       .dsection Unsorted80B9BCSection
 
-    .here
-
-    * = $00B9E1
-    .logical $80B9E1
-
       .dsection Unsorted80B9E1Section
 
-    .here
-
-    * = $00BA02
-    .logical $80BA02
-
       .dsection Unsorted80BA02Section
-
-    .here
-
-    * = $00BA52
-    .logical $80BA52
 
       .dsection Unsorted80BA52Section
 
@@ -963,60 +500,20 @@
       aDecompressionDMAEntry80BB4D .structDecompressionDMAEntry gcUnknownD35B40, $0800, $5400 ; 80/BB4D
       aDecompressionDMAEntry80BB55 .structDecompressionDMAEntry gcUnknownD33EFA, $2000, $1000 ; 80/BB55
 
-    .here
-
-    * = $00BB5D
-    .logical $80BB5D
-
       .dsection Unsorted80BB5DSection
-
-    .here
-
-    * = $00BB7C
-    .logical $80BB7C
 
       .dsection Unsorted80BB7CSection
 
-    .here
-
-    * = $00BB9B
-    .logical $80BB9B
-
       .dsection Unsorted80BB9BSection
 
-    .here
-
-    * = $00BEEF
-    .logical $80BEEF
-
       .dsection Data80BEEFSection
-
-    .here
-
-    * = $00BEF9
-    .logical $80BEF9
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80BEF9 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/BEF9
 
-    .here
-
-    * = $00BF01
-    .logical $80BF01
-
       .dsection Unsorted80BF01Section
 
-    .here
-
-    * = $00C162
-    .logical $80C162
-
       .dsection Unsorted80C162Section
-
-    .here
-
-    * = $00C1A0
-    .logical $80C1A0
 
       .dsection Unsorted80C1A0Section
 
@@ -1027,417 +524,127 @@
 
       .dsection Unsorted80C1CASection
 
-    .here
-
-    * = $00C1CB
-    .logical $80C1CB
-
       .dsection Unsorted80C1CBSection
-
-      ; 80/C212
-
-    .here
-
-    * = $00C212
-    .logical $80C212
 
       .dsection Unsorted80C212Section
 
-    .here
-
-    * = $00C32C
-    .logical $80C32C
-
       .dsection Unsorted80C32CSection
-
-    .here
-
-    * = $00C35D
-    .logical $80C35D
 
       .dsection Unsorted80C35DSection
 
-    .here
-
-    * = $00C39A
-    .logical $80C39A
-
       .dsection Unsorted80C39ASection
-
-    .here
-
-    * = $00C3DD
-    .logical $80C3DD
 
       .dsection Table80C3DDSection
 
-    .here
-
-    * = $00C3E6
-    .logical $80C3E6
-
       .dsection Unsorted80C3E6Section
-
-    .here
-
-    * = $00C5BE
-    .logical $80C5BE
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80C5BE .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 80/C5BE
 
-    .here
-
-    * = $00C5C6
-    .logical $80C5C6
-
       .dsection Unsorted80C5C6Section
-
-    .here
-
-    * = $00C5F8
-    .logical $80C5F8
 
       .dsection Data80C5F8Section
 
-    .here
-
-    * = $00C628
-    .logical $80C628
-
       .dsection Unsorted80C628Section
-
-    .here
-
-    * = $00C6CD
-    .logical $80C6CD
 
       .dsection Table80C6CDSection
 
-    .here
-
-    * = $00C6D8
-    .logical $80C6D8
-
       .dsection Unsorted80C6D8Section
-
-    .here
-
-    * = $00C716
-    .logical $80C716
 
       .dsection Table80C716Section
 
-    .here
-
-    * = $00C723
-    .logical $80C723
-
       .dsection Unsorted80C723Section
-
-    .here
-
-    * = $00C760
-    .logical $80C760
 
       .dsection Table80C760Section
 
-    .here
-
-    * = $00C76D
-    .logical $80C76D
-
       .dsection Unsorted80C76DSection
-
-    .here
-
-    * = $00C88A
-    .logical $80C88A
 
       .dsection Table80C88ASection
 
-    .here
-
-    * = $00C897
-    .logical $80C897
-
       .dsection Unsorted80C897Section
-
-    .here
-
-    * = $00C8D5
-    .logical $80C8D5
 
       .dsection Unsorted80C8D5Section
 
-    .here
-
-    * = $00CA25
-    .logical $80CA25
-
       .dsection Data80CA25Section
-
-    .here
-
-    * = $00CBA5
-    .logical $80CBA5
 
       .dsection Unsorted80CBA5Section
 
-    .here
-
-    * = $00CC05
-    .logical $80CC05
-
       .dsection Data80CC05Section
-
-    .here
-
-    * = $00CC35
-    .logical $80CC35
 
       .dsection Unsorted80CC35Section
 
-    .here
-
-    * = $00CCD3
-    .logical $80CCD3
-
       .dsection Data80CCD3Section
 
-    .here
-
-    * = $00CD2E
-    .logical $80CD2E
-
       .dsection Unsorted80CD2ESection
-
-    .here
-
-    * = $00CE8E
-    .logical $80CE8E
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80CE8E .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000 ; 80/CE8E
       aDecompressionDMAEntry80CE96 .structDecompressionDMAEntry gcUnknownDD3F20, $0800, $2800 ; 80/CE96
 
-    .here
-
-    * = $00CE9E
-    .logical $80CE9E
-
       .dsection Unsorted80CE9ESection
-
-    .here
-
-    * = $00D046
-    .logical $80D046
 
       .dsection Table80D046Section
 
-    .here
-
-    * = $00D089
-    .logical $80D089
-
       .dsection Unsorted80D089Section
-
-    .here
-
-    * = $00D09B
-    .logical $80D09B
 
       .dsection Data80D09BSection
 
-    .here
-
-    * = $00D0B1
-    .logical $80D0B1
-
       .dsection Unsorted80D0B1Section
 
-    .here
-
-    * = $00D0B4
-    .logical $80D0B4
-
       .dsection Unsorted80D0B4Section
-
-    .here
-
-    * = $00D143
-    .logical $80D143
 
       .dsection Unsorted80D143Section
       .dsection Table80D1AESection
 
       .dsection Unsorted80D2C6Section
 
-    .here
-
-    * = $00D41D
-    .logical $80D41D
-
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80D41D .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000 ; 80/D41D
       aDecompressionDMAEntry80D425 .structDecompressionDMAEntry gcUnknownDD3CE4, $0700, $1800 ; 80/D425
       aDecompressionDMAEntry80D42D .structDecompressionDMAEntry gcUnknownDD3F20, $0800, $2000 ; 80/D42D
 
-    .here
-
-    * = $00D435
-    .logical $80D435
-
       .dsection Unsorted80D435Section
-
-    .here
-
-    * = $00D662
-    .logical $80D662
 
       .dsection Table80D662Section
 
-    .here
-
-    * = $00D818
-    .logical $80D818
-
       .dsection Unsorted80D818Section
-
-    .here
-
-    * = $00D8E8
-    .logical $80D8E8
 
       .dsection Table80D8E8Section
 
-    .here
-
-    * = $00D90C
-    .logical $80D90C
-
       .dsection DataWindowOpenSection
-
-    .here
-
-
-
-
-
-
-
-    * = $00DFD3
-    .logical $80DFD3
 
       .dsection ReviveScreenSection
 
-    .here
-
-    * = $00E07A
-    .logical $80E07A
-
       .dsection ReviveScreenBuildSection
-
-    .here
-
-    * = $00E42B
-    .logical $80E42B
 
       .dsection Unsorted80E42BSection
 
-      ; 80/E586
-
-    .here
-
-    * = $00E586
-    .logical $80E586
-
       .dsection Table80E586Section
 
-    .here
-
-    * = $00E598
-    .logical $80E598
-
       .dsection Unsorted80E598Section
-
-    .here
-
-    * = $00E72E
-    .logical $80E72E
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80E72E .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $0000 ; 80/E72E
       aDecompressionDMAEntry80E736 .structDecompressionDMAEntry gcUnknownDD3932, $0800, $4200 ; 80/E736
       aDecompressionDMAEntry80E73E .structDecompressionDMAEntry gcUnknownDD3BDE, $0700, $2000 ; 80/E73E
 
-    .here
-
-    * = $00E746
-    .logical $80E746
-
       .dsection Unsorted80E746Section
-
-    .here
-
-    * = $00E84E
-    .logical $80E84E
 
       .dsection Table80E84ESection
 
-    .here
-
-    * = $00E8F0
-    .logical $80E8F0
-
       .dsection Unsorted80E8F0Section
-
-    .here
-
-    * = $00E96E
-    .logical $80E96E
 
       .dsection Table80E96ESection
 
-    .here
-
-    * = $00E979
-    .logical $80E979
-
       .dsection Unsorted80E979Section
-
-    .here
-
-    * = $00E97C
-    .logical $80E97C
 
       .dsection Unsorted80E97CSection
 
-    .here
-
-    * = $00E98E
-    .logical $80E98E
-
       .dsection Data80E98ESection
-
-    .here
-
-    * = $00E9AF
-    .logical $80E9AF
 
       .dsection Unsorted80E9AFSection
 
-    .here
-
-    * = $00E9B2
-    .logical $80E9B2
-
       .dsection Unsorted80E9B2Section
-
-    .here
-
-    * = $00E9F3
-    .logical $80E9F3
 
       .dsection Data80E9F3Section
       .dsection Data80EA80Section
@@ -1458,11 +665,6 @@
       aDecompressionDMAEntry80EFC8 .structDecompressionDMAEntry gcUnknownD33090, $1000, $5000 ; 80/EFC8
       aDecompressionDMAEntry80EFD0 .structDecompressionDMAEntry gcUnknownD335B5, $1000, $5800 ; 80/EFD0
 
-    .here
-
-    * = $00EFD8
-    .logical $80EFD8
-
       .dsection Unsorted80EFD8Section
 
     .here
@@ -1476,31 +678,11 @@
       aDecompressionDMAEntry80F197 .structDecompressionDMAEntry gcUnknownD35EB4, $5800, $0000 ; 80/F197
       aDecompressionDMAEntry80F19F .structDecompressionDMAEntry gcUnknownD42C50, $1000, $5800 ; 80/F19F
 
-    .here
-
-    * = $00F1A7
-    .logical $80F1A7
-
       .dsection Unsorted80F1A7Section
-
-    .here
-
-    * = $00F1D5
-    .logical $80F1D5
 
       .dsection Unsorted80F1D5Section
 
-    .here
-
-    * = $00F222
-    .logical $80F222
-
       .dsection Unsorted80F222Section
-
-    .here
-
-    * = $00F2BE
-    .logical $80F2BE
 
       .dsection Unsorted80F2BESection
 
@@ -1511,69 +693,24 @@
 
       .dsection Unsorted80F340Section
 
-    .here
-
-    * = $00F36C
-    .logical $80F36C
-
       .dsection Table80F36CSection
-
-    .here
-
-    * = $00F377
-    .logical $80F377
 
       .dsection Unsorted80F377Section
 
-    .here
-
-    * = $00F37D
-    .logical $80F37D
-
       .dsection Table80F37DSection
-
-    .here
-
-    * = $00F38A
-    .logical $80F38A
 
       .dsection Unsorted80F38ASection
 
-    .here
-
-    * = $00F392
-    .logical $80F392
-
       .dsection Unsorted80F392Section
 
-    .here
-
-    * = $00F413
-    .logical $80F413
-
       .dsection Table80F413Section
-
-    .here
-
-    * = $00F42B
-    .logical $80F42B
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry80F42B .structDecompressionDMAEntry gcUnknownDD3FA6, $4000, $0000 ; 80/F42B
       aDecompressionDMAEntry80F433 .structDecompressionDMAEntry gcUnknownDD20A0, $1200, $4000 ; 80/F433
       aDecompressionDMAEntry80F43B .structDecompressionDMAEntry gcUnknownDD2D90, $0800, $6000 ; 80/F43B
 
-    .here
-
-    * = $00F443
-    .logical $80F443
-
       .dsection Unsorted80F443Section
-
-    .here
-
-    * = $00F451
-    .logical $80F451
 
       .dsection Unsorted80F451Section
       .dsection Unsorted80F45FSection
@@ -1587,26 +724,16 @@
       .dsection Unsorted80F4CFSection
       .dsection Unsorted80F4DDSection
 
-    .here
-
-    * = $00F4EB
-    .logical $80F4EB
-
       .dsection Unsorted80F4EBSection
-
-    .here
-
-    * = $00F542
-    .logical $80F542
 
       .dsection Unsorted80F542Section
 
+      .fill $80FFB0 - *, 0
+
     .here
 
-    * = $00F628
-    .logical $80F628
-
-      .fill $80FFB0 - *, 0
+    * = $00FFB0
+    .logical $80FFB0
 
       .dsection SNESHeaderSection
 
@@ -1619,24 +746,9 @@
 
       ; 8188b0
 
-    .here
-
-    * = $0188B0
-    .logical $8188B0
-
       .dsection MapSpriteSection
 
-    .here
-
-    * = $0189E0
-    .logical $8189E0
-
       .dsection MapSpriteCodeSection
-
-    .here
-
-    * = $0189F3
-    .logical $8189F3
 
       .dsection Unsorted8189F3Section
 
@@ -1647,62 +759,20 @@
 
       .dsection Unsorted818A4ASection
 
-    .here
-
-    * = $018C5D
-    .logical $818C5D
-
       .dsection Unsorted818C5DSection
-
-    .here
-
-    * = $018C98
-    .logical $818C98
 
       .dsection Unsorted818C98Section
 
-    .here
-
-    * = $018D23
-    .logical $818D23
-
       .dsection Unsorted818D23Section
-
-    .here
-
-    * = $018D58
-    .logical $818D58
 
       .dsection Unsorted818D58Section
       .dsection MovingMapSpritePositionRoutinesSection
 
-    .here
-
-    * = $018EAB
-    .logical $818EAB
-
       .dsection Unsorted818EABSection
-
-    .here
-
-    * = $018ECB
-    .logical $818ECB
 
       .dsection MapScrollScriptSection
 
-      ; 81/8FA1
-
-    .here
-
-    * = $018FA1
-    .logical $818FA1
-
       .dsection Unknown818FA1Section
-
-    .here
-
-    * = $019031
-    .logical $819031
 
       .dsection CapSpawnDestinationCoordinates100Section
 
@@ -1712,11 +782,6 @@
     .logical $819092
 
       .dsection FillMovingMapSpriteDataSection
-
-    .here
-
-    * = $0190BF
-    .logical $8190BF
 
       .dsection FillMovingMapSpriteDataPathScriptPointerSection
 
@@ -1735,264 +800,77 @@
 
       .dsection Unsorted81A800Section
 
-    .here
-
-    * = $01A85C
-    .logical $81A85C
-
       .dsection Unsorted81A85CSection
-
-    .here
-
-    * = $01A89D
-    .logical $81A89D
 
       .dsection Unsorted81A89DSection
 
-    .here
-
-    * = $01AA00
-    .logical $81AA00
-
       .dsection GetActiveFactionSongIDSection
-
-    .here
-
-    * = $01AA4D
-    .logical $81AA4D
 
       .dsection PlayerPhaseChapterSongIDsSection
 
-    .here
-
-    * = $01AB90
-    .logical $81AB90
-
       .dsection Unknown81AB90Section
-
-    .here
-
-    * = $01AC02
-    .logical $81AC02
 
       .dsection Unsorted81AC02Section
 
-    .here
-
-    * = $01AD28
-    .logical $81AD28
-
       .dsection Unsorted81AD28Section
-
-    .here
-
-    * = $01AD6A
-    .logical $81AD6A
 
       .dsection Unsorted81AD6ASection
 
-    .here
-
-    * = $01AD8E
-    .logical $81AD8E
-
       .dsection Unsorted81AD8ESection
-
-    .here
-
-    * = $01ADD8
-    .logical $81ADD8
 
       .dsection Unsorted81ADD8Section
 
-    .here
-
-    * = $01AE02
-    .logical $81AE02
-
       .dsection Unsorted81AE02Section
-
-    .here
-
-    * = $01AE96
-    .logical $81AE96
 
       .dsection Unsorted81AE96Section
 
-    .here
-
-    * = $01AEAA
-    .logical $81AEAA
-
       .dsection Unsorted81AEAASection
-
-    .here
-
-    * = $01AFB7
-    .logical $81AFB7
 
       .dsection Unsorted81AFB7Section
 
-    .here
-
-    * = $01AFF8
-    .logical $81AFF8
-
       .dsection Unsorted81AFF8Section
-
-    .here
-
-    * = $01AFFE
-    .logical $81AFFE
 
       .dsection Unsorted81AFFESection
 
-    .here
-
-    * = $01B016
-    .logical $81B016
-
       .dsection Unsorted81B016Section
-
-    .here
-
-    * = $01B088
-    .logical $81B088
 
       .dsection Unsorted81B088Section
 
-    .here
-
-    * = $01B223
-    .logical $81B223
-
       .dsection ASMCShowItemPopUpBoxSection
-
-    .here
-
-    * = $01B259
-    .logical $81B259
 
       .dsection ASMCGiveToSupplyMenuIfInventoryFullSection
 
-    .here
-
-    * = $01B270
-    .logical $81B270
-
       .dsection ASMCGiveItemFromSlot8Section
-
-    .here
-
-    * = $01B2AA
-    .logical $81B2AA
 
       .dsection Unsorted81B2AASection
 
-    .here
-
-    * = $01B301
-    .logical $81B301
-
       .dsection Unsorted81B301Section
-
-    .here
-
-    * = $01B32C
-    .logical $81B32C
 
       .dsection Unsorted81B32CSection
 
-    .here
-
-    * = $01B3A6
-    .logical $81B3A6
-
       .dsection Unsorted81B3A6Section
-
-    .here
-
-    * = $01B42D
-    .logical $81B42D
 
       .dsection Table81B42DSection
 
-    .here
-
-    * = $01B43F
-    .logical $81B43F
-
       .dsection Unsorted81B43FSection
-
-    .here
-
-    * = $01B45B
-    .logical $81B45B
 
       .dsection Table81B45BSection
 
-    .here
-
-    * = $01B461
-    .logical $81B461
-
       .dsection Unsorted81B461Section
-
-    .here
-
-    * = $01B47D
-    .logical $81B47D
 
       .dsection Table81B47DSection
 
-    .here
-
-    * = $01B483
-    .logical $81B483
-
       .dsection ChapterDataPointerSection
-
-      ; 81/B4C5
-
-    .here
-
-    * = $01B4C5
-    .logical $81B4C5
 
       .dsection Unsorted81B4C5Section
 
-    .here
-
-    * = $01B4E4
-    .logical $81B4E4
-
       .dsection GetChapterTalkEventsPointerSection
-
-    .here
-
-    * = $01B503
-    .logical $81B503
 
       .dsection Unsorted81B503Section
 
-    .here
-
-    * = $01B522
-    .logical $81B522
-
       .dsection Table81B522Section
 
-    .here
-
-    * = $01B52A
-    .logical $81B52A
-
       .dsection Unsorted81B52ASection
-
-    .here
-
-    * = $01B54A
-    .logical $81B54A
 
       .dsection Table81B54ASection
 
@@ -2074,8 +952,6 @@
       .dsection ProcCodeSection
       .dsection FadeProcsSection
 
-      ; 82/83B5
-
     .here
 
     * = $0283E3
@@ -2083,81 +959,26 @@
 
       .dsection ProcScript8283E3Section
 
-    .here
-
-    * = $0283EB
-    .logical $8283EB
-
       .dsection Unsorted8283EBSection
-
-    .here
-
-    * = $0283FA
-    .logical $8283FA
 
       .dsection Unsorted8283FASection
 
-    .here
-
-    * = $02841F
-    .logical $82841F
-
       .dsection Unsorted82841FSection
 
-    .here
-
-    * = $028429
-    .logical $828429
-
       .dsection ProcScript828429Section
-
-    .here
-
-    * = $028431
-    .logical $828431
 
       .dsection Unsorted828431Section
       .dsection DialogueSection
 
-    .here
-
-    * = $028469
-    .logical $828469
-
       .dsection ProcDialogueInitSection
-
-    .here
-
-    * = $0284EA
-    .logical $8284EA
 
       .dsection ProcDialogueCycle1Section
 
-    .here
-
-    * = $02862E
-    .logical $82862E
-
       .dsection Unknown82862ESection
-
-    .here
-
-    * = $028648
-    .logical $828648
 
       .dsection Unsorted828648Section
 
-    .here
-
-    * = $028653
-    .logical $828653
-
       .dsection Unknown828653Section
-
-    .here
-
-    * = $028694
-    .logical $828694
 
       .dsection ProcDialogueCodeSection
       .dsection CastleNamePopUpSection
@@ -2176,17 +997,7 @@
 
       .dsection Unsorted82886FSection
 
-    .here
-
-    * = $0288B2
-    .logical $8288B2
-
       .dsection Unsorted8288B2Section
-
-    .here
-
-    * = $0288E7
-    .logical $8288E7
 
       .dsection ProcScript8288E7Section
 
@@ -2197,40 +1008,13 @@
 
       .dsection Unsorted8288F3Section
 
-    .here
-
-    * = $028906
-    .logical $828906
-
       .dsection DialogueWithBGSection
-
-    .here
-
-    * = $028A30
-    .logical $828A30
 
       .dsection Unsorted828A30Section
 
-      ; 82/8B2B
-
-    .here
-
-    * = $028B2B
-    .logical $828B2B
-
       .dsection Unsorted828B2BSection
 
-    .here
-
-    * = $028B35
-    .logical $828B35
-
       .dsection Unsorted828B35Section
-
-    .here
-
-    * = $028B46
-    .logical $828B46
 
       .dsection Unsorted828B46Section
 
@@ -2241,17 +1025,7 @@
 
       .dsection Unsorted828B50Section
 
-    .here
-
-    * = $028B5F
-    .logical $828B5F
-
       .dsection Unsorted828B5FSection
-
-    .here
-
-    * = $028B61
-    .logical $828B61
 
       .dsection ProcScript828B61Section
 
@@ -2262,17 +1036,7 @@
 
       .dsection Unsorted828B6BSection
 
-    .here
-
-    * = $028BA7
-    .logical $828BA7
-
       .dsection ProcScript828BA7Section
-
-    .here
-
-    * = $028BA9
-    .logical $828BA9
 
       .dsection Unsorted828BA9Section
 
@@ -2282,11 +1046,6 @@
     .logical $828BB3
 
       .dsection Unsorted828BB3Section
-
-    .here
-
-    * = $028BC6
-    .logical $828BC6
 
       .dsection Unsorted828BC6Section
       .dsection Unsorted828BC8Section
@@ -2298,24 +1057,9 @@
 
       .dsection Unsorted828BD2Section
 
-    .here
-
-    * = $028BE8
-    .logical $828BE8
-
       .dsection Unsorted828BE8Section
 
-    .here
-
-    * = $028BEA
-    .logical $828BEA
-
       .dsection Unsorted828BEASection
-
-    .here
-
-    * = $028BF4
-    .logical $828BF4
 
       .dsection Unsorted828BF4Section
 
@@ -2326,28 +1070,11 @@
 
       .dsection Unsorted828D52Section
 
-    .here
-
-    * = $028E61
-    .logical $828E61
-
       .dsection Unsorted828E61Section
-
-    .here
-
-    * = $028ECB
-    .logical $828ECB
 
       .dsection Unsorted828ECBSection
 
-    .here
-
-    * = $028F3F
-    .logical $828F3F
-
       .dsection EventScrollFadeProcSection
-
-      ; 82/90B0
 
     .here
 
@@ -2355,13 +1082,6 @@
     .logical $82921E
 
       .dsection EventPauseProcSection
-
-      ; 82/9245
-
-    .here
-
-    * = $029245
-    .logical $829245
 
       .dsection Unsorted829245Section
 
@@ -2372,24 +1092,9 @@
 
       .dsection Unsorted8292A9Section
 
-    .here
-
-    * = $0292B3
-    .logical $8292B3
-
       .dsection Unsorted8292B3Section
 
-    .here
-
-    * = $02932C
-    .logical $82932C
-
       .dsection Unsorted82932CSection
-
-    .here
-
-    * = $029391
-    .logical $829391
 
       .dsection Unsorted829391Section
 
@@ -2402,18 +1107,7 @@
 
       ; 829487
 
-    .here
-
-
-    * = $029487
-    .logical $829487
-
       .dsection Unsorted829487Section
-
-    .here
-
-    * = $029496
-    .logical $829496
 
       .dsection Unsorted829496Section
 
@@ -2423,11 +1117,6 @@
     .logical $8294C0
 
       .dsection Unsorted8294C0Section
-
-    .here
-
-    * = $0294CF
-    .logical $8294CF
 
       .dsection Unsorted8294CFSection
 
@@ -2439,19 +1128,12 @@
       .dsection HDMAEngineSection
       .dsection HDMACodeSection
 
-      ; 82/C26D
-
     .here
 
     * = $02E000
     .logical $82E000
 
       .dsection Unsorted82E000Section
-
-    .here
-
-    * = $02E028
-    .logical $82E028
 
       .dsection Unsorted82E028Section
 
@@ -2462,24 +1144,9 @@
 
       .dsection Unsorted82E073Section
 
-    .here
-
-    * = $02E08D
-    .logical $82E08D
-
       .dsection Unsorted82E08DSection
 
-    .here
-
-    * = $02E0AF
-    .logical $82E0AF
-
       .dsection Unsorted82E0AFSection
-
-    .here
-
-    * = $02E0C6
-    .logical $82E0C6
 
       .dsection Unsorted82E0C6Section
 
@@ -2497,24 +1164,9 @@
 
       .dsection Unsorted82E147Section
 
-    .here
-
-    * = $02E250
-    .logical $82E250
-
       .dsection Unsorted82E250Section
 
-    .here
-
-    * = $02E283
-    .logical $82E283
-
       .dsection Unsorted82E283Section
-
-    .here
-
-    * = $02E2AD
-    .logical $82E2AD
 
       .dsection Unsorted82E2ADSection
 
@@ -2532,49 +1184,15 @@
 
       .dsection RAMStructSection
 
-      ; 82/E5FF
-
-    .here
-
-    * = $02E5FF
-    .logical $82E5FF
-
       .dsection Unsorted82E5FFSection
-
-    .here
-
-    * = $02E615
-    .logical $82E615
 
       .dsection Unsorted82E615Section
 
-    .here
-
-    * = $02E62C
-    .logical $82E62C
-
       .dsection Unsorted82E62CSection
-
-    .here
-
-    * = $02E664
-    .logical $82E664
 
       .dsection Unsorted82E664Section
 
-    .here
-
-    * = $02E747
-    .logical $82E747
-
       .dsection RAMStructAccessSection
-
-      ; 82/EA43
-
-    .here
-
-    * = $02EADE
-    .logical $82EADE
 
       .dsection Unsorted82EADESection
 
@@ -2585,16 +1203,12 @@
 
       .dsection RAMAreaHeaderSection
 
-      ; 82/ED1D
-
     .here
 
     * = $02EDE7
     .logical $82EDE7
 
       .dsection RAMAreaSection
-
-      ; 82/F207
 
     .here
 
@@ -2603,45 +1217,15 @@
 
       .dsection Unsorted82F211Section
 
-    .here
-
-    * = $02F227
-    .logical $82F227
-
       .dsection Unsorted82F227Section
-
-    .here
-
-    * = $02F2E3
-    .logical $82F2E3
 
       .dsection Unsorted82F2E3Section
 
-    .here
-
-    * = $02F343
-    .logical $82F343
-
       .dsection Unsorted82F343Section
-
-    .here
-
-    * = $02F3A7
-    .logical $82F3A7
 
       .dsection Unsorted82F3A7Section
 
-    .here
-
-    * = $02F3E5
-    .logical $82F3E5
-
       .dsection Unsorted82F3E5Section
-
-    .here
-
-    * = $02F4A7
-    .logical $82F4A7
 
       .dsection Unsorted82F4A7Section
 
@@ -2651,8 +1235,6 @@
     .logical $82F4DE
 
       .dsection UNITGroupPointerSection
-
-      ; 82/F4F9
 
     .here
 
@@ -2668,14 +1250,14 @@
 
       .dsection OffsetTableSection
 
-      ; 82/F7A2
-
     .here
 
     * = $02F866
     .logical $82F866
 
       .dsection EpilogueEndingsSection
+
+      .fill $828000 + $8000 - *, $00
 
     .here
 
@@ -2957,17 +1539,7 @@
 
       .dsection Unsorted858000Section
 
-    .here
-
-    * = $058280
-    .logical $858280
-
       .dsection LoadMapMenuDataFromProcSection
-
-    .here
-
-    * = $0582A2
-    .logical $8582A2
 
       .dsection MapMenuSaveMapStateSection
 
@@ -2985,11 +1557,6 @@
 
       .dsection StallProcUntilMapMenuDataLoadedSection
 
-    .here
-
-    * = $058366
-    .logical $858366
-
       .dsection ProcCycleMapMenuWaitForPaletteGraphicFinishSection
 
     .here
@@ -2999,52 +1566,17 @@
 
       .dsection ProcScript858398Section
 
-    .here
-
-    * = $0583C2
-    .logical $8583C2
-
       .dsection Unsorted8583C2Section
-
-    .here
-
-    * = $0583D3
-    .logical $8583D3
 
       .dsection Unsorted8583D3Section
 
-    .here
-
-    * = $0583DA
-    .logical $8583DA
-
       .dsection Unsorted8583DASection
-
-    .here
-
-    * = $0583F8
-    .logical $8583F8
 
       .dsection Unsorted8583F8Section
 
-    .here
-
-    * = $0584A1
-    .logical $8584A1
-
       .dsection Unsorted8584A1Section
 
-    .here
-
-    * = $0584AA
-    .logical $8584AA
-
       .dsection ProcScript8584AASection
-
-    .here
-
-    * = $0584AC
-    .logical $8584AC
 
       .dsection Unsorted8584ACSection
 
@@ -3055,17 +1587,7 @@
 
       .dsection Unsorted8584DCSection
 
-    .here
-
-    * = $058516
-    .logical $858516
-
       .dsection Unsorted858516Section
-
-    .here
-
-    * = $05856E
-    .logical $85856E
 
       .dsection Unsorted85856ESection
 
@@ -3076,101 +1598,31 @@
 
       .dsection Unsorted85860ESection
 
-    .here
-
-    * = $058647
-    .logical $858647
-
       .dsection Table858647Section
-
-    .here
-
-    * = $05864B
-    .logical $85864B
 
       .dsection Unsorted85864BSection
 
-    .here
-
-    * = $058671
-    .logical $858671
-
       .dsection Unsorted858671Section
-
-    .here
-
-    * = $058684
-    .logical $858684
 
       .dsection Unsorted858684Section
 
-    .here
-
-    * = $058697
-    .logical $858697
-
       .dsection Unsorted858697Section
-
-    .here
-
-    * = $0586AA
-    .logical $8586AA
 
       .dsection Unsorted8586AASection
 
-    .here
-
-    * = $0586FA
-    .logical $8586FA
-
       .dsection Unsorted8586FASection
-
-    .here
-
-    * = $0586FF
-    .logical $8586FF
 
       .dsection Unsorted8586FFSection
 
-    .here
-
-    * = $058728
-    .logical $858728
-
       .dsection Unsorted858728Section
-
-    .here
-
-    * = $058751
-    .logical $858751
 
       .dsection Unsorted858751Section
 
-    .here
-
-    * = $058793
-    .logical $858793
-
       .dsection Unsorted858793Section
-
-    .here
-
-    * = $0587A8
-    .logical $8587A8
 
       .dsection Unsorted8587A8Section
 
-    .here
-
-    * = $0587E1
-    .logical $8587E1
-
       .dsection Unsorted8587E1Section
-
-    .here
-
-    * = $0587F2
-    .logical $8587F2
 
       .dsection Unsorted8587F2Section
 
@@ -3181,395 +1633,115 @@
 
       .dsection Unsorted85884ASection
 
-    .here
-
-    * = $05895C
-    .logical $85895C
-
       .dsection MapMenuBuildTilemapSection
-
-    .here
-
-    * = $0589C5
-    .logical $8589C5
 
       .dsection Unsorted8589C5Section
 
-    .here
-
-    * = $0589DE
-    .logical $8589DE
-
       .dsection Table8589DESection
-
-    .here
-
-    * = $0589E7
-    .logical $8589E7
 
       .dsection Unsorted8589E7Section
 
-    .here
-
-    * = $058A1B
-    .logical $858A1B
-
       .dsection Table858A1BSection
-
-    .here
-
-    * = $058A6F
-    .logical $858A6F
 
       .dsection Unsorted858A6FSection
 
-    .here
-
-    * = $058A95
-    .logical $858A95
-
       .dsection Table858A95Section
-
-    .here
-
-    * = $058AD7
-    .logical $858AD7
 
       .dsection Unsorted858AD7Section
 
-    .here
-
-    * = $058AFD
-    .logical $858AFD
-
       .dsection Table858AFDSection
-
-    .here
-
-    * = $058B51
-    .logical $858B51
 
       .dsection Unsorted858B51Section
 
-    .here
-
-    * = $058BD3
-    .logical $858BD3
-
       .dsection Table858BD3Section
-
-    .here
-
-    * = $058C4E
-    .logical $858C4E
 
       .dsection Unsorted858C4ESection
 
-    .here
-
-    * = $058C85
-    .logical $858C85
-
       .dsection Table858C85Section
-
-    .here
-
-    * = $058CD3
-    .logical $858CD3
 
       .dsection Unsorted858CD3Section
 
-    .here
-
-    * = $058D18
-    .logical $858D18
-
       .dsection Unsorted858D18Section
-
-    .here
-
-    * = $058D62
-    .logical $858D62
 
       .dsection Table858D62Section
 
-    .here
-
-    * = $058D83
-    .logical $858D83
-
       .dsection Unsorted858D83Section
-
-    .here
-
-    * = $058EA1
-    .logical $858EA1
 
       .dsection Table858EA1Section
 
-    .here
-
-    * = $058EC5
-    .logical $858EC5
-
       .dsection Unsorted858EC5Section
-
-    .here
-
-    * = $058F10
-    .logical $858F10
 
       .dsection Unsorted858F10Section
 
-    .here
-
-    * = $058F28
-    .logical $858F28
-
       .dsection Unsorted858F28Section
-
-    .here
-
-    * = $059078
-    .logical $859078
 
       .dsection Table859078Section
 
-    .here
-
-    * = $0590B9
-    .logical $8590B9
-
       .dsection Unsorted8590B9Section
-
-    .here
-
-    * = $059108
-    .logical $859108
 
       .dsection Unsorted859108Section
 
-    .here
-
-    * = $05915A
-    .logical $85915A
-
       .dsection Unsorted85915ASection
-
-    .here
-
-    * = $059281
-    .logical $859281
 
       .dsection Unsorted859281Section
 
-    .here
-
-    * = $05928D
-    .logical $85928D
-
       .dsection Unsorted85928DSection
-
-    .here
-
-    * = $0592FA
-    .logical $8592FA
 
       .dsection Unsorted8592FASection
 
-    .here
-
-    * = $059386
-    .logical $859386
-
       .dsection Unsorted859386Section
-
-    .here
-
-    * = $059390
-    .logical $859390
 
       .dsection Unsorted859390Section
 
-    .here
-
-    * = $059427
-    .logical $859427
-
       .dsection Unsorted859427Section
-
-    .here
-
-    * = $059431
-    .logical $859431
 
       .dsection Unsorted859431Section
 
-    .here
-
-    * = $05988E
-    .logical $85988E
-
       .dsection Unsorted85988ESection
-
-    .here
-
-    * = $05989A
-    .logical $85989A
 
       .dsection Unsorted85989ASection
 
-    .here
-
-    * = $059953
-    .logical $859953
-
       .dsection Table859953Section
-
-    .here
-
-    * = $059973
-    .logical $859973
 
       .dsection Unsorted859973Section
 
-    .here
-
-    * = $059AA8
-    .logical $859AA8
-
       .dsection Table859AA8Section
-
-    .here
-
-    * = $059AB4
-    .logical $859AB4
 
       .dsection Unsorted859AB4Section
 
-    .here
-
-    * = $059AFD
-    .logical $859AFD
-
       .dsection Unsorted859AFDSection
-
-    .here
-
-    * = $059B28
-    .logical $859B28
 
       .dsection Unsorted859B28Section
 
-    .here
-
-    * = $059B2A
-    .logical $859B2A
-
       .dsection Unsorted859B2ASection
-
-    .here
-
-    * = $059B42
-    .logical $859B42
 
       .dsection Table859B42Section
 
-    .here
-
-    * = $059B48
-    .logical $859B48
-
       .dsection Unsorted859B48Section
-
-    .here
-
-    * = $059B59
-    .logical $859B59
 
       .dsection CreateUnitWindowAndTerrainWindowProcsSection
 
-    .here
-
-    * = $059BBD
-    .logical $859BBD
-
       .dsection Unsorted859BBDSection
-
-    .here
-
-    * = $059BD1
-    .logical $859BD1
 
       .dsection DialogueBoxMapMenuTilemapDataSection
 
-    .here
-
-    * = $059BDA
-    .logical $859BDA
-
       .dsection DialogueBoxMapMenuDataSection
-
-    .here
-
-    * = $059BE6
-    .logical $859BE6
 
       .dsection DialogueBoxSection
 
-    .here
-
-    * = $059D60
-    .logical $859D60
-
       .dsection Unsorted859D60Section
-
-    .here
-
-    * = $059D88
-    .logical $859D88
 
       .dsection Table859D88Section
 
-    .here
-
-    * = $059D94
-    .logical $859D94
-
       .dsection Unsorted859D94Section
-
-    .here
-
-    * = $059DCD
-    .logical $859DCD
 
       .dsection Unsorted859DCDSection
 
-    .here
-
-    * = $059E08
-    .logical $859E08
-
       .dsection Unsorted859E08Section
-
-    .here
-
-    * = $059F97
-    .logical $859F97
 
       .dsection Unsorted859F97Section
 
-    .here
-
-    * = $059FC5
-    .logical $859FC5
-
       .dsection FreeHDMAEntry0Section
-
-    .here
-
-    * = $059FCD
-    .logical $859FCD
 
       .dsection Unsorted859FCDSection
 
@@ -3580,24 +1752,9 @@
 
       .dsection Unsorted859FEASection
 
-    .here
-
-    * = $059FFB
-    .logical $859FFB
-
       .dsection Unsorted859FFBSection
 
-    .here
-
-    * = $05A02E
-    .logical $85A02E
-
       .dsection Unsorted85A02ESection
-
-    .here
-
-    * = $05A03D
-    .logical $85A03D
 
       .dsection Unsorted85A03DSection
 
@@ -3608,384 +1765,112 @@
 
       .dsection Unsorted85A040Section
 
-    .here
-
-    * = $05A041
-    .logical $85A041
-
       .dsection Unsorted85A041Section
-
-    .here
-
-    * = $05A079
-    .logical $85A079
 
       .dsection Unsorted85A079Section
 
-    .here
-
-    * = $05A0A1
-    .logical $85A0A1
-
       .dsection Unsorted85A0A1Section
-
-    .here
-
-    * = $05A0CE
-    .logical $85A0CE
 
       .dsection Unsorted85A0CESection
 
-    .here
-
-    * = $05A0D0
-    .logical $85A0D0
-
       .dsection Unsorted85A0D0Section
-
-    .here
-
-    * = $05A0F5
-    .logical $85A0F5
 
       .dsection Unsorted85A0F5Section
 
-    .here
-
-    * = $05A117
-    .logical $85A117
-
       .dsection Unsorted85A117Section
 
-    .here
-
-    * = $05A1AA
-    .logical $85A1AA
-
       .dsection Unsorted85A1AASection
-
-    .here
-
-    * = $05A1E7
-    .logical $85A1E7
 
       .dsection Unsorted85A1E7Section
       .dsection GetMenuTextStringLengthSection
 
-    .here
-
-    * = $05A227
-    .logical $85A227
-
       .dsection Unsorted85A227Section
-
-    .here
-
-    * = $05A314
-    .logical $85A314
 
       .dsection Unsorted85A314Section
 
-    .here
-
-    * = $05A320
-    .logical $85A320
-
       .dsection Unsorted85A320Section
-
-    .here
-
-    * = $05A3A6
-    .logical $85A3A6
 
       .dsection Unsorted85A3A6Section
 
-    .here
-
-    * = $05A3D5
-    .logical $85A3D5
-
       .dsection Unsorted85A3D5Section
-
-    .here
-
-    * = $05A47F
-    .logical $85A47F
 
       .dsection ProcScript85A47FSection
 
-    .here
-
-    * = $05A48B
-    .logical $85A48B
-
       .dsection Unsorted85A48BSection
-
-    .here
-
-    * = $05A4E6
-    .logical $85A4E6
 
       .dsection Table85A4E6Section
 
-    .here
-
-    * = $05A508
-    .logical $85A508
-
       .dsection Unsorted85A508Section
-
-    .here
-
-    * = $05A509
-    .logical $85A509
 
       .dsection Unsorted85A509Section
 
-    .here
-
-    * = $05A5BD
-    .logical $85A5BD
-
       .dsection ProcScript85A5BDSection
-
-    .here
-
-    * = $05A5C5
-    .logical $85A5C5
 
       .dsection Unsorted85A5C5Section
 
-    .here
-
-    * = $05A5EF
-    .logical $85A5EF
-
       .dsection Unsorted85A5EFSection
-
-    .here
-
-    * = $05A5FB
-    .logical $85A5FB
 
       .dsection Unsorted85A5FBSection
 
-    .here
-
-    * = $05A670
-    .logical $85A670
-
       .dsection Table85A670Section
-
-    .here
-
-    * = $05A69A
-    .logical $85A69A
 
       .dsection Unsorted85A69ASection
 
-    .here
-
-    * = $05A765
-    .logical $85A765
-
       .dsection Unsorted85A765Section
-
-    .here
-
-    * = $05A782
-    .logical $85A782
 
       .dsection Unsorted85A782Section
 
-    .here
-
-    * = $05A78E
-    .logical $85A78E
-
       .dsection Unsorted85A78ESection
-
-    .here
-
-    * = $05A7CE
-    .logical $85A7CE
 
       .dsection Table85A7CESection
 
-    .here
-
-    * = $05A7DE
-    .logical $85A7DE
-
       .dsection Unsorted85A7DESection
-
-    .here
-
-    * = $05A895
-    .logical $85A895
 
       .dsection DialogueBoxHDMASection
 
-      ; 85/AB19
-
-    .here
-
-    * = $05AB19
-    .logical $85AB19
-
       .dsection FreeDialogueBoxHDMAIfFinishedSection
-
-    .here
-
-    * = $05AB32
-    .logical $85AB32
 
       .dsection Unsorted85AB32Section
 
-    .here
-
-    * = $05AB3F
-    .logical $85AB3F
-
       .dsection FreeDialogueBoxesSection
-
-    .here
-
-    * = $05AB82
-    .logical $85AB82
 
       .dsection Table85AB82Section
 
-    .here
-
-    * = $05AB8E
-    .logical $85AB8E
-
       .dsection Unsorted85AB8ESection
-
-    .here
-
-    * = $05AB96
-    .logical $85AB96
 
       .dsection Unsorted85AB96Section
 
-    .here
-
-    * = $05ABF1
-    .logical $85ABF1
-
       .dsection Unsorted85ABF1Section
-
-    .here
-
-    * = $05ABF6
-    .logical $85ABF6
 
       .dsection Unsorted85ABF6Section
 
-    .here
-
-    * = $05ABFE
-    .logical $85ABFE
-
       .dsection Unsorted85ABFESection
-
-    .here
-
-    * = $05AC02
-    .logical $85AC02
 
       .dsection Unsorted85AC02Section
 
-    .here
-
-    * = $05AC40
-    .logical $85AC40
-
       .dsection Unsorted85AC40Section
-
-    .here
-
-    * = $05AC89
-    .logical $85AC89
 
       .dsection Unsorted85AC89Section
 
-    .here
-
-    * = $05AD47
-    .logical $85AD47
-
       .dsection Table85AD47Section
-
-    .here
-
-    * = $05AD67
-    .logical $85AD67
 
       .dsection Unsorted85AD67Section
 
-    .here
-
-    * = $05AE8A
-    .logical $85AE8A
-
       .dsection Unsorted85AE8ASection
-
-    .here
-
-    * = $05AEAC
-    .logical $85AEAC
 
       .dsection ProcScript85AEACSection
 
-    .here
-
-    * = $05AEBB
-    .logical $85AEBB
-
       .dsection Table85AEBBSection
-
-    .here
-
-    * = $05AEC7
-    .logical $85AEC7
 
       .dsection Unsorted85AEC7Section
 
-    .here
-
-    * = $05AF0D
-    .logical $85AF0D
-
       .dsection Table85AF0DSection
-
-    .here
-
-    * = $05AF1B
-    .logical $85AF1B
 
       .dsection Unsorted85AF1BSection
 
-    .here
-
-    * = $05AFC5
-    .logical $85AFC5
-
       .dsection Unsorted85AFC5Section
 
-    .here
-
-    * = $05B009
-    .logical $85B009
-
       .dsection Unsorted85B009Section
-
-    .here
-
-    * = $05B039
-    .logical $85B039
 
       .dsection Unsorted85B039Section
 
@@ -3996,38 +1881,13 @@
 
       .dsection Unsorted85B07CSection
 
-    .here
-
-    * = $05B0BF
-    .logical $85B0BF
-
       .dsection Table85B0BFSection
-
-    .here
-
-    * = $05B107
-    .logical $85B107
 
       .dsection Unsorted85B107Section
 
-    .here
-
-    * = $05B127
-    .logical $85B127
-
       .dsection Table85B127Section
 
-    .here
-
-    * = $05B14F
-    .logical $85B14F
-
       .dsection Unsorted85B14FSection
-
-    .here
-
-    * = $05B18F
-    .logical $85B18F
 
       .dsection Unsorted85B18FSection
 
@@ -4038,129 +1898,39 @@
 
       .dsection Unsorted85B1B0Section
 
-    .here
-
-    * = $05B207
-    .logical $85B207
-
       .dsection Unsorted85B207Section
-
-    .here
-
-    * = $05B282
-    .logical $85B282
 
       .dsection Unsorted85B282Section
 
-    .here
-
-    * = $05B2D8
-    .logical $85B2D8
-
       .dsection ProcScript85B2D8Section
-
-    .here
-
-    * = $05B2DA
-    .logical $85B2DA
 
       .dsection Unsorted85B2DASection
 
-    .here
-
-    * = $05B367
-    .logical $85B367
-
       .dsection Unsorted85B367Section
-
-    .here
-
-    * = $05B37D
-    .logical $85B37D
 
       .dsection Unsorted85B37DSection
 
-    .here
-
-    * = $05B3A2
-    .logical $85B3A2
-
       .dsection Unsorted85B3A2Section
-
-    .here
-
-    * = $05B3DA
-    .logical $85B3DA
 
       .dsection Unsorted85B3DASection
 
-    .here
-
-    * = $05B3FF
-    .logical $85B3FF
-
       .dsection Unsorted85B3FFSection
-
-    .here
-
-    * = $05B40E
-    .logical $85B40E
 
       .dsection Unsorted85B40ESection
 
-    .here
-
-    * = $05B42B
-    .logical $85B42B
-
       .dsection Unsorted85B42BSection
-
-    .here
-
-    * = $05B43E
-    .logical $85B43E
 
       .dsection Unsorted85B43ESection
 
-    .here
-
-    * = $05B45C
-    .logical $85B45C
-
       .dsection Unsorted85B45CSection
-
-    .here
-
-    * = $05B4E9
-    .logical $85B4E9
 
       .dsection Table85B4E9Section
 
-    .here
-
-    * = $05B4ED
-    .logical $85B4ED
-
       .dsection Unsorted85B4EDSection
-
-    .here
-
-    * = $05B520
-    .logical $85B520
 
       .dsection Unsorted85B520Section
 
-    .here
-
-    * = $05B547
-    .logical $85B547
-
       .dsection Table85B547Section
-
-    .here
-
-    * = $05B63B
-    .logical $85B63B
 
       .dsection ProcScript85B63BSection
 
@@ -4171,283 +1941,83 @@
 
       .dsection Unsorted85B65CSection
 
-    .here
-
-    * = $05B6A0
-    .logical $85B6A0
-
       .dsection Table85B6A0Section
-
-    .here
-
-    * = $05B6E0
-    .logical $85B6E0
 
       .dsection Unsorted85B6E0Section
 
-    .here
-
-    * = $05B6E1
-    .logical $85B6E1
-
       .dsection ProcScript85B6E1Section
-
-    .here
-
-    * = $05B6EB
-    .logical $85B6EB
 
       .dsection Table85B6EBSection
 
-    .here
-
-    * = $05B725
-    .logical $85B725
-
       .dsection Unsorted85B725Section
-
-    .here
-
-    * = $05B786
-    .logical $85B786
 
       .dsection Table85B786Section
 
-    .here
-
-    * = $05B78A
-    .logical $85B78A
-
       .dsection Unsorted85B78ASection
-
-    .here
-
-    * = $05B7CF
-    .logical $85B7CF
 
       .dsection ProcScript85B7CFSection
 
-    .here
-
-    * = $05B7D1
-    .logical $85B7D1
-
       .dsection Unsorted85B7D1Section
-
-    .here
-
-    * = $05B81D
-    .logical $85B81D
 
       .dsection Unsorted85B81DSection
 
-    .here
-
-    * = $05B8D6
-    .logical $85B8D6
-
       .dsection Unsorted85B8D6Section
-
-    .here
-
-    * = $05B8E5
-    .logical $85B8E5
 
       .dsection Table85B8E5Section
 
-    .here
-
-    * = $05B8EE
-    .logical $85B8EE
-
       .dsection Unsorted85B8EESection
-
-    .here
-
-    * = $05B8FA
-    .logical $85B8FA
 
       .dsection ProcScript85B8FASection
 
-    .here
-
-    * = $05B906
-    .logical $85B906
-
       .dsection Unsorted85B906Section
-
-    .here
-
-    * = $05B9BC
-    .logical $85B9BC
 
       .dsection Table85B9BCSection
 
-    .here
-
-    * = $05B9D4
-    .logical $85B9D4
-
       .dsection Unsorted85B9D4Section
-
-    .here
-
-    * = $05B9F2
-    .logical $85B9F2
 
       .dsection Unsorted85B9F2Section
 
-    .here
-
-    * = $05BA2C
-    .logical $85BA2C
-
       .dsection Table85BA2CSection
-
-    .here
-
-    * = $05BA41
-    .logical $85BA41
 
       .dsection Unsorted85BA41Section
 
-    .here
-
-    * = $05BA4D
-    .logical $85BA4D
-
       .dsection Unsorted85BA4DSection
-
-    .here
-
-    * = $05BAB3
-    .logical $85BAB3
 
       .dsection Table85BAB3Section
 
-    .here
-
-    * = $05BAC7
-    .logical $85BAC7
-
       .dsection Unsorted85BAC7Section
-
-    .here
-
-    * = $05BAD9
-    .logical $85BAD9
 
       .dsection Unsorted85BAD9Section
 
-    .here
-
-    * = $05BB2E
-    .logical $85BB2E
-
       .dsection Unsorted85BB2ESection
-
-    .here
-
-    * = $05BB52
-    .logical $85BB52
 
       .dsection ProcScript85BB52Section
 
-    .here
-
-    * = $05BB5E
-    .logical $85BB5E
-
       .dsection Unsorted85BB5ESection
-
-    .here
-
-    * = $05BBA5
-    .logical $85BBA5
 
       .dsection Unsorted85BBA5Section
 
-    .here
-
-    * = $05BC00
-    .logical $85BC00
-
       .dsection Unsorted85BC00Section
-
-    .here
-
-    * = $05BC0F
-    .logical $85BC0F
 
       .dsection Unsorted85BC0FSection
 
-    .here
-
-    * = $05BC1B
-    .logical $85BC1B
-
       .dsection Unsorted85BC1BSection
-
-    .here
-
-    * = $05BC8C
-    .logical $85BC8C
 
       .dsection ItemObtainedTextSection
 
-    .here
-
-    * = $05BC9E
-    .logical $85BC9E
-
       .dsection Unsorted85BC9ESection
-
-    .here
-
-    * = $05BCB8
-    .logical $85BCB8
 
       .dsection Unsorted85BCB8Section
 
-    .here
-
-    * = $05BCD4
-    .logical $85BCD4
-
       .dsection Unsorted85BCD4Section
-
-    .here
-
-    * = $05BD12
-    .logical $85BD12
 
       .dsection Unsorted85BD12Section
 
-    .here
-
-    * = $05BD8D
-    .logical $85BD8D
-
       .dsection Table85BD8DSection
-
-    .here
-
-    * = $05BD93
-    .logical $85BD93
 
       .dsection Unsorted85BD93Section
 
-    .here
-
-    * = $05BDA1
-    .logical $85BDA1
-
       .dsection Unsorted85BDA1Section
-
-    .here
-
-    * = $05BE76
-    .logical $85BE76
 
       .dsection Table85BE76Section
       .dsection Table85BE87Section
@@ -4456,45 +2026,15 @@
 
       .dsection Unsorted85C0BASection
 
-    .here
-
-    * = $05C0C7
-    .logical $85C0C7
-
       .dsection Unsorted85C0C7Section
-
-    .here
-
-    * = $05C0CE
-    .logical $85C0CE
 
       .dsection Unsorted85C0CESection
 
-    .here
-
-    * = $05C0D5
-    .logical $85C0D5
-
       .dsection Unsorted85C0D5Section
-
-    .here
-
-    * = $05C0E2
-    .logical $85C0E2
 
       .dsection Unsorted85C0E2Section
 
-    .here
-
-    * = $05C19B
-    .logical $85C19B
-
       .dsection Table85C19BSection
-
-    .here
-
-    * = $05C1A4
-    .logical $85C1A4
 
       .dsection Unsorted85C1A4Section
 
@@ -4505,206 +2045,61 @@
 
       .dsection Unsorted85C30DSection
 
-    .here
-
-    * = $05C33D
-    .logical $85C33D
-
       .dsection ProcScript85C33DSection
-
-    .here
-
-    * = $05C347
-    .logical $85C347
 
       .dsection Unsorted85C347Section
 
-    .here
-
-    * = $05C41F
-    .logical $85C41F
-
       .dsection Unsorted85C41FSection
-
-    .here
-
-    * = $05C4E0
-    .logical $85C4E0
 
       .dsection Unsorted85C4E0Section
 
-    .here
-
-    * = $05C51B
-    .logical $85C51B
-
       .dsection Data85C51BSection
-
-    .here
-
-    * = $05C55B
-    .logical $85C55B
 
       .dsection Unsorted85C55BSection
 
-    .here
-
-    * = $05C652
-    .logical $85C652
-
       .dsection ProcScript85C652Section
-
-    .here
-
-    * = $05C65A
-    .logical $85C65A
 
       .dsection Unsorted85C65ASection
 
-    .here
-
-    * = $05C6D2
-    .logical $85C6D2
-
       .dsection Unsorted85C6D2Section
-
-    .here
-
-    * = $05C819
-    .logical $85C819
 
       .dsection Unsorted85C819Section
 
-    .here
-
-    * = $05C983
-    .logical $85C983
-
       .dsection Table85C983Section
-
-    .here
-
-    * = $05C99F
-    .logical $85C99F
 
       .dsection Unsorted85C99FSection
 
-    .here
-
-    * = $05C9B7
-    .logical $85C9B7
-
       .dsection Data85C9B7Section
-
-    .here
-
-    * = $05C9BF
-    .logical $85C9BF
 
       .dsection Unsorted85C9BFSection
 
-    .here
-
-    * = $05CA4B
-    .logical $85CA4B
-
       .dsection Unsorted85CA4BSection
-
-    .here
-
-    * = $05CA85
-    .logical $85CA85
 
       .dsection ProcScript85CA85Section
 
-    .here
-
-    * = $05CA91
-    .logical $85CA91
-
       .dsection Unsorted85CA91Section
-
-    .here
-
-    * = $05CAFB
-    .logical $85CAFB
 
       .dsection Unsorted85CAFBSection
 
-    .here
-
-    * = $05CAFC
-    .logical $85CAFC
-
       .dsection Unsorted85CAFCSection
-
-    .here
-
-    * = $05CB51
-    .logical $85CB51
 
       .dsection Unsorted85CB51Section
 
-    .here
-
-    * = $05CBBD
-    .logical $85CBBD
-
       .dsection Unsorted85CBBDSection
-
-    .here
-
-    * = $05CC3D
-    .logical $85CC3D
 
       .dsection Unsorted85CC3DSection
 
-    .here
-
-    * = $05CC3E
-    .logical $85CC3E
-
       .dsection Unsorted85CC3ESection
-
-    .here
-
-    * = $05CC4D
-    .logical $85CC4D
 
       .dsection Unsorted85CC4DSection
 
-    .here
-
-    * = $05CC62
-    .logical $85CC62
-
       .dsection ProcScript85CC62Section
-
-    .here
-
-    * = $05CCA8
-    .logical $85CCA8
 
       .dsection Unsorted85CCA8Section
 
-    .here
-
-    * = $05CD0C
-    .logical $85CD0C
-
       .dsection ProcScript85CD0CSection
 
-    .here
-
-    * = $05CD2D
-    .logical $85CD2D
-
       .dsection ProcScript85CD2DSection
-
-    .here
-
-    * = $05CD39
-    .logical $85CD39
 
       .dsection Unsorted85CD39Section
 
@@ -4715,59 +2110,19 @@
 
       .dsection Unsorted85CD81Section
 
-    .here
-
-    * = $05CE54
-    .logical $85CE54
-
       .dsection Unsorted85CE54Section
-
-    .here
-
-    * = $05CE7C
-    .logical $85CE7C
 
       .dsection Unsorted85CE7CSection
 
-    .here
-
-    * = $05CEC3
-    .logical $85CEC3
-
       .dsection Unsorted85CEC3Section
-
-    .here
-
-    * = $05CEE2
-    .logical $85CEE2
 
       .dsection Unsorted85CEE2Section
 
-    .here
-
-    * = $05D064
-    .logical $85D064
-
       .dsection ProcScript85D064Section
-
-    .here
-
-    * = $05D066
-    .logical $85D066
 
       .dsection Unsorted85D066Section
 
-    .here
-
-    * = $05D100
-    .logical $85D100
-
       .dsection Unsorted85D100Section
-
-    .here
-
-    * = $05D17E
-    .logical $85D17E
 
       .dsection Unsorted85D17ESection
 
@@ -4792,31 +2147,11 @@
 
       .dsection Unsorted85D442Section
 
-    .here
-
-    * = $05D4B2
-    .logical $85D4B2
-
       .dsection Unsorted85D4B2Section
-
-    .here
-
-    * = $05D591
-    .logical $85D591
 
       .dsection Table85D591Section
 
-    .here
-
-    * = $05D5AA
-    .logical $85D5AA
-
       .dsection Unsorted85D5AASection
-
-    .here
-
-    * = $05D5CC
-    .logical $85D5CC
 
       .dsection Unsorted85D5CCSection
 
@@ -4829,144 +2164,44 @@
       .dsection Table85D626Section
       .dsection Table85D638Section
 
-    .here
-
-    * = $05D648
-    .logical $85D648
-
       .dsection Unsorted85D648Section
-
-    .here
-
-    * = $05D669
-    .logical $85D669
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry85D669 .structDecompressionDMAEntry gcUnknownC022B6, $0800, $4C00 ; 85/D669
 
-    .here
-
-    * = $05D671
-    .logical $85D671
-
       .dsection Unsorted85D671Section
-
-    .here
-
-    * = $05D676
-    .logical $85D676
 
       .dsection Unsorted85D676Section
 
-    .here
-
-    * = $05D6B2
-    .logical $85D6B2
-
       .dsection Table85D6B2Section
-
-    .here
-
-    * = $05D766
-    .logical $85D766
 
       .dsection Unsorted85D766Section
 
-    .here
-
-    * = $05D7A0
-    .logical $85D7A0
-
       .dsection Table85D7A0Section
-
-    .here
-
-    * = $05D7FA
-    .logical $85D7FA
 
       .dsection Unsorted85D7FASection
 
-    .here
-
-    * = $05D8AA
-    .logical $85D8AA
-
       .dsection ProcScript85D8AASection
-
-    .here
-
-    * = $05D8B6
-    .logical $85D8B6
 
       .dsection Unsorted85D8B6Section
 
-    .here
-
-    * = $05D96D
-    .logical $85D96D
-
       .dsection Table85D96DSection
-
-    .here
-
-    * = $05D971
-    .logical $85D971
 
       .dsection Unsorted85D971Section
 
-    .here
-
-    * = $05D9FA
-    .logical $85D9FA
-
       .dsection ProcScript85D9FASection
-
-    .here
-
-    * = $05D9FC
-    .logical $85D9FC
 
       .dsection Unsorted85D9FCSection
 
-    .here
-
-    * = $05DA77
-    .logical $85DA77
-
       .dsection Table85DA77Section
-
-    .here
-
-    * = $05DA7E
-    .logical $85DA7E
 
       .dsection Unsorted85DA7ESection
 
-    .here
-
-    * = $05DAB2
-    .logical $85DAB2
-
       .dsection Table85DAB2Section
-
-    .here
-
-    * = $05DABB
-    .logical $85DABB
 
       .dsection Unsorted85DABBSection
 
-    .here
-
-    * = $05DACB
-    .logical $85DACB
-
       .dsection Table85DACBSection
-
-    .here
-
-    * = $05DAEA
-    .logical $85DAEA
 
       .dsection ProcScript85DAEASection
 
@@ -4984,283 +2219,83 @@
 
       .dsection Unsorted85DBDDSection
 
-    .here
-
-    * = $05DC26
-    .logical $85DC26
-
       .dsection Unsorted85DC26Section
-
-    .here
-
-    * = $05DCAB
-    .logical $85DCAB
 
       .dsection Unsorted85DCABSection
 
-    .here
-
-    * = $05DCCA
-    .logical $85DCCA
-
       .dsection Unsorted85DCCASection
-
-    .here
-
-    * = $05DDDB
-    .logical $85DDDB
 
       .dsection ProcScript85DDDBSection
 
-    .here
-
-    * = $05DDF9
-    .logical $85DDF9
-
       .dsection Unsorted85DDF9Section
-
-    .here
-
-    * = $05DE34
-    .logical $85DE34
 
       .dsection Unsorted85DE34Section
 
-    .here
-
-    * = $05DE7C
-    .logical $85DE7C
-
       .dsection Unsorted85DE7CSection
-
-    .here
-
-    * = $05DED6
-    .logical $85DED6
 
       .dsection Unsorted85DED6Section
 
-    .here
-
-    * = $05DF20
-    .logical $85DF20
-
       .dsection Unsorted85DF20Section
-
-    .here
-
-    * = $05DF3F
-    .logical $85DF3F
 
       .dsection Unsorted85DF3FSection
 
-    .here
-
-    * = $05DF61
-    .logical $85DF61
-
       .dsection Unsorted85DF61Section
-
-    .here
-
-    * = $05DF6F
-    .logical $85DF6F
 
       .dsection Unsorted85DF6FSection
 
-    .here
-
-    * = $05DF7D
-    .logical $85DF7D
-
       .dsection Unsorted85DF7DSection
-
-    .here
-
-    * = $05DF8A
-    .logical $85DF8A
 
       .dsection Unsorted85DF8ASection
 
-    .here
-
-    * = $05DFA6
-    .logical $85DFA6
-
       .dsection Unsorted85DFA6Section
-
-    .here
-
-    * = $05DFC2
-    .logical $85DFC2
 
       .dsection Unsorted85DFC2Section
 
-    .here
-
-    * = $05DFFD
-    .logical $85DFFD
-
       .dsection Unsorted85DFFDSection
-
-    .here
-
-    * = $05E004
-    .logical $85E004
 
       .dsection Unsorted85E004Section
 
-    .here
-
-    * = $05E012
-    .logical $85E012
-
       .dsection Unsorted85E012Section
-
-    .here
-
-    * = $05E1CC
-    .logical $85E1CC
 
       .dsection ProcScript85E1CCSection
 
-    .here
-
-    * = $05E1DB
-    .logical $85E1DB
-
       .dsection Unsorted85E1DBSection
-
-    .here
-
-    * = $05E27F
-    .logical $85E27F
 
       .dsection Table85E27FSection
 
-    .here
-
-    * = $05E2DF
-    .logical $85E2DF
-
       .dsection Unsorted85E2DFSection
-
-    .here
-
-    * = $05E33D
-    .logical $85E33D
 
       .dsection Unsorted85E33DSection
 
-    .here
-
-    * = $05E38C
-    .logical $85E38C
-
       .dsection Unsorted85E38CSection
-
-    .here
-
-    * = $05E44E
-    .logical $85E44E
 
       .dsection Unsorted85E44ESection
 
-    .here
-
-    * = $05E47F
-    .logical $85E47F
-
       .dsection Unsorted85E47FSection
-
-    .here
-
-    * = $05E545
-    .logical $85E545
 
       .dsection Unsorted85E545Section
 
-    .here
-
-    * = $05E549
-    .logical $85E549
-
       .dsection Unsorted85E549Section
-
-    .here
-
-    * = $05E57E
-    .logical $85E57E
 
       .dsection Unsorted85E57ESection
 
-    .here
-
-    * = $05E6D7
-    .logical $85E6D7
-
       .dsection Unsorted85E6D7Section
-
-    .here
-
-    * = $05E6E8
-    .logical $85E6E8
 
       .dsection Unsorted85E6E8Section
 
-    .here
-
-    * = $05E78A
-    .logical $85E78A
-
       .dsection Unsorted85E78ASection
-
-    .here
-
-    * = $05E7B3
-    .logical $85E7B3
 
       .dsection Unsorted85E7B3Section
 
-    .here
-
-    * = $05E839
-    .logical $85E839
-
       .dsection Unsorted85E839Section
-
-    .here
-
-    * = $05E85D
-    .logical $85E85D
 
       .dsection Unsorted85E85DSection
 
-    .here
-
-    * = $05E897
-    .logical $85E897
-
       .dsection Unsorted85E897Section
-
-    .here
-
-    * = $05E8A8
-    .logical $85E8A8
 
       .dsection Unsorted85E8A8Section
 
-    .here
-
-    * = $05E8EA
-    .logical $85E8EA
-
       .dsection Unsorted85E8EASection
-
-    .here
-
-    * = $05E8FB
-    .logical $85E8FB
 
       .dsection Unsorted85E8FBSection
 
@@ -5292,11 +2327,6 @@
 
       .dsection Unsorted85E9D6Section
 
-    .here
-
-    * = $05EA3A
-    .logical $85EA3A
-
       .dsection Table85EA3ASection
 
     .here
@@ -5307,12 +2337,9 @@
       .dsection Unsorted85EA42Section
       .dsection Unsorted85EA53Section
 
-    .here
-
-    * = $05EA64
-    .logical $85EA64
-
       .dsection Unsorted85EA64Section
+
+      .fill $858000 + $8000 - *, $00
 
     .here
 
@@ -5421,115 +2448,35 @@
 
       .dsection CodeChecksums878000Section
 
-    .here
-
-    * = $078017
-    .logical $878017
-
       .dsection Unsorted878017Section
-
-    .here
-
-    * = $0780AA
-    .logical $8780AA
 
       .dsection Unsorted8780AASection
 
-    .here
-
-    * = $0780DF
-    .logical $8780DF
-
       .dsection Unsorted8780DFSection
-
-    .here
-
-    * = $0780F9
-    .logical $8780F9
 
       .dsection MapMenu8780F9Section
 
-    .here
-
-    * = $078148
-    .logical $878148
-
       .dsection Unsorted878148Section
-
-    .here
-
-    * = $07819A
-    .logical $87819A
 
       .dsection Unknown87819ASection
 
-    .here
-
-    * = $0781EA
-    .logical $8781EA
-
       .dsection LoadMapMenuDataSection
-
-    .here
-
-    * = $078232
-    .logical $878232
 
       .dsection LoadMapMenuTilemapDataSection
 
-    .here
-
-    * = $078256
-    .logical $878256
-
       .dsection Unsorted878256Section
-
-    .here
-
-    * = $07829A
-    .logical $87829A
 
       .dsection Unsorted87829ASection
 
-    .here
-
-    * = $0782D4
-    .logical $8782D4
-
       .dsection Unsorted8782D4Section
-
-    .here
-
-    * = $078337
-    .logical $878337
 
       .dsection Unsorted878337Section
 
-    .here
-
-    * = $0783F8
-    .logical $8783F8
-
       .dsection Unsorted8783F8Section
-
-    .here
-
-    * = $07840F
-    .logical $87840F
 
       .dsection Unsorted87840FSection
 
-    .here
-
-    * = $078459
-    .logical $878459
-
       .dsection Unsorted878459Section
-
-    .here
-
-    * = $078472
-    .logical $878472
 
       .dsection Unsorted878472Section
 
@@ -5540,52 +2487,17 @@
 
       .dsection Unsorted8784E1Section
 
-    .here
-
-    * = $078517
-    .logical $878517
-
       .dsection GetMapMenuYPositionsSection
-
-    .here
-
-    * = $078531
-    .logical $878531
 
       .dsection Unsorted878531Section
 
-    .here
-
-    * = $0785A4
-    .logical $8785A4
-
       .dsection Unsorted8785A4Section
-
-    .here
-
-    * = $0786BA
-    .logical $8786BA
 
       .dsection HandleMapMenuPaletteGraphicsDataSection
 
-    .here
-
-    * = $07872B
-    .logical $87872B
-
       .dsection Unsorted87872BSection
 
-    .here
-
-    * = $078749
-    .logical $878749
-
       .dsection GetMapMenuPositionSection
-
-    .here
-
-    * = $0787B5
-    .logical $8787B5
 
       .dsection GetMapMenuTilemapRAMEntryPointerSection
 
@@ -5596,24 +2508,9 @@
 
       .dsection Unsorted878852Section
 
-    .here
-
-    * = $0788B3
-    .logical $8788B3
-
       .dsection GetMapMenuTileIndexSection
 
-    .here
-
-    * = $0788F7
-    .logical $8788F7
-
       .dsection Unsorted8788F7Section
-
-    .here
-
-    * = $078900
-    .logical $878900
 
       .dsection Unsorted878900Section
 
@@ -5624,174 +2521,54 @@
 
       .dsection Unsorted878916Section
 
-    .here
-
-    * = $078921
-    .logical $878921
-
       .dsection Unsorted878921Section
       .dsection ApplyMapMenuPaletteDataSection
 
-    .here
-
-    * = $078979
-    .logical $878979
-
       .dsection HandleMapMenuDecompressionDMASection
-
-    .here
-
-    * = $078AB5
-    .logical $878AB5
 
       .dsection Unsorted878AB5Section
 
-    .here
-
-    * = $078B1F
-    .logical $878B1F
-
       .dsection Unsorted878B1FSection
-
-    .here
-
-    * = $078B4E
-    .logical $878B4E
 
       .dsection Unsorted878B4ESection
 
-    .here
-
-    * = $078B83
-    .logical $878B83
-
       .dsection RemoveMapMenuTilemapRAMEntrySection
-
-    .here
-
-    * = $078BF0
-    .logical $878BF0
 
       .dsection Unsorted878BF0Section
 
-    .here
-
-    * = $078C8C
-    .logical $878C8C
-
       .dsection Unsorted878C8CSection
-
-    .here
-
-    * = $078D61
-    .logical $878D61
 
       .dsection Unsorted878D61Section
 
-    .here
-
-    * = $078F6E
-    .logical $878F6E
-
       .dsection Unsorted878F6ESection
-
-    .here
-
-    * = $078FE7
-    .logical $878FE7
 
       .dsection Unsorted878FE7Section
 
-    .here
-
-    * = $079076
-    .logical $879076
-
       .dsection Table879076Section
-
-    .here
-
-    * = $07913E
-    .logical $87913E
 
       .dsection Unsorted87913ESection
 
-    .here
-
-    * = $0791EE
-    .logical $8791EE
-
       .dsection Unsorted8791EESection
 
-    .here
-
-    * = $079354
-    .logical $879354
-
       .dsection DrawMenuTextLineSection
-
-    .here
-
-    * = $079471
-    .logical $879471
 
       .dsection Table879471Section
 
       .dsection Table879D77Section
 
-    .here
-
-    * = $079E42
-    .logical $879E42
-
       .dsection CheckTalkEventEntryAvailableSection
-
-    .here
-
-    * = $079EE7
-    .logical $879EE7
 
       .dsection Unsorted879EE7Section
 
-    .here
-
-    * = $079F12
-    .logical $879F12
-
       .dsection Unsorted879F12Section
-
-    .here
-
-    * = $07A006
-    .logical $87A006
 
       .dsection Unsorted87A006Section
 
-    .here
-
-    * = $07A040
-    .logical $87A040
-
       .dsection Unsorted87A040Section
-
-    .here
-
-    * = $07A082
-    .logical $87A082
 
       .dsection Unsorted87A082Section
 
-    .here
-
-    * = $07A18C
-    .logical $87A18C
-
       .dsection Unsorted87A18CSection
-
-    .here
-
-    * = $07A19D
-    .logical $87A19D
 
       .dsection SkillsSection
 
@@ -5801,310 +2578,91 @@
 
       .dsection LovePointsSection
 
-      ; 87/AE88
-
-    .here
-
-    * = $07AE88
-    .logical $87AE88
-
       .dsection Unsorted87AE88Section
 
-    .here
-
-    * = $07AF46
-    .logical $87AF46
-
       .dsection Unsorted87AF46Section
-
-    .here
-
-    * = $07B01D
-    .logical $87B01D
 
       .dsection Unsorted87B01DSection
       .dsection ClearEventMovementTargetMapSection
 
-    .here
-
-    * = $07B197
-    .logical $87B197
-
       .dsection EventMovementTargetDistanceMapSection
-
-    .here
-
-    * = $07B4ED
-    .logical $87B4ED
 
       .dsection EventMovementMovementScriptBufferAddressesSection
 
-    .here
-
-    * = $07B4FD
-    .logical $87B4FD
-
       .dsection EventMovementDirectionLookupSection
-
-    .here
-
-    * = $07B505
-    .logical $87B505
 
       .dsection EventMovementWriteToMovementScriptBufferSection
 
-    .here
-
-    * = $07B512
-    .logical $87B512
-
       .dsection Unsorted87B512Section
-
-    .here
-
-    * = $07B541
-    .logical $87B541
 
       .dsection Unsorted87B541Section
 
-    .here
-
-    * = $07B5DD
-    .logical $87B5DD
-
       .dsection Unsorted87B5DDSection
-
-    .here
-
-    * = $07B63F
-    .logical $87B63F
 
       .dsection Unsorted87B63FSection
 
-    .here
-
-    * = $07B786
-    .logical $87B786
-
       .dsection Unsorted87B786Section
-
-    .here
-
-    * = $07B877
-    .logical $87B877
 
       .dsection Unsorted87B877Section
 
-    .here
-
-    * = $07B8A7
-    .logical $87B8A7
-
       .dsection Unsorted87B8A7Section
-
-    .here
-
-    * = $07B8EE
-    .logical $87B8EE
 
       .dsection Table87B8EESection
 
-    .here
-
-    * = $07B8FE
-    .logical $87B8FE
-
       .dsection Unsorted87B8FESection
-
-    .here
-
-    * = $07BAD1
-    .logical $87BAD1
 
       .dsection Table87BAD1Section
 
-    .here
-
-    * = $07BB27
-    .logical $87BB27
-
       .dsection Unsorted87BB27Section
-
-    .here
-
-    * = $07BB50
-    .logical $87BB50
 
       .dsection ScriptedCritsSection
 
-      ; 87/BE98
-
-    .here
-
-    * = $07BE98
-    .logical $87BE98
-
       .dsection CheckIfTerrainWindowSettingOffSection
-
-    .here
-
-    * = $07BED7
-    .logical $87BED7
 
       .dsection Unsorted87BED7Section
 
-    .here
-
-    * = $07BEF1
-    .logical $87BEF1
-
       .dsection GetTextSpeedOptionSection
-
-    .here
-
-    * = $07BF01
-    .logical $87BF01
 
       .dsection Unsorted87BF01Section
 
-    .here
-
-    * = $07BF1B
-    .logical $87BF1B
-
       .dsection Unsorted87BF1BSection
-
-    .here
-
-    * = $07BF29
-    .logical $87BF29
 
       .dsection Unsorted87BF29Section
 
-    .here
-
-    * = $07BF43
-    .logical $87BF43
-
       .dsection Unsorted87BF43Section
-
-    .here
-
-    * = $07BF52
-    .logical $87BF52
 
       .dsection Unsorted87BF52Section
 
-    .here
-
-    * = $07BF6F
-    .logical $87BF6F
-
       .dsection Unsorted87BF6FSection
-
-    .here
-
-    * = $07BFBF
-    .logical $87BFBF
 
       .dsection Unsorted87BFBFSection
 
-    .here
-
-    * = $07BFD9
-    .logical $87BFD9
-
       .dsection Unsorted87BFD9Section
-
-    .here
-
-    * = $07BFE9
-    .logical $87BFE9
 
       .dsection Unsorted87BFE9Section
 
-    .here
-
-    * = $07C003
-    .logical $87C003
-
       .dsection AICleverModeSection
-
-    .here
-
-    * = $07C015
-    .logical $87C015
 
       .dsection Unsorted87C015Section
 
-    .here
-
-    * = $07C02F
-    .logical $87C02F
-
       .dsection Unsorted87C02FSection
 
-    .here
-
-    * = $07C03C
-    .logical $87C03C
-
       .dsection Unsorted87C03CSection
-
-    .here
-
-    * = $07C056
-    .logical $87C056
 
       .dsection Unsorted87C056Section
       .dsection ProcCycleFlickerUnitsOfFactionSlotSection
 
-    .here
-
-    * = $07C38C
-    .logical $87C38C
-
       .dsection Unsorted87C38CSection
-
-    .here
-
-    * = $07C41B
-    .logical $87C41B
 
       .dsection Unsorted87C41BSection
 
-    .here
-
-    * = $07C442
-    .logical $87C442
-
       .dsection Unsorted87C442Section
-
-    .here
-
-    * = $07C5AA
-    .logical $87C5AA
 
       .dsection Unsorted87C5AASection
 
-    .here
-
-    * = $07C5BF
-    .logical $87C5BF
-
       .dsection Table87C5BFSection
 
-    .here
-
-    * = $07C646
-    .logical $87C646
-
       .dsection Unsorted87C646Section
-
-    .here
-
-    * = $07C695
-    .logical $87C695
 
       .dsection Unsorted87C695Section
 
@@ -6115,128 +2673,41 @@
 
       .dsection Unsorted87C70ASection
 
-    .here
-
-    * = $07C712
-    .logical $87C712
-
       .dsection Unsorted87C712Section
-
-    .here
-
-    * = $07C784
-    .logical $87C784
 
       .dsection Table87C784Section
 
-    .here
-
-    * = $07C7B4
-    .logical $87C7B4
-
       .dsection Unsorted87C7B4Section
-
-    .here
-
-    * = $07C7F3
-    .logical $87C7F3
 
       .dsection Unsorted87C7F3Section
 
-    .here
-
-    * = $07C81F
-    .logical $87C81F
-
       .dsection Unsorted87C81FSection
-
-    .here
-
-    * = $07C821
-    .logical $87C821
 
       .dsection Unsorted87C821Section
 
-    .here
-
-    * = $07C866
-    .logical $87C866
-
       .dsection Table87C866Section
-
-    .here
-
-    * = $07C87A
-    .logical $87C87A
 
       .dsection Unsorted87C87ASection
 
-    .here
-
-    * = $07C8E1
-    .logical $87C8E1
-
       .dsection Table87C8E1Section
 
-    .here
-
-    * = $07CBC5
-    .logical $87CBC5
-
       .dsection Unsorted87CBC5Section
-
-    .here
-
-    * = $07CBC6
-    .logical $87CBC6
 
       .dsection AITargetListSection
       .dsection AIScriptSection
       .dsection AIRangeMapSection
 
-    .here
-
-    * = $07D65A
-    .logical $87D65A
-
       .dsection Unsorted87D65ASection
-
-    .here
-
-    * = $07D711
-    .logical $87D711
 
       .dsection AITargetMapSection
       .dsection AIUnitListSection
       .dsection AIGroupSection
 
-    .here
-
-    * = $07DC71
-    .logical $87DC71
-
       .dsection AIFormationOffsetSection
-
-    .here
-
-    * = $07DCD8
-    .logical $87DCD8
 
       .dsection FormationPatternOffsetsSection
 
-    .here
-
-    * = $07DF12
-    .logical $87DF12
-
       .dsection ItemsSection
-
-      ; 87/E6D3
-
-    .here
-
-    * = $07E6D3
-    .logical $87E6D3
 
       .dsection Unsorted87E6D3Section
 
@@ -6247,32 +2718,12 @@
 
       .dsection Unsorted87E6D7Section
 
-    .here
-
-    * = $07E705
-    .logical $87E705
-
       .dsection Unsorted87E705Section
       .dsection Unsorted87E707Section
 
-    .here
-
-    * = $07E709
-    .logical $87E709
-
       .dsection Unsorted87E709Section
 
-    .here
-
-    * = $07E715
-    .logical $87E715
-
       .dsection Table87E715Section
-
-    .here
-
-    * = $07E737
-    .logical $87E737
 
       .dsection Unsorted87E737Section
 
@@ -6283,31 +2734,11 @@
 
       .dsection Unsorted87E762Section
 
-    .here
-
-    * = $07E779
-    .logical $87E779
-
       .dsection Unsorted87E779Section
-
-    .here
-
-    * = $07E801
-    .logical $87E801
 
       .dsection Unsorted87E801Section
 
-    .here
-
-    * = $07E811
-    .logical $87E811
-
       .dsection Table87E811Section
-
-    .here
-
-    * = $07E833
-    .logical $87E833
 
       .dsection Unsorted87E833Section
       .dsection Unsorted87E834Section
@@ -6315,227 +2746,67 @@
       .dsection Unsorted87E84ASection
       .dsection Unsorted87E855Section
 
-    .here
-
-    * = $07E86A
-    .logical $87E86A
-
       .dsection Unsorted87E86ASection
-
-    .here
-
-    * = $07E98D
-    .logical $87E98D
 
       .dsection LocationEventDataSection
 
-      ; 87/E9E0
-
-    .here
-
-    * = $07E9E0
-    .logical $87E9E0
-
       .dsection Unsorted87E9E0Section
-
-    .here
-
-    * = $07EA09
-    .logical $87EA09
 
       .dsection Unsorted87EA09Section
 
-    .here
-
-    * = $07EA87
-    .logical $87EA87
-
       .dsection LocationUpdateSection
-
-      ; 87/EBC8
-
-    .here
-
-    * = $07EBC8
-    .logical $87EBC8
 
       .dsection Unsorted87EBC8Section
 
-    .here
-
-    * = $07EC42
-    .logical $87EC42
-
       .dsection LocationGettersSection
-
-      ; 87/EF46
-
-    .here
-
-    * = $07EF46
-    .logical $87EF46
 
       .dsection Unsorted87EF46Section
 
-    .here
-
-    * = $07EF61
-    .logical $87EF61
-
       .dsection LocationModificationSection
-
-      ; 87/F321
-
-    .here
-
-    * = $07F321
-    .logical $87F321
 
       .dsection Unsorted87F321Section
 
-    .here
-
-    * = $07F361
-    .logical $87F361
-
       .dsection Table87F361Section
-
-    .here
-
-    * = $07F391
-    .logical $87F391
 
       .dsection GetEventLocationTypeBaseMoneySection
 
-    .here
-
-    * = $07F3A7
-    .logical $87F3A7
-
       .dsection LocationTypeOffsetsSection
-
-      ; 87/F4A7
-
-    .here
-
-    * = $07F4CF
-    .logical $87F4CF
 
       .dsection CheckIfCharacterHasFemaleGenerationIDSection
 
-    .here
-
-    * = $07F501
-    .logical $87F501
-
       .dsection Unsorted87F501Section
-
-    .here
-
-    * = $07F515
-    .logical $87F515
 
       .dsection Unsorted87F515Section
 
-      ; 87/F559
-
-    .here
-
-    * = $07F55A
-    .logical $87F55A
-
       .dsection Unsorted87F55ASection
-
-    .here
-
-    * = $07F574
-    .logical $87F574
 
       .dsection CreateUnitFromBuffersByTypeSection
 
-    .here
-
-    * = $07F9CE
-    .logical $87F9CE
-
       .dsection CompactStaticDynamicUnitBuffer1UnitStatesSection
-
-    .here
-
-    * = $07F9F6
-    .logical $87F9F6
 
       .dsection Unsorted87F9F6Section
 
-    .here
-
-    * = $07FA1E
-    .logical $87FA1E
-
       .dsection CompactHolyEnemyUnitBuffer1UnitStatesSection
-
-    .here
-
-    * = $07FA57
-    .logical $87FA57
 
       .dsection Unsorted87FA57Section
 
-    .here
-
-    * = $07FA83
-    .logical $87FA83
-
       .dsection FillUnitsDeploymentSaveDataSection
-
-    .here
-
-    * = $07FABC
-    .logical $87FABC
 
       .dsection Unsorted87FABCSection
 
-    .here
-
-    * = $07FB5E
-    .logical $87FB5E
-
       .dsection Unsorted87FB5ESection
-
-    .here
-
-    * = $07FB94
-    .logical $87FB94
 
       .dsection Unsorted87FB94Section
 
-    .here
-
-    * = $07FBC5
-    .logical $87FBC5
-
       .dsection FillItemsOwnerAndSlotDataSection
-
-    .here
-
-    * = $07FC51
-    .logical $87FC51
 
       .dsection FillItemDurabilityDataSection
 
-    .here
-
-    * = $07FCC3
-    .logical $87FCC3
-
       .dsection CapItemDurabilitySection
 
-    .here
-
-    * = $07FD09
-    .logical $87FD09
-
       .dsection Unsorted87FD09Section
+
+      .fill $878000 + $8000 - *, $00
 
     .here
 
@@ -6543,11 +2814,6 @@
     .logical $888000
 
       .dsection Table888000Section
-
-    .here
-
-    * = $088082
-    .logical $888082
 
       .dsection Unsorted888082Section
 
@@ -6558,45 +2824,15 @@
 
       .dsection Unsorted88818ASection
 
-    .here
-
-    * = $088197
-    .logical $888197
-
       .dsection Unsorted888197Section
-
-    .here
-
-    * = $0881B8
-    .logical $8881B8
 
       .dsection Unsorted8881B8Section
 
-    .here
-
-    * = $0881D7
-    .logical $8881D7
-
       .dsection Unsorted8881D7Section
-
-    .here
-
-    * = $0881DE
-    .logical $8881DE
 
       .dsection Unsorted8881DESection
 
-    .here
-
-    * = $0881E5
-    .logical $8881E5
-
       .dsection Unsorted8881E5Section
-
-    .here
-
-    * = $0881EC
-    .logical $8881EC
 
       .dsection Unsorted8881ECSection
 
@@ -6607,31 +2843,11 @@
 
       .dsection Unsorted88821ASection
 
-    .here
-
-    * = $0883C7
-    .logical $8883C7
-
       .dsection Unsorted8883C7Section
-
-    .here
-
-    * = $088410
-    .logical $888410
 
       .dsection Unsorted888410Section
 
-    .here
-
-    * = $08847D
-    .logical $88847D
-
       .dsection Unsorted88847DSection
-
-    .here
-
-    * = $088560
-    .logical $888560
 
       .dsection Unsorted888560Section
 
@@ -6642,161 +2858,51 @@
 
       .dsection Unsorted8885D3Section
 
-    .here
-
-    * = $0885EF
-    .logical $8885EF
-
       .dsection Unsorted8885EFSection
 
-    .here
-
-    * = $08860B
-    .logical $88860B
-
       .dsection Unsorted88860BSection
-
-    .here
-
-    * = $08861C
-    .logical $88861C
 
       .dsection Unsorted88861CSection
       .dsection MapScrollRightSetBGOFSSection
 
-    .here
-
-    * = $0887EC
-    .logical $8887EC
-
       .dsection Unsorted8887ECSection
-
-    .here
-
-    * = $088901
-    .logical $888901
 
       .dsection Unsorted888901Section
 
-    .here
-
-    * = $088A14
-    .logical $888A14
-
       .dsection Unsorted888A14Section
-
-    .here
-
-    * = $088BB3
-    .logical $888BB3
 
       .dsection Unsorted888BB3Section
 
-    .here
-
-    * = $088C5F
-    .logical $888C5F
-
       .dsection Unsorted888C5FSection
-
-    .here
-
-    * = $088D57
-    .logical $888D57
 
       .dsection Unsorted888D57Section
 
-    .here
-
-    * = $088F32
-    .logical $888F32
-
       .dsection Unsorted888F32Section
-
-    .here
-
-    * = $089396
-    .logical $889396
 
       .dsection ProcScript889396Section
 
-    .here
-
-    * = $08939E
-    .logical $88939E
-
       .dsection Unsorted88939ESection
-
-    .here
-
-    * = $0893DB
-    .logical $8893DB
 
       .dsection Table8893DBSection
 
-    .here
-
-    * = $089400
-    .logical $889400
-
       .dsection Unsorted889400Section
-
-    .here
-
-    * = $089411
-    .logical $889411
 
       .dsection Unsorted889411Section
 
-    .here
-
-    * = $0894F2
-    .logical $8894F2
-
       .dsection Table8894F2Section
 
-    .here
-
-    * = $089504
-    .logical $889504
-
       .dsection ProcScript889504Section
-
-    .here
-
-    * = $089506
-    .logical $889506
 
       .dsection Unsorted889506Section
       .dsection Table88958FSection
 
       .dsection Unsorted8896AFSection
 
-    .here
-
-    * = $08972F
-    .logical $88972F
-
       .dsection Data88972FSection
-
-    .here
-
-    * = $08973F
-    .logical $88973F
 
       .dsection Unsorted88973FSection
 
-    .here
-
-    * = $0899A4
-    .logical $8899A4
-
       .dsection Table8899A4Section
-
-    .here
-
-    * = $0899B8
-    .logical $8899B8
 
       .dsection Unsorted8899B8Section
 
@@ -6807,31 +2913,11 @@
 
       .dsection Table889AE2Section
 
-    .here
-
-    * = $089B22
-    .logical $889B22
-
       .dsection Unsorted889B22Section
-
-    .here
-
-    * = $089B6D
-    .logical $889B6D
 
       .dsection Unsorted889B6DSection
 
-    .here
-
-    * = $089BB5
-    .logical $889BB5
-
       .dsection Unsorted889BB5Section
-
-    .here
-
-    * = $089BF7
-    .logical $889BF7
 
       .dsection Unsorted889BF7Section
 
@@ -6842,45 +2928,15 @@
 
       .dsection ProcScript889C52Section
 
-    .here
-
-    * = $089C5A
-    .logical $889C5A
-
       .dsection Unsorted889C5ASection
-
-    .here
-
-    * = $089CEE
-    .logical $889CEE
 
       .dsection Unsorted889CEESection
 
-    .here
-
-    * = $089D20
-    .logical $889D20
-
       .dsection Unsorted889D20Section
-
-    .here
-
-    * = $089D92
-    .logical $889D92
 
       .dsection Table889D92Section
 
-    .here
-
-    * = $089DA6
-    .logical $889DA6
-
       .dsection Unsorted889DA6Section
-
-    .here
-
-    * = $089E6C
-    .logical $889E6C
 
       .dsection ProcScript889E6CSection
 
@@ -6891,24 +2947,9 @@
 
       .dsection ChapterMapsSection
 
-    .here
-
-    * = $08A12B
-    .logical $88A12B
-
       .dsection Unsorted88A12BSection
 
-    .here
-
-    * = $08A2F5
-    .logical $88A2F5
-
       .dsection Unsorted88A2F5Section
-
-    .here
-
-    * = $08A32D
-    .logical $88A32D
 
       .dsection Unsorted88A32DSection
 
@@ -6919,31 +2960,11 @@
 
       .dsection Unsorted88A38CSection
 
-    .here
-
-    * = $08A395
-    .logical $88A395
-
       .dsection Unsorted88A395Section
-
-    .here
-
-    * = $08A44C
-    .logical $88A44C
 
       .dsection Unsorted88A44CSection
 
-    .here
-
-    * = $08A4BC
-    .logical $88A4BC
-
       .dsection Data88A4BCSection
-
-    .here
-
-    * = $08A4FC
-    .logical $88A4FC
 
       .dsection Unsorted88A4FCSection
 
@@ -6954,11 +2975,6 @@
 
       .dsection Unsorted88A551Section
 
-    .here
-
-    * = $08A698
-    .logical $88A698
-
       .dsection Unsorted88A698Section
 
     .here
@@ -6968,24 +2984,9 @@
 
       .dsection Unsorted88A704Section
 
-    .here
-
-    * = $08A73D
-    .logical $88A73D
-
       .dsection Table88A73DSection
 
-    .here
-
-    * = $08A754
-    .logical $88A754
-
       .dsection Unsorted88A754Section
-
-    .here
-
-    * = $08A7F5
-    .logical $88A7F5
 
       .dsection Unsorted88A7F5Section
 
@@ -6996,31 +2997,11 @@
 
       .dsection Unsorted88A81DSection
 
-    .here
-
-    * = $08AB2C
-    .logical $88AB2C
-
       .dsection Unsorted88AB2CSection
-
-    .here
-
-    * = $08AB47
-    .logical $88AB47
 
       .dsection Unsorted88AB47Section
 
-    .here
-
-    * = $08AC5B
-    .logical $88AC5B
-
       .dsection Unsorted88AC5BSection
-
-    .here
-
-    * = $08ACA6
-    .logical $88ACA6
 
       .dsection Unsorted88ACA6Section
 
@@ -7038,73 +3019,23 @@
 
       .dsection Unsorted88AD46Section
 
-    .here
-
-    * = $08ADA2
-    .logical $88ADA2
-
       .dsection Unsorted88ADA2Section
-
-    .here
-
-    * = $08ADA6
-    .logical $88ADA6
 
       .dsection Unsorted88ADA6Section
 
-    .here
-
-    * = $08ADC9
-    .logical $88ADC9
-
       .dsection Unsorted88ADC9Section
-
-    .here
-
-    * = $08ADE9
-    .logical $88ADE9
 
       .dsection Unsorted88ADE9Section
 
-    .here
-
-    * = $08AF4C
-    .logical $88AF4C
-
       .dsection Unsorted88AF4CSection
-
-    .here
-
-    * = $08AF7B
-    .logical $88AF7B
 
       .dsection Unsorted88AF7BSection
 
-    .here
-
-    * = $08AFB6
-    .logical $88AFB6
-
       .dsection MapInputHandlerSection
-
-    .here
-
-    * = $08B028
-    .logical $88B028
 
       .dsection Unsorted88B028Section
 
-    .here
-
-    * = $08B366
-    .logical $88B366
-
       .dsection Unsorted88B366Section
-
-    .here
-
-    * = $08B3AF
-    .logical $88B3AF
 
       .dsection Unsorted88B3AFSection
 
@@ -7115,59 +3046,19 @@
 
       .dsection Unsorted88B3DFSection
 
-    .here
-
-    * = $08B42C
-    .logical $88B42C
-
       .dsection Unsorted88B42CSection
-
-    .here
-
-    * = $08B46A
-    .logical $88B46A
 
       .dsection Unsorted88B46ASection
 
-    .here
-
-    * = $08B4DB
-    .logical $88B4DB
-
       .dsection Unsorted88B4DBSection
-
-    .here
-
-    * = $08B51A
-    .logical $88B51A
 
       .dsection Unsorted88B51ASection
 
-    .here
-
-    * = $08B64F
-    .logical $88B64F
-
       .dsection Unsorted88B64FSection
-
-    .here
-
-    * = $08B6FD
-    .logical $88B6FD
 
       .dsection Unsorted88B6FDSection
 
-    .here
-
-    * = $08BC05
-    .logical $88BC05
-
       .dsection Unsorted88BC05Section
-
-    .here
-
-    * = $08BDA1
-    .logical $88BDA1
 
       .dsection Unsorted88BDA1Section
 
@@ -7178,425 +3069,128 @@
 
       .dsection Unsorted88BF37Section
 
-    .here
-
-    * = $08BF6C
-    .logical $88BF6C
-
       .dsection Unsorted88BF6CSection
-
-    .here
-
-    * = $08BF97
-    .logical $88BF97
 
       .dsection Unsorted88BF97Section
 
-    .here
-
-    * = $08BFFA
-    .logical $88BFFA
-
       .dsection Unsorted88BFFASection
-
-    .here
-
-    * = $08C059
-    .logical $88C059
 
       .dsection Unsorted88C059Section
 
-    .here
-
-    * = $08C072
-    .logical $88C072
-
       .dsection Unsorted88C072Section
-
-    .here
-
-    * = $08C085
-    .logical $88C085
 
       .dsection Unsorted88C085Section
 
-    .here
-
-    * = $08C13E
-    .logical $88C13E
-
       .dsection GetMapSpriteMovementSoundSection
-
-    .here
-
-    * = $08C1BF
-    .logical $88C1BF
 
       .dsection Unsorted88C1BFSection
 
-    .here
-
-    * = $08C25D
-    .logical $88C25D
-
       .dsection Unsorted88C25DSection
-
-    .here
-
-    * = $08C2BA
-    .logical $88C2BA
 
       .dsection Unsorted88C2BASection
 
-    .here
-
-    * = $08C355
-    .logical $88C355
-
       .dsection Unsorted88C355Section
-
-    .here
-
-    * = $08C3F0
-    .logical $88C3F0
 
       .dsection Unsorted88C3F0Section
 
-    .here
-
-    * = $08C4D9
-    .logical $88C4D9
-
       .dsection Unsorted88C4D9Section
-
-    .here
-
-    * = $08C67D
-    .logical $88C67D
 
       .dsection Unsorted88C67DSection
 
-    .here
-
-    * = $08C6ED
-    .logical $88C6ED
-
       .dsection Unsorted88C6EDSection
-
-    .here
-
-    * = $08C71C
-    .logical $88C71C
 
       .dsection Unsorted88C71CSection
 
-    .here
-
-    * = $08C7CF
-    .logical $88C7CF
-
       .dsection Unsorted88C7CFSection
-
-    .here
-
-    * = $08C7D8
-    .logical $88C7D8
 
       .dsection Unsorted88C7D8Section
 
-    .here
-
-    * = $08C834
-    .logical $88C834
-
       .dsection Table88C834Section
-
-    .here
-
-    * = $08C83C
-    .logical $88C83C
 
       .dsection Data88C83CSection
 
-    .here
-
-    * = $08C844
-    .logical $88C844
-
       .dsection Unsorted88C844Section
-
-    .here
-
-    * = $08C990
-    .logical $88C990
 
       .dsection Data88C990Section
 
-    .here
-
-    * = $08C9A6
-    .logical $88C9A6
-
       .dsection Unsorted88C9A6Section
-
-    .here
-
-    * = $08CA28
-    .logical $88CA28
 
       .dsection Unsorted88CA28Section
 
-    .here
-
-    * = $08CA77
-    .logical $88CA77
-
       .dsection Unsorted88CA77Section
-
-    .here
-
-    * = $08CBE8
-    .logical $88CBE8
 
       .dsection Unsorted88CBE8Section
 
-    .here
-
-    * = $08CC75
-    .logical $88CC75
-
       .dsection Unsorted88CC75Section
-
-    .here
-
-    * = $08CD53
-    .logical $88CD53
 
       .dsection Unsorted88CD53Section
 
-    .here
-
-    * = $08CD68
-    .logical $88CD68
-
       .dsection Unsorted88CD68Section
-
-    .here
-
-    * = $08CF8A
-    .logical $88CF8A
 
       .dsection Table88CF8ASection
 
-    .here
-
-    * = $08CFBA
-    .logical $88CFBA
-
       .dsection Unsorted88CFBASection
-
-    .here
-
-    * = $08D013
-    .logical $88D013
 
       .dsection Table88D013Section
 
-    .here
-
-    * = $08D073
-    .logical $88D073
-
       .dsection Unsorted88D073Section
-
-    .here
-
-    * = $08D084
-    .logical $88D084
 
       .dsection Unsorted88D084Section
 
-    .here
-
-    * = $08D135
-    .logical $88D135
-
       .dsection Data88D135Section
-
-    .here
-
-    * = $08D365
-    .logical $88D365
 
       aMapMovementShortSpritePointers .binclude "data/class/MapMovementShortSpritePointers.csv.asm" ; 88/D365
       aMapMovementTallSpritePointers  .binclude "data/class/MapMovementTallSpritePointers.csv.asm"  ; 88/D428
-
-      ; 88/D488
-
-    .here
-
-    * = $08D488
-    .logical $88D488
 
       .dsection Table88D488Section
       .dsection Table88D4C6Section
       .dsection Table88D526Section
       .dsection Table88D5E3Section
 
-    .here
-
-    * = $08D67C
-    .logical $88D67C
-
       .dsection MovingMapSpriteAppendDecompSection
-
-    .here
-
-    * = $08D6E5
-    .logical $88D6E5
 
       .dsection SetMovingMapSpriteBufferPointersSection
 
-    .here
-
-    * = $08D731
-    .logical $88D731
-
       .dsection Unsorted88D731Section
 
-    .here
-
-    * = $08D7B2
-    .logical $88D7B2
-
       .dsection Table88D7B2Section
-
-    .here
-
-    * = $08D7BA
-    .logical $88D7BA
 
       .dsection Unsorted88D7BASection
       .dsection Unsorted88D7C5Section
       .dsection Unsorted88D7D8Section
       .dsection Unsorted88D7EBSection
 
-    .here
-
-    * = $08D7FE
-    .logical $88D7FE
-
       .dsection Unsorted88D7FESection
-
-    .here
-
-    * = $08D847
-    .logical $88D847
 
       .dsection Unsorted88D847Section
 
-    .here
-
-    * = $08D94B
-    .logical $88D94B
-
       .dsection Unsorted88D94BSection
-
-    .here
-
-    * = $08D963
-    .logical $88D963
 
       .dsection Unsorted88D963Section
 
-    .here
-
-    * = $08DA6A
-    .logical $88DA6A
-
       .dsection Unsorted88DA6ASection
-
-    .here
-
-    * = $08DA82
-    .logical $88DA82
 
       .dsection Unsorted88DA82Section
 
-    .here
-
-    * = $08DAFC
-    .logical $88DAFC
-
       .dsection Unsorted88DAFCSection
-
-    .here
-
-    * = $08DB0C
-    .logical $88DB0C
 
       .dsection Unsorted88DB0CSection
 
-    .here
-
-    * = $08DBEE
-    .logical $88DBEE
-
       .dsection Unsorted88DBEESection
-
-    .here
-
-    * = $08DC07
-    .logical $88DC07
 
       .dsection Unsorted88DC07Section
 
-    .here
-
-    * = $08DD0F
-    .logical $88DD0F
-
       .dsection Unsorted88DD0FSection
-
-    .here
-
-    * = $08DD9C
-    .logical $88DD9C
 
       .dsection Unsorted88DD9CSection
 
-    .here
-
-    * = $08DDFB
-    .logical $88DDFB
-
       .dsection Unsorted88DDFBSection
-
-    .here
-
-    * = $08DE0B
-    .logical $88DE0B
 
       .dsection Unsorted88DE0BSection
 
-    .here
-
-    * = $08DE1B
-    .logical $88DE1B
-
       .dsection Unsorted88DE1BSection
 
-    .here
-
-    * = $08DEFC
-    .logical $88DEFC
-
       .dsection Data88DEFCSection
-
-    .here
-
-    * = $08DF8C
-    .logical $88DF8C
 
       .dsection Unsorted88DF8CSection
 
@@ -7607,59 +3201,19 @@
 
       .dsection Unsorted88E02BSection
 
-    .here
-
-    * = $08E033
-    .logical $88E033
-
       .dsection Unsorted88E033Section
-
-    .here
-
-    * = $08E10B
-    .logical $88E10B
 
       .dsection Unsorted88E10BSection
 
-    .here
-
-    * = $08E179
-    .logical $88E179
-
       .dsection Unsorted88E179Section
-
-    .here
-
-    * = $08E1FE
-    .logical $88E1FE
 
       .dsection Unsorted88E1FESection
 
-    .here
-
-    * = $08E200
-    .logical $88E200
-
       .dsection ProcScript88E200Section
-
-    .here
-
-    * = $08E208
-    .logical $88E208
 
       .dsection Unsorted88E208Section
 
-    .here
-
-    * = $08E268
-    .logical $88E268
-
       .dsection ProcScript88E268Section
-
-    .here
-
-    * = $08E272
-    .logical $88E272
 
       .dsection Unsorted88E272Section
 
@@ -7670,17 +3224,7 @@
 
       .dsection ProcScript88E2DCSection
 
-    .here
-
-    * = $08E2DE
-    .logical $88E2DE
-
       .dsection Table88E2DESection
-
-    .here
-
-    * = $08E2E9
-    .logical $88E2E9
 
       .dsection Unsorted88E2E9Section
 
@@ -7691,40 +3235,17 @@
 
       .dsection Unsorted88E33DSection
 
-    .here
-
-    * = $08E38A
-    .logical $88E38A
-
       .dsection Unsorted88E38ASection
-
-    .here
-
-    * = $08E401
-    .logical $88E401
 
       .dsection Unsorted88E401Section
 
-    .here
-
-    * = $08E9E4
-    .logical $88E9E4
-
       .dsection Table88E9E4Section
-
-    .here
-
-    * = $08EEB1
-    .logical $88EEB1
 
       .dsection Unsorted88EEB1Section
 
-    .here
-
-    * = $08EF0D
-    .logical $88EF0D
-
       .dsection Unsorted88EF0DSection
+
+      .fill $888000 + $8000 - *, $00
 
     .here
 
@@ -7733,94 +3254,29 @@
 
       .dsection Unsorted898000Section
 
-    .here
-
-    * = $0980EF
-    .logical $8980EF
-
       .dsection Table8980EFSection
-
-    .here
-
-    * = $098105
-    .logical $898105
 
       .dsection Unsorted898105Section
 
-    .here
-
-    * = $098536
-    .logical $898536
-
       .dsection Unsorted898536Section
-
-    .here
-
-    * = $09861B
-    .logical $89861B
 
       .dsection Unsorted89861BSection
 
-    .here
-
-    * = $098734
-    .logical $898734
-
       .dsection Unsorted898734Section
-
-    .here
-
-    * = $098755
-    .logical $898755
 
       .dsection Unsorted898755Section
 
-    .here
-
-    * = $098768
-    .logical $898768
-
       .dsection Unsorted898768Section
-
-    .here
-
-    * = $09876D
-    .logical $89876D
 
       .dsection Unsorted89876DSection
 
-    .here
-
-    * = $098973
-    .logical $898973
-
       .dsection Table898973Section
-
-    .here
-
-    * = $0989AD
-    .logical $8989AD
 
       .dsection Unsorted8989ADSection
 
-    .here
-
-    * = $0989CE
-    .logical $8989CE
-
       .dsection Unsorted8989CESection
 
-    .here
-
-    * = $0989EA
-    .logical $8989EA
-
       .dsection Unsorted8989EASection
-
-    .here
-
-    * = $098A41
-    .logical $898A41
 
       .dsection Unsorted898A41Section
 
@@ -7831,59 +3287,19 @@
 
       .dsection Unsorted898A7ESection
 
-    .here
-
-    * = $098AF5
-    .logical $898AF5
-
       .dsection Unsorted898AF5Section
-
-    .here
-
-    * = $098B2A
-    .logical $898B2A
 
       .dsection Table898B2ASection
 
-    .here
-
-    * = $098B3B
-    .logical $898B3B
-
       .dsection Unsorted898B3BSection
-
-    .here
-
-    * = $098B80
-    .logical $898B80
 
       .dsection Table898B80Section
 
-    .here
-
-    * = $098B88
-    .logical $898B88
-
       .dsection Data898B88Section
-
-    .here
-
-    * = $098B97
-    .logical $898B97
 
       .dsection Unsorted898B97Section
 
-    .here
-
-    * = $098CBC
-    .logical $898CBC
-
       .dsection Data898CBCSection
-
-    .here
-
-    * = $098D55
-    .logical $898D55
 
       .dsection Unsorted898D55Section
 
@@ -7895,69 +3311,24 @@
       .dsection Table898E6CSection
       .dsection Table898E90Section
 
-    .here
-
-    * = $098EB4
-    .logical $898EB4
-
       .dsection Unsorted898EB4Section
 
-    .here
-
-    * = $098F16
-    .logical $898F16
-
       .dsection Unsorted898F16Section
-
-    .here
-
-    * = $098F43
-    .logical $898F43
 
       .dsection Table898F43Section
       .dsection Table898F5BSection
 
-    .here
-
-    * = $098F73
-    .logical $898F73
-
       .dsection Unsorted898F73Section
-
-    .here
-
-    * = $098FD4
-    .logical $898FD4
 
       .dsection Table898FD4Section
       .dsection Table898FECSection
       .dsection Table899004Section
 
-    .here
-
-    * = $099028
-    .logical $899028
-
       .dsection Unsorted899028Section
-
-    .here
-
-    * = $099081
-    .logical $899081
 
       .dsection Table899081Section
 
-    .here
-
-    * = $099099
-    .logical $899099
-
       .dsection Data899099Section
-
-    .here
-
-    * = $0990BD
-    .logical $8990BD
 
       .dsection Unsorted8990BDSection
 
@@ -7968,47 +3339,15 @@
 
       .dsection Unsorted8990DASection
 
-      ; 89/9140
-
-    .here
-
-    * = $099140
-    .logical $899140
-
       .dsection Table899140Section
-
-    .here
-
-    * = $09914B
-    .logical $89914B
 
       .dsection Unsorted89914BSection
 
-    .here
-
-    * = $099178
-    .logical $899178
-
       .dsection Table899178Section
-
-    .here
-
-    * = $099185
-    .logical $899185
 
       .dsection Unsorted899185Section
 
-    .here
-
-    * = $0991B9
-    .logical $8991B9
-
       .dsection Table8991B9Section
-
-    .here
-
-    * = $0991C4
-    .logical $8991C4
 
       .dsection Unsorted8991C4Section
 
@@ -8019,254 +3358,75 @@
 
       .dsection Unsorted899200Section
 
-    .here
-
-    * = $09923F
-    .logical $89923F
-
       .dsection Data89923FSection
-
-    .here
-
-    * = $0992AD
-    .logical $8992AD
 
       .dsection Unsorted8992ADSection
 
-    .here
-
-    * = $0992E7
-    .logical $8992E7
-
       .dsection Table8992E7Section
-
-    .here
-
-    * = $09933C
-    .logical $89933C
 
       .dsection Unsorted89933CSection
 
-    .here
-
-    * = $09935F
-    .logical $89935F
-
       .dsection Data89935FSection
-
-    .here
-
-    * = $09936E
-    .logical $89936E
 
       .dsection Unsorted89936ESection
 
-    .here
-
-    * = $0994B8
-    .logical $8994B8
-
       .dsection Unsorted8994B8Section
-
-    .here
-
-    * = $099510
-    .logical $899510
 
       .dsection Unsorted899510Section
 
-    .here
-
-    * = $099703
-    .logical $899703
-
       .dsection Table899703Section
-
-    .here
-
-    * = $09970D
-    .logical $89970D
 
       .dsection Unsorted89970DSection
 
-    .here
-
-    * = $0998D4
-    .logical $8998D4
-
       .dsection Data8998D4Section
-
-    .here
-
-    * = $0998E1
-    .logical $8998E1
 
       .dsection Unsorted8998E1Section
 
-    .here
-
-    * = $099B8F
-    .logical $899B8F
-
       .dsection Table899B8FSection
-
-    .here
-
-    * = $099BA5
-    .logical $899BA5
 
       .dsection Unsorted899BA5Section
 
-    .here
-
-    * = $099C44
-    .logical $899C44
-
       .dsection Table899C44Section
-
-    .here
-
-    * = $099C7C
-    .logical $899C7C
 
       .dsection Unsorted899C7CSection
 
-    .here
-
-    * = $099D26
-    .logical $899D26
-
       .dsection Table899D26Section
-
-    .here
-
-    * = $099D72
-    .logical $899D72
 
       .dsection Unsorted899D72Section
 
-    .here
-
-    * = $099F0B
-    .logical $899F0B
-
       .dsection Table899F0BSection
-
-    .here
-
-    * = $099FA1
-    .logical $899FA1
 
       .dsection Unsorted899FA1Section
 
-    .here
-
-    * = $099FDC
-    .logical $899FDC
-
       .dsection Unsorted899FDCSection
-
-      ; 89/A085
-
-    .here
-
-    * = $09A085
-    .logical $89A085
 
       .dsection Unsorted89A085Section
 
-    .here
-
-    * = $09A107
-    .logical $89A107
-
       .dsection SplitNumberIntoDigitsSection
-
-    .here
-
-    * = $09A138
-    .logical $89A138
 
       .dsection Unsorted89A138Section
 
-    .here
-
-    * = $09A150
-    .logical $89A150
-
       .dsection Unsorted89A150Section
-
-      ; 89/A18C
-
-    .here
-
-    * = $09A18C
-    .logical $89A18C
 
       .dsection DrawMenuTextNumberSection
 
-    .here
-
-    * = $09A25A
-    .logical $89A25A
-
       .dsection Unsorted89A25ASection
-
-    .here
-
-    * = $09A2ED
-    .logical $89A2ED
 
       .dsection Unsorted89A2EDSection
 
-    .here
-
-    * = $09A376
-    .logical $89A376
-
       .dsection Unsorted89A376Section
-
-    .here
-
-    * = $09A3C0
-    .logical $89A3C0
 
       .dsection Unsorted89A3C0Section
 
-    .here
-
-    * = $09A4C5
-    .logical $89A4C5
-
       .dsection Table89A4C5Section
 
-    .here
-
-    * = $09A4E3
-    .logical $89A4E3
-
       .dsection Unsorted89A4E3Section
-
-    .here
-
-    * = $09A52D
-    .logical $89A52D
 
       .dsection Table89A52DSection
       .dsection Table89A572Section
       .dsection Table89A59ESection
 
-    .here
-
-    * = $09A5AA
-    .logical $89A5AA
-
       .dsection Unsorted89A5AASection
-
-    .here
-
-    * = $09A5D1
-    .logical $89A5D1
 
       .dsection Unsorted89A5D1Section
       .dsection SpriteArray89A72ESection
@@ -8274,60 +3434,20 @@
 
       .dsection Table89ABF9Section
 
-    .here
-
-    * = $09AC56
-    .logical $89AC56
-
       .dsection Data89AC56Section
-
-    .here
-
-    * = $09ACCE
-    .logical $89ACCE
 
       .dsection Unsorted89ACCESection
 
-    .here
-
-    * = $09ACF6
-    .logical $89ACF6
-
       .dsection Table89ACF6Section
 
-    .here
-
-    * = $09AD00
-    .logical $89AD00
-
       .dsection ReviveMenuSection
-
-    .here
-
-    * = $09B058
-    .logical $89B058
 
       .dsection Unsorted89B058Section
       .dsection Unsorted89B0A9Section
 
-    .here
-
-    * = $09B0AA
-    .logical $89B0AA
-
       .dsection Unsorted89B0AASection
 
-    .here
-
-    * = $09B0B9
-    .logical $89B0B9
-
       .dsection Table89B0B9Section
-
-    .here
-
-    * = $09B0BF
-    .logical $89B0BF
 
       .dsection Unsorted89B0BFSection
       .dsection Unsorted89B0C6Section
@@ -8342,578 +3462,171 @@
 
       .dsection Unsorted89B20BSection
 
-    .here
-
-    * = $09B225
-    .logical $89B225
-
       .dsection Data89B225Section
-
-    .here
-
-    * = $09B285
-    .logical $89B285
 
       .dsection Unsorted89B285Section
 
-    .here
-
-    * = $09B29E
-    .logical $89B29E
-
       .dsection Data89B29ESection
-
-    .here
-
-    * = $09B2A2
-    .logical $89B2A2
 
       .dsection Unsorted89B2A2Section
       .dsection Unsorted89B2B6Section
 
-    .here
-
-    * = $09B30C
-    .logical $89B30C
-
       .dsection Data89B30CSection
-
-    .here
-
-    * = $09B344
-    .logical $89B344
 
       .dsection Unsorted89B344Section
 
-    .here
-
-    * = $09B39F
-    .logical $89B39F
-
       .dsection Data89B39FSection
-
-    .here
-
-    * = $09B3D7
-    .logical $89B3D7
 
       .dsection Unsorted89B3D7Section
 
-    .here
-
-    * = $09B3F6
-    .logical $89B3F6
-
       .dsection Table89B3F6Section
 
-    .here
-
-    * = $09B400
-    .logical $89B400
-
       .dsection Unsorted89B400Section
-
-    .here
-
-    * = $09B79D
-    .logical $89B79D
 
       .dsection Unsorted89B79DSection
       .dsection Unsorted89B838Section
 
-    .here
-
-    * = $09B856
-    .logical $89B856
-
       .dsection Unsorted89B856Section
-
-    .here
-
-    * = $09B869
-    .logical $89B869
 
       .dsection Unsorted89B869Section
 
-    .here
-
-    * = $09B883
-    .logical $89B883
-
       .dsection Unsorted89B883Section
-
-    .here
-
-    * = $09B8BD
-    .logical $89B8BD
 
       .dsection Unsorted89B8BDSection
 
-    .here
-
-    * = $09B91F
-    .logical $89B91F
-
       .dsection Unsorted89B91FSection
-
-    .here
-
-    * = $09BAC1
-    .logical $89BAC1
 
       .dsection Table89BAC1Section
 
-    .here
-
-    * = $09BAF3
-    .logical $89BAF3
-
       .dsection Unsorted89BAF3Section
-
-    .here
-
-    * = $09BBB2
-    .logical $89BBB2
 
       .dsection Unsorted89BBB2Section
 
-    .here
-
-    * = $09BCCE
-    .logical $89BCCE
-
       .dsection Table89BCCESection
-
-    .here
-
-    * = $09BCE6
-    .logical $89BCE6
 
       .dsection Data89BCE6Section
 
-    .here
-
-    * = $09BD00
-    .logical $89BD00
-
       .dsection Unsorted89BD00Section
-
-    .here
-
-    * = $09BE57
-    .logical $89BE57
 
       .dsection Data89BE57Section
 
-    .here
-
-    * = $09BEB8
-    .logical $89BEB8
-
       .dsection Unsorted89BEB8Section
-
-    .here
-
-    * = $09BECC
-    .logical $89BECC
 
       .dsection Unsorted89BECCSection
 
-    .here
-
-    * = $09BEEB
-    .logical $89BEEB
-
       .dsection Unsorted89BEEBSection
-
-    .here
-
-    * = $09C021
-    .logical $89C021
 
       .dsection Unsorted89C021Section
 
-    .here
-
-    * = $09C119
-    .logical $89C119
-
       .dsection Unsorted89C119Section
-
-    .here
-
-    * = $09C13E
-    .logical $89C13E
 
       .dsection Data89C13ESection
 
-    .here
-
-    * = $09C144
-    .logical $89C144
-
       .dsection Unsorted89C144Section
-
-    .here
-
-    * = $09C181
-    .logical $89C181
 
       .dsection Data89C181Section
 
-    .here
-
-    * = $09C1A1
-    .logical $89C1A1
-
       .dsection Unsorted89C1A1Section
-
-    .here
-
-    * = $09C2CF
-    .logical $89C2CF
 
       .dsection Unsorted89C2CFSection
 
-    .here
-
-    * = $09C3F3
-    .logical $89C3F3
-
       .dsection Unsorted89C3F3Section
-
-    .here
-
-    * = $09C488
-    .logical $89C488
 
       .dsection Unsorted89C488Section
 
-    .here
-
-    * = $09C5A2
-    .logical $89C5A2
-
       .dsection Unsorted89C5A2Section
-
-    .here
-
-    * = $09C5C9
-    .logical $89C5C9
 
       .dsection Data89C5C9Section
 
-    .here
-
-    * = $09C6F9
-    .logical $89C6F9
-
       .dsection DebugMenuSection
-
-      ; 89/EB26
-
-    .here
-
-    * = $09EB26
-    .logical $89EB26
 
       .dsection Unsorted89EB26Section
 
-    .here
-
-    * = $09EB56
-    .logical $89EB56
-
       .dsection Table89EB56Section
-
-    .here
-
-    * = $09EB5E
-    .logical $89EB5E
 
       .dsection Unsorted89EB5ESection
 
-    .here
-
-    * = $09ECB4
-    .logical $89ECB4
-
       .dsection Unsorted89ECB4Section
-
-    .here
-
-    * = $09ECC6
-    .logical $89ECC6
 
       .dsection Unsorted89ECC6Section
 
-    .here
-
-    * = $09ECC7
-    .logical $89ECC7
-
       .dsection Unsorted89ECC7Section
-
-    .here
-
-    * = $09ED12
-    .logical $89ED12
 
       .dsection Unsorted89ED12Section
 
-    .here
-
-    * = $09ED58
-    .logical $89ED58
-
       .dsection Table89ED58Section
-
-    .here
-
-    * = $09ED6A
-    .logical $89ED6A
 
       .dsection Data89ED6ASection
 
-    .here
-
-    * = $09EDFD
-    .logical $89EDFD
-
       .dsection Unsorted89EDFDSection
-
-    .here
-
-    * = $09EE0E
-    .logical $89EE0E
 
       .dsection Table89EE0ESection
 
-    .here
-
-    * = $09EE14
-    .logical $89EE14
-
       .dsection Unsorted89EE14Section
 
-    .here
-
-    * = $09EE32
-    .logical $89EE32
-
       .dsection Unsorted89EE32Section
-
-    .here
-
-    * = $09EE50
-    .logical $89EE50
 
       .dsection Unsorted89EE50Section
       .dsection Unsorted89EE89Section
 
-    .here
-
-    * = $09EE9A
-    .logical $89EE9A
-
       .dsection Table89EE9ASection
-
-    .here
-
-    * = $09EEA4
-    .logical $89EEA4
 
       .dsection Unsorted89EEA4Section
 
-    .here
-
-    * = $09EEFE
-    .logical $89EEFE
-
       .dsection Unsorted89EEFESection
-
-    .here
-
-    * = $09EF0F
-    .logical $89EF0F
 
       .dsection Table89EF0FSection
 
-    .here
-
-    * = $09EF13
-    .logical $89EF13
-
       .dsection Unsorted89EF13Section
-
-    .here
-
-    * = $09EF40
-    .logical $89EF40
 
       .dsection Table89EF40Section
 
-    .here
-
-    * = $09EF50
-    .logical $89EF50
-
       .dsection Unsorted89EF50Section
-
-    .here
-
-    * = $09EF61
-    .logical $89EF61
 
       .dsection Table89EF61Section
 
-    .here
-
-    * = $09EF67
-    .logical $89EF67
-
       .dsection Unsorted89EF67Section
-
-    .here
-
-    * = $09EFA3
-    .logical $89EFA3
 
       .dsection Unsorted89EFA3Section
 
-    .here
-
-    * = $09EFB4
-    .logical $89EFB4
-
       .dsection Table89EFB4Section
-
-    .here
-
-    * = $09EFBE
-    .logical $89EFBE
 
       .dsection Unsorted89EFBESection
 
-    .here
-
-    * = $09F018
-    .logical $89F018
-
       .dsection Unsorted89F018Section
-
-    .here
-
-    * = $09F029
-    .logical $89F029
 
       .dsection Table89F029Section
 
-    .here
-
-    * = $09F02D
-    .logical $89F02D
-
       .dsection Unsorted89F02DSection
-
-    .here
-
-    * = $09F051
-    .logical $89F051
 
       .dsection Table89F051Section
 
-    .here
-
-    * = $09F065
-    .logical $89F065
-
       .dsection Unsorted89F065Section
 
-    .here
-
-    * = $09F180
-    .logical $89F180
-
       .dsection Data89F180Section
-
-    .here
-
-    * = $09F246
-    .logical $89F246
 
       .dsection Unsorted89F246Section
       .dsection Table89F338Section
 
       .dsection Data89F579Section
 
-    .here
-
-    * = $09F620
-    .logical $89F620
-
       .dsection Unsorted89F620Section
-
-    .here
-
-    * = $09F630
-    .logical $89F630
 
       .dsection Unsorted89F630Section
 
-    .here
-
-    * = $09F66E
-    .logical $89F66E
-
       .dsection Data89F66ESection
-
-    .here
-
-    * = $09F67F
-    .logical $89F67F
 
       .dsection Unsorted89F67FSection
 
-    .here
-
-    * = $09F6BC
-    .logical $89F6BC
-
       .dsection Data89F6BCSection
-
-    .here
-
-    * = $09F713
-    .logical $89F713
 
       .dsection Unsorted89F713Section
 
-    .here
-
-    * = $09F7A6
-    .logical $89F7A6
-
       .dsection Unsorted89F7A6Section
-
-    .here
-
-    * = $09F7CD
-    .logical $89F7CD
 
       .dsection Data89F7CDSection
 
-    .here
-
-    * = $09F7E6
-    .logical $89F7E6
-
       .dsection Unsorted89F7E6Section
-
-    .here
-
-    * = $09F842
-    .logical $89F842
 
       .dsection Unsorted89F842Section
 
@@ -8935,109 +3648,34 @@
 
       .dsection Unsorted8A8000Section
 
-    .here
-
-    * = $0A800E
-    .logical $8A800E
-
       .dsection Unsorted8A800ESection
-
-    .here
-
-    * = $0A8061
-    .logical $8A8061
 
       .dsection Unsorted8A8061Section
 
-    .here
-
-    * = $0A8078
-    .logical $8A8078
-
       .dsection Table8A8078Section
 
-    .here
-
-    * = $0A80A6
-    .logical $8A80A6
-
       .dsection Unsorted8A80A6Section
-
-    .here
-
-    * = $0A80C3
-    .logical $8A80C3
 
       .dsection Unsorted8A80C3Section
       .dsection Unsorted8A80C8Section
 
-    .here
-
-    * = $0A80CD
-    .logical $8A80CD
-
       .dsection Unsorted8A80CDSection
-
-    .here
-
-    * = $0A80F5
-    .logical $8A80F5
 
       .dsection Unsorted8A80F5Section
 
-    .here
-
-    * = $0A80FA
-    .logical $8A80FA
-
       .dsection Unsorted8A80FASection
-
-    .here
-
-    * = $0A8208
-    .logical $8A8208
 
       .dsection Unsorted8A8208Section
 
-    .here
-
-    * = $0A8387
-    .logical $8A8387
-
       .dsection Data8A8387Section
-
-    .here
-
-    * = $0A8393
-    .logical $8A8393
 
       .dsection Unsorted8A8393Section
 
-    .here
-
-    * = $0A847E
-    .logical $8A847E
-
       .dsection Data8A847ESection
-
-    .here
-
-    * = $0A8496
-    .logical $8A8496
 
       .dsection Unsorted8A8496Section
 
-    .here
-
-    * = $0A85EF
-    .logical $8A85EF
-
       .dsection Table8A85EFSection
-
-    .here
-
-    * = $0A8643
-    .logical $8A8643
 
       .dsection Unsorted8A8643Section
 
@@ -9048,45 +3686,15 @@
 
       .dsection Unsorted8A869ASection
 
-    .here
-
-    * = $0A870D
-    .logical $8A870D
-
       .dsection Unsorted8A870DSection
-
-    .here
-
-    * = $0A8783
-    .logical $8A8783
 
       .dsection Unsorted8A8783Section
 
-    .here
-
-    * = $0A87B8
-    .logical $8A87B8
-
       .dsection Unsorted8A87B8Section
-
-    .here
-
-    * = $0A88E0
-    .logical $8A88E0
 
       .dsection Table8A88E0Section
 
-    .here
-
-    * = $0A8980
-    .logical $8A8980
-
       .dsection Unsorted8A8980Section
-
-    .here
-
-    * = $0A8E08
-    .logical $8A8E08
 
       .dsection Unsorted8A8E08Section
 
@@ -9099,94 +3707,29 @@
       aDecompressionDMAEntry8A8F58 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/8F58
       aDecompressionDMAEntry8A8F60 .structDecompressionDMAEntry g4bppcBattleBannerChalphy, $1000, $2000 ; 8A/8F60
 
-    .here
-
-    * = $0A8F68
-    .logical $8A8F68
-
       .dsection Unsorted8A8F68Section
-
-    .here
-
-    * = $0A8F8F
-    .logical $8A8F8F
 
       .dsection Unsorted8A8F8FSection
 
-    .here
-
-    * = $0A9158
-    .logical $8A9158
-
       .dsection Table8A9158Section
-
-    .here
-
-    * = $0A918A
-    .logical $8A918A
 
       .dsection Unsorted8A918ASection
 
-    .here
-
-    * = $0A91D7
-    .logical $8A91D7
-
       .dsection Table8A91D7Section
-
-    .here
-
-    * = $0A9209
-    .logical $8A9209
 
       .dsection Unsorted8A9209Section
 
-    .here
-
-    * = $0A9269
-    .logical $8A9269
-
       .dsection Table8A9269Section
-
-    .here
-
-    * = $0A929B
-    .logical $8A929B
 
       .dsection Unsorted8A929BSection
 
-    .here
-
-    * = $0A92AA
-    .logical $8A92AA
-
       .dsection Unsorted8A92AASection
-
-    .here
-
-    * = $0A92BB
-    .logical $8A92BB
 
       .dsection Unsorted8A92BBSection
 
-    .here
-
-    * = $0A92D6
-    .logical $8A92D6
-
       .dsection Unsorted8A92D6Section
 
-    .here
-
-    * = $0A9342
-    .logical $8A9342
-
       .dsection Unsorted8A9342Section
-
-    .here
-
-    * = $0A9389
-    .logical $8A9389
 
       .dsection Unsorted8A9389Section
       .dsection Table8A945ESection
@@ -9208,96 +3751,31 @@
 
       .dsection Unsorted8A950ESection
 
-    .here
-
-    * = $0A956F
-    .logical $8A956F
-
       .dsection Unsorted8A956FSection
-
-    .here
-
-    * = $0A9750
-    .logical $8A9750
 
       .dsection Unsorted8A9750Section
 
-    .here
-
-    * = $0A9776
-    .logical $8A9776
-
       .dsection Unsorted8A9776Section
-
-    .here
-
-    * = $0A979C
-    .logical $8A979C
 
       .dsection Unsorted8A979CSection
 
-    .here
-
-    * = $0A97C2
-    .logical $8A97C2
-
       .dsection Unsorted8A97C2Section
-
-    .here
-
-    * = $0A9858
-    .logical $8A9858
 
       .dsection Unsorted8A9858Section
 
-    .here
-
-    * = $0A9899
-    .logical $8A9899
-
       .dsection Table8A9899Section
-
-    .here
-
-    * = $0A98AC
-    .logical $8A98AC
 
       .dsection Table8A98ACSection
       .dsection Table8A98B8Section
 
-    .here
-
-    * = $0A98C4
-    .logical $8A98C4
-
       .dsection Data8A98C4Section
 
-    .here
-
-    * = $0A98D0
-    .logical $8A98D0
-
       .dsection Unsorted8A98D0Section
-
-    .here
-
-    * = $0A99DB
-    .logical $8A99DB
 
       .dsection Table8A99DBSection
       .dsection Table8A9A0BSection
 
-    .here
-
-    * = $0A9A56
-    .logical $8A9A56
-
       .dsection Unsorted8A9A56Section
-
-    .here
-
-    * = $0A9AD4
-    .logical $8A9AD4
 
       .dsection Table8A9AD4Section
       .dsection Table8A9B04Section
@@ -9306,31 +3784,11 @@
       .dsection Table8A9BF4Section
       .dsection Table8A9C24Section
 
-    .here
-
-    * = $0A9C61
-    .logical $8A9C61
-
       .dsection Unsorted8A9C61Section
-
-    .here
-
-    * = $0A9D22
-    .logical $8A9D22
 
       .dsection Unsorted8A9D22Section
 
-    .here
-
-    * = $0A9D39
-    .logical $8A9D39
-
       .dsection Unsorted8A9D39Section
-
-    .here
-
-    * = $0A9D79
-    .logical $8A9D79
 
       .dsection Data8A9D79Section
       .dsection Table8A9DD5Section
@@ -9338,52 +3796,17 @@
 
       .dsection Unsorted8A9DF2Section
 
-    .here
-
-    * = $0A9EB7
-    .logical $8A9EB7
-
       .dsection Unsorted8A9EB7Section
-
-    .here
-
-    * = $0A9FCC
-    .logical $8A9FCC
 
       .dsection Unsorted8A9FCCSection
 
-    .here
-
-    * = $0AA013
-    .logical $8AA013
-
       .dsection Unsorted8AA013Section
-
-    .here
-
-    * = $0AA022
-    .logical $8AA022
 
       .dsection Table8AA022Section
 
-    .here
-
-    * = $0AA02B
-    .logical $8AA02B
-
       .dsection Unsorted8AA02BSection
 
-    .here
-
-    * = $0AA12E
-    .logical $8AA12E
-
       .dsection Table8AA12ESection
-
-    .here
-
-    * = $0AA142
-    .logical $8AA142
 
       .dsection Unsorted8AA142Section
       .dsection Table8AA241Section
@@ -9391,297 +3814,87 @@
 
       .dsection Unsorted8AA2EDSection
 
-    .here
-
-    * = $0AA31C
-    .logical $8AA31C
-
       .dsection Table8AA31CSection
-
-    .here
-
-    * = $0AA400
-    .logical $8AA400
 
       .dsection Unsorted8AA400Section
 
-    .here
-
-    * = $0AA4C6
-    .logical $8AA4C6
-
       .dsection Data8AA4C6Section
-
-    .here
-
-    * = $0AA4C8
-    .logical $8AA4C8
 
       .dsection Unsorted8AA4C8Section
 
-    .here
-
-    * = $0AA5FF
-    .logical $8AA5FF
-
       .dsection Unsorted8AA5FFSection
-
-    .here
-
-    * = $0AA629
-    .logical $8AA629
 
       .dsection Data8AA629Section
 
-    .here
-
-    * = $0AA63D
-    .logical $8AA63D
-
       .dsection Unsorted8AA63DSection
-
-    .here
-
-    * = $0AA6CA
-    .logical $8AA6CA
 
       .dsection Unsorted8AA6CASection
 
-    .here
-
-    * = $0AA7DD
-    .logical $8AA7DD
-
       .dsection Table8AA7DDSection
-
-    .here
-
-    * = $0AA830
-    .logical $8AA830
 
       .dsection Unsorted8AA830Section
 
-    .here
-
-    * = $0AA83D
-    .logical $8AA83D
-
       .dsection Unsorted8AA83DSection
-
-    .here
-
-    * = $0AA8B5
-    .logical $8AA8B5
 
       .dsection Table8AA8B5Section
 
-    .here
-
-    * = $0AA8C9
-    .logical $8AA8C9
-
       .dsection Unsorted8AA8C9Section
-
-    .here
-
-    * = $0AA917
-    .logical $8AA917
 
       .dsection Data8AA917Section
 
-    .here
-
-    * = $0AA928
-    .logical $8AA928
-
       .dsection Unsorted8AA928Section
-
-    .here
-
-    * = $0AA975
-    .logical $8AA975
 
       .dsection Data8AA975Section
 
-    .here
-
-    * = $0AA97F
-    .logical $8AA97F
-
       .dsection Unsorted8AA97FSection
-
-    .here
-
-    * = $0AA9A6
-    .logical $8AA9A6
 
       .dsection Unsorted8AA9A6Section
 
-    .here
-
-    * = $0AA9CE
-    .logical $8AA9CE
-
       .dsection Unsorted8AA9CESection
-
-    .here
-
-    * = $0AAA3A
-    .logical $8AAA3A
 
       .dsection Unsorted8AAA3ASection
 
-    .here
-
-    * = $0AAA78
-    .logical $8AAA78
-
       .dsection Table8AAA78Section
-
-    .here
-
-    * = $0AAA8A
-    .logical $8AAA8A
 
       .dsection Unsorted8AAA8ASection
 
-    .here
-
-    * = $0AAB40
-    .logical $8AAB40
-
       .dsection Table8AAB40Section
-
-    .here
-
-    * = $0AAB48
-    .logical $8AAB48
 
       .dsection Unsorted8AAB48Section
 
-    .here
-
-    * = $0AABAB
-    .logical $8AABAB
-
       .dsection Unsorted8AABABSection
-
-    .here
-
-    * = $0AABEA
-    .logical $8AABEA
 
       .dsection Table8AABEASection
 
-    .here
-
-    * = $0AABFC
-    .logical $8AABFC
-
       .dsection Unsorted8AABFCSection
-
-    .here
-
-    * = $0AACA0
-    .logical $8AACA0
 
       .dsection Table8AACA0Section
 
-    .here
-
-    * = $0AACA8
-    .logical $8AACA8
-
       .dsection Unsorted8AACA8Section
-
-    .here
-
-    * = $0AAD05
-    .logical $8AAD05
 
       .dsection Unsorted8AAD05Section
 
-    .here
-
-    * = $0AAD6F
-    .logical $8AAD6F
-
       .dsection Unsorted8AAD6FSection
-
-    .here
-
-    * = $0AADA7
-    .logical $8AADA7
 
       .dsection Table8AADA7Section
 
-    .here
-
-    * = $0AADAD
-    .logical $8AADAD
-
       .dsection Unsorted8AADADSection
-
-    .here
-
-    * = $0AADC3
-    .logical $8AADC3
 
       .dsection Unsorted8AADC3Section
 
-    .here
-
-    * = $0AADCE
-    .logical $8AADCE
-
       .dsection Table8AADCESection
-
-    .here
-
-    * = $0AADF4
-    .logical $8AADF4
 
       .dsection Unsorted8AADF4Section
 
-    .here
-
-    * = $0AAEDA
-    .logical $8AAEDA
-
       .dsection Table8AAEDASection
-
-    .here
-
-    * = $0AAF0A
-    .logical $8AAF0A
 
       .dsection Unsorted8AAF0ASection
 
-    .here
-
-    * = $0AB033
-    .logical $8AB033
-
       .dsection Data8AB033Section
-
-    .here
-
-    * = $0AB043
-    .logical $8AB043
 
       .dsection Unsorted8AB043Section
 
-    .here
-
-    * = $0AB07C
-    .logical $8AB07C
-
       .dsection Data8AB07CSection
-
-    .here
-
-    * = $0AB093
-    .logical $8AB093
 
       .dsection Unsorted8AB093Section
 
@@ -9692,66 +3905,22 @@
 
       .dsection Unsorted8AB111Section
 
-    .here
-
-    * = $0AB230
-    .logical $8AB230
-
       .dsection Table8AB230Section
-
-    .here
-
-    * = $0AB23B
-    .logical $8AB23B
 
       .dsection Unsorted8AB23BSection
 
-    .here
-
-    * = $0AB317
-    .logical $8AB317
-
       .dsection DialoguePortraitSection
-
-      ; 8A/B3FE
-
-    .here
-
-    * = $0AB3FE
-    .logical $8AB3FE
 
       .dsection Unsorted8AB3FESection
 
-    .here
-
-    * = $0AB452
-    .logical $8AB452
-
       .dsection GetDecompressedPortraitDataPointersSection
-
-    .here
-
-    * = $0AB49A
-    .logical $8AB49A
 
       .dsection DecompressWorldMapPortraitToSlotSection
 
-    .here
-
-    * = $0AB4EB
-    .logical $8AB4EB
-
       .dsection PortraitSlotDecompressionPointersSection
-
-    .here
-
-    * = $0AB4F9
-    .logical $8AB4F9
 
       aPortraitGraphicPointers .include "data/PortraitGraphicPointers.csv.asm" ; 8A/B4F9
       aPortraitPalettePointers .include "data/PortraitPalettePointers.csv.asm" ; 8A/B7E1
-
-      ; 8A/BAC9
 
     .here
 
@@ -9759,11 +3928,6 @@
     .logical $8ABACF
 
       .dsection DialogueBackgroundsSection
-
-    .here
-
-    * = $0ABB3E
-    .logical $8ABB3E
 
       .dsection Unsorted8ABB3ESection
 
@@ -9777,76 +3941,26 @@
       aDecompressionDMAEntry8ABE53 .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800 ; 8A/BE53
       aDecompressionDMAEntry8ABE5B .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/BE5B
 
-    .here
-
-    * = $0ABE63
-    .logical $8ABE63
-
       .dsection Unsorted8ABE63Section
-
-    .here
-
-    * = $0ABF0F
-    .logical $8ABF0F
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8ABF0F .structDecompressionDMAEntry gcUnknownD22430, $1000, $0000 ; 8A/BF0F
       aDecompressionDMAEntry8ABF17 .structDecompressionDMAEntry gcUnknownD27F1A, $1000, $0000 ; 8A/BF17
       aDecompressionDMAEntry8ABF1F .structDecompressionDMAEntry gcUnknownD2769C, $1000, $0000 ; 8A/BF1F
 
-    .here
-
-    * = $0ABF27
-    .logical $8ABF27
-
       .dsection Unsorted8ABF27Section
-
-    .here
-
-    * = $0ABFF3
-    .logical $8ABFF3
 
       .dsection Data8ABFF3Section
 
-    .here
-
-    * = $0AC003
-    .logical $8AC003
-
       .dsection Unsorted8AC003Section
-
-    .here
-
-    * = $0AC08F
-    .logical $8AC08F
 
       .dsection Table8AC08FSection
 
-    .here
-
-    * = $0AC0B9
-    .logical $8AC0B9
-
       .dsection Unsorted8AC0B9Section
-
-    .here
-
-    * = $0AC447
-    .logical $8AC447
 
       .dsection Table8AC447Section
 
-    .here
-
-    * = $0AC457
-    .logical $8AC457
-
       .dsection Unsorted8AC457Section
-
-    .here
-
-    * = $0AC50D
-    .logical $8AC50D
 
       .dsection Unsorted8AC50DSection
       .dsection Unsorted8AC524Section
@@ -9856,63 +3970,23 @@
       .dsection Unsorted8AC81ESection
       .dsection Unsorted8AC853Section
 
-    .here
-
-    * = $0AC8A2
-    .logical $8AC8A2
-
       .dsection Unsorted8AC8A2Section
-
-    .here
-
-    * = $0AC984
-    .logical $8AC984
 
       .dsection Unsorted8AC984Section
       .dsection Unsorted8ACA53Section
 
-    .here
-
-    * = $0ACAD2
-    .logical $8ACAD2
-
       .dsection Unsorted8ACAD2Section
-
-    .here
-
-    * = $0ACBF2
-    .logical $8ACBF2
 
       .dsection Unsorted8ACBF2Section
 
-    .here
-
-    * = $0ACC43
-    .logical $8ACC43
-
       .dsection Unsorted8ACC43Section
-
-    .here
-
-    * = $0ACC58
-    .logical $8ACC58
 
       .dsection Unsorted8ACC58Section
       .dsection Unsorted8ACD53Section
       .dsection Unsorted8ACD94Section
       .dsection Unsorted8ACDABSection
 
-    .here
-
-    * = $0ACE2B
-    .logical $8ACE2B
-
       .dsection Unsorted8ACE2BSection
-
-    .here
-
-    * = $0ACE3A
-    .logical $8ACE3A
 
       .dsection Unsorted8ACE3ASection
 
@@ -9923,38 +3997,13 @@
 
       .dsection Unsorted8ACE50Section
 
-    .here
-
-    * = $0ACEB3
-    .logical $8ACEB3
-
       .dsection Unsorted8ACEB3Section
-
-    .here
-
-    * = $0ACFBE
-    .logical $8ACFBE
 
       .dsection Unsorted8ACFBESection
 
-    .here
-
-    * = $0AD071
-    .logical $8AD071
-
       .dsection Table8AD071Section
 
-    .here
-
-    * = $0AD092
-    .logical $8AD092
-
       .dsection Unsorted8AD092Section
-
-    .here
-
-    * = $0AD0D4
-    .logical $8AD0D4
 
       dialogueShop00 .include "text/dialogue/Shops/Shop00.dialogue.txt" ; 8AD0D4
       dialogueShop18 .include "text/dialogue/Shops/Shop18.dialogue.txt" ; 8AD0E3
@@ -10036,11 +4085,6 @@
       dialogueShopUnknown8AD7FC .include "text/dialogue/Shops/ShopUnknown8AD7FC.dialogue.txt" ; 8AD7FC
       dialogueShop10 .include "text/dialogue/Shops/Shop10.dialogue.txt" ; 8AD81A
 
-    .here
-
-    * = $0AD81B
-    .logical $8AD81B
-
       .dsection Unsorted8AD81BSection
 
     .here
@@ -10051,108 +4095,33 @@
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8AD952 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/D952
 
-    .here
-
-    * = $0AD95A
-    .logical $8AD95A
-
       .dsection Unsorted8AD95ASection
-
-    .here
-
-    * = $0AD975
-    .logical $8AD975
 
       .dsection Unsorted8AD975Section
 
-    .here
-
-    * = $0AD9FE
-    .logical $8AD9FE
-
       .dsection Unsorted8AD9FESection
-
-    .here
-
-    * = $0ADA16
-    .logical $8ADA16
 
       .dsection Unsorted8ADA16Section
 
-    .here
-
-    * = $0ADA83
-    .logical $8ADA83
-
       .dsection Unsorted8ADA83Section
-
-    .here
-
-    * = $0ADB04
-    .logical $8ADB04
 
       .dsection Unsorted8ADB04Section
 
-    .here
-
-    * = $0ADB37
-    .logical $8ADB37
-
       .dsection Unsorted8ADB37Section
-
-    .here
-
-    * = $0ADB63
-    .logical $8ADB63
 
       .dsection DisplayDialogueAPressArrowsSection
 
-    .here
-
-    * = $0ADB9F
-    .logical $8ADB9F
-
       .dsection Table8ADB9FSection
-
-    .here
-
-    * = $0ADBBD
-    .logical $8ADBBD
 
       .dsection Unsorted8ADBBDSection
 
-    .here
-
-    * = $0ADBFF
-    .logical $8ADBFF
-
       .dsection Unsorted8ADBFFSection
-
-    .here
-
-    * = $0ADC25
-    .logical $8ADC25
 
       .dsection Unsorted8ADC25Section
 
-    .here
-
-    * = $0ADCDD
-    .logical $8ADCDD
-
       .dsection Unsorted8ADCDDSection
 
-    .here
-
-    * = $0ADCDE
-    .logical $8ADCDE
-
       .dsection Unsorted8ADCDESection
-
-    .here
-
-    * = $0ADCF9
-    .logical $8ADCF9
 
       .dsection Unsorted8ADCF9Section
 
@@ -10163,115 +4132,35 @@
 
       .dsection Unsorted8AE05ESection
 
-    .here
-
-    * = $0AE0C7
-    .logical $8AE0C7
-
       .dsection Table8AE0C7Section
-
-    .here
-
-    * = $0AE147
-    .logical $8AE147
 
       .dsection ProcScript8AE147Section
 
-    .here
-
-    * = $0AE14F
-    .logical $8AE14F
-
       .dsection Unsorted8AE14FSection
-
-    .here
-
-    * = $0AE197
-    .logical $8AE197
 
       .dsection ProcScript8AE197Section
 
-    .here
-
-    * = $0AE199
-    .logical $8AE199
-
       .dsection Unsorted8AE199Section
-
-    .here
-
-    * = $0AE1A1
-    .logical $8AE1A1
 
       .dsection ProcUnknown8AE199InitSection
 
-    .here
-
-    * = $0AE1C1
-    .logical $8AE1C1
-
       .dsection Unsorted8AE1C1Section
-
-    .here
-
-    * = $0AE1EB
-    .logical $8AE1EB
 
       .dsection Unsorted8AE1EBSection
 
-    .here
-
-    * = $0AE1F3
-    .logical $8AE1F3
-
       .dsection Unsorted8AE1F3Section
-
-    .here
-
-    * = $0AE243
-    .logical $8AE243
 
       .dsection ProcScript8AE243Section
 
-    .here
-
-    * = $0AE245
-    .logical $8AE245
-
       .dsection Unsorted8AE245Section
-
-    .here
-
-    * = $0AE29F
-    .logical $8AE29F
 
       .dsection Unsorted8AE29FSection
 
-    .here
-
-    * = $0AE2F8
-    .logical $8AE2F8
-
       .dsection Unsorted8AE2F8Section
-
-    .here
-
-    * = $0AE4B9
-    .logical $8AE4B9
 
       .dsection ArenaMenuSection
 
-    .here
-
-    * = $0AECEF
-    .logical $8AECEF
-
       .dsection Unsorted8AECEFSection
-
-    .here
-
-    * = $0AEE89
-    .logical $8AEE89
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8AEE89 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/EE89
@@ -10280,24 +4169,9 @@
       aDecompressionDMAEntry8AEEA1 .structDecompressionDMAEntry gcUnknownD24914, $0800, $2800 ; 8A/EEA1
       aDecompressionDMAEntry8AEEA9 .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/EEA9
 
-    .here
-
-    * = $0AEEB1
-    .logical $8AEEB1
-
       .dsection Unsorted8AEEB1Section
 
-    .here
-
-    * = $0AEEF2
-    .logical $8AEEF2
-
       .dsection Table8AEEF2Section
-
-    .here
-
-    * = $0AEEFE
-    .logical $8AEEFE
 
       .dsection Unsorted8AEEFESection
 
@@ -10308,11 +4182,6 @@
 
       .dsection Unsorted8AF048Section
       .dsection Unsorted8AF0B4Section
-
-    .here
-
-    * = $0AF0D7
-    .logical $8AF0D7
 
       .dsection Unsorted8AF0D7Section
 
@@ -10327,38 +4196,13 @@
       aDecompressionDMAEntry8AF273 .structDecompressionDMAEntry gcUnknownD46691, $0800, $2800 ; 8A/F273
       aDecompressionDMAEntry8AF27B .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/F27B
 
-    .here
-
-    * = $0AF283
-    .logical $8AF283
-
       .dsection Unsorted8AF283Section
-
-    .here
-
-    * = $0AF2C7
-    .logical $8AF2C7
 
       .dsection Table8AF2C7Section
 
-    .here
-
-    * = $0AF2E1
-    .logical $8AF2E1
-
       .dsection Unsorted8AF2E1Section
 
-    .here
-
-    * = $0AF475
-    .logical $8AF475
-
       .dsection Table8AF475Section
-
-    .here
-
-    * = $0AF4A1
-    .logical $8AF4A1
 
       .dsection Unsorted8AF4A1Section
       .dsection Unsorted8AF4B8Section
@@ -10369,11 +4213,6 @@
       .dsection Unsorted8AF6ECSection
       .dsection Unsorted8AF791Section
       .dsection Unsorted8AF818Section
-
-    .here
-
-    * = $0AF885
-    .logical $8AF885
 
       .dsection Unsorted8AF885Section
 
@@ -10389,47 +4228,19 @@
       aDecompressionDMAEntry8AFA24 .structDecompressionDMAEntry gcUnknownD272B9, $0800, $2800 ; 8A/FA24
       aDecompressionDMAEntry8AFA2C .structDecompressionDMAEntry gcUnknownD467EF, $0800, $2C00 ; 8A/FA2C
 
-    .here
-
-    * = $0AFA34
-    .logical $8AFA34
-
       .dsection Unsorted8AFA34Section
-
-    .here
-
-    * = $0AFA6F
-    .logical $8AFA6F
 
       .dsection Table8AFA6FSection
 
-    .here
-
-    * = $0AFA7F
-    .logical $8AFA7F
-
       .dsection Unsorted8AFA7FSection
-
-    .here
-
-    * = $0AFC52
-    .logical $8AFC52
 
       .dsection Unsorted8AFC52Section
 
-    .here
-
-    * = $0AFC78
-    .logical $8AFC78
-
       .dsection Unsorted8AFC78Section
 
-    .here
-
-    * = $0AFCD5
-    .logical $8AFCD5
-
       .dsection Unsorted8AFCD5Section
+
+      .fill $8A8000 + $8000 - *, $00
 
     .here
 
@@ -10438,17 +4249,7 @@
 
       .dsection Unsorted8B8000Section
 
-    .here
-
-    * = $0B806D
-    .logical $8B806D
-
       .dsection Unsorted8B806DSection
-
-    .here
-
-    * = $0B80CB
-    .logical $8B80CB
 
       .dsection Unsorted8B80CBSection
 
@@ -10466,11 +4267,6 @@
 
       .dsection FadeInWorldMapPortraitSlotSection
 
-    .here
-
-    * = $0B8345
-    .logical $8B8345
-
       .dsection WorldMapPortraitSection
 
       ; 8b83a7
@@ -10483,19 +4279,7 @@
 
       .dsection WorldMapMarkers1Section
 
-      ; 8B/87E5
-
-    .here
-
-    * = $0B87E5
-    .logical $8B87E5
-
       .dsection Unsorted8B87E5Section
-
-    .here
-
-    * = $0B88CE
-    .logical $8B88CE
 
       .dsection WorldMapHighlightCodeSection
 
@@ -10508,17 +4292,7 @@
 
       .dsection ClearHighlightWorldMapPartSection
 
-    .here
-
-    * = $0B8AAB
-    .logical $8B8AAB
-
       .dsection Unsorted8B8AABSection
-
-    .here
-
-    * = $0B8B59
-    .logical $8B8B59
 
       .dsection WorldMapMarkerShadowFadeInSection
 
@@ -10536,17 +4310,7 @@
 
       .dsection WorldMapMarkerShadowFadeOutSection
 
-    .here
-
-    * = $0B8C3A
-    .logical $8B8C3A
-
       .dsection Unsorted8B8C3ASection
-
-    .here
-
-    * = $0B8C42
-    .logical $8B8C42
 
       .dsection Unsorted8B8C42Section
 
@@ -10557,136 +4321,44 @@
 
       .dsection Unsorted8B8C81Section
 
-    .here
-
-    * = $0B8C83
-    .logical $8B8C83
-
       .dsection FadeInWorldMapPortraitSlot8B8C83Section
-
-    .here
-
-    * = $0B8C98
-    .logical $8B8C98
 
       .dsection ProcFadeInWorldMapPortraitSlotCycleSection
 
-    .here
-
-    * = $0B8E17
-    .logical $8B8E17
-
       .dsection ProcFadeInWorldMapPortraitSlotCodeSection
-
-    .here
-
-    * = $0B911F
-    .logical $8B911F
 
       .dsection Table8B911FSection
 
-    .here
-
-    * = $0B912A
-    .logical $8B912A
-
       .dsection Unsorted8B912ASection
-
-    .here
-
-    * = $0B91F6
-    .logical $8B91F6
 
       .dsection Unsorted8B91F6Section
 
-    .here
-
-    * = $0B9449
-    .logical $8B9449
-
       .dsection Table8B9449Section
-
-    .here
-
-    * = $0B9451
-    .logical $8B9451
 
       .dsection Unsorted8B9451Section
 
-    .here
-
-    * = $0B9458
-    .logical $8B9458
-
       .dsection Unsorted8B9458Section
-
-    .here
-
-    * = $0B9594
-    .logical $8B9594
 
       .dsection Table8B9594Section
 
-    .here
-
-    * = $0B959C
-    .logical $8B959C
-
       .dsection Unsorted8B959CSection
-
-    .here
-
-    * = $0B95A3
-    .logical $8B95A3
 
       .dsection Unsorted8B95A3Section
 
-    .here
-
-    * = $0B96CF
-    .logical $8B96CF
-
       .dsection Unsorted8B96CFSection
-
-    .here
-
-    * = $0B9726
-    .logical $8B9726
 
       .dsection Table8B9726Section
 
-    .here
-
-    * = $0B972C
-    .logical $8B972C
-
       .dsection Unsorted8B972CSection
-
-    .here
-
-    * = $0B973C
-    .logical $8B973C
 
       .dsection Unsorted8B973CSection
 
-    .here
-
-    * = $0B9759
-    .logical $8B9759
-
       .dsection Unsorted8B9759Section
-
-    .here
-
-    * = $0B977D
-    .logical $8B977D
 
       .dsection WorldMapMarkers2Section
 
       aPortraitDataIDs .include "data/character/PortraitDataIDs.csv.asm" ; 8B/9A88
       aClassPortraitDataIDs .include "data/class/ClassPortraitDataIDs.csv.asm" ; 8B/9FF8
-
-      ; 8B/A088
       ; 4 different HDMA structs
 
     .here
@@ -10695,11 +4367,6 @@
     .logical $8BA0B4
 
       .dsection Unsorted8BA0B4Section
-
-    .here
-
-    * = $0BA7CB
-    .logical $8BA7CB
 
       .dsection Unsorted8BA7CBSection
 
@@ -10710,87 +4377,27 @@
 
       .dsection Unsorted8BA7F2Section
 
-    .here
-
-    * = $0BA845
-    .logical $8BA845
-
       .dsection Table8BA845Section
-
-    .here
-
-    * = $0BA851
-    .logical $8BA851
 
       .dsection Unsorted8BA851Section
 
-    .here
-
-    * = $0BAC7F
-    .logical $8BAC7F
-
       .dsection Unsorted8BAC7FSection
-
-    .here
-
-    * = $0BACAD
-    .logical $8BACAD
 
       .dsection UnitWindowUnknown8BACADSection
 
-    .here
-
-    * = $0BADF1
-    .logical $8BADF1
-
       .dsection Unsorted8BADF1Section
-
-    .here
-
-    * = $0BAE12
-    .logical $8BAE12
 
       .dsection UnitWindowPageDrawersSection
 
-    .here
-
-    * = $0BAE1E
-    .logical $8BAE1E
-
       .dsection Unsorted8BAE1ESection
-
-    .here
-
-    * = $0BAF3B
-    .logical $8BAF3B
 
       .dsection UnitWindowDrawPagesSection
 
-    .here
-
-    * = $0BB45D
-    .logical $8BB45D
-
       .dsection Unsorted8BB45DSection
-
-    .here
-
-    * = $0BB469
-    .logical $8BB469
 
       .dsection Unsorted8BB469Section
 
-    .here
-
-    * = $0BB4C7
-    .logical $8BB4C7
-
       .dsection Data8BB4C7Section
-
-    .here
-
-    * = $0BB50D
-    .logical $8BB50D
 
       .dsection Unsorted8BB50DSection
 
@@ -10801,11 +4408,6 @@
 
       .dsection Data8BB53BSection
 
-    .here
-
-    * = $0BB54F
-    .logical $8BB54F
-
       .dsection Unsorted8BB54FSection
 
     .here
@@ -10815,31 +4417,11 @@
 
       .dsection Unsorted8BB596Section
 
-    .here
-
-    * = $0BB61B
-    .logical $8BB61B
-
       .dsection Data8BB61BSection
-
-    .here
-
-    * = $0BB63B
-    .logical $8BB63B
 
       .dsection Unsorted8BB63BSection
 
-    .here
-
-    * = $0BB70B
-    .logical $8BB70B
-
       .dsection Data8BB70BSection
-
-    .here
-
-    * = $0BB71F
-    .logical $8BB71F
 
       .dsection Unsorted8BB71FSection
 
@@ -10850,11 +4432,6 @@
 
       .dsection Data8BB811Section
 
-    .here
-
-    * = $0BB871
-    .logical $8BB871
-
       .dsection Unsorted8BB871Section
 
     .here
@@ -10864,150 +4441,45 @@
 
       .dsection Unsorted8BB8B6Section
 
-    .here
-
-    * = $0BB9FC
-    .logical $8BB9FC
-
       .dsection Data8BB9FCSection
-
-    .here
-
-    * = $0BBAA4
-    .logical $8BBAA4
 
       .dsection Unsorted8BBAA4Section
 
-    .here
-
-    * = $0BBAE9
-    .logical $8BBAE9
-
       .dsection Unsorted8BBAE9Section
-
-    .here
-
-    * = $0BBD40
-    .logical $8BBD40
 
       .dsection Data8BBD40Section
 
-    .here
-
-    * = $0BBDA7
-    .logical $8BBDA7
-
       .dsection Unsorted8BBDA7Section
-
-    .here
-
-    * = $0BBDF0
-    .logical $8BBDF0
 
       .dsection UnitWindowDrawWeaponRankSection
 
-    .here
-
-    * = $0BBE68
-    .logical $8BBE68
-
       .dsection Unsorted8BBE68Section
-
-    .here
-
-    * = $0BBED5
-    .logical $8BBED5
 
       aItemIconOffsets .binclude "data/item/ItemIconOffsets.asm" ; 8B/BED5
 
-    .here
-
-    * = $0BBFED
-    .logical $8BBFED
-
       .dsection Table8BBFEDSection
-
-    .here
-
-    * = $0BC030
-    .logical $8BC030
 
       .dsection Unsorted8BC030Section
 
-    .here
-
-    * = $0BC08F
-    .logical $8BC08F
-
       .dsection Table8BC08FSection
-
-    .here
-
-    * = $0BC0B0
-    .logical $8BC0B0
 
       .dsection Data8BC0B0Section
 
-    .here
-
-    * = $0BC0F0
-    .logical $8BC0F0
-
       .dsection Unsorted8BC0F0Section
-
-    .here
-
-    * = $0BC127
-    .logical $8BC127
 
       .dsection Data8BC127Section
 
-    .here
-
-    * = $0BC21F
-    .logical $8BC21F
-
       .dsection Unsorted8BC21FSection
-
-    .here
-
-    * = $0BC385
-    .logical $8BC385
 
       .dsection Data8BC385Section
 
-    .here
-
-    * = $0BC391
-    .logical $8BC391
-
       .dsection Unsorted8BC391Section
-
-    .here
-
-    * = $0BC43A
-    .logical $8BC43A
 
       .dsection Unsorted8BC43ASection
 
-    .here
-
-    * = $0BC457
-    .logical $8BC457
-
       .dsection Table8BC457Section
 
-    .here
-
-    * = $0BC467
-    .logical $8BC467
-
       .dsection Unsorted8BC467Section
-
-    .here
-
-    * = $0BC484
-    .logical $8BC484
 
       .dsection Unsorted8BC484Section
 
@@ -11018,232 +4490,65 @@
 
       .dsection Table8BC518Section
 
-    .here
-
-    * = $0BC52A
-    .logical $8BC52A
-
       .dsection Unsorted8BC52ASection
-
-    .here
-
-    * = $0BC5C6
-    .logical $8BC5C6
 
       .dsection Unsorted8BC5C6Section
 
-    .here
-
-    * = $0BC61C
-    .logical $8BC61C
-
       .dsection Table8BC61CSection
-
-    .here
-
-    * = $0BC668
-    .logical $8BC668
 
       .dsection Unsorted8BC668Section
 
-    .here
-
-    * = $0BC67F
-    .logical $8BC67F
-
       .dsection UnitWindowUnknown8BC67FSection
-
-    .here
-
-    * = $0BC96A
-    .logical $8BC96A
 
       .dsection Table8BC96ASection
 
-    .here
-
-    * = $0BC972
-    .logical $8BC972
-
       .dsection UnitWindowUnknown8BC972Section
-
-    .here
-
-    * = $0BC9B6
-    .logical $8BC9B6
 
       .dsection Unsorted8BC9B6Section
 
-    .here
-
-    * = $0BCA1A
-    .logical $8BCA1A
-
       .dsection Unsorted8BCA1ASection
-
-    .here
-
-    * = $0BCA31
-    .logical $8BCA31
 
       .dsection Table8BCA31Section
 
-    .here
-
-    * = $0BCA7F
-    .logical $8BCA7F
-
       .dsection Unsorted8BCA7FSection
-
-    .here
-
-    * = $0BCAB4
-    .logical $8BCAB4
 
       .dsection Unsorted8BCAB4Section
 
-    .here
-
-    * = $0BCAE5
-    .logical $8BCAE5
-
       .dsection UnitWindowUnknown8BCAE5Section
-
-    .here
-
-    * = $0BCBBA
-    .logical $8BCBBA
 
       .dsection UnitWindowUnknown8BCBBASection
 
-    .here
-
-    * = $0BCD20
-    .logical $8BCD20
-
       .dsection Unsorted8BCD20Section
-
-    .here
-
-    * = $0BCD89
-    .logical $8BCD89
 
       .dsection Unsorted8BCD89Section
 
-    .here
-
-    * = $0BCDD8
-    .logical $8BCDD8
-
       .dsection JoinOrderSection
-
-      ; 8B/CE29
-
-    .here
-
-    * = $0BCE29
-    .logical $8BCE29
 
       .dsection Unsorted8BCE29Section
 
-    .here
-
-    * = $0BCE71
-    .logical $8BCE71
-
       .dsection Unsorted8BCE71Section
-
-    .here
-
-    * = $0BCECA
-    .logical $8BCECA
 
       .dsection Data8BCECASection
 
-    .here
-
-    * = $0BCF0A
-    .logical $8BCF0A
-
       .dsection DataWindowShowSection
-
-    .here
-
-
-
-
-
-
-
-
-
-
-
-    * = $0BD794
-    .logical $8BD794
 
       .dsection Unsorted8BD794Section
 
-    .here
-
-    * = $0BD7B9
-    .logical $8BD7B9
-
       .dsection Table8BD7B9Section
-
-    .here
-
-    * = $0BD7BD
-    .logical $8BD7BD
 
       .dsection Unsorted8BD7BDSection
 
-    .here
-
-    * = $0BD8FE
-    .logical $8BD8FE
-
       .dsection Unsorted8BD8FESection
-
-    .here
-
-    * = $0BD90B
-    .logical $8BD90B
 
       .dsection Unsorted8BD90BSection
 
-    .here
-
-    * = $0BDA9C
-    .logical $8BDA9C
-
       .dsection Data8BDA9CSection
-
-    .here
-
-    * = $0BDAB4
-    .logical $8BDAB4
 
       .dsection Unsorted8BDAB4Section
 
-    .here
-
-    * = $0BDB54
-    .logical $8BDB54
-
       .dsection Unsorted8BDB54Section
 
-    .here
-
-    * = $0BDB7E
-    .logical $8BDB7E
-
       .dsection Data8BDB7ESection
-
-    .here
-
-    * = $0BDBA2
-    .logical $8BDBA2
 
       .dsection Unsorted8BDBA2Section
       .dsection Table8BDC22Section
@@ -11251,17 +4556,7 @@
 
       .dsection Unsorted8BDC92Section
 
-    .here
-
-    * = $0BDE9D
-    .logical $8BDE9D
-
       .dsection Data8BDE9DSection
-
-    .here
-
-    * = $0BDECD
-    .logical $8BDECD
 
       .dsection Unsorted8BDECDSection
 
@@ -11275,17 +4570,7 @@
 
       .dsection Data8BDFBFSection
 
-    .here
-
-    * = $0BE000
-    .logical $8BE000
-
       .dsection BattleAnimationPalettes8BE000Section
-
-    .here
-
-    * = $0BE01E
-    .logical $8BE01E
 
       .dsection BattleAnimationPalettes8BE01ESection
 
@@ -11296,101 +4581,31 @@
 
       .dsection Data8C9400Section
 
-    .here
-
-    * = $0C9800
-    .logical $8C9800
-
       .dsection Unknown8CPalettes8C9800Section
-
-    .here
-
-    * = $0C9D00
-    .logical $8C9D00
 
       .dsection Data8C9D00Section
 
-    .here
-
-    * = $0C9E00
-    .logical $8C9E00
-
       .dsection BackgroundPalettes8C9E00Section
-
-    .here
-
-    * = $0CA000
-    .logical $8CA000
 
       .dsection Unknown8CPalettes8CA000Section
 
-    .here
-
-    * = $0CA800
-    .logical $8CA800
-
       .include "data/PortraitPalettes.asm"
-
-    .here
-
-    * = $0CC500
-    .logical $8CC500
 
       .dsection BackgroundPalettes8CC500Section
 
-    .here
-
-    * = $0CCB00
-    .logical $8CCB00
-
       .dsection Data8CCB00Section
-
-    .here
-
-    * = $0CCC00
-    .logical $8CCC00
 
       .dsection BackgroundPalettes8CCC00Section
 
-    .here
-
-    * = $0CD000
-    .logical $8CD000
-
       .dsection Unknown8CPalettes8CD000Section
-
-    .here
-
-    * = $0CDC00
-    .logical $8CDC00
 
       .dsection Table8CDC00Section
 
-    .here
-
-    * = $0CDC30
-    .logical $8CDC30
-
       .dsection Table8CDC30Section
-
-    .here
-
-    * = $0CDE00
-    .logical $8CDE00
 
       .dsection Table8CDE00Section
 
-    .here
-
-    * = $0CDE20
-    .logical $8CDE20
-
       .dsection Data8CDE20Section
-
-    .here
-
-    * = $0CDF00
-    .logical $8CDF00
 
       .dsection BackgroundPalettes8CDF00Section
 
@@ -11478,38 +4693,13 @@
 
       .dsection Unknown8CPalettes8CEB00Section
 
-    .here
-
-    * = $0CED00
-    .logical $8CED00
-
       .dsection Unsorted8CED00Section
-
-    .here
-
-    * = $0CED4F
-    .logical $8CED4F
 
       .dsection Unsorted8CED4FSection
 
-    .here
-
-    * = $0CEDD0
-    .logical $8CEDD0
-
       .dsection Unsorted8CEDD0Section
 
-    .here
-
-    * = $0CEEE8
-    .logical $8CEEE8
-
       .dsection Data8CEEE8Section
-
-    .here
-
-    * = $0CF06A
-    .logical $8CF06A
 
       .dsection Unsorted8CF06ASection
 
@@ -11519,11 +4709,6 @@
     .logical $8D8000
 
       .dsection DemoBattlesSection
-
-    .here
-
-    * = $0D863F
-    .logical $8D863F
 
       .include "events/Chapter10/EventChapter10Opening.asm"
       .include "events/Chapter10/EventChapter10RiddellLeisurelyCharge.asm"
@@ -11863,18 +5048,8 @@
 
       ; 8d9b65
 
-    .here
-
-    * = $0D9B65
-    .logical $8D9B65
-
       .dsection Table8D9B65Section
       .dsection Table8D9BF6Section
-
-    .here
-
-    * = $0D9FB1
-    .logical $8D9FB1
 
       dialogueGen1HomeCastleSeized .include "text/dialogue/General/Gen1HomeCastleSeized.dialogue.txt" ; 8D9FB1
       dialogueGen2HomeCastleSeized .include "text/dialogue/General/Gen2HomeCastleSeized.dialogue.txt" ; 8D9FED
@@ -11883,74 +5058,24 @@
 
       ; 8da06a
 
-    .here
-
-    * = $0DA06A
-    .logical $8DA06A
-
       .dsection Unsorted8DA06ASection
-
-    .here
-
-    * = $0DA0C6
-    .logical $8DA0C6
 
       .dsection Unsorted8DA0C6Section
 
-    .here
-
-    * = $0DA288
-    .logical $8DA288
-
       .dsection Unsorted8DA288Section
-
-    .here
-
-    * = $0DA2AA
-    .logical $8DA2AA
 
       .dsection Unsorted8DA2AASection
       .dsection Unsorted8DA34DSection
 
-    .here
-
-    * = $0DA372
-    .logical $8DA372
-
       .dsection Unsorted8DA372Section
-
-    .here
-
-    * = $0DA3DE
-    .logical $8DA3DE
 
       .dsection Unsorted8DA3DESection
 
-    .here
-
-    * = $0DA449
-    .logical $8DA449
-
       .dsection Unsorted8DA449Section
-
-    .here
-
-    * = $0DA4B3
-    .logical $8DA4B3
 
       .dsection Unsorted8DA4B3Section
 
-    .here
-
-    * = $0DA502
-    .logical $8DA502
-
       .dsection Table8DA502Section
-
-    .here
-
-    * = $0DA50F
-    .logical $8DA50F
 
       .dsection Unsorted8DA50FSection
 
@@ -11961,45 +5086,15 @@
 
       .dsection Unsorted8DA624Section
 
-    .here
-
-    * = $0DA737
-    .logical $8DA737
-
       .dsection Data8DA737Section
-
-    .here
-
-    * = $0DA755
-    .logical $8DA755
 
       .dsection Unsorted8DA755Section
 
-    .here
-
-    * = $0DA810
-    .logical $8DA810
-
       .dsection Unsorted8DA810Section
-
-    .here
-
-    * = $0DAA96
-    .logical $8DAA96
 
       .dsection Unsorted8DAA96Section
 
-    .here
-
-    * = $0DAA9E
-    .logical $8DAA9E
-
       .dsection Unsorted8DAA9ESection
-
-    .here
-
-    * = $0DAAFB
-    .logical $8DAAFB
 
       .dsection Unsorted8DAAFBSection
 
@@ -12010,24 +5105,9 @@
 
       .dsection Unsorted8DAD73Section
 
-    .here
-
-    * = $0DAD9E
-    .logical $8DAD9E
-
       .dsection Unsorted8DAD9ESection
 
-    .here
-
-    * = $0DADFA
-    .logical $8DADFA
-
       .dsection Table8DADFASection
-
-    .here
-
-    * = $0DAE85
-    .logical $8DAE85
 
       .dsection Unsorted8DAE85Section
 
@@ -12039,36 +5119,16 @@
       .dsection Unsorted8DAEC2Section
       .dsection Unsorted8DAF33Section
 
-    .here
-
-    * = $0DAF95
-    .logical $8DAF95
-
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8DAF95 .structDecompressionDMAEntry gcUnknownD35EB4, $3000, $0000 ; 8D/AF95
       aDecompressionDMAEntry8DAF9D .structDecompressionDMAEntry gcUnknownD421EE, $0800, $5800 ; 8D/AF9D
 
-    .here
-
-    * = $0DAFA5
-    .logical $8DAFA5
-
       .dsection Unsorted8DAFA5Section
-
-    .here
-
-    * = $0DB056
-    .logical $8DB056
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8DB056 .structDecompressionDMAEntry gcUnknownD429F6, $0800, $5800 ; 8D/B056
       aDecompressionDMAEntry8DB05E .structDecompressionDMAEntry gcUnknownD428B8, $0800, $6800 ; 8D/B05E
       aDecompressionDMAEntry8DB066 .structDecompressionDMAEntry gcUnknownD42273, $1000, $4000 ; 8D/B066
-
-    .here
-
-    * = $0DB06E
-    .logical $8DB06E
 
       .dsection Unsorted8DB06ESection
       .dsection Unsorted8DB150Section
@@ -12077,24 +5137,9 @@
       .dsection Unsorted8DB252Section
       .dsection Unsorted8DB276Section
 
-    .here
-
-    * = $0DB2B8
-    .logical $8DB2B8
-
       .dsection Unsorted8DB2B8Section
 
-    .here
-
-    * = $0DB4F1
-    .logical $8DB4F1
-
       .dsection Unsorted8DB4F1Section
-
-    .here
-
-    * = $0DB4F6
-    .logical $8DB4F6
 
       .dsection Unsorted8DB4F6Section
 
@@ -12105,47 +5150,15 @@
 
       .dsection Unsorted8DB53ASection
 
-    .here
-
-    * = $0DB5C8
-    .logical $8DB5C8
-
       .dsection Data8DB5C8Section
-
-    .here
-
-    * = $0DB63D
-    .logical $8DB63D
 
       .dsection EpilogueDialogueWorldMapCodeSection
 
-      ; 8D/C964
-
-    .here
-
-    * = $0DC964
-    .logical $8DC964
-
       .dsection Table8DC964Section
-
-    .here
-
-    * = $0DCF88
-    .logical $8DCF88
 
       .dsection Data8DCF88Section
 
-    .here
-
-    * = $0DD041
-    .logical $8DD041
-
       .dsection Unsorted8DD041Section
-
-    .here
-
-    * = $0DDCA7
-    .logical $8DDCA7
 
       dialogueChapterEpilogueWorldMapSilesse .include "text/dialogue/EpilogueWorldMap/WorldMapSilesse.dialogue.txt" ; 8DDCA7
       dialogueChapterEpilogueWorldMap_Silesse_NoInheritors .include "text/dialogue/EpilogueWorldMap/WorldMap_Silesse_NoInheritors.dialogue.txt" ; 8DDCB3
@@ -13030,57 +6043,20 @@
 
       .dsection DialogueEngineSection
 
-      ; 91/A3AB
-
-    .here
-
-    * = $11A3AB
-    .logical $91A3AB
-
       .dsection Unsorted91A3ABSection
-
-    .here
-
-    * = $11A3D9
-    .logical $91A3D9
 
       .dsection Unsorted91A3D9Section
 
-    .here
-
-    * = $11A3DE
-    .logical $91A3DE
-
       .dsection Unsorted91A3DESection
 
-    .here
-
-    * = $11A405
-    .logical $91A405
-
       .dsection Data91A405Section
-
-    .here
-
-    * = $11A40E
-    .logical $91A40E
 
       .dsection EventScriptEngineSection
       .dsection FadeProcClearSection
 
       ; 91a7bc
 
-    .here
-
-    * = $11A7BC
-    .logical $91A7BC
-
       .dsection Unsorted91A7BCSection
-
-    .here
-
-    * = $11A7DF
-    .logical $91A7DF
 
       .dsection Unsorted91A7DFSection
 
@@ -13091,14 +6067,7 @@
 
       .dsection Unsorted91A80DSection
 
-    .here
-
-    * = $11A863
-    .logical $91A863
-
       .dsection DialogueEventCommandSection
-
-      ; 91/A8E4
 
     .here
 
@@ -13107,19 +6076,7 @@
 
       .dsection Unsorted91A928Section
 
-    .here
-
-    * = $11A984
-    .logical $91A984
-
       .dsection DialogueUnknownSection
-
-      ; 91/A9BB
-
-    .here
-
-    * = $11A9BB
-    .logical $91A9BB
 
       .dsection Unsorted91A9BBSection
 
@@ -13130,59 +6087,19 @@
 
       .dsection Unsorted91AA15Section
 
-    .here
-
-    * = $11AA6F
-    .logical $91AA6F
-
       .dsection Unsorted91AA6FSection
-
-    .here
-
-    * = $11AAE2
-    .logical $91AAE2
 
       .dsection Unsorted91AAE2Section
 
-    .here
-
-    * = $11AB91
-    .logical $91AB91
-
       .dsection Unsorted91AB91Section
-
-    .here
-
-    * = $11ABEE
-    .logical $91ABEE
 
       .dsection Unsorted91ABEESection
 
-    .here
-
-    * = $11AC79
-    .logical $91AC79
-
       .dsection Unsorted91AC79Section
-
-    .here
-
-    * = $11AC96
-    .logical $91AC96
 
       .dsection Unsorted91AC96Section
 
-    .here
-
-    * = $11ACE2
-    .logical $91ACE2
-
       .dsection Unsorted91ACE2Section
-
-    .here
-
-    * = $11AD0B
-    .logical $91AD0B
 
       .dsection DeathQuoteSection
 
@@ -13195,17 +6112,7 @@
 
       .dsection Unsorted91B131Section
 
-    .here
-
-    * = $11B164
-    .logical $91B164
-
       .dsection Unsorted91B164Section
-
-    .here
-
-    * = $11B1E3
-    .logical $91B1E3
 
       .dsection Table91B1E3Section
 
@@ -13216,17 +6123,7 @@
 
       .dsection Unsorted91B1FCSection
 
-    .here
-
-    * = $11B2D3
-    .logical $91B2D3
-
       .dsection Data91B2D3Section
-
-    .here
-
-    * = $11B2E5
-    .logical $91B2E5
 
       .dsection Unsorted91B2E5Section
       .dsection Table91B34CSection
@@ -13236,17 +6133,7 @@
 
       .dsection Unsorted91BA46Section
 
-    .here
-
-    * = $11BA6C
-    .logical $91BA6C
-
       .dsection Data91BA6CSection
-
-    .here
-
-    * = $11BA9C
-    .logical $91BA9C
 
       .dsection EpilogueDialogueCodeSection
 
@@ -13258,11 +6145,6 @@
     .logical $91BD94
 
       .dsection ASMCStatUpDisplaySection
-
-    .here
-
-    * = $11BDD2
-    .logical $91BDD2
 
       .dsection EventCommandSection
 
@@ -13294,275 +6176,83 @@
 
       ; 91d616
 
-    .here
-
-    * = $11D616
-    .logical $91D616
-
       .dsection Unsorted91D616Section
-
-    .here
-
-    * = $11D62A
-    .logical $91D62A
 
       .dsection Table91D62ASection
 
-    .here
-
-    * = $11D682
-    .logical $91D682
-
       .dsection Unsorted91D682Section
-
-    .here
-
-    * = $11D683
-    .logical $91D683
 
       .dsection Unsorted91D683Section
 
-    .here
-
-    * = $11D69B
-    .logical $91D69B
-
       .dsection Unsorted91D69BSection
-
-    .here
-
-    * = $11D6BB
-    .logical $91D6BB
 
       .dsection Unsorted91D6BBSection
 
-    .here
-
-    * = $11D6E3
-    .logical $91D6E3
-
       .dsection Unsorted91D6E3Section
-
-    .here
-
-    * = $11D6EC
-    .logical $91D6EC
 
       .dsection Unsorted91D6ECSection
 
-    .here
-
-    * = $11D7E8
-    .logical $91D7E8
-
       g2bppBlankTile .binary "gfx/ui/BlankTile.2bpp" ; 91D7E8
-
-    .here
-
-    * = $11D7F8
-    .logical $91D7F8
 
       .dsection Unsorted91D7F8Section
 
-    .here
-
-    * = $11D7F9
-    .logical $91D7F9
-
       .dsection Unsorted91D7F9Section
-
-    .here
-
-    * = $11D839
-    .logical $91D839
 
       .dsection Unsorted91D839Section
 
-    .here
-
-    * = $11D844
-    .logical $91D844
-
       .dsection Unsorted91D844Section
-
-    .here
-
-    * = $11D899
-    .logical $91D899
 
       .dsection Data91D899Section
 
-    .here
-
-    * = $11D8A0
-    .logical $91D8A0
-
       .dsection Unsorted91D8A0Section
-
-    .here
-
-    * = $11D90D
-    .logical $91D90D
 
       .dsection Unsorted91D90DSection
 
-    .here
-
-    * = $11D921
-    .logical $91D921
-
       .dsection Unsorted91D921Section
-
-    .here
-
-    * = $11D945
-    .logical $91D945
 
       .dsection Unsorted91D945Section
       .dsection Unsorted91D995Section
 
-    .here
-
-    * = $11D9C5
-    .logical $91D9C5
-
       .dsection SaveFileSection
-
-      ; 91/D9FA
-
-    .here
-
-    * = $11D9FA
-    .logical $91D9FA
 
       .dsection Unsorted91D9FASection
 
-    .here
-
-    * = $11DA25
-    .logical $91DA25
-
       .dsection Unsorted91DA25Section
-
-    .here
-
-    * = $11DA64
-    .logical $91DA64
 
       .dsection Unsorted91DA64Section
 
-    .here
-
-    * = $11DB17
-    .logical $91DB17
-
       .dsection Unsorted91DB17Section
-
-    .here
-
-    * = $11DB6D
-    .logical $91DB6D
 
       .dsection Unsorted91DB6DSection
 
-    .here
-
-    * = $11DBA8
-    .logical $91DBA8
-
       .dsection Unsorted91DBA8Section
-
-    .here
-
-    * = $11DBD0
-    .logical $91DBD0
 
       .dsection Unsorted91DBD0Section
 
-    .here
-
-    * = $11DBEE
-    .logical $91DBEE
-
       .dsection Unsorted91DBEESection
-
-    .here
-
-    * = $11DC13
-    .logical $91DC13
 
       .dsection Unsorted91DC13Section
       .dsection Unsorted91DC1ASection
       .dsection Unsorted91DC37Section
       .dsection Unsorted91DC50Section
 
-    .here
-
-    * = $11DC6D
-    .logical $91DC6D
-
       .dsection Unsorted91DC6DSection
-
-    .here
-
-    * = $11DC92
-    .logical $91DC92
 
       .dsection Unsorted91DC92Section
 
-    .here
-
-    * = $11DCDE
-    .logical $91DCDE
-
       .dsection Unsorted91DCDESection
-
-    .here
-
-    * = $11DCF8
-    .logical $91DCF8
 
       .dsection Unsorted91DCF8Section
 
-    .here
-
-    * = $11DD9B
-    .logical $91DD9B
-
       .dsection Unsorted91DD9BSection
-
-    .here
-
-    * = $11DDD5
-    .logical $91DDD5
 
       .dsection Table91DDD5Section
 
-    .here
-
-    * = $11DDF1
-    .logical $91DDF1
-
       .dsection Unsorted91DDF1Section
-
-    .here
-
-    * = $11DE4C
-    .logical $91DE4C
 
       .dsection Unsorted91DE4CSection
 
-    .here
-
-    * = $11DE9F
-    .logical $91DE9F
-
       .dsection Table91DE9FSection
-
-    .here
-
-    * = $11DEA1
-    .logical $91DEA1
 
       .dsection Unsorted91DEA1Section
 
@@ -13573,11 +6263,6 @@
 
       .dsection Unsorted91DF32Section
 
-    .here
-
-    * = $11DF6D
-    .logical $91DF6D
-
       .dsection Unsorted91DF6DSection
 
     .here
@@ -13587,52 +6272,17 @@
 
       .dsection Unsorted91E07ASection
 
-    .here
-
-    * = $11E089
-    .logical $91E089
-
       .dsection Table91E089Section
-
-    .here
-
-    * = $11E095
-    .logical $91E095
 
       .dsection Unsorted91E095Section
 
-    .here
-
-    * = $11E09E
-    .logical $91E09E
-
       .dsection Table91E09ESection
-
-    .here
-
-    * = $11E275
-    .logical $91E275
 
       .dsection Unsorted91E275Section
 
-    .here
-
-    * = $11E2AA
-    .logical $91E2AA
-
       .dsection Unsorted91E2AASection
 
-    .here
-
-    * = $11E397
-    .logical $91E397
-
       .dsection Table91E397Section
-
-    .here
-
-    * = $11E405
-    .logical $91E405
 
       .dsection Unsorted91E405Section
 
@@ -13643,45 +6293,15 @@
 
       .dsection Table91E4B3Section
 
-    .here
-
-    * = $11E4F3
-    .logical $91E4F3
-
       .dsection Data91E4F3Section
-
-    .here
-
-    * = $11E52B
-    .logical $91E52B
 
       .dsection Unsorted91E52BSection
 
-    .here
-
-    * = $11E55A
-    .logical $91E55A
-
       .dsection Unsorted91E55ASection
-
-    .here
-
-    * = $11E583
-    .logical $91E583
 
       .dsection Unsorted91E583Section
 
-    .here
-
-    * = $11E780
-    .logical $91E780
-
       .dsection Unsorted91E780Section
-
-    .here
-
-    * = $11E793
-    .logical $91E793
 
       .dsection Unsorted91E793Section
 
@@ -13692,140 +6312,45 @@
 
       .dsection Unsorted91E915Section
 
-    .here
-
-    * = $11E92E
-    .logical $91E92E
-
       .dsection Unsorted91E92ESection
-
-    .here
-
-    * = $11E932
-    .logical $91E932
 
       .dsection Unsorted91E932Section
 
-    .here
-
-    * = $11E940
-    .logical $91E940
-
       .dsection Unsorted91E940Section
-
-    .here
-
-    * = $11E95F
-    .logical $91E95F
 
       .dsection SaveSlotSection
 
-      ; 91/F748
-
-    .here
-
-    * = $11F748
-    .logical $91F748
-
       .dsection Unsorted91F748Section
-
-    .here
-
-    * = $11F759
-    .logical $91F759
 
       .dsection Unsorted91F759Section
 
-    .here
-
-    * = $11F813
-    .logical $91F813
-
       .dsection Unsorted91F813Section
-
-    .here
-
-    * = $11F872
-    .logical $91F872
 
       .dsection Data91F872Section
 
-    .here
-
-    * = $11F88A
-    .logical $91F88A
-
       .dsection Unsorted91F88ASection
-
-    .here
-
-    * = $11F89B
-    .logical $91F89B
 
       .dsection Table91F89BSection
 
-    .here
-
-    * = $11F89F
-    .logical $91F89F
-
       .dsection Unsorted91F89FSection
-
-    .here
-
-    * = $11F907
-    .logical $91F907
 
       .dsection Unsorted91F907Section
 
-    .here
-
-    * = $11F935
-    .logical $91F935
-
       .dsection Unsorted91F935Section
-
-    .here
-
-    * = $11F959
-    .logical $91F959
 
       .dsection Unsorted91F959Section
 
-    .here
-
-    * = $11F9AD
-    .logical $91F9AD
-
       .dsection Table91F9ADSection
-
-    .here
-
-    * = $11F9DD
-    .logical $91F9DD
 
       .dsection Unsorted91F9DDSection
 
-    .here
-
-    * = $11FA27
-    .logical $91FA27
-
       .dsection Table91FA27Section
-
-    .here
-
-    * = $11FA57
-    .logical $91FA57
 
       .dsection Unsorted91FA57Section
 
-    .here
-
-    * = $11FA9A
-    .logical $91FA9A
-
       .dsection Unsorted91FA9ASection
+
+      .fill $918000 + $8000 - *, $00
 
     .here
 
@@ -13863,66 +6388,21 @@
 
       .dsection Unsorted958000Section
 
-    .here
-
-    * = $1582D8
-    .logical $9582D8
-
       .dsection Unsorted9582D8Section
-
-    .here
-
-    * = $1582F7
-    .logical $9582F7
 
       .dsection Unsorted9582F7Section
 
-    .here
-
-    * = $158B07
-    .logical $958B07
-
       .dsection Unsorted958B07Section
-
-    .here
-
-    * = $158CB9
-    .logical $958CB9
 
       .dsection Unsorted958CB9Section
 
-    .here
-
-    * = $1590F2
-    .logical $9590F2
-
       .dsection Unsorted9590F2Section
-
-    .here
-
-    * = $15937C
-    .logical $95937C
 
       .dsection Data95937CSection
 
-    .here
-
-    * = $15938C
-    .logical $95938C
-
       .dsection Unsorted95938CSection
 
-    .here
-
-    * = $1594F8
-    .logical $9594F8
-
       .dsection Unsorted9594F8Section
-
-    .here
-
-    * = $1595CA
-    .logical $9595CA
 
       .dsection Unsorted9595CASection
 
@@ -13933,73 +6413,23 @@
 
       .dsection Unsorted95968ESection
 
-    .here
-
-    * = $1597FA
-    .logical $9597FA
-
       .dsection Unsorted9597FASection
-
-    .here
-
-    * = $159890
-    .logical $959890
 
       .dsection Table959890Section
 
-    .here
-
-    * = $159894
-    .logical $959894
-
       .dsection Data959894Section
-
-    .here
-
-    * = $159895
-    .logical $959895
 
       .dsection Unsorted959895Section
 
-    .here
-
-    * = $1598E7
-    .logical $9598E7
-
       .dsection Unsorted9598E7Section
-
-    .here
-
-    * = $159902
-    .logical $959902
 
       .dsection Unsorted959902Section
 
-    .here
-
-    * = $1599E7
-    .logical $9599E7
-
       .dsection Unsorted9599E7Section
-
-    .here
-
-    * = $159B49
-    .logical $959B49
 
       .dsection Unsorted959B49Section
 
-    .here
-
-    * = $159B84
-    .logical $959B84
-
       .dsection Unsorted959B84Section
-
-    .here
-
-    * = $159BC1
-    .logical $959BC1
 
       .dsection Unsorted959BC1Section
 
@@ -14010,31 +6440,11 @@
 
       .dsection Unsorted959C14Section
 
-    .here
-
-    * = $159C3E
-    .logical $959C3E
-
       .dsection Unsorted959C3ESection
-
-    .here
-
-    * = $159C64
-    .logical $959C64
 
       .dsection Unsorted959C64Section
 
-    .here
-
-    * = $159DAC
-    .logical $959DAC
-
       .dsection Unsorted959DACSection
-
-    .here
-
-    * = $159E22
-    .logical $959E22
 
       .dsection Unsorted959E22Section
 
@@ -14052,17 +6462,7 @@
 
       .dsection Unsorted95A086Section
 
-    .here
-
-    * = $15A0F7
-    .logical $95A0F7
-
       .dsection Unsorted95A0F7Section
-
-    .here
-
-    * = $15A114
-    .logical $95A114
 
       .dsection Unsorted95A114Section
 
@@ -14073,38 +6473,13 @@
 
       .dsection Unsorted95A167Section
 
-    .here
-
-    * = $15A3FB
-    .logical $95A3FB
-
       .dsection DecompressSingleSection
-
-    .here
-
-    * = $15A414
-    .logical $95A414
 
       .dsection Unsorted95A414Section
 
-    .here
-
-    * = $15A481
-    .logical $95A481
-
       .dsection Unsorted95A481Section
 
-    .here
-
-    * = $15A53E
-    .logical $95A53E
-
       .dsection Unsorted95A53ESection
-
-    .here
-
-    * = $15A65F
-    .logical $95A65F
 
       .dsection Unsorted95A65FSection
 
@@ -14118,69 +6493,24 @@
 
       .dsection Unsorted95ABBBSection
 
-    .here
-
-    * = $15AC3B
-    .logical $95AC3B
-
       .dsection Data95AC3BSection
-
-    .here
-
-    * = $15AC41
-    .logical $95AC41
 
       .dsection Unsorted95AC41Section
 
-    .here
-
-    * = $15ACA8
-    .logical $95ACA8
-
       .dsection Data95ACA8Section
-
-    .here
-
-    * = $15ACAE
-    .logical $95ACAE
 
       .dsection Unsorted95ACAESection
 
-    .here
-
-    * = $15ACF0
-    .logical $95ACF0
-
       .dsection Data95ACF0Section
 
-    .here
-
-    * = $15ACF6
-    .logical $95ACF6
-
       .dsection Unsorted95ACF6Section
-
-    .here
-
-    * = $15AD64
-    .logical $95AD64
 
       .dsection Data95AD64Section
       .dsection Unsorted95AD8CSection
 
       .dsection Unsorted95ADD6Section
 
-    .here
-
-    * = $15AE8B
-    .logical $95AE8B
-
       .dsection Unsorted95AE8BSection
-
-    .here
-
-    * = $15AEA2
-    .logical $95AEA2
 
       .dsection Unsorted95AEA2Section
 
@@ -14191,73 +6521,23 @@
 
       .dsection Unsorted95B184Section
 
-    .here
-
-    * = $15B250
-    .logical $95B250
-
       .dsection BattleAnimationMoves95B250Section
-
-    .here
-
-    * = $15B2DF
-    .logical $95B2DF
 
       .dsection BattleAnimationMoves95B2DFSection
 
-    .here
-
-    * = $15B332
-    .logical $95B332
-
       .dsection BattleAnimationMoves95B332Section
-
-    .here
-
-    * = $15B362
-    .logical $95B362
 
       .dsection BattleAnimationMoves95B362Section
 
-    .here
-
-    * = $15B3AF
-    .logical $95B3AF
-
       .dsection BattleAnimationMoves95B3AFSection
-
-    .here
-
-    * = $15B475
-    .logical $95B475
 
       .dsection BattleAnimationMoves95B475Section
 
-    .here
-
-    * = $15B48D
-    .logical $95B48D
-
       .dsection BattleAnimationMoves95B48DSection
-
-    .here
-
-    * = $15B530
-    .logical $95B530
 
       .dsection Unsorted95B530Section
 
-    .here
-
-    * = $15B554
-    .logical $95B554
-
       .dsection Unsorted95B554Section
-
-    .here
-
-    * = $15B5D0
-    .logical $95B5D0
 
       .dsection Unsorted95B5D0Section
 
@@ -14275,31 +6555,11 @@
 
       .dsection Unsorted95B7F8Section
 
-    .here
-
-    * = $15B81B
-    .logical $95B81B
-
       .dsection Unsorted95B81BSection
-
-    .here
-
-    * = $15B884
-    .logical $95B884
 
       .dsection Unsorted95B884Section
 
-    .here
-
-    * = $15B96F
-    .logical $95B96F
-
       .dsection Unsorted95B96FSection
-
-    .here
-
-    * = $15B993
-    .logical $95B993
 
       .dsection Unsorted95B993Section
 
@@ -14310,73 +6570,23 @@
 
       .dsection Unsorted95C368Section
 
-    .here
-
-    * = $15C43E
-    .logical $95C43E
-
       .dsection Unsorted95C43ESection
-
-    .here
-
-    * = $15CA81
-    .logical $95CA81
 
       .dsection Unsorted95CA81Section
 
-    .here
-
-    * = $15CA88
-    .logical $95CA88
-
       .dsection Unsorted95CA88Section
-
-    .here
-
-    * = $15CEBF
-    .logical $95CEBF
 
       .dsection Unsorted95CEBFSection
 
-    .here
-
-    * = $15CF2E
-    .logical $95CF2E
-
       .dsection BattleAnimationMoves95CF2ESection
-
-    .here
-
-    * = $15CFA0
-    .logical $95CFA0
 
       .dsection Unsorted95CFA0Section
 
-    .here
-
-    * = $15D007
-    .logical $95D007
-
       .dsection BattleAnimationMoves95D007Section
-
-    .here
-
-    * = $15D078
-    .logical $95D078
 
       .dsection Unsorted95D078Section
 
-    .here
-
-    * = $15D0E7
-    .logical $95D0E7
-
       .dsection BattleAnimationMoves95D0E7Section
-
-    .here
-
-    * = $15D1C5
-    .logical $95D1C5
 
       .dsection Unsorted95D1C5Section
 
@@ -14394,66 +6604,21 @@
 
       .dsection Unsorted95D2A4Section
 
-    .here
-
-    * = $15DA0B
-    .logical $95DA0B
-
       .dsection Unsorted95DA0BSection
-
-    .here
-
-    * = $15DA1D
-    .logical $95DA1D
 
       .dsection Unsorted95DA1DSection
 
-    .here
-
-    * = $15DC4C
-    .logical $95DC4C
-
       .dsection Table95DC4CSection
-
-    .here
-
-    * = $15DC54
-    .logical $95DC54
 
       .dsection Unsorted95DC54Section
 
-    .here
-
-    * = $15DC90
-    .logical $95DC90
-
       .dsection Unsorted95DC90Section
-
-    .here
-
-    * = $15DCA3
-    .logical $95DCA3
 
       .dsection Unsorted95DCA3Section
 
-    .here
-
-    * = $15DE84
-    .logical $95DE84
-
       .dsection Table95DE84Section
 
-    .here
-
-    * = $15DE8C
-    .logical $95DE8C
-
       .dsection Unsorted95DE8CSection
-
-    .here
-
-    * = $15DF76
-    .logical $95DF76
 
       .dsection Unsorted95DF76Section
 
@@ -14464,52 +6629,17 @@
 
       .dsection Unsorted95E0C5Section
 
-    .here
-
-    * = $15E1C9
-    .logical $95E1C9
-
       .dsection Unsorted95E1C9Section
-
-    .here
-
-    * = $15E372
-    .logical $95E372
 
       .dsection Unsorted95E372Section
 
-    .here
-
-    * = $15E3DF
-    .logical $95E3DF
-
       .dsection Unsorted95E3DFSection
-
-    .here
-
-    * = $15E69E
-    .logical $95E69E
 
       .dsection Table95E69ESection
 
-    .here
-
-    * = $15E6AA
-    .logical $95E6AA
-
       .dsection Unsorted95E6AASection
 
-    .here
-
-    * = $15E6AC
-    .logical $95E6AC
-
       .dsection Table95E6ACSection
-
-    .here
-
-    * = $15E7B3
-    .logical $95E7B3
 
       .dsection Unsorted95E7B3Section
 
@@ -14527,24 +6657,9 @@
 
       .dsection Unsorted95E888Section
 
-    .here
-
-    * = $15EA47
-    .logical $95EA47
-
       .dsection Unsorted95EA47Section
 
-    .here
-
-    * = $15EA91
-    .logical $95EA91
-
       .dsection Table95EA91Section
-
-    .here
-
-    * = $15ED4E
-    .logical $95ED4E
 
       .dsection Unsorted95ED4ESection
 
@@ -14555,38 +6670,13 @@
 
       .dsection Unsorted95EE73Section
 
-    .here
-
-    * = $15EF54
-    .logical $95EF54
-
       .dsection Unsorted95EF54Section
-
-    .here
-
-    * = $15F0E9
-    .logical $95F0E9
 
       .dsection Unsorted95F0E9Section
 
-    .here
-
-    * = $15F12A
-    .logical $95F12A
-
       .dsection Unsorted95F12ASection
 
-    .here
-
-    * = $15F248
-    .logical $95F248
-
       .dsection Unsorted95F248Section
-
-    .here
-
-    * = $15F256
-    .logical $95F256
 
       .dsection Unsorted95F256Section
 
@@ -14610,11 +6700,6 @@
     .logical $95F7B7
 
       .dsection Unsorted95F7B7Section
-
-    .here
-
-    * = $15F7F7
-    .logical $95F7F7
 
       .dsection Unsorted95F7F7Section
 
@@ -14653,101 +6738,31 @@
 
       .dsection Table968000Section
 
-    .here
-
-    * = $168008
-    .logical $968008
-
       .dsection Unsorted968008Section
-
-    .here
-
-    * = $16800D
-    .logical $96800D
 
       .dsection Table96800DSection
 
-    .here
-
-    * = $168017
-    .logical $968017
-
       .dsection Unsorted968017Section
-
-    .here
-
-    * = $16804E
-    .logical $96804E
 
       .dsection Table96804ESection
 
-    .here
-
-    * = $168058
-    .logical $968058
-
       .dsection Unsorted968058Section
-
-    .here
-
-    * = $168076
-    .logical $968076
 
       .dsection Table968076Section
 
-    .here
-
-    * = $168080
-    .logical $968080
-
       .dsection Unsorted968080Section
-
-    .here
-
-    * = $168093
-    .logical $968093
 
       .dsection Table968093Section
 
-    .here
-
-    * = $16809D
-    .logical $96809D
-
       .dsection Unsorted96809DSection
-
-    .here
-
-    * = $1680A2
-    .logical $9680A2
 
       .dsection Table9680A2Section
 
-    .here
-
-    * = $1680AC
-    .logical $9680AC
-
       .dsection Unsorted9680ACSection
-
-    .here
-
-    * = $1680B1
-    .logical $9680B1
 
       .dsection Table9680B1Section
 
-    .here
-
-    * = $1680BB
-    .logical $9680BB
-
       .dsection Unsorted9680BBSection
-
-    .here
-
-    * = $1680C2
-    .logical $9680C2
 
       .dsection Unsorted9680C2Section
 
@@ -14757,11 +6772,6 @@
     .logical $96881F
 
       .dsection Unsorted96881FSection
-
-    .here
-
-    * = $16890E
-    .logical $96890E
 
       .dsection Unsorted96890ESection
 
@@ -14793,80 +6803,25 @@
 
       .dsection Unsorted969398Section
 
-    .here
-
-    * = $16941C
-    .logical $96941C
-
       .dsection Unsorted96941CSection
-
-    .here
-
-    * = $16947D
-    .logical $96947D
 
       .dsection Unsorted96947DSection
 
-    .here
-
-    * = $1694C7
-    .logical $9694C7
-
       .dsection Unsorted9694C7Section
-
-    .here
-
-    * = $16957D
-    .logical $96957D
 
       .dsection Unsorted96957DSection
 
-    .here
-
-    * = $169603
-    .logical $969603
-
       .dsection Unsorted969603Section
-
-    .here
-
-    * = $169617
-    .logical $969617
 
       .dsection Unsorted969617Section
 
-    .here
-
-    * = $16961F
-    .logical $96961F
-
       .dsection Unsorted96961FSection
-
-    .here
-
-    * = $169665
-    .logical $969665
 
       .dsection Unsorted969665Section
 
-    .here
-
-    * = $1696A0
-    .logical $9696A0
-
       .dsection Table9696A0Section
 
-    .here
-
-    * = $1696AA
-    .logical $9696AA
-
       .dsection Unsorted9696AASection
-
-    .here
-
-    * = $1696E6
-    .logical $9696E6
 
       .dsection Unsorted9696E6Section
       .dsection Unsorted969707Section
@@ -14881,31 +6836,11 @@
 
       .dsection Unsorted9697FASection
 
-    .here
-
-    * = $169861
-    .logical $969861
-
       .dsection Unsorted969861Section
-
-    .here
-
-    * = $169872
-    .logical $969872
 
       .dsection Unsorted969872Section
 
-    .here
-
-    * = $16989E
-    .logical $96989E
-
       .dsection Unsorted96989ESection
-
-    .here
-
-    * = $16994B
-    .logical $96994B
 
       .dsection Unsorted96994BSection
 
@@ -14916,38 +6851,13 @@
 
       .dsection Unsorted9699DDSection
 
-    .here
-
-    * = $169BE3
-    .logical $969BE3
-
       .dsection Data969BE3Section
-
-    .here
-
-    * = $169C63
-    .logical $969C63
 
       .dsection Unsorted969C63Section
 
-    .here
-
-    * = $169EF9
-    .logical $969EF9
-
       .dsection Unsorted969EF9Section
 
-    .here
-
-    * = $169F7D
-    .logical $969F7D
-
       .dsection Unsorted969F7DSection
-
-    .here
-
-    * = $16A05C
-    .logical $96A05C
 
       .dsection Unsorted96A05CSection
 
@@ -14958,53 +6868,17 @@
 
       .dsection Unsorted96A20ESection
 
-    .here
-
-    * = $16A28B
-    .logical $96A28B
-
       .dsection BattleSceneScriptSection
-
-    .here
-
-
-    * = $16A4B2
-    .logical $96A4B2
 
       .dsection Unsorted96A4B2Section
 
-    .here
-
-    * = $16A4FC
-    .logical $96A4FC
-
       .dsection Unsorted96A4FCSection
-
-    .here
-
-    * = $16A532
-    .logical $96A532
 
       .dsection Unsorted96A532Section
 
-    .here
-
-    * = $16ABF6
-    .logical $96ABF6
-
       .dsection BattleSceneCommand96ABF6Section
 
-    .here
-
-    * = $16AC1F
-    .logical $96AC1F
-
       .dsection Unsorted96AC1FSection
-
-    .here
-
-    * = $16ACAB
-    .logical $96ACAB
 
       .dsection Unsorted96ACABSection
 
@@ -15022,11 +6896,6 @@
 
       .dsection Unsorted96AD39Section
 
-    .here
-
-    * = $16ADE9
-    .logical $96ADE9
-
       .dsection Unsorted96ADE9Section
 
     .here
@@ -15043,94 +6912,29 @@
 
       .dsection Unsorted96B852Section
 
-    .here
-
-    * = $16B945
-    .logical $96B945
-
       .dsection Unsorted96B945Section
-
-    .here
-
-    * = $16BA68
-    .logical $96BA68
 
       .dsection BattleSceneCommand96BA68Section
 
-    .here
-
-    * = $16BB0C
-    .logical $96BB0C
-
       .dsection Unsorted96BB0CSection
-
-    .here
-
-    * = $16BB70
-    .logical $96BB70
 
       .dsection BattleSceneCommand96BB70Section
 
-    .here
-
-    * = $16BBC2
-    .logical $96BBC2
-
       .dsection Unsorted96BBC2Section
-
-    .here
-
-    * = $16BBE2
-    .logical $96BBE2
 
       .dsection Unsorted96BBE2Section
 
-    .here
-
-    * = $16BC4C
-    .logical $96BC4C
-
       .dsection Unsorted96BC4CSection
-
-    .here
-
-    * = $16BCAF
-    .logical $96BCAF
 
       .dsection BattleSceneCommand96BCAFSection
 
-    .here
-
-    * = $16BCEC
-    .logical $96BCEC
-
       .dsection Unsorted96BCECSection
-
-    .here
-
-    * = $16BCF1
-    .logical $96BCF1
 
       .dsection Unsorted96BCF1Section
 
-    .here
-
-    * = $16BD1A
-    .logical $96BD1A
-
       .dsection Unsorted96BD1ASection
 
-    .here
-
-    * = $16BD74
-    .logical $96BD74
-
       .dsection Unsorted96BD74Section
-
-    .here
-
-    * = $16BE28
-    .logical $96BE28
 
       .dsection Unsorted96BE28Section
 
@@ -15148,38 +6952,13 @@
 
       .dsection Unsorted96C7DBSection
 
-    .here
-
-    * = $16C8A1
-    .logical $96C8A1
-
       .dsection Unsorted96C8A1Section
-
-    .here
-
-    * = $16C942
-    .logical $96C942
 
       .dsection Unsorted96C942Section
 
-    .here
-
-    * = $16C9AD
-    .logical $96C9AD
-
       .dsection Unsorted96C9ADSection
 
-    .here
-
-    * = $16C9D9
-    .logical $96C9D9
-
       .dsection Unsorted96C9D9Section
-
-    .here
-
-    * = $16CB44
-    .logical $96CB44
 
       .dsection Unsorted96CB44Section
 
@@ -15190,17 +6969,7 @@
 
       .dsection Unsorted96CD23Section
 
-    .here
-
-    * = $16CDB7
-    .logical $96CDB7
-
       .dsection BattleSceneCommand96CDB7Section
-
-    .here
-
-    * = $16CECE
-    .logical $96CECE
 
       .dsection Unsorted96CECESection
 
@@ -15246,88 +7015,28 @@
 
       .dsection Unsorted96D42CSection
 
-    .here
-
-    * = $16D5DB
-    .logical $96D5DB
-
       .dsection Unsorted96D5DBSection
-
-    .here
-
-    * = $16D659
-    .logical $96D659
 
       .dsection Unsorted96D659Section
 
-    .here
-
-    * = $16D67B
-    .logical $96D67B
-
       .dsection Unsorted96D67BSection
-
-    .here
-
-    * = $16D695
-    .logical $96D695
 
       .dsection Unsorted96D695Section
 
-    .here
-
-    * = $16D6DD
-    .logical $96D6DD
-
       .dsection Table96D6DDSection
-
-    .here
-
-    * = $16D6F7
-    .logical $96D6F7
 
       .dsection Unsorted96D6F7Section
 
-    .here
-
-    * = $16D774
-    .logical $96D774
-
       .dsection Unsorted96D774Section
-
-    .here
-
-    * = $16D89F
-    .logical $96D89F
 
       .dsection Unsorted96D89FSection
       .dsection Unsorted96D8D7Section
 
-    .here
-
-    * = $16D912
-    .logical $96D912
-
       .dsection Unsorted96D912Section
-
-    .here
-
-    * = $16D938
-    .logical $96D938
 
       .dsection Unsorted96D938Section
 
-    .here
-
-    * = $16D95E
-    .logical $96D95E
-
       .dsection Unsorted96D95ESection
-
-    .here
-
-    * = $16D990
-    .logical $96D990
 
       .dsection Unsorted96D990Section
       .dsection Unsorted96D9B4Section
@@ -15336,31 +7045,11 @@
       .dsection Unsorted96DA34Section
       .dsection Unsorted96DACBSection
 
-    .here
-
-    * = $16DB20
-    .logical $96DB20
-
       .dsection Unsorted96DB20Section
-
-    .here
-
-    * = $16DB58
-    .logical $96DB58
 
       .dsection Unsorted96DB58Section
 
-    .here
-
-    * = $16DB94
-    .logical $96DB94
-
       .dsection Unsorted96DB94Section
-
-    .here
-
-    * = $16DC7C
-    .logical $96DC7C
 
       .dsection Unsorted96DC7CSection
 
@@ -15371,31 +7060,11 @@
 
       .dsection Unsorted96DD39Section
 
-    .here
-
-    * = $16DD6E
-    .logical $96DD6E
-
       .dsection Unsorted96DD6ESection
-
-    .here
-
-    * = $16DEAA
-    .logical $96DEAA
 
       .dsection Table96DEAASection
 
-    .here
-
-    * = $16DEC0
-    .logical $96DEC0
-
       .dsection Unsorted96DEC0Section
-
-    .here
-
-    * = $16DF60
-    .logical $96DF60
 
       .dsection Table96DF60Section
 
@@ -15406,24 +7075,9 @@
 
       .dsection Unsorted96DFBBSection
 
-    .here
-
-    * = $16DFC7
-    .logical $96DFC7
-
       .dsection Unsorted96DFC7Section
 
-    .here
-
-    * = $16E01F
-    .logical $96E01F
-
       .dsection Unsorted96E01FSection
-
-    .here
-
-    * = $16E077
-    .logical $96E077
 
       .dsection Unsorted96E077Section
       .dsection Unsorted96E0CFSection
@@ -15445,17 +7099,7 @@
       .dsection Unsorted96E49DSection
       .dsection Unsorted96E4D8Section
 
-    .here
-
-    * = $16E50E
-    .logical $96E50E
-
       .dsection Unsorted96E50ESection
-
-    .here
-
-    * = $16E50F
-    .logical $96E50F
 
       .dsection Unsorted96E50FSection
       .dsection Unsorted96E558Section
@@ -15463,203 +7107,68 @@
       .dsection Unsorted96E5DASection
       .dsection Unsorted96E5F6Section
 
-    .here
-
-    * = $16E612
-    .logical $96E612
-
       .dsection Unsorted96E612Section
-
-    .here
-
-    * = $16E6D7
-    .logical $96E6D7
 
       .dsection Unsorted96E6D7Section
       .dsection Unsorted96E712Section
 
-    .here
-
-    * = $16E716
-    .logical $96E716
-
       .dsection Unsorted96E716Section
-
-    .here
-
-    * = $16E798
-    .logical $96E798
 
       .dsection Unsorted96E798Section
 
-    .here
-
-    * = $16E803
-    .logical $96E803
-
       .dsection Unsorted96E803Section
-
-    .here
-
-    * = $16E8E1
-    .logical $96E8E1
 
       .dsection Unsorted96E8E1Section
       .dsection Unsorted96E91CSection
       .dsection Unsorted96E92FSection
       .dsection Unsorted96E936Section
 
-    .here
-
-    * = $16E9B8
-    .logical $96E9B8
-
       .dsection Unsorted96E9B8Section
-
-    .here
-
-    * = $16EA7A
-    .logical $96EA7A
 
       .dsection Unsorted96EA7ASection
 
-    .here
-
-    * = $16EA99
-    .logical $96EA99
-
       .dsection Unsorted96EA99Section
-
-    .here
-
-    * = $16EBE3
-    .logical $96EBE3
 
       .dsection Unsorted96EBE3Section
 
-    .here
-
-    * = $16EC4A
-    .logical $96EC4A
-
       .dsection BattleSceneCommand96EC4ASection
-
-    .here
-
-    * = $16EC91
-    .logical $96EC91
 
       .dsection Unsorted96EC91Section
 
-    .here
-
-    * = $16ECAB
-    .logical $96ECAB
-
       .dsection Unsorted96ECABSection
 
-    .here
-
-    * = $16ECCC
-    .logical $96ECCC
-
       .dsection Table96ECCCSection
-
-    .here
-
-    * = $16ECDC
-    .logical $96ECDC
 
       .dsection Unsorted96ECDCSection
       .dsection Unsorted96ED0BSection
       .dsection Unsorted96ED23Section
 
-    .here
-
-    * = $16ED67
-    .logical $96ED67
-
       .dsection Data96ED67Section
-
-    .here
-
-    * = $16EDA7
-    .logical $96EDA7
 
       .dsection Unsorted96EDA7Section
 
-    .here
-
-    * = $16EDC0
-    .logical $96EDC0
-
       .dsection Unsorted96EDC0Section
-
-    .here
-
-    * = $16EDF2
-    .logical $96EDF2
 
       .dsection Data96EDF2Section
 
-    .here
-
-    * = $16EE32
-    .logical $96EE32
-
       .dsection Unsorted96EE32Section
-
-    .here
-
-    * = $16EE4A
-    .logical $96EE4A
 
       .dsection Unsorted96EE4ASection
       .dsection Unsorted96EE5ESection
       .dsection Unsorted96EE71Section
 
-    .here
-
-    * = $16EE8A
-    .logical $96EE8A
-
       .dsection Unsorted96EE8ASection
-
-    .here
-
-    * = $16EE95
-    .logical $96EE95
 
       .dsection Unsorted96EE95Section
 
-    .here
-
-    * = $16EEBD
-    .logical $96EEBD
-
       .dsection Table96EEBDSection
-
-    .here
-
-    * = $16EEC5
-    .logical $96EEC5
 
       .dsection Unsorted96EEC5Section
       .dsection Unsorted96EEC6Section
       .dsection Unsorted96EFC3Section
       .dsection Unsorted96F0C4Section
 
-    .here
-
-    * = $16F1C2
-    .logical $96F1C2
-
       .dsection BattleSceneCommand96F1C2Section
-
-    .here
-
-    * = $16F275
-    .logical $96F275
 
       .dsection Unsorted96F275Section
 
@@ -15670,11 +7179,6 @@
 
       .dsection Unsorted96F28DSection
 
-    .here
-
-    * = $16F315
-    .logical $96F315
-
       .dsection Unsorted96F315Section
 
     .here
@@ -15684,31 +7188,11 @@
 
       .dsection Unsorted96F558Section
 
-    .here
-
-    * = $16F676
-    .logical $96F676
-
       .dsection Unsorted96F676Section
-
-    .here
-
-    * = $16F697
-    .logical $96F697
 
       .dsection Unsorted96F697Section
 
-    .here
-
-    * = $16F7A8
-    .logical $96F7A8
-
       .dsection Unsorted96F7A8Section
-
-    .here
-
-    * = $16F7D4
-    .logical $96F7D4
 
       .dsection Unsorted96F7D4Section
 
@@ -15740,11 +7224,6 @@
 
       .dsection Unsorted96FD54Section
 
-    .here
-
-    * = $16FD6F
-    .logical $96FD6F
-
       .dsection DemoBattles96Section
 
       .fill $968000 + $8000 - *, 0
@@ -15763,24 +7242,9 @@
 
       g2bppItemStatLabels .binary "gfx/ui/ItemStatLabels.2bpp" ; D76000
 
-    .here
-
-    * = $176800
-    .logical $D76800
-
       g2bppShopLabels .binary "gfx/ui/ShopLabels.2bpp" ; D76800
 
-    .here
-
-    * = $177000
-    .logical $D77000
-
       aUnknownD77000 .binary "gfx/ui/tilemaps/UnknownD77000.bin" ; D77000
-
-    .here
-
-    * = $177800
-    .logical $D77800
 
       gUnknownD77800 .binary "gfx/ui/tilemaps/UnknownD77800.bin" ; D77800
 
@@ -15798,51 +7262,21 @@
 
       .dsection Unsorted97802CSection
 
-    .here
-
-    * = $178039
-    .logical $978039
-
       .dsection BattleAnimationSheetsSection
 
-    .here
-
-    * = $17828B
-    .logical $97828B
-
       .dsection BattleAnimationExtrasSection
-
-    .here
-
-    * = $17874F
-    .logical $97874F
 
       .dsection BattleAnimationFramesSection
       .dsection Data978F3ASection
 
       .dsection BattleSceneDecompressionTablesSection
 
-    .here
-
-    * = $17BDD4
-    .logical $97BDD4
-
       .dsection Data97BDD4Section
       .dsection Data97BEACSection
 
       .dsection Data97C828Section
 
-    .here
-
-    * = $17C860
-    .logical $97C860
-
       .dsection BattleAnimationProgramsSection
-
-    .here
-
-    * = $17CA8B
-    .logical $97CA8B
 
       .dsection BattleAnimationMoveDataSection
       .dsection Table97E8FBSection
@@ -15892,11 +7326,6 @@
 
       g4bppMapTiles .binary "gfx/map/MapTiles.4bpp" ; D90000
 
-    .here
-
-    * = $195000
-    .logical $D95000
-
       aUnknownD95000 .binary "gfx/map/UnknownD95000.bin" ; D95000
 
     .here
@@ -15927,31 +7356,11 @@
 
       .dsection Data998000Section
 
-    .here
-
-    * = $198194
-    .logical $998194
-
       .dsection BattleCharacterPiecesSection
-
-    .here
-
-    * = $1982E3
-    .logical $9982E3
 
       .dsection Data9982E3Section
 
-    .here
-
-    * = $198725
-    .logical $998725
-
       .dsection BattleWeaponGraphicsSection
-
-    .here
-
-    * = $19892A
-    .logical $99892A
 
       .dsection Data99892ASection
       .dsection Data998944Section
@@ -15959,11 +7368,6 @@
       .dsection Data998DD8Section
 
       .dsection Data998F02Section
-
-    .here
-
-    * = $198FA1
-    .logical $998FA1
 
       .dsection BattleAnimationFrameData99Section
       .dsection Data99F6C1Section
@@ -15990,11 +7394,6 @@
     .logical $DA6800
 
       gUnknownDA6800 .binary "gfx/ui/tilemaps/UnknownDA6800.bin" ; DA6800
-
-    .here
-
-    * = $1A6A40
-    .logical $DA6A40
 
       gUnknownDA6A40 .binary "gfx/ui/tilemaps/UnknownDA6A40.bin" ; DA6A40
 
@@ -16028,11 +7427,6 @@
 
       .dsection BattleAnimationFrameData9ASection
 
-    .here
-
-    * = $1AFEAA
-    .logical $9AFEAA
-
       .dsection DemoBattles9ASection
 
       .fill $9A8000 + $8000 - *, 0
@@ -16052,24 +7446,9 @@
       .dsection BattleAnimationFrameData9BSection
       .dsection BattleAnimationEffectData9BSection
 
-    .here
-
-    * = $1BDC24
-    .logical $9BDC24
-
       .dsection Unsorted9BDC24Section
 
-    .here
-
-    * = $1BDF09
-    .logical $9BDF09
-
       .dsection Table9BDF09Section
-
-    .here
-
-    * = $1BDFAA
-    .logical $9BDFAA
 
       .dsection Unsorted9BDFAASection
 
@@ -16094,38 +7473,13 @@
 
       .dsection Unsorted9BEAA5Section
 
-    .here
-
-    * = $1BEAB1
-    .logical $9BEAB1
-
       .dsection Unsorted9BEAB1Section
-
-    .here
-
-    * = $1BEAE8
-    .logical $9BEAE8
 
       .dsection Unsorted9BEAE8Section
 
-    .here
-
-    * = $1BEDD7
-    .logical $9BEDD7
-
       .dsection Unsorted9BEDD7Section
 
-    .here
-
-    * = $1BEEB4
-    .logical $9BEEB4
-
       .dsection Unsorted9BEEB4Section
-
-    .here
-
-    * = $1BF179
-    .logical $9BF179
 
       .dsection Unsorted9BF179Section
 
@@ -16136,24 +7490,9 @@
 
       .dsection Unsorted9BF23CSection
 
-    .here
-
-    * = $1BF297
-    .logical $9BF297
-
       .dsection Unsorted9BF297Section
 
-    .here
-
-    * = $1BF2AA
-    .logical $9BF2AA
-
       .dsection Unsorted9BF2AASection
-
-    .here
-
-    * = $1BF3F3
-    .logical $9BF3F3
 
       .dsection Unsorted9BF3F3Section
 
@@ -16164,31 +7503,11 @@
 
       .dsection Unsorted9BF651Section
 
-    .here
-
-    * = $1BF69D
-    .logical $9BF69D
-
       .dsection Table9BF69DSection
-
-    .here
-
-    * = $1BF6B1
-    .logical $9BF6B1
 
       .dsection Unsorted9BF6B1Section
 
-    .here
-
-    * = $1BF715
-    .logical $9BF715
-
       .dsection Table9BF715Section
-
-    .here
-
-    * = $1BF726
-    .logical $9BF726
 
       .dsection Unsorted9BF726Section
 
@@ -16199,73 +7518,23 @@
 
       .dsection Unsorted9BFA58Section
 
-    .here
-
-    * = $1BFA69
-    .logical $9BFA69
-
       .dsection Table9BFA69Section
-
-    .here
-
-    * = $1BFA6E
-    .logical $9BFA6E
 
       .dsection Unsorted9BFA6ESection
 
-    .here
-
-    * = $1BFA7F
-    .logical $9BFA7F
-
       .dsection Table9BFA7FSection
-
-    .here
-
-    * = $1BFA85
-    .logical $9BFA85
 
       .dsection Unsorted9BFA85Section
 
-    .here
-
-    * = $1BFA96
-    .logical $9BFA96
-
       .dsection Table9BFA96Section
-
-    .here
-
-    * = $1BFAA1
-    .logical $9BFAA1
 
       .dsection Unsorted9BFAA1Section
 
-    .here
-
-    * = $1BFAB2
-    .logical $9BFAB2
-
       .dsection Table9BFAB2Section
-
-    .here
-
-    * = $1BFAB7
-    .logical $9BFAB7
 
       .dsection Unsorted9BFAB7Section
 
-    .here
-
-    * = $1BFB46
-    .logical $9BFB46
-
       .dsection Table9BFB46Section
-
-    .here
-
-    * = $1BFB5D
-    .logical $9BFB5D
 
       .dsection Unsorted9BFB5DSection
 
@@ -16276,17 +7545,7 @@
 
       .dsection Unsorted9BFB7ESection
 
-    .here
-
-    * = $1BFB9F
-    .logical $9BFB9F
-
       .dsection Unsorted9BFB9FSection
-
-    .here
-
-    * = $1BFBA9
-    .logical $9BFBA9
 
       .dsection Unsorted9BFBA9Section
 
@@ -16297,17 +7556,7 @@
 
       .dsection Unsorted9BFBC0Section
 
-    .here
-
-    * = $1BFC8D
-    .logical $9BFC8D
-
       .dsection Unsorted9BFC8DSection
-
-    .here
-
-    * = $1BFD71
-    .logical $9BFD71
 
       .dsection Unsorted9BFD71Section
 
@@ -16614,136 +7863,41 @@
 
       .dsection WindowPaletteDE0000Section
 
-    .here
-
-    * = $1E0200
-    .logical $DE0200
-
       g4bppWeaponTypeIcons .binary "gfx/ui/WeaponTypeIcons.4bpp" ; DE0200
-
-    .here
-
-    * = $1E0A00
-    .logical $DE0A00
 
       g4bppUnknownDE0A00 .binary "gfx/ui/UnknownDE0A00.4bpp" ; DE0A00
 
-    .here
-
-    * = $1E1600
-    .logical $DE1600
-
       gUnknownDE1600 .binary "gfx/ui/tilemaps/UnknownDE1600.bin" ; DE1600
-
-    .here
-
-    * = $1E1A40
-    .logical $DE1A40
 
       gUnknownDE1A40 .binary "gfx/ui/tilemaps/UnknownDE1A40.bin" ; DE1A40
 
-    .here
-
-    * = $1E1E80
-    .logical $DE1E80
-
       gUnknownDE1E80 .binary "gfx/ui/tilemaps/UnknownDE1E80.bin" ; DE1E80
-
-    .here
-
-    * = $1E22C0
-    .logical $DE22C0
 
       gUnknownDE22C0 .binary "gfx/ui/tilemaps/UnknownDE22C0.bin" ; DE22C0
 
-    .here
-
-    * = $1E2480
-    .logical $DE2480
-
       gUnknownDE2480 .binary "gfx/ui/tilemaps/UnknownDE2480.bin" ; DE2480
-
-    .here
-
-    * = $1E25C0
-    .logical $DE25C0
 
       gUnknownDE25C0 .binary "gfx/ui/tilemaps/UnknownDE25C0.bin" ; DE25C0
 
-    .here
-
-    * = $1E2700
-    .logical $DE2700
-
       gUnknownDE2700 .binary "gfx/ui/tilemaps/UnknownDE2700.bin" ; DE2700
-
-    .here
-
-    * = $1E2840
-    .logical $DE2840
 
       gUnknownDE2840 .binary "gfx/ui/tilemaps/UnknownDE2840.bin" ; DE2840
 
-    .here
-
-    * = $1E2980
-    .logical $DE2980
-
       gUnknownDE2980 .binary "gfx/ui/tilemaps/UnknownDE2980.bin" ; DE2980
-
-    .here
-
-    * = $1E2AC0
-    .logical $DE2AC0
 
       .dsection WindowPaletteDE2AC0Section
 
-    .here
-
-    * = $1E2CC0
-    .logical $DE2CC0
-
       g4bppDialogueBoxFrames .binary "gfx/ui/DialogueBoxFrames.4bpp" ; DE2CC0
-
-    .here
-
-    * = $1E34C0
-    .logical $DE34C0
 
       g4bppSkillIcons .binary "gfx/ui/SkillIcons.4bpp" ; DE34C0
 
-    .here
-
-    * = $1E40C0
-    .logical $DE40C0
-
       g4bppCursorSprites .binary "gfx/ui/CursorSprites.4bpp" ; DE40C0
-
-    .here
-
-    * = $1E44C0
-    .logical $DE44C0
 
       g4bppMenuCursorSprites .binary "gfx/ui/MenuCursorSprites.4bpp" ; DE44C0
 
-    .here
-
-    * = $1E48C0
-    .logical $DE48C0
-
       g2bppMenuLabels .binary "gfx/ui/MenuLabels.2bpp" ; DE48C0
 
-    .here
-
-    * = $1E60C0
-    .logical $DE60C0
-
       gUnknownDE60C0 .binary "gfx/ui/tilemaps/UnknownDE60C0.bin" ; DE60C0
-
-    .here
-
-    * = $1E6200
-    .logical $DE6200
 
       .dsection DataDE6200Section
 
@@ -16754,11 +7908,6 @@
 
       .dsection Unsorted9E8000Section
 
-    .here
-
-    * = $1E800C
-    .logical $9E800C
-
       .dsection Unsorted9E800CSection
 
     .here
@@ -16768,381 +7917,116 @@
 
       .dsection Unsorted9E805ESection
 
-    .here
-
-    * = $1E80CB
-    .logical $9E80CB
-
       .dsection Table9E80CBSection
-
-    .here
-
-    * = $1E80F2
-    .logical $9E80F2
 
       .dsection Unsorted9E80F2Section
 
-    .here
-
-    * = $1E811F
-    .logical $9E811F
-
       .dsection Unsorted9E811FSection
-
-    .here
-
-    * = $1E826B
-    .logical $9E826B
 
       .dsection Table9E826BSection
 
-    .here
-
-    * = $1E8271
-    .logical $9E8271
-
       .dsection Unsorted9E8271Section
-
-    .here
-
-    * = $1E82AA
-    .logical $9E82AA
 
       .dsection Unsorted9E82AASection
 
-    .here
-
-    * = $1E832C
-    .logical $9E832C
-
       .dsection Unsorted9E832CSection
-
-    .here
-
-    * = $1E838B
-    .logical $9E838B
 
       .dsection Unsorted9E838BSection
 
-    .here
-
-    * = $1E85A4
-    .logical $9E85A4
-
       .dsection Unsorted9E85A4Section
-
-    .here
-
-    * = $1E85DF
-    .logical $9E85DF
 
       .dsection Unsorted9E85DFSection
 
-    .here
-
-    * = $1E86CF
-    .logical $9E86CF
-
       .dsection Unsorted9E86CFSection
-
-    .here
-
-    * = $1E8792
-    .logical $9E8792
 
       .dsection Table9E8792Section
       .dsection Table9E879CSection
 
-    .here
-
-    * = $1E87A4
-    .logical $9E87A4
-
       .dsection Unsorted9E87A4Section
-
-    .here
-
-    * = $1E87CA
-    .logical $9E87CA
 
       .dsection Unsorted9E87CASection
 
-    .here
-
-    * = $1E8863
-    .logical $9E8863
-
       .dsection Table9E8863Section
-
-    .here
-
-    * = $1E8867
-    .logical $9E8867
 
       .dsection Unsorted9E8867Section
 
-    .here
-
-    * = $1E88CE
-    .logical $9E88CE
-
       .dsection Unsorted9E88CESection
-
-    .here
-
-    * = $1E88F4
-    .logical $9E88F4
 
       .dsection Unsorted9E88F4Section
 
-    .here
-
-    * = $1E88FA
-    .logical $9E88FA
-
       .dsection Unsorted9E88FASection
-
-    .here
-
-    * = $1E89F1
-    .logical $9E89F1
 
       .dsection Unsorted9E89F1Section
 
-    .here
-
-    * = $1E8D25
-    .logical $9E8D25
-
       .dsection Unsorted9E8D25Section
 
-    .here
-
-    * = $1E8D6C
-    .logical $9E8D6C
-
       .dsection Unsorted9E8D6CSection
-
-    .here
-
-    * = $1E8EC4
-    .logical $9E8EC4
 
       .dsection Table9E8EC4Section
       .dsection Table9E8F3ESection
 
-    .here
-
-    * = $1E8F6A
-    .logical $9E8F6A
-
       .dsection Unsorted9E8F6ASection
-
-    .here
-
-    * = $1E8FB2
-    .logical $9E8FB2
 
       .dsection Table9E8FB2Section
 
-    .here
-
-    * = $1E8FB3
-    .logical $9E8FB3
-
       .dsection Unsorted9E8FB3Section
-
-    .here
-
-    * = $1E9123
-    .logical $9E9123
 
       .dsection Table9E9123Section
       .dsection Table9E914BSection
 
-    .here
-
-    * = $1E915B
-    .logical $9E915B
-
       .dsection Unsorted9E915BSection
-
-    .here
-
-    * = $1E9320
-    .logical $9E9320
 
       .dsection Unsorted9E9320Section
 
-    .here
-
-    * = $1E9342
-    .logical $9E9342
-
       .dsection Unsorted9E9342Section
-
-    .here
-
-    * = $1E9480
-    .logical $9E9480
 
       .dsection Table9E9480Section
       .dsection Table9E94B6Section
       .dsection Table9E94EASection
       .dsection Table9E9504Section
 
-    .here
-
-    * = $1E950A
-    .logical $9E950A
-
       .dsection Unsorted9E950ASection
-
-    .here
-
-    * = $1E964C
-    .logical $9E964C
 
       .dsection Table9E964CSection
 
-    .here
-
-    * = $1E965E
-    .logical $9E965E
-
       .dsection Unsorted9E965ESection
-
-    .here
-
-    * = $1E973D
-    .logical $9E973D
 
       .dsection Table9E973DSection
       .dsection Table9E9787Section
 
-    .here
-
-    * = $1E978D
-    .logical $9E978D
-
       .dsection Unsorted9E978DSection
-
-    .here
-
-    * = $1E98B0
-    .logical $9E98B0
 
       .dsection Table9E98B0Section
 
-    .here
-
-    * = $1E98C4
-    .logical $9E98C4
-
       .dsection Unsorted9E98C4Section
-
-    .here
-
-    * = $1E9910
-    .logical $9E9910
 
       .dsection Table9E9910Section
 
-    .here
-
-    * = $1E9928
-    .logical $9E9928
-
       .dsection Unsorted9E9928Section
-
-    .here
-
-    * = $1E994F
-    .logical $9E994F
 
       .dsection Table9E994FSection
 
-    .here
-
-    * = $1E9967
-    .logical $9E9967
-
       .dsection Unsorted9E9967Section
-
-    .here
-
-    * = $1E998E
-    .logical $9E998E
 
       .dsection Table9E998ESection
 
-    .here
-
-    * = $1E99A4
-    .logical $9E99A4
-
       .dsection Unsorted9E99A4Section
-
-    .here
-
-    * = $1E99F7
-    .logical $9E99F7
 
       .dsection Unsorted9E99F7Section
 
-    .here
-
-    * = $1E9A34
-    .logical $9E9A34
-
       .dsection Unsorted9E9A34Section
-
-    .here
-
-    * = $1E9A43
-    .logical $9E9A43
 
       .dsection ProcScript9E9A43Section
 
-    .here
-
-    * = $1E9A4B
-    .logical $9E9A4B
-
       .dsection Unsorted9E9A4BSection
-
-    .here
-
-    * = $1E9B50
-    .logical $9E9B50
 
       .dsection Table9E9B50Section
 
-    .here
-
-    * = $1E9B68
-    .logical $9E9B68
-
       .dsection Unsorted9E9B68Section
-
-    .here
-
-    * = $1E9B82
-    .logical $9E9B82
 
       .dsection Unsorted9E9B82Section
 
-    .here
-
-    * = $1E9BE1
-    .logical $9E9BE1
-
       .dsection ProcScript9E9BE1Section
-
-    .here
-
-    * = $1E9C70
-    .logical $9E9C70
 
       .dsection Unsorted9E9C70Section
 
@@ -17153,38 +8037,13 @@
 
       .dsection Unsorted9E9CB9Section
 
-    .here
-
-    * = $1E9D3B
-    .logical $9E9D3B
-
       .dsection Unsorted9E9D3BSection
-
-    .here
-
-    * = $1E9D76
-    .logical $9E9D76
 
       .dsection Unsorted9E9D76Section
 
-    .here
-
-    * = $1E9DB9
-    .logical $9E9DB9
-
       .dsection Table9E9DB9Section
 
-    .here
-
-    * = $1E9DD9
-    .logical $9E9DD9
-
       .dsection Unsorted9E9DD9Section
-
-    .here
-
-    * = $1E9E61
-    .logical $9E9E61
 
       .dsection Unsorted9E9E61Section
 
@@ -17195,66 +8054,21 @@
 
       .dsection Unsorted9E9F26Section
 
-    .here
-
-    * = $1EA085
-    .logical $9EA085
-
       .dsection Table9EA085Section
-
-    .here
-
-    * = $1EA096
-    .logical $9EA096
 
       .dsection Unsorted9EA096Section
 
-    .here
-
-    * = $1EA1D7
-    .logical $9EA1D7
-
       .dsection Unsorted9EA1D7Section
-
-    .here
-
-    * = $1EA238
-    .logical $9EA238
 
       .dsection Unsorted9EA238Section
 
-    .here
-
-    * = $1EA334
-    .logical $9EA334
-
       .dsection ProcScript9EA334Section
-
-    .here
-
-    * = $1EA33C
-    .logical $9EA33C
 
       .dsection Unsorted9EA33CSection
 
-    .here
-
-    * = $1EA404
-    .logical $9EA404
-
       .dsection ProcScript9EA404Section
 
-    .here
-
-    * = $1EA417
-    .logical $9EA417
-
       .dsection Unsorted9EA417Section
-
-    .here
-
-    * = $1EA50F
-    .logical $9EA50F
 
       .dsection Table9EA50FSection
       .dsection Table9EA513Section
@@ -17262,206 +8076,61 @@
 
       .dsection Unsorted9EA67CSection
 
-    .here
-
-    * = $1EA84A
-    .logical $9EA84A
-
       .dsection Table9EA84ASection
-
-    .here
-
-    * = $1EA850
-    .logical $9EA850
 
       .dsection Unsorted9EA850Section
 
-    .here
-
-    * = $1EA873
-    .logical $9EA873
-
       .dsection Table9EA873Section
-
-    .here
-
-    * = $1EA89F
-    .logical $9EA89F
 
       .dsection Unsorted9EA89FSection
 
-    .here
-
-    * = $1EAA5C
-    .logical $9EAA5C
-
       .dsection Table9EAA5CSection
-
-    .here
-
-    * = $1EAA61
-    .logical $9EAA61
 
       .dsection Table9EAA61Section
 
-    .here
-
-    * = $1EAB21
-    .logical $9EAB21
-
       .dsection Unsorted9EAB21Section
-
-    .here
-
-    * = $1EABBD
-    .logical $9EABBD
 
       .dsection Table9EABBDSection
 
-    .here
-
-    * = $1EABE9
-    .logical $9EABE9
-
       .dsection Unsorted9EABE9Section
-
-    .here
-
-    * = $1EAC49
-    .logical $9EAC49
 
       .dsection Unsorted9EAC49Section
 
-    .here
-
-    * = $1EAC5A
-    .logical $9EAC5A
-
       .dsection Unsorted9EAC5ASection
-
-    .here
-
-    * = $1EACAF
-    .logical $9EACAF
 
       .dsection Unsorted9EACAFSection
 
-    .here
-
-    * = $1EAD7B
-    .logical $9EAD7B
-
       .dsection Unsorted9EAD7BSection
-
-    .here
-
-    * = $1EADB4
-    .logical $9EADB4
 
       .dsection Unsorted9EADB4Section
 
-    .here
-
-    * = $1EADD1
-    .logical $9EADD1
-
       .dsection Unsorted9EADD1Section
-
-    .here
-
-    * = $1EAEAF
-    .logical $9EAEAF
 
       .dsection Table9EAEAFSection
 
-    .here
-
-    * = $1EAECF
-    .logical $9EAECF
-
       .dsection Unsorted9EAECFSection
-
-    .here
-
-    * = $1EAF24
-    .logical $9EAF24
 
       .dsection Table9EAF24Section
 
-    .here
-
-    * = $1EAF44
-    .logical $9EAF44
-
       .dsection Unsorted9EAF44Section
-
-    .here
-
-    * = $1EAF98
-    .logical $9EAF98
 
       .dsection ProcScript9EAF98Section
 
-    .here
-
-    * = $1EAFA0
-    .logical $9EAFA0
-
       .dsection Unsorted9EAFA0Section
-
-    .here
-
-    * = $1EAFF8
-    .logical $9EAFF8
 
       .dsection ProcScript9EAFF8Section
 
-    .here
-
-    * = $1EB01B
-    .logical $9EB01B
-
       .dsection Unsorted9EB01BSection
-
-    .here
-
-    * = $1EB0EC
-    .logical $9EB0EC
 
       .dsection Table9EB0ECSection
 
-    .here
-
-    * = $1EB0F2
-    .logical $9EB0F2
-
       .dsection Unsorted9EB0F2Section
-
-    .here
-
-    * = $1EB15A
-    .logical $9EB15A
 
       .dsection Table9EB15ASection
 
-    .here
-
-    * = $1EB160
-    .logical $9EB160
-
       .dsection Unsorted9EB160Section
 
-    .here
-
-    * = $1EB2BA
-    .logical $9EB2BA
-
       .dsection Unsorted9EB2BASection
-
-    .here
-
-    * = $1EB345
-    .logical $9EB345
 
       .dsection Unsorted9EB345Section
 
@@ -17479,17 +8148,7 @@
 
       .dsection Unsorted9EB491Section
 
-    .here
-
-    * = $1EB4BB
-    .logical $9EB4BB
-
       .dsection Unsorted9EB4BBSection
-
-    .here
-
-    * = $1EB4C9
-    .logical $9EB4C9
 
       .dsection Table9EB4C9Section
       .dsection Table9EB4CDSection
@@ -17497,94 +8156,29 @@
       .dsection Table9EB4DBSection
       .dsection Table9EB4DFSection
 
-    .here
-
-    * = $1EB50D
-    .logical $9EB50D
-
       .dsection BattleMapSpriteDataSection
-
-    .here
-
-    * = $1EC70B
-    .logical $9EC70B
 
       .dsection Unsorted9EC70BSection
 
-    .here
-
-    * = $1EC776
-    .logical $9EC776
-
       .dsection Unsorted9EC776Section
-
-    .here
-
-    * = $1EC79B
-    .logical $9EC79B
 
       .dsection Unsorted9EC79BSection
 
-    .here
-
-    * = $1EC7B3
-    .logical $9EC7B3
-
       .dsection Unsorted9EC7B3Section
-
-    .here
-
-    * = $1EC899
-    .logical $9EC899
 
       .dsection Unsorted9EC899Section
 
-    .here
-
-    * = $1EC8B3
-    .logical $9EC8B3
-
       .dsection Unsorted9EC8B3Section
-
-    .here
-
-    * = $1EC91A
-    .logical $9EC91A
 
       .dsection Unsorted9EC91ASection
 
-    .here
-
-    * = $1EC98A
-    .logical $9EC98A
-
       .dsection Unsorted9EC98ASection
-
-    .here
-
-    * = $1EC9FD
-    .logical $9EC9FD
 
       .dsection Unsorted9EC9FDSection
 
-    .here
-
-    * = $1ECABB
-    .logical $9ECABB
-
       .dsection Unsorted9ECABBSection
 
-    .here
-
-    * = $1ECAD2
-    .logical $9ECAD2
-
       .dsection ProcScript9ECAD2Section
-
-    .here
-
-    * = $1ECEA0
-    .logical $9ECEA0
 
       .dsection Unsorted9ECEA0Section
 
@@ -17595,38 +8189,13 @@
 
       .dsection ProcScript9ECEDDSection
 
-    .here
-
-    * = $1ECEE5
-    .logical $9ECEE5
-
       .dsection Unsorted9ECEE5Section
-
-    .here
-
-    * = $1ECF72
-    .logical $9ECF72
 
       .dsection Table9ECF72Section
 
-    .here
-
-    * = $1ECF7A
-    .logical $9ECF7A
-
       .dsection Unsorted9ECF7ASection
 
-    .here
-
-    * = $1ECF7B
-    .logical $9ECF7B
-
       .dsection ProcScript9ECF7BSection
-
-    .here
-
-    * = $1ECFCD
-    .logical $9ECFCD
 
       .dsection Unsorted9ECFCDSection
 
@@ -17637,59 +8206,19 @@
 
       .dsection Unsorted9ED07ASection
 
-    .here
-
-    * = $1ED089
-    .logical $9ED089
-
       .dsection Unsorted9ED089Section
-
-    .here
-
-    * = $1ED1A1
-    .logical $9ED1A1
 
       .dsection Unsorted9ED1A1Section
 
-    .here
-
-    * = $1ED1F4
-    .logical $9ED1F4
-
       .dsection Unsorted9ED1F4Section
-
-    .here
-
-    * = $1ED2B5
-    .logical $9ED2B5
 
       .dsection Unsorted9ED2B5Section
 
-    .here
-
-    * = $1ED337
-    .logical $9ED337
-
       .dsection Unsorted9ED337Section
-
-    .here
-
-    * = $1ED372
-    .logical $9ED372
 
       .dsection Unsorted9ED372Section
 
-    .here
-
-    * = $1ED3C1
-    .logical $9ED3C1
-
       .dsection Unsorted9ED3C1Section
-
-    .here
-
-    * = $1ED401
-    .logical $9ED401
 
       .dsection Unsorted9ED401Section
 
@@ -17700,11 +8229,6 @@
 
       .dsection Unsorted9ED42ASection
 
-    .here
-
-    * = $1ED449
-    .logical $9ED449
-
       .dsection Unsorted9ED449Section
 
     .here
@@ -17714,24 +8238,9 @@
 
       .dsection Unsorted9ED535Section
 
-    .here
-
-    * = $1ED609
-    .logical $9ED609
-
       .dsection Unsorted9ED609Section
 
-    .here
-
-    * = $1ED68B
-    .logical $9ED68B
-
       .dsection Unsorted9ED68BSection
-
-    .here
-
-    * = $1ED6BA
-    .logical $9ED6BA
 
       .dsection Unsorted9ED6BASection
 
@@ -17742,199 +8251,59 @@
 
       .dsection Unsorted9ED742Section
 
-    .here
-
-    * = $1ED78B
-    .logical $9ED78B
-
       .dsection ProcScript9ED78BSection
-
-    .here
-
-    * = $1ED793
-    .logical $9ED793
 
       .dsection Unsorted9ED793Section
 
-    .here
-
-    * = $1ED79F
-    .logical $9ED79F
-
       .dsection ProcScript9ED79FSection
-
-    .here
-
-    * = $1ED7B7
-    .logical $9ED7B7
 
       .dsection Unsorted9ED7B7Section
 
-    .here
-
-    * = $1ED7E8
-    .logical $9ED7E8
-
       .dsection Table9ED7E8Section
-
-    .here
-
-    * = $1ED808
-    .logical $9ED808
 
       .dsection Unsorted9ED808Section
 
-    .here
-
-    * = $1ED900
-    .logical $9ED900
-
       .dsection Data9ED900Section
-
-    .here
-
-    * = $1EDAE7
-    .logical $9EDAE7
 
       .dsection Unsorted9EDAE7Section
 
-    .here
-
-    * = $1EDAF6
-    .logical $9EDAF6
-
       .dsection ProcScript9EDAF6Section
-
-    .here
-
-    * = $1EDAFE
-    .logical $9EDAFE
 
       .dsection Unsorted9EDAFESection
 
-    .here
-
-    * = $1EDC15
-    .logical $9EDC15
-
       .dsection ProcScript9EDC15Section
-
-    .here
-
-    * = $1EDCD2
-    .logical $9EDCD2
 
       .dsection Unsorted9EDCD2Section
 
-    .here
-
-    * = $1EDDC8
-    .logical $9EDDC8
-
       .dsection Table9EDDC8Section
-
-    .here
-
-    * = $1EDDE8
-    .logical $9EDDE8
 
       .dsection Unsorted9EDDE8Section
 
-    .here
-
-    * = $1EDE89
-    .logical $9EDE89
-
       .dsection Data9EDE89Section
-
-    .here
-
-    * = $1EDF7F
-    .logical $9EDF7F
 
       .dsection Unsorted9EDF7FSection
 
-    .here
-
-    * = $1EDF8E
-    .logical $9EDF8E
-
       .dsection ProcScript9EDF8ESection
-
-    .here
-
-    * = $1EDF96
-    .logical $9EDF96
 
       .dsection Unsorted9EDF96Section
 
-    .here
-
-    * = $1EDFF8
-    .logical $9EDFF8
-
       .dsection Unsorted9EDFF8Section
-
-    .here
-
-    * = $1EE011
-    .logical $9EE011
 
       .dsection ProcScript9EE011Section
 
-    .here
-
-    * = $1EE021
-    .logical $9EE021
-
       .dsection Unsorted9EE021Section
-
-    .here
-
-    * = $1EE02D
-    .logical $9EE02D
 
       .dsection Unsorted9EE02DSection
 
-    .here
-
-    * = $1EE03C
-    .logical $9EE03C
-
       .dsection ProcScript9EE03CSection
-
-    .here
-
-    * = $1EE044
-    .logical $9EE044
 
       .dsection Unsorted9EE044Section
 
-    .here
-
-    * = $1EE092
-    .logical $9EE092
-
       .dsection ProcScript9EE092Section
-
-    .here
-
-    * = $1EE0F1
-    .logical $9EE0F1
 
       .dsection Unsorted9EE0F1Section
 
-    .here
-
-    * = $1EE11B
-    .logical $9EE11B
-
       .dsection Table9EE11BSection
-
-    .here
-
-    * = $1EE127
-    .logical $9EE127
 
       .dsection Unsorted9EE127Section
 
@@ -17945,17 +8314,7 @@
 
       .dsection Unsorted9EE228Section
 
-    .here
-
-    * = $1EE2B2
-    .logical $9EE2B2
-
       .dsection Table9EE2B2Section
-
-    .here
-
-    * = $1EE2BE
-    .logical $9EE2BE
 
       .dsection Unsorted9EE2BESection
 
@@ -17966,174 +8325,56 @@
 
       .dsection Unsorted9EEC95Section
 
-    .here
-
-    * = $1EECA4
-    .logical $9EECA4
-
       .dsection ProcScript9EECA4Section
-
-    .here
-
-    * = $1EECAC
-    .logical $9EECAC
 
       .dsection Unsorted9EECACSection
 
-    .here
-
-    * = $1EED31
-    .logical $9EED31
-
       .dsection ProcScript9EED31Section
-
-    .here
-
-    * = $1EED7C
-    .logical $9EED7C
 
       .dsection Unsorted9EED7CSection
 
-    .here
-
-    * = $1EEDB5
-    .logical $9EEDB5
-
       .dsection Unsorted9EEDB5Section
-
-    .here
-
-    * = $1EEFF1
-    .logical $9EEFF1
 
       .dsection Unsorted9EEFF1Section
 
-    .here
-
-    * = $1EF1B5
-    .logical $9EF1B5
-
       .dsection Unsorted9EF1B5Section
-
-    .here
-
-    * = $1EF1D9
-    .logical $9EF1D9
 
       .dsection Unsorted9EF1D9Section
 
-    .here
-
-    * = $1EF1FA
-    .logical $9EF1FA
-
       .dsection Unsorted9EF1FASection
-
-    .here
-
-    * = $1EF353
-    .logical $9EF353
 
       .dsection Unsorted9EF353Section
 
-    .here
-
-    * = $1EF37F
-    .logical $9EF37F
-
       .dsection Unsorted9EF37FSection
-
-    .here
-
-    * = $1EF49E
-    .logical $9EF49E
 
       .dsection Unsorted9EF49ESection
 
-    .here
-
-    * = $1EF55B
-    .logical $9EF55B
-
       .dsection Unsorted9EF55BSection
 
-    .here
-
-    * = $1EF5D0
-    .logical $9EF5D0
-
       .dsection Unsorted9EF5D0Section
-
-    .here
-
-    * = $1EF60F
-    .logical $9EF60F
 
       .dsection Unsorted9EF60FSection
       .dsection BelhallaMagesAttackSection
 
-    .here
-
-    * = $1EF791
-    .logical $9EF791
-
       .dsection Unknown9EF791Section
-
-    .here
-
-    * = $1EF79D
-    .logical $9EF79D
 
       .dsection Unsorted9EF79DSection
 
-    .here
-
-    * = $1EF811
-    .logical $9EF811
-
       .dsection BelhallaAttackingMagePositionsSection
-
-    .here
-
-    * = $1EF81D
-    .logical $9EF81D
 
       .dsection BelhallaAttackingMageDirectionsSection
 
-    .here
-
-    * = $1EF83F
-    .logical $9EF83F
-
       .dsection ProcUnknown9EF837InitSection
-
-    .here
-
-    * = $1EF9DF
-    .logical $9EF9DF
 
       .dsection Unsorted9EF9DFSection
 
-    .here
-
-    * = $1EF9E0
-    .logical $9EF9E0
-
       .dsection Unsorted9EF9E0Section
-
-    .here
-
-    * = $1EFA17
-    .logical $9EFA17
 
       .dsection Unsorted9EFA17Section
 
-    .here
-
-    * = $1EFC47
-    .logical $9EFC47
-
       .dsection Unsorted9EFC47Section
+
+      .fill $9E8000 + $8000 - *, $00
 
     .here
 
@@ -18145,52 +8386,17 @@
 
       .dsection Unsorted9F8020Section
 
-    .here
-
-    * = $1F805D
-    .logical $9F805D
-
       .dsection ProcScript9F805DSection
-
-    .here
-
-    * = $1F8065
-    .logical $9F8065
 
       .dsection Unsorted9F8065Section
 
-    .here
-
-    * = $1F80D9
-    .logical $9F80D9
-
       .dsection MapBattleMagicBackgroundsSection
-
-    .here
-
-    * = $1F8253
-    .logical $9F8253
 
       .dsection Unsorted9F8253Section
 
-    .here
-
-    * = $1F82A7
-    .logical $9F82A7
-
       .dsection Unsorted9F82A7Section
 
-    .here
-
-    * = $1F82D7
-    .logical $9F82D7
-
       .dsection Unsorted9F82D7Section
-
-    .here
-
-    * = $1F8349
-    .logical $9F8349
 
       .dsection Unsorted9F8349Section
 
@@ -18201,38 +8407,13 @@
 
       .dsection Unsorted9F83D0Section
 
-    .here
-
-    * = $1F83F1
-    .logical $9F83F1
-
       .dsection Unsorted9F83F1Section
-
-    .here
-
-    * = $1F8414
-    .logical $9F8414
 
       .dsection Unsorted9F8414Section
 
-    .here
-
-    * = $1F86B0
-    .logical $9F86B0
-
       .dsection Unsorted9F86B0Section
 
-    .here
-
-    * = $1F86BF
-    .logical $9F86BF
-
       .dsection Unsorted9F86BFSection
-
-    .here
-
-    * = $1F8724
-    .logical $9F8724
 
       .dsection MapBattleMagicSpritesSection
 
@@ -18250,38 +8431,13 @@
 
       .dsection Unsorted9F8900Section
 
-    .here
-
-    * = $1F8943
-    .logical $9F8943
-
       .dsection Unsorted9F8943Section
-
-    .here
-
-    * = $1F8999
-    .logical $9F8999
 
       .dsection Unsorted9F8999Section
 
-    .here
-
-    * = $1F8A34
-    .logical $9F8A34
-
       .dsection Unsorted9F8A34Section
 
-    .here
-
-    * = $1F8A97
-    .logical $9F8A97
-
       .dsection Unsorted9F8A97Section
-
-    .here
-
-    * = $1F8B7A
-    .logical $9F8B7A
 
       .dsection Unsorted9F8B7ASection
       .dsection Table9F8C3ASection
@@ -18289,45 +8445,15 @@
 
       .dsection SavePaletteBufferColorsToRAMSection
 
-    .here
-
-    * = $1F8EC0
-    .logical $9F8EC0
-
       .dsection Unsorted9F8EC0Section
-
-    .here
-
-    * = $1F8EE1
-    .logical $9F8EE1
 
       .dsection FadePaletteToColorsSection
 
-    .here
-
-    * = $1F8F4F
-    .logical $9F8F4F
-
       .dsection FadePaletteToBlackSection
-
-    .here
-
-    * = $1F8FE3
-    .logical $9F8FE3
 
       .dsection FadeFromToColorByStepSection
 
-    .here
-
-    * = $1F9090
-    .logical $9F9090
-
       .dsection Unsorted9F9090Section
-
-    .here
-
-    * = $1F90F2
-    .logical $9F90F2
 
       .dsection Unsorted9F90F2Section
 
@@ -18338,80 +8464,25 @@
 
       .dsection Unsorted9F910ASection
 
-    .here
-
-    * = $1F9217
-    .logical $9F9217
-
       .dsection Unsorted9F9217Section
-
-    .here
-
-    * = $1F924B
-    .logical $9F924B
 
       .dsection Unsorted9F924BSection
 
-    .here
-
-    * = $1F9253
-    .logical $9F9253
-
       .dsection Unsorted9F9253Section
-
-    .here
-
-    * = $1F926E
-    .logical $9F926E
 
       .dsection Unsorted9F926ESection
 
-    .here
-
-    * = $1F92D2
-    .logical $9F92D2
-
       .dsection Unsorted9F92D2Section
-
-    .here
-
-    * = $1F92F3
-    .logical $9F92F3
 
       .dsection Unsorted9F92F3Section
 
-    .here
-
-    * = $1F9341
-    .logical $9F9341
-
       .dsection Unsorted9F9341Section
-
-    .here
-
-    * = $1F936C
-    .logical $9F936C
 
       .dsection Table9F936CSection
 
-    .here
-
-    * = $1F9378
-    .logical $9F9378
-
       .dsection Unsorted9F9378Section
 
-    .here
-
-    * = $1F94FE
-    .logical $9F94FE
-
       .dsection Unsorted9F94FESection
-
-    .here
-
-    * = $1F9570
-    .logical $9F9570
 
       .dsection Unsorted9F9570Section
 
@@ -18422,17 +8493,7 @@
 
       .dsection Unsorted9F95E1Section
 
-    .here
-
-    * = $1F9691
-    .logical $9F9691
-
       .dsection Unsorted9F9691Section
-
-    .here
-
-    * = $1F9954
-    .logical $9F9954
 
       .dsection Unsorted9F9954Section
 
@@ -18450,11 +8511,6 @@
 
       .dsection Unsorted9F999ESection
 
-    .here
-
-    * = $1F99CE
-    .logical $9F99CE
-
       .dsection Unsorted9F99CESection
 
     .here
@@ -18464,87 +8520,27 @@
 
       .dsection Unsorted9F9ABFSection
 
-    .here
-
-    * = $1FDB68
-    .logical $9FDB68
-
       .dsection Unsorted9FDB68Section
-
-    .here
-
-    * = $1FDB8B
-    .logical $9FDB8B
 
       .dsection Unsorted9FDB8BSection
 
-    .here
-
-    * = $1FDBC4
-    .logical $9FDBC4
-
       .dsection Unsorted9FDBC4Section
-
-    .here
-
-    * = $1FDBFD
-    .logical $9FDBFD
 
       .dsection Unsorted9FDBFDSection
 
-    .here
-
-    * = $1FDC40
-    .logical $9FDC40
-
       .dsection Unsorted9FDC40Section
-
-    .here
-
-    * = $1FDC83
-    .logical $9FDC83
 
       .dsection Unsorted9FDC83Section
 
-    .here
-
-    * = $1FDEE3
-    .logical $9FDEE3
-
       .dsection Unsorted9FDEE3Section
-
-    .here
-
-    * = $1FE006
-    .logical $9FE006
 
       .dsection Unsorted9FE006Section
 
-    .here
-
-    * = $1FE824
-    .logical $9FE824
-
       .dsection Unsorted9FE824Section
-
-    .here
-
-    * = $1FEA0C
-    .logical $9FEA0C
 
       .dsection Unsorted9FEA0CSection
 
-    .here
-
-    * = $1FEA52
-    .logical $9FEA52
-
       .dsection Unsorted9FEA52Section
-
-    .here
-
-    * = $1FEBA7
-    .logical $9FEBA7
 
       .dsection Unsorted9FEBA7Section
 
@@ -18554,11 +8550,6 @@
     .logical $9FEBA9
 
       .dsection ProcScript9FEBA9Section
-
-    .here
-
-    * = $1FECB2
-    .logical $9FECB2
 
       .dsection Unsorted9FECB2Section
 
@@ -18590,97 +8581,32 @@
 
       .dsection Unsorted9FF250Section
 
-    .here
-
-    * = $1FF376
-    .logical $9FF376
-
       .dsection Unsorted9FF376Section
-
-    .here
-
-    * = $1FF3ED
-    .logical $9FF3ED
 
       .dsection Unsorted9FF3EDSection
 
-    .here
-
-    * = $1FF448
-    .logical $9FF448
-
       .dsection Table9FF448Section
 
-    .here
-
-    * = $1FF450
-    .logical $9FF450
-
       .dsection Unsorted9FF450Section
-
-    .here
-
-    * = $1FF487
-    .logical $9FF487
 
       .dsection Unsorted9FF487Section
       .dsection Unsorted9FF495Section
       .dsection Unsorted9FF4A6Section
       .dsection Unsorted9FF4B7Section
 
-    .here
-
-    * = $1FF4C5
-    .logical $9FF4C5
-
       .dsection Unsorted9FF4C5Section
-
-    .here
-
-    * = $1FF4D6
-    .logical $9FF4D6
 
       .dsection Unsorted9FF4D6Section
 
-    .here
-
-    * = $1FF4DE
-    .logical $9FF4DE
-
       .dsection Unsorted9FF4DESection
-
-    .here
-
-    * = $1FF59D
-    .logical $9FF59D
 
       .dsection Unsorted9FF59DSection
 
-    .here
-
-    * = $1FF65A
-    .logical $9FF65A
-
       .dsection Unsorted9FF65ASection
-
-    .here
-
-    * = $1FF67D
-    .logical $9FF67D
 
       .dsection Unsorted9FF67DSection
 
-    .here
-
-    * = $1FF729
-    .logical $9FF729
-
       .dsection Data9FF729Section
-
-    .here
-
-    * = $1FF749
-    .logical $9FF749
 
       .dsection Unsorted9FF749Section
 
@@ -18691,45 +8617,15 @@
 
       .dsection Unsorted9FF9A8Section
 
-    .here
-
-    * = $1FF9B9
-    .logical $9FF9B9
-
       .dsection Unsorted9FF9B9Section
-
-    .here
-
-    * = $1FF9C1
-    .logical $9FF9C1
 
       .dsection Unsorted9FF9C1Section
 
-    .here
-
-    * = $1FFA78
-    .logical $9FFA78
-
       .dsection Data9FFA78Section
-
-    .here
-
-    * = $1FFA98
-    .logical $9FFA98
 
       .dsection Unsorted9FFA98Section
 
-    .here
-
-    * = $1FFA9A
-    .logical $9FFA9A
-
       .dsection Unsorted9FFA9ASection
-
-    .here
-
-    * = $1FFAB4
-    .logical $9FFAB4
 
       .dsection Unsorted9FFAB4Section
 
@@ -18874,6 +8770,11 @@
       .dsection BattleAnimationPalettesE00D32Section
 
       .fill $E00F30 - *, 0
+
+    .here
+
+    * = $200F30
+    .logical $E00F30
 
       .dsection BattleAnimationPalettesE00F30Section
 
@@ -19200,11 +9101,6 @@
     .logical $AFC400
 
       g4bppUnknownAFC400 .binary "gfx/ui/UnknownAFC400.4bpp", 0, $0400 ; AF/C400
-
-    .here
-
-    * = $2FC800
-    .logical $AFC800
 
       .dsection BackgroundPalettesAFC800Section
 

@@ -35,13 +35,15 @@ HERE = re.compile(r'\s*\.here\b')
 
 
 def blocks(lines):
-    """Each block as [star_line, here_line, file_offset], in file order."""
+    """Each block as [star_line, here_line, file_offset, logical_bank], in file order."""
     out = []
     for i, l in enumerate(lines):
         m = STAR.match(l)
         if m:
             here = next(j for j in range(i + 1, len(lines)) if HERE.match(lines[j]))
-            out.append([i, here, int(m.group(1), 16)])
+            lm = LOGICAL.match(lines[i + 1]) if i + 1 < len(lines) else None
+            lbank = int(lm.group(1), 16) >> 16 if lm else None
+            out.append([i, here, int(m.group(1), 16), lbank])
     return out
 
 
@@ -63,7 +65,7 @@ def main():
 
     # Assemble with a marker label before each block's .here to get its end.
     marked = list(lines)
-    for k, (star, here, _) in sorted(enumerate(bs), key=lambda x: -x[1][1]):
+    for k, (star, here, _, _) in sorted(enumerate(bs), key=lambda x: -x[1][1]):
         marked[here:here] = [f'      MergeBankEnd{k}']
     tmp = tempfile.mkdtemp()
     try:
@@ -90,6 +92,8 @@ def main():
         between = lines[prev[1] + 1:cur[0]]
         if any(l.strip() for l in between):
             keep.append((cur, 'other code comes between it and the previous block in build.asm'))
+        elif prev[3] is not None and cur[3] is not None and prev[3] != cur[3]:
+            keep.append((cur, f'logical bank changes from ${prev[3]:02X} to ${cur[3]:02X}'))
         elif ends[k - 1] != cur[2]:
             gap = cur[2] - ends[k - 1]
             keep.append((cur, f'{gap:,} bytes not built from source before it, from '
@@ -118,6 +122,8 @@ def main():
     for k, b in enumerate(bs):
         if k + 1 < len(bs) and id(bs[k + 1]) in merged:
             continue                  # not the last block of its chain
+        if b[3] is not None and b[3] != 0x80 + bank:
+            continue                  # lower-half block ($Cx-$FF); don't fill to upper bank end
         e = ends[k]
         tail = rom[e:bank_end]
         if (e < bank_end and e >> 16 == bank and tail[0] in (0x00, 0xFF)
@@ -137,7 +143,7 @@ def main():
     # through this block's .logical, with the blank lines around them, leaving
     # one blank line.
     drop = set()
-    for star, _, _ in merge:
+    for star, _, _, _ in merge:
         here = max(b[1] for b in bs if b[1] < star)
         lo = here
         while lo > 0 and not lines[lo - 1].strip():
