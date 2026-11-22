@@ -1168,7 +1168,7 @@
 
       rlUnknown9F8943 ; 9F/8943
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -1362,7 +1362,7 @@
 
       rlUnknown9F8A34 ; 9F/8A34
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -1891,7 +1891,7 @@
 
       rlUnknown9F8EC0 ; 9F/8EC0
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2373,7 +2373,7 @@
 
       rlUnknown9F9217 ; 9F/9217
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2512,7 +2512,7 @@
 
       rlUnknown9F9296 ; 9F/9296
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2606,7 +2606,7 @@
 
       rlUnknown9F92F3 ; 9F/92F3
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -3580,7 +3580,7 @@
 
       rlUnknown9F9954 ; 9F/9954
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -3612,7 +3612,7 @@
 
       rlUnknown9F9976 ; 9F/9976
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -3697,7 +3697,7 @@
 
       rlUnknown9F99CE ; 9F/99CE
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -3721,7 +3721,7 @@
 
       rlUnknown9F99E6 ; 9F/99E6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -3798,7 +3798,7 @@
 
       rlUnknown9F9ABF ; 9F/9ABF
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -12621,7 +12621,7 @@
 
       rlUnknown9FDB68 ; 9F/DB68
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -12635,7 +12635,7 @@
 
       rlUnknown9FDB69 ; 9F/DB69
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -12670,7 +12670,7 @@
 
       rlUnknown9FDB8B ; 9F/DB8B
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -12712,7 +12712,7 @@
 
       rlUnknown9FDBC4 ; 9F/DBC4
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -12754,7 +12754,7 @@
 
       rlUnknown9FDBFD ; 9F/DBFD
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -12797,7 +12797,7 @@
 
       rlUnknown9FDC40 ; 9F/DC40
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -12840,7 +12840,7 @@
 
       rlUnknown9FDC83 ; 9F/DC83
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -13103,7 +13103,7 @@
 
       rlUnknown9FDEE3 ; 9F/DEE3
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -13285,7 +13285,7 @@
 
       rlUnknown9FE006 ; 9F/E006
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -13819,7 +13819,7 @@
 
       rlUnknown9FE8DE ; 9F/E8DE
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -14531,7 +14531,7 @@
 
       rlUnknown9FECFE ; 9F/ECFE
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -14612,7 +14612,7 @@
 
       rlUnknown9FEDB3 ; 9F/EDB3
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -14702,7 +14702,7 @@
 
       rlUnknown9FF060 ; 9F/F060
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -14779,7 +14779,7 @@
 
       rlUnknown9FF100 ; 9F/F100
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

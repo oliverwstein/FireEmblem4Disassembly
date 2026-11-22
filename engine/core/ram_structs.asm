@@ -3131,7 +3131,7 @@
 
       rlMoveRAMStructEntry ; 82/E664
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3278,7 +3278,7 @@
 
       rsLoadRAMStructEntryToScratch ; 82/EADE
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3318,7 +3318,7 @@
 
       rsSaveRAMStructEntryFromScratch ; 82/EB15
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

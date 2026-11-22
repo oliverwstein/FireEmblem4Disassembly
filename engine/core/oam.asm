@@ -352,7 +352,7 @@
 
       rlPushToOAMBufferWithScanlineCulling ; 80/889D
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -509,7 +509,7 @@
 
       rlBeginOAMScanlineFrame ; 80/89AD
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -579,7 +579,7 @@
 
       rlFinishOAMScanlineFrame ; 80/8A01
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -693,7 +693,7 @@
 
       rsCountSpritesPerScanline ; 80/8A6C
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

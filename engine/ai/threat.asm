@@ -821,7 +821,7 @@
 
       rsAIActionEnterHomeCastle ; 86/B371
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -992,7 +992,7 @@
 
       rsAIActionTalk ; 86/B3DD
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -1023,7 +1023,7 @@
 
       rsAIActionReviveAndEnterCastle ; 86/B410
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

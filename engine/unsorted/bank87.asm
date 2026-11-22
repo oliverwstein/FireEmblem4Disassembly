@@ -424,7 +424,7 @@
 
       rlUnknown8782D4 ; 87/82D4
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -863,7 +863,7 @@
 
       rlUnknown8784E1 ; 87/84E1
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -915,7 +915,7 @@
 
       rlUnknown878531 ; 87/8531
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -1930,7 +1930,7 @@
 
       rlUnknown878D61 ; 87/8D61
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2866,7 +2866,7 @@
 
       rlUnknown879F12 ; 87/9F12
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2923,7 +2923,7 @@
 
       rlUnknown879F67 ; 87/9F67
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2964,7 +2964,7 @@
 
       rlUnknown879F9C ; 87/9F9C
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2996,7 +2996,7 @@
 
       rlUnknown879FBE ; 87/9FBE
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3194,7 +3194,7 @@
 
       rlUnknown87A082 ; 87/A082
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3272,7 +3272,7 @@
 
       rlUnknown87A0DF ; 87/A0DF
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3348,7 +3348,7 @@
 
       rlUnknown87A13C ; 87/A13C
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3387,7 +3387,7 @@
 
       rlUnknown87A165 ; 87/A165
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3460,7 +3460,7 @@
 
       rlUnknown87AE88 ; 87/AE88
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3773,7 +3773,7 @@
 
       rlUnknown87B512 ; 87/B512
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5223,7 +5223,7 @@
 
       rlUnknown87BF52 ; 87/BF52
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -6244,7 +6244,7 @@
 
       rlUnknown87C7F3 ; 87/C7F3
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -6865,7 +6865,7 @@
 
       rsUnknown87D65A ; 87/D65A
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

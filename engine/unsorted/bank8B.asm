@@ -278,7 +278,7 @@
 
       rsUnknown8B87E5 ; 8B/87E5
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -402,7 +402,7 @@
 
       rsUnknown8B8AAB ; 8B/8AAB
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -801,7 +801,7 @@
 
       rlUnknown8B9451 ; 8B/9451
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -1043,7 +1043,7 @@
 
       rlUnknown8B959C ; 8B/959C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz

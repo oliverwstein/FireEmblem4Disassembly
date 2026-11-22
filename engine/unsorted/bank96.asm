@@ -26,7 +26,7 @@
 
       rlUnknown968008 ; 96/8008
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -67,7 +67,7 @@
 
       rlUnknown968017 ; 96/8017
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -137,7 +137,7 @@
 
       rlUnknown968058 ; 96/8058
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -193,7 +193,7 @@
 
       rlUnknown968080 ; 96/8080
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -242,7 +242,7 @@
 
       rlUnknown96809D ; 96/809D
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -283,7 +283,7 @@
 
       rlUnknown9680AC ; 96/80AC
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -324,7 +324,7 @@
 
       rlUnknown9680BB ; 96/80BB
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -8888,7 +8888,7 @@
 
       rlUnknown96BFE5 ; 96/BFE5
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz

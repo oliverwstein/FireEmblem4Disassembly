@@ -380,7 +380,7 @@
 
       rsResetPPUAndBuffersMode09 ; 80/C212
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

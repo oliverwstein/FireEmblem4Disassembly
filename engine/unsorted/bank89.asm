@@ -1654,7 +1654,7 @@
 
       rsUnknown898AF5 ; 89/8AF5
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3672,7 +3672,7 @@
 
       rlUnknown8998E1 ; 89/98E1
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -4293,7 +4293,7 @@
 
       rlUnknown899D72 ; 89/9D72
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -4817,7 +4817,7 @@
 
       rlUnknown89A085 ; 89/A085
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5001,7 +5001,7 @@
 
       rsUnknown89A25A ; 89/A25A
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5086,7 +5086,7 @@
 
       rsUnknown89A2ED ; 89/A2ED
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5130,7 +5130,7 @@
 
       rsUnknown89A32E ; 89/A32E
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5244,7 +5244,7 @@
 
       rsUnknown89A3C0 ; 89/A3C0
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5566,7 +5566,7 @@
 
       rlUnknown89A5E5 ; 89/A5E5
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5646,7 +5646,7 @@
 
       rsUnknown89A68C ; 89/A68C
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

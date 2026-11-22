@@ -7478,7 +7478,7 @@
 
       rlUnknown9EADB4 ; 9E/ADB4
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -11331,7 +11331,7 @@
 
       rlUnknown9ED3C1 ; 9E/D3C1
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -13686,7 +13686,7 @@
 
       rlUnknown9EEDB5 ; 9E/EDB5
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -13791,7 +13791,7 @@
 
       rlUnknown9EEED3 ; 9E/EED3
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -14173,7 +14173,7 @@
 
       rlUnknown9EF1FA ; 9E/F1FA
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

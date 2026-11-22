@@ -52,7 +52,7 @@
 
       rsSetupWorldMapScreen ; 80/B3A2
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -129,7 +129,7 @@
 
       rlInitWorldMapGraphics ; 80/B452
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

@@ -621,7 +621,7 @@
 
       rlItemWindowGetItemData ; 80/D143
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -1430,7 +1430,7 @@
 
       rlItemWindowDrawItemInfo ; 89/B91F
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -1799,7 +1799,7 @@
 
       rsItemWindowRenderItemIcons ; 89/BBB2
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2221,7 +2221,7 @@
 
       rsItemWindowMoveToNextPage ; 89/BEEB
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2318,7 +2318,7 @@
 
       rsItemWindowMoveToPreviousPage ; 89/BFA7
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2388,7 +2388,7 @@
 
       rlItemWindowDrawList ; 89/C021
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2754,7 +2754,7 @@
 
       rlItemWindowSort ; 89/C2CF
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3102,7 +3102,7 @@
 
       rsItemWindowDrawSortPanel ; 89/C488
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

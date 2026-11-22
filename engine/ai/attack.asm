@@ -1634,7 +1634,7 @@
 
       rlAIGetClassTargetPriority ; 86/C3A0
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -1698,7 +1698,7 @@
 
       rlAIGetWeaponTriangleScore ; 86/C40D
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -1752,7 +1752,7 @@
 
       rlAIGetEffectivenessScore ; 86/C46E
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

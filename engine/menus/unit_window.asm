@@ -4499,7 +4499,7 @@
 
       rlUnitWindowGetEquippedWeaponID ; 8B/C484
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -4532,7 +4532,7 @@
 
       rsUnitWindowUpdateSort ; 8B/C49F
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -6271,7 +6271,7 @@
 
       rlUnitWindowGetPromotionFlagsAndWeapons ; 8B/CD89
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -6335,7 +6335,7 @@
 
       rlUnitWindowSaveListOrder ; 8B/CE29
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

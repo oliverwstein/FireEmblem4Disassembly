@@ -548,7 +548,7 @@
 
       rlProcEvent5DFadeOutCycle2 ; 82/88B2
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

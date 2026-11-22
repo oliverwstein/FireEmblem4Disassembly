@@ -1524,7 +1524,7 @@
 
       rsUnknown81AFFE ; 81/AFFE
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2055,7 +2055,7 @@
 
       rlUnknown81B3A6 ; 81/B3A6
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2262,7 +2262,7 @@
 
       rlUnknown81B52A ; 81/B52A
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz

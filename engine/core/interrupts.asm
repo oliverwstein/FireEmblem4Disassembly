@@ -176,7 +176,7 @@
 
       rlVBlank ; 80/81B6
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -248,7 +248,7 @@
 
       rlIRQ ; 80/81FD
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .as
         .xs
         .autsiz
@@ -415,7 +415,7 @@
 
       rsIRQCodeHalt ; 82/E028
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -516,7 +516,7 @@
 
       rlIRQEngineStub ; 82/E133
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
