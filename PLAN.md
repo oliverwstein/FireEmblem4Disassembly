@@ -8,9 +8,9 @@ This document records the roadmap from the current baseline (2026-11-21) to a 10
 
 Quote numbers only from `tools/counts.py` (and GAPS.md from `tools/gaps.py`); rerun them rather than editing figures by hand.
 
-- **Coverage:** **97.53% built from source** (4,090,600 of 4,194,304 bytes), byte-identical to `fe4.sfc`.
-- **Gaps remaining ([GAPS.md](GAPS.md)):** every class except `none` is closed: `none` **216 pieces (61,565 bytes)**, plus **56 padding runs (42,139 bytes)**.
-- **Routines:** **5,956** top-level `rl`/`rs` routines in `engine/`: **2,516** named, **3,440** `Unknown`; **3,005** still in `engine/unsorted/` (165,594 lines).
+- **Coverage:** **97.53% built from source** (4,090,898 of 4,194,304 bytes), byte-identical to `fe4.sfc`.
+- **Gaps remaining ([GAPS.md](GAPS.md)):** every class except `none` is closed: `none` **211 pieces (61,267 bytes)**, plus **56 padding runs (42,139 bytes)**.
+- **Routines:** **5,959** top-level `rl`/`rs` routines in `engine/`: **2,927** named, **3,032** `Unknown`; **2,610** still in `engine/unsorted/` (138,995 lines).
 - **Pinned blocks** in `build.asm`: **307**.
 
 Phase 2 is ordered ahead of Phase 3 because shiftability is what makes the disassembly genuinely moddable, its checklist is bounded and objectively testable (`./build.sh pad`), and resolving raw pointers/inline-`.byte` code exposes full call graphs before system-wide naming. Phases 3–5 can overlap with Phases 1–2 bank by bank.
@@ -41,6 +41,7 @@ Everything reachable via static pointers or the existing Prologue CDL is now bui
 Once a bank is 100% source with zero raw references into it, unpin its blocks and verify relocation with `./build.sh pad`. *(Status 2026-11-21: all non-Mesen Phase 2 work below is complete; only interactive Mesen smoke-testing of padded ROMs and final post-Phase-1 merges of partial banks remain.)*
 
 1. **Eliminate Remaining Raw Pointers & Inline-Byte Code — DONE (2026-11-21)**
+   - *Correction (2026-11-22):* the tools below only find code-pointer stores and six-digit numbers. Bank `$89` also had sprite arrays passed as `ldy #$xxxx`, sprite arrays inside word tables, long pointers written as bytes, and 44 main-loop addresses written as numbers engine-wide; those are fixed. 80 `ldy #$xxxx` immediates elsewhere still need checking (`tools/sprite_arrays.py`).
    - Resolved all **33 raw code-pointer stores** (`30` `aProcSystem.aHeaderOnCycle`, `3` `aActiveSpriteSystem.aOnCycle`) -> `0` left in `tools/code_pointers.py`.
    - Resolved all **9 raw 6-digit numbers** -> `0` left in `tools/raw_addresses.py`, fixed `Event000Pointer` (`$8FEF55` -> `aEventDebug8FEF78`), and labelled/converted all **36 unlabelled ROM two-halves long pointers** (`0` unlabelled left).
    - Disassembled all inline-`.byte` code blocks & `label+N` targets (leaving only the 2 intentional `bank87.asm` anti-tamper reads `rlUnknown8887EC._8880+8,x`).
@@ -77,7 +78,7 @@ Work hub-outward through the `Unknown` and unsorted routines (counts from `tools
 
 1. **System-by-System Routine Naming & Sorting**
    1. **Main Loop & Game States (`$80/9B01` `aGameStateRoutines`):** Name all 52 game state entries/steps/cleanups and `GAMESTATE_*` constants to map out call trees across banks `$80`, `$85`, `$89`, `$8A`, `$8B`, `$8D`, `$91`, `$95`, `$96`, and `$9B`.
-   2. **Menus, Windows & Facilities**, in three parts: (a) **the castle, bank `$8A` — DONE** (`engine/castle/`, [docs/reference/castle.md](docs/reference/castle.md)); (b) the full-screen menus in bank `$89` (status screen, revive screen, options) and the rest of `engine/save/`; (c) the map menu in banks `$85`/`$87` (likely two sessions). File into `engine/menus/` and `engine/save/`. The world map in `$8B` belongs to wave 4.
+   2. **Menus, Windows & Facilities**, in three parts: (a) **the castle, bank `$8A` — DONE** (`engine/castle/`, [docs/reference/castle.md](docs/reference/castle.md)); (b) the full-screen menus in bank `$89` (status screen, revive screen, options) and the rest of `engine/save/` — DONE ([docs/reference/menus.md](docs/reference/menus.md), [save.md](docs/reference/save.md)); (c) the map menu in banks `$85`/`$87` (likely two sessions). File into `engine/menus/` and `engine/save/`. The world map in `$8B` belongs to wave 4.
    3. **Map Engine (Bank `$88`):** Name map rendering, tile/palette animations, cursor/camera movement, movement-range calculation, and map sprite management; file into `engine/map/`.
    4. **Events, Attract Mode, Epilogue & Scripted Scenes (Banks `$81`, `$82`, `$8D`, `$90`, `$91`, `$9E`):** Name event command helpers, attract-mode demo (`$90/E8CE`), ending/epilogue/ranking screens (`$8D`, `$91`), and scripted `"ON"` scene procs (`$9E`); file into `engine/events/`, `engine/epilogue/`, and `engine/rankings/`.
    5. **Battle Engine, Map Battles & Battle Scene (Banks `$84`, `$95`, `$96`, `$97`, `$9B`, `$9F`):** Finish the remaining unnamed routines in `battle/`, `units/`, and `items/` (including `rlUnknown84DC1C`), the 6 battle scene control commands (`$FFF8`–`$FFFD`), the 72 effect routines at `$97/BDD4`, and the map-battle / spell animation engine in `$9B` and `$9F`.
