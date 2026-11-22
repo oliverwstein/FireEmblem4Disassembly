@@ -604,9 +604,9 @@
             sta wSoundIndirectPending,b
             jsl rlUnknown81A9D4
 
-            lda #(`procUnknown85ABF6)<<8
+            lda #(`procPhaseBanner)<<8
             sta $62+1
-            lda #<>procUnknown85ABF6
+            lda #<>procPhaseBanner
             sta $62
             jsl rlProcEngineCreateProc
 
@@ -772,9 +772,9 @@
 
                   lda #1
                   sta aProcSystem.wInput0,b
-                  lda #(`procUnknown85A47F)<<8
+                  lda #(`procSavePrompt)<<8
                   sta $62+1
-                  lda #<>procUnknown85A47F
+                  lda #<>procSavePrompt
                   sta $62
                   jsl rlProcEngineCreateProc
                   bra _INC
@@ -1258,7 +1258,7 @@
 
         stz wTargetEventLocationEntry,b
 
-        jsl rlUnknown85CA4B
+        jsl rlRefreshUnitWindow
 
         lda wUnknown000D79,b
         bit #$0040
@@ -1334,7 +1334,7 @@
             lda aDeploymentTable._UnitRAMPointer,x
             sta aProcSystem.wInput0,b
 
-            jsl rlUnknown85B14F
+            jsl rlOpenInventoryFullMenu
 
             lda #$FFFF
             sta wPhaseScratch000D89,b
@@ -1451,7 +1451,7 @@
           sta aProcSystem.wInput2,b
           lda wUnitRelocationLocationID,b
           sta aProcSystem.wInput3,b
-          jsl rlUnknown85BB2E
+          jsl rlOpenSeizePopUp
 
         +
         sec
@@ -1474,7 +1474,7 @@
           sta aProcSystem.wInput2,b
           lda #$0D00
           sta aProcSystem.wInput3,b
-          jsl rlUnknown85B8D6
+          jsl rlOpenGoldPopUp
 
           lda #$FFFF
           sta wPhaseScratch000D8D,b
@@ -1506,7 +1506,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85A5C5
+        jsl rlOpenSavePrompt
         sec
         rts
 
@@ -1564,7 +1564,7 @@
         sta aProcSystem.wInput2,b
         lda #$0D00
         sta aProcSystem.wInput3,b
-        jsl rlUnknown85BC00
+        jsl rlOpenItemPopUp
         sec
         rts
 
@@ -1587,7 +1587,7 @@
         lda wUnitRelocationLocationID,b
         jsl rlSetUnitResidingInCastle
         stz wTargetEventLocationEntry,b
-        jsl rlUnknown85CA4B
+        jsl rlRefreshUnitWindow
         lda #$0040
         trb wUnknown000D79,b
         phx
@@ -1884,9 +1884,9 @@
               lda wUnitRelocationLocationID,b
               sta aProcSystem.wInput3,b
 
-              lda #(`procUnknown85BA41)<<8
+              lda #(`procSeizePopUp)<<8
               sta lR44+1
-              lda #<>procUnknown85BA41
+              lda #<>procSeizePopUp
               sta lR44
               jsl rlEventEngineCreateProc
               lda #$FFFF

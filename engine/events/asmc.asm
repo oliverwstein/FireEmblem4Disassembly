@@ -90,15 +90,15 @@
         sta aProcSystem.wInput0,b
         lda wSelectedUnitDataRAMPointer,b
         sta aProcSystem.wInput3,b
-        jsl rlUnknown85B52F
-        jsl rlUnknown85B520
+        jsl rlOpenInventoryFullNewItem
+        jsl rlOpenInventoryFullMessage
         lda wSelectedUnitDataRAMPointer,b
         sta aProcSystem.wInput0,b
         lda wCurrentItemDataROMPointer,b
         sta aProcSystem.wInput1,b
-        lda #(`procUnknown85B18F)<<8
+        lda #(`procInventoryFullMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85B18F
+        lda #<>procInventoryFullMenu
         sta lR44
         jsl rlEventEngineCreateProc
         rts
@@ -242,9 +242,9 @@
       .al
       .xl
 
-      procUnknown85BC0F .structProcInfo "PW", rlProcUnknown85BC0FInit, rlProcUnknown85B9D4Cycle1, aProcDialogueBoxCode ; 85/BC0F
+      procUnknown85BC0F .structProcInfo "PW", rlProcItemPopUpInit, rlProcGoldPopUpShow, aProcDialogueBoxCode ; 85/BC0F
 
-        .long aUnknown85B8EE
+        .long aGoldPopUpData
         .byte 1
 
     .endsection Unsorted85BC0FSection

@@ -435,7 +435,7 @@
 
         +
         jsl rlClearUnitWindowAndTerrainWindowProcs
-        jsl rlUnknown85C0D5
+        jsl rlShowMapWindows
         jsl rlUnknown9180BC
         jsl rlDialogueFreeHDMA
         plp

@@ -4716,7 +4716,7 @@
         sta wMapYOffset,b
         lda #$0008
         trb wMapOverlayFlags,b
-        jsl rlUnknown85921D
+        jsl rlCloseBattleForecast
         jsl rlUnknown84DC1C
         lda #$0008
         jsl rlPlaySoundEffect
@@ -5049,7 +5049,7 @@
         .databank ?
 
         jsl rlLoadDefaultWindowBorderPalette
-        jsl rlUnknown859BBD
+        jsl rlLoadWindowPaletteColors
         rtl
 
         .databank 0
@@ -5554,7 +5554,7 @@
         bne _A85D
         lda #$0008
         tsb wMapSystemFlags,b
-        jsl rlUnknown85921D
+        jsl rlCloseBattleForecast
         jsl rlOpenUnitMenu
         lda #$0800
         trb wUnknown000D79,b
@@ -5582,7 +5582,7 @@
         sec
         sbc wMapScrollYPixels,b
         sta wCursorYOffset,b
-        jsl rlUnknown85921D
+        jsl rlCloseBattleForecast
         stz wMovingUnitSpriteState,b
         lda #$0004
         trb wMapOverlayFlags,b
@@ -5606,7 +5606,7 @@
         sta wR0
         lda wMapTargetDeploymentOffset,b
         sta wR1
-        jsl rlUnknown8591B2
+        jsl rlShowBattleForecast
         lda wMapTargetDeploymentOffset,b
         tax
         lda aDeploymentTable._XTilePosition,x
@@ -5705,7 +5705,7 @@
         lda wUnknown000D79,b
         bit #$0800
         bne _A994
-        jsl rlUnknown85921D
+        jsl rlCloseBattleForecast
         jsl rlUnknown84DC1C
         lda #$000A
         jsl rlPlaySoundEffect
@@ -5713,7 +5713,7 @@
 
 
         _A994
-        jsl rlUnknown85921D
+        jsl rlCloseBattleForecast
         stz wCastleSubMenuStep,b
         lda #$0020
         tsb wMapSystemFlags,b
@@ -6335,7 +6335,7 @@
         sta wR0
         lda wMapTargetDeploymentOffset,b
         sta wR1
-        jsl rlUnknown8591B2
+        jsl rlShowBattleForecast
         lda wMapTargetDeploymentOffset,b
         tax
         lda aDeploymentTable._XTilePosition,x
@@ -7127,7 +7127,7 @@
         sta $00
         lda wMapTargetDeploymentOffset,b
         sta $02
-        jsl rlUnknown8591B2
+        jsl rlShowBattleForecast
         lda #0
         rts
 

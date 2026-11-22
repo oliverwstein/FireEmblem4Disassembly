@@ -3448,7 +3448,7 @@
 
         lda #1
         sta wR0
-        jsl rlUnknown859D60
+        jsl rlCloseDialogueBox
         inc aDialogue.wCommandCycle,b
         rts
 
@@ -3460,12 +3460,12 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85AB32
+        jsl rlCheckDialogueBoxesClosed
         bcc +
 
           lda #0
           sta wR0
-          jsl rlUnknown859D60
+          jsl rlCloseDialogueBox
           inc aDialogue.wCommandCycle,b
 
         +
@@ -3479,7 +3479,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85AB32
+        jsl rlCheckDialogueBoxesClosed
         bcc +
 
           inc aDialogue.wCommandCycle,b
@@ -4175,7 +4175,7 @@
 
         +
         sta wR0
-        jsl rlUnknown859D60
+        jsl rlCloseDialogueBox
         rts
 
         .databank 0
@@ -4186,7 +4186,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85AB32
+        jsl rlCheckDialogueBoxesClosed
         bcs +
 
           rts

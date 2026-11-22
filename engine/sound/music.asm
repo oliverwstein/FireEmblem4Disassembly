@@ -380,7 +380,7 @@
           rts
 
         _ABF1
-        jsl rlUnknown85C0D5
+        jsl rlShowMapWindows
 
         lda #$0004
         tsb wMapSystemFlags,b

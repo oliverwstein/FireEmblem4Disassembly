@@ -3963,7 +3963,7 @@
         lda #$0D05
         ldx #$0416
         ldy #$0000
-        jsl rlUnknown85B7D1
+        jsl rlGetCenteredTextBoxPlacement
         jsl rlUnknown85DB63
         plx
         lda aProcSystem.aHeaderBitfield,b,x
@@ -4031,7 +4031,7 @@
         lda #$0D05
         ldx #$0416
         ldy #$0000
-        jsl rlUnknown85B7D1
+        jsl rlGetCenteredTextBoxPlacement
         jsl rlUnknown85DB63
         plx
         lda aProcSystem.aHeaderBitfield,b,x
@@ -4220,7 +4220,7 @@
         lda #$0D05
         ldx #$0416
         ldy #$0000
-        jsl rlUnknown85B7D1
+        jsl rlGetCenteredTextBoxPlacement
         jsl rlUnknown85DB63
         plx
         ply

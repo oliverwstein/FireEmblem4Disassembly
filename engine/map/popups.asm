@@ -302,7 +302,7 @@
         .databank ?
 
         jsl rlStallProcUntilMapMenuDataLoaded
-        jsl rlUnknown85C0CE
+        jsl rlHideMapWindows
         lda #$0000
         sta wBufferBG3VOFS
         sta wBufferBG3HOFS
@@ -311,7 +311,7 @@
         lda aProcSystem.wInput3,b
         jsl rlResizeMapMenuFrame
         lda aProcSystem.wInput1,b
-        jsl rlUnknown85C4E0
+        jsl rlSetWindowColoursByRelation
         rtl
 
         .databank 0
@@ -338,8 +338,8 @@
         jsl rlCloseMapMenuFromProc
         jsl rlUnknown85C0C7
         lda #$FFFF
-        jsl rlUnknown85C4E0
-        jsl rlUnknown85C0D5
+        jsl rlSetWindowColoursByRelation
+        jsl rlShowMapWindows
         bra _BB8B
 
         .databank 0
@@ -379,7 +379,7 @@
         sta wR43
         lda #$000F
         sta wR42
-        jsl rlUnknown859FCD
+        jsl rlStartMapMenuGradient
         plx
         ply
         pla
@@ -459,12 +459,14 @@
       .al
       .xl
 
-      rlUnknown85C4E0 ; 85/C4E0
+      rlSetWindowColoursByRelation ; 85/C4E0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = relation to the player (rlGetFactionRelation): BG colours 8-15 from aWindowColoursByRelation; -1 puts back aWindowPalette's.
 
         phb
         php
@@ -485,7 +487,7 @@
         ldx #$000E
 
         _C4F7
-        lda $C51B,b,y
+        lda <>aWindowColoursByRelation,b,y
         sta $0110,b,x
         dec y
         dec y
@@ -526,9 +528,9 @@
       .al
       .xl
 
-      aUnknown85C51B ; 85/C51B
+      aWindowColoursByRelation ; 85/C51B
 
-        ; Read by rlUnknown85C4E0.
+        ; Read by rlSetWindowColoursByRelation.
 
         .word $0000, $02FC, $7292, $6A70, $6A2F, $660E, $61ED, $04A7
         .word $0000, $02FC, $2976, $2555, $2134, $1D13, $18F2, $04A4

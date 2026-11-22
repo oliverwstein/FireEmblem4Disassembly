@@ -586,7 +586,7 @@
       ; $0010 = event active (wUnknown00171A nonzero)
       ; $0020 = map camera scrolling / menu scroll lock
       ; $0040 = faction phase setup active
-      ; $0080 = unit window / map menu open (rlUnknown85C0CE/D5)
+      ; $0080 = unit window / map menu open (rlHideMapWindows/D5)
       ; $4000 = returning from castle menu
       ; $8000 = pending cursor highlight update (sets wUnknown000758 = 1)
     wDeployedUnitScanCounter .word ?   ; $00078A ; deployed unit iteration count vs wDeployedUnitsCount
@@ -2579,6 +2579,16 @@
       ; -1 if unit hasn't been processed yet
 
     ; $7FC62E
+
+  .endvirtual
+
+  ; The map's terrain and unit windows (engine/map/windows.asm) draw into two
+  ; 32x32 tilemaps here, uploaded to VRAM $5400 (BG2) and $5800 (BG3).
+
+  .virtual $7FDD4A
+
+    aMapWindowFrameBuffer .fill $680 ; $7FDD4A
+    aMapWindowTextBuffer .fill $800  ; $7FE3CA
 
   .endvirtual
 

@@ -1647,7 +1647,7 @@
         jsl rlCastleDrawInfoLine
         lda #CASTLE_CURSOR_GRID
         sta wCastleCursorState,b
-        jsl rlUnknown85921D
+        jsl rlCloseBattleForecast
         lda #$0800
         trb wUnknown000D79,b
         lda #$0021

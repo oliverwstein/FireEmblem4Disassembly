@@ -2001,7 +2001,7 @@
         cmp #$0003
         beq _D10C
         jsl rlUnknown84BA6F
-        jsl rlUnknown85CA4B
+        jsl rlRefreshUnitWindow
         jsl rlGetEventLocationEntryID
         jsl rlSetUnitResidingInCastle
         jsl rlUnknown84CAA9

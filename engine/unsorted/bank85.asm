@@ -1754,18 +1754,18 @@
       .al
       .xl
 
-      aUnknown858D62 ; 85/8D62
+      aBattleForecastTargetTilemapData ; 85/8D62
         .byte $0A, $13, $88, $83, $7E, $00, $4A, $C5, $7F
 
-      aUnknown858D6B ; 85/8D6B
+      aBattleForecastTargetData ; 85/8D6B
         .long $000000
         .long $000000
-        .long aUnknown858D62
+        .long aBattleForecastTargetTilemapData
         .byte $00, $02, $01
 
-      procUnknown858D77 ; 85/8D77
-        .structProcInfo "PW", rlUnknown858D83, rlUnknown858DAB, aProcDialogueBoxCode
-        .long aUnknown858D6B
+      procBattleForecastTarget ; 85/8D77
+        .structProcInfo "PW", rlProcBattleForecastTargetInit, rlProcBattleForecastTargetFirstCycle, aProcDialogueBoxCode
+        .long aBattleForecastTargetData
         .byte $00
 
     .endsection Table858D62Section
@@ -1776,7 +1776,7 @@
       .al
       .xl
 
-      rlUnknown858D83 ; 85/8D83
+      rlProcBattleForecastTargetInit ; 85/8D83
 
         ; Found through fe4.cdl.
         .al
@@ -1784,8 +1784,10 @@
         .autsiz
         .databank ?
 
+        ; Shows the target's side of the forecast: aActionStructUnit2. For a staff (wMapActionTargetType 1) the window is shorter.
+
         jsl rlInitMapMenuProc
-        lda #$4F15
+        lda #<>aActionStructUnit2
         sta aProcSystem.aBody4,b,x
         lda #$0000
         sta aProcSystem.aBody5,b,x
@@ -1796,15 +1798,15 @@
         jsl rlSetMapMenuTilemapArea
 
         _8DA2
-        jsl rlUnknown859B2A
-        jsl rlUnknown85A227
+        jsl rlSetMapMenuTextColors
+        jsl rlHideMapMenuLayers
         rtl
 
         .databank 0
 
         ; 85/8DAB
 
-      rlUnknown858DAB ; 85/8DAB
+      rlProcBattleForecastTargetFirstCycle ; 85/8DAB
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
@@ -1812,8 +1814,8 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown858F10
-        lda #<>rlUnknown858DB5
+        jsr rsBattleForecastCheckClose
+        lda #<>rlProcBattleForecastTargetSetUp
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -1821,12 +1823,14 @@
 
         ; 85/8DB5
 
-      rlUnknown858DB5 ; 85/8DB5
+      rlProcBattleForecastTargetSetUp ; 85/8DB5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the labels (LV, HP and the stat icons), the numbers, and places the window away from the cursor.
 
         lda wUnknown0007D8,b
         cmp #$0006
@@ -1835,7 +1839,7 @@
 
 
         _8DC1
-        jsr rsUnknown858F10
+        jsr rsBattleForecastCheckClose
         bcc _8DCA
         jml _8EA0
 
@@ -1845,18 +1849,18 @@
         phx
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown858EA1)<<8
+        lda #(`aBattleForecastLevelText)<<8
         sta lR18+1
-        lda #<>aUnknown858EA1
+        lda #<>aBattleForecastLevelText
         sta lR18
         ldx #$0702
         jsl rlDrawMapMenuTextLine
         lda wMapActionTargetType,b
         cmp #$0001
         bne _8E01
-        lda #(`aUnknown858EA7)<<8
+        lda #(`aBattleForecastHPText)<<8
         sta lR18+1
-        lda #<>aUnknown858EA7
+        lda #<>aBattleForecastHPText
         sta lR18
         ldx #$0901
         jsl rlDrawMapMenuTextLine
@@ -1864,9 +1868,9 @@
 
 
         _8E01
-        lda #(`aUnknown858EA7)<<8
+        lda #(`aBattleForecastHPText)<<8
         sta lR18+1
-        lda #<>aUnknown858EA7
+        lda #<>aBattleForecastHPText
         sta lR18
         ldx #$0902
         jsl rlDrawMapMenuTextLine
@@ -1911,8 +1915,8 @@
 
         _8E7E
         plx
-        jsl rlUnknown858F61
-        jsl rlUnknown858F28
+        jsl rlBattleForecastDrawTarget
+        jsl rlBattleForecastAvoidCursor
         bcc _8E92
         sta $0534,b
         jsl rlMoveMapMenu
@@ -1923,8 +1927,8 @@
         jsl rlDrawMapMenu
 
         _8E96
-        jsl rlUnknown85A234
-        lda #<>rlUnknown858EC5
+        jsl rlShowMapMenuLayers
+        lda #<>rlProcBattleForecastTargetCycle
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _8EA0
@@ -1942,14 +1946,14 @@
       .al
       .xl
 
-      aUnknown858EA1 ; 85/8EA1
+      aBattleForecastLevelText ; 85/8EA1
 
         .enc "SJIS"
         .text "ＬＶ"
         .word $0000
         .enc "none"
 
-      aUnknown858EA7 ; 85/8EA7
+      aBattleForecastHPText ; 85/8EA7
 
         .enc "SJIS"
         .text "ＨＰ"
@@ -1983,22 +1987,24 @@
       .al
       .xl
 
-      rlUnknown858EC5 ; 85/8EC5
+      rlProcBattleForecastTargetCycle ; 85/8EC5
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Bit 0 of the proc's bitfield: redraw the numbers (the target changed); bit 1: close.
+
         lda wUnknown0007D8,b
         cmp #$0006
         beq _8ED3
-        jsl rlUnknown85A234
+        jsl rlShowMapMenuLayers
         bra _8ED7
 
 
         _8ED3
-        jsl rlUnknown85A227
+        jsl rlHideMapMenuLayers
 
         _8ED7
         lda aProcSystem.aHeaderBitfield,b,x
@@ -2008,8 +2014,8 @@
         beq _8F0F
         and #$FFFE
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown858F61
-        jsl rlUnknown858F28
+        jsl rlBattleForecastDrawTarget
+        jsl rlBattleForecastAvoidCursor
         bcc _8EFD
         sta $0534,b
         jsl rlMoveMapMenu
@@ -2024,7 +2030,7 @@
         _8F03
         jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
-        jsl rlUnknown859B48
+        jsl rlRestoreMapMenuTextColors
 
         _8F0F
         rtl
@@ -2041,7 +2047,7 @@
       .al
       .xl
 
-      rsUnknown858F10 ; 85/8F10
+      rsBattleForecastCheckClose ; 85/8F10
 
         ; Found by tools/sweep.py.
         .al
@@ -2049,12 +2055,14 @@
         .autsiz
         .databank ?
 
+        ; Bit 1 of the proc's bitfield: closes the window, frees the proc and puts back the text colours; carry set.
+
         lda aProcSystem.aHeaderBitfield,b,x
         bit #$0002
         beq _8F26
         jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
-        jsl rlUnknown859B48
+        jsl rlRestoreMapMenuTextColors
         sec
         rts
 
@@ -2075,12 +2083,14 @@
       .al
       .xl
 
-      rlUnknown858F28 ; 85/8F28
+      rlBattleForecastAvoidCursor ; 85/8F28
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set and A = a new position (column 2 or $12) when the window should change sides to stay away from the cursor; aBody5 remembers the side.
 
         lda wCursorXOffset,b
         cmp #$0080
@@ -2119,12 +2129,14 @@
 
         ; 85/8F61
 
-      rlUnknown858F61 ; 85/8F61
+      rlBattleForecastDrawTarget ; 85/8F61
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Name, class, weapon and level; then HP over max HP for a staff, or HP, might ("−−" from $FF), defense and adjusted hit (the "100" glyph at 100).
 
         phb
         php
@@ -2286,18 +2298,18 @@
         .enc "none"
 
 
-      aUnknown859098 ; 85/9098
+      aBattleForecastAttackerTilemapData ; 85/9098
         .byte $04, $0A, $88, $83, $7E, $00, $4A, $C9, $7F
 
-      aUnknown8590A1 ; 85/90A1
+      aBattleForecastAttackerData ; 85/90A1
         .long $000000
         .long $000000
-        .long aUnknown859098
+        .long aBattleForecastAttackerTilemapData
         .byte $01, $0A, $09
 
-      procUnknown8590AD ; 85/90AD
-        .structProcInfo "PW", rlUnknown8590B9, rlUnknown8590C8, aProcUnknown8590ADCode
-        .long aUnknown8590A1
+      procBattleForecastAttacker ; 85/90AD
+        .structProcInfo "PW", rlProcBattleForecastAttackerInit, rlProcBattleForecastAttackerFirstCycle, aProcBattleForecastAttackerCode
+        .long aBattleForecastAttackerData
         .byte $00
 
     .endsection Table859078Section
@@ -2308,7 +2320,7 @@
       .al
       .xl
 
-      rlUnknown8590B9 ; 85/90B9
+      rlProcBattleForecastAttackerInit ; 85/90B9
 
         ; Found through fe4.cdl.
         .al
@@ -2316,17 +2328,19 @@
         .autsiz
         .databank ?
 
+        ; The attacker's side of the forecast: aActionStructUnit1's HP, might, defense and adjusted hit.
+
         jsl rlInitMapMenuProc
         lda #$0000
         sta aProcSystem.aBody5,b,x
-        jsl rlUnknown85A227
+        jsl rlHideMapMenuLayers
         rtl
 
         .databank 0
 
         ; 85/90C8
 
-      rlUnknown8590C8 ; 85/90C8
+      rlProcBattleForecastAttackerFirstCycle ; 85/90C8
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
@@ -2334,8 +2348,8 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown858F10
-        lda #<>rlUnknown8590D2
+        jsr rsBattleForecastCheckClose
+        lda #<>rlProcBattleForecastAttackerSetUp
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -2343,7 +2357,7 @@
 
         ; 85/90D2
 
-      rlUnknown8590D2 ; 85/90D2
+      rlProcBattleForecastAttackerSetUp ; 85/90D2
 
         .al
         .xl
@@ -2353,11 +2367,11 @@
         lda wUnknown0007D8,b
         cmp #$0006
         beq _9107
-        jsr rsUnknown858F10
+        jsr rsBattleForecastCheckClose
         bcs _9107
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsr rsUnknown85915A
-        jsl rlUnknown858F28
+        jsr rsBattleForecastDrawAttacker
+        jsl rlBattleForecastAvoidCursor
         bcc _90F9
         clc
         adc #$0008
@@ -2370,8 +2384,8 @@
         jsl rlDrawMapMenu
 
         _90FD
-        jsl rlUnknown85A234
-        lda #<>rlUnknown859108
+        jsl rlShowMapMenuLayers
+        lda #<>rlProcBattleForecastAttackerCycle
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _9107
@@ -2389,7 +2403,7 @@
       .al
       .xl
 
-      rlUnknown859108 ; 85/9108
+      rlProcBattleForecastAttackerCycle ; 85/9108
 
         .al
         .xl
@@ -2410,11 +2424,11 @@
         and #$FFFB
         ora #$0008
         sta aProcSystem.aHeaderBitfield,b,x
-        jsr rsUnknown85915A
+        jsr rsBattleForecastDrawAttacker
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFE
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown858F28
+        jsl rlBattleForecastAvoidCursor
         bcc _9149
         clc
         adc #$0008
@@ -2439,7 +2453,7 @@
 
         ; 85/9158
 
-      aProcUnknown8590ADCode ; 85/9158
+      aProcBattleForecastAttackerCode ; 85/9158
 
         PROC_HALT
 
@@ -2451,7 +2465,7 @@
       .al
       .xl
 
-      rsUnknown85915A ; 85/915A
+      rsBattleForecastDrawAttacker ; 85/915A
 
         .al
         .xl
@@ -2466,7 +2480,7 @@
         phy
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        ldy #$4EB5
+        ldy #<>aActionStructUnit1
         sep #$20
         lda #$7E
         pha
@@ -2509,12 +2523,14 @@
 
         ; 85/91B2
 
-      rlUnknown8591B2 ; 85/91B2
+      rlShowBattleForecast ; 85/91B2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unless wMapActionTargetType is 2-4: computes the battle stats and opens or refreshes the target's window, and the attacker's unless it is a staff (type 1).
 
         phb
         php
@@ -2530,9 +2546,9 @@
         cmp #$0004
         beq _9219
         jsl rlActionStructGetBattleStats
-        lda #(`procUnknown858D77)<<8
+        lda #(`procBattleForecastTarget)<<8
         sta lR44+1
-        lda #<>procUnknown858D77
+        lda #<>procBattleForecastTarget
         sta lR44
         jsl rlProcEngineFindProc
         bcs _91E6
@@ -2550,9 +2566,9 @@
         lda wMapActionTargetType,b
         cmp #$0001
         beq _9219
-        lda #(`procUnknown8590AD)<<8
+        lda #(`procBattleForecastAttacker)<<8
         sta lR44+1
-        lda #<>procUnknown8590AD
+        lda #<>procBattleForecastAttacker
         sta lR44
         jsl rlProcEngineFindProc
         bcs _9210
@@ -2577,12 +2593,14 @@
 
         ; 85/921D
 
-      rlUnknown85921D ; 85/921D
+      rlCloseBattleForecast ; 85/921D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bit 1 (close) in both forecast procs and runs them once.
 
         phb
         php
@@ -2594,26 +2612,26 @@
         pha
         lda wR1
         pha
-        lda #(`procUnknown858D77)<<8
+        lda #(`procBattleForecastTarget)<<8
         sta lR44+1
-        lda #<>procUnknown858D77
+        lda #<>procBattleForecastTarget
         sta lR44
         jsl rlProcEngineFindProc
         bcc _9262
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown858EC5
-        lda #(`procUnknown8590AD)<<8
+        jsl rlProcBattleForecastTargetCycle
+        lda #(`procBattleForecastAttacker)<<8
         sta lR44+1
-        lda #<>procUnknown8590AD
+        lda #<>procBattleForecastAttacker
         sta lR44
         jsl rlProcEngineFindProc
         bcc _9262
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown859108
+        jsl rlProcBattleForecastAttackerCycle
 
         _9262
         pla
@@ -2631,13 +2649,13 @@
         ; 85/926C
 
 
-      aUnknown85926C ; 85/926C
+      aMapItemListTilemapData ; 85/926C
 
         .structMapMenuTilemapData 16, 16, aBG3TilemapBuffer, 0, $7FC64A
 
-      aUnknown859275 ; 85/9275
+      aMapItemListData ; 85/9275
 
-        .long 0, 0, aUnknown85926C
+        .long 0, 0, aMapItemListTilemapData
         .byte 0, 2, 9
 
     .endsection Unsorted85915ASection
@@ -2648,12 +2666,12 @@
       .al
       .xl
 
-      procUnknown859281 ; 85/9281
+      procMapItemList ; 85/9281
 
-        .structProcInfo "PW", rlUnknown85928D, rlUnknown8592C4, aProcDialogueBoxCode
+        .structProcInfo "PW", rlProcMapItemListInit, rlProcMapItemListSetUp, aProcDialogueBoxCode
 
 
-        .long aUnknown859275
+        .long aMapItemListData
         .byte 1
 
     .endsection Unsorted859281Section
@@ -2664,12 +2682,14 @@
       .al
       .xl
 
-      rlUnknown85928D ; 85/928D
+      rlProcMapItemListInit ; 85/928D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wInput0 = unit RAM pointer (aBody4), wInput1 = a list of inventory slots in bank $7E (aBody5): a count byte, then the slots ($7E2000-$7E2028, rlUnknown84F786).
 
         jsl rlInitMapMenuProcAndTileBase
         lda aProcSystem.wInput0,b
@@ -2681,7 +2701,7 @@
         lda #$0000
         sta $7E8BEE
         sta $7E8BEC
-        jsl rlUnknown859B2A
+        jsl rlSetMapMenuTextColors
         lda wUnknown000D79,b
         bit #$0020
         bne _92BC
@@ -2699,12 +2719,14 @@
 
         ; 85/92C4
 
-      rlUnknown8592C4 ; 85/92C4
+      rlProcMapItemListSetUp ; 85/92C4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sizes the window to the list.
 
         phx
         phy
@@ -2726,8 +2748,8 @@
         adc #$0002
         xba
         jsl rlSetMapMenuTilemapArea
-        jsl rlUnknown85A227
-        lda #<>rlUnknown8592FA
+        jsl rlHideMapMenuLayers
+        lda #<>rlMapItemListDrawItems
         sta aProcSystem.aHeaderOnCycle,b,x
         ply
         plx
@@ -2745,13 +2767,15 @@
       .al
       .xl
 
-      rlUnknown8592FA ; 85/92FA
+      rlMapItemListDrawItems ; 85/92FA
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Each item's name and uses.
 
         phx
         phy
@@ -2816,10 +2840,10 @@
         _9375
         ply
         plx
-        lda #<>rlUnknown859386
+        lda #<>rlProcMapItemListShowPortrait
         sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlDrawMapMenu
-        jsl rlUnknown85A227
+        jsl rlHideMapMenuLayers
         rtl
 
         .databank 0
@@ -2834,15 +2858,15 @@
       .al
       .xl
 
-      rlUnknown859386 ; 85/9386
+      rlProcMapItemListShowPortrait ; 85/9386
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown85969E
-        lda #<>rlUnknown859390
+        jsr rsMapItemListShowPortrait
+        lda #<>rlProcMapItemListShowDetails
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -2858,13 +2882,15 @@
       .al
       .xl
 
-      rlUnknown859390 ; 85/9390
+      rlProcMapItemListShowDetails ; 85/9390
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; For a weapon list ($7E2000, $7E2010, $7E2020): opens procMapItemWeaponStats on the item under the cursor; otherwise opens the item's description box.
 
         jsl rlLoadMapMenuEntryPointerFromProcBody
         lda aProcSystem.aBody5,b,x
@@ -2909,7 +2935,7 @@
         lda #$0113
 
         _93EA
-        jsl rlUnknown85A394
+        jsl rlOpenItemDescriptionBox
         plx
         pla
         sta wR2
@@ -2922,9 +2948,9 @@
         lda aProcSystem.aBody4,b,x
         sta aProcSystem.wInput0,b
         phx
-        lda #(`procUnknown85988E)<<8
+        lda #(`procMapItemWeaponStats)<<8
         sta lR44+1
-        lda #<>procUnknown85988E
+        lda #<>procMapItemWeaponStats
         sta lR44
         jsl rlProcEngineCreateProc
         plx
@@ -2934,8 +2960,8 @@
         _9414
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlBringMapMenuToFront
-        jsl rlUnknown85A227
-        lda #<>rlUnknown859427
+        jsl rlHideMapMenuLayers
+        lda #<>rlProcMapItemListLoadIcons
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -2951,15 +2977,15 @@
       .al
       .xl
 
-      rlUnknown859427 ; 85/9427
+      rlProcMapItemListLoadIcons ; 85/9427
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown859766
-        lda #<>rlUnknown859431
+        jsr rsMapItemListLoadIcons
+        lda #<>rlProcMapItemListBeginInput
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -2975,7 +3001,7 @@
       .al
       .xl
 
-      rlUnknown859431 ; 85/9431
+      rlProcMapItemListBeginInput ; 85/9431
 
         ; Found by tools/sweep.py.
         .al
@@ -2983,16 +3009,18 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85A234
-        lda #<>rlUnknown85943B
+        jsl rlShowMapMenuLayers
+        lda #<>rlProcMapItemListCycle
         sta aProcSystem.aHeaderOnCycle,b,x
 
-      rlUnknown85943B ; 85/943B
+      rlProcMapItemListCycle ; 85/943B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Up and Down move the cursor (aBody6) and update the stats or description; A chooses (rsMapItemListChoose); B closes everything and reopens the unit menu.
 
         phx
         lda aProcSystem.aBody5,b,x
@@ -3047,7 +3075,7 @@
         beq _94AF
         lda #$000A
         jsl rlPlaySoundEffect
-        jsr rsUnknown8595C0
+        jsr rsMapItemListChoose
         jml _957A
 
 
@@ -3057,14 +3085,14 @@
         beq _94E8
         lda #$0021
         jsl rlPlaySoundEffect
-        jsr rsUnknown8596FA
+        jsr rsMapItemListHidePortrait
         jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
-        jsl rlUnknown859B48
-        jsl rlUnknown85A3A6
+        jsl rlRestoreMapMenuTextColors
+        jsl rlCloseItemDescriptionBox
         lda #$8000
         sta $7E8BEE
-        jsr rsUnknown859737
+        jsr rsCloseMapItemWeaponStats
         phx
         jsl rlUnknown88ADA2
         jsl rlOpenUnitMenu
@@ -3108,7 +3136,7 @@
         sta lR18
         lda lRoutineVariable+1,b
         sta lR18+1
-        jsl rlUnknown85A3D5
+        jsl rlChangeItemDescriptionBox
         plx
         pla
         sta wR2
@@ -3131,7 +3159,7 @@
         sta wR1
         lda aProcSystem.aBody6,b,x
         jsl rlDrawListCursorAtIndex
-        jsr rsUnknown8597CD
+        jsr rsMapItemListDrawIcons
         lda aProcSystem.aBody5,b,x
         cmp #$2008
         beq _957A
@@ -3139,7 +3167,7 @@
         beq _957A
         cmp #$2028
         beq _957A
-        jsr rsUnknown859AFD
+        jsr rsMapItemWeaponStatsDrawRankIcon
 
         _957A
         rtl
@@ -3148,7 +3176,7 @@
 
         ; 85/957B
 
-      rlUnknown85957B ; 85/957B
+      rlProcMapItemListWaitForItemUseMenu ; 85/957B
 
         ; Found by tools/sweep.py.
         .al
@@ -3156,7 +3184,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown8597CD
+        jsr rsMapItemListDrawIcons
         lda wJoy1New
         bit #$0080
         beq _959A
@@ -3164,7 +3192,7 @@
         jsl rlPlaySoundEffect
         jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
-        jsl rlUnknown859B48
+        jsl rlRestoreMapMenuTextColors
         bra _95AE
 
 
@@ -3174,7 +3202,7 @@
         beq _95AE
         lda #$0021
         jsl rlPlaySoundEffect
-        lda #<>rlUnknown85943B
+        lda #<>rlProcMapItemListCycle
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _95AE
@@ -3191,7 +3219,7 @@
 
         ; 85/95C0
 
-      rsUnknown8595C0 ; 85/95C0
+      rsMapItemListChoose ; 85/95C0
 
         ; Found by tools/sweep.py.
         .al
@@ -3199,8 +3227,10 @@
         .autsiz
         .databank ?
 
+        ; Attack or assault: the item becomes wSelectedInventorySlot and target selection starts (rlUnknown87B512, rlUnknown88AD46). Items: opens procItemUseMenu. Staves: wSelectedInventorySlot (bit 15 for the castle's list) and rlUseItemFromMap. Equip: equips it and reopens the unit menu.
+
         phx
-        jsr rsUnknown8596FA
+        jsr rsMapItemListHidePortrait
         phx
         lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
@@ -3245,9 +3275,9 @@
         sta lR44
         jsl rlProcEngineCreateProc
         plx
-        lda #<>rlUnknown85957B
+        lda #<>rlProcMapItemListWaitForItemUseMenu
         sta aProcSystem.aHeaderOnCycle,b,x
-        jsl rlUnknown85A3A6
+        jsl rlCloseItemDescriptionBox
         jml _969C
 
 
@@ -3267,8 +3297,8 @@
         ldx aProcSystem.wOffset,b
         jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
-        jsl rlUnknown859B48
-        jsl rlUnknown85A3A6
+        jsl rlRestoreMapMenuTextColors
+        jsl rlCloseItemDescriptionBox
         jsl rlUseItemFromMap
         plx
         jml _969C
@@ -3289,10 +3319,10 @@
         ldx aProcSystem.wOffset,b
         jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
-        jsl rlUnknown859B48
+        jsl rlRestoreMapMenuTextColors
         lda #$8000
         sta $7E8BEE
-        jsr rsUnknown859737
+        jsr rsCloseMapItemWeaponStats
         rts
 
 
@@ -3304,13 +3334,15 @@
 
         ; 85/969E
 
-      rsUnknown85969E ; 85/969E
+      rsMapItemListShowPortrait ; 85/969E
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the unit's portrait beside the list (rlUnknown9196EE), except in the castle (bit 5 of wUnknown000D79).
 
         lda wUnknown000D79,b
         bit #$0020
@@ -3357,7 +3389,7 @@
 
         ; 85/96FA
 
-      rsUnknown8596FA ; 85/96FA
+      rsMapItemListHidePortrait ; 85/96FA
 
         ; Found by tools/sweep.py.
         .al
@@ -3402,7 +3434,7 @@
 
         ; 85/9737
 
-      rsUnknown859737 ; 85/9737
+      rsCloseMapItemWeaponStats ; 85/9737
 
         ; Found by tools/sweep.py.
         .al
@@ -3415,9 +3447,9 @@
         pha
         lda lMapMenuRAMEntryPointer+1,b
         pha
-        lda #(`procUnknown85988E)<<8
+        lda #(`procMapItemWeaponStats)<<8
         sta lR44+1
-        lda #<>procUnknown85988E
+        lda #<>procMapItemWeaponStats
         sta lR44
         jsl rlProcEngineFindProc
         bcc _975C
@@ -3437,13 +3469,15 @@
 
         ; 85/9766
 
-      rsUnknown859766 ; 85/9766
+      rsMapItemListLoadIcons ; 85/9766
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies each item's icon into sprite tiles $40+ (rlCopyItemIcon).
 
         phx
         phy
@@ -3508,7 +3542,7 @@
 
         ; 85/97CD
 
-      rsUnknown8597CD ; 85/97CD
+      rsMapItemListDrawIcons ; 85/97CD
 
         ; Found by tools/sweep.py.
         .al
@@ -3556,7 +3590,7 @@
 
         _9812
         phx
-        ldy $9831,b,x
+        ldy <>aMapItemListIconSprites,b,x
         jsl rlPushToOAMBuffer
         plx
         inc x
@@ -3582,7 +3616,7 @@
         ; 85/9831
 
 
-      aUnknown859831 ; 85/9831
+      aMapItemListIconSprites ; 85/9831
 
         .word <>aUnknown859841
         .word <>aUnknown859848
@@ -3641,13 +3675,13 @@
 
         .structSpriteArray aUnknown859872._Sprites
 
-      aUnknown859879 ; 85/9879
+      aMapItemWeaponStatsTilemapData ; 85/9879
 
         .structMapMenuTilemapData 11, 10, aBG3TilemapBuffer, 0, $7FC94A
 
-      aUnknown859882 ; 85/9882
+      aMapItemWeaponStatsData ; 85/9882
 
-        .long 0, 0, aUnknown859879
+        .long 0, 0, aMapItemWeaponStatsTilemapData
         .byte 0, 19, 4
 
     .endsection Unsorted859431Section
@@ -3658,12 +3692,12 @@
       .al
       .xl
 
-      procUnknown85988E ; 85/988E
+      procMapItemWeaponStats ; 85/988E
 
-        .structProcInfo "PW", rlUnknown85989A, rlUnknown859973, aProcUnknown85988ECode
+        .structProcInfo "PW", rlProcMapItemWeaponStatsInit, rlProcMapItemWeaponStatsDraw, aProcMapItemWeaponStatsCode
 
 
-        .long aUnknown859882
+        .long aMapItemWeaponStatsData
         .byte 0
 
     .endsection Unsorted85988ESection
@@ -3674,12 +3708,14 @@
       .al
       .xl
 
-      rlUnknown85989A ; 85/989A
+      rlProcMapItemWeaponStatsInit ; 85/989A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wInput0 = unit RAM pointer, wInput1 = inventory slot. Draws the stat labels.
 
         jsl rlInitMapMenuProcAndTileBase
         lda aProcSystem.wInput0,b
@@ -3692,7 +3728,7 @@
         jsl rlDrawMapMenu
         lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown85A227
+        jsl rlHideMapMenuLayers
         phx
         lda #$2140
         sta aCurrentTilemapInfo,b
@@ -3791,12 +3827,14 @@
       .al
       .xl
 
-      rlUnknown859973 ; 85/9973
+      rlProcMapItemWeaponStatsDraw ; 85/9973
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Might, hit and avoid with the weapon, each with an arrow up or down against the first usable weapon; the weapon rank icon.
 
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
@@ -3830,7 +3868,7 @@
         ora #$0008
         tax
         pla
-        jsr rsUnknown859A66
+        jsr rsDrawStatChangeArrow
         plx
         lda wR0
         ldx #$24F0
@@ -3854,7 +3892,7 @@
         ora #$0008
         tax
         pla
-        jsr rsUnknown859A66
+        jsr rsDrawStatChangeArrow
         plx
         lda wR0
         ldx #$24F0
@@ -3882,7 +3920,7 @@
         ora #$0008
         tax
         pla
-        jsr rsUnknown859A66
+        jsr rsDrawStatChangeArrow
         plx
         lda wR0
         ldx #$24F0
@@ -3893,11 +3931,11 @@
         lda bBufferTM
         bit #$0002
         beq _9A5B
-        jsr rsUnknown859AFD
+        jsr rsMapItemWeaponStatsDrawRankIcon
 
         _9A5B
         jsl rlDrawMapMenuBG3
-        lda #<>rlUnknown859AB4
+        lda #<>rlProcMapItemWeaponStatsCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -3905,12 +3943,14 @@
 
         ; 85/9A66
 
-      rsUnknown859A66 ; 85/9A66
+      rsDrawStatChangeArrow ; 85/9A66
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = difference, X = row and column: ↓ if positive, ↑ if negative (the first weapon minus this one), blank if 0.
 
         pha
         lda #$2400
@@ -3992,12 +4032,14 @@
       .al
       .xl
 
-      rlUnknown859AB4 ; 85/9AB4
+      rlProcMapItemWeaponStatsCycle ; 85/9AB4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wMapItemListRequest bit 15: close; bit 14: show the item in wMapItemListHoveredSlot.
 
         lda $7E8BEE
         bit #$8000
@@ -4027,7 +4069,7 @@
         lda #$0000
         sta $7E8BEE
         sta $7E8BEC
-        lda #<>rlUnknown859973
+        lda #<>rlProcMapItemWeaponStatsDraw
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -4043,7 +4085,7 @@
       .al
       .xl
 
-      rsUnknown859AFD ; 85/9AFD
+      rsMapItemWeaponStatsDrawRankIcon ; 85/9AFD
 
         .al
         .xl
@@ -4055,7 +4097,7 @@
         pha
         lda wR1
         pha
-        ldy #$9B21
+        ldy #<>aMapItemWeaponRankIconSprite
         lda #$00C8
         sta wR0
         lda #$0028
@@ -4075,11 +4117,11 @@
         ; 85/9B21
 
 
-      aUnknown859B21 ; 85/9B21
+      aMapItemWeaponRankIconSprite ; 85/9B21
 
         _Sprites := [[(   0,    0), $21, SpriteLarge, $04E, 3, 5, false, false]]
 
-        .structSpriteArray aUnknown859B21._Sprites
+        .structSpriteArray aMapItemWeaponRankIconSprite._Sprites
 
     .endsection Unsorted859AFDSection
 
@@ -4089,7 +4131,7 @@
       .al
       .xl
 
-      aProcUnknown85988ECode ; 85/9B28
+      aProcMapItemWeaponStatsCode ; 85/9B28
 
         PROC_HALT
 
@@ -4104,12 +4146,14 @@
       .al
       .xl
 
-      rlUnknown859B2A ; 85/9B2A
+      rlSetMapMenuTextColors ; 85/9B2A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Saves BG colours 5-7 (in $7FEB0A) and sets aMapMenuTextColors.
 
         phx
         ldx #$0004
@@ -4117,7 +4161,7 @@
         _9B2E
         lda $010A,b,x
         sta $7FEB0A,x
-        lda aUnknown859B42,x
+        lda aMapMenuTextColors,x
         sta $010A,b,x
         dec x
         dec x
@@ -4137,9 +4181,9 @@
       .al
       .xl
 
-      aUnknown859B42 ; 85/9B42
+      aMapMenuTextColors ; 85/9B42
 
-        ; Read by rlUnknown859B2A.
+        ; Read by rlSetMapMenuTextColors.
 
         .word $39AA, $7BDA, $0C21
 
@@ -4153,7 +4197,7 @@
       .al
       .xl
 
-      rlUnknown859B48 ; 85/9B48
+      rlRestoreMapMenuTextColors ; 85/9B48
 
         .al
         .xl
@@ -4184,12 +4228,14 @@
       .al
       .xl
 
-      rlUnknown859BBD ; 85/9BBD
+      rlLoadWindowPaletteColors ; 85/9BBD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies colours 8-15 of aWindowPalette into BG palette 0.
 
         phx
         ldx #$0010
@@ -4216,19 +4262,21 @@
       .al
       .xl
 
-      rlUnknown859D60 ; 85/9D60
+      rlCloseDialogueBox ; 85/9D60
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; wR0 = the dialogue box's number: sets bit 0 of its procDialogueBox's aBody4 (close). With none open, sets wDialogueBoxHDMAStatus to $7FFF.
+
         phx
         ldx #$001E
 
         _9D64
         lda aProcSystem.aHeaderTypeOffset,b,x
-        cmp #$9BE6
+        cmp #<>procDialogueBox
         bne _9D7B
         lda aProcSystem.aBody5,b,x
         cmp wR0
@@ -4261,7 +4309,7 @@
       .al
       .xl
 
-      aUnknown859D88 .dstruct structHDMAIndirectEntryInfo, rlUnknown859D94, rlUnknown859DCA, $9DCB, wDialogueBoxHDMAYPixelPosition, PPU_REG_BASE + $32, $40, $85 ; 85/9D88
+      aMapMenuGradientHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlMapMenuGradientHDMAInit, rlMapMenuGradientHDMACycle, aMapMenuGradientHDMACode, wDialogueBoxHDMAYPixelPosition, PPU_REG_BASE + $32, $40, $85 ; 85/9D88
 
     .endsection Table859D88Section
 
@@ -4271,12 +4319,14 @@
       .al
       .xl
 
-      rlUnknown859D94 ; 85/9D94
+      rlMapMenuGradientHDMAInit ; 85/9D94
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Subtracts the fixed colour from BG2 and builds a COLDATA table in wDialogueBoxHDMA: wR43 = first line and height, wR42 = steps and shape.
 
         sep #$20
         lda #$00
@@ -4300,8 +4350,8 @@
         sta wR4
         phx
         ldx #$0000
-        jsr rsUnknown859DCD
-        jsr rsUnknown859E08
+        jsr rsMapMenuGradientSkipLines
+        jsr rsMapMenuGradientBuild
         plx
         rtl
 
@@ -4309,7 +4359,7 @@
 
         ; 85/9DCA
 
-      rlUnknown859DCA ; 85/9DCA
+      rlMapMenuGradientHDMACycle ; 85/9DCA
 
         .al
         .xl
@@ -4323,7 +4373,7 @@
         ; 85/9DCB
 
 
-      aUnknown859DCB ; 85/9DCB
+      aMapMenuGradientHDMACode ; 85/9DCB
 
         HDMA_HALT
 
@@ -4335,7 +4385,7 @@
       .al
       .xl
 
-      rsUnknown859DCD ; 85/9DCD
+      rsMapMenuGradientSkipLines ; 85/9DCD
 
         .al
         .xl
@@ -4355,7 +4405,7 @@
         sta wDialogueBoxHDMAYPixelPosition,x
         rep #$20
         inc x
-        lda #$9E07
+        lda #<>aMapMenuGradientNone
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
         inc x
@@ -4366,7 +4416,7 @@
         sta wDialogueBoxHDMAYPixelPosition,x
         rep #$20
         inc x
-        lda #$9E07
+        lda #<>aMapMenuGradientNone
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
         inc x
@@ -4379,7 +4429,7 @@
         ; 85/9E07
 
 
-      aUnknown859E07 ; 85/9E07
+      aMapMenuGradientNone ; 85/9E07
 
         .byte $E0
 
@@ -4391,7 +4441,7 @@
       .al
       .xl
 
-      rsUnknown859E08 ; 85/9E08
+      rsMapMenuGradientBuild ; 85/9E08
 
         .al
         .xl
@@ -4406,14 +4456,14 @@
         jsl rlUnsignedDivide16By8
         lda wR13
         sta wR3
-        jsr rsUnknown859E1F
+        jsr rsMapMenuGradientChooseShape
         rts
 
         .databank 0
 
         ; 85/9E1F
 
-      rsUnknown859E1F ; 85/9E1F
+      rsMapMenuGradientChooseShape ; 85/9E1F
 
         .al
         .xl
@@ -4476,7 +4526,7 @@
         _9E66
         jsr rsUnknown859FA3
         jsr rsUnknown859F97
-        lda $9EE7,b,y
+        lda <>aMapMenuGradientSteps,b,y
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
         inc x
@@ -4512,7 +4562,7 @@
         _9E8A
         jsr rsUnknown859FA3
         jsr rsUnknown859F97
-        lda $9F27,b,y
+        lda <>aMapMenuGradientSteps+$40,b,y
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
         inc x
@@ -4551,7 +4601,7 @@
         _9EB3
         jsr rsUnknown859FA3
         jsr rsUnknown859F97
-        lda $9F4F,b,y
+        lda <>aMapMenuGradientSteps+$68,b,y
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
         inc x
@@ -4581,7 +4631,7 @@
         sta wDialogueBoxHDMAYPixelPosition,x
         rep #$20
         inc x
-        lda #$9F77
+        lda #<>aMapMenuGradientColors
         sta wDialogueBoxHDMAYPixelPosition,x
         inc x
         inc x
@@ -4594,19 +4644,19 @@
         ; 85/9EE7
 
 
-      aUnknown859EE7 ; 85/9EE7
+      aMapMenuGradientSteps ; 85/9EE7
 
-        .word <>aUnknown859F77, <>aUnknown859F77+1, <>aUnknown859F77+2, <>aUnknown859F77+3, <>aUnknown859F77+4, <>aUnknown859F77+5, <>aUnknown859F77+6, <>aUnknown859F77+7
-        .word <>aUnknown859F77+8, <>aUnknown859F77+9, <>aUnknown859F77+10, <>aUnknown859F77+11, <>aUnknown859F77+12, <>aUnknown859F77+13, <>aUnknown859F77+14, <>aUnknown859F77+15
-        .word <>aUnknown859F77+16, <>aUnknown859F77+17, <>aUnknown859F77+18, <>aUnknown859F77+19, <>aUnknown859F77+20, <>aUnknown859F77+21, <>aUnknown859F77+22, <>aUnknown859F77+23
-        .word <>aUnknown859F77+24, <>aUnknown859F77+25, <>aUnknown859F77+26, <>aUnknown859F77+27, <>aUnknown859F77+28, <>aUnknown859F77+29, <>aUnknown859F77+30, <>aUnknown859F77+31
-        .word <>aUnknown859F77+19, <>aUnknown859F77+18, <>aUnknown859F77+17, <>aUnknown859F77+16, <>aUnknown859F77+15, <>aUnknown859F77+14, <>aUnknown859F77+13, <>aUnknown859F77+12
-        .word <>aUnknown859F77+11, <>aUnknown859F77+10, <>aUnknown859F77+9, <>aUnknown859F77+8, <>aUnknown859F77+7, <>aUnknown859F77+6, <>aUnknown859F77+5, <>aUnknown859F77+4
-        .word <>aUnknown859F77+3, <>aUnknown859F77+2, <>aUnknown859F77+1, <>aUnknown859F77, <>aUnknown859F77+19, <>aUnknown859F77+16, <>aUnknown859F77+13, <>aUnknown859F77+10
-        .word <>aUnknown859F77+7, <>aUnknown859F77+5, <>aUnknown859F77+3, <>aUnknown859F77+2, <>aUnknown859F77+1, <>aUnknown859F77, <>aUnknown859F77, <>aUnknown859F77+1
-        .word <>aUnknown859F77+2, <>aUnknown859F77+3, <>aUnknown859F77+5, <>aUnknown859F77+7, <>aUnknown859F77+10, <>aUnknown859F77+13, <>aUnknown859F77+16, <>aUnknown859F77+19
+        .word <>aMapMenuGradientColors, <>aMapMenuGradientColors+1, <>aMapMenuGradientColors+2, <>aMapMenuGradientColors+3, <>aMapMenuGradientColors+4, <>aMapMenuGradientColors+5, <>aMapMenuGradientColors+6, <>aMapMenuGradientColors+7
+        .word <>aMapMenuGradientColors+8, <>aMapMenuGradientColors+9, <>aMapMenuGradientColors+10, <>aMapMenuGradientColors+11, <>aMapMenuGradientColors+12, <>aMapMenuGradientColors+13, <>aMapMenuGradientColors+14, <>aMapMenuGradientColors+15
+        .word <>aMapMenuGradientColors+16, <>aMapMenuGradientColors+17, <>aMapMenuGradientColors+18, <>aMapMenuGradientColors+19, <>aMapMenuGradientColors+20, <>aMapMenuGradientColors+21, <>aMapMenuGradientColors+22, <>aMapMenuGradientColors+23
+        .word <>aMapMenuGradientColors+24, <>aMapMenuGradientColors+25, <>aMapMenuGradientColors+26, <>aMapMenuGradientColors+27, <>aMapMenuGradientColors+28, <>aMapMenuGradientColors+29, <>aMapMenuGradientColors+30, <>aMapMenuGradientColors+31
+        .word <>aMapMenuGradientColors+19, <>aMapMenuGradientColors+18, <>aMapMenuGradientColors+17, <>aMapMenuGradientColors+16, <>aMapMenuGradientColors+15, <>aMapMenuGradientColors+14, <>aMapMenuGradientColors+13, <>aMapMenuGradientColors+12
+        .word <>aMapMenuGradientColors+11, <>aMapMenuGradientColors+10, <>aMapMenuGradientColors+9, <>aMapMenuGradientColors+8, <>aMapMenuGradientColors+7, <>aMapMenuGradientColors+6, <>aMapMenuGradientColors+5, <>aMapMenuGradientColors+4
+        .word <>aMapMenuGradientColors+3, <>aMapMenuGradientColors+2, <>aMapMenuGradientColors+1, <>aMapMenuGradientColors, <>aMapMenuGradientColors+19, <>aMapMenuGradientColors+16, <>aMapMenuGradientColors+13, <>aMapMenuGradientColors+10
+        .word <>aMapMenuGradientColors+7, <>aMapMenuGradientColors+5, <>aMapMenuGradientColors+3, <>aMapMenuGradientColors+2, <>aMapMenuGradientColors+1, <>aMapMenuGradientColors, <>aMapMenuGradientColors, <>aMapMenuGradientColors+1
+        .word <>aMapMenuGradientColors+2, <>aMapMenuGradientColors+3, <>aMapMenuGradientColors+5, <>aMapMenuGradientColors+7, <>aMapMenuGradientColors+10, <>aMapMenuGradientColors+13, <>aMapMenuGradientColors+16, <>aMapMenuGradientColors+19
 
-      aUnknown859F77 ; 85/9F77
+      aMapMenuGradientColors ; 85/9F77
 
         .byte $E0, $E1, $E2, $E3, $E4, $E5, $E6, $E7, $E8, $E9, $EA, $EB, $EC, $ED, $EE, $EF
         .byte $F0, $F1, $F2, $F3, $F4, $F5, $F6, $F7, $F8, $F9, $FA, $FB, $FC, $FD, $FE, $FF
@@ -4678,19 +4728,21 @@
       .al
       .xl
 
-      rlUnknown859FCD ; 85/9FCD
+      rlStartMapMenuGradient ; 85/9FCD
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; wR42/wR43 as rlMapMenuGradientHDMAInit: replaces HDMA entry 0 with the gradient.
+
         jsl rlFreeHDMAEntry0
         lda #$0000
         sta wR40
-        lda #(`aUnknown859D88)<<8
+        lda #(`aMapMenuGradientHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown859D88
+        lda #<>aMapMenuGradientHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntryByIndex
         rtl
@@ -4707,12 +4759,14 @@
       .al
       .xl
 
-      rlUnknown859FEA ; 85/9FEA
+      rlBeginMapMenuOpening ; 85/9FEA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = style: 0 widens from the right edge, 1 and 2 from the left; the window starts 4 tiles wide.
 
         pha
         lda #$0000
@@ -4721,7 +4775,7 @@
         asl a
         phx
         tax
-        jsr (aUnknown859FFB,x)
+        jsr (aMapMenuOpeningStyles,x)
         plx
         rtl
 
@@ -4737,18 +4791,18 @@
       .al
       .xl
 
-      aUnknown859FFB ; 85/9FFB
+      aMapMenuOpeningStyles ; 85/9FFB
 
-        ; Jump table of rlUnknown859FEA. (tools/sweep.py had started a routine at
+        ; Jump table of rlBeginMapMenuOpening. (tools/sweep.py had started a routine at
         ; $85/A004, three bytes into this table.)
-        .word <>rsUnknown85A007
-        .word <>rsUnknown85A02E
+        .word <>rsBeginMapMenuOpeningFromRight
+        .word <>rsBeginMapMenuOpeningFromLeft
         .word <>rlUnknown85A03D
         .word <>rsUnknown85A040
         .word <>rsUnknown85A040
         .word <>rsUnknown85A040
 
-      rsUnknown85A007 ; 85/A007
+      rsBeginMapMenuOpeningFromRight ; 85/A007
 
         .al
         .xl
@@ -4783,7 +4837,7 @@
       .al
       .xl
 
-      rsUnknown85A02E ; 85/A02E
+      rsBeginMapMenuOpeningFromLeft ; 85/A02E
 
         .al
         .xl
@@ -4815,7 +4869,7 @@
         .autsiz
         .databank ?
 
-        bra rsUnknown85A02E
+        bra rsBeginMapMenuOpeningFromLeft
 
         .databank 0
 
@@ -4850,12 +4904,14 @@
       .al
       .xl
 
-      rlUnknown85A041 ; 85/A041
+      rlStepMapMenuOpening ; 85/A041
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = full width and height, Y = steps and style: widens the window one step (aBody4 counts). Carry set (and A = full size) once done.
 
         phx
         sta wR7
@@ -4875,7 +4931,7 @@
         asl a
         phx
         tax
-        jsr (aUnknown85A079,x)
+        jsr (aMapMenuOpeningStepStyles,x)
         plx
         inc aProcSystem.aBody4,b,x
         lda wR4
@@ -4905,12 +4961,12 @@
       .al
       .xl
 
-      aUnknown85A079 ; 85/A079
+      aMapMenuOpeningStepStyles ; 85/A079
 
-        .word <>rsUnknown85A085, <>rsUnknown85A0A1, <>rsUnknown85A0CE
-        .word <>rlUnknown85A0D0, <>rsUnknown85A0D9, <>rsUnknown85A0F5
+        .word <>rsStepMapMenuOpeningFromRight, <>rsGetMapMenuOpeningWidth, <>rsUnknown85A0CE
+        .word <>rsGetMapMenuClosingWidth, <>rsStepMapMenuClosingFromRight, <>rsUnknown85A0F5
 
-      rsUnknown85A085 ; 85/A085
+      rsStepMapMenuOpeningFromRight ; 85/A085
 
         .al
         .xl
@@ -4919,7 +4975,7 @@
 
         jsl rlGetMapMenuTilemapArea
         sta wR0
-        jsr rsUnknown85A0A1
+        jsr rsGetMapMenuOpeningWidth
         lda wR4
         sec
         sbc wR0
@@ -4940,7 +4996,7 @@
       .al
       .xl
 
-      rsUnknown85A0A1 ; 85/A0A1
+      rsGetMapMenuOpeningWidth ; 85/A0A1
 
         .al
         .xl
@@ -4987,7 +5043,7 @@
         .autsiz
         .databank ?
 
-        bra rsUnknown85A0A1
+        bra rsGetMapMenuOpeningWidth
 
         .databank 0
 
@@ -5001,7 +5057,7 @@
       .al
       .xl
 
-      rlUnknown85A0D0 ; 85/A0D0
+      rsGetMapMenuClosingWidth ; 85/A0D0
 
         .al
         .xl
@@ -5012,13 +5068,13 @@
         sec
         sbc wR3
         sta wR3
-        bra rsUnknown85A0A1
+        bra rsGetMapMenuOpeningWidth
 
         .databank 0
 
         ; 85/A0D9
 
-      rsUnknown85A0D9 ; 85/A0D9
+      rsStepMapMenuClosingFromRight ; 85/A0D9
 
         .al
         .xl
@@ -5027,7 +5083,7 @@
 
         jsl rlGetMapMenuTilemapArea
         sta wR0
-        jsr rlUnknown85A0D0
+        jsr rsGetMapMenuClosingWidth
         lda wR0
         sec
         sbc wR4
@@ -5061,19 +5117,19 @@
 
         .databank 0
 
-      aUnknown85A0F6 ; 85/A0F6
+      aMapTextBoxTilemapData ; 85/A0F6
 
         .structMapMenuTilemapData 32, 4, aBG3TilemapBuffer, 0, $7FCE4A
 
-      aUnknown85A0FF ; 85/A0FF
+      aMapTextBoxData ; 85/A0FF
 
-        .long 0, 0, aUnknown85A0F6
+        .long 0, 0, aMapTextBoxTilemapData
         .byte 0, 1, 1
 
-      procUnknown85A10B ; 85/A10B
+      procMapTextBox ; 85/A10B
 
-        .structProcInfo "PW", rlUnknown85A117, rlProcUnknown85DAEACycle, aProcDialogueBoxCode
-        .long aUnknown85A0FF
+        .structProcInfo "PW", rlProcMapTextBoxInit, rlProcMapTextBoxDraw, aProcDialogueBoxCode
+        .long aMapTextBoxData
         .byte 0
 
     .endsection Unsorted85A0F5Section
@@ -5084,12 +5140,14 @@
       .al
       .xl
 
-      rlUnknown85A117 ; 85/A117
+      rlProcMapTextBoxInit ; 85/A117
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; lR18, lR19 = two texts (kept at $7FEAAA, $7FEAAE); wInput0 = tile base, wInput1 = flags (bit 15: keep the tiles), wInput2 = size, wInput3 = position.
 
         phx
         lda lR18
@@ -5127,12 +5185,14 @@
 
         ; 85/A168
 
-      rlProcUnknown85DAEACycle ; 85/A168
+      rlProcMapTextBoxDraw ; 85/A168
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the two texts on one line, shows the window, and goes on to rlProcMapTextBoxCycle.
 
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
@@ -5150,13 +5210,13 @@
         lda $7FEAAF
         sta lR19+1
         ldx #$0101
-        jsl rlUnknown85A1E7
+        jsl rlDrawTwoMapMenuTextLines
 
         _A19A
         jsl rlShowMapMenu
-        jsl rlUnknown85A234
+        jsl rlShowMapMenuLayers
         plx
-        lda #<>rlUnknown85A1AA
+        lda #<>rlProcMapTextBoxCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -5172,13 +5232,15 @@
       .al
       .xl
 
-      rlUnknown85A1AA ; 85/A1AA
+      rlProcMapTextBoxCycle ; 85/A1AA
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Bit 1 of the proc's bitfield: close; bit 2: clear and draw the texts again.
 
         lda aProcSystem.aHeaderBitfield,b,x
         bit #$0002
@@ -5199,7 +5261,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #<>rlProcUnknown85DAEACycle
+        lda #<>rlProcMapTextBoxDraw
         sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlLoadMapMenuEntryPointerFromProcBody
         lda #$20FF
@@ -5220,11 +5282,13 @@
       .al
       .xl
 
-      rlUnknown85A1E7 ; 85/A1E7
+      rlDrawTwoMapMenuTextLines ; 85/A1E7
 
         .al
         .autsiz
         .databank ?
+
+        ; X = row and column: draws lR18, then lR19 right after it.
 
         phx
         jsl rlDrawMapMenuTextLine
@@ -5253,12 +5317,14 @@
       .al
       .xl
 
-      rlUnknown85A227 ; 85/A227
+      rlHideMapMenuLayers ; 85/A227
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Turns BG2 and BG3 off on the main screen.
 
         pha
         sep #$20
@@ -5273,12 +5339,14 @@
 
         ; 85/A234
 
-      rlUnknown85A234 ; 85/A234
+      rlShowMapMenuLayers ; 85/A234
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Turns BG2 and BG3 on on the main screen.
 
         pha
         sep #$20
@@ -5294,48 +5362,48 @@
         ; 85/A241
 
 
-            rlUnknown85A241 ; 85/A241
+      rlOpenMapTextBoxWithGradient ; 85/A241
 
-              .al
-              .xl
-              .autsiz
-              .databank ?
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
-              pha
-              phx
-              and #$FF00
-              asl a
-              asl a
-              asl a
-              sta wR0
-              txa
-              and #$FF00
-              asl a
-              asl a
-              asl a
-              xba
-              ora wR0
-              sta wR43
-              lda #$000F
-              sta wR42
-              jsl rlUnknown859FCD
-              plx
-              lda #$2000
-              sta aCurrentTilemapInfo,b
-              lda #(`aUnknown85A284)<<8
-              sta lR18+1
-              lda #<>aUnknown85A284
-              sta lR18
-              lda #(`aUnknown85A284)<<8
-              sta lR19+1
-              lda #<>aUnknown85A284
-              sta lR19
-              ldy #$8000
-              pla
-              jsl rlUnknown85A295
-              rtl
+        pha
+        phx
+        and #$FF00
+        asl a
+        asl a
+        asl a
+        sta wR0
+        txa
+        and #$FF00
+        asl a
+        asl a
+        asl a
+        xba
+        ora wR0
+        sta wR43
+        lda #$000F
+        sta wR42
+        jsl rlStartMapMenuGradient
+        plx
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        lda #(`aUnknown85A284)<<8
+        sta lR18+1
+        lda #<>aUnknown85A284
+        sta lR18
+        lda #(`aUnknown85A284)<<8
+        sta lR19+1
+        lda #<>aUnknown85A284
+        sta lR19
+        ldy #$8000
+        pla
+        jsl rlCreateMapTextBox
+        rtl
 
-              .databank 0
+        .databank 0
 
       aUnknown85A284 ; 85/A284
 
@@ -5343,102 +5411,102 @@
         .text "　\n"
         .enc "none"
 
-            rlUnknown85A288 ; 85/A288
+      rlOpenMapTextBox ; 85/A288
 
-              .al
-              .xl
-              .autsiz
-              .databank ?
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
-              pha
-              lda #$2000
-              sta aCurrentTilemapInfo,b
-              pla
-              jsl rlUnknown85A295
-              rtl
+        pha
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        pla
+        jsl rlCreateMapTextBox
+        rtl
 
-              .databank 0
+        .databank 0
 
-            rlUnknown85A295 ; 85/A295
+      rlCreateMapTextBox ; 85/A295
 
-              .al
-              .xl
-              .autsiz
-              .databank ?
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
-              sta aProcSystem.wInput3,b
-              stx aProcSystem.wInput2,b
-              sty aProcSystem.wInput1,b
-              lda aCurrentTilemapInfo,b
-              sta aProcSystem.wInput0,b
-              lda #(`procUnknown85A10B)<<8
-              sta lR44+1
-              lda #<>procUnknown85A10B
-              sta lR44
-              jsl rlProcEngineCreateProc
-              rtl
+        sta aProcSystem.wInput3,b
+        stx aProcSystem.wInput2,b
+        sty aProcSystem.wInput1,b
+        lda aCurrentTilemapInfo,b
+        sta aProcSystem.wInput0,b
+        lda #(`procMapTextBox)<<8
+        sta lR44+1
+        lda #<>procMapTextBox
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
 
-              .databank 0
+        .databank 0
 
-            rlUnknown85A2B3 ; 85/A2B3
+      rlCloseMapTextBox ; 85/A2B3
 
-              .al
-              .xl
-              .autsiz
-              .databank ?
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
-              lda #(`procUnknown85A10B)<<8
-              sta lR44+1
-              lda #<>procUnknown85A10B
-              sta lR44
-              jsl rlProcEngineFindProc
-              bcc _A2CC
-              lda aProcSystem.aHeaderBitfield,b,x
-              ora #$0002
-              sta aProcSystem.aHeaderBitfield,b,x
+        lda #(`procMapTextBox)<<8
+        sta lR44+1
+        lda #<>procMapTextBox
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _A2CC
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0002
+        sta aProcSystem.aHeaderBitfield,b,x
 
-              _A2CC
-              rtl
+        _A2CC
+        rtl
 
-              .databank 0
+        .databank 0
 
-            rlUnknown85A2CD ; 85/A2CD
+      rlChangeMapTextBox ; 85/A2CD
 
-              .al
-              .xl
-              .autsiz
-              .databank ?
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
-              lda #(`procUnknown85A10B)<<8
-              sta lR44+1
-              lda #<>procUnknown85A10B
-              sta lR44
-              jsl rlProcEngineFindProc
-              bcc _A2FE
-              lda aProcSystem.aHeaderBitfield,b,x
-              ora #$0004
-              sta aProcSystem.aHeaderBitfield,b,x
-              lda lR18
-              sta $7FEAAA
-              lda lR18+1
-              sta $7FEAAB
-              lda lR19
-              sta $7FEAAE
-              lda lR19+1
-              sta $7FEAAF
+        lda #(`procMapTextBox)<<8
+        sta lR44+1
+        lda #<>procMapTextBox
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _A2FE
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0004
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda lR18
+        sta $7FEAAA
+        lda lR18+1
+        sta $7FEAAB
+        lda lR19
+        sta $7FEAAE
+        lda lR19+1
+        sta $7FEAAF
 
-              _A2FE
-              rtl
+        _A2FE
+        rtl
 
-              .databank 0
+        .databank 0
 
-      aUnknown85A2FF ; 85/A2FF
+      aItemDescriptionBoxTilemapData ; 85/A2FF
 
         .structMapMenuTilemapData 10, 11, aBG3TilemapBuffer, 0, $7FCD4A
 
-      aUnknown85A308 ; 85/A308
+      aItemDescriptionBoxData ; 85/A308
 
-        .long 0, 0, aUnknown85A2FF
+        .long 0, 0, aItemDescriptionBoxTilemapData
         .byte 0, 1, 1
 
     .endsection Unsorted85A227Section
@@ -5449,12 +5517,12 @@
       .al
       .xl
 
-      procUnknown85A314 ; 85/A314
+      procItemDescriptionBox ; 85/A314
 
-        .structProcInfo "PW", rlUnknown85A320, rlUnknown85A347, aProcDialogueBoxCode
+        .structProcInfo "PW", rlProcItemDescriptionBoxInit, rlProcItemDescriptionBoxCycle, aProcDialogueBoxCode
 
 
-        .long aUnknown85A308
+        .long aItemDescriptionBoxData
         .byte 0
 
     .endsection Unsorted85A314Section
@@ -5465,12 +5533,14 @@
       .al
       .xl
 
-      rlUnknown85A320 ; 85/A320
+      rlProcItemDescriptionBoxInit ; 85/A320
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; lR18 = the description, wInput3 = position.
 
         phx
         lda lR18
@@ -5494,12 +5564,14 @@
 
         ; 85/A347
 
-      rlUnknown85A347 ; 85/A347
+      rlProcItemDescriptionBoxCycle ; 85/A347
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; aBody7 bit 15: close; bit 14: draw the description in aBody5/aBody6.
 
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
@@ -5535,7 +5607,7 @@
         lda aProcSystem.aBody6,b,x
         sta lR18+1
         ldx #$0101
-        jsl rlUnknown85A3F8
+        jsl rlDrawItemDescription
         jsl rlDrawMapMenu
         bra _A359
 
@@ -5543,17 +5615,19 @@
 
         ; 85/A394
 
-      rlUnknown85A394 ; 85/A394
+      rlOpenItemDescriptionBox ; 85/A394
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = position, lR18 = the description.
+
         sta aProcSystem.wInput3,b
-        lda #(`procUnknown85A314)<<8
+        lda #(`procItemDescriptionBox)<<8
         sta lR44+1
-        lda #<>procUnknown85A314
+        lda #<>procItemDescriptionBox
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -5570,7 +5644,7 @@
       .al
       .xl
 
-      rlUnknown85A3A6 ; 85/A3A6
+      rlCloseItemDescriptionBox ; 85/A3A6
 
         ; Found by tools/sweep.py.
         .al
@@ -5579,9 +5653,9 @@
         .databank ?
 
         phx
-        lda #(`procUnknown85A314)<<8
+        lda #(`procItemDescriptionBox)<<8
         sta lR44+1
-        lda #<>procUnknown85A314
+        lda #<>procItemDescriptionBox
         sta lR44
         jsl rlProcEngineFindProc
         bcc _A3D3
@@ -5613,17 +5687,19 @@
       .al
       .xl
 
-      rlUnknown85A3D5 ; 85/A3D5
+      rlChangeItemDescriptionBox ; 85/A3D5
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; lR18 = the new description.
+
         phx
-        lda #(`procUnknown85A314)<<8
+        lda #(`procItemDescriptionBox)<<8
         sta lR44+1
-        lda #<>procUnknown85A314
+        lda #<>procItemDescriptionBox
         sta lR44
         jsl rlProcEngineFindProc
         bcc _A3F6
@@ -5642,12 +5718,14 @@
 
         ; 85/A3F8
 
-      rlUnknown85A3F8 ; 85/A3F8
+      rlDrawItemDescription ; 85/A3F8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = row and column: draws the text 8 characters to a line, two rows apart, through a buffer at $7E8BF6.
 
         stx wR7
         stz wR6
@@ -5731,13 +5809,13 @@
         ; 85/A46A
 
 
-      aUnknown85A46A ; 85/A46A
+      aSavePromptTilemapData ; 85/A46A
 
         .structMapMenuTilemapData 13, 6, aBG3TilemapBuffer, 0, $7FC54A
 
-      aUnknown85A473 ; 85/A473
+      aSavePromptData ; 85/A473
 
-        .long 0, 0, aUnknown85A46A
+        .long 0, 0, aSavePromptTilemapData
         .byte 0, 9, 11
 
     .endsection Unsorted85A3D5Section
@@ -5748,12 +5826,12 @@
       .al
       .xl
 
-      procUnknown85A47F ; 85/A47F
+      procSavePrompt ; 85/A47F
 
-        .structProcInfo "PW", rlProcUnknown85A47FInit, rlProcUnknown85A47FCycle1, aProcUnknown85A47FCode
+        .structProcInfo "PW", rlProcSavePromptInit, rlProcSavePromptWait, aProcSavePromptCode
 
 
-        .long aUnknown85A473
+        .long aSavePromptData
         .byte 1
 
     .endsection ProcScript85A47FSection
@@ -5764,12 +5842,14 @@
       .al
       .xl
 
-      rlProcUnknown85A47FInit ; 85/A48B
+      rlProcSavePromptInit ; 85/A48B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; "Save?" with yes and no; wInput0 = mode (aBody6): 0 opens the save menu, else saves at once (auto-save).
 
         jsl rlInitMapMenuProc
         lda #$2000
@@ -5779,27 +5859,27 @@
         lda #$0000
         sta aProcSystem.aBody7,b,x
         phx
-        lda #(`aUnknown85A4E6)<<8
+        lda #(`aSavePromptText)<<8
         sta lR18+1
-        lda #<>aUnknown85A4E6
+        lda #<>aSavePromptText
         sta lR18
         ldx #$0102
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown85A4FA)<<8
+        lda #(`aSavePromptYesText)<<8
         sta lR18+1
-        lda #<>aUnknown85A4FA
+        lda #<>aSavePromptYesText
         sta lR18
         ldx #$0303
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown85A500)<<8
+        lda #(`aSavePromptNoText)<<8
         sta lR18+1
-        lda #<>aUnknown85A500
+        lda #<>aSavePromptNoText
         sta lR18
         ldx #$0308
         jsl rlDrawMapMenuTextLine
         plx
         jsl rlDrawMapMenu
-        jsl rlUnknown85C0CE
+        jsl rlHideMapWindows
         lda #$0009
         jsl rlPlaySoundEffect
         rtl
@@ -5816,21 +5896,21 @@
       .al
       .xl
 
-      aUnknown85A4E6 ; 85/A4E6
+      aSavePromptText ; 85/A4E6
 
         .enc "SJIS"
         .text "セーブ　しますか？"
         .word $0000
         .enc "none"
 
-      aUnknown85A4FA ; 85/A4FA
+      aSavePromptYesText ; 85/A4FA
 
         .enc "SJIS"
         .text "はい"
         .word $0000
         .enc "none"
 
-      aUnknown85A500 ; 85/A500
+      aSavePromptNoText ; 85/A500
 
         .enc "SJIS"
         .text "いいえ"
@@ -5846,7 +5926,7 @@
       .al
       .xl
 
-      rlProcUnknown85A47FCycle1 ; 85/A508
+      rlProcSavePromptWait ; 85/A508
 
         .al
         .xl
@@ -5867,7 +5947,7 @@
       .al
       .xl
 
-      rlProcUnknown85A47FCycle2 ; 85/A509
+      rlProcSavePromptCycle ; 85/A509
 
         .al
         .xl
@@ -5898,11 +5978,11 @@
 
 
         _A539
-        jsr rsUnknown85A56D
+        jsr rsSavePromptHandleA
         bcc _A54C
         jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
-        jsl rlUnknown85C0D5
+        jsl rlShowMapWindows
         bra _A56C
 
 
@@ -5933,12 +6013,14 @@
 
         ; 85/A56D
 
-      rsUnknown85A56D ; 85/A56D
+      rsSavePromptHandleA ; 85/A56D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Mode 0: yes opens the save menu, no runs rlUnknown81B301. Other modes: yes saves (rlUnknown87BFD9, rlSaveToSaveSlot). Carry set when done.
 
         lda aProcSystem.aBody6,b,x
         bne _A595
@@ -6004,10 +6086,10 @@
       .al
       .xl
 
-      aProcUnknown85A47FCode ; 85/A5BD
+      aProcSavePromptCode ; 85/A5BD
 
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlProcUnknown85A47FCycle2
+        PROC_SET_ONCYCLE rlProcSavePromptCycle
         PROC_HALT
 
 
@@ -6021,18 +6103,20 @@
       .al
       .xl
 
-      rlUnknown85A5C5 ; 85/A5C5
+      rlOpenSavePrompt ; 85/A5C5
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Mode 0.
+
         lda #$0000
         sta aProcSystem.wInput0,b
-        lda #(`procUnknown85A47F)<<8
+        lda #(`procSavePrompt)<<8
         sta lR44+1
-        lda #<>procUnknown85A47F
+        lda #<>procSavePrompt
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -6042,13 +6126,13 @@
         ; 85/A5DA
 
 
-      aUnknown85A5DA ; 85/A5DA
+      aUnitAnimationMenuTilemapData ; 85/A5DA
 
         .structMapMenuTilemapData 9, 10, aBG3TilemapBuffer, 0, $7FC54A
 
-      aUnknown85A5E3 ; 85/A5E3
+      aUnitAnimationMenuData ; 85/A5E3
 
-        .long 0, 0, aUnknown85A5DA
+        .long 0, 0, aUnitAnimationMenuTilemapData
         .byte 0, 11, 9
 
     .endsection Unsorted85A5C5Section
@@ -6059,12 +6143,12 @@
       .al
       .xl
 
-      procUnknown85A5EF ; 85/A5EF
+      procUnitAnimationMenu ; 85/A5EF
 
-        .structProcInfo "PW", rlUnknown85A5FB, rlUnknown85A69A, aProcUnknown85A5EFCode
+        .structProcInfo "PW", rlProcUnitAnimationMenuInit, rlProcUnitAnimationMenuWait, aProcUnitAnimationMenuCode
 
 
-        .long aUnknown85A5E3
+        .long aUnitAnimationMenuData
         .byte 1
 
     .endsection Unsorted85A5EFSection
@@ -6075,12 +6159,14 @@
       .al
       .xl
 
-      rlUnknown85A5FB ; 85/A5FB
+      rlProcUnitAnimationMenuInit ; 85/A5FB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The unit menu's アニメ: "アニメせってい" with リアル (real), マップ (map), ぜんいん (everyone); the cursor starts on the active unit's setting.
 
         jsl rlInitMapMenuProc
         lda #$2000
@@ -6103,27 +6189,27 @@
         _A622
         sta aProcSystem.aBody7,b,x
         phx
-        lda #(`aUnknown85A670)<<8
+        lda #(`aUnitAnimationMenuTitle)<<8
         sta lR18+1
-        lda #<>aUnknown85A670
+        lda #<>aUnitAnimationMenuTitle
         sta lR18
         ldx #$0101
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown85A680)<<8
+        lda #(`aUnitAnimationMenuRealText)<<8
         sta lR18+1
-        lda #<>aUnknown85A680
+        lda #<>aUnitAnimationMenuRealText
         sta lR18
         ldx #$0302
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown85A688)<<8
+        lda #(`aUnitAnimationMenuMapText)<<8
         sta lR18+1
-        lda #<>aUnknown85A688
+        lda #<>aUnitAnimationMenuMapText
         sta lR18
         ldx #$0502
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown85A690)<<8
+        lda #(`aUnitAnimationMenuEveryoneText)<<8
         sta lR18+1
-        lda #<>aUnknown85A690
+        lda #<>aUnitAnimationMenuEveryoneText
         sta lR18
         ldx #$0702
         jsl rlDrawMapMenuTextLine
@@ -6143,28 +6229,28 @@
       .al
       .xl
 
-      aUnknown85A670 ; 85/A670
+      aUnitAnimationMenuTitle ; 85/A670
 
         .enc "SJIS"
         .text "アニメせってい"
         .word $0000
         .enc "none"
 
-      aUnknown85A680 ; 85/A680
+      aUnitAnimationMenuRealText ; 85/A680
 
         .enc "SJIS"
         .text "リアル"
         .word $0000
         .enc "none"
 
-      aUnknown85A688 ; 85/A688
+      aUnitAnimationMenuMapText ; 85/A688
 
         .enc "SJIS"
         .text "マップ"
         .word $0000
         .enc "none"
 
-      aUnknown85A690 ; 85/A690
+      aUnitAnimationMenuEveryoneText ; 85/A690
 
         .enc "SJIS"
         .text "ぜんいん"
@@ -6180,7 +6266,7 @@
       .al
       .xl
 
-      rlUnknown85A69A ; 85/A69A
+      rlProcUnitAnimationMenuWait ; 85/A69A
 
         .al
         .xl
@@ -6193,12 +6279,14 @@
 
         ; 85/A69B
 
-      rlUnknown85A69B ; 85/A69B
+      rlProcUnitAnimationMenuCycle ; 85/A69B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A on real or map sets the active unit's animation (rlSetSelectedUnitMapAnimation); on everyone opens procAllUnitsAnimationMenu. B or done: back to the unit menu.
 
         lda aProcSystem.aHeaderBitfield,b,x
         bit #$0004
@@ -6271,9 +6359,9 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #(`procUnknown85A782)<<8
+        lda #(`procAllUnitsAnimationMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85A782
+        lda #<>procAllUnitsAnimationMenu
         sta lR44
         jsl rlProcEngineCreateProc
         bra _A750
@@ -6318,23 +6406,23 @@
       .al
       .xl
 
-      aProcUnknown85A5EFCode ; 85/A765
+      aProcUnitAnimationMenuCode ; 85/A765
 
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown85A69B
+        PROC_SET_ONCYCLE rlProcUnitAnimationMenuCycle
         PROC_HALT
 
 
         ; 85/A76D
 
 
-      aUnknown85A76D ; 85/A76D
+      aAllUnitsAnimationMenuTilemapData ; 85/A76D
 
         .structMapMenuTilemapData 7, 6, aBG3TilemapBuffer, 0, $7FD54A
 
-      aUnknown85A776 ; 85/A776
+      aAllUnitsAnimationMenuData ; 85/A776
 
-        .long 0, 0, aUnknown85A76D
+        .long 0, 0, aAllUnitsAnimationMenuTilemapData
         .byte 1, 18, 12
 
     .endsection Unsorted85A765Section
@@ -6345,12 +6433,12 @@
       .al
       .xl
 
-      procUnknown85A782 ; 85/A782
+      procAllUnitsAnimationMenu ; 85/A782
 
-        .structProcInfo "PW", rlUnknown85A78E, rlUnknown85A799, aProcDialogueBoxCode
+        .structProcInfo "PW", rlProcAllUnitsAnimationMenuInit, rlProcAllUnitsAnimationMenuSetUp, aProcDialogueBoxCode
 
 
-        .long aUnknown85A776
+        .long aAllUnitsAnimationMenuData
         .byte 1
 
     .endsection Unsorted85A782Section
@@ -6361,7 +6449,7 @@
       .al
       .xl
 
-      rlUnknown85A78E ; 85/A78E
+      rlProcAllUnitsAnimationMenuInit ; 85/A78E
 
         .al
         .xl
@@ -6377,7 +6465,7 @@
 
         ; 85/A799
 
-      rlUnknown85A799 ; 85/A799
+      rlProcAllUnitsAnimationMenuSetUp ; 85/A799
 
         .al
         .xl
@@ -6387,21 +6475,21 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         phx
-        lda #(`aUnknown85A7CE)<<8
+        lda #(`aAllUnitsAnimationMenuRealText)<<8
         sta lR18+1
-        lda #<>aUnknown85A7CE
+        lda #<>aAllUnitsAnimationMenuRealText
         sta lR18
         ldx #$0102
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown85A7D6)<<8
+        lda #(`aAllUnitsAnimationMenuMapText)<<8
         sta lR18+1
-        lda #<>aUnknown85A7D6
+        lda #<>aAllUnitsAnimationMenuMapText
         sta lR18
         ldx #$0302
         jsl rlDrawMapMenuTextLine
         plx
         jsl rlDrawMapMenu
-        lda #<>rlUnknown85A7DE
+        lda #<>rlProcAllUnitsAnimationMenuCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -6417,14 +6505,14 @@
       .al
       .xl
 
-      aUnknown85A7CE ; 85/A7CE
+      aAllUnitsAnimationMenuRealText ; 85/A7CE
 
         .enc "SJIS"
         .text "リアル"
         .word $0000
         .enc "none"
 
-      aUnknown85A7D6 ; 85/A7D6
+      aAllUnitsAnimationMenuMapText ; 85/A7D6
 
         .enc "SJIS"
         .text "マップ"
@@ -6440,12 +6528,14 @@
       .al
       .xl
 
-      rlUnknown85A7DE ; 85/A7DE
+      rlProcAllUnitsAnimationMenuCycle ; 85/A7DE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A: sets every unit's animation to real or map (rlUnknown84C62E) and closes; B closes. Tells procUnitAnimationMenu through its bitfield.
 
         lda wJoy1Repeated
         bit #$0800
@@ -6501,9 +6591,9 @@
         jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
         phx
-        lda #(`procUnknown85A5EF)<<8
+        lda #(`procUnitAnimationMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85A5EF
+        lda #<>procUnitAnimationMenu
         sta lR44
         jsl rlProcEngineFindProc
         bcc _A885
@@ -6534,16 +6624,16 @@
 
         ; 85/A886
 
-      rlUnknown85A886 ; 85/A886
+      rlOpenUnitAnimationMenu ; 85/A886
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`procUnknown85A5EF)<<8
+        lda #(`procUnitAnimationMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85A5EF
+        lda #<>procUnitAnimationMenu
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -6560,12 +6650,14 @@
       .al
       .xl
 
-      rlUnknown85AB32 ; 85/AB32
+      rlCheckDialogueBoxesClosed ; 85/AB32
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set when wDialogueBoxHDMAStatus is $7FFF (no dialogue box open).
 
         lda wDialogueBoxHDMAStatus
         cmp #$7FFF
@@ -6589,7 +6681,7 @@
       .al
       .xl
 
-      aUnknown85AB82 .dstruct structHDMAIndirectEntryInfo, rlUnknown85AB8E, $AB93, $AB94, $7FEA9A, PPU_REG_BASE + $12, $42, $85 ; 85/AB82
+      aUnknown85AB82 .dstruct structHDMAIndirectEntryInfo, rlUnknown85AB8E, rlUnknown85AB93, aUnknown85AB94, $7FEA9A, PPU_REG_BASE + $12, $42, $85 ; 85/AB82
 
     .endsection Table85AB82Section
 
@@ -6608,6 +6700,14 @@
 
         lda wR43
         jsr rsUnknown85AB96
+
+      rlUnknown85AB93 ; 85/AB93
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         rtl
 
         .databank 0
@@ -6648,7 +6748,7 @@
         sta $7FEA9A,x
         rep #$20
         inc x
-        lda #$ABED
+        lda #<>aUnknown85ABED
         sta $7FEA9A,x
         inc x
         inc x
@@ -6659,7 +6759,7 @@
         sta $7FEA9A,x
         rep #$20
         inc x
-        lda #$ABED
+        lda #<>aUnknown85ABED
         sta $7FEA9A,x
         inc x
         inc x
@@ -6669,7 +6769,7 @@
         sep #$20
         sta $7FEA9A,x
         rep #$20
-        lda #$ABEF
+        lda #<>aUnknown85ABEF
         sta $7FEA9B,x
         lda #$0000
         sta $7FEA9D,x
@@ -6719,9 +6819,9 @@
       .al
       .xl
 
-      procUnknown85ABF6 ; 85/ABF6
+      procPhaseBanner ; 85/ABF6
 
-        .structProcInfo "PS", rlProcUnknown85ABF6Init, rlProcUnknown85ABF6Cycle, aProcUnknown85ABF6Code
+        .structProcInfo "PS", rlProcPhaseBannerInit, rlProcPhaseBannerLoadGraphics, aProcPhaseBannerCode
 
     .endsection Unsorted85ABF6Section
 
@@ -6743,11 +6843,13 @@
       .al
       .xl
 
-      rlProcUnknown85ABF6Init ; 85/AC02
+      rlProcPhaseBannerInit ; 85/AC02
 
         .al
         .autsiz
         .databank ?
+
+        ; Holds the game state (aBody5), hides the map menus, saves the palettes it changes, loads the army's colours (by its relation to the player) and its banner graphics (rlUnknown91AFC2). aBody6 = frames to stay (120).
 
         phx
         lda #$0008
@@ -6768,9 +6870,9 @@
         stz $85
         stz $83
 
-        jsl rlUnknown85A227
-        jsr rsUnknown85B009
-        jsr rsUnknown85B07C
+        jsl rlHideMapMenuLayers
+        jsr rsPhaseBannerSavePalettes
+        jsr rsPhaseBannerLoadColours
 
         plx
         phx
@@ -6793,12 +6895,14 @@
       .al
       .xl
 
-      rlProcUnknown85ABF6Cycle ; 85/AC40
+      rlProcPhaseBannerLoadGraphics ; 85/AC40
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Once the decompression queue is empty: uploads the banner tiles and the army's banner colours.
 
         lda bDecompressionArrayFlag,b
         bne _AC88
@@ -6808,11 +6912,11 @@
 
           .structDMAToVRAM $7E8E88, $0180, $80, $7000
 
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR18+1
-        lda #$8C88
+        lda #<>aDecompressionBuffer+$100
         sta lR18
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR18+1
         lda wActiveFactionSlot,b
         jsl rlGetFactionBattleBannerID
@@ -6821,7 +6925,7 @@
         lsr a
         lsr a
         clc
-        adc #$8C98
+        adc #<>aDecompressionBuffer+$110
         sta lR18
         ldy #$000E
 
@@ -6833,7 +6937,7 @@
         bpl _AC77
         ply
         plx
-        lda #<>rlUnknown85AC89
+        lda #<>rlProcPhaseBannerDrawFrame
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _AC88
@@ -6851,7 +6955,7 @@
       .al
       .xl
 
-      rlUnknown85AC89 ; 85/AC89
+      rlProcPhaseBannerDrawFrame ; 85/AC89
 
         ; Found by tools/sweep.py.
         .al
@@ -6862,22 +6966,22 @@
         phx
         lda #$1800
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown85AD55)<<8
+        lda #(`aPhaseBannerFrameTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown85AD55
+        lda #<>aPhaseBannerFrameTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
-        lda #(`aUnknown85ACC2)<<8
+        lda #(`aPhaseBannerFrameTiles)<<8
         sta lR18+1
-        lda #<>aUnknown85ACC2
+        lda #<>aPhaseBannerFrameTiles
         sta lR18
         jsl rlUnknown878BF0
-        jsr rsUnknown85AFC5
+        jsr rsPhaseBannerDrawEmblem
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E7B88, $0800, $80, $A800
 
         plx
-        lda #<>rlUnknown85ACEE
+        lda #<>rlProcPhaseBannerDrawText
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -6885,18 +6989,20 @@
 
         ; 85/ACC2
 
-      aUnknown85ACC2 ; 85/ACC2
+      aPhaseBannerFrameTiles ; 85/ACC2
 
         .word $0307, $2308, $2309, $230A, $230B, $230C, $230D, $230E
         .word $2318, $2319, $231A, $231B, $231C, $231D, $231E, $2328
         .word $2329, $232A, $232B, $232C, $232D, $232E
 
-      rlUnknown85ACEE ; 85/ACEE
+      rlProcPhaseBannerDrawText ; 85/ACEE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The army's name and "PHASE", centred.
 
         phx
         lda #$2400
@@ -6918,20 +7024,20 @@
         clc
         adc wR10
         pha
-        lda #(`aUnknown85AD5E)<<8
+        lda #(`aPhaseBannerTextTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown85AD5E
+        lda #<>aPhaseBannerTextTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlDrawMenuTextLine
-        lda #(`aUnknown85AD47)<<8
+        lda #(`aPhaseBannerPhaseText)<<8
         sta lR18+1
-        lda #<>aUnknown85AD47
+        lda #<>aPhaseBannerPhaseText
         sta lR18
         plx
         jsl rlDrawMenuTextLine
         jsl rlMarkAllMapMenuRowsDirty
         plx
-        lda #<>rlUnknown85AD67
+        lda #<>rlProcPhaseBannerSlideIn
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -6945,7 +7051,7 @@
       .al
       .xl
 
-      aUnknown85AD47 ; 85/AD47
+      aPhaseBannerPhaseText ; 85/AD47
 
         .enc "SJIS"
         .text "　ＰＨＡＳＥ"
@@ -6953,10 +7059,10 @@
         .enc "none"
 
 
-      aUnknown85AD55 ; 85/AD55
+      aPhaseBannerFrameTilemapData ; 85/AD55
         .byte $20, $20, $00, $00, $00, $00, $88, $7B, $7E
 
-      aUnknown85AD5E ; 85/AD5E
+      aPhaseBannerTextTilemapData ; 85/AD5E
         .byte $20, $1E, $00, $00, $00, $00, $88, $83, $7E
 
     .endsection Table85AD47Section
@@ -6967,20 +7073,22 @@
       .al
       .xl
 
-      rlUnknown85AD67 ; 85/AD67
+      rlProcPhaseBannerSlideIn ; 85/AD67
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Shows the layers and starts the slide-in window (aPhaseBannerSlideInHDMAInfo).
+
         phx
-        jsl rlUnknown85A234
+        jsl rlShowMapMenuLayers
         lda #$0002
         sta wR40
-        lda #(`aUnknown85AEBB)<<8
+        lda #(`aPhaseBannerSlideInHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown85AEBB
+        lda #<>aPhaseBannerSlideInHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntryByIndex
         sep #$20
@@ -6992,7 +7100,7 @@
         sta bBufferTS
         rep #$20
         plx
-        lda #<>rlUnknown85AD97
+        lda #<>rlProcPhaseBannerWaitSlideIn
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -7000,7 +7108,7 @@
 
         ; 85/AD97
 
-      rlUnknown85AD97 ; 85/AD97
+      rlProcPhaseBannerWaitSlideIn ; 85/AD97
 
         .al
         .xl
@@ -7010,7 +7118,7 @@
         lda $7FEAAA
         cmp #$7FFF
         bne _ADA6
-        lda #<>rlUnknown85ADA7
+        lda #<>rlProcPhaseBannerWait
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _ADA6
@@ -7020,16 +7128,18 @@
 
         ; 85/ADA7
 
-      rlUnknown85ADA7 ; 85/ADA7
+      rlProcPhaseBannerWait ; 85/ADA7
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Counts aBody6 down.
+
         dec aProcSystem.aBody6,b,x
         bpl _ADB2
-        lda #<>rlUnknown85ADB3
+        lda #<>rlProcPhaseBannerResetScroll
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _ADB2
@@ -7039,7 +7149,7 @@
 
         ; 85/ADB3
 
-      rlUnknown85ADB3 ; 85/ADB3
+      rlProcPhaseBannerResetScroll ; 85/ADB3
 
         .al
         .xl
@@ -7058,8 +7168,8 @@
         lda #$11
         sta bBufferTS
         rep #$20
-        jsr rsUnknown85B07C
-        lda #<>rlUnknown85ADD5
+        jsr rsPhaseBannerLoadColours
+        lda #<>rlProcPhaseBannerSlideOut
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -7067,22 +7177,22 @@
 
         ; 85/ADD5
 
-      rlUnknown85ADD5 ; 85/ADD5
+      rlProcPhaseBannerSlideOut ; 85/ADD5
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #<>rlUnknown85ADF6
+        lda #<>rlProcPhaseBannerWaitSlideOut
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0002
         jsl rlHDMAEngineFreeEntryByIndex
         lda #$0002
         sta wR40
-        lda #(`aUnknown85AF0F)<<8
+        lda #(`aPhaseBannerSlideOutHDMAInfo)<<8
         sta lR44+1
-        lda #<>aUnknown85AF0F
+        lda #<>aPhaseBannerSlideOutHDMAInfo
         sta lR44
         jsl rlHDMAEngineCreateEntryByIndex
         rtl
@@ -7091,7 +7201,7 @@
 
         ; 85/ADF6
 
-      rlUnknown85ADF6 ; 85/ADF6
+      rlProcPhaseBannerWaitSlideOut ; 85/ADF6
 
         .al
         .xl
@@ -7108,9 +7218,9 @@
         phx
         lda #$030F
         sta wMapMenuClearTile,b
-        lda #(`aUnknown85AD55)<<8
+        lda #(`aPhaseBannerFrameTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown85AD55
+        lda #<>aPhaseBannerFrameTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlClearTilemapEntryTiles
         jsl rlDMAByStruct
@@ -7118,7 +7228,7 @@
           .structDMAToVRAM $7E7B88, $0800, $80, $A800
 
         plx
-        lda #<>rlUnknown85AE2C
+        lda #<>rlProcPhaseBannerClear
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -7126,7 +7236,7 @@
 
         ; 85/AE2C
 
-      rlUnknown85AE2C ; 85/AE2C
+      rlProcPhaseBannerClear ; 85/AE2C
 
         .al
         .xl
@@ -7136,16 +7246,16 @@
         phx
         lda #$20FF
         sta wMapMenuClearTile,b
-        lda #(`aUnknown85AD5E)<<8
+        lda #(`aPhaseBannerTextTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown85AD5E
+        lda #<>aPhaseBannerTextTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         jsl rlClearTilemapEntryTiles
         jsl rlMarkAllMapMenuRowsDirty
         lda #$0002
         jsl rlHDMAEngineFreeEntryByIndex
         plx
-        lda #<>rlUnknown85AE56
+        lda #<>rlProcPhaseBannerEnd
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -7153,18 +7263,20 @@
 
         ; 85/AE56
 
-      rlUnknown85AE56 ; 85/AE56
+      rlProcPhaseBannerEnd ; 85/AE56
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Puts back the palettes, colour math and game state, frees the proc and shows the map windows again.
+
         stz wBufferBG2VOFS
         stz wBufferBG2HOFS
         stz wBufferBG3VOFS
         stz wBufferBG3HOFS
-        jsr rsUnknown85B039
+        jsr rsPhaseBannerRestorePalettes
         sep #$20
         lda #$00
         sta bBufferCGWSEL
@@ -7181,7 +7293,7 @@
         lda aProcSystem.aBody5,b,x
         sta wGameStateRoutine1,b
         jsl rlProcEngineFreeProc
-        jsl rlUnknown85C0D5
+        jsl rlShowMapWindows
         rtl
 
         .databank 0
@@ -7196,12 +7308,14 @@
       .al
       .xl
 
-      rlUnknown85AE8A ; 85/AE8A
+      rlPhaseBannerCheckSkip ; 85/AE8A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A button (A, B, X, Y, Start or Select): faster slide (speed 4) and 100 frames less.
 
         lda wJoy1New
         bit #$D0C0
@@ -7231,11 +7345,11 @@
       .al
       .xl
 
-      aProcUnknown85ABF6Code ; 85/AEAC
+      aProcPhaseBannerCode ; 85/AEAC
 
         PROC_YIELD 1
-        PROC_CALL rlUnknown85AE8A
-        PROC_JUMP_IF_BITS_UNSET aProcUnknown85ABF6Code, $0001
+        PROC_CALL rlPhaseBannerCheckSkip
+        PROC_JUMP_IF_BITS_UNSET aProcPhaseBannerCode, $0001
         PROC_HALT
 
 
@@ -7249,7 +7363,7 @@
       .al
       .xl
 
-      aUnknown85AEBB .dstruct structHDMAIndirectEntryInfo, rlUnknown85AEC7, rlUnknown85AED2, aUnknown85AF0D, $7FEAAE, PPU_REG_BASE + $2C, $40, $85 ; 85/AEBB
+      aPhaseBannerSlideInHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlPhaseBannerSlideInHDMAInit, rlPhaseBannerSlideInHDMACycle, aPhaseBannerHDMACode, $7FEAAE, PPU_REG_BASE + $2C, $40, $85 ; 85/AEBB
 
     .endsection Table85AEBBSection
 
@@ -7259,7 +7373,7 @@
       .al
       .xl
 
-      rlUnknown85AEC7 ; 85/AEC7
+      rlPhaseBannerSlideInHDMAInit ; 85/AEC7
 
         .al
         .xl
@@ -7268,19 +7382,21 @@
 
         lda #$006E
         sta $7FEAAA
-        jsr rsUnknown85AF5A
+        jsr rsPhaseBannerBuildWindowTable
         rtl
 
         .databank 0
 
         ; 85/AED2
 
-      rlUnknown85AED2 ; 85/AED2
+      rlPhaseBannerSlideInHDMACycle ; 85/AED2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Moves the window's edge (in $7FEAAA) by the speed ($7FEAAC) each frame; $7FEAAA = $7FFF when done.
 
         lda $7FEAAA
         sec
@@ -7290,7 +7406,7 @@
         bmi _AEE8
 
         _AEE4
-        jsr rsUnknown85AF5A
+        jsr rsPhaseBannerBuildWindowTable
         rtl
 
 
@@ -7307,7 +7423,7 @@
 
 
         _AEFE
-        lda #<>rlUnknown85AF0C
+        lda #<>rlPhaseBannerHDMADone
         sta aHDMASystem.aOnCycle,b,x
         lda #$7FFF
         sta $7FEAAA
@@ -7317,7 +7433,7 @@
 
         ; 85/AF0C
 
-      rlUnknown85AF0C ; 85/AF0C
+      rlPhaseBannerHDMADone ; 85/AF0C
 
         .al
         .xl
@@ -7338,10 +7454,10 @@
       .al
       .xl
 
-      aUnknown85AF0D ; 85/AF0D
+      aPhaseBannerHDMACode ; 85/AF0D
         HDMA_HALT
 
-      aUnknown85AF0F .dstruct structHDMAIndirectEntryInfo, rlUnknown85AF1B, rlUnknown85AF23, aUnknown85AF0D, $7FEAAE, PPU_REG_BASE + $2C, $40, $85 ; 85/AF0F
+      aPhaseBannerSlideOutHDMAInfo .dstruct structHDMAIndirectEntryInfo, rlPhaseBannerSlideOutHDMAInit, rlPhaseBannerSlideOutHDMACycle, aPhaseBannerHDMACode, $7FEAAE, PPU_REG_BASE + $2C, $40, $85 ; 85/AF0F
 
     .endsection Table85AF0DSection
 
@@ -7351,7 +7467,7 @@
       .al
       .xl
 
-      rlUnknown85AF1B ; 85/AF1B
+      rlPhaseBannerSlideOutHDMAInit ; 85/AF1B
 
         .al
         .xl
@@ -7366,12 +7482,14 @@
 
         ; 85/AF23
 
-      rlUnknown85AF23 ; 85/AF23
+      rlPhaseBannerSlideOutHDMACycle ; 85/AF23
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Like the slide in, the other way; $7FEAAA = $FFFF when done.
 
         lda $7FEAAA
         clc
@@ -7381,7 +7499,7 @@
         bpl _AF39
 
         _AF35
-        jsr rsUnknown85AF5A
+        jsr rsPhaseBannerBuildWindowTable
         rtl
 
 
@@ -7396,7 +7514,7 @@
 
 
         _AF4C
-        lda #<>rlUnknown85AF0C
+        lda #<>rlPhaseBannerHDMADone
         sta aHDMASystem.aOnCycle,b,x
         lda #$FFFF
         sta $7FEAAA
@@ -7406,12 +7524,14 @@
 
         ; 85/AF5A
 
-      rsUnknown85AF5A ; 85/AF5A
+      rsPhaseBannerBuildWindowTable ; 85/AF5A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Builds the window table in one of two halves of the buffer at $7FEAAE (alternating frames) and points the HDMA entry at it.
 
         lda wVBlankEnabledFramecount
         bit #$0001
@@ -7425,7 +7545,7 @@
 
         _AF69
         sta wR4
-        jsr rsUnknown85AF78
+        jsr rsPhaseBannerWriteWindowTable
         lda #$EAAE
         clc
         adc wR4
@@ -7436,7 +7556,7 @@
 
         ; 85/AF78
 
-      rsUnknown85AF78 ; 85/AF78
+      rsPhaseBannerWriteWindowTable ; 85/AF78
 
         .al
         .xl
@@ -7451,7 +7571,7 @@
         rep #$20
         asl a
         sta wR0
-        lda #$AFC3
+        lda #<>aPhaseBannerWindowOn
         sta $7FEAAF,x
         lda #$00E0
         sec
@@ -7459,14 +7579,14 @@
         sep #$20
         sta $7FEAB1,x
         rep #$20
-        lda #$AFC4
+        lda #<>aPhaseBannerWindowOff
         sta aDialogueBoxHDMAIndirectTableOdd,x
         lda $7FEAAA
         dec a
         sep #$20
         sta $7FEAB4,x
         rep #$20
-        lda #$AFC3
+        lda #<>aPhaseBannerWindowOn
         sta $7FEAB5,x
         lda #$0000
         sta $7FEAB7,x
@@ -7478,11 +7598,11 @@
         ; 85/AFC3
 
 
-      aUnknown85AFC3 ; 85/AFC3
+      aPhaseBannerWindowOn ; 85/AFC3
 
         .byte $11
 
-      aUnknown85AFC4 ; 85/AFC4
+      aPhaseBannerWindowOff ; 85/AFC4
 
         .byte $17
 
@@ -7494,12 +7614,14 @@
       .al
       .xl
 
-      rsUnknown85AFC5 ; 85/AFC5
+      rsPhaseBannerDrawEmblem ; 85/AFC5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Writes the 3x4 emblem tiles ($3F80...) into the frame layer.
 
         phb
         php
@@ -7567,7 +7689,7 @@
       .al
       .xl
 
-      rsUnknown85B009 ; 85/B009
+      rsPhaseBannerSavePalettes ; 85/B009
 
         .al
         .xl
@@ -7607,7 +7729,7 @@
       .al
       .xl
 
-      rsUnknown85B039 ; 85/B039
+      rsPhaseBannerRestorePalettes ; 85/B039
 
         .al
         .xl
@@ -7647,20 +7769,22 @@
       .al
       .xl
 
-      rsUnknown85B07C ; 85/B07C
+      rsPhaseBannerLoadColours ; 85/B07C
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; By the active army's relation to the player.
+
         phx
         lda #$0000
         ldx wActiveFactionSlot,b
         jsl rlGetFactionRelation
         sta wR0
-        jsr rsUnknown85B091
-        jsr rsUnknown85B107
+        jsr rsPhaseBannerLoadTextColours
+        jsr rsPhaseBannerLoadFrameColours
         plx
         rts
 
@@ -7668,7 +7792,7 @@
 
         ; 85/B091
 
-      rsUnknown85B091 ; 85/B091
+      rsPhaseBannerLoadTextColours ; 85/B091
 
         .al
         .xl
@@ -7683,7 +7807,7 @@
         lda wR0
         asl a
         tax
-        lda aUnknown85B0BF,x
+        lda aPhaseBannerTextPalettes,x
         sta $7FEACA
         sta wR1
         ldx #$0000
@@ -7712,15 +7836,28 @@
       .al
       .xl
 
-      aUnknown85B0BF ; 85/B0BF
+      aPhaseBannerTextPalettes ; 85/B0BF
 
-        ; Read by rsUnknown85B091.
+        ; Read by rsPhaseBannerLoadTextColours.
 
-        .word $B0C7, $B0D7, $B0E7, $B0F7, $4D96, $039C, $7292, $6A70
-        .word $6A2F, $660E, $61ED, $04A7, $3000, $039C, $24F9, $0CB7
-        .word $1896, $1475, $1054, $04A7, $3000, $039C, $5370, $4B2E
-        .word $470D, $42EC, $3AAA, $04A7, $3000, $03FF, $5F9C, $537B
-        .word $4B18, $3EF8, $2E96, $08C8
+        ; By relation to the player (rlGetFactionRelation): 8 colours each, for colours $68-$6F (aBGPaletteBuffer+$D0).
+        .word <>aPhaseBannerTextPalette0, <>aPhaseBannerTextPalette1, <>aPhaseBannerTextPalette2, <>aPhaseBannerTextPalette3
+
+      aPhaseBannerTextPalette0 ; 85/B0C7
+
+        .word $4D96, $039C, $7292, $6A70, $6A2F, $660E, $61ED, $04A7
+
+      aPhaseBannerTextPalette1 ; 85/B0D7
+
+        .word $3000, $039C, $24F9, $0CB7, $1896, $1475, $1054, $04A7
+
+      aPhaseBannerTextPalette2 ; 85/B0E7
+
+        .word $3000, $039C, $5370, $4B2E, $470D, $42EC, $3AAA, $04A7
+
+      aPhaseBannerTextPalette3 ; 85/B0F7
+
+        .word $3000, $03FF, $5F9C, $537B, $4B18, $3EF8, $2E96, $08C8
 
         ; 85/B107
 
@@ -7732,7 +7869,7 @@
       .al
       .xl
 
-      rsUnknown85B107 ; 85/B107
+      rsPhaseBannerLoadFrameColours ; 85/B107
 
         .al
         .xl
@@ -7743,7 +7880,7 @@
         lda wR0
         asl a
         tax
-        lda aUnknown85B127,x
+        lda aPhaseBannerFramePalettes,x
         sta wR1
         ldx #$0000
 
@@ -7771,12 +7908,27 @@
       .al
       .xl
 
-      aUnknown85B127 ; 85/B127
+      aPhaseBannerFramePalettes ; 85/B127
 
-        ; Read by rsUnknown85B107.
+        ; Read by rsPhaseBannerLoadFrameColours.
 
-        .word $B12F, $B137, $B13F, $B147, $4D96, $152B, $67DE, $0864
-        .word $4D96, $1529, $67FC, $0443, $4D96, $1509, $6FBE, $0423
+        ; By relation to the player: 4 colours each, for colours 4-7 (aBGPaletteBuffer+$08).
+        .word <>aPhaseBannerFramePalette0, <>aPhaseBannerFramePalette1, <>aPhaseBannerFramePalette2, <>aPhaseBannerFramePalette3
+
+      aPhaseBannerFramePalette0 ; 85/B12F
+
+        .word $4D96, $152B, $67DE, $0864
+
+      aPhaseBannerFramePalette1 ; 85/B137
+
+        .word $4D96, $1529, $67FC, $0443
+
+      aPhaseBannerFramePalette2 ; 85/B13F
+
+        .word $4D96, $1509, $6FBE, $0423
+
+      aPhaseBannerFramePalette3 ; 85/B147
+
         .word $4D96, $212A, $737D, $0C44
 
         ; 85/B14F
@@ -7789,12 +7941,14 @@
       .al
       .xl
 
-      rlUnknown85B14F ; 85/B14F
+      rlOpenInventoryFullMenu ; 85/B14F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wInput0 = unit RAM pointer whose new item is in slot 8: opens the message, the new item's window and procInventoryFullMenu.
 
         lda aProcSystem.wInput0,b
         sta wSelectedUnitDataRAMPointer,b
@@ -7805,15 +7959,15 @@
         sta aProcSystem.wInput0,b
         lda wSelectedUnitDataRAMPointer,b
         sta aProcSystem.wInput3,b
-        jsl rlUnknown85B52F
-        jsl rlUnknown85B520
+        jsl rlOpenInventoryFullNewItem
+        jsl rlOpenInventoryFullMessage
         lda wSelectedUnitDataRAMPointer,b
         sta aProcSystem.wInput0,b
         lda wCurrentItemDataROMPointer,b
         sta aProcSystem.wInput1,b
-        lda #(`procUnknown85B18F)<<8
+        lda #(`procInventoryFullMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85B18F
+        lda #<>procInventoryFullMenu
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -7830,7 +7984,7 @@
       .al
       .xl
 
-      procUnknown85B18F .structProcInfo "PW", rlProcUnknown85B18FInit, rlProcUnknown85B18FCycle1, aProcUnknown85B18FCode ; 85/B18F
+      procInventoryFullMenu .structProcInfo "PW", rlProcInventoryFullMenuInit, rlProcInventoryFullMenuFirstCycle, aProcInventoryFullMenuCode ; 85/B18F
 
         ; 85/B197
 
@@ -7842,11 +7996,13 @@
       .al
       .xl
 
-      rlProcUnknown85B18FInit ; 85/B1B0
+      rlProcInventoryFullMenuInit ; 85/B1B0
 
         .al
         .autsiz
         .databank ?
+
+        ; Lists the eight items (rsInventoryFullMenuGetItems), the new one first; aBody6 = cursor.
 
         phx
         lda aProcSystem.wInput0,b
@@ -7861,14 +8017,14 @@
         sta wSelectedUnitDataRAMPointer,b
         lda aProcSystem.aBody5,b,x
         sta wCurrentItemDataROMPointer,b
-        jsr rsUnknown85B45C
+        jsr rsInventoryFullMenuGetItems
         bcs +
 
           lda #$2000
           sta aCurrentTilemapInfo.wBaseTile,b
-          jsr rsUnknown85B489
+          jsr rsInventoryFullMenuDrawItems
           jsl rlDrawMapMenu
-          jsl rlUnknown85A227
+          jsl rlHideMapMenuLayers
           jsl rlFreeHDMAEntry0
 
         +
@@ -7876,28 +8032,28 @@
 
         .databank 0
 
-      rlProcUnknown85B18FCycle1 ; 85/B1EF
+      rlProcInventoryFullMenuFirstCycle ; 85/B1EF
 
         .al
         .autsiz
         .databank ?
 
-        lda #<>rlProcUnknown85B18FCycle2
+        lda #<>rlProcInventoryFullMenuShow
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
 
-      rlProcUnknown85B18FCycle2 ; 85/B1F6
+      rlProcInventoryFullMenuShow ; 85/B1F6
 
         .al
         .autsiz
         .databank ?
 
-        jsr rsUnknown85B2DA
-        jsr rsUnknown85B307
-        jsl rlUnknown85A234
-        lda #<>rlUnknown85B207
+        jsr rsInventoryFullMenuLoadIcons
+        jsr rsInventoryFullMenuDrawIcons
+        jsl rlShowMapMenuLayers
+        lda #<>rlProcInventoryFullMenuCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -7913,7 +8069,7 @@
       .al
       .xl
 
-      rlUnknown85B207 ; 85/B207
+      rlProcInventoryFullMenuCycle ; 85/B207
 
         ; Found by tools/sweep.py.
         .al
@@ -7921,13 +8077,15 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown85B307
+        ; Up and Down choose (wrapping over 8), A goes on to the confirmation.
+
+        jsr rsInventoryFullMenuDrawIcons
         lda wJoy1New
         bit #$0080
         beq _B220
         lda #$000A
         jsl rlPlaySoundEffect
-        lda #<>rlUnknown85B26B
+        lda #<>rlProcInventoryFullMenuHide
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _B254
 
@@ -7978,15 +8136,15 @@
 
         ; 85/B26B
 
-      rlUnknown85B26B ; 85/B26B
+      rlProcInventoryFullMenuHide ; 85/B26B
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown85B37D
-        lda #<>rlUnknown85B275
+        jsr rsInventoryFullMenuHideWindows
+        lda #<>rlProcInventoryFullMenuAsk
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -7994,16 +8152,18 @@
 
         ; 85/B275
 
-      rlUnknown85B275 ; 85/B275
+      rlProcInventoryFullMenuAsk ; 85/B275
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown85B4FA
-        jsr rsUnknown85B62A
-        lda #<>rlUnknown85B282
+        ; Opens the chosen item's window and "deposit this item?" (procInventoryFullConfirm).
+
+        jsr rsInventoryFullMenuOpenChosenItem
+        jsr rsOpenInventoryFullConfirm
+        lda #<>rlProcInventoryFullMenuWaitAnswer
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -8019,7 +8179,7 @@
       .al
       .xl
 
-      rlUnknown85B282 ; 85/B282
+      rlProcInventoryFullMenuWaitAnswer ; 85/B282
 
         ; Found by tools/sweep.py.
         .al
@@ -8027,14 +8187,16 @@
         .autsiz
         .databank ?
 
+        ; Yes: the item goes to the supply (rlDumpInventorySlotIntoSupplyIfFilled) and everything closes. No or B: back to the list.
+
         lda wJoy1New
         bit #$0080
         beq _B29F
         lda #$000A
         jsl rlPlaySoundEffect
-        jsr rsUnknown85B43E
+        jsr rsInventoryFullMenuGetAnswer
         pha
-        jsr rsUnknown85B40E
+        jsr rsInventoryFullMenuCloseQuestion
         pla
         ora #$0000
         beq _B2BB
@@ -8046,7 +8208,7 @@
         beq _B2B0
         lda #$0021
         jsl rlPlaySoundEffect
-        jsr rsUnknown85B40E
+        jsr rsInventoryFullMenuCloseQuestion
         bra _B2B2
 
 
@@ -8055,19 +8217,19 @@
 
 
         _B2B2
-        jsr rsUnknown85B3DA
-        jsl rlUnknown85A227
+        jsr rsInventoryFullMenuShowWindows
+        jsl rlHideMapMenuLayers
         bra _B2C3
 
 
         _B2BB
-        jsr rsUnknown85B367
-        jsr rsUnknown85B3B1
+        jsr rsInventoryFullMenuDeposit
+        jsr rsInventoryFullMenuCloseAll
         bra _B2C9
 
 
         _B2C3
-        lda #<>rlUnknown85B2CA
+        lda #<>rlProcInventoryFullMenuBack
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _B2C9
@@ -8077,16 +8239,16 @@
 
         ; 85/B2CA
 
-      rlUnknown85B2CA ; 85/B2CA
+      rlProcInventoryFullMenuBack ; 85/B2CA
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown85A234
-        jsr rsUnknown85B307
-        lda #<>rlUnknown85B207
+        jsl rlShowMapMenuLayers
+        jsr rsInventoryFullMenuDrawIcons
+        lda #<>rlProcInventoryFullMenuCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -8102,7 +8264,7 @@
       .al
       .xl
 
-      aProcUnknown85B18FCode ; 85/B2D8
+      aProcInventoryFullMenuCode ; 85/B2D8
 
         PROC_HALT
 
@@ -8117,7 +8279,7 @@
       .al
       .xl
 
-      rsUnknown85B2DA ; 85/B2DA
+      rsInventoryFullMenuLoadIcons ; 85/B2DA
 
         .al
         .xl
@@ -8154,7 +8316,7 @@
 
         ; 85/B307
 
-      rsUnknown85B307 ; 85/B307
+      rsInventoryFullMenuDrawIcons ; 85/B307
 
         .al
         .xl
@@ -8194,7 +8356,7 @@
 
         _B33C
         phx
-        ldy $9831,b,x
+        ldy <>aMapItemListIconSprites,b,x
         jsl rlPushToOAMBuffer
         plx
         dec x
@@ -8205,7 +8367,7 @@
         sbc #$0020
         sta wR1
         ldx #$000E
-        ldy $9831,b,x
+        ldy <>aMapItemListIconSprites,b,x
         jsl rlPushToOAMBuffer
         pla
         sta wR2
@@ -8229,13 +8391,15 @@
       .al
       .xl
 
-      rsUnknown85B367 ; 85/B367
+      rsInventoryFullMenuDeposit ; 85/B367
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Cursor 0 is the new item (slot 8).
 
         lda aProcSystem.aBody6,b,x
         bne _B36F
@@ -8260,7 +8424,7 @@
       .al
       .xl
 
-      rsUnknown85B37D ; 85/B37D
+      rsInventoryFullMenuHideWindows ; 85/B37D
 
         ; Found by tools/sweep.py.
         .al
@@ -8271,16 +8435,16 @@
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlHideMapMenu
-        lda #(`procUnknown85B63B)<<8
+        lda #(`procInventoryFullMessage)<<8
         sta lR44+1
-        lda #<>procUnknown85B63B
+        lda #<>procInventoryFullMessage
         sta lR44
-        jsr rsUnknown85B3A2
-        lda #(`procUnknown85B6E3)<<8
+        jsr rsHideProcMapMenu
+        lda #(`procInventoryFullNewItem)<<8
         sta lR44+1
-        lda #<>procUnknown85B6E3
+        lda #<>procInventoryFullNewItem
         sta lR44
-        jsr rsUnknown85B3A2
+        jsr rsHideProcMapMenu
         plx
         rts
 
@@ -8296,13 +8460,15 @@
       .al
       .xl
 
-      rsUnknown85B3A2 ; 85/B3A2
+      rsHideProcMapMenu ; 85/B3A2
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; lR44 = proc definition: hides its map menu if the proc exists.
 
         jsl rlProcEngineFindProc
         bcc _B3B0
@@ -8316,7 +8482,7 @@
 
         ; 85/B3B1
 
-      rsUnknown85B3B1 ; 85/B3B1
+      rsInventoryFullMenuCloseAll ; 85/B3B1
 
         ; Found by tools/sweep.py.
         .al
@@ -8328,16 +8494,16 @@
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
-        lda #(`procUnknown85B63B)<<8
+        lda #(`procInventoryFullMessage)<<8
         sta lR44+1
-        lda #<>procUnknown85B63B
+        lda #<>procInventoryFullMessage
         sta lR44
-        jsr rsUnknown85B42B
-        lda #(`procUnknown85B6E3)<<8
+        jsr rsCloseProcMapMenu
+        lda #(`procInventoryFullNewItem)<<8
         sta lR44+1
-        lda #<>procUnknown85B6E3
+        lda #<>procInventoryFullNewItem
         sta lR44
-        jsr rsUnknown85B42B
+        jsr rsCloseProcMapMenu
         plx
         rts
 
@@ -8353,7 +8519,7 @@
       .al
       .xl
 
-      rsUnknown85B3DA ; 85/B3DA
+      rsInventoryFullMenuShowWindows ; 85/B3DA
 
         .al
         .xl
@@ -8363,16 +8529,16 @@
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlShowMapMenu
-        lda #(`procUnknown85B63B)<<8
+        lda #(`procInventoryFullMessage)<<8
         sta lR44+1
-        lda #<>procUnknown85B63B
+        lda #<>procInventoryFullMessage
         sta lR44
-        jsr rsUnknown85B3FF
-        lda #(`procUnknown85B6E3)<<8
+        jsr rsShowProcMapMenu
+        lda #(`procInventoryFullNewItem)<<8
         sta lR44+1
-        lda #<>procUnknown85B6E3
+        lda #<>procInventoryFullNewItem
         sta lR44
-        jsr rsUnknown85B3FF
+        jsr rsShowProcMapMenu
         plx
         rts
 
@@ -8388,13 +8554,15 @@
       .al
       .xl
 
-      rsUnknown85B3FF ; 85/B3FF
+      rsShowProcMapMenu ; 85/B3FF
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; lR44 = proc definition: shows its map menu if the proc exists.
 
         jsl rlProcEngineFindProc
         bcc _B40D
@@ -8416,7 +8584,7 @@
       .al
       .xl
 
-      rsUnknown85B40E ; 85/B40E
+      rsInventoryFullMenuCloseQuestion ; 85/B40E
 
         .al
         .xl
@@ -8424,16 +8592,16 @@
         .databank ?
 
         phx
-        lda #(`procUnknown85B704)<<8
+        lda #(`procInventoryFullChosenItem)<<8
         sta lR44+1
-        lda #<>procUnknown85B704
+        lda #<>procInventoryFullChosenItem
         sta lR44
-        jsr rsUnknown85B42B
-        lda #(`procUnknown85B547)<<8
+        jsr rsCloseProcMapMenu
+        lda #(`procInventoryFullConfirm)<<8
         sta lR44+1
-        lda #<>procUnknown85B547
+        lda #<>procInventoryFullConfirm
         sta lR44
-        jsr rsUnknown85B42B
+        jsr rsCloseProcMapMenu
         plx
         rts
 
@@ -8449,13 +8617,15 @@
       .al
       .xl
 
-      rsUnknown85B42B ; 85/B42B
+      rsCloseProcMapMenu ; 85/B42B
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; lR44 = proc definition: closes its map menu and frees it if it exists.
 
         jsl rlProcEngineFindProc
         bcc _B43D
@@ -8478,17 +8648,19 @@
       .al
       .xl
 
-      rsUnknown85B43E ; 85/B43E
+      rsInventoryFullMenuGetAnswer ; 85/B43E
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = 1 for yes (aBody7 of procInventoryFullConfirm), 0 for no or none.
+
         phx
-        lda #(`procUnknown85B547)<<8
+        lda #(`procInventoryFullConfirm)<<8
         sta lR44+1
-        lda #<>procUnknown85B547
+        lda #<>procInventoryFullConfirm
         sta lR44
         jsl rlProcEngineFindProc
         bcc _B457
@@ -8516,12 +8688,14 @@
       .al
       .xl
 
-      rsUnknown85B45C ; 85/B45C
+      rsInventoryFullMenuGetItems ; 85/B45C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Item ROM pointers at $7FEABA: wCurrentItemDataROMPointer (the new item), then slots 1-7. Carry set if a slot is empty.
 
         phx
         lda wCurrentItemDataROMPointer,b
@@ -8558,12 +8732,14 @@
 
         ; 85/B489
 
-      rsUnknown85B489 ; 85/B489
+      rsInventoryFullMenuDrawItems ; 85/B489
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The names, with "Ｅ" by the equipped weapon.
 
         phx
         phy
@@ -8581,9 +8757,9 @@
         inc a
         cmp wR1
         bne _B4BB
-        lda #(`aUnknown85B4E9)<<8
+        lda #(`aInventoryFullMenuEquippedText)<<8
         sta lR18+1
-        lda #<>aUnknown85B4E9
+        lda #<>aInventoryFullMenuEquippedText
         sta lR18
         lda wR0
         clc
@@ -8595,7 +8771,7 @@
         tyx
         lda $7FEABC,x
         sta wCurrentItemDataROMPointer,b
-        jsr rsUnknown85B4ED
+        jsr rsSetTileBaseForObtainableItem
         jsl rlGetItemNamePointer
         lda lRoutineVariable+1,b
         sta lR18+1
@@ -8626,7 +8802,7 @@
       .al
       .xl
 
-      aUnknown85B4E9 ; 85/B4E9
+      aInventoryFullMenuEquippedText ; 85/B4E9
 
         .enc "SJIS"
         .text "Ｅ"
@@ -8642,12 +8818,14 @@
       .al
       .xl
 
-      rsUnknown85B4ED ; 85/B4ED
+      rsSetTileBaseForObtainableItem ; 85/B4ED
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Grey text (tile base $2400) unless rlCheckItemObtainable.
 
         jsl rlCheckItemObtainable
         bcs _B4F9
@@ -8661,7 +8839,7 @@
 
         ; 85/B4FA
 
-      rsUnknown85B4FA ; 85/B4FA
+      rsInventoryFullMenuOpenChosenItem ; 85/B4FA
 
         .al
         .xl
@@ -8677,9 +8855,9 @@
         sta aProcSystem.wInput0,b
         lda #$0909
         sta aProcSystem.wInput1,b
-        lda #(`procUnknown85B704)<<8
+        lda #(`procInventoryFullChosenItem)<<8
         sta lR44+1
-        lda #<>procUnknown85B704
+        lda #<>procInventoryFullChosenItem
         sta lR44
         jsl rlProcEngineCreateProc
         plx
@@ -8697,16 +8875,16 @@
       .al
       .xl
 
-      rlUnknown85B520 ; 85/B520
+      rlOpenInventoryFullMessage ; 85/B520
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`procUnknown85B63B)<<8
+        lda #(`procInventoryFullMessage)<<8
         sta lR44+1
-        lda #<>procUnknown85B63B
+        lda #<>procInventoryFullMessage
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -8715,7 +8893,7 @@
 
         ; 85/B52F
 
-      rlUnknown85B52F ; 85/B52F
+      rlOpenInventoryFullNewItem ; 85/B52F
 
         .al
         .xl
@@ -8725,9 +8903,9 @@
         lda #$FFFF
         sta aProcSystem.wInput1,b
         sta aProcSystem.wInput2,b
-        lda #(`procUnknown85B6E3)<<8
+        lda #(`procInventoryFullNewItem)<<8
         sta lR44+1
-        lda #<>procUnknown85B6E3
+        lda #<>procInventoryFullNewItem
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -8744,21 +8922,21 @@
       .al
       .xl
 
-      procUnknown85B547 ; 85/B547
-        .structProcInfo "PW", rlUnknown85B568, rlUnknown85B5DE, aUnknown85B628
-        .long aUnknown85B55C
+      procInventoryFullConfirm ; 85/B547
+        .structProcInfo "PW", rlProcInventoryFullConfirmInit, rlProcInventoryFullConfirmCycle, aProcInventoryFullConfirmCode
+        .long aInventoryFullConfirmData
         .byte $01
 
-      aUnknown85B553 ; 85/B553
+      aInventoryFullConfirmTilemapData ; 85/B553
         .byte $10, $06, $88, $83, $7E, $00, $4A, $C7, $7F
 
-      aUnknown85B55C ; 85/B55C
+      aInventoryFullConfirmData ; 85/B55C
         .long $000000
         .long $000000
-        .long aUnknown85B553
+        .long aInventoryFullConfirmTilemapData
         .byte $00, $08, $0F
 
-      rlUnknown85B568 ; 85/B568
+      rlProcInventoryFullConfirmInit ; 85/B568
 
         .al
         .xl
@@ -8771,21 +8949,21 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         phx
-        lda #(`aUnknown85B5B2)<<8
+        lda #(`aInventoryFullConfirmText)<<8
         sta lR18+1
-        lda #<>aUnknown85B5B2
+        lda #<>aInventoryFullConfirmText
         sta lR18
         ldx #$0101
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown85B5D0)<<8
+        lda #(`aInventoryFullConfirmYesText)<<8
         sta lR18+1
-        lda #<>aUnknown85B5D0
+        lda #<>aInventoryFullConfirmYesText
         sta lR18
         ldx #$0303
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown85B5D6)<<8
+        lda #(`aInventoryFullConfirmNoText)<<8
         sta lR18+1
-        lda #<>aUnknown85B5D6
+        lda #<>aInventoryFullConfirmNoText
         sta lR18
         ldx #$0308
         jsl rlDrawMapMenuTextLine
@@ -8797,21 +8975,21 @@
 
         ; 85/B5B2
 
-      aUnknown85B5B2 ; 85/B5B2
+      aInventoryFullConfirmText ; 85/B5B2
 
         .enc "SJIS"
         .text "このアイテムをあずけますか？"
         .word $0000
         .enc "none"
 
-      aUnknown85B5D0 ; 85/B5D0
+      aInventoryFullConfirmYesText ; 85/B5D0
 
         .enc "SJIS"
         .text "はい"
         .word $0000
         .enc "none"
 
-      aUnknown85B5D6 ; 85/B5D6
+      aInventoryFullConfirmNoText ; 85/B5D6
 
         .enc "SJIS"
         .text "いいえ"
@@ -8819,12 +8997,14 @@
         .enc "none"
 
 
-      rlUnknown85B5DE ; 85/B5DE
+      rlProcInventoryFullConfirmCycle ; 85/B5DE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Left and Right choose (aBody7 bit 0: yes); A or B stops the proc.
 
         lda wJoy1Repeated
         bit #$0300
@@ -8865,7 +9045,7 @@
 
 
         _B620
-        lda #$B627
+        lda #<>rlProcInventoryFullConfirmDone
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _B626
@@ -8875,12 +9055,23 @@
 
         ; 85/B627
 
-        .byte $6B ; unused rtl (85/B627)
+      rlProcInventoryFullConfirmDone ; 85/B627
 
-      aUnknown85B628 ; 85/B628
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; procInventoryFullMenu reads the answer and frees this proc.
+
+        rtl
+
+        .databank 0
+
+      aProcInventoryFullConfirmCode ; 85/B628
         PROC_HALT
 
-      rsUnknown85B62A ; 85/B62A
+      rsOpenInventoryFullConfirm ; 85/B62A
 
         .al
         .xl
@@ -8888,9 +9079,9 @@
         .databank ?
 
         phx
-        lda #(`procUnknown85B547)<<8
+        lda #(`procInventoryFullConfirm)<<8
         sta lR44+1
-        lda #<>procUnknown85B547
+        lda #<>procInventoryFullConfirm
         sta lR44
         jsl rlProcEngineCreateProc
         plx
@@ -8908,9 +9099,9 @@
       .al
       .xl
 
-      procUnknown85B63B ; 85/B63B
+      procInventoryFullMessage ; 85/B63B
 
-        .structProcInfo "PW", rlProcUnknown85B63BInit, rlProcUnknown85B63BCycle, aProcUnknown85B63BCode
+        .structProcInfo "PW", rlProcInventoryFullMessageInit, rlProcInventoryFullMessageCycle, aProcInventoryFullMessageCode
 
     .endsection ProcScript85B63BSection
 
@@ -8920,32 +9111,34 @@
       .al
       .xl
 
-      rlProcUnknown85B63BInit ; 85/B65C
+      rlProcInventoryFullMessageInit ; 85/B65C
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; "もちものが　いっぱいです　あずけるアイテムをえらんでください" (the inventory is full; choose an item to deposit).
+
         jsl rlInitMapMenuProc
         lda #$2000
         sta aCurrentTilemapInfo,b
         phx
-        lda #(`aUnknown85B6A0)<<8
+        lda #(`aInventoryFullMessageText1)<<8
         sta lR18+1
-        lda #<>aUnknown85B6A0
+        lda #<>aInventoryFullMessageText1
         sta lR18
         ldx #$0101
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown85B6BA)<<8
+        lda #(`aInventoryFullMessageText2)<<8
         sta lR18+1
-        lda #<>aUnknown85B6BA
+        lda #<>aInventoryFullMessageText2
         sta lR18
         ldx #$0301
         jsl rlDrawMapMenuTextLine
-        lda #(`aUnknown85B6D4)<<8
+        lda #(`aInventoryFullMessageText3)<<8
         sta lR18+1
-        lda #<>aUnknown85B6D4
+        lda #<>aInventoryFullMessageText3
         sta lR18
         ldx #$0501
         jsl rlDrawMapMenuTextLine
@@ -8965,21 +9158,21 @@
       .al
       .xl
 
-      aUnknown85B6A0 ; 85/B6A0
+      aInventoryFullMessageText1 ; 85/B6A0
 
         .enc "SJIS"
         .text "もちものが　いっぱいです"
         .word $0000
         .enc "none"
 
-      aUnknown85B6BA ; 85/B6BA
+      aInventoryFullMessageText2 ; 85/B6BA
 
         .enc "SJIS"
         .text "あずけるアイテムをえらん"
         .word $0000
         .enc "none"
 
-      aUnknown85B6D4 ; 85/B6D4
+      aInventoryFullMessageText3 ; 85/B6D4
 
         .enc "SJIS"
         .text "でください"
@@ -8995,7 +9188,7 @@
       .al
       .xl
 
-      rlProcUnknown85B63BCycle ; 85/B6E0
+      rlProcInventoryFullMessageCycle ; 85/B6E0
 
         .al
         .xl
@@ -9016,16 +9209,16 @@
       .al
       .xl
 
-      aProcUnknown85B63BCode ; 85/B6E1
+      aProcInventoryFullMessageCode ; 85/B6E1
 
         PROC_HALT
 
 
         ; 85/B6E3
 
-      procUnknown85B6E3 ; 85/B6E3
+      procInventoryFullNewItem ; 85/B6E3
 
-        .structProcInfo "PW", rlProcUnknown85B6E3Init, rlProcUnknown85B6E3Cycle, aProcUnknown85B6E3Code
+        .structProcInfo "PW", rlProcInventoryItemWindowInit, rlProcInventoryItemWindowCycle, aProcInventoryItemWindowCode
 
     .endsection ProcScript85B6E1Section
 
@@ -9035,31 +9228,31 @@
       .al
       .xl
 
-        ; trailing args for procUnknown85B6E3
-        .long aUnknown85B6F8
+        ; trailing args for procInventoryFullNewItem
+        .long aInventoryFullNewItemData
         .byte $00
 
-      aUnknown85B6EF ; 85/B6EF
+      aInventoryFullNewItemTilemapData ; 85/B6EF
         .byte $0E, $04, $88, $83, $7E, $00, $4A, $C9, $7F
 
-      aUnknown85B6F8 ; 85/B6F8
+      aInventoryFullNewItemData ; 85/B6F8
         .long $000000
         .long $000000
-        .long aUnknown85B6EF
+        .long aInventoryFullNewItemTilemapData
         .byte $00, $02, $01
 
-      procUnknown85B704 ; 85/B704
-        .structProcInfo "PW", rlProcUnknown85B6E3Init, rlProcUnknown85B6E3Cycle, aProcUnknown85B6E3Code
-        .long aUnknown85B719
+      procInventoryFullChosenItem ; 85/B704
+        .structProcInfo "PW", rlProcInventoryItemWindowInit, rlProcInventoryItemWindowCycle, aProcInventoryItemWindowCode
+        .long aInventoryFullChosenItemData
         .byte $00
 
-      aUnknown85B710 ; 85/B710
+      aInventoryFullChosenItemTilemapData ; 85/B710
         .byte $0E, $04, $88, $83, $7E, $00, $4A, $CA, $7F
 
-      aUnknown85B719 ; 85/B719
+      aInventoryFullChosenItemData ; 85/B719
         .long $000000
         .long $000000
-        .long aUnknown85B710
+        .long aInventoryFullChosenItemTilemapData
         .byte $00, $02, $01
 
     .endsection Table85B6EBSection
@@ -9070,12 +9263,14 @@
       .al
       .xl
 
-      rlProcUnknown85B6E3Init ; 85/B725
+      rlProcInventoryItemWindowInit ; 85/B725
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wInput0 = item ROM pointer, wInput1 = position (negative: keep), wInput2 = slot (aBody7; negative: none), wInput3 = unit RAM pointer. Draws the name, and "Ｅ" if it is the equipped weapon.
 
         jsl rlInitMapMenuProc
         lda aProcSystem.wInput0,b
@@ -9096,15 +9291,15 @@
         lda #$0008
         jsl rlCheckIfWeaponEquipped
         bcc _B769
-        lda #(`aUnknown85B786)<<8
+        lda #(`aInventoryItemWindowEquippedText)<<8
         sta lR18+1
-        lda #<>aUnknown85B786
+        lda #<>aInventoryItemWindowEquippedText
         sta lR18
         ldx #$010C
         jsl rlDrawMapMenuTextLine
 
         _B769
-        jsr rsUnknown85B4ED
+        jsr rsSetTileBaseForObtainableItem
         jsl rlGetItemNamePointer
         lda lRoutineVariable+1,b
         sta lR18+1
@@ -9127,7 +9322,7 @@
       .al
       .xl
 
-      aUnknown85B786 ; 85/B786
+      aInventoryItemWindowEquippedText ; 85/B786
 
         .enc "SJIS"
         .text "Ｅ"
@@ -9143,12 +9338,14 @@
       .al
       .xl
 
-      rlProcUnknown85B6E3Cycle ; 85/B78A
+      rlProcInventoryItemWindowCycle ; 85/B78A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the item's icon beside the window.
 
         phx
         lda aProcSystem.aBody7,b,x
@@ -9183,7 +9380,7 @@
         _B7C2
         sta wR4
         stz wR5
-        ldy $983F,b
+        ldy <>aMapItemListIconSprites+(7*2),b
         jsl rlPushToOAMBuffer
 
         _B7CD
@@ -9202,7 +9399,7 @@
       .al
       .xl
 
-      aProcUnknown85B6E3Code ; 85/B7CF
+      aProcInventoryItemWindowCode ; 85/B7CF
 
         PROC_HALT
 
@@ -9217,12 +9414,14 @@
       .al
       .xl
 
-      rlUnknown85B7D1 ; 85/B7D1
+      rlGetCenteredTextBoxPlacement ; 85/B7D1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = row, X = height, lR18 and lR19 = two texts: A = position and X = size of a box that holds both on one line, centred.
 
         and #$FF00
         sta wR7
@@ -9277,16 +9476,16 @@
       .al
       .xl
 
-      rlUnknown85B8D6 ; 85/B8D6
+      rlOpenGoldPopUp ; 85/B8D6
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`procUnknown85B8FA)<<8
+        lda #(`procGoldPopUp)<<8
         sta lR44+1
-        lda #<>procUnknown85B8FA
+        lda #<>procGoldPopUp
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -9303,7 +9502,7 @@
       .al
       .xl
 
-      aUnknown85B8E5 ; 85/B8E5
+      aGoldPopUpTilemapData ; 85/B8E5
         .byte $20, $04, $88, $83, $7E, $00, $4A, $CE, $7F
 
     .endsection Table85B8E5Section
@@ -9314,11 +9513,11 @@
       .al
       .xl
 
-      aUnknown85B8EE ; 85/B8EE
+      aGoldPopUpData ; 85/B8EE
 
         .long 0
         .long 0
-        .long aUnknown85B8E5
+        .long aGoldPopUpTilemapData
         .byte 0, 1, 1
 
     .endsection Unsorted85B8EESection
@@ -9329,12 +9528,12 @@
       .al
       .xl
 
-      procUnknown85B8FA ; 85/B8FA
+      procGoldPopUp ; 85/B8FA
 
-        .structProcInfo "PW", rlProcUnknown85B8FAInit, rlProcUnknown85B9D4Cycle1, aProcDialogueBoxCode
+        .structProcInfo "PW", rlProcGoldPopUpInit, rlProcGoldPopUpShow, aProcDialogueBoxCode
 
 
-        .long aUnknown85B8EE
+        .long aGoldPopUpData
         .byte 1
 
     .endsection ProcScript85B8FASection
@@ -9345,15 +9544,17 @@
       .al
       .xl
 
-      rlProcUnknown85B8FAInit ; 85/B906
+      rlProcGoldPopUpInit ; 85/B906
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; "<n> ゴールドてにいれた！" (got n gold): wInput2 = the gold, wInput3 = row (high byte). Sized to the digits and centred; stays 180 frames (aBody5).
+
         jsl rlInitMapMenuProc
-        jsl rlUnknown85C0CE
+        jsl rlHideMapWindows
         lda #$00B4
         sta aProcSystem.aBody5,b,x
         lda aProcSystem.wInput3,b
@@ -9434,9 +9635,9 @@
         ply
         lda #$2000
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown85B9BC)<<8
+        lda #(`aGoldPopUpText)<<8
         sta lR18+1
-        lda #<>aUnknown85B9BC
+        lda #<>aGoldPopUpText
         sta lR18
         tya
         clc
@@ -9444,7 +9645,7 @@
         tax
         jsl rlDrawMapMenuTextLine
         jsl rlDrawMapMenu
-        jsl rlUnknown85A227
+        jsl rlHideMapMenuLayers
         plx
         lda #$0094
         sta aProcSystem.aBody4,b,x
@@ -9462,7 +9663,7 @@
       .al
       .xl
 
-      aUnknown85B9BC ; 85/B9BC
+      aGoldPopUpText ; 85/B9BC
 
         .enc "SJIS"
         .text "　ゴールドてにいれた！"
@@ -9478,21 +9679,23 @@
       .al
       .xl
 
-      rlProcUnknown85B9D4Cycle1 ; 85/B9D4
+      rlProcGoldPopUpShow ; 85/B9D4
 
         .al
         .autsiz
         .databank ?
 
+        ; Once no music is loading: shows the window and plays sound $94 (aBody4).
+
         lda wMusicID,b
         bne +
 
-          jsl rlUnknown85A234
+          jsl rlShowMapMenuLayers
           lda #$00F7
           jsl rlSendSoundCommand
           lda aProcSystem.aBody4,b,x
           jsl rlPlaySoundEffect
-          lda #<>rlUnknown85B9F2
+          lda #<>rlProcGoldPopUpCheckSkip
           sta aProcSystem.aHeaderOnCycle,b,x
 
         +
@@ -9510,7 +9713,7 @@
       .al
       .xl
 
-      rlUnknown85B9F2 ; 85/B9F2
+      rlProcGoldPopUpCheckSkip ; 85/B9F2
 
         ; Found by tools/sweep.py.
         .al
@@ -9518,10 +9721,12 @@
         .autsiz
         .databank ?
 
+        ; A button takes 60 frames off.
+
         lda wJoy1New
         bit #$D0C0
-        beq rlUnknown85BA09
-        lda #<>rlUnknown85BA09
+        beq rlProcGoldPopUpWait
+        lda #<>rlProcGoldPopUpWait
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aBody5,b,x
         sec
@@ -9530,7 +9735,7 @@
 
         .databank 0
 
-      rlUnknown85BA09 ; 85/BA09
+      rlProcGoldPopUpWait ; 85/BA09
 
         .al
         .xl
@@ -9550,7 +9755,7 @@
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlCloseMapMenuFromProc
         jsl rlUnknown85C0C7
-        jsl rlUnknown85C0D5
+        jsl rlShowMapWindows
         lda #$00E8
         jsl rlSendSoundCommand
         bra _BA12
@@ -9567,13 +9772,13 @@
       .al
       .xl
 
-      aUnknown85BA2C ; 85/BA2C
+      aSeizePopUpTilemapData ; 85/BA2C
         .byte $20, $04, $88, $83, $7E, $00, $4A, $CE, $7F
 
-      aUnknown85BA35 ; 85/BA35
+      aSeizePopUpData ; 85/BA35
         .long $000000
         .long $000000
-        .long aUnknown85BA2C
+        .long aSeizePopUpTilemapData
         .byte $00, $01, $01
 
     .endsection Table85BA2CSection
@@ -9584,9 +9789,9 @@
       .al
       .xl
 
-      procUnknown85BA41 .structProcInfo "PW", rlProcUnknown85BA41Init, rlProcUnknown85BA41Cycle, aProcDialogueBoxCode ; 85/BA41
+      procSeizePopUp .structProcInfo "PW", rlProcSeizePopUpInit, rlProcSeizePopUpWaitMusic, aProcDialogueBoxCode ; 85/BA41
 
-        .long aUnknown85BA35
+        .long aSeizePopUpData
         .byte 1
 
     .endsection Unsorted85BA41Section
@@ -9597,14 +9802,16 @@
       .al
       .xl
 
-      rlProcUnknown85BA41Init ; 85/BA4D
+      rlProcSeizePopUpInit ; 85/BA4D
 
         .al
         .autsiz
         .databank ?
 
+        ; "<castle> をせいあつした！" (seized the castle): wInput3 = location, wInput2 = frames to wait before showing (aBody6); stays 366 frames (aBody7).
+
         jsl rlInitMapMenuProc
-        jsl rlUnknown85C0CE
+        jsl rlHideMapWindows
 
         lda #$016E
         sta aProcSystem.aBody7,b,x
@@ -9633,14 +9840,14 @@
         ora #$0C00
         jsl rlSetMapMenuPosition
 
-        lda #(`aUnknown85BAB3)<<8
+        lda #(`aSeizePopUpText)<<8
         sta lR19+1
-        lda #<>aUnknown85BAB3
+        lda #<>aSeizePopUpText
         sta lR19
         ldx #$0102
         lda #$2000
         sta aCurrentTilemapInfo.wBaseTile,b
-        jsl rlUnknown85A1E7
+        jsl rlDrawTwoMapMenuTextLines
         jsl rlHideMapMenu
         rtl
 
@@ -9656,7 +9863,7 @@
       .al
       .xl
 
-      aUnknown85BAB3 ; 85/BAB3
+      aSeizePopUpText ; 85/BAB3
 
         .enc "SJIS"
         .text "　をせいあつした！"
@@ -9672,7 +9879,7 @@
       .al
       .xl
 
-      rlProcUnknown85BA41Cycle ; 85/BAC7
+      rlProcSeizePopUpWaitMusic ; 85/BAC7
 
         .al
         .xl
@@ -9683,7 +9890,7 @@
         bne _BAD8
         lda #$0001
         sta wSoundUploadBusyFlag,b
-        lda #<>rlUnknown85BAD9
+        lda #<>rlProcSeizePopUpWaitToShow
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _BAD8
@@ -9701,7 +9908,7 @@
       .al
       .xl
 
-      rlUnknown85BAD9 ; 85/BAD9
+      rlProcSeizePopUpWaitToShow ; 85/BAD9
 
         ; Found by tools/sweep.py.
         .al
@@ -9721,7 +9928,7 @@
         jsl rlShowMapMenu
         lda #$0095
         jsl rlPlaySoundEffect
-        lda #<>rlUnknown85BAF9
+        lda #<>rlProcSeizePopUpCheckSkip
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -9729,7 +9936,7 @@
 
         ; 85/BAF9
 
-      rlUnknown85BAF9 ; 85/BAF9
+      rlProcSeizePopUpCheckSkip ; 85/BAF9
 
         ; Found by tools/sweep.py.
         .al
@@ -9739,8 +9946,8 @@
 
         lda wJoy1New
         bit #$D0C0
-        beq rlUnknown85BB10
-        lda #<>rlUnknown85BB10
+        beq rlProcSeizePopUpWait
+        lda #<>rlProcSeizePopUpWait
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aBody7,b,x
         sec
@@ -9749,7 +9956,7 @@
 
         .databank 0
 
-      rlUnknown85BB10 ; 85/BB10
+      rlProcSeizePopUpWait ; 85/BB10
 
         .al
         .xl
@@ -9785,16 +9992,16 @@
       .al
       .xl
 
-      rlUnknown85BB2E ; 85/BB2E
+      rlOpenSeizePopUp ; 85/BB2E
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #(`procUnknown85BA41)<<8
+        lda #(`procSeizePopUp)<<8
         sta lR44+1
-        lda #<>procUnknown85BA41
+        lda #<>procSeizePopUp
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -9821,7 +10028,7 @@
       .al
       .xl
 
-      rlUnknown85BC00 ; 85/BC00
+      rlOpenItemPopUp ; 85/BC00
 
         .al
         .xl
@@ -9847,11 +10054,13 @@
       .al
       .xl
 
-      rlProcUnknown85BC0FInit ; 85/BC1B
+      rlProcItemPopUpInit ; 85/BC1B
 
         .al
         .autsiz
         .databank ?
+
+        ; "<item> をてにいれた！" (got the item): wInput2 = item ID, wInput3 = row. Item $50 gets sound $96 and 60 more frames.
 
         phx
         jsl rlInitMapMenuProc
@@ -9869,7 +10078,7 @@
         sta lR19
         lda aProcSystem.wInput3,b
         ldx #$0400
-        jsl rlUnknown85B7D1
+        jsl rlGetCenteredTextBoxPlacement
         pha
         dec a
         jsl rlSetMapMenuPosition
@@ -9882,7 +10091,7 @@
         lda #$2000
         sta aCurrentTilemapInfo.wBaseTile,b
         ldx #$0102
-        jsl rlUnknown85A1E7
+        jsl rlDrawTwoMapMenuTextLines
         jsl rlDrawMapMenu
         plx
         lda aProcSystem.wInput2,b
@@ -9941,7 +10150,7 @@
         lda #$20FF
         sta wMapMenuClearTile,b
         jsl rlClearMapMenuTiles
-        jsl rlUnknown85A234
+        jsl rlShowMapMenuLayers
         rtl
 
         .databank 0
@@ -9956,12 +10165,14 @@
       .al
       .xl
 
-      rlUnknown85BCB8 ; 85/BCB8
+      rlSignedDivide16By16R13 ; 85/BCB8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; rlUnsignedDivide16By16R13 for a signed wR13.
 
         lda wR13
         bmi _BCC1
@@ -10270,7 +10481,7 @@
         sta wR13
         lda #$0010
         sta wR14
-        jsl rlUnknown85BCB8
+        jsl rlSignedDivide16By16R13
         lda wR13
         sta wR10
         lda wR7
@@ -10286,7 +10497,7 @@
         sta wR13
         lda #$0010
         sta wR14
-        jsl rlUnknown85BCB8
+        jsl rlSignedDivide16By16R13
         lda wR13
         sta wR10
         lda wR7
@@ -10720,7 +10931,7 @@
 
         jsl rlFreeHDMAEntry0
         jsl rlProcEngineFreeProc
-        jsl rlUnknown85C0D5
+        jsl rlShowMapWindows
         rtl
 
         .databank 0
@@ -10735,11 +10946,13 @@
       .al
       .xl
 
-      rlUnknown85C0CE ; 85/C0CE
+      rlHideMapWindows ; 85/C0CE
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets bit 7 of wMapSystemFlags.
 
         lda #$0080
         tsb wMapSystemFlags,b
@@ -10757,12 +10970,14 @@
       .al
       .xl
 
-      rlUnknown85C0D5 ; 85/C0D5
+      rlShowMapWindows ; 85/C0D5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears bit 7 of wMapSystemFlags and sets bit 3.
 
         lda #$0080
         trb wMapSystemFlags,b
@@ -10782,12 +10997,14 @@
       .al
       .xl
 
-      rsUnknown85C0E2 ; 85/C0E2
+      rsGetMapWindowPosition ; 85/C0E2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wInput0, wInput1 = column and row (aBody0).
 
         lda aProcSystem.aBody0,b,x
         and #$00FF
@@ -10801,12 +11018,14 @@
 
         ; 85/C0F5
 
-      rsUnknown85C0F5 ; 85/C0F5
+      rsSetMapWindowPosition ; 85/C0F5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; aBody0 = wInput0 (column), wInput1 (row).
 
         lda aProcSystem.wInput1,b
         xba
@@ -10818,12 +11037,14 @@
 
         ; 85/C100
 
-      rsUnknown85C100 ; 85/C100
+      rsSetMapWindowSize ; 85/C100
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; aBody1 = wInput0 (width), wInput1 (height).
 
         lda aProcSystem.wInput1,b
         xba
@@ -10835,12 +11056,14 @@
 
         ; 85/C10B
 
-      rsUnknown85C10B ; 85/C10B
+      rsGetMapWindowBufferOffset ; 85/C10B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = the window's offset in its 32x32 buffers. Carry set if it is off screen.
 
         lda aProcSystem.aBody0,b,x
         and #$00FF
@@ -10865,12 +11088,14 @@
 
         ; 85/C12B
 
-      rsUnknown85C12B ; 85/C12B
+      rsSetMapWindowDrawRoutine ; 85/C12B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = the routine that draws the window's contents (aBody2).
 
         sta aProcSystem.aBody2,b,x
         rts
@@ -10879,12 +11104,14 @@
 
         ; 85/C12F
 
-      rsUnknown85C12F ; 85/C12F
+      rsCheckMapWindowHidden ; 85/C12F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if the window is off (aBody3 bit 5), anything holds the map windows (the low byte of wMapSystemFlags), or bit 6 of bUnknown000E7B is set.
 
         lda aProcSystem.aBody3,b,x
         bit #$0020
@@ -10907,12 +11134,14 @@
 
         ; 85/C14B
 
-      rsUnknown85C14B ; 85/C14B
+      rsCheckMapWindowNeedsDrawing ; 85/C14B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if the window was hidden (aBody3 bit 7), is new (bit 6), or rlUnknown88A38C says so.
 
         lda aProcSystem.aBody3,b,x
         bit #$0080
@@ -10935,12 +11164,14 @@
 
         ; 85/C162
 
-      rsUnknown85C162 ; 85/C162
+      rsDrawMapWindow ; 85/C162
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Runs the window's draw routine (aBody2) with aMapWindowTextTilemapData, turns BG2 and BG3 on and clears bits 6 and 7.
 
         lda aProcSystem.aBody2,b,x
         beq _C19A
@@ -10957,9 +11188,9 @@
         lda bBufferTM
         ora #$0006
         sta bBufferTM
-        lda #(`aUnknown85C19B)<<8
+        lda #(`aMapWindowTextTilemapData)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown85C19B
+        lda #<>aMapWindowTextTilemapData
         sta lMapMenuTilemapRAMEntryPointer,b
         pea #<>_C19A - 1
         jmp ($0ED1)
@@ -10980,7 +11211,7 @@
       .al
       .xl
 
-      aUnknown85C19B ; 85/C19B
+      aMapWindowTextTilemapData ; 85/C19B
         .byte $20, $20, $00, $00, $00, $00, $CA, $E3, $7F
 
     .endsection Table85C19BSection
@@ -10991,12 +11222,14 @@
       .al
       .xl
 
-      rsUnknown85C1A4 ; 85/C1A4
+      rsClearMapWindow ; 85/C1A4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears the window's frame ($7FDD4A) and text ($7FE3CA). Carry set if it was already hidden.
 
         phb
         phx
@@ -11015,7 +11248,7 @@
         sec
         sbc wR1
         sta wR3
-        jsr rsUnknown85C10B
+        jsr rsGetMapWindowBufferOffset
         bcs _C1F7
         tax
         sep #$20
@@ -11060,7 +11293,7 @@
 
         ; 85/C1FA
 
-      rsUnknown85C1FA ; 85/C1FA
+      rsClearMapWindowText ; 85/C1FA
 
         .al
         .xl
@@ -11084,7 +11317,7 @@
         sec
         sbc wR1
         sta wR3
-        jsr rsUnknown85C10B
+        jsr rsGetMapWindowBufferOffset
         bcs _C24A
         tax
         sep #$20
@@ -11128,12 +11361,14 @@
 
         ; 85/C24D
 
-      rsUnknown85C24D ; 85/C24D
+      rsDrawMapWindowFrame ; 85/C24D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = 45 frame tiles (the corners, edges and fill of a window 9 wide): draws them into the frame buffer.
 
         phx
         phy
@@ -11150,7 +11385,7 @@
         sec
         sbc wR1
         sta wR3
-        jsr rsUnknown85C10B
+        jsr rsGetMapWindowBufferOffset
         bcs _C28E
         tax
 
@@ -11184,12 +11419,14 @@
 
         ; 85/C291
 
-      rsUnknown85C291 ; 85/C291
+      rsUploadMapWindow ; 85/C291
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; DMAs the window's rows of the frame buffer (VRAM $5400) and, unless bit 1 of wMapSystemFlags is set, the text buffer (VRAM $5800).
 
         phx
         lda aProcSystem.aBody0,b,x
@@ -11206,9 +11443,9 @@
         lsr a
         lsr a
         sta wR12
-        lda #$7FDD
+        lda #aMapWindowFrameBuffer >> 8
         sta lR18+1
-        lda #$DD4A
+        lda #<>aMapWindowFrameBuffer
         clc
         adc wR10
         sta lR18
@@ -11222,9 +11459,9 @@
         lda wMapSystemFlags,b
         bit #$0002
         bne _C2EF
-        lda #$7FE3
+        lda #aMapWindowTextBuffer >> 8
         sta lR18+1
-        lda #$E3CA
+        lda #<>aMapWindowTextBuffer
         clc
         adc wR10
         sta lR18
@@ -11244,12 +11481,14 @@
 
         ; 85/C2F1
 
-      rsUnknown85C2F1 ; 85/C2F1
+      rsTurnOffMapWindow ; 85/C2F1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bit 5 of aBody3.
 
         lda aProcSystem.aBody3,b,x
         ora #$0020
@@ -11260,7 +11499,7 @@
 
         ; 85/C2FB
 
-      rsUnknown85C2FB ; 85/C2FB
+      rsTurnOnMapWindow ; 85/C2FB
 
         .al
         .xl
@@ -11284,12 +11523,14 @@
       .al
       .xl
 
-      rlUnknown85C30D ; 85/C30D
+      rlInitMapWindowProc ; 85/C30D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; aBody2 = 0, aBody3 = $40 (new).
 
         lda #$0000
         sta aProcSystem.aBody2,b,x
@@ -11301,31 +11542,33 @@
 
         ; 85/C31A
 
-      rlUnknown85C31A ; 85/C31A
+      rlUpdateMapWindow ; 85/C31A
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown85C12F
+        ; Hidden: clears it once (bit 7). Otherwise, if it needs drawing, draws it. Then uploads.
+
+        jsr rsCheckMapWindowHidden
         bcs _C32B
-        jsr rsUnknown85C14B
+        jsr rsCheckMapWindowNeedsDrawing
         bcc _C33C
-        jsr rsUnknown85C162
+        jsr rsDrawMapWindow
         bcs _C33C
         bra _C339
 
 
         _C32B
-        jsr rsUnknown85C1A4
+        jsr rsClearMapWindow
         bcs _C33C
         lda aProcSystem.aBody3,b,x
         ora #$0080
         sta aProcSystem.aBody3,b,x
 
         _C339
-        jsr rsUnknown85C291
+        jsr rsUploadMapWindow
 
         _C33C
         rtl
@@ -11342,11 +11585,11 @@
       .al
       .xl
 
-      aProcUnknown85C31ACode ; 85/C33D
+      aProcTerrainWindowCode ; 85/C33D
         PROC_HALT
 
       procTerrainWindow ; 85/C33F
-        .structProcInfo "Ba", rlUnknown85C347, rlUnknown85C37C, aProcUnknown85C31ACode
+        .structProcInfo "Ba", rlProcTerrainWindowInit, rlProcTerrainWindowCycle, aProcTerrainWindowCode
 
     .endsection ProcScript85C33DSection
 
@@ -11356,7 +11599,7 @@
       .al
       .xl
 
-      rlUnknown85C347 ; 85/C347
+      rlProcTerrainWindowInit ; 85/C347
 
         ; Found through fe4.cdl.
         .al
@@ -11364,20 +11607,22 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85C30D
-        lda #$C3A9
-        jsr rsUnknown85C12B
+        ; Position (2, 1), size 9x5, drawn by rsDrawTerrainWindow.
+
+        jsl rlInitMapWindowProc
+        lda #<>rsDrawTerrainWindow
+        jsr rsSetMapWindowDrawRoutine
         lda #$0002
         sta aProcSystem.wInput0,b
         lda #$0001
         sta aProcSystem.wInput1,b
-        jsr rsUnknown85C0F5
+        jsr rsSetMapWindowPosition
         lda #$0009
         sta aProcSystem.wInput0,b
         lda #$0005
         sta aProcSystem.wInput1,b
-        jsr rsUnknown85C100
-        jsr rsUnknown85C41F
+        jsr rsSetMapWindowSize
+        jsr rsKeepTerrainWindowAwayFromCursor
         lda aProcSystem.aBody3,b,x
         ora #$0004
         sta aProcSystem.aBody3,b,x
@@ -11387,7 +11632,7 @@
 
         ; 85/C37C
 
-      rlUnknown85C37C ; 85/C37C
+      rlProcTerrainWindowCycle ; 85/C37C
 
         ; Found through fe4.cdl.
         .al
@@ -11402,7 +11647,7 @@
         bit #$0080
         bne _C393
         lda #$FFFF
-        jsl rlUnknown85C4E0
+        jsl rlSetWindowColoursByRelation
 
         _C393
         lda wMapSystemFlags,b
@@ -11413,14 +11658,14 @@
         sta aProcSystem.aBody3,b,x
 
         _C3A4
-        jsl rlUnknown85C31A
+        jsl rlUpdateMapWindow
         rtl
 
         .databank 0
 
         ; 85/C3A9
 
-      rsUnknown85C3A9 ; 85/C3A9
+      rsDrawTerrainWindow ; 85/C3A9
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
@@ -11428,15 +11673,15 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown85C41F
-        jsr rsUnknown85C467
+        jsr rsKeepTerrainWindowAwayFromCursor
+        jsr rsDrawTerrainWindowContents
         lda aProcSystem.aBody3,b,x
         bit #$0004
         beq _C3C3
         and #$FFFB
         sta aProcSystem.aBody3,b,x
-        lda #$C3C5
-        jsr rsUnknown85C24D
+        lda #<>aTerrainWindowFrameTiles
+        jsr rsDrawMapWindowFrame
 
         _C3C3
         clc
@@ -11447,7 +11692,7 @@
         ; 85/C3C5
 
 
-      aUnknown85C3C5 ; 85/C3C5
+      aTerrainWindowFrameTiles ; 85/C3C5
 
         .word $2368, $2369, $2369, $2369, $2369, $2369, $2369, $2369
         .word $236A, $236B, $236C, $236D, $236C, $236D, $236D, $236C
@@ -11464,12 +11709,14 @@
       .al
       .xl
 
-      rsUnknown85C41F ; 85/C41F
+      rsKeepTerrainWindowAwayFromCursor ; 85/C41F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Column $15 while the cursor is on the left half, 2 on the right (aBody3 bit 3 remembers).
 
         lda wCursorXOffset,b
         cmp #$0080
@@ -11496,8 +11743,8 @@
         _C451
         lda #$0001
         sta aProcSystem.wInput1,b
-        jsr rsUnknown85C1A4
-        jsr rsUnknown85C0F5
+        jsr rsClearMapWindow
+        jsr rsSetMapWindowPosition
         lda aProcSystem.aBody3,b,x
         ora #$0004
         sta aProcSystem.aBody3,b,x
@@ -11509,7 +11756,7 @@
 
         ; 85/C467
 
-      rsUnknown85C467 ; 85/C467
+      rsDrawTerrainWindowContents ; 85/C467
 
         .al
         .xl
@@ -11517,20 +11764,20 @@
         .databank ?
 
         phx
-        jsr rsUnknown85C1FA
+        jsr rsClearMapWindowText
         lda aProcSystem.aBody0,b,x
         sta aProcSystem.wInput0,b
-        jsr rsUnknown85C10B
+        jsr rsGetMapWindowBufferOffset
         sta aProcSystem.wInput1,b
-        jsr rsUnknown85C494
+        jsr rsGetCursorTerrain
         lda #$0101
-        jsr rsUnknown85C55B
+        jsr rsDrawTerrainName
         lda #$0101
-        jsr rsUnknown85C58F
+        jsr rsDrawTerrainWindowCastle
         lda #$00C8
-        jsr rsUnknown85C5CB
+        jsr rsDrawTerrainAvoid
         lda #$00C4
-        jsr rsUnknown85C631
+        jsr rsDrawTerrainRecoveryMark
         plx
         rts
 
@@ -11538,12 +11785,14 @@
 
         ; 85/C494
 
-      rsUnknown85C494 ; 85/C494
+      rsGetCursorTerrain ; 85/C494
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wInput2 = the terrain under the cursor, with bit 15 set at a castle.
 
         lda wCursorXOffset,b
         clc
@@ -11598,12 +11847,14 @@
       .al
       .xl
 
-      rsUnknown85C55B ; 85/C55B
+      rsDrawTerrainName ; 85/C55B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = row and column; not at a castle.
 
         sta wR10
         lda aProcSystem.wInput2,b
@@ -11623,7 +11874,7 @@
         tax
         jsl rlDrawMenuTextLine
         lda #$FFFF
-        jsl rlUnknown85C4E0
+        jsl rlSetWindowColoursByRelation
 
         _C58E
         rts
@@ -11632,12 +11883,14 @@
 
         ; 85/C58F
 
-      rsUnknown85C58F ; 85/C58F
+      rsDrawTerrainWindowCastle ; 85/C58F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = row and column: the castle's name, in its owner's colours.
 
         sta wR10
         lda aProcSystem.wInput2,b
@@ -11660,7 +11913,7 @@
         tax
         lda #$0000
         jsl rlGetFactionRelation
-        jsl rlUnknown85C4E0
+        jsl rlSetWindowColoursByRelation
 
         _C5CA
         rts
@@ -11669,12 +11922,14 @@
 
         ; 85/C5CB
 
-      rsUnknown85C5CB ; 85/C5CB
+      rsDrawTerrainAvoid ; 85/C5CB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = offset: "+n" or "-n" for the terrain's avoid; nothing for terrains 0, 2 and $D.
 
         sta wR10
         lda aProcSystem.wInput2,b
@@ -11738,12 +11993,14 @@
 
         ; 85/C631
 
-      rsUnknown85C631 ; 85/C631
+      rsDrawTerrainRecoveryMark ; 85/C631
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = offset: tile $21EA on terrains 9 and $16.
 
         sta wR10
         lda aProcSystem.wInput2,b
@@ -11777,7 +12034,7 @@
       .xl
 
       procUnitWindow ; 85/C652
-        .structProcInfo "Ba", rlUnknown85C65A, rlUnknown85C686, aProcUnitWindowCode
+        .structProcInfo "Ba", rlProcUnitWindowInit, rlProcUnitWindowClear, aProcUnitWindowCode
 
     .endsection ProcScript85C652Section
 
@@ -11787,7 +12044,7 @@
       .al
       .xl
 
-      rlUnknown85C65A ; 85/C65A
+      rlProcUnitWindowInit ; 85/C65A
 
         ; Found through fe4.cdl.
         .al
@@ -11795,27 +12052,29 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85C30D
-        lda #$C7AE
-        jsr rsUnknown85C12B
+        ; Size 9x5, drawn by rsDrawUnitWindow; starts off.
+
+        jsl rlInitMapWindowProc
+        lda #<>rsDrawUnitWindow
+        jsr rsSetMapWindowDrawRoutine
         lda #$FFFF
         sta aProcSystem.wInput0,b
         lda #$FFFF
         sta aProcSystem.wInput1,b
-        jsr rsUnknown85C0F5
+        jsr rsSetMapWindowPosition
         lda #$0009
         sta aProcSystem.wInput0,b
         lda #$0005
         sta aProcSystem.wInput1,b
-        jsr rsUnknown85C100
-        jsr rsUnknown85C2F1
+        jsr rsSetMapWindowSize
+        jsr rsTurnOffMapWindow
         rtl
 
         .databank 0
 
         ; 85/C686
 
-      rlUnknown85C686 ; 85/C686
+      rlProcUnitWindowClear ; 85/C686
 
         ; Found through fe4.cdl.
         .al
@@ -11823,9 +12082,9 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown85C1A4
+        jsr rsClearMapWindow
         bcs _C697
-        jsr rsUnknown85C291
+        jsr rsUploadMapWindow
         lda aProcSystem.aBody3,b,x
         ora #$0080
         sta aProcSystem.aBody3,b,x
@@ -11837,7 +12096,7 @@
 
         ; 85/C698
 
-      rlUnknown85C698 ; 85/C698
+      rlProcUnitWindowFindUnit ; 85/C698
 
         ; Found through fe4.cdl.
         .al
@@ -11847,10 +12106,10 @@
 
         lda wSelectedUnitDataRAMPointer,b
         pha
-        jsr rsUnknown85C6D2
+        jsr rsUnitWindowFindUnit
         lda #$0000
         sta aProcSystem.aBody7,b,x
-        lda #<>rlUnknown85C6B0
+        lda #<>rlProcUnitWindowCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         pla
         sta wSelectedUnitDataRAMPointer,b
@@ -11860,7 +12119,7 @@
 
         ; 85/C6B0
 
-      rlUnknown85C6B0 ; 85/C6B0
+      rlProcUnitWindowCycle ; 85/C6B0
 
         .al
         .xl
@@ -11869,10 +12128,10 @@
 
         lda wSelectedUnitDataRAMPointer,b
         pha
-        jsr rsUnknown85C712
-        jsr rsUnknown85C757
-        jsr rsUnknown85C784
-        jsl rlUnknown85C31A
+        jsr rsUnitWindowCheckCursorMoved
+        jsr rsUnitWindowRefreshWhenCursorStops
+        jsr rsUnitWindowBlinkStatus
+        jsl rlUpdateMapWindow
         pla
         sta wSelectedUnitDataRAMPointer,b
         rtl
@@ -11882,14 +12141,14 @@
         ; 85/C6C6
 
 
-      aUnknown85C6C6 ; 85/C6C6
+      aProcUnitWindowRefreshCode ; 85/C6C6
 
-        PROC_SET_ONCYCLE rlUnknown85C686
+        PROC_SET_ONCYCLE rlProcUnitWindowClear
 
       aProcUnitWindowCode ; 85/C6CA
 
         PROC_YIELD 3
-        PROC_SET_ONCYCLE rlUnknown85C698
+        PROC_SET_ONCYCLE rlProcUnitWindowFindUnit
         PROC_HALT
 
     .endsection Unsorted85C65ASection
@@ -11900,12 +12159,14 @@
       .al
       .xl
 
-      rsUnknown85C6D2 ; 85/C6D2
+      rsUnitWindowFindUnit ; 85/C6D2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The unit under the cursor (aBody6); turns the window off if there is none.
 
         lda bUnknown000E7B,b
         bit #$0040
@@ -11933,12 +12194,12 @@
         bcs _C70E
         lda wSelectedUnitDataRAMPointer,b
         sta aProcSystem.aBody6,b,x
-        jsr rsUnknown85C2FB
+        jsr rsTurnOnMapWindow
         bra _C711
 
 
         _C70E
-        jsr rsUnknown85C2F1
+        jsr rsTurnOffMapWindow
 
         _C711
         rts
@@ -11947,12 +12208,14 @@
 
         ; 85/C712
 
-      rsUnknown85C712 ; 85/C712
+      rsUnitWindowCheckCursorMoved ; 85/C712
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Turns the window off when the cursor or the map has moved (aBody4/aBody5), and sets aBody3 bit 3.
 
         lda aProcSystem.aBody3,b,x
         bit #$0008
@@ -11979,7 +12242,7 @@
         beq _C74C
 
         _C740
-        jsr rsUnknown85C2F1
+        jsr rsTurnOffMapWindow
         lda aProcSystem.aBody3,b,x
         ora #$0008
         sta aProcSystem.aBody3,b,x
@@ -11995,12 +12258,14 @@
 
         ; 85/C757
 
-      rsUnknown85C757 ; 85/C757
+      rsUnitWindowRefreshWhenCursorStops ; 85/C757
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Once the cursor rests on a tile again, restarts the script at aProcUnitWindowRefreshCode.
 
         lda wMapSystemFlags,b
         bit #$00FF
@@ -12014,7 +12279,7 @@
         lda wCursorYOffset,b
         bit #$000F
         bne _C783
-        lda #$C6C6
+        lda #<>aProcUnitWindowRefreshCode
         sta aProcSystem.aHeaderCodeOffset,b,x
         lda #$0001
         sta aProcSystem.aHeaderSleepTimer,b,x
@@ -12026,14 +12291,14 @@
 
         ; 85/C784
 
-      rsUnknown85C784 ; 85/C784
+      rsUnitWindowBlinkStatus ; 85/C784
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown85C12F
+        jsr rsCheckMapWindowHidden
         bcs _C7AD
         inc aProcSystem.aBody7,b,x
         lda aProcSystem.aBody6,b,x
@@ -12056,7 +12321,7 @@
 
         ; 85/C7AE
 
-      rsUnknown85C7AE ; 85/C7AE
+      rsDrawUnitWindow ; 85/C7AE
 
         ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
@@ -12064,11 +12329,11 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown85C819
-        jsr rsUnknown85C867
-        lda #$C7BF
-        jsr rsUnknown85C24D
-        jsr rsUnknown85C9BF
+        jsr rsPlaceUnitWindow
+        jsr rsDrawUnitWindowContents
+        lda #<>aUnitWindowFrameTiles
+        jsr rsDrawMapWindowFrame
+        jsr rsDrawUnitWindowPointer
         clc
         rts
 
@@ -12077,7 +12342,7 @@
         ; 85/C7BF
 
 
-      aUnknown85C7BF ; 85/C7BF
+      aUnitWindowFrameTiles ; 85/C7BF
 
         .word $2364, $2365, $2363, $2363, $2363, $2363, $2363, $6365
         .word $6364, $2360, $2361, $2361, $2361, $2361, $2361, $2361
@@ -12094,12 +12359,14 @@
       .al
       .xl
 
-      rsUnknown85C819 ; 85/C819
+      rsPlaceUnitWindow ; 85/C819
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Beside the cursor, kept on screen.
 
         phx
         lda wCursorXOffset,b
@@ -12141,11 +12408,11 @@
         beq _C862
 
         _C85C
-        jsr rsUnknown85C1A4
-        jsr rsUnknown85C291
+        jsr rsClearMapWindow
+        jsr rsUploadMapWindow
 
         _C862
-        jsr rsUnknown85C0F5
+        jsr rsSetMapWindowPosition
         plx
         rts
 
@@ -12153,12 +12420,14 @@
 
         ; 85/C867
 
-      rsUnknown85C867 ; 85/C867
+      rsDrawUnitWindowContents ; 85/C867
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Name, status and HP over max HP.
 
         phx
         lda aProcSystem.aBody6,b,x
@@ -12280,7 +12549,7 @@
         jsl rlDrawTileStringToTilemapEntry
 
         _C97E
-        jsr rsUnknown85C99F
+        jsr rsSetUnitWindowColour
         plx
         rts
 
@@ -12325,12 +12594,14 @@
       .al
       .xl
 
-      rsUnknown85C99F ; 85/C99F
+      rsSetUnitWindowColour ; 85/C99F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; BG colour 4 by the unit's relation to the player (aUnitWindowColours).
 
         phx
         jsl rlGetSelectedUnitFactionSlot
@@ -12339,7 +12610,7 @@
         jsl rlGetFactionRelation
         asl a
         tax
-        lda aUnknown85C9B7,x
+        lda aUnitWindowColours,x
         sta $0108,b
         plx
         rts
@@ -12356,9 +12627,9 @@
       .al
       .xl
 
-      aUnknown85C9B7 ; 85/C9B7
+      aUnitWindowColours ; 85/C9B7
 
-        ; Read by rsUnknown85C99F.
+        ; Read by rsSetUnitWindowColour.
 
         .word $62D5, $5AFA, $4F58, $5318
 
@@ -12372,17 +12643,19 @@
       .al
       .xl
 
-      rsUnknown85C9BF ; 85/C9BF
+      rsDrawUnitWindowPointer ; 85/C9BF
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The tail on the frame pointing at the cursor (aUnitWindowPointerTiles).
+
         phx
         phy
-        jsr rsUnknown85C0E2
-        jsr rsUnknown85C10B
+        jsr rsGetMapWindowPosition
+        jsr rsGetMapWindowBufferOffset
         sta aProcSystem.wInput2,b
         lda wCursorXOffset,b
         lsr a
@@ -12404,21 +12677,21 @@
         lsr a
         cmp aProcSystem.wInput1,b
         bcs _C9F9
-        lda $CA0B,b,y
+        lda <>aUnitWindowPointerTiles,b,y
         clc
         adc aProcSystem.wInput2,b
         tax
-        lda $CA0D,b,y
+        lda <>aUnitWindowPointerTiles+2,b,y
         sta $7FDD4A,x
         bra _CA08
 
 
         _C9F9
-        lda $CA2B,b,y
+        lda <>aUnitWindowPointerTiles+$20,b,y
         clc
         adc aProcSystem.wInput2,b
         tax
-        lda $CA2D,b,y
+        lda <>aUnitWindowPointerTiles+$22,b,y
         sta $7FDD4A,x
 
         _CA08
@@ -12431,7 +12704,7 @@
         ; 85/CA0B
 
 
-      aUnknown85CA0B ; 85/CA0B
+      aUnitWindowPointerTiles ; 85/CA0B
 
         .word $0004, $A362, $0000, $0000, $0008, $A362, $000A, $A362
         .word $0000, $0000, $0008, $E362, $0000, $0000, $000C, $E362
@@ -12446,11 +12719,13 @@
       .al
       .xl
 
-      rlUnknown85CA4B ; 85/CA4B
+      rlRefreshUnitWindow ; 85/CA4B
 
         .al
         .autsiz
         .databank ?
+
+        ; Restarts procUnitWindow's script at aProcUnitWindowRefreshCode.
 
         phb
         php
@@ -12465,7 +12740,7 @@
         jsl rlProcEngineFindProc
         bcc +
 
-          lda #$C6C6
+          lda #<>aProcUnitWindowRefreshCode
           sta aProcSystem.aHeaderCodeOffset,b,x
           lda #1
           sta aProcSystem.aHeaderSleepTimer,b,x
@@ -12522,7 +12797,7 @@
         .databank ?
 
         jsl rlInitMapMenuProc
-        jsl rlUnknown85C0CE
+        jsl rlHideMapWindows
         stz $0DB1,b
         lda aProcSystem.wInput0,b
         and #$00FF
@@ -12704,7 +12979,7 @@
         sta wR43
         lda #$000A
         sta wR42
-        jsl rlUnknown859FCD
+        jsl rlStartMapMenuGradient
         plx
         phx
         lda aProcSystem.aBody7,b,x
@@ -13109,7 +13384,7 @@
         plx
         jsr rsUnknown85CE1E
         jsl rlDrawMapMenu
-        jsl rlUnknown85A234
+        jsl rlShowMapMenuLayers
         ply
         plb
         .databank ?
@@ -13218,7 +13493,7 @@
         ldx #$0201
         jsl rlDrawMapMenuSmallNumber
         plx
-        jsl rlUnknown85A234
+        jsl rlShowMapMenuLayers
         rts
 
         .databank 0
@@ -13270,7 +13545,7 @@
 
         _CE2E
         tya
-        jsl rlUnknown859FEA
+        jsl rlBeginMapMenuOpening
         rts
 
         .databank 0
@@ -13302,7 +13577,7 @@
         ora #$0008
         tay
         pla
-        jsl rlUnknown85A041
+        jsl rlStepMapMenuOpening
         rts
 
         .databank 0
@@ -13338,7 +13613,7 @@
 
         _CE68
         tya
-        jsl rlUnknown859FEA
+        jsl rlBeginMapMenuOpening
         lda #$20FF
         sta wMapMenuClearTile,b
         jsl rlClearMapMenuTiles
@@ -13382,7 +13657,7 @@
         ora #$0005
         tay
         pla
-        jsl rlUnknown85A041
+        jsl rlStepMapMenuOpening
         rts
 
         .databank 0
@@ -13785,7 +14060,7 @@
         sta wR43
         lda #$0014
         sta wR42
-        jsl rlUnknown859FCD
+        jsl rlStartMapMenuGradient
         plx
         ply
         plb
@@ -13875,7 +14150,7 @@
         sta wR43
         lda #$0014
         sta wR42
-        jsl rlUnknown859FCD
+        jsl rlStartMapMenuGradient
         plx
         ply
         plb
@@ -13922,7 +14197,7 @@
         sta wR43
         lda #$0014
         sta wR42
-        jsl rlUnknown859FCD
+        jsl rlStartMapMenuGradient
         plx
         ply
         plb
@@ -13956,11 +14231,11 @@
         sta lR44+1
         lda #<>procUnknown85CD0C
         sta lR44
-        lda $7E4EC7
+        lda aActionStructUnit1.MaxHP
         sta aProcSystem.wInput0,b
-        lda aChildAverageLevelStats
+        lda aActionStructUnit1.CurrentHP
         sta aProcSystem.wInput1,b
-        lda #$4EB5
+        lda #<>aActionStructUnit1
         sta aProcSystem.wInput3,b
         lda wR0
         sta aProcSystem.wInput2,b
@@ -13994,7 +14269,7 @@
         sta aProcSystem.wInput0,b
         lda aActionStructUnit2.CurrentHP
         sta aProcSystem.wInput1,b
-        lda #$4F15
+        lda #<>aActionStructUnit2
         sta aProcSystem.wInput3,b
         lda wR1
         sta aProcSystem.wInput2,b
@@ -14307,7 +14582,7 @@
         sta wR43
         lda #$000E
         sta wR42
-        jsl rlUnknown859FCD
+        jsl rlStartMapMenuGradient
         rtl
 
         .databank 0
@@ -15328,7 +15603,7 @@
         ldx #$0107
         jsl rlUnknown85DA2A
         plx
-        jsl rlUnknown85A234
+        jsl rlShowMapMenuLayers
         jsl rlDrawMapMenu
         plp
         plb
@@ -15722,7 +15997,7 @@
 
       procUnknown85DAEA ; 85/DAEA
 
-        .structProcInfo "OW", rlProcUnknown85DAEAInit, rlProcUnknown85DAEACycle, aProcDialogueBoxCode
+        .structProcInfo "OW", rlProcUnknown85DAEAInit, rlProcMapTextBoxDraw, aProcDialogueBoxCode
 
     .endsection ProcScript85DAEASection
 
@@ -15781,7 +16056,7 @@
 
         _DB43
         plx
-        jsl rlUnknown85A117
+        jsl rlProcMapTextBoxInit
         lda aProcSystem.wInput3,b
         and #$FF00
         asl a
@@ -15792,7 +16067,7 @@
         sta wR43
         lda #$0010
         sta wR42
-        jsl rlUnknown859FCD
+        jsl rlStartMapMenuGradient
         rtl
 
         .databank 0
@@ -15981,7 +16256,7 @@
 
         lda #$0020
         tsb wMapStateFlags,b
-        jsl rlUnknown85C0CE
+        jsl rlHideMapWindows
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
@@ -16305,9 +16580,9 @@
         sta aProcSystem.wInput0,b
         lda #$2000
         sta aProcSystem.wInput1,b
-        lda #(`procUnknown859281)<<8
+        lda #(`procMapItemList)<<8
         sta lR44+1
-        lda #<>procUnknown859281
+        lda #<>procMapItemList
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -16344,9 +16619,9 @@
         sta aProcSystem.wInput0,b
         lda #$2010
         sta aProcSystem.wInput1,b
-        lda #(`procUnknown859281)<<8
+        lda #(`procMapItemList)<<8
         sta lR44+1
-        lda #<>procUnknown859281
+        lda #<>procMapItemList
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -16411,9 +16686,9 @@
         sta aProcSystem.wInput0,b
         lda #$2008
         sta aProcSystem.wInput1,b
-        lda #(`procUnknown859281)<<8
+        lda #(`procMapItemList)<<8
         sta lR44+1
-        lda #<>procUnknown859281
+        lda #<>procMapItemList
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -16436,9 +16711,9 @@
         sta aProcSystem.wInput0,b
         lda #$2018
         sta aProcSystem.wInput1,b
-        lda #(`procUnknown859281)<<8
+        lda #(`procMapItemList)<<8
         sta lR44+1
-        lda #<>procUnknown859281
+        lda #<>procMapItemList
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -16768,9 +17043,9 @@
         sta aProcSystem.wInput0,b
         lda #$2020
         sta aProcSystem.wInput1,b
-        lda #(`procUnknown859281)<<8
+        lda #(`procMapItemList)<<8
         sta lR44+1
-        lda #<>procUnknown859281
+        lda #<>procMapItemList
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -16794,7 +17069,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown85A886
+        jsl rlOpenUnitAnimationMenu
         plx
         rtl
 
@@ -17419,7 +17694,7 @@
               bit #$0008
               beq +
 
-                jsl rlUnknown85C0CE
+                jsl rlHideMapWindows
 
             +
             phx
@@ -18527,7 +18802,7 @@
         .autsiz
         .databank ?
 
-        ; Clears bits 3 and 4 of wMapStateFlags and closes the map windows (rlUnknown85C0D5).
+        ; Clears bits 3 and 4 of wMapStateFlags and closes the map windows (rlShowMapWindows).
 
         phb
         php
@@ -18535,7 +18810,7 @@
         plb
         lda #$0018
         trb wMapStateFlags,b
-        jsl rlUnknown85C0D5
+        jsl rlShowMapWindows
         plp
         plb
         rtl
@@ -18762,9 +19037,9 @@
         sta aProcSystem.wInput0,b
         lda #$2028
         sta aProcSystem.wInput1,b
-        lda #(`procUnknown859281)<<8
+        lda #(`procMapItemList)<<8
         sta lR44+1
-        lda #<>procUnknown859281
+        lda #<>procMapItemList
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
@@ -18784,9 +19059,9 @@
         sta aProcSystem.wInput0,b
         lda #$2008
         sta aProcSystem.wInput1,b
-        lda #(`procUnknown859281)<<8
+        lda #(`procMapItemList)<<8
         sta lR44+1
-        lda #<>procUnknown859281
+        lda #<>procMapItemList
         sta lR44
         jsl rlProcEngineCreateProc
         rtl
