@@ -4,15 +4,15 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-22, after the full-screen menus wave)
+## Current state (2026-11-22, after the map menu wave)
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
-- `./build.sh` is byte-identical and the checksums verify. 97.53% of the ROM is built from source. GAPS.md: 211 `none` pieces (61,267 bytes), 56 padding runs (42,139 bytes).
-- Routines: 5,959 in `engine/`, 2,927 named, 3,032 `Unknown`; 2,610 still in `engine/unsorted/`. 307 pinned blocks.
-- **Phase 3 Wave 2b (full-screen menus and save) done**, commits `ea6708d`..`e5423ad`. Bank `$89` is out of `engine/unsorted/`: the status screen, revive screen and options menu are in `engine/menus/` with their bank `$80` halves; `engine/save/save.asm` has no `Unknown` left. Constants appended to `include/Menus.h` (it already held the map menu structs) and `include/Save.h`; RAM blocks at `$7F8183` (status screen), `$7F8400` (options) and `$7FB014` (revive), scoped in `tools/name_ram.py`. Reference pages [docs/reference/menus.md](docs/reference/menus.md) and [save.md](docs/reference/save.md).
-- **Phase 2 had a hole:** its tools only look for code pointers and six-digit numbers. Bank `$89` had 25 sprite arrays passed as `ldy #$xxxx`, sprite arrays hidden inside word tables, long pointers written as bytes, and 44 main-loop routine addresses written as numbers engine-wide (`$B6B6`, `$BBD9`, `$C3E6`, `$DFDC`, `$B122`). All of those are labels now; 80 `ldy #$xxxx` immediates remain elsewhere (item, unit and skill windows, banks `$85`, `$88`, `$9B`...) and need the same check. `tools/sprite_arrays.py` decodes a sprite array from the ROM as `.structSpriteArray` source.
-- Reference pages so far: `docs/reference/core.md`, `ai.md`, `castle.md`, `menus.md`, `save.md`. `tools/reference.py` output is gitignored; run it locally. What each wave did is in HISTORY.md under "Phase 3 waves".
+- `./build.sh` is byte-identical and the checksums verify. 97.55% of the ROM is built from source. GAPS.md: 181 `none` pieces (60,487 bytes), 56 padding runs (42,139 bytes). Banks `$85` and `$87` have no gaps left.
+- Routines: 6,003 in `engine/`, 3,472 named, 2,531 `Unknown`; 2,064 still in `engine/unsorted/` (banks `$81`, `$84`, `$88`, `$8B`, `$8C`, `$8D`, `$90`, `$91`, `$95`-`$97`, `$9B`, `$9E`, `$9F`). 307 pinned blocks.
+- **Phase 3 Wave 2c (the map menus) done in one session**, commits `3165f4d`..`4dbff3f`. Banks `$85` and `$87` are out of `engine/unsorted/`; what each file holds is in [docs/reference/map_menu.md](docs/reference/map_menu.md) and HISTORY.md. New RAM names: the map menu block at `$000516`, `aUnitMenu...Slots` at `$7E2000` (scoped in `tools/name_ram.py`: the AI uses the area), the HP window requests at `$000DAF`; constants `UNIT_MENU_MODE_*` and `MAP_BATTLE_HP_REQUEST_*` in `include/Menus.h`.
+- **Left from this wave:** 35 `Unknown` in `engine/menus/unit_window.asm` (the full-screen unit list, bank `$8B`/`$80`); the `ldy #$xxxx` sprite pointer check in the unit, item and skill windows (as bank `$89`'s were, `tools/sprite_arrays.py`); a dozen low-level helpers left `Unknown` on purpose (the gradient table builder, the map battle HUD palette helpers, the "RP" proc in `map_battle_magic.asm`). Bank `$84`'s `rlUnknown84F786` (builds the unit menu's slot lists) and the command handlers' targets in banks `$84`/`$88` belong to the map engine wave.
+- Reference pages so far: `docs/reference/core.md`, `ai.md`, `castle.md`, `menus.md`, `map_menu.md`, `save.md`. `tools/reference.py` output is gitignored; run it locally. What each wave did is in HISTORY.md under "Phase 3 waves".
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
 ## Who wrote what
@@ -28,11 +28,11 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Talk to the user before starting the next wave.** Next in the agreed order: **the map menu in banks `$85`/`$87`** (about 375 routines; `engine/menus/map_menu.asm` and the unit, item, skill and data windows, whose `ldy #$xxxx` sprite pointers should be checked with `tools/sprite_arrays.py` as bank `$89`'s were). Then the map engine and battle. The file and save menu screens in bank `$91` are not named yet; they could join the map menu wave or the events wave.
+1. **Talk to the user before starting the next wave.** Next in the agreed order: **the map engine, bank `$88`** (cursor, camera, the action flow after a menu choice, map sprites; with bank `$84`'s map-side routines such as `rlUnknown84F786` and the unit command handlers' targets). Before it, a short clean-up could finish the menus: the 35 `Unknown` in `unit_window.asm` and the `ldy #$xxxx` sprite pointers. Then battle. The file and save menu screens in bank `$91` are not named yet; they could join the events wave.
 2. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
-3. Open questions are at the end of each reference page (`core.md`, `ai.md`, `castle.md`, `menus.md`, `save.md`).
-4. `tools/stream_catalog.py` deleted the catalog previews when run (reverted), so `gfx/compressed/CATALOG.md` still names pre-castle labels; find out why before rerunning it. New files from `move_sections.py` are included at the top of build.asm; move the lines to a sensible place by hand. Check that an `include/` file does not exist before creating one.
-5. Bank `$89` cannot be pad-tested until it is merged: its last block has no free space after it.
+3. Open questions are at the end of each reference page (`core.md`, `ai.md`, `castle.md`, `menus.md`, `map_menu.md`, `save.md`).
+4. `tools/stream_catalog.py` deleted the catalog previews when run (reverted), so `gfx/compressed/CATALOG.md` still names pre-castle labels; find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm; move the lines to a sensible place by hand. Check that an `include/` file does not exist before creating one.
+5. Bank `$89` cannot be pad-tested until it is merged: its last block has no free space after it. Banks `$85` and `$87` are all source now and could be merged (`tools/merge_bank.py`) and pad-tested.
 
 **Per-wave checklist.** One system (or one part of a big one) per session; hand over and clear context after each.
 
@@ -52,6 +52,8 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 Each is one screen. Answers so far are in HISTORY.md under the wave that asked them.
 
 1. (When a save reaches chapter 6.) Augury with a generation 2 child: are there three topics (love, record, parents)? The code reads the topic count from `$7F8183`; only the screen shows which topics a child gets.
+2. The unit command menu's mode 1: move a player unit onto its own home castle and choose たいき (wait). Does the command menu open again by itself, and which commands does it list? The code shows mode 1 follows a player unit ending its action at its home castle, hides attack, staff, items, dance, talk and give, and that B cannot close it; only the screen shows what the menu is for.
+3. Where does まち (town) appear? The code shows it at a location of type 1 and that its handler opens the castle screen; one screenshot of a unit standing where it is offered settles what a type 1 location is.
 
 ## How to work on this project
 
