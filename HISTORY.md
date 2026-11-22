@@ -145,6 +145,7 @@ Every step kept the output identical to the original.
 - **Battle.** `rlActionStructBuildBattleRounds` fills `aBattleRoundsData` with strikes; `rsActionStructResolveStrike` resolves one. `rlFindTargetsInRange` picks targets with 14 filters (`aTargetFilterRoutines`).
 - **Items.** Buying, selling and repair prices (`rlGetItemBuyPrice`, `rlGetItemSellPrice`, `rlGetItemRepairCost`); Bargain halves them; holy weapons cannot be sold or thrown away.
 - **AI formations.** Four routines, one per `wAIFormationDirection`, each turning a formation pattern a quarter turn further.
+- **The castle** (2026-11-22; details in [docs/reference/castle.md](docs/reference/castle.md)). Deirdre (character `$10`) cannot sortie or guard from chapter 3 on; class change is refused in chapter 6 and needs level 20. A sold item goes into the selling castle's secondhand stock (`ItemStatePawnbroker`, owned by that castle), where any unit can buy it back for more than it sold for (confirmed in the emulator). The depot keeps items per unit (`ItemStateSupply`). A weapon with 50 or more kills gets its own line at the repair shop. The augury reads love points with the unit's lover or top candidate: exactly 500 "bound to", 400+ "loves", 300+ "likes", 200+ "interested in"; only children can ask about their parents. Each castle's facilities are bits in byte `$05` of its location entry.
 
 ### Naming
 
@@ -158,6 +159,13 @@ Every step kept the output identical to the original.
 - **RAM.** `tools/name_ram.py` writes raw addresses with the names `include/` gives them (about 2,200 operands so far). The most-used unknown variables that could be named with confidence are named: the game state variables, `wActiveUnitDeploymentOffset`, the unit relocation record (`wUnitRelocationDeploymentOffset`, `...Type`, `...LocationID`) and several temporaries.
 - **Constants and struct fields.** `tools/apply_constants.py` (rules in `tools/constant_rules.txt`) writes numbers compared with a known getter or field as constants (78 operands); `tools/name_struct_fields.py` writes small offsets from an index register as struct fields (64 offsets).
 - **Sorting.** 95 sections left `unsorted/` because every routine using them is a named routine in one system. Callers with `Unknown` names do not count: many were filed by ROM neighbours, and trusting them spread wrong guesses.
+
+### Phase 3 waves
+
+One system per session, by the per-wave checklist in [STATUS.md](STATUS.md).
+
+- **Wave 1: core and AI audit** (2026-11-22, up to `0c07436`). The game state routines are named by role (`rl<Screen>Upkeep/Setup/Step`, constants in `include/GameStates.h`); wrong claims fixed (commits `2e4e0d0`, `96e3557`). The other ~380 names `ef5fff9` (Gemini) gave were triaged: its comments are mostly specific and code-derived; the "unused" claims, interpretive names and table names were checked one by one. A full line-by-line read of every AI, RAM-struct and OAM routine was not done. The reference set started: `tools/reference.py` generates `docs/reference/routines/`, `ram.md` and `INDEX.md` (gitignored); hand-written `docs/reference/README.md`, `core.md`, `ai.md`. The guide's introduction was updated for the game-state names and the menu option stack. At the end: 2,516 routines named, 3,005 in `engine/unsorted/`.
+- **Wave 2a: the castle** (2026-11-22, `a26ee55`..`04473ef`). All of bank `$8A`, the old `engine/menus/castle_menu.asm` and the castle rules from banks `$84`/`$87` named and moved into `engine/castle/` (ten files); the arena setup joined `engine/arena/`. `include/Castle.h` holds its constants (steps, cursor modes, commands, facilities, keepers, conversation exits); its `$7F757A` RAM block is scoped to the castle files in `tools/name_ram.py`. Wrong names fixed: `rlBuildDeadPlayerCharacterList` was the castle's unit list (`rlBuildCastleUnitList`); the "unit menu" routines set up the town; the しゅび command is guard, not equip. `tools/move_sections.py` now creates its target folder before writing. At the end: 2,771 routines named, 2,736 in `engine/unsorted/`.
 
 ## What remains
 

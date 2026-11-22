@@ -11,7 +11,7 @@ Numbers come from `python3 tools/counts.py`; quote nothing else.
 - `./build.sh` is byte-identical and the checksums verify. 97.53% of the ROM is built from source. GAPS.md: 216 `none` pieces (61,565 bytes), 56 padding runs (42,139 bytes).
 - Routines: 5,958 in `engine/`, 2,771 named, 3,187 `Unknown`; 2,736 still in `engine/unsorted/`. 307 pinned blocks.
 - **Phase 3 Wave 2a (castle) done**, commits `a26ee55`..`50648da`. Bank `$8A` is empty and gone; the castle lives in `engine/castle/` (10 files), with its rules from banks `$84`/`$87` and the old `menus/castle_menu.asm`. Constants in `include/Castle.h`, RAM block at `$7F757A` (scoped in `tools/name_ram.py`), reference page [docs/reference/castle.md](docs/reference/castle.md). Fixed on the way: `rlBuildDeadPlayerCharacterList` was the castle's unit list (now `rlBuildCastleUnitList`); the "unit menu" names were the town screen; the しゅび command is guard, not equip.
-- Wave 1 (core, AI) reference pages: `docs/reference/core.md`, `ai.md`. `tools/reference.py` output is gitignored; run it locally.
+- Reference pages so far: `docs/reference/core.md`, `ai.md`, `castle.md`. `tools/reference.py` output is gitignored; run it locally. What each wave did is in HISTORY.md under "Phase 3 waves".
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
 ## Who wrote what
