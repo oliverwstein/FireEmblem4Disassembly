@@ -18,5 +18,6 @@ The generated pages are not committed (they are in `.gitignore`): run `python3 t
 
 - [core.md](core.md): the frame, boot, game states, the engines that run every frame, procs.
 - [ai.md](ai.md): the enemy (and allied) AI.
+- [castle.md](castle.md): the castle screen: courtyard, unit commands, town, shops, depot, augury, class change, conversation scenes.
 
 The other systems get their page as Phase 3 names and sorts them (see [PLAN.md](../../PLAN.md)).
