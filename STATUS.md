@@ -11,7 +11,7 @@ Numbers come from `python3 tools/counts.py`; quote nothing else.
 - `./build.sh` is byte-identical and the checksums verify. 97.53% of the ROM is built from source. GAPS.md: 216 `none` pieces (61,565 bytes), 56 padding runs (42,139 bytes).
 - Routines: 5,956 in `engine/`, 2,516 named, 3,440 `Unknown`; 3,005 still in `engine/unsorted/`. 307 pinned blocks.
 - Phase 3 Wave 1 audit done: the game-state routines are named by role (`rl<Screen>Upkeep/Setup/Step`, constants in `include/GameStates.h`); wrong claims fixed (see commits `2e4e0d0`, `96e3557`). The other ~380 names `ef5fff9` gave were triaged: Gemini's comments are mostly specific and code-derived; the "unused" claims, interpretive names and table names were checked one by one. A full line-by-line read of every AI/RAM-struct/OAM routine was not done.
-- Reference set started: `tools/reference.py` generates `docs/reference/routines/`, `ram.md`, `INDEX.md`; hand-written `docs/reference/README.md`, `core.md`, `ai.md`. Rerun the tool after any rename and commit its output.
+- Reference set started: `tools/reference.py` generates `docs/reference/routines/`, `ram.md`, `INDEX.md`; hand-written `docs/reference/README.md`, `core.md`, `ai.md`. Its output is gitignored; run it locally to read the index.
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md), updated for the game-state names and the menu option stack.
 
 ## Who wrote what
@@ -28,7 +28,7 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 ## Next session, in order
 
 1. **Talk to the user before starting a Phase 3 wave** (they asked for a report between the setup steps and the waves).
-2. **Continue Phase 3 one system at a time.** Each wave: name the routines, move them out of `unsorted/`, write or extend that system's `docs/reference/<system>.md`, rerun `tools/reference.py`, commit with an evidence body. Plain-words docs are part of the wave; they catch wrong names. Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
+2. **Continue Phase 3 one system at a time.** Each wave: name the routines, move them out of `unsorted/`, write or extend that system's `docs/reference/<system>.md`, commit with an evidence body. Plain-words docs are part of the wave; they catch wrong names. Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
 3. Open questions left by Wave 1 are listed at the end of `docs/reference/core.md` and `ai.md`.
 
 ## How to work on this project
