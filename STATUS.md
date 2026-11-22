@@ -28,7 +28,7 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Talk to the user before starting the next wave.** Next in the agreed order: **the map menu in banks `$85`/`$87`** (about 375 routines, likely two sessions; `engine/menus/map_menu.asm` and the unit, item, skill and data windows, whose `ldy #$xxxx` sprite pointers should be checked with `tools/sprite_arrays.py` as bank `$89`'s were). Then the map engine (two sessions) and battle (three). The file and save menu screens in bank `$91` are not named yet; they could join the map menu wave or the events wave.
+1. **Talk to the user before starting the next wave.** Next in the agreed order: **the map menu in banks `$85`/`$87`** (about 375 routines; `engine/menus/map_menu.asm` and the unit, item, skill and data windows, whose `ldy #$xxxx` sprite pointers should be checked with `tools/sprite_arrays.py` as bank `$89`'s were). Then the map engine and battle. The file and save menu screens in bank `$91` are not named yet; they could join the map menu wave or the events wave.
 2. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
 3. Open questions are at the end of each reference page (`core.md`, `ai.md`, `castle.md`, `menus.md`, `save.md`).
 4. `tools/stream_catalog.py` deleted the catalog previews when run (reverted), so `gfx/compressed/CATALOG.md` still names pre-castle labels; find out why before rerunning it. New files from `move_sections.py` are included at the top of build.asm; move the lines to a sensible place by hand. Check that an `include/` file does not exist before creating one.
