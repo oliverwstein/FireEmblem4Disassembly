@@ -6223,7 +6223,7 @@
         .autsiz
         .databank ?
 
-        ; R: finds the player unit with the next generation ID (1-$18, wrapping) that is alive and not captive (any unit while Select is held), and fades out to reopen the screen for it. Sets carry and does nothing for a non-player unit or when the revive screen opened the status screen.
+        ; R: finds the player unit with the next generation ID (1-$18, wrapping) that is alive and not captive (any unit while Select is held, dead ones included: seen in the emulator), and fades out to reopen the screen for it. Sets carry and does nothing for a non-player unit or when the revive screen opened the status screen.
 
         lda wSelectedUnitDataRAMPointer,b
         sta wStatusScreenTemp3

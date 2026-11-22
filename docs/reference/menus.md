@@ -54,7 +54,7 @@ Weapon ranks are drawn by `rsDrawWeaponRankLetter`: A, B, C, a dash for none, an
 
 ### Another unit
 
-R and L (`rsStatusScreenNextUnit`, `rsStatusScreenPreviousUnit`) walk the player's generation IDs 1-`$18`, skipping units that are dead or captive unless Select is held. They fade out (`STATUS_SCREEN_STEP_FADE_OUT`), set `wStatusScreenReopenMode` to the page to come back to (`STATUS_SCREEN_REOPEN_TOP_PAGE`, `_BOTTOM_PAGE` or `_HOLY_BLOOD`, arbitrary values `$1234`, `$4321`, `$1111`) and install `rsOpenStatusScreen` again with the new unit selected. The setup routine sees the mode and fades in at that page.
+R and L (`rsStatusScreenNextUnit`, `rsStatusScreenPreviousUnit`) walk the player's generation IDs 1-`$18`, skipping units that are dead or captive unless Select is held (checked in the emulator: with Select held, R shows a unit that died in the prologue). They fade out (`STATUS_SCREEN_STEP_FADE_OUT`), set `wStatusScreenReopenMode` to the page to come back to (`STATUS_SCREEN_REOPEN_TOP_PAGE`, `_BOTTOM_PAGE` or `_HOLY_BLOOD`, arbitrary values `$1234`, `$4321`, `$1111`) and install `rsOpenStatusScreen` again with the new unit selected. The setup routine sees the mode and fades in at that page.
 
 ### Steps
 
