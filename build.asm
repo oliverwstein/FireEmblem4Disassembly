@@ -1185,11 +1185,6 @@
 
       .dsection Unsorted82E133Section
 
-    .here
-
-    * = $02E147
-    .logical $82E147
-
       .dsection Unsorted82E147Section
 
       .dsection Unsorted82E250Section

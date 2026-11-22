@@ -354,7 +354,7 @@
       .xl
 
       aIRQEngineMainActionTable ; 82/E000
-        .word <>rlResetIRQEngine, <>rlIRQEngineStub, $E140
+        .word <>rlResetIRQEngine, <>rlIRQEngineStub, <>rlIRQEngineRestoreDefaultIRQ
 
       rsIRQCodeSleep ; 82/E006
 
@@ -522,13 +522,52 @@
         .autsiz
         .databank ?
 
-        ; Empty rtl stub in aIRQEngineMainActionTable (slot 1)
+        ; The IRQ engine's per-frame routine in aIRQEngineMainActionTable: does
+        ; nothing. The engine's work runs from the IRQ itself (rsIRQEngineCycle).
 
         rtl
 
         .databank 0
 
-        ; 82/E134
+      rlUnknown82E134 ; 82/E134
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing refers to it. Writes INIDISP with only the forced-blank bit of
+        ; bBufferINIDISP (brightness 0).
+
+        sep #$20
+        lda bBufferINIDISP
+        and #$80
+        sta $2100,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+      rlIRQEngineRestoreDefaultIRQ ; 82/E140
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The third routine in aIRQEngineMainActionTable: puts rsDefaultIRQRoutine
+        ; back in wIRQPointer and disables interrupts. rlRegisterVBlankHook reads
+        ; only the first two words of an engine's table, and nothing else is
+        ; known to read the third.
+
+        lda #<>rsDefaultIRQRoutine
+        sta wIRQPointer
+        sei
+        rtl
+
+        .databank 0
+
+        ; 82/E147
 
     .endsection Unsorted82E133Section
 

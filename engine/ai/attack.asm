@@ -452,10 +452,10 @@
         .word <>rsAICheckAttackTypeIntimidate ; AttackTypeIntimidate
         .word <>rsAICheckAttackTypeReachable ; AttackTypeReachable
         .word <>rsAICheckAttackTypeRegular ; AttackTypeRegular
-        .word <>rsAICheckAttackTypePassive ; AttackTypeAlways
+        .word <>rsAICheckAttackTypeNever ; never attacks
         .word <>rsAICheckAttackTypeCautious ; AttackTypeCautious
         .word <>rsAICheckAttackTypeDefendingCastle ; AttackTypeDefendingCastle
-        .word <>rsAICheckAttackTypePassive ; AttackTypeAlways
+        .word <>rsAICheckAttackTypeNever ; never attacks
         .word <>rsAICheckAttackTypeRegular ; AttackTypeRegular
         .word <>rsAICheckAttackTypeRegular ; AttackTypeRegular
 
@@ -551,15 +551,14 @@
 
         .databank 0
 
-      rsAICheckAttackTypePassive ; 86/A1DF
+      rsAICheckAttackTypeNever ; 86/A1DF
 
         .al
         .autsiz
         .databank ?
 
-        ; AttackType 3/6: return CLC (never attack; movement/interaction only)
-
-        ; AttackTypeAlways
+        ; Attack types 3 and 6: rejects every tile (carry clear), so a unit with this
+        ; attack type never attacks; it only moves and interacts.
 
         clc
         rts

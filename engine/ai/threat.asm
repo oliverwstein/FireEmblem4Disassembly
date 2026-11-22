@@ -235,7 +235,7 @@
           jml _End
 
         +
-        lda wAIUnknown7E201A
+        lda wAIGroupObjective
         bne +
 
           jml _End
@@ -267,7 +267,7 @@
         lda wAITemp000E9C,b
         sta wAIUnknown7E2016
 
-        lda wAIUnknown7E201A
+        lda wAIGroupObjective
         cmp #6
         bne +
 
@@ -480,7 +480,7 @@
               bra ++
 
             +
-            lda wAIUnknown7E201A
+            lda wAIGroupObjective
             asl a
             tax
             jsr (aAIGroupObjectiveRoutines,x)

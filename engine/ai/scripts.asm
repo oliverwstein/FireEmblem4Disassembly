@@ -33,7 +33,7 @@
         lda #$FFFF
         sta wAIUnknown7E2018
         lda #0
-        sta wAIUnknown7E201A
+        sta wAIGroupObjective
 
         lda wAICurrentAISetting,b
         jsl rlTryGetGroupLeaderCoordinates
@@ -151,7 +151,7 @@
         .databank ?
 
         lda #0
-        sta wAIUnknown7E201A
+        sta wAIGroupObjective
         sec
         rts
 
@@ -293,7 +293,7 @@
           sta wAIUnknown7E2002
 
           lda #1
-          sta wAIUnknown7E201A
+          sta wAIGroupObjective
 
           inc y
           inc y
@@ -346,7 +346,7 @@
           jsl rlSetTargetMapTile
 
           lda #6
-          sta wAIUnknown7E201A
+          sta wAIGroupObjective
           lda $0001,b,y
           and #$00FF
           sta wAIUnknown7E2002
@@ -420,7 +420,7 @@
               jsl rlSetTargetMapTile
 
               lda #2
-              sta wAIUnknown7E201A
+              sta wAIGroupObjective
 
               inc y
               sec
@@ -476,7 +476,7 @@
           jsl rlSetTargetMapTile
 
           lda #7
-          sta wAIUnknown7E201A
+          sta wAIGroupObjective
           lda #0
           sta wAIUnknown7E2002
 
@@ -507,7 +507,7 @@
         bcs +
 
           lda #4
-          sta wAIUnknown7E201A
+          sta wAIGroupObjective
           lda #4
           sta wAIUnknown7E2002
           sec
@@ -532,7 +532,7 @@
           ; Any foe is in groups threat range
 
           lda #5
-          sta wAIUnknown7E201A
+          sta wAIGroupObjective
           lda #5
           sta wAIUnknown7E2002
           sec
@@ -596,7 +596,7 @@
               jsl rlSetTargetMapTile
 
               lda #3
-              sta wAIUnknown7E201A
+              sta wAIGroupObjective
 
               inc y
               inc y
@@ -639,7 +639,7 @@
           sta wAIUnknown7E201C
 
           lda #8
-          sta wAIUnknown7E201A
+          sta wAIGroupObjective
 
           inc y
           inc y
@@ -663,7 +663,7 @@
         .databank ?
 
         lda #9
-        sta wAIUnknown7E201A
+        sta wAIGroupObjective
         lda #$FFFF
         sta wAIUnknown7E2018
         lda #2
@@ -687,7 +687,7 @@
         bne _CLC
 
           lda #12
-          sta wAIUnknown7E201A
+          sta wAIGroupObjective
           lda #$FFFF
           sta wAIUnknown7E2018
           lda #2
@@ -730,7 +730,7 @@
               jsr rsAIScriptCommand18
 
               lda #10
-              sta wAIUnknown7E201A
+              sta wAIGroupObjective
               lda #$FFFF
               sta wAIUnknown7E2018
               lda #1
@@ -760,7 +760,7 @@
         jsr rsAIScriptCommand18
 
         lda #11
-        sta wAIUnknown7E201A
+        sta wAIGroupObjective
         lda #$FFFF
         sta wAIUnknown7E2018
         lda #2
@@ -782,7 +782,7 @@
         .databank ?
 
         lda #7
-        sta wAIUnknown7E201A
+        sta wAIGroupObjective
         lda #5
         sta wAIUnknown7E2002
 
@@ -917,7 +917,7 @@
 
         _SEC
         lda #2
-        sta wAIUnknown7E201A
+        sta wAIGroupObjective
         sec
         rts
 
@@ -970,7 +970,7 @@
           bpl _Loop
 
         lda #3
-        sta wAIUnknown7E201A
+        sta wAIGroupObjective
         sec
         rts
 
@@ -1079,7 +1079,7 @@
             lda #1
             sta wAIUnknown7E201C
             lda #8
-            sta wAIUnknown7E201A
+            sta wAIGroupObjective
             lda #0
             sta wAIUnknown7E2002
 

@@ -64,14 +64,14 @@
 
       aAIEngineCycleRoutines ; 86/9D65
 
-        .word <>rsAIEngineSetupCycle
-        .word <>rsAIEngineTargetListCycle
-        .word <>rsAIEngineCycle2 ; build ally list
-        .word <>rsAIEngineCycle3 ; builds distance map to target tile
-        .word <>rsAIEngineCycle4 ; sets destination tile of all allies with same AI?
-        .word <>rsAIEngineCycle5 ; gets best move tile?
-        .word <>rsAIEngineCycle6 ; waits for movement to finish
-        .word <>rsAIEngineNextCycle
+        .word <>rsAIEngineSetupCycle          ; 0: start with group 1 of the active faction
+        .word <>rsAIEngineTargetListCycle     ; 1: list the targets
+        .word <>rsAIEngineGroupScriptCycle    ; 2: run group scripts until one gives its group something to do
+        .word <>rsAIEngineGroupTargetCycle    ; 3: the group's target and the leader's waypoint
+        .word <>rsAIEngineGroupDestinationCycle ; 4: each member's destination
+        .word <>rsAIEngineUnitTurnCycle       ; 5: the selected unit moves and acts
+        .word <>rsAIEngineNextUnitCycle       ; 6: after the action, the next unit (5) or group (2)
+        .word <>rsAIEngineDoneCycle           ; 7: every group has had its turn
 
       rsAIEngineSetupCycle ; 86/9D75
 
@@ -105,11 +105,16 @@
 
         .databank 0
 
-      rsAIEngineCycle2 ; 86/9D93
+      rsAIEngineGroupScriptCycle ; 86/9D93
 
         .al
         .autsiz
         .databank ?
+
+        ; Fills the friendly and unfriendly unit maps, then for each AI group from wAICurrentAISetting
+        ; to 8: builds its unit list and, if it has units and a script, checks the threat to its allies and
+        ; runs the script. The first group whose script sets an objective (wAIGroupObjective) moves the cycle on to 3. When
+        ; no group is left, sets bit $20 of wMapStateFlags and goes to 7 (done).
 
         lda #$0010
         tsb bUnknown000E7B,b
@@ -143,7 +148,7 @@
             jsl rlAICheckIfAnyFoeInAlliesThreatRange
             jsl rlRunAIScript
 
-            lda wAIUnknown7E201A
+            lda wAIGroupObjective
             bne ++
 
         +
@@ -168,11 +173,14 @@
 
         .databank 0
 
-      rsAIEngineCycle3 ; 86/9DFA
+      rsAIEngineGroupTargetCycle ; 86/9DFA
 
         .al
         .autsiz
         .databank ?
+
+        ; Raises the group's mode from 1 to 2 if a foe is in its threat range, then picks the group's
+        ; target tile and the leader's waypoint for this turn.
 
         lda #$0010
         tsb bUnknown000E7B,b
@@ -189,11 +197,15 @@
 
         .databank 0
 
-      rsAIEngineCycle4 ; 86/9E0C
+      rsAIEngineGroupDestinationCycle ; 86/9E0C
 
         .al
         .autsiz
         .databank ?
+
+        ; Waits while a map action is running. Then sets each member's destination: its own position
+        ; if the group has no target path (bit 0 of wAIUnknownBitfield7E2000 clear), else around the target;
+        ; with objective 6, a group already in formation is skipped (next group).
 
         lda #$0010
         tsb bUnknown000E7B,b
@@ -212,7 +224,7 @@
             bra _9E3F
           
           +
-          lda wAIUnknown7E201A
+          lda wAIGroupObjective
           cmp #6
           bne +
 
@@ -237,11 +249,14 @@
 
         .databank 0
 
-      rsAIEngineCycle5 ; 86/9E4E
+      rsAIEngineUnitTurnCycle ; 86/9E4E
 
         .al
         .autsiz
         .databank ?
+
+        ; If the selected unit can act, refills the unit maps and runs its turn (move, then queue its
+        ; action).
 
         php
 
@@ -262,11 +277,15 @@
 
         .databank 0
 
-      rsAIEngineCycle6 ; 86/9E6C
+      rsAIEngineNextUnitCycle ; 86/9E6C
 
         .al
         .autsiz
         .databank ?
+
+        ; Waits while a map action is running, seizes a castle after a won siege, and gives a unit
+        ; with Canto another turn. Otherwise selects the next unit of the group (cycle 5), or the next
+        ; group (cycle 2) after the last one.
 
         lda wMapActionActiveFlag,b
         bne _End
@@ -398,11 +417,13 @@
 
         .databank 0
 
-      rsAIEngineNextCycle ; 86/9F34
+      rsAIEngineDoneCycle ; 86/9F34
 
         .al
         .autsiz
         .databank ?
+
+        ; Does nothing: the faction's AI is finished for this phase.
 
         rts
 

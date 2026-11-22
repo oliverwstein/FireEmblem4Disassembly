@@ -669,7 +669,7 @@
           cmp #StatusBerserk
           beq _CLC
 
-            lda wAIUnknown7E201A
+            lda wAIGroupObjective
             cmp #7
             beq _CLC
 
@@ -677,7 +677,7 @@
               bit #UnitStateGroupLeader
               beq +
 
-                lda wAIUnknown7E201A
+                lda wAIGroupObjective
                 cmp #10
                 beq _CLC
 
@@ -1469,7 +1469,7 @@
         ; Deploy unfielded AI unit from castle (relocation type 4) unless retreating
 
         phx
-        lda wAIUnknown7E201A
+        lda wAIGroupObjective
         cmp #9
         beq _SEC
 

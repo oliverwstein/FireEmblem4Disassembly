@@ -29,7 +29,7 @@
   .endstruct
 
   AI_00 .segment
-    ; Clears wAIUnknown7E201A
+    ; Clears wAIGroupObjective
     .byte $00
   .endsegment
 

@@ -1459,7 +1459,7 @@
     wAIUnknown7E2014 .word ?                ; $7E2014
     wAIUnknown7E2016 .word ?                ; $7E2016
     wAIUnknown7E2018 .word ?                ; $7E2018 ; Target value?
-    wAIUnknown7E201A .word ?                ; $7E201A ; some ID, action, for aAIGroupObjectiveRoutines
+    wAIGroupObjective .word ?                ; $7E201A ; some ID, action, for aAIGroupObjectiveRoutines
     wAIUnknown7E201C .word ?                ; $7E201C
     wAIIgnoredGenerationID .word ?          ; $7E201E
     wAIGroupLeaderDeploymentOffset .word ?  ; $7E2020
