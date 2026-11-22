@@ -8,7 +8,7 @@ The goal is source that is **readable and moddable** (shiftable, organized by ga
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
-- `./build.sh` is byte-identical and the checksums verify. 97.53% of the ROM is built from source. GAPS.md (regenerated): 217 `none` pieces (61,584 bytes), 56 padding runs.
+- `./build.sh` is byte-identical and the checksums verify. 97.53% of the ROM is built from source. GAPS.md: 216 `none` pieces (61,565 bytes), 56 padding runs (42,139 bytes).
 - Routines: 5,956 in `engine/`, 2,516 named, 3,440 `Unknown`; 3,005 still in `engine/unsorted/`. 307 pinned blocks.
 - Phase 3 Wave 1 audit done: the game-state routines are named by role (`rl<Screen>Upkeep/Setup/Step`, constants in `include/GameStates.h`); wrong claims fixed (see commits `2e4e0d0`, `96e3557`). The other ~380 names `ef5fff9` gave were triaged: Gemini's comments are mostly specific and code-derived; the "unused" claims, interpretive names and table names were checked one by one. A full line-by-line read of every AI/RAM-struct/OAM routine was not done.
 - Reference set started: `tools/reference.py` generates `docs/reference/routines/`, `ram.md`, `INDEX.md`; hand-written `docs/reference/README.md`, `core.md`, `ai.md`. Rerun the tool after any rename and commit its output.

@@ -7,7 +7,7 @@ first byte), `inside` (built code points into it, not at its start), `log` (read
 `fe4.cdl` only), `none` (no evidence). Addresses are given where the game reads them:
 upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 
-103,723 bytes in 273 runs: 56 runs of padding (42,139 bytes) and 217 pieces (61,584 bytes).
+103,704 bytes in 272 runs: 56 runs of padding (42,139 bytes) and 216 pieces (61,565 bytes).
 
 | Class | Pieces | Bytes | Read in the log |
 |---|---|---|---|
@@ -15,7 +15,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | `table` | 0 | 0 | 0 |
 | `inside` | 0 | 0 | 0 |
 | `log` | 0 | 0 | 0 |
-| `none` | 217 | 61,584 | 0 |
+| `none` | 216 | 61,565 | 0 |
 
 ## `code` (0)
 
@@ -37,7 +37,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 
-## `none` (217)
+## `none` (216)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
@@ -51,13 +51,13 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $80/B63E-$80/B63E | 1 | 0 | `aDecompressionDMAEntry80B636` / `rlUnknown80B63F` |  |
 | $80/B640-$80/B640 | 1 | 0 | `rlUnknown80B63F` / `rsRunCastleScreenVBlank` |  |
 | $80/B77D-$80/B77E | 2 | 0 | `rlReturnToCastleFromArena` / `rlDispatchCastleState` |  |
-| $80/C1BA-$80/C1C9 | 16 | 0 | `rlInitUnusedGameState16RAMArea` / `rlUnusedGameState17Stub` |  |
+| $80/C1BA-$80/C1C9 | 16 | 0 | `rlUnusedScreenSetup` / `rlUnusedScreenStep` |  |
 | $80/F337-$80/F33F | 9 | 0 | `rsOpenChapterIntroScreen` / `rsCreateChapterIntroHDMA` |  |
 | $81/9062-$81/9091 | 48 | 0 | `rsCapSpawnDestinationCoordinates100` / `rsFillMovingMapSpriteData` |  |
 | $81/90CC-$81/9165 | 154 | 0 | `rsFillMovingMapSpriteDataPathScriptPointer` / `rlUnknown819166` |  |
 | $81/EBBC-$81/FFFF | 5,188 | 0 | `aUNITGroupDataChapterFinalUnused` / `` | 92% $00/$FF |
 | $82/83B5-$82/83E2 | 46 | 0 | `aProcMainLoopChangeFadeByTimerCode` / `procFadeOutAndChangeSong` |  |
-| $82/8816-$82/8864 | 79 | 0 | `aProcCastleNamePopUpCode` / `procUnknown828865` |  |
+| $82/8816-$82/8864 | 79 | 0 | `aProcCastleNamePopUpCode` / `procEvent5DFadeOut` |  |
 | $82/8D21-$82/8D51 | 49 | 0 | `aProcUnknown828CA3Code` / `procUnknown828D52` |  |
 | $82/90B0-$82/921D | 366 | 0 | `aProcEventFadeOutByTimerCode` / `procEventPause` |  |
 | $82/9285-$82/92A8 | 36 | 0 | `aProcUnknown82925ECode` / `procUnknown8292A9` |  |
@@ -65,7 +65,6 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $82/94B1-$82/94BF | 15 | 0 | `rlFreeMapBattleProcAndClearSprites` / `rlCreateProcEventWaitBattleSceneEnd` |  |
 | $82/E030-$82/E072 | 67 | 0 | `rsIRQCodeHalt` / `rlResetIRQEngine` |  |
 | $82/E120-$82/E132 | 19 | 0 | `rlUnknown82E0C6` / `rlIRQEngineStub` |  |
-| $82/E134-$82/E146 | 19 | 0 | `rlIRQEngineStub` / `rlUnknown82E147` |  |
 | $82/E41A-$82/E41A | 1 | 0 | `rlResetRAMStructAndAreaVariables` / `rlBuildRAMStructHeader` |  |
 | $82/EB4C-$82/ECB8 | 365 | 0 | `rsSaveRAMStructEntryFromScratch` / `rlBuildRAMAreaHeaderAndGuidingEntry` |  |
 | $82/EDBB-$82/EDE6 | 44 | 0 | `rlAllocateRAMAreaWithHandle` / `rlAllocateRAMArea` |  |
@@ -139,7 +138,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8B/8BF2-$8B/8BF3 | 2 | 0 | `rlUnknown8B8BB5` / `procWorldMapMarkerShadowFadeOut` |  |
 | $8B/8C7B-$8B/8C80 | 6 | 0 | `rlUnknown8B8C4A` / `aProcUnknown8B8C3ACode` | 66% $00/$FF |
 | $8B/A088-$8B/A0B3 | 44 | 0 | `ClassPortraitDarkPrinceClassPortraitDataIDsEntry` / `rlUnknown8BA0B4` |  |
-| $8B/A7CE-$8B/A7F1 | 36 | 0 | `rlUnusedGameState15Stub` / `rlUnitWindowShow` |  |
+| $8B/A7CE-$8B/A7F1 | 36 | 0 | `rlUnusedGameState15` / `rlUnitWindowShow` |  |
 | $8B/B534-$8B/B53A | 7 | 0 | `rsUnitWindowRenderWeaponRankSortIcon` / `aUnknown8BB53B` |  |
 | $8B/B58F-$8B/B595 | 7 | 0 | `rlUnitWindowRenderUnitSwapCursors` / `rsUnitWindowMoveToLastUnit` |  |
 | $8B/B80A-$8B/B810 | 7 | 0 | `rsUnitWindowRenderItemIcons` / `aUnknown8BB811` |  |
@@ -150,7 +149,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8D/AAFD-$8D/AD72 | 630 | 0 | `aProcUnknown8DAA96Code` / `rlUnknown8DAD73` |  |
 | $8D/AEC0-$8D/AEC1 | 2 | 0 | `rlUnknown8DAE85` / `rlUnknown8DAEC2` |  |
 | $8D/B539-$8D/B539 | 1 | 0 | `rlUnknown8DB52C` / `rsUnknown8DB53A` |  |
-| $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardGreatBallistaPointer` / `gcUnknownD05673` |  |
+| $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardIronBallistaPointer` / `gcUnknownD05673` |  |
 | $91/A7EA-$91/A80C | 35 | 0 | `rlUnknown91A7DF` / `rlUnknown91A80D` |  |
 | $91/A8E4-$91/A927 | 68 | 0 | `rsDialogueEventCommand07` / `rlUnknown91A928` |  |
 | $91/A9F2-$91/AA14 | 35 | 0 | `aUnknown91A9E4` / `rsUnknown91AA15` |  |

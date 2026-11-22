@@ -8,10 +8,10 @@ This document records the roadmap from the current baseline (2026-11-21) to a 10
 
 Quote numbers only from `tools/counts.py` (and GAPS.md from `tools/gaps.py`); rerun them rather than editing figures by hand.
 
-- **Coverage:** **97.53% built from source** (4,090,581 of 4,194,304 bytes), byte-identical to `fe4.sfc`.
-- **Gaps remaining ([GAPS.md](GAPS.md)):** every class except `none` is closed: `none` **217 pieces (61,584 bytes)**, plus **56 padding runs (42,139 bytes)**.
-- **Routines:** **5,954** top-level `rl`/`rs` routines in `engine/`: **2,518** named, **3,436** `Unknown`; **3,005** still in `engine/unsorted/` (166,114 lines).
-- **Pinned blocks** in `build.asm`: **308**.
+- **Coverage:** **97.53% built from source** (4,090,600 of 4,194,304 bytes), byte-identical to `fe4.sfc`.
+- **Gaps remaining ([GAPS.md](GAPS.md)):** every class except `none` is closed: `none` **216 pieces (61,565 bytes)**, plus **56 padding runs (42,139 bytes)**.
+- **Routines:** **5,956** top-level `rl`/`rs` routines in `engine/`: **2,516** named, **3,440** `Unknown`; **3,005** still in `engine/unsorted/` (165,594 lines).
+- **Pinned blocks** in `build.asm`: **307**.
 
 Phase 2 is ordered ahead of Phase 3 because shiftability is what makes the disassembly genuinely moddable, its checklist is bounded and objectively testable (`./build.sh pad`), and resolving raw pointers/inline-`.byte` code exposes full call graphs before system-wide naming. Phases 3–5 can overlap with Phases 1–2 bank by bank.
 
