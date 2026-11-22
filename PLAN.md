@@ -60,6 +60,19 @@ Once a bank is 100% source with zero raw references into it, unpin its blocks an
 
 **Done means `engine/unsorted/` is empty** (user decision, 2026-11-22). Every routine that implements game mechanics is named from its code. Low-level rendering, HDMA, OAM and spell *visual effect* helpers may stay `Unknown`, filed in the right system folder with a one-line comment. Each wave also completes the reference set for its system (routine, struct, file and system docs; see the engine guide below) and commits with an evidence body.
 
+**Per-wave checklist** (also in STATUS.md). One system (or one part of a big one) per session; hand over and clear context after each.
+
+1. **Start:** read STATUS.md, PLAN.md, the system's existing reference page if any; report the plan to the user before changing anything.
+2. **Name** each routine from its code and callers (trace table indices, check every "unused" claim with a grep). Unknown stays `Unknown` with a note of what is known. No question marks committed.
+3. **Move** the routines out of `engine/unsorted/` into the system's folder (`move_sections.py`), with a header comment on each file.
+4. **Data:** name the RAM, constants and struct fields the system owns; rerun `name_ram.py`, `apply_constants.py`, `name_struct_fields.py`, `stale_notes.py --fix`.
+5. **Write** `docs/reference/<system>.md` in plain words (files, data, entry points, control flow, dependencies, open questions); fix the guide if anything it says changed.
+6. **Verify:** `./build.sh` matches after every step; run `tools/reference.py` and read the system's generated page for names that look wrong.
+7. **Commit** in small steps, each with an evidence body and before/after numbers from `tools/counts.py`.
+8. **End:** add emulator questions to the list in STATUS.md (asked in one batch, later); rewrite STATUS.md; report to the user.
+
+**Subagents.** Sonnet subagents may do work that needs little context and carries little risk of a wrong conclusion: mechanical moves and merges, running tools and collecting their output, applying constants, blank-line and formatting cleanups, broad read-only searches ("every reader of `$7F4400`"), and first drafts of data tables whose meaning is already known. Naming game-mechanics routines, deciding what code does, and writing the reference pages stay in the main session. Check what a subagent did (the build, the diff) before committing it.
+
 Work hub-outward through the `Unknown` and unsorted routines (counts from `tools/counts.py`) in `engine/unsorted/` (can run in parallel with Phases 1–2):
 
 1. **System-by-System Routine Naming & Sorting**

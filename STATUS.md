@@ -27,9 +27,26 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Talk to the user before starting a Phase 3 wave** (they asked for a report between the setup steps and the waves).
-2. **Continue Phase 3 one system at a time.** Each wave: name the routines, move them out of `unsorted/`, write or extend that system's `docs/reference/<system>.md`, commit with an evidence body. Plain-words docs are part of the wave; they catch wrong names. Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
-3. Open questions left by Wave 1 are listed at the end of `docs/reference/core.md` and `ai.md`.
+1. **Talk to the user before starting a Phase 3 wave.** Suggested first: menus and facilities (the most self-contained). Split battle into three sessions (formulas and skills; the battle-scene interpreter; map-battle and spell animation) and the map engine into two (rendering; movement and range).
+2. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
+3. Open questions left by Wave 1 are at the end of `docs/reference/core.md` and `ai.md`.
+
+**Per-wave checklist.** One system (or one part of a big one) per session; hand over and clear context after each.
+
+1. **Start:** read STATUS.md, PLAN.md, the system's existing reference page if any; report the plan to the user before changing anything.
+2. **Name** each routine from its code and callers (trace table indices, check every "unused" claim with a grep). Unknown stays `Unknown` with a note of what is known. No question marks committed.
+3. **Move** the routines out of `engine/unsorted/` into the system's folder (`move_sections.py`), with a header comment on each file.
+4. **Data:** name the RAM, constants and struct fields the system owns; rerun `name_ram.py`, `apply_constants.py`, `name_struct_fields.py`, `stale_notes.py --fix`.
+5. **Write** `docs/reference/<system>.md` in plain words (files, data, entry points, control flow, dependencies, open questions); fix the guide if anything it says changed.
+6. **Verify:** `./build.sh` matches after every step; run `tools/reference.py` and read the system's generated page for names that look wrong.
+7. **Commit** in small steps, each with an evidence body and before/after numbers from `tools/counts.py`.
+8. **End:** add emulator questions to the list in STATUS.md (asked in one batch, later); rewrite STATUS.md; report to the user.
+
+**Subagents.** Sonnet subagents may do work that needs little context and carries little risk of a wrong conclusion: mechanical moves and merges, running tools and collecting their output, applying constants, blank-line and formatting cleanups, broad read-only searches ("every reader of `$7F4400`"), and first drafts of data tables whose meaning is already known. Naming game-mechanics routines, deciding what code does, and writing the reference pages stay in the main session. Check what a subagent did (the build, the diff) before committing it.
+
+## Emulator questions (for one batched session)
+
+None yet.
 
 ## How to work on this project
 
