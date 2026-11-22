@@ -867,8 +867,8 @@
         phx
         phy
 
-        jsl rlUnknown8780AA
-        jsl rlUnknown8780DF
+        jsl rlInitMapMenus
+        jsl rlEnableMapMenuUploads
         jsl rlResetDialogueEngine
 
         ply
@@ -899,7 +899,7 @@
         .databank ?
 
         phy
-        jsl rlUnknown8780EC
+        jsl rlDisableMapMenuUploads
         ply
 
         clc
@@ -2836,7 +2836,7 @@
         sta bBufferTMW
         rep #$20
 
-        jsl rlUnknown8780AA
+        jsl rlInitMapMenus
 
         ply
         plp
@@ -3514,10 +3514,10 @@
         phy
 
         phy
-        lda wUnknown053E,b
+        lda wMapMenuTransparentTile,b
         sta $7EA7C5
         lda #$00FF
-        sta wUnknown053E,b
+        sta wMapMenuTransparentTile,b
         ply
 
         lda [lR22],y
@@ -4732,11 +4732,11 @@
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
         jsl rlResetRAMStructAndAreaVariables
-        jsl rlUnknown8780AA
+        jsl rlInitMapMenus
         jsl rlResetMenuOptionStack
         lda #$00FF
-        sta wUnknown053E,b
-        jsl rlUnknown8780DF
+        sta wMapMenuTransparentTile,b
+        jsl rlEnableMapMenuUploads
         rts
 
         .databank 0
@@ -7072,7 +7072,7 @@
         php
         phk
         plb
-        lda bUnknown000521,b
+        lda bMapMenuFlags,b
         bit #$0080
         beq _End
 
@@ -7088,7 +7088,7 @@
               trb wUnknown000D79,b
 
             +
-            jsl rlUnknown878256
+            jsl rlMapMenuVBlankUpload
 
         _End
         plp
@@ -7119,18 +7119,18 @@
         phk
         plb
         .databank $85
-        lda wUnknown00052A,b
-        cmp wUnknown00052C,b
+        lda wMapMenuDirtyTop,b
+        cmp wMapMenuDirtyBottom,b
         bcs _8D5F
-        lda wUnknown00052A,b
+        lda wMapMenuDirtyTop,b
         cmp #$0020
         bcs _8D5F
-        lda wUnknown00052C,b
+        lda wMapMenuDirtyBottom,b
         cmp #$0020
         bcs _8D5F
         lda #$7E7B
         sta lR18+1
-        lda wUnknown00052A,b
+        lda wMapMenuDirtyTop,b
         xba
         lsr a
         lsr a
@@ -7138,9 +7138,9 @@
         clc
         adc #$7B88
         sta lR18
-        lda wUnknown00052C,b
+        lda wMapMenuDirtyBottom,b
         sec
-        sbc wUnknown00052A,b
+        sbc wMapMenuDirtyTop,b
         inc a
         xba
         lsr a
@@ -8597,7 +8597,7 @@
         nop
         nop
         nop
-        jsl rlUnknown8780EC
+        jsl rlDisableMapMenuUploads
         plp
         rtl
 
@@ -8621,7 +8621,7 @@
         php
         rep #$30
         lda #$0084
-        tsb bUnknown000521,b
+        tsb bMapMenuFlags,b
         plp
         rtl
 
@@ -8648,16 +8648,16 @@
         lda #$2000
         sta aCurrentTilemapInfo.wBaseTile,b
         lda #$00FF
-        sta wUnknown053E,b
+        sta wMapMenuTransparentTile,b
         lda #$20FF
-        sta wUnknown053C,b
-        jsl rlUnknown8788E5
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
 
         lda #(`aUnknown91A9E4)<<8
         sta lR18+1
         lda #<>aUnknown91A9E4
         sta lR18
-        jsl rlUnknown8788EE
+        jsl rlDrawMapMenuSimpleFrame
         rtl
 
         .databank 0

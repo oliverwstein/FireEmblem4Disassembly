@@ -7,7 +7,7 @@ first byte), `inside` (built code points into it, not at its start), `log` (read
 `fe4.cdl` only), `none` (no evidence). Addresses are given where the game reads them:
 upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 
-103,406 bytes in 267 runs: 56 runs of padding (42,139 bytes) and 211 pieces (61,267 bytes).
+103,231 bytes in 262 runs: 56 runs of padding (42,139 bytes) and 206 pieces (61,092 bytes).
 
 | Class | Pieces | Bytes | Read in the log |
 |---|---|---|---|
@@ -15,7 +15,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | `table` | 0 | 0 | 0 |
 | `inside` | 0 | 0 | 0 |
 | `log` | 0 | 0 | 0 |
-| `none` | 211 | 61,267 | 0 |
+| `none` | 206 | 61,092 | 0 |
 
 ## `code` (0)
 
@@ -37,7 +37,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 
-## `none` (211)
+## `none` (206)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
@@ -73,12 +73,12 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $82/F4F9-$82/F516 | 30 | 0 | `rlGetUNITGroupPointer` / `rlCopyOffsetTableEntry` |  |
 | $82/F54F-$82/F566 | 24 | 0 | `rlCopyOffsetTableEntry` / `rlAddOffsetTableEntry` |  |
 | $82/F7A2-$82/F865 | 196 | 0 | `rlUpdateOffsetTable` / `rlSetParentsPermanentFlags` |  |
-| $85/82CB-$85/82D3 | 9 | 0 | `rlMapMenuCloseAndRestoreMapState` / `rlUnknown8582D4` |  |
-| $85/8335-$85/8340 | 12 | 0 | `rlUnknown8582D4` / `rlStallProcUntilMapMenuDataLoaded` |  |
+| $85/82CB-$85/82D3 | 9 | 0 | `rlMapMenuCloseAndRestoreMapState` / `rlMoveMapMenuToCursor` |  |
+| $85/8335-$85/8340 | 12 | 0 | `rlMoveMapMenuToCursor` / `rlStallProcUntilMapMenuDataLoaded` |  |
 | $85/837C-$85/8397 | 28 | 0 | `rlProcCycleMapMenuWaitForPaletteGraphicFinish` / `aProcDialogueBoxCode` |  |
-| $85/84CF-$85/84DB | 13 | 0 | `rlUnknown8584AC` / `rlUnknown8584DC` |  |
-| $85/85B3-$85/860D | 91 | 0 | `rlUnknown85856E` / `rsUnknown85860E` |  |
-| $85/8820-$85/8849 | 42 | 0 | `rlUnknown8587F2` / `rlUnknown85884A` |  |
+| $85/84CF-$85/84DB | 13 | 0 | `rlListMenuProcPushOptions` / `rlKeepUnitMenuAwayFromCursor` |  |
+| $85/85B3-$85/860D | 91 | 0 | `rlDrawMenuOptions` / `rsDrawMapMenuNumber100` |  |
+| $85/8820-$85/8849 | 42 | 0 | `rlMoveMapMenuFrame` / `rlResizeMapMenuFrame` |  |
 | $85/9FE5-$85/9FE9 | 5 | 0 | `rlUnknown859FCD` / `rlUnknown859FEA` |  |
 | $85/A03F-$85/A03F | 1 | 0 | `rlUnknown85A03D` / `rsUnknown85A040` |  |
 | $85/B069-$85/B07B | 19 | 0 | `rsUnknown85B039` / `rsUnknown85B07C` |  |
@@ -92,14 +92,9 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $85/D604-$85/D605 | 2 | 0 | `rlUnknown85D5CC` / `aUnknown85D606` |  |
 | $85/DAF2-$85/DAF5 | 4 | 0 | `procUnknown85DAEA` / `rlProcUnknown85DAEAInit` |  |
 | $85/DBAB-$85/DBDC | 50 | 0 | `rlUnknown85DB91` / `rlMapMenuOpenUnitWindow` |  |
-| $85/E910-$85/E950 | 65 | 0 | `rlUnknown85E8FB` / `procUnknown85E951` |  |
-| $85/E959-$85/E95F | 7 | 0 | `procUnknown85E951` / `rlUnknown85E960` |  |
-| $85/E96B-$85/E9C6 | 92 | 0 | `rlUnknown85E960` / `procUnknown85E9C7` |  |
-| $85/E9CF-$85/E9D5 | 7 | 0 | `procUnknown85E9C7` / `rlUnknown85E9D6` |  |
-| $85/EA3E-$85/EA41 | 4 | 0 | `aUnknown85EA3A` / `rlUnknown85EA42` |  |
-| $87/84CC-$87/84E0 | 21 | 0 | `rlUnknown8784B7` / `rlUnknown8784E1` |  |
-| $87/8833-$87/8851 | 31 | 0 | `rlReplaceMapMenuTilemapROMWithRAMPointer` / `rlUnknown878852` |  |
-| $87/890B-$87/8915 | 11 | 0 | `rlUnknown878900` / `rlUnknown878916` |  |
+| $87/84CC-$87/84E0 | 21 | 0 | `rlHideMapMenuBG3` / `rlResizeMapMenuBG3` |  |
+| $87/8833-$87/8851 | 31 | 0 | `rlReplaceMapMenuTilemapROMWithRAMPointer` / `rlFindPreviousMapMenu` |  |
+| $87/890B-$87/8915 | 11 | 0 | `rlDrawMapMenuSmallNumber` / `rlDrawMapMenuNumber` |  |
 | $87/C6DC-$87/C709 | 46 | 0 | `rsUnknown87C6AA` / `procUnknown87C70A` |  |
 | $87/E6D5-$87/E6D6 | 2 | 0 | `rsUnknown87E6D3` / `rsUnknown87E6D7` |  |
 | $87/E761-$87/E761 | 1 | 0 | `rsUnknown87E75F` / `rlUnknown87E762` |  |
@@ -144,7 +139,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8D/AAFD-$8D/AD72 | 630 | 0 | `aProcUnknown8DAA96Code` / `rlUnknown8DAD73` |  |
 | $8D/AEC0-$8D/AEC1 | 2 | 0 | `rlUnknown8DAE85` / `rlUnknown8DAEC2` |  |
 | $8D/B539-$8D/B539 | 1 | 0 | `rlUnknown8DB52C` / `rsUnknown8DB53A` |  |
-| $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardGreatBallistaPointer` / `gcUnknownD05673` |  |
+| $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardIronBallistaPointer` / `gcUnknownD05673` |  |
 | $91/A7EA-$91/A80C | 35 | 0 | `rlUnknown91A7DF` / `rlUnknown91A80D` |  |
 | $91/A8E4-$91/A927 | 68 | 0 | `rsDialogueEventCommand07` / `rlUnknown91A928` |  |
 | $91/A9F2-$91/AA14 | 35 | 0 | `aUnknown91A9E4` / `rsUnknown91AA15` |  |

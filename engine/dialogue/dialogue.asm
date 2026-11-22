@@ -678,7 +678,7 @@
                 cmp #3
                 beq _SEC
 
-                  jsl rlUnknown878459
+                  jsl rlMarkAllMapMenuRowsDirty
 
           _SEC
           sec
@@ -732,7 +732,7 @@
         sta lR18+1
         jsl rlDMAByPointer
         lda #$0010
-        tsb bUnknown000521,b
+        tsb bMapMenuFlags,b
         rtl
 
         .databank 0
@@ -1430,7 +1430,7 @@
           cmp #3
           beq +
 
-            jsl rlUnknown878459
+            jsl rlMarkAllMapMenuRowsDirty
 
         +
         jsr rsDialoguePlayTextSound
@@ -3432,7 +3432,7 @@
           lda #$00FF
           jsl rlFillBG3Page0TilemapBuffer
           stz wBufferBG3HOFS
-          jsl rlUnknown878459
+          jsl rlMarkAllMapMenuRowsDirty
 
         +
         inc aDialogue.wCommandCycle,b

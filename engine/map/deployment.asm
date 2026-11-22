@@ -999,7 +999,7 @@
         lda #$0004
         tsb wUnknown000D79,b
 
-        jsl rlUnknown85E897
+        jsl rlClearUnitMenuModeFlags
 
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b

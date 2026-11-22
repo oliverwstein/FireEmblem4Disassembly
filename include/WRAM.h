@@ -372,11 +372,21 @@
 
   .endvirtual
 
-  .virtual $000521
+  ; Map menus: the windows drawn on BG3 over the map (engine/menus/map_menu.asm).
+  ; rlInitMapMenus clears $000516-$00053F.
 
-    bUnknown000521 .byte ?        ; $000521
+  .virtual $000516
+
+    wMapMenuVRAMTilemap .word ?   ; $000516 ; VRAM word address of BG3's tilemap
+    lMapMenuBGBuffer .long ?      ; $000518 ; the BG3 tilemap buffer the menus are drawn into (aBG3TilemapBuffer)
+    .fill 6                       ; $00051B
+    bMapMenuFlags .byte ?         ; $000521
       ; Bitfield
-    lUnknown000522 .long ?        ; $000522
+      ; $02, $04, $08, $10 = something changed: upload the dirty rows in VBlank
+      ; $20 = hold the uploads
+      ; $40 = rlDrawMapMenuBG3 also draws the menus in front of the current one
+      ; $80 = uploads on (rlEnableMapMenuUploads)
+    lMapMenuListHead .long ?      ; $000522 ; the first open map menu; each links the next (structMapMenu.Next), back to front
     ; $000525
 
   .endvirtual
@@ -384,11 +394,11 @@
 
   .virtual $00052A
 
-    wUnknown00052A .word ?                  ; $00052A
-    wUnknown00052C .word ?                  ; $00052C
+    wMapMenuDirtyTop .word ?                ; $00052A ; first BG3 row to upload (32 = none)
+    wMapMenuDirtyBottom .word ?             ; $00052C ; last BG3 row to upload
     lMapMenuRAMEntryPointer .long ?         ; $00052E
     lMapMenuTilemapRAMEntryPointer .long ?  ; $000531
-    .word ?                                 ; $000534
+    wMapMenuNewPosition .word ?             ; $000534 ; argument of rlMoveMapMenu: column, row; bit 15 hides the menu
     bUnknown0536 .byte ?                    ; $000536
       ; Bitfield
       ; $0001 = busy decompressing
@@ -398,8 +408,8 @@
     aCurrentTilemapInfo .block 
       wBaseTile .word ?                     ; $00053A
     .bend
-    wUnknown053C .word ?                    ; $00053C
-    wUnknown053E .word ?                    ; $00053E
+    wMapMenuClearTile .word ?               ; $00053C ; what rlClearMapMenuTiles fills a menu with
+    wMapMenuTransparentTile .word ?         ; $00053E ; not copied to BG3; cleared BG3 rows are filled with it
     lMenuOptionPointer .long ?                    ; $000540 ; the menu option list template (rlPushMenuOptionList), option definition (rlAddMenuOption) or selected option (rlSelectMenuOptionByIndex)
     wMenuOptionX .word ?                  ; $000543 ; X of the option rlAddMenuOption adds
     wMenuOptionY .word ?                  ; $000545 ; Y of the option rlAddMenuOption adds

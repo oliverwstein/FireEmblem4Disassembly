@@ -32,7 +32,7 @@
         jsl rlRunGameStateRoutines
         jsl rlRunVBlankHooks
         jsl rlHideSprites
-        jsl rlUnknown878256
+        jsl rlMapMenuVBlankUpload
         rts
 
         .databank 0
@@ -124,7 +124,7 @@
         jsr rsResetPPUAndBuffersMode09
         jsl rlUnknown80C32C
         jsl rlResetRAMStructAndAreaVariables
-        jsl rlUnknown8780AA
+        jsl rlInitMapMenus
         lda #GAMESTATE_UNUSED_SCREEN_SETUP
         sta wGameStateRoutine1,b
         stz wGameStateStep,b

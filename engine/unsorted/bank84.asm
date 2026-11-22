@@ -2165,7 +2165,7 @@
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _D209
         jsl rlGetSelectedUnitStates
-        bit #UnitState1000
+        bit #UnitStateDismounted
         bne _D209
         lda #$1000
         jsl rlSetSelectedUnitStates
@@ -2241,7 +2241,7 @@
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitStates
-        bit #UnitState1000
+        bit #UnitStateDismounted
         beq _D26D
         lda #$1000
         jsl rlUnsetSelectedUnitStates

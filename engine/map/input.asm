@@ -111,21 +111,23 @@
       .al
       .xl
 
-      rlUnknown8583DA ; 85/83DA
+      rlListMenuProcSetUp ; 85/83DA
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Loads the menu named in the proc's header, pushes its option list, draws the options and goes on to rlListMenuProcHandleInput.
+
         lda #$0009
         jsl rlPlaySoundEffect
         lda aProcSystem.aHeaderTypeOffset,b,x
         tay
         jsl rlLoadMapMenuDataFromProc
-        jsl rlUnknown8584AC
-        jsl rlUnknown85856E
-        lda #<>rlUnknown8583F8
+        jsl rlListMenuProcPushOptions
+        jsl rlDrawMenuOptions
+        lda #<>rlListMenuProcHandleInput
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -141,21 +143,21 @@
       .al
       .xl
 
-      procUnknown85DDDB ; 85/DDDB
+      procMainMapMenu ; 85/DDDB
 
-        .structProcInfo "PM", rlProcUnknown85DDDBInit, rlProcUnknown85DDDBCycle, aProcUnknown85DDDBCode
+        .structProcInfo "PM", rlProcMainMapMenuInit, rlProcMainMapMenuSetUp, aProcListMenuCode
 
 
-        .long aUnknown85DCEB
+        .long aMainMapMenuData
         .byte 1
-        .long aUnknown85DD92
+        .long aMapMenuOptionList
 
-      procUnknown85DDEA ; 85/DDEA
+      procMainMapMenuNoSave ; 85/DDEA
 
-        .structProcInfo "PM", rlProcUnknown85DDDBInit, rlProcUnknown85DDDBCycle, aProcUnknown85DDDBCode
-        .long aUnknown85DD00
+        .structProcInfo "PM", rlProcMainMapMenuInit, rlProcMainMapMenuSetUp, aProcListMenuCode
+        .long aMainMapMenuNoSaveData
         .byte 1
-        .long aUnknown85DDB9
+        .long aMapMenuOptionListNoSave
 
     .endsection ProcScript85DDDBSection
 
@@ -165,21 +167,23 @@
       .al
       .xl
 
-      rlProcUnknown85DDDBInit ; 85/DDF9
+      rlProcMainMapMenuInit ; 85/DDF9
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Switches to procMainMapMenuNoSave (no Save option) once a unit has acted this turn (bit 12 of wUnknown000D79).
+
         lda wUnknown000D79,b
         bit #$1000
         beq _DE07
-        lda #$DDEA
+        lda #<>procMainMapMenuNoSave
         sta aProcSystem.aHeaderTypeOffset,b,x
 
         _DE07
-        jsl rlUnknown8583C2
+        jsl rlListMenuProcInit
         lda #$0000
         sta wBufferBG3VOFS
         sta wBufferBG3HOFS
@@ -189,7 +193,7 @@
 
         ; 85/DE13
 
-      rlProcUnknown85DDDBCycle ; 85/DE13
+      rlProcMainMapMenuSetUp ; 85/DE13
 
         .al
         .xl
@@ -201,10 +205,10 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda #$20FF
-        sta wUnknown053C,b
-        jsl rlUnknown8583DA
-        jsl rlUnknown8584DC
-        lda #<>rlUnknown85DE34
+        sta wMapMenuClearTile,b
+        jsl rlListMenuProcSetUp
+        jsl rlKeepUnitMenuAwayFromCursor
+        lda #<>rlMainMapMenuProcCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -373,9 +377,9 @@
         sta wMapYOffset,b
         lda #$0009
         jsl rlPlaySoundEffect
-        lda #(`procUnknown85DDDB)<<8
+        lda #(`procMainMapMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85DDDB
+        lda #<>procMainMapMenu
         sta lR44
         jsl rlProcEngineCreateProc
         lda #$0008
@@ -448,7 +452,7 @@
         jsl rlPlaySoundEffect
         jsr rsUnknown88BBD3
         stz wUnknown0007D8,b
-        jsl rlUnknown85E85D
+        jsl rlOpenUnitMenu
         lda #$0008
         tsb wMapSystemFlags,b
         lda #$0800

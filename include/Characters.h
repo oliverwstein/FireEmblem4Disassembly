@@ -87,7 +87,7 @@
   UnitStateDead           = bits($0200)
   UnitState0400           = bits($0400) ; siege?
   UnitStateCanto          = bits($0800)
-  UnitState1000           = bits($1000) ; town?
+  UnitStateDismounted     = bits($1000) ; on foot: a unit whose class can dismount (ClassSkillDismount) has dismounted
   UnitStateGuardingCastle = bits($2000)
   UnitStateMoved          = bits($4000)
   UnitStateFielded        = bits($8000)

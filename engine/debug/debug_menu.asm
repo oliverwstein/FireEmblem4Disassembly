@@ -724,7 +724,7 @@
         and #UnitStateGuardingCastle
         sta wDebugMenuTemp3
         txa
-        and #UnitState1000
+        and #UnitStateDismounted
         sta $7F8416
         txa
         and #UnitStateCanto
@@ -4240,7 +4240,7 @@
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
         jsl rlResetRAMStructAndAreaVariables
-        jsl rlUnknown8780AA
+        jsl rlInitMapMenus
         jsl rlResetMenuOptionStack
 
         jsr rsInitializeDebugMenuVariables

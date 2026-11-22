@@ -31,7 +31,7 @@
         jsl rlRunVBlankHooks
         jsl rlHideSprites
         jsl rlUnknown9181F6
-        jsl rlUnknown878256
+        jsl rlMapMenuVBlankUpload
         jsl rlUpdateSound
         rts
 
@@ -335,7 +335,7 @@
         jsl rlResetIRQEngine
         jsl rlClearUnitWindowAndTerrainWindowProcs
         jsl rlResetRAMStructAndAreaVariables
-        jsl rlUnknown8780AA
+        jsl rlInitMapMenus
         jsl rlResetMenuOptionStack
         lda #GAMESTATE_EPILOGUE_SETUP
         sta wGameStateRoutine1,b

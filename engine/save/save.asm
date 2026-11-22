@@ -656,7 +656,7 @@
         sta wR1
 
         lda wR0
-        and #(UnitState1000 | UnitStateGuardingCastle | UnitStateMoved | UnitStateFielded)
+        and #(UnitStateDismounted | UnitStateGuardingCastle | UnitStateMoved | UnitStateFielded)
         lsr a
         lsr a
         lsr a
@@ -700,7 +700,7 @@
         sta wR1
 
         lda wR0
-        and #(UnitState1000 | UnitStateGuardingCastle | UnitStateMoved | UnitStateFielded)
+        and #(UnitStateDismounted | UnitStateGuardingCastle | UnitStateMoved | UnitStateFielded)
         lsr a
         lsr a
         lsr a
@@ -4499,7 +4499,7 @@
         .autsiz
         .databank ?
 
-        ; Opens chapter-end save/transition (wUnknown053E=$FF, state 6/4, step $23, installs rsRunSaveMenuVBlank)
+        ; Opens chapter-end save/transition (wMapMenuTransparentTile=$FF, state 6/4, step $23, installs rsRunSaveMenuVBlank)
 
         php
         jsl rlProcEngineResetProcEngine
@@ -4507,10 +4507,10 @@
         jsl rlEnableActiveSpriteEngine
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
-        jsl rlUnknown8780AA
+        jsl rlInitMapMenus
         jsl rlResetMenuOptionStack
         lda #$00FF
-        sta wUnknown053E,b
+        sta wMapMenuTransparentTile,b
         lda #GAMESTATE_SAVE_MENU_UPKEEP
         sta wGameStateRoutine2,b
         lda #GAMESTATE_SAVE_MENU_STEP

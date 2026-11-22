@@ -327,7 +327,7 @@
         lda wUnknown000736,b
         cmp wMapScrollYPixels,b
         bcc _84DB
-        jsl rlUnknown878459
+        jsl rlMarkAllMapMenuRowsDirty
         lda wUnknown000734,b
         sta wMapScrollXPixels,b
         sta wBufferBG3HOFS
@@ -3004,7 +3004,7 @@
 
         _94D8
         ldx #$0190
-        jsl rlUnknown878AB5
+        jsl rlCopyTilemapEntryToBG
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E7B88, $0800, $80, $A800
@@ -4337,7 +4337,7 @@
         bne _9E34
         lda #$0008
         tsb wMapSystemFlags,b
-        jsl rlUnknown85E85D
+        jsl rlOpenUnitMenu
 
         _9E0B
         rtl
@@ -5555,7 +5555,7 @@
         lda #$0008
         tsb wMapSystemFlags,b
         jsl rlUnknown85921D
-        jsl rlUnknown85E85D
+        jsl rlOpenUnitMenu
         lda #$0800
         trb wUnknown000D79,b
         rtl
@@ -5902,7 +5902,7 @@
         beq _AAEF
         lda wMapActionActiveFlag,b
         bne _AAEB
-        jsl rlUnknown85E85D
+        jsl rlOpenUnitMenu
         lda #$0008
         tsb wMapSystemFlags,b
 
@@ -7295,7 +7295,7 @@
         clc
         adc wMapScrollYPixels,b
         sta wMapSavedCursorYPixel,b
-        jsl rlUnknown85E85D
+        jsl rlOpenUnitMenu
         lda #$0008
         tsb wMapSystemFlags,b
         stz wDeployedUnitScanCounter,b
@@ -7860,7 +7860,7 @@
         dec x
         dec x
         bpl _BBF1
-        jsl rlUnknown878459
+        jsl rlMarkAllMapMenuRowsDirty
         jsl rlUnknown88A4FC
         stz wUnknown000770,b
         rts

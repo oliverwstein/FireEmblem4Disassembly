@@ -243,13 +243,13 @@
 
         _9459
         phy
-        lda @l wUnknown053C
+        lda @l wMapMenuClearTile
         sta [lR23],y
         tya
         clc
         adc wR2
         tay
-        lda @l wUnknown053C
+        lda @l wMapMenuClearTile
         sta [lR23],y
         ply
         plx

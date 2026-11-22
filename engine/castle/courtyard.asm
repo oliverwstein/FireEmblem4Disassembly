@@ -542,12 +542,12 @@
         ldx #$30F0
         stx aCurrentTilemapInfo,b
         ldx #$0113
-        jsl rlUnknown87913E
+        jsl rlDrawTallTwoDigitNumberToTilemapEntry
         jsl rlGetSelectedUnitMaxHP
         ldx #$30F0
         stx aCurrentTilemapInfo,b
         ldx #$0116
-        jsl rlUnknown87913E
+        jsl rlDrawTallTwoDigitNumberToTilemapEntry
         rtl
 
 
@@ -594,7 +594,7 @@
         ldx #$34F0
         stx aCurrentTilemapInfo,b
         ldx #$0117
-        jsl rlUnknown87913E
+        jsl rlDrawTallTwoDigitNumberToTilemapEntry
         rtl
 
         .databank 0
@@ -1721,7 +1721,7 @@
         .autsiz
         .databank ?
 
-        ; Select on the unit grid: opens the same menu the map opens (procUnknown85DDDB).
+        ; Select on the unit grid: opens the same menu the map opens (procMainMapMenu).
 
         lda wCastleCursorState,b
         bne _8CB6
@@ -1736,9 +1736,9 @@
         jsr rsCastleLoadWindowPalette
         lda #$0009
         jsl rlPlaySoundEffect
-        lda #(`procUnknown85DDDB)<<8
+        lda #(`procMainMapMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85DDDB
+        lda #<>procMainMapMenu
         sta lR44
         jsl rlProcEngineCreateProc
 
@@ -2337,14 +2337,14 @@
           .structDMAToVRAM $7E8088, $0200, $80, $AD00
 
         lda #$0000
-        sta wUnknown00052A,b
+        sta wMapMenuDirtyTop,b
         lda #$0001
-        sta wUnknown00052C,b
-        jsl rlUnknown87829A
+        sta wMapMenuDirtyBottom,b
+        jsl rlGetMapMenuRows
         jsr rsCastleLoadWindowPalette
-        lda #(`procUnknown85E9C7)<<8
+        lda #(`procCastleStaffMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85E9C7
+        lda #<>procCastleStaffMenu
         sta lR44
         jsl rlProcEngineCreateProc
         rts

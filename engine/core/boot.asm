@@ -440,10 +440,10 @@
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
         jsl rlResetRAMStructAndAreaVariables
-        jsl rlUnknown8780AA
+        jsl rlInitMapMenus
         jsl rlResetMenuOptionStack
         lda #$00FF
-        sta wUnknown053E,b
+        sta wMapMenuTransparentTile,b
         jsl rlInitializeUnitRAM
         jsl rlInitiateChapterEventRAMData
         jsl rlClearAIEngineRAM

@@ -401,7 +401,7 @@
         adc $870000,x
         inc x
         inc x
-        cpx #<>rlUnknown8780AA
+        cpx #<>rlInitMapMenus
         bcc _803C
         cmp @l aCodeChecksumsCopy88.Bank87Sum
         bne _8066
@@ -490,7 +490,7 @@
             adc $870000,x
             inc x
             inc x
-            cpx #<>rlUnknown8780AA
+            cpx #<>rlInitMapMenus
             bcc -
 
           cmp aCodeChecksums.Bank87Sum
@@ -541,7 +541,7 @@
         ; constants.
 
         .word <>rlReset, <>rlColdResetClearMemory
-        .word <>rlUnknown878017, <>rlUnknown8780AA
+        .word <>rlUnknown878017, <>rlInitMapMenus
 
       aCodeChecksumsCopy87 .structCodeChecksums $AA24, $B66C, $5349 ; 87/8008
 

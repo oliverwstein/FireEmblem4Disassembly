@@ -1570,7 +1570,7 @@
         ldx #$24F0
         stx aCurrentTilemapInfo,b
         ldx #$0E06
-        jsl rlUnknown87913E
+        jsl rlDrawTallTwoDigitNumberToTilemapEntry
         jsl rlGetItemMinimumRange
         ldx #$2520
         stx wR5
@@ -1589,7 +1589,7 @@
         ldx #$24F0
         stx aCurrentTilemapInfo,b
         ldx #$1206
-        jsl rlUnknown87913E
+        jsl rlDrawTallTwoDigitNumberToTilemapEntry
         lda #(`aUnknown8AA7DD)<<8
         sta lRoutineVariable+1,b
         lda #<>aUnknown8AA7DD

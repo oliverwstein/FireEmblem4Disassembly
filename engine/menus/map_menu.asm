@@ -12,7 +12,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown8780DF
+        jsl rlEnableMapMenuUploads
 
         lda $0000+size(structProcInfo),b,y
         sta lR18
@@ -180,13 +180,13 @@
         ; 85/839A
 
 
-      aUnknown85839A ; 85/839A
+      aUnitMenuTilemapData ; 85/839A
 
         .structMapMenuTilemapData 9, 2, aBG3TilemapBuffer, 0, $7FCD4A
 
-      aUnknown8583A3 ; 85/83A3
+      aUnitMenuData ; 85/83A3
 
-        .long 0, 0, aUnknown85839A
+        .long 0, 0, aUnitMenuTilemapData
         .byte 2, 4, 6
 
       aUnknown8583AF ; 85/83AF
@@ -195,8 +195,8 @@
 
       procUnknown8583B3 ; 85/83B3
 
-        .structProcInfo "PM", rlUnknown8583C2, rlUnknown8583DA, aProcUnknown85DDDBCode
-        .long aUnknown8583A3
+        .structProcInfo "PM", rlListMenuProcInit, rlListMenuProcSetUp, aProcListMenuCode
+        .long aUnitMenuData
         .byte 1
         .long aUnknown8583AF
 
@@ -282,13 +282,13 @@
 
       aMapMenuTypePointers ; 85/89B5
 
-        .word <>rsUnknown8589F5
-        .word <>rsUnknown858A6F
-        .word <>rsUnknown858AD7
-        .word <>rsUnknown858B51
-        .word <>rsUnknown858B59
-        .word <>rsUnknown858C4E
-        .word $8C56
+        .word <>rsDrawMapMenuFrameType0
+        .word <>rsDrawMapMenuFrameType1
+        .word <>rsDrawMapMenuFrameType2
+        .word <>rsDrawMapMenuFrameType3
+        .word <>rsDrawMapMenuFrameType4
+        .word <>rsDrawMapMenuFrameType5
+        .word <>rsDrawMapMenuFrameType6
         .word <>rsMapMenuTypeDialogue
 
         ; 85/89C5
@@ -340,11 +340,13 @@
       .al
       .xl
 
-      rlUnknown8780F9 ; 87/80F9
+      rlAppendMapMenuToList ; 87/80F9
 
         .al
         .autsiz
         .databank ?
+
+        ; Adds the current map menu at the end of the list of open menus (lMapMenuListHead, linked through structMapMenu.Next); the end is drawn last, in front.
 
         phb
         php
@@ -352,7 +354,7 @@
         plb
         phy
         lda #$0027
-        jsl rlUnknown87819A
+        jsl rlFindLastMapMenu
         bcs +
 
           ldy lR19
@@ -363,16 +365,16 @@
           plb
 
           lda lMapMenuRAMEntryPointer
-          sta structMapMenu.Unknown3,b,y
+          sta structMapMenu.Next,b,y
           lda lMapMenuRAMEntryPointer+1
-          sta structMapMenu.Unknown3+1,b,y
+          sta structMapMenu.Next+1,b,y
           bra ++
 
         +
         lda lMapMenuRAMEntryPointer,b
-        sta lUnknown000522,b
+        sta lMapMenuListHead,b
         lda lMapMenuRAMEntryPointer+1,b
-        sta lUnknown000522+1,b
+        sta lMapMenuListHead+1,b
 
         +
         phk
@@ -386,8 +388,8 @@
         plb
 
         lda #0
-        sta structMapMenu.Unknown3,b,y
-        sta structMapMenu.Unknown3+1,b,y
+        sta structMapMenu.Next,b,y
+        sta structMapMenu.Next+1,b,y
         ply
         plp
         plb
@@ -405,11 +407,13 @@
       .al
       .xl
 
-      rlUnknown87819A ; 87/819A
+      rlFindLastMapMenu ; 87/819A
 
         .al
         .autsiz
         .databank ?
+
+        ; A = direct page address to receive a long pointer: the last open map menu. Carry set if none is open.
 
         phb
         php
@@ -419,13 +423,13 @@
         phy
 
         tax
-        lda lUnknown000522,b
-        ora lUnknown000522+1,b
+        lda lMapMenuListHead,b
+        ora lMapMenuListHead+1,b
         beq _SEC
 
-        lda lUnknown000522,b
+        lda lMapMenuListHead,b
         sta @l $000000,x
-        lda lUnknown000522+1,b
+        lda lMapMenuListHead+1,b
         sta @l $000000+1,x
         
           _Loop
@@ -511,7 +515,7 @@
         jsl rlLoadMapMenuTilemapData
 
         jsl rlReplaceMapMenuTilemapROMWithRAMPointer
-        jsl rlUnknown8780F9
+        jsl rlAppendMapMenuToList
         ply
         plx
         plp
@@ -719,9 +723,9 @@
 
         +
         sep #$20
-        lda bUnknown000521
+        lda bMapMenuFlags
         and #~$20
-        sta bUnknown000521
+        sta bMapMenuFlags
         rep #$20
         ply
         plp
@@ -730,9 +734,9 @@
         rtl
 
         _SEC
-        lda bUnknown000521
+        lda bMapMenuFlags
         ora #$0020
-        sta bUnknown000521
+        sta bMapMenuFlags
         ply
         plp
         plb
@@ -1046,26 +1050,30 @@
 
         .databank 0
 
-      rlUnknown8788E5 ; 87/88E5
+      rlClearMapMenuTiles ; 87/88E5
 
         .al
         .autsiz
         .databank ?
 
+        ; Fills the current map menu's tiles with wMapMenuClearTile.
+
         jsl rlGetMapMenuTilemapRAMEntryPointer
-        jsl rlUnknown878B98
+        jsl rlClearTilemapEntryTiles
         rtl
 
         .databank 0
 
-      rlUnknown8788EE ; 87/88EE
+      rlDrawMapMenuSimpleFrame ; 87/88EE
 
         .al
         .autsiz
         .databank ?
 
+        ; lR18 = 8 tiles (corners and edges): draws them round the edge of the current map menu's tiles.
+
         jsl rlGetMapMenuTilemapRAMEntryPointer
-        jsl rlUnknown878C8C
+        jsl rlDrawSimpleFrameToTilemapEntry
         rtl
 
         .databank 0
@@ -1373,11 +1381,13 @@
 
         .databank 0
 
-      rlUnknown878B98 ; 87/8B98
+      rlClearTilemapEntryTiles ; 87/8B98
 
         .al
         .autsiz
         .databank ?
+
+        ; Fills the tiles of lMapMenuTilemapRAMEntryPointer with wMapMenuClearTile.
 
         phb
         php
@@ -1385,7 +1395,7 @@
         plb
         phx
         phy
-        lda wUnknown053C,b
+        lda wMapMenuClearTile,b
         sta wR0
 
         ldy lMapMenuTilemapRAMEntryPointer,b

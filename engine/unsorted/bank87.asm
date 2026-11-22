@@ -131,11 +131,13 @@
       .al
       .xl
 
-      rlUnknown8780AA ; 87/80AA
+      rlInitMapMenus ; 87/80AA
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears the map menu variables ($0516-$053F), and points them at aBG3TilemapBuffer and BG3's VRAM tilemap.
 
         phb
         php
@@ -161,8 +163,8 @@
         lda #<>aBG3TilemapBuffer
         sta $0518,b
         lda #0
-        sta wUnknown053E,b
-        jsl rlUnknown87828D
+        sta wMapMenuTransparentTile,b
+        jsl rlResetMapMenuDirtyRows
         plp
         plb
         rtl
@@ -177,36 +179,40 @@
       .al
       .xl
 
-      rlUnknown8780DF ; 87/80DF
+      rlEnableMapMenuUploads ; 87/80DF
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets bit 7 of bMapMenuFlags.
 
         phb
         php
         phk
         plb
         lda #$0080
-        tsb bUnknown000521,b
+        tsb bMapMenuFlags,b
         plp
         plb
         rtl
 
         .databank 0
 
-      rlUnknown8780EC ; 87/80EC
+      rlDisableMapMenuUploads ; 87/80EC
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears bit 7 of bMapMenuFlags.
 
         phb
         php
         phk
         plb
         lda #$0080
-        trb bUnknown000521,b
+        trb bMapMenuFlags,b
         plp
         plb
         rtl
@@ -223,12 +229,14 @@
       .al
       .xl
 
-      rlUnknown878148 ; 87/8148
+      rlUnlinkMapMenu ; 87/8148
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Takes the current map menu out of the list of open menus.
 
         phb
         php
@@ -243,11 +251,11 @@
         rep #$20
         plb
         .databank ?
-        lda structMapMenu.Unknown3,b,y
+        lda structMapMenu.Next,b,y
         sta lR20
-        lda structMapMenu.Unknown3+1,b,y
+        lda structMapMenu.Next+1,b,y
         sta lR20+1
-        jsl rlUnknown878852
+        jsl rlFindPreviousMapMenu
         bcs _817F
         ldy lR19
         sep #$20
@@ -265,14 +273,14 @@
 
         _817F
         lda lR20
-        sta @l lUnknown000522
+        sta @l lMapMenuListHead
         lda lR20+1
-        sta @l lUnknown000522+1
+        sta @l lMapMenuListHead+1
 
         _818B
-        lda @l bUnknown000521
+        lda @l bMapMenuFlags
         ora #$0008
-        sta @l bUnknown000521
+        sta @l bMapMenuFlags
         ply
         plp
         plb
@@ -291,19 +299,21 @@
       .al
       .xl
 
-      rlUnknown878256 ; 87/8256
+      rlMapMenuVBlankUpload ; 87/8256
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Called by the VBlank routines: while map menus are on (bit 7 of bMapMenuFlags) and not held (bit 5), uploads the dirty rows if bits 1-4 say something changed.
+
         phb
         php
         phk
         plb
         .databank $87
-        lda bUnknown000521,b
+        lda bMapMenuFlags,b
         and #$00FF
         bit #$0080
         beq _827A
@@ -312,7 +322,7 @@
         pha
         sep #$20
         and #$E1
-        sta bUnknown000521,b
+        sta bMapMenuFlags,b
         rep #$20
         pla
         bit #$001E
@@ -328,8 +338,8 @@
 
 
         _8283
-        jsr rsUnknown87840F
-        jsl rlUnknown87828D
+        jsr rsUploadMapMenuDirtyRows
+        jsl rlResetMapMenuDirtyRows
         plp
         plb
         .databank ?
@@ -339,17 +349,19 @@
 
         ; 87/828D
 
-      rlUnknown87828D ; 87/828D
+      rlResetMapMenuDirtyRows ; 87/828D
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sets the rows to upload to none (top 32, bottom 0).
+
         lda #$0020
-        sta wUnknown00052A,b
+        sta wMapMenuDirtyTop,b
         lda #$0000
-        sta wUnknown00052C,b
+        sta wMapMenuDirtyBottom,b
         rtl
 
         .databank 0
@@ -364,11 +376,13 @@
       .al
       .xl
 
-      rlUnknown87829A ; 87/829A
+      rlGetMapMenuRows ; 87/829A
 
         .al
         .autsiz
         .databank ?
+
+        ; wR12 = the current map menu's top row, wR13 = its bottom row; widens the rows to upload (wMapMenuDirtyTop/wMapMenuDirtyBottom) to include them.
 
         phb
         php
@@ -387,10 +401,10 @@
         cmp #33
         bge +
 
-          cmp wUnknown00052A,b
+          cmp wMapMenuDirtyTop,b
           bge +
 
-            sta wUnknown00052A,b
+            sta wMapMenuDirtyTop,b
 
         +
         sta wR12
@@ -399,10 +413,10 @@
         cmp #33
         bge +
 
-          cmp wUnknown00052C,b
+          cmp wMapMenuDirtyBottom,b
           blt +
 
-            sta wUnknown00052C,b
+            sta wMapMenuDirtyBottom,b
 
         +
         sta wR13
@@ -422,13 +436,15 @@
       .al
       .xl
 
-      rlUnknown8782D4 ; 87/82D4
+      rlGetAllMapMenuRows ; 87/82D4
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets the rows to upload to those that any open map menu covers.
 
         phb
         php
@@ -437,12 +453,12 @@
         .databank $87
         phy
         lda #$0020
-        sta wUnknown00052A,b
+        sta wMapMenuDirtyTop,b
         lda #$0000
-        sta wUnknown00052C,b
-        lda lUnknown000522,b
+        sta wMapMenuDirtyBottom,b
+        lda lMapMenuListHead,b
         sta lMapMenuRAMEntryPointer,b
-        lda lUnknown000522+1,b
+        lda lMapMenuListHead+1,b
         sta lMapMenuRAMEntryPointer+1,b
 
         _82F1
@@ -451,15 +467,15 @@
         .databank $87
         jsl rlGetMapMenuYPositions
         lda @l wR10
-        cmp wUnknown00052A,b
+        cmp wMapMenuDirtyTop,b
         bcs _8303
-        sta wUnknown00052A,b
+        sta wMapMenuDirtyTop,b
 
         _8303
         lda @l wR11
-        cmp wUnknown00052C,b
+        cmp wMapMenuDirtyBottom,b
         bcc _830F
-        sta wUnknown00052C,b
+        sta wMapMenuDirtyBottom,b
 
         _830F
         ldy lMapMenuRAMEntryPointer,b
@@ -469,12 +485,12 @@
         rep #$20
         plb
         .databank ?
-        lda structMapMenu.Unknown3,b,y
-        ora structMapMenu.Unknown3+1,b,y
+        lda structMapMenu.Next,b,y
+        ora structMapMenu.Next+1,b,y
         beq _8333
-        lda structMapMenu.Unknown3,b,y
+        lda structMapMenu.Next,b,y
         sta @l lMapMenuRAMEntryPointer
-        lda structMapMenu.Unknown3+1,b,y
+        lda structMapMenu.Next+1,b,y
         sta @l lMapMenuRAMEntryPointer+1
         bra _82F1
 
@@ -498,12 +514,14 @@
       .al
       .xl
 
-      rlUnknown878337 ; 87/8337
+      rlClearMapMenuRows ; 87/8337
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fills rows wR12-wR13 of the BG3 buffer (lMapMenuBGBuffer) with the transparent tile wMapMenuTransparentTile.
 
         phb
         php
@@ -533,7 +551,7 @@
         .databank ?
 
         _8359
-        lda wUnknown053E,b
+        lda wMapMenuTransparentTile,b
         sta $0000,b,x
         sta $0002,b,x
         sta $0004,b,x
@@ -569,12 +587,14 @@
 
         ; 87/839A
 
-      rlUnknown87839A ; 87/839A
+      rlRedrawMapMenuRows ; 87/839A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears rows wR12-wR13 of BG3 and copies the tiles of every open map menu that overlaps them, back to front.
 
         phb
         php
@@ -583,8 +603,8 @@
         .databank $87
         phx
         phy
-        lda lUnknown000522,b
-        ora lUnknown000522+1,b
+        lda lMapMenuListHead,b
+        ora lMapMenuListHead+1,b
         beq _83F3
         lda wR12
         cmp #$0020
@@ -592,19 +612,19 @@
         lda wR13
         cmp #$0020
         bcs _83F3
-        jsl rlUnknown878337
+        jsl rlClearMapMenuRows
         lda lMapMenuRAMEntryPointer,b
         pha
         lda lMapMenuRAMEntryPointer+1,b
         pha
         phb
-        lda lUnknown000522,b
+        lda lMapMenuListHead,b
         sta lMapMenuRAMEntryPointer,b
-        lda lUnknown000522+1,b
+        lda lMapMenuListHead+1,b
         sta lMapMenuRAMEntryPointer+1,b
 
         _83CF
-        jsr rsUnknown87862D
+        jsr rsDrawMapMenuIfInRows
         lda $000C,b,y
         ora $000D,b,y
         beq _83EA
@@ -643,7 +663,7 @@
       .al
       .xl
 
-      rlUnknown8783F8 ; 87/83F8
+      rlRedrawAllMapMenus ; 87/83F8
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -651,16 +671,18 @@
         .autsiz
         .databank ?
 
+        ; Redraws every open map menu on BG3. Nothing in the build reaches this.
+
         phb
         php
         phk
         plb
         .databank $87
-        lda lUnknown000522,b
-        ora lUnknown000522+1,b
+        lda lMapMenuListHead,b
+        ora lMapMenuListHead+1,b
         beq _840C
-        jsl rlUnknown8782D4
-        jsl rlUnknown87839A
+        jsl rlGetAllMapMenuRows
+        jsl rlRedrawMapMenuRows
 
         _840C
         plp
@@ -680,30 +702,32 @@
       .al
       .xl
 
-      rsUnknown87840F ; 87/840F
+      rsUploadMapMenuDirtyRows ; 87/840F
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; DMAs the rows wMapMenuDirtyTop-wMapMenuDirtyBottom of the BG3 buffer to VRAM.
+
         phb
         php
         phk
         plb
         .databank $87
-        lda wUnknown00052A,b
-        cmp wUnknown00052C,b
+        lda wMapMenuDirtyTop,b
+        cmp wMapMenuDirtyBottom,b
         bcs _8456
-        lda wUnknown00052A,b
+        lda wMapMenuDirtyTop,b
         cmp #$0020
         bcs _8456
-        lda wUnknown00052C,b
+        lda wMapMenuDirtyBottom,b
         cmp #$0020
         bcs _8456
         lda $0519,b
         sta lR18+1
-        lda wUnknown00052A,b
+        lda wMapMenuDirtyTop,b
         xba
         lsr a
         lsr a
@@ -711,9 +735,9 @@
         clc
         adc $0518,b
         sta lR18
-        lda wUnknown00052C,b
+        lda wMapMenuDirtyBottom,b
         sec
-        sbc wUnknown00052A,b
+        sbc wMapMenuDirtyTop,b
         inc a
         xba
         lsr a
@@ -744,22 +768,24 @@
       .al
       .xl
 
-      rlUnknown878459 ; 87/8459
+      rlMarkAllMapMenuRowsDirty ; 87/8459
 
         .al
         .autsiz
         .databank ?
+
+        ; Marks rows 0-31 for upload (bit 1 of bMapMenuFlags).
 
         phb
         php
         phk
         plb
         lda #0
-        sta wUnknown00052A,b
+        sta wMapMenuDirtyTop,b
         lda #$001F
-        sta wUnknown00052C,b
+        sta wMapMenuDirtyBottom,b
         lda #$0002
-        tsb bUnknown000521,b
+        tsb bMapMenuFlags,b
         plp
         plb
         rtl
@@ -776,12 +802,14 @@
       .al
       .xl
 
-      rlUnknown878472 ; 87/8472
+      rlMoveMapMenuBG3 ; 87/8472
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The BG3 half of rlMoveMapMenu: writes wMapMenuNewPosition into the menu, redraws the rows it covered and draws it at its new place.
 
         phb
         php
@@ -789,7 +817,7 @@
         plb
         .databank $87
         phy
-        jsl rlUnknown87829A
+        jsl rlGetMapMenuRows
         ldy lMapMenuRAMEntryPointer,b
         sep #$20
         lda lMapMenuRAMEntryPointer+2,b
@@ -802,7 +830,7 @@
         phk
         plb
         .databank $87
-        jsl rlUnknown87839A
+        jsl rlRedrawMapMenuRows
         jsl rlGetMapMenuYPositions
         lda wR10
         cmp wR12
@@ -812,12 +840,12 @@
         bcs _84A8
 
         _84A4
-        jsl rlUnknown8785E3
+        jsl rlDrawMapMenuBG3
 
         _84A8
-        lda @l bUnknown000521
+        lda @l bMapMenuFlags
         ora #$0004
-        sta @l bUnknown000521
+        sta @l bMapMenuFlags
         ply
         plp
         plb
@@ -828,12 +856,14 @@
 
         ; 87/84B7
 
-      rlUnknown8784B7 ; 87/84B7
+      rlHideMapMenuBG3 ; 87/84B7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Hides the current map menu on BG3 (bit 15 of its position) and redraws the rows it covered.
 
         phb
         php
@@ -843,7 +873,7 @@
         jsl rlGetMapMenuPosition
         ora #$8000
         sta $0534,b
-        jsl rlUnknown878472
+        jsl rlMoveMapMenuBG3
         plp
         plb
         .databank $87
@@ -861,13 +891,15 @@
       .al
       .xl
 
-      rlUnknown8784E1 ; 87/84E1
+      rlResizeMapMenuBG3 ; 87/84E1
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = new width and height of the current map menu; redraws BG3.
 
         phb
         php
@@ -876,10 +908,10 @@
         .databank $87
         phy
         pha
-        jsl rlUnknown87829A
+        jsl rlGetMapMenuRows
         pla
         jsl rlSetMapMenuTilemapArea
-        jsl rlUnknown87839A
+        jsl rlRedrawMapMenuRows
         jsl rlGetMapMenuYPositions
         lda wR10
         cmp wR12
@@ -889,12 +921,12 @@
         bcs _8508
 
         _8504
-        jsl rlUnknown8785E3
+        jsl rlDrawMapMenuBG3
 
         _8508
-        lda @l bUnknown000521
+        lda @l bMapMenuFlags
         ora #$0004
-        sta @l bUnknown000521
+        sta @l bMapMenuFlags
         ply
         plp
         plb
@@ -913,13 +945,15 @@
       .al
       .xl
 
-      rlUnknown878531 ; 87/8531
+      rlBringMapMenuToFront ; 87/8531
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Moves the current map menu to the end of the list (drawn last, in front) and redraws it.
 
         phb
         php
@@ -929,7 +963,7 @@
         phx
         phy
         lda #$0027
-        jsl rlUnknown87819A
+        jsl rlFindLastMapMenu
         ldx lR19
         cpx lMapMenuRAMEntryPointer,b
         beq _859F
@@ -944,7 +978,7 @@
         sta $000C,b,x
         lda @l lMapMenuRAMEntryPointer+1
         sta $000D,b,x
-        jsl rlUnknown878852
+        jsl rlFindPreviousMapMenu
         bcs _8575
         ldx lR19
         lda $000C,b,y
@@ -956,19 +990,19 @@
 
         _8575
         lda $000C,b,y
-        sta @l lUnknown000522
+        sta @l lMapMenuListHead
         lda $000D,b,y
-        sta @l lUnknown000522+1
+        sta @l lMapMenuListHead+1
 
         _8583
         lda #$0000
         sta $000C,b,y
         sta $000D,b,y
-        jsl rlUnknown87829A
-        jsl rlUnknown87839A
-        lda @l bUnknown000521
+        jsl rlGetMapMenuRows
+        jsl rlRedrawMapMenuRows
+        lda @l bMapMenuFlags
         ora #$0008
-        sta @l bUnknown000521
+        sta @l bMapMenuFlags
 
         _859F
         ply
@@ -998,7 +1032,7 @@
         .databank ?
 
         ; Frees the current map menu's tilemap entry and its RAM area entry, after
-        ; rlUnknown8784B7 and rlUnknown878148.
+        ; rlHideMapMenuBG3 and rlUnlinkMapMenu.
 
         phb
         php
@@ -1006,8 +1040,8 @@
         plb
         .databank $87
         phy
-        jsl rlUnknown8784B7
-        jsl rlUnknown878148
+        jsl rlHideMapMenuBG3
+        jsl rlUnlinkMapMenu
         ldy lMapMenuRAMEntryPointer,b
         sep #$20
         lda lMapMenuRAMEntryPointer+2,b
@@ -1038,12 +1072,14 @@
 
         ; 87/85E3
 
-      rlUnknown8785E3 ; 87/85E3
+      rlDrawMapMenuBG3 ; 87/85E3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the current map menu's tiles to BG3, and the menus after it in the list (in front of it) when bit 6 of bMapMenuFlags is set.
 
         phb
         php
@@ -1052,9 +1088,9 @@
         .databank $87
         phx
         phy
-        jsl rlUnknown87829A
-        jsr rsUnknown87862D
-        lda @l bUnknown000521
+        jsl rlGetMapMenuRows
+        jsr rsDrawMapMenuIfInRows
+        lda @l bMapMenuFlags
         bit #$0040
         beq _8628
         lda lMapMenuRAMEntryPointer,b
@@ -1066,7 +1102,7 @@
 
 
         _8604
-        jsr rsUnknown87862D
+        jsr rsDrawMapMenuIfInRows
 
         _8607
         lda $000C,b,y
@@ -1099,12 +1135,14 @@
 
         ; 87/862D
 
-      rsUnknown87862D ; 87/862D
+      rsDrawMapMenuIfInRows ; 87/862D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the current map menu's tiles to BG3 if it is shown, has tiles, and overlaps rows wR12-wR13.
 
         phk
         plb
@@ -1132,7 +1170,7 @@
         sta @l lMapMenuTilemapRAMEntryPointer+1
         lda $0006,b,y
         sta @l lMapMenuTilemapRAMEntryPointer
-        jsr rsUnknown878697
+        jsr rsCheckMapMenuHasNoTiles
         bcs _8696
         lda $000A,b,y
         and #$00FF
@@ -1152,10 +1190,10 @@
         adc wR0
         asl a
         tax
-        jsl rlUnknown878AB5
-        lda @l bUnknown000521
+        jsl rlCopyTilemapEntryToBG
+        lda @l bMapMenuFlags
         ora #$0010
-        sta @l bUnknown000521
+        sta @l bMapMenuFlags
 
         _8696
         rts
@@ -1164,12 +1202,14 @@
 
         ; 87/8697
 
-      rsUnknown878697 ; 87/8697
+      rsCheckMapMenuHasNoTiles ; 87/8697
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if the current tilemap entry has no tile buffer.
 
         phb
         php
@@ -1215,12 +1255,14 @@
       .al
       .xl
 
-      rlUnknown87872B ; 87/872B
+      rlSetMapMenuType ; 87/872B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = the current map menu's type (its frame style, aMapMenuTypePointers).
 
         phb
         php
@@ -1258,12 +1300,14 @@
       .al
       .xl
 
-      rlUnknown878852 ; 87/8852
+      rlFindPreviousMapMenu ; 87/8852
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; lR19 = the open map menu before the current one. Carry set if the current one is first or not in the list.
 
         phb
         php
@@ -1271,17 +1315,17 @@
         plb
         .databank $87
         phy
-        lda lUnknown000522,b
-        ora lUnknown000522+1,b
+        lda lMapMenuListHead,b
+        ora lMapMenuListHead+1,b
         beq _88A9
-        lda lUnknown000522,b
+        lda lMapMenuListHead,b
         sta lR19
-        lda lUnknown000522+1,b
+        lda lMapMenuListHead+1,b
         sta lR19+1
-        lda lUnknown000522,b
+        lda lMapMenuListHead,b
         cmp lMapMenuRAMEntryPointer,b
         bne _8879
-        lda lUnknown000522+1,b
+        lda lMapMenuListHead+1,b
         cmp lMapMenuRAMEntryPointer+1,b
         beq _88A9
 
@@ -1340,15 +1384,17 @@
       .al
       .xl
 
-      rlUnknown8788F7 ; 87/88F7
+      rlDrawMapMenuTileString ; 87/88F7
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; lR18 = a string of tile numbers ending in 0, X = row and column: draws it into the current map menu, plus aCurrentTilemapInfo.
+
         jsl rlGetMapMenuTilemapRAMEntryPointer
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         rtl
 
         .databank 0
@@ -1363,17 +1409,19 @@
       .al
       .xl
 
-      rlUnknown878900 ; 87/8900
+      rlDrawMapMenuSmallNumber ; 87/8900
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = 0-99, X = row and column: draws two digit tiles into the current map menu. Carry set if A is 100 or more.
+
         pha
         jsl rlGetMapMenuTilemapRAMEntryPointer
         pla
-        jsl rlUnknown878FE7
+        jsl rlDrawSmallNumberToTilemapEntry
         rtl
 
         .databank 0
@@ -1388,17 +1436,19 @@
       .al
       .xl
 
-      rlUnknown878916 ; 87/8916
+      rlDrawMapMenuNumber ; 87/8916
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = a signed number below 1000, X = row and column (of the last digit): draws it in two-row digits, with a minus sign for a negative. Carry set if A is 1000 or more.
+
         pha
         jsl rlGetMapMenuTilemapRAMEntryPointer
         pla
-        jsl rlUnknown8791EE
+        jsl rlDrawNumberToTilemapEntry
         rtl
 
         .databank 0
@@ -1436,12 +1486,14 @@
       .al
       .xl
 
-      rlUnknown878AB5 ; 87/8AB5
+      rlCopyTilemapEntryToBG ; 87/8AB5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = offset into the entry's BG buffer: copies its tiles there, skipping wMapMenuTransparentTile.
 
         phb
         php
@@ -1487,7 +1539,7 @@
 
         _8AFB
         lda [lR19],y
-        cmp wUnknown053E,b
+        cmp wMapMenuTransparentTile,b
         beq _8B05
         sta $0000,b,x
 
@@ -1524,13 +1576,15 @@
       .al
       .xl
 
-      rlUnknown878B1F ; 87/8B1F
+      rlGetTilemapEntrySize ; 87/8B1F
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Width times height times 2. Nothing in the build reaches this.
 
         phb
         php
@@ -1574,7 +1628,7 @@
       .al
       .xl
 
-      rlUnknown878B4E ; 87/8B4E
+      rlGetTilemapEntryWidth ; 87/8B4E
 
         .al
         .xl
@@ -1606,12 +1660,14 @@
 
         ; 87/8B69
 
-      rlUnknown878B69 ; 87/8B69
+      rlSetTilemapEntryArea ; 87/8B69
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = width and height of lMapMenuTilemapRAMEntryPointer.
 
         phb
         php
@@ -1765,7 +1821,7 @@
       .al
       .xl
 
-      rlUnknown878C8C ; 87/8C8C
+      rlDrawSimpleFrameToTilemapEntry ; 87/8C8C
 
         .al
         .autsiz
@@ -1928,13 +1984,15 @@
       .al
       .xl
 
-      rlUnknown878D61 ; 87/8D61
+      rlDrawFancyFrameToTilemapEntry ; 87/8D61
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; lR18 = 20 tiles: draws a frame with two-tile corners round the edge of the current tilemap entry's tiles.
 
         phb
         php
@@ -2233,7 +2291,7 @@
       .al
       .xl
 
-      rlUnknown878F6E ; 87/8F6E
+      rlDrawTileStringToTilemapEntry ; 87/8F6E
 
         .al
         .xl
@@ -2330,7 +2388,7 @@
       .al
       .xl
 
-      rlUnknown878FE7 ; 87/8FE7
+      rlDrawSmallNumberToTilemapEntry ; 87/8FE7
 
         .al
         .xl
@@ -2382,7 +2440,7 @@
         adc lR23
         sta lR23
         plx
-        lda aUnknown879076+1,x
+        lda aTwoDigitDecimalTable+1,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -2391,7 +2449,7 @@
         ora #$2000
         sta [lR23]
         ldy #$0002
-        lda aUnknown879076,x
+        lda aTwoDigitDecimalTable,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -2435,9 +2493,9 @@
       .al
       .xl
 
-      aUnknown879076 ; 87/9076
+      aTwoDigitDecimalTable ; 87/9076
 
-        ; Read by rlUnknown878FE7, rlUnknown87913E, rlUnknown8791EE.
+        ; Read by rlDrawSmallNumberToTilemapEntry, rlDrawTallTwoDigitNumberToTilemapEntry, rlDrawNumberToTilemapEntry.
 
         .word $0000, $0001, $0002, $0003, $0004, $0005, $0006, $0007
         .word $0008, $0009, $0100, $0101, $0102, $0103, $0104, $0105
@@ -2463,12 +2521,14 @@
       .al
       .xl
 
-      rlUnknown87913E ; 87/913E
+      rlDrawTallTwoDigitNumberToTilemapEntry ; 87/913E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = 0-99, X = row and column: draws two two-row digits. Carry set if A is 100 or more.
 
         phb
         php
@@ -2523,7 +2583,7 @@
         asl a
         sta wR0
         plx
-        lda aUnknown879076+1,x
+        lda aTwoDigitDecimalTable+1,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -2536,7 +2596,7 @@
         ldy wR0
         sta [lR23],y
         ldy #$0002
-        lda aUnknown879076,x
+        lda aTwoDigitDecimalTable,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -2586,7 +2646,7 @@
       .al
       .xl
 
-      rlUnknown8791EE ; 87/91EE
+      rlDrawNumberToTilemapEntry ; 87/91EE
 
         .al
         .xl
@@ -2728,7 +2788,7 @@
         asl a
         tax
         ldy #$0002
-        lda aUnknown879076+1,x
+        lda aTwoDigitDecimalTable+1,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -2761,7 +2821,7 @@
 
         _931D
         ldy #$0004
-        lda aUnknown879076,x
+        lda aTwoDigitDecimalTable,x
         and #$00FF
         clc
         adc @l aCurrentTilemapInfo
@@ -5443,14 +5503,14 @@
         lda #$EB88
         sta lR19
         jsl rlAppendDecompList
-        stz wUnknown053C,b
+        stz wMapMenuClearTile,b
         lda #$2370
         sta aCurrentTilemapInfo,b
         lda #(`aUnknown87C7AB)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aUnknown87C7AB
         sta lMapMenuTilemapRAMEntryPointer,b
-        jsl rlUnknown878B98
+        jsl rlClearTilemapEntryTiles
         lda aProcSystem.aBody0,b,x
         bne _C761
         jsr rsUnknown87C821
@@ -5584,7 +5644,7 @@
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aUnknown87C7AB
         sta lMapMenuTilemapRAMEntryPointer,b
-        jsl rlUnknown878B98
+        jsl rlClearTilemapEntryTiles
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E7B88, $0800, $80, $A800
@@ -5634,25 +5694,25 @@
         lda #<>aUnknown87C866
         sta lR18
         ldx #$000F
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #(`aUnknown87C86B)<<8
         sta lR18+1
         lda #<>aUnknown87C86B
         sta lR18
         ldx #$010F
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #(`aUnknown87C870)<<8
         sta lR18+1
         lda #<>aUnknown87C870
         sta lR18
         ldx #$020F
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #(`aUnknown87C875)<<8
         sta lR18+1
         lda #<>aUnknown87C875
         sta lR18
         ldx #$030F
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         rts
 
         .databank 0
@@ -5699,37 +5759,37 @@
         lda #<>aUnknown87C8E1
         sta lR18
         ldx #$000C
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #(`aUnknown87C8EB)<<8
         sta lR18+1
         lda #<>aUnknown87C8EB
         sta lR18
         ldx #$010C
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #(`aUnknown87C8F5)<<8
         sta lR18+1
         lda #<>aUnknown87C8F5
         sta lR18
         ldx #$020C
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #(`aUnknown87C8FF)<<8
         sta lR18+1
         lda #<>aUnknown87C8FF
         sta lR18
         ldx #$030C
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #(`aUnknown87C909)<<8
         sta lR18+1
         lda #<>aUnknown87C909
         sta lR18
         ldx #$040C
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #(`aUnknown87C913)<<8
         sta lR18+1
         lda #<>aUnknown87C913
         sta lR18
         ldx #$050C
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         rts
 
         .databank 0

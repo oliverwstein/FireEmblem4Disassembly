@@ -23,7 +23,7 @@
         sta $7E2000
 
         jsl rlGetSelectedUnitStates
-        bit #UnitState1000
+        bit #UnitStateDismounted
         bne _SEC
 
         jsl rlGetSelectedUnitClassID

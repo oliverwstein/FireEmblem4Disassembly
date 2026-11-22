@@ -44,7 +44,7 @@
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
         jsl rlResetRAMStructAndAreaVariables
-        jsl rlUnknown8780AA
+        jsl rlInitMapMenus
         jsl rlResetMenuOptionStack
 
         jsr rsCreateChapterIntroHDMA

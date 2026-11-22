@@ -685,12 +685,12 @@
         pha
         lda #$2000
         sta aCurrentTilemapInfo,b
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         txa
         clc
         adc #$0100
         tax
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         pla
         sta aCurrentTilemapInfo,b
         plx
@@ -3159,7 +3159,7 @@
         lda #$0100
         tsb wUnknown000D79,b
         stz wGameStateRoutine1,b
-        lda #$AEEA
+        lda #<>rsStartChapterMap
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -4649,7 +4649,7 @@
         jsl rlResetIRQEngine
         jsl rlResetEventAndSpriteState
         lda #$00FF
-        sta wUnknown053E,b
+        sta wMapMenuTransparentTile,b
         lda #$00C0
         jsl rlQueueSoundCommand
         stz wUnknown00171A,b
@@ -5794,7 +5794,7 @@
         rep #$20
         lda #GAMESTATE_NONE
         sta wGameStateRoutine1,b
-        lda #$AEEA
+        lda #<>rsStartChapterMap
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -5837,7 +5837,7 @@
 
         _F917
         stz wGameStateRoutine1,b
-        lda #$AEEA
+        lda #<>rsStartChapterMap
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1

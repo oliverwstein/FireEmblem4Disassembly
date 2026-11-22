@@ -88,7 +88,7 @@
         lda aProcSystem.aBody5,b,x
         sta aProcSystem.wInput0,b
 
-        jsl rlUnknown87829A
+        jsl rlGetMapMenuRows
         jsl rlMapMenuBuildTilemap
         plx
 
@@ -129,7 +129,7 @@
         jsl rlLoadMapMenuEntryPointerFromProcBody
         lda #pack([32, 10])
         jsl rlSetMapMenuTilemapArea
-        jsl rlUnknown87829A
+        jsl rlGetMapMenuRows
         jsl rlMapMenuBuildTilemap
         plx
         lda #<>rlProcDialogueBoxCycle4
@@ -171,7 +171,7 @@
 
         lda aProcSystem.aBody5,b,x
         sta aProcSystem.wInput0,b
-        jsl rlUnknown87829A
+        jsl rlGetMapMenuRows
         jsl rlMapMenuBuildTilemap
         lda #$0002
         tsb wUnknown000D79,b
@@ -197,7 +197,7 @@
           sec
           sbc #4
           jsl rlSetMapMenuTilemapArea
-          jsl rlUnknown85884A
+          jsl rlResizeMapMenuFrame
           rtl
 
         +

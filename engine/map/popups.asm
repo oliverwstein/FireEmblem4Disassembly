@@ -309,7 +309,7 @@
         lda aProcSystem.wInput2,b
         jsl rlSetMapMenuPosition
         lda aProcSystem.wInput3,b
-        jsl rlUnknown85884A
+        jsl rlResizeMapMenuFrame
         lda aProcSystem.wInput1,b
         jsl rlUnknown85C4E0
         rtl

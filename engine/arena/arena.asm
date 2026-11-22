@@ -1464,7 +1464,7 @@
         ldx #$24F0
         stx aCurrentTilemapInfo,b
         ldx #$0E19
-        jsl rlUnknown87913E
+        jsl rlDrawTallTwoDigitNumberToTilemapEntry
         rts
 
         .databank 0

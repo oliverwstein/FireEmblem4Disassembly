@@ -128,7 +128,7 @@
         jsl rlResetIRQEngine
         jsl rlClearUnitWindowAndTerrainWindowProcs
         jsl rlResetRAMStructAndAreaVariables
-        jsl rlUnknown8780AA
+        jsl rlInitMapMenus
         jsl rlResetMenuOptionStack
         lda #GAMESTATE_CASTLE_SCREEN_SETUP
         sta wGameStateRoutine1,b

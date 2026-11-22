@@ -42,7 +42,7 @@
         sta wBufferBG3VOFS
         jsl rlHideSprites
         jsl rlUnknown9181F6
-        jsl rlUnknown878256
+        jsl rlMapMenuVBlankUpload
         jsl rlUpdateSound
         rts
 
@@ -90,7 +90,7 @@
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
         jsl rlResetRAMStructAndAreaVariables
-        jsl rlUnknown8780AA
+        jsl rlInitMapMenus
         jsl rlResetMenuOptionStack
         jsl rlResetDialogueEngine
         lda #(`aUnknown8B9449)<<8

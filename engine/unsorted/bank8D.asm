@@ -1849,8 +1849,8 @@
         rep #$20
         jsl rlDisableVBlank
         jsl rlResetHDMAEngine
-        jsl rlUnknown8780AA
-        jsl rlUnknown8780EC
+        jsl rlInitMapMenus
+        jsl rlDisableMapMenuUploads
         sep #$20
         rep #$10
         ldx #<>gcUnknownD44143
@@ -1972,8 +1972,8 @@
         sta bBufferINIDISP
         rep #$20
         jsl rlDisableVBlank
-        jsl rlUnknown8780AA
-        jsl rlUnknown8780EC
+        jsl rlInitMapMenus
+        jsl rlDisableMapMenuUploads
         sep #$20
         rep #$10
         ldx #<>gcUnknownD44143

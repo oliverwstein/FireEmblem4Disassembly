@@ -48,7 +48,7 @@
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
         jsl rlResetRAMStructAndAreaVariables
-        jsl rlUnknown8780AA
+        jsl rlInitMapMenus
         sep #$20
         rep #$10
         ldx #<>gcUnknownC02B6B

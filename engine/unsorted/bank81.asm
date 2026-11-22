@@ -1424,9 +1424,9 @@
 
       aUnknown81AFAE ; 81/AFAE
 
-        .long rlUnknown85E85D
-        .long rlUnknown85E8A8
-        .long rlUnknown85E8C9
+        .long rlOpenUnitMenu
+        .long rlOpenUnitMenuMode1
+        .long rlOpenUnitMenuMode2
 
     .endsection Unsorted81AEAASection
 
@@ -2090,7 +2090,7 @@
         adc wR0
         asl a
         tax
-        jsl rlUnknown878AB5
+        jsl rlCopyTilemapEntryToBG
         lda #(`aUnknown81B436)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aUnknown81B436
@@ -2107,22 +2107,22 @@
         adc wR0
         asl a
         tax
-        jsl rlUnknown878AB5
+        jsl rlCopyTilemapEntryToBG
         lda $7FC5B0
         cmp #$0021
         bcs _B418
-        cmp wUnknown00052A,b
+        cmp wMapMenuDirtyTop,b
         bcs _B418
-        sta wUnknown00052A,b
+        sta wMapMenuDirtyTop,b
 
         _B418
         clc
         adc #$0008
         cmp #$0021
         bcs _B429
-        cmp wUnknown00052C,b
+        cmp wMapMenuDirtyBottom,b
         bcc _B429
-        sta wUnknown00052C,b
+        sta wMapMenuDirtyBottom,b
 
         _B429
         plx

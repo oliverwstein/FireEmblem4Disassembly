@@ -1,5 +1,5 @@
 
-  structMapMenu .struct PaletteDataPointer, GraphicsDataPointer, TilemapDataPointer, Type, Position, Unknown3
+  structMapMenu .struct PaletteDataPointer, GraphicsDataPointer, TilemapDataPointer, Type, Position, Next
     .if (\PaletteDataPointer === ?)
       PaletteDataPointer  .long ? ; $00
       GraphicsDataPointer .long ? ; $03
@@ -12,7 +12,7 @@
           YPosition       .byte ? ; $0B
         .endstruct
       .endunion
-      Unknown3            .long ? ; $0C
+      Next            .long ? ; $0C ; the next open map menu (lMapMenuListHead)
     .else
       PaletteDataPointer  .long \PaletteDataPointer  ; $00
       GraphicsDataPointer .long \GraphicsDataPointer ; $03
@@ -20,7 +20,7 @@
       Type                .byte \Type                ; $09
       XPosition           .byte \Position[0]         ; $0A
       YPosition           .byte \Position[1]         ; $0B
-      Unknown3            .long \Unknown3            ; $0C
+      Next            .long \Next            ; $0C
     .endif
   .endstruct
 

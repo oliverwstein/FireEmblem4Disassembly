@@ -41,7 +41,7 @@
         jsl rlRunVBlankHooks
         jsl rlRunGameStateRoutines
         jsl rlHideSprites
-        jsl rlUnknown878256
+        jsl rlMapMenuVBlankUpload
         jsl rlUpdateSound
         rts
 

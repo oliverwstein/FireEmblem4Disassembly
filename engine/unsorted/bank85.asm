@@ -6,13 +6,15 @@
       .al
       .xl
 
-      rlUnknown8582D4 ; 85/82D4
+      rlMoveMapMenuToCursor ; 85/82D4
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = proc. Moves its map menu to the cursor's tile, kept on screen (30x28 tiles) for its size; nothing in the build reaches this.
 
         lda lR18
         pha
@@ -57,7 +59,7 @@
         _831B
         sta @l $000535
         rep #$20
-        jsl rlUnknown878472
+        jsl rlMoveMapMenuBG3
         pla
         sta wR42
         pla
@@ -82,17 +84,19 @@
       .al
       .xl
 
-      rlUnknown8583C2 ; 85/83C2
+      rlListMenuProcInit ; 85/83C2
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Init of a list menu proc: saves the game state (rlMapMenuSaveMapState) and holds the on-cycle routine back for one frame.
+
         jsl rlMapMenuSaveMapState
         lda aProcSystem.aHeaderOnCycle,b,x
         sta aProcSystem.aBody2,b,x
-        lda #<>rlUnknown8583D3
+        lda #<>rlListMenuProcFirstCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -108,12 +112,14 @@
       .al
       .xl
 
-      rlUnknown8583D3 ; 85/83D3
+      rlListMenuProcFirstCycle ; 85/83D3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Puts back the on-cycle routine that rlListMenuProcInit held back.
 
         lda aProcSystem.aBody2,b,x
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -131,17 +137,19 @@
       .al
       .xl
 
-      rlUnknown8583F8 ; 85/83F8
+      rlListMenuProcHandleInput ; 85/83F8
 
         .al
         .autsiz
         .databank ?
 
+        ; While the menu is on top: A closes it and runs the option under the cursor (aBody6, 1-based), B closes it, Up and Down move the cursor (wrapping on a new press).
+
         php
         phb
         phy
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown858516
+        jsl rlCheckListMenuIdle
         beq +
 
           jml _849A
@@ -160,7 +168,7 @@
           lda aProcSystem.aBody6,b,x
           sta $02
           jsl rlHandleMenuOptionInput
-          jsr rsUnknown8584A1
+          jsr rsListMenuProcEnd
           bra _End
 
         +
@@ -172,7 +180,7 @@
           jsl rlPlaySoundEffect
 
           jsl rlMapMenuCloseAndRestoreMapState
-          jsr rsUnknown8584A1
+          jsr rsListMenuProcEnd
           bra _End
         
         +
@@ -226,7 +234,7 @@
           jsl rlPlaySoundEffect
         
         _849A
-        jsr rsUnknown858542
+        jsr rsListMenuDrawCursor
         
         _End
         ply
@@ -246,14 +254,16 @@
       .al
       .xl
 
-      rsUnknown8584A1 ; 85/84A1
+      rsListMenuProcEnd ; 85/84A1
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown85853D
+        ; Pops the option list and frees the proc.
+
+        jsl rlListMenuPopOptions
         jsl rlProcEngineFreeProc
         rts
 
@@ -269,7 +279,7 @@
       .al
       .xl
 
-      aProcUnknown85DDDBCode ; 85/84AA
+      aProcListMenuCode ; 85/84AA
 
         PROC_HALT
 
@@ -284,12 +294,14 @@
       .al
       .xl
 
-      rlUnknown8584AC ; 85/84AC
+      rlListMenuProcPushOptions ; 85/84AC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Y = proc header: pushes the option list at +$0C, keeps it in aBody4/aBody5 and puts the cursor (aBody6) on option 1.
 
         lda $000C,b,y
         sta lMenuOptionPointer,b
@@ -316,12 +328,14 @@
       .al
       .xl
 
-      rlUnknown8584DC ; 85/84DC
+      rlKeepUnitMenuAwayFromCursor ; 85/84DC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Moves the current map menu to column $13 when the cursor is on the left side of the screen (bit 2 of wMapStateFlags remembers which side).
 
         lda wCursorXOffset,b
         cmp #$0070
@@ -349,8 +363,8 @@
 
         _850B
         sta $0534,b
-        jsl rlUnknown858751
-        jsr rsUnknown858542
+        jsl rlMoveMapMenu
+        jsr rsListMenuDrawCursor
 
         _8515
         rtl
@@ -367,12 +381,14 @@
       .al
       .xl
 
-      rlUnknown858516 ; 85/8516
+      rlCheckListMenuIdle ; 85/8516
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = 1 (nonzero) while the screen is blanked or dimmed or another option list is above this proc's (aBody4/aBody5), else 0.
 
         lda bBufferINIDISP
         bit #$0080
@@ -398,7 +414,7 @@
 
         ; 85/853D
 
-      rlUnknown85853D ; 85/853D
+      rlListMenuPopOptions ; 85/853D
 
         .al
         .xl
@@ -412,12 +428,14 @@
 
         ; 85/8542
 
-      rsUnknown858542 ; 85/8542
+      rsListMenuDrawCursor ; 85/8542
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the pointing hand at option aBody6 of the current map menu.
 
         phx
         jsl rlGetMapMenuPosition
@@ -439,7 +457,7 @@
         lda #$FF00
         trb wR0
         trb wR1
-        jsl rlUnknown858516
+        jsl rlCheckListMenuIdle
         jsl rlUnknown88A704
         plx
         rts
@@ -456,16 +474,18 @@
       .al
       .xl
 
-      rlUnknown85856E ; 85/856E
+      rlDrawMenuOptions ; 85/856E
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Draws the text of each option of the current list into the current map menu, draws the menu, and turns on BG2 and BG3.
+
         phx
         phy
-        jsl rlUnknown8788E5
+        jsl rlClearMapMenuTiles
         jsl rlGetCurrentMenuOptionCount
         ora #$0000
         beq _859B
@@ -488,7 +508,7 @@
         _859B
         ply
         plx
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         lda wUnknown000D79,b
         bit #$0020
         bne _85AD
@@ -511,34 +531,36 @@
       .al
       .xl
 
-      rsUnknown85860E ; 85/860E
+      rsDrawMapMenuNumber100 ; 85/860E
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; X = row and column: draws the three-tile "100" (two rows), for a hit or critical rate of 100.
+
         phx
         lda aCurrentTilemapInfo,b
         pha
         lda #$2500
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown858647)<<8
+        lda #(`aMapMenuNumber100Tiles)<<8
         sta lR18+1
-        lda #<>aUnknown858647
+        lda #<>aMapMenuNumber100Tiles
         sta lR18
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         txa
         clc
         adc #$0100
         tax
         lda #$2510
         sta aCurrentTilemapInfo,b
-        lda #(`aUnknown858647)<<8
+        lda #(`aMapMenuNumber100Tiles)<<8
         sta lR18+1
-        lda #<>aUnknown858647
+        lda #<>aMapMenuNumber100Tiles
         sta lR18
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         pla
         sta aCurrentTilemapInfo,b
         plx
@@ -556,7 +578,7 @@
       .al
       .xl
 
-      aUnknown858647 ; 85/8647
+      aMapMenuNumber100Tiles ; 85/8647
         .byte $AC, $AD, $AE, $00
 
     .endsection Table858647Section
@@ -567,12 +589,14 @@
       .al
       .xl
 
-      rlUnknown85864B ; 85/864B
+      rlDrawSelectedUnitNameInMapMenu ; 85/864B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = row and column.
 
         jsl rlGetSelectedUnitNamePointer
         lda lRoutineVariable+1,b
@@ -586,7 +610,7 @@
 
         ; 85/865E
 
-      rlUnknown85865E ; 85/865E
+      rlDrawSelectedUnitClassInMapMenu ; 85/865E
 
         .al
         .xl
@@ -613,13 +637,15 @@
       .al
       .xl
 
-      rlUnknown858671 ; 85/8671
+      rlDrawSelectedUnitFactionInMapMenu ; 85/8671
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = row and column. Nothing in the build reaches this.
 
         jsl rlGetSelectedUnitFactionNamePointer
         lda lRoutineVariable+1,b
@@ -641,12 +667,14 @@
       .al
       .xl
 
-      rlUnknown858684 ; 85/8684
+      rlDrawItemNameInMapMenu ; 85/8684
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = row and column; the item in wCurrentItemDataROMPointer.
 
         jsl rlGetItemNamePointer
         lda lRoutineVariable+1,b
@@ -668,13 +696,15 @@
       .al
       .xl
 
-      rlUnknown858697 ; 85/8697
+      rlDrawCastleNameInMapMenu ; 85/8697
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = row and column; the location in wEventLocationEntry. Nothing in the build reaches this.
 
         jsl rlGetEventLocationEntryCastleName
         lda lRoutineVariable+1,b
@@ -696,12 +726,14 @@
       .al
       .xl
 
-      rlUnknown8586AA ; 85/86AA
+      rlDrawListCursorAtIndex ; 85/86AA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = 1-based entry, wR0/wR1 = column step and entries per column: draws the pointing hand at that entry of the current map menu.
 
         phx
         sta wR13
@@ -740,7 +772,7 @@
         trb wR0
         trb wR1
         lda #$0027
-        jsl rlUnknown87819A
+        jsl rlFindLastMapMenu
         lda lR19
         sec
         sbc lMapMenuRAMEntryPointer,b
@@ -785,7 +817,7 @@
       .al
       .xl
 
-      rlUnknown8586FF ; 85/86FF
+      rlInitMapMenuProcAndTileBase ; 85/86FF
 
         ; Found by tools/sweep.py.
         .al
@@ -793,12 +825,14 @@
         .autsiz
         .databank ?
 
+        ; Like rlInitMapMenuProc, and sets the tile base to $20F0 (the number tiles).
+
         jsl rlStallProcUntilMapMenuDataLoaded
         lda #$20F0
         sta aCurrentTilemapInfo,b
         lda #$20FF
-        sta wUnknown053C,b
-        jsl rlUnknown8788E5
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
         lda #$0000
         sta wBufferBG3VOFS
         sta wBufferBG3HOFS
@@ -808,7 +842,7 @@
 
         ; 85/871B
 
-      rlUnknown85871B ; 85/871B
+      rlCloseMapMenuOnAnyButton ; 85/871B
 
         ; Nothing in the build reaches this; it did not run in fe4.cdl.
         ; Closes the map menu and frees the proc when a button is pressed.
@@ -816,6 +850,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing in the build reaches this; it did not run in fe4.cdl. Closes the map menu and frees the proc when a button is pressed.
 
         lda wJoy1New
         beq _8727
@@ -837,24 +873,26 @@
       .al
       .xl
 
-      rlUnknown858751 ; 85/8751
+      rlMoveMapMenu ; 85/8751
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown87829A
+        ; Moves the current map menu to wMapMenuNewPosition (bit 15 set hides it) and redraws the rows it left and entered on both layers: BG3 (text) and the frames in aBG2TilemapBuffer.Page1.
+
+        jsl rlGetMapMenuRows
         lda wR12
         pha
         lda wR13
         pha
-        jsl rlUnknown878472
+        jsl rlMoveMapMenuBG3
         pla
         sta wR13
         pla
         sta wR12
-        jsl rlUnknown8588F3
+        jsl rlRedrawMapMenuFrameRows
         lda wR10
         cmp @l wR12
         bcc _8779
@@ -863,7 +901,7 @@
         bcs _877D
 
         _8779
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
 
         _877D
         rtl
@@ -872,12 +910,14 @@
 
         ; 85/877E
 
-      rlUnknown85877E ; 85/877E
+      rlHideMapMenu ; 85/877E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bit 15 of the current map menu's position (hidden) and redraws.
 
         phb
         php
@@ -887,7 +927,7 @@
         jsl rlGetMapMenuPosition
         ora #$8000
         sta $0534,b
-        jsl rlUnknown858751
+        jsl rlMoveMapMenu
         plp
         plb
         .databank $85
@@ -905,12 +945,14 @@
       .al
       .xl
 
-      rlUnknown858793 ; 85/8793
+      rlShowMapMenu ; 85/8793
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears bit 15 of the current map menu's position and redraws.
 
         phb
         php
@@ -920,7 +962,7 @@
         jsl rlGetMapMenuPosition
         and #$7FFF
         sta $0534,b
-        jsl rlUnknown858751
+        jsl rlMoveMapMenu
         plp
         plb
         .databank $85
@@ -938,7 +980,7 @@
       .al
       .xl
 
-      rlUnknown8587A8 ; 85/87A8
+      rlResizeMapMenu ; 85/87A8
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -946,24 +988,26 @@
         .autsiz
         .databank ?
 
+        ; A = new width and height of the current map menu; redraws both layers. Nothing in the build reaches this.
+
         phb
         php
         phk
         plb
         .databank $85
         sta $0534,b
-        jsl rlUnknown87829A
+        jsl rlGetMapMenuRows
         lda wR12
         pha
         lda wR13
         pha
         lda $0534,b
-        jsl rlUnknown8784E1
+        jsl rlResizeMapMenuBG3
         pla
         sta wR13
         pla
         sta wR12
-        jsl rlUnknown8588F3
+        jsl rlRedrawMapMenuFrameRows
         lda wR10
         cmp @l wR12
         bcc _87DA
@@ -972,7 +1016,7 @@
         bcs _87DE
 
         _87DA
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
 
         _87DE
         plp
@@ -992,12 +1036,14 @@
       .al
       .xl
 
-      rlUnknown8587E1 ; 85/87E1
+      rlDrawMapMenu ; 85/87E1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the current map menu: its tiles on BG3 and its frame on BG2.
 
         phb
         php
@@ -1005,7 +1051,7 @@
         plb
         .databank $85
         phy
-        jsl rlUnknown8785E3
+        jsl rlDrawMapMenuBG3
         jsl rlMapMenuBuildTilemap
         ply
         plp
@@ -1025,7 +1071,7 @@
       .al
       .xl
 
-      rlUnknown8587F2 ; 85/87F2
+      rlMoveMapMenuFrame ; 85/87F2
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -1033,15 +1079,17 @@
         .autsiz
         .databank ?
 
+        ; Sets the current map menu's position to wMapMenuNewPosition and redraws only the frame layer. Nothing in the build reaches this.
+
         phb
         php
         phk
         plb
         .databank $85
-        jsl rlUnknown87829A
+        jsl rlGetMapMenuRows
         lda $0534,b
         jsl rlSetMapMenuPosition
-        jsl rlUnknown8588F3
+        jsl rlRedrawMapMenuFrameRows
         jsl rlGetMapMenuYPositions
         lda wR10
         cmp @l wR12
@@ -1051,7 +1099,7 @@
         bcs _881D
 
         _8819
-        jsl rlUnknown858879
+        jsl rlDrawMapMenuFrame
 
         _881D
         plp
@@ -1071,12 +1119,14 @@
       .al
       .xl
 
-      rlUnknown85884A ; 85/884A
+      rlResizeMapMenuFrame ; 85/884A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = new width and height of the current map menu; redraws only the frame layer.
 
         phb
         php
@@ -1085,10 +1135,10 @@
         .databank $85
         phy
         pha
-        jsl rlUnknown87829A
+        jsl rlGetMapMenuRows
         pla
         jsl rlSetMapMenuTilemapArea
-        jsl rlUnknown8588F3
+        jsl rlRedrawMapMenuFrameRows
         jsl rlGetMapMenuYPositions
         lda wR10
         cmp @l wR12
@@ -1098,7 +1148,7 @@
         bcs _8875
 
         _8871
-        jsl rlUnknown858879
+        jsl rlDrawMapMenuFrame
 
         _8875
         ply
@@ -1111,14 +1161,16 @@
 
         ; 85/8879
 
-      rlUnknown858879 ; 85/8879
+      rlDrawMapMenuFrame ; 85/8879
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown87829A
+        ; Draws the current map menu's frame on BG2 (rlMapMenuBuildTilemap).
+
+        jsl rlGetMapMenuRows
         jsl rlMapMenuBuildTilemap
         rtl
 
@@ -1133,12 +1185,12 @@
         .autsiz
         .databank ?
 
-        ; Sets $0534 to $FFFF, runs rlUnknown858751 (works with the menu's rectangle in
+        ; Sets $0534 to $FFFF, runs rlMoveMapMenu (works with the menu's rectangle in
         ; wR10-wR13), then rlRemoveMapMenu.
 
         lda #$FFFF
         sta $0534,b
-        jsl rlUnknown858751
+        jsl rlMoveMapMenu
         jsl rlRemoveMapMenu
         rtl
 
@@ -1146,12 +1198,14 @@
 
         ; 85/8891
 
-      rlUnknown858891 ; 85/8891
+      rlClearMapMenuFrameRows ; 85/8891
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fills rows wR12-wR13 of the frame layer (aBG2TilemapBuffer.Page1) with tile $030F.
 
         phb
         php
@@ -1217,12 +1271,14 @@
 
         ; 85/88F3
 
-      rlUnknown8588F3 ; 85/88F3
+      rlRedrawMapMenuFrameRows ; 85/88F3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears rows wR12-wR13 of the frame layer and draws the frame of every open map menu, back to front.
 
         phb
         php
@@ -1231,8 +1287,8 @@
         .databank $85
         phx
         phy
-        lda lUnknown000522,b
-        ora lUnknown000522+1,b
+        lda lMapMenuListHead,b
+        ora lMapMenuListHead+1,b
         beq _8957
         lda wR12
         cmp #$0020
@@ -1240,15 +1296,15 @@
         lda wR13
         cmp #$0020
         bcs _8957
-        jsl rlUnknown858891
+        jsl rlClearMapMenuFrameRows
         lda lMapMenuRAMEntryPointer,b
         pha
         lda lMapMenuRAMEntryPointer+1,b
         pha
         phb
-        lda lUnknown000522,b
+        lda lMapMenuListHead,b
         sta lMapMenuRAMEntryPointer,b
-        lda lUnknown000522+1,b
+        lda lMapMenuListHead+1,b
         sta lMapMenuRAMEntryPointer+1,b
 
         _8928
@@ -1297,22 +1353,24 @@
       .al
       .xl
 
-      rsUnknown8589C5 ; 85/89C5
+      rsBeginMapMenuFrame ; 85/89C5
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Creates a tilemap entry for the frame, as large as the menu, from aMapMenuFrameTilemapData.
+
         jsl rlGetMapMenuTilemapArea
         pha
-        lda #(`aUnknown8589DE)<<8
+        lda #(`aMapMenuFrameTilemapData)<<8
         sta lR18+1
-        lda #<>aUnknown8589DE
+        lda #<>aMapMenuFrameTilemapData
         sta lR18
         jsl rlLoadMapMenuTilemapData
         pla
-        jsl rlUnknown878B69
+        jsl rlSetTilemapEntryArea
         rts
 
         .databank 0
@@ -1327,7 +1385,7 @@
       .al
       .xl
 
-      aUnknown8589DE ; 85/89DE
+      aMapMenuFrameTilemapData ; 85/89DE
         .byte $00, $00, $88, $7B, $7E, $00, $4A, $D5, $7F
 
     .endsection Table8589DESection
@@ -1338,16 +1396,18 @@
       .al
       .xl
 
-      rsUnknown8589E7 ; 85/89E7
+      rsEndMapMenuFrame ; 85/89E7
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Copies the frame's tiles into the frame layer at the menu's position and frees its tilemap entry.
+
         jsl rlGetMapMenuTileIndex
         tax
-        jsl rlUnknown878AB5
+        jsl rlCopyTilemapEntryToBG
         jsl rlRemoveMapMenuTilemapRAMEntry
         rts
 
@@ -1355,26 +1415,26 @@
 
         ; 85/89F5
 
-      rsUnknown8589F5 ; 85/89F5
+      rsDrawMapMenuFrameType0 ; 85/89F5
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8589C5
+        jsr rsBeginMapMenuFrame
         stz aCurrentTilemapInfo,b
-        lda #(`aUnknown858A1B)<<8
+        lda #(`aMapMenuFrameType0Fill)<<8
         sta lR18+1
-        lda #<>aUnknown858A1B
+        lda #<>aMapMenuFrameType0Fill
         sta lR18
         jsl rlUnknown878BF0
-        lda #(`aUnknown858A47)<<8
+        lda #(`aMapMenuFrameType0Border)<<8
         sta lR18+1
-        lda #<>aUnknown858A47
+        lda #<>aMapMenuFrameType0Border
         sta lR18
-        jsl rlUnknown878D61
-        jsr rsUnknown8589E7
+        jsl rlDrawFancyFrameToTilemapEntry
+        jsr rsEndMapMenuFrame
         rts
 
         .databank 0
@@ -1389,13 +1449,13 @@
       .al
       .xl
 
-      aUnknown858A1B ; 85/8A1B
+      aMapMenuFrameType0Fill ; 85/8A1B
         .byte $07, $03
         .word $236C, $236D, $236C, $236D, $236D, $236C, $236D, $236C
         .word $236C, $236D, $236C, $236C, $236D, $236C, $236C, $236C
         .word $236D, $236C, $236D, $236D, $236C
 
-      aUnknown858A47 ; 85/8A47
+      aMapMenuFrameType0Border ; 85/8A47
         .word $2368, $2369, $2369, $2369, $236A, $236B, $236C, $236D
         .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $2378
         .word $236F, $236F, $2379, $237A
@@ -1408,26 +1468,26 @@
       .al
       .xl
 
-      rsUnknown858A6F ; 85/8A6F
+      rsDrawMapMenuFrameType1 ; 85/8A6F
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8589C5
+        jsr rsBeginMapMenuFrame
         stz aCurrentTilemapInfo,b
-        lda #(`aUnknown858A95)<<8
+        lda #(`aMapMenuFrameType1Fill)<<8
         sta lR18+1
-        lda #<>aUnknown858A95
+        lda #<>aMapMenuFrameType1Fill
         sta lR18
         jsl rlUnknown878BF0
-        lda #(`aUnknown858AAF)<<8
+        lda #(`aMapMenuFrameType1Border)<<8
         sta lR18+1
-        lda #<>aUnknown858AAF
+        lda #<>aMapMenuFrameType1Border
         sta lR18
-        jsl rlUnknown878D61
-        jsr rsUnknown8589E7
+        jsl rlDrawFancyFrameToTilemapEntry
+        jsr rsEndMapMenuFrame
         rts
 
         .databank 0
@@ -1442,12 +1502,12 @@
       .al
       .xl
 
-      aUnknown858A95 ; 85/8A95
+      aMapMenuFrameType1Fill ; 85/8A95
         .byte $04, $03
         .word $236C, $236D, $236C, $236D, $236C, $236C, $236D, $236C
         .word $236C, $236C, $236D, $236C
 
-      aUnknown858AAF ; 85/8AAF
+      aMapMenuFrameType1Border ; 85/8AAF
         .word $237B, $237C, $2369, $2369, $236A, $237D, $236C, $236D
         .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $237E
         .word $237F, $236F, $2379, $237A
@@ -1460,26 +1520,26 @@
       .al
       .xl
 
-      rsUnknown858AD7 ; 85/8AD7
+      rsDrawMapMenuFrameType2 ; 85/8AD7
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown8589C5
+        jsr rsBeginMapMenuFrame
         stz aCurrentTilemapInfo,b
-        lda #(`aUnknown858AFD)<<8
+        lda #(`aMapMenuFrameType2Fill)<<8
         sta lR18+1
-        lda #<>aUnknown858AFD
+        lda #<>aMapMenuFrameType2Fill
         sta lR18
         jsl rlUnknown878BF0
-        lda #(`aUnknown858B29)<<8
+        lda #(`aMapMenuFrameType2Border)<<8
         sta lR18+1
-        lda #<>aUnknown858B29
+        lda #<>aMapMenuFrameType2Border
         sta lR18
-        jsl rlUnknown878D61
-        jsr rsUnknown8589E7
+        jsl rlDrawFancyFrameToTilemapEntry
+        jsr rsEndMapMenuFrame
         rts
 
         .databank 0
@@ -1494,13 +1554,13 @@
       .al
       .xl
 
-      aUnknown858AFD ; 85/8AFD
+      aMapMenuFrameType2Fill ; 85/8AFD
         .byte $07, $03
         .word $236C, $236D, $236C, $236D, $236D, $236C, $236D, $236C
         .word $236C, $236D, $236C, $236C, $236D, $236C, $236C, $236C
         .word $236D, $236C, $236D, $236D, $236C
 
-      aUnknown858B29 ; 85/8B29
+      aMapMenuFrameType2Border ; 85/8B29
         .word $2368, $2369, $2369, $2369, $236A, $236B, $236C, $236D
         .word $2376, $2377, $2376, $2377, $236C, $236D, $236E, $2378
         .word $236F, $236F, $2379, $237A
@@ -1513,7 +1573,7 @@
       .al
       .xl
 
-      rsUnknown858B51 ; 85/8B51
+      rsDrawMapMenuFrameType3 ; 85/8B51
 
         .al
         .xl
@@ -1522,13 +1582,13 @@
 
         lda #$1800
         sta aCurrentTilemapInfo,b
-        bra rsUnknown858B59._8B5F
+        bra rsDrawMapMenuFrameType4._8B5F
 
         .databank 0
 
         ; 85/8B59
 
-      rsUnknown858B59 ; 85/8B59
+      rsDrawMapMenuFrameType4 ; 85/8B59
 
         .al
         .xl
@@ -1539,48 +1599,48 @@
         sta aCurrentTilemapInfo,b
 
         _8B5F
-        jsr rsUnknown8589C5
-        lda #(`aUnknown858BD3)<<8
+        jsr rsBeginMapMenuFrame
+        lda #(`aMapMenuFrameType3Fill)<<8
         sta lR18+1
-        lda #<>aUnknown858BD3
+        lda #<>aMapMenuFrameType3Fill
         sta lR18
         jsl rlUnknown878BF0
         lda #$2340
         tsb aCurrentTilemapInfo,b
-        lda #(`aUnknown858C0D)<<8
+        lda #(`aMapMenuFrameType3TopEdge)<<8
         sta lR18+1
-        lda #<>aUnknown858C0D
+        lda #<>aMapMenuFrameType3TopEdge
         sta lR18
         ldx #$0101
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #$23FF
         trb aCurrentTilemapInfo,b
-        lda #(`aUnknown858C26)<<8
+        lda #(`aMapMenuFrameType3Border)<<8
         sta lR18+1
-        lda #<>aUnknown858C26
+        lda #<>aMapMenuFrameType3Border
         sta lR18
-        jsl rlUnknown878D61
-        jsl rlUnknown878B4E
+        jsl rlDrawFancyFrameToTilemapEntry
+        jsl rlGetTilemapEntryWidth
         and #$00FF
         cmp #$000C
         bcc _8BCF
         lda #$2340
         tsb aCurrentTilemapInfo,b
-        lda #(`aUnknown858BF9)<<8
+        lda #(`aMapMenuFrameType3WideEdge1)<<8
         sta lR18+1
-        lda #<>aUnknown858BF9
+        lda #<>aMapMenuFrameType3WideEdge1
         sta lR18
         ldx #$0001
-        jsl rlUnknown878F6E
-        lda #(`aUnknown858C03)<<8
+        jsl rlDrawTileStringToTilemapEntry
+        lda #(`aMapMenuFrameType3WideEdge2)<<8
         sta lR18+1
-        lda #<>aUnknown858C03
+        lda #<>aMapMenuFrameType3WideEdge2
         sta lR18
         ldx #$0101
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
 
         _8BCF
-        jsr rsUnknown8589E7
+        jsr rsEndMapMenuFrame
         rts
 
         .databank 0
@@ -1595,23 +1655,23 @@
       .al
       .xl
 
-      aUnknown858BD3 ; 85/8BD3
+      aMapMenuFrameType3Fill ; 85/8BD3
         .byte $06, $03
         .word $2345, $2346, $2347, $2348, $2349, $234A, $2348, $2349
         .word $234A, $2355, $2356, $2357, $2355, $2356, $2357, $2345
         .word $2346, $2347
 
-      aUnknown858BF9 ; 85/8BF9
+      aMapMenuFrameType3WideEdge1 ; 85/8BF9
         .byte $0B, $0C, $0D, $0E, $0E, $0C, $0E, $0D, $0F, $00
 
-      aUnknown858C03 ; 85/8C03
+      aMapMenuFrameType3WideEdge2 ; 85/8C03
         .byte $1B, $1C, $1D, $1E, $1D, $1C, $1E, $1D, $1F, $00
 
-      aUnknown858C0D ; 85/8C0D
+      aMapMenuFrameType3TopEdge ; 85/8C0D
         .byte $18, $19, $18, $14, $19, $14, $18, $14, $19, $18, $19, $14, $18, $19, $14, $19
         .byte $14, $18, $19, $14, $18, $19, $14, $19, $00
 
-      aUnknown858C26 ; 85/8C26
+      aMapMenuFrameType3Border ; 85/8C26
         .word $2343, $2344, $2344, $6344, $6343, $2353, $2354, $6354
         .word $6353, $2350, $2352, $A350, $A351, $E351, $A352, $A340
         .word $A341, $A341, $A341, $A342
@@ -1624,7 +1684,7 @@
       .al
       .xl
 
-      rsUnknown858C4E ; 85/8C4E
+      rsDrawMapMenuFrameType5 ; 85/8C4E
 
         .al
         .xl
@@ -1633,26 +1693,35 @@
 
         lda #$1800
         sta aCurrentTilemapInfo,b
-        bra _8C5C
+        bra rsDrawMapMenuFrameType6._8C5C
 
-        .byte $A9, $00, $1C, $8D, $3A, $05
+      rsDrawMapMenuFrameType6 ; 85/8C56
 
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Type 5's frame with the tile base $1C00. No menu found uses type 6.
+
+        lda #$1C00
+        sta aCurrentTilemapInfo,b
 
         _8C5C
-        jsr rsUnknown8589C5
-        lda #(`aUnknown858C85)<<8
+        jsr rsBeginMapMenuFrame
+        lda #(`aMapMenuFrameType5Fill)<<8
         sta lR18+1
-        lda #<>aUnknown858C85
+        lda #<>aMapMenuFrameType5Fill
         sta lR18
         jsl rlUnknown878BF0
         lda #$23FF
         trb aCurrentTilemapInfo,b
-        lda #(`aUnknown858CAB)<<8
+        lda #(`aMapMenuFrameType5Border)<<8
         sta lR18+1
-        lda #<>aUnknown858CAB
+        lda #<>aMapMenuFrameType5Border
         sta lR18
-        jsl rlUnknown878D61
-        jsr rsUnknown8589E7
+        jsl rlDrawFancyFrameToTilemapEntry
+        jsr rsEndMapMenuFrame
         rts
 
         .databank 0
@@ -1667,13 +1736,13 @@
       .al
       .xl
 
-      aUnknown858C85 ; 85/8C85
+      aMapMenuFrameType5Fill ; 85/8C85
         .byte $06, $03
         .word $2345, $2346, $2347, $2348, $2349, $234A, $2348, $2349
         .word $234A, $2355, $2356, $2357, $2355, $2356, $2357, $2345
         .word $2346, $2347
 
-      aUnknown858CAB ; 85/8CAB
+      aMapMenuFrameType5Border ; 85/8CAB
         .word $2340, $2341, $2341, $6341, $2342, $2350, $2351, $6351
         .word $2352, $2350, $2352, $A350, $A351, $E351, $A352, $A340
         .word $A341, $A341, $A341, $A342
@@ -1695,7 +1764,7 @@
         .byte $00, $02, $01
 
       procUnknown858D77 ; 85/8D77
-        .structProcInfo "PW", rlUnknown858D83, $8DAB, $8398
+        .structProcInfo "PW", rlUnknown858D83, rlUnknown858DAB, aProcDialogueBoxCode
         .long aUnknown858D6B
         .byte $00
 
@@ -1715,7 +1784,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         lda #$4F15
         sta aProcSystem.aBody4,b,x
         lda #$0000
@@ -1808,37 +1877,37 @@
         lda #<>aUnknown858EAD
         sta lR18
         ldx #$0B02
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown858EB1)<<8
         sta lR18+1
         lda #<>aUnknown858EB1
         sta lR18
         ldx #$0C02
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown858EB5)<<8
         sta lR18+1
         lda #<>aUnknown858EB5
         sta lR18
         ldx #$0D02
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown858EB9)<<8
         sta lR18+1
         lda #<>aUnknown858EB9
         sta lR18
         ldx #$0E02
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown858EBD)<<8
         sta lR18+1
         lda #<>aUnknown858EBD
         sta lR18
         ldx #$0F02
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown858EC1)<<8
         sta lR18+1
         lda #<>aUnknown858EC1
         sta lR18
         ldx #$1002
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
 
         _8E7E
         plx
@@ -1846,12 +1915,12 @@
         jsl rlUnknown858F28
         bcc _8E92
         sta $0534,b
-        jsl rlUnknown858751
+        jsl rlMoveMapMenu
         bra _8E96
 
 
         _8E92
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
 
         _8E96
         jsl rlUnknown85A234
@@ -1943,12 +2012,12 @@
         jsl rlUnknown858F28
         bcc _8EFD
         sta $0534,b
-        jsl rlUnknown858751
+        jsl rlMoveMapMenu
         bra _8F0F
 
 
         _8EFD
-        jsl rlUnknown8785E3
+        jsl rlDrawMapMenuBG3
         bra _8F0F
 
 
@@ -2095,27 +2164,27 @@
         ldx #$0501
         jsl rlDrawMapMenuTextLine
         ldx #$0101
-        jsl rlUnknown85864B
+        jsl rlDrawSelectedUnitNameInMapMenu
         ldx #$0301
-        jsl rlUnknown85865E
+        jsl rlDrawSelectedUnitClassInMapMenu
         lda $0028,b,y
         jsl rlGetItemDataROMPointer
         ldx #$0501
-        jsl rlUnknown858684
+        jsl rlDrawItemNameInMapMenu
         lda #$24F0
         sta aCurrentTilemapInfo,b
         jsl rlGetSelectedUnitLevel
         ldx #$0706
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         lda wMapActionTargetType,b
         cmp #$0001
         bne _9017
         lda $0010,b,y
         ldx #$0904
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         lda $0012,b,y
         ldx #$0907
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda #(`aUnknown859078)<<8
@@ -2130,12 +2199,12 @@
         _9017
         lda $0010,b,y
         ldx #$0906
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         lda $003A,b,y
         cmp #$00FF
         bcs _9032
         ldx #$0B06
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         bra _904F
 
 
@@ -2154,19 +2223,19 @@
         _904F
         lda $003C,b,y
         ldx #$0D06
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         lda $0032,b,y
         cmp #$0064
         beq _906D
         lda $0032,b,y
         ldx #$0F06
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         bra _9073
 
 
         _906D
         ldx #$0F05
-        jsr rsUnknown85860E
+        jsr rsDrawMapMenuNumber100
 
         _9073
         ply
@@ -2227,7 +2296,7 @@
         .byte $01, $0A, $09
 
       procUnknown8590AD ; 85/90AD
-        .structProcInfo "PW", rlUnknown8590B9, $90C8, $9158
+        .structProcInfo "PW", rlUnknown8590B9, rlUnknown8590C8, aProcUnknown8590ADCode
         .long aUnknown8590A1
         .byte $00
 
@@ -2247,7 +2316,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         lda #$0000
         sta aProcSystem.aBody5,b,x
         jsl rlUnknown85A227
@@ -2293,12 +2362,12 @@
         clc
         adc #$0008
         sta $0534,b
-        jsl rlUnknown858751
+        jsl rlMoveMapMenu
         bra _90FD
 
 
         _90F9
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
 
         _90FD
         jsl rlUnknown85A234
@@ -2350,12 +2419,12 @@
         clc
         adc #$0008
         sta $0534,b
-        jsl rlUnknown858751
+        jsl rlMoveMapMenu
         bra _9157
 
 
         _9149
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         bra _9157
 
 
@@ -2370,6 +2439,7 @@
 
         ; 85/9158
 
+      aProcUnknown8590ADCode ; 85/9158
 
         PROC_HALT
 
@@ -2407,25 +2477,25 @@
         sta aCurrentTilemapInfo,b
         lda $0010,b,y
         ldx #$0101
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         lda $003A,b,y
         ldx #$0301
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         lda $003C,b,y
         ldx #$0501
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         lda $0032,b,y
         cmp #$0064
         beq _91A7
         lda $0032,b,y
         ldx #$0701
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         bra _91AD
 
 
         _91A7
         ldx #$0700
-        jsr rsUnknown85860E
+        jsr rsDrawMapMenuNumber100
 
         _91AD
         plx
@@ -2601,7 +2671,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown8586FF
+        jsl rlInitMapMenuProcAndTileBase
         lda aProcSystem.wInput0,b
         sta aProcSystem.aBody4,b,x
         lda aProcSystem.wInput1,b
@@ -2723,7 +2793,7 @@
         lda aCurrentTilemapInfo,b
         and #$FC00
         sta aCurrentTilemapInfo,b
-        jsl rlUnknown858684
+        jsl rlDrawItemNameInMapMenu
         lda aCurrentTilemapInfo,b
         and #$FFC0
         ora #$24F0
@@ -2734,7 +2804,7 @@
         tax
         lda wR1
         jsl rlGetItemDurabilityOfInventorySlot
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
 
         _936C
         inc y
@@ -2748,7 +2818,7 @@
         plx
         lda #<>rlUnknown859386
         sta aProcSystem.aHeaderOnCycle,b,x
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         jsl rlUnknown85A227
         rtl
 
@@ -2863,7 +2933,7 @@
 
         _9414
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown878531
+        jsl rlBringMapMenuToFront
         jsl rlUnknown85A227
         lda #<>rlUnknown859427
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -2997,7 +3067,7 @@
         jsr rsUnknown859737
         phx
         jsl rlUnknown88ADA2
-        jsl rlUnknown85E85D
+        jsl rlOpenUnitMenu
         plx
         jml _957A
 
@@ -3051,7 +3121,7 @@
         lda #$4000
         sta $7E8BEE
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown878531
+        jsl rlBringMapMenuToFront
 
         _9551
         lda #$0100
@@ -3060,7 +3130,7 @@
         inc a
         sta wR1
         lda aProcSystem.aBody6,b,x
-        jsl rlUnknown8586AA
+        jsl rlDrawListCursorAtIndex
         jsr rsUnknown8597CD
         lda aProcSystem.aBody5,b,x
         cmp #$2008
@@ -3114,7 +3184,7 @@
         inc a
         sta wR1
         lda aProcSystem.aBody6,b,x
-        jsl rlUnknown8586AA
+        jsl rlDrawListCursorAtIndex
         rtl
 
         .databank 0
@@ -3169,9 +3239,9 @@
         lda $7E0001,x
         and #$00FF
         sta wSelectedInventorySlot,b
-        lda #(`procUnknown85E951)<<8
+        lda #(`procItemUseMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85E951
+        lda #<>procItemUseMenu
         sta lR44
         jsl rlProcEngineCreateProc
         plx
@@ -3199,7 +3269,7 @@
         jsl rlProcEngineFreeProc
         jsl rlUnknown859B48
         jsl rlUnknown85A3A6
-        jsl rlUnknown85E8EA
+        jsl rlUseItemFromMap
         plx
         jml _969C
 
@@ -3210,7 +3280,7 @@
         sta wSelectedInventorySlot,b
         jsl rlFlagEquippedInventorySlotAndGetStatBonus
         jsr _9682
-        jsl rlUnknown85E85D
+        jsl rlOpenUnitMenu
         plx
         jml _969C
 
@@ -3270,15 +3340,15 @@
         sta $7FC5AE
         lda #$0001
         sta $7FC5B0
-        lda wUnknown00052C,b
+        lda wMapMenuDirtyBottom,b
         cmp #$0009
         bpl _96F3
         lda #$0009
-        sta wUnknown00052C,b
+        sta wMapMenuDirtyBottom,b
 
         _96F3
         lda #$0001
-        sta wUnknown00052A,b
+        sta wMapMenuDirtyTop,b
 
         _96F9
         rts
@@ -3312,16 +3382,16 @@
         dec x
         bpl _970B
         plx
-        lda wUnknown00052C,b
+        lda wMapMenuDirtyBottom,b
         cmp #$0009
         bpl _972A
         lda #$0009
-        sta wUnknown00052C,b
+        sta wMapMenuDirtyBottom,b
 
         _972A
         lda #$0001
-        sta wUnknown00052A,b
-        jsl rlUnknown87829A
+        sta wMapMenuDirtyTop,b
+        jsl rlGetMapMenuRows
         plx
         ply
 
@@ -3611,7 +3681,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown8586FF
+        jsl rlInitMapMenuProcAndTileBase
         lda aProcSystem.wInput0,b
         sta aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
@@ -3619,7 +3689,7 @@
         jsl rlGetItemROMDataByInventorySlot
         lda wCurrentItemDataROMPointer,b
         sta aProcSystem.aBody5,b,x
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUnknown85A227
@@ -3631,49 +3701,49 @@
         lda #<>aUnknown85996B
         sta lR18
         ldx #$0102
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown85996F)<<8
         sta lR18+1
         lda #<>aUnknown85996F
         sta lR18
         ldx #$0202
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown859953)<<8
         sta lR18+1
         lda #<>aUnknown859953
         sta lR18
         ldx #$0302
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown859957)<<8
         sta lR18+1
         lda #<>aUnknown859957
         sta lR18
         ldx #$0402
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown85995B)<<8
         sta lR18+1
         lda #<>aUnknown85995B
         sta lR18
         ldx #$0502
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown85995F)<<8
         sta lR18+1
         lda #<>aUnknown85995F
         sta lR18
         ldx #$0602
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown859963)<<8
         sta lR18+1
         lda #<>aUnknown859963
         sta lR18
         ldx #$0702
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         lda #(`aUnknown859967)<<8
         sta lR18+1
         lda #<>aUnknown859967
         sta lR18
         ldx #$0802
-        jsl rlUnknown8788F7
+        jsl rlDrawMapMenuTileString
         plx
         rtl
 
@@ -3766,7 +3836,7 @@
         ldx #$24F0
         stx aCurrentTilemapInfo,b
         ldx #$0306
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         plx
         phx
         lda aProcSystem.aBody5,b,x
@@ -3790,7 +3860,7 @@
         ldx #$24F0
         stx aCurrentTilemapInfo,b
         ldx #$0506
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         plx
         phx
         lda aProcSystem.aBody5,b,x
@@ -3818,7 +3888,7 @@
         ldx #$24F0
         stx aCurrentTilemapInfo,b
         ldx #$0706
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         plx
         lda bBufferTM
         bit #$0002
@@ -3826,7 +3896,7 @@
         jsr rsUnknown859AFD
 
         _9A5B
-        jsl rlUnknown8785E3
+        jsl rlDrawMapMenuBG3
         lda #<>rlUnknown859AB4
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
@@ -5037,7 +5107,7 @@
         jsl rlSetMapMenuPosition
         lda aProcSystem.wInput2,b
         jsl rlSetMapMenuTilemapArea
-        jsl rlUnknown85877E
+        jsl rlHideMapMenu
         plx
         phx
         lda aProcSystem.wInput0,b
@@ -5046,8 +5116,8 @@
         bit #$8000
         bne _A166
         lda #$20FF
-        sta wUnknown053C,b
-        jsl rlUnknown8788E5
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
 
         _A166
         plx
@@ -5083,7 +5153,7 @@
         jsl rlUnknown85A1E7
 
         _A19A
-        jsl rlUnknown858793
+        jsl rlShowMapMenu
         jsl rlUnknown85A234
         plx
         lda #<>rlUnknown85A1AA
@@ -5133,9 +5203,9 @@
         sta aProcSystem.aHeaderOnCycle,b,x
         jsl rlLoadMapMenuEntryPointerFromProcBody
         lda #$20FF
-        sta wUnknown053C,b
-        jsl rlUnknown8788E5
-        jsl rlUnknown8785E3
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
+        jsl rlDrawMapMenuBG3
         rtl
 
         .databank 0
@@ -5457,8 +5527,8 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda #$20FF
-        sta wUnknown053C,b
-        jsl rlUnknown8788E5
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
         plx
         lda aProcSystem.aBody5,b,x
         sta lR18
@@ -5466,7 +5536,7 @@
         sta lR18+1
         ldx #$0101
         jsl rlUnknown85A3F8
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         bra _A359
 
         .databank 0
@@ -5701,7 +5771,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda aProcSystem.wInput0,b
@@ -5728,7 +5798,7 @@
         ldx #$0308
         jsl rlDrawMapMenuTextLine
         plx
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         jsl rlUnknown85C0CE
         lda #$0009
         jsl rlPlaySoundEffect
@@ -5853,7 +5923,7 @@
         lda #$0000
         sta wR1
         phx
-        jsl rlUnknown8586AA
+        jsl rlDrawListCursorAtIndex
         plx
 
         _A56C
@@ -5879,7 +5949,7 @@
         jsl rlPlaySoundEffect
         lda aProcSystem.aBody7,b,x
         bne _A58B
-        jsl rlUnknown85DCAB
+        jsl rlMapMenuOpenSave
         bra _A593
 
 
@@ -6012,7 +6082,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         lda #$2000
         sta aCurrentTilemapInfo,b
         phx
@@ -6058,7 +6128,7 @@
         ldx #$0702
         jsl rlDrawMapMenuTextLine
         plx
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         rtl
 
         .databank 0
@@ -6218,7 +6288,7 @@
         _A742
         jsl rlCloseMapMenuFromProc
         jsl rlProcEngineFreeProc
-        jsl rlUnknown85E85D
+        jsl rlOpenUnitMenu
         bra _A764
 
 
@@ -6230,7 +6300,7 @@
         phx
         lda aProcSystem.aBody7,b,x
         inc a
-        jsl rlUnknown8586AA
+        jsl rlDrawListCursorAtIndex
         plx
 
         _A764
@@ -6298,7 +6368,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         lda #$0000
         sta aProcSystem.aBody7,b,x
         rtl
@@ -6330,7 +6400,7 @@
         ldx #$0302
         jsl rlDrawMapMenuTextLine
         plx
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         lda #<>rlUnknown85A7DE
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
@@ -6454,7 +6524,7 @@
         phx
         lda aProcSystem.aBody7,b,x
         inc a
-        jsl rlUnknown8586AA
+        jsl rlDrawListCursorAtIndex
         plx
 
         _A885
@@ -6859,7 +6929,7 @@
         sta lR18
         plx
         jsl rlDrawMenuTextLine
-        jsl rlUnknown878459
+        jsl rlMarkAllMapMenuRowsDirty
         plx
         lda #<>rlUnknown85AD67
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -7037,12 +7107,12 @@
         _AE00
         phx
         lda #$030F
-        sta wUnknown053C,b
+        sta wMapMenuClearTile,b
         lda #(`aUnknown85AD55)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aUnknown85AD55
         sta lMapMenuTilemapRAMEntryPointer,b
-        jsl rlUnknown878B98
+        jsl rlClearTilemapEntryTiles
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7E7B88, $0800, $80, $A800
@@ -7065,13 +7135,13 @@
 
         phx
         lda #$20FF
-        sta wUnknown053C,b
+        sta wMapMenuClearTile,b
         lda #(`aUnknown85AD5E)<<8
         sta lMapMenuTilemapRAMEntryPointer+1,b
         lda #<>aUnknown85AD5E
         sta lMapMenuTilemapRAMEntryPointer,b
-        jsl rlUnknown878B98
-        jsl rlUnknown878459
+        jsl rlClearTilemapEntryTiles
+        jsl rlMarkAllMapMenuRowsDirty
         lda #$0002
         jsl rlHDMAEngineFreeEntryByIndex
         plx
@@ -7785,7 +7855,7 @@
         sta aProcSystem.aBody5,b,x
         lda #1
         sta aProcSystem.aBody6,b,x
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         plx
         lda aProcSystem.aBody4,b,x
         sta wSelectedUnitDataRAMPointer,b
@@ -7797,7 +7867,7 @@
           lda #$2000
           sta aCurrentTilemapInfo.wBaseTile,b
           jsr rsUnknown85B489
-          jsl rlUnknown8587E1
+          jsl rlDrawMapMenu
           jsl rlUnknown85A227
           jsl rlFreeHDMAEntry0
 
@@ -7900,7 +7970,7 @@
 
         _B264
         phx
-        jsl rlUnknown8586AA
+        jsl rlDrawListCursorAtIndex
         plx
         rtl
 
@@ -8200,7 +8270,7 @@
 
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown85877E
+        jsl rlHideMapMenu
         lda #(`procUnknown85B63B)<<8
         sta lR44+1
         lda #<>procUnknown85B63B
@@ -8237,7 +8307,7 @@
         jsl rlProcEngineFindProc
         bcc _B3B0
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown85877E
+        jsl rlHideMapMenu
 
         _B3B0
         rts
@@ -8292,7 +8362,7 @@
 
         phx
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown858793
+        jsl rlShowMapMenu
         lda #(`procUnknown85B63B)<<8
         sta lR44+1
         lda #<>procUnknown85B63B
@@ -8329,7 +8399,7 @@
         jsl rlProcEngineFindProc
         bcc _B40D
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown858793
+        jsl rlShowMapMenu
 
         _B40D
         rts
@@ -8695,7 +8765,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         lda #$0000
         sta aProcSystem.aBody7,b,x
         lda #$2000
@@ -8720,7 +8790,7 @@
         ldx #$0308
         jsl rlDrawMapMenuTextLine
         plx
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         rtl
 
         .databank 0
@@ -8789,7 +8859,7 @@
         lda #$0000
         sta wR1
         phx
-        jsl rlUnknown8586AA
+        jsl rlDrawListCursorAtIndex
         plx
         bra _B626
 
@@ -8857,7 +8927,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         lda #$2000
         sta aCurrentTilemapInfo,b
         phx
@@ -8880,7 +8950,7 @@
         ldx #$0501
         jsl rlDrawMapMenuTextLine
         plx
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         rtl
 
         .databank 0
@@ -8979,7 +9049,7 @@
         .byte $00, $02, $01
 
       procUnknown85B704 ; 85/B704
-        .structProcInfo "PW", rlProcUnknown85B6E3Init, $B78A, $B7CF
+        .structProcInfo "PW", rlProcUnknown85B6E3Init, rlProcUnknown85B6E3Cycle, aProcUnknown85B6E3Code
         .long aUnknown85B719
         .byte $00
 
@@ -9007,7 +9077,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         lda aProcSystem.wInput0,b
         sta wCurrentItemDataROMPointer,b
         lda aProcSystem.wInput1,b
@@ -9042,7 +9112,7 @@
         sta lR18
         ldx #$0104
         jsl rlDrawMapMenuTextLine
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         rtl
 
         .databank 0
@@ -9282,7 +9352,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         jsl rlUnknown85C0CE
         lda #$00B4
         sta aProcSystem.aBody5,b,x
@@ -9356,7 +9426,7 @@
         adc #$0101
         tax
         lda wR10
-        jsl rlUnknown878916
+        jsl rlDrawMapMenuNumber
         bra _B968
 
 
@@ -9373,7 +9443,7 @@
         adc #$0102
         tax
         jsl rlDrawMapMenuTextLine
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         jsl rlUnknown85A227
         plx
         lda #$0094
@@ -9533,7 +9603,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         jsl rlUnknown85C0CE
 
         lda #$016E
@@ -9571,7 +9641,7 @@
         lda #$2000
         sta aCurrentTilemapInfo.wBaseTile,b
         jsl rlUnknown85A1E7
-        jsl rlUnknown85877E
+        jsl rlHideMapMenu
         rtl
 
         .databank 0
@@ -9648,7 +9718,7 @@
 
         _BAE3
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown858793
+        jsl rlShowMapMenu
         lda #$0095
         jsl rlPlaySoundEffect
         lda #<>rlUnknown85BAF9
@@ -9784,7 +9854,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         lda #$0093
         sta aProcSystem.aBody5,b,x
         lda aProcSystem.wInput2,b
@@ -9813,7 +9883,7 @@
         sta aCurrentTilemapInfo.wBaseTile,b
         ldx #$0102
         jsl rlUnknown85A1E7
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         plx
         lda aProcSystem.wInput2,b
         cmp #$0050
@@ -9856,19 +9926,21 @@
       .al
       .xl
 
-      rlUnknown85BC9E ; 85/BC9E
+      rlInitMapMenuProc ; 85/BC9E
 
         .al
         .autsiz
         .databank ?
+
+        ; Waits for the proc's map menu to load (rlStallProcUntilMapMenuDataLoaded), clears its tiles to $20FF and zeroes BG3's scroll.
 
         jsl rlStallProcUntilMapMenuDataLoaded
         lda #0
         sta wBufferBG3VOFS
         sta wBufferBG3HOFS
         lda #$20FF
-        sta wUnknown053C,b
-        jsl rlUnknown8788E5
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
         jsl rlUnknown85A234
         rtl
 
@@ -11648,7 +11720,7 @@
         _C615
         asl a
         tax
-        lda aUnknown879076+1,x
+        lda aTwoDigitDecimalTable+1,x
         and #$00FF
         clc
         adc #$21DF
@@ -11705,7 +11777,7 @@
       .xl
 
       procUnitWindow ; 85/C652
-        .structProcInfo "Ba", rlUnknown85C65A, rlUnknown85C686, $C6CA
+        .structProcInfo "Ba", rlUnknown85C65A, rlUnknown85C686, aProcUnitWindowCode
 
     .endsection ProcScript85C652Section
 
@@ -11813,6 +11885,9 @@
       aUnknown85C6C6 ; 85/C6C6
 
         PROC_SET_ONCYCLE rlUnknown85C686
+
+      aProcUnitWindowCode ; 85/C6CA
+
         PROC_YIELD 3
         PROC_SET_ONCYCLE rlUnknown85C698
         PROC_HALT
@@ -12125,7 +12200,7 @@
         clc
         adc #$0301
         tax
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #(`aUnknown85C986)<<8
         sta lR18+1
         lda #<>aUnknown85C986
@@ -12134,7 +12209,7 @@
         clc
         adc #$0305
         tax
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #$24E0
         sta aCurrentTilemapInfo,b
         jsl rlGetSelectedUnitCurrentHP
@@ -12144,7 +12219,7 @@
         adc #$0303
         tax
         pla
-        jsl rlUnknown878FE7
+        jsl rlDrawSmallNumberToTilemapEntry
         jsl rlGetSelectedUnitMaxHP
         pha
         lda aProcSystem.wInput0,b
@@ -12152,7 +12227,7 @@
         adc #$0306
         tax
         pla
-        jsl rlUnknown878FE7
+        jsl rlDrawSmallNumberToTilemapEntry
         bra _C97E
 
 
@@ -12168,7 +12243,7 @@
         clc
         adc #$0301
         tax
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #(`aUnknown85C997)<<8
         sta lR18+1
         lda #<>aUnknown85C997
@@ -12177,7 +12252,7 @@
         clc
         adc #$0307
         tax
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
         lda #$24E0
         sta aCurrentTilemapInfo,b
         jsl rlGetSelectedUnitStatusDuration
@@ -12188,7 +12263,7 @@
         adc #$0305
         tax
         pla
-        jsl rlUnknown878FE7
+        jsl rlDrawSmallNumberToTilemapEntry
         pla
         cmp #$000A
         bcs _C97E
@@ -12202,7 +12277,7 @@
         clc
         adc #$0305
         tax
-        jsl rlUnknown878F6E
+        jsl rlDrawTileStringToTilemapEntry
 
         _C97E
         jsr rsUnknown85C99F
@@ -12446,7 +12521,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85BC9E
+        jsl rlInitMapMenuProc
         jsl rlUnknown85C0CE
         stz $0DB1,b
         lda aProcSystem.wInput0,b
@@ -12471,7 +12546,7 @@
         lda aProcSystem.wInput2,b
         sta aProcSystem.aBody6,b,x
         jsl rlUnknown88B46A
-        jsl rlUnknown85877E
+        jsl rlHideMapMenu
         rtl
 
         .databank 0
@@ -12636,7 +12711,7 @@
         ldx #$05A0
         stx aCurrentTilemapInfo,b
         ldx #$0101
-        jsl rlUnknown878900
+        jsl rlDrawMapMenuSmallNumber
         plx
         phx
         lda aProcSystem.aBody7,b,x
@@ -12651,7 +12726,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown858751
+        jsl rlMoveMapMenu
 
       rlUnknown85CBBC ; 85/CBBC
 
@@ -12733,7 +12808,7 @@
         ldx #$05A0
         stx aCurrentTilemapInfo,b
         ldx #$0101
-        jsl rlUnknown878900
+        jsl rlDrawMapMenuSmallNumber
         plx
         phx
         lda aProcSystem.aBody7,b,x
@@ -12742,7 +12817,7 @@
         stx aCurrentTilemapInfo,b
         ldx #$0103
         jsl rlUnknown85D9FC
-        jsl rlUnknown8785E3
+        jsl rlDrawMapMenuBG3
 
         _CC3B
         plx
@@ -13022,8 +13097,8 @@
         jsr rsUnknown85CD81
         jsl rlStallProcUntilMapMenuDataLoaded
         lda #$20FF
-        sta wUnknown053C,b
-        jsl rlUnknown8788E5
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
         lda #$0002
         sta wBufferBG3VOFS
         lda #$0000
@@ -13033,7 +13108,7 @@
         jsl rlSetMapMenuPosition
         plx
         jsr rsUnknown85CE1E
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         jsl rlUnknown85A234
         ply
         plb
@@ -13133,7 +13208,7 @@
         lda $0006,b,y
         sta wSelectedUnitDataRAMPointer,b
         ldx #$0002
-        jsl rlUnknown85864B
+        jsl rlDrawSelectedUnitNameInMapMenu
         plx
         lda #$01A0
         jsr rsUnknown85CE08
@@ -13141,7 +13216,7 @@
         phx
         lda aProcSystem.aBody5,b,x
         ldx #$0201
-        jsl rlUnknown878900
+        jsl rlDrawMapMenuSmallNumber
         plx
         jsl rlUnknown85A234
         rts
@@ -13265,9 +13340,9 @@
         tya
         jsl rlUnknown859FEA
         lda #$20FF
-        sta wUnknown053C,b
-        jsl rlUnknown8788E5
-        jsl rlUnknown8785E3
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
+        jsl rlDrawMapMenuBG3
         rts
 
         .databank 0
@@ -13381,7 +13456,7 @@
         .databank ?
 
         jsl rlLoadMapMenuEntryPointerFromProcBody
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         jsr rsUnknown85CE34
         bcs _CED1
         rtl
@@ -13390,7 +13465,7 @@
         _CED1
         jsr rsUnknown85CD9C
         jsr rsUnknown85CDB9
-        jsl rlUnknown8785E3
+        jsl rlDrawMapMenuBG3
         lda #<>rlUnknown85CEE2
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
@@ -13594,9 +13669,9 @@
         sta aCurrentTilemapInfo,b
         lda aProcSystem.aBody5,b,x
         ldx #$0201
-        jsl rlUnknown878900
+        jsl rlDrawMapMenuSmallNumber
         plx
-        jsl rlUnknown8785E3
+        jsl rlDrawMapMenuBG3
         plx
         rtl
 
@@ -13625,7 +13700,7 @@
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsr rsUnknown85CE7C
         bcs _D055
-        jsl rlUnknown85884A
+        jsl rlResizeMapMenuFrame
         rtl
 
 
@@ -15174,8 +15249,8 @@
         phx
         jsl rlStallProcUntilMapMenuDataLoaded
         lda #$20FF
-        sta wUnknown053C,b
-        jsl rlUnknown8788E5
+        sta wMapMenuClearTile,b
+        jsl rlClearMapMenuTiles
         lda #$0000
         sta wBufferBG3VOFS
         sta wBufferBG3HOFS
@@ -15192,7 +15267,7 @@
         lda aProcSystem.wInput0,b
         bne _D8F3
         lda #$0006
-        jsl rlUnknown87872B
+        jsl rlSetMapMenuType
 
         _D8F3
         lda wR6
@@ -15244,7 +15319,7 @@
         ldx #$05A0
         stx aCurrentTilemapInfo,b
         ldx #$0105
-        jsl rlUnknown878900
+        jsl rlDrawMapMenuSmallNumber
         plx
         phx
         lda aProcSystem.aBody7,b,x
@@ -15254,7 +15329,7 @@
         jsl rlUnknown85DA2A
         plx
         jsl rlUnknown85A234
-        jsl rlUnknown8587E1
+        jsl rlDrawMapMenu
         plp
         plb
         .databank ?
@@ -15337,14 +15412,14 @@
         ldx #$05A0
         stx aCurrentTilemapInfo,b
         ldx #$0105
-        jsl rlUnknown878900
+        jsl rlDrawMapMenuSmallNumber
         plx
         lda aProcSystem.aBody7,b,x
         ldx #$0980
         stx aCurrentTilemapInfo,b
         ldx #$0107
         jsl rlUnknown85DA2A
-        jsl rlUnknown8785E3
+        jsl rlDrawMapMenuBG3
         bra _D9DE
 
 
@@ -15894,13 +15969,15 @@
       .al
       .xl
 
-      rlUnknown85DC26 ; 85/DC26
+      rlMapMenuTurnEnd ; 85/DC26
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bit 5 of wMapStateFlags and saves the cursor's tile; in the castle mode (bit 5 of wUnknown000D79) fades to rsUnknown80B122.
 
         lda #$0020
         tsb wMapStateFlags,b
@@ -15946,13 +16023,15 @@
 
         ; 85/DC7A
 
-      rlUnknown85DC7A ; 85/DC7A
+      rlMapMenuLoad ; 85/DC7A
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Reloads the saved chapter: rlUnknown87CBC5 with 1, then fades to rsStartChapterMap.
 
         lda wMapScrollXPixels,b
         sta wMapXOffset,b
@@ -15963,7 +16042,7 @@
         lda #$0100
         tsb wUnknown000D79,b
         stz wGameStateRoutine1,b
-        lda #$AEEA
+        lda #<>rsStartChapterMap
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -15984,7 +16063,7 @@
       .al
       .xl
 
-      rlUnknown85DCAB ; 85/DCAB
+      rlMapMenuOpenSave ; 85/DCAB
 
         .al
         .xl
@@ -15994,7 +16073,7 @@
         lda #$00E0
         jsl rlSendSoundCommand
         stz wGameStateRoutine1,b
-        lda #$F222
+        lda #<>rsOpenMapSaveMenu
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -16015,7 +16094,7 @@
       .al
       .xl
 
-      rlUnknown85DCCA ; 85/DCCA
+      rlMapMenuOpenConfig ; 85/DCCA
 
         ; Found through fe4.cdl.
         .al
@@ -16024,7 +16103,7 @@
         .databank ?
 
         stz wGameStateRoutine1,b
-        lda #$E598
+        lda #<>rsOpenOptionsMenu
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -16038,25 +16117,25 @@
         ; 85/DCE2
 
 
-      aUnknown85DCE2 ; 85/DCE2
+      aMainMapMenuTilemapData ; 85/DCE2
 
         .structMapMenuTilemapData 9, 16, aBG3TilemapBuffer, 0, $7FCD4A
 
-      aUnknown85DCEB ; 85/DCEB
+      aMainMapMenuData ; 85/DCEB
 
-        .long 0, 0, aUnknown85DCE2
+        .long 0, 0, aMainMapMenuTilemapData
         .byte 2, 4, 6
 
-      aUnknown85DCF7 ; 85/DCF7
+      aMainMapMenuNoSaveTilemapData ; 85/DCF7
 
         .structMapMenuTilemapData 9, 14, aBG3TilemapBuffer, 0, $7FCD4A
 
-      aUnknown85DD00 ; 85/DD00
+      aMainMapMenuNoSaveData ; 85/DD00
 
-        .long 0, 0, aUnknown85DCF7
+        .long 0, 0, aMainMapMenuNoSaveTilemapData
         .byte 2, 4, 6
 
-      aUnknown85DD0C ; 85/DD0C
+      aMapMenuOptionUnit ; 85/DD0C
 
         .long rlMapMenuOpenUnitWindow
         .word $0101
@@ -16064,7 +16143,7 @@
         .text "　ユニット\n"
         .enc "none"
 
-      aUnknown85DD1D ; 85/DD1D
+      aMapMenuOptionItem ; 85/DD1D
 
         .long rlMapMenuOpenItemWindow
         .word $0101
@@ -16072,7 +16151,7 @@
         .text "　アイテム\n"
         .enc "none"
 
-      aUnknown85DD2E ; 85/DD2E
+      aMapMenuOptionData ; 85/DD2E
 
         .long rlMapMenuOpenDataWindow
         .word $0101
@@ -16080,7 +16159,7 @@
         .text "　データ\n"
         .enc "none"
 
-      aUnknown85DD3D ; 85/DD3D
+      aMapMenuOptionSkill ; 85/DD3D
 
         .long rlMapMenuOpenSkillWindow
         .word $0101
@@ -16088,73 +16167,73 @@
         .text "　スキル\n"
         .enc "none"
 
-      aUnknown85DD4C ; 85/DD4C
+      aMapMenuOptionConfig ; 85/DD4C
 
-        .long rlUnknown85DCCA
+        .long rlMapMenuOpenConfig
         .word $0101
         .enc "SJIS"
         .text "　コンフィグ\n"
         .enc "none"
 
-      aUnknown85DD5F ; 85/DD5F
+      aMapMenuOptionLoad ; 85/DD5F
 
-        .long rlUnknown85DC7A
+        .long rlMapMenuLoad
         .word $0101
         .enc "SJIS"
         .text "　ロード\n"
         .enc "none"
 
-      aUnknown85DD6E ; 85/DD6E
+      aMapMenuOptionSave ; 85/DD6E
 
-        .long rlUnknown85DCAB
+        .long rlMapMenuOpenSave
         .word $0101
         .enc "SJIS"
         .text "　セーブ\n"
         .enc "none"
 
-      aUnknown85DD7D ; 85/DD7D
+      aMapMenuOptionTurnEnd ; 85/DD7D
 
-        .long rlUnknown85DC26
+        .long rlMapMenuTurnEnd
         .word $0101
         .enc "SJIS"
         .text "　ターンエンド\n"
         .enc "none"
 
-      aUnknown85DD92 ; 85/DD92
+      aMapMenuOptionList ; 85/DD92
 
         .word 0
         .byte 7, 7
         .byte 1, 1
-        .long aUnknown85DD0C
+        .long aMapMenuOptionUnit
         .byte 1, 3
-        .long aUnknown85DD1D
+        .long aMapMenuOptionItem
         .byte 1, 5
-        .long aUnknown85DD2E
+        .long aMapMenuOptionData
         .byte 1, 7
-        .long aUnknown85DD3D
+        .long aMapMenuOptionSkill
         .byte 1, 9
-        .long aUnknown85DD4C
+        .long aMapMenuOptionConfig
         .byte 1, 11
-        .long aUnknown85DD6E
+        .long aMapMenuOptionSave
         .byte 1, 13
-        .long aUnknown85DD7D
+        .long aMapMenuOptionTurnEnd
 
-      aUnknown85DDB9 ; 85/DDB9
+      aMapMenuOptionListNoSave ; 85/DDB9
 
         .word 0
         .byte 6, 6
         .byte 1, 1
-        .long aUnknown85DD0C
+        .long aMapMenuOptionUnit
         .byte 1, 3
-        .long aUnknown85DD1D
+        .long aMapMenuOptionItem
         .byte 1, 5
-        .long aUnknown85DD2E
+        .long aMapMenuOptionData
         .byte 1, 7
-        .long aUnknown85DD3D
+        .long aMapMenuOptionSkill
         .byte 1, 9
-        .long aUnknown85DD4C
+        .long aMapMenuOptionConfig
         .byte 1, 11
-        .long aUnknown85DD7D
+        .long aMapMenuOptionTurnEnd
 
     .endsection Unsorted85DCCASection
 
@@ -16164,20 +16243,22 @@
       .al
       .xl
 
-      rlUnknown85DE34 ; 85/DE34
+      rlMainMapMenuProcCycle ; 85/DE34
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown858516
+        ; Runs rlListMenuProcHandleInput only while the menu is on top, so the hand is not drawn under another menu.
+
+        jsl rlCheckListMenuIdle
         beq _DE3E
         jml _DE42
 
 
         _DE3E
-        jsl rlUnknown8583F8
+        jsl rlListMenuProcHandleInput
 
         _DE42
         rtl
@@ -16186,7 +16267,7 @@
 
         ; 85/DE43
 
-      rlUnknown85DE43 ; 85/DE43
+      rlUnitMenuWait ; 85/DE43
 
         ; Found through fe4.cdl.
         .al
@@ -16207,13 +16288,15 @@
 
         ; 85/DE57
 
-      rlUnknown85DE57 ; 85/DE57
+      rlUnitMenuAttack ; 85/DE57
 
         ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Opens the item list (procMapItemList) on the weapons that can attack ($7E2000).
 
         ldx wActiveUnitDeploymentOffset,b
         lda #$0000
@@ -16241,13 +16324,15 @@
       .al
       .xl
 
-      rlUnknown85DE7C ; 85/DE7C
+      rlUnitMenuAssault ; 85/DE7C
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Opens the item list on the weapons for an assault ($7E2010).
 
         ldx wActiveUnitDeploymentOffset,b
         lda #$0000
@@ -16270,13 +16355,15 @@
 
         ; 85/DEAB
 
-      rlUnknown85DEAB ; 85/DEAB
+      rlUnitMenuDance ; 85/DEAB
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Finds the adjacent units of the army (target filter 2) and starts choosing one (rlUnknown84DC1C).
 
         stz wSelectedInventorySlot,b
         lda #$0000
@@ -16307,13 +16394,15 @@
       .al
       .xl
 
-      rlUnknown85DED6 ; 85/DED6
+      rlUnitMenuStaff ; 85/DED6
 
         ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Opens the item list on the usable staves ($7E2008).
 
         ldx wActiveUnitDeploymentOffset,b
         lda #$0000
@@ -16331,12 +16420,14 @@
 
         .databank 0
 
-      rlUnknown85DEFB ; 85/DEFB
+      rlUnitMenuItems ; 85/DEFB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Opens the item list on the usable items ($7E2018).
 
         ldx wActiveUnitDeploymentOffset,b
         lda #$0000
@@ -16362,7 +16453,7 @@
       .al
       .xl
 
-      rlUnknown85DF20 ; 85/DF20
+      rlUnitMenuEnter ; 85/DF20
 
         ; Found by tools/sweep.py.
         .al
@@ -16400,11 +16491,13 @@
       .al
       .xl
 
-      rlUnknown85DF3F ; 85/DF3F
+      rlUnitMenuTown ; 85/DF3F
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs rlUnknown84CDA4 and fades to the castle screen.
 
         phx
         jsl rlUnknown88AF7B
@@ -16462,7 +16555,7 @@
       .al
       .xl
 
-      rlUnknown85DF61 ; 85/DF61
+      rlUnitMenuVillage ; 85/DF61
 
         ; Found through fe4.cdl.
         .al
@@ -16489,7 +16582,7 @@
       .al
       .xl
 
-      rlUnknown85DF6F ; 85/DF6F
+      rlUnitMenuSeize ; 85/DF6F
 
         .al
         .autsiz
@@ -16514,7 +16607,7 @@
       .al
       .xl
 
-      rlUnknown85DF7D ; 85/DF7D
+      rlUnitMenuGuard ; 85/DF7D
 
         ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
         ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
@@ -16543,7 +16636,7 @@
       .al
       .xl
 
-      rlUnknown85DF8A ; 85/DF8A
+      rlUnitMenuDepart ; 85/DF8A
 
         ; Found through fe4.cdl.
         .al
@@ -16562,7 +16655,7 @@
 
         ; 85/DF98
 
-      rlUnknown85DF98 ; 85/DF98
+      rlUnitMenuReturnToCastle ; 85/DF98
 
         ; Found through fe4.cdl.
         .al
@@ -16589,7 +16682,7 @@
       .al
       .xl
 
-      rlUnknown85DFA6 ; 85/DFA6
+      rlUnitMenuDismount ; 85/DFA6
 
         ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
         ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
@@ -16602,7 +16695,7 @@
         phx
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84D1CC
-        jsl rlUnknown85E85D
+        jsl rlOpenUnitMenu
         plx
         rtl
 
@@ -16610,7 +16703,7 @@
 
         ; 85/DFB4
 
-      rlUnknown85DFB4 ; 85/DFB4
+      rlUnitMenuMount ; 85/DFB4
 
         ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
         ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
@@ -16623,7 +16716,7 @@
         phx
         ldx wActiveUnitDeploymentOffset,b
         jsl rlUnknown84D247
-        jsl rlUnknown85E85D
+        jsl rlOpenUnitMenu
         plx
         rtl
 
@@ -16639,7 +16732,7 @@
       .al
       .xl
 
-      rlUnknown85DFC2 ; 85/DFC2
+      rlUnitMenuTalk ; 85/DFC2
 
         ; Found by tools/sweep.py.
         .al
@@ -16661,12 +16754,14 @@
 
         .databank 0
 
-      rlUnknown85DFDE ; 85/DFDE
+      rlUnitMenuEquip ; 85/DFDE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Opens the item list on the equippable weapons ($7E2020).
 
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
@@ -16690,7 +16785,7 @@
       .al
       .xl
 
-      rlUnknown85DFFD ; 85/DFFD
+      rlUnitMenuAnimation ; 85/DFFD
 
         ; Found through fe4.cdl.
         .al
@@ -16715,7 +16810,7 @@
       .al
       .xl
 
-      rlUnknown85E004 ; 85/E004
+      rlUnitMenuReturnSkill ; 85/E004
 
         ; Nothing in the build reaches this. One of the small wrappers at $85/DF20-E070
         ; that run a bank $84 routine on the active unit (wActiveUnitDeploymentOffset).
@@ -16724,6 +16819,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing in the build reaches this except its option (aUnitMenuOptionReturnSkill).
 
         phx
         jsl rlUnknown88AF7B
@@ -16744,13 +16841,15 @@
       .al
       .xl
 
-      rlUnknown85E012 ; 85/E012
+      rlUnitMenuHelp ; 85/E012
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Target filter 5, then starts choosing a target.
 
         stz wSelectedInventorySlot,b
         lda #$0002
@@ -16768,13 +16867,15 @@
 
         ; 85/E030
 
-      rlUnknown85E030 ; 85/E030
+      rlUnitMenuGiveGoldToArmy ; 85/E030
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Target filter $0A, then starts choosing a target.
 
         phx
         stz wSelectedInventorySlot,b
@@ -16794,13 +16895,15 @@
 
         ; 85/E050
 
-      rlUnknown85E050 ; 85/E050
+      rlUnitMenuGiveGoldToLover ; 85/E050
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Target filter $0B, then starts choosing a target.
 
         phx
         stz wSelectedInventorySlot,b
@@ -16821,183 +16924,183 @@
         ; 85/E070
 
 
-      aUnknown85E070 ; 85/E070
+      aUnitMenuOptionAttack ; 85/E070
 
-        .long rlUnknown85DE57
+        .long rlUnitMenuAttack
         .word $0101
         .enc "SJIS"
         .text "　こうげき\n"
         .enc "none"
 
-      aUnknown85E081 ; 85/E081
+      aUnitMenuOptionAssault ; 85/E081
 
-        .long rlUnknown85DE7C
+        .long rlUnitMenuAssault
         .word $0101
         .enc "SJIS"
         .text "　とつげき\n"
         .enc "none"
 
-      aUnknown85E092 ; 85/E092
+      aUnitMenuOptionDance ; 85/E092
 
-        .long rlUnknown85DEAB
+        .long rlUnitMenuDance
         .word $0101
         .enc "SJIS"
         .text "　おどる\n"
         .enc "none"
 
-      aUnknown85E0A1 ; 85/E0A1
+      aUnitMenuOptionStaff ; 85/E0A1
 
-        .long rlUnknown85DED6
+        .long rlUnitMenuStaff
         .word $0101
         .enc "SJIS"
         .text "　つえ\n"
         .enc "none"
 
-      aUnknown85E0AE ; 85/E0AE
+      aUnitMenuOptionItems ; 85/E0AE
 
-        .long rlUnknown85DEFB
+        .long rlUnitMenuItems
         .word $0101
         .enc "SJIS"
         .text "　もちもの\n"
         .enc "none"
 
-      aUnknown85E0BF ; 85/E0BF
+      aUnitMenuOptionTalk ; 85/E0BF
 
-        .long rlUnknown85DFC2
+        .long rlUnitMenuTalk
         .word $0101
         .enc "SJIS"
         .text "　はなす\n"
         .enc "none"
 
-      aUnknown85E0CE ; 85/E0CE
+      aUnitMenuOptionGiveGoldToArmy ; 85/E0CE
 
-        .long rlUnknown85E030
+        .long rlUnitMenuGiveGoldToArmy
         .word $0101
         .enc "SJIS"
         .text "　あげる\n"
         .enc "none"
 
-      aUnknown85E0DD ; 85/E0DD
+      aUnitMenuOptionGiveGoldToLover ; 85/E0DD
 
-        .long rlUnknown85E050
+        .long rlUnitMenuGiveGoldToLover
         .word $0101
         .enc "SJIS"
         .text "　あげる\n"
         .enc "none"
 
-      aUnknown85E0EC ; 85/E0EC
+      aUnitMenuOptionHelp ; 85/E0EC
 
-        .long rlUnknown85E012
+        .long rlUnitMenuHelp
         .word $0101
         .enc "SJIS"
         .text "　たすける\n"
         .enc "none"
 
-      aUnknown85E0FD ; 85/E0FD
+      aUnitMenuOptionSeize ; 85/E0FD
 
-        .long rlUnknown85DF6F
+        .long rlUnitMenuSeize
         .word $0101
         .enc "SJIS"
         .text "　せいあつ\n"
         .enc "none"
 
-      aUnknown85E10E ; 85/E10E
+      aUnitMenuOptionEnter ; 85/E10E
 
-        .long rlUnknown85DF20
+        .long rlUnitMenuEnter
         .word $0101
         .enc "SJIS"
         .text "　はいる\n"
         .enc "none"
 
-      aUnknown85E11D ; 85/E11D
+      aUnitMenuOptionTown ; 85/E11D
 
-        .long rlUnknown85DF3F
+        .long rlUnitMenuTown
         .word $0101
         .enc "SJIS"
         .text "　まち\n"
         .enc "none"
 
-      aUnknown85E12A ; 85/E12A
+      aUnitMenuOptionVillage ; 85/E12A
 
-        .long rlUnknown85DF61
+        .long rlUnitMenuVillage
         .word $0101
         .enc "SJIS"
         .text "　むら\n"
         .enc "none"
 
-      aUnknown85E137 ; 85/E137
+      aUnitMenuOptionGuard ; 85/E137
 
-        .long rlUnknown85DF7D
+        .long rlUnitMenuGuard
         .word $0101
         .enc "SJIS"
         .text "　しゅび\n"
         .enc "none"
 
-      aUnknown85E146 ; 85/E146
+      aUnitMenuOptionDepart ; 85/E146
 
-        .long rlUnknown85DF8A
+        .long rlUnitMenuDepart
         .word $0101
         .enc "SJIS"
         .text "　しゅつげき\n"
         .enc "none"
 
-      aUnknown85E159 ; 85/E159
+      aUnitMenuOptionReturnToCastle ; 85/E159
 
-        .long rlUnknown85DF98
+        .long rlUnitMenuReturnToCastle
         .word $0101
         .enc "SJIS"
         .text "　城にもどる\n"
         .enc "none"
 
-      aUnknown85E16C ; 85/E16C
+      aUnitMenuOptionWait ; 85/E16C
 
-        .long rlUnknown85DE43
+        .long rlUnitMenuWait
         .word $0101
         .enc "SJIS"
         .text "　たいき\n"
         .enc "none"
 
-      aUnknown85E17B ; 85/E17B
+      aUnitMenuOptionReturnSkill ; 85/E17B
 
-        .long rlUnknown85E004
+        .long rlUnitMenuReturnSkill
         .word $0101
         .enc "SJIS"
         .text "　城にもどる\n"
         .enc "none"
 
-      aUnknown85E18E ; 85/E18E
+      aUnitMenuOptionMount ; 85/E18E
 
-        .long rlUnknown85DFB4
+        .long rlUnitMenuMount
         .word $0101
         .enc "SJIS"
         .text "　のる\n"
         .enc "none"
 
-      aUnknown85E19B ; 85/E19B
+      aUnitMenuOptionDismount ; 85/E19B
 
-        .long rlUnknown85DFA6
+        .long rlUnitMenuDismount
         .word $0101
         .enc "SJIS"
         .text "　おりる\n"
         .enc "none"
 
-      aUnknown85E1AA ; 85/E1AA
+      aUnitMenuOptionEquip ; 85/E1AA
 
-        .long rlUnknown85DFDE
+        .long rlUnitMenuEquip
         .word $0101
         .enc "SJIS"
         .text "　そうび\n"
         .enc "none"
 
-      aUnknown85E1B9 ; 85/E1B9
+      aUnitMenuOptionAnimation ; 85/E1B9
 
-        .long rlUnknown85DFFD
+        .long rlUnitMenuAnimation
         .word $0101
         .enc "SJIS"
         .text "　アニメ\n"
         .enc "none"
 
-      aUnknown85E1C8 ; 85/E1C8
+      aUnitMenuOptionListTemplate ; 85/E1C8
 
         .word 0, 24
 
@@ -17009,14 +17112,14 @@
       .al
       .xl
 
-      procUnknown85E1CC ; 85/E1CC
+      procUnitMenu ; 85/E1CC
 
-        .structProcInfo "PW", rlProcUnknown85E1CCInit, rlProcUnknown85E1CCCycle, aProcUnknown85DDDBCode
+        .structProcInfo "PW", rlProcUnitMenuInit, rlProcUnitMenuSetUp, aProcListMenuCode
 
 
-        .long aUnknown8583A3
+        .long aUnitMenuData
         .byte 1
-        .long aUnknown85E1C8
+        .long aUnitMenuOptionListTemplate
 
     .endsection ProcScript85E1CCSection
 
@@ -17026,14 +17129,16 @@
       .al
       .xl
 
-      rlProcUnknown85E1CCInit ; 85/E1DB
+      rlProcUnitMenuInit ; 85/E1DB
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown8583C2
+        ; wInput0 = the mode (aBody7): 0 after moving, 1 and 2 when reopened (rlOpenUnitMenu).
+
+        jsl rlListMenuProcInit
         lda #$0000
         sta wBufferBG3VOFS
         sta wBufferBG3HOFS
@@ -17045,25 +17150,27 @@
 
         ; 85/E1ED
 
-      rlProcUnknown85E1CCCycle ; 85/E1ED
+      rlProcUnitMenuSetUp ; 85/E1ED
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Builds the menu: for each of the 24 commands, from the last to the first, adds its option if its check (aUnitMenuCommandChecks) returns carry set; sizes the menu to fit.
+
         lda #$0009
         jsl rlPlaySoundEffect
         lda aProcSystem.aHeaderTypeOffset,b,x
         tay
         jsl rlLoadMapMenuDataFromProc
-        jsl rlUnknown8584AC
+        jsl rlListMenuProcPushOptions
         lda #$0000
         sta aBGPaletteBuffer,b
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda #$20FF
-        sta wUnknown053C,b
+        sta wMapMenuClearTile,b
         lda aProcSystem.aBody7,b,x
         sta aProcSystem.wInput0,b
         lda #$0001
@@ -17073,20 +17180,20 @@
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        jsr rsUnknown85E44E
-        jsr rsUnknown85E468
+        jsr rsUnitMenuBuildItemLists
+        jsr rsUnitMenuGetLocation
         ldx #$002E
 
         _E235
         phx
-        jsr (aUnknown85E27F,x)
+        jsr (aUnitMenuCommandChecks,x)
         plx
         bcc _E24B
-        lda #$85E2
+        lda #aUnitMenuCommandOptions >> 8
         sta lMenuOptionPointer+1,b
-        lda $E2AF,b,x
+        lda <>aUnitMenuCommandOptions,b,x
         sta lMenuOptionPointer,b
-        jsr rsUnknown85E332
+        jsr rsUnitMenuAddOption
 
         _E24B
         dec x
@@ -17099,19 +17206,19 @@
         xba
         ora #$0009
         jsl rlSetMapMenuTilemapArea
-        jsl rlUnknown85856E
-        jsl rlUnknown8584DC
+        jsl rlDrawMenuOptions
+        jsl rlKeepUnitMenuAwayFromCursor
         lda aProcSystem.aBody7,b,x
         cmp #$0002
         beq _E278
         cmp #$0001
         bne _E278
-        jsr rsUnknown85E2DF
+        jsr rsUnitMenuMoveOptionListDown
         bra _E278
 
 
         _E278
-        lda #<>rlUnknown85E33D
+        lda #<>rlProcUnitMenuCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -17127,61 +17234,61 @@
       .al
       .xl
 
-      aUnknown85E27F ; 85/E27F
+      aUnitMenuCommandChecks ; 85/E27F
 
-        ; Jump table of rlProcUnknown85E1CCCycle.
-        .word <>rlUnknown85E5B6
-        .word <>rlUnknown85E6E8
-        .word <>rsUnknown85E545
-        .word $E539
-        .word <>rlUnknown85E6A5
-        .word <>rlUnknown85E6D7
-        .word <>rlUnknown85E7F6
-        .word <>rlUnknown85E7B3
-        .word $E524
-        .word $E4FB
-        .word <>rlUnknown85E623
-        .word <>rlUnknown85E549
-        .word <>rlUnknown85E5E6
-        .word <>rlUnknown85E57E
-        .word $E3E1
-        .word $E3C4
-        .word $E412
-        .word <>rsUnknown85E38C
-        .word <>rlUnknown85E744
-        .word $E4D2
-        .word <>rsUnknown85E47F
-        .word <>rlUnknown85E656
-        .word <>rlUnknown85E78A
-        .word <>rlUnknown85E839
+        ; Jump table of rlProcUnitMenuSetUp.
+        .word <>rsUnitMenuCheckReturnToCastle
+        .word <>rsUnitMenuCheckReturnSkill
+        .word <>rsUnitMenuCheckPass
+        .word <>rsUnitMenuCheckEquip
+        .word <>rsUnitMenuCheckDismount
+        .word <>rsUnitMenuCheckMount
+        .word <>rsUnitMenuCheckGiveGoldToLover
+        .word <>rsUnitMenuCheckGiveGoldToArmy
+        .word <>rsUnitMenuCheckItems
+        .word <>rsUnitMenuCheckOffensiveStaff
+        .word <>rsUnitMenuCheckWait
+        .word <>rsUnitMenuCheckTalk
+        .word <>rsUnitMenuCheckDepart
+        .word <>rsUnitMenuCheckGuard
+        .word <>rsUnitMenuCheckVillage
+        .word <>rsUnitMenuCheckTown
+        .word <>rsUnitMenuCheckSeize
+        .word <>rsUnitMenuCheckEnter
+        .word <>rsUnitMenuCheckDance
+        .word <>rsUnitMenuCheckSupportStaff
+        .word <>rsUnitMenuCheckAttack
+        .word <>rsUnitMenuCheckAssault
+        .word <>rsUnitMenuCheckHelp
+        .word <>rsUnitMenuCheckTalkHere
 
 
-      aUnknown85E2AF ; 85/E2AF
+      aUnitMenuCommandOptions ; 85/E2AF
 
-        .word <>aUnknown85E159
-        .word <>aUnknown85E17B
-        .word <>aUnknown85E1B9
-        .word <>aUnknown85E1AA
-        .word <>aUnknown85E19B
-        .word <>aUnknown85E18E
-        .word <>aUnknown85E0DD
-        .word <>aUnknown85E0CE
-        .word <>aUnknown85E0AE
-        .word <>aUnknown85E0A1
-        .word <>aUnknown85E16C
-        .word <>aUnknown85E0BF
-        .word <>aUnknown85E146
-        .word <>aUnknown85E137
-        .word <>aUnknown85E12A
-        .word <>aUnknown85E11D
-        .word <>aUnknown85E0FD
-        .word <>aUnknown85E10E
-        .word <>aUnknown85E092
-        .word <>aUnknown85E0A1
-        .word <>aUnknown85E070
-        .word <>aUnknown85E081
-        .word <>aUnknown85E0EC
-        .word <>aUnknown85E0BF
+        .word <>aUnitMenuOptionReturnToCastle
+        .word <>aUnitMenuOptionReturnSkill
+        .word <>aUnitMenuOptionAnimation
+        .word <>aUnitMenuOptionEquip
+        .word <>aUnitMenuOptionDismount
+        .word <>aUnitMenuOptionMount
+        .word <>aUnitMenuOptionGiveGoldToLover
+        .word <>aUnitMenuOptionGiveGoldToArmy
+        .word <>aUnitMenuOptionItems
+        .word <>aUnitMenuOptionStaff
+        .word <>aUnitMenuOptionWait
+        .word <>aUnitMenuOptionTalk
+        .word <>aUnitMenuOptionDepart
+        .word <>aUnitMenuOptionGuard
+        .word <>aUnitMenuOptionVillage
+        .word <>aUnitMenuOptionTown
+        .word <>aUnitMenuOptionSeize
+        .word <>aUnitMenuOptionEnter
+        .word <>aUnitMenuOptionDance
+        .word <>aUnitMenuOptionStaff
+        .word <>aUnitMenuOptionAttack
+        .word <>aUnitMenuOptionAssault
+        .word <>aUnitMenuOptionHelp
+        .word <>aUnitMenuOptionTalk
 
     .endsection Table85E27FSection
 
@@ -17191,12 +17298,14 @@
       .al
       .xl
 
-      rsUnknown85E2DF ; 85/E2DF
+      rsUnitMenuMoveOptionListDown ; 85/E2DF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Swaps the top option list with the one below it, so the unit menu waits under the previous menu (mode 1).
 
         phb
         php
@@ -17250,12 +17359,14 @@
 
         ; 85/E332
 
-      rsUnknown85E332 ; 85/E332
+      rsUnitMenuAddOption ; 85/E332
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Adds the option at lMenuOptionPointer and moves two rows down.
 
         jsl rlAddMenuOption
         inc wMenuOptionY,b
@@ -17274,13 +17385,15 @@
       .al
       .xl
 
-      rlUnknown85E33D ; 85/E33D
+      rlProcUnitMenuCycle ; 85/E33D
 
         .al
         .autsiz
         .databank ?
 
-        jsl rlUnknown858516
+        ; B: in mode 1 only puts the cursor back on the first option; otherwise closes the menu (mode 2 clears bit 4 of wMapStateFlags) and undoes the move (rlUnknown88ADE9).
+
+        jsl rlCheckListMenuIdle
         bne _End
 
           lda wJoy1New
@@ -17314,7 +17427,7 @@
             plx
 
         _End
-        jsl rlUnknown8583F8
+        jsl rlListMenuProcHandleInput
         
         -
         rtl
@@ -17323,7 +17436,7 @@
         jsl rlLoadMapMenuEntryPointerFromProcBody
         lda #1
         sta aProcSystem.aBody6,b,x
-        jsr rsUnknown858542
+        jsr rsListMenuDrawCursor
         bra -
 
         .databank 0
@@ -17338,7 +17451,7 @@
       .al
       .xl
 
-      rsUnknown85E38C ; 85/E38C
+      rsUnitMenuCheckEnter ; 85/E38C
 
         ; Runs on into built code at the end.
         .al
@@ -17346,16 +17459,18 @@
         .autsiz
         .databank ?
 
+        ; At a castle that is neither the enemy's (relation 2) nor relation 3.
+
         lda wEventLocationEntry,b
         bne _E395
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E395
         jsl rlGetEventLocationEntryType
         cmp #LocationTypeCastle
         beq _E3A2
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E3A2
@@ -17365,65 +17480,71 @@
         jsl rlGetFactionRelation
         cmp #AllegianceEnemy
         bne _E3B7
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E3B7
         cmp #$0003
         bne _E3C0
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E3C0
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
+
+      rsUnitMenuCheckTown ; 85/E3C4
 
         ldx wActiveUnitDeploymentOffset,b
         lda wEventLocationEntry,b
         bne _E3D0
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E3D0
         jsl rlGetEventLocationEntryType
         cmp #$0001
         beq _E3DD
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E3DD
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
+
+      rsUnitMenuCheckVillage ; 85/E3E1
 
         ldx wActiveUnitDeploymentOffset,b
         lda wEventLocationEntry,b
         bne _E3ED
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E3ED
         jsl rlGetEventLocationEntryType
         cmp #LocationTypeVillage
         beq _E3FA
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E3FA
         jsl rlCheckLocationDestroyed
         bcc _E404
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E404
         jsl rlCheckIfVillageClosed
         bcc _E40E
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E40E
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
+
+      rsUnitMenuCheckSeize ; 85/E412
 
         lda wEventLocationEntry,b
         bne _E41B
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E41B
@@ -17433,7 +17554,7 @@
         jsl rlGetFactionRelation
         cmp #AllegianceEnemy
         beq _E430
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E430
@@ -17468,12 +17589,14 @@
       .al
       .xl
 
-      rsUnknown85E44E ; 85/E44E
+      rsUnitMenuBuildItemLists ; 85/E44E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = deployment offset: builds the lists of usable inventory slots at the unit's tile ($7E2000-$7E2028, rlUnknown84F786).
 
         lda aDeploymentTable._XTilePosition,x
         sta wR10
@@ -17489,12 +17612,14 @@
 
         ; 85/E468
 
-      rsUnknown85E468 ; 85/E468
+      rsUnitMenuGetLocation ; 85/E468
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = deployment offset: wEventLocationEntry and wTargetEventLocationEntry = the location at the unit's tile.
 
         lda aDeploymentTable._XTilePosition,x
         sta wR0
@@ -17517,7 +17642,7 @@
       .al
       .xl
 
-      rsUnknown85E47F ; 85/E47F
+      rsUnitMenuCheckAttack ; 85/E47F
 
         ; Runs on into built code at the end.
         .al
@@ -17525,32 +17650,34 @@
         .autsiz
         .databank ?
 
+        ; Not mode 2 or $0008, and a weapon with a target in range ($7E2000).
+
         ldx aProcSystem.wOffset,b
         lda aProcSystem.aBody7,b,x
         cmp #$0002
         bne _E48E
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E48E
         lda wMapStateFlags,b
         bit #$0008
         beq _E49A
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E49A
         lda $7E2000
         and #$00FF
         bne _E4A7
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E4A7
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
 
-        _E4AB
+      rsUnitMenuHasSupportStaff ; 85/E4AB
         phx
         lda wAIGroupLeaderFieldMovement
         and #$00FF
@@ -17576,54 +17703,62 @@
         sec
         rts
 
+      rsUnitMenuCheckSupportStaff ; 85/E4D2
+
         ldx aProcSystem.wOffset,b
         lda aProcSystem.aBody7,b,x
         cmp #$0002
         bne _E4E1
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E4E1
         lda wMapStateFlags,b
         bit #$0008
-        bne rsUnknown85E547
+        bne rsUnitMenuCheckFail
         lda wAIGroupLeaderFieldMovement
         and #$00FF
-        beq rsUnknown85E547
-        jsr _E4AB
-        bcc rsUnknown85E547
-        jml rsUnknown85E545
+        beq rsUnitMenuCheckFail
+        jsr rsUnitMenuHasSupportStaff
+        bcc rsUnitMenuCheckFail
+        jml rsUnitMenuCheckPass
+
+      rsUnitMenuCheckOffensiveStaff ; 85/E4FB
 
         ldx aProcSystem.wOffset,b
         lda aProcSystem.aBody7,b,x
         cmp #$0002
         bne _E50A
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E50A
         lda wMapStateFlags,b
         bit #$0008
-        bne rsUnknown85E547
+        bne rsUnitMenuCheckFail
         lda wAIGroupLeaderFieldMovement
         and #$00FF
-        beq rsUnknown85E547
-        jsr _E4AB
-        bcs rsUnknown85E547
-        jml rsUnknown85E545
+        beq rsUnitMenuCheckFail
+        jsr rsUnitMenuHasSupportStaff
+        bcs rsUnitMenuCheckFail
+        jml rsUnitMenuCheckPass
+
+      rsUnitMenuCheckItems ; 85/E524
 
         lda wMapStateFlags,b
         bit #$0008
-        bne rsUnknown85E547
+        bne rsUnitMenuCheckFail
         lda wAIUnknown7E2018
         and #$00FF
-        beq rsUnknown85E547
-        jml rsUnknown85E545
+        beq rsUnitMenuCheckFail
+        jml rsUnitMenuCheckPass
+
+      rsUnitMenuCheckEquip ; 85/E539
 
         lda wAIGroupLeaderDeploymentOffset
         and #$00FF
         cmp #$0002
-        bcc rsUnknown85E547
+        bcc rsUnitMenuCheckFail
 
         .databank 0
 
@@ -17637,12 +17772,14 @@
       .al
       .xl
 
-      rsUnknown85E545 ; 85/E545
+      rsUnitMenuCheckPass ; 85/E545
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set: show the command.
 
         sec
         rts
@@ -17651,12 +17788,14 @@
 
         ; 85/E547
 
-      rsUnknown85E547 ; 85/E547
+      rsUnitMenuCheckFail ; 85/E547
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry clear: leave the command out.
 
         clc
         rts
@@ -17673,7 +17812,7 @@
       .al
       .xl
 
-      rlUnknown85E549 ; 85/E549
+      rsUnitMenuCheckTalk ; 85/E549
 
         ; Found by tools/sweep.py.
         .al
@@ -17681,17 +17820,19 @@
         .autsiz
         .databank ?
 
+        ; Not after acting ($0008) unless in canto; rlUnknown84B9A3 clear; someone to talk to in range 1 (target filter 3).
+
         jsl rlGetSelectedUnitStates
         bit #UnitStateCanto
         bne _E55A
         lda wMapStateFlags,b
         bit #$0008
-        bne rsUnknown85E547
+        bne rsUnitMenuCheckFail
 
         _E55A
         clc
         jsl rlUnknown84B9A3
-        bcs rsUnknown85E547
+        bcs rsUnitMenuCheckFail
         lda #$0001
         sta wR10
         sta wR11
@@ -17700,11 +17841,11 @@
         jsl rlFindTargetsInRange
         ora #$0000
         bne _E57A
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E57A
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
@@ -17718,7 +17859,7 @@
       .al
       .xl
 
-      rlUnknown85E57E ; 85/E57E
+      rsUnitMenuCheckGuard ; 85/E57E
 
         ; Found by tools/sweep.py.
         .al
@@ -17726,37 +17867,41 @@
         .autsiz
         .databank ?
 
+        ; At a castle owned by the unit's army or an ally that nobody guards, and wMapActionMode is not 2.
+
         lda wEventLocationEntry,b
-        beq rsUnknown85E547
+        beq rsUnitMenuCheckFail
         lda wMapActionMode,b
         and #$00FF
         cmp #$0002
-        beq rsUnknown85E547
+        beq rsUnitMenuCheckFail
         jsl rlCheckIfCastleGuarded
-        bcs rsUnknown85E547
+        bcs rsUnitMenuCheckFail
         jsl rlGetEventLocationEntryType
         cmp #LocationTypeCastle
-        bne rsUnknown85E547
+        bne rsUnitMenuCheckFail
         ldx wActiveFactionSlot,b
         jsl rlGetLocationFactionSlotOwner
         jsl rlGetFactionRelation
         cmp #AllegianceOwn
-        beq rsUnknown85E545
+        beq rsUnitMenuCheckPass
         cmp #AllegianceAllied
-        beq rsUnknown85E545
-        jml rsUnknown85E547
+        beq rsUnitMenuCheckPass
+        jml rsUnitMenuCheckFail
 
         .databank 0
 
         ; 85/E5B6
 
-      rlUnknown85E5B6 ; 85/E5B6
+      rsUnitMenuCheckReturnToCastle ; 85/E5B6
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The unit guards its home castle (its faction's location) and has no canto movement left.
 
         jsl rlGetSelectedUnitHomeCastle
         sta wR0
@@ -17764,30 +17909,30 @@
         jsl rlGetFactionSlotLocationID
         cmp wR0
         beq _E5CC
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E5CC
         jsl rlGetSelectedUnitStates
         bit #UnitStateGuardingCastle
         bne _E5D9
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E5D9
         bit #$0800
         beq _E5E2
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E5E2
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
         ; 85/E5E6
 
-      rlUnknown85E5E6 ; 85/E5E6
+      rsUnitMenuCheckDepart ; 85/E5E6
 
         ; Found by tools/sweep.py.
         .al
@@ -17795,16 +17940,18 @@
         .autsiz
         .databank ?
 
+        ; The unit guards a castle, has no canto movement left, and rlGetUnitByCoordinates returns carry set for the tile two below it.
+
         jsl rlGetSelectedUnitStates
         bit #UnitStateGuardingCastle
         bne _E5F3
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E5F3
         bit #$0800
         beq _E5FC
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E5FC
@@ -17821,17 +17968,17 @@
         pla
         sta wSelectedUnitDataRAMPointer,b
         bcs _E61F
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E61F
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
         ; 85/E623
 
-      rlUnknown85E623 ; 85/E623
+      rsUnitMenuCheckWait ; 85/E623
 
         ; Found by tools/sweep.py.
         .al
@@ -17839,17 +17986,19 @@
         .autsiz
         .databank ?
 
+        ; Shown unless the unit stands on its own faction's castle location (terrain 9 always shows it).
+
         lda wActiveUnitDeploymentOffset,b
         jsl rlGetTerrainTypeByDeploymentOffset
         cmp #$0009
         bne _E633
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
 
         _E633
         lda wEventLocationEntry,b
         bne _E63C
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
 
         _E63C
@@ -17859,17 +18008,17 @@
         jsl rlGetFactionSlotLocationID
         cmp wR0
         beq _E652
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
 
         _E652
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
         .databank 0
 
         ; 85/E656
 
-      rlUnknown85E656 ; 85/E656
+      rsUnitMenuCheckAssault ; 85/E656
 
         ; Found by tools/sweep.py.
         .al
@@ -17877,25 +18026,27 @@
         .autsiz
         .databank ?
 
+        ; Guarding a castle, or at an enemy castle that is guarded; and a weapon with a target ($7E2010, target filter 4).
+
         jsl rlGetSelectedUnitStates
         bit #UnitStateGuardingCastle
         bne _E694
         lda wEventLocationEntry,b
         bne _E668
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E668
         jsl rlCheckIfCastleGuarded
         bcs _E672
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E672
         jsl rlGetEventLocationEntryType
         cmp #LocationTypeCastle
         beq _E67F
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E67F
@@ -17905,24 +18056,24 @@
         jsl rlGetFactionRelation
         cmp #AllegianceEnemy
         beq _E694
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E694
         lda wAIUnknown7E2010
         and #$00FF
         bne _E6A1
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E6A1
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
         ; 85/E6A5
 
-      rlUnknown85E6A5 ; 85/E6A5
+      rsUnitMenuCheckDismount ; 85/E6A5
 
         ; Found by tools/sweep.py.
         .al
@@ -17930,11 +18081,13 @@
         .autsiz
         .databank ?
 
+        ; Personal skill bit 3 of byte 1, the class has ClassSkillDismount, and the unit is mounted.
+
         jsl rlGetSelectedUnitSkills
         lda lRoutineVariable,b
         bit #$0008
         bne _E6B5
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E6B5
@@ -17942,18 +18095,18 @@
         jsl rlGetClassSkills
         bit #$0400
         bne _E6C6
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E6C6
         jsl rlGetSelectedUnitStates
-        bit #UnitState1000
+        bit #UnitStateDismounted
         beq _E6D3
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E6D3
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
@@ -17967,7 +18120,7 @@
       .al
       .xl
 
-      rlUnknown85E6D7 ; 85/E6D7
+      rsUnitMenuCheckMount ; 85/E6D7
 
         ; Found by tools/sweep.py.
         .al
@@ -17975,14 +18128,16 @@
         .autsiz
         .databank ?
 
+        ; The unit is dismounted (UnitStateDismounted).
+
         jsl rlGetSelectedUnitStates
-        bit #UnitState1000
+        bit #UnitStateDismounted
         bne _E6E4
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E6E4
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
@@ -17996,7 +18151,7 @@
       .al
       .xl
 
-      rlUnknown85E6E8 ; 85/E6E8
+      rsUnitMenuCheckReturnSkill ; 85/E6E8
 
         ; Found by tools/sweep.py.
         .al
@@ -18004,11 +18159,13 @@
         .autsiz
         .databank ?
 
+        ; Not mode 2 or $0008, not at its own castle, not guarding a castle, and the unit or an item has Return.
+
         ldx aProcSystem.wOffset,b
         lda aProcSystem.aBody7,b,x
         cmp #$0002
         bne _E6F7
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E6F7
@@ -18018,45 +18175,45 @@
         jsl rlGetFactionSlotLocationID
         cmp wR0
         bne _E70D
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E70D
         lda wMapStateFlags,b
         bit #$0008
         beq _E719
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E719
         jsl rlGetSelectedUnitStates
         bit #UnitStateGuardingCastle
         beq _E726
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E726
         lda #SkillIDReturn
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _E733
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
 
         _E733
         lda #SkillIDReturn
         jsl rlCheckIfInventoryItemsHaveSpecifiedSkill
         bcc _E740
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
 
         _E740
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
         .databank 0
 
         ; 85/E744
 
-      rlUnknown85E744 ; 85/E744
+      rsUnitMenuCheckDance ; 85/E744
 
         ; Found by tools/sweep.py.
         .al
@@ -18064,24 +18221,26 @@
         .autsiz
         .databank ?
 
+        ; Not after acting, not in canto, the unit has Dance, and a unit that has moved is adjacent (target filter 7).
+
         lda wMapStateFlags,b
         bit #$0008
         beq _E750
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E750
         jsl rlGetSelectedUnitStates
         bit #UnitStateCanto
         beq _E75D
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E75D
         lda #SkillIDDance
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _E76A
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E76A
@@ -18094,11 +18253,11 @@
         jsl rlFindTargetsInRange
         ora #$0000
         bne _E786
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E786
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
@@ -18112,7 +18271,7 @@
       .al
       .xl
 
-      rlUnknown85E78A ; 85/E78A
+      rsUnitMenuCheckHelp ; 85/E78A
 
         ; Found by tools/sweep.py.
         .al
@@ -18120,10 +18279,12 @@
         .autsiz
         .databank ?
 
+        ; Not after acting, and a civilian or child adjacent (target filter 5).
+
         lda wMapStateFlags,b
         bit #$0008
         beq _E796
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E796
@@ -18135,11 +18296,11 @@
         jsl rlFindTargetsInRange
         ora #$0000
         bne _E7AF
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E7AF
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
@@ -18153,7 +18314,7 @@
       .al
       .xl
 
-      rlUnknown85E7B3 ; 85/E7B3
+      rsUnitMenuCheckGiveGoldToArmy ; 85/E7B3
 
         ; Found by tools/sweep.py.
         .al
@@ -18161,24 +18322,26 @@
         .autsiz
         .databank ?
 
+        ; A unit with Steal and gold, next to an army member under the gold cap (target filter $0A).
+
         lda wMapStateFlags,b
         bit #$0008
         beq _E7BF
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E7BF
         lda #SkillIDSteal
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcs _E7CC
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E7CC
         jsl rlGetSelectedUnitMoney
         ora #$0000
         bne _E7D9
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E7D9
@@ -18190,17 +18353,17 @@
         jsl rlFindTargetsInRange
         ora #$0000
         bne _E7F2
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E7F2
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
         ; 85/E7F6
 
-      rlUnknown85E7F6 ; 85/E7F6
+      rsUnitMenuCheckGiveGoldToLover ; 85/E7F6
 
         ; Found by tools/sweep.py.
         .al
@@ -18208,24 +18371,26 @@
         .autsiz
         .databank ?
 
+        ; A unit without Steal and with gold, next to its lover under the gold cap (target filter $0B).
+
         lda wMapStateFlags,b
         bit #$0008
         beq _E802
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E802
         lda #SkillIDSteal
         jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
         bcc _E80F
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E80F
         jsl rlGetSelectedUnitMoney
         ora #$0000
         bne _E81C
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E81C
@@ -18237,11 +18402,11 @@
         jsl rlFindTargetsInRange
         ora #$0000
         bne _E835
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E835
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
@@ -18255,7 +18420,7 @@
       .al
       .xl
 
-      rlUnknown85E839 ; 85/E839
+      rsUnitMenuCheckTalkHere ; 85/E839
 
         ; Found by tools/sweep.py.
         .al
@@ -18263,24 +18428,26 @@
         .autsiz
         .databank ?
 
+        ; Not after acting ($0008) unless in canto; rlUnknown84B9A3 set.
+
         jsl rlGetSelectedUnitStates
         bit #UnitStateCanto
         bne _E84E
         lda wMapStateFlags,b
         bit #$0008
         beq _E84E
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E84E
         clc
         jsl rlUnknown84B9A3
         bcs _E859
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _E859
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
@@ -18294,12 +18461,14 @@
       .al
       .xl
 
-      rlUnknown85E85D ; 85/E85D
+      rlOpenUnitMenu ; 85/E85D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Opens procUnitMenu with the mode in wMapStateFlags: 0, 1 (bit 3 set) or 2 (bit 4 set). Not while bit 5 of wUnknown000D79 is set.
 
         phb
         php
@@ -18328,9 +18497,9 @@
 
         _E883
         sta aProcSystem.wInput0,b
-        lda #(`procUnknown85E1CC)<<8
+        lda #(`procUnitMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85E1CC
+        lda #<>procUnitMenu
         sta lR44
         jsl rlProcEngineCreateProc
 
@@ -18352,11 +18521,13 @@
       .al
       .xl
 
-      rlUnknown85E897 ; 85/E897
+      rlClearUnitMenuModeFlags ; 85/E897
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears bits 3 and 4 of wMapStateFlags and closes the map windows (rlUnknown85C0D5).
 
         phb
         php
@@ -18381,12 +18552,14 @@
       .al
       .xl
 
-      rlUnknown85E8A8 ; 85/E8A8
+      rlOpenUnitMenuMode1 ; 85/E8A8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bit 3 of wMapStateFlags and opens procUnitMenu in mode 1; aUnknown81AFAE runs it after rlUnknown84D4A2 (a player unit ending its action at its home castle).
 
         phb
         php
@@ -18397,9 +18570,9 @@
         tsb wMapStateFlags,b
         lda #$0001
         sta aProcSystem.wInput0,b
-        lda #(`procUnknown85E1CC)<<8
+        lda #(`procUnitMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85E1CC
+        lda #<>procUnitMenu
         sta lR44
         jsl rlProcEngineCreateProc
         plp
@@ -18411,12 +18584,14 @@
 
         ; 85/E8C9
 
-      rlUnknown85E8C9 ; 85/E8C9
+      rlOpenUnitMenuMode2 ; 85/E8C9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bit 4 of wMapStateFlags and opens procUnitMenu in mode 2; aUnknown81AFAE runs it after rlUnknown84D483 (from the guard command's handler).
 
         phb
         php
@@ -18427,9 +18602,9 @@
         tsb wMapStateFlags,b
         lda #$0002
         sta aProcSystem.wInput0,b
-        lda #(`procUnknown85E1CC)<<8
+        lda #(`procUnitMenu)<<8
         sta lR44+1
-        lda #<>procUnknown85E1CC
+        lda #<>procUnitMenu
         sta lR44
         jsl rlProcEngineCreateProc
         plp
@@ -18449,12 +18624,14 @@
       .al
       .xl
 
-      rlUnknown85E8EA ; 85/E8EA
+      rlUseItemFromMap ; 85/E8EA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The active unit uses the item in wSelectedInventorySlot (rlUnknown84B32B).
 
         phx
         ldx wActiveUnitDeploymentOffset,b
@@ -18476,13 +18653,15 @@
       .al
       .xl
 
-      rlUnknown85E8FB ; 85/E8FB
+      rlDiscardItemFromMap ; 85/E8FB
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing in the build reaches this. The active unit discards the item in wSelectedInventorySlot.
 
         phx
         ldx wActiveUnitDeploymentOffset,b
@@ -18497,6 +18676,40 @@
 
         ; 85/E910
 
+      aItemUseMenuOptionUse ; 85/E910
+
+        .long rlUseItemFromMap
+        .word $0101
+        .enc "SJIS"
+        .text "　つかう\n"
+        .enc "none"
+
+      aItemUseMenuOptionDiscard ; 85/E91F
+
+        .long rlDiscardItemFromMap
+        .word $0101
+        .enc "SJIS"
+        .text "　すてる\n"
+        .enc "none"
+
+      aItemUseMenuOptionList ; 85/E92E
+
+        .word 0
+        .byte 2, 2
+        .byte 1, 1
+        .long aItemUseMenuOptionUse
+        .byte 1, 3
+        .long aItemUseMenuOptionDiscard
+
+      aItemUseMenuTilemapData ; 85/E93C
+
+        .structMapMenuTilemapData 9, 6, aBG3TilemapBuffer, 0, $7FCD4A
+
+      aItemUseMenuData ; 85/E945
+
+        .long 0, 0, aItemUseMenuTilemapData
+        .byte 2, 12, 10
+
     .endsection Unsorted85E8FBSection
 
 
@@ -18505,9 +18718,12 @@
       .al
       .xl
 
-      procUnknown85E951 ; 85/E951
+      procItemUseMenu ; 85/E951
 
-        .structProcInfo "PW", rlProcUnknown85E1CCInit, rlUnknown85E960, aProcUnknown85DDDBCode
+        .structProcInfo "PW", rlProcUnitMenuInit, rlProcItemUseMenuSetUp, aProcListMenuCode
+        .long aItemUseMenuData
+        .byte 1
+        .long aItemUseMenuOptionList
 
     .endsection Unsorted85E951Section
 
@@ -18517,19 +18733,81 @@
       .al
       .xl
 
-      rlUnknown85E960 ; 85/E960
+      rlProcItemUseMenuSetUp ; 85/E960
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown8583DA
-        lda #<>rlUnknown85DE34
+        jsl rlListMenuProcSetUp
+        lda #<>rlMainMapMenuProcCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
         .databank 0
+
+        ; 85/E96B
+
+      rlCastleStaffMenuInside ; 85/E96B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Opens the item list on the staves for units in the castle ($7E2028).
+
+        lda wSelectedUnitDataRAMPointer,b
+        sta aProcSystem.wInput0,b
+        lda #$2028
+        sta aProcSystem.wInput1,b
+        lda #(`procUnknown859281)<<8
+        sta lR44+1
+        lda #<>procUnknown859281
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+      rlCastleStaffMenuOutside ; 85/E986
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Opens the item list on the staves for units on the map ($7E2008).
+
+        lda wSelectedUnitDataRAMPointer,b
+        sta aProcSystem.wInput0,b
+        lda #$2008
+        sta aProcSystem.wInput1,b
+        lda #(`procUnknown859281)<<8
+        sta lR44+1
+        lda #<>procUnknown859281
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+      aCastleStaffMenuOptionInside ; 85/E9A1
+
+        .long rlCastleStaffMenuInside
+        .word $0101
+        .enc "SJIS"
+        .text "　じょうない\n"
+        .enc "none"
+
+      aCastleStaffMenuOptionOutside ; 85/E9B4
+
+        .long rlCastleStaffMenuOutside
+        .word $0101
+        .enc "SJIS"
+        .text "　じょうがい\n"
+        .enc "none"
 
         ; 85/E96B
 
@@ -18541,9 +18819,12 @@
       .al
       .xl
 
-      procUnknown85E9C7 ; 85/E9C7
+      procCastleStaffMenu ; 85/E9C7
 
-        .structProcInfo "PW", rlProcUnknown85E1CCInit, rlUnknown85E9D6, aProcUnknown85DDDBCode
+        .structProcInfo "PW", rlProcUnitMenuInit, rlProcCastleStaffMenuSetUp, aProcListMenuCode
+        .long aUnitMenuData
+        .byte 1
+        .long aUnitMenuOptionListTemplate
 
     .endsection Unsorted85E9C7Section
 
@@ -18553,23 +18834,25 @@
       .al
       .xl
 
-      rlUnknown85E9D6 ; 85/E9D6
+      rlProcCastleStaffMenuSetUp ; 85/E9D6
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Like rlProcUnitMenuSetUp with two commands (aUnknown85EA3A): the staff lists at $7E2008 and $7E2028.
+
         lda #$0009
         jsl rlPlaySoundEffect
         lda aProcSystem.aHeaderTypeOffset,b,x
         tay
         jsl rlLoadMapMenuDataFromProc
-        jsl rlUnknown8584AC
+        jsl rlListMenuProcPushOptions
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda #$20FF
-        sta wUnknown053C,b
+        sta wMapMenuClearTile,b
         lda #$0001
         sta wMenuOptionX,b
         sta wMenuOptionY,b
@@ -18582,11 +18865,11 @@
         jsr (aUnknown85EA3A,x)
         plx
         bcc _EA1C
-        lda #$85EA
+        lda #aCastleStaffMenuOptions >> 8
         sta lMenuOptionPointer+1,b
-        lda $EA3E,b,x
+        lda <>aCastleStaffMenuOptions,b,x
         sta lMenuOptionPointer,b
-        jsr rsUnknown85E332
+        jsr rsUnitMenuAddOption
 
         _EA1C
         dec x
@@ -18599,8 +18882,8 @@
         xba
         ora #$0009
         jsl rlSetMapMenuTilemapArea
-        jsl rlUnknown85856E
-        lda #<>rlUnknown8583F8
+        jsl rlDrawMenuOptions
+        lda #<>rlListMenuProcHandleInput
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -18618,9 +18901,14 @@
 
       aUnknown85EA3A ; 85/EA3A
 
-        ; Jump table of rlUnknown85E9D6.
+        ; Jump table of rlProcCastleStaffMenuSetUp.
         .word <>rlUnknown85EA42
         .word <>rlUnknown85EA53
+
+      aCastleStaffMenuOptions ; 85/EA3E
+
+        .word <>aCastleStaffMenuOptionOutside
+        .word <>aCastleStaffMenuOptionInside
 
     .endsection Table85EA3ASection
 
@@ -18640,11 +18928,11 @@
         lda wAIGroupLeaderFieldMovement
         and #$00FF
         bne _EA4F
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _EA4F
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
@@ -18668,11 +18956,11 @@
         lda $7E2028
         and #$00FF
         bne _EA60
-        jml rsUnknown85E547
+        jml rsUnitMenuCheckFail
 
 
         _EA60
-        jml rsUnknown85E545
+        jml rsUnitMenuCheckPass
 
         .databank 0
 
