@@ -993,11 +993,11 @@
         .autsiz
         .databank ?
 
-        ; Step $01: back to the map, or to the castle screen if the menu was opened from there (bit 5 of wUnknown000D79).
+        ; Step $01: back to the map, or to the castle screen if the menu was opened from there (bit 5 of wChapterFlags).
 
         lda #OPTIONS_MENU_STEP_WAIT
         sta wGameStateStep,b
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _ECAF
         lda #$0000

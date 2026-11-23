@@ -2,7 +2,7 @@
 ; dots, coloured by terrain (aMinimapTerrainColors) and by army for the units,
 ; with a box showing the visible part. While it is open (bit 5 of wMapSystemFlags)
 ; rlMinimapStep scrolls the map under it. The Warp staff uses it to choose a
-; castle (bit 11 of wUnknown000D79): the D-pad then steps through the player's
+; castle (bit 11 of wChapterFlags): the D-pad then steps through the player's
 ; castles. "MC" closes it. Bank $88.
 
 
@@ -172,7 +172,7 @@
         sta aProcSystem.aBody2,b,x
         lda #$0019
         jsl rlPlaySoundEffect
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0800
         beq _946A
         jsr rsMinimapShowWarpCastle
@@ -531,7 +531,7 @@
         .autsiz
         .databank ?
 
-        ; Runs while the minimap is open (bit 5 of wMapSystemFlags). The D-pad scrolls the map under it, B or Start closes it, holding R, X, A or Y makes it see-through and L jumps to the home castle. When choosing a warp destination (bit 11 of wUnknown000D79) the D-pad picks a castle instead (rsMinimapChooseWarpCastle).
+        ; Runs while the minimap is open (bit 5 of wMapSystemFlags). The D-pad scrolls the map under it, B or Start closes it, holding R, X, A or Y makes it see-through and L jumps to the home castle. When choosing a warp destination (bit 11 of wChapterFlags) the D-pad picks a castle instead (rsMinimapChooseWarpCastle).
 
         lda #(`procMinimap)<<8
         sta lR44+1
@@ -553,7 +553,7 @@
 
 
         _9767
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0800
         beq _9773
         jml _9841
@@ -1400,7 +1400,7 @@
         lsr a
         lsr a
         sta wR11
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0800
         bne _9CDF
         jsl rlGetTileScreenPixelPosition
@@ -1585,7 +1585,7 @@
         lda #$0020
         trb wMapSystemFlags,b
         jsl rlProcEngineFreeProc
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0800
         beq _9E0B
         lda wMapSystemFlags,b
@@ -1606,7 +1606,7 @@
         bne _9E0C
         jsl rlRunMapAction
         lda #$0800
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         lda #$0008
         tsb wMapSystemFlags,b
         rtl
@@ -1614,7 +1614,7 @@
 
         _9DF3
         lda #$0800
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         lda wMapReturnFlags,b
         bit #MAP_RETURN_CASTLE_GRID_STAFF
         bne _9E34
@@ -1641,7 +1641,7 @@
         sta wRoutineVariable1,b
         jsl rlBuildCastleActionRounds
         lda #$0800
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
 
         _9E34
         stz wCastleCursorState,b

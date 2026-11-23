@@ -6905,7 +6905,7 @@
         jsl rlUnitWindowSaveListOrder
         lda wGameStateStep,b
         sta wUnitWindowPage
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _A9AD
         sep #$20
@@ -7320,7 +7320,7 @@
         .autsiz
         .databank ?
 
-        ; B uses this instead of rlUnitWindowCloseToMap when bit 5 of wUnknown000D79 is set: loads the event data of faction slot 0's location, builds the dead character list and installs rsOpenCastleScreen. Where that returns to is not known yet.
+        ; B uses this instead of rlUnitWindowCloseToMap when bit 5 of wChapterFlags is set: loads the event data of faction slot 0's location, builds the dead character list and installs rsOpenCastleScreen. Where that returns to is not known yet.
 
         jsl rlRestoreDeploymentMapSprites
         lda #$0000

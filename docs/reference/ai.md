@@ -19,7 +19,7 @@ Data: [include/AI.h](../../include/AI.h); RAM `$0E7B`-`$0EA5` (`bUnknown000E7B`,
 
 ## Control flow
 
-`rlRunAIEngineCycle` is called every frame from the map's main loop (`rsMapMainLoop`), not from the interrupt. It does nothing unless the chapter map is up (`wGameStateRoutine1` is `GAMESTATE_MAP_STEP`, step not 3 or 5), no event is running (`wUnknown00171A` is 0), and the cycle is enabled (bit `$40` of `bUnknown000E7B`, set by `rlEnableAIEngineCycle` for a non-player phase). Then it runs one step of a small state machine, `wAIEngineCycleType`, from `aAIEngineCycleRoutines`:
+`rlRunAIEngineCycle` is called every frame from the map's main loop (`rsMapMainLoop`), not from the interrupt. It does nothing unless the chapter map is up (`wGameStateRoutine1` is `GAMESTATE_MAP_STEP`, step not 3 or 5), no event is running (`wEventEngineFlags` is 0), and the cycle is enabled (bit `$40` of `bUnknown000E7B`, set by `rlEnableAIEngineCycle` for a non-player phase). Then it runs one step of a small state machine, `wAIEngineCycleType`, from `aAIEngineCycleRoutines`:
 
 | Cycle | Routine | Does |
 |---|---|---|

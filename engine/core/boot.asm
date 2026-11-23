@@ -463,7 +463,7 @@
         lda #$00C0
         jsl rlQueueSoundCommand
         jsl rlUnknown9BFBC0
-        jsl rlUnknown81A85C
+        jsl rlResetChapterProgress
         lda #GAMESTATE_OPENING_LOGO_UPKEEP
         sta wGameStateRoutine2,b
         lda #GAMESTATE_OPENING_LOGO_SETUP

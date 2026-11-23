@@ -210,7 +210,7 @@
             plx
             bcs _End
 
-              jsr rsUnknown818DA8
+              jsr rsStepMovingMapSprite
 
         _End
         rtl
@@ -228,7 +228,7 @@
       aASMapSpriteCode ; 81/89E0
 
         ; Active sprite code for map sprites (asMapSprite). Command $0F
-        ; points the code back at itself and calls rlUnknown8189F3, so this
+        ; points the code back at itself and calls rlDrawMovingMapSprite, so this
         ; one command runs every frame.
 
         .byte $0F
@@ -249,7 +249,7 @@
         sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #1
         sta aActiveSpriteSystem.aFrameTimer,b,x
-        jsl rlUnknown8189F3
+        jsl rlDrawMovingMapSprite
         pla
         rts
 
@@ -346,18 +346,20 @@
 
         .databank 0
 
-      rsUnknown818E40 ; 81/8E40
+      rsCameraFollowMovingMapSprite ; 81/8E40
 
         .al
         .autsiz
         .databank ?
+
+        ; Scrolls the camera in the event mover's direction at its speed (wR5), unless rsCheckMovingMapSpriteInsideMargins says it need not.
 
         lda wR5
         sta wMapPixelScrollDistance,b
         sta wMapScrollSpeed,b
         lda aActiveSpriteSystem.aUnknown001300,b,y
         jsr rsGetMapScrollDirectionIdentifierFromCommand
-        jsr rsUnknown818E58
+        jsr rsCheckMovingMapSpriteInsideMargins
         bcs +
 
           jsl rlUnknown819305
@@ -367,11 +369,13 @@
 
         .databank 0
 
-      rsUnknown818E58 ; 81/8E58
+      rsCheckMovingMapSpriteInsideMargins ; 81/8E58
 
         .al
         .autsiz
         .databank ?
+
+        ; Returns SEC when the camera need not follow the event mover: it is off screen, or it has not yet reached the margin it is heading for (direction A in joypad bits: $0100 right, $0200 left, $0400 down, $0800 up).
 
         pha
         lda aActiveSpriteSystem.aUnknown0012C0,b,y
@@ -397,28 +401,28 @@
         bit #$0200
         beq +
 
-          jsr rsUnknown818EAB
+          jsr rsCheckSpriteRightOfLeftMargin
           bcs _SEC
 
         +
         bit #$0100
         beq +
 
-          jsr rsUnknown818EB3
+          jsr rsCheckSpriteLeftOfRightMargin
           bcs _SEC
 
         +
         bit #$0800
         beq +
 
-          jsr rsUnknown818EBB
+          jsr rsCheckSpriteBelowTopMargin
           bcs _SEC
 
         +
         bit #$0400
         beq +
 
-          jsr rsUnknown818EC3
+          jsr rsCheckSpriteAboveBottomMargin
           bcs _SEC
 
         +
@@ -838,7 +842,7 @@
         jsl rlGetVictoryThemeIfAllEnemiesDead
         bcc +
 
-          sta $0DAB,b
+          sta wPhaseSongID,b
 
         +
         rtl
@@ -867,7 +871,7 @@
           jsl rlGetAndRunChapterMapEventConditions
           bcs +
 
-            jsl rlUnknown81AB26
+            jsl rlResumePhaseMusic
 
         +
         rtl
@@ -884,7 +888,7 @@
         bne +
 
           stz wUnitRelocationDeploymentOffset,b
-          lda #5
+          lda #UNIT_RELOCATION_SEIZE_POPUP
           sta wUnitRelocationType,b
           lda aProcSystem.aBody0,b,x
           and #$00FF
@@ -1120,7 +1124,7 @@
         .databank ?
 
         jsl rlProcEngineFreeProc
-        jsl rlUnknown81AB3F
+        jsl rlCheckVictoryTheme
 
         lda #GAMESTATE_MAP_STEP
         sta wGameStateRoutine1,b
@@ -1722,7 +1726,7 @@
         and #~$8000
         sta aActiveSpriteSystem.aUnknown0012E0,b,y
 
-        jsl rlUnknown818D58
+        jsl rlStopMovingMapSpriteSound
         ply
         sec
         rtl
@@ -1746,7 +1750,7 @@
         lda #0
         sta aActiveSpriteSystem.aTypeOffset,b,y
 
-        jsl rlUnknown818D58
+        jsl rlStopMovingMapSpriteSound
         ply
         sec
         rtl
@@ -5641,5 +5645,319 @@
         ; 88/E00E
 
     .endsection Unsorted88DF8CSection
+
+
+    .section Unsorted8189F3Section
+
+      .al
+      .xl
+
+      rlDrawMovingMapSprite ; 81/89F3
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Active sprite command $0F's callback for map sprites: when bit 14 of the sprite's flags is set, animates the event mover in aMovingMapSprites.wOffset and, if it is on screen, adds its position less the camera to wR0/wR1 and pushes its sprite array (wUnknown001804) to OAM.
+
+        phb
+        lda aActiveSpriteSystem.aUnknown0012E0,b,x
+        bit #$4000
+        beq _End
+
+          ldx aMovingMapSprites.wOffset,b
+          lda aMovingMapSprites.wActiveSpriteOffset,b,x
+          cmp #$FFFF
+          beq _End
+
+            jsl rlAnimateMovingMapSprite
+
+            lda aMovingMapSprites.wXPixelPosition,b,x
+            sec
+            sbc wMapScrollXPixels,b
+            cmp #$FFC0
+            bcs +
+
+              cmp #$0140
+              bcs _End
+
+            +
+            clc
+            adc wR0
+            sta wR0
+
+            lda aMovingMapSprites.wYPixelPosition,b,x
+            sec
+            sbc wMapScrollYPixels,b
+            cmp #$FFF0
+            bcs +
+
+              cmp #$0100
+              bcs _End
+
+            +
+            clc
+            adc wR1
+            sta wR1
+            lda aMovingMapSprites.wUnknown001804,b,x
+            sta wR5
+            jsl rlPushToOAMBuffer
+
+        _End
+        plb
+        rtl
+
+        .databank 0
+
+        ; 81/8A42
+
+    .endsection Unsorted8189F3Section
+
+
+    .section Unsorted818D58Section
+
+      .al
+      .xl
+
+      rlStopMovingMapSpriteSound ; 81/8D58
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Clears the high byte of the event mover's wMovingSound and stops the sound it names: 1 sound channel 0, anything else channel 1.
+
+
+        php
+        phx
+        phy
+        lda aMovingMapSprites.wMovingSound,b,x
+        pha
+        and #$00FF
+        sta aMovingMapSprites.wMovingSound,b,x
+        pla
+        and #$FF00
+        beq _End
+
+          xba
+          dec a
+          bne +
+
+          jsr rsStopMapSpriteSoundChannel0
+          bra _End
+
+          +
+          jsr rsStopMapSpriteSoundChannel1
+
+        _End
+        ply
+        plx
+        plp
+        rtl
+
+        .databank 0
+
+      rlStopMapSpriteSounds ; 81/8D7B
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Stops the event movers' sounds on both channels (when an event ends).
+
+        jsr rsStopMapSpriteSoundChannel0
+        jsr rsStopMapSpriteSoundChannel1
+        rtl
+
+        .databank 0
+
+      rsStopMapSpriteSoundChannel0 ; 81/8D82
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Fade mode $10 (stop) on channel 0, then rlUpdateMapSpriteSoundPanning.
+
+        php
+        sep #$20
+        lda #$10
+        sta aSoundChannelFadeState.bMode,b
+        rep #$20
+        ldx #0
+        jsl rlUpdateMapSpriteSoundPanning
+        plp
+        rts
+
+        .databank 0
+
+      rsStopMapSpriteSoundChannel1 ; 81/8D95
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Fade mode $10 (stop) on channel 1, then rlUpdateMapSpriteSoundPanning.
+
+        php
+        sep #$20
+        lda #$10
+        sta aSoundChannelFadeState2,b
+        rep #$20
+        ldx #3
+        jsl rlUpdateMapSpriteSoundPanning
+        plp
+        rts
+
+        .databank 0
+
+      rsStepMovingMapSprite ; 81/8DA8
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; One frame of an event mover's walk (sprite Y): counts down its step timer, adds its speed (whole and fractional parts) and moves it in its direction (aMovingMapSpritePositionRoutines); with bit 0 of its flags set the camera follows (rsCameraFollowMovingMapSprite).
+
+        lda aActiveSpriteSystem.aUnknown001320,b,y
+        dec a
+        sta aActiveSpriteSystem.aUnknown001320,b,y
+
+        lda aActiveSpriteSystem.aUnknown001380,b,y
+        ora aActiveSpriteSystem.aUnknown0013A0,b,y
+        beq _End2
+
+          phx
+          lda aActiveSpriteSystem.aUnknown001340,b,y
+          clc
+          adc aActiveSpriteSystem.aUnknown001380,b,y
+          sta aActiveSpriteSystem.aUnknown001340,b,y
+          rol a
+          and #$0001
+          sta wR5
+          ror a
+          clc
+          lda aActiveSpriteSystem.aUnknown0013A0,b,y
+          adc wR5
+          sta wR5
+
+          lda aActiveSpriteSystem.aUnknown001300,b,y
+          bit #$0080
+          bne _End
+
+            dec a
+            sta wR4
+
+            lda wR4
+            cmp #10
+            bmi +
+
+              -
+              bra -
+
+            +
+            asl a
+            tax
+            jsr (aMovingMapSpritePositionRoutines,x)
+
+            lda aActiveSpriteSystem.aUnknown0012E0,b,y
+            bit #$0001
+            beq _End
+
+              jsr rsCameraFollowMovingMapSprite
+
+          _End
+          plx
+
+        _End2
+        rts
+
+        .databank 0
+
+    .endsection Unsorted818D58Section
+
+
+    .section Unsorted818EABSection
+
+      .al
+      .xl
+
+      rsCheckSpriteRightOfLeftMargin ; 81/8EAB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; SEC if wR0 (screen X) >= $60.
+
+        pha
+        lda wR0
+        cmp #$0060
+        pla
+        rts
+
+        .databank 0
+
+        ; 81/8EB3
+
+      rsCheckSpriteLeftOfRightMargin ; 81/8EB3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; SEC if wR0 (screen X) <= $80.
+
+        pha
+        lda #$0080
+        cmp wR0
+        pla
+        rts
+
+        .databank 0
+
+        ; 81/8EBB
+
+      rsCheckSpriteBelowTopMargin ; 81/8EBB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; SEC if wR1 (screen Y) >= $60.
+
+        pha
+        lda wR1
+        cmp #$0060
+        pla
+        rts
+
+        .databank 0
+
+        ; 81/8EC3
+
+      rsCheckSpriteAboveBottomMargin ; 81/8EC3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; SEC if wR1 (screen Y) <= $80.
+
+        pha
+        lda #$0080
+        cmp wR1
+        pla
+        rts
+
+        .databank 0
+
+        ; 81/8ECB
+
+    .endsection Unsorted818EABSection
 
 

@@ -105,7 +105,7 @@ The camera scrolls in steps of `wMapScrollSpeed` pixels in a direction given as 
 
 Start opens it (`procMinimap`, "MG"): the map is drawn as 2x2-pixel dots, `$200` tiles a frame, coloured by terrain (`aMinimapTerrainColors`, closed villages 9) and by army for the units, then uploaded and shown with a flashing box for the visible part. While it is open the D-pad scrolls the map under it, holding R, X, A or Y makes it see-through, and B or Start closes it (`procMinimapClose`, "MC").
 
-The Warp staff uses the minimap to choose a destination: bit 11 of `wUnknown000D79` is set, and the D-pad then steps through the player's castles that are empty or the home castle (`rsMinimapShowWarpCastle`), showing each one's name; A chooses and B cancels.
+The Warp staff uses the minimap to choose a destination: bit 11 of `wChapterFlags` is set, and the D-pad then steps through the player's castles that are empty or the home castle (`rsMinimapShowWarpCastle`), showing each one's name; A chooses and B cancels.
 
 ## Returning to the map
 

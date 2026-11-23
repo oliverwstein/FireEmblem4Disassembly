@@ -57,7 +57,7 @@
     PAUSE 20
     YIELD
 
-    RUN_ASM rlUnknown81B1ED
+    RUN_ASM rlShowQueuedSeizePopUpUnused
     YIELD
 
     PAUSE 30

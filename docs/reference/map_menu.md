@@ -46,7 +46,7 @@ A list menu (`rlListMenuProcSetUp`, `rlListMenuProcHandleInput`) pushes an optio
 
 ## The main map menu
 
-Opened on the map with no unit chosen, `procMainMapMenu` offers ユニット (the unit window), アイテム (item window), データ (data window), スキル (skill window), コンフィグ (options), セーブ (save), ターンエンド (end the turn). Once a unit has acted this turn (bit 12 of `wUnknown000D79`) the menu is `procMainMapMenuNoSave`, without Save. Turn end sets bit 5 of `wMapStateFlags`. A ロード (load) option exists (`aMapMenuOptionLoad`) but is in neither list.
+Opened on the map with no unit chosen, `procMainMapMenu` offers ユニット (the unit window), アイテム (item window), データ (data window), スキル (skill window), コンフィグ (options), セーブ (save), ターンエンド (end the turn). Once a unit has acted this turn (bit 12 of `wChapterFlags`) the menu is `procMainMapMenuNoSave`, without Save. Turn end sets bit 5 of `wMapStateFlags`. A ロード (load) option exists (`aMapMenuOptionLoad`) but is in neither list.
 
 ## The unit command menu
 

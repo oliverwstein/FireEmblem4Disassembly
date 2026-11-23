@@ -2674,14 +2674,14 @@
         .autsiz
         .databank ?
 
-        ; Opens procUnitMenu with the mode in wMapStateFlags: 0, 1 (bit 3 set) or 2 (bit 4 set). Not while bit 5 of wUnknown000D79 is set.
+        ; Opens procUnitMenu with the mode in wMapStateFlags: 0, 1 (bit 3 set) or 2 (bit 4 set). Not while bit 5 of wChapterFlags is set.
 
         phb
         php
         phk
         plb
         .databank $85
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _E894
         lda wMapStateFlags,b
@@ -2765,7 +2765,7 @@
         .autsiz
         .databank ?
 
-        ; Sets bit 3 of wMapStateFlags and opens procUnitMenu in mode 1; aUnknown81AFAE runs it after rlRequestUnitMenuMode1 (a player unit ending its action at its home castle).
+        ; Sets bit 3 of wMapStateFlags and opens procUnitMenu in mode 1; aQueuedUnitMenuOpeners runs it after rlRequestUnitMenuMode1 (a player unit ending its action at its home castle).
 
         phb
         php
@@ -2797,7 +2797,7 @@
         .autsiz
         .databank ?
 
-        ; Sets bit 4 of wMapStateFlags and opens procUnitMenu in mode 2; aUnknown81AFAE runs it after rlRequestUnitMenuMode2 (from the guard command's handler).
+        ; Sets bit 4 of wMapStateFlags and opens procUnitMenu in mode 2; aQueuedUnitMenuOpeners runs it after rlRequestUnitMenuMode2 (from the guard command's handler).
 
         phb
         php

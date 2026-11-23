@@ -283,7 +283,7 @@
         jsl rlGetSelectedUnitDeploymentOffset
         jsl rlDeployedUnitSetDefeated
 
-        lda #1
+        lda #UNIT_RELOCATION_ESCAPED
         sta wUnitRelocationType,b
 
         jsl rlGetSelectedUnitFactionSlot
@@ -703,7 +703,7 @@
         bcc +
 
           jsl rlGetSelectedUnitDeploymentOffset
-          sta wPhaseScratch000D89,b
+          sta wInventoryFullDeploymentOffset,b
 
         +
         plx
@@ -734,7 +734,7 @@
         jsl rlGetSelectedUnitDeploymentOffset
         jsl rlDeployedUnitSetDefeated
 
-        lda #2
+        lda #UNIT_RELOCATION_CAPTURED
         sta wUnitRelocationType,b
 
         lda #StatusCaptive
@@ -771,7 +771,7 @@
           sta aDeploymentTable._StateBuffer,x
           sta aDeploymentTable._State,x
 
-          lda wUnknown000D79,b
+          lda wChapterFlags,b
           bit #$0020
           bne +
 
@@ -893,7 +893,7 @@
               jsl rlUnsetCastleGuarded
 
         +
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0010
         beq _B916
 

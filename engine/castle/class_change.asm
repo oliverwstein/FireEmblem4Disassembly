@@ -59,7 +59,7 @@
         rep #$20
         lda #$003C
         sta wBattleSong
-        jsl rlUnknown81B368
+        jsl rlStartBattleScene
         plx
         plp
         plb

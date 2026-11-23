@@ -45,7 +45,7 @@
         jsl rlUnknown819166
         bcc _End
 
-          lda wUnknown000D79,b
+          lda wChapterFlags,b
           bit #$8000
           bne +
 
@@ -505,11 +505,11 @@
         .autsiz
         .databank ?
 
-        ; Wait for wUnknown00171A == 0 or Start press, play SFX $0A, fade music, switch on-cycle
+        ; Wait for wEventEngineFlags == 0 or Start press, play SFX $0A, fade music, switch on-cycle
 
         lda #$0200
         sta wEventProcBanks,b,x
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         beq _8888
         lda wJoy1New
         bit #$1000

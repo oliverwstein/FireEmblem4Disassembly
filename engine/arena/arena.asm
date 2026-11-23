@@ -1161,7 +1161,7 @@
         bcs _A0D5
         asl a
         sta wRoutineVariable1,b
-        jsl rlUnknown81B4C5
+        jsl rlGetChapterArenaOpponentsPointer
         ldx lR18
         sep #$20
         lda lR18+2

@@ -9,7 +9,8 @@
 ; is a 64x64 window around the unit (wMovementMapWindow* at $071C-$0722).
 ;
 ; rlRedrawVisibleMapTilemap and rlRedrawRangeOverlayTilemap rebuild the whole
-; screen at once. Bank $88.
+; screen at once. Bank $88. At the end, from bank $81, an IRQ (aMapRowUploadIRQ)
+; that does the upload in forced blank partway down the screen during some events.
 
 
     .section Unsorted888410Section
@@ -2239,4 +2240,64 @@
 
     .endsection Unsorted888F32Section
 
+
+    .section Table81B522Section
+
+      .al
+      .xl
+
+      aMapRowUploadIRQ ; 81/B522
+        .word $0068, $00D7, <>rlIRQUploadMapRowAndColumn, <>aMapRowUploadIRQNext
+
+    .endsection Table81B522Section
+
+
+    .section Unsorted81B52ASection
+
+      .al
+      .xl
+
+      rlIRQUploadMapRowAndColumn ; 81/B52A
+
+        ; Found through fe4.cdl.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; IRQ routine: waits for HBlank, forces blank, uploads the map row and column (rlUploadMapRowAndColumn) and restores the screen.
+
+        sep #$20
+
+        _B52C
+        lda $4212,b
+        bit #$40
+        beq _B52C
+        lda #$80
+        sta $2100,b
+        rep #$20
+        jsl rlUploadMapRowAndColumn
+        sep #$20
+        lda bBufferINIDISP
+        and #$80
+        sta $2100,b
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 81/B54A
+
+    .endsection Unsorted81B52ASection
+
+
+    .section Table81B54ASection
+
+      .al
+      .xl
+
+      aMapRowUploadIRQNext ; 81/B54A
+        .word <>rsIRQCodeHalt
+
+    .endsection Table81B54ASection
 

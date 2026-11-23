@@ -319,7 +319,7 @@
             bra _Loop
 
         _End
-        jsl rlUnknown81B15A
+        jsl rlApplyBufferedDeploymentStates
         plx
         plp
         plb

@@ -20,21 +20,21 @@
         sta $2100,b
         rep #$20
         jsl rlDMAPaletteAndOAMBuffer
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0200
         bne _AE92
         lda bDMAArrayFlag,b
         and #$00FF
         bne _AE92
         lda #$0008
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         jsl rlUploadMapAnimations
         bra _AE98
 
 
         _AE92
         lda #$0008
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
 
         _AE98
         jsl rlProcessDMAStructArray
@@ -52,7 +52,7 @@
         _AEC0
         jsl rlRunGameStateRoutines
         jsl rlRunVBlankHooks
-        jsl rlUnknown81B3A6
+        jsl rlRedrawDialogueBoxTilemaps
         jsl rlUnknown858728
         lda bUnknown000E7B,b
         bit #$0010
@@ -94,14 +94,14 @@
         lda wCurrentChapter,b
         jsl rlSetChapterEventDataPointerByID
         jsl rlApplySoundOption
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0100
         bne _AF33
         jsl rlResetUnitsForChapter
         lda wCurrentChapter,b
         jsl rlUnknown86C4C4
         stz wCurrentTurn,b
-        stz wSavedEventCycle,b
+        stz wSavedMapStep,b
         sep #$20
         stz wAreaRestrictionBitfield,b
         rep #$20
@@ -109,11 +109,11 @@
 
 
         _AF33
-        stz $0DAB,b
+        stz wPhaseSongID,b
         jsl rlUnknown86C4EB
         lda #$0007
-        sta wSavedEventCycle,b
-        jsl rlUnknown81A9D4
+        sta wSavedMapStep,b
+        jsl rlStartPhaseMusic
         jsl rlStepMusicScript
         jsl rlUnknown86C629
 
@@ -129,7 +129,7 @@
         lda #GAMESTATE_MAP_SETUP
         sta wGameStateRoutine1,b
         stz wGameStateStep,b
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         beq _AF89
         stz wGameStateRoutine1,b

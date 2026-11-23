@@ -1488,7 +1488,7 @@
         pla
         sta wSelectedUnitDataRAMPointer,b
         bcc _8B3C
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0800
         bne _8B22
         lda wCastleGridSavedSlot,b
@@ -1649,7 +1649,7 @@
         sta wCastleCursorState,b
         jsl rlCloseBattleForecast
         lda #$0800
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         lda #$0021
         jsl rlPlaySoundEffect
         rts

@@ -1058,7 +1058,7 @@
           sta aDeploymentTable._StateBuffer,x
 
           lda #$0004
-          tsb wUnknown000D79,b
+          tsb wChapterFlags,b
 
         +
         plx

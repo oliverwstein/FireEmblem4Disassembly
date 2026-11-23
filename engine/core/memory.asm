@@ -96,7 +96,7 @@
         .autsiz
         .databank ?
 
-        ; Set wMainLoopPointer to A, or save to wR26 and clear wUnknown00171A bit $0010
+        ; Set wMainLoopPointer to A, or save to wR26 and clear wEventEngineFlags bit $0010
 
         phb
         php
@@ -104,7 +104,7 @@
         plb
         pha
 
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         bit #$0010
         bne +
 
@@ -116,7 +116,7 @@
         pla
         sta wR26
         lda #$0010
-        trb wUnknown00171A,b
+        trb wEventEngineFlags,b
 
         +
         plp

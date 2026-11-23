@@ -142,7 +142,7 @@
     lda wActiveFactionSlot,b
     bne +
 
-      jsl rlUnknown81AB26
+      jsl rlResumePhaseMusic
 
       lda #(`procUnknown828AF2)<<8
       sta lR44+1

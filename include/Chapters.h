@@ -24,12 +24,12 @@
     TemporaryEventFlags   .fill len(bytes(%1 x 80)) ; $07
   .endstruct
 
-  structChapterEventData .struct LocationDataPointer, MapChangesPointer, Unknown1, TalkEventsPointer, Unknown3
+  structChapterEventData .struct LocationDataPointer, MapChangesPointer, ArenaOpponentsPointer, TalkEventsPointer, FactionPhaseFlagsPointer
     LocationDataPointer .word <>\LocationDataPointer  ; $00
     MapChangesPointer   .word <>\MapChangesPointer    ; $02
-    Unknown1            .word <>\Unknown1             ; $04
+    ArenaOpponentsPointer    .word <>\ArenaOpponentsPointer    ; $04 ; two pointers (melee, ranged) to opponent lists by arena level
     TalkEventsPointer   .word <>\TalkEventsPointer    ; $06
-    Unknown3            .word <>\Unknown3             ; $08
+    FactionPhaseFlagsPointer .word <>\FactionPhaseFlagsPointer ; $08 ; per army slot: chapter byte, event flag byte; the army takes a phase only once the flag is set ($FFFF: always)
   .endstruct
 
   structChapterLocationEntry .struct ID, NameID, Type, Coordinates

@@ -295,7 +295,7 @@
 
       aBattleTransitionHDMAInfo ; 87/C38C
 
-        ; Created by rlUnknown81B32C. Writes WH0 indirectly from the buffer at
+        ; Created by rlStartGameOverEvent. Writes WH0 indirectly from the buffer at
         ; $7E8B92, which rsBuildBattleTransitionWindow fills from aBattleTransitionShape.
         .structHDMAIndirectEntryInfo rlBattleTransitionHDMAInit, rlBattleTransitionHDMACycle, aBattleTransitionHDMACode, aBattleTransitionHDMATableEven, WH0, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode0), $7E
 

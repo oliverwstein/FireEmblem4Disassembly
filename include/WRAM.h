@@ -597,7 +597,7 @@
       ; $0002 = a unit is selected, or wMapReturnFlags or wMapActionMode is nonzero
       ; $0004 = wMapCursorState is not 0
       ; $0008 = map cursor / unit action HUD update
-      ; $0010 = an event is running (wUnknown00171A nonzero)
+      ; $0010 = an event is running (wEventEngineFlags nonzero)
       ; $0020 = the minimap is open
       ; $0040 = faction phase setup active
       ; $0080 = unit window / map menu open (rlHideMapWindows/D5)
@@ -889,22 +889,25 @@
 
   .virtual $000D79
 
-    wUnknown000D79 .word ?        ; $000D79
-      ; Bitfield:
-      ; $0001 = set during dialogue, set when building tilemap?
-      ; $0002 = set during dialogue
-      ; $0004 = unit state changed? awoke from sleep, enable canto, ungray unit, unhide unit
-      ; $0010 = checked for when someone died
-      ; $0020 = ViewingHomeCastleFlag
-      ; $0040 = checked in rlUnknown84CAA9, checked in rescue staff effect
-      ; $0080 = tested for to enable AI cycle, set in cycle 4, unset in cycle 6
-      ; $0200 = ?
-      ; $0400 = ?
-      ; $1000 = PlayerActedFlag, used to disable the map save command
-      ; $2000
-      ; $4000 = set when changing faction song?
-      ; $8000 = checked for during map scroll, reset after running location events
-    wSavedEventCycle .word ?      ; $000D7B ; saved event/turn cycle state
+    wChapterFlags .word ?        ; $000D79
+      ; Flags of the chapter in progress, cleared by rlResetChapterProgress and
+      ; rlAdvanceToNextChapter (rlMapSetup keeps only $4005). Bits:
+      ; $0001 = the dialogue boxes' tilemaps have been drawn (rlRedrawDialogueBoxTilemaps)
+      ; $0002 = a dialogue box changed: redraw their tilemaps next frame
+      ; $0004 = deployment states changed: copy the state buffers next frame (rlApplyBufferedDeploymentStates)
+      ; $0010 = set while a battle's rounds are built (engine/battle/battle.asm)
+      ; $0020 = the castle screen is open: relocations refresh its units, battles are type 3
+      ; $0040 = open the castle screen after the unit goes into the castle (rsRelocateIntoCastle)
+      ; $0080 = the AI queued an event for the unit about to act (rsRunQueuedAIUnitEvent)
+      ; $0100 = set by the map menu and bank $91; meaning unknown
+      ; $0200 = the map step does not move the cursor (rsMapStepPhase)
+      ; $0400 = the chapter has ended (rlSaveChapterTurncount); no seize popup
+      ; $0800 = the minimap is choosing a Warp destination
+      ; $1000 = a unit of the army acted this phase; disables the map save command
+      ; $2000 = the active unit has a canto move to make (rsResumeCantoMove)
+      ; $4000 = this chapter's first phase song has played (rlStartPhaseMusic)
+      ; $8000 = set with $2000 by rlCheckActiveUnitCanto and by bank $9E; cleared by rsRunActionEndedEvents
+    wSavedMapStep .word ?      ; $000D7B ; saved event/turn cycle state
     wUnknown000D7D .word ?        ; $000D7D ; set by rlRunEvents
 
   .endvirtual
@@ -919,9 +922,10 @@
     wUnitRelocationDeploymentOffset .word ? ; $000D7F
     wUnitRelocationType             .word ? ; $000D81
     wUnitRelocationLocationID       .word ? ; $000D83
-      ; A unit to be moved to a location after an action: rescue stores type 9 and
-      ; the player's castle, capture stores type 2 and the location where it
-      ; happened. rlUnknown81ADD8 acts on the type.
+      ; What the map step does next for a unit after an action (UNIT_RELOCATION_*
+      ; in include/Map.h): rlRunQueuedUnitRelocation runs it and sets the
+      ; deployment offset back to $FFFF. Rescue stores type 9 and the player's
+      ; castle, capture type 2 and the location where it happened.
 
   .endvirtual
 
@@ -929,15 +933,15 @@
 
     wDefeatedUnitDeploymentOffset .word ? ; $000D85
     wMapStateFlags .word ?                ; $000D87 ; bitfield:
-      ; $0003 = post-action dispatch index into aUnknown81AFAE
+      ; $0003 = post-action dispatch index into aQueuedUnitMenuOpeners
       ; $0004 = cursor hovering selectable unit/tile in rlGetMapMenuPosition
       ; $0008 = unit/action map menu open
       ; $0010 = secondary sub-menu open
       ; $0020 = AI/busy action lock blocking normal map menus
       ; $8000 = pending post-action handler dispatch
-    wPhaseScratch000D89 .word ?           ; $000D89 ; inventory-full & turn setup scratch
-    wPhaseScratch000D8B .word ?           ; $000D8B ; faction/castle deployment helper
-    wPhaseScratch000D8D .word ?           ; $000D8D ; phase state word
+    wInventoryFullDeploymentOffset .word ?           ; $000D89 ; inventory-full & turn setup scratch
+    wActionEndedDeploymentOffset .word ?           ; $000D8B ; faction/castle deployment helper
+    wVillageGoldPopUpAmount .word ?           ; $000D8D ; phase state word
 
   .endvirtual
 
@@ -949,8 +953,12 @@
 
   .endvirtual
 
-    ; .word ? ; $000DAB - phase music?
-    ; .word ? ; $000DAD ?
+  .virtual $000DAB
+
+    wPhaseSongID .word ?          ; $000DAB ; the active army's phase song (rlStartPhaseMusic)
+    wPhaseMusicFadeTimer .word ?  ; $000DAD ; rsMapStepFadeOutMusic: $FFFF start the fade, then frames left
+
+  .endvirtual
 
   ; The map battle HP windows' requests (engine/battle/map_battle_hud.asm): $4000 + n
   ; lose n HP, $0800 + n gain n HP, $1000 close, $0100 experience; the window sets
@@ -1195,8 +1203,11 @@
 
   .virtual $00171A
 
-    wUnknown00171A .word ? ; $00171A
-      ; Bitfield
+    wEventEngineFlags .word ? ; $00171A
+      ; Nonzero while an event script runs (rlStartEventScript sets 9). $0002 the
+      ; event waits for its procs, $0004 the event has procs (rlEventEngineCreateProc),
+      ; $0008 cleared when a script starts, $8000 the event is fading out. The map
+      ; step and many map routines do nothing while it is nonzero.
     wUnknown00171C .word ? ; $00171C
     wUnknown00171E .word ? ; $00171E
     wMapCurrentlyScrollingFlag .word ? ; $001720

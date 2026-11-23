@@ -1478,7 +1478,7 @@
         sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #1
         sta aActiveSpriteSystem.aFrameTimer,b,x
-        jsl rlUnknown8189F3
+        jsl rlDrawMovingMapSprite
         pla
         rts
 

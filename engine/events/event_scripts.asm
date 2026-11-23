@@ -78,7 +78,7 @@
         sta aMovingMapSprites.wState,b
 
         lda #8
-        trb wUnknown00171A,b
+        trb wEventEngineFlags,b
 
         plp
         jml rlRunEventCommand
@@ -137,7 +137,7 @@
         sta wEventProcOffsets,b,x
 
         lda #$0004
-        tsb wUnknown00171A,b
+        tsb wEventEngineFlags,b
 
         plp
         rtl
@@ -231,7 +231,7 @@
         .databank ?
 
         lda #$0002
-        tsb wUnknown00171A,b
+        tsb wEventEngineFlags,b
 
         ldx #(16 - 1) *2
         
@@ -267,7 +267,7 @@
 
         +
         lda #$0002
-        trb wUnknown00171A,b
+        trb wEventEngineFlags,b
         bra _Next
 
         .databank 0
@@ -455,18 +455,18 @@
         .autsiz
         .databank ?
 
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         bit #$0004
         beq _SEC
 
           jsr rsUnknown91A4C8
 
           lda #$0002
-          bit wUnknown00171A,b
+          bit wEventEngineFlags,b
           beq _CLC
 
             ora #$0004
-            trb wUnknown00171A,b
+            trb wEventEngineFlags,b
 
         _SEC
         sec
@@ -1020,7 +1020,7 @@
         ; RESTORE_PHASE_MUSIC
 
         phy
-        jsl rlUnknown81AB26
+        jsl rlResumePhaseMusic
 
         lda #(`procUnknown828AF2)<<8
         sta lR44+1
@@ -4370,7 +4370,7 @@
         phb
         phy
 
-        stz wSavedEventCycle,b
+        stz wSavedMapStep,b
         lda #1
         sta $1832,b
 
@@ -4393,7 +4393,7 @@
         jsl rlEventEngineCreateProc
 
         lda #$8000
-        tsb wUnknown00171A,b
+        tsb wEventEngineFlags,b
 
         lda #$0010
         tsb wMapSystemFlags,b
@@ -4714,9 +4714,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown81B522)<<8
+        lda #(`aMapRowUploadIRQ)<<8
         sta lR44+1
-        lda #<>aUnknown81B522
+        lda #<>aMapRowUploadIRQ
         sta lR44
         jsl rlUnknown82E0C6
         jsl rlUnknown82E08D
@@ -4844,7 +4844,7 @@
 
         lda #GAMESTATE_MAP_STEP
         sta wGameStateRoutine1,b
-        lda wSavedEventCycle,b
+        lda wSavedMapStep,b
         sta wGameStateStep,b
         jsr rsUnknown80B195
 
@@ -4923,7 +4923,7 @@
         .databank ?
 
         lda #$0020
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
 
         lda #(`aMapMenuRAMArea)<<8
         sta lR18+1
@@ -4942,19 +4942,19 @@
         cmp #2
         bcc _End
 
-          jsl rlUnknown81B088
+          jsl rlHandleDefeatedUnit
           bcc +
 
             jsl rlGetVictoryThemeIfAllEnemiesDead
             bcc +
 
-              sta $0DAB,b
+              sta wPhaseSongID,b
 
           +
-          lda wUnknown00171A,b
+          lda wEventEngineFlags,b
           bne _End
 
-            jsl rlUnknown81AB26
+            jsl rlResumePhaseMusic
             jsl rlStepMusicScript
 
         _End
@@ -7016,13 +7016,13 @@
           bit #$0020
           bne _End
 
-            lda wUnknown000D79,b
+            lda wChapterFlags,b
             bit #$0001
             beq +
 
               jsr rsUnknown858D18
               lda #$0001
-              trb wUnknown000D79,b
+              trb wChapterFlags,b
 
             +
             jsl rlMapMenuVBlankUpload

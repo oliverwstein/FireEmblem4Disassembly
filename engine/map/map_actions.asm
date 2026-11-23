@@ -436,7 +436,7 @@
         bpl _CDA0
         sta wUnitRelocationLocationID,b
         stx wUnitRelocationDeploymentOffset,b
-        lda #$0003
+        lda #UNIT_RELOCATION_INTO_CASTLE
         sta wUnitRelocationType,b
 
         _CDA0
@@ -528,7 +528,7 @@
         jsl rlAddSelectedCharacterMoney
         jsl rlUnknown84CAA9
         lda wRoutineVariable1,b
-        sta wPhaseScratch000D8D,b
+        sta wVillageGoldPopUpAmount,b
         lda #$0009
         sta bEventActionIdentifier,b
         jsl rlGetSelectedUnitCharacterID
@@ -1340,7 +1340,7 @@
         sta wUnitRelocationDeploymentOffset,b
         lda wR1
         sta wUnitRelocationLocationID,b
-        lda #$0007
+        lda #UNIT_RELOCATION_HELPED
         sta wUnitRelocationType,b
         lda wR0
         sta aActionStructUnit1
@@ -1602,7 +1602,7 @@
         .autsiz
         .databank ?
 
-        ; For a player unit: sets mode 1 in wMapStateFlags (with bit 15) and bit 15 of wUnknown000D79; carry clear. Carry set for other armies.
+        ; For a player unit: sets mode 1 in wMapStateFlags (with bit 15) and bit 15 of wChapterFlags; carry clear. Carry set for other armies.
 
         phb
         php
@@ -1618,7 +1618,7 @@
         sta wMapStateFlags,b
 
         lda #$8000
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
 
         plp
         plb

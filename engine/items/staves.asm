@@ -54,7 +54,7 @@
 
         ; Heal, mend, recover: not in the castle; then rsStaffTargetCheckHeal.
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne rsStaffTargetCheckFail
 
@@ -89,7 +89,7 @@
 
         ; Return, warp, charm: not in the castle; then rsStaffTargetCheckAlly.
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne rsStaffTargetCheckFail
 
@@ -300,7 +300,7 @@
 
         _E744
         sta wRoutineVariable1,b
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         beq rsCastleStaffTargetCheckFail
         lda $7E4E77
@@ -375,7 +375,7 @@
 
         phx
         lda #$0800
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         lda #$0001
         sta wR12
         jsl rlGetItemStaffEffect
@@ -440,10 +440,10 @@
         .autsiz
         .databank ?
 
-        ; Sets bit 11 of wUnknown000D79, then as rsStaffTargetSelectionAlly.
+        ; Sets bit 11 of wChapterFlags, then as rsStaffTargetSelectionAlly.
 
         lda #$0800
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         jml rsStaffTargetSelectionAlly
 
         .databank 0
@@ -686,10 +686,10 @@
         .autsiz
         .databank ?
 
-        ; Clears bit 11 of wUnknown000D79 and starts rlCastleStartStaffTargetSelection.
+        ; Clears bit 11 of wChapterFlags and starts rlCastleStartStaffTargetSelection.
 
         lda #$0800
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         jsl rlCastleStartStaffTargetSelection
         rts
 
@@ -712,10 +712,10 @@
         .autsiz
         .databank ?
 
-        ; Sets bit 11 of wUnknown000D79 and starts rlCastleStartStaffTargetSelection.
+        ; Sets bit 11 of wChapterFlags and starts rlCastleStartStaffTargetSelection.
 
         lda #$0800
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         jsl rlCastleStartStaffTargetSelection
         rts
 
@@ -850,7 +850,7 @@
         phx
         lda wSelectedUnitDataRAMPointer,b
         pha
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _E8B0
         jsr rsApplyFortifyOnMap

@@ -727,7 +727,7 @@
 
 
         _816C
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _8183
 
@@ -999,7 +999,7 @@
 
 
         _838B
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _83A2
 

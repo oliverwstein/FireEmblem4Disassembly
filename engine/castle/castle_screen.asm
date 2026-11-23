@@ -141,7 +141,7 @@
         lda #$0002
         sta aDialogue.wUnknown0018D0,b
         lda #$0020
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         jsl rlDispatchCastleState
         jsl rlPauseMapTileAnimation
         jsl rlEnableVBlank
@@ -346,7 +346,7 @@
         sta wEventLocationEntry,b
         lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b
-        jsl rlUnknown81AB26
+        jsl rlResumePhaseMusic
         jsl rlStepMusicScript
         lda #$0000
         jsl rlGetFactionSlotLocationID
@@ -1012,15 +1012,15 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $0C, every frame: rlUnknown81B15A, rlUnknown81ADD8, then the routine for wGameStateStep from aCastleScreenStepHandlers.
+        ; Game state routine $0C, every frame: rlApplyBufferedDeploymentStates, rlRunQueuedUnitRelocation, then the routine for wGameStateStep from aCastleScreenStepHandlers.
 
         phb
         php
         phk
         plb
         .databank $8A
-        jsl rlUnknown81B15A
-        jsl rlUnknown81ADD8
+        jsl rlApplyBufferedDeploymentStates
+        jsl rlRunQueuedUnitRelocation
         lda wGameStateStep,b
         asl a
         tax
@@ -1488,10 +1488,10 @@
 
         ; Step $16: once the screen is fully bright, fades out (sound command $E8) and returns to the map (procMainLoopChangeFade into $80/B122); moves to step $02.
 
-        jsl rlUnknown81AB26
+        jsl rlResumePhaseMusic
 
       rsCastleStepExitToMapNoReset ; 8A/8178
-        ; Step $13 enters here, skipping rlUnknown81AB26. Nothing found selects step $13.
+        ; Step $13 enters here, skipping rlResumePhaseMusic. Nothing found selects step $13.
         lda #$00E8
         jsl rlQueueSoundCommand
         sep #$20

@@ -217,7 +217,7 @@
         .autsiz
         .databank ?
 
-        ; Mode 0: yes opens the save menu, no runs rlUnknown81B301. Other modes: yes saves (rlGetAutoSaveFile, rlSaveToSaveSlot). Carry set when done.
+        ; Mode 0: yes opens the save menu, no runs rlAdvanceToNextChapter. Other modes: yes saves (rlGetAutoSaveFile, rlSaveToSaveSlot). Carry set when done.
 
         lda aProcSystem.aBody6,b,x
         bne _A595
@@ -233,7 +233,7 @@
 
 
         _A58B
-        jsl rlUnknown81B301
+        jsl rlAdvanceToNextChapter
         bra _A593
 
 
@@ -434,7 +434,7 @@
         .autsiz
         .databank ?
 
-        ; Sets bit 5 of wMapStateFlags and saves the cursor's tile; in the castle mode (bit 5 of wUnknown000D79) fades to rsUnknown80B122.
+        ; Sets bit 5 of wMapStateFlags and saves the cursor's tile; in the castle mode (bit 5 of wChapterFlags) fades to rsUnknown80B122.
 
         lda #$0020
         tsb wMapStateFlags,b
@@ -459,7 +459,7 @@
         sep #$20
         sta bSavedPlayerCursorYTile,b
         rep #$20
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         beq _DC79
         lda #$0000
@@ -497,7 +497,7 @@
         lda #$0001
         jsl rlMapMenuLoadHook
         lda #$0100
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         stz wGameStateRoutine1,b
         lda #<>rsStartChapterMap
         sta aProcSystem.wInput0,b
@@ -731,9 +731,9 @@
         .autsiz
         .databank ?
 
-        ; Switches to procMainMapMenuNoSave (no Save option) once a unit has acted this turn (bit 12 of wUnknown000D79).
+        ; Switches to procMainMapMenuNoSave (no Save option) once a unit has acted this turn (bit 12 of wChapterFlags).
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$1000
         beq _DE07
         lda #<>procMainMapMenuNoSave

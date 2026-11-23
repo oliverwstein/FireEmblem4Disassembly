@@ -54,7 +54,7 @@
         .autsiz
         .databank ?
 
-        lda wPhaseScratch000D89,b
+        lda wInventoryFullDeploymentOffset,b
         bmi +
 
           tax
@@ -62,7 +62,7 @@
           sta wSelectedUnitDataRAMPointer,b
           jsr rsUnknown81B270
           lda #$FFFF
-          sta wPhaseScratch000D89,b
+          sta wInventoryFullDeploymentOffset,b
 
         +
         rtl

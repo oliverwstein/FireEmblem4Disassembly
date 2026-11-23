@@ -37,3 +37,32 @@
   PATH_UP                      = 2
   PATH_RIGHT                   = 3
   PATH_LEFT                    = 4
+
+  ; wGameStateStep while the map step runs (aMapStepRoutines, engine/map/map_step.asm).
+  MAP_STEP_START_TURN          = 0
+  MAP_STEP_FADE_OUT_MUSIC      = 1 ; the first step of each army's phase
+  MAP_STEP_PHASE_BANNER        = 2
+  MAP_STEP_PHASE_START_EVENTS  = 3
+  MAP_STEP_START_PHASE         = 4
+  MAP_STEP_TURN_START_HEALING  = 5
+  MAP_STEP_AUTO_SAVE_PROMPT    = 6
+  MAP_STEP_PHASE               = 7 ; the phase itself
+  MAP_STEP_NEXT_FACTION        = 8
+  MAP_STEP_END_TURN            = 9
+  MAP_STEP_OPEN_STATUS_SCREEN  = 10
+  MAP_STEP_RESUME              = 11 ; back from another screen
+  MAP_STEP_GAME_OVER           = 12
+  MAP_STEP_COUNT               = 13
+
+  ; wUnitRelocationType: what the map step does next for a unit after an action
+  ; (aUnitRelocationRoutines).
+  UNIT_RELOCATION_TO_TILE      = 0 ; Warp and Rescue onto a tile
+  UNIT_RELOCATION_ESCAPED      = 1
+  UNIT_RELOCATION_CAPTURED     = 2
+  UNIT_RELOCATION_INTO_CASTLE  = 3
+  UNIT_RELOCATION_SORTIE       = 4 ; an AI unit leaves its castle
+  UNIT_RELOCATION_SEIZE_POPUP  = 5
+  UNIT_RELOCATION_SAVE_PROMPT  = 6 ; the end of a chapter
+  UNIT_RELOCATION_HELPED       = 7
+  UNIT_RELOCATION_ITEM_POPUP   = 8
+  UNIT_RELOCATION_RESCUED      = 9 ; the Rescue staff into a castle

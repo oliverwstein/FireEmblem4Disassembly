@@ -1,298 +1,20 @@
-; Code from bank $81 not yet assigned to a game system.
-
-    .section Unsorted8189F3Section
-
-      .al
-      .xl
-
-      rlUnknown8189F3 ; 81/89F3
-
-        .al
-        .autsiz
-        .databank ?
-
-        phb
-        lda aActiveSpriteSystem.aUnknown0012E0,b,x
-        bit #$4000
-        beq _End
-
-          ldx aMovingMapSprites.wOffset,b
-          lda aMovingMapSprites.wActiveSpriteOffset,b,x
-          cmp #$FFFF
-          beq _End
-
-            jsl rlAnimateMovingMapSprite
-
-            lda aMovingMapSprites.wXPixelPosition,b,x
-            sec
-            sbc wMapScrollXPixels,b
-            cmp #$FFC0
-            bcs +
-
-              cmp #$0140
-              bcs _End
-
-            +
-            clc
-            adc wR0
-            sta wR0
-
-            lda aMovingMapSprites.wYPixelPosition,b,x
-            sec
-            sbc wMapScrollYPixels,b
-            cmp #$FFF0
-            bcs +
-
-              cmp #$0100
-              bcs _End
-
-            +
-            clc
-            adc wR1
-            sta wR1
-            lda aMovingMapSprites.wUnknown001804,b,x
-            sta wR5
-            jsl rlPushToOAMBuffer
-
-        _End
-        plb
-        rtl
-
-        .databank 0
-
-        ; 81/8A42
-
-    .endsection Unsorted8189F3Section
-
-
-    .section Unsorted818D58Section
-
-      .al
-      .xl
-
-      rlUnknown818D58 ; 81/8D58
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Sound stuff
-
-        php
-        phx
-        phy
-        lda aMovingMapSprites.wMovingSound,b,x
-        pha
-        and #$00FF
-        sta aMovingMapSprites.wMovingSound,b,x
-        pla
-        and #$FF00
-        beq _End
-
-          xba
-          dec a
-          bne +
-
-          jsr rsUnknown818D82
-          bra _End
-
-          +
-          jsr rsUnknown818D95
-
-        _End
-        ply
-        plx
-        plp
-        rtl
-
-        .databank 0
-
-      rlUnknown818D7B ; 81/8D7B
-
-        .al
-        .autsiz
-        .databank ?
-
-        jsr rsUnknown818D82
-        jsr rsUnknown818D95
-        rtl
-
-        .databank 0
-
-      rsUnknown818D82 ; 81/8D82
-
-        .al
-        .autsiz
-        .databank ?
-
-        php
-        sep #$20
-        lda #$10
-        sta aSoundChannelFadeState.bMode,b
-        rep #$20
-        ldx #0
-        jsl rlUpdateMapSpriteSoundPanning
-        plp
-        rts
-
-        .databank 0
-
-      rsUnknown818D95 ; 81/8D95
-
-        .al
-        .autsiz
-        .databank ?
-
-        php
-        sep #$20
-        lda #$10
-        sta aSoundChannelFadeState2,b
-        rep #$20
-        ldx #3
-        jsl rlUpdateMapSpriteSoundPanning
-        plp
-        rts
-
-        .databank 0
-
-      rsUnknown818DA8 ; 81/8DA8
-
-        .al
-        .autsiz
-        .databank ?
-
-        lda aActiveSpriteSystem.aUnknown001320,b,y
-        dec a
-        sta aActiveSpriteSystem.aUnknown001320,b,y
-
-        lda aActiveSpriteSystem.aUnknown001380,b,y
-        ora aActiveSpriteSystem.aUnknown0013A0,b,y
-        beq _End2
-
-          phx
-          lda aActiveSpriteSystem.aUnknown001340,b,y
-          clc
-          adc aActiveSpriteSystem.aUnknown001380,b,y
-          sta aActiveSpriteSystem.aUnknown001340,b,y
-          rol a
-          and #$0001
-          sta wR5
-          ror a
-          clc
-          lda aActiveSpriteSystem.aUnknown0013A0,b,y
-          adc wR5
-          sta wR5
-
-          lda aActiveSpriteSystem.aUnknown001300,b,y
-          bit #$0080
-          bne _End
-
-            dec a
-            sta wR4
-
-            lda wR4
-            cmp #10
-            bmi +
-
-              -
-              bra -
-
-            +
-            asl a
-            tax
-            jsr (aMovingMapSpritePositionRoutines,x)
-
-            lda aActiveSpriteSystem.aUnknown0012E0,b,y
-            bit #$0001
-            beq _End
-
-              jsr rsUnknown818E40
-
-          _End
-          plx
-
-        _End2
-        rts
-
-        .databank 0
-
-    .endsection Unsorted818D58Section
-
-
-    .section Unsorted818EABSection
-
-      .al
-      .xl
-
-      rsUnknown818EAB ; 81/8EAB
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        pha
-        lda wR0
-        cmp #$0060
-        pla
-        rts
-
-        .databank 0
-
-        ; 81/8EB3
-
-      rsUnknown818EB3 ; 81/8EB3
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        pha
-        lda #$0080
-        cmp wR0
-        pla
-        rts
-
-        .databank 0
-
-        ; 81/8EBB
-
-      rsUnknown818EBB ; 81/8EBB
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        pha
-        lda wR1
-        cmp #$0060
-        pla
-        rts
-
-        .databank 0
-
-        ; 81/8EC3
-
-      rsUnknown818EC3 ; 81/8EC3
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        pha
-        lda #$0080
-        cmp wR1
-        pla
-        rts
-
-        .databank 0
-
-        ; 81/8ECB
-
-    .endsection Unsorted818EABSection
+; The chapter map's game state routines: rlMapSetup (state $11), rlMapStep ($12,
+; every frame) and rlMapUpkeep ($10, every frame). Bank $81, with one routine from
+; bank $84.
+;
+; The map step is the turn loop. wGameStateStep selects one of thirteen steps
+; (aMapStepRoutines): a new turn (0), each army's phase (fade out the music 1,
+; banner 2, phase start events 3, turn start effects 4, healing windows 5, auto save
+; prompt 6, the phase itself 7), the next army (8), the end of the turn (9), and the
+; status screen (10), the return from another screen (11) and game over (12).
+;
+; Before the step runs, rlMapStep handles what earlier actions queued, each of which
+; may end the frame: buffered deployment states (rlApplyBufferedDeploymentStates), a
+; defeated unit (rlHandleDefeatedUnit), the queued relocation (rlRunQueuedUnitRelocation
+; and aUnitRelocationRoutines: a unit moved to a tile, escaping, captured, going into
+; or leaving a castle, a popup or the save prompt), the queued unit menu, the gold
+; popup, the inventory full menu, a canto move and the action-ended events.
+; Nothing in this list runs while an event is running (wEventEngineFlags).
 
 
     .section Unsorted81A800Section
@@ -328,11 +50,11 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $11, once: builds aMapMenuRAMArea, turns on active sprites (flag $2000 set), fades in unless wUnknown00171A, creates the unit and terrain window procs, and moves on to $12 at the step saved in wSavedEventCycle.
+        ; Game state routine $11, once: builds aMapMenuRAMArea, turns on active sprites (flag $2000 set), fades in unless wEventEngineFlags, creates the unit and terrain window procs, and moves on to $12 at the step saved in wSavedMapStep.
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         and #$4005
-        sta wUnknown000D79,b
+        sta wChapterFlags,b
         lda #(`aMapMenuRAMArea)<<8
         sta lR18+1
         lda #<>aMapMenuRAMArea
@@ -343,7 +65,7 @@
         jsl rlBuildRAMAreaHeaderAndGuidingEntry
         jsl rlEnableActiveSpriteEngine
         jsl rlActiveSpriteEngineSetFlag2000
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         bne _A84E
         lda #(`procFadeIn)<<8
         sta lR44+1
@@ -354,7 +76,7 @@
         _A84E
         jsl rlCreateUnitWindowAndTerrainWindowProcs
         inc wGameStateRoutine1,b
-        lda wSavedEventCycle,b
+        lda wSavedMapStep,b
         sta wGameStateStep,b
         rtl
 
@@ -370,32 +92,34 @@
       .al
       .xl
 
-      rlUnknown81A85C ; 81/A85C
+      rlResetChapterProgress ; 81/A85C
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; New game, and loading a save before its data is read: clears the chapter, turn, saved map step, wChapterFlags, the queued relocation, defeat and action-end words, and sets the options to their default (8).
+
         phb
         php
         phk
         plb
         .databank $81
-        stz wUnknown000D79,b
+        stz wChapterFlags,b
         lda #$FFFF
         sta wUnitRelocationDeploymentOffset,b
         sta wDefeatedUnitDeploymentOffset,b
-        sta wPhaseScratch000D89,b
-        sta wPhaseScratch000D8B,b
-        sta wPhaseScratch000D8D,b
+        sta wInventoryFullDeploymentOffset,b
+        sta wActionEndedDeploymentOffset,b
+        sta wVillageGoldPopUpAmount,b
         stz wMapStateFlags,b
         stz wActiveFactionSlot,b
         stz wMapBattleHPWindowLeftRequest,b
         stz $0DB1,b
         stz wCurrentChapter,b
         stz wCurrentTurn,b
-        stz wSavedEventCycle,b
+        stz wSavedMapStep,b
         stz wDestroyedLocationsCount,b
         lda #$0008
         sta wOptionSettings,b
@@ -425,44 +149,44 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $12, every frame: the chapter map. Runs a chain of checks (each may end the frame), then the routine for wGameStateStep from aUnknown81A8F8 (13 steps), and saves the step in wSavedEventCycle. The AI engine only runs while wGameStateRoutine1 is $12.
+        ; Game state routine $12, every frame: the chapter map. Runs a chain of checks (each may end the frame), then the routine for wGameStateStep from aMapStepRoutines (13 steps), and saves the step in wSavedMapStep. The AI engine only runs while wGameStateRoutine1 is $12.
 
         phb
         php
         phk
         plb
 
-        jsl rlUnknown81B15A
-        jsl rlUnknown81B088
+        jsl rlApplyBufferedDeploymentStates
+        jsl rlHandleDefeatedUnit
         bcc +
 
-          jsl rlUnknown81AB3F
+          jsl rlCheckVictoryTheme
           bra _End
 
         +
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         bne +
 
-          jsl rlUnknown81ADD8
+          jsl rlRunQueuedUnitRelocation
           bcs _End
 
-            jsr rsUnknown81AF38
+            jsr rsOpenQueuedUnitMenu
             bcs _End
 
-              jsr rsUnknown81AFD4
+              jsr rsShowQueuedGoldPopUp
               bcs _End
 
-                jsr rsUnknown81AF16
+                jsr rsOpenQueuedInventoryFullMenu
                 bcs _End
 
-                  jsr rsUnknown81B0E5
+                  jsr rsResumeCantoMove
                   bcs _End
 
-                    jsr rsUnknown81B116
+                    jsr rsRunActionEndedEvents
 
         +
         lda wGameStateStep,b
-        cmp #$000D
+        cmp #MAP_STEP_COUNT
         bmi +
 
           -
@@ -471,12 +195,12 @@
         +
         asl a
         tax
-        jsr (aUnknown81A8F8,x)
+        jsr (aMapStepRoutines,x)
 
         lda wGameStateStep,b
-        sta wSavedEventCycle,b
+        sta wSavedMapStep,b
 
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         beq _End
 
           jsl rlMapCursorStep
@@ -489,32 +213,33 @@
 
         .databank 0
 
-      aUnknown81A8F8 ; 81/A8F8
+      aMapStepRoutines ; 81/A8F8
 
-        .word <>rsUnknown81A912 ; 0
-        .word <>rsUnknown81A93B ; 1
-        .word <>rsUnknown81A968 ; 2
-        .word <>rsUnknown81A9A6 ; 3
-        .word <>rsUnknown81AB6B ; 4
-        .word <>rsUnknown81AB90 ; 5
-        .word <>rsUnknown81AC4E ; 6
-        .word <>rsUnknown81AC9C ; 7
+        .word <>rsMapStepStartTurn ; 0
+        .word <>rsMapStepFadeOutMusic ; 1
+        .word <>rsMapStepPhaseBanner ; 2
+        .word <>rsMapStepPhaseStartEvents ; 3
+        .word <>rsMapStepStartPhase ; 4
+        .word <>rsMapStepTurnStartHealing ; 5
+        .word <>rsMapStepAutoSavePrompt ; 6
+        .word <>rsMapStepPhase ; 7
 
-        .word <>rsUnknown81ACD4 ; 8
-        .word <>rsUnknown81ACFE ; 9
-        .word <>rsUnknown81AD1C ; 10
-        .word <>rsUnknown81AD28 ; 11
-        .word <>rsUnknown81AD6A ; 12
+        .word <>rsMapStepNextFaction ; 8
+        .word <>rsMapStepEndTurn ; 9
+        .word <>rsMapStepOpenStatusScreen ; 10
+        .word <>rsMapStepResume ; 11
+        .word <>rsMapStepGameOver ; 12
 
-      rsUnknown81A912 ; 81/A912
+      rsMapStepStartTurn ; 81/A912
 
         .al
         .autsiz
         .databank ?
 
-        ; Update status and miracle for all units in all factions
+        ; Map step 0: a new turn. Counts the turn (up to 999), makes the player army active and counts down the status durations of armies 0-6.
 
-        lda wUnknown00171A,b
+
+        lda wEventEngineFlags,b
         bne _End
 
         lda wCurrentTurn,b
@@ -545,18 +270,20 @@
 
         .databank 0
 
-      rsUnknown81A93B ; 81/A93B
+      rsMapStepFadeOutMusic ; 81/A93B
 
         .al
         .autsiz
         .databank ?
 
-        lda $0DAD,b
+        ; Map step 1: fades the previous phase's music out before the next army's phase (wPhaseMusicFadeTimer: $FFFF start, then 32 frames), if the army takes a phase and has a phase song.
+
+        lda wPhaseMusicFadeTimer,b
         beq _INC
         bpl _DEC
 
           lda wActiveFactionSlot,b
-          jsl rlUnknown84C5D7
+          jsl rlCheckFactionTakesPhase
           bcc _INC
 
             jsr rsGetActiveFactionSongID
@@ -565,11 +292,11 @@
               lda #$00E0
               jsl rlSendSoundCommand
               lda #$0020
-              sta $0DAD,b
+              sta wPhaseMusicFadeTimer,b
               bra +
 
                 _DEC
-                dec $0DAD,b
+                dec wPhaseMusicFadeTimer,b
                 bra + 
 
         _INC
@@ -580,29 +307,30 @@
 
         .databank 0
 
-      rsUnknown81A968 ; 81/A968
+      rsMapStepPhaseBanner ; 81/A968
 
         .al
         .autsiz
         .databank ?
 
-        ; does phase transition banner?
+        ; Map step 2: clears the army-acted flag and, if the army takes a phase (rlCheckFactionTakesPhase), starts its music and shows the phase banner (procPhaseBanner).
 
-        lda wUnknown00171A,b
+
+        lda wEventEngineFlags,b
         bne _End
 
           lda #$1000
-          trb wUnknown000D79,b
+          trb wChapterFlags,b
 
           lda wActiveFactionSlot,b
-          jsl rlUnknown84C5D7
+          jsl rlCheckFactionTakesPhase
           bcc +
 
             lda #1
             sta wSoundUploadBusyFlag,b
             lda #1
             sta wSoundIndirectPending,b
-            jsl rlUnknown81A9D4
+            jsl rlStartPhaseMusic
 
             lda #(`procPhaseBanner)<<8
             sta $62+1
@@ -622,13 +350,14 @@
 
         .databank 0
 
-      rsUnknown81A9A6 ; 81/A9A6
+      rsMapStepPhaseStartEvents ; 81/A9A6
 
         .al
         .autsiz
         .databank ?
 
-        ; sets up turn events
+        ; Map step 3: runs the chapter's event conditions with event action $21 (turn, army, 0, 0): the start of a phase.
+
 
         lda #0
         sta wSoundUploadBusyFlag,b
@@ -654,34 +383,36 @@
 
         .databank 0
 
-      rlUnknown81A9D4 ; 81/A9D4
+      rlStartPhaseMusic ; 81/A9D4
 
         .al
         .autsiz
         .databank ?
 
-        lda wUnknown000D79,b
+        ; Sets wPhaseSongID for the active army's phase and starts it. The first phase of a chapter (bit 14 of wChapterFlags clear) plays the chapter's first-phase song (rsStartChapterFirstPhaseSong). Sets wPhaseMusicFadeTimer to $FFFF.
+
+        lda wChapterFlags,b
         bit #$4000
         beq +
 
           jsr rsGetActiveFactionSongID
           bcc _End
 
-            sta $0DAB,b
-            jsl rlUnknown81AB26
+            sta wPhaseSongID,b
+            jsl rlResumePhaseMusic
             bra _End
 
         +
         ora #$4000
-        sta wUnknown000D79,b
+        sta wChapterFlags,b
 
-        jsr rsUnknown81AAFB
+        jsr rsStartChapterFirstPhaseSong
         jsr rsGetActiveFactionSongID
-        sta $0DAB,b
+        sta wPhaseSongID,b
         
         _End
         lda #$FFFF
-        sta $0DAD,b
+        sta wPhaseMusicFadeTimer,b
         rtl
 
         .databank 0
@@ -689,16 +420,128 @@
     .endsection Unsorted81A89DSection
 
 
+    .section MapStepStartPhaseSection
+
+      .al
+      .xl
+
+      rsMapStepStartPhase ; 81/AB6B
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Map step 4: unless an event is running, the turn start love points (rlUnknown84C33D), the turn start effects of the army's units, the AI engine on, and the phase music if the army takes a phase.
+
+        lda wEventEngineFlags,b
+        bne _End
+
+          jsl rlUnknown84C33D
+
+          lda wActiveFactionSlot,b
+          jsl rlRunTurnStartEffectsForAllUnitsInFaction
+          jsl rlEnableAIEngineCycle
+
+          lda wActiveFactionSlot,b
+          jsl rlCheckFactionTakesPhase
+          bcc +
+
+            jsl rlStartPhaseMusic
+
+          +
+          inc wGameStateStep,b
+        
+        _End
+        rts
+
+        .databank 0
+
+    .endsection MapStepStartPhaseSection
+
+
+    .section Unknown81AB90Section
+
+      .al
+      .xl
+
+      rsMapStepTurnStartHealing ; 81/AB90
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Map step 5: shows each entry of the turn start healing list in procMapExperienceWindow, one a step ($7E2002 entries of 5 bytes from $7E2004), then the map windows, and moves the cursor to the phase's start.
+
+
+        lda $7E2002
+        beq _ABF1
+
+          lda $7E2000
+          tax
+          clc
+          adc #5
+          sta $7E2000
+
+          lda $7E2006,x
+          and #$00FF
+          sta aProcSystem.wInput0,b
+
+          lda aDebugMenuSkillFlags.bAdept,x
+          and #$00FF
+          xba
+          ora aProcSystem.wInput0,b
+          sta aProcSystem.wInput0,b
+
+          lda $7E2008,x
+          and #$00FF
+          sta aProcSystem.wInput1,b
+
+          lda aDebugMenuSkillFlags.bWrath,x
+          and #$00FF
+          sta aProcSystem.wInput2,b
+
+          lda $7E2004,x
+          and #$00FF
+          sta aProcSystem.wInput3,b
+
+          lda #(`procMapExperienceWindow)<<8
+          sta $62+1
+          lda #<>procMapExperienceWindow
+          sta $62
+          jsl rlProcEngineCreateProc
+
+          lda $7E2002
+          dec a
+          sta $7E2002
+          rts
+
+        _ABF1
+        jsl rlShowMapWindows
+
+        lda #$0004
+        tsb wMapSystemFlags,b
+
+        jsr rsMoveCursorToPhaseStart
+        inc wGameStateStep,b
+        rts
+
+        .databank 0
+
+    .endsection Unknown81AB90Section
+
+
     .section Unsorted81AC02Section
 
       .al
       .xl
 
-      rsUnknown81AC02 ; 81/AC02
+      rsMoveCursorToPhaseStart ; 81/AC02
 
         .al
         .autsiz
         .databank ?
+
+        ; At the start of the player phase: the cursor goes to the saved cursor tile when the auto cursor option is on and the turn is not the first, otherwise to the army's first unit (generation ID 0 in faction slot 0).
 
         lda wActiveFactionSlot,b
         bne _End
@@ -740,11 +583,13 @@
 
         .databank 0
 
-      rsUnknown81AC4E ; 81/AC4E
+      rsMapStepAutoSavePrompt ; 81/AC4E
 
         .al
         .autsiz
         .databank ?
+
+        ; Map step 6: from turn 2 of the player phase with the auto save option on, waits until no experience window is open and the cursor rests, then opens the save prompt (procSavePrompt).
 
         lda wCurrentTurn,b
         cmp #1
@@ -788,18 +633,19 @@
 
         .databank 0
 
-      rsUnknown81AC9C ; 81/AC9C
+      rsMapStepPhase ; 81/AC9C
 
         .al
         .autsiz
         .databank ?
 
-        ; Routine waits for some kind of input?
+        ; Map step 7: the phase itself. Runs the AI unit's queued event, moves the cursor and the camera, and moves on when bit 5 of wMapStateFlags (the phase is over) is set.
 
-        lda wUnknown00171A,b
+
+        lda wEventEngineFlags,b
         bne +
 
-          jsr rsUnknown81AD8E
+          jsr rsRunQueuedAIUnitEvent
           lda wMapCursorState,b
           bne +
         
@@ -808,7 +654,7 @@
         bit #$0020
         bne +
 
-          lda wUnknown000D79,b
+          lda wChapterFlags,b
           bit #$0200
           bne +
 
@@ -830,11 +676,13 @@
 
         .databank 0
 
-      rsUnknown81ACD4 ; 81/ACD4
+      rsMapStepNextFaction ; 81/ACD4
 
         .al
         .autsiz
         .databank ?
+
+        ; Map step 8: clears the army's moved flags and goes to the next army that exists (step 1), or after the last one back to the player army (step 9).
 
         lda wActiveFactionSlot,b
         jsl rlUnsetFactionUnitsMoved
@@ -850,7 +698,7 @@
             cmp #$0080
             beq -
 
-        lda #1
+        lda #MAP_STEP_FADE_OUT_MUSIC
         sta wGameStateStep,b
         rts
         
@@ -861,11 +709,13 @@
 
         .databank 0
 
-      rsUnknown81ACFE ; 81/ACFE
+      rsMapStepEndTurn ; 81/ACFE
 
         .al
         .autsiz
         .databank ?
+
+        ; Map step 9: the end of a turn. Stops the AI, sets bit 6 of wMapSystemFlags, runs the event conditions with event action $20 (turn) and goes back to step 0.
 
         jsl rlDisableAIEngineCycle
 
@@ -882,15 +732,17 @@
 
         .databank 0
 
-      rsUnknown81AD1C ; 81/AD1C
+      rsMapStepOpenStatusScreen ; 81/AD1C
 
         .al
         .autsiz
         .databank ?
 
+        ; Map step 10: switches the main loop to the status screen and leaves step 7 for the return.
+
         lda #<>rsOpenStatusScreen
         sta wMainLoopPointer
-        lda #7
+        lda #MAP_STEP_PHASE
         sta wGameStateStep,b
         rts
 
@@ -904,11 +756,13 @@
       .al
       .xl
 
-      rsUnknown81AD28 ; 81/AD28
+      rsMapStepResume ; 81/AD28
 
         .al
         .autsiz
         .databank ?
+
+        ; Map step 11: back on the map after another screen. Recreates the unit and terrain windows, fades in by wMainGameMode, gives the active unit its canto move if it has one (rlCheckActiveUnitCanto) and goes back to the saved step.
 
         jsl rlCreateUnitWindowAndTerrainWindowProcs
 
@@ -935,14 +789,14 @@
           rep #$20
 
         +
-        jsl rlUnknown81B189
+        jsl rlCheckActiveUnitCanto
         bcc +
 
           ldx wActiveUnitDeploymentOffset,b
           jsl rlDeployedUnitUnsetHiddenIfAlive
 
         +
-        lda wSavedEventCycle,b
+        lda wSavedMapStep,b
         sta wGameStateStep,b
         rts
 
@@ -956,13 +810,15 @@
       .al
       .xl
 
-      rsUnknown81AD6A ; 81/AD6A
+      rsMapStepGameOver ; 81/AD6A
 
         .al
         .autsiz
         .databank ?
 
-        lda wUnknown00171A,b
+        ; Map step 12 (rlStartGameOverEvent sets it): unless an event is running, stops the music and fades to the game over screen.
+
+        lda wEventEngineFlags,b
         bne +
 
           lda #$00E0
@@ -992,11 +848,13 @@
       .al
       .xl
 
-      rsUnknown81AD8E ; 81/AD8E
+      rsRunQueuedAIUnitEvent ; 81/AD8E
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs event action $21 for the AI unit that is about to act (turn, army, its AI and its character), when the AI has queued one (bit 7 of wChapterFlags).
 
         lda bUnknown000E7B,b
         bit #$0040
@@ -1005,12 +863,12 @@
           bit #$0020
           bne _End
 
-            lda wUnknown000D79,b
+            lda wChapterFlags,b
             bit #$0080
             beq _End
 
               lda #$0080
-              trb wUnknown000D79,b
+              trb wChapterFlags,b
 
               ldx wAISelectedAIUnitOffset,b
               lda aAIUnitList[0].UnitRAMPointer,x
@@ -1041,17 +899,19 @@
       .al
       .xl
 
-      rlUnknown81ADD8 ; 81/ADD8
+      rlRunQueuedUnitRelocation ; 81/ADD8
 
         .al
         .autsiz
         .databank ?
 
+        ; Runs the queued relocation (wUnitRelocationType, aUnitRelocationRoutines) for wUnitRelocationDeploymentOffset and clears it. SEC if one ran. Called by the map step and the castle screen.
+
         phb
         phk
         plb
 
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         bne _CLC
 
           lda wUnitRelocationDeploymentOffset,b
@@ -1066,7 +926,7 @@
 
               asl a
               tax
-              jsr (aUnknown81AE02,x)
+              jsr (aUnitRelocationRoutines,x)
 
               lda #$FFFF
               sta wUnitRelocationDeploymentOffset,b
@@ -1089,46 +949,48 @@
       .al
       .xl
 
-      aUnknown81AE02 ; 81/AE02
+      aUnitRelocationRoutines ; 81/AE02
 
-        .word <>rsUnknown81AE46
-        .word <>rsUnknown81AE68
-        .word <>rsUnknown81AE96
-        .word <>rsUnknown81AEAA
-        .word <>rsUnknown81AF03
-        .word <>rsUnknown81AFB7
-        .word <>rsUnknown81AFF8
-        .word <>rsUnknown81AFFE
-        .word <>rsUnknown81B016
-        .word <>rsUnknown81B030
+        .word <>rsRelocateToTile
+        .word <>rsRelocateEscapedUnit
+        .word <>rsRelocateCapturedUnit
+        .word <>rsRelocateIntoCastle
+        .word <>rsRelocateSortieFromCastle
+        .word <>rsRelocateShowSeizePopUp
+        .word <>rsRelocateChapterEndSavePrompt
+        .word <>rsRelocateRemoveHelpedUnit
+        .word <>rsRelocateShowItemPopUp
+        .word <>rsRelocateRescuedUnits
 
-      rlUnknown81AE16 ; 81/AE16
+      rlCheckQueuedRelocationMovesUnit ; 81/AE16
 
         .al
         .autsiz
         .databank ?
 
+        ; After a map battle: SEC if the queued relocation takes the unit off the map. A move to a tile (type 0) is done at once; rescue (9) and going into a castle (3, unless the castle screen is to open) only answer SEC.
+
         phb
         phk
         plb
 
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         bne _CLC
 
           lda wUnitRelocationDeploymentOffset,b
           bmi _CLC
 
             lda wUnitRelocationType,b
-            cmp #0
+            cmp #UNIT_RELOCATION_TO_TILE
             beq +
 
-              cmp #9
+              cmp #UNIT_RELOCATION_RESCUED
               beq _SEC
 
-                cmp #3
+                cmp #UNIT_RELOCATION_INTO_CASTLE
                 bne _CLC
 
-                  lda wUnknown000D79,b
+                  lda wChapterFlags,b
                   bit #$0040
                   beq _SEC
 
@@ -1140,7 +1002,7 @@
         rtl
         
         +
-        jsr rsUnknown81AE46
+        jsr rsRelocateToTile
         
         _SEC
         sec
@@ -1148,15 +1010,17 @@
 
         .databank 0
 
-      rsUnknown81AE46 ; 81/AE46
+      rsRelocateToTile ; 81/AE46
 
         .al
         .autsiz
         .databank ?
 
+        ; Relocation type 0: moves the unit to the tile in wUnitRelocationLocationID (X low byte, Y high) and shows it.
+
         ldx wUnitRelocationDeploymentOffset,b
 
-        ; packed coords?
+
         lda wUnitRelocationLocationID,b
         sta wRoutineVariable1,b
         jsl rlUnknown84C996
@@ -1165,7 +1029,7 @@
 
         jsl rlDeployedUnitUnsetHiddenIfAlive
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         beq +
 
@@ -1177,11 +1041,13 @@
 
         .databank 0
 
-      rsUnknown81AE68 ; 81/AE68
+      rsRelocateEscapedUnit ; 81/AE68
 
         .al
         .autsiz
         .databank ?
+
+        ; Relocation type 1: the unit leaves (faction 7), its deployment is cleared and event action $17 runs with its character.
 
         lda #7
         jsl rlSetSelectedUnitFaction
@@ -1215,11 +1081,13 @@
       .al
       .xl
 
-      rsUnknown81AE96 ; 81/AE96
+      rsRelocateCapturedUnit ; 81/AE96
 
         .al
         .autsiz
         .databank ?
+
+        ; Relocation type 2: the captured unit is put in the castle wUnitRelocationLocationID.
 
         lda wTargetEventLocationEntry,b
         pha
@@ -1244,13 +1112,14 @@
       .al
       .xl
 
-      rsUnknown81AEAA ; 81/AEAA
+      rsRelocateIntoCastle ; 81/AEAA
 
         .al
         .autsiz
         .databank ?
 
-        ; entering castle?
+        ; Relocation type 3: the unit goes into the castle. With bit 6 of wChapterFlags the castle screen opens; in the castle screen (bit 5) its units are refreshed; otherwise event action 4 runs (character, home castle).
+
 
         ldx wUnitRelocationDeploymentOffset,b
         lda wUnitRelocationLocationID,b
@@ -1260,12 +1129,12 @@
 
         jsl rlRefreshUnitWindow
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0040
         beq +
 
           and #~($40)
-          sta wUnknown000D79,b
+          sta wChapterFlags,b
 
           stz wGameStateRoutine1,b
 
@@ -1274,7 +1143,7 @@
           bra _End
         
         +
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         beq +
 
@@ -1301,11 +1170,13 @@
 
         .databank 0
 
-      rsUnknown81AF03 ; 81/AF03
+      rsRelocateSortieFromCastle ; 81/AF03
 
         .al
         .autsiz
         .databank ?
+
+        ; Relocation type 4: the AI's unit leaves its castle (rlSortieUnitFromCastle) with sound $1A.
 
         lda wUnitRelocationLocationID,b
         sta wSelectedUnitDataRAMPointer,b
@@ -1317,17 +1188,19 @@
 
         .databank 0
 
-      rsUnknown81AF16 ; 81/AF16
+      rsOpenQueuedInventoryFullMenu ; 81/AF16
 
         .al
         .autsiz
         .databank ?
 
+        ; Opens the inventory full menu for wInventoryFullDeploymentOffset when $70 is nonzero. SEC if it opened.
+
         lda $70
         and #$00FF
         beq _CLC
 
-          lda wPhaseScratch000D89,b
+          lda wInventoryFullDeploymentOffset,b
           bmi _CLC
 
             tax
@@ -1337,7 +1210,7 @@
             jsl rlOpenInventoryFullMenu
 
             lda #$FFFF
-            sta wPhaseScratch000D89,b
+            sta wInventoryFullDeploymentOffset,b
             sec
             rts
         
@@ -1347,16 +1220,18 @@
 
         .databank 0
 
-      rsUnknown81AF38 ; 81/AF38
+      rsOpenQueuedUnitMenu ; 81/AF38
 
         .al
         .autsiz
         .databank ?
 
+        ; When bit 15 of wMapStateFlags is set: picks up the active unit and opens its unit menu in the mode in bits 0-1 (aQueuedUnitMenuOpeners). SEC unless the map step is 11.
+
         lda wMapStateFlags,b
         bpl _CLC
 
-          lda wUnknown00171A,b
+          lda wEventEngineFlags,b
           bne _CLC
 
             lda wMapCursorState,b
@@ -1395,10 +1270,10 @@
                 asl a
                 adc $00
                 tax
-                lda aUnknown81AFAE,x
+                lda aQueuedUnitMenuOpeners,x
                 sta $33
                 sep #$20
-                lda aUnknown81AFAE+2,x
+                lda aQueuedUnitMenuOpeners+2,x
                 sta $33+2
                 pha
                 plb
@@ -1410,7 +1285,7 @@
               trb wMapStateFlags,b
 
               lda wGameStateStep,b
-              cmp #11
+              cmp #MAP_STEP_RESUME
               beq _CLC
 
                 sec
@@ -1422,7 +1297,7 @@
 
         .databank 0
 
-      aUnknown81AFAE ; 81/AFAE
+      aQueuedUnitMenuOpeners ; 81/AFAE
 
         .long rlOpenUnitMenu
         .long rlOpenUnitMenuMode1
@@ -1436,13 +1311,15 @@
       .al
       .xl
 
-      rsUnknown81AFB7 ; 81/AFB7
+      rsRelocateShowSeizePopUp ; 81/AFB7
 
         .al
         .autsiz
         .databank ?
 
-        lda wUnknown000D79,b
+        ; Relocation type 5: the seize popup for castle wUnitRelocationLocationID, unless the chapter has ended (bit 10 of wChapterFlags).
+
+        lda wChapterFlags,b
         bit #$0400
         bne +
 
@@ -1459,25 +1336,27 @@
 
         .databank 0
 
-      rsUnknown81AFD4 ; 81/AFD4
+      rsShowQueuedGoldPopUp ; 81/AFD4
 
         .al
         .autsiz
         .databank ?
 
-        lda wPhaseScratch000D8D,b
+        ; Shows the gold popup for wVillageGoldPopUpAmount (a village's gold) and clears it. SEC if it showed.
+
+        lda wVillageGoldPopUpAmount,b
         bmi _CLC
 
           jsl rlRedrawVisibleMapTilemap
 
-          lda wPhaseScratch000D8D,b
+          lda wVillageGoldPopUpAmount,b
           sta aProcSystem.wInput2,b
           lda #$0D00
           sta aProcSystem.wInput3,b
           jsl rlOpenGoldPopUp
 
           lda #$FFFF
-          sta wPhaseScratch000D8D,b
+          sta wVillageGoldPopUpAmount,b
           sec
           bra +
 
@@ -1499,12 +1378,14 @@
       .al
       .xl
 
-      rsUnknown81AFF8 ; 81/AFF8
+      rsRelocateChapterEndSavePrompt ; 81/AFF8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Relocation type 6 (rlSaveChapterTurncount, the end of a chapter): opens the save prompt.
 
         jsl rlOpenSavePrompt
         sec
@@ -1522,13 +1403,15 @@
       .al
       .xl
 
-      rsUnknown81AFFE ; 81/AFFE
+      rsRelocateRemoveHelpedUnit ; 81/AFFE
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Relocation type 7 (rlUnitHelp): the unit in wUnitRelocationLocationID is undeployed and deleted, with the scene of rlUnknown9EAC5A.
 
         ldx wUnitRelocationLocationID,b
         lda aDeploymentTable._UnitRAMPointer,x
@@ -1551,12 +1434,14 @@
       .al
       .xl
 
-      rsUnknown81B016 ; 81/B016
+      rsRelocateShowItemPopUp ; 81/B016
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Relocation type 8 (an event gave an item): shows the item popup for the item in wUnitRelocationLocationID.
 
         lda wUnitRelocationLocationID,b
         jsl rlGetItemRAMStructEntryByPlayerItemIndex
@@ -1572,12 +1457,14 @@
 
         ; 81/B030
 
-      rsUnknown81B030 ; 81/B030
+      rsRelocateRescuedUnits ; 81/B030
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Relocation type 9 (the Rescue staff): the unit and the target go into the castle wUnitRelocationLocationID and the castle screen opens. A piece of unreachable code follows (event action 4, as in rsRelocateIntoCastle).
 
         ldx wUnitRelocationDeploymentOffset,b
         lda wUnitRelocationLocationID,b
@@ -1589,7 +1476,7 @@
         stz wTargetEventLocationEntry,b
         jsl rlRefreshUnitWindow
         lda #$0040
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         phx
         stz wGameStateRoutine1,b
         lda #$0000
@@ -1618,13 +1505,15 @@
       .al
       .xl
 
-      rlUnknown81B088 ; 81/B088
+      rlHandleDefeatedUnit ; 81/B088
 
         .al
         .autsiz
         .databank ?
 
-        lda wUnknown00171A,b
+        ; For wDefeatedUnitDeploymentOffset: a defeated player lord (generation ID 1) starts the game over event; the unit is hidden unless a battle skill (bit 0 of TriggerableSkills) saved it; event action $17 runs (character, army). SEC if there was one.
+
+        lda wEventEngineFlags,b
         bne _CLC
 
           lda wDefeatedUnitDeploymentOffset,b
@@ -1642,7 +1531,7 @@
               bne +
 
                 lda #0
-                jsl rlUnknown81B32C
+                jsl rlStartGameOverEvent
 
             +
             lda aActionStructUnit1.TriggerableSkills
@@ -1677,13 +1566,15 @@
 
         .databank 0
 
-      rsUnknown81B0E5 ; 81/B0E5
+      rsResumeCantoMove ; 81/B0E5
 
         .al
         .autsiz
         .databank ?
 
-        lda wUnknown000D79,b
+        ; When bit 13 of wChapterFlags is set (rlCheckActiveUnitCanto): picks up the unit under the cursor again for its canto move. SEC if it did.
+
+        lda wChapterFlags,b
         bit #$2000
         beq _CLC
 
@@ -1702,7 +1593,7 @@
           
           +
           lda #$2000
-          trb wUnknown000D79,b
+          trb wChapterFlags,b
           sec
           bra +
         
@@ -1714,15 +1605,16 @@
 
         .databank 0
 
-      rsUnknown81B116 ; 81/B116
+      rsRunActionEndedEvents ; 81/B116
 
         .al
         .autsiz
         .databank ?
 
-        ; Prepares after action location based events
+        ; Runs event action 3 for wActionEndedDeploymentOffset (character, X, Y, army): a unit ended its action on a tile. SEC if there was one.
 
-        lda wPhaseScratch000D8B,b
+
+        lda wActionEndedDeploymentOffset,b
         bmi _CLC
 
           tax
@@ -1743,10 +1635,10 @@
           jsl rlGetAndRunChapterMapEventConditions
 
           lda #$FFFF
-          sta wPhaseScratch000D8B,b
+          sta wActionEndedDeploymentOffset,b
 
           lda #$8000
-          trb wUnknown000D79,b
+          trb wChapterFlags,b
           sec
           bra +
 
@@ -1758,22 +1650,23 @@
 
         .databank 0
 
-      rlUnknown81B15A ; 81/B15A
+      rlApplyBufferedDeploymentStates ; 81/B15A
 
         .al
         .autsiz
         .databank ?
 
-        ; Updates the Deployment state with buffered values
+        ; When bit 2 of wChapterFlags is set: copies aDeploymentTable._StateBuffer to _State for all 72 units. SEC if it did. Not during an event or map step 11.
 
-        lda wUnknown00171A,b
+
+        lda wEventEngineFlags,b
         bne _CLC
 
           lda wGameStateStep,b
-          cmp #11
+          cmp #MAP_STEP_RESUME
           beq _CLC
 
-            lda wUnknown000D79,b
+            lda wChapterFlags,b
             bit #$0004
             beq _CLC
 
@@ -1787,7 +1680,7 @@
                 bpl -
 
               lda #4
-              trb wUnknown000D79,b
+              trb wChapterFlags,b
               sec
               bra +
 
@@ -1799,11 +1692,13 @@
 
         .databank 0
 
-      rlUnknown81B189 ; 81/B189
+      rlCheckActiveUnitCanto ; 81/B189
 
         .al
         .autsiz
         .databank ?
+
+        ; Whether the active unit moves again (canto): alive, not defeated, with DeploymentStateCanto. Builds its range maps; if it can move, sets bits 13 and 15 of wChapterFlags (rsResumeCantoMove), otherwise opens its unit menu in mode 1. SEC if it has canto.
 
         phx
         lda bUnknown000E7B,b
@@ -1811,7 +1706,7 @@
         bne _CLC
 
         ldx wActiveUnitDeploymentOffset,b
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0004
         beq +
 
@@ -1844,9 +1739,9 @@
 
         +
         lda #$2000
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         lda #$8000
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         
         _SEC
         plx
@@ -1862,20 +1757,22 @@
 
         .databank 0
 
-      rlUnknown81B1ED ; 81/B1ED
+      rlShowQueuedSeizePopUpUnused ; 81/B1ED
 
         .al
         .autsiz
         .databank ?
 
+        ; Nothing reaches this. A variant of rsRelocateShowSeizePopUp that creates the seize popup as an event proc.
+
         lda wUnitRelocationDeploymentOffset,b
         bmi _End
 
           lda wUnitRelocationType,b
-          cmp #5
+          cmp #UNIT_RELOCATION_SEIZE_POPUP
           bne _End
 
-            lda wUnknown000D79,b
+            lda wChapterFlags,b
             bit #$0400
             bne _End
 
@@ -1905,12 +1802,14 @@
       .al
       .xl
 
-      rlUnknown81B301 ; 81/B301
+      rlAdvanceToNextChapter ; 81/B301
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Stops the music, counts the chapter up, clears wChapterFlags and fades to the chapter save screen (rsOpenChapterSaveTransition).
 
         phb
         php
@@ -1920,9 +1819,9 @@
         lda #$00E0
         jsl rlSendSoundCommand
         inc wCurrentChapter,b
-        stz wUnknown000D79,b
+        stz wChapterFlags,b
         stz wGameStateRoutine1,b
-        lda #$F27C
+        lda #<>rsOpenChapterSaveTransition
         sta aProcSystem.wInput0,b
         lda #(`procMainLoopChangeFade)<<8
         sta lR44+1
@@ -1946,11 +1845,13 @@
       .al
       .xl
 
-      rlUnknown81B32C ; 81/B32C
+      rlStartGameOverEvent ; 81/B32C
 
         .al
         .autsiz
         .databank ?
+
+        ; Starts the game over event (aGameOverEventIDs) for A: 0 the lord fell, 1 the player army was removed; the second pair is for chapters 6 on. Sets map step 12.
 
         phb
         php
@@ -1971,9 +1872,9 @@
           tax
 
         +
-        lda aUnknown81B353,x
+        lda aGameOverEventIDs,x
         jsl rlStartChapterEventByID
-        lda #12
+        lda #MAP_STEP_GAME_OVER
         sta wGameStateStep,b
 
         plx
@@ -1983,313 +1884,91 @@
 
         .databank 0
 
-      aUnknown81B353 ; 81/B353
+      aGameOverEventIDs ; 81/B353
 
-        ; some event IDs
 
         .word $022E
         .word $022F
         .word $0230
         .word $0231
 
-      rlUnknown81B35B ; 81/B35B
-
-        .al
-        .autsiz
-        .databank ?
-
-        jsl rlClearAIActionActiveFlag
-        jsl rlEndUnitAction
-        jsl rlUnknown9E800C
-        rtl
-
-        .databank 0
-
-      rlUnknown81B368 ; 81/B368
-
-        .al
-        .autsiz
-        .databank ?
-
-        lda #$00E0
-        jsl rlSendSoundCommand
-
-        stz wMapActionMode,b
-        stz wGameStateRoutine1,b
-
-        lda wBattleType
-        and #$00FF
-        cmp #0
-        beq +
-
-        lda #<>rsOpenBattleScene
-        sta aProcSystem.wInput0,b
-        lda #(`procMainLoopChangeFade)<<8
-        sta lR44+1
-        lda #<>procMainLoopChangeFade
-        sta lR44
-        jsl rlProcEngineCreateProc
-        bra ++
-
-        +
-        lda #(`aBattleTransitionHDMAInfo)<<8
-        sta lR44+1
-        lda #<>aBattleTransitionHDMAInfo
-        sta lR44
-        jsl rlHDMAEngineCreateEntry
-        
-        +
-        rtl
-
-        .databank 0
-
-        ; 81/B3A6
-
     .endsection Unsorted81B32CSection
 
 
-    .section Unsorted81B3A6Section
+    .section Unsorted84C5D7Section
 
       .al
       .xl
 
-      rlUnknown81B3A6 ; 81/B3A6
+      rlCheckFactionTakesPhase ; 84/C5D7
 
-        ; Found by tools/sweep.py.
         .al
-        .xl
         .autsiz
         .databank ?
 
+        ; SEC if army slot A takes a phase: the player army always does; another needs a name, fielded living units and, if the chapter lists it (rlGetChapterFactionPhaseFlagsPointer), its event flag set.
+
         phb
-        php
-        phk
-        plb
-        .databank $81
         phx
-        lda wUnknown000D79,b
-        bit #$0002
-        beq _B429
-        lda #$0002
-        trb wUnknown000D79,b
-        lda #$0001
-        tsb wUnknown000D79,b
-        lda #(`aUnknown81B42D)<<8
-        sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown81B42D
-        sta lMapMenuTilemapRAMEntryPointer,b
-        lda aEpilogueUnitStates
-        sta wR0
-        lda $7FC54C
-        asl a
-        asl a
-        asl a
-        asl a
-        asl a
-        clc
-        adc wR0
-        asl a
-        tax
-        jsl rlCopyTilemapEntryToBG
-        lda #(`aUnknown81B436)<<8
-        sta lMapMenuTilemapRAMEntryPointer+1,b
-        lda #<>aUnknown81B436
-        sta lMapMenuTilemapRAMEntryPointer,b
-        lda $7FC5AE
-        sta wR0
-        lda $7FC5B0
-        asl a
-        asl a
-        asl a
-        asl a
-        asl a
-        clc
-        adc wR0
-        asl a
-        tax
-        jsl rlCopyTilemapEntryToBG
-        lda $7FC5B0
-        cmp #$0021
-        bcs _B418
-        cmp wMapMenuDirtyTop,b
-        bcs _B418
-        sta wMapMenuDirtyTop,b
+        phy
 
-        _B418
-        clc
-        adc #$0008
-        cmp #$0021
-        bcs _B429
-        cmp wMapMenuDirtyBottom,b
-        bcc _B429
-        sta wMapMenuDirtyBottom,b
+        tax
+        ora #0
+        beq _SEC
 
-        _B429
+          jsl rlGetFactionSlotNameID
+          cmp #$00FF
+          beq _CLC
+
+          txa
+          jsl rlCountFactionFieldedLivingUnits
+          ora #0
+          beq _CLC
+
+            jsl rlGetChapterFactionPhaseFlagsPointer
+
+            lda $24
+            beq _SEC
+
+              txa
+              asl a
+              clc
+              adc $24
+              tay
+
+              sep #$20
+              lda $24+2
+              pha
+              rep #$20
+              plb
+
+              lda $0000,b,y
+              cmp #$FFFF
+              beq _SEC
+
+                lda $0001,b,y
+                and #$00FF
+                sta wEventEngineParameter1,b
+                lda $0000,b,y
+                and #$00FF
+                jsl rlCheckIfEventFlagOfSpecifiedChapterSet
+                bcc _CLC
+        
+        _SEC
+        sec
+        bra +
+        
+        _CLC
+        clc
+        
+        +
+        ply
         plx
-        plp
         plb
-        .databank ?
         rtl
 
         .databank 0
 
-        ; 81/B42D
+        ; 84/C62E
 
-    .endsection Unsorted81B3A6Section
-
-
-    .section Table81B42DSection
-
-      .al
-      .xl
-
-      aUnknown81B42D ; 81/B42D
-        .byte $06, $08, $88, $7B, $7E, $00, $4E, $C5, $7F
-
-      aUnknown81B436 ; 81/B436
-        .byte $06, $08, $88, $7B, $7E, $00, $B2, $C5, $7F
-
-    .endsection Table81B42DSection
-
-
-    .section Unsorted81B4C5Section
-
-      .al
-      .xl
-
-      rlUnknown81B4C5 ; 81/B4C5
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phb
-        php
-        phk
-        plb
-        .databank $81
-        phy
-        lda lChapterEventDataPointer+1,b
-        sta lR18+1
-        ldy lChapterEventDataPointer,b
-        sep #$20
-        lda lChapterEventDataPointer+2,b
-        pha
-        rep #$20
-        plb
-        .databank ?
-        lda structChapterEventData.Unknown1,b,y
-        sta lR18
-        ply
-        plp
-        plb
-        .databank ?
-        rtl
-
-        .databank 0
-
-        ; 81/B4E4
-
-    .endsection Unsorted81B4C5Section
-
-
-    .section Unsorted81B503Section
-
-      .al
-      .xl
-
-      rlUnknown81B503 ; 81/B503
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phb
-        php
-        phk
-        plb
-        .databank $81
-        phy
-        lda lChapterEventDataPointer+1,b
-        sta lR18+1
-        ldy lChapterEventDataPointer,b
-        sep #$20
-        lda lChapterEventDataPointer+2,b
-        pha
-        rep #$20
-        plb
-        .databank ?
-        lda structChapterEventData.Unknown3,b,y
-        sta lR18
-        ply
-        plp
-        plb
-        .databank ?
-        rtl
-
-        .databank 0
-
-        ; 81/B522
-
-    .endsection Unsorted81B503Section
-
-
-    .section Table81B522Section
-
-      .al
-      .xl
-
-      aUnknown81B522 ; 81/B522
-        .word $0068, $00D7, <>rlUnknown81B52A, <>aUnknown81B54A
-
-    .endsection Table81B522Section
-
-
-    .section Unsorted81B52ASection
-
-      .al
-      .xl
-
-      rlUnknown81B52A ; 81/B52A
-
-        ; Found through fe4.cdl.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        sep #$20
-
-        _B52C
-        lda $4212,b
-        bit #$40
-        beq _B52C
-        lda #$80
-        sta $2100,b
-        rep #$20
-        jsl rlUploadMapRowAndColumn
-        sep #$20
-        lda bBufferINIDISP
-        and #$80
-        sta $2100,b
-        rep #$20
-        rtl
-
-        .databank 0
-
-        ; 81/B54A
-
-    .endsection Unsorted81B52ASection
-
-
-    .section Table81B54ASection
-
-      .al
-      .xl
-
-      aUnknown81B54A ; 81/B54A
-        .word <>rsIRQCodeHalt
-
-    .endsection Table81B54ASection
+    .endsection Unsorted84C5D7Section

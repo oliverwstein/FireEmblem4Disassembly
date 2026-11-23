@@ -991,7 +991,7 @@
 
         ; Step 0, once the fade in is done. Finishes cursor moves (each takes two frames
         ; of 8 pixels); B closes (fading into rsUnknown80B122, or through rlFadeToCastleScreen
-        ; when bit 5 of wUnknown000D79 is set); X shows the selected army's details (step
+        ; when bit 5 of wChapterFlags is set); X shows the selected army's details (step
         ; 1); up and down move between armies.
 
         lda bBufferINIDISP
@@ -1032,7 +1032,7 @@
         _CF6E
         lda #$0021
         jsl rlPlaySoundEffect
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _CF9E
         lda #$0000

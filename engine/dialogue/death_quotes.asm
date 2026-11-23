@@ -199,7 +199,7 @@
 
         sta lR19
 
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         bit #$0001
         bne _End
 

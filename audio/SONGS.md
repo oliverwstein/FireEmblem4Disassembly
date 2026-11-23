@@ -90,23 +90,23 @@ here names a song; it is the evidence to name them from.
 
 ## $11 (`aSoundScriptF7962C`) `SONG_PLAYER_PHASE_PROLOGUE`, sound test 0
 
-- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Prologue, `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Prologue
+- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Prologue, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Prologue
 - **script**: deferred upload FD `aSoundUploadF7A058` ($065 $146 $147 @7400 $0D7 $0D8 $0D9 $0DA $0DB $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $12 (`aSoundScriptF79636`) `SONG_PLAYER_PHASE_CHAPTER6`, sound test 6
 
-- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 6, `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Chapter 6
+- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 6, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 6
 - **script**: deferred upload FD `aSoundUploadF7A072` ($06B $152 $153 @7400 $0DC $0DD $0D8 $0DE $0DF $0E0 $0E1 $0E2 $0E3 $0E4 $0E5 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $13 (`aSoundScriptF79640`) `SONG_PLAYER_PHASE_CHAPTER1`, sound test 1
 
-- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 1, `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Chapter 1
+- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 1, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 1
 - **script**: deferred upload FD `aSoundUploadF7A098` ($066 $148 $149 @7400 $0DC $0E0 $0D8 $0E6 $0E7 $0E2 $0E3 $0E8 $0E4 $0E5 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $14 (`aSoundScriptF7964A`) `SONG_PLAYER_PHASE_CHAPTER4`, sound test 4
 
 - **dialogue** (1): Chapter04/LowerBridge
-- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 4, `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Chapter 4
+- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 4, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 4
 - **script**: deferred upload FD `aSoundUploadF7A0BC` ($069 $14E $14F @7400 $0DC $0E9 $0D8 $0EA $0EB $0EC $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $15 (`aSoundScriptF795D6`)
@@ -127,7 +127,7 @@ here names a song; it is the evidence to name them from.
 
 ## $18 (`aSoundScriptF79654`) `SONG_PLAYER_PHASE_CHAPTER7`, sound test 7
 
-- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 7, `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Chapter 7
+- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 7, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 7
 - **script**: deferred upload FD `aSoundUploadF7A0F4` ($06C $154 $155 @7400 $0F3 $0F4 $0E0 $0F5 $0F6 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $19 (`aSoundScriptF79730`), sound test 23
@@ -143,12 +143,12 @@ here names a song; it is the evidence to name them from.
 
 ## $1B (`aSoundScriptF7965E`) `SONG_PLAYER_PHASE_CHAPTER10`, sound test 10
 
-- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 10, `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Chapter 10
+- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 10, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 10
 - **script**: deferred upload FD `aSoundUploadF7A10E` ($06F $15A $15B @7400 $0DC $0F0 $0D8 $0EA $0F7 $0F8 $0E8 $0E4 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $1C (`aSoundScriptF79668`) `SONG_PLAYER_PHASE_CHAPTER3`, sound test 3
 
-- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 3, `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Chapter 3
+- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 3, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 3
 - **script**: deferred upload FD `aSoundUploadF7A12E` ($068 $14C $14D @7400 $0F9 $0FA $0FB $0FC $0E7 $0E2 $0E4 $0FD $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $1D (`aSoundScriptF79672`) `SONG_ALLIED_PHASE`, sound test 25
@@ -159,7 +159,7 @@ here names a song; it is the evidence to name them from.
 
 ## $1E (`aSoundScriptF7967C`) `SONG_PLAYER_PHASE_CHAPTER8`, sound test 8
 
-- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 8, `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Chapter 8
+- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 8, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 8
 - **script**: deferred upload FD `aSoundUploadF7A168` ($06D $156 $157 @7400 $0DC $0EF $0DE $0FE $0EA $0DA $0FF $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $1F (`aSoundScriptF79686`), sound test 17
@@ -191,7 +191,7 @@ here names a song; it is the evidence to name them from.
 
 ## $24 (`aSoundScriptF796EA`) `SONG_PLAYER_PHASE_CHAPTER9`, sound test 9
 
-- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 9, `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Chapter 9
+- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 9, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 9
 - **script**: deferred upload FD `aSoundUploadF7A292` ($06E $158 $159 @7400 $0D7 $0EA $0E4 $0FB $0E0 $0E6 $0F5 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $25 (`aSoundScriptF796F4`), sound test 18
@@ -229,12 +229,12 @@ here names a song; it is the evidence to name them from.
 
 ## $2B (`aSoundScriptF796A4`) `SONG_PLAYER_PHASE_CHAPTER5`, sound test 5
 
-- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 5, `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Chapter 5
+- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 5, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 5
 - **script**: deferred upload FD `aSoundUploadF7A1DA` ($06A $150 $151 @7400 $0D7 $0EE $0E9 $101 $0EA $0F1 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $2C (`aSoundScriptF796AE`) `SONG_PLAYER_PHASE_CHAPTER2`, sound test 2
 
-- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 2, `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Chapter 2
+- **table** (2): `aPlayerPhaseChapterSongIDs` player phase: Chapter 2, `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Chapter 2
 - **script**: deferred upload FD `aSoundUploadF7A1F6` ($067 $14A $14B @7400 $0F9 $0FA $0FB $0E0 $102 $103 $0E1 $104 $0E8 $105 $340 indirect 3C), wait 4; queue command (checked) $00CB
 
 ## $2D (`aSoundScriptF796B8`) `SONG_PLAYER_PHASE_FINAL`, sound test 11
@@ -244,7 +244,7 @@ here names a song; it is the evidence to name them from.
 
 ## $2E (`aSoundScriptF796C2`), sound test 12
 
-- **table** (1): `aUnknown81AB0E` first phase of the chapter (rsUnknown81AAFB): Final chapter
+- **table** (1): `aChapterFirstPhaseSongIDs` first phase of the chapter (rsStartChapterFirstPhaseSong): Final chapter
 - **script**: deferred upload FD `aSoundUploadF7A21A` ($070 $15C $15D @7400 $106 $0D9 $0F4 $0DF $107 $103 $0E1 $104 $0E4 $105 $340 indirect 3C), wait 4; queue command (checked) $00CC
 
 ## $2F (`aSoundScriptF795C4`)

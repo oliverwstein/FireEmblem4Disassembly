@@ -138,7 +138,7 @@
 
 
         _B03F
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0800
         bne _B079
         ldx wActiveUnitDeploymentOffset,b
@@ -198,7 +198,7 @@
         .autsiz
         .databank ?
 
-        ; With bit 11 of wUnknown000D79 set and a unit selected: hides the range, puts the cursor back on the active unit and acts (rlRunMapAction) with the cursor's tile in wR2/wR3.
+        ; With bit 11 of wChapterFlags set and a unit selected: hides the range, puts the cursor back on the active unit and acts (rlRunMapAction) with the cursor's tile in wR2/wR3.
 
         lda #MAP_CURSOR_FREE
         sta wMapCursorState,b
@@ -252,7 +252,7 @@
         sta wR3
         jsl rlRunMapAction
         lda #$0800
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         rts
 
         .databank 0
@@ -300,7 +300,7 @@
         lda aDeploymentTable,x
         bit #$0010
         bne _B183
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0800
         bne _B198
         lda #$0021
@@ -355,7 +355,7 @@
         lda #$0008
         tsb wMapSystemFlags,b
         lda #$0800
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         rts
 
         .databank 0

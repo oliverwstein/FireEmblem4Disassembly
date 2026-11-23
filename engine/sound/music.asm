@@ -1,5 +1,7 @@
 ; Choosing music: the songs for each faction's phase in each chapter, and the
-; victory theme. The unknown routines here sit next to them in the ROM.
+; victory theme, the chapter's first-phase song, and resuming the phase song
+; (rlResumePhaseMusic) after an event or another screen. Bank $81; the map step
+; that uses them is in engine/map/map_step.asm.
 
     .section GetActiveFactionSongIDSection
 
@@ -192,13 +194,14 @@
 
         .databank 0
 
-      rsUnknown81AAFB ; 81/AAFB
+      rsStartChapterFirstPhaseSong ; 81/AAFB
 
         .al
         .autsiz
         .databank ?
 
-        ; Loads enemy music?
+        ; The first phase of a chapter: plays the victory theme if every enemy is gone, otherwise the chapter's first-phase song (aChapterFirstPhaseSongIDs).
+
 
         jsl rlGetVictoryThemeIfAllEnemiesDead
         bcs +
@@ -206,7 +209,7 @@
           lda wCurrentChapter,b
           asl a
           tax
-          lda aUnknown81AB0E,x
+          lda aChapterFirstPhaseSongIDs,x
 
         +
         sta wMusicID,b
@@ -214,9 +217,8 @@
 
         .databank 0
 
-      aUnknown81AB0E ; 81/AB0E
+      aChapterFirstPhaseSongIDs ; 81/AB0E
 
-        ; Song IDs?
 
         .word $0011
         .word $0013
@@ -231,22 +233,24 @@
         .word $001B
         .word $002E
 
-      rlUnknown81AB26 ; 81/AB26
+      rlResumePhaseMusic ; 81/AB26
 
         .al
         .autsiz
         .databank ?
 
+        ; Plays wPhaseSongID again unless it is already playing (after an event, a scene or the castle screen).
+
         lda bAPUStatus,b
         bit #$0002
         beq +
 
-        lda $0DAB,b
+        lda wPhaseSongID,b
         cmp aSoundScriptPrevious,b
         beq _End
 
         +
-        lda $0DAB,b
+        lda wPhaseSongID,b
         beq _End
 
         sta wMusicID,b
@@ -256,11 +260,13 @@
 
         .databank 0
 
-      rlUnknown81AB3F ; 81/AB3F
+      rlCheckVictoryTheme ; 81/AB3F
 
         .al
         .autsiz
         .databank ?
+
+        ; When every enemy is gone: makes the victory theme the phase song and, unless an event is running, fades the music over to it.
 
         phb
         php
@@ -270,10 +276,10 @@
         jsl rlGetVictoryThemeIfAllEnemiesDead
         bcc _End
 
-          sta $0DAB,b
+          sta wPhaseSongID,b
           sta aProcSystem.wInput0,b
 
-          lda wUnknown00171A,b
+          lda wEventEngineFlags,b
           bne _End
 
             lda #$00E1
@@ -292,106 +298,7 @@
 
         .databank 0
 
-      rsUnknown81AB6B ; 81/AB6B
-
-        .al
-        .autsiz
-        .databank ?
-
-        lda wUnknown00171A,b
-        bne _End
-
-          jsl rlUnknown84C33D
-
-          lda wActiveFactionSlot,b
-          jsl rlRunTurnStartEffectsForAllUnitsInFaction
-          jsl rlEnableAIEngineCycle
-
-          lda wActiveFactionSlot,b
-          jsl rlUnknown84C5D7
-          bcc +
-
-            jsl rlUnknown81A9D4
-
-          +
-          inc wGameStateStep,b
-        
-        _End
-        rts
-
-        .databank 0
-
     .endsection PlayerPhaseChapterSongIDsSection
-
-
-    .section Unknown81AB90Section
-
-      .al
-      .xl
-
-      rsUnknown81AB90 ; 81/AB90
-
-        .al
-        .autsiz
-        .databank ?
-
-        ; Handle turn start healing animations?
-
-        lda $7E2002
-        beq _ABF1
-
-          lda $7E2000
-          tax
-          clc
-          adc #5
-          sta $7E2000
-
-          lda $7E2006,x
-          and #$00FF
-          sta aProcSystem.wInput0,b
-
-          lda aDebugMenuSkillFlags.bAdept,x
-          and #$00FF
-          xba
-          ora aProcSystem.wInput0,b
-          sta aProcSystem.wInput0,b
-
-          lda $7E2008,x
-          and #$00FF
-          sta aProcSystem.wInput1,b
-
-          lda aDebugMenuSkillFlags.bWrath,x
-          and #$00FF
-          sta aProcSystem.wInput2,b
-
-          lda $7E2004,x
-          and #$00FF
-          sta aProcSystem.wInput3,b
-
-          lda #(`procMapExperienceWindow)<<8
-          sta $62+1
-          lda #<>procMapExperienceWindow
-          sta $62
-          jsl rlProcEngineCreateProc
-
-          lda $7E2002
-          dec a
-          sta $7E2002
-          rts
-
-        _ABF1
-        jsl rlShowMapWindows
-
-        lda #$0004
-        tsb wMapSystemFlags,b
-
-        jsr rsUnknown81AC02
-        inc wGameStateStep,b
-        rts
-
-        .databank 0
-
-    .endsection Unknown81AB90Section
 
 
     .section ProcScript8283E3Section

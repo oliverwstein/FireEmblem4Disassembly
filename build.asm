@@ -171,6 +171,7 @@
   .include "engine/map/phase_banner.asm"
   .include "engine/map/windows.asm"
   .include "engine/map/map_actions.asm"
+  .include "engine/map/map_step.asm"
   .include "engine/menus/map_menu.asm"
   .include "engine/menus/main_map_menu.asm"
   .include "engine/menus/unit_menu.asm"
@@ -188,7 +189,6 @@
   .include "engine/map/map_loop.asm"
   .include "engine/core/boot.asm"
   .include "engine/sound/driver.asm"
-  .include "engine/unsorted/bank81.asm"
   .include "engine/unsorted/bank84.asm"
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
@@ -858,6 +858,8 @@
 
       .dsection PlayerPhaseChapterSongIDsSection
 
+      .dsection MapStepStartPhaseSection
+
       .dsection Unknown81AB90Section
 
       .dsection Unsorted81AC02Section
@@ -897,6 +899,8 @@
       .dsection Unsorted81B301Section
 
       .dsection Unsorted81B32CSection
+
+      .dsection StartBattleFromMapSection
 
       .dsection Unsorted81B3A6Section
 

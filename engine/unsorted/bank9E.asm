@@ -2538,7 +2538,7 @@
         bpl _8FEA
 
         _8FD0
-        jsl rlUnknown81AE16
+        jsl rlCheckQueuedRelocationMovesUnit
         stz wR15
         rol wR15
         lda wR15
@@ -5628,9 +5628,9 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
         sta aProcSystem.aHeaderBitfield,b,x
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         and #$7FFF
-        sta wUnknown000D79,b
+        sta wChapterFlags,b
         lda #$0000
         sta $7F4C0F
         lda #$FFFF
@@ -5698,9 +5698,9 @@
         ora #$0001
         sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown9E8F6A
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         ora #$8000
-        sta wUnknown000D79,b
+        sta wChapterFlags,b
         bra _A2F6
 
 
@@ -10013,7 +10013,7 @@
         bcs _C9FC
         lda $7F4C87
         bne _C9E3
-        jsl rlUnknown81B189
+        jsl rlCheckActiveUnitCanto
 
         _C9E3
         lda aProcSystem.aBody7,b,x

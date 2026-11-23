@@ -15791,7 +15791,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown81AB26
+        jsl rlResumePhaseMusic
         plx
         rtl
 

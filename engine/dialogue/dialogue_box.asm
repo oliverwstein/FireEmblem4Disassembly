@@ -2,7 +2,9 @@
 ; boxes, freeing and closing them (rlCloseDialogueBox, rlCheckDialogueBoxesClosed).
 ; At the end, helpers from bank $85 the dialogue code calls whose purpose is not
 ; worked out yet (rlUnknown85BCD4, rlUnknown85BD12, rlUnknown85BD93) and an
-; unreached proc (procUnknown85C01F).
+; unreached proc (procUnknown85C01F). Last, from bank $81, rlRedrawDialogueBoxTilemaps:
+; each frame on the map it copies the two boxes' tilemaps when bit 1 of
+; wChapterFlags asks for it.
 
     .section DialogueBoxSection
 
@@ -98,7 +100,7 @@
         lda #<>rlProcDialogueBoxCycle3
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0002
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         rtl
 
         .databank 0
@@ -110,7 +112,7 @@
         .databank ?
 
         lda #$0002
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
 
         jsl rlCheckDialogueBoxHDMAFinished
         bcs +
@@ -177,7 +179,7 @@
         jsl rlGetMapMenuRows
         jsl rlMapMenuBuildTilemap
         lda #$0002
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         rtl
 
         .databank 0
@@ -194,7 +196,7 @@
           lda aProcSystem.aBody5,b,x
           sta aProcSystem.wInput0,b
           lda #$0002
-          tsb wUnknown000D79,b
+          tsb wChapterFlags,b
           jsl rlLoadMapMenuEntryPointerFromProcBody
           jsl rlGetMapMenuTilemapArea
           sec
@@ -207,7 +209,7 @@
         jsl rlCloseMapMenuFromProc
         jsl rlFreeDialogueBoxHDMA
         lda #$0002
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         lda #<>rlProcDialogueBoxCycle6
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
@@ -1836,5 +1838,111 @@
         ; 85/C0C7
 
     .endsection Unsorted85C0BASection
+
+
+    .section Unsorted81B3A6Section
+
+      .al
+      .xl
+
+      rlRedrawDialogueBoxTilemaps ; 81/B3A6
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Every frame on the map: when bit 1 of wChapterFlags is set (a dialogue box moved), clears it, sets bit 0 and copies the two dialogue boxes' tilemaps ($7FC54E and $7FC5B2, at the tiles in $7FC54A/$7FC54C and $7FC5AE/$7FC5B0) to the map menu buffer, widening its dirty rows.
+
+        phb
+        php
+        phk
+        plb
+        .databank $81
+        phx
+        lda wChapterFlags,b
+        bit #$0002
+        beq _B429
+        lda #$0002
+        trb wChapterFlags,b
+        lda #$0001
+        tsb wChapterFlags,b
+        lda #(`aDialogueBox1TilemapEntry)<<8
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #<>aDialogueBox1TilemapEntry
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda aEpilogueUnitStates
+        sta wR0
+        lda $7FC54C
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR0
+        asl a
+        tax
+        jsl rlCopyTilemapEntryToBG
+        lda #(`aDialogueBox2TilemapEntry)<<8
+        sta lMapMenuTilemapRAMEntryPointer+1,b
+        lda #<>aDialogueBox2TilemapEntry
+        sta lMapMenuTilemapRAMEntryPointer,b
+        lda $7FC5AE
+        sta wR0
+        lda $7FC5B0
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR0
+        asl a
+        tax
+        jsl rlCopyTilemapEntryToBG
+        lda $7FC5B0
+        cmp #$0021
+        bcs _B418
+        cmp wMapMenuDirtyTop,b
+        bcs _B418
+        sta wMapMenuDirtyTop,b
+
+        _B418
+        clc
+        adc #$0008
+        cmp #$0021
+        bcs _B429
+        cmp wMapMenuDirtyBottom,b
+        bcc _B429
+        sta wMapMenuDirtyBottom,b
+
+        _B429
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 81/B42D
+
+    .endsection Unsorted81B3A6Section
+
+
+    .section Table81B42DSection
+
+      .al
+      .xl
+
+      aDialogueBox1TilemapEntry ; 81/B42D
+        .byte $06, $08, $88, $7B, $7E, $00, $4E, $C5, $7F
+
+      aDialogueBox2TilemapEntry ; 81/B436
+        .byte $06, $08, $88, $7B, $7E, $00, $B2, $C5, $7F
+
+    .endsection Table81B42DSection
 
 

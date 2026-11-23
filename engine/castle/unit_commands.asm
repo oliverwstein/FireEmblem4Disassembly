@@ -75,7 +75,7 @@
         .autsiz
         .databank ?
 
-        ; Deploys the unit one tile north of its home castle tile and sets bit $0040 of wUnknown000D79; carry set if already fielded.
+        ; Deploys the unit one tile north of its home castle tile and sets bit $0040 of wChapterFlags; carry set if already fielded.
 
         phb
         php
@@ -100,7 +100,7 @@
         lda wEventLocationEntry,b
         sta wTargetEventLocationEntry,b
         lda #$0040
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         plp
         plb
         .databank $84

@@ -472,7 +472,7 @@
         lda #1
         trb bEventStatus,b
 
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         bit #$0008
         bne +
 
@@ -740,7 +740,7 @@
         lda #2
         trb bEventStatus,b
 
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         bit #$0008
         bne _SEC
         
@@ -4448,7 +4448,7 @@
             jsl rlGiveItemToUnitCheckEncumbered
 
             stz wUnitRelocationDeploymentOffset,b
-            lda #8
+            lda #UNIT_RELOCATION_ITEM_POPUP
             sta wUnitRelocationType,b
             lda wRoutineVariable1,b
             sta wUnitRelocationLocationID,b
@@ -4482,7 +4482,7 @@
             jsl rlFlagEquippedInventorySlotAndGetStatBonus
             stz wUnitRelocationDeploymentOffset,b
 
-            lda #8
+            lda #UNIT_RELOCATION_ITEM_POPUP
             sta wUnitRelocationType,b
             lda $0002,b,y
             and #$00FF
@@ -4515,7 +4515,7 @@
             jsl rlGiveItemToUnitCheckEncumbered
 
             stz wUnitRelocationDeploymentOffset,b
-            lda #8
+            lda #UNIT_RELOCATION_ITEM_POPUP
             sta wUnitRelocationType,b
             lda wRoutineVariable1,b
             sta wUnitRelocationLocationID,b
@@ -6872,7 +6872,7 @@
         lda #$FFFF
         sta wCurrentTurn,b
         lda #$0400
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         jsl rlClearUnitWindowAndTerrainWindowProcs
 
         lda wCurrentChapter,b
@@ -6881,7 +6881,7 @@
 
           lda wActiveUnitDeploymentOffset,b
           sta wUnitRelocationDeploymentOffset,b
-          lda #6
+          lda #UNIT_RELOCATION_SAVE_PROMPT
           sta wUnitRelocationType,b
           bra +
 
@@ -6997,7 +6997,7 @@
         phx
 
         lda #$0010
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
 
         ldx wSelectedUnitDataRAMPointer,b
         lda #$2100
@@ -7175,12 +7175,12 @@
         .autsiz
         .databank ?
 
-        ; Validates A < $0232 and wUnknown00171A==0, reads aEventPointers, starts script via rlStartEventScript
+        ; Validates A < $0232 and wEventEngineFlags==0, reads aEventPointers, starts script via rlStartEventScript
 
         phb
         sta wR0
 
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         bne _SEC
 
           stz wUnknown00171C,b
@@ -7218,7 +7218,7 @@
         .autsiz
         .databank ?
 
-        ; Writes lR18 to lActiveEventPointer, zeroes wActiveEventOffset, sets wUnknown00171A=9
+        ; Writes lR18 to lActiveEventPointer, zeroes wActiveEventOffset, sets wEventEngineFlags=9
 
         phb
         lda lR18
@@ -7229,7 +7229,7 @@
         stz wActiveEventOffset,b
 
         lda #9
-        sta wUnknown00171A,b
+        sta wEventEngineFlags,b
         plb
         rtl
 

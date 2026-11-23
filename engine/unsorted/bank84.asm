@@ -511,7 +511,7 @@
         sta wR0
         lda #$2100
         sta wR1
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0010
         bne _B530
         jsl rlUnknown87A082
@@ -531,7 +531,7 @@
         jsl rlActionStructBuildBattleRounds
         lda #$003B
         sta wBattleSong
-        jsl rlUnknown81B368
+        jsl rlStartBattleScene
 
         _B54D
         plp
@@ -612,11 +612,11 @@
         bcs _Off
 
         ; On
-        jsl rlUnknown81B368
+        jsl rlStartBattleScene
         bra +
 
         _Off
-        jsl rlUnknown81B35B
+        jsl rlStartMapBattle
 
         +
         rtl
@@ -798,83 +798,6 @@
     .endsection Unsorted84C412Section
 
 
-    .section Unsorted84C5D7Section
-
-      .al
-      .xl
-
-      rlUnknown84C5D7 ; 84/C5D7
-
-        .al
-        .autsiz
-        .databank ?
-
-        phb
-        phx
-        phy
-
-        tax
-        ora #0
-        beq _SEC
-
-          jsl rlGetFactionSlotNameID
-          cmp #$00FF
-          beq _CLC
-
-          txa
-          jsl rlCountFactionFieldedLivingUnits
-          ora #0
-          beq _CLC
-
-            jsl rlUnknown81B503
-
-            lda $24
-            beq _SEC
-
-              txa
-              asl a
-              clc
-              adc $24
-              tay
-
-              sep #$20
-              lda $24+2
-              pha
-              rep #$20
-              plb
-
-              lda $0000,b,y
-              cmp #$FFFF
-              beq _SEC
-
-                lda $0001,b,y
-                and #$00FF
-                sta wEventEngineParameter1,b
-                lda $0000,b,y
-                and #$00FF
-                jsl rlCheckIfEventFlagOfSpecifiedChapterSet
-                bcc _CLC
-        
-        _SEC
-        sec
-        bra +
-        
-        _CLC
-        clc
-        
-        +
-        ply
-        plx
-        plb
-        rtl
-
-        .databank 0
-
-        ; 84/C62E
-
-    .endsection Unsorted84C5D7Section
-
-
     .section Unsorted84C62ESection
 
       .al
@@ -956,7 +879,7 @@
         and #$FFF7
         sta aDeploymentTable._StateBuffer,x
         lda #$0004
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         plx
         lda $0006,b,x
         sta wSelectedUnitDataRAMPointer,b

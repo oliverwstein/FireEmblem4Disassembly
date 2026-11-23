@@ -3413,7 +3413,7 @@
         ldx #1
         jsr rsUnknown9197DC
         lda #$0002
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         inc aDialogue.wCommandCycle,b
         rts
 
@@ -4476,7 +4476,7 @@
         _944B
         jsr rsUnknown9197DC
         lda #$0002
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         rtl
 
         .databank 0
@@ -5189,10 +5189,10 @@
           dec x
           bne _OuterLoop
 
-        lda wUnknown000D79
+        lda wChapterFlags
         ora #$0001
         ora #$0002
-        sta wUnknown000D79
+        sta wChapterFlags
         plx
         plp
         rts

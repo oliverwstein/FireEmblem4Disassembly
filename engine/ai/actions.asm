@@ -1493,7 +1493,7 @@
               cmp #$00FF
               bne _SEC 
 
-                lda #4
+                lda #UNIT_RELOCATION_SORTIE
                 sta wUnitRelocationType,b
                 lda wSelectedUnitDataRAMPointer,b
                 sta wUnitRelocationLocationID,b

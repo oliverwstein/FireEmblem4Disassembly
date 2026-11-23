@@ -24,8 +24,8 @@ The status screen is opened from several places, and closing it goes back to whi
 |---|---|---|---|
 | the unit window (A on a unit not on the map) | `rsUnitWindowOpen` | speed 5 | the unit window, which keeps its place because `wUnitWindowCaller` is `rsOpenStatusScreen` |
 | the revive screen (X) | `rsReviveScreenOpen` | speed 1 | the revive screen, with its cursor (saved in `wItemWindowCursorRow`) |
-| the castle courtyard | `rsOpenCastleScreen` | speed 1 | the castle (bit 5 of `wUnknown000D79` is set there) |
-| the map (X on a unit) | `rsUnknown80B122` | none: starts at full brightness | the map, or the castle if bit 5 of `wUnknown000D79` is set |
+| the castle courtyard | `rsOpenCastleScreen` | speed 1 | the castle (bit 5 of `wChapterFlags` is set there) |
+| the map (X on a unit) | `rsUnknown80B122` | none: starts at full brightness | the map, or the castle if bit 5 of `wChapterFlags` is set |
 
 ## The status screen
 

@@ -483,13 +483,13 @@
 
         php
         rep #$30
-        stz wUnknown00171A,b
+        stz wEventEngineFlags,b
         stz wUnknown00171C,b
         stz wUnknown00171E,b
         stz wActiveEventOffset,b
         jsl rlEventEngineFreeAllProcs
         jsl rlActiveSpriteEngineClearAllSprites
-        jsl rlUnknown818D7B
+        jsl rlStopMapSpriteSounds
         plp
         rtl
 

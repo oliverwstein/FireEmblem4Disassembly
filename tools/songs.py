@@ -184,7 +184,7 @@ def main():
     factions = names_from_csv('data/offset/FactionNameOffsets.csv')
     castles = names_from_csv('data/offset/CastleNameOffsets.csv')
     tables = [('aPlayerPhaseChapterSongIDs', 'player phase', lambda i: CHAPTERS[i]),
-              ('aUnknown81AB0E', 'first phase of the chapter (rsUnknown81AAFB)', lambda i: CHAPTERS[i]),
+              ('aChapterFirstPhaseSongIDs', 'first phase of the chapter (rsStartChapterFirstPhaseSong)', lambda i: CHAPTERS[i]),
               ('aNonPlayerFactionPhaseSongIDs', 'phase of the faction', lambda i: factions[i]),
               ('aUnknown91F7B7', 'per chapter (rlUnknown91F75F)', lambda i: CHAPTERS[i]),
               ('aUnknown8A9D79', 'castle (rlUnknown8A9D39)', lambda i: castles[i])]

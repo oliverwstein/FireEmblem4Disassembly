@@ -289,7 +289,7 @@
         pha
 
         lda #$0001
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
 
         ldy lMapMenuRAMEntryPointer,b
         sep #$20
@@ -2943,7 +2943,7 @@
         ply
         plx
         jsl rlDrawMapMenu
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _85AD
         jsl rlFreeHDMAEntry0

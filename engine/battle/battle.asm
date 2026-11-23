@@ -1,6 +1,73 @@
 ; Setting up and resolving a battle: the combatants' stats, battle music, boss checks,
 ; weapon triangle, leadership and charm, combat skills (vantage, accost, sword skills,
 ; dance), effectiveness, doubling, and each round's hit, crit and damage.
+; First, from bank $81: starting a battle from the map, as a map battle with the
+; animations off (rlStartMapBattle) or the battle scene (rlStartBattleScene).
+
+    .section StartBattleFromMapSection
+
+      .al
+      .xl
+
+      rlStartMapBattle ; 81/B35B
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; A battle with the animations off: ends the unit's action and starts the map battle (rlUnknown9E800C).
+
+        jsl rlClearAIActionActiveFlag
+        jsl rlEndUnitAction
+        jsl rlUnknown9E800C
+        rtl
+
+        .databank 0
+
+      rlStartBattleScene ; 81/B368
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; A battle with the animations on: stops the music and fades to the battle scene, or for battle type 0 starts the battle transition HDMA.
+
+        lda #$00E0
+        jsl rlSendSoundCommand
+
+        stz wMapActionMode,b
+        stz wGameStateRoutine1,b
+
+        lda wBattleType
+        and #$00FF
+        cmp #0
+        beq +
+
+        lda #<>rsOpenBattleScene
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        bra ++
+
+        +
+        lda #(`aBattleTransitionHDMAInfo)<<8
+        sta lR44+1
+        lda #<>aBattleTransitionHDMAInfo
+        sta lR44
+        jsl rlHDMAEngineCreateEntry
+        
+        +
+        rtl
+
+        .databank 0
+
+        ; 81/B3A6
+
+    .endsection StartBattleFromMapSection
+
 
     .section BattleSection
 
@@ -1353,11 +1420,11 @@
         .autsiz
         .databank ?
 
-        ; Types 0 and 1 (attack, staff): builds the battle (battle type 3 while bit 5 of wUnknown000D79 is set, else 0) and its rounds.
+        ; Types 0 and 1 (attack, staff): builds the battle (battle type 3 while bit 5 of wChapterFlags is set, else 0) and its rounds.
 
         jsl rlActionStructGetBattleStats
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
 
         sep #$20
@@ -1469,12 +1536,12 @@
 
         jsr rsActionStructGetBattleInitiatorIfArena
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0010
         bne _Loop
 
           lda #$0010
-          tsb wUnknown000D79,b
+          tsb wChapterFlags,b
 
           jsr rsActionStructGetBattleTriggerableSkillFlags
           jsr rsActionStructAdjustVantageRoundOrder
@@ -1534,7 +1601,7 @@
         jsr rsActionstructGetLevelUpAndDroppedItemData
 
         lda #$0010
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
 
         lda @l wBattleType
         and #$00FF
@@ -1718,7 +1785,7 @@
           bra _End
 
           _DE91
-          jsl rlUnknown81B368
+          jsl rlStartBattleScene
           bra _End
 
           _DE97
@@ -1945,7 +2012,7 @@
         sta lR18
 
         lda #$0010
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         ldy #0
 
           _Loop
@@ -1990,10 +2057,10 @@
         jsl rlAppendNewStructEntry
 
         lda #$0010
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         lda #SONG_BATTLE_BOSS
         sta wBattleSong
-        jsl rlUnknown81B368
+        jsl rlStartBattleScene
 
         ply
         plx
@@ -3703,7 +3770,7 @@
         lda #2
         tsb bBattleRoundFlags
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _EA76
 

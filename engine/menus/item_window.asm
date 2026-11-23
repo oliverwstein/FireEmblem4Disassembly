@@ -873,7 +873,7 @@
         _B476
         lda #$0021
         jsl rlPlaySoundEffect
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _B494
         sep #$20

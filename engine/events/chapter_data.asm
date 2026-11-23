@@ -1,4 +1,7 @@
-; Pointers to per-chapter event, location and UNIT group data.
+; Pointers to per-chapter event, location and UNIT group data, and the fields of
+; structChapterEventData: locations, map changes, arena opponents
+; (rlGetChapterArenaOpponentsPointer), talk events and the event flags that let an
+; army take its phase (rlGetChapterFactionPhaseFlagsPointer).
 
     .section ChapterDataPointerSection
 
@@ -134,3 +137,93 @@
         ; 82/F4F9
 
     .endsection UNITGroupPointerSection
+
+
+    .section Unsorted81B4C5Section
+
+      .al
+      .xl
+
+      rlGetChapterArenaOpponentsPointer ; 81/B4C5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lR18 = the chapter's arena opponents table (structChapterEventData.ArenaOpponentsPointer).
+
+        phb
+        php
+        phk
+        plb
+        .databank $81
+        phy
+        lda lChapterEventDataPointer+1,b
+        sta lR18+1
+        ldy lChapterEventDataPointer,b
+        sep #$20
+        lda lChapterEventDataPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structChapterEventData.ArenaOpponentsPointer,b,y
+        sta lR18
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 81/B4E4
+
+    .endsection Unsorted81B4C5Section
+
+
+    .section Unsorted81B503Section
+
+      .al
+      .xl
+
+      rlGetChapterFactionPhaseFlagsPointer ; 81/B503
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; lR18 = the chapter's table of event flags that let an army take its phase (structChapterEventData.FactionPhaseFlagsPointer).
+
+        phb
+        php
+        phk
+        plb
+        .databank $81
+        phy
+        lda lChapterEventDataPointer+1,b
+        sta lR18+1
+        ldy lChapterEventDataPointer,b
+        sep #$20
+        lda lChapterEventDataPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structChapterEventData.FactionPhaseFlagsPointer,b,y
+        sta lR18
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 81/B522
+
+    .endsection Unsorted81B503Section
+
+

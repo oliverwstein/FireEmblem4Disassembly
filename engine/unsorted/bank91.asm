@@ -252,7 +252,7 @@
         stz wUnknown00171E,b
         stz wActiveEventOffset,b
         stz wUnknown001732,b
-        stz wUnknown00171A,b
+        stz wEventEngineFlags,b
         stz aMovingMapSprites.wState,b
         stz $17BA,b
         stz $17BC,b
@@ -316,7 +316,7 @@
         .databank ?
 
         php
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         bit #$0001
         beq _A400
         lda wUnknown00171C,b
@@ -2115,7 +2115,7 @@
         jsl rlStartNewGameSave
         lda #$0000
         sta aSave,b
-        stz wUnknown000D79,b
+        stz wChapterFlags,b
         lda #$0029
         sta wGameStateStep,b
         rts
@@ -2670,19 +2670,19 @@
         .autsiz
         .databank ?
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0400
         beq _D92F
-        jsl rlUnknown81B301
+        jsl rlAdvanceToNextChapter
         bra _D944
 
 
         _D92F
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         beq _D941
         jsl rlFadeToCastleScreen
-        jsl rlUnknown81AB26
+        jsl rlResumePhaseMusic
         bra _D944
 
 
@@ -2784,7 +2784,7 @@
 
 
         _D9C0
-        jsl rlUnknown81B301
+        jsl rlAdvanceToNextChapter
 
         _D9C4
         rts
@@ -3157,7 +3157,7 @@
         sta bBufferTM
         rep #$20
         lda #$0100
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         stz wGameStateRoutine1,b
         lda #<>rsStartChapterMap
         sta aProcSystem.wInput0,b
@@ -4652,7 +4652,7 @@
         sta wMapMenuTransparentTile,b
         lda #$00C0
         jsl rlQueueSoundCommand
-        stz wUnknown00171A,b
+        stz wEventEngineFlags,b
         plp
         rtl
 

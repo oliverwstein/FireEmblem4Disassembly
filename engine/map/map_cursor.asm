@@ -203,7 +203,7 @@
           jml rlMapAIMoveStep
 
         +
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         beq +
 
           jml _End
@@ -507,7 +507,7 @@
           tsb wMapSystemFlags,b
         
         +
-        lda wUnknown00171A,b
+        lda wEventEngineFlags,b
         beq +
 
           lda #$0010
@@ -1160,13 +1160,13 @@
         jsl rlCloseBattleForecast
         jsl rlOpenUnitMenu
         lda #$0800
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         rtl
 
 
         _A85D
         lda #$0040
-        trb wUnknown000D79,b
+        trb wChapterFlags,b
         lda wActiveUnitDeploymentOffset,b
         tax
         lda aDeploymentTable._XTilePosition,x
@@ -1305,7 +1305,7 @@
         sta wMapXOffset,b
         lda wMapScrollYPixels,b
         sta wMapYOffset,b
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0800
         bne _A994
         jsl rlCloseBattleForecast

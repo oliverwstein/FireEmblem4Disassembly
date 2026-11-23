@@ -59,7 +59,7 @@
         sta wMapItemListRequest
         sta wMapItemListHoveredSlot
         jsl rlSetMapMenuTextColors
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _92BC
         bra _92C3
@@ -281,7 +281,7 @@
         sta lR18
         lda lRoutineVariable+1,b
         sta lR18+1
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _93E7
         lda #$0213
@@ -699,9 +699,9 @@
         .autsiz
         .databank ?
 
-        ; Draws the unit's portrait beside the list (rlUnknown9196EE), except in the castle (bit 5 of wUnknown000D79).
+        ; Draws the unit's portrait beside the list (rlUnknown9196EE), except in the castle (bit 5 of wChapterFlags).
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _96F9
         phx
@@ -754,7 +754,7 @@
         .autsiz
         .databank ?
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0020
         bne _9736
         phy

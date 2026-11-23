@@ -33,10 +33,10 @@
             cmp #3
             beq +
 
-              lda wUnknown00171A,b
+              lda wEventEngineFlags,b
               bne +
 
-                lda wUnknown000D79,b
+                lda wChapterFlags,b
                 bit #$0080
                 bne +
 
@@ -236,7 +236,7 @@
 
           _9E3F
           lda #$0080
-          tsb wUnknown000D79,b
+          tsb wChapterFlags,b
 
           inc wAIEngineCycleType,b
 
@@ -328,7 +328,7 @@
 
             +
             lda #$0080
-            tsb wUnknown000D79,b
+            tsb wChapterFlags,b
 
             _9EBD
             lda #5

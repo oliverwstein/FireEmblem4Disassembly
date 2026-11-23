@@ -1205,7 +1205,7 @@
         pha
         sta aSave.wActiveSlot,b
         jsl rlClearMapRAM
-        jsl rlUnknown81A85C
+        jsl rlResetChapterProgress
         jsr rsLoadGameTimerAndUnitLosses
         jsr rsLoadSaveFileBody
         jsr rsFillSaveSlotDataBuffers
@@ -1227,7 +1227,7 @@
         ; New game: resets the game's RAM and units, rereads the slots' save data words, takes a save ID no slot uses (rsGetNewUniqueSaveID) as wActiveSaveData, and clears the unit losses and the game timer.
 
         jsl rlClearMapRAM
-        jsl rlUnknown81A85C
+        jsl rlResetChapterProgress
         jsl rlInitializeUnitRAM
         jsr rsFillSaveSlotDataBuffers
         jsr rsGetNewUniqueSaveID
@@ -3608,7 +3608,7 @@
         jsr rsSaveChapterTurncountsHigh
 
         ; ViewingHomeCastleFlag
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         and #$0020
         beq +
 
@@ -3655,8 +3655,8 @@
 
           ; ViewingHomeCastleFlag
           lda #$0020
-          ora wUnknown000D79,b
-          sta wUnknown000D79,b
+          ora wChapterFlags,b
+          sta wChapterFlags,b
 
         +
         jsr rsLoadUnitWinCounts

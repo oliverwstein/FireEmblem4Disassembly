@@ -33,7 +33,7 @@
         and #$DFFF
         sta $489B,b,x
         lda #$0004
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
 
         _EBA1
         plx
@@ -196,7 +196,7 @@
         
         jsr rsUnknown84E62C
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0040
         bne _ED3A
 
@@ -249,7 +249,7 @@
         jsr rsUnknown84EDAE
         lda structActionStructEntry.DeploymentNumber,b,x
         sta wUnitRelocationDeploymentOffset,b
-        lda #9
+        lda #UNIT_RELOCATION_RESCUED
         sta wUnitRelocationType,b
         lda #0
         jsl rlGetFactionSlotLocationID
@@ -504,7 +504,7 @@
 
         +
         lda #$0004
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         plx
 
         jsl rlGetItemAdditionalInfo
@@ -551,7 +551,7 @@
         lda $0000,b,y
         sta wUnitRelocationDeploymentOffset,b
 
-        lda #2
+        lda #UNIT_RELOCATION_CAPTURED
         sta wUnitRelocationType,b
         plx
         rts

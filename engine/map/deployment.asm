@@ -758,7 +758,7 @@
 
           sta wUnitRelocationLocationID,b
           stx wUnitRelocationDeploymentOffset,b
-          lda #0
+          lda #UNIT_RELOCATION_TO_TILE
           sta wUnitRelocationType,b
 
         +
@@ -879,7 +879,7 @@
           sta aDeploymentTable._State,x
 
           lda #$0004
-          tsb wUnknown000D79,b
+          tsb wChapterFlags,b
 
           pla
           sta wR2
@@ -911,7 +911,7 @@
         sta aDeploymentTable._StateBuffer,x
 
         lda #$0004
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         rtl
 
         .databank 0
@@ -949,7 +949,7 @@
           bra _CB24
 
         +
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0040
         bne _CB18
 
@@ -997,7 +997,7 @@
         sta aDeploymentTable._StateBuffer,x
 
         lda #$0004
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
 
         jsl rlClearUnitMenuModeFlags
 
@@ -1008,7 +1008,7 @@
         jsl rlSetSelectedUnitStates
 
         lda #$1000
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
 
         lda aDeploymentTable._State,x
         bit #DeploymentStateCanto
@@ -1025,7 +1025,7 @@
           sta aDeploymentTable._StateBuffer,x
 
         +
-        stx wPhaseScratch000D8B,b
+        stx wActionEndedDeploymentOffset,b
         
         _End
         pla
@@ -1044,7 +1044,7 @@
 
         ; X = deployment offset
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0004
         bne +
 
@@ -1081,7 +1081,7 @@
 
         ; X = deployment offset
 
-        lda wUnknown000D79,b
+        lda wChapterFlags,b
         bit #$0004
         bne +
 
@@ -1182,7 +1182,7 @@
         sta aDeploymentTable._FactionSlot,x
         dec wDeployedUnitsCount,b
         lda #$0004
-        tsb wUnknown000D79,b
+        tsb wChapterFlags,b
         plx
         plp
         plb

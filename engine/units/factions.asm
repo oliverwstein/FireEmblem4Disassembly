@@ -287,7 +287,7 @@
 
             ; is player FactionSlot
             lda #1
-            jsl rlUnknown81B32C
+            jsl rlStartGameOverEvent
 
           +
           lda #(`aFactionArea)<<8
