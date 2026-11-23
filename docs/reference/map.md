@@ -51,7 +51,7 @@ The map's main loop runs the game state routines: `rlMapStep` (below) runs the t
 | 1 | `rsMapStepFadeOutMusic` | fades out the last phase's music (32 frames, `wPhaseMusicFadeTimer`) if this army takes a phase and has a song |
 | 2 | `rsMapStepPhaseBanner` | if the army takes a phase (`rlCheckFactionTakesPhase`), starts its music (`rlStartPhaseMusic`) and shows the phase banner |
 | 3 | `rsMapStepPhaseStartEvents` | event action `$21` (turn, army) |
-| 4 | `rsMapStepStartPhase` | love points at the start of the player's turns, the turn start effects of the army's units (healing, status), the AI on |
+| 4 | `rsMapStepStartPhase` | love points at the start of the player's turns (`rlAddTurnStartLovePoints`, below), the turn start effects of the army's units (healing, status), the AI on |
 | 5 | `rsMapStepTurnStartHealing` | one window per unit healed at the turn's start, then the map windows; the cursor goes to the saved tile (auto cursor option) or the army's first unit |
 | 6 | `rsMapStepAutoSavePrompt` | from turn 2, with the auto save option, the save prompt |
 | 7 | `rsMapStepPhase` | the phase: the cursor and the camera move, the AI runs, until bit 5 of `wMapStateFlags` ends it |
@@ -160,6 +160,10 @@ At the end of chapter 5, after Arvis attacks Sigurd, `procFirstGenerationEnding`
 - **Map menus** ([map_menu.md](map_menu.md)): the unit menu after a move, the battle forecast, the popups.
 - **AI** ([ai.md](ai.md)): the computer phase's moves and actions.
 - **Events**: event conditions after commands, scroll scripts and event movers.
+
+### Love points at the start of a turn
+
+`rlAddTurnStartLovePoints` ([factions.asm](../../engine/units/factions.asm)) runs in step 4 when the player's phase starts, until turn 50. Love points are kept on the woman's side (generation ID 16 and up). Each woman of the player's faction gains her love growth with each man of it (`rsAddLoveGrowthWithEachMan`, the rates in `data/character/Gen*LoveGrowths.csv`). Then each living woman gains 5 more with each player man standing next to her (`rsAddAdjacentLovePoints`). At 500 points the two become lovers (`rlModifyUnitsLovePoints`).
 
 ## Open questions
 

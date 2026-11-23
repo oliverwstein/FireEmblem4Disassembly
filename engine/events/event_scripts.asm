@@ -3908,7 +3908,9 @@
         .autsiz
         .databank ?
 
-        ; transition from world map to chapter name display?
+        ; Leaves the world map: fades out to the chapter intro, or in the
+        ; epilogue (wCurrentChapter $FFFF) moves on to the credits
+        ; (rlStartEpilogueCredits).
 
         php
         phb

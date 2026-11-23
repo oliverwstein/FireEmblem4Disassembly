@@ -264,7 +264,7 @@ A few conventions make the files much easier to scan.
 
 **Each routine is in a `.section`**, which lets the assembler place it, and move it when something before it grows. The comment after a label (`; 80/9B01`) is where it sits in the original ROM. That's useful with an emulator, but nothing depends on it.
 
-**Folders follow game systems**: `engine/core/` (the machine and the three engines), `units/`, `items/`, `battle/`, `battle_scene/`, `map/`, `ai/`, `events/`, `dialogue/`, `menus/`, `worldmap/`, `save/`, `sound/`, `epilogue/`, `rankings/`. `engine/unsorted/` holds code not yet assigned to a system. It is shrinking, and the project's Phase 3 ends when it is empty. `include/` holds the shapes: RAM layout (`WRAM.h`), structs, constants and script macros. `data/`, `events/`, `text/`, `gfx/` and `audio/` hold the content.
+**Folders follow game systems**: `engine/core/` (the machine and the three engines), `units/`, `items/`, `battle/`, `battle_scene/`, `map/`, `ai/`, `events/`, `dialogue/`, `menus/`, `worldmap/`, `castle/`, `arena/`, `debug/`, `save/`, `sound/`, `epilogue/`, `rankings/`. Every routine now sits in a system's folder (the old `engine/unsorted/` is gone). Leftovers nothing reaches are filed with the system they belong to, or in `debug/`. `include/` holds the shapes: RAM layout (`WRAM.h`), structs, constants and script macros. `data/`, `events/`, `text/`, `gfx/` and `audio/` hold the content.
 
 ## What comes next
 

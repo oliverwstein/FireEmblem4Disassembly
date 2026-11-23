@@ -25,7 +25,7 @@ The final chapter's ending event calls `rlStartEpilogue`: `wEpiloguePart` 0, no 
 | 1, the credits | `rlSetupEpilogueCreditsDisplay` (to step 13 straight away when the final ranking score is not 0) | 2, 3, 4: the credits text prints into BG3 while two backgrounds scroll up at different speeds, with six sprites and two HDMA effects (layers switched partway down, BG2's lines swaying); then 13 and 14, the end screen, for 48 seconds or until a button |
 | 2, the play record | `rlSetupEpilogueRankingsDisplay` | 6, 7: the play record scrolls (each chapter's turns, the total, then every recruited unit's wins and losses, grey if dead); then 15-17, the ranking screen |
 
-The routines that move from part to part (`rlUnknown8B80CB`, `rlUnknown8B80F3` in bank `$8B`, and `rsStartEpilogueCharacterScene`) set `wEpiloguePart` and fade back to `rsOpenEpilogueScreen`.
+The routines that move from part to part (`rlStartEpilogueCredits` and `rlStartEpilogueCreditsQuickly` at the end of the world map, in [world_map.asm](../../engine/epilogue/world_map.asm), and `rsStartEpilogueCharacterScene`) set `wEpiloguePart` and fade back to `rsOpenEpilogueScreen`.
 
 ## The play record and the ranking screen
 

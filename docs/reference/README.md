@@ -18,7 +18,7 @@ The generated pages are not committed (they are in `.gitignore`): run `python3 t
 
 - [core.md](core.md): the frame, boot, game states, the engines that run every frame, procs.
 - [ai.md](ai.md): the enemy (and allied) AI.
-- [castle.md](castle.md): the castle screen: courtyard, unit commands, town, shops, depot, augury, class change, conversation scenes.
+- [castle.md](castle.md): the castle screen: courtyard, unit commands, town, shops, depot, augury, class change, conversation scenes, the lovers' home castle conversation.
 - [menus.md](menus.md): the full-screen menus: the status screen, the revive screen, the options menu.
 - [map_menu.md](map_menu.md): the menus and windows over the chapter map.
 - [map.md](map.md): the chapter map: turns and phases (the map step), the cursor, moving units, the camera and tile streaming, map sprites, the minimap, the unit commands' effects.
@@ -28,5 +28,6 @@ The generated pages are not committed (they are in `.gitignore`): run `python3 t
 - [title.md](title.md): the title screen (game states `$1A`/`$1B`): its intro, timelines, sprites, captions and the way to the file menu or back to the opening.
 - [battle_scene.md](battle_scene.md): the battle scene with the animations on (game states `$18`/`$19`): its frame, the rounds and strikes, HP, the end steps (experience, level up, messages), the animation slots.
 - [map_battle.md](map_battle.md): battles played on the map with the animations off, and the map actions and scripted scenes that use the same sprites.
+- [worldmap.md](worldmap.md): the world map between chapters and in the epilogue (game states `$0D`-`$0F`): its steps, frame, edge IRQs and layer HDMA, and the leftovers.
 
 The other systems get their page as Phase 3 names and sorts them (see [PLAN.md](../../PLAN.md)).

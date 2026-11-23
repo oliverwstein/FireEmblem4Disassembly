@@ -17,7 +17,7 @@ When the player's units go home to a castle, the game leaves the map for the **c
 | [class_change.asm](../../engine/castle/class_change.asm) | class change in the castle |
 | [conversation.asm](../../engine/castle/conversation.asm) | the conversation scene: two portraits over a dialogue background |
 
-The arena's menu, screen setup and opponent window are in [engine/arena/arena.asm](../../engine/arena/arena.asm).
+The arena's menu, screen setup and opponent window are in [engine/arena/arena.asm](../../engine/arena/arena.asm), with the start of each fight (`rlStartArenaBattle`: the opponent is unit `$2100`, `wBattleType` 1, battle song `$3B`) and its result (`rlGetArenaBattleResult`: won, lost, or neither side fell).
 
 Data: constants in [include/Castle.h](../../include/Castle.h); RAM `$087B`-`$08BA` (`wCastleScreenHandler`, `wCastleCursorState`, `wCastleGridSlot`, `wCastleUnitCommand`, `wCastleTownFacility`, the list cursors, `wConversation*`) and the castle block at `$7F757A` (`aCastleGridCharacters`, `aCastleUnitsByCharacter`, the list arrays `aCastleListItem*`, `wKeeper`, `lKeeperOptionList`) in [include/WRAM.h](../../include/WRAM.h). The `$7F` block reuses the map buffers, so its names are only written in the castle files (`SCOPED` in [tools/name_ram.py](../../tools/name_ram.py)). The shop, depot, augury, class change and arena lines are in [text/dialogue/Shops/](../../text/dialogue/Shops/).
 
@@ -53,7 +53,7 @@ The VBlank routine draws the courtyard's unit sprites (`rlCastleDrawCourtyardUni
 | Staff (つえ) or Dance (おどる) | a dancer: `rlCheckUnitCanDance`; anyone else: has a usable staff | staff: opens the castle staff menu, then `CASTLE_CURSOR_STAFF_TARGET` (or the map, for a staff used there); dance: `rlBuildCastleDanceRounds` |
 | Give (あげる) | `rlCheckUnitCanGive`: has money and some unit in the castle can receive it | `CASTLE_CURSOR_GIVE_TARGET`, then `rlCastleGiveMoney` |
 
-Targets for a staff, dance or gift come from `rlBuildCastleTargetList`: each unit in the castle that passes `rlUnknown848BFE` for the target type. The castle versions of staff and dance build their action struct with both units standing on castle terrain (`rlBuildCastleActionRounds`).
+Targets for a staff, dance or gift come from `rlBuildCastleTargetList`: each unit in the castle that passes `rlCheckUnitPassesTargetFilter` for the target type: the map's target filters (`aTargetFilterRoutines`) without the range check, and never the unit itself. The castle versions of staff and dance build their action struct with both units standing on castle terrain (`rlBuildCastleActionRounds`).
 
 ### The town
 
@@ -77,13 +77,13 @@ All the keeper screens work alike: the keeper's portrait (OAM palette 5, mirrore
 - **Shop** (`aShopStepHandlers`, 21 sub-states). The item shop offers *buy* and *belongings*. The belongings list can only be looked at, and the keeper tells you to look at the goods instead. The secondhand shop offers *sell* and *buy*, the repair shop only repair.
   - **Buying** (`$03`-`$08`): the stock is every item in the shop's item state (`rlBuildStockList`). Items that cannot be had yet are marked unavailable. The price is halved if the unit, its class or an item it holds has Bargain (`rlCheckUnitHasBargain`). Buying fails if the inventory has 7 items or the unit cannot pay.
   - **Selling** (`$09`-`$0C`): `rlSellInventorySlotItem`, then `rlMoveItemToSecondhandStock`. The item goes to `ItemStatePawnbroker` owned by this castle, so it turns up in this castle's secondhand shop. Any unit can buy it back there, for more than it sold for (confirmed in the emulator, 2026-11-22).
-  - **Repairing** (`$0D`-`$10`): only items with a repair cost can be chosen, and the cost is halved with Bargain. An item with 50 or more kills gets a different line. `rlUnknown84B349` does the repair.
+  - **Repairing** (`$0D`-`$10`): only items with a repair cost can be chosen, and the cost is halved with Bargain. An item with 50 or more kills gets a different line. `rlRepairSelectedUnitItem` (beside the buying routine in `unit_state.asm`) does the repair: if the unit cannot pay for all of it, it buys as many uses as its money pays for.
 - **Depot** (`aDepotStepHandlers`, 13 sub-states): *deposit* moves an inventory item to `ItemStateSupply` (`rlSendInventorySlotItemToSupply`); *withdraw* lists the unit's stored items (`rlBuildUnitStoredItemList`) and gives one back if the inventory has room.
 - **Augury** (`aAuguryStepHandlers`, 8 sub-states): every unit can ask about love and record; children (`UnitTypeDynamic`) can also ask about their parents.
   - *Record*: wins and losses (`rlGetUnitWinCount`, `rlGetUnitLossCount`).
   - *Parents*: father and mother.
   - *Love* (`rsAuguryAnswer`): takes the love points between the unit and its lover, or the unpaired unit of the other sex with the most points (`rlGetUnitLoverOrTopCandidate`). The points are kept on the woman's side. Exactly 500 is "bound to" (lovers), 400 and up "loves", 300 and up "likes", 200 and up "interested in", below that "not interested in anyone".
-- **Class change** (`aClassChangeStepHandlers`, 6 sub-states): `rlGetPromotedClassIfAvailable` decides between "you cannot class change" (no promoted class), "you need level 20", and an offer of the new class. Yes starts `rlStartCastleClassChange`, which sets the class and plays the class change scene through the battle scene engine (battle song `$3C`). Generation 2 has its own keeper and lines.
+- **Class change** (`aClassChangeStepHandlers`, 6 sub-states): `rlGetPromotedClassIfAvailable` decides between "you cannot class change" (no promoted class), "you need level 20", and an offer of the new class. Yes starts `rlStartCastleClassChange`, which sets the class and plays the class change scene through the battle scene engine (`wBattleType` 2, battle song `$3C`). Before and after the change it saves the unit's total stats (`rlSaveSelectedUnitTotalStatsToBuffer`, into `aUnit1DataBuffer` and `aUnit2DataBuffer`); the scene's level up window shows the difference (`rsClassChangeStoreStatGains`), with no HP or luck gain. Generation 2 has its own keeper and lines.
 - **Arena**: see [arena.asm](../../engine/arena/arena.asm). The castle sets it up (`rlArenaScreenSetup`, with the unit's equippable weapons from `rlBuildEquippableWeaponList`) and comes back to it after each fight (`CASTLE_SCREEN_ARENA`).
 
 ### The conversation scene
@@ -97,6 +97,12 @@ All the keeper screens work alike: the keeper's portrait (OAM palette 5, mirrore
 | `CONVERSATION_EXIT_MAP` | the map |
 | `CONVERSATION_EXIT_CALLBACK` | fades out, then `rlUnknown8DB52C` |
 | `CONVERSATION_EXIT_FADE_OUT` | fades out and waits |
+
+### The lovers' home castle conversation
+
+[lover_conversation.asm](../../engine/castle/lover_conversation.asm). When a unit ends its move at its home castle, the map step (and the event command `rsEventCommandLoverHomeCastle`) calls `rlTryStartLoverHomeCastleConversation`. If the unit's lover is fielded and waiting in that castle (`rlCheckCharacterWaitingInHomeCastle`), and the woman's flag is not set yet, it sets the flag and opens the castle screen in conversation mode (`rlStartLoverHomeCastleConversation`), coming back to the map afterwards. The flags are the permanent flags `PermanentFlag...LoverHomeCastle` (`aLoverHomeCastleFlags`, by character ID), so each couple talks once. A mother and the daughter who can replace her share a flag.
+
+The text is put together for each couple (`rlBuildLoverHomeCastleConversation`, run when the castle screen sees `wLoverHomeCastleConversationPending`). It is the arriving unit's line, from `aLoverHomeCastleArrivalLines` by its character ID, then the waiting lover's reply, from `aLoverHomeCastleReplyLines`, copied over the end code of the first. Both go to `$7F8183`. The lines are in [text/dialogue/LoverHomeCastle](../../text/dialogue/LoverHomeCastle), one file per character and side. Two ASMCs in them name the other person, with 様 added for Seliph and Leif.
 
 ## Depends on
 
@@ -114,6 +120,6 @@ All the keeper screens work alike: the keeper's portrait (OAM palette 5, mirrore
 - Step `$13` (`rsCastleStepExitToMapNoReset`) and shop sub-state `$14` (`rsShopLeaveToCourtyard`): nothing found selects them.
 - Keepers 4 and 6, and option codes 3-5: present in the tables (`rsSetKeeperOptionList`, `aKeeperPortraits`) but not seen used.
 - `$7F80A3`-`$7F80A7` hold both the fountain animation and the town's HDMA table, and are unnamed for now. `$7F8183` holds the augury topics; as the status screen's `wStatusScreenCaller` it is named only in the status screen's files (see [menus.md](menus.md)).
-- `rlUnknown848BFE` (who counts as a target of each type), `rlUnknown84B349` (the repair itself), `rlUnknown84D334` and `rlUnknown9EDAE7` (giving money), `rlUnknown8CED4F` (run on `wCastleReturnEventFlag`) and `rlUnknown8DB52C` (the conversation callback) are in banks not yet named.
+- `rlUnknown84D334` and `rlUnknown9EDAE7` (giving money) and `rlUnknown8DB52C` (the conversation callback) are still `Unknown`.
 - Why class change is refused in chapter 6. In that chapter the command's label is drawn blank, its button gets another palette, and pressing it only plays the error sound (`rsCastleUnitCommandNameClassChange`, `rsCastleUnitCommandClassChange`); the code gives no reason.
 - The window HDMA routines (`rlUnknown8AB23B` and the three after it) are unnamed.
