@@ -3,7 +3,7 @@
 ; runs the whole fight: move the camera, create both units' battle sprites
 ; (aBattleMapSpriteData, by rlGetMapBattleClassSprite), the battle quote, open the
 ; HP windows, then each round of aBattleRoundsData (rlMapBattleNextRound: sprite
-; scripts, thrown-weapon projectiles, map magic, HP changes), the death quote,
+; scripts, ballista bolts, map magic, HP changes), the death quote,
 ; experience, the level up banner and stat gains, the gold, item and broken weapon
 ; popups, and the clean-up (rlProcMapBattleEnd). Also the scripted critical's
 ; effect played before such a battle (procScriptedCritEffect). The sprite and
@@ -791,7 +791,7 @@
         lda #$0000
         sta @l wR15
         lda $454E,b
-        jsl rlCheckMapBattleThrownWeapon
+        jsl rlCheckMapBattleBallistician
         bcs _845B
         lda aActionStructUnit1.WeaponID
         jsl rlGetClassMapBattleWeaponType
@@ -844,7 +844,7 @@
         lda #$0001
         sta @l wR15
         lda $4550,b
-        jsl rlCheckMapBattleThrownWeapon
+        jsl rlCheckMapBattleBallistician
         bcs _84FA
         lda aActionStructUnit2.WeaponID
         jsl rlGetClassMapBattleWeaponType
@@ -958,14 +958,14 @@
 
         ; 9E/857D
 
-      rlCheckMapBattleThrownWeapon ; 9E/857D
+      rlCheckMapBattleBallistician ; 9E/857D
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Carry set for items $43-$46, which are thrown at range (a projectile proc).
+        ; Carry set when the class in wR0 is a ballistician ($43-$46): marks side wR15 as firing a ballista bolt (procMapBattleBallistaBolt).
 
         phy
         phx
@@ -5105,7 +5105,7 @@
 
         ; 9E/A2F8
 
-      rlStartMapBattleProjectile ; 9E/A2F8
+      rlStartMapBattleBallistaBolt ; 9E/A2F8
 
         .al
         .xl
@@ -5128,9 +5128,9 @@
         lda wBattleStatus
         and #$0001
         sta $7F4C2D
-        lda #(`procMapBattleProjectile)<<8
+        lda #(`procMapBattleBallistaBolt)<<8
         sta lR44+1
-        lda #<>procMapBattleProjectile
+        lda #<>procMapBattleBallistaBolt
         sta lR44
         jsl rlProcEngineCreateProc
         sta $7F4C1F
@@ -5151,9 +5151,9 @@
       .al
       .xl
 
-      procMapBattleProjectile ; 9E/A334
+      procMapBattleBallistaBolt ; 9E/A334
 
-        .structProcInfo "ON", rlProcMapBattleProjectileInit, rlProcMapBattleProjectileCycle, aProcMapBattleProjectileCode
+        .structProcInfo "ON", rlProcMapBattleBallistaBoltInit, rlProcMapBattleBallistaBoltCycle, aProcMapBattleBallistaBoltCode
 
     .endsection ProcScript9EA334Section
 
@@ -5163,7 +5163,7 @@
       .al
       .xl
 
-      rlProcMapBattleProjectileInit ; 9E/A33C
+      rlProcMapBattleBallistaBoltInit ; 9E/A33C
 
         .al
         .xl
@@ -5182,7 +5182,7 @@
 
         ; 9E/A353
 
-      rlProcMapBattleProjectileCycle ; 9E/A353
+      rlProcMapBattleBallistaBoltCycle ; 9E/A353
 
         .al
         .xl
@@ -5302,10 +5302,10 @@
       .al
       .xl
 
-      aProcMapBattleProjectileCode ; 9E/A404
+      aProcMapBattleBallistaBoltCode ; 9E/A404
 
         PROC_YIELD 1
-        PROC_JUMP_IF_BITS_UNSET aProcMapBattleProjectileCode, $0004
+        PROC_JUMP_IF_BITS_UNSET aProcMapBattleBallistaBoltCode, $0004
         PROC_YIELD 40
         PROC_CALL rlUnknown9EA712
         PROC_YIELD 3
@@ -9450,7 +9450,7 @@
         PROC_SET_ONCYCLE rlProcMapBattleOpenHPWindows
         PROC_YIELD 48
         _CB70
-        PROC_CALL rlStartMapBattleProjectile
+        PROC_CALL rlStartMapBattleBallistaBolt
         PROC_CALL rlMapBattleNextRound
         PROC_JUMP_IF_BITS_UNSET _CC6C, $0002
         PROC_CALL rlUnknown9EA9B5
