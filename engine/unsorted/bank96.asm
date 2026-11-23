@@ -242,74 +242,7 @@
       aUnknown9680A2 ; 96/80A2
         .word <>rsIRQCodeHalt
 
-      aUnknown9680A4 ; 96/80A4
-        .word $0060, $0006, <>rlUnknown9680AC, <>aUnknown9680B1
-
     .endsection Table9680A2Section
-
-
-    .section Unsorted9680ACSection
-
-      .al
-      .xl
-
-      rlUnknown9680AC ; 96/80AC
-
-        ; Found through fe4.cdl.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlUnknown9BEEB4
-        rtl
-
-        .databank 0
-
-        ; 96/80B1
-
-    .endsection Unsorted9680ACSection
-
-
-    .section Table9680B1Section
-
-      .al
-      .xl
-
-      aUnknown9680B1 ; 96/80B1
-        .word <>rsIRQCodeHalt
-
-      aUnknown9680B3 ; 96/80B3
-        .word $0060, $00BD, <>rlUnknown9680BB, $80C0
-
-    .endsection Table9680B1Section
-
-
-    .section Unsorted9680BBSection
-
-      .al
-      .xl
-
-      rlUnknown9680BB ; 96/80BB
-
-        ; Found through fe4.cdl.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlUnknown9BEF88
-        rtl
-
-        .databank 0
-
-        ; 96/80C0
-
-
-      aUnknown9680C0 ; 96/80C0
-        .word <>rsIRQCodeHalt
-
-    .endsection Unsorted9680BBSection
 
 
     .section Unsorted9680C2Section

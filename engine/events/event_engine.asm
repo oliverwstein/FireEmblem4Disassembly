@@ -125,7 +125,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9BFC8D
+        jsl rlFlashToTitleScreen
         bcs +
 
           rts
@@ -145,7 +145,7 @@
         jsl rlProcEngineResetProcEngine
         stz wGameStateRoutine1,b
 
-        lda #<>rsOpenMapBattle
+        lda #<>rsOpenTitleScreen
         sta aProcSystem.wInput0,b
 
         lda #(`procMainLoopChangeFade)<<8

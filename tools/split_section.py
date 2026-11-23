@@ -45,6 +45,8 @@ def main():
     if len(sys.argv) != 6:
         print(__doc__); return 2
     src_file, section, label, dst_file, new_section = sys.argv[1:6]
+    if not os.path.isdir(os.path.dirname(dst_file) or '.'):
+        raise SystemExit(f'{os.path.dirname(dst_file)} does not exist')
     widths = measure_widths(src_file, label)
 
     t = open(src_file, encoding='utf-8').read()

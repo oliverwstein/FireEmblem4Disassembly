@@ -57,8 +57,8 @@
         .long rlUnusedScreenStep
         .long rlBattleSceneSetup
         .long rlBattleSceneStep
-        .long rlMapBattleSetup
-        .long rlMapBattleStep
+        .long rlTitleScreenSetup
+        .long rlTitleScreenStep
         .long aUnused9FFACC ; unused: points into zero padding
         .long aUnused9FFACC ; unused: points into zero padding
         .long aUnused9FFACC ; unused: points into zero padding

@@ -196,6 +196,9 @@
   .include "engine/sound/music.asm"
   .include "engine/units/turn_start.asm"
   .include "engine/battle_scene/battle_screen.asm"
+  .include "engine/title/title_screen.asm"
+  .include "engine/title/title_scenes.asm"
+  .include "engine/title/title_timelines.asm"
   .include "engine/map/map_loop.asm"
   .include "engine/core/boot.asm"
   .include "engine/core/anti_tamper.asm"
@@ -569,6 +572,16 @@
       .dsection Unsorted80BF01Section
 
       .dsection BattleSceneVBlankSection
+
+      .dsection TitleScreenVBlankSection
+
+      .dsection OpenBattleSceneSection
+
+      .dsection OpenTitleScreenSection
+
+      .dsection BattleSceneMainLoopSection
+
+      .dsection TitleScreenMainLoopSection
 
       .dsection Unsorted80C162Section
 
@@ -7051,6 +7064,8 @@
 
       .dsection Table9680A2Section
 
+      .dsection TitleScreenIRQSection
+
       .dsection Unsorted9680ACSection
 
       .dsection Table9680B1Section
@@ -7573,6 +7588,7 @@
 
       .dsection BattleAnimationMoveDataSection
       .dsection Table97E8FBSection
+      .dsection TitleTimelinesSection
       .dsection Data97F19BSection
       .dsection Data97F48BSection
       .dsection Unsorted97FDC1Section

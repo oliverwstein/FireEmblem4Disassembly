@@ -4419,14 +4419,14 @@
         .autsiz
         .databank ?
 
-        ; Event command $5E (OPEN_MAP_BATTLE): fades to the map battle screen (rsOpenMapBattle).
+        ; Event command $5E (OPEN_TITLE_SCREEN): fades to the map battle screen (rsOpenTitleScreen).
 
         php
         phb
         phy
 
         stz wGameStateRoutine1,b
-        lda #<>rsOpenMapBattle
+        lda #<>rsOpenTitleScreen
         sta aProcSystem.wInput0,b
 
         lda #(`procMainLoopChangeFade)<<8

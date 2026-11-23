@@ -462,7 +462,7 @@
         _ADD0
         lda #$00C0
         jsl rlQueueSoundCommand
-        jsl rlUnknown9BFBC0
+        jsl rlLoadOpeningLogoScreen
         jsl rlResetChapterProgress
         lda #GAMESTATE_OPENING_LOGO_UPKEEP
         sta wGameStateRoutine2,b
@@ -655,5 +655,110 @@
         ; 87/80AA
 
     .endsection Unsorted878017Section
+
+
+    .section Unsorted9BFBC0Section
+
+      .al
+      .xl
+
+      rlLoadOpeningLogoScreen ; 9B/FBC0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sep #$20
+        lda #$00
+        sta $7FD000
+        lda #$01
+        sta bBufferTM
+        sta bBufferBGMODE
+        sta bBufferOBSEL
+        lda #$10
+        sta bBufferBG1SC
+        rep #$20
+        jsl rlSetDemoIndexFromRanking
+        jsl rlGetHighestCompletionCount
+        cmp #$0010
+        bcc _FBE7
+        lda #$000F
+
+        _FBE7
+        sta wDemoBattlePair,b
+        stz aBGPaletteBuffer,b
+        lda #$0000
+        sta $7FD001
+        stz wBufferBG1HOFS
+        stz wBufferBG1VOFS
+        sep #$20
+        rep #$10
+        ldx #<>gcUnknownDF2AFE
+        stx DecompressionVariables
+        lda #`gcUnknownDF2AFE
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        jsl rlDecompressor
+        rep #$30
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $0820, $80, $0000
+
+        sep #$20
+        rep #$10
+        ldx #<>gcUnknownDF30CC
+        stx DecompressionVariables
+        lda #`gcUnknownDF30CC
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        jsl rlDecompressor
+        rep #$30
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $0060, $80, $4000
+
+        sep #$20
+        rep #$10
+        ldx #<>gcUnknownDF30E9
+        stx DecompressionVariables
+        lda #`gcUnknownDF30E9
+        sta $CA
+        ldx #$8B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        jsl rlDecompressor
+        rep #$30
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8B88, $0700, $80, $2000
+
+        ldx #$0000
+
+        _FC76
+        lda aUnknownE0283F,x
+        sta $0122,b,x
+        lda aUnknownE0285D,x
+        sta $0222,b,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc _FC76
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/FC8D
+
+    .endsection Unsorted9BFBC0Section
 
 

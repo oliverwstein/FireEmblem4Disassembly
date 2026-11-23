@@ -289,7 +289,7 @@
 
         _EB9B ; 90/EB9B
         RUN_ASM rlASMCClearDemoDeployments
-        OPEN_MAP_BATTLE
+        OPEN_TITLE_SCREEN
         END_EVENT
 
       aOpeningAnnandMovement ; 90/EBA2

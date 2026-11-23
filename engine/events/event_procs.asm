@@ -554,7 +554,7 @@
         .autsiz
         .databank ?
 
-        ; Fade bBufferINIDISP down to 0, clear event proc/flags, set main loop rsOpenMapBattleForDemo, disable IRQ
+        ; Fade bBufferINIDISP down to 0, clear event proc/flags, set main loop rsOpenTitleScreenWithoutIntro, disable IRQ
 
         lda bBufferINIDISP
         bit #$000F
@@ -571,7 +571,7 @@
         lda bSoundFlags,b
         and #$FFFA
         sta bSoundFlags,b
-        lda #<>rsOpenMapBattleForDemo
+        lda #<>rsOpenTitleScreenWithoutIntro
         jsl rlSetMainLoopPointer
         sei
         sep #$20
@@ -766,7 +766,7 @@
         lda wGameStateRoutine1,b
         cmp #GAMESTATE_BATTLE_SCENE_SETUP
         bcc _8BC1
-        cmp #GAMESTATE_MAP_BATTLE_STEP+1
+        cmp #GAMESTATE_TITLE_SCREEN_STEP+1
         bcc _8BC5
 
         _8BC1

@@ -38,5 +38,6 @@
   .include "SRAM.h"
   .include "Terrain.h"
   .include "Tiles.h"
+  .include "TitleScreen.h"
   .include "WRAM.h"
   .include "Undisassembled.h"

@@ -58,45 +58,13 @@
 
         ; 80/BFA9
 
-      rsRunMapBattleVBlank ; 80/BFA9
+    .endsection BattleSceneVBlankSection
 
-        .al
-        .xl
-        .autsiz
-        .databank ?
 
-        ; Map battle VBlank calling 95C368/96D5DB/9BEAB1, DMA/OAM/HDMA/PPU, APU, sprites, sound
+    .section OpenBattleSceneSection
 
-        php
-        sep #$20
-        lda #$80
-        sta $2100,b
-        rep #$20
-        jsl rlUnknown95C368
-        jsl rlUnknown96D5DB
-        jsl rlUnknown9BEAB1
-        jsl rlProcessDMAStructArray
-        jsl rlDMAPaletteAndOAMBuffer
-        jsl rlHandlePossibleHDMA
-        jsl rlCopyPPURegisterBuffer
-        jsl rlSendSoundQueuesToAPU
-        jsl rlGetJoypadInput
-        jsl rlUnknown82E147
-        jsl rlClearSpriteExtBuffer
-        sep #$20
-        lda #$00
-        sta $7FE1CF
-        rep #$20
-        jsl rlRunGameStateRoutines
-        jsl rlRunVBlankHooks
-        jsl rlHideSprites
-        jsl rlUpdateSound
-        plp
-        rts
-
-        .databank 0
-
-        ; 80/BFFB
+      .al
+      .xl
 
       rsOpenBattleScene ; 80/BFFB
 
@@ -179,86 +147,13 @@
 
         ; 80/C0B6
 
-      rsOpenMapBattle ; 80/C0B6
+    .endsection OpenBattleSceneSection
 
-        .al
-        .xl
-        .autsiz
-        .databank ?
 
-        ; Resets engines/map battle (game state $1A), installs rsRunMapBattleVBlank and rsRunMapBattleMainLoop
+    .section BattleSceneMainLoopSection
 
-        php
-        lda #$0000
-        bra +
-
-      rsOpenMapBattleForDemo ; 80/C0BC
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; The same with $7FD8B9 = 1, which bank $9B tests to skip parts of the setup. Entered from procDemoSkipFadeOut at the end of the attract mode's opening.
-
-        php
-        lda #$0001
-
-        +
-        sep #$20
-        sta $7FD8B9
-        rep #$20
-        sep #$20
-        lda #$80
-        sta bBufferINIDISP
-        sta $2100,b
-        rep #$20
-        jsl rlDisableVBlank
-        jsl rlUnknown95F13C
-        bcc _C0E7
-        sep #$20
-        lda #$01
-        sta $7FD8B9
-        rep #$20
-
-        _C0E7
-        jsl rlProcEngineResetProcEngine
-        jsl rlActiveSpriteEngineReset
-        jsl rlResetHDMAEngine
-        jsl rlResetIRQEngine
-        jsl rlUnknown95EE73
-        jsl rlUnknown95F0E9
-        lda #(`aUnknown9680A4)<<8
-        sta lR44+1
-        lda #<>aUnknown9680A4
-        sta lR44
-        jsl rlUnknown82E0C6
-        lda #(`aUnknown9680B3)<<8
-        sta lR44+1
-        lda #<>aUnknown9680B3
-        sta lR44
-        jsl rlUnknown82E0C6
-        jsl rlUnknown82E08D
-        lda #GAMESTATE_MAP_BATTLE_SETUP
-        sta wGameStateRoutine1,b
-        lda #<>rsRunMapBattleVBlank
-        sta wVBlankPointer
-        lda #<>rsRunMapBattleMainLoop
-        sta wMainLoopPointer
-        stz wGameStateRoutine2,b
-        jsl rlEnableVBlank
-        sep #$20
-        lda #$80
-        sta bBufferINIDISP
-        sta $2100,b
-        rep #$20
-        plp
-        cli
-        rts
-
-        .databank 0
-
-        ; 80/C144
+      .al
+      .xl
 
       rsRunBattleSceneMainLoop ; 80/C144
 
@@ -279,25 +174,7 @@
 
         ; 80/C155
 
-      rsRunMapBattleMainLoop ; 80/C155
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Map battle main loop: reset check, decompression list, deferred sound upload
-
-        jsl rlButtonCombinationResetCheck
-        jsl rlDecompressByList
-        jsl rlRunDeferredSoundUpload
-        rts
-
-        .databank 0
-
-        ; 80/C162
-
-    .endsection BattleSceneVBlankSection
+    .endsection BattleSceneMainLoopSection
 
 
     .section Unsorted87C38CSection
