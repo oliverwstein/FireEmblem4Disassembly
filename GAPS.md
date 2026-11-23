@@ -7,25 +7,30 @@ first byte), `inside` (built code points into it, not at its start), `log` (read
 `fe4.cdl` only), `none` (no evidence). Addresses are given where the game reads them:
 upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 
-100,619 bytes in 217 runs: 57 runs of padding (42,147 bytes) and 160 pieces (58,472 bytes).
+97,373 bytes in 221 runs: 57 runs of padding (42,147 bytes) and 164 pieces (55,226 bytes).
 
 | Class | Pieces | Bytes | Read in the log |
 |---|---|---|---|
-| `code` | 0 | 0 | 0 |
-| `table` | 0 | 0 | 0 |
+| `code` | 1 | 345 | 0 |
+| `table` | 4 | 78 | 0 |
 | `inside` | 0 | 0 | 0 |
 | `log` | 0 | 0 | 0 |
-| `none` | 160 | 58,472 | 0 |
+| `none` | 159 | 54,803 | 0 |
 
-## `code` (0)
-
-| Piece | Bytes | Log reads | Between | Evidence |
-|---|---|---|---|---|
-
-## `table` (0)
+## `code` (1)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
+| $95/FB4B-$95/FCA3 | 345 | 0 | `rlUnknown95FB0A` / `rlUnknown95FCA4` | **at start** number `engine/unsorted/bank95.asm:20738`: `jsr ($95FB4B,x)` |
+
+## `table` (4)
+
+| Piece | Bytes | Log reads | Between | Evidence |
+|---|---|---|---|---|
+| $95/EDD0-$95/EDE9 | 26 | 0 | `rlUnknown95ED7B` / `rlUnknown95EDEA` | **at start** halves `engine/unsorted/bank95.asm:18514`: `long pointer in lR18` |
+| $95/EE58-$95/EE72 | 27 | 0 | `rlUnknown95EE00` / `rlUnknown95EE73` | **at start** halves `engine/unsorted/bank95.asm:18612`: `long pointer in lR18` |
+| $95/F41B-$95/F425 | 11 | 0 | `rlUnknown95F3E7` / `rlUnknown95F426` | **at start** halves `engine/unsorted/bank95.asm:19544`: `long pointer in lR18`; 63% $00/$FF |
+| $9B/F56C-$9B/F579 | 14 | 0 | `rlUnknown9BF548` / `rlUnknown9BF57A` | **at start** halves `engine/unsorted/bank9B.asm:4777`: `long pointer in lR18` |
 
 ## `inside` (0)
 
@@ -37,7 +42,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 
-## `none` (160)
+## `none` (159)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
@@ -108,7 +113,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8D/A612-$8D/A623 | 18 | 0 | `rlEpilogueCreditsWaveHDMACycle` / `rsDrawEpilogueCreditsSprite` |  |
 | $8D/AEC0-$8D/AEC1 | 2 | 0 | `rlEpilogueRecordLayerHDMACycle` / `rlSetUpEpilogueRecordTextWindow` |  |
 | $8D/B539-$8D/B539 | 1 | 0 | `rlShowNextEpilogueCharacterEnding` / `rsStartEpilogueCharacterScene` |  |
-| $D0/5639-$D0/5672 | 58 | 0 | `g4bppcClassCardBallista` / `gcUnknownD05673` |  |
+| $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardGreatBallistaPointer` / `gcUnknownD05673` |  |
 | $91/A7EA-$91/A80C | 35 | 0 | `rlUnknown91A7DF` / `rlPlanQueuedMapSpriteMovement` |  |
 | $91/A8E4-$91/A927 | 68 | 0 | `rsDialogueEventCommand07` / `rlSetupConversationDialogueBoxes` |  |
 | $91/A9F2-$91/AA14 | 35 | 0 | `aUnknown91A9E4` / `rsSplitNumberIntoFiveDigits` |  |
@@ -133,15 +138,12 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $95/E08C-$95/E0C4 | 57 | 0 | `rsUnknown95DF76` / `rsUnknown95E0C5` |  |
 | $95/E80D-$95/E833 | 39 | 0 | `rlUnknown95E7EC` / `rsUnknown95E834` |  |
 | $95/E877-$95/E887 | 17 | 0 | `rsUnknown95E834` / `rlUnknown95E888` |  |
-| $95/ED7B-$95/EE72 | 248 | 0 | `rlUnknown95ED6A` / `rlUnknown95EE73` |  |
-| $95/F2E5-$95/F425 | 321 | 0 | `rlUnknown95F29B` / `rlUnknown95F426` |  |
-| $95/F48E-$95/F740 | 691 | 0 | `rlUnknown95F47A` / `rlUnknown95F741` |  |
-| $95/F777-$95/F7B6 | 64 | 0 | `rlUnknown95F741` / `rlUnknown95F7B7` |  |
-| $95/F831-$95/F87E | 78 | 0 | `rlUnknown95F7F7` / `rlUnknown95F87F` |  |
-| $95/F9B4-$95/FCA3 | 752 | 0 | `rlUnknown95F967` / `rlUnknown95FCA4` |  |
-| $95/FD1C-$95/FD43 | 40 | 0 | `rlUnknown95FCF4` / `rlUnknown95FD44` |  |
-| $95/FDE4-$95/FF50 | 365 | 0 | `rlUnknown95FDA6` / `rlUnknown95FF51` |  |
-| $95/FF6E-$95/FFFF | 146 | 0 | `rlUnknown95FF51` / `` | 58% $00/$FF |
+| $95/F35D-$95/F3D2 | 118 | 0 | `rlUnknown95F349` / `rlUnknown95F3D3` |  |
+| $95/F5D9-$95/F62F | 87 | 0 | `rlUnknown95F5B4` / `rlUnknown95F630` |  |
+| $95/F681-$95/F740 | 192 | 0 | `rlUnknown95F64A` / `rlUnknown95F741` |  |
+| $95/F9B4-$95/F9CD | 26 | 0 | `rlUnknown95F967` / `rlUnknown95F9CE` |  |
+| $95/FDE4-$95/FE21 | 62 | 0 | `rlUnknown95FDA6` / `rlUnknown95FE22` |  |
+| $95/FFAC-$95/FFFF | 84 | 0 | `rlUnknown95FF8A` / `` | 91% $00/$FF |
 | $96/87B3-$96/881E | 108 | 0 | `rlUnknown96878D` / `rlUnknown96881F` |  |
 | $96/8DBB-$96/8DBC | 2 | 0 | `rlUnknown968DAA` / `rlUnknown968DBD` |  |
 | $96/8DE1-$96/8E4B | 107 | 0 | `rlUnknown968DC8` / `rlUnknown968E4C` |  |
@@ -180,14 +182,16 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $DA/6C80-$DA/6CFF | 128 | 0 | `gUnknownDA6A40` / `gUnknownDA6D00` |  |
 | $DA/6F40-$DA/6FFF | 192 | 0 | `gUnknownDA6D00` / `aUnknownDA7000` |  |
 | $DA/7800-$DA/79FF | 512 | 0 | `aUnknownDA7000` / `g4bppUnknownDA7A00` |  |
-| $9B/E15F-$9B/E178 | 26 | 0 | `rsUnknown9BE128` / `rlUnknown9BE179` |  |
-| $9B/E2A4-$9B/E5B1 | 782 | 0 | `rlUnknown9BE1C0` / `rlUnknown9BE5B2` |  |
-| $9B/E697-$9B/EAA4 | 1,038 | 0 | `rlUnknown9BE619` / `rlUnknown9BEAA5` |  |
-| $9B/F1F4-$9B/F23B | 72 | 0 | `rlUnknown9BF179` / `rlUnknown9BF23C` |  |
-| $9B/F49E-$9B/F650 | 435 | 0 | `rlUnknown9BF3F3` / `rlUnknown9BF651` |  |
-| $9B/F77A-$9B/FA57 | 734 | 0 | `rlUnknown9BF726` / `rlUnknown9BFA58` |  |
-| $9B/FB73-$9B/FB7D | 11 | 0 | `rlUnknown9BFB68` / `rlUnknown9BFB7E` |  |
-| $9B/FBB0-$9B/FBBF | 16 | 0 | `rlUnknown9BFBA9` / `rlUnknown9BFBC0` |  |
+| $9B/E2E3-$9B/E2FC | 26 | 0 | `rlUnknown9BE2A4` / `rlUnknown9BE2FD` |  |
+| $9B/E331-$9B/E371 | 65 | 0 | `rlUnknown9BE317` / `rlUnknown9BE372` |  |
+| $9B/E6DF-$9B/E790 | 178 | 0 | `rlUnknown9BE6AD` / `rlUnknown9BE791` |  |
+| $9B/E88E-$9B/E9AD | 288 | 0 | `rlUnknown9BE7F2` / `rlUnknown9BE9AE` |  |
+| $9B/EA5C-$9B/EAA4 | 73 | 0 | `rlUnknown9BE9FD` / `rlUnknown9BEAA5` |  |
+| $9B/F1F4-$9B/F217 | 36 | 0 | `rlUnknown9BF179` / `rlUnknown9BF218` |  |
+| $9B/F4BF-$9B/F547 | 137 | 0 | `rlUnknown9BF49E` / `rlUnknown9BF548` |  |
+| $9B/F59E-$9B/F650 | 179 | 0 | `rlUnknown9BF57A` / `rlUnknown9BF651` |  |
+| $9B/F7A3-$9B/F9E2 | 576 | 0 | `rlUnknown9BF77A` / `rsUnknown9BF9E3` |  |
+| $9B/F9FA-$9B/FA10 | 23 | 0 | `rsUnknown9BF9E3` / `rlUnknown9BFA11` |  |
 | $9B/FE13-$9B/FFFF | 493 | 0 | `rlUnknown9BFE06` / `g4bppMapTileAnimations2` |  |
 | $9E/8035-$9E/805D | 41 | 0 | `rlStartMapBattleAnimation` / `rlGetMapBattleFacing` |  |
 | $9E/9C94-$9E/9CB8 | 37 | 0 | `rlUnknown9E9C70` / `rlProcUnknown9E9A43Cycle1` |  |

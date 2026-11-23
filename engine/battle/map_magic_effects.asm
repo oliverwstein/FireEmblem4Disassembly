@@ -3664,7 +3664,7 @@
 
           .byte $56
 
-        bra $9FA70D
+        bra rlUnknown9FA6FF._A70D
 
         .databank 0
 
@@ -3684,6 +3684,7 @@
 
           .byte $54
 
+        _A70D
         lda wMapMagicCasterPixel+1
         and #$00FF
         sec
@@ -3739,7 +3740,7 @@
         .databank ?
 
         jsl rlUnknown9FAACC
-        bcc $9FA779
+        bcc rlUnknown9FA76A._A779
         lda #$000C
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #<>rlUnknown9FA75E
@@ -3757,7 +3758,7 @@
         .databank ?
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne $9FA779
+        bne rlUnknown9FA76A._A779
         lda #<>rlUnknown9FA76A
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
@@ -3793,9 +3794,9 @@
         ; Part of the Elthunder effect.
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
-        beq $9FA79A
+        beq rlUnknown9FA792._A79A
         stz aActiveSpriteSystem.aUnknown001320,b,x
-        jsr $9FA7F6
+        jsr rsUnknown9FA7F6
         lda #<>rlUnknown9FA792
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0040
@@ -3831,7 +3832,7 @@
         .databank ?
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
-        beq $9FA7BB
+        beq rlUnknown9FA7B0._A7BB
         stz aActiveSpriteSystem.aUnknown001320,b,x
         lda #<>rlUnknown9FA7B0
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -3851,7 +3852,7 @@
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _A7BB
-        jsr $9FA843
+        jsr rsUnknown9FA843
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _A7BB
@@ -3868,9 +3869,9 @@
         .databank ?
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
-        beq $9FA7F5
+        beq rlUnknown9FA7ED._A7F5
         stz aActiveSpriteSystem.aUnknown001320,b,x
-        jsr $9FA86B
+        jsr rsUnknown9FA86B
         lda #<>rlUnknown9FA7D4
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$003C
@@ -4109,7 +4110,7 @@
 
         lda aActiveSpriteSystem.aUnknown001240,b,x
         cmp #$000A
-        bpl $9FA917
+        bpl rlUnknown9FA917
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
         lda wMapMagicTargetPixel
@@ -4174,7 +4175,7 @@
         ; Part of the Thunder effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne $9FA94A
+        bne rlUnknown9FA94A
         lda #<>rlUnknown9FA94A
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0001
@@ -4192,7 +4193,7 @@
         ; Part of the Thunder effect.
 
         jsl rlUnknown9FAACC
-        bcc $9FA966
+        bcc rlUnknown9FA957._A966
         lda #<>rlUnknown9FA957
         sta aActiveSpriteSystem.aOnCycle,b,x
         rtl
@@ -4317,7 +4318,7 @@
 
         lda aActiveSpriteSystem.aUnknown0013A0,b,x
         cmp #$0001
-        bne $9FAA0D
+        bne rlUnknown9FAA02._AA0D
         inc y
         inc y
         rtl
@@ -14917,7 +14918,7 @@
         sta wR1
         lda #$FFFE
         sta wR3
-        bra $9FF07D
+        bra rlUnknown9FF071._F07D
 
         .databank 0
 
