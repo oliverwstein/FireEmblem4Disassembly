@@ -1940,7 +1940,7 @@
         phx
         phy
         lda #$0004
-        sta $7E52F0
+        sta aBuiltSpriteArray
         lda #$0000
         sta $7E5313
         lda #(`rlUnknown968F71)<<8
@@ -2232,7 +2232,7 @@
         phx
         phy
         lda #$0005
-        sta $7E52F0
+        sta aBuiltSpriteArray
         lda #$015E
         sta $7E530D
         ldx #$0000

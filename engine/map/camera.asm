@@ -588,7 +588,7 @@
         sta wR3
         lda #$0004
         sta wMapScrollSpeed,b
-        lda $7F4BF5
+        lda wMapBattleCameraTargetX
         cmp wMapScrollXPixels,b
         beq _C2E2
         bcs _C2DB
@@ -604,7 +604,7 @@
 
 
         _C2E2
-        lda $7F4BF7
+        lda wMapBattleCameraTargetY
         cmp wMapScrollYPixels,b
         beq _C2FB
         bcs _C2F4
@@ -737,10 +737,10 @@
         lda wR10
         cmp #$FFFF
         beq _C394
-        lda $7F4BF9
+        lda wMapBattleSavedCameraX
         cmp wMapScrollXPixels,b
         bne _C382
-        lda $7F4BFB
+        lda wMapBattleSavedCameraY
         cmp wMapScrollYPixels,b
         bne _C382
         clc
@@ -748,10 +748,10 @@
 
 
         _C382
-        lda $7F4BF9
-        sta $7F4BF5
-        lda $7F4BFB
-        sta $7F4BF7
+        lda wMapBattleSavedCameraX
+        sta wMapBattleCameraTargetX
+        lda wMapBattleSavedCameraY
+        sta wMapBattleCameraTargetY
         sec
         rtl
 
@@ -759,7 +759,7 @@
         _C394
         lda wCursorXOffset,b
         clc
-        adc $7F4BF9
+        adc wMapBattleSavedCameraX
         sta wTempVariable1,b
         sec
         sbc #$0080
@@ -774,10 +774,10 @@
         lda wMapMaxXScroll,b
 
         _C3B2
-        sta $7F4BF5
+        sta wMapBattleCameraTargetX
         lda wCursorYOffset,b
         clc
-        adc $7F4BFB
+        adc wMapBattleSavedCameraY
         sta wTempVariable2,b
         sec
         sbc #$0080
@@ -792,14 +792,14 @@
         lda wMapMaxYScroll,b
 
         _C3D4
-        sta $7F4BF7
+        sta wMapBattleCameraTargetY
         lda wTempVariable1,b
         sec
-        sbc $7F4BF5
+        sbc wMapBattleCameraTargetX
         sta wCursorXOffset,b
         lda wTempVariable2,b
         sec
-        sbc $7F4BF7
+        sbc wMapBattleCameraTargetY
         sta wCursorYOffset,b
         sec
         rtl

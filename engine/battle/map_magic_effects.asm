@@ -690,7 +690,7 @@
         lda #<>rlUnknown9F94EE
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
 
         _94ED
         rtl
@@ -739,7 +739,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9F9517._9526
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9F9517
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0020
@@ -1275,7 +1275,7 @@
         dec aProcSystem.aBody0,b,x
         bne _9830
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9F9831
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0008
@@ -1647,7 +1647,7 @@
         dec aProcSystem.aBody0,b,x
         bne _99FE
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9F99FF
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0040
@@ -1759,7 +1759,7 @@
         ; Part of the Fortify effect.
 
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         jsr rsUnknown9F9B56
         lda #<>rlUnknown9F9A73
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -2060,7 +2060,7 @@
         dec aProcSystem.aBody0,b,x
         bne rlUnknown9F9C7F._9C8B
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9F9C60
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
@@ -2508,7 +2508,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _9FAB
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9F9FAC
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0008
@@ -3069,7 +3069,7 @@
         dec aProcSystem.aBody0,b,x
         bne _A377
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FA378
         sta aProcSystem.aHeaderOnCycle,b,x
 
@@ -3454,7 +3454,7 @@
         dec aProcSystem.aBody0,b,x
         bne rlUnknown9FA62E._A64C
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FA62E
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$000E
@@ -3891,7 +3891,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _A7EC
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FA7ED
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0004
@@ -4179,7 +4179,7 @@
         lda #<>rlUnknown9FA94A
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
 
         .databank 0
 
@@ -4828,7 +4828,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FAE05._AE18
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FADD6
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$0018
@@ -5330,7 +5330,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FB0C4._B0E4
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FB0C4
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda #$000A
@@ -5946,7 +5946,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B474
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FB475
         sta aActiveSpriteSystem.aOnCycle,b,x
 
@@ -6221,7 +6221,7 @@
         lda #$0014
         sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         rtl
 
 
@@ -6469,7 +6469,7 @@
         dec aProcSystem.aBody0,b,x
         bne _B694
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FB695
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0080
@@ -6716,7 +6716,7 @@
         dec aProcSystem.aBody0,b,x
         bne _B876
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FB877
         sta aProcSystem.aHeaderOnCycle,b,x
 
@@ -6939,7 +6939,7 @@
         dec aProcSystem.aBody0,b,x
         bne _B9E8
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FB9E9
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0080
@@ -7425,7 +7425,7 @@
         dec aProcSystem.aBody0,b,x
         bne rlUnknown9FBD7B._BD9E
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FBD7B
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0050
@@ -7881,7 +7881,7 @@
         dec aProcSystem.aBody0,b,x
         bne rlUnknown9FC07B._C092
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FC07B
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0014
@@ -8118,7 +8118,7 @@
         dec aProcSystem.aBody0,b,x
         bne _C20C
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FC20D
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$00A0
@@ -8834,7 +8834,7 @@
         lda #$0030
         sta aProcSystem.aBody0,b,x
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
 
         _C697
         rtl
@@ -9283,7 +9283,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _C954
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #$0020
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #<>rlUnknown9FC955
@@ -9610,7 +9610,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FCB00._CB41
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0020
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -9938,7 +9938,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FCDAC
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         lda #<>rlUnknown9FCDAC
         sta aActiveSpriteSystem.aOnCycle,b,x
 
@@ -10701,7 +10701,7 @@
         ; Part of the Jormungandr effect.
 
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         rtl
 
         .databank 0
@@ -10974,7 +10974,7 @@
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FD2FF._D340
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0020
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -11974,7 +11974,7 @@
         cmp #$0010
         bne _D905
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
 
         _D905
         lda aProcSystem.aBody0,b,x
@@ -15944,11 +15944,11 @@
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
         sta aProcSystem.aBody3,b,x
-        sta $7F4C17
-        sta $7F4C07
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
-        sta aMapAction.wMapBattleActiveSpriteAckFlag
-        sta aMapAction.wMapBattlePhaseFlag
+        sta wBallistaBoltSignal
+        sta wMapAnimationSignals
+        sta aMapAction.wMapBattleStrikeSignal
+        sta aMapAction.wMapBattleStrikeDone
+        sta aMapAction.wMapBattleRoundRunning
         jsl rlUnknown9FF697
         jsl rlUnknown9FF6B6
         lda #$0005
@@ -15966,7 +15966,7 @@
         lda #<>rlPushToOAMBufferDualTileBase
         sta $15E4,b
         lda aActiveSpriteSystem,b
-        sta $7F4BD9
+        sta wMapBattleSavedSpriteEngineFlag
         lda aActiveSpriteSystem,b
         ora #$4000
         sta aActiveSpriteSystem,b
@@ -16228,9 +16228,9 @@
         sta lR18+1
         lda #<>gcUnknownAFF670
         sta lR18
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR19+1
-        lda #$8B88
+        lda #<>aDecompressionBuffer
         clc
         adc #$0000
         sta lR19
@@ -16254,9 +16254,9 @@
         sta lR18+1
         lda #<>gcUnknownD67D7D
         sta lR18
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR19+1
-        lda #$8B88
+        lda #<>aDecompressionBuffer
         clc
         adc #$1000
         sta lR19
@@ -16300,9 +16300,9 @@
         .databank ?
 
         phx
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR18+1
-        lda #$8B88
+        lda #<>aDecompressionBuffer
         clc
         adc #$0000
         sta lR18
@@ -16371,38 +16371,38 @@
         phx
         jsl rlUnknown9E88CE
         lda #$7E00
-        sta aMapAction.lUnknown7F4598+1
+        sta aMapAction.lAttackerSpriteData+1
         sta lR18+1
         lda #$8B88
         clc
         adc #$1000
-        sta aMapAction.lUnknown7F4598
+        sta aMapAction.lAttackerSpriteData
         sta lR18
         lda #$7E00
-        sta aMapAction.lMapBattleAttackerSpriteScriptPointer+1
+        sta aMapAction.lMapBattleSideScript+1
         ldy #$0004
         lda [lR18],y
         clc
         adc lR18
-        sta aMapAction.lMapBattleAttackerSpriteScriptPointer
+        sta aMapAction.lMapBattleSideScript
         lda $7F57EC
         tay
         lda $7F57EA
         tax
         lda aActionStructUnit2.UnitRAMPointer
         jsl rlUnknown9E8D25
-        lda #$7E00
+        lda #(`aMapBattleAttackerSpriteInfo)<<8
         sta lR44+1
-        lda #$FC88
+        lda #<>aMapBattleAttackerSpriteInfo
         sta lR44
-        lda aMapAction.lMapBattleAttackerSpriteScriptPointer
-        sta $7EFC8C
+        lda aMapAction.lMapBattleSideScript
+        sta aMapBattleAttackerSpriteInfo.Code
         ldx wR0
         lda wR1
         clc
         adc #$0005
         tay
-        lda #$FC88
+        lda #<>aMapBattleAttackerSpriteInfo
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         lda aActiveSpriteSystem.wOffset,b
         tax
@@ -16414,32 +16414,32 @@
         sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
         sta aActiveSpriteSystem.aUnknown001320,b,x
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR18+1
-        lda #$8B88
+        lda #<>aDecompressionBuffer
         clc
         adc #$1000
         sta lR18
         lda #$7E00
-        sta aMapAction.lMapBattleAttackerSpriteScriptPointer+1
+        sta aMapAction.lMapBattleSideScript+1
         ldy #$0008
         lda [lR18],y
         clc
         adc lR18
-        sta aMapAction.lMapBattleAttackerSpriteScriptPointer
+        sta aMapAction.lMapBattleSideScript
         lda $7F57EC
         tay
         lda $7F57EA
         tax
         lda aActionStructUnit2.UnitRAMPointer
         jsl rlUnknown9E8D25
-        lda #$7E00
+        lda #(`aMapBattleAttackerAuxSpriteInfo)<<8
         sta lR44+1
-        lda #$FC8E
+        lda #<>aMapBattleAttackerAuxSpriteInfo
         sta lR44
-        lda aMapAction.lMapBattleAttackerSpriteScriptPointer
-        sta $7EFC92
-        lda #$FC8E
+        lda aMapAction.lMapBattleSideScript
+        sta aMapBattleAttackerAuxSpriteInfo.Code
+        lda #<>aMapBattleAttackerAuxSpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -16504,9 +16504,9 @@
         .autsiz
         .databank ?
 
-        lda $7F4C07
+        lda wMapAnimationSignals
         ora #$0010
-        sta $7F4C07
+        sta wMapAnimationSignals
         rtl
 
         .databank 0
@@ -16521,8 +16521,8 @@
         .databank ?
 
         lda #$0001
-        sta $7F4C17
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta wBallistaBoltSignal
+        sta aMapAction.wMapBattleStrikeSignal
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         tax
         lda #$0000
@@ -16693,15 +16693,15 @@
 
         lda aProcSystem.aBody7,b,x
         sta wGameStateRoutine1,b
-        lda $7F4BD9
+        lda wMapBattleSavedSpriteEngineFlag
         sta aActiveSpriteSystem,b
         lda #(`rlPushToOAMBuffer)<<8
         sta $15E5,b
         lda #<>rlPushToOAMBuffer
         sta $15E4,b
-        lda $7F4C07
+        lda wMapAnimationSignals
         ora #$0002
-        sta $7F4C07
+        sta wMapAnimationSignals
         jsl rlResumeMapSpriteAnimation
         jsl rlResumeMapTileAnimation
         jsl rlProcEngineFreeProc
@@ -16888,7 +16888,7 @@
 
 
         _F9E4
-        lda $7F4C07
+        lda wMapAnimationSignals
         bit #$0004
         bne _FA1B
         lda aProcSystem.aBody6,b,x
@@ -16934,7 +16934,7 @@
         lda aProcSystem.aBody6,b,x
         inc a
         sta aProcSystem.aBody6,b,x
-        lda $7F4C07
+        lda wMapAnimationSignals
         bit #$0001
         beq _FA6A
         lda aProcSystem.aBody3,b,x
@@ -17043,9 +17043,9 @@
         .autsiz
         .databank ?
 
-        lda $7F4C07
+        lda wMapAnimationSignals
         ora #$0004
-        sta $7F4C07
+        sta wMapAnimationSignals
         rtl
 
         .databank 0
@@ -17059,9 +17059,9 @@
         .autsiz
         .databank ?
 
-        lda $7F4C07
+        lda wMapAnimationSignals
         ora #$0001
-        sta $7F4C07
+        sta wMapAnimationSignals
         rtl
 
         .databank 0

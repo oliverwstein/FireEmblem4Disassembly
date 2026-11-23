@@ -2082,6 +2082,28 @@
 
   .endvirtual
 
+  .virtual $7E52F0
+
+    aBuiltSpriteArray .fill 2 + 3 * 5 ; $7E52F0 ; a sprite array of up to 3 entries built in RAM for rlPushToOAMBuffer
+                                       ; (the map battle's level up banner, the battle scene)
+
+  .endvirtual
+
+  .virtual $7EFC88
+
+    ; The map battle's active sprite definitions, built in RAM by
+    ; rlInitMapBattleSpriteInfos so that the scripts can be in the decompressed
+    ; sprite data (bank $7E). Init and OnCycle point to bMapBattleSpriteInfoRTL.
+
+    aMapBattleAttackerSpriteInfo .dstruct structActiveSpriteInfo, 0, 0, 0 ; $7EFC88
+    aMapBattleAttackerAuxSpriteInfo .dstruct structActiveSpriteInfo, 0, 0, 0 ; $7EFC8E
+    aMapBattleDefenderSpriteInfo .dstruct structActiveSpriteInfo, 0, 0, 0 ; $7EFC94
+    aMapBattleDefenderAuxSpriteInfo .dstruct structActiveSpriteInfo, 0, 0, 0 ; $7EFC9A
+    bMapBattleSpriteInfoRTL .byte ? ; $7EFCA0 ; an rtl
+    aMapBattleEndedRoundScript .byte ? ; $7EFCA1 ; ACTIVE_SPRITE_END: the round scripts after rlMapBattleEndRoundScripts
+
+  .endvirtual
+
 
 
   .virtual $7E4EC5
@@ -2462,74 +2484,125 @@
 
   .virtual $7F454A
 
+    ; The map battle's state (procMapBattle, engine/battle/map_battle.asm), also
+    ; used by the map action animations and the event cutscenes that share its
+    ; sprites. Two sides: the attacker (aActionStructUnit1) and the defender
+    ; (aActionStructUnit2). Words for the two sides are next to each other, so
+    ; the code reads the defender's as the attacker's + 2 (or + 4 for pairs of
+    ; words, + 3 for long pointers). "The side" is the one being set up.
+
     aMapAction .block
-      wWeaponType .word ?     ; $7F454A
-      wUnknown7F454C .word ?  ; $7F454C
-      wBattleClassID .word ?  ; $7F454E
-        ; usually class ID, can differ if gendered?
-      wUnknown7F4450 .word ?  ; $7F4550
-      wXTilePosition .word ?  ; $7F4552
-      wYTilePosition .word ?  ; $7F4554
-      wUnknown7F4556 .word ?  ; $7F4556
-      wUnknown7F4558 .word ?  ; $7F4558
-      wUnknown7F455A .word ?  ; $7F455A
-      wUnknown7F455C .word ?  ; $7F455C
-      wUnknown7F455E .word ?  ; $7F455E
-      wUnknown7F4560 .word ?  ; $7F4560
-      wUnknown7F4562 .word ?  ; $7F4562
-      wDefenderAllegiance            .word ?  ; $7F4564
-      wMapBattleTerrainMode          .word ?  ; $7F4566 ; selects terrain/BG config (<4)
-                                     .fill 6  ; $7F4568-$7F456D
-      wMapBattleClassSpriteID        .word ?  ; $7F456E ; *49 index into aBattleMapSpriteData
-      wMapBattleWeaponAnimIndex      .word ?  ; $7F4570 ; *6 offset within class entry in aBattleMapSpriteData
-      wMapBattleAttackVariant        .word ?  ; $7F4572 ; loaded from byte+$30 of aBattleMapSpriteData entry
-      wUnknown7F4574                 .word ?  ; $7F4574 ; active side allegiance
-      wUnknown7F4576                 .word ?  ; $7F4576 ; active sprite parameter
-      wMapBattleAttackerXPixel       .word ?  ; $7F4578 ; attacker sprite X
-      wMapBattleAttackerYPixel       .word ?  ; $7F457A ; attacker sprite Y
-      wUnknown7F457C                 .word ?  ; $7F457C
-      wUnknown7F457E                 .word ?  ; $7F457E
-      wMapBattleActiveSpriteSyncFlag .word ?  ; $7F4580 ; command 05 waits until 0, command 06 clears when aux sprite matches
-      wMapBattleActiveSpriteAckFlag  .word ?  ; $7F4582 ; set to 1 by rsActiveSpriteCommand05 when SyncFlag == 0
-      wMapBattlePhaseFlag            .word ?  ; $7F4584 ; 0/1 map-battle active state
-      lUnknown7F4586                 .long ?  ; $7F4586
-      lUnknown7F4589                 .long ?  ; $7F4589
-      lUnknown7F458C                 .long ?  ; $7F458C
-      lUnknown7F458F                 .long ?  ; $7F458F
-      lMapBattleAttackerSpriteScriptPointer .long ? ; $7F4592 ; $7E00 bank + offset -> $7EFC8C
-      lMapBattleAuxSpriteScriptPointer      .long ? ; $7F4595 ; $7E00 bank + offset -> $7EFC92/$7EFC9E
-      lUnknown7F4598                 .long ?  ; $7F4598
-      lUnknown7F459B                 .long ?  ; $7F459B
+      wAttackerWeaponType .word ? ; $7F454A ; rlGetClassMapBattleWeaponType: 0-3, or 4 for a tome or staff
+      wDefenderWeaponType .word ? ; $7F454C
+      wAttackerSpriteRow .word ?  ; $7F454E ; the row of aBattleMapSpriteData (rlGetMapBattleClassSprite)
+      wDefenderSpriteRow .word ?  ; $7F4550
+      wAttackerXTile .word ?      ; $7F4552
+      wAttackerYTile .word ?      ; $7F4554
+      wDefenderXTile .word ?      ; $7F4556
+      wDefenderYTile .word ?      ; $7F4558
+      wUnknown7F455A .word ?      ; $7F455A ; written by the map action animations and cutscenes, never read
+      wUnknown7F455C .word ?      ; $7F455C
+      wAttackerFacing .word ?     ; $7F455E ; 0-7 (rlGetMapBattleFacing), 6 with no target
+      wDefenderFacing .word ?     ; $7F4560 ; the attacker's facing turned around (eor 4)
+      wAttackerAllegiance .word ? ; $7F4562 ; the low 2 bits of the deployment entry; palette = allegiance + 1
+      wDefenderAllegiance .word ? ; $7F4564
+      wSideWeaponType .word ?     ; $7F4566 ; the side's: picks its scripts in its sprite data
+      wSideSpriteRowCopy .word ?  ; $7F4568 ; written, never read
+                          .fill 4 ; $7F456A
+      wSideSpriteRow .word ?      ; $7F456E
+      wSideFacing .word ?         ; $7F4570 ; picks the pair of long pointers in the sprite row
+      wSideTallSprite .word ?     ; $7F4572 ; byte $30 of the sprite row: 1 for mounted and flying classes,
+                                            ; whose frames are taller and who get an aux sprite
+      wSideAllegiance .word ?     ; $7F4574
+      wSide .word ?               ; $7F4576 ; 0 attacker, 1 defender
+      wMapBattleAttackerXPixel .word ? ; $7F4578 ; the side's sprite position on screen
+      wMapBattleAttackerYPixel .word ? ; $7F457A
+      wMapBattleDefenderXPixel .word ? ; $7F457C
+      wMapBattleDefenderYPixel .word ? ; $7F457E
+      wMapBattleStrikeSignal .word ?   ; $7F4580 ; set when a strike lands (sprite command $04); the struck
+                                       ; side recoils (rlMapBattleRunRecoil) and clears it
+      wMapBattleStrikeDone .word ?     ; $7F4582 ; set by sprite commands $05, $11, $1C; command $07 waits for it
+      wMapBattleRoundRunning .word ?   ; $7F4584 ; 1 from rlMapBattleSetRoundSpriteScripts until a script
+                                       ; runs command $0D (rlMapBattleEndRoundScripts)
+      lAttackerAuxRoundScript .long ?  ; $7F4586 ; the round's scripts, read by sprite commands $0A and $09
+      lAttackerRoundScript .long ?     ; $7F4589
+      lDefenderAuxRoundScript .long ?  ; $7F458C
+      lDefenderRoundScript .long ?     ; $7F458F
+      lMapBattleSideScript .long ?     ; $7F4592 ; the side's first scripts, copied into its sprite infos
+      lMapBattleSideAuxScript .long ?  ; $7F4595
+      lAttackerSpriteData .long ?      ; $7F4598 ; the side's block of decompressed sprite data for its weapon type:
+      lDefenderSpriteData .long ?      ; $7F459B ; a frame table, then offsets of its scripts
       wMapBattleRoundIndex           .word ?  ; $7F459E ; index into aBattleRoundsData
                                      .word ?  ; $7F45A0
-      wMapBattleRoundCounter         .word ?  ; $7F45A2
-      wMapBattleAttackerSpriteSlot   .word ?  ; $7F45A4 ; attacker active sprite slot offset
-      wMapBattleAttackerAuxSpriteSlot .word ? ; $7F45A6 ; attacker overlay/shadow sprite slot
-      wMapBattleDefenderSpriteSlot   .word ?  ; $7F45A8 ; defender active sprite slot
-      wMapBattleDefenderAuxSpriteSlot .word ? ; $7F45AA ; defender overlay/shadow sprite slot
+      wMapBattleRecoilStep           .word ?  ; $7F45A2 ; frame of the recoil (rlMapBattleRunRecoil), $FFFF when done
+      wMapBattleAttackerSpriteSlot   .word ?  ; $7F45A4 ; active sprite slots, $FFFF for none
+      wMapBattleAttackerAuxSpriteSlot .word ? ; $7F45A6
+      wMapBattleDefenderSpriteSlot   .word ?  ; $7F45A8
+      wMapBattleDefenderAuxSpriteSlot .word ? ; $7F45AA
       aMapBattleSavedPalette         .fill 32 ; $7F45AC ; saved 16-color palette buffer
       wMapBattlePaletteRestoreFlag   .word ?  ; $7F45CC ; nonzero after palette saved/faded
-      wMapBattleLevelUpFrameCounter  .word ?  ; $7F45CE ; level-up UI animation frame counter
-      lMapBattleLevelUpDataPointer   .long ?  ; $7F45D0 ; 24-bit ptr ($7E4EA9+$4C level-up struct)
-      wMapBattleLevelUpStatIndex     .word ?  ; $7F45D3 ; index into aMapBattleStatGainOrder stat order
-      wMapBattleLevelUpStatWaitTimer .word ?  ; $7F45D5 ; delay timer per stat row
-      wMapBattleLevelUpStatGain      .word ?  ; $7F45D7 ; current stat gain value
+      wMapBattleLevelUpFrameCounter  .word ?  ; $7F45CE ; frame of the level up banner, then of each stat gain
+      lMapBattleLevelUpDataPointer   .long ?  ; $7F45D0 ; aActionStructUnit1.LevelUpData
+      wMapBattleLevelUpStatIndex     .word ?  ; $7F45D3 ; index into aMapBattleStatGainOrder
+      wMapBattleLevelUpStatWaitTimer .word ?  ; $7F45D5 ; delay after each stat
+      wMapBattleLevelUpStatGain      .word ?  ; $7F45D7 ; the gain being shown
     .bend
 
   .endvirtual
 
 
-  .virtual $7F4BF1
-    wMapBattleStatusSword .word ? ; $7F4BF1 ; $FFFF, or the status sword's index (BerserkSword 0, SilenceSword 2, SleepSword 3; rlGetMagicSwordMapEffect)
+  .virtual $7F4BD9
+
+    ; The map battle's flags (procMapBattle). Pairs are attacker then defender.
+
+    wMapBattleSavedSpriteEngineFlag .word ? ; $7F4BD9 ; aActiveSpriteSystem.wFlag before the battle
+    aMapBattleGoldText .fill 12             ; $7F4BDB ; the gold amount as text (rlShowGoldAmountText)
+    wMapBattleSolo .word ?                  ; $7F4BE7 ; 1 for a dance or an action without a target (rlMapBattleCheckDance)
+    wMapBattleStrikeDrains .word ?          ; $7F4BE9 ; 1 when the strike heals its striker by the damage (Sol)
+    wMapBattleRoundEntry .word ?            ; $7F4BEB ; the aBattleRoundsData entry being played
+    wMapBattleAttackerStatusSword .word ?   ; $7F4BED ; wMapBattleStatusSword per side; $FFFE once its staff effect played
+    wMapBattleDefenderStatusSword .word ?   ; $7F4BEF
+    wMapBattleStatusSword .word ?           ; $7F4BF1 ; $FFFF, or the status sword's index (BerserkSword 0, SilenceSword 2, SleepSword 3; rlGetMagicSwordMapEffect)
+    wMapBattleSkillEffect .word ?           ; $7F4BF3 ; $FFFF, or the skill activating: 0 Astra, 1 Luna, 2 Sol, 3 Holy, 4 Darkness
+    wMapBattleCameraTargetX .word ?         ; $7F4BF5
+    wMapBattleCameraTargetY .word ?         ; $7F4BF7
+    wMapBattleSavedCameraX .word ?          ; $7F4BF9 ; the camera before the battle
+    wMapBattleSavedCameraY .word ?          ; $7F4BFB
+                           .word ?          ; $7F4BFD
+    wUnknown7F4BFF .word ?                  ; $7F4BFF ; used by the scripted critical's effect
+    wUnknown7F4C01 .word ?                  ; $7F4C01
+    wUnknown7F4C03 .word ?                  ; $7F4C03
+    wMapBattleMusicLowered .word ?          ; $7F4C05 ; 1 while the music is lowered for a popup's jingle
+    wMapAnimationSignals .word ?            ; $7F4C07 ; signals between the map battle, the map action animations, the cutscenes and the event procs
+                                            ; that wait for them: bit 1 ($0002) the animation has ended (rlProcHaltEventCycle waits for it); procMapBattle sets 1 after the round entry $7F00; the cutscenes use $0004-$0010
+    wMapBattleEarthSwordMelee .word ?       ; $7F4C09 ; 1 when the Earth Sword strikes at distance 1 (rlGetMagicSwordMapEffect)
+    wMapBattleAttackerEarthSwordMelee .word ? ; $7F4C0B ; the above per side: the strike heals its striker
+    wMapBattleDefenderEarthSwordMelee .word ? ; $7F4C0D
+    wMapBattlePavise .word ?                ; $7F4C0F ; 1 when the round entry just read was a Pavise activation (rlMapBattleNextRound)
+    wMapBattleAttackerBallista .word ?      ; $7F4C11 ; 1 when the side is a ballistician (rlCheckMapBattleBallistician)
+    wMapBattleDefenderBallista .word ?      ; $7F4C13
+                               .word ?      ; $7F4C15
+    wBallistaBoltSignal .word ?             ; $7F4C17 ; set at frames of the bolt's flight (aBallistaBoltSignalFrames); sprite command $1A waits for it
+    wBallistaBoltFrame .word ?              ; $7F4C19
+    wBallistaBoltFire .word ?               ; $7F4C1B ; set by sprite command $1B: the bolt proc fires
+    wBallistaBoltDone .word ?               ; $7F4C1D ; set when the bolt has landed; sprite command $1C waits for it
+    wBallistaBoltProc .word ?               ; $7F4C1F ; the bolt proc's slot, $FFFF for none
+    wBallistaBoltDistance .word ?           ; $7F4C21 ; wBattleDistance, picks the arc
+    wBallistaBoltXFraction .word ?          ; $7F4C23 ; the bolt's position, 8.8 fixed point in two words
+    wBallistaBoltX .word ?                  ; $7F4C25
+    wBallistaBoltYFraction .word ?          ; $7F4C27
+    wBallistaBoltY .word ?                  ; $7F4C29
+    wBallistaBoltHeight .word ?             ; $7F4C2B ; the arc's height above the line, subtracted from Y
+    wBallistaBoltSide .word ?               ; $7F4C2D ; the side that fires
+    wMapBattleLastRoundEntry .word ?        ; $7F4C2F
+    wMapBattleDefeatedSide .word ?          ; $7F4C31 ; $FFFF, or the side the last strike defeated
+    wMapBattleDefeatBlinkStep .word ?       ; $7F4C33 ; index into aMapBattleDefeatBlinkTimes
+    wMapBattleDefeatBlinkTimer .word ?      ; $7F4C35
+    wMapBattleDefeatedSprite .word ?        ; $7F4C37 ; its sprite slots
+    wMapBattleDefeatedAuxSprite .word ?     ; $7F4C39
+
   .endvirtual
 
-  .virtual $7F4C09
-    wMapBattleEarthSwordMelee .word ? ; $7F4C09 ; 1 when the Earth Sword strikes at distance 1 (rlGetMagicSwordMapEffect)
-  .endvirtual
-
-  .virtual $7F4C0F
-    wMapBattlePavise .word ? ; $7F4C0F ; 1 when the round entry just read was a Pavise activation (rlMapBattleNextRound)
-  .endvirtual
 
   .virtual $7F4C87
 

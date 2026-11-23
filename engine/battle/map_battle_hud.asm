@@ -3612,11 +3612,11 @@
         lda aProcSystem.wInput0,b
         sta wR4
         sta wR6
-        sta aMapAction.wXTilePosition
+        sta aMapAction.wAttackerXTile
         lda aProcSystem.wInput1,b
         sta wR5
         sta wR7
-        sta aMapAction.wYTilePosition
+        sta aMapAction.wAttackerYTile
         ldx aProcSystem.wInput0,b
         ldy aProcSystem.wInput1,b
         lda aActionStructUnit1.UnitRAMPointer
@@ -3639,7 +3639,7 @@
         sta aProcSystem.aHeaderBitfield,b,x
         sta wMapMagicStart
         sta wMapMagicDone
-        sta $7F4C07
+        sta wMapAnimationSignals
         lda wGameStateRoutine1,b
         sta aProcSystem.aBody7,b,x
         stz wGameStateRoutine1,b

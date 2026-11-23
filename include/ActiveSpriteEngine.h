@@ -56,7 +56,7 @@
 
     ACTIVE_SPRITE_WAIT_MAP_MAGIC .segment
       ; $11: wait until the magic effect is done ($7F5093), then clear
-      ; $7F5091 and acknowledge (wMapBattleActiveSpriteAckFlag).
+      ; $7F5091 and acknowledge (wMapBattleStrikeDone).
       .byte $11
     .endsegment
 

@@ -1429,12 +1429,12 @@
 
         phb
         phx
-        lda aMapAction.lUnknown7F4589
+        lda aMapAction.lAttackerRoundScript
         tay
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
-          lda aMapAction.lUnknown7F458F
+          lda aMapAction.lDefenderRoundScript
           tay
 
         +
@@ -1452,12 +1452,12 @@
 
         phb
         phx
-        lda aMapAction.lUnknown7F4586
+        lda aMapAction.lAttackerAuxRoundScript
         tay
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
-          lda aMapAction.lUnknown7F458C
+          lda aMapAction.lDefenderAuxRoundScript
           tay
 
         +
@@ -1588,9 +1588,9 @@
         tax
         lda aUnknown9EB4C9,x
         sta $06
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta $24+1
-        lda #$8B88
+        lda #<>aDecompressionBuffer
         clc
         adc #$1000
         adc $04
@@ -1634,7 +1634,7 @@
         .databank ?
 
         lda #1
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         jsl rlPlayMapBattleHitSFX
         rts
 
@@ -1646,7 +1646,7 @@
         .autsiz
         .databank ?
 
-        lda aMapAction.wMapBattleActiveSpriteSyncFlag
+        lda aMapAction.wMapBattleStrikeSignal
         beq +
 
         dec y
@@ -1657,7 +1657,7 @@
 
         +
         lda #1
-        sta aMapAction.wMapBattleActiveSpriteAckFlag
+        sta aMapAction.wMapBattleStrikeDone
 
         +
         rts
@@ -1670,7 +1670,7 @@
         .autsiz
         .databank ?
 
-        lda aMapAction.wMapBattleActiveSpriteSyncFlag
+        lda aMapAction.wMapBattleStrikeSignal
         beq +
 
         stx $00
@@ -1683,7 +1683,7 @@
         beq _End
 
         lda #0
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         bra _End
         
         +
@@ -1703,7 +1703,7 @@
         .autsiz
         .databank ?
 
-        lda aMapAction.wMapBattleActiveSpriteAckFlag
+        lda aMapAction.wMapBattleStrikeDone
         bne +
 
           dec y
@@ -1722,7 +1722,7 @@
         .autsiz
         .databank ?
 
-        lda aMapAction.wMapBattlePhaseFlag
+        lda aMapAction.wMapBattleRoundRunning
         bne +
 
           dec y
@@ -1741,7 +1741,7 @@
         .autsiz
         .databank ?
 
-        lda aMapAction.lUnknown7F4598
+        lda aMapAction.lAttackerSpriteData
         sta $24
         lda $7F4598+1
         sta $24+1
@@ -1749,7 +1749,7 @@
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
-        lda aMapAction.lUnknown7F459B
+        lda aMapAction.lDefenderSpriteData
         sta $24
         lda $7F459B+1
         sta $24+1
@@ -1770,7 +1770,7 @@
         .autsiz
         .databank ?
 
-        lda aMapAction.lUnknown7F4598
+        lda aMapAction.lAttackerSpriteData
         sta $24
         lda $7F4598+1
         sta $24+1
@@ -1778,7 +1778,7 @@
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
-        lda aMapAction.lUnknown7F459B
+        lda aMapAction.lDefenderSpriteData
         sta $24
         lda $7F459B+1
         sta $24+1
@@ -1817,7 +1817,7 @@
         phx
         phy
         sty $00
-        lda aMapAction.lUnknown7F4598
+        lda aMapAction.lAttackerSpriteData
         sta $24
         lda $7F4598+1
         sta $24+1
@@ -1825,7 +1825,7 @@
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq +
 
-          lda aMapAction.lUnknown7F459B
+          lda aMapAction.lDefenderSpriteData
           sta $24
           lda $7F459B+1
           sta $24+1
@@ -1887,7 +1887,7 @@
         lda #0
         sta wMapMagicStart
         lda #1
-        sta aMapAction.wMapBattleActiveSpriteAckFlag
+        sta aMapAction.wMapBattleStrikeDone
         bra ++
         
         +
@@ -1907,11 +1907,11 @@
         .autsiz
         .databank ?
 
-        lda $7F4C17
+        lda wBallistaBoltSignal
         beq +
 
         lda #0
-        sta $7F4C17
+        sta wBallistaBoltSignal
         bra ++
         
         +
@@ -1932,9 +1932,9 @@
         .databank ?
 
         lda #1
-        sta $7F4C1B
+        sta wBallistaBoltFire
         lda #0
-        sta $7F4C1D
+        sta wBallistaBoltDone
         rts
 
         .databank 0
@@ -1945,13 +1945,13 @@
         .autsiz
         .databank ?
 
-        lda $7F4C1D
+        lda wBallistaBoltDone
         beq +
 
         lda #0
-        sta $7F4C1B
+        sta wBallistaBoltFire
         lda #1
-        sta aMapAction.wMapBattleActiveSpriteAckFlag
+        sta aMapAction.wMapBattleStrikeDone
         bra ++
         
         +
@@ -1986,18 +1986,18 @@
 
         phy
         phx
-        lda $7F4BEB
+        lda wMapBattleRoundEntry
         and #$0001
         asl a
         tax
-        lda $7F4C11,x
+        lda wMapBattleAttackerBallista,x
         beq _B2D4
-        lda $7F4BEB
+        lda wMapBattleRoundEntry
         and #$0001
         bne _B342
 
         _B2D4
-        lda $7F4BEB
+        lda wMapBattleRoundEntry
         and #$0001
         asl a
         tax
@@ -2019,7 +2019,7 @@
         _B2F4
         dec a
         bne _B30E
-        lda $7F4BEB
+        lda wMapBattleRoundEntry
         and #$0020
         beq _B307
         lda #$0045

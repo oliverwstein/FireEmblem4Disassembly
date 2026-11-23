@@ -843,9 +843,9 @@
         .autsiz
         .databank ?
 
-        ; Wait until bit $0002 of $7F4C07 is set, then free event proc
+        ; Wait until bit $0002 of wMapAnimationSignals is set, then free event proc
 
-        lda $7F4C07
+        lda wMapAnimationSignals
         bit #$0002
         beq +
 
@@ -907,9 +907,9 @@
         .autsiz
         .databank ?
 
-        ; Wait until bit $0010 of $7F4C07 is set, then free event proc
+        ; Wait until bit $0010 of wMapAnimationSignals is set, then free event proc
 
-        lda $7F4C07
+        lda wMapAnimationSignals
         bit #$0010
         beq _8B5E
         jsl rlEventEngineFreeProc

@@ -1178,14 +1178,14 @@
         .autsiz
         .databank ?
 
-        ; $7F50C9 = the acting side's facing (aMapAction.wUnknown7F4560, or wUnknown7F455E when the round's bit 0 says the defender acts).
+        ; $7F50C9 = the acting side's facing (aMapAction.wDefenderFacing, or wAttackerFacing when the round's bit 0 says the defender acts).
 
-        lda aMapAction.wUnknown7F4560
+        lda aMapAction.wDefenderFacing
         tay
-        lda $7F4BEB
+        lda wMapBattleRoundEntry
         lsr a
         bcc _82B8
-        lda aMapAction.wUnknown7F455E
+        lda aMapAction.wAttackerFacing
         tay
 
         _82B8

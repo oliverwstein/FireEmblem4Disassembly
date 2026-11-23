@@ -64,51 +64,51 @@
         plb
         .databank ?
         lda #$0000
-        sta $4580,b
-        sta $4582,b
-        sta $4584,b
+        sta <>aMapAction.wMapBattleStrikeSignal,b
+        sta <>aMapAction.wMapBattleStrikeDone,b
+        sta <>aMapAction.wMapBattleRoundRunning,b
         sta @l $000FD7,x
         sta aMapAction.wUnknown7F455A
-        sta aMapAction.wMapBattleAttackVariant
+        sta aMapAction.wSideTallSprite
         sta wMapBattleMode
-        sta $4C11,b
-        sta $4C13,b
-        sta $7F4C07
+        sta <>wMapBattleAttackerBallista,b
+        sta <>wMapBattleDefenderBallista,b
+        sta wMapAnimationSignals
         lda #$0001
-        sta $7F4BEB
+        sta wMapBattleRoundEntry
         lda $7E4EAF
-        sta $454E,b
+        sta <>aMapAction.wAttackerSpriteRow,b
         lda wBattleDistance
-        sta $4552,b
+        sta <>aMapAction.wAttackerXTile,b
         lda wBattleQuotePointer
-        sta $4554,b
+        sta <>aMapAction.wAttackerYTile,b
         lda wDeathQuotePointer+1
         jsl rlGetItemDataROMPointer
         jsl rlGetItemWeaponType
         sta $454A,b
         lda #$0000
-        sta $4550,b
-        sta $4556,b
-        sta $4558,b
-        sta $454C,b
+        sta <>aMapAction.wDefenderSpriteRow,b
+        sta <>aMapAction.wDefenderXTile,b
+        sta <>aMapAction.wDefenderYTile,b
+        sta <>aMapAction.wDefenderWeaponType,b
         lda #$0006
-        sta $455E,b
-        sta $4560,b
+        sta <>aMapAction.wAttackerFacing,b
+        sta <>aMapAction.wDefenderFacing,b
         lda #$003E
         sec
         sbc #$003E
-        sta $5089,b
+        sta <>wMapMagicEffect,b
         lda wBattleSong
         asl a
         asl a
         tax
         plb
         .databank ?
-        lda aMapAction.wYTilePosition
+        lda aMapAction.wAttackerYTile
         clc
         adc aUnknown9E9B50+2,x
         tay
-        lda aMapAction.wXTilePosition
+        lda aMapAction.wAttackerXTile
         clc
         adc aUnknown9E9B50,x
         tax
@@ -185,16 +185,16 @@
         .autsiz
         .databank ?
 
-        lda aMapAction.wMapBattlePhaseFlag
+        lda aMapAction.wMapBattleRoundRunning
         beq _9B74
         lda #<>rlUnknown9E9B82
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _9B74
-        lda aMapAction.wMapBattleActiveSpriteSyncFlag
+        lda aMapAction.wMapBattleStrikeSignal
         beq _9B81
         lda #$0000
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
 
         _9B81
         rtl
@@ -218,7 +218,7 @@
         .autsiz
         .databank ?
 
-        lda aMapAction.wMapBattlePhaseFlag
+        lda aMapAction.wMapBattleRoundRunning
         bne _9B97
         lda #<>rlUnknown9E9BAD
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -227,10 +227,10 @@
         sta aProcSystem.aHeaderBitfield,b,x
 
         _9B97
-        lda aMapAction.wMapBattleActiveSpriteSyncFlag
+        lda aMapAction.wMapBattleStrikeSignal
         beq _9BAC
         lda #$0000
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
         jsl rlUnknown9E9E61
         jsl rlUnknown9E9C70
 
@@ -254,7 +254,7 @@
         cmp #$0001
         beq _9BC8
         lda #$0000
-        sta aMapAction.wMapBattlePhaseFlag
+        sta aMapAction.wMapBattleRoundRunning
         lda #<>rlUnknown9E9BE0
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _9BDE
@@ -442,13 +442,13 @@
         rep #$20
         plb
         .databank $7F
-        lda @l aMapAction.wUnknown7F455E
+        lda @l aMapAction.wAttackerFacing
         asl a
         clc
-        adc @l aMapAction.wUnknown7F455E
+        adc @l aMapAction.wAttackerFacing
         asl a
         sta wR0
-        lda @l aMapAction.wBattleClassID
+        lda @l aMapAction.wAttackerSpriteRow
         sta wR10
         lda #$0031
         sta wR11
@@ -462,9 +462,9 @@
         sta lR18+1
         lda aBattleMapSpriteData,x
         sta lR18
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR19+1
-        lda #$8B88
+        lda #<>aDecompressionBuffer
         clc
         adc #$0000
         sta lR19
@@ -484,9 +484,9 @@
         sta lR18+1
         lda #<>gcUnknownACCC17
         sta lR18
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR19+1
-        lda #$8B88
+        lda #<>aDecompressionBuffer
         clc
         adc #$4000
         sta lR19
@@ -566,9 +566,9 @@
 
         phy
         phx
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR18+1
-        lda #$8B88
+        lda #<>aDecompressionBuffer
         clc
         adc #$2000
         sta lR18
@@ -641,9 +641,9 @@
         phy
         phx
         lda #$0000
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
-        sta aMapAction.wMapBattleActiveSpriteAckFlag
-        sta aMapAction.wMapBattlePhaseFlag
+        sta aMapAction.wMapBattleStrikeSignal
+        sta aMapAction.wMapBattleStrikeDone
+        sta aMapAction.wMapBattleRoundRunning
         sta aProcSystem.aHeaderBitfield,b,x
         lda #$FFFF
         sta aMapAction.wMapBattleAttackerSpriteSlot
@@ -680,25 +680,25 @@
         phy
         phx
         lda #$0000
-        sta $4580,b
-        sta $4582,b
-        sta $4584,b
+        sta <>aMapAction.wMapBattleStrikeSignal,b
+        sta <>aMapAction.wMapBattleStrikeDone,b
+        sta <>aMapAction.wMapBattleRoundRunning,b
         sta @l $000F37,x
         lda #$0001
-        sta $4584,b
-        lda $4599,b
-        sta $458A,b
-        sta $4587,b
-        lda $4598,b
+        sta <>aMapAction.wMapBattleRoundRunning,b
+        lda <>aMapAction.lAttackerSpriteData+1,b
+        sta <>aMapAction.lAttackerRoundScript+1,b
+        sta <>aMapAction.lAttackerAuxRoundScript+1,b
+        lda <>aMapAction.lAttackerSpriteData,b
         sta @l lR18
-        lda $4599,b
+        lda <>aMapAction.lAttackerSpriteData+1,b
         sta @l lR18+1
-        lda $455E,b
+        lda <>aMapAction.wAttackerFacing,b
         sta @l wR0
         lda #$0000
         jsr rsGetMapBattleRoundScripts
-        stx $4589,b
-        sty $4586,b
+        stx <>aMapAction.lAttackerRoundScript,b
+        sty <>aMapAction.lAttackerAuxRoundScript,b
         plx
         ply
         plp
@@ -728,29 +728,29 @@
         phy
         phx
         lda #$7E00
-        sta aMapAction.lUnknown7F459B+1
+        sta aMapAction.lDefenderSpriteData+1
         sta lR18+1
         lda #$8B88
         clc
         adc #$3000
-        sta aMapAction.lUnknown7F459B
+        sta aMapAction.lDefenderSpriteData
         sta lR18
         ldy #$0002
         lda [lR18],y
         clc
         adc lR18
-        sta $7EFC98
-        lda aMapAction.wYTilePosition
+        sta aMapBattleDefenderSpriteInfo.Code
+        lda aMapAction.wAttackerYTile
         tay
-        lda aMapAction.wXTilePosition
+        lda aMapAction.wAttackerXTile
         tax
         lda aActionStructUnit1.UnitRAMPointer
         jsl rlUnknown9E8D25
-        lda #$7E00
+        lda #(`aMapBattleDefenderSpriteInfo)<<8
         sta lR44+1
-        lda #$FC94
+        lda #<>aMapBattleDefenderSpriteInfo
         sta lR44
-        lda #$FC94
+        lda #<>aMapBattleDefenderSpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -905,8 +905,8 @@
         and #$00FF
         sta aMapAction.wMapBattleAttackerYPixel
         lda #0
-        sta $7F4C05
-        sta $7F4C07
+        sta wMapBattleMusicLowered
+        sta wMapAnimationSignals
         rtl
 
         .databank 0
@@ -1088,9 +1088,9 @@
 
         jsl rlReloadMenuIconGraphics
         bcs _ADD0
-        lda $7F4C07
+        lda wMapAnimationSignals
         ora #$0002
-        sta $7F4C07
+        sta wMapAnimationSignals
         lda @l $0010B7,x
         sta wGameStateRoutine1,b
         jsl rlProcEngineFreeProc
@@ -1156,17 +1156,17 @@
         plb
         .databank ?
         lda #$0000
-        sta $4580,b
-        sta $4582,b
-        sta $4584,b
+        sta <>aMapAction.wMapBattleStrikeSignal,b
+        sta <>aMapAction.wMapBattleStrikeDone,b
+        sta <>aMapAction.wMapBattleRoundRunning,b
         sta aMapAction.wUnknown7F455A
-        sta aMapAction.wMapBattleAttackVariant
+        sta aMapAction.wSideTallSprite
         sta wMapBattleMode
         sta wMapMagicStart
         sta wMapMagicDone
-        sta $4C11,b
-        sta $4C13,b
-        sta $7F4C07
+        sta <>wMapBattleAttackerBallista,b
+        sta <>wMapBattleDefenderBallista,b
+        sta wMapAnimationSignals
         lda $7E4EA9
         sta aActionStructUnit1
         sta aActionStructUnit2
@@ -1177,31 +1177,31 @@
         lda aActionStructUnit1.UnitRAMPointer
         sta @l wR2
         jsl rlGetMapBattleClassSprite
-        sta $454E,b
+        sta <>aMapAction.wAttackerSpriteRow,b
         lda wBattleDistance
-        sta $4552,b
+        sta <>aMapAction.wAttackerXTile,b
         lda wBattleQuotePointer
-        sta $4554,b
+        sta <>aMapAction.wAttackerYTile,b
         lda #$FFFF
         jsl rlGetClassMapBattleWeaponType
         sta $454A,b
         lda #$FFFF
         sta aActionStructUnit1.WeaponID
         lda #$0000
-        sta $4550,b
-        sta $4556,b
-        sta $4558,b
-        sta $454C,b
+        sta <>aMapAction.wDefenderSpriteRow,b
+        sta <>aMapAction.wDefenderXTile,b
+        sta <>aMapAction.wDefenderYTile,b
+        sta <>aMapAction.wDefenderWeaponType,b
         lda #$0006
-        sta $455E,b
-        sta $4560,b
+        sta <>aMapAction.wAttackerFacing,b
+        sta <>aMapAction.wDefenderFacing,b
         lda #$001F
-        sta $5089,b
+        sta <>wMapMagicEffect,b
         plb
         .databank ?
-        lda aMapAction.wYTilePosition
+        lda aMapAction.wAttackerYTile
         tay
-        lda aMapAction.wXTilePosition
+        lda aMapAction.wAttackerXTile
         tax
         jsl rlUnknown9E8D25
         lda #$8000
@@ -1222,7 +1222,7 @@
         lda #$841B
         sta @l $0015E4
         lda @l aActiveSpriteSystem
-        sta $7F4BD9
+        sta wMapBattleSavedSpriteEngineFlag
         lda @l aActiveSpriteSystem
         ora #$4000
         sta @l aActiveSpriteSystem
@@ -1264,10 +1264,10 @@
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _D1AD
-        lda aMapAction.wMapBattleActiveSpriteSyncFlag
+        lda aMapAction.wMapBattleStrikeSignal
         beq _D1BA
         lda #$0000
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
 
         _D1BA
         rtl
@@ -1292,10 +1292,10 @@
         sta aProcSystem.aHeaderBitfield,b,x
 
         _D1D0
-        lda aMapAction.wMapBattleActiveSpriteSyncFlag
+        lda aMapAction.wMapBattleStrikeSignal
         beq _D1DD
         lda #$0000
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta aMapAction.wMapBattleStrikeSignal
 
         _D1DD
         rtl
@@ -1433,13 +1433,13 @@
         rep #$20
         plb
         .databank $7F
-        lda @l aMapAction.wUnknown7F455E
+        lda @l aMapAction.wAttackerFacing
         asl a
         clc
-        adc @l aMapAction.wUnknown7F455E
+        adc @l aMapAction.wAttackerFacing
         asl a
         sta wR0
-        lda @l aMapAction.wBattleClassID
+        lda @l aMapAction.wAttackerSpriteRow
         sta wR10
         lda #$0031
         sta wR11
@@ -1453,9 +1453,9 @@
         sta lR18+1
         lda aBattleMapSpriteData,x
         sta lR18
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR19+1
-        lda #$8B88
+        lda #<>aDecompressionBuffer
         clc
         adc #$0000
         sta lR19
@@ -1475,9 +1475,9 @@
         sta lR18+1
         lda #<>gcUnknownACCC17
         sta lR18
-        lda #$7E00
+        lda #(`aDecompressionBuffer)<<8
         sta lR19+1
-        lda #$8B88
+        lda #<>aDecompressionBuffer
         clc
         adc #$4000
         sta lR19
@@ -1512,9 +1512,9 @@
         phy
         phx
         lda #0
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
-        sta aMapAction.wMapBattleActiveSpriteAckFlag
-        sta aMapAction.wMapBattlePhaseFlag
+        sta aMapAction.wMapBattleStrikeSignal
+        sta aMapAction.wMapBattleStrikeDone
+        sta aMapAction.wMapBattleRoundRunning
         sta wMapMagicStart
         sta aProcSystem.aHeaderBitfield,b,x
 
@@ -1561,25 +1561,25 @@
         phy
         phx
         lda #$0000
-        sta @l aMapAction.wMapBattleActiveSpriteSyncFlag
-        sta @l aMapAction.wMapBattleActiveSpriteAckFlag
-        sta @l aMapAction.wMapBattlePhaseFlag
+        sta @l aMapAction.wMapBattleStrikeSignal
+        sta @l aMapAction.wMapBattleStrikeDone
+        sta @l aMapAction.wMapBattleRoundRunning
         sta @l $000F37,x
         lda #$0001
-        sta $5091,b
-        lda $4599,b
-        sta $458A,b
-        sta $4587,b
-        lda $4598,b
+        sta <>wMapMagicStart,b
+        lda <>aMapAction.lAttackerSpriteData+1,b
+        sta <>aMapAction.lAttackerRoundScript+1,b
+        sta <>aMapAction.lAttackerAuxRoundScript+1,b
+        lda <>aMapAction.lAttackerSpriteData,b
         sta lR18
-        lda $4599,b
+        lda <>aMapAction.lAttackerSpriteData+1,b
         sta lR18+1
-        lda @l aMapAction.wUnknown7F455E
+        lda @l aMapAction.wAttackerFacing
         sta wR0
         lda #$0000
         jsr rsGetMapBattleRoundScripts
-        stx $4589,b
-        sty $4586,b
+        stx <>aMapAction.lAttackerRoundScript,b
+        sty <>aMapAction.lAttackerAuxRoundScript,b
         plx
         ply
         plp
@@ -1619,7 +1619,7 @@
 
         _D3D7
         lda #$0001
-        sta aMapAction.wMapBattlePhaseFlag
+        sta aMapAction.wMapBattleRoundRunning
         jsl rlResumeMapSpriteAnimation
         jsl rlResumeMapTileAnimation
         plx
@@ -1629,7 +1629,7 @@
         sta $15E5,b
         lda #<>rlPushToOAMBuffer
         sta $15E4,b
-        lda $7F4BD9
+        lda wMapBattleSavedSpriteEngineFlag
         sta aActiveSpriteSystem,b
         rtl
 
@@ -1744,14 +1744,14 @@
         plb
 
         lda #0
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
-        sta aMapAction.wMapBattleActiveSpriteAckFlag
-        sta aMapAction.wMapBattlePhaseFlag
+        sta aMapAction.wMapBattleStrikeSignal
+        sta aMapAction.wMapBattleStrikeDone
+        sta aMapAction.wMapBattleRoundRunning
         sta aMapAction.wUnknown7F455A
-        sta aMapAction.wMapBattleAttackVariant
+        sta aMapAction.wSideTallSprite
         sta wMapBattleMode
-        sta $7F4BE9
-        sta $7F4C07
+        sta wMapBattleStrikeDrains
+        sta wMapAnimationSignals
         sta $4C11,b
         sta $4C13,b
 
@@ -1945,7 +1945,7 @@
         tax
         lda aDeploymentTable._State,x
         and #DeploymentAllegianceMask
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         plx
         rtl
 
@@ -1976,14 +1976,14 @@
         plb
         .databank $7F
 
-        lda @l aMapAction.wUnknown7F455E
+        lda @l aMapAction.wAttackerFacing
         asl a
         clc
-        adc @l aMapAction.wUnknown7F455E
+        adc @l aMapAction.wAttackerFacing
         asl a
         sta wR0
 
-        lda @l aMapAction.wBattleClassID
+        lda @l aMapAction.wAttackerSpriteRow
         sta wR10
         lda #$0031
         sta wR11
@@ -2054,7 +2054,7 @@
         phy
         phx
         lda #0
-        sta aMapAction.wMapBattlePhaseFlag
+        sta aMapAction.wMapBattleRoundRunning
         sta aProcSystem.aHeaderBitfield,b,x
         lda #$FFFF
         sta aMapAction.wMapBattleAttackerSpriteSlot
@@ -2099,7 +2099,7 @@
         phy
         phx
         lda #$0000
-        sta @l aMapAction.wMapBattlePhaseFlag
+        sta @l aMapAction.wMapBattleRoundRunning
         sta @l $000F37,x
         plx
         ply
@@ -2133,7 +2133,7 @@
 
         _D6F2
         lda #$0001
-        sta aMapAction.wMapBattlePhaseFlag
+        sta aMapAction.wMapBattleRoundRunning
         lda aActionStructUnit1
         tax
         jsl rlDeployedUnitUnsetHiddenIfAlive
@@ -2159,9 +2159,9 @@
         .autsiz
         .databank ?
 
-        lda $7F4C07
+        lda wMapAnimationSignals
         ora #$0002
-        sta $7F4C07
+        sta wMapAnimationSignals
         rtl
 
         .databank 0
@@ -2262,19 +2262,19 @@
         plb
         .databank ?
         lda #$0000
-        sta $4580,b
-        sta $4582,b
-        sta $4584,b
-        sta $455A,b
-        sta $4572,b
-        sta $4C87,b
-        sta $4BE9,b
-        sta $4BE7,b
-        sta $4C11,b
-        sta $4C13,b
-        sta $4C05,b
+        sta <>aMapAction.wMapBattleStrikeSignal,b
+        sta <>aMapAction.wMapBattleStrikeDone,b
+        sta <>aMapAction.wMapBattleRoundRunning,b
+        sta <>aMapAction.wUnknown7F455A,b
+        sta <>aMapAction.wSideTallSprite,b
+        sta <>wMapBattleMode,b
+        sta <>wMapBattleStrikeDrains,b
+        sta <>wMapBattleSolo,b
+        sta <>wMapBattleAttackerBallista,b
+        sta <>wMapBattleDefenderBallista,b
+        sta <>wMapBattleMusicLowered,b
         sta @l $000F37,x
-        sta $7F4C07
+        sta wMapAnimationSignals
         lda aActionStructUnit1.ClassID
         sta @l wR0
         lda aActionStructUnit1.Gender
@@ -2282,11 +2282,11 @@
         lda aActionStructUnit1.CharacterID
         sta @l wR2
         jsl rlGetMapBattleClassSprite
-        sta $454E,b
+        sta <>aMapAction.wAttackerSpriteRow,b
         lda aActionStructUnit1.XPosition
-        sta $4552,b
+        sta <>aMapAction.wAttackerXTile,b
         lda aActionStructUnit1.YPosition
-        sta $4554,b
+        sta <>aMapAction.wAttackerYTile,b
         lda #$FFFF
         jsl rlGetClassMapBattleWeaponType
         sta $454A,b
@@ -2299,34 +2299,34 @@
         lda aActionStructUnit2.CharacterID
         sta @l wR2
         jsl rlGetMapBattleClassSprite
-        sta $4550,b
+        sta <>aMapAction.wDefenderSpriteRow,b
         lda aActionStructUnit2.XPosition
-        sta $4556,b
+        sta <>aMapAction.wDefenderXTile,b
         lda aActionStructUnit2.YPosition
-        sta $4558,b
+        sta <>aMapAction.wDefenderYTile,b
         lda #$FFFF
         jsl rlGetClassMapBattleWeaponType
-        sta $454C,b
+        sta <>aMapAction.wDefenderWeaponType,b
         lda #$FFFF
         sta aActionStructUnit2.WeaponID
         jsl rlGetMapBattleFacing
-        lda $455E,b
+        lda <>aMapAction.wAttackerFacing,b
         eor #$0004
-        sta $4560,b
+        sta <>aMapAction.wDefenderFacing,b
         lda wBattleType
         and #$00FF
         cmp #$0003
         bne _DBD7
         lda #$0006
-        sta $455E,b
-        sta $4560,b
+        sta <>aMapAction.wAttackerFacing,b
+        sta <>aMapAction.wDefenderFacing,b
         lda #$0000
         sta @l $000891
 
         _DBD7
         lda #$0000
-        sta $508F,b
-        sta $459E,b
+        sta <>wMapMagicFlags,b
+        sta <>aMapAction.wMapBattleRoundIndex,b
         sta $7E4F85
         plb
         .databank ?
@@ -2464,7 +2464,7 @@
         phy
         phx
         lda #$0000
-        sta aMapAction.wMapBattlePhaseFlag
+        sta aMapAction.wMapBattleRoundRunning
         sta aProcSystem.aHeaderBitfield,b,x
         lda #$FFFF
         sta aMapAction.wMapBattleAttackerSpriteSlot
@@ -2496,7 +2496,7 @@
         .databank ?
 
         lda #$0000
-        sta aMapAction.wMapBattlePhaseFlag
+        sta aMapAction.wMapBattleRoundRunning
         sta @l $000F37,x
         rtl
 
@@ -2537,7 +2537,7 @@
 
         _DD57
         lda #$0001
-        sta aMapAction.wMapBattlePhaseFlag
+        sta aMapAction.wMapBattleRoundRunning
         lda aActionStructUnit1
         tax
         jsl rlDeployedUnitUnsetHiddenIfAlive
@@ -2641,17 +2641,17 @@
         phx
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
-        lda aMapAction.lUnknown7F4598
+        lda aMapAction.lAttackerSpriteData
         sta $7F57EA
-        lda aMapAction.lUnknown7F4598+1
+        lda aMapAction.lAttackerSpriteData+1
         sta $7F57EC
         lda #(`aUnknown9EDE89)<<8
-        sta aMapAction.lUnknown7F4598+1
+        sta aMapAction.lAttackerSpriteData+1
         lda #<>aUnknown9EDE89
-        sta aMapAction.lUnknown7F4598
-        lda aMapAction.wUnknown7F4558
+        sta aMapAction.lAttackerSpriteData
+        lda aMapAction.wDefenderYTile
         tay
-        lda aMapAction.wUnknown7F4556
+        lda aMapAction.wDefenderXTile
         tax
         lda aActionStructUnit2.UnitRAMPointer
         jsl rlUnknown9E8D25
@@ -2704,9 +2704,9 @@
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
         lda $7F57EA
-        sta aMapAction.lUnknown7F4598
+        sta aMapAction.lAttackerSpriteData
         lda $7F57EC
-        sta aMapAction.lUnknown7F4598+1
+        sta aMapAction.lAttackerSpriteData+1
 
         _DE87
         plx

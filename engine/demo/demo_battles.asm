@@ -138,7 +138,7 @@
         lda #$0000
         sta aActionStructUnit1.Unknown
         lda #$0000
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$0029
         sta aActionStructUnit2.ClassID
@@ -229,7 +229,7 @@
         lda #$0000
         sta aActionStructUnit1.Unknown
         lda #$0000
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$0016
         sta aActionStructUnit2.ClassID
@@ -336,7 +336,7 @@
         lda #$0000
         sta aActionStructUnit1.Unknown
         lda #$0003
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$0011
         sta aActionStructUnit2.ClassID
@@ -443,7 +443,7 @@
         lda #$0000
         sta aActionStructUnit1.Unknown
         lda #$0000
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$0009
         sta aActionStructUnit2.ClassID
@@ -543,7 +543,7 @@
         lda #$0000
         sta aActionStructUnit1.Unknown
         lda #$0000
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$001C
         sta aActionStructUnit2.ClassID
@@ -650,7 +650,7 @@
         lda #$0000
         sta aActionStructUnit1.Unknown
         lda #$0000
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$0027
         sta aActionStructUnit2.ClassID
@@ -764,7 +764,7 @@
         lda #$0000
         sta aActionStructUnit1.Unknown
         lda #$0000
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$0035
         sta aActionStructUnit2.ClassID
@@ -871,7 +871,7 @@
         lda #$0000
         sta aActionStructUnit1.Unknown
         lda #$0000
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$0014
         sta aActionStructUnit2.ClassID
@@ -978,7 +978,7 @@
         lda #$0000
         sta aActionStructUnit1.Unknown
         lda #$0000
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$003A
         sta aActionStructUnit2.ClassID
@@ -1080,7 +1080,7 @@
         lda #$0019
         sta aActionStructUnit1.CharacterID
         lda #$0000
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$001B
         sta aActionStructUnit2.ClassID
@@ -1193,7 +1193,7 @@
         lda #$0000
         sta aActionStructUnit1.Unknown
         lda #$0000
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$0012
         sta aActionStructUnit2.ClassID
@@ -1298,7 +1298,7 @@
         lda #$0000
         sta aActionStructUnit1.Unknown
         lda #$0000
-        sta aMapAction.wUnknown7F4562
+        sta aMapAction.wAttackerAllegiance
         sta aActionStructUnit1
         lda #$000E
         sta aActionStructUnit2.ClassID
