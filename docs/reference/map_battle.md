@@ -34,7 +34,8 @@ The proc's script, `aProcMapBattleCode`, is the battle's outline. Most steps are
 3. **Sprites**: the attacker's then the defender's battle sprites appear (`rlShowMapBattleAttacker`, `rlShowMapBattleDefender`) over their hidden map sprites.
 4. **Battle quote** (`rlMapBattleStartBattleQuote`): when `wBattleQuotePointer` is set, a dialogue box; afterwards the sprite tiles it covered are decompressed and uploaded again.
 5. **HP windows** (`rlProcMapBattleOpenHPWindows`).
-6. **Rounds** (`rlMapBattleNextRound` and the steps after it), until the entry `$FFFF` in `aBattleRoundsData`: each round picks its sprite scripts by side and by its hit, miss and critical bits (`rsGetMapBattleRoundScripts`), may fire a ballista bolt (`procMapBattleBallistaBolt`, when a side is one of the four ballistician classes) or a map magic effect (bank `$9F`), and applies the HP change.
+6. **Rounds** (`rlMapBattleNextRound` and the steps after it), until the entry `$FFFF` in `aBattleRoundsData`: each round picks its sprite scripts by side and by its hit, miss and critical bits (`rsGetMapBattleRoundScripts`), may fire a ballista bolt (`procMapBattleBallistaBolt`, when a side is one of the four ballistician classes) or a map magic effect (bank `$9F`), and applies the HP change. A Pavise activation (entry `$02FE`) first shows the shield (`procMapBattlePavise`). When a strike lands (`rlMapBattleRoundStep`), the struck side recoils (`rlMapBattleRunRecoil`) and flashes white (`rlMapBattleRunHitFlash`), with the hit sound (`rlMapBattlePlayHitSound`: `$94` for a fatal strike, `$93` ranged, `$91`/`$93` otherwise, `$4E` more for a critical) or the no-damage sound `$95`; the HP changes at the same time (`rlApplyMapBattleRoundHP`). A defeated unit cries out (`rlMapBattlePlayDefeatCry`: sound `$21`-`$23` by voice, `$24`/`$25` for a Child).
+   A combatant moved a tile off a shared tile for the battle (`wBattleStatus` bit 2) slides out 16 pixels before the rounds and back after (`rlMapBattleSlideShiftedUnitOut`/`Back`). After a Warp, its arrival plays at the destination when that is on screen (`procMapBattleWarpArrival`).
 7. **Death quote** (`rlMapBattleStartDeathQuote`).
 8. **Experience** (`rlMapBattleOpenExperienceWindow`), then **level up** (`rlMapBattleStartLevelUpBanner`, `rlMapBattleStatGains`, with `rlPlayLevelUpJingle` and `rlPlayStatGainSound`).
 9. **Popups**, each with the music lowered and a jingle: gold obtained (ゴールド　てにいれた！), gold stolen (ゴールド　ぬすまれた), an item obtained (を　てにいれた！), a weapon broken (は　こわれてしまった).
@@ -42,7 +43,7 @@ The proc's script, `aProcMapBattleCode`, is the battle's outline. Most steps are
 
 ## Magic effects
 
-A tome or staff plays an effect over a background of its own. The effect number is the item ID minus Fire (`$3E`), so 0 is Fire and 41 BrokenStaffA. `rlInitMapBattleCombatants` stores each side's number (`wMapMagicAttackerEffect`, `wMapMagicDefenderEffect`; magic swords get one through `rlUnknown9E86CF`), and `rlUnknown9E811F` sets `wMapMagicFlags` (0 when nothing plays; its high byte says whether the units are near a screen edge). All of it is in `include/WRAM.h` from `$7F5089`.
+A tome or staff plays an effect over a background of its own. The effect number is the item ID minus Fire (`$3E`), so 0 is Fire and 41 BrokenStaffA. `rlInitMapBattleCombatants` stores each side's number (`wMapMagicAttackerEffect`, `wMapMagicDefenderEffect`; magic swords get one through `rlGetMagicSwordMapEffect`: at range the Fire, Earth, Thunder and Wind Swords and the Light Brand play Elfire, Nosferatu, Elthunder, Elwind and Light, and the Berserk, Silence and Sleep Swords their staff's), and `rlSetMapMagicFlags` sets `wMapMagicFlags`: 0 when nothing plays, `$8000` in demo and scripted battles, 1 on the castle screen, else 1 plus `$0100`, `$0200` or `$0400` when the units are within `aMapMagicEdgeMargins` tiles of the left, right or top edge. All of it is in `include/WRAM.h` from `$7F5089`.
 
 For each round, the battle's script:
 
@@ -76,9 +77,8 @@ The starters share effects: Heal's (sound `$71`, `procMapMagicHealingStaff`) als
 
 ## Open questions
 
-- What `procUnknown9ED78B` shows: a round entry `$02FE` starts it before the round (`rlUnknown9ED742`), with its own sprite script (`aUnknown9ED900`) and sound.
-- What `procUnknown9EAF98` shows: it starts after the rounds when `$7F5089` is `$20` and a check on the defender's tile (a location, the home castle) passes (`rlUnknown9EAF44`, `rlUnknown9EB01B`).
-- `rlUnknown9EAE22`, `rlUnknown9EAE5A` and `rlUnknown9EAECF` run before and after the rounds when `wBattleStatus` bit 2 is set; what the effect is.
+- `UnitState0400`: a unit with it shares a tile with another (battle.asm moves it a tile for the battle). What puts two units on one tile.
+- `rlMapBattlePlayLordDodgeSound` plays sound `$97` only when a Junior Lord or a Prince is missed. Why those classes.
 - The sprite, palette and animation helpers that are still `Unknown`.
 - What `wMapMagicFlags`' edge bits change: they pick the HDMA line counts in `aMapMagicWindowLines` (`rsSetMapMagicWindowLines`).
 - Who sets the effect number `$27` (Berserk) in `event_scripts.asm` (near `$9E/ECA4`), and for which scene.

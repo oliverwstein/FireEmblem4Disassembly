@@ -651,7 +651,7 @@
         jsl rlUnknown9E88CE
         jsl rlSelectMapBattleAttackerSprite
         lda #$0000
-        jsl rlUnknown9E8867
+        jsl rlMapBattleQueueSpriteData
         plx
         ply
         lda #<>rlUnknown9E9BE0
@@ -1524,7 +1524,7 @@
         jsl rlUnknown9E88CE
         jsl rlSelectMapBattleAttackerSprite
         lda #0
-        jsl rlUnknown9E8867
+        jsl rlMapBattleQueueSpriteData
         plx
         lda #<>rlUnknown9ED1F3
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -2062,7 +2062,7 @@
         jsl rlUnknown9E88CE
         jsl rlSelectMapBattleAttackerSprite
         lda #0
-        jsl rlUnknown9E8867
+        jsl rlMapBattleQueueSpriteData
         plx
         lda #<>rlProcUnknown9ED441Cycle2
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -2474,10 +2474,10 @@
         jsl rlUnknown9E88CE
         jsl rlSelectMapBattleAttackerSprite
         lda #$0000
-        jsl rlUnknown9E8867
+        jsl rlMapBattleQueueSpriteData
         jsl rlSelectMapBattleDefenderSprite
         lda #$0001
-        jsl rlUnknown9E8867
+        jsl rlMapBattleQueueSpriteData
         plx
         lda #<>rlUnknown9EDC14
         sta aProcSystem.aHeaderOnCycle,b,x

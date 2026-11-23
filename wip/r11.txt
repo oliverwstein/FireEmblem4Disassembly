@@ -1,0 +1,5 @@
+rlUnknown9E811F rlSetMapMagicFlags | wMapMagicFlags: 0 when neither side's weapon plays an effect (no staff or tome, a magic sword at distance 1); $8000 in demo and scripted battles (wMapBattleMode not 0) or with no target; 1 on the castle screen; otherwise 1 plus the screen edges the units are near (within aMapMagicEdgeMargins tiles): $0100 the left, $0200 the right, $0400 the top.
+aUnknown9E826B aMapMagicEdgeMargins
+rlUnknown9E87F0 rlMapBattleSetSpriteScripts | A = side (0 or 1): sets wMapBattleAttackVariant from byte $30 of the class's aBattleMapSpriteData entry, and points the attacker and aux sprite script pointers into the side's decompressed sprite data (aMapBattleSpriteBufferOffsets) by wMapBattleTerrainMode.
+aUnknown9E8863 aMapBattleSpriteBufferOffsets
+rlUnknown9E8867 rlMapBattleQueueSpriteData | A = side: queues the decompression of the class's sprite data for its weapon (aBattleMapSpriteData) to aDecompressionBuffer + $6000, or + $6880 for side 1.

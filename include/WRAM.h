@@ -2557,7 +2557,7 @@
       ; Each side's effect, filled from its weapon by rlInitMapBattleCombatants.
     wMapMagicFlags .word ? ; $7F508F
       ; 0: no effect this battle. Bit 0 set: effects play. The high byte says
-      ; where the units are on screen (rlUnknown9E811F): $01 near the left
+      ; where the units are on screen (rlSetMapMagicFlags): $01 near the left
       ; edge, $02 near the right, $04 near the bottom. $8000: no effect
       ; (no defender, or a scripted battle).
     wMapMagicStart .word ? ; $7F5091

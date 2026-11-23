@@ -372,12 +372,14 @@
       .al
       .xl
 
-      rlUnknown9E811F ; 9E/811F
+      rlSetMapMagicFlags ; 9E/811F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wMapMagicFlags: 0 when neither side's weapon plays an effect (no staff or tome, a magic sword at distance 1); $8000 in demo and scripted battles (wMapBattleMode not 0) or with no target; 1 on the castle screen; otherwise 1 plus the screen edges the units are near (within aMapMagicEdgeMargins tiles): $0100 the left, $0200 the right, $0400 the top.
 
         phy
         phx
@@ -481,7 +483,7 @@
         sta wR7
         lda wR0
         clc
-        adc aUnknown9E826B
+        adc aMapMagicEdgeMargins
         cmp wR4
         bcs _8219
         cmp wR6
@@ -496,7 +498,7 @@
         _8222
         lda wR1
         sec
-        sbc aUnknown9E826B+2
+        sbc aMapMagicEdgeMargins+2
         cmp wR4
         bcc _8231
         cmp wR6
@@ -509,7 +511,7 @@
         _8238
         lda wR2
         clc
-        adc aUnknown9E826B+4
+        adc aMapMagicEdgeMargins+4
         cmp wR5
         bcs _8247
         cmp wR7
@@ -550,9 +552,9 @@
       .al
       .xl
 
-      aUnknown9E826B ; 9E/826B
+      aMapMagicEdgeMargins ; 9E/826B
 
-        ; Read by rlUnknown9E811F.
+        ; Read by rlSetMapMagicFlags.
 
         .word $0005, $0006, $0006
 
@@ -1366,7 +1368,7 @@
 
 
         _873F
-        jsl rlUnknown9E811F
+        jsl rlSetMapMagicFlags
         lda $7F57EE
         sec
         sbc #$000F
@@ -1381,7 +1383,7 @@
 
 
         _875C
-        jsl rlUnknown9E811F
+        jsl rlSetMapMagicFlags
         lda $7F57EE
         sec
         sbc #$0009
@@ -1534,12 +1536,14 @@
 
         ; 9E/87F0
 
-      rlUnknown9E87F0 ; 9E/87F0
+      rlMapBattleSetSpriteScripts ; 9E/87F0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = side (0 or 1): sets wMapBattleAttackVariant from byte $30 of the class's aBattleMapSpriteData entry, and points the attacker and aux sprite script pointers into the side's decompressed sprite data (aMapBattleSpriteBufferOffsets) by wMapBattleTerrainMode.
 
         phb
         phy
@@ -1567,7 +1571,7 @@
         sta lR18+1
         lda #$8B88
         clc
-        adc aUnknown9E8863,x
+        adc aMapBattleSpriteBufferOffsets,x
         sta lR18
         lda lR18+1
         sta aMapAction.lMapBattleAttackerSpriteScriptPointer+1
@@ -1607,9 +1611,9 @@
       .al
       .xl
 
-      aUnknown9E8863 ; 9E/8863
+      aMapBattleSpriteBufferOffsets ; 9E/8863
 
-        ; Read by rlUnknown9E87F0.
+        ; Read by rlMapBattleSetSpriteScripts.
 
         .word $6000, $6880
 
@@ -1623,11 +1627,13 @@
       .al
       .xl
 
-      rlUnknown9E8867 ; 9E/8867
+      rlMapBattleQueueSpriteData ; 9E/8867
 
         .al
         .autsiz
         .databank ?
+
+        ; A = side: queues the decompression of the class's sprite data for its weapon (aBattleMapSpriteData) to aDecompressionBuffer + $6000, or + $6880 for side 1.
 
         phb
         phy
@@ -1916,7 +1922,7 @@
         phx
         jsl rlSelectMapBattleAttackerSprite
         lda #$0000
-        jsl rlUnknown9E87F0
+        jsl rlMapBattleSetSpriteScripts
         lda lR18
         sta aMapAction.lUnknown7F4598
         lda lR18+1
@@ -2062,7 +2068,7 @@
 
         _8B4A
         lda #$0001
-        jsl rlUnknown9E87F0
+        jsl rlMapBattleSetSpriteScripts
         lda lR18
         sta aMapAction.lUnknown7F459B
         lda lR18+1
@@ -8847,7 +8853,7 @@
         sta $7F4BF3
         sta $7F4C1F
 
-        jsl rlUnknown9E811F
+        jsl rlSetMapMagicFlags
 
         lda aActiveSpriteSystem.wFlag,b
         sta $7F4BD9
@@ -8973,13 +8979,13 @@
         jsl rlUnknown9E88CE
         jsl rlSelectMapBattleAttackerSprite
         lda #$0000
-        jsl rlUnknown9E8867
+        jsl rlMapBattleQueueSpriteData
         lda aActionStructUnit2
         cmp #$FFFF
         beq _C7F1
         jsl rlSelectMapBattleDefenderSprite
         lda #$0001
-        jsl rlUnknown9E8867
+        jsl rlMapBattleQueueSpriteData
 
         _C7F1
         lda #<>rlUnknown9EC79B
