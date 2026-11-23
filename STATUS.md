@@ -4,16 +4,15 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-22, during wave 4: banks $81 and $90 done, $8D next)
+## Current state (2026-11-22, after wave 4 part 1: banks $81, $90, $8D)
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
 - `./build.sh` is byte-identical and the checksums verify. 97.57% of the ROM is built from source. GAPS.md: 174 `none` pieces (59,734 bytes), 56 padding runs (42,139 bytes).
-- Routines: 6,015 in `engine/`, 3,941 named, 2,074 `Unknown`; 1,689 still in `engine/unsorted/` (banks `$84`, `$8B`, `$8C`, `$8D`, `$91`, `$95`-`$97`, `$9B`, `$9E`, `$9F`). 305 pinned blocks.
-- **Wave 4 (events, attract mode, epilogue), part 1, this session:** bank `$81` (commit `11f7df9`): the map step is `engine/map/map_step.asm` (the turn loop `aMapStepRoutines`/`MAP_STEP_*`, the queued relocations `UNIT_RELOCATION_*`, defeated units, canto), with `wChapterFlags` (`$0D79`, every bit described) and `wEventEngineFlags` (`$171A`) named; event movers in `map_sprites.asm`. Bank `$90` (commit `703372e`): the attract mode's opening is `engine/demo/opening.asm`, its event script decoded by the new `tools/event_script.py`; the staff credits (`engine/demo/opening_credits.asm`) closed three unbuilt pieces. Reference: `docs/reference/map.md` (new "Turns and phases") and `docs/reference/demo.md`.
-- **Next in this session: bank `$8D`** (the epilogue, 76 routines, `rlEpilogueSetup`/`rlEpilogueStep` named; also `rlUnknown8DA810`/`A864`/`A880`, which the opening calls).
-- **Left from the map engine wave:** bank `$84` still has routines of other systems in `engine/unsorted/bank84.asm` (class change, repair, arena, love points, win/loss counts, castle targets); `rlCheckFactionTakesPhase` left it this session. `rlRunMapAction` stays inside `battle.asm`'s one big section. `rlUnknown88DD0F` (unreached) is the only `Unknown` left from bank `$88`.
-- Reference pages so far: `docs/reference/core.md`, `ai.md`, `castle.md`, `demo.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`. `tools/reference.py` output is gitignored; run it locally. What each wave did is in HISTORY.md under "Phase 3 waves".
+- Routines: 6,015 in `engine/`, 4,016 named, 1,999 `Unknown`; 1,610 still in `engine/unsorted/` (banks `$84`, `$8B`, `$8C`, `$91`, `$95`-`$97`, `$9B`, `$9E`, `$9F`). 305 pinned blocks.
+- **Wave 4 part 1 done in one session**, commits `11f7df9`..`7247c33`: bank `$81` (the map step, `engine/map/map_step.asm`), bank `$90` (the attract mode's opening, `engine/demo/opening.asm`, its event script decoded by the new `tools/event_script.py`, plus the staff credits that closed three unbuilt pieces), bank `$8D` (the epilogue, `engine/epilogue/`). What each file holds is in `docs/reference/map.md` ("Turns and phases"), `demo.md` and `epilogue.md`, and HISTORY.md. New `include/Epilogue.h`; `MAP_STEP_*` and `UNIT_RELOCATION_*` in `include/Map.h`; macros `DEMO_ALLOW_SKIP` and `OPEN_MAP_BATTLE` in `include/events/Main.h`.
+- **Left from wave 4:** bank `$91` (save menu screens, event engine helpers, and bank `$8D` text data at `$8D/9B65`-`9ED4` that sits in `bank91.asm`) and bank `$9E` (the scripted `"ON"` scene procs, 274 routines). Bank `$84` still has routines of other systems in `engine/unsorted/bank84.asm` (class change, repair, arena, love points, castle targets).
+- Reference pages so far: `docs/reference/core.md`, `ai.md`, `castle.md`, `demo.md`, `epilogue.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`. `tools/reference.py` output is gitignored; run it locally.
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
 ## Who wrote what
@@ -29,9 +28,9 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Talk to the user before starting the next wave.** Next in the agreed order: **events, attract mode, epilogue and scripted scenes** (banks `$81`, `$82`, `$8D`, `$90`, `$91`, `$9E`; PLAN wave 4). Bank `$81` holds the map step and upkeep (`rlMapStep`, `rlMapUpkeep`) and event movers, which pair well with what this wave named; bank `$90` the attract demo's map scenes (indexed by `wDemoIndex`). That is big: propose a part (for example banks `$81` and `$90`) and say which. The file and save menu screens in bank `$91` could join it. Then battle.
+1. **Talk to the user before starting the next wave.** Wave 4 has two parts left: bank `$91` (the save menu screens and event engine helpers; 137 routines) and bank `$9E` (the scripted scenes; 274 routines, a session of its own). Propose which first; then battle (wave 5).
 2. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages (core, map, menus, castle and AI have them now), and show it to the user.
-3. Open questions are at the end of each reference page (`core.md`, `ai.md`, `castle.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`).
+3. Open questions are at the end of each reference page (`core.md`, `ai.md`, `castle.md`, `demo.md`, `epilogue.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`). `tools/songs.py` stops at a stale label (`aUnknown8A9D79`); fix it before regenerating `audio/SONGS.md`. To decode more event scripts, use `tools/event_script.py` and prove each by building.
 4. `tools/stream_catalog.py` deleted the catalog previews when run (reverted), so `gfx/compressed/CATALOG.md` still names pre-castle labels; find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm; move the lines to a sensible place by hand. Check that an `include/` file does not exist before creating one. `tools/rename.py` refuses a new name that appears anywhere, comments included: rename forward references in comments first.
 5. Bank `$89` cannot be pad-tested until it is merged: its last block has no free space after it. Banks `$85`, `$87` and now `$88` are all source and could be merged (`tools/merge_bank.py`) and pad-tested.
 
@@ -56,6 +55,7 @@ Each is one screen. Answers so far are in HISTORY.md under the wave that asked t
 2. The unit command menu's mode 1: move a player unit onto its own home castle and choose たいき (wait). Does the command menu open again by itself, and which commands does it list? The code shows mode 1 follows a player unit ending its action at its home castle, hides attack, staff, items, dance, talk and give, and that B cannot close it; only the screen shows what the menu is for.
 3. Where does まち (town) appear? The code shows it at a location of type 1 and that its handler opens the castle screen; one screenshot of a unit standing where it is offered settles what a type 1 location is.
 4. The item window (from the map menu's item command) with a weapon selected: what is the sprite at the right edge, about (195, 76)? The code draws it only for weapons (`aUnknown89BE50`, tile `$0E`); the weapon type icon and the weapon triangle icons beside it are known.
+5. (Needs a save that has finished the game.) The ranking screen: what are the 16 letters drawn from `aUnknown7FC70A`, and what row appears after the secret code (Select, Up, A, Down, B, Left, X, Right, Y, L, R, Start)? The code shows the code check (`rlCheckEpilogueSecretCode`) and where the row is uploaded; only the screen shows what it says.
 
 ## How to work on this project
 
