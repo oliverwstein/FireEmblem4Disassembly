@@ -3940,7 +3940,7 @@
           rts
 
         +
-        jsl rlUnknown8B80CB
+        jsl rlStartEpilogueCredits
         bra _End
 
         .databank 0

@@ -172,6 +172,7 @@
   .include "engine/save/save_menu.asm"
   .include "engine/save/jugdral_history.asm"
   .include "engine/debug/debug_menu.asm"
+  .include "engine/debug/world_map_test.asm"
   .include "engine/dialogue/backgrounds.asm"
   .include "engine/dialogue/dialogue_procs.asm"
   .include "engine/events/cutscenes.asm"
@@ -213,7 +214,6 @@
   .include "engine/core/boot.asm"
   .include "engine/core/anti_tamper.asm"
   .include "engine/sound/driver.asm"
-  .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
   .include "engine/battle/map_magic_effects.asm"
 
@@ -4355,6 +4355,8 @@
 
       .dsection Unsorted8B80CBSection
 
+      .dsection WorldMapSpriteColorsSection
+
     .here
 
     * = $0B818D
@@ -4398,30 +4400,11 @@
 
       .dsection WorldMapMarkerShadowFadeInSection
 
-    .here
-
-    * = $0B8BB5
-    .logical $8B8BB5
-
-      .dsection Unsorted8B8BB5Section
-
-    .here
-
-    * = $0B8BF4
-    .logical $8B8BF4
+      .dsection WorldMapMarkerShadow2FadeInSection
 
       .dsection WorldMapMarkerShadowFadeOutSection
 
-      .dsection Unsorted8B8C3ASection
-
-      .dsection Unsorted8B8C42Section
-
-    .here
-
-    * = $0B8C81
-    .logical $8B8C81
-
-      .dsection Unsorted8B8C81Section
+      .dsection WorldMapMarkerShadow2FadeOutSection
 
       .dsection FadeInWorldMapPortraitSlot8B8C83Section
 

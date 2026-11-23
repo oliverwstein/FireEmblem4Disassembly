@@ -7,7 +7,7 @@ first byte), `inside` (built code points into it, not at its start), `log` (read
 `fe4.cdl` only), `none` (no evidence). Addresses are given where the game reads them:
 upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 
-94,307 bytes in 199 runs: 57 runs of padding (42,147 bytes) and 142 pieces (52,160 bytes).
+94,283 bytes in 196 runs: 57 runs of padding (42,147 bytes) and 139 pieces (52,136 bytes).
 
 | Class | Pieces | Bytes | Read in the log |
 |---|---|---|---|
@@ -15,7 +15,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | `table` | 0 | 0 | 0 |
 | `inside` | 0 | 0 | 0 |
 | `log` | 0 | 0 | 0 |
-| `none` | 142 | 52,160 | 0 |
+| `none` | 139 | 52,136 | 0 |
 
 ## `code` (0)
 
@@ -37,7 +37,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 
-## `none` (142)
+## `none` (139)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
@@ -95,13 +95,10 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8A/DD98-$8A/E05D | 710 | 0 | `rsConversationSetupSlots` / `rsAnimateConversationBackground` | 73% $00/$FF |
 | $8A/F045-$8A/F047 | 3 | 0 | `rsClassChangeCheck` / `rsClassChangeConfirm` |  |
 | $8A/F259-$8A/F262 | 10 | 0 | `rlDepotScreenSetup` / `aDecompressionDMAEntry8AF263` | 60% $00/$FF |
-| $8B/812A-$8B/818C | 99 | 0 | `rsUnknown8B8114` / `rsUnknown8B818D` |  |
-| $8B/81EC-$8B/821E | 51 | 0 | `rsUnknown8B818D` / `rlFadeInWorldMapPortraitSlot` |  |
+| $8B/812A-$8B/818C | 99 | 0 | `rsCycleWorldMapSpriteColors` / `rsUnusedWorldMapTestShowPortraits` |  |
+| $8B/81EC-$8B/821E | 51 | 0 | `rsUnusedWorldMapTestShowPortraits` / `rlFadeInWorldMapPortraitSlot` |  |
 | $8B/83A7-$8B/84E4 | 318 | 0 | `aPortraitSlotVRAMOffsets` / `rlLoadWorldMapMarkerData` |  |
 | $8B/8A58-$8B/8A83 | 44 | 0 | `WMH_UnifiedThraciaPointer` / `rlClearHighlightWorldMapPart` | 56% $00/$FF |
-| $8B/8BA5-$8B/8BB4 | 16 | 0 | `aProcWorldMapMarkerShadowFadeInCode` / `rlUnknown8B8BB5` |  |
-| $8B/8BF2-$8B/8BF3 | 2 | 0 | `rlUnknown8B8BB5` / `procWorldMapMarkerShadowFadeOut` |  |
-| $8B/8C7B-$8B/8C80 | 6 | 0 | `rlUnknown8B8C4A` / `aProcUnknown8B8C3ACode` | 66% $00/$FF |
 | $8B/A7CE-$8B/A7F1 | 36 | 0 | `rlUnusedGameState15` / `rlUnitWindowShow` |  |
 | $8B/B882-$8B/B8B5 | 52 | 0 | `rsUnitWindowRenderWeaponRankIcons` / `rsUnitWindowCopyLineHighlightColors` |  |
 | $8C/F09B-$8C/FFFF | 3,941 | 0 | `rlUnknown8CF07F` / `` |  |
@@ -121,9 +118,9 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $95/9650-$95/968D | 62 | 0 | `rlUnknown9595CA` / `rlUnknown95968E` |  |
 | $95/9BFE-$95/9C13 | 22 | 0 | `rsUnknown959BC1` / `rsUnknown959C14` |  |
 | $95/9E71-$95/9F42 | 210 | 0 | `rlUnknown959E22` / `rlUnknown959F43` |  |
-| $95/9FEA-$95/A085 | 156 | 0 | `rlUnknown959F43` / `rlUnknown95A086` |  |
+| $95/9FEA-$95/A085 | 156 | 0 | `rlUnknown959F43` / `rlBattleSceneRunQueuedCopies` |  |
 | $95/A166-$95/A166 | 1 | 0 | `rlUnknown95A165` / `rlUnknown95A167` |  |
-| $95/AA8D-$95/AAFE | 114 | 0 | `rsUnknown95A761` / `rlUnknown95AAFF` |  |
+| $95/AA8D-$95/AAFE | 114 | 0 | `rsBattleSceneStartNextRound` / `rlUnknown95AAFF` |  |
 | $95/B114-$95/B183 | 112 | 0 | `rlUnknown95B0D7` / `rlBattleAnimationCompareCombatantX` |  |
 | $95/B6A7-$95/B6CF | 41 | 0 | `rsBattleAnimationGetSpeedB` / `rlUnknown95B6D0` |  |
 | $95/B7CF-$95/B7F7 | 41 | 0 | `rlUnknown95B7AE` / `rlUnknown95B7F8` |  |
@@ -140,7 +137,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $96/92F8-$96/9397 | 160 | 0 | `rlUnknown9691C8` / `rlUnknown969398` |  |
 | $96/9766-$96/97F9 | 148 | 0 | `rsUnknown969765` / `rlUnknown9697FA` |  |
 | $96/9964-$96/99DC | 121 | 0 | `rlUnknown96994B` / `rlUnknown9699DD` |  |
-| $96/A0EB-$96/A20D | 291 | 0 | `rlUnknown96A0E2` / `rlUnknown96A20E` |  |
+| $96/A0EB-$96/A20D | 291 | 0 | `rlUnknown96A0E2` / `rlBattleSceneEndStepJulius` |  |
 | $96/ACC5-$96/AD06 | 66 | 0 | `rsUnknown96ACAB` / `rsUnknown96AD07` |  |
 | $96/AD37-$96/AD38 | 2 | 0 | `rsUnknown96AD07` / `rlUnknown96AD39` |  |
 | $96/B08D-$96/B0E0 | 84 | 0 | `rlUnknown96AFCF` / `rsUnknown96B0E1` |  |
@@ -157,12 +154,12 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $96/DCC8-$96/DD38 | 113 | 0 | `rlUnknown96DC7C` / `rlUnknown96DD39` |  |
 | $96/DF98-$96/DFBA | 35 | 0 | `aUnknown96DF60` / `rsUnknown96DFBB` |  |
 | $96/F28B-$96/F28C | 2 | 0 | `rlUnknown96F275` / `rlUnknown96F28D` |  |
-| $96/F41A-$96/F557 | 318 | 0 | `rsUnknown96F3FE` / `rlUnknown96F558` |  |
+| $96/F41A-$96/F557 | 318 | 0 | `rsUnknown96F3FE` / `rlBattleSceneEndStepType2Script` |  |
 | $96/F89B-$96/F914 | 122 | 0 | `rsUnknown96F7EB` / `rsUnknown96F915` |  |
 | $96/FA92-$96/FAB5 | 36 | 0 | `rlUnknown96F9BF` / `rsUnknown96FAB6` |  |
 | $96/FADA-$96/FBF8 | 287 | 0 | `rsUnknown96FAB6` / `rlUnknown96FBF9` |  |
 | $96/FC49-$96/FD53 | 267 | 0 | `rlUnknown96FBF9` / `rlUnknown96FD54` |  |
-| $97/8024-$97/802B | 8 | 0 | `rlUnknown978000` / `rlUnknown97802C` |  |
+| $97/8024-$97/802B | 8 | 0 | `rlBattleScenePlayHolyWeaponSound` / `rlUnknown97802C` |  |
 | $D9/6800-$D9/6BFF | 1,024 | 0 | `aUnknownD95000` / `gUnknownD96C00` |  |
 | $D9/7400-$D9/793F | 1,344 | 0 | `gUnknownD96C00` / `gUnknownD97940` |  |
 | $D9/7B00-$D9/7BFF | 256 | 0 | `gUnknownD97940` / `aUnknownD97C00` |  |

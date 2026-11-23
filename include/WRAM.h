@@ -2274,6 +2274,8 @@
     .word ?                         ; $7F5482
     .word ?                         ; $7F5484
     wEpilogueTimer .word ?          ; $7F5486 ; frames counted by the epilogue's steps (and the secret code's position)
+    .fill 6                         ; $7F5488
+    wWorldMapLayersDialogueStatus .word ? ; $7F548E ; aDialogue.wStatus as of the last rlWorldMapBuildLayersHDMATable
     
   .endvirtual
 

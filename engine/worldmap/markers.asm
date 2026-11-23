@@ -542,6 +542,82 @@
     .endsection WorldMapMarkerShadowFadeInSection
 
 
+    .section WorldMapMarkerShadow2FadeInSection
+
+      .al
+      .xl
+
+      procWorldMapMarkerShadow2FadeIn ; 8B/8BA5
+
+        ; Unreferenced: nothing creates this proc. A second copy of
+        ; procWorldMapMarkerShadowFadeIn: fades the five colours at BG palette 5
+        ; + $10 in from $7ECBA8 instead of palette 1 from aWorldMapMarkerPalette,
+        ; then starts procWorldMapMarkerShadow2FadeOut.
+
+        .structProcInfo "CN", rlProcWorldMapMarkerShadow2FadeInInit, rlProcWorldMapMarkerShadow2FadeInCycle, aProcWorldMapMarkerShadow2FadeInCode
+
+      rlProcWorldMapMarkerShadow2FadeInInit ; 8B/8BAD
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #0
+        sta $7F808B
+        rtl
+
+        .databank 0
+
+      rlProcWorldMapMarkerShadow2FadeInCycle ; 8B/8BB5
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda $7F808B
+        sta aPaletteFading.wCurrentStep,b
+
+        lda wVBlankEnabledFramecount
+        and #$0003
+        bne _End
+
+          lda #16
+          sta aPaletteFading.wMaxSteps,b
+          clc
+          jsl rlFadePaletteToColors
+
+            .word $CBA8
+            .word 5
+            .word aBGPaletteBuffer.aPalette5 + $10 - aBGPaletteBuffer
+
+          bcs +
+
+        _End
+        lda aPaletteFading.wCurrentStep,b
+        sta $7F808B
+        rtl
+
+        +
+        jsl rlProcEngineFreeProc
+
+        lda #(`procWorldMapMarkerShadow2FadeOut)<<8
+        sta lR44+1
+        lda #<>procWorldMapMarkerShadow2FadeOut
+        sta lR44
+        jsl rlProcEngineCreateProc
+        bra _End
+
+        .databank 0
+
+      aProcWorldMapMarkerShadow2FadeInCode ; 8B/8BF2
+
+        PROC_HALT
+
+        ; 8B/8BF4
+
+    .endsection WorldMapMarkerShadow2FadeInSection
+
+
     .section WorldMapMarkerShadowFadeOutSection
 
       .al
@@ -609,6 +685,80 @@
         ; 8B/8C3A
 
     .endsection WorldMapMarkerShadowFadeOutSection
+
+
+    .section WorldMapMarkerShadow2FadeOutSection
+
+      .al
+      .xl
+
+      procWorldMapMarkerShadow2FadeOut ; 8B/8C3A
+
+        ; Started only by the unreferenced procWorldMapMarkerShadow2FadeIn.
+        ; Fades the same five colours to black.
+
+        .structProcInfo "CF", rlProcWorldMapMarkerShadow2FadeOutInit, rlProcWorldMapMarkerShadow2FadeOutCycle, aProcWorldMapMarkerShadow2FadeOutCode
+
+      rlProcWorldMapMarkerShadow2FadeOutInit ; 8B/8C42
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #0
+        sta $7F808F
+        rtl
+
+        .databank 0
+
+      rlProcWorldMapMarkerShadow2FadeOutCycle ; 8B/8C4A
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda $7F808F
+        sta aPaletteFading.wCurrentStep,b
+
+        lda wVBlankEnabledFramecount
+        and #$0003
+        bne _End
+
+          lda #0
+          sta aPaletteFading.wDesiredColor,b
+          lda #32
+          sta aPaletteFading.wMaxSteps,b
+          clc
+          jsl rlFadePaletteToBlack
+
+            .word <>aWorldMapMarkerShadow2FadeOutData
+
+          bcs +
+
+        _End
+        lda aPaletteFading.wCurrentStep,b
+        sta $7F808F
+        rtl
+
+        +
+        jsl rlProcEngineFreeProc
+        bra _End
+
+        .databank 0
+
+      aWorldMapMarkerShadow2FadeOutData ; 8B/8C7B
+
+        .word aBGPaletteBuffer.aPalette5 + $10 - aBGPaletteBuffer
+        .word 5
+        .word $FFFF
+
+      aProcWorldMapMarkerShadow2FadeOutCode ; 8B/8C81
+
+        PROC_HALT
+
+        ; 8B/8C83
+
+    .endsection WorldMapMarkerShadow2FadeOutSection
 
 
     .section WorldMapMarkers2Section

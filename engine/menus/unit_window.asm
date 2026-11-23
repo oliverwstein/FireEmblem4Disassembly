@@ -7635,3 +7635,30 @@
     .endsection Table80C3DDSection
 
 
+    .section TableDD7FB0Section
+
+      .al
+      .xl
+
+      aItemIconPalette ; DD/7FB0
+
+        ; The colours of g4bppItemIcons. Copied into a sprite palette by
+        ; rlUnitWindowCopySpritePalette1.
+
+        .word $3800, $7BFF, $56D7, $35EF, $0462, $02FB, $000B, $5C40
+        .word $6D25, $7E0F, $0140, $1EC5, $10EA, $298F, $0487, $0134
+
+      aUnknownDD7FD0 ; DD/7FD0
+
+        ; Copied into a sprite palette by rlUnitWindowCopySpritePalette2; it
+        ; does not colour the item icons properly, so it is for something else.
+
+        .word $3800, $0012, $013A, $02FB, $7E6A, $7504, $0120, $0280
+        .word $7FFF, $56D7, $35EF, $08A6, $190A, $256C, $4232, $0842
+
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+
+        ; DD/8000
+
+    .endsection TableDD7FB0Section
+

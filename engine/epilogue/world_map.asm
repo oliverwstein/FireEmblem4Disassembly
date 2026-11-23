@@ -1,5 +1,6 @@
 ; ASMCs for the world map part of the epilogue: which scenes play for each region,
-; depending on who inherited it and who their lover is.
+; depending on who inherited it and who their lover is; and the moves from the
+; world map to the credits (rlStartEpilogueCredits, rlStartEpilogueCreditsQuickly).
 
     .section EpilogueDialogueWorldMapCodeSection
 
@@ -3014,7 +3015,7 @@
         bra _Dialogue
 
         _C938
-        jsl rlUnknown8B80F3
+        jsl rlStartEpilogueCreditsQuickly
 
         lda aDialogue.lActivePointer,b
         clc
@@ -3044,7 +3045,7 @@
         cmp #$556E
         bcs _End
 
-          jsl rlUnknown8B80CB
+          jsl rlStartEpilogueCredits
           bra _End
 
         _End
@@ -3055,3 +3056,67 @@
         ; 8D/C964
 
     .endsection EpilogueDialogueWorldMapCodeSection
+
+
+    .section Unsorted8B80CBSection
+
+      .al
+      .xl
+
+      rlStartEpilogueCredits ; 8B/80CB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Moves the epilogue on to the credits (EPILOGUE_PART_CREDITS): queues sound command $E6 and fades out (timer $0C) into rsOpenEpilogueScreen. Ends the epilogue's world map (rsEventCommandWMFadeOut when wCurrentChapter is $FFFF, rlASMCUnknown8DC955).
+
+        lda #EPILOGUE_PART_CREDITS
+        sta wEpiloguePart,b
+        lda #$00E6
+        jsl rlQueueSoundCommand
+        lda #$000C
+        sta wScreenFadingProcInput,b
+        lda #<>rsOpenEpilogueScreen
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFadeByTimer)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFadeByTimer
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 8B/80F3
+
+      rlStartEpilogueCreditsQuickly ; 8B/80F3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; As rlStartEpilogueCredits, with fade timer 6 and no sound command.
+
+        lda #EPILOGUE_PART_CREDITS
+        sta wEpiloguePart,b
+        lda #$0006
+        sta wScreenFadingProcInput,b
+        lda #<>rsOpenEpilogueScreen
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFadeByTimer)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFadeByTimer
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 8B/8114
+
+    .endsection Unsorted8B80CBSection
+
+

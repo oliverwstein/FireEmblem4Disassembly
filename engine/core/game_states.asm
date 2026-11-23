@@ -337,3 +337,56 @@
     .endsection Unsorted809C7ASection
 
 
+    .section Unsorted8BA7CBSection
+
+      .al
+      .xl
+
+      rlUnusedGameState13 ; 8B/A7CB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $13: does nothing; nothing selects it.
+
+        rtl
+
+        .databank 0
+
+        ; 8B/A7CC
+
+      rlUnusedGameState14 ; 8B/A7CC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $14: does nothing; nothing selects it.
+
+        rtl
+
+        .databank 0
+
+        ; 8B/A7CD
+
+      rlUnusedGameState15 ; 8B/A7CD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Game state routine $15: does nothing; nothing selects it.
+
+        rtl
+
+        .databank 0
+
+        ; 8B/A7CE
+
+    .endsection Unsorted8BA7CBSection
+
+
