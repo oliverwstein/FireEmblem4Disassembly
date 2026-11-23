@@ -122,7 +122,7 @@
         bne _A75F
 
         _A710
-        lda $0AF1,b
+        lda bBattleSceneKnockback,b
         and #$003F
         bne _A75F
         lda $7FFD9A

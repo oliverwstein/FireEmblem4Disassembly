@@ -342,7 +342,7 @@
         sta lBattleSceneRoundPointer+1,b
         lda #<>aBattleRoundsData._Entry[0]
         sta lBattleSceneRoundPointer,b
-        jsl rlUnknown95CA81
+        jsl rlBattleSceneClearKnockback
         jsl rlUnknown95DA0B
         jsl rlUnknown96A4FC
         jsl rlUnknown96CB0A
@@ -503,7 +503,7 @@
         jsl rlBattleAnimationMoveEffectSlot
         jsl rlBattleAnimationApplyEffectGravity
         jsl rlBattleAnimationApplyEffectYStep
-        jsl rlUnknown95CAD5
+        jsl rlBattleSceneRunKnockback
 
         _8B85
         jsl rlUnknown96961F
@@ -636,7 +636,7 @@
         bne _8CA4
         lda aBattleSceneCombatant2.HPSpeed,b
         bne _8CA4
-        lda $0AF1,b
+        lda bBattleSceneKnockback,b
         and #$003F
         bne _8CA4
         lda $7FE4B7

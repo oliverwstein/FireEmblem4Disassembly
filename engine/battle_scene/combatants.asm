@@ -760,15 +760,17 @@
       .al
       .xl
 
-      rlUnknown95B7F8 ; 95/B7F8
+      rlBattleSceneGetKnockbackStrength ; 95/B7F8
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = class: the knockback strength, $762 / its weight (rlBattleSceneGetClassWeight).
+
         phx
-        jsl rlUnknown95B80C
+        jsl rlBattleSceneGetClassWeight
         sta wR14
         lda #$0762
         sta wR13
@@ -781,18 +783,20 @@
 
         ; 95/B80C
 
-      rlUnknown95B80C ; 95/B80C
+      rlBattleSceneGetClassWeight ; 95/B80C
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = class: its byte of aBattleSceneClassWeights (index class + 1).
+
         phx
         inc a
         and #$00FF
         tax
-        lda aUnknown97EC1A,x
+        lda aBattleSceneClassWeights,x
         and #$00FF
         plx
         rtl
@@ -4490,15 +4494,17 @@
       .al
       .xl
 
-      rlUnknown95CA81 ; 95/CA81
+      rlBattleSceneClearKnockback ; 95/CA81
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Clears the knockback (bBattleSceneKnockback).
+
         lda #$0000
-        sta $0AF1,b
+        sta bBattleSceneKnockback,b
         rtl
 
         .databank 0
@@ -4520,7 +4526,7 @@
         .autsiz
         .databank ?
 
-        ; Sets the defender's knockback in $0AF1/$0AF2 by its class and which side it stands on.
+        ; Sets the defender's knockback (bBattleSceneKnockback, bBattleSceneKnockbackShake): its strength by its class (rlBattleSceneGetKnockbackStrength), and its side.
 
         phx
         phy
@@ -4528,7 +4534,7 @@
         bit #$0080
         beq _CAAB
         lda aBattleSceneCombatant1.Class,b
-        jsl rlUnknown95B7F8
+        jsl rlBattleSceneGetKnockbackStrength
         sta wR0
         jsl rlBattleAnimationCompareCombatantX
         bcc _CAA6
@@ -4543,7 +4549,7 @@
 
         _CAAB
         lda aBattleSceneCombatant2.Class,b
-        jsl rlUnknown95B7F8
+        jsl rlBattleSceneGetKnockbackStrength
         sta wR0
         jsl rlBattleAnimationCompareCombatantX
         bcc _CABF
@@ -4558,10 +4564,10 @@
         sep #$20
         pha
         ora wR0
-        sta $0AF1,b
+        sta bBattleSceneKnockback,b
         pla
         ora #$18
-        sta $0AF2,b
+        sta bBattleSceneKnockbackShake,b
         rep #$20
         ply
         plx
@@ -4571,18 +4577,20 @@
 
         ; 95/CAD5
 
-      rlUnknown95CAD5 ; 95/CAD5
+      rlBattleSceneRunKnockback ; 95/CAD5
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Every frame: pushes the knocked-back combatant by its knockback strength / 4 pixels (stopped by the other combatant or the stage edge) and takes the strength down to 3/4; then shakes it sideways by aBattleSceneKnockbackShake for the frames left in bBattleSceneKnockbackShake.
+
         phx
-        lda $0AF1,b
+        lda bBattleSceneKnockback,b
         bit #$003F
         beq _CB3B
-        jsl rlUnknown95CB97
+        jsl rlBattleSceneSetKnockbackDirection
         bit #$0080
         bne _CAEC
         ldx #$0000
@@ -4622,7 +4630,7 @@
 
         _CB1C
         sep #$20
-        lda $0AF1,b
+        lda bBattleSceneKnockback,b
         pha
         and #$C0
         xba
@@ -4638,15 +4646,15 @@
         pha
         xba
         ora #1,s
-        sta $0AF1,b
+        sta bBattleSceneKnockback,b
         pla
         rep #$20
 
         _CB3B
-        lda $0AF2,b
+        lda bBattleSceneKnockbackShake,b
         bit #$003F
         beq _CB95
-        lda $0AF2,b
+        lda bBattleSceneKnockbackShake,b
         bit #$003F
         beq _CB95
         bit #$0040
@@ -4654,7 +4662,7 @@
         and #$003F
         phx
         tax
-        lda aUnknown98AD65,x
+        lda aBattleSceneKnockbackShake,x
         and #$00FF
         plx
         sep #$20
@@ -4667,7 +4675,7 @@
         and #$003F
         phx
         tax
-        lda aUnknown98AD65,x
+        lda aBattleSceneKnockbackShake,x
         and #$00FF
         eor #$FFFF
         inc a
@@ -4678,7 +4686,7 @@
 
         _CB7E
         sep #$20
-        lda $0AF2,b
+        lda bBattleSceneKnockbackShake,b
         pha
         and #$C0
         xba
@@ -4688,7 +4696,7 @@
         pha
         xba
         ora #1,s
-        sta $0AF2,b
+        sta bBattleSceneKnockbackShake,b
         pla
         rep #$20
 
@@ -4700,16 +4708,18 @@
 
         ; 95/CB97
 
-      rlUnknown95CB97 ; 95/CB97
+      rlBattleSceneSetKnockbackDirection ; 95/CB97
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sets bit 6 of bBattleSceneKnockback when the knocked-back combatant is pushed right: away from the other combatant, or by its side of the stage ($100) when they stand at the same X.
+
         pha
         phx
-        lda $0AF1,b
+        lda bBattleSceneKnockback,b
         bit #$0080
         bne _CBB5
         jsl rlBattleAnimationCompareCombatantX
@@ -4741,18 +4751,18 @@
 
         _CBC9
         sep #$20
-        lda $0AF1,b
+        lda bBattleSceneKnockback,b
         ora #$40
-        sta $0AF1,b
+        sta bBattleSceneKnockback,b
         bra _CBDF
 
 
         _CBD5
         .al
         sep #$20
-        lda $0AF1,b
+        lda bBattleSceneKnockback,b
         and #$BF
-        sta $0AF1,b
+        sta bBattleSceneKnockback,b
 
         _CBDF
         rep #$20

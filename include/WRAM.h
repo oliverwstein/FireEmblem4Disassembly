@@ -983,6 +983,14 @@
 
   .endvirtual
 
+  .virtual $000AF1
+
+    ; The defender's knockback (rlBattleSceneSetKnockback, rlBattleSceneRunKnockback).
+    bBattleSceneKnockback      .byte ? ; $000AF1 ; bit 7 combatant 2, bit 6 pushed right, bits 0-5 strength
+    bBattleSceneKnockbackShake .byte ? ; $000AF2 ; bit 6 the shake's side, bits 0-5 frames left ($18 to start)
+
+  .endvirtual
+
   .virtual $000AE9
     wBattleAnimationAttackerOffset .word ? ; $000AE9 ; $0000 or $0043
     wBattleAnimationDefenderOffset .word ? ; $000AEB ; $0043 or $0000

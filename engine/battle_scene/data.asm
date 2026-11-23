@@ -462,9 +462,9 @@
         .byte $06, $1C, $30, $20, $10, $20, $40, $00
         .byte $08, $1D, $18, $14, $30, $20, $5B, $00
 
-      aUnknown97EC1A ; 97/EC1A
+      aBattleSceneClassWeights ; 97/EC1A
 
-        ; Read by rlUnknown95B80C.
+        ; Read by rlBattleSceneGetClassWeight.
 
         .byte $78, $B4, $B4, $B4, $B4, $B4, $B4, $B4, $B4, $C8, $C8, $BE, $C8, $C8, $C8, $DC
         .byte $C8, $C8, $DC, $F0, $FF, $FF, $64, $50, $5A, $5A, $5A, $D7, $EB, $FF, $8C, $8C

@@ -1004,7 +1004,7 @@
 
       aUnknown95E726 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FF6D4, PPU_REG_BASE + $0D, $43, $7F ; 95/E726
 
-      aUnknown95E732 .dstruct structHDMADirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aUnknown98AD65+429, PPU_REG_BASE + $21, $00 ; 95/E732
+      aUnknown95E732 .dstruct structHDMADirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneKnockbackShake+429, PPU_REG_BASE + $21, $00 ; 95/E732
 
       aUnknown95E73D .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $22, $42, $98 ; 95/E73D
 
@@ -5018,7 +5018,7 @@
         phx
         lda $7FED0A,x
         tax
-        lda aUnknown98AD65+648,x
+        lda aBattleSceneKnockbackShake+648,x
         and #$00FF
         sta $7FF6B4
         lda #$AF83
@@ -5140,7 +5140,7 @@
         lda #$18
         sta $7FF6B7
         rep #$20
-        lda aUnknown98AD65+648,x
+        lda aBattleSceneKnockbackShake+648,x
         and #$0001
         sta $7FF6BA
         lda #$FF00
@@ -13532,7 +13532,7 @@
 
         phx
         ldx $0C46,b
-        lda aUnknown98AD65+59,x
+        lda aBattleSceneKnockbackShake+59,x
         cmp #$8080
         bne _F489
         jsl rlBattleSceneEndScriptRoutine
@@ -13595,7 +13595,7 @@
         lsr a
         lsr a
         tax
-        lda aUnknown98AD65+401,x
+        lda aBattleSceneKnockbackShake+401,x
         cmp #$FFFF
         bne _F4D1
         jsl rlBattleSceneEndScriptRoutine
@@ -13607,7 +13607,7 @@
         lda $0C46,b
         and #$0007
         tax
-        lda aUnknown98AD65+421,x
+        lda aBattleSceneKnockbackShake+421,x
         and #1,s
         and #$00FF
         bne _F4F5

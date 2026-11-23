@@ -5785,9 +5785,9 @@
       .al
       .xl
 
-      aUnknown98AD65 ; 98/AD65
+      aBattleSceneKnockbackShake ; 98/AD65
 
-        ; Read by rlUnknown95CAD5.
+        ; Read by rlBattleSceneRunKnockback.
 
         .byte $00, $00, $00, $01, $00, $FF, $00, $01, $FF, $01, $FF, $01, $01, $FF, $FF, $02
         .byte $02, $FE, $FE, $03, $03, $03, $FD, $FD, $FD, $98, $9D, $97, $9E, $96, $9F, $95
