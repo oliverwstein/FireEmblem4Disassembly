@@ -66,3 +66,13 @@
       TrailPosition .byte ?
       TrailDelay    .byte ? ; how many frames behind the afterimage is
     .endstruct
+
+  ; A title sprite's definition, read by rlUnknown95F967 into aTitleSprites.
+  ; Frames is in Script's bank.
+
+    TITLE_SPRITE_SIZE = 13
+
+    TITLE_SPRITE .segment Script, Frames, X, Y, TileBase, Attributes
+      .long \Script
+      .word <>\Frames, \X, \Y, \TileBase, \Attributes
+    .endsegment

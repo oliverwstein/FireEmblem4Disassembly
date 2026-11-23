@@ -654,9 +654,9 @@
 
         lda #$0000
         sta bTitleLoadRequests
-        lda #(`aUnknown97F19B)<<8
+        lda #(`aTitleLoadList)<<8
         sta lTitleLoadListPosition+1
-        lda #<>aUnknown97F19B
+        lda #<>aTitleLoadList
         sta lTitleLoadListPosition
         rtl
 
@@ -673,9 +673,9 @@
 
         lda #$0000
         sta bTitleLoadRequests
-        lda #(`aUnknown97F45A)<<8
+        lda #(`aTitleFadeOutLoadList)<<8
         sta lTitleLoadListPosition+1
-        lda #<>aUnknown97F45A
+        lda #<>aTitleFadeOutLoadList
         sta lTitleLoadListPosition
         rtl
 
@@ -1202,7 +1202,7 @@
         .word <>rsIRQCodeHalt
 
       aUnknown9680B3 ; 96/80B3
-        .word $0060, $00BD, <>rlUnknown9680BB, $80C0
+        .word $0060, $00BD, <>rlUnknown9680BB, <>aUnknown9680C0
 
     .endsection Table9680B1Section
 
@@ -1556,9 +1556,9 @@
         jsl rlUnknown95EF54
         jsl rlUnknown95F12A
         ldx #$0000
-        lda #(`aUnknown99FEAC)<<8
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #<>aUnknown99FEAC
+        lda #<>aTitleSpriteDefinitions
         sta lR18
         jsl rlUnknown95F967
         jsl rlUnknown9BFD71
@@ -1777,9 +1777,9 @@
         sta lTitleTimelinePosition
         jsl rlUnknown95F1BF
         ldx #$0000
-        lda #(`aUnknown99FEAC)<<8
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #<>aUnknown99FEAC
+        lda #<>aTitleSpriteDefinitions
         sta lR18
         jsl rlUnknown95F967
         sep #$20
@@ -3338,22 +3338,22 @@
 
         phx
         ldx #$0000
-        lda #(`aUnknown99FE92)<<8
+        lda #(`aTitleSprite0Definition2)<<8
         sta lR18+1
-        lda #<>aUnknown99FE92
+        lda #<>aTitleSprite0Definition2
         sta lR18
         jsl rlUnknown95F967
         ldx #$0062
-        lda #(`aUnknown99FE9F)<<8
+        lda #(`aTitleSprite1Definition2)<<8
         sta lR18+1
-        lda #<>aUnknown99FE9F
+        lda #<>aTitleSprite1Definition2
         sta lR18
         jsl rlUnknown95F967
         lda #$0000
         sta $7FD05D
         lda #1,s
         tax
-        lda #$9B00
+        lda #(`rlUnknown9BF36F)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
         lda #<>rlUnknown9BF36F
         sta aTitleTimelineSlots.lRoutine,x
@@ -3406,12 +3406,12 @@
         phx
         lda $7FD05D
         tax
-        lda aUnknown99FEAC+156,x
+        lda aTitleSprite0Motion,x
         and #$00FF
         cmp #$0080
         beq _F3E4
         pha
-        lda aUnknown99FEAC+157,x
+        lda aTitleSprite0Motion+1,x
         and #$00FF
         pha
         lda aTitleSprites.X
@@ -3598,7 +3598,7 @@
         sta wR1
         stz wR4
         stz wR5
-        ldy #$FF6D
+        ldy #<>aTitleFlashSprite
         jsl rlPushToOAMBuffer
         plb
         .databank $99

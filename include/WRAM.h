@@ -2922,6 +2922,23 @@
   .endvirtual
 
 
+  .virtual $7FD04C
+
+    wTitleBrightnessStep .word ? ; $7FD04C
+      ; Position in the brightness list (rlUnknown95FD44).
+
+  .endvirtual
+
+
+  .virtual $7FD052
+
+    lTitleBrightnessList .long ? ; $7FD052
+      ; INIDISP values, one a frame, ended by $FF: aTitleSceneFadeInBrightness
+      ; and the lists after it.
+
+  .endvirtual
+
+
   .virtual $7FD073
 
     bTitleCaptionBrightness .byte ? ; $7FD073

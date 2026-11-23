@@ -235,10 +235,62 @@
 
       _F96D_FA77 ; 99/FA77
         .byte $04, $00, $00, $C2, $00, $AE, $3E, $F0, $C3, $00, $AC, $3E, $00, $C2, $F0, $8E
-        .byte $3E, $F0, $C3, $F0, $8C, $3E, $01, $10, $80, $01, $02, $01, $80, $01, $03, $02
-        .byte $80, $01, $04, $02, $80, $01, $05, $02, $80, $01, $06, $02, $80, $01, $07, $01
-        .byte $80, $01, $08, $02, $80, $01, $09, $01, $80, $01, $0A, $01, $80, $01, $0B, $01
-        .byte $80, $01, $0C, $01, $80, $01, $0D, $01, $80, $01
+        .byte $3E, $F0, $C3, $F0, $8C, $3E
+
+      aTitleSpriteStill00 ; 99/FA8D
+
+        .byte $01, $10, $80, $01
+
+      aTitleSpriteStill01 ; 99/FA91
+
+        .byte $02, $01, $80, $01
+
+      aTitleSpriteStill02 ; 99/FA95
+
+        .byte $03, $02
+        .byte $80, $01
+
+      aTitleSpriteStill03 ; 99/FA99
+
+        .byte $04, $02, $80, $01
+
+      aTitleSpriteStill04 ; 99/FA9D
+
+        .byte $05, $02, $80, $01
+
+      aTitleSpriteStill05 ; 99/FAA1
+
+        .byte $06, $02, $80, $01
+
+      aTitleSpriteStill06 ; 99/FAA5
+
+        .byte $07, $01
+        .byte $80, $01
+
+      aTitleSpriteStill07 ; 99/FAA9
+
+        .byte $08, $02, $80, $01
+
+      aTitleSpriteStill08 ; 99/FAAD
+
+        .byte $09, $01, $80, $01
+
+      aTitleSpriteStill09 ; 99/FAB1
+
+        .byte $0A, $01, $80, $01
+
+      aTitleSpriteStill10 ; 99/FAB5
+
+        .byte $0B, $01
+        .byte $80, $01
+
+      aTitleSpriteStill11 ; 99/FAB9
+
+        .byte $0C, $01, $80, $01
+
+      aTitleSpriteStill12 ; 99/FABD
+
+        .byte $0D, $01, $80, $01
 
         ; 99/FAC1
 
@@ -333,8 +385,18 @@
 
       _FAC1_FD9B ; 99/FD9B
         .byte $05, $00, $4E, $00, $C8, $7D, $28, $46, $00, $C8, $7C, $28, $36, $C2, $F0, $3B
-        .byte $29, $3F, $00, $C8, $7B, $28, $3E, $C2, $D0, $34, $29, $00, $05, $10, $61, $04
-        .byte $01, $05, $80, $61, $04, $02, $05, $F0, $01, $04
+        .byte $29, $3F, $00, $C8, $7B, $28, $3E, $C2, $D0, $34, $29
+
+      aUnknown99FDB6 ; 99/FDB6
+
+        .byte $00, $05, $10, $61, $04
+      aUnknown99FDBB ; 99/FDBB
+
+        .byte $01, $05, $80, $61, $04
+
+      aUnknown99FDC0 ; 99/FDC0
+
+        .byte $02, $05, $F0, $01, $04
 
       aUnknown99FDC5 ; 99/FDC5
 
@@ -382,33 +444,68 @@
         .byte $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80, $80
         .byte $80, $80, $80, $80, $80, $80, $80, $80
 
-      aUnknown99FE92 ; 99/FE92
-        .byte $8D, $FA, $99, $C1, $FA, $98, $01, $3E, $00, $00, $00, $00, $00
+      aTitleSprite0Definition2 ; 99/FE92
 
-      aUnknown99FE9F ; 99/FE9F
-        .byte $91, $FA, $99, $C1, $FA, $98, $01, $3E, $00, $00, $00, $00, $00
+        TITLE_SPRITE aTitleSpriteStill00, aUnknown99FAC1, $0198, $003E, $0000, $0000
 
-      aUnknown99FEAC ; 99/FEAC
-        .byte $8D, $FA, $99, $C1, $FA, $88, $00, $9E, $00, $00, $00, $00, $00, $95, $FA, $99
-        .byte $C1, $FA, $9C, $00, $9D, $00, $00, $00, $00, $08, $99, $FA, $99, $C1, $FA, $9C
-        .byte $00, $9D, $00, $00, $00, $00, $08, $9D, $FA, $99, $C1, $FA, $9C, $00, $9D, $00
-        .byte $00, $00, $00, $08, $A1, $FA, $99, $C1, $FA, $9C, $00, $9D, $00, $00, $00, $00
-        .byte $08, $A5, $FA, $99, $C1, $FA, $9C, $00, $9D, $00, $00, $00, $00, $08, $A9, $FA
-        .byte $99, $C1, $FA, $9C, $00, $9D, $00, $00, $00, $00, $08, $AD, $FA, $99, $C1, $FA
-        .byte $9C, $00, $9D, $00, $00, $00, $00, $08, $B1, $FA, $99, $C1, $FA, $9C, $00, $9D
-        .byte $00, $00, $00, $00, $08, $B5, $FA, $99, $C1, $FA, $9C, $00, $9D, $00, $00, $00
-        .byte $00, $08, $B9, $FA, $99, $C1, $FA, $9C, $00, $9D, $00, $00, $00, $00, $08, $BD
-        .byte $FA, $99, $C1, $FA, $9C, $00, $9D, $00, $00, $00, $00, $08, $0F, $06, $0F, $06
+      aTitleSprite1Definition2 ; 99/FE9F
+
+        TITLE_SPRITE aTitleSpriteStill01, aUnknown99FAC1, $0198, $003E, $0000, $0000
+
+      aTitleSpriteDefinitions ; 99/FEAC
+
+        TITLE_SPRITE aTitleSpriteStill00, aUnknown99FAC1, $0088, $009E, $0000, $0000
+        TITLE_SPRITE aTitleSpriteStill02, aUnknown99FAC1, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill03, aUnknown99FAC1, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill04, aUnknown99FAC1, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill05, aUnknown99FAC1, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill06, aUnknown99FAC1, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill07, aUnknown99FAC1, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill08, aUnknown99FAC1, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill09, aUnknown99FAC1, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill10, aUnknown99FAC1, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill11, aUnknown99FAC1, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill12, aUnknown99FAC1, $009C, $009D, $0000, $0800
+
+      aTitleSprite0Motion ; 99/FF48
+
+        ; X and Y steps for sprite 0 (rlUnknown9BF3A5), ended by $80.
+
         .byte $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06
-        .byte $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0A, $04, $0A, $04, $05, $02, $05, $02
-        .byte $80, $18, $00, $00, $00, $08, $02, $72, $08, $00, $08, $01, $72, $10, $00, $08
-        .byte $00, $72, $00, $00, $00, $02, $72, $08, $00, $00, $01, $72, $10, $00, $00, $00
-        .byte $72, $00, $00, $F8, $02, $72, $08, $00, $F8, $01, $72, $10, $00, $F8, $00, $72
-        .byte $00, $00, $F0, $02, $72, $08, $00, $F0, $01, $72, $10, $00, $F0, $00, $72, $F8
-        .byte $01, $08, $02, $32, $F0, $01, $08, $01, $32, $E8, $01, $08, $00, $32, $F8, $01
-        .byte $00, $02, $32, $F0, $01, $00, $01, $32, $E8, $01, $00, $00, $32, $F8, $01, $F8
-        .byte $02, $32, $F0, $01, $F8, $01, $32, $E8, $01, $F8, $00, $32, $F8, $01, $F0, $02
-        .byte $32, $F0, $01, $F0, $01, $32, $E8, $01, $F0, $00, $32
+        .byte $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0F, $06, $0A, $04, $0A, $04
+        .byte $05, $02, $05, $02
+        .byte $80
+
+      aTitleFlashSprite ; 99/FF6D
+
+        _Sprites := [[(   0,    8), $00, SpriteSmall, $002, 3, 1, true, false]]
+        _Sprites ..= [[(   8,    8), $00, SpriteSmall, $001, 3, 1, true, false]]
+        _Sprites ..= [[(  16,    8), $00, SpriteSmall, $000, 3, 1, true, false]]
+        _Sprites ..= [[(   0,    0), $00, SpriteSmall, $002, 3, 1, true, false]]
+        _Sprites ..= [[(   8,    0), $00, SpriteSmall, $001, 3, 1, true, false]]
+        _Sprites ..= [[(  16,    0), $00, SpriteSmall, $000, 3, 1, true, false]]
+        _Sprites ..= [[(   0,   -8), $00, SpriteSmall, $002, 3, 1, true, false]]
+        _Sprites ..= [[(   8,   -8), $00, SpriteSmall, $001, 3, 1, true, false]]
+        _Sprites ..= [[(  16,   -8), $00, SpriteSmall, $000, 3, 1, true, false]]
+        _Sprites ..= [[(   0,  -16), $00, SpriteSmall, $002, 3, 1, true, false]]
+        _Sprites ..= [[(   8,  -16), $00, SpriteSmall, $001, 3, 1, true, false]]
+        _Sprites ..= [[(  16,  -16), $00, SpriteSmall, $000, 3, 1, true, false]]
+        _Sprites ..= [[(  -8,    8), $00, SpriteSmall, $002, 3, 1, false, false]]
+        _Sprites ..= [[( -16,    8), $00, SpriteSmall, $001, 3, 1, false, false]]
+        _Sprites ..= [[( -24,    8), $00, SpriteSmall, $000, 3, 1, false, false]]
+        _Sprites ..= [[(  -8,    0), $00, SpriteSmall, $002, 3, 1, false, false]]
+        _Sprites ..= [[( -16,    0), $00, SpriteSmall, $001, 3, 1, false, false]]
+        _Sprites ..= [[( -24,    0), $00, SpriteSmall, $000, 3, 1, false, false]]
+        _Sprites ..= [[(  -8,   -8), $00, SpriteSmall, $002, 3, 1, false, false]]
+        _Sprites ..= [[( -16,   -8), $00, SpriteSmall, $001, 3, 1, false, false]]
+        _Sprites ..= [[( -24,   -8), $00, SpriteSmall, $000, 3, 1, false, false]]
+        _Sprites ..= [[(  -8,  -16), $00, SpriteSmall, $002, 3, 1, false, false]]
+        _Sprites ..= [[( -16,  -16), $00, SpriteSmall, $001, 3, 1, false, false]]
+        _Sprites ..= [[( -24,  -16), $00, SpriteSmall, $000, 3, 1, false, false]]
+
+        .structSpriteArray aTitleFlashSprite._Sprites
+
+        ; 99/FFE7
 
         ; 99/FFE7
 

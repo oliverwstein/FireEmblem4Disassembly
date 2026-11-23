@@ -967,6 +967,99 @@
     .endsection Unsorted95F2E5Section
 
 
+    .section TitleScenes95F35DSection
+
+      .al
+      .xl
+
+      rlUnknown95F35D ; 95/F35D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it.
+
+        phx
+        ldx #$0000
+        lda #$7FFF
+
+        _F364
+        sta $0122,b,x
+        inc x
+        inc x
+        cpx #$00AE
+        bcc _F364
+        ldx #$0000
+
+        _F371
+        sta $0202,b,x
+        inc x
+        inc x
+        cpx #$00AE
+        bcc _F371
+        plx
+        rtl
+
+        .databank 0
+
+        ; 95/F37D
+
+      rlUnknown95F37D ; 95/F37D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it.
+
+        lda #(`aUnknown99FDB6)<<8
+        sta lR18+1
+        lda #<>aUnknown99FDB6
+        sta lR18
+        lda #$0000
+        sta wR0
+        jsl rlBattleSceneStartPaletteEffect
+        lda #(`aUnknown99FDBB)<<8
+        sta lR18+1
+        lda #<>aUnknown99FDBB
+        sta lR18
+        lda #$0000
+        sta wR0
+        jsl rlBattleSceneStartPaletteEffect
+        lda #(`aUnknown99FDC0)<<8
+        sta lR18+1
+        lda #<>aUnknown99FDC0
+        sta lR18
+        lda #$0000
+        sta wR0
+        jsl rlBattleSceneStartPaletteEffect
+        lda #(`aUnknown95F3C5)<<8
+        sta lR18+1
+        lda #<>aUnknown95F3C5
+        sta lR18
+        jsl rlBattleSceneWriteRAM
+        rtl
+
+        .databank 0
+
+        ; 95/F3C5
+
+      aUnknown95F3C5 ; 95/F3C5
+
+        ; Nothing in the build reaches this: rlUnknown95F37D writes it.
+
+        WRITE_RAM_BYTE bBufferTM, $12
+        WRITE_RAM_BYTE bBufferTS, $01
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $02
+        WRITE_RAM_END
+
+    .endsection TitleScenes95F35DSection
+
+
     .section Unsorted95F3D3Section
 
       .al
@@ -1190,7 +1283,7 @@
         clc
         jsl rlFadePaletteToColors
 
-          .byte $88, $EB, $0F, $00, $02, $01
+          .word $EB88, $000F, $0102 ; 15 colours from $7EEB88 (filled by rlUnknown95EAB4) to palette offset $0102
 
         bcc _F4DE
         sep #$20
@@ -1274,7 +1367,7 @@
         clc
         jsl rlFadePaletteToColors
 
-          .byte $88, $EB, $0F, $00, $82, $01
+          .word $EB88, $000F, $0182 ; 15 colours from $7EEB88 (filled by rlUnknown95EAB4) to palette offset $0182
 
         bcc _F540
         sep #$20
@@ -1358,7 +1451,7 @@
         clc
         jsl rlFadePaletteToColors
 
-          .byte $88, $EB, $0F, $00, $A2, $01
+          .word $EB88, $000F, $01A2 ; 15 colours from $7EEB88 (filled by rlUnknown95EAB4) to palette offset $01A2
 
         bcc _F5A2
         sep #$20
@@ -1417,6 +1510,82 @@
     .endsection Unsorted95F57BSection
 
 
+    .section TitleScenes95F5D9Section
+
+      .al
+      .xl
+
+      rlUnknown95F5D9 ; 95/F5D9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it.
+
+        lda #$0000
+        sta $7FD055
+        jsl rlUnknown95F5F3
+        lda #(`rlUnknown95F5F3)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95F5F3
+        sta aTitleTimelineSlots.lRoutine,x
+        rtl
+
+        .databank 0
+
+        ; 95/F5F3
+
+      rlUnknown95F5F3 ; 95/F5F3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FD055
+        bne _F618
+        lda #$0000
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0020
+        sta aPaletteFading,b
+        clc
+        jsl rlFadePaletteToBlack
+
+          .addr aUnknown95F62A
+
+        bcc _F618
+        sep #$20
+        lda #$00
+        sta aTitleTimelineSlots,x
+        rep #$20
+
+        _F618
+        lda $7FD055
+        inc a
+        cmp #$0004
+        bcc _F625
+        lda #$0000
+
+        _F625
+        sta $7FD055
+        rtl
+
+        .databank 0
+
+        ; 95/F62A
+
+      aUnknown95F62A ; 95/F62A
+
+        ; Palette fade list for rlFadePaletteToBlack (rlUnknown95F5F3).
+
+        .word $0022, $000F
+        .word $FFFF
+
+    .endsection TitleScenes95F5D9Section
+
+
     .section Unsorted95F630Section
 
       .al
@@ -1466,7 +1635,7 @@
         clc
         jsl rlFadePaletteToBlack
 
-          .byte $81, $F6
+          .addr aUnknown95F681
 
         bcc _F66F
         sep #$20
@@ -1490,6 +1659,133 @@
         ; 95/F681
 
     .endsection Unsorted95F64ASection
+
+
+    .section TitleScenes95F681Section
+
+      .al
+      .xl
+
+      aUnknown95F681 ; 95/F681
+
+        ; Palette fade list for rlFadePaletteToBlack (rlUnknown95F64A): palette offset and colour count, $FFFF ends it.
+
+        .word $0062, $000F
+        .word $0082, $000F
+        .word $FFFF
+
+      rlUnknown95F68B ; 95/F68B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it.
+
+        lda #$0000
+        sta $7FD055
+        phx
+        ldx #$0000
+        lda #$7FFF
+
+        _F699
+        sta $0122,b,x
+        inc x
+        inc x
+        cpx #$009E
+        bcc _F699
+        ldx #$0000
+
+        _F6A6
+        sta $0202,b,x
+        inc x
+        inc x
+        cpx #$00AE
+        bcc _F6A6
+        plx
+        lda #(`rlUnknown95F6DC)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95F6DC
+        sta aTitleTimelineSlots.lRoutine,x
+        lda #(`aUnknown95F3C5)<<8
+        sta lR18+1
+        lda #<>aUnknown95F3C5
+        sta lR18
+        jsl rlBattleSceneWriteRAM
+        rtl
+
+        .databank 0
+
+        ; 95/F6CE
+
+      aUnknown95F6CE ; 95/F6CE
+
+        ; Nothing in the build reaches this.
+
+        WRITE_RAM_BYTE bBufferTM, $11
+        WRITE_RAM_BYTE bBufferTS, $02
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $01
+        WRITE_RAM_END
+
+      rlUnknown95F6DC ; 95/F6DC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FD055
+        bne _F701
+        lda #$0000
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0020
+        sta aPaletteFading,b
+        clc
+        jsl rlFadePaletteToBlack
+
+          .addr aUnknown95F713
+
+        bcc _F701
+        sep #$20
+        lda #$00
+        sta aTitleTimelineSlots,x
+        rep #$20
+
+        _F701
+        lda $7FD055
+        inc a
+        cmp #$0002
+        bcc _F70E
+        lda #$0000
+
+        _F70E
+        sta $7FD055
+        rtl
+
+        .databank 0
+
+        ; 95/F713
+
+      aUnknown95F713 ; 95/F713
+
+        ; Palette fade list for rlFadePaletteToBlack (rlUnknown95F6DC).
+
+        .word $0022, $000F
+        .word $0042, $000F
+        .word $0062, $000F
+        .word $0082, $000F
+        .word $00A2, $000F
+        .word $0102, $000F
+        .word $0122, $000F
+        .word $0142, $000F
+        .word $0162, $000F
+        .word $0182, $000F
+        .word $01A2, $000F
+        .word $FFFF
+
+    .endsection TitleScenes95F681Section
 
 
     .section Unsorted95F777Section
@@ -1673,6 +1969,40 @@
         ; 95/F87F
 
     .endsection Unsorted95F831Section
+
+
+    .section TitleScenes95F9B4Section
+
+      .al
+      .xl
+
+      rlUnknown95F9B4 ; 95/F9B4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it.
+
+        phx
+        sta wR10
+        lda #$0062
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        ldx wR12
+        sep #$20
+        lda #$00
+        sta aTitleSprites
+        rep #$20
+        plx
+        rtl
+
+        .databank 0
+
+        ; 95/F9CE
+
+    .endsection TitleScenes95F9B4Section
 
 
     .section Unsorted95F9CESection
@@ -2039,14 +2369,14 @@
         sta #1,s
         pla
         tax
-        lda $97FA1F,x
+        lda aUnknown97FA1F,x
         sta lR18
-        lda $97FA20,x
+        lda aUnknown97FA1F+1,x
         sta lR18+1
         tya
         asl a
         tax
-        lda $97F9D1,x
+        lda aUnknown97F9D1,x
         tax
         lda lR18
         sta aTitleSprites.Script,x
@@ -2086,7 +2416,7 @@
         and #$00FF
         sta wR0
         phx
-        lda $97F9D1,x
+        lda aUnknown97F9D1,x
         tax
         lda aTitleSprites.Y,x
         sec
@@ -2138,9 +2468,9 @@
         txa
         asl a
         tax
-        lda $97FA05,x
+        lda aUnknown97FA05,x
         sta wR0
-        lda $97F9D1,x
+        lda aUnknown97F9D1,x
         tax
         lda wBufferBG1VOFS
         eor #$FFFF
@@ -2171,7 +2501,7 @@
         ; rlUnknown95FC6B as a title timeline slot routine, like rlUnknown95F630.
 
         lda #$0000
-        sta $7FD04C
+        sta wTitleBrightnessStep
         jsl rlUnknown95FC6B
         lda #(`rlUnknown95FC6B)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
@@ -2190,7 +2520,7 @@
         .autsiz
         .databank ?
 
-        lda $7FD04C
+        lda wTitleBrightnessStep
         bne _FC92
         sep #$20
         lda $7FD072
@@ -2213,14 +2543,14 @@
 
 
         _FC92
-        lda $7FD04C
+        lda wTitleBrightnessStep
         inc a
         cmp #$000A
         bcc _FC9F
         lda #$0000
 
         _FC9F
-        sta $7FD04C
+        sta wTitleBrightnessStep
 
         _FCA3
         rtl
@@ -2246,11 +2576,11 @@
         .databank ?
 
         lda #$0000
-        sta $7FD04C
-        lda #$9700
-        sta $7FD053
-        lda #$F48B
-        sta $7FD052
+        sta wTitleBrightnessStep
+        lda #(`aTitleSceneFadeInBrightness)<<8
+        sta lTitleBrightnessList+1
+        lda #<>aTitleSceneFadeInBrightness
+        sta lTitleBrightnessList
         jsl rlUnknown95FD44
         lda #(`rlUnknown95FD44)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
@@ -2271,11 +2601,11 @@
         .databank ?
 
         lda #$0000
-        sta $7FD04C
-        lda #$9700
-        sta $7FD053
-        lda #$F57D
-        sta $7FD052
+        sta wTitleBrightnessStep
+        lda #(`aTitleFadeInBrightness)<<8
+        sta lTitleBrightnessList+1
+        lda #<>aTitleFadeInBrightness
+        sta lTitleBrightnessList
         jsl rlUnknown95FD44
         lda #(`rlUnknown95FD44)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
@@ -2296,11 +2626,11 @@
         .databank ?
 
         lda #$0000
-        sta $7FD04C
-        lda #$9700
-        sta $7FD053
-        lda #$F5C7
-        sta $7FD052
+        sta wTitleBrightnessStep
+        lda #(`aTitleSceneFadeOutBrightness)<<8
+        sta lTitleBrightnessList+1
+        lda #<>aTitleSceneFadeOutBrightness
+        sta lTitleBrightnessList
         jsl rlUnknown95FD44
         lda #(`rlUnknown95FD44)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
@@ -2328,11 +2658,11 @@
         .databank ?
 
         lda #$0000
-        sta $7FD04C
-        lda #$9700
-        sta $7FD053
-        lda #$F63D
-        sta $7FD052
+        sta wTitleBrightnessStep
+        lda #(`aTitleQuickFadeOutBrightness)<<8
+        sta lTitleBrightnessList+1
+        lda #<>aTitleQuickFadeOutBrightness
+        sta lTitleBrightnessList
         jsl rlUnknown95FD44
         lda #(`rlUnknown95FD44)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
@@ -2363,11 +2693,11 @@
         lda $7FD8B7
         and #$00FF
         bne _FD84
-        lda $7FD052
+        lda lTitleBrightnessList
         sta lR18
-        lda $7FD053
+        lda lTitleBrightnessList+1
         sta lR18+1
-        lda $7FD04C
+        lda wTitleBrightnessStep
         tay
         lda [lR18],y
         and #$00FF
@@ -2376,9 +2706,9 @@
         sep #$20
         sta bBufferINIDISP
         rep #$20
-        lda $7FD04C
+        lda wTitleBrightnessStep
         inc a
-        sta $7FD04C
+        sta wTitleBrightnessStep
         bra _FD84
 
 
@@ -2467,6 +2797,69 @@
         ; 95/FDE4
 
     .endsection Unsorted95FD44Section
+
+
+    .section TitleScenes95FDE4Section
+
+      .al
+      .xl
+
+      rlUnknown95FDE4 ; 95/FDE4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it.
+
+        phx
+        lda #$0000
+        sta $7FD046
+        jsl rlUnknown95FE00
+        lda #(`rlUnknown95FE00)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FE00
+        sta aTitleTimelineSlots.lRoutine,x
+        plx
+        rtl
+
+        .databank 0
+
+        ; 95/FE00
+
+      rlUnknown95FE00 ; 95/FE00
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FD046
+        bne _FE10
+        lda wBufferBG2HOFS
+        dec a
+        sta wBufferBG2HOFS
+        lda wBufferBG2VOFS
+        inc a
+        sta wBufferBG2VOFS
+
+        _FE10
+        lda $7FD046
+        inc a
+        cmp #$0003
+        bcc _FE1D
+        lda #$0000
+
+        _FE1D
+        sta $7FD046
+        rtl
+
+        .databank 0
+
+        ; 95/FE22
+
+    .endsection TitleScenes95FDE4Section
 
 
     .section Unsorted95FE22Section
@@ -2855,6 +3248,31 @@
     .endsection Unsorted95FF8ASection
 
 
+    .section TitleScenes95FFACSection
+
+      .al
+      .xl
+
+      rlUnknown95FFAC ; 95/FFAC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it. Plays sound 2.
+
+        lda #$0002
+        jsl rlPlaySoundEffect2
+        rtl
+
+        .databank 0
+
+        ; 95/FFB4
+
+    .endsection TitleScenes95FFACSection
+
+
     .section Unsorted9BE15FSection
 
       .al
@@ -3108,6 +3526,44 @@
     .endsection Unsorted9BE2A4Section
 
 
+    .section TitleScenes9BE2E3Section
+
+      .al
+      .xl
+
+      rlUnknown9BE2E3 ; 9B/E2E3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it.
+
+        phx
+        phy
+        ldx #$0000
+
+        _E2E8
+        lda #$0005
+        jsl rlUnknown9BEDD7
+        txa
+        clc
+        adc #$0062
+        tax
+        cpx #$0498
+        bcc _E2E8
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/E2FD
+
+    .endsection TitleScenes9BE2E3Section
+
+
     .section Unsorted9BE2FDSection
 
       .al
@@ -3170,6 +3626,66 @@
         ; 9B/E331
 
     .endsection Unsorted9BE2FDSection
+
+
+    .section TitleScenes9BE331Section
+
+      .al
+      .xl
+
+      rlUnknown9BE331 ; 9B/E331
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it.
+
+        phx
+        phy
+        ldx #$0000
+
+        _E336
+        sep #$20
+        lda aTitleSprites.TrailDelay,x
+        bne _E34A
+        lda aTitleSprites,x
+        and #$FE
+        sta aTitleSprites,x
+        bra _E34F
+
+
+        _E34A
+        dec a
+        sta aTitleSprites.TrailDelay,x
+
+        _E34F
+        rep #$20
+        txa
+        clc
+        adc #$0062
+        tax
+        cpx #$0498
+        bcc _E336
+        lda aTitleSprites.TrailDelay,x
+        and #$00FF
+        bne _E36F
+        sep #$20
+        lda #$00
+        sta aTitleTimelineSlots,x
+        rep #$20
+
+        _E36F
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/E372
+
+    .endsection TitleScenes9BE331Section
 
 
     .section Unsorted9BE372Section
@@ -3773,7 +4289,7 @@
         _E6FF
         lda wBufferBG2HOFS
         clc
-        adc $97FB52,x
+        adc aUnknown97FB52,x
         sta [lR18],y
         inc y
         inc y
@@ -4065,6 +4581,156 @@
     .endsection TitleScenes9BE88ESection
 
 
+    .section TitleScenes9BE8D7Section
+
+      .al
+      .xl
+
+      rlUnknown9BE8D7 ; 9B/E8D7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it.
+
+        phx
+        lda #$00C3
+        sta $7FD057
+        lda #(`rlUnknown9BE971)<<8
+        sta lTitleVBlankRoutine2+1
+        lda #<>rlUnknown9BE971
+        sta lTitleVBlankRoutine2
+        lda #(`aUnknown95E79B)<<8
+        sta lR44+1
+        lda #<>aUnknown95E79B
+        sta lR44
+        lda #$0005
+        sta wR40
+        jsl rlHDMAEngineCreateEntryByIndex
+        jsl rlUnknown9BE914
+        lda #(`rlUnknown9BE914)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BE914
+        sta aTitleTimelineSlots.lRoutine,x
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/E914
+
+      rlUnknown9BE914 ; 9B/E914
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda #$7F00
+        sta lR18+1
+        lda wTitleScreenFrame
+        bit #$0001
+        beq _E929
+        lda #$D6F5
+        bra _E92C
+
+
+        _E929
+        lda #$D815
+
+        _E92C
+        sta lR18
+        ldy #$0000
+        lda $7FD057
+        asl a
+        tax
+
+        _E937
+        lda $97FB92,x
+        sta [lR18],y
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0090
+        bcc _E937
+        lda $7FD057
+        bne _E969
+        lda #3,s
+        tax
+        sep #$20
+        lda #$00
+        sta aTitleTimelineSlots,x
+        rep #$20
+        lda #$0005
+        jsl rlHDMAEngineFreeEntryByIndex
+        lda #$0000
+        sta lTitleVBlankRoutine2
+        bra _E96E
+
+
+        _E969
+        dec a
+        sta $7FD057
+
+        _E96E
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/E971
+
+      rlUnknown9BE971 ; 9B/E971
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda wTitleScreenFrame
+        bit #$0001
+        bne _E981
+        lda #$D6F5
+        bra _E984
+
+
+        _E981
+        lda #$D815
+
+        _E984
+        pha
+        lda #$00B7
+        sta $7FD64C
+        lda #$0000
+        sta $7FD64D
+        lda #$00C8
+        sta $7FD64F
+        lda #1,s
+        sta $7FD650
+        pla
+        sep #$20
+        lda #$00
+        sta $7FD652
+        rep #$20
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/E9AE
+
+    .endsection TitleScenes9BE8D7Section
+
+
     .section Unsorted9BE9AESection
 
       .al
@@ -4223,6 +4889,45 @@
         ; 9B/EAA5
 
     .endsection TitleScenes9BEA5CSection
+
+
+    .section TitleScenes9BF1F4Section
+
+      .al
+      .xl
+
+      rlUnknown9BF1F4 ; 9B/F1F4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it.
+
+        lda #(`aUnknown99FDD5)<<8
+        sta lR18+1
+        lda #<>aUnknown99FDD5
+        sta lR18
+        lda #$0000
+        sta wR0
+        jsl rlBattleSceneStartPaletteEffect
+        lda $01E2,b
+        ldx #$0000
+
+        _F20D
+        sta $0122,b,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc _F20D
+        rtl
+
+        .databank 0
+
+        ; 9B/F218
+
+    .endsection TitleScenes9BF1F4Section
 
 
     .section Unsorted9BF218Section
@@ -5487,7 +6192,7 @@
         .autsiz
         .databank ?
 
-        jsr $9BF9FA
+        jsr rsUnknown9BF9FA
         sep #$20
         lda #$00
         sta aTitleTimelineSlots,x
@@ -5529,6 +6234,36 @@
         ; 9B/F9FA
 
     .endsection Unsorted9BF9E3Section
+
+
+    .section TitleScenes9BF9FASection
+
+      .al
+      .xl
+
+      rsUnknown9BF9FA ; 9B/F9FA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        lda #$7E00
+        sta lR18+1
+        lda #$9C88
+        sta lR18
+        ldy #$0080
+        lda #$0700
+        jsl rlUnknown95C4E3
+        ply
+        rts
+
+        .databank 0
+
+        ; 9B/FA11
+
+    .endsection TitleScenes9BF9FASection
 
 
     .section Unsorted9BFA11Section
@@ -6096,9 +6831,9 @@
         sta aTitleSprites.Flags
         rep #$20
         ldx #$0062
-        lda #$9900
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #$FEB9
+        lda #<>aTitleSpriteDefinitions + 1 * TITLE_SPRITE_SIZE
         bra rlUnknown9BFDC0._FDCB
 
         .databank 0
@@ -6113,9 +6848,9 @@
         .databank ?
 
         ldx #$00C4
-        lda #$9900
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #$FEC6
+        lda #<>aTitleSpriteDefinitions + 2 * TITLE_SPRITE_SIZE
         bra rlUnknown9BFDC0._FDCB
 
         .databank 0
@@ -6130,9 +6865,9 @@
         .databank ?
 
         ldx #$0126
-        lda #$9900
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #$FED3
+        lda #<>aTitleSpriteDefinitions + 3 * TITLE_SPRITE_SIZE
         bra rlUnknown9BFDC0._FDCB
 
         .databank 0
@@ -6147,9 +6882,9 @@
         .databank ?
 
         ldx #$0188
-        lda #$9900
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #$FEE0
+        lda #<>aTitleSpriteDefinitions + 4 * TITLE_SPRITE_SIZE
         bra rlUnknown9BFDC0._FDCB
 
         .databank 0
@@ -6164,9 +6899,9 @@
         .databank ?
 
         ldx #$01EA
-        lda #$9900
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #$FEED
+        lda #<>aTitleSpriteDefinitions + 5 * TITLE_SPRITE_SIZE
         bra rlUnknown9BFDC0._FDCB
 
         .databank 0
@@ -6181,9 +6916,9 @@
         .databank ?
 
         ldx #$024C
-        lda #$9900
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #$FEFA
+        lda #<>aTitleSpriteDefinitions + 6 * TITLE_SPRITE_SIZE
 
         _FDCB
         sta lR18
@@ -6202,9 +6937,9 @@
         .databank ?
 
         ldx #$02AE
-        lda #$9900
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #$FF07
+        lda #<>aTitleSpriteDefinitions + 7 * TITLE_SPRITE_SIZE
         bra rlUnknown9BFDC0._FDCB
 
         .databank 0
@@ -6219,9 +6954,9 @@
         .databank ?
 
         ldx #$0310
-        lda #$9900
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #$FF14
+        lda #<>aTitleSpriteDefinitions + 8 * TITLE_SPRITE_SIZE
         bra rlUnknown9BFDC0._FDCB
 
         .databank 0
@@ -6236,9 +6971,9 @@
         .databank ?
 
         ldx #$0372
-        lda #$9900
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #$FF21
+        lda #<>aTitleSpriteDefinitions + 9 * TITLE_SPRITE_SIZE
         bra rlUnknown9BFDC0._FDCB
 
         .databank 0
@@ -6253,9 +6988,9 @@
         .databank ?
 
         ldx #$03D4
-        lda #$9900
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #$FF2E
+        lda #<>aTitleSpriteDefinitions + 10 * TITLE_SPRITE_SIZE
         bra rlUnknown9BFDC0._FDCB
 
         .databank 0
@@ -6270,9 +7005,9 @@
         .databank ?
 
         ldx #$0436
-        lda #$9900
+        lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
-        lda #$FF3B
+        lda #<>aTitleSpriteDefinitions + 11 * TITLE_SPRITE_SIZE
         bra rlUnknown9BFDC0._FDCB
 
         .databank 0
@@ -6282,3 +7017,46 @@
     .endsection Unsorted9BFD71Section
 
 
+    .section TitleData9BFE13Section
+
+      .al
+      .xl
+
+      aUnknown9BFE13 ; 9B/FE13
+
+        ; Unreferenced: title sprite scripts and frames like aTitleSpriteStill00 and
+        ; aTitleSpriteFrames, which nothing in the build points at.
+
+        .byte $01, $03, $02, $03, $03, $03, $04, $03, $80, $04, $01, $03, $02, $03, $03, $03
+        .byte $04, $03, $05, $01, $06, $01, $07, $01, $08, $01, $09, $03, $0A, $03, $0B, $03
+        .byte $0C, $03, $80, $04, $18, $00, $2E, $00, $44, $00, $5A, $00, $70, $00, $86, $00
+        .byte $9C, $00, $B2, $00, $C8, $00, $06, $01, $44, $01, $82, $01, $04, $00, $00, $C2
+        .byte $00, $52, $3A, $F0, $C3, $00, $50, $3A, $00, $C2, $F0, $32, $3A, $F0, $C3, $F0
+        .byte $30, $3A, $04, $00, $00, $C2, $00, $56, $3A, $F0, $C3, $00, $54, $3A, $00, $C2
+        .byte $F0, $36, $3A, $F0, $C3, $F0, $34, $3A, $04, $00, $00, $C2, $00, $5A, $3A, $F0
+        .byte $C3, $00, $58, $3A, $00, $C2, $F0, $3A, $3A, $F0, $C3, $F0, $38, $3A, $04, $00
+        .byte $00, $C2, $00, $5E, $3A, $F0, $C3, $00, $5C, $3A, $00, $C2, $F0, $3E, $3A, $F0
+        .byte $C3, $F0, $3C, $3A, $04, $00, $00, $C2, $00, $CE, $3A, $F0, $C3, $00, $CC, $3A
+        .byte $00, $C2, $F0, $AE, $3A, $F0, $C3, $F0, $AC, $3A, $04, $00, $00, $C2, $00, $E6
+        .byte $3A, $F0, $C3, $00, $E4, $3A, $00, $C2, $F0, $E2, $3A, $F0, $C3, $F0, $E0, $3A
+        .byte $04, $00, $00, $C2, $00, $CE, $3A, $F0, $C3, $00, $CC, $3A, $00, $C2, $F0, $AE
+        .byte $3A, $F0, $C3, $F0, $AC, $3A, $04, $00, $00, $C2, $00, $E6, $3A, $F0, $C3, $00
+        .byte $E4, $3A, $00, $C2, $F0, $E2, $3A, $F0, $C3, $F0, $E0, $3A, $0C, $00, $04, $00
+        .byte $08, $D2, $3A, $FC, $01, $08, $D1, $3A, $F4, $01, $08, $D0, $3A, $04, $00, $00
+        .byte $C2, $3A, $FC, $01, $00, $C1, $3A, $F4, $01, $00, $C0, $3A, $04, $00, $F8, $B2
+        .byte $3A, $FC, $01, $F8, $B1, $3A, $F4, $01, $F8, $B0, $3A, $04, $00, $F0, $A2, $3A
+        .byte $FC, $01, $F0, $A1, $3A, $F4, $01, $F0, $A0, $3A, $0C, $00, $04, $00, $08, $D5
+        .byte $3A, $FC, $01, $08, $D4, $3A, $F4, $01, $08, $D3, $3A, $04, $00, $00, $C5, $3A
+        .byte $FC, $01, $00, $C4, $3A, $F4, $01, $00, $C3, $3A, $04, $00, $F8, $B5, $3A, $FC
+        .byte $01, $F8, $B4, $3A, $F4, $01, $F8, $B3, $3A, $04, $00, $F0, $A5, $3A, $FC, $01
+        .byte $F0, $A4, $3A, $F4, $01, $F0, $A3, $3A, $0C, $00, $04, $00, $08, $D8, $3A, $FC
+        .byte $01, $08, $D7, $3A, $F4, $01, $08, $D6, $3A, $04, $00, $00, $C8, $3A, $FC, $01
+        .byte $00, $C7, $3A, $F4, $01, $00, $C6, $3A, $04, $00, $F8, $B8, $3A, $FC, $01, $F8
+        .byte $B7, $3A, $F4, $01, $F8, $B6, $3A, $04, $00, $F0, $A8, $3A, $FC, $01, $F0, $A7
+        .byte $3A, $F4, $01, $F0, $A6, $3A, $0C, $00, $04, $00, $08, $DB, $3A, $FC, $01, $08
+        .byte $DA, $3A, $F4, $01, $08, $D9, $3A, $04, $00, $00, $CB, $3A, $FC, $01, $00, $CA
+        .byte $3A, $F4, $01, $00, $C9, $3A, $04, $00, $F8, $BB, $3A, $FC, $01, $F8, $BA, $3A
+        .byte $F4, $01, $F8, $B9, $3A, $04, $00, $F0, $AB, $3A, $FC, $01, $F0, $AA, $3A, $F4
+        .byte $01, $F0, $A9, $3A, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+    .endsection TitleData9BFE13Section
