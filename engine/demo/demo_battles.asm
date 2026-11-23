@@ -1377,3 +1377,82 @@
     .endsection Unsorted9EEDB5Section
 
 
+    .section DemoBattles96Section
+
+      .al
+      .xl
+
+      dialogueDemoBattleQuote96FD6F ; 96/FD6F
+        .byte $07, $00, $05, $01
+        _96FD6F_Body .include "../../text/dialogue/DemoBattles/Quote96FD6F.dialogue.txt"
+
+      dialogueDemoBattleQuote96FD84 ; 96/FD84
+        .byte $07, $00, $05, $01
+        _96FD84_Body .include "../../text/dialogue/DemoBattles/Quote96FD84.dialogue.txt"
+
+      dialogueDemoBattleQuote96FDA0 ; 96/FDA0
+        .byte $07, $00, $05, $01
+        _96FDA0_Body .include "../../text/dialogue/DemoBattles/Quote96FDA0.dialogue.txt"
+
+      dialogueDemoBattleQuote96FDCC ; 96/FDCC
+        .byte $07, $00, $05, $01
+        _96FDCC_Body .include "../../text/dialogue/DemoBattles/Quote96FDCC.dialogue.txt"
+
+      dialogueDemoBattleQuote96FDE2 ; 96/FDE2
+        .byte $07, $00, $05, $01
+        _96FDE2_Body .include "../../text/dialogue/DemoBattles/Quote96FDE2.dialogue.txt"
+
+      dialogueDemoBattleQuote96FE02 ; 96/FE02
+        .byte $07, $00, $05, $01
+        _96FE02_Body .include "../../text/dialogue/DemoBattles/Quote96FE02.dialogue.txt"
+
+      dialogueDemoBattleQuote96FE35 ; 96/FE35
+        .byte $07, $00, $05, $01
+        _96FE35_Body .include "../../text/dialogue/DemoBattles/Quote96FE35.dialogue.txt"
+
+      dialogueDemoBattleQuote96FE68 ; 96/FE68
+        .byte $07, $00, $05, $01
+        _96FE68_Body .include "../../text/dialogue/DemoBattles/Quote96FE68.dialogue.txt"
+
+      dialogueDemoBattleQuote96FE9C ; 96/FE9C
+        .byte $07, $00, $05, $01
+        _96FE9C_Body .include "../../text/dialogue/DemoBattles/Quote96FE9C.dialogue.txt"
+
+      dialogueDemoBattleQuote96FEC1 ; 96/FEC1
+        .byte $07, $00, $05, $01
+        _96FEC1_Body .include "../../text/dialogue/DemoBattles/Quote96FEC1.dialogue.txt"
+
+      dialogueDemoBattleQuote96FEF4 ; 96/FEF4
+        .byte $07, $00, $05, $01
+        _96FEF4_Body .include "../../text/dialogue/DemoBattles/Quote96FEF4.dialogue.txt"
+
+      dialogueDemoBattleQuote96FF29 ; 96/FF29
+        .byte $07, $00, $05, $01
+        _96FF29_Body .include "../../text/dialogue/DemoBattles/Quote96FF29.dialogue.txt"
+
+      dialogueDemoBattleQuote96FF3E ; 96/FF3E
+        .byte $07, $00, $05, $01
+        _96FF3E_Body .include "../../text/dialogue/DemoBattles/Quote96FF3E.dialogue.txt"
+
+      dialogueDemoBattleQuote96FF5D ; 96/FF5D
+        .byte $07, $00, $05, $01
+        _96FF5D_Body .include "../../text/dialogue/DemoBattles/Quote96FF5D.dialogue.txt"
+
+      dialogueDemoBattleQuote96FF7A ; 96/FF7A
+        .byte $07, $00, $05, $01
+        _96FF7A_Body .include "../../text/dialogue/DemoBattles/Quote96FF7A.dialogue.txt"
+
+      dialogueDemoBattleQuote96FFA6 ; 96/FFA6
+        .byte $07, $00, $05, $01
+        _96FFA6_Body .include "../../text/dialogue/DemoBattles/Quote96FFA6.dialogue.txt"
+
+      dialogueDemoBattleQuote96FFE0 ; 96/FFE0
+        .byte $07, $00, $05, $01
+        _96FFE0_Body .include "../../text/dialogue/DemoBattles/Quote96FFE0.dialogue.txt"
+
+        .enc "proc"
+
+    .endsection DemoBattles96Section
+
+
+

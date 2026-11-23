@@ -7053,3 +7053,376 @@
         ; 9A/BA2A
 
     .endsection Data9A8000Section
+
+
+    .section Unsorted96A4FCSection
+
+      .al
+      .xl
+
+      rlUnknown96A4FC ; 96/A4FC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta $7FEC1D
+        sta $7FEC41
+        sta aUnit2DataBuffer._ROM.Skills1
+        sta $7FEC50
+        lda #$10
+        sta $7FEC65
+        lda #$70
+        sta $7FEC66
+        rep #$20
+        lda #$0000
+        sta aUnit2DataBuffer._Inventory.ItemCount
+        sta aUnit2DataBuffer._Inventory.Items
+        sta $7FEC5A
+        sta $7FEC5C
+        rtl
+
+        .databank 0
+
+        ; 96/A532
+
+    .endsection Unsorted96A4FCSection
+
+
+    .section Unsorted96B852Section
+
+      .al
+      .xl
+
+      rsUnknown96B852 ; 96/B852
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        pha
+        ldx wBattleAnimationDefenderOffset,b
+        lda bBattleAnimationY,b,x
+        and #$00FF
+        sta wR1
+        lda aUnit2DataBuffer._ROM.SpeedGrowth
+        and #$00FF
+        sta wR2
+        lda wR1
+        sec
+        sbc wR2
+        bpl _B878
+        eor #$FFFF
+        inc a
+        sta wR2
+        pla
+        bra _B87E
+
+
+        _B878
+        sta wR2
+        pla
+        eor #$8000
+
+        _B87E
+        sta wR3
+        lda wR2
+        jsl rlBattleAnimationGetSpeed
+        ora wR3
+        sta $7FEC3F
+        lda wR1
+        sta aUnit2DataBuffer._ROM.HolyBlood2
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/B894
+
+      rsUnknown96B894 ; 96/B894
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sep #$20
+        lda bBattleSceneAttackerSide,b
+        bit #$80
+        bne _B8A3
+        ldx #$0000
+        bra _B8A6
+
+
+        _B8A3
+        ldx #$000E
+
+        _B8A6
+        lda aBattleSceneCombatant1.Class,b,x
+        sta wR9+1
+        rep #$20
+        and #$00FF
+        sta wR10
+        lda #$0008
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        ldx wR12
+        lda aUnknown97EA9A+2,x
+        and #$00FF
+        sta wR8
+        ldx wBattleAnimationDefenderOffset,b
+        lda wBattleAnimationX,b,x
+        sta wR1
+        lda $7FEC1F
+        sta wR0
+        lda wR0
+        cmp wR1
+        bcc _B8DF
+        sec
+        sbc wR8
+        bra _B8E2
+
+
+        _B8DF
+        clc
+        adc wR8
+
+        _B8E2
+        sta wR0
+        lda wR1
+        sec
+        sbc wR0
+        bpl _B8F6
+        eor #$FFFF
+        inc a
+        sta wR2
+        lda #$8000
+        bra _B8FB
+
+
+        _B8F6
+        sta wR2
+        lda #$0000
+
+        _B8FB
+        sta wR3
+        lda wR2
+        sta wR4
+        sec
+        jsl rlBattleAnimationGetTravelFrames
+        sta wR0
+        lda wR2
+        jsl rlBattleAnimationGetSpeed
+        ora wR3
+        sta aUnit2DataBuffer._Inventory.ItemCount
+        lda wR3
+        bmi _B921
+        lda $7FEC1F
+        clc
+        adc wR2
+        bra _B928
+
+
+        _B921
+        lda $7FEC1F
+        sec
+        sbc wR2
+
+        _B928
+        pha
+        lda aUnit2DataBuffer._ROM.StrengthGrowth
+        sta aUnit2DataBuffer._ROM.Skills2
+        pla
+        sta aUnit2DataBuffer._ROM.Skills3
+        lda wR4
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/B93A
+
+      rlBattleSceneScriptClearLoading ; 96/B93A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta $7FECF4
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/B945
+
+    .endsection Unsorted96B852Section
+
+
+    .section Unsorted96BCECSection
+
+      .al
+      .xl
+
+      rlUnknown96BCEC ; 96/BCEC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlStartBattleSceneScript
+        rtl
+
+        .databank 0
+
+        ; 96/BCF1
+
+    .endsection Unsorted96BCECSection
+
+
+    .section Unsorted96BD74Section
+
+      .al
+      .xl
+
+      rlUnknown96BD74 ; 96/BD74
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0000
+        sta $7FED02
+        ldx #$0000
+
+        _BD7F
+        lda #$0000
+        sta $7FED03,x
+        txa
+        clc
+        adc #$0009
+        tax
+        cpx #$0048
+        bcc _BD7F
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BD93
+
+      rlBattleSceneCommandHDMAEffect ; 96/BD93
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Command 3: arg 0-7 stops HDMA effect slot arg; arg 8 and up starts effect
+        ; arg-8 from the offset table at $97/BD3E in a free slot of eight ($7FED03),
+        ; waiting while none is free.
+
+        phx
+        phy
+        tya
+        and #$01FF
+        cmp #$0008
+        bcs _BDA4
+        jsl rlBattleSceneStopHDMAEffect
+        bra _BE20
+
+
+        _BDA4
+        lda $7FED02
+        and #$00FF
+        cmp #$0008
+        bcs _BE1D
+        ldx #$0000
+
+        _BDB3
+        lda $7FED03,x
+        bit #$0001
+        bne _BE12
+        sep #$20
+        lda #$01
+        sta $7FED03,x
+        lda $7FED02
+        inc a
+        sta $7FED02
+        rep #$20
+        lda #$9700
+        sta lR18+1
+        tya
+        and #$01FF
+        sec
+        sbc #$0008
+        asl a
+        clc
+        adc #$BD3E
+        sta lR18
+        ldy #$0000
+        lda [lR18],y
+        clc
+        adc #$BD3E
+        sta lR18
+        ldy #$0000
+        lda [lR18],y
+        sta $7FED04,x
+        inc y
+        inc y
+        lda [lR18],y
+        sta $7FED06,x
+        inc y
+        inc y
+        lda [lR18],y
+        sta $7FED08,x
+        inc y
+        inc y
+        lda [lR18],y
+        sta $7FED0A,x
+        clc
+        bra _BE20
+
+
+        _BE12
+        txa
+        clc
+        adc #$0009
+        tax
+        cpx #$0048
+        bcc _BDB3
+
+        _BE1D
+        sec
+        bra _BE25
+
+
+        _BE20
+        pla
+        pha
+        jsr rsBattleSceneScriptNextCommand
+
+        _BE25
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BE28
+
+    .endsection Unsorted96BD74Section
+
+

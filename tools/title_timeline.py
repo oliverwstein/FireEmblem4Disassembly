@@ -23,7 +23,7 @@ from disasm import load_labels
 
 TIMELINES = [(0x97EC63, 'aTitleIntroTimeline'), (0x97F12D, 'aTitleTimeline'), (0x97F15D, 'aTitleFadeOutTimeline')]
 END = 0x97F19B
-FILE = 'engine/unsorted/bank97.asm'
+FILE = 'engine/title/title_timelines.asm'
 
 
 def decode(rom, addr):

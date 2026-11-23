@@ -27,8 +27,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from asmlib import ASFLAGS
 
 import glob as _glob
-BATTLE_SCENE_FILES = tuple(sorted(_glob.glob('engine/battle_scene/*.asm') + _glob.glob('engine/title/*.asm')
-                                  + _glob.glob('engine/unsorted/bank9[5-7].asm')))
+BATTLE_SCENE_FILES = tuple(sorted(_glob.glob('engine/battle_scene/*.asm') + _glob.glob('engine/title/*.asm')))
 
 # (first address, last address, name prefixes, the only files where those names are written)
 SCOPED = [
@@ -62,10 +61,7 @@ SCOPED = [
     (0x7FD000, 0x7FD8BA, ('bTitle', 'wTitle', 'lTitle', 'aTitle'),
      ('engine/title/title_screen.asm', 'engine/title/title_scenes.asm')),
     # The battle animation combatants' motion; a few other screens reuse the area.
-    (0x7E0AF3, 0x7E0B78, ('wBattleAnimation', 'bBattleAnimation', 'lBattleAnimation'),
-     ('engine/unsorted/bank95.asm', 'engine/unsorted/bank96.asm', 'engine/unsorted/bank97.asm',
-      'engine/battle_scene/animation_moves.asm', 'engine/battle_scene/script.asm',
-      'engine/battle_scene/animations.asm')),
+    (0x7E0AF3, 0x7E0B78, ('wBattleAnimation', 'bBattleAnimation', 'lBattleAnimation'), BATTLE_SCENE_FILES),
     # The battle scene's variables; the map's text buffer and unit buffers share $7FE000-$7FFFFF.
     (0x7E0ADD, 0x7E0AE8, ('wBattleScene', 'bBattleScene', 'lBattleScene', 'aBattleScene'), BATTLE_SCENE_FILES),
     (0x7E0D44, 0x7E0D69, ('wBattleScene', 'bBattleScene', 'lBattleScene', 'aBattleScene'), BATTLE_SCENE_FILES),

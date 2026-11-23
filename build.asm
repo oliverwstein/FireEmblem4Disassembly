@@ -139,6 +139,15 @@
   .include "engine/battle_scene/animations.asm"
   .include "engine/battle_scene/backgrounds.asm"
   .include "engine/battle_scene/script.asm"
+  .include "engine/battle_scene/scene.asm"
+  .include "engine/battle_scene/rounds.asm"
+  .include "engine/battle_scene/results.asm"
+  .include "engine/battle_scene/combatants.asm"
+  .include "engine/battle_scene/loading.asm"
+  .include "engine/battle_scene/screen.asm"
+  .include "engine/battle_scene/hud.asm"
+  .include "engine/battle_scene/effects.asm"
+  .include "engine/battle_scene/data.asm"
   .include "engine/core/oam.asm"
   .include "engine/core/options.asm"
   .include "engine/core/tilemaps.asm"
@@ -206,9 +215,6 @@
   .include "engine/unsorted/bank84.asm"
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
-  .include "engine/unsorted/bank95.asm"
-  .include "engine/unsorted/bank96.asm"
-  .include "engine/unsorted/bank97.asm"
   .include "engine/unsorted/bank9B.asm"
   .include "engine/battle/map_magic_effects.asm"
 
@@ -6730,6 +6736,8 @@
       .dsection Unsorted95E372Section
 
       .dsection Unsorted95E3DFSection
+
+      .dsection BattleSceneGameStateSection
 
       .dsection Table95E69ESection
 
