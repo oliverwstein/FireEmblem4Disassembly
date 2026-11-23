@@ -2865,7 +2865,7 @@
 
       rlUnknown96B08D ; 96/B08D
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -4567,7 +4567,7 @@
 
       rlUnknown96C008 ; 96/C008
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -4698,7 +4698,7 @@
 
       rlUnknown96C0DC ; 96/C0DC
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -4814,7 +4814,7 @@
 
       rlUnknown96C1B9 ; 96/C1B9
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -4927,7 +4927,7 @@
 
       rlUnknown96C292 ; 96/C292
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5209,7 +5209,7 @@
 
       rlUnknown96C485 ; 96/C485
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5322,7 +5322,7 @@
 
       rlUnknown96C52D ; 96/C52D
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5434,7 +5434,7 @@
 
       rlUnknown96C5D1 ; 96/C5D1
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -5595,7 +5595,7 @@
 
       rlUnknown96C776 ; 96/C776
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -6025,7 +6025,7 @@
         .autsiz
         .databank ?
 
-        ; Command 8: sets routine arg from the table at $97/BDD4 as the one
+        ; Command 8: sets routine arg from aBattleSceneScriptRoutines as the one
         ; rlBattleSceneScriptRunRoutine runs every frame.
 
         phx
@@ -6038,9 +6038,9 @@
         adc #1,s
         tax
         pla
-        lda aUnknown97BDD4+1,x
+        lda aBattleSceneScriptRoutines+1,x
         sta $7FED00
-        lda aUnknown97BDD4,x
+        lda aBattleSceneScriptRoutines,x
         sta $7FECFF
         pla
         pha
@@ -6085,7 +6085,7 @@
         .autsiz
         .databank ?
 
-        ; Command 4: calls routine arg from the table at $97/BDD4 (72 long pointers).
+        ; Command 4: calls routine arg from aBattleSceneScriptRoutines (72 long pointers).
 
         phx
         phy
@@ -6112,10 +6112,10 @@
         asl a
         adc wR0
         tax
-        lda aUnknown97BDD4,x
+        lda aBattleSceneScriptRoutines,x
         sta lR23
         sep #$20
-        lda aUnknown97BDD4+2,x
+        lda aBattleSceneScriptRoutines+2,x
         sta lR23+2
         pha
         plb
@@ -6143,7 +6143,7 @@
         .autsiz
         .databank ?
 
-        ; Command 5: calls routine arg from the table at $97/BDD4 every frame until it
+        ; Command 5: calls routine arg from aBattleSceneScriptRoutines every frame until it
         ; clears bit 0 of $7FE4B7.
 
         phx
@@ -6176,10 +6176,10 @@
         asl a
         adc wR0
         tax
-        lda aUnknown97BDD4,x
+        lda aBattleSceneScriptRoutines,x
         sta lR23
         sep #$20
-        lda aUnknown97BDD4+2,x
+        lda aBattleSceneScriptRoutines+2,x
         sta lR23+2
         pha
         plb
@@ -6207,7 +6207,7 @@
 
       rlUnknown96CAA7 ; 96/CAA7
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -6223,7 +6223,7 @@
 
       rlUnknown96CAAD ; 96/CAAD
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -9405,7 +9405,7 @@
 
       rlUnknown96DCC8 ; 96/DCC8
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -13273,7 +13273,7 @@
 
       rlUnknown96F356 ; 96/F356
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -13432,7 +13432,7 @@
 
       rlUnknown96F41A ; 96/F41A
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -13454,7 +13454,7 @@
 
       rlUnknown96F431 ; 96/F431
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -13476,7 +13476,7 @@
 
       rlUnknown96F448 ; 96/F448
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -13498,7 +13498,7 @@
 
       rlUnknown96F45F ; 96/F45F
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -13557,7 +13557,7 @@
 
       rlUnknown96F4A3 ; 96/F4A3
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -13868,7 +13868,7 @@
 
       rlUnknown96F89B ; 96/F89B
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -14243,7 +14243,7 @@
 
       rlUnknown96FADA ; 96/FADA
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -14314,7 +14314,7 @@
 
       rlUnknown96FB39 ; 96/FB39
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -14386,7 +14386,7 @@
 
       rlUnknown96FB99 ; 96/FB99
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -14464,7 +14464,7 @@
 
       rlUnknown96FBF9 ; 96/FBF9
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -14514,7 +14514,7 @@
 
       rlUnknown96FC49 ; 96/FC49
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -14549,7 +14549,7 @@
 
       rlUnknown96FC81 ; 96/FC81
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -14597,7 +14597,7 @@
 
       rlUnknown96FCDB ; 96/FCDB
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -14630,7 +14630,7 @@
 
       rlUnknown96FD13 ; 96/FD13
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -14672,7 +14672,7 @@
 
       rlUnknown96FD54 ; 96/FD54
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -14707,7 +14707,7 @@
 
       rlUnknown97802C ; 97/802C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz

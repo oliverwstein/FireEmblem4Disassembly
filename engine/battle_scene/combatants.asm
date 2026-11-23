@@ -8219,7 +8219,7 @@
 
       rlUnknown95E08C ; 95/E08C
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

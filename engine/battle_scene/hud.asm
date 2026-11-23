@@ -1091,14 +1091,14 @@
         sta wR1
         lda #$0002
         sta wR0
-        lda aUnknown98AC86,x
+        lda aBattleSceneHUDStats,x
         inc x
         inc x
         pha
-        lda aUnknown98AC86,x
+        lda aBattleSceneHUDStats,x
         sta lR18
         inc x
-        lda aUnknown98AC86,x
+        lda aBattleSceneHUDStats,x
         sta lR18+1
         inc x
         inc x
@@ -2279,7 +2279,7 @@
 
       rlUnknown96830D ; 96/830D
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2320,7 +2320,7 @@
 
       rlUnknown968360 ; 96/8360
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2690,7 +2690,7 @@
 
       rlUnknown9685D9 ; 96/85D9
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2887,7 +2887,7 @@
 
       rlUnknown9686FC ; 96/86FC
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2961,7 +2961,7 @@
 
       rlUnknown96878D ; 96/878D
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz

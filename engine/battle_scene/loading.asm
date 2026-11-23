@@ -2865,7 +2865,7 @@
 
       rlUnknown969773 ; 96/9773
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2917,7 +2917,7 @@
 
       rlUnknown96979F ; 96/979F
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -2969,7 +2969,7 @@
 
       rlUnknown9697CB ; 96/97CB
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3011,7 +3011,7 @@
 
       rlUnknown9697EA ; 96/97EA
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

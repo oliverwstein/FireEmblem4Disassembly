@@ -174,24 +174,86 @@
       .al
       .xl
 
-      aUnknown97BDD4 ; 97/BDD4
+      aBattleSceneScriptRoutines ; 97/BDD4
 
-        ; Read by rlBattleSceneCommandCallRoutine, rlBattleSceneCommandCallRoutineUntilDone, rlBattleSceneCommandSetRoutine.
+        ; Long pointers to the routines that script commands 4 (call once),
+        ; 5 (call every frame until it clears bit 0 of $7FE4B7) and 8 (set as
+        ; the routine run every frame) take by index
+        ; (rlBattleSceneCommandCallRoutine, rlBattleSceneCommandCallRoutineUntilDone,
+        ; rlBattleSceneCommandSetRoutine). Entries 9-12 are empty.
 
-        .byte $D9, $85, $96, $60, $83, $96, $FC, $86, $96, $C8, $8D, $96, $22, $8E, $96, $A7
-        .byte $CA, $96, $00, $8E, $96, $4C, $8E, $96, $E1, $8D, $96, $00, $00, $00, $00, $00
-        .byte $00, $00, $00, $00, $00, $00, $00, $0D, $83, $96, $50, $8F, $96, $C8, $DC, $96
-        .byte $63, $91, $96, $73, $97, $96, $9F, $97, $96, $8F, $8E, $96, $E9, $8E, $96, $C7
-        .byte $8E, $96, $13, $8F, $96, $A8, $8E, $96, $8C, $E0, $95, $BA, $88, $96, $E4, $88
-        .byte $96, $0E, $89, $96, $0D, $E8, $95, $88, $E8, $95, $C9, $E8, $95, $B3, $E7, $95
-        .byte $CB, $E7, $95, $EC, $E7, $95, $AD, $CA, $96, $77, $E8, $95, $56, $F3, $96, $1A
-        .byte $F4, $96, $CB, $97, $96, $31, $F4, $96, $48, $F4, $96, $5F, $F4, $96, $12, $F5
-        .byte $96, $2C, $F5, $96, $45, $8F, $96, $43, $F5, $96, $4F, $F5, $96, $A3, $F4, $96
-        .byte $80, $F5, $96, $D7, $F5, $96, $1F, $F6, $96, $35, $F6, $96, $9B, $F8, $96, $DA
-        .byte $FA, $96, $F9, $FB, $96, $EA, $97, $96, $DB, $FC, $96, $39, $FB, $96, $54, $FD
-        .byte $96, $2C, $80, $97, $24, $80, $97, $8D, $87, $96, $49, $FC, $96, $99, $FB, $96
-        .byte $C8, $9F, $96, $5C, $A0, $96, $03, $96, $96, $17, $96, $96, $8D, $B0, $96, $13
-        .byte $FD, $96, $60, $A1, $96, $81, $FC, $96
+        .long rlUnknown9685D9 ; $00
+        .long rlUnknown968360 ; $01
+        .long rlUnknown9686FC ; $02
+        .long rlUnknown968DC8 ; $03
+        .long rlUnknown968E22 ; $04
+        .long rlUnknown96CAA7 ; $05
+        .long rlUnknown968E00 ; $06
+        .long rlUnknown968E4C ; $07
+        .long rlUnknown968DE1 ; $08
+        .long 0 ; $09
+        .long 0 ; $0A
+        .long 0 ; $0B
+        .long 0 ; $0C
+        .long rlUnknown96830D ; $0D
+        .long rlUnknown968F50 ; $0E
+        .long rlUnknown96DCC8 ; $0F
+        .long rlUnknown969163 ; $10
+        .long rlUnknown969773 ; $11
+        .long rlUnknown96979F ; $12
+        .long rlUnknown968E8F ; $13
+        .long rlUnknown968EE9 ; $14
+        .long rlUnknown968EC7 ; $15
+        .long rlUnknown968F13 ; $16
+        .long rlUnknown968EA8 ; $17
+        .long rlUnknown95E08C ; $18
+        .long rlUnknown9688BA ; $19
+        .long rlUnknown9688E4 ; $1A
+        .long rlUnknown96890E ; $1B
+        .long rlUnknown95E80D ; $1C
+        .long rlUnknown95E888 ; $1D
+        .long rlUnknown95E8C9 ; $1E
+        .long rlUnknown95E7B3 ; $1F
+        .long rlUnknown95E7CB ; $20
+        .long rlUnknown95E7EC ; $21
+        .long rlUnknown96CAAD ; $22
+        .long rlUnknown95E877 ; $23
+        .long rlUnknown96F356 ; $24
+        .long rlUnknown96F41A ; $25
+        .long rlUnknown9697CB ; $26
+        .long rlUnknown96F431 ; $27
+        .long rlUnknown96F448 ; $28
+        .long rlUnknown96F45F ; $29
+        .long rlUnknown96F512 ; $2A
+        .long rlUnknown96F52C ; $2B
+        .long rlUnknown968F45 ; $2C
+        .long rlUnknown96F543 ; $2D
+        .long rlUnknown96F54F ; $2E
+        .long rlUnknown96F4A3 ; $2F
+        .long rlUnknown96F580 ; $30
+        .long rlUnknown96F5D7 ; $31
+        .long rlUnknown96F61F ; $32
+        .long rlUnknown96F635 ; $33
+        .long rlUnknown96F89B ; $34
+        .long rlUnknown96FADA ; $35
+        .long rlUnknown96FBF9 ; $36
+        .long rlUnknown9697EA ; $37
+        .long rlUnknown96FCDB ; $38
+        .long rlUnknown96FB39 ; $39
+        .long rlUnknown96FD54 ; $3A
+        .long rlUnknown97802C ; $3B
+        .long rlUnknown978024 ; $3C
+        .long rlUnknown96878D ; $3D
+        .long rlUnknown96FC49 ; $3E
+        .long rlUnknown96FB99 ; $3F
+        .long rlUnknown969FC8 ; $40
+        .long rlUnknown96A05C ; $41
+        .long rlBattleSceneFadeMusicForJulius ; $42
+        .long rlUnknown969617 ; $43
+        .long rlUnknown96B08D ; $44
+        .long rlUnknown96FD13 ; $45
+        .long rlUnknown96A160 ; $46
+        .long rlUnknown96FC81 ; $47
 
         ; 97/BEAC
 
@@ -1547,14 +1609,32 @@
 
         ; 98/AC86
 
-      aUnknown98AC86 ; 98/AC86
+      aBattleSceneHUDStats ; 98/AC86
 
-        ; Read by rsUnknown959895.
+        ; The numbers rsBattleSceneDrawStats draws in the HUD's tilemap
+        ; ($7FD0C0): the offset in the tilemap, then the stat's address.
+        ; Combatant 1's five in palette 3, combatant 2's in palette 1.
 
-        .word $0A62, $4EC5, $F67E, $C90A, $7E4E, $0AAA, $4EE7, $EA7E
-        .word $EF0A, $7E4E, $0AB6, $4EF1, $447E, $250A, $7E4F, $0AD8
-        .word $4F29, $8C7E, $470A, $7E4F, $0ACC, $4F4F, $987E, $510A
-        .word $7E4F
+        .word $0A62
+        .long aActionStructUnit1.CurrentHP
+        .word $0AF6
+        .long aActionStructUnit1.Level
+        .word $0AAA
+        .long aActionStructUnit1.BattleAdjustedHit
+        .word $0AEA
+        .long aActionStructUnit1.BattleMight
+        .word $0AB6
+        .long aActionStructUnit1.BattleDefense
+        .word $0A44
+        .long aActionStructUnit2.CurrentHP
+        .word $0AD8
+        .long aActionStructUnit2.Level
+        .word $0A8C
+        .long aActionStructUnit2.BattleAdjustedHit
+        .word $0ACC
+        .long aActionStructUnit2.BattleMight
+        .word $0A98
+        .long aActionStructUnit2.BattleDefense
 
         ; 98/ACB8
 
