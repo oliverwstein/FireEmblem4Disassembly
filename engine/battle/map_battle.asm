@@ -822,7 +822,7 @@
         sta $4552,b
         lda aActionStructUnit1.YPosition
         sta $4554,b
-        jsl rlUnknown9E852A
+        jsl rlMapBattleCheckDance
         bcc _83FD
         jml _8504
 
@@ -839,7 +839,7 @@
         lda aActionStructUnit1.Unknown
         tay
         lda aActionStructUnit1.WeaponID
-        jsl rlUnknown9E86CF
+        jsl rlGetMagicSwordMapEffect
         sta $508B,b
         lda $7F4BF1
         sta $7F4BED
@@ -892,7 +892,7 @@
         lda aActionStructUnit2.Unknown
         tay
         lda aActionStructUnit2.WeaponID
-        jsl rlUnknown9E86CF
+        jsl rlGetMagicSwordMapEffect
         sta $508D,b
         lda $7F4BF1
         sta $7F4BEF
@@ -940,12 +940,14 @@
 
         ; 9E/852A
 
-      rlUnknown9E852A ; 9E/852A
+      rlMapBattleCheckDance ; 9E/852A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wR0 = class: for a Dancer (class $32) dancing (aActionStructUnit1.Unknown 8) or with no target, sets aMapAction up for mode 4 (no magic effects) and returns carry set; carry clear otherwise.
 
         phb
         phy
@@ -1306,12 +1308,14 @@
       .al
       .xl
 
-      rlUnknown9E86CF ; 9E/86CF
+      rlGetMagicSwordMapEffect ; 9E/86CF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = weapon: carry set and wR0 = the map magic effect a sword plays (item minus Fire). The ranged magic swords and the Earth Sword at distance 2 or more play their tome's effect (aMagicSwordMapEffectItems); at distance 1 the Earth Sword sets $7F4C09 instead. The Berserk, Silence and Sleep Swords play their staff's (aStatusSwordMapEffectItems) and keep their index in $7F4BF1. $FFFF for others; carry clear for a weapon that is not a sword.
 
         phx
         phy
@@ -1370,7 +1374,7 @@
         bcs _8782
         asl a
         tax
-        lda aUnknown9E8792,x
+        lda aMagicSwordMapEffectItems,x
         sec
         sbc #$003E
         bra _8782
@@ -1388,7 +1392,7 @@
         sta $7F4BF1
         asl a
         tax
-        lda aUnknown9E879C,x
+        lda aStatusSwordMapEffectItems,x
         bmi _8782
         sec
         sbc #$003E
@@ -1422,11 +1426,16 @@
       .al
       .xl
 
-      aUnknown9E8792 ; 9E/8792
+      aMagicSwordMapEffectItems ; 9E/8792
 
-        ; Read by rlUnknown9E86CF.
+        ; Read by rlGetMagicSwordMapEffect: the tome whose effect each magic sword
+        ; plays, by item ID minus FireSword.
 
-        .word $003F, $004E, $0044, $0049, $004D
+        .word $003F ; FireSword: Elfire
+        .word $004E ; EarthSword: Nosferatu
+        .word $0044 ; ThunderSword: Elthunder
+        .word $0049 ; WindSword: Elwind
+        .word $004D ; LightBrand: Light
 
         ; 9E/879C
 
@@ -1438,11 +1447,15 @@
       .al
       .xl
 
-      aUnknown9E879C ; 9E/879C
+      aStatusSwordMapEffectItems ; 9E/879C
 
-        ; Read by rlUnknown9E86CF.
+        ; Read by rlGetMagicSwordMapEffect: the staff whose effect each status
+        ; sword plays, by item ID minus BerserkSword.
 
-        .word $0065, $FFFF, $0063, $0064
+        .word $0065 ; BerserkSword: BerserkStaff
+        .word $FFFF ; BraveSword: none
+        .word $0063 ; SilenceSword: SilenceStaff
+        .word $0064 ; SleepSword: SleepStaff
 
         ; 9E/87A4
 
@@ -2749,7 +2762,7 @@
         lda aMapAction.wMapBattleRoundCounter
         cmp #$FFFF
         beq _9071
-        jsl rlUnknown9EB24C
+        jsl rlMapBattlePlayLordDodgeSound
         bra _9071
 
 
@@ -2771,7 +2784,7 @@
         beq _906B
 
         _905D
-        jsl rlUnknown9E9074
+        jsl rlMapBattleRunRecoil
         lda $7F4BEB
         xba
         and #$00FF
@@ -2779,7 +2792,7 @@
 
         _906B
         ldx wR0
-        jsl rlUnknown9E91CF
+        jsl rlMapBattleRunHitFlash
 
         _9071
         plx
@@ -2790,12 +2803,14 @@
 
         ; 9E/9074
 
-      rlUnknown9E9074 ; 9E/9074
+      rlMapBattleRunRecoil ; 9E/9074
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame of a struck round: moves the defender's sprites by aUnknown9E9123 (damage) or aUnknown9E914B (none, which ends with rlMapBattlePlayNoDamageSound), and applies the HP at step 5 (rlApplyMapBattleRoundHP).
 
         phy
         phb
@@ -2845,7 +2860,7 @@
         bne _90DD
         lda #$0000
         sta @l aMapAction.wMapBattleActiveSpriteSyncFlag
-        jsl rlUnknown9EB214
+        jsl rlMapBattlePlayNoDamageSound
 
         _90D4
         lda #$FFFF
@@ -2911,7 +2926,7 @@
 
       aUnknown9E9123 ; 9E/9123
 
-        ; Read by rlUnknown9E9074.
+        ; Read by rlMapBattleRunRecoil.
 
         .word $0000, $0000, $0000, $0000, $FFFF, $0003, $FFFD, $0003
         .word $FFFD, $0003, $FFFD, $0003, $FFFD, $0003, $FFFD, $0003
@@ -2929,7 +2944,7 @@
 
       aUnknown9E914B ; 9E/914B
 
-        ; Read by rlUnknown9E9074.
+        ; Read by rlMapBattleRunRecoil.
 
         .word $0000, $0000, $0000, $0000, $FFFF, $0002, $FFFF, $8000
 
@@ -2943,12 +2958,14 @@
       .al
       .xl
 
-      rlUnknown9E915B ; 9E/915B
+      rlMapBattleWhitenStruckSide ; 9E/915B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets the struck side's sprites (round bit 0 picks the side) to palette 5, the white one.
 
         phx
         phy
@@ -2988,12 +3005,14 @@
 
         ; 9E/9192
 
-      rlUnknown9E9192 ; 9E/9192
+      rlMapBattleRestoreSpritePalettes ; 9E/9192
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Gives both sides' sprites their palettes back (allegiance + 1).
 
         phx
         phy
@@ -3035,12 +3054,14 @@
 
         ; 9E/91CF
 
-      rlUnknown9E91CF ; 9E/91CF
+      rlMapBattleRunHitFlash ; 9E/91CF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The struck side's flash: saves its palette, whitens OAM palette 5 and turns the sprites to it (rlMapBattleWhitenStruckSide), plays the hit sound and applies the HP; then each frame steps the colors back toward the saved ones and, at the end, restores the palettes.
 
         phy
         phx
@@ -3052,7 +3073,7 @@
         _91DB
         lda aMapAction.wMapBattlePaletteRestoreFlag
         bne _924E
-        jsl rlUnknown9E915B
+        jsl rlMapBattleWhitenStruckSide
         bcc _91EB
         jml _9273
 
@@ -3111,7 +3132,7 @@
         lda #$0001
         sta @l aMapAction.wMapBattlePaletteRestoreFlag
         plx
-        jsl rlUnknown9EB160
+        jsl rlMapBattlePlayHitSound
         jsl rlApplyMapBattleRoundHP
         phx
 
@@ -3126,7 +3147,7 @@
         lda #$00D1
         jsl rlBattleSceneStepColorsToward
         bcc _9273
-        jsl rlUnknown9E9192
+        jsl rlMapBattleRestoreSpritePalettes
         lda #$0000
         sta @l aMapAction.wMapBattleActiveSpriteSyncFlag
 
@@ -4498,7 +4519,7 @@
         phx
         jsl rlRedrawVisibleMapTilemap
         plx
-        jsl rlUnknown9EB345
+        jsl rlMapBattlePlaySound48
         rtl
 
         .databank 0
@@ -6348,7 +6369,7 @@
         lda #<>aUnknown9EAA5C
         sta lR18
         jsl rlBattleSceneStartPaletteEffect
-        jsl rlUnknown9EB36C
+        jsl rlMapBattlePlaySound3D
         lda #1,s
         tax
         lda aProcSystem.aHeaderBitfield,b,x
@@ -6418,7 +6439,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown9E9192
+        jsl rlMapBattleRestoreSpritePalettes
         sep #$20
         lda $7FFD9A
         ora #$80
@@ -7267,7 +7288,7 @@
         tax
         lda aMapBattleDefeatCrySounds,x
         sta wR0
-        jsl rlUnknown9EB12B
+        jsl rlMapBattleGetChildCry
         pla
         jsl rlGetSoundPanFromXPixel
         ora wR0
@@ -7349,12 +7370,14 @@
 
         ; 9E/B12B
 
-      rlUnknown9EB12B ; 9E/B12B
+      rlMapBattleGetChildCry ; 9E/B12B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The defeat cry of a Child (class $42): wR0 = sound $24 or $25 by gender from aMapBattleChildCrySounds; other classes leave wR0 alone. $7F4C31 picks the side.
 
         phx
         lda $7F4C31
@@ -7376,7 +7399,7 @@
         inc a
         asl a
         tax
-        lda aUnknown9EB15A,x
+        lda aMapBattleChildCrySounds,x
         sta wR0,b
 
         _B158
@@ -7395,9 +7418,9 @@
       .al
       .xl
 
-      aUnknown9EB15A ; 9E/B15A
+      aMapBattleChildCrySounds ; 9E/B15A
 
-        ; Read by rlUnknown9EB12B.
+        ; Read by rlMapBattleGetChildCry.
 
         .word $0024, $0024, $0025
 
@@ -7411,12 +7434,14 @@
       .al
       .xl
 
-      rlUnknown9EB160 ; 9E/B160
+      rlMapBattlePlayHitSound ; 9E/B160
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the sprite: the round's hit sound, panned to the defender: $94 for a fatal strike (BattleRoundFlagFatal), $93 for a ranged one, else $91 or $93 by the striking side's bit 0 of aMapAction; none for a staff with a magic effect. A critical adds sound $4E.
 
         phy
         phx
@@ -7519,12 +7544,14 @@
 
         ; 9E/B214
 
-      rlUnknown9EB214 ; 9E/B214
+      rlMapBattlePlayNoDamageSound ; 9E/B214
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sound $95 panned to the defender, unless a magic effect plays.
 
         phy
         phx
@@ -7559,12 +7586,14 @@
 
         ; 9E/B24C
 
-      rlUnknown9EB24C ; 9E/B24C
+      rlMapBattlePlayLordDodgeSound ; 9E/B24C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; On a miss with no magic effect, at step $23 of the round counter: sound $97 when the side the round bit 0 picks is a Junior Lord or a Prince (classes $2C, $2E).
 
         phy
         phx
@@ -7635,12 +7664,14 @@
       .al
       .xl
 
-      rlUnknown9EB345 ; 9E/B345
+      rlMapBattlePlaySound48 ; 9E/B345
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sound $48 ($49 when aActionStructUnit1's X is 0) panned to the attacker's sprite.
 
         phy
         phx
@@ -7666,12 +7697,14 @@
 
         ; 9E/B36C
 
-      rlUnknown9EB36C ; 9E/B36C
+      rlMapBattlePlaySound3D ; 9E/B36C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sound $3D panned to the defender's sprite (the attacker's when the defender has none).
 
         phy
         phx
@@ -7707,12 +7740,14 @@
 
         ; 9E/B39F
 
-      rlUnknown9EB39F ; 9E/B39F
+      rlMapBattlePlaySound2E ; 9E/B39F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sound $2E panned to the defender's sprite (the attacker's when $7F57EA is set).
 
         phy
         phx
@@ -7748,13 +7783,15 @@
       .al
       .xl
 
-      rlUnknown9EB3C8 ; 9E/B3C8
+      rlMapBattlePlaySound2F ; 9E/B3C8
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Found by tools/sweep.py: nothing in the build reaches this. Sound $2F panned to the defender's sprite.
 
         phx
         lda aMapAction.wMapBattleDefenderSpriteSlot
@@ -7776,12 +7813,14 @@
       .al
       .xl
 
-      rlUnknown9EB3DE ; 9E/B3DE
+      rlMapBattlePlaySound32 ; 9E/B3DE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sound $32 panned to the caster (wMapMagicCasterPixel).
 
         phx
         lda wMapMagicCasterPixel
@@ -7848,12 +7887,14 @@
 
         ; 9E/B433
 
-      rlUnknown9EB433 ; 9E/B433
+      rlMapBattleSetMusicID ; 9E/B433
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Stores A in wMusicID.
 
         ; Unreferenced: stores A in $04BA.
 
@@ -7864,14 +7905,16 @@
 
         ; 9E/B437
 
-      rlUnknown9EB437 ; 9E/B437
+      rlMapBattleSetMusicID2 ; 9E/B437
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Unreferenced: the same as rlUnknown9EB433.
+        ; Unreferenced: the same code as rlMapBattleSetMusicID.
+
+        ; Unreferenced: the same as rlMapBattleSetMusicID.
 
         sta wMusicID,b
         rtl
@@ -7880,12 +7923,14 @@
 
         ; 9E/B43B
 
-      rlUnknown9EB43B ; 9E/B43B
+      rlMapBattlePlaySoundAtAttacker ; 9E/B43B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced. Sound A panned to the attacker's sprite.
 
         ; Unreferenced.
 
@@ -7906,12 +7951,14 @@
 
         ; 9E/B454
 
-      rlUnknown9EB454 ; 9E/B454
+      rlMapBattlePlaySoundAtAttackerDebug ; 9E/B454
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced. As rlMapBattlePlaySoundAtAttacker; with exactly Start held on controller 2, plays the value $1000 instead.
 
         ; Unreferenced.
 
@@ -7938,12 +7985,14 @@
 
         ; 9E/B476
 
-      rlUnknown9EB476 ; 9E/B476
+      rlMapBattlePlaySoundAtSprite ; 9E/B476
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sound A panned to the map position of $7F57EE (rlUnknown9E8D25).
 
         ; Unreferenced.
 
@@ -10232,7 +10281,7 @@
         lda #$0000
         sta aActiveSpriteSystem.aUnknown001260,b,x
         sta aActiveSpriteSystem.aUnknown001280,b,x
-        jsl rlUnknown9EB39F
+        jsl rlMapBattlePlaySound2E
         plx
         ply
         rtl
@@ -11242,7 +11291,7 @@
         .databank ?
 
         lda #$002C
-        jsl rlUnknown9EB476
+        jsl rlMapBattlePlaySoundAtSprite
         jsl rlUnknown9EE309
         jsl rlUnknown9EE35F
         rtl
@@ -11381,7 +11430,7 @@
         lda #$0001
         sta aActiveSpriteSystem.aFrameTimer,b,x
         lda #$002D
-        jsl rlUnknown9EB476
+        jsl rlMapBattlePlaySoundAtSprite
         plx
         rtl
 
@@ -11403,7 +11452,7 @@
         .databank ?
 
         lda #$0029
-        jsl rlUnknown9EB476
+        jsl rlMapBattlePlaySoundAtSprite
         jsl rlUnknown9EE417
         jsl rlUnknown9EE46D
         jsl rlUnknown9EE568
@@ -11666,7 +11715,7 @@
         lda #$0001
         sta aActiveSpriteSystem.aFrameTimer,b,x
         lda #$002C
-        jsl rlUnknown9EB476
+        jsl rlMapBattlePlaySoundAtSprite
         plx
         rtl
 
@@ -11742,7 +11791,7 @@
         .databank ?
 
         lda #$002A
-        jsl rlUnknown9EB476
+        jsl rlMapBattlePlaySoundAtSprite
         jsl rlUnknown9EE628
         jsl rlUnknown9EE67E
         jsl rlUnknown9EE6C6
@@ -12038,7 +12087,7 @@
         lda #$0001
         sta aActiveSpriteSystem.aFrameTimer,b,x
         lda #$002C
-        jsl rlUnknown9EB476
+        jsl rlMapBattlePlaySoundAtSprite
         plx
         rtl
 
@@ -12096,7 +12145,7 @@
         .databank ?
 
         lda #$002B
-        jsl rlUnknown9EB476
+        jsl rlMapBattlePlaySoundAtSprite
         jsl rlUnknown9EE88C
         jsl rlUnknown9EE8E2
         jsl rlUnknown9EE92A
@@ -12293,7 +12342,7 @@
         lda #$0001
         sta aActiveSpriteSystem.aFrameTimer,b,x
         lda #$002C
-        jsl rlUnknown9EB476
+        jsl rlMapBattlePlaySoundAtSprite
         plx
         rtl
 

@@ -1399,7 +1399,7 @@
         PROC_CALL rlUnknown9E99F7
         PROC_YIELD 2
         PROC_CALL rlCreateMapBattleAttackerSprites
-        PROC_CALL rlUnknown9EB3DE
+        PROC_CALL rlMapBattlePlaySound32
         PROC_YIELD 1
         PROC_CALL rlUnknown9EFA4F
         PROC_YIELD 32

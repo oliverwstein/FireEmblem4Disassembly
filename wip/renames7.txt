@@ -1,0 +1,23 @@
+rlUnknown9EB12B rlMapBattleGetChildCry | The defeat cry of a Child (class $42): wR0 = sound $24 or $25 by gender from aMapBattleChildCrySounds; other classes leave wR0 alone. $7F4C31 picks the side.
+aUnknown9EB15A aMapBattleChildCrySounds
+rlUnknown9EB160 rlMapBattlePlayHitSound | X = the sprite: the round's hit sound, panned to the defender: $94 for a fatal strike (BattleRoundFlagFatal), $93 for a ranged one, else $91 or $93 by the striking side's bit 0 of aMapAction; none for a staff with a magic effect. A critical adds sound $4E.
+rlUnknown9EB214 rlMapBattlePlayNoDamageSound | Sound $95 panned to the defender, unless a magic effect plays.
+rlUnknown9EB24C rlMapBattlePlayLordDodgeSound | On a miss with no magic effect, at step $23 of the round counter: sound $97 when the side the round bit 0 picks is a Junior Lord or a Prince (classes $2C, $2E).
+rlUnknown9EB345 rlMapBattlePlaySound48 | Sound $48 ($49 when aActionStructUnit1's X is 0) panned to the attacker's sprite.
+rlUnknown9EB36C rlMapBattlePlaySound3D | Sound $3D panned to the defender's sprite (the attacker's when the defender has none).
+rlUnknown9EB39F rlMapBattlePlaySound2E | Sound $2E panned to the defender's sprite (the attacker's when $7F57EA is set).
+rlUnknown9EB3C8 rlMapBattlePlaySound2F | Found by tools/sweep.py: nothing in the build reaches this. Sound $2F panned to the defender's sprite.
+rlUnknown9EB3DE rlMapBattlePlaySound32 | Sound $32 panned to the caster (wMapMagicCasterPixel).
+rlUnknown9EB433 rlMapBattleSetMusicID | Stores A in wMusicID.
+rlUnknown9EB437 rlMapBattleSetMusicID2 | Unreferenced: the same code as rlMapBattleSetMusicID.
+rlUnknown9EB43B rlMapBattlePlaySoundAtAttacker | Unreferenced. Sound A panned to the attacker's sprite.
+rlUnknown9EB454 rlMapBattlePlaySoundAtAttackerDebug | Unreferenced. As rlMapBattlePlaySoundAtAttacker; with exactly Start held on controller 2, plays the value $1000 instead.
+rlUnknown9EB476 rlMapBattlePlaySoundAtSprite | Sound A panned to the map position of $7F57EE (rlUnknown9E8D25).
+rlUnknown9E852A rlMapBattleCheckDance | wR0 = class: for a Dancer (class $32) dancing (aActionStructUnit1.Unknown 8) or with no target, sets aMapAction up for mode 4 (no magic effects) and returns carry set; carry clear otherwise.
+rlUnknown9E86CF rlGetMagicSwordMapEffect | A = weapon: carry set and wR0 = the map magic effect a sword plays (item minus Fire). The ranged magic swords and the Earth Sword at distance 2 or more play their tome's effect (aMagicSwordMapEffectItems); at distance 1 the Earth Sword sets $7F4C09 instead. The Berserk, Silence and Sleep Swords play their staff's (aStatusSwordMapEffectItems) and keep their index in $7F4BF1. $FFFF for others; carry clear for a weapon that is not a sword.
+aUnknown9E8792 aMagicSwordMapEffectItems
+aUnknown9E879C aStatusSwordMapEffectItems
+rlUnknown9E9074 rlMapBattleRunRecoil | Every frame of a struck round: moves the defender's sprites by aUnknown9E9123 (damage) or aUnknown9E914B (none, which ends with rlMapBattlePlayNoDamageSound), and applies the HP at step 5 (rlApplyMapBattleRoundHP).
+rlUnknown9E915B rlMapBattleWhitenStruckSide | Sets the struck side's sprites (round bit 0 picks the side) to palette 5, the white one.
+rlUnknown9E9192 rlMapBattleRestoreSpritePalettes | Gives both sides' sprites their palettes back (allegiance + 1).
+rlUnknown9E91CF rlMapBattleRunHitFlash | The struck side's flash: saves its palette, whitens OAM palette 5 and turns the sprites to it (rlMapBattleWhitenStruckSide), plays the hit sound and applies the HP; then each frame steps the colors back toward the saved ones and, at the end, restores the palettes.
