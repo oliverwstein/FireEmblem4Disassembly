@@ -8464,8 +8464,10 @@
     ; Compressed streams: generated from gfx/compressed/DF0000/DF0000.streams by build.sh.
     .include "gfx/compressed/DF0000/Layout.asm"
 
-    * = $1F8020
-    .logical $9F8020
+    * = $1F8000
+    .logical $9F8000
+
+      .dsection Bank9FBuildStampSection
 
       .dsection Unsorted9F8020Section
 
@@ -8483,10 +8485,7 @@
 
       .dsection Unsorted9F8349Section
 
-    .here
-
-    * = $1F83D0
-    .logical $9F83D0
+      .dsection Unsorted9F8398Section
 
       .dsection Unsorted9F83D0Section
 
@@ -8507,10 +8506,7 @@
 
       .dsection MapBattleMagicPalettes9F8800Section
 
-    .here
-
-    * = $1F8900
-    .logical $9F8900
+      .dsection Unsorted9F88C0Section
 
       .dsection Unsorted9F8900Section
 
@@ -8540,10 +8536,7 @@
 
       .dsection Unsorted9F90F2Section
 
-    .here
-
-    * = $1F910A
-    .logical $9F910A
+      .dsection Unsorted9F90FESection
 
       .dsection Unsorted9F910ASection
 
@@ -8571,47 +8564,17 @@
 
       .dsection Unsorted9F9954Section
 
-    .here
-
-    * = $1F9965
-    .logical $9F9965
-
       .dsection Unsorted9F9965Section
-
-    .here
-
-    * = $1F9976
-    .logical $9F9976
 
       .dsection Unsorted9F9976Section
 
-    .here
-
-    * = $1F9987
-    .logical $9F9987
-
       .dsection Unsorted9F9987Section
-
-    .here
-
-    * = $1F999E
-    .logical $9F999E
 
       .dsection Unsorted9F999ESection
 
       .dsection Unsorted9F99CESection
 
-    .here
-
-    * = $1F9A2B
-    .logical $9F9A2B
-
       .dsection Unsorted9F9A2BSection
-
-    .here
-
-    * = $1F9ABF
-    .logical $9F9ABF
 
       .dsection Unsorted9F9ABFSection
 
@@ -8639,68 +8602,25 @@
 
       .dsection Unsorted9FEBA7Section
 
-    .here
-
-    * = $1FEBA9
-    .logical $9FEBA9
+      .dsection Unsorted9FEBA8Section
 
       .dsection ProcScript9FEBA9Section
 
       .dsection Unsorted9FECB2Section
 
-    .here
-
-    * = $1FED29
-    .logical $9FED29
-
       .dsection Unsorted9FED29Section
-
-    .here
-
-    * = $1FED5A
-    .logical $9FED5A
 
       .dsection Unsorted9FED5ASection
 
-    .here
-
-    * = $1FEE45
-    .logical $9FEE45
-
       .dsection Unsorted9FEE45Section
-
-    .here
-
-    * = $1FF060
-    .logical $9FF060
 
       .dsection Unsorted9FF060Section
 
-    .here
-
-    * = $1FF0DC
-    .logical $9FF0DC
-
       .dsection Unsorted9FF0DCSection
-
-    .here
-
-    * = $1FF100
-    .logical $9FF100
 
       .dsection Unsorted9FF100Section
 
-    .here
-
-    * = $1FF1BC
-    .logical $9FF1BC
-
       .dsection Unsorted9FF1BCSection
-
-    .here
-
-    * = $1FF250
-    .logical $9FF250
 
       .dsection Unsorted9FF250Section
 
@@ -8733,10 +8653,7 @@
 
       .dsection Unsorted9FF749Section
 
-    .here
-
-    * = $1FF9A8
-    .logical $9FF9A8
+      .dsection Unsorted9FF98ESection
 
       .dsection Unsorted9FF9A8Section
 

@@ -7,7 +7,7 @@ first byte), `inside` (built code points into it, not at its start), `log` (read
 `fe4.cdl` only), `none` (no evidence). Addresses are given where the game reads them:
 upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 
-101,873 bytes in 230 runs: 56 runs of padding (42,139 bytes) and 174 pieces (59,734 bytes).
+100,619 bytes in 217 runs: 57 runs of padding (42,147 bytes) and 160 pieces (58,472 bytes).
 
 | Class | Pieces | Bytes | Read in the log |
 |---|---|---|---|
@@ -15,7 +15,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | `table` | 0 | 0 | 0 |
 | `inside` | 0 | 0 | 0 |
 | `log` | 0 | 0 | 0 |
-| `none` | 174 | 59,734 | 0 |
+| `none` | 160 | 58,472 | 0 |
 
 ## `code` (0)
 
@@ -37,7 +37,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 
-## `none` (174)
+## `none` (160)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
@@ -108,16 +108,16 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8D/A612-$8D/A623 | 18 | 0 | `rlEpilogueCreditsWaveHDMACycle` / `rsDrawEpilogueCreditsSprite` |  |
 | $8D/AEC0-$8D/AEC1 | 2 | 0 | `rlEpilogueRecordLayerHDMACycle` / `rlSetUpEpilogueRecordTextWindow` |  |
 | $8D/B539-$8D/B539 | 1 | 0 | `rlShowNextEpilogueCharacterEnding` / `rsStartEpilogueCharacterScene` |  |
-| $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardGreatBallistaPointer` / `gcUnknownD05673` |  |
-| $91/A7EA-$91/A80C | 35 | 0 | `rlUnknown91A7DF` / `rlUnknown91A80D` |  |
-| $91/A8E4-$91/A927 | 68 | 0 | `rsDialogueEventCommand07` / `rlUnknown91A928` |  |
-| $91/A9F2-$91/AA14 | 35 | 0 | `aUnknown91A9E4` / `rsUnknown91AA15` |  |
-| $91/B1FB-$91/B1FB | 1 | 0 | `aUnknown91B1E3` / `rsUnknown91B1FC` |  |
+| $D0/5639-$D0/5672 | 58 | 0 | `g4bppcClassCardBallista` / `gcUnknownD05673` |  |
+| $91/A7EA-$91/A80C | 35 | 0 | `rlUnknown91A7DF` / `rlPlanQueuedMapSpriteMovement` |  |
+| $91/A8E4-$91/A927 | 68 | 0 | `rsDialogueEventCommand07` / `rlSetupConversationDialogueBoxes` |  |
+| $91/A9F2-$91/AA14 | 35 | 0 | `aUnknown91A9E4` / `rsSplitNumberIntoFiveDigits` |  |
+| $91/B1FB-$91/B1FB | 1 | 0 | `aJugdralHistoryLineSteps` / `rsJugdralHistoryDrawEntry` |  |
 | $91/BD42-$91/BD93 | 82 | 0 | `aEpilogueLoverPartners` / `rlASMCStatUpDisplay` |  |
-| $91/DF08-$91/DF31 | 42 | 0 | `rsUnknown91DEA1` / `rlUnknown91DF32` |  |
-| $91/E006-$91/E079 | 116 | 0 | `rsUnknown91DF6D` / `rlUnknown91E07A` |  |
-| $91/E4A3-$91/E4B2 | 16 | 0 | `rlUnknown91E472` / `aUnknown91E4B3` | 87% $00/$FF |
-| $91/E913-$91/E914 | 2 | 0 | `rlUnknown91E8D5` / `rsUnknown91E915` |  |
+| $91/DF08-$91/DF31 | 42 | 0 | `rsSaveMenuClearSlotTextTiles` / `rlStartTextToTiles` |  |
+| $91/E006-$91/E079 | 116 | 0 | `rsSetSaveMenuScreenRegisters` / `rlCreateSaveMenuHDMA` |  |
+| $91/E4A3-$91/E4B2 | 16 | 0 | `rlDrawSaveMenuHand` / `aSaveMenuHandFrames` | 87% $00/$FF |
+| $91/E913-$91/E914 | 2 | 0 | `rlFadeInAndHang` / `rsClearRAMAndResetHardware` |  |
 | $95/9650-$95/968D | 62 | 0 | `rlUnknown9595CA` / `rlUnknown95968E` |  |
 | $95/9BFE-$95/9C13 | 22 | 0 | `rsUnknown959BC1` / `rsUnknown959C14` |  |
 | $95/9E71-$95/9F42 | 210 | 0 | `rlUnknown959E22` / `rlUnknown959F43` |  |
@@ -189,29 +189,15 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $9B/FB73-$9B/FB7D | 11 | 0 | `rlUnknown9BFB68` / `rlUnknown9BFB7E` |  |
 | $9B/FBB0-$9B/FBBF | 16 | 0 | `rlUnknown9BFBA9` / `rlUnknown9BFBC0` |  |
 | $9B/FE13-$9B/FFFF | 493 | 0 | `rlUnknown9BFE06` / `g4bppMapTileAnimations2` |  |
-| $9E/8035-$9E/805D | 41 | 0 | `rlUnknown9E800C` / `rlUnknown9E805E` |  |
+| $9E/8035-$9E/805D | 41 | 0 | `rlStartMapBattleAnimation` / `rlGetMapBattleFacing` |  |
 | $9E/9C94-$9E/9CB8 | 37 | 0 | `rlUnknown9E9C70` / `rlProcUnknown9E9A43Cycle1` |  |
 | $9E/9ECF-$9E/9F25 | 87 | 0 | `rlUnknown9E9E61` / `rlUnknown9E9F26` |  |
 | $9E/B3C8-$9E/B3DD | 22 | 0 | `rlUnknown9EB39F` / `rlUnknown9EB3DE` |  |
-| $9E/B433-$9E/B490 | 94 | 0 | `rlUnknown9EB41C` / `rlUnknown9EB491` |  |
-| $9E/CEB9-$9E/CEDC | 36 | 0 | `rlUnknown9ECEA0` / `procUnknown9ECEDD` |  |
-| $9E/D006-$9E/D079 | 116 | 0 | `rlUnknown9ECFEB` / `rlUnknown9ED07A` |  |
-| $9E/D412-$9E/D429 | 24 | 0 | `rlUnknown9ED401` / `rlUnknown9ED42A` |  |
-| $9E/D528-$9E/D534 | 13 | 0 | `rlProcUnknown9ED441Init` / `rlProcUnknown9ED441Cycle2` |  |
+| $9E/B433-$9E/B490 | 94 | 0 | `rlMapBattleRestoreMusic` / `rlPlayGoldObtainedJingle` |  |
+| $9E/CEB9-$9E/CEDC | 36 | 0 | `rlUnknown9ECEA0` / `procMapExperienceWindowEffect` |  |
+| $9E/D006-$9E/D079 | 116 | 0 | `rlUnknown9ECFEB` / `rlStartReturnHomeAnimation` |  |
+| $9E/D412-$9E/D429 | 24 | 0 | `rlUnknown9ED401` / `rlStartHolyWeaponShine` |  |
+| $9E/D528-$9E/D534 | 13 | 0 | `rlProcHolyWeaponShineInit` / `rlProcUnknown9ED441Cycle2` |  |
 | $9E/D72A-$9E/D741 | 24 | 0 | `rlUnknown9ED71E` / `rlUnknown9ED742` |  |
 | $9E/E177-$9E/E227 | 177 | 0 | `rlUnknown9EE156` / `rlUnknown9EE228` |  |
 | $9E/E2E4-$9E/EC94 | 2,481 | 0 | `rlUnknown9EE2D1` / `rlUnknown9EEC95` |  |
-| $DF/7FF8-$9F/801F | 40 | 0 | `g4bppcBattleAnimationSheetHighPriest` / `rlUnknown9F8020` |  |
-| $9F/8398-$9F/83CF | 56 | 0 | `rsUnknown9F8389` / `rsUnknown9F83D0` |  |
-| $9F/88C0-$9F/88FF | 64 | 0 | `aMapBattleMagicSpritePaletteLight` / `rlUnknown9F8900` |  |
-| $9F/90FE-$9F/9109 | 12 | 0 | `rlUnknown9F90FA` / `rsUnknown9F910A` |  |
-| $9F/957A-$9F/95E0 | 103 | 0 | `rlUnknown9F9570` / `rlUnknown9F95E1` |  |
-| $9F/9965-$9F/9975 | 17 | 0 | `rlUnknown9F9954` / `rlUnknown9F9976` |  |
-| $9F/9987-$9F/999D | 23 | 0 | `rlUnknown9F9976` / `rsUnknown9F999E` |  |
-| $9F/9A2B-$9F/9ABE | 148 | 0 | `rlUnknown9F9A1E` / `rlUnknown9F9ABF` |  |
-| $9F/EBA8-$9F/EBA8 | 1 | 0 | `rlProcUnknown9F805DInit` / `aProcUnknown9F805DCode` |  |
-| $9F/ED29-$9F/ED59 | 49 | 0 | `rlUnknown9FECFE` / `rlUnknown9FED5A` |  |
-| $9F/EE45-$9F/F05F | 539 | 0 | `rlUnknown9FEDB3` / `rlUnknown9FF060` |  |
-| $9F/F0DC-$9F/F0FF | 36 | 0 | `rlUnknown9FF060` / `rlUnknown9FF100` |  |
-| $9F/F1BC-$9F/F24F | 148 | 0 | `rlUnknown9FF111` / `rsUnknown9FF250` |  |
-| $9F/F98E-$9F/F9A7 | 26 | 0 | `rsUnknown9FF97A` / `rlUnknown9FF9A8` | 53% $00/$FF |

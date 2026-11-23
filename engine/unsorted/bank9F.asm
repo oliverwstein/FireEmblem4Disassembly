@@ -1,5 +1,18 @@
 ; Code from bank $9F not yet assigned to a game system.
 
+    .section Bank9FBuildStampSection
+
+      .al
+      .xl
+
+      aBank9FBuildStamp ; 9F/8000
+
+        ; Unreferenced: an ASCII build stamp at the start of the bank.
+        .text "1996/01/10 05:29 by manchan     "
+
+    .endsection Bank9FBuildStampSection
+
+
     .section Unsorted9F8020Section
 
       .al
@@ -480,6 +493,54 @@
         ; 9F/8398
 
     .endsection Unsorted9F8349Section
+
+
+    .section Unsorted9F8398Section
+
+      .al
+      .xl
+
+      rsUnknown9F8398 ; 9F/8398
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced. Writes an active sprite definition to $7ECC0E from the
+        ; two words after the call (bank $9F) and creates the sprite from it.
+
+        phx
+        phk
+        phk
+        pla
+        sta $7ECC12
+        sta $7ECC0F
+        lda #3,s
+        tay
+        lda $0001,b,y
+        sta $7ECC11
+        lda $0003,b,y
+        sta $7ECC0E
+        tya
+        clc
+        adc #$0004
+        sta #3,s
+        lda #$7E00
+        sta lR44+1
+        lda #$CC00
+        sta lR44
+        ldx #$0000
+        txy
+        jsl rlCreateActiveSpriteHighestSlotRelative
+        plx
+        rts
+
+        .databank 0
+
+        ; 9F/83D0
+
+    .endsection Unsorted9F8398Section
 
 
     .section Unsorted9F83D0Section
@@ -1111,6 +1172,22 @@
         ; 9F/8724
 
     .endsection Unsorted9F86BFSection
+
+
+    .section Unsorted9F88C0Section
+
+      .al
+      .xl
+
+      aUnknown9F88C0 ; 9F/88C0
+
+        ; Unreferenced: 32 colours after the map magic sprite palettes.
+        .word $2550, $39F3, $4E97, $5F3B, $73DF, $01D8, $0619, $063A
+        .word $0A7B, $0EBC, $12FD, $131E, $175F, $00AC, $00EE, $052F
+        .word $0571, $09B2, $0A35, $0E97, $131A, $17DF, $0C89, $190C
+        .word $298F, $3612, $4276, $4EF9, $5F7C, $6BFF, $0008, $14AC
+
+    .endsection Unsorted9F88C0Section
 
 
     .section Unsorted9F8900Section
@@ -2073,6 +2150,33 @@
         ; 9F/90FE
 
     .endsection Unsorted9F90F2Section
+
+
+    .section Unsorted9F90FESection
+
+      .al
+      .xl
+
+      rsUnknown9F90FE ; 9F/90FE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced. Copies 80 colours from $7ED000 to aBGPaletteBuffer+$20.
+
+        jsl rlUnknown9F8E3A
+
+          .byte $00, $D0, $7E, $50, $00, $20, $00
+
+        rts
+
+        .databank 0
+
+        ; 9F/910A
+
+    .endsection Unsorted9F90FESection
 
 
     .section Unsorted9F910ASection
@@ -15993,6 +16097,26 @@
     .endsection Unsorted9FEBA7Section
 
 
+    .section Unsorted9FEBA8Section
+
+      .al
+      .xl
+
+      rlUnknown9FEBA8 ; 9F/EBA8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted9FEBA8Section
+
+
     .section ProcScript9FEBA9Section
 
       .al
@@ -18547,6 +18671,21 @@
         ; 9F/F98E
 
     .endsection Unsorted9FF749Section
+
+
+    .section Unsorted9FF98ESection
+
+      .al
+      .xl
+
+      aUnknown9FF98E ; 9F/F98E
+
+        ; Unreferenced: a colour range list ending in $FFFF, like the ones
+        ; the palette fades read (aUnknown9F91B8).
+        .word $0002, $000F, $0022, $000F, $0042, $000F, $0062, $000F
+        .word $0082, $000F, $00A2, $000F, $FFFF
+
+    .endsection Unsorted9FF98ESection
 
 
     .section Unsorted9FF9A8Section

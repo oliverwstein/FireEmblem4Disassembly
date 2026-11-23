@@ -47,6 +47,8 @@ INLINE_ARGS = {
     'rsUnknown9F8253': 1,
     'rsUnknown9F82D7': 2,
     'rsUnknown9F830F': 2,
+    # Copies colours into aBGPaletteBuffer: long source, colour count, buffer offset.
+    'rlUnknown9F8E3A': 7,
 }
 WORD_ARGS = {'rsUnknown9F82D7', 'rsUnknown9F830F'}
 
