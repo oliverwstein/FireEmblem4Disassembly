@@ -3638,6 +3638,232 @@
 
         ; 82/EB77
 
+        ; Unreachable: it follows a return.
+        rtl
+
+      rlUnknown82EB78 ; 82/EB78
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: works on the RAM area whose pointer is at $055F (see
+        ; rlUnknown82EC81): takes wR1 bytes from it, filled from [lR18] or with 0.
+        ; Carry set if there is not enough.
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        phy
+        lda wR1
+        pha
+        ldy $055F,b
+        sep #$20
+        lda $0561,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0002,b,y
+        bit #$8000
+        beq _EB9A
+        and #$1FFF
+        sta wR1
+
+        _EB9A
+        lda $0000,b,y
+        cmp wR1
+        bcc _EBF7
+        tax
+        sec
+        sbc wR1
+        sta $0000,b,y
+        txa
+        clc
+        adc @l $00055F
+        tax
+        dec x
+        ldy wR1
+        dec y
+        lda lR18
+        ora lR18+1
+        beq _EBC8
+        sep #$20
+
+        _EBBB
+        lda [lR18],y
+        sta $0006,b,x
+        dec x
+        dec y
+        bpl _EBBB
+        rep #$20
+        bra _EBD5
+
+
+        _EBC8
+        sep #$20
+        lda #$00
+
+        _EBCC
+        sta $0006,b,x
+        dec x
+        dec y
+        bpl _EBCC
+        rep #$20
+
+        _EBD5
+        lda @l $00055F
+        tay
+        lda @l $000560
+        sta lR18+1
+        lda @l $00055F
+        clc
+        adc $0000,b,y
+        clc
+        adc #$0006
+        sta lR18
+        pla
+        sta wR1
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+        rtl
+
+
+        _EBF7
+        pla
+        sta wR1
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        rtl
+
+        .databank 0
+
+        ; 82/EC00
+
+      rlUnknown82EC00 ; 82/EC00
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: works on the same RAM area; carry set if wR1 more bytes
+        ; do not fit.
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phx
+        phy
+        lda wR1
+        pha
+        ldy $055F,b
+        sep #$20
+        lda $0561,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0002,b,y
+        bit #$8000
+        beq _EC22
+        and #$1FFF
+        sta wR1
+
+        _EC22
+        lda $0000,b,y
+        clc
+        adc wR1
+        cmp $0004,b,y
+        bcs _EC56
+        sta $0000,b,y
+        clc
+        adc @l $00055F
+        tax
+        dec x
+        ldy wR1
+        dec y
+        lda lR18
+        ora lR18+1
+        beq _EC4D
+        sep #$20
+
+        _EC42
+        lda $0006,b,x
+        sta [lR18],y
+        dec x
+        dec y
+        bpl _EC42
+        rep #$20
+
+        _EC4D
+        pla
+        sta wR1
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+        rtl
+
+
+        _EC56
+        pla
+        sta wR1
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        rtl
+
+        .databank 0
+
+        ; 82/EC5F
+
+      rlUnknown82EC5F ; 82/EC5F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: sets lR18 to the pointer at $055F.
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda $0560,b
+        sta lR18+1
+        lda $055F,b
+        sta lR18
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/EC70
+
     .endsection Unreferenced82EB4CSection
 
 

@@ -847,9 +847,9 @@
         ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
         ; entries of aUnknown88A50D are the same code).
 
-        lda $DE0012
+        lda aWindowPalette+18
         sta $0112,b
-        lda $DE0014
+        lda aWindowPalette+20
         sta $0114,b
         rtl
 
@@ -865,9 +865,9 @@
         ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
         ; entries of aUnknown88A50D are the same code).
 
-        lda $DE0012
+        lda aWindowPalette+18
         sta $0112,b
-        lda $DE0014
+        lda aWindowPalette+20
         sta $0114,b
         rtl
 
@@ -883,9 +883,9 @@
         ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
         ; entries of aUnknown88A50D are the same code).
 
-        lda $DE0012
+        lda aWindowPalette+18
         sta $0112,b
-        lda $DE0014
+        lda aWindowPalette+20
         sta $0114,b
         rtl
 
@@ -901,9 +901,9 @@
         ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
         ; entries of aUnknown88A50D are the same code).
 
-        lda $DE0012
+        lda aWindowPalette+18
         sta $0112,b
-        lda $DE0014
+        lda aWindowPalette+20
         sta $0114,b
         rtl
 

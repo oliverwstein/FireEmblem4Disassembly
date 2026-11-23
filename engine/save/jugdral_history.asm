@@ -392,6 +392,12 @@
         .word <>rsJugdralHistoryUploadBG3Tilemap
         .word <>rsJugdralHistoryNextTextTiles
 
+      rsUnknown91B1FB ; 91/B1FB
+
+        ; Unreferenced: a lone rts.
+
+        rts
+
     .endsection Table91B1E3Section
 
 

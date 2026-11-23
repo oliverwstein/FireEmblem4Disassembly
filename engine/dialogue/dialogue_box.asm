@@ -2011,6 +2011,8 @@
         sta aDialogue._Slot[0].lBGBufferPosition,b,x
 
         +
+
+        _A979
         jsl rlSetDialogueFontAndColors
         lda #$2000
         tsb aDialogue.wStatus,b

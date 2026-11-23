@@ -7021,7 +7021,7 @@
         clc
         adc wR0
         sta $18D4,b,x
-        brl $91A979
+        brl rlSetupLowerDialogueBox._A979
 
         .databank 0
 

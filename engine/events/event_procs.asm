@@ -315,6 +315,220 @@
 
         ; 82/90B0
 
+      procUnknown8290B0 ; 82/90B0
+
+        ; Unreferenced: nothing creates this event proc.
+
+        .structProcInfo "B3", rlProcUnknown8290B0Init, rlProcUnknown8290B0Cycle, aProcUnknown8290B0Code
+
+        .word $0010
+
+      rlProcUnknown8290B0Init ; 82/90BA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda lActiveEventPointer+1,b
+        sta lR18+1
+        lda lActiveEventPointer,b
+        sta lR18
+        ldx $0ECA,b
+        ldy wActiveEventOffset,b
+        lda [lR18],y
+        sta $0FD7,b,x
+        inc y
+        inc y
+        lda [lR18],y
+        sta $0FF7,b,x
+        inc y
+        inc y
+        lda [lR18],y
+        sta $1057,b,x
+        inc y
+        inc y
+        lda [lR18],y
+        sta $1077,b,x
+        lda wBufferBG3HOFS
+        sta $1037,b,x
+        stz $1017,b,x
+        lda wBufferBG3VOFS
+        sta $10B7,b,x
+        stz $1097,b,x
+        rtl
+
+        .databank 0
+
+        ; 82/90F5
+
+      rlProcUnknown8290B0Cycle ; 82/90F5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx $0ECA,b
+        lda $0FD7,b,x
+        clc
+        adc $1057,b,x
+        bne _9106
+        jsl rlEventEngineFreeProc
+        rtl
+
+
+        _9106
+        ldx $0ECA,b
+        lda $0FD7,b,x
+        beq _914D
+        lda $0FF7,b,x
+        bmi _914F
+        lda $0FF6,b,x
+        and #$FF00
+        clc
+        adc $1017,b,x
+        sta $1017,b,x
+        bcc _9128
+        inc $1037,b,x
+        dec $0FD7,b,x
+
+        _9128
+        lda $0FF8,b,x
+        and #$007F
+        clc
+        adc $1037,b,x
+        sta $1037,b,x
+        sta wBufferBG3HOFS
+        lda $0FF8,b,x
+        and #$007F
+        sta wR0,x
+        lda $0FD7,b,x
+        sec
+        sbc wR0,x
+        bcs _914A
+        lda #$0000
+
+        _914A
+        sta $0FD7,b,x
+
+        _914D
+        bra _9191
+
+
+        _914F
+        lda $0FF6,b,x
+        and #$FF00
+        sta wR0,x
+        lda $1017,b,x
+        sec
+        sbc wR0,x
+        sta $1017,b,x
+        bcs _9168
+        dec $1037,b,x
+        dec $0FD7,b,x
+
+        _9168
+        lda $0FF8,b,x
+        and #$007F
+        sta wR0,x
+        lda $1037,b,x
+        sec
+        sbc wR0,x
+        sta $1037,b,x
+        sta wBufferBG3HOFS
+        lda $0FF8,b,x
+        and #$007F
+        sta wR0,x
+        lda $0FD7,b,x
+        sec
+        sbc wR0,x
+        bcs _918E
+        lda #$0000
+
+        _918E
+        sta $0FD7,b,x
+
+        _9191
+        ldx $0ECA,b
+        lda $1057,b,x
+        beq _91D8
+        lda $1077,b,x
+        bmi _91D9
+        lda $1076,b,x
+        and #$FF00
+        clc
+        adc $1097,b,x
+        sta $1097,b,x
+        bcc _91B3
+        inc $10B7,b,x
+        dec $1057,b,x
+
+        _91B3
+        lda $1078,b,x
+        and #$007F
+        clc
+        adc $10B7,b,x
+        sta $10B7,b,x
+        sta wBufferBG3VOFS
+        lda $1078,b,x
+        and #$007F
+        sta wR0,x
+        lda $1057,b,x
+        sec
+        sbc wR0,x
+        bcs _91D5
+        lda #$0000
+
+        _91D5
+        sta $1057,b,x
+
+        _91D8
+        rtl
+
+
+        _91D9
+        lda $1076,b,x
+        and #$FF00
+        sta wR0,x
+        lda $1097,b,x
+        sec
+        sbc wR0,x
+        sta $1097,b,x
+        bcs _91F2
+        dec $10B7,b,x
+        dec $1057,b,x
+
+        _91F2
+        lda $1078,b,x
+        and #$007F
+        sta wR0,x
+        lda $10B7,b,x
+        sec
+        sbc wR0,x
+        sta $10B7,b,x
+        sta wBufferBG3VOFS
+        lda $1078,b,x
+        and #$007F
+        sta wR0,x
+        lda $1057,b,x
+        sec
+        sbc wR0,x
+        bcs _9218
+        lda #$0000
+
+        _9218
+        sta $1057,b,x
+        rtl
+
+        .databank 0
+
+        ; 82/921C
+
+      aProcUnknown8290B0Code ; 82/921C
+
+        PROC_HALT
+
     .endsection EventScrollFadeProcSection
 
 

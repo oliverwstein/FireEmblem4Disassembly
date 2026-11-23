@@ -4321,6 +4321,216 @@
 
         ; 96/BE68
 
+        ; Unreachable: it follows a return.
+        rtl
+
+      rlUnknown96BE69 ; 96/BE69
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        phx
+        lda #$000F
+        sta $7FF6B4,x
+        lda #$F714
+        sta $7FF6B5,x
+        lda #$00C0
+        sta $7FF6B7,x
+        lda #$F714
+        sta $7FF6B8,x
+        lda #$00B0
+        sta $7FF6BA,x
+        lda #$F714
+        sta $7FF6BB,x
+        sep #$20
+        lda #$00
+        sta $7FF6BD,x
+        rep #$20
+        lda #(`aUnknown95E6F6)<<8
+        sta lR44+1
+        lda #<>aUnknown95E6F6
+        sta lR44
+        lda #$0005
+        sta wR40
+        jsl rlHDMAEngineCreateEntryByIndex
+        lda #(`rlUnknown96BEC1)<<8
+        sta $7FED05,x
+        lda #<>rlUnknown96BEC1
+        sta $7FED04,x
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BEC1
+
+      rlUnknown96BEC1 ; 96/BEC1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        phx
+        ldx #$0000
+        lda $7FE477
+        bit #$0100
+        beq _BED1
+        ora #$FF00
+
+        _BED1
+        pha
+        lda $7FE47A
+        bit #$0100
+        beq _BEDE
+        ora #$FF00
+
+        _BEDE
+        pha
+
+        _BEDF
+        lda aUnknown97C2D4+12,x
+        sec
+        sbc #3,s
+        sta $7FF714,x
+        inc x
+        inc x
+        lda aUnknown97C2D4+12,x
+        sec
+        sbc #1,s
+        sta $7FF714,x
+        inc x
+        inc x
+        cpx #$0100
+        bcc _BEDF
+        pla
+        pla
+        plx
+        rtl
+
+        phx
+        lda #$000F
+        sta $7FF6B4,x
+        lda #$F714
+        sta $7FF6B5,x
+        lda #$00A0
+        sta $7FF6B7,x
+        lda #$F714
+        sta $7FF6B8,x
+        lda #$00A0
+        sta $7FF6BA,x
+        lda #$F714
+        sta $7FF6BB,x
+        lda #$00A0
+        sta $7FF6BD,x
+        lda #$F714
+        sta $7FF6BE,x
+        lda #$0090
+        sta $7FF6C0,x
+        lda #$F714
+        sta $7FF6C1,x
+        sep #$20
+        lda #$00
+        sta $7FF6C3,x
+        rep #$20
+        lda #(`aUnknown95E6F6)<<8
+        sta lR44+1
+        lda #<>aUnknown95E6F6
+        sta lR44
+        lda #$0005
+        sta wR40
+        jsl rlHDMAEngineCreateEntryByIndex
+        lda #(`rlUnknown96BF76)<<8
+        sta $7FED05,x
+        lda #<>rlUnknown96BF76
+        sta $7FED04,x
+        plx
+        rtl
+
+        .databank 0
+
+      rlUnknown96BF76 ; 96/BF76
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The step rlUnknown96BEC1 stores for its slot.
+
+        phx
+        phy
+        lda $7FED0A,x
+        pha
+        clc
+        adc #$0004
+        cmp #$0080
+        bcc _BF89
+        lda #$0000
+
+        _BF89
+        sta $7FED0A,x
+        pla
+        tax
+        lda #$7F00
+        sta lR18+1
+        lda #$F714
+        sta lR18
+        ldy #$0000
+        lda $7FE477
+        and #$03FF
+        sec
+        sbc wBattleSceneCameraX
+        sec
+        sbc #$0100
+        sec
+        sbc $7FE486
+        pha
+        lda $7FE47A
+        pha
+
+        _BFB7
+        lda aUnknown97C2D4+268,x
+        cmp #$8000
+        bne _BFC5
+        ldx #$0000
+        bra _BFB7
+
+
+        _BFC5
+        sec
+        sbc #3,s
+        sta [lR18],y
+        inc x
+        inc x
+        inc y
+        inc y
+        lda aUnknown97C2D4+268,x
+        sec
+        sbc #1,s
+        sta [lR18],y
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0080
+        bcc _BFB7
+        pla
+        pla
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/BFE5
+
     .endsection Unsorted96BE28Section
 
 
@@ -4344,9 +4554,9 @@
         sta $7FED03
         rep #$20
         jsl rlUnknown96C7DB
-        lda #$9600
+        lda #(`rlUnknown96C008)<<8
         sta $7FED05,x
-        lda #$C008
+        lda #<>rlUnknown96C008
         sta $7FED04,x
         plx
         rtl
@@ -4475,9 +4685,9 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #$9600
+        lda #(`rlUnknown96C0DC)<<8
         sta $7FED05,x
-        lda #$C0DC
+        lda #<>rlUnknown96C0DC
         sta $7FED04,x
         plx
         rtl
@@ -4591,9 +4801,9 @@
         lda #$0006
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #$9600
+        lda #(`rlUnknown96C1B9)<<8
         sta $7FED05,x
-        lda #$C1B9
+        lda #<>rlUnknown96C1B9
         sta $7FED04,x
         plx
         rtl
@@ -4704,9 +4914,9 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #$9600
+        lda #(`rlUnknown96C292)<<8
         sta $7FED05,x
-        lda #$C292
+        lda #<>rlUnknown96C292
         sta $7FED04,x
         plx
         rtl
@@ -4785,9 +4995,9 @@
         lda #$0006
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #$9600
+        lda #(`rlUnknown96C30A)<<8
         sta $7FED05,x
-        lda #$C30A
+        lda #<>rlUnknown96C30A
         sta $7FED04,x
         plx
         rtl
@@ -4869,9 +5079,9 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #$9600
+        lda #(`rlUnknown96C390)<<8
         sta $7FED05,x
-        lda #$C390
+        lda #<>rlUnknown96C390
         sta $7FED04,x
         plx
         rtl
@@ -4986,9 +5196,9 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #$9600
+        lda #(`rlUnknown96C485)<<8
         sta $7FED05,x
-        lda #$C485
+        lda #<>rlUnknown96C485
         sta $7FED04,x
         plx
         rtl
@@ -5099,9 +5309,9 @@
         jsl rlHDMAEngineCreateEntryByIndex
         lda #1,s
         tax
-        lda #$9600
+        lda #(`rlUnknown96C52D)<<8
         sta $7FED05,x
-        lda #$C52D
+        lda #<>rlUnknown96C52D
         sta $7FED04,x
         plx
         rtl
@@ -5211,9 +5421,9 @@
         jsl rlHDMAEngineCreateEntryByIndex
         lda #1,s
         tax
-        lda #$9600
+        lda #(`rlUnknown96C5D1)<<8
         sta $7FED05,x
-        lda #$C5D1
+        lda #<>rlUnknown96C5D1
         sta $7FED04,x
         plx
         rtl
@@ -5372,9 +5582,9 @@
         lda #$0005
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #$9600
+        lda #(`rlUnknown96C776)<<8
         sta $7FED05,x
-        lda #$C776
+        lda #<>rlUnknown96C776
         sta $7FED04,x
         plx
         rtl

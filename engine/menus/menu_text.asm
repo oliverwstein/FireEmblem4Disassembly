@@ -873,7 +873,7 @@
 
       rsSplitNumberIntoFiveDigits ; 91/AA15
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -942,7 +942,7 @@
 
       rsDrawFiveDigitNumber ; 91/AA6F
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

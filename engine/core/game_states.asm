@@ -321,7 +321,7 @@
         ldy #$0004
         lda [lR44],y
         sta lTaskJumpPointer,b
-        jsl $809C77
+        jsl rlUnknown809C77
         clc
         rtl
 

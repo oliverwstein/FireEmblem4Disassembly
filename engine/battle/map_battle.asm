@@ -10940,7 +10940,7 @@
         ldy #$001E
 
         _E167
-        lda rlUnknown9EE156._E175,x
+        lda aMapBattleCriticalTypePalettes - 2,x
         sta aOAMPaletteBuffer.aPalette6,b,y
         dec x
         dec x
@@ -10948,14 +10948,55 @@
         dec y
         bpl _E167
         plx
-
-        _E175
         ply
         rtl
 
         .databank 0
 
         ; 9E/E177
+
+      aMapBattleCriticalTypePalettes ; 9E/E177
+
+        ; Sprite palette 6 for wBattleCriticalType 1-4, one palette each
+        ; (rlUnknown9EE156 reads type * 32 bytes from aMapBattleCriticalTypePalettes - 2, backwards).
+
+        .word $3800, $7FFF, $035F, $01BF, $0037, $0C8A, $0425, $7FBA
+        .word $7E6E, $7C84, $30C4, $1421, $0000, $0000, $0000, $0000
+        .word $3800, $7FFF, $5BDF, $1E9A, $0C87, $14AA, $18EC, $2952
+        .word $35B7, $421C, $4A5F, $46FF, $161E, $0D77, $08ED, $0489
+        .word $3800, $726F, $726F, $6E2C, $726F, $72B1, $76F4, $7716
+        .word $7B59, $7B9B, $7FDE, $679C, $4F5A, $3338, $1AF6, $02B4
+        .word $3800, $14AA, $0C87, $0444, $0C87, $14AA, $18EC, $2952
+        .word $35B7, $421C, $4A5F, $46FF, $161E, $0D77, $08ED, $0489
+
+      rlUnknown9EE1F7 ; 9E/E1F7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: copies aUnknown9EE208 into sprite palette 6.
+
+        phx
+        ldx #$001E
+
+        -
+        lda aUnknown9EE208,x
+        sta aOAMPaletteBuffer.aPalette6,b,x
+        dec x
+        dec x
+        bpl -
+
+        plx
+        rtl
+
+        .databank 0
+
+      aUnknown9EE208 ; 9E/E208
+
+        .word $3800, $7FFF, $5BDF, $1E9A, $1551, $0C8A, $0425, $7FBA
+        .word $5EB3, $49EE, $28E6, $1421, $63FA, $2E2D, $1505, $0000
 
     .endsection Unsorted9EE127Section
 

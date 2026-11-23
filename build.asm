@@ -1168,10 +1168,6 @@
 
       .dsection EventScrollFadeProcSection
 
-    .here
-
-    * = $02921E
-    .logical $82921E
 
       .dsection EventPauseProcSection
 
@@ -1306,10 +1302,6 @@
 
       .dsection Unreferenced82EB4CSection
 
-    .here
-
-    * = $02EC70
-    .logical $82EC70
 
       .dsection Unreferenced82EC70Section
 
@@ -6418,10 +6410,6 @@
 
       .dsection Table91B1E3Section
 
-    .here
-
-    * = $11B1FC
-    .logical $91B1FC
 
       .dsection Unsorted91B1FCSection
 
@@ -7428,10 +7416,6 @@
 
       .dsection Unsorted96BE28Section
 
-    .here
-
-    * = $16BFE5
-    .logical $96BFE5
 
       .dsection Unsorted96BFE5Section
 
@@ -7857,24 +7841,15 @@
 
       aUnknownD95000 .binary "gfx/map/UnknownD95000.bin" ; D95000
 
-    .here
-
-    * = $196C00
-    .logical $D96C00
+      aUnknownD96800 .binary "gfx/map/UnknownD96800.bin" ; D96800, unreferenced
 
       gUnknownD96C00 .binary "gfx/ui/tilemaps/UnknownD96C00.bin" ; D96C00
 
-    .here
-
-    * = $197940
-    .logical $D97940
+      gUnknownD97400 .binary "gfx/ui/tilemaps/UnknownD97400.bin" ; D97400, unreferenced
 
       gUnknownD97940 .binary "gfx/ui/tilemaps/UnknownD97940.bin" ; D97940
 
-    .here
-
-    * = $197C00
-    .logical $D97C00
+      gUnknownD97B00 .binary "gfx/ui/tilemaps/UnknownD97B00.bin" ; D97B00, unreferenced
 
       aUnknownD97C00 .binary "gfx/ui/tilemaps/UnknownD97C00.bin" ; D97C00
 
@@ -7911,40 +7886,25 @@
 
       g4bppStandingMapSprites2 .binary "gfx/map/StandingMapSprites2.4bpp" ; DA0000
 
-    .here
-
-    * = $1A6500
-    .logical $DA6500
+      g4bppUnknownDA45C0 .binary "gfx/map/UnknownDA45C0.4bpp" ; DA45C0, unreferenced: 250 tiles, mostly blank
 
       .dsection DataDA6500Section
 
-    .here
-
-    * = $1A6800
-    .logical $DA6800
+      gUnknownDA6700 .binary "gfx/ui/tilemaps/UnknownDA6700.bin" ; DA6700, unreferenced
 
       gUnknownDA6800 .binary "gfx/ui/tilemaps/UnknownDA6800.bin" ; DA6800
 
       gUnknownDA6A40 .binary "gfx/ui/tilemaps/UnknownDA6A40.bin" ; DA6A40
 
-    .here
-
-    * = $1A6D00
-    .logical $DA6D00
+      gUnknownDA6C80 .binary "gfx/ui/tilemaps/UnknownDA6C80.bin" ; DA6C80, unreferenced
 
       gUnknownDA6D00 .binary "gfx/ui/tilemaps/UnknownDA6D00.bin" ; DA6D00
 
-    .here
-
-    * = $1A7000
-    .logical $DA7000
+      gUnknownDA6F40 .binary "gfx/ui/tilemaps/UnknownDA6F40.bin" ; DA6F40, unreferenced
 
       aUnknownDA7000 .binary "gfx/ui/tilemaps/UnknownDA7000.bin" ; DA7000
 
-    .here
-
-    * = $1A7A00
-    .logical $DA7A00
+      gUnknownDA7800 .binary "gfx/ui/tilemaps/UnknownDA7800.bin" ; DA7800, unreferenced
 
       g4bppUnknownDA7A00 .binary "gfx/ui/UnknownDA7A00.4bpp" ; DA7A00
 
@@ -8929,10 +8889,6 @@
 
       .dsection Unsorted9EE127Section
 
-    .here
-
-    * = $1EE228
-    .logical $9EE228
 
       .dsection Unsorted9EE228Section
 
