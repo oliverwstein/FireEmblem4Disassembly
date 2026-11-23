@@ -10412,7 +10412,7 @@
 
         lda aActionStructUnit1.UnitRAMPointer
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown84BB54
+        jsl rlStartBattleSceneOrMapBattle
         rtl
 
         .databank 0

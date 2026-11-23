@@ -2,7 +2,8 @@
 ; aArenaMenuStepHandlers (fight or quit, the wager, continuing or leaving between
 ; rounds, changing weapons), with the menu text and the decompression DMA entries
 ; used when the arena screen is set up (rlArenaScreenSetup), and the opponent
-; window (rsDrawArenaOpponent). Banks $87 and $8A. Its lines are in
+; window (rsDrawArenaOpponent); starting the fight (rlStartArenaBattle) and
+; reading its result (rlGetArenaBattleResult). Banks $84, $87 and $8A. Its lines are in
 ; text/dialogue/Shops with the other keepers'.
 
     .section ArenaMenuSection
@@ -157,7 +158,7 @@
 
         ; Arena menu step 2 (aArenaMenuStepHandlers).
 
-        jsl rlUnknown84B550
+        jsl rlGetArenaBattleResult
         cmp #$0001
         beq _E5E7
         cmp #$0002
@@ -942,7 +943,7 @@
         jsl rlGetSelectedUnitMoney
         sta $0AD9,b
         inc $0AD7,b
-        jsl rlUnknown84B508
+        jsl rlStartArenaBattle
         rts
 
         .databank 0
@@ -1035,7 +1036,7 @@
         sta wNextMenuState,b
         lda $0AD7,b
         beq _EC68
-        jsl rlUnknown84B550
+        jsl rlGetArenaBattleResult
         cmp #$0002
         beq _ECB2
 
@@ -1065,7 +1066,7 @@
         stz wCastleMenuOptionIndex,b
         lda $0AD7,b
         beq _EC68
-        jsl rlUnknown84B550
+        jsl rlGetArenaBattleResult
         cmp #$0002
         beq _ECB2
         rts
@@ -1097,7 +1098,7 @@
         rep #$20
         lda #CASTLE_STEP_REOPEN_TOWN
         sta wGameStateStep,b
-        jsl rlUnknown84B550
+        jsl rlGetArenaBattleResult
         cmp #$0002
         bne _ECDF
         lda $0AD7,b
@@ -1654,7 +1655,7 @@
         rep #$20
         lda $0AD7,b
         beq _E457
-        jsl rlUnknown84B550
+        jsl rlGetArenaBattleResult
         cmp #$0002
         beq _E45D
 
@@ -1704,5 +1705,117 @@
         ; 8A/E4B9
 
     .endsection Unsorted8AE2F8Section
+
+
+    .section Unsorted84B508Section
+
+      .al
+      .xl
+
+      rlStartArenaBattle ; 84/B508
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unless wChapterFlags bit $10 is set, creates the arena opponent as unit $2100 (rlUnknown87A082, rlCreateUnit); returns if rlUnknown87A082 sets carry. Then builds the rounds and starts the battle scene with wBattleType 1 and battle song $3B.
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        lda wSelectedUnitDataRAMPointer,b
+        sta wR0
+        lda #$2100
+        sta wR1
+        lda wChapterFlags,b
+        bit #$0010
+        bne _B530
+        jsl rlUnknown87A082
+        bcs _B54D
+        pha
+        lda #$2100
+        sta wSelectedUnitDataRAMPointer,b
+        pla
+        jsl rlCreateUnit
+
+        _B530
+        jsl rlUnknown84B72C
+        sep #$20
+        lda #$01
+        sta $7E4EA9
+        rep #$20
+        jsl rlActionStructBuildBattleRounds
+        lda #$003B
+        sta wBattleSong
+        jsl rlStartBattleScene
+
+        _B54D
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 84/B550
+
+    .endsection Unsorted84B508Section
+
+
+    .section Unsorted84B550Section
+
+      .al
+      .xl
+
+      rlGetArenaBattleResult ; 84/B550
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = 1 if the unit lost (DeploymentStateDefeated in its state buffer), 0 if it won (aActionStructUnit1.ObtainedArenaMoney is not 0), 2 if neither side fell.
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        phx
+        jsl rlGetSelectedUnitDeploymentOffset
+        tax
+        lda aDeploymentTable._StateBuffer,x
+        bit #$0020
+        bne _B56E
+        lda aActionStructUnit1.ObtainedArenaMoney
+        beq _B573
+        lda #$0000
+        bra _B576
+
+
+        _B56E
+        lda #$0001
+        bra _B576
+
+
+        _B573
+        lda #$0002
+
+        _B576
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 84/B57A
+
+    .endsection Unsorted84B550Section
 
 

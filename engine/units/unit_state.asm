@@ -1206,3 +1206,125 @@
     .endsection Unsorted87A040Section
 
 
+    .section Unsorted84B349Section
+
+      .al
+      .xl
+
+      rlRepairSelectedUnitItem ; 84/B349
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Repairs the item in inventory slot wRoutineVariable1 for rlGetItemRepairCost (half with Bargain). If the unit cannot pay for all of it, buys as many uses as its money pays for at rlGetItemRepairCostPerUse. Carry set and A = 1 if it cannot pay for one use.
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        lda wRoutineVariable1,b
+        jsl rlGetItemROMDataByInventorySlot
+        jsl rlGetItemRepairCost
+        sta wRoutineVariable1,b
+        jsr rsCheckSelectedUnitHasBargain
+        bcc _B363
+        lsr wRoutineVariable1,b
+
+        _B363
+        jsl rlGetSelectedUnitMoney
+        cmp wRoutineVariable1,b
+        bcc _B37A
+        jsl rlSubtractSelectedCharacterMoney
+        jsl rlGetItemMaxDurability2
+        jsl rlSetItemRAMStructEntryDurability
+        bra _B3AE
+
+
+        _B37A
+        jsl rlGetItemRepairCostPerUse
+        sta wRoutineVariable1,b
+        jsr rsCheckSelectedUnitHasBargain
+        bcc _B389
+        lsr wRoutineVariable1,b
+
+        _B389
+        jsl rlGetSelectedUnitMoney
+        cmp wRoutineVariable1,b
+        bcc _B3BB
+        sta wR13
+        lda wRoutineVariable1,b
+        sta wR14
+        jsl rlUnsignedDivide16By16R13
+        jsl rlGetItemCurrentDurability
+        clc
+        adc wR13
+        jsl rlSetItemRAMStructEntryDurability
+        lda wR10
+        jsl rlSetSelectedUnitMoney
+
+        _B3AE
+        jsl rlSaveEquippedWeaponStatBonus
+        plp
+        plb
+        .databank $84
+        clc
+
+        _B3B5
+        rtl
+
+        lda #$0000
+        bra _B3BE
+
+
+        _B3BB
+        lda #$0001
+
+        _B3BE
+        plp
+        plb
+        .databank $84
+        sec
+        bra _B3B5
+
+        .databank 0
+
+        ; 84/B3C3
+
+      rsCheckSelectedUnitHasBargain ; 84/B3C3
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Carry set if the unit, its class or an item it holds has Bargain (as rlCheckUnitHasBargain), keeping the current item pointers.
+
+        lda wCurrentItemDataROMPointer,b
+        pha
+        lda wCurrentItemDataRAMPointer,b
+        pha
+        lda #SkillIDBargain
+        jsl rlCheckIfUnitHasSpecifiedPersonalOrClassSkill
+        bcs _B3DB
+        lda #SkillIDBargain
+        jsl rlCheckIfInventoryItemsHaveSpecifiedSkill
+
+        _B3DB
+        pla
+        sta wCurrentItemDataRAMPointer,b
+        pla
+        sta wCurrentItemDataROMPointer,b
+        rts
+
+        .databank 0
+
+        ; 84/B3E4
+
+    .endsection Unsorted84B349Section
+
+

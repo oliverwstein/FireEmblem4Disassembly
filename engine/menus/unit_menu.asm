@@ -415,7 +415,7 @@
         .autsiz
         .databank ?
 
-        ; A: sets every unit's animation to real or map (rlUnknown84C62E) and closes; B closes. Tells procUnitAnimationMenu through its bitfield.
+        ; A: sets every unit's animation to real or map (rlSetFactionSlotUnitsMapAnimation) and closes; B closes. Tells procUnitAnimationMenu through its bitfield.
 
         lda wJoy1Repeated
         bit #$0800
@@ -454,7 +454,7 @@
         lda aProcSystem.aBody7,b,x
         sta wRoutineVariable1,b
         lda #$0000
-        jsl rlUnknown84C62E
+        jsl rlSetFactionSlotUnitsMapAnimation
         lda #$0004
         sta aProcSystem.wInput0,b
         bra _A846

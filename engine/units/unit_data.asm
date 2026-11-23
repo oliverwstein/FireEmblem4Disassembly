@@ -1278,6 +1278,91 @@
     .endsection UnitDataSection
 
 
+    .section Unsorted8499B5Section
+
+      .al
+      .xl
+
+      rlSaveSelectedUnitTotalStatsToBuffer ; 84/99B5
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Like rlSaveExtendedCharacterDataToBuffer, but with each stat's total (class, items and skills counted) and the unit's movement at +$1C. Writes the structExtendedCharacterDataBuffer at lRAMBufferPointer; the class, leadership and talk target fields are left as they were.
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        phx
+        phy
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+        jsl rlGetSelectedUnitClassDataPointer
+        jsl rlGetSelectedUnitExtendedPersonalDataPointer
+        lda lRAMBufferPointer+1,b
+        sta lR18+1
+        lda lRAMBufferPointer,b
+        sta lR18
+        ldy #$0018
+        lda structExtendedCharacterDataRAM.Experience,b,x
+        and #$00FF
+        sta [lR18],y
+        ldy #$0000
+        jsl rlGetSelectedUnitMaxHP
+        sta [lR18],y
+        ldy #$0002
+        jsl rlGetSelectedUnitTotalStrength
+        sta [lR18],y
+        ldy #$0004
+        jsl rlGetSelectedUnitTotalMagic
+        sta [lR18],y
+        ldy #$0006
+        jsl rlGetSelectedUnitTotalSkill
+        sta [lR18],y
+        ldy #$0008
+        jsl rlGetSelectedUnitTotalSpeed
+        sta [lR18],y
+        ldy #$000A
+        jsl rlGetSelectedUnitTotalDefense
+        sta [lR18],y
+        ldy #$000C
+        jsl rlGetSelectedUnitTotalResistance
+        sta [lR18],y
+        ldy #$000E
+        jsl rlGetSelectedUnitLuck
+        sta [lR18],y
+        ldy #$0012
+        jsl rlGetSelectedUnitLevel
+        sta [lR18],y
+        ldy #$0016
+        jsl rlGetSelectedUnitMoney
+        sta [lR18],y
+        ldy #$001C
+        jsl rlGetSelectedUnitTotalMovement
+        sta [lR18],y
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 84/9A4C
+
+    .endsection Unsorted8499B5Section
     .section LoadExtendedCharacterDataFromBufferSection
 
       .al

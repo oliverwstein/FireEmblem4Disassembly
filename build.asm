@@ -213,7 +213,6 @@
   .include "engine/core/boot.asm"
   .include "engine/core/anti_tamper.asm"
   .include "engine/sound/driver.asm"
-  .include "engine/unsorted/bank84.asm"
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
   .include "engine/battle/map_magic_effects.asm"

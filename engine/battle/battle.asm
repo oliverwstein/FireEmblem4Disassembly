@@ -1781,7 +1781,7 @@
           +
           lda aActionStructUnit1.UnitRAMPointer
           sta wSelectedUnitDataRAMPointer,b
-          jsl rlUnknown84BB54
+          jsl rlStartBattleSceneOrMapBattle
           bra _End
 
           _DE91
@@ -3914,3 +3914,36 @@
         ; 84/EB24
 
     .endsection BattleSection
+
+
+    .section Unsorted84BB54Section
+
+      .al
+      .xl
+
+      rlStartBattleSceneOrMapBattle ; 84/BB54
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Starts the battle as the battle scene, or as a map battle when battle animations are off (rlCheckIfBattleAnimationOFF).
+
+        jsl rlCheckIfBattleAnimationOFF
+        bcs _Off
+
+        ; On
+        jsl rlStartBattleScene
+        bra +
+
+        _Off
+        jsl rlStartMapBattle
+
+        +
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted84BB54Section
+
+

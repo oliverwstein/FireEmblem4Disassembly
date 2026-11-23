@@ -1829,3 +1829,68 @@
         ; 84/8BFE
 
     .endsection UnitsTable848A0DEntriesSection
+
+
+    .section Unsorted848BFESection
+
+      .al
+      .xl
+
+      rlCheckUnitPassesTargetFilter ; 84/8BFE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Runs target filter A (aTargetFilterRoutines) on the unit at deployment offset X, with no range check. Carry set if the unit passes; the selected unit itself never does. Builds the castle's target lists.
+
+        phb
+        phk
+        plb
+        .databank $84
+        phx
+        phy
+        ldy wR0
+        phy
+        phx
+        asl a
+        tax
+        lda aTargetFilterRoutines,x
+        sta wR0
+        plx
+        lda aDeploymentTable._UnitRAMPointer,x
+        cmp wSelectedUnitDataRAMPointer,b
+        beq _8C2E
+        sep #$20
+        lda #$7F
+        pha
+        rep #$20
+        plb
+        .databank $7F
+        txa
+        pea #<>_8C27 - 1
+        jmp (wR0)
+
+
+        _8C27
+        plx
+        stx wR0
+        ply
+        plx
+        plb
+        .databank $7F
+        rtl
+
+
+        _8C2E
+        clc
+        bra _8C27
+
+        .databank 0
+
+        ; 84/8C31
+
+    .endsection Unsorted848BFESection
+
+

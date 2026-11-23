@@ -2,6 +2,57 @@
 ; Valkyrie, status), Sol healing, level-up and dropped-item results, and a
 ; percentage-chance roll.
 
+    .section Unsorted84EB24Section
+
+      .al
+      .xl
+
+      rsActionStructStaffEffectRefresh ; 84/EB24
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: aActionStructStaffEffects does not list it. Takes the staff's target out of the grayed state (DeploymentStateGrayed), so it can act again, sets wChapterFlags bit $04, and charges the staff's use like the other staff effects.
+
+        ldx $CCD8,b
+        ldy $CCDA,b
+        lda #$0002
+        tsb $CCDE,b
+        jsr rsUnknown84E62C
+        phx
+        lda $0000,b,y
+        tax
+        lda aDeploymentTable._StateBuffer,x
+        and #$FFF7
+        sta aDeploymentTable._StateBuffer,x
+        lda #$0004
+        tsb wChapterFlags,b
+        plx
+        lda $0006,b,x
+        sta wSelectedUnitDataRAMPointer,b
+        lda $0026,b,x
+        and #$00FF
+        jsl rlGetInventorySlotStaffCostValue
+        sta $001A,b,x
+        sep #$20
+        lda #$00
+        sta $7ECCDF
+        rep #$20
+        lda #$003A
+        sta $4EB3,b
+        clc
+        rts
+
+        .databank 0
+
+        ; 84/EB6F
+
+    .endsection Unsorted84EB24Section
+
+
     .section StaffEffectClearStatusSection
 
       .al
@@ -836,5 +887,3 @@
         ; 87/B01D
 
     .endsection Unsorted87AF46Section
-
-

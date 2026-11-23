@@ -2288,7 +2288,7 @@
         .autsiz
         .databank ?
 
-        ; Sub-state $0F: yes repairs the item (rlUnknown84B349).
+        ; Sub-state $0F: yes repairs the item (rlRepairSelectedUnitItem).
 
         jsr rsPushInventoryItemTypeIcon
         lda #$2000
@@ -2333,7 +2333,7 @@
 
 
         _CCB6
-        jsl rlUnknown84B349
+        jsl rlRepairSelectedUnitItem
         bcs _CCCD
         lda #$0070
         jsl rlPlaySoundEffect2

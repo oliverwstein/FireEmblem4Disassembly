@@ -30,10 +30,10 @@
         sta lRAMBufferPointer+1,b
         lda #$EB66
         sta lRAMBufferPointer,b
-        jsl rlUnknown8499B5
+        jsl rlSaveSelectedUnitTotalStatsToBuffer
         jsl rlClearBattleData
         ldx #$4EB5
-        jsr rsUnknown84AC24
+        jsr rsClassChangeSetUpActionStruct
         pla
         jsl rlSetSelectedUnitClass
         jsl rlGetSelectedUnitDeploymentOffset
@@ -46,11 +46,11 @@
         sta lRAMBufferPointer+1,b
         lda #$EBF4
         sta lRAMBufferPointer,b
-        jsl rlUnknown8499B5
+        jsl rlSaveSelectedUnitTotalStatsToBuffer
         ldx #$4F15
-        jsr rsUnknown84AC24
+        jsr rsClassChangeSetUpActionStruct
         ldx #$4EF5
-        jsr rsUnknown84AC50
+        jsr rsClassChangeStoreStatGains
         lda #$FFFF
         sta $7E4F85
         sep #$20
@@ -73,6 +73,115 @@
     .endsection Unsorted84ABB0Section
 
 
+    .section Unsorted84AC24Section
+
+      .al
+      .xl
+
+      rsClassChangeSetUpActionStruct ; 84/AC24
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Fills the action struct at X for the selected unit (rlActionStructGetBasicBattleData), with its hit, might and defense set to $FF.
+
+        phb
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+        lda #$0000
+        sta $0000,b,x
+        lda wSelectedUnitDataRAMPointer,b
+        sta $0006,b,x
+        lda #$0001
+        sta wR0
+        jsl rlActionStructGetBasicBattleData
+        lda #$00FF
+        sta $003A,b,x
+        sta $003C,b,x
+        sta $0032,b,x
+        plb
+        .databank $7E
+        rts
+
+        .databank 0
+
+        ; 84/AC50
+
+      rsClassChangeStoreStatGains ; 84/AC50
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Fills the level up data at X (aActionStructUnit1.LevelUpData) for the class change scene: each stat before the change (aUnit1DataBuffer) and its gain (aUnit2DataBuffer, after the change, minus before). The HP and luck gains are 0.
+
+        phb
+        sep #$20
+        lda #$7E
+        pha
+        rep #$20
+        plb
+        .databank $7E
+        lda aUnit1DataBuffer._Extended.HP
+        sta $0000,b,x
+        lda #$0000
+        sta $0010,b,x
+        lda aUnit1DataBuffer._Extended.Strength
+        sta $0002,b,x
+        lda aUnit2DataBuffer._Extended.Strength
+        sec
+        sbc aUnit1DataBuffer._Extended.Strength
+        sta $0012,b,x
+        lda aUnit1DataBuffer._Extended.Magic
+        sta $0004,b,x
+        lda aUnit2DataBuffer._Extended.Magic
+        sec
+        sbc aUnit1DataBuffer._Extended.Magic
+        sta $0014,b,x
+        lda aUnit1DataBuffer._Extended.Skill
+        sta $0006,b,x
+        lda aUnit2DataBuffer._Extended.Skill
+        sec
+        sbc aUnit1DataBuffer._Extended.Skill
+        sta $0016,b,x
+        lda aUnit1DataBuffer._Extended.Speed
+        sta $0008,b,x
+        lda aUnit2DataBuffer._Extended.Speed
+        sec
+        sbc aUnit1DataBuffer._Extended.Speed
+        sta $0018,b,x
+        lda aUnit1DataBuffer._Extended.Defense
+        sta $000A,b,x
+        lda aUnit2DataBuffer._Extended.Defense
+        sec
+        sbc aUnit1DataBuffer._Extended.Defense
+        sta $001A,b,x
+        lda aUnit1DataBuffer._Extended.Resistance
+        sta $000C,b,x
+        lda aUnit2DataBuffer._Extended.Resistance
+        sec
+        sbc aUnit1DataBuffer._Extended.Resistance
+        sta $001C,b,x
+        lda aUnit1DataBuffer._Extended.Luck
+        sta $000E,b,x
+        lda #$0000
+        sta $001E,b,x
+        plb
+        .databank $7E
+        rts
+
+        .databank 0
+
+        ; 84/ACE7
+
+    .endsection Unsorted84AC24Section
     .section Unsorted8AECEFSection
 
       .al

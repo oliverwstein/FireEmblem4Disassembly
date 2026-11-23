@@ -1,4 +1,6 @@
-; Factions: faction slots, groups and their relations to each other.
+; Factions: faction slots, groups and their relations to each other, and the
+; love points the player's women gain at the start of each player phase
+; (rlAddTurnStartLovePoints).
 
     .section GetSelectedUnitFactionNameIDSection
 
@@ -1653,11 +1655,13 @@
 
         .databank 0
 
-      rlUnknown84C33D ; 84/C33D
+      rlAddTurnStartLovePoints ; 84/C33D
 
         .al
         .autsiz
         .databank ?
+
+        ; Map step 4, at the start of the player phase before turn 51: each woman (generation ID 16 and up) of the player's faction gains love points with each man of it (rsAddLoveGrowthWithEachMan), and each living woman gains 5 more with each player man next to her (rsAddAdjacentLovePoints).
 
         phb
         php
@@ -1673,7 +1677,7 @@
           bne _End
 
             lda #0
-            jsl rlUnknown84C412
+            jsl rlListFactionSlotUnitsByGenerationID
 
             ldx #(9 - 1) * size(word)
 
@@ -1685,7 +1689,7 @@
                 jsl rlGetSelectedUnitGenerationID
                 bcs +
 
-                  jsr rsUnknown84C398
+                  jsr rsAddLoveGrowthWithEachMan
 
               +
               dec x
@@ -1707,7 +1711,7 @@
                   cmp #$0010
                   bcc +
 
-                    jsr rsUnknown84C3C1
+                    jsr rsAddAdjacentLovePoints
 
               +
               dec x
@@ -1725,6 +1729,184 @@
         ; 84/C398
 
     .endsection FactionRelationsSection
+
+
+    .section Unsorted84C398Section
+
+      .al
+      .xl
+
+      rsAddLoveGrowthWithEachMan ; 84/C398
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; For the selected woman: adds her love growth (rlGetUnitLoveGrowthWithTarget) with each man listed at $7E2000 (generation IDs 1-15).
+
+        phx
+        phy
+        ldy wSelectedUnitDataRAMPointer,b
+        ldx #$001C
+
+        _C3A0
+        lda $7E2000,x
+        beq _C3BA
+        sta wRoutineVariable1,b
+        sty wSelectedUnitDataRAMPointer,b
+        jsl rlGetUnitLoveGrowthWithTarget
+        sta wRoutineVariable1,b
+        txa
+        lsr a
+        inc a
+        jsl rlModifyUnitsLovePoints
+
+        _C3BA
+        dec x
+        dec x
+        bpl _C3A0
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 84/C3C1
+
+      rsAddAdjacentLovePoints ; 84/C3C1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; For the woman at deployment offset X: adds 5 love points (6 minus the distance) with each living man of faction slot 0 next to her.
+
+        phx
+        phy
+        stx wR0
+        ldx #$008E
+
+        _C3C8
+        lda aDeploymentTable,x
+        bit #$0080
+        beq _C40B
+        lda aDeploymentTable._FactionSlot,x
+        bne _C40B
+        stx wR1
+        jsl rlGetUnitsDistance
+        cmp #$0002
+        bcs _C40B
+        sta wRoutineVariable1,b
+        lda #$0006
+        sec
+        sbc wRoutineVariable1,b
+        sta wRoutineVariable1,b
+        ldy wSelectedUnitDataRAMPointer,b
+        lda aDeploymentTable._UnitRAMPointer,x
+        sta wSelectedUnitDataRAMPointer,b
+        jsl rlGetSelectedUnitGenerationID
+        bcs _C40B
+        cmp #$0010
+        bcs _C40B
+        sty wSelectedUnitDataRAMPointer,b
+        jsl rlModifyUnitsLovePoints
+
+        _C40B
+        dec x
+        dec x
+        bpl _C3C8
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 84/C412
+
+    .endsection Unsorted84C398Section
+
+
+    .section Unsorted84C412Section
+
+      .al
+      .xl
+
+      rlListFactionSlotUnitsByGenerationID ; 84/C412
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Lists the units of faction slot A at $7E2000 by generation ID: entry (ID - 1) holds the unit's RAM pointer, 0 for none (24 entries).
+
+        ; A = FactionSlot?
+
+        phb
+        php
+        phk
+        plb
+        phx
+        phy
+
+        ldx wSelectedUnitDataRAMPointer,b
+        phx
+        ldx wRoutineVariable1,b
+        phx
+
+        tay
+        ldx #(24 - 1) * size(word)
+        lda #0
+        
+          -
+          sta $7E2000,x
+          dec x
+          dec x
+          bpl -
+
+        ldx #1
+        
+          -
+          stx wRoutineVariable1,b
+          tya
+          jsl rlGetUnitRAMDataPointerByFactionSlotEntryID
+
+          lda wSelectedUnitDataRAMPointer,b
+          beq _End
+
+            jsl rlGetSelectedUnitGenerationID
+            bcs +
+
+              phx
+              dec a
+              asl a
+              tax
+              lda wSelectedUnitDataRAMPointer,b
+              sta $7E2000,x
+              plx
+
+          +
+          inc x
+          bra -
+        
+        _End
+        plx
+        stx wRoutineVariable1,b
+        plx
+        stx wSelectedUnitDataRAMPointer,b
+
+        ply
+        plx
+        plp
+        plb
+        rtl
+
+        .databank 0
+
+        ; 84/C461
+
+    .endsection Unsorted84C412Section
 
 
     .section FactionUnitsSection
@@ -2045,3 +2227,61 @@
         ; 84/C5D7
 
     .endsection FactionUnitsSection
+
+
+    .section Unsorted84C62ESection
+
+      .al
+      .xl
+
+      rlSetFactionSlotUnitsMapAnimation ; 84/C62E
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sets the map animation of every unit of faction slot A to wRoutineVariable1 (rlSetSelectedUnitMapAnimation).
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        phx
+        phy
+        ldx wR0
+        phx
+        tay
+        lda wRoutineVariable1,b
+        sta wR0
+        ldx #$0001
+
+        _C640
+        stx wRoutineVariable1,b
+        tya
+        jsl rlGetUnitRAMDataPointerByFactionSlotEntryID
+        lda wSelectedUnitDataRAMPointer,b
+        beq _C656
+        lda wR0
+        jsl rlSetSelectedUnitMapAnimation
+        inc x
+        bra _C640
+
+
+        _C656
+        plx
+        stx wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 84/C65E
+
+    .endsection Unsorted84C62ESection

@@ -431,12 +431,12 @@
         .autsiz
         .databank ?
 
-        ; Map step 4: unless an event is running, the turn start love points (rlUnknown84C33D), the turn start effects of the army's units, the AI engine on, and the phase music if the army takes a phase.
+        ; Map step 4: unless an event is running, the turn start love points (rlAddTurnStartLovePoints), the turn start effects of the army's units, the AI engine on, and the phase music if the army takes a phase.
 
         lda wEventEngineFlags,b
         bne _End
 
-          jsl rlUnknown84C33D
+          jsl rlAddTurnStartLovePoints
 
           lda wActiveFactionSlot,b
           jsl rlRunTurnStartEffectsForAllUnitsInFaction

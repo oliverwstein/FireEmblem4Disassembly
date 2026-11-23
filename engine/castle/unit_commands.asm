@@ -592,7 +592,7 @@
         .autsiz
         .databank ?
 
-        ; Lists the units in aCastleUnitDeploymentOffsets that pass rlUnknown848BFE for target type wRoutineVariable1, at $7E2100 (count) and $7E2102.
+        ; Lists the units in aCastleUnitDeploymentOffsets that pass rlCheckUnitPassesTargetFilter for target type wRoutineVariable1, at $7E2100 (count) and $7E2102.
 
         phx
         lda #$0000
@@ -605,7 +605,7 @@
         phx
         tax
         lda wRoutineVariable1,b
-        jsl rlUnknown848BFE
+        jsl rlCheckUnitPassesTargetFilter
         plx
         bcc _9FEC
         lda aCastleUnitDeploymentOffsets,x
