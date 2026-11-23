@@ -195,7 +195,7 @@
 
         jsl rlLoadMapMenuEntryPointerFromProcBody
         jsl rlDrawMapMenuBG3
-        lda #$838B
+        lda #<>rlProcMapMenuWaitForButtonCycle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 

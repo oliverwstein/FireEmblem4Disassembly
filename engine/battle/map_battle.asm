@@ -9951,9 +9951,9 @@
         sta $7F57EA
         lda aMapAction.lUnknown7F4598+1
         sta $7F57EC
-        lda #$9E00
+        lda #(`aUnknown9ED900)<<8
         sta aMapAction.lUnknown7F4598+1
-        lda #$D900
+        lda #<>aUnknown9ED900
         sta aMapAction.lUnknown7F4598
         bra _D857
 
@@ -9963,9 +9963,9 @@
         sta $7F57EA
         lda aMapAction.lUnknown7F459B+1
         sta $7F57EC
-        lda #$9E00
+        lda #(`aUnknown9ED900)<<8
         sta aMapAction.lUnknown7F459B+1
-        lda #$D900
+        lda #<>aUnknown9ED900
         sta aMapAction.lUnknown7F459B
 
         _D857

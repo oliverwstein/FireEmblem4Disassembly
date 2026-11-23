@@ -331,17 +331,17 @@
         beq _BFC0
 
         _BF50
-        lda #$8A00
+        lda #(`aItemShopOptions)<<8
         sta lKeeperOptionList+1
-        lda #$D074
+        lda #<>aItemShopOptions
         sta lKeeperOptionList
         bra _BFD0
 
 
         _BF60
-        lda #$8A00
+        lda #(`aSecondhandShopOptions)<<8
         sta lKeeperOptionList+1
-        lda #$D07A
+        lda #<>aSecondhandShopOptions
         sta lKeeperOptionList
         bra _BFD0
 
@@ -355,9 +355,9 @@
 
 
         _BF80
-        lda #$8A00
+        lda #(`aDepotOptions)<<8
         sta lKeeperOptionList+1
-        lda #$D083
+        lda #<>aDepotOptions
         sta lKeeperOptionList
         bra _BFD0
 
@@ -387,9 +387,9 @@
 
 
         _BFC0
-        lda #$8A00
+        lda #(`aUnknown8AD08A)<<8
         sta lKeeperOptionList+1
-        lda #$D08A
+        lda #<>aUnknown8AD08A
         sta lKeeperOptionList
         bra _BFD0
 

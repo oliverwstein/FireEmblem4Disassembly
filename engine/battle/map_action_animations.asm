@@ -2443,9 +2443,9 @@
         sta $7F57EA
         lda aMapAction.lUnknown7F4598+1
         sta $7F57EC
-        lda #$9E00
+        lda #(`aUnknown9EDE89)<<8
         sta aMapAction.lUnknown7F4598+1
-        lda #$DE89
+        lda #<>aUnknown9EDE89
         sta aMapAction.lUnknown7F4598
         lda aMapAction.wUnknown7F4558
         tay
