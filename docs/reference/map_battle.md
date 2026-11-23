@@ -68,6 +68,12 @@ The starters share effects: Heal's (sound `$71`, `procMapMagicHealingStaff`) als
 - **Scripted critical** (`procScriptedCritStart`, `procScriptedCritEffect`): before a battle with a scripted critical (`rlUnknown84DE36`), the critical's effect plays on the map (`aMapBattleScriptedCritSprites`).
 - **Warp away / warp in** (`procWarpAway`, `procWarpIn`) and **the Belhalla mages** (`procBelhallaAttackingMage`, `procBelhallaMagesBlast`), from event ASMCs.
 
+## Sprites
+
+Each side gets a main sprite and, for the mounted and flying classes (byte `$30` of their row in `aBattleMapSpriteData`, `wSideTallSprite`), an aux sprite. Their definitions are built in RAM (`rlInitMapBattleSpriteInfos`, `$7EFC88`) because their scripts are in the decompressed sprite data (bank `$7E`). A class's row holds, per facing (0-7), a long pointer to its sprite data and one to its graphics (`rlQueueMapBattleSpriteGraphics`). The sprite data has one block per weapon type: a frame table, then script pairs (main, aux): +6 wait for a round, +`$0A` dodge, +`$0E` strike, +`$12` strike at range (with the magic effect). `rsGetMapBattleRoundScripts` picks a pair per round; sprite commands `$09`/`$0A` jump to it. A strike is a handshake: the striker's script runs `$04` (`wMapBattleStrikeSignal`, the hit sound), the struck side recoils and flashes, `$05` waits until the signal is cleared and sets `wMapBattleStrikeDone`, `$07` waits for that, `$0D` ends the round. The ballista uses `$1B` (fire), `$1A` (bolt progress) and `$1C` (landed); the bolt flies 16 frames along an arc chosen by distance (`aBallistaBoltArcs`). The commands' macros are in `include/ActiveSpriteEngine.h`; `tools/sprite_scripts.py` writes them.
+
+Other pieces: the weapon icon over each unit (`rlUploadMapBattleWeaponIcon`), the shadow, the level up banner and stat gains (`g4bppMapBattleLevelUpText`), the defeat blink (`rlMapBattleDefeatBlink`), the skill activation effect (`rlMapBattleStartSkillEffect`: BG palette 13 by skill, sound `$3D`), a status sword's staff effect after its strike (`rlMapBattleStartStatusSwordEffect`). A battle on the castle screen (`wBattleType` 3) uses the courtyard sprite positions and hides the units with `DeploymentStateHiddenInCastle`. Staves that change no HP (Fortify, Return, Warp, Rescue, Restore, Silence, Sleep, Berserk, Thief) open no HP windows (`rlCheckMapBattleNoHPChange`).
+
 ## Depends on
 
 - **Battle** (bank `$84`): the action structs and `aBattleRoundsData`.
@@ -82,4 +88,6 @@ The starters share effects: Heal's (sound `$71`, `procMapMagicHealingStaff`) als
 - The sprite, palette and animation helpers that are still `Unknown`.
 - What `wMapMagicFlags`' edge bits change: they pick the HDMA line counts in `aMapMagicWindowLines` (`rsSetMapMagicWindowLines`).
 - Who sets the effect number `$27` (Berserk) in `event_scripts.asm` (near `$9E/ECA4`), and for which scene.
-- Active sprite commands `$03`-`$0F`, `$13`, `$18`, `$1A`-`$1C` have no macro yet (map battle internals); the map battle's own scripts in bank `$9E` are still `.byte` rows.
+- The round entry `$7F00` makes the battle signal a waiting event and pause (`rlMapBattleSignalEventMarker`); which events use it.
+- Words +2 and +4 of each weapon block in the sprite data.
+- Scripted critical type 4: nothing found sets it.
