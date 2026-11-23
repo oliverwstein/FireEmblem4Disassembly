@@ -2,6 +2,175 @@
 ; drawn with. rlLoadChapterMapLayout and rlLoadChapterMapGraphics load the entry for
 ; wCurrentChapter.
 
+    .section ChapterMapLoadingSection
+
+      .al
+      .xl
+
+      rlLoadChapterMapLayout ; 88/9268
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Decompresses wCurrentChapter's map layout to aMapData and its tile entries to $7F0000, sets wMapWidthMode, $075E and the scroll limits, and decompresses the terrain table.
+
+        lda wCurrentChapter,b
+        asl a
+        clc
+        adc wCurrentChapter,b
+        tax
+        lda aChapterMapPointers+1,x
+        sta lR19+1
+        lda aChapterMapPointers,x
+        sta lR19
+        ldy #$0000
+        lda [lR19],y
+        sta lR45
+        ldy #$0001
+        lda [lR19],y
+        sta lR45+1
+        lda #(`aMapData)<<8
+        sta lR47+1
+        lda #<>aMapData
+        sta lR47
+        jsl rlDecompressSingle
+        ldy #$0003
+        lda [lR19],y
+        sta lR45
+        ldy #$0004
+        lda [lR19],y
+        sta lR45+1
+        lda #$7F00
+        sta lR47+1
+        lda #$0000
+        sta lR47
+        jsl rlDecompressSingle
+        ldy #$000C
+        lda [lR19],y
+        sta wUnknown00075C,b
+        inc y
+        inc y
+        lda [lR19],y
+        sta $075E,b
+        inc y
+        inc y
+        lda [lR19],y
+        sta wMapMinXScroll,b
+        inc y
+        inc y
+        lda [lR19],y
+        sta wMapMinYScroll,b
+        inc y
+        inc y
+        lda [lR19],y
+        sec
+        sbc #$0100
+        sta wMapMaxXScroll,b
+        inc y
+        inc y
+        lda [lR19],y
+        sec
+        sbc #$00E0
+        sta wMapMaxYScroll,b
+        ldy #$0018
+        lda [lR19],y
+        sta lR45
+        ldy #$0019
+        lda [lR19],y
+        sta lR45+1
+        lda #(`aTerrainTileset)<<8
+        sta lR47+1
+        lda #<>aTerrainTileset
+        sta lR47
+        jsl rlDecompressSingle
+        rtl
+
+        .databank 0
+
+        ; 88/9305
+
+      rlLoadChapterMapGraphics ; 88/9305
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Decompresses wCurrentChapter's map tile graphics and copies them to VRAM $2800, then copies its palettes into BG palettes 1-7.
+
+        lda wCurrentChapter,b
+        asl a
+        clc
+        adc wCurrentChapter,b
+        tax
+        lda aChapterMapPointers+1,x
+        sta lR19+1
+        lda aChapterMapPointers,x
+        sta lR19
+        ldy #$0006
+        lda [lR19],y
+        sta lR45
+        ldy #$0007
+        lda [lR19],y
+        sta lR45+1
+        lda #(`aDecompressionBuffer)<<8
+        sta lR47+1
+        lda #<>aDecompressionBuffer
+        sta lR47
+        jsl rlDecompressSingle
+        lda #(`aDecompressionBuffer)<<8
+        sta lR20+1
+        lda #<>aDecompressionBuffer
+        sta lR20
+        sep #$20
+        lda #$80
+        sta $2115,b
+        lda #$00
+        sta $4315,b
+        lda #$20
+        sta $4316,b
+        lda #$18
+        sta $4311,b
+        lda lR20
+        sta $4312,b
+        lda lR20+1
+        sta $4313,b
+        lda lR20+2
+        sta $4314,b
+        lda #$00
+        sta $2116,b
+        lda #$28
+        sta $2117,b
+        lda #$01
+        sta $4310,b
+        lda #$02
+        sta $420B,b
+        rep #$20
+        ldy #$000A
+        lda [lR19],y
+        sta lR20+1
+        ldy #$0009
+        lda [lR19],y
+        sta lR20
+        ldy #$00DE
+
+        _938C
+        lda [lR20],y
+        sta aBGPaletteBuffer.aPalette1,b,y
+        dec y
+        dec y
+        bpl _938C
+        rtl
+
+        .databank 0
+
+        ; 88/9396
+
+    .endsection ChapterMapLoadingSection
+
+
     .section ChapterMapsSection
 
       .al

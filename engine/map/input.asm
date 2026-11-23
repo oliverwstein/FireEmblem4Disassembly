@@ -1,4 +1,8 @@
-; Handling controller input on the map.
+; The map's buttons while the cursor is free (rsMapInputHandler): A selects a unit,
+; sets its destination or opens the map menu; B puts a selected unit down; X opens
+; the status screen; Start the minimap; R sends the cursor to the next unit that
+; can act; L jumps between castles. Also entering the castle courtyard or town
+; from the map. Bank $88.
 
     .section MapInputHandlerSection
 
@@ -876,5 +880,105 @@
         ; 88/B64F
 
     .endsection Unsorted88B51ASection
+
+
+    .section Unsorted88B366Section
+
+      .al
+      .xl
+
+      rlOpenSoloConversationFromMap ; 88/B366
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        tsb wConversationFlags,b
+        lda #$0002
+        tsb wConversationFlags,b
+        lda #$0004
+        tsb wConversationFlags,b
+        lda #$0008
+        tsb wConversationFlags,b
+        lda wSelectedUnitDataRAMPointer,b
+        sta wConversationLeftUnit,b
+        lda wSelectedUnitDataRAMPointer,b
+        sta wConversationRightUnit,b
+        lda #CONVERSATION_EXIT_MAP
+        sta wConversationExitMode,b
+        jsl rlSaveMapCameraAndLockCursor
+        lda #CASTLE_SCREEN_CONVERSATION
+        sta wCastleScreenHandler,b
+        lda #<>rsOpenCastleScreen
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 88/B3AF
+
+    .endsection Unsorted88B366Section
+
+
+    .section Unsorted88B3DFSection
+
+      .al
+      .xl
+
+      rlGetTileEntriesAtCursor ; 88/B3DF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        lda wCursorXOffset,b
+        sta wR10
+        lda wCursorYOffset,b
+        sta wR11
+        jsl rlGetTileAtScreenPosition
+        lda wR10
+        sta wR0
+        lda wR11
+        sta wR1
+        jsl rlGetMapDataIndex
+        tax
+        lda aMapData,x
+        and #$03FF
+        asl a
+        asl a
+        asl a
+        tax
+        lda $7F0000,x
+        and #$DFFF
+        sta wR0
+        lda $7F0002,x
+        and #$DFFF
+        sta wR1
+        lda $7F0004,x
+        and #$DFFF
+        sta wR2
+        lda $7F0006,x
+        and #$DFFF
+        sta wR3
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 88/B42C
+
+    .endsection Unsorted88B3DFSection
 
 

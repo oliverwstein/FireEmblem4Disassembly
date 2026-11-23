@@ -1120,3 +1120,125 @@
         ; 84/FE98
 
     .endsection BattleStatsSection
+
+
+    .section Unsorted84FE98Section
+
+      .al
+      .xl
+
+      rlGetSelectedUnitFirstWeaponHit ; 84/FE98
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Takes the first weapon in the unit's inventory as the item for the calculation (rlGetFirstEquippableWeaponInInventory) and returns the unit's battle hit.
+
+        jsl rlGetFirstEquippableWeaponInInventory
+        jsl rlGetSelectedUnitBattleHit
+        rtl
+
+        .databank 0
+
+        ; 84/FEA1
+
+      rlGetSelectedUnitFirstWeaponAvoid ; 84/FEA1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Takes the first weapon in the unit's inventory as the item for the calculation and returns the unit's battle avoid. A goes on to rlGetSelectedUnitBattleAvoid as its terrain argument: negative leaves the terrain bonus out.
+
+        pha
+        jsl rlGetFirstEquippableWeaponInInventory
+        pla
+        jsl rlGetSelectedUnitBattleAvoid
+        rtl
+
+        .databank 0
+
+        ; 84/FEAC
+
+    .endsection Unsorted84FE98Section
+
+
+    .section Unsorted84FEACSection
+
+      .al
+      .xl
+
+      rlGetSelectedUnitFirstWeaponCrit ; 84/FEAC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetFirstEquippableWeaponInInventory
+        jsl rlGetSelectedUnitBattleCrit
+        rtl
+
+        .databank 0
+
+        ; 84/FEB5
+
+      rlGetSelectedUnitFirstWeaponAttackSpeed ; 84/FEB5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlGetFirstEquippableWeaponInInventory
+        jsl rlGetSelectedUnitBattleAttackSpeed
+        rtl
+
+        .databank 0
+
+        ; 84/FEBE
+
+    .endsection Unsorted84FEACSection
+
+
+    .section Unsorted84FEBESection
+
+      .al
+      .xl
+
+      rlGetSelectedUnitFirstWeaponWeightUnused ; 84/FEBE
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing reaches this. The weight of the first weapon in the unit's inventory.
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        jsl rlGetFirstEquippableWeaponInInventory
+        lda wCurrentItemDataROMPointer,b
+        beq _FECF
+        jsl rlGetItemWeight
+
+        _FECF
+        plp
+        plb
+        .databank $84
+        rtl
+
+        .databank 0
+
+        ; 84/FED2
+
+    .endsection Unsorted84FEBESection
+
+

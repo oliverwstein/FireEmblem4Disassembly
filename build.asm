@@ -91,8 +91,12 @@
   .include "engine/core/random.asm"
   .include "engine/map/deployment.asm"
   .include "engine/map/locations.asm"
+  .include "engine/map/map_display.asm"
   .include "engine/map/scroll.asm"
+  .include "engine/map/map_tilemap.asm"
   .include "engine/map/range_maps.asm"
+  .include "engine/map/camera.asm"
+  .include "engine/map/minimap.asm"
   .include "engine/units/classes.asm"
   .include "engine/units/factions.asm"
   .include "engine/units/generations.asm"
@@ -142,6 +146,7 @@
   .include "engine/events/event_engine.asm"
   .include "engine/events/event_procs.asm"
   .include "engine/events/event_scripts.asm"
+  .include "engine/events/first_generation_ending.asm"
   .include "engine/worldmap/highlight.asm"
   .include "engine/worldmap/markers.asm"
   .include "engine/worldmap/portraits.asm"
@@ -156,15 +161,20 @@
   .include "engine/events/cutscenes.asm"
   .include "engine/events/event_movement.asm"
   .include "engine/events/talk_events.asm"
+  .include "engine/demo/demo_battles.asm"
   .include "engine/map/chapter_maps.asm"
   .include "engine/map/input.asm"
+  .include "engine/map/map_cursor.asm"
   .include "engine/map/map_sprites.asm"
+  .include "engine/map/unit_movement.asm"
   .include "engine/map/popups.asm"
   .include "engine/map/phase_banner.asm"
   .include "engine/map/windows.asm"
+  .include "engine/map/map_actions.asm"
   .include "engine/menus/map_menu.asm"
   .include "engine/menus/main_map_menu.asm"
   .include "engine/menus/unit_menu.asm"
+  .include "engine/menus/unit_menu_slots.asm"
   .include "engine/menus/item_list.asm"
   .include "engine/menus/battle_forecast.asm"
   .include "engine/menus/inventory_full.asm"
@@ -180,7 +190,6 @@
   .include "engine/sound/driver.asm"
   .include "engine/unsorted/bank81.asm"
   .include "engine/unsorted/bank84.asm"
-  .include "engine/unsorted/bank88.asm"
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
   .include "engine/unsorted/bank8D.asm"
@@ -2927,6 +2936,8 @@
 
       .dsection Unsorted888F32Section
 
+      .dsection ChapterMapLoadingSection
+
       .dsection ProcScript889396Section
 
       .dsection Unsorted88939ESection
@@ -3044,6 +3055,8 @@
     .logical $88A81D
 
       .dsection Unsorted88A81DSection
+
+      .dsection WalkUnitAlongPathSection
 
       .dsection Unsorted88AB2CSection
 
@@ -3288,6 +3301,8 @@
       .dsection Unsorted88E401Section
 
       .dsection Table88E9E4Section
+
+      .dsection MapCursorSpritesSection
 
       .dsection Unsorted88EEB1Section
 

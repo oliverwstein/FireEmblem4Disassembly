@@ -1,6 +1,11 @@
-; Map sprites: the active sprite for a unit on the map, moving map sprites and
-; their movement sounds, and hiding, revealing or flickering a faction's units.
-; The unknown routines here sit among them in the ROM.
+; Map sprites: event movers (aMovingMapSprites) and their movement sounds, hiding,
+; revealing or flickering a faction's units, and in bank $88 the animation: every
+; deployed unit drawn each VBlank (rlDrawDeployedUnitMapSprites), the standing
+; frames queued eight units at a time (rlQueueStandingMapSpriteFrames) and
+; uploaded with the two animated map tile sets (rlUploadMapAnimations), the moving
+; unit's walking sprite, and the map sprite helpers of the unit window and status
+; screen. wMapSpriteAnimationPauseFlags pauses the sprites (bit 15) or the tiles
+; (bit 0). The unknown routines here sit among them in the ROM.
 
     .section MapSpriteSection
 
@@ -2220,5 +2225,3421 @@
         .databank 0
 
     .endsection Unsorted87C056Section
+
+
+    .section Unsorted88C7CFSection
+
+      .al
+      .xl
+
+      rlAnimateMapSprites ; 88/C7CF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Each frame of the map (rlMapUpkeep): queues the standing map sprite frames for this frame count (rlQueueStandingMapSpriteFrames).
+
+        phb
+        lda wVBlankEnabledFramecount
+        jsl rlQueueStandingMapSpriteFrames
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 88/C7D8
+
+    .endsection Unsorted88C7CFSection
+
+
+    .section Unsorted88C7D8Section
+
+      .al
+      .xl
+
+      rsDrawMovingSpritesTestUnused ; 88/C7D8
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing reaches this. Sets up four moving map sprites with fixed sprites and draws them in a diagonal from the cursor; apparently a test.
+
+        lda #$0000
+        sta aMovingMapSpritesMapSprites,b
+        lda #$8000
+        sta $0869,b
+        lda #$0002
+        sta $086B,b
+        lda #$8002
+        sta $086D,b
+        lda wUnknown0007E2,b
+        sta @l wUnknown000911
+        sta @l $000913
+        sta @l $000915
+        sta @l $000917
+        ldx #$0006
+
+        _C806
+        lda #$0400
+        sta wR5
+        jsl rlAnimateMovingMapSprite
+        lda wR0
+        clc
+        adc wCursorXOffset,b
+        clc
+        adc aMovingSpritesTestXOffsetsUnused,x
+        sta wR0
+        lda wR1
+        clc
+        adc wCursorYOffset,b
+        clc
+        adc aMovingSpritesTestYOffsetsUnused,x
+        sta wR1
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+        dec x
+        dec x
+        bpl _C806
+        rts
+
+        .databank 0
+
+        ; 88/C834
+
+    .endsection Unsorted88C7D8Section
+
+
+    .section Table88C834Section
+
+      .al
+      .xl
+
+      aMovingSpritesTestXOffsetsUnused ; 88/C834
+
+        ; Read by rsDrawMovingSpritesTestUnused.
+
+        .word $0000, $0020, $0030, $0040
+
+        ; 88/C83C
+
+    .endsection Table88C834Section
+
+
+    .section Data88C83CSection
+
+      .al
+      .xl
+
+      aMovingSpritesTestYOffsetsUnused ; 88/C83C
+
+        ; Read by rsDrawMovingSpritesTestUnused.
+
+        .word $0000, $0020, $0030, $0040
+
+        ; 88/C844
+
+    .endsection Data88C83CSection
+
+
+    .section Unsorted88C844Section
+
+      .al
+      .xl
+
+      rlDrawMovingUnitSprite ; 88/C844
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; VBlank: draws the active unit's moving map sprite by wMovingUnitSpriteState (1 at its saved place while on screen, 2 at the cursor, 3 at wMapSavedCursorXPixel/YPixel), then gets its next frame ready (rsUpdateMovingUnitSpriteFrame).
+
+        phx
+        phy
+        lda wMovingUnitSpriteState,b
+        beq _C873
+        cmp #$0001
+        beq _C89A
+        cmp #$0003
+        beq _C876
+        lda wCursorXOffset,b
+        sta wR0
+        lda wCursorYOffset,b
+        sta wR1
+        lda #$0000
+        sta wR4
+        stz wR5
+        jsr rsGetMovingUnitSpriteToDraw
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+        jml _C8F9
+
+
+        _C873
+        plx
+        ply
+        rtl
+
+
+        _C876
+        lda wMapSavedCursorXPixel,b
+        sec
+        sbc wMapScrollXPixels,b
+        sta wR0
+        lda wMapSavedCursorYPixel,b
+        sec
+        sbc wMapScrollYPixels,b
+        sta wR1
+        lda #$0000
+        sta wR4
+        stz wR5
+        jsr rsGetMovingUnitSpriteToDraw
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+        bra _C8F9
+
+
+        _C89A
+        ldx wActiveUnitDeploymentOffset,b
+        lda wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sec
+        sbc #$0001
+        sta wTempVariable1,b
+        lda wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sec
+        sbc #$0001
+        sta wTempVariable2,b
+        lda aDeploymentTable._XTilePosition,x
+        sec
+        sbc wTempVariable1,b
+        bmi _C873
+        cmp #$0012
+        bcs _C873
+        lda aDeploymentTable._YTilePosition,x
+        sec
+        sbc wTempVariable2,b
+        bmi _C873
+        cmp #$0011
+        bcs _C873
+        lda wUnknown00076C,b
+        sec
+        sbc wMapScrollXPixels,b
+        sta wR0
+        lda wUnknown00076E,b
+        sec
+        sbc wMapScrollYPixels,b
+        sta wR1
+        lda #$0000
+        sta wR4
+        stz wR5
+        jsr rsGetMovingUnitSpriteToDraw
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+
+        _C8F9
+        jsr rsUpdateMovingUnitSpriteFrame
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 88/C8FF
+
+      rsGetMovingUnitSpriteToDraw ; 88/C8FF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Steps the walking frame when its timer runs out and returns Y = the sprite array, wR5 = the palette for its allegiance (aMapSpritePalettesByAllegiance) and the frame's X/Y nudge in wR0/wR1.
+
+        lda wMovingUnitSpriteTimer,b
+        bne _C91E
+        lda bDMAArrayFlag,b
+        and #$00FF
+        bne _C91E
+        lda wMovingUnitSpriteFrame,b
+        clc
+        adc #$0001
+        cmp #$0004
+        bcc _C91B
+        lda #$0000
+
+        _C91B
+        sta wMovingUnitSpriteFrame,b
+
+        _C91E
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._DeploymentOffsets,x
+        cmp #$0060
+        bcs _C939
+        sep #$20
+        lda #$88
+        pha
+        plb
+        .databank $88
+        rep #$20
+        ldy #<>aMovingUnitSprite24x24
+        jml _C97E
+
+
+        _C939
+        sep #$20
+        lda #$88
+        pha
+        plb
+        .databank $88
+        rep #$20
+        phx
+        lda aDeploymentTable._DeploymentOffsets,x
+        tax
+        lda aDeploymentTable._MapSpriteID,x
+        and #$7FFF
+        asl a
+        tax
+        lda @l aMapSpriteWalkOffsetPointers,x
+        sta wR3
+        lda wMovingUnitSpriteFrame,b
+        asl a
+        clc
+        adc wUnknown0007E2,b
+        clc
+        adc wR3
+        tax
+        lda @l aMapSpriteWalkOffsets,x
+        and #$00FF
+        clc
+        adc wR0
+        sta wR0
+        lda @l aMapSpriteWalkOffsets+1,x
+        and #$00FF
+        clc
+        adc wR1
+        sta wR1
+        ldy #<>aMovingUnitSprite32x32
+        plx
+
+        _C97E
+        lda aDeploymentTable,x
+        and #$0003
+        asl a
+        phx
+        tax
+        lda @l aMapSpritePalettesByAllegiance,x
+        sta wR5
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/C990
+
+    .endsection Unsorted88C844Section
+
+
+    .section Data88C990Section
+
+      .al
+      .xl
+
+      aMapSpritePalettesByAllegiance ; 88/C990
+
+        ; Read by rlDrawDeployedUnitMapSprites, rsGetMovingUnitSpriteToDraw.
+
+        .word $0200, $0400, $0600, $0800, $0000, $0200, $0400, $0600
+        .word $0800, $0800, $0800
+
+        ; 88/C9A6
+
+    .endsection Data88C990Section
+
+
+    .section Unsorted88C9A6Section
+
+      .al
+      .xl
+
+      rlLoadMovingUnitSprite ; 88/C9A6
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Decompresses the active unit's walking sprite (short or tall, from aMapMovementShortSpritePointers or aMapMovementTallSpritePointers) to $7EAB88.
+
+        phx
+        phk
+        plb
+
+        lda #$FFFF
+        sta $0865,b
+
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._DeploymentOffsets,x
+        tax
+        lda aDeploymentTable._MapSpriteID,x
+        and #$8000
+        bne _Tall
+
+          ldx wActiveUnitDeploymentOffset,b
+          lda aDeploymentTable._DeploymentOffsets,x
+          tax
+          lda aDeploymentTable._MapSpriteID,x
+          and #~$8000
+          sta wR0
+          clc
+          adc wR0
+          clc
+          adc wR0
+          tax
+          lda aMapMovementShortSpritePointers,x
+          sta lR45
+          lda aMapMovementShortSpritePointers+1,x
+          sta lR45+1
+          lda #(`$7EAB88)<<8
+          sta lR47+1
+          lda #<>$7EAB88
+          sta lR47
+          jsl rlDecompressSingle
+
+          plx
+          rtl
+        
+        _Tall
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._DeploymentOffsets,x
+        tax
+        lda aDeploymentTable._MapSpriteID,x
+        and #~$8000
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda aMapMovementTallSpritePointers,x
+        sta lR45
+        lda aMapMovementTallSpritePointers+1,x
+        sta lR45+1
+        lda #(`$7EAB88)<<8
+        sta lR47+1
+        lda #<>$7EAB88
+        sta lR47
+        jsl rlDecompressSingle
+
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/CA28
+
+    .endsection Unsorted88C9A6Section
+
+
+    .section Unsorted88CA28Section
+
+      .al
+      .xl
+
+      rsUpdateMovingUnitSpriteFrame ; 88/CA28
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; When the frame timer runs out, reloads it from aMapSpriteWalkFrameDelays and picks the next frame's graphics (short or tall); counts the timer down otherwise.
+
+        lda $0865,b
+        bmi _CA30
+        stz $0865,b
+
+        _CA30
+        lda wMovingUnitSpriteState,b
+        beq _CA73
+        lda wMovingUnitSpriteTimer,b
+        bne _CA73
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._DeploymentOffsets,x
+        tax
+        lda aDeploymentTable._MapSpriteID,x
+        and #$7FFF
+        tax
+        lda aMapSpriteWalkFrameDelays,x
+        and #$00FF
+        sta wMovingUnitSpriteTimer,b
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._DeploymentOffsets,x
+        tax
+        lda aDeploymentTable._MapSpriteID,x
+        and #$8000
+        bne _CA6C
+        jsr rsSetShortMovingUnitSpriteFrame
+        inc $0865,b
+        rts
+
+
+        _CA6C
+        jsr rsSetTallMovingUnitSpriteFrame
+        inc $0865,b
+        rts
+
+
+        _CA73
+        dec wMovingUnitSpriteTimer,b
+        rts
+
+        .databank 0
+
+        ; 88/CA77
+
+    .endsection Unsorted88CA28Section
+
+
+    .section Unsorted88CA77Section
+
+      .al
+      .xl
+
+      rsSetShortMovingUnitSpriteFrame ; 88/CA77
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Points the upload at the frame (wMovingUnitSpriteFrame) and facing (wUnknown0007E2) of a short walking sprite.
+
+        lda wMovingUnitSpriteFrame,b
+        cmp #$0000
+        beq _CA8E
+        cmp #$0001
+        beq _CA93
+        cmp #$0002
+        beq _CA98
+        cmp #$0003
+        beq _CA9D
+
+        _CA8E
+        lda #$0000
+        bra _CAA2
+
+
+        _CA93
+        lda #$0140
+        bra _CAA2
+
+
+        _CA98
+        lda #$0280
+        bra _CAA2
+
+
+        _CA9D
+        lda #$03C0
+        bra _CAA2
+
+
+        _CAA2
+        sta wMapSpriteFrameByteOffset,b
+        lda wUnknown0007E2,b
+        cmp #$0000
+        beq _CABC
+        cmp #$0008
+        beq _CAC1
+        cmp #$0010
+        beq _CAC6
+        cmp #$0018
+        beq _CACB
+
+        _CABC
+        lda #$0000
+        bra _CAD0
+
+
+        _CAC1
+        lda #$0500
+        bra _CAD0
+
+
+        _CAC6
+        lda #$0A00
+        bra _CAD0
+
+
+        _CACB
+        lda #$0F00
+        bra _CAD0
+
+
+        _CAD0
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta wMapSpriteFrameByteOffset,b
+        lda #$7E00
+        sta lR18+1
+        lda #$AB88
+        sta lR18
+        lda #$7E00
+        sta lMapSpriteGraphicsPointer+1,b
+        lda #$AB88
+        sta lMapSpriteGraphicsPointer,b
+        lda #$7E00
+        sta $084E,b
+        lda #$AB88
+        sta $084D,b
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+        sta $084D,b
+        lda #$00A0
+        sta wR0
+        lda #$6200
+        sta wR1
+        lda $0865,b
+        beq _CB1A
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        _CB1A
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$00A0
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+        sta $0850,b
+        lda #$00A0
+        sta wR0
+        lda #$6300
+        sta wR1
+        lda $0865,b
+        beq _CB42
+        phx
+        jsl rlDMAByPointer
+        plx
+        stz $0865,b
+
+        _CB42
+        rts
+
+        .databank 0
+
+        ; 88/CB43
+
+      rsSetTallMovingUnitSpriteFrame ; 88/CB43
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wMovingUnitSpriteFrame,b
+        cmp #$0000
+        beq _CB5A
+        cmp #$0001
+        beq _CB5F
+        cmp #$0002
+        beq _CB64
+        cmp #$0003
+        beq _CB69
+
+        _CB5A
+        lda #$0000
+        bra _CB6E
+
+
+        _CB5F
+        lda #$0200
+        bra _CB6E
+
+
+        _CB64
+        lda #$0400
+        bra _CB6E
+
+
+        _CB69
+        lda #$0600
+        bra _CB6E
+
+
+        _CB6E
+        sta wMapSpriteFrameByteOffset,b
+        lda wUnknown0007E2,b
+        xba
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta wMapSpriteFrameByteOffset,b
+        lda #$7E00
+        sta lR18+1
+        lda #$AB88
+        sta lR18
+        lda #$7E00
+        sta lMapSpriteGraphicsPointer+1,b
+        lda #$AB88
+        sta lMapSpriteGraphicsPointer,b
+        lda #$7E00
+        sta $084E,b
+        lda #$AB88
+        sta $084D,b
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+        sta $084D,b
+        lda #$0100
+        sta wR0
+        lda #$6200
+        sta wR1
+        lda $0865,b
+        beq _CBBF
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        _CBBF
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$0100
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+        sta $0850,b
+        lda #$0100
+        sta wR0
+        lda #$6300
+        sta wR1
+        lda $0865,b
+        beq _CBE7
+        phx
+        jsl rlDMAByPointer
+        plx
+        stz $0865,b
+
+        _CBE7
+        rts
+
+        .databank 0
+
+        ; 88/CBE8
+
+    .endsection Unsorted88CA77Section
+
+
+    .section Unsorted88CBE8Section
+
+      .al
+      .xl
+
+      aMapSpriteWalkFrameDelays ; 88/CBE8
+
+        ; Indexed by map sprite ID (without the tall flag $8000).
+        ; 65 bytes of 9 and then 32 bytes of 14: the same counts as the
+        ; short and tall map sprite tables.
+
+        .fill 65, 9
+        .fill 32, 14
+
+        ; 88/CC49
+
+
+      aMovingUnitSprite32x32 ; 88/CC49
+
+        _Sprites := [[(   8,    0), $21, SpriteLarge, $026, 2, 0, false, false]]
+        _Sprites ..= [[(  -8,    0), $21, SpriteLarge, $024, 2, 0, false, false]]
+        _Sprites ..= [[(   8,  -16), $21, SpriteLarge, $022, 2, 0, false, false]]
+        _Sprites ..= [[(  -8,  -16), $21, SpriteLarge, $020, 2, 0, false, false]]
+
+        .structSpriteArray aMovingUnitSprite32x32._Sprites
+
+      aMovingUnitSprite24x24 ; 88/CC5F
+
+        _Sprites := [[(  -4,    8), $00, SpriteSmall, $034, 2, 0, false, false]]
+        _Sprites ..= [[(   4,    0), $21, SpriteLarge, $022, 2, 0, false, false]]
+        _Sprites ..= [[(  12,   -8), $00, SpriteSmall, $024, 2, 0, false, false]]
+        _Sprites ..= [[(  -4,   -8), $21, SpriteLarge, $020, 2, 0, false, false]]
+
+        .structSpriteArray aMovingUnitSprite24x24._Sprites
+
+    .endsection Unsorted88CBE8Section
+
+
+    .section Unsorted88CC75Section
+
+      .al
+      .xl
+
+      rlQueueStandingMapSpriteFrames ; 88/CC75
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Queues the standing map sprite frames for frame count A: short sprites on steps 2-7, tall ones on steps 10-15 (of 16).
+
+        lda wMapSpriteFrameCounter,b
+        and #$000F
+        cmp #$0002
+        bcc _CC97
+        cmp #$0008
+        beq _CC97
+        cmp #$0009
+        beq _CC97
+        cmp #$000A
+        bcc _CC93
+        jsr rsQueueTallStandingMapSpriteFrames
+        rtl
+
+
+        _CC93
+        jsr rsQueueShortStandingMapSpriteFrames
+        rtl
+
+
+        _CC97
+        rtl
+
+        .databank 0
+
+        ; 88/CC98
+
+      rsQueueShortStandingMapSpriteFrames ; 88/CC98
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Queues eight units' short standing frames into aDynamicMapSpriteDMASources/aDynamicMapSpriteVRAMDestinations.
+
+        lda wMapSpriteFrameCounter,b
+        clc
+        adc #$0002
+        and #$000F
+        asl a
+        xba
+        sta wTempVariable2,b
+        lda wMapSpriteFrameCounter,b
+        and #$000F
+        sec
+        sbc #$0002
+        asl a
+        asl a
+        asl a
+        asl a
+        sta wTempVariable1,b
+        lda wMapSpriteFrameCounter,b
+        and #$0030
+        cmp #$0000
+        beq _CCD2
+        cmp #$0010
+        beq _CCD7
+        cmp #$0020
+        beq _CCDC
+        cmp #$0030
+        beq _CCE1
+
+        _CCD2
+        lda #$0000
+        bra _CCE6
+
+
+        _CCD7
+        lda #$0080
+        bra _CCE6
+
+
+        _CCDC
+        lda #$0100
+        bra _CCE6
+
+
+        _CCE1
+        lda #$0080
+        bra _CCE6
+
+
+        _CCE6
+        sta wMapSpriteFrameByteOffset,b
+        sta wUnknown000790,b
+        ldx wTempVariable1,b
+        ldy #$0000
+
+        _CCF2
+        lda aDeploymentTable._MapSpriteID,x
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        phx
+        tax
+        lda aShortStandingMapSpritePointers+1,x
+        sta aDynamicMapSpriteDMASources.lTopHalf+1,b,y
+        sta aDynamicMapSpriteDMASources.lBottomHalf+1,b,y
+        lda aShortStandingMapSpritePointers,x
+        plx
+        sta lMapSpriteGraphicsPointer,b
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta aDynamicMapSpriteDMASources.lTopHalf,b,y
+        clc
+        adc #$0040
+        sta aDynamicMapSpriteDMASources.lBottomHalf,b,y
+        lda #$6000
+        clc
+        adc wTempVariable2,b
+        sta aDynamicMapSpriteVRAMDestinations.wTopHalf,b,y
+        clc
+        adc #$0100
+        sta aDynamicMapSpriteVRAMDestinations.wBottomHalf,b,y
+        lda wTempVariable2,b
+        clc
+        adc #$0020
+        sta wTempVariable2,b
+        inc x
+        inc x
+        tya
+        clc
+        adc #$0006
+        tay
+        cpy #$0030
+        bcc _CCF2
+        rts
+
+        .databank 0
+
+        ; 88/CD4C
+
+      rlResumeMapSpriteAnimation ; 88/CD4C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Clears bit 15 of wMapSpriteAnimationPauseFlags.
+
+        lda #$8000
+        trb wMapSpriteAnimationPauseFlags,b
+        rtl
+
+        .databank 0
+
+        ; 88/CD53
+
+    .endsection Unsorted88CC75Section
+
+
+    .section Unsorted88CD53Section
+
+      .al
+      .xl
+
+      rlPauseMapSpriteAnimation ; 88/CD53
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Sets bit 15 of wMapSpriteAnimationPauseFlags: rlUploadMapAnimations stops uploading map sprite frames.
+
+        lda #$8000
+        tsb wMapSpriteAnimationPauseFlags,b
+        rtl
+
+        .databank 0
+
+      rlResumeMapTileAnimation ; 88/CD5A
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Clears bit 0 of wMapSpriteAnimationPauseFlags.
+
+        lda #$0001
+        trb wMapSpriteAnimationPauseFlags,b
+        rtl
+
+        .databank 0
+
+      rlPauseMapTileAnimation ; 88/CD61
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Sets bit 0 of wMapSpriteAnimationPauseFlags: the animated map tiles stop.
+
+        lda #$0001
+        tsb wMapSpriteAnimationPauseFlags,b
+        rtl
+
+        .databank 0
+
+        ; 88/CD68
+
+    .endsection Unsorted88CD53Section
+
+
+    .section Unsorted88CD68Section
+
+      .al
+      .xl
+
+      rlUploadMapAnimations ; 88/CD68
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; VBlank: uploads the moving unit's frame, then on step 0 or 1 of 8 an animated map tile frame, else the queued standing map sprite frames (unless paused).
+
+        phb
+        php
+        phk
+        plb
+        .databank $88
+        jsl rlUploadMovingUnitSpriteFrame
+        lda wMapSpriteFrameCounter,b
+        and #$0007
+        beq _CD97
+        cmp #$0001
+        beq _CD9D
+        lda wMapSpriteAnimationPauseFlags,b
+        bmi _CD94
+        lda wMapSpriteFrameCounter,b
+        and #$000F
+        cmp #$0008
+        bcc _CDA3
+        jml _CE11
+
+
+        _CD91
+        inc wMapSpriteFrameCounter,b
+
+        _CD94
+        plp
+        plb
+        .databank $88
+        rtl
+
+
+        _CD97
+        jsl rlUploadMapTileAnimation1
+        bra _CD91
+
+
+        _CD9D
+        jsl rlUploadMapTileAnimation2
+        bra _CD91
+
+
+        _CDA3
+        sep #$20
+        rep #$10
+        lda #$80
+        sta $2115,b
+        lda #$00
+        sta $4316,b
+        sta $4326,b
+        lda #$18
+        sta $4311,b
+        sta $4321,b
+        ldy #$0000
+
+        _CDBF
+        lda #$40
+        sta $4315,b
+        sta $4325,b
+        ldx aDynamicMapSpriteDMASources.lTopHalf,b,y
+        stx $4312,b
+        lda aDynamicMapSpriteDMASources.lTopHalf+2,b,y
+        sta $4314,b
+        ldx aDynamicMapSpriteVRAMDestinations.wTopHalf,b,y
+        stx $2116,b
+        lda #$01
+        sta $4310,b
+        sta $4320,b
+        lda #$02
+        sta $420B,b
+        ldx aDynamicMapSpriteDMASources.lBottomHalf,b,y
+        stx $4322,b
+        lda aDynamicMapSpriteDMASources.lBottomHalf+2,b,y
+        sta $4324,b
+        ldx aDynamicMapSpriteVRAMDestinations.wBottomHalf,b,y
+        stx $2116,b
+        lda #$04
+        sta $420B,b
+        tya
+        clc
+        adc #$06
+        tay
+        cpy #$0030
+        beq _CE0B
+        jml _CDBF
+
+
+        _CE0B
+        rep #$20
+        jml _CD91
+
+
+        _CE11
+        sep #$20
+        rep #$10
+        lda #$80
+        sta $2115,b
+        lda #$18
+        sta $4311,b
+        sta $4321,b
+        lda #$00
+        sta $4316,b
+        sta $4326,b
+        ldy #$0000
+
+        _CE2D
+        lda #$40
+        sta $4315,b
+        ldx aDynamicMapSpriteDMASources.lTopHalf,b,y
+        stx $4312,b
+        lda aDynamicMapSpriteDMASources.lTopHalf+2,b,y
+        sta $4314,b
+        ldx aDynamicMapSpriteVRAMDestinations.wTopHalf,b,y
+        stx $2116,b
+        lda #$01
+        sta $4310,b
+        sta $4320,b
+        lda #$02
+        sta $420B,b
+        lda #$80
+        sta $4325,b
+        ldx aDynamicMapSpriteDMASources.lBottomHalf,b,y
+        stx $4322,b
+        lda aDynamicMapSpriteDMASources.lBottomHalf+2,b,y
+        sta $4324,b
+        ldx aDynamicMapSpriteVRAMDestinations.wBottomHalf,b,y
+        stx $2116,b
+        lda #$04
+        sta $420B,b
+        tya
+        clc
+        adc #$06
+        tay
+        cpy #$0018
+        beq _CE7B
+        jml _CE2D
+
+
+        _CE7B
+        rep #$20
+        jml _CD91
+
+        .databank 0
+
+        ; 88/CE81
+
+      rsQueueTallStandingMapSpriteFrames ; 88/CE81
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wMapSpriteFrameCounter,b
+        and #$000F
+        asl a
+        xba
+        sta wTempVariable2,b
+        lda wMapSpriteFrameCounter,b
+        and #$000F
+        sec
+        sbc #$000A
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$0060
+        sta wTempVariable1,b
+        lda wMapSpriteFrameCounter,b
+        and #$0030
+        cmp #$0000
+        beq _CEBA
+        cmp #$0010
+        beq _CEBF
+        cmp #$0020
+        beq _CEC4
+        cmp #$0030
+        beq _CEC9
+
+        _CEBA
+        lda #$0000
+        bra _CECE
+
+
+        _CEBF
+        lda #$00C0
+        bra _CECE
+
+
+        _CEC4
+        lda #$0180
+        bra _CECE
+
+
+        _CEC9
+        lda #$00C0
+        bra _CECE
+
+
+        _CECE
+        sta wMapSpriteFrameByteOffset,b
+        sta wUnknown000790,b
+        ldx wTempVariable1,b
+        ldy #$0000
+
+        _CEDA
+        lda aDeploymentTable._MapSpriteID,x
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        phx
+        tax
+        lda aTallStandingMapSpritePointers+1,x
+        sta aDynamicMapSpriteDMASources.lTopHalf+1,b,y
+        sta aDynamicMapSpriteDMASources.lBottomHalf+1,b,y
+        lda aTallStandingMapSpritePointers,x
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta aDynamicMapSpriteDMASources.lTopHalf,b,y
+        clc
+        adc #$0040
+        sta aDynamicMapSpriteDMASources.lBottomHalf,b,y
+        plx
+        lda #$6000
+        clc
+        adc wTempVariable2,b
+        sta aDynamicMapSpriteVRAMDestinations.wTopHalf,b,y
+        clc
+        adc #$0100
+        sta aDynamicMapSpriteVRAMDestinations.wBottomHalf,b,y
+        lda wTempVariable2,b
+        clc
+        adc #$0040
+        sta wTempVariable2,b
+        inc x
+        inc x
+        tya
+        clc
+        adc #$0006
+        tay
+        cpy #$0018
+        bcc _CEDA
+        rts
+
+        .databank 0
+
+        ; 88/CF31
+
+      rlUploadMapTileAnimation1 ; 88/CF31
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies frame (wMapSpriteFrameCounter / 8) of g4bppMapTileAnimations1 ($800 bytes, 16 frames) to VRAM $0C00.
+
+        lda wMapSpriteAnimationPauseFlags,b
+        bit #$0001
+        bne _CF89
+        sep #$20
+        lda wMapSpriteFrameCounter,b
+        and #$78
+        lsr a
+        lsr a
+        lsr a
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda #$80
+        sta $2115,b
+        lda #$00
+        sta $4315,b
+        lda #$08
+        sta $4316,b
+        lda #$18
+        sta $4311,b
+        lda aMapTileAnimation1Frames,x
+        sta $4312,b
+        lda aMapTileAnimation1Frames+1,x
+        sta $4313,b
+        lda aMapTileAnimation1Frames+2,x
+        sta $4314,b
+        lda #$00
+        sta $2116,b
+        lda #$0C
+        sta $2117,b
+        lda #$01
+        sta $4310,b
+        lda #$02
+        sta $420B,b
+        rep #$20
+
+        _CF89
+        rtl
+
+        .databank 0
+
+        ; 88/CF8A
+
+    .endsection Unsorted88CD68Section
+
+
+    .section Table88CF8ASection
+
+      .al
+      .xl
+
+      aMapTileAnimation1Frames ; 88/CF8A
+
+        ; Read by rlUploadMapTileAnimation1.
+
+        .for i in range(16)
+          .long g4bppMapTileAnimations1 + (i * $0800)
+        .endfor
+
+        ; 88/CFBA
+
+    .endsection Table88CF8ASection
+
+
+    .section Unsorted88CFBASection
+
+      .al
+      .xl
+
+      rlUploadMapTileAnimation2 ; 88/CFBA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies frame (wMapSpriteFrameCounter / 8) of g4bppMapTileAnimations2 ($400 bytes, 32 frames) to VRAM $0A00.
+
+        lda wMapSpriteAnimationPauseFlags,b
+        bit #$0001
+        bne _D012
+        sep #$20
+        lda wMapSpriteFrameCounter,b
+        and #$F8
+        lsr a
+        lsr a
+        lsr a
+        sta wR0
+        asl a
+        clc
+        adc wR0
+        tax
+        lda #$80
+        sta $2115,b
+        lda #$00
+        sta $4315,b
+        lda #$04
+        sta $4316,b
+        lda #$18
+        sta $4311,b
+        lda aMapTileAnimation2Frames,x
+        sta $4312,b
+        lda aMapTileAnimation2Frames+1,x
+        sta $4313,b
+        lda aMapTileAnimation2Frames+2,x
+        sta $4314,b
+        lda #$00
+        sta $2116,b
+        lda #$0A
+        sta $2117,b
+        lda #$01
+        sta $4310,b
+        lda #$02
+        sta $420B,b
+        rep #$20
+
+        _D012
+        rtl
+
+        .databank 0
+
+        ; 88/D013
+
+    .endsection Unsorted88CFBASection
+
+
+    .section Table88D013Section
+
+      .al
+      .xl
+
+      aMapTileAnimation2Frames ; 88/D013
+
+        ; Read by rlUploadMapTileAnimation2.
+
+        .for i in range(32)
+          .long g4bppMapTileAnimations2 + (i * $0400)
+        .endfor
+
+        ; 88/D073
+
+    .endsection Table88D013Section
+
+
+    .section Unsorted88D073Section
+
+      .al
+      .xl
+
+      rlUploadMapTileAnimations ; 88/D073
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $88
+        phk
+        plb
+        .databank $88
+        jsl rlUploadMapTileAnimation1
+        jsl rlUploadMapTileAnimation2
+        plp
+        plb
+        .databank $88
+        rtl
+
+        .databank 0
+
+        ; 88/D084
+
+    .endsection Unsorted88D073Section
+
+
+    .section Unsorted88D084Section
+
+      .al
+      .xl
+
+      rlDrawDeployedUnitMapSprites ; 88/D084
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; VBlank: draws every deployed, visible unit's map sprite on screen (with scanline culling), coloured by allegiance; units with deployment state bit 13, or bit 3 outside the player army, are grey ($0E00).
+
+        phb
+        sep #$20
+        lda #$7E
+        pha
+        plb
+        .databank $7E
+        rep #$20
+        jsl rlBeginOAMScanlineFrame
+        ldy #$008E
+        bra _D0A0
+
+
+        _D096
+        lda #$0000
+        sta $0A43,b,y
+        jml _D10F
+
+
+        _D0A0
+        lda aDeploymentTable,y
+        beq _D096
+        bit #$0040
+        bne _D096
+        lda $453B,b,y
+        sec
+        sbc wMapScrollXPixels,b
+        sta $0923,b,y
+        sta wR0
+        clc
+        adc #$0007
+        cmp #$00FF
+        bcs _D096
+        lda $45CB,b,y
+        sec
+        sbc wMapScrollYPixels,b
+        sta $09B3,b,y
+        clc
+        adc #$000F
+        cmp #$00F1
+        bcs _D096
+        sec
+        sbc #$001F
+        sta wR1
+        lda aDeploymentTable,y
+        bit #$2000
+        bne _D0EA
+        bit #$0008
+        beq _D0EF
+        bit #$0003
+        bne _D0EF
+
+        _D0EA
+        lda #$0E00
+        bra _D0F8
+
+
+        _D0EF
+        and #$0003
+        asl a
+        tax
+        lda aMapSpritePalettesByAllegiance,x
+
+        _D0F8
+        ldx $465B,b,y
+        ora aMapSpriteSlotTiles,x
+        sta $0A43,b,y
+        cpx #$0060
+        bcc _D10F
+        inc a
+        inc a
+        sta wR4
+        jsl rlPushToOAMBufferWithScanlineCulling
+
+        _D10F
+        dec y
+        dec y
+        bpl _D0A0
+        ldy #$008E
+
+        _D116
+        lda $0A43,b,y
+        beq _D12B
+        sta wR4
+        lda $0923,b,y
+        sta wR0
+        lda $09B3,b,y
+        sta wR1
+        jsl rlPushToOAMBufferWithScanlineCulling._88D8
+
+        _D12B
+        dec y
+        dec y
+        bpl _D116
+        jsl rlFinishOAMScanlineFrame
+        plb
+        .databank $7E
+        rtl
+
+        .databank 0
+
+        ; 88/D135
+
+    .endsection Unsorted88D084Section
+
+
+    .section Data88D135Section
+
+      .al
+      .xl
+
+      aMapSpriteSlotTiles ; 88/D135
+
+        ; Read by rlDrawDeployedUnitMapSprites.
+
+        .word $2080, $2082, $2084, $2086, $2088, $208A, $208C, $208E
+        .word $20A0, $20A2, $20A4, $20A6, $20A8, $20AA, $20AC, $20AE
+        .word $20C0, $20C2, $20C4, $20C6, $20C8, $20CA, $20CC, $20CE
+        .word $20E0, $20E2, $20E4, $20E6, $20E8, $20EA, $20EC, $20EE
+        .word $2100, $2102, $2104, $2106, $2108, $210A, $210C, $210E
+        .word $2120, $2122, $2124, $2126, $2128, $212A, $212C, $212E
+        .word $2140, $2144, $2148, $214C, $2160, $2164, $2168, $216C
+        .word $2180, $2184, $2188, $218C, $21A0, $21A4, $21A8, $21AC
+        .word $21C0, $21C4, $21C8, $21CC, $21E0, $21E4, $21E8, $21EC
+
+        ; 88/D1C5
+
+      aShortMapSpriteSlotTiles ; 88/D1C5
+
+        ; Read by rlCastleDrawCourtyardUnitSprites, rsUnitWindowRenderSprites.
+
+        .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E
+        .word $0020, $0022, $0024, $0026, $0028, $002A, $002C, $002E
+        .word $0040, $0042, $0044, $0046, $0048, $004A, $004C, $004E
+        .word $0060, $0062, $0064, $0066, $0068, $006A, $006C, $006E
+        .word $0080, $0082, $0084, $0086, $0088, $008A, $008C, $008E
+        .word $00A0, $00A2, $00A4, $00A6, $00A8, $00AA, $00AC, $00AE
+        .word $0000, $0004, $0008, $000C, $0020, $0024, $0028, $002C
+        .word $0040, $0044, $0048, $004C, $0060, $0064, $0068, $006C
+        .word $0080, $0084, $0088, $008C, $00A0, $00A4, $00A8, $00AC
+
+        ; 88/D255
+
+      aTallMapSpriteSlotTiles ; 88/D255
+
+        ; Read by rlCastleDrawCourtyardUnitSprites.
+
+        .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E
+        .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E
+        .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E
+        .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E
+        .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E
+        .word $0000, $0002, $0004, $0006, $0008, $000A, $000C, $000E
+
+        ; 88/D2B5
+
+      aTallMapSpriteSlotTiles2 ; 88/D2B5
+
+        ; Read by rsUnitWindowRenderSprites.
+
+        .word $0000, $0004, $0008, $000C, $0020, $0024, $0028, $002C
+        .word $0040, $0044, $0048, $004C, $0060, $0064, $0068, $006C
+        .word $0080, $0084, $0088, $008C, $00A0, $00A4, $00A8, $00AC
+        .word $0000, $0010, $0020, $0030, $0040, $0050, $0060, $0070
+        .word $0080, $0090, $00A0, $00B0, $00C0, $00D0, $00E0, $00F0
+        .word $0100, $0110, $0120, $0130, $0140, $0150, $0160, $0170
+        .word $0180, $0190, $01A0, $01B0, $01C0, $01D0, $01E0, $01F0
+        .word $0200, $0210, $0220, $0230, $0240, $0250, $0260, $0270
+        .word $0280, $0290, $02A0, $02B0, $02C0, $02D0, $02E0, $02F0
+        .word $0300, $0310, $0320, $0330, $0340, $0350, $0360, $0370
+        .word $0380, $0390, $03A0, $03B0, $03C0, $03D0, $03E0, $03F0
+
+        ; 88/D365
+
+    .endsection Data88D135Section
+
+
+    .section Table88D488Section
+
+      .al
+      .xl
+
+      aMapSpriteWalkOffsetPointers ; 88/D488
+
+        ; Read by rsAnimateTallMovingMapSprite.
+
+        .word $0020, $0000, $0040, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0000, $0000, $0000, $0020, $0000, $0000, $0000
+        .word $0020, $0040, $0040, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0020, $0020, $0020, $0000, $0000, $0000
+
+        ; 88/D4C6
+
+    .endsection Table88D488Section
+
+
+    .section Table88D4C6Section
+
+      .al
+      .xl
+
+      aMapSpriteWalkOffsets ; 88/D4C6
+
+        ; Read by rsAnimateTallMovingMapSprite.
+
+        .word $0800, $0800, $0800, $0800, $0800, $0800, $0800, $0800
+        .word $0800, $0800, $0800, $0800, $0800, $0800, $0800, $0800
+        .word $0100, $0000, $0C00, $0000, $0100, $0000, $0C00, $0000
+        .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
+        .word $0000, $0300, $0A00, $0700, $0000, $0300, $0A00, $0700
+        .word $0000, $0000, $0600, $0000, $0000, $0000, $0600, $0000
+
+        ; 88/D526
+
+    .endsection Table88D4C6Section
+
+
+    .section Table88D526Section
+
+      .al
+      .xl
+
+      aShortStandingMapSpritePointers ; 88/D526
+
+        ; Read by rsQueueShortStandingMapSpriteFrames, rsUploadShortStandingMapSprite.
+
+        .for i in range(63)
+          .long g4bppStandingMapSprites1 + (i * $0180)
+        .endfor
+
+        ; 88/D5E3
+
+    .endsection Table88D526Section
+
+
+    .section Table88D5E3Section
+
+      .al
+      .xl
+
+      aTallStandingMapSpritePointers ; 88/D5E3
+
+        ; Read by rsQueueTallStandingMapSpriteFrames, rsUploadTallStandingMapSprite.
+
+        .for i in range(31)
+          .long g4bppStandingMapSprites2 + (i * $0240)
+        .endfor
+        .rept 30
+          .word $0E00
+        .endrept
+
+        ; 88/D67C
+
+    .endsection Table88D5E3Section
+
+
+    .section Unsorted88D731Section
+
+      .al
+      .xl
+
+      rlLoadMovingMapSpriteUnused ; 88/D731
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing reaches this. Like rsMovingMapSpriteAppendDecomp: decompresses event mover X's walking sprite into its buffer.
+
+        lda lR18
+        pha
+        lda lR18+1
+        pha
+        phx
+        phk
+        plb
+        .databank $88
+        lda aMovingMapSpritesMapSprites,b,x
+        and #$8000
+        bne _D786
+        lda aMovingMapSpritesMapSprites,b,x
+        phx
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda @l aMapMovementShortSpritePointers,x
+        sta lR45
+        lda @l aMapMovementShortSpritePointers+1,x
+        sta lR45+1
+        plx
+        jsr (aSetMovingMapSpriteBufferPointersUnused,x)
+        jsl rlDecompressSingle
+        lda #(`g4bppcMageFemaleMapMovementSprite)<<8
+        sta lR18+1
+        lda #<>g4bppcMageFemaleMapMovementSprite
+        sta lR18
+        lda #(`aMapAction)<<8
+        sta lR19+1
+        lda #<>aMapAction
+        sta lR19
+        jsl rlAppendDecompList
+        plx
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        rtl
+
+
+        _D786
+        lda aMovingMapSpritesMapSprites,b,x
+        phx
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda @l aMapMovementTallSpritePointers,x
+        sta lR45
+        lda @l aMapMovementTallSpritePointers+1,x
+        sta lR45+1
+        plx
+        jsr (aSetMovingMapSpriteBufferPointersUnused,x)
+        jsl rlDecompressSingle
+        plx
+        pla
+        sta lR18+1
+        pla
+        sta lR18
+        rtl
+
+        .databank 0
+
+        ; 88/D7B2
+
+    .endsection Unsorted88D731Section
+
+
+    .section Table88D7B2Section
+
+      .al
+      .xl
+
+      aSetMovingMapSpriteBufferPointersUnused ; 88/D7B2
+
+        ; Jump table of rlLoadMovingMapSpriteUnused.
+        .word <>rsSetMovingMapSpriteBuffer0Unused
+        .word <>rsSetMovingMapSpriteBuffer1Unused
+        .word <>rsSetMovingMapSpriteBuffer2Unused
+        .word <>rsSetMovingMapSpriteBuffer3Unused
+
+    .endsection Table88D7B2Section
+
+
+    .section Unsorted88D7BASection
+
+      .al
+      .xl
+
+      rsSetMovingMapSpriteBuffer0Unused ; 88/D7BA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aMapAction)<<8
+        sta lR47+1
+        lda #<>aMapAction
+        sta lR47
+        rts
+
+        .databank 0
+
+        ; 88/D7C5
+
+    .endsection Unsorted88D7BASection
+
+
+    .section Unsorted88D7C5Section
+
+      .al
+      .xl
+
+      rsSetMovingMapSpriteBuffer1Unused ; 88/D7C5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aMapAction)<<8
+        sta lR47+1
+        lda #<>aMapAction
+        sta lR47
+        lda lR47
+        clc
+        adc #$2000
+        sta lR47
+        rts
+
+        .databank 0
+
+        ; 88/D7D8
+
+    .endsection Unsorted88D7C5Section
+
+
+    .section Unsorted88D7D8Section
+
+      .al
+      .xl
+
+      rsSetMovingMapSpriteBuffer2Unused ; 88/D7D8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aMapAction)<<8
+        sta lR47+1
+        lda #<>aMapAction
+        sta lR47
+        lda lR47
+        clc
+        adc #$4000
+        sta lR47
+        rts
+
+        .databank 0
+
+        ; 88/D7EB
+
+    .endsection Unsorted88D7D8Section
+
+
+    .section Unsorted88D7EBSection
+
+      .al
+      .xl
+
+      rsSetMovingMapSpriteBuffer3Unused ; 88/D7EB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`aMapAction)<<8
+        sta lR47+1
+        lda #<>aMapAction
+        sta lR47
+        lda lR47
+        clc
+        adc #$6000
+        sta lR47
+        rts
+
+        .databank 0
+
+        ; 88/D7FE
+
+    .endsection Unsorted88D7EBSection
+
+
+    .section Unsorted88D7FESection
+
+      .al
+      .xl
+
+      rlAnimateMovingMapSprite ; 88/D7FE
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; X = an event mover (aMovingMapSprites): steps its walking frame and uploads it (short or tall).
+
+        ; X = active mover offset
+
+        phk
+        plb
+        lda aMovingMapSpriteUploadedFlags,x
+        trb wUnknown000921,b
+        lda aMovingMapSpriteUploadedFlags2,x
+        trb wUnknown000921,b
+
+        lda aMovingMapSpritesMapSprites,b,x
+        and #$8000
+        bne +
+
+        ; Short
+        jsr rsAnimateShortMovingMapSprite
+        lda wUnknown000901,x
+        sec
+        sbc #1
+        sta wUnknown000901,x
+        bra ++
+
+        ; Tall
+        +
+        jsr rsAnimateTallMovingMapSprite
+        lda wUnknown000901,x
+        sec
+        sbc #1
+        sta wUnknown000901,x
+
+        +
+        rtl
+
+        .databank 0
+
+      aMovingMapSpriteUploadedFlags ; 88/D837
+
+        .word $0001
+        .word $0002
+        .word $0004
+        .word $0008
+
+      aMovingMapSpriteUploadedFlags2 ; 88/D83F
+
+        .word $8000
+        .word $4000
+        .word $2000
+        .word $1000
+
+    .endsection Unsorted88D7FESection
+
+
+    .section Unsorted88D847Section
+
+      .al
+      .xl
+
+      rsAnimateShortMovingMapSprite ; 88/D847
+
+        .al
+        .autsiz
+        .databank $88
+
+        ; X = active mover offset
+
+        ; For short map sprites
+
+        lda wUnknown000901,x
+        beq +
+
+          jml _End
+
+        +
+        lda wUnknown000921,b
+        beq ++
+
+          and #$FF00
+          beq +
+
+            inc wUnknown000901,b,x
+            jml _End
+
+          +
+          lda @l aShortMovingMapSpriteUploadFlags2,x
+          tsb wUnknown000921,b
+
+        +
+        lda @l aShortMovingMapSpriteUploadFlags,x
+        tsb wUnknown000921,b
+
+        lda aMovingMapSpritesMapSprites,b,x
+        and #$7FFF
+        tay
+        lda aMapSpriteWalkFrameDelays,y
+        and #$00FF
+        sta wUnknown000901,x
+
+        lda wUnknown0008F1,x
+        clc
+        adc #1
+        and #$0003
+        sta wUnknown0008F1,x
+
+        lda wUnknown0008F1,x
+        cmp #0
+        beq _D8A8
+
+        cmp #1
+        beq _D8AD
+
+        cmp #2
+        beq _D8B2
+
+        cmp #3
+        beq _D8B7
+
+        _D8A8
+        lda #size(Tile4bpp) * 0
+        bra +
+
+        _D8AD
+        lda #size(Tile4bpp) * 10
+        bra +
+
+        _D8B2
+        lda #size(Tile4bpp) * 20
+        bra +
+
+        _D8B7
+        lda #size(Tile4bpp) * 30
+        bra +
+
+        +
+        sta wMapSpriteFrameByteOffset,b
+
+        ; Check for direction of movement
+        lda wUnknown000911,x
+        cmp #0
+        beq _D8D7
+
+        cmp #8
+        beq _D8DC
+
+        cmp #$0010
+        beq _D8E1
+
+        cmp #$0018
+        beq _D8E6
+
+        _D8D7
+        lda #0
+        bra +
+
+        _D8DC
+        lda #$0500
+        bra +
+
+        _D8E1
+        lda #$0A00
+        bra +
+
+        _D8E6
+        lda #$0F00
+        bra +
+
+        +
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta wMapSpriteFrameByteOffset,b
+
+        jsr (aMovingMapSpriteGraphicsSetters,x)
+
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+
+        lda #$00A0
+        sta wR0
+
+        lda #$C400 >> 1
+        clc
+        adc @l aMovingMapSpriteVRAMOffsets,x
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$00A0
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+
+        lda #$00A0
+        sta wR0
+
+        lda #$C600 >> 1
+        clc
+        adc @l aMovingMapSpriteVRAMOffsets,x
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        _End
+        sep #$20
+        lda #$88
+        pha
+        plb
+        rep #$20
+
+        stz wR0
+        stz wR1
+        lda @l aMovingMapSpriteTileOffsets,x
+        sta wR4
+        ldy #<>aMovingUnitSprite24x24
+        rts
+
+        .databank 0
+
+    .endsection Unsorted88D847Section
+
+
+    .section Unsorted88D94BSection
+
+      .al
+      .xl
+
+      aMovingMapSpriteGraphicsSetters ; 88/D94B
+
+        .word <>rsSetMovingMapSpriteGraphics0
+        .word <>rsSetMovingMapSpriteGraphics1
+        .word <>rsSetMovingMapSpriteGraphics2
+        .word <>rsSetMovingMapSpriteGraphics3
+
+      aShortMovingMapSpriteUploadFlags ; 88/D953
+
+        .word $0001
+        .word $0002
+        .word $0004
+        .word $0008
+
+      aShortMovingMapSpriteUploadFlags2 ; 88/D95B
+
+        .word $8000
+        .word $4000
+        .word $2000
+        .word $1000
+
+    .endsection Unsorted88D94BSection
+
+
+    .section Unsorted88D963Section
+
+      .al
+      .xl
+
+      rsAnimateTallMovingMapSprite ; 88/D963
+
+        .al
+        .autsiz
+        .databank $88
+
+        lda wUnknown000901,x
+        beq +
+
+          jml _End
+
+        +
+        lda wUnknown000921,b
+        beq ++
+
+          and #$FF00
+          beq +
+
+            inc wUnknown000901,b,x
+            jml _End
+
+          +
+          lda @l aTallMovingMapSpriteUploadFlags2,x
+          tsb wUnknown000921,b
+
+        +
+        lda @l aTallMovingMapSpriteUploadFlags,x
+        tsb wUnknown000921,b
+
+        lda aMovingMapSpritesMapSprites,b,x
+        and #$7FFF
+        tay
+        lda aMapSpriteWalkFrameDelays,y
+        and #$00FF
+        sta wUnknown000901,x
+
+        lda wUnknown0008F1,x
+        clc
+        adc #1
+        and #$0003
+        sta wUnknown0008F1,x
+
+        lda wUnknown0008F1,x
+        cmp #0
+        beq _D9C4
+
+        cmp #1
+        beq _D9C9
+
+        cmp #2
+        beq _D9CE
+
+        cmp #3
+        beq _D9D3
+        
+        _D9C4
+        lda #0
+        bra +
+
+        _D9C9
+        lda #$0200
+        bra +
+
+        _D9CE
+        lda #$0400
+        bra +
+
+        _D9D3
+        lda #$0600
+        bra +
+
+        +
+        sta wMapSpriteFrameByteOffset,b
+
+        lda wUnknown000911,x
+        xba
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta wMapSpriteFrameByteOffset,b
+
+        jsr (aMovingMapSpriteGraphicsSetters2,x)
+
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+
+        lda #size(Tile4bpp) * 8
+        sta wR0
+
+        lda #$C400 >> 1
+        clc
+        adc @l aMovingMapSpriteVRAMOffsets,x
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$0100
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+
+        lda #size(Tile4bpp) * 8
+        sta wR0
+
+        lda #$C600 >> 1
+        clc
+        adc @l aMovingMapSpriteVRAMOffsets,x
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+
+        _End
+        sep #$20
+        lda #$88
+        pha
+        plb
+        rep #$20
+
+        phx
+        lda aMovingMapSpritesMapSprites,b,x
+        and #$7FFF
+        asl a
+        tax
+        lda @l aMapSpriteWalkOffsetPointers,x
+        sta wR3
+        plx
+
+        lda wUnknown0008F1,x
+        asl a
+        clc
+        adc wUnknown000911,x
+        clc
+        adc wR3
+        tay
+        lda $D4C6,b,y
+        and #$00FF
+        sta wR0
+        lda $D4C7,b,y
+        and #$00FF
+        sta wR1
+        lda @l aMovingMapSpriteTileOffsets,x
+        sta wR4
+        ldy #<>aMovingUnitSprite32x32
+        rts
+
+        .databank 0
+
+    .endsection Unsorted88D963Section
+
+
+    .section Unsorted88DA6ASection
+
+      .al
+      .xl
+
+      aMovingMapSpriteGraphicsSetters2 ; 88/DA6A
+
+        .word <>rsSetMovingMapSpriteGraphics0
+        .word <>rsSetMovingMapSpriteGraphics1
+        .word <>rsSetMovingMapSpriteGraphics2
+        .word <>rsSetMovingMapSpriteGraphics3
+
+      aTallMovingMapSpriteUploadFlags ; 88/DA72
+
+        .word $0001
+        .word $0002
+        .word $0004
+        .word $0008
+
+      aTallMovingMapSpriteUploadFlags2 ; 88/DA7A
+
+        .word $8000
+        .word $4000
+        .word $2000
+        .word $1000
+
+    .endsection Unsorted88DA6ASection
+
+
+    .section Unsorted88DA82Section
+
+      .al
+      .xl
+
+      rsSetMovingMapSpriteGraphics0 ; 88/DA82
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR18+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR18
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta $07EA+1,b
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lMapSpriteGraphicsPointer,b
+        rts
+
+        .databank 0
+
+      rsSetMovingMapSpriteGraphics1 ; 88/DA99
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR18+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR18
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta $07EA+1,b
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lMapSpriteGraphicsPointer,b
+
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$2000
+        sta lMapSpriteGraphicsPointer,b
+        rts
+
+        .databank 0
+
+      rsSetMovingMapSpriteGraphics2 ; 88/DABA
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR18+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR18
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lMapSpriteGraphicsPointer+1,b
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lMapSpriteGraphicsPointer,b
+
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$4000
+        sta lMapSpriteGraphicsPointer,b
+        rts
+
+        .databank 0
+
+      rsSetMovingMapSpriteGraphics3 ; 88/DADB
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lR18+1
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lR18
+        lda #(`aMovingMapSpriteBuffers[0])<<8
+        sta lMapSpriteGraphicsPointer+1,b
+        lda #<>aMovingMapSpriteBuffers[0]
+        sta lMapSpriteGraphicsPointer,b
+
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$6000
+        sta lMapSpriteGraphicsPointer,b
+        rts
+
+        .databank 0
+
+    .endsection Unsorted88DA82Section
+
+
+    .section Unsorted88DAFCSection
+
+      .al
+      .xl
+
+      aMovingMapSpriteTileOffsets ; 88/DAFC
+
+        .word $0000
+        .word $0008
+        .word $0020
+        .word $0028
+
+      aMovingMapSpriteVRAMOffsets ; 88/DB04
+
+        .word $0000 >> 1
+        .word $0100 >> 1
+        .word $0400 >> 1
+        .word $0500 >> 1
+
+        ; 88/DB0C
+
+    .endsection Unsorted88DAFCSection
+
+
+    .section Unsorted88DB0CSection
+
+      .al
+      .xl
+
+      rlUploadMovingUnitSpriteFrame ; 88/DB0C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; VBlank: uploads the frame rsUpdateMovingUnitSpriteFrame picked to VRAM $6200/$6300.
+
+        phb
+        php
+        phk
+        plb
+        .databank $88
+        lda wMovingUnitSpriteState,b
+        beq _DB2F
+        lda $0865,b
+        beq _DB2F
+        ldx wActiveUnitDeploymentOffset,b
+        lda aDeploymentTable._DeploymentOffsets,x
+        tax
+        lda aDeploymentTable._MapSpriteID,x
+        and #$8000
+        beq _DB32
+        jml _DB90
+
+
+        _DB2F
+        plp
+        plb
+        .databank $88
+        rtl
+
+
+        _DB32
+        sep #$20
+        rep #$10
+        lda #$80
+        sta $2115,b
+        lda #$00
+        sta $4316,b
+        sta $4326,b
+        lda #$18
+        sta $4311,b
+        sta $4321,b
+        lda #$01
+        sta $4310,b
+        sta $4320,b
+        lda #$A0
+        sta $4315,b
+        ldx $084D,b
+        stx $4312,b
+        lda $084F,b
+        sta $4314,b
+        ldx #$6200
+        stx $2116,b
+        lda #$02
+        sta $420B,b
+        lda #$A0
+        sta $4325,b
+        ldx $0850,b
+        stx $4322,b
+        lda $084F,b
+        sta $4324,b
+        ldx #$6300
+        stx $2116,b
+        lda #$04
+        sta $420B,b
+        rep #$20
+        plp
+        plb
+        .databank $88
+        rtl
+
+
+        _DB90
+        sep #$20
+        rep #$10
+        lda #$80
+        sta $2115,b
+        lda #$18
+        sta $4311,b
+        sta $4321,b
+        lda #$00
+        sta $4315,b
+        sta $4325,b
+        lda #$01
+        sta $4310,b
+        sta $4320,b
+        lda #$01
+        sta $4316,b
+        ldx $084D,b
+        stx $4312,b
+        lda $084F,b
+        sta $4314,b
+        ldx #$6200
+        stx $2116,b
+        lda #$02
+        sta $420B,b
+        lda #$01
+        sta $4326,b
+        ldx $0850,b
+        stx $4322,b
+        lda $084F,b
+        sta $4324,b
+        ldx #$6300
+        stx $2116,b
+        lda #$04
+        sta $420B,b
+        sep #$20
+        plp
+        plb
+        .databank $88
+        rtl
+
+        .databank 0
+
+        ; 88/DBEE
+
+    .endsection Unsorted88DB0CSection
+
+
+    .section Unsorted88DBEESection
+
+      .al
+      .xl
+
+      rlUploadSelectedUnitMapSpriteFrame ; 88/DBEE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The selected unit's standing map sprite, animated by frame count (status screen).
+
+        phb
+        php
+        phk
+        plb
+        .databank $88
+        jsl rlGetSelectedUnitMapSprite
+        and #$8000
+        bne _DC01
+        jsr rsUploadSelectedUnitShortMapSpriteFrame
+        plp
+        plb
+        .databank $88
+        rtl
+
+
+        _DC01
+        jsr rsUploadSelectedUnitTallMapSpriteFrame
+        plp
+        plb
+        .databank $88
+        rtl
+
+        .databank 0
+
+        ; 88/DC07
+
+    .endsection Unsorted88DBEESection
+
+
+    .section Unsorted88DC07Section
+
+      .al
+      .xl
+
+      rsUploadSelectedUnitShortMapSpriteFrame ; 88/DC07
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0030
+        cmp #$0000
+        beq _DC20
+        cmp #$0010
+        beq _DC25
+        cmp #$0020
+        beq _DC2A
+        cmp #$0030
+        beq _DC2F
+
+        _DC20
+        lda #$0000
+        bra _DC34
+
+
+        _DC25
+        lda #$0080
+        bra _DC34
+
+
+        _DC2A
+        lda #$0100
+        bra _DC34
+
+
+        _DC2F
+        lda #$0080
+        bra _DC34
+
+
+        _DC34
+        sta wMapSpriteFrameByteOffset,b
+        jsl rlGetSelectedUnitMapSprite
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda aShortStandingMapSpritePointers+1,x
+        sta lR18+1
+        lda aShortStandingMapSpritePointers,x
+        sta lMapSpriteGraphicsPointer,b
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+        lda #$0040
+        sta wR0
+        lda #$6E00
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$0040
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+        lda #$0040
+        sta wR0
+        lda #$6F00
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/DC8B
+
+      rsUploadSelectedUnitTallMapSpriteFrame ; 88/DC8B
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0030
+        cmp #$0000
+        beq _DCA4
+        cmp #$0010
+        beq _DCA9
+        cmp #$0020
+        beq _DCAE
+        cmp #$0030
+        beq _DCB3
+
+        _DCA4
+        lda #$0000
+        bra _DCB8
+
+
+        _DCA9
+        lda #$00C0
+        bra _DCB8
+
+
+        _DCAE
+        lda #$0180
+        bra _DCB8
+
+
+        _DCB3
+        lda #$00C0
+        bra _DCB8
+
+
+        _DCB8
+        sta wMapSpriteFrameByteOffset,b
+        jsl rlGetSelectedUnitMapSprite
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        tax
+        lda aTallStandingMapSpritePointers+1,x
+        sta lR18+1
+        lda aTallStandingMapSpritePointers,x
+        sta lMapSpriteGraphicsPointer,b
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+        lda #$0040
+        sta wR0
+        lda #$6E00
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$0040
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lR18
+        lda #$0080
+        sta wR0
+        lda #$6F00
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/DD0F
+
+    .endsection Unsorted88DC07Section
+
+
+    .section Unsorted88DD0FSection
+
+      .al
+      .xl
+
+      rlUnknown88DD0F ; 88/DD0F
+
+        ; Nothing in the build reaches this. Draws a sprite array at the active
+        ; unit (wR0 = $68, wR1 = $0885 + 6): aUnknown88DD57, or aUnknown88DD77
+        ; when its map sprite has bit 15 set.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $88
+        lda #$0068
+        sta wR0
+        lda wUnknown000885,b
+        clc
+        adc #$0006
+        sta wR1
+        stz wR4
+        ldx wActiveUnitDeploymentOffset,b
+        lda #$0000
+        sta wR5
+        jsl rlGetSelectedUnitMapSprite
+        and #$8000
+        bne _DD42
+        sep #$20
+        lda #$88
+        pha
+        plb
+        .databank $88
+        rep #$20
+        lda #<>aUnknown88DD57
+        tay
+        bra _DD4E
+
+
+        _DD42
+        sep #$20
+        lda #$88
+        pha
+        plb
+        .databank $88
+        rep #$20
+        lda #<>aUnknown88DD77
+        tay
+
+        _DD4E
+        phx
+        jsl rlPushToOAMBuffer
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 88/DD57
+
+      aUnknown88DD57 ; 88/DD57
+
+        ; Drawn by rlUnknown88DD0F when the active unit's map sprite has bit 15 clear.
+        _Sprites := [[(   4,    4), $21, SpriteLarge, $00E0, 3, 1, false, false]]
+        _Sprites..= [[(  16,   16), $00, SpriteSmall, $0022, 3, 2, false, false]]
+        _Sprites..= [[(   8,   16), $00, SpriteSmall, $0021, 3, 2, false, false]]
+        _Sprites..= [[(   0,   16), $00, SpriteSmall, $0020, 3, 2, false, false]]
+        _Sprites..= [[(  16,    0), $21, SpriteLarge, $0002, 3, 2, false, false]]
+        _Sprites..= [[(   0,    0), $21, SpriteLarge, $0000, 3, 2, false, false]]
+
+        .structSpriteArray aUnknown88DD57._Sprites
+
+
+      aUnknown88DD77 ; 88/DD77
+
+        ; Drawn by rlUnknown88DD0F when the active unit's map sprite has bit 15 set.
+        _Sprites := [[(   4,    6), $21, SpriteLarge, $00E0, 3, 1, false, false]]
+        _Sprites..= [[(   4,  -10), $21, SpriteLarge, $00E2, 3, 1, false, false]]
+        _Sprites..= [[(  16,   16), $00, SpriteSmall, $0022, 3, 2, false, false]]
+        _Sprites..= [[(   8,   16), $00, SpriteSmall, $0021, 3, 2, false, false]]
+        _Sprites..= [[(   0,   16), $00, SpriteSmall, $0020, 3, 2, false, false]]
+        _Sprites..= [[(  16,    0), $21, SpriteLarge, $0002, 3, 2, false, false]]
+        _Sprites..= [[(   0,    0), $21, SpriteLarge, $0000, 3, 2, false, false]]
+
+        .structSpriteArray aUnknown88DD77._Sprites
+
+    .endsection Unsorted88DD0FSection
+
+
+    .section Unsorted88DD9CSection
+
+      .as
+      .xl
+
+      rlUploadMapSpriteFrame ; 88/DD9C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies a map sprite frame from lR18 to VRAM wR1: two rows of $A0 bytes, or tall rows when wR0 is not 0.
+
+        phb
+        phk
+        plb
+        .databank $88
+        lda wR0
+        bne _DDA8
+        jsr rsUploadShortMapSpriteFrame
+        bra _DDAB
+
+
+        _DDA8
+        jsr rsUploadTallMapSpriteFrame
+
+        _DDAB
+        plb
+        .databank $88
+        rtl
+
+        .databank 0
+
+        ; 88/DDAD
+
+      rsUploadShortMapSpriteFrame ; 88/DDAD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$00A0
+        sta wR0
+        phx
+        jsl rlDMAByPointer
+        plx
+        lda lR18
+        clc
+        adc #$00A0
+        sta lR18
+        lda #$00A0
+        sta wR0
+        lda wR1
+        clc
+        adc #$0100
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/DDD4
+
+      rsUploadTallMapSpriteFrame ; 88/DDD4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0100
+        sta wR0
+        phx
+        jsl rlDMAByPointer
+        plx
+        lda lR18
+        clc
+        adc #$0100
+        sta lR18
+        lda #$0100
+        sta wR0
+        lda wR1
+        clc
+        adc #$0100
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/DDFB
+
+    .endsection Unsorted88DD9CSection
+
+
+    .section Unsorted88DDFBSection
+
+      .al
+      .xl
+
+      rlSaveDeploymentMapSprites ; 88/DDFB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies every deployment's map sprite ID to $7E4DB5 (the unit window changes them).
+
+        ldx #$008E
+
+        _DDFE
+        lda aDeploymentTable._MapSpriteID,x
+        sta $7E4DB5,x
+        dec x
+        dec x
+        bpl _DDFE
+        rtl
+
+        .databank 0
+
+        ; 88/DE0B
+
+    .endsection Unsorted88DDFBSection
+
+
+    .section Unsorted88DE0BSection
+
+      .al
+      .xl
+
+      rlRestoreDeploymentMapSprites ; 88/DE0B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$008E
+
+        _DE0E
+        lda $7E4DB5,x
+        sta aDeploymentTable._MapSpriteID,x
+        dec x
+        dec x
+        bpl _DE0E
+        rtl
+
+        .databank 0
+
+        ; 88/DE1B
+
+    .endsection Unsorted88DE0BSection
+
+
+    .section Unsorted88DE1BSection
+
+      .al
+      .xl
+
+      rlUploadAllStandingMapSprites ; 88/DE1B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Uploads the first standing frame of every deployed unit's map sprite.
+
+        phk
+        plb
+        .databank $88
+        stz wMapSpriteFrameByteOffset,b
+        ldx #$008E
+
+        _DE23
+        lda aDeploymentTable._MapSpriteID,x
+        cmp #$FFFF
+        beq _DE3B
+        and #$8000
+        beq _DE36
+        jsr rsUploadTallStandingMapSprite
+        bra _DE3B
+
+
+        _DE36
+        jsr rsUploadShortStandingMapSprite
+        bra _DE3B
+
+
+        _DE3B
+        dec x
+        dec x
+        bpl _DE23
+        rtl
+
+        .databank 0
+
+        ; 88/DE40
+
+      rsUploadShortStandingMapSprite ; 88/DE40
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = deployment: uploads its short standing frame (wMapSpriteFrameByteOffset) to its VRAM slot (aDeploymentMapSpriteVRAMOffsets).
+
+        lda aDeploymentMapSpriteVRAMOffsets,x
+        sta wTempVariable2,b
+        lda aDeploymentTable._MapSpriteID,x
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        phx
+        tax
+        lda aShortStandingMapSpritePointers+1,x
+        sta lR18+1
+        lda aShortStandingMapSpritePointers,x
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lMapSpriteGraphicsPointer,b
+        sta lR18
+        plx
+        lda #$0040
+        sta wR0
+        lda #$6000
+        clc
+        adc wTempVariable2,b
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$0040
+        sta lR18
+        lda #$0040
+        sta wR0
+        lda #$6100
+        clc
+        adc wTempVariable2,b
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/DE9E
+
+      rsUploadTallStandingMapSprite ; 88/DE9E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aDeploymentMapSpriteVRAMOffsets,x
+        sta wTempVariable2,b
+        lda aDeploymentTable._MapSpriteID,x
+        and #$7FFF
+        sta wR0
+        clc
+        adc wR0
+        clc
+        adc wR0
+        phx
+        tax
+        lda aTallStandingMapSpritePointers+1,x
+        sta lR18+1
+        lda aTallStandingMapSpritePointers,x
+        clc
+        adc wMapSpriteFrameByteOffset,b
+        sta lMapSpriteGraphicsPointer,b
+        sta lR18
+        plx
+        lda #$0040
+        sta wR0
+        lda #$6000
+        clc
+        adc wTempVariable2,b
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$0040
+        sta lR18
+        lda #$0080
+        sta wR0
+        lda #$6100
+        clc
+        adc wTempVariable2,b
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 88/DEFC
+
+    .endsection Unsorted88DE1BSection
+
+
+    .section Data88DEFCSection
+
+      .al
+      .xl
+
+      aDeploymentMapSpriteVRAMOffsets ; 88/DEFC
+
+        ; Read by rsUploadShortStandingMapSprite, rsUploadTallStandingMapSprite.
+
+        .word $0800, $0820, $0840, $0860, $0880, $08A0, $08C0, $08E0
+        .word $0A00, $0A20, $0A40, $0A60, $0A80, $0AA0, $0AC0, $0AE0
+        .word $0C00, $0C20, $0C40, $0C60, $0C80, $0CA0, $0CC0, $0CE0
+        .word $0E00, $0E20, $0E40, $0E60, $0E80, $0EA0, $0EC0, $0EE0
+        .word $1000, $1020, $1040, $1060, $1080, $10A0, $10C0, $10E0
+        .word $1200, $1220, $1240, $1260, $1280, $12A0, $12C0, $12E0
+        .word $1400, $1440, $1480, $14C0, $1600, $1640, $1680, $16C0
+        .word $1800, $1840, $1880, $18C0, $1A00, $1A40, $1A80, $1AC0
+        .word $1C00, $1C40, $1C80, $1CC0, $1E00, $1E40, $1E80, $1EC0
+
+        ; 88/DF8C
+
+    .endsection Data88DEFCSection
+
+
+    .section Unsorted88DF8CSection
+
+      .al
+      .xl
+
+      rlAnimateUnitWindowLineSprite ; 88/DF8C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; X = a unit window sprite slot: uploads its standing frame for the frame count, short or tall.
+
+        lda $7E486B,x
+        cmp #$FFFF
+        beq _DFA0
+        txa
+        clc
+        adc #$0060
+        tax
+        jsr rsAnimateUnitWindowTallSprite
+        bra _DFA5
+
+
+        _DFA0
+        jsr rsAnimateUnitWindowShortSprite
+        bra _DFA5
+
+
+        _DFA5
+        rtl
+
+        .databank 0
+
+        ; 88/DFA6
+
+      rsAnimateUnitWindowShortSprite ; 88/DFA6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0030
+        cmp #$0000
+        beq _DFBF
+        cmp #$0010
+        beq _DFC4
+        cmp #$0020
+        beq _DFC9
+        cmp #$0030
+        beq _DFCE
+
+        _DFBF
+        lda #$0000
+        bra _DFD3
+
+
+        _DFC4
+        lda #$0080
+        bra _DFD3
+
+
+        _DFC9
+        lda #$0100
+        bra _DFD3
+
+
+        _DFCE
+        lda #$0080
+        bra _DFD3
+
+
+        _DFD3
+        sta wMapSpriteFrameByteOffset,b
+        jsr rsUploadShortStandingMapSprite
+        rts
+
+        .databank 0
+
+        ; 88/DFDA
+
+      rsAnimateUnitWindowTallSprite ; 88/DFDA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wVBlankEnabledFramecount
+        and #$0030
+        cmp #$0000
+        beq _DFF3
+        cmp #$0010
+        beq _DFF8
+        cmp #$0020
+        beq _DFFD
+        cmp #$0030
+        beq _E002
+
+        _DFF3
+        lda #$0000
+        bra _E007
+
+
+        _DFF8
+        lda #$00C0
+        bra _E007
+
+
+        _DFFD
+        lda #$0180
+        bra _E007
+
+
+        _E002
+        lda #$00C0
+        bra _E007
+
+
+        _E007
+        sta wMapSpriteFrameByteOffset,b
+        jsr rsUploadTallStandingMapSprite
+        rts
+
+        .databank 0
+
+        ; 88/E00E
+
+    .endsection Unsorted88DF8CSection
 
 

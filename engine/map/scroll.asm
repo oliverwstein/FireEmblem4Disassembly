@@ -1,4 +1,7 @@
-; Scripted map camera scrolling.
+; Map camera scrolling: the scroll steps in each direction (rlMapScrollStep*,
+; which move the camera by wMapScrollSpeed and queue the new row or column of
+; tiles), rlContinueMapScroll each frame, and scroll scripts built from
+; coordinates for events (rlCreateMapScrollScriptFromCoordinates). Banks $81, $88.
 
     .section MapScrollScriptSection
 
@@ -1007,3 +1010,377 @@
         ; 88/87EC
 
     .endsection MapScrollRightSetBGOFSSection
+
+
+    .section Unsorted888560Section
+
+      .al
+      .xl
+
+      rlContinueMapScroll ; 88/8560
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Each frame while wMapScrollingFlag is set: scrolls one more step in wMapScrollDirectionIdentifier and, unless the minimap is open, keeps wMapXOffset/wMapYOffset with the scroll.
+
+        lda wUnknown00073A,b
+        beq +
+
+          jsl rlMapScrollStepInDirection
+
+          lda wMapSystemFlags,b
+          bit #$0020
+          bne +
+
+            lda wMapScrollXPixels,b
+            sta wMapXOffset,b
+            lda wMapScrollYPixels,b
+            sta wMapYOffset,b
+
+        +
+        rtl
+
+        .databank 0
+
+        ; 88/857E
+
+    .endsection Unsorted888560Section
+
+
+    .section Unsorted8885D3Section
+
+      .al
+      .xl
+
+      rlStartMapScrollUp ; 88/85D3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta wUnknown00073A,b
+        sta wMapEnableYScrollFlag,b
+        jsl rlMapScrollStepUp
+        rtl
+
+        .databank 0
+
+        ; 88/85E1
+
+      rlStartMapScrollDown ; 88/85E1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta wUnknown00073A,b
+        sta wMapEnableYScrollFlag,b
+        jsl rlMapScrollStepDown
+        rtl
+
+        .databank 0
+
+        ; 88/85EF
+
+    .endsection Unsorted8885D3Section
+
+
+    .section Unsorted8885EFSection
+
+      .al
+      .xl
+
+      rlStartMapScrollLeft ; 88/85EF
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+
+        jsl rlMapScrollStepLeft
+        rtl
+
+        .databank 0
+
+      rlStartMapScrollRight ; 88/85FD
+      
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+
+        jsl rlMapScrollStepRight
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted8885EFSection
+
+
+    .section Unsorted88860BSection
+
+      .al
+      .xl
+
+      rlStartMapScrollUpLeft ; 88/860B
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+        sta wMapEnableYScrollFlag,b
+
+        jsl rlMapScrollStepUpLeft
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted88860BSection
+
+
+    .section Unsorted88861CSection
+
+      .al
+      .xl
+
+      rlStartMapScrollDownLeft ; 88/861C
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+        sta wMapEnableYScrollFlag,b
+
+        jsl rlMapScrollStepDownLeft
+        rtl
+
+        .databank 0
+
+      rlStartMapScrollUpRight ; 88/862D
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+        sta wMapEnableYScrollFlag,b
+
+        jsl rlMapScrollStepUpRight
+        rtl
+
+        .databank 0
+
+      rlStartMapScrollDownRight ; 88/863E
+
+        .al
+        .autsiz
+        .databank ?
+
+        lda #1
+        sta wUnknown00073A,b
+        sta wMapEnableXScrollFlag,b
+        sta wMapEnableYScrollFlag,b
+
+        jsl rlMapScrollStepDownRight
+        rtl
+
+        .databank 0
+
+      rlMapScrollStepInDirection ; 88/864F
+      
+        .al
+        .autsiz
+        .databank ?
+
+        ; One scroll step in wMapScrollDirectionIdentifier (the JOY_ direction bits: $0100 right, $0200 left, $0400 down, $0800 up and their diagonals).
+
+        lda wMapScrollDirectionIdentifier,b
+        cmp #$0200
+        beq _867B
+
+        cmp #$0100
+        beq _8680
+
+        cmp #$0800
+        beq _8685
+
+        cmp #$0400
+        beq _868A
+
+        cmp #$0A00
+        beq _868F
+
+        cmp #$0600
+        beq _8694
+
+        cmp #$0900
+        beq _8699
+
+        cmp #$0500
+        beq _869E
+
+        rtl
+
+        _867B
+        jsl rlMapScrollStepLeft
+        rtl
+        
+        _8680
+        jsl rlMapScrollStepRight
+        rtl
+        
+        _8685
+        jsl rlMapScrollStepUp
+        rtl
+        
+        _868A
+        jsl rlMapScrollStepDown
+        rtl
+        
+        _868F
+        jsl rlMapScrollStepUpLeft
+        rtl
+        
+        _8694
+        jsl rlMapScrollStepDownLeft
+        rtl
+        
+        _8699
+        jsl rlMapScrollStepUpRight
+        rtl
+        
+        _869E
+        jsl rlMapScrollStepDownRight
+        rtl
+
+        .databank 0
+
+      rlMapScrollStepLeft ; 88/86A3
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Moves the camera left by wMapScrollSpeed and builds the new left column.
+
+        jsr rsMapScrollLeftSetBGOFS
+        jsl rlQueueMapLeftColumnUpload
+        rtl
+
+        .databank 0
+
+      rlMapScrollStepRight ; 88/86AB
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsMapScrollRightSetBGOFS
+        jsl rlQueueMapRightColumnUpload
+        rtl
+
+        .databank 0
+
+      rlMapScrollStepUp ; 88/86B3
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsMapScrollUpSetBGOFS
+        jsl rlQueueMapTopRowUpload
+        rtl
+
+        .databank 0
+
+      rlMapScrollStepDown ; 88/86BB
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsMapScrollDownSetBGOFS
+        jsl rlQueueMapBottomRowUpload
+        rtl
+
+        .databank 0
+
+      rlMapScrollStepUpLeft ; 88/86C3
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsMapScrollLeftSetBGOFS
+        jsr rsMapScrollUpSetBGOFS
+        jsl rlQueueMapLeftColumnUpload
+        jsl rlQueueMapTopRowUpload
+        rtl
+
+        .databank 0
+
+      rlMapScrollStepUpRight ; 88/86D2
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsMapScrollRightSetBGOFS
+        jsr rsMapScrollUpSetBGOFS
+        jsl rlQueueMapRightColumnUpload
+        jsl rlQueueMapTopRowUpload
+        rtl
+
+        .databank 0
+
+      rlMapScrollStepDownLeft ; 88/86E1
+
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsMapScrollLeftSetBGOFS
+        jsr rsMapScrollDownSetBGOFS
+        jsl rlQueueMapLeftColumnUpload
+        jsl rlQueueMapBottomRowUpload
+        rtl
+
+        .databank 0
+
+      rlMapScrollStepDownRight ; 88/86F0
+      
+        .al
+        .autsiz
+        .databank ?
+
+        jsr rsMapScrollRightSetBGOFS
+        jsr rsMapScrollDownSetBGOFS
+        jsl rlQueueMapRightColumnUpload
+        jsl rlQueueMapBottomRowUpload
+        rtl
+
+        .databank 0
+
+    .endsection Unsorted88861CSection
+
+
