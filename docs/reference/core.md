@@ -64,9 +64,9 @@ The screens with three entries are the opening logo, the save menu screen (which
 | `aActiveSpriteEngineMainActionTable` | `rlActiveSpriteEngineMainLoop` | active sprites: scripted, animated sprites |
 | `aHDMAEngineMainActionTable` | `rlHDMAEngineMainLoop` | HDMA effects, scripted |
 | `aIRQEngineMainActionTable` | `rlIRQEngineStub` (nothing) | mid-frame IRQ effects; the work runs from the IRQ handler (`rsIRQEngineCycle` → `rlRunIRQEngine`): a few slots, each with a script that sets the IRQ line and a routine to call there |
-| `aDialogueEngineMainActionTable` | `rlUnknown91A3D9` | the dialogue text engine |
+| `aEventEngineMainActionTable` | `rlEventEngineMainLoop` | the event engine: while an event script runs, begins it, runs its commands or ends it (`wEventEngineState`); its reset also resets the dialogue engine |
 
-Each table has a third word that `rlRegisterVBlankHook` never reads: a routine that does nothing for procs, active sprites and HDMA, `rlIRQEngineRestoreDefaultIRQ` for the IRQ engine, and `rlUnknown91A3DD` for dialogue. Nothing is known to call them; they look like a "shut down" entry that was never used.
+Each table has a third word that `rlRegisterVBlankHook` never reads: a routine that does nothing for procs, active sprites and HDMA, `rlIRQEngineRestoreDefaultIRQ` for the IRQ engine, and `rlEventEngineStub` for events. Nothing is known to call them; they look like a "shut down" entry that was never used.
 
 ### Procs
 
