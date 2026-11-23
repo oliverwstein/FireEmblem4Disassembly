@@ -4376,7 +4376,7 @@
         lda #1
         sta $1832,b
 
-        lda $0CC2,b
+        lda wDemoBattlePair,b
         bne +
 
           lda wDemoIndex,b

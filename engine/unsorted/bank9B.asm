@@ -4543,7 +4543,7 @@
         lda #$000F
 
         _FBE7
-        sta $0CC2,b
+        sta wDemoBattlePair,b
         stz aBGPaletteBuffer,b
         lda #$0000
         sta $7FD001

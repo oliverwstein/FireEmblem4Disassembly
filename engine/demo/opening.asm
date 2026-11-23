@@ -74,7 +74,7 @@
         YIELD
         PAUSE $000A
         YIELD
-        RUN_ASM rlUnknown97FDC1
+        RUN_ASM rlASMCLoadFirstDemoBattle
         YIELD
         RUN_ASM rlCreateProcEventWaitBattleSceneEnd
         YIELD
@@ -154,7 +154,7 @@
         YIELD
         FADE_OUT_BY_TIMER $04
         YIELD
-        RUN_ASM rlUnknown97FDC6
+        RUN_ASM rlASMCLoadNextDemoBattle
         YIELD
         RUN_ASM rlCreateProcEventWaitBattleSceneEnd
         YIELD

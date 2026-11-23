@@ -1488,6 +1488,17 @@
   .endvirtual
 
 
+  .virtual $000CC2
+
+    wDemoBattlePair .word ? ; $000CC2
+      ; Which pair of battle scenes the opening plays (aDemoBattlesPointerTable
+      ; holds two per entry): counts down after each opening, and from 0
+      ; starts again at the highest completion count, at most 15
+      ; (rlASMCLoadNextDemoBattle).
+
+  .endvirtual
+
+
   .virtual $001C00
 
     aSpriteBuffer .fill (128 * size(structPPUOAMEntry)) ; $001C00
