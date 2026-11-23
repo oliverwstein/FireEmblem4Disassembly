@@ -1361,7 +1361,7 @@
 
 
         _D033
-        lda #$8000
+        lda #MAP_BATTLE_HP_REQUEST_IDLE
         jsr rsSetMapBattleHPWindowRequest
         lda #<>rlProcMapBattleHPWindowCycle
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -1445,7 +1445,7 @@
 
 
         _D081
-        jsr rsUnknown85D29F
+        jsr rsPlaceMapBattleHPWindowsForMagic
 
         _D084
         jsr rsOpenMapBattleHPWindowRight
@@ -1501,7 +1501,7 @@
         jsl rlLoadMapBattleHPWindowColours
         lda #$0000
         ldy wR0
-        jsl rlUnknown85D766
+        jsl rlLoadMapBattleHPWindowAccentColours
         lda aActionStructUnit2.UnitRAMPointer
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitFactionSlot
@@ -1512,7 +1512,7 @@
         jsl rlLoadMapBattleHPWindowColours
         lda #$0001
         ldy wR0
-        jsl rlUnknown85D766
+        jsl rlLoadMapBattleHPWindowAccentColours
         rtl
 
         .databank 0
@@ -1820,12 +1820,14 @@
 
         ; 85/D29F
 
-      rsUnknown85D29F ; 85/D29F
+      rsPlaceMapBattleHPWindowsForMagic ; 85/D29F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Places the HP windows (wR0, wR1) around a magic effect according to wMapMagicFlags.
 
         lda aActionStructUnit2.XPosition
         sta wR2
@@ -1966,15 +1968,17 @@
 
         ; 85/D337
 
-      rlUnknown85D337 ; 85/D337
+      rlCheckMapBattleHPWindowRightBusy ; 85/D337
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = 0 when the right HP window is idle (MAP_BATTLE_HP_REQUEST_IDLE), $FFFF otherwise.
+
         lda wMapBattleHPWindowRightRequest,b
-        cmp #$8000
+        cmp #MAP_BATTLE_HP_REQUEST_IDLE
         beq _D343
         lda #$FFFF
         rtl
@@ -1988,15 +1992,17 @@
 
         ; 85/D347
 
-      rlUnknown85D347 ; 85/D347
+      rlCheckMapBattleHPWindowLeftBusy ; 85/D347
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = 0 when the left HP window is idle (MAP_BATTLE_HP_REQUEST_IDLE), $FFFF otherwise.
+
         lda wMapBattleHPWindowLeftRequest,b
-        cmp #$8000
+        cmp #MAP_BATTLE_HP_REQUEST_IDLE
         beq _D353
         lda #$FFFF
         rtl
@@ -2288,13 +2294,15 @@
       .al
       .xl
 
-      rlUnknown85D442 ; 85/D442
+      rlDrawMapMenuTwoRowGauge ; 85/D442
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws a gauge split across two rows (38 steps per row).
 
         stx wR7
         sta wR2
@@ -2307,7 +2315,7 @@
         sta wR6
         lda wR3
         sta wR5
-        jsr rsUnknown85D4B2
+        jsr rsDrawMapMenuGaugeRow
         rtl
 
 
@@ -2320,7 +2328,7 @@
         sta wR6
         lda #$0026
         sta wR5
-        jsr rsUnknown85D4B2
+        jsr rsDrawMapMenuGaugeRow
         lda wR7
         sec
         sbc #$0100
@@ -2331,7 +2339,7 @@
         sec
         sbc #$0026
         sta wR5
-        jsr rsUnknown85D4B2
+        jsr rsDrawMapMenuGaugeRow
         rtl
 
 
@@ -2340,7 +2348,7 @@
         sta wR4
         sta wR6
         sta wR5
-        jsr rsUnknown85D4B2
+        jsr rsDrawMapMenuGaugeRow
         lda wR7
         sec
         sbc #$0100
@@ -2354,7 +2362,7 @@
         sec
         sbc #$0026
         sta wR5
-        jsr rsUnknown85D4B2
+        jsr rsDrawMapMenuGaugeRow
         rtl
 
         .databank 0
@@ -2369,13 +2377,15 @@
       .al
       .xl
 
-      rsUnknown85D4B2 ; 85/D4B2
+      rsDrawMapMenuGaugeRow ; 85/D4B2
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws one row of a five-step-per-tile gauge using aMapMenuGaugeTiles.
 
         lda wR4
         sec
@@ -2391,16 +2401,16 @@
         phx
         ldy #$0004
         lda #$0004
-        jsr rsUnknown85D5AA
+        jsr rsGetMapMenuGaugeTile
         plx
-        jsr rsUnknown85D5C3
-        jsl rlUnknown85D81F
+        jsr rsAdjustMapMenuUpperGaugeTile
+        jsl rlDrawMapMenuTile
         pla
         ply
         lda wR0
         sta wR4
         inc x
-        jml rsUnknown85D4B2
+        jml rsDrawMapMenuGaugeRow
 
 
         _D4DF
@@ -2417,10 +2427,10 @@
         pha
         phx
         lda wR4
-        jsr rsUnknown85D5AA
+        jsr rsGetMapMenuGaugeTile
         plx
-        jsr rsUnknown85D5C3
-        jsl rlUnknown85D81F
+        jsr rsAdjustMapMenuUpperGaugeTile
+        jsl rlDrawMapMenuTile
         pla
         ply
         jml _D572
@@ -2432,10 +2442,10 @@
         phx
         ldy #$0004
         lda wR4
-        jsr rsUnknown85D5AA
+        jsr rsGetMapMenuGaugeTile
         plx
-        jsr rsUnknown85D5C3
-        jsl rlUnknown85D81F
+        jsr rsAdjustMapMenuUpperGaugeTile
+        jsl rlDrawMapMenuTile
         pla
         ply
         inc x
@@ -2462,10 +2472,10 @@
         phx
         ldy #$0004
         lda #$0000
-        jsr rsUnknown85D5AA
+        jsr rsGetMapMenuGaugeTile
         plx
-        jsr rsUnknown85D5C3
-        jsl rlUnknown85D81F
+        jsr rsAdjustMapMenuUpperGaugeTile
+        jsl rlDrawMapMenuTile
         pla
         ply
         sta wR5
@@ -2482,10 +2492,10 @@
         phx
         ldy wR5
         lda #$0000
-        jsr rsUnknown85D5AA
+        jsr rsGetMapMenuGaugeTile
         plx
-        jsr rsUnknown85D5C3
-        jsl rlUnknown85D81F
+        jsr rsAdjustMapMenuUpperGaugeTile
+        jsl rlDrawMapMenuTile
         pla
         ply
         nop
@@ -2508,10 +2518,10 @@
         phx
         ldy #$0000
         lda #$0000
-        jsr rsUnknown85D5AA
+        jsr rsGetMapMenuGaugeTile
         plx
-        jsr rsUnknown85D5C3
-        jsl rlUnknown85D81F
+        jsr rsAdjustMapMenuUpperGaugeTile
+        jsl rlDrawMapMenuTile
         pla
         ply
         rts
@@ -2528,9 +2538,9 @@
       .al
       .xl
 
-      aUnknown85D591 ; 85/D591
+      aMapMenuGaugeTiles ; 85/D591
 
-        ; Read by rsUnknown85D5AA.
+        ; 5x5 tile index table (filled steps x base steps) for rsGetMapMenuGaugeTile.
 
         .byte $1E, $1E, $1E, $1E, $1E, $1C, $1D, $1D, $1D, $1D, $19, $1A, $1B, $1B, $1B, $15
         .byte $16, $17, $18, $18, $10, $11, $12, $13, $14
@@ -2545,12 +2555,14 @@
       .al
       .xl
 
-      rsUnknown85D5AA ; 85/D5AA
+      rsGetMapMenuGaugeTile ; 85/D5AA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = tile index from aMapMenuGaugeTiles for A = start step (0-4), Y = fill step (0-4).
 
         pha
         lda #$0005
@@ -2561,7 +2573,7 @@
         clc
         adc wR12
         tax
-        lda aUnknown85D591,x
+        lda aMapMenuGaugeTiles,x
         and #$00FF
         rts
 
@@ -2569,12 +2581,14 @@
 
         ; 85/D5C3
 
-      rsUnknown85D5C3 ; 85/D5C3
+      rsAdjustMapMenuUpperGaugeTile ; 85/D5C3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Shifts tile index A by -$10 when drawing the upper row of a two-row gauge (X < wR7).
 
         cpx wR7
         bpl _D5CB
@@ -2795,7 +2809,7 @@
         tya
         asl a
         tax
-        lda @l aUnknown85D6B2,x
+        lda @l aMapBattleHPWindowPalettePointers,x
         clc
         adc #$0010
         tay
@@ -2842,22 +2856,46 @@
       .al
       .xl
 
-      aUnknown85D6B2 ; 85/D6B2
+      aMapBattleHPWindowPalettePointers ; 85/D6B2
 
         ; Read by rlLoadMapBattleHPWindowColours.
 
-        .word $D6C4, $D6D6, $D6E8, $D6FA, $D70C, $D71E, $D730, $D742
-        .word $D754, $5ED5, $039C, $39D2, $3190, $2D6F, $294E, $252D
-        .word $1CC9, $0000, $3000, $039C, $420F, $3DEE, $39CD, $35AC
-        .word $318B, $0C42, $0000, $3000, $039C, $5310, $4ACE, $46AD
-        .word $428C, $3A4A, $04A7, $0000, $3000, $039C, $4DAF, $498E
-        .word $456D, $414C, $3D2B, $0866, $0000, $3000, $03FF, $6B7B
-        .word $635A, $5AF7, $4ED7, $3E75, $08C8, $0000, $4001, $03FF
-        .word $21AF, $1D8E, $196D, $154C, $152B, $04A7, $0000, $0001
-        .word $039C, $76D3, $72B2, $6E91, $6A70, $664F, $04A7, $0000
-        .word $4001, $03FF, $19D4, $15B3, $1192, $0D71, $0950, $04A7
-        .word $0000, $3800, $039C, $658C, $616B, $5D4A, $5929, $5909
-        .word $0445, $0000
+        .word <>aMapBattleHPWindowPalette0
+        .word <>aMapBattleHPWindowPalette1
+        .word <>aMapBattleHPWindowPalette2
+        .word <>aMapBattleHPWindowPalette3
+        .word <>aMapBattleHPWindowPalette4
+        .word <>aMapBattleHPWindowPalette5
+        .word <>aMapBattleHPWindowPalette6
+        .word <>aMapBattleHPWindowPalette7
+        .word <>aMapBattleHPWindowPalette8
+
+      aMapBattleHPWindowPalette0 ; 85/D6C4
+        .word $5ED5, $039C, $39D2, $3190, $2D6F, $294E, $252D, $1CC9, $0000
+
+      aMapBattleHPWindowPalette1 ; 85/D6D6
+        .word $3000, $039C, $420F, $3DEE, $39CD, $35AC, $318B, $0C42, $0000
+
+      aMapBattleHPWindowPalette2 ; 85/D6E8
+        .word $3000, $039C, $5310, $4ACE, $46AD, $428C, $3A4A, $04A7, $0000
+
+      aMapBattleHPWindowPalette3 ; 85/D6FA
+        .word $3000, $039C, $4DAF, $498E, $456D, $414C, $3D2B, $0866, $0000
+
+      aMapBattleHPWindowPalette4 ; 85/D70C
+        .word $3000, $03FF, $6B7B, $635A, $5AF7, $4ED7, $3E75, $08C8, $0000
+
+      aMapBattleHPWindowPalette5 ; 85/D71E
+        .word $4001, $03FF, $21AF, $1D8E, $196D, $154C, $152B, $04A7, $0000
+
+      aMapBattleHPWindowPalette6 ; 85/D730
+        .word $0001, $039C, $76D3, $72B2, $6E91, $6A70, $664F, $04A7, $0000
+
+      aMapBattleHPWindowPalette7 ; 85/D742
+        .word $4001, $03FF, $19D4, $15B3, $1192, $0D71, $0950, $04A7, $0000
+
+      aMapBattleHPWindowPalette8 ; 85/D754
+        .word $3800, $039C, $658C, $616B, $5D4A, $5929, $5909, $0445, $0000
 
         ; 85/D766
 
@@ -2869,12 +2907,14 @@
       .al
       .xl
 
-      rlUnknown85D766 ; 85/D766
+      rlLoadMapBattleHPWindowAccentColours ; 85/D766
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = side (1: BG colours $0C-$0E, else $04-$06), Y = HUD colour ID (from aMapBattleHPWindowAccentColourPointers).
 
         phb
         php
@@ -2886,7 +2926,7 @@
         tya
         asl a
         tax
-        lda @l aUnknown85D7A0,x
+        lda @l aMapBattleHPWindowAccentColourPointers,x
         clc
         adc #$0006
         tay
@@ -2932,16 +2972,46 @@
       .al
       .xl
 
-      aUnknown85D7A0 ; 85/D7A0
+      aMapBattleHPWindowAccentColourPointers ; 85/D7A0
 
-        ; Read by rlUnknown85D766.
+        ; Read by rlLoadMapBattleHPWindowAccentColours.
 
-        .word $D7B2, $D7BA, $D7C2, $D7CA, $D7D2, $D7DA, $D7E2, $D7EA
-        .word $D7F2, $0000, $18A8, $0003, $39D2, $0000, $1CE6, $0000
-        .word $420F, $0000, $1D64, $0880, $4ACE, $0000, $2CA7, $0401
-        .word $498E, $10A6, $318B, $10E7, $5F7B, $0000, $04A7, $0021
-        .word $21AF, $0000, $2106, $0C42, $5A71, $0000, $0068, $0021
-        .word $1DF5, $65AB, $3863, $0400, $61AD
+        .word <>aMapBattleHPWindowAccentColours0
+        .word <>aMapBattleHPWindowAccentColours1
+        .word <>aMapBattleHPWindowAccentColours2
+        .word <>aMapBattleHPWindowAccentColours3
+        .word <>aMapBattleHPWindowAccentColours4
+        .word <>aMapBattleHPWindowAccentColours5
+        .word <>aMapBattleHPWindowAccentColours6
+        .word <>aMapBattleHPWindowAccentColours7
+        .word <>aMapBattleHPWindowAccentColours8
+
+      aMapBattleHPWindowAccentColours0 ; 85/D7B2
+        .word $0000, $18A8, $0003, $39D2
+
+      aMapBattleHPWindowAccentColours1 ; 85/D7BA
+        .word $0000, $1CE6, $0000, $420F
+
+      aMapBattleHPWindowAccentColours2 ; 85/D7C2
+        .word $0000, $1D64, $0880, $4ACE
+
+      aMapBattleHPWindowAccentColours3 ; 85/D7CA
+        .word $0000, $2CA7, $0401, $498E
+
+      aMapBattleHPWindowAccentColours4 ; 85/D7D2
+        .word $10A6, $318B, $10E7, $5F7B
+
+      aMapBattleHPWindowAccentColours5 ; 85/D7DA
+        .word $0000, $04A7, $0021, $21AF
+
+      aMapBattleHPWindowAccentColours6 ; 85/D7E2
+        .word $0000, $2106, $0C42, $5A71
+
+      aMapBattleHPWindowAccentColours7 ; 85/D7EA
+        .word $0000, $0068, $0021, $1DF5
+
+      aMapBattleHPWindowAccentColours8 ; 85/D7F2
+        .word $65AB, $3863, $0400, $61AD
 
         ; 85/D7FA
 
@@ -2953,12 +3023,14 @@
       .al
       .xl
 
-      rlUnknown85D7FA ; 85/D7FA
+      rlDrawMapMenuTileByteString ; 85/D7FA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws a null-terminated byte string of tile indices at lR18 starting at tilemap coordinates X.
 
         phb
         php
@@ -2980,7 +3052,7 @@
         beq _D81C
         phx
         tyx
-        jsl rlUnknown85D81F
+        jsl rlDrawMapMenuTile
         plx
         inc x
         inc y
@@ -2997,29 +3069,33 @@
 
         ; 85/D81F
 
-      rlUnknown85D81F ; 85/D81F
+      rlDrawMapMenuTile ; 85/D81F
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Draws tile index A at tilemap coordinates X in the current map menu entry.
+
         pha
         jsl rlGetMapMenuTilemapRAMEntryPointer
         pla
-        jsl rlUnknown85D82A
+        jsl rlWriteMapMenuTileToBuffer
         rtl
 
         .databank 0
 
         ; 85/D82A
 
-      rlUnknown85D82A ; 85/D82A
+      rlWriteMapMenuTileToBuffer ; 85/D82A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Writes tile index A (< $80, carry set otherwise) to the current tilemap entry at (X_low, X_high).
 
         phb
         php
@@ -3098,13 +3174,13 @@
         ; 85/D895
 
 
-      aUnknown85D895 ; 85/D895
+      aMapBattleExperienceWindowTilemapData ; 85/D895
 
         .structMapMenuTilemapData 22, 3, aBG3TilemapBuffer, 0, $7FCD4A
 
-      aUnknown85D89E ; 85/D89E
+      aMapBattleExperienceWindowData ; 85/D89E
 
-        .long 0, 0, aUnknown85D895
+        .long 0, 0, aMapBattleExperienceWindowTilemapData
         .byte 5, 3, 11
 
     .endsection Unsorted85D7FASection
@@ -3120,7 +3196,7 @@
         .structProcInfo "OW", rlProcMapBattleExperienceWindowInit, rlProcMapBattleExperienceWindowDraw, aProcMapBattleExperienceWindowCode
 
 
-        .long aUnknown85D89E
+        .long aMapBattleExperienceWindowData
         .byte 0
 
     .endsection ProcScript85D8AASection
@@ -3208,7 +3284,7 @@
         lda #<>aMapBattleExperienceLabelTiles
         sta lR18
         ldx #$0101
-        jsl rlUnknown85D7FA
+        jsl rlDrawMapMenuTileByteString
         plx
         phx
         lda aProcSystem.aBody7,b,x
@@ -3584,7 +3660,7 @@
 
       procMapExperienceWindowEffect ; 9E/CEDD
 
-        .structProcInfo "ON", rlProcMapExperienceWindowEffectInit, rlProcUnknown9ECEDDCycle1, aProcMapExperienceWindowEffectCode
+        .structProcInfo "ON", rlProcMapExperienceWindowEffectInit, rlProcMapExperienceWindowEffectIdle, aProcMapExperienceWindowEffectCode
 
     .endsection ProcScript9ECEDDSection
 
@@ -3630,7 +3706,7 @@
         lda aProcSystem.wInput3,b
         asl a
         tax
-        lda aUnknown9ECF72,x
+        lda aMapExperienceWindowEffectItems,x
         sec
         sbc #$003E
         sta wMapMagicEffect
@@ -3668,9 +3744,9 @@
       .al
       .xl
 
-      aUnknown9ECF72 ; 9E/CF72
+      aMapExperienceWindowEffectItems ; 9E/CF72
 
-        ; Read by rlProcMapExperienceWindowEffectInit.
+        ; Item IDs played by procMapExperienceWindowEffect (Heal $58, Heal $58, Recover $5A, Heal $58).
 
         .word $0058, $0058, $005A, $0058
 
@@ -3684,7 +3760,7 @@
       .al
       .xl
 
-      rlProcUnknown9ECEDDCycle1 ; 9E/CF7A
+      rlProcMapExperienceWindowEffectIdle ; 9E/CF7A
 
         .al
         .xl
@@ -3720,15 +3796,15 @@
         PROC_YIELD 2
         PROC_CALL rlStartMapMagicEffect
         PROC_YIELD 16
-        PROC_CALL rlUnknown9ECFCD
+        PROC_CALL rlProcMapExperienceWindowEffectTriggerMagic
         _CFAB
         PROC_YIELD 1
-        PROC_CALL rlUnknown9ECFD5
+        PROC_CALL rlProcMapExperienceWindowEffectWaitMagic
         PROC_JUMP_IF_BITS_UNSET _CFAB, $0004
         PROC_CALL rlEndMapMagicEffect
         PROC_CALL rlRestoreMapMagicScreenRegisters
         PROC_YIELD 1
-        PROC_CALL rlUnknown9ECFEB
+        PROC_CALL rlProcMapExperienceWindowEffectRestore
         PROC_YIELD 1
         PROC_END
 
@@ -3743,7 +3819,7 @@
       .al
       .xl
 
-      rlUnknown9ECFCD ; 9E/CFCD
+      rlProcMapExperienceWindowEffectTriggerMagic ; 9E/CFCD
 
         .al
         .xl
@@ -3758,7 +3834,7 @@
 
         ; 9E/CFD5
 
-      rlUnknown9ECFD5 ; 9E/CFD5
+      rlProcMapExperienceWindowEffectWaitMagic ; 9E/CFD5
 
         .al
         .xl
@@ -3767,7 +3843,7 @@
 
         lda wMapMagicDone
         beq _CFEA
-        lda #<>rlProcUnknown9ECEDDCycle1
+        lda #<>rlProcMapExperienceWindowEffectIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
@@ -3780,7 +3856,7 @@
 
         ; 9E/CFEB
 
-      rlUnknown9ECFEB ; 9E/CFEB
+      rlProcMapExperienceWindowEffectRestore ; 9E/CFEB
 
         .al
         .xl
@@ -3810,13 +3886,15 @@
       .al
       .xl
 
-      rlUnknown9ED006 ; 9E/D006
+      rlEnableMapBattleMainScreenLayers ; 9E/D006
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bBufferTM to $17 (BG1+BG2+BG3+OBJ).
 
         sep #$20
         lda #$17
@@ -3828,13 +3906,15 @@
 
         ; 9E/D00F
 
-      rlUnknown9ED00F ; 9E/D00F
+      rlSetMapMagicEdgeFlags ; 9E/D00F
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets wMapMagicFlags edge bits from visible map tile bounds and aMapMagicEdgeFlagsMargins.
 
         phy
         phx
@@ -3843,7 +3923,7 @@
         jsl rlGetVisibleMapTileBounds
         lda wR0
         clc
-        adc aUnknown9ED074
+        adc aMapMagicEdgeFlagsMargins
         cmp wR4
         bcs _D02B
         cmp wR6
@@ -3858,7 +3938,7 @@
         _D034
         lda wR1
         sec
-        sbc aUnknown9ED074+2
+        sbc aMapMagicEdgeFlagsMargins+2
         cmp wR4
         bcc _D043
         cmp wR6
@@ -3871,7 +3951,7 @@
         _D04A
         lda wR2
         clc
-        adc aUnknown9ED074+4
+        adc aMapMagicEdgeFlagsMargins+4
         cmp wR5
         bcs _D059
         cmp wR7
@@ -3898,9 +3978,9 @@
 
         ; 9E/D074
 
-      aUnknown9ED074 ; 9E/D074
+      aMapMagicEdgeFlagsMargins ; 9E/D074
 
-        ; Read by the unreferenced rlUnknown9ED00F: added to and taken from
+        ; Read by the unreferenced rlSetMapMagicEdgeFlags: added to and taken from
         ; the visible map tile bounds.
 
         .word 4, 5, 5

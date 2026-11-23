@@ -10110,9 +10110,9 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown85D347
+        jsl rlCheckMapBattleHPWindowLeftBusy
         sta aProcSystem.aBody0,b,x
-        jsl rlUnknown85D337
+        jsl rlCheckMapBattleHPWindowRightBusy
         sta aProcSystem.aBody1,b,x
         lda aProcSystem.aBody0,b,x
         ora aProcSystem.aBody1,b,x

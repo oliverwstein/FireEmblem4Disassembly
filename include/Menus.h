@@ -75,6 +75,7 @@
   MAP_BATTLE_HP_REQUEST_CLOSE        = $1000
   MAP_BATTLE_HP_REQUEST_BUSY         = $2000 ; set by the window while it drains or fills
   MAP_BATTLE_HP_REQUEST_DAMAGE       = $4000 ; + damage in the low byte
+  MAP_BATTLE_HP_REQUEST_IDLE         = $8000 ; set by the window when no request is pending
 
   ; The full-screen menus (engine/menus/): the status screen, the revive screen
   ; and the options menu.

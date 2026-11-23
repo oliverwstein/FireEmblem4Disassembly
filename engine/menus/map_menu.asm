@@ -6171,7 +6171,7 @@
         lda aUnknown85DA77,x
         and #$00FF
         ldx wR1
-        jsl rlUnknown85D81F
+        jsl rlDrawMapMenuTile
         stz wR0
         bra _DA74
 
@@ -6181,7 +6181,7 @@
         lda aUnknown85DA77,x
         and #$00FF
         ldx wR1
-        jsl rlUnknown85D81F
+        jsl rlDrawMapMenuTile
         lda wR0
         sec
         sbc #$0006
@@ -6233,7 +6233,7 @@
         lda aUnknown85DAB2,x
         and #$00FF
         ldx wR1
-        jsl rlUnknown85D81F
+        jsl rlDrawMapMenuTile
         stz wR0
         bra _DAAF
 
@@ -6243,7 +6243,7 @@
         lda aUnknown85DAB2,x
         and #$00FF
         ldx wR1
-        jsl rlUnknown85D81F
+        jsl rlDrawMapMenuTile
         lda wR0
         sec
         sbc #$0008
@@ -6292,7 +6292,7 @@
         lda aGaugeEndTiles,x
         and #$00FF
         ldx wR1
-        jsl rlUnknown85D81F
+        jsl rlDrawMapMenuTile
         rts
 
         .databank 0
