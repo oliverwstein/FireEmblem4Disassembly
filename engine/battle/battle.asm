@@ -15,11 +15,11 @@
         .autsiz
         .databank ?
 
-        ; A battle with the animations off: ends the unit's action and starts the map battle (rlUnknown9E800C).
+        ; A battle with the animations off: ends the unit's action and starts the map battle (rlStartMapBattleAnimation).
 
         jsl rlClearAIActionActiveFlag
         jsl rlEndUnitAction
-        jsl rlUnknown9E800C
+        jsl rlStartMapBattleAnimation
         rtl
 
         .databank 0
@@ -1481,7 +1481,7 @@
 
         jsl rlEndUnitAction
         jsl rlUnitGiveGold
-        jsl rlUnknown9EDAE7
+        jsl rlStartGiveGoldAnimation
         rts
 
         .databank 0
@@ -1791,7 +1791,7 @@
           _DE97
           and #$7FFF
           sta wBattleCriticalType
-          jsl rlUnknown9EDF7F
+          jsl rlStartScriptedCritEffect
           bra _End
         
         _End

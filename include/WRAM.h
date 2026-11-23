@@ -2223,7 +2223,7 @@
       wMapBattlePaletteRestoreFlag   .word ?  ; $7F45CC ; nonzero after palette saved/faded
       wMapBattleLevelUpFrameCounter  .word ?  ; $7F45CE ; level-up UI animation frame counter
       lMapBattleLevelUpDataPointer   .long ?  ; $7F45D0 ; 24-bit ptr ($7E4EA9+$4C level-up struct)
-      wMapBattleLevelUpStatIndex     .word ?  ; $7F45D3 ; index into aUnknown9E964C stat order
+      wMapBattleLevelUpStatIndex     .word ?  ; $7F45D3 ; index into aMapBattleStatGainOrder stat order
       wMapBattleLevelUpStatWaitTimer .word ?  ; $7F45D5 ; delay timer per stat row
       wMapBattleLevelUpStatGain      .word ?  ; $7F45D7 ; current stat gain value
     .bend

@@ -4661,7 +4661,7 @@
         and #$01FF
         sec
         sbc $7FE198
-        jsl rlUnknown9EB4BB
+        jsl rlGetSoundPanFromXPixel
         cpx #$0000
         bne _9CF7
         clc
@@ -17549,7 +17549,7 @@
         and #$01FF
         sec
         sbc $7FE198
-        jsl rlUnknown9EB4BB
+        jsl rlGetSoundPanFromXPixel
         cpx #$0000
         bne _FAD0
         clc

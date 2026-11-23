@@ -100,7 +100,7 @@
     .autsiz
     .databank ?
 
-    jsl rlUnknown9EF1FA
+    jsl rlStartWarpAwayAnimation
     jsl rlCreateProcHaltEvent
     rtl
 
@@ -137,7 +137,7 @@
     sta $7E4EAB
     lda $7ECCBE
     sta $7E4EAD
-    jsl rlUnknown9EF369
+    jsl rlStartWarpInAnimationVariant
     jsl rlCreateProcEventWaitFlag7F4C07Bit10
     rtl
 

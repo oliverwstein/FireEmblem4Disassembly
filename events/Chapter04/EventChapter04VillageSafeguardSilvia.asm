@@ -59,7 +59,7 @@
     .autsiz
     .databank ?
 
-    jsl rlUnknown9EEFF1
+    jsl rlStartSoloMapBattleAnimation
     jsl rlCreateProcHaltEvent
     rtl
 

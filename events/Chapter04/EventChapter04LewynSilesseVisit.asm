@@ -36,7 +36,7 @@
     .autsiz
     .databank ?
 
-    jsl rlUnknown9ED42A
+    jsl rlStartHolyWeaponShine
     jsl rlCreateProcHaltEvent
     rtl
 

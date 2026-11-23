@@ -103,7 +103,7 @@
 
         ; 12 long pointers to routines.
 
-        .long rlUnknown9EEED3, rlUnknown9EEDB5, rlSetupDemoBattle02
+        .long rlSetUpDemoBattleB, rlSetUpDemoBattleA, rlSetupDemoBattle02
         .long rlSetupDemoBattle03, rlSetupDemoBattle04, rlSetupDemoBattle05
         .long rlSetupDemoBattle06, rlSetupDemoBattle07, rlSetupDemoBattle08
         .long rlSetupDemoBattle09, rlSetupDemoBattle10, rlSetupDemoBattle11

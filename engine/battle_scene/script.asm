@@ -274,7 +274,7 @@
         and #$01FF
         sec
         sbc $7FE198
-        jsl rlUnknown9EB4BB
+        jsl rlGetSoundPanFromXPixel
         ldx wBattleAnimationAttackerOffset,b
         cpx #$0000
         bne _BCDC
@@ -1876,7 +1876,7 @@
         .autsiz
         .databank ?
 
-        ; Command 22: as command 21, adding a value worked out (rlUnknown9EB4BB) from
+        ; Command 22: as command 21, adding a value worked out (rlGetSoundPanFromXPixel) from
         ; the acting combatant's position on screen.
 
         phx
@@ -1893,7 +1893,7 @@
         and #$01FF
         sec
         sbc $7FE198
-        jsl rlUnknown9EB4BB
+        jsl rlGetSoundPanFromXPixel
         ldx wBattleAnimationAttackerOffset,b
         cpx #$0000
         bne _BC9F

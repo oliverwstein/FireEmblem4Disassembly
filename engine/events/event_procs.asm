@@ -912,11 +912,11 @@
         .autsiz
         .databank ?
 
-        ; Unused: find/free procUnknown9EC70B if active and clear all active sprites
+        ; Unused: find/free procMapBattle if active and clear all active sprites
 
-        lda #(`procUnknown9EC70B)<<8
+        lda #(`procMapBattle)<<8
         sta lR44+1
-        lda #<>procUnknown9EC70B
+        lda #<>procMapBattle
         sta lR44
         jsl rlProcEngineFindProc
         bcc _94B0

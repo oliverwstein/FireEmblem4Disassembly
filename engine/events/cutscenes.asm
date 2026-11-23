@@ -93,7 +93,7 @@
         ; Meteors fall
         -
         PROC_CALL rlUnknown9EF724
-        PROC_CALL rlUnknown9EFAD4
+        PROC_CALL rlStartBelhallaMagesBlast
         PROC_CALL rlUnknown9F8020
         PROC_YIELD 128
         PROC_CALL rlUnknown9F8349
@@ -282,9 +282,9 @@
 
         .databank 0
 
-      procUnknown9EF837 ; 9E/F837
+      procBelhallaAttackingMage ; 9E/F837
 
-        .structProcInfo "ON", rlProcUnknown9EF837Init, rlProcUnknown9EF837Cycle1, aProcUnknown9EF837Code
+        .structProcInfo "ON", rlProcBelhallaAttackingMageInit, rlProcBelhallaAttackingMageCycle1, aProcBelhallaAttackingMageCode
 
     .endsection BelhallaAttackingMageDirectionsSection
 
@@ -294,7 +294,7 @@
       .al
       .xl
 
-      rlProcUnknown9EF837Init ; 9E/F83F
+      rlProcBelhallaAttackingMageInit ; 9E/F83F
 
         .al
         .autsiz
@@ -333,7 +333,7 @@
         sta @l wR1
         lda aScriptedUnitMapAction + structScriptedMapAttack.wCharacterID
         sta @l wR2
-        jsl rlUnknown9E85A4
+        jsl rlGetMapBattleClassSprite
         sta aMapAction.wBattleClassID
 
         lda aScriptedUnitMapAction + structScriptedMapAttack.wXTilePosition
@@ -341,7 +341,7 @@
         lda aScriptedUnitMapAction + structScriptedMapAttack.wYTilePosition
         sta $4554,b
         lda #$FFFF
-        jsl rlUnknown9E866F
+        jsl rlGetClassMapBattleWeaponType
         sta aMapAction.wWeaponType
 
         lda #$FFFF
@@ -411,7 +411,7 @@
 
         .databank 0
 
-      rlProcUnknown9EF837Cycle1 ; 9E/F94D
+      rlProcBelhallaAttackingMageCycle1 ; 9E/F94D
 
         .al
         .autsiz
@@ -484,7 +484,7 @@
         jsl rlAppendDecompList
         ply
         plx
-        lda #<>rlProcUnknown9EF837Cycle2
+        lda #<>rlProcBelhallaAttackingMageCycle2
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -535,9 +535,9 @@
             and #$00FF
             sta aProcSystem.wInput0
 
-            lda #(`procUnknown9EF837)<<8
+            lda #(`procBelhallaAttackingMage)<<8
             sta lR44+1
-            lda #<>procUnknown9EF837
+            lda #<>procBelhallaAttackingMage
             sta lR44
             jsl rlProcEngineCreateProc
 

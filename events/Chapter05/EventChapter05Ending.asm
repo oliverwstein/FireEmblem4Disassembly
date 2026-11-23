@@ -282,7 +282,7 @@
       .autsiz
       .databank ?
 
-      jsl rlUnknown9EF60F
+      jsl rlStartBelhallaMagesAttack
       jsl rlCreateProcHaltEvent
       rtl
 
@@ -326,7 +326,7 @@
       sta wR0
       lda wEventUnitSlot2ID,b
       sta wR1
-      jsl rlUnknown9EF0CF
+      jsl rlStartScriptedMapBattleAnimation
       jsl rlCreateProcHaltEvent
       rtl
 

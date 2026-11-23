@@ -56,7 +56,7 @@
     sta $7E4EAB
     lda #$001E
     sta $7E4EAD
-    jsl rlUnknown9EF1D9
+    jsl rlStartWarpAwayAnimationNoUnit
     jsl rlCreateProcHaltEvent
     rtl
 
@@ -78,7 +78,7 @@
     sta $7E4EAB
     lda #10
     sta $7E4EAD
-    jsl rlUnknown9EF353
+    jsl rlStartWarpInAnimation
     jsl rlCreateProcHaltEvent
     rtl
 

@@ -5410,9 +5410,9 @@
         .autsiz
         .databank ?
 
-        lda #(`procUnknown9EC70B)<<8
+        lda #(`procMapBattle)<<8
         sta lR44+1
-        lda #<>procUnknown9EC70B
+        lda #<>procMapBattle
         sta lR44
         jsl rlProcEngineFindProc
         bcs +

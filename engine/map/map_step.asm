@@ -1411,14 +1411,14 @@
         .autsiz
         .databank ?
 
-        ; Relocation type 7 (rlUnitHelp): the unit in wUnitRelocationLocationID is undeployed and deleted, with the scene of rlUnknown9EAC5A.
+        ; Relocation type 7 (rlUnitHelp): the unit in wUnitRelocationLocationID is undeployed and deleted, with the scene of rlStartMapActionRewards.
 
         ldx wUnitRelocationLocationID,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlUndeployUnit
         jsl rlDeleteUnit
-        jsl rlUnknown9EAC5A
+        jsl rlStartMapActionRewards
         sec
         rts
 

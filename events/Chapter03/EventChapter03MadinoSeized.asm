@@ -238,7 +238,7 @@
       .autsiz
       .databank ?
 
-      jsl rlUnknown9EF1FA
+      jsl rlStartWarpAwayAnimation
       jsl rlCreateProcHaltEvent
       rtl
 
@@ -265,7 +265,7 @@
       sta $7E4EAB
       lda #_Coordinates[1]
       sta $7E4EAD
-      jsl rlUnknown9EF353
+      jsl rlStartWarpInAnimation
       rtl
 
       .databank 0

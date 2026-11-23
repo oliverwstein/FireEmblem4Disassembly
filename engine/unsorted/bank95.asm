@@ -7932,7 +7932,7 @@
 
 
         _AFDD
-        jsl rlUnknown9EB4BB
+        jsl rlGetSoundPanFromXPixel
 
         _AFE1
         cpx #$0000
@@ -9932,7 +9932,7 @@
 
 
         _BD35
-        jsl rlUnknown9EB4BB
+        jsl rlGetSoundPanFromXPixel
 
         _BD39
         cpx #$0000

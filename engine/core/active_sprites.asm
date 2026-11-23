@@ -1529,7 +1529,7 @@
         phx
         lda aActiveSpriteSystem.aUnknown001200,b,x
         tax
-        jsl rlUnknown9EB4BB
+        jsl rlGetSoundPanFromXPixel
         sta $00
 
         lda $0000,b,y
@@ -2059,7 +2059,7 @@
 
         _B337
         tya
-        jsl rlUnknown9EB4BB
+        jsl rlGetSoundPanFromXPixel
         ora wR0
         jsl rlPlaySoundEffect2
 

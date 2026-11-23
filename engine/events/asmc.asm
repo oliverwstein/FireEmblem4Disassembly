@@ -198,7 +198,7 @@
         sta aActionStructUnit1.GainedLevels
         sta aActionStructUnit1.ObtainedStealMoney
         sta aActionStructUnit1.GainedExperience
-        jsl rlUnknown9EAC5A
+        jsl rlStartMapActionRewards
         jsl rlCreateProcHaltEvent
         rtl
 

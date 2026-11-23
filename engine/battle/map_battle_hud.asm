@@ -170,7 +170,7 @@
         .autsiz
         .databank ?
 
-        ; wInput0 = experience (low byte) and experience gained (high byte), wInput1 = the maximum (aBody5), wInput2 = deployment offset (aBody6), wInput3 = passed to procUnknown9ECEDD. The target ($1058) is the experience plus the gain, at most the maximum.
+        ; wInput0 = experience (low byte) and experience gained (high byte), wInput1 = the maximum (aBody5), wInput2 = deployment offset (aBody6), wInput3 = passed to procMapExperienceWindowEffect. The target ($1058) is the experience plus the gain, at most the maximum.
 
         jsl rlInitMapMenuProc
         jsl rlHideMapWindows
@@ -271,7 +271,7 @@
         .autsiz
         .databank ?
 
-        ; Creates procUnknown9ECEDD at the unit's tile.
+        ; Creates procMapExperienceWindowEffect at the unit's tile.
 
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFE
@@ -288,9 +288,9 @@
         plx
         lda $7FEB0A
         sta aProcSystem.wInput3,b
-        lda #(`procUnknown9ECEDD)<<8
+        lda #(`procMapExperienceWindowEffect)<<8
         sta lR44+1
-        lda #<>procUnknown9ECEDD
+        lda #<>procMapExperienceWindowEffect
         sta lR44
         jsl rlProcEngineCreateProc
         bra rlProcMapExperienceWindowWaitEffect._CB50
@@ -305,9 +305,9 @@
         .databank ?
 
         stx wR0
-        lda #(`procUnknown9ECEDD)<<8
+        lda #(`procMapExperienceWindowEffect)<<8
         sta lR44+1
-        lda #<>procUnknown9ECEDD
+        lda #<>procMapExperienceWindowEffect
         sta lR44
         jsl rlProcEngineFindProc
         bcs _CB50

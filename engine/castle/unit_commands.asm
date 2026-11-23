@@ -221,7 +221,7 @@
         .autsiz
         .databank ?
 
-        ; Gives money from the unit to the unit in wRoutineVariable1 (rlUnitGiveGold, then rlUnknown9EDAE7).
+        ; Gives money from the unit to the unit in wRoutineVariable1 (rlUnitGiveGold, then rlStartGiveGoldAnimation).
 
         phb
         php
@@ -243,7 +243,7 @@
         lda #$03
         sta $7E4EA9
         rep #$20
-        jsl rlUnknown9EDAE7
+        jsl rlStartGiveGoldAnimation
         pla
         sta wSelectedUnitDataRAMPointer,b
         plx

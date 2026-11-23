@@ -22,7 +22,7 @@
     .autsiz
     .databank ?
 
-    jsl rlUnknown9EF1FA
+    jsl rlStartWarpAwayAnimation
     jsl rlCreateProcHaltEvent
     rtl
 

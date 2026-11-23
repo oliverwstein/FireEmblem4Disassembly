@@ -397,7 +397,7 @@
         sta wBattleQuotePointer
         jsl rlGetSelectedUnitClassID
         sta $7E4EAF
-        jsl rlUnknown9ED07A
+        jsl rlStartReturnHomeAnimation
         lda #$0010
         tsb wMapSystemFlags,b
         plp
@@ -787,7 +787,7 @@
         sta aActionStructUnit1.XPosition
         lda #500
         sta aActionStructUnit1.YPosition
-        jsl rlUnknown9E9A34
+        jsl rlStartVillageRaidAnimation
         
         _End
         pla
