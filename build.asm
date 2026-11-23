@@ -8573,10 +8573,24 @@
 
     .here
 
+    * = $1F9965
+    .logical $9F9965
+
+      .dsection Unsorted9F9965Section
+
+    .here
+
     * = $1F9976
     .logical $9F9976
 
       .dsection Unsorted9F9976Section
+
+    .here
+
+    * = $1F9987
+    .logical $9F9987
+
+      .dsection Unsorted9F9987Section
 
     .here
 
@@ -8586,6 +8600,13 @@
       .dsection Unsorted9F999ESection
 
       .dsection Unsorted9F99CESection
+
+    .here
+
+    * = $1F9A2B
+    .logical $9F9A2B
+
+      .dsection Unsorted9F9A2BSection
 
     .here
 
@@ -8629,10 +8650,24 @@
 
     .here
 
+    * = $1FED29
+    .logical $9FED29
+
+      .dsection Unsorted9FED29Section
+
+    .here
+
     * = $1FED5A
     .logical $9FED5A
 
       .dsection Unsorted9FED5ASection
+
+    .here
+
+    * = $1FEE45
+    .logical $9FEE45
+
+      .dsection Unsorted9FEE45Section
 
     .here
 
@@ -8643,10 +8678,24 @@
 
     .here
 
+    * = $1FF0DC
+    .logical $9FF0DC
+
+      .dsection Unsorted9FF0DCSection
+
+    .here
+
     * = $1FF100
     .logical $9FF100
 
       .dsection Unsorted9FF100Section
+
+    .here
+
+    * = $1FF1BC
+    .logical $9FF1BC
+
+      .dsection Unsorted9FF1BCSection
 
     .here
 

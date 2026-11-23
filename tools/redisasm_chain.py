@@ -29,8 +29,8 @@ import disasm
 import promote_locals
 import sprite_scripts
 
-STEP_RE = re.compile(r'lda #\$([0-9A-F]{4})\s*\n\s+sta (?:aProcSystem\.aHeaderOnCycle|aActiveSpriteSystem\.aOnCycle|\$1160),b,[xy]')
-LABEL_STEP_RE = re.compile(r'lda #<>(\w+)\s*\n\s+sta (?:aProcSystem\.aHeaderOnCycle|aActiveSpriteSystem\.aOnCycle|\$1160),b,[xy]')
+STEP_RE = re.compile(r'lda #\$([0-9A-F]{4})\s*\n\s+sta (?:aProcSystem\.aHeaderOnCycle|aActiveSpriteSystem\.aOnCycle|\$1160|\$0F57),b,[xy]')
+LABEL_STEP_RE = re.compile(r'lda #<>(\w+)\s*\n\s+sta (?:aProcSystem\.aHeaderOnCycle|aActiveSpriteSystem\.aOnCycle|\$1160|\$0F57),b,[xy]')
 
 
 def decode(rom, labels, entries, end, prefix={}, scripts=(), used=None, inner={}):
