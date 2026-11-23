@@ -6234,7 +6234,7 @@
         sta lR18
         ldy #$0080
         lda #$0700
-        jsl rlUnknown95C4E3
+        jsl rlBattleSceneStartLargeUpload
         ply
         rts
 
@@ -6264,7 +6264,7 @@
         sta lR18
         ldy #$0080
         lda #$0700
-        jsl rlUnknown95C4E3
+        jsl rlBattleSceneStartLargeUpload
         ply
         rts
 

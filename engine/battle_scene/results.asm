@@ -237,7 +237,7 @@
         sta lR18
         ldy #$7640
         lda #$0180
-        jsl rlUnknown95C4E3
+        jsl rlBattleSceneStartLargeUpload
         rtl
 
         .databank 0

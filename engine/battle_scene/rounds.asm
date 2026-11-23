@@ -309,13 +309,13 @@
         jsr rsBattleSceneSetRoles
         .al
         lda #$0000
-        sta $7FE1A8
-        lda #$0AF9
-        sta $7FE1A7
+        sta lBattleSceneCameraAttackerX+1
+        lda #<>wBattleAnimationX
+        sta lBattleSceneCameraAttackerX
         lda #$0000
-        sta $7FE1AE
-        lda #$0B3C
-        sta $7FE1AD
+        sta lBattleSceneCameraDefenderX+1
+        lda #<>wBattleAnimation2X
+        sta lBattleSceneCameraDefenderX
         jsl rlBattleSceneCheckCombatant1OnScreen
         bcs _A8A5
         jml _AA8C
@@ -353,13 +353,13 @@
         jsr rsBattleSceneSetRoles
         .al
         lda #$0000
-        sta $7FE1AE
-        lda #$0AF9
-        sta $7FE1AD
+        sta lBattleSceneCameraDefenderX+1
+        lda #<>wBattleAnimationX
+        sta lBattleSceneCameraDefenderX
         lda #$0000
-        sta $7FE1A8
-        lda #$0B3C
-        sta $7FE1A7
+        sta lBattleSceneCameraAttackerX+1
+        lda #<>wBattleAnimation2X
+        sta lBattleSceneCameraAttackerX
         jsl rlBattleSceneCheckCombatant2OnScreen
         bcs _A910
         jml _AA8C

@@ -13846,7 +13846,7 @@
         lda $7FFC64
         tay
         clc
-        jsl rlUnknown95C51F
+        jsl rlBattleScenePushSprites
         sep #$20
         plb
         .databank ?
@@ -14037,7 +14037,7 @@
         tay
         lda $7FFC6C
         asl a
-        jsl rlUnknown95C51F
+        jsl rlBattleScenePushSprites
         sep #$20
         plb
         .databank ?

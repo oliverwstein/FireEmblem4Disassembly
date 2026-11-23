@@ -860,6 +860,23 @@
 
   .endvirtual
 
+  .virtual $7FE18A
+
+    wBattleSceneLargeUploadSize   .word ? ; $7FE18A ; bytes left; 0 none (rlBattleSceneRunLargeUpload)
+    lBattleSceneLargeUploadSource .long ? ; $7FE18C
+    wBattleSceneLargeUploadVRAM   .word ? ; $7FE18F ; VRAM word address
+
+  .endvirtual
+
+  .virtual $7FE1A7
+
+    ; Long pointers to the X positions the camera follows (rsBattleSceneScrollCameraRight).
+    lBattleSceneCameraAttackerX .long ? ; $7FE1A7
+                                .fill 3
+    lBattleSceneCameraDefenderX .long ? ; $7FE1AD
+
+  .endvirtual
+
   .virtual $7FE189
 
     bBattleSceneHitKind .byte ? ; $7FE189 ; picks the hit sound: 0-2 by the attack, 3 a critical or a heavy blow

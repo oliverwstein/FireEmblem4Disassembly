@@ -9,7 +9,7 @@
   ;     frame record list; the index (a word offset per sequence) and the list
   ;     (a word offset per frame record) follow, all offsets from the block
   ;     start. Sequences are two-byte steps read by rsBattleAnimationRunScript; a frame
-  ;     record is a frame number and a structSpriteArray (rlUnknown95C51F).
+  ;     record is a frame number and a structSpriteArray (rlBattleScenePushSprites).
   ;   frame table: a word offset per frame from the table start (the first
   ;     word / 2 is the count). A frame is a count byte and that many pairs of
   ;     words, an offset into the class sheet and a byte count, each filling
@@ -190,7 +190,7 @@
       .byte $EA, \Arg
     .endsegment
 
-    ; $E9: rlUnknown95C697 (rsUnknown95BFA4).
+    ; $E9: rlBattleAnimationFaceOther (rsUnknown95BFA4).
     ANIM_CMD_E9 .segment Arg=0
       .byte $E9, \Arg
     .endsegment

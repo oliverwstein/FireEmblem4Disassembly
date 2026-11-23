@@ -2394,7 +2394,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown95C697
+        jsl rlBattleAnimationFaceOther
         lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
@@ -2946,7 +2946,7 @@
 
         _C256
         plp
-        jsl rlUnknown95C51F
+        jsl rlBattleScenePushSprites
 
         _C25B
         plx
@@ -3411,56 +3411,58 @@
 
         ; 95/C47A
 
-      rlUnknown95C47A ; 95/C47A
+      rlBattleSceneRunLargeUpload ; 95/C47A
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Every frame: queues the next part of the large upload (wBattleSceneLargeUploadSize bytes left), as much as keeps the frame's queue under $800 bytes.
+
         pha
         phy
-        lda $7FE18A
+        lda wBattleSceneLargeUploadSize
         beq _C4E0
         lda #$0800
         cmp wBattleSceneUploadTotal,b
         bcc _C4E0
         beq _C4E0
         pha
-        lda $7FE18F
+        lda wBattleSceneLargeUploadVRAM
         tay
-        lda $7FE18C
+        lda lBattleSceneLargeUploadSource
         sta lR18
-        lda $7FE18D
+        lda lBattleSceneLargeUploadSource+1
         sta lR18+1
         pla
         sec
         sbc wBattleSceneUploadTotal,b
-        cmp $7FE18A
+        cmp wBattleSceneLargeUploadSize
         bcc _C4BA
-        lda $7FE18A
+        lda wBattleSceneLargeUploadSize
         jsl rlBattleSceneQueueUpload
         lda #$0000
-        sta $7FE18A
+        sta wBattleSceneLargeUploadSize
         bra _C4E0
 
 
         _C4BA
         pha
         jsl rlBattleSceneQueueUpload
-        lda $7FE18A
+        lda wBattleSceneLargeUploadSize
         sec
         sbc #1,s
-        sta $7FE18A
-        lda $7FE18C
+        sta wBattleSceneLargeUploadSize
+        lda lBattleSceneLargeUploadSource
         clc
         adc #1,s
-        sta $7FE18C
+        sta lBattleSceneLargeUploadSource
         pla
         lsr a
         clc
-        adc $7FE18F
-        sta $7FE18F
+        adc wBattleSceneLargeUploadVRAM
+        sta wBattleSceneLargeUploadVRAM
 
         _C4E0
         ply
@@ -3471,16 +3473,18 @@
 
         ; 95/C4E3
 
-      rlUnknown95C4E3 ; 95/C4E3
+      rlBattleSceneStartLargeUpload ; 95/C4E3
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Starts a large upload of A bytes from lR18 to VRAM word address Y, sent over several frames by rlBattleSceneRunLargeUpload. Carry set (and nothing done) while one is still running.
+
         phx
         pha
-        lda $7FE18A
+        lda wBattleSceneLargeUploadSize
         beq _C4EF
         pla
         sec
@@ -3489,13 +3493,13 @@
 
         _C4EF
         pla
-        sta $7FE18A
+        sta wBattleSceneLargeUploadSize
         tya
-        sta $7FE18F
+        sta wBattleSceneLargeUploadVRAM
         lda lR18
-        sta $7FE18C
+        sta lBattleSceneLargeUploadSource
         lda lR18+1
-        sta $7FE18D
+        sta lBattleSceneLargeUploadSource+1
         clc
 
         _C506
@@ -3534,12 +3538,14 @@
 
         ; 95/C51F
 
-      rlUnknown95C51F ; 95/C51F
+      rlBattleScenePushSprites ; 95/C51F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Pushes the sprite array at Y (bank B) to the OAM buffer at wR0, wR1 with base tile wR4 and attributes wR5: carry clear through rlPushToOAMBuffer, carry set mirrored (X offsets taken from the right and the H-flip bit set).
 
         bcs _C52C
         lda wR5
@@ -3659,12 +3665,14 @@
 
         ; 95/C5E6
 
-      rsUnknown95C5E6 ; 95/C5E6
+      rsBattleSceneTurnCombatants ; 95/C5E6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame: when both combatants may turn (rsBattleSceneCheckMayTurn), flips them to face each other.
 
         phx
         ldx wBattleAnimationAttackerOffset,b
@@ -3691,14 +3699,14 @@
 
         _C613
         ldx wBattleAnimationAttackerOffset,b
-        jsr rsUnknown95C63B
+        jsr rsBattleSceneCheckMayTurn
         bcc _C639
         lda wBattleAnimationBaseTile,b,x
         and #$7FFF
         ora wR0
         sta wBattleAnimationBaseTile,b,x
         ldx wBattleAnimationDefenderOffset,b
-        jsr rsUnknown95C63B
+        jsr rsBattleSceneCheckMayTurn
         bcc _C639
         lda wBattleAnimationBaseTile,b,x
         and #$7FFF
@@ -3713,12 +3721,14 @@
 
         ; 95/C63B
 
-      rsUnknown95C63B ; 95/C63B
+      rsBattleSceneCheckMayTurn ; 95/C63B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the combatant: carry set when it may turn to face the other: no sequence playing, on the ground, bits 0-1 of $0ADE both set, bit 1 of $7FE186 clear, and its class is not $43-$46.
 
         phy
         lda bBattleAnimationStateFlags,b,x
@@ -3775,12 +3785,14 @@
 
         ; 95/C697
 
-      rlUnknown95C697 ; 95/C697
+      rlBattleAnimationFaceOther ; 95/C697
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the combatant: sets its H-flip bit (bit 15 of wBattleAnimationBaseTile) to face the other combatant.
 
         phx
         lda wBattleAnimationX,b,x
@@ -3878,7 +3890,7 @@
         _C718
         lda wR0
         sec
-        jsr rsUnknown95C858
+        jsr rsBattleAnimationMoveRight
         bcc _C738
         sta wR0
         lda wBattleAnimationTargetXFixed,b,x
@@ -3924,7 +3936,7 @@
         _C76F
         lda wR0
         sec
-        jsr rsUnknown95C90F
+        jsr rsBattleAnimationMoveLeft
         bcc _C78F
         sta wR0
         lda wBattleAnimationTargetXFixed,b,x
@@ -4072,7 +4084,7 @@
 
         ; 95/C858
 
-      rsUnknown95C858 ; 95/C858
+      rsBattleAnimationMoveRight ; 95/C858
 
         ; Reads the stack above its return address, but in the emulator log every
         ; caller continues right after the call: no inline arguments.
@@ -4081,10 +4093,12 @@
         .autsiz
         .databank ?
 
+        ; X = the combatant, A = 8.8 pixels: moves it right, stopping against the other combatant (rsBattleAnimationCheckBlocked) or the stage's right edge, and scrolls the camera after it (carry set: both combatants, else the attacker). Carry set when it was stopped short.
+
         php
         pha
         sec
-        jsr rsUnknown95CA01
+        jsr rsBattleAnimationCheckBlocked
         bcc _C89B
         xba
         pha
@@ -4161,13 +4175,13 @@
         bcc _C8FE
         lda wR0
         and #$7FFF
-        jsr rsUnknown95D2A4
+        jsr rsBattleSceneScrollCameraRight
         bra _C903
 
 
         _C8FE
         lda wR0
-        jsr rsUnknown95D3A3
+        jsr rsBattleSceneScrollCameraRightToAttacker
 
         _C903
         lda wR2
@@ -4188,7 +4202,7 @@
 
         ; 95/C90F
 
-      rsUnknown95C90F ; 95/C90F
+      rsBattleAnimationMoveLeft ; 95/C90F
 
         ; Reads the stack above its return address, but in the emulator log every
         ; caller continues right after the call: no inline arguments.
@@ -4197,10 +4211,12 @@
         .autsiz
         .databank ?
 
+        ; As rsBattleAnimationMoveRight, to the left.
+
         php
         pha
         clc
-        jsr rsUnknown95CA01
+        jsr rsBattleAnimationCheckBlocked
         bcc _C952
         xba
         pha
@@ -4276,13 +4292,13 @@
         plp
         bcc _C9B2
         lda wR0
-        jsr rsUnknown95D322
+        jsr rsBattleSceneScrollCameraLeft
         bra _C9B7
 
 
         _C9B2
         lda wR0
-        jsr rsUnknown95D420
+        jsr rsBattleSceneScrollCameraLeftToAttacker
 
         _C9B7
         lda wR2
@@ -4353,12 +4369,14 @@
 
         ; 95/CA01
 
-      rsUnknown95CA01 ; 95/CA01
+      rsBattleAnimationCheckBlocked ; 95/CA01
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the combatant (carry set when moving right): when it is walking on the ground toward the other combatant and their bodies (rlBattleAnimationGetBodyWidth) overlap, returns carry set and the overlap in A; else carry clear and 0.
 
         phx
         php
@@ -4580,7 +4598,7 @@
         lsr a
         lsr a
         sec
-        jsr rsUnknown95C858
+        jsr rsBattleAnimationMoveRight
         bcc _CB06
         stz wBattleAnimationXSpeed,b,x
         stz wBattleAnimationXDeceleration,b,x
@@ -4595,7 +4613,7 @@
         lsr a
         lsr a
         sec
-        jsr rsUnknown95C90F
+        jsr rsBattleAnimationMoveLeft
         bcc _CB1C
         stz wBattleAnimationXSpeed,b,x
         stz wBattleAnimationXDeceleration,b,x
@@ -5634,26 +5652,28 @@
       .al
       .xl
 
-      rsUnknown95D2A4 ; 95/D2A4
+      rsBattleSceneScrollCameraRight ; 95/D2A4
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = 8.8 pixels: scrolls the camera right while the midpoint of the two followed X positions (lBattleSceneCameraAttackerX, lBattleSceneCameraDefenderX) is right of its center, at most to $C0. Carry set when it stopped there.
+
         phx
         phy
         sta wR9
         ldy #$0000
-        lda $7FE1A7
+        lda lBattleSceneCameraAttackerX
         sta lR18
-        lda $7FE1A8
+        lda lBattleSceneCameraAttackerX+1
         sta lR18+1
         lda [lR18],y
         sta wR7
-        lda $7FE1AD
+        lda lBattleSceneCameraDefenderX
         sta lR18
-        lda $7FE1AE
+        lda lBattleSceneCameraDefenderX+1
         sta lR18+1
         lda [lR18],y
         sta wR8
@@ -5713,26 +5733,28 @@
 
         ; 95/D322
 
-      rsUnknown95D322 ; 95/D322
+      rsBattleSceneScrollCameraLeft ; 95/D322
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; As rsBattleSceneScrollCameraRight, to the left (at least 0).
+
         phx
         phy
         sta wR9
         ldy #$0000
-        lda $7FE1A7
+        lda lBattleSceneCameraAttackerX
         sta lR18
-        lda $7FE1A8
+        lda lBattleSceneCameraAttackerX+1
         sta lR18+1
         lda [lR18],y
         sta wR7
-        lda $7FE1AD
+        lda lBattleSceneCameraDefenderX
         sta lR18
-        lda $7FE1AE
+        lda lBattleSceneCameraDefenderX+1
         sta lR18+1
         lda [lR18],y
         sta wR8
@@ -5798,12 +5820,14 @@
 
         ; 95/D3A3
 
-      rsUnknown95D3A3 ; 95/D3A3
+      rsBattleSceneScrollCameraRightToAttacker ; 95/D3A3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; As rsBattleSceneScrollCameraRight, following the attacker's X alone.
 
         phx
         phy
@@ -5814,15 +5838,15 @@
         bit #$0040
         beq _D41D
         ldy #$0000
-        lda $7FE1A7
+        lda lBattleSceneCameraAttackerX
         sta lR18
-        lda $7FE1A8
+        lda lBattleSceneCameraAttackerX+1
         sta lR18+1
         lda [lR18],y
         sta wR7
-        lda $7FE1A7
+        lda lBattleSceneCameraAttackerX
         sta lR18
-        lda $7FE1A8
+        lda lBattleSceneCameraAttackerX+1
         sta lR18+1
         lda [lR18],y
         sta wR8
@@ -5877,12 +5901,14 @@
 
         ; 95/D420
 
-      rsUnknown95D420 ; 95/D420
+      rsBattleSceneScrollCameraLeftToAttacker ; 95/D420
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; As rsBattleSceneScrollCameraLeft, following the attacker's X alone (at least $40).
 
         phx
         phy
@@ -5893,15 +5919,15 @@
         bit #$0040
         beq _D49A
         ldy #$0000
-        lda $7FE1A7
+        lda lBattleSceneCameraAttackerX
         sta lR18
-        lda $7FE1A8
+        lda lBattleSceneCameraAttackerX+1
         sta lR18+1
         lda [lR18],y
         sta wR7
-        lda $7FE1A7
+        lda lBattleSceneCameraAttackerX
         sta lR18
-        lda $7FE1A8
+        lda lBattleSceneCameraAttackerX+1
         sta lR18+1
         lda [lR18],y
         sta wR8
@@ -5969,15 +5995,15 @@
         phy
         sta wR9
         ldy #$0000
-        lda $7FE1A7
+        lda lBattleSceneCameraAttackerX
         sta lR18
-        lda $7FE1A8
+        lda lBattleSceneCameraAttackerX+1
         sta lR18+1
         lda [lR18],y
         sta wR7
-        lda $7FE1AD
+        lda lBattleSceneCameraDefenderX
         sta lR18
-        lda $7FE1AE
+        lda lBattleSceneCameraDefenderX+1
         sta lR18+1
         lda [lR18],y
         sta wR8
@@ -6043,15 +6069,15 @@
         phy
         sta wR9
         ldy #$0000
-        lda $7FE1A7
+        lda lBattleSceneCameraAttackerX
         sta lR18
-        lda $7FE1A8
+        lda lBattleSceneCameraAttackerX+1
         sta lR18+1
         lda [lR18],y
         sta wR7
-        lda $7FE1AD
+        lda lBattleSceneCameraDefenderX
         sta lR18
-        lda $7FE1AE
+        lda lBattleSceneCameraDefenderX+1
         sta lR18+1
         lda [lR18],y
         sta wR8
@@ -6594,7 +6620,7 @@
         sec
 
         _D84B
-        jsl rlUnknown95C51F
+        jsl rlBattleScenePushSprites
         plx
         plb
         .databank ?
@@ -6791,7 +6817,7 @@
         sec
 
         _D95B
-        jsl rlUnknown95C51F
+        jsl rlBattleScenePushSprites
 
         _D95F
         ply
@@ -9163,7 +9189,7 @@
         bit #$8000
         bne _E516
         clc
-        jsr rsUnknown95C858
+        jsr rsBattleAnimationMoveRight
         bra _E53F
 
 
@@ -9172,7 +9198,7 @@
         clc
         adc #$0100
         clc
-        jsr rsUnknown95C90F
+        jsr rsBattleAnimationMoveLeft
         bra _E53F
 
 
@@ -9183,7 +9209,7 @@
         bit #$8000
         bne _E534
         clc
-        jsr rsUnknown95C90F
+        jsr rsBattleAnimationMoveLeft
         bra _E53F
 
 
@@ -9192,7 +9218,7 @@
         clc
         adc #$0100
         clc
-        jsr rsUnknown95C858
+        jsr rsBattleAnimationMoveRight
 
         _E53F
         inc y

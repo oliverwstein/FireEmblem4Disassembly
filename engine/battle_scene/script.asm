@@ -1669,7 +1669,7 @@
         .databank ?
 
         ; Command 7: copies entry arg of the 7-byte table at $97/B60D to VRAM
-        ; (rlUnknown95C4E3). Waits while other loading is under way.
+        ; (rlBattleSceneStartLargeUpload). Waits while other loading is under way.
 
         phx
         phy
@@ -1709,7 +1709,7 @@
         lda $7FECFB
         tay
         lda $7FECFD
-        jsl rlUnknown95C4E3
+        jsl rlBattleSceneStartLargeUpload
         sep #$20
         lda #$02
         sta $7FECF4
@@ -1826,7 +1826,7 @@
         lda $7FECFB
         tay
         lda $7FECFD
-        jsl rlUnknown95C4E3
+        jsl rlBattleSceneStartLargeUpload
         sep #$20
         lda #$02
         sta $7FECF4
@@ -1835,7 +1835,7 @@
 
 
         _BC2E
-        lda $7FE18A
+        lda wBattleSceneLargeUploadSize
         bne _BC49
 
         _BC34

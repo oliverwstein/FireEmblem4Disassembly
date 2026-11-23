@@ -2163,7 +2163,7 @@
         lda #$0000
         sta wR5
         clc
-        jsl rlUnknown95C51F
+        jsl rlBattleScenePushSprites
         plb
         .databank $7E
         lda @l $7E5311
@@ -2395,7 +2395,7 @@
         lda #$0000
         sta wR5
         clc
-        jsl rlUnknown95C51F
+        jsl rlBattleScenePushSprites
         plb
         .databank $7E
         lda @l $7E5311

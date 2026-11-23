@@ -615,40 +615,40 @@
 
         pha
         phy
-        lda $7FE18A
+        lda wBattleSceneLargeUploadSize
         beq _F1A6
-        lda $7FE18F
+        lda wBattleSceneLargeUploadVRAM
         tay
-        lda $7FE18C
+        lda lBattleSceneLargeUploadSource
         sta lR18
-        lda $7FE18D
+        lda lBattleSceneLargeUploadSource+1
         sta lR18+1
         lda #$0800
-        cmp $7FE18A
+        cmp wBattleSceneLargeUploadSize
         bcc _F180
-        lda $7FE18A
+        lda wBattleSceneLargeUploadSize
         jsl rlBattleSceneQueueUpload
         lda #$0000
-        sta $7FE18A
+        sta wBattleSceneLargeUploadSize
         bra _F1A6
 
 
         _F180
         pha
         jsl rlBattleSceneQueueUpload
-        lda $7FE18A
+        lda wBattleSceneLargeUploadSize
         sec
         sbc #1,s
-        sta $7FE18A
-        lda $7FE18C
+        sta wBattleSceneLargeUploadSize
+        lda lBattleSceneLargeUploadSource
         clc
         adc #1,s
-        sta $7FE18C
+        sta lBattleSceneLargeUploadSource
         pla
         lsr a
         clc
-        adc $7FE18F
-        sta $7FE18F
+        adc wBattleSceneLargeUploadVRAM
+        sta wBattleSceneLargeUploadVRAM
 
         _F1A6
         ply
@@ -882,7 +882,7 @@
         lda $7FECFB
         tay
         lda $7FECFD
-        jsl rlUnknown95C4E3
+        jsl rlBattleSceneStartLargeUpload
         sep #$20
         lda #$02
         sta $7FECF4
@@ -1542,7 +1542,7 @@
         jsl rlUnknown96D659
         jsl rlResetIRQEngine
         lda #$0000
-        sta $7FE18A
+        sta wBattleSceneLargeUploadSize
         sep #$20
         sta $7FECF4
         sta bTitleLoadRequests
@@ -1786,7 +1786,7 @@
         jsl rlUnknown95F741
         jsl rlUnknown95F7F7
         lda #$0000
-        sta $7FE18A
+        sta wBattleSceneLargeUploadSize
         sep #$20
         sta $7FECF4
         sta bTitleLoadRequests

@@ -484,7 +484,7 @@
 
         _8B36
         jsl rlUnknown96F7D4
-        jsr rsUnknown95C5E6
+        jsr rsBattleSceneTurnCombatants
         ldx #$0000
         jsl rlBattleAnimationUpdateX
         jsl rlBattleAnimationApplyDefaultGravity
@@ -529,7 +529,7 @@
         jsr rsBattleSceneUpdateHP2
         jsl rlUnknown96D695
         jsl rlUnknown95C508
-        jsl rlUnknown95C47A
+        jsl rlBattleSceneRunLargeUpload
         jsl rlUnknown96C8A1
         jsr rsUnknown959CF8
         jsl rlBattleSceneRunHUDShake
