@@ -2027,7 +2027,7 @@
       ; 1 = arena
       ; 2 = ? (forced anims on?)
       ; 3 = ?
-    wBattleStatus   .byte ? ; $7E4EAA
+    wBattleStatus   .byte ? ; $7E4EAA ; bit 1 the sides were swapped; bit 2 a combatant on a shared tile (UnitState0400) was moved a tile for the battle, bit 3 the guarding defender, moved down
       ; $40 - battle anim off
       ; $20 - ?
       ; $10 - ?
@@ -2518,6 +2518,18 @@
 
   .endvirtual
 
+
+  .virtual $7F4BF1
+    wMapBattleStatusSword .word ? ; $7F4BF1 ; $FFFF, or the status sword's index (BerserkSword 0, SilenceSword 2, SleepSword 3; rlGetMagicSwordMapEffect)
+  .endvirtual
+
+  .virtual $7F4C09
+    wMapBattleEarthSwordMelee .word ? ; $7F4C09 ; 1 when the Earth Sword strikes at distance 1 (rlGetMagicSwordMapEffect)
+  .endvirtual
+
+  .virtual $7F4C0F
+    wMapBattlePavise .word ? ; $7F4C0F ; 1 when the round entry just read was a Pavise activation (rlMapBattleNextRound)
+  .endvirtual
 
   .virtual $7F4C87
 

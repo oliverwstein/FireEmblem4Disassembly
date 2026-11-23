@@ -841,9 +841,9 @@
         lda aActionStructUnit1.WeaponID
         jsl rlGetMagicSwordMapEffect
         sta $508B,b
-        lda $7F4BF1
+        lda wMapBattleStatusSword
         sta $7F4BED
-        lda $7F4C09
+        lda wMapBattleEarthSwordMelee
         sta $7F4C0B
         lda #$0000
         bcs _845B
@@ -894,9 +894,9 @@
         lda aActionStructUnit2.WeaponID
         jsl rlGetMagicSwordMapEffect
         sta $508D,b
-        lda $7F4BF1
+        lda wMapBattleStatusSword
         sta $7F4BEF
-        lda $7F4C09
+        lda wMapBattleEarthSwordMelee
         sta $7F4C0D
         lda #$0000
         bcs _84FA
@@ -1315,7 +1315,7 @@
         .autsiz
         .databank ?
 
-        ; A = weapon: carry set and wR0 = the map magic effect a sword plays (item minus Fire). The ranged magic swords and the Earth Sword at distance 2 or more play their tome's effect (aMagicSwordMapEffectItems); at distance 1 the Earth Sword sets $7F4C09 instead. The Berserk, Silence and Sleep Swords play their staff's (aStatusSwordMapEffectItems) and keep their index in $7F4BF1. $FFFF for others; carry clear for a weapon that is not a sword.
+        ; A = weapon: carry set and wR0 = the map magic effect a sword plays (item minus Fire). The ranged magic swords and the Earth Sword at distance 2 or more play their tome's effect (aMagicSwordMapEffectItems); at distance 1 the Earth Sword sets wMapBattleEarthSwordMelee instead. The Berserk, Silence and Sleep Swords play their staff's (aStatusSwordMapEffectItems) and keep their index in wMapBattleStatusSword. $FFFF for others; carry clear for a weapon that is not a sword.
 
         phx
         phy
@@ -1323,9 +1323,9 @@
         tya
         sta $7F57F0
         lda #$FFFF
-        sta $7F4BF1
+        sta wMapBattleStatusSword
         lda #$0000
-        sta $7F4C09
+        sta wMapBattleEarthSwordMelee
         lda $7F57EE
         jsl rlGetItemDataROMPointer
         sta $7F57EA
@@ -1361,7 +1361,7 @@
         cmp #$0010
         bne _8721
         lda #$0001
-        sta $7F4C09
+        sta wMapBattleEarthSwordMelee
         bra _8721
 
 
@@ -1389,7 +1389,7 @@
         bcs _8782
         cmp #$0001
         beq _8782
-        sta $7F4BF1
+        sta wMapBattleStatusSword
         asl a
         tax
         lda aStatusSwordMapEffectItems,x
@@ -5070,7 +5070,7 @@
         .autsiz
         .databank ?
 
-        ; Moves to the next entry of aBattleRoundsData. $FFFF ends the rounds; an entry $xxFE marks something to show first (high byte 2 a round effect, $13-$17 a magic effect).
+        ; Moves to the next entry of aBattleRoundsData. $FFFF ends the rounds; an entry $xxFE is a skill activation to show first (high byte SkillIDPavise its shield, procMapBattlePavise; SkillIDAstra to SkillIDDarkness an effect).
 
         phx
         lda aProcSystem.aHeaderBitfield,b,x
@@ -5080,7 +5080,7 @@
         and #$7FFF
         sta wChapterFlags,b
         lda #$0000
-        sta $7F4C0F
+        sta wMapBattlePavise
         lda #$FFFF
         sta $7F4BF3
         lda aMapAction.wMapBattleRoundIndex
@@ -5104,10 +5104,10 @@
         lda wR0
         and #$FF00
         xba
-        cmp #$0002
+        cmp #SkillIDPavise
         bne _A296
         lda #$0001
-        sta $7F4C0F
+        sta wMapBattlePavise
         bra _A2A5
 
 
@@ -6737,12 +6737,14 @@
 
         ; 9E/AE22
 
-      rlUnknown9EAE22 ; 9E/AE22
+      rlMapBattleCheckShiftedUnit ; 9E/AE22
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When a combatant was moved a tile off a shared tile for the battle (wBattleStatus bit 2), keeps its side (bit 1) and direction (bit 3: the guarding defender, moved down) and sets header bit $0002.
 
         phx
         lda aProcSystem.aHeaderBitfield,b,x
@@ -6772,17 +6774,19 @@
 
         ; 9E/AE5A
 
-      rlUnknown9EAE5A ; 9E/AE5A
+      rlMapBattleSlideShiftedUnitOut ; 9E/AE5A
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Every frame: moves the shifted combatant's sprites by the next step of aMapBattleShiftSlideOut (16 pixels in all, up or down); header bit $0004 at the end.
+
         phx
         lda $7F57EC
         tax
-        lda aUnknown9EAEAF,x
+        lda aMapBattleShiftSlideOut,x
         sta wR0
         cmp #$8000
         beq _AEA1
@@ -6838,9 +6842,9 @@
       .al
       .xl
 
-      aUnknown9EAEAF ; 9E/AEAF
+      aMapBattleShiftSlideOut ; 9E/AEAF
 
-        ; Read by rlUnknown9EAE5A.
+        ; Read by rlMapBattleSlideShiftedUnitOut.
 
         .word $0001, $0001, $0002, $0002, $0002, $0004, $0004, $8000
         .word $FFFF, $FFFF, $FFFE, $FFFE, $FFFE, $FFFC, $FFFC, $8000
@@ -6855,17 +6859,19 @@
       .al
       .xl
 
-      rlUnknown9EAECF ; 9E/AECF
+      rlMapBattleSlideShiftedUnitBack ; 9E/AECF
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The same with aMapBattleShiftSlideBack, after the battle.
+
         phx
         lda $7F57EC
         tax
-        lda aUnknown9EAF24,x
+        lda aMapBattleShiftSlideBack,x
         sta wR0
         cmp #$8000
         beq _AF16
@@ -6921,9 +6927,9 @@
       .al
       .xl
 
-      aUnknown9EAF24 ; 9E/AF24
+      aMapBattleShiftSlideBack ; 9E/AF24
 
-        ; Read by rlUnknown9EAECF.
+        ; Read by rlMapBattleSlideShiftedUnitBack.
 
         .word $0004, $0004, $0002, $0002, $0002, $0001, $0001, $8000
         .word $FFFC, $FFFC, $FFFE, $FFFE, $FFFE, $FFFF, $FFFF, $8000
@@ -6938,12 +6944,14 @@
       .al
       .xl
 
-      rlUnknown9EAF44 ; 9E/AF44
+      rlMapBattleStartWarpArrival ; 9E/AF44
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; After the rounds: when the effect was Warp (wMapMagicEffect $20) and its destination can be shown (rlMapBattleCheckWarpDestinationShown), starts procMapBattleWarpArrival and sets header bit $0002.
 
         phx
         lda aProcSystem.aHeaderBitfield,b,x
@@ -6953,14 +6961,14 @@
         lda wMapMagicEffect
         cmp #$0020
         bne _AF77
-        jsl rlUnknown9EB01B
+        jsl rlMapBattleCheckWarpDestinationShown
         bcs _AF77
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #(`procUnknown9EAF98)<<8
+        lda #(`procMapBattleWarpArrival)<<8
         sta lR44+1
-        lda #<>procUnknown9EAF98
+        lda #<>procMapBattleWarpArrival
         sta lR44
         jsl rlProcEngineCreateProc
 
@@ -6972,17 +6980,19 @@
 
         ; 9E/AF79
 
-      rlUnknown9EAF79 ; 9E/AF79
+      rlMapBattleWaitWarpArrival ; 9E/AF79
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sets header bit $0004 once procMapBattleWarpArrival has ended.
+
         phx
-        lda #(`procUnknown9EAF98)<<8
+        lda #(`procMapBattleWarpArrival)<<8
         sta lR44+1
-        lda #<>procUnknown9EAF98
+        lda #<>procMapBattleWarpArrival
         sta lR44
         jsl rlProcEngineFindProc
         bcs _AF96
@@ -7008,9 +7018,9 @@
       .al
       .xl
 
-      procUnknown9EAF98 ; 9E/AF98
+      procMapBattleWarpArrival ; 9E/AF98
 
-        .structProcInfo "ON", rlProcUnknown9EAF98Init, rlProcUnknown9EAF98Cycle1, aProcUnknown9EAF98Code
+        .structProcInfo "ON", rlProcMapBattleWarpArrivalInit, rlProcMapBattleWarpArrivalCycle1, aProcMapBattleWarpArrivalCode
 
     .endsection ProcScript9EAF98Section
 
@@ -7020,12 +7030,14 @@
       .al
       .xl
 
-      rlProcUnknown9EAF98Init ; 9E/AFA0
+      rlProcMapBattleWarpArrivalInit ; 9E/AFA0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets map magic effect $29 and points wMapMagicTargetPixel at the warp's destination ($7E4F77, $7E4F79).
 
         phy
         phx
@@ -7072,7 +7084,7 @@
 
         ; 9E/AFF7
 
-      rlProcUnknown9EAF98Cycle1 ; 9E/AFF7
+      rlProcMapBattleWarpArrivalCycle1 ; 9E/AFF7
 
         .al
         .xl
@@ -7093,14 +7105,14 @@
       .al
       .xl
 
-      aProcUnknown9EAF98Code ; 9E/AFF8
+      aProcMapBattleWarpArrivalCode ; 9E/AFF8
 
-        PROC_CALL rlUnknown9EB08E
+        PROC_CALL rlMapBattleHideDefenderSprites
         PROC_YIELD 1
         PROC_CALL rlStartMapMagicEffect
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EB0B2
-        PROC_SET_ONCYCLE rlProcUnknown9EAF98Cycle2
+        PROC_CALL rlMapBattleSetMagicStart
+        PROC_SET_ONCYCLE rlProcWaitMapMagicStartCycle
         _B00F
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _B00F, $0002
@@ -7118,12 +7130,14 @@
       .al
       .xl
 
-      rlUnknown9EB01B ; 9E/B01B
+      rlMapBattleCheckWarpDestinationShown ; 9E/B01B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry clear when the warp's destination ($7E4F77, $7E4F79) is on the screen; on the castle screen (battle type 3), when the location there is the warped unit's home castle.
 
         phx
         lda $7E4F77
@@ -7134,14 +7148,14 @@
         and #$00FF
         cmp #$0003
         beq _B03A
-        jsl rlUnknown9EB046
+        jsl rlIsMapTileOnScreen
         bra _B044
 
 
         _B03A
         lda aActionStructUnit2.UnitRAMPointer
         sta wR2
-        jsl rlUnknown9EB06C
+        jsl rlIsHomeCastleAtTile
 
         _B044
         plx
@@ -7151,12 +7165,14 @@
 
         ; 9E/B046
 
-      rlUnknown9EB046 ; 9E/B046
+      rlIsMapTileOnScreen ; 9E/B046
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wR0, wR1 = tile X, Y: carry clear when it is inside the 256x224 screen at the current scroll.
 
         lda wR0
         asl a
@@ -7190,12 +7206,14 @@
 
         ; 9E/B06C
 
-      rlUnknown9EB06C ; 9E/B06C
+      rlIsHomeCastleAtTile ; 9E/B06C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wR0, wR1 = tile, wR2 = unit: carry clear when the location at the tile is the unit's home castle.
 
         phx
         jsl rlFindLocationAtTile
@@ -7220,12 +7238,14 @@
 
         ; 9E/B08E
 
-      rlUnknown9EB08E ; 9E/B08E
+      rlMapBattleHideDefenderSprites ; 9E/B08E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bit 15 of the X of the defender's sprites, hiding them.
 
         phx
         lda aMapAction.wMapBattleDefenderSpriteSlot
@@ -7249,12 +7269,14 @@
 
         ; 9E/B0B2
 
-      rlUnknown9EB0B2 ; 9E/B0B2
+      rlMapBattleSetMagicStart ; 9E/B0B2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wMapMagicStart = 1.
 
         lda #$0001
         sta wMapMagicStart
@@ -8821,7 +8843,7 @@
         lda #$FFFF
         sta $7F4BED
         sta $7F4BEF
-        sta $7F4BF1
+        sta wMapBattleStatusSword
         sta $7F4BF3
         sta $7F4C1F
 
@@ -9677,11 +9699,11 @@
         PROC_CALL rlUploadMapBattleTilesAfterQuote3
         PROC_YIELD 4
         _CB52
-        PROC_CALL rlUnknown9EAE22
+        PROC_CALL rlMapBattleCheckShiftedUnit
         PROC_JUMP_IF_BITS_UNSET _CB6A, $0002
         _CB5D
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EAE5A
+        PROC_CALL rlMapBattleSlideShiftedUnitOut
         PROC_JUMP_IF_BITS_UNSET _CB5D, $0004
         _CB6A
         PROC_SET_ONCYCLE rlProcMapBattleOpenHPWindows
@@ -9701,11 +9723,11 @@
         PROC_JUMP_IF_BITS_SET _CB70, $0002
         PROC_YIELD 16
         _CBA7
-        PROC_CALL rlUnknown9ED742
+        PROC_CALL rlMapBattleStartPavise
         PROC_JUMP_IF_BITS_UNSET _CBBF, $0002
         _CBB2
         PROC_YIELD 1
-        PROC_CALL rlUnknown9ED775
+        PROC_CALL rlMapBattleWaitPavise
         PROC_JUMP_IF_BITS_UNSET _CBB2, $0004
         _CBBF
         PROC_CALL rlUnknown9E8C81
@@ -9744,11 +9766,11 @@
         PROC_YIELD 1
         PROC_CALL rlMapBattleRoundStep
         PROC_JUMP_WHILE_UNK_TIMER _CC31
-        PROC_CALL rlUnknown9EAF44
+        PROC_CALL rlMapBattleStartWarpArrival
         PROC_JUMP_IF_BITS_UNSET _CC54, $0002
         _CC47
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EAF79
+        PROC_CALL rlMapBattleWaitWarpArrival
         PROC_JUMP_IF_BITS_UNSET _CC47, $0004
         _CC54
         PROC_CALL rlUnknown9EA8BA
@@ -9824,11 +9846,11 @@
         _CD4D
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CB70, $0001
-        PROC_CALL rlUnknown9EAE22
+        PROC_CALL rlMapBattleCheckShiftedUnit
         PROC_JUMP_IF_BITS_UNSET _CD6D, $0002
         _CD60
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EAECF
+        PROC_CALL rlMapBattleSlideShiftedUnitBack
         PROC_JUMP_IF_BITS_UNSET _CD60, $0004
         _CD6D
         PROC_CALL rlUnknown9ECA3B
@@ -10012,23 +10034,25 @@
       .al
       .xl
 
-      rlUnknown9ED742 ; 9E/D742
+      rlMapBattleStartPavise ; 9E/D742
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Before a round: when the round entry was a Pavise activation ($02FE, wMapBattlePavise), starts procMapBattlePavise and sets header bit $0002.
+
         phx
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         and #$FFFD
         sta aProcSystem.aHeaderBitfield,b,x
-        lda $7F4C0F
+        lda wMapBattlePavise
         beq _D773
-        lda #(`procUnknown9ED78B)<<8
+        lda #(`procMapBattlePavise)<<8
         sta lR44+1
-        lda #<>procUnknown9ED78B
+        lda #<>procMapBattlePavise
         sta lR44
         jsl rlProcEngineCreateProc
         sta $7F57F0
@@ -10046,12 +10070,14 @@
 
         ; 9E/D775
 
-      rlUnknown9ED775 ; 9E/D775
+      rlMapBattleWaitPavise ; 9E/D775
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets header bit $0004 once procMapBattlePavise has ended.
 
         phx
         lda $7F57F0
@@ -10077,9 +10103,9 @@
       .al
       .xl
 
-      procUnknown9ED78B ; 9E/D78B
+      procMapBattlePavise ; 9E/D78B
 
-        .structProcInfo "ON", rlProcUnknown9ED78BInit, rlProcUnknown9ED78BCycle, aProcUnknown9ED78BCode
+        .structProcInfo "ON", rlProcMapBattlePaviseInit, rlProcMapBattlePaviseCycle, aProcMapBattlePaviseCode
 
     .endsection ProcScript9ED78BSection
 
@@ -10089,7 +10115,7 @@
       .al
       .xl
 
-      rlProcUnknown9ED78BInit ; 9E/D793
+      rlProcMapBattlePaviseInit ; 9E/D793
 
         .al
         .xl
@@ -10098,14 +10124,14 @@
 
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown9ED7B7
+        jsl rlMapBattleLoadPaviseGraphics
         rtl
 
         .databank 0
 
         ; 9E/D79E
 
-      rlProcUnknown9ED78BCycle ; 9E/D79E
+      rlProcMapBattlePaviseCycle ; 9E/D79E
 
         .al
         .xl
@@ -10126,13 +10152,13 @@
       .al
       .xl
 
-      aProcUnknown9ED78BCode ; 9E/D79F
+      aProcMapBattlePaviseCode ; 9E/D79F
 
         PROC_YIELD 16
-        PROC_CALL rlUnknown9ED808
+        PROC_CALL rlMapBattleShowPavise
         _D7A6
         PROC_YIELD 1
-        PROC_CALL rlUnknown9ED8B6
+        PROC_CALL rlMapBattleCheckPaviseDone
         PROC_JUMP_IF_BITS_UNSET _D7A6, $0004
         PROC_YIELD 14
         PROC_END
@@ -10148,17 +10174,19 @@
       .al
       .xl
 
-      rlUnknown9ED7B7 ; 9E/D7B7
+      rlMapBattleLoadPaviseGraphics ; 9E/D7B7
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Uploads the shield's tiles (g4bppMapBattlePavise, $400 bytes to the sprite tiles) and its colors (aMapBattlePaviseColors).
+
         phx
-        lda #(`g4bppUnknown9FFC00)<<8
+        lda #(`g4bppMapBattlePavise)<<8
         sta lR18+1
-        lda #<>g4bppUnknown9FFC00
+        lda #<>g4bppMapBattlePavise
         sta lR18
         lda #$0400
         sta wR0
@@ -10175,7 +10203,7 @@
         ldx #$001E
 
         _D7DB
-        lda aUnknown9ED7E8,x
+        lda aMapBattlePaviseColors,x
         sta aOAMPaletteBuffer.aPalette6,b,x
         dec x
         dec x
@@ -10195,9 +10223,9 @@
       .al
       .xl
 
-      aUnknown9ED7E8 ; 9E/D7E8
+      aMapBattlePaviseColors ; 9E/D7E8
 
-        ; Read by rlUnknown9ED7B7.
+        ; Read by rlMapBattleLoadPaviseGraphics.
 
         .word $3800, $7FFF, $035F, $01BF, $0037, $0C8A, $0425, $7FBA
         .word $7E6E, $7C84, $30C4, $1421, $0000, $0000, $0000, $0000
@@ -10212,12 +10240,14 @@
       .al
       .xl
 
-      rlUnknown9ED808 ; 9E/D808
+      rlMapBattleShowPavise ; 9E/D808
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Gives the defending side's sprite the shield's script (aMapBattlePaviseSpriteScript, saving its own), creates the shield's sprite (aUnknown9EDAE0) on the defender's tile and plays sound $2E.
 
         phy
         phx
@@ -10231,9 +10261,9 @@
         sta $7F57EA
         lda aMapAction.lUnknown7F4598+1
         sta $7F57EC
-        lda #(`aUnknown9ED900)<<8
+        lda #(`aMapBattlePaviseSpriteScript)<<8
         sta aMapAction.lUnknown7F4598+1
-        lda #<>aUnknown9ED900
+        lda #<>aMapBattlePaviseSpriteScript
         sta aMapAction.lUnknown7F4598
         bra _D857
 
@@ -10243,9 +10273,9 @@
         sta $7F57EA
         lda aMapAction.lUnknown7F459B+1
         sta $7F57EC
-        lda #(`aUnknown9ED900)<<8
+        lda #(`aMapBattlePaviseSpriteScript)<<8
         sta aMapAction.lUnknown7F459B+1
-        lda #<>aUnknown9ED900
+        lda #<>aMapBattlePaviseSpriteScript
         sta aMapAction.lUnknown7F459B
 
         _D857
@@ -10290,12 +10320,14 @@
 
         ; 9E/D8B6
 
-      rlUnknown9ED8B6 ; 9E/D8B6
+      rlMapBattleCheckPaviseDone ; 9E/D8B6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When the shield's sprite has ended, gives the side its own script back and sets header bit $0004.
 
         phx
         lda $7F57EE
@@ -10342,10 +10374,10 @@
       .al
       .xl
 
-      aUnknown9ED900 ; 9E/D900
+      aMapBattlePaviseSpriteScript ; 9E/D900
 
-        .word _D900_Table - aUnknown9ED900
-        .word _D900_Script - aUnknown9ED900
+        .word _D900_Table - aMapBattlePaviseSpriteScript
+        .word _D900_Script - aMapBattlePaviseSpriteScript
 
         _D900_Frame00
           .word 1 ; sprite count
@@ -10475,26 +10507,26 @@
           .structSpriteEntry (   3,  -14), $00, SpriteSmall, $011, 2, 0, false, false
 
         _D900_Table
-          .word _D900_Frame00 - aUnknown9ED900
-          .word _D900_Frame01 - aUnknown9ED900
-          .word _D900_Frame02 - aUnknown9ED900
-          .word _D900_Frame03 - aUnknown9ED900
-          .word _D900_Frame04 - aUnknown9ED900
-          .word _D900_Frame05 - aUnknown9ED900
-          .word _D900_Frame06 - aUnknown9ED900
-          .word _D900_Frame07 - aUnknown9ED900
-          .word _D900_Frame08 - aUnknown9ED900
-          .word _D900_Frame09 - aUnknown9ED900
-          .word _D900_Frame10 - aUnknown9ED900
-          .word _D900_Frame11 - aUnknown9ED900
-          .word _D900_Frame12 - aUnknown9ED900
-          .word _D900_Frame13 - aUnknown9ED900
-          .word _D900_Frame14 - aUnknown9ED900
-          .word _D900_Frame15 - aUnknown9ED900
-          .word _D900_Frame16 - aUnknown9ED900
-          .word _D900_Frame17 - aUnknown9ED900
-          .word _D900_Frame18 - aUnknown9ED900
-          .word _D900_Frame19 - aUnknown9ED900
+          .word _D900_Frame00 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame01 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame02 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame03 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame04 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame05 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame06 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame07 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame08 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame09 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame10 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame11 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame12 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame13 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame14 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame15 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame16 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame17 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame18 - aMapBattlePaviseSpriteScript
+          .word _D900_Frame19 - aMapBattlePaviseSpriteScript
 
         _D900_Script
           ACTIVE_SPRITE_TABLE_FRAME 2, 0
@@ -10520,7 +10552,7 @@
           ACTIVE_SPRITE_END
 
       aUnknown9EDAE0 ; 9E/DAE0
-        .word <>rlUnknown9EDAE6, <>rlUnknown9EDAE6, <>aUnknown9ED900._D900_Script
+        .word <>rlUnknown9EDAE6, <>rlUnknown9EDAE6, <>aMapBattlePaviseSpriteScript._D900_Script
 
       rlUnknown9EDAE6 ; 9E/DAE6
         rtl

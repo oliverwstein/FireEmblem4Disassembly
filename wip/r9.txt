@@ -1,0 +1,1 @@
+rlProcMapMagicEffectWaitCycle rlProcWaitMapMagicStartCycle | On-cycle: once wMapMagicStart is set, moves on to rlUnknown9ED1BB; clears the active sprite sync flag.

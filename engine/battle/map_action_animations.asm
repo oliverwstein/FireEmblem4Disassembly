@@ -1249,12 +1249,14 @@
       .al
       .xl
 
-      rlProcUnknown9EAF98Cycle2 ; 9E/D1A1
+      rlProcWaitMapMagicStartCycle ; 9E/D1A1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; On-cycle: once wMapMagicStart is set, moves on to rlUnknown9ED1BB; clears the active sprite sync flag.
 
         lda wMapMagicStart
         beq _D1AD
@@ -1385,7 +1387,7 @@
         PROC_YIELD 1
         PROC_CALL rlUnknown9ED372
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlProcUnknown9EAF98Cycle2
+        PROC_SET_ONCYCLE rlProcWaitMapMagicStartCycle
         _D27D
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _D27D, $0002

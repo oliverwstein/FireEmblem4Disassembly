@@ -8662,7 +8662,7 @@
     * = $1FFC00
     .logical $9FFC00
 
-      g4bppUnknown9FFC00 .binary "gfx/ui/Unknown9FFC00.4bpp", 0, $0400 ; 9F/FC00
+      g4bppMapBattlePavise .binary "gfx/ui/Unknown9FFC00.4bpp", 0, $0400 ; 9F/FC00
 
     .here
 

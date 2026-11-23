@@ -1155,7 +1155,7 @@
         PROC_YIELD 1
         PROC_CALL rlUnknown9ED372
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlProcUnknown9EAF98Cycle2
+        PROC_SET_ONCYCLE rlProcWaitMapMagicStartCycle
         _F507
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _F507, $0002

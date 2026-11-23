@@ -1,0 +1,17 @@
+rlUnknown9EAF44 rlMapBattleStartWarpArrival | After the rounds: when the effect was Warp (wMapMagicEffect $20) and its destination can be shown (rlMapBattleCheckWarpDestinationShown), starts procMapBattleWarpArrival and sets header bit $0002.
+rlUnknown9EAF79 rlMapBattleWaitWarpArrival | Sets header bit $0004 once procMapBattleWarpArrival has ended.
+procUnknown9EAF98 procMapBattleWarpArrival
+rlProcUnknown9EAF98Init rlProcMapBattleWarpArrivalInit | Sets map magic effect $29 and points wMapMagicTargetPixel at the warp's destination ($7E4F77, $7E4F79).
+rlProcUnknown9EAF98Cycle1 rlProcMapBattleWarpArrivalCycle1
+aProcUnknown9EAF98Code aProcMapBattleWarpArrivalCode
+rlProcUnknown9EAF98Cycle2 rlProcMapMagicEffectWaitCycle
+rlUnknown9EB01B rlMapBattleCheckWarpDestinationShown | Carry clear when the warp's destination ($7E4F77, $7E4F79) is on the screen; on the castle screen (battle type 3), when the location there is the warped unit's home castle.
+rlUnknown9EB046 rlIsMapTileOnScreen | wR0, wR1 = tile X, Y: carry clear when it is inside the 256x224 screen at the current scroll.
+rlUnknown9EB06C rlIsHomeCastleAtTile | wR0, wR1 = tile, wR2 = unit: carry clear when the location at the tile is the unit's home castle.
+rlUnknown9EB08E rlMapBattleHideDefenderSprites | Sets bit 15 of the X of the defender's sprites, hiding them.
+rlUnknown9EB0B2 rlMapBattleSetMagicStart | wMapMagicStart = 1.
+rlUnknown9EAE22 rlMapBattleCheckShiftedUnit | When a combatant was moved a tile off a shared tile for the battle (wBattleStatus bit 2), keeps its side (bit 1) and direction (bit 3: the guarding defender, moved down) and sets header bit $0002.
+rlUnknown9EAE5A rlMapBattleSlideShiftedUnitOut | Every frame: moves the shifted combatant's sprites by the next step of aMapBattleShiftSlideOut (16 pixels in all, up or down); header bit $0004 at the end.
+aUnknown9EAEAF aMapBattleShiftSlideOut
+rlUnknown9EAECF rlMapBattleSlideShiftedUnitBack | The same with aMapBattleShiftSlideBack, after the battle.
+aUnknown9EAF24 aMapBattleShiftSlideBack
