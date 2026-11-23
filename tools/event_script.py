@@ -223,7 +223,7 @@ def main():
         print(f'; warning: jump target {t:06X} is inside a command', file=sys.stderr)
     for a, src in lines:
         if a in targets:
-            print(f'\n      _{a & 0xFFFF:04X} ; {a >> 16:02X}/{a & 0xFFFF:04X}')
+            print(f'\n        _{a & 0xFFFF:04X} ; {a >> 16:02X}/{a & 0xFFFF:04X}')
         print('        ' + src)
 
 

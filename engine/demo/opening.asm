@@ -107,7 +107,7 @@
         RUN_ASM rlASMCHideDemoSceneUnit
         JUMP _E9C1
 
-      _E9B2 ; 90/E9B2
+        _E9B2 ; 90/E9B2
         RUN_ASM rlRunDemoBattleSetup
         RUN_ASM rlUnknown9E8000
         PAUSE $0020
@@ -115,7 +115,7 @@
         FADE_IN_BY_TIMER $04
         YIELD
 
-      _E9C1 ; 90/E9C1
+        _E9C1 ; 90/E9C1
         RUN_ASM rlCreateProcHaltEvent
         YIELD
         FADE_OUT_BY_TIMER $04
@@ -261,7 +261,7 @@
         YIELD
         JUMP _EB9B
 
-      _EB89 ; 90/EB89
+        _EB89 ; 90/EB89
         PAUSE $00B4
         YIELD
         PLAY_SFX_WORD $00E7
@@ -272,7 +272,7 @@
         PAUSE $005A
         YIELD
 
-      _EB9B ; 90/EB9B
+        _EB9B ; 90/EB9B
         RUN_ASM rlASMCClearDemoDeployments
         OPEN_MAP_BATTLE
         END_EVENT

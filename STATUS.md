@@ -4,15 +4,16 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-22, after the map engine wave)
+## Current state (2026-11-22, during wave 4: banks $81 and $90 done, $8D next)
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
-- `./build.sh` is byte-identical and the checksums verify. 97.55% of the ROM is built from source. GAPS.md: 177 `none` pieces (60,429 bytes), 56 padding runs (42,139 bytes).
-- Routines: 6,003 in `engine/`, 3,857 named, 2,146 `Unknown`; 1,755 still in `engine/unsorted/` (banks `$81`, `$84`, `$8B`, `$8C`, `$8D`, `$90`, `$91`, `$95`-`$97`, `$9B`, `$9E`, `$9F`). 307 pinned blocks.
-- **Phase 3 Wave 3 (the map engine) done in one session**, commits `650bcba`..`64bda55`: the menu leftovers first (unit window sort routines, the `ldy #$xxxx` sprite arrays), then all of bank `$88` and bank `$84`'s map side. `engine/unsorted/bank88.asm` is gone. What each new file holds is in [docs/reference/map.md](docs/reference/map.md) and HISTORY.md. New `include/Map.h` (`MAP_CURSOR_*`, `MAP_AI_*`, `MAP_RETURN_*`, `MAP_ACTION_*`, `PATH_*`), `UNIT_WINDOW_SORT_*` in `include/Menus.h`, and map RAM names in `include/WRAM.h` (`wMapCursorState`, `wMapReturnFlags`, `aMovementPath`, the streaming block at `$00071C`, `wDemoIndex` at `$1B49`...).
-- **Left from this wave:** bank `$84` still has 17 routines of other systems in `engine/unsorted/bank84.asm` (class change `rlUnknown8499B5`/`rsUnknown84AC24`/`AC50`, repair `rlUnknown84B349`, arena `rlUnknown84B508`/`B550`, love points `rsUnknown84C398`/`C3C1`/`rlUnknown84C412`, win/loss counts `rlUnknown8486A0`/`86E5`, castle targets `rlUnknown848BFE`, and a few more); they belong to the castle, units and battle waves. `rlMapStep`, `rlMapUpkeep` and the map's other per-frame code are in bank `$81` (unsorted). `rlRunMapAction` stays inside `battle.asm`'s one big section. `rlUnknown88DD0F` (unreached) is the only `Unknown` left from bank `$88`.
-- Reference pages so far: `docs/reference/core.md`, `ai.md`, `castle.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`. `tools/reference.py` output is gitignored; run it locally. What each wave did is in HISTORY.md under "Phase 3 waves".
+- `./build.sh` is byte-identical and the checksums verify. 97.57% of the ROM is built from source. GAPS.md: 174 `none` pieces (59,734 bytes), 56 padding runs (42,139 bytes).
+- Routines: 6,015 in `engine/`, 3,941 named, 2,074 `Unknown`; 1,689 still in `engine/unsorted/` (banks `$84`, `$8B`, `$8C`, `$8D`, `$91`, `$95`-`$97`, `$9B`, `$9E`, `$9F`). 305 pinned blocks.
+- **Wave 4 (events, attract mode, epilogue), part 1, this session:** bank `$81` (commit `11f7df9`): the map step is `engine/map/map_step.asm` (the turn loop `aMapStepRoutines`/`MAP_STEP_*`, the queued relocations `UNIT_RELOCATION_*`, defeated units, canto), with `wChapterFlags` (`$0D79`, every bit described) and `wEventEngineFlags` (`$171A`) named; event movers in `map_sprites.asm`. Bank `$90` (commit `703372e`): the attract mode's opening is `engine/demo/opening.asm`, its event script decoded by the new `tools/event_script.py`; the staff credits (`engine/demo/opening_credits.asm`) closed three unbuilt pieces. Reference: `docs/reference/map.md` (new "Turns and phases") and `docs/reference/demo.md`.
+- **Next in this session: bank `$8D`** (the epilogue, 76 routines, `rlEpilogueSetup`/`rlEpilogueStep` named; also `rlUnknown8DA810`/`A864`/`A880`, which the opening calls).
+- **Left from the map engine wave:** bank `$84` still has routines of other systems in `engine/unsorted/bank84.asm` (class change, repair, arena, love points, win/loss counts, castle targets); `rlCheckFactionTakesPhase` left it this session. `rlRunMapAction` stays inside `battle.asm`'s one big section. `rlUnknown88DD0F` (unreached) is the only `Unknown` left from bank `$88`.
+- Reference pages so far: `docs/reference/core.md`, `ai.md`, `castle.md`, `demo.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`. `tools/reference.py` output is gitignored; run it locally. What each wave did is in HISTORY.md under "Phase 3 waves".
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
 ## Who wrote what
@@ -55,7 +56,6 @@ Each is one screen. Answers so far are in HISTORY.md under the wave that asked t
 2. The unit command menu's mode 1: move a player unit onto its own home castle and choose たいき (wait). Does the command menu open again by itself, and which commands does it list? The code shows mode 1 follows a player unit ending its action at its home castle, hides attack, staff, items, dance, talk and give, and that B cannot close it; only the screen shows what the menu is for.
 3. Where does まち (town) appear? The code shows it at a location of type 1 and that its handler opens the castle screen; one screenshot of a unit standing where it is offered settles what a type 1 location is.
 4. The item window (from the map menu's item command) with a weapon selected: what is the sprite at the right edge, about (195, 76)? The code draws it only for weapons (`aUnknown89BE50`, tile `$0E`); the weapon type icon and the weapon triangle icons beside it are known.
-5. The attract mode (leave the title screen alone): does it alternate map scenes and battles? The code shows `wDemoIndex` counts down, that the battle setups only use odd indices, and that bank `$90` has chapter map scenes for each index; one watch of the demo shows whether even indices are the map scenes.
 
 ## How to work on this project
 

@@ -16,6 +16,7 @@ The chapter map is the screen where the battle is fought: the map itself, the cu
 | [map_cursor.asm](../../engine/map/map_cursor.asm) | the cursor and its states, choosing a target, travelling to a unit, the hand cursor used by menus |
 | [unit_movement.asm](../../engine/map/unit_movement.asm) | picking up a unit, its path, walking it, undoing a move; the computer phase's moves; walking sounds |
 | [map_actions.asm](../../engine/map/map_actions.asm) | the effects of the unit commands (bank `$84`) |
+| [map_step.asm](../../engine/map/map_step.asm) | the map's game state routines: the turn loop (each army's phase, the end of a turn) and what earlier actions queued for it (bank `$81`) |
 | [map_sprites.asm](../../engine/map/map_sprites.asm) | drawing and animating the units' map sprites and the animated map tiles; event movers |
 | [minimap.asm](../../engine/map/minimap.asm) | the minimap, and choosing a castle for the Warp staff |
 | [range_maps.asm](../../engine/map/range_maps.asm) | where the selected unit can move (`aMovementMap`) and what it can reach |
@@ -34,9 +35,46 @@ The **camera** is `wMapScrollXPixels`/`YPixels`, the map pixel at the top left o
 
 ## A frame
 
-The map's main loop runs the game state routines; the map step (`rlMapStep`, bank `$81`, not filed yet) calls `rlMapCursorStep` and `rlContinueMapScroll` each frame, and `rlMapUpkeep` animates the map sprites (`rlAnimateMapSprites`) and pulses the range overlay's colours. The VBlank handler (`rsMapVBlank`) uploads the animation frames (`rlUploadMapAnimations`), and draws the moving unit's sprite and every other unit's (`rlDrawMovingUnitSprite`, `rlDrawDeployedUnitMapSprites`). New rows and columns of the map reach VRAM through `rlUploadMapRowAndColumn`.
+The map's main loop runs the game state routines: `rlMapStep` (below) runs the turn loop and, in the steps where the player can act, calls `rlMapCursorStep` and `rlContinueMapScroll`; `rlMapUpkeep` animates the map sprites (`rlAnimateMapSprites`), pulses the range overlay's colours and copies the camera to the BG1 scroll registers. The main loop also redraws the dialogue boxes' tilemaps when one moved (`rlRedrawDialogueBoxTilemaps`). The VBlank handler (`rsMapVBlank`) uploads the animation frames (`rlUploadMapAnimations`), and draws the moving unit's sprite and every other unit's (`rlDrawMovingUnitSprite`, `rlDrawDeployedUnitMapSprites`). New rows and columns of the map reach VRAM through `rlUploadMapRowAndColumn`.
 
 `wMapSystemFlags` collects the map's state for other code: bit 0 Y held, bit 1 a unit is selected (or a return flag or action mode is set), bit 2 the cursor is busy, bit 3 a unit menu or map menu was opened, bit 4 an event is running, bit 5 the minimap is open, bit 7 the map windows are hidden. `rsUpdateMapSystemFlags` recomputes the low bits every frame.
+
+## Turns and phases
+
+`rlMapSetup` (game state `$11`) builds the map menus' RAM, turns the active sprites on, fades in and creates the unit and terrain windows, then hands over to `rlMapStep` (state `$12`) at the step saved in `wSavedMapStep`. Nothing in `rlMapStep` that starts something new runs while an event is running (`wEventEngineFlags` nonzero).
+
+**The turn loop.** `wGameStateStep` picks one of thirteen steps (`aMapStepRoutines`, `MAP_STEP_*` in [include/Map.h](../../include/Map.h)):
+
+| Step | Routine | What it does |
+|---|---|---|
+| 0 | `rsMapStepStartTurn` | counts the turn (up to 999), makes the player army active, counts down every army's status durations |
+| 1 | `rsMapStepFadeOutMusic` | fades out the last phase's music (32 frames, `wPhaseMusicFadeTimer`) if this army takes a phase and has a song |
+| 2 | `rsMapStepPhaseBanner` | if the army takes a phase (`rlCheckFactionTakesPhase`), starts its music (`rlStartPhaseMusic`) and shows the phase banner |
+| 3 | `rsMapStepPhaseStartEvents` | event action `$21` (turn, army) |
+| 4 | `rsMapStepStartPhase` | love points at the start of the player's turns, the turn start effects of the army's units (healing, status), the AI on |
+| 5 | `rsMapStepTurnStartHealing` | one window per unit healed at the turn's start, then the map windows; the cursor goes to the saved tile (auto cursor option) or the army's first unit |
+| 6 | `rsMapStepAutoSavePrompt` | from turn 2, with the auto save option, the save prompt |
+| 7 | `rsMapStepPhase` | the phase: the cursor and the camera move, the AI runs, until bit 5 of `wMapStateFlags` ends it |
+| 8 | `rsMapStepNextFaction` | the next army that exists (step 1), or after the last the end of the turn (step 9) |
+| 9 | `rsMapStepEndTurn` | event action `$20` (turn), then step 0 |
+| 10 | `rsMapStepOpenStatusScreen` | opens the status screen; step 7 on return |
+| 11 | `rsMapStepResume` | back from another screen: windows, fade in, a canto move if the active unit has one, then the saved step |
+| 12 | `rsMapStepGameOver` | fades to the game over screen |
+
+An army takes a phase only if it has a name and units on the map, and, if the chapter's `FactionPhaseFlagsPointer` table lists it, once the event flag given there is set, so a chapter can hold an army's phases back until an event sets the flag.
+
+The music: a chapter's first phase plays the chapter's own song (`aChapterFirstPhaseSongIDs`), later phases the army's phase song (`rsGetActiveFactionSongID`), and once every enemy is gone the victory theme (`rlCheckVictoryTheme`). `wPhaseSongID` holds it, and `rlResumePhaseMusic` plays it again after an event, a scene or the castle.
+
+**What actions leave for the map step.** Commands and battles do not finish their consequences themselves; they leave a note, and `rlMapStep` acts on it at the start of the next frame, before the step, in this order (each may end the frame):
+
+1. `rlApplyBufferedDeploymentStates`: units changed by a battle or a staff (bit 2 of `wChapterFlags`) get their new deployment states.
+2. `rlHandleDefeatedUnit` (`wDefeatedUnitDeploymentOffset`): the unit is hidden and event action `$17` runs; a fallen lord of the player army starts the game over event (`rlStartGameOverEvent`, `aGameOverEventIDs`, which also runs when the player army is removed).
+3. `rlRunQueuedUnitRelocation` (`wUnitRelocationType`, `UNIT_RELOCATION_*`): moving a unit to a tile (Warp, Rescue), an escaped or captured unit, a unit going into a castle (with event action 4) or an AI unit leaving one, the seize popup, the save prompt at a chapter's end, the helped unit leaving, the item popup, a rescued unit and its rescuer into a castle.
+4. `rsOpenQueuedUnitMenu` (bit 15 of `wMapStateFlags`), `rsShowQueuedGoldPopUp` (a village's gold), `rsOpenQueuedInventoryFullMenu`.
+5. `rsResumeCantoMove`: a unit with canto picks up again (`rlCheckActiveUnitCanto` set it up).
+6. `rsRunActionEndedEvents` (`wActionEndedDeploymentOffset`): event action 3 with the unit's tile, so a chapter can react to a unit stopping somewhere.
+
+`wChapterFlags` holds the flags of the chapter in progress; every bit is described in [include/WRAM.h](../../include/WRAM.h). `rlAdvanceToNextChapter` ends a chapter (to the chapter save screen), and `rlResetChapterProgress` clears the chapter state for a new game.
 
 ## The cursor
 
@@ -99,7 +137,7 @@ The camera scrolls in steps of `wMapScrollSpeed` pixels in a direction given as 
 - **Every unit** is drawn each VBlank (`rlDrawDeployedUnitMapSprites`) at its position, coloured by allegiance (`aMapSpritePalettesByAllegiance`); asleep units and player units that have acted are grey. Units off screen are skipped and sprites are culled by scanline.
 - **Standing animation**: the frame counter (`wMapSpriteFrameCounter`) runs in steps of 16; on steps 2-7 the short sprites' frames for eight units are queued, on 10-15 the tall ones (`rlQueueStandingMapSpriteFrames`), and `rlUploadMapAnimations` copies them. Steps 0 and 1 of each 8 upload a frame of the two animated tile sets (`g4bppMapTileAnimations1`/`2`). Bit 15 of `wMapSpriteAnimationPauseFlags` pauses the sprites, bit 0 the tiles.
 - **The moving unit** (the one picked up) has its walking sprite decompressed to `$7EAB88` (`rlLoadMovingUnitSprite`) and is drawn by `rlDrawMovingUnitSprite`, its frames timed by `aMapSpriteWalkFrameDelays`.
-- **Event movers** (`aMovingMapSprites`, up to four at a time) are animated by `rlAnimateMovingMapSprite`.
+- **Event movers** (`aMovingMapSprites`, up to four at a time) are animated by `rlAnimateMovingMapSprite` and drawn by `rlDrawMovingMapSprite`; each step (`rsStepMovingMapSprite`) can make the camera follow (`rsCameraFollowMovingMapSprite`, once the mover passes the screen's middle margins), and `rlStopMapSpriteSounds` stops their walking sounds when an event ends.
 
 ## The minimap
 
@@ -130,6 +168,6 @@ At the end of chapter 5, after Arvis attacks Sigurd, `procFirstGenerationEnding`
 - `wUnitSelectedFlag` takes the values 1 and 2 in an unused routine (`rlMoveFreeMapCursorUnused`, a different cursor frame for 2); only 1 is used.
 - The help command's relocation (type 7 with `wR0` and `wR1`) and why the helper gets 100 experience.
 - What the chapter 5 flags `$14`-`$2C` record (the ending only reads them).
-- The attract demo: `rlRunDemoBattleSetup` only reaches the odd entries of `aDemoBattleSetups`; what the even ones (and the map scenes in bank `$90`) are for.
 - `rlUnknown88DD0F` and its two sprite arrays: nothing reaches it.
-- `rlMapStep` and `rlMapUpkeep` are in bank `$81`, which is not filed yet.
+- `wChapterFlags` bit `$0100` (set by the map menu and bank `$91`), and what `$70` means to `rsOpenQueuedInventoryFullMenu`.
+- The `CharacterID` of `MOVE_TEMPORARY_TO_COORDS_CLASS` and the help command's relocation (type 7: the target leaves the map with a scene).

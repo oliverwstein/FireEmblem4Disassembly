@@ -21,7 +21,8 @@ The generated pages are not committed (they are in `.gitignore`): run `python3 t
 - [castle.md](castle.md): the castle screen: courtyard, unit commands, town, shops, depot, augury, class change, conversation scenes.
 - [menus.md](menus.md): the full-screen menus: the status screen, the revive screen, the options menu.
 - [map_menu.md](map_menu.md): the menus and windows over the chapter map.
-- [map.md](map.md): the chapter map: the cursor, moving units, the camera and tile streaming, map sprites, the minimap, the unit commands' effects.
+- [map.md](map.md): the chapter map: turns and phases (the map step), the cursor, moving units, the camera and tile streaming, map sprites, the minimap, the unit commands' effects.
+- [demo.md](demo.md): the attract mode's opening: its event script, the staff credits, the demo map scenes and their battles.
 - [save.md](save.md): save slots in SRAM, saving and loading, and what is written as it happens (losses, timer, ranking).
 
 The other systems get their page as Phase 3 names and sorts them (see [PLAN.md](../../PLAN.md)).
