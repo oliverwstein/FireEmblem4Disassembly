@@ -245,8 +245,19 @@
     ; Compressed streams: generated from gfx/compressed/C00A2B/C00A2B.streams by build.sh.
     .include "gfx/compressed/C00A2B/Layout.asm"
 
-    * = $008002
-    .logical $808002
+    * = $003C05
+    .logical $C03C05
+
+      ; Unreferenced: zeros to the end of the bank's lower half.
+      .fill $C08000 - *, 0
+
+    .here
+
+    * = $008000
+    .logical $808000
+
+      ; 80/8000: two unreferenced bytes before the first routine.
+      aUnknown808000 .byte $02, $FE
 
       .dsection Unsorted808002Section
 
@@ -1043,7 +1054,158 @@
       aUNITGroupDataChapterFinalThracia   .binclude "data/eventunit/UNITGroupDataChapterFinalThracia.csv.asm"
       aUNITGroupDataChapterFinalUnused    .binclude "data/eventunit/UNITGroupDataChapterFinalUnused.csv.asm"
 
-      ; 81ebbc
+      ; 81/EBBC: unreferenced. Two bytes, then UNIT groups in the format of the ones
+      ; above (structUNITEntry: character, X, Y, leader flag, AI, faction slot,
+      ; formation; $FFFF ends a group) that no chapter uses, then zeros to the end
+      ; of the bank.
+      aUnknown81EBBC .byte $03, $03
+
+      aUNITGroupDataUnused81EBBE
+        .word $01AD
+        .byte 12, 16, 0, 1, 3, 4
+        .word $01AD
+        .byte 13, 16, 0, 1, 3, 5
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .word $01A8
+        .byte 9, 16, 0, 1, 3, 1
+        .word $01A8
+        .byte 10, 16, 0, 1, 3, 2
+        .word $01A8
+        .byte 11, 16, 0, 1, 3, 3
+        .word $01A8
+        .byte 12, 16, 0, 1, 3, 4
+        .word $01A8
+        .byte 13, 16, 0, 1, 3, 5
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .word $01A5
+        .byte 11, 16, 0, 1, 3, 3
+        .word $01A5
+        .byte 12, 16, 0, 1, 3, 4
+        .word $01A5
+        .byte 13, 16, 0, 1, 3, 5
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .word $01AA
+        .byte 11, 16, 0, 1, 3, 3
+        .word $01AA
+        .byte 12, 16, 0, 1, 3, 4
+        .word $01AA
+        .byte 13, 16, 0, 1, 3, 5
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .word $01AA
+        .byte 9, 16, 0, 1, 3, 1
+        .word $01AA
+        .byte 10, 16, 0, 1, 3, 2
+        .word $01AA
+        .byte 11, 16, 0, 1, 3, 3
+        .word $01AA
+        .byte 12, 16, 0, 1, 3, 4
+        .word $01AA
+        .byte 13, 16, 0, 1, 3, 5
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .word $01A6
+        .byte 61, 54, 0, 1, 4, 0
+        .word $01A7
+        .byte 62, 53, 0, 1, 4, 0
+        .word $01A8
+        .byte 62, 55, 0, 1, 4, 0
+        .word $01A2
+        .byte 8, 16, 1, 1, 3, 0
+        .word $01A3
+        .byte 9, 16, 0, 1, 3, 1
+        .word $01A3
+        .byte 10, 16, 0, 1, 3, 2
+        .word $01A3
+        .byte 11, 16, 0, 1, 3, 3
+        .word $01A3
+        .byte 12, 16, 0, 1, 3, 4
+        .word $01A3
+        .byte 13, 16, 0, 1, 3, 5
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .word $01A5
+        .byte 60, 58, 0, 1, 2, 6
+        .word $01A5
+        .byte 59, 61, 0, 1, 2, 7
+        .word $01A5
+        .byte 59, 59, 0, 1, 2, 8
+        .word $01A5
+        .byte 58, 60, 0, 1, 2, 9
+        .word $01A6
+        .byte 61, 54, 0, 1, 4, 0
+        .word $01A7
+        .byte 62, 53, 0, 1, 4, 0
+        .word $01A8
+        .byte 62, 55, 0, 1, 4, 0
+        .word $01A2
+        .byte 8, 16, 1, 1, 3, 0
+        .word $01A3
+        .byte 9, 16, 0, 1, 3, 1
+        .word $01A3
+        .byte 10, 16, 0, 1, 3, 2
+        .word $01A3
+        .byte 11, 16, 0, 1, 3, 3
+        .word $01A3
+        .byte 12, 16, 0, 1, 3, 4
+        .word $01A3
+        .byte 13, 16, 0, 1, 3, 5
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .word $01A3
+        .byte 10, 16, 0, 1, 3, 2
+        .word $01A3
+        .byte 11, 16, 0, 1, 3, 3
+        .word $01A3
+        .byte 12, 16, 0, 1, 3, 4
+        .word $01A3
+        .byte 13, 16, 0, 1, 3, 5
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .word $01A6
+        .byte 62, 55, 0, 1, 2, 0
+        .word $01A0
+        .byte 8, 16, 1, 1, 2, 0
+        .word $01A1
+        .byte 9, 16, 0, 1, 2, 1
+        .word $01A1
+        .byte 10, 16, 0, 1, 2, 2
+        .word $01A1
+        .byte 11, 16, 0, 1, 2, 3
+        .word $01A1
+        .byte 12, 16, 0, 1, 2, 4
+        .word $01A1
+        .byte 13, 16, 0, 1, 2, 5
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .word $01A1
+        .byte 11, 16, 0, 1, 2, 3
+        .word $01A1
+        .byte 12, 16, 0, 1, 2, 4
+        .word $01A1
+        .byte 13, 16, 0, 1, 2, 5
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .word $FFFF
+        .byte 0, 0, 0, 0, 0, 0
+
+        .fill $820000 - $81EDCE, 0
 
     .here
 
