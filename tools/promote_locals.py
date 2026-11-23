@@ -34,7 +34,7 @@ import glob, os, re, subprocess, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import asmlib
 
-LIST_RE = re.compile(r'^(\d+)\t\.[0-9a-f]+\t([0-9a-f]{6})\t([0-9a-f ]*)\t+(.*)$')
+LIST_RE = re.compile(r'^(\d+)\t[.>][0-9a-f]+\t([0-9a-f]{6})\t([0-9a-f ]*)\t+(.*)$')
 TOP_RE = re.compile(r'^ {6}([A-Za-z]\w*)\b')
 LOCAL_DEF_RE = re.compile(r'^ {8}(_\w+)\s*$')
 

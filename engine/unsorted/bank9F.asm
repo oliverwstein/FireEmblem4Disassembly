@@ -4401,82 +4401,128 @@
 
         rtl
 
-        .byte $22, $99, $89, $9F, $DE, $C0, $12, $D0, $0F, $A9, $93, $9F, $9D, $60, $11, $A9
-        .byte $10, $00, $9D, $C0, $12, $9D, $20, $13, $6B, $DE, $C0, $12, $D0
-
-        .databank 0
-
-      rlUnknown9F9F97 ; 9F/9F97
+      rlUnknown9F9F7A ; 9F/9F7A
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ora (#169,s),y
-        ora (wR0,x)
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
-        lda #$9FAC
-        sta aActiveSpriteSystem.aOnCycle,b,x
-        lda #$0008
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        jsl rlUnknown9F8999
+        dec $12C0,b,x
+        bne _9F92
+        lda #$9F93
+        sta $1160,b,x
+        lda #$0010
+        sta $12C0,b,x
+        sta $1320,b,x
+
+        _9F92
         rtl
 
-        .byte $DE, $C0, $12
-
         .databank 0
 
-      rlUnknown9F9FAF ; 9F/9FAF
+        ; 9F/9F93
+      rlUnknown9F9F93 ; 9F/9F93
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        dec $12C0,b,x
+        bne _9FAB
+        lda #$0001
+        sta $7F4580
+        lda #$9FAC
+        sta $1160,b,x
+        lda #$0008
+        sta $12C0,b,x
+
+        _9FAB
+        rtl
+
+        .databank 0
+
+        ; 9F/9FAC
+      rlUnknown9F9FAC ; 9F/9FAC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $12C0,b,x
         bne _9FC1
         lda #$9FC2
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $1160,b,x
         lda #$0010
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
         sta $7ECC06
 
         _9FC1
         rtl
 
-        .byte $DE, $C0
-
         .databank 0
 
-      rlUnknown9F9FC4 ; 9F/9FC4
+        ; 9F/9FC2
+      rlUnknown9F9FC2 ; 9F/9FC2
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ora ($D0)
-        asl $A9
-        dec $9D9F,b
-        rts
+        dec $12C0,b,x
+        bne _9FCD
+        lda #$9FCE
+        sta $1160,b,x
 
-        .byte $11, $6B, $20
+        _9FCD
+        rtl
 
+        .databank 0
 
-        _9FCF
-        sta $0A9091,x
-        stz aActiveSpriteSystem.aTypeOffset,b,x
+        ; 9F/9FCE
+      rlUnknown9F9FCE ; 9F/9FCE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown9F919F
+        bcc _9FDD
+        stz $1100,b,x
         lda #$0001
         sta $7F5093
+
+        _9FDD
         rtl
 
         .databank 0
 
       aUnknown9F9FDE ; 9F/9FDE
 
-        .byte $00, $04, $1D, $A0, $00, $04, $2E, $A0, $00, $04, $3F, $A0, $00, $04, $50, $A0
-        .byte $00, $04, $61, $A0, $00, $03, $72, $A0, $00, $03, $79, $A0, $00, $03, $80, $A0
-        .byte $00, $03, $87, $A0, $17, $0E, $A0, $F2, $9F, $00, $01, $1B, $A0, $15, $07, $A0
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FA01D
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FA02E
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FA03F
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FA050
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FA061
 
+        _9FF2
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FA072
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FA079
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FA080
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FA087
+        ACTIVE_SPRITE_CALL rlUnknown9FA00E
+        .word <>_9FF2
+
+        _A007
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FA01B
+        ACTIVE_SPRITE_JUMP _A007
+
+        ; 9F/A00E
       rlUnknown9FA00E ; 9F/A00E
 
         .al
@@ -4484,7 +4530,7 @@
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aUnknown001320,b,x
+        lda $1320,b,x
         bne _A018
         lda $0000,b,y
         tay
@@ -4497,6 +4543,8 @@
         rtl
 
         .databank 0
+
+        ; 9F/A01B
 
       aUnknown9FA01B ; 9F/A01B
 
@@ -5443,6 +5491,7 @@
       aUnknown9FA6E9 ; 9F/A6E9
         .word $A729, $A74B, $A967
 
+
       rlUnknown9FA6EF ; 9F/A6EF
 
         .al
@@ -5450,127 +5499,275 @@
         .autsiz
         .databank ?
 
-        ; WARNING: a branch or jump leads into the middle of an instruction at $9FA800
-        ; WARNING: a branch or jump leads into the middle of an instruction at $9FA7CE
-        ; WARNING: a branch or jump leads into the middle of an instruction at $9FA71E
         lda $7F5099
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta $1200,b,x
         jsr rsUnknown9F8253
 
           .byte $56
 
-        bra _A70D
+        bra $9FA70D
 
+        .databank 0
 
-        _A6FF
+        ; 9F/A6FF
+      rlUnknown9FA6FF ; 9F/A6FF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda $7F5099
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta $1200,b,x
         jsr rsUnknown9F8253
 
           .byte $54
 
-
-        _A70D
         lda $7F509A
         and #$00FF
         sec
         sbc #$0010
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta $1240,b,x
+
+        .databank 0
+
+        ; 9F/A71B
+      rlUnknown9FA71B ; 9F/A71B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta $1260,b,x
         lda #$0004
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
         rtl
 
-        .byte $AF, $9F, $50, $7F, $9D, $60, $12, $AF, $9B, $50, $7F, $29, $FF, $00, $9D, $00
-        .byte $12, $AF, $9C, $50, $7F, $29, $FF, $00, $9D, $40, $12, $9E, $20, $13, $9E, $40
-        .byte $13, $6B
+        .databank 0
 
+        ; 9F/A729
+      rlUnknown9FA729 ; 9F/A729
 
-        _A74B
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F509F
+        sta $1260,b,x
+        lda $7F509B
+        and #$00FF
+        sta $1200,b,x
+        lda $7F509C
+        and #$00FF
+        sta $1240,b,x
+        stz $1320,b,x
+        stz $1340,b,x
+        rtl
+
+        .databank 0
+
+        ; 9F/A74B
+      rlUnknown9FA74B ; 9F/A74B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         jsl rlUnknown9FAACC
-        bcc _A779
+        bcc $9FA779
         lda #$000C
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
         lda #$A75E
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $1160,b,x
         rtl
 
-        .byte $DE, $C0, $12, $D0, $16, $A9, $6A, $A7, $9D, $60, $11, $6B, $20, $9F, $91, $90
-        .byte $0A, $9E, $00, $11, $A9, $01, $00, $8F, $93, $50, $7F
+        .databank 0
 
+        ; 9F/A75E
+      rlUnknown9FA75E ; 9F/A75E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $12C0,b,x
+        bne $9FA779
+        lda #$A76A
+        sta $1160,b,x
+        rtl
+
+        .databank 0
+
+        ; 9F/A76A
+      rlUnknown9FA76A ; 9F/A76A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown9F919F
+        bcc _A779
+        stz $1100,b,x
+        lda #$0001
+        sta $7F5093
 
         _A779
         rtl
 
+        .databank 0
 
-        _A77A
-        lda aActiveSpriteSystem.aUnknown001320,b,x
-        beq _A79A
-        stz aActiveSpriteSystem.aUnknown001320,b,x
-        jsr _A7F6
+        ; 9F/A77A
+      rlUnknown9FA77A ; 9F/A77A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1320,b,x
+        beq $9FA79A
+        stz $1320,b,x
+        jsr $9FA7F6
         lda #$A792
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $1160,b,x
         lda #$0040
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
         rtl
 
-        .byte $DE, $C0, $12, $D0, $03, $9E, $00, $11
+        .databank 0
 
+        ; 9F/A792
+      rlUnknown9FA792 ; 9F/A792
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $12C0,b,x
+        bne _A79A
+        stz $1100,b,x
 
         _A79A
         rtl
 
+        .databank 0
 
-        _A79B
-        lda aActiveSpriteSystem.aUnknown001320,b,x
-        beq _A7BB
-        stz aActiveSpriteSystem.aUnknown001320,b,x
+        ; 9F/A79B
+      rlUnknown9FA79B ; 9F/A79B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1320,b,x
+        beq $9FA7BB
+        stz $1320,b,x
         lda #$A7B0
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $1160,b,x
         lda #$0040
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
         rtl
 
-        .byte $DE, $C0, $12, $D0, $06, $20, $43, $A8, $9E, $00, $11
+        .databank 0
 
+        ; 9F/A7B0
+      rlUnknown9FA7B0 ; 9F/A7B0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $12C0,b,x
+        bne _A7BB
+        jsr $9FA843
+        stz $1100,b,x
 
         _A7BB
         rtl
 
+        .databank 0
 
-        _A7BC
-        lda aActiveSpriteSystem.aUnknown001320,b,x
-        beq _A7F5
-        stz aActiveSpriteSystem.aUnknown001320,b,x
-        jsr _A86B
+        ; 9F/A7BC
+      rlUnknown9FA7BC ; 9F/A7BC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $1320,b,x
+        beq $9FA7F5
+        stz $1320,b,x
+        jsr $9FA86B
         lda #$A7D4
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $1160,b,x
         lda #$003C
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
         rtl
 
-        .byte $DE, $C0, $12, $D0, $13, $A9, $01, $00, $8F, $80, $45, $7F, $A9, $ED, $A7, $9D
-        .byte $60, $11, $A9, $04, $00
+        .databank 0
 
+        ; 9F/A7D4
+      rlUnknown9FA7D4 ; 9F/A7D4
 
-        _A7E9
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $12C0,b,x
+        bne _A7EC
+        lda #$0001
+        sta $7F4580
+        lda #$A7ED
+        sta $1160,b,x
+        lda #$0004
+        sta $12C0,b,x
+
+        _A7EC
         rtl
 
-        .byte $DE, $C0, $12, $D0, $03, $9E, $00, $11
+        .databank 0
 
+        ; 9F/A7ED
+      rlUnknown9FA7ED ; 9F/A7ED
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $12C0,b,x
+        bne _A7F5
+        stz $1100,b,x
 
         _A7F5
         rtl
 
+        .databank 0
 
-        _A7F6
+        ; 9F/A7F6
+      rsUnknown9FA7F6 ; 9F/A7F6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         phx
         phy
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda $1240,b,x
         sec
         sbc #$0030
         bpl _A809
@@ -5584,7 +5781,7 @@
         clc
         adc #$0018
         tay
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda $1200,b,x
         and #$00FF
         tax
         lda #(`aUnknown9FA6D7)<<8
@@ -5601,7 +5798,7 @@
         clc
         adc #$0018
         tay
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda $1200,b,x
         and #$00FF
         tax
         lda #(`aUnknown9FA6DD)<<8
@@ -5613,8 +5810,16 @@
         plx
         rts
 
+        .databank 0
 
-        _A843
+        ; 9F/A843
+      rsUnknown9FA843 ; 9F/A843
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         phx
         phy
         lda $7F509C
@@ -5635,8 +5840,16 @@
         clc
         rts
 
+        .databank 0
 
-        _A86B
+        ; 9F/A86B
+      rsUnknown9FA86B ; 9F/A86B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         phx
         phy
         lda $7F509C
@@ -5644,7 +5857,7 @@
         sec
         sbc #$0018
         sta wR0
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda $1240,b,x
         clc
         adc #$0018
         cmp wR0
@@ -5665,7 +5878,7 @@
 
 
         _A8A0
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda $1200,b,x
         jsr rsUnknown9F8253
 
           .byte $57
@@ -5685,35 +5898,83 @@
 
       aUnknown9FA8BC ; 9F/A8BC
 
-        .byte $00, $01, $39, $AA, $00, $01, $40, $AA, $00, $01, $4C, $AA, $17, $E4, $A8, $00
-        .byte $01, $5D, $AA, $00, $01, $6E, $AA, $15, $CB, $A8, $17, $E4, $A8, $00, $01, $A3
-        .byte $AA, $00, $01
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA39
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA40
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA4C
 
-      aUnknown9FA8DF ; 9F/A8DF
+        ; 9F/A8C8
+      aUnknown9FA8C8 ; 9F/A8C8
 
-        .word <>$AAB4, <>$D915, <>$A9A8
+        ACTIVE_SPRITE_CALL $A8E4
 
-      rlUnknown9FA8E5 ; 9F/A8E5
+        _A8CB
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA5D
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA6E
+        ACTIVE_SPRITE_JUMP _A8CB
+
+        ; 9F/A8D6
+      aUnknown9FA8D6 ; 9F/A8D6
+
+        ACTIVE_SPRITE_CALL $A8E4
+
+        _A8D9
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAAA3
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAAB4
+        ACTIVE_SPRITE_JUMP _A8D9
+
+        ; 9F/A8E4
+      rlUnknown9FA8E4 ; 9F/A8E4
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; WARNING: a branch or jump leads into the middle of an instruction at $9FA935
-        ora (wR0,x)
-        sta aActiveSpriteSystem.aUnknown001320,b,x
+        lda #$0001
+        sta $1320,b,x
         rtl
 
-        .byte $BD, $40, $12, $C9, $0A, $00, $10, $24, $A9, $01, $00, $9D, $A0, $13, $AF, $9B
-        .byte $50, $7F, $29, $FF, $00, $9D, $00, $12, $AF, $9C, $50, $7F, $29, $1F, $00, $38
-        .byte $E9, $20, $00, $9D, $40, $12, $A9, $17
+        .databank 0
 
+        ; 9F/A8EB
+      rlUnknown9FA8EB ; 9F/A8EB
 
-        _A913
-        lda #$609D
-        ora (lR47+1),y
+        .al
+        .xl
+        .autsiz
+        .databank ?
 
+        lda $1240,b,x
+        cmp #$000A
+        bpl $9FA917
+        lda #$0001
+        sta $13A0,b,x
+        lda $7F509B
+        and #$00FF
+        sta $1200,b,x
+        lda $7F509C
+        and #$001F
+        sec
+        sbc #$0020
+        sta $1240,b,x
+        lda #$A917
+        sta $1160,b,x
+
+        .databank 0
+
+        ; 9F/A917
+      rlUnknown9FA917 ; 9F/A917
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9F/A918
       rlUnknown9FA918 ; 9F/A918
 
         .al
@@ -5721,33 +5982,67 @@
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda $1200,b,x
         jsr rsUnknown9F8253
 
           .byte $55
 
         lda #$0020
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
         lda #$0002
-        sta aActiveSpriteSystem.aUnknown0013A0,b,x
-        stz aActiveSpriteSystem.aUnknown001320,b,x
-        stz aActiveSpriteSystem.aUnknown001340,b,x
+        sta $13A0,b,x
+        stz $1320,b,x
+        stz $1340,b,x
         lda #$A938
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $1160,b,x
         rtl
 
-        .byte $DE, $C0, $12, $D0, $0D, $A9, $4A, $A9, $9D, $60, $11, $A9, $01, $00, $8F, $80
-        .byte $45, $7F, $22, $CC, $AA, $9F, $90, $16, $A9, $57, $A9, $9D, $60, $11
+        .databank 0
 
+        ; 9F/A938
+      rlUnknown9FA938 ; 9F/A938
 
-        _A956
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $12C0,b,x
+        bne $9FA94A
+        lda #$A94A
+        sta $1160,b,x
+        lda #$0001
+        sta $7F4580
+
+        .databank 0
+
+        ; 9F/A94A
+      rlUnknown9FA94A ; 9F/A94A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown9FAACC
+        bcc $9FA966
+        lda #$A957
+        sta $1160,b,x
         rtl
 
+        .databank 0
 
-        _A957
+        ; 9F/A957
+      rlUnknown9FA957 ; 9F/A957
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         jsr rsUnknown9F919F
         bcc _A966
-        stz aActiveSpriteSystem.aTypeOffset,b,x
+        stz $1100,b,x
         lda #$0001
         sta $7F5093
 
@@ -5756,15 +6051,54 @@
 
         .databank 0
 
+        ; 9F/A967
       aUnknown9FA967 ; 9F/A967
 
-        .byte $00, $40, $C5, $AA, $00, $01, $37, $AA, $15, $6B, $A9, $00, $01, $39, $AA, $00
-        .byte $01, $40, $AA, $00, $01, $4C, $AA, $00, $01, $5D, $AA, $19, $00, $F6, $00, $01
-        .byte $6E, $AA, $19, $00, $F6, $17, $F7, $A9, $7E, $A9, $17, $12, $AA, $00, $1D, $37
-        .byte $AA, $00, $01, $92, $AA, $17, $C1, $A9, $B6, $A9, $00, $01, $A3, $AA, $17, $C1
-        .byte $A9, $B6, $A9, $00, $01, $B4, $AA, $17, $C1, $A9, $B6, $A9, $15, $98, $A9, $00
-        .byte $04, $C5, $AA, $00, $01, $37, $AA, $15, $BA, $A9
+        ACTIVE_SPRITE_FRAME 64, aUnknown9FAAC5
 
+        _A96B
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA37
+        ACTIVE_SPRITE_JUMP _A96B
+
+        ; 9F/A972
+      aUnknown9FA972 ; 9F/A972
+
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA39
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA40
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA4C
+
+        _A97E
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA5D
+        ACTIVE_SPRITE_MOVE 0, -10
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA6E
+        ACTIVE_SPRITE_MOVE 0, -10
+        ACTIVE_SPRITE_CALL $A9F7
+        .word <>_A97E
+        ACTIVE_SPRITE_CALL $AA12
+        ACTIVE_SPRITE_FRAME 29, aUnknown9FAA37
+
+        _A998
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA92
+        ACTIVE_SPRITE_CALL rlUnknown9FA9C1
+        .word <>$A9B6
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAAA3
+        ACTIVE_SPRITE_CALL rlUnknown9FA9C1
+        .word <>$A9B6
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAAB4
+        ACTIVE_SPRITE_CALL rlUnknown9FA9C1
+        .word <>$A9B6
+        ACTIVE_SPRITE_JUMP _A998
+
+        ; 9F/A9B6
+      aUnknown9FA9B6 ; 9F/A9B6
+
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FAAC5
+
+        _A9BA
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAA37
+        ACTIVE_SPRITE_JUMP _A9BA
+
+        ; 9F/A9C1
       rlUnknown9FA9C1 ; 9F/A9C1
 
         .al
@@ -5772,7 +6106,6 @@
         .autsiz
         .databank ?
 
-        ; WARNING: a branch or jump leads into the middle of an instruction at $9FA9EA
         lda $7F509C
         and #$00FF
         sec
@@ -5780,18 +6113,16 @@
         sta wR0
         lda #$0010
         clc
-        adc aActiveSpriteSystem.aUnknown001240,b,x
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        adc $1240,b,x
+        sta $1240,b,x
         cmp wR0
         bmi _A9F4
         jsr rlUnknown9FAA16
         lda $7F509C
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
-        lda #<>rlUnknown9FA918
-        sta aActiveSpriteSystem.aOnCycle,b,x
-
-        _A9EF
+        sta $1240,b,x
+        lda #$A918
+        sta $1160,b,x
         lda $0000,b,y
         tay
         rtl
@@ -5800,25 +6131,71 @@
         _A9F4
         inc y
         inc y
-
-        _A9F6
         rtl
 
-        .byte $BD, $A0, $13, $C9, $01, $00, $D0, $0E, $C8, $C8, $6B, $BD, $A0, $13, $C9, $02
-        .byte $00, $D0, $03, $C8, $C8, $6B, $B9, $00, $00, $A8, $6B
+        .databank 0
 
+        ; 9F/A9F7
+      rlUnknown9FA9F7 ; 9F/A9F7
 
-        _AA12
-        stz aActiveSpriteSystem.aUnknown0013A0,b,x
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $13A0,b,x
+        cmp #$0001
+        bne $9FAA0D
+        inc y
+        inc y
+        rtl
+
+        .databank 0
+
+        ; 9F/AA02
+      rlUnknown9FAA02 ; 9F/AA02
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $13A0,b,x
+        cmp #$0002
+        bne _AA0D
+        inc y
+        inc y
         rtl
 
 
+        _AA0D
+        lda $0000,b,y
+        tay
+        rtl
+
+        .databank 0
+
+        ; 9F/AA12
+      rlUnknown9FAA12 ; 9F/AA12
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        stz $13A0,b,x
+        rtl
+
+        .databank 0
+
+        ; 9F/AA16
       rlUnknown9FAA16 ; 9F/AA16
 
         .al
         .xl
         .autsiz
         .databank ?
+
         phy
         jsr rsUnknown9F82D7
 
@@ -5848,6 +6225,8 @@
         rts
 
         .databank 0
+
+        ; 9F/AA37
 
       aUnknown9FAA37 ; 9F/AA37
 
@@ -6194,7 +6573,7 @@
 
       aUnknown9FAD72 ; 9F/AD72
 
-        .word <>rlUnknown9FAD78, <>$ADA3, <>aUnknown9FAE9C
+        .word <>rlUnknown9FAD78, <>rlUnknown9FADA3, <>aUnknown9FAE9C
 
       rlUnknown9FAD78 ; 9F/AD78
 
@@ -6204,45 +6583,83 @@
         .databank ?
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta $1260,b,x
         lda $7F509B
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta $1200,b,x
         lda $7F509C
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
-        stz aActiveSpriteSystem.aUnknown0013E0,b,x
-        stz aActiveSpriteSystem.aUnknown0013C0,b,x
+        sta $1240,b,x
+        stz $13E0,b,x
+        stz $13C0,b,x
         lda #$0028
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-
-        _AD9F
+        sta $12C0,b,x
         jml rlUnknown9FAE19
 
-        .byte $22, $19, $AE, $9F, $DE, $C0, $12, $D0, $6C, $A9, $B9, $AD, $9D, $60, $11, $A9
-        .byte $20, $00, $9D, $C0, $12
+        .databank 0
 
+        ; 9F/ADA3
+      rlUnknown9FADA3 ; 9F/ADA3
 
-        _ADB8
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown9FAE19
+        dec $12C0,b,x
+        bne rlUnknown9FAE05._AE18
+        lda #$ADB9
+        sta $1160,b,x
+        lda #$0020
+        sta $12C0,b,x
         rtl
 
-        .byte $22, $19, $AE, $9F, $DE, $C0, $12, $D0, $56, $A9, $01, $00, $8F, $80, $45, $7F
-        .byte $A9, $D6, $AD, $9D, $60, $11, $A9, $18, $00, $9D, $C0, $12, $6B, $22, $19, $AE
-        .byte $9F
+        .databank 0
 
+        ; 9F/ADB9
+      rlUnknown9FADB9 ; 9F/ADB9
 
-        _ADDA
-        dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne rlUnknown9FADF2._AE18
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown9FAE19
+        dec $12C0,b,x
+        bne rlUnknown9FAE05._AE18
         lda #$0001
-        sta aActiveSpriteSystem.aUnknown0013A0,b,x
-        lda #<>rlUnknown9FADF2
-        sta aActiveSpriteSystem.aOnCycle,b,x
-        lda #$0028
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $7F4580
+        lda #$ADD6
+        sta $1160,b,x
+        lda #$0018
+        sta $12C0,b,x
         rtl
 
+        .databank 0
 
+        ; 9F/ADD6
+      rlUnknown9FADD6 ; 9F/ADD6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown9FAE19
+        dec $12C0,b,x
+        bne rlUnknown9FAE05._AE18
+        lda #$0001
+        sta $13A0,b,x
+        lda #$ADF2
+        sta $1160,b,x
+        lda #$0028
+        sta $12C0,b,x
+        rtl
+
+        .databank 0
+
+        ; 9F/ADF2
       rlUnknown9FADF2 ; 9F/ADF2
 
         .al
@@ -6251,42 +6668,58 @@
         .databank ?
 
         jsl rlUnknown9FAE19
-        dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne _AE18
+        dec $12C0,b,x
+        bne rlUnknown9FAE05._AE18
         lda #$AE05
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $1160,b,x
         jsr rsUnknown9F8359
         rtl
 
-        .byte $22, $19, $AE, $9F, $20, $9F, $91, $90, $0A, $9E, $00, $11, $A9, $01, $00, $8F
-        .byte $93, $50, $7F
+        .databank 0
 
+        ; 9F/AE05
+      rlUnknown9FAE05 ; 9F/AE05
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown9FAE19
+        jsr rsUnknown9F919F
+        bcc _AE18
+        stz $1100,b,x
+        lda #$0001
+        sta $7F5093
 
         _AE18
         rtl
 
+        .databank 0
 
+        ; 9F/AE19
       rlUnknown9FAE19 ; 9F/AE19
 
         .al
         .xl
         .autsiz
         .databank ?
-        lda aActiveSpriteSystem.aUnknown001360,b,x
+
+        lda $1360,b,x
         beq _AE23
         dec a
-        sta aActiveSpriteSystem.aUnknown001360,b,x
+        sta $1360,b,x
         rtl
 
 
         _AE23
         lda #$0002
-        sta aActiveSpriteSystem.aUnknown001360,b,x
+        sta $1360,b,x
         phx
-        lda aActiveSpriteSystem.aUnknown001380,b,x
+        lda $1380,b,x
         inc a
         and #$000F
-        sta aActiveSpriteSystem.aUnknown001380,b,x
+        sta $1380,b,x
         asl a
         tax
         lda $AE5C,b,x
@@ -6305,6 +6738,8 @@
         rtl
 
         .databank 0
+
+        ; 9F/AE5C
 
       aUnknown9FAE5C ; 9F/AE5C
 
