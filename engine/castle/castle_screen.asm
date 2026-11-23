@@ -59,7 +59,7 @@
 
         _B69C
         jsl rlHideSprites
-        jsl rlUnknown9181F6
+        jsl rlRunDialogueCycle
         jsl rlUnknown858728
         jsl rlUpdateSound
         rts

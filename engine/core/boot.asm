@@ -50,9 +50,9 @@
         lda #<>aIRQEngineMainActionTable
         sta lR44
         jsl rlRegisterVBlankHook
-        lda #(`aDialogueEngineMainActionTable)<<8
+        lda #(`aEventEngineMainActionTable)<<8
         sta lR44+1
-        lda #<>aDialogueEngineMainActionTable
+        lda #<>aEventEngineMainActionTable
         sta lR44
         jsl rlRegisterVBlankHook
         stz wGameStateRoutine2,b
@@ -563,7 +563,7 @@
         .autsiz
         .databank ?
 
-        ; Compares $88/8888-$88/8907 with aSpriteExtBuffer. If any word differs (a cold start), writes the signature and returns. If all match, writes the SRAM anti-tamper mark and hangs (rlUnknown91E8CC); _8063 is the hang used when the mark is already there (rlUnknown91E8C1).
+        ; Compares $88/8888-$88/8907 with aSpriteExtBuffer. If any word differs (a cold start), writes the signature and returns. If all match, writes the SRAM anti-tamper mark and hangs (rlShowAntiTamperScreen); _8063 is the hang used when the mark is already there (rlShowAntiTamperScreenAgain).
 
         ldx #$0000
 
@@ -586,7 +586,7 @@
         beq _8063
         lda #SRAM_ANTI_TAMPER_MARK
         jsl rlSetAntiTamperMark
-        jsl rlUnknown91E8CC
+        jsl rlShowAntiTamperScreen
 
         _8061
         bra _8061
@@ -596,7 +596,7 @@
         lda #$0000
         sta @l $001FFC
         sta @l $001FFE
-        jsl rlUnknown91E8C1
+        jsl rlShowAntiTamperScreenAgain
 
         _8072
         bra _8072

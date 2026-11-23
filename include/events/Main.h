@@ -20,7 +20,7 @@
 
     EVENT_01 .segment
       ; Unused.
-      ; Writes 2 to wUnknown00171C.
+      ; Writes 2 to wEventEngineState.
       .byte $01
     .endsegment
 

@@ -1372,7 +1372,7 @@
         and #$00FF
         beq _DE11
         stz wGameStateRoutine1,b
-        jsl rlUnknown91E55A
+        jsl rlReturnToFileMenu
 
         _DE11
         rtl

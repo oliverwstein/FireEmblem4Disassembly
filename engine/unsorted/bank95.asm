@@ -17493,7 +17493,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9181F6
+        jsl rlRunDialogueCycle
         jsl rlUnknown95E8B4
         jsl rlUnknown95EA03
         jsl rlUnknown96A21F

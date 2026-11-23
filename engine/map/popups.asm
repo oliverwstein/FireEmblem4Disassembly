@@ -80,7 +80,7 @@
         trb bBufferTM
 
         phx
-        jsl rlUnknown9181F6
+        jsl rlRunDialogueCycle
         plx
 
         ; Wait until the dialogue string is completed
@@ -143,7 +143,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown9181F6
+        jsl rlRunDialogueCycle
         plx
 
         lda aDialogue.wStatus,b
@@ -243,7 +243,7 @@
         adc #<>aBG3TilemapBuffer
         sta aDialogue._Slot[0].lBGBufferPosition,b
 
-        jsl rlUnknown91A984
+        jsl rlSetDialogueFontAndColors
 
         lda #$FFFF
         sta aDialogue.wTextSpeed,b

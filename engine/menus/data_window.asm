@@ -297,7 +297,7 @@
         lda #$2000
         sta aCurrentTilemapInfo,b
         lda wCurrentChapter,b
-        jsl rlUnknown91AB91
+        jsl rlBuildChapterTitleString
         jsl rlUnknown918110
         jsl rlDialogueFreeHDMA
         lda #$0C00
@@ -310,7 +310,7 @@
         sta aDialogue.wBaseTile,b
 
         _DAF2
-        jsl rlUnknown9181F6
+        jsl rlRunDialogueCycle
         lda aDialogue.wStatus,b
         bne _DAF2
         lda #(`aDataWindowGoalText)<<8

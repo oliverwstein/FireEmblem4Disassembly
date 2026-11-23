@@ -4397,7 +4397,7 @@
         .autsiz
         .databank ?
 
-        ; Sets up title/file-select save menu (step 0, 91E565/E52B/D6EC, 80B0D3, DMAs $7E9D88->$D000, procFadeIn)
+        ; Opens the title file menu: the save menu screen at step 0 (engine/save/save_menu.asm), faded in.
 
         php
         sep #$20
@@ -4406,9 +4406,9 @@
         sta $2100,b
         rep #$20
         jsl rlDisableVBlank
-        jsl rlUnknown91E565
-        jsl rlUnknown91E52B
-        jsl rlUnknown91D6EC
+        jsl rlSetSaveMenuGameState
+        jsl rlResetEnginesForSaveMenu
+        jsl rlLoadSaveMenuScreen
         jsl rlQueueMenuFontDecompression
         jsl rlDMAByStruct
 
@@ -4449,7 +4449,7 @@
         .autsiz
         .databank ?
 
-        ; Opens map Save menu (state 5/4, step 2, $1864=1, installs rsRunSaveMenuVBlank and rsRunSaveMenuMainLoop)
+        ; Opens the map save: the save menu screen at step 2 (engine/save/save_menu.asm), faded in.
 
         php
         sep #$20
@@ -4459,8 +4459,8 @@
         rep #$20
         jsl rlDisableVBlank
         stz aSave.wMenuOperation,b
-        jsl rlUnknown91E52B
-        jsl rlUnknown91D6EC
+        jsl rlResetEnginesForSaveMenu
+        jsl rlLoadSaveMenuScreen
         lda #GAMESTATE_SAVE_MENU_UPKEEP
         sta wGameStateRoutine2,b
         lda #GAMESTATE_SAVE_MENU_SETUP
@@ -4468,7 +4468,7 @@
         lda #$0002
         sta wGameStateStep,b
         lda #$0001
-        sta $1864,b
+        sta wSaveMenuSlotRow,b
         lda #<>rsRunSaveMenuVBlank
         sta wVBlankPointer
         lda #<>rsRunSaveMenuMainLoop
@@ -4499,7 +4499,7 @@
         .autsiz
         .databank ?
 
-        ; Opens chapter-end save/transition (wMapMenuTransparentTile=$FF, state 6/4, step $23, installs rsRunSaveMenuVBlank)
+        ; Enters the save menu game state at step $23, which starts the next chapter's world map events.
 
         php
         jsl rlProcEngineResetProcEngine

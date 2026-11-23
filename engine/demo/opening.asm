@@ -13,6 +13,20 @@
 ; A demo scene: rlASMCClearDemoDeployments, rlASMCLoadDemoMapScene (chapter and
 ; camera), rlASMCPlaceDemoSceneSprites (the units, from aDemoSceneSpriteLists).
 
+    .section OpeningDialogueSection
+
+      .al
+      .xl
+
+      dialogueOpeningShannanAyra .include "../../text/dialogue/Opening/ShannanAyra.dialogue.txt" ; 8D/9ED5
+      dialogueOpeningEldiganLachesis .include "../../text/dialogue/Opening/EldiganLachesis.dialogue.txt" ; 8D/9F25
+      dialogueOpeningArvisFinalAttack .include "../../text/dialogue/Opening/ArvisFinalAttack.dialogue.txt" ; 8D/9F82
+
+        ; 8D/9FB1
+
+    .endsection OpeningDialogueSection
+
+
     .section Data90E8CESection
 
       .al

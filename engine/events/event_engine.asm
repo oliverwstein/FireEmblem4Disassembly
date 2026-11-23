@@ -7183,7 +7183,7 @@
         lda wEventEngineFlags,b
         bne _SEC
 
-          stz wUnknown00171C,b
+          stz wEventEngineState,b
 
           lda wR0
           cmp #$0232
@@ -7238,5 +7238,153 @@
         ; 80/C212
 
     .endsection Unsorted80C1CBSection
+
+
+    .section Unsorted91A3ABSection
+
+      .al
+      .xl
+
+      rlResetEventEngine ; 91/A3AB
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The event engine's reset hook (aEventEngineMainActionTable): resets the dialogue engine, the active sprites and the event procs, and clears the event engine's state.
+
+        php
+        rep #$20
+        jsl rlResetDialogueEngine
+        jsl rlActiveSpriteEngineReset
+        jsr rsEventEngineClearProcs
+        stz wEventEngineState,b
+        stz wUnknown00171E,b
+        stz wActiveEventOffset,b
+        stz wUnknown001732,b
+        stz wEventEngineFlags,b
+        stz aMovingMapSprites.wState,b
+        stz $17BA,b
+        stz $17BC,b
+        sep #$20
+        lda #$00
+        sta bBufferTM
+        plp
+        rtl
+
+        .databank 0
+
+        ; 91/A3D9
+
+    .endsection Unsorted91A3ABSection
+
+
+    .section Unsorted91A3D9Section
+
+      .al
+      .xl
+
+      rlEventEngineMainLoop ; 91/A3D9
+
+        ; Found through fe4.cdl.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The event engine's per-frame hook (aEventEngineMainActionTable).
+
+        jsr rsRunEventEngineState
+        rtl
+
+        .databank 0
+
+      rlEventEngineStub ; 91/A3DD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 91/A3DD
+
+    .endsection Unsorted91A3D9Section
+
+
+    .section Unsorted91A3DESection
+
+      .al
+      .xl
+
+      rsRunEventEngineState ; 91/A3DE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; While an event runs (wEventEngineFlags bit 0), runs the routine for wEventEngineState from aEventEngineStateRoutines: 0 begin the script, 1 run its commands, 2 end it.
+
+        php
+        lda wEventEngineFlags,b
+        bit #$0001
+        beq _A400
+        lda wEventEngineState,b
+        asl a
+        clc
+        adc wEventEngineState,b
+        tax
+        lda aEventEngineStateRoutines,x
+        sta lR19
+        lda aEventEngineStateRoutines+1,x
+        sta lR19+1
+        jsl rlJumpToLongR19
+
+        _A400
+        plp
+        rts
+
+        .databank 0
+
+        ; 91/A402
+
+      rlJumpToLongR19 ; 91/A402
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jml [lR19]
+
+        .databank 0
+
+        ; 91/A405
+
+    .endsection Unsorted91A3DESection
+
+
+    .section Data91A405Section
+
+      .al
+      .xl
+
+      aEventEngineStateRoutines ; 91/A405
+
+        ; Read by rsRunEventEngineState.
+
+        .long rlEventEngineBeginScript   ; 0
+        .long rlRunEventCommand         ; 1
+        .long rlResetEventAndSpriteState ; 2: end
+
+        ; 91/A40E
+
+    .endsection Data91A405Section
 
 

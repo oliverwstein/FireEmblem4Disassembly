@@ -484,7 +484,7 @@
         php
         rep #$30
         stz wEventEngineFlags,b
-        stz wUnknown00171C,b
+        stz wEventEngineState,b
         stz wUnknown00171E,b
         stz wActiveEventOffset,b
         jsl rlEventEngineFreeAllProcs

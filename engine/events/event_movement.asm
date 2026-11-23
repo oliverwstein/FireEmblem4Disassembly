@@ -911,3 +911,65 @@
     .endsection Unsorted87B01DSection
 
 
+    .section Unsorted91A80DSection
+
+      .al
+      .xl
+
+      rlPlanQueuedMapSpriteMovement ; 91/A80D
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Called by the map main loop. When an event has queued a map sprite move (aMovingMapSprites.wState 1), plans its route with rlEventMovementPlanRoute and sets the state to 2; state 2 goes back to 0.
+
+        php
+        lda bDecompressionArrayFlag,b
+        bne _End
+
+          lda aMovingMapSprites.wState,b
+          cmp #2
+          beq _A85B
+
+            cmp #1
+            bne _End
+
+              lda aMovingMapSprites.wCharacterID,b
+              sta wRoutineVariable1,b
+              lda aMovingMapSprites.wSpawnXCoordinate,b
+              sta aEventMovement.wUnitXCoordinate
+              lda aMovingMapSprites.wSpawnYCoordinate,b
+              sta aEventMovement.wUnitYCoordinate
+              lda aMovingMapSprites.wDestinationXCoordinate,b
+              sta aEventMovement.wDestinationXCoordinate
+              lda aMovingMapSprites.wDestinationYCoordinate,b
+              sta aEventMovement.wDestinationYCoordinate
+              lda aMovingMapSprites.wUnknown001830,b
+              sta aEventMovement.wUnknown7EC494
+              lda aMovingMapSprites.wEntryIndex,b
+              jsl rlEventMovementPlanRoute
+              bcc +
+
+                brk
+
+              +
+              lda #2
+              sta aMovingMapSprites.wState,b
+              bra _End
+              
+                _A85B
+                lda #0
+                sta aMovingMapSprites.wState,b
+
+        _End
+        plp
+        rtl
+
+        .databank 0
+
+        ; 91/A863
+
+    .endsection Unsorted91A80DSection
+
+

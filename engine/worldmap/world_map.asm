@@ -41,7 +41,7 @@
         sta wBufferBG1VOFS
         sta wBufferBG3VOFS
         jsl rlHideSprites
-        jsl rlUnknown9181F6
+        jsl rlRunDialogueCycle
         jsl rlMapMenuVBlankUpload
         jsl rlUpdateSound
         rts

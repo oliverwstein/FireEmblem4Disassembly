@@ -32,6 +32,7 @@ SCOPED = [
     (0x7F82C7, 0x7F8438, ('wUnitWindow', 'aUnitWindow'), ('engine/menus/unit_window.asm',)),
     (0x7F8185, 0x7F92B4, ('wSkillWindow', 'aSkillWindow'), ('engine/menus/skill_window.asm',)),
     (0x7F8183, 0x7F8505, ('wDataWindow', 'aDataWindow'), ('engine/menus/data_window.asm',)),
+    (0x7F8183, 0x7F83DC, ('wChapterIntro', 'aChapterIntro'), ('engine/worldmap/chapter_intro.asm',)),
     # The item window's variables; the map buffers (aTargetDistanceMap...) share the area.
     (0x7F8467, 0x7FAF4F, ('wItemWindow', 'aItemWindow'), ('engine/menus/item_window.asm',)),
     # The status screen's variables, written by the screens that open it too; the skill and data windows reuse the area.

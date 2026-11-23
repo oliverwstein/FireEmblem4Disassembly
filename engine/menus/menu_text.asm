@@ -866,3 +866,310 @@
     .endsection Unsorted89BECCSection
 
 
+    .section Unsorted91AA15Section
+
+      .as
+      .xl
+
+      rsSplitNumberIntoFiveDigits ; 91/AA15
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Splits A into five decimal digits at [lR19].
+
+        php
+        phx
+        phy
+        ldy #$0000
+        sta wR13
+        lda #$2710
+        sta wR14
+        jsl rlUnsignedDivide16By16R13
+        lda wR13
+        sta [lR19],y
+        inc x
+        inc y
+        lda wR10
+        sta wR13
+        lda #$03E8
+        sta wR14
+        jsl rlUnsignedDivide16By16R13
+        lda wR13
+        sta [lR19],y
+        inc x
+        inc y
+        lda wR10
+        sta wR13
+        lda #$0064
+        sta wR14
+        jsl rlUnsignedDivide16By16R13
+        lda wR13
+        sta [lR19],y
+        inc x
+        inc y
+        lda wR10
+        sta wR13
+        lda #$000A
+        sta wR14
+        jsl rlUnsignedDivide16By8
+        lda wR13
+        sta [lR19],y
+        inc x
+        inc y
+        sep #$20
+        lda wR10
+        sta [lR19],y
+        ply
+        plx
+        plp
+        rts
+
+        .databank 0
+
+        ; 91/AA6F
+
+    .endsection Unsorted91AA15Section
+
+
+    .section Unsorted91AA6FSection
+
+      .al
+      .xl
+
+      rsDrawFiveDigitNumber ; 91/AA6F
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draws the five digits at [lR19] as map menu tiles at X, leading zeros blank.
+
+        phx
+        phy
+        ldy #$0000
+        sty wR0
+        lda [lR19],y
+        and #$00FF
+        bne _AA86
+        cmp wR0
+        bne _AA86
+        jsr rsDrawBlankDigit
+        bra _AA8C
+
+
+        _AA86
+        jsl rlDrawDigitTile
+        inc wR0
+
+        _AA8C
+        inc x
+        inc y
+        lda [lR19],y
+        and #$00FF
+        bne _AA9E
+        cmp wR0
+        bne _AA9E
+        jsr rsDrawBlankDigit
+        bra _AAA4
+
+
+        _AA9E
+        jsl rlDrawDigitTile
+        inc wR0
+
+        _AAA4
+        inc x
+        inc y
+        lda [lR19],y
+        and #$00FF
+        bne _AAB6
+        cmp wR0
+        bne _AAB6
+        jsr rsDrawBlankDigit
+        bra _AABC
+
+
+        _AAB6
+        jsl rlDrawDigitTile
+        inc wR0
+
+        _AABC
+        inc x
+        inc y
+        lda [lR19],y
+        and #$00FF
+        bne _AACE
+        cmp wR0
+        bne _AACE
+        jsr rsDrawBlankDigit
+        bra _AAD4
+
+
+        _AACE
+        jsl rlDrawDigitTile
+        inc wR0
+
+        _AAD4
+        inc x
+        inc y
+        lda [lR19],y
+        and #$00FF
+        jsl rlDrawDigitTile
+        ply
+        plx
+        rts
+
+        .databank 0
+
+        ; 91/AAE2
+
+    .endsection Unsorted91AA6FSection
+
+
+    .section Unsorted91AAE2Section
+
+      .as
+      .xl
+
+      rsDrawBlankDigit ; 91/AAE2
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #(`aBlankDigitTileString)<<8
+        sta lR18+1
+        lda #<>aBlankDigitTileString
+        sta lR18
+        lda aCurrentTilemapInfo,b
+        pha
+        lda #$2000
+        sta aCurrentTilemapInfo,b
+        jsl rlDrawMapMenuTileString
+        txa
+        clc
+        adc #$0100
+        tax
+        jsl rlDrawMapMenuTileString
+        pla
+        sta aCurrentTilemapInfo,b
+        plx
+        rts
+
+        .databank 0
+
+        ; 91/AB0B
+
+      aBlankDigitTileString ; 91/AB0B
+
+        .word $00FF
+
+      rlDrawDigitTile ; 91/AB0D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Draws digit A (0-9) as a two-tile-high number in the active map menu tilemap at X (column low byte, row high byte). Carry set if A is not a digit.
+
+        phb
+        php
+        phk
+        plb
+        .databank $91
+        phx
+        phy
+        ldy wR0
+        phy
+        and #$00FF
+        cmp #$000A
+        bcc _AB22
+        jml _AB87
+
+
+        _AB22
+        pha
+        ldy lMapMenuTilemapRAMEntryPointer,b
+        sep #$20
+        lda lMapMenuTilemapRAMEntryPointer+2,b
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda structMapMenuTilemapData.TilesPointer,b,y
+        sta lR23
+        lda structMapMenuTilemapData.TilesPointer+1,b,y
+        sta lR23+1
+        stz wR0
+        txa
+        sep #$20
+        sta wR0
+        xba
+        sta @l WRMPYA
+        lda structMapMenuTilemapData.Width,b,y
+        sta @l WRMPYB
+        nop
+        nop
+        nop
+        rep #$20
+        lda @l RDMPY
+        clc
+        adc wR0
+        asl a
+        clc
+        adc lR23
+        sta lR23
+        lda structMapMenuTilemapData.Width,b,y
+        and #$00FF
+        asl a
+        sta wR0
+        pla
+        clc
+        adc @l aCurrentTilemapInfo
+        clc
+        adc #$0030
+        ora #$2000
+        sta [lR23]
+        clc
+        adc #$0010
+        ldy wR0
+        sta [lR23],y
+        pla
+        sta wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        clc
+
+        _AB86
+        rtl
+
+
+        _AB87
+        plx
+        stx wR0
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        sec
+        bra _AB86
+
+        .databank 0
+
+    .endsection Unsorted91AAE2Section
+
+

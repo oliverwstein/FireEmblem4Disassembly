@@ -1,4 +1,10 @@
-; Chapter title/intro screen setup, graphics/DMA dispatch, and scroll HDMA entries.
+; The chapter intro title card: the chapter's number and title sliding in over a
+; waving background. rsOpenChapterIntroScreen (bank $80) loads the screen and
+; enters the save menu's game state at step $24; the steps (bank $91) fade in
+; with the chapter's intro song (aChapterIntroSongs), hold for
+; aChapterIntroHoldFrames, fade out and start the chapter map. The two HDMA
+; tables (aChapterIntroBG2VOFSTable, aChapterIntroBG1HOFSTable) make the wave and
+; the slide.
 
 
     .section Unsorted80F2BESection
@@ -86,12 +92,12 @@
         .autsiz
         .databank ?
 
-        ; Zeroes $7F8183/85/8B and creates curved BG2VOFS and BG1HOFS HDMA entries
+        ; Zeroes wChapterIntroFrames, wChapterIntroPhaseFrames and wChapterIntroPhase and creates the BG2VOFS and BG1HOFS HDMA entries
 
         lda #$0000
-        sta $7F8183
-        sta $7F8185
-        sta $7F818B
+        sta wChapterIntroFrames
+        sta wChapterIntroPhaseFrames
+        sta wChapterIntroPhase
         lda #(`aChapterIntroBG2VOFSHDMA)<<8
         sta lR44+1
         lda #<>aChapterIntroBG2VOFSHDMA
@@ -133,9 +139,9 @@
         .autsiz
         .databank ?
 
-        ; HDMA init forwarding to rlUnknown91F959
+        ; HDMA init forwarding to rlFillChapterIntroBG2VOFSTable
 
-        jsl rlUnknown91F959
+        jsl rlFillChapterIntroBG2VOFSTable
         rtl
 
         .databank 0
@@ -185,9 +191,9 @@
         .autsiz
         .databank ?
 
-        ; HDMA init forwarding to rlUnknown91F9DD
+        ; HDMA init forwarding to rlFillChapterIntroBG1HOFSTable
 
-        jsl rlUnknown91F9DD
+        jsl rlFillChapterIntroBG1HOFSTable
         rtl
 
         .databank 0
@@ -334,11 +340,11 @@
         .autsiz
         .databank ?
 
-        ; DMAs $C0 bytes of Prologue title tilemap ($7E8B88) to VRAM $A300
+        ; DMAs $C0 bytes of Prologue title tilemap (aDecompressionBuffer) to VRAM $A300
 
         jsl rlDMAByStruct
 
-          .structDMAToVRAM $7E8B88, $00C0, $80, $A300
+          .structDMAToVRAM aDecompressionBuffer, $00C0, $80, $A300
 
         rts
 
@@ -711,4 +717,780 @@
 
     .endsection Unsorted80F4EBSection
 
+
+    .section ChapterIntroStepsSection
+
+      .al
+      .xl
+
+      rsChapterIntroStart ; 91/D6BC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        inc wGameStateStep,b
+        rts
+
+        .databank 0
+
+        ; 91/D6C8
+
+      rsChapterIntroFadeIn ; 91/D6C8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlChapterIntroFadeInStep
+        jsl rlChapterIntroUpdate
+        rts
+
+        .databank 0
+
+        ; 91/D6D1
+
+      rsChapterIntroHold ; 91/D6D1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlChapterIntroHold
+        jsl rlChapterIntroUpdate
+        rts
+
+        .databank 0
+
+        ; 91/D6DA
+
+      rsChapterIntroFadeOut ; 91/D6DA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlChapterIntroFadeOutStep
+        jsl rlChapterIntroUpdate
+        rts
+
+        .databank 0
+
+        ; 91/D6E3
+
+    .endsection ChapterIntroStepsSection
+
+
+    .section Unsorted91D6E3Section
+
+      .al
+      .xl
+
+      rsChapterIntroSkip ; 91/D6E3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Step $28: no code seen sets it.
+
+        jsl rlChapterIntroSkipToMap
+        jsl rlChapterIntroUpdate
+        rts
+
+        .databank 0
+
+        ; 91/D6EC
+
+    .endsection Unsorted91D6E3Section
+
+
+    .section Unsorted91F748Section
+
+      .al
+      .xl
+
+      rlChapterIntroFadeInStep ; 91/F748
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wChapterIntroPhase
+        cmp #$0003
+        bmi _F753
+
+        _F751
+        bra _F751
+
+
+        _F753
+        asl a
+        tax
+        jsr (aChapterIntroFadeInPhases,x)
+        rtl
+
+        .databank 0
+
+        ; 91/F759
+
+    .endsection Unsorted91F748Section
+
+
+    .section Unsorted91F759Section
+
+      .al
+      .xl
+
+      aChapterIntroFadeInPhases ; 91/F759
+
+        .word <>rsChapterIntroBegin, <>rsChapterIntroBrighten, <>rsChapterIntroFadePaletteIn
+
+      rsChapterIntroBegin ; 91/F75F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Saves and blacks out the first BG palette, starts the chapter's intro song (aChapterIntroSongs) and the palette fade.
+
+        ldx #$0020
+
+        _F762
+        lda @l aBGPaletteBuffer.aPalette4-2,x
+        sta $7ECFFE,x
+        dec x
+        dec x
+        bne _F762
+        lda #$0000
+        ldx #$0020
+
+        _F774
+        sta aBGPaletteBuffer.aPalette4-2,b,x
+        dec x
+        dec x
+        bne _F774
+        lda #$0001
+        sta wChapterIntroPhase
+        lda #$0000
+        sta wChapterIntroPhaseFrames
+        sta wChapterIntroTitleSettled
+        sta wChapterIntroFadeFrames
+        lda #$0002
+        sta wChapterIntroFadeInterval
+        lda #$0044
+        sta aPaletteFading,b
+        stz aPaletteFading.wCurrentStep,b
+        lda #$00E2
+        jsl rlQueueSoundCommand
+        lda wCurrentChapter,b
+        asl a
+        tax
+        lda aChapterIntroSongs,x
+        beq _F7B6
+        sta wMusicID,b
+
+        _F7B6
+        rts
+
+        .databank 0
+
+        ; 91/F7B7
+
+      aChapterIntroSongs ; 91/F7B7
+
+        ; One word per chapter, read by rsChapterIntroBegin: if it is not 0, it is stored in $04BA.
+
+        .word $006B, $0055, $0055, $0063, $0056, $0066, $0026, $006B
+        .word $0063, $0081, $007A, $0000
+
+        ; 91/F7CF
+
+      rsChapterIntroBrighten ; 91/F7CF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wChapterIntroPhaseFrames
+        cmp #$0006
+        bne _F7FE
+        lda #$0000
+        sta wChapterIntroPhaseFrames
+        sep #$20
+        lda bBufferINIDISP
+        inc a
+        sta bBufferINIDISP
+        rep #$20
+        and #$000F
+        cmp #$000F
+        bne _F7FE
+        lda #$0002
+        sta wChapterIntroPhase
+        lda #$0000
+        sta wChapterIntroPhaseFrames
+
+        _F7FE
+        lda wChapterIntroFadeFrames
+        cmp wChapterIntroFadeInterval
+        bne _F812
+        lda #$0000
+        sta wChapterIntroFadeFrames
+        jsr rsChapterIntroFadePaletteStep
+
+        _F812
+        rts
+
+        .databank 0
+
+    .endsection Unsorted91F759Section
+
+
+    .section Unsorted91F813Section
+
+      .al
+      .xl
+
+      rsChapterIntroFadePaletteIn ; 91/F813
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wChapterIntroFadeFrames
+        cmp wChapterIntroFadeInterval
+        bne _F837
+        lda #$0000
+        sta wChapterIntroFadeFrames
+        jsr rsChapterIntroFadePaletteStep
+        bcc _F837
+        inc wGameStateStep,b
+        lda #$0000
+        sta wChapterIntroPhaseFrames
+        sta wChapterIntroPhase
+
+        _F837
+        rts
+
+        .databank 0
+
+        ; 91/F838
+
+      rlChapterIntroHold ; 91/F838
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Waits aChapterIntroHoldFrames[chapter] frames, then starts the fade out (step $27).
+
+        lda @l wCurrentChapter
+        asl a
+        tax
+        lda wChapterIntroPhaseFrames
+        cmp aChapterIntroHoldFrames,x
+        bne _F871
+        ldx #$0020
+        lda #$0000
+
+        _F84E
+        sta $7ECFFE,x
+        dec x
+        dec x
+        bne _F84E
+        lda #$005F
+        sta aPaletteFading,b
+        stz aPaletteFading.wCurrentStep,b
+        inc wGameStateStep,b
+        lda #$0000
+        sta wChapterIntroPhase
+        sta wChapterIntroPhaseFrames
+        sta wChapterIntroFadeFrames
+
+        _F871
+        rtl
+
+        .databank 0
+
+        ; 91/F872
+
+    .endsection Unsorted91F813Section
+
+
+    .section Data91F872Section
+
+      .al
+      .xl
+
+      aChapterIntroHoldFrames ; 91/F872
+
+        ; Read by rlChapterIntroHold.
+
+        .word $00C8, $00BE, $00B4, $00C8, $00B4, $00D2, $00B4, $00B4
+        .word $00B4, $00B4, $00B4, $00D2
+
+        ; 91/F88A
+
+    .endsection Data91F872Section
+
+
+    .section Unsorted91F88ASection
+
+      .al
+      .xl
+
+      rlChapterIntroFadeOutStep ; 91/F88A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wChapterIntroPhase
+        cmp #$0002
+        bmi _F895
+
+        _F893
+        bra _F893
+
+
+        _F895
+        asl a
+        tax
+        jsr (aChapterIntroFadeOutPhases,x)
+        rtl
+
+        .databank 0
+
+        ; 91/F89B
+
+    .endsection Unsorted91F88ASection
+
+
+    .section Table91F89BSection
+
+      .al
+      .xl
+
+      aChapterIntroFadeOutPhases ; 91/F89B
+
+        ; Jump table of rlChapterIntroFadeOutStep.
+        .word <>rsChapterIntroDarken
+        .word <>rsChapterIntroStartMap
+
+    .endsection Table91F89BSection
+
+
+    .section Unsorted91F89FSection
+
+      .al
+      .xl
+
+      rsChapterIntroDarken ; 91/F89F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wChapterIntroPhaseFrames
+        cmp #$0007
+        bne _F8C4
+        lda #$0000
+        sta wChapterIntroPhaseFrames
+        sep #$20
+        lda bBufferINIDISP
+        dec a
+        sta bBufferINIDISP
+        rep #$20
+        and #$000F
+        bne _F8C4
+        lda #$0001
+        sta wChapterIntroPhase
+
+        _F8C4
+        lda wChapterIntroFadeFrames
+        cmp #$0002
+        bne _F8D7
+        jsr rsChapterIntroFadePaletteStep
+        lda #$0000
+        sta wChapterIntroFadeFrames
+
+        _F8D7
+        rts
+
+        .databank 0
+
+        ; 91/F8D8
+
+      rsChapterIntroStartMap ; 91/F8D8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        lda #GAMESTATE_NONE
+        sta wGameStateRoutine1,b
+        lda #<>rsStartChapterMap
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        lda #$0029
+        sta wGameStateStep,b
+        stz aPaletteFading,b
+        stz aPaletteFading.wCurrentStep,b
+        rts
+
+        .databank 0
+
+        ; 91/F907
+
+    .endsection Unsorted91F89FSection
+
+
+    .section Unsorted91F907Section
+
+      .al
+      .xl
+
+      rlChapterIntroSkipToMap ; 91/F907
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wChapterIntroPhaseFrames
+        bne _F917
+        sep #$20
+        lda #$80
+        sta bBufferINIDISP
+        rep #$20
+        bra _F934
+
+
+        _F917
+        stz wGameStateRoutine1,b
+        lda #<>rsStartChapterMap
+        sta aProcSystem.wInput0,b
+        lda #(`procMainLoopChangeFade)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFade
+        sta lR44
+        jsl rlProcEngineCreateProc
+        stz aPaletteFading,b
+        stz aPaletteFading.wCurrentStep,b
+
+        _F934
+        rtl
+
+        .databank 0
+
+        ; 91/F935
+
+    .endsection Unsorted91F907Section
+
+
+    .section Unsorted91F935Section
+
+      .al
+      .xl
+
+      rlChapterIntroUpdate ; 91/F935
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Every frame of the intro: slides the title in, counts the timers, waves BG2.
+
+        jsr rsSlideChapterIntroTitle
+        lda wChapterIntroFrames
+        inc a
+        sta wChapterIntroFrames
+        lda wChapterIntroFadeFrames
+        inc a
+        sta wChapterIntroFadeFrames
+        lda wChapterIntroPhaseFrames
+        inc a
+        sta wChapterIntroPhaseFrames
+        lda wVBlankEnabledFramecount
+        lsr a
+        sta wBufferBG2VOFS
+        rtl
+
+        .databank 0
+
+        ; 91/F959
+
+    .endsection Unsorted91F935Section
+
+
+    .section Unsorted91F959Section
+
+      .al
+      .xl
+
+      rlFillChapterIntroBG2VOFSTable ; 91/F959
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $91
+        phk
+        plb
+        .databank $91
+        ldx #$0000
+        sep #$20
+        lda #$5D
+        sta aChapterIntroBG2VOFSTable,x
+        rep #$20
+        lda #$0000
+        sta $7F8290,x
+        inc x
+        inc x
+        inc x
+        ldy #$0000
+
+        _F979
+        sep #$20
+        lda #$01
+        sta aChapterIntroBG2VOFSTable,x
+        rep #$20
+        lda $7F8290,x
+        clc
+        adc $F9AD,b,y
+        sta $7F8290,x
+        inc y
+        inc y
+        inc x
+        inc x
+        inc x
+        cpy #$0030
+        bne _F979
+        sep #$20
+        lda #$00
+        sta aChapterIntroBG2VOFSTable,x
+        rep #$20
+        lda #$0000
+        sta $7F8290,x
+        plp
+        plb
+        .databank $91
+        rtl
+
+        .databank 0
+
+        ; 91/F9AD
+
+    .endsection Unsorted91F959Section
+
+
+    .section Table91F9ADSection
+
+      .al
+      .xl
+
+      aChapterIntroWaveOffsets ; 91/F9AD
+
+        ; Read by rlFillChapterIntroBG2VOFSTable.
+
+        .word $0000, $0006, $000D, $0013, $0018, $001E, $0023, $0029
+        .word $002E, $0033, $0039, $003E, $0042, $0045, $0046, $0046
+        .word $0045, $0044, $0041, $003D, $0037, $0030, $0029, $0023
+
+        ; 91/F9DD
+
+    .endsection Table91F9ADSection
+
+
+    .section Unsorted91F9DDSection
+
+      .al
+      .xl
+
+      rlFillChapterIntroBG1HOFSTable ; 91/F9DD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phk
+        plb
+        .databank $91
+        ldx #$0000
+        sep #$20
+        lda #$60
+        sta aChapterIntroBG1HOFSTable,x
+        rep #$20
+        inc x
+        lda #$0000
+        sta aChapterIntroBG1HOFSTable,x
+        inc x
+        inc x
+        ldy #$0000
+
+        _F9F9
+        sep #$20
+        lda #$01
+        sta aChapterIntroBG1HOFSTable,x
+        rep #$20
+        inc x
+        lda $FA27,b,y
+        sta aChapterIntroBG1HOFSTable,x
+        inc x
+        inc x
+        inc y
+        inc y
+        cpx #$004B
+        bne _F9F9
+        sep #$20
+        lda #$00
+        sta aChapterIntroBG1HOFSTable,x
+        rep #$20
+        inc x
+        lda #$0000
+        sta aChapterIntroBG1HOFSTable,x
+        rtl
+
+        .databank 0
+
+        ; 91/FA27
+
+    .endsection Unsorted91F9DDSection
+
+
+    .section Table91FA27Section
+
+      .al
+      .xl
+
+      aChapterIntroTitleSlideOffsets ; 91/FA27
+
+        ; Read by rlFillChapterIntroBG1HOFSTable.
+        ; Pairs of signed words; code follows at 91/FA57.
+
+        .word $0027, $FFDC, $0030, $FFE4, $0036, $FFBA, $0025, $FFCD
+        .word $003A, $FFC5, $002F, $FFBF, $0024, $FFD0, $0035, $FFCE
+        .word $003E, $FFC2, $003A, $FFBC, $0032, $FFD3, $002E, $FFC5
+
+        ; 91/FA57
+
+    .endsection Table91FA27Section
+
+
+    .section Unsorted91FA57Section
+
+      .al
+      .xl
+
+      rsSlideChapterIntroTitle ; 91/FA57
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wChapterIntroTitleSettled
+        bne _FA99
+        ldx #$0003
+
+        _FA60
+        inc x
+        lda aChapterIntroBG1HOFSTable,x
+        beq _FA6C
+        dec a
+        sta aChapterIntroBG1HOFSTable,x
+
+        _FA6C
+        inc x
+        inc x
+        inc x
+        lda aChapterIntroBG1HOFSTable,x
+        beq _FA7A
+        inc a
+        sta aChapterIntroBG1HOFSTable,x
+
+        _FA7A
+        inc x
+        inc x
+        cpx #$004B
+        bne _FA60
+        ldx #$0003
+
+        _FA84
+        inc x
+        lda aChapterIntroBG1HOFSTable,x
+        bne _FA99
+        inc x
+        inc x
+        cpx #$004B
+        bne _FA84
+        lda #$0001
+        sta wChapterIntroTitleSettled
+
+        _FA99
+        rts
+
+        .databank 0
+
+        ; 91/FA9A
+
+    .endsection Unsorted91FA57Section
+
+
+    .section Unsorted91FA9ASection
+
+      .al
+      .xl
+
+      rsChapterIntroFadePaletteStep ; 91/FA9A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        clc
+        jsl rlFadePaletteToColors
+
+          .byte $00, $D0, $20, $00, $80, $00
+
+        rts
+
+        .databank 0
+
+        ; 91/FAA6
+
+    .endsection Unsorted91FA9ASection
 

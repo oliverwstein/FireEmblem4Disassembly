@@ -567,7 +567,7 @@
         _88BE
         jsl rlEventEngineFreeProc
         lda #$0002
-        sta wUnknown00171C,b
+        sta wEventEngineState,b
         lda bSoundFlags,b
         and #$FFFA
         sta bSoundFlags,b

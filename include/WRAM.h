@@ -1221,7 +1221,8 @@
       ; event waits for its procs, $0004 the event has procs (rlEventEngineCreateProc),
       ; $0008 cleared when a script starts, $8000 the event is fading out. The map
       ; step and many map routines do nothing while it is nonzero.
-    wUnknown00171C .word ? ; $00171C
+    wEventEngineState .word ? ; $00171C
+      ; 0 begin the script, 1 run its commands, 2 end it (aEventEngineStateRoutines).
     wUnknown00171E .word ? ; $00171E
     wMapCurrentlyScrollingFlag .word ? ; $001720
     wEventUnitSlot1ID .word ? ; $001722
@@ -1318,6 +1319,33 @@
       .word ?                                       ; $001832
     aEventScriptBuffer .fill $22                    ; $001834
       ; May be bigger
+
+  .endvirtual
+
+
+  .virtual $001854
+
+    ; The save menu screen's variables (engine/save/save_menu.asm). The menu is a
+    ; list of rows: on the title file menu the commands, on a slot list a heading
+    ; row and the four slots. The Jugdral history scroll reuses two of them.
+
+    wSaveMenuNextStep .word ?       ; $001854
+      ; The step to go to once the rows are drawn (rsSaveMenuDrawRows).
+    wSaveMenuRowsDrawn .word ?      ; $001856
+      ; Rows drawn so far; also the row type whose text is being rendered.
+    wSaveMenuRowCount .word ?       ; $001858
+    wSaveMenuCommandRow .word ?     ; $00185A
+      ; The file menu's cursor row. The history scroll: the entry being drawn.
+    aSaveMenuRowTypes .fill 6       ; $00185C
+      ; One byte per row: 1-9 a command or heading (aSaveMenuRowTexts), 10 an
+      ; empty slot, 11-14 a used slot 1-4.
+    wSaveMenuWindowPosition .word ? ; $001862
+      ; Low byte the column, high byte the row (tiles).
+    wSaveMenuSlotRow .word ?        ; $001864
+      ; The slot list's cursor row (1-4), $FFFF while the command rows show.
+      ; The history scroll: lines scrolled.
+    wSaveMenuConfirm .word ?        ; $001866
+      ; The yes/no window: 0 closed, 1 yes, 2 no.
 
   .endvirtual
 
@@ -2389,6 +2417,28 @@
     aSkillWindowSkillListTilemap .fill $7FE         ; $7F878D
     aSkillWindowDescriptionTilemap .fill $100       ; $7F8F8B
     aSkillWindowHolderTilemap .fill $22A            ; $7F908B
+
+  .endvirtual
+
+  .virtual $7F8183
+
+    ; The chapter intro title card's variables (engine/worldmap/chapter_intro.asm).
+    ; Other screens reuse this area, so the names are only written in that file.
+
+    wChapterIntroFrames .word ?         ; $7F8183
+    wChapterIntroPhaseFrames .word ?    ; $7F8185
+      ; Frames in the current phase; the brightness steps every 6 (in) or 7 (out).
+    wChapterIntroFadeFrames .word ?     ; $7F8187
+    wChapterIntroFadeInterval .word ?   ; $7F8189
+      ; Frames between palette fade steps.
+    wChapterIntroPhase .word ?          ; $7F818B
+    wChapterIntroTitleSettled .word ?   ; $7F818D
+      ; Nonzero once every band of the title has slid into place.
+    .fill $7F828F - *
+    aChapterIntroBG2VOFSTable .fill $100 ; $7F828F
+      ; HDMA table that waves the background.
+    aChapterIntroBG1HOFSTable .fill $4E  ; $7F838F
+      ; HDMA table: one horizontal offset per band of the title, slid to 0.
 
   .endvirtual
 

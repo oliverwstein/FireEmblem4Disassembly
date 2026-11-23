@@ -419,11 +419,13 @@
 
         .databank 0
 
-      rlUnknown9181F6 ; 91/81F6
+      rlRunDialogueCycle ; 91/81F6
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs the dialogue engine for one frame: the next characters or commands of the active text, unless it is paused. Callers wait until aDialogue.wStatus and aDialogue.wUnknown0018C9 (the tiles still to upload) are both 0.
 
         php
         rep #$30
@@ -5484,11 +5486,13 @@
 
         .databank 0
 
-      rlUnknown9198F5 ; 91/98F5
+      rlCopyText ; 91/98F5
 
         .al
         .autsiz
         .databank ?
+
+        ; Copies the text at lR18 (up to and with its $01 end) to lR19, and sets lR18 to lR19.
 
         php
         phy
@@ -5512,11 +5516,13 @@
 
         .databank 0
 
-      rlUnknown919912 ; 91/9912
+      rlAppendText ; 91/9912
 
         .al
         .autsiz
         .databank ?
+
+        ; Appends the text at lR19 to the end of the text at lR18 (both end with $01).
 
         php
         phy
@@ -6763,10 +6769,10 @@
         .word <>aDialogueCustomWidth79
         .word <>aDialogueCustomWidth79
 
-      aDialogueEngineMainActionTable ; 91/A3A5
-        .word <>rlUnknown91A3AB
-        .word <>rlUnknown91A3D9
-        .word <>rlUnknown91A3DD
+      aEventEngineMainActionTable ; 91/A3A5
+        .word <>rlResetEventEngine
+        .word <>rlEventEngineMainLoop
+        .word <>rlEventEngineStub
 
         ; 91/A3AB
 
@@ -6985,7 +6991,7 @@
       .al
       .xl
 
-      rlUnknown91A984 ; 91/A984
+      rlSetDialogueFontAndColors ; 91/A984
 
         .al
         .autsiz

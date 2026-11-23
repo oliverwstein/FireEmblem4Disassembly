@@ -236,7 +236,7 @@
         lda wVBlankEnabledFramecount
         and #$0001
         bne _E171
-        jsl rlUnknown9181F6
+        jsl rlRunDialogueCycle
 
         _E171
         rtl

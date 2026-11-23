@@ -54,7 +54,7 @@
       .al
       .xl
 
-      rsUnknown91A40E ; 91/A40E
+      rlEventEngineBeginScript ; 91/A40E
 
         .al
         .autsiz
@@ -62,7 +62,7 @@
 
         php
         rep #$30
-        inc wUnknown00171C,b
+        inc wEventEngineState,b
         jsl rlZeroEventMenuWindowList
         jsr rsGetEventLength
         jsl rlEventEngineFreeAllProcs
@@ -429,7 +429,7 @@
           bne +
 
             lda #2
-            sta wUnknown00171C,b
+            sta wEventEngineState,b
             bra _End
 
           +
@@ -1168,7 +1168,7 @@
         ; EVENT_19
 
         phy
-        jsl rlUnknown91A931
+        jsl rlSetupUpperDialogueBox
         ply
 
         phy
@@ -4353,7 +4353,7 @@
         ; EVENT_01
 
         lda #2
-        sta wUnknown00171C,b
+        sta wEventEngineState,b
 
         clc
         rts

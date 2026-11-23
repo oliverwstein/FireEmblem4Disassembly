@@ -39,7 +39,7 @@
               jsl rlProcEngineCreateProc
 
               lda #2
-              sta wUnknown00171C,b
+              sta wEventEngineState,b
               jsl rlUnknown9180BC
 
         +

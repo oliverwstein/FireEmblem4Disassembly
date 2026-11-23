@@ -1946,3 +1946,80 @@
     .endsection Table81B42DSection
 
 
+    .section Unsorted91A928Section
+
+      .al
+      .xl
+
+      rlSetupConversationDialogueBoxes ; 91/A928
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Sets up dialogue slot 1 as the lower box and slot 0 as the upper box.
+
+        jsl rlSetupLowerDialogueBox
+        jsl rlSetupUpperDialogueBox
+        rtl
+
+        .databank 0
+
+      rlSetupUpperDialogueBox ; 91/A931
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Dialogue slot 0: a 28x6 box on BG3 at row 2, tiles at VRAM $8000.
+
+        lda #0
+        jsl rlDialogueUpdateSlotOffset
+
+        lda #pack([28, 6])
+        sta aDialogue._Slot[0].wDisplayArea,b,x
+        lda #$8000 >> 1
+        sta aDialogue._Slot[0].wVRAMAddress,b,x
+        lda #(`aBG3TilemapBuffer)<<8
+        sta aDialogue._Slot[0].lBGBufferPosition+1,b,x
+        lda #$0086
+        clc
+        adc #<>aBG3TilemapBuffer
+        sta aDialogue._Slot[0].lBGBufferPosition,b,x
+        bra +
+
+      rlSetupLowerDialogueBox ; 91/A956
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Dialogue slot 1: a 28x6 box on BG3 at row 20, tiles at VRAM $9000.
+
+        lda #1
+        jsl rlDialogueUpdateSlotOffset
+
+        lda #pack([28, 6])
+        sta aDialogue._Slot[0].wDisplayArea,b,x
+        lda #$9000 >> 1
+        sta aDialogue._Slot[0].wVRAMAddress,b,x
+        lda #(`aBG3TilemapBuffer)<<8
+        sta aDialogue._Slot[0].lBGBufferPosition+1,b,x
+        lda #$0506
+        clc
+        adc #<>aBG3TilemapBuffer
+        sta aDialogue._Slot[0].lBGBufferPosition,b,x
+
+        +
+        jsl rlSetDialogueFontAndColors
+        lda #$2000
+        tsb aDialogue.wStatus,b
+        rtl
+
+        .databank 0
+
+        ; 91/A984
+
+    .endsection Unsorted91A928Section
+
+

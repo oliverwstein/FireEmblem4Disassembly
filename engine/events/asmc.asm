@@ -279,3 +279,54 @@
         .databank 0
 
     .endsection ASMCDialogueSection
+
+
+    .section Unsorted91B131Section
+
+      .al
+      .xl
+
+      rlASMCCloseDialogue ; 91/B131
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Frees the dialogue proc and steps the dialogue until it has closed, running this command again (wActiveEventOffset back 4) while it has not.
+
+        lda #(`procDialogue)<<8
+        sta lR44+1
+        lda #<>procDialogue
+        sta lR44
+        jsl rlProcEngineFindProc
+        bcc _B147
+        txa
+        lsr a
+        jsl rlProcEngineFreeProcByIndex
+
+        _B147
+        lda aDialogue.wStatus,b
+        beq _B163
+        jsl rlRunDialogueCycle
+        lda aDialogue.wStatus,b
+        bne _B159
+        jsl rlDialogueFreeHDMA
+
+        _B159
+        lda wActiveEventOffset,b
+        sec
+        sbc #$0004
+        sta wActiveEventOffset,b
+
+        _B163
+        rtl
+
+        .databank 0
+
+        ; 91/B164
+
+    .endsection Unsorted91B131Section
+
+

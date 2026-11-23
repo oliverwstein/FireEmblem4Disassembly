@@ -158,6 +158,8 @@
   .include "engine/epilogue/movement.asm"
   .include "engine/epilogue/world_map.asm"
   .include "engine/save/save.asm"
+  .include "engine/save/save_menu.asm"
+  .include "engine/save/jugdral_history.asm"
   .include "engine/debug/debug_menu.asm"
   .include "engine/dialogue/backgrounds.asm"
   .include "engine/dialogue/dialogue_procs.asm"
@@ -194,11 +196,11 @@
   .include "engine/battle_scene/battle_screen.asm"
   .include "engine/map/map_loop.asm"
   .include "engine/core/boot.asm"
+  .include "engine/core/anti_tamper.asm"
   .include "engine/sound/driver.asm"
   .include "engine/unsorted/bank84.asm"
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
-  .include "engine/unsorted/bank91.asm"
   .include "engine/unsorted/bank95.asm"
   .include "engine/unsorted/bank96.asm"
   .include "engine/unsorted/bank97.asm"
@@ -5132,6 +5134,8 @@
 
       .dsection Table8D9B65Section
       .dsection Table8D9BF6Section
+      .dsection JugdralHistoryTextSection
+      .dsection OpeningDialogueSection
 
       dialogueGen1HomeCastleSeized .include "text/dialogue/General/Gen1HomeCastleSeized.dialogue.txt" ; 8D9FB1
       dialogueGen2HomeCastleSeized .include "text/dialogue/General/Gen2HomeCastleSeized.dialogue.txt" ; 8D9FED
@@ -6262,6 +6266,8 @@
 
       .dsection Unsorted91D6BBSection
 
+      .dsection ChapterIntroStepsSection
+
       .dsection Unsorted91D6E3Section
 
       .dsection Unsorted91D6ECSection
@@ -6374,6 +6380,8 @@
       .dsection Unsorted91E55ASection
 
       .dsection Unsorted91E583Section
+
+      .dsection JugdralHistoryStepsSection
 
       .dsection Unsorted91E780Section
 

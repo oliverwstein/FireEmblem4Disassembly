@@ -332,7 +332,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9181F6
+        jsl rlRunDialogueCycle
         jsr rsUnknown8285EC
         jsr rsUnknown82862E
         rtl
@@ -442,7 +442,7 @@
 
         lda #1
         sta aDialogue.wTextSound,b
-        jsl rlUnknown91A928
+        jsl rlSetupConversationDialogueBoxes
 
         ldx #0
         jsl rlUnknown919420._944B

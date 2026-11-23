@@ -175,7 +175,7 @@
         jsl rlDecompressByList
         jsl rlRunAIEngineCycle
         jsl rlRunDeferredSoundUpload
-        jsl rlUnknown91A80D
+        jsl rlPlanQueuedMapSpriteMovement
         rts
 
         .databank 0
