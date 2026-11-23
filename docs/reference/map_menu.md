@@ -50,7 +50,7 @@ Opened on the map with no unit chosen, `procMainMapMenu` offers ユニット (th
 
 ## The unit command menu
 
-After a unit moves, `rlOpenUnitMenu` opens `procUnitMenu` with a mode from `wMapStateFlags` (`UNIT_MENU_MODE_*`). `rlProcUnitMenuSetUp` first builds the lists of usable inventory slots at the unit's tile (`rlUnknown84F786`: `aUnitMenuWeaponSlots`, `...StaffSlots`, `...AssaultSlots`, `...ItemSlots`, `...EquipSlots`, `...CastleStaffSlots`, each a count and up to seven slots), then runs 24 checks (`aUnitMenuCommandChecks`) from the last to the first and adds the option (`aUnitMenuCommandOptions`) for each that returns carry set. The commands, top to bottom:
+After a unit moves, `rlOpenUnitMenu` opens `procUnitMenu` with a mode from `wMapStateFlags` (`UNIT_MENU_MODE_*`). `rlProcUnitMenuSetUp` first builds the lists of usable inventory slots at the unit's tile (`rlBuildUnitMenuSlotLists`: `aUnitMenuWeaponSlots`, `...StaffSlots`, `...AssaultSlots`, `...ItemSlots`, `...EquipSlots`, `...CastleStaffSlots`, each a count and up to seven slots), then runs 24 checks (`aUnitMenuCommandChecks`) from the last to the first and adds the option (`aUnitMenuCommandOptions`) for each that returns carry set. The commands, top to bottom:
 
 | Command | Shown when (check) | Does (handler) |
 |---|---|---|
@@ -79,7 +79,7 @@ After a unit moves, `rlOpenUnitMenu` opens `procUnitMenu` with a mode from `wMap
 | 城にもどる return | Return (skill or item), not at its own castle | `rlUnitMenuReturnSkill` |
 | 城にもどる return | guarding its home castle | `rlUnitMenuReturnToCastle` |
 
-Most checks also leave a command out while bit 3 of `wMapStateFlags` is set (mode 1). B closes the menu and undoes the move (`rlUnknown88ADE9`), except in mode 1.
+Most checks also leave a command out while bit 3 of `wMapStateFlags` is set (mode 1). B closes the menu and undoes the move (`rlUndoUnitMove`), except in mode 1.
 
 ### The item list and what follows
 
@@ -105,13 +105,12 @@ The terrain window and the unit window (`procTerrainWindow`, `procUnitWindow`, "
 
 - **Core** ([core.md](core.md)): procs, RAM areas and the option list stack, HDMA, DMA, decompression.
 - **Units** and **items**: everything the checks and windows read; `rlFindTargetsInRange` and its target filters.
-- **Map**: the cursor, locations, `rlUnknown84F786` (bank `$84`, not filed yet), the actions the handlers start (bank `$84` and `$88`, not filed yet).
+- **Map** ([map.md](map.md)): the cursor, locations, the slot lists (`rlBuildUnitMenuSlotLists`, [unit_menu_slots.asm](../../engine/menus/unit_menu_slots.asm)) and the command effects the handlers start ([map_actions.asm](../../engine/map/map_actions.asm)).
 
 ## Open questions
 
-- What modes 1 and 2 of the unit menu are for. Mode 1 follows `rlUnknown84D4A2` (a player unit ending its action at its home castle), mode 2 the guard command's `rlUnknown84D483`; the code only shows what each hides.
+- What modes 1 and 2 of the unit menu are for. Mode 1 follows `rlRequestUnitMenuMode1` (a player unit ending its action at its home castle), mode 2 the guard command's `rlRequestUnitMenuMode2`; the code only shows what each hides.
 - The depart check passes when `rlGetUnitByCoordinates` returns carry set for the tile two below the unit; what that tile means.
-- `UnitState0400`: set while assaulting? `rlFindTargetsForSelectedWeapon` uses target filter 4 when it is set, and `rlUnknown84F786` clears it.
+- `UnitState0400`: set while assaulting? `rlFindTargetsForSelectedWeapon` uses target filter 4 when it is set, and `rlBuildUnitMenuSlotLists` clears it. Assault targets are found at range 2 only, for weapons with minimum range 1 (`rlFindTargetsForItemRange`).
 - The まち (town) command: location type 1, and its handler opens the castle screen.
 - The "RP" proc in [map_battle_magic.asm](../../engine/battle/map_battle_magic.asm), `procUnknown8583B3` (an empty list menu nothing creates), and the gradient table helpers (`rsUnknown859E5F`...).
-- 35 `Unknown` routines remain in [unit_window.asm](../../engine/menus/unit_window.asm) (the full-screen unit list), and the `ldy #$xxxx` sprite pointers in the unit, item and skill windows are not checked yet.
