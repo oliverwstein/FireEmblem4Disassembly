@@ -814,7 +814,7 @@
         .databank ?
 
         phx
-        lda #$0000
+        lda #MAP_ACTION_BATTLE
         sta wMapActionTargetType,b
         jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
@@ -837,7 +837,7 @@
         ; Opens the item list (procMapItemList) on the weapons that can attack ($7E2000).
 
         ldx wActiveUnitDeploymentOffset,b
-        lda #$0000
+        lda #MAP_ACTION_BATTLE
         sta wMapActionTargetType,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta aProcSystem.wInput0,b

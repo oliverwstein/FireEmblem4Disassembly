@@ -44,7 +44,7 @@
         lda #$0000
         sta aProcSystem.aBody5,b,x
         lda wMapActionTargetType,b
-        cmp #$0001
+        cmp #MAP_ACTION_STAFF
         bne _8DA2
         lda #$0D0A
         jsl rlSetMapMenuTilemapArea
@@ -84,8 +84,8 @@
 
         ; Draws the labels (LV, HP and the stat icons), the numbers, and places the window away from the cursor.
 
-        lda wUnknown0007D8,b
-        cmp #$0006
+        lda wMapCursorState,b
+        cmp #MAP_CURSOR_TO_TARGET
         bne _8DC1
         jml _8EA0
 
@@ -108,7 +108,7 @@
         ldx #$0702
         jsl rlDrawMapMenuTextLine
         lda wMapActionTargetType,b
-        cmp #$0001
+        cmp #MAP_ACTION_STAFF
         bne _8E01
         lda #(`aBattleForecastHPText)<<8
         sta lR18+1
@@ -248,8 +248,8 @@
 
         ; Bit 0 of the proc's bitfield: redraw the numbers (the target changed); bit 1: close.
 
-        lda wUnknown0007D8,b
-        cmp #$0006
+        lda wMapCursorState,b
+        cmp #MAP_CURSOR_TO_TARGET
         beq _8ED3
         jsl rlShowMapMenuLayers
         bra _8ED7
@@ -441,7 +441,7 @@
         ldx #$0706
         jsl rlDrawMapMenuNumber
         lda wMapActionTargetType,b
-        cmp #$0001
+        cmp #MAP_ACTION_STAFF
         bne _9017
         lda $0010,b,y
         ldx #$0904
@@ -616,8 +616,8 @@
         .autsiz
         .databank ?
 
-        lda wUnknown0007D8,b
-        cmp #$0006
+        lda wMapCursorState,b
+        cmp #MAP_CURSOR_TO_TARGET
         beq _9107
         jsr rsBattleForecastCheckClose
         bcs _9107
@@ -791,11 +791,11 @@
         .databank $85
         phx
         lda wMapActionTargetType,b
-        cmp #$0002
+        cmp #MAP_ACTION_HELP
         beq _9219
-        cmp #$0003
+        cmp #MAP_ACTION_GIVE_GOLD
         beq _9219
-        cmp #$0004
+        cmp #MAP_ACTION_TALK
         beq _9219
         jsl rlActionStructGetBattleStats
         lda #(`procBattleForecastTarget)<<8
@@ -816,7 +816,7 @@
 
         _91EF
         lda wMapActionTargetType,b
-        cmp #$0001
+        cmp #MAP_ACTION_STAFF
         beq _9219
         lda #(`procBattleForecastAttacker)<<8
         sta lR44+1

@@ -174,7 +174,7 @@
         sta $420B,b
         rep #$20
         lda #$03FF
-        sta wUnknown000596,b
+        sta wMapTileIDMask,b
         lda #$0002
         sta aDialogue.wUnknown0018D0,b
         lda #(`aDecompressionDMAEntry80B61E)<<8
@@ -299,7 +299,7 @@
         lda wMapYOffset,b
         sta wMapScrollYPixels,b
         lda #$0004
-        sta wUnknown00075C,b
+        sta wMapWidthMode,b
         sta $075E,b
         lda #$0000
         sta wMapMinXScroll,b

@@ -211,7 +211,7 @@
         .autsiz
         .databank ?
 
-        ; Waits for wUnknown0007D8 to be 0, then sets bit 0 of the bitfield for the script.
+        ; Waits for wMapCursorState to be 0, then sets bit 0 of the bitfield for the script.
 
         phb
         phx
@@ -220,7 +220,7 @@
         plx
         plb
         .databank ?
-        lda wUnknown0007D8,b
+        lda wMapCursorState,b
         bne _CAFA
         lda #<>rlProcMapExperienceWindowIdle
         sta aProcSystem.aHeaderOnCycle,b,x

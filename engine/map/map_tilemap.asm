@@ -30,19 +30,19 @@
         sta wMapEnableYScrollFlag,b
 
         lda wMapScrollXPixels,b
-        sta wUnknown000734,b
+        sta wMapSavedScrollXPixels,b
         lda wMapScrollYPixels,b
-        sta wUnknown000736,b
+        sta wMapSavedScrollYPixels,b
         clc
         adc #$0100
         sta wMapScrollYPixels,b
         lda #8
         sta wMapScrollSpeed,b
 
-        stz wUnknown00072C,b
-        stz wUnknown00072E,b
+        stz wMapColumnUploadFlag,b
+        stz wMapRowUploadFlag,b
 
-        lda wUnknown000736,b
+        lda wMapSavedScrollYPixels,b
         and #$00F8
         asl a
         asl a
@@ -50,23 +50,23 @@
         clc
         adc #$07C0
         and #$07FF
-        sta $0724,b
+        sta wTilemapRedrawOffset,b
         
           -
           jsr rsMapScrollUpSetBGOFS
           jsl rlBuildMapTopRow
           jsr rsCopyMapRowToTilemapBuffer
 
-          lda wUnknown000736,b
+          lda wMapSavedScrollYPixels,b
           cmp wMapScrollYPixels,b
           bcc -
 
         jsl rlDMAByStruct
           .structDMAToVRAM $7E7388, $0800, $80, $A000
 
-        lda wUnknown000734,b
+        lda wMapSavedScrollXPixels,b
         sta wMapScrollXPixels,b
-        lda wUnknown000736,b
+        lda wMapSavedScrollYPixels,b
         sta wMapScrollYPixels,b
 
         stz wMapEnableXScrollFlag,b
@@ -94,7 +94,7 @@
 
         ; Copies the row built in $05DC into aBG2TilemapBuffer at $0724 and moves $0724 up one row (wrapping at the top).
 
-        ldx $0724,b
+        ldx wTilemapRedrawOffset,b
         ldy #$0000
 
         _8483
@@ -106,13 +106,13 @@
         inc y
         cpy #$0040
         bcc _8483
-        lda $0724,b
+        lda wTilemapRedrawOffset,b
         sec
         sbc #$0040
-        sta $0724,b
+        sta wTilemapRedrawOffset,b
         bpl _84A5
         lda #$07C0
-        sta $0724,b
+        sta wTilemapRedrawOffset,b
 
         _84A5
         rts
@@ -134,15 +134,15 @@
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
         lda wMapScrollXPixels,b
-        sta wUnknown000734,b
+        sta wMapSavedScrollXPixels,b
         lda wMapScrollYPixels,b
-        sta wUnknown000736,b
+        sta wMapSavedScrollYPixels,b
         clc
         adc #$0100
         sta wMapScrollYPixels,b
         lda #$0008
         sta wMapScrollSpeed,b
-        lda wUnknown000736,b
+        lda wMapSavedScrollYPixels,b
         and #$00F8
         asl a
         asl a
@@ -150,19 +150,19 @@
         clc
         adc #$07C0
         and #$07FF
-        sta $0724,b
+        sta wTilemapRedrawOffset,b
 
         _84DB
         jsr rsMapScrollUpSetBGOFS
         jsl rlBuildRangeOverlayRowIntoTilemap
-        lda wUnknown000736,b
+        lda wMapSavedScrollYPixels,b
         cmp wMapScrollYPixels,b
         bcc _84DB
         jsl rlMarkAllMapMenuRowsDirty
-        lda wUnknown000734,b
+        lda wMapSavedScrollXPixels,b
         sta wMapScrollXPixels,b
         sta wBufferBG3HOFS
-        lda wUnknown000736,b
+        lda wMapSavedScrollYPixels,b
         sta wMapScrollYPixels,b
         sta wBufferBG3VOFS
         stz wMapEnableXScrollFlag,b
@@ -195,7 +195,7 @@
         sec
         sbc #$0000
         tax
-        stz wUnknown00072A,b
+        stz wMapTileBufferWrapped,b
         lda wMapScrollXPixels,b
         and #$0008
         bne _8531
@@ -209,7 +209,7 @@
         jsr rsBuildRangeOverlayRowHalfOffset
 
         _8537
-        ldx $0724,b
+        ldx wTilemapRedrawOffset,b
         ldy #$0000
 
         _853D
@@ -221,13 +221,13 @@
         inc y
         cpy #$0040
         bcc _853D
-        lda $0724,b
+        lda wTilemapRedrawOffset,b
         sec
         sbc #$0040
-        sta $0724,b
+        sta wTilemapRedrawOffset,b
         bpl _855F
         lda #$07C0
-        sta $0724,b
+        sta wTilemapRedrawOffset,b
 
         _855F
         rtl
@@ -258,14 +258,14 @@
         phk
         plb
         .databank $88
-        lda wUnknown00072E,b
+        lda wMapRowUploadFlag,b
         bne _87F9
         jml _8877
 
 
         _87F9
-        stz wUnknown00072E,b
-        lda wUnknown000732,b
+        stz wMapRowUploadFlag,b
+        lda wMapRowUploadVRAMOffset,b
         clc
         adc #$5000
         sta $2116,b
@@ -289,9 +289,9 @@
         lda #$02
         sta $420B,b
         rep #$20
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq _8877
-        lda wUnknown000732,b
+        lda wMapRowUploadVRAMOffset,b
         clc
         adc #$5800
         sta $2116,b
@@ -317,14 +317,14 @@
         rep #$20
 
         _8877
-        lda wUnknown00072C,b
+        lda wMapColumnUploadFlag,b
         bne _8880
         jml _88FE
 
 
         _8880
-        stz wUnknown00072C,b
-        lda wUnknown000730,b
+        stz wMapColumnUploadFlag,b
+        lda wMapColumnUploadVRAMOffset,b
         clc
         adc #$5000
         sta $2116,b
@@ -348,9 +348,9 @@
         lda #$01
         sta $420B,b
         rep #$20
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq _88FE
-        lda wUnknown000730,b
+        lda wMapColumnUploadVRAMOffset,b
         clc
         adc #$5800
         sta $2116,b
@@ -401,7 +401,7 @@
 
         ; Adds 14 rows (the screen height in map tiles) to the aMapData index in wR3; the row size depends on wMapWidthMode.
 
-        lda wUnknown00075C,b
+        lda wMapWidthMode,b
         cmp #4
         beq ++
 
@@ -440,7 +440,7 @@
         jsr rsGetMapTopRowIndex
         jsr rsGetMapBottomRowIndex
         tax
-        stz wUnknown00072A,b
+        stz wMapTileBufferWrapped,b
         
         lda wMapScrollXPixels,b
         and #$0008
@@ -448,7 +448,7 @@
 
           jsr rsBuildMapRowTiles
 
-          lda wUnknown000770,b
+          lda wUnitSelectedFlag,b
           beq _End
 
             lda #$00E0
@@ -458,7 +458,7 @@
         +
         jsr rsBuildMapRowTilesHalfOffset
 
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq _End
 
           lda #$00E0
@@ -491,7 +491,7 @@
         sbc #0
         tax
 
-        stz wUnknown00072A,b
+        stz wMapTileBufferWrapped,b
 
         lda wMapScrollXPixels,b
         and #$0008
@@ -499,7 +499,7 @@
 
           jsr rsBuildMapRowTiles
 
-          lda wUnknown000770,b
+          lda wUnitSelectedFlag,b
           beq _End
 
             lda #0
@@ -509,7 +509,7 @@
         +
         jsr rsBuildMapRowTilesHalfOffset
 
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq _End
 
           lda #0
@@ -530,7 +530,7 @@
 
         _Loop
         lda aMapData,x
-        and wUnknown000596,b
+        and wMapTileIDMask,b
         asl a
         asl a
         asl a
@@ -581,7 +581,7 @@
         inc x
         
         -
-        lda wUnknown00072A,b
+        lda wMapTileBufferWrapped,b
         beq +
 
           cpy wR8
@@ -592,7 +592,7 @@
         cpy #64
         bcc _Loop
 
-          inc wUnknown00072A,b
+          inc wMapTileBufferWrapped,b
           ldy #0
           bra -
 
@@ -638,19 +638,19 @@
         lsr a
         sta wTempVariable1,b
         jsr rsGetMovementMapRowIndex
-        stz wUnknown00072A,b
+        stz wMapTileBufferWrapped,b
         ldy wR8
 
         _8A3B
         lda wTempVariable2,b
-        cmp $071E,b
+        cmp wMovementMapWindowTop,b
         bcc _8A66
-        cmp $0722,b
+        cmp wMovementMapWindowBottom,b
         bcs _8A66
         lda wTempVariable1,b
-        cmp $071C,b
+        cmp wMovementMapWindowLeft,b
         bcc _8A66
-        cmp $0720,b
+        cmp wMovementMapWindowRight,b
         bcs _8A66
         jsr rsGetMovementMapIndexInRow
         lda aMovementMap,x
@@ -673,7 +673,7 @@
         inc y
 
         _8A76
-        lda wUnknown00072A,b
+        lda wMapTileBufferWrapped,b
         beq _8A81
         cpy wR8
         bcs _8A92
@@ -683,7 +683,7 @@
         _8A81
         cpy #$0040
         bcc _8A8E
-        inc wUnknown00072A,b
+        inc wMapTileBufferWrapped,b
         ldy #$0000
         bra _8A76
 
@@ -947,7 +947,7 @@
 
         _Loop
         lda aMapData,x
-        and wUnknown000596,b
+        and wMapTileIDMask,b
         asl a
         asl a
         asl a
@@ -987,12 +987,12 @@
         cpy #64
         bcc +
 
-          inc wUnknown00072A,b
+          inc wMapTileBufferWrapped,b
           ldy #0
 
         +
         lda aMapData,x
-        and wUnknown000596,b
+        and wMapTileIDMask,b
         asl a
         asl a
         asl a
@@ -1029,7 +1029,7 @@
         inc y
         
         -
-        lda wUnknown00072A,b
+        lda wMapTileBufferWrapped,b
         beq +
 
           cpy wR8
@@ -1040,7 +1040,7 @@
         cpy #64
         bcc _8C5B
 
-          inc wUnknown00072A,b
+          inc wMapTileBufferWrapped,b
           ldy #0
           bra -
 
@@ -1088,19 +1088,19 @@
         sta wTempVariable1,b
         jsr rsGetMovementMapRowIndex
         stz wR9
-        stz wUnknown00072A,b
+        stz wMapTileBufferWrapped,b
         ldy wR8
 
         _8C88
         lda wTempVariable2,b
-        cmp $071E,b
+        cmp wMovementMapWindowTop,b
         bcc _8CD2
-        cmp $0722,b
+        cmp wMovementMapWindowBottom,b
         bcs _8CD2
         lda wTempVariable1,b
-        cmp $071C,b
+        cmp wMovementMapWindowLeft,b
         bcc _8CD2
-        cmp $0720,b
+        cmp wMovementMapWindowRight,b
         bcs _8CD2
         jsr rsGetMovementMapIndexInRow
         lda aMovementMap,x
@@ -1114,7 +1114,7 @@
         inc y
         cpy #$0040
         bcc _8CC1
-        inc wUnknown00072A,b
+        inc wMapTileBufferWrapped,b
         ldy #$0000
 
         _8CC1
@@ -1134,7 +1134,7 @@
         inc y
         cpy #$0040
         bcc _8CE8
-        inc wUnknown00072A,b
+        inc wMapTileBufferWrapped,b
         ldy #$0000
 
         _8CE8
@@ -1161,7 +1161,7 @@
         lda wR9
         cmp #$0010
         bcs _8D22
-        lda wUnknown00072A,b
+        lda wMapTileBufferWrapped,b
         beq _8D11
         cpy wR8
         bcs _8D22
@@ -1171,7 +1171,7 @@
         _8D11
         cpy #$0040
         bcc _8D1E
-        inc wUnknown00072A,b
+        inc wMapTileBufferWrapped,b
         ldy #$0000
         bra _8CFD
 
@@ -1198,12 +1198,12 @@
 
         lda wTempVariable1,b
         sec
-        sbc $0720,b
+        sbc wMovementMapWindowRight,b
         and #$003F
         sta wR0
         lda wTempVariable2,b
         sec
-        sbc $0722,b
+        sbc wMovementMapWindowBottom,b
         and #$003F
         asl a
         asl a
@@ -1232,7 +1232,7 @@
 
         lda wTempVariable1,b
         sec
-        sbc $0720,b
+        sbc wMovementMapWindowRight,b
         and #$003F
         clc
         adc wUnknown000790,b
@@ -1259,7 +1259,7 @@
 
         ; X = the aMapData index of the top left visible tile (wR3 too), Y = the buffer offset of its column (wR8).
 
-        lda wUnknown00075C,b
+        lda wMapWidthMode,b
         cmp #4
         beq ++
 
@@ -1315,7 +1315,7 @@
 
         ; Adds 16 rows to the aMapData index in wR0.
 
-        lda wUnknown00075C,b
+        lda wMapWidthMode,b
         cmp #4
         beq ++
 
@@ -1378,7 +1378,7 @@
           lda #4
           jsr rsBuildMapColumnTiles
 
-          lda wUnknown000770,b
+          lda wUnitSelectedFlag,b
           beq _End
 
             lda #$00F8
@@ -1389,7 +1389,7 @@
         lda #4
         jsr rsBuildMapColumnTilesHalfOffset
 
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq _End
 
           lda #$00F8
@@ -1430,7 +1430,7 @@
           lda #0
           jsr rsBuildMapColumnTiles
 
-          lda wUnknown000770,b
+          lda wUnitSelectedFlag,b
           beq _End
 
             lda #0
@@ -1441,7 +1441,7 @@
         lda #0
         jsr rsBuildMapColumnTilesHalfOffset
 
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq _End
 
           lda #0
@@ -1460,7 +1460,7 @@
 
         ; A = X plus one row of aMapData.
 
-        lda wUnknown00075C,b
+        lda wMapWidthMode,b
         cmp #4
         beq ++
 
@@ -1496,7 +1496,7 @@
         and #62
         sta wR3
 
-        lda wUnknown00075C,b
+        lda wMapWidthMode,b
         cmp #4
         beq ++
 
@@ -1546,7 +1546,7 @@
 
           _Loop
           lda aMapData,x
-          and wUnknown000596,b
+          and wMapTileIDMask,b
           asl a
           asl a
           asl a
@@ -1650,21 +1650,21 @@
         sta wTempVariable2,b
         jsr rsGetMovementMapColumnIndex
         stz wR9
-        stz wUnknown00072A,b
+        stz wMapTileBufferWrapped,b
         lda wR3
         sta wR8
         tay
 
         _8F5E
         lda wTempVariable2,b
-        cmp $071E,b
+        cmp wMovementMapWindowTop,b
         bcc _8F89
-        cmp $0722,b
+        cmp wMovementMapWindowBottom,b
         bcs _8F89
         lda wTempVariable1,b
-        cmp $071C,b
+        cmp wMovementMapWindowLeft,b
         bcc _8F89
-        cmp $0720,b
+        cmp wMovementMapWindowRight,b
         bcs _8F89
         jsr rsGetMovementMapIndexInColumn
         lda aMovementMap,x
@@ -1965,12 +1965,12 @@
 
         lda wTempVariable1,b
         sec
-        sbc $0720,b
+        sbc wMovementMapWindowRight,b
         and #$003F
         sta wUnknown000790,b
         lda wTempVariable2,b
         sec
-        sbc $0722,b
+        sbc wMovementMapWindowBottom,b
         and #$003F
         asl a
         asl a
@@ -1996,7 +1996,7 @@
 
         lda wTempVariable2,b
         sec
-        sbc $0722,b
+        sbc wMovementMapWindowBottom,b
         and #$003F
         asl a
         asl a
@@ -2026,7 +2026,7 @@
 
         _910E
         lda aMapData,x
-        and wUnknown000596,b
+        and wMapTileIDMask,b
         asl a
         asl a
         asl a
@@ -2071,7 +2071,7 @@
         jsr rsGetNextMapRowIndex
         tax
         lda aMapData,x
-        and wUnknown000596,b
+        and wMapTileIDMask,b
         asl a
         asl a
         asl a
@@ -2155,21 +2155,21 @@
         sta wTempVariable2,b
         jsr rsGetMovementMapColumnIndex
         stz wR9
-        stz wUnknown00072A,b
+        stz wMapTileBufferWrapped,b
         lda wR3
         sta wR8
         tay
 
         _91E8
         lda wTempVariable2,b
-        cmp $071E,b
+        cmp wMovementMapWindowTop,b
         bcc _9232
-        cmp $0722,b
+        cmp wMovementMapWindowBottom,b
         bcs _9232
         lda wTempVariable1,b
-        cmp $071C,b
+        cmp wMovementMapWindowLeft,b
         bcc _9232
-        cmp $0720,b
+        cmp wMovementMapWindowRight,b
         bcs _9232
         jsr rsGetMovementMapIndexInColumn
         lda aMovementMap,x
@@ -2183,7 +2183,7 @@
         inc y
         cpy #$0040
         bcc _9221
-        inc wUnknown00072A,b
+        inc wMapTileBufferWrapped,b
         ldy #$0000
 
         _9221

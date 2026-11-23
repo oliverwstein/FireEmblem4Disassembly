@@ -411,9 +411,9 @@
         _EndScroll
         lda #16
         sta wMapPixelScrollDistance,b
-        stz wUnknown0007D8,b
+        stz wMapCursorState,b
         stz wMapScrollScriptOffset,b
-        stz wUnknown00073A,b
+        stz wMapScrollingFlag,b
         sec
         rts
 
@@ -540,49 +540,49 @@
         
         _Down
         lda #$0018
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0400
         bra _End
         
         _Up
         lda #$0010
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0800
         bra _End
         
         _Right
         lda #$0008
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0100
         bra _End
         
         _Left
         lda #0
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0200
         bra _End
         
         _TopLeft
         lda #0
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0A00
         bra _End
         
         _BottomLeft
         lda #0
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0600
         bra _End
         
         _TopRight
         lda #$0008
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0900
         bra _End
         
         _BottomRight
         lda #$0008
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0500
         bra _End
         
@@ -668,7 +668,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableYScrollFlag,b
         jsl rlMapScrollStepUp
         rts
@@ -682,7 +682,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableYScrollFlag,b
         jsl rlMapScrollStepDown
         rts
@@ -696,7 +696,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         jsl rlMapScrollStepLeft
         rts
@@ -710,7 +710,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         jsl rlMapScrollStepRight
         rts
@@ -724,7 +724,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
         jsl rlMapScrollStepUpLeft
@@ -739,7 +739,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
         jsl rlMapScrollStepDownLeft
@@ -754,7 +754,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
         jsl rlMapScrollStepUpRight
@@ -769,7 +769,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
         jsl rlMapScrollStepDownRight
@@ -914,10 +914,10 @@
         and #$00F8
         asl a
         asl a
-        sta wUnknown000732,b
+        sta wMapRowUploadVRAMOffset,b
 
         lda #1
-        sta wUnknown00072E,b
+        sta wMapRowUploadFlag,b
         rtl
 
         .databank 0
@@ -936,10 +936,10 @@
         and #$00F8
         asl a
         asl a
-        sta wUnknown000732,b
+        sta wMapRowUploadVRAMOffset,b
 
         lda #1
-        sta wUnknown00072E,b
+        sta wMapRowUploadFlag,b
         rtl
 
         .databank 0
@@ -958,7 +958,7 @@
         and #$00F8
         asl a
         asl a
-        sta wUnknown000732,b
+        sta wMapRowUploadVRAMOffset,b
         rtl
 
         .databank 0
@@ -978,10 +978,10 @@
         lsr a
         lsr a
         lsr a
-        sta wUnknown000730,b
+        sta wMapColumnUploadVRAMOffset,b
 
         lda #1
-        sta wUnknown00072C,b
+        sta wMapColumnUploadFlag,b
         rtl
 
         .databank 0
@@ -999,10 +999,10 @@
         lsr a
         lsr a
         lsr a
-        sta wUnknown000730,b
+        sta wMapColumnUploadVRAMOffset,b
 
         lda #1
-        sta wUnknown00072C,b
+        sta wMapColumnUploadFlag,b
         rtl
 
         .databank 0
@@ -1025,7 +1025,7 @@
 
         ; Each frame while wMapScrollingFlag is set: scrolls one more step in wMapScrollDirectionIdentifier and, unless the minimap is open, keeps wMapXOffset/wMapYOffset with the scroll.
 
-        lda wUnknown00073A,b
+        lda wMapScrollingFlag,b
         beq +
 
           jsl rlMapScrollStepInDirection
@@ -1062,7 +1062,7 @@
         .databank ?
 
         lda #$0001
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableYScrollFlag,b
         jsl rlMapScrollStepUp
         rtl
@@ -1079,7 +1079,7 @@
         .databank ?
 
         lda #$0001
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableYScrollFlag,b
         jsl rlMapScrollStepDown
         rtl
@@ -1103,7 +1103,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
 
         jsl rlMapScrollStepLeft
@@ -1118,7 +1118,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
 
         jsl rlMapScrollStepRight
@@ -1141,7 +1141,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
 
@@ -1165,7 +1165,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
 
@@ -1181,7 +1181,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
 
@@ -1197,7 +1197,7 @@
         .databank ?
 
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
 

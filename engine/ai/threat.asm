@@ -754,7 +754,7 @@
 
         ; Actions 1/8/14/15: clear $057C and run rlRunMapAction between $0871 and $0873
 
-        lda #$0000
+        lda #MAP_ACTION_BATTLE
         sta wMapActionTargetType,b
         lda wActiveActionUnit1DeploymentOffset,b
         sta wR0

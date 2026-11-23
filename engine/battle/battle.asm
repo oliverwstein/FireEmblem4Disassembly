@@ -1325,7 +1325,7 @@
         tax
         jsr (aMapActionRoutines,x)
 
-        lda #0
+        lda #MAP_ACTION_BATTLE
         sta wMapActionTargetType,b
 
         pla

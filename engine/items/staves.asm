@@ -574,7 +574,7 @@
         ; A = target filter: finds the targets (wMapActionTargetType 1), then on the map rlStartChoosingTarget, in the castle rlCastleUseStaffFromMap.
 
         jsl rlCheckStaffTargetsInRange
-        lda #$0001
+        lda #MAP_ACTION_STAFF
         sta wMapActionTargetType,b
         jsl rlGetSelectedUnitStates
         bit #UnitStateFielded

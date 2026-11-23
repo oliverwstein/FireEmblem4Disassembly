@@ -48,7 +48,7 @@
         rts
         
         _SelectPressed
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq +
 
           rts
@@ -58,7 +58,7 @@
         rts
         
         _BPressed
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq +
 
           jsr rsMapPressBWithUnitSelected
@@ -75,7 +75,7 @@
         rts
         
         _RPressed
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq +
 
           rts
@@ -94,7 +94,7 @@
         rts
         
         _LPressed
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq +
 
           rts
@@ -124,11 +124,11 @@
 
         ; A on the map. With no unit selected: picks up the unit at the cursor; with none there, enters the home castle if the cursor is on it, else opens the map menu. With a unit selected: in warp mode acts at the cursor (rsMapConfirmWarpAtCursor); for a unit of the active army sets its destination (sound $0A, or $22 if it cannot go there); for any other unit puts it down.
 
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         bne _B03F
         jsr rsSelectUnitAtCursor
         bcs _B037
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq _B06F
 
         _B037
@@ -200,8 +200,8 @@
 
         ; With bit 11 of wUnknown000D79 set and a unit selected: hides the range, puts the cursor back on the active unit and acts (rlRunMapAction) with the cursor's tile in wR2/wR3.
 
-        lda #$0000
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_FREE
+        sta wMapCursorState,b
         stz wMovingUnitSpriteState,b
         jsr rsHideRangeOverlay
         lda wActiveUnitDeploymentOffset,b
@@ -337,8 +337,8 @@
         jsl rlDeployedUnitUnsetHiddenIfAlive
         lda wActiveUnitDeploymentOffset,b
         jsl rlMoveCursorToUnit
-        lda #$0007
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT_MENU
+        sta wMapCursorState,b
         rts
 
 
@@ -350,7 +350,7 @@
         lda #$0005
         jsl rlPlaySoundEffect
         jsr rsHideRangeOverlay
-        stz wUnknown0007D8,b
+        stz wMapCursorState,b
         jsl rlOpenUnitMenu
         lda #$0008
         tsb wMapSystemFlags,b
@@ -371,9 +371,9 @@
 
         ; X: on a unit, opens its status screen; elsewhere enters the home castle if the cursor is on it.
 
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         bne _B1D0
-        lda wUnknown000766,b
+        lda wMapCursorStepping,b
         beq _B1D1
 
         _B1CC
@@ -421,7 +421,7 @@
         lda wJoy1Input
         cmp #$1000
         bne _B248
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         bne _B248
         lda wMapSystemFlags,b
         bit #$0020
@@ -728,8 +728,8 @@
         sec
         sbc wTempVariable2,b
         sta wMapCursorYTile,b
-        lda #$0004
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT
+        sta wMapCursorState,b
         stx wMapPanTargetDeploymentOffset,b
         bra _B5C9
 
@@ -822,8 +822,8 @@
         sec
         sbc wTempVariable2,b
         sta wMapCursorYTile,b
-        lda #$0004
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT
+        sta wMapCursorState,b
         lda #$FFFF
         sta wMapPanTargetDeploymentOffset,b
         sec

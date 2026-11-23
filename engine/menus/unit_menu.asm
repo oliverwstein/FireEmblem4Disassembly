@@ -541,7 +541,7 @@
         ; Opens the item list on the weapons for an assault ($7E2010).
 
         ldx wActiveUnitDeploymentOffset,b
-        lda #$0000
+        lda #MAP_ACTION_BATTLE
         sta wMapActionTargetType,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
@@ -572,7 +572,7 @@
         ; Finds the adjacent units of the army (target filter 2) and starts choosing one (rlRunMapAction).
 
         stz wSelectedInventorySlot,b
-        lda #$0000
+        lda #MAP_ACTION_BATTLE
         sta wMapActionTargetType,b
         lda #$0001
         sta wR10
@@ -611,7 +611,7 @@
         ; Opens the item list on the usable staves ($7E2008).
 
         ldx wActiveUnitDeploymentOffset,b
-        lda #$0000
+        lda #MAP_ACTION_BATTLE
         sta wMapActionTargetType,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta aProcSystem.wInput0,b
@@ -636,7 +636,7 @@
         ; Opens the item list on the usable items ($7E2018).
 
         ldx wActiveUnitDeploymentOffset,b
-        lda #$0000
+        lda #MAP_ACTION_BATTLE
         sta wMapActionTargetType,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta aProcSystem.wInput0,b
@@ -947,7 +947,7 @@
         .databank ?
 
         phx
-        lda #$0004
+        lda #MAP_ACTION_TALK
         sta wMapActionTargetType,b
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
@@ -1058,7 +1058,7 @@
         ; Target filter 5, then starts choosing a target.
 
         stz wSelectedInventorySlot,b
-        lda #$0002
+        lda #MAP_ACTION_HELP
         sta wMapActionTargetType,b
         lda #$0001
         sta wR10
@@ -1085,7 +1085,7 @@
 
         phx
         stz wSelectedInventorySlot,b
-        lda #$0003
+        lda #MAP_ACTION_GIVE_GOLD
         sta wMapActionTargetType,b
         lda #$0001
         sta wR10
@@ -1113,7 +1113,7 @@
 
         phx
         stz wSelectedInventorySlot,b
-        lda #$0003
+        lda #MAP_ACTION_GIVE_GOLD
         sta wMapActionTargetType,b
         lda #$0001
         sta wR10

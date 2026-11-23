@@ -391,7 +391,7 @@
         sta wPhaseScratch000D8D,b
         stz wMapStateFlags,b
         stz wActiveFactionSlot,b
-        stz $0DAF,b
+        stz wMapBattleHPWindowLeftRequest,b
         stz $0DB1,b
         stz wCurrentChapter,b
         stz wCurrentTurn,b
@@ -767,7 +767,7 @@
                 jsl rlMapCursorStep
                 jsl rlContinueMapScroll
 
-                lda wUnknown0007D8,b
+                lda wMapCursorState,b
                 bne _End
 
                   lda #1
@@ -800,7 +800,7 @@
         bne +
 
           jsr rsUnknown81AD8E
-          lda wUnknown0007D8,b
+          lda wMapCursorState,b
           bne +
         
         +
@@ -1359,8 +1359,8 @@
           lda wUnknown00171A,b
           bne _CLC
 
-            lda wUnknown0007D8,b
-            cmp #4
+            lda wMapCursorState,b
+            cmp #MAP_CURSOR_TO_UNIT
             beq _CLC
 
               ldx wActiveUnitDeploymentOffset,b

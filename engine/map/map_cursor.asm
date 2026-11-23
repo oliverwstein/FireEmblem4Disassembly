@@ -1,6 +1,6 @@
 ; The map cursor during the player phase. rlMapCursorStep runs it every frame:
 ; with nothing in progress the D-pad moves it a tile at a time (rsGetMapCursorMove,
-; rlMoveMapCursorInDirection), otherwise wUnknown0007D8 says what it is doing:
+; rlMoveMapCursorInDirection), otherwise wMapCursorState says what it is doing:
 ;   0       free (buttons go to rsMapInputHandler)
 ;   1, 2    a unit's move: back to the unit's tile, then the unit walks its path
 ;           (engine/map/unit_movement.asm)
@@ -105,8 +105,8 @@
         sec
         sbc wR13
         sta wMapCursorYTile,b
-        lda #$0004
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT
+        sta wMapCursorState,b
         pla
         sta wR13
         pla
@@ -157,10 +157,10 @@
 
         ; Does nothing while a fade runs or not every input layer is on. Hands over to the AI movement (rlMapAIMoveStep) in a computer phase, to the minimap, or to the cursor state (wMapCursorState); otherwise moves the free cursor with the D-pad and draws it.
 
-        stz wUnknown000758,b
+        stz wMapCursorResting,b
         jsr rsUpdateMapSystemFlags
 
-        stz wUnknown00073A,b
+        stz wMapScrollingFlag,b
         stz wMapEnableXScrollFlag,b
         stz wMapEnableYScrollFlag,b
 
@@ -224,8 +224,8 @@
           jml _End
         
         +
-        lda wMapOverlayFlags,b
-        bit #$0002
+        lda wMapReturnFlags,b
+        bit #MAP_RETURN_START_CASTLE_STAFF
         beq _A234
 
           ldx wActiveUnitDeploymentOffset,b
@@ -270,37 +270,37 @@
           stz wMovingUnitSpriteTimer,b
           jsl rlDeployedUnitSetHidden
 
-          stz wUnknown0007E2,b
+          stz wMovingUnitSpriteFacing,b
 
           jsl rlLoadMovingUnitSprite
 
-          lda wMapOverlayFlags,b
-          bit #$0008
+          lda wMapReturnFlags,b
+          bit #MAP_RETURN_CASTLE_GRID_STAFF
           bne +
 
             jsl rlStartInventoryStaffTargetSelection
 
-            lda #$0002
-            trb wMapOverlayFlags,b
+            lda #MAP_RETURN_START_CASTLE_STAFF
+            trb wMapReturnFlags,b
 
-            lda #$0004
-            tsb wMapOverlayFlags,b
+            lda #MAP_RETURN_CASTLE_STAFF_ACTIVE
+            tsb wMapReturnFlags,b
             bra _A234
 
           +
-          lda #$0002
-          trb wMapOverlayFlags,b
+          lda #MAP_RETURN_START_CASTLE_STAFF
+          trb wMapReturnFlags,b
 
           jsl rlUseCastleGridStaff
 
         _A234
-        lda wUnknown0007D8,b
+        lda wMapCursorState,b
         beq _A24F
 
-          cmp #$FFFF
+          cmp #MAP_CURSOR_LOCKED
           beq ++
 
-            cmp #$0003
+            cmp #MAP_CURSOR_CHOOSE_TARGET
             beq +
 
               jml rlMapCursorMoveStep
@@ -312,7 +312,7 @@
           jml _A2BD
 
         _A24F
-        lda wUnknown000766,b
+        lda wMapCursorStepping,b
         bne _A28D
 
           lda wJoy1New
@@ -329,8 +329,8 @@
 
             stz wMapScrollCurrentPixelDistance,b
             lda #1
-            sta wUnknown000766,b
-            stz wUnknown00073A,b
+            sta wMapCursorStepping,b
+            stz wMapScrollingFlag,b
             stz wMapEnableXScrollFlag,b
             stz wMapEnableYScrollFlag,b
             lda #4
@@ -351,12 +351,12 @@
         cmp #16
         bcc +
 
-          stz wUnknown000766,b
-          stz wUnknown00073A,b
+          stz wMapCursorStepping,b
+          stz wMapScrollingFlag,b
           stz wMapEnableXScrollFlag,b
           stz wMapEnableYScrollFlag,b
           lda #1
-          sta wUnknown000758,b
+          sta wMapCursorResting,b
 
         +
         jsl rlMoveMapCursorInDirection
@@ -384,7 +384,7 @@
         lda #0
         sta $08
 
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq +
 
           lda #4
@@ -424,20 +424,20 @@
 
         ; For a staff chosen on the castle grid (target already picked): uses it at once (rlRunMapAction) and clears the castle flags.
 
-        lda #$0000
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_FREE
+        sta wMapCursorState,b
         lda wActiveUnitDeploymentOffset,b
         sta wR0
         lda wMapTargetDeploymentOffset,b
         sta wR1
-        lda #$0004
-        trb wMapOverlayFlags,b
+        lda #MAP_RETURN_CASTLE_STAFF_ACTIVE
+        trb wMapReturnFlags,b
         lda wMapScrollXPixels,b
         sta wMapXOffset,b
         lda wMapScrollYPixels,b
         sta wMapYOffset,b
-        lda #$0008
-        trb wMapOverlayFlags,b
+        lda #MAP_RETURN_CASTLE_GRID_STAFF
+        trb wMapReturnFlags,b
         jsl rlCloseBattleForecast
         jsl rlRunMapAction
         lda #$0008
@@ -469,7 +469,7 @@
         beq +
 
           lda #1
-          sta wUnknown000758,b
+          sta wMapCursorResting,b
           lda #$8000
           trb wMapSystemFlags,b
         
@@ -486,10 +486,10 @@
           tsb wMapSystemFlags,b
         
         +
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         bne +
 
-          lda wMapOverlayFlags,b
+          lda wMapReturnFlags,b
           bne +
 
             lda wMapActionMode,b
@@ -500,7 +500,7 @@
         tsb wMapSystemFlags,b
 
         +
-        lda wUnknown0007D8,b
+        lda wMapCursorState,b
         beq +
 
           lda #$0004
@@ -537,7 +537,7 @@
 
         ; Carry set if the cursor has just come to rest on a tile (wMapCursorResting).
 
-        lda wUnknown000758,b
+        lda wMapCursorResting,b
         beq _A393
         sec
         rtl
@@ -569,8 +569,8 @@
 
         ; Nothing reaches this. An older free cursor movement: moves the cursor 16 pixels in the D-pad direction (faster with Y) and draws it.
 
-        stz wUnknown000758,b
-        lda wUnknown000766,b
+        stz wMapCursorResting,b
+        lda wMapCursorStepping,b
         bne _A3E6
         lda wJoy1Input
         bit #$4000
@@ -591,8 +591,8 @@
         _A3BA
         stz wMapScrollCurrentPixelDistance,b
         lda #$0001
-        sta wUnknown000766,b
-        stz wUnknown00073A,b
+        sta wMapCursorStepping,b
+        stz wMapScrollingFlag,b
         stz wMapEnableXScrollFlag,b
         stz wMapEnableYScrollFlag,b
         lda #$0005
@@ -612,12 +612,12 @@
         sta wMapScrollCurrentPixelDistance,b
         cmp #$0010
         bcc _A407
-        stz wUnknown000766,b
-        stz wUnknown00073A,b
+        stz wMapCursorStepping,b
+        stz wMapScrollingFlag,b
         stz wMapEnableXScrollFlag,b
         stz wMapEnableYScrollFlag,b
         lda #$0001
-        sta wUnknown000758,b
+        sta wMapCursorResting,b
 
         _A407
         jsl rlMoveMapCursorInDirection
@@ -638,7 +638,7 @@
         sta wR5
         lda #$0000
         sta wR4
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq _A447
         cmp #$0001
         beq _A439
@@ -682,7 +682,7 @@
 
         ; While a unit is selected, pulses the range overlay colours by frame.
 
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq _A4BB
         lda wVBlankEnabledFramecount
         and #$0078
@@ -822,7 +822,7 @@
 
 
         _A570
-        lda wUnknown000770,b
+        lda wUnitSelectedFlag,b
         beq _A5C2
         lda wJoy1New
         and #$0F00
@@ -965,14 +965,14 @@
         sta wTempVariable2,b
         sta wR1
         lda wTempVariable2,b
-        cmp $071E,b
+        cmp wMovementMapWindowTop,b
         bcc _A696
-        cmp $0722,b
+        cmp wMovementMapWindowBottom,b
         bcs _A696
         lda wTempVariable1,b
-        cmp $071C,b
+        cmp wMovementMapWindowLeft,b
         bcc _A696
-        cmp $0720,b
+        cmp wMovementMapWindowRight,b
         bcs _A696
         jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
@@ -1151,9 +1151,9 @@
         sta wMapCursorYTile,b
         lda #$0005
         jsl rlPlaySoundEffect
-        stz wUnknown0007D8,b
-        lda wMapOverlayFlags,b
-        bit #$0004
+        stz wMapCursorState,b
+        lda wMapReturnFlags,b
+        bit #MAP_RETURN_CASTLE_STAFF_ACTIVE
         bne _A85D
         lda #$0008
         tsb wMapSystemFlags,b
@@ -1187,8 +1187,8 @@
         sta wCursorYOffset,b
         jsl rlCloseBattleForecast
         stz wMovingUnitSpriteState,b
-        lda #$0004
-        trb wMapOverlayFlags,b
+        lda #MAP_RETURN_CASTLE_STAFF_ACTIVE
+        trb wMapReturnFlags,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlEnterTargetLocation
         rtl
@@ -1228,8 +1228,8 @@
         _A8DD
         lda wMapTargetDeploymentOffset,b
         jsl rlMoveCursorToUnit
-        lda #$0006
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_TARGET
+        sta wMapCursorState,b
         rtl
 
 
@@ -1271,14 +1271,14 @@
 
 
         _A92C
-        lda #$0000
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_FREE
+        sta wMapCursorState,b
         lda wActiveUnitDeploymentOffset,b
         sta wR0
         lda wMapTargetDeploymentOffset,b
         sta wR1
-        lda #$0004
-        trb wMapOverlayFlags,b
+        lda #MAP_RETURN_CASTLE_STAFF_ACTIVE
+        trb wMapReturnFlags,b
         lda wMapCursorOriginXTile,b
         sta wMapCursorXTile,b
         lda wMapCursorOriginYTile,b
@@ -1700,8 +1700,8 @@
 
         ; Sets cursor state 3, picks the first target, shows the battle forecast and moves the cursor to it (state 6 when the map has to scroll).
 
-        lda #$0003
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_CHOOSE_TARGET
+        sta wMapCursorState,b
         lda #$0003
         sta wMovingUnitSpriteState,b
         stz wMapTargetSearchIndex,b
@@ -1733,8 +1733,8 @@
         _AD94
         lda wMapTargetDeploymentOffset,b
         jsl rlMoveCursorToUnit
-        lda #$0006
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_TARGET
+        sta wMapCursorState,b
 
         _ADA1
         rtl
@@ -1758,7 +1758,7 @@
         .autsiz
         .databank ?
 
-        stz wUnknown0007D8,b
+        stz wMapCursorState,b
         rtl
 
         .databank 0
@@ -1824,8 +1824,8 @@
 
         lda wActiveUnitDeploymentOffset,b
         jsl rlMoveCursorToUnit
-        lda #$0008
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT_ACTION
+        sta wMapCursorState,b
         lda wMapActionMode,b
         beq _ADE2
         lda #$0005
@@ -1859,8 +1859,8 @@
 
         ; Sets wMapCursorState to $FFFF (the cursor only draws) and saves the camera in wMapXOffset/wMapYOffset, before leaving the map for a conversation.
 
-        lda #$FFFF
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_LOCKED
+        sta wMapCursorState,b
         lda wMapScrollXPixels,b
         sta wMapXOffset,b
         lda wMapScrollYPixels,b
@@ -1889,8 +1889,8 @@
         ; Sends the cursor to unit A (state 5) and turns wMapActionMode $8002-$8004 into 2-4 (4 also uses state 8), anything else into 1.
 
         jsl rlMoveCursorToUnit
-        lda #$0005
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT_SELECT
+        sta wMapCursorState,b
         lda wMapActionMode,b
         cmp #$8002
         beq _B44F
@@ -1918,8 +1918,8 @@
         _B45D
         lda #$0004
         sta wMapActionMode,b
-        lda #$0008
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT_ACTION
+        sta wMapCursorState,b
         rtl
 
         .databank 0
@@ -1982,8 +1982,8 @@
         sec
         sbc wTempVariable2,b
         sta wMapCursorYTile,b
-        lda #$0004
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT
+        sta wMapCursorState,b
         lda bUnknown000E7B,b
         and #$00FF
         bit #$0041
@@ -1992,8 +1992,8 @@
 
 
         _B4D4
-        lda #$0001
-        sta wUnknown0007D8,b
+        lda #MAP_AI_CURSOR_TO_UNIT
+        sta wMapCursorState,b
         rtl
 
         .databank 0
@@ -2047,8 +2047,8 @@
         sbc wTempVariable2,b
         sta wMapCursorYTile,b
 
-        lda #$0004
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT
+        sta wMapCursorState,b
         rtl
 
         .databank 0
@@ -2103,37 +2103,37 @@
         rts
 
         _B681
-        lda wUnknown0007D8,b
-        cmp #5
+        lda wMapCursorState,b
+        cmp #MAP_CURSOR_TO_UNIT_SELECT
         beq _B6A6
 
-          cmp #6
+          cmp #MAP_CURSOR_TO_TARGET
           beq _B6B6
 
-            cmp #7
+            cmp #MAP_CURSOR_TO_UNIT_MENU
             beq _B6D4
 
-              stz wUnknown00073A,b
+              stz wMapScrollingFlag,b
               stz wMapScrollScriptOffset,b
-              stz wUnknown0007D8,b
+              stz wMapCursorState,b
               lda #$0004
               trb wMapSystemFlags,b
               lda #0
               rts
         
         _B6A6
-        stz wUnknown00073A,b
+        stz wMapScrollingFlag,b
         stz wMapScrollScriptOffset,b
-        stz wUnknown0007D8,b
+        stz wMapCursorState,b
         jsr rsSelectUnitAtCursor
         lda #0
         rts
 
         _B6B6
-        stz wUnknown00073A,b
+        stz wMapScrollingFlag,b
         stz wMapScrollScriptOffset,b
-        lda #3
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_CHOOSE_TARGET
+        sta wMapCursorState,b
         lda wActiveUnitDeploymentOffset,b
         sta $00
         lda wMapTargetDeploymentOffset,b
@@ -2143,9 +2143,9 @@
         rts
 
         _B6D4
-        stz wUnknown00073A,b
+        stz wMapScrollingFlag,b
         stz wMapScrollScriptOffset,b
-        stz wUnknown0007D8,b
+        stz wMapCursorState,b
         lda wMapStateFlags,b
         bit #$0008
         bne +
@@ -2183,7 +2183,7 @@
         ; Moves the cursor by wMapScrollSpeed in wMapScrollDirectionIdentifier; within 48 pixels of the screen edge (16 at the map edge) the map scrolls instead. Bit 0 of $0764 is set if the cursor moved.
 
         lda #$0001
-        trb $0764,b
+        trb wMapCursorMoved,b
 
         lda wMapScrollDirectionIdentifier,b
         cmp #$0200
@@ -2268,7 +2268,7 @@
 
         sta wCursorXOffset,b
         lda #$0001
-        tsb $0764,b
+        tsb wMapCursorMoved,b
         rts
         
         +
@@ -2280,7 +2280,7 @@
 
         sta wCursorXOffset,b
         lda #$0001
-        tsb $0764,b
+        tsb wMapCursorMoved,b
         rts
         
         +
@@ -2329,10 +2329,10 @@
         
         +
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         lda #$0001
-        tsb $0764,b
+        tsb wMapCursorMoved,b
         rts
 
         _BCF4
@@ -2366,7 +2366,7 @@
 
             sta wCursorXOffset,b
             lda #$0001
-            tsb $0764,b
+            tsb wMapCursorMoved,b
             rts
 
         +
@@ -2378,7 +2378,7 @@
 
           sta wCursorXOffset,b
           lda #$0001
-          tsb $0764,b
+          tsb wMapCursorMoved,b
           rts
 
         +
@@ -2416,10 +2416,10 @@
         
         +
         lda #1
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableXScrollFlag,b
         lda #$0001
-        tsb $0764,b
+        tsb wMapCursorMoved,b
         rts
 
         _BD8C
@@ -2462,7 +2462,7 @@
         bcc _BDE5
         sta wCursorYOffset,b
         lda #$0001
-        tsb $0764,b
+        tsb wMapCursorMoved,b
         rts
 
 
@@ -2474,7 +2474,7 @@
         bcc _BE42
         sta wCursorYOffset,b
         lda #$0001
-        tsb $0764,b
+        tsb wMapCursorMoved,b
         rts
 
         .byte $A9, $01, $00, $8D, $3A, $07, $8D, $3E, $07, $A9, $01, $00, $0C, $64, $07, $60
@@ -2523,10 +2523,10 @@
 
         _BE32
         lda #$0001
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableYScrollFlag,b
         lda #$0001
-        tsb $0764,b
+        tsb wMapCursorMoved,b
         rts
 
 
@@ -2562,7 +2562,7 @@
         bcs _BE8B
         sta wCursorYOffset,b
         lda #$0001
-        tsb $0764,b
+        tsb wMapCursorMoved,b
         rts
 
 
@@ -2574,7 +2574,7 @@
         bcs _BEDA
         sta wCursorYOffset,b
         lda #$0001
-        tsb $0764,b
+        tsb wMapCursorMoved,b
         rts
 
 
@@ -2612,10 +2612,10 @@
 
         _BECA
         lda #$0001
-        sta wUnknown00073A,b
+        sta wMapScrollingFlag,b
         sta wMapEnableYScrollFlag,b
         lda #$0001
-        tsb $0764,b
+        tsb wMapCursorMoved,b
         rts
 
 
@@ -2643,7 +2643,7 @@
 
         ; Sound $05 if the cursor moved this step.
 
-        lda $0764,b
+        lda wMapCursorMoved,b
         bit #$0001
         beq _BEFE
         lda #$0005

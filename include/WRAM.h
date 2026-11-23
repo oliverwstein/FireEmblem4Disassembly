@@ -481,8 +481,8 @@
 
   .virtual $000596
 
-    wUnknown000596 .word ?    ; $000596
-    ; A mask for the IDs inside aMapData?
+    wMapTileIDMask .word ?    ; $000596
+      ; ANDed with each aMapData word to get the tile ID ($03FF on the chapter map).
     wMapScrollXPixels .word ? ; $000598
     wMapScrollYPixels .word ? ; $00059A
 
@@ -493,19 +493,29 @@
 
 
 
-  .virtual $000726
+  .virtual $00071C
 
+    wMovementMapWindowLeft .word ?          ; $00071C
+    wMovementMapWindowTop .word ?           ; $00071E
+    wMovementMapWindowRight .word ?         ; $000720
+    wMovementMapWindowBottom .word ?        ; $000722
+      ; The map tiles aMovementMap covers: 64x64 around the selected unit
+      ; (rsSetMovementMapWindowAndRedraw). Right and bottom are left + 64 and
+      ; top + 64 before clamping and are also the origin for the index.
+    wTilemapRedrawOffset .word ?            ; $000724
+      ; Where the next row goes in aBG2TilemapBuffer/aBG3TilemapBuffer while the
+      ; whole map or range overlay is redrawn.
     wMapScrollSpeed .word ?                 ; $000726
     wMapPixelScrollDistance .word ?         ; $000728
-    wUnknown00072A .word ?                  ; $00072A
-    wUnknown00072C .word ?                  ; $00072C
-    wUnknown00072E .word ?                  ; $00072E
-    wUnknown000730 .word ?                  ; $000730 ; X tile?
-    wUnknown000732 .word ?                  ; $000732
-    wUnknown000734 .word ?                  ; $000734
-    wUnknown000736 .word ?                  ; $000736
+    wMapTileBufferWrapped .word ?           ; $00072A ; set when a row or column being built wraps to the start of its buffer
+    wMapColumnUploadFlag .word ?            ; $00072C ; rlUploadMapRowAndColumn copies the column buffer when set
+    wMapRowUploadFlag .word ?               ; $00072E ; rlUploadMapRowAndColumn copies the row buffer when set
+    wMapColumnUploadVRAMOffset .word ?      ; $000730
+    wMapRowUploadVRAMOffset .word ?         ; $000732
+    wMapSavedScrollXPixels .word ?          ; $000734
+    wMapSavedScrollYPixels .word ?          ; $000736
     wMapScrollCurrentPixelDistance .word ?  ; $000738
-    wUnknown00073A .word ?                  ; $00073A
+    wMapScrollingFlag .word ?               ; $00073A ; set while the camera scrolls (rlContinueMapScroll)
     wMapEnableXScrollFlag .word ?           ; $00073C
     wMapEnableYScrollFlag .word ?           ; $00073E
     wMapMinXScroll .word ?                  ; $000740
@@ -542,20 +552,20 @@
     .word ? ; $000752
     .word ? ; $000754
     .word ? ; $000756
-    wUnknown000758 .word ?    ; $000758
+    wMapCursorResting .word ? ; $000758 ; set for a frame when the cursor comes to rest on a tile
     wUnknown00075A .word ?    ; $00075A
-    wUnknown00075C .word ?    ; $00075C
+    wMapWidthMode .word ?     ; $00075C
+      ; 4: aMapData rows are 64 tiles; anything else (8): 128 tiles.
     .word ? ; $00075E
     wMapXOffset .word ?       ; $000760
     wMapYOffset .word ?       ; $000762
-    .word ? ; $000764
-    wUnknown000766 .word ?    ; $000766
-    ; A flag for something
+    wMapCursorMoved .word ?   ; $000764 ; bit 0: the cursor moved this step (rlMoveMapCursorInDirection)
+    wMapCursorStepping .word ? ; $000766 ; set while the cursor or a walking unit is partway through a 16-pixel step
     wCursorXOffset .word ?    ; $000768
     wCursorYOffset .word ?    ; $00076A
-    wUnknown00076C .word ?    ; $00076C
-    wUnknown00076E .word ?    ; $00076E
-    wUnknown000770 .word ?    ; $000770
+    wMovingUnitXPixel .word ? ; $00076C ; where the moving unit sprite is drawn in state 1 (map pixels)
+    wMovingUnitYPixel .word ? ; $00076E
+    wUnitSelectedFlag .word ? ; $000770 ; nonzero while a unit is picked up and its range overlay shown
 
   .endvirtual
 
@@ -577,18 +587,22 @@
     wMapSavedCursorXPixel .word ?      ; $000780 ; cursor absolute X pixel saved across move
     wMapSavedCursorYPixel .word ?      ; $000782 ; cursor absolute Y pixel saved across move
     wMapPanTargetDeploymentOffset .word ? ; $000784 ; unit deployment offset targeted by camera pan
-    wMapOverlayFlags .word ?           ; $000786 ; map cursor/tile overlay flags tested in rsUpdateMapSystemFlags
+    wMapReturnFlags .word ?            ; $000786
+      ; What the map does on return from a menu or the castle (MAP_RETURN_* in
+      ; include/Map.h): send the cursor to the active unit, start a castle staff's
+      ; target selection, and whether that selection is running or came from the
+      ; castle grid.
     wMapSystemFlags .word ?            ; $000788 ; bitfield:
       ; $0001 = JOY_Y held (recomputed per frame by rsUpdateMapSystemFlags)
-      ; $0002 = map sprite/unit motion active (wUnknown000770 | wMapOverlayFlags | wMapActionMode)
-      ; $0004 = wUnknown0007D8 nonzero / phase action
+      ; $0002 = a unit is selected, or wMapReturnFlags or wMapActionMode is nonzero
+      ; $0004 = wMapCursorState is not 0
       ; $0008 = map cursor / unit action HUD update
-      ; $0010 = event active (wUnknown00171A nonzero)
-      ; $0020 = map camera scrolling / menu scroll lock
+      ; $0010 = an event is running (wUnknown00171A nonzero)
+      ; $0020 = the minimap is open
       ; $0040 = faction phase setup active
       ; $0080 = unit window / map menu open (rlHideMapWindows/D5)
-      ; $4000 = returning from castle menu
-      ; $8000 = pending cursor highlight update (sets wUnknown000758 = 1)
+      ; $4000 = a warp castle was chosen on the minimap
+      ; $8000 = sets wMapCursorResting for a frame
     wDeployedUnitScanCounter .word ?   ; $00078A ; deployed unit iteration count vs wDeployedUnitsCount
 
   .endvirtual
@@ -600,7 +614,16 @@
       ; Temporary values used by many unrelated routines: prices, portrait IDs,
       ; weapons and their ranges, map coordinates and more.
     wUnknown000790 .word ? ; $000790 ; tilemap / path helper scratch
-    ; Skip $000792 (multi-purposed in bank88.asm).
+    ; Skip $000792 (multi-purposed in the map code).
+
+  .endvirtual
+
+  .virtual $000794
+
+    aMovementPath .fill $40 ; $000794
+      ; The walking path rsBuildMovementPath writes, one word per step from the
+      ; destination back to the unit: 1 down, 2 up, 3 right, 4 left.
+      ; wMapScrollScriptOffset indexes it as the unit walks.
 
   .endvirtual
 
@@ -609,7 +632,9 @@
 
     wMapScrollScriptOffset .word ?      ; $0007D4
     wSavedMapScrollScriptOffset .word ? ; $0007D6 ; saves wMapScrollScriptOffset around movement-arrow calc
-    wUnknown0007D8 .word ?              ; $0007D8
+    wMapCursorState .word ?             ; $0007D8
+      ; What the map cursor is doing (MAP_CURSOR_* in include/Map.h); see
+      ; engine/map/map_cursor.asm.
     wMovingUnitSpriteState .word ?      ; $0007DA ; 0 idle, 1 selected, 2 moving/acting
     wMovingUnitSpriteFrame .word ?      ; $0007DC ; moving map sprite frame index
     wMovingUnitSpriteTimer .word ?      ; $0007DE ; countdown timer reloaded from aMapSpriteWalkFrameDelays
@@ -622,7 +647,7 @@
 
   .virtual $0007E2
 
-    wUnknown0007E2 .word ? ; $0007E2
+    wMovingUnitSpriteFacing .word ? ; $0007E2 ; 0 left, 8 right, $10 up, $18 down
     wMapSpriteFrameCounter .word ?        ; $0007E4 ; incremented after map sprite VRAM DMA cycles
     wMapSpriteFrameByteOffset .word ?     ; $0007E6 ; animation frame byte offset added to lMapSpriteGraphicsPointer
     wMapSpriteAnimationPauseFlags .word ? ; $0007E8 ; $8000 disables map sprite DMA, $0001 disables tile anim/mouth
@@ -1404,6 +1429,9 @@
       wCurrentStep .word ?                ; $001B45
       wCurrentPaletteBufferOffset .word ? ; $001B47
     .bend
+
+    wDemoIndex .word ?        ; $001B49 ; the attract demo to show (rlSetDemoIndexFromRanking)
+    wDemoRestartIndex .word ? ; $001B4B ; where wDemoIndex starts again
 
   .endvirtual
 

@@ -58,7 +58,7 @@
 
 
         _A9E6
-        stz wUnknown00073A,b
+        stz wMapScrollingFlag,b
         lda wMapScrollScriptOffset,b
         dec a
         dec a
@@ -69,8 +69,8 @@
         sta wMapCursorYTile,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitSetHidden
-        lda #$0002
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_UNIT_WALKING
+        sta wMapCursorState,b
         lda #$FFFF
         sta wMapScrollDirectionIdentifier,b
         jsl rlStartWalkingSound
@@ -95,42 +95,42 @@
         lda wMapScrollScriptOffset,b
         bmi _AA8A
         tax
-        lda $0794,b,x
+        lda aMovementPath,b,x
         sta wR0
         beq _AA8A
-        cmp #$0001
+        cmp #PATH_DOWN
         beq _AA3F
-        cmp #$0002
+        cmp #PATH_UP
         beq _AA4A
-        cmp #$0003
+        cmp #PATH_RIGHT
         beq _AA55
-        cmp #$0004
+        cmp #PATH_LEFT
         beq _AA60
 
         _AA3F
         lda #$0018
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0400
         bra _AA6B
 
 
         _AA4A
         lda #$0010
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0800
         bra _AA6B
 
 
         _AA55
         lda #$0008
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0100
         bra _AA6B
 
 
         _AA60
         lda #$0000
-        sta wUnknown0007E2,b
+        sta wMovingUnitSpriteFacing,b
         lda #$0200
         bra _AA6B
 
@@ -159,9 +159,9 @@
         jsl rlStopWalkingSound
         lda #$0002
         sta wMovingUnitSpriteState,b
-        stz wUnknown0007D8,b
+        stz wMapCursorState,b
         stz wMapScrollScriptOffset,b
-        stz wUnknown00073A,b
+        stz wMapScrollingFlag,b
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
@@ -183,7 +183,7 @@
         ldx wActiveUnitDeploymentOffset,b
         jsl rlMoveDeploymentToTile
         lda wMapActionMode,b
-        cmp #$0004
+        cmp #PATH_LEFT
         beq _AAEF
         cmp #$0005
         beq _AAEF
@@ -211,7 +211,7 @@
 
         _AB00
         lda wMapActionMode,b
-        cmp #$0004
+        cmp #PATH_LEFT
         beq _AB0C
         lda #$0000
         rts
@@ -243,7 +243,7 @@
         dec x
         stx wMapScrollScriptOffset,b
         bmi _AB2B
-        lda $0794,b,x
+        lda aMovementPath,b,x
         cmp wR0
         beq rsMergePathSteps
 
@@ -268,23 +268,23 @@
         .autsiz
         .databank $00
 
-        lda wUnknown000766,b
+        lda wMapCursorStepping,b
         bne _A7BA
 
-          lda wUnknown0007D8,b
-          cmp #2
+          lda wMapCursorState,b
+          cmp #MAP_CURSOR_UNIT_WALKING
           beq _A788
 
-            cmp #4
+            cmp #MAP_CURSOR_TO_UNIT
             beq _A795
 
-              cmp #5
+              cmp #MAP_CURSOR_TO_UNIT_SELECT
               beq _A795
 
-                cmp #6
+                cmp #MAP_CURSOR_TO_TARGET
                 beq _A795
 
-                  cmp #7
+                  cmp #MAP_CURSOR_TO_UNIT_MENU
                   beq _A795
 
                     lda #16
@@ -317,8 +317,8 @@
           +
           stz wMapScrollCurrentPixelDistance,b
           lda #1
-          sta wUnknown000766,b
-          stz wUnknown00073A,b
+          sta wMapCursorStepping,b
+          stz wMapScrollingFlag,b
           stz wMapEnableXScrollFlag,b
           stz wMapEnableYScrollFlag,b
 
@@ -338,16 +338,16 @@
           sbc wR0
           sta wMapScrollSpeed,b
 
-          stz wUnknown000766,b
-          stz wUnknown00073A,b
+          stz wMapCursorStepping,b
+          stz wMapScrollingFlag,b
           stz wMapEnableXScrollFlag,b
           stz wMapEnableYScrollFlag,b
         
         +
         jsl rlMoveMapCursorInDirection
 
-        lda wUnknown0007D8,b
-        cmp #2
+        lda wMapCursorState,b
+        cmp #MAP_CURSOR_UNIT_WALKING
         bne _End
 
           jsl rlUpdateWalkingSound
@@ -449,8 +449,8 @@
         jsl rlMoveDeploymentToTile
         lda wActiveUnitDeploymentOffset,b
         jsl rlMoveCursorToUnit
-        lda #$0007
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT_MENU
+        sta wMapCursorState,b
         rtl
 
 
@@ -490,8 +490,8 @@
         jsl rlMoveDeploymentToTile
         lda wActiveUnitDeploymentOffset,b
         jsl rlMoveCursorToUnit
-        lda #$0007
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT_MENU
+        sta wMapCursorState,b
         rtl
 
 
@@ -582,8 +582,8 @@
 
 
         _AF45
-        lda #$0007
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_TO_UNIT_MENU
+        sta wMapCursorState,b
         rtl
 
         .databank 0
@@ -613,12 +613,12 @@
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
-        sta wUnknown00076C,b
+        sta wMovingUnitXPixel,b
 
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
-        sta wUnknown00076E,b
+        sta wMovingUnitYPixel,b
 
         lda #1
         sta wMovingUnitSpriteState,b
@@ -627,7 +627,7 @@
 
         jsl rlDeployedUnitSetHidden
 
-        stz wUnknown0007E2,b
+        stz wMovingUnitSpriteFacing,b
         jsl rlLoadMovingUnitSprite
         rtl
 
@@ -716,7 +716,7 @@
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
-        sta wUnknown00076C,b
+        sta wMovingUnitXPixel,b
         lsr a
         lsr a
         lsr a
@@ -727,7 +727,7 @@
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
-        sta wUnknown00076E,b
+        sta wMovingUnitYPixel,b
         lsr a
         lsr a
         lsr a
@@ -756,7 +756,7 @@
         cmp wR1
         bne _B799
         sta wR11
-        inc wUnknown000770,b
+        inc wUnitSelectedFlag,b
         lda #$0002
         tsb wMapSystemFlags,b
         jsl rlMapMenuEmptyHook
@@ -766,7 +766,7 @@
         stz wMovingUnitSpriteTimer,b
         stx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitSetHidden
-        stz wUnknown0007E2,b
+        stz wMovingUnitSpriteFacing,b
         jsl rlLoadMovingUnitSprite
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
@@ -810,12 +810,12 @@
         jsl rlMoveDeploymentToTile
         lda #$0002
         trb wMapSystemFlags,b
-        stz wUnknown000770,b
+        stz wUnitSelectedFlag,b
         lda #$0002
         sta wMovingUnitSpriteState,b
-        stz wUnknown0007D8,b
+        stz wMapCursorState,b
         stz wMapScrollScriptOffset,b
-        stz wUnknown00073A,b
+        stz wMapScrollingFlag,b
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
@@ -958,25 +958,25 @@
         lda wTempVariable1,b
         sec
         sbc #$0020
-        sta $071C,b
+        sta wMovementMapWindowLeft,b
         clc
         adc #$0040
-        sta $0720,b
+        sta wMovementMapWindowRight,b
         lda wTempVariable2,b
         sec
         sbc #$0020
-        sta $071E,b
+        sta wMovementMapWindowTop,b
         clc
         adc #$0040
-        sta $0722,b
-        lda $071C,b
+        sta wMovementMapWindowBottom,b
+        lda wMovementMapWindowLeft,b
         bpl _B8D1
-        stz $071C,b
+        stz wMovementMapWindowLeft,b
 
         _B8D1
-        lda $071E,b
+        lda wMovementMapWindowTop,b
         bpl _B8D9
-        stz $071E,b
+        stz wMovementMapWindowTop,b
 
         _B8D9
         lda bUnknown000E7B,b
@@ -1029,14 +1029,14 @@
         lda aTerrainTileset,x
         and #$00FF
         lda wTempVariable2,b
-        cmp $071E,b
+        cmp wMovementMapWindowTop,b
         bcc _B95E
-        cmp $0722,b
+        cmp wMovementMapWindowBottom,b
         bcs _B95E
         lda wTempVariable1,b
-        cmp $071C,b
+        cmp wMovementMapWindowLeft,b
         bcc _B95E
-        cmp $0720,b
+        cmp wMovementMapWindowRight,b
         bcs _B95E
         jsr rsGetMovementMapRowIndex
         lda aMovementMap,x
@@ -1121,7 +1121,7 @@
         ldx #$0040
 
         _B9A0
-        stz $0794,b,x
+        stz aMovementPath,b,x
         dec x
         dec x
         bpl _B9A0
@@ -1150,8 +1150,8 @@
         bcc _B9F4
         beq _B9F4
         sta $0792,b
-        lda #$0001
-        sta $0794,b,y
+        lda #PATH_DOWN
+        sta aMovementPath,b,y
         inc wMapScrollScriptOffset,b
         lda wTempVariable1,b
         sta wR4
@@ -1172,8 +1172,8 @@
         bcc _BA29
         beq _BA29
         sta $0792,b
-        lda #$0002
-        sta $0794,b,y
+        lda #PATH_UP
+        sta aMovementPath,b,y
         inc wMapScrollScriptOffset,b
         lda wTempVariable1,b
         sta wR4
@@ -1194,8 +1194,8 @@
         bcc _BA5E
         beq _BA5E
         sta $0792,b
-        lda #$0003
-        sta $0794,b,y
+        lda #PATH_RIGHT
+        sta aMovementPath,b,y
         inc wMapScrollScriptOffset,b
         lda wTempVariable1,b
         sta wR4
@@ -1216,8 +1216,8 @@
         bcc _BA9C
         beq _BA9C
         sta $0792,b
-        lda #$0004
-        sta $0794,b,y
+        lda #PATH_LEFT
+        sta aMovementPath,b,y
         inc wMapScrollScriptOffset,b
         lda wTempVariable1,b
         sta wR4
@@ -1239,8 +1239,8 @@
         sty wMapScrollScriptOffset,b
         lda wActiveUnitDeploymentOffset,b
         jsl rlMoveCursorToUnit
-        lda #$0001
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_BACK_TO_UNIT
+        sta wMapCursorState,b
         rts
 
 
@@ -1248,7 +1248,7 @@
         ldx #$0040
 
         _BABB
-        stz $0794,b,x
+        stz aMovementPath,b,x
         dec x
         dec x
         bpl _BABB
@@ -1277,8 +1277,8 @@
         bcc _BB0F
         beq _BB0F
         sta $0792,b
-        lda #$0003
-        sta $0794,b,y
+        lda #PATH_RIGHT
+        sta aMovementPath,b,y
         inc wMapScrollScriptOffset,b
         lda wTempVariable1,b
         sta wR4
@@ -1299,8 +1299,8 @@
         bcc _BB44
         beq _BB44
         sta $0792,b
-        lda #$0004
-        sta $0794,b,y
+        lda #PATH_LEFT
+        sta aMovementPath,b,y
         inc wMapScrollScriptOffset,b
         lda wTempVariable1,b
         sta wR4
@@ -1321,8 +1321,8 @@
         bcc _BB79
         beq _BB79
         sta $0792,b
-        lda #$0001
-        sta $0794,b,y
+        lda #PATH_DOWN
+        sta aMovementPath,b,y
         inc wMapScrollScriptOffset,b
         lda wTempVariable1,b
         sta wR4
@@ -1343,8 +1343,8 @@
         bcc _BBB7
         beq _BBB7
         sta $0792,b
-        lda #$0002
-        sta $0794,b,y
+        lda #PATH_UP
+        sta aMovementPath,b,y
         inc wMapScrollScriptOffset,b
         lda wTempVariable1,b
         sta wR4
@@ -1366,8 +1366,8 @@
         sty wMapScrollScriptOffset,b
         lda wActiveUnitDeploymentOffset,b
         jsl rlMoveCursorToUnit
-        lda #$0001
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_BACK_TO_UNIT
+        sta wMapCursorState,b
         rts
 
         .databank 0
@@ -1405,7 +1405,7 @@
         bpl _BBF1
         jsl rlMarkAllMapMenuRowsDirty
         jsl rlLoadMapWindowPalettes
-        stz wUnknown000770,b
+        stz wUnitSelectedFlag,b
         rts
 
         .databank 0
@@ -1512,11 +1512,11 @@
         tax
         lda aTerrainTileset,x
         and #$00FF
-        cmp #$0005
+        cmp #TerrainSea
         beq _C120
-        cmp #$0006
+        cmp #TerrainRiver
         beq _C120
-        cmp #$0010
+        cmp #TerrainSwamp
         beq _C120
 
         _C11B
@@ -1574,24 +1574,24 @@
         ; The computer phase's version of the cursor states: 1 cursor to the acting unit, then picks it up and starts its walk (rsStartAIUnitWalk); 2 walking (speed by the enemy speed option); 3 cursor to its target; 4 a short wait; then the queued AI action runs (rlAIExecuteQueuedAction).
 
         ; Reached with jml from rlMapCursorStepInner. Steps through states 0-4 in
-        ; wUnknown0007D8 and sets up the map scroll distance and speed, then
+        ; wMapCursorState and sets up the map scroll distance and speed, then
         ; draws a sprite at the cursor. What the states mean is not known yet.
 
-        lda wUnknown000766,b
+        lda wMapCursorStepping,b
         beq _C4E2
         jml _C61E
 
 
         _C4E2
-        lda wUnknown0007D8,b
+        lda wMapCursorState,b
         beq _C4FF
-        cmp #$0001
+        cmp #MAP_AI_CURSOR_TO_UNIT
         beq _C507
-        cmp #$0002
+        cmp #MAP_AI_UNIT_WALKING
         beq _C53B
-        cmp #$0003
+        cmp #MAP_AI_CURSOR_TO_TARGET
         beq _C503
-        cmp #$0004
+        cmp #MAP_AI_WAIT
         bne _C4FF
         jml _C5D2
 
@@ -1624,8 +1624,8 @@
 
 
         _C52E
-        lda #$0000
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_FREE
+        sta wMapCursorState,b
         sta wMapActionActiveFlag,b
         jml _C658
 
@@ -1654,24 +1654,24 @@
         cmp #$FFFF
         beq _C592
         jsl rlMoveCursorToUnit
-        lda #$0003
-        sta wUnknown0007D8,b
+        lda #MAP_AI_CURSOR_TO_TARGET
+        sta wMapCursorState,b
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
-        sta wUnknown00076C,b
+        sta wMovingUnitXPixel,b
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
-        sta wUnknown00076E,b
+        sta wMovingUnitYPixel,b
         lda #$0001
         sta wMovingUnitSpriteState,b
         bra _C5AA
 
 
         _C592
-        lda #$0000
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_FREE
+        sta wMapCursorState,b
         sta wMapActionActiveFlag,b
         jsl rlEndUnitAction
         lda wActiveActionID,b
@@ -1693,8 +1693,8 @@
         _C5C2
         lda #$0018
         sta wMapScrollScriptOffset,b
-        lda #$0004
-        sta wUnknown0007D8,b
+        lda #MAP_AI_WAIT
+        sta wMapCursorState,b
         jml _C658
 
 
@@ -1708,8 +1708,8 @@
 
 
         _C5E0
-        lda #$0000
-        sta wUnknown0007D8,b
+        lda #MAP_CURSOR_FREE
+        sta wMapCursorState,b
         sta wMapActionActiveFlag,b
         jsl rlEndUnitAction
         lda wMapScrollXPixels,b
@@ -1728,8 +1728,8 @@
         _C60C
         stz wMapScrollCurrentPixelDistance,b
         lda #$0001
-        sta wUnknown000766,b
-        stz wUnknown00073A,b
+        sta wMapCursorStepping,b
+        stz wMapScrollingFlag,b
         stz wMapEnableXScrollFlag,b
         stz wMapEnableYScrollFlag,b
 
@@ -1747,15 +1747,15 @@
         sec
         sbc wR0
         sta wMapScrollSpeed,b
-        stz wUnknown000766,b
-        stz wUnknown00073A,b
+        stz wMapCursorStepping,b
+        stz wMapScrollingFlag,b
         stz wMapEnableXScrollFlag,b
         stz wMapEnableYScrollFlag,b
 
         _C648
         jsl rlMoveMapCursorInDirection
-        lda wUnknown0007D8,b
-        cmp #$0002
+        lda wMapCursorState,b
+        cmp #MAP_AI_UNIT_WALKING
         bne _C658
         jsl rlUpdateWalkingSound
 
@@ -1806,13 +1806,13 @@
 
         jsr rsSelectAIUnitAtCursor
         lda wMapScrollXPixels,b
-        sta wUnknown000734,b
+        sta wMapSavedScrollXPixels,b
         lda wMapScrollYPixels,b
-        sta wUnknown000736,b
+        sta wMapSavedScrollYPixels,b
         lda wCursorXOffset,b
-        sta wUnknown00076C,b
+        sta wMovingUnitXPixel,b
         lda wCursorYOffset,b
-        sta wUnknown00076E,b
+        sta wMovingUnitYPixel,b
         lda #$0000
         sta wCursorXOffset,b
         lda wActiveActionDestinationX,b
@@ -1826,16 +1826,16 @@
         .byte $00 ; brk
 
         _C6B6
-        lda wUnknown000734,b
+        lda wMapSavedScrollXPixels,b
         sta wMapScrollXPixels,b
-        lda wUnknown000736,b
+        lda wMapSavedScrollYPixels,b
         sta wMapScrollYPixels,b
-        lda wUnknown00076C,b
+        lda wMovingUnitXPixel,b
         sta wCursorXOffset,b
-        lda wUnknown00076E,b
+        lda wMovingUnitYPixel,b
         sta wCursorYOffset,b
-        lda #$0002
-        sta wUnknown0007D8,b
+        lda #MAP_AI_UNIT_WALKING
+        sta wMapCursorState,b
         lda #$FFFF
         sta wMapScrollDirectionIdentifier,b
         jsl rlStartWalkingSound
@@ -1882,8 +1882,8 @@
         lda wActiveActionUnit1DeploymentOffset,b
         sta wActiveUnitDeploymentOffset,b
         jsl rlMoveCursorToUnit
-        lda #$0001
-        sta wUnknown0007D8,b
+        lda #MAP_AI_CURSOR_TO_UNIT
+        sta wMapCursorState,b
         rtl
 
         .databank 0
@@ -1912,8 +1912,8 @@
         lda wActiveActionUnit1DeploymentOffset,b
         sta wActiveUnitDeploymentOffset,b
         jsl rlMoveCursorToUnit
-        lda #$0001
-        sta wUnknown0007D8,b
+        lda #MAP_AI_CURSOR_TO_UNIT
+        sta wMapCursorState,b
         rts
 
         .databank 0
@@ -1932,7 +1932,7 @@
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
-        sta wUnknown00076C,b
+        sta wMovingUnitXPixel,b
         lsr a
         lsr a
         lsr a
@@ -1943,7 +1943,7 @@
         lda wCursorYOffset,b
         clc
         adc wMapScrollYPixels,b
-        sta wUnknown00076E,b
+        sta wMovingUnitYPixel,b
         lsr a
         lsr a
         lsr a
@@ -1968,7 +1968,7 @@
         cmp wR1
         bne _C7BF
         sta wR11
-        inc wUnknown000770,b
+        inc wUnitSelectedFlag,b
         lda #$0002
         tsb wMapSystemFlags,b
         jsl rlMapMenuEmptyHook
@@ -1978,7 +1978,7 @@
         stz wMovingUnitSpriteTimer,b
         stx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitSetHidden
-        stz wUnknown0007E2,b
+        stz wMovingUnitSpriteFacing,b
         jsl rlLoadMovingUnitSprite
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b

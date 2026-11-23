@@ -37,8 +37,8 @@
         sbc wR0,b
         asl a
         dec a
-        sta $1B49,b
-        sta $1B4B,b
+        sta wDemoIndex,b
+        sta wDemoRestartIndex,b
         plx
         rtl
 
@@ -53,14 +53,14 @@
 
         ; Sets bit 0 of the demo index and runs its entry of aDemoBattleSetups, then steps the index down (back to $1B4B below 0). Only odd entries are reached from here.
 
-        lda $1B49,b
+        lda wDemoIndex,b
         ora #$0001
-        sta $1B49,b
+        sta wDemoIndex,b
         phx
-        lda $1B49,b
+        lda wDemoIndex,b
         asl a
         clc
-        adc $1B49,b
+        adc wDemoIndex,b
         tax
         lda @l aDemoBattleSetups,x
         sta lR18
@@ -70,12 +70,12 @@
         pea #<>(+)-1
         jml [lR18]
         +
-        lda $1B49,b
+        lda wDemoIndex,b
         dec a
         bpl +
-        lda $1B4B,b
+        lda wDemoRestartIndex,b
         +
-        sta $1B49,b
+        sta wDemoIndex,b
         plx
         rtl
 

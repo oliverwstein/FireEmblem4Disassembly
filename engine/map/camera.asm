@@ -29,7 +29,7 @@
         phk
         plb
         .databank $88
-        lda wUnknown00075C,b
+        lda wMapWidthMode,b
         cmp #$0004
         beq _BF56
         cmp #$0008

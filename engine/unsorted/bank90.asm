@@ -117,7 +117,7 @@
         .databank $90
         phx
         phy
-        lda $1B49,b
+        lda wDemoIndex,b
         tax
         lda @l aUnknown90EC19,x
         and #$00FF
@@ -616,9 +616,9 @@
         ; Run by RUN_ASM from the event scripts at $90/E8CE-EBC9 (not built yet).
         ; Sets bit 0 of $1B49.
 
-        lda $1B49,b
+        lda wDemoIndex,b
         ora #$0001
-        sta $1B49,b
+        sta wDemoIndex,b
         rtl
 
         .databank 0
@@ -642,7 +642,7 @@
         .databank $90
         phx
         phy
-        lda $1B49,b
+        lda wDemoIndex,b
         cmp #$0001
         bne _F1C7
         lda #$0001
@@ -702,7 +702,7 @@
         .databank $90
         phx
         phy
-        lda $1B49,b
+        lda wDemoIndex,b
         sta wR0
         asl a
         clc

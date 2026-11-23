@@ -1,7 +1,7 @@
 ; Setting up the chapter map's display: rlSetUpChapterMapDisplay loads the map's
 ; graphics and palettes, sets the windows, restores the camera, draws the visible
 ; map and the unit sprites and restarts the animations; it then acts on
-; wMapOverlayFlags, the flags that tell the map what to do on return from the
+; wMapReturnFlags, the flags that tell the map what to do on return from the
 ; castle or a menu (rlSetMapReturn*, rsHandleMapReturnFlags). Also rlClearMapRAM
 ; for a new game or a loaded save. Bank $88.
 
@@ -23,7 +23,7 @@
         lda #$0001
         sta wUnknown00075A,b
         lda #$03FF
-        sta wUnknown000596,b
+        sta wMapTileIDMask,b
         phk
         plb
         .databank $88
@@ -114,9 +114,9 @@
         sta wBufferBG3VOFS
         lda #$0020
         trb wMapSystemFlags,b
-        stz wUnknown000770,b
-        stz wUnknown000766,b
-        stz wUnknown0007D8,b
+        stz wUnitSelectedFlag,b
+        stz wMapCursorStepping,b
+        stz wMapCursorState,b
         stz wMovingUnitSpriteState,b
         stz wMapActionActiveFlag,b
         stz wMapScrollSpeed,b
@@ -234,10 +234,10 @@
 
         ; With MAP_RETURN_CENTER_ON_UNIT set, sends the cursor to the active unit and clears the flag.
 
-        lda wMapOverlayFlags,b
-        bit #$0001
+        lda wMapReturnFlags,b
+        bit #MAP_RETURN_CENTER_ON_UNIT
         bne _81C6
-        bit #$0002
+        bit #MAP_RETURN_START_CASTLE_STAFF
         bne _81D5
 
         _81C5
@@ -247,8 +247,8 @@
         _81C6
         lda wActiveUnitDeploymentOffset,b
         jsl rlMoveCursorToUnit
-        lda #$0001
-        trb wMapOverlayFlags,b
+        lda #MAP_RETURN_CENTER_ON_UNIT
+        trb wMapReturnFlags,b
         bra _81C5
 
 
@@ -276,8 +276,8 @@
 
         ; Sets MAP_RETURN_CENTER_ON_UNIT: back on the map, the cursor travels to the active unit.
 
-        lda #$0001
-        tsb wMapOverlayFlags,b
+        lda #MAP_RETURN_CENTER_ON_UNIT
+        tsb wMapReturnFlags,b
         rtl
 
         .databank 0
@@ -301,8 +301,8 @@
 
         ; Sets MAP_RETURN_START_CASTLE_STAFF: back on the map, the active unit's staff target selection starts.
 
-        lda #$0002
-        tsb wMapOverlayFlags,b
+        lda #MAP_RETURN_START_CASTLE_STAFF
+        tsb wMapReturnFlags,b
         rtl
 
         .databank 0
@@ -326,8 +326,8 @@
 
         ; Sets MAP_RETURN_CASTLE_GRID_STAFF: the staff was chosen from the castle grid, so finishing or cancelling the target selection goes back to the castle screen.
 
-        lda #$0008
-        tsb wMapOverlayFlags,b
+        lda #MAP_RETURN_CASTLE_GRID_STAFF
+        tsb wMapReturnFlags,b
         rtl
 
         .databank 0
@@ -395,7 +395,7 @@
         lda #$0001
         sta wUnknown00075A,b
         lda #$03FF
-        sta wUnknown000596,b
+        sta wMapTileIDMask,b
         rep #$30
         lda #$1809
         sta $4300,b
@@ -481,9 +481,9 @@
         sta wMapScrollYPixels,b
         sta wBufferBG1VOFS
         sta wBufferBG3VOFS
-        stz wUnknown000770,b
-        stz wUnknown000766,b
-        stz wUnknown0007D8,b
+        stz wUnitSelectedFlag,b
+        stz wMapCursorStepping,b
+        stz wMapCursorState,b
         stz wMovingUnitSpriteState,b
         stz wMapActionActiveFlag,b
         stz wMapScrollSpeed,b
@@ -587,9 +587,9 @@
         sta wMapEnableXScrollFlag,b
         sta wMapEnableYScrollFlag,b
         lda wMapScrollXPixels,b
-        sta wUnknown000734,b
+        sta wMapSavedScrollXPixels,b
         lda wMapScrollYPixels,b
-        sta wUnknown000736,b
+        sta wMapSavedScrollYPixels,b
         clc
         adc #$0100
         sta wMapScrollYPixels,b
@@ -600,12 +600,12 @@
         jsr rsMapScrollUpSetBGOFS
         jsl rlQueueMapTopRowUpload
         jsl rlUploadMapRowAndColumn
-        lda wUnknown000736,b
+        lda wMapSavedScrollYPixels,b
         cmp wMapScrollYPixels,b
         bcc _83EA
-        lda wUnknown000734,b
+        lda wMapSavedScrollXPixels,b
         sta wMapScrollXPixels,b
-        lda wUnknown000736,b
+        lda wMapSavedScrollYPixels,b
         sta wMapScrollYPixels,b
         stz wMapEnableXScrollFlag,b
         stz wMapEnableYScrollFlag,b

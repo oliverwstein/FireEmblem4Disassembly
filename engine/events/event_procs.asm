@@ -424,7 +424,7 @@
             lda #1
             sta wMapCurrentlyScrollingFlag,b
 
-            stz wUnknown00073A,b
+            stz wMapScrollingFlag,b
             stz wMapEnableXScrollFlag,b
             stz wMapEnableYScrollFlag,b
 
@@ -447,7 +447,7 @@
           sta wMapScrollSpeed,b
 
           stz wMapCurrentlyScrollingFlag,b
-          stz wUnknown00073A,b
+          stz wMapScrollingFlag,b
           stz wMapEnableXScrollFlag,b
           stz wMapEnableYScrollFlag,b
 

@@ -27,3 +27,6 @@ field     wCastleCursorState,b                      CASTLE_CURSOR_              
 field     wCastleUnitCommand,b                      CASTLE_COMMAND_                      enum
 field     wCastleTownFacility,b                     CASTLE_TOWN_                         enum
 field     wConversationExitMode,b                   CONVERSATION_EXIT_                   enum
+field     wMapCursorState,b                         MAP_CURSOR_                          enum
+field     wMapReturnFlags,b                         MAP_RETURN_                          bits
+field     wMapActionTargetType,b                    MAP_ACTION_                          enum

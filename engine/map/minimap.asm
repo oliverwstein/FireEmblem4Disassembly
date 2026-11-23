@@ -560,7 +560,7 @@
 
 
         _9773
-        lda wUnknown000766,b
+        lda wMapCursorStepping,b
         bne _97DA
         lda wJoy1New
         bit #$9000
@@ -599,8 +599,8 @@
         _97C2
         stz wMapScrollCurrentPixelDistance,b
         lda #$0001
-        sta wUnknown000766,b
-        stz wUnknown00073A,b
+        sta wMapCursorStepping,b
+        stz wMapScrollingFlag,b
         stz wMapEnableXScrollFlag,b
         stz wMapEnableYScrollFlag,b
         lda #$0004
@@ -613,8 +613,8 @@
         sta wMapScrollCurrentPixelDistance,b
         cmp #$0010
         bcc _97F5
-        stz wUnknown000766,b
-        stz wUnknown00073A,b
+        stz wMapCursorStepping,b
+        stz wMapScrollingFlag,b
         stz wMapEnableXScrollFlag,b
         stz wMapEnableYScrollFlag,b
 
@@ -733,7 +733,7 @@
         lda #<>procMinimapClose
         sta lR44
         jsl rlProcEngineCreateProc
-        stz wUnknown0007D8,b
+        stz wMapCursorState,b
         rts
 
         .byte $60
@@ -890,9 +890,9 @@
         ; Scrolls the map in the D-pad direction and plays the scrolling sounds.
 
         lda wMapScrollXPixels,b
-        sta wUnknown000734,b
+        sta wMapSavedScrollXPixels,b
         lda wMapScrollYPixels,b
-        sta wUnknown000736,b
+        sta wMapSavedScrollYPixels,b
         lda wMapScrollDirectionIdentifier,b
         cmp #$0200
         beq _99F0
@@ -957,10 +957,10 @@
 
         _9A20
         lda wMapScrollXPixels,b
-        cmp wUnknown000734,b
+        cmp wMapSavedScrollXPixels,b
         bne _99EF
         lda wMapScrollYPixels,b
-        cmp wUnknown000736,b
+        cmp wMapSavedScrollYPixels,b
         bne _99EF
         lda $0ADB,b
         beq _99EF
@@ -1236,9 +1236,9 @@
 
         ; For terrain $12 or $13: carry set and colour 9 when the tile is a village that is closed.
 
-        cmp #$0012
+        cmp #TerrainVillage
         beq _9BD9
-        cmp #$0013
+        cmp #TerrainVillageRuins
         bne _9BF5
 
         _9BD9
@@ -1601,8 +1601,8 @@
         sta wR2
         lda wCastleCursorY,b
         sta wR3
-        lda wMapOverlayFlags,b
-        bit #$0008
+        lda wMapReturnFlags,b
+        bit #MAP_RETURN_CASTLE_GRID_STAFF
         bne _9E0C
         jsl rlRunMapAction
         lda #$0800
@@ -1615,8 +1615,8 @@
         _9DF3
         lda #$0800
         trb wUnknown000D79,b
-        lda wMapOverlayFlags,b
-        bit #$0008
+        lda wMapReturnFlags,b
+        bit #MAP_RETURN_CASTLE_GRID_STAFF
         bne _9E34
         lda #$0008
         tsb wMapSystemFlags,b
@@ -1663,8 +1663,8 @@
         dec x
         bpl _9E54
         stz wMovingUnitSpriteState,b
-        lda #$0008
-        trb wMapOverlayFlags,b
+        lda #MAP_RETURN_CASTLE_GRID_STAFF
+        trb wMapReturnFlags,b
         stz wMapActionMode,b
         rtl
 

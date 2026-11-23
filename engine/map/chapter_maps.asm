@@ -49,7 +49,7 @@
         jsl rlDecompressSingle
         ldy #$000C
         lda [lR19],y
-        sta wUnknown00075C,b
+        sta wMapWidthMode,b
         inc y
         inc y
         lda [lR19],y
@@ -184,7 +184,7 @@
         ;   map is drawn from them is not read yet;
         ; - the tile graphics (compressed 4bpp, to VRAM $2800);
         ; - the palettes (BG palettes 1-7, uncompressed);
-        ; - six words: wUnknown00075C, $075E, wMapMinXScroll, wMapMinYScroll,
+        ; - six words: wMapWidthMode, $075E, wMapMinXScroll, wMapMinYScroll,
         ;   then the largest X and Y scroll plus $100 and $E0;
         ; - the terrain of each tile ID (compressed, to aTerrainTileset).
 

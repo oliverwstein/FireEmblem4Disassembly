@@ -4377,7 +4377,7 @@
         lda $0CC2,b
         bne +
 
-          lda $1B49,b
+          lda wDemoIndex,b
           and #$FFFE
           bne +
 

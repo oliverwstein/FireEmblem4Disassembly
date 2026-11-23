@@ -2278,7 +2278,7 @@
         sta $086B,b
         lda #$8002
         sta $086D,b
-        lda wUnknown0007E2,b
+        lda wMovingUnitSpriteFacing,b
         sta @l wUnknown000911
         sta @l $000913
         sta @l $000915
@@ -2439,11 +2439,11 @@
         bmi _C873
         cmp #$0011
         bcs _C873
-        lda wUnknown00076C,b
+        lda wMovingUnitXPixel,b
         sec
         sbc wMapScrollXPixels,b
         sta wR0
-        lda wUnknown00076E,b
+        lda wMovingUnitYPixel,b
         sec
         sbc wMapScrollYPixels,b
         sta wR1
@@ -2523,7 +2523,7 @@
         lda wMovingUnitSpriteFrame,b
         asl a
         clc
-        adc wUnknown0007E2,b
+        adc wMovingUnitSpriteFacing,b
         clc
         adc wR3
         tax
@@ -2731,7 +2731,7 @@
         .autsiz
         .databank ?
 
-        ; Points the upload at the frame (wMovingUnitSpriteFrame) and facing (wUnknown0007E2) of a short walking sprite.
+        ; Points the upload at the frame (wMovingUnitSpriteFrame) and facing (wMovingUnitSpriteFacing) of a short walking sprite.
 
         lda wMovingUnitSpriteFrame,b
         cmp #$0000
@@ -2765,7 +2765,7 @@
 
         _CAA2
         sta wMapSpriteFrameByteOffset,b
-        lda wUnknown0007E2,b
+        lda wMovingUnitSpriteFacing,b
         cmp #$0000
         beq _CABC
         cmp #$0008
@@ -2892,7 +2892,7 @@
 
         _CB6E
         sta wMapSpriteFrameByteOffset,b
-        lda wUnknown0007E2,b
+        lda wMovingUnitSpriteFacing,b
         xba
         clc
         adc wMapSpriteFrameByteOffset,b
@@ -3676,7 +3676,7 @@
         .autsiz
         .databank ?
 
-        ; VBlank: draws every deployed, visible unit's map sprite on screen (with scanline culling), coloured by allegiance; units with deployment state bit 13, or bit 3 outside the player army, are grey ($0E00).
+        ; VBlank: draws every deployed, visible unit's map sprite on screen (with scanline culling), coloured by allegiance; units asleep (DeploymentStateAsleep), and player units that have acted (DeploymentStateGrayed), are grey ($0E00).
 
         phb
         sep #$20
