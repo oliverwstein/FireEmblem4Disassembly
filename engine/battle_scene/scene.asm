@@ -324,7 +324,7 @@
         jsl rlUnknown96EB02
         jsl rlUnknown96EBC9
         jsl rlUnknown96984A
-        jsl rlUnknown96994B
+        jsl rlBattleSceneClearMagicSwordFlags
         jsl rlUnknown96F7BF
         jsl rlBattleSceneStopHUDShake
         lda #$0202
@@ -350,7 +350,7 @@
         jsl rlResetBattleSceneScript
         jsl rlBattleSceneScriptClearLoading
         jsl rlUnknown96BD74
-        jsl rlUnknown95A1C6
+        jsl rlBattleSceneSetAnimStyles
         jsl rlUnknown95A247
         jsl rlBattleAnimationSetBodyIndices
         jsl rlUnknown96957D
@@ -506,7 +506,7 @@
         jsl rlBattleSceneRunKnockback
 
         _8B85
-        jsl rlUnknown96961F
+        jsl rlBattleSceneTrackCombatantSides
         jsl rlUnknown96A0E2
         jsl rlBattleAnimationRunSignals
         jsl rlRunBattleSceneScript

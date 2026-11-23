@@ -2236,7 +2236,7 @@
         lda #$015E
         sta $7E530D
         ldx #$0000
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         pha
         lda bBattleAnimationY,b,x
         and #$00FF

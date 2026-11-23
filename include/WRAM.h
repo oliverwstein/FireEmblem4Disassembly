@@ -1096,6 +1096,62 @@
 
 
 
+  .virtual $000BFF
+
+    ; The spawn slot: a fifth record of $43 bytes after the four slots, with
+    ; the same fields. rlBattleAnimationResetSpawnSlot fills it from
+    ; aBattleAnimationSpawnSlotTemplate, the spawning code sets its position,
+    ; motion and sequence, and rlBattleAnimationCopySpawnSlot copies it into a
+    ; slot (an effect slot, rsBattleAnimationSpawnEffect1/2).
+
+    bBattleAnimationSpawnStateFlags .byte ? ; $000BFF
+    bBattleAnimationSpawnFacingFlags     .byte ? ; $000C00
+    bBattleAnimationSpawnCombatantFlags  .byte ? ; $000C01
+    bBattleAnimationSpawnMotionFlags     .byte ? ; $000C02
+    bBattleAnimationSpawnRole       .byte ? ; $000C03
+
+    wBattleAnimationSpawnXFixed     .byte ? ; $000C04
+    wBattleAnimationSpawnX          .word ? ; $000C05
+    wBattleAnimationSpawnYAnchor    .word ? ; $000C07
+    wBattleAnimationSpawnYFixed     .byte ? ; $000C09
+    bBattleAnimationSpawnY          .byte ? ; $000C0A
+    wBattleAnimationSpawnTargetXFixed    .byte ? ; $000C0B
+    wBattleAnimationSpawnTargetX    .word ? ; $000C0C
+                                    .fill 2
+    wBattleAnimationSpawnTargetY    .word ? ; $000C10
+                                    .fill 2
+    wBattleAnimationSpawnXSpeed     .word ? ; $000C14
+    wBattleAnimationSpawnXDeceleration   .word ? ; $000C16
+    wBattleAnimationSpawnXStartSpeed     .word ? ; $000C18
+    wBattleAnimationSpawnYVelocity  .word ? ; $000C1A
+    wBattleAnimationSpawnGravity    .word ? ; $000C1C
+                                    .fill 1
+    wBattleAnimationSpawnYStep      .word ? ; $000C1F
+
+    bBattleAnimationSpawnDelayMultiplier1 .byte ? ; $000C21
+    bBattleAnimationSpawnDelayMultiplier2 .byte ? ; $000C22
+    bBattleAnimationSpawnDrawOffsetX .byte ? ; $000C23
+    bBattleAnimationSpawnDrawOffsetY .byte ? ; $000C24
+    lBattleAnimationSpawnFrameDataPointer .long ? ; $000C25
+    bBattleAnimationSpawnSequenceID  .byte ? ; $000C28
+    bBattleAnimationSpawnPoseID      .byte ? ; $000C29
+    bBattleAnimationSpawnPoseOffset  .byte ? ; $000C2A
+    wBattleAnimationSpawnScriptLoopOffset .word ? ; $000C2B
+    wBattleAnimationSpawnScriptOffset     .word ? ; $000C2D
+    bBattleAnimationSpawnFrameTimer  .byte ? ; $000C2F
+    wBattleAnimationSpawnBaseTile    .word ? ; $000C30
+    bBattleAnimationSpawnAttributes  .byte ? ; $000C32
+    lBattleAnimationSpawnSecondaryPointer1 .long ? ; $000C33
+    lBattleAnimationSpawnSecondaryPointer2 .long ? ; $000C36
+    wBattleAnimationSpawnSecondaryOffset  .word ? ; $000C39
+    lBattleAnimationSpawnMoveListPointer  .long ? ; $000C3B
+    wBattleAnimationSpawnMoveListLoopOffset .word ? ; $000C3E
+    wBattleAnimationSpawnMoveListOffset   .word ? ; $000C40
+
+
+
+  .endvirtual
+
   .virtual $000D79
 
     wChapterFlags .word ?        ; $000D79

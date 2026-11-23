@@ -3229,12 +3229,14 @@
       .al
       .xl
 
-      rlUnknown96994B ; 96/994B
+      rlBattleSceneClearMagicSwordFlags ; 96/994B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears bit 2 of both combatants' bBattleAnimationCombatantFlags (the magic sword strike).
 
         ; Clears bit 2 of both combatants' bBattleAnimationCombatantFlags.
 
@@ -3284,7 +3286,7 @@
 
 
         _996F
-        jsl rlUnknown96994B
+        jsl rlBattleSceneClearMagicSwordFlags
         pha
         xba
         and #$00FF

@@ -1155,14 +1155,14 @@
 
 
         _88FD
-        jsl rlUnknown95B993
+        jsl rlBattleAnimationResetSpawnSlot
         lda $7FE1B6
         and #$00FF
         jsl rlBattleSceneSetFramePointers
         lda #$0180
-        sta $0C05,b
+        sta wBattleAnimationSpawnX,b
         lda #$0000
-        jsl rlUnknown95B9AC
+        jsl rlBattleAnimationCopySpawnSlot
 
         _8919
         lda aBattleSceneCombatant2.Character,b
@@ -1176,26 +1176,26 @@
 
 
         _892C
-        jsl rlUnknown95B993
+        jsl rlBattleAnimationResetSpawnSlot
         lda $7FE1BA
         and #$00FF
         jsl rlBattleSceneSetFramePointers
         lda #$0080
-        sta $0C05,b
+        sta wBattleAnimationSpawnX,b
         lda #$5000
-        sta $0C39,b
+        sta wBattleAnimationSpawnSecondaryOffset,b
         lda #$7F00
-        sta $0C34,b
+        sta lBattleAnimationSpawnSecondaryPointer1+1,b
         lda #$6000
-        sta $0C33,b
+        sta lBattleAnimationSpawnSecondaryPointer1,b
         lda #$8100
-        sta $0C30,b
+        sta wBattleAnimationSpawnBaseTile,b
         sep #$20
         lda #$08
-        sta $0C32,b
+        sta bBattleAnimationSpawnAttributes,b
         rep #$20
         lda #$0001
-        jsl rlUnknown95B9AC
+        jsl rlBattleAnimationCopySpawnSlot
 
         _8969
         lda wBattleSceneFlags
@@ -1221,7 +1221,7 @@
         bcs _8A0B
         clc
         ldx #$0000
-        jsl rlUnknown95B6D0
+        jsl rlBattleSceneGetStartGap
         sta wR0
         lda wBattleAnimationX,b
         sec
@@ -1244,7 +1244,7 @@
 
         ; Unreachable: both branches above go to _89EE.
         ldx #$0000
-        jsl rlUnknown95B7CF
+        jsl rlBattleAnimationGetBodyByte7
         xba
         sta wBattleAnimationYFixed,b,x
         bit #$FFFF
@@ -1273,7 +1273,7 @@
         _8A0B
         sec
         ldx #$0043
-        jsl rlUnknown95B6D0
+        jsl rlBattleSceneGetStartGap
         sta wR0
         lda wBattleAnimation2X,b
         clc
@@ -1292,7 +1292,7 @@
 
         ; Unreachable: both branches above go to _8A4F.
         ldx #$0043
-        jsl rlUnknown95B7CF
+        jsl rlBattleAnimationGetBodyByte7
         xba
         sta wBattleAnimationYFixed,b,x
         bit #$FFFF
@@ -1341,14 +1341,14 @@
         cmp #$0000
         beq _8AA2
         ldx #$0000
-        jsl rlUnknown95AAFF
+        jsl rlBattleSceneQueueIdleAction
 
         _8AA2
         lda aBattleSceneCombatant2.Character,b
         cmp #$0000
         beq _8AB1
         ldx #$0043
-        jsl rlUnknown95AAFF
+        jsl rlBattleSceneQueueIdleAction
 
         _8AB1
         jsl rlUnknown969665
@@ -1385,13 +1385,13 @@
         tax
         pla
         lda aBattleAnimationFrameIndices,x
-        sta $0C25,b
+        sta lBattleAnimationSpawnFrameDataPointer,b
         lda aBattleAnimationFrameIndices+1,x
-        sta $0C26,b
+        sta lBattleAnimationSpawnFrameDataPointer+1,b
         lda aBattleAnimationFrameIndices+3,x
-        sta $0C36,b
+        sta lBattleAnimationSpawnSecondaryPointer2,b
         lda aBattleAnimationFrameIndices+4,x
-        sta $0C37,b
+        sta lBattleAnimationSpawnSecondaryPointer2+1,b
         plx
         pla
         rtl
@@ -2204,15 +2204,17 @@
 
         ; 95/A1C6
 
-      rlUnknown95A1C6 ; 95/A1C6
+      rlBattleSceneSetAnimStyles ; 95/A1C6
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Each combatant's AnimStyle from its weapon (rlBattleSceneGetWeaponAnimStyle); $90 (AnimCategoryAny, sword style) when it has none.
+
         lda aBattleSceneCombatant1.Weapon,b
-        jsl rlUnknown95A1ED
+        jsl rlBattleSceneGetWeaponAnimStyle
         bcc _A1D2
         lda #$0090
 
@@ -2221,7 +2223,7 @@
         sta aBattleSceneCombatant1.AnimStyle,b
         rep #$20
         lda aBattleSceneCombatant2.Weapon,b
-        jsl rlUnknown95A1ED
+        jsl rlBattleSceneGetWeaponAnimStyle
         bcc _A1E5
         lda #$0090
 
@@ -2235,7 +2237,7 @@
 
         ; 95/A1ED
 
-      rlUnknown95A1ED ; 95/A1ED
+      rlBattleSceneGetWeaponAnimStyle ; 95/A1ED
 
         ; Reads the stack above its return address, but in the emulator log every
         ; caller continues right after the call: no inline arguments.
@@ -2243,6 +2245,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; A = item ID: its byte of aItemAnimationCategories, carry clear (carry set for no item or an unlisted one). A javelin or hand axe (the ranged categories) at wBattleDistance 2 or more gets attack style AttackStyleRanged; closer, it becomes the plain lance or axe category.
 
         phx
         inc a

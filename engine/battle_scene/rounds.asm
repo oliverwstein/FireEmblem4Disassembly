@@ -500,12 +500,12 @@
         ora #$10
         sta bBattleSceneStrikeFlags,b
         rep #$20
-        jsl rlUnknown95B8F3
+        jsl rlBattleSceneCheckMagicSword
         bcs _AA53
         lda bBattleAnimationCombatantFlags,b,x
         bit #$0004
         beq _AA1D
-        jsl rlUnknown95ACF6
+        jsl rlBattleSceneQueueMagicSwordAttack
         bra _AA53
 
 
@@ -646,12 +646,14 @@
       .al
       .xl
 
-      rlUnknown95AAFF ; 95/AAFF
+      rlBattleSceneQueueIdleAction ; 95/AAFF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = 0 or $43: clears the action variant (bits 0-1 of bBattleAnimationCombatantFlags) and queues action 0, the idle stance; a combatant in the air (bBattleAnimationY not 0) with attack style AttackStyleSword or AttackStyleLance queues action $38 or $3C instead.
 
         phx
         sep #$20
@@ -812,7 +814,7 @@
         .autsiz
         .databank ?
 
-        ; The attacker's normal attack: the action from aUnknown95AC3B by attack style.
+        ; The attacker's normal attack: the action from aBattleSceneAttackActions by attack style.
 
         lda [lR18],y
         bit #$0010
@@ -832,7 +834,7 @@
         php
         phx
         jsr rsBattleSceneGetAttackStyle
-        lda aUnknown95AC3B,x
+        lda aBattleSceneAttackActions,x
         and #$00FF
         plx
         pha
@@ -917,11 +919,11 @@
         .autsiz
         .databank ?
 
-        ; The attacker's critical: the action from aUnknown95ACA8 by attack style.
+        ; The attacker's critical: the action from aBattleSceneCriticalActions by attack style.
 
         phx
         jsr rsBattleSceneGetAttackStyle
-        lda aUnknown95ACA8,x
+        lda aBattleSceneCriticalActions,x
         and #$00FF
         plx
         pha
@@ -1002,11 +1004,11 @@
         .autsiz
         .databank ?
 
-        ; A critical with round bit 4: the action from aUnknown95ACF0 by attack style.
+        ; A critical with round bit 4: the action from aBattleSceneSpecialCriticalActions by attack style.
 
         phx
         jsr rsBattleSceneGetAttackStyle
-        lda aUnknown95ACF0,x
+        lda aBattleSceneSpecialCriticalActions,x
         and #$00FF
         plx
         pha
@@ -1049,12 +1051,14 @@
       .al
       .xl
 
-      rlUnknown95ACF6 ; 95/ACF6
+      rlBattleSceneQueueMagicSwordAttack ; 95/ACF6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the attacker: a magic sword striking from range (bit 2 of bBattleAnimationCombatantFlags, set by rlBattleSceneCheckMagicSword). Queues the swing from aBattleSceneMagicSwordSwingActions by attack style, plus its variant, then the spell from aBattleSceneMagicSwordSpellActions (row = bits 3-5 of the flags, column = attack style); sets hit kind 3 for round bit $10 and variant 2.
 
         sep #$20
         lda [lR18],y
@@ -1072,7 +1076,7 @@
         rep #$20
         phx
         jsr rsBattleSceneGetAttackStyle
-        lda aUnknown95AD8C,x
+        lda aBattleSceneMagicSwordSwingActions,x
         and #$00FF
         plx
         pha
@@ -1100,7 +1104,7 @@
         adc #1,s
         tax
         pla
-        lda aUnknown95AD64,x
+        lda aBattleSceneMagicSwordSpellActions,x
         and #$00FF
         plx
         jsl rlBattleAnimationQueueAction
@@ -1124,9 +1128,9 @@
       .al
       .xl
 
-      aUnknown95AD8C ; 95/AD8C
+      aBattleSceneMagicSwordSwingActions ; 95/AD8C
 
-        ; Read by rlUnknown95ACF6.
+        ; Read by rlBattleSceneQueueMagicSwordAttack.
 
         .byte $1B, $1B, $3A, $1F, $10
 
@@ -1766,7 +1770,7 @@
         pla
 
         _B0C7
-        jsl rlUnknown95B0D7
+        jsl rlBattleSceneCheckBodiesOverlap
         bcc _B0D4
         lda #$0000
         sta wR0
@@ -1781,12 +1785,14 @@
 
         ; 95/B0D7
 
-      rlUnknown95B0D7 ; 95/B0D7
+      rlBattleSceneCheckBodiesOverlap ; 95/B0D7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set when the attacker and the defender are closer than their two body widths (rlBattleAnimationGetBodyWidth), with A = by how much; else carry clear and A = 0.
 
         phx
         phy
@@ -1839,13 +1845,15 @@
       .al
       .xl
 
-      rsUnknown95B114 ; 95/B114
+      rsBattleSceneCheckEffectNearDefender ; 95/B114
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Found by tools/sweep.py: nothing in the build reaches this. wR0 = the distance from the attacker's effect slot to the defender ($FFFF when the slot is off); under 10 sets bit 5 of bBattleSceneStrikeFlags.
 
         phx
         lda wBattleAnimationAttackerOffset,b
@@ -1974,13 +1982,15 @@
       .al
       .xl
 
-      rlUnknown978024 ; 97/8024
+      rlBattleSceneScriptPlaySound0B ; 97/8024
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Script routine $3C: plays sound $0B.
 
         lda #$000B
         jsl rlPlaySoundEffect2

@@ -86,7 +86,7 @@
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
-        jsl rlUnknown95B96F
+        jsl rlBattleAnimationResetSlots
         jsl rlBattleSceneClearCombatants
         jsl rlUnknown95A0F7
         lda #$0000

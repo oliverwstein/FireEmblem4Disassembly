@@ -2556,9 +2556,9 @@
       .al
       .xl
 
-      aUnknown978F3A ; 97/8F3A
+      aBattleAnimationSpawnSlotTemplate ; 97/8F3A
 
-        ; Read by rlUnknown95B993 (67 bytes).
+        ; Read by rlBattleAnimationResetSpawnSlot (67 bytes).
 
         .byte $80, $00, $00, $00, $00, $00, $00, $00, $00, $64, $00, $00, $00, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -7309,12 +7309,14 @@
       .al
       .xl
 
-      rlUnknown96BCEC ; 96/BCEC
+      rlStartBattleSceneScriptFar ; 96/BCEC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; rlStartBattleSceneScript, reached from bank $95.
 
         jsl rlStartBattleSceneScript
         rtl

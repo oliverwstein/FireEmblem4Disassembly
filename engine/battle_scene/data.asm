@@ -40,11 +40,18 @@
       .al
       .xl
 
-      aUnknown95AC3B ; 95/AC3B
+      aBattleSceneAttackActions ; 95/AC3B
 
-        ; Read by rlBattleSceneQueueAttack.
+        ; Read by rlBattleSceneQueueAttack: the action of a normal attack, plus the
+        ; combatant's variant. One byte per attack style (AttackStyle...), sword to
+        ; magic; staves use rlBattleSceneQueueStaffAction.
 
-        .word $0B0B, $0B0B, $0707
+        .byte $0B ; AttackStyleSword
+        .byte $0B ; 1, not used
+        .byte $0B ; AttackStyleLance
+        .byte $0B ; AttackStyleAxe
+        .byte $07 ; AttackStyleRanged
+        .byte $07 ; AttackStyleMagic
 
         ; 95/AC41
 
@@ -56,11 +63,17 @@
       .al
       .xl
 
-      aUnknown95ACA8 ; 95/ACA8
+      aBattleSceneCriticalActions ; 95/ACA8
 
-        ; Read by rlBattleSceneQueueCriticalAttack.
+        ; Read by rlBattleSceneQueueCriticalAttack: the action of a critical, as
+        ; aBattleSceneAttackActions.
 
-        .word $1111, $1111, $0A0A
+        .byte $11 ; AttackStyleSword
+        .byte $11 ; 1, not used
+        .byte $11 ; AttackStyleLance
+        .byte $11 ; AttackStyleAxe
+        .byte $0A ; AttackStyleRanged
+        .byte $0A ; AttackStyleMagic
 
         ; 95/ACAE
 
@@ -72,11 +85,17 @@
       .al
       .xl
 
-      aUnknown95ACF0 ; 95/ACF0
+      aBattleSceneSpecialCriticalActions ; 95/ACF0
 
-        ; Read by rlBattleSceneQueueSpecialCriticalAttack.
+        ; Read by rlBattleSceneQueueSpecialCriticalAttack: the action of a critical
+        ; with round bit $10, as aBattleSceneAttackActions.
 
-        .word $1717, $1717, $0D0D
+        .byte $17 ; AttackStyleSword
+        .byte $17 ; 1, not used
+        .byte $17 ; AttackStyleLance
+        .byte $17 ; AttackStyleAxe
+        .byte $0D ; AttackStyleRanged
+        .byte $0D ; AttackStyleMagic
 
         ; 95/ACF6
 
@@ -88,13 +107,22 @@
       .al
       .xl
 
-      aUnknown95AD64 ; 95/AD64
+      aBattleSceneMagicSwordSpellActions ; 95/AD64
 
-        ; Read by rlUnknown95ACF6.
+        ; Read by rlBattleSceneQueueMagicSwordAttack: the action after a magic
+        ; sword's swing. Eight rows of five, one per value of bits 3-5 of
+        ; bBattleAnimationCombatantFlags (rlBattleSceneCheckMagicSword sets 0; only
+        ; rlUnknown969964, which nothing reaches, sets others); in each row one byte
+        ; per attack style, sword to ranged.
 
-        .word $2121, $2525, $2413, $2824, $1428, $2727, $2B2B, $2A15
-        .word $2E2A, $162E, $2D2D, $3131, $3017, $3430, $1834, $3333
-        .word $3737, $3619, $3A36, $1A3A
+        .byte $21, $21, $25, $25, $13
+        .byte $24, $24, $28, $28, $14
+        .byte $27, $27, $2B, $2B, $15
+        .byte $2A, $2A, $2E, $2E, $16
+        .byte $2D, $2D, $31, $31, $17
+        .byte $30, $30, $34, $34, $18
+        .byte $33, $33, $37, $37, $19
+        .byte $36, $36, $3A, $3A, $1A
 
         ; 95/AD8C
 
@@ -242,7 +270,7 @@
         .long rlUnknown96FB39 ; $39
         .long rlUnknown96FD54 ; $3A
         .long rlUnknown97802C ; $3B
-        .long rlUnknown978024 ; $3C
+        .long rlBattleSceneScriptPlaySound0B ; $3C
         .long rlUnknown96878D ; $3D
         .long rlUnknown96FC49 ; $3E
         .long rlUnknown96FB99 ; $3F
@@ -1654,22 +1682,112 @@
       .al
       .xl
 
-      aUnknown98AFFD ; 98/AFFD
+      aBattleAnimationEffectStarts ; 98/AFFD
 
-        ; Read by rlUnknown95B8B0.
+        ; Read by rlBattleAnimationGetEffectStart: where a combatant's effect (an
+        ; arrow, a thrown weapon) appears, by its class. Three lists by weapon
+        ; category, each ending in $FFFF; an entry is the class (a word), then the X
+        ; offset toward the opponent and the Y offset.
 
-        .word $0002, $1AE8, $0008, $1AE8, $000B, $1AE8, $0015, $14E8
-        .word $0018, $14E8, $001A, $17E8, $001B, $17E8, $001C, $17E8
-        .word $0024, $17E8, $0029, $12E8, $002A, $12E8, $0043, $29F3
-        .word $0044, $29F3, $0045, $29F3, $0046, $29F3, $FFFF, $0003
-        .word $1AE8, $0008, $1AE8, $000E, $1AE8, $001A, $04E2, $001B
-        .word $04E2, $001C, $04E2, $0023, $02E2, $0026, $06E0, $0027
-        .word $06E0, $0028, $06E0, $0029, $06E0, $002B, $06E0, $FFFF
-        .word $0000, $30E8, $0001, $30E8, $0006, $30E8, $0007, $30E8
-        .word $0008, $30E8, $0009, $30E8, $000A, $30E8, $000F, $32E8
-        .word $0010, $32E8, $0011, $32E8, $0012, $35E8, $0013, $35E8
-        .word $0014, $35E8, $001A, $1AE8, $001B, $1AE8, $001C, $1AE8
-        .word $0022, $1FE8, $FFFF
+        _Bows ; every other weapon category: the bow users
+
+          .word BowKnight
+          .char -24, $1A
+          .word MasterKnight
+          .char -24, $1A
+          .word ArchKnight
+          .char -24, $1A
+          .word Archer
+          .char -24, $14
+          .word Sniper
+          .char -24, $14
+          .word General
+          .char -24, $17
+          .word Emperor
+          .char -24, $17
+          .word Baron
+          .char -24, $17
+          .word BowArmor
+          .char -24, $17
+          .word Warrior
+          .char -24, $12
+          .word Hunter
+          .char -24, $12
+          .word Ballistician
+          .char -13, $29
+          .word IronBallistician
+          .char -13, $29
+          .word KillerBallistician
+          .char -13, $29
+          .word GreatBallistician
+          .char -13, $29
+          .word $FFFF
+
+        _HandAxes ; AnimCategoryRangedAxe
+
+          .word AxeKnight
+          .char -24, $1A
+          .word MasterKnight
+          .char -24, $1A
+          .word GreatKnight
+          .char -24, $1A
+          .word General
+          .char -30, $04
+          .word Emperor
+          .char -30, $04
+          .word Baron
+          .char -30, $04
+          .word AxeArmor
+          .char -30, $02
+          .word Barbarian
+          .char -32, $06
+          .word Fighter
+          .char -32, $06
+          .word Brigand
+          .char -32, $06
+          .word Warrior
+          .char -32, $06
+          .word Pirate
+          .char -32, $06
+          .word $FFFF
+
+        _Javelins ; AnimCategoryRangedLance
+
+          .word Cavalier
+          .char -24, $30
+          .word LanceKnight
+          .char -24, $30
+          .word KnightLord
+          .char -24, $30
+          .word DukeKnight
+          .char -24, $30
+          .word MasterKnight
+          .char -24, $30
+          .word Paladin
+          .char -24, $30
+          .word PaladinF
+          .char -24, $30
+          .word PegasusRider
+          .char -24, $32
+          .word PegasusKnight
+          .char -24, $32
+          .word FalconKnight
+          .char -24, $32
+          .word Dragonrider
+          .char -24, $35
+          .word Dragonknight
+          .char -24, $35
+          .word Dragonmaster
+          .char -24, $35
+          .word General
+          .char -24, $1A
+          .word Emperor
+          .char -24, $1A
+          .word Baron
+          .char -24, $1A
+          .word LanceArmor
+          .char -24, $1F
+          .word $FFFF
 
         ; 98/B0B3
 
@@ -1983,154 +2101,195 @@
 
         ; 99/832D
 
-      aUnknown99832D ; 99/832D
+      aBattleSceneWeaponScripts ; 99/832D
 
-        ; Read by rlUnknown96DC7C.
+        ; Read by rlBattleSceneGetWeaponScript: the battle scene script each weapon
+        ; starts (sequence command $F0, or at once for a status sword). Three bytes
+        ; per weapon: item ID, the script, and the script at wBattleDistance 3 or
+        ; more. $FFFF ends the list.
 
-        .word $4109, $0B41, $3C3C, $420C, $0F42, $0202, $1210, $1112
-        .word $0707, $0C12, $130C, $1111, $023E, $3F02, $0303, $0440
-        .word $4104, $0505, $0642, $4306, $0707, $0844, $4508, $0909
-        .word $0A46, $470A, $0B0B, $0C48, $490C, $0D0D, $0E4A, $4B0E
-        .word $0F0F, $104C, $4D10, $1111, $124E, $4F12, $1313, $1450
-        .word $5114, $1515, $1652, $5316, $1717, $1854, $5818, $1919
-        .word $1A59, $5A1A, $1B1B, $455B, $5C1C, $1D1D, $1E5D, $5E1E
-        .word $1F1F, $205F, $6020, $2121, $2261, $6246, $2323, $4763
-        .word $6424, $4825, $2665, $6649, $2727, $FFFF
+        .byte $09, $41, $41 ; BerserkSword
+        .byte $0B, $3C, $3C ; SilenceSword
+        .byte $0C, $42, $42 ; SleepSword
+        .byte $0F, $02, $02 ; FireSword
+        .byte $10, $12, $12 ; EarthSword
+        .byte $11, $07, $07 ; ThunderSword
+        .byte $12, $0C, $0C ; WindSword
+        .byte $13, $11, $11 ; LightBrand
+        .byte $3E, $02, $02 ; Fire
+        .byte $3F, $03, $03 ; Elfire
+        .byte $40, $04, $04 ; Bolganone
+        .byte $41, $05, $05 ; Valflame
+        .byte $42, $06, $06 ; Meteor
+        .byte $43, $07, $07 ; Thunder
+        .byte $44, $08, $08 ; Elthunder
+        .byte $45, $09, $09 ; Thoron
+        .byte $46, $0A, $0A ; Mjolnir
+        .byte $47, $0B, $0B ; Bolting
+        .byte $48, $0C, $0C ; Wind
+        .byte $49, $0D, $0D ; Elwind
+        .byte $4A, $0E, $0E ; Tornado
+        .byte $4B, $0F, $0F ; Forseti
+        .byte $4C, $10, $10 ; Blizzard
+        .byte $4D, $11, $11 ; Light
+        .byte $4E, $12, $12 ; Nosferatu
+        .byte $4F, $13, $13 ; Aura
+        .byte $50, $14, $14 ; Naga
+        .byte $51, $15, $15 ; Jormungandr
+        .byte $52, $16, $16 ; Fenrir
+        .byte $53, $17, $17 ; Hel
+        .byte $54, $18, $18 ; Loptous
+        .byte $58, $19, $19 ; HealStaff
+        .byte $59, $1A, $1A ; MendStaff
+        .byte $5A, $1B, $1B ; RecoverStaff
+        .byte $5B, $45, $1C ; PhysicStaff
+        .byte $5C, $1D, $1D ; Fortify
+        .byte $5D, $1E, $1E ; ReturnStaff
+        .byte $5E, $1F, $1F ; WarpStaff
+        .byte $5F, $20, $20 ; RescueStaff
+        .byte $60, $21, $21 ; CharmStaff
+        .byte $61, $22, $46 ; RestoreStaff
+        .byte $62, $23, $23 ; ValkyrieStaff
+        .byte $63, $47, $24 ; SilenceStaff
+        .byte $64, $25, $48 ; SleepStaff
+        .byte $65, $26, $49 ; BerserkStaff
+        .byte $66, $27, $27 ; ThiefStaff
+        .word $FFFF
 
         ; 99/83B9
 
       aItemAnimationCategories ; 99/83B9
 
-        ; Read by rlUnknown95A1ED. One byte per item ID plus 1 (entry 0 is for no
+        ; Read by rlBattleSceneGetWeaponAnimStyle. One byte per item ID plus 1 (entry 0 is for no
         ; item): the high nibble is the weapon category of the battle animation
-        ; lookup (AnimCategory...), the low nibble is not read yet.
+        ; lookup (AnimCategory...), the low nibble the attack style (AttackStyle...).
 
-        .byte (AnimCategoryAny << 4) | 0  ; no item
-        .byte (AnimCategorySword << 4) | 0  ; IronSword
-        .byte (AnimCategorySword << 4) | 0  ; SteelSword
-        .byte (AnimCategorySword << 4) | 0  ; SilverSword
-        .byte (AnimCategorySword << 4) | 0  ; IronBlade
-        .byte (AnimCategorySword << 4) | 0  ; SteelBlade
-        .byte (AnimCategorySword << 4) | 0  ; SilverBlade
-        .byte (AnimCategorySword << 4) | 0  ; MiracleSword
-        .byte (AnimCategorySword << 4) | 0  ; ThiefSword
-        .byte (AnimCategorySword << 4) | 0  ; BarrierBlade
-        .byte (AnimCategorySword << 4) | 0  ; BerserkSword
-        .byte (AnimCategorySword << 4) | 0  ; BraveSword
-        .byte (AnimCategorySword << 4) | 0  ; SilenceSword
-        .byte (AnimCategorySword << 4) | 0  ; SleepSword
-        .byte (AnimCategorySword << 4) | 0  ; SlimSword
-        .byte (AnimCategorySword << 4) | 0  ; Safeguard
-        .byte (AnimCategorySword << 4) | 0  ; FireSword
-        .byte (AnimCategorySword << 4) | 0  ; EarthSword
-        .byte (AnimCategorySword << 4) | 0  ; ThunderSword
-        .byte (AnimCategorySword << 4) | 0  ; WindSword
-        .byte (AnimCategorySword << 4) | 0  ; LightBrand
-        .byte (AnimCategorySword << 4) | 0  ; Mystletainn
-        .byte (AnimCategorySword << 4) | 0  ; Tyrfing
-        .byte (AnimCategorySword << 4) | 0  ; Balmung
-        .byte (AnimCategorySword << 4) | 0  ; Armorslayer
-        .byte (AnimCategorySword << 4) | 0  ; Wingclipper
-        .byte (AnimCategorySword << 4) | 0  ; BrokenSwordA
-        .byte (AnimCategorySword << 4) | 0  ; BrokenSwordB
-        .byte (AnimCategorySword << 4) | 0  ; BrokenSwordC
-        .byte (AnimCategoryLance << 4) | 2  ; IronLance
-        .byte (AnimCategoryLance << 4) | 2  ; SteelLance
-        .byte (AnimCategoryLance << 4) | 2  ; SilverLance
-        .byte (AnimCategoryRangedLance << 4) | 2  ; Javelin
-        .byte (AnimCategoryLance << 4) | 2  ; Ridersbane
-        .byte (AnimCategoryLance << 4) | 2  ; BraveLance
-        .byte (AnimCategoryLance << 4) | 2  ; SlimLance
-        .byte (AnimCategoryLance << 4) | 2  ; Gungnir
-        .byte (AnimCategoryLance << 4) | 2  ; GaeBolg
-        .byte (AnimCategoryLance << 4) | 2  ; BrokenLanceA
-        .byte (AnimCategoryLance << 4) | 2  ; BrokenLanceB
-        .byte (AnimCategoryLance << 4) | 2  ; BrokenLanceC
-        .byte (AnimCategoryAxe << 4) | 3  ; IronAxe
-        .byte (AnimCategoryAxe << 4) | 3  ; SteelAxe
-        .byte (AnimCategoryAxe << 4) | 3  ; SilverAxe
-        .byte (AnimCategoryAxe << 4) | 3  ; BraveAxe
-        .byte (AnimCategoryRangedAxe << 4) | 3  ; Helswath
-        .byte (AnimCategoryRangedAxe << 4) | 3  ; HandAxe
-        .byte (AnimCategoryAxe << 4) | 3  ; BrokenAxeA
-        .byte (AnimCategoryAxe << 4) | 3  ; BrokenAxeB
-        .byte (AnimCategoryAxe << 4) | 3  ; BrokenAxeC
-        .byte (AnimCategoryBow << 4) | 4  ; IronBow
-        .byte (AnimCategoryBow << 4) | 4  ; SteelBow
-        .byte (AnimCategoryBow << 4) | 4  ; SilverBow
-        .byte (AnimCategoryBow << 4) | 4  ; BraveBow
-        .byte (AnimCategoryBow << 4) | 4  ; KillerBow
-        .byte (AnimCategoryBow << 4) | 4  ; Yewfelle
-        .byte (AnimCategoryBow << 4) | 4  ; BrokenBowA
-        .byte (AnimCategoryBow << 4) | 4  ; BrokenBowB
-        .byte (AnimCategoryBow << 4) | 4  ; BrokenBowC
-        .byte (AnimCategoryBow << 4) | 4  ; Ballista
-        .byte (AnimCategoryBow << 4) | 4  ; IronBallista
-        .byte (AnimCategoryBow << 4) | 4  ; KillerBallista
-        .byte (AnimCategoryBow << 4) | 4  ; GreatBallista
-        .byte (AnimCategoryMagic << 4) | 5  ; Fire
-        .byte (AnimCategoryMagic << 4) | 5  ; Elfire
-        .byte (AnimCategoryMagic << 4) | 5  ; Bolganone
-        .byte (AnimCategoryMagic << 4) | 5  ; Valflame
-        .byte (AnimCategoryMagic << 4) | 5  ; Meteor
-        .byte (AnimCategoryMagic << 4) | 5  ; Thunder
-        .byte (AnimCategoryMagic << 4) | 5  ; Elthunder
-        .byte (AnimCategoryMagic << 4) | 5  ; Thoron
-        .byte (AnimCategoryMagic << 4) | 5  ; Mjolnir
-        .byte (AnimCategoryMagic << 4) | 5  ; Bolting
-        .byte (AnimCategoryMagic << 4) | 5  ; Wind
-        .byte (AnimCategoryMagic << 4) | 5  ; Elwind
-        .byte (AnimCategoryMagic << 4) | 5  ; Tornado
-        .byte (AnimCategoryMagic << 4) | 5  ; Forseti
-        .byte (AnimCategoryMagic << 4) | 5  ; Blizzard
-        .byte (AnimCategoryMagic << 4) | 5  ; Light
-        .byte (AnimCategoryMagic << 4) | 5  ; Nosferatu
-        .byte (AnimCategoryMagic << 4) | 5  ; Aura
-        .byte (AnimCategoryMagic << 4) | 5  ; Naga
-        .byte (AnimCategoryMagic << 4) | 5  ; Jormungandr
-        .byte (AnimCategoryMagic << 4) | 5  ; Fenrir
-        .byte (AnimCategoryMagic << 4) | 5  ; Hel
-        .byte (AnimCategoryMagic << 4) | 5  ; Loptous
-        .byte (AnimCategoryMagic << 4) | 5  ; BrokenFireTomeA
-        .byte (AnimCategoryMagic << 4) | 5  ; BrokenFireTomeB
-        .byte (AnimCategoryMagic << 4) | 5  ; BrokenFireTomeC
-        .byte (AnimCategoryStaff << 4) | 6  ; HealStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; MendStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; RecoverStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; PhysicStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; Fortify
-        .byte (AnimCategoryStaff << 4) | 6  ; ReturnStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; WarpStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; RescueStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; CharmStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; RestoreStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; ValkyrieStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; SilenceStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; SleepStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; BerserkStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; ThiefStaff
-        .byte (AnimCategoryStaff << 4) | 6  ; BrokenStaffA
-        .byte (AnimCategoryStaff << 4) | 6  ; BrokenStaffB
-        .byte (AnimCategoryStaff << 4) | 6  ; BrokenStaffC
-        .byte (AnimCategoryAny << 4) | 0  ; RenewalBand
-        .byte (AnimCategoryAny << 4) | 0  ; ParagonBand
-        .byte (AnimCategoryAny << 4) | 0  ; ThiefBand
-        .byte (AnimCategoryAny << 4) | 0  ; MiracleBand
-        .byte (AnimCategoryAny << 4) | 0  ; PursuitRing
-        .byte (AnimCategoryAny << 4) | 0  ; RecoverRing
-        .byte (AnimCategoryAny << 4) | 0  ; BargainBand
-        .byte (AnimCategoryAny << 4) | 0  ; KnightRing
-        .byte (AnimCategoryAny << 4) | 0  ; ReturnBand
-        .byte (AnimCategoryAny << 4) | 0  ; SpeedRing
-        .byte (AnimCategoryAny << 4) | 0  ; MagicRing
-        .byte (AnimCategoryAny << 4) | 0  ; PowerRing
-        .byte (AnimCategoryAny << 4) | 0  ; ShieldRing
-        .byte (AnimCategoryAny << 4) | 0  ; BarrierRing
-        .byte (AnimCategoryAny << 4) | 0  ; LegRing
-        .byte (AnimCategoryAny << 4) | 0  ; SkillRing
-        .byte (AnimCategorySword << 4) | 0  ; BrokenHolySword
-        .byte (AnimCategoryLance << 4) | 2  ; BrokenHolyLance
-        .byte (AnimCategoryBow << 4) | 4  ; BrokenHolyBow
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; no item
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; IronSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; SteelSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; SilverSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; IronBlade
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; SteelBlade
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; SilverBlade
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; MiracleSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; ThiefSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; BarrierBlade
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; BerserkSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; BraveSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; SilenceSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; SleepSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; SlimSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; Safeguard
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; FireSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; EarthSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; ThunderSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; WindSword
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; LightBrand
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; Mystletainn
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; Tyrfing
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; Balmung
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; Armorslayer
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; Wingclipper
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; BrokenSwordA
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; BrokenSwordB
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; BrokenSwordC
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; IronLance
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; SteelLance
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; SilverLance
+        .byte (AnimCategoryRangedLance << 4) | AttackStyleLance  ; Javelin
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; Ridersbane
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; BraveLance
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; SlimLance
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; Gungnir
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; GaeBolg
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; BrokenLanceA
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; BrokenLanceB
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; BrokenLanceC
+        .byte (AnimCategoryAxe << 4) | AttackStyleAxe  ; IronAxe
+        .byte (AnimCategoryAxe << 4) | AttackStyleAxe  ; SteelAxe
+        .byte (AnimCategoryAxe << 4) | AttackStyleAxe  ; SilverAxe
+        .byte (AnimCategoryAxe << 4) | AttackStyleAxe  ; BraveAxe
+        .byte (AnimCategoryRangedAxe << 4) | AttackStyleAxe  ; Helswath
+        .byte (AnimCategoryRangedAxe << 4) | AttackStyleAxe  ; HandAxe
+        .byte (AnimCategoryAxe << 4) | AttackStyleAxe  ; BrokenAxeA
+        .byte (AnimCategoryAxe << 4) | AttackStyleAxe  ; BrokenAxeB
+        .byte (AnimCategoryAxe << 4) | AttackStyleAxe  ; BrokenAxeC
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; IronBow
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; SteelBow
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; SilverBow
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; BraveBow
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; KillerBow
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; Yewfelle
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; BrokenBowA
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; BrokenBowB
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; BrokenBowC
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; Ballista
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; IronBallista
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; KillerBallista
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; GreatBallista
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Fire
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Elfire
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Bolganone
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Valflame
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Meteor
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Thunder
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Elthunder
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Thoron
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Mjolnir
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Bolting
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Wind
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Elwind
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Tornado
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Forseti
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Blizzard
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Light
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Nosferatu
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Aura
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Naga
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Jormungandr
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Fenrir
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Hel
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; Loptous
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; BrokenFireTomeA
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; BrokenFireTomeB
+        .byte (AnimCategoryMagic << 4) | AttackStyleMagic  ; BrokenFireTomeC
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; HealStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; MendStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; RecoverStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; PhysicStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; Fortify
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; ReturnStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; WarpStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; RescueStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; CharmStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; RestoreStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; ValkyrieStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; SilenceStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; SleepStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; BerserkStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; ThiefStaff
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; BrokenStaffA
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; BrokenStaffB
+        .byte (AnimCategoryStaff << 4) | AttackStyleStaff  ; BrokenStaffC
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; RenewalBand
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; ParagonBand
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; ThiefBand
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; MiracleBand
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; PursuitRing
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; RecoverRing
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; BargainBand
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; KnightRing
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; ReturnBand
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; SpeedRing
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; MagicRing
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; PowerRing
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; ShieldRing
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; BarrierRing
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; LegRing
+        .byte (AnimCategoryAny << 4) | AttackStyleSword  ; SkillRing
+        .byte (AnimCategorySword << 4) | AttackStyleSword  ; BrokenHolySword
+        .byte (AnimCategoryLance << 4) | AttackStyleLance  ; BrokenHolyLance
+        .byte (AnimCategoryBow << 4) | AttackStyleRanged  ; BrokenHolyBow
 
         ; 99/8437
 

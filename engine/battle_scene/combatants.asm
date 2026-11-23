@@ -361,12 +361,14 @@
 
         ; 95/B5FD
 
-      rlUnknown95B5FD ; 95/B5FD
+      rlBattleAnimationGetHitHeight ; 95/B5FD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Byte 1 of the combatant's body record: the height its effects aim at and fly from.
 
         phx
         cpx #$0000
@@ -512,13 +514,15 @@
       .al
       .xl
 
-      rsUnknown95B6A7 ; 95/B6A7
+      rsBattleAnimationGetBodyByte5 ; 95/B6A7
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Found by tools/sweep.py. Byte 5 of the combatant's body record; the only caller is not reached.
 
         phx
         cpx #$0000
@@ -552,12 +556,14 @@
       .al
       .xl
 
-      rlUnknown95B6D0 ; 95/B6D0
+      rlBattleSceneGetStartGap ; 95/B6D0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = 0 or $43: the distance the combatants start apart. $C8 for a magic sword (Fire Sword to Light Brand) at range; $E0 for the Physic, Restore, Silence, Sleep and Berserk Staves at distance 2; otherwise twice byte 6 of the body record (the other combatant's when a mage faces a non-mage up close and rlUnknown969F7D says so).
 
         phx
         lda wBattleDistance
@@ -573,7 +579,7 @@
         lda aBattleSceneCombatant2.Weapon,b
 
         _B6E7
-        jsl rlUnknown95B7AE
+        jsl rlBattleSceneIsMagicSword
         bcc _B6F4
         lda #$00C8
         jml _B7AC
@@ -684,12 +690,14 @@
 
         ; 95/B7AE
 
-      rlUnknown95B7AE ; 95/B7AE
+      rlBattleSceneIsMagicSword ; 95/B7AE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = item ID: carry set for the Fire, Earth, Thunder and Wind Swords and the Light Brand.
 
         and #$00FF
         cmp #$000F
@@ -724,13 +732,15 @@
       .al
       .xl
 
-      rlUnknown95B7CF ; 95/B7CF
+      rlBattleAnimationGetBodyByte7 ; 95/B7CF
 
         ; Called only from unreachable code in rsBattleScenePlaceCombatants. X = 0 or $43 (the combatant); returns byte 7 of the combatant's aUnknown97EA9A record (index $7FE1BE/$7FE1BF).
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Called only from unreachable code in rsBattleScenePlaceCombatants: byte 7 of the combatant's body record, there a starting height.
 
         phx
         cpx #$0000
@@ -923,12 +933,14 @@
       .al
       .xl
 
-      rsUnknown95B884 ; 95/B884
+      rsBattleAnimationStartPose ; 95/B884
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A + bBattleAnimationPoseOffset: starts that sequence on combatant X unless it is already playing.
 
         phx
         clc
@@ -968,40 +980,42 @@
 
         ; 95/B8B0
 
-      rlUnknown95B8B0 ; 95/B8B0
+      rlBattleAnimationGetEffectStart ; 95/B8B0
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = class, wR2 = AnimStyle: the offset from the thrower where its effect appears, from aBattleAnimationEffectStarts (low byte X, toward the opponent; high byte Y). Carry set and 0 for a class not listed.
+
         phx
         pha
         lda wR2
         and #$00F0
-        cmp #$0050
+        cmp #AnimCategoryRangedLance << 4
         bne _B8C1
-        ldx #$0070
+        ldx #aBattleAnimationEffectStarts._Javelins - aBattleAnimationEffectStarts
         bra _B8CE
 
 
         _B8C1
-        cmp #$0060
+        cmp #AnimCategoryRangedAxe << 4
         bne _B8CB
-        ldx #$003E
+        ldx #aBattleAnimationEffectStarts._HandAxes - aBattleAnimationEffectStarts
         bra _B8CE
 
 
         _B8CB
-        ldx #$0000
+        ldx #aBattleAnimationEffectStarts._Bows - aBattleAnimationEffectStarts
 
         _B8CE
-        lda aUnknown98AFFD,x
+        lda aBattleAnimationEffectStarts,x
         cmp #$FFFF
         beq _B8EA
         cmp #1,s
         bne _B8E4
-        lda aUnknown98AFFD+2,x
+        lda aBattleAnimationEffectStarts+2,x
         sta #1,s
         clc
         bra _B8F0
@@ -1029,12 +1043,14 @@
 
         ; 95/B8F3
 
-      rlUnknown95B8F3 ; 95/B8F3
+      rlBattleSceneCheckMagicSword ; 95/B8F3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Y = the round entry in [lR18], X = the attacker. For a magic round (bit $40) by a sword wielder (AnimCategorySword): the status swords (Berserk, Silence and Sleep Swords) start their weapon script now (rlBattleSceneGetWeaponScript) and set bit 6 of the slot's state, returning carry set; any other sword striking from range (bit $20) sets bit 2 of bBattleAnimationCombatantFlags (and bit 6 of bBattleSceneStrikeFlags for a critical) so the round queues rlBattleSceneQueueMagicSwordAttack. Carry clear otherwise.
 
         lda [lR18],y
         bit #$0040
@@ -1095,8 +1111,8 @@
 
 
         _B959
-        jsl rlUnknown96DC7C
-        jsl rlUnknown96BCEC
+        jsl rlBattleSceneGetWeaponScript
+        jsl rlStartBattleSceneScriptFar
         sep #$20
         lda bBattleAnimationStateFlags,b,x
         ora #$40
@@ -1119,12 +1135,14 @@
       .al
       .xl
 
-      rlUnknown95B96F ; 95/B96F
+      rlBattleAnimationResetSlots ; 95/B96F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears the state of all four slots, sets the upload budget to $C00 and clears the release signals.
 
         sep #$20
         ldx #$0000
@@ -1157,12 +1175,14 @@
       .al
       .xl
 
-      rlUnknown95B993 ; 95/B993
+      rlBattleAnimationResetSpawnSlot ; 95/B993
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fills the spawn slot ($0BFF) from aBattleAnimationSpawnSlotTemplate.
 
         pha
         phx
@@ -1170,8 +1190,8 @@
         ldx #$0000
 
         _B99A
-        lda aUnknown978F3A,x
-        sta $0BFF,b,x
+        lda aBattleAnimationSpawnSlotTemplate,x
+        sta bBattleAnimationSpawnStateFlags,b,x
         inc x
         cpx #$0043
         bcc _B99A
@@ -1184,22 +1204,24 @@
 
         ; 95/B9AC
 
-      rlUnknown95B9AC ; 95/B9AC
+      rlBattleAnimationCopySpawnSlot ; 95/B9AC
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Points the spawn slot's script at its sequence, then copies the slot into slot A (0-3; 4 and up do nothing).
+
         phy
         pha
-        lda $0C26,b
+        lda lBattleAnimationSpawnFrameDataPointer+1,b
         sta lR18+1
-        lda $0C25,b
+        lda lBattleAnimationSpawnFrameDataPointer,b
         sta lR18
         sta wR0
         ldy #$0000
-        lda $0C28,b
+        lda bBattleAnimationSpawnSequenceID,b
         and #$00FF
         asl a
         clc
@@ -1210,8 +1232,8 @@
         lda [lR18],y
         clc
         adc wR0
-        sta $0C2B,b
-        sta $0C2D,b
+        sta wBattleAnimationSpawnScriptLoopOffset,b
+        sta wBattleAnimationSpawnScriptOffset,b
         pla
         and #$00FF
         cmp #$0004
@@ -1227,7 +1249,7 @@
         ldy $4216,b
 
         _B9F3
-        lda $0BFF,b,x
+        lda bBattleAnimationSpawnStateFlags,b,x
         sta bBattleAnimationStateFlags,b,y
         inc y
         inc x
@@ -1322,12 +1344,14 @@
 
         ; 95/BA76
 
-      rlUnknown95BA76 ; 95/BA76
+      rlBattleAnimationStartSequence2 ; 95/BA76
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The same code as rlBattleAnimationStartSequence; used for effects whose role is 4 or more.
 
         phx
         phy
@@ -1602,7 +1626,7 @@
         _BBEC
         cmp #$00F1
         bne _BBFC
-        jsr rsUnknown95BE04
+        jsr rsBattleAnimationCmdQueueIdle
         bcc _BBFA
         jml _BC9D
 
@@ -1621,21 +1645,21 @@
         _BC06
         cmp #$00EF
         bne _BC10
-        jsr rsUnknown95BE26
+        jsr rsBattleAnimationCmdStartWeaponScript
         bra _BC65
 
 
         _BC10
         cmp #$00EE
         bne _BC1A
-        jsr rsUnknown95BE39
+        jsr rsBattleAnimationCmdSpawnEffect
         bra _BC65
 
 
         _BC1A
         cmp #$00ED
         bne _BC24
-        jsr rsUnknown95BEA4
+        jsr rsBattleAnimationCmdDodgeIfMissed
         bra _BC65
 
 
@@ -1670,7 +1694,7 @@
         _BC4C
         cmp #$00E8
         bne _BC56
-        jsr rsUnknown95BFA4
+        jsr rsBattleAnimationCmdFaceOther
         bra _BC65
 
 
@@ -1772,7 +1796,7 @@
 
         lda wBattleAnimationScriptLoopOffset,b,x
         sta wBattleAnimationScriptOffset,b,x
-        jsr rsUnknown95E58C
+        jsr rsBattleAnimationRestartMoveList
         rts
 
         .databank 0
@@ -1800,7 +1824,7 @@
         sbc #1,s
         sta wBattleAnimationScriptOffset,b,x
         pla
-        jsr rsUnknown95E59B
+        jsr rsBattleAnimationGoBackMoveList
         rts
 
         .databank 0
@@ -2065,14 +2089,16 @@
 
         ; 95/BE04
 
-      rsUnknown95BE04 ; 95/BE04
+      rsBattleAnimationCmdQueueIdle ; 95/BE04
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown95AAFF
+        ; Sequence command $F2: rlBattleSceneQueueIdleAction and variant 0; does not advance.
+
+        jsl rlBattleSceneQueueIdleAction
         sep #$20
         lda bBattleAnimationCombatantFlags,b,x
         and #$FC
@@ -2103,15 +2129,17 @@
 
         ; 95/BE26
 
-      rsUnknown95BE26 ; 95/BE26
+      rsBattleAnimationCmdStartWeaponScript ; 95/BE26
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown96DC7C
-        jsl rlUnknown96BCEC
+        ; Sequence command $F0: starts the weapon's battle scene script (rlBattleSceneGetWeaponScript), the spell of a tome or staff.
+
+        jsl rlBattleSceneGetWeaponScript
+        jsl rlStartBattleSceneScriptFar
         lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
@@ -2122,12 +2150,14 @@
 
         ; 95/BE39
 
-      rsUnknown95BE39 ; 95/BE39
+      rsBattleAnimationCmdSpawnEffect ; 95/BE39
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sequence command $EF Arg: starts the combatant's effect slot (arrow, thrown weapon, spell) with sequence Arg (rsBattleAnimationSpawnEffect1/2), between two calls of rlBattleAnimationSetEffectMotion.
 
         jsr rsBattleAnimationReadStep
         phx
@@ -2140,12 +2170,12 @@
         jsl rlBattleAnimationSetEffectMotion
         sep #$20
         lda $0B7D,b
-        sta $0C03,b
+        sta bBattleAnimationSpawnRole,b
         rep #$20
         pla
         pha
         xba
-        jsr rsUnknown95DCA3
+        jsr rsBattleAnimationSpawnEffect1
         pla
         lda aBattleSceneCombatant1.Weapon,b
         sta wR0
@@ -2162,12 +2192,12 @@
         jsl rlBattleAnimationSetEffectMotion
         sep #$20
         lda $0BC0,b
-        sta $0C03,b
+        sta bBattleAnimationSpawnRole,b
         rep #$20
         pla
         pha
         xba
-        jsr rsUnknown95DD4F
+        jsr rsBattleAnimationSpawnEffect2
         pla
         lda aBattleSceneCombatant2.Weapon,b
         sta wR0
@@ -2186,12 +2216,14 @@
 
         ; 95/BEA4
 
-      rsUnknown95BEA4 ; 95/BEA4
+      rsBattleAnimationCmdDodgeIfMissed ; 95/BEA4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sequence command $EE: rlUnknown96F9BF, then the other combatant dodges (rlBattleSceneQueueDodge) if the strike missed.
 
         jsl rlUnknown96F9BF
         lda bBattleSceneStrikeFlags,b
@@ -2399,12 +2431,14 @@
 
         ; 95/BFA4
 
-      rsUnknown95BFA4 ; 95/BFA4
+      rsBattleAnimationCmdFaceOther ; 95/BFA4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sequence command $E9: rlBattleAnimationFaceOther.
 
         jsl rlBattleAnimationFaceOther
         lda wBattleAnimationScriptOffset,b,x
@@ -4933,7 +4967,7 @@
         lda #$0002
 
         _CCC5
-        jsr rsUnknown95B884
+        jsr rsBattleAnimationStartPose
 
         _CCC8
         lda wBattleAnimationYVelocity,b,x
@@ -7644,44 +7678,46 @@
       .al
       .xl
 
-      rsUnknown95DCA3 ; 95/DCA3
+      rsBattleAnimationSpawnEffect1 ; 95/DCA3
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = sequence: starts combatant 1's effect slot (slot 2) at its start offset (rlBattleAnimationGetEffectStart), aimed at the defender (rsBattleAnimationAimEffect).
+
         phx
         and #$001F
         pha
-        jsl rlUnknown95B993
+        jsl rlBattleAnimationResetSpawnSlot
         pla
         pha
         sep #$20
-        sta $0C2A,b
+        sta bBattleAnimationSpawnPoseOffset,b
         rep #$20
         lda lBattleAnimationFrameDataPointer+1,b
-        sta $0C26,b
+        sta lBattleAnimationSpawnFrameDataPointer+1,b
         lda lBattleAnimationFrameDataPointer,b
-        sta $0C25,b
+        sta lBattleAnimationSpawnFrameDataPointer,b
         lda wBattleAnimationX,b
         sta wR0
         lda wBattleAnimationXFixed,b
-        sta $0C04,b
+        sta wBattleAnimationSpawnXFixed,b
         lda wBattleAnimationYAnchor,b
-        sta $0C07,b
+        sta wBattleAnimationSpawnYAnchor,b
         lda wBattleAnimationYFixed,b
         sta wR1
         lda #$0000
-        sta $0C30,b
+        sta wBattleAnimationSpawnBaseTile,b
         sep #$20
         lda $0B7D,b
-        sta $0C03,b
+        sta bBattleAnimationSpawnRole,b
         rep #$20
         lda aBattleSceneCombatant1.AnimStyle,b
         sta wR2
         lda aBattleSceneCombatant1.Class,b
-        jsl rlUnknown95B8B0
+        jsl rlBattleAnimationGetEffectStart
         pha
         and #$00FF
         bit #$0080
@@ -7699,16 +7735,16 @@
         _DD0B
         clc
         adc wR0
-        sta $0C05,b
+        sta wBattleAnimationSpawnX,b
         pla
         and #$FF00
         clc
         adc wR1
-        sta $0C09,b
+        sta wBattleAnimationSpawnYFixed,b
         lda #$0000
-        jsr rsUnknown95DE0C
+        jsr rsBattleAnimationAimEffect
         lda #$0002
-        jsl rlUnknown95B9AC
+        jsl rlBattleAnimationCopySpawnSlot
         lda $0B7D,b
         and #$00FF
         cmp #$0004
@@ -7718,7 +7754,7 @@
         sep #$20
         lda #$02
         rep #$20
-        jsl rlUnknown95BA76
+        jsl rlBattleAnimationStartSequence2
         bra _DD4D
 
 
@@ -7738,44 +7774,46 @@
 
         ; 95/DD4F
 
-      rsUnknown95DD4F ; 95/DD4F
+      rsBattleAnimationSpawnEffect2 ; 95/DD4F
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The same for combatant 2's effect slot (slot 3).
+
         phx
         and #$001F
         pha
-        jsl rlUnknown95B993
+        jsl rlBattleAnimationResetSpawnSlot
         pla
         pha
         sep #$20
-        sta $0C2A,b
+        sta bBattleAnimationSpawnPoseOffset,b
         rep #$20
         lda lBattleAnimation2FrameDataPointer+1,b
-        sta $0C26,b
+        sta lBattleAnimationSpawnFrameDataPointer+1,b
         lda lBattleAnimation2FrameDataPointer,b
-        sta $0C25,b
+        sta lBattleAnimationSpawnFrameDataPointer,b
         lda wBattleAnimation2X,b
         sta wR0
         lda wBattleAnimation2XFixed,b
-        sta $0C04,b
+        sta wBattleAnimationSpawnXFixed,b
         lda wBattleAnimation2YAnchor,b
-        sta $0C07,b
+        sta wBattleAnimationSpawnYAnchor,b
         lda wBattleAnimation2YFixed,b
         sta wR1
         lda #$8100
-        sta $0C30,b
+        sta wBattleAnimationSpawnBaseTile,b
         sep #$20
         lda $0BC0,b
-        sta $0C03,b
+        sta bBattleAnimationSpawnRole,b
         rep #$20
         lda aBattleSceneCombatant2.AnimStyle,b
         sta wR2
         lda aBattleSceneCombatant2.Class,b
-        jsl rlUnknown95B8B0
+        jsl rlBattleAnimationGetEffectStart
         pha
         and #$00FF
         bit #$0080
@@ -7793,16 +7831,16 @@
         _DDB7
         clc
         adc wR0
-        sta $0C05,b
+        sta wBattleAnimationSpawnX,b
         pla
         and #$FF00
         clc
         adc wR1
-        sta $0C09,b
+        sta wBattleAnimationSpawnYFixed,b
         lda #$8000
-        jsr rsUnknown95DE0C
+        jsr rsBattleAnimationAimEffect
         lda #$0003
-        jsl rlUnknown95B9AC
+        jsl rlBattleAnimationCopySpawnSlot
         lda $0BC0,b
         and #$00FF
         cmp #$0004
@@ -7812,7 +7850,7 @@
         sep #$20
         lda #$03
         rep #$20
-        jsl rlUnknown95BA76
+        jsl rlBattleAnimationStartSequence2
         bra _DDF9
 
 
@@ -7855,12 +7893,14 @@
 
         ; 95/DE0C
 
-      rsUnknown95DE0C ; 95/DE0C
+      rsBattleAnimationAimEffect ; 95/DE0C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets the spawn slot's X speed toward the defender (rlBattleAnimationGetEffectSpeed), its Y step to the defender's hit height (rsBattleAnimationSetEffectYStep) and its jump arc (rlBattleAnimationGetEffectArcHeight).
 
         pha
         pha
@@ -7869,7 +7909,7 @@
         sta wR1
         lda #1,s
         asl a
-        jsl rlUnknown95E304
+        jsl rlBattleAnimationGetEffectSpeed
         pha
         sta wR0
         lda wR1
@@ -7889,24 +7929,24 @@
 
         _DE38
         ora wR1
-        sta $0C14,b
+        sta wBattleAnimationSpawnXSpeed,b
         pla
         pha
         sta wR1
         lda wR0
         pha
         lda wR1
-        jsr rsUnknown95E291
+        jsr rsBattleAnimationSetEffectYStep
         pla
         sta wR0
         pla
         asl a
-        jsl rlUnknown95E33B
+        jsl rlBattleAnimationGetEffectArcHeight
         jsl rlBattleAnimationGetJumpArc
         lda wR0
-        sta $0C1C,b
+        sta wBattleAnimationSpawnGravity,b
         lda wR1
-        sta $0C1A,b
+        sta wBattleAnimationSpawnYVelocity,b
         rts
 
         .databank 0
@@ -8736,12 +8776,14 @@
 
         ; 95/E291
 
-      rsUnknown95E291 ; 95/E291
+      rsBattleAnimationSetEffectYStep ; 95/E291
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets the spawn slot's target Y to the defender's hit height and its Y step (8.8 a pixel, bit 15 down) from the attacker's hit height ($18 higher for motion 1).
 
         phx
         lda wBattleAnimationAttackerOffset,b
@@ -8762,10 +8804,10 @@
         _E2AD
         pha
         ldx wBattleAnimationDefenderOffset,b
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         sta wR1
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         clc
         adc #1,s
         sta wR2
@@ -8788,11 +8830,11 @@
         _E2DB
         sta wR3
         lda wR2
-        jsl rlUnknown95E2EF
+        jsl rlBattleAnimationDivide8_8
         ora wR3
-        sta $0C1F,b
+        sta wBattleAnimationSpawnYStep,b
         lda wR1
-        sta $0C10,b
+        sta wBattleAnimationSpawnTargetY,b
         plx
         rts
 
@@ -8800,12 +8842,14 @@
 
         ; 95/E2EF
 
-      rlUnknown95E2EF ; 95/E2EF
+      rlBattleAnimationDivide8_8 ; 95/E2EF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A * 256 / wR0.
 
         phx
         phy
@@ -8824,12 +8868,14 @@
 
         ; 95/E304
 
-      rlUnknown95E304 ; 95/E304
+      rlBattleAnimationGetEffectSpeed ; 95/E304
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry clear for combatant 1's effect: $800 for motion 1, else $1000 when the thrower is off the ground and $1200 on it.
 
         phx
         php
@@ -8879,12 +8925,14 @@
 
         ; 95/E33B
 
-      rlUnknown95E33B ; 95/E33B
+      rlBattleAnimationGetEffectArcHeight ; 95/E33B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry clear for combatant 1's effect: $18 for motion 1, else 6 or 0 by wBattleAnimationYFixed of X = $0E or 0, which are offsets into aBattleSceneCombatant1, not slot offsets: they read the wrong field.
 
         phx
         php
@@ -9340,12 +9388,14 @@
 
         ; 95/E58C
 
-      rsUnknown95E58C ; 95/E58C
+      rsBattleAnimationRestartMoveList ; 95/E58C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; With bit 0 of bBattleAnimationFacingFlags, the move list restarts with the sequence (rsBattleAnimationCmdRestart).
 
         lda bBattleAnimationFacingFlags,b,x
         bit #$0001
@@ -9360,12 +9410,14 @@
 
         ; 95/E59B
 
-      rsUnknown95E59B ; 95/E59B
+      rsBattleAnimationGoBackMoveList ; 95/E59B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; With bit 0 of bBattleAnimationFacingFlags, the move list goes back with the sequence (rsBattleAnimationCmdGoBack): by the same count, doubled for variant 3.
 
         lda bBattleAnimationFacingFlags,b,x
         bit #$0001
@@ -9410,12 +9462,14 @@
       .al
       .xl
 
-      rlUnknown96961F ; 96/961F
+      rlBattleSceneTrackCombatantSides ; 96/961F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Each frame: when combatant 1 passes to the right of combatant 2 sends sound command $1D1, and $D1 when it passes back (bit 0 of $7FFC9C remembers the side).
 
         lda $7FFC9C
         bit #$0001

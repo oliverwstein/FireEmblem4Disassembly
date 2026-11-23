@@ -947,7 +947,7 @@
         lda bBattleAnimationStateFlags,b,x
         ora #$08
         sta bBattleAnimationStateFlags,b,x
-        jsr rsUnknown95B6A7
+        jsr rsBattleAnimationGetBodyByte5
         jsl rlBattleAnimationGetJumpArc
         lda wR1
         sta wBattleAnimationYVelocity,b,x

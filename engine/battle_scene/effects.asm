@@ -1817,7 +1817,7 @@
         pla
         phx
         ldx wBattleAnimationDefenderOffset,b
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         sec
         sbc #$0010
         xba
@@ -3921,7 +3921,7 @@
         lda wR0
         sta wR1
         clc
-        jsl rlUnknown95E304
+        jsl rlBattleAnimationGetEffectSpeed
         pha
         sta wR0
         lda wR1
@@ -3953,7 +3953,7 @@
         sta wR0
         pla
         asl a
-        jsl rlUnknown95E33B
+        jsl rlBattleAnimationGetEffectArcHeight
         jsl rlBattleAnimationGetJumpArc
         lda wR0
         sta $7FEC3C,x
@@ -9372,12 +9372,14 @@
       .al
       .xl
 
-      rlUnknown96DC7C ; 96/DC7C
+      rlBattleSceneGetWeaponScript ; 96/DC7C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = 0 or $43: A = the battle scene script of the combatant's weapon from aBattleSceneWeaponScripts (the second column at wBattleDistance 3 or more), 0 for a weapon not listed.
 
         phx
         cpx #$0000
@@ -9395,7 +9397,7 @@
         ldx #$0000
 
         _DC91
-        lda aUnknown99832D,x
+        lda aBattleSceneWeaponScripts,x
         cmp #$FFFF
         bne _DCA1
         lda #$0000
@@ -9417,12 +9419,12 @@
         lda wBattleDistance
         cmp #$0003
         bcs _DCBC
-        lda aUnknown99832D+1,x
+        lda aBattleSceneWeaponScripts+1,x
         bra _DCC0
 
 
         _DCBC
-        lda aUnknown99832D+2,x
+        lda aBattleSceneWeaponScripts+2,x
 
         _DCC0
         and #$00FF
@@ -9833,7 +9835,7 @@
         lda #$0000
         sta $7FE479,x
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         sec
         sbc #$0008
         pha
@@ -9892,7 +9894,7 @@
         lda #$0000
         sta $7FE479,x
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         sec
         sbc #$0008
         pha
@@ -9951,7 +9953,7 @@
         lda #$0000
         sta $7FE479,x
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         clc
         adc #$0018
         pha
@@ -10010,7 +10012,7 @@
         lda #$0000
         sta $7FE479,x
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         clc
         adc #$0018
         pha
@@ -10069,7 +10071,7 @@
         lda #$0000
         sta $7FE479,x
         ldx wBattleAnimationDefenderOffset,b
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         sec
         sbc #$0008
         pha
@@ -10126,7 +10128,7 @@
         lda #$0000
         sta $7FE479,x
         ldx wBattleAnimationDefenderOffset,b
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         sec
         sbc #$0008
         pha
@@ -10724,7 +10726,7 @@
         ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         sta wR0
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         sec
         sbc #$0008
         clc
@@ -10837,7 +10839,7 @@
         ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         sta wR0
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         sec
         sbc #$0008
         clc
@@ -11057,7 +11059,7 @@
         ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         sta wR0
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         sec
         sbc #$0008
         clc
@@ -13958,7 +13960,7 @@
         _F8DD
         lda wBattleAnimationX,b,x
         sta $7FFC60
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         pha
         lda wBattleAnimationYAnchor,b,x
         sec
@@ -14141,7 +14143,7 @@
         sta $7FFC6C
 
         _FA20
-        jsl rlUnknown95B5FD
+        jsl rlBattleAnimationGetHitHeight
         pha
         lda wBattleAnimationYAnchor,b,x
         sec
@@ -14662,7 +14664,7 @@
         lda #$0080
         sta wBattleSceneCameraX
         ldx #$0000
-        jsl rlUnknown95AAFF
+        jsl rlBattleSceneQueueIdleAction
         plx
         rtl
 
@@ -14698,7 +14700,7 @@
         sta wBattleAnimationX,b
         sta wBattleAnimation2X,b
         ldx #$0043
-        jsl rlUnknown95AAFF
+        jsl rlBattleSceneQueueIdleAction
         plx
         rtl
 

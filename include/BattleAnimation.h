@@ -112,7 +112,7 @@
     .endsegment
 
     ; $F7: clear the combatant's busy bit (bit 2 of $0AF3,x; rsBattleAnimationCmdClearBusy).
-    ; rlBattleAnimationStartSequence and rlUnknown95BA76 set it when they start a sequence and
+    ; rlBattleAnimationStartSequence and rlBattleAnimationStartSequence2 set it when they start a sequence and
     ; refuse to start another while it is set, and rsBattleSceneCheckRoundsOver waits until
     ; both combatants have it clear. Most sequences end ANIM_CLEAR_BUSY,
     ; ANIM_HOLD.
@@ -141,8 +141,8 @@
       .byte $F3, \Arg
     .endsegment
 
-    ; $F2: rlUnknown95AAFF, then clear bits 0-1 of $0AF5,x; does not advance
-    ; (rsUnknown95BE04). Not used.
+    ; $F2: rlBattleSceneQueueIdleAction, then clear bits 0-1 of $0AF5,x; does not advance
+    ; (rsBattleAnimationCmdQueueIdle). Not used.
     ANIM_CMD_F2 .segment Arg=0
       .byte $F2, \Arg
     .endsegment
@@ -152,19 +152,19 @@
       .byte $F1, \Arg
     .endsegment
 
-    ; $F0: rlUnknown96DC7C and rlUnknown96BCEC (rsUnknown95BE26).
+    ; $F0: rlBattleSceneGetWeaponScript and rlStartBattleSceneScriptFar (rsBattleAnimationCmdStartWeaponScript).
     ANIM_CMD_F0 .segment Arg=0
       .byte $F0, \Arg
     .endsegment
 
-    ; $EF: Arg to rsUnknown95DCA3 (first combatant) or rsUnknown95DD4F
-    ; (second), around calls of rlBattleAnimationSetEffectMotion (rsUnknown95BE39).
+    ; $EF: Arg to rsBattleAnimationSpawnEffect1 (first combatant) or rsBattleAnimationSpawnEffect2
+    ; (second), around calls of rlBattleAnimationSetEffectMotion (rsBattleAnimationCmdSpawnEffect).
     ANIM_CMD_EF .segment Arg
       .byte $EF, \Arg
     .endsegment
 
     ; $EE: rlUnknown96F9BF, and rlBattleSceneQueueDodge for the other combatant if
-    ; bit 3 of $0AE4 is set (rsUnknown95BEA4).
+    ; bit 3 of $0AE4 is set (rsBattleAnimationCmdDodgeIfMissed).
     ANIM_CMD_EE .segment Arg=0
       .byte $EE, \Arg
     .endsegment
@@ -190,7 +190,7 @@
       .byte $EA, \Arg
     .endsegment
 
-    ; $E9: rlBattleAnimationFaceOther (rsUnknown95BFA4).
+    ; $E9: rlBattleAnimationFaceOther (rsBattleAnimationCmdFaceOther).
     ANIM_CMD_E9 .segment Arg=0
       .byte $E9, \Arg
     .endsegment
@@ -204,7 +204,7 @@
   ; The animation lookup (aBattleAnimationLookup, read by rlUnknown95A2C8).
 
   ; Weapon categories: the high nibble of an item's byte in the table at
-  ; $99/83B9 (rlUnknown95A1ED). The ranged ones (Javelin; Hand Axe and
+  ; $99/83B9 (rlBattleSceneGetWeaponAnimStyle). The ranged ones (Javelin; Hand Axe and
   ; Helswath) count only at wBattleDistance 2 or more, else they become the
   ; plain lance or axe. A combatant without one gets AnimCategoryAny, which
   ; matches any record of its class.
@@ -219,6 +219,18 @@
     AnimCategoryMagic       = 7
     AnimCategoryStaff       = 8
     AnimCategoryAny         = 9
+
+  ; Attack styles: the low nibble of the same byte (rsBattleSceneGetAttackStyle).
+  ; They pick the action a combatant queues for a strike (aBattleSceneAttackActions
+  ; and the tables after it). rlBattleSceneGetWeaponAnimStyle gives a javelin or
+  ; hand axe AttackStyleRanged at wBattleDistance 2 or more. 1 is not used.
+
+    AttackStyleSword  = 0
+    AttackStyleLance  = 2
+    AttackStyleAxe    = 3
+    AttackStyleRanged = 4
+    AttackStyleMagic  = 5
+    AttackStyleStaff  = 6
 
   ; A record's character: AnimAnyCharacter, or the low byte of a character ID.
 

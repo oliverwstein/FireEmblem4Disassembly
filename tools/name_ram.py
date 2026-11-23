@@ -61,7 +61,7 @@ SCOPED = [
     (0x7FD000, 0x7FD8BA, ('bTitle', 'wTitle', 'lTitle', 'aTitle'),
      ('engine/title/title_screen.asm', 'engine/title/title_scenes.asm')),
     # The battle animation combatants' motion; a few other screens reuse the area.
-    (0x7E0AF3, 0x7E0B78, ('wBattleAnimation', 'bBattleAnimation', 'lBattleAnimation'), BATTLE_SCENE_FILES),
+    (0x7E0AF3, 0x7E0C41, ('wBattleAnimation', 'bBattleAnimation', 'lBattleAnimation'), BATTLE_SCENE_FILES),
     # The battle scene's variables; the map's text buffer and unit buffers share $7FE000-$7FFFFF.
     (0x7E0ADD, 0x7E0AE8, ('wBattleScene', 'bBattleScene', 'lBattleScene', 'aBattleScene'), BATTLE_SCENE_FILES),
     (0x7E0D44, 0x7E0D69, ('wBattleScene', 'bBattleScene', 'lBattleScene', 'aBattleScene'), BATTLE_SCENE_FILES),
