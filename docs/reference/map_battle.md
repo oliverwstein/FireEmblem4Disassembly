@@ -11,7 +11,7 @@ When battle animations are off, a fight is played on the map itself: the two uni
 | [map_battle_hud.asm](../../engine/battle/map_battle_hud.asm) | the HP and experience windows and the text box (bank `$85`), and `procMapExperienceWindowEffect` |
 | [cutscenes.asm](../../engine/events/cutscenes.asm) | the warp away/in animations, the Belhalla mages, and the starters for scripted map battles that events run |
 
-The map magic effects are in [map_battle_magic.asm](../../engine/battle/map_battle_magic.asm) (bank `$9F`, not yet sorted).
+The magic effects (bank `$9F`) are in [map_battle_magic.asm](../../engine/battle/map_battle_magic.asm) (the shared machinery and the data each effect loads) and [map_magic_effects.asm](../../engine/battle/map_magic_effects.asm) (one starter per spell and its steps); see "Magic effects" below.
 
 Data: `aMapAction` (`$7F454A`) and `wMapBattleMode` (`$7F4C87`) in [include/WRAM.h](../../include/WRAM.h); the rounds come from `aBattleRoundsData`, written by the battle calculation.
 
@@ -40,6 +40,23 @@ The proc's script, `aProcMapBattleCode`, is the battle's outline. Most steps are
 9. **Popups**, each with the music lowered and a jingle: gold obtained (ゴールド　てにいれた！), gold stolen (ゴールド　ぬすまれた), an item obtained (を　てにいれた！), a weapon broken (は　こわれてしまった).
 10. **End** (`rlProcMapBattleEnd`, `rlEndMapBattleRestoreMap`): the camera returns to the cursor, the windows close, the palettes and the units' map sprites come back, and canto is checked.
 
+## Magic effects
+
+A tome or staff plays an effect over a background of its own. The effect number is the item ID minus Fire (`$3E`), so 0 is Fire and 41 BrokenStaffA. `rlInitMapBattleCombatants` stores each side's number (`wMapMagicAttackerEffect`, `wMapMagicDefenderEffect`; magic swords get one through `rlUnknown9E86CF`), and `rlUnknown9E811F` sets `wMapMagicFlags` (0 when nothing plays; its high byte says whether the units are near a screen edge). All of it is in `include/WRAM.h` from `$7F5089`.
+
+For each round, the battle's script:
+
+1. `rlSelectMapMagicEffectForRound`: `wMapMagicEffect` = the acting side's number.
+2. `rlQueueMapMagicBackgroundTiles`, `...Tilemap`, `...Palette` (earlier, in `rlUnknown9E...` before the rounds) decompress the background from `aMapBattleMagicBackgrounds`. Meteor and Valflame have a second tilemap for a target on the right of the screen.
+3. `rlUploadMapMagicBackgroundTiles`, `...TilesRest`, `...Tilemap`, `rlCopyMapMagicBackgroundColors`, then `rlLoadMapMagicSprites` and `rlUploadMapMagicSpriteTiles` (`aMapBattleMagicSprites`).
+4. `rlStartMapMagicEffect` saves the screen registers and creates `procMapMagicEffect`.
+5. The battler's sprite script reaches `ACTIVE_SPRITE_START_MAP_MAGIC` (command `$10`), which sets `wMapMagicStart`. The proc then runs the spell's starter from `aMapMagicEffectStarters` (`rlStartMapMagicFire` ... `rlStartMapMagicBrokenStaff`) and ends. The script waits at `ACTIVE_SPRITE_WAIT_MAP_MAGIC` (command `$11`) until the effect sets `wMapMagicDone`, usually after fading the colours back (`rsFadeBackMapMagicColors`).
+6. `rlEndMapMagicEffect` frees the procs and HDMA entries the effect created (`aMapMagicProcList`, `aMapMagicHDMAList`, filled by `rsCreateMapMagicProc` and `rsCreateMapMagicHDMA`), and `rlRestoreMapMagicScreenRegisters` puts the screen back.
+
+The starters share effects: Heal's (sound `$71`, `procMapMagicHealingStaff`) also plays for Naga, Loptous, the broken fire tomes, Charm and Valkyrie; Mend, Recover and Physic use the same proc with their own sound; Elthunder serves Bolting, Wind Elwind, Warp Rescue. The Belhalla mages' meteors use Meteor's (effect 4). The steps of each effect are `Unknown` (visual detail) and carry a note naming their effect.
+
+**Active sprite scripts.** The effects draw with active sprites, whose scripts are now written with the `ACTIVE_SPRITE_*` macros in `include/ActiveSpriteEngine.h` (`tools/sprite_scripts.py` decodes one from the ROM). Command `$17` calls a routine; many of the routines it calls read a script position after the call and jump there or skip it (they load the word at `Y` into `Y`).
+
 ## The other animations
 
 - **Village raid** (`procVillageRaid`, from `rlUnitRaidVillage`).
@@ -63,3 +80,6 @@ The proc's script, `aProcMapBattleCode`, is the battle's outline. Most steps are
 - What `procUnknown9EAF98` shows: it starts after the rounds when `$7F5089` is `$20` and a check on the defender's tile (a location, the home castle) passes (`rlUnknown9EAF44`, `rlUnknown9EB01B`).
 - `rlUnknown9EAE22`, `rlUnknown9EAE5A` and `rlUnknown9EAECF` run before and after the rounds when `wBattleStatus` bit 2 is set; what the effect is.
 - The sprite, palette and animation helpers that are still `Unknown`.
+- What `wMapMagicFlags`' edge bits change: they pick the HDMA line counts in `aMapMagicWindowLines` (`rsSetMapMagicWindowLines`).
+- Who sets the effect number `$27` (Berserk) in `event_scripts.asm` (near `$9E/ECA4`), and for which scene.
+- Active sprite commands `$03`-`$0F`, `$13`, `$18`, `$1A`-`$1C` have no macro yet (map battle internals); the map battle's own scripts in bank `$9E` are still `.byte` rows.
