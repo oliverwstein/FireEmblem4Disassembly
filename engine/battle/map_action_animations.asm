@@ -1889,7 +1889,7 @@
 
         -
         PROC_YIELD 1
-        PROC_CALL rlUnknown96D695
+        PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_WHILE_UNK_TIMER -
 
         PROC_CALL rlUnknown9EAB21

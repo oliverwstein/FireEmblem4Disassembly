@@ -971,6 +971,19 @@
 
   .endvirtual
 
+  .virtual $7FFD9A
+
+    aBattleScenePaletteSlots .dstruct structBattleScenePaletteSlot ; $7FFD9A
+                             .fill 9 * size(structBattleScenePaletteSlot)
+
+  .endvirtual
+
+  .virtual $7FFDFE
+
+    wBattleScenePaletteBrighten .word ? ; $7FFDFE ; steps palette effect type 12 brightens by
+
+  .endvirtual
+
   .virtual $7FFC72
 
     ; The HUD's scroll, written in the IRQ that splits the screen above the HUD.

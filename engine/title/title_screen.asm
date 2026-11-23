@@ -1441,7 +1441,7 @@
         jsl rlRunTitleLoadList
         jsl rlBattleSceneScriptUpdateLoading
         jsl rlUnknown95F14D
-        jsl rlUnknown96D695
+        jsl rlBattleSceneRunPaletteEffects
         jsl rlUnknown96CB44
         jsl rlUnknown96A532
         jsl rlUpdateTitleSprites
@@ -1479,7 +1479,7 @@
         jsl rlRunTitleLoadList
         jsl rlBattleSceneScriptUpdateLoading
         jsl rlUnknown95F14D
-        jsl rlUnknown96D695
+        jsl rlBattleSceneRunPaletteEffects
         jsl rlUnknown96A532
         jsl rlUnknown96CB44
         jsl rlUpdateTitleSprites
@@ -1510,7 +1510,7 @@
         jsl rlRunTitleLoadList
         jsl rlBattleSceneScriptUpdateLoading
         jsl rlUnknown95F14D
-        jsl rlUnknown96D695
+        jsl rlBattleSceneRunPaletteEffects
         jsl rlUpdateTitleSprites
         lda bTitleScreenDone
         and #$00FF

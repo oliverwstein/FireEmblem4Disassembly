@@ -244,12 +244,14 @@
       .al
       .xl
 
-      rlUnknown959DAC ; 95/9DAC
+      rlBattleSceneDarkenColorsStep ; 95/9DAC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = first color, Y = count: takes one step off each nonzero channel of those colors of aBGPaletteBuffer. Carry set when they are all black.
 
         pha
         phx
@@ -356,12 +358,14 @@
       .al
       .xl
 
-      rlUnknown959E22 ; 95/9E22
+      rlBattleSceneBrightenColorsStep ; 95/9E22
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = first color, Y = count: adds one step to each channel below 31. Carry set when they are all white.
 
         pha
         phx
@@ -632,12 +636,14 @@
       .al
       .xl
 
-      rlUnknown959F43 ; 95/9F43
+      rlBattleSceneStepColorsToward ; 95/9F43
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = first color, Y = count, lR18 = target colors: moves each channel one step toward the target's. Carry set when they all match.
 
         pha
         phx
@@ -8255,7 +8261,7 @@
         _D65D
         sep #$20
         lda #$80
-        sta $7FFD9A,x
+        sta aBattleScenePaletteSlots.Type,x
         rep #$20
         txa
         clc
@@ -8264,7 +8270,7 @@
         cpx #$0064
         bcc _D65D
         lda #$0000
-        sta $7FFDFE
+        sta wBattleScenePaletteBrighten
         plx
         rtl
 
@@ -8314,34 +8320,36 @@
       .al
       .xl
 
-      rlUnknown96D695 ; 96/D695
+      rlBattleSceneRunPaletteEffects ; 96/D695
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Every frame: for each of the ten palette effect slots (aBattleScenePaletteSlots) still running, counts down its timer, and when it is out runs its type (aBattleScenePaletteEffectTypes).
+
         phx
         phy
         ldx #$0000
 
         _D69A
-        lda $7FFD9A,x
+        lda aBattleScenePaletteSlots.Type,x
         bit #$0080
         bne _D6CE
-        lda $7FFDA3,x
+        lda aBattleScenePaletteSlots.Timer,x
         and #$00FF
         beq _D6BB
         sep #$20
-        lda $7FFDA3,x
+        lda aBattleScenePaletteSlots.Timer,x
         dec a
-        sta $7FFDA3,x
+        sta aBattleScenePaletteSlots.Timer,x
         rep #$20
         bra _D6CE
 
 
         _D6BB
-        lda $7FFD9A,x
+        lda aBattleScenePaletteSlots.Type,x
         and #$003F
         sta wR0
         txy
@@ -8349,7 +8357,7 @@
         lda wR0
         asl a
         tax
-        jsr (aUnknown96D6DD,x)
+        jsr (aBattleScenePaletteEffectTypes,x)
         plx
 
         _D6CE
@@ -8376,22 +8384,22 @@
       .al
       .xl
 
-      aUnknown96D6DD ; 96/D6DD
+      aBattleScenePaletteEffectTypes ; 96/D6DD
 
-        ; Jump table of rlUnknown96D695.
-        .word <>rsUnknown96D6F7
-        .word <>rsUnknown96D774
-        .word <>rsUnknown96D808
-        .word <>rsUnknown96D89F
-        .word <>rsUnknown96D8D7
-        .word <>rsUnknown96D912
-        .word <>rsUnknown96D938
-        .word <>rsUnknown96D95E
-        .word <>rsUnknown96D990
-        .word <>rsUnknown96D9B4
-        .word <>rsUnknown96D9D8
-        .word <>rsUnknown96DA0F
-        .word <>rsUnknown96DA34
+        ; Jump table of rlBattleSceneRunPaletteEffects.
+        .word <>rsBattleScenePaletteEffectFrames
+        .word <>rsBattleScenePaletteEffectScrollIn
+        .word <>rsBattleScenePaletteEffectScrollInBack
+        .word <>rsBattleScenePaletteEffectRotate
+        .word <>rsBattleScenePaletteEffectRotateBack
+        .word <>rsBattleScenePaletteEffectFadeToBlack
+        .word <>rsBattleScenePaletteEffectFadeToWhite
+        .word <>rsBattleScenePaletteEffectFadeToColors
+        .word <>rsBattleScenePaletteEffectBlack
+        .word <>rsBattleScenePaletteEffectWhite
+        .word <>rsBattleScenePaletteEffectSetColors
+        .word <>rsBattleScenePaletteEffectRestore
+        .word <>rsBattleScenePaletteEffectScrollInBright
 
     .endsection Table96D6DDSection
 
@@ -8401,18 +8409,20 @@
       .al
       .xl
 
-      rsUnknown96D6F7 ; 96/D6F7
+      rsBattleScenePaletteEffectFrames ; 96/D6F7
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 0: writes the next frame of Count colors from the data; a byte $80 | n before it sets the delay, $FE goes back to the start, $FF ends.
+
         phx
         tyx
         lda $7FFD9C,x
         sta lR18+1
-        lda $7FFD9E,x
+        lda aBattleScenePaletteSlots.Position,x
         sta lR18
 
         _D705
@@ -8430,13 +8440,13 @@
 
 
         _D721
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
         bra _D772
 
 
         _D726
-        lda $7FFD9B,x
-        sta $7FFD9E,x
+        lda aBattleScenePaletteSlots.Data,x
+        sta aBattleScenePaletteSlots.Position,x
         bra _D705
 
 
@@ -8446,18 +8456,18 @@
 
 
         _D733
-        lda $7FFDA2,x
+        lda aBattleScenePaletteSlots.Delay,x
 
         _D737
         sep #$20
-        sta $7FFDA3,x
-        sta $7FFDA2,x
+        sta aBattleScenePaletteSlots.Timer,x
+        sta aBattleScenePaletteSlots.Delay,x
         rep #$20
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         sta wR0
         phx
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         asl a
         tax
@@ -8478,8 +8488,8 @@
         plx
         tya
         clc
-        adc $7FFD9E,x
-        sta $7FFD9E,x
+        adc aBattleScenePaletteSlots.Position,x
+        sta aBattleScenePaletteSlots.Position,x
 
         _D772
         plx
@@ -8497,20 +8507,22 @@
       .al
       .xl
 
-      rsUnknown96D774 ; 96/D774
+      rsBattleScenePaletteEffectScrollIn ; 96/D774
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 1: moves the colors down by one and puts the next color of the data (read as in type 0) in the last place.
+
         tyx
         phx
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         dec a
         bne _D78B
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         asl a
         tax
@@ -8519,7 +8531,7 @@
 
         _D78B
         pha
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         asl a
         tax
@@ -8541,7 +8553,7 @@
         _D7A7
         lda $7FFD9C,x
         sta lR18+1
-        lda $7FFD9E,x
+        lda aBattleScenePaletteSlots.Position,x
         sta lR18
         ldy #$0000
         lda [lR18],y
@@ -8557,15 +8569,15 @@
 
 
         _D7CF
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
         plx
         plx
         bra _D807
 
 
         _D7D6
-        lda $7FFD9B,x
-        sta $7FFD9E,x
+        lda aBattleScenePaletteSlots.Data,x
+        sta aBattleScenePaletteSlots.Position,x
         bra _D7A7
 
 
@@ -8575,12 +8587,12 @@
 
 
         _D7E3
-        lda $7FFDA2,x
+        lda aBattleScenePaletteSlots.Delay,x
 
         _D7E7
         sep #$20
-        sta $7FFDA3,x
-        sta $7FFDA2,x
+        sta aBattleScenePaletteSlots.Timer,x
+        sta aBattleScenePaletteSlots.Delay,x
         rep #$20
         plx
         lda [lR18],y
@@ -8591,8 +8603,8 @@
         plx
         tya
         clc
-        adc $7FFD9E,x
-        sta $7FFD9E,x
+        adc aBattleScenePaletteSlots.Position,x
+        sta aBattleScenePaletteSlots.Position,x
 
         _D807
         rts
@@ -8601,20 +8613,22 @@
 
         ; 96/D808
 
-      rsUnknown96D808 ; 96/D808
+      rsBattleScenePaletteEffectScrollInBack ; 96/D808
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 2: as type 1, the colors moved up and the new one in the first place.
+
         tyx
         phx
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         dec a
         bne _D81F
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         asl a
         tax
@@ -8623,7 +8637,7 @@
 
         _D81F
         pha
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         clc
         adc #1,s
@@ -8647,7 +8661,7 @@
         _D83E
         lda $7FFD9C,x
         sta lR18+1
-        lda $7FFD9E,x
+        lda aBattleScenePaletteSlots.Position,x
         sta lR18
         ldy #$0000
         lda [lR18],y
@@ -8663,15 +8677,15 @@
 
 
         _D866
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
         plx
         plx
         bra _D89E
 
 
         _D86D
-        lda $7FFD9B,x
-        sta $7FFD9E,x
+        lda aBattleScenePaletteSlots.Data,x
+        sta aBattleScenePaletteSlots.Position,x
         bra _D83E
 
 
@@ -8681,12 +8695,12 @@
 
 
         _D87A
-        lda $7FFDA2,x
+        lda aBattleScenePaletteSlots.Delay,x
 
         _D87E
         sep #$20
-        sta $7FFDA3,x
-        sta $7FFDA2,x
+        sta aBattleScenePaletteSlots.Timer,x
+        sta aBattleScenePaletteSlots.Delay,x
         rep #$20
         plx
         lda [lR18],y
@@ -8697,8 +8711,8 @@
         plx
         tya
         clc
-        adc $7FFD9E,x
-        sta $7FFD9E,x
+        adc aBattleScenePaletteSlots.Position,x
+        sta aBattleScenePaletteSlots.Position,x
 
         _D89E
         rts
@@ -8715,23 +8729,25 @@
       .al
       .xl
 
-      rsUnknown96D89F ; 96/D89F
+      rsBattleScenePaletteEffectRotate ; 96/D89F
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 3: rotates the colors down by one every Value frames.
+
         tyx
         sep #$20
-        lda $7FFDA2,x
-        sta $7FFDA3,x
+        lda aBattleScenePaletteSlots.Delay,x
+        sta aBattleScenePaletteSlots.Timer,x
         rep #$20
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         dec a
         pha
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         asl a
         tax
@@ -8762,23 +8778,25 @@
       .al
       .xl
 
-      rsUnknown96D8D7 ; 96/D8D7
+      rsBattleScenePaletteEffectRotateBack ; 96/D8D7
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 4: rotates the colors up by one every Value frames.
+
         tyx
         sep #$20
-        lda $7FFDA2,x
-        sta $7FFDA3,x
+        lda aBattleScenePaletteSlots.Delay,x
+        sta aBattleScenePaletteSlots.Timer,x
         rep #$20
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         dec a
         pha
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         clc
         adc #1,s
@@ -8811,26 +8829,28 @@
       .al
       .xl
 
-      rsUnknown96D912 ; 96/D912
+      rsBattleScenePaletteEffectFadeToBlack ; 96/D912
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 5: takes one step off every channel every Value frames (rlBattleSceneDarkenColorsStep); ends at black.
+
         tyx
         sep #$20
-        lda $7FFDA2,x
-        sta $7FFDA3,x
+        lda aBattleScenePaletteSlots.Delay,x
+        sta aBattleScenePaletteSlots.Timer,x
         rep #$20
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         tay
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
-        jsl rlUnknown959DAC
+        jsl rlBattleSceneDarkenColorsStep
         bcc _D937
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
 
         _D937
         rts
@@ -8847,26 +8867,28 @@
       .al
       .xl
 
-      rsUnknown96D938 ; 96/D938
+      rsBattleScenePaletteEffectFadeToWhite ; 96/D938
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 6: adds one step to every channel every Value frames (rlBattleSceneBrightenColorsStep); ends at white.
+
         tyx
         sep #$20
-        lda $7FFDA2,x
-        sta $7FFDA3,x
+        lda aBattleScenePaletteSlots.Delay,x
+        sta aBattleScenePaletteSlots.Timer,x
         rep #$20
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         tay
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
-        jsl rlUnknown959E22
+        jsl rlBattleSceneBrightenColorsStep
         bcc _D95D
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
 
         _D95D
         rts
@@ -8883,30 +8905,32 @@
       .al
       .xl
 
-      rsUnknown96D95E ; 96/D95E
+      rsBattleScenePaletteEffectFadeToColors ; 96/D95E
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 7: moves every channel one step toward the data's colors every Value frames (rlBattleSceneStepColorsToward); ends when they match.
+
         tyx
         sep #$20
-        lda $7FFDA2,x
-        sta $7FFDA3,x
+        lda aBattleScenePaletteSlots.Delay,x
+        sta aBattleScenePaletteSlots.Timer,x
         rep #$20
-        lda $7FFD9B,x
+        lda aBattleScenePaletteSlots.Data,x
         sta lR18
         lda $7FFD9C,x
         sta lR18+1
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         tay
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
-        jsl rlUnknown959F43
+        jsl rlBattleSceneStepColorsToward
         bcc _D98F
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
 
         _D98F
         rts
@@ -8923,19 +8947,21 @@
       .al
       .xl
 
-      rsUnknown96D990 ; 96/D990
+      rsBattleScenePaletteEffectBlack ; 96/D990
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 8: sets the colors black and ends.
+
         tyx
         phx
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         tay
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         asl a
         tax
@@ -8948,7 +8974,7 @@
         dec y
         bne _D9A6
         plx
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
         rts
 
         .databank 0
@@ -8963,19 +8989,21 @@
       .al
       .xl
 
-      rsUnknown96D9B4 ; 96/D9B4
+      rsBattleScenePaletteEffectWhite ; 96/D9B4
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 9: sets the colors white and ends.
+
         tyx
         phx
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         tay
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         asl a
         tax
@@ -8988,7 +9016,7 @@
         dec y
         bne _D9CA
         plx
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
         rts
 
         .databank 0
@@ -9003,23 +9031,25 @@
       .al
       .xl
 
-      rsUnknown96D9D8 ; 96/D9D8
+      rsBattleScenePaletteEffectSetColors ; 96/D9D8
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 10: copies the colors from the data and ends.
+
         tyx
         phx
-        lda $7FFD9B,x
+        lda aBattleScenePaletteSlots.Data,x
         sta lR18
         lda $7FFD9C,x
         sta lR18+1
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         pha
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         asl a
         tax
@@ -9038,7 +9068,7 @@
         dec a
         bne _D9FB
         plx
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
         rts
 
         .databank 0
@@ -9053,19 +9083,21 @@
       .al
       .xl
 
-      rsUnknown96DA0F ; 96/DA0F
+      rsBattleScenePaletteEffectRestore ; 96/DA0F
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 11: copies the colors back from the saved palette at $7FFE00 and ends.
+
         tyx
         phx
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         tay
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         asl a
         tax
@@ -9078,7 +9110,7 @@
         dec y
         bne _DA22
         plx
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
         rts
 
         .databank 0
@@ -9093,20 +9125,22 @@
       .al
       .xl
 
-      rsUnknown96DA34 ; 96/DA34
+      rsBattleScenePaletteEffectScrollInBright ; 96/DA34
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Type 12: as type 1, the new color brightened by wBattleScenePaletteBrighten steps (rsBattleSceneBrightenColorBy).
+
         tyx
         phx
-        lda $7FFDA1,x
+        lda aBattleScenePaletteSlots.Count,x
         and #$00FF
         dec a
         bne _DA4B
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         asl a
         tax
@@ -9115,7 +9149,7 @@
 
         _DA4B
         pha
-        lda $7FFDA0,x
+        lda aBattleScenePaletteSlots.FirstColor,x
         and #$00FF
         asl a
         tax
@@ -9137,7 +9171,7 @@
         _DA67
         lda $7FFD9C,x
         sta lR18+1
-        lda $7FFD9E,x
+        lda aBattleScenePaletteSlots.Position,x
         sta lR18
         ldy #$0000
         lda [lR18],y
@@ -9153,15 +9187,15 @@
 
 
         _DA8F
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
         plx
         plx
         bra _DACA
 
 
         _DA96
-        lda $7FFD9B,x
-        sta $7FFD9E,x
+        lda aBattleScenePaletteSlots.Data,x
+        sta aBattleScenePaletteSlots.Position,x
         bra _DA67
 
 
@@ -9171,25 +9205,25 @@
 
 
         _DAA3
-        lda $7FFDA2,x
+        lda aBattleScenePaletteSlots.Delay,x
 
         _DAA7
         sep #$20
-        sta $7FFDA3,x
-        sta $7FFDA2,x
+        sta aBattleScenePaletteSlots.Timer,x
+        sta aBattleScenePaletteSlots.Delay,x
         rep #$20
         plx
         lda [lR18],y
         xba
-        jsr rsUnknown96DACB
+        jsr rsBattleSceneBrightenColorBy
         sta aBGPaletteBuffer,b,x
         inc y
         inc y
         plx
         tya
         clc
-        adc $7FFD9E,x
-        sta $7FFD9E,x
+        adc aBattleScenePaletteSlots.Position,x
+        sta aBattleScenePaletteSlots.Position,x
 
         _DACA
         rts
@@ -9206,13 +9240,15 @@
       .al
       .xl
 
-      rsUnknown96DACB ; 96/DACB
+      rsBattleSceneBrightenColorBy ; 96/DACB
 
         ; TRACE: stack-args
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Returns color A with each channel raised by wBattleScenePaletteBrighten steps (aUnknown98B133, aUnknown98B0F3, aUnknown98B0B3 by channel), each at most 31.
 
         phx
         pha
@@ -9224,7 +9260,7 @@
         lda #5,s
         and #$001F
         pha
-        lda $7FFDFE
+        lda wBattleScenePaletteBrighten
         asl a
         tax
         lda aUnknown98B133,x
@@ -9289,7 +9325,7 @@
         sta wR11
         jsl rlUnsignedMultiply16By16
         ldx wR12
-        jsr rsUnknown96DB36
+        jsr rsBattleSceneEndPaletteEffect
         plx
         rtl
 
@@ -9297,18 +9333,20 @@
 
         ; 96/DB36
 
-      rsUnknown96DB36 ; 96/DB36
+      rsBattleSceneEndPaletteEffect ; 96/DB36
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; X = the slot: stops it (bit 7 of its type) and, when it was waited for (bit 6), counts down bBattleSceneScriptWaitCount.
+
         sep #$20
-        lda $7FFD9A,x
+        lda aBattleScenePaletteSlots.Type,x
         ora #$80
-        sta $7FFD9A,x
-        lda $7FFD9A,x
+        sta aBattleScenePaletteSlots.Type,x
+        lda aBattleScenePaletteSlots.Type,x
         bit #$40
         beq _DB55
         lda bBattleSceneScriptWaitCount
@@ -14492,7 +14530,7 @@
         _FC2D
         sep #$20
         lda #$80
-        sta $7FFD9A,x
+        sta aBattleScenePaletteSlots.Type,x
         rep #$20
         txa
         clc
@@ -14537,7 +14575,7 @@
         _FC6B
         sep #$20
         lda #$80
-        sta $7FFD9A,x
+        sta aBattleScenePaletteSlots.Type,x
         rep #$20
         txa
         clc
@@ -14576,7 +14614,7 @@
         _FCB1
         sep #$20
         lda #$80
-        sta $7FFD9A,x
+        sta aBattleScenePaletteSlots.Type,x
         rep #$20
         txa
         clc

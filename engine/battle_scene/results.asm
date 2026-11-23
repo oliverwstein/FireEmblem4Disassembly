@@ -900,7 +900,7 @@
         bcc +
         lda #$001F
         +
-        sta $7FFDFE
+        sta wBattleScenePaletteBrighten
         sep #$20
         .as
         ora #$E0
@@ -956,7 +956,7 @@
         bcc +
         lda #$001F
         +
-        sta $7FFDFE
+        sta wBattleScenePaletteBrighten
         sep #$20
         .as
         ora #$E0

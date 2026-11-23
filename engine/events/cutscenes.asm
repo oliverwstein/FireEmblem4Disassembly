@@ -1780,7 +1780,7 @@
         sta lR18
         ldy #$000F
         lda #$00F1
-        jsl rlUnknown959F43
+        jsl rlBattleSceneStepColorsToward
         bcc _End
 
           lda #0

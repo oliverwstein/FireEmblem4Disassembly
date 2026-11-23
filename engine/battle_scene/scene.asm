@@ -527,7 +527,7 @@
         jsr rsBattleSceneDrawShadows
         jsr rsBattleSceneUpdateHP1
         jsr rsBattleSceneUpdateHP2
-        jsl rlUnknown96D695
+        jsl rlBattleSceneRunPaletteEffects
         jsl rlUnknown95C508
         jsl rlBattleSceneRunLargeUpload
         jsl rlUnknown96C8A1

@@ -1675,7 +1675,7 @@
 
       aUnknown98B0B3 ; 98/B0B3
 
-        ; Read by rsUnknown96DACB.
+        ; Read by rsBattleSceneBrightenColorBy.
 
         .word $0000, $0400, $0800, $0C00, $1000, $1400, $1800, $1C00
         .word $2000, $2400, $2800, $2C00, $3000, $3400, $3800, $3C00
@@ -1686,7 +1686,7 @@
 
       aUnknown98B0F3 ; 98/B0F3
 
-        ; Read by rsUnknown96DACB.
+        ; Read by rsBattleSceneBrightenColorBy.
 
         .word $0000, $0020, $0040, $0060, $0080, $00A0, $00C0, $00E0
         .word $0100, $0120, $0140, $0160, $0180, $01A0, $01C0, $01E0
@@ -1697,7 +1697,7 @@
 
       aUnknown98B133 ; 98/B133
 
-        ; Read by rsUnknown96DACB.
+        ; Read by rsBattleSceneBrightenColorBy.
 
         .word $0000, $0001, $0002, $0003, $0004, $0005, $0006, $0007
         .word $0008, $0009, $000A, $000B, $000C, $000D, $000E, $000F

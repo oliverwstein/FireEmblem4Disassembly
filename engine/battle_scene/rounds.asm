@@ -125,7 +125,7 @@
         lda bBattleSceneKnockback,b
         and #$003F
         bne _A75F
-        lda $7FFD9A
+        lda aBattleScenePaletteSlots.Type
         bit #$0080
         beq _A75F
         lda $7FFDA4

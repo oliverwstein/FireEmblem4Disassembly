@@ -43,7 +43,7 @@
   ; Palette effect entries for rlBattleSceneStartPaletteEffect (script command
   ; 11 takes them from aBattleScenePaletteEffects; tools/palette_effects.py).
   ; Slot is one of ten slots ($7FFD9A, 10 bytes each), Type (bits 0-5) picks
-  ; what rlUnknown96D695 does each frame; FirstColor and Count are the colors
+  ; what rlBattleSceneRunPaletteEffects does each frame; FirstColor and Count are the colors
   ; of aBGPaletteBuffer it changes. Type 0 plays Data as frames of Count colors,
   ; each optionally led by a byte $80 | frames (else the slot's own delay); a
   ; byte $FE goes back to the start and $FF ends it.
@@ -105,4 +105,18 @@
     Flags     .byte ?        ; bit 0 on, bit 1 alternates the delay (8 or 12 frames)
     Owner     .word ?        ; the slot (0 or $43)
     Positions .fill 16 * 3   ; X (word) and screen Y (byte), oldest first
+  .endstruct
+
+  ; A palette effect slot (aBattleScenePaletteSlots), filled by
+  ; rlBattleSceneStartPaletteEffect from a PALETTE_EFFECT entry and run by
+  ; rlBattleSceneRunPaletteEffects.
+
+  structBattleScenePaletteSlot .struct
+    Type       .byte ? ; bits 0-5 the type; bit 6 a script waits for it; bit 7 stopped
+    Data       .long ? ; the start of the type's data
+    Position   .word ? ; the next byte of the data (in Data's bank)
+    FirstColor .byte ?
+    Count      .byte ?
+    Delay      .byte ? ; frames between steps
+    Timer      .byte ?
   .endstruct

@@ -3124,7 +3124,7 @@
         sta lR18
         ldy #$000F
         lda #$00D1
-        jsl rlUnknown959F43
+        jsl rlBattleSceneStepColorsToward
         bcc _9273
         jsl rlUnknown9E9192
         lda #$0000
@@ -9642,7 +9642,7 @@
         PROC_SET_UNK_TIMER 96
         _CB8F
         PROC_YIELD 1
-        PROC_CALL rlUnknown96D695
+        PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_WHILE_UNK_TIMER _CB8F
         PROC_CALL rlUnknown9EAB21
         PROC_JUMP_IF_BITS_SET _CB70, $0002
@@ -11430,13 +11430,13 @@
         PROC_SET_UNK_TIMER 30
         _E3EC
         PROC_YIELD 1
-        PROC_CALL rlUnknown96D695
+        PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_WHILE_UNK_TIMER _E3EC
         PROC_CALL rlUnknown9EE4B5
         _E3FC
         PROC_YIELD 1
         PROC_CALL rlUnknown9EE4C5
-        PROC_CALL rlUnknown96D695
+        PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_IF_BITS_UNSET _E3FC, $0004
         PROC_CALL rlUnknown9EE53D
         PROC_YIELD 16
@@ -11770,13 +11770,13 @@
         PROC_SET_UNK_TIMER 30
         _E5FD
         PROC_YIELD 1
-        PROC_CALL rlUnknown96D695
+        PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_WHILE_UNK_TIMER _E5FD
         PROC_CALL rlUnknown9EE70E
         _E60D
         PROC_YIELD 1
         PROC_CALL rlUnknown9EE74B
-        PROC_CALL rlUnknown96D695
+        PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_IF_BITS_UNSET _E60D, $0004
         PROC_CALL rlUnknown9EE7A8
         PROC_YIELD 24
@@ -12124,13 +12124,13 @@
         PROC_SET_UNK_TIMER 30
         _E861
         PROC_YIELD 1
-        PROC_CALL rlUnknown96D695
+        PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_WHILE_UNK_TIMER _E861
         PROC_CALL rlUnknown9EE70E
         _E871
         PROC_YIELD 1
         PROC_CALL rlUnknown9EE74B
-        PROC_CALL rlUnknown96D695
+        PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_IF_BITS_UNSET _E871, $0004
         PROC_CALL rlUnknown9EE972
         PROC_YIELD 24

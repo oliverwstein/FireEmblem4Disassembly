@@ -2204,7 +2204,7 @@
         .databank ?
 
         ; lR18 = data, wR0 = 1 to wait for it: fills one of ten palette effect slots
-        ; ($7FFD9A, 10 bytes each; 13 types run by rlUnknown96D695, which change
+        ; ($7FFD9A, 10 bytes each; 13 types run by rlBattleSceneRunPaletteEffects, which change
         ; aBGPaletteBuffer).
 
         phx
@@ -2223,23 +2223,23 @@
         and #$3F
         pha
         inc y
-        sta $7FFD9A,x
+        sta aBattleScenePaletteSlots.Type,x
         lda wR0
         beq _DBC6
-        lda $7FFD9A,x
+        lda aBattleScenePaletteSlots.Type,x
         ora #$40
-        sta $7FFD9A,x
+        sta aBattleScenePaletteSlots.Type,x
 
         _DBC6
         lda [lR18],y
         inc y
-        sta $7FFDA0,x
+        sta aBattleScenePaletteSlots.FirstColor,x
         lda [lR18],y
         inc y
-        sta $7FFDA1,x
+        sta aBattleScenePaletteSlots.Count,x
         lda #$00
-        sta $7FFDA3,x
-        sta $7FFDA2,x
+        sta aBattleScenePaletteSlots.Timer,x
+        sta aBattleScenePaletteSlots.Delay,x
         pla
         cmp #$00
         beq _DC1B
@@ -2268,15 +2268,15 @@
         cmp #$0C
         beq _DC1B
         lda #$80
-        sta $7FFD9A,x
+        sta aBattleScenePaletteSlots.Type,x
         bra _DC77
 
 
         _DC1B
         lda [lR18],y
         inc y
-        sta $7FFD9B,x
-        sta $7FFD9E,x
+        sta aBattleScenePaletteSlots.Data,x
+        sta aBattleScenePaletteSlots.Position,x
         lda [lR18],y
         inc y
         sta $7FFD9C,x
@@ -2289,17 +2289,17 @@
 
         _DC3A
         lda [lR18],y
-        sta $7FFDA2,x
+        sta aBattleScenePaletteSlots.Delay,x
         bra _DC77
 
 
         _DC42
         lda [lR18],y
         inc y
-        sta $7FFDA2,x
+        sta aBattleScenePaletteSlots.Delay,x
         lda [lR18],y
         inc y
-        sta $7FFD9B,x
+        sta aBattleScenePaletteSlots.Data,x
         lda [lR18],y
         inc y
         sta $7FFD9C,x
@@ -2316,7 +2316,7 @@
         _DC62
         lda [lR18],y
         inc y
-        sta $7FFD9B,x
+        sta aBattleScenePaletteSlots.Data,x
         lda [lR18],y
         inc y
         sta $7FFD9C,x
