@@ -7681,17 +7681,17 @@
       aUnknown9FBF47 ; 9F/BF47
 
         ; Part of the Mjolnir effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FBF79
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FBF79
         ACTIVE_SPRITE_CALL rlUnknown9FBF6B
         .word <>aUnknown9FBF47
 
         _BF50
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FBF7B
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FBF79
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FBFA5
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FBF79
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FBFCF
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FBF79
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FBF7B
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FBF79
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FBFA5
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FBF79
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FBFCF
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FBF79
         ACTIVE_SPRITE_JUMP _BF50
 
         ; 9F/BF6B
@@ -7718,11 +7718,11 @@
 
         .databank 0
 
-      aUnknown9F9FBF79 ; 9F/9FBF79
+      aUnknown9FBF79 ; 9F/BF79
 
         .word 0
 
-      aUnknown9F9FBF7B ; 9F/9FBF7B
+      aUnknown9FBF7B ; 9F/BF7B
 
         _Sprites := [[( -40,   -9), $21, SpriteLarge, $006, 2, 6, false, true]]
         _Sprites ..= [[(  -6,  -38), $21, SpriteLarge, $00C, 2, 6, false, true]]
@@ -7733,9 +7733,9 @@
         _Sprites ..= [[( -32,   16), $21, SpriteLarge, $004, 2, 6, true, false]]
         _Sprites ..= [[( -13,   25), $21, SpriteLarge, $00C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FBF7B._Sprites
+        .structSpriteArray aUnknown9FBF7B._Sprites
 
-      aUnknown9F9FBFA5 ; 9F/9FBFA5
+      aUnknown9FBFA5 ; 9F/BFA5
 
         _Sprites := [[( -14,   25), $21, SpriteLarge, $002, 2, 6, false, true]]
         _Sprites ..= [[(  22,  -11), $21, SpriteLarge, $006, 2, 6, false, true]]
@@ -7746,9 +7746,9 @@
         _Sprites ..= [[( -31,  -32), $21, SpriteLarge, $004, 2, 6, false, false]]
         _Sprites ..= [[(  -7,  -38), $21, SpriteLarge, $00A, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9F9FBFA5._Sprites
+        .structSpriteArray aUnknown9FBFA5._Sprites
 
-      aUnknown9F9FBFCF ; 9F/9FBFCF
+      aUnknown9FBFCF ; 9F/BFCF
 
         _Sprites := [[(  14,  -32), $21, SpriteLarge, $004, 2, 6, true, false]]
         _Sprites ..= [[(  22,   -8), $21, SpriteLarge, $008, 2, 6, true, false]]
@@ -7759,7 +7759,7 @@
         _Sprites ..= [[( -32,  -32), $21, SpriteLarge, $002, 2, 6, true, true]]
         _Sprites ..= [[(  -7,  -38), $21, SpriteLarge, $00C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FBFCF._Sprites
+        .structSpriteArray aUnknown9FBFCF._Sprites
 
 
       rlStartMapMagicForseti ; 9F/BFF9
@@ -8548,27 +8548,27 @@
       aUnknown9FC499 ; 9F/C499
 
         ; Part of the Nosferatu effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FC4DE
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FC4DE
         ACTIVE_SPRITE_CALL rlUnknown9FC4C9
         .word <>aUnknown9FC499
 
         _C4A2
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FC4F6
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FC4F6
         ACTIVE_SPRITE_CALL rlUnknown9FC4C9
         .word <>_C4A2
 
         _C4AB
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FC4DE
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FC4DE
         ACTIVE_SPRITE_CALL rlUnknown9FC4C9
         .word <>_C4AB
 
         _C4B4
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FC4E0
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FC4E0
         ACTIVE_SPRITE_CALL rlUnknown9FC4C9
         .word <>_C4B4
 
         _C4BD
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FC4DE
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FC4DE
         ACTIVE_SPRITE_CALL rlUnknown9FC4C9
         .word <>_C4BD
         ACTIVE_SPRITE_JUMP aUnknown9FC499
@@ -8599,27 +8599,27 @@
 
         .databank 0
 
-      aUnknown9F9FC4DE ; 9F/9FC4DE
+      aUnknown9FC4DE ; 9F/C4DE
 
         .word 0
 
-      aUnknown9F9FC4E0 ; 9F/9FC4E0
+      aUnknown9FC4E0 ; 9F/C4E0
 
         _Sprites := [[(   0,    2), $21, SpriteLarge, $000, 3, 6, true, true]]
         _Sprites ..= [[(   0,  -14), $21, SpriteLarge, $000, 3, 6, true, false]]
         _Sprites ..= [[( -16,    2), $21, SpriteLarge, $000, 3, 6, false, true]]
         _Sprites ..= [[( -16,  -14), $21, SpriteLarge, $000, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FC4E0._Sprites
+        .structSpriteArray aUnknown9FC4E0._Sprites
 
-      aUnknown9F9FC4F6 ; 9F/9FC4F6
+      aUnknown9FC4F6 ; 9F/C4F6
 
         _Sprites := [[(   0,    2), $21, SpriteLarge, $002, 3, 6, true, true]]
         _Sprites ..= [[( -16,    2), $21, SpriteLarge, $002, 3, 6, false, true]]
         _Sprites ..= [[(   0,  -14), $21, SpriteLarge, $002, 3, 6, true, false]]
         _Sprites ..= [[( -16,  -14), $21, SpriteLarge, $002, 3, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FC4F6._Sprites
+        .structSpriteArray aUnknown9FC4F6._Sprites
 
 
       aProcUnknown9FC50CCode ; 9F/C50C
@@ -9319,7 +9319,7 @@
         .byte $00, $03, $7C, $C9, $00, $03, $B2, $C9, $00, $03, $97, $C9, $00, $03, $CD, $C9
         .byte $15, $69, $C9
 
-      aUnknown9F9FC97C ; 9F/9FC97C
+      aUnknown9FC97C ; 9F/C97C
 
         _Sprites := [[(  -1,  -72), $21, SpriteLarge, $00C, 2, 6, true, false]]
         _Sprites ..= [[(  -3,  -56), $21, SpriteLarge, $006, 2, 6, false, false]]
@@ -9327,9 +9327,9 @@
         _Sprites ..= [[(  -6,  -24), $21, SpriteLarge, $002, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FC97C._Sprites
+        .structSpriteArray aUnknown9FC97C._Sprites
 
-      aUnknown9F9FC997 ; 9F/9FC997
+      aUnknown9FC997 ; 9F/C997
 
         _Sprites := [[(   1,  -72), $21, SpriteLarge, $00C, 2, 6, false, false]]
         _Sprites ..= [[(  -3,  -56), $21, SpriteLarge, $004, 2, 6, false, false]]
@@ -9337,9 +9337,9 @@
         _Sprites ..= [[(  -9,  -24), $21, SpriteLarge, $008, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FC997._Sprites
+        .structSpriteArray aUnknown9FC997._Sprites
 
-      aUnknown9F9FC9B2 ; 9F/9FC9B2
+      aUnknown9FC9B2 ; 9F/C9B2
 
         _Sprites := [[(  -6,  -72), $21, SpriteLarge, $00C, 2, 6, true, false]]
         _Sprites ..= [[(  -8,  -56), $21, SpriteLarge, $006, 2, 6, false, false]]
@@ -9347,9 +9347,9 @@
         _Sprites ..= [[(  -8,  -24), $21, SpriteLarge, $002, 2, 6, true, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FC9B2._Sprites
+        .structSpriteArray aUnknown9FC9B2._Sprites
 
-      aUnknown9F9FC9CD ; 9F/9FC9CD
+      aUnknown9FC9CD ; 9F/C9CD
 
         _Sprites := [[(  -7,  -72), $21, SpriteLarge, $00C, 2, 6, false, false]]
         _Sprites ..= [[( -10,  -56), $21, SpriteLarge, $004, 2, 6, false, true]]
@@ -9357,7 +9357,7 @@
         _Sprites ..= [[(  -9,  -24), $21, SpriteLarge, $008, 2, 6, false, false]]
         _Sprites ..= [[(  -7,   -8), $21, SpriteLarge, $00A, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9F9FC9CD._Sprites
+        .structSpriteArray aUnknown9FC9CD._Sprites
 
 
       rlUnknown9FC9E8 ; 9F/C9E8
@@ -9681,169 +9681,169 @@
         .byte $DE, $CC, $00, $01, $F4, $CC, $15, $28, $CC, $00, $02, $00, $CD, $00, $02, $16
         .byte $CD, $00, $01, $2C, $CD, $15, $37, $CC
 
-      aUnknown9F9FCC3E ; 9F/9FCC3E
+      aUnknown9FCC3E ; 9F/CC3E
 
         .word 0
 
-      aUnknown9F9FCC40 ; 9F/9FCC40
+      aUnknown9FCC40 ; 9F/CC40
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FCC40._Sprites
+        .structSpriteArray aUnknown9FCC40._Sprites
 
-      aUnknown9F9FCC47 ; 9F/9FCC47
+      aUnknown9FCC47 ; 9F/CC47
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FCC47._Sprites
+        .structSpriteArray aUnknown9FCC47._Sprites
 
-      aUnknown9F9FCC4E ; 9F/9FCC4E
+      aUnknown9FCC4E ; 9F/CC4E
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FCC4E._Sprites
+        .structSpriteArray aUnknown9FCC4E._Sprites
 
-      aUnknown9F9FCC55 ; 9F/9FCC55
+      aUnknown9FCC55 ; 9F/CC55
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9F9FCC55._Sprites
+        .structSpriteArray aUnknown9FCC55._Sprites
 
-      aUnknown9F9FCC5C ; 9F/9FCC5C
+      aUnknown9FCC5C ; 9F/CC5C
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9F9FCC5C._Sprites
+        .structSpriteArray aUnknown9FCC5C._Sprites
 
-      aUnknown9F9FCC63 ; 9F/9FCC63
+      aUnknown9FCC63 ; 9F/CC63
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9F9FCC63._Sprites
+        .structSpriteArray aUnknown9FCC63._Sprites
 
-      aUnknown9F9FCC6A ; 9F/9FCC6A
+      aUnknown9FCC6A ; 9F/CC6A
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9F9FCC6A._Sprites
+        .structSpriteArray aUnknown9FCC6A._Sprites
 
-      aUnknown9F9FCC71 ; 9F/9FCC71
+      aUnknown9FCC71 ; 9F/CC71
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9F9FCC71._Sprites
+        .structSpriteArray aUnknown9FCC71._Sprites
 
-      aUnknown9F9FCC78 ; 9F/9FCC78
+      aUnknown9FCC78 ; 9F/CC78
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9F9FCC78._Sprites
+        .structSpriteArray aUnknown9FCC78._Sprites
 
-      aUnknown9F9FCC7F ; 9F/9FCC7F
+      aUnknown9FCC7F ; 9F/CC7F
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, true, true]]
 
-        .structSpriteArray aUnknown9F9FCC7F._Sprites
+        .structSpriteArray aUnknown9FCC7F._Sprites
 
-      aUnknown9F9FCC86 ; 9F/9FCC86
+      aUnknown9FCC86 ; 9F/CC86
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, true, true]]
 
-        .structSpriteArray aUnknown9F9FCC86._Sprites
+        .structSpriteArray aUnknown9FCC86._Sprites
 
-      aUnknown9F9FCC8D ; 9F/9FCC8D
+      aUnknown9FCC8D ; 9F/CC8D
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, true, true]]
 
-        .structSpriteArray aUnknown9F9FCC8D._Sprites
+        .structSpriteArray aUnknown9FCC8D._Sprites
 
-      aUnknown9F9FCC94 ; 9F/9FCC94
+      aUnknown9FCC94 ; 9F/CC94
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FCC94._Sprites
+        .structSpriteArray aUnknown9FCC94._Sprites
 
-      aUnknown9F9FCC9B ; 9F/9FCC9B
+      aUnknown9FCC9B ; 9F/CC9B
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FCC9B._Sprites
+        .structSpriteArray aUnknown9FCC9B._Sprites
 
-      aUnknown9F9FCCA2 ; 9F/9FCCA2
+      aUnknown9FCCA2 ; 9F/CCA2
 
         _Sprites := [[(  -8,    0), $00, SpriteSmall, $013, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $00, SpriteSmall, $012, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FCCA2._Sprites
+        .structSpriteArray aUnknown9FCCA2._Sprites
 
-      aUnknown9F9FCCAE ; 9F/9FCCAE
+      aUnknown9FCCAE ; 9F/CCAE
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9F9FCCAE._Sprites
+        .structSpriteArray aUnknown9FCCAE._Sprites
 
-      aUnknown9F9FCCB5 ; 9F/9FCCB5
+      aUnknown9FCCB5 ; 9F/CCB5
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9F9FCCB5._Sprites
+        .structSpriteArray aUnknown9FCCB5._Sprites
 
-      aUnknown9F9FCCBC ; 9F/9FCCBC
+      aUnknown9FCCBC ; 9F/CCBC
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $013, 2, 6, true, false]]
         _Sprites ..= [[(   0,   -8), $00, SpriteSmall, $012, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9F9FCCBC._Sprites
+        .structSpriteArray aUnknown9FCCBC._Sprites
 
-      aUnknown9F9FCCC8 ; 9F/9FCCC8
+      aUnknown9FCCC8 ; 9F/CCC8
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $016, 2, 6, true, false]]
         _Sprites ..= [[(   0,   -8), $00, SpriteSmall, $006, 2, 6, true, false]]
         _Sprites ..= [[(  -8,    0), $00, SpriteSmall, $016, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $00, SpriteSmall, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FCCC8._Sprites
+        .structSpriteArray aUnknown9FCCC8._Sprites
 
-      aUnknown9F9FCCDE ; 9F/9FCCDE
+      aUnknown9FCCDE ; 9F/CCDE
 
         _Sprites := [[(   0,    0), $00, SpriteSmall, $017, 2, 6, false, false]]
         _Sprites ..= [[(   0,   -8), $00, SpriteSmall, $007, 2, 6, false, false]]
         _Sprites ..= [[(  -8,    0), $00, SpriteSmall, $017, 2, 6, true, false]]
         _Sprites ..= [[(  -8,   -8), $00, SpriteSmall, $007, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9F9FCCDE._Sprites
+        .structSpriteArray aUnknown9FCCDE._Sprites
 
-      aUnknown9F9FCCF4 ; 9F/9FCCF4
+      aUnknown9FCCF4 ; 9F/CCF4
 
         _Sprites := [[(   0,   -7), $00, SpriteSmall, $003, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -7), $00, SpriteSmall, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FCCF4._Sprites
+        .structSpriteArray aUnknown9FCCF4._Sprites
 
-      aUnknown9F9FCD00 ; 9F/9FCD00
+      aUnknown9FCD00 ; 9F/CD00
 
         _Sprites := [[(   0,   -8), $00, SpriteSmall, $016, 2, 6, true, true]]
         _Sprites ..= [[(   0,    0), $00, SpriteSmall, $006, 2, 6, true, true]]
         _Sprites ..= [[(  -8,   -8), $00, SpriteSmall, $016, 2, 6, false, true]]
         _Sprites ..= [[(  -8,    0), $00, SpriteSmall, $006, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9F9FCD00._Sprites
+        .structSpriteArray aUnknown9FCD00._Sprites
 
-      aUnknown9F9FCD16 ; 9F/9FCD16
+      aUnknown9FCD16 ; 9F/CD16
 
         _Sprites := [[(  -8,    0), $00, SpriteSmall, $007, 2, 6, true, true]]
         _Sprites ..= [[(   0,   -8), $00, SpriteSmall, $017, 2, 6, false, true]]
         _Sprites ..= [[(   0,    0), $00, SpriteSmall, $007, 2, 6, false, true]]
         _Sprites ..= [[(  -8,   -8), $00, SpriteSmall, $017, 2, 6, true, true]]
 
-        .structSpriteArray aUnknown9F9FCD16._Sprites
+        .structSpriteArray aUnknown9FCD16._Sprites
 
-      aUnknown9F9FCD2C ; 9F/9FCD2C
+      aUnknown9FCD2C ; 9F/CD2C
 
         _Sprites := [[(   0,   -1), $00, SpriteSmall, $003, 2, 6, false, true]]
         _Sprites ..= [[(  -8,   -1), $00, SpriteSmall, $002, 2, 6, false, true]]
 
-        .structSpriteArray aUnknown9F9FCD2C._Sprites
+        .structSpriteArray aUnknown9FCD2C._Sprites
 
 
       rlStartMapMagicWarp ; 9F/CD38
@@ -10177,36 +10177,36 @@
       aUnknown9FCED1 ; 9F/CED1
 
         ; Part of the Warp effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD097
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD09E
-        ACTIVE_SPRITE_FRAME 8, aUnknown9F9FD0A5
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD0BA
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD097
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FD09E
+        ACTIVE_SPRITE_FRAME 8, aUnknown9FD0A5
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FD0BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
         ACTIVE_SPRITE_CALL rlUnknown9FCF58
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0BA
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0BA
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
         ACTIVE_SPRITE_MOVE 0, -10
-        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD0C8
+        ACTIVE_SPRITE_FRAME 5, aUnknown9FD0C8
         ACTIVE_SPRITE_MOVE 0, -18
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD0CF
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD0CF
         ACTIVE_SPRITE_CALL rlUnknown9FCF35
 
         _CF25
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD0CF
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD0CF
         ACTIVE_SPRITE_CALL rlUnknown9FCF45
         .word <>_CF25
 
         _CF2E
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD095
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD095
         ACTIVE_SPRITE_JUMP _CF2E
 
         ; 9F/CF35
@@ -10358,31 +10358,31 @@
       aUnknown9FD004 ; 9F/D004
 
         ; Part of the BrokenStaff effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD0CF
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD0CF
         ACTIVE_SPRITE_CALL rlUnknown9FD088
         .word <>aUnknown9FD004
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0CF
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C8
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0BA
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0CF
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C8
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0BA
         ACTIVE_SPRITE_CALL rlUnknown9FD05F
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD0BA
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
-        ACTIVE_SPRITE_FRAME 8, aUnknown9F9FD0A5
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD09E
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD097
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0C1
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FD0BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD0AC
+        ACTIVE_SPRITE_FRAME 8, aUnknown9FD0A5
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FD09E
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD097
 
         _D058
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD095
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD095
         ACTIVE_SPRITE_JUMP _D058
 
         ; 9F/D05F
@@ -10451,63 +10451,63 @@
 
         ; 9F/D095
 
-      aUnknown9F9FD095 ; 9F/9FD095
+      aUnknown9FD095 ; 9F/D095
 
         .word 0
 
-      aUnknown9F9FD097 ; 9F/9FD097
+      aUnknown9FD097 ; 9F/D097
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD097._Sprites
+        .structSpriteArray aUnknown9FD097._Sprites
 
-      aUnknown9F9FD09E ; 9F/9FD09E
+      aUnknown9FD09E ; 9F/D09E
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD09E._Sprites
+        .structSpriteArray aUnknown9FD09E._Sprites
 
-      aUnknown9F9FD0A5 ; 9F/9FD0A5
+      aUnknown9FD0A5 ; 9F/D0A5
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD0A5._Sprites
+        .structSpriteArray aUnknown9FD0A5._Sprites
 
-      aUnknown9F9FD0AC ; 9F/9FD0AC
+      aUnknown9FD0AC ; 9F/D0AC
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD0AC._Sprites
+        .structSpriteArray aUnknown9FD0AC._Sprites
 
-      aUnknown9F9FD0B3 ; 9F/9FD0B3
+      aUnknown9FD0B3 ; 9F/D0B3
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD0B3._Sprites
+        .structSpriteArray aUnknown9FD0B3._Sprites
 
-      aUnknown9F9FD0BA ; 9F/9FD0BA
+      aUnknown9FD0BA ; 9F/D0BA
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD0BA._Sprites
+        .structSpriteArray aUnknown9FD0BA._Sprites
 
-      aUnknown9F9FD0C1 ; 9F/9FD0C1
+      aUnknown9FD0C1 ; 9F/D0C1
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD0C1._Sprites
+        .structSpriteArray aUnknown9FD0C1._Sprites
 
-      aUnknown9F9FD0C8 ; 9F/9FD0C8
+      aUnknown9FD0C8 ; 9F/D0C8
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD0C8._Sprites
+        .structSpriteArray aUnknown9FD0C8._Sprites
 
-      aUnknown9F9FD0CF ; 9F/9FD0CF
+      aUnknown9FD0CF ; 9F/D0CF
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD0CF._Sprites
+        .structSpriteArray aUnknown9FD0CF._Sprites
 
 
       rlStartMapMagicJormungandr ; 9F/D0D6
@@ -10639,55 +10639,55 @@
 
         ; Part of the Jormungandr effect.
         ACTIVE_SPRITE_CALL rlUnknown9FD21B
-        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD254
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD265
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD276
-        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD287
-        ACTIVE_SPRITE_FRAME 6, aUnknown9F9FD298
+        ACTIVE_SPRITE_FRAME 5, aUnknown9FD254
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD265
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD276
+        ACTIVE_SPRITE_FRAME 5, aUnknown9FD287
+        ACTIVE_SPRITE_FRAME 6, aUnknown9FD298
         ACTIVE_SPRITE_CALL rlUnknown9FD206
-        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FD22F
         ACTIVE_SPRITE_CALL rlUnknown9FD225
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD231
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD238
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD238
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD238
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD23F
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD23F
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD23F
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD231
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD238
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD238
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD238
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD23F
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD23F
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD23F
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
         ACTIVE_SPRITE_CALL rlUnknown9FD1F7
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD29F
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD29F
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD2AB
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD2AB
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD2AB
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD2B7
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD2B7
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD246
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD246
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD24D
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD24D
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD29F
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD29F
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD2AB
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD2AB
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD2AB
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD2B7
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD2B7
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD246
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD246
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD24D
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD24D
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD22F
         ACTIVE_SPRITE_CALL rlUnknown9FD1FF
 
         _D1F0
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD22F
         ACTIVE_SPRITE_JUMP _D1F0
 
         ; 9F/D1F7
@@ -10781,99 +10781,99 @@
 
         ; 9F/D22F
 
-      aUnknown9F9FD22F ; 9F/9FD22F
+      aUnknown9FD22F ; 9F/D22F
 
         .word 0
 
-      aUnknown9F9FD231 ; 9F/9FD231
+      aUnknown9FD231 ; 9F/D231
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD231._Sprites
+        .structSpriteArray aUnknown9FD231._Sprites
 
-      aUnknown9F9FD238 ; 9F/9FD238
+      aUnknown9FD238 ; 9F/D238
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD238._Sprites
+        .structSpriteArray aUnknown9FD238._Sprites
 
-      aUnknown9F9FD23F ; 9F/9FD23F
+      aUnknown9FD23F ; 9F/D23F
 
         _Sprites := [[(  -8,   -9), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD23F._Sprites
+        .structSpriteArray aUnknown9FD23F._Sprites
 
-      aUnknown9F9FD246 ; 9F/9FD246
+      aUnknown9FD246 ; 9F/D246
 
         _Sprites := [[(  -8,  -26), $21, SpriteLarge, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD246._Sprites
+        .structSpriteArray aUnknown9FD246._Sprites
 
-      aUnknown9F9FD24D ; 9F/9FD24D
+      aUnknown9FD24D ; 9F/D24D
 
         _Sprites := [[(  -8,  -33), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD24D._Sprites
+        .structSpriteArray aUnknown9FD24D._Sprites
 
-      aUnknown9F9FD254 ; 9F/9FD254
+      aUnknown9FD254 ; 9F/D254
 
         _Sprites := [[(  -2,    0), $00, SpriteSmall, $00B, 2, 6, false, false]]
         _Sprites ..= [[( -10,    0), $00, SpriteSmall, $01B, 2, 6, false, false]]
         _Sprites ..= [[(  -7,   -7), $00, SpriteSmall, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD254._Sprites
+        .structSpriteArray aUnknown9FD254._Sprites
 
-      aUnknown9F9FD265 ; 9F/9FD265
+      aUnknown9FD265 ; 9F/D265
 
         _Sprites := [[(  -2,   -3), $00, SpriteSmall, $01B, 2, 6, false, false]]
         _Sprites ..= [[( -10,   -4), $00, SpriteSmall, $00B, 2, 6, false, false]]
         _Sprites ..= [[(  -7,  -13), $00, SpriteSmall, $01A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD265._Sprites
+        .structSpriteArray aUnknown9FD265._Sprites
 
-      aUnknown9F9FD276 ; 9F/9FD276
+      aUnknown9FD276 ; 9F/D276
 
         _Sprites := [[(  -2,   -4), $00, SpriteSmall, $00B, 2, 6, false, false]]
         _Sprites ..= [[( -10,   -9), $00, SpriteSmall, $01B, 2, 6, false, false]]
         _Sprites ..= [[(  -7,  -22), $00, SpriteSmall, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD276._Sprites
+        .structSpriteArray aUnknown9FD276._Sprites
 
-      aUnknown9F9FD287 ; 9F/9FD287
+      aUnknown9FD287 ; 9F/D287
 
         _Sprites := [[(  -2,   -7), $00, SpriteSmall, $01B, 2, 6, false, false]]
         _Sprites ..= [[( -10,  -15), $00, SpriteSmall, $00B, 2, 6, false, false]]
         _Sprites ..= [[(  -7,  -29), $00, SpriteSmall, $01A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD287._Sprites
+        .structSpriteArray aUnknown9FD287._Sprites
 
-      aUnknown9F9FD298 ; 9F/9FD298
+      aUnknown9FD298 ; 9F/D298
 
         _Sprites := [[(  -6,  -39), $00, SpriteSmall, $00B, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD298._Sprites
+        .structSpriteArray aUnknown9FD298._Sprites
 
-      aUnknown9F9FD29F ; 9F/9FD29F
+      aUnknown9FD29F ; 9F/D29F
 
         _Sprites := [[(  -8,    0), $21, SpriteLarge, $00C, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -15), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD29F._Sprites
+        .structSpriteArray aUnknown9FD29F._Sprites
 
-      aUnknown9F9FD2AB ; 9F/9FD2AB
+      aUnknown9FD2AB ; 9F/D2AB
 
         _Sprites := [[(  -8,   -4), $21, SpriteLarge, $00C, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -19), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD2AB._Sprites
+        .structSpriteArray aUnknown9FD2AB._Sprites
 
-      aUnknown9F9FD2B7 ; 9F/9FD2B7
+      aUnknown9FD2B7 ; 9F/D2B7
 
         _Sprites := [[(   0,   -9), $00, SpriteSmall, $017, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -9), $00, SpriteSmall, $016, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -22), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD2B7._Sprites
+        .structSpriteArray aUnknown9FD2B7._Sprites
 
 
       rlStartMapMagicThief ; 9F/D2C8
@@ -11031,25 +11031,25 @@
       aUnknown9FD399 ; 9F/D399
 
         ; Part of the Thief effect.
-        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD3E4
-        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD3EB
-        ACTIVE_SPRITE_FRAME 6, aUnknown9F9FD3F2
-        ACTIVE_SPRITE_FRAME 9, aUnknown9F9FD3F9
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FD3E4
+        ACTIVE_SPRITE_FRAME 5, aUnknown9FD3EB
+        ACTIVE_SPRITE_FRAME 6, aUnknown9FD3F2
+        ACTIVE_SPRITE_FRAME 9, aUnknown9FD3F9
 
         _D3A9
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD3F9
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD400
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD3F9
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD400
         ACTIVE_SPRITE_CALL rlUnknown9FD3D5
         .word <>_D3A9
-        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD407
-        ACTIVE_SPRITE_FRAME 32, aUnknown9F9FD40E
-        ACTIVE_SPRITE_FRAME 9, aUnknown9F9FD3F9
-        ACTIVE_SPRITE_FRAME 6, aUnknown9F9FD3F2
-        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD3EB
-        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD3E4
+        ACTIVE_SPRITE_FRAME 5, aUnknown9FD407
+        ACTIVE_SPRITE_FRAME 32, aUnknown9FD40E
+        ACTIVE_SPRITE_FRAME 9, aUnknown9FD3F9
+        ACTIVE_SPRITE_FRAME 6, aUnknown9FD3F2
+        ACTIVE_SPRITE_FRAME 5, aUnknown9FD3EB
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FD3E4
 
         _D3CE
-        ACTIVE_SPRITE_FRAME 9, aUnknown9F9FD3E2
+        ACTIVE_SPRITE_FRAME 9, aUnknown9FD3E2
         ACTIVE_SPRITE_JUMP _D3CE
 
         ; 9F/D3D5
@@ -11076,69 +11076,69 @@
 
         .databank 0
 
-      aUnknown9F9FD3E2 ; 9F/9FD3E2
+      aUnknown9FD3E2 ; 9F/D3E2
 
         .word 0
 
-      aUnknown9F9FD3E4 ; 9F/9FD3E4
+      aUnknown9FD3E4 ; 9F/D3E4
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $00C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD3E4._Sprites
+        .structSpriteArray aUnknown9FD3E4._Sprites
 
-      aUnknown9F9FD3EB ; 9F/9FD3EB
+      aUnknown9FD3EB ; 9F/D3EB
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD3EB._Sprites
+        .structSpriteArray aUnknown9FD3EB._Sprites
 
-      aUnknown9F9FD3F2 ; 9F/9FD3F2
+      aUnknown9FD3F2 ; 9F/D3F2
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD3F2._Sprites
+        .structSpriteArray aUnknown9FD3F2._Sprites
 
-      aUnknown9F9FD3F9 ; 9F/9FD3F9
+      aUnknown9FD3F9 ; 9F/D3F9
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD3F9._Sprites
+        .structSpriteArray aUnknown9FD3F9._Sprites
 
-      aUnknown9F9FD400 ; 9F/9FD400
+      aUnknown9FD400 ; 9F/D400
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD400._Sprites
+        .structSpriteArray aUnknown9FD400._Sprites
 
-      aUnknown9F9FD407 ; 9F/9FD407
+      aUnknown9FD407 ; 9F/D407
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD407._Sprites
+        .structSpriteArray aUnknown9FD407._Sprites
 
-      aUnknown9F9FD40E ; 9F/9FD40E
+      aUnknown9FD40E ; 9F/D40E
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD40E._Sprites
+        .structSpriteArray aUnknown9FD40E._Sprites
 
-      aUnknown9F9FD415 ; 9F/9FD415
+      aUnknown9FD415 ; 9F/D415
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $01C, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD415._Sprites
+        .structSpriteArray aUnknown9FD415._Sprites
 
-      aUnknown9F9FD41C ; 9F/9FD41C
+      aUnknown9FD41C ; 9F/D41C
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $00D, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD41C._Sprites
+        .structSpriteArray aUnknown9FD41C._Sprites
 
-      aUnknown9F9FD423 ; 9F/9FD423
+      aUnknown9FD423 ; 9F/D423
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $01D, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD423._Sprites
+        .structSpriteArray aUnknown9FD423._Sprites
 
 
       rlStartMapMagicValflame ; 9F/D42A
@@ -11618,13 +11618,13 @@
       aUnknown9FD6E4 ; 9F/D6E4
 
         ; Part of the Valflame effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD799
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD799
         ACTIVE_SPRITE_CALL rlUnknown9FD6FE
         .word <>aUnknown9FD6E4
-        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD76A
-        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD771
-        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD778
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD755
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FD76A
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FD771
+        ACTIVE_SPRITE_FRAME 4, aUnknown9FD778
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD755
         ACTIVE_SPRITE_END
 
         ; 9F/D6FE
@@ -11655,23 +11655,23 @@
       aUnknown9FD70E ; 9F/D70E
 
         ; Part of the Valflame effect.
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD755
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD755
         ACTIVE_SPRITE_CALL rlUnknown9FD73F
         .word <>aUnknown9FD70E
-        ACTIVE_SPRITE_FRAME 6, aUnknown9F9FD77F
-        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD786
-        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD78D
+        ACTIVE_SPRITE_FRAME 6, aUnknown9FD77F
+        ACTIVE_SPRITE_FRAME 5, aUnknown9FD786
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FD78D
 
         _D723
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD75E
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD75E
         ACTIVE_SPRITE_CALL rlUnknown9FD747
         .word <>_D723
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD78D
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD786
-        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD77F
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FD78D
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FD786
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FD77F
 
         _D738
-        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD755
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FD755
         ACTIVE_SPRITE_JUMP _D738
 
       rlUnknown9FD73F ; 9F/D73F
@@ -11714,65 +11714,65 @@
 
         ; 9F/D755
 
-      aUnknown9F9FD755 ; 9F/9FD755
+      aUnknown9FD755 ; 9F/D755
 
         .word 0
 
-      aUnknown9F9FD757 ; 9F/9FD757
+      aUnknown9FD757 ; 9F/D757
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD757._Sprites
+        .structSpriteArray aUnknown9FD757._Sprites
 
-      aUnknown9F9FD75E ; 9F/9FD75E
+      aUnknown9FD75E ; 9F/D75E
 
         _Sprites := [[(   0,   -5), $21, SpriteLarge, $004, 2, 6, false, false]]
         _Sprites ..= [[( -16,   -5), $21, SpriteLarge, $002, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD75E._Sprites
+        .structSpriteArray aUnknown9FD75E._Sprites
 
-      aUnknown9F9FD76A ; 9F/9FD76A
+      aUnknown9FD76A ; 9F/D76A
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $016, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD76A._Sprites
+        .structSpriteArray aUnknown9FD76A._Sprites
 
-      aUnknown9F9FD771 ; 9F/9FD771
+      aUnknown9FD771 ; 9F/D771
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $006, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD771._Sprites
+        .structSpriteArray aUnknown9FD771._Sprites
 
-      aUnknown9F9FD778 ; 9F/9FD778
+      aUnknown9FD778 ; 9F/D778
 
         _Sprites := [[(  -4,   -4), $00, SpriteSmall, $017, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD778._Sprites
+        .structSpriteArray aUnknown9FD778._Sprites
 
-      aUnknown9F9FD77F ; 9F/9FD77F
+      aUnknown9FD77F ; 9F/D77F
 
         _Sprites := [[(  -4,   -1), $00, SpriteSmall, $007, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD77F._Sprites
+        .structSpriteArray aUnknown9FD77F._Sprites
 
-      aUnknown9F9FD786 ; 9F/9FD786
+      aUnknown9FD786 ; 9F/D786
 
         _Sprites := [[(  -8,   -5), $21, SpriteLarge, $008, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD786._Sprites
+        .structSpriteArray aUnknown9FD786._Sprites
 
-      aUnknown9F9FD78D ; 9F/9FD78D
+      aUnknown9FD78D ; 9F/D78D
 
         _Sprites := [[(   5,   -5), $21, SpriteLarge, $00C, 2, 6, false, false]]
         _Sprites ..= [[( -11,   -5), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
-        .structSpriteArray aUnknown9F9FD78D._Sprites
+        .structSpriteArray aUnknown9FD78D._Sprites
 
-      aUnknown9F9FD799 ; 9F/9FD799
+      aUnknown9FD799 ; 9F/D799
 
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, true, false]]
 
-        .structSpriteArray aUnknown9F9FD799._Sprites
+        .structSpriteArray aUnknown9FD799._Sprites
 
 
       procUnknown9FD7A0 ; 9F/D7A0
