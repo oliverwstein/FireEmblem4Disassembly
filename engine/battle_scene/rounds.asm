@@ -578,13 +578,15 @@
       .al
       .xl
 
-      rsUnknown95AA8D ; 95/AA8D
+      rsBattleSceneSaveAttackerState1 ; 95/AA8D
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Found by tools/sweep.py: nothing in the build reaches this. X = 0 or $0E: copies the combatant's class, weapon and $0D55 and the attacker's slot flags, Y and X to $7FE0AE-$7FE0B8.
 
         sep #$20
         lda aBattleSceneCombatant1,b,x
@@ -609,13 +611,15 @@
 
         ; 95/AAC6
 
-      rsUnknown95AAC6 ; 95/AAC6
+      rsBattleSceneSaveAttackerState2 ; 95/AAC6
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Found by tools/sweep.py: nothing in the build reaches this. The same into $7FE0B9-$7FE0C3.
 
         sep #$20
         lda aBattleSceneCombatant1,b,x
@@ -1847,7 +1851,7 @@
 
       rsBattleSceneCheckEffectNearDefender ; 95/B114
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz

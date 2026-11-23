@@ -112,7 +112,7 @@
         ; Read by rlBattleSceneQueueMagicSwordAttack: the action after a magic
         ; sword's swing. Eight rows of five, one per value of bits 3-5 of
         ; bBattleAnimationCombatantFlags (rlBattleSceneCheckMagicSword sets 0; only
-        ; rlUnknown969964, which nothing reaches, sets others); in each row one byte
+        ; rlBattleSceneRunSpellRowCommand, which nothing reaches, sets others); in each row one byte
         ; per attack style, sword to ranged.
 
         .byte $21, $21, $25, $25, $13
@@ -234,7 +234,7 @@
         .long rlUnknown968EC7 ; $15
         .long rlUnknown968F13 ; $16
         .long rlUnknown968EA8 ; $17
-        .long rlUnknown95E08C ; $18
+        .long rlBattleSceneScriptNextEffectPose ; $18
         .long rlUnknown9688BA ; $19
         .long rlUnknown9688E4 ; $1A
         .long rlUnknown96890E ; $1B

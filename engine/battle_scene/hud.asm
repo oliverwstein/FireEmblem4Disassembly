@@ -3266,7 +3266,7 @@
       .al
       .xl
 
-      rlUnknown969964 ; 96/9964
+      rlBattleSceneRunSpellRowCommand ; 96/9964
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -3274,7 +3274,9 @@
         .autsiz
         .databank ?
 
-        ; With bit 7 of A set: clears bit 2 of both combatants' flags, then by the low 7 bits of A runs aUnknown969995 with Y = the high byte, and steps lR18 by 2; carry set. Otherwise carry clear.
+        ; Found by tools/sweep.py: nothing in the build reaches this. With bit 7 of A set: clears both magic sword flags (rlBattleSceneClearMagicSwordFlags), then runs entry (A & $7F) of aBattleSceneSpellRowSetters with Y = the high byte and steps lR18 by 2; carry set. Otherwise carry clear.
+
+        ; With bit 7 of A set: clears bit 2 of both combatants' flags, then by the low 7 bits of A runs aBattleSceneSpellRowSetters with Y = the high byte, and steps lR18 by 2; carry set. Otherwise carry clear.
 
         pha
         phx
@@ -3302,7 +3304,7 @@
         lda wR0
         asl a
         tax
-        jsr (aUnknown969995,x)
+        jsr (aBattleSceneSpellRowSetters,x)
         plp
         plb
         .databank $96
@@ -3320,19 +3322,21 @@
 
         ; 96/9995
 
-      aUnknown969995 ; 96/9995
+      aBattleSceneSpellRowSetters ; 96/9995
 
-        ; Jump table of rlUnknown969964.
+        ; Jump table of rlBattleSceneRunSpellRowCommand.
 
-        .word <>rsUnknown969999
-        .word <>rsUnknown9699BB
+        .word <>rsBattleSceneSetSpellRow1
+        .word <>rsBattleSceneSetSpellRow2
 
-      rsUnknown969999 ; 96/9999
+      rsBattleSceneSetSpellRow1 ; 96/9999
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Combatant 1: bits 3-5 of bBattleAnimationCombatantFlags = Y (the row of aBattleSceneMagicSwordSpellActions) and bit 2, a magic sword strike.
 
         ; Sets bits 3-5 of $0AF5 in the first combatant slot to Y, and bit 2.
 
@@ -3360,12 +3364,14 @@
 
         ; 96/99BB
 
-      rsUnknown9699BB ; 96/99BB
+      rsBattleSceneSetSpellRow2 ; 96/99BB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The same for combatant 2.
 
         ; The same for the second combatant slot ($43 on).
 

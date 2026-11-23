@@ -43,6 +43,22 @@ The scene's RAM is in [WRAM.h](../../include/WRAM.h): the animation slots at `$0
 4. loads the background and foreground for the two terrains (`rsBattleSceneLoadBackground`), and each combatant's weapon, extra tiles, sheet, palette and character piece (`rsBattleSceneLoadCombatantGraphics`);
 5. places the combatants facing each other (`rsBattleScenePlaceCombatants`) and sets the camera (`wBattleSceneCameraX`).
 
+**Placing the combatants.** They start apart by `rlBattleSceneGetStartGap`: twice byte 6 of the combatant's body record, `$C8` for a magic sword at range, `$E0` for a staff used from distance 2. Then the first striker's weapon (`rlBattleSceneGetFirstStriker`) can override the placement (`rlBattleSceneApplyPlacement`, `aBattleSceneWeaponPlacements`):
+
+| Mode | Weapons | Placement |
+|---|---|---|
+| 0 | Meteor, Bolting, Blizzard, Fenrir, the ballistae; Physic, Restore, Silence, Sleep and Berserk Staves at distance 3 or more | the striker alone at the center, the other hidden |
+| 1 | Fortify | both at the center (`BattleSceneFlagSolo2`) |
+| 2 | Rescue, Valkyrie | the other hidden |
+| 3 | battle type 2, any weapon | both at the center on the ground, the other hidden |
+| 4 | the magic and status swords | nothing |
+
+A hidden combatant has bit 6 of `bBattleAnimationCombatantFlags` set: neither it nor its shadow is drawn. Script routines show and hide either side (`rlBattleSceneScriptHideDefender`...).
+
+**The dance.** Action struct field `$22` = 8 is the dance (battle.asm's `rsActionStructDance` refreshes every unit in range). The scene sets `BattleSceneFlagDance` and `BattleSceneFlagSolo2`, puts both combatants at the center, queues action 1 (`rlBattleSceneQueueDanceAction`), and gives a Dancer (class `$32`) the dance's animation IDs (`rlBattleAnimationCheckDance`).
+
+**Animations.** `rlBattleSceneSetAnimStyles` sets each combatant's `AnimStyle` from its weapon (`aItemAnimationCategories`): the high nibble is the weapon category of the animation lookup, the low nibble the attack style (`AttackStyleSword`, `Lance`, `Axe`, `Ranged`, `Magic`, `Staff`). A javelin or hand axe becomes `AttackStyleRanged` at distance 2 or more, else the plain lance or axe. `rlBattleSceneLookUpAnimations` then takes the four animation IDs from `aBattleAnimationLookup` (`rlBattleAnimationLookUp`). A few characters get three colors of their own over sprite colors 12-14 (`rlBattleSceneLoadCharacterColors`).
+
 ## The frame
 
 Game state `$18` (`rlBattleSceneSetup`) blanks the screen once. Game state `$19` (`rlBattleSceneStep`) runs `rsBattleSceneRunFrame` every frame until it returns carry set. That happens when the fade out is over (`bBattleSceneFade` `$40` with brightness 0). The step then leaves by `wBattleSceneFlags` and `wBattleType`: to the map (`wMainGameMode` 2, or 3 after Julius), back to the castle after the arena, to the castle screen (types 2 and 3), or to game state 0.
@@ -62,7 +78,7 @@ The battle calculation (`rlActionStructBuildBattleRounds`, bank `$84`) leaves on
 
 | Entry | Meaning |
 |---|---|
-| low byte | `bBattleRoundFlags`: bit 0 the side that strikes (0 combatant 1), `$02` a staff, `$04` critical, `$08` miss, `$10` hit kind 3 (the Julius strike; original notes: "vs Julius, arena"), `$20` ranged, `$40` magic |
+| low byte | `bBattleRoundFlags`: bit 0 the side that strikes (0 combatant 1), `$02` a staff, `$04` critical, `$08` miss, `$10` fatal (`BattleRoundFlagFatal`: the strike defeats the defender), `$20` ranged, `$40` magic |
 | high byte | the damage (`bBattleSceneRoundDamage`) |
 | `$xxFE` | a skill activates: the high byte is its `SkillID` |
 | `$xxFD` | skipped |
@@ -73,7 +89,10 @@ The battle calculation (`rlActionStructBuildBattleRounds`, bank `$84`) leaves on
 
 - **Holy weapon.** At the first round of a combatant with a holy weapon (`rsBattleSceneCheckHolyWeapon`: Tyrfing, Gungnir... Valkyrie Staff), it plays script `$43` and sound `$90` (`rlBattleScenePlayHolyWeaponSound`) before anything else.
 - **Sides.** It sets `wBattleAnimationAttackerOffset`/`DefenderOffset` and the roles (`rsBattleSceneSetRoles`). It pans the camera when the attacker is off the screen's middle (`rlBattleSceneCheckCombatant1OnScreen`).
-- **The action.** It queues the attacker's action by the attack style in its `AnimStyle` (the low nibble): `rlBattleSceneQueueStaffAction`, `rlBattleSceneQueueAttack`, `rlBattleSceneQueueCriticalAttack`, or `rlBattleSceneQueueSpecialCriticalAttack` (with bit `$10`). A far attacker may first close in (`rlBattleSceneQueueApproach`).
+- **The action.** It queues the attacker's action by the attack style in its `AnimStyle` (the low nibble): `rlBattleSceneQueueStaffAction`, `rlBattleSceneQueueAttack`, `rlBattleSceneQueueCriticalAttack`, or `rlBattleSceneQueueSpecialCriticalAttack` (a fatal critical). The action numbers come from `aBattleSceneAttackActions` and the tables after it, one byte per attack style, plus the combatant's variant (bits 0-1 of `bBattleAnimationCombatantFlags`). A far attacker may first close in (`rlBattleSceneQueueApproach`).
+- **Magic swords.** For a magic round by a sword wielder, `rlBattleSceneCheckMagicSword` decides first. The Berserk, Silence and Sleep Swords start their weapon script at once. Any other sword striking from range sets bit 2 of `bBattleAnimationCombatantFlags`, and `rlBattleSceneQueueMagicSwordAttack` queues a swing (`aBattleSceneMagicSwordSwingActions`) and then the spell (`aBattleSceneMagicSwordSpellActions`).
+- **Weapon scripts.** Tomes, staves and the magic swords each name a battle scene script in `aBattleSceneWeaponScripts`; the four ranged staves name another at distance 3 or more. Sequence command `$F0` starts it (`rlBattleSceneGetWeaponScript`).
+- **The last round.** Before reading an entry, the reader looks at the one before it: after a fatal strike it sets bit 7 of `bBattleSceneStrikeFlags` and reads no more.
 - **Skills.** A skill entry shows its banner (`rlBattleSceneShowSkill`: Astra, Luna, Sol, Holy, Darkness, Pavise). Each banner has its colors and a script, `$36`-`$3A` and `$3F`.
 
 The strike lands when the attacker's sequence reaches its command (`ANIM_CMD_F1`) or script command `$FFFA`. Either way it calls `rlBattleSceneApplyStrike`:
@@ -94,7 +113,7 @@ HP is kept as 8.8 in each combatant's record (`HP`). `rsBattleSceneUpdateHP1`/`2
 After the rounds, `rlBattleSceneRunEndStep` takes the 21 routines of `aBattleSceneEndSteps`, last to first, one at a time whenever nothing else is running. Most start a battle scene script:
 
 1. `rlBattleSceneShowBG3`;
-2. scripts `$33` and `$35` in battle type 2, and `$34` and `$31` when bit 7 of `bBattleSceneStrikeFlags` is set (not with Julius defending);
+2. scripts `$33` and `$35` in battle type 2, and `$34` and `$31` after a fatal strike (bit 7 of `bBattleSceneStrikeFlags`; not with Julius defending), with the defeat cry: sound `$89`-`$8B` by the defeated unit's voice (`rlBattleSceneEndStepDefeatCry`, `rlGetDefeatedUnitVoice`: 1 + its gender, or 0 for none);
 3. the death quote (`rlBattleSceneShowDeathQuote`, `wDeathQuotePointer`);
 4. the experience bar (script 0, `rlBattleSceneShowExperience`);
 5. a level up: the lead-in (`rlBattleScenePrepareLevelUp`), the banner (`$3B`), the stat gains (script 1, `rlBattleSceneShowLevelUp`);
@@ -103,13 +122,13 @@ After the rounds, `rlBattleSceneRunEndStep` takes the 21 routines of `aBattleSce
    - gold obtained or stolen (`$2F`),
    - a broken weapon (`$44`),
 
-   each waiting for a button (`$30`);
+   each waiting for a button (`$30`). Script routines `$1C`-`$23` run the window: set up the dialogue engine for it (`rsBattleSceneSetUpMessageDialogue`), start the text at `lBattleSceneDialoguePointer`, and every frame run the dialogue, upload its tilemap and draw the button arrow until the delay at `$7FE4D9` has run out and the text is done (`rlBattleSceneScriptRunMessage`);
 7. Julius's scripts when the battle ends on him (`$4A`, `$4B`/`$3D`, `$4C`);
 8. the fade out (`rlBattleSceneStartFadeOut`).
 
 The intro has three steps (`aBattleSceneIntroSteps`): fade in, the opening, and the wait for it to end (`rlBattleSceneWaitForIntro`, which sets the end step count).
 
-**Julius.** A strike of hit kind 3 (round bit `$10`) by combatant 1 on `JuliusChFinal` sets `BattleSceneFlagToMapMode3`, slows the fade and fades the music (`rlBattleScenePlayHitSound`). The death quote is then shown by `rlBattleSceneShowJuliusQuote` instead, and the scene returns to the map in mode 3.
+**Julius.** A fatal strike (round bit `$10`, hit kind 3) by combatant 1 on `JuliusChFinal` sets `BattleSceneFlagToMapMode3`, slows the fade and fades the music (`rlBattleScenePlayHitSound`). The death quote is then shown by `rlBattleSceneShowJuliusQuote` instead, and the scene returns to the map in mode 3.
 
 ## The HUD
 
@@ -161,6 +180,8 @@ Four slots of `$43` bytes from `$0AF3`: the two combatants (`X` = 0 and `$43`) a
 - **Movement.** The move lists' steps run the move routines in [animation_moves.asm](../../engine/battle_scene/animation_moves.asm). `rsBattleAnimationMoveRight`/`Left` stop a combatant against the other's body (`rsBattleAnimationCheckBlocked`) or the stage edge, and scroll the camera after it: toward the midpoint of the attacker's and defender's X (`lBattleSceneCameraAttackerX`/`DefenderX`, long pointers), or the attacker's alone. `rsBattleSceneTurnCombatants` turns idle combatants to face each other.
 - **Release signals.** `ANIM_CMD_F4` freezes a combatant's sequence; the other side signals it (`$F3`, or its effect slot ending) through `bBattleSceneRelease1`/`2`, and `rlBattleAnimationRunSignals` moves its script past the `$F4`.
 - **Knockback.** A strike knocks the defender back (`rlBattleSceneSetKnockback`): `bBattleSceneKnockback` holds a strength of `$762` / its class's weight (`aBattleSceneClassWeights`), taken to 3/4 each frame as it pushes the combatant (`rlBattleSceneRunKnockback`), then `$18` frames of sideways shake.
+- **Spawning an effect.** Sequence command `$EF` starts the combatant's effect slot (`rsBattleAnimationCmdSpawnEffect`). The new slot is built in a fifth record, the spawn slot at `$0BFF` (`bBattleAnimationSpawnStateFlags`...): filled from `aBattleAnimationSpawnSlotTemplate`, placed at the thrower plus its class's offset (`aBattleAnimationEffectStarts`, one list each for bows, hand axes and javelins), aimed at the defender (`rsBattleAnimationAimEffect`: X speed, Y step to the defender's hit height, a jump arc), and copied into slot 2 or 3 (`rlBattleAnimationCopySpawnSlot`).
+- **Body records.** Each combatant has an 8-byte body record chosen by class and weapon category (`rlBattleAnimationSetBodyIndices`): 0 its width, 1 the height its effects aim at and fly from, 2 the distance it keeps, 3 and 4 two speeds, 6 half its starting distance; 5 and 7 are read only by code nothing reaches.
 - **Effect slots.** `rlBattleAnimationSetEffectMotion` picks the motion by the attacker's `AnimStyle` and weapon; each frame `rlBattleAnimationMoveEffectSlot` moves the slot by it: straight flight with gravity and a pose by its slope, a path (`aBattleAnimationEffectPaths`), or a path script with commands `$8080`-`$8085` (`aBattleAnimationEffectPathScripts`). Reaching the defender lands the strike (`rlBattleSceneApplyEffectStrike`); landing or leaving the stage ends the slot (`rlBattleAnimationEndEffectSlot`).
 - **Afterimages.** Sequence command `$EC` 1 starts one of two afterimages (`aBattleSceneAfterimages`): the owner's pose drawn 8 or 12 frames back. `$EC` 3 draws the slot mirrored around the defender on odd frames (`rlBattleAnimationGetMirroredX`).
 - **Sounds.** On a river or in the sea's water, footsteps `$11`-`$19` become splashes `$21`-`$29` (`rsBattleAnimationUseWaterSounds`); with a weapon of `aUnknown998F02` (`BattleSceneFlagListedWeapon1`/`2`), sounds `$47`, `$6D`, `$8C` and `$8E` become the next one (`rsBattleAnimationUseListedWeaponSounds`).
@@ -178,9 +199,9 @@ Script commands 4, 5 and 8 take an index into `aBattleSceneScriptRoutines` (72 l
 ## Open questions
 
 - **Battle type 2.** What it is: the scene clears the quotes and drops, has no foreground, and uses scripts `$33`/`$35`. It leaves to the castle screen like type 3.
-- **`BattleSceneFlagSolo`** (`aActionStructUnit1.Unknown` = 8, both combatants at the center, action 1): which action sets it.
+- **`BattleSceneFlagSolo2`** is set for the dance and for Fortify (both combatants at the center) and turns on HDMA entries 3 and 6. What those draw is not known.
 - **`bBattleSceneRanged`.** It is never stored: `rsBattleSceneStartNextRound` loads the ranged bit into A and branches past the store.
 - **Extra tiles ID 0** copies `$C0` tiles from `$86E000` (`ANIM_NO_EXTRA_TILES_SOURCE`), event data in the released ROM. Whether that VRAM is ever shown is not known.
-- **Bit 7 of `bBattleSceneStrikeFlags`** is set by a round entry with bit `$10`; the end steps then play scripts `$34`/`$31` and a sound `$89`-`$8B` by gender (`rlUnknown969CA1`). What it means on screen is not settled.
-- **The effect slots' spawn fields** `$0C03`-`$0C30` (`rsUnknown95DCA3`/`95DD4F`, sequence command `$EF`) and the `aUnknown97EA9A` body records are still raw.
-- **Unknown routines.** The visual effects (`effects.asm`, `screen.asm`), the script routines that run them, and the rest of the slot engine (`combatants.asm`, 33) are still `Unknown`, as is the window effect data (`$97/F64E`, `$97/A7C7`).
+- **The magic sword's spell rows.** Bits 3-5 of `bBattleAnimationCombatantFlags` pick one of eight rows of `aBattleSceneMagicSwordSpellActions`, but only `rlBattleSceneRunSpellRowCommand`, which nothing reaches, sets a row other than 0.
+- **`rlBattleAnimationGetEffectArcHeight`** reads the defender's height with X = `$0E` for combatant 1's effect, an offset into `aBattleSceneCombatant1`, not into the slots. It reads the wrong byte; what difference that makes on screen is not known.
+- **Unknown routines.** The visual effects (`effects.asm`, `screen.asm`), the script routines that run them, and a few slot helpers are still `Unknown`, as is the window effect data (`$97/F64E`, `$97/A7C7`).

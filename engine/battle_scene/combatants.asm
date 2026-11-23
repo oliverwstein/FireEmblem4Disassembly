@@ -1680,7 +1680,7 @@
         _BC38
         cmp #$00EA
         bne _BC42
-        jsr rsUnknown95BF4A
+        jsr rsBattleAnimationCmdEndWhenStopped
         bra _BC65
 
 
@@ -1701,7 +1701,7 @@
         _BC56
         cmp #$00E7
         bne _BC60
-        jsr rsUnknown95BF61
+        jsr rsBattleAnimationCmdEndWhenStoppedSignal
         bra _BC65
 
 
@@ -2355,12 +2355,14 @@
 
         ; 95/BF4A
 
-      rsUnknown95BF4A ; 95/BF4A
+      rsBattleAnimationCmdEndWhenStopped ; 95/BF4A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sequence command $EB: sets bit 6 of bBattleAnimationFacingFlags: the sequence ends once the slot stops moving (no X speed, no Y velocity), the camera follows the attacker alone, and rsBattleSceneCheckBusy counts it as done.
 
         sep #$20
         lda bBattleAnimationFacingFlags,b,x
@@ -2377,12 +2379,14 @@
 
         ; 95/BF61
 
-      rsUnknown95BF61 ; 95/BF61
+      rsBattleAnimationCmdEndWhenStoppedSignal ; 95/BF61
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sequence command $E8: as $EB; a slot not moving already also signals itself and sets bit 6 of its state.
 
         lda wBattleAnimationXSpeed,b,x
         bne _BF76
@@ -4869,7 +4873,7 @@
         lda bBattleAnimationMotionFlags,b,x
         bit #$0001
         beq _CC20
-        jml rlUnknown95CE46
+        jml rlBattleAnimationFallToGround
 
 
         _CC20
@@ -5202,12 +5206,14 @@
 
         ; 95/CE46
 
-      rlUnknown95CE46 ; 95/CE46
+      rlBattleAnimationFallToGround ; 95/CE46
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The end of rlBattleAnimationUpdateJump for a slot in free X motion: adds the Y velocity until the slot reaches the ground ($5800), then stops it.
 
         lda wBattleAnimationYFixed,b,x
         clc
@@ -5656,13 +5662,15 @@
       .as
       .xl
 
-      rsUnknown95D200 ; 95/D200
+      rsBattleAnimationAimYAtDefender ; 95/D200
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Found by tools/sweep.py: nothing in the build reaches this. Sets slot X's target Y to the defender's height and its Y step to cover the difference from the attacker's in its travel frames.
 
         jsl rlBattleAnimationGetTravelFrames
         pha
@@ -8391,13 +8399,15 @@
       .as
       .xl
 
-      rlUnknown95E08C ; 95/E08C
+      rlBattleSceneScriptNextEffectPose ; 95/E08C
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Found by tools/sweep.py. Script routine $18: steps the attacker's effect slot to its next pose (secondary offset + 2, pose offset + 1) and ends.
 
         phx
         lda wBattleAnimationAttackerOffset,b

@@ -180,7 +180,7 @@
       .byte $EC, \Arg
     .endsegment
 
-    ; $EB: set bit 6 of $0AF4,x (rsUnknown95BF4A).
+    ; $EB: set bit 6 of $0AF4,x (rsBattleAnimationCmdEndWhenStopped).
     ANIM_CMD_EB .segment Arg=0
       .byte $EB, \Arg
     .endsegment
@@ -196,7 +196,7 @@
     .endsegment
 
     ; $E8: if $0B08,x is 0, rlBattleAnimationSignalSelf and set bit 6 of $0AF3,x; then
-    ; set bit 6 of $0AF4,x (rsUnknown95BF61).
+    ; set bit 6 of $0AF4,x (rsBattleAnimationCmdEndWhenStoppedSignal).
     ANIM_CMD_E8 .segment Arg=0
       .byte $E8, \Arg
     .endsegment
