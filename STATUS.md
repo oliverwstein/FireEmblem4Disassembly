@@ -4,17 +4,18 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-23, after wave 6 and the unbuilt-bytes pass)
+## Current state (2026-11-23, after the unbuilt-bytes pass and its wrap-up)
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
-- `./build.sh` is byte-identical and the checksums verify. **GAPS.md: 0 `none` pieces**; only 58 padding runs are still copied from the ROM. Every closed piece was settled from the code (commits `3f56cda`..): sweep candidates read and placed, procs, tables, graphics slices, and unreachable bytes noted as such.
-- Routines: 6,500 in `engine/`, 4,602 named, 1,898 `Unknown` (the pass added about 240 unreferenced routines). `engine/unsorted/` is gone. 280 pinned blocks.
-- New tool: `tools/close_gap.py ADDR FILE` writes a piece's source at the end of the section before it and merges the placement break after it.
-- Wave 6 (`aebad7e`..): bank `$84` leftovers filed; bank `$8B` is the world map's game state (`engine/worldmap/world_map.asm`) and a test mode (`engine/debug/world_map_test.asm`); bank `$8C` is the lovers' home castle conversation (`engine/castle/lover_conversation.asm`, text in `text/dialogue/LoverHomeCastle`).
-- New: `docs/reference/worldmap.md`; RAM `wWorldMapLayersDialogueStatus`; `wCastleReturnEventFlag` is `wLoverHomeCastleConversationPending`.
+- `./build.sh` is byte-identical and the checksums verify (about 3 s; `./build.sh clean` first only when a converter changed). **GAPS.md: 0 `none` pieces**; only 58 padding runs are still copied from the ROM.
+- Routines: 6,505 in `engine/`, 4,602 named, 1,903 `Unknown`. `engine/unsorted/` is gone. **147 pinned blocks** (was 280): every bank whose pieces are all source is merged.
+- Pad tests pass for `$85`, `$87`, `$89`, `$91`, `$95`, `$9E` (16 bytes) and `$96` (8; it has 8 free bytes). `$8B` and `$A0` end where pinned graphics streams begin, so they cannot grow until the streams move with them. `$87` and `$91` touch the code the game checksums (`--fix-checksums`).
+- Active sprite command `$0E` is `ACTIVE_SPRITE_TABLE_FRAME Duration, Index` (a frame from the table at `$7F4598`); `$9E/EA05`-`EC94` is five frame tables with their scripts, written like `aUnknown9ED900`. `tools/sprite_scripts.py` writes the macro.
+- Every generated file starts with a line naming the tool, its source and the date (`build.sh`'s `stamp` for the external converters).
 - Reference pages: `docs/reference/core.md`, `ai.md`, `battle_scene.md`, `castle.md`, `demo.md`, `epilogue.md`, `map_battle.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`, `title.md`, `worldmap.md`. `tools/reference.py` output is gitignored; run it locally.
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
+- `Unknown` by folder: `battle/` 697 (435 of them in `map_magic_effects.asm`), `battle_scene/` 543 (247 in `effects.asm`), `events/` 144, `title/` 140, `dialogue/` 97, `map/` 80; every other folder under 25.
 
 ## Who wrote what
 
@@ -29,7 +30,6 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-0. **Unfinished from the unbuilt-bytes pass:** the active sprite data at `$9E/EA05`-`EC94` (in `engine/battle/map_battle.asm`) is `.byte` rows. `wip/sprites_e2e4.py` splits it into `structActiveSpriteInfo` definitions, one-byte init routines and scripts. Its output did not assemble at the last try (not yet diagnosed; see `log.txt` after applying it). Active sprite command `$0E` (`rsActiveSpriteCommand0E`, two operand bytes, used for frames) has no macro yet. Also: banks with all gaps closed can now be merged (`tools/merge_bank.py`) and pad-tested; GAPS.md and the reference pages do not mention the new unreferenced code yet.
 1. **Talk to the user before starting.** Phase 3's sorting is done, so the next direction is the user's choice. The candidates:
    - **The second pass, by value**: the `Unknown` routines inside the systems that implement game mechanics. The battle scene's are the biggest group:
      1. `hud.asm`: the experience bar and level up windows (`rlUnknown9680C2` and the `$7FED4B`.. variables), the name and weapon windows.
@@ -40,8 +40,8 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
    - **The engine guide's outline**: every core system now has a reference page. Draft `docs/guide/OUTLINE.md` and show it to the user (PLAN.md, "The engine guide").
 2. **Before naming a bank, make it honest source**, as for `$9F` and the title: `code_pointers.py`, `ram_lists.py`, raw `.word $XXXX`, `.byte` rows that are scripts or code, routines nothing references. In the battle scene, `rsBattleSceneLoadExtraTiles` loads a pointer written `aChapter05MapEvents + 326` (a chance label), and `rsBattleScenePlaceCombatants` holds two dead `.byte` runs. Wave 6 found two more kinds: pointer tables written as `.word` rows that were really `.long` (the lover conversation), and an HDMA code word in the middle of a routine.
 3. Open questions are at the end of each reference page. `tools/songs.py` stops at a stale label (`aUnknown8A9D79`); fix it before regenerating `audio/SONGS.md`. `tools/stream_catalog.py` deleted the catalog previews when run (reverted); find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm, and moved sections land at the end of their target file; move both by hand. Check that an `include/` file does not exist before creating one. `tools/rename.py` refuses a new name that appears anywhere, comments included: rename first, then write comments that use the new name. `move_sections.py` stops at a section listed twice in its spec.
-4. Bank `$89` cannot be pad-tested until it is merged. Banks `$85`, `$87`, `$88`, `$9F` and `$9B` could be pad-tested (`./build.sh pad`).
-6. The Jugdral history's texts (`engine/save/jugdral_history.asm`) are still `.byte` rows; the user asked where the text is. Find whether `tools/dialogue.py`'s encoding reads them (it read the lover conversation's text without trouble).
+4. Banks `$88`, `$9B` and `$9F` have not been pad-tested yet (`./build.sh pad SECTION N`). Leave `wip/` holding only `.gitkeep` at the end of a session.
+5. The Jugdral history's texts (`engine/save/jugdral_history.asm`) are still `.byte` rows; the user asked where the text is. Find whether `tools/dialogue.py`'s encoding reads them (it read the lover conversation's text without trouble).
 
 **Per-wave checklist.** One system (or one part of a big one) per session; hand over and clear context after each.
 
