@@ -4,18 +4,17 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-23, after the unbuilt-bytes pass and its wrap-up)
+## Current state (2026-11-23, after wave 7: the battle scene's HUD and slots)
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
-- `./build.sh` is byte-identical and the checksums verify (about 3 s; `./build.sh clean` first only when a converter changed). **The build is 100% source**: no overlay of the original ROM, no `include/Undisassembled.h`; `./build.sh mod` makes the identical ROM without `fe4.sfc`. GAPS.md is empty.
-- Routines: 6,505 in `engine/`, 4,602 named, 1,903 `Unknown`. `engine/unsorted/` is gone. **172 pinned blocks** (280 before merging; 25 of the 172 are unused space pinned after graphics, text and data blocks): every bank whose pieces are all source is merged.
-- Pad tests pass for `$85`, `$87`, `$89`, `$91`, `$95`, `$9E` (16 bytes) and `$96` (8; it has 8 free bytes). `$8B` and `$A0` end where pinned graphics streams begin, so they cannot grow until the streams move with them. `$87` and `$91` touch the code the game checksums (`--fix-checksums`).
-- Active sprite command `$0E` is `ACTIVE_SPRITE_TABLE_FRAME Duration, Index` (a frame from the table at `$7F4598`); `$9E/EA05`-`EC94` is five frame tables with their scripts, written like `aUnknown9ED900`. `tools/sprite_scripts.py` writes the macro.
-- Every generated file starts with a line naming the tool, its source and the date (`build.sh`'s `stamp` for the external converters).
+- `./build.sh` is byte-identical and the checksums verify (about 3 s; `./build.sh clean` first only when a converter changed). **The build is 100% source**; `./build.sh mod` makes the identical ROM without `fe4.sfc`. GAPS.md is empty.
+- Routines: 6,505 in `engine/`, 4,741 named, 1,764 `Unknown`. 172 pinned blocks. 121 notes still say nothing reaches a routine.
+- Pad tests pass for `$85`, `$87`, `$89`, `$91`, `$95`, `$9E` (16 bytes) and `$96` (8). `$8B` and `$A0` end where pinned graphics streams begin. `$87` and `$91` touch the code the game checksums (`--fix-checksums`).
+- The battle scene ([docs/reference/battle_scene.md](docs/reference/battle_scene.md)): hud.asm has 10 `Unknown` left, combatants.asm 33, effects.asm 226 (visual effects, low priority), screen.asm 58 (IRQ/HDMA), loading.asm 25, results.asm 23, script.asm 12, rounds.asm 10, scene.asm 6. The script routine table (`aBattleSceneScriptRoutines`) is pointers now, so every script routine is reachable; most are effect steps still `Unknown`.
 - Reference pages: `docs/reference/core.md`, `ai.md`, `battle_scene.md`, `castle.md`, `demo.md`, `epilogue.md`, `map_battle.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`, `title.md`, `worldmap.md`. `tools/reference.py` output is gitignored; run it locally.
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
-- `Unknown` by folder: `battle/` 697 (435 of them in `map_magic_effects.asm`), `battle_scene/` 543 (247 in `effects.asm`), `events/` 144, `title/` 140, `dialogue/` 97, `map/` 80; every other folder under 25.
+- `Unknown` by folder: `battle/` 697 (435 of them in `map_magic_effects.asm`, 151 in `map_battle.asm`), `battle_scene/` 404, `events/` 144, `title/` 140, `dialogue/` 97, `map/` 80; every other folder under 25.
 
 ## Who wrote what
 
@@ -30,16 +29,13 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Talk to the user before starting.** Phase 3's sorting is done, so the next direction is the user's choice. The candidates:
-   - **The second pass, by value**: the `Unknown` routines inside the systems that implement game mechanics. The battle scene's are the biggest group:
-     1. `hud.asm`: the experience bar and level up windows (`rlUnknown9680C2` and the `$7FED4B`.. variables), the name and weapon windows.
-     2. `combatants.asm`: the slot engine around `rlBattleAnimationQueueAction` (`rlUnknown95C1AB`, `95C51F`, `95DDFB`, the effect slots `$86`/`$C9`), and the slot fields still raw (`$0AF1`/`$0AF2` knockback, `$0B79`.. the effect slots, `$0C25`.. the frame pointers set by `rlBattleSceneSetFramePointers`).
-     3. The palette effect types 1-12 (`rlUnknown96D695`'s jump table `aUnknown96D6DD`), then the slot RAM at `$7FFD9A` as a struct.
-     4. The rest of `rsBattleSceneRunFrame`'s callees (`rlUnknown96961F` plays sound command `$01D1` when the combatants cross, ...).
-     Run `tools/counts.py`'s per-file numbers (or grep `Unknown` per folder) to find other systems with mechanics still `Unknown`, e.g. `units/`, `items/`, `battle/`.
-   - **The engine guide's outline**: every core system now has a reference page. Draft `docs/guide/OUTLINE.md` and show it to the user (PLAN.md, "The engine guide").
-2. **Before naming a bank, make it honest source**, as for `$9F` and the title: `code_pointers.py`, `ram_lists.py`, raw `.word $XXXX`, `.byte` rows that are scripts or code, routines nothing references. In the battle scene, `rsBattleSceneLoadExtraTiles` loads a pointer written `aChapter05MapEvents + 326` (a chance label), and `rsBattleScenePlaceCombatants` holds two dead `.byte` runs. Wave 6 found two more kinds: pointer tables written as `.word` rows that were really `.long` (the lover conversation), and an HDMA code word in the middle of a routine.
-3. Open questions are at the end of each reference page. `tools/songs.py` stops at a stale label (`aUnknown8A9D79`); fix it before regenerating `audio/SONGS.md`. `tools/stream_catalog.py` deleted the catalog previews when run (reverted); find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm, and moved sections land at the end of their target file; move both by hand. Check that an `include/` file does not exist before creating one. `tools/rename.py` refuses a new name that appears anywhere, comments included: rename first, then write comments that use the new name. `move_sections.py` stops at a section listed twice in its spec.
+1. **Talk to the user before starting.** The candidates:
+   - **Finish the battle scene's mechanics** (one session): combatants.asm's last 33 (the effect slots' spawn fields `$0C03`-`$0C30` set by sequence command `$EF`, `rsUnknown95DCA3`/`95DD4F`; the body records `aUnknown97EA9A` and `$7FE1BE`; `rsUnknown95DE0C`, `rlUnknown95E2EF`/`E304`/`E33B`; the routines at the top of the file, `95B5FD`-`95BA76`), then loading.asm (25), results.asm (23), rounds.asm (10: `rlUnknown95AAFF` picks an action when a combatant is airborne), script.asm (12). What bit 7 of `bBattleSceneStrikeFlags` means (a round entry with bit `$10`; the end steps play scripts `$34`/`$31` and sound `$89`-`$8B` by gender).
+   - **The map battle** (`map_battle.asm` 151, `map_battle_magic.asm` 50, `map_battle_hud.asm` 16), skipping the spell visuals.
+   - **The event engine** (`event_engine.asm` 40, `event_scripts.asm` 79, `cutscenes.asm` 20).
+   - **The engine guide's outline**: draft `docs/guide/OUTLINE.md` and show it to the user (PLAN.md, "The engine guide").
+2. **Before naming a bank, make it honest source.** Wave 7 found two more kinds: a table of long pointers written as `.byte` rows (`aBattleSceneScriptRoutines`; its targets all looked unreached), and tables whose `.word` rows straddle entries of 5 or 11 bytes (look at any table whose words look like `$7E4E`, `$4F7E`). Also `code_pointers.py`, `ram_lists.py`, raw `.word $XXXX`, `.byte` rows that are scripts or code, routines nothing references.
+3. Open questions are at the end of each reference page. `tools/songs.py` stops at a stale label (`aUnknown8A9D79`); fix it before regenerating `audio/SONGS.md`. `tools/stream_catalog.py` deleted the catalog previews when run (reverted); find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm, and moved sections land at the end of their target file; move both by hand. Check that an `include/` file does not exist before creating one. `tools/rename.py` refuses a new name that appears anywhere, comments included: rename first, then write comments that use the new name (wave 7 tripped on this twice with comments written into include/ and data.asm). `rename.py` does not touch `docs/` or `tools/`: grep them for old names after a rename. `move_sections.py` stops at a section listed twice in its spec. A RAM name in `$7FE000`-`$7FFFFF` must use a `BattleScene` prefix to stay scoped (`name_ram.py`); `bBattleAnimation...` there would be written into map code.
 4. Banks `$88`, `$9B` and `$9F` have not been pad-tested yet (`./build.sh pad SECTION N`). Leave `wip/` holding only `.gitkeep` at the end of a session.
 5. The Jugdral history's texts (`engine/save/jugdral_history.asm`) are still `.byte` rows; the user asked where the text is. Find whether `tools/dialogue.py`'s encoding reads them (it read the lover conversation's text without trouble).
 
