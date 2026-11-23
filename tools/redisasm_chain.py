@@ -145,6 +145,10 @@ def main():
     while last + 1 < len(lines) and (not lines[last + 1].strip() or lines[last + 1].strip() == '.databank 0'):
         last += 1
     removed = lines[first:last + 1]
+    crossing = [l.strip() for l in removed if re.match(r'\s*\.(end)?section\b', l)]
+    if crossing:
+        raise SystemExit('the range crosses section lines (' + '; '.join(crossing)
+                         + '): split it, or merge the sections in build.asm first')
     gone = [m.group(1) for l in removed if (m := promote_locals.TOP_RE.match(l)) and not l.strip().startswith('.')]
     print('replaced lines', first + 1, '-', last + 1, '; labels removed:', ' '.join(gone), file=sys.stderr)
     lines[first:last + 1] = [''] + text.rstrip('\n').split('\n') + ['']

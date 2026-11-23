@@ -8567,15 +8567,6 @@
 
       .dsection Unsorted9F94FESection
 
-      .dsection Unsorted9F9570Section
-
-    .here
-
-    * = $1F95E1
-    .logical $9F95E1
-
-      .dsection Unsorted9F95E1Section
-
       .dsection Unsorted9F9691Section
 
       .dsection Unsorted9F9954Section

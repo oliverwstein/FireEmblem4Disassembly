@@ -26,11 +26,15 @@ SIZES = {0x00: 3, 0x01: 0, 0x02: 2, 0x03: 1, 0x04: 0, 0x05: 0, 0x06: 0, 0x07: 0,
          0x1B: 0, 0x1C: 0, 0x1D: 1, 0x1E: 1}
 # Routines called by command $17 that read operands after it themselves:
 # address -> 'jump' (a word, a script position the routine may jump to).
+# Routines that load the word at Y into Y are found by reads_jump() anyway;
+# these are the ones checked by hand.
 CALL_ARGS = {
     0x9FA00E: 'jump',  # jumps when aUnknown001320 is 0, else skips the word
     0x9FA9C1: 'jump',  # moves the sprite down; jumps once it has reached its Y
     0x9FA9F7: 'jump',  # skips the word when aUnknown0013A0 is 1, else jumps
     0x9FAA02: 'jump',  # skips the word when aUnknown0013A0 is 2, else jumps
+    0x9FB1CC: 'jump',  # jumps (and clears it) when aUnknown0013A0 is set
+    0x9FB4E8: 'jump',  # skips the word when $7ECC0C is 2, else jumps
 }
 # Commands after which the script does not run on.
 ENDS = {0x01, 0x09, 0x0A, 0x0B, 0x0C, 0x0F, 0x15, 0x16}
@@ -46,7 +50,7 @@ def decode(rom, addr, stop=None):
         if op not in SIZES:
             raise ValueError(f'${a:06X}: {op:02X} is not an active sprite command')
         n = SIZES[op]
-        if op == 0x17 and (a & 0xFF0000 | word(rom, offset(a) + 1)) in CALL_ARGS:
+        if op == 0x17 and reads_jump(rom, a & 0xFF0000 | word(rom, offset(a) + 1)):
             n += 2
         args = rom[offset(a) + 1:offset(a) + 1 + n]
         out.append((a, op, bytes(args)))
@@ -54,6 +58,20 @@ def decode(rom, addr, stop=None):
         if op in ENDS:
             break
     return out
+
+
+def reads_jump(rom, routine):
+    """Whether a routine called by command $17 reads a jump target after the call:
+    listed in CALL_ARGS, or its code (decoded to its end) loads the word at Y
+    into Y (lda $0000,b,y / tay)."""
+    if routine in CALL_ARGS:
+        return True
+    import disasm
+    try:
+        text = disasm.Disassembler(rom, {}, routine, None, False, False).render('x')
+    except Exception:
+        return False
+    return bool(re.search(r'lda \$0000,b,y\s*\n\s*tay', text))
 
 
 def word(b, i=0):

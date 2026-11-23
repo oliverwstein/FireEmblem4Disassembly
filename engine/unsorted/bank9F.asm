@@ -3101,35 +3101,46 @@
 
         .databank 0
 
-        ; 9F/9527
-
-
       aUnknown9F9527 ; 9F/9527
 
-        .byte $00, $05, $01, $96, $17, $70, $95, $00, $01, $03, $96, $00, $01, $0A, $96, $00
-        .byte $01, $11, $96, $14, $E0, $93, $00, $01, $03, $96, $00, $01, $0A, $96, $00, $01
-        .byte $11, $96, $17, $E1, $95, $3D, $95, $00, $01, $03, $96, $00, $01, $0A, $96, $00
-        .byte $01, $11, $96, $17, $F1, $95, $4E, $95, $17, $7A, $95, $00, $02, $18, $96, $00
-        .byte $02, $1F, $96, $00, $30, $01, $96, $16, $FB
+        ACTIVE_SPRITE_FRAME 5, aUnknown9F9601
+        ACTIVE_SPRITE_CALL rlUnknown9F9570
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9603
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F960A
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9611
+        ACTIVE_SPRITE_SET_ONCYCLE rlUnknown9F93E0
 
-    .endsection Unsorted9F94FESection
+        _953D
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9603
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F960A
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9611
+        ACTIVE_SPRITE_CALL rlUnknown9F95E1
+        .word <>_953D
 
+        _954E
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9603
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F960A
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9611
+        ACTIVE_SPRITE_CALL rlUnknown9F95F1
+        .word <>_954E
+        ACTIVE_SPRITE_CALL rlUnknown9F957A
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9618
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F961F
 
-    .section Unsorted9F9570Section
+        _956A
+        ACTIVE_SPRITE_FRAME 48, aUnknown9F9601
+        .byte $16, $FB ; command $16
 
-      .al
-      .xl
-
+        ; 9F/9570
       rlUnknown9F9570 ; 9F/9570
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
 
         phy
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda $1200,b,x
         jsr rsUnknown9F8253
 
           .byte $51
@@ -3140,24 +3151,102 @@
         .databank 0
 
         ; 9F/957A
+      rlUnknown9F957A ; 9F/957A
 
-    .endsection Unsorted9F9570Section
-
-
-    .section Unsorted9F95E1Section
-
-      .al
-      .xl
-
-      rlUnknown9F95E1 ; 9F/95E1
-
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aUnknown0013A0,b,x
+        phy
+        lda $1200,b,x
+        jsr rsUnknown9F8253
+
+          .byte $4B
+
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9F/9584
+      aUnknown9F9584 ; 9F/9584
+
+        ACTIVE_SPRITE_FRAME 5, aUnknown9F9601
+        ACTIVE_SPRITE_CALL rlUnknown9F95CD
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9626
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F962D
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9634
+        ACTIVE_SPRITE_SET_ONCYCLE rlUnknown9F93E0
+
+        _959A
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F963B
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9642
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9649
+        ACTIVE_SPRITE_CALL rlUnknown9F95E1
+        .word <>_959A
+
+        _95AB
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9650
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9657
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F965E
+        ACTIVE_SPRITE_CALL rlUnknown9F95F1
+        .word <>_95AB
+        ACTIVE_SPRITE_CALL rlUnknown9F95D7
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9665
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F967B
+
+        _95C7
+        ACTIVE_SPRITE_FRAME 48, aUnknown9F9601
+        .byte $16, $FB ; command $16
+
+        ; 9F/95CD
+      rlUnknown9F95CD ; 9F/95CD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        lda $1200,b,x
+        jsr rsUnknown9F8253
+
+          .byte $52
+
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9F/95D7
+      rlUnknown9F95D7 ; 9F/95D7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        lda $1200,b,x
+        jsr rsUnknown9F8253
+
+          .byte $4C
+
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9F/95E1
+      rlUnknown9F95E1 ; 9F/95E1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $13A0,b,x
         cmp #$0001
         bne _95EC
         inc y
@@ -3173,16 +3262,14 @@
         .databank 0
 
         ; 9F/95F1
-
       rlUnknown9F95F1 ; 9F/95F1
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aUnknown0013A0,b,x
+        lda $13A0,b,x
         cmp #$0002
         bne _95FC
         inc y
@@ -3196,6 +3283,8 @@
         rtl
 
         .databank 0
+
+        ; 9F/9601
 
         ; 9F/9601
 
@@ -3306,7 +3395,7 @@
 
         .structSpriteArray aUnknown9F967B._Sprites
 
-    .endsection Unsorted9F95E1Section
+    .endsection Unsorted9F94FESection
 
 
     .section Unsorted9F9691Section
@@ -4364,7 +4453,7 @@
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9F9F79
-        lda #$9F7A
+        lda #<>rlUnknown9F9F7A
         sta aActiveSpriteSystem.aOnCycle,b,x
         lda $7F509B
         and #$00FF
@@ -4411,7 +4500,7 @@
         jsl rlUnknown9F8999
         dec $12C0,b,x
         bne _9F92
-        lda #$9F93
+        lda #<>rlUnknown9F9F93
         sta $1160,b,x
         lda #$0010
         sta $12C0,b,x
@@ -4434,7 +4523,7 @@
         bne _9FAB
         lda #$0001
         sta $7F4580
-        lda #$9FAC
+        lda #<>rlUnknown9F9FAC
         sta $1160,b,x
         lda #$0008
         sta $12C0,b,x
@@ -4454,7 +4543,7 @@
 
         dec $12C0,b,x
         bne _9FC1
-        lda #$9FC2
+        lda #<>rlUnknown9F9FC2
         sta $1160,b,x
         lda #$0010
         sta $12C0,b,x
@@ -4475,7 +4564,7 @@
 
         dec $12C0,b,x
         bne _9FCD
-        lda #$9FCE
+        lda #<>rlUnknown9F9FCE
         sta $1160,b,x
 
         _9FCD
@@ -5146,21 +5235,31 @@
 
       aUnknown9FA563 ; 9F/A563
 
-        .byte $00, $08, $49, $A5, $00, $08, $50, $A5, $00, $02, $57, $A5, $17, $9B, $A5, $00
-        .byte $01, $57, $A5, $17, $8D, $A5, $72, $A5, $00, $08, $50, $A5, $00, $08, $49, $A5
-        .byte $17, $A3, $A5
+        ACTIVE_SPRITE_FRAME 8, aUnknown9FA549
+        ACTIVE_SPRITE_FRAME 8, aUnknown9FA550
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FA557
+        ACTIVE_SPRITE_CALL rlUnknown9FA59B
 
-      rlUnknown9FA586 ; 9F/A586
+        _A572
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FA557
+        ACTIVE_SPRITE_CALL rlUnknown9FA58D
+        .word <>_A572
+        ACTIVE_SPRITE_FRAME 8, aUnknown9FA550
+        ACTIVE_SPRITE_FRAME 8, aUnknown9FA549
+        ACTIVE_SPRITE_CALL rlUnknown9FA5A3
+
+        _A586
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FA547
+        ACTIVE_SPRITE_JUMP _A586
+
+        ; 9F/A58D
+      rlUnknown9FA58D ; 9F/A58D
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        .byte $00 ; brk
-        ora (wR31+1,x)
-        lda wR10+1
-        stx $A5
         lda $7ECC08
         beq _A596
         inc y
@@ -5173,29 +5272,37 @@
         tay
         rtl
 
+        .databank 0
 
+        ; 9F/A59B
       rlUnknown9FA59B ; 9F/A59B
 
         .al
         .xl
         .autsiz
         .databank ?
+
         lda #$0001
         sta $7ECC06
         rtl
 
+        .databank 0
 
+        ; 9F/A5A3
       rlUnknown9FA5A3 ; 9F/A5A3
 
         .al
         .xl
         .autsiz
         .databank ?
+
         lda #$0002
         sta $7ECC06
         rtl
 
         .databank 0
+
+        ; 9F/A5AB
 
       rlUnknown9FA5AB ; 9F/A5AB
 
@@ -5583,7 +5690,7 @@
         bcc $9FA779
         lda #$000C
         sta $12C0,b,x
-        lda #$A75E
+        lda #<>rlUnknown9FA75E
         sta $1160,b,x
         rtl
 
@@ -5599,7 +5706,7 @@
 
         dec $12C0,b,x
         bne $9FA779
-        lda #$A76A
+        lda #<>rlUnknown9FA76A
         sta $1160,b,x
         rtl
 
@@ -5636,7 +5743,7 @@
         beq $9FA79A
         stz $1320,b,x
         jsr $9FA7F6
-        lda #$A792
+        lda #<>rlUnknown9FA792
         sta $1160,b,x
         lda #$0040
         sta $12C0,b,x
@@ -5672,7 +5779,7 @@
         lda $1320,b,x
         beq $9FA7BB
         stz $1320,b,x
-        lda #$A7B0
+        lda #<>rlUnknown9FA7B0
         sta $1160,b,x
         lda #$0040
         sta $12C0,b,x
@@ -5710,7 +5817,7 @@
         beq $9FA7F5
         stz $1320,b,x
         jsr $9FA86B
-        lda #$A7D4
+        lda #<>rlUnknown9FA7D4
         sta $1160,b,x
         lda #$003C
         sta $12C0,b,x
@@ -5730,7 +5837,7 @@
         bne _A7EC
         lda #$0001
         sta $7F4580
-        lda #$A7ED
+        lda #<>rlUnknown9FA7ED
         sta $1160,b,x
         lda #$0004
         sta $12C0,b,x
@@ -5905,7 +6012,7 @@
         ; 9F/A8C8
       aUnknown9FA8C8 ; 9F/A8C8
 
-        ACTIVE_SPRITE_CALL $A8E4
+        ACTIVE_SPRITE_CALL rlUnknown9FA8E4
 
         _A8CB
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA5D
@@ -5915,7 +6022,7 @@
         ; 9F/A8D6
       aUnknown9FA8D6 ; 9F/A8D6
 
-        ACTIVE_SPRITE_CALL $A8E4
+        ACTIVE_SPRITE_CALL rlUnknown9FA8E4
 
         _A8D9
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAAA3
@@ -5957,7 +6064,7 @@
         sec
         sbc #$0020
         sta $1240,b,x
-        lda #$A917
+        lda #<>rlUnknown9FA917
         sta $1160,b,x
 
         .databank 0
@@ -5993,7 +6100,7 @@
         sta $13A0,b,x
         stz $1320,b,x
         stz $1340,b,x
-        lda #$A938
+        lda #<>rlUnknown9FA938
         sta $1160,b,x
         rtl
 
@@ -6009,7 +6116,7 @@
 
         dec $12C0,b,x
         bne $9FA94A
-        lda #$A94A
+        lda #<>rlUnknown9FA94A
         sta $1160,b,x
         lda #$0001
         sta $7F4580
@@ -6026,7 +6133,7 @@
 
         jsl rlUnknown9FAACC
         bcc $9FA966
-        lda #$A957
+        lda #<>rlUnknown9FA957
         sta $1160,b,x
         rtl
 
@@ -6072,21 +6179,21 @@
         ACTIVE_SPRITE_MOVE 0, -10
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA6E
         ACTIVE_SPRITE_MOVE 0, -10
-        ACTIVE_SPRITE_CALL $A9F7
+        ACTIVE_SPRITE_CALL rlUnknown9FA9F7
         .word <>_A97E
-        ACTIVE_SPRITE_CALL $AA12
+        ACTIVE_SPRITE_CALL rlUnknown9FAA12
         ACTIVE_SPRITE_FRAME 29, aUnknown9FAA37
 
         _A998
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA92
         ACTIVE_SPRITE_CALL rlUnknown9FA9C1
-        .word <>$A9B6
+        .word <>aUnknown9FA9B6
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAAA3
         ACTIVE_SPRITE_CALL rlUnknown9FA9C1
-        .word <>$A9B6
+        .word <>aUnknown9FA9B6
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAAB4
         ACTIVE_SPRITE_CALL rlUnknown9FA9C1
-        .word <>$A9B6
+        .word <>aUnknown9FA9B6
         ACTIVE_SPRITE_JUMP _A998
 
         ; 9F/A9B6
@@ -6121,7 +6228,7 @@
         lda $7F509C
         and #$00FF
         sta $1240,b,x
-        lda #$A918
+        lda #<>rlUnknown9FA918
         sta $1160,b,x
         lda $0000,b,y
         tay
@@ -6609,7 +6716,7 @@
         jsl rlUnknown9FAE19
         dec $12C0,b,x
         bne rlUnknown9FAE05._AE18
-        lda #$ADB9
+        lda #<>rlUnknown9FADB9
         sta $1160,b,x
         lda #$0020
         sta $12C0,b,x
@@ -6630,7 +6737,7 @@
         bne rlUnknown9FAE05._AE18
         lda #$0001
         sta $7F4580
-        lda #$ADD6
+        lda #<>rlUnknown9FADD6
         sta $1160,b,x
         lda #$0018
         sta $12C0,b,x
@@ -6651,7 +6758,7 @@
         bne rlUnknown9FAE05._AE18
         lda #$0001
         sta $13A0,b,x
-        lda #$ADF2
+        lda #<>rlUnknown9FADF2
         sta $1160,b,x
         lda #$0028
         sta $12C0,b,x
@@ -6670,7 +6777,7 @@
         jsl rlUnknown9FAE19
         dec $12C0,b,x
         bne rlUnknown9FAE05._AE18
-        lda #$AE05
+        lda #<>rlUnknown9FAE05
         sta $1160,b,x
         jsr rsUnknown9F8359
         rtl
@@ -6750,28 +6857,51 @@
 
       aUnknown9FAE9C ; 9F/AE9C
 
-        .byte $00, $08, $EA, $AE, $00, $08, $F1, $AE, $00, $08, $F8, $AE, $00, $08, $FF, $AE
-        .byte $00, $03, $06, $AF, $00, $03, $0D, $AF, $00, $03, $14, $AF, $00, $03, $1B, $AF
-        .byte $17, $D8, $AE, $AC, $AE, $00, $03, $FF, $AE, $00, $03, $F8, $AE, $00, $03, $F1
-        .byte $AE, $00, $03, $EA, $AE, $00, $01, $E8, $AE, $15, $D1, $AE, $BD
+        ACTIVE_SPRITE_FRAME 8, aUnknown9FAEEA
+        ACTIVE_SPRITE_FRAME 8, aUnknown9FAEF1
+        ACTIVE_SPRITE_FRAME 8, aUnknown9FAEF8
+        ACTIVE_SPRITE_FRAME 8, aUnknown9FAEFF
 
-      rlUnknown9FAED9 ; 9F/AED9
+        _AEAC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FAF06
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FAF0D
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FAF14
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FAF1B
+        ACTIVE_SPRITE_CALL rlUnknown9FAED8
+        .word <>_AEAC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FAEFF
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FAEF8
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FAEF1
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FAEEA
+
+        _AED1
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FAEE8
+        ACTIVE_SPRITE_JUMP _AED1
+
+        ; 9F/AED8
+      rlUnknown9FAED8 ; 9F/AED8
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ldy #$D013
-        ora $B9
-        .byte $00 ; brk
-        .byte $00 ; brk
+        lda $13A0,b,x
+        bne _AEE2
+        lda $0000,b,y
         tay
         rtl
 
-        .byte $9E, $A0, $13, $C8, $C8, $6B
+
+        _AEE2
+        stz $13A0,b,x
+        inc y
+        inc y
+        rtl
 
         .databank 0
+
+        ; 9F/AEE8
 
       aUnknown9FAEE8 ; 9F/AEE8
 
@@ -6952,44 +7082,47 @@
         .databank ?
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta $1260,b,x
         lda $7F5099
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta $1200,b,x
         lda $7F509A
         and #$00FF
         clc
         adc #$FFF8
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta $1240,b,x
         lda #$0002
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
         lda $7F50C9
         asl a
         tay
         lda $B101,b,y
-        sta aActiveSpriteSystem.aCodeOffset,b,x
+        sta $11A0,b,x
         rtl
 
+        .databank 0
 
+        ; 9F/B011
       rlUnknown9FB011 ; 9F/B011
 
         .al
         .xl
         .autsiz
         .databank ?
-        dec aActiveSpriteSystem.aUnknown0012C0,b,x
+
+        dec $12C0,b,x
         bne _B052
-        lda #$B053
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        lda #<>rlUnknown9FB053
+        sta $1160,b,x
         lda $7F509B
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001200,b,x
+        sbc $1200,b,x
         sta wR0
         lda $7F509C
         and #$00FF
         sec
-        sbc aActiveSpriteSystem.aUnknown001240,b,x
+        sbc $1240,b,x
         sta wR1
         jsl rlUnknown9F89F8
         lsr a
@@ -6998,30 +7131,51 @@
         lda #$0002
 
         _B041
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
         lda wR0
-        sta aActiveSpriteSystem.aUnknown0012E0,b,x
+        sta $12E0,b,x
         lda #$0400
-        sta aActiveSpriteSystem.aUnknown001300,b,x
-
-        _B04F
+        sta $1300,b,x
         jsr rsUnknown9F9379
 
         _B052
         rtl
 
-        .byte $22, $99, $89, $9F, $DE, $C0, $12, $D0, $F6, $AF, $9B, $50, $7F, $29, $FF, $00
-        .byte $9D, $00, $12, $AF, $9C, $50, $7F, $29, $FF, $00, $9D, $40, $12, $A9, $01, $00
-        .byte $9D, $A0, $13, $A9, $AB, $B0, $9D, $60, $11, $A9, $32, $00, $9D, $C0, $12, $BD
-        .byte $00, $12, $20, $53, $82, $5C
+        .databank 0
 
+        ; 9F/B053
+      rlUnknown9FB053 ; 9F/B053
 
-        _B089
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown9F8999
+        dec $12C0,b,x
+        bne rlUnknown9FB011._B052
+        lda $7F509B
+        and #$00FF
+        sta $1200,b,x
+        lda $7F509C
+        and #$00FF
+        sta $1240,b,x
+        lda #$0001
+        sta $13A0,b,x
+        lda #<>rlUnknown9FB0AB
+        sta $1160,b,x
+        lda #$0032
+        sta $12C0,b,x
+        lda $1200,b,x
+        jsr rsUnknown9F8253
+
+          .byte $5C
+
         jsr rsUnknown9F82D7
 
           .word <>procUnknown9FEC58
 
-        sta aActiveSpriteSystem.aUnknown001380,b,x
+        sta $1380,b,x
         jsr rsUnknown9F830F
 
           .word <>aUnknown9FDBB8
@@ -7042,37 +7196,84 @@
 
           .word <>aUnknown9FDC77
 
-
-        _B0AA
         rtl
 
-        .byte $DE, $C0, $12, $D0, $34, $A9, $01, $00, $8F, $80, $45, $7F, $A9, $C4, $B0, $9D
-        .byte $60, $11, $A9, $0A, $00, $9D, $C0, $12, $6B
+        .databank 0
 
+        ; 9F/B0AB
+      rlUnknown9FB0AB ; 9F/B0AB
 
-        _B0C4
-        dec aActiveSpriteSystem.aUnknown0012C0,b,x
-        bne _B0E4
-        ldy aActiveSpriteSystem.aUnknown001380,b,x
-        lda #$FFFD
-        sta aProcSystem.aBody4,b,y
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $12C0,b,x
+        bne rlUnknown9FB0C4._B0E4
         lda #$0001
-        sta aActiveSpriteSystem.aUnknown0013A0,b,x
-        lda #$B0E5
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $7F4580
+        lda #<>rlUnknown9FB0C4
+        sta $1160,b,x
+        lda #$000A
+        sta $12C0,b,x
+        rtl
+
+        .databank 0
+
+        ; 9F/B0C4
+      rlUnknown9FB0C4 ; 9F/B0C4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $12C0,b,x
+        bne _B0E4
+        ldy $1380,b,x
+        lda #$FFFD
+        sta $1057,b,y
+        lda #$0001
+        sta $13A0,b,x
+        lda #<>rlUnknown9FB0E5
+        sta $1160,b,x
         lda #$0010
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
 
         _B0E4
         rtl
 
-        .byte $DE, $C0, $12, $D0, $06, $A9, $F1, $B0, $9D, $60, $11, $6B
+        .databank 0
 
+        ; 9F/B0E5
+      rlUnknown9FB0E5 ; 9F/B0E5
 
-        _B0F1
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $12C0,b,x
+        bne _B0F0
+        lda #<>rlUnknown9FB0F1
+        sta $1160,b,x
+
+        _B0F0
+        rtl
+
+        .databank 0
+
+        ; 9F/B0F1
+      rlUnknown9FB0F1 ; 9F/B0F1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         jsr rsUnknown9F919F
         bcc _B100
-        stz aActiveSpriteSystem.aTypeOffset,b,x
+        stz $1100,b,x
         lda #$0001
         sta $7F5093
 
@@ -7081,39 +7282,118 @@
 
         .databank 0
 
+        ; 9F/B101
+
       aUnknown9FB101 ; 9F/B101
 
-        .byte $11, $B1, $59, $B1, $29, $B1, $41, $B1, $11, $B1, $59, $B1, $29, $B1, $41, $B1
-        .byte $00, $03, $DE, $B1, $00, $01, $DC, $B1, $00, $03, $EA, $B1, $00, $01, $DC, $B1
-        .byte $17, $CC, $B1, $71, $B1, $15, $11, $B1, $00, $03, $04, $B2, $00, $01, $DC, $B1
-        .byte $00, $03, $10, $B2, $00, $01, $DC, $B1, $17, $CC, $B1, $71, $B1, $15, $29, $B1
-        .byte $00, $03, $F6, $B1, $00, $01, $DC, $B1, $00, $03, $FD, $B1, $00, $01, $DC, $B1
-        .byte $17, $CC, $B1, $71, $B1, $15, $41, $B1, $00, $03, $1C, $B2, $00, $01, $DC, $B1
-        .byte $00, $03, $23, $B2, $00, $01, $DC, $B1, $17, $CC, $B1, $71, $B1, $15, $59, $B1
-        .byte $00, $01, $FD, $B1, $17, $CC, $B1, $C5, $B1, $00, $01, $FD, $B1, $17, $CC, $B1
-        .byte $C5, $B1, $00, $01, $DC, $B1, $17, $CC, $B1, $C5, $B1, $00, $01, $40, $B2, $17
-        .byte $CC, $B1, $C5, $B1, $00, $01, $40, $B2, $17, $CC, $B1, $C5, $B1, $00, $01, $DC
-        .byte $B1, $17, $CC, $B1, $C5, $B1, $00, $01, $56, $B2, $17, $CC, $B1, $C5, $B1, $00
-        .byte $01, $56, $B2, $17, $CC, $B1, $C5, $B1, $00, $01, $DC, $B1, $17, $CC, $B1, $C5
-        .byte $B1, $15, $71, $B1, $00, $01, $DC, $B1, $15, $C5, $B1, $BD
+        .word <>aUnknown9FB111, <>aUnknown9FB159, <>aUnknown9FB129, <>aUnknown9FB141
+        .word <>aUnknown9FB111, <>aUnknown9FB159, <>aUnknown9FB129, <>aUnknown9FB141
 
-      rlUnknown9FB1CD ; 9F/B1CD
+      aUnknown9FB111 ; 9F/B111
+
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FB1DE
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FB1EA
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB171
+        ACTIVE_SPRITE_JUMP aUnknown9FB111
+
+        ; 9F/B129
+      aUnknown9FB129 ; 9F/B129
+
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FB204
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FB210
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB171
+        ACTIVE_SPRITE_JUMP aUnknown9FB129
+
+        ; 9F/B141
+      aUnknown9FB141 ; 9F/B141
+
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FB1F6
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FB1FD
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB171
+        ACTIVE_SPRITE_JUMP aUnknown9FB141
+
+        ; 9F/B159
+      aUnknown9FB159 ; 9F/B159
+
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FB21C
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FB223
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB171
+        ACTIVE_SPRITE_JUMP aUnknown9FB159
+
+        ; 9F/B171
+      aUnknown9FB171 ; 9F/B171
+
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1FD
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB1C5
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1FD
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB1C5
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB1C5
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB240
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB1C5
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB240
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB1C5
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB1C5
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB256
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB1C5
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB256
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB1C5
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_CALL rlUnknown9FB1CC
+        .word <>aUnknown9FB1C5
+        ACTIVE_SPRITE_JUMP aUnknown9FB171
+
+        ; 9F/B1C5
+      aUnknown9FB1C5 ; 9F/B1C5
+
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
+        ACTIVE_SPRITE_JUMP aUnknown9FB1C5
+
+        ; 9F/B1CC
+      rlUnknown9FB1CC ; 9F/B1CC
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ldy #$F013
-        php
-        stz aActiveSpriteSystem.aUnknown0013A0,b,x
+        lda $13A0,b,x
+        beq _B1D9
+        stz $13A0,b,x
         lda $0000,b,y
         tay
         rtl
 
-        .byte $C8, $C8, $6B
+
+        _B1D9
+        inc y
+        inc y
+        rtl
 
         .databank 0
+
+        ; 9F/B1DC
 
       aUnknown9FB1DC ; 9F/B1DC
 
@@ -7436,24 +7716,27 @@
         .databank ?
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta $1260,b,x
         lda #$00F8
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta $1200,b,x
         lda #$FFF0
-        sta aActiveSpriteSystem.aUnknown001240,b,x
-        stz aActiveSpriteSystem.aUnknown0013E0,b,x
-        stz aActiveSpriteSystem.aUnknown0013C0,b,x
+        sta $1240,b,x
+        stz $13E0,b,x
+        stz $13C0,b,x
         lda $7ECC0A
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
         rtl
 
+        .databank 0
 
+        ; 9F/B40A
       rlUnknown9FB40A ; 9F/B40A
 
         .al
         .xl
         .autsiz
         .databank ?
+
         jsl rlUnknown9FDE04
         lda $7F50CD
         eor #$FFFF
@@ -7461,71 +7744,87 @@
         clc
         adc #$0080
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta $1200,b,x
         lda $7F50CF
         eor #$FFFF
         inc a
         clc
         adc #$0070
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta $1240,b,x
         lda $7F509C
         and #$00FF
         sta wR0
-        lda aActiveSpriteSystem.aUnknown001240,b,x
+        lda $1240,b,x
         cmp wR0
         bmi _B461
         lda wR0
-        sta aActiveSpriteSystem.aUnknown001240,b,x
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        sta $1240,b,x
+        lda $1200,b,x
         jsr rsUnknown9F8253
 
           .byte $5F
 
         lda #$000C
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
-        lda #$B462
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $12C0,b,x
+        lda #<>rlUnknown9FB462
+        sta $1160,b,x
         lda #$0001
         sta $7ECC0C
 
         _B461
         rtl
 
-        .byte $DE, $C0
+        .databank 0
 
+        ; 9F/B462
+      rlUnknown9FB462 ; 9F/B462
 
-        _B464
-        ora ($D0)
-        ora $01A9,b
-        .byte $00 ; brk
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
-        lda #$B475
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        dec $12C0,b,x
+        bne _B474
+        lda #$0001
+        sta $7F4580
+        lda #<>rlUnknown9FB475
+        sta $1160,b,x
+
+        _B474
         rtl
 
-        .byte $A9, $00
+        .databank 0
 
+        ; 9F/B475
+      rlUnknown9FB475 ; 9F/B475
 
-        _B477
-        .byte $00 ; brk
-        sta aPaletteFading.wDesiredColor,b
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $1B43,b
         lda #$0006
         sta aPaletteFading,b
         jsl rlFadePaletteToBlack
 
-          .byte $96, $B4
+          .word <>aUnknown9FB496
 
         bcc _B495
         lda #<>rlUnknown9FB49C
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $1160,b,x
         lda #$000E
-        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta $12C0,b,x
 
         _B495
         rtl
 
         .databank 0
+
+        ; 9F/B496
 
       aUnknown9FB496 ; 9F/B496
 
@@ -7538,17 +7837,19 @@
         .autsiz
         .databank ?
 
-        dec aActiveSpriteSystem.aUnknown0012C0,b,x
+        dec $12C0,b,x
         bne _B4AE
         lda #$0002
         sta $7ECC0C
         lda #<>rlUnknown9FB4AF
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $1160,b,x
 
         _B4AE
         rtl
 
+        .databank 0
 
+        ; 9F/B4AF
       rlUnknown9FB4AF ; 9F/B4AF
 
         .al
@@ -7562,7 +7863,7 @@
         bcc _B4C7
 
         _B4BA
-        stz aActiveSpriteSystem.aTypeOffset,b,x
+        stz $1100,b,x
         lda #$0001
         sta $7F5093
         jsr rsUnknown9F8371
@@ -7572,11 +7873,29 @@
 
         .databank 0
 
+        ; 9F/B4C8
       aUnknown9FB4C8 ; 9F/B4C8
 
-        .byte $00, $01, $FB, $B4, $17, $E8, $B4, $C8, $B4, $00, $01, $F9, $B4, $15, $D1, $B4
-        .byte $00, $01, $11, $B5, $17, $E8, $B4, $D8, $B4, $00, $01, $F9, $B4, $15, $E1, $B4
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB4FB
+        ACTIVE_SPRITE_CALL rlUnknown9FB4E8
+        .word <>aUnknown9FB4C8
 
+        _B4D1
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB4F9
+        ACTIVE_SPRITE_JUMP _B4D1
+
+        ; 9F/B4D8
+      aUnknown9FB4D8 ; 9F/B4D8
+
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB511
+        ACTIVE_SPRITE_CALL rlUnknown9FB4E8
+        .word <>aUnknown9FB4D8
+
+        _B4E1
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FB4F9
+        ACTIVE_SPRITE_JUMP _B4E1
+
+        ; 9F/B4E8
       rlUnknown9FB4E8 ; 9F/B4E8
 
         .al
@@ -7598,6 +7917,8 @@
         rtl
 
         .databank 0
+
+        ; 9F/B4F9
 
       aUnknown9FB4F9 ; 9F/B4F9
 
@@ -8512,10 +8833,27 @@
 
       aUnknown9FBA4F ; 9F/BA4F
 
-        .byte $00, $03, $CE, $BA, $00, $03, $A8, $BA, $00, $03, $B6, $BA, $00, $03, $AF, $BA
-        .byte $00, $03, $BD, $BA, $00, $01, $97, $BA, $17, $87, $BA, $63, $BA, $00, $02, $BD
-        .byte $BA, $00, $02, $AF, $BA, $00, $02, $B6, $BA, $00, $02, $A8, $BA, $00, $02, $CE
-        .byte $BA, $00, $01, $95, $BA, $15, $80, $BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FBACE
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FBAA8
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FBAB6
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FBAAF
+        ACTIVE_SPRITE_FRAME 3, aUnknown9FBABD
+
+        _BA63
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FBA97
+        ACTIVE_SPRITE_CALL rlUnknown9FBA87
+        .word <>_BA63
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FBABD
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FBAAF
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FBAB6
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FBAA8
+        ACTIVE_SPRITE_FRAME 2, aUnknown9FBACE
+
+        _BA80
+        ACTIVE_SPRITE_FRAME 1, aUnknown9FBA95
+        ACTIVE_SPRITE_JUMP _BA80
+
+        ; 9F/BA87
 
       rlUnknown9FBA87 ; 9F/BA87
 
@@ -9107,9 +9445,20 @@
 
       aUnknown9FBF47 ; 9F/BF47
 
-        .byte $00, $01, $79, $BF, $17, $6B, $BF, $47, $BF, $00, $03, $7B, $BF, $00, $01, $79
-        .byte $BF, $00, $03, $A5, $BF, $00, $01, $79, $BF, $00, $01, $CF, $BF, $00, $01, $79
-        .byte $BF, $15, $50, $BF
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FBF79
+        ACTIVE_SPRITE_CALL rlUnknown9FBF6B
+        .word <>aUnknown9FBF47
+
+        _BF50
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FBF7B
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FBF79
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FBFA5
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FBF79
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FBFCF
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FBF79
+        ACTIVE_SPRITE_JUMP _BF50
+
+        ; 9F/BF6B
 
       rlUnknown9FBF6B ; 9F/BF6B
 
@@ -9928,9 +10277,32 @@
 
       aUnknown9FC499 ; 9F/C499
 
-        .byte $00, $01, $DE, $C4, $17, $C9, $C4, $99, $C4, $00, $01, $F6, $C4, $17, $C9, $C4
-        .byte $A2, $C4, $00, $01, $DE, $C4, $17, $C9, $C4, $AB, $C4, $00, $01, $E0, $C4, $17
-        .byte $C9, $C4, $B4, $C4, $00, $01, $DE, $C4, $17, $C9, $C4, $BD, $C4, $15, $99, $C4
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FC4DE
+        ACTIVE_SPRITE_CALL rlUnknown9FC4C9
+        .word <>aUnknown9FC499
+
+        _C4A2
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FC4F6
+        ACTIVE_SPRITE_CALL rlUnknown9FC4C9
+        .word <>_C4A2
+
+        _C4AB
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FC4DE
+        ACTIVE_SPRITE_CALL rlUnknown9FC4C9
+        .word <>_C4AB
+
+        _C4B4
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FC4E0
+        ACTIVE_SPRITE_CALL rlUnknown9FC4C9
+        .word <>_C4B4
+
+        _C4BD
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FC4DE
+        ACTIVE_SPRITE_CALL rlUnknown9FC4C9
+        .word <>_C4BD
+        ACTIVE_SPRITE_JUMP aUnknown9FC499
+
+        ; 9F/C4C9
 
       rlUnknown9FC4C9 ; 9F/C4C9
 
@@ -11470,13 +11842,39 @@
 
       aUnknown9FCED1 ; 9F/CED1
 
-        .byte $00, $01, $97, $D0, $00, $02, $9E, $D0, $00, $08, $A5, $D0, $00, $03, $AC, $D0
-        .byte $00, $03, $B3, $D0, $00, $02, $BA, $D0, $00, $03, $C1, $D0, $00, $03, $AC, $D0
-        .byte $00, $03, $B3, $D0, $17, $58, $CF, $00, $03, $BA, $D0, $00, $03, $C1, $D0, $00
-        .byte $03, $AC, $D0, $00, $03, $B3, $D0, $00, $03, $BA, $D0, $00, $03, $C1, $D0, $00
-        .byte $03, $B3, $D0, $19, $00, $F6, $00, $05, $C8, $D0, $19, $00, $EE, $00, $01, $CF
-        .byte $D0, $17, $35, $CF, $00, $01, $CF, $D0, $17, $45, $CF, $25, $CF, $00, $01, $95
-        .byte $D0, $15, $2E, $CF
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD097
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD09E
+        ACTIVE_SPRITE_FRAME 8, aUnknown9F9FD0A5
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD0BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
+        ACTIVE_SPRITE_CALL rlUnknown9FCF58
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
+        ACTIVE_SPRITE_MOVE 0, -10
+        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD0C8
+        ACTIVE_SPRITE_MOVE 0, -18
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD0CF
+        ACTIVE_SPRITE_CALL rlUnknown9FCF35
+
+        _CF25
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD0CF
+        ACTIVE_SPRITE_CALL rlUnknown9FCF45
+        .word <>_CF25
+
+        _CF2E
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD095
+        ACTIVE_SPRITE_JUMP _CF2E
+
+        ; 9F/CF35
 
       rlUnknown9FCF35 ; 9F/CF35
 
@@ -11619,32 +12017,52 @@
 
       aUnknown9FD004 ; 9F/D004
 
-        .byte $00, $01, $CF, $D0, $17, $88, $D0, $04, $D0, $00, $03, $CF, $D0, $00, $03, $C8
-        .byte $D0, $00, $03, $B3, $D0, $00, $03, $C1, $D0, $00, $03, $BA, $D0, $00, $03, $B3
-        .byte $D0, $00, $03, $AC, $D0, $00, $03, $C1, $D0, $00, $03, $BA, $D0, $17, $5F, $D0
-        .byte $00, $03, $B3, $D0, $00, $03, $AC, $D0, $00, $03, $C1, $D0, $00, $02, $BA, $D0
-        .byte $00, $03, $B3, $D0, $00, $03, $AC, $D0, $00, $08, $A5, $D0, $00, $02, $9E, $D0
-        .byte $00, $01, $97, $D0, $00, $01, $95, $D0, $15, $58
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD0CF
+        ACTIVE_SPRITE_CALL rlUnknown9FD088
+        .word <>aUnknown9FD004
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0CF
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C8
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0BA
+        ACTIVE_SPRITE_CALL rlUnknown9FD05F
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0C1
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD0BA
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0B3
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD0AC
+        ACTIVE_SPRITE_FRAME 8, aUnknown9F9FD0A5
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD09E
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD097
 
-      rlUnknown9FD05E ; 9F/D05E
+        _D058
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD095
+        ACTIVE_SPRITE_JUMP _D058
+
+        ; 9F/D05F
+      rlUnknown9FD05F ; 9F/D05F
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        bne aUnknown9FD004+11
-        tax
-        eor wBufferBG1HOFS
+        lda $7F45AA
         cmp #$FFFF
         beq _D06C
         jsl rlUnknown9FD070
 
         _D06C
-        lda aMapAction.wMapBattleDefenderSpriteSlot
+        lda $7F45A8
 
         .databank 0
 
+        ; 9F/D070
       rlUnknown9FD070 ; 9F/D070
 
         .al
@@ -11656,15 +12074,16 @@
         tay
         lda $7F509B
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,y
+        sta $1200,b,y
         lda $7F509C
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,y
+        sta $1240,b,y
         ply
         rtl
 
         .databank 0
 
+        ; 9F/D088
       rlUnknown9FD088 ; 9F/D088
 
         .al
@@ -11672,7 +12091,7 @@
         .autsiz
         .databank ?
 
-        lda aActiveSpriteSystem.aUnknown0013A0,b,x
+        lda $13A0,b,x
         beq _D090
         inc y
         inc y
@@ -11685,6 +12104,8 @@
         rtl
 
         .databank 0
+
+        ; 9F/D095
 
       aUnknown9F9FD095 ; 9F/9FD095
 
@@ -11809,7 +12230,6 @@
 
         .word <>rlUnknown9FD108, <>$D128, <>aUnknown9FD139
 
-
       rlUnknown9FD108 ; 9F/D108
 
         .al
@@ -11818,23 +12238,32 @@
         .databank ?
 
         lda $7F509F
-        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta $1260,b,x
         lda $7F5099
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta $1200,b,x
         lda $7F509A
         sec
         sbc #$0008
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
-        rtl
-
-
-        _D128
+        sta $1240,b,x
         rtl
 
         .databank 0
 
+        ; 9F/D128
+      rlUnknown9FD128 ; 9F/D128
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9F/D129
       rlUnknown9FD129 ; 9F/D129
 
         .al
@@ -11846,28 +12275,69 @@
         bcc _D138
         lda #$0001
         sta $7F5093
-        stz aActiveSpriteSystem.aTypeOffset,b,x
+        stz $1100,b,x
 
         _D138
         rtl
 
         .databank 0
 
+        ; 9F/D139
       aUnknown9FD139 ; 9F/D139
 
-        .byte $17, $1B, $D2, $00, $05, $54, $D2, $00, $03, $65, $D2, $00, $03, $76, $D2, $00
-        .byte $05, $87, $D2, $00, $06, $98, $D2, $17, $06, $D2, $00, $04, $2F, $D2, $17, $25
-        .byte $D2, $00, $01, $31, $D2, $00, $03, $2F, $D2, $00, $01, $38, $D2, $00, $03, $2F
-        .byte $D2, $00, $01, $38, $D2, $00, $03, $2F, $D2, $00, $01, $38, $D2, $00, $03, $2F
-        .byte $D2, $00, $01, $3F, $D2, $00, $03, $2F, $D2, $00, $01, $3F, $D2, $00, $03, $2F
-        .byte $D2, $00, $01, $3F, $D2, $00, $03, $2F, $D2, $17, $F7, $D1, $00, $01, $9F, $D2
-        .byte $00, $03, $2F, $D2, $00, $01, $9F, $D2, $00, $02, $2F, $D2, $00, $01, $AB, $D2
-        .byte $00, $02, $2F, $D2, $00, $01, $AB, $D2, $00, $01, $2F, $D2, $00, $01, $AB, $D2
-        .byte $00, $02, $2F, $D2, $00, $01, $B7, $D2, $00, $03, $2F, $D2, $00, $01, $B7, $D2
-        .byte $00, $03, $2F, $D2, $00, $01, $46, $D2, $00, $03, $2F, $D2, $00, $01, $46, $D2
-        .byte $00, $03, $2F, $D2, $00, $01, $4D, $D2, $00, $03, $2F, $D2, $00, $01, $4D, $D2
-        .byte $00, $03, $2F, $D2, $17, $FF, $D1, $00, $01, $2F, $D2, $15, $F0, $D1
+        ACTIVE_SPRITE_CALL rlUnknown9FD21B
+        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD254
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD265
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD276
+        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD287
+        ACTIVE_SPRITE_FRAME 6, aUnknown9F9FD298
+        ACTIVE_SPRITE_CALL rlUnknown9FD206
+        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD22F
+        ACTIVE_SPRITE_CALL rlUnknown9FD225
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD231
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD238
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD238
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD238
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD23F
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD23F
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD23F
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_CALL rlUnknown9FD1F7
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD29F
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD29F
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD2AB
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD2AB
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD2AB
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD2B7
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD2B7
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD246
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD246
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD24D
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD24D
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD22F
+        ACTIVE_SPRITE_CALL rlUnknown9FD1FF
 
+        _D1F0
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD22F
+        ACTIVE_SPRITE_JUMP _D1F0
+
+        ; 9F/D1F7
       rlUnknown9FD1F7 ; 9F/D1F7
 
         .al
@@ -11876,11 +12346,12 @@
         .databank ?
 
         lda #$0001
-        sta aMapAction.wMapBattleActiveSpriteSyncFlag
+        sta $7F4580
         rtl
 
         .databank 0
 
+        ; 9F/D1FF
       rlUnknown9FD1FF ; 9F/D1FF
 
         .al
@@ -11889,11 +12360,12 @@
         .databank ?
 
         lda #<>rlUnknown9FD129
-        sta aActiveSpriteSystem.aOnCycle,b,x
+        sta $1160,b,x
         rtl
 
         .databank 0
 
+        ; 9F/D206
       rlUnknown9FD206 ; 9F/D206
 
         .al
@@ -11903,14 +12375,15 @@
 
         lda $7F509B
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001200,b,x
+        sta $1200,b,x
         lda $7F509C
         and #$00FF
-        sta aActiveSpriteSystem.aUnknown001240,b,x
+        sta $1240,b,x
         rtl
 
         .databank 0
 
+        ; 9F/D21B
       rlUnknown9FD21B ; 9F/D21B
 
         .al
@@ -11919,7 +12392,7 @@
         .databank ?
 
         phy
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda $1200,b,x
         jsr rsUnknown9F8253
 
           .byte $5A
@@ -11929,6 +12402,7 @@
 
         .databank 0
 
+        ; 9F/D225
       rlUnknown9FD225 ; 9F/D225
 
         .al
@@ -11937,7 +12411,7 @@
         .databank ?
 
         phy
-        lda aActiveSpriteSystem.aUnknown001200,b,x
+        lda $1200,b,x
         jsr rsUnknown9F8253
 
           .byte $5B
@@ -11946,6 +12420,8 @@
         rtl
 
         .databank 0
+
+        ; 9F/D22F
 
       aUnknown9F9FD22F ; 9F/9FD22F
 
@@ -12190,10 +12666,28 @@
 
       aUnknown9FD399 ; 9F/D399
 
-        .byte $00, $04, $E4, $D3, $00, $05, $EB, $D3, $00, $06, $F2, $D3, $00, $09, $F9, $D3
-        .byte $00, $03, $F9, $D3, $00, $03, $00, $D4, $17, $D5, $D3, $A9, $D3, $00, $05, $07
-        .byte $D4, $00, $20, $0E, $D4, $00, $09, $F9, $D3, $00, $06, $F2, $D3, $00, $05, $EB
-        .byte $D3, $00, $04, $E4, $D3, $00, $09, $E2, $D3, $15, $CE, $D3
+        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD3E4
+        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD3EB
+        ACTIVE_SPRITE_FRAME 6, aUnknown9F9FD3F2
+        ACTIVE_SPRITE_FRAME 9, aUnknown9F9FD3F9
+
+        _D3A9
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD3F9
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD400
+        ACTIVE_SPRITE_CALL rlUnknown9FD3D5
+        .word <>_D3A9
+        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD407
+        ACTIVE_SPRITE_FRAME 32, aUnknown9F9FD40E
+        ACTIVE_SPRITE_FRAME 9, aUnknown9F9FD3F9
+        ACTIVE_SPRITE_FRAME 6, aUnknown9F9FD3F2
+        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD3EB
+        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD3E4
+
+        _D3CE
+        ACTIVE_SPRITE_FRAME 9, aUnknown9F9FD3E2
+        ACTIVE_SPRITE_JUMP _D3CE
+
+        ; 9F/D3D5
 
       rlUnknown9FD3D5 ; 9F/D3D5
 
@@ -12734,8 +13228,16 @@
 
       aUnknown9FD6E4 ; 9F/D6E4
 
-        .byte $00, $01, $99, $D7, $17, $FE, $D6, $E4, $D6, $00, $04, $6A, $D7, $00, $04, $71
-        .byte $D7, $00, $04, $78, $D7, $00, $01, $55, $D7, $01
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD799
+        ACTIVE_SPRITE_CALL rlUnknown9FD6FE
+        .word <>aUnknown9FD6E4
+        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD76A
+        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD771
+        ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD778
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD755
+        ACTIVE_SPRITE_END
+
+        ; 9F/D6FE
 
       rlUnknown9FD6FE ; 9F/D6FE
 
@@ -12761,10 +13263,24 @@
 
       aUnknown9FD70E ; 9F/D70E
 
-        .byte $00, $01, $55, $D7, $17, $3F, $D7, $0E, $D7, $00, $06, $7F, $D7, $00, $05, $86
-        .byte $D7, $00, $03, $8D, $D7, $00, $01, $5E, $D7, $17, $47, $D7, $23, $D7, $00, $02
-        .byte $8D, $D7, $00, $02, $86, $D7, $00, $02, $7F, $D7, $00, $01, $55, $D7, $15, $38
-        .byte $D7
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD755
+        ACTIVE_SPRITE_CALL rlUnknown9FD73F
+        .word <>aUnknown9FD70E
+        ACTIVE_SPRITE_FRAME 6, aUnknown9F9FD77F
+        ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD786
+        ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD78D
+
+        _D723
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD75E
+        ACTIVE_SPRITE_CALL rlUnknown9FD747
+        .word <>_D723
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD78D
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD786
+        ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD77F
+
+        _D738
+        ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD755
+        ACTIVE_SPRITE_JUMP _D738
 
       rlUnknown9FD73F ; 9F/D73F
 
@@ -12774,11 +13290,18 @@
         .databank ?
 
         lda $7ECC08
-        bne _D752
-        bra _D74D
+        bne rlUnknown9FD747._D752
+        bra rlUnknown9FD747._D74D
+        .databank 0
 
+        ; 9F/D747
+      rlUnknown9FD747 ; 9F/D747
 
-        _D747
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
         lda $7ECC0A
         bne _D752
 
@@ -12794,6 +13317,8 @@
         rtl
 
         .databank 0
+
+        ; 9F/D755
 
       aUnknown9F9FD755 ; 9F/9FD755
 
