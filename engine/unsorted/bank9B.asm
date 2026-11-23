@@ -1495,35 +1495,22 @@
       .xl
 
       aUnknown9BDF09 ; 9B/DF09
-        .word $0074
-        .byte $09
-        .word $007A
-        .byte $24
-        .word $0071
-        .byte $03
-        .word $0076
-        .byte $7C
-        .word $0077
-        .byte $00
-        .word $0096
-        .byte $13
-        .word $0097
-        .byte $00
-        .word $0098
-        .byte $00
-        .word $0099
-        .byte $00
-        .word $009C
-        .byte $E0
-        .word $009D
-        .byte $00
-        .word $009E
-        .byte $00
-        .word $009F
-        .byte $00
-        .word $009B
-        .byte $00
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBGMODE, $09
+        WRITE_RAM_BYTE bBufferBG12NBA, $24
+        WRITE_RAM_BYTE bBufferOBSEL, $03
+        WRITE_RAM_BYTE bBufferBG1SC, $7C
+        WRITE_RAM_BYTE bBufferBG2SC, $00
+        WRITE_RAM_BYTE bBufferTM, $13
+        WRITE_RAM_BYTE bBufferTS, $00
+        WRITE_RAM_BYTE bBufferTMW, $00
+        WRITE_RAM_BYTE bBufferTSW, $00
+        WRITE_RAM_BYTE bBufferCOLDATA_0, $E0
+        WRITE_RAM_BYTE bBufferCOLDATA_1, $00
+        WRITE_RAM_BYTE bBufferCOLDATA_2, $00
+        WRITE_RAM_BYTE bBufferCOLDATA_3, $00
+        WRITE_RAM_BYTE bBufferCGADSUB, $00
+        WRITE_RAM_END
 
       rlUnknown9BDF35 ; 9B/DF35
 
@@ -4789,6 +4776,22 @@
     .endsection Unsorted9BF548Section
 
 
+    .section Data9BF56CSection
+
+      .al
+      .xl
+
+      aUnknown9BF56C ; 9B/F56C
+
+        WRITE_RAM_BYTE bBufferTM, $12
+        WRITE_RAM_BYTE bBufferTS, $01
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $02
+        WRITE_RAM_END
+
+    .endsection Data9BF56CSection
+
+
     .section Unsorted9BF57ASection
 
       .al
@@ -4893,19 +4896,14 @@
       .xl
 
       aUnknown9BF69D ; 9B/F69D
-        .word $007B
-        .byte $05
-        .word $0078
-        .byte $59
-        .word $0096
-        .byte $13
-        .word $0097
-        .byte $04
-        .word $009A
-        .byte $02
-        .word $009B
-        .byte $01
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBG34NBA, $05
+        WRITE_RAM_BYTE bBufferBG3SC, $59
+        WRITE_RAM_BYTE bBufferTM, $13
+        WRITE_RAM_BYTE bBufferTS, $04
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $01
+        WRITE_RAM_END
 
     .endsection Table9BF69DSection
 
@@ -4991,17 +4989,13 @@
       .xl
 
       aUnknown9BF715 ; 9B/F715
-        .word $0078
-        .byte $0C
-        .word $0096
-        .byte $13
-        .word $0097
-        .byte $04
-        .word $009A
-        .byte $02
-        .word $009B
-        .byte $92
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBG3SC, $0C
+        WRITE_RAM_BYTE bBufferTM, $13
+        WRITE_RAM_BYTE bBufferTS, $04
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $92
+        WRITE_RAM_END
 
     .endsection Table9BF715Section
 
@@ -5250,9 +5244,9 @@
       .xl
 
       aUnknown9BFA69 ; 9B/FA69
-        .word $0077
-        .byte $78
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBG2SC, $78
+        WRITE_RAM_END
 
     .endsection Table9BFA69Section
 
@@ -5292,10 +5286,9 @@
       .xl
 
       aUnknown9BFA7F ; 9B/FA7F
-        .word $807A
-        .byte $0F
-        .word $FF00
-        .byte $FF
+
+        WRITE_RAM_MASK_BYTE bBufferBG12NBA, $0F, $00
+        WRITE_RAM_END
 
     .endsection Table9BFA7FSection
 
@@ -5335,13 +5328,11 @@
       .xl
 
       aUnknown9BFA96 ; 9B/FA96
-        .word $0096
-        .byte $02
-        .word $0097
-        .byte $00
-        .word $009B
-        .byte $00
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferTM, $02
+        WRITE_RAM_BYTE bBufferTS, $00
+        WRITE_RAM_BYTE bBufferCGADSUB, $00
+        WRITE_RAM_END
 
     .endsection Table9BFA96Section
 
@@ -5381,9 +5372,9 @@
       .xl
 
       aUnknown9BFAB2 ; 9B/FAB2
-        .word $0077
-        .byte $40
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBG2SC, $40
+        WRITE_RAM_END
 
     .endsection Table9BFAB2Section
 
@@ -5490,21 +5481,15 @@
       .xl
 
       aUnknown9BFB46 ; 9B/FB46
-        .word $0096
-        .byte $02
-        .word $0097
-        .byte $11
-        .word $0071
-        .byte $03
-        .word $0076
-        .byte $7C
-        .word $007A
-        .byte $24
-        .word $009A
-        .byte $02
-        .word $009B
-        .byte $22
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferTM, $02
+        WRITE_RAM_BYTE bBufferTS, $11
+        WRITE_RAM_BYTE bBufferOBSEL, $03
+        WRITE_RAM_BYTE bBufferBG1SC, $7C
+        WRITE_RAM_BYTE bBufferBG12NBA, $24
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $22
+        WRITE_RAM_END
 
     .endsection Table9BFB46Section
 

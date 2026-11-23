@@ -6755,10 +6755,24 @@
 
     .here
 
+    * = $15EDD0
+    .logical $95EDD0
+
+      .dsection Data95EDD0Section
+
+    .here
+
     * = $15EDEA
     .logical $95EDEA
 
       .dsection Unsorted95EDEASection
+
+    .here
+
+    * = $15EE58
+    .logical $95EE58
+
+      .dsection Data95EE58Section
 
     .here
 
@@ -6790,6 +6804,13 @@
     .logical $95F3D3
 
       .dsection Unsorted95F3D3Section
+
+    .here
+
+    * = $15F41B
+    .logical $95F41B
+
+      .dsection Data95F41BSection
 
     .here
 
@@ -6904,6 +6925,13 @@
     .logical $95FB0A
 
       .dsection Unsorted95FB0ASection
+
+    .here
+
+    * = $15FB4B
+    .logical $95FB4B
+
+      .dsection Table95FB4BSection
 
     .here
 
@@ -7865,6 +7893,13 @@
     .logical $9BF548
 
       .dsection Unsorted9BF548Section
+
+    .here
+
+    * = $1BF56C
+    .logical $9BF56C
+
+      .dsection Data9BF56CSection
 
     .here
 

@@ -17877,21 +17877,15 @@
       .xl
 
       aUnknown95EA91 ; 95/EA91
-        .word $007A
-        .byte $60
-        .word $0076
-        .byte $32
-        .word $0077
-        .byte $70
-        .word $0096
-        .byte $01
-        .word $0097
-        .byte $02
-        .word $009A
-        .byte $02
-        .word $009B
-        .byte $33
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBG12NBA, $60
+        WRITE_RAM_BYTE bBufferBG1SC, $32
+        WRITE_RAM_BYTE bBufferBG2SC, $70
+        WRITE_RAM_BYTE bBufferTM, $01
+        WRITE_RAM_BYTE bBufferTS, $02
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $33
+        WRITE_RAM_END
 
       rlUnknown95EAA8 ; 95/EAA8
 
@@ -17980,27 +17974,18 @@
         ; 95/EB1B
 
       aUnknown95EB1B ; 95/EB1B
-        .word $007A
-        .byte $40
-        .word $007B
-        .byte $02
-        .word $0071
-        .byte $03
-        .word $0076
-        .byte $32
-        .word $0077
-        .byte $3A
-        .word $0078
-        .byte $72
-        .word $0096
-        .byte $17
-        .word $0097
-        .byte $07
-        .word $009A
-        .byte $02
-        .word $009B
-        .byte $30
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBG12NBA, $40
+        WRITE_RAM_BYTE bBufferBG34NBA, $02
+        WRITE_RAM_BYTE bBufferOBSEL, $03
+        WRITE_RAM_BYTE bBufferBG1SC, $32
+        WRITE_RAM_BYTE bBufferBG2SC, $3A
+        WRITE_RAM_BYTE bBufferBG3SC, $72
+        WRITE_RAM_BYTE bBufferTM, $17
+        WRITE_RAM_BYTE bBufferTS, $07
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $30
+        WRITE_RAM_END
 
       rlUnknown95EB3B ; 95/EB3B
 
@@ -18084,20 +18069,15 @@
         ; 95/EB9B
 
       aUnknown95EB9B ; 95/EB9B
-        .word $0077
-        .byte $28
-        .word $807A
-        .byte $0F
-        .word $7B20, $0200
-        .word $0096
-        .byte $03
-        .word $0097
-        .byte $10
-        .word $009A
-        .byte $02
-        .word $009B
-        .byte $27
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBG2SC, $28
+        WRITE_RAM_MASK_BYTE bBufferBG12NBA, $0F, $20
+        WRITE_RAM_BYTE bBufferBG34NBA, $02
+        WRITE_RAM_BYTE bBufferTM, $03
+        WRITE_RAM_BYTE bBufferTS, $10
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $27
+        WRITE_RAM_END
 
       rlUnknown95EBB3 ; 95/EBB3
 
@@ -18140,25 +18120,17 @@
         ; 95/EBF1
 
       aUnknown95EBF1 ; 95/EBF1
-        .word $007A
-        .byte $02
-        .word $007B
-        .byte $02
-        .word $0076
-        .byte $28
-        .word $0077
-        .byte $32
-        .word $0078
-        .byte $24
-        .word $0096
-        .byte $03
-        .word $0097
-        .byte $10
-        .word $009A
-        .byte $02
-        .word $009B
-        .byte $27
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBG12NBA, $02
+        WRITE_RAM_BYTE bBufferBG34NBA, $02
+        WRITE_RAM_BYTE bBufferBG1SC, $28
+        WRITE_RAM_BYTE bBufferBG2SC, $32
+        WRITE_RAM_BYTE bBufferBG3SC, $24
+        WRITE_RAM_BYTE bBufferTM, $03
+        WRITE_RAM_BYTE bBufferTS, $10
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $27
+        WRITE_RAM_END
 
       rlUnknown95EC0E ; 95/EC0E
 
@@ -18195,14 +18167,12 @@
         ; 95/EC3E
 
       aUnknown95EC3E ; 95/EC3E
-        .word $0076
-        .byte $2C
-        .word $0077
-        .byte $28
-        .word $8096
-        .byte $FE
-        .word $7A00, $2500
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBG1SC, $2C
+        WRITE_RAM_BYTE bBufferBG2SC, $28
+        WRITE_RAM_MASK_BYTE bBufferTM, $FE, $00
+        WRITE_RAM_BYTE bBufferBG12NBA, $25
+        WRITE_RAM_END
 
       rlUnknown95EC4D ; 95/EC4D
 
@@ -18305,25 +18275,17 @@
         ; 95/ECB9
 
       aUnknown95ECB9 ; 95/ECB9
-        .word $007A
-        .byte $10
-        .word $007B
-        .byte $02
-        .word $0076
-        .byte $72
-        .word $0077
-        .byte $1C
-        .word $0078
-        .byte $24
-        .word $0096
-        .byte $03
-        .word $0097
-        .byte $00
-        .word $009A
-        .byte $02
-        .word $009B
-        .byte $33
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBG12NBA, $10
+        WRITE_RAM_BYTE bBufferBG34NBA, $02
+        WRITE_RAM_BYTE bBufferBG1SC, $72
+        WRITE_RAM_BYTE bBufferBG2SC, $1C
+        WRITE_RAM_BYTE bBufferBG3SC, $24
+        WRITE_RAM_BYTE bBufferTM, $03
+        WRITE_RAM_BYTE bBufferTS, $00
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $33
+        WRITE_RAM_END
 
       rlUnknown95ECD6 ; 95/ECD6
 
@@ -18406,25 +18368,17 @@
         ; 95/ED31
 
       aUnknown95ED31 ; 95/ED31
-        .word $007A
-        .byte $44
-        .word $007B
-        .byte $00
-        .word $0076
-        .byte $2A
-        .word $0077
-        .byte $6C
-        .word $0078
-        .byte $04
-        .word $0096
-        .byte $03
-        .word $0097
-        .byte $00
-        .word $009A
-        .byte $02
-        .word $009B
-        .byte $37
-        .word $FFFF
+
+        WRITE_RAM_BYTE bBufferBG12NBA, $44
+        WRITE_RAM_BYTE bBufferBG34NBA, $00
+        WRITE_RAM_BYTE bBufferBG1SC, $2A
+        WRITE_RAM_BYTE bBufferBG2SC, $6C
+        WRITE_RAM_BYTE bBufferBG3SC, $04
+        WRITE_RAM_BYTE bBufferTM, $03
+        WRITE_RAM_BYTE bBufferTS, $00
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $37
+        WRITE_RAM_END
 
 
     .endsection Table95EA91Section
@@ -18560,6 +18514,26 @@
     .endsection Unsorted95ED7BSection
 
 
+    .section Data95EDD0Section
+
+      .al
+      .xl
+
+      aUnknown95EDD0 ; 95/EDD0
+
+        WRITE_RAM_BYTE bBufferBGMODE, $0B
+        WRITE_RAM_BYTE bBufferBG12NBA, $13
+        WRITE_RAM_BYTE bBufferOBSEL, $01
+        WRITE_RAM_BYTE bBufferBG1SC, $0C
+        WRITE_RAM_BYTE bBufferBG2SC, $08
+        WRITE_RAM_BYTE bBufferTM, $12
+        WRITE_RAM_BYTE bBufferTS, $00
+        WRITE_RAM_BYTE bBufferCGADSUB, $00
+        WRITE_RAM_END
+
+    .endsection Data95EDD0Section
+
+
     .section Unsorted95EDEASection
 
       .al
@@ -18652,6 +18626,26 @@
         ; 95/EE58
 
     .endsection Unsorted95EDEASection
+
+
+    .section Data95EE58Section
+
+      .al
+      .xl
+
+      aUnknown95EE58 ; 95/EE58
+
+        WRITE_RAM_BYTE bBufferBGMODE, $09
+        WRITE_RAM_MASK_BYTE bBufferBG12NBA, $FC, $04
+        WRITE_RAM_BYTE bBufferBG1SC, $7C
+        WRITE_RAM_BYTE bBufferOBSEL, $03
+        WRITE_RAM_BYTE bBufferTM, $12
+        WRITE_RAM_BYTE bBufferTS, $01
+        WRITE_RAM_BYTE bBufferCGWSEL, $02
+        WRITE_RAM_BYTE bBufferCGADSUB, $32
+        WRITE_RAM_END
+
+    .endsection Data95EE58Section
 
 
     .section Unsorted95EE73Section
@@ -19553,6 +19547,21 @@
         ; 95/F41B
 
     .endsection Unsorted95F3D3Section
+
+
+    .section Data95F41BSection
+
+      .al
+      .xl
+
+      aUnknown95F41B ; 95/F41B
+
+        WRITE_RAM_BYTE bBufferTM, $13
+        WRITE_RAM_BYTE bBufferTS, $00
+        WRITE_RAM_BYTE bBufferCGADSUB, $00
+        WRITE_RAM_END
+
+    .endsection Data95F41BSection
 
 
     .section Unsorted95F426Section
@@ -20735,7 +20744,7 @@
         lda wR0
         asl a
         tax
-        jsr ($95FB4B,x)
+        jsr (aUnknown95FB4B,x)
         plx
 
         _FB2F
@@ -20761,6 +20770,271 @@
         ; 95/FB4B
 
     .endsection Unsorted95FB0ASection
+
+
+    .section Table95FB4BSection
+
+      .al
+      .xl
+
+      aUnknown95FB4B ; 95/FB4B
+
+        ; Jump table of rlUnknown95FB0A.
+        .word <>rsUnknown95FB51
+        .word <>rsUnknown95FB7C
+        .word <>rsUnknown95FBD1
+      rsUnknown95FB51 ; 95/FB51
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tya
+        asl a
+        tax
+        lda $7FD612,x
+        bne _FB6E
+        lda #$0018
+        sta $7FD612,x
+        tyx
+        sep #$20
+        lda #$01
+        sta $7FD5EB,x
+        rep #$20
+        bra _FB77
+
+
+        _FB6E
+        lda $7FD612,x
+        dec a
+        sta $7FD612,x
+
+        _FB77
+        tyx
+        jsr rsUnknown95FC23
+        rts
+
+        .databank 0
+
+        ; 95/FB7C
+
+      rsUnknown95FB7C ; 95/FB7C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tya
+        asl a
+        tax
+        lda $7FD612,x
+        bne _FBC3
+        tyx
+        sep #$20
+        lda #$02
+        sta $7FD5EB,x
+        rep #$20
+        tya
+        pha
+        asl a
+        clc
+        adc #1,s
+        sta #1,s
+        pla
+        tax
+        lda $97FA1F,x
+        sta lR18
+        lda $97FA20,x
+        sta lR18+1
+        tya
+        asl a
+        tax
+        lda $97F9D1,x
+        tax
+        lda lR18
+        sta $7FD094,x
+        lda lR18+1
+        sta $7FD095,x
+        lda #$0004
+        jsl rlUnknown9BEDD7
+        bra _FBCC
+
+
+        _FBC3
+        lda $7FD612,x
+        dec a
+        sta $7FD612,x
+
+        _FBCC
+        tyx
+        jsr rsUnknown95FC23
+        rts
+
+        .databank 0
+
+        ; 95/FBD1
+
+      rsUnknown95FBD1 ; 95/FBD1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        tya
+        asl a
+        tax
+        lda $7FD5F8,x
+        xba
+        and #$00FF
+        sta wR0
+        phx
+        lda $97F9D1,x
+        tax
+        lda $7FD092,x
+        sec
+        sbc wR0
+        and #$00FF
+        sta $7FD092,x
+        cmp #$00E0
+        bcc _FC10
+        cmp #$00F0
+        bcs _FC10
+        sep #$20
+        lda #$00
+        sta $7FD08F,x
+        plx
+        tyx
+        lda #$03
+        sta $7FD5EB,x
+        rep #$20
+        bra _FC22
+
+
+        _FC10
+        plx
+        lda $7FD5F8,x
+        cmp #$0800
+        bcs _FC22
+        clc
+        adc #$0010
+        sta $7FD5F8,x
+
+        _FC22
+        rts
+
+        .databank 0
+
+        ; 95/FC23
+
+      rsUnknown95FC23 ; 95/FC23
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FD8B6
+        and #$00FF
+        bne _FC4F
+        txa
+        asl a
+        tax
+        lda $97FA05,x
+        sta wR0
+        lda $97F9D1,x
+        tax
+        lda wBufferBG1VOFS
+        eor #$FFFF
+        inc a
+        clc
+        adc #$0130
+        clc
+        adc wR0
+        and #$00FF
+        sta $7FD092,x
+
+        _FC4F
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/FC51
+
+      rlUnknown95FC51 ; 95/FC51
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing in the build reaches this: no title timeline names it. It installs
+        ; rlUnknown95FC6B as a title timeline slot routine, like rlUnknown95F630.
+
+        lda #$0000
+        sta $7FD04C
+        jsl rlUnknown95FC6B
+        lda #$9500
+        sta $7FD008,x
+        lda #$FC6B
+        sta $7FD007,x
+        rtl
+
+        .databank 0
+
+        ; 95/FC6B
+
+      rlUnknown95FC6B ; 95/FC6B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7FD04C
+        bne _FC92
+        sep #$20
+        lda $7FD072
+        cmp #$0F
+        beq _FC84
+        inc a
+        sta $7FD072
+        rep #$20
+        bra _FC92
+
+
+        _FC84
+        .as
+        rep #$20
+        sep #$20
+        lda #$00
+        sta $7FD006,x
+        rep #$20
+        bra _FCA3
+
+
+        _FC92
+        lda $7FD04C
+        inc a
+        cmp #$000A
+        bcc _FC9F
+        lda #$0000
+
+        _FC9F
+        sta $7FD04C
+
+        _FCA3
+        rtl
+
+        .databank 0
+
+        ; 95/FCA4
+
+    .endsection Table95FB4BSection
 
 
     .section Unsorted95FCA4Section

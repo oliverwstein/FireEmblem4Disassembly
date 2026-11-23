@@ -306,3 +306,37 @@
     AnimMoveJumpTo16                = 15    ; jump
     AnimMoveLaunchAwayFromAttacker  = 16
     AnimMoveDrift                   = 17    ; not used
+
+  ; Lists of RAM writes for rlBattleSceneWriteRAM, written by tools/ram_lists.py.
+  ; Each entry is a word, the address (below $4000, in practice the PPU register
+  ; buffers in the direct page) with the entry's type in bits 14-15, and its
+  ; operands. The battle scene and the title screen set up their screens this
+  ; way.
+
+    WRITE_RAM_BYTE .segment Address, Value
+      ; Type 0: write the byte Value to Address.
+      .word \Address
+      .byte \Value
+    .endsegment
+
+    WRITE_RAM_WORD .segment Address, Value
+      ; Type $4000: write the word Value to Address.
+      .word $4000 | \Address
+      .word \Value
+    .endsegment
+
+    WRITE_RAM_MASK_BYTE .segment Address, And, Or
+      ; Type $8000: the byte at Address = (it AND And) OR Or.
+      .word $8000 | \Address
+      .byte \And, \Or
+    .endsegment
+
+    WRITE_RAM_MASK_WORD .segment Address, And, Or
+      ; Type $C000: the same for a word.
+      .word $C000 | \Address
+      .word \And, \Or
+    .endsegment
+
+    WRITE_RAM_END .segment
+      .word $FFFF
+    .endsegment
