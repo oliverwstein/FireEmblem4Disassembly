@@ -4,15 +4,15 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-23, after wave 5 part 3: the battle scene)
+## Current state (2026-11-23, after wave 6: `engine/unsorted/` is empty)
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
-- `./build.sh` is byte-identical and the checksums verify. 97.75% of the ROM is built from source. GAPS.md: 142 `none` pieces (52,160 bytes), 57 padding runs.
-- Routines: 6,258 in `engine/`, 4,554 named, 1,704 `Unknown`; **44 still in `engine/unsorted/`** (bank `$84` 14, `$8B` 25, `$8C` 5). 276 pinned blocks.
-- **Wave 5 part 3 done** (commits `bc435b2`..): banks `$95`-`$97` are all in `engine/battle_scene/` (`scene`, `rounds`, `results`, `combatants`, `loading`, `screen`, `hud`, `effects`, `data`, plus the old `script`, `animations`, `animation_moves`, `backgrounds`, `battle_screen`). Page: [docs/reference/battle_scene.md](docs/reference/battle_scene.md). Named: the frame and init, the rounds and strikes, HP, the intro and end steps (experience, level up, messages, Julius), skill banners, loading, the sequence interpreter and its command handlers. Still `Unknown`: most of `effects.asm`, `screen.asm`, `hud.asm`'s windows and `combatants.asm`'s slot engine (about 560 routines across the battle scene files).
-- New: `include/BattleScene.h` (`structBattleSceneCombatant`, `BattleSceneFlag*`, `BattleSceneRound*`, the latter two in `constant_rules.txt`; the palette effect entries `PALETTE_EFFECT_*`, all 204 written by the new `tools/palette_effects.py`); `bank9B.asm`'s data filed (battle scene `data.asm`, the new `engine/title/title_data.asm`, the opening logo's palettes in `boot.asm`); the scene's RAM in WRAM.h (`$0ADD`-`$0AE8`, `$0D44`-`$0D69`, `$7FE09E`-`$7FFC59`), scoped to `engine/battle_scene/` and `engine/title/` in `name_ram.py` (`BATTLE_SCENE_FILES`).
-- Reference pages: `docs/reference/core.md`, `ai.md`, `battle_scene.md`, `castle.md`, `demo.md`, `epilogue.md`, `map_battle.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`, `title.md`. `tools/reference.py` output is gitignored; run it locally.
+- `./build.sh` is byte-identical and the checksums verify. 97.84% of the ROM is built from source. GAPS.md: 138 `none` pieces (48,195 bytes), 58 padding runs.
+- Routines: 6,262 in `engine/`, 4,597 named, 1,665 `Unknown`. **`engine/unsorted/` is gone: Phase 3's finish line is reached.** 273 pinned blocks.
+- **Wave 6 done** (`aebad7e`..): bank `$84`'s leftovers went to their systems (castle target filter, class change stat gains, repair, arena start and result, the turn start love points in `factions.asm`, an unreferenced staff effect). Bank `$8B` is the world map's game state, IRQs and HDMA (`engine/worldmap/world_map.asm`), the move to the credits (`engine/epilogue/world_map.asm`) and an unreachable test mode (`engine/debug/world_map_test.asm`). Bank `$8C` is the lovers' home castle conversation (`engine/castle/lover_conversation.asm`), with its text now source in `text/dialogue/LoverHomeCastle` (130 files).
+- New: `docs/reference/worldmap.md`; RAM `wWorldMapLayersDialogueStatus`; `wCastleReturnEventFlag` is `wLoverHomeCastleConversationPending`.
+- Reference pages: `docs/reference/core.md`, `ai.md`, `battle_scene.md`, `castle.md`, `demo.md`, `epilogue.md`, `map_battle.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`, `title.md`, `worldmap.md`. `tools/reference.py` output is gitignored; run it locally.
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
 ## Who wrote what
@@ -28,24 +28,26 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Talk to the user before starting.** Planned next (agreed with the user): **empty `engine/unsorted/`**, Phase 3's finish line: bank `$84` (14 routines), `$8B` (25) and `$8C` (5). They are leftovers of different systems; find each one's system from its callers and RAM, name, and file it there.
-   After that, the battle scene's second pass, by value:
+1. **Talk to the user before starting.** Phase 3's sorting is done, so the next direction is the user's choice. The candidates:
+   - **The second pass, by value**: the `Unknown` routines inside the systems that implement game mechanics. The battle scene's are the biggest group:
      1. `hud.asm`: the experience bar and level up windows (`rlUnknown9680C2` and the `$7FED4B`.. variables), the name and weapon windows.
      2. `combatants.asm`: the slot engine around `rlBattleAnimationQueueAction` (`rlUnknown95C1AB`, `95C51F`, `95DDFB`, the effect slots `$86`/`$C9`), and the slot fields still raw (`$0AF1`/`$0AF2` knockback, `$0B79`.. the effect slots, `$0C25`.. the frame pointers set by `rlBattleSceneSetFramePointers`).
      3. The palette effect types 1-12 (`rlUnknown96D695`'s jump table `aUnknown96D6DD`), then the slot RAM at `$7FFD9A` as a struct.
      4. The rest of `rsBattleSceneRunFrame`'s callees (`rlUnknown96961F` plays sound command `$01D1` when the combatants cross, ...).
-2. **Before naming a bank, make it honest source**, as for `$9F` and the title: `code_pointers.py`, `ram_lists.py`, raw `.word $XXXX`, `.byte` rows that are scripts or code, routines nothing references. In the battle scene, `rsBattleSceneLoadExtraTiles` loads a pointer written `aChapter05MapEvents + 326` (a chance label), and `rsBattleScenePlaceCombatants` holds two dead `.byte` runs.
-3. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
-4. Open questions are at the end of each reference page. `tools/songs.py` stops at a stale label (`aUnknown8A9D79`); fix it before regenerating `audio/SONGS.md`. `tools/stream_catalog.py` deleted the catalog previews when run (reverted); find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm; move the lines by hand. Check that an `include/` file does not exist before creating one. `tools/rename.py` refuses a new name that appears anywhere, comments included: rename first, then write comments that use the new name. `move_sections.py` stops at a section listed twice in its spec.
-5. Bank `$89` cannot be pad-tested until it is merged. Banks `$85`, `$87`, `$88`, `$9F` and `$9B` could be pad-tested (`./build.sh pad`).
-6. Two unbuilt pieces in bank `$91` decode as unreferenced code: `$91/DF08` and `$91/E006`. Close them as labelled data or code with an "unreferenced" note.
-7. The Jugdral history's texts (`engine/save/jugdral_history.asm`) are still `.byte` rows; the user asked where the text is. Find whether `tools/dialogue.py`'s encoding reads them.
+     Run `tools/counts.py`'s per-file numbers (or grep `Unknown` per folder) to find other systems with mechanics still `Unknown`, e.g. `units/`, `items/`, `battle/`.
+   - **The engine guide's outline**: every core system now has a reference page. Draft `docs/guide/OUTLINE.md` and show it to the user (PLAN.md, "The engine guide").
+   - **Phase 1 leftovers**: the 138 `none` pieces in GAPS.md, closed statically (see "Decisions").
+2. **Before naming a bank, make it honest source**, as for `$9F` and the title: `code_pointers.py`, `ram_lists.py`, raw `.word $XXXX`, `.byte` rows that are scripts or code, routines nothing references. In the battle scene, `rsBattleSceneLoadExtraTiles` loads a pointer written `aChapter05MapEvents + 326` (a chance label), and `rsBattleScenePlaceCombatants` holds two dead `.byte` runs. Wave 6 found two more kinds: pointer tables written as `.word` rows that were really `.long` (the lover conversation), and an HDMA code word in the middle of a routine.
+3. Open questions are at the end of each reference page. `tools/songs.py` stops at a stale label (`aUnknown8A9D79`); fix it before regenerating `audio/SONGS.md`. `tools/stream_catalog.py` deleted the catalog previews when run (reverted); find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm, and moved sections land at the end of their target file; move both by hand. Check that an `include/` file does not exist before creating one. `tools/rename.py` refuses a new name that appears anywhere, comments included: rename first, then write comments that use the new name. `move_sections.py` stops at a section listed twice in its spec.
+4. Bank `$89` cannot be pad-tested until it is merged. Banks `$85`, `$87`, `$88`, `$9F` and `$9B` could be pad-tested (`./build.sh pad`).
+5. Two unbuilt pieces in bank `$91` decode as unreferenced code: `$91/DF08` and `$91/E006`. Close them as labelled data or code with an "unreferenced" note.
+6. The Jugdral history's texts (`engine/save/jugdral_history.asm`) are still `.byte` rows; the user asked where the text is. Find whether `tools/dialogue.py`'s encoding reads them (it read the lover conversation's text without trouble).
 
 **Per-wave checklist.** One system (or one part of a big one) per session; hand over and clear context after each.
 
 1. **Start:** read STATUS.md, PLAN.md, the system's existing reference page if any; report the plan to the user before changing anything.
 2. **Name** each routine from its code and callers (trace table indices, check every "unused" claim with a grep). Unknown stays `Unknown` with a note of what is known. No question marks committed.
-3. **Move** the routines out of `engine/unsorted/` into the system's folder (`move_sections.py`), with a header comment on each file.
+3. **Move** routines that sit in the wrong file into the system's folder (`move_sections.py`), with a header comment on each file.
 4. **Data:** name the RAM, constants and struct fields the system owns; rerun `name_ram.py`, `apply_constants.py`, `name_struct_fields.py`, `stale_notes.py --fix`.
 5. **Write** `docs/reference/<system>.md` in plain words (files, data, entry points, control flow, dependencies, open questions); fix the guide if anything it says changed.
 6. **Verify:** `./build.sh` matches after every step; run `tools/reference.py` and read the system's generated page for names that look wrong.

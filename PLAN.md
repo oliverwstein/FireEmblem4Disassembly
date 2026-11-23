@@ -59,13 +59,13 @@ Once a bank is 100% source with zero raw references into it, unpin its blocks an
 
 ## Phase 3: Readability — Naming, Sorting, RAM & Constants
 
-**Done means `engine/unsorted/` is empty** (user decision, 2026-11-22). Every routine that implements game mechanics is named from its code. Low-level rendering, HDMA, OAM and spell *visual effect* helpers may stay `Unknown`, filed in the right system folder with a one-line comment. Each wave also completes the reference set for its system (routine, struct, file and system docs; see the engine guide below) and commits with an evidence body.
+**Done means `engine/unsorted/` is empty** (user decision, 2026-11-22). **Reached 2026-11-23 (wave 6):** `engine/unsorted/` is gone. What is left is the second pass: the `Unknown` routines inside the systems (by value; see STATUS.md), the RAM and constants below. Every routine that implements game mechanics is named from its code. Low-level rendering, HDMA, OAM and spell *visual effect* helpers may stay `Unknown`, filed in the right system folder with a one-line comment. Each wave also completes the reference set for its system (routine, struct, file and system docs; see the engine guide below) and commits with an evidence body.
 
 **Per-wave checklist** (also in STATUS.md). One system (or one part of a big one) per session; hand over and clear context after each.
 
 1. **Start:** read STATUS.md, PLAN.md, the system's existing reference page if any; report the plan to the user before changing anything.
 2. **Name** each routine from its code and callers (trace table indices, check every "unused" claim with a grep). Unknown stays `Unknown` with a note of what is known. No question marks committed.
-3. **Move** the routines out of `engine/unsorted/` into the system's folder (`move_sections.py`), with a header comment on each file.
+3. **Move** routines that sit in the wrong file into the system's folder (`move_sections.py`), with a header comment on each file.
 4. **Data:** name the RAM, constants and struct fields the system owns; rerun `name_ram.py`, `apply_constants.py`, `name_struct_fields.py`, `stale_notes.py --fix`.
 5. **Write** `docs/reference/<system>.md` in plain words (files, data, entry points, control flow, dependencies, open questions); fix the guide if anything it says changed.
 6. **Verify:** `./build.sh` matches after every step; run `tools/reference.py` and read the system's generated page for names that look wrong.
