@@ -14,6 +14,7 @@ destination and byte count, and the places that name the entry. The preview
 draws the decompressed bytes as 4bpp tiles, 16 across, in grey: only a first
 look, since a stream may be 2bpp, a tilemap or other data.
 """
+import datetime
 import glob
 import os
 import re
@@ -84,7 +85,7 @@ def main():
     for old in glob.glob(os.path.join(OUT, 'catalog', '*.png')):
         os.remove(old)
     lines = ['# Unidentified compressed streams', '',
-             'Made by `tools/stream_catalog.py`; do not edit. These streams are carved',
+             f'Made by `tools/stream_catalog.py` on {datetime.date.today().isoformat()}; do not edit. These streams are carved',
              '(labelled, and placed by the build) but not identified: each is still the',
              "ROM's bytes, `gcUnknownADDR.comp`. When the code that uses one is read, give it",
              'a real name and format (a PNG if it is graphics) and run the tool again.', '',

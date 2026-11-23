@@ -5,9 +5,13 @@ macOS and Windows ignore case in file names, so a wrong-case include builds
 there but fails on Linux. 64tass resolves an include relative to the file that
 contains it.
 """
-import os, re, sys
+import functools, os, re, sys
 
 INCLUDE = re.compile(r'''(?:\.b?include|\.binary|binary\()\s*"([^"]+)"''')
+
+@functools.lru_cache(maxsize=None)
+def listdir(path):
+    return frozenset(os.listdir(path))
 
 def exists_exact(path):
     path = os.path.normpath(path)
@@ -19,7 +23,7 @@ def exists_exact(path):
         if p == '..':
             cur = os.path.join(cur, '..'); continue
         try:
-            if p not in os.listdir(cur):
+            if p not in listdir(cur):
                 return False
         except (FileNotFoundError, NotADirectoryError):
             return False

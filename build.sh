@@ -36,6 +36,15 @@ clean() {
   rm -f "$OUT" FE4Padded.sfc log.txt labels.txt
 }
 
+# stamp OUT TOOL SOURCE: put a first line on a generated file saying what made it,
+# from what and when, for converters that do not write one themselves.
+stamp() {
+  local tmp
+  tmp=$(mktemp)
+  { printf '; Made by %s from %s on %s; do not edit.\n' "$2" "$3" "$(date +%Y-%m-%d)"; cat "$1"; } > "$tmp"
+  mv "$tmp" "$1"
+}
+
 # Convert dialogue text and CSV tables to assembly. Only files whose source is
 # newer than their output are converted.
 generate() {
@@ -44,6 +53,7 @@ generate() {
     out=${t%.txt}.dialogue.txt
     if [[ ! -e $out || $t -nt $out || $font -nt $out ]]; then
       python3 tools/process_dialogue.py "$t" "$font" "$out"
+      stamp "$out" tools/process_dialogue.py "$t"
     fi
   done < <(find text/dialogue -mindepth 2 -name '*.txt' ! -name '*.dialogue.txt')
 
@@ -54,6 +64,7 @@ generate() {
     out=${t%.csv}.csv.asm
     if [[ ! -e $out || $t -nt $out ]]; then
       python3 tools/c2a.py "$t" "$out"
+      stamp "$out" tools/c2a.py "$t"
     fi
   done < <(find data -name '*.csv')
 
@@ -89,7 +100,9 @@ generate() {
   done < <(find gfx -name '*.streams')
 
   (cd data/character && python3 "$ROOT/tools/FE4c2a.py" CharacterData.csv CharacterDataHelper.h CharacterData.csv.asm)
+  stamp data/character/CharacterData.csv.asm tools/FE4c2a.py data/character/CharacterData.csv
   (cd data/item && python3 "$ROOT/tools/FE4c2a.py" ItemData.csv ItemDataHelper.h ItemData.csv.asm)
+  stamp data/item/ItemData.csv.asm tools/FE4c2a.py data/item/ItemData.csv
 }
 
 assemble() { # assemble <output> <log>

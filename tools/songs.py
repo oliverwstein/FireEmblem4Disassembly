@@ -20,6 +20,7 @@ and decodes each script from fe4.sfc with tools/sound.py: its steps, the upload
 lists it sends and the chunks they name. Nothing is named from this; it is the
 evidence to name songs from. Run it again after naming tables or routines.
 """
+import datetime
 import collections
 import csv
 import glob
@@ -217,7 +218,7 @@ def main():
                 uses[CONSTANTS[m.group(1)]].append(('code', f'`{routine}`, {where}'))
 
     out = ['# Song scripts', '',
-           'Made by `tools/songs.py`; do not edit. A song is a script in `aSoundScripts`',
+           f'Made by `tools/songs.py` on {datetime.date.today().isoformat()}; do not edit. A song is a script in `aSoundScripts`',
            '(`audio/sound_data.asm`), asked for by its number in `wMusicID`. For each number:',
            'where the game asks for it, its place in the debug sound test, and what the script',
            'does (upload lists with their chunk IDs; `@xxxx` sets the SPC address). Nothing',

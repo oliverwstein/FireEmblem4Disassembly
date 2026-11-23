@@ -24,6 +24,7 @@ include. It fails if the streams pass end.
 an edited graphic that compresses to a different size moves everything after
 it and moves the splits with it.
 """
+import datetime
 import os
 import sys
 
@@ -82,7 +83,7 @@ def main():
         sys.exit(f'{list_path}: the streams end at ${here:06X}, past the region end ${end:06X} '
                  f'by {here - end} bytes')
 
-    out = [f'; Made by tools/stream_layout.py from {list_path}; do not edit.', '']
+    out = [f'; Made by tools/stream_layout.py from {list_path} on {datetime.date.today().isoformat()}; do not edit.', '']
     for address, block in blocks:
         if not block:
             continue

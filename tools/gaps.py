@@ -31,6 +31,7 @@ Pieces are classed by the strongest evidence:
 
 Takes a minute or two (it builds three times). Run it again as gaps close.
 """
+import datetime
 import argparse
 import bisect
 import collections
@@ -150,7 +151,7 @@ def main():
         rows.append(dict(a=a, b=b, cls=cls, refs=r, read=rd, exe=ex, pad=padn, before=before, after=after))
     order = ['code', 'table', 'inside', 'log', 'none']
     text = ['# ROM bytes not built from source', '',
-            'Made by `tools/gaps.py`; do not edit. Every run of bytes the build still copies from',
+            f'Made by `tools/gaps.py` on {datetime.date.today().isoformat()}; do not edit. Every run of bytes the build still copies from',
             '`fe4.sfc`, with the evidence of what it is. Classes, strongest evidence first:',
             '`code` (a call or jump in the source targets it), `table` (built code reads it at its',
             'first byte), `inside` (built code points into it, not at its start), `log` (read in',
