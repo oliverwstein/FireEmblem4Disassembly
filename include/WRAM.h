@@ -822,7 +822,7 @@
     ; scene files in tools/name_ram.py.
 
     bBattleSceneLetterboxINIDISP .byte ? ; $000ADD ; INIDISP for the top 15 lines ($8F: blank)
-    .byte ?                              ; $000ADE
+    bBattleSceneQueuesIdle .byte ?       ; $000ADE ; bit 0 combatant 1's move queue is empty, bit 1 combatant 2's (rlBattleAnimationRunMoveQueue)
     .byte ?                              ; $000ADF
     bBattleSceneRoundState    .byte ? ; $000AE0 ; BattleSceneRoundMayRun ...
     lBattleSceneRoundPointer  .long ? ; $000AE1 ; the next entry of aBattleRoundsData
@@ -850,6 +850,14 @@
   .virtual $7FE09E
 
     wBattleSceneFrame .word ? ; $7FE09E ; counted up at the end of rsBattleSceneRunFrame; the title screen counts it too
+
+  .endvirtual
+
+  .virtual $7FE144
+
+    ; Each combatant's queue of moves (rlBattleAnimationQueueMove): 16 words,
+    ; $FFFF free; combatant 2's from $7FE164.
+    aBattleSceneMoveQueues .fill 2 * 16 * size(word) ; $7FE144
 
   .endvirtual
 

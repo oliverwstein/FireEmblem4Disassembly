@@ -343,7 +343,7 @@
         lda #<>aBattleRoundsData._Entry[0]
         sta lBattleSceneRoundPointer,b
         jsl rlBattleSceneClearKnockback
-        jsl rlUnknown95DA0B
+        jsl rlBattleAnimationClearMoveQueues
         jsl rlUnknown96A4FC
         jsl rlUnknown96CB0A
         jsl rlUnknown96EE8A

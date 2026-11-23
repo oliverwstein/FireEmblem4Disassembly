@@ -38,7 +38,7 @@
 
         ; Carry set while anything is still going: a queued move, a combatant or effect slot in motion, the HP bars, a script, a fade.
 
-        lda $7FE144
+        lda aBattleSceneMoveQueues
         cmp #$FFFF
         beq _A677
         jml _A75F

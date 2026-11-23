@@ -158,7 +158,7 @@
     .endsegment
 
     ; $EF: Arg to rsUnknown95DCA3 (first combatant) or rsUnknown95DD4F
-    ; (second), around calls of rlUnknown95DBDE (rsUnknown95BE39).
+    ; (second), around calls of rlBattleAnimationSetEffectMotion (rsUnknown95BE39).
     ANIM_CMD_EF .segment Arg
       .byte $EF, \Arg
     .endsegment

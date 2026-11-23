@@ -2133,7 +2133,7 @@
         lda aBattleSceneCombatant1.Weapon,b
         sta wR0
         lda aBattleSceneCombatant1.AnimStyle,b
-        jsl rlUnknown95DBDE
+        jsl rlBattleAnimationSetEffectMotion
         sep #$20
         lda $0B7D,b
         sta $0C03,b
@@ -2146,7 +2146,7 @@
         lda aBattleSceneCombatant1.Weapon,b
         sta wR0
         lda aBattleSceneCombatant1.AnimStyle,b
-        jsl rlUnknown95DBDE
+        jsl rlBattleAnimationSetEffectMotion
         bra _BE98
 
 
@@ -2155,7 +2155,7 @@
         lda aBattleSceneCombatant2.Weapon,b
         sta wR0
         lda aBattleSceneCombatant2.AnimStyle,b
-        jsl rlUnknown95DBDE
+        jsl rlBattleAnimationSetEffectMotion
         sep #$20
         lda $0BC0,b
         sta $0C03,b
@@ -2168,7 +2168,7 @@
         lda aBattleSceneCombatant2.Weapon,b
         sta wR0
         lda aBattleSceneCombatant2.AnimStyle,b
-        jsl rlUnknown95DBDE
+        jsl rlBattleAnimationSetEffectMotion
 
         _BE98
         plx
@@ -3736,7 +3736,7 @@
         .autsiz
         .databank ?
 
-        ; X = the combatant: carry set when it may turn to face the other: no sequence playing, on the ground, bits 0-1 of $0ADE both set, bit 1 of $7FE186 clear, and its class is not $43-$46.
+        ; X = the combatant: carry set when it may turn to face the other: no sequence playing, on the ground, both move queues empty (bBattleSceneQueuesIdle), bit 1 of $7FE186 clear, and its class is not $43-$46.
 
         phy
         lda bBattleAnimationStateFlags,b,x
@@ -3744,7 +3744,7 @@
         bne _C694
         lda wBattleAnimationYFixed,b,x
         bne _C694
-        lda $0ADE,b
+        lda bBattleSceneQueuesIdle,b
         and #$0003
         cmp #$0003
         bne _C694
@@ -7004,18 +7004,20 @@
       .al
       .xl
 
-      rlUnknown95DA0B ; 95/DA0B
+      rlBattleAnimationClearMoveQueues ; 95/DA0B
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Empties both combatants' move queues ($7FE144, 16 words each).
+
         ldx #$0000
         lda #$FFFF
 
         _DA11
-        sta $7FE144,x
+        sta aBattleSceneMoveQueues,x
         inc x
         inc x
         cpx #$0040
@@ -7045,8 +7047,8 @@
         ; movement (rlBattleAnimationStartMovement) and its sequence
         ; (rlBattleAnimationStartSequence).
 
-        stz $0ADE,b
-        jsr rsUnknown95DA98
+        stz bBattleSceneQueuesIdle,b
+        jsr rsBattleAnimationTakeMove1
         bcs _DA39
         pha
         ldx #$0000
@@ -7060,7 +7062,7 @@
 
 
         _DA39
-        jsr rsUnknown95DAE1
+        jsr rsBattleAnimationTakeMove2
         bcs _DA55
         pha
         ldx #$0043
@@ -7075,7 +7077,7 @@
 
 
         _DA55
-        lda $0ADE,b
+        lda bBattleSceneQueuesIdle,b
         and #$0003
         cmp #$0003
         bne _DA97
@@ -7124,12 +7126,14 @@
 
         ; 95/DA98
 
-      rsUnknown95DA98 ; 95/DA98
+      rsBattleAnimationTakeMove1 ; 95/DA98
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When combatant 1 stands ready (no X speed or Y velocity, its sequence done or frozen): takes its next queued move and returns carry clear with it in A. With an empty queue sets bit 0 of bBattleSceneQueuesIdle; carry set.
 
         lda bBattleAnimationStateFlags,b
         bit #$0080
@@ -7162,9 +7166,9 @@
         clc
         jsl rlBattleAnimationTakeQueuedMove
         bcc _DAE0
-        lda $0ADE,b
+        lda bBattleSceneQueuesIdle,b
         ora #$0001
-        sta $0ADE,b
+        sta bBattleSceneQueuesIdle,b
 
         _DADF
         sec
@@ -7176,12 +7180,14 @@
 
         ; 95/DAE1
 
-      rsUnknown95DAE1 ; 95/DAE1
+      rsBattleAnimationTakeMove2 ; 95/DAE1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; rsBattleAnimationTakeMove1 for combatant 2 (bit 1 of bBattleSceneQueuesIdle).
 
         lda bBattleAnimation2StateFlags,b
         bit #$0080
@@ -7214,9 +7220,9 @@
         sec
         jsl rlBattleAnimationTakeQueuedMove
         bcc _DB29
-        lda $0ADE,b
+        lda bBattleSceneQueuesIdle,b
         ora #$0002
-        sta $0ADE,b
+        sta bBattleSceneQueuesIdle,b
 
         _DB28
         sec
@@ -7253,7 +7259,7 @@
         ldy #$0010
 
         _DB3A
-        lda $7FE144,x
+        lda aBattleSceneMoveQueues,x
         cmp #$FFFF
         beq _DB4C
         inc x
@@ -7267,7 +7273,7 @@
 
         _DB4C
         pla
-        sta $7FE144,x
+        sta aBattleSceneMoveQueues,x
         clc
 
         _DB52
@@ -7300,7 +7306,7 @@
         ldx #$0020
 
         _DB61
-        lda $7FE144,x
+        lda aBattleSceneMoveQueues,x
         cmp #$FFFF
         bne _DB6D
         sec
@@ -7313,13 +7319,13 @@
 
         _DB71
         lda $7FE146,x
-        sta $7FE144,x
+        sta aBattleSceneMoveQueues,x
         inc x
         inc x
         dec y
         bne _DB71
         lda #$FFFF
-        sta $7FE144,x
+        sta aBattleSceneMoveQueues,x
         pla
         clc
 
@@ -7423,12 +7429,14 @@
 
         ; 95/DBDE
 
-      rlUnknown95DBDE ; 95/DBDE
+      rlBattleAnimationSetEffectMotion ; 95/DBDE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the combatant, A = its AnimStyle, wR0 its weapon: sets the motion of its effect slot ($86 or $C9) and sets it up: 0 (straight) for style $3x, 1 for $5x, 2 (a path) for $6x, and 3 (a path script) for the rest and for style $3x with weapons $3A-$3D.
 
         pha
         phx
@@ -7495,7 +7503,7 @@
         lda wR0
         asl a
         tax
-        jsr (aUnknown95DC4C,x)
+        jsr (aBattleAnimationEffectSetups,x)
         plp
         plb
         .databank $95
@@ -7516,13 +7524,13 @@
       .al
       .xl
 
-      aUnknown95DC4C ; 95/DC4C
+      aBattleAnimationEffectSetups ; 95/DC4C
 
-        ; Jump table of rlUnknown95DBDE.
-        .word <>rsUnknown95DC54
-        .word <>rsUnknown95DC54
-        .word <>rsUnknown95DC61
-        .word <>rsUnknown95DC90
+        ; Jump table of rlBattleAnimationSetEffectMotion.
+        .word <>rsBattleAnimationSetupFlyingEffect
+        .word <>rsBattleAnimationSetupFlyingEffect
+        .word <>rsBattleAnimationSetupPathEffect
+        .word <>rsBattleAnimationSetupPathScriptEffect
 
     .endsection Table95DC4CSection
 
@@ -7532,12 +7540,14 @@
       .al
       .xl
 
-      rsUnknown95DC54 ; 95/DC54
+      rsBattleAnimationSetupFlyingEffect ; 95/DC54
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Y = the effect slot: role 1 (motions 0 and 1).
 
         phx
         tyx
@@ -7552,12 +7562,14 @@
 
         ; 95/DC61
 
-      rsUnknown95DC61 ; 95/DC61
+      rsBattleAnimationSetupPathEffect ; 95/DC61
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Y = the effect slot: starts its path at the beginning, its X step the combatants' gap * 2, role 1 (motion 2).
 
         phx
         tyx
@@ -7596,12 +7608,14 @@
       .al
       .xl
 
-      rsUnknown95DC90 ; 95/DC90
+      rsBattleAnimationSetupPathScriptEffect ; 95/DC90
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Y = the effect slot: starts its path script at the beginning, role 4 (motion 3).
 
         phx
         tyx
