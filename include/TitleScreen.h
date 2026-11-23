@@ -42,15 +42,15 @@
       .word $FFFF
     .endsegment
 
-  ; A title screen sprite (aTitleSprites, 13 of them). rlUnknown95F967 sets
+  ; A title screen sprite (aTitleSprites, 13 of them). rlStartTitleSprite sets
   ; one up from an 11-byte definition (Script, Frames, X, Y, TileBase,
-  ; Attributes); rlUnknown95F89A animates and draws the active ones each frame.
+  ; Attributes); rlUpdateTitleSprites animates and draws the active ones each frame.
   ; The script is a list of two-byte steps: a frame number + 1 and how many
   ; frames to show it, or $80 and a count of steps to go back by.
 
     structTitleSprite .struct
       Flags         .byte ? ; $80 active; $01 draws an afterimage
-                            ; (rlUnknown9BEAE8); $02 draws it with the next
+                            ; (rlDrawTitleSpriteAfterimage); $02 draws it with the next
                             ; sprite's frame
       X             .word ?
       Y             .word ?
@@ -67,7 +67,7 @@
       TrailDelay    .byte ? ; how many frames behind the afterimage is
     .endstruct
 
-  ; A title sprite's definition, read by rlUnknown95F967 into aTitleSprites.
+  ; A title sprite's definition, read by rlStartTitleSprite into aTitleSprites.
   ; Frames is in Script's bank.
 
     TITLE_SPRITE_SIZE = 13

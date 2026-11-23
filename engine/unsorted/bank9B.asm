@@ -294,21 +294,21 @@
 
         ; 99/FAC1
 
-      aUnknown99FAC1 ; 99/FAC1
+      aTitleSpriteFrames ; 99/FAC1
 
-        .word _FAC1_FADB - aUnknown99FAC1
-        .word _FAC1_FBA0 - aUnknown99FAC1
-        .word _FAC1_FBF2 - aUnknown99FAC1
-        .word _FAC1_FC1C - aUnknown99FAC1
-        .word _FAC1_FC46 - aUnknown99FAC1
-        .word _FAC1_FC70 - aUnknown99FAC1
-        .word _FAC1_FC9F - aUnknown99FAC1
-        .word _FAC1_FCD3 - aUnknown99FAC1
-        .word _FAC1_FCF8 - aUnknown99FAC1
-        .word _FAC1_FD22 - aUnknown99FAC1
-        .word _FAC1_FD51 - aUnknown99FAC1
-        .word _FAC1_FD7B - aUnknown99FAC1
-        .word _FAC1_FD9B - aUnknown99FAC1
+        .word _FAC1_FADB - aTitleSpriteFrames
+        .word _FAC1_FBA0 - aTitleSpriteFrames
+        .word _FAC1_FBF2 - aTitleSpriteFrames
+        .word _FAC1_FC1C - aTitleSpriteFrames
+        .word _FAC1_FC46 - aTitleSpriteFrames
+        .word _FAC1_FC70 - aTitleSpriteFrames
+        .word _FAC1_FC9F - aTitleSpriteFrames
+        .word _FAC1_FCD3 - aTitleSpriteFrames
+        .word _FAC1_FCF8 - aTitleSpriteFrames
+        .word _FAC1_FD22 - aTitleSpriteFrames
+        .word _FAC1_FD51 - aTitleSpriteFrames
+        .word _FAC1_FD7B - aTitleSpriteFrames
+        .word _FAC1_FD9B - aTitleSpriteFrames
 
       _FAC1_FADB ; 99/FADB
         .byte $27, $00, $60, $C2, $07, $42, $24, $58, $00, $0F, $45, $24, $50, $00, $0F, $44
@@ -446,26 +446,26 @@
 
       aTitleSprite0Definition2 ; 99/FE92
 
-        TITLE_SPRITE aTitleSpriteStill00, aUnknown99FAC1, $0198, $003E, $0000, $0000
+        TITLE_SPRITE aTitleSpriteStill00, aTitleSpriteFrames, $0198, $003E, $0000, $0000
 
       aTitleSprite1Definition2 ; 99/FE9F
 
-        TITLE_SPRITE aTitleSpriteStill01, aUnknown99FAC1, $0198, $003E, $0000, $0000
+        TITLE_SPRITE aTitleSpriteStill01, aTitleSpriteFrames, $0198, $003E, $0000, $0000
 
       aTitleSpriteDefinitions ; 99/FEAC
 
-        TITLE_SPRITE aTitleSpriteStill00, aUnknown99FAC1, $0088, $009E, $0000, $0000
-        TITLE_SPRITE aTitleSpriteStill02, aUnknown99FAC1, $009C, $009D, $0000, $0800
-        TITLE_SPRITE aTitleSpriteStill03, aUnknown99FAC1, $009C, $009D, $0000, $0800
-        TITLE_SPRITE aTitleSpriteStill04, aUnknown99FAC1, $009C, $009D, $0000, $0800
-        TITLE_SPRITE aTitleSpriteStill05, aUnknown99FAC1, $009C, $009D, $0000, $0800
-        TITLE_SPRITE aTitleSpriteStill06, aUnknown99FAC1, $009C, $009D, $0000, $0800
-        TITLE_SPRITE aTitleSpriteStill07, aUnknown99FAC1, $009C, $009D, $0000, $0800
-        TITLE_SPRITE aTitleSpriteStill08, aUnknown99FAC1, $009C, $009D, $0000, $0800
-        TITLE_SPRITE aTitleSpriteStill09, aUnknown99FAC1, $009C, $009D, $0000, $0800
-        TITLE_SPRITE aTitleSpriteStill10, aUnknown99FAC1, $009C, $009D, $0000, $0800
-        TITLE_SPRITE aTitleSpriteStill11, aUnknown99FAC1, $009C, $009D, $0000, $0800
-        TITLE_SPRITE aTitleSpriteStill12, aUnknown99FAC1, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill00, aTitleSpriteFrames, $0088, $009E, $0000, $0000
+        TITLE_SPRITE aTitleSpriteStill02, aTitleSpriteFrames, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill03, aTitleSpriteFrames, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill04, aTitleSpriteFrames, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill05, aTitleSpriteFrames, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill06, aTitleSpriteFrames, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill07, aTitleSpriteFrames, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill08, aTitleSpriteFrames, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill09, aTitleSpriteFrames, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill10, aTitleSpriteFrames, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill11, aTitleSpriteFrames, $009C, $009D, $0000, $0800
+        TITLE_SPRITE aTitleSpriteStill12, aTitleSpriteFrames, $009C, $009D, $0000, $0800
 
       aTitleSprite0Motion ; 99/FF48
 
@@ -517,9 +517,9 @@
       .al
       .xl
 
-      aUnknown99FFE7 ; 99/FFE7
+      aTitleCaptionScrolls ; 99/FFE7
 
-        ; Read by rlUnknown9BF159.
+        ; Read by rlShowNextTitleCaption.
 
         .byte $BC, $CA, $D1, $C9, $D8, $CD, $CA, $D8, $B4, $D8, $9F, $C9, $BC, $00, $00, $00
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00
@@ -1276,7 +1276,7 @@
 
       aUnknownE02299 ; E0/2299
 
-        ; Read by rlUnknown9BE1C0.
+        ; Read by rlLoadTitleIntroGraphics.
 
         .word $4F5F, $169F, $11FF, $21DA, $0938, $04F8, $0516, $00B4
         .word $0051, $110C, $006D, $000B, $0007, $0002, $0000
@@ -1306,7 +1306,7 @@
 
       aUnknownE023B1 ; E0/23B1
 
-        ; Read by rlUnknown9BE1C0.
+        ; Read by rlLoadTitleIntroGraphics.
 
         .word $000F, $000E, $000D, $000C, $000B, $000A, $0009, $0008
         .word $0007, $0006, $0005, $0004, $0003, $0002, $0001

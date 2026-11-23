@@ -11,20 +11,20 @@ The game plays its opening by itself: Annand's pegasus knights, the staff credit
 | [opening_credits.asm](../../engine/demo/opening_credits.asm) | the eight pages of staff credits (bank `$8D`) and their HDMA scroll effects |
 | [demo_battles.asm](../../engine/demo/demo_battles.asm) | the scripted battles of the map scenes (`aDemoBattleSetups`, bank `$88`) and choosing the first scene from the save's ranking |
 
-The three conversations are [text/dialogue/Opening/](../../text/dialogue/Opening/). Two event commands exist only for the opening: `DEMO_ALLOW_SKIP` (`$5D`) and `OPEN_MAP_BATTLE` (`$5E`) in [include/events/Main.h](../../include/events/Main.h).
+The three conversations are [text/dialogue/Opening/](../../text/dialogue/Opening/). Two event commands exist only for the opening: `DEMO_ALLOW_SKIP` (`$5D`) and `OPEN_TITLE_SCREEN` (`$5E`) in [include/events/Main.h](../../include/events/Main.h).
 
 ## How it runs
 
-`rlStartOpeningEvent` (bank `$9B`) starts `aOpeningEvent` from the map battle screen's loop when that screen sets `$7FD8B5`. The script then runs like any event, one command after another, with `YIELD` ending the frame and `PAUSE` waiting:
+`rlStartOpeningEvent` (bank `$9B`) starts `aOpeningEvent` from the title screen when its timeline ends (`bTitleScreenDone`; see [title.md](title.md)). The script then runs like any event, one command after another, with `YIELD` ending the frame and `PAUSE` waiting:
 
-1. `DEMO_ALLOW_SKIP`: from now on Start (or the end of the script) fades out and goes to the map battle screen in its demo mode (`procDemoSkipFadeOut`, `rsOpenMapBattleForDemo`).
+1. `DEMO_ALLOW_SKIP`: from now on Start (or the end of the script) fades out and goes to the title screen without its intro (`procDemoSkipFadeOut`, `rsOpenTitleScreenWithoutIntro`).
 2. Chapter 9's map (`rlASMCSetOpeningMapChapter9`) under two drifting sky layers (`rlASMCSetUpOpeningSkyScene`): Annand and three pegasus knights fly across it (`MOVE_TEMPORARY_BY_SCRIPT`, `aOpeningAnnandMovement`...), the camera following a scroll script.
 3. Credits pages 1 and 2, a battle scene, page 3, the conversation of Shannan and Ayra (`DIALOGUE_WITH_BG`).
 4. **The first map scene**: `rlASMCSetDemoIndexOdd`, then `rlASMCLoadDemoMapScene` (the chapter and camera for `wDemoIndex`), `rlASMCClearDemoDeployments` and `rlASMCPlaceDemoSceneSprites` (the units from `aDemoSceneSpriteLists`). For index 1 a dragon rider flies in first. Then `rlRunDemoBattleSetup` fills in the scene's scripted battle and the map battle runs (`rlASMCStartDemoMapBattle`).
 5. Credits page 4, the conversation of Eldigan and Lachesis, page 5, a battle scene, page 6.
 6. **The second map scene**: the same for the even index below (`rlRunDemoBattleSetupAtIndex`).
 7. Credits page 7, then the last map scene (`rlASMCSetOpeningMapChapter11`), Arvis ordering the final attack (on the final chapter's map): a fixed set of units (`rlASMCPlaceOpeningFinalSceneSprites`), soldiers closing in (`MOVE_TEMPORARY_TO_COORDS_CLASS`) and Arvis ordering the attack.
-8. Credits page 8 (the producer); then, by `$1832` (`rlASMCTestDemoAllowSkipFlag`), a sound and a longer fade, or a short fade; `OPEN_MAP_BATTLE`.
+8. Credits page 8 (the producer); then, by `$1832` (`rlASMCTestDemoAllowSkipFlag`), a sound and a longer fade, or a short fade; `OPEN_TITLE_SCREEN`, which flashes in the title screen (`rlFlashToTitleScreen`).
 
 ## The scenes
 
@@ -43,7 +43,6 @@ Each page is a `RUN_ASM` routine (`rlShowOpeningCreditsPage1`-`8`). It blanks th
 ## Open questions
 
 - `$1832` and `$0CC2`: `DEMO_ALLOW_SKIP` sets `$1832` to 0 (and sends sound command `$D0`) when `$0CC2` is 0 and `wDemoIndex` is 0 or 1, else to 1; the last screen plays sound `$E7` only when it is 1.
-- What the map battle screen's demo mode (`$7FD8B9` = 1) skips, and what sets `$7FD8B5` so that the opening starts again.
 - `rlUnknown97FDC1`/`FDC6` start the two battle scenes from `aDemoBattlesPointerTable`; the second reads `$0CC2`, so `$0CC2` is probably which battle scene plays.
 - Unused leftovers: setters for chapters 2 and 7 (`rlASMCSetOpeningMapChapter2Unused`, `7Unused`) and a second sky scene setup.
 - The seventh vertical scroll HDMA info is unused.

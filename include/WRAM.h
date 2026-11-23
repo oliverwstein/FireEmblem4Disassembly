@@ -2925,7 +2925,7 @@
   .virtual $7FD04C
 
     wTitleBrightnessStep .word ? ; $7FD04C
-      ; Position in the brightness list (rlUnknown95FD44).
+      ; Position in the brightness list (rlRunTitleBrightnessList).
 
   .endvirtual
 
@@ -2943,7 +2943,7 @@
 
     bTitleCaptionBrightness .byte ? ; $7FD073
       ; Brightness of the caption strip at the bottom of the intro
-      ; (rlUnknown9BEF88), faded by rlUnknown9BF09F and rlUnknown9BF0FE.
+      ; (rlDrawTitleCaptionStrip), faded by rlStartFadingInTitleCaption and rlStartFadingOutTitleCaption.
 
   .endvirtual
 
@@ -2952,7 +2952,7 @@
 
     bTitleScreenEdgeFade .byte ? ; $7FD075
       ; Nonzero: the screen is blanked at the top of the frame and the IRQ
-      ; code (rlUnknown9BEEB4, rlUnknown9BEF88) fades the lines near the top
+      ; code (rlFadeTitleScreenTopEdge, rlDrawTitleCaptionStrip) fades the lines near the top
       ; and bottom edges in steps (aTitleScreenEdgeBrightness).
 
   .endvirtual
@@ -2961,11 +2961,11 @@
   .virtual $7FD08B
 
     bTitleLoadRequests .byte ? ; $7FD08B
-      ; Entries of the load list rlUnknown95F1D5 may start; each
-      ; rlUnknown95F248 call allows one more.
+      ; Entries of the load list rlRunTitleLoadList may start; each
+      ; rlAllowTitleLoad call allows one more.
     lTitleLoadListPosition .long ? ; $7FD08C
       ; The next entry of the load list: type 0 (11 bytes) a decompression,
-      ; type 2 (8 bytes) a copy (rlUnknown95F256, rlUnknown95F29B).
+      ; type 2 (8 bytes) a copy (rlStartTitleLoadDecompression, rlStartTitleLoadCopy).
     aTitleSprites .dstruct structTitleSprite ; $7FD08F
       .fill 12 * size(structTitleSprite)
 
@@ -2976,14 +2976,14 @@
 
     lTitleVBlankRoutine1 .long ? ; $7FD8A5
     lTitleVBlankRoutine2 .long ? ; $7FD8A8
-      ; Called from the title's VBlank (rlUnknown9BEAB1) when not 0, to update
+      ; Called from the title's VBlank (rlRunTitleVBlankRoutines) when not 0, to update
       ; HDMA tables.
     bTitleCaption .byte ? ; $7FD8AB
-      ; The next caption (rlUnknown9BF159).
+      ; The next caption (rlShowNextTitleCaption).
     bTitleCaptionScroll .byte ? ; $7FD8AC
-      ; BG1 horizontal scroll of the caption strip, from aUnknown99FFE7.
+      ; BG1 horizontal scroll of the caption strip, from aTitleCaptionScrolls.
     aTitleScreenEdgeBrightness .fill 8 ; $7FD8AD
-      ; INIDISP values for the lines near the edges (rlUnknown9BF179).
+      ; INIDISP values for the lines near the edges (rlSetTitleEdgeBrightness).
     bTitleScreenDone .byte ? ; $7FD8B5
       ; Set when a timeline ends (rlEndTitleScreen): the title starts the
       ; opening, or after the fade out goes to the file menu.
@@ -2998,7 +2998,7 @@
       ; title opens: rlTitleScreenSetup goes straight to the title.
     bTitleScreenFlags .byte ? ; $7FD8BA
       ; $01 Start was pressed during the intro (once), $02 Start may end the
-      ; title (rlUnknown9BFAB7), $04 skipping to the title, waiting for the
+      ; title (rlAllowStartOnTitle), $04 skipping to the title, waiting for the
       ; decompression and APU uploads to finish, $08 set by rlTitleScreenSetup.
 
   .endvirtual

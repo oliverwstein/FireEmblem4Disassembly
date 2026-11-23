@@ -652,12 +652,12 @@
 
     DEMO_ALLOW_SKIP .segment
       ; The attract mode's opening: when the event ends or Start is pressed,
-      ; fade out and go to the map battle screen (procDemoSkipFadeOut,
+      ; fade out and go to the title screen, skipping its intro (procDemoSkipFadeOut,
       ; rsOpenTitleScreenWithoutIntro). Also sets $1832 (see the command routine).
       .byte $5D
     .endsegment
 
     OPEN_TITLE_SCREEN .segment
-      ; Fades to the map battle screen (rsOpenTitleScreen).
+      ; Flashes in the title screen (rlFlashToTitleScreen, rsOpenTitleScreen).
       .byte $5E
     .endsegment

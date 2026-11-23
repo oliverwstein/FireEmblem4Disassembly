@@ -18301,7 +18301,7 @@
 
       aUnknownE02667 ; E0/2667
 
-        ; Read by rlUnknown95EF54.
+        ; Read by rlLoadTitleGraphics.
 
         .word $5000, $3C00, $3400, $2800, $2800, $2C00, $2000, $1800
         .word $1800, $1C00, $1400, $1000, $0400, $0800, $0800, $021F
@@ -18314,7 +18314,7 @@
 
       aUnknownE026C3 ; E0/26C3
 
-        ; Read by rlUnknown95EF54.
+        ; Read by rlLoadTitleGraphics.
 
         .word $42DC, $0C66, $7FDF, $479F, $371C, $2EDA, $1E99, $1E77
         .word $01B8, $0175, $0153, $00F0, $00EE, $110B, $0823
@@ -18323,7 +18323,7 @@
 
       aUnknownE026E1 ; E0/26E1
 
-        ; Read by rlUnknown95EF54.
+        ; Read by rlLoadTitleGraphics.
 
         .word $3678, $7FFF, $6316, $4E74, $4211, $3E10, $3DF0, $39EF
         .word $6271, $5E6F, $4DEA, $452C, $612A, $4927, $48A6
@@ -18332,7 +18332,7 @@
 
       aUnknownE026FF ; E0/26FF
 
-        ; Read by rlUnknown95EF54.
+        ; Read by rlLoadTitleGraphics.
 
         .word $0000, $1D2B, $2DCF, $3A54, $3A32, $6E00, $256C, $46B6
         .word $475C, $6F6F, $6EE0, $14C6, $6DC0, $54C0, $0C84
@@ -18341,7 +18341,7 @@
 
       aUnknownE0271D ; E0/271D
 
-        ; Read by rlUnknown95EF54.
+        ; Read by rlLoadTitleGraphics.
 
         .word $0014, $2550, $0442, $7FFF, $373D, $0257, $01F8, $0173
         .word $00EE, $0069, $6316, $422C, $3A8A, $3942, $01C8
@@ -18359,7 +18359,7 @@
 
       aUnknownE02759 ; E0/2759
 
-        ; Read by rlUnknown95EF54.
+        ; Read by rlLoadTitleGraphics.
 
         .word $14C7, $32FB, $0000, $1E99, $1A56, $11B8, $0D54, $0D32
 
@@ -18367,7 +18367,7 @@
 
       aUnknownE02769 ; E0/2769
 
-        ; Read by rlUnknown95EF54.
+        ; Read by rlLoadTitleGraphics.
 
         .word $2E36, $7FFF, $56B3, $4A53, $4211, $31CF, $2D8D, $256C
         .word $5E50, $520C, $49C9, $5949, $4908, $34E7, $18A6
@@ -18376,7 +18376,7 @@
 
       aUnknownE02787 ; E0/2787
 
-        ; Read by rlUnknown9BE1C0.
+        ; Read by rlLoadTitleIntroGraphics.
 
         .word $0000, $0421, $0842, $14A5, $18C6, $1CE7, $2108, $2529
         .word $294A, $2D6B, $35AD, $3DEF, $4A52, $56B5, $6739, $7E60

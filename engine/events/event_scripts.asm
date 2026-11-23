@@ -4419,7 +4419,7 @@
         .autsiz
         .databank ?
 
-        ; Event command $5E (OPEN_TITLE_SCREEN): fades to the map battle screen (rsOpenTitleScreen).
+        ; Event command $5E (OPEN_TITLE_SCREEN): flashes in the title screen (rlFlashToTitleScreen, rsOpenTitleScreen).
 
         php
         phb

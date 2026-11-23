@@ -287,7 +287,7 @@
 
       aTitleLoadList ; 97/F19B
 
-        ; Read by rlUnknown95F1D5 via rlUnknown95F1A9.
+        ; Read by rlRunTitleLoadList via rlStartTitleLoadList.
 
         .byte $00
         .long gcUnknownDF005F, aDecompressionBuffer
@@ -489,7 +489,7 @@
 
       aTitleFadeOutLoadList ; 97/F45A
 
-        ; Read by rlUnknown95F1D5 via rlUnknown95F1BF.
+        ; Read by rlRunTitleLoadList via rlStartTitleFadeOutLoadList.
 
         .byte $00
         .long gcUnknown9CBBB7, $7F0000

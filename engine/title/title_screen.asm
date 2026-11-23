@@ -1,4 +1,11 @@
-; TODO: describe this file.
+; The title screen (game states $1A/$1B): how it is opened (rsOpenTitleScreen,
+; rsOpenTitleScreenWithoutIntro, from the end of the attract mode's opening),
+; its VBlank, main loop and IRQs, the three phases its step runs (the intro,
+; the title, the fade out), and the engines the phases share: the timeline
+; interpreter (rsRunTitleTimeline, include/TitleScreen.h), the load list, the
+; title sprites with their afterimages, the VBlank routines, the edge fade and
+; the caption strip. What the timelines call is in title_scenes.asm, the
+; timelines themselves in title_timelines.asm. See docs/reference/title.md.
 
     .section TitleScreenVBlankSection
 
@@ -12,7 +19,8 @@
         .autsiz
         .databank ?
 
-        ; Map battle VBlank calling 95C368/96D5DB/9BEAB1, DMA/OAM/HDMA/PPU, APU, sprites, sound
+        ; The title screen's VBlank: the battle scene's VBlank helpers (rlUnknown95C368, rlUnknown96D5DB),
+        ; rlRunTitleVBlankRoutines, then DMA, OAM, HDMA, PPU registers, sound, input and the game state.
 
         php
         sep #$20
@@ -21,7 +29,7 @@
         rep #$20
         jsl rlUnknown95C368
         jsl rlUnknown96D5DB
-        jsl rlUnknown9BEAB1
+        jsl rlRunTitleVBlankRoutines
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
         jsl rlHandlePossibleHDMA
@@ -60,7 +68,9 @@
         .autsiz
         .databank ?
 
-        ; Resets engines/map battle (game state $1A), installs rsRunTitleScreenVBlank and rsRunTitleScreenMainLoop
+        ; Opens the title screen with its intro: resets the engines, decompresses the title's graphics,
+        ; sets its IRQs (aTitleScreenTopIRQ, aTitleScreenBottomIRQ) and game state $1A, and installs
+        ; rsRunTitleScreenVBlank and rsRunTitleScreenMainLoop. Holding Start skips the intro too.
 
         php
         lda #$0000
@@ -100,16 +110,16 @@
         jsl rlActiveSpriteEngineReset
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
-        jsl rlUnknown95EE73
-        jsl rlUnknown95F0E9
-        lda #(`aUnknown9680A4)<<8
+        jsl rlDecompressTitleGraphics
+        jsl rlSetTitleScreenRegisters
+        lda #(`aTitleScreenTopIRQ)<<8
         sta lR44+1
-        lda #<>aUnknown9680A4
+        lda #<>aTitleScreenTopIRQ
         sta lR44
         jsl rlUnknown82E0C6
-        lda #(`aUnknown9680B3)<<8
+        lda #(`aTitleScreenBottomIRQ)<<8
         sta lR44+1
-        lda #<>aUnknown9680B3
+        lda #<>aTitleScreenBottomIRQ
         sta lR44
         jsl rlUnknown82E0C6
         jsl rlUnknown82E08D
@@ -149,7 +159,7 @@
         .autsiz
         .databank ?
 
-        ; Map battle main loop: reset check, decompression list, deferred sound upload
+        ; The title screen's main loop: reset check, decompression list, deferred sound upload.
 
         jsl rlButtonCombinationResetCheck
         jsl rlDecompressByList
@@ -168,8 +178,8 @@
       .al
       .xl
 
-      aUnknown9680A4 ; 96/80A4
-        .word $0060, $0006, <>rlUnknown9680AC, <>aUnknown9680B1
+      aTitleScreenTopIRQ ; 96/80A4
+        .word $0060, $0006, <>rlTitleScreenTopIRQ, <>aUnknown9680B1
 
     .endsection TitleScreenIRQSection
 
@@ -179,12 +189,14 @@
       .al
       .xl
 
-      rlUnknown95EE73 ; 95/EE73
+      rlDecompressTitleGraphics ; 95/EE73
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Decompresses the title's graphics into $7F0000-$7F7FFF and its palettes into $7F6700 (rsOpenTitleScreen).
 
         sep #$20
         rep #$10
@@ -299,12 +311,14 @@
       .al
       .xl
 
-      rlUnknown95EF54 ; 95/EF54
+      rlLoadTitleGraphics ; 95/EF54
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Decompresses more title graphics, uploads them and those rlDecompressTitleGraphics left in $7F0000 to VRAM, and sets the title's palettes (rlTitleScreenShowTitle).
 
         sep #$20
         rep #$10
@@ -476,7 +490,7 @@
       .al
       .xl
 
-      rlUnknown95F0E9 ; 95/F0E9
+      rlSetTitleScreenRegisters ; 95/F0E9
 
         .al
         .xl
@@ -645,7 +659,7 @@
 
         ; 95/F1A9
 
-      rlUnknown95F1A9 ; 95/F1A9
+      rlStartTitleLoadList ; 95/F1A9
 
         .al
         .xl
@@ -664,7 +678,7 @@
 
         ; 95/F1BF
 
-      rlUnknown95F1BF ; 95/F1BF
+      rlStartTitleFadeOutLoadList ; 95/F1BF
 
         .al
         .xl
@@ -683,12 +697,14 @@
 
         ; 95/F1D5
 
-      rlUnknown95F1D5 ; 95/F1D5
+      rlRunTitleLoadList ; 95/F1D5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Each frame: while bTitleLoadRequests is not 0, starts the next entry of the load list (type 0 a decompression, rlStartTitleLoadDecompression; type 2 a copy, rlStartTitleLoadCopy) once the one before has finished.
 
         phy
         lda bTitleLoadRequests
@@ -711,7 +727,7 @@
 
 
         _F204
-        jsl rlUnknown95F256
+        jsl rlStartTitleLoadDecompression
         bcs _F246
         lda lTitleLoadListPosition
         clc
@@ -730,7 +746,7 @@
 
 
         _F227
-        jsl rlUnknown95F29B
+        jsl rlStartTitleLoadCopy
         bcs _F246
         lda lTitleLoadListPosition
         clc
@@ -758,13 +774,15 @@
       .al
       .xl
 
-      rlUnknown95F248 ; 95/F248
+      rlAllowTitleLoad ; 95/F248
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Lets rlRunTitleLoadList start one more entry (the timelines call it, CALL 2).
 
         sep #$20
         lda bTitleLoadRequests
@@ -785,7 +803,7 @@
       .al
       .xl
 
-      rlUnknown95F256 ; 95/F256
+      rlStartTitleLoadDecompression ; 95/F256
 
         .al
         .xl
@@ -832,7 +850,7 @@
 
         ; 95/F29B
 
-      rlUnknown95F29B ; 95/F29B
+      rlStartTitleLoadCopy ; 95/F29B
 
         .al
         .xl
@@ -963,7 +981,7 @@
       .al
       .xl
 
-      rlUnknown95F87F ; 95/F87F
+      rlClearTitleSprites ; 95/F87F
 
         .al
         .xl
@@ -991,7 +1009,7 @@
 
         ; 95/F89A
 
-      rlUnknown95F89A ; 95/F89A
+      rlUpdateTitleSprites ; 95/F89A
 
         .al
         .xl
@@ -1005,8 +1023,8 @@
         lda aTitleSprites.Flags,x
         bit #$0080
         beq _F8AF
-        jsl rlUnknown95F8BC
-        jsl rlUnknown9BEAE8
+        jsl rlAnimateAndDrawTitleSprite
+        jsl rlDrawTitleSpriteAfterimage
 
         _F8AF
         txa
@@ -1022,7 +1040,7 @@
 
         ; 95/F8BC
 
-      rlUnknown95F8BC ; 95/F8BC
+      rlAnimateAndDrawTitleSprite ; 95/F8BC
 
         .al
         .xl
@@ -1118,12 +1136,14 @@
 
         ; 95/F967
 
-      rlUnknown95F967 ; 95/F967
+      rlStartTitleSprite ; 95/F967
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; lR18 = a TITLE_SPRITE definition, X = the sprite's offset in aTitleSprites (n * size(structTitleSprite)).
 
         phx
         phy
@@ -1175,7 +1195,7 @@
       .al
       .xl
 
-      rlUnknown9680AC ; 96/80AC
+      rlTitleScreenTopIRQ ; 96/80AC
 
         ; Found through fe4.cdl.
         .al
@@ -1183,7 +1203,9 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9BEEB4
+        ; IRQ at line 6 (aUnknown9680A4): rlFadeTitleScreenTopEdge.
+
+        jsl rlFadeTitleScreenTopEdge
         rtl
 
         .databank 0
@@ -1201,8 +1223,8 @@
       aUnknown9680B1 ; 96/80B1
         .word <>rsIRQCodeHalt
 
-      aUnknown9680B3 ; 96/80B3
-        .word $0060, $00BD, <>rlUnknown9680BB, <>aUnknown9680C0
+      aTitleScreenBottomIRQ ; 96/80B3
+        .word $0060, $00BD, <>rlTitleScreenBottomIRQ, <>aUnknown9680C0
 
     .endsection Table9680B1Section
 
@@ -1212,7 +1234,7 @@
       .al
       .xl
 
-      rlUnknown9680BB ; 96/80BB
+      rlTitleScreenBottomIRQ ; 96/80BB
 
         ; Found through fe4.cdl.
         .al
@@ -1220,7 +1242,9 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9BEF88
+        ; IRQ at line 189 (aUnknown9680B3): rlDrawTitleCaptionStrip.
+
+        jsl rlDrawTitleCaptionStrip
         rtl
 
         .databank 0
@@ -1246,7 +1270,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $1A, once: blanks the screen, resets procs and HDMA, sets up the map battle (bank $95/$9B helpers) and moves on to $1B. Selected by rsOpenTitleScreen.
+        ; Game state routine $1A, once: blanks the screen, resets procs and HDMA, sets up the intro (phase 0: timeline aTitleIntroTimeline, song 1), or with bTitleScreenSkipIntro the title (rlTitleScreenSkipIntro, rlTitleScreenShowTitle), and moves on to $1B. Selected by rsOpenTitleScreen.
 
         sep #$20
         lda #$80
@@ -1256,21 +1280,21 @@
         jsl rlProcEngineResetProcEngine
         jsl rlResetTitleTimeline
         jsl rlResetHDMAEngine
-        jsl rlUnknown95F1A9
+        jsl rlStartTitleLoadList
         jsl rlBattleSceneScriptClearLoading
-        jsl rlUnknown95EA47
+        jsl rlSetUpTitleIntro
         jsl rlUnknown9BF3F3
         jsl rlUnknown96D659
         jsl rlUnknown95F741
         jsl rlUnknown95F7F7
-        jsl rlUnknown95F87F
-        jsl rlUnknown9BEAA5
+        jsl rlClearTitleSprites
+        jsl rlClearTitleVBlankRoutines
         lda #$0000
         sta $7FE09E
         lda bTitleScreenSkipIntro
         and #$00FF
         bne _DCA7
-        jsl rlUnknown9BFB7E
+        jsl rlPlayTitleIntroSong
         jsl rlStepMusicScript
         lda #$0000
         sep #$20
@@ -1312,7 +1336,7 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $1B, every frame: runs one of three map battle phases by $7FD000 (0, 1, other) and counts frames in $7FD001 and $7FE09E.
+        ; Game state routine $1B, every frame: runs the phase in bTitleScreenPhase (0 the intro, 1 the title, other the fade out) and counts frames in wTitleScreenFrame and $7FE09E.
 
         sep #$20
         lda bTitleScreenEdgeFade
@@ -1414,14 +1438,14 @@
         jsl rlUnknown9BE184
         jsr rsRunTitleTimeline
         jsr rsRunTitleTimelineSlots
-        jsl rlUnknown95F1D5
+        jsl rlRunTitleLoadList
         jsl rlBattleSceneScriptUpdateLoading
         jsl rlUnknown95F14D
         jsl rlUnknown96D695
         jsl rlUnknown96CB44
         jsl rlUnknown96A532
-        jsl rlUnknown95F89A
-        jsl rlUnknown9BF179
+        jsl rlUpdateTitleSprites
+        jsl rlSetTitleEdgeBrightness
         lda bTitleScreenDone
         and #$00FF
         beq _DD99
@@ -1452,13 +1476,13 @@
         jsl rlUnknown9BE184
         jsr rsRunTitleTimeline
         jsr rsRunTitleTimelineSlots
-        jsl rlUnknown95F1D5
+        jsl rlRunTitleLoadList
         jsl rlBattleSceneScriptUpdateLoading
         jsl rlUnknown95F14D
         jsl rlUnknown96D695
         jsl rlUnknown96A532
         jsl rlUnknown96CB44
-        jsl rlUnknown95F89A
+        jsl rlUpdateTitleSprites
         lda bTitleScreenDone
         and #$00FF
         beq _DDE2
@@ -1483,11 +1507,11 @@
         jsl rlUnknown9BE184
         jsr rsRunTitleTimeline
         jsr rsRunTitleTimelineSlots
-        jsl rlUnknown95F1D5
+        jsl rlRunTitleLoadList
         jsl rlBattleSceneScriptUpdateLoading
         jsl rlUnknown95F14D
         jsl rlUnknown96D695
-        jsl rlUnknown95F89A
+        jsl rlUpdateTitleSprites
         lda bTitleScreenDone
         and #$00FF
         beq _DE11
@@ -1514,7 +1538,7 @@
         sta bBufferINIDISP
         rep #$20
         jsl rlResetHDMAEngine
-        jsl rlUnknown95F87F
+        jsl rlClearTitleSprites
         jsl rlUnknown96D659
         jsl rlResetIRQEngine
         lda #$0000
@@ -1529,7 +1553,7 @@
         sta lTitleTimelinePosition+1
         lda #<>aTitleTimeline
         sta lTitleTimelinePosition
-        jsl rlUnknown95F1A9
+        jsl rlStartTitleLoadList
         sep #$20
         lda bTitleScreenFlags
         ora #$04
@@ -1553,28 +1577,28 @@
         lda #$01
         sta bTitleScreenPhase
         rep #$20
-        jsl rlUnknown95EF54
+        jsl rlLoadTitleGraphics
         jsl rlUnknown95F12A
         ldx #$0000
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions
         sta lR18
-        jsl rlUnknown95F967
-        jsl rlUnknown9BFD71
-        jsl rsUnknown9BFD8C
-        jsl rsUnknown9BFD99
-        jsl rsUnknown9BFDA6
-        jsl rsUnknown9BFDB3
-        jsl rlUnknown9BFDC0
-        jsl rlUnknown9BFDD2
-        jsl rlUnknown9BFDDF
-        jsl rlUnknown9BFDEC
-        jsl rlUnknown9BFDF9
-        jsl rlUnknown9BFE06
-        lda #(`aUnknown9BDF09)<<8
+        jsl rlStartTitleSprite
+        jsl rlStartTitleLogoSprite1
+        jsl rlStartTitleLogoSprite2
+        jsl rlStartTitleLogoSprite3
+        jsl rlStartTitleLogoSprite4
+        jsl rlStartTitleLogoSprite5
+        jsl rlStartTitleLogoSprite6
+        jsl rlStartTitleLogoSprite7
+        jsl rlStartTitleLogoSprite8
+        jsl rlStartTitleLogoSprite9
+        jsl rlStartTitleLogoSprite10
+        jsl rlStartTitleLogoSprite11
+        lda #(`aTitleScreenRegisters)<<8
         sta lR18+1
-        lda #<>aUnknown9BDF09
+        lda #<>aTitleScreenRegisters
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -1591,8 +1615,8 @@
         rep #$20
         lda #$0000
         sta aBGPaletteBuffer,b
-        jsl rlUnknown9BEAA5
-        jsl rlUnknown9BFBA9
+        jsl rlClearTitleVBlankRoutines
+        jsl rlPlayTitleSong
         jsl rlStepMusicScript
         jsl rlEnableVBlank
         sep #$20
@@ -1614,7 +1638,7 @@
       .al
       .xl
 
-      aUnknown9BDF09 ; 9B/DF09
+      aTitleScreenRegisters ; 9B/DF09
 
         WRITE_RAM_BYTE bBufferBGMODE, $09
         WRITE_RAM_BYTE bBufferBG12NBA, $24
@@ -1632,16 +1656,18 @@
         WRITE_RAM_BYTE bBufferCGADSUB, $00
         WRITE_RAM_END
 
-      rlUnknown9BDF35 ; 9B/DF35
+      rlRestartTitleIntro ; 9B/DF35
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Nothing in the build reaches this: the intro's setup again, with the edge fade on.
+
         sei
         jsl rlDisableVBlank
-        jsl rlUnknown9BF297
+        jsl rlWaitForVBlankStart
         sep #$20
         lda #$80
         sta $2100,b
@@ -1659,12 +1685,12 @@
         sta lTitleTimelinePosition+1
         lda #<>aTitleIntroTimeline
         sta lTitleTimelinePosition
-        jsl rlUnknown95F1A9
+        jsl rlStartTitleLoadList
         jsl rlBattleSceneScriptClearLoading
-        jsl rlUnknown95EA47
+        jsl rlSetUpTitleIntro
         jsl rlUnknown96D659
-        jsl rlUnknown95F87F
-        jsl rlUnknown9BF2AA
+        jsl rlClearTitleSprites
+        jsl rlWaitForVBlankEnd
         jsl rlEnableVBlank
         sep #$20
         lda #$80
@@ -1713,11 +1739,11 @@
         .autsiz
         .databank ?
 
-        ; Called from the map battle screen's loop when $7FD8B5 is set: blanks the screen, resets the battle screen's state and HDMA, and starts the attract mode's opening (aOpeningEvent).
+        ; Called from the title screen's step when bTitleScreenDone is set: blanks the screen, resets the battle screen's state and HDMA, and starts the attract mode's opening (aOpeningEvent).
 
         sei
         jsl rlDisableVBlank
-        jsl rlUnknown9BF297
+        jsl rlWaitForVBlankStart
         sep #$20
         lda #$80
         sta $2100,b
@@ -1775,13 +1801,13 @@
         sta lTitleTimelinePosition+1
         lda #<>aTitleFadeOutTimeline
         sta lTitleTimelinePosition
-        jsl rlUnknown95F1BF
+        jsl rlStartTitleFadeOutLoadList
         ldx #$0000
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         sep #$20
         lda #$0F
         sta bBufferINIDISP
@@ -2002,7 +2028,7 @@
       .al
       .xl
 
-      rlUnknown9BEAA5 ; 9B/EAA5
+      rlClearTitleVBlankRoutines ; 9B/EAA5
 
         .al
         .xl
@@ -2026,7 +2052,7 @@
       .al
       .xl
 
-      rlUnknown9BEAB1 ; 9B/EAB1
+      rlRunTitleVBlankRoutines ; 9B/EAB1
 
         .al
         .xl
@@ -2082,7 +2108,7 @@
       .al
       .xl
 
-      rlUnknown9BEAE8 ; 9B/EAE8
+      rlDrawTitleSpriteAfterimage ; 9B/EAE8
 
         ; Reads the stack above its return address, but in the emulator log every
         ; caller continues right after the call: no inline arguments.
@@ -2101,7 +2127,7 @@
         _EAF6
         bit #$0002
         beq _EB03
-        jsl rlUnknown9BEC6E
+        jsl rlDrawTitleSpriteAfterimages
         jml _EC6C
 
 
@@ -2297,7 +2323,7 @@
 
         ; 9B/EC6E
 
-      rlUnknown9BEC6E ; 9B/EC6E
+      rlDrawTitleSpriteAfterimages ; 9B/EC6E
 
         ; TRACE: stack-args
         .al
@@ -2369,7 +2395,7 @@
         lda aTitleSprites.TrailY,x
         sta wR1
         plx
-        jsr rsUnknown9BED9D
+        jsr rsDrawTitleSpriteAfterimageFrame
         lda wTitleScreenFrame
         bit #$0001
         bne _ED4A
@@ -2404,7 +2430,7 @@
         lda aTitleSprites.TrailY,x
         sta wR1
         plx
-        jsr rsUnknown9BED9D
+        jsr rsDrawTitleSpriteAfterimageFrame
         bra _ED9B
 
 
@@ -2450,7 +2476,7 @@
         lda aTitleSprites.TrailY,x
         sta wR1
         plx
-        jsr rsUnknown9BED9D
+        jsr rsDrawTitleSpriteAfterimageFrame
 
         _ED9B
         plx
@@ -2460,7 +2486,7 @@
 
         ; 9B/ED9D
 
-      rsUnknown9BED9D ; 9B/ED9D
+      rsDrawTitleSpriteAfterimageFrame ; 9B/ED9D
 
         .al
         .xl
@@ -2509,12 +2535,14 @@
       .al
       .xl
 
-      rlUnknown9BEDD7 ; 9B/EDD7
+      rlStartTitleSpriteAfterimage ; 9B/EDD7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = how many frames behind the afterimage is (structTitleSprite.TrailDelay); fills the trail with the sprite's position.
 
         sep #$20
         sta aTitleSprites.TrailDelay,x
@@ -2577,7 +2605,7 @@
 
         ; 9B/EEA5
 
-      rlUnknown9BEEA5 ; 9B/EEA5
+      rlStopTitleSpriteAfterimage ; 9B/EEA5
 
         .al
         .xl
@@ -2603,7 +2631,7 @@
       .al
       .xl
 
-      rlUnknown9BEEB4 ; 9B/EEB4
+      rlFadeTitleScreenTopEdge ; 9B/EEB4
 
         .al
         .xl
@@ -2739,12 +2767,14 @@
 
         ; 9B/EF88
 
-      rlUnknown9BEF88 ; 9B/EF88
+      rlDrawTitleCaptionStrip ; 9B/EF88
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Below line 189: fades the lines near the bottom edge, then switches the PPU to BG1 alone (mode 1, tilemap $7C00) scrolled to bTitleCaptionScroll for the caption, at bTitleCaptionBrightness.
 
         sep #$20
         lda bTitleScreenEdgeFade
@@ -2898,9 +2928,9 @@
 
         ; 9B/F09F
 
-      rlUnknown9BF09F ; 9B/F09F
+      rlStartFadingInTitleCaption ; 9B/F09F
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2912,10 +2942,10 @@
         lda #$00
         sta bTitleCaptionBrightness
         rep #$20
-        jsl rlUnknown9BF0C3
-        lda #(`rlUnknown9BF0C3)<<8
+        jsl rlFadeInTitleCaption
+        lda #(`rlFadeInTitleCaption)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF0C3
+        lda #<>rlFadeInTitleCaption
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -2923,7 +2953,7 @@
 
         ; 9B/F0C3
 
-      rlUnknown9BF0C3 ; 9B/F0C3
+      rlFadeInTitleCaption ; 9B/F0C3
 
         .al
         .xl
@@ -2971,9 +3001,9 @@
 
         ; 9B/F0FE
 
-      rlUnknown9BF0FE ; 9B/F0FE
+      rlStartFadingOutTitleCaption ; 9B/F0FE
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2981,10 +3011,10 @@
 
         lda #$0000
         sta $7FD050
-        jsl rlUnknown9BF118
-        lda #(`rlUnknown9BF118)<<8
+        jsl rlFadeOutTitleCaption
+        lda #(`rlFadeOutTitleCaption)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown9BF118
+        lda #<>rlFadeOutTitleCaption
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -2992,7 +3022,7 @@
 
         ; 9B/F118
 
-      rlUnknown9BF118 ; 9B/F118
+      rlFadeOutTitleCaption ; 9B/F118
 
         .al
         .xl
@@ -3042,9 +3072,9 @@
 
         ; 9B/F159
 
-      rlUnknown9BF159 ; 9B/F159
+      rlShowNextTitleCaption ; 9B/F159
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -3055,7 +3085,7 @@
         and #$00FF
         tax
         sep #$20
-        lda aUnknown99FFE7,x
+        lda aTitleCaptionScrolls,x
         sta bTitleCaptionScroll
         lda bTitleCaption
         inc a
@@ -3076,7 +3106,7 @@
       .al
       .xl
 
-      rlUnknown9BF179 ; 9B/F179
+      rlSetTitleEdgeBrightness ; 9B/F179
 
         .al
         .xl
@@ -3170,7 +3200,7 @@
       .al
       .xl
 
-      rlUnknown9BF297 ; 9B/F297
+      rlWaitForVBlankStart ; 9B/F297
 
         .al
         .xl
@@ -3203,7 +3233,7 @@
       .al
       .xl
 
-      rlUnknown9BF2AA ; 9B/F2AA
+      rlWaitForVBlankEnd ; 9B/F2AA
 
         .al
         .xl
@@ -3228,7 +3258,7 @@
 
         ; 9B/F2BD
 
-      rlUnknown9BF2BD ; 9B/F2BD
+      rlEndTitleEdgeFade ; 9B/F2BD
 
         .al
         .xl
@@ -3342,13 +3372,13 @@
         sta lR18+1
         lda #<>aTitleSprite0Definition2
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         ldx #$0062
         lda #(`aTitleSprite1Definition2)<<8
         sta lR18+1
         lda #<>aTitleSprite1Definition2
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         lda #$0000
         sta $7FD05D
         lda #1,s
@@ -3374,7 +3404,7 @@
         phx
         ldx #$0000
         lda #$0004
-        jsl rlUnknown9BEDD7
+        jsl rlStartTitleSpriteAfterimage
         sep #$20
         lda aTitleSprites.Flags
         ora #$02
@@ -3524,7 +3554,7 @@
         _FD01
         lda $7FD046
         sta wR0
-        jsr rsUnknown9BFD52
+        jsr rsDrawTitleFlashSprite
         lda $7FD046
         clc
         adc #$0005
@@ -3578,7 +3608,7 @@
 
         ; 9B/FD52
 
-      rsUnknown9BFD52 ; 9B/FD52
+      rsDrawTitleFlashSprite ; 9B/FD52
 
         .al
         .xl

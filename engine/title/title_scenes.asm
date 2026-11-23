@@ -1,4 +1,9 @@
-; TODO: describe this file.
+; What the title screen's timelines call (title_timelines.asm): the intro's
+; eight scenes (their registers, graphics, scrolling, palette effects, HDMA
+; effects and sprites), the brightness fades, the title logo's sprites, the
+; music, and the fade out's steps. Most visual effect routines are Unknown,
+; with the scene that uses them visible in the timeline. Routines noted
+; "nothing in the build reaches this" are steps no timeline names.
 
 
     .section Unsorted95EA47Section
@@ -6,7 +11,7 @@
       .al
       .xl
 
-      rlUnknown95EA47 ; 95/EA47
+      rlSetUpTitleIntro ; 95/EA47
 
         .al
         .xl
@@ -22,8 +27,8 @@
         sta bBufferCOLDATA_1
         sta bBufferCOLDATA_2
         rep #$20
-        jsl rlUnknown95EA6A
-        jsl rlUnknown9BE1C0
+        jsl rlSetUpTitleIntroScene1
+        jsl rlLoadTitleIntroGraphics
         jsl rlUnknown9BE179
         rtl
 
@@ -31,7 +36,7 @@
 
         ; 95/EA6A
 
-      rlUnknown95EA6A ; 95/EA6A
+      rlSetUpTitleIntroScene1 ; 95/EA6A
 
         .al
         .xl
@@ -109,7 +114,7 @@
 
         ; 95/EAB4
 
-      rlUnknown95EAB4 ; 95/EAB4
+      rlSetUpTitleIntroScene2 ; 95/EAB4
 
         .al
         .xl
@@ -220,7 +225,7 @@
 
         ; 95/EB5D
 
-      rlUnknown95EB5D ; 95/EB5D
+      rlSetUpTitleIntroScene3 ; 95/EB5D
 
         .al
         .xl
@@ -270,7 +275,7 @@
         WRITE_RAM_BYTE bBufferCGADSUB, $27
         WRITE_RAM_END
 
-      rlUnknown95EBB3 ; 95/EBB3
+      rlSetUpTitleIntroScene3b ; 95/EBB3
 
         .al
         .xl
@@ -323,7 +328,7 @@
         WRITE_RAM_BYTE bBufferCGADSUB, $27
         WRITE_RAM_END
 
-      rlUnknown95EC0E ; 95/EC0E
+      rlSetUpTitleIntroScene4 ; 95/EC0E
 
         .al
         .xl
@@ -419,7 +424,7 @@
 
         ; 95/EC6E
 
-      rlUnknown95EC6E ; 95/EC6E
+      rlSetUpTitleIntroScene5 ; 95/EC6E
 
         .al
         .xl
@@ -514,7 +519,7 @@
 
         ; 95/ECEC
 
-      rlUnknown95ECEC ; 95/ECEC
+      rlSetUpTitleIntroScene6 ; 95/ECEC
 
         .al
         .xl
@@ -582,7 +587,7 @@
 
       rlUnknown95ED4E ; 95/ED4E
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -601,7 +606,7 @@
 
       rlUnknown95ED59 ; 95/ED59
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -622,7 +627,7 @@
 
       rlUnknown95ED6A ; 95/ED6A
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -649,7 +654,7 @@
       .al
       .xl
 
-      rlUnknown95ED7B ; 95/ED7B
+      rlSetUpTitleIntroScene7 ; 95/ED7B
 
         .al
         .xl
@@ -766,7 +771,7 @@
 
         ; 95/EE00
 
-      rlUnknown95EE00 ; 95/EE00
+      rlSetUpTitleIntroScene8 ; 95/EE00
 
         .al
         .xl
@@ -1146,7 +1151,7 @@
 
       rlUnknown95F426 ; 95/F426
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -1169,7 +1174,7 @@
 
       rlUnknown95F440 ; 95/F440
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -1204,7 +1209,7 @@
 
       rlUnknown95F47A ; 95/F47A
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -1283,7 +1288,7 @@
         clc
         jsl rlFadePaletteToColors
 
-          .word $EB88, $000F, $0102 ; 15 colours from $7EEB88 (filled by rlUnknown95EAB4) to palette offset $0102
+          .word $EB88, $000F, $0102 ; 15 colours from $7EEB88 (filled by rlSetUpTitleIntroScene2) to palette offset $0102
 
         bcc _F4DE
         sep #$20
@@ -1367,7 +1372,7 @@
         clc
         jsl rlFadePaletteToColors
 
-          .word $EB88, $000F, $0182 ; 15 colours from $7EEB88 (filled by rlUnknown95EAB4) to palette offset $0182
+          .word $EB88, $000F, $0182 ; 15 colours from $7EEB88 (filled by rlSetUpTitleIntroScene2) to palette offset $0182
 
         bcc _F540
         sep #$20
@@ -1451,7 +1456,7 @@
         clc
         jsl rlFadePaletteToColors
 
-          .word $EB88, $000F, $01A2 ; 15 colours from $7EEB88 (filled by rlUnknown95EAB4) to palette offset $01A2
+          .word $EB88, $000F, $01A2 ; 15 colours from $7EEB88 (filled by rlSetUpTitleIntroScene2) to palette offset $01A2
 
         bcc _F5A2
         sep #$20
@@ -1849,7 +1854,7 @@
 
       rlUnknown95F7B7 ; 95/F7B7
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -1877,7 +1882,7 @@
 
       rlUnknown95F7E5 ; 95/F7E5
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -1976,7 +1981,7 @@
       .al
       .xl
 
-      rlUnknown95F9B4 ; 95/F9B4
+      rlStopTitleSprite ; 95/F9B4
 
         .al
         .xl
@@ -2022,13 +2027,13 @@
         sta lR18+1
         lda #<>aUnknown97F9AA
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         ldx #$0498
         lda #(`aUnknown97F9B7)<<8
         sta lR18+1
         lda #<>aUnknown97F9B7
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         sep #$20
         lda #$00
         sta $7FD8B6
@@ -2051,13 +2056,13 @@
         sta lR18+1
         lda #<>aUnknown97F990
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         ldx #$03D4
         lda #(`aUnknown97F99D)<<8
         sta lR18+1
         lda #<>aUnknown97F99D
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         rtl
 
         .databank 0
@@ -2076,13 +2081,13 @@
         sta lR18+1
         lda #<>aUnknown97F976
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         ldx #$0310
         lda #(`aUnknown97F983)<<8
         sta lR18+1
         lda #<>aUnknown97F983
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         rtl
 
         .databank 0
@@ -2101,13 +2106,13 @@
         sta lR18+1
         lda #<>aUnknown97F95C
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         ldx #$01EA
         lda #(`aUnknown97F969)<<8
         sta lR18+1
         lda #<>aUnknown97F969
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         rtl
 
         .databank 0
@@ -2126,13 +2131,13 @@
         sta lR18+1
         lda #<>aUnknown97F942
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         ldx #$0126
         lda #(`aUnknown97F94F)<<8
         sta lR18+1
         lda #<>aUnknown97F94F
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         rtl
 
         .databank 0
@@ -2151,13 +2156,13 @@
         sta lR18+1
         lda #<>aUnknown97F928
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         ldx #$0062
         lda #(`aUnknown97F935)<<8
         sta lR18+1
         lda #<>aUnknown97F935
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         rtl
 
         .databank 0
@@ -2176,7 +2181,7 @@
         sta lR18+1
         lda #<>aUnknown97F9C4
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         rtl
 
         .databank 0
@@ -2383,7 +2388,7 @@
         lda lR18+1
         sta $7FD095,x
         lda #$0004
-        jsl rlUnknown9BEDD7
+        jsl rlStartTitleSpriteAfterimage
         bra _FBCC
 
 
@@ -2567,9 +2572,9 @@
       .al
       .xl
 
-      rlUnknown95FCA4 ; 95/FCA4
+      rlStartTitleSceneFadeIn ; 95/FCA4
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2581,10 +2586,10 @@
         sta lTitleBrightnessList+1
         lda #<>aTitleSceneFadeInBrightness
         sta lTitleBrightnessList
-        jsl rlUnknown95FD44
-        lda #(`rlUnknown95FD44)<<8
+        jsl rlRunTitleBrightnessList
+        lda #(`rlRunTitleBrightnessList)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FD44
+        lda #<>rlRunTitleBrightnessList
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -2592,9 +2597,9 @@
 
         ; 95/FCCC
 
-      rlUnknown95FCCC ; 95/FCCC
+      rlStartTitleFadeIn ; 95/FCCC
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2606,10 +2611,10 @@
         sta lTitleBrightnessList+1
         lda #<>aTitleFadeInBrightness
         sta lTitleBrightnessList
-        jsl rlUnknown95FD44
-        lda #(`rlUnknown95FD44)<<8
+        jsl rlRunTitleBrightnessList
+        lda #(`rlRunTitleBrightnessList)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FD44
+        lda #<>rlRunTitleBrightnessList
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -2617,9 +2622,9 @@
 
         ; 95/FCF4
 
-      rlUnknown95FCF4 ; 95/FCF4
+      rlStartTitleSceneFadeOut ; 95/FCF4
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2631,10 +2636,10 @@
         sta lTitleBrightnessList+1
         lda #<>aTitleSceneFadeOutBrightness
         sta lTitleBrightnessList
-        jsl rlUnknown95FD44
-        lda #(`rlUnknown95FD44)<<8
+        jsl rlRunTitleBrightnessList
+        lda #(`rlRunTitleBrightnessList)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FD44
+        lda #<>rlRunTitleBrightnessList
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -2650,7 +2655,7 @@
       .al
       .xl
 
-      rlUnknown95FD1C ; 95/FD1C
+      rlStartTitleQuickFadeOut ; 95/FD1C
 
         .al
         .xl
@@ -2663,10 +2668,10 @@
         sta lTitleBrightnessList+1
         lda #<>aTitleQuickFadeOutBrightness
         sta lTitleBrightnessList
-        jsl rlUnknown95FD44
-        lda #(`rlUnknown95FD44)<<8
+        jsl rlRunTitleBrightnessList
+        lda #(`rlRunTitleBrightnessList)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FD44
+        lda #<>rlRunTitleBrightnessList
         sta aTitleTimelineSlots.lRoutine,x
         rtl
 
@@ -2682,7 +2687,7 @@
       .al
       .xl
 
-      rlUnknown95FD44 ; 95/FD44
+      rlRunTitleBrightnessList ; 95/FD44
 
         .al
         .xl
@@ -2726,9 +2731,9 @@
 
         ; 95/FD86
 
-      rlUnknown95FD86 ; 95/FD86
+      rlStartTitleIntroScene1Scroll ; 95/FD86
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2738,10 +2743,10 @@
         lda #$0000
         sta $7FD046
         sta $7FD048
-        jsl rlUnknown95FDA6
-        lda #(`rlUnknown95FDA6)<<8
+        jsl rlTitleIntroScene1Scroll
+        lda #(`rlTitleIntroScene1Scroll)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FDA6
+        lda #<>rlTitleIntroScene1Scroll
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -2750,7 +2755,7 @@
 
         ; 95/FDA6
 
-      rlUnknown95FDA6 ; 95/FDA6
+      rlTitleIntroScene1Scroll ; 95/FDA6
 
         .al
         .xl
@@ -2867,7 +2872,7 @@
       .al
       .xl
 
-      rlUnknown95FE22 ; 95/FE22
+      rlStartTitleIntroScene2Scroll ; 95/FE22
 
         .al
         .xl
@@ -2879,10 +2884,10 @@
         sta $7FD046
         sta $7FD048
         sta $7FD04A
-        jsl rlUnknown95FE46
-        lda #(`rlUnknown95FE46)<<8
+        jsl rlTitleIntroScene2Scroll
+        lda #(`rlTitleIntroScene2Scroll)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FE46
+        lda #<>rlTitleIntroScene2Scroll
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -2899,7 +2904,7 @@
       .al
       .xl
 
-      rlUnknown95FE46 ; 95/FE46
+      rlTitleIntroScene2Scroll ; 95/FE46
 
         .al
         .xl
@@ -2968,7 +2973,7 @@
       .al
       .xl
 
-      rlUnknown95FEA0 ; 95/FEA0
+      rlStartTitleIntroScene3Scroll ; 95/FEA0
 
         .al
         .xl
@@ -2978,10 +2983,10 @@
         phx
         lda #$0000
         sta $7FD046
-        jsl rlUnknown95FEBC
-        lda #(`rlUnknown95FEBC)<<8
+        jsl rlTitleIntroScene3Scroll
+        lda #(`rlTitleIntroScene3Scroll)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FEBC
+        lda #<>rlTitleIntroScene3Scroll
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -2998,7 +3003,7 @@
       .al
       .xl
 
-      rlUnknown95FEBC ; 95/FEBC
+      rlTitleIntroScene3Scroll ; 95/FEBC
 
         .al
         .xl
@@ -3034,7 +3039,7 @@
       .al
       .xl
 
-      rlUnknown95FED9 ; 95/FED9
+      rlStartTitleIntroScene5Scroll ; 95/FED9
 
         .al
         .xl
@@ -3045,10 +3050,10 @@
         lda #$0000
         sta $7FD046
         sta $7FD048
-        jsl rlUnknown95FEF9
-        lda #(`rlUnknown95FEF9)<<8
+        jsl rlTitleIntroScene5Scroll
+        lda #(`rlTitleIntroScene5Scroll)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FEF9
+        lda #<>rlTitleIntroScene5Scroll
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -3065,7 +3070,7 @@
       .al
       .xl
 
-      rlUnknown95FEF9 ; 95/FEF9
+      rlTitleIntroScene5Scroll ; 95/FEF9
 
         .al
         .xl
@@ -3117,7 +3122,7 @@
       .al
       .xl
 
-      rlUnknown95FF35 ; 95/FF35
+      rlStartTitleIntroScene6Scroll ; 95/FF35
 
         .al
         .xl
@@ -3127,10 +3132,10 @@
         phx
         lda #$0000
         sta $7FD046
-        jsl rlUnknown95FF51
-        lda #(`rlUnknown95FF51)<<8
+        jsl rlTitleIntroScene6Scroll
+        lda #(`rlTitleIntroScene6Scroll)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FF51
+        lda #<>rlTitleIntroScene6Scroll
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -3147,7 +3152,7 @@
       .al
       .xl
 
-      rlUnknown95FF51 ; 95/FF51
+      rlTitleIntroScene6Scroll ; 95/FF51
 
         .al
         .xl
@@ -3183,7 +3188,7 @@
       .al
       .xl
 
-      rlUnknown95FF6E ; 95/FF6E
+      rlStartTitleIntroScene7Scroll ; 95/FF6E
 
         .al
         .xl
@@ -3193,10 +3198,10 @@
         phx
         lda #$0000
         sta $7FD048
-        jsl rlUnknown95FF8A
-        lda #(`rlUnknown95FF8A)<<8
+        jsl rlTitleIntroScene7Scroll
+        lda #(`rlTitleIntroScene7Scroll)<<8
         sta aTitleTimelineSlots.lRoutine+1,x
-        lda #<>rlUnknown95FF8A
+        lda #<>rlTitleIntroScene7Scroll
         sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
@@ -3213,7 +3218,7 @@
       .al
       .xl
 
-      rlUnknown95FF8A ; 95/FF8A
+      rlTitleIntroScene7Scroll ; 95/FF8A
 
         .al
         .xl
@@ -3278,12 +3283,14 @@
       .al
       .xl
 
-      rlUnknown9BE15F ; 9B/E15F
+      rlStopTitleTimelineSlot ; 9B/E15F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = the slot.
 
         phx
         sta wR10
@@ -3366,12 +3373,14 @@
 
         ; 9B/E1C0
 
-      rlUnknown9BE1C0 ; 9B/E1C0
+      rlLoadTitleIntroGraphics ; 9B/E1C0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears the BG tilemap, decompresses and uploads the intro's graphics and sets its first palettes (rlSetUpTitleIntro).
 
         phx
         ldx #$0000
@@ -3498,7 +3507,7 @@
         sta lR18+1
         phx
         tyx
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         pla
         clc
         adc #$0003
@@ -3546,7 +3555,7 @@
 
         _E2E8
         lda #$0005
-        jsl rlUnknown9BEDD7
+        jsl rlStartTitleSpriteAfterimage
         txa
         clc
         adc #$0062
@@ -3582,7 +3591,7 @@
 
         _E302
         lda #$0003
-        jsl rlUnknown9BEDD7
+        jsl rlStartTitleSpriteAfterimage
         txa
         clc
         adc #$0062
@@ -3610,7 +3619,7 @@
 
         _E31C
         lda #$0003
-        jsl rlUnknown9BEDD7
+        jsl rlStartTitleSpriteAfterimage
         txa
         clc
         adc #$0062
@@ -3833,8 +3842,8 @@
         sta aTitleTimelineSlots.bActive,x
         rep #$20
         lda #$0002
-        jsl rlUnknown9BE15F
-        jsl rlUnknown95F87F
+        jsl rlStopTitleTimelineSlot
+        jsl rlClearTitleSprites
         lda #$5C00
 
         _E430
@@ -4059,7 +4068,7 @@
 
       rlUnknown9BE5B2 ; 9B/E5B2
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -4213,7 +4222,7 @@
         lda #$0004
         jsl rlHDMAEngineFreeEntryByIndex
         lda #$0004
-        jsl rlUnknown9BE15F
+        jsl rlStopTitleTimelineSlot
         lda #$0000
         sta lTitleVBlankRoutine1
         rtl
@@ -4385,7 +4394,7 @@
         lda #$0004
         jsl rlHDMAEngineFreeEntryByIndex
         lda #$0004
-        jsl rlUnknown9BE15F
+        jsl rlStopTitleTimelineSlot
         lda #$0000
         sta lTitleVBlankRoutine1
         rtl
@@ -4974,7 +4983,7 @@
 
       rlUnknown9BF23C ; 9B/F23C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -5479,9 +5488,9 @@
       .al
       .xl
 
-      rlUnknown9BF651 ; 9B/F651
+      rlStartTitleEdgeFade ; 9B/F651
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -5499,7 +5508,7 @@
 
       rlUnknown9BF65C ; 9B/F65C
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -5597,7 +5606,7 @@
 
       rlUnknown9BF6D6 ; 9B/F6D6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -6348,7 +6357,7 @@
 
       rlUnknown9BFA58 ; 9B/FA58
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -6390,7 +6399,7 @@
 
       rlUnknown9BFA6E ; 9B/FA6E
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -6432,7 +6441,7 @@
 
       rlUnknown9BFA85 ; 9B/FA85
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -6476,7 +6485,7 @@
 
       rlUnknown9BFAA1 ; 9B/FAA1
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -6516,9 +6525,9 @@
       .al
       .xl
 
-      rlUnknown9BFAB7 ; 9B/FAB7
+      rlAllowStartOnTitle ; 9B/FAB7
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -6535,13 +6544,15 @@
 
         ; 9B/FAC6
 
-      rlUnknown9BFAC6 ; 9B/FAC6
+      rlStartDimmingTitle ; 9B/FAC6
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The fade out's first step: dims the palettes to half and sets its registers.
 
         phx
         sep #$20
@@ -6650,7 +6661,7 @@
 
       rlEndTitleScreenFadeOut ; 9B/FB68
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -6674,12 +6685,14 @@
       .al
       .xl
 
-      rlUnknown9BFB73 ; 9B/FB73
+      rlEnterTitlePhase ; 9B/FB73
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets bTitleScreenPhase to 1 at the end of the intro's timeline, without reloading: the intro has built the title itself.
 
         sep #$20
         lda #$01
@@ -6699,12 +6712,14 @@
       .al
       .xl
 
-      rlUnknown9BFB7E ; 9B/FB7E
+      rlPlayTitleIntroSong ; 9B/FB7E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Song 1; clears bit 3 of bTitleScreenFlags.
 
         sep #$20
         lda bSoundFlags,b
@@ -6732,13 +6747,15 @@
       .al
       .xl
 
-      rlUnknown9BFB9F ; 9B/FB9F
+      rlPlayTitleIntroSong2 ; 9B/FB9F
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Song 2, at frame $10F2 of the intro.
 
         lda #$0002
         sta wMusicID,b
@@ -6757,12 +6774,14 @@
       .al
       .xl
 
-      rlUnknown9BFBA9 ; 9B/FBA9
+      rlPlayTitleSong ; 9B/FBA9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Song 3 (rlTitleScreenShowTitle).
 
         lda #$0003
         sta wMusicID,b
@@ -6818,12 +6837,14 @@
       .al
       .xl
 
-      rlUnknown9BFD71 ; 9B/FD71
+      rlStartTitleLogoSprite1 ; 9B/FD71
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Also clears sprite 0's afterimage flags.
 
         sep #$20
         lda aTitleSprites.Flags
@@ -6834,13 +6855,13 @@
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions + 1 * TITLE_SPRITE_SIZE
-        bra rlUnknown9BFDC0._FDCB
+        bra rlStartTitleLogoSprite6._FDCB
 
         .databank 0
 
         ; 9B/FD8C
 
-      rsUnknown9BFD8C ; 9B/FD8C
+      rlStartTitleLogoSprite2 ; 9B/FD8C
 
         .al
         .xl
@@ -6851,13 +6872,13 @@
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions + 2 * TITLE_SPRITE_SIZE
-        bra rlUnknown9BFDC0._FDCB
+        bra rlStartTitleLogoSprite6._FDCB
 
         .databank 0
 
         ; 9B/FD99
 
-      rsUnknown9BFD99 ; 9B/FD99
+      rlStartTitleLogoSprite3 ; 9B/FD99
 
         .al
         .xl
@@ -6868,13 +6889,13 @@
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions + 3 * TITLE_SPRITE_SIZE
-        bra rlUnknown9BFDC0._FDCB
+        bra rlStartTitleLogoSprite6._FDCB
 
         .databank 0
 
         ; 9B/FDA6
 
-      rsUnknown9BFDA6 ; 9B/FDA6
+      rlStartTitleLogoSprite4 ; 9B/FDA6
 
         .al
         .xl
@@ -6885,13 +6906,13 @@
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions + 4 * TITLE_SPRITE_SIZE
-        bra rlUnknown9BFDC0._FDCB
+        bra rlStartTitleLogoSprite6._FDCB
 
         .databank 0
 
         ; 9B/FDB3
 
-      rsUnknown9BFDB3 ; 9B/FDB3
+      rlStartTitleLogoSprite5 ; 9B/FDB3
 
         .al
         .xl
@@ -6902,13 +6923,13 @@
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions + 5 * TITLE_SPRITE_SIZE
-        bra rlUnknown9BFDC0._FDCB
+        bra rlStartTitleLogoSprite6._FDCB
 
         .databank 0
 
         ; 9B/FDC0
 
-      rlUnknown9BFDC0 ; 9B/FDC0
+      rlStartTitleLogoSprite6 ; 9B/FDC0
 
         .al
         .xl
@@ -6922,14 +6943,14 @@
 
         _FDCB
         sta lR18
-        jsl rlUnknown95F967
+        jsl rlStartTitleSprite
         rtl
 
         .databank 0
 
         ; 9B/FDD2
 
-      rlUnknown9BFDD2 ; 9B/FDD2
+      rlStartTitleLogoSprite7 ; 9B/FDD2
 
         .al
         .xl
@@ -6940,13 +6961,13 @@
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions + 7 * TITLE_SPRITE_SIZE
-        bra rlUnknown9BFDC0._FDCB
+        bra rlStartTitleLogoSprite6._FDCB
 
         .databank 0
 
         ; 9B/FDDF
 
-      rlUnknown9BFDDF ; 9B/FDDF
+      rlStartTitleLogoSprite8 ; 9B/FDDF
 
         .al
         .xl
@@ -6957,13 +6978,13 @@
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions + 8 * TITLE_SPRITE_SIZE
-        bra rlUnknown9BFDC0._FDCB
+        bra rlStartTitleLogoSprite6._FDCB
 
         .databank 0
 
         ; 9B/FDEC
 
-      rlUnknown9BFDEC ; 9B/FDEC
+      rlStartTitleLogoSprite9 ; 9B/FDEC
 
         .al
         .xl
@@ -6974,13 +6995,13 @@
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions + 9 * TITLE_SPRITE_SIZE
-        bra rlUnknown9BFDC0._FDCB
+        bra rlStartTitleLogoSprite6._FDCB
 
         .databank 0
 
         ; 9B/FDF9
 
-      rlUnknown9BFDF9 ; 9B/FDF9
+      rlStartTitleLogoSprite10 ; 9B/FDF9
 
         .al
         .xl
@@ -6991,13 +7012,13 @@
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions + 10 * TITLE_SPRITE_SIZE
-        bra rlUnknown9BFDC0._FDCB
+        bra rlStartTitleLogoSprite6._FDCB
 
         .databank 0
 
         ; 9B/FE06
 
-      rlUnknown9BFE06 ; 9B/FE06
+      rlStartTitleLogoSprite11 ; 9B/FE06
 
         .al
         .xl
@@ -7008,7 +7029,7 @@
         lda #(`aTitleSpriteDefinitions)<<8
         sta lR18+1
         lda #<>aTitleSpriteDefinitions + 11 * TITLE_SPRITE_SIZE
-        bra rlUnknown9BFDC0._FDCB
+        bra rlStartTitleLogoSprite6._FDCB
 
         .databank 0
 
