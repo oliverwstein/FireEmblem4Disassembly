@@ -1,6 +1,6 @@
 # ROM bytes not built from source
 
-Made by `tools/gaps.py`; do not edit. Every run of bytes the build still copies from
+Made by `tools/gaps.py` on 2026-11-23; do not edit. Every run of bytes the build still copies from
 `fe4.sfc`, with the evidence of what it is. Classes, strongest evidence first:
 `code` (a call or jump in the source targets it), `table` (built code reads it at its
 first byte), `inside` (built code points into it, not at its start), `log` (read in

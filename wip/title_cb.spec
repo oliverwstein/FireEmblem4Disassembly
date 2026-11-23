@@ -1,6 +1,0 @@
-rlUnknown9BE6DF engine/title/title_scenes.asm TitleScenes9BE6DFSection
-rlUnknown9BE88E engine/title/title_scenes.asm TitleScenes9BE88ESection
-rlUnknown9BEA5C engine/title/title_scenes.asm TitleScenes9BEA5CSection
-rlUnknown9BF4BF engine/title/title_scenes.asm TitleScenes9BF4BFSection
-rlUnknown9BF59E engine/title/title_scenes.asm TitleScenes9BF59ESection
-rlUnknown9BF7A3 engine/title/title_scenes.asm TitleScenes9BF7A3Section
