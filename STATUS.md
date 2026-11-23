@@ -4,15 +4,15 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-22, after the map menu wave)
+## Current state (2026-11-22, after the map engine wave)
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
-- `./build.sh` is byte-identical and the checksums verify. 97.55% of the ROM is built from source. GAPS.md: 181 `none` pieces (60,487 bytes), 56 padding runs (42,139 bytes). Banks `$85` and `$87` have no gaps left.
-- Routines: 6,003 in `engine/`, 3,472 named, 2,531 `Unknown`; 2,064 still in `engine/unsorted/` (banks `$81`, `$84`, `$88`, `$8B`, `$8C`, `$8D`, `$90`, `$91`, `$95`-`$97`, `$9B`, `$9E`, `$9F`). 307 pinned blocks.
-- **Phase 3 Wave 2c (the map menus) done in one session**, commits `3165f4d`..`4dbff3f`. Banks `$85` and `$87` are out of `engine/unsorted/`; what each file holds is in [docs/reference/map_menu.md](docs/reference/map_menu.md) and HISTORY.md. New RAM names: the map menu block at `$000516`, `aUnitMenu...Slots` at `$7E2000` (scoped in `tools/name_ram.py`: the AI uses the area), the HP window requests at `$000DAF`; constants `UNIT_MENU_MODE_*` and `MAP_BATTLE_HP_REQUEST_*` in `include/Menus.h`.
-- **Left from this wave:** 35 `Unknown` in `engine/menus/unit_window.asm` (the full-screen unit list, bank `$8B`/`$80`); the `ldy #$xxxx` sprite pointer check in the unit, item and skill windows (as bank `$89`'s were, `tools/sprite_arrays.py`); a dozen low-level helpers left `Unknown` on purpose (the gradient table builder, the map battle HUD palette helpers, the "RP" proc in `map_battle_magic.asm`). Bank `$84`'s `rlUnknown84F786` (builds the unit menu's slot lists) and the command handlers' targets in banks `$84`/`$88` belong to the map engine wave.
-- Reference pages so far: `docs/reference/core.md`, `ai.md`, `castle.md`, `menus.md`, `map_menu.md`, `save.md`. `tools/reference.py` output is gitignored; run it locally. What each wave did is in HISTORY.md under "Phase 3 waves".
+- `./build.sh` is byte-identical and the checksums verify. 97.55% of the ROM is built from source. GAPS.md: 177 `none` pieces (60,429 bytes), 56 padding runs (42,139 bytes).
+- Routines: 6,003 in `engine/`, 3,857 named, 2,146 `Unknown`; 1,755 still in `engine/unsorted/` (banks `$81`, `$84`, `$8B`, `$8C`, `$8D`, `$90`, `$91`, `$95`-`$97`, `$9B`, `$9E`, `$9F`). 307 pinned blocks.
+- **Phase 3 Wave 3 (the map engine) done in one session**, commits `650bcba`..`64bda55`: the menu leftovers first (unit window sort routines, the `ldy #$xxxx` sprite arrays), then all of bank `$88` and bank `$84`'s map side. `engine/unsorted/bank88.asm` is gone. What each new file holds is in [docs/reference/map.md](docs/reference/map.md) and HISTORY.md. New `include/Map.h` (`MAP_CURSOR_*`, `MAP_AI_*`, `MAP_RETURN_*`, `MAP_ACTION_*`, `PATH_*`), `UNIT_WINDOW_SORT_*` in `include/Menus.h`, and map RAM names in `include/WRAM.h` (`wMapCursorState`, `wMapReturnFlags`, `aMovementPath`, the streaming block at `$00071C`, `wDemoIndex` at `$1B49`...).
+- **Left from this wave:** bank `$84` still has 17 routines of other systems in `engine/unsorted/bank84.asm` (class change `rlUnknown8499B5`/`rsUnknown84AC24`/`AC50`, repair `rlUnknown84B349`, arena `rlUnknown84B508`/`B550`, love points `rsUnknown84C398`/`C3C1`/`rlUnknown84C412`, win/loss counts `rlUnknown8486A0`/`86E5`, castle targets `rlUnknown848BFE`, and a few more); they belong to the castle, units and battle waves. `rlMapStep`, `rlMapUpkeep` and the map's other per-frame code are in bank `$81` (unsorted). `rlRunMapAction` stays inside `battle.asm`'s one big section. `rlUnknown88DD0F` (unreached) is the only `Unknown` left from bank `$88`.
+- Reference pages so far: `docs/reference/core.md`, `ai.md`, `castle.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`. `tools/reference.py` output is gitignored; run it locally. What each wave did is in HISTORY.md under "Phase 3 waves".
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
 ## Who wrote what
@@ -28,11 +28,11 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Talk to the user before starting the next wave.** Next in the agreed order: **the map engine, bank `$88`** (cursor, camera, the action flow after a menu choice, map sprites; with bank `$84`'s map-side routines such as `rlUnknown84F786` and the unit command handlers' targets). Before it, a short clean-up could finish the menus: the 35 `Unknown` in `unit_window.asm` and the `ldy #$xxxx` sprite pointers. Then battle. The file and save menu screens in bank `$91` are not named yet; they could join the events wave.
-2. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
-3. Open questions are at the end of each reference page (`core.md`, `ai.md`, `castle.md`, `menus.md`, `map_menu.md`, `save.md`).
-4. `tools/stream_catalog.py` deleted the catalog previews when run (reverted), so `gfx/compressed/CATALOG.md` still names pre-castle labels; find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm; move the lines to a sensible place by hand. Check that an `include/` file does not exist before creating one.
-5. Bank `$89` cannot be pad-tested until it is merged: its last block has no free space after it. Banks `$85` and `$87` are all source now and could be merged (`tools/merge_bank.py`) and pad-tested.
+1. **Talk to the user before starting the next wave.** Next in the agreed order: **events, attract mode, epilogue and scripted scenes** (banks `$81`, `$82`, `$8D`, `$90`, `$91`, `$9E`; PLAN wave 4). Bank `$81` holds the map step and upkeep (`rlMapStep`, `rlMapUpkeep`) and event movers, which pair well with what this wave named; bank `$90` the attract demo's map scenes (indexed by `wDemoIndex`). That is big: propose a part (for example banks `$81` and `$90`) and say which. The file and save menu screens in bank `$91` could join it. Then battle.
+2. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages (core, map, menus, castle and AI have them now), and show it to the user.
+3. Open questions are at the end of each reference page (`core.md`, `ai.md`, `castle.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`).
+4. `tools/stream_catalog.py` deleted the catalog previews when run (reverted), so `gfx/compressed/CATALOG.md` still names pre-castle labels; find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm; move the lines to a sensible place by hand. Check that an `include/` file does not exist before creating one. `tools/rename.py` refuses a new name that appears anywhere, comments included: rename forward references in comments first.
+5. Bank `$89` cannot be pad-tested until it is merged: its last block has no free space after it. Banks `$85`, `$87` and now `$88` are all source and could be merged (`tools/merge_bank.py`) and pad-tested.
 
 **Per-wave checklist.** One system (or one part of a big one) per session; hand over and clear context after each.
 
@@ -54,6 +54,8 @@ Each is one screen. Answers so far are in HISTORY.md under the wave that asked t
 1. (When a save reaches chapter 6.) Augury with a generation 2 child: are there three topics (love, record, parents)? The code reads the topic count from `$7F8183`; only the screen shows which topics a child gets.
 2. The unit command menu's mode 1: move a player unit onto its own home castle and choose たいき (wait). Does the command menu open again by itself, and which commands does it list? The code shows mode 1 follows a player unit ending its action at its home castle, hides attack, staff, items, dance, talk and give, and that B cannot close it; only the screen shows what the menu is for.
 3. Where does まち (town) appear? The code shows it at a location of type 1 and that its handler opens the castle screen; one screenshot of a unit standing where it is offered settles what a type 1 location is.
+4. The item window (from the map menu's item command) with a weapon selected: what is the sprite at the right edge, about (195, 76)? The code draws it only for weapons (`aUnknown89BE50`, tile `$0E`); the weapon type icon and the weapon triangle icons beside it are known.
+5. The attract mode (leave the title screen alone): does it alternate map scenes and battles? The code shows `wDemoIndex` counts down, that the battle setups only use odd indices, and that bank `$90` has chapter map scenes for each index; one watch of the demo shows whether even indices are the map scenes.
 
 ## How to work on this project
 
