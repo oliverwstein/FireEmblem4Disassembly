@@ -1,2473 +1,17 @@
-; Code from bank $9F not yet assigned to a game system.
-
-    .section Bank9FBuildStampSection
-
-      .al
-      .xl
-
-      aBank9FBuildStamp ; 9F/8000
-
-        ; Unreferenced: an ASCII build stamp at the start of the bank.
-        .text "1996/01/10 05:29 by manchan     "
-
-    .endsection Bank9FBuildStampSection
-
-
-    .section Unsorted9F8020Section
-
-      .al
-      .xl
-
-      rlUnknown9F8020 ; 9F/8020
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F5089
-        bpl _8027
-        rtl
-
-
-        _8027
-        phb
-        phk
-        plb
-        .databank $9F
-        phx
-        phy
-        jsr rsUnknown9F82A7
-        jsr rsUnknown9F8414
-        jsr rsUnknown9F83D0
-        lda #$0000
-        sta $7F50A1
-        sta $7F50A3
-        lda #$FFFF
-        sta $7F50A5
-        sta $7F50B7
-        lda #(`procUnknown9F805D)<<8
-        sta lR44+1
-        lda #<>procUnknown9F805D
-        sta lR44
-        jsl rlProcEngineCreateProc
-        ply
-        plx
-        plb
-        .databank ?
-        rtl
-
-        .databank 0
-
-        ; 9F/805D
-
-    .endsection Unsorted9F8020Section
-
-
-    .section ProcScript9F805DSection
-
-      .al
-      .xl
-
-      procUnknown9F805D ; 9F/805D
-
-        .structProcInfo "ON", rlProcUnknown9F805DInit, rlProcUnknown9F805DCycle, aProcUnknown9F805DCode
-
-    .endsection ProcScript9F805DSection
-
-
-    .section Unsorted9F8065Section
-
-      .al
-      .xl
-
-      rlProcUnknown9F805DCycle ; 9F/8065
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F5091
-        beq _8084
-        bmi _8081
-        phx
-        lda $7F5089
-        asl a
-        tax
-        lda <>aUnknown9F8085,b,x
-        sta lR18
-        phk
-        pea #<>_8080 - 1
-        jmp (lR18)
-
-
-        _8080
-        plx
-
-        _8081
-        stz aProcSystem.aHeaderTypeOffset,b,x
-
-        _8084
-        rtl
-
-        .databank 0
-
-        ; 9F/8085
-
-
-      aUnknown9F8085 ; 9F/8085
-
-        .word <>rlUnknown9F9296
-        .word <>rlUnknown9F92AC
-        .word <>rlUnknown9FA2BF
-        .word <>rlUnknown9FD42A
-        .word <>rlUnknown9FB26C
-        .word <>rlUnknown9FA66C
-        .word <>rlUnknown9FA672
-        .word <>rlUnknown9FAF22
-        .word <>rlUnknown9FBCCF
-        .word <>rlUnknown9FA672
-        .word <>rlUnknown9FCA5F
-        .word <>rlUnknown9FCA5F
-        .word <>rlUnknown9FC840
-        .word <>rlUnknown9FBFF9
-        .word <>rlUnknown9FB527
-        .word <>rlUnknown9FAC5B
-        .word <>rlUnknown9FC18B
-        .word <>rlUnknown9F97B7
-        .word <>rlUnknown9F9954
-        .word <>rlUnknown9FD0D6
-        .word <>rlUnknown9F9D10
-        .word <>rlUnknown9FA5AB
-        .word <>rlUnknown9F9954
-        .word <>rlUnknown9F9954
-        .word <>rlUnknown9F9954
-        .word <>rlUnknown9F9954
-        .word <>rlUnknown9F9954
-        .word <>rlUnknown9F9965
-        .word <>rlUnknown9F9976
-        .word <>rlUnknown9F9987
-        .word <>rlUnknown9F9998
-        .word <>rlUnknown9FB60E
-        .word <>rlUnknown9FCD38
-        .word <>rlUnknown9FCD38
-        .word <>rlUnknown9F9954
-        .word <>rlUnknown9FB614
-        .word <>rlUnknown9F9954
-        .word <>rlUnknown9FC60F
-        .word <>rlUnknown9FB61A
-        .word <>rlUnknown9F9BFD
-        .word <>rlUnknown9FD2C8
-        .word <>rlUnknown9FCD52
-
-    .endsection Unsorted9F8065Section
-
-
-    .section Unsorted9F8253Section
-
-      .al
-      .xl
-
-      rsUnknown9F8253 ; 9F/8253
-
-        ; TRACE: stack-args
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        tax
-        lda #3,s
-        tay
-        lda $0001,b,y
-        and #$00FF
-        pha
-        tya
-        inc a
-        sta #5,s
-        txa
-        and #$00FF
-        lsr a
-        lsr a
-        lsr a
-        cmp #$0010
-        bcs _8270
-        inc a
-
-        _8270
-        xba
-        ora #1,s
-        jsl rlPlaySoundEffect2
-        pla
-        plx
-        rts
-
-        .databank 0
-
-      rsUnknown9F827A ; 9F/827A
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        lda aProcSystem.aBody7,b,x
-        inc aProcSystem.aBody7,b,x
-        and #$0003
-        asl a
-        tax
-        sep #$20
-        lda $7F57FD
-        adc <>aUnknown9F829F,b,x
-        sta $7F
-        lda $7F57FE
-        clc
-        adc <>(aUnknown9F829F+1),b,x
-        sta $81
-        rep #$20
-        plx
-        rts
-
-        .databank 0
-
-      aUnknown9F829F ; 9F/829F
-
-        .byte $02, $02, $00, $02, $00, $FE, $FE, $FE
-
-        ; 9F/82A7
-
-    .endsection Unsorted9F8253Section
-
-
-    .section Unsorted9F82A7Section
-
-      .al
-      .xl
-
-      rsUnknown9F82A7 ; 9F/82A7
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda aMapAction.wUnknown7F4560
-        tay
-        lda $7F4BEB
-        lsr a
-        bcc _82B8
-        lda aMapAction.wUnknown7F455E
-        tay
-
-        _82B8
-        tya
-        sta $7F50C9
-        rts
-
-        .databank 0
-
-      rsUnknown9F82BE ; 9F/82BE
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        stz aProcSystem.aBody0,b,x
-        stz aProcSystem.aBody1,b,x
-        stz aProcSystem.aBody2,b,x
-        stz aProcSystem.aBody3,b,x
-        stz aProcSystem.aBody4,b,x
-        stz aProcSystem.aBody5,b,x
-        stz aProcSystem.aBody6,b,x
-        stz aProcSystem.aBody7,b,x
-        rts
-
-        .databank 0
-
-        ; 9F/82D7
-
-    .endsection Unsorted9F82A7Section
-
-
-    .section Unsorted9F82D7Section
-
-      .al
-      .xl
-
-      rsUnknown9F82D7 ; 9F/82D7
-
-        ; TRACE: stack-args
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phk
-        phk
-        pla
-        sta lR44+1
-        lda #1,s
-        tay
-        lda $0001,b,y
-        sta lR44
-        tya
-        clc
-        adc #$0002
-        sta #1,s
-        jsl rlProcEngineCreateProc
-        bcs _830E
-        phx
-        pha
-        lda $7F50A1
-        tax
-        lda #1,s
-        sta $7F50A5,x
-        lda #$FFFF
-        sta $7F50A7,x
-        inc x
-        inc x
-        txa
-        sta $7F50A1
-        pla
-        plx
-
-        _830E
-        rts
-
-        .databank 0
-
-        ; 9F/830F
-
-      rsUnknown9F830F ; 9F/830F
-
-        ; TRACE: stack-args
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phk
-        phk
-        pla
-        sta lR44+1
-        lda #1,s
-        tay
-        lda $0001,b,y
-        sta lR44
-        tya
-        clc
-        adc #$0002
-        sta #1,s
-        jsl rlHDMAEngineCreateEntry
-        bcs _8348
-        phx
-        lda $7F50A3
-        tax
-        lda aHDMASystem.wOffset,b
-        sta $7F50B7,x
-        lda #$FFFF
-        sta $7F50B9,x
-        inc x
-        inc x
-        txa
-        sta $7F50A3
-        plx
-        lda aHDMASystem.wOffset,b
-
-        _8348
-        rts
-
-        .databank 0
-
-        ; 9F/8349
-
-    .endsection Unsorted9F82D7Section
-
-
-    .section Unsorted9F8349Section
-
-      .al
-      .xl
-
-      rlUnknown9F8349 ; 9F/8349
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F5089
-        bmi _8358
-        jsr rsUnknown9F8359
-        jsr rsUnknown9F8371
-        jsr rsUnknown9F8389
-
-        _8358
-        rtl
-
-        .databank 0
-
-        ; 9F/8359
-
-      rsUnknown9F8359 ; 9F/8359
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        ldx #$0000
-        bra _8366
-
-
-        _835F
-        lsr a
-        jsl rlHDMAEngineFreeEntryByIndex
-        inc x
-        inc x
-
-        _8366
-        lda $7F50B7,x
-        cmp #$FFFF
-        bne _835F
-        plx
-        rts
-
-        .databank 0
-
-        ; 9F/8371
-
-      rsUnknown9F8371 ; 9F/8371
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        ldx #$0000
-        bra _837E
-
-
-        _8377
-        lsr a
-        jsl rlProcEngineFreeProcByIndex
-        inc x
-        inc x
-
-        _837E
-        lda $7F50A5,x
-        cmp #$FFFF
-        bne _8377
-        plx
-        rts
-
-        .databank 0
-
-        ; 9F/8389
-
-      rsUnknown9F8389 ; 9F/8389
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F508F
-        beq _8397
-        sep #$20
-        lda #$54
-        sta bBufferBG2SC
-        rep #$20
-
-        _8397
-        rts
-
-        .databank 0
-
-        ; 9F/8398
-
-    .endsection Unsorted9F8349Section
-
-
-    .section Unsorted9F8398Section
-
-      .al
-      .xl
-
-      rsUnknown9F8398 ; 9F/8398
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Unreferenced. Writes an active sprite definition to $7ECC0E from the
-        ; two words after the call (bank $9F) and creates the sprite from it.
-
-        phx
-        phk
-        phk
-        pla
-        sta $7ECC12
-        sta $7ECC0F
-        lda #3,s
-        tay
-        lda $0001,b,y
-        sta $7ECC11
-        lda $0003,b,y
-        sta $7ECC0E
-        tya
-        clc
-        adc #$0004
-        sta #3,s
-        lda #$7E00
-        sta lR44+1
-        lda #$CC00
-        sta lR44
-        ldx #$0000
-        txy
-        jsl rlCreateActiveSpriteHighestSlotRelative
-        plx
-        rts
-
-        .databank 0
-
-        ; 9F/83D0
-
-    .endsection Unsorted9F8398Section
-
-
-    .section Unsorted9F83D0Section
-
-      .al
-      .xl
-
-      rsUnknown9F83D0 ; 9F/83D0
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        lda $7F5090
-        and #$0004
-        tax
-        lda <>aUnknown9F83E9,b,x
-        sta $7F5095
-        lda <>(aUnknown9F83E9+2),b,x
-        sta $7F5097
-        plx
-        rts
-
-        .databank 0
-
-        ; 9F/83E9
-
-
-      aUnknown9F83E9 ; 9F/83E9
-
-        .byte $08, $21, $7F, $37, $7F, $30, $22, $0E
-
-    .endsection Unsorted9F83D0Section
-
-
-    .section Unsorted9F83F1Section
-
-      .al
-      .xl
-
-      rsUnknown9F83F1 ; 9F/83F1
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        sep #$20
-        lda bBufferTM
-        ora #$02
-        sta bBufferTM
-        lda #$0F
-        sta bBufferWBGLOG
-        lda #$01
-        sta bBufferWOBJLOG
-        lda #$11
-        sta bBufferTS
-        lda #$17
-        sta bBufferTMW
-        lda #$11
-        sta bBufferTSW
-        lda #$82
-        sta bBufferCGADSUB
-        plp
-        rts
-
-        .databank 0
-
-        ; 9F/8414
-
-    .endsection Unsorted9F83F1Section
-
-
-    .section Unsorted9F8414Section
-
-      .al
-      .xl
-
-      rsUnknown9F8414 ; 9F/8414
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-        sep #$20
-        lda bBufferW12SEL
-        sta $7F57F2
-        lda bBufferW34SEL
-        sta $7F57F3
-        lda bBufferWOBJSEL
-        sta $7F57F4
-        lda bBufferWBGLOG
-        sta $7F57F5
-        lda bBufferWOBJLOG
-        sta $7F57F6
-        lda bBufferTM
-        sta $7F57F7
-        lda bBufferTS
-        sta $7F57F8
-        lda bBufferTMW
-        sta $7F57F9
-        lda bBufferTSW
-        sta $7F57FA
-        lda bBufferCGWSEL
-        sta $7F57FB
-        lda bBufferCGADSUB
-        sta $7F57FC
-        lda wBufferBG1HOFS
-        sta $7F57FD
-        lda wBufferBG1VOFS
-        sta $7F57FE
-        lda wBufferBG2HOFS
-        sta $7F57FF
-        lda wBufferBG2VOFS
-        sta $7F5800
-        plp
-        rts
-
-        .databank 0
-
-        ; 9F/8473
-
-      rlUnknown9F8473 ; 9F/8473
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F5089
-        bpl _847A
-        rtl
-
-
-        _847A
-        php
-        sep #$20
-        lda $7F57F2
-        sta bBufferW12SEL
-        lda $7F57F3
-        sta bBufferW34SEL
-        lda $7F57F4
-        sta bBufferWOBJSEL
-        lda $7F57F5
-        sta bBufferWBGLOG
-        lda $7F57F6
-        sta bBufferWOBJLOG
-        lda $7F57F7
-        sta bBufferTM
-        lda $7F57F8
-        sta bBufferTS
-        lda $7F57F9
-        sta bBufferTMW
-        lda $7F57FA
-        sta bBufferTSW
-        lda $7F57FB
-        sta bBufferCGWSEL
-        lda $7F57FC
-        sta bBufferCGADSUB
-        lda $7F57FD
-        sta wBufferBG1HOFS
-        lda $7F57FE
-        sta wBufferBG1VOFS
-        lda $7F57FF
-        sta wBufferBG2HOFS
-        lda $7F5800
-        sta wBufferBG2VOFS
-        lda #$54
-        sta bBufferBG2SC
-        plp
-        rtl
-
-        .databank 0
-
-        ; 9F/84DD
-
-      rlUnknown9F84DD ; 9F/84DD
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F5089
-        bmi _850A
-        phx
-        phy
-        sta wR0
-        asl a
-        asl a
-        asl a
-        clc
-        adc wR0
-        tax
-        lda aMapBattleMagicBackgrounds,x
-        sta lR18
-        lda aMapBattleMagicBackgrounds+1,x
-        sta lR18+1
-        lda #(`aWorldMapMarkerPalette)<<8
-        sta lR19+1
-        lda #<>aWorldMapMarkerPalette
-        sta lR19
-        jsl rlAppendDecompList
-        ply
-        plx
-
-        _850A
-        rtl
-
-        .databank 0
-
-        ; 9F/850B
-
-      rlUnknown9F850B ; 9F/850B
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F5089
-        bmi _8574
-        phx
-        phy
-        sta wR0
-        cmp #$0004
-        bne _8532
-        lda $7F509B
-        and #$00FF
-        cmp #$00A0
-        bmi _8532
-        lda #(`acMapBattleMagicMeteorTilemap2)<<8
-        sta lR18+1
-        lda #<>acMapBattleMagicMeteorTilemap2
-        sta lR18
-        bra _8564
-
-
-        _8532
-        cmp #$0003
-        bne _854F
-        lda $7F509B
-        and #$00FF
-        cmp #$00C0
-        bmi _854F
-        lda #(`acMapBattleMagicValflameTilemap2)<<8
-        sta lR18+1
-        lda #<>acMapBattleMagicValflameTilemap2
-        sta lR18
-        bra _8564
-
-
-        _854F
-        lda wR0
-        asl a
-        asl a
-        asl a
-        clc
-        adc wR0
-        tax
-        lda aMapBattleMagicBackgrounds+3,x
-        sta lR18
-        lda aMapBattleMagicBackgrounds+4,x
-        sta lR18+1
-
-        _8564
-        lda #$7E00
-        sta lR19+1
-        lda #$DB88
-        sta lR19
-        jsl rlAppendDecompList
-        ply
-        plx
-
-        _8574
-        rtl
-
-        .databank 0
-
-        ; 9F/8575
-
-      rlUnknown9F8575 ; 9F/8575
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F5089
-        bmi _85A2
-        phx
-        phy
-        sta wR0
-        asl a
-        asl a
-        asl a
-        clc
-        adc wR0
-        tax
-        lda aMapBattleMagicBackgrounds+6,x
-        sta lR18
-        lda aMapBattleMagicBackgrounds+7,x
-        sta lR18+1
-        lda #$7E00
-        sta lR19+1
-        lda #$E388
-        sta lR19
-        jsl rlAppendDecompList
-        ply
-        plx
-
-        _85A2
-        rtl
-
-        .databank 0
-
-        ; 9F/85A3
-
-      rlUnknown9F85A3 ; 9F/85A3
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F5089
-        bmi _85CB
-        phy
-        phx
-        lda #(`aWorldMapMarkerPalette)<<8
-        sta lR18+1
-        lda #<>aWorldMapMarkerPalette
-        sta lR18
-        lda #$0800
-        sta wR0
-        lda bBufferBG4SC
-        and #$F000
-        clc
-        adc #$3800
-        sta wR1
-        jsl rlDMAByPointer
-        plx
-        ply
-
-        _85CB
-        rtl
-
-        .databank 0
-
-        ; 9F/85CC
-
-      rlUnknown9F85CC ; 9F/85CC
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F5089
-        bmi _85F4
-        phy
-        phx
-        lda #$7E00
-        sta lR18+1
-        lda #$D388
-        sta lR18
-        lda #$0800
-        sta wR0
-        lda bBufferBG4SC
-        and #$F000
-        clc
-        adc #$3C00
-        sta wR1
-        jsl rlDMAByPointer
-        plx
-        ply
-
-        _85F4
-        rtl
-
-        .databank 0
-
-        ; 9F/85F5
-
-      rlUnknown9F85F5 ; 9F/85F5
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F5089
-        bmi _861E
-        phy
-        phx
-        lda #$7E00
-        sta lR18+1
-        lda #$DB88
-        sta lR18
-        lda #$0800
-        sta wR0
-        lda bBufferBG1SC
-        and #$00FC
-        xba
-        clc
-        adc #$0C00
-        sta wR1
-        jsl rlDMAByPointer
-        plx
-        ply
-
-        _861E
-        rtl
-
-        .databank 0
-
-        ; 9F/861F
-
-      rlUnknown9F861F ; 9F/861F
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $7F5089
-        bmi _8676
-        phy
-        phx
-        lda #$7E00
-        sta lR18+1
-        sta lR19+1
-        lda #$E388
-        sta lR18
-        clc
-        adc #$0020
-        sta lR19
-        lda wBattleType
-        and #$00FF
-        cmp #$0003
-        beq _8660
-        ldy #$00D2
-        ldx #$00D2
-
-        _864B
-        lda [lR18],y
-        sta aBGPaletteBuffer,b,x
-        lda [lR19],y
-        sta aBGPaletteBuffer.aPalette1,b,x
-        inc y
-        inc y
-        inc x
-        inc x
-        cpx #$00E0
-        bne _864B
-        bra _8674
-
-
-        _8660
-        ldy #$00D2
-        ldx #$00D2
-
-        _8666
-        lda [lR18],y
-        sta aBGPaletteBuffer,b,x
-        inc y
-        inc y
-        inc x
-        inc x
-        cpx #$00E0
-        bne _8666
-
-        _8674
-        plx
-        ply
-
-        _8676
-        rtl
-
-        .databank 0
-
-        ; 9F/8677
-
-      rlUnknown9F8677 ; 9F/8677
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phb
-        phy
-        phx
-        lda #$7F00
-        sta lR18+1
-        lda #$45D9
-        sta lR18
-        lda #$0400
-        sta wR0
-        lda aMapAction.wMapBattleRoundIndex
-        asl a
-        tax
-        lda aBattleRoundsData._Entry[0],x
-        and #$0001
-        and #$0001
-        asl a
-        tax
-        lda bBufferOBSEL
-        and #$0003
-        asl a
-        asl a
-        asl a
-        asl a
-        asl a
-        xba
-        sta wR1
-        jsl rlDMAByPointer
-        plx
-        ply
-        plb
-        .databank ?
-        rtl
-
-        .databank 0
-
-        ; 9F/86B0
-
-    .endsection Unsorted9F8414Section
-
-
-    .section Unsorted9F86B0Section
-
-      .al
-      .xl
-
-      rlUnknown9F86B0 ; 9F/86B0
-
-        .al
-        .autsiz
-        .databank ?
-
-        lda bDecompressionArrayFlag,b
-        bne +
-
-          lda aProcSystem.aHeaderBitfield,b,x
-          ora #1
-          sta aProcSystem.aHeaderBitfield,b,x
-
-        +
-        rtl
-
-        .databank 0
-
-        ; 9F/86BF
-
-    .endsection Unsorted9F86B0Section
-
-
-    .section Unsorted9F86BFSection
-
-      .al
-      .xl
-
-      rlUnknown9F86BF ; 9F/86BF
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phy
-        phx
-        lda aProcSystem.aHeaderBitfield,b,x
-        and #$FFFD
-        sta aProcSystem.aHeaderBitfield,b,x
-        lda $7F5089
-        bmi _8721
-        asl a
-        asl a
-        adc $7F5089
-        tax
-        lda aMapBattleMagicSprites,x
-        cmp #$FFFF
-        beq _8721
-        phk
-        phk
-        ply
-        sty lR19+1
-        sta lR19
-        lda aMapBattleMagicSprites+2,x
-        sta lR18
-        lda aMapBattleMagicSprites+3,x
-        sta lR18+1
-        ldx #$01DE
-        ldy #$001E
-
-        _86F9
-        lda [lR19],y
-        sta aBGPaletteBuffer,b,x
-        dec x
-        dec x
-        dec y
-        dec y
-        bpl _86F9
-        lda #1,s
-        tax
-        lda aProcSystem.aHeaderBitfield,b,x
-        and #$FFFE
-        ora #$0002
-        sta aProcSystem.aHeaderBitfield,b,x
-        lda #$7F00
-        sta lR19+1
-        lda #$45D9
-        sta lR19
-        jsl rlAppendDecompList
-
-        _8721
-        plx
-        ply
-        rtl
-
-        .databank 0
-
-        ; 9F/8724
-
-    .endsection Unsorted9F86BFSection
-
-
-    .section Unsorted9F88C0Section
-
-      .al
-      .xl
-
-      aUnknown9F88C0 ; 9F/88C0
-
-        ; Unreferenced: 32 colours after the map magic sprite palettes.
-        .word $2550, $39F3, $4E97, $5F3B, $73DF, $01D8, $0619, $063A
-        .word $0A7B, $0EBC, $12FD, $131E, $175F, $00AC, $00EE, $052F
-        .word $0571, $09B2, $0A35, $0E97, $131A, $17DF, $0C89, $190C
-        .word $298F, $3612, $4276, $4EF9, $5F7C, $6BFF, $0008, $14AC
-
-    .endsection Unsorted9F88C0Section
-
-
-    .section Unsorted9F8900Section
-
-      .al
-      .xl
-
-      rlUnknown9F8900 ; 9F/8900
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda aProcSystem.aHeaderBitfield,b,x
-        and #$FFFD
-        sta aProcSystem.aHeaderBitfield,b,x
-        lda $7F508F
-        beq _8942
-        phx
-        lda $7F508B
-        sta $7F5089
-        lda aMapAction.wMapBattleRoundIndex
-        asl a
-        tax
-        lda aBattleRoundsData._Entry[0],x
-        and #$0001
-        beq _892F
-        lda $7F508D
-        sta $7F5089
-
-        _892F
-        plx
-        lda $7F5089
-        cmp #$FFFF
-        beq _8942
-        lda aProcSystem.aHeaderBitfield,b,x
-        ora #$0002
-        sta aProcSystem.aHeaderBitfield,b,x
-
-        _8942
-        rtl
-
-        .databank 0
-
-        ; 9F/8943
-
-    .endsection Unsorted9F8900Section
-
-
-    .section Unsorted9F8943Section
-
-      .al
-      .xl
-
-      rlUnknown9F8943 ; 9F/8943
-
-        ; Found by tools/sweep.py.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        php
-
-        _8944
-        ldy wDMAArrayPosition,b
-        sep #$20
-        lda #$02
-        sta aDMAArray,b,y
-        lda #$00
-        sta $034F,b,y
-        lda $0000,b,x
-        sta $034C,b,y
-        rep #$21
-        lda $0001,b,x
-        sta $0347,b,y
-        lda $0002,b,x
-        sta $0348,b,y
-        lda $0004,b,x
-        sta $034A,b,y
-        lda $0006,b,x
-        sta $034D,b,y
-        tya
-        adc #$0009
-        sta wDMAArrayPosition,b
-        txa
-        clc
-        adc #$0008
-        tax
-        lda $0000,b,x
-        cmp #$FFFF
-        bne _8944
-        sep #$20
-        lda #$01
-        sta bDMAArrayFlag,b
-        lda bBufferINIDISP
-        bpl _8997
-        jsl rlProcessDMAStructArray
-
-        _8997
-        plp
-        rtl
-
-        .databank 0
-
-        ; 9F/8999
-
-    .endsection Unsorted9F8943Section
-
-
-    .section Unsorted9F8999Section
-
-      .al
-      .xl
-
-      rlUnknown9F8999 ; 9F/8999
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda aActiveSpriteSystem.aUnknown0013C0,b,x
-        sep #$20
-        clc
-        adc $11E1,b,x
-        sta $11E1,b,x
-        rep #$20
-        and #$FF00
-        xba
-        bpl _89B0
-        ora #$FF00
-
-        _89B0
-        adc aActiveSpriteSystem.aUnknown001200,b,x
-        sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda aActiveSpriteSystem.aUnknown0013E0,b,x
-        sep #$20
-        clc
-        adc $1221,b,x
-        sta $1221,b,x
-        rep #$20
-        and #$FF00
-        xba
-        bpl _89CD
-        ora #$FF00
-
-        _89CD
-        adc aActiveSpriteSystem.aUnknown001240,b,x
-        sta aActiveSpriteSystem.aUnknown001240,b,x
-        rtl
-
-        .databank 0
-
-      rsUnknown9F89D4 ; 9F/89D4
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda aActiveSpriteSystem.aUnknown001200,b,x
-        sec
-        sbc wR0
-        bpl _89E0
-        eor #$FFFF
-        inc a
-
-        _89E0
-        cmp wR2
-        bpl _89F6
-        lda aActiveSpriteSystem.aUnknown001240,b,x
-        sec
-        sbc wR1
-        bpl _89F0
-        eor #$FFFF
-        inc a
-
-        _89F0
-        cmp wR2
-        bpl _89F6
-        sec
-        rts
-
-        _89F6
-        clc
-        rts
-
-        .databank 0
-
-      rlUnknown9F89F8 ; 9F/89F8
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        lda wR0
-        sta wR2
-        jsl rlUnknown9F8A34
-        sta wR0
-        lda wR2
-        bpl _8A0B
-        eor #$FFFF
-        inc a
-
-        _8A0B
-        xba
-        jsl rlUnknown9F8B7A._8B84
-        bpl _8A16
-        eor #$FFFF
-        inc a
-
-        _8A16
-        sta wR2
-        lda wR1
-        bpl _8A20
-        eor #$FFFF
-        inc a
-
-        _8A20
-        xba
-        jsl rlUnknown9F8B7A
-        bpl _8A2B
-        eor #$FFFF
-        inc a
-
-        _8A2B
-        clc
-        adc wR2
-        xba
-        plx
-        and #$00FF
-        rtl
-
-        .databank 0
-
-        ; 9F/8A34
-
-    .endsection Unsorted9F8999Section
-
-
-    .section Unsorted9F8A34Section
-
-      .as
-      .xl
-
-      rlUnknown9F8A34 ; 9F/8A34
-
-        ; Found by tools/sweep.py.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        ldx #$0000
-        lda wR0
-        bpl _8A43
-        ldx #$0004
-        eor #$FFFF
-        inc a
-
-        _8A43
-        sta wR0
-        lda wR1
-        bpl _8A4F
-        inc x
-        inc x
-        eor #$FFFF
-        inc a
-
-        _8A4F
-        sta wR1
-        cmp wR0
-        bpl _8A76
-        sep #$20
-        stz $4204,b
-        lda wR1
-        sta $4205,b
-        lda wR0
-        sta $4206,b
-        nop
-        nop
-        nop
-        rep #$20
-        jsr (_8A6E,x)
-        plx
-        rtl
-
-        _8A6E
-        .word <>rsUnknown9F8A97
-        .word <>rsUnknown9F8AA8
-        .word <>rsUnknown9F8AB5
-        .word <>rsUnknown9F8AC6
-
-        _8A76
-        sep #$20
-        stz $4204,b
-        lda wR0
-        sta $4205,b
-        lda wR1
-        sta $4206,b
-        nop
-        nop
-        nop
-        rep #$20
-        jsr (_8A8F,x)
-        plx
-        rtl
-
-        _8A8F
-        .word <>rsUnknown9F8ADA
-        .word <>rsUnknown9F8AEB
-        .word <>rsUnknown9F8AFF
-        .word <>rsUnknown9F8B13
-
-        .databank 0
-
-        ; 9F/8A97
-
-    .endsection Unsorted9F8A34Section
-
-
-    .section Unsorted9F8A97Section
-
-      .al
-      .xl
-
-      rsUnknown9F8A97 ; 9F/8A97
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $4214,b
-        lsr a
-        lsr a
-        lsr a
-        eor #$FFFF
-        inc a
-        and #$00FF
-        jml rsUnknown9F8B24
-
-        .databank 0
-
-        ; 9F/8AA8
-
-      rsUnknown9F8AA8 ; 9F/8AA8
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $4214,b
-        lsr a
-        lsr a
-        lsr a
-        and #$00FF
-        jml rsUnknown9F8B24
-
-        .databank 0
-
-        ; 9F/8AB5
-
-      rsUnknown9F8AB5 ; 9F/8AB5
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $4214,b
-        lsr a
-        lsr a
-        lsr a
-        clc
-        adc #$0080
-        and #$00FF
-        jml rsUnknown9F8B24
-
-        .databank 0
-
-        ; 9F/8AC6
-
-      rsUnknown9F8AC6 ; 9F/8AC6
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $4214,b
-        lsr a
-        lsr a
-        lsr a
-        eor #$FFFF
-        sec
-        adc #$0080
-        and #$00FF
-        jml rsUnknown9F8B24
-
-        .databank 0
-
-        ; 9F/8ADA
-
-      rsUnknown9F8ADA ; 9F/8ADA
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $4214,b
-        lsr a
-        lsr a
-        lsr a
-        clc
-        adc #$00C0
-        and #$00FF
-        jml rsUnknown9F8B24
-
-        .databank 0
-
-        ; 9F/8AEB
-
-      rsUnknown9F8AEB ; 9F/8AEB
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $4214,b
-        lsr a
-        lsr a
-        lsr a
-        eor #$FFFF
-        sec
-        adc #$0040
-        and #$00FF
-        jml rsUnknown9F8B24
-
-        .databank 0
-
-        ; 9F/8AFF
-
-      rsUnknown9F8AFF ; 9F/8AFF
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $4214,b
-        lsr a
-        lsr a
-        lsr a
-        eor #$FFFF
-        sec
-        adc #$00C0
-        and #$00FF
-        jml rsUnknown9F8B24
-
-        .databank 0
-
-        ; 9F/8B13
-
-      rsUnknown9F8B13 ; 9F/8B13
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda $4214,b
-        lsr a
-        lsr a
-        lsr a
-        clc
-        adc #$0040
-        and #$00FF
-        jml rsUnknown9F8B24
-
-        .databank 0
-
-        ; 9F/8B24
-
-      rsUnknown9F8B24 ; 9F/8B24
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        pha
-        and #$003F
-        tax
-        lda <>aUnknown9F8B3A,b,x
-        and #$00FF
-        eor #$FFFF
-        inc a
-        clc
-        adc #1,s
-        sta #1,s
-        pla
-        rts
-
-        .databank 0
-
-        ; 9F/8B3A
-
-
-      aUnknown9F8B3A ; 9F/8B3A
-
-        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF, $FF, $FF
-        .byte $00, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $00, $00, $00
-        .byte $00, $00, $01, $02, $02, $02, $03, $03, $03, $03, $04, $03, $03, $04, $03, $04
-        .byte $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $02, $01, $01, $00, $00, $00
-
-    .endsection Unsorted9F8A97Section
-
-
-    .section Unsorted9F8B7ASection
-
-      .al
-      .xl
-
-      rlUnknown9F8B7A ; 9F/8B7A
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        sta wR10
-        lda wR0
-        clc
-        adc #$0080
-        bra _8B8C
-
-        _8B84
-        sta wR10
-        lda wR0
-        clc
-        adc #$0040
-
-        _8B8C
-        asl a
-        and #$01FE
-        tax
-        lda aUnknown9F8C3A,x
-        sta wR14
-        bpl _8B9D
-        eor #$FFFF
-        inc a
-
-        _8B9D
-        sta wR11
-        jsr rsUnknown9F8BAD
-        lda wR12+1
-        bit wR14
-        bpl _8BAC
-        eor #$FFFF
-        inc a
-
-        _8BAC
-        rtl
-
-        .databank 0
-
-        ; 9F/8BAD
-
-      rsUnknown9F8BAD ; 9F/8BAD
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        rep #$20
-        sep #$10
-        ldx wR10
-        stx $4202,b
-        ldx wR11
-        stx $4203,b
-        xba
-        nop
-        lda $4216,b
-        sta wR12
-        ldx wR10+1
-        stx $4202,b
-        ldx wR11+1
-        stx $4203,b
-        xba
-        nop
-        ldx $4216,b
-        stx wR13
-        ldy $4217,b
-        ldx wR10+1
-        stx $4202,b
-        ldx wR11
-        stx $4203,b
-        lda wR12+1
-        clc
-        adc $4216,b
-        sta wR12+1
-        bcc _8BEB
-        inc y
-
-        _8BEB
-        ldx wR10
-        stx $4202,b
-        ldx wR11+1
-        stx $4203,b
-        lda wR12+1
-        clc
-        adc $4216,b
-        sta wR12+1
-        bcc _8C00
-        inc y
-
-        _8C00
-        sty wR13+1
-        rep #$10
-        rts
-
-        .databank 0
-
-        ; 9F/8C05
-
-      rlUnknown9F8C05 ; 9F/8C05
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        sta wR1
-        lda wR0
-        clc
-        adc #$0080
-        bra _8C17
-
-        .byte $85, $02, $A5, $00, $18, $69, $40, $00
-
-
-        _8C17
-        phx
-        asl a
-        and #$01FE
-        tax
-        lda aUnknown9F8C3A,x
-        sep #$20
-        sta @l M7A
-        xba
-        sta @l M7A
-        lda wR1
-        sta @l M7B
-        rep #$20
-        lda @l $002135
-        plx
-        rtl
-
-        .databank 0
-
-        ; 9F/8C3A
-
-    .endsection Unsorted9F8B7ASection
-
-
-    .section Table9F8C3ASection
-
-      .al
-      .xl
-
-      aUnknown9F8C3A ; 9F/8C3A
-
-        ; Read by rlUnknown9F8B7A and rlUnknown9F8C05 (256-entry signed trig table).
-
-        .sint $0000, $0006, $000C, $0012, $0019, $001F, $0025, $002B
-        .sint $0031, $0038, $003E, $0044, $004A, $0050, $0056, $005C
-        .sint $0061, $0067, $006D, $0073, $0078, $007E, $0083, $0088
-        .sint $008E, $0093, $0098, $009D, $00A2, $00A7, $00AB, $00B0
-        .sint $00B5, $00B9, $00BD, $00C1, $00C5, $00C9, $00CD, $00D1
-        .sint $00D4, $00D8, $00DB, $00DE, $00E1, $00E4, $00E7, $00EA
-        .sint $00EC, $00EE, $00F1, $00F3, $00F4, $00F6, $00F8, $00F9
-        .sint $00FB, $00FC, $00FD, $00FE, $00FE, $00FF, $00FF, $00FF
-        .sint $0100, $00FF, $00FF, $00FF, $00FE, $00FE, $00FD, $00FC
-        .sint $00FB, $00F9, $00F8, $00F6, $00F4, $00F3, $00F1, $00EE
-        .sint $00EC, $00EA, $00E7, $00E4, $00E1, $00DE, $00DB, $00D8
-        .sint $00D4, $00D1, $00CD, $00C9, $00C5, $00C1, $00BD, $00B9
-        .sint $00B5, $00B0, $00AB, $00A7, $00A2, $009D, $0098, $0093
-        .sint $008E, $0088, $0083, $007E, $0078, $0073, $006D, $0067
-        .sint $0061, $005C, $0056, $0050, $004A, $0044, $003E, $0038
-        .sint $0031, $002B, $0025, $001F, $0019, $0012, $000C, $0006
-        .sint $0000, -$0006, -$000C, -$0012, -$0019, -$001F, -$0025, -$002B
-        .sint -$0031, -$0038, -$003E, -$0044, -$004A, -$0050, -$0056, -$005C
-        .sint -$0061, -$0067, -$006D, -$0073, -$0078, -$007E, -$0083, -$0088
-        .sint -$008E, -$0093, -$0098, -$009D, -$00A2, -$00A7, -$00AB, -$00B0
-        .sint -$00B5, -$00B9, -$00BD, -$00C1, -$00C5, -$00C9, -$00CD, -$00D1
-        .sint -$00D4, -$00D8, -$00DB, -$00DE, -$00E1, -$00E4, -$00E7, -$00EA
-        .sint -$00EC, -$00EE, -$00F1, -$00F3, -$00F4, -$00F6, -$00F8, -$00F9
-        .sint -$00FB, -$00FC, -$00FD, -$00FE, -$00FE, -$00FF, -$00FF, -$00FF
-        .sint -$0100, -$00FF, -$00FF, -$00FF, -$00FE, -$00FE, -$00FD, -$00FC
-        .sint -$00FB, -$00F9, -$00F8, -$00F6, -$00F4, -$00F3, -$00F1, -$00EE
-        .sint -$00EC, -$00EA, -$00E7, -$00E4, -$00E1, -$00DE, -$00DB, -$00D8
-        .sint -$00D4, -$00D1, -$00CD, -$00C9, -$00C5, -$00C1, -$00BD, -$00B9
-        .sint -$00B5, -$00B0, -$00AB, -$00A7, -$00A2, -$009D, -$0098, -$0093
-        .sint -$008E, -$0088, -$0083, -$007E, -$0078, -$0073, -$006D, -$0067
-        .sint -$0061, -$005C, -$0056, -$0050, -$004A, -$0044, -$003E, -$0038
-        .sint -$0031, -$002B, -$0025, -$001F, -$0019, -$0012, -$000C, -$0006
-
-        ; 9F/8E3A
-
-    .endsection Table9F8C3ASection
-
-
-    .section Unsorted9F8E3ASection
-
-      .al
-      .xl
-
-      rlUnknown9F8E3A ; 9F/8E3A
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phx
-        phy
-        lda #5,s
-        tay
-        lda $0001,b,y
-        sta lR18
-        lda $0002,b,y
-        sta lR18+1
-        lda $0004,b,y
-        sta wR0
-        lda $0006,b,y
-        tax
-        tya
-        clc
-        adc #$0007
-        sta #5,s
-        ldy #$0000
-
-        _8E5C
-        lda [lR18],y
-        sta aBGPaletteBuffer,b,x
-        inc x
-        inc x
-        inc y
-        inc y
-        dec wR0
-        bne _8E5C
-        ply
-        plx
-        rtl
-
-        .databank 0
-
-        ; 9F/8E6C
-
-
-    .endsection Unsorted9F8E3ASection
-
-
-    .section Unsorted9F8EC0Section
-
-      .al
-      .xl
-
-      rlUnknown9F8EC0 ; 9F/8EC0
-
-        ; Found by tools/sweep.py.
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        sta wR2
-
-        _8EC2
-        lda aPaletteFading.wDesiredColor,b
-        cmp aBGPaletteBuffer,b,x
-        beq _8EDA
-        phx
-        lda aBGPaletteBuffer,b,x
-        tax
-        lda aPaletteFading.wCurrentStep,b
-        jsl rlUnknown9F9090
-        plx
-        sta aBGPaletteBuffer,b,x
-
-        _8EDA
-        inc x
-        inc x
-        dec wR2
-        bne _8EC2
-        rtl
-
-        .databank 0
-
-        ; 9F/8EE1
-
-    .endsection Unsorted9F8EC0Section
-
-
-    .section Unsorted9F9090Section
-
-      .as
-      .xl
-
-      rlUnknown9F9090 ; 9F/9090
-
-        ; TRACE: stack-args
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        pha
-        pha
-        phx
-        phy
-        lda #1,s
-        and #$001F
-        tay
-        lda #3,s
-        and #$001F
-        tax
-        jsr rsUnknown9F90E6
-        sta #7,s
-        lda #1,s
-        asl a
-        asl a
-        asl a
-        xba
-        and #$001F
-        tay
-        lda #3,s
-        asl a
-        asl a
-        asl a
-        xba
-        and #$001F
-        tax
-        jsr rsUnknown9F90E6
-        asl a
-        asl a
-        asl a
-        asl a
-        asl a
-        ora #7,s
-        sta #7,s
-        lda #1,s
-        lsr a
-        lsr a
-        xba
-        and #$001F
-        tay
-        lda #3,s
-        lsr a
-        lsr a
-        xba
-        and #$001F
-        tax
-        jsr rsUnknown9F90E6
-        asl a
-        asl a
-        xba
-        ora #7,s
-        sta #7,s
-        ply
-        plx
-        pla
-        pla
-        rtl
-
-        .databank 0
-
-        ; 9F/90E6
-
-      rsUnknown9F90E6 ; 9F/90E6
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        phy
-        txa
-        sec
-        sbc #1,s
-        bpl _90F0
-        lda #$0000
-
-        _90F0
-        ply
-        rts
-
-        .databank 0
-
-        ; 9F/90F2
-
-    .endsection Unsorted9F9090Section
-
-
-    .section Unsorted9F90F2Section
-
-      .al
-      .xl
-
-      rlUnknown9F90F2 ; 9F/90F2
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsr rsUnknown9F9116
-        rtl
-
-        .databank 0
-
-        ; 9F/90F6
-
-      rlUnknown9F90F6 ; 9F/90F6
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsr rsUnknown9F919F
-        rtl
-
-        .databank 0
-
-        ; 9F/90FA
-
-      rlUnknown9F90FA ; 9F/90FA
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsr rsUnknown9F910A
-        rtl
-
-        .databank 0
-
-        ; 9F/90FE
-
-    .endsection Unsorted9F90F2Section
-
-
-    .section Unsorted9F90FESection
-
-      .al
-      .xl
-
-      rsUnknown9F90FE ; 9F/90FE
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        ; Unreferenced. Copies 80 colours from $7ED000 to aBGPaletteBuffer+$20.
-
-        jsl rlUnknown9F8E3A
-
-          .byte $00, $D0, $7E, $50, $00, $20, $00
-
-        rts
-
-        .databank 0
-
-        ; 9F/910A
-
-    .endsection Unsorted9F90FESection
-
-
-    .section Unsorted9F910ASection
-
-      .al
-      .xl
-
-      rsUnknown9F910A ; 9F/910A
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlSavePaletteBufferColorsToRAM
-
-          .byte $00, $D0, $7E, $50, $00, $20, $00
-
-        rts
-
-        .databank 0
-
-        ; 9F/9116
-
-      rsUnknown9F9116 ; 9F/9116
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0000
-        ldy #$0010
-        bra rsUnknown9F912A
-
-        .databank 0
-
-      rsUnknown9F911E ; 9F/911E
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        sta aPaletteFading.wDesiredColor,b
-        tya
-        sta aPaletteFading,b
-        clc
-        jml rsUnknown9F91FB
-
-        .databank 0
-
-      rsUnknown9F912A ; 9F/912A
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        sta aPaletteFading.wDesiredColor,b
-        tya
-        sta aPaletteFading,b
-        sec
-        jml rsUnknown9F91B1
-
-        .databank 0
-
-      rsUnknown9F9136 ; 9F/9136
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0007
-        ldy #$000E
-        sta aPaletteFading.wDesiredColor,b
-        tya
-        sta aPaletteFading,b
-        clc
-        jml rsUnknown9F91CE
-
-        .databank 0
-
-      rsUnknown9F9148 ; 9F/9148
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0007
-        ldy #$0014
-        sta aPaletteFading.wDesiredColor,b
-        tya
-        sta aPaletteFading,b
-        clc
-        jml rsUnknown9F91DD
-
-        .databank 0
-
-      rsUnknown9F915A ; 9F/915A
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0007
-        ldy #$000E
-        sta aPaletteFading.wDesiredColor,b
-        tya
-        sta aPaletteFading,b
-        clc
-        jml rsUnknown9F91EC
-
-        .databank 0
-
-      rsUnknown9F916C ; 9F/916C
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$7FFF
-        sta aPaletteFading.wDesiredColor,b
-        lda #$0010
-        sta aPaletteFading,b
-        clc
-        jml rsUnknown9F91B1
-
-        .databank 0
-
-      rsUnknown9F917D ; 9F/917D
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$7FFF
-        sta aPaletteFading.wDesiredColor,b
-        lda #$0010
-        sta aPaletteFading,b
-        clc
-        jml rsUnknown9F920A
-
-        .databank 0
-
-      rsUnknown9F918E ; 9F/918E
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0000
-        sta aPaletteFading.wDesiredColor,b
-        lda #$0010
-        sta aPaletteFading,b
-        clc
-        jml rsUnknown9F920A
-
-        .databank 0
-
-      rsUnknown9F919F ; 9F/919F
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        lda #$0008
-        sta aPaletteFading,b
-        clc
-        jsl rlFadePaletteToColors
-
-          .byte $00, $D0, $50, $00, $20, $00
-
-        rts
-
-        .databank 0
-
-      rsUnknown9F91B1 ; 9F/91B1
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlFadePaletteToBlack
-
-          .word <>aUnknown9F91B8
-
-        rts
-
-        .databank 0
-
-      aUnknown9F91B8 ; 9F/91B8
-
-        .word $0022, $000F, $0042, $000F, $0062, $000F, $0082, $000F, $00A2, $000F, $FFFF
-
-      rsUnknown9F91CE ; 9F/91CE
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlFadeBGPaletteColorRanges
-        .word <>aUnknown9F91D5
-        rts
-
-        .databank 0
-
-      aUnknown9F91D5 ; 9F/91D5
-
-        .word $0022, $004F, $0420, $FFFF
-
-      rsUnknown9F91DD ; 9F/91DD
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlFadeBGPaletteColorRanges
-        .word <>aUnknown9F91E4
-        rts
-
-        .databank 0
-
-      aUnknown9F91E4 ; 9F/91E4
-
-        .word $0022, $004F, $0021, $FFFF
-
-      rsUnknown9F91EC ; 9F/91EC
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlFadeBGPaletteColorRanges
-        .word <>aUnknown9F91F3
-        rts
-
-        .databank 0
-
-      aUnknown9F91F3 ; 9F/91F3
-
-        .word $0022, $004F, $0401, $FFFF
-
-      rsUnknown9F91FB ; 9F/91FB
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlFadeBGPaletteColorRanges
-        .word <>aUnknown9F9202
-        rts
-
-        .databank 0
-
-      aUnknown9F9202 ; 9F/9202
-
-        .word $0022, $004F, $0421, $FFFF
-
-      rsUnknown9F920A ; 9F/920A
-
-        .al
-        .xl
-        .autsiz
-        .databank ?
-
-        jsl rlFadePaletteToBlack
-        .word <>aUnknown9F9211
-        rts
-
-        .databank 0
-
-      aUnknown9F9211 ; 9F/9211
-
-        .word $01C2, $000F, $FFFF
-
-        ; 9F/9217
-
-    .endsection Unsorted9F910ASection
+; The map battle's magic effects, one per tome or staff (bank $9F).
+;
+; procMapMagicEffect (map_battle_magic.asm) runs one starter from
+; aMapMagicEffectStarters when the battler's sprite script reaches
+; ACTIVE_SPRITE_START_MAP_MAGIC. The starters are named after their spell
+; (rlStartMapMagicFire ...). Each creates procs (rsCreateMapMagicProc), HDMA
+; entries (rsCreateMapMagicHDMA) and active sprites that draw the effect over
+; the background that the map battle loaded, then sets wMapMagicDone when it
+; has finished, usually after rsFadeBackMapMagicColors.
+;
+; The effects' own steps, sprite scripts and tables are left Unknown: they are
+; visual detail. Each carries a note saying which effect uses it ("Part of the
+; Thoron effect.", "Shared by ..."), worked out from the references between
+; labels starting at the starters.
 
 
     .section Unsorted9F9217Section
@@ -2488,15 +32,15 @@
         plb
         .databank $9F
         phy
-        jsr rsUnknown9F82A7
-        jsr rsUnknown9F8414
-        jsr rsUnknown9F83D0
+        jsr rsSetMapMagicCasterFacing
+        jsr rsSaveMapMagicScreenRegisters
+        jsr rsSetMapMagicWindowLines
         lda #$0000
-        sta $7F50A1
-        sta $7F50A3
+        sta wMapMagicProcListEnd
+        sta wMapMagicHDMAListEnd
         lda #$FFFF
-        sta $7F50A5
-        sta $7F50B7
+        sta aMapMagicProcList
+        sta aMapMagicHDMAList
         lda #(`procUnknown9F924B)<<8
         sta lR44+1
         lda #<>procUnknown9F924B
@@ -2521,7 +65,7 @@
 
       procUnknown9F924B ; 9F/924B
 
-        .structProcInfo "ON", rlUnknown9F92D2, rlUnknown9F9253, aProcUnknown9F805DCode
+        .structProcInfo "ON", rlUnknown9F92D2, rlUnknown9F9253, aProcMapMagicHaltCode
 
     .endsection Unsorted9F924BSection
 
@@ -2543,9 +87,9 @@
         sta aProcSystem.aBody4,b,x
         lda #<>rlUnknown9F926E
         sta aProcSystem.aHeaderOnCycle,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $4C
 
@@ -2596,8 +140,8 @@
         lda #<>rlUnknown9F9295
         sta aProcSystem.aHeaderOnCycle,b,x
         stz aProcSystem.aHeaderTypeOffset,b,x
-        jsl rlUnknown9F8349
-        jsl rlUnknown9F8473._847A
+        jsl rlEndMapMagicEffect
+        jsl rlRestoreMapMagicScreenRegisters._847A
 
         .databank 0
 
@@ -2614,7 +158,7 @@
 
         ; 9F/9296
 
-      rlUnknown9F9296 ; 9F/9296
+      rlStartMapMagicFire ; 9F/9296
 
         ; Found through fe4.cdl.
         .al
@@ -2629,7 +173,7 @@
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         plx
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9F92C2
 
@@ -2640,7 +184,7 @@
         ; 9F/92AC
 
 
-      rlUnknown9F92AC ; 9F/92AC
+      rlStartMapMagicElfire ; 9F/92AC
 
         .al
         .xl
@@ -2654,7 +198,7 @@
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
         plx
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9F92CA
 
@@ -2664,11 +208,13 @@
 
       procUnknown9F92C2 ; 9F/92C2
 
-        .structProcInfo "ON", rlUnknown9F92D2, rlUnknown9F92F3, aProcUnknown9F805DCode
+        ; Part of the Fire effect.
+        .structProcInfo "ON", rlUnknown9F92D2, rlUnknown9F92F3, aProcMapMagicHaltCode
 
       procUnknown9F92CA ; 9F/92CA
 
-        .structProcInfo "ON", rlUnknown9F92D2, rlUnknown9F9302, aProcUnknown9F805DCode
+        ; Part of the Elfire effect.
+        .structProcInfo "ON", rlUnknown9F92D2, rlUnknown9F9302, aProcMapMagicHaltCode
 
     .endsection Unsorted9F926ESection
 
@@ -2684,8 +230,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
-        jsr rsUnknown9F83F1
+        jsr rsSetMapMagicLayerBlending
         lda #$0000
         sta $7ECC06
         sta $7ECC08
@@ -2715,6 +262,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fire effect.
 
         lda $7ECC06
         bne _92FA
@@ -2736,6 +284,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Elfire effect.
 
         lda $7ECC06
         bne _9309
@@ -2760,13 +309,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Elfire effect.
 
         lda $7ECC08
         beq rlUnknown9F9302._9312
         jsl rlUnknown9F9691
         bcc rlUnknown9F9302._9312
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
         lda #<>rlUnknown9F932C
         sta aProcSystem.aHeaderOnCycle,b,x
 
@@ -2780,6 +330,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Elfire effect.
 
         rtl
 
@@ -2793,11 +344,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fire effect.
 
         lda $7ECC08
         beq rlUnknown9F9340
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
         lda #<>rlUnknown9F9340
         sta aProcSystem.aHeaderOnCycle,b,x
 
@@ -2809,6 +361,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fire effect.
 
         rtl
 
@@ -2831,11 +384,11 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEBAB
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDE4E
 
@@ -2851,30 +404,31 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Elfire effect.
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEBBA
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDE5E
 
 
         _9357
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBF1
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
@@ -2912,6 +466,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         rtl
 
@@ -2925,6 +480,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by 8 effects.
 
         lda aActiveSpriteSystem.aUnknown0012E0,b,x
         sta wR0
@@ -2950,13 +506,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         and #$00FF
         sec
         sbc #$000C
@@ -2967,7 +524,7 @@
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0013C0,b,x
         ldy #$0004
-        lda $7F5089
+        lda wMapMagicEffect
         cmp #$0000
         beq _93DB
         ldy #$000C
@@ -2988,12 +545,13 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         lda aActiveSpriteSystem.aUnknown0013E0,b,x
         sec
         sbc #$0050
         sta aActiveSpriteSystem.aUnknown0013E0,b,x
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _9405
         lda #$0001
@@ -3016,6 +574,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         lda aActiveSpriteSystem.aUnknown0013E0,b,x
         clc
@@ -3025,20 +584,20 @@
 
         _9412
         sta aActiveSpriteSystem.aUnknown0013E0,b,x
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _944E
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
-        jsl rlUnknown9F8A34
+        jsl rlGetVectorAngle
         sta aActiveSpriteSystem.aUnknown0012E0,b,x
         lda #$0100
         sta aActiveSpriteSystem.aUnknown001300,b,x
@@ -3059,23 +618,24 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         lda aActiveSpriteSystem.aUnknown001300,b,x
         clc
         adc #$0040
         sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
-        jsl rlUnknown9F8999
-        lda $7F509B
+        jsl rlMoveActiveSpriteByVelocity
+        lda wMapMagicTargetPixel
         and #$00FF
         sta wR0
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR1
         lda aActiveSpriteSystem.aUnknown001240,b,x
         cmp wR1
         bmi _94D4
-        lda $7F5089
+        lda wMapMagicEffect
         cmp #$0000
         bne _94AA
         lda #$0001
@@ -3084,10 +644,10 @@
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda #<>rlUnknown9F94FE
         sta aActiveSpriteSystem.aOnCycle,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         rtl
@@ -3101,10 +661,10 @@
         sta $7ECC06
         lda #$0002
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
 
@@ -3121,6 +681,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _94ED
@@ -3144,6 +705,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _94FD
@@ -3172,6 +734,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9F9517._9526
@@ -3193,6 +756,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _9526
@@ -3207,6 +771,7 @@
 
       aUnknown9F9527 ; 9F/9527
 
+        ; Part of the Fire effect.
         ACTIVE_SPRITE_FRAME 5, aUnknown9F9601
         ACTIVE_SPRITE_CALL rlUnknown9F9570
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9603
@@ -3242,10 +807,11 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fire effect.
 
         phy
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $51
 
@@ -3261,10 +827,11 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fire effect.
 
         phy
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $4B
 
@@ -3276,6 +843,7 @@
         ; 9F/9584
       aUnknown9F9584 ; 9F/9584
 
+        ; Part of the Elfire effect.
         ACTIVE_SPRITE_FRAME 5, aUnknown9F9601
         ACTIVE_SPRITE_CALL rlUnknown9F95CD
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9626
@@ -3311,10 +879,11 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Elfire effect.
 
         phy
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $52
 
@@ -3330,10 +899,11 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Elfire effect.
 
         phy
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $4C
 
@@ -3349,6 +919,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         lda aActiveSpriteSystem.aUnknown0013A0,b,x
         cmp #$0001
@@ -3372,6 +943,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         lda aActiveSpriteSystem.aUnknown0013A0,b,x
         cmp #$0002
@@ -3395,94 +967,110 @@
 
       aUnknown9F9601 ; 9F/9601
 
+        ; Shared by the Elfire and Fire effects.
         .word 0
 
       aUnknown9F9603 ; 9F/9603
 
+        ; Part of the Fire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9F9603._Sprites
 
       aUnknown9F960A ; 9F/960A
 
+        ; Part of the Fire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9F960A._Sprites
 
       aUnknown9F9611 ; 9F/9611
 
+        ; Part of the Fire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9F9611._Sprites
 
       aUnknown9F9618 ; 9F/9618
 
+        ; Part of the Fire effect.
         _Sprites := [[(  -8,  -10), $21, SpriteLarge, $006, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9F9618._Sprites
 
       aUnknown9F961F ; 9F/961F
 
+        ; Part of the Fire effect.
         _Sprites := [[(  -8,   -9), $21, SpriteLarge, $008, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9F961F._Sprites
 
       aUnknown9F9626 ; 9F/9626
 
+        ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9F9626._Sprites
 
       aUnknown9F962D ; 9F/962D
 
+        ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9F962D._Sprites
 
       aUnknown9F9634 ; 9F/9634
 
+        ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9F9634._Sprites
 
       aUnknown9F963B ; 9F/963B
 
+        ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $006, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9F963B._Sprites
 
       aUnknown9F9642 ; 9F/9642
 
+        ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9F9642._Sprites
 
       aUnknown9F9649 ; 9F/9649
 
+        ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9F9649._Sprites
 
       aUnknown9F9650 ; 9F/9650
 
+        ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $006, 2, 6, false, true]]
 
         .structSpriteArray aUnknown9F9650._Sprites
 
       aUnknown9F9657 ; 9F/9657
 
+        ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $008, 2, 6, false, true]]
 
         .structSpriteArray aUnknown9F9657._Sprites
 
       aUnknown9F965E ; 9F/965E
 
+        ; Part of the Elfire effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, true]]
 
         .structSpriteArray aUnknown9F965E._Sprites
 
       aUnknown9F9665 ; 9F/9665
 
+        ; Part of the Elfire effect.
         _Sprites := [[(   0,    3), $00, SpriteSmall, $01C, 2, 6, true, false]]
         _Sprites ..= [[(   0,   -5), $00, SpriteSmall, $00C, 2, 6, true, false]]
         _Sprites ..= [[(  -8,    3), $00, SpriteSmall, $01C, 2, 6, false, false]]
@@ -3492,6 +1080,7 @@
 
       aUnknown9F967B ; 9F/967B
 
+        ; Part of the Elfire effect.
         _Sprites := [[(   0,    3), $00, SpriteSmall, $01D, 2, 6, false, false]]
         _Sprites ..= [[(   0,   -5), $00, SpriteSmall, $00D, 2, 6, false, false]]
         _Sprites ..= [[(  -8,    3), $00, SpriteSmall, $01D, 2, 6, true, false]]
@@ -3513,6 +1102,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Fire effects.
 
         ldy aProcSystem.aBody3,b,x
         lda <>aUnknown9F96D5,b,y
@@ -3554,6 +1144,7 @@
 
       aUnknown9F96D5 ; 9F/96D5
 
+        ; Shared by the Elfire and Fire effects.
         .word $73FF, $2FFF, $03BF, $02DF, $023F, $017F, $007F
         .word $6BBD, $2BBD, $037D, $029D, $01FD, $015D, $005D
         .word $635A, $275A, $033A, $027A, $01DA, $013A, $005A
@@ -3572,14 +1163,14 @@
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $FFFF
 
-      rlUnknown9F97B7 ; 9F/97B7
+      rlStartMapMagicAura ; 9F/97B7
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9F97BD
 
@@ -3589,7 +1180,8 @@
 
       procUnknown9F97BD ; 9F/97BD
 
-        .structProcInfo "ON", rlUnknown9F97C5, rlUnknown9F97D6, aProcUnknown9F805DCode
+        ; Part of the Aura effect.
+        .structProcInfo "ON", rlUnknown9F97C5, rlUnknown9F97D6, aProcMapMagicHaltCode
 
       rlUnknown9F97C5 ; 9F/97C5
 
@@ -3597,9 +1189,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F910A
+        jsr rsSetMapMagicLayerBlending
+        jsr rsSaveMapMagicColors
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
         jsl rlUnknown9F985F._9860
@@ -3613,6 +1206,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
         jsr rsUnknown9F915A
         bcc _97E1
@@ -3629,36 +1223,37 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEBC9
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBF1
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDE6E
 
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
 
         _9807
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $60
 
@@ -3675,6 +1270,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
         dec aProcSystem.aBody0,b,x
         bne _9830
@@ -3695,6 +1291,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
         dec aProcSystem.aBody0,b,x
         bne _983C
@@ -3711,12 +1308,13 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
         jsl rlUnknown9F985F._9860
         bcc _984C
         lda #<>rlUnknown9F984D
         sta aProcSystem.aHeaderOnCycle,b,x
-        jsr rsUnknown9F8359
+        jsr rsFreeMapMagicHDMA
 
         _984C
         rtl
@@ -3728,13 +1326,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc rlUnknown9F985F
         lda #<>rlUnknown9F985F
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
       rlUnknown9F985F ; 9F/985F
 
@@ -3742,6 +1341,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
         rtl
 
@@ -3781,6 +1381,7 @@
 
       aUnknown9F98A8 ; 9F/98A8
 
+        ; Part of the Aura effect.
         .word $6B38, $02D6, $12D6, $1ED6, $2ED6, $3AD6, $46D6
         .word $56D6, $0294, $1294, $1A94, $2A94, $3694, $4294
         .word $4E94, $0252, $0E52, $1A52, $2652, $3252, $3A52
@@ -3803,7 +1404,7 @@
       .al
       .xl
 
-      rlUnknown9F9954 ; 9F/9954
+      rlStartMapMagicHeal ; 9F/9954
 
         ; Found through fe4.cdl.
         .al
@@ -3811,15 +1412,17 @@
         .autsiz
         .databank ?
 
-        lda $7F509B
+        ; Also Naga, Loptous, the broken fire tomes, Charm and Valkyrie: sound $71 and procMapMagicHealingStaff. The other healing staves differ only in the sound.
+
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $71
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9F99BB
+          .word <>procMapMagicHealingStaff
 
         rtl
 
@@ -3835,22 +1438,24 @@
       .al
       .xl
 
-      rlUnknown9F9965 ; 9F/9965
+      rlStartMapMagicMend ; 9F/9965
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $7F509B
+        ; Sound $72 and procMapMagicHealingStaff.
+
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $72
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9F99BB
+          .word <>procMapMagicHealingStaff
 
         rtl
 
@@ -3866,7 +1471,7 @@
       .al
       .xl
 
-      rlUnknown9F9976 ; 9F/9976
+      rlStartMapMagicRecover ; 9F/9976
 
         ; Found through fe4.cdl.
         .al
@@ -3874,15 +1479,17 @@
         .autsiz
         .databank ?
 
-        lda $7F509B
+        ; Sound $73 and procMapMagicHealingStaff.
+
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $73
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9F99BB
+          .word <>procMapMagicHealingStaff
 
         rtl
 
@@ -3898,22 +1505,24 @@
       .al
       .xl
 
-      rlUnknown9F9987 ; 9F/9987
+      rlStartMapMagicPhysic ; 9F/9987
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $7F509B
+        ; Sound $74 and procMapMagicHealingStaff.
+
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $74
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9F99BB
+          .word <>procMapMagicHealingStaff
 
         rtl
 
@@ -3921,16 +1530,16 @@
 
         ; 9F/9998
 
-      rlUnknown9F9998 ; 9F/9998
+      rlStartMapMagicFortify ; 9F/9998
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
-          .word <>procUnknown9F9A2B
+          .word <>procMapMagicFortify
 
         rtl
 
@@ -3952,25 +1561,26 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Fortify, Heal, Mend, Physic and Recover effects.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F830F
+        jsr rsSetMapMagicLayerBlending
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC34
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC77
 
@@ -3981,12 +1591,13 @@
         ; 9F/99BB
 
 
-      procUnknown9F99BB ; 9F/99BB
+      procMapMagicHealingStaff ; 9F/99BB
 
         .structProcInfo "ON", rlUnknown9F99CE, rlUnknown9F99E6, aProcUnknown9F99C3Code
 
       aProcUnknown9F99C3Code ; 9F/99C3
 
+        ; Shared by the Heal, Mend, Physic and Recover effects.
         PROC_YIELD 1
         PROC_CALL rlUnknown9F9ABF
         PROC_JUMP aProcUnknown9F99C3Code
@@ -4006,8 +1617,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Heal, Mend, Physic and Recover effects.
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEBD8
 
@@ -4030,6 +1642,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Heal, Mend, Physic and Recover effects.
 
         dec aProcSystem.aBody0,b,x
         bne _99FE
@@ -4053,6 +1666,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Heal, Mend, Physic and Recover effects.
 
         dec aProcSystem.aBody0,b,x
         bne _9A1D
@@ -4079,11 +1693,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Heal, Mend, Physic and Recover effects.
 
         dec aProcSystem.aBody0,b,x
         bne _9A2A
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
         _9A2A
         rtl
@@ -4100,9 +1715,9 @@
       .al
       .xl
 
-      procUnknown9F9A2B ; 9F/9A2B
+      procMapMagicFortify ; 9F/9A2B
 
-        .structProcInfo "ON", rlUnknown9F9A33, rlUnknown9F9A5C, aProcUnknown9F805DCode
+        .structProcInfo "ON", rlUnknown9F9A33, rlUnknown9F9A5C, aProcMapMagicHaltCode
 
       rlUnknown9F9A33 ; 9F/9A33
 
@@ -4110,10 +1725,11 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fortify effect.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F910A
-        jsr rsUnknown9F82D7
+        jsr rsSetMapMagicLayerBlending
+        jsr rsSaveMapMagicColors
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC0D
 
@@ -4123,9 +1739,9 @@
         sta aProcSystem.aBody0,b,x
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $75
 
@@ -4140,6 +1756,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fortify effect.
 
         lda #$0001
         sta aMapAction.wMapBattleActiveSpriteSyncFlag
@@ -4159,6 +1776,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fortify effect.
 
         jsr rsUnknown9F9B56
         dec aProcSystem.aBody0,b,x
@@ -4178,11 +1796,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fortify effect.
 
         jsr rsUnknown9F9B56
-        jsr rsUnknown9F916C
+        jsr rsFadeMapMagicColorsToWhite
         bcc _9A99
-        jsr rsUnknown9F8359
+        jsr rsFreeMapMagicHDMA
         lda #<>rlUnknown9F9AA0
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0010
@@ -4203,6 +1822,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fortify effect.
 
         dec aProcSystem.aBody0,b,x
         bne _9AAB
@@ -4221,13 +1841,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fortify effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc rlUnknown9F9ABE
         lda #<>rlUnknown9F9ABE
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
         .databank 0
 
@@ -4238,6 +1859,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fortify effect.
 
         rtl
 
@@ -4260,6 +1882,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Heal, Mend, Physic and Recover effects.
 
         lda aProcSystem.aBody2,b,x
         beq _9AC9
@@ -4302,6 +1925,7 @@
 
       aUnknown9F9B08 ; 9F/9B08
 
+        ; Shared by the Heal, Mend, Physic and Recover effects.
         .word $7FFF, $7FBD, $7F9C, $7F5A, $7F38, $7EF7, $7ED5, $7E93
         .word $7E72, $7E30, $7E0E, $7DCD, $7DAB, $7D69, $7D48, $7D06
         .word $7D06, $7D48, $7D69, $7DAB, $7DCD, $7E0E, $7E30, $7E72
@@ -4314,6 +1938,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fortify effect.
 
         lda aProcSystem.aBody2,b,x
         beq _9B60
@@ -4349,6 +1974,7 @@
 
       aUnknown9F9B93 ; 9F/9B93
 
+        ; Part of the Fortify effect.
         .word $03FF, $02B9, $0278, $0216, $01D5, $0153, $00D0, $004E
         .word $004E, $00D0, $0153, $01D5, $01D5, $0216, $0278, $03FF
         .word $03FF, $02B9, $0278, $0216, $01D5, $0153, $00D0, $004E
@@ -4357,14 +1983,14 @@
         .word $004E, $00D0, $0153, $01D5, $0216, $0278, $02B9, $03FF
         .word $03FF, $0278, $0216, $01D5, $01D5
 
-      rlUnknown9F9BFD ; 9F/9BFD
+      rlStartMapMagicBerserk ; 9F/9BFD
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9F9C03
 
@@ -4374,6 +2000,7 @@
 
       procUnknown9F9C03 ; 9F/9C03
 
+        ; Part of the Berserk effect.
         .structProcInfo "ON", rlUnknown9F9C0B, rlUnknown9F9C47, aProcUnknown9F9C8CCode
 
       rlUnknown9F9C0B ; 9F/9C0B
@@ -4382,38 +2009,39 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Berserk effect.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F82D7
+        jsr rsSetMapMagicLayerBlending
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC2B
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC34
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC77
 
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $76
 
@@ -4428,6 +2056,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Berserk effect.
         dec aProcSystem.aBody0,b,x
         bne rlUnknown9F9C7F._9C8B
         lda #$0001
@@ -4445,6 +2074,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Berserk effect.
 
         dec aProcSystem.aBody0,b,x
         bne rlUnknown9F9C7F._9C8B
@@ -4466,11 +2096,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Berserk effect.
 
         dec aProcSystem.aBody0,b,x
         bne _9C8B
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
         _9C8B
         rtl
@@ -4479,6 +2110,7 @@
 
       aProcUnknown9F9C8CCode ; 9F/9C8C
 
+        ; Part of the Berserk effect.
         PROC_YIELD 1
         PROC_CALL rlUnknown9F9C97
         PROC_JUMP aProcUnknown9F9C8CCode
@@ -4489,6 +2121,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Berserk effect.
 
         lda aProcSystem.aBody2,b,x
         beq _9CA1
@@ -4528,18 +2161,19 @@
 
       aUnknown9F9CE0 ; 9F/9CE0
 
+        ; Part of the Berserk effect.
         .word $00FF, $53FF, $3FFF, $033F, $02BF, $01BF, $00FF, $00FF
         .word $0C12, $71BF, $701F, $401F, $2C1B, $1C16, $1414, $0C12
         .word $00FF, $53FF, $3FFF, $033F, $02BF, $01BF, $00FF, $00FF
 
-      rlUnknown9F9D10 ; 9F/9D10
+      rlStartMapMagicFenrir ; 9F/9D10
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9F9D16
 
@@ -4549,6 +2183,7 @@
 
       procUnknown9F9D16 ; 9F/9D16
 
+        ; Part of the Fenrir effect.
         .structProcInfo "ON", rlUnknown9F9D1E, rlUnknown9F9D38, aProcUnknown9F9DA4Code
 
       rlUnknown9F9D1E ; 9F/9D1E
@@ -4557,9 +2192,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F910A
+        jsr rsSetMapMagicLayerBlending
+        jsr rsSaveMapMagicColors
         lda #$0000
         sta $7ECC06
         sta $7ECC08
@@ -4574,6 +2210,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
         jsr rsUnknown9F9116
         bcc _9D49
         lda #<>rlUnknown9F9D4A
@@ -4591,41 +2228,42 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         dec aProcSystem.aBody0,b,x
         bne rlUnknown9F9D38._9D49
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC1C
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FA139
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC34
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FA08E
 
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $68
 
@@ -4640,6 +2278,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         lda $7ECC06
         beq _9DA2
@@ -4661,6 +2300,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         rtl
 
@@ -4668,10 +2308,12 @@
 
       aProcUnknown9F9DA4Code ; 9F/9DA4
 
+        ; Part of the Fenrir effect.
         PROC_HALT
 
       aProcUnknown9F9DA6Code ; 9F/9DA6
 
+        ; Part of the Fenrir effect.
         PROC_YIELD 1
         PROC_CALL_ARGS rlUnknown9F9DCC, 1
         .byte $2A
@@ -4692,6 +2334,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         lda $0000,b,y
         and #$00FF
@@ -4733,6 +2376,7 @@
 
       aUnknown9F9E29 ; 9F/9E29
 
+        ; Part of the Fenrir effect.
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0444, $0443, $0022, $0021, $0001, $0000, $0000
         .word $08A8, $0886, $0465, $0443, $0002, $0001, $0000
@@ -4752,6 +2396,7 @@
 
       aUnknown9F9F09 ; 9F/9F09
 
+        ; Part of the Fenrir effect.
         .word <>rlUnknown9F9F0F, <>rlUnknown9F9F38, <>aUnknown9F9FDE
 
       rlUnknown9F9F0F ; 9F/9F0F
@@ -4760,19 +2405,20 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0040
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $69
 
@@ -4786,17 +2432,18 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9F9F79
         lda #<>rlUnknown9F9F7A
         sta aActiveSpriteSystem.aOnCycle,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
@@ -4823,6 +2470,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         rtl
 
@@ -4832,8 +2480,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _9F92
         lda #<>rlUnknown9F9F93
@@ -4854,6 +2503,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _9FAB
@@ -4876,6 +2526,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _9FC1
@@ -4897,6 +2548,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _9FCD
@@ -4915,12 +2567,13 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc _9FDD
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
         _9FDD
         rtl
@@ -4929,6 +2582,7 @@
 
       aUnknown9F9FDE ; 9F/9FDE
 
+        ; Part of the Fenrir effect.
         ACTIVE_SPRITE_FRAME 4, aUnknown9FA01D
         ACTIVE_SPRITE_FRAME 4, aUnknown9FA02E
         ACTIVE_SPRITE_FRAME 4, aUnknown9FA03F
@@ -4954,6 +2608,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
         bne _A018
@@ -4973,10 +2628,12 @@
 
       aUnknown9FA01B ; 9F/A01B
 
+        ; Part of the Fenrir effect.
         .word 0
 
       aUnknown9FA01D ; 9F/A01D
 
+        ; Part of the Fenrir effect.
         _Sprites := [[(  -4,   14), $00, SpriteSmall, $001, 3, 6, false, false]]
         _Sprites ..= [[(  20,  -11), $00, SpriteSmall, $001, 3, 6, false, false]]
         _Sprites ..= [[( -28,  -11), $00, SpriteSmall, $001, 3, 6, false, false]]
@@ -4985,6 +2642,7 @@
 
       aUnknown9FA02E ; 9F/A02E
 
+        ; Part of the Fenrir effect.
         _Sprites := [[( -14,   11), $00, SpriteSmall, $002, 3, 6, false, false]]
         _Sprites ..= [[(  15,   -5), $00, SpriteSmall, $002, 3, 6, false, false]]
         _Sprites ..= [[( -25,  -16), $00, SpriteSmall, $002, 3, 6, false, false]]
@@ -4993,6 +2651,7 @@
 
       aUnknown9FA03F ; 9F/A03F
 
+        ; Part of the Fenrir effect.
         _Sprites := [[(   9,    2), $00, SpriteSmall, $010, 3, 6, false, false]]
         _Sprites ..= [[( -19,    3), $00, SpriteSmall, $010, 3, 6, false, false]]
         _Sprites ..= [[(  -5,  -16), $00, SpriteSmall, $010, 3, 6, false, false]]
@@ -5001,6 +2660,7 @@
 
       aUnknown9FA050 ; 9F/A050
 
+        ; Part of the Fenrir effect.
         _Sprites := [[(  -3,   10), $00, SpriteSmall, $012, 3, 6, false, false]]
         _Sprites ..= [[( -20,   -2), $00, SpriteSmall, $012, 3, 6, false, false]]
         _Sprites ..= [[(   3,  -13), $00, SpriteSmall, $012, 3, 6, false, false]]
@@ -5009,6 +2669,7 @@
 
       aUnknown9FA061 ; 9F/A061
 
+        ; Part of the Fenrir effect.
         _Sprites := [[( -11,    6), $00, SpriteSmall, $010, 3, 6, false, true]]
         _Sprites ..= [[(   3,   -3), $00, SpriteSmall, $010, 3, 6, false, true]]
         _Sprites ..= [[( -14,   -9), $00, SpriteSmall, $010, 3, 6, false, true]]
@@ -5017,30 +2678,35 @@
 
       aUnknown9FA072 ; 9F/A072
 
+        ; Part of the Fenrir effect.
         _Sprites := [[(  -8,  -10), $21, SpriteLarge, $006, 3, 6, false, true]]
 
         .structSpriteArray aUnknown9FA072._Sprites
 
       aUnknown9FA079 ; 9F/A079
 
+        ; Part of the Fenrir effect.
         _Sprites := [[( -10,   -8), $21, SpriteLarge, $004, 3, 6, true, false]]
 
         .structSpriteArray aUnknown9FA079._Sprites
 
       aUnknown9FA080 ; 9F/A080
 
+        ; Part of the Fenrir effect.
         _Sprites := [[(  -8,   -6), $21, SpriteLarge, $006, 3, 6, false, false]]
 
         .structSpriteArray aUnknown9FA080._Sprites
 
       aUnknown9FA087 ; 9F/A087
 
+        ; Part of the Fenrir effect.
         _Sprites := [[(  -6,   -8), $21, SpriteLarge, $004, 3, 6, false, false]]
 
         .structSpriteArray aUnknown9FA087._Sprites
 
       aUnknown9FA08E .dstruct structHDMAIndirectEntryInfo, rlUnknown9FA09A, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDF58, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/A08E
 
+        ; Part of the Fenrir effect.
       rlUnknown9FA09A ; 9F/A09A
 
         .al
@@ -5054,7 +2720,7 @@
         clc
         adc #$FFFF
         sta $7F50D3
-        lda $7F508F
+        lda wMapMagicFlags
         and #$0400
         beq _A0BD
         lda #<>aUnknown9FDF65
@@ -5065,10 +2731,10 @@
         sta $7F50D9
         lda #$0000
         sta $7F50DB
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta $7F50DF
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc #$007C
@@ -5076,10 +2742,10 @@
         inc a
         sta wR0
         sta $7F50CD
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta $7F50E1
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0070
@@ -5113,7 +2779,8 @@
 
       procUnknown9FA139 ; 9F/A139
 
-        .structProcInfo "ON", rlUnknown9FA141, rlUnknown9FA15A, aProcUnknown9F805DCode
+        ; Part of the Fenrir effect.
+        .structProcInfo "ON", rlUnknown9FA141, rlUnknown9FA15A, aProcMapMagicHaltCode
 
       rlUnknown9FA141 ; 9F/A141
 
@@ -5121,6 +2788,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         lda #$0000
         sta aProcSystem.aBody0,b,x
@@ -5139,6 +2807,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
 
         jsl rlUnknown9FA221
         lda $7F50CD
@@ -5228,6 +2897,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Fenrir effect.
         lda aProcSystem.aBody4,b,x
         and #$0003
         bne _A23B
@@ -5249,6 +2919,7 @@
 
       aUnknown9FA23F ; 9F/A23F
 
+        ; Part of the Fenrir effect.
         .byte $47, $A2, $61, $A2, $7B, $A2, $95, $A2, $81, $AF, $A2, $9F, $04, $00, $EC, $5C
         .byte $81, $AF, $A2, $9F, $04, $00, $4F, $5D, $81, $AF, $A2, $9F, $04, $00, $F2, $5C
         .byte $FF, $FF, $81, $B3, $A2, $9F, $04, $00, $EC, $5C, $81, $B3, $A2, $9F, $04, $00
@@ -5258,7 +2929,7 @@
         .byte $A2, $9F, $04, $00, $4F, $5D, $81, $BB, $A2, $9F, $04, $00, $F2, $5C, $FF, $FF
         .byte $83, $3F, $93, $3F, $84, $3F, $94, $3F, $85, $3F, $95, $3F, $86, $3F, $96, $3F
 
-      rlUnknown9FA2BF ; 9F/A2BF
+      rlStartMapMagicBolganone ; 9F/A2BF
 
         .al
         .xl
@@ -5270,7 +2941,7 @@
         lda #<>aUnknown9FA4FD
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteLastSlot
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FA2D3
 
@@ -5280,7 +2951,8 @@
 
       procUnknown9FA2D3 ; 9F/A2D3
 
-        .structProcInfo "ON", rlUnknown9FA2DB, rlUnknown9FA305, aProcUnknown9F805DCode
+        ; Part of the Bolganone effect.
+        .structProcInfo "ON", rlUnknown9FA2DB, rlUnknown9FA305, aProcMapMagicHaltCode
 
       rlUnknown9FA2DB ; 9F/A2DB
 
@@ -5288,13 +2960,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
 
-        jsr rsUnknown9F83F1
+        jsr rsSetMapMagicLayerBlending
         lda #$0020
         sta aProcSystem.aBody0,b,x
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
-        jsr rsUnknown9F910A
+        jsr rsSaveMapMagicColors
         jsl rlUnknown9FA380
         lda #$0000
         sta $7ECC06
@@ -5310,6 +2983,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
         jsr rsUnknown9F9136
         bcc _A310
         lda #<>rlUnknown9FA311
@@ -5325,31 +2999,32 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
 
         lda $7ECC06
         cmp #$0001
         bne rlUnknown9FA305._A310
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC49
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBF1
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC77
 
@@ -5366,6 +3041,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
 
         jsr rsUnknown9F827A
         jsl rlUnknown9FA380
@@ -5386,6 +3062,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
 
         jsr rsUnknown9F827A
         jsl rlUnknown9FA380
@@ -5406,6 +3083,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
 
         jsr rsUnknown9F827A
         jsl rlUnknown9FA380
@@ -5418,6 +3096,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
         lda aProcSystem.aBody2,b,x
         beq _A38A
         dec a
@@ -5469,6 +3148,7 @@
 
       aUnknown9FA3DB ; 9F/A3DB
 
+        ; Part of the Bolganone effect.
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $A4FB
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $A4FB
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $A4FB
@@ -5491,6 +3171,7 @@
 
       aUnknown9FA4FD ; 9F/A4FD
 
+        ; Part of the Bolganone effect.
         .word <>rlUnknown9FA503, <>rlUnknown9FA527, <>aUnknown9FA563
 
       rlUnknown9FA503 ; 9F/A503
@@ -5499,18 +3180,19 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
 
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FA536
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $53
 
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         clc
         adc #$0002
         and #$00FF
@@ -5524,6 +3206,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
         lda $7ECC06
         cmp #$0002
         beq _A531
@@ -5540,11 +3223,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc _A546
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _A546
@@ -5554,22 +3238,26 @@
 
       aUnknown9FA547 ; 9F/A547
 
+        ; Part of the Bolganone effect.
         .word 0
 
       aUnknown9FA549 ; 9F/A549
 
+        ; Part of the Bolganone effect.
         _Sprites := [[(  -4,    0), $00, SpriteSmall, $010, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9FA549._Sprites
 
       aUnknown9FA550 ; 9F/A550
 
+        ; Part of the Bolganone effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $001, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9FA550._Sprites
 
       aUnknown9FA557 ; 9F/A557
 
+        ; Part of the Bolganone effect.
         _Sprites := [[(   0,   -7), $21, SpriteLarge, $003, 2, 6, true, false]]
         _Sprites ..= [[( -16,   -7), $21, SpriteLarge, $003, 2, 6, false, false]]
 
@@ -5577,6 +3265,7 @@
 
       aUnknown9FA563 ; 9F/A563
 
+        ; Part of the Bolganone effect.
         ACTIVE_SPRITE_FRAME 8, aUnknown9FA549
         ACTIVE_SPRITE_FRAME 8, aUnknown9FA550
         ACTIVE_SPRITE_FRAME 2, aUnknown9FA557
@@ -5601,6 +3290,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
 
         lda $7ECC08
         beq _A596
@@ -5623,6 +3313,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
 
         lda #$0001
         sta $7ECC06
@@ -5637,6 +3328,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Bolganone effect.
 
         lda #$0002
         sta $7ECC06
@@ -5646,14 +3338,14 @@
 
         ; 9F/A5AB
 
-      rlUnknown9FA5AB ; 9F/A5AB
+      rlStartMapMagicHel ; 9F/A5AB
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FA5B1
 
@@ -5663,7 +3355,8 @@
 
       procUnknown9FA5B1 ; 9F/A5B1
 
-        .structProcInfo "ON", rlUnknown9FA5B9, rlUnknown9FA5C0, aProcUnknown9F805DCode
+        ; Part of the Hel effect.
+        .structProcInfo "ON", rlUnknown9FA5B9, rlUnknown9FA5C0, aProcMapMagicHaltCode
 
       rlUnknown9FA5B9 ; 9F/A5B9
 
@@ -5671,9 +3364,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Hel effect.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F910A
+        jsr rsSetMapMagicLayerBlending
+        jsr rsSaveMapMagicColors
         rtl
 
 
@@ -5683,44 +3377,45 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Hel effect.
         jsr rsUnknown9F9116
         bcc _A602
         lda #<>rlUnknown9FA603
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0020
         sta aProcSystem.aBody0,b,x
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC3A
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC34
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FE378
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FE2D9
 
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $58
 
@@ -5735,6 +3430,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Hel effect.
 
         dec aProcSystem.aBody0,b,x
         bne _A614
@@ -5753,6 +3449,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Hel effect.
 
         dec aProcSystem.aBody0,b,x
         bne rlUnknown9FA62E._A64C
@@ -5771,6 +3468,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Hel effect.
 
         dec aProcSystem.aBody0,b,x
         bne _A64C
@@ -5794,6 +3492,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Hel effect.
 
         dec aProcSystem.aBody0,b,x
         bne _A658
@@ -5810,13 +3509,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Hel effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc rlUnknown9FA66B
         lda #<>rlUnknown9FA66B
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
       rlUnknown9FA66B ; 9F/A66B
 
@@ -5824,19 +3524,20 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Hel effect.
 
         rtl
 
         .databank 0
 
-      rlUnknown9FA66C ; 9F/A66C
+      rlStartMapMagicThunder ; 9F/A66C
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FA678
 
@@ -5844,14 +3545,16 @@
 
         .databank 0
 
-      rlUnknown9FA672 ; 9F/A672
+      rlStartMapMagicElthunder ; 9F/A672
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        ; Also Bolting.
+
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FA682
 
@@ -5861,12 +3564,14 @@
 
       procUnknown9FA678 ; 9F/A678
 
-        .structProcInfo "ON", rlUnknown9FA68C, rlUnknown9FA693, aProcUnknown9F805DCode
+        ; Part of the Thunder effect.
+        .structProcInfo "ON", rlUnknown9FA68C, rlUnknown9FA693, aProcMapMagicHaltCode
         .word <>aUnknown9FA6CB
 
       procUnknown9FA682 ; 9F/A682
 
-        .structProcInfo "ON", rlUnknown9FA68C, rlUnknown9FA693, aProcUnknown9F805DCode
+        ; Part of the Elthunder effect.
+        .structProcInfo "ON", rlUnknown9FA68C, rlUnknown9FA693, aProcMapMagicHaltCode
         .word <>aUnknown9FA6D1
 
       rlUnknown9FA68C ; 9F/A68C
@@ -5875,9 +3580,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elthunder and Thunder effects.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F910A
+        jsr rsSetMapMagicLayerBlending
+        jsr rsSaveMapMagicColors
         rtl
 
 
@@ -5887,6 +3593,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elthunder and Thunder effects.
         jsr rsUnknown9F9116
         bcc rlUnknown9FA6CA
         lda $0EF6,b,x
@@ -5898,12 +3605,12 @@
         sta aProcSystem.aHeaderOnCycle,b,x
         phx
         phy
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         sec
         sbc #$0008
         and #$00FF
         tay
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         tax
         jsl rlActiveSpriteEngineCreateSpriteHighestSlot
@@ -5917,6 +3624,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elthunder and Thunder effects.
 
         rtl
 
@@ -5947,11 +3655,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Elthunder effect.
 
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $56
 
@@ -5966,15 +3675,16 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $54
 
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         and #$00FF
         sec
         sbc #$0010
@@ -6008,10 +3718,10 @@
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         stz aActiveSpriteSystem.aUnknown001320,b,x
@@ -6062,11 +3772,11 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc _A779
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
         _A779
         rtl
@@ -6080,6 +3790,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Elthunder effect.
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq $9FA79A
@@ -6100,6 +3811,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Elthunder effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _A79A
@@ -6271,12 +3983,12 @@
 
         phx
         phy
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$0008
         sec
         sbc #$0020
         tay
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         tax
         lda #(`aUnknown9FA6E3)<<8
@@ -6301,7 +4013,7 @@
 
         phx
         phy
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0018
@@ -6312,7 +4024,7 @@
         cmp wR0
         bpl _A8A0
         tay
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         tax
         lda #(`aUnknown9FA6E3)<<8
@@ -6328,7 +4040,7 @@
 
         _A8A0
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $57
 
@@ -6347,6 +4059,7 @@
 
       aUnknown9FA8BC ; 9F/A8BC
 
+        ; Part of the Elthunder effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA39
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA40
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA4C
@@ -6392,16 +4105,17 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
         lda aActiveSpriteSystem.aUnknown001240,b,x
         cmp #$000A
         bpl $9FA917
         lda #$0001
         sta aActiveSpriteSystem.aUnknown0013A0,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$001F
         sec
         sbc #$0020
@@ -6418,6 +4132,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
         rtl
 
@@ -6430,9 +4145,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $55
 
@@ -6455,6 +4171,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne $9FA94A
@@ -6472,6 +4189,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
         jsl rlUnknown9FAACC
         bcc $9FA966
@@ -6488,12 +4206,13 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc _A966
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
         _A966
         rtl
@@ -6512,6 +4231,7 @@
         ; 9F/A972
       aUnknown9FA972 ; 9F/A972
 
+        ; Part of the Thunder effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA39
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA40
         ACTIVE_SPRITE_FRAME 1, aUnknown9FAA4C
@@ -6541,6 +4261,7 @@
         ; 9F/A9B6
       aUnknown9FA9B6 ; 9F/A9B6
 
+        ; Part of the Thunder effect.
         ACTIVE_SPRITE_FRAME 4, aUnknown9FAAC5
 
         _A9BA
@@ -6554,8 +4275,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0018
@@ -6567,7 +4289,7 @@
         cmp wR0
         bmi _A9F4
         jsr rlUnknown9FAA16
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #<>rlUnknown9FA918
@@ -6591,6 +4313,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
         lda aActiveSpriteSystem.aUnknown0013A0,b,x
         cmp #$0001
@@ -6631,6 +4354,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
         stz aActiveSpriteSystem.aUnknown0013A0,b,x
         rtl
@@ -6644,29 +4368,30 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
         phy
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEBE7
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBF1
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC77
 
@@ -6679,16 +4404,19 @@
 
       aUnknown9FAA37 ; 9F/AA37
 
+        ; Part of the Thunder effect.
         .word 0
 
       aUnknown9FAA39 ; 9F/AA39
 
+        ; Shared by the Elthunder and Thunder effects.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9FAA39._Sprites
 
       aUnknown9FAA40 ; 9F/AA40
 
+        ; Shared by the Elthunder and Thunder effects.
         _Sprites := [[(  -8,  -24), $21, SpriteLarge, $006, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, false]]
 
@@ -6696,6 +4424,7 @@
 
       aUnknown9FAA4C ; 9F/AA4C
 
+        ; Shared by the Elthunder and Thunder effects.
         _Sprites := [[(  -8,  -40), $21, SpriteLarge, $002, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -24), $21, SpriteLarge, $004, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $006, 2, 6, false, false]]
@@ -6704,6 +4433,7 @@
 
       aUnknown9FAA5D ; 9F/AA5D
 
+        ; Part of the Thunder effect.
         _Sprites := [[(  -8,  -40), $21, SpriteLarge, $000, 2, 6, true, false]]
         _Sprites ..= [[(  -8,  -24), $21, SpriteLarge, $006, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, false]]
@@ -6712,6 +4442,7 @@
 
       aUnknown9FAA6E ; 9F/AA6E
 
+        ; Part of the Thunder effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -24), $21, SpriteLarge, $002, 2, 6, false, false]]
         _Sprites ..= [[(  -8,  -40), $21, SpriteLarge, $006, 2, 6, true, false]]
@@ -6733,6 +4464,7 @@
 
       aUnknown9FAA92 ; 9F/AA92
 
+        ; Part of the Thunder effect.
         _Sprites := [[(  -8,   24), $21, SpriteLarge, $004, 2, 6, false, true]]
         _Sprites ..= [[(  -8,    8), $21, SpriteLarge, $002, 2, 6, false, true]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $000, 2, 6, false, false]]
@@ -6741,6 +4473,7 @@
 
       aUnknown9FAAA3 ; 9F/AAA3
 
+        ; Part of the Thunder effect.
         _Sprites := [[(  -8,   24), $21, SpriteLarge, $006, 2, 6, false, true]]
         _Sprites ..= [[(  -8,    8), $21, SpriteLarge, $002, 2, 6, true, true]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, false, true]]
@@ -6749,6 +4482,7 @@
 
       aUnknown9FAAB4 ; 9F/AAB4
 
+        ; Part of the Thunder effect.
         _Sprites := [[(  -8,   24), $21, SpriteLarge, $002, 2, 6, false, true]]
         _Sprites ..= [[(  -8,    8), $21, SpriteLarge, $006, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -8), $21, SpriteLarge, $004, 2, 6, false, true]]
@@ -6757,6 +4491,7 @@
 
       aUnknown9FAAC5 ; 9F/AAC5
 
+        ; Part of the Thunder effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00A, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9FAAC5._Sprites
@@ -6767,6 +4502,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thunder effect.
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq _AAD7
@@ -6826,6 +4562,7 @@
 
       aUnknown9FAB29 ; 9F/AB29
 
+        ; Part of the Thunder effect.
         .word $0002, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0002, $0000, $0000, $0000, $0000, $0000, $0000, $0400
         .word $0002, $0000, $0000, $0000, $0000, $0000, $0000, $0820
@@ -6847,14 +4584,14 @@
         .word $0003, $0000, $0000, $0000, $0400, $0000, $0000, $0400
         .word $FFFF
 
-      rlUnknown9FAC5B ; 9F/AC5B
+      rlStartMapMagicLight ; 9F/AC5B
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FAC61
 
@@ -6864,10 +4601,12 @@
 
       procUnknown9FAC61 ; 9F/AC61
 
+        ; Part of the Light effect.
         .structProcInfo "ON", rlUnknown9FAC74, rlUnknown9FAC81, aProcUnknown9FAC69Code
 
       aProcUnknown9FAC69Code ; 9F/AC69
 
+        ; Part of the Light effect.
         PROC_YIELD 1
         PROC_CALL rlUnknown9FACE3
         PROC_JUMP aProcUnknown9FAC69Code
@@ -6878,9 +4617,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F910A
+        jsr rsSetMapMagicLayerBlending
+        jsr rsSaveMapMagicColors
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
         rtl
@@ -6892,30 +4632,31 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
         jsr rsUnknown9F9116
         bcc _ACC8
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEBD8
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC34
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC77
 
@@ -6924,7 +4665,7 @@
         lda #$0078
         sta aProcSystem.aBody0,b,x
         lda #$0080
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $59
 
@@ -6944,6 +4685,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
 
         dec aProcSystem.aBody0,b,x
         bne _ACE1
@@ -6965,6 +4707,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
 
         rtl
 
@@ -6975,6 +4718,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
         lda aProcSystem.aBody2,b,x
         beq _ACED
         dec a
@@ -7015,6 +4759,7 @@
 
       aUnknown9FAD32 ; 9F/AD32
 
+        ; Part of the Light effect.
         .word $015F, $02FF, $03FF, $7FFF, $7FFF, $03FA, $03E0, $0260
         .word $015F, $02FF, $03FF, $7FFF, $7FFF, $03FA, $03E0, $0260
         .word $015F, $02FF, $03FF, $7FFF, $7FFF, $03FA, $03E0, $0260
@@ -7022,6 +4767,7 @@
 
       aUnknown9FAD72 ; 9F/AD72
 
+        ; Part of the Light effect.
         .word <>rlUnknown9FAD78, <>rlUnknown9FADA3, <>aUnknown9FAE9C
 
       rlUnknown9FAD78 ; 9F/AD78
@@ -7030,13 +4776,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         stz aActiveSpriteSystem.aUnknown0013E0,b,x
@@ -7054,6 +4801,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
 
         jsl rlUnknown9FAE19
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -7073,6 +4821,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
 
         jsl rlUnknown9FAE19
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -7094,6 +4843,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
 
         jsl rlUnknown9FAE19
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -7115,13 +4865,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
 
         jsl rlUnknown9FAE19
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FAE05._AE18
         lda #<>rlUnknown9FAE05
         sta aActiveSpriteSystem.aOnCycle,b,x
-        jsr rsUnknown9F8359
+        jsr rsFreeMapMagicHDMA
         rtl
 
         .databank 0
@@ -7133,13 +4884,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
 
         jsl rlUnknown9FAE19
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc _AE18
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
         _AE18
         rtl
@@ -7153,6 +4905,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
 
         lda aActiveSpriteSystem.aUnknown001360,b,x
         beq _AE23
@@ -7192,6 +4945,7 @@
 
       aUnknown9FAE5C ; 9F/AE5C
 
+        ; Part of the Light effect.
         .word $65FC, $6A3C, $6E7D, $6EBD, $72FE, $773E, $7B7E, $7BBF
         .word $7FFF, $7BBF, $7B7E, $773E, $72FE, $6EBD, $6E7D, $6A3C
         .word $65FC, $6A3C, $6E7D, $6EBD, $72FE, $773E, $7B7E, $7BBF
@@ -7199,6 +4953,7 @@
 
       aUnknown9FAE9C ; 9F/AE9C
 
+        ; Part of the Light effect.
         ACTIVE_SPRITE_FRAME 8, aUnknown9FAEEA
         ACTIVE_SPRITE_FRAME 8, aUnknown9FAEF1
         ACTIVE_SPRITE_FRAME 8, aUnknown9FAEF8
@@ -7227,6 +4982,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Light effect.
 
         lda aActiveSpriteSystem.aUnknown0013A0,b,x
         bne _AEE2
@@ -7247,64 +5003,73 @@
 
       aUnknown9FAEE8 ; 9F/AEE8
 
+        ; Part of the Light effect.
         .word 0
 
       aUnknown9FAEEA ; 9F/AEEA
 
+        ; Part of the Light effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $000, 3, 6, false, false]]
 
         .structSpriteArray aUnknown9FAEEA._Sprites
 
       aUnknown9FAEF1 ; 9F/AEF1
 
+        ; Part of the Light effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 3, 6, false, false]]
 
         .structSpriteArray aUnknown9FAEF1._Sprites
 
       aUnknown9FAEF8 ; 9F/AEF8
 
+        ; Part of the Light effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $004, 3, 6, false, false]]
 
         .structSpriteArray aUnknown9FAEF8._Sprites
 
       aUnknown9FAEFF ; 9F/AEFF
 
+        ; Part of the Light effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $006, 3, 6, false, false]]
 
         .structSpriteArray aUnknown9FAEFF._Sprites
 
       aUnknown9FAF06 ; 9F/AF06
 
+        ; Part of the Light effect.
         _Sprites := [[(  -8,   -6), $21, SpriteLarge, $00A, 3, 6, false, false]]
 
         .structSpriteArray aUnknown9FAF06._Sprites
 
       aUnknown9FAF0D ; 9F/AF0D
 
+        ; Part of the Light effect.
         _Sprites := [[( -10,   -8), $21, SpriteLarge, $008, 3, 6, true, false]]
 
         .structSpriteArray aUnknown9FAF0D._Sprites
 
       aUnknown9FAF14 ; 9F/AF14
 
+        ; Part of the Light effect.
         _Sprites := [[(  -8,  -10), $21, SpriteLarge, $00A, 3, 6, false, true]]
 
         .structSpriteArray aUnknown9FAF14._Sprites
 
       aUnknown9FAF1B ; 9F/AF1B
 
+        ; Part of the Light effect.
         _Sprites := [[(  -6,   -8), $21, SpriteLarge, $008, 3, 6, false, false]]
 
         .structSpriteArray aUnknown9FAF1B._Sprites
 
-      rlUnknown9FAF22 ; 9F/AF22
+      rlStartMapMagicThoron ; 9F/AF22
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FAF28
 
@@ -7314,7 +5079,8 @@
 
       procUnknown9FAF28 ; 9F/AF28
 
-        .structProcInfo "ON", rlUnknown9FAF30, rlUnknown9FAF37, aProcUnknown9F805DCode
+        ; Part of the Thoron effect.
+        .structProcInfo "ON", rlUnknown9FAF30, rlUnknown9FAF37, aProcMapMagicHaltCode
 
       rlUnknown9FAF30 ; 9F/AF30
 
@@ -7322,9 +5088,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F910A
+        jsr rsSetMapMagicLayerBlending
+        jsr rsSaveMapMagicColors
         rtl
 
 
@@ -7334,6 +5101,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
         jsr rsUnknown9F9116
         bcc _AF56
         lda #<>rlUnknown9FAF57
@@ -7356,6 +5124,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
 
         jsl rlUnknown9FAF5C
         rtl
@@ -7367,6 +5136,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
         lda aProcSystem.aBody2,b,x
         beq _AF66
         dec a
@@ -7408,12 +5178,14 @@
 
       aUnknown9FAFA9 ; 9F/AFA9
 
+        ; Part of the Thoron effect.
         .word $0000, $18A0, $30E0, $3160, $4E00, $66C0, $0000, $18A0
         .word $3160, $4E00, $66C0, $7F60, $0000, $18A0, $30E0, $3160
         .word $4E00, $66C0, $0000, $18A0, $3160, $4E00, $66C0, $7F60
 
       aUnknown9FAFD9 ; 9F/AFD9
 
+        ; Part of the Thoron effect.
         .word <>rlUnknown9FAFDF, <>rlUnknown9FB011, <>aUnknown9FB111
 
       rlUnknown9FAFDF ; 9F/AFDF
@@ -7422,13 +5194,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         and #$00FF
         clc
         adc #$FFF8
@@ -7451,17 +5224,18 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B052
         lda #<>rlUnknown9FB053
         sta aActiveSpriteSystem.aOnCycle,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
@@ -7492,14 +5266,15 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
 
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FB011._B052
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0001
@@ -7509,32 +5284,32 @@
         lda #$0032
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $5C
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC58
 
         sta aActiveSpriteSystem.aUnknown001380,b,x
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBF1
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC77
 
@@ -7549,6 +5324,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FB0C4._B0E4
@@ -7569,6 +5345,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B0E4
@@ -7594,6 +5371,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B0F0
@@ -7612,12 +5390,13 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc _B100
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
         _B100
         rtl
@@ -7628,11 +5407,13 @@
 
       aUnknown9FB101 ; 9F/B101
 
+        ; Part of the Thoron effect.
         .word <>aUnknown9FB111, <>aUnknown9FB159, <>aUnknown9FB129, <>aUnknown9FB141
         .word <>aUnknown9FB111, <>aUnknown9FB159, <>aUnknown9FB129, <>aUnknown9FB141
 
       aUnknown9FB111 ; 9F/B111
 
+        ; Part of the Thoron effect.
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB1DE
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB1EA
@@ -7644,6 +5425,7 @@
         ; 9F/B129
       aUnknown9FB129 ; 9F/B129
 
+        ; Part of the Thoron effect.
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB204
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB210
@@ -7655,6 +5437,7 @@
         ; 9F/B141
       aUnknown9FB141 ; 9F/B141
 
+        ; Part of the Thoron effect.
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB1F6
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB1FD
@@ -7666,6 +5449,7 @@
         ; 9F/B159
       aUnknown9FB159 ; 9F/B159
 
+        ; Part of the Thoron effect.
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB21C
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
         ACTIVE_SPRITE_FRAME 3, aUnknown9FB223
@@ -7677,6 +5461,7 @@
         ; 9F/B171
       aUnknown9FB171 ; 9F/B171
 
+        ; Part of the Thoron effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1FD
         ACTIVE_SPRITE_CALL rlUnknown9FB1CC
         .word <>aUnknown9FB1C5
@@ -7709,6 +5494,7 @@
         ; 9F/B1C5
       aUnknown9FB1C5 ; 9F/B1C5
 
+        ; Part of the Thoron effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB1DC
         ACTIVE_SPRITE_JUMP aUnknown9FB1C5
 
@@ -7719,6 +5505,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thoron effect.
 
         lda aActiveSpriteSystem.aUnknown0013A0,b,x
         beq _B1D9
@@ -7739,10 +5526,12 @@
 
       aUnknown9FB1DC ; 9F/B1DC
 
+        ; Part of the Thoron effect.
         .word 0
 
       aUnknown9FB1DE ; 9F/B1DE
 
+        ; Part of the Thoron effect.
         _Sprites := [[(   0,   -4), $00, SpriteSmall, $010, 2, 6, false, false]]
         _Sprites ..= [[(  -8,   -4), $00, SpriteSmall, $000, 2, 6, false, false]]
 
@@ -7750,6 +5539,7 @@
 
       aUnknown9FB1EA ; 9F/B1EA
 
+        ; Part of the Thoron effect.
         _Sprites := [[(   0,   -4), $00, SpriteSmall, $010, 2, 6, false, true]]
         _Sprites ..= [[(  -8,   -4), $00, SpriteSmall, $000, 2, 6, false, true]]
 
@@ -7757,18 +5547,21 @@
 
       aUnknown9FB1F6 ; 9F/B1F6
 
+        ; Part of the Thoron effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, true, true]]
 
         .structSpriteArray aUnknown9FB1F6._Sprites
 
       aUnknown9FB1FD ; 9F/B1FD
 
+        ; Part of the Thoron effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9FB1FD._Sprites
 
       aUnknown9FB204 ; 9F/B204
 
+        ; Part of the Thoron effect.
         _Sprites := [[(  -4,    0), $00, SpriteSmall, $011, 2, 6, false, false]]
         _Sprites ..= [[(  -4,   -8), $00, SpriteSmall, $001, 2, 6, false, false]]
 
@@ -7776,6 +5569,7 @@
 
       aUnknown9FB210 ; 9F/B210
 
+        ; Part of the Thoron effect.
         _Sprites := [[(  -4,   -8), $00, SpriteSmall, $011, 2, 6, false, true]]
         _Sprites ..= [[(  -4,    0), $00, SpriteSmall, $001, 2, 6, false, true]]
 
@@ -7783,12 +5577,14 @@
 
       aUnknown9FB21C ; 9F/B21C
 
+        ; Part of the Thoron effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $002, 2, 6, true, false]]
 
         .structSpriteArray aUnknown9FB21C._Sprites
 
       aUnknown9FB223 ; 9F/B223
 
+        ; Part of the Thoron effect.
         _Sprites := [[(  -8,   -8), $21, SpriteLarge, $00C, 2, 6, true, false]]
 
         .structSpriteArray aUnknown9FB223._Sprites
@@ -7804,6 +5600,7 @@
 
       aUnknown9FB240 ; 9F/B240
 
+        ; Part of the Thoron effect.
         _Sprites := [[( -16,  -16), $21, SpriteLarge, $006, 2, 6, true, true]]
         _Sprites ..= [[(   0,  -16), $21, SpriteLarge, $004, 2, 6, false, true]]
         _Sprites ..= [[( -16,    0), $21, SpriteLarge, $008, 2, 6, true, false]]
@@ -7813,6 +5610,7 @@
 
       aUnknown9FB256 ; 9F/B256
 
+        ; Part of the Thoron effect.
         _Sprites := [[(   0,    0), $21, SpriteLarge, $006, 2, 6, false, false]]
         _Sprites ..= [[( -16,    0), $21, SpriteLarge, $00A, 2, 6, true, false]]
         _Sprites ..= [[(   0,  -16), $21, SpriteLarge, $006, 2, 6, false, true]]
@@ -7820,19 +5618,21 @@
 
         .structSpriteArray aUnknown9FB256._Sprites
 
-      rlUnknown9FB26C ; 9F/B26C
+      rlStartMapMagicMeteor ; 9F/B26C
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        ; Also the Belhalla mages' meteors (rlUnknown9EF703 sets effect 4).
+
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FB279
 
         lda #$0080
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $5E
 
@@ -7842,10 +5642,12 @@
 
       procUnknown9FB279 ; 9F/B279
 
+        ; Part of the Meteor effect.
         .structProcInfo "ON", rlUnknown9FB28C, rlUnknown9FB2AC, aProcUnknown9FB281Code
 
       aProcUnknown9FB281Code ; 9F/B281
 
+        ; Part of the Meteor effect.
         PROC_YIELD 1
         PROC_CALL rlUnknown9FB330
         PROC_JUMP aProcUnknown9FB281Code
@@ -7856,9 +5658,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F910A
+        jsr rsSetMapMagicLayerBlending
+        jsr rsSaveMapMagicColors
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
         lda #$0000
@@ -7875,6 +5678,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
         lda $7F50CB
         bne _B2B7
         jsr rsUnknown9F9116
@@ -7896,30 +5700,31 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         dec aProcSystem.aBody0,b,x
         bpl _B2ED
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FECA3
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBF1
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDCF4
 
@@ -7936,6 +5741,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         lda #<>rlUnknown9FB319
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -7943,7 +5749,7 @@
         sta lR44+1
         lda #<>aUnknown9FB3DD
         sta lR44
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         cmp #$00A0
         bmi _B314
@@ -7963,12 +5769,13 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         lda $7ECC0C
         beq _B32B
         lda #<>rlUnknown9FB32C
         sta aProcSystem.aHeaderOnCycle,b,x
-        lda #<>aProcUnknown9F805DCode
+        lda #<>aProcMapMagicHaltCode
         sta aProcSystem.aHeaderCodeOffset,b,x
 
         _B32B
@@ -7981,6 +5788,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         jsr rsUnknown9F827A
         rtl
@@ -7992,6 +5800,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
         lda aProcSystem.aBody2,b,x
         beq _B33A
         dec a
@@ -8033,6 +5842,7 @@
 
       aUnknown9FB37D ; 9F/B37D
 
+        ; Part of the Meteor effect.
         .word $0012, $000D, $0012, $0017, $001F, $01FF
         .word $0012, $0008, $0012, $0017, $001F, $01FF
         .word $0012, $000D, $0012, $0017, $001F, $01FF
@@ -8044,10 +5854,12 @@
 
       aUnknown9FB3DD ; 9F/B3DD
 
+        ; Part of the Meteor effect.
         .word <>rlUnknown9FB3E9, <>rlUnknown9FB40A, <>aUnknown9FB4C8
 
       aUnknown9FB3E3 ; 9F/B3E3
 
+        ; Part of the Meteor effect.
         .word <>rlUnknown9FB3E9, <>rlUnknown9FB40A, <>aUnknown9FB4D8
 
       rlUnknown9FB3E9 ; 9F/B3E9
@@ -8056,6 +5868,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
@@ -8078,6 +5891,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         jsl rlUnknown9FDE04
         lda $7F50CD
@@ -8094,7 +5908,7 @@
         adc #$0070
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR0
         lda aActiveSpriteSystem.aUnknown001240,b,x
@@ -8103,7 +5917,7 @@
         lda wR0
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $5F
 
@@ -8126,6 +5940,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B474
@@ -8146,6 +5961,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         lda #$0000
         sta aPaletteFading.wDesiredColor,b
@@ -8170,6 +5986,7 @@
 
       aUnknown9FB496 ; 9F/B496
 
+        ; Part of the Meteor effect.
         .byte $D2, $00, $07, $00, $FF, $FF
 
       rlUnknown9FB49C ; 9F/B49C
@@ -8178,6 +5995,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _B4AE
@@ -8198,17 +6016,18 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         lda $7F50CB
         bne _B4BA
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc _B4C7
 
         _B4BA
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
-        sta $7F5093
-        jsr rsUnknown9F8371
+        sta wMapMagicDone
+        jsr rsFreeMapMagicProcs
 
         _B4C7
         rtl
@@ -8218,6 +6037,7 @@
         ; 9F/B4C8
       aUnknown9FB4C8 ; 9F/B4C8
 
+        ; Part of the Meteor effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB4FB
         ACTIVE_SPRITE_CALL rlUnknown9FB4E8
         .word <>aUnknown9FB4C8
@@ -8229,6 +6049,7 @@
         ; 9F/B4D8
       aUnknown9FB4D8 ; 9F/B4D8
 
+        ; Part of the Meteor effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9FB511
         ACTIVE_SPRITE_CALL rlUnknown9FB4E8
         .word <>aUnknown9FB4D8
@@ -8244,6 +6065,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         lda $7ECC0C
         cmp #$0002
@@ -8264,10 +6086,12 @@
 
       aUnknown9FB4F9 ; 9F/B4F9
 
+        ; Part of the Meteor effect.
         .word 0
 
       aUnknown9FB4FB ; 9F/B4FB
 
+        ; Part of the Meteor effect.
         _Sprites := [[(   0,    0), $21, SpriteLarge, $006, 2, 6, false, false]]
         _Sprites ..= [[( -16,    0), $21, SpriteLarge, $004, 2, 6, false, false]]
         _Sprites ..= [[(   0,  -16), $21, SpriteLarge, $002, 2, 6, false, false]]
@@ -8277,6 +6101,7 @@
 
       aUnknown9FB511 ; 9F/B511
 
+        ; Part of the Meteor effect.
         _Sprites := [[( -16,    0), $21, SpriteLarge, $006, 2, 6, true, false]]
         _Sprites ..= [[(   0,    0), $21, SpriteLarge, $004, 2, 6, true, false]]
         _Sprites ..= [[( -16,  -16), $21, SpriteLarge, $002, 2, 6, true, false]]
@@ -8284,14 +6109,14 @@
 
         .structSpriteArray aUnknown9FB511._Sprites
 
-      rlUnknown9FB527 ; 9F/B527
+      rlStartMapMagicBlizzard ; 9F/B527
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FB52D
 
@@ -8301,7 +6126,8 @@
 
       procUnknown9FB52D ; 9F/B52D
 
-        .structProcInfo "ON", rlUnknown9FB535, rlUnknown9FB53C, aProcUnknown9F805DCode
+        ; Part of the Blizzard effect.
+        .structProcInfo "ON", rlUnknown9FB535, rlUnknown9FB53C, aProcMapMagicHaltCode
 
       rlUnknown9FB535 ; 9F/B535
 
@@ -8309,9 +6135,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Blizzard effect.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F910A
+        jsr rsSetMapMagicLayerBlending
+        jsr rsSaveMapMagicColors
 
         _B53B
         rtl
@@ -8323,15 +6150,16 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Blizzard effect.
         jsr rsUnknown9F9116
         bcc rlUnknown9FB535._B53B
         lda #<>rlUnknown9FB559
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0004
         sta aProcSystem.aBody0,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $66
 
@@ -8344,6 +6172,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Blizzard effect.
 
         dec aProcSystem.aBody0,b,x
         bpl _B56D
@@ -8363,6 +6192,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Blizzard effect.
 
         dec aProcSystem.aBody0,b,x
         bne _B57F
@@ -8381,6 +6211,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Blizzard effect.
 
         dec aProcSystem.aBody0,b,x
         bne rlUnknown9FB599._B5B7
@@ -8399,6 +6230,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Blizzard effect.
 
         dec aProcSystem.aBody0,b,x
         bne _B5B7
@@ -8422,10 +6254,11 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Blizzard effect.
 
         dec aProcSystem.aBody0,b,x
         bne _B5CC
-        jsr rsUnknown9F8359
+        jsr rsFreeMapMagicHDMA
         lda #<>rlUnknown9FB5CD
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
@@ -8441,6 +6274,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Blizzard effect.
 
         dec aProcSystem.aBody0,b,x
         bne _B5D8
@@ -8457,13 +6291,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Blizzard effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc rlUnknown9FB5EB
         lda #<>rlUnknown9FB5EB
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
       rlUnknown9FB5EB ; 9F/B5EB
 
@@ -8471,6 +6306,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Blizzard effect.
 
         rtl
 
@@ -8481,28 +6317,29 @@
         .xl
         .autsiz
         .databank ?
-        jsr rsUnknown9F82D7
+        ; Part of the Blizzard effect.
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC3A
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC34
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDE9E
 
@@ -8510,14 +6347,14 @@
 
         .databank 0
 
-      rlUnknown9FB60E ; 9F/B60E
+      rlStartMapMagicReturn ; 9F/B60E
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FB6C4
 
@@ -8525,14 +6362,14 @@
 
         .databank 0
 
-      rlUnknown9FB614 ; 9F/B614
+      rlStartMapMagicRestore ; 9F/B614
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FB974
 
@@ -8540,14 +6377,14 @@
 
         .databank 0
 
-      rlUnknown9FB61A ; 9F/B61A
+      rlStartMapMagicSleep ; 9F/B61A
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FB620
 
@@ -8557,10 +6394,12 @@
 
       procUnknown9FB620 ; 9F/B620
 
+        ; Part of the Sleep effect.
         .structProcInfo "ON", rlUnknown9FB6CC, rlUnknown9FB633, aProcUnknown9FB628Code
 
       aProcUnknown9FB628Code ; 9F/B628
 
+        ; Part of the Sleep effect.
         PROC_YIELD 1
         PROC_CALL rlUnknown9FBAD5
         PROC_JUMP aProcUnknown9FB628Code
@@ -8571,29 +6410,30 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Sleep effect.
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC67
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBF1
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FE2E5
 
@@ -8608,9 +6448,9 @@
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteLastSlot
         plx
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $7C
 
@@ -8623,6 +6463,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Sleep effect.
 
         dec aProcSystem.aBody0,b,x
         bne _B694
@@ -8643,6 +6484,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Sleep effect.
 
         dec aProcSystem.aBody0,b,x
         bne _B6B6
@@ -8666,6 +6508,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Sleep effect.
 
         dec aProcSystem.aBody0,b,x
         bne _B6C3
@@ -8679,6 +6522,7 @@
 
       procUnknown9FB6C4 ; 9F/B6C4
 
+        ; Part of the Return effect.
         .structProcInfo "ON", rlUnknown9FB6CC, rlUnknown9FB81B, aProcUnknown9FB6F7Code
 
       rlUnknown9FB6CC ; 9F/B6CC
@@ -8687,8 +6531,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Restore, Return and Sleep effects.
 
-        jsr rsUnknown9F83F1
+        jsr rsSetMapMagicLayerBlending
         lda #$0000
         sta $7ECC06
         sta $7ECC08
@@ -8707,6 +6552,7 @@
 
       aProcUnknown9FB6F7Code ; 9F/B6F7
 
+        ; Part of the Return effect.
         PROC_YIELD 3
         PROC_CALL_ARGS rlUnknown9FBC45, 1
         .byte $0F
@@ -8811,29 +6657,30 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Return effect.
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC67
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC34
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC77
 
@@ -8848,9 +6695,9 @@
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteLastSlot
         plx
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $7D
 
@@ -8863,6 +6710,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Return effect.
 
         dec aProcSystem.aBody0,b,x
         bne _B876
@@ -8881,6 +6729,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Return effect.
 
         jsr rlUnknown9FB8AB._B8B8
         bcc _B888
@@ -8899,6 +6748,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Return effect.
 
         dec aProcSystem.aBody0,b,x
         bne _B8AA
@@ -8922,6 +6772,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Return effect.
 
         dec aProcSystem.aBody0,b,x
         bne _B8B7
@@ -9005,6 +6856,7 @@
 
       aUnknown9FB934 ; 9F/B934
 
+        ; Part of the Return effect.
         .word $0100, $0200, $0300, $0400, $0500, $0600, $0700, $0800
         .word $0900, $0A00, $0B00, $0C00, $0D00, $0E00, $0F00, $1000
         .word $1100, $1200, $1300, $1400, $1500, $1600, $1700, $1800
@@ -9012,10 +6864,12 @@
 
       procUnknown9FB974 ; 9F/B974
 
+        ; Part of the Restore effect.
         .structProcInfo "ON", rlUnknown9FB6CC, rlUnknown9FB987, aProcUnknown9FB97CCode
 
       aProcUnknown9FB97CCode ; 9F/B97C
 
+        ; Part of the Restore effect.
         PROC_YIELD 1
         PROC_CALL rlUnknown9FBB8E
         PROC_JUMP aProcUnknown9FB97CCode
@@ -9026,29 +6880,30 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Restore effect.
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC67
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBF1
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FE2D9
 
@@ -9063,9 +6918,9 @@
         sta lR44
         jsl rlActiveSpriteEngineCreateSpriteLastSlot
         plx
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $78
 
@@ -9078,6 +6933,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Restore effect.
 
         dec aProcSystem.aBody0,b,x
         bne _B9E8
@@ -9098,6 +6954,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Restore effect.
 
         dec aProcSystem.aBody0,b,x
         bne _BA0A
@@ -9121,6 +6978,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Restore effect.
 
         dec aProcSystem.aBody0,b,x
         bne _BA17
@@ -9134,6 +6992,7 @@
 
       aUnknown9FBA18 ; 9F/BA18
 
+        ; Shared by the Restore, Return and Sleep effects.
         .word <>rlUnknown9FBA1E, <>rlUnknown9FBA3E, <>aUnknown9FBA4F
 
       rlUnknown9FBA1E ; 9F/BA1E
@@ -9142,13 +7001,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Restore, Return and Sleep effects.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         clc
         adc #$FFFC
         and #$00FF
@@ -9162,10 +7022,11 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Restore, Return and Sleep effects.
         lda $7ECC06
         beq _BA4E
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _BA4E
@@ -9175,6 +7036,7 @@
 
       aUnknown9FBA4F ; 9F/BA4F
 
+        ; Shared by the Restore, Return and Sleep effects.
         ACTIVE_SPRITE_FRAME 3, aUnknown9FBACE
         ACTIVE_SPRITE_FRAME 3, aUnknown9FBAA8
         ACTIVE_SPRITE_FRAME 3, aUnknown9FBAB6
@@ -9203,6 +7065,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Restore, Return and Sleep effects.
 
         lda $7ECC08
         bne _BA92
@@ -9220,10 +7083,12 @@
 
       aUnknown9FBA95 ; 9F/BA95
 
+        ; Shared by the Restore, Return and Sleep effects.
         .word 0
 
       aUnknown9FBA97 ; 9F/BA97
 
+        ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(   5,    8), $00, SpriteSmall, $012, 2, 6, false, false]]
         _Sprites ..= [[(   5,    0), $00, SpriteSmall, $002, 2, 6, false, false]]
         _Sprites ..= [[( -11,    0), $21, SpriteLarge, $000, 2, 6, false, false]]
@@ -9232,24 +7097,28 @@
 
       aUnknown9FBAA8 ; 9F/BAA8
 
+        ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(  -3,    3), $00, SpriteSmall, $003, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9FBAA8._Sprites
 
       aUnknown9FBAAF ; 9F/BAAF
 
+        ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(  -8,    0), $21, SpriteLarge, $004, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9FBAAF._Sprites
 
       aUnknown9FBAB6 ; 9F/BAB6
 
+        ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(  -8,    0), $21, SpriteLarge, $006, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9FBAB6._Sprites
 
       aUnknown9FBABD ; 9F/BABD
 
+        ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(   5,    8), $00, SpriteSmall, $01A, 2, 6, false, false]]
         _Sprites ..= [[(   5,    0), $00, SpriteSmall, $00A, 2, 6, false, false]]
         _Sprites ..= [[( -11,    0), $21, SpriteLarge, $008, 2, 6, false, false]]
@@ -9258,6 +7127,7 @@
 
       aUnknown9FBACE ; 9F/BACE
 
+        ; Shared by the Restore, Return and Sleep effects.
         _Sprites := [[(  -3,    4), $00, SpriteSmall, $013, 2, 6, false, false]]
 
         .structSpriteArray aUnknown9FBACE._Sprites
@@ -9268,6 +7138,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Sleep effect.
 
         lda aProcSystem.aBody2,b,x
         beq _BADF
@@ -9314,6 +7185,7 @@
 
       aUnknown9FBB2E ; 9F/BB2E
 
+        ; Part of the Sleep effect.
         .word $7E0B, $7E0E, $7E11, $7E14, $7E16, $7E19, $7E1C, $7E1F
         .word $7E1F, $7DDD, $7D7A, $7D38, $7CF6, $7CB4, $7C51, $7C0F
         .word $7C0F, $7C6D, $7CCC, $7D2A, $7DA9, $7E07, $7E66, $7EC4
@@ -9327,6 +7199,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Restore effect.
 
         lda aProcSystem.aBody2,b,x
         beq _BB98
@@ -9373,6 +7246,7 @@
 
       aUnknown9FBBE5 ; 9F/BBE5
 
+        ; Part of the Restore effect.
         .word $7D40, $7520, $7120, $6900, $64E0, $5CE0, $58C0, $50A0
         .word $4CA0, $4480, $4060, $3860, $3440, $2C20, $2820, $2000
         .word $2000, $2820, $2C20, $3440, $3860, $4060, $4480, $4CA0
@@ -9386,6 +7260,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Return effect.
 
         phx
         lda $0000,b,y
@@ -9420,19 +7295,20 @@
 
       aUnknown9FBC8F ; 9F/BC8F
 
+        ; Part of the Return effect.
         .word $43FF, $039F, $033D, $025A, $01DA, $0159, $00F0, $006E
         .word $006E, $00F0, $0159, $01DA, $025A, $033D, $039F, $43FF
         .word $43FF, $039F, $033D, $025A, $01DA, $0159, $00F0, $006E
         .word $006E, $00F0, $0159, $01DA, $025A, $033D, $039F, $43FF
 
-      rlUnknown9FBCCF ; 9F/BCCF
+      rlStartMapMagicMjolnir ; 9F/BCCF
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FBCD5
 
@@ -9442,6 +7318,7 @@
 
       procUnknown9FBCD5 ; 9F/BCD5
 
+        ; Part of the Mjolnir effect.
         .structProcInfo "ON", rlUnknown9FBCDD, rlUnknown9FBCFD, aProcUnknown9FBDC1Code
 
       rlUnknown9FBCDD ; 9F/BCDD
@@ -9450,9 +7327,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F910A
+        jsr rsSetMapMagicLayerBlending
+        jsr rsSaveMapMagicColors
         stz aProcSystem.aBody0,b,x
         stz aProcSystem.aBody1,b,x
         lda #$0000
@@ -9471,30 +7349,31 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
         jsr rsUnknown9F9116
         bcc rlUnknown9FBCDD._BCFC
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEBFE
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC34
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC77
 
@@ -9519,6 +7398,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         jsl rlUnknown9FBEB2
         dec aProcSystem.aBody0,b,x
@@ -9538,6 +7418,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         jsl rlUnknown9FBEB2
         dec aProcSystem.aBody0,b,x
@@ -9557,6 +7438,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         jsl rlUnknown9FBEB2
         lda $7ECC06
@@ -9581,12 +7463,13 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         dec aProcSystem.aBody0,b,x
         bne _BDAD
         lda #<>rlUnknown9FBDAE
         sta aProcSystem.aHeaderOnCycle,b,x
-        jsr rsUnknown9F8359
+        jsr rsFreeMapMagicHDMA
 
         _BDAD
         rtl
@@ -9598,13 +7481,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc rlUnknown9FBDC0
         lda #<>rlUnknown9FBDC0
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
       rlUnknown9FBDC0 ; 9F/BDC0
 
@@ -9612,6 +7496,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         rtl
 
@@ -9619,6 +7504,7 @@
 
       aProcUnknown9FBDC1Code ; 9F/BDC1
 
+        ; Part of the Mjolnir effect.
         PROC_YIELD 1
         PROC_CALL_ARGS rlUnknown9FBE31, 1
         .byte $00
@@ -9664,6 +7550,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         lda $0000,b,y
         and #$00FF
@@ -9683,6 +7570,7 @@
 
       aUnknown9FBE52 ; 9F/BE52
 
+        ; Part of the Mjolnir effect.
         .word $7400, $7C20, $7D40, $7DC0, $7E40, $7FC0
         .word $2C02, $4007, $5C0B, $6810, $7C17, $7C9F
         .word $7400, $7C20, $7D40, $7DC0, $7E40, $7FC0
@@ -9698,6 +7586,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         lda aProcSystem.aBody2,b,x
         inc a
@@ -9733,11 +7622,13 @@
 
       aUnknown9FBEE8 ; 9F/BEE8
 
+        ; Part of the Mjolnir effect.
         .word $0000, $1800, $6000, $7D60, $7000, $3400, $1800, $0000
         .word $0000, $1800, $6000, $7D60, $7000, $3400, $1800, $0000
 
       aUnknown9FBF08 ; 9F/BF08
 
+        ; Part of the Mjolnir effect.
         .word <>rlUnknown9FBF0E, <>rlUnknown9FBF37, <>aUnknown9FBF47
 
 
@@ -9747,19 +7638,20 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0060
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $5D
 
@@ -9773,6 +7665,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _BF46
@@ -9787,6 +7680,7 @@
 
       aUnknown9FBF47 ; 9F/BF47
 
+        ; Part of the Mjolnir effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9FBF79
         ACTIVE_SPRITE_CALL rlUnknown9FBF6B
         .word <>aUnknown9FBF47
@@ -9808,6 +7702,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         lda $7ECC08
         bne _BF76
@@ -9867,14 +7762,14 @@
         .structSpriteArray aUnknown9F9FBFCF._Sprites
 
 
-      rlUnknown9FBFF9 ; 9F/BFF9
+      rlStartMapMagicForseti ; 9F/BFF9
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FBFFF
 
@@ -9884,7 +7779,8 @@
 
       procUnknown9FBFFF ; 9F/BFFF
 
-        .structProcInfo "ON", rlUnknown9FC007, rlUnknown9FC00F, aProcUnknown9F805DCode
+        ; Part of the Forseti effect.
+        .structProcInfo "ON", rlUnknown9FC007, rlUnknown9FC00F, aProcMapMagicHaltCode
 
 
       rlUnknown9FC007 ; 9F/C007
@@ -9893,8 +7789,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Forseti effect.
 
-        jsr rsUnknown9F910A
+        jsr rsSaveMapMagicColors
         jsl rlUnknown9FC0B3
         rtl
 
@@ -9906,38 +7803,39 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Forseti effect.
 
         jsr rsUnknown9F9116
         bcc _C04F
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F82D7
+        jsr rsSetMapMagicLayerBlending
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC76
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBF1
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDE8E
 
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $65
 
@@ -9957,6 +7855,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Forseti effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C061
@@ -9976,6 +7875,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Forseti effect.
 
         dec aProcSystem.aBody0,b,x
         bne rlUnknown9FC07B._C092
@@ -9995,6 +7895,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Forseti effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C092
@@ -10016,6 +7917,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Forseti effect.
 
         jsl rlUnknown9FC0B3
         bcc _C09F
@@ -10033,13 +7935,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Forseti effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc rlUnknown9FC0B2
         lda #<>rlUnknown9FC0B2
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
       rlUnknown9FC0B2 ; 9F/C0B2
 
@@ -10047,6 +7950,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Forseti effect.
 
         rtl
 
@@ -10058,6 +7962,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Forseti effect.
 
         lda #$0003
         sta aProcSystem.aBody2,b,x
@@ -10098,6 +8003,7 @@
 
       aUnknown9FC0FD ; 9F/C0FD
 
+        ; Part of the Forseti effect.
         .word $4251, $360D, $21C7, $1984, $0942, $00C0, $0020
         .word $3E0F, $2DCB, $1D86, $1544, $0922, $00A0, $0020
         .word $35CD, $298A, $1965, $1123, $0501, $0080, $0020
@@ -10110,14 +8016,14 @@
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $FFFF
 
-      rlUnknown9FC18B ; 9F/C18B
+      rlStartMapMagicNosferatu ; 9F/C18B
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FC191
 
@@ -10127,6 +8033,7 @@
 
       procUnknown9FC191 ; 9F/C191
 
+        ; Part of the Nosferatu effect.
         .structProcInfo "ON", rlUnknown9FC199, rlUnknown9FC1B0, aProcUnknown9FC50CCode
 
 
@@ -10136,8 +8043,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
-        jsr rsUnknown9F83F1
+        jsr rsSetMapMagicLayerBlending
         lda #$0000
         sta $7ECC06
         sta $7ECC08
@@ -10153,28 +8061,29 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEBF6
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC34
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC77
 
@@ -10182,9 +8091,9 @@
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0060
         sta aProcSystem.aBody0,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $67
 
@@ -10203,6 +8112,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C20C
@@ -10224,6 +8134,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C219
@@ -10241,27 +8152,28 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
-        jsr rsUnknown9F82BE
-        lda $7F509B
+        jsr rsClearMapMagicProcBody
+        lda wMapMagicTargetPixel
         and #$00FF
         xba
         sta aProcSystem.aBody3,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$FF00
         sta aProcSystem.aBody4,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta wR0
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sec
         sbc wR0
         sta wR0
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR1
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         and #$00FF
         sec
         sbc wR1
@@ -10286,6 +8198,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         lda aProcSystem.aBody2,b,x
         clc
@@ -10313,6 +8226,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C2BF
@@ -10334,6 +8248,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C2D1
@@ -10353,6 +8268,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         jsr rsUnknown9FC393
         lda aProcSystem.aBody2,b,x
@@ -10377,6 +8293,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C30C
@@ -10398,6 +8315,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C31F
@@ -10417,13 +8335,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         lda aProcSystem.aBody2,b,x
         sec
         sbc #$0001
         cmp #$0001
         bpl _C338
-        jsr rsUnknown9F8359
+        jsr rsFreeMapMagicHDMA
         lda #<>rlUnknown9FC33E
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
@@ -10438,6 +8357,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         rtl
 
@@ -10449,6 +8369,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         sta $7F50E3
         asl a
@@ -10492,6 +8413,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         lda aProcSystem.aBody5,b,x
         clc
@@ -10506,6 +8428,7 @@
 
       aUnknown9FC3A7 ; 9F/C3A7
 
+        ; Part of the Nosferatu effect.
         .word <>rlUnknown9FC3AD, <>rlUnknown9FC3C9, <>aUnknown9FC499
 
 
@@ -10515,13 +8438,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         rtl
@@ -10534,12 +8458,13 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         jsr rsUnknown9FC415
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda $7ECC06
@@ -10558,19 +8483,20 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         jsr rsUnknown9FC415
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda $7ECC0C
         beq _C414
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
         _C414
         rtl
@@ -10583,6 +8509,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         phx
         inc aActiveSpriteSystem.aUnknown001300,b,x
@@ -10610,6 +8537,7 @@
 
       aUnknown9FC439 ; 9F/C439
 
+        ; Part of the Nosferatu effect.
         .word $2550, $39F3, $4E97, $5F3B, $73DF, $01D8, $0619, $063A
         .word $0A7B, $0EBC, $12FD, $131E, $175F, $00AC, $00EE, $052F
         .word $0571, $09B2, $0A35, $0E97, $131A, $17DF, $0C89, $190C
@@ -10619,6 +8547,7 @@
 
       aUnknown9FC499 ; 9F/C499
 
+        ; Part of the Nosferatu effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9FC4DE
         ACTIVE_SPRITE_CALL rlUnknown9FC4C9
         .word <>aUnknown9FC499
@@ -10652,6 +8581,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         lda $7ECC0A
         beq _C4D9
@@ -10694,6 +8624,7 @@
 
       aProcUnknown9FC50CCode ; 9F/C50C
 
+        ; Part of the Nosferatu effect.
         PROC_YIELD 2
         PROC_CALL_ARGS rlUnknown9FC57C, 1
         .byte $00
@@ -10739,6 +8670,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Nosferatu effect.
 
         lda $0000,b,y
         and #$00FF
@@ -10764,6 +8696,7 @@
 
       aUnknown9FC5AF ; 9F/C5AF
 
+        ; Part of the Nosferatu effect.
         .word $001D, $0016, $0013, $0012, $000D, $001D, $0016, $0013
         .word $0012, $000D, $001D, $0016, $0013, $0012, $000D, $001D
         .word $0016, $0013, $0012, $000D, $001D, $0016, $0013, $0012
@@ -10771,14 +8704,14 @@
         .word $0013, $0012, $000D, $001D, $0016, $0013, $0012, $000D
         .word $001D, $0016, $0013, $0012, $000D, $001D, $0016, $0013
 
-      rlUnknown9FC60F ; 9F/C60F
+      rlStartMapMagicSilence ; 9F/C60F
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FC615
 
@@ -10788,11 +8721,13 @@
 
       procUnknown9FC615 ; 9F/C615
 
+        ; Part of the Silence effect.
         .structProcInfo "ON", rlUnknown9FC628, rlUnknown9FC62F, aProcUnknown9FC61DCode
 
 
       aProcUnknown9FC61DCode ; 9F/C61D
 
+        ; Part of the Silence effect.
         PROC_YIELD 1
         PROC_CALL rlUnknown9FC7A8
         PROC_JUMP aProcUnknown9FC61DCode
@@ -10804,9 +8739,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Silence effect.
 
-        jsr rsUnknown9F83F1
-        jsr rsUnknown9F910A
+        jsr rsSetMapMagicLayerBlending
+        jsr rsSaveMapMagicColors
         rtl
 
         .databank 0
@@ -10817,6 +8753,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Silence effect.
 
         jsr rsUnknown9F9116
         bcc _C64B
@@ -10824,9 +8761,9 @@
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$000C
         sta aProcSystem.aBody0,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $79
 
@@ -10842,31 +8779,32 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Silence effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C67E
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FEC85
 
         sta aProcSystem.aBody7,b,x
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC34
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC77
 
@@ -10886,6 +8824,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Silence effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C697
@@ -10907,6 +8846,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Silence effect.
 
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FC69C
         dec aProcSystem.aBody0,b,x
@@ -10930,12 +8870,13 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Silence effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C6C1
         lda #<>rlUnknown9FC6C2
         sta aProcSystem.aHeaderOnCycle,b,x
-        jsr rsUnknown9F8359
+        jsr rsFreeMapMagicHDMA
 
         _C6C1
         rtl
@@ -10948,13 +8889,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Silence effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc rlUnknown9FC6D4
         lda #<>rlUnknown9FC6D4
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
       rlUnknown9FC6D4 ; 9F/C6D4
 
@@ -10962,6 +8904,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Silence effect.
 
         rtl
 
@@ -10973,6 +8916,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Silence effect.
 
         dec aProcSystem.aBody1,b,x
         beq _C6DE
@@ -11005,7 +8949,7 @@
         sta aProcSystem.aBody2,b,x
 
         _C715
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         clc
         adc wR0
@@ -11015,21 +8959,21 @@
         and #$000C
         lsr a
         tay
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc <>aUnknown9FC7A0,b,y
         eor #$FFFF
         inc a
         sta $7F50CD
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc #$0004
         clc
         adc wR1
         sta $7F50E1
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc #$0004
@@ -11071,6 +9015,7 @@
 
       aUnknown9FC7A0 ; 9F/C7A0
 
+        ; Part of the Silence effect.
         .word $0080, $00B0, $00E0, $0050
 
       rlUnknown9FC7A8 ; 9F/C7A8
@@ -11079,6 +9024,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Silence effect.
 
         phx
         lda aProcSystem.aBody2,b
@@ -11107,6 +9053,7 @@
 
       aUnknown9FC7E0 ; 9F/C7E0
 
+        ; Part of the Silence effect.
         .word $7D40, $7520, $7120, $6900, $64E0, $5CE0, $58C0, $50A0
         .word $4CA0, $4480, $4060, $3860, $3440, $2C20, $2820, $2000
         .word $2000, $2820, $2C20, $3440, $3860, $4060, $4480, $4CA0
@@ -11114,14 +9061,14 @@
         .word $7D40, $7520, $7120, $6900, $64E0, $5CE0, $58C0, $50A0
         .word $4CA0, $4480, $4060, $3860, $3440, $2C20, $2820, $2000
 
-      rlUnknown9FC840 ; 9F/C840
+      rlStartMapMagicTornado ; 9F/C840
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FC846
 
@@ -11131,7 +9078,8 @@
 
       procUnknown9FC846 ; 9F/C846
 
-        .structProcInfo "ON", rlUnknown9FC84E, rlUnknown9FC865, aProcUnknown9F805DCode
+        ; Part of the Tornado effect.
+        .structProcInfo "ON", rlUnknown9FC84E, rlUnknown9FC865, aProcMapMagicHaltCode
 
 
       rlUnknown9FC84E ; 9F/C84E
@@ -11140,8 +9088,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Tornado effect.
 
-        jsr rsUnknown9F910A
+        jsr rsSaveMapMagicColors
         lda #$0000
         sta $7ECC06
         sta $7ECC08
@@ -11157,6 +9106,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Tornado effect.
 
         lda #$0007
         ldy #$0014
@@ -11187,6 +9137,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Tornado effect.
 
         lda $7ECC06
         beq _C8A1
@@ -11206,6 +9157,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Tornado effect.
 
         dec aProcSystem.aBody0,b,x
         bne _C8AD
@@ -11223,13 +9175,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Tornado effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc rlUnknown9FC8C0
         lda #<>rlUnknown9FC8C0
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
 
       rlUnknown9FC8C0 ; 9F/C8C0
 
@@ -11237,6 +9190,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Tornado effect.
 
         rtl
 
@@ -11244,6 +9198,7 @@
 
       aUnknown9FC8C1 ; 9F/C8C1
 
+        ; Part of the Tornado effect.
         .word <>rlUnknown9FC8C7, <>rlUnknown9FC8F0, <>aUnknown9FC969
 
 
@@ -11253,18 +9208,19 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Tornado effect.
 
         ; WARNING: a branch or jump leads into the middle of an instruction at $9FC8CC
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $63
 
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0030
@@ -11279,16 +9235,17 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Tornado effect.
 
         jsl rlUnknown9FC9E8
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _C933
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
@@ -11318,9 +9275,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Tornado effect.
 
         jsl rlUnknown9FC9E8
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _C954
         lda #$0001
@@ -11341,6 +9299,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Tornado effect.
 
         jsl rlUnknown9FC9E8
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
@@ -11356,6 +9315,7 @@
 
       aUnknown9FC969 ; 9F/C969
 
+        ; Part of the Tornado effect.
         .byte $00, $03, $7C, $C9, $00, $03, $B2, $C9, $00, $03, $97, $C9, $00, $03, $CD, $C9
         .byte $15, $69, $C9
 
@@ -11406,6 +9366,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Tornado effect.
 
         lda aActiveSpriteSystem.aUnknown001360,b,x
         beq _C9F2
@@ -11441,17 +9402,20 @@
 
       aUnknown9FCA1F ; 9F/CA1F
 
+        ; Part of the Tornado effect.
         .word $7F9F, $62B8, $45D1, $24E9, $1445, $24E9, $45D1, $62B8
         .word $7F9F, $62B8, $45D1, $45D1, $24E9, $1445, $24E9, $45D1
         .word $7F9F, $62B8, $45D1, $24E9, $1445, $24E9, $45D1, $62B8
         .word $7F9F, $62B8, $45D1, $45D1, $24E9, $1445, $24E9, $45D1
 
-      rlUnknown9FCA5F ; 9F/CA5F
+      rlStartMapMagicWind ; 9F/CA5F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Also Elwind.
 
         lda #(`aUnknown9FCA89)<<8
         sta lR44+1
@@ -11468,6 +9432,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Wind effect.
 
         phx
         phy
@@ -11488,16 +9453,19 @@
 
       aUnknown9FCA89 ; 9F/CA89
 
+        ; Part of the Wind effect.
         .word <>rlUnknown9FCA97, <>rlUnknown9FCB00, <>aUnknown9FCA95
 
 
       aUnknown9FCA8F ; 9F/CA8F
 
+        ; Part of the Wind effect.
         .word <>rlUnknown9FCADD, <>rlUnknown9FCAF7, <>aUnknown9FCA95
 
 
       aUnknown9FCA95 ; 9F/CA95
 
+        ; Part of the Wind effect.
         .word $0000
 
       rlUnknown9FCA97 ; 9F/CA97
@@ -11506,13 +9474,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Wind effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0001
@@ -11522,11 +9491,11 @@
         tay
         lda <>aUnknown9FCBA6,b,y
         sta aActiveSpriteSystem.aCodeOffset,b,x
-        lda $7F5089
+        lda wMapMagicEffect
         cmp #$000B
         beq _CAD5
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $61
 
@@ -11535,7 +9504,7 @@
 
         _CAD5
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $62
 
@@ -11549,6 +9518,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Wind effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
@@ -11569,6 +9539,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Wind effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CAFF
@@ -11585,15 +9556,16 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Wind effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CB41
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
@@ -11625,14 +9597,15 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Wind effect.
 
-        lda $7F5089
+        lda wMapMagicEffect
         cmp #$000B
         bne _CB4E
         jsr rsUnknown9FCA6E
 
         _CB4E
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FCB00._CB41
         lda #$0001
@@ -11652,6 +9625,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Wind effect.
 
         lda aActiveSpriteSystem.aUnknown001300,b,x
         sec
@@ -11662,7 +9636,7 @@
         _CB7A
         sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FCB00._CB41
         lda #$0010
@@ -11679,11 +9653,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Wind effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FCB00._CB41
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
         stz aActiveSpriteSystem.aTypeOffset,b,x
         rtl
 
@@ -11691,6 +9666,7 @@
 
       aUnknown9FCBA6 ; 9F/CBA6
 
+        ; Part of the Wind effect.
         .word $CC11, $CBD5, $CC2F, $CBF3, $CC02, $CBE4, $CC20, $CBC6
         .word $CC19, $CBDD, $CC37, $CBFB, $CC0A, $CBEC, $CC28, $CBCE
 
@@ -11870,16 +9846,18 @@
         .structSpriteArray aUnknown9F9FCD2C._Sprites
 
 
-      rlUnknown9FCD38 ; 9F/CD38
+      rlStartMapMagicWarp ; 9F/CD38
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $7F509B
+        ; Also Rescue.
+
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $77
 
@@ -11892,16 +9870,16 @@
 
         .databank 0
 
-      rlUnknown9FCD52 ; 9F/CD52
+      rlStartMapMagicBrokenStaff ; 9F/CD52
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $77
 
@@ -11916,11 +9894,13 @@
 
       aUnknown9FCD6C ; 9F/CD6C
 
+        ; Part of the Warp effect.
         .word <>rlUnknown9FCD78, <>rlUnknown9FCD9A, <>aUnknown9FCED1
 
 
       aUnknown9FCD72 ; 9F/CD72
 
+        ; Part of the BrokenStaff effect.
         .word <>rlUnknown9FCE44, <>rlUnknown9FCE62, <>aUnknown9FD004
 
 
@@ -11930,13 +9910,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Warp effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$0001
@@ -11951,6 +9932,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Warp effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FCDAC
@@ -11965,6 +9947,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Warp effect.
 
         rtl
 
@@ -11976,16 +9959,17 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Warp effect.
 
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         lda aActiveSpriteSystem.aUnknown0013A0,b,x
         beq _CDCC
         stz aActiveSpriteSystem.aUnknown0013A0,b,x
-        lda $7F5089
+        lda wMapMagicEffect
         cmp #$0020
         bne _CDCD
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _CDCC
@@ -12019,6 +10003,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Warp effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CE0D
@@ -12036,8 +10021,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Warp effect.
 
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         lda $7F509E
         and #$00FF
         cmp aActiveSpriteSystem.aUnknown001240,b,x
@@ -12063,11 +10049,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Warp effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CE43
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _CE43
@@ -12081,10 +10068,11 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the BrokenStaff effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
         and #$FFF8
@@ -12101,6 +10089,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the BrokenStaff effect.
 
         lda #<>rlUnknown9FCE8B
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -12110,7 +10099,7 @@
         sta aActiveSpriteSystem.aUnknown0013E0,b,x
         stz aActiveSpriteSystem.aUnknown0011E0,b,x
         stz aActiveSpriteSystem.aUnknown001220,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
         lda #$FFF8
@@ -12125,6 +10114,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the BrokenStaff effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CE96
@@ -12142,9 +10132,10 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the BrokenStaff effect.
 
-        jsl rlUnknown9F8999
-        lda $7F509C
+        jsl rlMoveActiveSpriteByVelocity
+        lda wMapMagicTargetPixel+1
         and #$00FF
         cmp aActiveSpriteSystem.aUnknown001240,b,x
         beq _CEAA
@@ -12170,11 +10161,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the BrokenStaff effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _CED0
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _CED0
@@ -12184,6 +10176,7 @@
 
       aUnknown9FCED1 ; 9F/CED1
 
+        ; Part of the Warp effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD097
         ACTIVE_SPRITE_FRAME 2, aUnknown9F9FD09E
         ACTIVE_SPRITE_FRAME 8, aUnknown9F9FD0A5
@@ -12224,6 +10217,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Warp effect.
 
         lda #$F800
         sta aActiveSpriteSystem.aUnknown0013E0,b,x
@@ -12240,6 +10234,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Warp effect.
 
         lda aActiveSpriteSystem.aUnknown001240,b,x
         bmi _CF4F
@@ -12263,6 +10258,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Warp effect.
 
         lda aMapAction.wMapBattleDefenderAuxSpriteSlot
         cmp #$FFFF
@@ -12280,6 +10276,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Warp effect.
 
         phy
         tay
@@ -12292,6 +10289,7 @@
 
       aUnknown9FCF73 ; 9F/CF73
 
+        ; Part of the Warp effect.
         .byte $00, $01, $CF, $D0, $17, $F7, $CF, $73, $CF, $00, $03, $CF, $D0, $00, $03, $C8
         .byte $D0, $00, $03, $B3, $D0, $00, $03, $C1, $D0, $00, $03, $BA, $D0, $00, $03, $B3
         .byte $D0, $00, $03, $AC, $D0, $00, $03, $C1, $D0, $00, $03, $BA, $D0, $17, $CE, $CF
@@ -12359,6 +10357,7 @@
 
       aUnknown9FD004 ; 9F/D004
 
+        ; Part of the BrokenStaff effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD0CF
         ACTIVE_SPRITE_CALL rlUnknown9FD088
         .word <>aUnknown9FD004
@@ -12393,6 +10392,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the BrokenStaff effect.
 
         lda aMapAction.wMapBattleDefenderAuxSpriteSlot
         cmp #$FFFF
@@ -12411,13 +10411,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the BrokenStaff effect.
 
         phy
         tay
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,y
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,y
         ply
@@ -12432,6 +10433,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the BrokenStaff effect.
 
         lda aActiveSpriteSystem.aUnknown0013A0,b,x
         beq _D090
@@ -12508,14 +10510,14 @@
         .structSpriteArray aUnknown9F9FD0CF._Sprites
 
 
-      rlUnknown9FD0D6 ; 9F/D0D6
+      rlStartMapMagicJormungandr ; 9F/D0D6
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FD0DC
 
@@ -12525,7 +10527,8 @@
 
       procUnknown9FD0DC ; 9F/D0DC
 
-        .structProcInfo "ON", rlUnknown9FD0E4, rlUnknown9FD0E8, aProcUnknown9F805DCode
+        ; Part of the Jormungandr effect.
+        .structProcInfo "ON", rlUnknown9FD0E4, rlUnknown9FD0E8, aProcMapMagicHaltCode
 
 
       rlUnknown9FD0E4 ; 9F/D0E4
@@ -12534,8 +10537,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Jormungandr effect.
 
-        jsr rsUnknown9F910A
+        jsr rsSaveMapMagicColors
         rtl
 
         .databank 0
@@ -12546,6 +10550,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Jormungandr effect.
 
         jsr rsUnknown9F9116
         bcc rlUnknown9FD101
@@ -12563,6 +10568,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Jormungandr effect.
 
         rtl
 
@@ -12570,6 +10576,7 @@
 
       aUnknown9FD102 ; 9F/D102
 
+        ; Part of the Jormungandr effect.
         .word <>rlUnknown9FD108, <>rlUnknown9FD128, <>aUnknown9FD139
 
       rlUnknown9FD108 ; 9F/D108
@@ -12578,13 +10585,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Jormungandr effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         sec
         sbc #$0008
         and #$00FF
@@ -12600,6 +10608,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Jormungandr effect.
 
         rtl
 
@@ -12612,11 +10621,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Jormungandr effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc _D138
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _D138
@@ -12627,6 +10637,7 @@
         ; 9F/D139
       aUnknown9FD139 ; 9F/D139
 
+        ; Part of the Jormungandr effect.
         ACTIVE_SPRITE_CALL rlUnknown9FD21B
         ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD254
         ACTIVE_SPRITE_FRAME 3, aUnknown9F9FD265
@@ -12686,6 +10697,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Jormungandr effect.
 
         lda #$0001
         sta aMapAction.wMapBattleActiveSpriteSyncFlag
@@ -12700,6 +10712,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Jormungandr effect.
 
         lda #<>rlUnknown9FD129
         sta aActiveSpriteSystem.aOnCycle,b,x
@@ -12714,11 +10727,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Jormungandr effect.
 
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         rtl
@@ -12732,10 +10746,11 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Jormungandr effect.
 
         phy
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $5A
 
@@ -12751,10 +10766,11 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Jormungandr effect.
 
         phy
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $5B
 
@@ -12860,7 +10876,7 @@
         .structSpriteArray aUnknown9F9FD2B7._Sprites
 
 
-      rlUnknown9FD2C8 ; 9F/D2C8
+      rlStartMapMagicThief ; 9F/D2C8
 
         .al
         .xl
@@ -12878,6 +10894,7 @@
 
       aUnknown9FD2D7 ; 9F/D2D7
 
+        ; Part of the Thief effect.
         .word <>rlUnknown9FD2DD, <>rlUnknown9FD2FF, <>aUnknown9FD399
 
 
@@ -12887,13 +10904,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thief effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509A
+        lda wMapMagicCasterPixel+1
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001240,b,x
         lda #$000A
@@ -12908,15 +10926,16 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thief effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _D340
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc aActiveSpriteSystem.aUnknown001240,b,x
@@ -12948,8 +10967,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thief effect.
 
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FD2FF._D340
         lda #$0001
@@ -12969,6 +10989,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thief effect.
 
         lda aActiveSpriteSystem.aUnknown001300,b,x
         sec
@@ -12979,7 +11000,7 @@
         _D36D
         sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FD2FF._D340
         lda #$0010
@@ -12996,11 +11017,12 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thief effect.
 
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne rlUnknown9FD2FF._D340
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
         stz aActiveSpriteSystem.aTypeOffset,b,x
         rtl
 
@@ -13008,6 +11030,7 @@
 
       aUnknown9FD399 ; 9F/D399
 
+        ; Part of the Thief effect.
         ACTIVE_SPRITE_FRAME 4, aUnknown9F9FD3E4
         ACTIVE_SPRITE_FRAME 5, aUnknown9F9FD3EB
         ACTIVE_SPRITE_FRAME 6, aUnknown9F9FD3F2
@@ -13037,6 +11060,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Thief effect.
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
         bne _D3DF
@@ -13117,14 +11141,14 @@
         .structSpriteArray aUnknown9F9FD423._Sprites
 
 
-      rlUnknown9FD42A ; 9F/D42A
+      rlStartMapMagicValflame ; 9F/D42A
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FD430
 
@@ -13134,11 +11158,13 @@
 
       procUnknown9FD430 ; 9F/D430
 
+        ; Part of the Valflame effect.
         .structProcInfo "ON", rlUnknown9FD443, rlUnknown9FD463, aProcUnknown9FD438Code
 
 
       aProcUnknown9FD438Code ; 9F/D438
 
+        ; Part of the Valflame effect.
         PROC_YIELD 1
         PROC_CALL rlUnknown9FD4C6
         PROC_JUMP aProcUnknown9FD438Code
@@ -13150,8 +11176,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
-        jsr rsUnknown9F83F1
+        jsr rsSetMapMagicLayerBlending
         lda #$0000
         sta $7ECC06
         sta $7ECC08
@@ -13159,7 +11186,7 @@
         sta $7ECC0C
         stz aProcSystem.aBody2,b,x
         stz aProcSystem.aBody3,b,x
-        jsr rsUnknown9F910A
+        jsr rsSaveMapMagicColors
         rtl
 
         .databank 0
@@ -13170,6 +11197,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         jsr rsUnknown9F9136
         bcc _D474
@@ -13189,6 +11217,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         dec aProcSystem.aBody0,b,x
         bpl _D489
@@ -13209,6 +11238,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         dec aProcSystem.aBody0,b,x
         bne _D495
@@ -13226,6 +11256,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         rtl
 
@@ -13237,28 +11268,29 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
-        jsr rsUnknown9F82D7
+        jsr rsCreateMapMagicProc
 
           .word <>procUnknown9FD7A0
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDBB8
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDC34
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB6C
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDB7F
 
-        jsr rsUnknown9F830F
+        jsr rsCreateMapMagicHDMA
 
           .word <>aUnknown9FDE7E
 
@@ -13279,6 +11311,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda aProcSystem.aBody2,b,x
         beq _D4D0
@@ -13321,6 +11354,7 @@
 
       aUnknown9FD513 ; 9F/D513
 
+        ; Part of the Valflame effect.
         .word $03FF, $033F, $025F, $019F, $019F, $025F, $033F, $03FF
         .word $03FF, $033F, $025F, $019F, $019F, $025F, $033F, $03FF
         .word $03FF, $033F, $025F, $019F, $019F, $025F, $033F, $03FF
@@ -13332,6 +11366,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
         beq _D54F
@@ -13374,6 +11409,7 @@
 
       aUnknown9FD592 ; 9F/D592
 
+        ; Part of the Valflame effect.
         .word $02FF, $025F, $01FC, $01B7, $00F5, $14B0, $00F5, $01B7
         .word $025F, $02FF, $025F, $01B7, $00F5, $14B0, $00F5, $01FC
         .word $02FF, $025F, $01FC, $01B7, $00F5, $14B0, $00F5, $01B7
@@ -13381,6 +11417,7 @@
 
       aUnknown9FD5D2 ; 9F/D5D2
 
+        ; Part of the Valflame effect.
         .word <>rlUnknown9FD5D8, <>rlUnknown9FD5F8, <>aUnknown9FD70E
 
 
@@ -13390,13 +11427,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda $7F509F
         sta aActiveSpriteSystem.aUnknown001260,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta aActiveSpriteSystem.aUnknown001200,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         clc
         adc #$0002
         and #$00FF
@@ -13411,12 +11449,13 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         jsl rlUnknown9FD545
         lda $7ECC06
         beq _D60C
         lda #$0001
-        sta $7F5093
+        sta wMapMagicDone
         stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _D60C
@@ -13426,11 +11465,13 @@
 
       aUnknown9FD60D ; 9F/D60D
 
+        ; Part of the Valflame effect.
         .word <>rlUnknown9FD620, <>rlUnknown9FD69D, <>aUnknown9FD6BA
 
 
       aUnknown9FD613 ; 9F/D613
 
+        ; Part of the Valflame effect.
         .word <>rlUnknown9FD619, <>rlUnknown9FD69D, <>aUnknown9FD6E4
 
 
@@ -13440,6 +11481,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda #$8000
         sta wR2
@@ -13453,6 +11495,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         stz wR2
 
@@ -13468,14 +11511,14 @@
 
         _D636
         sta wR3
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         clc
         adc wR3
         sec
         sbc aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         clc
         adc <>(aUnknown9FD67D+2),b,y
         and #$00FF
@@ -13496,7 +11539,7 @@
         sta aActiveSpriteSystem.aUnknown001300,b,x
         jsr rsUnknown9F9379
         lda aActiveSpriteSystem.aUnknown001200,b,x
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $4D
 
@@ -13506,6 +11549,7 @@
 
       aUnknown9FD67D ; 9F/D67D
 
+        ; Part of the Valflame effect.
         .byte $F0, $FF, $02, $00, $00, $00, $00, $00, $F8, $FF, $06, $00, $00, $00, $00, $00
         .byte $F0, $FF, $02, $00, $00, $00, $00, $00, $F8, $FF, $06, $00, $00, $00, $00, $00
 
@@ -13515,8 +11559,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
-        jsl rlUnknown9F8999
+        jsl rlMoveActiveSpriteByVelocity
         dec aActiveSpriteSystem.aUnknown0012C0,b,x
         bne _D6B8
         lda #$0001
@@ -13536,6 +11581,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         rtl
 
@@ -13543,6 +11589,7 @@
 
       aUnknown9FD6BA ; 9F/D6BA
 
+        ; Part of the Valflame effect.
         .byte $00, $01, $57, $D7, $17, $D4, $D6, $BA, $D6, $00, $04, $6A, $D7, $00, $04, $71
         .byte $D7, $00, $04, $78, $D7, $00, $01, $55, $D7, $01
 
@@ -13570,6 +11617,7 @@
 
       aUnknown9FD6E4 ; 9F/D6E4
 
+        ; Part of the Valflame effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD799
         ACTIVE_SPRITE_CALL rlUnknown9FD6FE
         .word <>aUnknown9FD6E4
@@ -13587,6 +11635,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda aActiveSpriteSystem.aUnknown001320,b,x
         cmp #$0001
@@ -13605,6 +11654,7 @@
 
       aUnknown9FD70E ; 9F/D70E
 
+        ; Part of the Valflame effect.
         ACTIVE_SPRITE_FRAME 1, aUnknown9F9FD755
         ACTIVE_SPRITE_CALL rlUnknown9FD73F
         .word <>aUnknown9FD70E
@@ -13630,6 +11680,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda $7ECC08
         bne rlUnknown9FD747._D752
@@ -13643,6 +11694,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda $7ECC0A
         bne _D752
@@ -13725,7 +11777,8 @@
 
       procUnknown9FD7A0 ; 9F/D7A0
 
-        .structProcInfo "ON", rlUnknown9FD7A8, rlUnknown9FD823, aProcUnknown9F805DCode
+        ; Part of the Valflame effect.
+        .structProcInfo "ON", rlUnknown9FD7A8, rlUnknown9FD823, aProcMapMagicHaltCode
 
 
       rlUnknown9FD7A8 ; 9F/D7A8
@@ -13734,22 +11787,23 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda #$0020
         sta aProcSystem.aBody0,b,x
         stz aProcSystem.aBody1,b,x
         stz aProcSystem.aBody2,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         cmp #$00C0
         bmi _D7F3
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR10
         lda #$0035
         sta wR11
         jsl rlUnsignedMultiply16By16
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc wR12+1
@@ -13764,7 +11818,7 @@
 
 
         _D7F3
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR10
         lda #$0035
@@ -13772,7 +11826,7 @@
         jsl rlUnsignedMultiply16By16
         lda wR12+1
         clc
-        adc $7F509B
+        adc wMapMagicTargetPixel
         and #$00FF
         xba
         sta aProcSystem.aBody5,b,x
@@ -13790,8 +11844,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR0
         lda aProcSystem.aBody1,b,x
@@ -13829,13 +11884,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         jsr rsUnknown9FD9DC
         dec aProcSystem.aBody0,b,x
         bne _D898
         lda #<>rlUnknown9FD8A9
         sta aProcSystem.aHeaderOnCycle,b,x
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         lsr a
         lsr a
@@ -13845,9 +11901,9 @@
         lda <>aUnknown9FD899,b,y
         and #$00FF
         sta aProcSystem.aBody0,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
-        jsr rsUnknown9F8253
+        jsr rsPlayMapMagicSound
 
           .byte $64
 
@@ -13859,6 +11915,7 @@
 
       aUnknown9FD899 ; 9F/D899
 
+        ; Part of the Valflame effect.
         .byte $16, $12, $0E, $0C, $0A, $09, $08, $07, $07, $06, $05, $05, $05, $05, $05, $05
 
       rlUnknown9FD8A9 ; 9F/D8A9
@@ -13867,6 +11924,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda aProcSystem.aBody3,b,x
         clc
@@ -13909,6 +11967,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda aProcSystem.aBody0,b,x
         cmp #$0010
@@ -13934,6 +11993,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         inc aProcSystem.aBody6,b,x
         lda aProcSystem.aBody5,b,x
@@ -13945,7 +12005,7 @@
         sta lR44+1
         lda #<>aUnknown9FD60D
         sta lR44
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         cmp #$00C0
         bmi _D943
@@ -13979,6 +12039,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda aProcSystem.aBody3,b,x
         clc
@@ -14022,7 +12083,7 @@
         sta aProcSystem.aHeaderOnCycle,b,x
         lda #$0000
         sta aProcSystem.aBody2,b,x
-        jsr rsUnknown9F8359
+        jsr rsFreeMapMagicHDMA
 
         _D9C2
         lda aProcSystem.aBody2,b,x
@@ -14037,8 +12098,9 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
-        jsr rsUnknown9F919F
+        jsr rsFadeBackMapMagicColors
         bcc rlUnknown9FD9DB
         lda #<>rlUnknown9FD9DB
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -14051,6 +12113,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         rtl
 
@@ -14062,6 +12125,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         lda aProcSystem.aBody1,b,x
         sta wR1
@@ -14081,6 +12145,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Valflame effect.
 
         phx
         lsr a
@@ -14354,12 +12419,14 @@
 
       aUnknown9FDB6C .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDB68, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDB78, PPU_REG_BASE + $28, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode1), $7F ; 9F/DB6C
 
+        ; Shared by 24 effects.
       aUnknown9FDB78 ; 9F/DB78
 
         .byte $FF, $EA, $50, $E0, $E8, $51, $00
 
       aUnknown9FDB7F .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDB8B, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDBA1, PPU_REG_BASE + $08, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DB7F
 
+        ; Shared by 24 effects.
     .endsection Unsorted9FDB68Section
 
 
@@ -14377,7 +12444,7 @@
         .databank ?
 
         ldy #$DBB3
-        lda $7F508F
+        lda wMapMagicFlags
         bmi _DB9C
         and #$0400
         beq _DBA0
@@ -14402,6 +12469,7 @@
 
       aUnknown9FDBB8 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDBC4, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDBDA, PPU_REG_BASE + $23, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode0), $9F ; 9F/DBB8
 
+        ; Shared by 24 effects.
     .endsection Unsorted9FDB8BSection
 
 
@@ -14419,7 +12487,7 @@
         .databank ?
 
         ldy #$DBEC
-        lda $7F508F
+        lda wMapMagicFlags
         bmi _DBD5
         and #$0400
         beq _DBD9
@@ -14444,6 +12512,7 @@
 
       aUnknown9FDBF1 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDBFD, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDC13, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DBF1
 
+        ; Shared by 9 effects.
     .endsection Unsorted9FDBC4Section
 
 
@@ -14461,7 +12530,7 @@
         .databank ?
 
         ldy #$DC2D
-        lda $7F508F
+        lda wMapMagicFlags
         bmi _DC0E
         and #$0400
         beq _DC12
@@ -14487,6 +12556,7 @@
 
       aUnknown9FDC34 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDC40, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDC56, PPU_REG_BASE + $30, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode1), $9F ; 9F/DC34
 
+        ; Shared by 15 effects.
     .endsection Unsorted9FDBFDSection
 
 
@@ -14504,7 +12574,7 @@
         .databank ?
 
         ldy #$DC70
-        lda $7F508F
+        lda wMapMagicFlags
         bmi _DC51
         and #$0400
         beq _DC55
@@ -14530,6 +12600,7 @@
 
       aUnknown9FDC77 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDC83, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDCD3, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DC77
 
+        ; Shared by 14 effects.
     .endsection Unsorted9FDC40Section
 
 
@@ -14552,14 +12623,14 @@
         clc
         adc #$FFFF
         sta $7F50D3
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc #$0080
         eor #$FFFF
         inc a
         sta $7F50CD
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0070
@@ -14567,7 +12638,7 @@
         inc a
         sta $7F50CF
         ldy #$DCED
-        lda $7F508F
+        lda wMapMagicFlags
         bmi _DCCE
         and #$0400
         beq _DCD2
@@ -14593,6 +12664,7 @@
 
       aUnknown9FDCF4 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDD00, rlUnknown9FDB69, aHDMAUnknown9FDB6ACode, aUnknown9FDDEA, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/DCF4
 
+        ; Part of the Meteor effect.
       rlUnknown9FDD00 ; 9F/DD00
 
         .al
@@ -14606,19 +12678,19 @@
         sta $7F50D5
         lda #$FC8A
         sta $7F50D7
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         cmp #$00A0
         bmi _DD67
         lda #$FE00
         sta $7F50D5
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR10
         lda #$0093
         sta wR11
         jsl rlUnsignedMultiply16By16
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc wR12+1
@@ -14639,13 +12711,13 @@
 
 
         _DD67
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR10
         lda #$0093
         sta wR11
         jsl rlUnsignedMultiply16By16
-        lda $7F509B
+        lda wMapMagicTargetPixel
         clc
         adc wR12+1
         clc
@@ -14663,14 +12735,14 @@
         sta $7F50DB
 
         _DDA1
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta wR1
         lda wR0
         sec
         sbc wR1
         sta wR0
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta wR1
         jsl rlUnknown9F89F8
@@ -14681,7 +12753,7 @@
         clc
         adc #$FFFF
         sta $7F50D3
-        lda $7F508F
+        lda wMapMagicFlags
         and #$0400
         beq _DDE5
         lda #<>aUnknown9FDDF7
@@ -14724,6 +12796,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         lda $7ECC0C
         beq _DE15
@@ -14846,7 +12919,7 @@
         clc
         adc #$FFFF
         sta $7F50D3
-        lda $7F508F
+        lda wMapMagicFlags
         and #$0400
         beq _DF2C
         lda #<>aUnknown9FDF65
@@ -15250,8 +13323,10 @@
 
       aUnknown9FE2D9 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FE2F6, rlUnknown9FE341, aHDMAUnknown9FDB6ACode, aUnknown9FE357, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/E2D9
 
+        ; Shared by the Hel and Restore effects.
       aUnknown9FE2E5 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FE2F1, rlUnknown9FE341, aHDMAUnknown9FDB6ACode, aUnknown9FE357, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, true, DMAP_Mode3), $7F ; 9F/E2E5
 
+        ; Part of the Sleep effect.
       rlUnknown9FE2F1 ; 9F/E2F1
 
         .al
@@ -15277,7 +13352,7 @@
         sta $7F50DB
         lda #$0000
         sta $7F50D7
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc #$0080
@@ -15291,7 +13366,7 @@
         adc #$FFFF
         sta $7F50D3
         ldy #<>aUnknown9FE371
-        lda $7F508F
+        lda wMapMagicFlags
         bmi _E33C
         and #$0400
         beq _E340
@@ -15338,6 +13413,7 @@
 
       aUnknown9FE378 .dstruct structHDMAIndirectEntryInfo, rlUnknown9FDB68, rlUnknown9FDB69, aHDMAUnknown9FE384Code, aUnknown9FE393, PPU_REG_BASE + $0F, DMAP_HDMA_Setting(DMAP_CPUToIO, false, DMAP_Mode2), $9F ; 9F/E378
 
+        ; Part of the Hel effect.
       aHDMAUnknown9FE384Code ; 9F/E384
 
         HDMA_SET_INDIRECT_BANK $9F
@@ -15444,6 +13520,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Forseti effect.
 
         phx
         lda #$00E0
@@ -15567,6 +13644,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Restore, Return and Sleep effects.
 
         phx
         sta wR0
@@ -15764,6 +13842,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Restore, Return and Sleep effects.
 
         phx
         pha
@@ -15831,6 +13910,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by 17 effects.
 
         phx
         sta wR0
@@ -15971,6 +14051,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by 21 effects.
 
         lda [lR19],y
         pha
@@ -16011,6 +14092,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by 21 effects.
 
         phx
         lda #$9A00
@@ -16081,7 +14163,7 @@
       .al
       .xl
 
-      rlProcUnknown9F805DInit ; 9F/EBA7
+      rlProcMapMagicEffectInit ; 9F/EBA7
 
         .al
         .xl
@@ -16122,7 +14204,7 @@
       .al
       .xl
 
-      aProcUnknown9F805DCode ; 9F/EBA9
+      aProcMapMagicHaltCode ; 9F/EBA9
 
         PROC_HALT
 
@@ -16132,107 +14214,123 @@
 
       procUnknown9FEBAB ; 9F/EBAB
 
-        .structProcInfo "ON", rlUnknown9FECFE, rlUnknown9FF060, aProcUnknown9F805DCode
+        .structProcInfo "ON", rlUnknown9FECFE, rlUnknown9FF060, aProcMapMagicHaltCode
 
         .byte $10, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEBBA ; 9F/EBBA
 
-        .structProcInfo "ON", rlUnknown9FECFE, rlUnknown9FF04F, aProcUnknown9F805DCode
+        ; Part of the Elfire effect.
+        .structProcInfo "ON", rlUnknown9FECFE, rlUnknown9FF04F, aProcMapMagicHaltCode
 
         .byte $10, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEBC9 ; 9F/EBC9
 
-        .structProcInfo "ON", rlUnknown9FED29, rlUnknown9FF071, aProcUnknown9F805DCode
+        ; Part of the Aura effect.
+        .structProcInfo "ON", rlUnknown9FED29, rlUnknown9FF071, aProcMapMagicHaltCode
 
         .byte $18, $00, $12, $00, $00, $00, $00
 
       procUnknown9FEBD8 ; 9F/EBD8
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcUnknown9F805DCode
+        ; Shared by the Heal, Light, Mend, Physic and Recover effects.
+        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
 
         .byte $12, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEBE7 ; 9F/EBE7
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcUnknown9F805DCode
+        ; Part of the Thunder effect.
+        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
 
         .byte $18, $01, $02, $00, $00, $00, $00
 
       procUnknown9FEBF6 ; 9F/EBF6
 
-        .structProcInfo "ON", rlUnknown9FC21A, rlUnknown9FC27E, aProcUnknown9F805DCode
+        ; Part of the Nosferatu effect.
+        .structProcInfo "ON", rlUnknown9FC21A, rlUnknown9FC27E, aProcMapMagicHaltCode
 
       procUnknown9FEBFE ; 9F/EBFE
 
-        .structProcInfo "ON", rlUnknown9FED54, rlUnknown9FEE45, aProcUnknown9F805DCode
+        ; Part of the Mjolnir effect.
+        .structProcInfo "ON", rlUnknown9FED54, rlUnknown9FEE45, aProcMapMagicHaltCode
 
         .byte $18, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEC0D ; 9F/EC0D
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcUnknown9F805DCode
+        ; Part of the Fortify effect.
+        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
 
         .byte $80, $00, $10, $00, $00, $00, $00
 
       procUnknown9FEC1C ; 9F/EC1C
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcUnknown9F805DCode
+        ; Part of the Fenrir effect.
+        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
 
         .byte $60, $00, $02, $00, $00, $D4, $00
 
       procUnknown9FEC2B ; 9F/EC2B
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcUnknown9F805DCode
+        ; Part of the Berserk effect.
+        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
 
         .byte $20, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEC3A ; 9F/EC3A
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcUnknown9F805DCode
+        ; Shared by the Blizzard and Hel effects.
+        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
 
         .byte $18, $01, $01, $00, $00, $00, $00
 
       procUnknown9FEC49 ; 9F/EC49
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcUnknown9F805DCode
+        ; Part of the Bolganone effect.
+        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
 
         .byte $30, $01, $10, $00, $00, $F0, $FF
 
       procUnknown9FEC58 ; 9F/EC58
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcUnknown9F805DCode
+        ; Part of the Thoron effect.
+        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
 
         .byte $1E, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEC67 ; 9F/EC67
 
-        .structProcInfo "ON", rlUnknown9FF0DC, rlUnknown9FF100, aProcUnknown9F805DCode
+        ; Shared by the Restore, Return and Sleep effects.
+        .structProcInfo "ON", rlUnknown9FF0DC, rlUnknown9FF100, aProcMapMagicHaltCode
 
         .byte $0C, $30, $00, $00, $00, $0E, $00
 
       procUnknown9FEC76 ; 9F/EC76
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FF1BC, aProcUnknown9F805DCode
+        ; Part of the Forseti effect.
+        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FF1BC, aProcMapMagicHaltCode
 
         .byte $F0, $00, $02, $00, $00, $00, $00
 
       procUnknown9FEC85 ; 9F/EC85
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FC6D5, aProcUnknown9F805DCode
+        ; Part of the Silence effect.
+        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FC6D5, aProcMapMagicHaltCode
 
         .byte $22, $00, $01, $00, $00, $00, $00
 
       procUnknown9FEC94 ; 9F/EC94
 
-        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcUnknown9F805DCode
+        .structProcInfo "ON", rlUnknown9FED5A, rlUnknown9FEDB3, aProcMapMagicHaltCode
 
         .byte $18, $01, $01, $00, $00, $00, $00
 
       procUnknown9FECA3 ; 9F/ECA3
 
-        .structProcInfo "ON", rlUnknown9FECFE, rlUnknown9FF000, aProcUnknown9F805DCode
+        ; Part of the Meteor effect.
+        .structProcInfo "ON", rlUnknown9FECFE, rlUnknown9FF000, aProcMapMagicHaltCode
 
         .byte $10, $00, $01, $00, $00, $00, $00
 
@@ -16250,6 +14348,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by 22 effects.
 
         phb
         pea #$7F7F
@@ -16299,16 +14398,17 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Elfire and Meteor effects.
 
         jsl rlUnknown9FED5A
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc #$00F8
         eor #$FFFF
         inc a
         sta $7F50CD
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0000
@@ -16335,16 +14435,17 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
         jsl rlUnknown9FED5A
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc #$00DC
         eor #$FFFF
         inc a
         sta $7F50CD
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$FFF0
@@ -16362,6 +14463,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         lda #$0020
         sta aProcSystem.aBody6,b,x
@@ -16384,6 +14486,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by 18 effects.
 
         txy
         ldx aProcSystem.aHeaderTypeOffset,b,y
@@ -16402,14 +14505,14 @@
         sta aProcSystem.aBody1,b,x
         lda #$0001
         sta aProcSystem.aBody2,b,x
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc #$0080
         eor #$FFFF
         inc a
         sta $7F50CD
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0070
@@ -16429,6 +14532,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by 13 effects.
 
         dec aProcSystem.aBody1,b,x
         beq _EDBC
@@ -16461,12 +14565,12 @@
         sta aProcSystem.aBody2,b,x
 
         _EDF3
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         clc
         adc wR0
         sta $7F50DF
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc wR1
@@ -16518,6 +14622,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         dec aProcSystem.aBody1,b,x
         beq _EE4E
@@ -16550,24 +14655,24 @@
         sta aProcSystem.aBody2,b,x
 
         _EE85
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         clc
         adc wR0
         sta $7F50DF
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc #$0080
         eor #$FFFF
         inc a
         sta $7F50CD
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc wR1
         sta $7F50E1
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0070
@@ -16623,6 +14728,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         dec aProcSystem.aBody6,b,x
         bne rlUnknown9FEF48
@@ -16642,6 +14748,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         dec aProcSystem.aBody6,b,x
         bne rlUnknown9FEF48
@@ -16659,6 +14766,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Mjolnir effect.
 
         dec aProcSystem.aBody1,b,x
         beq _EF51
@@ -16691,24 +14799,24 @@
         sta aProcSystem.aBody2,b,x
 
         _EF88
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         clc
         adc wR0
         sta $7F50DF
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sec
         sbc #$0080
         eor #$FFFF
         inc a
         sta $7F50CD
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc wR1
         sta $7F50E1
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sec
         sbc #$0070
@@ -16753,6 +14861,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Meteor effect.
 
         lda #$0040
         sta wR1
@@ -16800,6 +14909,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Elfire effect.
 
         lda #$0012
         sta wR0
@@ -16843,6 +14953,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
         .byte $A9, $0C, $00, $85, $00, $A9, $58, $00, $85, $02, $64, $06
 
@@ -16872,10 +14983,10 @@
         sta aProcSystem.aBody2,b,x
 
         _F0AC
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta $7F50DF
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc wR0
@@ -16911,6 +15022,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Restore, Return and Sleep effects.
 
         txy
         ldx aProcSystem.aHeaderTypeOffset,b,y
@@ -16945,6 +15057,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Restore, Return and Sleep effects.
 
         dec aProcSystem.aBody0,b,x
         bne rlUnknown9FF111
@@ -16961,6 +15074,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Shared by the Restore, Return and Sleep effects.
 
         lda aProcSystem.aBody4,b,x
         clc
@@ -16985,12 +15099,12 @@
         lda $000D,b,x
         sta wR1
         ldx aProcSystem.wOffset,b
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         clc
         adc wR0
         sta $7F50DF
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc wR1
@@ -17062,6 +15176,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Forseti effect.
 
         dec aProcSystem.aBody1,b,x
         beq _F1C5
@@ -17087,7 +15202,7 @@
         sta aProcSystem.aBody2,b,x
 
         _F1EB
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta $7F50DF
         sec
@@ -17095,7 +15210,7 @@
         eor #$FFFF
         inc a
         sta $7F50CD
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         sta $7F50E1
         sec
@@ -17151,13 +15266,14 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
         pha
         sty wR1
-        lda $7F509B
+        lda wMapMagicTargetPixel
         and #$00FF
         sta wR2
-        lda $7F509C
+        lda wMapMagicTargetPixel+1
         and #$00FF
         clc
         adc wR3
@@ -17180,6 +15296,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
         lsr a
         sta wR5
@@ -17259,6 +15376,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
         ldx wR1
         bra _F2F7
@@ -17377,6 +15495,7 @@
         .xl
         .autsiz
         .databank ?
+        ; Part of the Aura effect.
 
         phb
         pea #$9A00

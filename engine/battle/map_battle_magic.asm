@@ -1,7 +1,23 @@
-; Map battle magic: the background layer drawn behind a map battle for each
-; tome and staff, and the sprites drawn over it. The map battle code (bank $9E) stores WeaponID - $3E (Fire
-; is $3E) for each side, and rlUnknown9F84DD, rlUnknown9F850B and
-; rlUnknown9F8575 (bank $9F) load the acting side's entry.
+; Map battle magic: the machinery shared by all the map magic effects
+; (bank $9F), and the background and sprite data each effect loads.
+;
+; The map battle (bank $9E) picks each side's effect from its weapon
+; (wMapMagicAttackerEffect, wMapMagicDefenderEffect: WeaponID - $3E, Fire is
+; $3E), and for each round with an effect:
+;
+;   rlSelectMapMagicEffectForRound   wMapMagicEffect = the acting side's
+;   rlQueueMapMagicBackground*       decompress the background (tiles,
+;                                    tilemap, colours: aMapBattleMagicBackgrounds)
+;   rlUploadMapMagicBackground*, rlCopyMapMagicBackgroundColors
+;   rlLoadMapMagicSprites, rlUploadMapMagicSpriteTiles   (aMapBattleMagicSprites)
+;   rlStartMapMagicEffect            create procMapMagicEffect
+;   ... the battler's sprite script sets wMapMagicStart; the proc runs the
+;   effect's starter (map_magic_effects.asm), which sets wMapMagicDone at the
+;   end ...
+;   rlEndMapMagicEffect, rlRestoreMapMagicScreenRegisters
+;
+; Also here: the helpers the effects share (sound, creating and freeing their
+; procs and HDMA entries, palette fades, sprite motion and angles).
 
     .section MapBattleMagicBackgroundsSection
 
@@ -15,7 +31,7 @@
         ; tilemap (to $7EDB88) and 256 colours (to $7EE388). Streams shared by
         ; several items are named after the first. Meteor and Valflame also
         ; have a second tilemap (acMapBattleMagicMeteorTilemap2,
-        ; acMapBattleMagicValflameTilemap2), which rlUnknown9F850B picks by
+        ; acMapBattleMagicValflameTilemap2), which rlQueueMapMagicBackgroundTilemap picks by
         ; $7F509B.
 
         .long g4bppcMapBattleMagicFire, acMapBattleMagicFireTilemap, acMapBattleMagicFirePalette ; Fire
@@ -71,7 +87,7 @@
 
       aMapBattleMagicSprites ; 9F/8724
 
-        ; Read by rlUnknown9F86BF with the same index as
+        ; Read by rlLoadMapMagicSprites with the same index as
         ; aMapBattleMagicBackgrounds. Entries of 5 bytes: the bank $9F address
         ; of 16 colours, copied into sprite palette 6, then compressed 4bpp
         ; sprite tiles, decompressed to $7F45D9. Five $FF bytes: no sprites.
@@ -895,5 +911,2563 @@
         .byte $00, $10, $00, $01, $00, $00, $00, $27, $FF, $FF
 
     .endsection Table87C8E1Section
+
+
+    .section Bank9FBuildStampSection
+
+      .al
+      .xl
+
+      aBank9FBuildStamp ; 9F/8000
+
+        ; Unreferenced: an ASCII build stamp at the start of the bank.
+        .text "1996/01/10 05:29 by manchan     "
+
+    .endsection Bank9FBuildStampSection
+
+
+    .section Unsorted9F8020Section
+
+      .al
+      .xl
+
+      rlStartMapMagicEffect ; 9F/8020
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unless wMapMagicEffect is negative: saves the screen registers, records the caster's facing and the window lines, empties the effect's proc and HDMA lists, and creates procMapMagicEffect.
+
+        lda wMapMagicEffect
+        bpl _8027
+        rtl
+
+
+        _8027
+        phb
+        phk
+        plb
+        .databank $9F
+        phx
+        phy
+        jsr rsSetMapMagicCasterFacing
+        jsr rsSaveMapMagicScreenRegisters
+        jsr rsSetMapMagicWindowLines
+        lda #$0000
+        sta wMapMagicProcListEnd
+        sta wMapMagicHDMAListEnd
+        lda #$FFFF
+        sta aMapMagicProcList
+        sta aMapMagicHDMAList
+        lda #(`procMapMagicEffect)<<8
+        sta lR44+1
+        lda #<>procMapMagicEffect
+        sta lR44
+        jsl rlProcEngineCreateProc
+        ply
+        plx
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 9F/805D
+
+    .endsection Unsorted9F8020Section
+
+
+    .section ProcScript9F805DSection
+
+      .al
+      .xl
+
+      procMapMagicEffect ; 9F/805D
+
+        .structProcInfo "ON", rlProcMapMagicEffectInit, rlProcMapMagicEffectCycle, aProcMapMagicHaltCode
+
+    .endsection ProcScript9F805DSection
+
+
+    .section Unsorted9F8065Section
+
+      .al
+      .xl
+
+      rlProcMapMagicEffectCycle ; 9F/8065
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Waits for wMapMagicStart (set by active sprite command $10 in the battler's script), runs the effect's starter from aMapMagicEffectStarters once, and ends. A negative wMapMagicStart ends it without one.
+
+        lda wMapMagicStart
+        beq _8084
+        bmi _8081
+        phx
+        lda wMapMagicEffect
+        asl a
+        tax
+        lda <>aMapMagicEffectStarters,b,x
+        sta lR18
+        phk
+        pea #<>_8080 - 1
+        jmp (lR18)
+
+
+        _8080
+        plx
+
+        _8081
+        stz aProcSystem.aHeaderTypeOffset,b,x
+
+        _8084
+        rtl
+
+        .databank 0
+
+        ; 9F/8085
+
+
+      aMapMagicEffectStarters ; 9F/8085
+
+        .word <>rlStartMapMagicFire
+        .word <>rlStartMapMagicElfire
+        .word <>rlStartMapMagicBolganone
+        .word <>rlStartMapMagicValflame
+        .word <>rlStartMapMagicMeteor
+        .word <>rlStartMapMagicThunder
+        .word <>rlStartMapMagicElthunder
+        .word <>rlStartMapMagicThoron
+        .word <>rlStartMapMagicMjolnir
+        .word <>rlStartMapMagicElthunder
+        .word <>rlStartMapMagicWind
+        .word <>rlStartMapMagicWind
+        .word <>rlStartMapMagicTornado
+        .word <>rlStartMapMagicForseti
+        .word <>rlStartMapMagicBlizzard
+        .word <>rlStartMapMagicLight
+        .word <>rlStartMapMagicNosferatu
+        .word <>rlStartMapMagicAura
+        .word <>rlStartMapMagicHeal
+        .word <>rlStartMapMagicJormungandr
+        .word <>rlStartMapMagicFenrir
+        .word <>rlStartMapMagicHel
+        .word <>rlStartMapMagicHeal
+        .word <>rlStartMapMagicHeal
+        .word <>rlStartMapMagicHeal
+        .word <>rlStartMapMagicHeal
+        .word <>rlStartMapMagicHeal
+        .word <>rlStartMapMagicMend
+        .word <>rlStartMapMagicRecover
+        .word <>rlStartMapMagicPhysic
+        .word <>rlStartMapMagicFortify
+        .word <>rlStartMapMagicReturn
+        .word <>rlStartMapMagicWarp
+        .word <>rlStartMapMagicWarp
+        .word <>rlStartMapMagicHeal
+        .word <>rlStartMapMagicRestore
+        .word <>rlStartMapMagicHeal
+        .word <>rlStartMapMagicSilence
+        .word <>rlStartMapMagicSleep
+        .word <>rlStartMapMagicBerserk
+        .word <>rlStartMapMagicThief
+        .word <>rlStartMapMagicBrokenStaff
+
+    .endsection Unsorted9F8065Section
+
+
+    .section Unsorted9F8253Section
+
+      .al
+      .xl
+
+      rsPlayMapMagicSound ; 9F/8253
+
+        ; TRACE: stack-args
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Plays the sound effect in the byte after the call, panned by the X pixel in A (rlPlaySoundEffect2).
+
+        phx
+        tax
+        lda #3,s
+        tay
+        lda $0001,b,y
+        and #$00FF
+        pha
+        tya
+        inc a
+        sta #5,s
+        txa
+        and #$00FF
+        lsr a
+        lsr a
+        lsr a
+        cmp #$0010
+        bcs _8270
+        inc a
+
+        _8270
+        xba
+        ora #1,s
+        jsl rlPlaySoundEffect2
+        pla
+        plx
+        rts
+
+        .databank 0
+
+      rsUnknown9F827A ; 9F/827A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by the Bolganone and Meteor effects.
+
+        phx
+        lda aProcSystem.aBody7,b,x
+        inc aProcSystem.aBody7,b,x
+        and #$0003
+        asl a
+        tax
+        sep #$20
+        lda $7F57FD
+        adc <>aUnknown9F829F,b,x
+        sta $7F
+        lda $7F57FE
+        clc
+        adc <>(aUnknown9F829F+1),b,x
+        sta $81
+        rep #$20
+        plx
+        rts
+
+        .databank 0
+
+      aUnknown9F829F ; 9F/829F
+
+        ; Shared by the Bolganone and Meteor effects.
+        .byte $02, $02, $00, $02, $00, $FE, $FE, $FE
+
+        ; 9F/82A7
+
+    .endsection Unsorted9F8253Section
+
+
+    .section Unsorted9F82A7Section
+
+      .al
+      .xl
+
+      rsSetMapMagicCasterFacing ; 9F/82A7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; $7F50C9 = the acting side's facing (aMapAction.wUnknown7F4560, or wUnknown7F455E when the round's bit 0 says the defender acts).
+
+        lda aMapAction.wUnknown7F4560
+        tay
+        lda $7F4BEB
+        lsr a
+        bcc _82B8
+        lda aMapAction.wUnknown7F455E
+        tay
+
+        _82B8
+        tya
+        sta $7F50C9
+        rts
+
+        .databank 0
+
+      rsClearMapMagicProcBody ; 9F/82BE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Clears aBody0-aBody7 of proc X.
+
+        stz aProcSystem.aBody0,b,x
+        stz aProcSystem.aBody1,b,x
+        stz aProcSystem.aBody2,b,x
+        stz aProcSystem.aBody3,b,x
+        stz aProcSystem.aBody4,b,x
+        stz aProcSystem.aBody5,b,x
+        stz aProcSystem.aBody6,b,x
+        stz aProcSystem.aBody7,b,x
+        rts
+
+        .databank 0
+
+        ; 9F/82D7
+
+    .endsection Unsorted9F82A7Section
+
+
+    .section Unsorted9F82D7Section
+
+      .al
+      .xl
+
+      rsCreateMapMagicProc ; 9F/82D7
+
+        ; TRACE: stack-args
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Creates the proc whose header (bank $9F) is the word after the call and adds its slot to aMapMagicProcList, so rlEndMapMagicEffect frees it. Returns the slot in A.
+
+        phk
+        phk
+        pla
+        sta lR44+1
+        lda #1,s
+        tay
+        lda $0001,b,y
+        sta lR44
+        tya
+        clc
+        adc #$0002
+        sta #1,s
+        jsl rlProcEngineCreateProc
+        bcs _830E
+        phx
+        pha
+        lda wMapMagicProcListEnd
+        tax
+        lda #1,s
+        sta aMapMagicProcList,x
+        lda #$FFFF
+        sta $7F50A7,x
+        inc x
+        inc x
+        txa
+        sta wMapMagicProcListEnd
+        pla
+        plx
+
+        _830E
+        rts
+
+        .databank 0
+
+        ; 9F/830F
+
+      rsCreateMapMagicHDMA ; 9F/830F
+
+        ; TRACE: stack-args
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Creates the HDMA entry whose header (bank $9F) is the word after the call and adds it to aMapMagicHDMAList. Returns its offset in A.
+
+        phk
+        phk
+        pla
+        sta lR44+1
+        lda #1,s
+        tay
+        lda $0001,b,y
+        sta lR44
+        tya
+        clc
+        adc #$0002
+        sta #1,s
+        jsl rlHDMAEngineCreateEntry
+        bcs _8348
+        phx
+        lda wMapMagicHDMAListEnd
+        tax
+        lda aHDMASystem.wOffset,b
+        sta aMapMagicHDMAList,x
+        lda #$FFFF
+        sta $7F50B9,x
+        inc x
+        inc x
+        txa
+        sta wMapMagicHDMAListEnd
+        plx
+        lda aHDMASystem.wOffset,b
+
+        _8348
+        rts
+
+        .databank 0
+
+        ; 9F/8349
+
+    .endsection Unsorted9F82D7Section
+
+
+    .section Unsorted9F8349Section
+
+      .al
+      .xl
+
+      rlEndMapMagicEffect ; 9F/8349
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unless wMapMagicEffect is negative: frees the effect's HDMA entries and procs and, when wMapMagicFlags is set, restores BG2SC.
+
+        lda wMapMagicEffect
+        bmi _8358
+        jsr rsFreeMapMagicHDMA
+        jsr rsFreeMapMagicProcs
+        jsr rsRestoreMapMagicBG2SC
+
+        _8358
+        rtl
+
+        .databank 0
+
+        ; 9F/8359
+
+      rsFreeMapMagicHDMA ; 9F/8359
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+        bra _8366
+
+
+        _835F
+        lsr a
+        jsl rlHDMAEngineFreeEntryByIndex
+        inc x
+        inc x
+
+        _8366
+        lda aMapMagicHDMAList,x
+        cmp #$FFFF
+        bne _835F
+        plx
+        rts
+
+        .databank 0
+
+        ; 9F/8371
+
+      rsFreeMapMagicProcs ; 9F/8371
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+        bra _837E
+
+
+        _8377
+        lsr a
+        jsl rlProcEngineFreeProcByIndex
+        inc x
+        inc x
+
+        _837E
+        lda aMapMagicProcList,x
+        cmp #$FFFF
+        bne _8377
+        plx
+        rts
+
+        .databank 0
+
+        ; 9F/8389
+
+      rsRestoreMapMagicBG2SC ; 9F/8389
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wMapMagicFlags
+        beq _8397
+        sep #$20
+        lda #$54
+        sta bBufferBG2SC
+        rep #$20
+
+        _8397
+        rts
+
+        .databank 0
+
+        ; 9F/8398
+
+    .endsection Unsorted9F8349Section
+
+
+    .section Unsorted9F8398Section
+
+      .al
+      .xl
+
+      rsUnknown9F8398 ; 9F/8398
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced. Writes an active sprite definition to $7ECC0E from the
+        ; two words after the call (bank $9F) and creates the sprite from it.
+
+        phx
+        phk
+        phk
+        pla
+        sta $7ECC12
+        sta $7ECC0F
+        lda #3,s
+        tay
+        lda $0001,b,y
+        sta $7ECC11
+        lda $0003,b,y
+        sta $7ECC0E
+        tya
+        clc
+        adc #$0004
+        sta #3,s
+        lda #$7E00
+        sta lR44+1
+        lda #$CC00
+        sta lR44
+        ldx #$0000
+        txy
+        jsl rlCreateActiveSpriteHighestSlotRelative
+        plx
+        rts
+
+        .databank 0
+
+        ; 9F/83D0
+
+    .endsection Unsorted9F8398Section
+
+
+    .section Unsorted9F83D0Section
+
+      .al
+      .xl
+
+      rsSetMapMagicWindowLines ; 9F/83D0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; $7F5095 and $7F5097 = four HDMA line counts from aUnknown9F83E9, picked by bit 2 of wMapMagicFlags' high byte (the units near the bottom of the screen).
+
+        phx
+        lda wMapMagicFlags+1
+        and #$0004
+        tax
+        lda <>aMapMagicWindowLines,b,x
+        sta $7F5095
+        lda <>(aMapMagicWindowLines+2),b,x
+        sta $7F5097
+        plx
+        rts
+
+        .databank 0
+
+        ; 9F/83E9
+
+
+      aMapMagicWindowLines ; 9F/83E9
+
+        .byte $08, $21, $7F, $37, $7F, $30, $22, $0E
+
+    .endsection Unsorted9F83D0Section
+
+
+    .section Unsorted9F83F1Section
+
+      .al
+      .xl
+
+      rsSetMapMagicLayerBlending ; 9F/83F1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Puts BG2 on the main screen and sets the windows and colour math (add) used by the effects' backgrounds.
+
+        php
+        sep #$20
+        lda bBufferTM
+        ora #$02
+        sta bBufferTM
+        lda #$0F
+        sta bBufferWBGLOG
+        lda #$01
+        sta bBufferWOBJLOG
+        lda #$11
+        sta bBufferTS
+        lda #$17
+        sta bBufferTMW
+        lda #$11
+        sta bBufferTSW
+        lda #$82
+        sta bBufferCGADSUB
+        plp
+        rts
+
+        .databank 0
+
+        ; 9F/8414
+
+    .endsection Unsorted9F83F1Section
+
+
+    .section Unsorted9F8414Section
+
+      .al
+      .xl
+
+      rsSaveMapMagicScreenRegisters ; 9F/8414
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Saves the window, layer, colour math and BG1/BG2 scroll buffers to $7F57F2-$7F5800.
+
+        php
+        sep #$20
+        lda bBufferW12SEL
+        sta $7F57F2
+        lda bBufferW34SEL
+        sta $7F57F3
+        lda bBufferWOBJSEL
+        sta $7F57F4
+        lda bBufferWBGLOG
+        sta $7F57F5
+        lda bBufferWOBJLOG
+        sta $7F57F6
+        lda bBufferTM
+        sta $7F57F7
+        lda bBufferTS
+        sta $7F57F8
+        lda bBufferTMW
+        sta $7F57F9
+        lda bBufferTSW
+        sta $7F57FA
+        lda bBufferCGWSEL
+        sta $7F57FB
+        lda bBufferCGADSUB
+        sta $7F57FC
+        lda wBufferBG1HOFS
+        sta $7F57FD
+        lda wBufferBG1VOFS
+        sta $7F57FE
+        lda wBufferBG2HOFS
+        sta $7F57FF
+        lda wBufferBG2VOFS
+        sta $7F5800
+        plp
+        rts
+
+        .databank 0
+
+        ; 9F/8473
+
+      rlRestoreMapMagicScreenRegisters ; 9F/8473
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unless wMapMagicEffect is negative: restores what rsSaveMapMagicScreenRegisters saved and sets BG2SC to $54.
+
+        lda wMapMagicEffect
+        bpl _847A
+        rtl
+
+
+        _847A
+        php
+        sep #$20
+        lda $7F57F2
+        sta bBufferW12SEL
+        lda $7F57F3
+        sta bBufferW34SEL
+        lda $7F57F4
+        sta bBufferWOBJSEL
+        lda $7F57F5
+        sta bBufferWBGLOG
+        lda $7F57F6
+        sta bBufferWOBJLOG
+        lda $7F57F7
+        sta bBufferTM
+        lda $7F57F8
+        sta bBufferTS
+        lda $7F57F9
+        sta bBufferTMW
+        lda $7F57FA
+        sta bBufferTSW
+        lda $7F57FB
+        sta bBufferCGWSEL
+        lda $7F57FC
+        sta bBufferCGADSUB
+        lda $7F57FD
+        sta wBufferBG1HOFS
+        lda $7F57FE
+        sta wBufferBG1VOFS
+        lda $7F57FF
+        sta wBufferBG2HOFS
+        lda $7F5800
+        sta wBufferBG2VOFS
+        lda #$54
+        sta bBufferBG2SC
+        plp
+        rtl
+
+        .databank 0
+
+        ; 9F/84DD
+
+      rlQueueMapMagicBackgroundTiles ; 9F/84DD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Queues the effect's background tiles (aMapBattleMagicBackgrounds) for decompression.
+
+        lda wMapMagicEffect
+        bmi _850A
+        phx
+        phy
+        sta wR0
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aMapBattleMagicBackgrounds,x
+        sta lR18
+        lda aMapBattleMagicBackgrounds+1,x
+        sta lR18+1
+        lda #(`aWorldMapMarkerPalette)<<8
+        sta lR19+1
+        lda #<>aWorldMapMarkerPalette
+        sta lR19
+        jsl rlAppendDecompList
+        ply
+        plx
+
+        _850A
+        rtl
+
+        .databank 0
+
+        ; 9F/850B
+
+      rlQueueMapMagicBackgroundTilemap ; 9F/850B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Queues the effect's background tilemap for decompression to $7EDB88. Meteor and Valflame take their second tilemap when the target is at the right of the screen (X >= $A0, $C0).
+
+        lda wMapMagicEffect
+        bmi _8574
+        phx
+        phy
+        sta wR0
+        cmp #$0004
+        bne _8532
+        lda wMapMagicTargetPixel
+        and #$00FF
+        cmp #$00A0
+        bmi _8532
+        lda #(`acMapBattleMagicMeteorTilemap2)<<8
+        sta lR18+1
+        lda #<>acMapBattleMagicMeteorTilemap2
+        sta lR18
+        bra _8564
+
+
+        _8532
+        cmp #$0003
+        bne _854F
+        lda wMapMagicTargetPixel
+        and #$00FF
+        cmp #$00C0
+        bmi _854F
+        lda #(`acMapBattleMagicValflameTilemap2)<<8
+        sta lR18+1
+        lda #<>acMapBattleMagicValflameTilemap2
+        sta lR18
+        bra _8564
+
+
+        _854F
+        lda wR0
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aMapBattleMagicBackgrounds+3,x
+        sta lR18
+        lda aMapBattleMagicBackgrounds+4,x
+        sta lR18+1
+
+        _8564
+        lda #$7E00
+        sta lR19+1
+        lda #$DB88
+        sta lR19
+        jsl rlAppendDecompList
+        ply
+        plx
+
+        _8574
+        rtl
+
+        .databank 0
+
+        ; 9F/8575
+
+      rlQueueMapMagicBackgroundPalette ; 9F/8575
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Queues the effect's background colours for decompression to $7EE388.
+
+        lda wMapMagicEffect
+        bmi _85A2
+        phx
+        phy
+        sta wR0
+        asl a
+        asl a
+        asl a
+        clc
+        adc wR0
+        tax
+        lda aMapBattleMagicBackgrounds+6,x
+        sta lR18
+        lda aMapBattleMagicBackgrounds+7,x
+        sta lR18+1
+        lda #$7E00
+        sta lR19+1
+        lda #$E388
+        sta lR19
+        jsl rlAppendDecompList
+        ply
+        plx
+
+        _85A2
+        rtl
+
+        .databank 0
+
+        ; 9F/85A3
+
+      rlUploadMapMagicBackgroundTiles ; 9F/85A3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; DMAs the first $800 bytes of the decompressed background tiles to VRAM.
+
+        lda wMapMagicEffect
+        bmi _85CB
+        phy
+        phx
+        lda #(`aWorldMapMarkerPalette)<<8
+        sta lR18+1
+        lda #<>aWorldMapMarkerPalette
+        sta lR18
+        lda #$0800
+        sta wR0
+        lda bBufferBG4SC
+        and #$F000
+        clc
+        adc #$3800
+        sta wR1
+        jsl rlDMAByPointer
+        plx
+        ply
+
+        _85CB
+        rtl
+
+        .databank 0
+
+        ; 9F/85CC
+
+      rlUploadMapMagicBackgroundTilesRest ; 9F/85CC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; DMAs the next $800 bytes ($7ED388) of the background tiles to VRAM.
+
+        lda wMapMagicEffect
+        bmi _85F4
+        phy
+        phx
+        lda #$7E00
+        sta lR18+1
+        lda #$D388
+        sta lR18
+        lda #$0800
+        sta wR0
+        lda bBufferBG4SC
+        and #$F000
+        clc
+        adc #$3C00
+        sta wR1
+        jsl rlDMAByPointer
+        plx
+        ply
+
+        _85F4
+        rtl
+
+        .databank 0
+
+        ; 9F/85F5
+
+      rlUploadMapMagicBackgroundTilemap ; 9F/85F5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wMapMagicEffect
+        bmi _861E
+        phy
+        phx
+        lda #$7E00
+        sta lR18+1
+        lda #$DB88
+        sta lR18
+        lda #$0800
+        sta wR0
+        lda bBufferBG1SC
+        and #$00FC
+        xba
+        clc
+        adc #$0C00
+        sta wR1
+        jsl rlDMAByPointer
+        plx
+        ply
+
+        _861E
+        rtl
+
+        .databank 0
+
+        ; 9F/861F
+
+      rlCopyMapMagicBackgroundColors ; 9F/861F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies colours $69-$6F of the decompressed palette into palettes 6 and 7 of aBGPaletteBuffer (only palette 6 in battle type 3).
+
+        lda wMapMagicEffect
+        bmi _8676
+        phy
+        phx
+        lda #$7E00
+        sta lR18+1
+        sta lR19+1
+        lda #$E388
+        sta lR18
+        clc
+        adc #$0020
+        sta lR19
+        lda wBattleType
+        and #$00FF
+        cmp #$0003
+        beq _8660
+        ldy #$00D2
+        ldx #$00D2
+
+        _864B
+        lda [lR18],y
+        sta aBGPaletteBuffer,b,x
+        lda [lR19],y
+        sta aBGPaletteBuffer.aPalette1,b,x
+        inc y
+        inc y
+        inc x
+        inc x
+        cpx #$00E0
+        bne _864B
+        bra _8674
+
+
+        _8660
+        ldy #$00D2
+        ldx #$00D2
+
+        _8666
+        lda [lR18],y
+        sta aBGPaletteBuffer,b,x
+        inc y
+        inc y
+        inc x
+        inc x
+        cpx #$00E0
+        bne _8666
+
+        _8674
+        plx
+        ply
+
+        _8676
+        rtl
+
+        .databank 0
+
+        ; 9F/8677
+
+      rlUploadMapMagicSpriteTiles ; 9F/8677
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; DMAs the effect's sprite tiles ($7F45D9) to sprite VRAM.
+
+        phb
+        phy
+        phx
+        lda #$7F00
+        sta lR18+1
+        lda #$45D9
+        sta lR18
+        lda #$0400
+        sta wR0
+        lda aMapAction.wMapBattleRoundIndex
+        asl a
+        tax
+        lda aBattleRoundsData._Entry[0],x
+        and #$0001
+        and #$0001
+        asl a
+        tax
+        lda bBufferOBSEL
+        and #$0003
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        xba
+        sta wR1
+        jsl rlDMAByPointer
+        plx
+        ply
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 9F/86B0
+
+    .endsection Unsorted9F8414Section
+
+
+    .section Unsorted9F86B0Section
+
+      .al
+      .xl
+
+      rlCheckMapMagicDecompressionDone ; 9F/86B0
+
+        .al
+        .autsiz
+        .databank ?
+
+        ; Sets proc header bit $0001 when the decompression queue is empty.
+
+        lda bDecompressionArrayFlag,b
+        bne +
+
+          lda aProcSystem.aHeaderBitfield,b,x
+          ora #1
+          sta aProcSystem.aHeaderBitfield,b,x
+
+        +
+        rtl
+
+        .databank 0
+
+        ; 9F/86BF
+
+    .endsection Unsorted9F86B0Section
+
+
+    .section Unsorted9F86BFSection
+
+      .al
+      .xl
+
+      rlLoadMapMagicSprites ; 9F/86BF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Loads the effect's sprite palette and queues its sprite tiles (aMapBattleMagicSprites); sets proc header bit $0002 when there are any.
+
+        phy
+        phx
+        lda aProcSystem.aHeaderBitfield,b,x
+        and #$FFFD
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda wMapMagicEffect
+        bmi _8721
+        asl a
+        asl a
+        adc wMapMagicEffect
+        tax
+        lda aMapBattleMagicSprites,x
+        cmp #$FFFF
+        beq _8721
+        phk
+        phk
+        ply
+        sty lR19+1
+        sta lR19
+        lda aMapBattleMagicSprites+2,x
+        sta lR18
+        lda aMapBattleMagicSprites+3,x
+        sta lR18+1
+        ldx #$01DE
+        ldy #$001E
+
+        _86F9
+        lda [lR19],y
+        sta aBGPaletteBuffer,b,x
+        dec x
+        dec x
+        dec y
+        dec y
+        bpl _86F9
+        lda #1,s
+        tax
+        lda aProcSystem.aHeaderBitfield,b,x
+        and #$FFFE
+        ora #$0002
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda #$7F00
+        sta lR19+1
+        lda #$45D9
+        sta lR19
+        jsl rlAppendDecompList
+
+        _8721
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9F/8724
+
+    .endsection Unsorted9F86BFSection
+
+
+    .section Unsorted9F88C0Section
+
+      .al
+      .xl
+
+      aUnknown9F88C0 ; 9F/88C0
+
+        ; Unreferenced: 32 colours after the map magic sprite palettes.
+        .word $2550, $39F3, $4E97, $5F3B, $73DF, $01D8, $0619, $063A
+        .word $0A7B, $0EBC, $12FD, $131E, $175F, $00AC, $00EE, $052F
+        .word $0571, $09B2, $0A35, $0E97, $131A, $17DF, $0C89, $190C
+        .word $298F, $3612, $4276, $4EF9, $5F7C, $6BFF, $0008, $14AC
+
+    .endsection Unsorted9F88C0Section
+
+
+    .section Unsorted9F8900Section
+
+      .al
+      .xl
+
+      rlSelectMapMagicEffectForRound ; 9F/8900
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; When wMapMagicFlags is set: wMapMagicEffect = the acting side's effect this round (the defender's when the round's bit 0 is set), and proc header bit $0002 when there is one.
+
+        lda aProcSystem.aHeaderBitfield,b,x
+        and #$FFFD
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda wMapMagicFlags
+        beq _8942
+        phx
+        lda wMapMagicAttackerEffect
+        sta wMapMagicEffect
+        lda aMapAction.wMapBattleRoundIndex
+        asl a
+        tax
+        lda aBattleRoundsData._Entry[0],x
+        and #$0001
+        beq _892F
+        lda wMapMagicDefenderEffect
+        sta wMapMagicEffect
+
+        _892F
+        plx
+        lda wMapMagicEffect
+        cmp #$FFFF
+        beq _8942
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0002
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        _8942
+        rtl
+
+        .databank 0
+
+        ; 9F/8943
+
+    .endsection Unsorted9F8900Section
+
+
+    .section Unsorted9F8943Section
+
+      .al
+      .xl
+
+      rlUnknown9F8943 ; 9F/8943
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Part of the Fenrir effect.
+
+        php
+
+        _8944
+        ldy wDMAArrayPosition,b
+        sep #$20
+        lda #$02
+        sta aDMAArray,b,y
+        lda #$00
+        sta $034F,b,y
+        lda $0000,b,x
+        sta $034C,b,y
+        rep #$21
+        lda $0001,b,x
+        sta $0347,b,y
+        lda $0002,b,x
+        sta $0348,b,y
+        lda $0004,b,x
+        sta $034A,b,y
+        lda $0006,b,x
+        sta $034D,b,y
+        tya
+        adc #$0009
+        sta wDMAArrayPosition,b
+        txa
+        clc
+        adc #$0008
+        tax
+        lda $0000,b,x
+        cmp #$FFFF
+        bne _8944
+        sep #$20
+        lda #$01
+        sta bDMAArrayFlag,b
+        lda bBufferINIDISP
+        bpl _8997
+        jsl rlProcessDMAStructArray
+
+        _8997
+        plp
+        rtl
+
+        .databank 0
+
+        ; 9F/8999
+
+    .endsection Unsorted9F8943Section
+
+
+    .section Unsorted9F8999Section
+
+      .al
+      .xl
+
+      rlMoveActiveSpriteByVelocity ; 9F/8999
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Adds the 8.8 velocities in aUnknown0013C0 and aUnknown0013E0 to the sprite's X and Y (aUnknown001200, aUnknown001240), keeping the fractions in their high bytes' neighbours.
+
+        lda aActiveSpriteSystem.aUnknown0013C0,b,x
+        sep #$20
+        clc
+        adc $11E1,b,x
+        sta $11E1,b,x
+        rep #$20
+        and #$FF00
+        xba
+        bpl _89B0
+        ora #$FF00
+
+        _89B0
+        adc aActiveSpriteSystem.aUnknown001200,b,x
+        sta aActiveSpriteSystem.aUnknown001200,b,x
+        lda aActiveSpriteSystem.aUnknown0013E0,b,x
+        sep #$20
+        clc
+        adc $1221,b,x
+        sta $1221,b,x
+        rep #$20
+        and #$FF00
+        xba
+        bpl _89CD
+        ora #$FF00
+
+        _89CD
+        adc aActiveSpriteSystem.aUnknown001240,b,x
+        sta aActiveSpriteSystem.aUnknown001240,b,x
+        rtl
+
+        .databank 0
+
+      rsCheckActiveSpriteNearPoint ; 9F/89D4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Carry set when the sprite is less than wR2 pixels from (wR0, wR1) on both axes.
+
+        lda aActiveSpriteSystem.aUnknown001200,b,x
+        sec
+        sbc wR0
+        bpl _89E0
+        eor #$FFFF
+        inc a
+
+        _89E0
+        cmp wR2
+        bpl _89F6
+        lda aActiveSpriteSystem.aUnknown001240,b,x
+        sec
+        sbc wR1
+        bpl _89F0
+        eor #$FFFF
+        inc a
+
+        _89F0
+        cmp wR2
+        bpl _89F6
+        sec
+        rts
+
+        _89F6
+        clc
+        rts
+
+        .databank 0
+
+      rlUnknown9F89F8 ; 9F/89F8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 7 effects.
+
+        phx
+        lda wR0
+        sta wR2
+        jsl rlGetVectorAngle
+        sta wR0
+        lda wR2
+        bpl _8A0B
+        eor #$FFFF
+        inc a
+
+        _8A0B
+        xba
+        jsl rlUnknown9F8B7A._8B84
+        bpl _8A16
+        eor #$FFFF
+        inc a
+
+        _8A16
+        sta wR2
+        lda wR1
+        bpl _8A20
+        eor #$FFFF
+        inc a
+
+        _8A20
+        xba
+        jsl rlUnknown9F8B7A
+        bpl _8A2B
+        eor #$FFFF
+        inc a
+
+        _8A2B
+        clc
+        adc wR2
+        xba
+        plx
+        and #$00FF
+        rtl
+
+        .databank 0
+
+        ; 9F/8A34
+
+    .endsection Unsorted9F8999Section
+
+
+    .section Unsorted9F8A34Section
+
+      .as
+      .xl
+
+      rlGetVectorAngle ; 9F/8A34
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The angle (0-255) of the vector (wR0, wR1), from a hardware division of the smaller by the larger and the octant.
+
+        phx
+        ldx #$0000
+        lda wR0
+        bpl _8A43
+        ldx #$0004
+        eor #$FFFF
+        inc a
+
+        _8A43
+        sta wR0
+        lda wR1
+        bpl _8A4F
+        inc x
+        inc x
+        eor #$FFFF
+        inc a
+
+        _8A4F
+        sta wR1
+        cmp wR0
+        bpl _8A76
+        sep #$20
+        stz $4204,b
+        lda wR1
+        sta $4205,b
+        lda wR0
+        sta $4206,b
+        nop
+        nop
+        nop
+        rep #$20
+        jsr (_8A6E,x)
+        plx
+        rtl
+
+        _8A6E
+        .word <>rsUnknown9F8A97
+        .word <>rsUnknown9F8AA8
+        .word <>rsUnknown9F8AB5
+        .word <>rsUnknown9F8AC6
+
+        _8A76
+        sep #$20
+        stz $4204,b
+        lda wR0
+        sta $4205,b
+        lda wR1
+        sta $4206,b
+        nop
+        nop
+        nop
+        rep #$20
+        jsr (_8A8F,x)
+        plx
+        rtl
+
+        _8A8F
+        .word <>rsUnknown9F8ADA
+        .word <>rsUnknown9F8AEB
+        .word <>rsUnknown9F8AFF
+        .word <>rsUnknown9F8B13
+
+        .databank 0
+
+        ; 9F/8A97
+
+    .endsection Unsorted9F8A34Section
+
+
+    .section Unsorted9F8A97Section
+
+      .al
+      .xl
+
+      rsUnknown9F8A97 ; 9F/8A97
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 9 effects.
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        eor #$FFFF
+        inc a
+        and #$00FF
+        jml rsUnknown9F8B24
+
+        .databank 0
+
+        ; 9F/8AA8
+
+      rsUnknown9F8AA8 ; 9F/8AA8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 9 effects.
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        and #$00FF
+        jml rsUnknown9F8B24
+
+        .databank 0
+
+        ; 9F/8AB5
+
+      rsUnknown9F8AB5 ; 9F/8AB5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 9 effects.
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        clc
+        adc #$0080
+        and #$00FF
+        jml rsUnknown9F8B24
+
+        .databank 0
+
+        ; 9F/8AC6
+
+      rsUnknown9F8AC6 ; 9F/8AC6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 9 effects.
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        eor #$FFFF
+        sec
+        adc #$0080
+        and #$00FF
+        jml rsUnknown9F8B24
+
+        .databank 0
+
+        ; 9F/8ADA
+
+      rsUnknown9F8ADA ; 9F/8ADA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 9 effects.
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        clc
+        adc #$00C0
+        and #$00FF
+        jml rsUnknown9F8B24
+
+        .databank 0
+
+        ; 9F/8AEB
+
+      rsUnknown9F8AEB ; 9F/8AEB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 9 effects.
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        eor #$FFFF
+        sec
+        adc #$0040
+        and #$00FF
+        jml rsUnknown9F8B24
+
+        .databank 0
+
+        ; 9F/8AFF
+
+      rsUnknown9F8AFF ; 9F/8AFF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 9 effects.
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        eor #$FFFF
+        sec
+        adc #$00C0
+        and #$00FF
+        jml rsUnknown9F8B24
+
+        .databank 0
+
+        ; 9F/8B13
+
+      rsUnknown9F8B13 ; 9F/8B13
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 9 effects.
+
+        lda $4214,b
+        lsr a
+        lsr a
+        lsr a
+        clc
+        adc #$0040
+        and #$00FF
+        jml rsUnknown9F8B24
+
+        .databank 0
+
+        ; 9F/8B24
+
+      rsUnknown9F8B24 ; 9F/8B24
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 9 effects.
+
+        pha
+        and #$003F
+        tax
+        lda <>aUnknown9F8B3A,b,x
+        and #$00FF
+        eor #$FFFF
+        inc a
+        clc
+        adc #1,s
+        sta #1,s
+        pla
+        rts
+
+        .databank 0
+
+        ; 9F/8B3A
+
+
+      aUnknown9F8B3A ; 9F/8B3A
+
+        ; Shared by 9 effects.
+        .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF, $FF, $FF
+        .byte $00, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $00, $00, $00
+        .byte $00, $00, $01, $02, $02, $02, $03, $03, $03, $03, $04, $03, $03, $04, $03, $04
+        .byte $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $02, $01, $01, $00, $00, $00
+
+    .endsection Unsorted9F8A97Section
+
+
+    .section Unsorted9F8B7ASection
+
+      .al
+      .xl
+
+      rlUnknown9F8B7A ; 9F/8B7A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 9 effects.
+
+        sta wR10
+        lda wR0
+        clc
+        adc #$0080
+        bra _8B8C
+
+        _8B84
+        sta wR10
+        lda wR0
+        clc
+        adc #$0040
+
+        _8B8C
+        asl a
+        and #$01FE
+        tax
+        lda aUnknown9F8C3A,x
+        sta wR14
+        bpl _8B9D
+        eor #$FFFF
+        inc a
+
+        _8B9D
+        sta wR11
+        jsr rsUnknown9F8BAD
+        lda wR12+1
+        bit wR14
+        bpl _8BAC
+        eor #$FFFF
+        inc a
+
+        _8BAC
+        rtl
+
+        .databank 0
+
+        ; 9F/8BAD
+
+      rsUnknown9F8BAD ; 9F/8BAD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 9 effects.
+
+        rep #$20
+        sep #$10
+        ldx wR10
+        stx $4202,b
+        ldx wR11
+        stx $4203,b
+        xba
+        nop
+        lda $4216,b
+        sta wR12
+        ldx wR10+1
+        stx $4202,b
+        ldx wR11+1
+        stx $4203,b
+        xba
+        nop
+        ldx $4216,b
+        stx wR13
+        ldy $4217,b
+        ldx wR10+1
+        stx $4202,b
+        ldx wR11
+        stx $4203,b
+        lda wR12+1
+        clc
+        adc $4216,b
+        sta wR12+1
+        bcc _8BEB
+        inc y
+
+        _8BEB
+        ldx wR10
+        stx $4202,b
+        ldx wR11+1
+        stx $4203,b
+        lda wR12+1
+        clc
+        adc $4216,b
+        sta wR12+1
+        bcc _8C00
+        inc y
+
+        _8C00
+        sty wR13+1
+        rep #$10
+        rts
+
+        .databank 0
+
+        ; 9F/8C05
+
+      rlUnknown9F8C05 ; 9F/8C05
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Part of the Fenrir effect.
+
+        sta wR1
+        lda wR0
+        clc
+        adc #$0080
+        bra _8C17
+
+        .byte $85, $02, $A5, $00, $18, $69, $40, $00
+
+
+        _8C17
+        phx
+        asl a
+        and #$01FE
+        tax
+        lda aUnknown9F8C3A,x
+        sep #$20
+        sta @l M7A
+        xba
+        sta @l M7A
+        lda wR1
+        sta @l M7B
+        rep #$20
+        lda @l $002135
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9F/8C3A
+
+    .endsection Unsorted9F8B7ASection
+
+
+    .section Table9F8C3ASection
+
+      .al
+      .xl
+
+      aUnknown9F8C3A ; 9F/8C3A
+
+        ; Shared by 9 effects.
+        ; Read by rlUnknown9F8B7A and rlUnknown9F8C05 (256-entry signed trig table).
+
+        .sint $0000, $0006, $000C, $0012, $0019, $001F, $0025, $002B
+        .sint $0031, $0038, $003E, $0044, $004A, $0050, $0056, $005C
+        .sint $0061, $0067, $006D, $0073, $0078, $007E, $0083, $0088
+        .sint $008E, $0093, $0098, $009D, $00A2, $00A7, $00AB, $00B0
+        .sint $00B5, $00B9, $00BD, $00C1, $00C5, $00C9, $00CD, $00D1
+        .sint $00D4, $00D8, $00DB, $00DE, $00E1, $00E4, $00E7, $00EA
+        .sint $00EC, $00EE, $00F1, $00F3, $00F4, $00F6, $00F8, $00F9
+        .sint $00FB, $00FC, $00FD, $00FE, $00FE, $00FF, $00FF, $00FF
+        .sint $0100, $00FF, $00FF, $00FF, $00FE, $00FE, $00FD, $00FC
+        .sint $00FB, $00F9, $00F8, $00F6, $00F4, $00F3, $00F1, $00EE
+        .sint $00EC, $00EA, $00E7, $00E4, $00E1, $00DE, $00DB, $00D8
+        .sint $00D4, $00D1, $00CD, $00C9, $00C5, $00C1, $00BD, $00B9
+        .sint $00B5, $00B0, $00AB, $00A7, $00A2, $009D, $0098, $0093
+        .sint $008E, $0088, $0083, $007E, $0078, $0073, $006D, $0067
+        .sint $0061, $005C, $0056, $0050, $004A, $0044, $003E, $0038
+        .sint $0031, $002B, $0025, $001F, $0019, $0012, $000C, $0006
+        .sint $0000, -$0006, -$000C, -$0012, -$0019, -$001F, -$0025, -$002B
+        .sint -$0031, -$0038, -$003E, -$0044, -$004A, -$0050, -$0056, -$005C
+        .sint -$0061, -$0067, -$006D, -$0073, -$0078, -$007E, -$0083, -$0088
+        .sint -$008E, -$0093, -$0098, -$009D, -$00A2, -$00A7, -$00AB, -$00B0
+        .sint -$00B5, -$00B9, -$00BD, -$00C1, -$00C5, -$00C9, -$00CD, -$00D1
+        .sint -$00D4, -$00D8, -$00DB, -$00DE, -$00E1, -$00E4, -$00E7, -$00EA
+        .sint -$00EC, -$00EE, -$00F1, -$00F3, -$00F4, -$00F6, -$00F8, -$00F9
+        .sint -$00FB, -$00FC, -$00FD, -$00FE, -$00FE, -$00FF, -$00FF, -$00FF
+        .sint -$0100, -$00FF, -$00FF, -$00FF, -$00FE, -$00FE, -$00FD, -$00FC
+        .sint -$00FB, -$00F9, -$00F8, -$00F6, -$00F4, -$00F3, -$00F1, -$00EE
+        .sint -$00EC, -$00EA, -$00E7, -$00E4, -$00E1, -$00DE, -$00DB, -$00D8
+        .sint -$00D4, -$00D1, -$00CD, -$00C9, -$00C5, -$00C1, -$00BD, -$00B9
+        .sint -$00B5, -$00B0, -$00AB, -$00A7, -$00A2, -$009D, -$0098, -$0093
+        .sint -$008E, -$0088, -$0083, -$007E, -$0078, -$0073, -$006D, -$0067
+        .sint -$0061, -$005C, -$0056, -$0050, -$004A, -$0044, -$003E, -$0038
+        .sint -$0031, -$002B, -$0025, -$001F, -$0019, -$0012, -$000C, -$0006
+
+        ; 9F/8E3A
+
+    .endsection Table9F8C3ASection
+
+
+    .section Unsorted9F8E3ASection
+
+      .al
+      .xl
+
+      rlCopyRAMColorsToPaletteBuffer ; 9F/8E3A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The reverse of rlSavePaletteBufferColorsToRAM: copies colours to aBGPaletteBuffer. Seven bytes after the call: the long source, the number of colours, the buffer offset.
+
+        phx
+        phy
+        lda #5,s
+        tay
+        lda $0001,b,y
+        sta lR18
+        lda $0002,b,y
+        sta lR18+1
+        lda $0004,b,y
+        sta wR0
+        lda $0006,b,y
+        tax
+        tya
+        clc
+        adc #$0007
+        sta #5,s
+        ldy #$0000
+
+        _8E5C
+        lda [lR18],y
+        sta aBGPaletteBuffer,b,x
+        inc x
+        inc x
+        inc y
+        inc y
+        dec wR0
+        bne _8E5C
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9F/8E6C
+
+
+    .endsection Unsorted9F8E3ASection
+
+
+    .section Unsorted9F8EC0Section
+
+      .al
+      .xl
+
+      rlUnknown9F8EC0 ; 9F/8EC0
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta wR2
+
+        _8EC2
+        lda aPaletteFading.wDesiredColor,b
+        cmp aBGPaletteBuffer,b,x
+        beq _8EDA
+        phx
+        lda aBGPaletteBuffer,b,x
+        tax
+        lda aPaletteFading.wCurrentStep,b
+        jsl rlUnknown9F9090
+        plx
+        sta aBGPaletteBuffer,b,x
+
+        _8EDA
+        inc x
+        inc x
+        dec wR2
+        bne _8EC2
+        rtl
+
+        .databank 0
+
+        ; 9F/8EE1
+
+    .endsection Unsorted9F8EC0Section
+
+
+    .section Unsorted9F9090Section
+
+      .as
+      .xl
+
+      rlUnknown9F9090 ; 9F/9090
+
+        ; TRACE: stack-args
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        pha
+        phx
+        phy
+        lda #1,s
+        and #$001F
+        tay
+        lda #3,s
+        and #$001F
+        tax
+        jsr rsUnknown9F90E6
+        sta #7,s
+        lda #1,s
+        asl a
+        asl a
+        asl a
+        xba
+        and #$001F
+        tay
+        lda #3,s
+        asl a
+        asl a
+        asl a
+        xba
+        and #$001F
+        tax
+        jsr rsUnknown9F90E6
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        ora #7,s
+        sta #7,s
+        lda #1,s
+        lsr a
+        lsr a
+        xba
+        and #$001F
+        tay
+        lda #3,s
+        lsr a
+        lsr a
+        xba
+        and #$001F
+        tax
+        jsr rsUnknown9F90E6
+        asl a
+        asl a
+        xba
+        ora #7,s
+        sta #7,s
+        ply
+        plx
+        pla
+        pla
+        rtl
+
+        .databank 0
+
+        ; 9F/90E6
+
+      rsUnknown9F90E6 ; 9F/90E6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        txa
+        sec
+        sbc #1,s
+        bpl _90F0
+        lda #$0000
+
+        _90F0
+        ply
+        rts
+
+        .databank 0
+
+        ; 9F/90F2
+
+    .endsection Unsorted9F9090Section
+
+
+    .section Unsorted9F90F2Section
+
+      .al
+      .xl
+
+      rlUnknown9F90F2 ; 9F/90F2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown9F9116
+        rtl
+
+        .databank 0
+
+        ; 9F/90F6
+
+      rlUnknown9F90F6 ; 9F/90F6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsFadeBackMapMagicColors
+        rtl
+
+        .databank 0
+
+        ; 9F/90FA
+
+      rlUnknown9F90FA ; 9F/90FA
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsSaveMapMagicColors
+        rtl
+
+        .databank 0
+
+        ; 9F/90FE
+
+    .endsection Unsorted9F90F2Section
+
+
+    .section Unsorted9F90FESection
+
+      .al
+      .xl
+
+      rsUnknown9F90FE ; 9F/90FE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced. Copies 80 colours from $7ED000 to aBGPaletteBuffer+$20.
+
+        jsl rlCopyRAMColorsToPaletteBuffer
+
+          .byte $00, $D0, $7E, $50, $00, $20, $00
+
+        rts
+
+        .databank 0
+
+        ; 9F/910A
+
+    .endsection Unsorted9F90FESection
+
+
+    .section Unsorted9F910ASection
+
+      .al
+      .xl
+
+      rsSaveMapMagicColors ; 9F/910A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Saves 80 colours from aBGPaletteBuffer+$20 to $7ED000.
+
+        jsl rlSavePaletteBufferColorsToRAM
+
+          .byte $00, $D0, $7E, $50, $00, $20, $00
+
+        rts
+
+        .databank 0
+
+        ; 9F/9116
+
+      rsUnknown9F9116 ; 9F/9116
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 12 effects.
+
+        lda #$0000
+        ldy #$0010
+        bra rsUnknown9F912A
+
+        .databank 0
+
+      rsUnknown9F911E ; 9F/911E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta aPaletteFading.wDesiredColor,b
+        tya
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F91FB
+
+        .databank 0
+
+      rsUnknown9F912A ; 9F/912A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 12 effects.
+
+        sta aPaletteFading.wDesiredColor,b
+        tya
+        sta aPaletteFading,b
+        sec
+        jml rsUnknown9F91B1
+
+        .databank 0
+
+      rsUnknown9F9136 ; 9F/9136
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by the Bolganone and Valflame effects.
+
+        lda #$0007
+        ldy #$000E
+        sta aPaletteFading.wDesiredColor,b
+        tya
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F91CE
+
+        .databank 0
+
+      rsUnknown9F9148 ; 9F/9148
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0007
+        ldy #$0014
+        sta aPaletteFading.wDesiredColor,b
+        tya
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F91DD
+
+        .databank 0
+
+      rsUnknown9F915A ; 9F/915A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Part of the Aura effect.
+
+        lda #$0007
+        ldy #$000E
+        sta aPaletteFading.wDesiredColor,b
+        tya
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F91EC
+
+        .databank 0
+
+      rsFadeMapMagicColorsToWhite ; 9F/916C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Fades the colour ranges in aUnknown9F91B8 to white over 16 steps; carry set when done.
+
+        lda #$7FFF
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0010
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F91B1
+
+        .databank 0
+
+      rsUnknown9F917D ; 9F/917D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$7FFF
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0010
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F920A
+
+        .databank 0
+
+      rsUnknown9F918E ; 9F/918E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0010
+        sta aPaletteFading,b
+        clc
+        jml rsUnknown9F920A
+
+        .databank 0
+
+      rsFadeBackMapMagicColors ; 9F/919F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Fades the colours back to what rsSaveMapMagicColors saved; carry set when done. The effects end with this.
+
+        lda #$0008
+        sta aPaletteFading,b
+        clc
+        jsl rlFadePaletteToColors
+
+          .byte $00, $D0, $50, $00, $20, $00
+
+        rts
+
+        .databank 0
+
+      rsUnknown9F91B1 ; 9F/91B1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by 13 effects.
+
+        jsl rlFadePaletteToBlack
+
+          .word <>aUnknown9F91B8
+
+        rts
+
+        .databank 0
+
+      aUnknown9F91B8 ; 9F/91B8
+
+        ; Shared by 13 effects.
+        .word $0022, $000F, $0042, $000F, $0062, $000F, $0082, $000F, $00A2, $000F, $FFFF
+
+      rsUnknown9F91CE ; 9F/91CE
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Shared by the Bolganone and Valflame effects.
+
+        jsl rlFadeBGPaletteColorRanges
+        .word <>aUnknown9F91D5
+        rts
+
+        .databank 0
+
+      aUnknown9F91D5 ; 9F/91D5
+
+        ; Shared by the Bolganone and Valflame effects.
+        .word $0022, $004F, $0420, $FFFF
+
+      rsUnknown9F91DD ; 9F/91DD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Part of the Tornado effect.
+
+        jsl rlFadeBGPaletteColorRanges
+        .word <>aUnknown9F91E4
+        rts
+
+        .databank 0
+
+      aUnknown9F91E4 ; 9F/91E4
+
+        ; Part of the Tornado effect.
+        .word $0022, $004F, $0021, $FFFF
+
+      rsUnknown9F91EC ; 9F/91EC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+        ; Part of the Aura effect.
+
+        jsl rlFadeBGPaletteColorRanges
+        .word <>aUnknown9F91F3
+        rts
+
+        .databank 0
+
+      aUnknown9F91F3 ; 9F/91F3
+
+        ; Part of the Aura effect.
+        .word $0022, $004F, $0401, $FFFF
+
+      rsUnknown9F91FB ; 9F/91FB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlFadeBGPaletteColorRanges
+        .word <>aUnknown9F9202
+        rts
+
+        .databank 0
+
+      aUnknown9F9202 ; 9F/9202
+
+        .word $0022, $004F, $0421, $FFFF
+
+      rsUnknown9F920A ; 9F/920A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlFadePaletteToBlack
+        .word <>aUnknown9F9211
+        rts
+
+        .databank 0
+
+      aUnknown9F9211 ; 9F/9211
+
+        .word $01C2, $000F, $FFFF
+
+        ; 9F/9217
+
+    .endsection Unsorted9F910ASection
 
 

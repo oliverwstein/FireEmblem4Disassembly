@@ -2243,6 +2243,58 @@
   .endvirtual
 
 
+  .virtual $7F5089
+
+    ; The map battle's magic effects (bank $9F, procMapMagicEffect). An effect
+    ; number is an item ID minus Fire ($3E), so 0 is Fire and 41 BrokenStaffA;
+    ; $FFFF is none.
+
+    wMapMagicEffect .word ? ; $7F5089
+      ; The effect playing now: chosen per round from the two below
+      ; (rlSelectMapMagicEffectForRound), or set by the caller.
+    wMapMagicAttackerEffect .word ? ; $7F508B
+    wMapMagicDefenderEffect .word ? ; $7F508D
+      ; Each side's effect, filled from its weapon by rlInitMapBattleCombatants.
+    wMapMagicFlags .word ? ; $7F508F
+      ; 0: no effect this battle. Bit 0 set: effects play. The high byte says
+      ; where the units are on screen (rlUnknown9E811F): $01 near the left
+      ; edge, $02 near the right, $04 near the bottom. $8000: no effect
+      ; (no defender, or a scripted battle).
+    wMapMagicStart .word ? ; $7F5091
+      ; Set to 1 by active sprite command $10 (ACTIVE_SPRITE_START_MAP_MAGIC)
+      ; in the battler's script; rlProcMapMagicEffectCycle then runs the
+      ; effect's starter. Negative: end without one.
+    wMapMagicDone .word ? ; $7F5093
+      ; Set to 1 by the effect when it has finished; command $11
+      ; (ACTIVE_SPRITE_WAIT_MAP_MAGIC) waits for it.
+
+  .endvirtual
+
+
+  .virtual $7F5099
+
+    wMapMagicCasterPixel .word ? ; $7F5099
+      ; The acting unit's position on screen: X in the low byte, Y in the high.
+    wMapMagicTargetPixel .word ? ; $7F509B
+      ; The other unit's position, the same way (rlUnknown9E8C81).
+
+  .endvirtual
+
+
+  .virtual $7F50A1
+
+    wMapMagicProcListEnd .word ? ; $7F50A1
+    wMapMagicHDMAListEnd .word ? ; $7F50A3
+      ; Byte offsets of the $FFFF that ends each list below.
+    aMapMagicProcList .fill size(word) * 9 ; $7F50A5
+      ; Slots of the procs the effect created (rsCreateMapMagicProc), freed by
+      ; rlEndMapMagicEffect. Ends with $FFFF.
+    aMapMagicHDMAList .fill size(word) * 9 ; $7F50B7
+      ; The same for HDMA entries (rsCreateMapMagicHDMA).
+
+  .endvirtual
+
+
   .virtual $7F454A
 
     .union

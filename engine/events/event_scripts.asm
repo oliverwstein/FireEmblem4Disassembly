@@ -7753,18 +7753,18 @@
         lda aActionStructUnit1.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda #$0000
-        sta $7F508F
+        sta wMapMagicFlags
         lda wR1
         xba
         ora wR0
-        sta $7F509B
+        sta wMapMagicTargetPixel
         lda #$0027
-        sta $7F5089
+        sta wMapMagicEffect
         plx
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
-        sta $7F5091
-        sta $7F5093
+        sta wMapMagicStart
+        sta wMapMagicDone
         sta $7F4C07
         lda wGameStateRoutine1,b
         sta aProcSystem.aBody7,b,x
@@ -7812,21 +7812,21 @@
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlUnknown9EC9FD
         PROC_YIELD 16
-        PROC_CALL rlUnknown9F85A3
+        PROC_CALL rlUploadMapMagicBackgroundTiles
         PROC_YIELD 4
-        PROC_CALL rlUnknown9F85F5
+        PROC_CALL rlUploadMapMagicBackgroundTilemap
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F861F
+        PROC_CALL rlCopyMapMagicBackgroundColors
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F8020
+        PROC_CALL rlStartMapMagicEffect
         PROC_YIELD 16
         PROC_CALL rlUnknown9EED7C
         _ED5A
         PROC_YIELD 1
         PROC_CALL rlUnknown9EED84
         PROC_JUMP_IF_BITS_UNSET _ED5A, $0004
-        PROC_CALL rlUnknown9F8349
-        PROC_CALL rlUnknown9F8473
+        PROC_CALL rlEndMapMagicEffect
+        PROC_CALL rlRestoreMapMagicScreenRegisters
         PROC_YIELD 1
         PROC_CALL rlUnknown9EED9A
         PROC_YIELD 1
@@ -7851,7 +7851,7 @@
         .databank ?
 
         lda #$0001
-        sta $7F5091
+        sta wMapMagicStart
         rtl
 
         .databank 0
@@ -7865,7 +7865,7 @@
         .autsiz
         .databank ?
 
-        lda $7F5093
+        lda wMapMagicDone
         beq _ED99
         lda #<>rlProcUnknown9EECA4Cycle1
         sta aProcSystem.aHeaderOnCycle,b,x

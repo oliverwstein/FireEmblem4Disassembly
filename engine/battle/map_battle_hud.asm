@@ -1437,7 +1437,7 @@
         phy
         phx
         jsl rlSetMapBattleHUDColours
-        lda $7F508F
+        lda wMapMagicFlags
         bit #$0001
         bne _D081
         jsr rsPlaceMapBattleHPWindows
@@ -1846,7 +1846,7 @@
         sta wR1
 
         _D2C3
-        lda $7F5090
+        lda wMapMagicFlags+1
         and #$0003
         beq _D2F5
         cmp #$0001
@@ -1875,7 +1875,7 @@
 
 
         _D2F5
-        lda $7F5090
+        lda wMapMagicFlags+1
         bit #$0004
         bne _D307
         lda #$0100
@@ -3626,19 +3626,19 @@
         lda wR1
         xba
         ora wR0
-        sta $7F509B
+        sta wMapMagicTargetPixel
         lda aProcSystem.wInput3,b
         asl a
         tax
         lda aUnknown9ECF72,x
         sec
         sbc #$003E
-        sta $7F5089
+        sta wMapMagicEffect
         plx
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
-        sta $7F5091
-        sta $7F5093
+        sta wMapMagicStart
+        sta wMapMagicDone
         sta $7F4C07
         lda wGameStateRoutine1,b
         sta aProcSystem.aBody7,b,x
@@ -3710,23 +3710,23 @@
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlUnknown9EC9FD
         PROC_YIELD 16
-        PROC_CALL rlUnknown9F85A3
+        PROC_CALL rlUploadMapMagicBackgroundTiles
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F85CC
+        PROC_CALL rlUploadMapMagicBackgroundTilesRest
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F85F5
+        PROC_CALL rlUploadMapMagicBackgroundTilemap
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F861F
+        PROC_CALL rlCopyMapMagicBackgroundColors
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F8020
+        PROC_CALL rlStartMapMagicEffect
         PROC_YIELD 16
         PROC_CALL rlUnknown9ECFCD
         _CFAB
         PROC_YIELD 1
         PROC_CALL rlUnknown9ECFD5
         PROC_JUMP_IF_BITS_UNSET _CFAB, $0004
-        PROC_CALL rlUnknown9F8349
-        PROC_CALL rlUnknown9F8473
+        PROC_CALL rlEndMapMagicEffect
+        PROC_CALL rlRestoreMapMagicScreenRegisters
         PROC_YIELD 1
         PROC_CALL rlUnknown9ECFEB
         PROC_YIELD 1
@@ -3751,7 +3751,7 @@
         .databank ?
 
         lda #$0001
-        sta $7F5091
+        sta wMapMagicStart
         rtl
 
         .databank 0
@@ -3765,7 +3765,7 @@
         .autsiz
         .databank ?
 
-        lda $7F5093
+        lda wMapMagicDone
         beq _CFEA
         lda #<>rlProcUnknown9ECEDDCycle1
         sta aProcSystem.aHeaderOnCycle,b,x

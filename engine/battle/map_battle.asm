@@ -342,11 +342,11 @@
         phy
         phx
         lda #$0000
-        sta $7F508F
+        sta wMapMagicFlags
         lda wMapBattleMode
         beq _8139
         lda #$8000
-        sta $7F508F
+        sta wMapMagicFlags
         jml _8268
 
 
@@ -415,7 +415,7 @@
         cmp #$FFFF
         bne _81D9
         lda #$8000
-        sta $7F508F
+        sta wMapMagicFlags
         jml _8268
 
 
@@ -425,7 +425,7 @@
         cmp #$0003
         bne _81EE
         lda #$0001
-        sta $7F508F
+        sta wMapMagicFlags
         bra _8268
 
 
@@ -449,7 +449,7 @@
 
         _8219
         lda #$0101
-        sta $7F508F
+        sta wMapMagicFlags
         bra _8238
 
 
@@ -464,7 +464,7 @@
 
         _8231
         lda #$0201
-        sta $7F508F
+        sta wMapMagicFlags
 
         _8238
         lda wR2
@@ -476,22 +476,22 @@
         bcc _8254
 
         _8247
-        lda $7F508F
+        lda wMapMagicFlags
         ora #$0401
-        sta $7F508F
+        sta wMapMagicFlags
         bra _8268
 
 
         _8254
-        lda $7F508F
+        lda wMapMagicFlags
         ora #$0001
-        sta $7F508F
+        sta wMapMagicFlags
         bra _8268
 
 
         _8261
         lda #$0000
-        sta $7F508F
+        sta wMapMagicFlags
 
         _8268
         plx
@@ -2143,7 +2143,7 @@
 
         phx
         lda #$0000
-        sta $7F5091
+        sta wMapMagicStart
         jsr rsUnknown9E8CED
         lda aMapAction.wMapBattleAttackerYPixel
         xba
@@ -2159,8 +2159,8 @@
         cmp #$FFFF
         bne _8CBE
         lda wR0
-        sta $7F5099
-        sta $7F509B
+        sta wMapMagicCasterPixel
+        sta wMapMagicTargetPixel
         bra _8CEB
 
 
@@ -2173,17 +2173,17 @@
         and #$0001
         bne _8CDF
         lda wR0
-        sta $7F5099
+        sta wMapMagicCasterPixel
         lda wR1
-        sta $7F509B
+        sta wMapMagicTargetPixel
         bra _8CEB
 
 
         _8CDF
         lda wR1
-        sta $7F5099
+        sta wMapMagicCasterPixel
         lda wR0
-        sta $7F509B
+        sta wMapMagicTargetPixel
 
         _8CEB
         plx
@@ -2203,7 +2203,7 @@
         phx
         lda #$FFFF
         sta $7F509D
-        lda $7F508B
+        lda wMapMagicAttackerEffect
         cmp #$0021
         bne _8D23
         lda $7E4F77
@@ -3142,7 +3142,7 @@
         _92C0
         lda wR0
         jsl rlMapBattleDamageLeft
-        lda $7F508B
+        lda wMapMagicAttackerEffect
         cmp #$0010
         beq _92DB
         lda $7F4BE9
@@ -3168,7 +3168,7 @@
         _92F3
         lda wR0
         jsl rlMapBattleDamageRight
-        lda $7F508D
+        lda wMapMagicDefenderEffect
         cmp #$0010
         beq _930E
         lda $7F4BE9
@@ -5853,7 +5853,7 @@
         lda $7F4C11
         ora $7F4C13
         bne _A7A4
-        lda $7F508F
+        lda wMapMagicFlags
         beq _A804
         jsl rlUnknown9EA850
         bcc _A804
@@ -5995,12 +5995,12 @@
         .databank ?
 
         phx
-        lda $7F508B
+        lda wMapMagicAttackerEffect
         tax
         lda aUnknown9EA873,x
         and #$00FF
         bne _A86D
-        lda $7F508D
+        lda wMapMagicDefenderEffect
         tax
         lda aUnknown9EA873,x
         and #$00FF
@@ -6125,13 +6125,13 @@
 
         _A914
         lda #$0001
-        sta $7F5091
+        sta wMapMagicStart
         bra _A924
 
 
         _A91D
         lda #$FFFF
-        sta $7F5091
+        sta wMapMagicStart
 
         _A924
         rtl
@@ -6219,7 +6219,7 @@
         .autsiz
         .databank ?
 
-        lda $7F5093
+        lda wMapMagicDone
         beq _A9B4
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
@@ -6426,7 +6426,7 @@
 
 
         _AB71
-        lda $7F508B
+        lda wMapMagicAttackerEffect
         tax
         lda aUnknown9EABBD,x
         and #$00FF
@@ -6446,7 +6446,7 @@
 
 
         _AB9A
-        lda $7F508D
+        lda wMapMagicDefenderEffect
         tax
         lda aUnknown9EABBD,x
         and #$00FF
@@ -6457,7 +6457,7 @@
 
         _ABB0
         lda #$8000
-        sta $7F508F
+        sta wMapMagicFlags
         sec
         plx
         rtl
@@ -6609,7 +6609,7 @@
         asl a
         asl a
         ora #$0101
-        sta $7F508F
+        sta wMapMagicFlags
         rtl
 
         .databank 0
@@ -6889,7 +6889,7 @@
         and #$FFFD
         and #$FFFB
         sta aProcSystem.aHeaderBitfield,b,x
-        lda $7F5089
+        lda wMapMagicEffect
         cmp #$0020
         bne _AF77
         jsl rlUnknown9EB01B
@@ -7002,7 +7002,7 @@
         lda wR1
         xba
         ora wR0
-        sta $7F509B
+        sta wMapMagicTargetPixel
         plx
         ply
         rtl
@@ -7036,7 +7036,7 @@
 
         PROC_CALL rlUnknown9EB08E
         PROC_YIELD 1
-        PROC_CALL rlUnknown9F8020
+        PROC_CALL rlStartMapMagicEffect
         PROC_YIELD 1
         PROC_CALL rlUnknown9EB0B2
         PROC_SET_ONCYCLE rlProcUnknown9EAF98Cycle2
@@ -7196,7 +7196,7 @@
         .databank ?
 
         lda #$0001
-        sta $7F5091
+        sta wMapMagicStart
         rtl
 
         .databank 0
@@ -7390,7 +7390,7 @@
 
 
         _B17B
-        lda $7F5089
+        lda wMapMagicEffect
         cmp #$FFFF
         beq _B19B
         lda #1,s
@@ -7484,7 +7484,7 @@
 
         phy
         phx
-        lda $7F5089
+        lda wMapMagicEffect
         cmp #$FFFF
         bne _B249
         lda #$0095
@@ -7529,7 +7529,7 @@
         bne _B2AE
         lda #$FFFE
         sta aMapAction.wMapBattleRoundCounter
-        lda $7F5089
+        lda wMapMagicEffect
         cmp #$FFFF
         bne _B2B7
         ldx #$0000
@@ -7712,7 +7712,7 @@
         .databank ?
 
         phx
-        lda $7F5099
+        lda wMapMagicCasterPixel
         and #$00FF
         jsl rlGetSoundPanFromXPixel
         ora #$0032
@@ -8831,8 +8831,8 @@
         sta aMapAction.wMapBattleActiveSpriteSyncFlag
         sta aMapAction.wMapBattleActiveSpriteAckFlag
         sta aMapAction.wMapBattlePhaseFlag
-        sta $7F5091
-        sta $7F5093
+        sta wMapMagicStart
+        sta wMapMagicDone
         sta aMapAction.wMapBattleRoundCounter
         sta aMapAction.wMapBattlePaletteRestoreFlag
         sta aMapAction.wMapBattleLevelUpFrameCounter
@@ -9184,9 +9184,9 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9F84DD
-        jsl rlUnknown9F850B
-        jsl rlUnknown9F8575
+        jsl rlQueueMapMagicBackgroundTiles
+        jsl rlQueueMapMagicBackgroundTilemap
+        jsl rlQueueMapMagicBackgroundPalette
         lda #<>rlUnknown9ECAD1
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
@@ -9472,28 +9472,28 @@
         PROC_JUMP_IF_BITS_UNSET _CBB2, $0004
         _CBBF
         PROC_CALL rlUnknown9E8C81
-        PROC_CALL rlUnknown9F8900
+        PROC_CALL rlSelectMapMagicEffectForRound
         PROC_JUMP_IF_BITS_UNSET _CC15, $0002
         PROC_SET_ONCYCLE rlUnknown9EC9FD
         PROC_YIELD 16
-        PROC_CALL rlUnknown9F85A3
+        PROC_CALL rlUploadMapMagicBackgroundTiles
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F85CC
+        PROC_CALL rlUploadMapMagicBackgroundTilesRest
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F85F5
+        PROC_CALL rlUploadMapMagicBackgroundTilemap
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F861F
+        PROC_CALL rlCopyMapMagicBackgroundColors
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F86BF
+        PROC_CALL rlLoadMapMagicSprites
         PROC_JUMP_IF_BITS_UNSET _CC10, $0002
         _CBFC
         PROC_YIELD 1
-        PROC_CALL rlUnknown9F86B0
+        PROC_CALL rlCheckMapMagicDecompressionDone
         PROC_JUMP_IF_BITS_UNSET _CBFC, $0001
-        PROC_CALL rlUnknown9F8677
+        PROC_CALL rlUploadMapMagicSpriteTiles
         PROC_YIELD 2
         _CC10
-        PROC_CALL rlUnknown9F8020
+        PROC_CALL rlStartMapMagicEffect
         _CC15
         PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle6
         PROC_YIELD 1
@@ -9521,8 +9521,8 @@
         PROC_CALL rlUnknown9EA9A5
         PROC_JUMP_IF_BITS_UNSET _CC5F, $0004
         _CC6C
-        PROC_CALL rlUnknown9F8349
-        PROC_CALL rlUnknown9F8473
+        PROC_CALL rlEndMapMagicEffect
+        PROC_CALL rlRestoreMapMagicScreenRegisters
         PROC_CALL rlUnknown9ECA60
         PROC_JUMP_IF_BITS_UNSET _CC98, $0002
         PROC_YIELD 40

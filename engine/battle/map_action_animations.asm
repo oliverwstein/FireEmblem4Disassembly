@@ -116,9 +116,9 @@
         jsl rlUnknown9E8D25
         lda wR1
         jsl rlUnknown9EAC49
-        lda $7F508F
+        lda wMapMagicFlags
         ora #$8000
-        sta $7F508F
+        sta wMapMagicFlags
         lda wR0
         and #$00FF
         sta wR0
@@ -128,8 +128,8 @@
         lda wR1
         xba
         ora wR0
-        sta $7F5099
-        sta $7F509B
+        sta wMapMagicCasterPixel
+        sta wMapMagicTargetPixel
         lda $7E4EA9
         sta aActionStructUnit1
         lda $7E4EAF
@@ -301,7 +301,7 @@
       aProcVillageRaidCode ; 9E/9BE1
 
         PROC_YIELD 1
-        PROC_CALL rlUnknown9F86B0
+        PROC_CALL rlCheckMapMagicDecompressionDone
         PROC_JUMP_IF_BITS_UNSET aProcVillageRaidCode, $0001
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlProcUnknown9E9A43Cycle2
@@ -317,11 +317,11 @@
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlUnknown9EC9FD
         PROC_YIELD 8
-        PROC_CALL rlUnknown9F85A3
+        PROC_CALL rlUploadMapMagicBackgroundTiles
         PROC_YIELD 4
-        PROC_CALL rlUnknown9F85F5
+        PROC_CALL rlUploadMapMagicBackgroundTilemap
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F861F
+        PROC_CALL rlCopyMapMagicBackgroundColors
         PROC_YIELD 2
         _9C2F
         PROC_YIELD 8
@@ -1051,8 +1051,8 @@
         sta aMapAction.wUnknown7F455A
         sta aMapAction.wMapBattleAttackVariant
         sta wMapBattleMode
-        sta $7F5091
-        sta $7F5093
+        sta wMapMagicStart
+        sta wMapMagicDone
         sta $4C11,b
         sta $4C13,b
         sta $7F4C07
@@ -1094,7 +1094,7 @@
         tax
         jsl rlUnknown9E8D25
         lda #$8000
-        sta $7F508F
+        sta wMapMagicFlags
         lda wR0
         and #$00FF
         sta wR0
@@ -1104,8 +1104,8 @@
         lda wR1
         xba
         ora wR0
-        sta $7F5099
-        sta $7F509B
+        sta wMapMagicCasterPixel
+        sta wMapMagicTargetPixel
         lda #$8100
         sta @l $0015E5
         lda #$841B
@@ -1145,7 +1145,7 @@
         .autsiz
         .databank ?
 
-        lda $7F5091
+        lda wMapMagicStart
         beq _D1AD
         lda #<>rlUnknown9ED1BB
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -1170,7 +1170,7 @@
         .autsiz
         .databank ?
 
-        lda $7F5093
+        lda wMapMagicDone
         beq _D1D0
         lda #<>rlUnknown9ED1DE
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -1236,7 +1236,7 @@
       aProcReturnHomeCode ; 9E/D1F4
 
         PROC_YIELD 1
-        PROC_CALL rlUnknown9F86B0
+        PROC_CALL rlCheckMapMagicDecompressionDone
         PROC_JUMP_IF_BITS_UNSET aProcReturnHomeCode, $0001
         PROC_SET_ONCYCLE rlUnknown9ED337
         PROC_YIELD 56
@@ -1251,24 +1251,24 @@
         PROC_YIELD 2
         PROC_SET_ONCYCLE rlUnknown9EC9FD
         PROC_YIELD 16
-        PROC_CALL rlUnknown9F85A3
+        PROC_CALL rlUploadMapMagicBackgroundTiles
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F85CC
+        PROC_CALL rlUploadMapMagicBackgroundTilesRest
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F85F5
+        PROC_CALL rlUploadMapMagicBackgroundTilemap
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F861F
+        PROC_CALL rlCopyMapMagicBackgroundColors
         PROC_YIELD 2
-        PROC_CALL rlUnknown9F86BF
+        PROC_CALL rlLoadMapMagicSprites
         PROC_JUMP_IF_BITS_UNSET _D269, $0002
         _D255
         PROC_YIELD 1
-        PROC_CALL rlUnknown9F86B0
+        PROC_CALL rlCheckMapMagicDecompressionDone
         PROC_JUMP_IF_BITS_UNSET _D255, $0001
-        PROC_CALL rlUnknown9F8677
+        PROC_CALL rlUploadMapMagicSpriteTiles
         PROC_YIELD 2
         _D269
-        PROC_CALL rlUnknown9F8020
+        PROC_CALL rlStartMapMagicEffect
         PROC_YIELD 16
         _D270
         PROC_YIELD 1
@@ -1281,8 +1281,8 @@
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _D270, $0001
         PROC_YIELD 4
-        PROC_CALL rlUnknown9F8349
-        PROC_CALL rlUnknown9F8473
+        PROC_CALL rlEndMapMagicEffect
+        PROC_CALL rlRestoreMapMagicScreenRegisters
         PROC_YIELD 1
         PROC_CALL rlUnknown9ED3C1
         PROC_CALL rlLoadCursorSpriteGraphics
@@ -1402,7 +1402,7 @@
         sta aMapAction.wMapBattleActiveSpriteSyncFlag
         sta aMapAction.wMapBattleActiveSpriteAckFlag
         sta aMapAction.wMapBattlePhaseFlag
-        sta $7F5091
+        sta wMapMagicStart
         sta aProcSystem.aHeaderBitfield,b,x
 
         lda #$FFFF
@@ -1701,7 +1701,7 @@
 
         -
         PROC_YIELD 1
-        PROC_CALL rlUnknown9F86B0
+        PROC_CALL rlCheckMapMagicDecompressionDone
         PROC_JUMP_IF_BITS_UNSET -, $0001
 
         PROC_SET_ONCYCLE rlProcUnknown9ED441Cycle3

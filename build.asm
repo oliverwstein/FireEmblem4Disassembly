@@ -207,7 +207,7 @@
   .include "engine/unsorted/bank96.asm"
   .include "engine/unsorted/bank97.asm"
   .include "engine/unsorted/bank9B.asm"
-  .include "engine/unsorted/bank9F.asm"
+  .include "engine/battle/map_magic_effects.asm"
 
   .include "events/ChapterPrologue.asm"
   .include "events/Chapter01.asm"

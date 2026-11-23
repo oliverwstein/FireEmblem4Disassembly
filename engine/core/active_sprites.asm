@@ -1868,9 +1868,9 @@
         .databank ?
 
         lda #1
-        sta $7F5091
+        sta wMapMagicStart
         lda #0
-        sta $7F5093
+        sta wMapMagicDone
         rts
 
         .databank 0
@@ -1881,11 +1881,11 @@
         .autsiz
         .databank ?
 
-        lda $7F5093
+        lda wMapMagicDone
         beq +
 
         lda #0
-        sta $7F5091
+        sta wMapMagicStart
         lda #1
         sta aMapAction.wMapBattleActiveSpriteAckFlag
         bra ++
