@@ -131,6 +131,8 @@ def render(rom, labels, starts, names=None, stop=None):
             lines.append('        ACTIVE_SPRITE_END')
         elif op == 0x02:
             lines.append(f'        ACTIVE_SPRITE_JUMP_WHILE_COUNTER {name(bank | word(b))}')
+        elif op == 0x0E:
+            lines.append(f'        ACTIVE_SPRITE_TABLE_FRAME {b[0]}, {b[1]}')
         elif op == 0x10:
             lines.append('        ACTIVE_SPRITE_START_MAP_MAGIC')
         elif op == 0x11:

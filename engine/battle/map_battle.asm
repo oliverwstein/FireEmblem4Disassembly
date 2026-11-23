@@ -10444,10 +10444,27 @@
           .word _D900_Frame19 - aUnknown9ED900
 
         _D900_Script
-          .byte $0E, $02, $00, $0E, $02, $01, $0E, $02, $02, $0E, $02, $03, $0E, $02, $04, $0E
-          .byte $02, $05, $0E, $02, $06, $0E, $02, $07, $0E, $02, $08, $0E, $02, $09, $0E, $02
-          .byte $0A, $0E, $02, $0B, $0E, $02, $0C, $0E, $02, $0D, $0E, $02, $0E, $0E, $02, $0F
-          .byte $0E, $02, $10, $0E, $02, $11, $0E, $02, $12, $0E, $02, $13, $01
+          ACTIVE_SPRITE_TABLE_FRAME 2, 0
+          ACTIVE_SPRITE_TABLE_FRAME 2, 1
+          ACTIVE_SPRITE_TABLE_FRAME 2, 2
+          ACTIVE_SPRITE_TABLE_FRAME 2, 3
+          ACTIVE_SPRITE_TABLE_FRAME 2, 4
+          ACTIVE_SPRITE_TABLE_FRAME 2, 5
+          ACTIVE_SPRITE_TABLE_FRAME 2, 6
+          ACTIVE_SPRITE_TABLE_FRAME 2, 7
+          ACTIVE_SPRITE_TABLE_FRAME 2, 8
+          ACTIVE_SPRITE_TABLE_FRAME 2, 9
+          ACTIVE_SPRITE_TABLE_FRAME 2, 10
+          ACTIVE_SPRITE_TABLE_FRAME 2, 11
+          ACTIVE_SPRITE_TABLE_FRAME 2, 12
+          ACTIVE_SPRITE_TABLE_FRAME 2, 13
+          ACTIVE_SPRITE_TABLE_FRAME 2, 14
+          ACTIVE_SPRITE_TABLE_FRAME 2, 15
+          ACTIVE_SPRITE_TABLE_FRAME 2, 16
+          ACTIVE_SPRITE_TABLE_FRAME 2, 17
+          ACTIVE_SPRITE_TABLE_FRAME 2, 18
+          ACTIVE_SPRITE_TABLE_FRAME 2, 19
+          ACTIVE_SPRITE_END
 
       aUnknown9EDAE0 ; 9E/DAE0
         .word <>rlUnknown9EDAE6, <>rlUnknown9EDAE6, <>aUnknown9ED900._D900_Script
@@ -12318,85 +12335,449 @@
 
       aUnknown9EEA05 ; 9E/EA05
 
-        .byte $6F, $00, $85, $00, $01, $00, $FC, $01, $FC, $40, $20, $01, $00, $FC, $01, $FC
-        .byte $50, $20, $01, $00, $F8, $C3, $F8, $41, $20, $01, $00, $F8, $C3, $F8, $43, $20
-        .byte $01, $00, $F8, $C3, $F8, $45, $20, $02, $00, $F2, $01, $02, $40, $20, $F1, $01
-        .byte $FB, $57, $20, $02, $00, $F1, $01, $F5, $40, $20, $F5, $01, $F0, $47, $20, $02
-        .byte $00, $FA, $01, $EF, $40, $20, $01, $00, $F2, $57, $20, $02, $00, $06, $00, $F7
-        .byte $40, $20, $08, $00, $FD, $47, $20, $02, $00, $06, $00, $05, $40, $20, $FF, $01
-        .byte $08, $57, $20, $02, $00, $F0, $00, $F0, $FF, $20, $F0, $00, $F0, $FF, $20, $04
-        .byte $00, $0B, $00, $12, $00, $19, $00, $20, $00, $27, $00, $33, $00, $3F, $00, $4B
-        .byte $00, $57, $00, $63, $00, $0E, $05, $00, $0E, $05, $01, $0E, $05, $02, $0E, $05
-        .byte $03, $0E, $05, $04, $0E, $FF, $0A, $0E, $FF, $0A, $0E, $FF, $0A, $0E, $FF, $0A
-        .byte $01
+        ; A frame table for script command $0E (ACTIVE_SPRITE_TABLE_FRAME):
+        ; the offsets of the frame list and of the first script, then the frames.
+
+        .word _Table - aUnknown9EEA05
+        .word aUnknown9EEA8A - aUnknown9EEA05
+
+        _Frame00
+          .word 1 ; sprite count
+          .structSpriteEntry (  -4,   -4), $00, SpriteSmall, $040, 2, 0, false, false
+
+        _Frame01
+          .word 1 ; sprite count
+          .structSpriteEntry (  -4,   -4), $00, SpriteSmall, $050, 2, 0, false, false
+
+        _Frame02
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $041, 2, 0, false, false
+
+        _Frame03
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $043, 2, 0, false, false
+
+        _Frame04
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $045, 2, 0, false, false
+
+        _Frame05
+          .word 2 ; sprite count
+          .structSpriteEntry ( -14,    2), $00, SpriteSmall, $040, 2, 0, false, false
+          .structSpriteEntry ( -15,   -5), $00, SpriteSmall, $057, 2, 0, false, false
+
+        _Frame06
+          .word 2 ; sprite count
+          .structSpriteEntry ( -15,  -11), $00, SpriteSmall, $040, 2, 0, false, false
+          .structSpriteEntry ( -11,  -16), $00, SpriteSmall, $047, 2, 0, false, false
+
+        _Frame07
+          .word 2 ; sprite count
+          .structSpriteEntry (  -6,  -17), $00, SpriteSmall, $040, 2, 0, false, false
+          .structSpriteEntry (   1,  -14), $00, SpriteSmall, $057, 2, 0, false, false
+
+        _Frame08
+          .word 2 ; sprite count
+          .structSpriteEntry (   6,   -9), $00, SpriteSmall, $040, 2, 0, false, false
+          .structSpriteEntry (   8,   -3), $00, SpriteSmall, $047, 2, 0, false, false
+
+        _Frame09
+          .word 2 ; sprite count
+          .structSpriteEntry (   6,    5), $00, SpriteSmall, $040, 2, 0, false, false
+          .structSpriteEntry (  -1,    8), $00, SpriteSmall, $057, 2, 0, false, false
+
+        _Frame10
+          .word 2 ; sprite count
+          .structSpriteEntry ( 240,  -16), $00, SpriteSmall, $0FF, 2, 0, false, false
+          .structSpriteEntry ( 240,  -16), $00, SpriteSmall, $0FF, 2, 0, false, false
+
+        _Table
+          .word _Frame00 - aUnknown9EEA05
+          .word _Frame01 - aUnknown9EEA05
+          .word _Frame02 - aUnknown9EEA05
+          .word _Frame03 - aUnknown9EEA05
+          .word _Frame04 - aUnknown9EEA05
+          .word _Frame05 - aUnknown9EEA05
+          .word _Frame06 - aUnknown9EEA05
+          .word _Frame07 - aUnknown9EEA05
+          .word _Frame08 - aUnknown9EEA05
+          .word _Frame09 - aUnknown9EEA05
+          .word _Frame10 - aUnknown9EEA05
+
+      aUnknown9EEA8A ; 9E/EA8A
+
+        ACTIVE_SPRITE_TABLE_FRAME 5, 0
+        ACTIVE_SPRITE_TABLE_FRAME 5, 1
+        ACTIVE_SPRITE_TABLE_FRAME 5, 2
+        ACTIVE_SPRITE_TABLE_FRAME 5, 3
+        ACTIVE_SPRITE_TABLE_FRAME 5, 4
+        ACTIVE_SPRITE_TABLE_FRAME 255, 10
+        ACTIVE_SPRITE_TABLE_FRAME 255, 10
+        ACTIVE_SPRITE_TABLE_FRAME 255, 10
+        ACTIVE_SPRITE_TABLE_FRAME 255, 10
+        ACTIVE_SPRITE_END
 
       aUnknown9EEAA6 ; 9E/EAA6
 
-        .byte $0E, $04, $00, $0E, $04, $05, $0E, $04, $06, $0E, $04, $07, $0E, $04, $08, $0E
-        .byte $04, $09, $0E, $04, $05, $0E, $04, $06, $0E, $04, $07, $0E, $04, $08, $0E, $04
-        .byte $09, $01
+        ACTIVE_SPRITE_TABLE_FRAME 4, 0
+        ACTIVE_SPRITE_TABLE_FRAME 4, 5
+        ACTIVE_SPRITE_TABLE_FRAME 4, 6
+        ACTIVE_SPRITE_TABLE_FRAME 4, 7
+        ACTIVE_SPRITE_TABLE_FRAME 4, 8
+        ACTIVE_SPRITE_TABLE_FRAME 4, 9
+        ACTIVE_SPRITE_TABLE_FRAME 4, 5
+        ACTIVE_SPRITE_TABLE_FRAME 4, 6
+        ACTIVE_SPRITE_TABLE_FRAME 4, 7
+        ACTIVE_SPRITE_TABLE_FRAME 4, 8
+        ACTIVE_SPRITE_TABLE_FRAME 4, 9
+        ACTIVE_SPRITE_END
 
-      aUnknown9EEAC8 ; 9E/EAC8
+      aUnknown9EEAC8 .dstruct structActiveSpriteInfo, rlUnknown9EEAD4, rlUnknown9EEAD4, aUnknown9EEA8A ; 9E/EAC8
 
-        .byte $D4, $EA, $D4, $EA, $8A, $EA, $D4, $EA, $D4, $EA, $A6, $EA, $6B
+        ; Unreferenced.
+      aUnknown9EEACE .dstruct structActiveSpriteInfo, rlUnknown9EEAD4, rlUnknown9EEAD4, aUnknown9EEAA6 ; 9E/EACE
+
+      rlUnknown9EEAD4 ; 9E/EAD4
+
+        ; The definitions' init and on-cycle routine: does nothing.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
 
       aUnknown9EEAD5 ; 9E/EAD5
 
-        .byte $3C, $00, $4C, $00, $01, $00, $F8, $C3, $F8, $40, $20, $01, $00, $F8, $C3, $F8
-        .byte $42, $20, $01, $00, $F8, $C3, $F8, $44, $20, $01, $00, $FB, $01, $FC, $46, $20
-        .byte $01, $00, $FB, $01, $FC, $56, $20, $01, $00, $F8, $C3, $F8, $47, $20, $01, $00
-        .byte $F8, $C3, $F8, $49, $20, $01, $00, $F8, $C3, $F8, $4B, $20, $04, $00, $0B, $00
-        .byte $12, $00, $19, $00, $20, $00, $27, $00, $2E, $00, $35, $00, $0E, $02, $00, $0E
-        .byte $02, $01, $0E, $02, $02, $15, $21, $EB
+        ; A frame table for script command $0E (ACTIVE_SPRITE_TABLE_FRAME):
+        ; the offsets of the frame list and of the first script, then the frames.
+
+        .word _Table - aUnknown9EEAD5
+        .word aUnknown9EEB21 - aUnknown9EEAD5
+
+        _Frame00
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $040, 2, 0, false, false
+
+        _Frame01
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $042, 2, 0, false, false
+
+        _Frame02
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $044, 2, 0, false, false
+
+        _Frame03
+          .word 1 ; sprite count
+          .structSpriteEntry (  -5,   -4), $00, SpriteSmall, $046, 2, 0, false, false
+
+        _Frame04
+          .word 1 ; sprite count
+          .structSpriteEntry (  -5,   -4), $00, SpriteSmall, $056, 2, 0, false, false
+
+        _Frame05
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $047, 2, 0, false, false
+
+        _Frame06
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $049, 2, 0, false, false
+
+        _Frame07
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $04B, 2, 0, false, false
+
+        _Table
+          .word _Frame00 - aUnknown9EEAD5
+          .word _Frame01 - aUnknown9EEAD5
+          .word _Frame02 - aUnknown9EEAD5
+          .word _Frame03 - aUnknown9EEAD5
+          .word _Frame04 - aUnknown9EEAD5
+          .word _Frame05 - aUnknown9EEAD5
+          .word _Frame06 - aUnknown9EEAD5
+          .word _Frame07 - aUnknown9EEAD5
+
+      aUnknown9EEB21 ; 9E/EB21
+
+        ACTIVE_SPRITE_TABLE_FRAME 2, 0
+        ACTIVE_SPRITE_TABLE_FRAME 2, 1
+        ACTIVE_SPRITE_TABLE_FRAME 2, 2
+        ACTIVE_SPRITE_JUMP aUnknown9EEB21
 
       aUnknown9EEB2D ; 9E/EB2D
 
-        .byte $0E, $05, $03, $0E, $03, $04, $0E, $03, $05, $0E, $05, $06, $0E, $05, $07, $01
+        ACTIVE_SPRITE_TABLE_FRAME 5, 3
+        ACTIVE_SPRITE_TABLE_FRAME 3, 4
+        ACTIVE_SPRITE_TABLE_FRAME 3, 5
+        ACTIVE_SPRITE_TABLE_FRAME 5, 6
+        ACTIVE_SPRITE_TABLE_FRAME 5, 7
+        ACTIVE_SPRITE_END
 
-      aUnknown9EEB3D ; 9E/EB3D
+      aUnknown9EEB3D .dstruct structActiveSpriteInfo, rlUnknown9EEB49, rlUnknown9EEB49, aUnknown9EEB21 ; 9E/EB3D
 
-        .byte $49, $EB, $49, $EB, $21, $EB, $49, $EB, $49, $EB, $2D, $EB, $6B
+        ; Unreferenced.
+      aUnknown9EEB43 .dstruct structActiveSpriteInfo, rlUnknown9EEB49, rlUnknown9EEB49, aUnknown9EEB2D ; 9E/EB43
+
+      rlUnknown9EEB49 ; 9E/EB49
+
+        ; The definitions' init and on-cycle routine: does nothing.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
 
       aUnknown9EEB4A ; 9E/EB4A
 
-        .byte $3C, $00, $4C, $00, $01, $00, $F8, $C3, $F8, $40, $20, $01, $00, $F8, $C3, $F8
-        .byte $42, $20, $01, $00, $F8, $C3, $F8, $44, $20, $01, $00, $F8, $C3, $F8, $46, $20
-        .byte $01, $00, $FC, $01, $FD, $48, $20, $01, $00, $F8, $C3, $F8, $49, $20, $01, $00
-        .byte $F8, $C3, $F8, $4B, $20, $01, $00, $F8, $C3, $F8, $4D, $20, $04, $00, $0B, $00
-        .byte $12, $00, $19, $00, $20, $00, $27, $00, $2E, $00, $35, $00, $0E, $01, $00, $0E
-        .byte $01, $01, $0E, $01, $02, $0E, $01, $03, $15, $96, $EB
+        ; A frame table for script command $0E (ACTIVE_SPRITE_TABLE_FRAME):
+        ; the offsets of the frame list and of the first script, then the frames.
+
+        .word _Table - aUnknown9EEB4A
+        .word aUnknown9EEB96 - aUnknown9EEB4A
+
+        _Frame00
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $040, 2, 0, false, false
+
+        _Frame01
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $042, 2, 0, false, false
+
+        _Frame02
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $044, 2, 0, false, false
+
+        _Frame03
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $046, 2, 0, false, false
+
+        _Frame04
+          .word 1 ; sprite count
+          .structSpriteEntry (  -4,   -3), $00, SpriteSmall, $048, 2, 0, false, false
+
+        _Frame05
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $049, 2, 0, false, false
+
+        _Frame06
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $04B, 2, 0, false, false
+
+        _Frame07
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $04D, 2, 0, false, false
+
+        _Table
+          .word _Frame00 - aUnknown9EEB4A
+          .word _Frame01 - aUnknown9EEB4A
+          .word _Frame02 - aUnknown9EEB4A
+          .word _Frame03 - aUnknown9EEB4A
+          .word _Frame04 - aUnknown9EEB4A
+          .word _Frame05 - aUnknown9EEB4A
+          .word _Frame06 - aUnknown9EEB4A
+          .word _Frame07 - aUnknown9EEB4A
+
+      aUnknown9EEB96 ; 9E/EB96
+
+        ACTIVE_SPRITE_TABLE_FRAME 1, 0
+        ACTIVE_SPRITE_TABLE_FRAME 1, 1
+        ACTIVE_SPRITE_TABLE_FRAME 1, 2
+        ACTIVE_SPRITE_TABLE_FRAME 1, 3
+        ACTIVE_SPRITE_JUMP aUnknown9EEB96
 
       aUnknown9EEBA5 ; 9E/EBA5
 
-        .byte $0E, $05, $04, $0E, $05, $05, $0E, $05, $06, $0E, $05, $07, $01
+        ACTIVE_SPRITE_TABLE_FRAME 5, 4
+        ACTIVE_SPRITE_TABLE_FRAME 5, 5
+        ACTIVE_SPRITE_TABLE_FRAME 5, 6
+        ACTIVE_SPRITE_TABLE_FRAME 5, 7
+        ACTIVE_SPRITE_END
 
-      aUnknown9EEBB2 ; 9E/EBB2
+      aUnknown9EEBB2 .dstruct structActiveSpriteInfo, rlUnknown9EEBB8, rlUnknown9EEBB8, aUnknown9EEB96 ; 9E/EBB2
 
-        .byte $B8, $EB, $B8, $EB, $96, $EB, $6B
+      rlUnknown9EEBB8 ; 9E/EBB8
+
+        ; The definitions' init and on-cycle routine: does nothing.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
 
       aUnknown9EEBB9 ; 9E/EBB9
 
-        .byte $35, $00, $43, $00, $01, $00, $F8, $C3, $F8, $40, $20, $01, $00, $F8, $C3, $F8
-        .byte $42, $20, $01, $00, $F8, $C3, $F8, $44, $20, $01, $00, $FC, $01, $FD, $46, $20
-        .byte $01, $00, $FC, $01, $FC, $56, $20, $01, $00, $F8, $C3, $F8, $47, $20, $01, $00
-        .byte $F8, $C3, $F8, $49, $20, $04, $00, $0B, $00, $12, $00, $19, $00, $20, $00, $27
-        .byte $00, $2E, $00, $0E, $01, $00, $0E, $01, $01, $0E, $01, $02, $15, $FC, $EB, $0E
-        .byte $03, $03, $0E, $03, $04, $0E, $03, $05, $0E, $03, $06, $01
+        ; A frame table for script command $0E (ACTIVE_SPRITE_TABLE_FRAME):
+        ; the offsets of the frame list and of the first script, then the frames.
+
+        .word _Table - aUnknown9EEBB9
+        .word aUnknown9EEBFC - aUnknown9EEBB9
+
+        _Frame00
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $040, 2, 0, false, false
+
+        _Frame01
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $042, 2, 0, false, false
+
+        _Frame02
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $044, 2, 0, false, false
+
+        _Frame03
+          .word 1 ; sprite count
+          .structSpriteEntry (  -4,   -3), $00, SpriteSmall, $046, 2, 0, false, false
+
+        _Frame04
+          .word 1 ; sprite count
+          .structSpriteEntry (  -4,   -4), $00, SpriteSmall, $056, 2, 0, false, false
+
+        _Frame05
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $047, 2, 0, false, false
+
+        _Frame06
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $049, 2, 0, false, false
+
+        _Table
+          .word _Frame00 - aUnknown9EEBB9
+          .word _Frame01 - aUnknown9EEBB9
+          .word _Frame02 - aUnknown9EEBB9
+          .word _Frame03 - aUnknown9EEBB9
+          .word _Frame04 - aUnknown9EEBB9
+          .word _Frame05 - aUnknown9EEBB9
+          .word _Frame06 - aUnknown9EEBB9
+
+      aUnknown9EEBFC ; 9E/EBFC
+
+        ACTIVE_SPRITE_TABLE_FRAME 1, 0
+        ACTIVE_SPRITE_TABLE_FRAME 1, 1
+        ACTIVE_SPRITE_TABLE_FRAME 1, 2
+        ACTIVE_SPRITE_JUMP aUnknown9EEBFC
+
+      aUnknown9EEC08 ; 9E/EC08
+        ; Unreferenced.
+
+        ACTIVE_SPRITE_TABLE_FRAME 3, 3
+        ACTIVE_SPRITE_TABLE_FRAME 3, 4
+        ACTIVE_SPRITE_TABLE_FRAME 3, 5
+        ACTIVE_SPRITE_TABLE_FRAME 3, 6
+        ACTIVE_SPRITE_END
 
       aUnknown9EEC15 ; 9E/EC15
 
-        .byte $0E, $04, $03, $0E, $05, $04, $0E, $06, $05, $0E, $03, $06, $01
+        ACTIVE_SPRITE_TABLE_FRAME 4, 3
+        ACTIVE_SPRITE_TABLE_FRAME 5, 4
+        ACTIVE_SPRITE_TABLE_FRAME 6, 5
+        ACTIVE_SPRITE_TABLE_FRAME 3, 6
+        ACTIVE_SPRITE_END
 
-      aUnknown9EEC22 ; 9E/EC22
+      aUnknown9EEC22 .dstruct structActiveSpriteInfo, rlUnknown9EEC28, rlUnknown9EEC28, aUnknown9EEBFC ; 9E/EC22
 
-        .byte $28, $EC, $28, $EC, $FC, $EB, $6B, $35, $00, $43, $00, $01, $00, $F8, $C3, $F8
-        .byte $48, $20, $01, $00, $F8, $C3, $F8, $44, $20, $01, $00, $F8, $C3, $F8, $46, $20
-        .byte $01, $00, $F8, $C3, $F8, $40, $20, $01, $00, $F8, $C3, $F8, $42, $20, $01, $00
-        .byte $F8, $C3, $F8, $4A, $20, $01, $00, $F8, $C3, $F8, $4C, $20, $04, $00, $0B, $00
-        .byte $12, $00, $19, $00, $20, $00, $27, $00, $2E, $00, $0E, $04, $00, $0E, $04, $01
-        .byte $0E, $04, $00, $0E, $04, $02, $15, $6C, $EC, $0E, $04, $03, $0E, $04, $04, $0E
-        .byte $04, $05, $0E, $04, $06, $01, $94, $EC, $94, $EC, $6C, $EC, $94, $EC, $94, $EC
-        .byte $7B, $EC, $6B
+      rlUnknown9EEC28 ; 9E/EC28
+
+        ; The definitions' init and on-cycle routine: does nothing.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+      aUnknown9EEC29 ; 9E/EC29
+
+        ; A frame table for script command $0E (ACTIVE_SPRITE_TABLE_FRAME):
+        ; the offsets of the frame list and of the first script, then the frames.
+
+        .word _Table - aUnknown9EEC29
+        .word aUnknown9EEC6C - aUnknown9EEC29
+
+        _Frame00
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $048, 2, 0, false, false
+
+        _Frame01
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $044, 2, 0, false, false
+
+        _Frame02
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $046, 2, 0, false, false
+
+        _Frame03
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $040, 2, 0, false, false
+
+        _Frame04
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $042, 2, 0, false, false
+
+        _Frame05
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $04A, 2, 0, false, false
+
+        _Frame06
+          .word 1 ; sprite count
+          .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $04C, 2, 0, false, false
+
+        _Table
+          .word _Frame00 - aUnknown9EEC29
+          .word _Frame01 - aUnknown9EEC29
+          .word _Frame02 - aUnknown9EEC29
+          .word _Frame03 - aUnknown9EEC29
+          .word _Frame04 - aUnknown9EEC29
+          .word _Frame05 - aUnknown9EEC29
+          .word _Frame06 - aUnknown9EEC29
+
+      aUnknown9EEC6C ; 9E/EC6C
+
+        ACTIVE_SPRITE_TABLE_FRAME 4, 0
+        ACTIVE_SPRITE_TABLE_FRAME 4, 1
+        ACTIVE_SPRITE_TABLE_FRAME 4, 0
+        ACTIVE_SPRITE_TABLE_FRAME 4, 2
+        ACTIVE_SPRITE_JUMP aUnknown9EEC6C
+
+      aUnknown9EEC7B ; 9E/EC7B
+        ; Unreferenced.
+
+        ACTIVE_SPRITE_TABLE_FRAME 4, 3
+        ACTIVE_SPRITE_TABLE_FRAME 4, 4
+        ACTIVE_SPRITE_TABLE_FRAME 4, 5
+        ACTIVE_SPRITE_TABLE_FRAME 4, 6
+        ACTIVE_SPRITE_END
+
+      aUnknown9EEC88 .dstruct structActiveSpriteInfo, rlUnknown9EEC94, rlUnknown9EEC94, aUnknown9EEC6C ; 9E/EC88
+
+        ; Unreferenced.
+      aUnknown9EEC8E .dstruct structActiveSpriteInfo, rlUnknown9EEC94, rlUnknown9EEC94, aUnknown9EEC7B ; 9E/EC8E
+
+      rlUnknown9EEC94 ; 9E/EC94
+
+        ; The definitions' init and on-cycle routine: does nothing.
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
 
     .endsection Unsorted9EE2BESection
 

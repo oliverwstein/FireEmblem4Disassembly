@@ -41,6 +41,14 @@
       .word <>\Position
     .endsegment
 
+    ACTIVE_SPRITE_TABLE_FRAME .segment Duration, Index
+      ; $0E: draw frame Index of the frame table at $7F4598 ($7F459B when
+      ; the sprite's aUnknown001320 is set) for Duration frames. A frame
+      ; table starts with the offset of its list of frame offsets; all
+      ; offsets count from the table's start.
+      .byte $0E, \Duration, \Index
+    .endsegment
+
     ACTIVE_SPRITE_START_MAP_MAGIC .segment
       ; $10: start the map battle's magic effect ($7F5091 = 1, $7F5093 = 0).
       .byte $10

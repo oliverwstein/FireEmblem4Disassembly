@@ -2801,10 +2801,26 @@
           .word _DE89_Frame10 - aUnknown9EDE89
 
         _DE89_Script
-          .byte $0E, $04, $05, $0E, $02, $00, $0E, $04, $01, $0E, $04, $02, $1D, $2F, $0E, $03
-          .byte $02, $0E, $02, $03, $0E, $03, $04, $0E, $07, $05, $0E, $30, $04, $1D, $30, $0E
-          .byte $04, $06, $0E, $04, $07, $0E, $02, $08, $0E, $02, $09, $0E, $02, $08, $0E, $02
-          .byte $09, $0E, $20, $08, $0E, $03, $0A, $01
+          ACTIVE_SPRITE_TABLE_FRAME 4, 5
+          ACTIVE_SPRITE_TABLE_FRAME 2, 0
+          ACTIVE_SPRITE_TABLE_FRAME 4, 1
+          ACTIVE_SPRITE_TABLE_FRAME 4, 2
+          ACTIVE_SPRITE_SOUND $2F
+          ACTIVE_SPRITE_TABLE_FRAME 3, 2
+          ACTIVE_SPRITE_TABLE_FRAME 2, 3
+          ACTIVE_SPRITE_TABLE_FRAME 3, 4
+          ACTIVE_SPRITE_TABLE_FRAME 7, 5
+          ACTIVE_SPRITE_TABLE_FRAME 48, 4
+          ACTIVE_SPRITE_SOUND $30
+          ACTIVE_SPRITE_TABLE_FRAME 4, 6
+          ACTIVE_SPRITE_TABLE_FRAME 4, 7
+          ACTIVE_SPRITE_TABLE_FRAME 2, 8
+          ACTIVE_SPRITE_TABLE_FRAME 2, 9
+          ACTIVE_SPRITE_TABLE_FRAME 2, 8
+          ACTIVE_SPRITE_TABLE_FRAME 2, 9
+          ACTIVE_SPRITE_TABLE_FRAME 32, 8
+          ACTIVE_SPRITE_TABLE_FRAME 3, 10
+          ACTIVE_SPRITE_END
 
       aUnknown9EDF78 ; 9E/DF78
         .word <>rlUnknown9EDF7E, <>rlUnknown9EDF7E, <>aUnknown9EDE89._DE89_Script
