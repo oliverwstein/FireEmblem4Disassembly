@@ -201,7 +201,7 @@
       .byte $E8, \Arg
     .endsegment
 
-  ; The animation lookup (aBattleAnimationLookup, read by rlUnknown95A2C8).
+  ; The animation lookup (aBattleAnimationLookup, read by rlBattleAnimationLookUp).
 
   ; Weapon categories: the high nibble of an item's byte in the table at
   ; $99/83B9 (rlBattleSceneGetWeaponAnimStyle). The ranged ones (Javelin; Hand Axe and

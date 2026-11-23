@@ -76,9 +76,9 @@
 
         phx
         lda wBattleSceneFlags
-        bit #BattleSceneFlagSolo
+        bit #BattleSceneFlagDance
         bne _8338
-        jsl rlUnknown9697FA
+        jsl rlBattleSceneGetFirstStriker
         bcs _8320
         ldx #$0043
         lda aBattleSceneCombatant1.Weapon,b
@@ -90,7 +90,7 @@
         lda aBattleSceneCombatant2.Weapon,b
 
         _8326
-        jsl rlUnknown9696AA
+        jsl rlBattleSceneGetWeaponPlacement
         bcs _833D
         cmp #$0000
         beq _8338
@@ -172,7 +172,7 @@
         jsr rsBattleSceneLoadPalette
         lda aBattleSceneCombatant1.Character,b
         clc
-        jsl rlUnknown95A167
+        jsl rlBattleSceneLoadCharacterColors
 
         _83A9
         lda aBattleSceneCombatant2.Character,b
@@ -205,7 +205,7 @@
         jsr rsBattleSceneLoadPalette
         lda aBattleSceneCombatant2.Character,b
         sec
-        jsl rlUnknown95A167
+        jsl rlBattleSceneLoadCharacterColors
 
         _83FF
         rts
@@ -570,10 +570,10 @@
         bcc _8647
         pla
         pha
-        jsl rlUnknown9697FA
+        jsl rlBattleSceneGetFirstStriker
         bcs _864A
         lda aBattleSceneCombatant1.Weapon,b
-        jsl rlUnknown958678
+        jsl rlBattleSceneIsSupportStaff
         bcc _864A
 
         _8647
@@ -617,12 +617,14 @@
 
         ; 95/8678
 
-      rlUnknown958678 ; 95/8678
+      rlBattleSceneIsSupportStaff ; 95/8678
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = item ID: carry set for a staff listed at aBattleSceneSupportStaves (Heal to Rescue, Restore, Valkyrie: not Charm or the status staves).
 
         phx
         pha
@@ -630,7 +632,7 @@
         ldx #$0000
 
         _867F
-        lda aUnknown998F86,x
+        lda aBattleSceneSupportStaves,x
         cmp #$FF
         beq _8691
         cmp #1,s
@@ -1199,7 +1201,7 @@
 
         _8969
         lda wBattleSceneFlags
-        bit #BattleSceneFlagSolo
+        bit #BattleSceneFlagDance
         beq _8999
         lda #$0100
         sta wBattleAnimationX,b
@@ -1217,7 +1219,7 @@
 
 
         _8999
-        jsl rlUnknown9697FA
+        jsl rlBattleSceneGetFirstStriker
         bcs _8A0B
         clc
         ldx #$0000
@@ -1238,7 +1240,7 @@
         cmp #$0080
         beq _89EE
         ldx #$0000
-        jsl rlUnknown969820
+        jsl rlBattleSceneCheckSwordAtRange
         bcs _89EE
         bra _89EE
 
@@ -1286,7 +1288,7 @@
         _8A25
         sta wBattleAnimationX,b
         ldx #$0043
-        jsl rlUnknown969820
+        jsl rlBattleSceneCheckSwordAtRange
         bcs _8A4F
         bra _8A4F
 
@@ -1351,7 +1353,7 @@
         jsl rlBattleSceneQueueIdleAction
 
         _8AB1
-        jsl rlUnknown969665
+        jsl rlBattleSceneApplyPlacement
         plx
         rts
 
@@ -2134,12 +2136,14 @@
       .al
       .xl
 
-      rlUnknown95A167 ; 95/A167
+      rlBattleSceneLoadCharacterColors ; 95/A167
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = character, carry set for combatant 2: a character listed in aBattleSceneCharacterColorIndices gets three colors of aBattleSceneCharacterColors written over colors 12-14 of its sprite palette (OAM palette 0, or 4 for combatant 2).
 
         phx
         phy
@@ -2148,7 +2152,7 @@
         ldx #$0000
 
         _A16E
-        lda aUnknown998DF8,x
+        lda aBattleSceneCharacterColorIndices,x
         cmp #$FFFF
         beq _A1C1
         cmp #1,s
@@ -2161,7 +2165,7 @@
 
         _A180
         pla
-        lda aUnknown998DF8+2,x
+        lda aBattleSceneCharacterColorIndices+2,x
         and #$00FF
         asl a
         pha
@@ -2172,21 +2176,21 @@
         pla
         plp
         bcs _A1AA
-        lda aUnknownE0017C,x
+        lda aBattleSceneCharacterColors,x
         sta $0218,b
-        lda aUnknownE0017C+2,x
+        lda aBattleSceneCharacterColors+2,x
         sta $021A,b
-        lda aUnknownE0017C+4,x
+        lda aBattleSceneCharacterColors+4,x
         sta $021C,b
         bra _A1C3
 
 
         _A1AA
-        lda aUnknownE0017C,x
+        lda aBattleSceneCharacterColors,x
         sta $0298,b
-        lda aUnknownE0017C+2,x
+        lda aBattleSceneCharacterColors+2,x
         sta $029A,b
-        lda aUnknownE0017C+4,x
+        lda aBattleSceneCharacterColors+4,x
         sta $029C,b
         bra _A1C3
 
@@ -2307,12 +2311,14 @@
 
         ; 95/A247
 
-      rlUnknown95A247 ; 95/A247
+      rlBattleSceneLookUpAnimations ; 95/A247
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The four animation IDs of each combatant ($7FE1B6-$7FE1B9, then copied to $7FE1BA-$7FE1BD for combatant 2) from its class, category, character and gender (rlBattleAnimationLookUp). A combatant with no record of its weapon category gets AnimCategoryAny.
 
         sep #$20
         lda aBattleSceneCombatant2.Class,b
@@ -2328,7 +2334,7 @@
         lda aBattleSceneCombatant2.Gender,b
         sta $7FE1B9
         rep #$20
-        jsl rlUnknown95A2C8
+        jsl rlBattleAnimationLookUp
         bcc _A27F
         sep #$20
         lda aBattleSceneCombatant2.AnimStyle,b
@@ -2356,7 +2362,7 @@
         lda aBattleSceneCombatant1.Gender,b
         sta $7FE1B9
         rep #$20
-        jsl rlUnknown95A2C8
+        jsl rlBattleAnimationLookUp
         bcc _A2C7
         sep #$20
         lda aBattleSceneCombatant1.AnimStyle,b
@@ -2372,16 +2378,18 @@
 
         ; 95/A2C8
 
-      rlUnknown95A2C8 ; 95/A2C8
+      rlBattleAnimationLookUp ; 95/A2C8
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; $7FE1B6-$7FE1B9 = class, category, character, gender in; the four IDs out. Takes the first record of aBattleAnimationLookup that matches class, gender, character (AnimAnyCharacter matches any) and category (AnimCategoryAny matches any); carry clear on a full match. Carry set otherwise, with the last record of the class that matched furthest (or the first record when the class has none). The dance replaces it all (rlBattleAnimationCheckDance).
+
         phx
         phy
-        jsl rlUnknown95A3C1
+        jsl rlBattleAnimationCheckDance
         bcc _A2D5
         clc
         jml _A3BC
@@ -2509,12 +2517,14 @@
 
         ; 95/A3C1
 
-      rlUnknown95A3C1 ; 95/A3C1
+      rlBattleAnimationCheckDance ; 95/A3C1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A Dancer (class $32) in the dance scene (BattleSceneFlagDance): the dance's animation IDs ($5E, $66, $46, $2E) and carry set; carry clear otherwise.
 
         phx
         phy
@@ -2523,7 +2533,7 @@
         cmp #$0032
         bne _A3D8
         lda wBattleSceneFlags
-        bit #BattleSceneFlagSolo
+        bit #BattleSceneFlagDance
         bne _A3DB
 
         _A3D8
@@ -2561,12 +2571,14 @@
       .al
       .xl
 
-      rlUnknown969665 ; 96/9665
+      rlBattleSceneApplyPlacement ; 96/9665
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Places the combatants by the first striker's weapon (rlBattleSceneGetWeaponPlacement): runs the mode's routine of aBattleScenePlacements with Y = the other combatant. Battle type 2 always uses mode 3.
 
         phx
         phy
@@ -2579,7 +2591,7 @@
 
 
         _9677
-        jsl rlUnknown9697FA
+        jsl rlBattleSceneGetFirstStriker
         bcs _9685
         ldx #$0043
         lda aBattleSceneCombatant1.Weapon,b
@@ -2591,7 +2603,7 @@
         lda aBattleSceneCombatant2.Weapon,b
 
         _968B
-        jsl rlUnknown9696AA
+        jsl rlBattleSceneGetWeaponPlacement
         bcs _969D
         sta wR0
 
@@ -2601,7 +2613,7 @@
         lda wR0
         asl a
         tax
-        jsr (aUnknown9696A0,x)
+        jsr (aBattleScenePlacements,x)
         plx
 
         _969D
@@ -2621,14 +2633,14 @@
       .al
       .xl
 
-      aUnknown9696A0 ; 96/96A0
+      aBattleScenePlacements ; 96/96A0
 
-        ; Jump table of rlUnknown969665.
-        .word <>rsUnknown9696E6
-        .word <>rsUnknown969707
-        .word <>rsUnknown969727
-        .word <>rsUnknown969735
-        .word <>rsUnknown969765
+        ; Jump table of rlBattleSceneApplyPlacement.
+        .word <>rsBattleScenePlaceStrikerAlone
+        .word <>rsBattleScenePlaceTogether
+        .word <>rsBattleSceneHideOther
+        .word <>rsBattleScenePlaceTogetherOnGround
+        .word <>rsBattleScenePlaceNone
 
     .endsection Table9696A0Section
 
@@ -2638,19 +2650,21 @@
       .al
       .xl
 
-      rlUnknown9696AA ; 96/96AA
+      rlBattleSceneGetWeaponPlacement ; 96/96AA
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = item ID: its placement mode from aBattleSceneWeaponPlacements (the second at wBattleDistance 3 or more), carry clear; carry set for a weapon not listed or mode $FF.
+
         phx
         pha
         ldx #$0000
 
         _96AF
-        lda aUnknown9982E3,x
+        lda aBattleSceneWeaponPlacements,x
         inc x
         inc x
         inc x
@@ -2662,12 +2676,12 @@
         lda wBattleDistance
         cmp #$0003
         bcs _96D1
-        lda aBattleCharacterPieces+52,x
+        lda aBattleSceneWeaponPlacements+1-3,x
         bra _96D5
 
 
         _96D1
-        lda aBattleCharacterPieces+53,x
+        lda aBattleSceneWeaponPlacements+2-3,x
 
         _96D5
         and #$00FF
@@ -2698,12 +2712,14 @@
       .al
       .xl
 
-      rsUnknown9696E6 ; 96/96E6
+      rsBattleScenePlaceStrikerAlone ; 96/96E6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Mode 0 (long range tomes, ballistae, staves from afar): hides the other combatant and puts both at the center ($100, $FF), the camera at $80.
 
         tyx
         sep #$20
@@ -2731,12 +2747,14 @@
       .al
       .xl
 
-      rsUnknown969707 ; 96/9707
+      rsBattleScenePlaceTogether ; 96/9707
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Mode 1 (Fortify): both at the center, the camera at $80, and BattleSceneFlagSolo2.
 
         tyx
         lda #$0100
@@ -2762,12 +2780,14 @@
       .al
       .xl
 
-      rsUnknown969727 ; 96/9727
+      rsBattleSceneHideOther ; 96/9727
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Mode 2 (Rescue, Valkyrie): hides the other combatant.
 
         tyx
         sep #$20
@@ -2789,12 +2809,14 @@
       .al
       .xl
 
-      rsUnknown969735 ; 96/9735
+      rsBattleScenePlaceTogetherOnGround ; 96/9735
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Mode 3 (battle type 2): hides the other combatant and puts both at the center on the ground (Y anchor $7000), the camera at $80.
 
         tyx
         sep #$20
@@ -2827,12 +2849,14 @@
       .al
       .xl
 
-      rsUnknown969765 ; 96/9765
+      rsBattleScenePlaceNone ; 96/9765
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Mode 4 (magic and status swords): nothing.
 
         rts
 
@@ -2848,13 +2872,15 @@
       .al
       .xl
 
-      rlUnknown969766 ; 96/9766
+      rlBattleSceneHideCombatant ; 96/9766
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Found by tools/sweep.py. Hides combatant X (bit 6 of bBattleAnimationCombatantFlags).
 
         sep #$20
         lda bBattleAnimationCombatantFlags,b,x
@@ -2867,7 +2893,7 @@
 
         ; 96/9773
 
-      rlUnknown969773 ; 96/9773
+      rlBattleSceneScriptHideAttacker ; 96/9773
 
         ; Found by tools/sweep.py.
         .al
@@ -2875,10 +2901,12 @@
         .autsiz
         .databank ?
 
+        ; Found by tools/sweep.py. Script routine: hides the attacker.
+
         phx
         phy
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown969766
+        jsl rlBattleSceneHideCombatant
         jsl rlBattleSceneEndScriptRoutine
         ply
         plx
@@ -2888,13 +2916,15 @@
 
         ; 96/9783
 
-      rlUnknown969783 ; 96/9783
+      rlBattleSceneShowOtherCombatant ; 96/9783
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Found by tools/sweep.py. Shows the combatant other than X.
 
         phx
         cpx #$0000
@@ -2919,7 +2949,7 @@
 
         ; 96/979F
 
-      rlUnknown96979F ; 96/979F
+      rlBattleSceneScriptShowDefender ; 96/979F
 
         ; Found by tools/sweep.py.
         .al
@@ -2927,10 +2957,12 @@
         .autsiz
         .databank ?
 
+        ; Found by tools/sweep.py. Script routine: shows the defender.
+
         phx
         phy
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown969783
+        jsl rlBattleSceneShowOtherCombatant
         jsl rlBattleSceneEndScriptRoutine
         ply
         plx
@@ -2940,13 +2972,15 @@
 
         ; 96/97AF
 
-      rlUnknown9697AF ; 96/97AF
+      rlBattleSceneHideOtherCombatant ; 96/97AF
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Found by tools/sweep.py. Hides the combatant other than X.
 
         phx
         cpx #$0000
@@ -2971,7 +3005,7 @@
 
         ; 96/97CB
 
-      rlUnknown9697CB ; 96/97CB
+      rlBattleSceneScriptHideDefender ; 96/97CB
 
         ; Found by tools/sweep.py.
         .al
@@ -2979,10 +3013,12 @@
         .autsiz
         .databank ?
 
+        ; Found by tools/sweep.py. Script routine: hides the defender.
+
         phx
         phy
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown9697AF
+        jsl rlBattleSceneHideOtherCombatant
         jsl rlBattleSceneEndScriptRoutine
         ply
         plx
@@ -2992,13 +3028,15 @@
 
         ; 96/97DB
 
-      rlUnknown9697DB ; 96/97DB
+      rlBattleSceneShowCombatant ; 96/97DB
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Found by tools/sweep.py. Shows combatant X.
 
         phx
         sep #$20
@@ -3013,7 +3051,7 @@
 
         ; 96/97EA
 
-      rlUnknown9697EA ; 96/97EA
+      rlBattleSceneScriptShowAttacker ; 96/97EA
 
         ; Found by tools/sweep.py.
         .al
@@ -3021,10 +3059,12 @@
         .autsiz
         .databank ?
 
+        ; Found by tools/sweep.py. Script routine: shows the attacker.
+
         phx
         phy
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown9697DB
+        jsl rlBattleSceneShowCombatant
         jsl rlBattleSceneEndScriptRoutine
         ply
         plx
@@ -3040,12 +3080,14 @@
       .al
       .xl
 
-      rlUnknown9697FA ; 96/97FA
+      rlBattleSceneGetFirstStriker ; 96/97FA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry = bit 0 of the first strike in aBattleRoundsData (skipping skill entries): set when combatant 2 strikes first. Carry clear when there is none.
 
         phx
         ldx #$0000
@@ -3083,12 +3125,14 @@
 
         ; 96/9820
 
-      rlUnknown969820 ; 96/9820
+      rlBattleSceneCheckSwordAtRange ; 96/9820
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = 0 or $43: carry set when the combatant's weapon has placement mode 4 (a magic or status sword) and wBattleDistance is 2 or more.
 
         phx
         phy
@@ -3102,7 +3146,7 @@
         lda aBattleSceneCombatant2.Weapon,b
 
         _982F
-        jsl rlUnknown9696AA
+        jsl rlBattleSceneGetWeaponPlacement
         bcs _9846
         cmp #$0004
         bne _9846
@@ -3125,12 +3169,14 @@
 
         ; 96/984A
 
-      rlUnknown96984A ; 96/984A
+      rlBattleSceneResetArenaBreak ; 96/984A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears $7FE187 and $7FE188 (the break between arena bouts) and BattleSceneRoundArenaNextBout.
 
         sep #$20
         lda #$00

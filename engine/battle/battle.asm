@@ -2824,7 +2824,7 @@
         cmp #8
         bne +
 
-          jsr rsUnknown84EA37
+          jsr rsActionStructDance
           bra _End
 
         +
@@ -3758,7 +3758,7 @@
 
         .databank 0
 
-      rsUnknown84EA37 ; 84/EA37
+      rsActionStructDance ; 84/EA37
 
         .al
         .autsiz

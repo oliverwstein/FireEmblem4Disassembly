@@ -1026,7 +1026,7 @@
 
     bBattleAnimationStateFlags      .byte ? ; $000AF3 ; $01 active, $02 paused, $04 busy, $08 airborne, $20 cleared by leap, $80 slot enabled
     bBattleAnimationFacingFlags     .byte ? ; $000AF4 ; $06 variant mask, $08 flip/dir, $60 cleared on sequence start
-    bBattleAnimationCombatantFlags  .byte ? ; $000AF5 ; $40 flip/palette flag, $80 set by leap
+    bBattleAnimationCombatantFlags  .byte ? ; $000AF5 ; bits 0-1 the action variant, $04 a magic sword strike, bits 3-5 its spell row, $40 hidden (not drawn), $80 set by leap
     bBattleAnimationMotionFlags     .byte ? ; $000AF6 ; $01 free X motion
     bBattleAnimationRole            .byte ? ; $000AF7 ; 1 cast, 2/3 attacker/defender
 

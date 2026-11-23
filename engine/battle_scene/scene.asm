@@ -323,7 +323,7 @@
         jsl rlUnknown96DD39
         jsl rlUnknown96EB02
         jsl rlUnknown96EBC9
-        jsl rlUnknown96984A
+        jsl rlBattleSceneResetArenaBreak
         jsl rlBattleSceneClearMagicSwordFlags
         jsl rlUnknown96F7BF
         jsl rlBattleSceneStopHUDShake
@@ -351,7 +351,7 @@
         jsl rlBattleSceneScriptClearLoading
         jsl rlUnknown96BD74
         jsl rlBattleSceneSetAnimStyles
-        jsl rlUnknown95A247
+        jsl rlBattleSceneLookUpAnimations
         jsl rlBattleAnimationSetBodyIndices
         jsl rlUnknown96957D
         jsl rlUnknown95A414
@@ -1045,7 +1045,7 @@
         cmp #$0008
         bne _A593
         lda wBattleSceneFlags
-        ora #BattleSceneFlagSolo
+        ora #BattleSceneFlagDance
         ora #BattleSceneFlagSolo2
         sta wBattleSceneFlags
 

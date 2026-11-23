@@ -1,6 +1,6 @@
 ; Battle animations: the graphics of the battle scenes, by class.
 ;
-; rlUnknown95A247 picks four animation IDs for each combatant from
+; rlBattleSceneLookUpAnimations picks four animation IDs for each combatant from
 ; aBattleAnimationLookup (206 records: class, weapon category, character,
 ; gender, then the four IDs) into $7FE1B6-$7FE1B9 and $7FE1BA-$7FE1BD. The second ID selects the combatant's sheet here.
 
@@ -970,13 +970,13 @@
 
       aBattleAnimationLookup ; 97/88C9
 
-        ; The four animation IDs of each combatant (rlUnknown95A2C8, for both
-        ; through rlUnknown95A247). The search takes the first record of the
+        ; The four animation IDs of each combatant (rlBattleAnimationLookUp, for both
+        ; through rlBattleSceneLookUpAnimations). The search takes the first record of the
         ; combatant's class whose gender, character (unless AnimAnyCharacter)
         ; and category (unless the combatant's is AnimCategoryAny) match. When a
         ; class has records but none matches, it keeps the previous record
         ; (_A378, which reads this table less 4); a class with no records gets
-        ; the first record's IDs. rlUnknown95A3C1 replaces the search for a
+        ; the first record's IDs. rlBattleAnimationCheckDance replaces the search for a
         ; dancing Dancer.
 
         .structBattleAnimationLookupEntry Cavalier, AnimCategorySword, AnimAnyCharacter, GenderMale, $00, $00, $00, $00

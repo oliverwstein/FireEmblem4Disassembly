@@ -5057,7 +5057,7 @@
       aBattleAnimationSequencesDancerDance ; 9B/BD7A
 
         ; Sequence data of entry 45 of aBattleAnimationFrameTables, used by: Dancer (dancing,
-        ; rlUnknown95A3C1). Frames: aBattleAnimationFramesDancerDance.
+        ; rlBattleAnimationCheckDance). Frames: aBattleAnimationFramesDancerDance.
 
         .word _Index - aBattleAnimationSequencesDancerDance, _Records - aBattleAnimationSequencesDancerDance
 

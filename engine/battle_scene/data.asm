@@ -227,8 +227,8 @@
         .long rlUnknown968F50 ; $0E
         .long rlUnknown96DCC8 ; $0F
         .long rlUnknown969163 ; $10
-        .long rlUnknown969773 ; $11
-        .long rlUnknown96979F ; $12
+        .long rlBattleSceneScriptHideAttacker ; $11
+        .long rlBattleSceneScriptShowDefender ; $12
         .long rlUnknown968E8F ; $13
         .long rlUnknown968EE9 ; $14
         .long rlUnknown968EC7 ; $15
@@ -248,7 +248,7 @@
         .long rlUnknown95E877 ; $23
         .long rlUnknown96F356 ; $24
         .long rlUnknown96F41A ; $25
-        .long rlUnknown9697CB ; $26
+        .long rlBattleSceneScriptHideDefender ; $26
         .long rlUnknown96F431 ; $27
         .long rlUnknown96F448 ; $28
         .long rlUnknown96F45F ; $29
@@ -265,7 +265,7 @@
         .long rlUnknown96F89B ; $34
         .long rlUnknown96FADA ; $35
         .long rlUnknown96FBF9 ; $36
-        .long rlUnknown9697EA ; $37
+        .long rlBattleSceneScriptShowAttacker ; $37
         .long rlUnknown96FCDB ; $38
         .long rlUnknown96FB39 ; $39
         .long rlUnknown96FD54 ; $3A
@@ -2089,15 +2089,42 @@
       .al
       .xl
 
-      aUnknown9982E3 ; 99/82E3
+      aBattleSceneWeaponPlacements ; 99/82E3
 
-        ; Read by rlUnknown9696AA.
+        ; Read by rlBattleSceneGetWeaponPlacement: how the scene places the
+        ; combatants for the first striker's weapon (rlBattleSceneApplyPlacement).
+        ; Three bytes per weapon: item ID, the mode, and the mode at wBattleDistance 3
+        ; or more; $FF is none. Modes index aBattleScenePlacements: 0 the striker
+        ; alone at the center (the other hidden), 1 both at the center, 2 the other
+        ; hidden, 3 both at the center on the ground (battle type 2 only), 4 nothing
+        ; (a magic or status sword; rlBattleSceneCheckSwordAtRange). $FFFF ends the
+        ; list.
 
-        .word $0409, $0B04, $0404, $040C, $0F04, $0404, $0410, $1104
-        .word $0404, $0412, $1304, $0404, $003A, $3B00, $0000, $003C
-        .word $3D00, $0000, $0042, $4700, $0000, $004C, $5200, $0000
-        .word $FF5B, $5C00, $0101, $025F, $6102, $00FF, $0262, $6302
-        .word $00FF, $FF64, $6500, $00FF, $FFFF
+        .byte $09, $04, $04 ; BerserkSword
+        .byte $0B, $04, $04 ; SilenceSword
+        .byte $0C, $04, $04 ; SleepSword
+        .byte $0F, $04, $04 ; FireSword
+        .byte $10, $04, $04 ; EarthSword
+        .byte $11, $04, $04 ; ThunderSword
+        .byte $12, $04, $04 ; WindSword
+        .byte $13, $04, $04 ; LightBrand
+        .byte $3A, $00, $00 ; Ballista
+        .byte $3B, $00, $00 ; IronBallista
+        .byte $3C, $00, $00 ; KillerBallista
+        .byte $3D, $00, $00 ; GreatBallista
+        .byte $42, $00, $00 ; Meteor
+        .byte $47, $00, $00 ; Bolting
+        .byte $4C, $00, $00 ; Blizzard
+        .byte $52, $00, $00 ; Fenrir
+        .byte $5B, $FF, $00 ; PhysicStaff
+        .byte $5C, $01, $01 ; Fortify
+        .byte $5F, $02, $02 ; RescueStaff
+        .byte $61, $FF, $00 ; RestoreStaff
+        .byte $62, $02, $02 ; ValkyrieStaff
+        .byte $63, $FF, $00 ; SilenceStaff
+        .byte $64, $FF, $00 ; SleepStaff
+        .byte $65, $FF, $00 ; BerserkStaff
+        .word $FFFF
 
         ; 99/832D
 
@@ -2609,9 +2636,9 @@
         .byte $02, $02, $02, $02, $02, $03, $03, $03, $03, $05, $05, $05, $07, $07, $09, $09
         .byte $09, $09, $07, $07, $05, $05, $05, $03, $03, $03, $03, $02, $02, $02, $02, $02
 
-      aUnknown998DF8 ; 99/8DF8
+      aBattleSceneCharacterColorIndices ; 99/8DF8
 
-        ; Read by rlUnknown95A167 (2-byte ID + 1-byte index, $FFFF terminated).
+        ; Read by rlBattleSceneLoadCharacterColors (2-byte ID + 1-byte index, $FFFF terminated).
 
         .word $0001
         .byte $01
@@ -2824,9 +2851,9 @@
 
         ; 99/8F86
 
-      aUnknown998F86 ; 99/8F86
+      aBattleSceneSupportStaves ; 99/8F86
 
-        ; Read by rlUnknown958678.
+        ; Read by rlBattleSceneIsSupportStaff.
 
         .byte $58, $59, $5A, $5B, $5C, $5D, $5E, $5F, $61, $62, $FF
 
@@ -2896,9 +2923,9 @@
 
         ; E0/017C
 
-      aUnknownE0017C ; E0/017C
+      aBattleSceneCharacterColors ; E0/017C
 
-        ; Read by rlUnknown95A167.
+        ; Read by rlBattleSceneLoadCharacterColors.
 
         .word $0CC7, $1D2E, $2170, $3CC1, $758A, $7B93, $00C6, $0231
         .word $03DE, $00E3, $01C3, $43D3, $0009, $0092, $015C, $1CE7

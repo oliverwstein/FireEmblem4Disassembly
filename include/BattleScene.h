@@ -21,8 +21,8 @@
 
     BattleSceneFlagMelee          = bits($0001) ; battle distance under 2, not battle type 2
     BattleSceneFlagBattleType2    = bits($0002) ; wBattleType 2: no quotes, no foreground
-    BattleSceneFlagSolo           = bits($0004) ; aActionStructUnit1.Unknown is 8: both stand at the center
-    BattleSceneFlagSolo2          = bits($0008) ; set with BattleSceneFlagSolo
+    BattleSceneFlagDance          = bits($0004) ; aActionStructUnit1.Unknown is 8, the dance: both stand at the center
+    BattleSceneFlagSolo2          = bits($0008) ; the dance and Fortify (rsBattleScenePlaceTogether): both at the center, HDMA entries 3 and 6
     BattleSceneFlagSea            = bits($0010)
     BattleSceneFlagRiver          = bits($0020)
     BattleSceneFlagHolyWeapon2    = bits($0040) ; combatant 2 carries a holy weapon; cleared at its first round

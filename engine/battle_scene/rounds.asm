@@ -372,7 +372,7 @@
         jsl rlBattleAnimationClearSignals
         jsl rlBattleSceneCheckPaletteSwap
         lda wBattleSceneFlags
-        bit #BattleSceneFlagSolo
+        bit #BattleSceneFlagDance
         bne _A92D
         lda [lR18],y
         bit #$0002
@@ -381,7 +381,7 @@
 
 
         _A92D
-        jsl rlBattleSceneQueueSoloAction
+        jsl rlBattleSceneQueueDanceAction
         jml _AA53
 
 
@@ -1216,14 +1216,14 @@
 
         ; 95/ADEE
 
-      rlBattleSceneQueueSoloAction ; 95/ADEE
+      rlBattleSceneQueueDanceAction ; 95/ADEE
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Action 1, for a scene with BattleSceneSolo set (aActionStructUnit1.Unknown 8: both combatants stand at the center).
+        ; Action 1, the dance (BattleSceneFlagDance: aActionStructUnit1.Unknown 8, both combatants at the center).
 
         lda #$0001
         jsl rlBattleAnimationQueueAction
