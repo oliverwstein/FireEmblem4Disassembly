@@ -12976,12 +12976,12 @@
         ACTIVE_SPRITE_TABLE_FRAME 4, 6
         ACTIVE_SPRITE_END
 
-      aUnknown9EEC88 .dstruct structActiveSpriteInfo, rlUnknownScriptedCritSpriteNothing, rlUnknownScriptedCritSpriteNothing, aUnknown9EEC6C ; 9E/EC88
+      aUnknown9EEC88 .dstruct structActiveSpriteInfo, rlUnusedScriptedCritSpriteNothing, rlUnusedScriptedCritSpriteNothing, aUnknown9EEC6C ; 9E/EC88
 
         ; Unreferenced.
-      aUnknown9EEC8E .dstruct structActiveSpriteInfo, rlUnknownScriptedCritSpriteNothing, rlUnknownScriptedCritSpriteNothing, aUnknown9EEC7B ; 9E/EC8E
+      aUnknown9EEC8E .dstruct structActiveSpriteInfo, rlUnusedScriptedCritSpriteNothing, rlUnusedScriptedCritSpriteNothing, aUnknown9EEC7B ; 9E/EC8E
 
-      rlUnknownScriptedCritSpriteNothing ; 9E/EC94
+      rlUnusedScriptedCritSpriteNothing ; 9E/EC94
 
         ; The definitions' init and on-cycle routine: does nothing.
 
