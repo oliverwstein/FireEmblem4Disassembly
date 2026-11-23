@@ -102,9 +102,9 @@
       .al
       .xl
 
-      rlUnknown9E8000 ; 9E/8000
+      rlASMCStartDemoMapBattle ; 9E/8000
 
-        ; Nothing in the build reaches this. Runs rlStartMapBattleAnimation with $7F4C87 = 1.
+        ; The opening's demo battles (aOpeningEvent): runs rlStartMapBattleAnimation with wMapBattleMode 1.
 
         .al
         .xl
@@ -113,7 +113,7 @@
 
         phx
         lda #$0001
-        sta $7F4C87
+        sta wMapBattleMode
         jml rlStartMapBattleAnimation._8014
 
         .databank 0
@@ -135,14 +135,14 @@
         .autsiz
         .databank ?
 
-        ; Creates procMapBattle in the first free proc slot from 7 down. Entered here with $7F4C87 = 0 (a real battle); rlUnknown9E8000 enters at _8014 with 1, rlStartSoloMapBattleAnimation and rlStartScriptedMapBattleAnimation with 2.
+        ; Creates procMapBattle in the first free proc slot from 7 down. Entered here with wMapBattleMode = 0 (a real battle); rlASMCStartDemoMapBattle enters at _8014 with 1, rlStartSoloMapBattleAnimation and rlStartScriptedMapBattleAnimation with 2.
 
-        ; Entered here with $7F4C87 = 0, at rlUnknown9E8000 with 1, and by
+        ; Entered here with wMapBattleMode = 0, at rlASMCStartDemoMapBattle with 1, and by
         ; rlStartSoloMapBattleAnimation and rlStartScriptedMapBattleAnimation at _8014 with 2.
 
         phx
         lda #$0000
-        sta $7F4C87
+        sta wMapBattleMode
         _8014
 
         lda #(`procMapBattle)<<8
@@ -343,7 +343,7 @@
         phx
         lda #$0000
         sta $7F508F
-        lda $7F4C87
+        lda wMapBattleMode
         beq _8139
         lda #$8000
         sta $7F508F
@@ -1872,7 +1872,7 @@
         and #$00FF
         cmp #$0003
         beq _8A2D
-        lda $7F4C87
+        lda wMapBattleMode
         and #$0001
         bne _8A35
         lda aActionStructUnit1
@@ -1886,7 +1886,7 @@
         jsl rlUnknown9EAC0E
 
         _8A35
-        lda $7F4C87
+        lda wMapBattleMode
         bne _8A51
         lda aActionStructUnit1
         tax
@@ -2029,7 +2029,7 @@
         jsl rlUnknown9EAC0E
 
         _8B7C
-        lda $7F4C87
+        lda wMapBattleMode
         bne _8B98
         lda aActionStructUnit2
         tax
@@ -2669,7 +2669,7 @@
         and #$00FF
         cmp #$0003
         beq _9007
-        lda $7F4C87
+        lda wMapBattleMode
         bne _900B
         jsl rlResumeMapTileAnimation
         bra _900B
@@ -3110,7 +3110,7 @@
 
         phy
         phx
-        lda $7F4C87
+        lda wMapBattleMode
         beq _9282
         jml _9316
 
@@ -5848,7 +5848,7 @@
         and #$FFFD
         and #$FFFB
         sta aProcSystem.aHeaderBitfield,b,x
-        lda $7F4C87
+        lda wMapBattleMode
         bne _A804
         lda $7F4C11
         ora $7F4C13
@@ -9149,7 +9149,7 @@
 
         jsl rlReloadMenuIconGraphics
         bcs _C9FC
-        lda $7F4C87
+        lda wMapBattleMode
         bne _C9E3
         jsl rlCheckActiveUnitCanto
 
@@ -9211,7 +9211,7 @@
         lda aActionStructUnit2
         cmp #$FFFF
         beq _CA34
-        lda $7F4C87
+        lda wMapBattleMode
         bne _CA34
         jsl rlUnknown9EAB5D
         bcs _CA34
@@ -9329,7 +9329,7 @@
         .autsiz
         .databank ?
 
-        lda $7F4C87
+        lda wMapBattleMode
         bne _CAB4
         jsl rlUnknown9EAB5D
         bcs _CAB4
@@ -9711,7 +9711,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         sta aProcSystem.aHeaderBitfield,b,x
-        lda $7F4C87
+        lda wMapBattleMode
         bne _CEB8
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004

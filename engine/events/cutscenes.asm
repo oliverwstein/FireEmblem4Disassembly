@@ -321,7 +321,7 @@
         sta @l $7F4C07
 
         lda #2
-        sta @l $7F4C87
+        sta @l wMapBattleMode
 
         lda aScriptedUnitMapAction + structScriptedMapAttack.wDeploymentOffset
         sta aActionStructUnit1.DeploymentNumber
@@ -580,7 +580,7 @@
 
         ; Nothing in the build reaches this. Fills the battle action structs for the
         ; selected unit alone (no opponent: aActionStructUnit2 = $FFFF), then runs
-        ; rlStartMapBattleAnimation with $7F4C87 = 2.
+        ; rlStartMapBattleAnimation with wMapBattleMode = 2.
 
         .al
         .xl
@@ -656,7 +656,7 @@
         plb
         .databank ?
         lda #$0002
-        sta $7F4C87
+        sta wMapBattleMode
         jml rlStartMapBattleAnimation._8014
 
         .databank 0
@@ -667,7 +667,7 @@
 
         ; Nothing in the build reaches this. Fills the battle action structs for
         ; the unit at wR0 and the unit at wR1, then runs rlStartMapBattleAnimation with
-        ; $7F4C87 = 2. When the second unit has no usable weapon, the original
+        ; wMapBattleMode = 2. When the second unit has no usable weapon, the original
         ; branches back to the first unit's code (bra _F11F); that looks like a bug.
 
         .al
@@ -749,7 +749,7 @@
         and #$0003
         sta aMapAction.wDefenderAllegiance
         lda #$0002
-        sta $7F4C87
+        sta wMapBattleMode
         jml rlStartMapBattleAnimation._8014
 
         .databank 0
@@ -788,7 +788,7 @@
         .databank ?
 
         lda #$0001
-        sta $7F4C87
+        sta wMapBattleMode
         lda #$FFFF
         sta $7E4EA9
         sta aActionStructUnit1.UnitRAMPointer
@@ -838,7 +838,7 @@
         lda aDeploymentTable._YTilePosition,x
         sta wBattleQuotePointer
         lda #$0000
-        sta $7F4C87
+        sta wMapBattleMode
         lda #(`procWarpAway)<<8
         sta lR44+1
         lda #<>procWarpAway
@@ -1037,7 +1037,7 @@
         sta $7F5091
         sta $7F5093
         lda #$0001
-        sta $7F4C87
+        sta wMapBattleMode
         lda #$FFFF
         sta aActionStructUnit1
         sta aActionStructUnit2

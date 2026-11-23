@@ -116,7 +116,7 @@
         YIELD
         CONTINUE_FORM_MAP_SPRITE_HALT
         RUN_ASM rlRunDemoBattleSetup
-        RUN_ASM rlUnknown9E8000
+        RUN_ASM rlASMCStartDemoMapBattle
         PAUSE $0027
         YIELD
         RUN_ASM rlASMCHideDemoSceneUnit
@@ -124,7 +124,7 @@
 
         _E9B2 ; 90/E9B2
         RUN_ASM rlRunDemoBattleSetup
-        RUN_ASM rlUnknown9E8000
+        RUN_ASM rlASMCStartDemoMapBattle
         PAUSE $0020
         YIELD
         FADE_IN_BY_TIMER $04
@@ -172,7 +172,7 @@
         PAUSE $0014
         YIELD
         RUN_ASM rlRunDemoBattleSetupAtIndex
-        RUN_ASM rlUnknown9E8000
+        RUN_ASM rlASMCStartDemoMapBattle
         PAUSE $0020
         YIELD
         FADE_IN_BY_TIMER $04

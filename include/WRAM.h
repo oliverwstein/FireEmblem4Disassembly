@@ -2231,6 +2231,18 @@
   .endvirtual
 
 
+  .virtual $7F4C87
+
+    wMapBattleMode .word ? ; $7F4C87
+      ; How procMapBattle was started: 0 a battle (rlStartMapBattleAnimation),
+      ; 1 the opening's demo battles (rlASMCStartDemoMapBattle), 2 a scripted
+      ; battle from an event (rlStartSoloMapBattleAnimation,
+      ; rlStartScriptedMapBattleAnimation). Modes 1 and 2 do not change HP
+      ; (rlApplyMapBattleRoundHP).
+
+  .endvirtual
+
+
   .virtual $7F454A
 
     .union

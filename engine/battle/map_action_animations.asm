@@ -70,7 +70,7 @@
         sta @l $000FD7,x
         sta aMapAction.wUnknown7F455A
         sta aMapAction.wMapBattleAttackVariant
-        sta $7F4C87
+        sta wMapBattleMode
         sta $4C11,b
         sta $4C13,b
         sta $7F4C07
@@ -1050,7 +1050,7 @@
         sta $4584,b
         sta aMapAction.wUnknown7F455A
         sta aMapAction.wMapBattleAttackVariant
-        sta $7F4C87
+        sta wMapBattleMode
         sta $7F5091
         sta $7F5093
         sta $4C11,b
@@ -1604,7 +1604,7 @@
         sta aMapAction.wMapBattlePhaseFlag
         sta aMapAction.wUnknown7F455A
         sta aMapAction.wMapBattleAttackVariant
-        sta $7F4C87
+        sta wMapBattleMode
         sta $7F4BE9
         sta $7F4C07
         sta $4C11,b
