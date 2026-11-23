@@ -536,9 +536,9 @@
 
       aActiveSpriteCommandPointers ; 81/823B
 
-        .word <>rsActiveSpriteCommand00
-        .word <>rsActiveSpriteCommand01
-        .word <>rsActiveSpriteCommand02
+        .word <>rsActiveSpriteCommandFrame
+        .word <>rsActiveSpriteCommandEnd
+        .word <>rsActiveSpriteCommandJumpWhileCounter
         .word <>rsActiveSpriteCommand03
         .word <>rsActiveSpriteCommand04
         .word <>rsActiveSpriteCommand05
@@ -552,21 +552,21 @@
         .word <>rsActiveSpriteCommand0D
         .word <>rsActiveSpriteCommand0E
         .word <>rsActiveSpriteCommand0F
-        .word <>rsActiveSpriteCommand10
-        .word <>rsActiveSpriteCommand11
-        .word <>rsActiveSpriteCommand12
+        .word <>rsActiveSpriteCommandStartMapMagic
+        .word <>rsActiveSpriteCommandWaitMapMagic
+        .word <>rsActiveSpriteCommandWaitFrames
         .word <>rsActiveSpriteCommand13
-        .word <>rsActiveSpriteCommand14
-        .word <>rsActiveSpriteCommand15
-        .word <>rsActiveSpriteCommand16
-        .word <>rsActiveSpriteCommand17
+        .word <>rsActiveSpriteCommandSetOnCycle
+        .word <>rsActiveSpriteCommandJump
+        .word <>rsActiveSpriteCommandJumpRelative
+        .word <>rsActiveSpriteCommandCall
         .word <>rsActiveSpriteCommand18
-        .word <>rsActiveSpriteCommand19
+        .word <>rsActiveSpriteCommandMove
         .word <>rsActiveSpriteCommand1A
         .word <>rsActiveSpriteCommand1B
         .word <>rsActiveSpriteCommand1C
-        .word <>rsActiveSpriteCommand1D
-        .word <>rsActiveSpriteCommand1E
+        .word <>rsActiveSpriteCommandSound
+        .word <>rsActiveSpriteCommandSetMusic
 
       rsRenderAllActiveSprites ; 81/8279
 
@@ -997,7 +997,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand00 ; 81/84C4
+      rsActiveSpriteCommandFrame ; 81/84C4
 
         .al
         .autsiz
@@ -1041,7 +1041,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand01 ; 81/84FA
+      rsActiveSpriteCommandEnd ; 81/84FA
 
         .al
         .autsiz
@@ -1053,7 +1053,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand12 ; 81/84FF
+      rsActiveSpriteCommandWaitFrames ; 81/84FF
 
         .al
         .autsiz
@@ -1101,7 +1101,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand14 ; 81/8520
+      rsActiveSpriteCommandSetOnCycle ; 81/8520
 
         .al
         .autsiz
@@ -1129,7 +1129,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand17 ; 81/8530
+      rsActiveSpriteCommandCall ; 81/8530
 
         .al
         .autsiz
@@ -1178,7 +1178,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand15 ; 81/8561
+      rsActiveSpriteCommandJump ; 81/8561
 
         .al
         .autsiz
@@ -1190,7 +1190,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand16 ; 81/8566
+      rsActiveSpriteCommandJumpRelative ; 81/8566
 
         .al
         .autsiz
@@ -1231,14 +1231,14 @@
 
         .databank 0
 
-      rsActiveSpriteCommand02 ; 81/8585
+      rsActiveSpriteCommandJumpWhileCounter ; 81/8585
 
         .al
         .autsiz
         .databank ?
 
         dec aActiveSpriteSystem.aUpdater,b,x
-        bne rsActiveSpriteCommand15
+        bne rsActiveSpriteCommandJump
 
         inc y
         inc y
@@ -1255,7 +1255,7 @@
         ; Unused cmd: decrement aUpdater and relative-branch via cmd $16 while non-zero
 
         dec aActiveSpriteSystem.aUpdater,b,x
-        bne rsActiveSpriteCommand16
+        bne rsActiveSpriteCommandJumpRelative
 
         inc y
         rts
@@ -1484,7 +1484,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand19 ; 81/8662
+      rsActiveSpriteCommandMove ; 81/8662
 
         .al
         .autsiz
@@ -1520,7 +1520,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand1D ; 81/868C
+      rsActiveSpriteCommandSound ; 81/868C
 
         .al
         .autsiz
@@ -1542,7 +1542,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand1E ; 81/86A6
+      rsActiveSpriteCommandSetMusic ; 81/86A6
 
         .al
         .autsiz
@@ -1861,7 +1861,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand10 ; 81/883C
+      rsActiveSpriteCommandStartMapMagic ; 81/883C
 
         .al
         .autsiz
@@ -1875,7 +1875,7 @@
 
         .databank 0
 
-      rsActiveSpriteCommand11 ; 81/884B
+      rsActiveSpriteCommandWaitMapMagic ; 81/884B
 
         .al
         .autsiz
