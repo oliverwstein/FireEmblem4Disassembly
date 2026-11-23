@@ -1663,6 +1663,13 @@
   .endvirtual
 
 
+  .virtual $000C45
+
+    aBattleSceneAfterimages .dstruct structBattleSceneAfterimage ; $000C45
+                            .dstruct structBattleSceneAfterimage ; $000C78
+
+  .endvirtual
+
   .virtual $000CC4
 
     ; Uploads to VRAM queued by rlBattleSceneQueueUpload and sent in VBlank by

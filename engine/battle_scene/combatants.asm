@@ -1645,7 +1645,7 @@
         _BC2E
         cmp #$00EB
         bne _BC38
-        jsr rsUnknown95BEED
+        jsr rsBattleAnimationCmdAfterimage
         bra _BC65
 
 
@@ -2245,12 +2245,14 @@
 
         ; 95/BEED
 
-      rsUnknown95BEED ; 95/BEED
+      rsBattleAnimationCmdAfterimage ; 95/BEED
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sequence command $EC Arg: by Arg & 3, stops (0) or starts (1) the combatant's afterimage, or clears (2) or sets (3) its mirrored double (bit 7 of bBattleAnimationFacingFlags).
 
         cpx #$0000
         bne _BEF7
@@ -2276,13 +2278,13 @@
 
         _BF13
         pla
-        jsl rlUnknown95D9BE
+        jsl rlBattleAnimationStopAfterimage
         bra _BF3F
 
 
         _BF1A
         pla
-        jsl rlUnknown95D963
+        jsl rlBattleAnimationStartAfterimage
         bra _BF3F
 
 
@@ -2849,7 +2851,7 @@
         .autsiz
         .databank ?
 
-        ; X = the slot: draws its pose's sprite at its screen position (X minus the camera, plus the draw offset; Y from the anchor), flipped when rlUnknown95D9DC says so, unless the pose is $FE (hidden) or bit 6 of its bBattleAnimationCombatantFlags is set. With carry set (a new pose) it also queues the pose's frame tiles (rlBattleAnimationLoadFrameTiles).
+        ; X = the slot: draws its pose's sprite at its screen position (X minus the camera, plus the draw offset; Y from the anchor), flipped when rlBattleAnimationGetMirroredX says so, unless the pose is $FE (hidden) or bit 6 of its bBattleAnimationCombatantFlags is set. With carry set (a new pose) it also queues the pose's frame tiles (rlBattleAnimationLoadFrameTiles).
 
         phx
         phy
@@ -2859,7 +2861,7 @@
         sta wR6
         lda wBattleAnimationX,b,x
         and #$01FF
-        jsl rlUnknown95D9DC
+        jsl rlBattleAnimationGetMirroredX
         bcc _C1CA
         pha
         lda wR6
@@ -5996,12 +5998,14 @@
 
         ; 95/D49D
 
-      rsUnknown95D49D ; 95/D49D
+      rsBattleSceneScrollCameraRightBy ; 95/D49D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = 8.8 pixels: scrolls the camera right, at most to $C0, without checking where the combatants stand. Carry set when it stopped there.
 
         phx
         phy
@@ -6070,12 +6074,14 @@
 
         ; 95/D50F
 
-      rsUnknown95D50F ; 95/D50F
+      rsBattleSceneScrollCameraLeftBy ; 95/D50F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; As rsBattleSceneScrollCameraRightBy, to the left (at least $40).
 
         phx
         phy
@@ -6144,12 +6150,14 @@
 
         ; 95/D580
 
-      rsUnknown95D580 ; 95/D580
+      rsBattleSceneUpdateStageScroll ; 95/D580
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame (not with bit 0 of $7FF5AF): steps the camera by $7FE1B4 (1 or 2 pixels a frame, between $40 and $C0), then, unless bit 2 of $7FE1B3, sets BG2's scroll from the camera plus $7FE19F/$7FE1A1, raising the stage as the attacker rises ($7FE19A, 0-$38 for Y $18-$50).
 
         lda $7FF5AF
         bit #$0001
@@ -6293,12 +6301,14 @@
 
         ; 95/D670
 
-      rsUnknown95D670 ; 95/D670
+      rsBattleSceneUpdateBG1Scroll ; 95/D670
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame with bit 1 of $7FE1B3: scrolls BG1 from the camera and BG2's vertical scroll (a slower layer behind the stage).
 
         phx
         phy
@@ -6441,12 +6451,14 @@
 
         ; 95/D721
 
-      rlUnknown95D721 ; 95/D721
+      rlBattleSceneRunCameraPan ; 95/D721
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame: scrolls the camera by bBattleSceneCameraPan until it stops at an end; then clears the pan and, with bit 0 of $7FE1A3, counts down bBattleSceneScriptWaitCount.
 
         phx
         lda bBattleSceneCameraPan
@@ -6461,7 +6473,7 @@
         pha
         pla
         pla
-        jsr rsUnknown95D49D
+        jsr rsBattleSceneScrollCameraRightBy
         bcs _D75D
         bra _D77A
 
@@ -6479,7 +6491,7 @@
         eor #$FF00
         clc
         adc #$0100
-        jsr rsUnknown95D50F
+        jsr rsBattleSceneScrollCameraLeftBy
         bcs _D75D
         bra _D77A
 
@@ -6507,12 +6519,14 @@
 
         ; 95/D77C
 
-      rsUnknown95D77C ; 95/D77C
+      rsBattleSceneDrawShadows ; 95/D77C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame: draws each combatant's first frame record at its ground position (wBattleAnimationYAnchor, ignoring its height) with its attributes, combatant 1 on even frames and combatant 2 on odd ones, unless hidden (bit 6 of bBattleAnimationCombatantFlags).
 
         phx
         phy
@@ -6656,26 +6670,30 @@
 
         ; 95/D863
 
-      rlUnknown95D863 ; 95/D863
+      rlBattleSceneDrawAfterimages ; 95/D863
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown95D867
+        ; Every frame: rsBattleSceneUpdateAfterimages.
+
+        jsr rsBattleSceneUpdateAfterimages
         rtl
 
         .databank 0
 
         ; 95/D867
 
-      rsUnknown95D867 ; 95/D867
+      rsBattleSceneUpdateAfterimages ; 95/D867
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; For each of the two afterimages that is on: shifts its 16 past positions, records its owner's position, and draws it (rsBattleSceneDrawAfterimage).
 
         phx
         phy
@@ -6683,7 +6701,7 @@
 
         _D86C
         phx
-        lda $0C45,b,x
+        lda aBattleSceneAfterimages.Flags,b,x
         bit #$0001
         beq _D8C1
         lda #$0000
@@ -6709,7 +6727,7 @@
         cpy #$002D
         bcc _D88C
         phx
-        lda $0C46,b,x
+        lda aBattleSceneAfterimages.Owner,b,x
         tax
         lda wBattleAnimationX,b,x
         sta lR18
@@ -6724,7 +6742,7 @@
         sta $0C75,b,x
         lda lR18+1
         sta $0C76,b,x
-        jsr rsUnknown95D8D0
+        jsr rsBattleSceneDrawAfterimage
 
         _D8C1
         plx
@@ -6742,12 +6760,14 @@
 
         ; 95/D8D0
 
-      rsUnknown95D8D0 ; 95/D8D0
+      rsBattleSceneDrawAfterimage ; 95/D8D0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the afterimage ($00 or $33): draws its owner's pose at its position 8 or 12 frames back, alternating each frame.
 
         phb
         phx
@@ -6755,9 +6775,9 @@
         rep #$20
         phx
         sep #$20
-        lda $0C45,b,x
+        lda aBattleSceneAfterimages.Flags,b,x
         eor #$02
-        sta $0C45,b,x
+        sta aBattleSceneAfterimages.Flags,b,x
         bit #$02
         bne _D8EE
         rep #$20
@@ -6777,7 +6797,7 @@
         tax
 
         _D8F6
-        lda $0C48,b,x
+        lda aBattleSceneAfterimages.Positions,b,x
         and #$01FF
         sec
         sbc wBattleSceneCameraX
@@ -6797,7 +6817,7 @@
         and #$00FF
         sta wR1
         plx
-        lda $0C46,b,x
+        lda aBattleSceneAfterimages.Owner,b,x
         tax
         lda bBattleAnimationPoseID,b,x
         and #$00FF
@@ -6842,12 +6862,14 @@
 
         ; 95/D963
 
-      rlUnknown95D963 ; 95/D963
+      rlBattleAnimationStartAfterimage ; 95/D963
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the owner, A = the afterimage (0 or 1): fills its past positions with the owner's position and turns it on (sequence command $EC 1).
 
         phx
         phy
@@ -6876,7 +6898,7 @@
         sta lR19
         txa
         ldx $4216,b
-        sta $0C46,b,x
+        sta aBattleSceneAfterimages.Owner,b,x
         ldy #$0000
 
         _D99F
@@ -6890,9 +6912,9 @@
         cpy #$0030
         bcc _D99F
         sep #$20
-        lda $0C45,b,x
+        lda aBattleSceneAfterimages.Flags,b,x
         ora #$01
-        sta $0C45,b,x
+        sta aBattleSceneAfterimages.Flags,b,x
         rep #$20
         ply
         plx
@@ -6902,12 +6924,14 @@
 
         ; 95/D9BE
 
-      rlUnknown95D9BE ; 95/D9BE
+      rlBattleAnimationStopAfterimage ; 95/D9BE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = the afterimage (0 or 1): turns it off (sequence command $EC 0).
 
         phx
         sep #$20
@@ -6919,9 +6943,9 @@
         nop
         nop
         ldx $4216,b
-        lda $0C45,b,x
+        lda aBattleSceneAfterimages.Flags,b,x
         and #$FE
-        sta $0C45,b,x
+        sta aBattleSceneAfterimages.Flags,b,x
         rep #$20
         plx
         rtl
@@ -6930,12 +6954,14 @@
 
         ; 95/D9DC
 
-      rlUnknown95D9DC ; 95/D9DC
+      rlBattleAnimationGetMirroredX ; 95/D9DC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the slot, A = its X: with bit 7 of its bBattleAnimationFacingFlags (sequence command $EC 3), on odd frames returns carry set and A mirrored around the defender's X, so the slot appears on both sides of it. Otherwise carry clear.
 
         phx
         pha

@@ -316,8 +316,8 @@
         stz bBattleSceneRoundState,b
         stz bBattleSceneStrikeFlags,b
         stz bBattleSceneUploadCount,b
-        stz $0C45,b
-        stz $0C78,b
+        stz aBattleSceneAfterimages.Flags,b
+        stz Flags,b
         rep #$20
         jsl rlUnknown95A43C
         jsl rlUnknown96DD39
@@ -514,17 +514,17 @@
         jsl rlBattleSceneScriptUpdateLoading
         jsl rlUnknown96952C
         jsl rlUnknown96EBE3
-        jsr rsUnknown95D580
-        jsr rsUnknown95D670
+        jsr rsBattleSceneUpdateStageScroll
+        jsr rsBattleSceneUpdateBG1Scroll
         jsl rlUnknown96DE6F
         jsl rlUnknown96A532
         jsl rlUnknown96DD6E
-        jsl rlUnknown95D721
+        jsl rlBattleSceneRunCameraPan
         jsl rlUnknown96BE28
         jsl rlBattleAnimationUpdateAll
         jsl rlUnknown96A05C
-        jsl rlUnknown95D863
-        jsr rsUnknown95D77C
+        jsl rlBattleSceneDrawAfterimages
+        jsr rsBattleSceneDrawShadows
         jsr rsBattleSceneUpdateHP1
         jsr rsBattleSceneUpdateHP2
         jsl rlUnknown96D695

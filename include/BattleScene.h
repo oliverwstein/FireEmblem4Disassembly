@@ -97,3 +97,12 @@
     .word \Scale, \Offset
     .byte \Max
   .endsegment
+
+  ; An afterimage (aBattleSceneAfterimages): a copy of a combatant drawn at its
+  ; position a few frames back (rsBattleSceneUpdateAfterimages).
+
+  structBattleSceneAfterimage .struct
+    Flags     .byte ?        ; bit 0 on, bit 1 alternates the delay (8 or 12 frames)
+    Owner     .word ?        ; the slot (0 or $43)
+    Positions .fill 16 * 3   ; X (word) and screen Y (byte), oldest first
+  .endstruct

@@ -174,8 +174,8 @@
       .byte $ED, \Arg
     .endsegment
 
-    ; $EC: by Arg & 3, rlUnknown95D9BE, rlUnknown95D963, clear or set bit 7
-    ; of $0AF4,x (rsUnknown95BEED).
+    ; $EC: by Arg & 3, rlBattleAnimationStopAfterimage, rlBattleAnimationStartAfterimage, clear or set bit 7
+    ; of $0AF4,x (rsBattleAnimationCmdAfterimage).
     ANIM_CMD_EC .segment Arg
       .byte $EC, \Arg
     .endsegment

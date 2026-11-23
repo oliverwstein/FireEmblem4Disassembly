@@ -13444,7 +13444,7 @@
 
         phx
         lda #$0000
-        sta $0C46,b
+        sta aBattleSceneAfterimages.Owner,b
         lda #(`rlUnknown96F476)<<8
         sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F476
@@ -13466,7 +13466,7 @@
 
         phx
         lda #$008E
-        sta $0C46,b
+        sta aBattleSceneAfterimages.Owner,b
         lda #(`rlUnknown96F476)<<8
         sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F476
@@ -13488,7 +13488,7 @@
 
         phx
         lda #$0118
-        sta $0C46,b
+        sta aBattleSceneAfterimages.Owner,b
         lda #(`rlUnknown96F476)<<8
         sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F476
@@ -13510,7 +13510,7 @@
 
         phx
         lda #$0122
-        sta $0C46,b
+        sta aBattleSceneAfterimages.Owner,b
         lda #(`rlUnknown96F476)<<8
         sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F476
@@ -13531,7 +13531,7 @@
         .databank ?
 
         phx
-        ldx $0C46,b
+        ldx aBattleSceneAfterimages.Owner,b
         lda aBattleSceneKnockbackShake+59,x
         cmp #$8080
         bne _F489
@@ -13546,10 +13546,10 @@
         xba
         sta bBattleAnimationDrawOffsetY,b,x
         rep #$20
-        lda $0C46,b
+        lda aBattleSceneAfterimages.Owner,b
         clc
         adc #$0002
-        sta $0C46,b
+        sta aBattleSceneAfterimages.Owner,b
 
         _F4A1
         plx
@@ -13569,7 +13569,7 @@
 
         phx
         lda #$0000
-        sta $0C46,b
+        sta aBattleSceneAfterimages.Owner,b
         lda #(`rlUnknown96F4BA)<<8
         sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F4BA
@@ -13590,7 +13590,7 @@
         .databank ?
 
         phx
-        lda $0C46,b
+        lda aBattleSceneAfterimages.Owner,b
         lsr a
         lsr a
         lsr a
@@ -13604,7 +13604,7 @@
 
         _F4D1
         pha
-        lda $0C46,b
+        lda aBattleSceneAfterimages.Owner,b
         and #$0007
         tax
         lda aBattleSceneKnockbackShake+421,x
@@ -13631,9 +13631,9 @@
         rep #$20
 
         _F504
-        lda $0C46,b
+        lda aBattleSceneAfterimages.Owner,b
         inc a
-        sta $0C46,b
+        sta aBattleSceneAfterimages.Owner,b
 
         _F50B
         plx
