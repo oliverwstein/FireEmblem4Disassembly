@@ -77,6 +77,12 @@
 
         ; 80/F337
 
+      aUnknown80F337 ; 80/F337
+
+        ; Unreferenced. The same nine bytes follow an rts at both 80/F337 and
+        ; 88/A6CA; nothing reads either copy.
+        .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E
+
     .endsection Unsorted80F2BESection
 
 

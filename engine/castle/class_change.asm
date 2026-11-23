@@ -637,6 +637,11 @@
 
         ; 8A/F045
 
+      aUnknown8AF045 ; 8A/F045
+
+        ; Unreferenced: three bytes after an rts.
+        .byte $58, $88, $B8
+
     .endsection Unsorted8AEEFESection
 
 

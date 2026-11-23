@@ -504,6 +504,9 @@
 
         ; 95/A166
 
+        ; Unreachable: it follows a return.
+        rtl
+
     .endsection Unsorted95A114Section
 
 
@@ -1499,6 +1502,10 @@
         .databank 0
 
         ; 96/8DBB
+
+        ; Unreachable: it follows a return.
+        rtl
+        rtl
 
     .endsection Unsorted96890ESection
 

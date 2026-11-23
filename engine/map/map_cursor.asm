@@ -814,6 +814,101 @@
 
         ; 88/A505
 
+      rlUnknown88A505 ; 88/A505
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: runs the entry of aUnknown88A50D for $0756.
+
+        lda $0756,b
+        asl a
+        tax
+        jmp (aUnknown88A50D,x)
+
+        .databank 0
+
+      aUnknown88A50D ; 88/A50D
+
+        .word <>rlUnknown88A524
+        .word <>rlUnknown88A542
+        .word <>rlUnknown88A515
+        .word <>rlUnknown88A533
+
+      rlUnknown88A515 ; 88/A515
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
+        ; entries of aUnknown88A50D are the same code).
+
+        lda $DE0012
+        sta $0112,b
+        lda $DE0014
+        sta $0114,b
+        rtl
+
+        .databank 0
+
+      rlUnknown88A524 ; 88/A524
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
+        ; entries of aUnknown88A50D are the same code).
+
+        lda $DE0012
+        sta $0112,b
+        lda $DE0014
+        sta $0114,b
+        rtl
+
+        .databank 0
+
+      rlUnknown88A533 ; 88/A533
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
+        ; entries of aUnknown88A50D are the same code).
+
+        lda $DE0012
+        sta $0112,b
+        lda $DE0014
+        sta $0114,b
+        rtl
+
+        .databank 0
+
+      rlUnknown88A542 ; 88/A542
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Copies the words at $DE0012 and $DE0014 to $0112 and $0114 (all four
+        ; entries of aUnknown88A50D are the same code).
+
+        lda $DE0012
+        sta $0112,b
+        lda $DE0014
+        sta $0114,b
+        rtl
+
+        .databank 0
+
     .endsection Unsorted88A4FCSection
 
 
@@ -1069,6 +1164,49 @@
         .databank 0
 
         ; 88/A6CA
+
+      aUnknown88A6CA ; 88/A6CA
+
+        ; Unreferenced. The same nine bytes follow an rts at both 80/F337 and
+        ; 88/A6CA; nothing reads either copy.
+        .byte $20, $20, $00, $00, $00, $00, $88, $83, $7E
+
+      rsUnknown88A6D3 ; 88/A6D3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        lda wCursorXOffset,b
+        clc
+        adc wMapScrollXPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        ldx #$20F0
+        stx aCurrentTilemapInfo,b
+        ldx #$0407
+        jsl rlDrawTallTwoDigitNumberToTilemapEntry
+        lda wCursorYOffset,b
+        clc
+        adc wMapScrollYPixels,b
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        ldx #$20F0
+        stx aCurrentTilemapInfo,b
+        ldx #$040A
+        jsl rlDrawTallTwoDigitNumberToTilemapEntry
+        rts
+
+        .databank 0
+
+        ; 88/A704
 
     .endsection Unsorted88A698Section
 
@@ -1692,6 +1830,15 @@
         .databank 0
 
         ; 88/ACBB
+
+      aUnknown88ACBB ; 88/ACBB
+
+        ; Unreferenced: signed pixel offsets, like aNearTargetOffsets after it.
+
+        .word $000C, $000C, $000C, $0000, $0010, $0000, $FFF0, $0000
+        .word $0010, $0020, $0010, $0000, $FFF0, $FFE0, $FFF0, $FFF0
+        .word $0000, $0010, $0000, $FFE0, $FFF0, $0000, $0010, $0020
+        .word $0010, $0000, $FFF0
 
     .endsection Unsorted88ACA6Section
 

@@ -482,6 +482,57 @@
 
         ; 80/ADFF
 
+        ; Unreachable: it follows a return.
+        plp
+        rtl
+
+      rlUnknown80AE01 ; 80/AE01
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: queues the decompression DMA entry aUnknown80AE10.
+
+        lda #(`aUnknown80AE10)<<8
+        sta lR19+1
+        lda #<>aUnknown80AE10
+        sta lR19
+        jsl rlHandleMapMenuDecompressionDMA
+        rtl
+
+        .databank 0
+
+        ; 80/AE10
+
+      aUnknown80AE10 ; 80/AE10
+
+        ; Read only by the unreferenced rlUnknown80AE01.
+
+        .byte $00, $18, $00, $40, $01, $2B, $0A, $C0
+
+      rlUnknown80AE18 ; 80/AE18
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        sep #$20
+        lda #$16
+        sta bBufferTM
+        lda #$09
+        sta bBufferBGMODE
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 80/AE25
+
     .endsection Unsorted80AD24Section
 
 

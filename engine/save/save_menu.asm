@@ -2522,6 +2522,145 @@
 
         ; 91/E006
 
+      rsUnknown91E006 ; 91/E006
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: fades to white over 16 steps (rsUnknown91E05C).
+
+        lda #$7FFF
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0010
+        sta aPaletteFading.wMaxSteps,b
+        clc
+        jml rsUnknown91E05C
+
+        .databank 0
+
+      rsUnknown91E017 ; 91/E017
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: fades to black over 16 steps (rsUnknown91E05C).
+
+        lda #$0000
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0010
+        sta aPaletteFading.wMaxSteps,b
+        clc
+        jml rsUnknown91E05C
+
+        .databank 0
+
+      rsUnknown91E028 ; 91/E028
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: fades to white over 16 steps (rsUnknown91E069).
+
+        lda #$7FFF
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0010
+        sta aPaletteFading.wMaxSteps,b
+        clc
+        jml rsUnknown91E069
+
+        .databank 0
+
+      rsUnknown91E039 ; 91/E039
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: fades to black over 16 steps (rsUnknown91E069).
+
+        lda #$0000
+        sta aPaletteFading.wDesiredColor,b
+        lda #$0010
+        sta aPaletteFading.wMaxSteps,b
+        clc
+        jml rsUnknown91E069
+
+        .databank 0
+
+      rsUnknown91E04A ; 91/E04A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: fades 512 colours in from the copy at $7EAB88 over 22 steps.
+
+        lda #$0016
+        sta aPaletteFading.wMaxSteps,b
+        clc
+        jsl rlFadePaletteToColors
+
+          .word $AB88
+          .word $0200
+          .word $0000
+
+        rts
+
+        .databank 0
+
+      rsUnknown91E05C ; 91/E05C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; One fade step of BG palette 1's colours 1-15 (aUnknown91E063).
+
+        jsl rlFadePaletteToBlack
+
+          .word <>aUnknown91E063
+
+        rts
+
+        .databank 0
+
+      aUnknown91E063 ; 91/E063
+
+        .word $0022, 15
+        .word $FFFF
+
+      rsUnknown91E069 ; 91/E069
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; One fade step of sprite palettes 0 and 1's colours 1-15 (aUnknown91E070).
+
+        jsl rlFadePaletteToBlack
+
+          .word <>aUnknown91E070
+
+        rts
+
+        .databank 0
+
+      aUnknown91E070 ; 91/E070
+
+        .word $0102, 15
+        .word $0122, 15
+        .word $FFFF
+
     .endsection Unsorted91DF6DSection
 
 
@@ -3066,6 +3205,12 @@
         .databank 0
 
         ; 91/E4A3
+
+      aUnknown91E4A3 ; 91/E4A3
+
+        ; Unreferenced.
+
+        .byte $00, $00, $00, $00, $01, $00, $01, $00, $00, $00, $00, $00, $FF, $FF, $FF, $FF
 
     .endsection Unsorted91E405Section
 

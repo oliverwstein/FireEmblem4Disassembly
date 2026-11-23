@@ -3187,6 +3187,11 @@
 
         ; 8A/B10A
 
+      aUnknown8AB10A ; 8A/B10A
+
+        ; Unreferenced.
+        .byte $01, $00, $00, $C2, $00, $0C, $30
+
     .endsection Unsorted8AB093Section
 
 

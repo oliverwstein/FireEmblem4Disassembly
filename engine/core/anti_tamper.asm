@@ -219,6 +219,10 @@
 
         ; 91/E913
 
+        ; Unreachable: it follows the endless loop above.
+        plp
+        rtl
+
     .endsection Unsorted91E793Section
 
 

@@ -671,9 +671,9 @@
         .autsiz
         .databank ?
 
-        lda #$9100
+        lda #(`procUnknown91BD51)<<8
         sta lR44+1
-        lda #$BD51
+        lda #<>procUnknown91BD51
         sta lR44
         jsl rlEventEngineCreateProc
         rtl
@@ -681,6 +681,75 @@
         .databank 0
 
         ; 91/BD51
+
+      procUnknown91BD51 ; 91/BD51
+
+        ; Created only by the unreferenced rlUnknown91BD42. For 7 frames it
+        ; runs MOVE_TEMPORARY_TO_COORDS (rlUnknown91B03F) with the arguments
+        ; at aUnknown91BD8A, then ends.
+
+        .structProcInfo "ED", rlProcUnknown91BD51Init, rlProcUnknown91BD51Cycle, aProcUnknown91BD51Code
+
+        .word 0
+
+      rlProcUnknown91BD51Init ; 91/BD5B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0000
+        sta $0FD7,b,x
+        rtl
+
+        .databank 0
+
+        ; 91/BD62
+
+      rlProcUnknown91BD51Cycle ; 91/BD62
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0FD7,b,x
+        cmp #$0007
+        bcs _BD85
+        phx
+        lda #(`aUnknown91BD8A)<<8
+        sta lR18+1
+        lda #<>aUnknown91BD8A
+        sta lR18
+        jsl rlUnknown91B03F
+        plx
+        bcs _BD89
+        lda $0FD7,b,x
+        inc a
+        sta $0FD7,b,x
+        bra _BD89
+
+
+        _BD85
+        jsl rlEventEngineFreeProc
+
+        _BD89
+        rtl
+
+        .databank 0
+
+        ; 91/BD8A
+
+      aUnknown91BD8A ; 91/BD8A
+
+        ; The MOVE_TEMPORARY_TO_COORDS arguments of procUnknown91BD51.
+
+        .byte $27, $00, $2A, $1B, $2A, $18, $04, $04
+
+      aProcUnknown91BD51Code ; 91/BD92
+
+        PROC_HALT
 
     .endsection Unreferenced91BD42Section
     .section EpilogueDialoguePointersSection

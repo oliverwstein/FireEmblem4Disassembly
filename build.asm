@@ -341,10 +341,6 @@
 
       .dsection Table809703Section
 
-    .here
-
-    * = $009729
-    .logical $809729
 
       .dsection Unsorted809729Section
       .dsection Unsorted80972ESection
@@ -387,10 +383,6 @@
 
       .dsection Unreferenced809C3ESection
 
-    .here
-
-    * = $009C7A
-    .logical $809C7A
 
       .dsection Unsorted809C7ASection
 
@@ -460,10 +452,6 @@
 
       .dsection Unsorted80AD24Section
 
-    .here
-
-    * = $00AE25
-    .logical $80AE25
 
       .dsection Unsorted80AE25Section
 
@@ -526,17 +514,11 @@
       aDecompressionDMAEntry80B62E .structDecompressionDMAEntry gcUnknownD1432E, $0100, $4000 ; 80/B62E
       aDecompressionDMAEntry80B636 .structDecompressionDMAEntry gcUnknownD14375, $0800, $6000 ; 80/B636
 
-    .here
-
-    * = $00B63F
-    .logical $80B63F
+      ; 80/B63E: an unreferenced lone rts (as at 80/B640).
+      .byte $60
 
       .dsection Unsorted80B63FSection
 
-    .here
-
-    * = $00B641
-    .logical $80B641
 
       .dsection Unsorted80B641Section
 
@@ -546,10 +528,6 @@
 
       .dsection Unsorted80B74BSection
 
-    .here
-
-    * = $00B77F
-    .logical $80B77F
 
       .dsection Unsorted80B77FSection
 
@@ -796,10 +774,6 @@
 
       .dsection Unsorted80F2BESection
 
-    .here
-
-    * = $00F340
-    .logical $80F340
 
       .dsection Unsorted80F340Section
 
@@ -1080,10 +1054,6 @@
       .dsection ProcCodeSection
       .dsection FadeProcsSection
 
-    .here
-
-    * = $0283E3
-    .logical $8283E3
 
       .dsection ProcScript8283E3Section
 
@@ -1111,10 +1081,6 @@
       .dsection ProcDialogueCodeSection
       .dsection CastleNamePopUpSection
 
-    .here
-
-    * = $028865
-    .logical $828865
 
       .dsection ProcScript828865Section
 
@@ -1193,10 +1159,6 @@
 
       .dsection Unsorted828BF4Section
 
-    .here
-
-    * = $028D52
-    .logical $828D52
 
       .dsection Unsorted828D52Section
 
@@ -1215,10 +1177,6 @@
 
       .dsection Unsorted829245Section
 
-    .here
-
-    * = $0292A9
-    .logical $8292A9
 
       .dsection Unsorted8292A9Section
 
@@ -1288,10 +1246,6 @@
 
       .dsection Unreferenced82E030Section
 
-    .here
-
-    * = $02E073
-    .logical $82E073
 
       .dsection Unsorted82E073Section
 
@@ -1330,10 +1284,6 @@
 
       .dsection Unsorted82E400Section
 
-    .here
-
-    * = $02E41B
-    .logical $82E41B
 
       .dsection RAMStructSection
 
@@ -1363,10 +1313,6 @@
 
       .dsection Unreferenced82EC70Section
 
-    .here
-
-    * = $02ECB9
-    .logical $82ECB9
 
       .dsection RAMAreaHeaderSection
 
@@ -3134,10 +3080,6 @@
 
       .dsection Unsorted8899B8Section
 
-    .here
-
-    * = $089AE2
-    .logical $889AE2
 
       .dsection Table889AE2Section
 
@@ -3149,10 +3091,6 @@
 
       .dsection Unsorted889BF7Section
 
-    .here
-
-    * = $089C52
-    .logical $889C52
 
       .dsection ProcScript889C52Section
 
@@ -3210,19 +3148,11 @@
 
       .dsection Unsorted88A4FCSection
 
-    .here
-
-    * = $08A551
-    .logical $88A551
 
       .dsection Unsorted88A551Section
 
       .dsection Unsorted88A698Section
 
-    .here
-
-    * = $08A704
-    .logical $88A704
 
       .dsection Unsorted88A704Section
 
@@ -3256,10 +3186,6 @@
 
       .dsection Unsorted88ACA6Section
 
-    .here
-
-    * = $08ACF1
-    .logical $88ACF1
 
       .dsection Table88ACF1Section
 
@@ -3496,10 +3422,6 @@
 
       .dsection Unsorted88E272Section
 
-    .here
-
-    * = $08E2DC
-    .logical $88E2DC
 
       .dsection ProcScript88E2DCSection
 
@@ -3507,10 +3429,6 @@
 
       .dsection Unsorted88E2E9Section
 
-    .here
-
-    * = $08E33D
-    .logical $88E33D
 
       .dsection Unsorted88E33DSection
 
@@ -3919,6 +3837,18 @@
 
     ; The portraits: generated from gfx/portraits/portraits.streams by build.sh.
     .include "gfx/portraits/Layout.asm"
+
+    * = $105639
+    .logical $D05639
+
+      ; Unreferenced: 58 bytes after the last class card.
+      aUnknownD05639
+      .byte $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF
+      .byte $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF
+      .byte $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF, $E7, $FD, $00, $FF
+      .byte $E7, $FC, $00, $00, $01, $FF, $E7, $FD, $00, $FF
+
+    .here
     * = $09F88B
     .logical $89F88B
 
@@ -3964,10 +3894,6 @@
 
       .dsection Unsorted8A8643Section
 
-    .here
-
-    * = $0A869A
-    .logical $8A869A
 
       .dsection Unsorted8A869ASection
 
@@ -4183,10 +4109,6 @@
 
       .dsection Unsorted8AB093Section
 
-    .here
-
-    * = $0AB111
-    .logical $8AB111
 
       .dsection Unsorted8AB111Section
 
@@ -4207,10 +4129,8 @@
       aPortraitGraphicPointers .include "data/PortraitGraphicPointers.csv.asm" ; 8A/B4F9
       aPortraitPalettePointers .include "data/PortraitPalettePointers.csv.asm" ; 8A/B7E1
 
-    .here
-
-    * = $0ABACF
-    .logical $8ABACF
+      ; 8A/BAC9: unreferenced, two long pointers to aDialogueBackgroundPointers.
+      aUnknown8ABAC9 .long aDialogueBackgroundPointers, aDialogueBackgroundPointers
 
       .dsection DialogueBackgroundsSection
 
@@ -4277,10 +4197,6 @@
 
       .dsection Unsorted8ACE3ASection
 
-    .here
-
-    * = $0ACE50
-    .logical $8ACE50
 
       .dsection Unsorted8ACE50Section
 
@@ -4412,10 +4328,6 @@
 
       .dsection Unsorted8ADCF9Section
 
-    .here
-
-    * = $0AE05E
-    .logical $8AE05E
 
       .dsection Unsorted8AE05ESection
 
@@ -4462,10 +4374,6 @@
 
       .dsection Unsorted8AEEFESection
 
-    .here
-
-    * = $0AF048
-    .logical $8AF048
 
       .dsection Unsorted8AF048Section
       .dsection Unsorted8AF0B4Section
@@ -4474,10 +4382,6 @@
 
       .dsection DepotScreenSetupSection
 
-    .here
-
-    * = $0AF263
-    .logical $8AF263
 
       ; Entries for rlHandleMapMenuDecompressionDMA.
       aDecompressionDMAEntry8AF263 .structDecompressionDMAEntry gcUnknownC00A2B, $1800, $4000 ; 8A/F263
@@ -4599,10 +4503,6 @@
 
       ; 8b8a58
 
-    .here
-
-    * = $0B8A84
-    .logical $8B8A84
 
       .dsection ClearHighlightWorldMapPartSection
 
@@ -4666,10 +4566,6 @@
 
       .dsection Unsorted8BA7CBSection
 
-    .here
-
-    * = $0BA7F2
-    .logical $8BA7F2
 
       .dsection Unsorted8BA7F2Section
 
@@ -4730,10 +4626,6 @@
 
       .dsection Unsorted8BB871Section
 
-    .here
-
-    * = $0BB8B6
-    .logical $8BB8B6
 
       .dsection Unsorted8BB8B6Section
 
@@ -5510,10 +5402,6 @@
 
       .dsection Unsorted8DA50FSection
 
-    .here
-
-    * = $0DA624
-    .logical $8DA624
 
       .dsection Unsorted8DA624Section
 
@@ -5539,10 +5427,6 @@
 
       .dsection Unsorted8DAE85Section
 
-    .here
-
-    * = $0DAEC2
-    .logical $8DAEC2
 
       .dsection Unsorted8DAEC2Section
       .dsection Unsorted8DAF33Section
@@ -5571,10 +5455,6 @@
 
       .dsection Unsorted8DB4F6Section
 
-    .here
-
-    * = $0DB53A
-    .logical $8DB53A
 
       .dsection Unsorted8DB53ASection
 
@@ -6504,10 +6384,6 @@
 
       .dsection DialogueEventCommandSection
 
-    .here
-
-    * = $11A928
-    .logical $91A928
 
       .dsection Unsorted91A928Section
 
@@ -6515,10 +6391,6 @@
 
       .dsection Unsorted91A9BBSection
 
-    .here
-
-    * = $11AA15
-    .logical $91AA15
 
       .dsection Unsorted91AA15Section
 
@@ -6576,10 +6448,6 @@
 
       .dsection Unreferenced91BD42Section
 
-    .here
-
-    * = $11BD94
-    .logical $91BD94
 
       .dsection ASMCStatUpDisplaySection
 
@@ -6711,10 +6579,6 @@
 
       .dsection Unsorted91DF6DSection
 
-    .here
-
-    * = $11E07A
-    .logical $91E07A
 
       .dsection Unsorted91E07ASection
 
@@ -6732,10 +6596,6 @@
 
       .dsection Unsorted91E405Section
 
-    .here
-
-    * = $11E4B3
-    .logical $91E4B3
 
       .dsection Table91E4B3Section
 
@@ -6753,10 +6613,6 @@
 
       .dsection Unsorted91E793Section
 
-    .here
-
-    * = $11E915
-    .logical $91E915
 
       .dsection Unsorted91E915Section
 
@@ -6942,10 +6798,6 @@
 
       .dsection Unsorted95A114Section
 
-    .here
-
-    * = $15A167
-    .logical $95A167
 
       .dsection Unsorted95A167Section
 
@@ -7366,10 +7218,6 @@
 
       .dsection Unsorted96890ESection
 
-    .here
-
-    * = $168DBD
-    .logical $968DBD
 
       .dsection Unsorted968DBDSection
 
@@ -7470,10 +7318,6 @@
 
       .dsection Unreferenced969964Section
 
-    .here
-
-    * = $1699DD
-    .logical $9699DD
 
       .dsection Unsorted9699DDSection
 
@@ -7522,17 +7366,9 @@
 
       .dsection Unreferenced96ACC5Section
 
-    .here
-
-    * = $16AD07
-    .logical $96AD07
 
       .dsection Unsorted96AD07Section
 
-    .here
-
-    * = $16AD39
-    .logical $96AD39
 
       .dsection Unsorted96AD39Section
 
@@ -7641,45 +7477,21 @@
 
       .dsection Unsorted96CECESection
 
-    .here
-
-    * = $16D256
-    .logical $96D256
 
       .dsection Unsorted96D256Section
 
-    .here
-
-    * = $16D2D7
-    .logical $96D2D7
 
       .dsection Unsorted96D2D7Section
 
-    .here
-
-    * = $16D3ED
-    .logical $96D3ED
 
       .dsection Unsorted96D3EDSection
 
-    .here
-
-    * = $16D402
-    .logical $96D402
 
       .dsection Unsorted96D402Section
 
-    .here
-
-    * = $16D417
-    .logical $96D417
 
       .dsection Unsorted96D417Section
 
-    .here
-
-    * = $16D42C
-    .logical $96D42C
 
       .dsection Unsorted96D42CSection
 
@@ -7854,10 +7666,6 @@
 
       .dsection Unsorted96F275Section
 
-    .here
-
-    * = $16F28D
-    .logical $96F28D
 
       .dsection Unsorted96F28DSection
 
@@ -7870,10 +7678,6 @@
 
       .dsection Unreferenced96F41ASection
 
-    .here
-
-    * = $16F558
-    .logical $96F558
 
       .dsection Unsorted96F558Section
 
@@ -8943,10 +8747,6 @@
 
       .dsection Unsorted9EB3DESection
 
-    .here
-
-    * = $1EB491
-    .logical $9EB491
 
       .dsection Unsorted9EB491Section
 
@@ -8984,10 +8784,6 @@
 
       .dsection Unsorted9ECEA0Section
 
-    .here
-
-    * = $1ECEDD
-    .logical $9ECEDD
 
       .dsection ProcScript9ECEDDSection
 
@@ -9008,10 +8804,6 @@
 
       .dsection Unreferenced9ED006Section
 
-    .here
-
-    * = $1ED07A
-    .logical $9ED07A
 
       .dsection Unsorted9ED07ASection
 

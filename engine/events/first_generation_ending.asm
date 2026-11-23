@@ -519,7 +519,7 @@
         clc
         jsl rlFadePaletteToBlack
 
-          .byte $D6, $E2
+          .word <>aFirstGenerationEndingPortraitFadeOutData
 
         bcs _E2AA
 
@@ -551,6 +551,11 @@
         .databank 0
 
         ; 88/E2D6
+
+      aFirstGenerationEndingPortraitFadeOutData ; 88/E2D6
+
+        .word $00C2, 15
+        .word $FFFF
 
     .endsection Unsorted88E272Section
 
@@ -615,6 +620,10 @@
         .databank 0
 
         ; 88/E33B
+
+      aFirstGenerationEndingHDMACode ; 88/E33B
+
+        HDMA_HALT
 
     .endsection Unsorted88E2E9Section
 
@@ -2045,7 +2054,7 @@
       .al
       .xl
 
-      aFirstGenerationEndingHDMAInfo .dstruct structHDMADirectEntryInfo, rlFirstGenerationEndingHDMA, rlFirstGenerationEndingHDMA, $E33B, $0008BC, PPU_REG_BASE + $2C, $00 ; 88/E2DE
+      aFirstGenerationEndingHDMAInfo .dstruct structHDMADirectEntryInfo, rlFirstGenerationEndingHDMA, rlFirstGenerationEndingHDMA, aFirstGenerationEndingHDMACode, $0008BC, PPU_REG_BASE + $2C, $00 ; 88/E2DE
 
     .endsection Table88E2DESection
 

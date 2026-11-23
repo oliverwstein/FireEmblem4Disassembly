@@ -3194,6 +3194,9 @@
 
         ; 82/E41A
 
+        ; Unreachable: it follows a return.
+        rtl
+
     .endsection Unsorted82E400Section
 
 
@@ -3668,6 +3671,70 @@
         .databank 0
 
         ; 82/EC81
+
+      rlUnknown82EC81 ; 82/EC81
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: copies the pointer at $055F to $0562 and sets $055F
+        ; to lR18.
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda $0560,b
+        sta $0563,b
+        lda $055F,b
+        sta $0562,b
+        lda lR18+1
+        sta $0560,b
+        lda lR18
+        sta $055F,b
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/EC9E
+
+      rlUnknown82EC9E ; 82/EC9E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: if $0562 is not 0, copies it back to $055F.
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda $0562,b
+        ora $0563,b
+        beq _ECB6
+        lda $0563,b
+        sta $0560,b
+        lda $0562,b
+        sta $055F,b
+
+        _ECB6
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/ECB9
 
     .endsection Unreferenced82EC70Section
     .section Unsorted82F517Section

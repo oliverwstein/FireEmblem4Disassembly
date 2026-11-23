@@ -2609,6 +2609,9 @@
 
         ; 8A/CE4F
 
+        ; Unreachable: it follows a return.
+        rts
+
     .endsection Unsorted8ACE3ASection
 
 

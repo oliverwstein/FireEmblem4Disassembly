@@ -30,6 +30,13 @@
         .word <>rsSoundScriptQueueCommandChecked
         .word <>rsSoundScriptBattleTerrainCommand
 
+      rsUnknown809727 ; 80/9727
+
+        ; Unreferenced: does nothing.
+
+        nop
+        rts
+
     .endsection Table809703Section
 
 
@@ -4991,6 +4998,12 @@
 
         ; 80/B640
 
+      rsUnknown80B640 ; 80/B640
+
+        ; Unreferenced: a lone rts.
+
+        rts
+
     .endsection Unsorted80B63FSection
 
 
@@ -5751,6 +5764,66 @@
 
         ; 82/8D21
 
+      procUnknown828D21 ; 82/8D21
+
+        ; Unreferenced: an older copy of procEventFadeInByTimer. Its header
+        ; points at that proc's routines; the two routines after it are an
+        ; older init (it also sets wScreenFadingFlag) and the same cycle.
+
+        .structProcInfo "EI", rlProcEventFadeInByTimerInit, rlProcEventFadeInByTimerCycle, aProcEventFadeInByTimerCode
+
+        .word 0
+
+      rlUnknown828D2B ; 82/8D2B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: an older rlProcEventFadeInByTimerInit.
+
+        php
+        sep #$20
+        lda #$FF
+        sta wScreenFadingFlag,b
+        rep #$20
+        ldy wActiveEventOffset,b
+        lda [lR22],y
+        and #$00FF
+        sta $0FD7,b,x
+        plp
+        rtl
+
+        .databank 0
+
+        ; 82/8D42
+
+      rlUnknown828D42 ; 82/8D42
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: the same as rlProcEventFadeInByTimerCycle.
+
+        lda $0FD7,b,x
+        jsl rlFadeInByTimer
+        bcc _8D4F
+        jsl rlEventEngineFreeProc
+
+        _8D4F
+        rtl
+
+        .databank 0
+
+        ; 82/8D50
+
+      aProcUnknown828D21Code ; 82/8D50
+
+        PROC_HALT
+
     .endsection Unsorted828BF4Section
 
 
@@ -6286,6 +6359,55 @@
       aProcUnknown82925ECode ; 82/9283
 
         PROC_HALT
+
+      procUnknown829285 ; 82/9285
+
+        ; Unreferenced: nothing creates this event proc. Its script calls
+        ; rlUnknown91A7BC and ends; init and cycle do nothing.
+
+        .structProcInfo "e0", rlProcUnknown829285Nothing, rlProcUnknown829285Nothing, aProcUnknown829285Code
+
+        .word 0
+
+      aProcUnknown829285Code ; 82/928F
+
+        PROC_CALL rlUnknown91A7BC
+        PROC_END
+
+      rlProcUnknown829285Nothing ; 82/9296
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+      procUnknown829297 ; 82/9297
+
+        ; Unreferenced: as procUnknown829285, calling rlUnknown91A7DF.
+
+        .structProcInfo "e1", rlProcUnknown829297Nothing, rlProcUnknown829297Nothing, aProcUnknown829297Code
+
+        .word 0
+
+      aProcUnknown829297Code ; 82/92A1
+
+        PROC_CALL rlUnknown91A7DF
+        PROC_END
+
+      rlProcUnknown829297Nothing ; 82/92A8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
 
     .endsection Unsorted829245Section
 
@@ -7776,7 +7898,39 @@
         .word $E106
         .word $A107
 
-; 06 A1 85 06 A5 27 48 A5 28 48 A9 00 00 85 28 A9 08 00 85 27 A5 06 20 15 AA 20 6F AA 68 85 28 68 85 27 6B 08 DA 5A A0 00 00 85 1A A9 10 27
+        .word $A106
+
+      rlUnknown91A9F4 ; 91/A9F4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: draws the number in A as five digits (rsSplitNumberIntoFiveDigits,
+        ; rsDrawFiveDigitNumber) with lR19 pointing at wR4.
+
+        sta wR3
+        lda lR19
+        pha
+        lda lR19+1
+        pha
+        lda #(`wR4)<<8
+        sta lR19+1
+        lda #<>wR4
+        sta lR19
+        lda wR3
+        jsr rsSplitNumberIntoFiveDigits
+        jsr rsDrawFiveDigitNumber
+        pla
+        sta lR19+1
+        pla
+        sta lR19
+        rtl
+
+        .databank 0
+
+        ; 91/AA15
 
     .endsection Unsorted91A9BBSection
 

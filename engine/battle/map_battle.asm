@@ -7844,6 +7844,122 @@
 
         ; 9E/B433
 
+      rlUnknown9EB433 ; 9E/B433
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: stores A in $04BA.
+
+        sta wMusicID,b
+        rtl
+
+        .databank 0
+
+        ; 9E/B437
+
+      rlUnknown9EB437 ; 9E/B437
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced: the same as rlUnknown9EB433.
+
+        sta wMusicID,b
+        rtl
+
+        .databank 0
+
+        ; 9E/B43B
+
+      rlUnknown9EB43B ; 9E/B43B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        phy
+        phx
+        sta wR0
+        lda $7F45A4
+        tax
+        lda $1200,b,x
+        jsl rlGetSoundPanFromXPixel
+        ora wR0
+        jsl rlPlaySoundEffect2
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/B454
+
+      rlUnknown9EB454 ; 9E/B454
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        phy
+        phx
+        sta wR0
+        lda wJoy2Input
+        cmp #$1000
+        bne _B461
+        sta wR0
+
+        _B461
+        lda $7F45A4
+        tax
+        lda $1200,b,x
+        jsl rlGetSoundPanFromXPixel
+        ora wR0
+        jsl rlPlaySoundEffect2
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/B476
+
+      rlUnknown9EB476 ; 9E/B476
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        phx
+        sta wR2
+        lda $7F57EE
+        tax
+        tay
+        jsl rlUnknown9E8D25
+        lda wR0
+        jsl rlGetSoundPanFromXPixel
+        ora wR2
+        jsl rlPlaySoundEffect2
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/B491
+
     .endsection Unsorted9EB3DESection
 
 
@@ -9791,6 +9907,49 @@
         .databank 0
 
         ; 9E/CEB9
+
+      procUnknown9ECEB9 ; 9E/CEB9
+
+        ; Unreferenced: nothing creates this proc.
+
+        .structProcInfo "ON", rlProcUnknown9ECEB9Init, rlProcUnknown9ECEB9Cycle, aProcUnknown9ECEB9Code
+
+      rlProcUnknown9ECEB9Init ; 9E/CEC1
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/CEC2
+
+      rlProcUnknown9ECEB9Cycle ; 9E/CEC2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlUnknown85D347
+        sta $0FD7,b,x
+        jsl rlUnknown85D337
+        sta $0FF7,b,x
+        lda $0FD7,b,x
+        ora $0FF7,b,x
+        sta $7F45A0
+        rtl
+
+        .databank 0
+
+        ; 9E/CEDB
+
+      aProcUnknown9ECEB9Code ; 9E/CEDB
+
+        PROC_HALT
 
     .endsection Unsorted9ECEA0Section
 

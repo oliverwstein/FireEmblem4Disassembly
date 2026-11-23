@@ -2954,7 +2954,7 @@
         stz wR1
         stz wR4
         stz wR5
-        lda #$B882
+        lda #<>aUnitWindowWeaponRankIconSprites
         tay
         jsl rlPushToOAMBuffer
         rts
@@ -2962,6 +2962,25 @@
         .databank 0
 
         ; 8B/B882
+
+      aUnitWindowWeaponRankIconSprites ; 8B/B882
+
+        ; The ten weapon type icons of the weapon rank page (rsUnitWindowRenderWeaponRankIcons).
+
+        _Sprites := [[(  84,   33), $21, SpriteLarge, $040, 3, 5, false, false]]
+        _Sprites ..= [[( 100,   33), $21, SpriteLarge, $042, 3, 5, false, false]]
+        _Sprites ..= [[( 116,   33), $21, SpriteLarge, $044, 3, 5, false, false]]
+        _Sprites ..= [[( 132,   33), $21, SpriteLarge, $046, 3, 5, false, false]]
+        _Sprites ..= [[( 148,   33), $21, SpriteLarge, $048, 3, 5, false, false]]
+        _Sprites ..= [[( 164,   33), $21, SpriteLarge, $04A, 3, 5, false, false]]
+        _Sprites ..= [[( 180,   33), $21, SpriteLarge, $04C, 3, 5, false, false]]
+        _Sprites ..= [[( 196,   33), $21, SpriteLarge, $04E, 3, 5, false, false]]
+        _Sprites ..= [[( 212,   33), $21, SpriteLarge, $060, 3, 5, false, false]]
+        _Sprites ..= [[( 228,   33), $21, SpriteLarge, $062, 3, 5, false, false]]
+
+        .structSpriteArray aUnitWindowWeaponRankIconSprites._Sprites
+
+        ; 8B/B8B6
 
     .endsection Unsorted8BB871Section
 

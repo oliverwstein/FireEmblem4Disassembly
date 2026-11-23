@@ -442,13 +442,16 @@
       .al
       .xl
 
-      rsUnknown82E030 ; 82/E030
+      rsIRQCodeCall ; 82/E030
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; IRQ script command: calls the long routine in the next three bytes
+        ; (as rsHDMACodeCall). Nothing found uses this command or the four
+        ; after it.
 
         lda $0000,b,y
         sta $1697,b
@@ -456,7 +459,7 @@
         sta $1698,b
         phy
         phx
-        jsl $82E048
+        jsl +
         plx
         ply
         inc y
@@ -464,9 +467,85 @@
         inc y
         rts
 
+        +
+        jml [$1697]
+
         .databank 0
 
-        ; 82/E048
+      rsIRQCodeSetRoutine ; 82/E04B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; IRQ script command: sets the entry's routine ($16EA) to the next word.
+
+        lda $0000,b,y
+        sta $16EA,b,x
+        inc y
+        inc y
+        rts
+
+        .databank 0
+
+      rsIRQCodeJump ; 82/E054
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; IRQ script command: continues at the next word.
+
+        lda $0000,b,y
+        tay
+        rts
+
+        .databank 0
+
+      rsIRQCodeJumpIfBitsUnset ; 82/E059
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; IRQ script command: jumps to the first word if none of the bits in the
+        ; second are set in the entry's $16BA.
+
+        lda $0002,b,y
+        bit $16BA,b,x
+        beq rsIRQCodeJump
+        inc y
+        inc y
+        inc y
+        inc y
+        rts
+
+        .databank 0
+
+      rsIRQCodeJumpIfBitsSet ; 82/E066
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; IRQ script command: jumps to the first word if any of them are set.
+
+        lda $0002,b,y
+        bit $16BA,b,x
+        bne rsIRQCodeJump
+        inc y
+        inc y
+        inc y
+        inc y
+        rts
+
+        .databank 0
+
+        ; 82/E073
 
     .endsection Unreferenced82E030Section
     .section Unsorted82E073Section

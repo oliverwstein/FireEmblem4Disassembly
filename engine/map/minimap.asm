@@ -1063,6 +1063,13 @@
 
         ; 88/9AC4
 
+      aUnknown889AC4 ; 88/9AC4
+
+        ; Unreferenced: 15 colours.
+
+        .word $08A5, $1DC9, $1168, $4F9C, $2657, $0D2F, $0089, $6BF4
+        .word $6289, $3945, $7BFF, $7E00, $001F, $03E0, $03FF
+
     .endsection Unsorted8899B8Section
 
 
@@ -1323,6 +1330,13 @@
         .databank 0
 
         ; 88/9C38
+
+      aUnknown889C38 ; 88/9C38
+
+        ; Unreferenced.
+
+        .byte $06, $01, $06, $02, $03, $0A, $0A, $05, $04, $0B, $08, $08, $08, $08, $05, $0B
+        .byte $07, $08, $08, $08, $08, $08, $08, $08, $08, $04
 
     .endsection Unsorted889BF7Section
 

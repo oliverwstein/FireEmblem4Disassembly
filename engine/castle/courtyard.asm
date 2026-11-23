@@ -702,6 +702,14 @@
 
         ; 8A/8682
 
+      aUnknown8A8682 ; 8A/8682
+
+        ; Unreferenced: the courtyard grid slots of the left column (0, 4 ... 20) and
+        ; the right column (3, 7 ... 23).
+
+        .word $0000, $0004, $0008, $000C, $0010, $0014, $0003, $0007
+        .word $000B, $000F, $0013, $0017
+
     .endsection Unsorted8A8643Section
 
 

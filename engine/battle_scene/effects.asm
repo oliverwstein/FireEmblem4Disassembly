@@ -2246,6 +2246,9 @@
 
         ; 96/AD05
 
+        ; Unreachable: it follows a return.
+        rep #$20
+
     .endsection Unreferenced96ACC5Section
     .section Unsorted96AD07Section
 
@@ -2288,6 +2291,9 @@
         .databank 0
 
         ; 96/AD37
+
+        ; Unreachable: it follows a return.
+        rep #$20
 
     .endsection Unsorted96AD07Section
 
@@ -7256,6 +7262,9 @@
 
         ; 96/D254
 
+        ; Unreachable: it follows a return.
+        rep #$20
+
     .endsection Unsorted96CECESection
 
 
@@ -7334,6 +7343,9 @@
         .databank 0
 
         ; 96/D2D5
+
+        ; Unreachable: it follows a return.
+        rep #$20
 
     .endsection Unsorted96D256Section
 
@@ -7528,6 +7540,9 @@
 
         ; 96/D3EB
 
+        ; Unreachable: it follows a return.
+        rep #$20
+
     .endsection Unsorted96D2D7Section
 
 
@@ -7561,6 +7576,9 @@
         .databank 0
 
         ; 96/D400
+
+        ; Unreachable: it follows a return.
+        rep #$20
 
     .endsection Unsorted96D3EDSection
 
@@ -7596,6 +7614,9 @@
 
         ; 96/D415
 
+        ; Unreachable: it follows a return.
+        rep #$20
+
     .endsection Unsorted96D402Section
 
 
@@ -7629,6 +7650,9 @@
         .databank 0
 
         ; 96/D42A
+
+        ; Unreachable: it follows a return.
+        rep #$20
 
     .endsection Unsorted96D417Section
 
@@ -12861,6 +12885,9 @@
 
         ; 96/F28B
 
+        ; Unreachable: it follows a return.
+        rep #$20
+
     .endsection Unsorted96F275Section
 
 
@@ -13401,6 +13428,93 @@
         .databank 0
 
         ; 96/F50D
+
+        ; Unreachable: it follows a return.
+        rtl
+        rtl
+        rtl
+        rtl
+        rtl
+
+      rlUnknown96F512 ; 96/F512
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        sep #$20
+        lda $7FE1B3
+        ora #$04
+        sta $7FE1B3
+        rep #$20
+        lda #$0007
+        jsl rlHDMAEngineFreeEntryByIndex
+        jsl rlUnknown96C9FE
+        rtl
+
+        .databank 0
+
+        ; 96/F52C
+
+      rlUnknown96F52C ; 96/F52C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        sep #$20
+        lda $7FE1B3
+        and #$FB
+        sta $7FE1B3
+        rep #$20
+        jsl rlUnknown95A428
+        jsl rlUnknown96C9FE
+        rtl
+
+        .databank 0
+
+        ; 96/F543
+
+      rlUnknown96F543 ; 96/F543
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        lda #$0007
+        jsl rlHDMAEngineFreeEntryByIndex
+        jsl rlUnknown96C9FE
+        rtl
+
+        .databank 0
+
+        ; 96/F54F
+
+      rlUnknown96F54F ; 96/F54F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        jsl rlUnknown95A428
+        jsl rlUnknown96C9FE
+        rtl
+
+        .databank 0
+
+        ; 96/F558
 
     .endsection Unreferenced96F41ASection
     .section Unsorted96F7D4Section

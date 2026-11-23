@@ -199,6 +199,10 @@
 
         ; 80/B77D
 
+        ; Unreachable: it follows a return.
+        sec
+        rtl
+
     .endsection Unsorted80B74BSection
 
 

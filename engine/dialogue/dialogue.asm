@@ -6983,6 +6983,50 @@
 
         ; 91/A8E4
 
+      rsUnknown91A8E4 ; 91/A8E4
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Unreferenced.
+
+        lda #$0000
+        jsl rlDialogueUpdateSlotOffset
+        lda #$201E
+        sta $18DB,b,x
+        lda #$4000
+        sta $18D7,b,x
+        lda #$020A
+        sta wR1
+        sep #$20
+        lda #$00
+        sta wR0+1
+        xba
+        lda wR1
+        sta wR0
+        lda wR1+1
+        xba
+        rep #$20
+        lsr a
+        lsr a
+        clc
+        adc wR0
+        sta wR0
+        ldx aDialogue,b
+        lda #$7E00
+        sta $18D5,b,x
+        lda #$8388
+        clc
+        adc wR0
+        sta $18D4,b,x
+        brl $91A979
+
+        .databank 0
+
+        ; 91/A928
+
     .endsection DialogueEventCommandSection
 
 

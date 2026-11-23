@@ -92,6 +92,9 @@
 
         ; 8D/B539
 
+        ; Unreachable: it follows a return.
+        rtl
+
     .endsection Unsorted8DB4F6Section
 
 

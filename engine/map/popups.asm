@@ -258,6 +258,74 @@
 
         ; 82/8816
 
+      procUnknown828816 ; 82/8816
+
+        ; Unreferenced: nothing creates this event proc. While it runs,
+        ; Start (or wEventEngineFlags being 0) fades out to the
+        ; chapter intro and ends the event.
+
+        .structProcInfo "TT", rlProcUnknown828816Init, rlProcUnknown828816Cycle, aProcUnknown828816Code
+
+        .word 0
+
+      rlProcUnknown828816Init ; 82/8820
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0200
+        sta wEventProcBanks,b,x
+        rtl
+
+        .databank 0
+
+        ; 82/8827
+
+      rlProcUnknown828816Cycle ; 82/8827
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0200
+        sta wEventProcBanks,b,x
+        lda wEventEngineFlags,b
+        beq _8839
+        lda wJoy1New
+        bit #$1000
+        beq _8862
+
+        _8839
+        phx
+        stz wGameStateRoutine1,b
+        lda #<>rsOpenChapterIntroScreen
+        sta aProcSystem.wInput0,b
+        lda #$0002
+        sta wScreenFadingProcInput,b
+        lda #(`procMainLoopChangeFadeByTimer)<<8
+        sta lR44+1
+        lda #<>procMainLoopChangeFadeByTimer
+        sta lR44
+        jsl rlProcEngineCreateProc
+        plx
+        jsl rlEventEngineFreeProc
+        lda #$0002
+        sta wEventEngineState,b
+
+        _8862
+        rtl
+
+        .databank 0
+
+        ; 82/8863
+
+      aProcUnknown828816Code ; 82/8863
+
+        PROC_HALT
+
     .endsection CastleNamePopUpSection
 
 

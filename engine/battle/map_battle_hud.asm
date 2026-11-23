@@ -3843,7 +3843,7 @@
         jsl rlGetVisibleMapTileBounds
         lda wR0
         clc
-        adc $9ED074
+        adc aUnknown9ED074
         cmp wR4
         bcs _D02B
         cmp wR6
@@ -3858,7 +3858,7 @@
         _D034
         lda wR1
         sec
-        sbc $9ED076
+        sbc aUnknown9ED074+2
         cmp wR4
         bcc _D043
         cmp wR6
@@ -3871,7 +3871,7 @@
         _D04A
         lda wR2
         clc
-        adc $9ED078
+        adc aUnknown9ED074+4
         cmp wR5
         bcs _D059
         cmp wR7
@@ -3897,5 +3897,12 @@
         .databank 0
 
         ; 9E/D074
+
+      aUnknown9ED074 ; 9E/D074
+
+        ; Read by the unreferenced rlUnknown9ED00F: added to and taken from
+        ; the visible map tile bounds.
+
+        .word 4, 5, 5
 
     .endsection Unreferenced9ED006Section

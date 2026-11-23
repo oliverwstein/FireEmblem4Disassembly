@@ -1252,7 +1252,7 @@
       aUnknown8DA502 ; 8D/A502
         HDMA_HALT
 
-      aEpilogueCreditsWaveHDMAInfo .dstruct structHDMADirectEntryInfo, rlEpilogueCreditsWaveHDMACycle, rlEpilogueCreditsWaveHDMACycle, $A622, $7F56C9, PPU_REG_BASE + $0F, $02 ; 8D/A504
+      aEpilogueCreditsWaveHDMAInfo .dstruct structHDMADirectEntryInfo, rlEpilogueCreditsWaveHDMACycle, rlEpilogueCreditsWaveHDMACycle, aEpilogueCreditsWaveHDMACode, $7F56C9, PPU_REG_BASE + $0F, $02 ; 8D/A504
 
     .endsection Table8DA502Section
 
@@ -1306,7 +1306,7 @@
         lda #$01
         sta $7F56CF,x
         rep #$20
-        lda $A612,b,y
+        lda <>aEpilogueCreditsWaveOffsets,b,y
         and #$00FF
         sta $7F56D0,x
         tya
@@ -1336,7 +1336,7 @@
         lda #$01
         sta $7F56EA,x
         rep #$20
-        lda $A612,b,y
+        lda <>aEpilogueCreditsWaveOffsets,b,y
         and #$00FF
         sta $7F56EB,x
         tya
@@ -1366,7 +1366,7 @@
         lda #$01
         sta $7F571D,x
         rep #$20
-        lda $A612,b,y
+        lda <>aEpilogueCreditsWaveOffsets,b,y
         and #$00FF
         sta $7F571E,x
         tya
@@ -1400,6 +1400,16 @@
         .databank 0
 
         ; 8D/A612
+
+      aEpilogueCreditsWaveOffsets ; 8D/A612
+
+        ; The sway of BG2's lines, read 16 frames round.
+
+        .byte 0, 1, 2, 1, 0, 1, 2, 1, 0, 1, 2, 1, 0, 1, 2, 1
+
+      aEpilogueCreditsWaveHDMACode ; 8D/A622
+
+        HDMA_HALT
 
     .endsection Unsorted8DA50FSection
 

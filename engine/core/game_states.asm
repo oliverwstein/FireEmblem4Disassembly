@@ -329,6 +329,13 @@
 
         ; 80/9C77
 
+      rlUnknown809C77 ; 80/9C77
+
+        ; Called only by the unreferenced rlUnknown809C3E: jumps through the
+        ; long pointer at $0306.
+
+        jml [$0306]
+
     .endsection Unreferenced809C3ESection
     .section Unsorted809C7ASection
 
@@ -442,6 +449,14 @@
         .databank 0
 
         ; 8B/A7CE
+
+        ; Unreachable: it follows a return.
+        rts
+
+      aProgrammerCredit ; 8B/A7CF
+
+        ; Unreferenced: a signature left in the ROM.
+        .text "  -- Programed by Takahiro Ohgi -- "
 
     .endsection Unsorted8BA7CBSection
 

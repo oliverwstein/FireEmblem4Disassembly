@@ -108,7 +108,7 @@
         .byte $04, $0B, $04, $0D, $28, $0F, $08, $0D, $08, $0B, $08, $09, $04, $07, $04, $05
         .byte $04, $03, $04, $01, $01, $00, $00, $00
 
-      aEpilogueRecordLayerHDMAInfo .dstruct structHDMADirectEntryInfo, rlEpilogueRecordLayerHDMACycle, rlEpilogueRecordLayerHDMACycle, $AEC0, $7F56C9, PPU_REG_BASE + $2C, $00 ; 8D/AE7A
+      aEpilogueRecordLayerHDMAInfo .dstruct structHDMADirectEntryInfo, rlEpilogueRecordLayerHDMACycle, rlEpilogueRecordLayerHDMACycle, aEpilogueRecordLayerHDMACode, $7F56C9, PPU_REG_BASE + $2C, $00 ; 8D/AE7A
 
     .endsection Table8DADFASection
 
@@ -155,6 +155,10 @@
         .databank 0
 
         ; 8D/AEC0
+
+      aEpilogueRecordLayerHDMACode ; 8D/AEC0
+
+        HDMA_HALT
 
     .endsection Unsorted8DAE85Section
 

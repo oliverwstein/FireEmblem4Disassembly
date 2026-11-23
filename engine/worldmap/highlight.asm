@@ -287,6 +287,14 @@
 
         ; 8B/8A58
 
+      aUnknown8B8A58 ; 8B/8A58
+
+        ; Unreferenced.
+
+        .word $0004, $0002, $000A, $0004, $0006, $0002, $0008, $0006
+        .word $000E, $000E, $0008, $0002, $0008, $0000, $0000, $0000
+        .word $0008, $000A, $0008, $0002, $0002, $000A
+
     .endsection WorldMapHighlightCodeSection
 
 

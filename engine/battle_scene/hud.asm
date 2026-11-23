@@ -3212,7 +3212,7 @@
         lda wR0
         asl a
         tax
-        jsr ($969995,x)
+        jsr (aUnknown969995,x)
         plp
         plb
         .databank $96
@@ -3229,6 +3229,79 @@
         .databank 0
 
         ; 96/9995
+
+      aUnknown969995 ; 96/9995
+
+        ; Jump table of rlUnknown969964.
+
+        .word <>rsUnknown969999
+        .word <>rsUnknown9699BB
+
+      rsUnknown969999 ; 96/9999
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Sets bits 3-5 of $0AF5 in the first combatant slot to Y, and bit 2.
+
+        phx
+        tya
+        ldx #$0000
+        sep #$20
+        asl a
+        asl a
+        asl a
+        pha
+        lda bBattleAnimationCombatantFlags,b,x
+        and #$C7
+        ora #1,s
+        sta bBattleAnimationCombatantFlags,b,x
+        pla
+        lda bBattleAnimationCombatantFlags,b,x
+        ora #$04
+        sta bBattleAnimationCombatantFlags,b,x
+        rep #$20
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/99BB
+
+      rsUnknown9699BB ; 96/99BB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The same for the second combatant slot ($43 on).
+
+        phx
+        tya
+        ldx #$0043
+        sep #$20
+        asl a
+        asl a
+        asl a
+        pha
+        lda bBattleAnimationCombatantFlags,b,x
+        and #$C7
+        ora #1,s
+        sta bBattleAnimationCombatantFlags,b,x
+        pla
+        lda bBattleAnimationCombatantFlags,b,x
+        ora #$04
+        sta bBattleAnimationCombatantFlags,b,x
+        rep #$20
+        plx
+        rts
+
+        .databank 0
+
+        ; 96/99DD
 
     .endsection Unreferenced969964Section
     .section Unsorted9699DDSection

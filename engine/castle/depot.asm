@@ -159,6 +159,12 @@
 
         ; 8A/F259
 
+      aUnknown8AF259 ; 8A/F259
+
+        ; Unreferenced.
+
+        .word $0000, $001A, $0017, $001C, $001A
+
     .endsection DepotScreenSetupSection
 
 
