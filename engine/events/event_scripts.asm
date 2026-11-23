@@ -1110,7 +1110,7 @@
 
         php
         phy
-        jsl rlUnknown8CEDD0
+        jsl rlTryStartLoverHomeCastleConversation
 
         lda #(`procUnknown828A88)<<8
         sta lR44+1

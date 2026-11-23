@@ -1,0 +1,4 @@
+{DIALOGUE_LEFT}{DIALOGUE_FONT_0}ただ⅛いまぁ～､あれ？{DIALOGUE_NL}
+{DIALOGUE_ASMC rlASMCLoverHomeCastleUnit2Name}､{DIALOGUE_NL}
+あたしを待っていてくれたの？{DIALOGUE_NL}
+きゃ～､超うれしい！！{DIALOGUE_EOF}

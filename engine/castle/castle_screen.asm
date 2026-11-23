@@ -258,14 +258,14 @@
         .autsiz
         .databank ?
 
-        ; CASTLE_SCREEN_CONVERSATION: clears the courtyard tables; if wCastleReturnEventFlag is
-        ; set, clears it and runs rlUnknown8CED4F; sets up the conversation scene.
+        ; CASTLE_SCREEN_CONVERSATION: clears the courtyard tables; if wLoverHomeCastleConversationPending is
+        ; set, clears it and runs rlBuildLoverHomeCastleConversation; sets up the conversation scene.
 
         jsl rlClearMovementMapBuffer
-        lda wCastleReturnEventFlag,b
+        lda wLoverHomeCastleConversationPending,b
         beq _B7A3
-        stz wCastleReturnEventFlag,b
-        jsl rlUnknown8CED4F
+        stz wLoverHomeCastleConversationPending,b
+        jsl rlBuildLoverHomeCastleConversation
 
         _B7A3
         lda #CASTLE_CURSOR_TOWN

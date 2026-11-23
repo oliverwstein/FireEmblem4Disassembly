@@ -707,7 +707,7 @@
     wCastleGridSlot .word ?                    ; $000897 ; 0-23, slot on the 4x6 courtyard grid
     wCastleGridSavedSlot .word ?               ; $000899 ; wCastleGridSlot kept while choosing a target
     wCastleSavedUnitRAMPointer .word ?         ; $00089B ; the unit that entered the castle ($FFFF none)
-    wCastleReturnEventFlag .word ?             ; $00089D ; nonzero: rlUnknown8CED4F runs before the next conversation
+    wLoverHomeCastleConversationPending .word ? ; $00089D ; nonzero: rlBuildLoverHomeCastleConversation builds the next conversation's text
     wEnteredCastleLocationID .word ?           ; $00089F ; location ID of the castle entered
     wCastleMenuOptionIndex .word ?             ; $0008A1 ; the keeper option under the cursor
     wCastleConfirmCursorIndex .word ?          ; $0008A3 ; yes/no cursor (0 yes, 1 no)

@@ -1,0 +1,3 @@
+{DIALOGUE_LEFT}{DIALOGUE_FONT_0}あら､{DIALOGUE_ASMC rlASMCLoverHomeCastleUnit2Name}{DIALOGUE_NL}
+あたしの帰りを待っていてくれたの？{DIALOGUE_NL}
+ホント､うれしい！{DIALOGUE_EOF}

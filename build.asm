@@ -70,6 +70,7 @@
   .include "engine/castle/augury.asm"
   .include "engine/castle/class_change.asm"
   .include "engine/castle/conversation.asm"
+  .include "engine/castle/lover_conversation.asm"
   .include "engine/worldmap/world_map.asm"
   .include "engine/menus/game_over.asm"
   .include "engine/core/game_states.asm"
@@ -214,7 +215,6 @@
   .include "engine/core/boot.asm"
   .include "engine/core/anti_tamper.asm"
   .include "engine/sound/driver.asm"
-  .include "engine/unsorted/bank8C.asm"
   .include "engine/battle/map_magic_effects.asm"
 
   .include "events/ChapterPrologue.asm"
@@ -4788,6 +4788,139 @@
       .dsection Data8CEEE8Section
 
       .dsection Unsorted8CF06ASection
+
+      .dsection LoverHomeCastleASMCSection
+
+      dialogueLoverHomeCastleArrivalSigurd .include "text/dialogue/LoverHomeCastle/ArrivalSigurd.dialogue.txt" ; 8CF0F1
+      dialogueLoverHomeCastleArrivalNaoise .include "text/dialogue/LoverHomeCastle/ArrivalNaoise.dialogue.txt" ; 8CF102
+      dialogueLoverHomeCastleArrivalAlec .include "text/dialogue/LoverHomeCastle/ArrivalAlec.dialogue.txt" ; 8CF11A
+      dialogueLoverHomeCastleArrivalArden .include "text/dialogue/LoverHomeCastle/ArrivalArden.dialogue.txt" ; 8CF131
+      dialogueLoverHomeCastleArrivalFinn .include "text/dialogue/LoverHomeCastle/ArrivalFinn.dialogue.txt" ; 8CF14D
+      dialogueLoverHomeCastleArrivalQuan .include "text/dialogue/LoverHomeCastle/ArrivalQuan.dialogue.txt" ; 8CF168
+      dialogueLoverHomeCastleArrivalMidir .include "text/dialogue/LoverHomeCastle/ArrivalMidir.dialogue.txt" ; 8CF186
+      dialogueLoverHomeCastleArrivalLewyn .include "text/dialogue/LoverHomeCastle/ArrivalLewyn.dialogue.txt" ; 8CF1A2
+      dialogueLoverHomeCastleArrivalChulainn .include "text/dialogue/LoverHomeCastle/ArrivalChulainn.dialogue.txt" ; 8CF1BB
+      dialogueLoverHomeCastleArrivalAzelle .include "text/dialogue/LoverHomeCastle/ArrivalAzelle.dialogue.txt" ; 8CF1CC
+      dialogueLoverHomeCastleArrivalJamke .include "text/dialogue/LoverHomeCastle/ArrivalJamke.dialogue.txt" ; 8CF1EA
+      dialogueLoverHomeCastleArrivalClaud .include "text/dialogue/LoverHomeCastle/ArrivalClaud.dialogue.txt" ; 8CF201
+      dialogueLoverHomeCastleArrivalBeowulf .include "text/dialogue/LoverHomeCastle/ArrivalBeowulf.dialogue.txt" ; 8CF21F
+      dialogueLoverHomeCastleArrivalLex .include "text/dialogue/LoverHomeCastle/ArrivalLex.dialogue.txt" ; 8CF238
+      dialogueLoverHomeCastleArrivalDew .include "text/dialogue/LoverHomeCastle/ArrivalDew.dialogue.txt" ; 8CF253
+      dialogueLoverHomeCastleArrivalDeirdre .include "text/dialogue/LoverHomeCastle/ArrivalDeirdre.dialogue.txt" ; 8CF284
+      dialogueLoverHomeCastleArrivalEthlyn .include "text/dialogue/LoverHomeCastle/ArrivalEthlyn.dialogue.txt" ; 8CF29E
+      dialogueLoverHomeCastleArrivalLachesis .include "text/dialogue/LoverHomeCastle/ArrivalLachesis.dialogue.txt" ; 8CF2BB
+      dialogueLoverHomeCastleArrivalAyra .include "text/dialogue/LoverHomeCastle/ArrivalAyra.dialogue.txt" ; 8CF2D2
+      dialogueLoverHomeCastleArrivalErinys .include "text/dialogue/LoverHomeCastle/ArrivalErinys.dialogue.txt" ; 8CF2ED
+      dialogueLoverHomeCastleArrivalTailtiu .include "text/dialogue/LoverHomeCastle/ArrivalTailtiu.dialogue.txt" ; 8CF30E
+      dialogueLoverHomeCastleArrivalSilvia .include "text/dialogue/LoverHomeCastle/ArrivalSilvia.dialogue.txt" ; 8CF33D
+      dialogueLoverHomeCastleArrivalEdain .include "text/dialogue/LoverHomeCastle/ArrivalEdain.dialogue.txt" ; 8CF361
+      dialogueLoverHomeCastleArrivalBrigid .include "text/dialogue/LoverHomeCastle/ArrivalBrigid.dialogue.txt" ; 8CF37B
+      dialogueLoverHomeCastleArrivalSeliph .include "text/dialogue/LoverHomeCastle/ArrivalSeliph.dialogue.txt" ; 8CF391
+      dialogueLoverHomeCastleArrivalShannan .include "text/dialogue/LoverHomeCastle/ArrivalShannan.dialogue.txt" ; 8CF3AD
+      dialogueLoverHomeCastleArrivalDalvin .include "text/dialogue/LoverHomeCastle/ArrivalDalvin.dialogue.txt" ; 8CF3BE
+      dialogueLoverHomeCastleArrivalAsaello .include "text/dialogue/LoverHomeCastle/ArrivalAsaello.dialogue.txt" ; 8CF3DC
+      dialogueLoverHomeCastleArrivalLeif .include "text/dialogue/LoverHomeCastle/ArrivalLeif.dialogue.txt" ; 8CF3F6
+      dialogueLoverHomeCastleArrivalIuchar .include "text/dialogue/LoverHomeCastle/ArrivalIuchar.dialogue.txt" ; 8CF41A
+      dialogueLoverHomeCastleArrivalCharlot .include "text/dialogue/LoverHomeCastle/ArrivalCharlot.dialogue.txt" ; 8CF438
+      dialogueLoverHomeCastleArrivalHawk .include "text/dialogue/LoverHomeCastle/ArrivalHawk.dialogue.txt" ; 8CF456
+      dialogueLoverHomeCastleArrivalTristan .include "text/dialogue/LoverHomeCastle/ArrivalTristan.dialogue.txt" ; 8CF469
+      dialogueLoverHomeCastleArrivalAdultFinn .include "text/dialogue/LoverHomeCastle/ArrivalAdultFinn.dialogue.txt" ; 8CF487
+      dialogueLoverHomeCastleArrivalDeimne .include "text/dialogue/LoverHomeCastle/ArrivalDeimne.dialogue.txt" ; 8CF49C
+      dialogueLoverHomeCastleArrivalHannibal .include "text/dialogue/LoverHomeCastle/ArrivalHannibal.dialogue.txt" ; 8CF4BB
+      dialogueLoverHomeCastleArrivalAres .include "text/dialogue/LoverHomeCastle/ArrivalAres.dialogue.txt" ; 8CF4CF
+      dialogueLoverHomeCastleArrivalAmid .include "text/dialogue/LoverHomeCastle/ArrivalAmid.dialogue.txt" ; 8CF4E4
+      dialogueLoverHomeCastleArrivalOifey .include "text/dialogue/LoverHomeCastle/ArrivalOifey.dialogue.txt" ; 8CF4FB
+      dialogueLoverHomeCastleArrivalDaisy .include "text/dialogue/LoverHomeCastle/ArrivalDaisy.dialogue.txt" ; 8CF510
+      dialogueLoverHomeCastleArrivalCreidne .include "text/dialogue/LoverHomeCastle/ArrivalCreidne.dialogue.txt" ; 8CF545
+      dialogueLoverHomeCastleArrivalMuirne .include "text/dialogue/LoverHomeCastle/ArrivalMuirne.dialogue.txt" ; 8CF56E
+      dialogueLoverHomeCastleArrivalJulia .include "text/dialogue/LoverHomeCastle/ArrivalJulia.dialogue.txt" ; 8CF595
+      dialogueLoverHomeCastleArrivalAltena .include "text/dialogue/LoverHomeCastle/ArrivalAltena.dialogue.txt" ; 8CF5AF
+      dialogueLoverHomeCastleArrivalHermina .include "text/dialogue/LoverHomeCastle/ArrivalHermina.dialogue.txt" ; 8CF5CE
+      dialogueLoverHomeCastleArrivalLinda .include "text/dialogue/LoverHomeCastle/ArrivalLinda.dialogue.txt" ; 8CF5FD
+      dialogueLoverHomeCastleArrivalLaylea .include "text/dialogue/LoverHomeCastle/ArrivalLaylea.dialogue.txt" ; 8CF626
+      dialogueLoverHomeCastleArrivalJeanne .include "text/dialogue/LoverHomeCastle/ArrivalJeanne.dialogue.txt" ; 8CF651
+      dialogueLoverHomeCastleArrivalIucharba .include "text/dialogue/LoverHomeCastle/ArrivalIucharba.dialogue.txt" ; 8CF671
+      dialogueLoverHomeCastleArrivalScathach .include "text/dialogue/LoverHomeCastle/ArrivalScathach.dialogue.txt" ; 8CF694
+      dialogueLoverHomeCastleArrivalFebail .include "text/dialogue/LoverHomeCastle/ArrivalFebail.dialogue.txt" ; 8CF6B2
+      dialogueLoverHomeCastleArrivalCoirpre .include "text/dialogue/LoverHomeCastle/ArrivalCoirpre.dialogue.txt" ; 8CF6CC
+      dialogueLoverHomeCastleArrivalCed .include "text/dialogue/LoverHomeCastle/ArrivalCed.dialogue.txt" ; 8CF6EA
+      dialogueLoverHomeCastleArrivalDiarmuid .include "text/dialogue/LoverHomeCastle/ArrivalDiarmuid.dialogue.txt" ; 8CF6FD
+      dialogueLoverHomeCastleArrivalLester .include "text/dialogue/LoverHomeCastle/ArrivalLester.dialogue.txt" ; 8CF71B
+      dialogueLoverHomeCastleArrivalArthur .include "text/dialogue/LoverHomeCastle/ArrivalArthur.dialogue.txt" ; 8CF73A
+      dialogueLoverHomeCastleArrivalPatty .include "text/dialogue/LoverHomeCastle/ArrivalPatty.dialogue.txt" ; 8CF750
+      dialogueLoverHomeCastleArrivalLarcei .include "text/dialogue/LoverHomeCastle/ArrivalLarcei.dialogue.txt" ; 8CF786
+      dialogueLoverHomeCastleArrivalLana .include "text/dialogue/LoverHomeCastle/ArrivalLana.dialogue.txt" ; 8CF7AE
+      dialogueLoverHomeCastleArrivalFee .include "text/dialogue/LoverHomeCastle/ArrivalFee.dialogue.txt" ; 8CF7D5
+      dialogueLoverHomeCastleArrivalTine .include "text/dialogue/LoverHomeCastle/ArrivalTine.dialogue.txt" ; 8CF804
+      dialogueLoverHomeCastleArrivalLene .include "text/dialogue/LoverHomeCastle/ArrivalLene.dialogue.txt" ; 8CF82D
+      dialogueLoverHomeCastleArrivalNanna .include "text/dialogue/LoverHomeCastle/ArrivalNanna.dialogue.txt" ; 8CF858
+      dialogueLoverHomeCastleReplySigurd .include "text/dialogue/LoverHomeCastle/ReplySigurd.dialogue.txt" ; 8CF878
+      dialogueLoverHomeCastleReplyNaoise .include "text/dialogue/LoverHomeCastle/ReplyNaoise.dialogue.txt" ; 8CF891
+      dialogueLoverHomeCastleReplyAlec .include "text/dialogue/LoverHomeCastle/ReplyAlec.dialogue.txt" ; 8CF8A9
+      dialogueLoverHomeCastleReplyArden .include "text/dialogue/LoverHomeCastle/ReplyArden.dialogue.txt" ; 8CF8BF
+      dialogueLoverHomeCastleReplyFinn .include "text/dialogue/LoverHomeCastle/ReplyFinn.dialogue.txt" ; 8CF8D5
+      dialogueLoverHomeCastleReplyQuan .include "text/dialogue/LoverHomeCastle/ReplyQuan.dialogue.txt" ; 8CF8EF
+      dialogueLoverHomeCastleReplyMidir .include "text/dialogue/LoverHomeCastle/ReplyMidir.dialogue.txt" ; 8CF908
+      dialogueLoverHomeCastleReplyLewyn .include "text/dialogue/LoverHomeCastle/ReplyLewyn.dialogue.txt" ; 8CF932
+      dialogueLoverHomeCastleReplyChulainn .include "text/dialogue/LoverHomeCastle/ReplyChulainn.dialogue.txt" ; 8CF954
+      dialogueLoverHomeCastleReplyAzelle .include "text/dialogue/LoverHomeCastle/ReplyAzelle.dialogue.txt" ; 8CF96C
+      dialogueLoverHomeCastleReplyJamke .include "text/dialogue/LoverHomeCastle/ReplyJamke.dialogue.txt" ; 8CF981
+      dialogueLoverHomeCastleReplyClaud .include "text/dialogue/LoverHomeCastle/ReplyClaud.dialogue.txt" ; 8CF99A
+      dialogueLoverHomeCastleReplyBeowulf .include "text/dialogue/LoverHomeCastle/ReplyBeowulf.dialogue.txt" ; 8CF9CA
+      dialogueLoverHomeCastleReplyLex .include "text/dialogue/LoverHomeCastle/ReplyLex.dialogue.txt" ; 8CF9E1
+      dialogueLoverHomeCastleReplyDew .include "text/dialogue/LoverHomeCastle/ReplyDew.dialogue.txt" ; 8CF9F8
+      dialogueLoverHomeCastleReplyDeirdre .include "text/dialogue/LoverHomeCastle/ReplyDeirdre.dialogue.txt" ; 8CFA1A
+      dialogueLoverHomeCastleReplyEthlyn .include "text/dialogue/LoverHomeCastle/ReplyEthlyn.dialogue.txt" ; 8CFA2D
+      dialogueLoverHomeCastleReplyLachesis .include "text/dialogue/LoverHomeCastle/ReplyLachesis.dialogue.txt" ; 8CFA42
+      dialogueLoverHomeCastleReplyAyra .include "text/dialogue/LoverHomeCastle/ReplyAyra.dialogue.txt" ; 8CFA5E
+      dialogueLoverHomeCastleReplyErinys .include "text/dialogue/LoverHomeCastle/ReplyErinys.dialogue.txt" ; 8CFA7E
+      dialogueLoverHomeCastleReplyTailtiu .include "text/dialogue/LoverHomeCastle/ReplyTailtiu.dialogue.txt" ; 8CFA98
+      dialogueLoverHomeCastleReplySilvia .include "text/dialogue/LoverHomeCastle/ReplySilvia.dialogue.txt" ; 8CFABC
+      dialogueLoverHomeCastleReplyEdain .include "text/dialogue/LoverHomeCastle/ReplyEdain.dialogue.txt" ; 8CFAE1
+      dialogueLoverHomeCastleReplyBrigid .include "text/dialogue/LoverHomeCastle/ReplyBrigid.dialogue.txt" ; 8CFB00
+      dialogueLoverHomeCastleReplySeliph .include "text/dialogue/LoverHomeCastle/ReplySeliph.dialogue.txt" ; 8CFB18
+      dialogueLoverHomeCastleReplyShannan .include "text/dialogue/LoverHomeCastle/ReplyShannan.dialogue.txt" ; 8CFB35
+      dialogueLoverHomeCastleReplyDalvin .include "text/dialogue/LoverHomeCastle/ReplyDalvin.dialogue.txt" ; 8CFB4A
+      dialogueLoverHomeCastleReplyAsaello .include "text/dialogue/LoverHomeCastle/ReplyAsaello.dialogue.txt" ; 8CFB68
+      dialogueLoverHomeCastleReplyLeif .include "text/dialogue/LoverHomeCastle/ReplyLeif.dialogue.txt" ; 8CFB75
+      dialogueLoverHomeCastleReplyIuchar .include "text/dialogue/LoverHomeCastle/ReplyIuchar.dialogue.txt" ; 8CFB96
+      dialogueLoverHomeCastleReplyCharlot .include "text/dialogue/LoverHomeCastle/ReplyCharlot.dialogue.txt" ; 8CFBB5
+      dialogueLoverHomeCastleReplyHawk .include "text/dialogue/LoverHomeCastle/ReplyHawk.dialogue.txt" ; 8CFBDC
+      dialogueLoverHomeCastleReplyTristan .include "text/dialogue/LoverHomeCastle/ReplyTristan.dialogue.txt" ; 8CFBF5
+      dialogueLoverHomeCastleReplyAdultFinn .include "text/dialogue/LoverHomeCastle/ReplyAdultFinn.dialogue.txt" ; 8CFC0B
+      dialogueLoverHomeCastleReplyDeimne .include "text/dialogue/LoverHomeCastle/ReplyDeimne.dialogue.txt" ; 8CFC35
+      dialogueLoverHomeCastleReplyHannibal .include "text/dialogue/LoverHomeCastle/ReplyHannibal.dialogue.txt" ; 8CFC49
+      dialogueLoverHomeCastleReplyAres .include "text/dialogue/LoverHomeCastle/ReplyAres.dialogue.txt" ; 8CFC70
+      dialogueLoverHomeCastleReplyAmid .include "text/dialogue/LoverHomeCastle/ReplyAmid.dialogue.txt" ; 8CFC8F
+      dialogueLoverHomeCastleReplyOifey .include "text/dialogue/LoverHomeCastle/ReplyOifey.dialogue.txt" ; 8CFCAA
+      dialogueLoverHomeCastleReplyDaisy .include "text/dialogue/LoverHomeCastle/ReplyDaisy.dialogue.txt" ; 8CFCCC
+      dialogueLoverHomeCastleReplyCreidne .include "text/dialogue/LoverHomeCastle/ReplyCreidne.dialogue.txt" ; 8CFCF6
+      dialogueLoverHomeCastleReplyMuirne .include "text/dialogue/LoverHomeCastle/ReplyMuirne.dialogue.txt" ; 8CFD11
+      dialogueLoverHomeCastleReplyJulia .include "text/dialogue/LoverHomeCastle/ReplyJulia.dialogue.txt" ; 8CFD29
+      dialogueLoverHomeCastleReplyAltena .include "text/dialogue/LoverHomeCastle/ReplyAltena.dialogue.txt" ; 8CFD4A
+      dialogueLoverHomeCastleReplyHermina .include "text/dialogue/LoverHomeCastle/ReplyHermina.dialogue.txt" ; 8CFD66
+      dialogueLoverHomeCastleReplyLinda .include "text/dialogue/LoverHomeCastle/ReplyLinda.dialogue.txt" ; 8CFD8A
+      dialogueLoverHomeCastleReplyLaylea .include "text/dialogue/LoverHomeCastle/ReplyLaylea.dialogue.txt" ; 8CFDB5
+      dialogueLoverHomeCastleReplyJeanne .include "text/dialogue/LoverHomeCastle/ReplyJeanne.dialogue.txt" ; 8CFDD6
+      dialogueLoverHomeCastleReplyIucharba .include "text/dialogue/LoverHomeCastle/ReplyIucharba.dialogue.txt" ; 8CFDFA
+      dialogueLoverHomeCastleReplyScathach .include "text/dialogue/LoverHomeCastle/ReplyScathach.dialogue.txt" ; 8CFE15
+      dialogueLoverHomeCastleReplyFebail .include "text/dialogue/LoverHomeCastle/ReplyFebail.dialogue.txt" ; 8CFE33
+      dialogueLoverHomeCastleReplyCoirpre .include "text/dialogue/LoverHomeCastle/ReplyCoirpre.dialogue.txt" ; 8CFE40
+      dialogueLoverHomeCastleReplyCed .include "text/dialogue/LoverHomeCastle/ReplyCed.dialogue.txt" ; 8CFE66
+      dialogueLoverHomeCastleReplyDiarmuid .include "text/dialogue/LoverHomeCastle/ReplyDiarmuid.dialogue.txt" ; 8CFE7F
+      dialogueLoverHomeCastleReplyLester .include "text/dialogue/LoverHomeCastle/ReplyLester.dialogue.txt" ; 8CFE95
+      dialogueLoverHomeCastleReplyArthur .include "text/dialogue/LoverHomeCastle/ReplyArthur.dialogue.txt" ; 8CFEA9
+      dialogueLoverHomeCastleReplyPatty .include "text/dialogue/LoverHomeCastle/ReplyPatty.dialogue.txt" ; 8CFEC4
+      dialogueLoverHomeCastleReplyLarcei .include "text/dialogue/LoverHomeCastle/ReplyLarcei.dialogue.txt" ; 8CFEEE
+      dialogueLoverHomeCastleReplyLana .include "text/dialogue/LoverHomeCastle/ReplyLana.dialogue.txt" ; 8CFF09
+      dialogueLoverHomeCastleReplyFee .include "text/dialogue/LoverHomeCastle/ReplyFee.dialogue.txt" ; 8CFF21
+      dialogueLoverHomeCastleReplyTine .include "text/dialogue/LoverHomeCastle/ReplyTine.dialogue.txt" ; 8CFF45
+      dialogueLoverHomeCastleReplyLene .include "text/dialogue/LoverHomeCastle/ReplyLene.dialogue.txt" ; 8CFF70
+      dialogueLoverHomeCastleReplyNanna .include "text/dialogue/LoverHomeCastle/ReplyNanna.dialogue.txt" ; 8CFF91
+      dialogueLoverHomeCastleUnit1NameSama .include "text/dialogue/LoverHomeCastle/Unit1NameSama.dialogue.txt" ; 8CFFB5
+      dialogueLoverHomeCastleUnit2NameSama .include "text/dialogue/LoverHomeCastle/Unit2NameSama.dialogue.txt" ; 8CFFBB
+      dialogueLoverHomeCastleUnit1Name .include "text/dialogue/LoverHomeCastle/Unit1Name.dialogue.txt" ; 8CFFC1
+      dialogueLoverHomeCastleUnit2Name .include "text/dialogue/LoverHomeCastle/Unit2Name.dialogue.txt" ; 8CFFC4
 
     .here
 

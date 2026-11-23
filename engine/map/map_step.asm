@@ -1162,7 +1162,7 @@
         jsl rlGetAndRunChapterMapEventConditions
         bcs _End
 
-          jsl rlUnknown8CEDD0
+          jsl rlTryStartLoverHomeCastleConversation
 
         _End
         sec

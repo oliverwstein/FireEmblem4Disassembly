@@ -1,0 +1,3 @@
+{DIALOGUE_LEFT}{DIALOGUE_ASMC rlASMCLoverHomeCastleUnit2Name}{DIALOGUE_FONT_0}､ただ⅛いま帰りました{DIALOGUE_NL}
+わざわざ待っていてくれたの？{DIALOGUE_NL}
+{DIALOGUE_EOF}
