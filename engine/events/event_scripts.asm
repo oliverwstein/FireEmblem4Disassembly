@@ -8007,7 +8007,7 @@
         ldx aProcSystem.wInput0,b
         ldy aProcSystem.wInput1,b
         lda aActionStructUnit1.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda #$0000
         sta wMapMagicFlags
         lda wR1
@@ -8066,7 +8066,7 @@
       aProcUnknown9EECA4Code ; 9E/ED31
 
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown9EC9FD
+        PROC_SET_ONCYCLE rlQueueMapMagicBackgroundAll
         PROC_YIELD 16
         PROC_CALL rlUploadMapMagicBackgroundTiles
         PROC_YIELD 4

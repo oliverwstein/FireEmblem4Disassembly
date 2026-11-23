@@ -16,9 +16,9 @@
       .al
       .xl
 
-      aUnknown9CFC00 ; 9C/FC00
+      aMapBattleLevelUpPalettes ; 9C/FC00
 
-        ; 16 palettes (offset +$0100 read by rlUnknown9E93A4 and rlUnknown9E965E).
+        ; 16 palettes (offset +$0100 read by rlLoadLevelUpBannerGraphics and rlLoadStatGainGraphics).
 
         .word $4D96, $318B, $7FFF, $1484, $7FFF, $4D96, $4D96, $4D96
         .word $7FFF, $5B00, $0C20, $77FF, $7FFF, $001F, $0003, $7FBF
@@ -176,13 +176,15 @@
       .al
       .xl
 
-      rlUnknown9E8035 ; 9E/8035
+      rlUnusedStartDemoMapBattle ; 9E/8035
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unreferenced: a copy of rlASMCStartDemoMapBattle that creates procMapBattle itself instead of jumping into rlStartMapBattleAnimation.
 
         phx
         lda #$0001
@@ -1703,17 +1705,19 @@
       .al
       .xl
 
-      rlUnknown9E88CE ; 9E/88CE
+      rlInitMapBattleSpriteInfos ; 9E/88CE
 
         .al
         .autsiz
         .databank ?
 
+        ; Writes the four active sprite definitions of the battle's sprites into RAM (aMapBattleAttackerSpriteInfo...: Init and OnCycle point to an rtl at bMapBattleSpriteInfoRTL), so that their scripts can be in the decompressed sprite data in bank $7E.
+
         phx
         ldx #2
 
           -
-          lda aUnknown9E88F4,x
+          lda aMapBattleSpriteInfoTemplate,x
           sta aMapBattleAttackerSpriteInfo.Init,x
           sta aMapBattleAttackerAuxSpriteInfo.Init,x
           sta aMapBattleDefenderSpriteInfo.Init,x
@@ -1722,7 +1726,7 @@
           dec x
           bpl -
 
-        lda aUnknown9E88F4 + 4
+        lda aMapBattleSpriteInfoTemplate + 4
         sta bMapBattleSpriteInfoRTL
         plx
         rtl
@@ -1737,19 +1741,21 @@
       .al
       .xl
 
-      aUnknown9E88F4 ; 9E/88F4
+      aMapBattleSpriteInfoTemplate ; 9E/88F4
 
-        .word $FCA0
-        .word $FCA0
-        .byte $6B
+        .word <>bMapBattleSpriteInfoRTL ; Init
+        .word <>bMapBattleSpriteInfoRTL ; OnCycle
+        .byte $6B ; the rtl at bMapBattleSpriteInfoRTL
 
-      rlUnknown9E88F9 ; 9E/88F9
+      rlQueueMapBattleSpriteGraphics ; 9E/88F9
 
-        ; Pushes X and runs on into rlUnknown9E88FA.
+        ; Pushes X and runs on into rlQueueMapBattleSpriteGraphicsBody.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Queues the decompression of both sides' sprite graphics for their facing (aBattleMapSpriteData, the second pointer of the pair) to aDecompressionBuffer and + $2000, and the weapon icons (gcUnknownACCC17) to + $4000. A dance or an action without a target (wMapBattleSolo) loads gcUnknownACC8C3 instead. Pushes X and runs on into rlQueueMapBattleSpriteGraphicsBody.
 
         phx
 
@@ -1763,13 +1769,14 @@
       .al
       .xl
 
-      rlUnknown9E88FA ; 9E/88FA
+      rlQueueMapBattleSpriteGraphicsBody ; 9E/88FA
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The body of rlQueueMapBattleSpriteGraphics, entered only by running on from it (it pops the X that routine pushed).
 
         phy
         phb
@@ -1786,9 +1793,9 @@
         sta @l $000224
         lda #$0002
         sta @l $000226
-        lda #$AC00
+        lda #(`gcUnknownACC8C3)<<8
         sta @l lR18+1
-        lda #$C8C3
+        lda #<>gcUnknownACC8C3
         sta @l lR18
         bra _895A
 
@@ -1942,7 +1949,7 @@
 
         _8A2D
         lda aActionStructUnit1
-        jsl rlUnknown9EAC0E
+        jsl rlHideCastleScreenUnit
 
         _8A35
         lda wMapBattleMode
@@ -1961,16 +1968,16 @@
         sta aMapAction.wSideAllegiance
 
         _8A59
-        jsl rlUnknown9E8D6C
-        jsl rlUnknown9E8DBB
+        jsl rlUploadMapBattleSideTiles
+        jsl rlUploadMapBattleSideFrame
         lda aActionStructUnit1.WeaponID
-        jsl rlUnknown9E8E01
+        jsl rlUploadMapBattleWeaponIcon
         lda aMapAction.wAttackerXTile
         tax
         lda aMapAction.wAttackerYTile
         tay
         lda aActionStructUnit1.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda wR0
         and #$00FF
         sta aMapAction.wMapBattleAttackerXPixel
@@ -2085,7 +2092,7 @@
 
         _8B74
         lda aActionStructUnit2
-        jsl rlUnknown9EAC0E
+        jsl rlHideCastleScreenUnit
 
         _8B7C
         lda wMapBattleMode
@@ -2104,16 +2111,16 @@
         sta aMapAction.wSideAllegiance
 
         _8BA0
-        jsl rlUnknown9E8D6C
-        jsl rlUnknown9E8DBB
+        jsl rlUploadMapBattleSideTiles
+        jsl rlUploadMapBattleSideFrame
         lda aActionStructUnit2.WeaponID
-        jsl rlUnknown9E8E01
+        jsl rlUploadMapBattleWeaponIcon
         lda aMapAction.wDefenderXTile
         tax
         lda aMapAction.wDefenderYTile
         tay
         lda aActionStructUnit2.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda wR0
         and #$00FF
         sta aMapAction.wMapBattleDefenderXPixel
@@ -2193,17 +2200,19 @@
 
         ; 9E/8C81
 
-      rlUnknown9E8C81 ; 9E/8C81
+      rlSetMapMagicPositions ; 9E/8C81
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sets wMapMagicCasterPixel and wMapMagicTargetPixel from the side acting in this round (bit 0 of its entry), both to the attacker without a defender; and the Rescue destination (rsSetMapMagicRescueDestination).
+
         phx
         lda #$0000
         sta wMapMagicStart
-        jsr rsUnknown9E8CED
+        jsr rsSetMapMagicRescueDestination
         lda aMapAction.wMapBattleAttackerYPixel
         xba
         ora aMapAction.wMapBattleAttackerXPixel
@@ -2252,12 +2261,14 @@
 
         ; 9E/8CED
 
-      rsUnknown9E8CED ; 9E/8CED
+      rsSetMapMagicRescueDestination ; 9E/8CED
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; For the Rescue effect ($21): $7F509D = the screen position of the destination tile ($7E4F77, $7E4F79), X in the low byte and Y in the high; else $FFFF.
 
         phx
         lda #$FFFF
@@ -2270,7 +2281,7 @@
         lda $7E4F79
         tay
         lda aActionStructUnit2.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda wR0
         and #$00FF
         sta wR0
@@ -2296,11 +2307,13 @@
       .al
       .xl
 
-      rlUnknown9E8D25 ; 9E/8D25
+      rlGetMapBattleUnitScreenPosition ; 9E/8D25
 
         .al
         .autsiz
         .databank ?
+
+        ; A = unit, X/Y = its tile: wR0/wR1 = the center of the tile on screen. On the castle screen (wBattleType 3) the unit's courtyard sprite position by generation instead (aCastleCourtyardSpriteX/Y).
 
         sta wR0
         lda wBattleType
@@ -2356,12 +2369,14 @@
       .al
       .xl
 
-      rlUnknown9E8D6C ; 9E/8D6C
+      rlUploadMapBattleSideTiles ; 9E/8D6C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Uploads $400 bytes of the side's decompressed graphics (aDecompressionBuffer, + $2000 for the defender; the block for its weapon type from aMapBattleWeaponTypeTileOffsets) to its sprite VRAM (aMapBattleSideTileVRAM).
 
         phb
         phk
@@ -2389,7 +2404,7 @@
         lda aMapAction.wSide
         asl a
         tax
-        lda @l aUnknown9EB4DB,x
+        lda @l aMapBattleSideTileVRAM,x
         sta wR2
         lda bBufferOBSEL
         and #$0003
@@ -2413,12 +2428,14 @@
 
         ; 9E/8DBB
 
-      rlUnknown9E8DBB ; 9E/8DBB
+      rlUploadMapBattleSideFrame ; 9E/8DBB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Uploads the side's first frame (aDecompressionBuffer + $1000, + $2000 for the defender) to its frame VRAM (aMapBattleSideFrameVRAM): short or tall by wSideTallSprite.
 
         phx
         phb
@@ -2428,7 +2445,7 @@
         lda aMapAction.wSide
         asl a
         tax
-        lda @l aUnknown9EB4C9,x
+        lda @l aMapBattleSideGraphicsOffsets,x
         sta wR2
         lda #(`aDecompressionBuffer)<<8
         sta lR18+1
@@ -2437,7 +2454,7 @@
         adc #$1000
         adc wR2
         sta lR18
-        lda @l aUnknown9EB4D7,x
+        lda @l aMapBattleSideFrameVRAM,x
         sta wR2
         lda aMapAction.wSideTallSprite
         and #$00FF
@@ -2463,12 +2480,14 @@
 
         ; 9E/8E01
 
-      rlUnknown9E8E01 ; 9E/8E01
+      rlUploadMapBattleWeaponIcon ; 9E/8E01
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = item ID: for a weapon (below $3A, or $7A-$7C) uploads its icon from the decompressed weapon icons (aMapBattleWeaponIcons, + $4000) into the side's sprite VRAM and sets colours 2 and 3 of the side's palette (aMapBattleWeaponIconColors).
 
         phx
         phy
@@ -2503,7 +2522,7 @@
         sta $7F57EA
         asl a
         tax
-        lda aUnknown9E8EC4,x
+        lda aMapBattleWeaponIcons,x
         and #$00FF
         xba
         sta wR2
@@ -2519,7 +2538,7 @@
         lda aMapAction.wSide
         asl a
         tax
-        lda aUnknown9EB4DB,x
+        lda aMapBattleSideTileVRAM,x
         sta wR2
         lda bBufferOBSEL
         and #$0003
@@ -2545,17 +2564,17 @@
         lda $7F57EA
         asl a
         tax
-        lda aUnknown9E8EC4,x
+        lda aMapBattleWeaponIcons,x
         and #$FF00
         xba
         asl a
         asl a
         tax
-        lda aUnknown9E8F3E,x
+        lda aMapBattleWeaponIconColors,x
         pha
         inc x
         inc x
-        lda aUnknown9E8F3E,x
+        lda aMapBattleWeaponIconColors,x
         pha
         lda aMapAction.wSideAllegiance
         inc a
@@ -2591,9 +2610,9 @@
       .al
       .xl
 
-      aUnknown9E8EC4 ; 9E/8EC4
+      aMapBattleWeaponIcons ; 9E/8EC4
 
-        ; Read by rlUnknown9E8E01.
+        ; Read by rlUploadMapBattleWeaponIcon.
 
         .word $0200, $0000, $0900, $0205, $0005, $0905, $0607, $0608
         .word $0408, $0102, $0804, $0302, $0002, $0007, $0807, $0103
@@ -2614,9 +2633,9 @@
       .al
       .xl
 
-      aUnknown9E8F3E ; 9E/8F3E
+      aMapBattleWeaponIconColors ; 9E/8F3E
 
-        ; Read by rlUnknown9E8E01.
+        ; Read by rlUploadMapBattleWeaponIcon.
 
         .word $6481, $1F19, $213F, $03A0, $2DD2, $6E10, $2D6B, $08B1
         .word $0B7F, $013E, $6481, $0197, $03E0, $0D23, $213F, $0197
@@ -2632,16 +2651,18 @@
       .al
       .xl
 
-      rlUnknown9E8F6A ; 9E/8F6A
+      rlMapBattleEndRoundScripts ; 9E/8F6A
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sprite command $0D: clears wMapBattleRoundRunning and points all four round scripts at aMapBattleEndedRoundScript, a single ACTIVE_SPRITE_END.
+
         lda #$0000
         sta aMapAction.wMapBattleRoundRunning
-        lda aUnknown9E8FB2
+        lda aMapBattleEndedRoundScriptTemplate
         sta aMapBattleEndedRoundScript
         lda #(`aMapBattleEndedRoundScript)<<8
         sta aMapAction.lAttackerAuxRoundScript+1
@@ -2673,11 +2694,11 @@
       .al
       .xl
 
-      aUnknown9E8FB2 ; 9E/8FB2
+      aMapBattleEndedRoundScriptTemplate ; 9E/8FB2
 
-        ; Read by rlUnknown9E8F6A.
+        ; Read by rlMapBattleEndRoundScripts.
 
-        .byte $01
+        ACTIVE_SPRITE_END
 
         ; 9E/8FB3
 
@@ -2735,7 +2756,7 @@
 
 
         _9007
-        jsl rlUnknown9EAC1D
+        jsl rlShowMapBattleCastleScreenUnits
 
         _900B
         lda #(`rlPushToOAMBuffer)<<8
@@ -2816,7 +2837,7 @@
         .autsiz
         .databank ?
 
-        ; Every frame of a struck round: moves the defender's sprites by aUnknown9E9123 (damage) or aUnknown9E914B (none, which ends with rlMapBattlePlayNoDamageSound), and applies the HP at step 5 (rlApplyMapBattleRoundHP).
+        ; Every frame of a struck round: moves the defender's sprites by aMapBattleRecoilOffsets (damage) or aMapBattleNoDamageRecoilOffsets (none, which ends with rlMapBattlePlayNoDamageSound), and applies the HP at step 5 (rlApplyMapBattleRoundHP).
 
         phy
         phb
@@ -2854,14 +2875,14 @@
         xba
         and #$00FF
         beq _90C0
-        lda aUnknown9E9123,x
+        lda aMapBattleRecoilOffsets,x
         cmp #$8000
         bne _90DD
         bra _90D4
 
 
         _90C0
-        lda aUnknown9E914B,x
+        lda aMapBattleNoDamageRecoilOffsets,x
         cmp #$8000
         bne _90DD
         lda #$0000
@@ -2930,7 +2951,7 @@
       .al
       .xl
 
-      aUnknown9E9123 ; 9E/9123
+      aMapBattleRecoilOffsets ; 9E/9123
 
         ; Read by rlMapBattleRunRecoil.
 
@@ -2948,7 +2969,7 @@
       .al
       .xl
 
-      aUnknown9E914B ; 9E/914B
+      aMapBattleNoDamageRecoilOffsets ; 9E/914B
 
         ; Read by rlMapBattleRunRecoil.
 
@@ -3312,13 +3333,13 @@
         .autsiz
         .databank ?
 
-        ; When the unit levelled up ($7E4ECB), sets the cycle to the level up banner.
+        ; When the attacker gained a level (aActionStructUnit1.GainedLevels), sets the cycle to the level up banner.
 
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         and #$FFFD
         sta aProcSystem.aHeaderBitfield,b,x
-        lda $7E4ECB
+        lda aActionStructUnit1.GainedLevels
         beq _936A
         lda #<>rlMapBattleLevelUpBanner
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -3347,12 +3368,12 @@
         phx
         lda aMapAction.wMapBattleLevelUpFrameCounter
         bne _937F
-        jsl rlUnknown9E93A4
+        jsl rlLoadLevelUpBannerGraphics
         lda #$0000
         sta aMapAction.wMapBattleLevelUpFrameCounter
 
         _937F
-        jsl rlUnknown9E93E7
+        jsl rlDrawLevelUpBanner
         lda aMapAction.wMapBattleLevelUpFrameCounter
         cmp #$0019
         bne _9397
@@ -3378,18 +3399,20 @@
 
         ; 9E/93A4
 
-      rlUnknown9E93A4 ; 9E/93A4
+      rlLoadLevelUpBannerGraphics ; 9E/93A4
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Loads sprite palette 0 from aMapBattleLevelUpPalettes + $100 and the banner's tiles (g4bppMapBattleLevelUpText + $300).
+
         phy
         phx
-        lda #(`aUnknown9CFC00)<<8
+        lda #(`aMapBattleLevelUpPalettes)<<8
         sta lR18+1
-        lda #<>aUnknown9CFC00
+        lda #<>aMapBattleLevelUpPalettes
         clc
         adc #$0100
         sta lR18
@@ -3401,9 +3424,9 @@
         dec y
         dec y
         bpl _93B7
-        lda #(`g4bppUnknown9CF000)<<8
+        lda #(`g4bppMapBattleLevelUpText)<<8
         sta lR18+1
-        lda #<>g4bppUnknown9CF000
+        lda #<>g4bppMapBattleLevelUpText
         clc
         adc #$0300
         sta lR18
@@ -3427,12 +3450,14 @@
 
         ; 9E/93E7
 
-      rlUnknown9E93E7 ; 9E/93E7
+      rlDrawLevelUpBanner ; 9E/93E7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the three tiles of the level up banner above the attacker, spread and bouncing by wMapBattleLevelUpFrameCounter (aLevelUpBannerXOffsets, ...YOffsets, ...Spacing). Carry set at the end of the tables.
 
         phb
         phy
@@ -3440,7 +3465,7 @@
         lda aMapAction.wMapBattleLevelUpFrameCounter
         asl a
         tax
-        lda aUnknown9E9480,x
+        lda aLevelUpBannerXOffsets,x
         cmp #$8000
         bne _93FE
         sec
@@ -3450,17 +3475,17 @@
         _93FE
         lda aMapAction.wMapBattleAttackerXPixel
         clc
-        adc aUnknown9E9480,x
+        adc aLevelUpBannerXOffsets,x
         sta wR0
-        jsl rlUnknown9E950A
+        jsl rlGetMapBattleShiftYOffset
         lda aMapAction.wMapBattleAttackerYPixel
         clc
         adc wR1
-        adc aUnknown9E94B6,x
+        adc aLevelUpBannerYOffsets,x
         sta wR1
         lda aMapAction.wMapBattleLevelUpFrameCounter
         tax
-        lda aUnknown9E94EA,x
+        lda aLevelUpBannerSpacing,x
         and #$00FF
         sta wR15
         stz wR4
@@ -3486,7 +3511,7 @@
         lda wR13
         asl a
         tax
-        lda aUnknown9E9504,x
+        lda aLevelUpBannerTiles,x
         ora #$2000
         plx
         sta $7E52F5,x
@@ -3525,9 +3550,9 @@
       .al
       .xl
 
-      aUnknown9E9480 ; 9E/9480
+      aLevelUpBannerXOffsets ; 9E/9480
 
-        ; Read by rlUnknown9E93E7.
+        ; Read by rlDrawLevelUpBanner.
 
         .word $FFF4, $FFF4, $FFEF, $FFEF, $FFEC, $FFEC, $FFEF, $FFEF
         .word $FFF4, $FFF4, $FFF9, $FFF9, $FFFC, $FFFC, $FFF9, $FFF9
@@ -3544,9 +3569,9 @@
       .al
       .xl
 
-      aUnknown9E94B6 ; 9E/94B6
+      aLevelUpBannerYOffsets ; 9E/94B6
 
-        ; Read by rlUnknown9E93E7.
+        ; Read by rlDrawLevelUpBanner.
 
         .word $FFEC, $FFEC, $FFE9, $FFE9, $FFE4, $FFE4, $FFDF, $FFDF
         .word $FFDC, $FFDC, $FFDF, $FFDF, $FFE4, $FFE4, $FFE9, $FFE9
@@ -3563,9 +3588,9 @@
       .al
       .xl
 
-      aUnknown9E94EA ; 9E/94EA
+      aLevelUpBannerSpacing ; 9E/94EA
 
-        ; Read by rlUnknown9E93E7.
+        ; Read by rlDrawLevelUpBanner.
 
         .word $0101, $0202, $0303, $0404, $0505, $0606, $0707, $0808
         .word $0808, $0808, $0808, $0808, $0808
@@ -3580,9 +3605,9 @@
       .al
       .xl
 
-      aUnknown9E9504 ; 9E/9504
+      aLevelUpBannerTiles ; 9E/9504
 
-        ; Read by rlUnknown9E93E7.
+        ; Read by rlDrawLevelUpBanner.
 
         .word $0000, $0001, $0002
 
@@ -3596,12 +3621,14 @@
       .al
       .xl
 
-      rlUnknown9E950A ; 9E/950A
+      rlGetMapBattleShiftYOffset ; 9E/950A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wR1 = 16 pixels (-16 with wBattleStatus bit 3) when the attacker was moved a tile for the battle (bit 2 set, bit 1 clear), else 0.
 
         phx
         stz wR1
@@ -3661,9 +3688,9 @@
 
 
         _955E
-        lda #(`aUnknown9CFC00)<<8
+        lda #(`aMapBattleLevelUpPalettes)<<8
         sta lR18+1
-        lda #<>aUnknown9CFC00
+        lda #<>aMapBattleLevelUpPalettes
         clc
         adc #$0100
         sta lR18
@@ -3727,7 +3754,7 @@
         lda [lR18],y
         beq _961D
         sta aMapAction.wMapBattleLevelUpStatGain
-        jsl rlUnknown9E965E
+        jsl rlLoadStatGainGraphics
         jsl rlPlayStatGainSound
         lda #$0008
         sta aMapAction.wMapBattleLevelUpFrameCounter
@@ -3735,9 +3762,9 @@
         sta aMapAction.wMapBattleLevelUpStatWaitTimer
 
         _95F1
-        jsl rlUnknown9E96C0
-        jsl rlUnknown9E978D
-        jsl rlUnknown9E97F3
+        jsl rlDrawStatGainName
+        jsl rlDrawStatGainPlus
+        jsl rlDrawStatGainAmount
         lda aMapAction.wMapBattleLevelUpFrameCounter
         cmp #$0023
         beq _960D
@@ -3770,7 +3797,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #<>rlUnknown9ECAD1
+        lda #<>rlMapBattleIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         phx
 
@@ -3808,12 +3835,14 @@
       .al
       .xl
 
-      rlUnknown9E965E ; 9E/965E
+      rlLoadStatGainGraphics ; 9E/965E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Uploads the name of stat wMapBattleLevelUpStatIndex (three tiles of g4bppMapBattleStatNames) and the digits (g4bppMapBattleLevelUpText + $400).
 
         phy
         phx
@@ -3826,10 +3855,10 @@
         clc
         adc wR2
         sta wR2
-        lda #(`g4bppUnknown9CF600)<<8
+        lda #(`g4bppMapBattleStatNames)<<8
         sta lR18+1
-        lda #<>g4bppUnknown9CF000
-        lda #<>g4bppUnknown9CF600
+        lda #<>g4bppMapBattleLevelUpText
+        lda #<>g4bppMapBattleStatNames
         clc
         adc wR2
         sta lR18
@@ -3845,9 +3874,9 @@
         xba
         sta wR1
         jsl rlDMAByPointer
-        lda #(`g4bppUnknown9CF000)<<8
+        lda #(`g4bppMapBattleLevelUpText)<<8
         sta lR18+1
-        lda #<>g4bppUnknown9CF000
+        lda #<>g4bppMapBattleLevelUpText
         clc
         adc #$0400
         sta lR18
@@ -3873,7 +3902,7 @@
 
         ; 9E/96C0
 
-      rlUnknown9E96C0 ; 9E/96C0
+      rlDrawStatGainName ; 9E/96C0
 
         .al
         .xl
@@ -3890,11 +3919,11 @@
         clc
         adc #$FFF0
         sta wR0
-        jsl rlUnknown9E950A
+        jsl rlGetMapBattleShiftYOffset
         lda aMapAction.wMapBattleAttackerYPixel
         clc
         adc wR1
-        adc aUnknown9E973D,x
+        adc aStatGainYOffsets,x
         sta wR1
         stz wR4
         stz wR5
@@ -3919,7 +3948,7 @@
         lda wR13
         asl a
         tax
-        lda aUnknown9E9787,x
+        lda aStatGainNameTiles,x
         ora #$2000
         plx
         sta $7E52F5,x
@@ -3956,9 +3985,9 @@
       .al
       .xl
 
-      aUnknown9E973D ; 9E/973D
+      aStatGainYOffsets ; 9E/973D
 
-        ; Read by rlUnknown9E96C0, rlUnknown9E978D, rlUnknown9E97F3.
+        ; Read by rlDrawStatGainName, rlDrawStatGainPlus, rlDrawStatGainAmount.
 
         .word $FFEC, $FFEC, $FFEC, $FFEC, $FFEC, $FFEC, $FFEC, $FFEC
         .word $FFEC, $FFEC, $FFEC, $FFEC, $FFE9, $FFE9, $FFE4, $FFE4
@@ -3976,9 +4005,9 @@
       .al
       .xl
 
-      aUnknown9E9787 ; 9E/9787
+      aStatGainNameTiles ; 9E/9787
 
-        ; Read by rlUnknown9E96C0.
+        ; Read by rlDrawStatGainName.
 
         .word $0000, $0001, $0002
 
@@ -3992,7 +4021,7 @@
       .al
       .xl
 
-      rlUnknown9E978D ; 9E/978D
+      rlDrawStatGainPlus ; 9E/978D
 
         .al
         .xl
@@ -4013,11 +4042,11 @@
         bcc _97EF
         asl a
         tax
-        jsl rlUnknown9E950A
+        jsl rlGetMapBattleShiftYOffset
         lda aMapAction.wMapBattleAttackerYPixel
         clc
         adc wR1
-        adc aUnknown9E973D,x
+        adc aStatGainYOffsets,x
         sta wR1
         stz wR4
         stz wR5
@@ -4053,7 +4082,7 @@
 
         ; 9E/97F3
 
-      rlUnknown9E97F3 ; 9E/97F3
+      rlDrawStatGainAmount ; 9E/97F3
 
         .al
         .xl
@@ -4074,11 +4103,11 @@
         bcc _985A
         asl a
         tax
-        jsl rlUnknown9E950A
+        jsl rlGetMapBattleShiftYOffset
         lda aMapAction.wMapBattleAttackerYPixel
         clc
         adc wR1
-        adc aUnknown9E973D,x
+        adc aStatGainYOffsets,x
         sta wR1
         stz wR4
         stz wR5
@@ -4128,7 +4157,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
         sta aProcSystem.aHeaderBitfield,b,x
-        lda $7E4ED1
+        lda aActionStructUnit1.ObtainedItem
         cmp #$FFFF
         beq _98AD
         sep #$20
@@ -4269,7 +4298,7 @@
         sta lR19+1
         lda #<>aObtainedGoldText
         sta lR19
-        lda $7E4ED3
+        lda aActionStructUnit1.ObtainedStealMoney
         beq _994E
         jsl rlShowGoldAmountText
         lda aProcSystem.aHeaderBitfield,b,x
@@ -4422,19 +4451,21 @@
       .al
       .xl
 
-      rlUnknown9E99F7 ; 9E/99F7
+      rlUploadMapBattleShadowTiles ; 9E/99F7
 
         .al
         .autsiz
         .databank ?
 
+        ; Uploads the units' shadow (g4bppMapBattleShadow) to sprite tiles $0E-$0F and $1E-$1F.
+
         ; dma shadows?
 
         phy
         phx
-        lda #(`g4bppUnknownADFF80)<<8
+        lda #(`g4bppMapBattleShadow)<<8
         sta lR18+1
-        lda #<>g4bppUnknownADFF80
+        lda #<>g4bppMapBattleShadow
         sta lR18
         lda #$0040 ; size
         sta wR0
@@ -4477,12 +4508,14 @@
       .al
       .xl
 
-      rlUnknown9E9F26 ; 9E/9F26
+      rlEndVillageRaidSprites ; 9E/9F26
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The village raid's end: frees the attacker's sprites, shows its unit again, restores the game state routine and the usual OAM routine.
 
         phx
         lda aMapAction.wMapBattleAttackerSpriteSlot
@@ -4515,7 +4548,7 @@
 
         ; 9E/9F66
 
-      rlUnknown9E9F66 ; 9E/9F66
+      rlRedrawMapAfterVillageRaid ; 9E/9F66
 
         .al
         .xl
@@ -4532,12 +4565,14 @@
 
         ; 9E/9F71
 
-      rlUnknown9E9F71 ; 9E/9F71
+      rlMapBattleStartDefeat ; 9E/9F71
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When the last round (wMapBattleLastRoundEntry) was fatal: wMapBattleDefeatedSide = the struck side, saves its sprite slots, blinks them (rlMapBattleDefeatBlink) and plays the cry.
 
         phy
         phx
@@ -4563,7 +4598,7 @@
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot,x
         sta wMapBattleDefeatedAuxSprite
         ldx wR0
-        lda #<>rlProcUnknown9EC70BCycle8
+        lda #<>rlMapBattleDefeatBlink
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -4582,12 +4617,14 @@
 
         ; 9E/9FD4
 
-      rlProcUnknown9EC70BCycle8 ; 9E/9FD4
+      rlMapBattleDefeatBlink ; 9E/9FD4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Each frame: toggles the defeated side's sprites off the screen (X and Y eor $1000) at the intervals in aMapBattleDefeatBlinkTimes, then hides them for good and sets proc bit $0004.
 
         phy
         phx
@@ -4599,7 +4636,7 @@
         _9FE0
         lda wMapBattleDefeatBlinkStep
         tax
-        lda aUnknown9EA085,x
+        lda aMapBattleDefeatBlinkTimes,x
         and #$00FF
         cmp #$00FF
         beq _A033
@@ -4653,7 +4690,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #<>rlUnknown9ECAD1
+        lda #<>rlMapBattleIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         phx
         bra _A082
@@ -4681,9 +4718,9 @@
       .al
       .xl
 
-      aUnknown9EA085 ; 9E/A085
+      aMapBattleDefeatBlinkTimes ; 9E/A085
 
-        ; Read by rlProcUnknown9EC70BCycle8.
+        ; Read by rlMapBattleDefeatBlink.
 
         .byte $04, $04, $04, $04, $02, $02, $02, $02, $01, $01, $01, $01, $01, $01, $01, $01
         .byte $FF
@@ -4856,18 +4893,20 @@
 
         ; 9E/A140
 
-      rlUnknown9EA140 ; 9E/A140
+      rlSetMapBattleExperienceWindowValues ; 9E/A140
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The experience window's proc inputs: 0, the starting experience and the experience gained.
+
         lda #$0000
         sta aProcSystem.wInput0,b
-        lda $7E4ECD
+        lda aActionStructUnit1.StartingExperience
         sta aProcSystem.wInput1,b
-        lda $7E4ECF
+        lda aActionStructUnit1.GainedExperience
         sta aProcSystem.wInput3,b
         rtl
 
@@ -4995,12 +5034,14 @@
       .al
       .xl
 
-      rlUnknown9EA1D7 ; 9E/A1D7
+      rlFreeMapBattleSprites ; 9E/A1D7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Frees the ballista bolt's proc (if it is still running) and the four battle sprites.
 
         phx
         lda wMapBattleAttackerBallista
@@ -5151,7 +5192,7 @@
         and #$FFFD
         ora #$0001
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown9E8F6A
+        jsl rlMapBattleEndRoundScripts
         lda wChapterFlags,b
         ora #$8000
         sta wChapterFlags,b
@@ -5273,10 +5314,10 @@
         ora #$0046
         jsl rlPlaySoundEffect2
         plx
-        jsl rlUnknown9EA417
-        lda #<>rlUnknown9EA38C
+        jsl rlCreateBallistaBoltSprite
+        lda #<>rlMoveBallistaBolt
         sta aProcSystem.aHeaderOnCycle,b,x
-        jsl rlUnknown9EA67C
+        jsl rlSetBallistaBoltVelocity
 
         _A38A
         plx
@@ -5286,12 +5327,14 @@
 
         ; 9E/A38C
 
-      rlUnknown9EA38C ; 9E/A38C
+      rlMoveBallistaBolt ; 9E/A38C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Each frame of the flight: moves the bolt (rlStepBallistaBolt) along its arc (rlUpdateBallistaBoltArc); within 4 pixels of the target it stops.
 
         phx
         lda wBallistaBoltSide
@@ -5300,8 +5343,8 @@
         tax
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot,x
         tax
-        jsl rlUnknown9EA523
-        jsl rlUnknown9EA58A
+        jsl rlStepBallistaBolt
+        jsl rlUpdateBallistaBoltArc
         lda wBallistaBoltSide
         asl a
         asl a
@@ -5335,9 +5378,9 @@
         tax
         lda aMapAction.wMapBattleAttackerAuxSpriteSlot,x
         tax
-        jsl rlUnknown9EA566
+        jsl rlCheckActiveSpriteNearPoint
         bcc _A401
-        lda #<>rlUnknown9EA403
+        lda #<>rlBallistaBoltLanded
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _A401
@@ -5348,7 +5391,7 @@
 
         ; 9E/A403
 
-      rlUnknown9EA403 ; 9E/A403
+      rlBallistaBoltLanded ; 9E/A403
 
         .al
         .xl
@@ -5374,7 +5417,7 @@
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET aProcMapBattleBallistaBoltCode, $0004
         PROC_YIELD 40
-        PROC_CALL rlUnknown9EA712
+        PROC_CALL rlSetBallistaBoltDone
         PROC_YIELD 3
         PROC_END
 
@@ -5389,12 +5432,14 @@
       .al
       .xl
 
-      rlUnknown9EA417 ; 9E/A417
+      rlCreateBallistaBoltSprite ; 9E/A417
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Creates the bolt as the firing side's aux sprite, with the side's script at +$14 (+$10 for a diagonal facing) of its sprite data, at the side's position + aBallistaBoltXOffsets by facing, 12 pixels up.
 
         phy
         phx
@@ -5443,7 +5488,7 @@
         lda aMapAction.wMapBattleAttackerXPixel,x
         tyx
         clc
-        adc aUnknown9EA513,x
+        adc aBallistaBoltXOffsets,x
         sta wBallistaBoltX
         sta wR0
         lda $7F57EA
@@ -5487,7 +5532,7 @@
         lsr a
         sta wR0,b
         tax
-        lda aUnknown9EA50F,x
+        lda aBallistaBoltTileBases,x
         tyx
         sta aActiveSpriteSystem.aUnknown001260,b,x
         phx
@@ -5514,9 +5559,9 @@
       .al
       .xl
 
-      aUnknown9EA50F ; 9E/A50F
+      aBallistaBoltTileBases ; 9E/A50F
 
-        ; Read by rlUnknown9EA417.
+        ; Read by rlCreateBallistaBoltSprite.
 
         .word $0020, $0040
 
@@ -5530,9 +5575,9 @@
       .al
       .xl
 
-      aUnknown9EA513 ; 9E/A513
+      aBallistaBoltXOffsets ; 9E/A513
 
-        ; Read by rlUnknown9EA417.
+        ; Read by rlCreateBallistaBoltSprite.
 
         .sint -$000C, -$0004, $0003, $0003, $000E, $000C, -$0001, -$000C
 
@@ -5546,12 +5591,14 @@
       .al
       .xl
 
-      rlUnknown9EA523 ; 9E/A523
+      rlStepBallistaBolt ; 9E/A523
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Adds the sprite's velocity (aUnknown0013C0, aUnknown0013E0: 8.8 fixed point) to the bolt's position.
 
         lda aActiveSpriteSystem.aUnknown0013C0,b,x
         sep #$20
@@ -5588,12 +5635,14 @@
         ; 9E/A566
 
 
-      rlUnknown9EA566 ; 9E/A566
+      rlCheckActiveSpriteNearPoint ; 9E/A566
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set when the active sprite X is less than wR2 pixels from (wR0, wR1) on both axes.
 
         lda aActiveSpriteSystem.aUnknown001200,b,x
         sec
@@ -5628,12 +5677,14 @@
         ; 9E/A58A
 
 
-      rlUnknown9EA58A ; 9E/A58A
+      rlUpdateBallistaBoltArc ; 9E/A58A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wBallistaBoltHeight = the next byte of the arc for wBallistaBoltDistance (aBallistaBoltArcs); sets wBallistaBoltSignal at the frames in aBallistaBoltSignalFrames.
 
         phx
         lda wBallistaBoltDistance
@@ -5643,9 +5694,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown9EA5DE,x
+        lda aBallistaBoltArcs,x
         sta lR18
-        lda aUnknown9EA5DE+1,x
+        lda aBallistaBoltArcs+1,x
         sta lR18+1
         lda wBallistaBoltFrame
         tay
@@ -5658,7 +5709,7 @@
         ldx #$000A
 
         _A5BD
-        cmp aUnknown9EA5D2,x
+        cmp aBallistaBoltSignalFrames,x
         bne _A5CC
         lda #$0001
         sta wBallistaBoltSignal
@@ -5679,45 +5730,45 @@
         ; 9E/A5D2
 
 
-      aUnknown9EA5D2 ; 9E/A5D2
+      aBallistaBoltSignalFrames ; 9E/A5D2
 
         .word $0004, $0006, $0008, $000A, $000D, $0011
 
-      aUnknown9EA5DE ; 9E/A5DE
+      aBallistaBoltArcs ; 9E/A5DE
 
-        .long aUnknown9EA5FC
-        .long aUnknown9EA5FC
-        .long aUnknown9EA5FC
-        .long aUnknown9EA60C
-        .long aUnknown9EA61C
-        .long aUnknown9EA62C
-        .long aUnknown9EA63C
-        .long aUnknown9EA64C
-        .long aUnknown9EA65C
-        .long aUnknown9EA66C
+        .long aBallistaBoltArc1
+        .long aBallistaBoltArc1
+        .long aBallistaBoltArc1
+        .long aBallistaBoltArc4
+        .long aBallistaBoltArc5
+        .long aBallistaBoltArc6
+        .long aBallistaBoltArc7
+        .long aBallistaBoltArc8
+        .long aBallistaBoltArc9
+        .long aBallistaBoltArc10
 
-      aUnknown9EA5FC ; 9E/A5FC
+      aBallistaBoltArc1 ; 9E/A5FC
         .byte $04, $09, $0D, $10, $13, $16, $17, $18, $18, $17, $16, $13, $10, $0D, $09, $04
 
-      aUnknown9EA60C ; 9E/A60C
+      aBallistaBoltArc4 ; 9E/A60C
         .byte $06, $0C, $11, $16, $1A, $1D, $1F, $20, $20, $1F, $1D, $1A, $16, $11, $0C, $06
 
-      aUnknown9EA61C ; 9E/A61C
+      aBallistaBoltArc5 ; 9E/A61C
         .byte $07, $0F, $16, $1C, $21, $24, $27, $28, $28, $27, $24, $21, $1C, $16, $0F, $07
 
-      aUnknown9EA62C ; 9E/A62C
+      aBallistaBoltArc6 ; 9E/A62C
         .byte $09, $12, $1A, $21, $27, $2C, $2F, $30, $30, $2F, $2C, $27, $21, $1A, $12, $09
 
-      aUnknown9EA63C ; 9E/A63C
+      aBallistaBoltArc7 ; 9E/A63C
         .byte $0A, $15, $1F, $27, $2E, $33, $36, $38, $38, $36, $33, $2E, $27, $1F, $15, $0A
 
-      aUnknown9EA64C ; 9E/A64C
+      aBallistaBoltArc8 ; 9E/A64C
         .byte $0C, $18, $23, $2D, $35, $3B, $3E, $40, $40, $3E, $3B, $35, $2D, $23, $18, $0C
 
-      aUnknown9EA65C ; 9E/A65C
+      aBallistaBoltArc9 ; 9E/A65C
         .byte $0E, $1B, $28, $32, $3B, $42, $46, $48, $48, $46, $42, $3B, $32, $28, $1B, $0E
 
-      aUnknown9EA66C ; 9E/A66C
+      aBallistaBoltArc10 ; 9E/A66C
         .byte $0F, $1E, $2C, $38, $42, $49, $4E, $50, $50, $4E, $49, $42, $38, $2C, $1E, $0F
 
         ; 9E/A67C
@@ -5730,12 +5781,14 @@
       .al
       .xl
 
-      rlUnknown9EA67C ; 9E/A67C
+      rlSetBallistaBoltVelocity ; 9E/A67C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The bolt's velocity: the distance to the target over 16 frames, 8.8 fixed point.
 
         phy
         phx
@@ -5817,7 +5870,7 @@
 
         ; 9E/A712
 
-      rlUnknown9EA712 ; 9E/A712
+      rlSetBallistaBoltDone ; 9E/A712
 
         .al
         .xl
@@ -5832,12 +5885,14 @@
 
         ; 9E/A71A
 
-      rlUnknown9EA71A ; 9E/A71A
+      rlGetMapBattleCameraTarget ; 9E/A71A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wR4/wR5 = the camera position that centers the two points (wR0, wR1) and (wR2, wR3), kept inside the map's scroll limits.
 
         phx
         lda wR0
@@ -5922,7 +5977,7 @@
         bne _A7A4
         lda wMapMagicFlags
         beq _A804
-        jsl rlUnknown9EA850
+        jsl rlCheckMapMagicEffectsMoveCamera
         bcc _A804
 
         _A7A4
@@ -5963,14 +6018,14 @@
         sta wR3
 
         _A7DF
-        jsl rlUnknown9EA71A
+        jsl rlGetMapBattleCameraTarget
         lda wR4
         and #$FFF0
         sta wMapBattleCameraTargetX
         lda wR5
         and #$FFF0
         sta wMapBattleCameraTargetY
-        jsl rlUnknown9EA806
+        jsl rlMapBattleCameraNeedsMove
         bcc _A804
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -5984,12 +6039,14 @@
 
         ; 9E/A806
 
-      rlUnknown9EA806 ; 9E/A806
+      rlMapBattleCameraNeedsMove ; 9E/A806
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry clear (and the target becomes the camera's position) when the camera is already within aMapBattleCameraMargins of the target and the units are close; carry set to move it.
 
         lda wMapScrollXPixels,b
         sec
@@ -5999,7 +6056,7 @@
         inc a
 
         _A814
-        cmp aUnknown9EA84A
+        cmp aMapBattleCameraMargins
         bcs _A848
         lda wMapScrollYPixels,b
         sec
@@ -6009,10 +6066,10 @@
         inc a
 
         _A828
-        cmp aUnknown9EA84A+2
+        cmp aMapBattleCameraMargins+2
         bcs _A848
         lda wBattleDistance
-        cmp aUnknown9EA84A+4
+        cmp aMapBattleCameraMargins+4
         bcs _A848
         lda wMapScrollXPixels,b
         sta wMapBattleCameraTargetX
@@ -6038,9 +6095,9 @@
       .al
       .xl
 
-      aUnknown9EA84A ; 9E/A84A
+      aMapBattleCameraMargins ; 9E/A84A
 
-        ; Read by rlUnknown9EA806.
+        ; Read by rlMapBattleCameraNeedsMove.
 
         .word $0030, $0030, $0008
 
@@ -6054,22 +6111,24 @@
       .al
       .xl
 
-      rlUnknown9EA850 ; 9E/A850
+      rlCheckMapMagicEffectsMoveCamera ; 9E/A850
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Carry set when either side's magic effect needs the camera on the units (aMapMagicEffectMovesCamera).
+
         phx
         lda wMapMagicAttackerEffect
         tax
-        lda aUnknown9EA873,x
+        lda aMapMagicEffectMovesCamera,x
         and #$00FF
         bne _A86D
         lda wMapMagicDefenderEffect
         tax
-        lda aUnknown9EA873,x
+        lda aMapMagicEffectMovesCamera,x
         and #$00FF
         beq _A870
 
@@ -6096,9 +6155,9 @@
       .al
       .xl
 
-      aUnknown9EA873 ; 9E/A873
+      aMapMagicEffectMovesCamera ; 9E/A873
 
-        ; Read by rlUnknown9EA850.
+        ; Read by rlCheckMapMagicEffectsMoveCamera.
 
         .word $0101, $0101, $0101, $0101, $0101, $0101, $0101, $0101
         .word $0101, $0100, $0101, $0000, $0000, $0101, $0101, $0101
@@ -6125,7 +6184,7 @@
         jsl rlStepCameraTowardsTarget
         bcc _A8B8
         plx
-        lda #<>rlUnknown9ECAD1
+        lda #<>rlMapBattleIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
@@ -6143,12 +6202,14 @@
 
         ; 9E/A8BA
 
-      rlUnknown9EA8BA ; 9E/A8BA
+      rlMapBattleStartStatusSwordEffect ; 9E/A8BA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; After a strike with a Berserk, Silence or Sleep Sword (wMapBattleAttackerStatusSword): when the next entry is that side's magic round (rsTakeStatusSwordRound), starts its staff's effect (wMapMagicStart) once and sets proc bit $0002.
 
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
@@ -6172,7 +6233,7 @@
         lda wMapBattleRoundEntry
         and #$0001
         sta $7F57EA
-        jsr rsUnknown9EA925
+        jsr rsTakeStatusSwordRound
         bcc _A91D
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -6207,12 +6268,14 @@
 
         ; 9E/A925
 
-      rsUnknown9EA925 ; 9E/A925
+      rsTakeStatusSwordRound ; 9E/A925
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set, and the entry taken (wMapBattleLastRoundEntry, the round index moves on), when the next round entry is a magic round of side $7F57EA.
 
         phx
         lda aMapAction.wMapBattleRoundIndex
@@ -6279,7 +6342,7 @@
 
         ; 9E/A9A5
 
-      rlUnknown9EA9A5 ; 9E/A9A5
+      rlMapBattleWaitStatusSwordEffect ; 9E/A9A5
 
         .al
         .xl
@@ -6299,12 +6362,14 @@
 
         ; 9E/A9B5
 
-      rlUnknown9EA9B5 ; 9E/A9B5
+      rlMapBattleStartSkillEffect ; 9E/A9B5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When a skill activates (wMapBattleSkillEffect, Astra to Darkness): whitens the side's sprites, loads the skill's colours (aMapBattleSkillColors) into BG palette 13, starts their palette effect and plays sound $3D. Sol sets wMapBattleStrikeDrains.
 
         phy
         phx
@@ -6360,7 +6425,7 @@
         ldy #$01A0
 
         _AA25
-        lda aUnknown9EAA61,x
+        lda aMapBattleSkillColors,x
         sta aBGPaletteBuffer,b,y
         inc x
         inc x
@@ -6370,9 +6435,9 @@
         bne _AA25
         jsl rlUnknown96D659
         stz wR0
-        lda #(`aUnknown9EAA5C)<<8
+        lda #(`aMapBattleSkillPaletteEffect)<<8
         sta lR18+1
-        lda #<>aUnknown9EAA5C
+        lda #<>aMapBattleSkillPaletteEffect
         sta lR18
         jsl rlBattleSceneStartPaletteEffect
         jsl rlMapBattlePlaySound3D
@@ -6399,7 +6464,7 @@
       .al
       .xl
 
-      aUnknown9EAA5C ; 9E/AA5C
+      aMapBattleSkillPaletteEffect ; 9E/AA5C
         PALETTE_EFFECT_VALUE $00, $03, $D0, $10, $02
 
     .endsection Table9EAA5CSection
@@ -6410,9 +6475,9 @@
       .al
       .xl
 
-      aUnknown9EAA61 ; 9E/AA61
+      aMapBattleSkillColors ; 9E/AA61
 
-        ; Read by rlUnknown9EA9B5.
+        ; Read by rlMapBattleStartSkillEffect.
 
         .word $5BF6, $53F2, $33EC, $03E0, $0280, $0180, $1104, $0080
         .word $1104, $0180, $0280, $03E0, $33EC, $53F2, $5BF6, $6BF8
@@ -6437,12 +6502,14 @@
       .al
       .xl
 
-      rlUnknown9EAB21 ; 9E/AB21
+      rlMapBattleEndSkillEffect ; 9E/AB21
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Restores the sprite palettes; sets proc bit $0002 when the next entry is another skill.
 
         phx
         jsl rlMapBattleRestoreSpritePalettes
@@ -6475,19 +6542,21 @@
 
         ; 9E/AB5D
 
-      rlUnknown9EAB5D ; 9E/AB5D
+      rlCheckMapBattleNoHPChange ; 9E/AB5D
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Carry set (and wMapMagicFlags $8000) when no side has a round that changes HP: both act with a staff that does not (aMapMagicEffectNoHPChange: Fortify, Return, Warp, Rescue, Restore, Silence, Sleep, Berserk, Thief) or have no round. The HP windows are not opened then.
+
         phx
         lda $7F454A
         cmp #$0004
         bcs _AB71
         lda #$0000
-        jsr rsUnknown9EABE9
+        jsr rsCheckSideHasRound
         bcs _ABBA
         bra _AB87
 
@@ -6495,11 +6564,11 @@
         _AB71
         lda wMapMagicAttackerEffect
         tax
-        lda aUnknown9EABBD,x
+        lda aMapMagicEffectNoHPChange,x
         and #$00FF
         bne _AB87
         lda #$0000
-        jsr rsUnknown9EABE9
+        jsr rsCheckSideHasRound
         bcs _ABBA
 
         _AB87
@@ -6507,7 +6576,7 @@
         cmp #$0004
         bcs _AB9A
         lda #$0001
-        jsr rsUnknown9EABE9
+        jsr rsCheckSideHasRound
         bcs _ABBA
         bra _ABB0
 
@@ -6515,11 +6584,11 @@
         _AB9A
         lda wMapMagicDefenderEffect
         tax
-        lda aUnknown9EABBD,x
+        lda aMapMagicEffectNoHPChange,x
         and #$00FF
         bne _ABB0
         lda #$0001
-        jsr rsUnknown9EABE9
+        jsr rsCheckSideHasRound
         bcs _ABBA
 
         _ABB0
@@ -6547,9 +6616,9 @@
       .al
       .xl
 
-      aUnknown9EABBD ; 9E/ABBD
+      aMapMagicEffectNoHPChange ; 9E/ABBD
 
-        ; Read by rlUnknown9EAB5D.
+        ; Read by rlCheckMapBattleNoHPChange.
 
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0101
@@ -6565,12 +6634,14 @@
       .al
       .xl
 
-      rsUnknown9EABE9 ; 9E/ABE9
+      rsCheckSideHasRound ; 9E/ABE9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set when aBattleRoundsData has an entry of side A (bit 0).
 
         phx
         sta wR0
@@ -6605,17 +6676,19 @@
 
         ; 9E/AC0E
 
-      rlUnknown9EAC0E ; 9E/AC0E
+      rlHideCastleScreenUnit ; 9E/AC0E
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; A = deployment offset: sets DeploymentStateHiddenInCastle, so that the castle screen does not draw the unit.
+
         phx
         tax
         lda aDeploymentTable,x
-        ora #$8000
+        ora #DeploymentStateHiddenInCastle
         sta aDeploymentTable,x
         plx
         rtl
@@ -6624,18 +6697,20 @@
 
         ; 9E/AC1D
 
-      rlUnknown9EAC1D ; 9E/AC1D
+      rlShowMapBattleCastleScreenUnits ; 9E/AC1D
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Clears DeploymentStateHiddenInCastle of the attacker and, unless wR15 is set, the defender.
+
         phx
         lda aActionStructUnit1
         tax
         lda aDeploymentTable,x
-        and #$7FFF
+        and #~DeploymentStateHiddenInCastle
         sta aDeploymentTable,x
         lda wR15
         bne _AC47
@@ -6644,7 +6719,7 @@
         beq _AC47
         tax
         lda aDeploymentTable,x
-        and #$7FFF
+        and #~DeploymentStateHiddenInCastle
         sta aDeploymentTable,x
 
         _AC47
@@ -6663,12 +6738,14 @@
       .al
       .xl
 
-      rlUnknown9EAC49 ; 9E/AC49
+      rlSetMapMagicFlagsFromBit7 ; 9E/AC49
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wMapMagicFlags = $0101, or $0501 (near the bottom) when bit 7 of A is clear.
 
         and #$0080
         eor #$0080
@@ -6691,12 +6768,14 @@
       .al
       .xl
 
-      rlUnknown9EADD1 ; 9E/ADD1
+      rlMapBattleOffsetShiftedSprites ; 9E/ADD1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = side: if that side was moved a tile for the battle (wBattleStatus bits 1-2), moves its sprites down 16 pixels (up with bit 3).
 
         phx
         sta wR0
@@ -7071,7 +7150,7 @@
         lda $7E4F79
         tay
         lda aActionStructUnit2.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda wR0
         and #$00FF
         sta wR0
@@ -8020,7 +8099,7 @@
         .autsiz
         .databank ?
 
-        ; Sound A panned to the map position of $7F57EE (rlUnknown9E8D25).
+        ; Sound A panned to the map position of $7F57EE (rlGetMapBattleUnitScreenPosition).
 
         ; Unreferenced.
 
@@ -8029,7 +8108,7 @@
         lda $7F57EE
         tax
         tay
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda wR0
         jsl rlGetSoundPanFromXPixel
         ora wR2
@@ -8170,9 +8249,9 @@
       .al
       .xl
 
-      aUnknown9EB4C9 ; 9E/B4C9
+      aMapBattleSideGraphicsOffsets ; 9E/B4C9
 
-        ; Read by rlUnknown9E8D6C, rlUnknown9E8DBB, rsActiveSpriteCommand03.
+        ; Read by rlUploadMapBattleSideTiles, rlUploadMapBattleSideFrame, rsActiveSpriteCommand03.
 
         .word $0000, $2000
 
@@ -8186,9 +8265,9 @@
       .al
       .xl
 
-      aUnknown9EB4CD ; 9E/B4CD
+      aMapBattleWeaponTypeTileOffsets ; 9E/B4CD
 
-        ; Read by rlUnknown9E8D6C.
+        ; Read by rlUploadMapBattleSideTiles.
 
         .word $0000, $0000, $0000, $0400, $0600
 
@@ -8202,9 +8281,9 @@
       .al
       .xl
 
-      aUnknown9EB4D7 ; 9E/B4D7
+      aMapBattleSideFrameVRAM ; 9E/B4D7
 
-        ; Read by rlUnknown9E8DBB, rsActiveSpriteCommand03.
+        ; Read by rlUploadMapBattleSideFrame, rsActiveSpriteCommand03.
 
         .word $0200, $0280
 
@@ -8218,9 +8297,9 @@
       .al
       .xl
 
-      aUnknown9EB4DB ; 9E/B4DB
+      aMapBattleSideTileVRAM ; 9E/B4DB
 
-        ; Read by rlUnknown9E8D6C, rlUnknown9E8E01.
+        ; Read by rlUploadMapBattleSideTiles, rlUploadMapBattleWeaponIcon.
 
         .word $0400, $0600
 
@@ -8886,7 +8965,7 @@
       .al
       .xl
 
-      rlProcUnknown9EC70BCycle2 ; 9E/C776
+      rlProcMapBattleLoadCombatants ; 9E/C776
 
         .al
         .xl
@@ -8898,12 +8977,12 @@
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
         jsl rlInitMapBattleCombatants
-        jsl rlUnknown9E88F9
+        jsl rlQueueMapBattleSpriteGraphics
         lda #(`rlPushToOAMBufferDualTileBase)<<8
         sta $15E5,b
         lda #<>rlPushToOAMBufferDualTileBase
         sta $15E4,b
-        lda #<>rlUnknown9EC79B
+        lda #<>rlMapBattleWaitDecompression
         sta aProcSystem.aHeaderOnCycle,b,x
         plx
         ply
@@ -8921,7 +9000,7 @@
       .al
       .xl
 
-      rlUnknown9EC79B ; 9E/C79B
+      rlMapBattleWaitDecompression ; 9E/C79B
 
         .al
         .xl
@@ -8930,16 +9009,16 @@
 
         lda bDecompressionArrayFlag,b
         and #$00FF
-        bne rlUnknown9EC7B2
+        bne rlMapBattleDecompressionDone
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #<>rlUnknown9EC7B2
+        lda #<>rlMapBattleDecompressionDone
         sta aProcSystem.aHeaderOnCycle,b,x
 
         .databank 0
 
-      rlUnknown9EC7B2 ; 9E/C7B2
+      rlMapBattleDecompressionDone ; 9E/C7B2
 
         .al
         .xl
@@ -8960,7 +9039,7 @@
       .al
       .xl
 
-      rlProcUnknown9EC70BCycle3 ; 9E/C7B3
+      rlProcMapBattleQueueSpriteData ; 9E/C7B3
 
         .al
         .xl
@@ -8976,7 +9055,7 @@
         sta aMapAction.wMapBattleAttackerAuxSpriteSlot
         sta aMapAction.wMapBattleDefenderSpriteSlot
         sta aMapAction.wMapBattleDefenderAuxSpriteSlot
-        jsl rlUnknown9E88CE
+        jsl rlInitMapBattleSpriteInfos
         jsl rlSelectMapBattleAttackerSprite
         lda #$0000
         jsl rlMapBattleQueueSpriteData
@@ -8988,7 +9067,7 @@
         jsl rlMapBattleQueueSpriteData
 
         _C7F1
-        lda #<>rlUnknown9EC79B
+        lda #<>rlMapBattleWaitDecompression
         sta aProcSystem.aHeaderOnCycle,b,x
         plx
         ply
@@ -9022,14 +9101,14 @@
         _C814
         jsl rlCreateMapBattleDefenderSprites
         lda #$0001
-        jsl rlUnknown9EADD1
+        jsl rlMapBattleOffsetShiftedSprites
         bra _C82C
 
 
         _C821
         jsl rlCreateMapBattleAttackerSprites
         lda #$0000
-        jsl rlUnknown9EADD1
+        jsl rlMapBattleOffsetShiftedSprites
 
         _C82C
         jsl rlEnableOAMScanlineFlicker
@@ -9065,14 +9144,14 @@
         _C84D
         jsl rlCreateMapBattleAttackerSprites
         lda #$0000
-        jsl rlUnknown9EADD1
+        jsl rlMapBattleOffsetShiftedSprites
         bra _C865
 
 
         _C85A
         jsl rlCreateMapBattleDefenderSprites
         lda #$0001
-        jsl rlUnknown9EADD1
+        jsl rlMapBattleOffsetShiftedSprites
 
         _C865
         plx
@@ -9083,7 +9162,7 @@
 
         ; 9E/C868
 
-      rlProcUnknown9EC70BCycle6 ; 9E/C868
+      rlProcMapBattleResetRound ; 9E/C868
 
         .al
         .xl
@@ -9104,7 +9183,7 @@
         sta aProcSystem.aHeaderBitfield,b,x
         plx
         ply
-        lda #<>rlUnknown9EC899
+        lda #<>rlMapBattleWaitRoundStart
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -9120,7 +9199,7 @@
       .al
       .xl
 
-      rlUnknown9EC899 ; 9E/C899
+      rlMapBattleWaitRoundStart ; 9E/C899
 
         .al
         .xl
@@ -9129,7 +9208,7 @@
 
         lda aMapAction.wMapBattleRoundRunning
         beq _C8A5
-        lda #<>rlUnknown9EC8A6
+        lda #<>rlMapBattleWaitRoundEnd
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _C8A5
@@ -9139,7 +9218,7 @@
 
         ; 9E/C8A6
 
-      rlUnknown9EC8A6 ; 9E/C8A6
+      rlMapBattleWaitRoundEnd ; 9E/C8A6
 
         .al
         .xl
@@ -9148,7 +9227,7 @@
 
         lda aMapAction.wMapBattleRoundRunning
         bne _C8B2
-        lda #<>rlUnknown9EC8B3
+        lda #<>rlMapBattleReadNextRoundEntry
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _C8B2
@@ -9166,13 +9245,15 @@
       .al
       .xl
 
-      rlUnknown9EC8B3 ; 9E/C8B3
+      rlMapBattleReadNextRoundEntry ; 9E/C8B3
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Reads the next round entry into aBody5 and wMapBattleLastRoundEntry; sets proc bits $0002 (and $0001 at the end, $FFFF). The entry $7F00 sets bit 0 of wMapAnimationSignals.
 
         lda #(`aBattleRoundsData)<<8
         sta lStructPointer2+1,b
@@ -9201,13 +9282,13 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #<>rlUnknown9ECAD1
+        lda #<>rlMapBattleIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
 
         _C907
-        lda #<>rlUnknown9ECAD1
+        lda #<>rlMapBattleIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -9238,11 +9319,11 @@
         and #$FFFB
         and #$FFFD
         sta aProcSystem.aHeaderBitfield,b,x
-        lda $7E4ECF
+        lda aActionStructUnit1.GainedExperience
         beq _C943
-        jsl rlUnknown9EA140
+        jsl rlSetMapBattleExperienceWindowValues
         jsl rlOpenMapBattleExperienceWindow
-        lda #<>rlUnknown9ECAD1
+        lda #<>rlMapBattleIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -9302,7 +9383,7 @@
 
         _C982
         plx
-        lda #<>rlUnknown9EC98A
+        lda #<>rlMapBattleEndSetCamera
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -9318,26 +9399,26 @@
       .al
       .xl
 
-      rlUnknown9EC98A ; 9E/C98A
+      rlMapBattleEndSetCamera ; 9E/C98A
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0003
         beq _C9A4
         jsl rlSetCameraTargetForCursor
         bcc _C9A4
-        lda #<>rlUnknown9EC9AB
+        lda #<>rlMapBattleEndMoveCamera
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _C9AA
 
 
         _C9A4
-        lda #<>rlUnknown9EC9BD
+        lda #<>rlMapBattleEndCloseHPWindows
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _C9AA
@@ -9347,7 +9428,7 @@
 
         ; 9E/C9AB
 
-      rlUnknown9EC9AB ; 9E/C9AB
+      rlMapBattleEndMoveCamera ; 9E/C9AB
 
         .al
         .xl
@@ -9358,7 +9439,7 @@
         jsl rlStepCameraTowardsTarget
         bcc _C9BB
         plx
-        lda #<>rlUnknown9EC9BD
+        lda #<>rlMapBattleEndCloseHPWindows
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _C9BC
 
@@ -9373,7 +9454,7 @@
 
         ; 9E/C9BD
 
-      rlUnknown9EC9BD ; 9E/C9BD
+      rlMapBattleEndCloseHPWindows ; 9E/C9BD
 
         .al
         .xl
@@ -9381,7 +9462,7 @@
         .databank ?
 
         jsl rlCloseMapBattleHPWindows
-        lda #<>rlUnknown9EC9C8
+        lda #<>rlMapBattleEndRestorePalettes
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -9389,7 +9470,7 @@
 
         ; 9E/C9C8
 
-      rlUnknown9EC9C8 ; 9E/C9C8
+      rlMapBattleEndRestorePalettes ; 9E/C9C8
 
         .al
         .xl
@@ -9397,7 +9478,7 @@
         .databank ?
 
         jsl rlRestoreMapBattlePalettes
-        lda #<>rlUnknown9EC9D3
+        lda #<>rlMapBattleEndFree
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -9405,12 +9486,14 @@
 
         ; 9E/C9D3
 
-      rlUnknown9EC9D3 ; 9E/C9D3
+      rlMapBattleEndFree ; 9E/C9D3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Once the menu icons are back: checks canto (in a battle), restores the game state routine, frees the sprites and the proc, and sets bit 1 of wMapAnimationSignals.
 
         jsl rlReloadMenuIconGraphics
         bcs _C9FC
@@ -9421,7 +9504,7 @@
         _C9E3
         lda aProcSystem.aBody7,b,x
         sta wGameStateRoutine1,b
-        jsl rlUnknown9EA1D7
+        jsl rlFreeMapBattleSprites
         jsl rlProcEngineFreeProc
         lda wMapAnimationSignals
         ora #$0002
@@ -9442,7 +9525,7 @@
       .al
       .xl
 
-      rlUnknown9EC9FD ; 9E/C9FD
+      rlQueueMapMagicBackgroundAll ; 9E/C9FD
 
         .al
         .xl
@@ -9452,7 +9535,7 @@
         jsl rlQueueMapMagicBackgroundTiles
         jsl rlQueueMapMagicBackgroundTilemap
         jsl rlQueueMapMagicBackgroundPalette
-        lda #<>rlUnknown9ECAD1
+        lda #<>rlMapBattleIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -9478,16 +9561,16 @@
         beq _CA34
         lda wMapBattleMode
         bne _CA34
-        jsl rlUnknown9EAB5D
+        jsl rlCheckMapBattleNoHPChange
         bcs _CA34
         jsl rlSetMapBattlePalettes
         jsl rlOpenMapBattleHPWindows
 
         _CA34
-        lda #<>rlUnknown9ECA3A
+        lda #<>rlMapBattleHPWindowsOpened
         sta aProcSystem.aHeaderOnCycle,b,x
 
-      rlUnknown9ECA3A ; 9E/CA3A
+      rlMapBattleHPWindowsOpened ; 9E/CA3A
 
         .al
         .xl
@@ -9500,7 +9583,7 @@
 
         ; 9E/CA3B
 
-      rlUnknown9ECA3B ; 9E/CA3B
+      rlMapBattleClearDoneBit ; 9E/CA3B
 
         .al
         .xl
@@ -9533,10 +9616,10 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #<>rlUnknown9ECA5F
+        lda #<>rlMapBattleHUDLoaded
         sta aProcSystem.aHeaderOnCycle,b,x
 
-      rlUnknown9ECA5F ; 9E/CA5F
+      rlMapBattleHUDLoaded ; 9E/CA5F
 
         .al
         .xl
@@ -9549,12 +9632,14 @@
 
         ; 9E/CA60
 
-      rlUnknown9ECA60 ; 9E/CA60
+      rlMapBattleCheckRoundsOver ; 9E/CA60
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Proc bit $0002 when the rounds are over (aBody5 $FFFF) and the HP windows are open.
 
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFD
@@ -9563,7 +9648,7 @@
         lda aActionStructUnit2
         cmp #$FFFF
         beq _CA9A
-        jsl rlUnknown9EAB5D
+        jsl rlCheckMapBattleNoHPChange
         bcs _CA9A
         lda aProcSystem.aBody5,b,x
         cmp #$FFFF
@@ -9571,13 +9656,13 @@
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #<>rlUnknown9ECAD1
+        lda #<>rlMapBattleIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         bra _CA9A
 
 
         _CA94
-        lda #<>rlUnknown9ECAD1
+        lda #<>rlMapBattleIdle
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _CA9A
@@ -9587,7 +9672,7 @@
 
         ; 9E/CA9B
 
-      rlProcUnknown9EC70BCycle7 ; 9E/CA9B
+      rlMapBattleWaitHPWindowsClosed ; 9E/CA9B
 
         .al
         .xl
@@ -9596,7 +9681,7 @@
 
         lda wMapBattleMode
         bne _CAB4
-        jsl rlUnknown9EAB5D
+        jsl rlCheckMapBattleNoHPChange
         bcs _CAB4
         jsl rlCheckMapBattleHPWindowsBusy
         cmp #$FFFF
@@ -9604,7 +9689,7 @@
         jsl rlRestoreMapBattlePalettes
 
         _CAB4
-        lda #<>rlUnknown9ECABB
+        lda #<>rlMapBattleReloadIcons
         sta aProcSystem.aHeaderOnCycle,b,x
 
         _CABA
@@ -9622,7 +9707,7 @@
       .al
       .xl
 
-      rlUnknown9ECABB ; 9E/CABB
+      rlMapBattleReloadIcons ; 9E/CABB
 
         .al
         .xl
@@ -9631,7 +9716,7 @@
 
         jsl rlReloadMenuIconGraphics
         bcs _CAD0
-        lda #<>rlUnknown9ECAD1
+        lda #<>rlMapBattleIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
@@ -9644,7 +9729,7 @@
 
         ; 9E/CAD1
 
-      rlUnknown9ECAD1 ; 9E/CAD1
+      rlMapBattleIdle ; 9E/CAD1
 
         .al
         .xl
@@ -9668,11 +9753,11 @@
       aProcMapBattleCode ; 9E/CAD2
 
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle2
+        PROC_SET_ONCYCLE rlProcMapBattleLoadCombatants
         _CAD8
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CAD8, $0001
-        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle3
+        PROC_SET_ONCYCLE rlProcMapBattleQueueSpriteData
         _CAE4
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CAE4, $0001
@@ -9683,7 +9768,7 @@
         PROC_CALL rlMapBattleMoveCamera
         PROC_JUMP_IF_BITS_UNSET _CAF7, $0004
         _CB04
-        PROC_CALL rlUnknown9E99F7
+        PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
         PROC_CALL rlShowMapBattleAttacker
         PROC_YIELD 12
@@ -9718,14 +9803,14 @@
         PROC_CALL rlStartMapBattleBallistaBolt
         PROC_CALL rlMapBattleNextRound
         PROC_JUMP_IF_BITS_UNSET _CC6C, $0002
-        PROC_CALL rlUnknown9EA9B5
+        PROC_CALL rlMapBattleStartSkillEffect
         PROC_JUMP_IF_BITS_UNSET _CBA7, $0002
         PROC_SET_UNK_TIMER 96
         _CB8F
         PROC_YIELD 1
         PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_WHILE_UNK_TIMER _CB8F
-        PROC_CALL rlUnknown9EAB21
+        PROC_CALL rlMapBattleEndSkillEffect
         PROC_JUMP_IF_BITS_SET _CB70, $0002
         PROC_YIELD 16
         _CBA7
@@ -9736,10 +9821,10 @@
         PROC_CALL rlMapBattleWaitPavise
         PROC_JUMP_IF_BITS_UNSET _CBB2, $0004
         _CBBF
-        PROC_CALL rlUnknown9E8C81
+        PROC_CALL rlSetMapMagicPositions
         PROC_CALL rlSelectMapMagicEffectForRound
         PROC_JUMP_IF_BITS_UNSET _CC15, $0002
-        PROC_SET_ONCYCLE rlUnknown9EC9FD
+        PROC_SET_ONCYCLE rlQueueMapMagicBackgroundAll
         PROC_YIELD 16
         PROC_CALL rlUploadMapMagicBackgroundTiles
         PROC_YIELD 2
@@ -9760,7 +9845,7 @@
         _CC10
         PROC_CALL rlStartMapMagicEffect
         _CC15
-        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle6
+        PROC_SET_ONCYCLE rlProcMapBattleResetRound
         PROC_YIELD 1
         PROC_CALL rlMapBattleSetRoundSpriteScripts
         _CC20
@@ -9779,21 +9864,21 @@
         PROC_CALL rlMapBattleWaitWarpArrival
         PROC_JUMP_IF_BITS_UNSET _CC47, $0004
         _CC54
-        PROC_CALL rlUnknown9EA8BA
+        PROC_CALL rlMapBattleStartStatusSwordEffect
         PROC_JUMP_IF_BITS_UNSET _CC6C, $0002
         _CC5F
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EA9A5
+        PROC_CALL rlMapBattleWaitStatusSwordEffect
         PROC_JUMP_IF_BITS_UNSET _CC5F, $0004
         _CC6C
         PROC_CALL rlEndMapMagicEffect
         PROC_CALL rlRestoreMapMagicScreenRegisters
-        PROC_CALL rlUnknown9ECA60
+        PROC_CALL rlMapBattleCheckRoundsOver
         PROC_JUMP_IF_BITS_UNSET _CC98, $0002
         PROC_YIELD 40
         PROC_CALL rlCloseMapBattleHPWindows
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle7
+        PROC_SET_ONCYCLE rlMapBattleWaitHPWindowsClosed
         _CC8E
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CC8E, $0004
@@ -9803,7 +9888,7 @@
         PROC_JUMP_IF_BITS_UNSET _CCE4, $0002
         PROC_YIELD 2
         PROC_CALL rlLoadCursorSpriteGraphics
-        PROC_CALL rlUnknown9E99F7
+        PROC_CALL rlUploadMapBattleShadowTiles
         PROC_CALL rlLoadMapSpriteOAMPalettes
         PROC_YIELD 2
         _CCB6
@@ -9820,11 +9905,11 @@
         PROC_CALL rlUploadMapBattleTilesAfterQuote3
         PROC_YIELD 4
         _CCE4
-        PROC_CALL rlUnknown9E9F71
+        PROC_CALL rlMapBattleStartDefeat
         PROC_JUMP_IF_BITS_UNSET _CCFD, $0002
         _CCEF
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlProcUnknown9EC70BCycle8
+        PROC_SET_ONCYCLE rlMapBattleDefeatBlink
         PROC_JUMP_IF_BITS_UNSET _CCEF, $0004
         PROC_YIELD 1
         _CCFD
@@ -9859,13 +9944,13 @@
         PROC_CALL rlMapBattleSlideShiftedUnitBack
         PROC_JUMP_IF_BITS_UNSET _CD60, $0004
         _CD6D
-        PROC_CALL rlUnknown9ECA3B
+        PROC_CALL rlMapBattleClearDoneBit
         PROC_SET_ONCYCLE rlMapBattleLoadHUD
         _CD76
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _CD76, $0004
         PROC_YIELD 4
-        PROC_CALL rlUnknown9ECEA0
+        PROC_CALL rlMapBattleCheckExperience
         PROC_JUMP_IF_BITS_UNSET _CE88, $0004
         PROC_CALL rlMapBattleOpenExperienceWindow
         PROC_JUMP_IF_BITS_UNSET _CDA5, $0002
@@ -9966,12 +10051,14 @@
       .al
       .xl
 
-      rlUnknown9ECEA0 ; 9E/CEA0
+      rlMapBattleCheckExperience ; 9E/CEA0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Proc bit $0004 (skip experience, level up and popups) unless wMapBattleMode is 0.
 
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
@@ -10253,7 +10340,7 @@
         .autsiz
         .databank ?
 
-        ; Gives the defending side's sprite the shield's script (aMapBattlePaviseSpriteScript, saving its own), creates the shield's sprite (aUnknown9EDAE0) on the defender's tile and plays sound $2E.
+        ; Gives the defending side's sprite the shield's script (aMapBattlePaviseSpriteScript, saving its own), creates the shield's sprite (aMapBattlePaviseSpriteInfo) on the defender's tile and plays sound $2E.
 
         phy
         phx
@@ -10296,10 +10383,10 @@
         tay
         lda aMapAction.wAttackerXTile,x
         tax
-        jsl rlUnknown9E8D25
-        lda #(`aUnknown9EDAE0)<<8
+        jsl rlGetMapBattleUnitScreenPosition
+        lda #(`aMapBattlePaviseSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EDAE0
+        lda #<>aMapBattlePaviseSpriteInfo
         sta lR44
         lda #$DAE0
         ldx wR0
@@ -10557,10 +10644,10 @@
           ACTIVE_SPRITE_TABLE_FRAME 2, 19
           ACTIVE_SPRITE_END
 
-      aUnknown9EDAE0 ; 9E/DAE0
-        .word <>rlUnknown9EDAE6, <>rlUnknown9EDAE6, <>aMapBattlePaviseSpriteScript._D900_Script
+      aMapBattlePaviseSpriteInfo ; 9E/DAE0
+        .dstruct structActiveSpriteInfo, rlMapBattlePaviseSpriteNothing, rlMapBattlePaviseSpriteNothing, aMapBattlePaviseSpriteScript._D900_Script
 
-      rlUnknown9EDAE6 ; 9E/DAE6
+      rlMapBattlePaviseSpriteNothing ; 9E/DAE6
         rtl
 
     .endsection Data9ED900Section
@@ -10601,7 +10688,7 @@
 
       procScriptedCritStart ; 9E/DF8E
 
-        .structProcInfo "ON", rlProcScriptedCritStartInit, rlProcUnknown9EDF8ECycle1, aProcScriptedCritStartCode
+        .structProcInfo "ON", rlProcScriptedCritStartInit, rlProcScriptedCritStartCycle, aProcScriptedCritStartCode
 
     .endsection ProcScript9EDF8ESection
 
@@ -10658,7 +10745,7 @@
 
         ; 9E/DFF7
 
-      rlProcUnknown9EDF8ECycle1 ; 9E/DFF7
+      rlProcScriptedCritStartCycle ; 9E/DFF7
 
         .al
         .xl
@@ -10679,7 +10766,7 @@
       .al
       .xl
 
-      rlProcUnknown9EDF8ECycle2 ; 9E/DFF8
+      rlScriptedCritStartWaitEffect ; 9E/DFF8
 
         .al
         .xl
@@ -10688,16 +10775,16 @@
 
         lda aProcSystem.aBody6,b,x
         jsl rlProcEngineCheckProcEnded
-        bcc rlUnknown9EE010
+        bcc rlScriptedCritStartIdle
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0001
         sta aProcSystem.aHeaderBitfield,b,x
-        lda #<>rlUnknown9EE010
+        lda #<>rlScriptedCritStartIdle
         sta aProcSystem.aHeaderOnCycle,b,x
 
         .databank 0
 
-      rlUnknown9EE010 ; 9E/E010
+      rlScriptedCritStartIdle ; 9E/E010
 
         .al
         .xl
@@ -10721,7 +10808,7 @@
       aProcScriptedCritStartCode ; 9E/E011
 
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlProcUnknown9EDF8ECycle2
+        PROC_SET_ONCYCLE rlScriptedCritStartWaitEffect
         _E017
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _E017, $0001
@@ -10738,7 +10825,7 @@
       .al
       .xl
 
-      rlUnknown9EE021 ; 9E/E021
+      rlScriptedCritStartBattle ; 9E/E021
 
         .al
         .xl
@@ -10835,7 +10922,7 @@
         lda wBattleCriticalType
         dec a
         jsl rlDecompressScriptedCritSprites
-        lda #<>rlUnknown9EE079
+        lda #<>rlScriptedCritEffectWaitDecompression
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -10843,7 +10930,7 @@
 
         ; 9E/E079
 
-      rlUnknown9EE079 ; 9E/E079
+      rlScriptedCritEffectWaitDecompression ; 9E/E079
 
         .al
         .xl
@@ -10853,7 +10940,7 @@
         lda bDecompressionArrayFlag,b
         and #$00FF
         bne _E090
-        lda #<>rlUnknown9EE091
+        lda #<>rlScriptedCritEffectIdle
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
         ora #$0002
@@ -10866,7 +10953,7 @@
 
         ; 9E/E091
 
-      rlUnknown9EE091 ; 9E/E091
+      rlScriptedCritEffectIdle ; 9E/E091
 
         .al
         .xl
@@ -10893,30 +10980,30 @@
         _E094
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _E094, $0002
-        PROC_CALL rlUnknown9EE127
+        PROC_CALL rlUploadScriptedCritSprites
         PROC_YIELD 8
-        PROC_CALL rlUnknown9EE228
+        PROC_CALL rlScriptedCritSaveColors
         _E0A8
-        PROC_CALL rlUnknown9EE23D
+        PROC_CALL rlScriptedCritDarken
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _E0A8, $0004
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EE290
+        PROC_CALL rlStartScriptedCritTypeEffect
         _E0BC
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EE2BE
+        PROC_CALL rlScriptedCritWaitTypeEffect
         PROC_JUMP_IF_BITS_UNSET _E0BC, $0001
         PROC_YIELD 30
-        PROC_CALL rlUnknown9EE254
+        PROC_CALL rlScriptedCritCheckAnimationsOff
         PROC_JUMP_IF_BITS_UNSET _E0E3, $0002
         _E0D6
-        PROC_CALL rlUnknown9EE279
+        PROC_CALL rlScriptedCritFadeBack
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _E0D6, $0004
         _E0E3
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EE2D1
-        PROC_CALL rlUnknown9EE021
+        PROC_CALL rlScriptedCritEffectEnd
+        PROC_CALL rlScriptedCritStartBattle
         PROC_END
 
 
@@ -10993,7 +11080,7 @@
       .al
       .xl
 
-      rlUnknown9EE127 ; 9E/E127
+      rlUploadScriptedCritSprites ; 9E/E127
 
         .al
         .xl
@@ -11021,7 +11108,7 @@
         adc #$0400
         sta wR1
         jsl rlDMAByPointer
-        jsl rlUnknown9EE156
+        jsl rlLoadScriptedCritPalette
         plx
         rtl
 
@@ -11029,7 +11116,7 @@
 
         ; 9E/E156
 
-      rlUnknown9EE156 ; 9E/E156
+      rlLoadScriptedCritPalette ; 9E/E156
 
         .al
         .xl
@@ -11066,7 +11153,7 @@
       aMapBattleCriticalTypePalettes ; 9E/E177
 
         ; Sprite palette 6 for wBattleCriticalType 1-4, one palette each
-        ; (rlUnknown9EE156 reads type * 32 bytes from aMapBattleCriticalTypePalettes - 2, backwards).
+        ; (rlLoadScriptedCritPalette reads type * 32 bytes from aMapBattleCriticalTypePalettes - 2, backwards).
 
         .word $3800, $7FFF, $035F, $01BF, $0037, $0C8A, $0425, $7FBA
         .word $7E6E, $7C84, $30C4, $1421, $0000, $0000, $0000, $0000
@@ -11077,20 +11164,20 @@
         .word $3800, $14AA, $0C87, $0444, $0C87, $14AA, $18EC, $2952
         .word $35B7, $421C, $4A5F, $46FF, $161E, $0D77, $08ED, $0489
 
-      rlUnknown9EE1F7 ; 9E/E1F7
+      rlLoadScriptedCritEndPalette ; 9E/E1F7
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; Unreferenced: copies aUnknown9EE208 into sprite palette 6.
+        ; Copies aScriptedCritEndPalette into sprite palette 6 (the lover, triangle and type 4 effects at their end).
 
         phx
         ldx #$001E
 
         -
-        lda aUnknown9EE208,x
+        lda aScriptedCritEndPalette,x
         sta aOAMPaletteBuffer.aPalette6,b,x
         dec x
         dec x
@@ -11101,7 +11188,7 @@
 
         .databank 0
 
-      aUnknown9EE208 ; 9E/E208
+      aScriptedCritEndPalette ; 9E/E208
 
         .word $3800, $7FFF, $5BDF, $1E9A, $1551, $0C8A, $0425, $7FBA
         .word $5EB3, $49EE, $28E6, $1421, $63FA, $2E2D, $1505, $0000
@@ -11114,7 +11201,7 @@
       .al
       .xl
 
-      rlUnknown9EE228 ; 9E/E228
+      rlScriptedCritSaveColors ; 9E/E228
 
         .al
         .xl
@@ -11139,7 +11226,7 @@
 
         ; 9E/E23D
 
-      rlUnknown9EE23D ; 9E/E23D
+      rlScriptedCritDarken ; 9E/E23D
 
         .al
         .xl
@@ -11167,7 +11254,7 @@
 
         ; 9E/E254
 
-      rlUnknown9EE254 ; 9E/E254
+      rlScriptedCritCheckAnimationsOff ; 9E/E254
 
         .al
         .xl
@@ -11195,7 +11282,7 @@
 
         ; 9E/E279
 
-      rlUnknown9EE279 ; 9E/E279
+      rlScriptedCritFadeBack ; 9E/E279
 
         .al
         .xl
@@ -11223,12 +11310,14 @@
 
         ; 9E/E290
 
-      rlUnknown9EE290 ; 9E/E290
+      rlStartScriptedCritTypeEffect ; 9E/E290
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Creates the effect of the critical's type (aScriptedCritEffectProcs by wBattleCriticalType - 1) and keeps its slot in aBody6.
 
         phx
         lda wBattleCriticalType
@@ -11238,9 +11327,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown9EE2B2+1,x
+        lda aScriptedCritEffectProcs+1,x
         sta lR44+1
-        lda aUnknown9EE2B2,x
+        lda aScriptedCritEffectProcs,x
         sta lR44
         jsl rlProcEngineCreateProc
         plx
@@ -11259,11 +11348,14 @@
       .al
       .xl
 
-      aUnknown9EE2B2 ; 9E/E2B2
+      aScriptedCritEffectProcs ; 9E/E2B2
 
-        ; Read by rlUnknown9EE290.
+        ; Read by rlStartScriptedCritTypeEffect.
 
-        .word $E2E4, $CA9E, $9EE3, $E5D7, $3B9E, $9EE8
+        .long procScriptedCritSiblingEffect   ; 1: sibling
+        .long procScriptedCritLoverEffect     ; 2: lover
+        .long procScriptedCritTriangleEffect  ; 3: triangle attack
+        .long procScriptedCritType4Effect     ; 4
 
         ; 9E/E2BE
 
@@ -11275,7 +11367,7 @@
       .al
       .xl
 
-      rlUnknown9EE2BE ; 9E/E2BE
+      rlScriptedCritWaitTypeEffect ; 9E/E2BE
 
         .al
         .xl
@@ -11296,7 +11388,7 @@
 
         ; 9E/E2D1
 
-      rlUnknown9EE2D1 ; 9E/E2D1
+      rlScriptedCritEffectEnd ; 9E/E2D1
 
         .al
         .xl
@@ -11315,13 +11407,13 @@
 
         ; 9E/E2E4
 
-      procUnknown9EE2E4 ; 9E/E2E4
+      procScriptedCritSiblingEffect ; 9E/E2E4
 
-        ; Unreferenced: nothing creates this proc.
+        ; The effect of a sibling critical, created from aScriptedCritEffectProcs.
 
-        .structProcInfo "ON", rlProcUnknown9EE2E4Init, rlProcUnknown9EE2E4Cycle, aProcUnknown9EE2E4Code
+        .structProcInfo "ON", rlProcScriptedCritSiblingEffectInit, rlProcScriptedCritSiblingEffectCycle, aProcScriptedCritSiblingEffectCode
 
-      rlProcUnknown9EE2E4Init ; 9E/E2EC
+      rlProcScriptedCritSiblingEffectInit ; 9E/E2EC
 
         .al
         .xl
@@ -11338,7 +11430,7 @@
 
         ; 9E/E2FC
 
-      rlProcUnknown9EE2E4Cycle ; 9E/E2FC
+      rlProcScriptedCritSiblingEffectCycle ; 9E/E2FC
 
         .al
         .xl
@@ -11354,7 +11446,7 @@
         ; Unreachable: it follows a return.
         rtl
 
-      aProcUnknown9EE2E4Code ; 9E/E2FE
+      aProcScriptedCritSiblingEffectCode ; 9E/E2FE
 
         PROC_YIELD 32
         PROC_CALL rlUnknown9EE3A7
@@ -11373,20 +11465,20 @@
 
         phy
         phx
-        lda #(`aUnknown9EEA05)<<8
+        lda #(`aScriptedCritSiblingFrames)<<8
         sta aMapAction.lAttackerSpriteData+1
-        lda #<>aUnknown9EEA05
+        lda #<>aScriptedCritSiblingFrames
         sta aMapAction.lAttackerSpriteData
         lda $7F57EE
         tax
         lda $7F57F0
         tay
-        jsl rlUnknown9E8D25
-        lda #(`aUnknown9EEAC8)<<8
+        jsl rlGetMapBattleUnitScreenPosition
+        lda #(`aScriptedCritSiblingSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EEAC8
+        lda #<>aScriptedCritSiblingSpriteInfo
         sta lR44
-        lda #<>aUnknown9EEAC8
+        lda #<>aScriptedCritSiblingSpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -11422,12 +11514,12 @@
         tax
         lda $7E4F7B
         tay
-        jsl rlUnknown9E8D25
-        lda #(`aUnknown9EEAC8)<<8
+        jsl rlGetMapBattleUnitScreenPosition
+        lda #(`aScriptedCritSiblingSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EEAC8
+        lda #<>aScriptedCritSiblingSpriteInfo
         sta lR44
-        lda #<>aUnknown9EEAC8
+        lda #<>aScriptedCritSiblingSpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -11463,7 +11555,7 @@
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda wUnknown7F4BFF
         tax
-        lda #<>aUnknown9EEAA6
+        lda #<>aScriptedCritSiblingMergeScript
         sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #$0001
         sta aActiveSpriteSystem.aFrameTimer,b,x
@@ -11476,13 +11568,13 @@
 
         ; 9E/E3CA
 
-      procUnknown9EE3CA ; 9E/E3CA
+      procScriptedCritLoverEffect ; 9E/E3CA
 
-        ; Unreferenced: nothing creates this proc.
+        ; The effect of a lover critical, created from aScriptedCritEffectProcs.
 
-        .structProcInfo "ON", rlProcUnknown9EE3CAInit, rlProcUnknown9EE3CACycle, aProcUnknown9EE3CACode
+        .structProcInfo "ON", rlProcScriptedCritLoverEffectInit, rlProcScriptedCritLoverEffectCycle, aProcScriptedCritLoverEffectCode
 
-      rlProcUnknown9EE3CAInit ; 9E/E3D2
+      rlProcScriptedCritLoverEffectInit ; 9E/E3D2
 
         .al
         .xl
@@ -11500,7 +11592,7 @@
 
         ; 9E/E3E6
 
-      rlProcUnknown9EE3CACycle ; 9E/E3E6
+      rlProcScriptedCritLoverEffectCycle ; 9E/E3E6
 
         .al
         .xl
@@ -11516,7 +11608,7 @@
         ; Unreachable: it follows a return.
         rtl
 
-      aProcUnknown9EE3CACode ; 9E/E3E8
+      aProcScriptedCritLoverEffectCode ; 9E/E3E8
 
         PROC_SET_UNK_TIMER 30
         _E3EC
@@ -11545,20 +11637,20 @@
 
         phy
         phx
-        lda #(`aUnknown9EEAD5)<<8
+        lda #(`aScriptedCritLoverFrames)<<8
         sta aMapAction.lAttackerSpriteData+1
-        lda #<>aUnknown9EEAD5
+        lda #<>aScriptedCritLoverFrames
         sta aMapAction.lAttackerSpriteData
         lda $7F57EE
         tax
         lda $7F57F0
         tay
-        jsl rlUnknown9E8D25
-        lda #(`aUnknown9EEB3D)<<8
+        jsl rlGetMapBattleUnitScreenPosition
+        lda #(`aScriptedCritLoverSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EEB3D
+        lda #<>aScriptedCritLoverSpriteInfo
         sta lR44
-        lda #<>aUnknown9EEB3D
+        lda #<>aScriptedCritLoverSpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -11594,12 +11686,12 @@
         tax
         lda $7E4F7B
         tay
-        jsl rlUnknown9E8D25
-        lda #(`aUnknown9EEB3D)<<8
+        jsl rlGetMapBattleUnitScreenPosition
+        lda #(`aScriptedCritLoverSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EEB3D
+        lda #<>aScriptedCritLoverSpriteInfo
         sta lR44
-        lda #<>aUnknown9EEB3D
+        lda #<>aScriptedCritLoverSpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -11662,7 +11754,7 @@
         sta wR2
         lda wUnknown7F4C01
         tax
-        jsl rlUnknown9EA566
+        jsl rlCheckActiveSpriteNearPoint
         bcc _E4FA
         lda #1,s
         tax
@@ -11742,13 +11834,13 @@
 
         phx
         jsl rlUnknown9EE5C8
-        jsl rlUnknown9EE1F7
+        jsl rlLoadScriptedCritEndPalette
         lda wUnknown7F4C01
         tax
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda wUnknown7F4BFF
         tax
-        lda #<>aUnknown9EEB2D
+        lda #<>aScriptedCritLoverArriveScript
         sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #$0001
         sta aActiveSpriteSystem.aFrameTimer,b,x
@@ -11815,13 +11907,13 @@
 
         ; 9E/E5D7
 
-      procUnknown9EE5D7 ; 9E/E5D7
+      procScriptedCritTriangleEffect ; 9E/E5D7
 
-        ; Unreferenced: nothing creates this proc.
+        ; The effect of a triangle attack critical, created from aScriptedCritEffectProcs.
 
-        .structProcInfo "ON", rlProcUnknown9EE5D7Init, rlProcUnknown9EE5D7Cycle, aProcUnknown9EE5D7Code
+        .structProcInfo "ON", rlProcScriptedCritTriangleEffectInit, rlProcScriptedCritTriangleEffectCycle, aProcScriptedCritTriangleEffectCode
 
-      rlProcUnknown9EE5D7Init ; 9E/E5DF
+      rlProcScriptedCritTriangleEffectInit ; 9E/E5DF
 
         .al
         .xl
@@ -11840,7 +11932,7 @@
 
         ; 9E/E5F7
 
-      rlProcUnknown9EE5D7Cycle ; 9E/E5F7
+      rlProcScriptedCritTriangleEffectCycle ; 9E/E5F7
 
         .al
         .xl
@@ -11856,7 +11948,7 @@
         ; Unreachable: it follows a return.
         rtl
 
-      aProcUnknown9EE5D7Code ; 9E/E5F9
+      aProcScriptedCritTriangleEffectCode ; 9E/E5F9
 
         PROC_SET_UNK_TIMER 30
         _E5FD
@@ -11885,20 +11977,20 @@
 
         phy
         phx
-        lda #(`aUnknown9EEBB9)<<8
+        lda #(`aScriptedCritTriangleFrames)<<8
         sta aMapAction.lAttackerSpriteData+1
-        lda #<>aUnknown9EEBB9
+        lda #<>aScriptedCritTriangleFrames
         sta aMapAction.lAttackerSpriteData
         lda $7F57EE
         tax
         lda $7F57F0
         tay
-        jsl rlUnknown9E8D25
-        lda #(`aUnknown9EEC22)<<8
+        jsl rlGetMapBattleUnitScreenPosition
+        lda #(`aScriptedCritTriangleSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EEC22
+        lda #<>aScriptedCritTriangleSpriteInfo
         sta lR44
-        lda #<>aUnknown9EEC22
+        lda #<>aScriptedCritTriangleSpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -11934,12 +12026,12 @@
         tax
         lda $7E4F7B
         tay
-        jsl rlUnknown9E8D25
-        lda #(`aUnknown9EEC22)<<8
+        jsl rlGetMapBattleUnitScreenPosition
+        lda #(`aScriptedCritTriangleSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EEC22
+        lda #<>aScriptedCritTriangleSpriteInfo
         sta lR44
-        lda #<>aUnknown9EEC22
+        lda #<>aScriptedCritTriangleSpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -11975,12 +12067,12 @@
         tax
         lda $7E4F7F
         tay
-        jsl rlUnknown9E8D25
-        lda #(`aUnknown9EEC22)<<8
+        jsl rlGetMapBattleUnitScreenPosition
+        lda #(`aScriptedCritTriangleSpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EEC22
+        lda #<>aScriptedCritTriangleSpriteInfo
         sta lR44
-        lda #<>aUnknown9EEC22
+        lda #<>aScriptedCritTriangleSpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -12072,7 +12164,7 @@
         sta wR2
         lda wUnknown7F4C01
         tax
-        jsl rlUnknown9EA566
+        jsl rlCheckActiveSpriteNearPoint
         lda wUnknown7F4C03
         tax
         jsl rlMoveActiveSpriteByVelocity
@@ -12086,7 +12178,7 @@
         sta wR2
         lda wUnknown7F4C03
         tax
-        jsl rlUnknown9EA566
+        jsl rlCheckActiveSpriteNearPoint
         bcc _E7A6
         lda #1,s
         tax
@@ -12111,7 +12203,7 @@
 
         phx
         jsl rlUnknown9EE5C8
-        jsl rlUnknown9EE1F7
+        jsl rlLoadScriptedCritEndPalette
         lda wUnknown7F4C01
         tax
         stz aActiveSpriteSystem.aTypeOffset,b,x
@@ -12120,7 +12212,7 @@
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda wUnknown7F4BFF
         tax
-        lda #<>aUnknown9EEC15
+        lda #<>aScriptedCritTriangleArriveScript
         sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #$0001
         sta aActiveSpriteSystem.aFrameTimer,b,x
@@ -12144,9 +12236,9 @@
         phx
         jsl rlUnknown96D659
         stz wR0
-        lda #(`aUnknown9EE7F4)<<8
+        lda #(`aScriptedCritTrianglePaletteEffect)<<8
         sta lR18+1
-        lda #<>aUnknown9EE7F4
+        lda #<>aScriptedCritTrianglePaletteEffect
         sta lR18
         jsl rlBattleSceneStartPaletteEffect
         plx
@@ -12157,11 +12249,11 @@
 
         ; 9E/E7F4
 
-      aUnknown9EE7F4 ; 9E/E7F4
+      aScriptedCritTrianglePaletteEffect ; 9E/E7F4
 
-        PALETTE_EFFECT $02, $01, $E1, $08, aUnknown9EE7FB
+        PALETTE_EFFECT $02, $01, $E1, $08, aScriptedCritTriangleFlashColors
 
-      aUnknown9EE7FB ; 9E/E7FB
+      aScriptedCritTriangleFlashColors ; 9E/E7FB
 
         .byte $81, $7B, $59, $7B, $9B, $7F, $DE, $67, $9C
         .byte $4F, $5A, $33, $38, $1A, $F6, $02, $B4, $03, $7A, $1B, $9B, $33, $9C, $4B, $FF
@@ -12169,13 +12261,13 @@
         .byte $53, $3F, $7F, $DE, $7B, $59, $72, $6F, $72, $B1, $72, $6F, $6E, $2C, $72, $6F
         .byte $72, $B1, $76, $F4, $77, $16, $FE
 
-      procUnknown9EE83B ; 9E/E83B
+      procScriptedCritType4Effect ; 9E/E83B
 
-        ; Unreferenced: nothing creates this proc.
+        ; The effect of a type 4, which nothing found sets critical, created from aScriptedCritEffectProcs.
 
-        .structProcInfo "ON", rlProcUnknown9EE83BInit, rlProcUnknown9EE83BCycle, aProcUnknown9EE83BCode
+        .structProcInfo "ON", rlProcScriptedCritType4EffectInit, rlProcScriptedCritType4EffectCycle, aProcScriptedCritType4EffectCode
 
-      rlProcUnknown9EE83BInit ; 9E/E843
+      rlProcScriptedCritType4EffectInit ; 9E/E843
 
         .al
         .xl
@@ -12194,7 +12286,7 @@
 
         ; 9E/E85B
 
-      rlProcUnknown9EE83BCycle ; 9E/E85B
+      rlProcScriptedCritType4EffectCycle ; 9E/E85B
 
         .al
         .xl
@@ -12210,7 +12302,7 @@
         ; Unreachable: it follows a return.
         rtl
 
-      aProcUnknown9EE83BCode ; 9E/E85D
+      aProcScriptedCritType4EffectCode ; 9E/E85D
 
         PROC_SET_UNK_TIMER 30
         _E861
@@ -12239,20 +12331,20 @@
 
         phy
         phx
-        lda #(`aUnknown9EEB4A)<<8
+        lda #(`aScriptedCritType4Frames)<<8
         sta aMapAction.lAttackerSpriteData+1
-        lda #<>aUnknown9EEB4A
+        lda #<>aScriptedCritType4Frames
         sta aMapAction.lAttackerSpriteData
         lda $7F57EE
         tax
         lda $7F57F0
         tay
-        jsl rlUnknown9E8D25
-        lda #(`aUnknown9EEBB2)<<8
+        jsl rlGetMapBattleUnitScreenPosition
+        lda #(`aScriptedCritType4SpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EEBB2
+        lda #<>aScriptedCritType4SpriteInfo
         sta lR44
-        lda #<>aUnknown9EEBB2
+        lda #<>aScriptedCritType4SpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -12288,12 +12380,12 @@
         tax
         lda $7E4F7B
         tay
-        jsl rlUnknown9E8D25
-        lda #(`aUnknown9EEBB2)<<8
+        jsl rlGetMapBattleUnitScreenPosition
+        lda #(`aScriptedCritType4SpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EEBB2
+        lda #<>aScriptedCritType4SpriteInfo
         sta lR44
-        lda #<>aUnknown9EEBB2
+        lda #<>aScriptedCritType4SpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -12329,12 +12421,12 @@
         tax
         lda $7E4F7F
         tay
-        jsl rlUnknown9E8D25
-        lda #(`aUnknown9EEBB2)<<8
+        jsl rlGetMapBattleUnitScreenPosition
+        lda #(`aScriptedCritType4SpriteInfo)<<8
         sta lR44+1
-        lda #<>aUnknown9EEBB2
+        lda #<>aScriptedCritType4SpriteInfo
         sta lR44
-        lda #<>aUnknown9EEBB2
+        lda #<>aScriptedCritType4SpriteInfo
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
@@ -12366,7 +12458,7 @@
 
         phx
         jsl rlUnknown9EE5C8
-        jsl rlUnknown9EE1F7
+        jsl rlLoadScriptedCritEndPalette
         lda wUnknown7F4C01
         tax
         stz aActiveSpriteSystem.aTypeOffset,b,x
@@ -12375,7 +12467,7 @@
         stz aActiveSpriteSystem.aTypeOffset,b,x
         lda wUnknown7F4BFF
         tax
-        lda #<>aUnknown9EEBA5
+        lda #<>aScriptedCritType4ArriveScript
         sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #$0001
         sta aActiveSpriteSystem.aFrameTimer,b,x
@@ -12399,9 +12491,9 @@
         phx
         jsl rlUnknown96D659
         stz wR0
-        lda #(`aUnknown9EE9BE)<<8
+        lda #(`aScriptedCritType4PaletteEffect)<<8
         sta lR18+1
-        lda #<>aUnknown9EE9BE
+        lda #<>aScriptedCritType4PaletteEffect
         sta lR18
         jsl rlBattleSceneStartPaletteEffect
         plx
@@ -12412,11 +12504,11 @@
 
         ; 9E/E9BE
 
-      aUnknown9EE9BE ; 9E/E9BE
+      aScriptedCritType4PaletteEffect ; 9E/E9BE
 
-        PALETTE_EFFECT $02, $01, $E1, $08, aUnknown9EE9C5
+        PALETTE_EFFECT $02, $01, $E1, $08, aScriptedCritType4FlashColors
 
-      aUnknown9EE9C5 ; 9E/E9C5
+      aScriptedCritType4FlashColors ; 9E/E9C5
 
         .byte $81, $35, $B7, $42, $1C, $4A, $5F, $46, $FF
         .byte $16, $1E, $0D, $77, $08, $ED, $04, $89, $08, $ED, $0D, $77, $16, $1E, $26, $BF
@@ -12424,13 +12516,13 @@
         .byte $02, $B5, $3B, $FF, $4A, $5F, $29, $52, $18, $EC, $0C, $87, $04, $44, $0C, $87
         .byte $14, $AA, $18, $EC, $29, $52, $FE
 
-      aUnknown9EEA05 ; 9E/EA05
+      aScriptedCritSiblingFrames ; 9E/EA05
 
         ; A frame table for script command $0E (ACTIVE_SPRITE_TABLE_FRAME):
         ; the offsets of the frame list and of the first script, then the frames.
 
-        .word _Table - aUnknown9EEA05
-        .word aUnknown9EEA8A - aUnknown9EEA05
+        .word _Table - aScriptedCritSiblingFrames
+        .word aScriptedCritSiblingScript - aScriptedCritSiblingFrames
 
         _Frame00
           .word 1 ; sprite count
@@ -12483,19 +12575,19 @@
           .structSpriteEntry ( 240,  -16), $00, SpriteSmall, $0FF, 2, 0, false, false
 
         _Table
-          .word _Frame00 - aUnknown9EEA05
-          .word _Frame01 - aUnknown9EEA05
-          .word _Frame02 - aUnknown9EEA05
-          .word _Frame03 - aUnknown9EEA05
-          .word _Frame04 - aUnknown9EEA05
-          .word _Frame05 - aUnknown9EEA05
-          .word _Frame06 - aUnknown9EEA05
-          .word _Frame07 - aUnknown9EEA05
-          .word _Frame08 - aUnknown9EEA05
-          .word _Frame09 - aUnknown9EEA05
-          .word _Frame10 - aUnknown9EEA05
+          .word _Frame00 - aScriptedCritSiblingFrames
+          .word _Frame01 - aScriptedCritSiblingFrames
+          .word _Frame02 - aScriptedCritSiblingFrames
+          .word _Frame03 - aScriptedCritSiblingFrames
+          .word _Frame04 - aScriptedCritSiblingFrames
+          .word _Frame05 - aScriptedCritSiblingFrames
+          .word _Frame06 - aScriptedCritSiblingFrames
+          .word _Frame07 - aScriptedCritSiblingFrames
+          .word _Frame08 - aScriptedCritSiblingFrames
+          .word _Frame09 - aScriptedCritSiblingFrames
+          .word _Frame10 - aScriptedCritSiblingFrames
 
-      aUnknown9EEA8A ; 9E/EA8A
+      aScriptedCritSiblingScript ; 9E/EA8A
 
         ACTIVE_SPRITE_TABLE_FRAME 5, 0
         ACTIVE_SPRITE_TABLE_FRAME 5, 1
@@ -12508,7 +12600,7 @@
         ACTIVE_SPRITE_TABLE_FRAME 255, 10
         ACTIVE_SPRITE_END
 
-      aUnknown9EEAA6 ; 9E/EAA6
+      aScriptedCritSiblingMergeScript ; 9E/EAA6
 
         ACTIVE_SPRITE_TABLE_FRAME 4, 0
         ACTIVE_SPRITE_TABLE_FRAME 4, 5
@@ -12523,12 +12615,12 @@
         ACTIVE_SPRITE_TABLE_FRAME 4, 9
         ACTIVE_SPRITE_END
 
-      aUnknown9EEAC8 .dstruct structActiveSpriteInfo, rlUnknown9EEAD4, rlUnknown9EEAD4, aUnknown9EEA8A ; 9E/EAC8
+      aScriptedCritSiblingSpriteInfo .dstruct structActiveSpriteInfo, rlScriptedCritSiblingSpriteNothing, rlScriptedCritSiblingSpriteNothing, aScriptedCritSiblingScript ; 9E/EAC8
 
         ; Unreferenced.
-      aUnknown9EEACE .dstruct structActiveSpriteInfo, rlUnknown9EEAD4, rlUnknown9EEAD4, aUnknown9EEAA6 ; 9E/EACE
+      aScriptedCritSiblingMergeSpriteInfo .dstruct structActiveSpriteInfo, rlScriptedCritSiblingSpriteNothing, rlScriptedCritSiblingSpriteNothing, aScriptedCritSiblingMergeScript ; 9E/EACE
 
-      rlUnknown9EEAD4 ; 9E/EAD4
+      rlScriptedCritSiblingSpriteNothing ; 9E/EAD4
 
         ; The definitions' init and on-cycle routine: does nothing.
 
@@ -12541,13 +12633,13 @@
 
         .databank 0
 
-      aUnknown9EEAD5 ; 9E/EAD5
+      aScriptedCritLoverFrames ; 9E/EAD5
 
         ; A frame table for script command $0E (ACTIVE_SPRITE_TABLE_FRAME):
         ; the offsets of the frame list and of the first script, then the frames.
 
-        .word _Table - aUnknown9EEAD5
-        .word aUnknown9EEB21 - aUnknown9EEAD5
+        .word _Table - aScriptedCritLoverFrames
+        .word aScriptedCritLoverScript - aScriptedCritLoverFrames
 
         _Frame00
           .word 1 ; sprite count
@@ -12582,23 +12674,23 @@
           .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $04B, 2, 0, false, false
 
         _Table
-          .word _Frame00 - aUnknown9EEAD5
-          .word _Frame01 - aUnknown9EEAD5
-          .word _Frame02 - aUnknown9EEAD5
-          .word _Frame03 - aUnknown9EEAD5
-          .word _Frame04 - aUnknown9EEAD5
-          .word _Frame05 - aUnknown9EEAD5
-          .word _Frame06 - aUnknown9EEAD5
-          .word _Frame07 - aUnknown9EEAD5
+          .word _Frame00 - aScriptedCritLoverFrames
+          .word _Frame01 - aScriptedCritLoverFrames
+          .word _Frame02 - aScriptedCritLoverFrames
+          .word _Frame03 - aScriptedCritLoverFrames
+          .word _Frame04 - aScriptedCritLoverFrames
+          .word _Frame05 - aScriptedCritLoverFrames
+          .word _Frame06 - aScriptedCritLoverFrames
+          .word _Frame07 - aScriptedCritLoverFrames
 
-      aUnknown9EEB21 ; 9E/EB21
+      aScriptedCritLoverScript ; 9E/EB21
 
         ACTIVE_SPRITE_TABLE_FRAME 2, 0
         ACTIVE_SPRITE_TABLE_FRAME 2, 1
         ACTIVE_SPRITE_TABLE_FRAME 2, 2
-        ACTIVE_SPRITE_JUMP aUnknown9EEB21
+        ACTIVE_SPRITE_JUMP aScriptedCritLoverScript
 
-      aUnknown9EEB2D ; 9E/EB2D
+      aScriptedCritLoverArriveScript ; 9E/EB2D
 
         ACTIVE_SPRITE_TABLE_FRAME 5, 3
         ACTIVE_SPRITE_TABLE_FRAME 3, 4
@@ -12607,12 +12699,12 @@
         ACTIVE_SPRITE_TABLE_FRAME 5, 7
         ACTIVE_SPRITE_END
 
-      aUnknown9EEB3D .dstruct structActiveSpriteInfo, rlUnknown9EEB49, rlUnknown9EEB49, aUnknown9EEB21 ; 9E/EB3D
+      aScriptedCritLoverSpriteInfo .dstruct structActiveSpriteInfo, rlScriptedCritLoverSpriteNothing, rlScriptedCritLoverSpriteNothing, aScriptedCritLoverScript ; 9E/EB3D
 
         ; Unreferenced.
-      aUnknown9EEB43 .dstruct structActiveSpriteInfo, rlUnknown9EEB49, rlUnknown9EEB49, aUnknown9EEB2D ; 9E/EB43
+      aScriptedCritLoverArriveSpriteInfo .dstruct structActiveSpriteInfo, rlScriptedCritLoverSpriteNothing, rlScriptedCritLoverSpriteNothing, aScriptedCritLoverArriveScript ; 9E/EB43
 
-      rlUnknown9EEB49 ; 9E/EB49
+      rlScriptedCritLoverSpriteNothing ; 9E/EB49
 
         ; The definitions' init and on-cycle routine: does nothing.
 
@@ -12625,13 +12717,13 @@
 
         .databank 0
 
-      aUnknown9EEB4A ; 9E/EB4A
+      aScriptedCritType4Frames ; 9E/EB4A
 
         ; A frame table for script command $0E (ACTIVE_SPRITE_TABLE_FRAME):
         ; the offsets of the frame list and of the first script, then the frames.
 
-        .word _Table - aUnknown9EEB4A
-        .word aUnknown9EEB96 - aUnknown9EEB4A
+        .word _Table - aScriptedCritType4Frames
+        .word aScriptedCritType4Script - aScriptedCritType4Frames
 
         _Frame00
           .word 1 ; sprite count
@@ -12666,24 +12758,24 @@
           .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $04D, 2, 0, false, false
 
         _Table
-          .word _Frame00 - aUnknown9EEB4A
-          .word _Frame01 - aUnknown9EEB4A
-          .word _Frame02 - aUnknown9EEB4A
-          .word _Frame03 - aUnknown9EEB4A
-          .word _Frame04 - aUnknown9EEB4A
-          .word _Frame05 - aUnknown9EEB4A
-          .word _Frame06 - aUnknown9EEB4A
-          .word _Frame07 - aUnknown9EEB4A
+          .word _Frame00 - aScriptedCritType4Frames
+          .word _Frame01 - aScriptedCritType4Frames
+          .word _Frame02 - aScriptedCritType4Frames
+          .word _Frame03 - aScriptedCritType4Frames
+          .word _Frame04 - aScriptedCritType4Frames
+          .word _Frame05 - aScriptedCritType4Frames
+          .word _Frame06 - aScriptedCritType4Frames
+          .word _Frame07 - aScriptedCritType4Frames
 
-      aUnknown9EEB96 ; 9E/EB96
+      aScriptedCritType4Script ; 9E/EB96
 
         ACTIVE_SPRITE_TABLE_FRAME 1, 0
         ACTIVE_SPRITE_TABLE_FRAME 1, 1
         ACTIVE_SPRITE_TABLE_FRAME 1, 2
         ACTIVE_SPRITE_TABLE_FRAME 1, 3
-        ACTIVE_SPRITE_JUMP aUnknown9EEB96
+        ACTIVE_SPRITE_JUMP aScriptedCritType4Script
 
-      aUnknown9EEBA5 ; 9E/EBA5
+      aScriptedCritType4ArriveScript ; 9E/EBA5
 
         ACTIVE_SPRITE_TABLE_FRAME 5, 4
         ACTIVE_SPRITE_TABLE_FRAME 5, 5
@@ -12691,9 +12783,9 @@
         ACTIVE_SPRITE_TABLE_FRAME 5, 7
         ACTIVE_SPRITE_END
 
-      aUnknown9EEBB2 .dstruct structActiveSpriteInfo, rlUnknown9EEBB8, rlUnknown9EEBB8, aUnknown9EEB96 ; 9E/EBB2
+      aScriptedCritType4SpriteInfo .dstruct structActiveSpriteInfo, rlScriptedCritType4SpriteNothing, rlScriptedCritType4SpriteNothing, aScriptedCritType4Script ; 9E/EBB2
 
-      rlUnknown9EEBB8 ; 9E/EBB8
+      rlScriptedCritType4SpriteNothing ; 9E/EBB8
 
         ; The definitions' init and on-cycle routine: does nothing.
 
@@ -12706,13 +12798,13 @@
 
         .databank 0
 
-      aUnknown9EEBB9 ; 9E/EBB9
+      aScriptedCritTriangleFrames ; 9E/EBB9
 
         ; A frame table for script command $0E (ACTIVE_SPRITE_TABLE_FRAME):
         ; the offsets of the frame list and of the first script, then the frames.
 
-        .word _Table - aUnknown9EEBB9
-        .word aUnknown9EEBFC - aUnknown9EEBB9
+        .word _Table - aScriptedCritTriangleFrames
+        .word aScriptedCritTriangleScript - aScriptedCritTriangleFrames
 
         _Frame00
           .word 1 ; sprite count
@@ -12743,20 +12835,20 @@
           .structSpriteEntry (  -8,   -8), $21, SpriteLarge, $049, 2, 0, false, false
 
         _Table
-          .word _Frame00 - aUnknown9EEBB9
-          .word _Frame01 - aUnknown9EEBB9
-          .word _Frame02 - aUnknown9EEBB9
-          .word _Frame03 - aUnknown9EEBB9
-          .word _Frame04 - aUnknown9EEBB9
-          .word _Frame05 - aUnknown9EEBB9
-          .word _Frame06 - aUnknown9EEBB9
+          .word _Frame00 - aScriptedCritTriangleFrames
+          .word _Frame01 - aScriptedCritTriangleFrames
+          .word _Frame02 - aScriptedCritTriangleFrames
+          .word _Frame03 - aScriptedCritTriangleFrames
+          .word _Frame04 - aScriptedCritTriangleFrames
+          .word _Frame05 - aScriptedCritTriangleFrames
+          .word _Frame06 - aScriptedCritTriangleFrames
 
-      aUnknown9EEBFC ; 9E/EBFC
+      aScriptedCritTriangleScript ; 9E/EBFC
 
         ACTIVE_SPRITE_TABLE_FRAME 1, 0
         ACTIVE_SPRITE_TABLE_FRAME 1, 1
         ACTIVE_SPRITE_TABLE_FRAME 1, 2
-        ACTIVE_SPRITE_JUMP aUnknown9EEBFC
+        ACTIVE_SPRITE_JUMP aScriptedCritTriangleScript
 
       aUnknown9EEC08 ; 9E/EC08
         ; Unreferenced.
@@ -12767,7 +12859,7 @@
         ACTIVE_SPRITE_TABLE_FRAME 3, 6
         ACTIVE_SPRITE_END
 
-      aUnknown9EEC15 ; 9E/EC15
+      aScriptedCritTriangleArriveScript ; 9E/EC15
 
         ACTIVE_SPRITE_TABLE_FRAME 4, 3
         ACTIVE_SPRITE_TABLE_FRAME 5, 4
@@ -12775,9 +12867,9 @@
         ACTIVE_SPRITE_TABLE_FRAME 3, 6
         ACTIVE_SPRITE_END
 
-      aUnknown9EEC22 .dstruct structActiveSpriteInfo, rlUnknown9EEC28, rlUnknown9EEC28, aUnknown9EEBFC ; 9E/EC22
+      aScriptedCritTriangleSpriteInfo .dstruct structActiveSpriteInfo, rlScriptedCritTriangleSpriteNothing, rlScriptedCritTriangleSpriteNothing, aScriptedCritTriangleScript ; 9E/EC22
 
-      rlUnknown9EEC28 ; 9E/EC28
+      rlScriptedCritTriangleSpriteNothing ; 9E/EC28
 
         ; The definitions' init and on-cycle routine: does nothing.
 

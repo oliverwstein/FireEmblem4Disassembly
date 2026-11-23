@@ -113,9 +113,9 @@
         adc aUnknown9E9B50,x
         tax
         lda aActionStructUnit1.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda wR1
-        jsl rlUnknown9EAC49
+        jsl rlSetMapMagicFlagsFromBit7
         lda wMapMagicFlags
         ora #$8000
         sta wMapMagicFlags
@@ -261,7 +261,7 @@
 
 
         _9BC8
-        jsl rlUnknown9E8F6A
+        jsl rlMapBattleEndRoundScripts
         lda #<>rlUnknown9E9BE0
         sta aProcSystem.aHeaderOnCycle,b,x
         lda aProcSystem.aHeaderBitfield,b,x
@@ -306,7 +306,7 @@
         PROC_YIELD 1
         PROC_SET_ONCYCLE rlProcUnknown9E9A43Cycle2
         PROC_YIELD 16
-        PROC_CALL rlUnknown9E99F7
+        PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
         PROC_CALL rlUnknown9E9D3B
         PROC_YIELD 4
@@ -315,7 +315,7 @@
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_YIELD 2
         PROC_YIELD 1
-        PROC_SET_ONCYCLE rlUnknown9EC9FD
+        PROC_SET_ONCYCLE rlQueueMapMagicBackgroundAll
         PROC_YIELD 8
         PROC_CALL rlUploadMapMagicBackgroundTiles
         PROC_YIELD 4
@@ -336,9 +336,9 @@
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET _9C54, $0004
         _9C54
-        PROC_CALL rlUnknown9E9F66
+        PROC_CALL rlRedrawMapAfterVillageRaid
         PROC_YIELD 2
-        PROC_CALL rlUnknown9E9F26
+        PROC_CALL rlEndVillageRaidSprites
         PROC_CALL rlLoadCursorSpriteGraphics
         PROC_YIELD 4
         PROC_CALL rlLoadMapSpriteOAMPalettes
@@ -648,7 +648,7 @@
         lda #$FFFF
         sta aMapAction.wMapBattleAttackerSpriteSlot
         sta aMapAction.wMapBattleAttackerAuxSpriteSlot
-        jsl rlUnknown9E88CE
+        jsl rlInitMapBattleSpriteInfos
         jsl rlSelectMapBattleAttackerSprite
         lda #$0000
         jsl rlMapBattleQueueSpriteData
@@ -745,7 +745,7 @@
         lda aMapAction.wAttackerXTile
         tax
         lda aActionStructUnit1.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda #(`aMapBattleDefenderSpriteInfo)<<8
         sta lR44+1
         lda #<>aMapBattleDefenderSpriteInfo
@@ -799,7 +799,7 @@
         lda aActionStructUnit1.YPosition
         tay
         lda aActionStructUnit1.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda wR1
         lsr a
         lsr a
@@ -896,7 +896,7 @@
         lda aActionStructUnit1.YPosition
         tay
         lda aActionStructUnit1.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
 
         lda wR0
         and #$00FF
@@ -1054,7 +1054,7 @@
 
         _AD9E
         jsl rlCastleRestoreCourtyardPalettes
-        jsl rlUnknown9EAC1D
+        jsl rlShowMapBattleCastleScreenUnits
 
         _ADA6
         phb
@@ -1203,7 +1203,7 @@
         tay
         lda aMapAction.wAttackerXTile
         tax
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda #$8000
         sta wMapMagicFlags
         lda wR0
@@ -1353,7 +1353,7 @@
         PROC_JUMP_IF_BITS_UNSET aProcReturnHomeCode, $0001
         PROC_SET_ONCYCLE rlUnknown9ED337
         PROC_YIELD 56
-        PROC_CALL rlUnknown9E99F7
+        PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
         PROC_CALL rlUnknown9E9D3B
         PROC_YIELD 4
@@ -1362,7 +1362,7 @@
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_CALL rlUnknown9ED401
         PROC_YIELD 2
-        PROC_SET_ONCYCLE rlUnknown9EC9FD
+        PROC_SET_ONCYCLE rlQueueMapMagicBackgroundAll
         PROC_YIELD 16
         PROC_CALL rlUploadMapMagicBackgroundTiles
         PROC_YIELD 2
@@ -1521,7 +1521,7 @@
         lda #$FFFF
         sta aMapAction.wMapBattleAttackerSpriteSlot
         sta aMapAction.wMapBattleAttackerAuxSpriteSlot
-        jsl rlUnknown9E88CE
+        jsl rlInitMapBattleSpriteInfos
         jsl rlSelectMapBattleAttackerSprite
         lda #0
         jsl rlMapBattleQueueSpriteData
@@ -1876,7 +1876,7 @@
 
         PROC_SET_ONCYCLE rlProcUnknown9ED441Cycle3
         PROC_YIELD 40
-        PROC_CALL rlUnknown9E99F7
+        PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
         PROC_CALL rlUnknown9E9D3B
         PROC_YIELD 4
@@ -1886,7 +1886,7 @@
         PROC_YIELD 2
         PROC_CALL rlUnknown9ED6BA
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EA9B5
+        PROC_CALL rlMapBattleStartSkillEffect
         PROC_SET_UNK_TIMER 96
 
         -
@@ -1894,7 +1894,7 @@
         PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_WHILE_UNK_TIMER -
 
-        PROC_CALL rlUnknown9EAB21
+        PROC_CALL rlMapBattleEndSkillEffect
         PROC_YIELD 16
         PROC_CALL rlUnknown9ED6D6
         PROC_CALL rlLoadCursorSpriteGraphics
@@ -2059,7 +2059,7 @@
         lda #$FFFF
         sta aMapAction.wMapBattleAttackerSpriteSlot
         sta aMapAction.wMapBattleAttackerAuxSpriteSlot
-        jsl rlUnknown9E88CE
+        jsl rlInitMapBattleSpriteInfos
         jsl rlSelectMapBattleAttackerSprite
         lda #0
         jsl rlMapBattleQueueSpriteData
@@ -2354,8 +2354,8 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown9E88F9
-        lda #<>rlUnknown9EC79B
+        jsl rlQueueMapBattleSpriteGraphics
+        lda #<>rlMapBattleWaitDecompression
         sta aProcSystem.aHeaderOnCycle,b,x
         rtl
 
@@ -2391,7 +2391,7 @@
         PROC_YIELD 4
         PROC_SET_ONCYCLE rlProcUnknown9EDAF6Cycle2
         PROC_YIELD 32
-        PROC_CALL rlUnknown9E99F7
+        PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 2
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_YIELD 2
@@ -2471,7 +2471,7 @@
         sta aMapAction.wMapBattleAttackerAuxSpriteSlot
         sta aMapAction.wMapBattleDefenderSpriteSlot
         sta aMapAction.wMapBattleDefenderAuxSpriteSlot
-        jsl rlUnknown9E88CE
+        jsl rlInitMapBattleSpriteInfos
         jsl rlSelectMapBattleAttackerSprite
         lda #$0000
         jsl rlMapBattleQueueSpriteData
@@ -2654,7 +2654,7 @@
         lda aMapAction.wDefenderXTile
         tax
         lda aActionStructUnit2.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda #(`aUnknown9EDF78)<<8
         sta lR44+1
         lda #<>aUnknown9EDF78

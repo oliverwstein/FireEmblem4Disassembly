@@ -1586,7 +1586,7 @@
         lda aActiveSpriteSystem.aUnknown0012C0,b,x
         asl a
         tax
-        lda aUnknown9EB4C9,x
+        lda aMapBattleSideGraphicsOffsets,x
         sta $06
         lda #(`aDecompressionBuffer)<<8
         sta $24+1
@@ -1606,7 +1606,7 @@
         asl a
         tax
 
-        lda aUnknown9EB4D7,x
+        lda aMapBattleSideFrameVRAM,x
         sta $04
         lda $71
         and #$0003
@@ -1801,7 +1801,7 @@
 
         phy
         phx
-        jsl rlUnknown9E8F6A
+        jsl rlMapBattleEndRoundScripts
         plx
         ply
         rts
@@ -2082,11 +2082,20 @@
 
       aMapBattleSpriteDMATable ; 9E/B4DF
 
-        ; Read by rsActiveSpriteCommand03.
+        ; Read by rsActiveSpriteCommand03, by wSideTallSprite: the offsets of
+        ; a side's eight frames in its decompressed frame tiles.
 
-        .word $B4F5, $E59E, $9EB4, $0000, $0200, $0400, $0600, $0800
-        .word $0A00, $0C00, $0E00, $0000, $0140, $0280, $03C0, $0500
-        .word $0640, $0780, $08C0, $0000, $0100, $0200, $0300
+        .long _Short
+        .long _Tall
+
+        _Tall
+        .word $0000, $0200, $0400, $0600, $0800, $0A00, $0C00, $0E00
+
+        _Short
+        .word $0000, $0140, $0280, $03C0, $0500, $0640, $0780, $08C0
+
+        ; Unreferenced: offsets of four frames of $100 bytes.
+        .word $0000, $0100, $0200, $0300
 
         ; 9E/B50D
 

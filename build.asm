@@ -7688,9 +7688,9 @@
     * = $1CF000
     .logical $9CF000
 
-      g4bppUnknown9CF000 .binary "gfx/ui/Unknown9CF000.4bpp" ; 9CF000
+      g4bppMapBattleLevelUpText .binary "gfx/ui/Unknown9CF000.4bpp" ; 9CF000
 
-      g4bppUnknown9CF600 .binary "gfx/ui/Unknown9CF600.4bpp" ; 9CF600
+      g4bppMapBattleStatNames .binary "gfx/ui/Unknown9CF600.4bpp" ; 9CF600
 
       .dsection Data9CFC00Section
 
@@ -8966,7 +8966,7 @@
     * = $2DFF80
     .logical $ADFF80
 
-      g4bppUnknownADFF80 .binary "gfx/ui/UnknownADFF80.4bpp", 0, $0080 ; AD/FF80
+      g4bppMapBattleShadow .binary "gfx/ui/UnknownADFF80.4bpp", 0, $0080 ; AD/FF80
 
     .here
 

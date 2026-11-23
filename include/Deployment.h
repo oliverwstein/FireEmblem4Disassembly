@@ -11,7 +11,7 @@
   DeploymentFormationID         = $1F00 >> 8
   DeploymentStateAsleep         = bits($2000)
   ; $4000 ; not used?
-  ; $8000 ; not used?
+  DeploymentStateHiddenInCastle = bits($8000) ; the castle screen does not draw the unit (a map battle on it, rlHideCastleScreenUnit)
 
 
   Factionless         = 7

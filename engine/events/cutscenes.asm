@@ -60,7 +60,7 @@
         ; Check targets to hit
         _MagesAttacked
         PROC_CALL rlUnknown9EF703
-        PROC_SET_ONCYCLE rlUnknown9EC9FD
+        PROC_SET_ONCYCLE rlQueueMapMagicBackgroundAll
         PROC_YIELD 16
         PROC_CALL rlUploadMapMagicBackgroundTiles
         PROC_YIELD 2
@@ -81,10 +81,10 @@
 
         PROC_CALL rlUploadMapMagicSpriteTiles
         PROC_YIELD 2
-        PROC_CALL rlUnknown9EE228
+        PROC_CALL rlScriptedCritSaveColors
 
         -
-        PROC_CALL rlUnknown9EE23D
+        PROC_CALL rlScriptedCritDarken
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET -, $0004
 
@@ -104,7 +104,7 @@
         PROC_CALL rlUnknown9EF791
 
         -
-        PROC_CALL rlUnknown9EE279
+        PROC_CALL rlScriptedCritFadeBack
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_UNSET -, $0004
 
@@ -149,7 +149,7 @@
         and #$00FF
         tax
         lda aActionStructUnit1.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
 
         lda wR0
         and #$00FF
@@ -370,7 +370,7 @@
         tay
         lda @l aMapAction.wAttackerXTile
         tax
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
 
         lda #$8000
         sta @l wMapMagicFlags
@@ -914,7 +914,7 @@
         tay
         lda aMapAction.wAttackerXTile
         tax
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda #$8000
         sta wMapMagicFlags
         lda $7E4EAF
@@ -1074,7 +1074,7 @@
         tay
         lda aMapAction.wAttackerXTile
         tax
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda #$8000
         sta wMapMagicFlags
         lda wR0
@@ -1131,7 +1131,7 @@
         PROC_JUMP_IF_BITS_UNSET _F4A0, $0001
         PROC_SET_ONCYCLE rlUnknown9ED337
         PROC_YIELD 56
-        PROC_CALL rlUnknown9E99F7
+        PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 4
         PROC_CALL rlUnknown9E9D3B
         PROC_YIELD 4
@@ -1396,7 +1396,7 @@
         PROC_YIELD 44
         PROC_SET_ONCYCLE rlUnknown9ED337
         PROC_YIELD 32
-        PROC_CALL rlUnknown9E99F7
+        PROC_CALL rlUploadMapBattleShadowTiles
         PROC_YIELD 2
         PROC_CALL rlCreateMapBattleAttackerSprites
         PROC_CALL rlMapBattlePlaySound32

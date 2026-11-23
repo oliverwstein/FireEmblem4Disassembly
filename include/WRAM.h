@@ -2649,7 +2649,7 @@
     wMapMagicCasterPixel .word ? ; $7F5099
       ; The acting unit's position on screen: X in the low byte, Y in the high.
     wMapMagicTargetPixel .word ? ; $7F509B
-      ; The other unit's position, the same way (rlUnknown9E8C81).
+      ; The other unit's position, the same way (rlSetMapMagicPositions).
 
   .endvirtual
 

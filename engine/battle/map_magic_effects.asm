@@ -16369,7 +16369,7 @@
 
         phy
         phx
-        jsl rlUnknown9E88CE
+        jsl rlInitMapBattleSpriteInfos
         lda #$7E00
         sta aMapAction.lAttackerSpriteData+1
         sta lR18+1
@@ -16390,7 +16390,7 @@
         lda $7F57EA
         tax
         lda aActionStructUnit2.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda #(`aMapBattleAttackerSpriteInfo)<<8
         sta lR44+1
         lda #<>aMapBattleAttackerSpriteInfo
@@ -16432,7 +16432,7 @@
         lda $7F57EA
         tax
         lda aActionStructUnit2.UnitRAMPointer
-        jsl rlUnknown9E8D25
+        jsl rlGetMapBattleUnitScreenPosition
         lda #(`aMapBattleAttackerAuxSpriteInfo)<<8
         sta lR44+1
         lda #<>aMapBattleAttackerAuxSpriteInfo
