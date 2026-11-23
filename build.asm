@@ -133,6 +133,8 @@
   .include "engine/arena/arena.asm"
   .include "engine/battle/map_battle_magic.asm"
   .include "engine/battle/map_battle_hud.asm"
+  .include "engine/battle/map_battle.asm"
+  .include "engine/battle/map_action_animations.asm"
   .include "engine/battle_scene/animation_moves.asm"
   .include "engine/battle_scene/animations.asm"
   .include "engine/battle_scene/backgrounds.asm"
@@ -205,7 +207,6 @@
   .include "engine/unsorted/bank96.asm"
   .include "engine/unsorted/bank97.asm"
   .include "engine/unsorted/bank9B.asm"
-  .include "engine/unsorted/bank9E.asm"
   .include "engine/unsorted/bank9F.asm"
 
   .include "events/ChapterPrologue.asm"

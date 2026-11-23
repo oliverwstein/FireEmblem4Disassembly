@@ -3577,3 +3577,231 @@
     .endsection Unsorted85DAF6Section
 
 
+    .section ProcScript9ECEDDSection
+
+      .al
+      .xl
+
+      procMapExperienceWindowEffect ; 9E/CEDD
+
+        .structProcInfo "ON", rlProcMapExperienceWindowEffectInit, rlProcUnknown9ECEDDCycle1, aProcMapExperienceWindowEffectCode
+
+    .endsection ProcScript9ECEDDSection
+
+
+    .section Unsorted9ECEE5Section
+
+      .al
+      .xl
+
+      rlProcMapExperienceWindowEffectInit ; 9E/CEE5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #$FFFF
+        sta aActionStructUnit2
+        lda aProcSystem.wInput0,b
+        sta wR4
+        sta wR6
+        sta aMapAction.wXTilePosition
+        lda aProcSystem.wInput1,b
+        sta wR5
+        sta wR7
+        sta aMapAction.wYTilePosition
+        ldx aProcSystem.wInput0,b
+        ldy aProcSystem.wInput1,b
+        lda aActionStructUnit1.UnitRAMPointer
+        jsl rlUnknown9E8D25
+        lda wR1
+        jsl rlUnknown9EAC49
+        lda wR1
+        xba
+        ora wR0
+        sta $7F509B
+        lda aProcSystem.wInput3,b
+        asl a
+        tax
+        lda aUnknown9ECF72,x
+        sec
+        sbc #$003E
+        sta $7F5089
+        plx
+        lda #$0000
+        sta aProcSystem.aHeaderBitfield,b,x
+        sta $7F5091
+        sta $7F5093
+        sta $7F4C07
+        lda wGameStateRoutine1,b
+        sta aProcSystem.aBody7,b,x
+        stz wGameStateRoutine1,b
+        sep #$20
+        lda bBufferBG2SC
+        sta $7F57EA
+        lda #$5C
+        sta bBufferBG2SC
+        lda bBufferTM
+        sta $7F57EC
+        lda #$15
+        sta bBufferTM
+        rep #$20
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/CF72
+
+    .endsection Unsorted9ECEE5Section
+
+
+    .section Table9ECF72Section
+
+      .al
+      .xl
+
+      aUnknown9ECF72 ; 9E/CF72
+
+        ; Read by rlProcMapExperienceWindowEffectInit.
+
+        .word $0058, $0058, $005A, $0058
+
+        ; 9E/CF7A
+
+    .endsection Table9ECF72Section
+
+
+    .section Unsorted9ECF7ASection
+
+      .al
+      .xl
+
+      rlProcUnknown9ECEDDCycle1 ; 9E/CF7A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/CF7B
+
+    .endsection Unsorted9ECF7ASection
+
+
+    .section ProcScript9ECF7BSection
+
+      .al
+      .xl
+
+      aProcMapExperienceWindowEffectCode ; 9E/CF7B
+
+        PROC_YIELD 1
+        PROC_SET_ONCYCLE rlUnknown9EC9FD
+        PROC_YIELD 16
+        PROC_CALL rlUnknown9F85A3
+        PROC_YIELD 2
+        PROC_CALL rlUnknown9F85CC
+        PROC_YIELD 2
+        PROC_CALL rlUnknown9F85F5
+        PROC_YIELD 2
+        PROC_CALL rlUnknown9F861F
+        PROC_YIELD 2
+        PROC_CALL rlUnknown9F8020
+        PROC_YIELD 16
+        PROC_CALL rlUnknown9ECFCD
+        _CFAB
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9ECFD5
+        PROC_JUMP_IF_BITS_UNSET _CFAB, $0004
+        PROC_CALL rlUnknown9F8349
+        PROC_CALL rlUnknown9F8473
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9ECFEB
+        PROC_YIELD 1
+        PROC_END
+
+
+        ; 9E/CFCD
+
+    .endsection ProcScript9ECF7BSection
+
+
+    .section Unsorted9ECFCDSection
+
+      .al
+      .xl
+
+      rlUnknown9ECFCD ; 9E/CFCD
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0001
+        sta $7F5091
+        rtl
+
+        .databank 0
+
+        ; 9E/CFD5
+
+      rlUnknown9ECFD5 ; 9E/CFD5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F5093
+        beq _CFEA
+        lda #<>rlProcUnknown9ECEDDCycle1
+        sta aProcSystem.aHeaderOnCycle,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
+        ora #$0004
+        sta aProcSystem.aHeaderBitfield,b,x
+
+        _CFEA
+        rtl
+
+        .databank 0
+
+        ; 9E/CFEB
+
+      rlUnknown9ECFEB ; 9E/CFEB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $7F57EA
+        sta bBufferBG2SC
+        lda $7F57EC
+        sta bBufferTM
+        sta $7F57EC
+        rep #$20
+        lda aProcSystem.aBody7,b,x
+        sta wGameStateRoutine1,b
+        rtl
+
+        .databank 0
+
+        ; 9E/D006
+
+    .endsection Unsorted9ECFCDSection
+
+

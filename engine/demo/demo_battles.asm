@@ -1158,3 +1158,222 @@
 
     .endsection Unsorted88EF0DSection
 
+
+    .section Unsorted9EEDB5Section
+
+      .al
+      .xl
+
+      rlSetUpDemoBattleA ; 9E/EDB5
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$0019
+        sta aActionStructUnit1.ClassID
+        lda #$0000
+        sta aActionStructUnit1.Gender
+        lda #$0038
+        sta aActionStructUnit1.XPosition
+        lda #$0039
+        sta aActionStructUnit1.YPosition
+        lda #$000A
+        sta aActionStructUnit1.WeaponID
+        lda #$0000
+        sta aActionStructUnit1.Unknown
+        lda #$0000
+        sta aMapAction.wUnknown7F4562
+        sta aActionStructUnit1
+        lda #$0012
+        sta aActionStructUnit2.ClassID
+        lda #$0000
+        sta aActionStructUnit2.Gender
+        lda #$0039
+        sta aActionStructUnit2.XPosition
+        lda #$0039
+        sta aActionStructUnit2.YPosition
+        lda #$001D
+        sta aActionStructUnit2.WeaponID
+        lda #$0000
+        sta aActionStructUnit2.Unknown
+        lda #$0001
+        sta aMapAction.wDefenderAllegiance
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0009
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$1B00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$1614
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/EED3
+
+      rlSetUpDemoBattleB ; 9E/EED3
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phb
+        jsl rlClearBattleData
+        pea #$7F00
+        plb
+        .databank ?
+        plb
+        .databank ?
+        lda #$003B
+        sta aActionStructUnit1.ClassID
+        lda #$0000
+        sta aActionStructUnit1.Gender
+        lda #$0039
+        sta aActionStructUnit1.XPosition
+        lda #$0037
+        sta aActionStructUnit1.YPosition
+        lda #$004B
+        sta aActionStructUnit1.WeaponID
+        lda #$0000
+        sta aActionStructUnit1.Unknown
+        lda #$0000
+        sta aMapAction.wUnknown7F4562
+        sta aActionStructUnit1
+        lda #$000E
+        sta aActionStructUnit2.ClassID
+        lda #$0000
+        sta aActionStructUnit2.Gender
+        lda #$0039
+        sta aActionStructUnit2.XPosition
+        lda #$0038
+        sta aActionStructUnit2.YPosition
+        lda #$002A
+        sta aActionStructUnit2.WeaponID
+        lda #$0000
+        sta aActionStructUnit2.Unknown
+        lda #$0001
+        sta aMapAction.wDefenderAllegiance
+        sta aActionStructUnit2
+        lda #$0001
+        sta wBattleDistance
+        sep #$20
+        lda #$00
+        sta $7E4EA9
+        rep #$20
+        lda #(`aBattleRoundsData)<<8
+        sta lR18+1
+        lda #<>aBattleRoundsData
+        sta lR18
+        lda #$0020
+        sta wR0
+        lda #$0002
+        sta wR1
+        jsl rlBuildRAMStructHeader
+        lda #$0148
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0109
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$0140
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$7F00
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        lda #$FFFF
+        sta @l lStructPointer1
+        lda #$7E00
+        sta @l lStructPointer2+1
+        lda #$4F81
+        sta @l lStructPointer2
+        jsl rlAppendNewStructEntry
+        plb
+        .databank ?
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/EFF1
+
+    .endsection Unsorted9EEDB5Section
+
+
