@@ -1755,7 +1755,7 @@
 
       aBattleAnimationSoundEffects ; 98/ACC0
 
-        ; The sound effect of each ANIM_SOUND index (rsUnknown95BD10), played
+        ; The sound effect of each ANIM_SOUND index (rsBattleAnimationCmdPlaySound), played
         ; with rlPlaySoundEffect2 at the combatant's position. 34 entries: the
         ; sequences use indices up to 33, and the battle scene script's own
         ; table follows at $98/AD04.

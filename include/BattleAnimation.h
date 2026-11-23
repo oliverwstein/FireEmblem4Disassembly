@@ -8,7 +8,7 @@
   ;   sequence data block: .word offset of the sequence index, offset of the
   ;     frame record list; the index (a word offset per sequence) and the list
   ;     (a word offset per frame record) follow, all offsets from the block
-  ;     start. Sequences are two-byte steps read by rsUnknown95BB41; a frame
+  ;     start. Sequences are two-byte steps read by rsBattleAnimationRunScript; a frame
   ;     record is a frame number and a structSpriteArray (rlUnknown95C51F).
   ;   frame table: a word offset per frame from the table start (the first
   ;     word / 2 is the count). A frame is a count byte and that many pairs of
@@ -45,8 +45,8 @@
       +
     .endsegment
 
-  ; Sequence steps. Each is two bytes. rsUnknown95BFB3 reads the first byte
-  ; less 1, so the handlers in rsUnknown95BB41 compare with $FE and below.
+  ; Sequence steps. Each is two bytes. rsBattleAnimationReadStep reads the first byte
+  ; less 1, so the handlers in rsBattleAnimationRunScript compare with $FE and below.
   ; The step position is $0B21,x and the sequence start $0B1F,x.
 
   ; Show frame record Record (numbered from 0 in the block's list) for
@@ -69,39 +69,39 @@
       .byte $FE, \Arg
     .endsegment
 
-    ; $FD: go back to the start of the sequence (rsUnknown95BCCB).
+    ; $FD: go back to the start of the sequence (rsBattleAnimationCmdRestart).
     ANIM_RESTART .segment Arg=0
       .byte $FD, \Arg
     .endsegment
 
-    ; $FC: go back Steps steps (at least 1; rsUnknown95BCD5). Not used.
+    ; $FC: go back Steps steps (at least 1; rsBattleAnimationCmdGoBack). Not used.
     ANIM_BACK .segment Steps
       .byte $FC, \Steps
     .endsegment
 
-    ; $FB: wait Frames frames, scaled like a step (rsUnknown95BCEF). Not used.
+    ; $FB: wait Frames frames, scaled like a step (rsBattleAnimationCmdWait). Not used.
     ANIM_WAIT .segment Frames
       .byte $FB, \Frames
     .endsegment
 
     ; $FA: play sound effect Index of aBattleAnimationSoundEffects, at the
-    ; combatant's position (rsUnknown95BD10).
+    ; combatant's position (rsBattleAnimationCmdPlaySound).
     ANIM_SOUND .segment Index
       .byte $FA, \Index
     .endsegment
 
-    ; $F9: nothing (rsUnknown95BD6B). Not used.
+    ; $F9: nothing (rsBattleAnimationCmdNothing). Not used.
     ANIM_NOP .segment Arg=0
       .byte $F9, \Arg
     .endsegment
 
-    ; $F8: rsUnknown95BD76 runs into a brk (a bug), so it cannot be used.
+    ; $F8: rsBattleAnimationCmdBroken runs into a brk (a bug), so it cannot be used.
     ANIM_CMD_F8 .segment Arg=0
       .byte $F8, \Arg
     .endsegment
 
-    ; $F7: clear the combatant's busy bit (bit 2 of $0AF3,x; rsUnknown95BD89).
-    ; rlUnknown95BA05 and rlUnknown95BA76 set it when they start a sequence and
+    ; $F7: clear the combatant's busy bit (bit 2 of $0AF3,x; rsBattleAnimationCmdClearBusy).
+    ; rlBattleAnimationStartSequence and rlUnknown95BA76 set it when they start a sequence and
     ; refuse to start another while it is set, and rsBattleSceneCheckRoundsOver waits until
     ; both combatants have it clear. Most sequences end ANIM_CLEAR_BUSY,
     ; ANIM_HOLD.
@@ -109,18 +109,18 @@
       .byte $F7, \Arg
     .endsegment
 
-    ; $F6: set the busy bit again (rsUnknown95BDA0). Not used.
+    ; $F6: set the busy bit again (rsBattleAnimationCmdSetBusy). Not used.
     ANIM_SET_BUSY .segment Arg=0
       .byte $F6, \Arg
     .endsegment
 
-    ; $F5: wait until $0C42 is set, then clear it (rsUnknown95BDB7). Not used.
+    ; $F5: wait until $0C42 is set, then clear it (rsBattleAnimationCmdWaitForSignal). Not used.
     ANIM_CMD_F5 .segment Arg=0
       .byte $F5, \Arg
     .endsegment
 
     ; $F4: set bit 6 of $0AF3,x (which skips the move scripts of
-    ; rsBattleAnimationApplyScriptStep) and go back Steps steps, at least 1 (rsUnknown95BDD2).
+    ; rsBattleAnimationApplyScriptStep) and go back Steps steps, at least 1 (rsBattleAnimationCmdFreezeAndGoBack).
     ANIM_CMD_F4 .segment Steps
       .byte $F4, \Steps
     .endsegment
@@ -136,7 +136,7 @@
       .byte $F2, \Arg
     .endsegment
 
-    ; $F1: rlBattleSceneApplyStrike (rsUnknown95BE17).
+    ; $F1: rlBattleSceneApplyStrike (rsBattleAnimationCmdApplyStrike).
     ANIM_CMD_F1 .segment Arg=0
       .byte $F1, \Arg
     .endsegment
@@ -158,7 +158,7 @@
       .byte $EE, \Arg
     .endsegment
 
-    ; $ED: store Arg in bits 0-1 of $0AF5,x (rsUnknown95BECE).
+    ; $ED: store Arg in bits 0-1 of $0AF5,x (rsBattleAnimationCmdSetVariant).
     ANIM_CMD_ED .segment Arg
       .byte $ED, \Arg
     .endsegment
@@ -174,7 +174,7 @@
       .byte $EB, \Arg
     .endsegment
 
-    ; $EA: clear bit 0 of $0AF3,x and go on (rsUnknown95BF8D). Not used.
+    ; $EA: clear bit 0 of $0AF3,x and go on (rsBattleAnimationCmdContinue). Not used.
     ANIM_CMD_EA .segment Arg=0
       .byte $EA, \Arg
     .endsegment
@@ -242,7 +242,7 @@
   ;     is a run of steps rlBattleAnimationQueueMoveList queues for the combatant
   ;     ($7FE144), up to a $7F byte. rlBattleAnimationRunMoveQueue takes them one at a
   ;     time: the low byte is the movement (rlBattleAnimationStartMovement), the high byte
-  ;     the sequence it plays (rlUnknown95BA05; bits 0-5).
+  ;     the sequence it plays (rlBattleAnimationStartSequence; bits 0-5).
   ;   script table: a word offset per movement script from the table start.
   ;     A script is a signed byte per frame step of the sequence, moving the
   ;     combatant (rsBattleAnimationApplyScriptStep); it has no end of its own.

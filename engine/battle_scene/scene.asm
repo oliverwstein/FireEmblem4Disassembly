@@ -521,7 +521,7 @@
         jsl rlUnknown96DD6E
         jsl rlUnknown95D721
         jsl rlUnknown96BE28
-        jsl rlUnknown95BAEF
+        jsl rlBattleAnimationUpdateAll
         jsl rlUnknown96A05C
         jsl rlUnknown95D863
         jsr rsUnknown95D77C

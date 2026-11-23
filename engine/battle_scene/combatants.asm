@@ -870,7 +870,7 @@
         ora #$0001
 
         _B8AA
-        jsl rlUnknown95BA05
+        jsl rlBattleAnimationStartSequence
 
         _B8AE
         plx
@@ -1156,12 +1156,14 @@
 
         ; 95/BA05
 
-      rlUnknown95BA05 ; 95/BA05
+      rlBattleAnimationStartSequence ; 95/BA05
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Starts a sequence on a slot and sets its busy bit (see ANIM_CMD_F7).
 
         phx
         phy
@@ -1323,12 +1325,14 @@
 
         ; 95/BAEF
 
-      rlUnknown95BAEF ; 95/BAEF
+      rlBattleAnimationUpdateAll ; 95/BAEF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Each frame: runs each animation slot's sequence (rsBattleAnimationUpdate), the slots taken in order of their role.
 
         lda $7FFC77
         bit #$0001
@@ -1348,7 +1352,7 @@
         lda bBattleAnimationStateFlags,b,x
         bit #$0080
         beq _BB18
-        jsr rsUnknown95BB2E
+        jsr rsBattleAnimationUpdate
 
         _BB18
         plx
@@ -1370,12 +1374,14 @@
 
         ; 95/BB2E
 
-      rsUnknown95BB2E ; 95/BB2E
+      rsBattleAnimationUpdate ; 95/BB2E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the slot: steps its sequence script when it is playing (bit 0 of its state), else rlUnknown95C1AB.
 
         lda bBattleAnimationStateFlags,b,x
         bit #$0001
@@ -1386,7 +1392,7 @@
 
 
         _BB3D
-        jsr rsUnknown95BB41
+        jsr rsBattleAnimationRunScript
 
         _BB40
         rts
@@ -1395,12 +1401,14 @@
 
         ; 95/BB41
 
-      rsUnknown95BB41 ; 95/BB41
+      rsBattleAnimationRunScript ; 95/BB41
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Runs the slot's sequence script when its frame timer is out: a command byte ($E8-$FF, ANIM_CMD_* in include/BattleAnimation.h) or a pose and its frames.
 
         lda bBattleAnimationFrameTimer,b,x
         and #$00FF
@@ -1409,7 +1417,7 @@
 
 
         _BB4D
-        jsr rsUnknown95BFB3
+        jsr rsBattleAnimationReadStep
         and #$00FF
         cmp #$00FE
         bne _BB5C
@@ -1419,70 +1427,70 @@
         _BB5C
         cmp #$00FD
         bne _BB68
-        jsr rsUnknown95BCBE
+        jsr rsBattleAnimationCmdStay
         jml _BC9D
 
 
         _BB68
         cmp #$00FC
         bne _BB74
-        jsr rsUnknown95BCCB
+        jsr rsBattleAnimationCmdRestart
         jml _BC65
 
 
         _BB74
         cmp #$00FB
         bne _BB80
-        jsr rsUnknown95BCD5
+        jsr rsBattleAnimationCmdGoBack
         jml _BC65
 
 
         _BB80
         cmp #$00FA
         bne _BB8C
-        jsr rsUnknown95BCEF
+        jsr rsBattleAnimationCmdWait
         jml _BC9D
 
 
         _BB8C
         cmp #$00F9
         bne _BB98
-        jsr rsUnknown95BD10
+        jsr rsBattleAnimationCmdPlaySound
         jml _BC65
 
 
         _BB98
         cmp #$00F8
         bne _BBA4
-        jsr rsUnknown95BD6B
+        jsr rsBattleAnimationCmdNothing
         jml _BC65
 
 
         _BBA4
         cmp #$00F7
         bne _BBB0
-        jsr rsUnknown95BD76
+        jsr rsBattleAnimationCmdBroken
         jml _BC65
 
 
         _BBB0
         cmp #$00F6
         bne _BBBC
-        jsr rsUnknown95BD89
+        jsr rsBattleAnimationCmdClearBusy
         jml _BC65
 
 
         _BBBC
         cmp #$00F5
         bne _BBC8
-        jsr rsUnknown95BDA0
+        jsr rsBattleAnimationCmdSetBusy
         jml _BC65
 
 
         _BBC8
         cmp #$00F4
         bne _BBD6
-        jsr rsUnknown95BDB7
+        jsr rsBattleAnimationCmdWaitForSignal
         bcs _BBD6
         jml _BC65
 
@@ -1490,7 +1498,7 @@
         _BBD6
         cmp #$00F3
         bne _BBE2
-        jsr rsUnknown95BDD2
+        jsr rsBattleAnimationCmdFreezeAndGoBack
         jml _BC65
 
 
@@ -1516,7 +1524,7 @@
         _BBFC
         cmp #$00F0
         bne _BC06
-        jsr rsUnknown95BE17
+        jsr rsBattleAnimationCmdApplyStrike
         bra _BC65
 
 
@@ -1544,7 +1552,7 @@
         _BC24
         cmp #$00EC
         bne _BC2E
-        jsr rsUnknown95BECE
+        jsr rsBattleAnimationCmdSetVariant
         bra _BC65
 
 
@@ -1565,7 +1573,7 @@
         _BC42
         cmp #$00E9
         bne _BC4C
-        jsr rsUnknown95BF8D
+        jsr rsBattleAnimationCmdContinue
         bra _BC65
 
 
@@ -1598,7 +1606,7 @@
         and #$FD
         sta bBattleAnimationStateFlags,b,x
         rep #$20
-        jsr rsUnknown95BFB3
+        jsr rsBattleAnimationReadStep
         pha
         lda wBattleAnimationScriptOffset,b,x
         clc
@@ -1647,7 +1655,7 @@
 
         ; 95/BCBE
 
-      rsUnknown95BCBE ; 95/BCBE
+      rsBattleAnimationCmdStay ; 95/BCBE
 
         .al
         .xl
@@ -1665,7 +1673,7 @@
 
         ; 95/BCCB
 
-      rsUnknown95BCCB ; 95/BCCB
+      rsBattleAnimationCmdRestart ; 95/BCCB
 
         .al
         .xl
@@ -1681,14 +1689,14 @@
 
         ; 95/BCD5
 
-      rsUnknown95BCD5 ; 95/BCD5
+      rsBattleAnimationCmdGoBack ; 95/BCD5
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown95BFB3
+        jsr rsBattleAnimationReadStep
         xba
         and #$00FF
         bne _BCDF
@@ -1709,14 +1717,14 @@
 
         ; 95/BCEF
 
-      rsUnknown95BCEF ; 95/BCEF
+      rsBattleAnimationCmdWait ; 95/BCEF
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown95BFB3
+        jsr rsBattleAnimationReadStep
         sep #$20
         xba
         jsr rsUnknown95BFC6
@@ -1735,7 +1743,7 @@
 
         ; 95/BD10
 
-      rsUnknown95BD10 ; 95/BD10
+      rsBattleAnimationCmdPlaySound ; 95/BD10
 
         .al
         .xl
@@ -1772,7 +1780,7 @@
 
         _BD42
         pha
-        jsr rsUnknown95BFB3
+        jsr rsBattleAnimationReadStep
         inc a
         xba
         and #$00FF
@@ -1798,7 +1806,7 @@
 
         ; 95/BD6B
 
-      rsUnknown95BD6B ; 95/BD6B
+      rsBattleAnimationCmdNothing ; 95/BD6B
 
         .al
         .xl
@@ -1815,11 +1823,11 @@
 
         ; 95/BD76
 
-      rsUnknown95BD76 ; 95/BD76
+      rsBattleAnimationCmdBroken ; 95/BD76
 
         ; Probably a bug in the original: unlike its neighbours this has no
         ; rep #$20 after storing $0C42, so adc #$0002 runs as adc #$02 and the
-        ; CPU then executes the $00 as brk. Sequence byte $F8 of rsUnknown95BB41; the
+        ; CPU then executes the $00 as brk. Sequence byte $F8 of rsBattleAnimationRunScript; the
         ; prologue log never runs it.
         .al
         .xl
@@ -1841,7 +1849,7 @@
 
         ; 95/BD89
 
-      rsUnknown95BD89 ; 95/BD89
+      rsBattleAnimationCmdClearBusy ; 95/BD89
 
         .al
         .xl
@@ -1863,7 +1871,7 @@
 
         ; 95/BDA0
 
-      rsUnknown95BDA0 ; 95/BDA0
+      rsBattleAnimationCmdSetBusy ; 95/BDA0
 
         .al
         .xl
@@ -1885,7 +1893,7 @@
 
         ; 95/BDB7
 
-      rsUnknown95BDB7 ; 95/BDB7
+      rsBattleAnimationCmdWaitForSignal ; 95/BDB7
 
         .al
         .xl
@@ -1915,7 +1923,7 @@
 
         ; 95/BDD2
 
-      rsUnknown95BDD2 ; 95/BDD2
+      rsBattleAnimationCmdFreezeAndGoBack ; 95/BDD2
 
         .al
         .xl
@@ -1927,7 +1935,7 @@
         ora #$40
         sta bBattleAnimationStateFlags,b,x
         rep #$20
-        jsr rsUnknown95BFB3
+        jsr rsBattleAnimationReadStep
         xba
         and #$00FF
         bne _BDE8
@@ -1985,7 +1993,7 @@
 
         ; 95/BE17
 
-      rsUnknown95BE17 ; 95/BE17
+      rsBattleAnimationCmdApplyStrike ; 95/BE17
 
         .al
         .xl
@@ -2029,7 +2037,7 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown95BFB3
+        jsr rsBattleAnimationReadStep
         phx
         cpx #$0000
         bne _BE6E
@@ -2122,14 +2130,14 @@
 
         ; 95/BECE
 
-      rsUnknown95BECE ; 95/BECE
+      rsBattleAnimationCmdSetVariant ; 95/BECE
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown95BFB3
+        jsr rsBattleAnimationReadStep
         xba
         pha
         sep #$20
@@ -2167,7 +2175,7 @@
 
         _BEFA
         pha
-        jsr rsUnknown95BFB3
+        jsr rsBattleAnimationReadStep
         xba
         and #$0003
         beq _BF13
@@ -2275,7 +2283,7 @@
 
         ; 95/BF8D
 
-      rsUnknown95BF8D ; 95/BF8D
+      rsBattleAnimationCmdContinue ; 95/BF8D
 
         .al
         .xl
@@ -2315,12 +2323,14 @@
 
         ; 95/BFB3
 
-      rsUnknown95BFB3 ; 95/BFB3
+      rsBattleAnimationReadStep ; 95/BFB3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = the word at the slot's script offset, minus 1 (a command byte $FF reads as $FE).
 
         phy
         lda lBattleAnimationFrameDataPointer+1,b,x
@@ -2424,7 +2434,7 @@
         rep #$20
 
         _C02F
-        jsr rsUnknown95BFB3
+        jsr rsBattleAnimationReadStep
         and #$00FF
         cmp #$00FD
         beq _C055
@@ -6698,7 +6708,7 @@
 
         ; Takes the next move of each combatant whose last one is done: its
         ; movement (rlBattleAnimationStartMovement) and its sequence
-        ; (rlUnknown95BA05).
+        ; (rlBattleAnimationStartSequence).
 
         stz $0ADE,b
         jsr rsUnknown95DA98
@@ -6709,7 +6719,7 @@
         pla
         and #$FF00
         pha
-        jsl rlUnknown95BA05
+        jsl rlBattleAnimationStartSequence
         pla
         bra _DA8F
 
@@ -6724,7 +6734,7 @@
         and #$FF00
         ora #$0001
         pha
-        jsl rlUnknown95BA05
+        jsl rlBattleAnimationStartSequence
         pla
         bra _DA8F
 
@@ -7365,7 +7375,7 @@
         sep #$20
         lda #$02
         rep #$20
-        jsl rlUnknown95BA05
+        jsl rlBattleAnimationStartSequence
 
         _DD4D
         plx
@@ -7459,7 +7469,7 @@
         sep #$20
         lda #$03
         rep #$20
-        jsl rlUnknown95BA05
+        jsl rlBattleAnimationStartSequence
 
         _DDF9
         plx
@@ -8579,7 +8589,7 @@
 
         _E3D7
         rep #$20
-        jsl rlUnknown95BA05
+        jsl rlBattleAnimationStartSequence
         plx
         rts
 
@@ -8933,7 +8943,7 @@
         lda bBattleAnimationFacingFlags,b,x
         bit #$0001
         beq _E5C8
-        jsr rsUnknown95BFB3
+        jsr rsBattleAnimationReadStep
         xba
         and #$00FF
         bne _E5AD
