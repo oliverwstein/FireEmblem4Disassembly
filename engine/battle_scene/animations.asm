@@ -367,7 +367,7 @@
         ; placeholder.
 
         .byte $40, $C0
-        .long aChapter07MapEvents+156
+        .long ANIM_NO_EXTRA_TILES_TABLE_SOURCE
         .word $FFFF
         .byte $80, $80
         .long g4bppcBattleAnimationExtraMyrmidon

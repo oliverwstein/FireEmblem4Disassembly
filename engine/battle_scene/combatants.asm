@@ -722,7 +722,7 @@
 
       rlUnknown95B7CF ; 95/B7CF
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Called only from unreachable code in rsBattleScenePlaceCombatants. X = 0 or $43 (the combatant); returns byte 7 of the combatant's aUnknown97EA9A record (index $7FE1BE/$7FE1BF).
         .al
         .xl
         .autsiz

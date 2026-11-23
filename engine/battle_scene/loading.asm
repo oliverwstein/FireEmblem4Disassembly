@@ -240,15 +240,15 @@
         sec
         sbc #1,s
         clc
-        adc #$0048
+        adc #aBattleAnimationExtras - aBattleAnimationExtraIndices ; X = 7 * entry, from aBattleAnimationExtraIndices
         tax
         pla
         pla
         cmp #$0000
         bne _8432
-        lda #(`(aChapter05MapEvents + 326))<<8
+        lda #(`ANIM_NO_EXTRA_TILES_SOURCE)<<8
         sta lR18+1
-        lda #<>(aChapter05MapEvents + 326)
+        lda #<>ANIM_NO_EXTRA_TILES_SOURCE
         sta lR18
         jml _84A9
 
@@ -1242,8 +1242,18 @@
         bcs _89EE
         bra _89EE
 
-        .byte $A2, $00, $00, $22, $CF, $B7, $95, $EB, $9D, $FD, $0A, $89, $FF, $FF, $F0, $0C
-        .byte $E2, $20, $AD, $F3, $0A, $09, $20, $8D, $F3, $0A, $C2, $20
+        ; Unreachable: both branches above go to _89EE.
+        ldx #$0000
+        jsl rlUnknown95B7CF
+        xba
+        sta wBattleAnimationYFixed,b,x
+        bit #$FFFF
+        beq _89EE
+        sep #$20
+        lda bBattleAnimationStateFlags,b
+        ora #$20
+        sta bBattleAnimationStateFlags,b
+        rep #$20
 
 
         _89EE
@@ -1280,8 +1290,18 @@
         bcs _8A4F
         bra _8A4F
 
-        .byte $A2, $43, $00, $22, $CF, $B7, $95, $EB, $9D, $FD, $0A, $89, $FF, $FF, $F0, $0C
-        .byte $E2, $20, $AD, $36, $0B, $09, $20, $8D, $36, $0B, $C2, $20
+        ; Unreachable: both branches above go to _8A4F.
+        ldx #$0043
+        jsl rlUnknown95B7CF
+        xba
+        sta wBattleAnimationYFixed,b,x
+        bit #$FFFF
+        beq _8A4F
+        sep #$20
+        lda bBattleAnimation2StateFlags,b
+        ora #$20
+        sta bBattleAnimation2StateFlags,b
+        rep #$20
 
 
         _8A4F

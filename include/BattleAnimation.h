@@ -15,6 +15,17 @@
   ;     words, an offset into the class sheet and a byte count, each filling
   ;     one 16-tile row of sprite VRAM (rsUnknown95C2C0).
 
+  ; Where the extra tiles of entry 0 (no extra tiles) are copied from:
+  ; rsBattleSceneLoadExtraTiles copies $C0 tiles from ANIM_NO_EXTRA_TILES_SOURCE
+  ; without decompressing, and the table's own entry 0 names
+  ; ANIM_NO_EXTRA_TILES_TABLE_SOURCE (never read: the routine skips it). Both are
+  ; fixed addresses in bank $86 that hold event data in the released ROM, not
+  ; tiles: placeholders, kept as numbers so that moving the events does not
+  ; move them.
+
+    ANIM_NO_EXTRA_TILES_SOURCE       = $86E000
+    ANIM_NO_EXTRA_TILES_TABLE_SOURCE = $86E800
+
   ; Frame number of a record that keeps the tiles already loaded.
 
     ANIM_KEEP_TILES = $FF
