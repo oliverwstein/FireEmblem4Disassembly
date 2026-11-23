@@ -2342,6 +2342,49 @@
     .endsection Unsorted91DEA1Section
 
 
+    .section Unreferenced91DF08Section
+
+      .al
+      .xl
+
+      rsUnknown91DF08 ; 91/DF08
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$8D00
+        stx lR18+1
+        asl a
+        tax
+        lda aSaveMenuRowTexts,x
+        sta lR18
+        lda #$00D8
+        clc
+        adc #$8388
+        sta $18D4,b
+        ldx #$0004
+        txa
+        xba
+        tay
+        txa
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        tax
+        jsl rlStartTextToTiles
+        rts
+
+        .databank 0
+
+        ; 91/DF32
+
+    .endsection Unreferenced91DF08Section
     .section Unsorted91DF32Section
 
       .al

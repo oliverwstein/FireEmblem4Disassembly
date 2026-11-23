@@ -503,6 +503,46 @@
     .endsection Unsorted95B5D0Section
 
 
+    .section Unreferenced95B6A7Section
+
+      .al
+      .xl
+
+      rsUnknown95B6A7 ; 95/B6A7
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        cpx #$0000
+        bne _B6B3
+        lda $7FE1BE
+        bra _B6B7
+
+
+        _B6B3
+        lda $7FE1BF
+
+        _B6B7
+        and #$00FF
+        sta wR10
+        lda #$0008
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        ldx wR12
+        lda aUnknown97EA9A+5,x
+        and #$00FF
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/B6D0
+
+    .endsection Unreferenced95B6A7Section
     .section Unsorted95B6D0Section
 
       .al
@@ -675,6 +715,46 @@
     .endsection Unsorted95B6D0Section
 
 
+    .section Unreferenced95B7CFSection
+
+      .al
+      .xl
+
+      rlUnknown95B7CF ; 95/B7CF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        cpx #$0000
+        bne _B7DB
+        lda $7FE1BE
+        bra _B7DF
+
+
+        _B7DB
+        lda $7FE1BF
+
+        _B7DF
+        and #$00FF
+        sta wR10
+        lda #$0008
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        ldx wR12
+        lda aUnknown97EA9A+7,x
+        and #$00FF
+        plx
+        rtl
+
+        .databank 0
+
+        ; 95/B7F8
+
+    .endsection Unreferenced95B7CFSection
     .section Unsorted95B7F8Section
 
       .al
@@ -2995,6 +3075,107 @@
     .endsection Unsorted95B993Section
 
 
+    .section Unreferenced95C306Section
+
+      .al
+      .xl
+
+      rsUnknown95C306 ; 95/C306
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        and #$00FF
+        cmp #$00FF
+        beq _C318
+        asl a
+        tay
+        lda [lR19],y
+        sta lR19
+        jsr rsUnknown95C31A
+
+        _C318
+        ply
+        rts
+
+        .databank 0
+
+        ; 95/C31A
+
+      rsUnknown95C31A ; 95/C31A
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        lda lR18
+        sta lR20
+        lda lR18+1
+        sta lR20+1
+        ldy #$0000
+        lda [lR19],y
+        and #$00FF
+        inc lR19
+        tax
+        ldy wR0
+
+        _C330
+        phy
+        ldy #$0000
+        lda [lR19],y
+        inc lR19
+        inc lR19
+        clc
+        adc lR20
+        sta lR18
+        lda #$0000
+        adc lR20+2
+        sep #$20
+        sta lR18+2
+        rep #$20
+        lda [lR19],y
+        inc lR19
+        inc lR19
+        ply
+        jsl rlUnknown95C43E
+        tya
+        clc
+        adc #$0100
+        tay
+        dec x
+        bne _C330
+        ply
+        rts
+
+        .databank 0
+
+        ; 95/C360
+
+      rsUnknown95C360 ; 95/C360
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$01
+        sta $0C42,b
+        rts
+
+        .databank 0
+
+        ; 95/C368
+
+    .endsection Unreferenced95C306Section
     .section Unsorted95C368Section
 
       .al
@@ -5358,6 +5539,54 @@
     .endsection Unsorted95D1C5Section
 
 
+    .section Unreferenced95D200Section
+
+      .as
+      .xl
+
+      rsUnknown95D200 ; 95/D200
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlBattleAnimationGetTravelFrames
+        pha
+        phx
+        ldx wBattleAnimationDefenderOffset,b
+        lda bBattleAnimationY,b,x
+        and #$00FF
+        sta wR1
+        ldx wBattleAnimationAttackerOffset,b
+        lda bBattleAnimationY,b,x
+        and #$00FF
+        sta wR0
+        plx
+        lda wR1
+        sec
+        sbc wR0
+        bpl _D228
+        eor #$FFFF
+        inc a
+
+        _D228
+        sta wR2
+        pla
+        sta wR0
+        lda wR2
+        jsl rlBattleAnimationGetSpeed
+        sta wBattleAnimationYStep,b,x
+        lda wR1
+        sta wBattleAnimationTargetY,b,x
+        rts
+
+        .databank 0
+
+        ; 95/D23C
+
+    .endsection Unreferenced95D200Section
     .section Unsorted95D2A4Section
 
       .al
@@ -7983,6 +8212,60 @@
     .endsection Unsorted95DF76Section
 
 
+    .section Unreferenced95E08CSection
+
+      .as
+      .xl
+
+      rlUnknown95E08C ; 95/E08C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda wBattleAnimationAttackerOffset,b
+        cmp #$0000
+        bne _E09A
+        ldx #$0086
+        bra _E09D
+
+
+        _E09A
+        ldx #$00C9
+
+        _E09D
+        lda wBattleAnimationSecondaryOffset,b,x
+        clc
+        adc #$0002
+        sta wBattleAnimationSecondaryOffset,b,x
+        lda bBattleAnimationPoseOffset,b,x
+        inc a
+        sep #$20
+        xba
+        cpx #$0086
+        bne _E0B7
+        lda #$02
+        bra _E0B9
+
+
+        _E0B7
+        lda #$03
+
+        _E0B9
+        rep #$20
+        jsl rlBattleAnimationStartSequence
+        plx
+        jsl rlUnknown96C9FE
+        rtl
+
+        .databank 0
+
+        ; 95/E0C5
+
+    .endsection Unreferenced95E08CSection
     .section Unsorted95E0C5Section
 
       .al

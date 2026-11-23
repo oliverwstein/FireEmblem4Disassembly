@@ -85,6 +85,39 @@
     .endsection Unsorted95E7B3Section
 
 
+    .section Unreferenced95E80DSection
+
+      .al
+      .xl
+
+      rlUnknown95E80D ; 95/E80D
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr rsUnknown95E834
+        lda #$A00C
+        sta $18D4,b
+        lda #$061E
+        sta $18DB,b
+        sta $18F4,b
+        lda #(`dialogueBattleSceneClear)<<8
+        sta lR18+1
+        lda #<>dialogueBattleSceneClear
+        sta lR18
+        jsl rlUnknown918102
+        lda #$0000
+        sta $189B,b
+        rtl
+
+        .databank 0
+
+        ; 95/E834
+
+    .endsection Unreferenced95E80DSection
     .section Unsorted95E834Section
 
       .al
@@ -127,6 +160,31 @@
     .endsection Unsorted95E834Section
 
 
+    .section Unreferenced95E877Section
+
+      .al
+      .xl
+
+      rlUnknown95E877 ; 95/E877
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda lBattleSceneDialoguePointer+1
+        sta lR18+1
+        lda lBattleSceneDialoguePointer
+        sta lR18
+        jsl rlUnknown918102
+        rtl
+
+        .databank 0
+
+        ; 95/E888
+
+    .endsection Unreferenced95E877Section
     .section Unsorted95E888Section
 
       .al

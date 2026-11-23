@@ -1690,3 +1690,303 @@
     .endsection ProcScript889E6CSection
 
 
+    .section Unreferenced889E6ESection
+
+      .al
+      .xl
+
+      rsUnknown889E6E ; 88/9E6E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wJoy1Input
+        bit #$0010
+        beq _9EC1
+        lda wJoy1Repeated
+        bit #$0800
+        beq _9E9C
+        lda wJoy1Input
+        bit #$0080
+        beq _9E86
+        jsr rsUnknown889EC2
+
+        _9E86
+        lda wJoy1Input
+        bit #$4000
+        beq _9E90
+        jsr rsUnknown889EE9
+
+        _9E90
+        lda wJoy1Input
+        bit #$0040
+        beq _9E9C
+        jsr rsUnknown889F1A
+        bra _9EC1
+
+
+        _9E9C
+        lda wJoy1Repeated
+        bit #$0400
+        beq _9EC1
+        lda wJoy1Input
+        bit #$0080
+        beq _9EAD
+        jsr rsUnknown889F47
+
+        _9EAD
+        lda wJoy1Input
+        bit #$4000
+        beq _9EB7
+        jsr rsUnknown889F6B
+
+        _9EB7
+        lda wJoy1Input
+        bit #$0040
+        beq _9EC1
+        jsr rsUnknown889F99
+
+        _9EC1
+        rts
+
+        .databank 0
+
+        ; 88/9EC2
+
+      rsUnknown889EC2 ; 88/9EC2
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$009E
+
+        _9EC5
+        lda $0120,b,x
+        and #$001F
+        clc
+        adc #$0001
+        cmp #$001F
+        bcc _9ED7
+        lda #$001F
+
+        _9ED7
+        sta wR0
+        lda $0120,b,x
+        and #$FFE0
+        ora wR0
+        sta $0120,b,x
+        dec x
+        dec x
+        bpl _9EC5
+        rts
+
+        .databank 0
+
+        ; 88/9EE9
+
+      rsUnknown889EE9 ; 88/9EE9
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$009E
+
+        _9EEC
+        lda $0120,b,x
+        and #$03E0
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        clc
+        adc #$0001
+        cmp #$001F
+        bcc _9F03
+        lda #$001F
+
+        _9F03
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        sta wR0
+        lda $0120,b,x
+        and #$FC1F
+        ora wR0
+        sta $0120,b,x
+        dec x
+        dec x
+        bpl _9EEC
+        rts
+
+        .databank 0
+
+        ; 88/9F1A
+
+      rsUnknown889F1A ; 88/9F1A
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$009E
+
+        _9F1D
+        lda $0120,b,x
+        and #$7C00
+        xba
+        lsr a
+        lsr a
+        clc
+        adc #$0001
+        cmp #$001F
+        bcc _9F32
+        lda #$001F
+
+        _9F32
+        xba
+        asl a
+        asl a
+        sta wR0
+        lda $0120,b,x
+        and #$83FF
+        ora wR0
+        sta $0120,b,x
+        dec x
+        dec x
+        bpl _9F1D
+        rts
+
+        .databank 0
+
+        ; 88/9F47
+
+      rsUnknown889F47 ; 88/9F47
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$009E
+
+        _9F4A
+        lda $0120,b,x
+        and #$001F
+        sec
+        sbc #$0001
+        bpl _9F59
+        lda #$0000
+
+        _9F59
+        sta wR0
+        lda $0120,b,x
+        and #$FFE0
+        ora wR0
+        sta $0120,b,x
+        dec x
+        dec x
+        bpl _9F4A
+        rts
+
+        .databank 0
+
+        ; 88/9F6B
+
+      rsUnknown889F6B ; 88/9F6B
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$009E
+
+        _9F6E
+        lda $0120,b,x
+        and #$03E0
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sec
+        sbc #$0001
+        bpl _9F82
+        lda #$0000
+
+        _9F82
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        sta wR0
+        lda $0120,b,x
+        and #$FC1F
+        ora wR0
+        sta $0120,b,x
+        dec x
+        dec x
+        bpl _9F6E
+        rts
+
+        .databank 0
+
+        ; 88/9F99
+
+      rsUnknown889F99 ; 88/9F99
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$009E
+
+        _9F9C
+        lda $0120,b,x
+        and #$7C00
+        xba
+        lsr a
+        lsr a
+        sec
+        sbc #$0001
+        bpl _9FAE
+        lda #$0000
+
+        _9FAE
+        xba
+        asl a
+        asl a
+        sta wR0
+        lda $0120,b,x
+        and #$83FF
+        ora wR0
+        sta $0120,b,x
+        dec x
+        dec x
+        bpl _9F9C
+        rts
+
+        .databank 0
+
+        ; 88/9FC3
+
+    .endsection Unreferenced889E6ESection

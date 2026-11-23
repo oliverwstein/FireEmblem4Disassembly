@@ -2376,6 +2376,47 @@
     .endsection Unsorted82F4A7Section
 
 
+    .section Unreferenced82F4BFSection
+
+      .al
+      .xl
+
+      rlUnknown82F4BF ; 82/F4BF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phy
+        ldy lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda #$0004
+        sta $0000,b,y
+        lda #$0005
+        sta $0002,b,y
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F4DE
+
+    .endsection Unreferenced82F4BFSection
     .section Unsorted8582D4Section
 
       .al

@@ -214,3 +214,153 @@
         ; 80/9FB2
 
     .endsection FillBG2Page0TilemapBufferSection
+
+
+    .section Unreferenced809FB2Section
+
+      .al
+      .xl
+
+      rlUnknown809FB2 ; 80/9FB2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR11
+        eor wR13
+        php
+        lda wR11
+        bpl _9FD0
+        clc
+        lda wR10
+        eor #$FFFF
+        adc #$0001
+        sta wR10
+        lda wR11
+        eor #$FFFF
+        adc #$0000
+        sta wR11
+
+        _9FD0
+        lda wR13
+        bpl _9FE9
+        clc
+        lda wR12
+        eor #$FFFF
+        adc #$0001
+        sta wR12
+        lda wR13
+        eor #$FFFF
+        adc #$0000
+        sta wR13
+
+        _9FE9
+        jsl rlUnsignedMultiply32By32
+        plp
+        bpl _A019
+        clc
+        lda wR14
+        eor #$FFFF
+        adc #$0001
+        sta wR14
+        lda wR15
+        eor #$FFFF
+        adc #$0000
+        sta wR15
+        lda wR16
+        eor #$FFFF
+        adc #$0000
+        sta wR16
+        lda wR17
+        eor #$FFFF
+        adc #$0000
+        sta wR17
+
+        _A019
+        rtl
+
+        .databank 0
+
+        ; 80/A01A
+
+      rlUnknown80A01A ; 80/A01A
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wR13
+        eor wR15
+        php
+        lda wR13
+        bpl _A038
+        clc
+        lda wR12
+        eor #$FFFF
+        adc #$0001
+        sta wR12
+        lda wR13
+        eor #$FFFF
+        adc #$0000
+        sta wR13
+
+        _A038
+        lda wR15
+        bpl _A051
+        clc
+        lda wR14
+        eor #$FFFF
+        adc #$0001
+        sta wR14
+        lda wR15
+        eor #$FFFF
+        adc #$0000
+        sta wR15
+
+        _A051
+        sep #$20
+        lda wR13
+        sta wR13+1
+        lda wR12+1
+        sta wR13
+        lda wR12
+        sta wR12+1
+        lda #$00
+        sta wR12
+        rep #$20
+        jsl rlUnsignedDivide32By32
+        sep #$20
+        lda wR13
+        sta wR13+1
+        lda wR12+1
+        sta wR13
+        lda wR12
+        sta wR12+1
+        lda #$00
+        sta wR12
+        rep #$20
+        plp
+        bpl _A095
+        clc
+        lda wR12
+        eor #$FFFF
+        adc #$0001
+        sta wR12
+        lda wR13
+        eor #$FFFF
+        adc #$0000
+        sta wR13
+
+        _A095
+        rtl
+
+        .databank 0
+
+        ; 80/A096
+
+    .endsection Unreferenced809FB2Section

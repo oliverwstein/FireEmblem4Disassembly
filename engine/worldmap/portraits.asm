@@ -330,6 +330,242 @@
     .endsection WorldMapPortraitSection
 
 
+    .section Unreferenced8B83A7Section
+
+      .al
+      .xl
+
+      rsUnknown8B83A7 ; 8B/83A7
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta wR0
+        lda wR0
+        and #$001F
+        sta wR1
+        lda wR0
+        and #$03E0
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR2
+        lda wR0
+        and #$7C00
+        xba
+        lsr a
+        lsr a
+        sta wR3
+        lda wR2
+        clc
+        adc wR3
+        lsr a
+        sta wR5
+        sta wR6
+        lda wR1
+        clc
+        adc wR5
+        lsr a
+        sec
+        sbc #$0005
+        bpl _83DF
+        lda #$0000
+
+        _83DF
+        sta wR6
+        clc
+        adc #$0004
+        sta wR5
+        clc
+        adc #$0003
+        sta wR4
+        lda wR4
+        and #$001F
+        sta wR1
+        lda wR5
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        and #$03E0
+        sta wR2
+        lda wR6
+        xba
+        asl a
+        asl a
+        and #$7C00
+        sta wR3
+        lda wR1
+        clc
+        adc wR2
+        clc
+        adc wR3
+        rts
+
+        .databank 0
+
+        ; 8B/8413
+
+      rsUnknown8B8413 ; 8B/8413
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta wR0
+        lda wR0
+        and #$001F
+        sta wR1
+        lda wR0
+        and #$03E0
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR2
+        lda wR0
+        and #$7C00
+        xba
+        lsr a
+        lsr a
+        sta wR3
+        lda wR1
+        lsr a
+        sta wR4
+        lda wR2
+        lsr a
+        sta wR5
+        lda wR3
+        lsr a
+        sta wR6
+        lda wR4
+        sta wR1
+        lda wR5
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        sta wR2
+        lda wR6
+        xba
+        asl a
+        asl a
+        sta wR3
+        lda wR1
+        clc
+        adc wR2
+        clc
+        adc wR3
+        rts
+
+        .databank 0
+
+        ; 8B/845E
+
+      rsUnknown8B845E ; 8B/845E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sta wR0
+        lda wR0
+        and #$001F
+        sta wR1
+        lda wR0
+        and #$03E0
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        lsr a
+        sta wR2
+        lda wR0
+        and #$7C00
+        xba
+        lsr a
+        lsr a
+        sta wR3
+        lda wR1
+        cmp wR2
+        bcc _8494
+        lda wR1
+        cmp wR3
+        bcc _8494
+        lda wR1
+        sec
+        sbc #$0003
+        bpl _8494
+        lda #$0000
+
+        _8494
+        sta wR4
+        lda wR2
+        cmp wR1
+        bcc _84AD
+        lda wR2
+        cmp wR3
+        bcc _84AD
+        lda wR2
+        sec
+        sbc #$0003
+        bpl _84AD
+        lda #$0000
+
+        _84AD
+        sta wR5
+        lda wR3
+        cmp wR1
+        bcc _84C6
+        lda wR3
+        cmp wR2
+        bcc _84C6
+        lda wR3
+        sec
+        sbc #$0003
+        bpl _84C6
+        lda #$0000
+
+        _84C6
+        sta wR6
+        lda wR4
+        sta wR1
+        lda wR5
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        sta wR2
+        lda wR6
+        xba
+        asl a
+        asl a
+        sta wR3
+        lda wR1
+        clc
+        adc wR2
+        clc
+        adc wR3
+        rts
+
+        .databank 0
+
+        ; 8B/84E5
+
+    .endsection Unreferenced8B83A7Section
     .section FadeInWorldMapPortraitSlot8B8C83Section
 
       .al

@@ -935,6 +935,31 @@
     .endsection Unsorted829496Section
 
 
+    .section Unreferenced8294B1Section
+
+      .al
+      .xl
+
+      rlUnknown8294B1 ; 82/94B1
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procUnknown828B61)<<8
+        sta lR44+1
+        lda #<>procUnknown828B61
+        sta lR44
+        jsl rlEventEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 82/94C0
+
+    .endsection Unreferenced8294B1Section
     .section Unsorted8294C0Section
 
       .al

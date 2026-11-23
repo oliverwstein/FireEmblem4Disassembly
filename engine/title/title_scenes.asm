@@ -4659,7 +4659,7 @@
         tax
 
         _E937
-        lda $97FB92,x
+        lda aUnknown97FB52+64,x
         sta [lR18],y
         inc x
         inc x

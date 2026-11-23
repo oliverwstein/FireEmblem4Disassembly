@@ -171,6 +171,46 @@
     .endsection Unsorted9E800CSection
 
 
+    .section Unreferenced9E8035Section
+
+      .al
+      .xl
+
+      rlUnknown9E8035 ; 9E/8035
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0001
+        sta wMapBattleMode
+        lda #(`procMapBattle)<<8
+        sta lR44+1
+        lda #<>procMapBattle
+        sta lR44
+        lda #$0008
+        dec a
+
+        _804B
+        sta $7F57F0
+        jsl rlProcEngineCreateProcByIndex
+        bcc _805C
+        lda $7F57F0
+        dec a
+        bpl _804B
+
+        _805C
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/805E
+
+    .endsection Unreferenced9E8035Section
     .section Unsorted9E805ESection
 
       .al
@@ -7699,6 +7739,34 @@
     .endsection Unsorted9EB345Section
 
 
+    .section Unreferenced9EB3C8Section
+
+      .al
+      .xl
+
+      rlUnknown9EB3C8 ; 9E/B3C8
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F45A8
+        tax
+        lda $1200,b,x
+        jsl rlGetSoundPanFromXPixel
+        ora #$002F
+        jsl rlPlaySoundEffect2
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/B3DE
+
+    .endsection Unreferenced9EB3C8Section
     .section Unsorted9EB3DESection
 
       .al

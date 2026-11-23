@@ -525,6 +525,41 @@
     .endsection Table96DF60Section
 
 
+    .section Unreferenced96DF98Section
+
+      .al
+      .xl
+
+      rlUnknown96DF98 ; 96/DF98
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        and #$0003
+        cmp #$0003
+        bcs _DFB9
+        sta wR10
+        lda #$0015
+        sta wR11
+        jsl rlUnsignedMultiply16By16
+        ldx wR12
+        lda $7FE475,x
+        and #$007F
+        sta $7FE475,x
+
+        _DFB9
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/DFBB
+
+    .endsection Unreferenced96DF98Section
     .section BattleSceneCommand96EC4ASection
 
       .al

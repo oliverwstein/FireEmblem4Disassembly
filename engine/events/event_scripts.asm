@@ -6675,6 +6675,31 @@
     .endsection Unsorted829391Section
 
 
+    .section Unreferenced829469Section
+
+      .al
+      .xl
+
+      rlUnknown829469 ; 82/9469
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #(`procUnknown828B09)<<8
+        sta lR44+1
+        lda #<>procUnknown828B09
+        sta lR44
+        jsl rlEventEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 82/9478
+
+    .endsection Unreferenced829469Section
     .section Unsorted82E08DSection
 
       .al
@@ -6789,6 +6814,38 @@
     .endsection Unsorted82E0C6Section
 
 
+    .section Unreferenced82E120Section
+
+      .al
+      .xl
+
+      rlUnknown82E120 ; 82/E120
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        ldx $1691,b
+        stz $169A,b,x
+        stz $16DA,b,x
+        dec $1695,b
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/E133
+
+    .endsection Unreferenced82E120Section
     .section Unsorted82E147Section
 
       .al
@@ -7639,6 +7696,46 @@
     .endsection Unsorted91A7DFSection
 
 
+    .section Unreferenced91A7EASection
+
+      .al
+      .xl
+
+      rlUnknown91A7EA ; 91/A7EA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$001E
+
+        _A7ED
+        lda $0ED7,b,x
+        cmp #$8865
+        beq _A808
+        lda #$FFFF
+        sta wEventProcBanks,b,x
+        lda $0ED7,b,x
+        beq _A808
+        phx
+        txa
+        lsr a
+        jsl rlProcEngineFreeProcByIndex
+        plx
+
+        _A808
+        dec x
+        dec x
+        bpl _A7ED
+        rtl
+
+        .databank 0
+
+        ; 91/A80D
+
+    .endsection Unreferenced91A7EASection
     .section Unsorted91A9BBSection
 
       .al

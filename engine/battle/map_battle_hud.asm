@@ -3805,3 +3805,97 @@
     .endsection Unsorted9ECFCDSection
 
 
+    .section Unreferenced9ED006Section
+
+      .al
+      .xl
+
+      rlUnknown9ED006 ; 9E/D006
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$17
+        sta bBufferTM
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 9E/D00F
+
+      rlUnknown9ED00F ; 9E/D00F
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda #$0000
+        sta wMapMagicFlags
+        jsl rlGetVisibleMapTileBounds
+        lda wR0
+        clc
+        adc $9ED074
+        cmp wR4
+        bcs _D02B
+        cmp wR6
+        bcc _D034
+
+        _D02B
+        lda #$0101
+        sta wMapMagicFlags
+        bra _D04A
+
+
+        _D034
+        lda wR1
+        sec
+        sbc $9ED076
+        cmp wR4
+        bcc _D043
+        cmp wR6
+        bcs _D04A
+
+        _D043
+        lda #$0201
+        sta wMapMagicFlags
+
+        _D04A
+        lda wR2
+        clc
+        adc $9ED078
+        cmp wR5
+        bcs _D059
+        cmp wR7
+        bcc _D066
+
+        _D059
+        lda wMapMagicFlags
+        ora #$0401
+        sta wMapMagicFlags
+        bra _D071
+
+
+        _D066
+        lda wMapMagicFlags
+        ora #$0001
+        sta wMapMagicFlags
+
+        _D071
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/D074
+
+    .endsection Unreferenced9ED006Section

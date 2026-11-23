@@ -437,6 +437,38 @@
     .endsection Unsorted82E028Section
 
 
+    .section Unreferenced82E030Section
+
+      .al
+      .xl
+
+      rsUnknown82E030 ; 82/E030
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0000,b,y
+        sta $1697,b
+        lda $0001,b,y
+        sta $1698,b
+        phy
+        phx
+        jsl $82E048
+        plx
+        ply
+        inc y
+        inc y
+        inc y
+        rts
+
+        .databank 0
+
+        ; 82/E048
+
+    .endsection Unreferenced82E030Section
     .section Unsorted82E073Section
 
       .al

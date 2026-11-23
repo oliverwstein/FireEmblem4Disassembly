@@ -658,6 +658,31 @@
     .endsection EpilogueDialogueCodeSection
 
 
+    .section Unreferenced91BD42Section
+
+      .al
+      .xl
+
+      rlUnknown91BD42 ; 91/BD42
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$9100
+        sta lR44+1
+        lda #$BD51
+        sta lR44
+        jsl rlEventEngineCreateProc
+        rtl
+
+        .databank 0
+
+        ; 91/BD51
+
+    .endsection Unreferenced91BD42Section
     .section EpilogueDialoguePointersSection
 
       .al

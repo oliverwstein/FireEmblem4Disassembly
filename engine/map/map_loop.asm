@@ -183,3 +183,52 @@
         ; 80/B316
 
     .endsection MapMainLoopSection
+
+
+    .section Unreferenced80B316Section
+
+      .al
+      .xl
+
+      rsUnknown80B316 ; 80/B316
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$0200
+        tsb wChapterFlags,b
+        ldx #$001E
+
+        _B320
+        lda $0F17,b,x
+        cmp #$4F4E
+        bne _B331
+        lda $0F37,b,x
+        ora #$1000
+        sta $0F37,b,x
+
+        _B331
+        dec x
+        dec x
+        bpl _B320
+        ldx #$000E
+
+        _B338
+        lda $160F,b,x
+        ora #$1000
+        sta $160F,b,x
+        dec x
+        dec x
+        bpl _B338
+        plx
+        rts
+
+        .databank 0
+
+        ; 80/B347
+
+    .endsection Unreferenced80B316Section

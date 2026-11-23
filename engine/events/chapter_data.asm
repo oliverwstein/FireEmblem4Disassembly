@@ -139,6 +139,50 @@
     .endsection UNITGroupPointerSection
 
 
+    .section Unreferenced82F4F9Section
+
+      .al
+      .xl
+
+      rlUnknown82F4F9 ; 82/F4F9
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phy
+        dec a
+        asl a
+        clc
+        adc lR18
+        tay
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0002,b,y
+        sec
+        sbc $0000,b,y
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F517
+
+    .endsection Unreferenced82F4F9Section
     .section Unsorted81B4C5Section
 
       .al

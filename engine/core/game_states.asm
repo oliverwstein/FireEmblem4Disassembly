@@ -274,6 +274,62 @@
     .endsection Unsorted809BEESection
 
 
+    .section Unreferenced809C3ESection
+
+      .as
+      .xl
+
+      rlUnknown809C3E ; 80/9C3E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        phk
+        plb
+        .databank $80
+        ldy #$0002
+        lda lR44+1
+        sta lTaskJumpPointer+1,b
+        lda [lR44],y
+        sta lTaskJumpPointer,b
+        ldx #$002D
+
+        _9C51
+        lda $030A,b,x
+        cmp lTaskJumpPointer+1,b
+        bne _9C61
+        lda aTaskTable,b,x
+        cmp lTaskJumpPointer,b
+        beq _9C69
+
+        _9C61
+        dec x
+        dec x
+        dec x
+        bpl _9C51
+        plb
+        .databank $80
+        sec
+        rtl
+
+
+        _9C69
+        ldy #$0004
+        lda [lR44],y
+        sta lTaskJumpPointer,b
+        jsl $809C77
+        clc
+        rtl
+
+        .databank 0
+
+        ; 80/9C77
+
+    .endsection Unreferenced809C3ESection
     .section Unsorted809C7ASection
 
       .al

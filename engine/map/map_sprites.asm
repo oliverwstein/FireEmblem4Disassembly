@@ -497,6 +497,56 @@
     .endsection CapSpawnDestinationCoordinates100Section
 
 
+    .section Unreferenced819062Section
+
+      .al
+      .xl
+
+      rlUnknown819062 ; 81/9062
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #$7E00
+        sta lR18+1
+        txa
+        asl a
+        asl a
+        asl a
+        asl a
+        asl a
+        clc
+        adc #$DB88
+        sta lR18
+        jsr rsFillMovingMapSpriteData
+        phy
+        tya
+        clc
+        adc lR18
+        sta lR18
+        jsr rsUnknown8190CC
+
+        _9081
+        jsr rsUnknown8190DC
+        bcc _9081
+        ply
+        sty wR0
+        lda lR18
+        sec
+        sbc wR0
+        sta lR18
+        plx
+        rtl
+
+        .databank 0
+
+        ; 81/9092
+
+    .endsection Unreferenced819062Section
     .section FillMovingMapSpriteDataSection
 
       .al
@@ -574,6 +624,147 @@
     .endsection FillMovingMapSpriteDataPathScriptPointerSection
 
 
+    .section Unreferenced8190CCSection
+
+      .al
+      .xl
+
+      rsUnknown8190CC ; 81/90CC
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldy #$0000
+        lda #$0012
+        sta [lR18],y
+        inc y
+        lda #$0004
+        sta [lR18],y
+        dec y
+        rts
+
+        .databank 0
+
+        ; 81/90DC
+
+      rsUnknown8190DC ; 81/90DC
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        cpy #$007F
+        bne _90E5
+        jml _9139
+
+
+        _90E5
+        ldx #$0000
+        lda wR2
+        cmp wR4
+        beq _90EF
+        inc x
+
+        _90EF
+        lda wR3
+        cmp wR5
+        beq _90F6
+        inc x
+
+        _90F6
+        cpx #$0000
+        beq _9139
+        cpx #$0002
+        bne _910B
+        lda rlIncreaseFrameCounters
+        and #$0002
+        bne _9111
+        beq _9125
+
+        _910B
+        lda wR2
+        cmp wR4
+        beq _9125
+
+        _9111
+        lda wR2
+        cmp wR4
+        bcc _911E
+        dec wR2
+        lda #$000A
+        bra _9143
+
+
+        _911E
+        inc wR2
+        lda #$000B
+        bra _9143
+
+
+        _9125
+        lda wR3
+        cmp wR5
+        bcc _9132
+        dec wR3
+        lda #$000C
+        bra _9143
+
+
+        _9132
+        inc wR3
+        lda #$000D
+        bra _9143
+
+
+        _9139
+        lda #$0080
+        inc y
+        inc y
+        sta [lR18],y
+        sec
+        bra _9165
+
+
+        _9143
+        sta wR7
+        lda [lR18],y
+        and #$00FF
+        cmp wR7
+        bne _9157
+        inc y
+        lda [lR18],y
+        inc a
+        sta [lR18],y
+        dec y
+        bra _9164
+
+
+        _9157
+        lda wR7
+        inc y
+        inc y
+        sta [lR18],y
+        inc y
+        lda #$0001
+        sta [lR18],y
+        dec y
+
+        _9164
+        clc
+
+        _9165
+        rts
+
+        .databank 0
+
+        ; 81/9166
+
+    .endsection Unreferenced8190CCSection
     .section ProcCycleFlickerUnitsOfFactionSlotSection
 
       .al
@@ -5647,6 +5838,46 @@
     .endsection Unsorted88DF8CSection
 
 
+    .section Unreferenced88E00ESection
+
+      .al
+      .xl
+
+      rlUnknown88E00E ; 88/E00E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phk
+        plb
+        .databank $88
+        lda $7E465B,x
+        tax
+        lda $7E480B,x
+        and #$8000
+        beq _E024
+        jsr rsUploadTallStandingMapSprite
+        bra _E029
+
+
+        _E024
+        jsr rsUploadShortStandingMapSprite
+        bra _E029
+
+
+        _E029
+        plx
+        rtl
+
+        .databank 0
+
+        ; 88/E02B
+
+    .endsection Unreferenced88E00ESection
     .section Unsorted8189F3Section
 
       .al

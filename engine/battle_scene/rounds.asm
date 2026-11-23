@@ -573,6 +573,74 @@
     .endsection Unsorted95A65FSection
 
 
+    .section Unreferenced95AA8DSection
+
+      .al
+      .xl
+
+      rsUnknown95AA8D ; 95/AA8D
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda aBattleSceneCombatant1,b,x
+        sta $7FE0B6
+        lda $0D52,b,x
+        sta $7FE0B7
+        lda $0D55,b
+        sta $7FE0B8
+        ldx wBattleAnimationAttackerOffset,b
+        lda bBattleAnimationStateFlags,b,x
+        sta $7FE0AE
+        lda wBattleAnimationYAnchor+1,b,x
+        sta $7FE0B2
+        lda bBattleAnimationY,b,x
+        sta $7FE0B4
+        rep #$20
+        lda wBattleAnimationX,b,x
+        sta $7FE0AF
+        rts
+
+        .databank 0
+
+        ; 95/AAC6
+
+      rsUnknown95AAC6 ; 95/AAC6
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda aBattleSceneCombatant1,b,x
+        sta $7FE0C1
+        lda $0D52,b,x
+        sta $7FE0C2
+        lda $0D55,b
+        sta $7FE0C3
+        ldx wBattleAnimationAttackerOffset,b
+        lda bBattleAnimationStateFlags,b,x
+        sta $7FE0B9
+        lda wBattleAnimationYAnchor+1,b,x
+        sta $7FE0BD
+        lda bBattleAnimationY,b,x
+        sta $7FE0BF
+        rep #$20
+        lda wBattleAnimationX,b,x
+        sta $7FE0BA
+        rts
+
+        .databank 0
+
+        ; 95/AAFF
+
+    .endsection Unreferenced95AA8DSection
     .section Unsorted95AAFFSection
 
       .al
@@ -1762,6 +1830,102 @@
     .endsection Unsorted95AEA2Section
 
 
+    .section Unreferenced95B114Section
+
+      .al
+      .xl
+
+      rsUnknown95B114 ; 95/B114
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda wBattleAnimationAttackerOffset,b
+        clc
+        adc #$0086
+        tax
+        lda bBattleAnimationStateFlags,b,x
+        bit #$0080
+        bne _B12A
+        lda #$FFFF
+        bra _B13A
+
+
+        _B12A
+        lda wBattleAnimationX,b,x
+        ldx wBattleAnimationDefenderOffset,b
+        sec
+        sbc wBattleAnimationX,b,x
+        bpl _B13A
+        eor #$FFFF
+        inc a
+
+        _B13A
+        sta wR0
+        cmp #$000A
+        bcs _B14D
+        sep #$20
+        lda bBattleSceneStrikeFlags,b
+        ora #$20
+        sta bBattleSceneStrikeFlags,b
+        rep #$20
+
+        _B14D
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/B14F
+
+      rsUnknown95B14F ; 95/B14F
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7FEC1D
+        bit #$0080
+        bne _B15E
+        lda #$FFFF
+        bra _B16F
+
+
+        _B15E
+        lda $7FEC1F
+        ldx wBattleAnimationDefenderOffset,b
+        sec
+        sbc wBattleAnimationX,b,x
+        bpl _B16F
+        eor #$FFFF
+        inc a
+
+        _B16F
+        sta wR0
+        cmp #$000A
+        bcs _B182
+        sep #$20
+        lda bBattleSceneStrikeFlags,b
+        ora #$20
+        sta bBattleSceneStrikeFlags,b
+        rep #$20
+
+        _B182
+        plx
+        rts
+
+        .databank 0
+
+        ; 95/B184
+
+    .endsection Unreferenced95B114Section
     .section Unsorted978000Section
 
       .al
@@ -1801,3 +1965,25 @@
     .endsection Unsorted978000Section
 
 
+    .section Unreferenced978024Section
+
+      .al
+      .xl
+
+      rlUnknown978024 ; 97/8024
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$000B
+        jsl rlPlaySoundEffect2
+        rtl
+
+        .databank 0
+
+        ; 97/802C
+
+    .endsection Unreferenced978024Section

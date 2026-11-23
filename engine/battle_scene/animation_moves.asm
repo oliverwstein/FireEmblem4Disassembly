@@ -927,6 +927,39 @@
     .endsection BattleAnimationMoves95D23CSection
 
 
+    .section Unreferenced95D280Section
+
+      .al
+      .xl
+
+      rsUnknown95D280 ; 95/D280
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $0B06,b,x
+        and #$00FF
+        sta wR0
+        sep #$20
+        lda bBattleAnimationStateFlags,b,x
+        ora #$08
+        sta bBattleAnimationStateFlags,b,x
+        jsr rsUnknown95B6A7
+        jsl rlBattleAnimationGetJumpArc
+        lda wR1
+        sta wBattleAnimationYVelocity,b,x
+        lda wR0
+        sta wBattleAnimationGravity,b,x
+        rts
+
+        .databank 0
+
+        ; 95/D2A4
+
+    .endsection Unreferenced95D280Section
     .section BattleAnimationMoves95B2DFSection
 
       .al

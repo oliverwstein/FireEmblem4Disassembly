@@ -130,6 +130,45 @@
     .endsection Unsorted8B818DSection
 
 
+    .section Unreferenced8B81ECSection
+
+      .al
+      .xl
+
+      rsUnknown8B81EC ; 8B/81EC
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E8908, $0140, $80, $B580
+
+        lda #(`aBG3TilemapBuffer)<<8
+        sta lMapSpriteGraphicsPointer+1,b
+        lda #<>aBG3TilemapBuffer
+        sta lMapSpriteGraphicsPointer,b
+        lda lMapSpriteGraphicsPointer,b
+        clc
+        adc #$0580
+        sta lR18
+        lda #$0040
+        sta wR0
+        lda $5800,b
+        sta wR1
+        phx
+        jsl rlDMAByPointer
+        plx
+        rts
+
+        .databank 0
+
+        ; 8B/821F
+
+    .endsection Unreferenced8B81ECSection
     .section Unsorted8B87E5Section
 
       .al

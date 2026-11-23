@@ -385,6 +385,41 @@
     .endsection Unsorted9E9C70Section
 
 
+    .section Unreferenced9E9C94Section
+
+      .al
+      .xl
+
+      rlUnknown9E9C94 ; 9E/9C94
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $0F37,b,x
+        and #$FFFB
+        sta $0F37,b,x
+        lda $7F57EE
+        jsl rlProcEngineCheckProcEnded
+        bcs _9CB7
+        lda $0F37,b,x
+        ora #$0004
+        sta $0F37,b,x
+        lda #$9BE0
+        sta $0F57,b,x
+
+        _9CB7
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/9CB9
+
+    .endsection Unreferenced9E9C94Section
     .section Unsorted9E9CB9Section
 
       .al
@@ -741,6 +776,82 @@
     .endsection Unsorted9E9E61Section
 
 
+    .section Unreferenced9E9ECFSection
+
+      .al
+      .xl
+
+      rlUnknown9E9ECF ; 9E/9ECF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda $0F37,b,x
+        and #$FFFB
+        sta $0F37,b,x
+        lda $7E4EB7
+        tax
+        lda $7E4EB9
+        tay
+        lda $7E4EBB
+        jsl rlUnknown9E8D25
+        lda wR1
+        lsr a
+        lsr a
+        lsr a
+        and #$00FF
+        xba
+        sta wR1
+        lda wR0
+        lsr a
+        lsr a
+        lsr a
+        and #$00FF
+        ora wR1
+        sta $0ECF,b
+        lda #$1388
+        sta $0ED1,b
+        lda #$01F4
+        sta $0ED3,b
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/9F13
+
+      rlUnknown9E9F13 ; 9E/9F13
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        cmp #$FFFF
+        beq _9F23
+        lda $0F37,b,x
+        ora #$0004
+        sta $0F37,b,x
+
+        _9F23
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/9F26
+
+    .endsection Unreferenced9E9ECFSection
     .section Unsorted9EAC5ASection
 
       .al
@@ -1552,6 +1663,38 @@
     .endsection Unsorted9ED401Section
 
 
+    .section Unreferenced9ED412Section
+
+      .al
+      .xl
+
+      rlUnknown9ED412 ; 9E/D412
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F45A4
+        tax
+        stz $1100,b,x
+        lda $7F45A6
+        cmp #$FFFF
+        beq _D428
+        tax
+        stz $1100,b,x
+
+        _D428
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/D42A
+
+    .endsection Unreferenced9ED412Section
     .section Unsorted9ED42ASection
 
       .al
@@ -1682,6 +1825,31 @@
     .endsection Unsorted9ED449Section
 
 
+    .section Unreferenced9ED528Section
+
+      .al
+      .xl
+
+      rlUnknown9ED528 ; 9E/D528
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown9ED72A
+        lda #$D535
+        sta $0F57,b,x
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/D535
+
+    .endsection Unreferenced9ED528Section
     .section Unsorted9ED535Section
 
       .al
@@ -2001,6 +2169,38 @@
     .endsection Unsorted9ED6BASection
 
 
+    .section Unreferenced9ED72ASection
+
+      .al
+      .xl
+
+      rlUnknown9ED72A ; 9E/D72A
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F45A4
+        tax
+        stz $1100,b,x
+        lda $7F45A6
+        cmp #$FFFF
+        beq _D740
+        tax
+        stz $1100,b,x
+
+        _D740
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/D742
+
+    .endsection Unreferenced9ED72ASection
     .section Unsorted9EDAE7Section
 
       .al

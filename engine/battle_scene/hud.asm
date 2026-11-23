@@ -584,6 +584,61 @@
     .endsection Unsorted9595CASection
 
 
+    .section Unreferenced959650Section
+
+      .al
+      .xl
+
+      rlUnknown959650 ; 95/9650
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        phx
+        cmp #$000A
+        bcs _9664
+        pha
+        lda #$00FF
+        ora wR1
+        sta $7FC800,x
+        pla
+        bra _967F
+
+
+        _9664
+        sta wR13
+        lda #$000A
+        sta wR14
+        phx
+        jsl rlUnknown959C3E
+        plx
+        lda wR13
+        clc
+        adc #$0040
+        ora wR1
+        sta $7FC800,x
+        lda wR10
+
+        _967F
+        inc x
+        inc x
+        clc
+        adc #$004A
+        ora wR1
+        sta $7FC800,x
+        plx
+        pla
+        rtl
+
+        .databank 0
+
+        ; 95/968E
+
+    .endsection Unreferenced959650Section
     .section Unsorted95968ESection
 
       .al
@@ -1609,6 +1664,35 @@
     .endsection Unsorted959BC1Section
 
 
+    .section Unreferenced959BFESection
+
+      .al
+      .xl
+
+      rsUnknown959BFE ; 95/9BFE
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        sep #$20
+        lda bBattleSceneRoundState,b
+        ora #$08
+        sta bBattleSceneRoundState,b
+        rep #$20
+        lda #$003C
+        sta $7FED5A
+        pla
+        rts
+
+        .databank 0
+
+        ; 95/9C14
+
+    .endsection Unreferenced959BFESection
     .section Unsorted959C3ESection
 
       .al
@@ -2244,9 +2328,9 @@
 
         lda #$000B
         jsl rlPlaySoundEffect
-        lda #$9600
+        lda #(`rlUnknown968376)<<8
         sta $7FED00
-        lda #$8376
+        lda #<>rlUnknown968376
         sta $7FECFF
         rtl
 
@@ -2256,7 +2340,7 @@
 
       rlUnknown968376 ; 96/8376
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2630,9 +2714,9 @@
         sta $7FE4D3
         lda #$AD7E
         sta $7FE4D2
-        lda #$9600
+        lda #(`rlUnknown96861E)<<8
         sta $7FED00
-        lda #$861E
+        lda #<>rlUnknown96861E
         sta $7FECFF
         rtl
 
@@ -2642,7 +2726,7 @@
 
       rlUnknown96861E ; 96/861E
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
+        ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
@@ -2913,6 +2997,73 @@
     .endsection Unsorted9680C2Section
 
 
+    .section Unreferenced9687B3Section
+
+      .al
+      .xl
+
+      rlUnknown9687B3 ; 96/87B3
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldx #$0000
+
+        _87B8
+        lda aUnknown9984C6,x
+        sta lR18
+        lda aUnknown9984C6+1,x
+        sta lR18+1
+        ldy #$0000
+        lda [lR18],y
+        and #$00FF
+        xba
+        sta $7FED4B
+        inc x
+        inc x
+        inc x
+        lda aUnknown9984C6,x
+        sta $7FED56
+        inc x
+        inc x
+        lda aUnknown9984C6,x
+        sta $7FED53
+        inc x
+        inc x
+        sep #$20
+        lda aUnknown9984C6,x
+        sta $7FED4D
+        inc x
+        lda aUnknown9984C6,x
+        sta $7FED52
+        inc x
+        lda aUnknown9984C6,x
+        sta $7FED55
+        inc x
+        rep #$20
+        lda aUnknown9984C6,x
+        sta $7FED58
+        inc x
+        inc x
+        phx
+        jsl rlUnknown968530
+        plx
+        cpx #$006C
+        bcc _87B8
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/881F
+
+    .endsection Unreferenced9687B3Section
     .section Unsorted969398Section
 
       .al
@@ -3022,6 +3173,64 @@
     .endsection Unsorted96994BSection
 
 
+    .section Unreferenced969964Section
+
+      .al
+      .xl
+
+      rlUnknown969964 ; 96/9964
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        pha
+        phx
+        phy
+        bit #$0080
+        bne _996F
+        clc
+        bra _9991
+
+
+        _996F
+        jsl rlUnknown96994B
+        pha
+        xba
+        and #$00FF
+        tay
+        pla
+        and #$007F
+        sta wR0
+        phb
+        php
+        phk
+        plb
+        .databank $96
+        lda wR0
+        asl a
+        tax
+        jsr ($969995,x)
+        plp
+        plb
+        .databank $96
+        inc lR18
+        inc lR18
+        sec
+
+        _9991
+        ply
+        plx
+        pla
+        rtl
+
+        .databank 0
+
+        ; 96/9995
+
+    .endsection Unreferenced969964Section
     .section Unsorted9699DDSection
 
       .al

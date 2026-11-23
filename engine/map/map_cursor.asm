@@ -523,6 +523,34 @@
     .endsection Unsorted88A32DSection
 
 
+    .section Unreferenced88A383Section
+
+      .al
+      .xl
+
+      rlUnknown88A383 ; 88/A383
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wMapScrollingFlag,b
+        beq _A38A
+        sec
+        rtl
+
+
+        _A38A
+        clc
+        rtl
+
+        .databank 0
+
+        ; 88/A38C
+
+    .endsection Unreferenced88A383Section
     .section Unsorted88A38CSection
 
       .al
@@ -1685,6 +1713,61 @@
     .endsection Table88ACF1Section
 
 
+    .section Unreferenced88AD09Section
+
+      .al
+      .xl
+
+      rsUnknown88AD09 ; 88/AD09
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ldx #$008E
+
+        _AD0C
+        lda aDeploymentTable,x
+        beq _AD33
+        and #$0003
+        cmp wActiveFactionSlot,b
+        beq _AD33
+        lda $7E441B,x
+        cmp wR0
+        bne _AD33
+        sta wR10
+        lda $7E44AB,x
+        cmp wR1
+        bne _AD33
+        sta wR11
+        stx wMapTargetDeploymentOffset,b
+        bra _AD3F
+
+
+        _AD33
+        dec x
+        dec x
+        bmi _AD3B
+        jml _AD0C
+
+
+        _AD3B
+        lda $0792,b
+        rts
+
+
+        _AD3F
+        lda #$0001
+        sta $0792,b
+        rts
+
+        .databank 0
+
+        ; 88/AD46
+
+    .endsection Unreferenced88AD09Section
     .section Unsorted88AD46Section
 
       .al
@@ -1874,6 +1957,54 @@
     .endsection Unsorted88B3AFSection
 
 
+    .section Unreferenced88B3C2Section
+
+      .al
+      .xl
+
+      rlUnknown88B3C2 ; 88/B3C2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        jsl rlGetMapDataIndex
+        tax
+        lda #$0000
+        sta aMapData,x
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 88/B3D1
+
+      rlUnknown88B3D1 ; 88/B3D1
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        jsl rlGetMapDataIndex
+        tax
+        lda wR2
+        sta aMapData,x
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 88/B3DF
+
+    .endsection Unreferenced88B3C2Section
     .section Unsorted88B42CSection
 
       .al
@@ -2659,3 +2790,66 @@
     .endsection Unsorted88BDA1Section
 
 
+    .section Unreferenced88BEFFSection
+
+      .al
+      .xl
+
+      rlUnknown88BEFF ; 88/BEFF
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $88
+        lda wMapWidthMode,b
+        cmp #$0004
+        beq _BF1D
+        cmp #$0008
+        beq _BF10
+
+        _BF10
+        lda wR1
+        and #$FFF0
+        asl a
+        asl a
+        asl a
+        asl a
+        sta wR3
+        bra _BF29
+
+
+        _BF1D
+        lda wR1
+        and #$FFF0
+        asl a
+        asl a
+        asl a
+        sta wR3
+        bra _BF29
+
+
+        _BF29
+        lda wR0
+        and #$FFF0
+        lsr a
+        lsr a
+        lsr a
+        clc
+        adc wR3
+        plp
+        plb
+        .databank $88
+        rtl
+
+        .databank 0
+
+        ; 88/BF37
+
+    .endsection Unreferenced88BEFFSection

@@ -399,6 +399,28 @@
     .endsection Unsorted88A7F5Section
 
 
+    .section Unreferenced88A816Section
+
+      .al
+      .xl
+
+      rsUnknown88A816 ; 88/A816
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0002
+        sta wMapScrollSpeed,b
+        rts
+
+        .databank 0
+
+        ; 88/A81D
+
+    .endsection Unreferenced88A816Section
     .section Unsorted88ADE9Section
 
       .al

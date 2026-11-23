@@ -2819,6 +2819,198 @@
     .endsection Unsorted969765Section
 
 
+    .section Unreferenced969766Section
+
+      .al
+      .xl
+
+      rlUnknown969766 ; 96/9766
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda bBattleAnimationCombatantFlags,b,x
+        ora #$40
+        sta bBattleAnimationCombatantFlags,b,x
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 96/9773
+
+      rlUnknown969773 ; 96/9773
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldx wBattleAnimationAttackerOffset,b
+        jsl rlUnknown969766
+        jsl rlUnknown96C9FE
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/9783
+
+      rlUnknown969783 ; 96/9783
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        cpx #$0000
+        bne _978E
+        ldx #$0043
+        bra _9791
+
+
+        _978E
+        ldx #$0000
+
+        _9791
+        sep #$20
+        lda bBattleAnimationCombatantFlags,b,x
+        and #$BF
+        sta bBattleAnimationCombatantFlags,b,x
+        rep #$20
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/979F
+
+      rlUnknown96979F ; 96/979F
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldx wBattleAnimationAttackerOffset,b
+        jsl rlUnknown969783
+        jsl rlUnknown96C9FE
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/97AF
+
+      rlUnknown9697AF ; 96/97AF
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        cpx #$0000
+        bne _97BA
+        ldx #$0043
+        bra _97BD
+
+
+        _97BA
+        ldx #$0000
+
+        _97BD
+        sep #$20
+        lda bBattleAnimationCombatantFlags,b,x
+        ora #$40
+        sta bBattleAnimationCombatantFlags,b,x
+        rep #$20
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/97CB
+
+      rlUnknown9697CB ; 96/97CB
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldx wBattleAnimationAttackerOffset,b
+        jsl rlUnknown9697AF
+        jsl rlUnknown96C9FE
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/97DB
+
+      rlUnknown9697DB ; 96/97DB
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        sep #$20
+        lda bBattleAnimationCombatantFlags,b,x
+        and #$BF
+        sta bBattleAnimationCombatantFlags,b,x
+        rep #$20
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/97EA
+
+      rlUnknown9697EA ; 96/97EA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldx wBattleAnimationAttackerOffset,b
+        jsl rlUnknown9697DB
+        jsl rlUnknown96C9FE
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 96/97FA
+
+    .endsection Unreferenced969766Section
     .section Unsorted9697FASection
 
       .al

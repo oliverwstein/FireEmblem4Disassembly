@@ -75,6 +75,33 @@
     .endsection Unsorted80C1A0Section
 
 
+    .section Unreferenced80C1BASection
+
+      .al
+      .xl
+
+      rlUnknown80C1BA ; 80/C1BA
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda wEventEngineFlags,b
+        bit #$0001
+        bne _C1C9
+        lda #$0001
+        jsl rlStartChapterEventByID
+
+        _C1C9
+        rtl
+
+        .databank 0
+
+        ; 80/C1CA
+
+    .endsection Unreferenced80C1BASection
     .section Unsorted80C1CASection
 
       .al

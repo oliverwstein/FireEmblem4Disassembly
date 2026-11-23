@@ -665,6 +665,66 @@
     .endsection WorldMapSpriteColorsSection
 
 
+    .section Unreferenced8B812ASection
+
+      .al
+      .xl
+
+      rsUnknown8B812A ; 8B/812A
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda aWorldMapSpriteColorCycle1,x
+        sta $022C,b
+        lda aWorldMapSpriteColorCycle2,x
+        sta $024C,b
+        txa
+        inc a
+        inc a
+        and #$000E
+        tax
+        lda aWorldMapSpriteColorCycle1,x
+        sta $022E,b
+        lda aWorldMapSpriteColorCycle2,x
+        sta $024E,b
+        txa
+        inc a
+        inc a
+        and #$000E
+        tax
+        lda aWorldMapSpriteColorCycle1,x
+        sta $0230,b
+        lda aWorldMapSpriteColorCycle2,x
+        sta $0250,b
+        txa
+        inc a
+        inc a
+        and #$000E
+        tax
+        lda aWorldMapSpriteColorCycle1,x
+        sta $0232,b
+        lda aWorldMapSpriteColorCycle2,x
+        sta $0252,b
+        txa
+        inc a
+        inc a
+        and #$000E
+        tax
+        lda aWorldMapSpriteColorCycle1,x
+        sta $0234,b
+        lda aWorldMapSpriteColorCycle2,x
+        sta $0254,b
+        rts
+
+        .databank 0
+
+        ; 8B/818D
+
+    .endsection Unreferenced8B812ASection
     .section Table8CDE00Section
 
       .al

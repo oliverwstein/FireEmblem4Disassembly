@@ -1049,6 +1049,89 @@
     .endsection Unsorted888560Section
 
 
+    .section Unreferenced88857ESection
+
+      .al
+      .xl
+
+      rlUnknown88857E ; 88/857E
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $213E,b
+        and #$C0
+        beq _85A1
+        lda wBufferOAMADD+1
+        ora #$80
+        sta wBufferOAMADD+1
+        lda bOAMRenderedSpriteCount,b
+        lda wVBlankEnabledFramecount
+        and #$10
+        sta wR0
+        lda bOAMRenderedSpriteCount,b
+        sec
+        sbc wR0
+        sta wBufferOAMADD
+        rep #$20
+        rtl
+
+
+        _85A1
+        .as
+        sep #$20
+        lda #$00
+        sta wBufferOAMADD+1
+        lda #$00
+        sta wBufferOAMADD
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 88/85AE
+
+      rlUnknown8885AE ; 88/85AE
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $213E,b
+        bit #$C0
+        beq _85C6
+        lda wBufferOAMADD+1
+        ora #$80
+        sta wBufferOAMADD+1
+        lda wVBlankEnabledFramecount
+        and #$10
+        sta wBufferOAMADD
+        rep #$20
+        rtl
+
+
+        _85C6
+        .as
+        sep #$20
+        lda #$00
+        sta wBufferOAMADD+1
+        lda #$00
+        sta wBufferOAMADD
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 88/85D3
+
+    .endsection Unreferenced88857ESection
     .section Unsorted8885D3Section
 
       .al

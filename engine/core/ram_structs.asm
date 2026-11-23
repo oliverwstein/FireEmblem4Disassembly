@@ -1456,6 +1456,54 @@
     .endsection RAMAreaHeaderSection
 
 
+    .section Unreferenced82EDBBSection
+
+      .al
+      .xl
+
+      rlUnknown82EDBB ; 82/EDBB
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phy
+        ldy lR25
+        sep #$20
+        lda lR25+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        tya
+        sec
+        sbc #$0000
+        tay
+        lda $0001,b,y
+        sta lR25+1
+        lda $0000,b,y
+        sta lR25
+        jsr rsUnknown82F207
+        jsr rsFreeSpecifiedRAMAreaEntryHeader
+        jsr rsCombineAdjacentFreeRAMAreaEntries
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/EDE7
+
+    .endsection Unreferenced82EDBBSection
     .section RAMAreaSection
 
       .al
@@ -2459,6 +2507,30 @@
     .endsection RAMAreaSection
 
 
+    .section Unreferenced82F207Section
+
+      .al
+      .xl
+
+      rsUnknown82F207 ; 82/F207
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda #$80
+        sta $0003,b,y
+        rep #$20
+        rts
+
+        .databank 0
+
+        ; 82/F211
+
+    .endsection Unreferenced82F207Section
     .section OffsetTableSection
 
       .al
@@ -2928,6 +3000,164 @@
     .endsection OffsetTableSection
 
 
+    .section Unreferenced82F7A2Section
+
+      .al
+      .xl
+
+      rlUnknown82F7A2 ; 82/F7A2
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phy
+        sta wR3
+        dec a
+        asl a
+        clc
+        adc lR18
+        tay
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0002,b,y
+        sec
+        sbc $0000,b,y
+        sta wR4
+        ldy lR18
+        lda $0000,b,y
+        lsr a
+        dec a
+        sta wR1
+        lda wR3
+        inc a
+        cmp wR1
+        bcs _F7EA
+        sta wR2
+        lda wR4
+        eor #$FFFF
+        inc a
+        sta wR0
+
+        _F7DA
+        lda wR2
+        jsl rlShiftOffsetTableEntry
+        inc wR2
+        lda wR2
+        cmp wR1
+        bcc _F7DA
+        beq _F7DA
+
+        _F7EA
+        lda wR1
+        asl a
+        clc
+        adc lR18
+        tay
+        lda $0000,b,y
+        sec
+        sbc wR4
+        sta $0000,b,y
+        lda wR3
+        asl a
+        clc
+        adc lR18
+        tay
+        lda wR1
+        sec
+        sbc wR3
+        beq _F816
+        sta wR2
+
+        _F80A
+        lda $0002,b,y
+        sta $0000,b,y
+        inc y
+        inc y
+        dec wR2
+        bne _F80A
+
+        _F816
+        dec wR1
+        lda #$0001
+        sta wR2
+        lda #$FFFE
+        sta wR0
+
+        _F822
+        lda wR2
+        jsl rlShiftOffsetTableEntry
+        inc wR2
+        lda wR2
+        cmp wR1
+        bcc _F822
+        beq _F822
+        lda wR1
+        asl a
+        clc
+        adc lR18
+        tay
+        lda $0000,b,y
+        sec
+        sbc #$0002
+        sta $0000,b,y
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F847
+
+      rlUnknown82F847 ; 82/F847
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda #$0001
+        sta wR2
+
+        _F850
+        lda wR2
+        jsl rlCopyOffsetTableEntry
+        lda lR19
+        clc
+        adc wR0
+        sta lR19
+        inc wR2
+        dec wR1
+        bne _F850
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/F866
+
+    .endsection Unreferenced82F7A2Section
     .section Unsorted82E400Section
 
       .al
@@ -3359,6 +3589,87 @@
     .endsection Unsorted82EADESection
 
 
+    .section Unreferenced82EB4CSection
+
+      .al
+      .xl
+
+      rlUnknown82EB4C ; 82/EB4C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        jsl rlUnknown82EC70
+        ldy lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda wR1
+        beq _EB6B
+        and #$1FFF
+        ora #$8000
+        sta $0002,b,y
+
+        _EB6B
+        lda wR0
+        sta $0000,b,y
+        inc a
+        sta $0004,b,y
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/EB77
+
+    .endsection Unreferenced82EB4CSection
+
+
+    .section Unreferenced82EC70Section
+
+      .al
+      .xl
+
+      rlUnknown82EC70 ; 82/EC70
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        lda lR18+1
+        sta $0560,b
+        lda lR18
+        sta $055F,b
+        plp
+        plb
+        .databank $82
+        rtl
+
+        .databank 0
+
+        ; 82/EC81
+
+    .endsection Unreferenced82EC70Section
     .section Unsorted82F517Section
 
       .al
@@ -3366,7 +3677,7 @@
 
       rlCopyOffsetTableEntry ; 82/F517
 
-        ; Found by tools/sweep.py: nothing in the build reaches this.
+        ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
@@ -3412,3 +3723,44 @@
 
     .endsection Unsorted82F517Section
 
+
+    .section Unreferenced82F54FSection
+
+      .al
+      .xl
+
+      rlUnknown82F54F ; 82/F54F
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phb
+        php
+        phk
+        plb
+        .databank $82
+        phy
+        ldy lR18
+        sep #$20
+        lda lR18+2
+        pha
+        rep #$20
+        plb
+        .databank ?
+        lda $0000,b,y
+        lsr a
+        dec a
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 82/F567
+
+    .endsection Unreferenced82F54FSection

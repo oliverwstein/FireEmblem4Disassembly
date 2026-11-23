@@ -103,6 +103,74 @@
     .endsection HideSpritesSection
 
 
+    .section Unreferenced808372Section
+
+      .al
+      .xl
+
+      rlUnknown808372 ; 80/8372
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        php
+        phb
+        sep #$20
+        lda #5,s
+        pha
+        plb
+        .databank ?
+        rep #$30
+        lda #3,s
+        tax
+        lda $0001,b,x
+        and #$00FF
+        sta wR34
+        sta wR35
+        inc x
+        ldy #$0000
+
+        _838D
+        lsr wR34
+        bcc _83AF
+        lda $0001,b,x
+        sta $4300,b,y
+        lda $0003,b,x
+        sta $4302,b,y
+        lda $0005,b,x
+        sta $4304,b,y
+        lda $0006,b,x
+        sta $4305,b,y
+        txa
+        clc
+        adc #$0007
+        tax
+
+        _83AF
+        tya
+        clc
+        adc #$0010
+        tay
+        cpy #$0080
+        bne _838D
+        txa
+        sta #3,s
+        sep #$20
+        lda wR35
+        sta $420B,b
+        plb
+        .databank ?
+        plp
+        rtl
+
+        .databank 0
+
+        ; 80/83C7
+
+    .endsection Unreferenced808372Section
     .section OAMUpperXBitTableSection
 
       .al
