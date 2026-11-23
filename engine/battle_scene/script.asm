@@ -841,7 +841,7 @@
 
 
         _A2C1
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         and #$00FF
         bne _A32E
         lda $7FE4BA
@@ -948,7 +948,7 @@
 
         ; Control command $FFFE: stops for this frame.
 
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         and #$00FF
         bne _A358
         lda $7FE4BC
@@ -1223,9 +1223,9 @@
         cmp #$4000
         bne _A48D
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         inc a
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
 
         _A48D
@@ -1295,7 +1295,7 @@
         ora #$80
         sta $7FE4B7
         lda #$00
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
         pla
         asl a
@@ -1842,10 +1842,10 @@
         sep #$20
         lda #$00
         sta $7FECF4
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _BC47
         dec a
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
 
         _BC47
         rep #$20
@@ -2102,17 +2102,17 @@
 
         phx
         phy
-        lda $7FECFF
+        lda lBattleSceneScriptRoutine
         cmp #$FFFF
         bne _C9C1
-        lda $7FED00
+        lda lBattleSceneScriptRoutine+1
         cmp #$FFFF
         beq _C9D6
 
         _C9C1
-        lda $7FECFF
+        lda lBattleSceneScriptRoutine
         sta lR18
-        lda $7FED00
+        lda lBattleSceneScriptRoutine+1
         sta lR18+1
         jsl _C9D3
         bra _C9D6

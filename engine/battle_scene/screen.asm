@@ -887,7 +887,7 @@
         sta $7FE4C2
         rep #$20
         stz aBGPaletteBuffer,b
-        jsl rlUnknown9599E7
+        jsl rlBattleSceneSetHUDColors
         jsl rlUnknown95A414
         jsl rlUnknown96957D
         jsl rlUnknown969EBB
@@ -1012,17 +1012,17 @@
         sta $210B,b
         lda #$77
         sta $210C,b
-        lda $7FFC74
+        lda bBattleSceneHUDBG2Y
         sta $2110,b
         lda #$01
         sta $2110,b
-        lda $7FFC73
+        lda bBattleSceneHUDBG2X
         sta $210F,b
         stz $210F,b
-        lda $7FFC76
+        lda bBattleSceneHUDBG3Y
         sta $2112,b
         stz $2112,b
-        lda $7FFC75
+        lda bBattleSceneHUDBG3X
         sta $2111,b
         stz $2111,b
         stz $2123,b
@@ -1543,7 +1543,7 @@
         lda $7FE4D5
         and #$000F
         bne _8DD7
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _8DE0
 
 
@@ -1579,7 +1579,7 @@
         lda $7FE4D5
         and #$000F
         bne _8DF0
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _8DFF
 
 
@@ -1615,7 +1615,7 @@
         lda $7FE4D5
         and #$000F
         bne _8E18
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _8E21
 
 
@@ -1750,7 +1750,7 @@
         lda $7FE4DD
         and #$000F
         bne _8E9E
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _8EA7
 
 
@@ -1778,7 +1778,7 @@
         lda $7FE4DD
         and #$000F
         bne _8EB7
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _8EC6
 
 
@@ -1814,7 +1814,7 @@
         lda $7FE4DD
         and #$000F
         bne _8EDF
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _8EE8
 
 
@@ -1944,9 +1944,9 @@
         lda #$0000
         sta $7E5313
         lda #(`rlUnknown968F71)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown968F71
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         ply
         plx
         rtl
@@ -1972,7 +1972,7 @@
         lda aUnknown998683,x
         cmp #$0080
         bne _8F89
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         jml _9034
 
 
@@ -2032,7 +2032,7 @@
         sta $7E530B
         lda aUnknown998683+8,x
         and #$00FF
-        jsl rlUnknown969398
+        jsl rlBattleSceneStartStatGauge
         lda $7E5313
         clc
         adc #$0009
@@ -2042,9 +2042,9 @@
         lda #$0023
         jsl rlPlaySoundEffect
         lda #(`rlUnknown969037)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown969037
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
 
         _9034
         ply
@@ -2098,9 +2098,9 @@
         cmp #$0080
         bne _9090
         lda #(`rlUnknown968F71)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown968F71
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         jml _9130
 
 
@@ -2172,7 +2172,7 @@
         sta @l $7E5311
 
         _9130
-        jsl rlUnknown968418
+        jsl rlBattleSceneRunStatGauge
         ply
         plx
         rtl
@@ -2203,7 +2203,7 @@
         sta wR13
         lda #$000A
         sta wR14
-        jsl rlUnknown959C3E
+        jsl rlBattleSceneDivide
         lda wR13
         clc
         adc #$0154
@@ -2264,9 +2264,9 @@
         lda #$0000
         sta $7E5311
         lda #(`rlUnknown9691C8)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown9691C8
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         ply
         plx
         rtl
@@ -2291,7 +2291,7 @@
         and #$00FF
         cmp #$0080
         bne _91E3
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         jml _92F5
 
 
@@ -2437,7 +2437,7 @@
         lda aUnknown998683,x
         cmp #$0080
         bne _9310
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         jml _9395
 
 
@@ -2479,7 +2479,7 @@
         sta $7E530B
         lda aUnknown998683+8,x
         and #$00FF
-        jsl rlUnknown969398
+        jsl rlBattleSceneStartStatGauge
         lda $7E5313
         clc
         adc #$0009
@@ -2487,9 +2487,9 @@
         lda #$0000
         sta $7E5311
         lda #(`rlUnknown969037)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown969037
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
 
         _9395
         ply

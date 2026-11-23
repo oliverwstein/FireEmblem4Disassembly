@@ -110,7 +110,7 @@
         sta lR18
         jsl rlUnknown918102
         lda #$0000
-        sta $189B,b
+        sta aDialogue.wTextSound,b
         rtl
 
         .databank 0
@@ -213,7 +213,7 @@
         lda aDialogue.wStatus,b
         and #$00FF
         bne _E8B3
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _E8B3
 
 
@@ -759,14 +759,14 @@
         rep #$20
         lda #$0008
         ldy #$6A83
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         lda lR18
         clc
         adc #$0008
         sta lR18
         lda #$0008
         ldy #$6AA3
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
 
         _A26D
         plx
@@ -790,7 +790,7 @@
         and #$7F
         sta $7FE4B7
         lda #$00
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
         lda #$0000
         sta $7FE4BE
@@ -871,9 +871,9 @@
         lda #$0000
         sta $7FFDF8
         lda #(`rlUnknown96F5A4)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F5A4
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         plx
         rtl
 
@@ -890,7 +890,7 @@
         lda $7FFDF8
         cmp #$0080
         bcc +
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _F5D5
 
         +
@@ -928,9 +928,9 @@
         lda #$007F
         sta $7FFDF8
         lda #(`rlUnknown96F5EF)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F5EF
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         plx
         rtl
 
@@ -946,7 +946,7 @@
         phx
         lda $7FFDF8
         bne +
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _F61D
 
         +
@@ -989,7 +989,7 @@
         sta bBattleAnimationAttributes,b
         rep #$20
         .al
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         plx
         rtl
 
@@ -1035,7 +1035,7 @@
         cpx #$0006
         bcc -
 
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         plx
         rtl
 

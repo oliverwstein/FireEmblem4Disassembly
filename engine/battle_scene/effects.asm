@@ -1010,13 +1010,13 @@
 
       aUnknown95E749 .dstruct structHDMADirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FF6B4, PPU_REG_BASE + $26, $01 ; 95/E749
 
-      aUnknown95E754 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aUnknown998944+448, PPU_REG_BASE + $21, $40, $99 ; 95/E754
+      aUnknown95E754 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneHUDColors+448, PPU_REG_BASE + $21, $40, $99 ; 95/E754
 
-      aUnknown95E760 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aUnknown998944+438, PPU_REG_BASE + $22, $42, $99 ; 95/E760
+      aUnknown95E760 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneHUDColors+438, PPU_REG_BASE + $22, $42, $99 ; 95/E760
 
       aUnknown95E76C .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aUnknown998B0E+64, PPU_REG_BASE + $32, $40, $7F ; 95/E76C
 
-      aUnknown95E778 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aUnknown998F0F+54, PPU_REG_BASE + $0F, $42, $7F ; 95/E778
+      aUnknown95E778 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneHUDShakeOffsets+54, PPU_REG_BASE + $0F, $42, $7F ; 95/E778
 
       aUnknown95E784 .dstruct structHDMADirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, $7FD06B, PPU_REG_BASE + $2C, $01 ; 95/E784
 
@@ -1501,12 +1501,12 @@
         sta $7FEC3A,x
         sta $7FEC3F,x
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _A815
         dec a
 
         _A815
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
 
         _A81B
@@ -1532,12 +1532,12 @@
         sta $7FEC1D,x
         rep #$20
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _A83C
         dec a
 
         _A83C
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
 
         _A842
@@ -4607,10 +4607,10 @@
         sta $7FED03
 
         _C04D
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _C058
         dec a
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
 
         _C058
         rep #$20
@@ -5347,10 +5347,10 @@
         lda #$0000
         jsl rlBattleSceneStopHDMAEffect
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _C567
         dec a
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
 
         _C567
         rep #$20
@@ -5442,35 +5442,35 @@
 
         lda $7FED0A
         bne _C641
-        lda aUnknown998F0F+103
+        lda aBattleSceneHUDShakeOffsets+103
         clc
         adc $7FF8E4
         sta $7FF8E4
-        lda aUnknown998F0F+105
+        lda aBattleSceneHUDShakeOffsets+105
         clc
         adc $7FF8E6
         sta $7FF8E6
-        lda aUnknown998F0F+107
+        lda aBattleSceneHUDShakeOffsets+107
         clc
         adc $7FF8E8
         sta $7FF8E8
-        lda aUnknown998F0F+109
+        lda aBattleSceneHUDShakeOffsets+109
         clc
         adc $7FF8EA
         sta $7FF8EA
-        lda aUnknown998F0F+111
+        lda aBattleSceneHUDShakeOffsets+111
         clc
         adc $7FF8EC
         sta $7FF8EC
-        lda aUnknown998F0F+113
+        lda aBattleSceneHUDShakeOffsets+113
         clc
         adc $7FF8EE
         sta $7FF8EE
-        lda aUnknown998F0F+115
+        lda aBattleSceneHUDShakeOffsets+115
         clc
         adc $7FF8F0
         sta $7FF8F0
-        lda aUnknown998F0F+117
+        lda aBattleSceneHUDShakeOffsets+117
         clc
         adc $7FF8F2
         sta $7FF8F2
@@ -5480,35 +5480,35 @@
         _C641
         lda $7FF8E4
         sec
-        sbc aUnknown998F0F+103
+        sbc aBattleSceneHUDShakeOffsets+103
         sta $7FF8E4
         lda $7FF8E6
         sec
-        sbc aUnknown998F0F+105
+        sbc aBattleSceneHUDShakeOffsets+105
         sta $7FF8E6
         lda $7FF8E8
         sec
-        sbc aUnknown998F0F+107
+        sbc aBattleSceneHUDShakeOffsets+107
         sta $7FF8E8
         lda $7FF8EA
         sec
-        sbc aUnknown998F0F+109
+        sbc aBattleSceneHUDShakeOffsets+109
         sta $7FF8EA
         lda $7FF8EC
         sec
-        sbc aUnknown998F0F+111
+        sbc aBattleSceneHUDShakeOffsets+111
         sta $7FF8EC
         lda $7FF8EE
         sec
-        sbc aUnknown998F0F+113
+        sbc aBattleSceneHUDShakeOffsets+113
         sta $7FF8EE
         lda $7FF8F0
         sec
-        sbc aUnknown998F0F+115
+        sbc aBattleSceneHUDShakeOffsets+115
         sta $7FF8F0
         lda $7FF8F2
         sec
-        sbc aUnknown998F0F+117
+        sbc aBattleSceneHUDShakeOffsets+117
         sta $7FF8F2
 
         _C6A9
@@ -5993,17 +5993,19 @@
 
         ; 96/C99E
 
-      rlUnknown96C99E ; 96/C99E
+      rlBattleSceneClearScriptRoutine ; 96/C99E
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Clears the routine run every frame (lBattleSceneScriptRoutine).
+
         lda #$FF00
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #$FFFF
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         rtl
 
         .databank 0
@@ -6039,9 +6041,9 @@
         tax
         pla
         lda aBattleSceneScriptRoutines+1,x
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda aBattleSceneScriptRoutines,x
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         pla
         pha
         jsr rsBattleSceneScriptNextCommand
@@ -6053,22 +6055,24 @@
 
         ; 96/C9FE
 
-      rlUnknown96C9FE ; 96/C9FE
+      rlBattleSceneEndScriptRoutine ; 96/C9FE
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Ends the routine run every frame (lBattleSceneScriptRoutine) and counts down bBattleSceneScriptWaitCount.
+
         lda #$FF00
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #$FFFF
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _CA19
         dec a
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
 
         _CA19
         rep #$20
@@ -6490,12 +6494,12 @@
         rep #$20
         jsl rlUnknown96CECE
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _CC13
         dec a
 
         _CC13
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
         rts
 
@@ -6522,12 +6526,12 @@
         sta $7FED6E,x
         plx
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _CC39
         dec a
 
         _CC39
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
         rts
 
@@ -9307,12 +9311,12 @@
         lda $7FFD9A,x
         bit #$40
         beq _DB55
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _DB51
         dec a
 
         _DB51
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
 
         _DB55
         rep #$20
@@ -9424,9 +9428,9 @@
         lda #$00FC
         sta $7FE48C
         lda #(`rlUnknown96DCF1)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96DCF1
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         plx
         rtl
 
@@ -9473,7 +9477,7 @@
         sta lR18
         ldy #$7000
         lda #$0080
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         plb
         .databank $99
         ply
@@ -11153,12 +11157,12 @@
         bit #$0020
         beq _E709
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _E703
         dec a
 
         _E703
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
 
         _E709
@@ -11230,12 +11234,12 @@
         bit #$0020
         beq _E748
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _E742
         dec a
 
         _E742
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
 
         _E748
@@ -11284,12 +11288,12 @@
         bit #$0020
         beq _E794
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _E78E
         dec a
 
         _E78E
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
 
         _E794
@@ -11354,12 +11358,12 @@
         bit #$0020
         beq _E7F9
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _E7F3
         dec a
 
         _E7F3
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
 
         _E7F9
@@ -11446,12 +11450,12 @@
         bit #$0020
         beq _E882
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _E87C
         dec a
 
         _E87C
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
 
         _E882
@@ -11549,12 +11553,12 @@
         bit #$0020
         beq _E913
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _E90D
         dec a
 
         _E90D
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
 
         _E913
@@ -11684,12 +11688,12 @@
         bit #$0020
         beq _E9AF
         sep #$20
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _E9A9
         dec a
 
         _E9A9
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
         rep #$20
 
         _E9AF
@@ -13299,9 +13303,9 @@
         sta bBufferCGADSUB
         rep #$20
         lda #(`rlUnknown96F38F)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F38F
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         rtl
 
         .databank 0
@@ -13335,7 +13339,7 @@
         and #$00FF
         cmp #$00FF
         bne _F3BE
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _F3E0
 
 
@@ -13442,9 +13446,9 @@
         lda #$0000
         sta $0C46,b
         lda #(`rlUnknown96F476)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F476
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         plx
         rtl
 
@@ -13464,9 +13468,9 @@
         lda #$008E
         sta $0C46,b
         lda #(`rlUnknown96F476)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F476
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         plx
         rtl
 
@@ -13486,9 +13490,9 @@
         lda #$0118
         sta $0C46,b
         lda #(`rlUnknown96F476)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F476
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         plx
         rtl
 
@@ -13508,9 +13512,9 @@
         lda #$0122
         sta $0C46,b
         lda #(`rlUnknown96F476)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F476
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         plx
         rtl
 
@@ -13531,7 +13535,7 @@
         lda aUnknown98AD65+59,x
         cmp #$8080
         bne _F489
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _F4A1
 
 
@@ -13567,9 +13571,9 @@
         lda #$0000
         sta $0C46,b
         lda #(`rlUnknown96F4BA)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96F4BA
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         plx
         rtl
 
@@ -13594,7 +13598,7 @@
         lda aUnknown98AD65+401,x
         cmp #$FFFF
         bne _F4D1
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _F50B
 
 
@@ -13662,7 +13666,7 @@
         rep #$20
         lda #$0007
         jsl rlHDMAEngineFreeEntryByIndex
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         rtl
 
         .databank 0
@@ -13684,7 +13688,7 @@
         sta $7FE1B3
         rep #$20
         jsl rlUnknown95A428
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         rtl
 
         .databank 0
@@ -13702,7 +13706,7 @@
 
         lda #$0007
         jsl rlHDMAEngineFreeEntryByIndex
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         rtl
 
         .databank 0
@@ -13719,7 +13723,7 @@
         ; Unreferenced.
 
         jsl rlUnknown95A428
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         rtl
 
         .databank 0
@@ -13933,7 +13937,7 @@
         sta $7FFC65
         lda #$B215
         sta $7FFC67
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         ply
         plx
         rtl
@@ -14260,9 +14264,9 @@
         rep #$20
         jsl rlUnknown96FB02
         lda #(`rlUnknown96FB02)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96FB02
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         rtl
 
         .databank 0
@@ -14294,7 +14298,7 @@
         lda #$00
         sta $7FE3EE
         rep #$20
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _FB38
 
 
@@ -14331,9 +14335,9 @@
         rep #$20
         jsl rlUnknown96FB61
         lda #(`rlUnknown96FB61)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96FB61
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         rtl
 
         .databank 0
@@ -14366,7 +14370,7 @@
         lda #$00
         sta $7FE3EE
         rep #$20
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _FB98
 
 
@@ -14403,9 +14407,9 @@
         rep #$20
         jsl rlUnknown96FBC1
         lda #(`rlUnknown96FBC1)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96FBC1
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         rtl
 
         .databank 0
@@ -14438,7 +14442,7 @@
         lda #$00
         sta $7FE3EE
         rep #$20
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _FBF8
 
 
@@ -14476,7 +14480,7 @@
         jsl rlUnknown96DD39
         jsl rlUnknown96EE8A
         jsl rlUnknown96EBC9
-        jsl rlUnknown96C99E
+        jsl rlBattleSceneClearScriptRoutine
         lda #$0003
         jsl rlHDMAEngineFreeEntryByIndex
         lda #$0005
@@ -14560,7 +14564,7 @@
         jsl rlUnknown96CB0A
         jsl rlUnknown96EE8A
         jsl rlUnknown96EBC9
-        jsl rlUnknown96C99E
+        jsl rlBattleSceneClearScriptRoutine
         lda #$0003
         jsl rlHDMAEngineFreeEntryByIndex
         lda #$0005

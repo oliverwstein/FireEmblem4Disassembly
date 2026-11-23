@@ -1133,7 +1133,7 @@
         bcc _B974
         rep #$20
         lda #$0C00
-        sta $0CC5,b
+        sta wBattleSceneUploadBudget,b
         jsl rlUnknown95C097
         rtl
 
@@ -3058,7 +3058,7 @@
         inc lR19
         inc lR19
         ply
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         tya
         clc
         adc #$0100
@@ -3144,7 +3144,7 @@
         inc lR19
         inc lR19
         ply
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         tya
         clc
         adc #$0100
@@ -3181,21 +3181,23 @@
       .al
       .xl
 
-      rlUnknown95C368 ; 95/C368
+      rlBattleSceneRunUploads ; 95/C368
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $0CC4,b
+        ; In VBlank: sends the queued uploads, last first, up to wBattleSceneUploadBudget bytes; the one that does not fit is sent in part and the rest left queued. Then resets the budget to $0C00.
+
+        lda bBattleSceneUploadCount,b
         and #$00FF
         beq _C3B8
         cmp #$0011
         bcc _C37F
         lda #$0010
         sep #$20
-        sta $0CC4,b
+        sta bBattleSceneUploadCount,b
         rep #$20
 
         _C37F
@@ -3207,57 +3209,59 @@
         nop
         nop
         ldx $4216,b
-        lda $0CC5,b
+        lda wBattleSceneUploadBudget,b
         and #$FFFE
-        sta $0CC5,b
+        sta wBattleSceneUploadBudget,b
 
         _C396
-        lda $0CC5,b
+        lda wBattleSceneUploadBudget,b
         beq _C3B8
         sec
-        sbc $0CCE,b,x
+        sbc aBattleSceneUploads.Size,b,x
         bcs _C3A6
-        jsr rsUnknown95C3EA
+        jsr rsBattleSceneSendUploadPart
         bra _C3B8
 
 
         _C3A6
-        sta $0CC5,b
-        jsr rsUnknown95C3C2
+        sta wBattleSceneUploadBudget,b
+        jsr rsBattleSceneSendUpload
         txa
         sec
         sbc #$0007
         tax
-        dec $0CC4,b
+        dec bBattleSceneUploadCount,b
         dec y
         bne _C396
 
         _C3B8
         lda #$0C00
-        sta $0CC5,b
-        stz $0CC7,b
+        sta wBattleSceneUploadBudget,b
+        stz wBattleSceneUploadTotal,b
         rtl
 
         .databank 0
 
         ; 95/C3C2
 
-      rsUnknown95C3C2 ; 95/C3C2
+      rsBattleSceneSendUpload ; 95/C3C2
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $0CCC,b,x
+        ; Sends upload X whole (DMA channel 0).
+
+        lda aBattleSceneUploads.VRAMAddress,b,x
         sta $2116,b
         lda #$1801
         sta $4300,b
-        lda $0CC9,b,x
+        lda aBattleSceneUploads.Source,b,x
         sta $4302,b
         lda $0CCA,b,x
         sta $4303,b
-        lda $0CCE,b,x
+        lda aBattleSceneUploads.Size,b,x
         sta $4305,b
         sep #$20
         lda #$01
@@ -3269,41 +3273,43 @@
 
         ; 95/C3EA
 
-      rsUnknown95C3EA ; 95/C3EA
+      rsBattleSceneSendUploadPart ; 95/C3EA
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $0CCC,b,x
+        ; Sends the first wBattleSceneUploadBudget bytes of upload X (DMA channel 1) and advances it past them.
+
+        lda aBattleSceneUploads.VRAMAddress,b,x
         sta $2116,b
         lda #$1801
         sta $4310,b
-        lda $0CC9,b,x
+        lda aBattleSceneUploads.Source,b,x
         sta $4312,b
         lda $0CCA,b,x
         sta $4313,b
-        lda $0CC5,b
+        lda wBattleSceneUploadBudget,b
         sta $4315,b
-        lda $0CC5,b
+        lda wBattleSceneUploadBudget,b
         lsr a
         clc
-        adc $0CCC,b,x
-        sta $0CCC,b,x
-        lda $0CC9,b,x
+        adc aBattleSceneUploads.VRAMAddress,b,x
+        sta aBattleSceneUploads.VRAMAddress,b,x
+        lda aBattleSceneUploads.Source,b,x
         clc
-        adc $0CC5,b
-        sta $0CC9,b,x
+        adc wBattleSceneUploadBudget,b
+        sta aBattleSceneUploads.Source,b,x
         lda #$0000
         adc $0CCB,b,x
         sep #$20
         sta $0CCB,b,x
         rep #$20
-        lda $0CCE,b,x
+        lda aBattleSceneUploads.Size,b,x
         sec
-        sbc $0CC5,b
-        sta $0CCE,b,x
+        sbc wBattleSceneUploadBudget,b
+        sta aBattleSceneUploads.Size,b,x
         sep #$20
         lda #$02
         sta $420B,b
@@ -3322,16 +3328,18 @@
       .al
       .xl
 
-      rlUnknown95C43E ; 95/C43E
+      rlBattleSceneQueueUpload ; 95/C43E
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Queues A bytes from lR18 for VRAM word address Y (aBattleSceneUploads). Carry set when the queue is full (16).
+
         phx
         pha
-        lda $0CC4,b
+        lda bBattleSceneUploadCount,b
         and #$00FF
         cmp #$0010
         bcc _C44F
@@ -3348,17 +3356,17 @@
         nop
         ldx $4216,b
         pla
-        sta $0CCE,b,x
+        sta aBattleSceneUploads.Size,b,x
         clc
-        adc $0CC7,b
-        sta $0CC7,b
+        adc wBattleSceneUploadTotal,b
+        sta wBattleSceneUploadTotal,b
         tya
-        sta $0CCC,b,x
+        sta aBattleSceneUploads.VRAMAddress,b,x
         lda lR18
-        sta $0CC9,b,x
+        sta aBattleSceneUploads.Source,b,x
         lda lR18+1
         sta $0CCA,b,x
-        inc $0CC4,b
+        inc bBattleSceneUploadCount,b
         clc
 
         _C478
@@ -3381,7 +3389,7 @@
         lda $7FE18A
         beq _C4E0
         lda #$0800
-        cmp $0CC7,b
+        cmp wBattleSceneUploadTotal,b
         bcc _C4E0
         beq _C4E0
         pha
@@ -3393,11 +3401,11 @@
         sta lR18+1
         pla
         sec
-        sbc $0CC7,b
+        sbc wBattleSceneUploadTotal,b
         cmp $7FE18A
         bcc _C4BA
         lda $7FE18A
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         lda #$0000
         sta $7FE18A
         bra _C4E0
@@ -3405,7 +3413,7 @@
 
         _C4BA
         pha
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         lda $7FE18A
         sec
         sbc #1,s
@@ -6411,10 +6419,10 @@
         lda $7FE1A3
         bit #$01
         beq _D778
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         beq _D778
         dec a
-        sta $7FE4B8
+        sta bBattleSceneScriptWaitCount
 
         _D778
         rep #$20
@@ -8258,7 +8266,7 @@
         rep #$20
         jsl rlBattleAnimationStartSequence
         plx
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         rtl
 
         .databank 0

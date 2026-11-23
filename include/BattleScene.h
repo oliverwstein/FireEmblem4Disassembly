@@ -69,3 +69,31 @@
     PALETTE_EFFECT_NO_DATA .segment Slot, Type, FirstColor, Count
       .byte \Slot, \Type, \FirstColor, \Count
     .endsegment
+
+
+  ; An upload queued for VBlank (aBattleSceneUploads).
+
+  structBattleSceneUpload .struct
+    Source      .long ?
+    VRAMAddress .word ?
+    Size        .word ? ; bytes
+  .endstruct
+
+  ; The gauges the level up window draws (aBattleSceneLevelUpGauges): the value's
+  ; address, then the gauge's variables (wBattleSceneGaugeScale ...).
+
+  BATTLE_SCENE_GAUGE .segment Value, Scale, Offset, Max, Digits, UploadSize, Attributes
+    .long \Value
+    .word \Scale, \Offset
+    .byte \Max, \Digits, \UploadSize
+    .word \Attributes
+  .endsegment
+
+  ; The stats a level up raises (aBattleSceneLevelUpStatGauges): the stat and
+  ; its gain, then the gauge's scale, offset and length.
+
+  BATTLE_SCENE_STAT_GAUGE .segment Stat, Gain, Scale, Offset, Max
+    .long \Stat, \Gain
+    .word \Scale, \Offset
+    .byte \Max
+  .endsegment

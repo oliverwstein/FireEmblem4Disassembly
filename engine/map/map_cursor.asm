@@ -1881,11 +1881,11 @@
         and #$0003
         cmp wActiveFactionSlot,b
         beq _AD33
-        lda $7E441B,x
+        lda aDeploymentTable._XTilePosition,x
         cmp wR0
         bne _AD33
         sta wR10
-        lda $7E44AB,x
+        lda aDeploymentTable._YTilePosition,x
         cmp wR1
         bne _AD33
         sta wR11

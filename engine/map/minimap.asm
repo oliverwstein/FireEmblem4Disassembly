@@ -1781,7 +1781,7 @@
         ldx #$009E
 
         _9EC5
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$001F
         clc
         adc #$0001
@@ -1791,10 +1791,10 @@
 
         _9ED7
         sta wR0
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$FFE0
         ora wR0
-        sta $0120,b,x
+        sta aBGPaletteBuffer.aPalette1,b,x
         dec x
         dec x
         bpl _9EC5
@@ -1815,7 +1815,7 @@
         ldx #$009E
 
         _9EEC
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$03E0
         lsr a
         lsr a
@@ -1835,10 +1835,10 @@
         asl a
         asl a
         sta wR0
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$FC1F
         ora wR0
-        sta $0120,b,x
+        sta aBGPaletteBuffer.aPalette1,b,x
         dec x
         dec x
         bpl _9EEC
@@ -1859,7 +1859,7 @@
         ldx #$009E
 
         _9F1D
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$7C00
         xba
         lsr a
@@ -1875,10 +1875,10 @@
         asl a
         asl a
         sta wR0
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$83FF
         ora wR0
-        sta $0120,b,x
+        sta aBGPaletteBuffer.aPalette1,b,x
         dec x
         dec x
         bpl _9F1D
@@ -1899,7 +1899,7 @@
         ldx #$009E
 
         _9F4A
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$001F
         sec
         sbc #$0001
@@ -1908,10 +1908,10 @@
 
         _9F59
         sta wR0
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$FFE0
         ora wR0
-        sta $0120,b,x
+        sta aBGPaletteBuffer.aPalette1,b,x
         dec x
         dec x
         bpl _9F4A
@@ -1932,7 +1932,7 @@
         ldx #$009E
 
         _9F6E
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$03E0
         lsr a
         lsr a
@@ -1951,10 +1951,10 @@
         asl a
         asl a
         sta wR0
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$FC1F
         ora wR0
-        sta $0120,b,x
+        sta aBGPaletteBuffer.aPalette1,b,x
         dec x
         dec x
         bpl _9F6E
@@ -1975,7 +1975,7 @@
         ldx #$009E
 
         _9F9C
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$7C00
         xba
         lsr a
@@ -1990,10 +1990,10 @@
         asl a
         asl a
         sta wR0
-        lda $0120,b,x
+        lda aBGPaletteBuffer.aPalette1,b,x
         and #$83FF
         ora wR0
-        sta $0120,b,x
+        sta aBGPaletteBuffer.aPalette1,b,x
         dec x
         dec x
         bpl _9F9C

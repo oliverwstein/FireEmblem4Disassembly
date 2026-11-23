@@ -299,7 +299,7 @@
         ldx #$002D
 
         _9C51
-        lda $030A,b,x
+        lda aTaskTable.lEntry0+1,b,x
         cmp lTaskJumpPointer+1,b
         bne _9C61
         lda aTaskTable,b,x

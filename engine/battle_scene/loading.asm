@@ -2875,7 +2875,7 @@
         phy
         ldx wBattleAnimationAttackerOffset,b
         jsl rlUnknown969766
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         ply
         plx
         rtl
@@ -2927,7 +2927,7 @@
         phy
         ldx wBattleAnimationAttackerOffset,b
         jsl rlUnknown969783
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         ply
         plx
         rtl
@@ -2979,7 +2979,7 @@
         phy
         ldx wBattleAnimationAttackerOffset,b
         jsl rlUnknown9697AF
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         ply
         plx
         rtl
@@ -3021,7 +3021,7 @@
         phy
         ldx wBattleAnimationAttackerOffset,b
         jsl rlUnknown9697DB
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         ply
         plx
         rtl

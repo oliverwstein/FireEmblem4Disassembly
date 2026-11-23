@@ -589,7 +589,7 @@
         sep #$20
         lda aBattleSceneCombatant1,b,x
         sta $7FE0B6
-        lda $0D52,b,x
+        lda aBattleSceneCombatant1.Weapon,b,x
         sta $7FE0B7
         lda $0D55,b
         sta $7FE0B8
@@ -620,7 +620,7 @@
         sep #$20
         lda aBattleSceneCombatant1,b,x
         sta $7FE0C1
-        lda $0D52,b,x
+        lda aBattleSceneCombatant1.Weapon,b,x
         sta $7FE0C2
         lda $0D55,b
         sta $7FE0C3
@@ -1457,7 +1457,7 @@
         _AF00
         jsl rlBattleSceneSetKnockback
         jsl rlBattleScenePlayHitSound
-        jsl rlUnknown969F6A
+        jsl rlBattleSceneStartHUDShake
         lda aBattleSceneCombatant2.Weapon,b
         bra _AF33
 
@@ -1474,7 +1474,7 @@
         _AF23
         jsl rlBattleSceneSetKnockback
         jsl rlBattleScenePlayHitSound
-        jsl rlUnknown969F6A
+        jsl rlBattleSceneStartHUDShake
         lda @l $000D52
 
         _AF33

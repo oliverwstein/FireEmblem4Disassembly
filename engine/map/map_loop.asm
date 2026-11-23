@@ -204,12 +204,12 @@
         ldx #$001E
 
         _B320
-        lda $0F17,b,x
+        lda aProcSystem.aHeaderName,b,x
         cmp #$4F4E
         bne _B331
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$1000
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _B331
         dec x
@@ -218,9 +218,9 @@
         ldx #$000E
 
         _B338
-        lda $160F,b,x
+        lda aHDMASystem.aBitfield,b,x
         ora #$1000
-        sta $160F,b,x
+        sta aHDMASystem.aBitfield,b,x
         dec x
         dec x
         bpl _B338

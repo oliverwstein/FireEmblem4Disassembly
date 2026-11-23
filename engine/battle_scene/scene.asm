@@ -164,7 +164,7 @@
         jsl rlBattleSceneCopyExperience
         jsr rsBattleSceneResetState
         jsl rlBattleSceneSetHPBarY
-        jsl rlUnknown9682F8
+        jsl rlBattleSceneStopGauge
         jsr rsBattleSceneLoadBackground
         jsr rsBattleSceneLoadCombatantGraphics
         jsr rsBattleScenePlaceCombatants
@@ -172,12 +172,12 @@
         jsl rlBattleAnimationRunMoveQueue
         jsl rlUnknown968DBD
         jsl rlUnknown968E7E
-        jsl rlUnknown96C99E
+        jsl rlBattleSceneClearScriptRoutine
         jsl rlUnknown96D659
-        jsl rlUnknown959902
+        jsl rlBattleSceneLoadHUD
         jsl rlUnknown96D67B
-        jsl rlUnknown969A26
-        jsl rlUnknown969D01
+        jsl rlBattleSceneDimPalettesForType2
+        jsl rlBattleSceneBuildWhiteFadePalettes
         jsl rlUnknown969EBB
         rtl
 
@@ -271,7 +271,7 @@
 
         ; Clears the scene's flags and counters, points lBattleSceneRoundPointer at the first entry of aBattleRoundsData, and resets each engine.
 
-        stz $0CC7,b
+        stz wBattleSceneUploadTotal,b
         stz $0D3E,b
         lda #$0000
         sta bBattleSceneCameraXFraction
@@ -315,7 +315,7 @@
         sta bBattleSceneStep
         stz bBattleSceneRoundState,b
         stz bBattleSceneStrikeFlags,b
-        stz $0CC4,b
+        stz bBattleSceneUploadCount,b
         stz $0C45,b
         stz $0C78,b
         rep #$20
@@ -326,7 +326,7 @@
         jsl rlUnknown96984A
         jsl rlUnknown96994B
         jsl rlUnknown96F7BF
-        jsl rlUnknown969EF9
+        jsl rlBattleSceneStopHUDShake
         lda #$0202
         sta $7FE1F0
         lda #$1212
@@ -532,8 +532,8 @@
         jsl rlUnknown95C47A
         jsl rlUnknown96C8A1
         jsr rsUnknown959CF8
-        jsl rlUnknown969F1C
-        jsl rlUnknown9598E7
+        jsl rlBattleSceneRunHUDShake
+        jsl rlBattleSceneQueueHPUpload
 
         _8BEF
         lda $7FE1CF
@@ -1305,7 +1305,7 @@
         ; Once $7FE4B8 is 0, sets bBattleSceneStep to the 21 end steps and clears bit 3 of $7FE1B3.
 
         lda $7FE4B7
-        lda $7FE4B8
+        lda bBattleSceneScriptWaitCount
         and #$00FF
         bne _94A0
         sep #$20

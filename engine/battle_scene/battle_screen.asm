@@ -20,7 +20,7 @@
         lda #$80
         sta $2100,b
         rep #$20
-        jsl rlUnknown95C368
+        jsl rlBattleSceneRunUploads
         jsl rlUnknown969FD7
         jsl rlUnknown96D5DB
         jsl rlBattleSceneRunQueuedCopies

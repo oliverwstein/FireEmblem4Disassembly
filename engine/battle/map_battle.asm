@@ -7753,9 +7753,9 @@
         .databank ?
 
         phx
-        lda $7F45A8
+        lda aMapAction.wMapBattleDefenderSpriteSlot
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsl rlGetSoundPanFromXPixel
         ora #$002F
         jsl rlPlaySoundEffect2
@@ -7888,9 +7888,9 @@
         phy
         phx
         sta wR0
-        lda $7F45A4
+        lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsl rlGetSoundPanFromXPixel
         ora wR0
         jsl rlPlaySoundEffect2
@@ -7920,9 +7920,9 @@
         sta wR0
 
         _B461
-        lda $7F45A4
+        lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         jsl rlGetSoundPanFromXPixel
         ora wR0
         jsl rlPlaySoundEffect2
@@ -9935,11 +9935,11 @@
         .databank ?
 
         jsl rlUnknown85D347
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         jsl rlUnknown85D337
-        sta $0FF7,b,x
-        lda $0FD7,b,x
-        ora $0FF7,b,x
+        sta aProcSystem.aBody1,b,x
+        lda aProcSystem.aBody0,b,x
+        ora aProcSystem.aBody1,b,x
         sta $7F45A0
         rtl
 
@@ -11283,9 +11283,9 @@
         phy
         phx
         lda #(`aUnknown9EEA05)<<8
-        sta $7F4599
+        sta aMapAction.lUnknown7F4598+1
         lda #<>aUnknown9EEA05
-        sta $7F4598
+        sta aMapAction.lUnknown7F4598
         lda $7F57EE
         tax
         lda $7F57F0
@@ -11299,17 +11299,17 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F4BFF
         lda #$0000
-        sta $12C0,b,x
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         plx
         ply
         rtl
@@ -11340,17 +11340,17 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F4C01
         lda #$0000
-        sta $12C0,b,x
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         plx
         ply
         rtl
@@ -11369,13 +11369,13 @@
         phx
         lda $7F4C01
         tax
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda $7F4BFF
         tax
         lda #<>aUnknown9EEAA6
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #$0001
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         lda #$002D
         jsl rlUnknown9EB476
         plx
@@ -11455,9 +11455,9 @@
         phy
         phx
         lda #(`aUnknown9EEAD5)<<8
-        sta $7F4599
+        sta aMapAction.lUnknown7F4598+1
         lda #<>aUnknown9EEAD5
-        sta $7F4598
+        sta aMapAction.lUnknown7F4598
         lda $7F57EE
         tax
         lda $7F57F0
@@ -11471,17 +11471,17 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F4BFF
         lda #$0000
-        sta $12C0,b,x
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         plx
         ply
         rtl
@@ -11512,17 +11512,17 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F4C01
         lda #$0000
-        sta $12C0,b,x
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         plx
         ply
         rtl
@@ -11539,9 +11539,9 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown9EE4FC
         plx
         rtl
@@ -11563,9 +11563,9 @@
         jsl rlMoveActiveSpriteByVelocity
         lda $7F4BFF
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
         lda #$0001
         sta wR2
@@ -11575,9 +11575,9 @@
         bcc _E4FA
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _E4FA
         plx
@@ -11625,7 +11625,7 @@
         asl a
         lda wR0
         ror a
-        sta $13C0,b,x
+        sta aActiveSpriteSystem.aUnknown0013C0,b,x
         lda $7F57F0
         sec
         sbc wR1
@@ -11635,7 +11635,7 @@
         asl a
         lda wR0
         ror a
-        sta $13E0,b,x
+        sta aActiveSpriteSystem.aUnknown0013E0,b,x
         rtl
 
         .databank 0
@@ -11654,13 +11654,13 @@
         jsl rlUnknown9EE1F7
         lda $7F4C01
         tax
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda $7F4BFF
         tax
         lda #<>aUnknown9EEB2D
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #$0001
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         lda #$002C
         jsl rlUnknown9EB476
         plx
@@ -11795,9 +11795,9 @@
         phy
         phx
         lda #(`aUnknown9EEBB9)<<8
-        sta $7F4599
+        sta aMapAction.lUnknown7F4598+1
         lda #<>aUnknown9EEBB9
-        sta $7F4598
+        sta aMapAction.lUnknown7F4598
         lda $7F57EE
         tax
         lda $7F57F0
@@ -11811,17 +11811,17 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F4BFF
         lda #$0000
-        sta $12C0,b,x
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         plx
         ply
         rtl
@@ -11852,17 +11852,17 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F4C01
         lda #$0000
-        sta $12C0,b,x
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         plx
         ply
         rtl
@@ -11893,17 +11893,17 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F4C03
         lda #$0000
-        sta $12C0,b,x
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         plx
         ply
         rtl
@@ -11920,9 +11920,9 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         jsl rlUnknown9EE71E
         plx
         rtl
@@ -11973,9 +11973,9 @@
         jsl rlMoveActiveSpriteByVelocity
         lda $7F4BFF
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
         lda #$0001
         sta wR2
@@ -11987,9 +11987,9 @@
         jsl rlMoveActiveSpriteByVelocity
         lda $7F4BFF
         tax
-        lda $1200,b,x
+        lda aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
-        lda $1240,b,x
+        lda aActiveSpriteSystem.aUnknown001240,b,x
         sta wR1
         lda #$0001
         sta wR2
@@ -11999,9 +11999,9 @@
         bcc _E7A6
         lda #1,s
         tax
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _E7A6
         plx
@@ -12023,16 +12023,16 @@
         jsl rlUnknown9EE1F7
         lda $7F4C01
         tax
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda $7F4C03
         tax
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda $7F4BFF
         tax
         lda #<>aUnknown9EEC15
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #$0001
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         lda #$002C
         jsl rlUnknown9EB476
         plx
@@ -12149,9 +12149,9 @@
         phy
         phx
         lda #(`aUnknown9EEB4A)<<8
-        sta $7F4599
+        sta aMapAction.lUnknown7F4598+1
         lda #<>aUnknown9EEB4A
-        sta $7F4598
+        sta aMapAction.lUnknown7F4598
         lda $7F57EE
         tax
         lda $7F57F0
@@ -12165,17 +12165,17 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F4BFF
         lda #$0000
-        sta $12C0,b,x
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         plx
         ply
         rtl
@@ -12206,17 +12206,17 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F4C01
         lda #$0000
-        sta $12C0,b,x
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         plx
         ply
         rtl
@@ -12247,17 +12247,17 @@
         ldx wR0
         ldy wR1
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
-        ldx $10F9,b
+        ldx aActiveSpriteSystem.wOffset,b
         txa
         sta $7F4C03
         lda #$0000
-        sta $12C0,b,x
-        sta $1320,b,x
+        sta aActiveSpriteSystem.aUnknown0012C0,b,x
+        sta aActiveSpriteSystem.aUnknown001320,b,x
         lda #$0006
-        sta $12A0,b,x
+        sta aActiveSpriteSystem.aUnknown0012A0,b,x
         lda #$0000
-        sta $1260,b,x
-        sta $1280,b,x
+        sta aActiveSpriteSystem.aUnknown001260,b,x
+        sta aActiveSpriteSystem.aUnknown001280,b,x
         plx
         ply
         rtl
@@ -12278,16 +12278,16 @@
         jsl rlUnknown9EE1F7
         lda $7F4C01
         tax
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda $7F4C03
         tax
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
         lda $7F4BFF
         tax
         lda #<>aUnknown9EEBA5
-        sta $11A0,b,x
+        sta aActiveSpriteSystem.aCodeOffset,b,x
         lda #$0001
-        sta $1180,b,x
+        sta aActiveSpriteSystem.aFrameTimer,b,x
         lda #$002C
         jsl rlUnknown9EB476
         plx

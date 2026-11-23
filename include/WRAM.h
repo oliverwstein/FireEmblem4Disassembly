@@ -909,6 +909,47 @@
 
   .endvirtual
 
+  .virtual $7FE4B8
+
+    bBattleSceneScriptWaitCount .byte ? ; $7FE4B8 ; things a waiting script command still waits for; each counts it down when done
+
+  .endvirtual
+
+  .virtual $7FECFF
+
+    lBattleSceneScriptRoutine .long ? ; $7FECFF ; run every frame (script command 8); $FFFFFF none
+
+  .endvirtual
+
+  .virtual $7FED4B
+
+    ; The gauge: one number with an optional bar that counts toward a target,
+    ; used for the experience bar and the level up stats
+    ; (rlBattleSceneStartExperienceGauge, rlBattleSceneStartStatGauge).
+
+    wBattleSceneGaugeValue      .word ? ; $7FED4B ; 8.8: the high byte is the number shown
+    bBattleSceneGaugeMax        .byte ? ; $7FED4D ; the bar's length; $FF for 99
+    wBattleSceneGaugeSpeed      .word ? ; $7FED4E ; 8.8 added a frame; 0 stopped
+    wBattleSceneGaugeTarget     .word ? ; $7FED50
+    bBattleSceneGaugeDigits     .byte ? ; $7FED52
+    wBattleSceneGaugeOffset     .word ? ; $7FED53 ; where it is drawn in the tilemap at $7FC800
+    bBattleSceneGaugeUploadSize .byte ? ; $7FED55 ; bytes of the tilemap row queued for VRAM
+    wBattleSceneGaugeScale      .word ? ; $7FED56 ; the bar's pixels per point, 8.8; $FFFF no bar
+    wBattleSceneGaugeAttributes .word ? ; $7FED58 ; the bar's tile attributes
+
+  .endvirtual
+
+  .virtual $7FFC72
+
+    ; The HUD's scroll, written in the IRQ that splits the screen above the HUD.
+    bBattleSceneHUDShakeStep .byte ? ; $7FFC72 ; the next pair of aBattleSceneHUDShakeOffsets; $FF still
+    bBattleSceneHUDBG2X      .byte ? ; $7FFC73
+    bBattleSceneHUDBG2Y      .byte ? ; $7FFC74
+    bBattleSceneHUDBG3X      .byte ? ; $7FFC75
+    bBattleSceneHUDBG3Y      .byte ? ; $7FFC76
+
+  .endvirtual
+
   .virtual $7FFC56
 
     bBattleSceneFade      .byte ? ; $7FFC56 ; low nibble brightness, $40 fading out, $80 fading
@@ -1589,6 +1630,19 @@
 
   .endvirtual
 
+
+  .virtual $000CC4
+
+    ; Uploads to VRAM queued by rlBattleSceneQueueUpload and sent in VBlank by
+    ; rlBattleSceneRunUploads, at most wBattleSceneUploadBudget bytes a frame
+    ; (the title screen uses them too).
+    bBattleSceneUploadCount  .byte ? ; $000CC4 ; at most 16
+    wBattleSceneUploadBudget .word ? ; $000CC5 ; bytes left this VBlank ($0C00)
+    wBattleSceneUploadTotal  .word ? ; $000CC7 ; bytes queued
+    aBattleSceneUploads .dstruct structBattleSceneUpload ; $000CC9
+                        .fill 15 * size(structBattleSceneUpload)
+
+  .endvirtual
 
   .virtual $000CC2
 

@@ -19,7 +19,7 @@
         .autsiz
         .databank ?
 
-        ; The title screen's VBlank: the battle scene's VBlank helpers (rlUnknown95C368, rlUnknown96D5DB),
+        ; The title screen's VBlank: the battle scene's VBlank helpers (rlBattleSceneRunUploads, rlUnknown96D5DB),
         ; rlRunTitleVBlankRoutines, then DMA, OAM, HDMA, PPU registers, sound, input and the game state.
 
         php
@@ -27,7 +27,7 @@
         lda #$80
         sta $2100,b
         rep #$20
-        jsl rlUnknown95C368
+        jsl rlBattleSceneRunUploads
         jsl rlUnknown96D5DB
         jsl rlRunTitleVBlankRoutines
         jsl rlProcessDMAStructArray
@@ -627,7 +627,7 @@
         cmp $7FE18A
         bcc _F180
         lda $7FE18A
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         lda #$0000
         sta $7FE18A
         bra _F1A6
@@ -635,7 +635,7 @@
 
         _F180
         pha
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         lda $7FE18A
         sec
         sbc #1,s
@@ -1306,9 +1306,9 @@
         lda bTitleScreenFlags
         ora #$08
         sta bTitleScreenFlags
-        stz $0CC4,b
+        stz bBattleSceneUploadCount,b
         rep #$20
-        stz $0CC7,b
+        stz wBattleSceneUploadTotal,b
 
         _DCA0
         inc wGameStateRoutine1,b
@@ -1320,9 +1320,9 @@
         jsl rlTitleScreenSkipIntro
         jsl rlTitleScreenShowTitle
         sep #$20
-        stz $0CC4,b
+        stz bBattleSceneUploadCount,b
         rep #$20
-        stz $0CC7,b
+        stz wBattleSceneUploadTotal,b
         bra _DCA0
 
         .databank 0

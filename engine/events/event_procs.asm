@@ -334,28 +334,28 @@
         sta lR18+1
         lda lActiveEventPointer,b
         sta lR18
-        ldx $0ECA,b
+        ldx aProcSystem.wOffset,b
         ldy wActiveEventOffset,b
         lda [lR18],y
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         inc y
         inc y
         lda [lR18],y
-        sta $0FF7,b,x
+        sta aProcSystem.aBody1,b,x
         inc y
         inc y
         lda [lR18],y
-        sta $1057,b,x
+        sta aProcSystem.aBody4,b,x
         inc y
         inc y
         lda [lR18],y
-        sta $1077,b,x
+        sta aProcSystem.aBody5,b,x
         lda wBufferBG3HOFS
-        sta $1037,b,x
-        stz $1017,b,x
+        sta aProcSystem.aBody3,b,x
+        stz aProcSystem.aBody2,b,x
         lda wBufferBG3VOFS
-        sta $10B7,b,x
-        stz $1097,b,x
+        sta aProcSystem.aBody7,b,x
+        stz aProcSystem.aBody6,b,x
         rtl
 
         .databank 0
@@ -369,48 +369,48 @@
         .autsiz
         .databank ?
 
-        ldx $0ECA,b
-        lda $0FD7,b,x
+        ldx aProcSystem.wOffset,b
+        lda aProcSystem.aBody0,b,x
         clc
-        adc $1057,b,x
+        adc aProcSystem.aBody4,b,x
         bne _9106
         jsl rlEventEngineFreeProc
         rtl
 
 
         _9106
-        ldx $0ECA,b
-        lda $0FD7,b,x
+        ldx aProcSystem.wOffset,b
+        lda aProcSystem.aBody0,b,x
         beq _914D
-        lda $0FF7,b,x
+        lda aProcSystem.aBody1,b,x
         bmi _914F
         lda $0FF6,b,x
         and #$FF00
         clc
-        adc $1017,b,x
-        sta $1017,b,x
+        adc aProcSystem.aBody2,b,x
+        sta aProcSystem.aBody2,b,x
         bcc _9128
-        inc $1037,b,x
-        dec $0FD7,b,x
+        inc aProcSystem.aBody3,b,x
+        dec aProcSystem.aBody0,b,x
 
         _9128
         lda $0FF8,b,x
         and #$007F
         clc
-        adc $1037,b,x
-        sta $1037,b,x
+        adc aProcSystem.aBody3,b,x
+        sta aProcSystem.aBody3,b,x
         sta wBufferBG3HOFS
         lda $0FF8,b,x
         and #$007F
         sta wR0,x
-        lda $0FD7,b,x
+        lda aProcSystem.aBody0,b,x
         sec
         sbc wR0,x
         bcs _914A
         lda #$0000
 
         _914A
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _914D
         bra _9191
@@ -420,68 +420,68 @@
         lda $0FF6,b,x
         and #$FF00
         sta wR0,x
-        lda $1017,b,x
+        lda aProcSystem.aBody2,b,x
         sec
         sbc wR0,x
-        sta $1017,b,x
+        sta aProcSystem.aBody2,b,x
         bcs _9168
-        dec $1037,b,x
-        dec $0FD7,b,x
+        dec aProcSystem.aBody3,b,x
+        dec aProcSystem.aBody0,b,x
 
         _9168
         lda $0FF8,b,x
         and #$007F
         sta wR0,x
-        lda $1037,b,x
+        lda aProcSystem.aBody3,b,x
         sec
         sbc wR0,x
-        sta $1037,b,x
+        sta aProcSystem.aBody3,b,x
         sta wBufferBG3HOFS
         lda $0FF8,b,x
         and #$007F
         sta wR0,x
-        lda $0FD7,b,x
+        lda aProcSystem.aBody0,b,x
         sec
         sbc wR0,x
         bcs _918E
         lda #$0000
 
         _918E
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
 
         _9191
-        ldx $0ECA,b
-        lda $1057,b,x
+        ldx aProcSystem.wOffset,b
+        lda aProcSystem.aBody4,b,x
         beq _91D8
-        lda $1077,b,x
+        lda aProcSystem.aBody5,b,x
         bmi _91D9
         lda $1076,b,x
         and #$FF00
         clc
-        adc $1097,b,x
-        sta $1097,b,x
+        adc aProcSystem.aBody6,b,x
+        sta aProcSystem.aBody6,b,x
         bcc _91B3
-        inc $10B7,b,x
-        dec $1057,b,x
+        inc aProcSystem.aBody7,b,x
+        dec aProcSystem.aBody4,b,x
 
         _91B3
         lda $1078,b,x
         and #$007F
         clc
-        adc $10B7,b,x
-        sta $10B7,b,x
+        adc aProcSystem.aBody7,b,x
+        sta aProcSystem.aBody7,b,x
         sta wBufferBG3VOFS
         lda $1078,b,x
         and #$007F
         sta wR0,x
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sec
         sbc wR0,x
         bcs _91D5
         lda #$0000
 
         _91D5
-        sta $1057,b,x
+        sta aProcSystem.aBody4,b,x
 
         _91D8
         rtl
@@ -491,34 +491,34 @@
         lda $1076,b,x
         and #$FF00
         sta wR0,x
-        lda $1097,b,x
+        lda aProcSystem.aBody6,b,x
         sec
         sbc wR0,x
-        sta $1097,b,x
+        sta aProcSystem.aBody6,b,x
         bcs _91F2
-        dec $10B7,b,x
-        dec $1057,b,x
+        dec aProcSystem.aBody7,b,x
+        dec aProcSystem.aBody4,b,x
 
         _91F2
         lda $1078,b,x
         and #$007F
         sta wR0,x
-        lda $10B7,b,x
+        lda aProcSystem.aBody7,b,x
         sec
         sbc wR0,x
-        sta $10B7,b,x
+        sta aProcSystem.aBody7,b,x
         sta wBufferBG3VOFS
         lda $1078,b,x
         and #$007F
         sta wR0,x
-        lda $1057,b,x
+        lda aProcSystem.aBody4,b,x
         sec
         sbc wR0,x
         bcs _9218
         lda #$0000
 
         _9218
-        sta $1057,b,x
+        sta aProcSystem.aBody4,b,x
         rtl
 
         .databank 0

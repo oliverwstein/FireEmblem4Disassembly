@@ -106,9 +106,9 @@
       .al
       .xl
 
-      aUnknown969BE3 ; 96/9BE3
+      aBattleSceneGreenSteps ; 96/9BE3
 
-        ; Read by rlUnknown969B9C, rlUnknown969C63.
+        ; Read by rlBattleSceneBrightenColor, rlBattleSceneDarkenColor.
 
         .word $0000, $0020, $0040, $0060, $0080, $00A0, $00C0, $00E0
         .word $0100, $0120, $0140, $0160, $0180, $01A0, $01C0, $01E0
@@ -117,9 +117,9 @@
 
         ; 96/9C23
 
-      aUnknown969C23 ; 96/9C23
+      aBattleSceneBlueSteps ; 96/9C23
 
-        ; Read by rlUnknown969B9C, rlUnknown969C63.
+        ; Read by rlBattleSceneBrightenColor, rlBattleSceneDarkenColor.
 
         .word $0000, $0400, $0800, $0C00, $1000, $1400, $1800, $1C00
         .word $2000, $2400, $2800, $2C00, $3000, $3400, $3800, $3C00
@@ -183,8 +183,8 @@
         ; rlBattleSceneCommandSetRoutine). Entries 9-12 are empty.
 
         .long rlUnknown9685D9 ; $00
-        .long rlUnknown968360 ; $01
-        .long rlUnknown9686FC ; $02
+        .long rlBattleSceneStartExperienceFill ; $01
+        .long rlBattleSceneDrawLevelUpWindow ; $02
         .long rlUnknown968DC8 ; $03
         .long rlUnknown968E22 ; $04
         .long rlUnknown96CAA7 ; $05
@@ -195,7 +195,7 @@
         .long 0 ; $0A
         .long 0 ; $0B
         .long 0 ; $0C
-        .long rlUnknown96830D ; $0D
+        .long rlBattleSceneStartExperienceGauge ; $0D
         .long rlUnknown968F50 ; $0E
         .long rlUnknown96DCC8 ; $0F
         .long rlUnknown969163 ; $10
@@ -1638,9 +1638,9 @@
 
         ; 98/ACB8
 
-      aUnknown98ACB8 ; 98/ACB8
+      aBattleSceneGaugeEndTiles ; 98/ACB8
 
-        ; Read by rlUnknown959742.
+        ; Read by rlBattleSceneDrawGauge.
 
         .word $2123, $1A1E, $0F15, $0008
 
@@ -1814,9 +1814,9 @@
       .al
       .xl
 
-      aUnknown98B388 ; 98/B388
+      aBattleSceneWhiteFadeSteps ; 98/B388
 
-        ; Read by rlUnknown969D01.
+        ; Read by rlBattleSceneBuildWhiteFadePalettes.
 
         .word $0000, $000A, $0015, $0020, $002A, $0035, $0040, $004A
         .word $0055, $0060, $006A, $0075, $0080, $008A, $0095, $00A0
@@ -2251,17 +2251,20 @@
 
         ; 99/84C6
 
-      aUnknown9984C6 ; 99/84C6
+      aBattleSceneLevelUpGauges ; 99/84C6
 
-        ; Read by rlUnknown9686FC.
+        ; The level and the eight stats before the gains, as the level up window
+        ; first draws them (rlBattleSceneDrawLevelUpWindow).
 
-        .byte $4D, $0D, $00, $FF, $FF, $E4, $0C, $32, $02, $04, $00, $28, $F5, $4E, $7E, $5C
-        .byte $00, $D8, $0D, $50, $02, $0C, $00, $28, $F7, $4E, $7E, $F7, $00, $18, $0E, $1E
-        .byte $02, $0C, $00, $28, $F9, $4E, $7E, $F7, $00, $58, $0E, $1E, $02, $0C, $00, $28
-        .byte $FF, $4E, $7E, $F7, $00, $98, $0E, $1E, $02, $0C, $00, $28, $FB, $4E, $7E, $F7
-        .byte $00, $EE, $0D, $1E, $02, $0C, $00, $28, $FD, $4E, $7E, $F7, $00, $2E, $0E, $1E
-        .byte $02, $0C, $00, $28, $03, $4F, $7E, $F7, $00, $6E, $0E, $1E, $02, $0C, $00, $28
-        .byte $01, $4F, $7E, $F7, $00, $AE, $0E, $1E, $02, $0C, $00, $28
+        BATTLE_SCENE_GAUGE bBattleSceneLevel, $FFFF, $0CE4, $32, 2, $04, $2800
+        BATTLE_SCENE_GAUGE aActionStructUnit1.LevelUpData.HP, $005C, $0DD8, $50, 2, $0C, $2800
+        BATTLE_SCENE_GAUGE aActionStructUnit1.LevelUpData.Strength, $00F7, $0E18, $1E, 2, $0C, $2800
+        BATTLE_SCENE_GAUGE aActionStructUnit1.LevelUpData.Magic, $00F7, $0E58, $1E, 2, $0C, $2800
+        BATTLE_SCENE_GAUGE aActionStructUnit1.LevelUpData.Defense, $00F7, $0E98, $1E, 2, $0C, $2800
+        BATTLE_SCENE_GAUGE aActionStructUnit1.LevelUpData.Skill, $00F7, $0DEE, $1E, 2, $0C, $2800
+        BATTLE_SCENE_GAUGE aActionStructUnit1.LevelUpData.Speed, $00F7, $0E2E, $1E, 2, $0C, $2800
+        BATTLE_SCENE_GAUGE aActionStructUnit1.LevelUpData.Luck, $00F7, $0E6E, $1E, 2, $0C, $2800
+        BATTLE_SCENE_GAUGE aActionStructUnit1.LevelUpData.Resistance, $00F7, $0EAE, $1E, 2, $0C, $2800
 
         ; 99/8532
 
@@ -2321,16 +2324,18 @@
 
         ; 99/86CD
 
-      aUnknown9986CD ; 99/86CD
+      aBattleSceneLevelUpStatGauges ; 99/86CD
 
-        ; Read by rlUnknown969398.
+        ; The stats in the order a level up raises them (rlBattleSceneStartStatGauge).
 
-        .byte $F5, $4E, $7E, $05, $4F, $7E, $5C, $00, $D8, $0D, $50, $FB, $4E, $7E, $0B, $4F
-        .byte $7E, $F7, $00, $EE, $0D, $1E, $F7, $4E, $7E, $07, $4F, $7E, $F7, $00, $18, $0E
-        .byte $1E, $FD, $4E, $7E, $0D, $4F, $7E, $F7, $00, $2E, $0E, $1E, $F9, $4E, $7E, $09
-        .byte $4F, $7E, $F7, $00, $58, $0E, $1E, $03, $4F, $7E, $13, $4F, $7E, $F7, $00, $6E
-        .byte $0E, $1E, $FF, $4E, $7E, $0F, $4F, $7E, $F7, $00, $98, $0E, $1E, $01, $4F, $7E
-        .byte $11, $4F, $7E, $F7, $00, $AE, $0E, $1E
+        BATTLE_SCENE_STAT_GAUGE aActionStructUnit1.LevelUpData.HP, aActionStructUnit1.LevelUpData.HPGain, $005C, $0DD8, $50
+        BATTLE_SCENE_STAT_GAUGE aActionStructUnit1.LevelUpData.Skill, aActionStructUnit1.LevelUpData.SkillGain, $00F7, $0DEE, $1E
+        BATTLE_SCENE_STAT_GAUGE aActionStructUnit1.LevelUpData.Strength, aActionStructUnit1.LevelUpData.StrengthGain, $00F7, $0E18, $1E
+        BATTLE_SCENE_STAT_GAUGE aActionStructUnit1.LevelUpData.Speed, aActionStructUnit1.LevelUpData.SpeedGain, $00F7, $0E2E, $1E
+        BATTLE_SCENE_STAT_GAUGE aActionStructUnit1.LevelUpData.Magic, aActionStructUnit1.LevelUpData.MagicGain, $00F7, $0E58, $1E
+        BATTLE_SCENE_STAT_GAUGE aActionStructUnit1.LevelUpData.Luck, aActionStructUnit1.LevelUpData.LuckGain, $00F7, $0E6E, $1E
+        BATTLE_SCENE_STAT_GAUGE aActionStructUnit1.LevelUpData.Defense, aActionStructUnit1.LevelUpData.DefenseGain, $00F7, $0E98, $1E
+        BATTLE_SCENE_STAT_GAUGE aActionStructUnit1.LevelUpData.Resistance, aActionStructUnit1.LevelUpData.ResistanceGain, $00F7, $0EAE, $1E
 
         ; 99/8725
 
@@ -2359,9 +2364,9 @@
       .al
       .xl
 
-      aUnknown998944 ; 99/8944
+      aBattleSceneHUDColors ; 99/8944
 
-        ; Read by rsUnknown959B84 and rsUnknown959BC1 (22 bytes per entry).
+        ; Read by rsBattleSceneSetHUDColors1 and rsBattleSceneSetHUDColors2 (22 bytes per entry).
 
         .word $039C, $39D2, $3190, $2D6F, $294E, $252D, $1CC9, $0000, $18A8, $0003, $39D2
         .word $039C, $420F, $3DEE, $39CD, $35AC, $318B, $0C42, $0000, $1CE6, $0000, $420F
@@ -2645,9 +2650,9 @@
 
         ; 99/8F0F
 
-      aUnknown998F0F ; 99/8F0F
+      aBattleSceneHUDShakeOffsets ; 99/8F0F
 
-        ; Read by rlUnknown969F1C.
+        ; Read by rlBattleSceneRunHUDShake.
 
         .byte $02, $FF, $02, $FF, $FE, $00, $FE, $00, $00, $01, $00, $01, $00, $FF, $00, $FF
         .byte $02, $01, $FE, $FF, $FE, $FF, $02, $00, $FE, $01, $FE, $01, $01, $FF, $FF, $00
@@ -2686,7 +2691,7 @@
 
       aUnknownE00060 ; E0/0060
 
-        ; Read by rlUnknown9599E7.
+        ; Read by rlBattleSceneSetHUDColors.
 
         .word $4631, $318B, $7FFF, $1484, $4ACE, $1D64, $0CA0, $4ACE
         .word $0000, $3F80, $1CA2, $73FF, $0000, $35AC, $1508, $5F7B
@@ -2698,7 +2703,7 @@
 
       aUnknownE000B0 ; E0/00B0
 
-        ; Read by rlUnknown9686FC, rlUnknown968982, rlUnknown968A57, rlBattleSceneShowLevelUpBanner.
+        ; Read by rlBattleSceneDrawLevelUpWindow, rlUnknown968982, rlUnknown968A57, rlBattleSceneShowLevelUpBanner.
 
         .byte $C4, $09, $85, $00, $F6, $7F, $1F, $00, $03, $00, $BF, $7F, $CE, $4A, $A4, $14
         .byte $FF, $7F, $00, $04, $D3, $57, $AA, $3E

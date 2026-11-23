@@ -5855,9 +5855,9 @@
         phk
         plb
         .databank $88
-        lda $7E465B,x
+        lda aDeploymentTable._DeploymentOffsets,x
         tax
-        lda $7E480B,x
+        lda aDeploymentTable._MapSpriteID,x
         and #$8000
         beq _E024
         jsr rsUploadTallStandingMapSprite

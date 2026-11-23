@@ -399,17 +399,17 @@
         .databank ?
 
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda $7F57EE
         jsl rlProcEngineCheckProcEnded
         bcs _9CB7
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
         lda #$9BE0
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
 
         _9CB7
         plx
@@ -791,14 +791,14 @@
 
         phy
         phx
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
-        sta $0F37,b,x
-        lda $7E4EB7
+        sta aProcSystem.aHeaderBitfield,b,x
+        lda aActionStructUnit1.XPosition
         tax
-        lda $7E4EB9
+        lda aActionStructUnit1.YPosition
         tay
-        lda $7E4EBB
+        lda aActionStructUnit1.UnitRAMPointer
         jsl rlUnknown9E8D25
         lda wR1
         lsr a
@@ -813,11 +813,11 @@
         lsr a
         and #$00FF
         ora wR1
-        sta $0ECF,b
+        sta aProcSystem.wInput0,b
         lda #$1388
-        sta $0ED1,b
+        sta aProcSystem.wInput1,b
         lda #$01F4
-        sta $0ED3,b
+        sta aProcSystem.wInput2,b
         plx
         ply
         rtl
@@ -838,9 +838,9 @@
         phx
         cmp #$FFFF
         beq _9F23
-        lda $0F37,b,x
+        lda aProcSystem.aHeaderBitfield,b,x
         ora #$0004
-        sta $0F37,b,x
+        sta aProcSystem.aHeaderBitfield,b,x
 
         _9F23
         plx
@@ -1677,14 +1677,14 @@
         .databank ?
 
         phx
-        lda $7F45A4
+        lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        stz $1100,b,x
-        lda $7F45A6
+        stz aActiveSpriteSystem.aTypeOffset,b,x
+        lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         cmp #$FFFF
         beq _D428
         tax
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _D428
         plx
@@ -1841,7 +1841,7 @@
         phx
         jsl rlUnknown9ED72A
         lda #$D535
-        sta $0F57,b,x
+        sta aProcSystem.aHeaderOnCycle,b,x
         plx
         rtl
 
@@ -2183,14 +2183,14 @@
         .databank ?
 
         phx
-        lda $7F45A4
+        lda aMapAction.wMapBattleAttackerSpriteSlot
         tax
-        stz $1100,b,x
-        lda $7F45A6
+        stz aActiveSpriteSystem.aTypeOffset,b,x
+        lda aMapAction.wMapBattleAttackerAuxSpriteSlot
         cmp #$FFFF
         beq _D740
         tax
-        stz $1100,b,x
+        stz aActiveSpriteSystem.aTypeOffset,b,x
 
         _D740
         plx

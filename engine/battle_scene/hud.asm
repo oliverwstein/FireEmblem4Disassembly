@@ -1,6 +1,8 @@
 ; The battle scene's HUD: each combatant's HP (numbers and bar, changed by
-; rsBattleSceneUpdateHP1/2), the name and stat windows, and the experience bar
-; and level up windows. Much here is still Unknown.
+; rsBattleSceneUpdateHP1/2), the stats, names and faction banners
+; (rlBattleSceneLoadHUD), and the gauge that draws the experience bar and the
+; level up window (wBattleSceneGaugeValue...). Also the color helpers for battle
+; type 2 and the white fade, and the HUD's shake on a critical.
 
 
     .section Unsorted95938CSection
@@ -452,7 +454,7 @@
         lda #$000A
         sta wR14
         phx
-        jsl rlUnknown959C3E
+        jsl rlBattleSceneDivide
         plx
         pla
         lda wR10
@@ -485,12 +487,14 @@
       .al
       .xl
 
-      rlUnknown9595CA ; 95/95CA
+      rlBattleSceneDrawStat ; 95/95CA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws A as rlBattleSceneDrawNumber does (wR0 digits ending at X, attributes wR1), except that 255 or more is two dashes (tile $15A) and 100 the two tiles $15B-$15C.
 
         pha
         phx
@@ -556,7 +560,7 @@
         lda #$000A
         sta wR14
         phx
-        jsl rlUnknown959C3E
+        jsl rlBattleSceneDivide
         plx
         pla
         lda wR10
@@ -589,13 +593,15 @@
       .al
       .xl
 
-      rlUnknown959650 ; 95/9650
+      rlBattleSceneDrawTwoDigits ; 95/9650
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws A (under 100) at X: the tens as tile $40 + tens (blank under 10), then the ones as tile $4A + ones. Attributes wR1.
 
         pha
         phx
@@ -614,7 +620,7 @@
         lda #$000A
         sta wR14
         phx
-        jsl rlUnknown959C3E
+        jsl rlBattleSceneDivide
         plx
         lda wR13
         clc
@@ -644,12 +650,14 @@
       .al
       .xl
 
-      rlUnknown95968E ; 95/968E
+      rlBattleSceneDrawTallNumber ; 95/968E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws A as wR0 digits ending at X, each digit two tiles high (tile $22 + digit over $32 + digit); leading zeroes blank. The gauges draw their number so when they have no bar (the level).
 
         pha
         phx
@@ -691,7 +699,7 @@
         lda #$000A
         sta wR14
         phx
-        jsl rlUnknown959C3E
+        jsl rlBattleSceneDivide
         plx
         pla
         lda wR10
@@ -721,12 +729,14 @@
 
         ; 95/96EE
 
-      rlUnknown9596EE ; 95/96EE
+      rlBattleSceneDrawGaugeNumber ; 95/96EE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws A as wR0 digits ending at X with tiles $40 + digit; leading zeroes blank. The gauges with a bar draw their number so.
 
         pha
         phx
@@ -768,7 +778,7 @@
         lda #$000A
         sta wR14
         phx
-        jsl rlUnknown959C3E
+        jsl rlBattleSceneDivide
         plx
         pla
         lda wR10
@@ -793,12 +803,14 @@
 
         ; 95/9742
 
-      rlUnknown959742 ; 95/9742
+      rlBattleSceneDrawGauge ; 95/9742
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws a bar at X: wR0 filled out of wR1, both first scaled by wR2 / 256 (at least 1), in tiles of 8 pixels from attributes wR3. The first tile holds 6 pixels; aBattleSceneGaugeEndTiles gives the last tile by the pixels left.
 
         pha
         phx
@@ -893,7 +905,7 @@
         pha
         phx
         tax
-        lda aUnknown98ACB8,x
+        lda aBattleSceneGaugeEndTiles,x
         and #$00FF
         plx
         clc
@@ -960,7 +972,7 @@
         lda wR9
         cmp #$000A
         bcc _9831
-        lda aUnknown959890
+        lda aBattleSceneHPBarTiles
         and #$00FF
         clc
         adc wR3
@@ -1020,7 +1032,7 @@
 
 
         _987B
-        lda aUnknown959890,x
+        lda aBattleSceneHPBarTiles,x
         and #$00FF
         clc
         adc wR0
@@ -1046,7 +1058,7 @@
       .al
       .xl
 
-      aUnknown959890 ; 95/9890
+      aBattleSceneHPBarTiles ; 95/9890
 
         ; Read by rlBattleSceneDrawHPBar.
 
@@ -1062,12 +1074,14 @@
       .al
       .xl
 
-      rsUnknown959895 ; 95/9895
+      rsBattleSceneDrawStats ; 95/9895
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the ten numbers of aBattleSceneHUDStats (each combatant's HP, level, hit, might and defense) into the HUD's tilemap, three digits for 100 or more.
 
         pha
         phx
@@ -1113,7 +1127,7 @@
         dec x
 
         _98DA
-        jsl rlUnknown9595CA
+        jsl rlBattleSceneDrawStat
         plx
         pla
         dec a
@@ -1135,12 +1149,14 @@
       .al
       .xl
 
-      rlUnknown9598E7 ; 95/98E7
+      rlBattleSceneQueueHPUpload ; 95/98E7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame: queues the HUD's HP rows ($78 bytes from $7FD204) for VRAM $6D02 (rlBattleSceneQueueUpload).
 
         pha
         phx
@@ -1151,7 +1167,7 @@
         sta lR18
         ldy #$6D02
         lda #$0078
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         ply
         plx
         pla
@@ -1169,12 +1185,14 @@
       .al
       .xl
 
-      rlUnknown959902 ; 95/9902
+      rlBattleSceneLoadHUD ; 95/9902
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Decompresses the HUD's tiles (VRAM $FC00, $F400) and the names (rlBattleSceneLoadNames), the window tilemap ($7FC800, to VRAM $D000) and the HUD tilemap ($7FD0C0: stats, HP, colors, to VRAM $D8C0), then the faction banners.
 
         sep #$20
         rep #$10
@@ -1208,7 +1226,7 @@
 
           .structDMAToVRAM $7E8B88, $0400, $80, $F400
 
-        jsl rlUnknown9680C2
+        jsl rlBattleSceneLoadNames
         sep #$20
         rep #$10
         ldx #<>gcUnknownE03A1D
@@ -1226,7 +1244,7 @@
         lda #$C800
         sta lR18
         lda #$00FF
-        jsl rlUnknown959B49
+        jsl rlBattleSceneBlankMissingCombatant
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7FC800, $03C0, $80, $D000
@@ -1243,24 +1261,24 @@
         sta $CD
         jsl rlDecompressor
         rep #$30
-        jsr rsUnknown959895
+        jsr rsBattleSceneDrawStats
         lda #$7F00
         sta lR18+1
         lda #$D0C0
         sta lR18
         lda #$01FF
-        jsl rlUnknown959B49
+        jsl rlBattleSceneBlankMissingCombatant
         lda #$2940
         jsr rsBattleSceneDrawHP1
         lda #$2940
         jsr rsBattleSceneDrawHP2
-        jsl rlUnknown9599E7
-        jsl rlUnknown9699DD
+        jsl rlBattleSceneSetHUDColors
+        jsl rlBattleSceneRecolorHUDForType2
         jsl rlDMAByStruct
 
           .structDMAToVRAM $7FD0C0, $03C0, $80, $D8C0
 
-        jsr rsUnknown959A4D
+        jsr rsBattleSceneLoadBanners
         rtl
 
         .databank 0
@@ -1275,11 +1293,13 @@
       .al
       .xl
 
-      rlUnknown9599E7 ; 95/99E7
+      rlBattleSceneSetHUDColors ; 95/99E7
 
         .al
         .autsiz
         .databank ?
+
+        ; Redraws both HPs, copies the HUD's base colors (aUnknownE00060) to BG palette 0, then sets each combatant's HUD colors by its faction (rlGetFactionBattleHUDColorID; in battle type $FF the low byte of the unit pointer is the color ID).
 
         lda #$2940
         jsr rsBattleSceneDrawHP1
@@ -1312,7 +1332,7 @@
         jsl rlGetFactionBattleHUDColorID
 
         +
-        jsr rsUnknown959B84
+        jsr rsBattleSceneSetHUDColors1
 
         lda wBattleType
         and #$00FF
@@ -1329,16 +1349,18 @@
         jsl rlGetFactionBattleHUDColorID
         
         +
-        jsr rsUnknown959BC1
+        jsr rsBattleSceneSetHUDColors2
         rtl
 
         .databank 0
 
-      rsUnknown959A4D ; 95/9A4D
+      rsBattleSceneLoadBanners ; 95/9A4D
 
         .al
         .autsiz
         .databank ?
+
+        ; Decompresses each combatant's faction banner (aBattleBannerTable by rlGetFactionBattleBannerID; in battle type $FF the X position is the banner ID) to $7FC200 and $7FC000, copies its 7 colors to $01D2 and $01F2, and sends the banners to VRAM $F000.
 
         sep #$20
         rep #$10
@@ -1478,12 +1500,14 @@
       .al
       .xl
 
-      rlUnknown959B49 ; 95/9B49
+      rlBattleSceneBlankMissingCombatant ; 95/9B49
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When a combatant has no character (0), fills its half of the tilemap at lR18 (10 rows of 16 tiles; combatant 1 the right half) with A.
 
         phx
         phy
@@ -1545,11 +1569,13 @@
       .al
       .xl
 
-      rsUnknown959B84 ; 95/9B84
+      rsBattleSceneSetHUDColors1 ; 95/9B84
 
         .al
         .autsiz
         .databank ?
+
+        ; A = HUD color ID: copies its entry of aBattleSceneHUDColors (8 colors to $01C2, 3 to $011A) for combatant 1.
 
         phx
         phy
@@ -1571,7 +1597,7 @@
         ldy #0
 
           -
-          lda aUnknown998944,x
+          lda aBattleSceneHUDColors,x
           sta $01C2,b,y
           inc x
           inc x
@@ -1583,7 +1609,7 @@
         ldy #0
         
           -
-          lda aUnknown998944,x
+          lda aBattleSceneHUDColors,x
           sta $011A,b,y
           inc x
           inc x
@@ -1608,12 +1634,14 @@
       .al
       .xl
 
-      rsUnknown959BC1 ; 95/9BC1
+      rsBattleSceneSetHUDColors2 ; 95/9BC1
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The same for combatant 2 ($01E2, $010A).
 
         phx
         phy
@@ -1634,7 +1662,7 @@
         ldy #$0000
 
         _9BD8
-        lda aUnknown998944,x
+        lda aBattleSceneHUDColors,x
         sta $01E2,b,y
         inc x
         inc x
@@ -1645,7 +1673,7 @@
         ldy #$0000
 
         _9BEB
-        lda aUnknown998944,x
+        lda aBattleSceneHUDColors,x
         sta $010A,b,y
         inc x
         inc x
@@ -1677,10 +1705,12 @@
         .autsiz
         .databank ?
 
+        ; Sets bit 3 of bBattleSceneRoundState and $7FED5A to 60.
+
         pha
         sep #$20
         lda bBattleSceneRoundState,b
-        ora #$08
+        ora #BattleSceneRoundHeld
         sta bBattleSceneRoundState,b
         rep #$20
         lda #$003C
@@ -1698,12 +1728,14 @@
       .al
       .xl
 
-      rlUnknown959C3E ; 95/9C3E
+      rlBattleSceneDivide ; 95/9C3E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wR13 / wR14 (a byte) with the hardware divider: the quotient in wR13, the remainder in wR10.
 
         php
         pha
@@ -1742,28 +1774,32 @@
       .al
       .xl
 
-      rlUnknown9680C2 ; 96/80C2
+      rlBattleSceneLoadNames ; 96/80C2
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsr rsUnknown9680CC
-        jsr rsUnknown9680F7
-        jsr rsUnknown9680E9
+        ; Loads the name font, draws the combatants' names and weapons into tiles and sends them to VRAM $F800.
+
+        jsr rsBattleSceneLoadNameFont
+        jsr rsBattleSceneRenderNames
+        jsr rsBattleSceneUploadNames
         rtl
 
         .databank 0
 
         ; 96/80CC
 
-      rsUnknown9680CC ; 96/80CC
+      rsBattleSceneLoadNameFont ; 96/80CC
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Decompresses the font (gcUnknownC00A2B) to $7E8B88.
 
         sep #$20
         rep #$10
@@ -1783,12 +1819,14 @@
 
         ; 96/80E9
 
-      rsUnknown9680E9 ; 96/80E9
+      rsBattleSceneUploadNames ; 96/80E9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sends the name tiles ($7EAC88) to VRAM $F800.
 
         jsl rlDMAByStruct
 
@@ -1800,12 +1838,14 @@
 
         ; 96/80F7
 
-      rsUnknown9680F7 ; 96/80F7
+      rsBattleSceneRenderNames ; 96/80F7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws each combatant's name and weapon name (8 characters, two 2bpp tile rows each) into $7EAC88: combatant 2's right-aligned at $000 (weapon) and $100 (name), combatant 1's left-aligned at $200 and $300. No weapon ($FFFF) is blank; a combatant with no character is skipped.
 
         phx
         phy
@@ -1814,20 +1854,20 @@
         beq _8128
         ldx #$0100
         jsl rlGetCharacterNamePointer
-        jsr rsUnknown96815A
-        jsr rsUnknown968179
+        jsr rsBattleSceneGetTextLength
+        jsr rsBattleSceneDrawNameRight
         lda aBattleSceneCombatant2.Weapon,b
         ldx #$0000
         cmp #$FFFF
         bne _811E
-        jsr rsUnknown9682E8
+        jsr rsBattleSceneBlankWeaponName
         bra _8128
 
 
         _811E
         jsl rlGetItemNamePointerByItemID
-        jsr rsUnknown96815A
-        jsr rsUnknown9681B3
+        jsr rsBattleSceneGetTextLength
+        jsr rsBattleSceneDrawWeaponNameRight
 
         _8128
         lda aBattleSceneCombatant1.Character,b
@@ -1835,20 +1875,20 @@
         beq _8157
         ldx #$0300
         jsl rlGetCharacterNamePointer
-        jsr rsUnknown96815A
-        jsr rsUnknown968196
+        jsr rsBattleSceneGetTextLength
+        jsr rsBattleSceneDrawNameLeft
         lda aBattleSceneCombatant1.Weapon,b
         ldx #$0200
         cmp #$FFFF
         bne _814D
-        jsr rsUnknown9682E8
+        jsr rsBattleSceneBlankWeaponName
         bra _8157
 
 
         _814D
         jsl rlGetItemNamePointerByItemID
-        jsr rsUnknown96815A
-        jsr rsUnknown9681D0
+        jsr rsBattleSceneGetTextLength
+        jsr rsBattleSceneDrawWeaponNameLeft
 
         _8157
         ply
@@ -1859,12 +1899,14 @@
 
         ; 96/815A
 
-      rsUnknown96815A ; 96/815A
+      rsBattleSceneGetTextLength ; 96/815A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Points lR18 at the text in lRoutineVariable and returns its length in characters (at most 8) in wR0.
 
         phy
         lda lRoutineVariable,b
@@ -1892,12 +1934,14 @@
 
         ; 96/8179
 
-      rsUnknown968179 ; 96/8179
+      rsBattleSceneDrawNameRight ; 96/8179
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the name at lR18 right-aligned in 8 characters at X.
 
         pha
         lda #$0008
@@ -1907,7 +1951,7 @@
 
         _8182
         pha
-        jsr rsUnknown9682CD
+        jsr rsBattleSceneDrawBlankCharacter
         pla
         dec a
         bne _8182
@@ -1917,7 +1961,7 @@
 
         _818C
         pha
-        jsr rsUnknown9681ED
+        jsr rsBattleSceneDrawNameCharacter
         pla
         dec a
         bne _818C
@@ -1928,19 +1972,21 @@
 
         ; 96/8196
 
-      rsUnknown968196 ; 96/8196
+      rsBattleSceneDrawNameLeft ; 96/8196
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Draws the name at lR18 left-aligned in 8 characters at X.
+
         pha
         lda wR0
 
         _8199
         pha
-        jsr rsUnknown9681ED
+        jsr rsBattleSceneDrawNameCharacter
         pla
         dec a
         bne _8199
@@ -1951,7 +1997,7 @@
 
         _81A9
         pha
-        jsr rsUnknown9682CD
+        jsr rsBattleSceneDrawBlankCharacter
         pla
         dec a
         bne _81A9
@@ -1964,12 +2010,14 @@
 
         ; 96/81B3
 
-      rsUnknown9681B3 ; 96/81B3
+      rsBattleSceneDrawWeaponNameRight ; 96/81B3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the weapon name at lR18 right-aligned in 8 characters at X.
 
         pha
         lda #$0008
@@ -1979,7 +2027,7 @@
 
         _81BC
         pha
-        jsr rsUnknown9682CD
+        jsr rsBattleSceneDrawBlankCharacter
         pla
         dec a
         bne _81BC
@@ -1989,7 +2037,7 @@
 
         _81C6
         pha
-        jsr rsUnknown96824C
+        jsr rsBattleSceneDrawWeaponNameCharacter
         pla
         dec a
         bne _81C6
@@ -2000,19 +2048,21 @@
 
         ; 96/81D0
 
-      rsUnknown9681D0 ; 96/81D0
+      rsBattleSceneDrawWeaponNameLeft ; 96/81D0
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Draws the weapon name at lR18 left-aligned in 8 characters at X.
+
         pha
         lda wR0
 
         _81D3
         pha
-        jsr rsUnknown96824C
+        jsr rsBattleSceneDrawWeaponNameCharacter
         pla
         dec a
         bne _81D3
@@ -2023,7 +2073,7 @@
 
         _81E3
         pha
-        jsr rsUnknown9682CD
+        jsr rsBattleSceneDrawBlankCharacter
         pla
         dec a
         bne _81E3
@@ -2036,12 +2086,14 @@
 
         ; 96/81ED
 
-      rsUnknown9681ED ; 96/81ED
+      rsBattleSceneDrawNameCharacter ; 96/81ED
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Draws the character at lR18 (its two font tiles from rlUnknown879DD1) into the name tiles at X, top half and bottom half, and steps lR18 and X.
 
         pha
         phy
@@ -2106,12 +2158,14 @@
 
         ; 96/824C
 
-      rsUnknown96824C ; 96/824C
+      rsBattleSceneDrawWeaponNameCharacter ; 96/824C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; As rsBattleSceneDrawNameCharacter, but 2 pixels higher (the font tiles' first two rows are skipped).
 
         pha
         phy
@@ -2188,12 +2242,14 @@
 
         ; 96/82CD
 
-      rsUnknown9682CD ; 96/82CD
+      rsBattleSceneDrawBlankCharacter ; 96/82CD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears one character of the name tiles at X (both halves) and steps X.
 
         pha
         phy
@@ -2216,12 +2272,14 @@
 
         ; 96/82E8
 
-      rsUnknown9682E8 ; 96/82E8
+      rsBattleSceneBlankWeaponName ; 96/82E8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears 8 characters at X.
 
         pha
         phx
@@ -2229,7 +2287,7 @@
         lda #$0008
 
         _82EE
-        jsr rsUnknown9682CD
+        jsr rsBattleSceneDrawBlankCharacter
         dec a
         bne _82EE
         ply
@@ -2241,15 +2299,17 @@
 
         ; 96/82F8
 
-      rlUnknown9682F8 ; 96/82F8
+      rlBattleSceneStopGauge ; 96/82F8
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Clears the gauge's speed (wBattleSceneGaugeSpeed).
+
         lda #$0000
-        sta $7FED4E
+        sta wBattleSceneGaugeSpeed
         rtl
 
         .databank 0
@@ -2277,7 +2337,7 @@
 
         ; 96/830D
 
-      rlUnknown96830D ; 96/830D
+      rlBattleSceneStartExperienceGauge ; 96/830D
 
         ; Found through fe4.cdl.
         .al
@@ -2285,40 +2345,42 @@
         .autsiz
         .databank ?
 
+        ; Script routine 13: sets up the gauge for the experience bar (from wBattleSceneExperience to it plus wBattleSceneExperienceGained, 99 at most) and draws it.
+
         lda wBattleSceneExperience,b
         and #$00FF
         xba
-        sta $7FED4B
+        sta wBattleSceneGaugeValue
         lda wBattleSceneExperienceGained,b
         sta wR0
         jsl rlBattleSceneGetHPSpeed
-        sta $7FED4E
+        sta wBattleSceneGaugeSpeed
         lda wBattleSceneExperience,b
         clc
         adc wBattleSceneExperienceGained,b
-        sta $7FED50
+        sta wBattleSceneGaugeTarget
         lda #$0191
-        sta $7FED56
+        sta wBattleSceneGaugeScale
         lda #$3000
-        sta $7FED58
+        sta wBattleSceneGaugeAttributes
         lda #$0BCE
-        sta $7FED53
+        sta wBattleSceneGaugeOffset
         sep #$20
         lda #$FF
-        sta $7FED4D
+        sta bBattleSceneGaugeMax
         lda #$02
-        sta $7FED52
+        sta bBattleSceneGaugeDigits
         lda #$2C
-        sta $7FED55
+        sta bBattleSceneGaugeUploadSize
         rep #$20
-        jsl rlUnknown9684AF
+        jsl rlBattleSceneDrawExperienceGauge
         rtl
 
         .databank 0
 
         ; 96/8360
 
-      rlUnknown968360 ; 96/8360
+      rlBattleSceneStartExperienceFill ; 96/8360
 
         ; Found through fe4.cdl.
         .al
@@ -2326,19 +2388,21 @@
         .autsiz
         .databank ?
 
+        ; Script routine 1: plays sound $0B and sets rlBattleSceneRunExperienceFill as the routine run every frame.
+
         lda #$000B
         jsl rlPlaySoundEffect
-        lda #(`rlUnknown968376)<<8
-        sta $7FED00
-        lda #<>rlUnknown968376
-        sta $7FECFF
+        lda #(`rlBattleSceneRunExperienceFill)<<8
+        sta lBattleSceneScriptRoutine+1
+        lda #<>rlBattleSceneRunExperienceFill
+        sta lBattleSceneScriptRoutine
         rtl
 
         .databank 0
 
         ; 96/8376
 
-      rlUnknown968376 ; 96/8376
+      rlBattleSceneRunExperienceFill ; 96/8376
 
         ; Found through fe4.cdl.
         .al
@@ -2346,43 +2410,45 @@
         .autsiz
         .databank ?
 
+        ; Every frame: moves the gauge toward its target and redraws the experience bar; past 100 it starts again from 0. When it stops, plays sound $0C and ends the routine (rlBattleSceneEndScriptRoutine).
+
         phx
         phy
-        lda $7FED4E
+        lda wBattleSceneGaugeSpeed
         bne _838D
         lda #$000C
         jsl rlPlaySoundEffect
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         jml _8415
 
 
         _838D
-        lda $7FED4B
+        lda wBattleSceneGaugeValue
         clc
-        adc $7FED4E
+        adc wBattleSceneGaugeSpeed
         bcc _83A2
-        lda $7FED4D
+        lda bBattleSceneGaugeMax
         and #$00FF
         xba
         bra _83CA
 
 
         _83A2
-        sta $7FED4B
+        sta wBattleSceneGaugeValue
         xba
         sep #$20
-        cmp $7FED4D
+        cmp bBattleSceneGaugeMax
         bcc _83B8
-        lda $7FED4D
+        lda bBattleSceneGaugeMax
         xba
         lda #$00
         bra _83CA
 
 
         _83B8
-        cmp $7FED50
+        cmp wBattleSceneGaugeTarget
         bcc _83C7
-        lda $7FED50
+        lda wBattleSceneGaugeTarget
         xba
         lda #$00
         bra _83CA
@@ -2400,17 +2466,17 @@
         sec
         sbc #$6400
         pha
-        lda $7FED50
+        lda wBattleSceneGaugeTarget
         sec
         sbc #$0064
-        sta $7FED50
+        sta wBattleSceneGaugeTarget
         pla
 
         _83E3
-        sta $7FED4B
-        jsl rlUnknown9684AF
+        sta wBattleSceneGaugeValue
+        jsl rlBattleSceneDrawExperienceGauge
         lda #$0000
-        sta $7FED4E
+        sta wBattleSceneGaugeSpeed
         bra _8415
 
 
@@ -2422,15 +2488,15 @@
         sec
         sbc #$6400
         pha
-        lda $7FED50
+        lda wBattleSceneGaugeTarget
         sec
         sbc #$0064
-        sta $7FED50
+        sta wBattleSceneGaugeTarget
         pla
 
         _840D
-        sta $7FED4B
-        jsl rlUnknown9684AF
+        sta wBattleSceneGaugeValue
+        jsl rlBattleSceneDrawExperienceGauge
 
         _8415
         ply
@@ -2441,47 +2507,49 @@
 
         ; 96/8418
 
-      rlUnknown968418 ; 96/8418
+      rlBattleSceneRunStatGauge ; 96/8418
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Every frame: moves the gauge toward its target and redraws it as a level up stat (rlBattleSceneDrawStatGauge).
+
         phx
         phy
-        lda $7FED4E
+        lda wBattleSceneGaugeSpeed
         bne _8424
         jml _84AC
 
 
         _8424
-        lda $7FED4B
+        lda wBattleSceneGaugeValue
         clc
-        adc $7FED4E
+        adc wBattleSceneGaugeSpeed
         bcc _8439
-        lda $7FED4D
+        lda bBattleSceneGaugeMax
         and #$00FF
         xba
         bra _8461
 
 
         _8439
-        sta $7FED4B
+        sta wBattleSceneGaugeValue
         xba
         sep #$20
-        cmp $7FED4D
+        cmp bBattleSceneGaugeMax
         bcc _844F
-        lda $7FED4D
+        lda bBattleSceneGaugeMax
         xba
         lda #$00
         bra _8461
 
 
         _844F
-        cmp $7FED50
+        cmp wBattleSceneGaugeTarget
         bcc _845E
-        lda $7FED50
+        lda wBattleSceneGaugeTarget
         xba
         lda #$00
         bra _8461
@@ -2499,17 +2567,17 @@
         sec
         sbc #$6400
         pha
-        lda $7FED50
+        lda wBattleSceneGaugeTarget
         sec
         sbc #$0064
-        sta $7FED50
+        sta wBattleSceneGaugeTarget
         pla
 
         _847A
-        sta $7FED4B
-        jsl rlUnknown968530
+        sta wBattleSceneGaugeValue
+        jsl rlBattleSceneDrawStatGauge
         lda #$0000
-        sta $7FED4E
+        sta wBattleSceneGaugeSpeed
         bra _84AC
 
 
@@ -2521,15 +2589,15 @@
         sec
         sbc #$6400
         pha
-        lda $7FED50
+        lda wBattleSceneGaugeTarget
         sec
         sbc #$0064
-        sta $7FED50
+        sta wBattleSceneGaugeTarget
         pla
 
         _84A4
-        sta $7FED4B
-        jsl rlUnknown968530
+        sta wBattleSceneGaugeValue
+        jsl rlBattleSceneDrawStatGauge
 
         _84AC
         ply
@@ -2540,28 +2608,30 @@
 
         ; 96/84AF
 
-      rlUnknown9684AF ; 96/84AF
+      rlBattleSceneDrawExperienceGauge ; 96/84AF
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $7FED52
+        ; Draws the gauge as the experience bar: the number, then the bar, and queues the tilemap row for VRAM.
+
+        lda bBattleSceneGaugeDigits
         and #$00FF
         sta wR0
         lda #$2C00
         sta wR1
-        lda $7FED53
+        lda wBattleSceneGaugeOffset
         tax
-        lda $7FED4B
+        lda wBattleSceneGaugeValue
         xba
         and #$00FF
         jsl rlBattleSceneDrawNumber
-        lda $7FED4C
+        lda wBattleSceneGaugeValue+1
         and #$00FF
         sta wR0
-        lda $7FED4D
+        lda bBattleSceneGaugeMax
         and #$00FF
         cmp #$00FF
         bne _84E6
@@ -2569,119 +2639,121 @@
 
         _84E6
         sta wR1
-        lda $7FED56
+        lda wBattleSceneGaugeScale
         cmp #$FFFF
         beq _850B
         sta wR2
-        lda $7FED58
+        lda wBattleSceneGaugeAttributes
         sta wR3
-        lda $7FED52
+        lda bBattleSceneGaugeDigits
         and #$00FF
         asl a
         clc
-        adc $7FED53
+        adc wBattleSceneGaugeOffset
         tax
-        jsl rlUnknown959742
+        jsl rlBattleSceneDrawGauge
 
         _850B
         lda #$7F00
         sta lR18+1
-        lda $7FED53
+        lda wBattleSceneGaugeOffset
         clc
         adc #$C800
         sta lR18
-        lda $7FED53
+        lda wBattleSceneGaugeOffset
         lsr a
         clc
         adc #$6800
         tay
-        lda $7FED55
+        lda bBattleSceneGaugeUploadSize
         and #$00FF
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         rtl
 
         .databank 0
 
         ; 96/8530
 
-      rlUnknown968530 ; 96/8530
+      rlBattleSceneDrawStatGauge ; 96/8530
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $7FED4C
+        ; Draws the gauge as a level up stat: the bar, then the number (tall when it has no bar), and queues both tilemap rows for VRAM.
+
+        lda wBattleSceneGaugeValue+1
         and #$00FF
         sta wR0
-        lda $7FED4D
+        lda bBattleSceneGaugeMax
         and #$00FF
         sta wR1
-        lda $7FED56
+        lda wBattleSceneGaugeScale
         cmp #$FFFF
         beq _855B
         sta wR2
         lda #$2400
         sta wR3
-        lda $7FED53
+        lda wBattleSceneGaugeOffset
         tax
-        jsl rlUnknown959742
+        jsl rlBattleSceneDrawGauge
 
         _855B
-        lda $7FED52
+        lda bBattleSceneGaugeDigits
         and #$00FF
         sta wR0
         lda #$2000
         sta wR1
-        lda $7FED53
+        lda wBattleSceneGaugeOffset
         clc
         adc #$F9C8
         tax
-        lda $7FED4B
+        lda wBattleSceneGaugeValue
         xba
         and #$00FF
         pha
-        lda $7FED56
+        lda wBattleSceneGaugeScale
         cmp #$FFFF
         beq _858B
         pla
-        jsl rlUnknown9596EE
+        jsl rlBattleSceneDrawGaugeNumber
         bra _8590
 
 
         _858B
         pla
-        jsl rlUnknown95968E
+        jsl rlBattleSceneDrawTallNumber
 
         _8590
         lda #$7F00
         sta lR18+1
-        lda $7FED53
+        lda wBattleSceneGaugeOffset
         clc
         adc #$C1C0
         sta lR18
-        lda $7FED53
+        lda wBattleSceneGaugeOffset
         lsr a
         clc
         adc #$64E0
         tay
-        lda $7FED55
+        lda bBattleSceneGaugeUploadSize
         and #$00FF
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         lda #$7F00
         sta lR18+1
-        lda $7FED53
+        lda wBattleSceneGaugeOffset
         clc
         adc #$C800
         sta lR18
-        lda $7FED53
+        lda wBattleSceneGaugeOffset
         lsr a
         clc
         adc #$6800
         tay
-        lda $7FED55
+        lda bBattleSceneGaugeUploadSize
         and #$00FF
-        jsl rlUnknown95C43E
+        jsl rlBattleSceneQueueUpload
         rtl
 
         .databank 0
@@ -2695,6 +2767,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; Script routine 0: sets bytes of the effect variables at $7FE4C2.. and points $7FE4D2 at the word list at $98/AD7E, then sets rlUnknown96861E as the routine run every frame.
 
         sep #$20
         lda #$9C
@@ -2715,9 +2789,9 @@
         lda #$AD7E
         sta $7FE4D2
         lda #(`rlUnknown96861E)<<8
-        sta $7FED00
+        sta lBattleSceneScriptRoutine+1
         lda #<>rlUnknown96861E
-        sta $7FECFF
+        sta lBattleSceneScriptRoutine
         rtl
 
         .databank 0
@@ -2732,6 +2806,8 @@
         .autsiz
         .databank ?
 
+        ; Every frame: takes the next word of the list at $7FE4D2 into $7FE4C5/$7FE4CB and copies its bytes of aUnknown98AC4C to $7FE3FD.. (rlUnknown9695AE); at $FFFF ends the routine.
+
         phy
         lda $7FE4D2
         sta lR18
@@ -2741,7 +2817,7 @@
         lda [lR18],y
         cmp #$FFFF
         bne _863B
-        jsl rlUnknown96C9FE
+        jsl rlBattleSceneEndScriptRoutine
         bra _865A
 
 
@@ -2885,13 +2961,15 @@
 
         ; 96/86FC
 
-      rlUnknown9686FC ; 96/86FC
+      rlBattleSceneDrawLevelUpWindow ; 96/86FC
 
         ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Script routine 2: sets the window's colors and draws the nine gauges of aBattleSceneLevelUpGauges (level and the eight stats before the gains).
 
         sep #$20
         lda #$02
@@ -2912,43 +2990,43 @@
         ldx #$0000
 
         _8724
-        lda aUnknown9984C6,x
+        lda aBattleSceneLevelUpGauges,x
         sta lR18
-        lda aUnknown9984C6+1,x
+        lda aBattleSceneLevelUpGauges+1,x
         sta lR18+1
         ldy #$0000
         lda [lR18],y
         and #$00FF
         xba
-        sta $7FED4B
+        sta wBattleSceneGaugeValue
         inc x
         inc x
         inc x
-        lda aUnknown9984C6,x
-        sta $7FED56
+        lda aBattleSceneLevelUpGauges,x
+        sta wBattleSceneGaugeScale
         inc x
         inc x
-        lda aUnknown9984C6,x
-        sta $7FED53
+        lda aBattleSceneLevelUpGauges,x
+        sta wBattleSceneGaugeOffset
         inc x
         inc x
         sep #$20
-        lda aUnknown9984C6,x
-        sta $7FED4D
+        lda aBattleSceneLevelUpGauges,x
+        sta bBattleSceneGaugeMax
         inc x
-        lda aUnknown9984C6,x
-        sta $7FED52
+        lda aBattleSceneLevelUpGauges,x
+        sta bBattleSceneGaugeDigits
         inc x
-        lda aUnknown9984C6,x
-        sta $7FED55
+        lda aBattleSceneLevelUpGauges,x
+        sta bBattleSceneGaugeUploadSize
         inc x
         rep #$20
-        lda aUnknown9984C6,x
-        sta $7FED58
+        lda aBattleSceneLevelUpGauges,x
+        sta wBattleSceneGaugeAttributes
         inc x
         inc x
         phx
-        jsl rlUnknown968530
+        jsl rlBattleSceneDrawStatGauge
         plx
         cpx #$006C
         bcc _8724
@@ -2966,6 +3044,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; Script routine 61: sets wMusicID to $40 when the scene returns to the map in mode 3 (after Julius), $3F in the arena (battle type 1), else $39. The songs are not named.
 
         lda wBattleSceneFlags
         bit #BattleSceneFlagToMapMode3
@@ -3002,7 +3082,7 @@
       .al
       .xl
 
-      rlUnknown9687B3 ; 96/87B3
+      rlBattleSceneRedrawLevelUpGauges ; 96/87B3
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
@@ -3010,48 +3090,50 @@
         .autsiz
         .databank ?
 
+        ; Draws the nine gauges of aBattleSceneLevelUpGauges, as rlBattleSceneDrawLevelUpWindow does without the colors.
+
         phx
         phy
         ldx #$0000
 
         _87B8
-        lda aUnknown9984C6,x
+        lda aBattleSceneLevelUpGauges,x
         sta lR18
-        lda aUnknown9984C6+1,x
+        lda aBattleSceneLevelUpGauges+1,x
         sta lR18+1
         ldy #$0000
         lda [lR18],y
         and #$00FF
         xba
-        sta $7FED4B
+        sta wBattleSceneGaugeValue
         inc x
         inc x
         inc x
-        lda aUnknown9984C6,x
-        sta $7FED56
+        lda aBattleSceneLevelUpGauges,x
+        sta wBattleSceneGaugeScale
         inc x
         inc x
-        lda aUnknown9984C6,x
-        sta $7FED53
+        lda aBattleSceneLevelUpGauges,x
+        sta wBattleSceneGaugeOffset
         inc x
         inc x
         sep #$20
-        lda aUnknown9984C6,x
-        sta $7FED4D
+        lda aBattleSceneLevelUpGauges,x
+        sta bBattleSceneGaugeMax
         inc x
-        lda aUnknown9984C6,x
-        sta $7FED52
+        lda aBattleSceneLevelUpGauges,x
+        sta bBattleSceneGaugeDigits
         inc x
-        lda aUnknown9984C6,x
-        sta $7FED55
+        lda aBattleSceneLevelUpGauges,x
+        sta bBattleSceneGaugeUploadSize
         inc x
         rep #$20
-        lda aUnknown9984C6,x
-        sta $7FED58
+        lda aBattleSceneLevelUpGauges,x
+        sta wBattleSceneGaugeAttributes
         inc x
         inc x
         phx
-        jsl rlUnknown968530
+        jsl rlBattleSceneDrawStatGauge
         plx
         cpx #$006C
         bcc _87B8
@@ -3069,12 +3151,14 @@
       .al
       .xl
 
-      rlUnknown969398 ; 96/9398
+      rlBattleSceneStartStatGauge ; 96/9398
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = stat (0-7, aBattleSceneLevelUpStatGauges): sets up the gauge to rise from the stat to the stat plus its gain.
 
         phx
         phy
@@ -3091,18 +3175,18 @@
         pla
         pla
         ldy #$0000
-        lda aUnknown9986CD,x
+        lda aBattleSceneLevelUpStatGauges,x
         sta lR18
-        lda aUnknown9986CD+1,x
+        lda aBattleSceneLevelUpStatGauges+1,x
         sta lR18+1
         lda [lR18],y
         and #$00FF
         sta wR0
         xba
-        sta $7FED4B
-        lda aUnknown9986CD+3,x
+        sta wBattleSceneGaugeValue
+        lda aBattleSceneLevelUpStatGauges+3,x
         sta lR18
-        lda aUnknown9986CD+4,x
+        lda aBattleSceneLevelUpStatGauges+4,x
         sta lR18+1
         lda [lR18],y
         and #$00FF
@@ -3111,23 +3195,23 @@
         pha
         sta wR0
         jsl rlBattleSceneGetHPSpeed
-        sta $7FED4E
+        sta wBattleSceneGaugeSpeed
         pla
         and #$00FF
-        sta $7FED50
-        lda aUnknown9986CD+6,x
-        sta $7FED56
+        sta wBattleSceneGaugeTarget
+        lda aBattleSceneLevelUpStatGauges+6,x
+        sta wBattleSceneGaugeScale
         lda #$2800
-        sta $7FED58
-        lda aUnknown9986CD+8,x
-        sta $7FED53
+        sta wBattleSceneGaugeAttributes
+        lda aBattleSceneLevelUpStatGauges+8,x
+        sta wBattleSceneGaugeOffset
         sep #$20
-        lda aUnknown9986CD+10,x
-        sta $7FED4D
+        lda aBattleSceneLevelUpStatGauges+10,x
+        sta bBattleSceneGaugeMax
         lda #$02
-        sta $7FED52
+        sta bBattleSceneGaugeDigits
         lda #$0C
-        sta $7FED55
+        sta bBattleSceneGaugeUploadSize
         rep #$20
         ply
         plx
@@ -3151,6 +3235,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; Clears bit 2 of both combatants' bBattleAnimationCombatantFlags.
 
         pha
         phx
@@ -3185,6 +3271,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; With bit 7 of A set: clears bit 2 of both combatants' flags, then by the low 7 bits of A runs aUnknown969995 with Y = the high byte, and steps lR18 by 2; carry set. Otherwise carry clear.
 
         pha
         phx
@@ -3309,12 +3397,14 @@
       .al
       .xl
 
-      rlUnknown9699DD ; 96/99DD
+      rlBattleSceneRecolorHUDForType2 ; 96/99DD
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; In battle type 2 (BattleSceneFlagBattleType2): moves every tile of the HUD tilemap ($7FD0C0) up four palettes, palette 1 up six.
 
         phx
         lda wBattleSceneFlags
@@ -3367,12 +3457,14 @@
 
         ; 96/9A26
 
-      rlUnknown969A26 ; 96/9A26
+      rlBattleSceneDimPalettesForType2 ; 96/9A26
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; In battle type 2: saves BG palettes 0 and 7 at $7ECC08, copies palette 0 to 1, and halves or darkens the HUD's and the scene's colors (some into $7FFE02.. and $7FFEC2..), with the sprite colors brightened into aWorldMapMarkerPalette and $7ECBC8.
 
         phx
         lda wBattleSceneFlags
@@ -3453,7 +3545,7 @@
         jsl rlUnknown96EDC0
         lsr a
         and #$3DEF
-        jsl rlUnknown969C63
+        jsl rlBattleSceneDarkenColor
         sta $0132,b,x
         inc x
         inc x
@@ -3468,7 +3560,7 @@
         jsl rlUnknown96EDC0
         lsr a
         and #$3DEF
-        jsl rlUnknown969C63
+        jsl rlBattleSceneDarkenColor
         sta $013A,b,x
         inc x
         inc x
@@ -3507,7 +3599,7 @@
         jsl rlUnknown96EDC0
         lsr a
         and #$3DEF
-        jsl rlUnknown969C63
+        jsl rlBattleSceneDarkenColor
         sta $7FFE12,x
         inc x
         inc x
@@ -3522,7 +3614,7 @@
         jsl rlUnknown96EDC0
         lsr a
         and #$3DEF
-        jsl rlUnknown969C63
+        jsl rlBattleSceneDarkenColor
         sta $7FFE1A,x
         inc x
         inc x
@@ -3534,7 +3626,7 @@
 
         _9B6E
         lda $0162,b,x
-        jsl rlUnknown969B9C
+        jsl rlBattleSceneBrightenColor
         sta aWorldMapMarkerPalette,x
         inc x
         inc x
@@ -3546,7 +3638,7 @@
 
         _9B88
         lda $0162,b,x
-        jsl rlUnknown969B9C
+        jsl rlBattleSceneBrightenColor
         sta $7ECBC8,x
         inc x
         inc x
@@ -3561,7 +3653,7 @@
 
         ; 96/9B9C
 
-      rlUnknown969B9C ; 96/9B9C
+      rlBattleSceneBrightenColor ; 96/9B9C
 
         ; Reads the stack above its return address, but in the emulator log every
         ; caller continues right after the call: no inline arguments.
@@ -3569,6 +3661,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; Returns color A with wR0 (0-31) added to each channel, each at most 31.
 
         phx
         pha
@@ -3588,7 +3682,7 @@
         lda #3,s
         and #$03E0
         clc
-        adc aUnknown969BE3,x
+        adc aBattleSceneGreenSteps,x
         cmp #$0400
         bcc _9BC5
         lda #$03E0
@@ -3599,7 +3693,7 @@
         lda #3,s
         and #$7C00
         clc
-        adc aUnknown969C23,x
+        adc aBattleSceneBlueSteps,x
         cmp #$8000
         bcc _9BDB
         lda #$7C00
@@ -3624,7 +3718,7 @@
       .al
       .xl
 
-      rlUnknown969C63 ; 96/9C63
+      rlBattleSceneDarkenColor ; 96/9C63
 
         ; Reads the stack above its return address, but in the emulator log every
         ; caller continues right after the call: no inline arguments.
@@ -3632,6 +3726,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; Returns color A with wR0 (0-31) taken from each channel, each at least 0.
 
         phx
         pha
@@ -3650,7 +3746,7 @@
         lda #3,s
         and #$03E0
         sec
-        sbc aUnknown969BE3,x
+        sbc aBattleSceneGreenSteps,x
         bcs _9C86
         lda #$0000
 
@@ -3660,7 +3756,7 @@
         lda #3,s
         and #$7C00
         sec
-        sbc aUnknown969C23,x
+        sbc aBattleSceneBlueSteps,x
         bcs _9C99
         lda #$0000
 
@@ -3682,6 +3778,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; End step (after the death quote, aBattleSceneEndSteps): when bit 7 of bBattleSceneStrikeFlags is set and Julius does not defend, plays sound $89, $8A or $8B (rlUnknown9EB0F2: 0 or 1 + a gender) panned to the defender.
 
         phx
         lda bBattleSceneStrikeFlags,b
@@ -3744,12 +3842,14 @@
 
         ; 96/9D01
 
-      rlUnknown969D01 ; 96/9D01
+      rlBattleSceneBuildWhiteFadePalettes ; 96/9D01
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Builds 25 steps of sprite palettes 0-3 and 4-7 (all but palette 3's and 7's colors 10-15) fading toward white, at $7F5574 and $7FB574, by the steps of aBattleSceneWhiteFadeSteps.
 
         sep #$20
         lda #$74
@@ -3765,34 +3865,34 @@
         sta wR0
         asl a
         tax
-        lda aUnknown98B388,x
+        lda aBattleSceneWhiteFadeSteps,x
         sta wR1
         ldx #$0000
 
         _9D24
         lda $0202,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
         sta $2180,b
         rep #$20
         lda $0222,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
         sta $2180,b
         rep #$20
         lda $0242,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
         sta $2180,b
         rep #$20
         lda $0262,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
@@ -3805,21 +3905,21 @@
 
         _9D6F
         lda $0202,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
         sta $2180,b
         rep #$20
         lda $0222,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
         sta $2180,b
         rep #$20
         lda $0242,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
@@ -3851,34 +3951,34 @@
         sta wR0
         asl a
         tax
-        lda aUnknown98B388,x
+        lda aBattleSceneWhiteFadeSteps,x
         sta wR1
         ldx #$0000
 
         _9DD8
         lda $0282,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
         sta $2180,b
         rep #$20
         lda $02A2,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
         sta $2180,b
         rep #$20
         lda $02C2,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
         sta $2180,b
         rep #$20
         lda $02E2,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
@@ -3891,21 +3991,21 @@
 
         _9E23
         lda $0282,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
         sta $2180,b
         rep #$20
         lda $02A2,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
         sta $2180,b
         rep #$20
         lda $02C2,b,x
-        jsr rsUnknown969E6A
+        jsr rsBattleSceneBlendColorToWhite
         sep #$20
         sta $2180,b
         xba
@@ -3929,12 +4029,14 @@
 
         ; 96/9E6A
 
-      rsUnknown969E6A ; 96/9E6A
+      rsBattleSceneBlendColorToWhite ; 96/9E6A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Returns color A moved toward white by wR1 / 256 in each channel.
 
         phx
         pha
@@ -3988,6 +4090,8 @@
         .autsiz
         .databank ?
 
+        ; With BattleSceneFlagSolo2: sets bits $48 of $7FFC6F and creates HDMA entries 3 and 6 (aUnknown95E754, aUnknown95E760).
+
         lda wBattleSceneFlags
         bit #BattleSceneFlagSolo2
         beq _9EF8
@@ -4026,24 +4130,26 @@
       .al
       .xl
 
-      rlUnknown969EF9 ; 96/9EF9
+      rlBattleSceneStopHUDShake ; 96/9EF9
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Stops the HUD's shake and puts its scroll back (BG2 $00/$7F, BG3 $FC/$97).
+
         sep #$20
         lda #$FF
-        sta $7FFC72
+        sta bBattleSceneHUDShakeStep
         lda #$00
-        sta $7FFC73
+        sta bBattleSceneHUDBG2X
         lda #$FC
-        sta $7FFC75
+        sta bBattleSceneHUDBG3X
         lda #$7F
-        sta $7FFC74
+        sta bBattleSceneHUDBG2Y
         lda #$97
-        sta $7FFC76
+        sta bBattleSceneHUDBG3Y
         rep #$20
         rtl
 
@@ -4051,44 +4157,46 @@
 
         ; 96/9F1C
 
-      rlUnknown969F1C ; 96/9F1C
+      rlBattleSceneRunHUDShake ; 96/9F1C
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $7FFC72
+        ; Every frame while the HUD shakes: adds the next offsets of aBattleSceneHUDShakeOffsets to the HUD's scroll; $8080 stops it.
+
+        lda bBattleSceneHUDShakeStep
         and #$00FF
         cmp #$00FF
         beq _9F69
         phx
         asl a
         tax
-        lda aUnknown998F0F,x
+        lda aBattleSceneHUDShakeOffsets,x
         cmp #$8080
         bne _9F3A
-        jsl rlUnknown969EF9
+        jsl rlBattleSceneStopHUDShake
         bra _9F68
 
 
         _9F3A
         sep #$20
-        sta $7FFC73
+        sta bBattleSceneHUDBG2X
         clc
         adc #$FC
-        sta $7FFC75
-        lda aUnknown998F0F+1,x
+        sta bBattleSceneHUDBG3X
+        lda aBattleSceneHUDShakeOffsets+1,x
         clc
         adc #$7F
-        sta $7FFC74
-        lda aUnknown998F0F+1,x
+        sta bBattleSceneHUDBG2Y
+        lda aBattleSceneHUDShakeOffsets+1,x
         clc
         adc #$97
-        sta $7FFC76
-        lda $7FFC72
+        sta bBattleSceneHUDBG3Y
+        lda bBattleSceneHUDShakeStep
         inc a
-        sta $7FFC72
+        sta bBattleSceneHUDShakeStep
         rep #$20
 
         _9F68
@@ -4101,19 +4209,21 @@
 
         ; 96/9F6A
 
-      rlUnknown969F6A ; 96/9F6A
+      rlBattleSceneStartHUDShake ; 96/9F6A
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Starts the HUD's shake on a critical (bit $40 of bBattleSceneStrikeFlags).
+
         lda bBattleSceneStrikeFlags,b
         bit #$0040
         beq _9F7C
         sep #$20
         lda #$00
-        sta $7FFC72
+        sta bBattleSceneHUDShakeStep
         rep #$20
 
         _9F7C

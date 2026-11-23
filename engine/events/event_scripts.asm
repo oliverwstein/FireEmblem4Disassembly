@@ -5794,7 +5794,7 @@
         ldy wActiveEventOffset,b
         lda [lR22],y
         and #$00FF
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         plp
         rtl
 
@@ -5811,7 +5811,7 @@
 
         ; Unreferenced: the same as rlProcEventFadeInByTimerCycle.
 
-        lda $0FD7,b,x
+        lda aProcSystem.aBody0,b,x
         jsl rlFadeInByTimer
         bcc _8D4F
         jsl rlEventEngineFreeProc
@@ -7837,12 +7837,12 @@
         ldx #$001E
 
         _A7ED
-        lda $0ED7,b,x
+        lda aProcSystem.aHeaderTypeOffset,b,x
         cmp #$8865
         beq _A808
         lda #$FFFF
         sta wEventProcBanks,b,x
-        lda $0ED7,b,x
+        lda aProcSystem.aHeaderTypeOffset,b,x
         beq _A808
         phx
         txa

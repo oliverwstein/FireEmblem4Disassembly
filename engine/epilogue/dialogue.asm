@@ -700,7 +700,7 @@
         .databank ?
 
         lda #$0000
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         rtl
 
         .databank 0
@@ -714,7 +714,7 @@
         .autsiz
         .databank ?
 
-        lda $0FD7,b,x
+        lda aProcSystem.aBody0,b,x
         cmp #$0007
         bcs _BD85
         phx
@@ -725,9 +725,9 @@
         jsl rlUnknown91B03F
         plx
         bcs _BD89
-        lda $0FD7,b,x
+        lda aProcSystem.aBody0,b,x
         inc a
-        sta $0FD7,b,x
+        sta aProcSystem.aBody0,b,x
         bra _BD89
 
 
