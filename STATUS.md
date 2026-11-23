@@ -4,15 +4,15 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-22, after wave 4 part 1: banks $81, $90, $8D)
+## Current state (2026-11-23, after wave 4 part 2: banks $91 and $9E)
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
 - `./build.sh` is byte-identical and the checksums verify. 97.57% of the ROM is built from source. GAPS.md: 174 `none` pieces (59,734 bytes), 56 padding runs (42,139 bytes).
-- Routines: 6,015 in `engine/`, 4,016 named, 1,999 `Unknown`; 1,610 still in `engine/unsorted/` (banks `$84`, `$8B`, `$8C`, `$91`, `$95`-`$97`, `$9B`, `$9E`, `$9F`). 305 pinned blocks.
-- **Wave 4 part 1 done in one session**, commits `10e99bd`..`7247c33`: bank `$81` (the map step, `engine/map/map_step.asm`), bank `$90` (the attract mode's opening, `engine/demo/opening.asm`, its event script decoded by the new `tools/event_script.py`, plus the staff credits that closed three unbuilt pieces), bank `$8D` (the epilogue, `engine/epilogue/`). What each file holds is in `docs/reference/map.md` ("Turns and phases"), `demo.md` and `epilogue.md`, and HISTORY.md. New `include/Epilogue.h`; `MAP_STEP_*` and `UNIT_RELOCATION_*` in `include/Map.h`; macros `DEMO_ALLOW_SKIP` and `OPEN_MAP_BATTLE` in `include/events/Main.h`.
-- **Left from wave 4:** bank `$91` (save menu screens, event engine helpers, and bank `$8D` text data at `$8D/9B65`-`9ED4` that sits in `bank91.asm`) and bank `$9E` (the scripted `"ON"` scene procs, 274 routines). Bank `$84` still has routines of other systems in `engine/unsorted/bank84.asm` (class change, repair, arena, love points, castle targets).
-- Reference pages so far: `docs/reference/core.md`, `ai.md`, `castle.md`, `demo.md`, `epilogue.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`. `tools/reference.py` output is gitignored; run it locally.
+- Routines: 6,014 in `engine/`, 4,250 named, 1,764 `Unknown`; 1,199 still in `engine/unsorted/` (banks `$84`, `$8B`, `$8C`, `$95`-`$97`, `$9B`, `$9F`). 305 pinned blocks.
+- **Wave 4 done** (part 2 this session, commits `6734259`..`48a4f8f`): bank `$91` is the save menu screen (`engine/save/save_menu.asm`, `jugdral_history.asm`), the chapter intro card (`engine/worldmap/chapter_intro.asm`), the anti-tamper screens (`engine/core/anti_tamper.asm`) and the event engine's hooks (`engine/events/event_engine.asm`). Bank `$9E` was not the scripted scenes but **the map battle** (`engine/battle/map_battle.asm`) and the procs that reuse its sprites (`map_action_animations.asm`; warp/Belhalla/scripted-battle starters in `engine/events/cutscenes.asm`). Its sprite internals stay `Unknown`. HISTORY.md has the details.
+- New RAM names: the save menu block at `$1854` (`wSaveMenuNextStep`...), the chapter intro variables at `$7F8183` (scoped in `name_ram.py`), `wEventEngineState` (`$171C`), `wMapBattleMode` (`$7F4C87`).
+- Reference pages: `docs/reference/core.md`, `ai.md`, `castle.md`, `demo.md`, `epilogue.md`, `map_battle.md` (new), `menus.md`, `map_menu.md`, `map.md`, `save.md` (now with the save menu screen). `tools/reference.py` output is gitignored; run it locally.
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
 ## Who wrote what
@@ -28,11 +28,12 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Talk to the user before starting the next wave.** Wave 4 has two parts left: bank `$91` (the save menu screens and event engine helpers; 137 routines) and bank `$9E` (the scripted scenes; 274 routines, a session of its own). Propose which first; then battle (wave 5).
-2. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages (core, map, menus, castle and AI have them now), and show it to the user.
-3. Open questions are at the end of each reference page (`core.md`, `ai.md`, `castle.md`, `demo.md`, `epilogue.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`). `tools/songs.py` stops at a stale label (`aUnknown8A9D79`); fix it before regenerating `audio/SONGS.md`. To decode more event scripts, use `tools/event_script.py` and prove each by building.
-4. `tools/stream_catalog.py` deleted the catalog previews when run (reverted), so `gfx/compressed/CATALOG.md` still names pre-castle labels; find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm; move the lines to a sensible place by hand. Check that an `include/` file does not exist before creating one. `tools/rename.py` refuses a new name that appears anywhere, comments included: rename forward references in comments first.
-5. Bank `$89` cannot be pad-tested until it is merged: its last block has no free space after it. Banks `$85`, `$87` and now `$88` are all source and could be merged (`tools/merge_bank.py`) and pad-tested.
+1. **Talk to the user before starting the next wave.** Wave 5 is battle. Proposed order: bank `$9F` (405 routines: the map battle's magic effects and the rest of the map battle, continuing `engine/battle/map_battle.asm`; read `docs/reference/map_battle.md` first), then banks `$95` and `$96` (about 670 routines: the battle scene's animation engine, `engine/battle_scene/`). The small leftovers (`$84` 14, `$8B` 25, `$8C` 5, `$97` 5, `$9B` 78) can ride along with whichever system they belong to.
+2. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages (core, map, menus, castle, AI, save and map battle have them now), and show it to the user.
+3. Open questions are at the end of each reference page. `tools/songs.py` stops at a stale label (`aUnknown8A9D79`); fix it before regenerating `audio/SONGS.md`. To decode more event scripts, use `tools/event_script.py` and prove each by building.
+4. `tools/stream_catalog.py` deleted the catalog previews when run (reverted), so `gfx/compressed/CATALOG.md` still names pre-castle labels; find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm; move the lines to a sensible place by hand. Check that an `include/` file does not exist before creating one. `tools/rename.py` refuses a new name that appears anywhere, comments included: rename first, then write comments that use the new name (or use a placeholder).
+5. Bank `$89` cannot be pad-tested until it is merged: its last block has no free space after it. Banks `$85`, `$87` and `$88` are all source and could be merged (`tools/merge_bank.py`) and pad-tested.
+6. Two unbuilt pieces in bank `$91` decode as unreferenced code: `$91/DF08` (draws one save menu row text) and `$91/E006` (small palette fade routines). Close them as labelled data or code with an "unreferenced" note.
 
 **Per-wave checklist.** One system (or one part of a big one) per session; hand over and clear context after each.
 
