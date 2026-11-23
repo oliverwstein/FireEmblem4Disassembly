@@ -46,7 +46,7 @@
         .autsiz
         .databank ?
 
-        ; wInput0 = unit RAM pointer (aBody4), wInput1 = a list of inventory slots in bank $7E (aBody5): a count byte, then the slots ($7E2000-$7E2028, rlUnknown84F786).
+        ; wInput0 = unit RAM pointer (aBody4), wInput1 = a list of inventory slots in bank $7E (aBody5): a count byte, then the slots ($7E2000-$7E2028, rlBuildUnitMenuSlotLists).
 
         jsl rlInitMapMenuProcAndTileBase
         lda aProcSystem.wInput0,b

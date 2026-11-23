@@ -194,7 +194,7 @@
         .autsiz
         .databank ?
 
-        ; With bit 11 of wUnknown000D79 set and a unit selected: hides the range, puts the cursor back on the active unit and acts (rlUnknown84DC1C) with the cursor's tile in wR2/wR3.
+        ; With bit 11 of wUnknown000D79 set and a unit selected: hides the range, puts the cursor back on the active unit and acts (rlRunMapAction) with the cursor's tile in wR2/wR3.
 
         lda #$0000
         sta wUnknown0007D8,b
@@ -246,7 +246,7 @@
         lsr a
         lsr a
         sta wR3
-        jsl rlUnknown84DC1C
+        jsl rlRunMapAction
         lda #$0800
         trb wUnknown000D79,b
         rts
@@ -316,14 +316,14 @@
 
         _B16D
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CC5D
+        jsl rlEnterTargetLocation
         stz wMapActionMode,b
         rts
 
 
         _B178
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CFBF
+        jsl rlStartGuardingCastleAtUnit
         stz wMapActionMode,b
         rts
 

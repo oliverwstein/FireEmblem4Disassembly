@@ -569,7 +569,7 @@
         .autsiz
         .databank ?
 
-        ; Finds the adjacent units of the army (target filter 2) and starts choosing one (rlUnknown84DC1C).
+        ; Finds the adjacent units of the army (target filter 2) and starts choosing one (rlRunMapAction).
 
         stz wSelectedInventorySlot,b
         lda #$0000
@@ -585,7 +585,7 @@
         sta wR0
         lda #$FFFF
         sta wR1
-        jsl rlUnknown84DC1C
+        jsl rlRunMapAction
         rtl
 
         .databank 0
@@ -670,7 +670,7 @@
         phx
         jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CC5D
+        jsl rlEnterTargetLocation
         pha
         bcs _DF33
         jsl rlUnknown84CAA9
@@ -679,7 +679,7 @@
         pla
         cpy #$0001
         bne _DF3D
-        jsl rlUnknown84CD8A
+        jsl rlQueueUnitRelocationToCastle
 
         _DF3D
         plx
@@ -703,12 +703,12 @@
         .autsiz
         .databank ?
 
-        ; Runs rlUnknown84CDA4 and fades to the castle screen.
+        ; Runs rlUnitVisitTown and fades to the castle screen.
 
         phx
         jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CDA4
+        jsl rlUnitVisitTown
 
         lda #<>rsOpenCastleScreen
         sta aProcSystem.wInput0,b
@@ -772,7 +772,7 @@
         phx
         jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CDD6
+        jsl rlUnitVisitVillage
         plx
         rtl
 
@@ -797,7 +797,7 @@
         phx
         jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CE21
+        jsl rlUnitSeizeCastle
         plx
         rtl
 
@@ -826,7 +826,7 @@
         phx
         lda #$0000
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84D03E
+        jsl rlUnitGuardCastle
         plx
         rtl
 
@@ -853,7 +853,7 @@
         phx
         jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84D10F
+        jsl rlUnitDepartCastle
         plx
         rtl
 
@@ -872,7 +872,7 @@
         phx
         jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84D0B9
+        jsl rlUnitReturnIntoCastle
         plx
         rtl
 
@@ -900,7 +900,7 @@
 
         phx
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84D1CC
+        jsl rlUnitDismount
         jsl rlOpenUnitMenu
         plx
         rtl
@@ -921,7 +921,7 @@
 
         phx
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84D247
+        jsl rlUnitMount
         jsl rlOpenUnitMenu
         plx
         rtl
@@ -953,7 +953,7 @@
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         sec
-        jsl rlUnknown84BA3E
+        jsl rlFindTalkTargets
         jsl rlStartChoosingTarget
         plx
         rtl
@@ -1031,7 +1031,7 @@
         phx
         jsl rlEndUnitAction
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CD35
+        jsl rlUnitReturnToHomeCastle
         plx
         rtl
 
@@ -1802,7 +1802,7 @@
         .autsiz
         .databank ?
 
-        ; X = deployment offset: builds the lists of usable inventory slots at the unit's tile ($7E2000-$7E2028, rlUnknown84F786).
+        ; X = deployment offset: builds the lists of usable inventory slots at the unit's tile ($7E2000-$7E2028, rlBuildUnitMenuSlotLists).
 
         lda aDeploymentTable._XTilePosition,x
         sta wR10
@@ -1811,7 +1811,7 @@
         lda aDeploymentTable,x
         and #$0003
         sta wR12
-        jsl rlUnknown84F786
+        jsl rlBuildUnitMenuSlotLists
         rts
 
         .databank 0
@@ -2026,7 +2026,7 @@
         .autsiz
         .databank ?
 
-        ; Not after acting ($0008) unless in canto; rlUnknown84B9A3 clear; someone to talk to in range 1 (target filter 3).
+        ; Not after acting ($0008) unless in canto; rlCheckCanTalk clear; someone to talk to in range 1 (target filter 3).
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateCanto
@@ -2037,7 +2037,7 @@
 
         _E55A
         clc
-        jsl rlUnknown84B9A3
+        jsl rlCheckCanTalk
         bcs rsUnitMenuCheckFail
         lda #$0001
         sta wR10
@@ -2634,7 +2634,7 @@
         .autsiz
         .databank ?
 
-        ; Not after acting ($0008) unless in canto; rlUnknown84B9A3 set.
+        ; Not after acting ($0008) unless in canto; rlCheckCanTalk set.
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateCanto
@@ -2647,7 +2647,7 @@
 
         _E84E
         clc
-        jsl rlUnknown84B9A3
+        jsl rlCheckCanTalk
         bcs _E859
         jml rsUnitMenuCheckFail
 
@@ -2765,7 +2765,7 @@
         .autsiz
         .databank ?
 
-        ; Sets bit 3 of wMapStateFlags and opens procUnitMenu in mode 1; aUnknown81AFAE runs it after rlUnknown84D4A2 (a player unit ending its action at its home castle).
+        ; Sets bit 3 of wMapStateFlags and opens procUnitMenu in mode 1; aUnknown81AFAE runs it after rlRequestUnitMenuMode1 (a player unit ending its action at its home castle).
 
         phb
         php
@@ -2797,7 +2797,7 @@
         .autsiz
         .databank ?
 
-        ; Sets bit 4 of wMapStateFlags and opens procUnitMenu in mode 2; aUnknown81AFAE runs it after rlUnknown84D483 (from the guard command's handler).
+        ; Sets bit 4 of wMapStateFlags and opens procUnitMenu in mode 2; aUnknown81AFAE runs it after rlRequestUnitMenuMode2 (from the guard command's handler).
 
         phb
         php
@@ -2837,13 +2837,13 @@
         .autsiz
         .databank ?
 
-        ; The active unit uses the item in wSelectedInventorySlot (rlUnknown84B32B).
+        ; The active unit uses the item in wSelectedInventorySlot (rlStartInventoryStaffTargetSelection).
 
         phx
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
-        jsl rlUnknown84B32B
+        jsl rlStartInventoryStaffTargetSelection
         plx
         rtl
 
@@ -3063,7 +3063,7 @@
         sta wMenuOptionX,b
         sta wMenuOptionY,b
         phx
-        jsl rlUnknown84F8D9
+        jsl rlBuildCastleStaffSlotLists
         ldx #$0002
 
         _EA06

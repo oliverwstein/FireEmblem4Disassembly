@@ -507,12 +507,12 @@
           bit #UnitStateGuardingCastle
           beq ++
 
-            jsl rlUnknown84BA6F
+            jsl rlStopGuardingCastle
             bra ++
 
         ; is on castle terrain
         +
-        jsl rlUnknown84CFBF
+        jsl rlStartGuardingCastleAtUnit
         
         +
         lda aDeploymentTable._State,x
@@ -945,7 +945,7 @@
         cmp #TerrainCastle
         bne +
 
-          jsl rlUnknown84CFBF
+          jsl rlStartGuardingCastleAtUnit
           bra _CB24
 
         +
@@ -970,7 +970,7 @@
           cmp wRoutineVariable1,b
           bne _CB24
 
-          jsl rlUnknown84D4A2
+          jsl rlRequestUnitMenuMode1
           bcs +
 
             jml _End
@@ -983,7 +983,7 @@
         _CB18
         lda aDeploymentTable._FactionSlot,x
         jsl rlGetFactionSlotLocationID
-        jsl rlUnknown84CD8A
+        jsl rlQueueUnitRelocationToCastle
 
         _CB24
         lda aDeploymentTable._StateBuffer,x

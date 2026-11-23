@@ -499,7 +499,7 @@
         .autsiz
         .databank ?
 
-        ; No target to choose: on the map, rlUnknown84DC1C on the user; in the castle, rlCastleUseStaffFromMapRaised.
+        ; No target to choose: on the map, rlRunMapAction on the user; in the castle, rlCastleUseStaffFromMapRaised.
 
         jsl rlGetSelectedUnitStates
         bit #UnitStateFielded
@@ -509,7 +509,7 @@
         sta wR0
         lda #$FFFF
         sta wR1
-        jsl rlUnknown84DC1C
+        jsl rlRunMapAction
         rts
 
 

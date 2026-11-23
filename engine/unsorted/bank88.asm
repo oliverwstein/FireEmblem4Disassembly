@@ -4387,7 +4387,7 @@
         .autsiz
         .databank ?
 
-        ; Clears the minimap flag and ends the proc. After a warp destination was chosen, uses the warp staff on it (rlUnknown84DC1C), from the map or from the castle grid; after a cancel, reopens the unit menu or returns to the castle grid.
+        ; Clears the minimap flag and ends the proc. After a warp destination was chosen, uses the warp staff on it (rlRunMapAction), from the map or from the castle grid; after a cancel, reopens the unit menu or returns to the castle grid.
 
         lda #$0020
         trb wMapSystemFlags,b
@@ -4411,7 +4411,7 @@
         lda wMapOverlayFlags,b
         bit #$0008
         bne _9E0C
-        jsl rlUnknown84DC1C
+        jsl rlRunMapAction
         lda #$0800
         trb wUnknown000D79,b
         lda #$0008
@@ -4652,7 +4652,7 @@
           bit #$0008
           bne +
 
-            jsl rlUnknown84B32B
+            jsl rlStartInventoryStaffTargetSelection
 
             lda #$0002
             trb wMapOverlayFlags,b
@@ -4796,7 +4796,7 @@
         .autsiz
         .databank ?
 
-        ; For a staff chosen on the castle grid (target already picked): uses it at once (rlUnknown84DC1C) and clears the castle flags.
+        ; For a staff chosen on the castle grid (target already picked): uses it at once (rlRunMapAction) and clears the castle flags.
 
         lda #$0000
         sta wUnknown0007D8,b
@@ -4813,7 +4813,7 @@
         lda #$0008
         trb wMapOverlayFlags,b
         jsl rlCloseBattleForecast
-        jsl rlUnknown84DC1C
+        jsl rlRunMapAction
         lda #$0008
         jsl rlPlaySoundEffect
         rtl
@@ -5654,7 +5654,7 @@
         .autsiz
         .databank ?
 
-        ; Cursor state 3, choosing a target: the D-pad picks the next target (rsSelectNextTarget) and shows the battle forecast, A acts (rlUnknown84DC1C, or the minimap for a warp destination), B goes back to the unit menu or, for a castle staff, puts the unit back in the castle.
+        ; Cursor state 3, choosing a target: the D-pad picks the next target (rsSelectNextTarget) and shows the battle forecast, A acts (rlRunMapAction, or the minimap for a warp destination), B goes back to the unit menu or, for a castle staff, puts the unit back in the castle.
 
         lda #$0003
         sta wMovingUnitSpriteState,b
@@ -5706,7 +5706,7 @@
         lda #$0004
         trb wMapOverlayFlags,b
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CC5D
+        jsl rlEnterTargetLocation
         rtl
 
 
@@ -5825,7 +5825,7 @@
         bit #$0800
         bne _A994
         jsl rlCloseBattleForecast
-        jsl rlUnknown84DC1C
+        jsl rlRunMapAction
         lda #$000A
         jsl rlPlaySoundEffect
         rtl
@@ -6035,7 +6035,7 @@
 
 
         _AAEF
-        jsl rlUnknown84D483
+        jsl rlRequestUnitMenuMode2
         bcc _AB00
         jsl rlUnknown84CAA9
         stz wMapActionMode,b
@@ -6702,7 +6702,7 @@
         jsl rlDeployedUnitUnsetHiddenIfAlive
         stz wMovingUnitSpriteState,b
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CC5D
+        jsl rlEnterTargetLocation
         stz wMapActionMode,b
         rtl
 
@@ -6716,7 +6716,7 @@
         jsl rlDeployedUnitUnsetHiddenIfAlive
         stz wMovingUnitSpriteState,b
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CFBF
+        jsl rlStartGuardingCastleAtUnit
         stz wMapActionMode,b
         rtl
 
@@ -6744,7 +6744,7 @@
         jsl rlDeployedUnitUnsetHiddenIfAlive
         stz wMovingUnitSpriteState,b
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84CC5D
+        jsl rlEnterTargetLocation
         stz wMapActionMode,b
         rtl
 
@@ -7298,7 +7298,7 @@
 
         +
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84D4A2
+        jsl rlRequestUnitMenuMode1
         lda #$0008
         tsb wMapSystemFlags,b
         lda #0

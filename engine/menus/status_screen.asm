@@ -4324,7 +4324,7 @@
         cmp #$0001
         bne _9844
         tya
-        jsl rlUnknown84F75C
+        jsl rlCheckInventorySlotStaffUsable
         bcs _9844
         bra _983E
 

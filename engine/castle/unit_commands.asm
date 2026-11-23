@@ -221,7 +221,7 @@
         .autsiz
         .databank ?
 
-        ; Gives money from the unit to the unit in wRoutineVariable1 (rlUnknown84D334, then rlUnknown9EDAE7).
+        ; Gives money from the unit to the unit in wRoutineVariable1 (rlUnitGiveGold, then rlUnknown9EDAE7).
 
         phb
         php
@@ -238,7 +238,7 @@
         sta wSelectedUnitDataRAMPointer,b
         jsl rlGetSelectedUnitDeploymentOffset
         sta wR1
-        jsl rlUnknown84D334
+        jsl rlUnitGiveGold
         sep #$20
         lda #$03
         sta $7E4EA9
@@ -420,14 +420,14 @@
         sta $002E,b,x
 
         _B89D
-        jsl rlUnknown84FEB5
+        jsl rlGetSelectedUnitFirstWeaponAttackSpeed
         sta $0030,b,x
         jsl rlGetSelectedUnitFirstWeaponHit
         sta $0034,b,x
         lda $000E,b,x
         jsl rlGetSelectedUnitFirstWeaponAvoid
         sta $0036,b,x
-        jsl rlUnknown84FEAC
+        jsl rlGetSelectedUnitFirstWeaponCrit
         sta $0038,b,x
         rtl
 

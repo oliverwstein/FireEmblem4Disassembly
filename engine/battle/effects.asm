@@ -104,7 +104,7 @@
         cmp wBattleTempVariable
         bne _EC46
         lda wBattleTempVariable
-        jsl rlUnknown84CD8A
+        jsl rlQueueUnitRelocationToCastle
         bra _EC56
 
 
@@ -310,7 +310,7 @@
         bit #UnitStateGuardingCastle
         beq +
 
-          jsl rlUnknown84BA6F
+          jsl rlStopGuardingCastle
 
         +
         rts

@@ -717,7 +717,7 @@
               lda bSavedPlayerCursorYTile,b
               and #$00FF
               sta $16
-              jsl rlUnknown848E5D
+              jsl rlMoveCursorToTile
               bra _End
           
           +
@@ -1839,7 +1839,7 @@
         jsl rlBuildSelectedUnitRangeMaps
         bcc +
 
-          jsl rlUnknown84D4A2
+          jsl rlRequestUnitMenuMode1
           bcc _SEC
 
         +

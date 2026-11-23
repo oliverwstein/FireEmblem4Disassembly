@@ -937,7 +937,7 @@
         cmp #TerrainCastle
         bne +
 
-          jsl rlUnknown84CFBF
+          jsl rlStartGuardingCastleAtUnit
 
         +
         lda structUNITEntry.FormationID,b,y

@@ -1302,11 +1302,13 @@
 
         .databank 0
 
-      rlUnknown84DC1C ; 84/DC1C
+      rlRunMapAction ; 84/DC1C
 
         .al
         .autsiz
         .databank ?
+
+        ; Runs the chosen action by wMapActionTargetType (aMapActionRoutines) with wR0 = the acting unit and wR1 = the target, then clears the type.
 
         phb
         php
@@ -1321,7 +1323,7 @@
         lda wMapActionTargetType,b
         asl a
         tax
-        jsr (aUnknown84DC3F,x)
+        jsr (aMapActionRoutines,x)
 
         lda #0
         sta wMapActionTargetType,b
@@ -1337,19 +1339,21 @@
 
         .databank 0
 
-      aUnknown84DC3F ; 84/DC3F
+      aMapActionRoutines ; 84/DC3F
 
-        .word <>rsUnknown84DC49
-        .word <>rsUnknown84DC49
-        .word <>rsUnknown84DC82
-        .word <>rsUnknown84DC8D
-        .word <>rsUnknown84DC9A
+        .word <>rsMapActionBattle
+        .word <>rsMapActionBattle
+        .word <>rsMapActionHelp
+        .word <>rsMapActionGiveGold
+        .word <>rsMapActionTalk
 
-      rsUnknown84DC49 ; 84/DC49
+      rsMapActionBattle ; 84/DC49
 
         .al
         .autsiz
         .databank ?
+
+        ; Types 0 and 1 (attack, staff): builds the battle (battle type 3 while bit 5 of wUnknown000D79 is set, else 0) and its rounds.
 
         jsl rlActionStructGetBattleStats
 
@@ -1385,40 +1389,46 @@
 
         .databank 0
 
-      rsUnknown84DC82 ; 84/DC82
+      rsMapActionHelp ; 84/DC82
 
         .al
         .autsiz
         .databank ?
 
+        ; Type 2 (help): ends the unit's action and runs rlUnitHelp.
+
         ldx $00
         jsl rlEndUnitAction
-        jsl rlUnknown84D2BA
+        jsl rlUnitHelp
         rts
 
         .databank 0
 
-      rsUnknown84DC8D ; 84/DC8D
+      rsMapActionGiveGold ; 84/DC8D
 
         .al
         .autsiz
         .databank ?
 
+        ; Type 3 (give gold): ends the unit's action, runs rlUnitGiveGold and shows the gold scene.
+
         jsl rlEndUnitAction
-        jsl rlUnknown84D334
+        jsl rlUnitGiveGold
         jsl rlUnknown9EDAE7
         rts
 
         .databank 0
 
-      rsUnknown84DC9A ; 84/DC9A
+      rsMapActionTalk ; 84/DC9A
 
         .al
         .autsiz
         .databank ?
 
+        ; Type 4 (talk).
+
         jsl rlEndUnitAction
-        jsl rlUnknown84D16B
+        jsl rlUnitTalk
         rts
 
         .databank 0
@@ -3656,7 +3666,7 @@
         tax
         jsl rlGetSelectedUnitFactionSlot
         jsl rlGetFactionSlotLocationID
-        jsl rlUnknown84CD8A
+        jsl rlQueueUnitRelocationToCastle
 
         pla
         sta wTargetEventLocationEntry,b

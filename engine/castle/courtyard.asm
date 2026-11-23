@@ -1156,7 +1156,7 @@
         bcs _88CD
         jsl rlGetSelectedUnitDeploymentOffset
         sta wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84F8D9
+        jsl rlBuildCastleStaffSlotLists
         lda wAIGroupLeaderFieldMovement
         and #$00FF
         bne _88C0
@@ -1828,7 +1828,7 @@
         bcs _8DC2
         jsl rlGetSelectedUnitDeploymentOffset
         sta wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84F8D9
+        jsl rlBuildCastleStaffSlotLists
         lda wAIGroupLeaderFieldMovement
         and #$00FF
         bne _8DC8
@@ -2274,7 +2274,7 @@
         sta wActiveUnitDeploymentOffset,b
         tax
         lda #$0001
-        jsl rlUnknown84D03E
+        jsl rlUnitGuardCastle
         lda #CASTLE_STEP_EXIT_TO_MAP
         sta wGameStateStep,b
         rts
@@ -2299,7 +2299,7 @@
 
         jsl rlGetSelectedUnitDeploymentOffset
         sta wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84F8D9
+        jsl rlBuildCastleStaffSlotLists
         lda wAIGroupLeaderFieldMovement
         and #$00FF
         bne _90E4

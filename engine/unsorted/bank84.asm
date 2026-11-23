@@ -184,12 +184,14 @@
       .al
       .xl
 
-      rlUnknown848E5D ; 84/8E5D
+      rlMoveCursorToTile ; 84/8E5D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Starts cursor state 4 towards tile (wR10, wR11).
 
         phb
         php
@@ -439,12 +441,14 @@
       .al
       .xl
 
-      rlUnknown84B32B ; 84/B32B
+      rlStartInventoryStaffTargetSelection ; 84/B32B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Starts choosing a target for the staff in wSelectedInventorySlot (from the castle when the slot is negative).
 
         lda wSelectedInventorySlot,b
         bmi _B33A
@@ -700,13 +704,15 @@
       .al
       .xl
 
-      rlUnknown84B9A3 ; 84/B9A3
+      rlCheckCanTalk ; 84/B9A3
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set if the unit has someone to talk to in range 1 (filter 6), or a talk event with a unit at its castle; with carry in, also marks them as targets.
 
         phb
         php
@@ -723,9 +729,9 @@
         jsl rlFindTargetsInRange
         ora #$0000
         bne _B9C9
-        jsr rsUnknown84B9D4
+        jsr rsCheckTalkTargetHere
         bcs _B9C9
-        jsr rsUnknown84BA09
+        jsr rsCheckTalkTargetGuarding
         bcc _B9CF
 
         _B9C9
@@ -759,7 +765,7 @@
       .al
       .xl
 
-      rsUnknown84B9D4 ; 84/B9D4
+      rsCheckTalkTargetHere ; 84/B9D4
 
         .al
         .xl
@@ -800,7 +806,7 @@
 
         ; 84/BA09
 
-      rsUnknown84BA09 ; 84/BA09
+      rsCheckTalkTargetGuarding ; 84/BA09
 
         .al
         .xl
@@ -849,13 +855,15 @@
       .al
       .xl
 
-      rlUnknown84BA3E ; 84/BA3E
+      rlFindTalkTargets ; 84/BA3E
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Like rlCheckCanTalk with filter 3, for the talk command.
 
         phb
         php
@@ -872,9 +880,9 @@
         jsl rlFindTargetsInRange
         ora #$0000
         bne _BA64
-        jsr rsUnknown84B9D4
+        jsr rsCheckTalkTargetHere
         bcs _BA64
-        jsr rsUnknown84BA09
+        jsr rsCheckTalkTargetGuarding
         bcc _BA6A
 
         _BA64
@@ -908,12 +916,14 @@
       .al
       .xl
 
-      rlUnknown84BA6F ; 84/BA6F
+      rlStopGuardingCastle ; 84/BA6F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The selected unit stops guarding: clears its unit state and DeploymentStateGuardingCastle and unguards its home castle.
 
         phx
         lda #$2000
@@ -1281,12 +1291,14 @@
       .al
       .xl
 
-      rlUnknown84CC5D ; 84/CC5D
+      rlEnterTargetLocation ; 84/CC5D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = deployment: if wTargetEventLocationEntry is set, the unit enters that location: its home castle (it stays there; Y = 1) or another location (opens it, takes the unit off the map into the castle; Y = 0). Carry clear.
 
         lda wTargetEventLocationEntry,b
         beq _CC83
@@ -1340,13 +1352,15 @@
       .al
       .xl
 
-      rlUnknown84CD35 ; 84/CD35
+      rlUnitReturnToHomeCastle ; 84/CD35
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The Return skill: sends the unit to its army's castle (rlQueueUnitRelocationToCastle) with the warp scene.
 
         phb
         php
@@ -1358,7 +1372,7 @@
         jsl rlUnknown84CAA9
         jsl rlGetSelectedUnitFactionSlot
         jsl rlGetFactionSlotLocationID
-        jsl rlUnknown84CD8A
+        jsl rlQueueUnitRelocationToCastle
         jsl rlGetSelectedUnitCharacterID
         sta aActionStructUnit1.UnitRAMPointer
         jsl rlGetSelectedUnitGender
@@ -1391,12 +1405,14 @@
       .al
       .xl
 
-      rlUnknown84CD8A ; 84/CD8A
+      rlQueueUnitRelocationToCastle ; 84/CD8A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unless a relocation is already queued: unit X goes to location A (wUnitRelocationType 3).
 
         phb
         php
@@ -1430,11 +1446,13 @@
       .al
       .xl
 
-      rlUnknown84CDA4 ; 84/CDA4
+      rlUnitVisitTown ; 84/CDA4
 
         .al
         .autsiz
         .databank ?
+
+        ; Ends the action and runs the town's event conditions (event action 8, the character and location).
 
         phb
         php
@@ -1472,13 +1490,15 @@
       .al
       .xl
 
-      rlUnknown84CDD6 ; 84/CDD6
+      rlUnitVisitVillage ; 84/CDD6
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Closes the village, gives its gold to the unit, ends the action and runs its event conditions (event action 9).
 
         phb
         php
@@ -1524,11 +1544,13 @@
       .al
       .xl
 
-      rlUnknown84CE21 ; 84/CE21
+      rlUnitSeizeCastle ; 84/CE21
 
         .al
         .autsiz
         .databank ?
+
+        ; X = deployment: makes the unit's army the owner of the unguarded castle in wTargetEventLocationEntry and starts procCastleTakenOver. The player army also frees its captured characters; another army taking a player castle (not location 0) destroys it.
 
         ; X = deployment offset
 
@@ -1566,7 +1588,7 @@
         lda aDeploymentTable._FactionSlot,x
         jsl rlSetLocationFactionSlotOwner
         jsl rlUnknown84CAA9
-        jsr rsUnknown84CEA3
+        jsr rsStartCastleTakenOverProc
         lda aDeploymentTable._FactionSlot,x
         bne +
 
@@ -1605,7 +1627,7 @@
 
         .databank 0
 
-      rsUnknown84CEA3 ; 84/CEA3
+      rsStartCastleTakenOverProc ; 84/CEA3
 
         .al
         .autsiz
@@ -1679,11 +1701,13 @@
 
         .databank 0
 
-      rlUnknown84CF0F ; 84/CF0F
+      rlUnitRaidVillage ; 84/CF0F
 
         .al
         .autsiz
         .databank ?
+
+        ; A computer unit raids the village in wTargetEventLocationEntry: takes 500 of its gold (destroying it, with event action 2, when nothing is left) and shows the raid scene.
 
         phb
         php
@@ -1772,11 +1796,13 @@
       .al
       .xl
 
-      rlUnknown84CFBF ; 84/CFBF
+      rlStartGuardingCastleAtUnit ; 84/CFBF
 
         .al
         .autsiz
         .databank ?
+
+        ; X = deployment: if the unit stands on an unguarded castle of its own army or an ally, it starts guarding it.
 
         phb
         php
@@ -1815,7 +1841,7 @@
               cmp #AllegianceNeutral
               beq +
 
-                jsr rsUnknown84D010
+                jsr rsSetUnitGuardingCastle
 
         +
         pla
@@ -1828,7 +1854,7 @@
 
         .databank 0
 
-      rsUnknown84D010 ; 84/D010
+      rsSetUnitGuardingCastle ; 84/D010
 
         .al
         .autsiz
@@ -1861,13 +1887,15 @@
       .al
       .xl
 
-      rlUnknown84D03E ; 84/D03E
+      rlUnitGuardCastle ; 84/D03E
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The guard command (from the map, the castle or the AI): moves the unit onto the castle and, for a player move, sends the cursor to it.
 
         phb
         php
@@ -1905,7 +1933,7 @@
         lda wMapActionMode,b
         cmp #$0001
         beq _D09C
-        jsr rsUnknown84D0B2
+        jsr rsSetMapActionModeGuard
         bra _D0AE
 
 
@@ -1918,7 +1946,7 @@
 
 
         _D0A2
-        jsl rlUnknown84D483
+        jsl rlRequestUnitMenuMode2
         bcc _D0AE
         jsl rlUnknown84CAA9
         bra _D0AE
@@ -1943,12 +1971,14 @@
       .al
       .xl
 
-      rsUnknown84D0B2 ; 84/D0B2
+      rsSetMapActionModeGuard ; 84/D0B2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wMapActionMode = $8004.
 
         lda #$8004
         sta wMapActionMode,b
@@ -1966,13 +1996,15 @@
       .al
       .xl
 
-      rlUnknown84D0B9 ; 84/D0B9
+      rlUnitReturnIntoCastle ; 84/D0B9
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Return command while guarding a castle: the unit stops guarding and goes inside.
 
         phb
         php
@@ -2000,7 +2032,7 @@
         beq _D10C
         cmp #$0003
         beq _D10C
-        jsl rlUnknown84BA6F
+        jsl rlStopGuardingCastle
         jsl rlRefreshUnitWindow
         jsl rlGetEventLocationEntryID
         jsl rlSetUnitResidingInCastle
@@ -2016,13 +2048,15 @@
 
         ; 84/D10F
 
-      rlUnknown84D10F ; 84/D10F
+      rlUnitDepartCastle ; 84/D10F
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Depart command: the unit stops guarding and steps onto the castle's map tile (wMapActionMode $8002).
 
         phb
         php
@@ -2050,7 +2084,7 @@
         beq _D168
         cmp #$0003
         beq _D168
-        jsl rlUnknown84BA6F
+        jsl rlStopGuardingCastle
         jsl rlGetEventLocationEntryEffectiveXCoordinate
         sta wR0
         jsl rlGetEventLocationEntryEffectiveYCoordinate
@@ -2077,11 +2111,13 @@
       .al
       .xl
 
-      rlUnknown84D16B ; 84/D16B
+      rlUnitTalk ; 84/D16B
 
         .al
         .autsiz
         .databank ?
+
+        ; wR0 talks to wR1: ends the action, runs the talk event conditions (event action $0A) and clears the talk target once used.
 
         ; wR0 = initiator deployment offset
         ; wR1 = target deployment offset
@@ -2145,13 +2181,15 @@
       .al
       .xl
 
-      rlUnknown84D1CC ; 84/D1CC
+      rlUnitDismount ; 84/D1CC
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; With the Dismount skill and mounted: sets UnitStateDismounted, changes the class to JuniorLord, equips a usable weapon and redeploys the unit.
 
         phb
         php
@@ -2177,7 +2215,7 @@
         jsl rlEquipFirstWeaponInInventory
 
         _D206
-        jsr rsUnknown84D20D
+        jsr rsRedeployUnitAfterClassChange
 
         _D209
         plx
@@ -2190,7 +2228,7 @@
 
         ; 84/D20D
 
-      rsUnknown84D20D ; 84/D20D
+      rsRedeployUnitAfterClassChange ; 84/D20D
 
         ; Found by tools/sweep.py.
         .al
@@ -2224,13 +2262,15 @@
 
         ; 84/D247
 
-      rlUnknown84D247 ; 84/D247
+      rlUnitMount ; 84/D247
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Dismounted: clears UnitStateDismounted, changes the class back to KnightLord and redeploys the unit.
 
         phb
         php
@@ -2247,7 +2287,7 @@
         jsl rlUnsetSelectedUnitStates
         lda #$0006
         jsl rlSetSelectedUnitClass
-        jsr rsUnknown84D20D
+        jsr rsRedeployUnitAfterClassChange
 
         _D26D
         plx
@@ -2268,12 +2308,14 @@
       .al
       .xl
 
-      rlUnknown84D2BA ; 84/D2BA
+      rlUnitHelp ; 84/D2BA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The help command: queues relocation type 7 for wR0 (location wR1), gives 100 experience and runs event action $1A with wR1's formation ID.
 
         phb
         php
@@ -2332,12 +2374,14 @@
 
         ; 84/D334
 
-      rlUnknown84D334 ; 84/D334
+      rlUnitGiveGold ; 84/D334
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wR0 gives all its gold to wR1 (what wR1 cannot hold goes back) and sets up the gold scene.
 
         phb
         php
@@ -2492,12 +2536,14 @@
       .al
       .xl
 
-      rlUnknown84D483 ; 84/D483
+      rlRequestUnitMenuMode2 ; 84/D483
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; For a player unit: sets mode 2 in wMapStateFlags (with bit 15) so the unit menu opens again; carry clear. Carry set for other armies.
 
         phb
         php
@@ -2538,11 +2584,13 @@
       .al
       .xl
 
-      rlUnknown84D4A2 ; 84/D4A2
+      rlRequestUnitMenuMode1 ; 84/D4A2
 
         .al
         .autsiz
         .databank ?
+
+        ; For a player unit: sets mode 1 in wMapStateFlags (with bit 15) and bit 15 of wUnknown000D79; carry clear. Carry set for other armies.
 
         phb
         php
@@ -2634,7 +2682,7 @@
       .al
       .xl
 
-      rlUnknown84F75C ; 84/F75C
+      rlCheckInventorySlotStaffUsable ; 84/F75C
 
         .al
         .xl
@@ -2649,12 +2697,14 @@
 
         ; 84/F765
 
-      rlUnknown84F765 ; 84/F765
+      rlCheckInventorySlotItemUsable ; 84/F765
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry set for an item in the slot that is not a staff and has targets.
 
         phb
         phk
@@ -2684,12 +2734,14 @@
 
         ; 84/F786
 
-      rlUnknown84F786 ; 84/F786
+      rlBuildUnitMenuSlotLists ; 84/F786
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Builds the unit menu's slot lists for slots 1-7: weapons with targets, staves with targets, weapons for assault, usable items and equippable weapons (only the last during canto). Clears unit state $0400 first.
 
         phb
         php
@@ -2722,13 +2774,13 @@
         jsl rlGetSelectedUnitStates
         bit #UnitStateCanto
         bne _F7DA
-        jsr rsUnknown84F7F5
-        jsr rsUnknown84F815
-        jsr rsUnknown84F845
-        jsr rsUnknown84F865
+        jsr rsAddSlotIfWeaponHasTargets
+        jsr rsAddSlotIfStaffHasTargets
+        jsr rsAddSlotIfAssaultHasTargets
+        jsr rsAddSlotIfItemUsable
 
         _F7DA
-        jsr rsUnknown84F877
+        jsr rsAddSlotIfEquippable
         inc wR0
         lda wR0
         cmp #$0008
@@ -2752,7 +2804,7 @@
 
         ; 84/F7F5
 
-      rsUnknown84F7F5 ; 84/F7F5
+      rsAddSlotIfWeaponHasTargets ; 84/F7F5
 
         .al
         .xl
@@ -2766,10 +2818,10 @@
         bcc _F814
         stz wR12
         lda #$0000
-        jsl rlUnknown84FED2
+        jsl rlFindTargetsForItemRange
         ora #$0000
         beq _F814
-        jml rsUnknown84F877._F889
+        jml rsAddSlotIfEquippable._F889
 
 
         _F814
@@ -2779,7 +2831,7 @@
 
         ; 84/F815
 
-      rsUnknown84F815 ; 84/F815
+      rsAddSlotIfStaffHasTargets ; 84/F815
 
         .al
         .xl
@@ -2789,11 +2841,11 @@
         lda #<>aUnitMenuStaffSlots
         sta wR1
         lda wR0
-        jsl rlUnknown84F75C
+        jsl rlCheckInventorySlotStaffUsable
         bcc _F82C
         jsl rlCheckStaffHasTargets
         bcc _F82C
-        jml rsUnknown84F877._F889
+        jml rsAddSlotIfEquippable._F889
 
 
         _F82C
@@ -2803,7 +2855,7 @@
 
         ; 84/F82D
 
-      rsUnknown84F82D ; 84/F82D
+      rsAddSlotIfStaffHasCastleTargets ; 84/F82D
 
         .al
         .xl
@@ -2813,11 +2865,11 @@
         lda #<>aUnitMenuCastleStaffSlots
         sta wR1
         lda wR0
-        jsl rlUnknown84F75C
+        jsl rlCheckInventorySlotStaffUsable
         bcc _F844
         jsl rlCheckStaffHasCastleTargets
         bcc _F844
-        jml rsUnknown84F877._F889
+        jml rsAddSlotIfEquippable._F889
 
 
         _F844
@@ -2827,7 +2879,7 @@
 
         ; 84/F845
 
-      rsUnknown84F845 ; 84/F845
+      rsAddSlotIfAssaultHasTargets ; 84/F845
 
         .al
         .xl
@@ -2841,10 +2893,10 @@
         bcc _F864
         stz wR12
         lda #$0004
-        jsl rlUnknown84FED2
+        jsl rlFindTargetsForItemRange
         ora #$0000
         beq _F864
-        jml rsUnknown84F877._F889
+        jml rsAddSlotIfEquippable._F889
 
 
         _F864
@@ -2854,7 +2906,7 @@
 
         ; 84/F865
 
-      rsUnknown84F865 ; 84/F865
+      rsAddSlotIfItemUsable ; 84/F865
 
         .al
         .xl
@@ -2864,9 +2916,9 @@
         lda #<>aUnitMenuItemSlots
         sta wR1
         lda wR0
-        jsl rlUnknown84F765
+        jsl rlCheckInventorySlotItemUsable
         bcc _F876
-        jml rsUnknown84F877._F889
+        jml rsAddSlotIfEquippable._F889
 
 
         _F876
@@ -2876,12 +2928,14 @@
 
         ; 84/F877
 
-      rsUnknown84F877 ; 84/F877
+      rsAddSlotIfEquippable ; 84/F877
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Adds slot wR0 to the list at wR1 if its weapon is equippable; _F889 adds it to any list, the equipped weapon first.
 
         lda #<>aUnitMenuEquipSlots
         sta wR1
@@ -2964,12 +3018,14 @@
       .al
       .xl
 
-      rlUnknown84F8D9 ; 84/F8D9
+      rlBuildCastleStaffSlotLists ; 84/F8D9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The staff and castle staff lists for a unit in its castle, from the castle's tile.
 
         phb
         php
@@ -3002,8 +3058,8 @@
         sta wR0
 
         _F91B
-        jsr rsUnknown84F815
-        jsr rsUnknown84F82D
+        jsr rsAddSlotIfStaffHasTargets
+        jsr rsAddSlotIfStaffHasCastleTargets
         inc wR0
         lda wR0
         cmp #$0008
@@ -3079,7 +3135,7 @@
       .al
       .xl
 
-      rlUnknown84FEAC ; 84/FEAC
+      rlGetSelectedUnitFirstWeaponCrit ; 84/FEAC
 
         .al
         .xl
@@ -3094,7 +3150,7 @@
 
         ; 84/FEB5
 
-      rlUnknown84FEB5 ; 84/FEB5
+      rlGetSelectedUnitFirstWeaponAttackSpeed ; 84/FEB5
 
         .al
         .xl
@@ -3117,13 +3173,15 @@
       .al
       .xl
 
-      rlUnknown84FEBE ; 84/FEBE
+      rlGetSelectedUnitFirstWeaponWeightUnused ; 84/FEBE
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing reaches this. The weight of the first weapon in the unit's inventory.
 
         phb
         php
@@ -3153,12 +3211,14 @@
       .al
       .xl
 
-      rlUnknown84FED2 ; 84/FED2
+      rlFindTargetsForItemRange ; 84/FED2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Finds targets with filter A in the item's range; filter 4 (assault) uses only range 2 and only for weapons with minimum range 1.
 
         phb
         php

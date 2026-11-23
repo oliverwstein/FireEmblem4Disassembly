@@ -752,7 +752,7 @@
         .autsiz
         .databank ?
 
-        ; Actions 1/8/14/15: clear $057C and run rlUnknown84DC1C between $0871 and $0873
+        ; Actions 1/8/14/15: clear $057C and run rlRunMapAction between $0871 and $0873
 
         lda #$0000
         sta wMapActionTargetType,b
@@ -760,7 +760,7 @@
         sta wR0
         lda wActiveActionUnit2DeploymentOffset,b
         sta wR1
-        jsl rlUnknown84DC1C
+        jsl rlRunMapAction
         rts
 
         .databank 0
@@ -835,7 +835,7 @@
         beq _B388
         sta wEventLocationEntry,b
         jsl rlGetEventLocationEntryID
-        jsl rlUnknown84CD8A
+        jsl rlQueueUnitRelocationToCastle
 
         _B388
         lda #$0001
@@ -864,7 +864,7 @@
         ; Action 5: raid/destroy village ($84/CF0F) and clear bit $01 of $0E7B
 
         ldx wActiveActionUnit1DeploymentOffset,b
-        jsl rlUnknown84CF0F
+        jsl rlUnitRaidVillage
         lda #$0001
         trb bUnknown000E7B,b
         rts
@@ -890,7 +890,7 @@
         ; Action 4: seize/capture castle ($84/CE21) and clear bit $01 of $0E7B
 
         ldx wActiveActionUnit1DeploymentOffset,b
-        jsl rlUnknown84CE21
+        jsl rlUnitSeizeCastle
         lda #1
         trb bUnknown000E7B,b
         rts
@@ -917,7 +917,7 @@
         ; Action 6: run castle entry/seize handler ($84/D03E) and clear bit $01 of $0E7B
 
         ldx wActiveActionUnit1DeploymentOffset,b
-        jsl rlUnknown84D03E
+        jsl rlUnitGuardCastle
         lda #$0001
         trb bUnknown000E7B,b
         rts
@@ -936,7 +936,7 @@
         ; Action 7: enter/guard occupied friendly castle ($84/D0B9) and clear bit $01 of $0E7B
 
         ldx wActiveUnitDeploymentOffset,b
-        jsl rlUnknown84D0B9
+        jsl rlUnitReturnIntoCastle
         lda #$0001
         trb bUnknown000E7B,b
         rts

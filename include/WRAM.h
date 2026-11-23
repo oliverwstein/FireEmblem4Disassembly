@@ -458,7 +458,7 @@
     wRoutineVariable2 .word ?           ; $000576
     wRoutineVariable3 .word ?           ; $000578
     wCurrentClassDataROMPointer .word ? ; $00057A
-    wMapActionTargetType .word ?        ; $00057C ; jump table index into aUnknown84DC3F
+    wMapActionTargetType .word ?        ; $00057C ; jump table index into aMapActionRoutines
     wSelectedInventorySlot .word ?      ; $00057E
     wTargetEventLocationEntry .word ?   ; $000580 ; castle/location event entry passed between map, AI, and return
     .word ? ; $000582
@@ -1474,7 +1474,7 @@
 
 
 
-  ; The unit menu's lists of usable inventory slots, built by rlUnknown84F786 at the
+  ; The unit menu's lists of usable inventory slots, built by rlBuildUnitMenuSlotLists at the
   ; unit's tile: each is a count byte, then up to seven slot numbers. The AI uses
   ; this area for other things (below). Scoped in tools/name_ram.py.
 
