@@ -136,7 +136,7 @@
       .byte $F2, \Arg
     .endsegment
 
-    ; $F1: rlUnknown95AEA2 (rsUnknown95BE17).
+    ; $F1: rlBattleSceneApplyStrike (rsUnknown95BE17).
     ANIM_CMD_F1 .segment Arg=0
       .byte $F1, \Arg
     .endsegment

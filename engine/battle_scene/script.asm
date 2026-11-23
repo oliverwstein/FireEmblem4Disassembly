@@ -981,9 +981,9 @@
         .autsiz
         .databank ?
 
-        ; Control command $FFFA: rlUnknown95AEA2.
+        ; Control command $FFFA: rlBattleSceneApplyStrike.
 
-        jsl rlUnknown95AEA2
+        jsl rlBattleSceneApplyStrike
         lda $7FE4BC
         clc
         adc #$0002
@@ -1040,10 +1040,10 @@
         .autsiz
         .databank ?
 
-        ; Control command $FFFB: rlUnknown95B006.
+        ; Control command $FFFB: rlBattleSceneStartHeal.
 
         phx
-        jsl rlUnknown95B006
+        jsl rlBattleSceneStartHeal
         lda $7FE4BC
         clc
         adc #$0002
@@ -1062,13 +1062,13 @@
         .autsiz
         .databank ?
 
-        ; Control command $FFF8: rlUnknown95B02B, unless bit 6 of $0AE0 is set.
+        ; Control command $FFF8: rlBattleSceneStartDrain, unless bit 6 of $0AE0 is set.
 
         phx
         lda bBattleSceneRoundState,b
         bit #BattleSceneRoundMissed
         bne _A3E5
-        jsl rlUnknown95B02B
+        jsl rlBattleSceneStartDrain
 
         _A3E5
         lda $7FE4BC
@@ -1576,9 +1576,9 @@
         tya
         and #$0002
         beq _BA37
-        lda $7FE4D6
+        lda lBattleSceneDialoguePointer
         sta lR18
-        lda $7FE4D7
+        lda lBattleSceneDialoguePointer+1
         sta lR18+1
         jsr rsUnknown96F7A8
         bra _BA44

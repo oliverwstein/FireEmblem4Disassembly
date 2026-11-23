@@ -149,8 +149,8 @@
         sta $7FFC71
         sta $7FE191
         sta $7FE193
-        sta $7FE195
-        sta $7FE196
+        sta bBattleSceneDamageFlash1
+        sta bBattleSceneDamageFlash2
         sta bBufferCOLDATA_0
         sta bBufferCOLDATA_1
         sta bBufferCOLDATA_2
@@ -169,7 +169,7 @@
         sta $7FE3ED
         sta $7FE3EC
         lda #$03
-        sta $7FE4CC
+        sta bBattleSceneStep
         stz bBattleSceneRoundState,b
         stz bBattleSceneStrikeFlags,b
         stz $0CC4,b
@@ -1729,7 +1729,7 @@
 
         ; The battle scene's work for one frame, in order: the rounds, the combatants' moves and movement, the effects, the script, HUD and palettes; then waits for VBlank and does the rest. Returns carry set when the scene has faded out (bBattleSceneFade).
 
-        jsl rlUnknown96941C
+        jsl rlBattleSceneRunIntroStep
         jsl rlBattleSceneCheckIntroDone
         jsr rsBattleSceneBuildBrightnessTable
         jsr rsUnknown959C14
@@ -1813,7 +1813,7 @@
         jsr rsUnknown959C64
         jsr rsBattleSceneCheckRoundsOver
         jsl rlBattleSceneCheckArenaBout
-        jsl rlUnknown9694C7
+        jsl rlBattleSceneRunEndStep
         bcc _8C22
         jsr rsBattleSceneCheckNotHeld
         bcc _8C22
@@ -1849,7 +1849,7 @@
         .autsiz
         .databank ?
 
-        ; Carry set (rlUnknown96941C has no intro step left) and wMusicID 0: sets BattleSceneRoundMayRun, which lets the rounds start.
+        ; Carry set (rlBattleSceneRunIntroStep has no intro step left) and wMusicID 0: sets BattleSceneRoundMayRun, which lets the rounds start.
 
         bcc _8C51
         lda wMusicID,b
@@ -4901,17 +4901,19 @@
 
         ; 95/9CDF
 
-      rlUnknown959CDF ; 95/9CDF
+      rlBattleSceneStartDamageFlash ; 95/9CDF
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Carry clear combatant 1, set combatant 2: 25 frames ($7FE195 or $7FE196).
+
         bcs _9CED
         sep #$20
         lda #$19
-        sta $7FE195
+        sta bBattleSceneDamageFlash1
         rep #$20
         bra _9CF7
 
@@ -4919,7 +4921,7 @@
         _9CED
         sep #$20
         lda #$19
-        sta $7FE196
+        sta bBattleSceneDamageFlash2
         rep #$20
 
         _9CF7
@@ -4937,7 +4939,7 @@
         .databank ?
 
         phx
-        lda $7FE195
+        lda bBattleSceneDamageFlash1
         bne _9D03
         jml _9DAA
 
@@ -4947,7 +4949,7 @@
         beq _9D23
         dec a
         sep #$20
-        sta $7FE195
+        sta bBattleSceneDamageFlash1
         rep #$20
         asl a
         tax
@@ -4961,11 +4963,11 @@
 
         _9D23
         .al
-        lda $7FE196
+        lda bBattleSceneDamageFlash2
         and #$00FF
         dec a
         sep #$20
-        sta $7FE196
+        sta bBattleSceneDamageFlash2
         rep #$20
         asl a
         tax
@@ -6099,7 +6101,7 @@
 
         ; 95/A44F
 
-      rlUnknown95A44F ; 95/A44F
+      rlBattleSceneStartFadeIn ; 95/A44F
 
         .al
         .xl
@@ -6116,12 +6118,14 @@
 
         ; 95/A45A
 
-      rlUnknown95A45A ; 95/A45A
+      rlBattleSceneStartFadeOut ; 95/A45A
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Fades the scene out (bBattleSceneFade $CF); also fades the music (sound $E0) when $7FFC9D is set, except in battle type $FF.
 
         sep #$20
         lda #$CF
@@ -6363,31 +6367,31 @@
 
         ; Carry set when A is one of the 13 holy weapons (Tyrfing ... Valkyrie Staff), whose bearer's first round opens with script $43.
 
-        cmp #$0015
+        cmp #Tyrfing
         beq _A628
-        cmp #$0014
+        cmp #Mystletainn
         beq _A628
-        cmp #$0016
+        cmp #Balmung
         beq _A628
-        cmp #$0023
+        cmp #Gungnir
         beq _A628
-        cmp #$0024
+        cmp #GaeBolg
         beq _A628
-        cmp #$002C
+        cmp #Helswath
         beq _A628
-        cmp #$0036
+        cmp #Yewfelle
         beq _A628
-        cmp #$0041
+        cmp #Valflame
         beq _A628
-        cmp #$0046
+        cmp #Mjolnir
         beq _A628
-        cmp #$004B
+        cmp #Forseti
         beq _A628
-        cmp #$0054
+        cmp #Loptous
         beq _A628
-        cmp #$0050
+        cmp #Naga
         beq _A628
-        cmp #$0062
+        cmp #ValkyrieStaff
         beq _A628
         clc
         bra _A629
@@ -6602,7 +6606,7 @@
         lda $7FFDA4
         bit #$0080
         beq _A75F
-        lda $7FE195
+        lda bBattleSceneDamageFlash1
         bne _A75F
         lda aBattleSceneCombatant1.HPSpeed,b
         ora aBattleSceneCombatant2.HPSpeed,b
@@ -6705,7 +6709,7 @@
         ldy #$0002
         sep #$20
         lda [lR18],y
-        sta bBattleSceneRoundHighByte,b
+        sta bBattleSceneRoundDamage,b
         rep #$20
         ldy #$0000
         sep #$20
@@ -7220,7 +7224,7 @@
         beq _ABCF
         sep #$20
         lda #$03
-        sta $7FE189
+        sta bBattleSceneHitKind
         sec
         rep #$20
         bra _ABD0
@@ -7289,7 +7293,7 @@
         lda #$01
 
         _AC28
-        sta $7FE189
+        sta bBattleSceneHitKind
         lda @l $000AF5,x
         and #$FC
         ora #$02
@@ -7392,7 +7396,7 @@
         lda #$01
 
         _AC95
-        sta $7FE189
+        sta bBattleSceneHitKind
         lda @l $000AF5,x
         and #$FC
         ora #$02
@@ -7466,7 +7470,7 @@
         ora #$02
         sta @l $000AF5,x
         lda #$03
-        sta $7FE189
+        sta bBattleSceneHitKind
         rep #$20
         rtl
 
@@ -7517,7 +7521,7 @@
         lda #$00
 
         _AD04
-        sta $7FE189
+        sta bBattleSceneHitKind
         rep #$20
         phx
         jsr rsBattleSceneGetAttackStyle
@@ -7846,15 +7850,15 @@
         .databank ?
 
         sep #$20
-        lda $7FE189
+        lda bBattleSceneHitKind
         cmp #$03
         beq _AE9B
         lda #$02
-        sta $7FE189
+        sta bBattleSceneHitKind
 
         _AE9B
         rep #$20
-        jsl rlUnknown95AEA2
+        jsl rlBattleSceneApplyStrike
         rtl
 
         .databank 0
@@ -7869,12 +7873,14 @@
       .al
       .xl
 
-      rlUnknown95AEA2 ; 95/AEA2
+      rlBattleSceneApplyStrike ; 95/AEA2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The strike lands (battle scene script command $FFFA): starts the defender's HP loss by bBattleSceneRoundDamage, one point a frame, its damage flash, the knockback and the hit sound; with EarthSword or Sol the attacker regains the damage (rlBattleSceneStartDrain).
 
         phx
         lda bBattleSceneStrikeFlags,b
@@ -7913,46 +7919,46 @@
         lda bBattleSceneAttackerSide,b
         bit #$0080
         beq _AF11
-        lda bBattleSceneRoundHighByte,b
+        lda bBattleSceneRoundDamage,b
         and #$00FF
         beq _AF00
         sta wR0
         jsr rsBattleSceneStartHPLoss1
         clc
-        jsl rlUnknown959CDF
+        jsl rlBattleSceneStartDamageFlash
 
         _AF00
-        jsl rlUnknown95CA88
-        jsl rlUnknown95AF55
+        jsl rlBattleSceneSetKnockback
+        jsl rlBattleScenePlayHitSound
         jsl rlUnknown969F6A
         lda aBattleSceneCombatant2.Weapon,b
         bra _AF33
 
 
         _AF11
-        lda bBattleSceneRoundHighByte,b
+        lda bBattleSceneRoundDamage,b
         and #$00FF
         beq _AF23
         sta wR0
         jsr rsBattleSceneStartHPLoss2
         sec
-        jsl rlUnknown959CDF
+        jsl rlBattleSceneStartDamageFlash
 
         _AF23
-        jsl rlUnknown95CA88
-        jsl rlUnknown95AF55
+        jsl rlBattleSceneSetKnockback
+        jsl rlBattleScenePlayHitSound
         jsl rlUnknown969F6A
         lda @l $000D52
 
         _AF33
-        cmp #$0010
+        cmp #EarthSword
         beq _AF41
         lda $7FFC5D
         bit #$0004
         beq _AF45
 
         _AF41
-        jsl rlUnknown95B02B
+        jsl rlBattleSceneStartDrain
 
         _AF45
         sep #$20
@@ -7967,18 +7973,20 @@
 
         ; 95/AF55
 
-      rlUnknown95AF55 ; 95/AF55
+      rlBattleScenePlayHitSound ; 95/AF55
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Sound by bBattleSceneHitKind ($91-$94), $95 for no damage, panned to the defender; a critical adds $50. A blow on JuliusChFinal by combatant 1 that ends the battle slows the fade and sets BattleSceneFlagToMapMode3.
+
         phx
-        lda bBattleSceneRoundHighByte,b
+        lda bBattleSceneRoundDamage,b
         and #$00FF
         beq _AFBA
-        lda $7FE189
+        lda bBattleSceneHitKind
         and #$00FF
         cmp #$0003
         beq _AF83
@@ -8005,7 +8013,7 @@
         cmp #$0000
         bne _AFB5
         lda aBattleSceneCombatant2.Character,b
-        cmp #$01C6
+        cmp #JuliusChFinal
         bne _AFB5
         lda wBattleType
         and #$00FF
@@ -8016,7 +8024,7 @@
         lda wBattleSceneFlags
         ora #BattleSceneFlagToMapMode3
         sta wBattleSceneFlags
-        jsl rlUnknown969603
+        jsl rlBattleSceneFadeMusicForJulius
 
         _AFB5
         lda #$0094
@@ -8074,17 +8082,19 @@
 
         ; 95/B006
 
-      rlUnknown95B006 ; 95/B006
+      rlBattleSceneStartHeal ; 95/B006
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Battle scene script command $FFFB: the target regains bBattleSceneRoundDamage HP, 4 frames a point.
+
         lda bBattleSceneAttackerSide,b
         bit #$0080
         beq _B01D
-        lda bBattleSceneRoundHighByte,b
+        lda bBattleSceneRoundDamage,b
         and #$00FF
         sta wR0
         asl a
@@ -8094,7 +8104,7 @@
 
 
         _B01D
-        lda bBattleSceneRoundHighByte,b
+        lda bBattleSceneRoundDamage,b
         and #$00FF
         sta wR0
         asl a
@@ -8108,17 +8118,19 @@
 
         ; 95/B02B
 
-      rlUnknown95B02B ; 95/B02B
+      rlBattleSceneStartDrain ; 95/B02B
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; The attacker regains bBattleSceneRoundDamage HP, 4 frames a point.
+
         lda bBattleSceneAttackerSide,b
         bit #$0080
         bne _B042
-        lda bBattleSceneRoundHighByte,b
+        lda bBattleSceneRoundDamage,b
         and #$00FF
         sta wR0
         asl a
@@ -8128,7 +8140,7 @@
 
 
         _B042
-        lda bBattleSceneRoundHighByte,b
+        lda bBattleSceneRoundDamage,b
         and #$00FF
         sta wR0
         asl a
@@ -10278,7 +10290,7 @@
         .autsiz
         .databank ?
 
-        jsl rlUnknown95AEA2
+        jsl rlBattleSceneApplyStrike
         lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
@@ -12546,12 +12558,14 @@
       .al
       .xl
 
-      rlUnknown95CA88 ; 95/CA88
+      rlBattleSceneSetKnockback ; 95/CA88
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets the defender's knockback in $0AF1/$0AF2 by its class and which side it stands on.
 
         phx
         phy
@@ -17524,9 +17538,9 @@
         .databank ?
 
         jsr rsUnknown95E834
-        lda $7FE4D7
+        lda lBattleSceneDialoguePointer+1
         sta lR18+1
-        lda $7FE4D6
+        lda lBattleSceneDialoguePointer
         sta lR18
         jsl rlUnknown918102
         lda #$0000
@@ -17548,9 +17562,9 @@
         .databank ?
 
         jsr rsUnknown95E834
-        lda $7FE4D7
+        lda lBattleSceneDialoguePointer+1
         sta lR18+1
-        lda $7FE4D6
+        lda lBattleSceneDialoguePointer
         sta lR18
         jsl rlUnknown918102
         lda #$0000
@@ -17682,12 +17696,14 @@
 
         ; 95/E8CE
 
-      rlUnknown95E8CE ; 95/E8CE
+      rlBattleSceneOpenMessageWindow ; 95/E8CE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Before any of the messages below (a broken weapon, an item, gold stolen or got): starts script $2A, which opens the message window.
 
         lda aActionStructUnit1.WeaponInventorySlot
         bmi _E8E9
@@ -17714,20 +17730,22 @@
 
         ; 95/E8FD
 
-      rlUnknown95E8FD ; 95/E8FD
+      rlBattleSceneShowItemObtained ; 95/E8FD
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; When aActionStructUnit1 obtained an item: dialogueBattleSceneItemObtained, script $2C, sound $92.
+
         lda aActionStructUnit1.ObtainedItem
         cmp #$FFFF
         beq _E930
         lda #(`dialogueBattleSceneItemObtained)<<8
-        sta $7FE4D7
+        sta lBattleSceneDialoguePointer+1
         lda #<>dialogueBattleSceneItemObtained
-        sta $7FE4D6
+        sta lBattleSceneDialoguePointer
         lda aActionStructUnit1.ObtainedItem
         sta aDialogue.wItemID,b
         lda #$002C
@@ -17744,19 +17762,21 @@
 
         ; 95/E931
 
-      rlUnknown95E931 ; 95/E931
+      rlBattleSceneShowGoldObtained ; 95/E931
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; When aActionStructUnit1 stole gold: dialogueBattleSceneGoldObtained, script $2F, sound $92.
+
         lda aActionStructUnit1.ObtainedStealMoney
         beq _E961
         lda #(`dialogueBattleSceneGoldObtained)<<8
-        sta $7FE4D7
+        sta lBattleSceneDialoguePointer+1
         lda #<>dialogueBattleSceneGoldObtained
-        sta $7FE4D6
+        sta lBattleSceneDialoguePointer
         lda aActionStructUnit1.ObtainedStealMoney
         sta aDialogue.wNumber1,b
         lda #$002F
@@ -17773,19 +17793,21 @@
 
         ; 95/E962
 
-      rlUnknown95E962 ; 95/E962
+      rlBattleSceneShowGoldStolen ; 95/E962
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; When aActionStructUnit2 stole gold from the player's unit: dialogueBattleSceneGoldStolen, script $2F, sound $93.
+
         lda aActionStructUnit2.ObtainedStealMoney
         beq _E992
         lda #(`dialogueBattleSceneGoldStolen)<<8
-        sta $7FE4D7
+        sta lBattleSceneDialoguePointer+1
         lda #<>dialogueBattleSceneGoldStolen
-        sta $7FE4D6
+        sta lBattleSceneDialoguePointer
         lda aActionStructUnit2.ObtainedStealMoney
         sta aDialogue.wNumber1,b
         lda #$002F
@@ -17802,19 +17824,21 @@
 
         ; 95/E993
 
-      rlUnknown95E993 ; 95/E993
+      rlBattleSceneShowWeaponBroke ; 95/E993
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; When aActionStructUnit1's weapon broke (no inventory slot left): dialogueBattleSceneWeaponBroke, script $44, sound $93.
+
         lda aActionStructUnit1.WeaponInventorySlot
         bpl _E9C3
         lda #(`dialogueBattleSceneWeaponBroke)<<8
-        sta $7FE4D7
+        sta lBattleSceneDialoguePointer+1
         lda #<>dialogueBattleSceneWeaponBroke
-        sta $7FE4D6
+        sta lBattleSceneDialoguePointer
         lda aActionStructUnit1.WeaponID
         sta aDialogue.wItemID,b
         lda #$0044
@@ -17831,12 +17855,14 @@
 
         ; 95/E9C4
 
-      rlUnknown95E9C4 ; 95/E9C4
+      rlBattleSceneShowWaitForPress ; 95/E9C4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; After a message: dialogueBattleSceneWaitPress, script $30.
 
         lda aActionStructUnit1.WeaponInventorySlot
         bmi _E9D9
@@ -17848,9 +17874,9 @@
 
         _E9D9
         lda #(`dialogueBattleSceneWaitPress)<<8
-        sta $7FE4D7
+        sta lBattleSceneDialoguePointer+1
         lda #<>dialogueBattleSceneWaitPress
-        sta $7FE4D6
+        sta lBattleSceneDialoguePointer
         lda #$0030
         jsl rlStartBattleSceneScript
 
@@ -18374,7 +18400,7 @@
 
       aUnknownE000B0 ; E0/00B0
 
-        ; Read by rlUnknown9686FC, rlUnknown968982, rlUnknown968A57, rlUnknown96F676.
+        ; Read by rlUnknown9686FC, rlUnknown968982, rlUnknown968A57, rlBattleSceneShowLevelUpBanner.
 
         .byte $C4, $09, $85, $00, $F6, $7F, $1F, $00, $03, $00, $BF, $7F, $CE, $4A, $A4, $14
         .byte $FF, $7F, $00, $04, $D3, $57, $AA, $3E

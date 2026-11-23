@@ -764,12 +764,14 @@
 
         ; 96/8300
 
-      rlUnknown968300 ; 96/8300
+      rlBattleSceneShowExperience ; 96/8300
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When aActionStructUnit1 gained experience, starts script 0 (the experience bar).
 
         lda wBattleSceneExperienceGained,b
         beq _830C
@@ -1273,12 +1275,14 @@
 
         ; 96/865C
 
-      rlUnknown96865C ; 96/865C
+      rlBattleScenePrepareLevelUp ; 96/865C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When aActionStructUnit1 gained a level, starts the script that leads into the level up: $40 when bit 0 of $7FF5AF is set, $3E for a staff of range 3 or more (Physic, Restore, Silence, Sleep, Berserk), $32 when combatant 1 attacks, else $3D.
 
         lda aActionStructUnit1.GainedLevels
         beq _86BA
@@ -1295,15 +1299,15 @@
         cmp #$0003
         bcc _86A2
         lda aBattleSceneCombatant1.Weapon,b
-        cmp #$005B
+        cmp #PhysicStaff
         beq _8699
-        cmp #$0061
+        cmp #RestoreStaff
         beq _8699
-        cmp #$0063
+        cmp #SilenceStaff
         beq _8699
-        cmp #$0064
+        cmp #SleepStaff
         beq _8699
-        cmp #$0065
+        cmp #BerserkStaff
         bne _86A2
 
         _8699
@@ -1332,12 +1336,14 @@
 
         ; 96/86BB
 
-      rlUnknown9686BB ; 96/86BB
+      rlBattleSceneEndStepJulius2 ; 96/86BB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When the battle ends on Julius: script $4B if aActionStructUnit1 gained a level and bit 0 of $7FF5AF is set, else $3D.
 
         lda wBattleSceneFlags
         bit #BattleSceneFlagToMapMode3
@@ -1364,12 +1370,14 @@
 
         ; 96/86E7
 
-      rlUnknown9686E7 ; 96/86E7
+      rlBattleSceneShowLevelUp ; 96/86E7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When aActionStructUnit1 gained a level, fades the music (sound $E0) and starts script 1 (the stat gains).
 
         lda aActionStructUnit1.GainedLevels
         beq _86FB
@@ -1513,9 +1521,9 @@
         cmp #$0000
         beq _883F
         lda wBattleQuotePointer
-        sta $7FE4D6
+        sta lBattleSceneDialoguePointer
         lda wBattleQuotePointer+1
-        sta $7FE4D7
+        sta lBattleSceneDialoguePointer+1
         lda #$002D
         jsl rlStartBattleSceneScript
 
@@ -1526,12 +1534,14 @@
 
         ; 96/8840
 
-      rlUnknown968840 ; 96/8840
+      rlBattleSceneShowDeathQuote ; 96/8840
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Unless the battle ends on Julius: when the battle has a death quote, sets it as the scene's dialogue and starts its script.
 
         lda wBattleSceneFlags
         bit #BattleSceneFlagToMapMode3
@@ -1540,9 +1550,9 @@
         cmp #$0000
         beq _888F
         lda wDeathQuotePointer
-        sta $7FE4D6
+        sta lBattleSceneDialoguePointer
         lda wDeathQuotePointer+1
-        sta $7FE4D7
+        sta lBattleSceneDialoguePointer+1
         lda aActionStructUnit1.GainedExperience
         bne _8888
         lda aActionStructUnit1.ObtainedItem
@@ -1571,12 +1581,14 @@
 
         ; 96/8890
 
-      rlUnknown968890 ; 96/8890
+      rlBattleSceneShowJuliusQuote ; 96/8890
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When the battle ends on Julius and has a death quote, starts script $4A with it.
 
         lda wBattleSceneFlags
         bit #BattleSceneFlagToMapMode3
@@ -1585,9 +1597,9 @@
         cmp #$0000
         beq _88B9
         lda wDeathQuotePointer
-        sta $7FE4D6
+        sta lBattleSceneDialoguePointer
         lda wDeathQuotePointer+1
-        sta $7FE4D7
+        sta lBattleSceneDialoguePointer+1
         lda #$004A
         jsl rlStartBattleSceneScript
 
@@ -2990,14 +3002,16 @@
       .al
       .xl
 
-      rlUnknown96941C ; 96/941C
+      rlBattleSceneRunIntroStep ; 96/941C
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda $7FE4CC
+        ; While bBattleSceneStep counts the intro steps (bit 7 clear) and no fade or skill banner runs, takes the next of aBattleSceneIntroSteps. Carry set when none is left.
+
+        lda bBattleSceneStep
         bit #$0080
         bne _947B
         and #$007F
@@ -3008,10 +3022,10 @@
         lda bBattleSceneFade
         bit #$0080
         bne _9478
-        lda $7FE4CC
+        lda bBattleSceneStep
         dec a
         sep #$20
-        sta $7FE4CC
+        sta bBattleSceneStep
         rep #$20
         and #$007F
         sta wR0
@@ -3035,10 +3049,10 @@
         asl a
         adc wR0
         tax
-        lda aUnknown998437,x
+        lda aBattleSceneIntroSteps,x
         sta lR23
         sep #$20
-        lda aUnknown998437+2,x
+        lda aBattleSceneIntroSteps+2,x
         sta lR23+2
         pha
         plb
@@ -3070,12 +3084,14 @@
       .al
       .xl
 
-      rlUnknown96947D ; 96/947D
+      rlBattleSceneWaitForIntro ; 96/947D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Once $7FE4B8 is 0, sets bBattleSceneStep to the 21 end steps and clears bit 3 of $7FE1B3.
 
         lda $7FE4B7
         lda $7FE4B8
@@ -3083,7 +3099,7 @@
         bne _94A0
         sep #$20
         lda #$95
-        sta $7FE4CC
+        sta bBattleSceneStep
         lda $7FE1B3
         and #$F7
         sta $7FE1B3
@@ -3093,9 +3109,9 @@
 
         _94A0
         sep #$20
-        lda $7FE4CC
+        lda bBattleSceneStep
         inc a
-        sta $7FE4CC
+        sta bBattleSceneStep
         rep #$20
 
         _94AD
@@ -3105,12 +3121,14 @@
 
         ; 96/94AE
 
-      rlUnknown9694AE ; 96/94AE
+      rlBattleSceneShowBG3 ; 96/94AE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The first end step: sets bit 3 of $7FE1B3 and scrolls BG3 to (0, $1FF).
 
         sep #$20
         lda $7FE1B3
@@ -3135,18 +3153,20 @@
       .al
       .xl
 
-      rlUnknown9694C7 ; 96/94C7
+      rlBattleSceneRunEndStep ; 96/94C7
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Carry in set (the rounds are over): runs the next of aBattleSceneEndSteps, last to first, one each time nothing else runs; each may start a battle scene script.
+
         bcc _952B
         lda bBattleSceneFade
         bit #$0080
         bne _9527
-        lda $7FE4CC
+        lda bBattleSceneStep
         bit #$0080
         beq _952A
         and #$007F
@@ -3155,7 +3175,7 @@
         sep #$20
         pha
         ora #$80
-        sta $7FE4CC
+        sta bBattleSceneStep
         pla
         rep #$20
         sta wR0
@@ -3179,10 +3199,10 @@
         asl a
         adc wR0
         tax
-        lda aUnknown998440,x
+        lda aBattleSceneEndSteps,x
         sta lR23
         sep #$20
-        lda aUnknown998440+2,x
+        lda aBattleSceneEndSteps+2,x
         sta lR23+2
         pha
         plb
@@ -3412,12 +3432,14 @@
       .al
       .xl
 
-      rlUnknown969603 ; 96/9603
+      rlBattleSceneFadeMusicForJulius ; 96/9603
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sound command $C0, except in battle type $FF.
 
         lda wBattleType
         and #$00FF
@@ -4565,7 +4587,7 @@
         lda bBattleSceneStrikeFlags,b
         bit #$0080
         beq _9CFF
-        jsl rlUnknown96F341
+        jsl rlBattleSceneCheckJuliusDefends
         bcs _9CFF
         lda wBattleAnimationDefenderOffset,b
         cmp #$0000
@@ -5241,12 +5263,14 @@
       .al
       .xl
 
-      rlUnknown96A20E ; 96/A20E
+      rlBattleSceneEndStepJulius ; 96/A20E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When the battle ends on Julius, starts script $4C.
 
         lda wBattleSceneFlags
         bit #BattleSceneFlagToMapMode3
@@ -9503,9 +9527,9 @@
 
 
         _CADA
-        lda $7FE4D6
+        lda lBattleSceneDialoguePointer
         sta lR18
-        lda $7FE4D7
+        lda lBattleSceneDialoguePointer+1
         sta lR18+1
         jsr rsUnknown96F7A8
         jsl rlGetCharacterPortraitData
@@ -16331,17 +16355,19 @@
       .al
       .xl
 
-      rlUnknown96F315 ; 96/F315
+      rlBattleSceneEndStepWaitScript ; 96/F315
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; When bBattleSceneStrikeFlags bit 7 is set and the defender is not Julius in the final chapter, starts script $34.
+
         lda bBattleSceneStrikeFlags,b
         bit #$0080
         beq _F32A
-        jsl rlUnknown96F341
+        jsl rlBattleSceneCheckJuliusDefends
         bcs _F32A
         lda #$0034
         jsl rlStartBattleSceneScript
@@ -16353,17 +16379,19 @@
 
         ; 96/F32B
 
-      rlUnknown96F32B ; 96/F32B
+      rlBattleSceneEndStepWaitScript2 ; 96/F32B
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; When bBattleSceneStrikeFlags bit 7 is set and the defender is not Julius in the final chapter, starts script $31.
+
         lda bBattleSceneStrikeFlags,b
         bit #$0080
         beq _F340
-        jsl rlUnknown96F341
+        jsl rlBattleSceneCheckJuliusDefends
         bcs _F340
         lda #$0031
         jsl rlStartBattleSceneScript
@@ -16375,18 +16403,20 @@
 
         ; 96/F341
 
-      rlUnknown96F341 ; 96/F341
+      rlBattleSceneCheckJuliusDefends ; 96/F341
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Carry set when combatant 1 attacks and combatant 2 is JuliusChFinal.
+
         lda wBattleAnimationAttackerOffset,b
         cmp #$0000
         bne _F354
         lda aBattleSceneCombatant2.Character,b
-        cmp #$01C6
+        cmp #JuliusChFinal
         bne _F354
         sec
         bra _F355
@@ -16561,12 +16591,14 @@
       .al
       .xl
 
-      rlUnknown96F558 ; 96/F558
+      rlBattleSceneEndStepType2Script ; 96/F558
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; In battle type 2, starts script $33.
 
         lda wBattleType
         and #$00FF
@@ -16582,12 +16614,14 @@
 
         ; 96/F56C
 
-      rlUnknown96F56C ; 96/F56C
+      rlBattleSceneEndStepType2Script2 ; 96/F56C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; In battle type 2, starts script $35.
 
         lda wBattleType
         and #$00FF
@@ -16798,12 +16832,14 @@
       .al
       .xl
 
-      rlUnknown96F676 ; 96/F676
+      rlBattleSceneShowLevelUpBanner ; 96/F676
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When aActionStructUnit1 gained a level, copies the banner's colors and starts script $3B.
 
         phx
         lda aActionStructUnit1.GainedLevels
@@ -16849,42 +16885,42 @@
         inc y
         lda [lR18],y
         and #$00FF
-        cmp #$0013
+        cmp #SkillIDAstra
         bne _F6A9
         jsl rlBattleSceneShowAstra
         bra _F6DE
 
 
         _F6A9
-        cmp #$0014
+        cmp #SkillIDLuna
         bne _F6B4
         jsl rlBattleSceneShowLuna
         bra _F6DE
 
 
         _F6B4
-        cmp #$0015
+        cmp #SkillIDSol
         bne _F6BF
         jsl rlBattleSceneShowSol
         bra _F6DE
 
 
         _F6BF
-        cmp #$0016
+        cmp #SkillIDHoly
         bne _F6CA
         jsl rlBattleSceneShowHoly
         bra _F6DE
 
 
         _F6CA
-        cmp #$0017
+        cmp #SkillIDDarkness
         bne _F6D5
         jsl rlBattleSceneShowDarkness
         bra _F6DE
 
 
         _F6D5
-        cmp #$0002
+        cmp #SkillIDPavise
         bne _F6DE
         jsl rlBattleSceneShowPavise
 
@@ -18006,41 +18042,41 @@
 
         ; 99/8437
 
-      aUnknown998437 ; 99/8437
+      aBattleSceneIntroSteps ; 99/8437
 
-        ; Read by rlUnknown96941C: routines it calls.
+        ; Read by rlBattleSceneRunIntroStep: routines it calls.
 
-        .long rlUnknown96947D
+        .long rlBattleSceneWaitForIntro
         .long rlUnknown96881F
-        .long rlUnknown95A44F
+        .long rlBattleSceneStartFadeIn
 
         ; 99/8440
 
-      aUnknown998440 ; 99/8440
+      aBattleSceneEndSteps ; 99/8440
 
-        ; Read by rlUnknown9694C7: routines it calls.
+        ; Read by rlBattleSceneRunEndStep: routines it calls.
 
-        .long rlUnknown95A45A
-        .long rlUnknown968890
-        .long rlUnknown96A20E
-        .long rlUnknown9686BB
-        .long rlUnknown95E9C4
-        .long rlUnknown95E993
-        .long rlUnknown95E8FD
-        .long rlUnknown95E962
-        .long rlUnknown95E931
-        .long rlUnknown95E8CE
-        .long rlUnknown96F56C
-        .long rlUnknown9686E7
-        .long rlUnknown96865C
-        .long rlUnknown96F676
-        .long rlUnknown968300
-        .long rlUnknown96F32B
+        .long rlBattleSceneStartFadeOut
+        .long rlBattleSceneShowJuliusQuote
+        .long rlBattleSceneEndStepJulius
+        .long rlBattleSceneEndStepJulius2
+        .long rlBattleSceneShowWaitForPress
+        .long rlBattleSceneShowWeaponBroke
+        .long rlBattleSceneShowItemObtained
+        .long rlBattleSceneShowGoldStolen
+        .long rlBattleSceneShowGoldObtained
+        .long rlBattleSceneOpenMessageWindow
+        .long rlBattleSceneEndStepType2Script2
+        .long rlBattleSceneShowLevelUp
+        .long rlBattleScenePrepareLevelUp
+        .long rlBattleSceneShowLevelUpBanner
+        .long rlBattleSceneShowExperience
+        .long rlBattleSceneEndStepWaitScript2
         .long rlUnknown969CA1
-        .long rlUnknown968840
-        .long rlUnknown96F315
-        .long rlUnknown96F558
-        .long rlUnknown9694AE
+        .long rlBattleSceneShowDeathQuote
+        .long rlBattleSceneEndStepWaitScript
+        .long rlBattleSceneEndStepType2Script
+        .long rlBattleSceneShowBG3
 
         ; 99/847F
 

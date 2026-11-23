@@ -829,7 +829,7 @@
     bBattleSceneStrikeFlags   .byte ? ; $000AE4 ; $08 miss, $10 struck, $40 critical, $80 waiting
     .byte ?                           ; $000AE5
     bBattleSceneRanged        .byte ? ; $000AE6 ; bit 0 is meant to be the round's ranged bit, but the set is never stored
-    bBattleSceneRoundHighByte .byte ? ; $000AE7 ; the high byte of the current round entry
+    bBattleSceneRoundDamage .byte ? ; $000AE7 ; the high byte of the round entry: the damage
     bBattleSceneAttackerSide  .byte ? ; $000AE8 ; $80: combatant 2 attacks
 
   .endvirtual
@@ -844,6 +844,31 @@
     bBattleSceneLevel           .byte ? ; $000D4D ; level plus levels gained
     aBattleSceneCombatant1 .dstruct structBattleSceneCombatant ; $000D4E
     aBattleSceneCombatant2 .dstruct structBattleSceneCombatant ; $000D5C
+
+  .endvirtual
+
+  .virtual $7FE189
+
+    bBattleSceneHitKind .byte ? ; $7FE189 ; picks the hit sound: 0-2 by the attack, 3 a critical or a heavy blow
+
+  .endvirtual
+
+  .virtual $7FE195
+
+    bBattleSceneDamageFlash1 .byte ? ; $7FE195 ; frames left of combatant 1's damage flash
+    bBattleSceneDamageFlash2 .byte ? ; $7FE196
+
+  .endvirtual
+
+  .virtual $7FE4CC
+
+    bBattleSceneStep .byte ? ; $7FE4CC ; steps left: intro steps, then (bit 7) end steps
+
+  .endvirtual
+
+  .virtual $7FE4D6
+
+    lBattleSceneDialoguePointer .long ? ; $7FE4D6 ; the text a message script prints
 
   .endvirtual
 
