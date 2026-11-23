@@ -612,7 +612,7 @@
     wUnknown0007D8 .word ?              ; $0007D8
     wMovingUnitSpriteState .word ?      ; $0007DA ; 0 idle, 1 selected, 2 moving/acting
     wMovingUnitSpriteFrame .word ?      ; $0007DC ; moving map sprite frame index
-    wMovingUnitSpriteTimer .word ?      ; $0007DE ; countdown timer reloaded from aUnknown88CBE8
+    wMovingUnitSpriteTimer .word ?      ; $0007DE ; countdown timer reloaded from aMapSpriteWalkFrameDelays
     wMapActionMode .word ?              ; $0007E0 ; active map action / menu selection mode
 
   .endvirtual

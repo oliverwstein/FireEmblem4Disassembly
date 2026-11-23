@@ -15565,8 +15565,8 @@
         lda wGameStateRoutine1,b
         sta aProcSystem.aBody7,b,x
         stz wGameStateRoutine1,b
-        jsl rlUnknown88CD53
-        jsl rlUnknown88CD61
+        jsl rlPauseMapSpriteAnimation
+        jsl rlPauseMapTileAnimation
         lda #$0000
         sta aProcSystem.aHeaderBitfield,b,x
         sta aProcSystem.aBody3,b,x
@@ -16328,8 +16328,8 @@
         lda $7F4C07
         ora #$0002
         sta $7F4C07
-        jsl rlUnknown88CD4C
-        jsl rlUnknown88CD5A
+        jsl rlResumeMapSpriteAnimation
+        jsl rlResumeMapTileAnimation
         jsl rlProcEngineFreeProc
         rtl
 

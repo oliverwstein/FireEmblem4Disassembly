@@ -28,8 +28,8 @@
         lda #1
         sta $7F50CB
 
-        jsl rlUnknown88CD53
-        jsl rlUnknown88CD61
+        jsl rlPauseMapSpriteAnimation
+        jsl rlPauseMapTileAnimation
         rtl
 
         .databank 0
@@ -189,8 +189,8 @@
         ora #$0002
         sta $7F4C07
 
-        jsl rlUnknown88CD4C
-        jsl rlUnknown88CD5A
+        jsl rlResumeMapSpriteAnimation
+        jsl rlResumeMapTileAnimation
 
         ldx #$00DE
 

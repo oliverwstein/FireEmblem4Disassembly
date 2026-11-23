@@ -96,7 +96,7 @@
           rts
 
         +
-        jsr rsUnknown88C1BF
+        jsr rsJumpToNextCastle
         rts
 
         .databank 0
@@ -141,7 +141,7 @@
         jsl rlGetSelectedUnitFactionSlot
         cmp wActiveFactionSlot,b
         bne _B081
-        jsr rsUnknown88B8E9
+        jsr rsSetMoveDestinationAtCursor
         bcs _B067
         lda #$000A
         jsl rlPlaySoundEffect
@@ -178,7 +178,7 @@
         stz wMovingUnitSpriteState,b
         ldx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitUnsetHiddenIfAlive
-        jsr rsUnknown88BBD3
+        jsr rsHideRangeOverlay
         rts
 
         .databank 0
@@ -195,7 +195,7 @@
         lda #$0000
         sta wUnknown0007D8,b
         stz wMovingUnitSpriteState,b
-        jsr rsUnknown88BBD3
+        jsr rsHideRangeOverlay
         lda wActiveUnitDeploymentOffset,b
         sta wR0
         lda wMapTargetDeploymentOffset,b
@@ -297,7 +297,7 @@
         lda wActiveUnitDeploymentOffset,b
         jsl rlMoveCursorToUnit
         jsl rlDeployedUnitUnsetHiddenIfAlive
-        jsr rsUnknown88BBD3
+        jsr rsHideRangeOverlay
         lda wMapActionMode,b
         cmp #$0001
         beq _B16D
@@ -337,7 +337,7 @@
         sta wMapCursorYTile,b
         lda #$0005
         jsl rlPlaySoundEffect
-        jsr rsUnknown88BBD3
+        jsr rsHideRangeOverlay
         stz wUnknown0007D8,b
         jsl rlOpenUnitMenu
         lda #$0008

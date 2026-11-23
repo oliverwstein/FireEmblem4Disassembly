@@ -2283,7 +2283,7 @@
         clc
         adc wR2
         sta wR1
-        jsl rlUnknown88DD9C
+        jsl rlUploadMapSpriteFrame
         plb
         .databank $9E
         plx
@@ -2551,14 +2551,14 @@
 
         _8FEA
         plx
-        jsl rlUnknown88CD4C
+        jsl rlResumeMapSpriteAnimation
         lda wBattleType
         and #$00FF
         cmp #$0003
         beq _9007
         lda $7F4C87
         bne _900B
-        jsl rlUnknown88CD5A
+        jsl rlResumeMapTileAnimation
         bra _900B
 
 
@@ -6668,7 +6668,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown88C2BA
+        jsl rlStepCameraTowardsTarget
         bcc _A8B8
         plx
         lda #<>rlUnknown9ECAD1
@@ -9428,8 +9428,8 @@
         sta aProcSystem.aBody7,b,x
 
         stz wGameStateRoutine1,b
-        jsl rlUnknown88CD53
-        jsl rlUnknown88CD61
+        jsl rlPauseMapSpriteAnimation
+        jsl rlPauseMapTileAnimation
 
         lda #1
         sta aProcSystem.aBody4,b,x
@@ -9926,7 +9926,7 @@
         and #$00FF
         cmp #$0003
         beq _C9A4
-        jsl rlUnknown88C355
+        jsl rlSetCameraTargetForCursor
         bcc _C9A4
         lda #<>rlUnknown9EC9AB
         sta aProcSystem.aHeaderOnCycle,b,x
@@ -9952,7 +9952,7 @@
         .databank ?
 
         phx
-        jsl rlUnknown88C2BA
+        jsl rlStepCameraTowardsTarget
         bcc _C9BB
         plx
         lda #<>rlUnknown9EC9BD
@@ -10946,8 +10946,8 @@
         sta aProcSystem.aHeaderBitfield,b,x
         lda $7E4EAF
         sta aActionStructUnit1.ClassID
-        jsl rlUnknown88CD53
-        jsl rlUnknown88CD61
+        jsl rlPauseMapSpriteAnimation
+        jsl rlPauseMapTileAnimation
         ply
         rtl
 
@@ -11330,8 +11330,8 @@
         _D3D7
         lda #$0001
         sta aMapAction.wMapBattlePhaseFlag
-        jsl rlUnknown88CD4C
-        jsl rlUnknown88CD5A
+        jsl rlResumeMapSpriteAnimation
+        jsl rlResumeMapTileAnimation
         plx
         lda aProcSystem.aBody7,b,x
         sta wGameStateRoutine1,b
@@ -11493,8 +11493,8 @@
 
         lda #0
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown88CD53
-        jsl rlUnknown88CD61
+        jsl rlPauseMapSpriteAnimation
+        jsl rlPauseMapTileAnimation
         ply
         rtl
 
@@ -11790,8 +11790,8 @@
         lda aActionStructUnit1
         tax
         jsl rlDeployedUnitUnsetHiddenIfAlive
-        jsl rlUnknown88CD4C
-        jsl rlUnknown88CD5A
+        jsl rlResumeMapSpriteAnimation
+        jsl rlResumeMapTileAnimation
         plx
         lda aProcSystem.aBody7,b,x
         sta wGameStateRoutine1,b
@@ -12463,8 +12463,8 @@
         lda @l $000302
         sta @l $0010B7,x
         stz wGameStateRoutine1,b
-        jsl rlUnknown88CD53
-        jsl rlUnknown88CD61
+        jsl rlPauseMapSpriteAnimation
+        jsl rlPauseMapTileAnimation
         ply
         rtl
 
@@ -12671,12 +12671,12 @@
         jsl rlDeployedUnitUnsetHiddenIfAlive
         lda #1,s
         tax
-        jsl rlUnknown88CD4C
+        jsl rlResumeMapSpriteAnimation
         lda wBattleType
         and #$00FF
         cmp #$0003
         beq _DD87
-        jsl rlUnknown88CD5A
+        jsl rlResumeMapTileAnimation
 
         _DD87
         lda #(`rlPushToOAMBuffer)<<8
@@ -14273,8 +14273,8 @@
         lda @l $000302
         sta @l $0010B7,x
         stz wGameStateRoutine1,b
-        jsl rlUnknown88CD53
-        jsl rlUnknown88CD61
+        jsl rlPauseMapSpriteAnimation
+        jsl rlPauseMapTileAnimation
         ply
         rtl
 
@@ -14437,8 +14437,8 @@
         sta aProcSystem.aBody3,b,x
         lda $7E4EAF
         sta aActionStructUnit1.ClassID
-        jsl rlUnknown88CD53
-        jsl rlUnknown88CD61
+        jsl rlPauseMapSpriteAnimation
+        jsl rlPauseMapTileAnimation
         ply
         rtl
 

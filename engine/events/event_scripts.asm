@@ -54,9 +54,9 @@
       .al
       .xl
 
-      aUnknown88D526 ; 88/D526
+      aShortStandingMapSpritePointers ; 88/D526
 
-        ; Read by rsUnknown88CC98, rsUnknown88DE40.
+        ; Read by rsQueueShortStandingMapSpriteFrames, rsUploadShortStandingMapSprite.
 
         .for i in range(63)
           .long g4bppStandingMapSprites1 + (i * $0180)
@@ -72,9 +72,9 @@
       .al
       .xl
 
-      aUnknown88D5E3 ; 88/D5E3
+      aTallStandingMapSpritePointers ; 88/D5E3
 
-        ; Read by rsUnknown88CE81, rsUnknown88DE9E.
+        ; Read by rsQueueTallStandingMapSpriteFrames, rsUploadTallStandingMapSprite.
 
         .for i in range(31)
           .long g4bppStandingMapSprites2 + (i * $0240)
@@ -93,9 +93,9 @@
       .al
       .xl
 
-      aUnknown88DEFC ; 88/DEFC
+      aDeploymentMapSpriteVRAMOffsets ; 88/DEFC
 
-        ; Read by rsUnknown88DE40, rsUnknown88DE9E.
+        ; Read by rsUploadShortStandingMapSprite, rsUploadTallStandingMapSprite.
 
         .word $0800, $0820, $0840, $0860, $0880, $08A0, $08C0, $08E0
         .word $0A00, $0A20, $0A40, $0A60, $0A80, $0AA0, $0AC0, $0AE0
@@ -3212,7 +3212,7 @@
             lda wEventUnitSlot1YCoordinate
             sta wR1
 
-            jsl rlUnknown88C473
+            jsl rlGetCameraCenteredOnTile
 
             lda wR0
             sta wR4
@@ -5939,7 +5939,7 @@
         jsr rsUnknown828E61
         bcs _End
 
-        jsl rlUnknown88BF97
+        jsl rlCheckPointInScreenMargins
         bcc +
 
           lda #$0080
@@ -7375,7 +7375,7 @@
         sta wJoyRepeatDelay
         lda #$0002
         sta wJoyRepeatInterval
-        jsl rlUnknown88C3F0
+        jsl rlRestoreMapCamera
         lda wMapXOffset,b
         sta wMapScrollXPixels,b
         sta wBufferBG1HOFS
@@ -7394,11 +7394,11 @@
         stz wMapScrollSpeed,b
         stz wMapScrollDirectionIdentifier,b
         jsl rlUnknown8883C8
-        jsl rlUnknown88DE1B
+        jsl rlUploadAllStandingMapSprites
         jsr rsUnknown8881B8
-        jsl rlUnknown88CD4C
-        jsl rlUnknown88CD5A
-        jsl rlUnknown88D073
+        jsl rlResumeMapSpriteAnimation
+        jsl rlResumeMapTileAnimation
+        jsl rlUploadMapTileAnimations
         rtl
 
         .databank 0
@@ -7540,7 +7540,7 @@
         sta wJoyRepeatDelay
         lda #$0002
         sta wJoyRepeatInterval
-        jsl rlUnknown88C3F0
+        jsl rlRestoreMapCamera
         lda wMapXOffset,b
         sta wMapScrollXPixels,b
         sta wBufferBG1HOFS
@@ -7558,57 +7558,57 @@
         stz wMapScrollDirectionIdentifier,b
         jsl rlUnknown8883C8
         lda #$0000
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$0001
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$0002
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$0003
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$0004
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$0005
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$0006
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$0007
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$0008
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$0009
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$000A
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$000B
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$000C
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$000D
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$000E
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         lda #$000F
-        jsl rlUnknown88CC75
-        jsl rlUnknown88CD68
+        jsl rlQueueStandingMapSpriteFrames
+        jsl rlUploadMapAnimations
         jsr rsUnknown8881B8
-        jsl rlUnknown88CD4C
-        jsl rlUnknown88CD5A
-        jsl rlUnknown88D073
+        jsl rlResumeMapSpriteAnimation
+        jsl rlResumeMapTileAnimation
+        jsl rlUploadMapTileAnimations
         rtl
 
         .databank 0
@@ -7836,12 +7836,14 @@
       .al
       .xl
 
-      rlUnknown88C059 ; 88/C059
+      rlGetTileAtScreenPosition ; 88/C059
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Turns screen position (wR10, wR11) into the map tile under it.
 
         lda wR10
         clc
@@ -7873,12 +7875,14 @@
       .al
       .xl
 
-      rlUnknown88C3F0 ; 88/C3F0
+      rlRestoreMapCamera ; 88/C3F0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Puts the camera back at wMapXOffset/wMapYOffset; if the cursor would be outside the screen margins, centres the camera on it instead. Carry set if it moved.
 
         lda wMapXOffset,b
         sta wMapScrollXPixels,b
@@ -7888,8 +7892,8 @@
         sta wR10
         lda wCursorYOffset,b
         sta wR11
-        jsl rlUnknown88C059
-        jsl rlUnknown88BFC3
+        jsl rlGetTileAtScreenPosition
+        jsl rlGetTileScreenPixelPosition
         lda wR10
         cmp #$FFFF
         beq _C417
@@ -7951,12 +7955,14 @@
 
         ; 88/C473
 
-      rlUnknown88C473 ; 88/C473
+      rlGetCameraCenteredOnTile ; 88/C473
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wR0/wR1 = the camera position (in tiles) that centres tile (wR0, wR1), clamped to the map, and the cursor offsets for it.
 
         lda wR0
         asl a
@@ -8035,7 +8041,7 @@
       .al
       .xl
 
-      rlUnknown88D073 ; 88/D073
+      rlUploadMapTileAnimations ; 88/D073
 
         .al
         .xl
@@ -8050,8 +8056,8 @@
         phk
         plb
         .databank $88
-        jsl rlUnknown88CF31
-        jsl rlUnknown88CFBA
+        jsl rlUploadMapTileAnimation1
+        jsl rlUploadMapTileAnimation2
         plp
         plb
         .databank $88
@@ -8069,12 +8075,14 @@
       .al
       .xl
 
-      rlUnknown88DE1B ; 88/DE1B
+      rlUploadAllStandingMapSprites ; 88/DE1B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Uploads the first standing frame of every deployed unit's map sprite.
 
         phk
         plb
@@ -8088,12 +8096,12 @@
         beq _DE3B
         and #$8000
         beq _DE36
-        jsr rsUnknown88DE9E
+        jsr rsUploadTallStandingMapSprite
         bra _DE3B
 
 
         _DE36
-        jsr rsUnknown88DE40
+        jsr rsUploadShortStandingMapSprite
         bra _DE3B
 
 
@@ -8107,14 +8115,16 @@
 
         ; 88/DE40
 
-      rsUnknown88DE40 ; 88/DE40
+      rsUploadShortStandingMapSprite ; 88/DE40
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda aUnknown88DEFC,x
+        ; X = deployment: uploads its short standing frame (wMapSpriteFrameByteOffset) to its VRAM slot (aDeploymentMapSpriteVRAMOffsets).
+
+        lda aDeploymentMapSpriteVRAMOffsets,x
         sta wTempVariable2,b
         lda aDeploymentTable._MapSpriteID,x
         and #$7FFF
@@ -8125,9 +8135,9 @@
         adc wR0
         phx
         tax
-        lda aUnknown88D526+1,x
+        lda aShortStandingMapSpritePointers+1,x
         sta lR18+1
-        lda aUnknown88D526,x
+        lda aShortStandingMapSpritePointers,x
         clc
         adc wMapSpriteFrameByteOffset,b
         sta lMapSpriteGraphicsPointer,b
@@ -8161,14 +8171,14 @@
 
         ; 88/DE9E
 
-      rsUnknown88DE9E ; 88/DE9E
+      rsUploadTallStandingMapSprite ; 88/DE9E
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda aUnknown88DEFC,x
+        lda aDeploymentMapSpriteVRAMOffsets,x
         sta wTempVariable2,b
         lda aDeploymentTable._MapSpriteID,x
         and #$7FFF
@@ -8179,9 +8189,9 @@
         adc wR0
         phx
         tax
-        lda aUnknown88D5E3+1,x
+        lda aTallStandingMapSpritePointers+1,x
         sta lR18+1
-        lda aUnknown88D5E3,x
+        lda aTallStandingMapSpritePointers,x
         clc
         adc wMapSpriteFrameByteOffset,b
         sta lMapSpriteGraphicsPointer,b

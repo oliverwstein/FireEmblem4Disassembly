@@ -71,7 +71,7 @@
         jsr rsUnitWindowSetBGSettings
         jsr rsUnitWindowSetHDMA
         jsr rsUnitWindowBuildList
-        jsl rlUnknown88DE1B
+        jsl rlUploadAllStandingMapSprites
         lda #GAMESTATE_UNIT_WINDOW_SETUP
         sta wGameStateRoutine1,b
         lda #GAMESTATE_UNIT_WINDOW_UPKEEP
@@ -154,7 +154,7 @@
 
         ; FE5: rsUnitWindowInitializeFE4LineVariables.
 
-        jsl rlUnknown88DDFB
+        jsl rlSaveDeploymentMapSprites
         lda #$0000
         sta wUnitWindowCaller
         sta wStatusScreenCaller
@@ -3363,7 +3363,7 @@
         lda $7E486B,x
         cmp #$FFFF
         beq _BB83
-        lda aUnknown88D2B5,x
+        lda aTallMapSpriteSlotTiles2,x
         sta wR4
         lda #<>aUnitWindowTallMapSprite
         tay
@@ -3371,7 +3371,7 @@
 
 
         _BB83
-        lda aUnknown88D1C5,x
+        lda aShortMapSpriteSlotTiles,x
         sta wR4
         lda #<>aUnitWindowMapSprite
         tay
@@ -3489,7 +3489,7 @@
         lda aUnitWindowSpriteSlots,x
         asl a
         tax
-        lda aUnknown88D2B5,x
+        lda aTallMapSpriteSlotTiles2,x
         plx
         sta wR4
         lda #<>aUnitWindowTallMapSprite
@@ -3584,7 +3584,7 @@
         lda aUnitWindowSpriteSlots,x
         asl a
         tax
-        lda aUnknown88D1C5,x
+        lda aShortMapSpriteSlotTiles,x
         plx
         sta wR4
         lda #<>aUnitWindowMapSprite
@@ -3721,7 +3721,7 @@
         asl a
         sta wUnitWindowCurrentLineSlotOffset
         tax
-        jsl rlUnknown88DF8C
+        jsl rlAnimateUnitWindowLineSprite
 
         _BDEF
         rts
@@ -7297,7 +7297,7 @@
 
         ; Installs rsUnknown80B122, which restarts game state $12 at the step saved in $0D7B. B uses it, and A on a unit that is on the map after making it the active unit.
 
-        jsl rlUnknown88DE0B
+        jsl rlRestoreDeploymentMapSprites
         lda #$0000
         sta wUnitWindowCaller
         sta wStatusScreenCaller
@@ -7322,7 +7322,7 @@
 
         ; B uses this instead of rlUnitWindowCloseToMap when bit 5 of wUnknown000D79 is set: loads the event data of faction slot 0's location, builds the dead character list and installs rsOpenCastleScreen. Where that returns to is not known yet.
 
-        jsl rlUnknown88DE0B
+        jsl rlRestoreDeploymentMapSprites
         lda #$0000
         sta wUnitWindowCaller
         sta wStatusScreenCaller
@@ -7342,7 +7342,7 @@
 
         ; A on a unit that is not on the map: installs rsOpenStatusScreen, which opens a screen run from bank $89 (game states $07 and $08) for the active unit, with $7F8183 set to return to rsUnitWindowOpen.
 
-        jsl rlUnknown88DE0B
+        jsl rlRestoreDeploymentMapSprites
         lda #$0000
         sta wUnitWindowCaller
         lda #<>rsUnitWindowOpen

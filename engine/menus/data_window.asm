@@ -1978,9 +1978,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown88D526+1,x
+        lda aShortStandingMapSpritePointers+1,x
         sta lR18+1
-        lda aUnknown88D526,x
+        lda aShortStandingMapSpritePointers,x
         sta lMapSpriteGraphicsPointer,b
         lda lMapSpriteGraphicsPointer,b
         clc
@@ -2066,9 +2066,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown88D5E3+1,x
+        lda aTallStandingMapSpritePointers+1,x
         sta lR18+1
-        lda aUnknown88D5E3,x
+        lda aTallStandingMapSpritePointers,x
         sta lMapSpriteGraphicsPointer,b
         lda lMapSpriteGraphicsPointer,b
         clc

@@ -50,7 +50,7 @@
           bne +
 
             phx
-            jsl rlUnknown88BF97
+            jsl rlCheckPointInScreenMargins
             plx
             bcc +
 

@@ -28,7 +28,7 @@
         bne _AE92
         lda #$0008
         trb wUnknown000D79,b
-        jsl rlUnknown88CD68
+        jsl rlUploadMapAnimations
         bra _AE98
 
 
@@ -57,8 +57,8 @@
         lda bUnknown000E7B,b
         bit #$0010
         bne _AEE4
-        jsl rlUnknown88C844
-        jsl rlUnknown88D084
+        jsl rlDrawMovingUnitSprite
+        jsl rlDrawDeployedUnitMapSprites
         jsl rlHideSprites
 
         _AEE4
@@ -118,7 +118,7 @@
         jsl rlUnknown86C629
 
         _AF4C
-        jsl rlUnknown88DE1B
+        jsl rlUploadAllStandingMapSprites
         jsl rlUpdateAllLocationEvents
         jsl rlUnknown888082
         jsl rlLoadWindowGraphics

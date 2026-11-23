@@ -346,7 +346,7 @@
         sta wVBlankPointer
         lda #<>rsRunFrameTasks
         sta wMainLoopPointer
-        jsl rlUnknown88CD61
+        jsl rlPauseMapTileAnimation
         lda $08DA,b
         beq _ED57
         cmp #$0001

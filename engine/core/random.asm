@@ -429,8 +429,8 @@
 
         _8075
         jsl rlLoadChapterMapLayout
-        jsl rlUnknown88CD4C
-        jsl rlUnknown88CD5A
+        jsl rlResumeMapSpriteAnimation
+        jsl rlResumeMapTileAnimation
         rtl
 
         .databank 0

@@ -592,7 +592,7 @@
         sta wR0
         lda aDeploymentTable._YTilePosition,x
         sta wR1
-        jsl rlUnknown88BF37
+        jsl rlGetMapDataIndex
         tax
         lda aMapData,x
         and #$FC00

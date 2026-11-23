@@ -21,7 +21,7 @@
         .databank ?
 
         ; The castle screen's VBlank routine: blanks the screen; sends the DMA queue (first
-        ; calling rlUnknown88CD68 unless wCastleCursorState is 2 or the town), the palettes,
+        ; calling rlUploadMapAnimations unless wCastleCursorState is 2 or the town), the palettes,
         ; OAM, HDMA and PPU registers and sound; reads the joypads; runs the game state
         ; routines and VBlank hooks; draws the courtyard unit sprites unless the town is up.
 
@@ -37,7 +37,7 @@
         beq _B663
         cmp #CASTLE_CURSOR_TOWN
         beq _B663
-        jsl rlUnknown88CD68
+        jsl rlUploadMapAnimations
 
         _B663
         jsl rlProcessDMAStructArray
@@ -143,7 +143,7 @@
         lda #$0020
         tsb wUnknown000D79,b
         jsl rlDispatchCastleState
-        jsl rlUnknown88CD61
+        jsl rlPauseMapTileAnimation
         jsl rlEnableVBlank
         sep #$20
         lda #$00
@@ -496,7 +496,7 @@
         bpl _B90B
         jsl rlClearMovementMapBuffer
         jsl rlCastleBuildCourtyardTables
-        jsl rlUnknown88DE1B
+        jsl rlUploadAllStandingMapSprites
         lda wCastleGridSlot,b
         asl a
         tax
@@ -859,7 +859,7 @@
         lda #$0000
         jsl rlGetFactionSlotLocationID
         jsl rlGetLocationEventDataEntry
-        jsl rlUnknown88C25D
+        jsl rlCenterCameraOnLocation
         jsl rlBuildCastleUnitList
         lda #CASTLE_SCREEN_COURTYARD
         sta wCastleScreenHandler,b

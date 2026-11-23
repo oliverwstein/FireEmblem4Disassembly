@@ -1961,7 +1961,7 @@
         sta lR19
         jsl rlHandleMapMenuDecompressionDMA
         jsl rlClearVRAM6000
-        jsl rlUnknown88DE1B
+        jsl rlUploadAllStandingMapSprites
         jsl rlDMAByStruct
 
           .structDMAToVRAM g4bppCursorSprites, $0400, $80, $C000
@@ -2247,7 +2247,7 @@
         jsl rlSortieUnitFromCastle
         lda #$000A
         jsl rlPlaySoundEffect
-        jsl rlUnknown88C25D
+        jsl rlCenterCameraOnLocation
         lda wCursorXOffset,b
         clc
         adc wMapScrollXPixels,b
@@ -2587,7 +2587,7 @@
 
         ; Called by the castle staff menu for a staff used on the map: puts the unit one tile north of its castle and returns to the map.
 
-        jsl rlUnknown88C25D
+        jsl rlCenterCameraOnLocation
         jsl rlSortieUnitNorthOfCastle
         bcs _92D5
         lda wRoutineVariable1,b
@@ -2621,7 +2621,7 @@
 
         ; Like rlCastleUseStaffFromMap, and also moves the map cursor up 16 pixels.
 
-        jsl rlUnknown88C25D
+        jsl rlCenterCameraOnLocation
         jsl rlSortieUnitNorthOfCastle
         bcs _92FE
         lda wRoutineVariable1,b
@@ -3131,7 +3131,7 @@
         plb
         .databank $8A
         lda wVBlankEnabledFramecount
-        jsl rlUnknown88CC75
+        jsl rlQueueStandingMapSpriteFrames
         sep #$20
         lda #$8A
         pha
@@ -3175,7 +3175,7 @@
         lda aDeploymentTable._MapSpriteID,x
         and #$8000
         bne _9958
-        lda aUnknown88D1C5,x
+        lda aShortMapSpriteSlotTiles,x
         sta wR4
         lda #$9A43
         tay
@@ -3237,7 +3237,7 @@
         lda aDeploymentTable._MapSpriteID,x
         and #$8000
         beq _99D5
-        lda aUnknown88D255,x
+        lda aTallMapSpriteSlotTiles,x
         sta wR4
         lda #$9A4A
         tay

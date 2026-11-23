@@ -240,7 +240,7 @@
         sta @l $7E4F79
         phb
         phy
-        jsl rlUnknown88C9A6
+        jsl rlLoadMovingUnitSprite
         ply
         plb
         bra +

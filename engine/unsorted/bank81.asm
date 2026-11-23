@@ -21,7 +21,7 @@
           cmp #$FFFF
           beq _End
 
-            jsl rlUnknown88D7FE
+            jsl rlAnimateMovingMapSprite
 
             lda aMovingMapSprites.wXPixelPosition,b,x
             sec
@@ -307,9 +307,9 @@
         .autsiz
         .databank ?
 
-        ; Game state routine $10, every frame while the chapter map is up: rlUnknown88C7CF and rlAnimateRangeOverlayPalette, then copies the map scroll to the BG1 scroll registers.
+        ; Game state routine $10, every frame while the chapter map is up: rlAnimateMapSprites and rlAnimateRangeOverlayPalette, then copies the map scroll to the BG1 scroll registers.
 
-        jsl rlUnknown88C7CF
+        jsl rlAnimateMapSprites
         jsl rlAnimateRangeOverlayPalette
         lda wMapScrollXPixels,b
         sta wBufferBG1HOFS

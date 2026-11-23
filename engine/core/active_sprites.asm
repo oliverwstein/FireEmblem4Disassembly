@@ -1619,7 +1619,7 @@
         clc
         adc $04
         sta $02
-        jsl rlUnknown88DD9C
+        jsl rlUploadMapSpriteFrame
         plx
         ply
         inc y

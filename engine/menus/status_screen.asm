@@ -497,7 +497,7 @@
 
         ; Game state routine $08, once: picks the first step and the fade speed: a reopened screen (wStatusScreenReopenMode) fades in at the page it left; a fresh one fades in at the top at a speed set by its opener (wStatusScreenCaller), or, opened from the map, starts fully bright. Draws the first frame's sprites and moves on to $09. Selected by rsOpenStatusScreen.
 
-        jsl rlUnknown88DBEE
+        jsl rlUploadSelectedUnitMapSpriteFrame
         lda wStatusScreenReopenMode
         cmp #STATUS_SCREEN_REOPEN_TOP_PAGE
         beq _803A
@@ -1973,7 +1973,7 @@
         .autsiz
         .databank ?
 
-        ; The promotion marker (rsStatusScreenDrawPromotionMarker), then the unit's map sprite, animated by rlUnknown88DBEE unless the unit is dead or captive; a large (mounted) map sprite uses the array with its top half.
+        ; The promotion marker (rsStatusScreenDrawPromotionMarker), then the unit's map sprite, animated by rlUploadSelectedUnitMapSpriteFrame unless the unit is dead or captive; a large (mounted) map sprite uses the array with its top half.
 
         phb
         php
@@ -1984,7 +1984,7 @@
         lda wStatusScreenGreyIndex
         cmp #$0008
         beq _89FE
-        jsl rlUnknown88DBEE
+        jsl rlUploadSelectedUnitMapSpriteFrame
 
         _89FE
         phk

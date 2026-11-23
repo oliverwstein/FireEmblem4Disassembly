@@ -3376,7 +3376,7 @@
 
           lda #DialogueStatusAssetLoading
           tsb aDialogue.wStatus,b
-          jsl rlUnknown88CD53
+          jsl rlPauseMapSpriteAnimation
 
         +
         lda wMapSpriteAnimationPauseFlags,b
@@ -3385,7 +3385,7 @@
 
           lda #DialogueStatusUpdateMouth
           tsb aDialogue.wStatus,b
-          jsl rlUnknown88CD61
+          jsl rlPauseMapTileAnimation
 
         _End
         inc aDialogue.wCommandCycle,b
@@ -3505,7 +3505,7 @@
 
             lda #DialogueStatusAssetLoading
             trb aDialogue.wStatus,b
-            jsl rlUnknown88CD4C
+            jsl rlResumeMapSpriteAnimation
 
           +
           lda aDialogue.wStatus,b
@@ -3514,7 +3514,7 @@
 
             lda #DialogueStatusUpdateMouth
             trb aDialogue.wStatus,b
-            jsl rlUnknown88CD5A
+            jsl rlResumeMapTileAnimation
 
           +
           jsl rlLoadWindowGraphics

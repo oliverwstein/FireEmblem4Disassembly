@@ -626,7 +626,7 @@
         sta wR10
         lda aDeploymentTable._YTilePosition,x
         sta wR11
-        jsl rlUnknown88BF6C
+        jsl rlGetTileScreenPosition
         lda wR11
         xba
         and #$FF00
@@ -1704,7 +1704,7 @@
         .autsiz
         .databank ?
 
-        ; Above or below the two units, from their screen tiles (rlUnknown88BF6C).
+        ; Above or below the two units, from their screen tiles (rlGetTileScreenPosition).
 
         lda aActionStructUnit2.XPosition
         sta wR2
@@ -1729,14 +1729,14 @@
         _D20E
         lda aActionStructUnit2.YPosition
         sta wR11
-        jsl rlUnknown88BF6C
+        jsl rlGetTileScreenPosition
         lda wR11
         sta wR2
         lda aActionStructUnit1.YPosition
         sta wR11
         lda wR12
         sta wR10
-        jsl rlUnknown88BF6C
+        jsl rlGetTileScreenPosition
         lda wR11
         sta wR5
         cmp wR2

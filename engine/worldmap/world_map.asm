@@ -114,7 +114,7 @@
         lda #<>rsRunFrameTasks
         sta wMainLoopPointer
         jsl rlInitWorldMapGraphics
-        jsl rlUnknown88CD61
+        jsl rlPauseMapTileAnimation
         jsl rlEnableVBlank
         sep #$20
         lda #$00

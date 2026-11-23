@@ -3825,7 +3825,7 @@
 
 
         _9A80
-        jsr rsUnknown88C1BF
+        jsr rsJumpToNextCastle
         bra _9A5E
 
         .databank 0
@@ -4210,7 +4210,7 @@
         lda wUnknown000D79,b
         bit #$0800
         bne _9CDF
-        jsl rlUnknown88BFC3
+        jsl rlGetTileScreenPixelPosition
         lda wR10
         cmp #$FFFF
         beq _9CD6
@@ -4571,10 +4571,10 @@
           lda wMapActionActiveFlag,b
           bpl +
 
-            jsr rsUnknown88C71C
+            jsr rsStartAIUnitMove
           
           +
-          jml rlUnknown88C4D9
+          jml rlMapAIMoveStep
 
         +
         lda wUnknown00171A,b
@@ -4646,7 +4646,7 @@
 
           stz wUnknown0007E2,b
 
-          jsl rlUnknown88C9A6
+          jsl rlLoadMovingUnitSprite
 
           lda wMapOverlayFlags,b
           bit #$0008
@@ -4733,13 +4733,13 @@
           sta wUnknown000758,b
 
         +
-        jsl rlUnknown88BC05
+        jsl rlMoveMapCursorInDirection
 
         lda wMapScrollCurrentPixelDistance,b
         cmp wMapScrollSpeed,b
         bne _A2BD
 
-          jsr rsUnknown88BEEF
+          jsr rsPlayMapCursorMoveSound
 
         _A2BD
         sep #$20
@@ -4994,7 +4994,7 @@
         sta wUnknown000758,b
 
         _A407
-        jsl rlUnknown88BC05
+        jsl rlMoveMapCursorInDirection
 
         _A40B
         sep #$20
@@ -5580,13 +5580,13 @@
           stz wMapEnableYScrollFlag,b
         
         +
-        jsl rlUnknown88BC05
+        jsl rlMoveMapCursorInDirection
 
         lda wUnknown0007D8,b
         cmp #2
         bne _End
 
-          jsl rlUnknown88C0B3
+          jsl rlUpdateWalkingSound
 
         _End
         rtl
@@ -5725,7 +5725,7 @@
         sta wR10
         lda aDeploymentTable._YTilePosition,x
         sta wR11
-        jsl rlUnknown88BFC3
+        jsl rlGetTileScreenPixelPosition
         lda wR10
         bmi _A8DD
         sta wCursorXOffset,b
@@ -5900,7 +5900,7 @@
         sta wUnknown0007D8,b
         lda #$FFFF
         sta wMapScrollDirectionIdentifier,b
-        jsl rlUnknown88C085
+        jsl rlStartWalkingSound
         lda #$0002
         sta wMovingUnitSpriteState,b
         lda #$0000
@@ -5983,7 +5983,7 @@
         _AA8A
         lda #$0010
         sta wMapPixelScrollDistance,b
-        jsl rlUnknown88C126
+        jsl rlStopWalkingSound
         lda #$0002
         sta wMovingUnitSpriteState,b
         stz wUnknown0007D8,b
@@ -6464,7 +6464,7 @@
         sta wR10
         lda aDeploymentTable._YTilePosition,x
         sta wR11
-        jsl rlUnknown88BFC3
+        jsl rlGetTileScreenPixelPosition
         lda wR10
         bmi _AD94
         sta wCursorXOffset,b
@@ -6817,7 +6817,7 @@
         jsl rlDeployedUnitSetHidden
 
         stz wUnknown0007E2,b
-        jsl rlUnknown88C9A6
+        jsl rlLoadMovingUnitSprite
         rtl
 
         .databank 0
@@ -6967,12 +6967,12 @@
         sta wR10
         lda wCursorYOffset,b
         sta wR11
-        jsl rlUnknown88C059
+        jsl rlGetTileAtScreenPosition
         lda wR10
         sta wR0
         lda wR11
         sta wR1
-        jsl rlUnknown88BF37
+        jsl rlGetMapDataIndex
         tax
         lda aMapData,x
         and #$03FF
@@ -7380,7 +7380,7 @@
         stx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitSetHidden
         stz wUnknown0007E2,b
-        jsl rlUnknown88C9A6
+        jsl rlLoadMovingUnitSprite
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlBuildSelectedUnitRangeMaps
@@ -7605,12 +7605,14 @@
 
         ; 88/B8E9
 
-      rsUnknown88B8E9 ; 88/B8E9
+      rsSetMoveDestinationAtCursor ; 88/B8E9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry clear if the cursor's tile is a place the active unit can move to (inside its movement, not attack only, no other unit there); then hides the range overlay and builds the path (rsBuildMovementPath).
 
         lda wCursorXOffset,b
         clc
@@ -7632,7 +7634,7 @@
         lsr a
         sta wTempVariable2,b
         sta wR1
-        jsl rlUnknown88BF37
+        jsl rlGetMapDataIndex
         tax
         lda aMapData,x
         and #$03FF
@@ -7656,10 +7658,10 @@
         and #$007F
         beq _B95E
         sta $0792,b
-        jsr rsUnknown88B960
+        jsr rsCheckTileHasOtherUnit
         bmi _B95E
-        jsr rsUnknown88BBD3
-        jsr rsUnknown88B992
+        jsr rsHideRangeOverlay
+        jsr rsBuildMovementPath
         clc
         rts
 
@@ -7672,12 +7674,14 @@
 
         ; 88/B960
 
-      rsUnknown88B960 ; 88/B960
+      rsCheckTileHasOtherUnit ; 88/B960
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = $FFFF if a deployed unit other than the active one stands on tile (wTempVariable1, wTempVariable2), else 0.
 
         ldx #$008E
 
@@ -7711,12 +7715,14 @@
 
         ; 88/B992
 
-      rsUnknown88B992 ; 88/B992
+      rsBuildMovementPath ; 88/B992
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; From the destination, steps to the neighbour with the most movement left until the unit's tile, writing the directions (1 down, 2 up, 3 right, 4 left) to the path at $0794; then sends the cursor back to the unit (state 1). Each step tries the neighbours in a different order on odd and even frames.
 
         lda wVBlankEnabledFramecount
         and #$0001
@@ -7981,12 +7987,14 @@
 
         ; 88/BBD3
 
-      rsUnknown88BBD3 ; 88/BBD3
+      rsHideRangeOverlay ; 88/BBD3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears the range overlay (BG3) and its colour math and clears wUnitSelectedFlag.
 
         sep #$20
         lda #$15
@@ -8025,11 +8033,13 @@
       .al
       .xl
 
-      rlUnknown88BC05 ; 88/BC05
+      rlMoveMapCursorInDirection ; 88/BC05
 
         .al
         .autsiz
         .databank ?
+
+        ; Moves the cursor by wMapScrollSpeed in wMapScrollDirectionIdentifier; within 48 pixels of the screen edge (16 at the map edge) the map scrolls instead. Bit 0 of $0764 is set if the cursor moved.
 
         lda #$0001
         trb $0764,b
@@ -8062,44 +8072,44 @@
         rtl
 
         _0200
-        jsr rsUnknown88BC63
+        jsr rsMoveMapCursorLeft
         rtl
         
         _0100
-        jsr rsUnknown88BD09
+        jsr rsMoveMapCursorRight
         rtl
         
         _0800
-        jsr rsUnknown88BDA1
+        jsr rsMoveMapCursorUp
         rtl
         
         _0400
-        jsr rsUnknown88BE57
+        jsr rsMoveMapCursorDown
         rtl
         
         _0A00
-        jsr rsUnknown88BC63
-        jsr rsUnknown88BDA1
+        jsr rsMoveMapCursorLeft
+        jsr rsMoveMapCursorUp
         rtl
         
         _0600
-        jsr rsUnknown88BC63
-        jsr rsUnknown88BE57
+        jsr rsMoveMapCursorLeft
+        jsr rsMoveMapCursorDown
         rtl
         
         _0900
-        jsr rsUnknown88BD09
-        jsr rsUnknown88BDA1
+        jsr rsMoveMapCursorRight
+        jsr rsMoveMapCursorUp
         rtl
         
         _0500
-        jsr rsUnknown88BD09
-        jsr rsUnknown88BE57
+        jsr rsMoveMapCursorRight
+        jsr rsMoveMapCursorDown
         rtl
 
         .databank 0
 
-      rsUnknown88BC63 ; 88/BC63
+      rsMoveMapCursorLeft ; 88/BC63
 
         .al
         .autsiz
@@ -8197,7 +8207,7 @@
 
         .databank 0
 
-      rsUnknown88BD09 ; 88/BD09
+      rsMoveMapCursorRight ; 88/BD09
 
         .al
         .autsiz
@@ -8294,7 +8304,7 @@
       .al
       .xl
 
-      rsUnknown88BDA1 ; 88/BDA1
+      rsMoveMapCursorUp ; 88/BDA1
 
         .al
         .xl
@@ -8394,7 +8404,7 @@
 
         ; 88/BE57
 
-      rsUnknown88BE57 ; 88/BE57
+      rsMoveMapCursorDown ; 88/BE57
 
         .al
         .xl
@@ -8483,12 +8493,14 @@
 
         ; 88/BEEF
 
-      rsUnknown88BEEF ; 88/BEEF
+      rsPlayMapCursorMoveSound ; 88/BEEF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sound $05 if the cursor moved this step.
 
         lda $0764,b
         bit #$0001
@@ -8511,12 +8523,14 @@
       .al
       .xl
 
-      rlUnknown88BF37 ; 88/BF37
+      rlGetMapDataIndex ; 88/BF37
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = the aMapData offset of tile (wR0, wR1); the row size depends on wMapWidthMode.
 
         phb
         php
@@ -8578,12 +8592,14 @@
       .al
       .xl
 
-      rlUnknown88BF6C ; 88/BF6C
+      rlGetTileScreenPosition ; 88/BF6C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Turns tile (wR10, wR11) into its screen position in 8-pixel units, or $FFFF in both if it is above or left of the screen.
 
         lda wR10
         asl a
@@ -8630,12 +8646,14 @@
       .al
       .xl
 
-      rlUnknown88BF97 ; 88/BF97
+      rlCheckPointInScreenMargins ; 88/BF97
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Carry clear if (wCursorXOffset, wCursorYOffset) minus the camera is inside the area the cursor can move in without scrolling (X $30-$C7, Y $28-$A7); the offsets are left in wR10/wR11.
 
         lda wCursorXOffset,b
         sec
@@ -8667,12 +8685,14 @@
 
         ; 88/BFC3
 
-      rlUnknown88BFC3 ; 88/BFC3
+      rlGetTileScreenPixelPosition ; 88/BFC3
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Turns tile (wR10, wR11) into its screen position in pixels, or $FFFF in both if it is outside the area the cursor can move in without scrolling.
 
         lda wR10
         asl a
@@ -8721,13 +8741,15 @@
       .al
       .xl
 
-      rlUnknown88BFFA ; 88/BFFA
+      rlGetTileScreenPixelPositionAtMapEdgeUnused ; 88/BFFA
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing reaches this. Like rlGetTileScreenPixelPosition, but a tile near the screen edge counts as visible when the camera is at the map edge.
 
         lda wR10
         asl a
@@ -8808,13 +8830,15 @@
       .al
       .xl
 
-      rlUnknown88C072 ; 88/C072
+      rlGetCursorMapPositionUnused ; 88/C072
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing reaches this. wR10/wR11 = the cursor's position on the map in pixels.
 
         lda wCursorXOffset,b
         clc
@@ -8838,12 +8862,14 @@
       .al
       .xl
 
-      rlUnknown88C085 ; 88/C085
+      rlStartWalkingSound ; 88/C085
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Starts the active unit's walking sound (by its map sprite, rlGetMapSpriteMovementSound), panned by the cursor's X and with the water flag of rlGetWalkingSoundTerrainFlag.
 
         ldx wActiveUnitDeploymentOffset,b
         lda aDeploymentTable._DeploymentOffsets,x
@@ -8856,7 +8882,7 @@
         lda wCursorXOffset,b
         sta aSoundChannelFadeState.bLevel,b
         rep #$20
-        jsl rlUnknown88C0D5
+        jsl rlGetWalkingSoundTerrainFlag
         sep #$20
         lda wR0
         sta aSoundChannelFadeState.bFlags,b
@@ -8867,14 +8893,16 @@
 
         ; 88/C0B3
 
-      rlUnknown88C0B3 ; 88/C0B3
+      rlUpdateWalkingSound ; 88/C0B3
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown88C0D5
+        ; Updates the walking sound's panning and water flag as the unit moves.
+
+        jsl rlGetWalkingSoundTerrainFlag
         sep #$20
         lda wCursorXOffset,b
         sta aSoundChannelFadeState.bLevel,b
@@ -8891,12 +8919,14 @@
 
         ; 88/C0D5
 
-      rlUnknown88C0D5 ; 88/C0D5
+      rlGetWalkingSoundTerrainFlag ; 88/C0D5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; wR0 = $20 if the cursor's tile is sea, river or swamp and the unit does not fly, else 0.
 
         jsl rlGetClassWeakness
         bit #$0002
@@ -8917,7 +8947,7 @@
         lsr a
         lsr a
         sta wR1
-        jsl rlUnknown88BF37
+        jsl rlGetMapDataIndex
         tax
         lda aMapData,x
         and #$03FF
@@ -8947,7 +8977,7 @@
 
         ; 88/C126
 
-      rlUnknown88C126 ; 88/C126
+      rlStopWalkingSound ; 88/C126
 
         .al
         .xl
@@ -8976,12 +9006,14 @@
       .al
       .xl
 
-      rsUnknown88C1BF ; 88/C1BF
+      rsJumpToNextCastle ; 88/C1BF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; L on the map or minimap: centres the camera and cursor on the next castle (wCastleSubMenuStep counts through the locations); L and R together start again from the home castle.
 
         lda wJoy1Input
         cmp #$0030
@@ -9079,13 +9111,15 @@
       .al
       .xl
 
-      rlUnknown88C25D ; 88/C25D
+      rlCenterCameraOnLocation ; 88/C25D
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Centres the camera (and wMapXOffset/wMapYOffset) on the location in wEventLocationEntry and puts the cursor on it.
 
         jsl rlGetEventLocationEntryEffectiveXCoordinate
         asl a
@@ -9151,12 +9185,14 @@
       .al
       .xl
 
-      rlUnknown88C2BA ; 88/C2BA
+      rlStepCameraTowardsTarget ; 88/C2BA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; One scroll step (speed 4) towards the camera position at $7F4BF5/$7F4BF7; carry set when it is there.
 
         php
         phb
@@ -9295,7 +9331,7 @@
       .al
       .xl
 
-      rlUnknown88C355 ; 88/C355
+      rlSetCameraTargetForCursor ; 88/C355
 
         ; Found by tools/sweep.py.
         .al
@@ -9303,12 +9339,14 @@
         .autsiz
         .databank ?
 
+        ; If the cursor is outside the screen margins, sets the camera target ($7F4BF5/$7F4BF7) to centre it; else to $7F4BF9/$7F4BFB. Carry set if the camera has to move.
+
         lda wCursorXOffset,b
         sta wR10
         lda wCursorYOffset,b
         sta wR11
-        jsl rlUnknown88C059
-        jsl rlUnknown88BFC3
+        jsl rlGetTileAtScreenPosition
+        jsl rlGetTileScreenPixelPosition
         lda wR10
         cmp #$FFFF
         beq _C394
@@ -9391,12 +9429,14 @@
       .al
       .xl
 
-      rlUnknown88C4D9 ; 88/C4D9
+      rlMapAIMoveStep ; 88/C4D9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The computer phase's version of the cursor states: 1 cursor to the acting unit, then picks it up and starts its walk (rsStartAIUnitWalk); 2 walking (speed by the enemy speed option); 3 cursor to its target; 4 a short wait; then the queued AI action runs (rlAIExecuteQueuedAction).
 
         ; Reached with jml from rlMapCursorStepInner. Steps through states 0-4 in
         ; wUnknown0007D8 and sets up the map scroll distance and speed, then
@@ -9444,7 +9484,7 @@
         and #$00FF
         bit #$0002
         bne _C52E
-        jsr rsUnknown88C67D
+        jsr rsStartAIUnitWalk
         jml _C658
 
 
@@ -9456,7 +9496,7 @@
 
 
         _C53B
-        jsl rlUnknown88C0B3
+        jsl rlUpdateWalkingSound
         stz wMapPixelScrollDistance,b
         jsr rsWalkUnitAlongPath
         beq _C564
@@ -9578,11 +9618,11 @@
         stz wMapEnableYScrollFlag,b
 
         _C648
-        jsl rlUnknown88BC05
+        jsl rlMoveMapCursorInDirection
         lda wUnknown0007D8,b
         cmp #$0002
         bne _C658
-        jsl rlUnknown88C0B3
+        jsl rlUpdateWalkingSound
 
         _C658
         rtl
@@ -9619,7 +9659,7 @@
       .al
       .xl
 
-      rsUnknown88C67D ; 88/C67D
+      rsStartAIUnitWalk ; 88/C67D
 
         ; TRACE: odd-opcode
         .al
@@ -9627,7 +9667,9 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown88C733
+        ; Builds the path to wActiveActionDestinationX/Y (rsSetMoveDestinationAtCursor with the camera moved there) and starts the walk (state 2).
+
+        jsr rsSelectAIUnitAtCursor
         lda wMapScrollXPixels,b
         sta wUnknown000734,b
         lda wMapScrollYPixels,b
@@ -9644,7 +9686,7 @@
         sta wCursorYOffset,b
         lda wActiveActionDestinationY,b
         sta wMapScrollYPixels,b
-        jsr rsUnknown88B8E9
+        jsr rsSetMoveDestinationAtCursor
         bcc _C6B6
         .byte $00 ; brk
 
@@ -9661,7 +9703,7 @@
         sta wUnknown0007D8,b
         lda #$FFFF
         sta wMapScrollDirectionIdentifier,b
-        jsl rlUnknown88C085
+        jsl rlStartWalkingSound
         lda wSavedMapScrollScriptOffset,b
         dec a
         dec a
@@ -9682,13 +9724,15 @@
       .al
       .xl
 
-      rlUnknown88C6ED ; 88/C6ED
+      rlStartTestAIMoveUnused ; 88/C6ED
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing reaches this. Starts an AI move with fixed values (deployment $88 to tile (20, 23), target $0C), apparently a test.
 
         lda #$FFFF
         sta wMapActionActiveFlag,b
@@ -9719,12 +9763,14 @@
       .al
       .xl
 
-      rsUnknown88C71C ; 88/C71C
+      rsStartAIUnitMove ; 88/C71C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Makes wActiveActionUnit1DeploymentOffset the active unit and sends the cursor to it (state 1).
 
         lda #$0001
         sta wMapActionActiveFlag,b
@@ -9739,12 +9785,14 @@
 
         ; 88/C733
 
-      rsUnknown88C733 ; 88/C733
+      rsSelectAIUnitAtCursor ; 88/C733
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Like rsSelectUnitAtCursor for the computer phase: picks up the acting unit and shows its range.
 
         lda wCursorXOffset,b
         clc
@@ -9796,7 +9844,7 @@
         stx wActiveUnitDeploymentOffset,b
         jsl rlDeployedUnitSetHidden
         stz wUnknown0007E2,b
-        jsl rlUnknown88C9A6
+        jsl rlLoadMovingUnitSprite
         lda aDeploymentTable._UnitRAMPointer,x
         sta wSelectedUnitDataRAMPointer,b
         jsl rlBuildSelectedUnitRangeMaps
@@ -9828,16 +9876,18 @@
       .al
       .xl
 
-      rlUnknown88C7CF ; 88/C7CF
+      rlAnimateMapSprites ; 88/C7CF
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Each frame of the map (rlMapUpkeep): queues the standing map sprite frames for this frame count (rlQueueStandingMapSpriteFrames).
+
         phb
         lda wVBlankEnabledFramecount
-        jsl rlUnknown88CC75
+        jsl rlQueueStandingMapSpriteFrames
         plb
         .databank ?
         rtl
@@ -9854,13 +9904,15 @@
       .al
       .xl
 
-      rsUnknown88C7D8 ; 88/C7D8
+      rsDrawMovingSpritesTestUnused ; 88/C7D8
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing reaches this. Sets up four moving map sprites with fixed sprites and draws them in a diagonal from the cursor; apparently a test.
 
         lda #$0000
         sta aMovingMapSpritesMapSprites,b
@@ -9880,18 +9932,18 @@
         _C806
         lda #$0400
         sta wR5
-        jsl rlUnknown88D7FE
+        jsl rlAnimateMovingMapSprite
         lda wR0
         clc
         adc wCursorXOffset,b
         clc
-        adc aUnknown88C834,x
+        adc aMovingSpritesTestXOffsetsUnused,x
         sta wR0
         lda wR1
         clc
         adc wCursorYOffset,b
         clc
-        adc aUnknown88C83C,x
+        adc aMovingSpritesTestYOffsetsUnused,x
         sta wR1
         phx
         jsl rlPushToOAMBuffer
@@ -9913,9 +9965,9 @@
       .al
       .xl
 
-      aUnknown88C834 ; 88/C834
+      aMovingSpritesTestXOffsetsUnused ; 88/C834
 
-        ; Read by rsUnknown88C7D8.
+        ; Read by rsDrawMovingSpritesTestUnused.
 
         .word $0000, $0020, $0030, $0040
 
@@ -9929,9 +9981,9 @@
       .al
       .xl
 
-      aUnknown88C83C ; 88/C83C
+      aMovingSpritesTestYOffsetsUnused ; 88/C83C
 
-        ; Read by rsUnknown88C7D8.
+        ; Read by rsDrawMovingSpritesTestUnused.
 
         .word $0000, $0020, $0030, $0040
 
@@ -9945,12 +9997,14 @@
       .al
       .xl
 
-      rlUnknown88C844 ; 88/C844
+      rlDrawMovingUnitSprite ; 88/C844
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; VBlank: draws the active unit's moving map sprite by wMovingUnitSpriteState (1 at its saved place while on screen, 2 at the cursor, 3 at wMapSavedCursorXPixel/YPixel), then gets its next frame ready (rsUpdateMovingUnitSpriteFrame).
 
         phx
         phy
@@ -9967,7 +10021,7 @@
         lda #$0000
         sta wR4
         stz wR5
-        jsr rsUnknown88C8FF
+        jsr rsGetMovingUnitSpriteToDraw
         phx
         jsl rlPushToOAMBuffer
         plx
@@ -9992,7 +10046,7 @@
         lda #$0000
         sta wR4
         stz wR5
-        jsr rsUnknown88C8FF
+        jsr rsGetMovingUnitSpriteToDraw
         phx
         jsl rlPushToOAMBuffer
         plx
@@ -10040,13 +10094,13 @@
         lda #$0000
         sta wR4
         stz wR5
-        jsr rsUnknown88C8FF
+        jsr rsGetMovingUnitSpriteToDraw
         phx
         jsl rlPushToOAMBuffer
         plx
 
         _C8F9
-        jsr rsUnknown88CA28
+        jsr rsUpdateMovingUnitSpriteFrame
         plx
         ply
         rtl
@@ -10055,12 +10109,14 @@
 
         ; 88/C8FF
 
-      rsUnknown88C8FF ; 88/C8FF
+      rsGetMovingUnitSpriteToDraw ; 88/C8FF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Steps the walking frame when its timer runs out and returns Y = the sprite array, wR5 = the palette for its allegiance (aMapSpritePalettesByAllegiance) and the frame's X/Y nudge in wR0/wR1.
 
         lda wMovingUnitSpriteTimer,b
         bne _C91E
@@ -10106,7 +10162,7 @@
         and #$7FFF
         asl a
         tax
-        lda @l aUnknown88D488,x
+        lda @l aMapSpriteWalkOffsetPointers,x
         sta wR3
         lda wMovingUnitSpriteFrame,b
         asl a
@@ -10115,12 +10171,12 @@
         clc
         adc wR3
         tax
-        lda @l aUnknown88D4C6,x
+        lda @l aMapSpriteWalkOffsets,x
         and #$00FF
         clc
         adc wR0
         sta wR0
-        lda @l aUnknown88D4C6+1,x
+        lda @l aMapSpriteWalkOffsets+1,x
         and #$00FF
         clc
         adc wR1
@@ -10134,7 +10190,7 @@
         asl a
         phx
         tax
-        lda @l aUnknown88C990,x
+        lda @l aMapSpritePalettesByAllegiance,x
         sta wR5
         plx
         rts
@@ -10151,9 +10207,9 @@
       .al
       .xl
 
-      aUnknown88C990 ; 88/C990
+      aMapSpritePalettesByAllegiance ; 88/C990
 
-        ; Read by rlUnknown88D084, rsUnknown88C8FF.
+        ; Read by rlDrawDeployedUnitMapSprites, rsGetMovingUnitSpriteToDraw.
 
         .word $0200, $0400, $0600, $0800, $0000, $0200, $0400, $0600
         .word $0800, $0800, $0800
@@ -10168,11 +10224,13 @@
       .al
       .xl
 
-      rlUnknown88C9A6 ; 88/C9A6
+      rlLoadMovingUnitSprite ; 88/C9A6
 
         .al
         .autsiz
         .databank ?
+
+        ; Decompresses the active unit's walking sprite (short or tall, from aMapMovementShortSpritePointers or aMapMovementTallSpritePointers) to $7EAB88.
 
         phx
         phk
@@ -10249,12 +10307,14 @@
       .al
       .xl
 
-      rsUnknown88CA28 ; 88/CA28
+      rsUpdateMovingUnitSpriteFrame ; 88/CA28
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When the frame timer runs out, reloads it from aMapSpriteWalkFrameDelays and picks the next frame's graphics (short or tall); counts the timer down otherwise.
 
         lda $0865,b
         bmi _CA30
@@ -10271,7 +10331,7 @@
         lda aDeploymentTable._MapSpriteID,x
         and #$7FFF
         tax
-        lda aUnknown88CBE8,x
+        lda aMapSpriteWalkFrameDelays,x
         and #$00FF
         sta wMovingUnitSpriteTimer,b
         ldx wActiveUnitDeploymentOffset,b
@@ -10280,13 +10340,13 @@
         lda aDeploymentTable._MapSpriteID,x
         and #$8000
         bne _CA6C
-        jsr rsUnknown88CA77
+        jsr rsSetShortMovingUnitSpriteFrame
         inc $0865,b
         rts
 
 
         _CA6C
-        jsr rsUnknown88CB43
+        jsr rsSetTallMovingUnitSpriteFrame
         inc $0865,b
         rts
 
@@ -10307,13 +10367,15 @@
       .al
       .xl
 
-      rsUnknown88CA77 ; 88/CA77
+      rsSetShortMovingUnitSpriteFrame ; 88/CA77
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Points the upload at the frame (wMovingUnitSpriteFrame) and facing (wUnknown0007E2) of a short walking sprite.
 
         lda wMovingUnitSpriteFrame,b
         cmp #$0000
@@ -10434,7 +10496,7 @@
 
         ; 88/CB43
 
-      rsUnknown88CB43 ; 88/CB43
+      rsSetTallMovingUnitSpriteFrame ; 88/CB43
 
         ; Found by tools/sweep.py.
         .al
@@ -10540,7 +10602,7 @@
       .al
       .xl
 
-      aUnknown88CBE8 ; 88/CBE8
+      aMapSpriteWalkFrameDelays ; 88/CBE8
 
         ; Indexed by map sprite ID (without the tall flag $8000).
         ; 65 bytes of 9 and then 32 bytes of 14: the same counts as the
@@ -10552,23 +10614,23 @@
         ; 88/CC49
 
 
-      aUnknown88CC49 ; 88/CC49
+      aMovingUnitSprite32x32 ; 88/CC49
 
         _Sprites := [[(   8,    0), $21, SpriteLarge, $026, 2, 0, false, false]]
         _Sprites ..= [[(  -8,    0), $21, SpriteLarge, $024, 2, 0, false, false]]
         _Sprites ..= [[(   8,  -16), $21, SpriteLarge, $022, 2, 0, false, false]]
         _Sprites ..= [[(  -8,  -16), $21, SpriteLarge, $020, 2, 0, false, false]]
 
-        .structSpriteArray aUnknown88CC49._Sprites
+        .structSpriteArray aMovingUnitSprite32x32._Sprites
 
-      aUnknown88CC5F ; 88/CC5F
+      aMovingUnitSprite24x24 ; 88/CC5F
 
         _Sprites := [[(  -4,    8), $00, SpriteSmall, $034, 2, 0, false, false]]
         _Sprites ..= [[(   4,    0), $21, SpriteLarge, $022, 2, 0, false, false]]
         _Sprites ..= [[(  12,   -8), $00, SpriteSmall, $024, 2, 0, false, false]]
         _Sprites ..= [[(  -4,   -8), $21, SpriteLarge, $020, 2, 0, false, false]]
 
-        .structSpriteArray aUnknown88CC5F._Sprites
+        .structSpriteArray aMovingUnitSprite24x24._Sprites
 
     .endsection Unsorted88CBE8Section
 
@@ -10578,12 +10640,14 @@
       .al
       .xl
 
-      rlUnknown88CC75 ; 88/CC75
+      rlQueueStandingMapSpriteFrames ; 88/CC75
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Queues the standing map sprite frames for frame count A: short sprites on steps 2-7, tall ones on steps 10-15 (of 16).
 
         lda wMapSpriteFrameCounter,b
         and #$000F
@@ -10595,12 +10659,12 @@
         beq _CC97
         cmp #$000A
         bcc _CC93
-        jsr rsUnknown88CE81
+        jsr rsQueueTallStandingMapSpriteFrames
         rtl
 
 
         _CC93
-        jsr rsUnknown88CC98
+        jsr rsQueueShortStandingMapSpriteFrames
         rtl
 
 
@@ -10611,12 +10675,14 @@
 
         ; 88/CC98
 
-      rsUnknown88CC98 ; 88/CC98
+      rsQueueShortStandingMapSpriteFrames ; 88/CC98
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Queues eight units' short standing frames into aDynamicMapSpriteDMASources/aDynamicMapSpriteVRAMDestinations.
 
         lda wMapSpriteFrameCounter,b
         clc
@@ -10681,10 +10747,10 @@
         adc wR0
         phx
         tax
-        lda aUnknown88D526+1,x
+        lda aShortStandingMapSpritePointers+1,x
         sta aDynamicMapSpriteDMASources.lTopHalf+1,b,y
         sta aDynamicMapSpriteDMASources.lBottomHalf+1,b,y
-        lda aUnknown88D526,x
+        lda aShortStandingMapSpritePointers,x
         plx
         sta lMapSpriteGraphicsPointer,b
         clc
@@ -10718,12 +10784,14 @@
 
         ; 88/CD4C
 
-      rlUnknown88CD4C ; 88/CD4C
+      rlResumeMapSpriteAnimation ; 88/CD4C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears bit 15 of wMapSpriteAnimationPauseFlags.
 
         lda #$8000
         trb wMapSpriteAnimationPauseFlags,b
@@ -10741,11 +10809,13 @@
       .al
       .xl
 
-      rlUnknown88CD53 ; 88/CD53
+      rlPauseMapSpriteAnimation ; 88/CD53
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets bit 15 of wMapSpriteAnimationPauseFlags: rlUploadMapAnimations stops uploading map sprite frames.
 
         lda #$8000
         tsb wMapSpriteAnimationPauseFlags,b
@@ -10753,11 +10823,13 @@
 
         .databank 0
 
-      rlUnknown88CD5A ; 88/CD5A
+      rlResumeMapTileAnimation ; 88/CD5A
 
         .al
         .autsiz
         .databank ?
+
+        ; Clears bit 0 of wMapSpriteAnimationPauseFlags.
 
         lda #$0001
         trb wMapSpriteAnimationPauseFlags,b
@@ -10765,11 +10837,13 @@
 
         .databank 0
 
-      rlUnknown88CD61 ; 88/CD61
+      rlPauseMapTileAnimation ; 88/CD61
 
         .al
         .autsiz
         .databank ?
+
+        ; Sets bit 0 of wMapSpriteAnimationPauseFlags: the animated map tiles stop.
 
         lda #$0001
         tsb wMapSpriteAnimationPauseFlags,b
@@ -10787,19 +10861,21 @@
       .al
       .xl
 
-      rlUnknown88CD68 ; 88/CD68
+      rlUploadMapAnimations ; 88/CD68
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; VBlank: uploads the moving unit's frame, then on step 0 or 1 of 8 an animated map tile frame, else the queued standing map sprite frames (unless paused).
+
         phb
         php
         phk
         plb
         .databank $88
-        jsl rlUnknown88DB0C
+        jsl rlUploadMovingUnitSpriteFrame
         lda wMapSpriteFrameCounter,b
         and #$0007
         beq _CD97
@@ -10825,12 +10901,12 @@
 
 
         _CD97
-        jsl rlUnknown88CF31
+        jsl rlUploadMapTileAnimation1
         bra _CD91
 
 
         _CD9D
-        jsl rlUnknown88CFBA
+        jsl rlUploadMapTileAnimation2
         bra _CD91
 
 
@@ -10938,7 +11014,7 @@
 
         ; 88/CE81
 
-      rsUnknown88CE81 ; 88/CE81
+      rsQueueTallStandingMapSpriteFrames ; 88/CE81
 
         .al
         .xl
@@ -11007,10 +11083,10 @@
         adc wR0
         phx
         tax
-        lda aUnknown88D5E3+1,x
+        lda aTallStandingMapSpritePointers+1,x
         sta aDynamicMapSpriteDMASources.lTopHalf+1,b,y
         sta aDynamicMapSpriteDMASources.lBottomHalf+1,b,y
-        lda aUnknown88D5E3,x
+        lda aTallStandingMapSpritePointers,x
         clc
         adc wMapSpriteFrameByteOffset,b
         sta aDynamicMapSpriteDMASources.lTopHalf,b,y
@@ -11043,12 +11119,14 @@
 
         ; 88/CF31
 
-      rlUnknown88CF31 ; 88/CF31
+      rlUploadMapTileAnimation1 ; 88/CF31
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies frame (wMapSpriteFrameCounter / 8) of g4bppMapTileAnimations1 ($800 bytes, 16 frames) to VRAM $0C00.
 
         lda wMapSpriteAnimationPauseFlags,b
         bit #$0001
@@ -11072,11 +11150,11 @@
         sta $4316,b
         lda #$18
         sta $4311,b
-        lda aUnknown88CF8A,x
+        lda aMapTileAnimation1Frames,x
         sta $4312,b
-        lda aUnknown88CF8A+1,x
+        lda aMapTileAnimation1Frames+1,x
         sta $4313,b
-        lda aUnknown88CF8A+2,x
+        lda aMapTileAnimation1Frames+2,x
         sta $4314,b
         lda #$00
         sta $2116,b
@@ -11103,9 +11181,9 @@
       .al
       .xl
 
-      aUnknown88CF8A ; 88/CF8A
+      aMapTileAnimation1Frames ; 88/CF8A
 
-        ; Read by rlUnknown88CF31.
+        ; Read by rlUploadMapTileAnimation1.
 
         .for i in range(16)
           .long g4bppMapTileAnimations1 + (i * $0800)
@@ -11121,12 +11199,14 @@
       .al
       .xl
 
-      rlUnknown88CFBA ; 88/CFBA
+      rlUploadMapTileAnimation2 ; 88/CFBA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies frame (wMapSpriteFrameCounter / 8) of g4bppMapTileAnimations2 ($400 bytes, 32 frames) to VRAM $0A00.
 
         lda wMapSpriteAnimationPauseFlags,b
         bit #$0001
@@ -11150,11 +11230,11 @@
         sta $4316,b
         lda #$18
         sta $4311,b
-        lda aUnknown88D013,x
+        lda aMapTileAnimation2Frames,x
         sta $4312,b
-        lda aUnknown88D013+1,x
+        lda aMapTileAnimation2Frames+1,x
         sta $4313,b
-        lda aUnknown88D013+2,x
+        lda aMapTileAnimation2Frames+2,x
         sta $4314,b
         lda #$00
         sta $2116,b
@@ -11181,9 +11261,9 @@
       .al
       .xl
 
-      aUnknown88D013 ; 88/D013
+      aMapTileAnimation2Frames ; 88/D013
 
-        ; Read by rlUnknown88CFBA.
+        ; Read by rlUploadMapTileAnimation2.
 
         .for i in range(32)
           .long g4bppMapTileAnimations2 + (i * $0400)
@@ -11199,12 +11279,14 @@
       .al
       .xl
 
-      rlUnknown88D084 ; 88/D084
+      rlDrawDeployedUnitMapSprites ; 88/D084
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; VBlank: draws every deployed, visible unit's map sprite on screen (with scanline culling), coloured by allegiance; units with deployment state bit 13, or bit 3 outside the player army, are grey ($0E00).
 
         phb
         sep #$20
@@ -11266,11 +11348,11 @@
         and #$0003
         asl a
         tax
-        lda aUnknown88C990,x
+        lda aMapSpritePalettesByAllegiance,x
 
         _D0F8
         ldx $465B,b,y
-        ora aUnknown88D135,x
+        ora aMapSpriteSlotTiles,x
         sta $0A43,b,y
         cpx #$0060
         bcc _D10F
@@ -11316,9 +11398,9 @@
       .al
       .xl
 
-      aUnknown88D135 ; 88/D135
+      aMapSpriteSlotTiles ; 88/D135
 
-        ; Read by rlUnknown88D084.
+        ; Read by rlDrawDeployedUnitMapSprites.
 
         .word $2080, $2082, $2084, $2086, $2088, $208A, $208C, $208E
         .word $20A0, $20A2, $20A4, $20A6, $20A8, $20AA, $20AC, $20AE
@@ -11332,7 +11414,7 @@
 
         ; 88/D1C5
 
-      aUnknown88D1C5 ; 88/D1C5
+      aShortMapSpriteSlotTiles ; 88/D1C5
 
         ; Read by rlCastleDrawCourtyardUnitSprites, rsUnitWindowRenderSprites.
 
@@ -11348,7 +11430,7 @@
 
         ; 88/D255
 
-      aUnknown88D255 ; 88/D255
+      aTallMapSpriteSlotTiles ; 88/D255
 
         ; Read by rlCastleDrawCourtyardUnitSprites.
 
@@ -11361,7 +11443,7 @@
 
         ; 88/D2B5
 
-      aUnknown88D2B5 ; 88/D2B5
+      aTallMapSpriteSlotTiles2 ; 88/D2B5
 
         ; Read by rsUnitWindowRenderSprites.
 
@@ -11387,9 +11469,9 @@
       .al
       .xl
 
-      aUnknown88D488 ; 88/D488
+      aMapSpriteWalkOffsetPointers ; 88/D488
 
-        ; Read by rsUnknown88D963.
+        ; Read by rsAnimateTallMovingMapSprite.
 
         .word $0020, $0000, $0040, $0000, $0000, $0000, $0000, $0000
         .word $0000, $0000, $0000, $0000, $0020, $0000, $0000, $0000
@@ -11406,9 +11488,9 @@
       .al
       .xl
 
-      aUnknown88D4C6 ; 88/D4C6
+      aMapSpriteWalkOffsets ; 88/D4C6
 
-        ; Read by rsUnknown88D963.
+        ; Read by rsAnimateTallMovingMapSprite.
 
         .word $0800, $0800, $0800, $0800, $0800, $0800, $0800, $0800
         .word $0800, $0800, $0800, $0800, $0800, $0800, $0800, $0800
@@ -11427,13 +11509,15 @@
       .al
       .xl
 
-      rlUnknown88D731 ; 88/D731
+      rlLoadMovingMapSpriteUnused ; 88/D731
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Nothing reaches this. Like rsMovingMapSpriteAppendDecomp: decompresses event mover X's walking sprite into its buffer.
 
         lda lR18
         pha
@@ -11460,7 +11544,7 @@
         lda @l aMapMovementShortSpritePointers+1,x
         sta lR45+1
         plx
-        jsr (aUnknown88D7B2,x)
+        jsr (aSetMovingMapSpriteBufferPointersUnused,x)
         jsl rlDecompressSingle
         lda #(`g4bppcMageFemaleMapMovementSprite)<<8
         sta lR18+1
@@ -11494,7 +11578,7 @@
         lda @l aMapMovementTallSpritePointers+1,x
         sta lR45+1
         plx
-        jsr (aUnknown88D7B2,x)
+        jsr (aSetMovingMapSpriteBufferPointersUnused,x)
         jsl rlDecompressSingle
         plx
         pla
@@ -11515,13 +11599,13 @@
       .al
       .xl
 
-      aUnknown88D7B2 ; 88/D7B2
+      aSetMovingMapSpriteBufferPointersUnused ; 88/D7B2
 
-        ; Jump table of rlUnknown88D731.
-        .word <>rsUnknown88D7BA
-        .word <>rsUnknown88D7C5
-        .word <>rsUnknown88D7D8
-        .word <>rsUnknown88D7EB
+        ; Jump table of rlLoadMovingMapSpriteUnused.
+        .word <>rsSetMovingMapSpriteBuffer0Unused
+        .word <>rsSetMovingMapSpriteBuffer1Unused
+        .word <>rsSetMovingMapSpriteBuffer2Unused
+        .word <>rsSetMovingMapSpriteBuffer3Unused
 
     .endsection Table88D7B2Section
 
@@ -11531,7 +11615,7 @@
       .al
       .xl
 
-      rsUnknown88D7BA ; 88/D7BA
+      rsSetMovingMapSpriteBuffer0Unused ; 88/D7BA
 
         .al
         .xl
@@ -11556,7 +11640,7 @@
       .al
       .xl
 
-      rsUnknown88D7C5 ; 88/D7C5
+      rsSetMovingMapSpriteBuffer1Unused ; 88/D7C5
 
         .al
         .xl
@@ -11585,7 +11669,7 @@
       .al
       .xl
 
-      rsUnknown88D7D8 ; 88/D7D8
+      rsSetMovingMapSpriteBuffer2Unused ; 88/D7D8
 
         .al
         .xl
@@ -11614,7 +11698,7 @@
       .al
       .xl
 
-      rsUnknown88D7EB ; 88/D7EB
+      rsSetMovingMapSpriteBuffer3Unused ; 88/D7EB
 
         .al
         .xl
@@ -11643,19 +11727,21 @@
       .al
       .xl
 
-      rlUnknown88D7FE ; 88/D7FE
+      rlAnimateMovingMapSprite ; 88/D7FE
 
         .al
         .autsiz
         .databank ?
 
+        ; X = an event mover (aMovingMapSprites): steps its walking frame and uploads it (short or tall).
+
         ; X = active mover offset
 
         phk
         plb
-        lda aUnknown88D837,x
+        lda aMovingMapSpriteUploadedFlags,x
         trb wUnknown000921,b
-        lda aUnknown88D83F,x
+        lda aMovingMapSpriteUploadedFlags2,x
         trb wUnknown000921,b
 
         lda aMovingMapSpritesMapSprites,b,x
@@ -11663,7 +11749,7 @@
         bne +
 
         ; Short
-        jsr rsUnknown88D847
+        jsr rsAnimateShortMovingMapSprite
         lda wUnknown000901,x
         sec
         sbc #1
@@ -11672,7 +11758,7 @@
 
         ; Tall
         +
-        jsr rsUnknown88D963
+        jsr rsAnimateTallMovingMapSprite
         lda wUnknown000901,x
         sec
         sbc #1
@@ -11683,14 +11769,14 @@
 
         .databank 0
 
-      aUnknown88D837 ; 88/D837
+      aMovingMapSpriteUploadedFlags ; 88/D837
 
         .word $0001
         .word $0002
         .word $0004
         .word $0008
 
-      aUnknown88D83F ; 88/D83F
+      aMovingMapSpriteUploadedFlags2 ; 88/D83F
 
         .word $8000
         .word $4000
@@ -11705,7 +11791,7 @@
       .al
       .xl
 
-      rsUnknown88D847 ; 88/D847
+      rsAnimateShortMovingMapSprite ; 88/D847
 
         .al
         .autsiz
@@ -11731,17 +11817,17 @@
             jml _End
 
           +
-          lda @l aUnknown88D95B,x
+          lda @l aShortMovingMapSpriteUploadFlags2,x
           tsb wUnknown000921,b
 
         +
-        lda @l aUnknown88D953,x
+        lda @l aShortMovingMapSpriteUploadFlags,x
         tsb wUnknown000921,b
 
         lda aMovingMapSpritesMapSprites,b,x
         and #$7FFF
         tay
-        lda aUnknown88CBE8,y
+        lda aMapSpriteWalkFrameDelays,y
         and #$00FF
         sta wUnknown000901,x
 
@@ -11818,7 +11904,7 @@
         adc wMapSpriteFrameByteOffset,b
         sta wMapSpriteFrameByteOffset,b
 
-        jsr (aUnknown88D94B,x)
+        jsr (aMovingMapSpriteGraphicsSetters,x)
 
         lda lMapSpriteGraphicsPointer,b
         clc
@@ -11830,7 +11916,7 @@
 
         lda #$C400 >> 1
         clc
-        adc @l aUnknown88DB04,x
+        adc @l aMovingMapSpriteVRAMOffsets,x
         sta wR1
         phx
         jsl rlDMAByPointer
@@ -11848,7 +11934,7 @@
 
         lda #$C600 >> 1
         clc
-        adc @l aUnknown88DB04,x
+        adc @l aMovingMapSpriteVRAMOffsets,x
         sta wR1
         phx
         jsl rlDMAByPointer
@@ -11863,7 +11949,7 @@
 
         stz wR0
         stz wR1
-        lda @l aUnknown88DAFC,x
+        lda @l aMovingMapSpriteTileOffsets,x
         sta wR4
         ldy #$CC5F
         rts
@@ -11878,21 +11964,21 @@
       .al
       .xl
 
-      aUnknown88D94B ; 88/D94B
+      aMovingMapSpriteGraphicsSetters ; 88/D94B
 
-        .word <>rsUnknown88DA82
-        .word <>rsUnknown88DA99
-        .word <>rsUnknown88DABA
-        .word <>rsUnknown88DADB
+        .word <>rsSetMovingMapSpriteGraphics0
+        .word <>rsSetMovingMapSpriteGraphics1
+        .word <>rsSetMovingMapSpriteGraphics2
+        .word <>rsSetMovingMapSpriteGraphics3
 
-      aUnknown88D953 ; 88/D953
+      aShortMovingMapSpriteUploadFlags ; 88/D953
 
         .word $0001
         .word $0002
         .word $0004
         .word $0008
 
-      aUnknown88D95B ; 88/D95B
+      aShortMovingMapSpriteUploadFlags2 ; 88/D95B
 
         .word $8000
         .word $4000
@@ -11907,7 +11993,7 @@
       .al
       .xl
 
-      rsUnknown88D963 ; 88/D963
+      rsAnimateTallMovingMapSprite ; 88/D963
 
         .al
         .autsiz
@@ -11929,17 +12015,17 @@
             jml _End
 
           +
-          lda @l aUnknown88DA7A,x
+          lda @l aTallMovingMapSpriteUploadFlags2,x
           tsb wUnknown000921,b
 
         +
-        lda @l aUnknown88DA72,x
+        lda @l aTallMovingMapSpriteUploadFlags,x
         tsb wUnknown000921,b
 
         lda aMovingMapSpritesMapSprites,b,x
         and #$7FFF
         tay
-        lda aUnknown88CBE8,y
+        lda aMapSpriteWalkFrameDelays,y
         and #$00FF
         sta wUnknown000901,x
 
@@ -11987,7 +12073,7 @@
         adc wMapSpriteFrameByteOffset,b
         sta wMapSpriteFrameByteOffset,b
 
-        jsr (aUnknown88DA6A,x)
+        jsr (aMovingMapSpriteGraphicsSetters2,x)
 
         lda lMapSpriteGraphicsPointer,b
         clc
@@ -11999,7 +12085,7 @@
 
         lda #$C400 >> 1
         clc
-        adc @l aUnknown88DB04,x
+        adc @l aMovingMapSpriteVRAMOffsets,x
         sta wR1
         phx
         jsl rlDMAByPointer
@@ -12017,7 +12103,7 @@
 
         lda #$C600 >> 1
         clc
-        adc @l aUnknown88DB04,x
+        adc @l aMovingMapSpriteVRAMOffsets,x
         sta wR1
         phx
         jsl rlDMAByPointer
@@ -12035,7 +12121,7 @@
         and #$7FFF
         asl a
         tax
-        lda @l aUnknown88D488,x
+        lda @l aMapSpriteWalkOffsetPointers,x
         sta wR3
         plx
 
@@ -12052,7 +12138,7 @@
         lda $D4C7,b,y
         and #$00FF
         sta wR1
-        lda @l aUnknown88DAFC,x
+        lda @l aMovingMapSpriteTileOffsets,x
         sta wR4
         ldy #$CC49
         rts
@@ -12067,21 +12153,21 @@
       .al
       .xl
 
-      aUnknown88DA6A ; 88/DA6A
+      aMovingMapSpriteGraphicsSetters2 ; 88/DA6A
 
-        .word <>rsUnknown88DA82
-        .word <>rsUnknown88DA99
-        .word <>rsUnknown88DABA
-        .word <>rsUnknown88DADB
+        .word <>rsSetMovingMapSpriteGraphics0
+        .word <>rsSetMovingMapSpriteGraphics1
+        .word <>rsSetMovingMapSpriteGraphics2
+        .word <>rsSetMovingMapSpriteGraphics3
 
-      aUnknown88DA72 ; 88/DA72
+      aTallMovingMapSpriteUploadFlags ; 88/DA72
 
         .word $0001
         .word $0002
         .word $0004
         .word $0008
 
-      aUnknown88DA7A ; 88/DA7A
+      aTallMovingMapSpriteUploadFlags2 ; 88/DA7A
 
         .word $8000
         .word $4000
@@ -12096,7 +12182,7 @@
       .al
       .xl
 
-      rsUnknown88DA82 ; 88/DA82
+      rsSetMovingMapSpriteGraphics0 ; 88/DA82
 
         .al
         .autsiz
@@ -12114,7 +12200,7 @@
 
         .databank 0
 
-      rsUnknown88DA99 ; 88/DA99
+      rsSetMovingMapSpriteGraphics1 ; 88/DA99
 
         .al
         .autsiz
@@ -12137,7 +12223,7 @@
 
         .databank 0
 
-      rsUnknown88DABA ; 88/DABA
+      rsSetMovingMapSpriteGraphics2 ; 88/DABA
 
         .al
         .autsiz
@@ -12160,7 +12246,7 @@
 
         .databank 0
 
-      rsUnknown88DADB ; 88/DADB
+      rsSetMovingMapSpriteGraphics3 ; 88/DADB
 
         .al
         .autsiz
@@ -12191,14 +12277,14 @@
       .al
       .xl
 
-      aUnknown88DAFC ; 88/DAFC
+      aMovingMapSpriteTileOffsets ; 88/DAFC
 
         .word $0000
         .word $0008
         .word $0020
         .word $0028
 
-      aUnknown88DB04 ; 88/DB04
+      aMovingMapSpriteVRAMOffsets ; 88/DB04
 
         .word $0000 >> 1
         .word $0100 >> 1
@@ -12215,12 +12301,14 @@
       .al
       .xl
 
-      rlUnknown88DB0C ; 88/DB0C
+      rlUploadMovingUnitSpriteFrame ; 88/DB0C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; VBlank: uploads the frame rsUpdateMovingUnitSpriteFrame picked to VRAM $6200/$6300.
 
         phb
         php
@@ -12340,12 +12428,14 @@
       .al
       .xl
 
-      rlUnknown88DBEE ; 88/DBEE
+      rlUploadSelectedUnitMapSpriteFrame ; 88/DBEE
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The selected unit's standing map sprite, animated by frame count (status screen).
 
         phb
         php
@@ -12355,7 +12445,7 @@
         jsl rlGetSelectedUnitMapSprite
         and #$8000
         bne _DC01
-        jsr rsUnknown88DC07
+        jsr rsUploadSelectedUnitShortMapSpriteFrame
         plp
         plb
         .databank $88
@@ -12363,7 +12453,7 @@
 
 
         _DC01
-        jsr rsUnknown88DC8B
+        jsr rsUploadSelectedUnitTallMapSpriteFrame
         plp
         plb
         .databank $88
@@ -12381,7 +12471,7 @@
       .al
       .xl
 
-      rsUnknown88DC07 ; 88/DC07
+      rsUploadSelectedUnitShortMapSpriteFrame ; 88/DC07
 
         ; Found by tools/sweep.py.
         .al
@@ -12430,9 +12520,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown88D526+1,x
+        lda aShortStandingMapSpritePointers+1,x
         sta lR18+1
-        lda aUnknown88D526,x
+        lda aShortStandingMapSpritePointers,x
         sta lMapSpriteGraphicsPointer,b
         lda lMapSpriteGraphicsPointer,b
         clc
@@ -12464,7 +12554,7 @@
 
         ; 88/DC8B
 
-      rsUnknown88DC8B ; 88/DC8B
+      rsUploadSelectedUnitTallMapSpriteFrame ; 88/DC8B
 
         ; Found by tools/sweep.py.
         .al
@@ -12513,9 +12603,9 @@
         clc
         adc wR0
         tax
-        lda aUnknown88D5E3+1,x
+        lda aTallStandingMapSpritePointers+1,x
         sta lR18+1
-        lda aUnknown88D5E3,x
+        lda aTallStandingMapSpritePointers,x
         sta lMapSpriteGraphicsPointer,b
         lda lMapSpriteGraphicsPointer,b
         clc
@@ -12652,12 +12742,14 @@
       .as
       .xl
 
-      rlUnknown88DD9C ; 88/DD9C
+      rlUploadMapSpriteFrame ; 88/DD9C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies a map sprite frame from lR18 to VRAM wR1: two rows of $A0 bytes, or tall rows when wR0 is not 0.
 
         phb
         phk
@@ -12665,12 +12757,12 @@
         .databank $88
         lda wR0
         bne _DDA8
-        jsr rsUnknown88DDAD
+        jsr rsUploadShortMapSpriteFrame
         bra _DDAB
 
 
         _DDA8
-        jsr rsUnknown88DDD4
+        jsr rsUploadTallMapSpriteFrame
 
         _DDAB
         plb
@@ -12681,7 +12773,7 @@
 
         ; 88/DDAD
 
-      rsUnknown88DDAD ; 88/DDAD
+      rsUploadShortMapSpriteFrame ; 88/DDAD
 
         .al
         .xl
@@ -12712,7 +12804,7 @@
 
         ; 88/DDD4
 
-      rsUnknown88DDD4 ; 88/DDD4
+      rsUploadTallMapSpriteFrame ; 88/DDD4
 
         .al
         .xl
@@ -12751,12 +12843,14 @@
       .al
       .xl
 
-      rlUnknown88DDFB ; 88/DDFB
+      rlSaveDeploymentMapSprites ; 88/DDFB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies every deployment's map sprite ID to $7E4DB5 (the unit window changes them).
 
         ldx #$008E
 
@@ -12780,7 +12874,7 @@
       .al
       .xl
 
-      rlUnknown88DE0B ; 88/DE0B
+      rlRestoreDeploymentMapSprites ; 88/DE0B
 
         .al
         .xl
@@ -12809,12 +12903,14 @@
       .al
       .xl
 
-      rlUnknown88DF8C ; 88/DF8C
+      rlAnimateUnitWindowLineSprite ; 88/DF8C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = a unit window sprite slot: uploads its standing frame for the frame count, short or tall.
 
         lda $7E486B,x
         cmp #$FFFF
@@ -12823,12 +12919,12 @@
         clc
         adc #$0060
         tax
-        jsr rsUnknown88DFDA
+        jsr rsAnimateUnitWindowTallSprite
         bra _DFA5
 
 
         _DFA0
-        jsr rsUnknown88DFA6
+        jsr rsAnimateUnitWindowShortSprite
         bra _DFA5
 
 
@@ -12839,7 +12935,7 @@
 
         ; 88/DFA6
 
-      rsUnknown88DFA6 ; 88/DFA6
+      rsAnimateUnitWindowShortSprite ; 88/DFA6
 
         .al
         .xl
@@ -12879,14 +12975,14 @@
 
         _DFD3
         sta wMapSpriteFrameByteOffset,b
-        jsr rsUnknown88DE40
+        jsr rsUploadShortStandingMapSprite
         rts
 
         .databank 0
 
         ; 88/DFDA
 
-      rsUnknown88DFDA ; 88/DFDA
+      rsAnimateUnitWindowTallSprite ; 88/DFDA
 
         .al
         .xl
@@ -12926,7 +13022,7 @@
 
         _E007
         sta wMapSpriteFrameByteOffset,b
-        jsr rsUnknown88DE9E
+        jsr rsUploadTallStandingMapSprite
         rts
 
         .databank 0
@@ -13031,8 +13127,8 @@
         sta wBufferBG2VOFS
         lda #$FFE0
         sta wBufferBG2HOFS
-        jsl rlUnknown88CD53
-        jsl rlUnknown88CD61
+        jsl rlPauseMapSpriteAnimation
+        jsl rlPauseMapTileAnimation
         stz $0AD3,b
         lda #(`aUnknown88E2DE)<<8
         sta lR44+1
