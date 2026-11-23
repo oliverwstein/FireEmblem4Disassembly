@@ -1014,7 +1014,7 @@
 
       aUnknown95E760 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneHUDColors+438, PPU_REG_BASE + $22, $42, $99 ; 95/E760
 
-      aUnknown95E76C .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aUnknown998B0E+64, PPU_REG_BASE + $32, $40, $7F ; 95/E76C
+      aUnknown95E76C .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneSeaColumns+64, PPU_REG_BASE + $32, $40, $7F ; 95/E76C
 
       aUnknown95E778 .dstruct structHDMAIndirectEntryInfo, rlUnknown95E6AA, rlUnknown95E6AB, aUnknown95E6AC, aBattleSceneHUDShakeOffsets+54, PPU_REG_BASE + $0F, $42, $7F ; 95/E778
 
@@ -5294,7 +5294,7 @@
         ldx #$0000
 
         _C4F8
-        lda aUnknown998B0E+149,x
+        lda aBattleSceneSeaColumns+149,x
         sta $7FE51D,x
         inc x
         inc x
@@ -5340,7 +5340,7 @@
         adc #$000F
         sta $7FED0A,x
         plx
-        lda aUnknown998B0E+149,x
+        lda aBattleSceneSeaColumns+149,x
         and #$00FF
         cmp #$0000
         bne _C56B
@@ -5361,7 +5361,7 @@
         ldy #$0000
 
         _C56E
-        lda aUnknown998B0E+149,x
+        lda aBattleSceneSeaColumns+149,x
         sta [lR18],y
         inc x
         inc x

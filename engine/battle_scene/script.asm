@@ -970,11 +970,11 @@
         .autsiz
         .databank ?
 
-        ; Control command $FFFD: rlUnknown95C057 for the acting combatant ($0AE9; adds 1 to $7FE184 or $7FE185).
+        ; Control command $FFFD: rlBattleAnimationSignalSelf for the acting combatant ($0AE9; adds 1 to $7FE184 or $7FE185).
 
         phx
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown95C057
+        jsl rlBattleAnimationSignalSelf
         lda $7FE4BC
         clc
         adc #$0002
@@ -993,11 +993,11 @@
         .autsiz
         .databank ?
 
-        ; Control command $FFFC: rlUnknown95C077, the same for the other counter.
+        ; Control command $FFFC: rlBattleAnimationSignalOther, the same for the other counter.
 
         phx
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown95C077
+        jsl rlBattleAnimationSignalOther
         lda $7FE4BC
         clc
         adc #$0002

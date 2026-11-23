@@ -2390,9 +2390,9 @@
         .word $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0000, $0A10
         .word $708A, $8A0A, $0AD0, $008A, $AA10, $708A, $8AAA, $AAD0, $008A
 
-      aUnknown998B0E ; 99/8B0E
+      aBattleSceneSeaColumns ; 99/8B0E
 
-        ; Read by rsUnknown95C0F3.
+        ; Read by rsBattleAnimationUseWaterSounds.
 
         .byte $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $01, $01
         .byte $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00

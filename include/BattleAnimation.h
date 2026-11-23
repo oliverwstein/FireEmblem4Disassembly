@@ -13,7 +13,7 @@
   ;   frame table: a word offset per frame from the table start (the first
   ;     word / 2 is the count). A frame is a count byte and that many pairs of
   ;     words, an offset into the class sheet and a byte count, each filling
-  ;     one 16-tile row of sprite VRAM (rsUnknown95C2C0).
+  ;     one 16-tile row of sprite VRAM (rsBattleAnimationQueueFrameRows).
 
   ; Where the extra tiles of entry 0 (no extra tiles) are copied from:
   ; rsBattleSceneLoadExtraTiles copies $C0 tiles from ANIM_NO_EXTRA_TILES_SOURCE
@@ -61,7 +61,7 @@
   ; The step position is $0B21,x and the sequence start $0B1F,x.
 
   ; Show frame record Record (numbered from 0 in the block's list) for
-  ; Duration frames, scaled by the speed in $0B15/$0B16 (rsUnknown95BFC6).
+  ; Duration frames, scaled by the speed in $0B15/$0B16 (rsBattleAnimationScaleDelay).
 
     ANIM_STEP .segment Record, Duration
       .byte \Record + 1, \Duration
@@ -136,7 +136,7 @@
       .byte $F4, \Steps
     .endsegment
 
-    ; $F3: rlUnknown95C077 (rsUnknown95BDF5).
+    ; $F3: rlBattleAnimationSignalOther (rsBattleAnimationCmdSignalOther).
     ANIM_CMD_F3 .segment Arg=0
       .byte $F3, \Arg
     .endsegment
@@ -195,7 +195,7 @@
       .byte $E9, \Arg
     .endsegment
 
-    ; $E8: if $0B08,x is 0, rlUnknown95C057 and set bit 6 of $0AF3,x; then
+    ; $E8: if $0B08,x is 0, rlBattleAnimationSignalSelf and set bit 6 of $0AF3,x; then
     ; set bit 6 of $0AF4,x (rsUnknown95BF61).
     ANIM_CMD_E8 .segment Arg=0
       .byte $E8, \Arg

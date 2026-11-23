@@ -853,6 +853,13 @@
 
   .endvirtual
 
+  .virtual $7FE184
+
+    bBattleSceneRelease1 .byte ? ; $7FE184 ; release signals waiting for combatant 1 (rlBattleAnimationRunSignals)
+    bBattleSceneRelease2 .byte ? ; $7FE185 ; the same for combatant 2
+
+  .endvirtual
+
   .virtual $7FE189
 
     bBattleSceneHitKind .byte ? ; $7FE189 ; picks the hit sound: 0-2 by the attack, 3 a critical or a heavy blow

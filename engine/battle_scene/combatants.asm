@@ -1134,7 +1134,7 @@
         rep #$20
         lda #$0C00
         sta wBattleSceneUploadBudget,b
-        jsl rlUnknown95C097
+        jsl rlBattleAnimationClearSignals
         rtl
 
         .databank 0
@@ -1461,13 +1461,13 @@
         .autsiz
         .databank ?
 
-        ; X = the slot: steps its sequence script when it is playing (bit 0 of its state), else rlUnknown95C1AB.
+        ; X = the slot: steps its sequence script when it is playing (bit 0 of its state), else rlBattleAnimationDrawSlot.
 
         lda bBattleAnimationStateFlags,b,x
         bit #$0001
         bne _BB3D
         clc
-        jsl rlUnknown95C1AB
+        jsl rlBattleAnimationDrawSlot
         bra _BB40
 
 
@@ -1585,7 +1585,7 @@
         _BBE2
         cmp #$00F2
         bne _BBEC
-        jsr rsUnknown95BDF5
+        jsr rsBattleAnimationCmdSignalOther
         bra _BC65
 
 
@@ -1696,7 +1696,7 @@
         sep #$20
         sta bBattleAnimationPoseID,b,x
         xba
-        jsr rsUnknown95BFC6
+        jsr rsBattleAnimationScaleDelay
         sta bBattleAnimationFrameTimer,b,x
         rep #$20
         lda bBattleAnimationStateFlags,b,x
@@ -1713,7 +1713,7 @@
         clc
 
         _BCA6
-        jsl rlUnknown95C1AB
+        jsl rlBattleAnimationDrawSlot
 
         _BCAA
         lda bBattleAnimationFrameTimer,b,x
@@ -1807,7 +1807,7 @@
         jsr rsBattleAnimationReadStep
         sep #$20
         xba
-        jsr rsUnknown95BFC6
+        jsr rsBattleAnimationScaleDelay
         sta bBattleAnimationFrameTimer,b,x
         lda bBattleAnimationStateFlags,b,x
         ora #$02
@@ -1869,8 +1869,8 @@
         tax
         lda aBattleAnimationSoundEffects,x
         plx
-        jsr rsUnknown95C0F3
-        jsr rsUnknown95C17A
+        jsr rsBattleAnimationUseWaterSounds
+        jsr rsBattleAnimationUseListedWeaponSounds
         ora #1,s
         jsl rlPlaySoundEffect2
         pla
@@ -2035,14 +2035,16 @@
 
         ; 95/BDF5
 
-      rsUnknown95BDF5 ; 95/BDF5
+      rsBattleAnimationCmdSignalOther ; 95/BDF5
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        jsl rlUnknown95C077
+        ; Sequence command $F3: rlBattleAnimationSignalOther.
+
+        jsl rlBattleAnimationSignalOther
         lda wBattleAnimationScriptOffset,b,x
         clc
         adc #$0002
@@ -2340,7 +2342,7 @@
 
         lda wBattleAnimationXSpeed,b,x
         bne _BF76
-        jsl rlUnknown95C057
+        jsl rlBattleAnimationSignalSelf
         sep #$20
         lda bBattleAnimationStateFlags,b,x
         ora #$40
@@ -2427,12 +2429,14 @@
 
         ; 95/BFC6
 
-      rsUnknown95BFC6 ; 95/BFC6
+      rsBattleAnimationScaleDelay ; 95/BFC6
 
         .as
         .xl
         .autsiz
         .databank ?
+
+        ; A (8-bit) = frames: returns them times the slot's 8.8 delay multiplier (bBattleAnimationDelayMultiplier2 whole, bBattleAnimationDelayMultiplier1 fraction), rounded.
 
         pha
         sta $4202,b
@@ -2466,12 +2470,14 @@
 
         ; 95/BFF9
 
-      rsUnknown95BFF9 ; 95/BFF9
+      rsBattleAnimationGetPoseRecord ; 95/BFF9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Returns the address of the slot's pose's frame record: the frame data block plus its record list's offset for bBattleAnimationPoseID.
 
         phy
         lda lBattleAnimationFrameDataPointer+1,b,x
@@ -2499,12 +2505,14 @@
 
         ; 95/C022
 
-      rlUnknown95C022 ; 95/C022
+      rlBattleAnimationRelease ; 95/C022
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the combatant: clears its frozen bit (bit 6 of bBattleAnimationStateFlags) and moves its script on past the next $F4 command (ANIM_CMD_F4, the one that froze it), or to the next $FE.
 
         phx
         sep #$20
@@ -2541,27 +2549,29 @@
 
         ; 95/C057
 
-      rlUnknown95C057 ; 95/C057
+      rlBattleAnimationSignalSelf ; 95/C057
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; X = the combatant: counts up its release signals (bBattleSceneRelease1 for 0, bBattleSceneRelease2 for $43).
+
         phx
         sep #$20
         cpx #$0000
         bne _C06A
-        lda $7FE184
+        lda bBattleSceneRelease1
         inc a
-        sta $7FE184
+        sta bBattleSceneRelease1
         bra _C073
 
 
         _C06A
-        lda $7FE185
+        lda bBattleSceneRelease2
         inc a
-        sta $7FE185
+        sta bBattleSceneRelease2
 
         _C073
         rep #$20
@@ -2572,27 +2582,29 @@
 
         ; 95/C077
 
-      rlUnknown95C077 ; 95/C077
+      rlBattleAnimationSignalOther ; 95/C077
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; X = the combatant: counts up the other combatant's release signals.
+
         phx
         sep #$20
         cpx #$0000
         beq _C08A
-        lda $7FE184
+        lda bBattleSceneRelease1
         inc a
-        sta $7FE184
+        sta bBattleSceneRelease1
         bra _C093
 
 
         _C08A
-        lda $7FE185
+        lda bBattleSceneRelease2
         inc a
-        sta $7FE185
+        sta bBattleSceneRelease2
 
         _C093
         rep #$20
@@ -2603,17 +2615,19 @@
 
         ; 95/C097
 
-      rlUnknown95C097 ; 95/C097
+      rlBattleAnimationClearSignals ; 95/C097
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Clears both combatants' release signals.
+
         sep #$20
         lda #$00
-        sta $7FE184
-        sta $7FE185
+        sta bBattleSceneRelease1
+        sta bBattleSceneRelease2
         rep #$20
         rtl
 
@@ -2621,41 +2635,43 @@
 
         ; 95/C0A6
 
-      rlUnknown95C0A6 ; 95/C0A6
+      rlBattleAnimationRunSignals ; 95/C0A6
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Every frame: a combatant that is frozen (bit 6 of its state) and has a release signal is released (rlBattleAnimationRelease) and the signal counted down.
+
         phx
-        lda $7FE184
+        lda bBattleSceneRelease1
         and #$00FF
         beq _C0CC
         ldx #$0000
         lda bBattleAnimationStateFlags,b,x
         bit #$0040
         beq _C0CC
-        jsl rlUnknown95C022
+        jsl rlBattleAnimationRelease
         sep #$20
-        lda $7FE184
+        lda bBattleSceneRelease1
         dec a
-        sta $7FE184
+        sta bBattleSceneRelease1
         rep #$20
 
         _C0CC
-        lda $7FE185
+        lda bBattleSceneRelease2
         and #$00FF
         beq _C0F1
         ldx #$0043
         lda bBattleAnimationStateFlags,b,x
         bit #$0040
         beq _C0F1
-        jsl rlUnknown95C022
+        jsl rlBattleAnimationRelease
         sep #$20
-        lda $7FE185
+        lda bBattleSceneRelease2
         dec a
-        sta $7FE185
+        sta bBattleSceneRelease2
         rep #$20
 
         _C0F1
@@ -2666,7 +2682,7 @@
 
         ; 95/C0F3
 
-      rsUnknown95C0F3 ; 95/C0F3
+      rsBattleAnimationUseWaterSounds ; 95/C0F3
 
         ; Reads the stack above its return address, but in the emulator log every
         ; caller continues right after the call: no inline arguments.
@@ -2674,6 +2690,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; A = sound: on a river, or on the sea where the combatant's 8-pixel column is water (aBattleSceneSeaColumns), sounds $11-$19 become $21-$29.
 
         phx
         pha
@@ -2689,7 +2707,7 @@
         lsr a
         phx
         tax
-        lda aUnknown998B0E,x
+        lda aBattleSceneSeaColumns,x
         plx
         and #$00FF
         beq _C177
@@ -2770,7 +2788,7 @@
 
         ; 95/C17A
 
-      rsUnknown95C17A ; 95/C17A
+      rsBattleAnimationUseListedWeaponSounds ; 95/C17A
 
         ; Reads the stack above its return address, but in the emulator log every
         ; caller continues right after the call: no inline arguments.
@@ -2778,6 +2796,8 @@
         .xl
         .autsiz
         .databank ?
+
+        ; A = sound: when the combatant's weapon is in aUnknown998F02 (BattleSceneFlagListedWeapon1/2), sounds $47, $6D, $8C and $8E become the next sound.
 
         phx
         pha
@@ -2816,12 +2836,14 @@
 
         ; 95/C1AB
 
-      rlUnknown95C1AB ; 95/C1AB
+      rlBattleAnimationDrawSlot ; 95/C1AB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the slot: draws its pose's sprite at its screen position (X minus the camera, plus the draw offset; Y from the anchor), flipped when rlUnknown95D9DC says so, unless the pose is $FE (hidden) or bit 6 of its bBattleAnimationCombatantFlags is set. With carry set (a new pose) it also queues the pose's frame tiles (rlBattleAnimationLoadFrameTiles).
 
         phx
         phy
@@ -2898,7 +2920,7 @@
         plb
         .databank ?
         rep #$20
-        jsr rsUnknown95BFF9
+        jsr rsBattleAnimationGetPoseRecord
         pha
         inc a
         tay
@@ -2939,7 +2961,7 @@
         plx
         plp
         bcc _C272
-        jsl rlUnknown95C275
+        jsl rlBattleAnimationLoadFrameTiles
 
         _C272
         ply
@@ -2950,12 +2972,14 @@
 
         ; 95/C275
 
-      rlUnknown95C275 ; 95/C275
+      rlBattleAnimationLoadFrameTiles ; 95/C275
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = frame number: for a combatant slot (0 or $43), queues that frame's tile rows from its sheet (lBattleAnimationSecondaryPointer1) by its frame table (lBattleAnimationSecondaryPointer2) to VRAM at wBattleAnimationSecondaryOffset.
 
         pha
         phx
@@ -2980,7 +3004,7 @@
         lda wBattleAnimationSecondaryOffset,b,x
         sta wR0
         pla
-        jsl rlUnknown95C2A9
+        jsl rlBattleAnimationQueueFrameTiles
         bra _C2A5
 
 
@@ -2994,12 +3018,14 @@
 
         ; 95/C2A9
 
-      rlUnknown95C2A9 ; 95/C2A9
+      rlBattleAnimationQueueFrameTiles ; 95/C2A9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = frame number ($FF keeps the tiles loaded): finds the frame in the frame table at lR19 and queues its rows (rsBattleAnimationQueueFrameRows).
 
         phy
         and #$00FF
@@ -3011,7 +3037,7 @@
         clc
         adc lR19
         sta lR19
-        jsr rsUnknown95C2C0
+        jsr rsBattleAnimationQueueFrameRows
 
         _C2BE
         ply
@@ -3021,12 +3047,14 @@
 
         ; 95/C2C0
 
-      rsUnknown95C2C0 ; 95/C2C0
+      rsBattleAnimationQueueFrameRows ; 95/C2C0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Queues each row of the frame at lR19 (a count byte, then per row an offset into the sheet at lR18 and a byte count) for VRAM from wR0, $100 words apart.
 
         phy
         lda lR18
@@ -3080,13 +3108,15 @@
       .al
       .xl
 
-      rsUnknown95C306 ; 95/C306
+      rsBattleAnimationQueueFrameTilesAbsolute ; 95/C306
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; As rlBattleAnimationQueueFrameTiles, but the frame table holds addresses rather than offsets.
 
         phy
         and #$00FF
@@ -3096,7 +3126,7 @@
         tay
         lda [lR19],y
         sta lR19
-        jsr rsUnknown95C31A
+        jsr rsBattleAnimationQueueFrameRowsAbsolute
 
         _C318
         ply
@@ -3106,13 +3136,15 @@
 
         ; 95/C31A
 
-      rsUnknown95C31A ; 95/C31A
+      rsBattleAnimationQueueFrameRowsAbsolute ; 95/C31A
 
         ; Found by tools/sweep.py.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; As rsBattleAnimationQueueFrameRows (a copy used by rsBattleAnimationQueueFrameTilesAbsolute).
 
         phy
         lda lR18
@@ -3158,13 +3190,15 @@
 
         ; 95/C360
 
-      rsUnknown95C360 ; 95/C360
+      rsBattleAnimationSetSignal ; 95/C360
 
         ; Found by tools/sweep.py: nothing in the build reaches this.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Sets $0C42, the signal sequence command $F5 waits for (rsBattleAnimationCmdWaitForSignal).
 
         sep #$20
         lda #$01
@@ -6743,7 +6777,7 @@
         plb
         .databank ?
         rep #$20
-        jsr rsUnknown95BFF9
+        jsr rsBattleAnimationGetPoseRecord
         inc a
         tay
         lda wBattleAnimationBaseTile,b,x
@@ -7729,7 +7763,7 @@
         sec
         sbc #$0086
         tax
-        jsl rlUnknown95C077
+        jsl rlBattleAnimationSignalOther
         plx
         rtl
 
@@ -7937,7 +7971,7 @@
         plx
         jsl rlUnknown95DDFB
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown95C057
+        jsl rlBattleAnimationSignalSelf
         bra _DF73
 
 
@@ -8138,7 +8172,7 @@
         plx
         jsl rlUnknown95DDFB
         ldx wBattleAnimationAttackerOffset,b
-        jsl rlUnknown95C057
+        jsl rlBattleAnimationSignalSelf
         bra _E089
 
 

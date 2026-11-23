@@ -369,7 +369,7 @@
         ldx #$0043
 
         _A913
-        jsl rlUnknown95C097
+        jsl rlBattleAnimationClearSignals
         jsl rlBattleSceneCheckPaletteSwap
         lda wBattleSceneFlags
         bit #BattleSceneFlagSolo

@@ -508,7 +508,7 @@
         _8B85
         jsl rlUnknown96961F
         jsl rlUnknown96A0E2
-        jsl rlUnknown95C0A6
+        jsl rlBattleAnimationRunSignals
         jsl rlRunBattleSceneScript
         jsl rlUnknown96CB44
         jsl rlBattleSceneScriptUpdateLoading
