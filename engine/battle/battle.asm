@@ -3307,7 +3307,7 @@
           jml _E82C
 
         +
-        lda #$0010
+        lda #BattleRoundFlagFatal
         tsb bBattleRoundFlags
 
         lda #80
@@ -3346,7 +3346,7 @@
 
         ; Is arena, vs julius or not captive
         +
-        lda #$0010
+        lda #BattleRoundFlagFatal
         tsb bBattleRoundFlags
 
         +
@@ -3564,7 +3564,7 @@
                 lda #<>aBattleRoundsData
                 sta lStructPointer2,b
                 lda @l bBattleRoundFlags
-                and #~($10)
+                and #~BattleRoundFlagFatal
                 sta lStructPointer1,b
                 jsl rlAppendNewStructEntry
 

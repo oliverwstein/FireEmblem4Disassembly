@@ -117,5 +117,6 @@
   ; original notes (see bBattleRoundFlags in WRAM.h); $02 and $10 are not known.
   BattleRoundFlagCrit   = bits($04)
   BattleRoundFlagMiss   = bits($08)
+  BattleRoundFlagFatal  = bits($10) ; the strike defeats the defender (not set for a defender with CombatSkillFlagStayOnMap, outside the arena and JuliusChFinal); the battle scene reads no rounds after it
   BattleRoundFlagRanged = bits($20) ; the battle distance is 2 or more
   BattleRoundFlagMagic  = bits($40) ; the weapon is a staff or magic

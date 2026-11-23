@@ -2349,10 +2349,10 @@
         .long rlBattleScenePrepareLevelUp
         .long rlBattleSceneShowLevelUpBanner
         .long rlBattleSceneShowExperience
-        .long rlBattleSceneEndStepWaitScript2
-        .long rlUnknown969CA1
+        .long rlBattleSceneEndStepDefeatScript2
+        .long rlBattleSceneEndStepDefeatCry
         .long rlBattleSceneShowDeathQuote
-        .long rlBattleSceneEndStepWaitScript
+        .long rlBattleSceneEndStepDefeatScript
         .long rlBattleSceneEndStepType2Script
         .long rlBattleSceneShowBG3
 

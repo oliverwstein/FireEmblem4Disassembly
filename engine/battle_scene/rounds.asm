@@ -219,7 +219,7 @@
         lda [lR18],y
         bit #$0080
         bne _A7D7
-        bit #$0010
+        bit #BattleRoundFlagFatal
         beq _A7D7
         sep #$20
         lda bBattleSceneStrikeFlags,b
@@ -817,7 +817,7 @@
         ; The attacker's normal attack: the action from aBattleSceneAttackActions by attack style.
 
         lda [lR18],y
-        bit #$0010
+        bit #BattleRoundFlagFatal
         beq _ABCF
         sep #$20
         lda #$03
@@ -1058,11 +1058,11 @@
         .autsiz
         .databank ?
 
-        ; X = the attacker: a magic sword striking from range (bit 2 of bBattleAnimationCombatantFlags, set by rlBattleSceneCheckMagicSword). Queues the swing from aBattleSceneMagicSwordSwingActions by attack style, plus its variant, then the spell from aBattleSceneMagicSwordSpellActions (row = bits 3-5 of the flags, column = attack style); sets hit kind 3 for round bit $10 and variant 2.
+        ; X = the attacker: a magic sword striking from range (bit 2 of bBattleAnimationCombatantFlags, set by rlBattleSceneCheckMagicSword). Queues the swing from aBattleSceneMagicSwordSwingActions by attack style, plus its variant, then the spell from aBattleSceneMagicSwordSpellActions (row = bits 3-5 of the flags, column = attack style); sets hit kind 3 for a fatal strike (BattleRoundFlagFatal) and variant 2.
 
         sep #$20
         lda [lR18],y
-        bit #$10
+        bit #BattleRoundFlagFatal
         beq _AD02
         lda #$03
         bra _AD04

@@ -4544,7 +4544,7 @@
         lda #$0000
         sta $7F4C33
         sta $7F4C35
-        jsl rlUnknown9EB0BA
+        jsl rlMapBattlePlayDefeatCry
 
         _9FD1
         plx
@@ -7243,12 +7243,14 @@
 
         ; 9E/B0BA
 
-      rlUnknown9EB0BA ; 9E/B0BA
+      rlMapBattlePlayDefeatCry ; 9E/B0BA
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The map battle's defeat cry: sound $21, $22 or $23 by rlGetDefeatedUnitVoice, panned to the side's map sprite.
 
         phx
         lda $7F4C31
@@ -7260,10 +7262,10 @@
         lda aActiveSpriteSystem.aUnknown001200,b,x
         pha
         lda $7F4C31
-        jsl rlUnknown9EB0F2
+        jsl rlGetDefeatedUnitVoice
         asl a
         tax
-        lda aUnknown9EB0EC,x
+        lda aMapBattleDefeatCrySounds,x
         sta wR0
         jsl rlUnknown9EB12B
         pla
@@ -7285,9 +7287,9 @@
       .al
       .xl
 
-      aUnknown9EB0EC ; 9E/B0EC
+      aMapBattleDefeatCrySounds ; 9E/B0EC
 
-        ; Read by rlUnknown9EB0BA.
+        ; Read by rlMapBattlePlayDefeatCry.
 
         .word $0021, $0022, $0023
 
@@ -7301,12 +7303,14 @@
       .al
       .xl
 
-      rlUnknown9EB0F2 ; 9E/B0F2
+      rlGetDefeatedUnitVoice ; 9E/B0F2
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A = 0 for combatant 1 defeated, 1 for combatant 2: 1 + its gender when it has a voice, else 0. Combatant 1 has none when its deployment faction is 1; combatant 2 has one only with wBattleSong $3E and a character ID up to $3F.
 
         bne _B10C
         lda aActionStructUnit1

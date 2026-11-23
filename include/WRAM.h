@@ -826,7 +826,7 @@
     .byte ?                              ; $000ADF
     bBattleSceneRoundState    .byte ? ; $000AE0 ; BattleSceneRoundMayRun ...
     lBattleSceneRoundPointer  .long ? ; $000AE1 ; the next entry of aBattleRoundsData
-    bBattleSceneStrikeFlags   .byte ? ; $000AE4 ; $08 miss, $10 struck, $40 critical, $80 waiting
+    bBattleSceneStrikeFlags   .byte ? ; $000AE4 ; $08 miss, $10 struck, $20 an effect near the defender, $40 critical, $80 a fatal strike was read: no more rounds
     .byte ?                           ; $000AE5
     bBattleSceneRanged        .byte ? ; $000AE6 ; bit 0 is meant to be the round's ranged bit, but the set is never stored
     bBattleSceneRoundDamage .byte ? ; $000AE7 ; the high byte of the round entry: the damage
@@ -890,7 +890,7 @@
 
   .virtual $7FE189
 
-    bBattleSceneHitKind .byte ? ; $7FE189 ; picks the hit sound: 0-2 by the attack, 3 a critical or a heavy blow
+    bBattleSceneHitKind .byte ? ; $7FE189 ; picks the hit sound: 0-2 by the attack, 3 a fatal blow (BattleRoundFlagFatal) or a critical with that bit
 
   .endvirtual
 

@@ -13238,7 +13238,7 @@
       .al
       .xl
 
-      rlBattleSceneEndStepWaitScript ; 96/F315
+      rlBattleSceneEndStepDefeatScript ; 96/F315
 
         .al
         .xl
@@ -13262,7 +13262,7 @@
 
         ; 96/F32B
 
-      rlBattleSceneEndStepWaitScript2 ; 96/F32B
+      rlBattleSceneEndStepDefeatScript2 ; 96/F32B
 
         .al
         .xl

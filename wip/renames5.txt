@@ -1,0 +1,6 @@
+rlUnknown969CA1 rlBattleSceneEndStepDefeatCry
+rlUnknown9EB0F2 rlGetDefeatedUnitVoice | A = 0 for combatant 1 defeated, 1 for combatant 2: 1 + its gender when it has a voice, else 0. Combatant 1 has none when its deployment faction is 1; combatant 2 has one only with wBattleSong $3E and a character ID up to $3F.
+rlUnknown9EB0BA rlMapBattlePlayDefeatCry | The map battle's defeat cry: sound $21, $22 or $23 by rlGetDefeatedUnitVoice, panned to the side's map sprite.
+aUnknown9EB0EC aMapBattleDefeatCrySounds
+rlBattleSceneEndStepWaitScript rlBattleSceneEndStepDefeatScript
+rlBattleSceneEndStepWaitScript2 rlBattleSceneEndStepDefeatScript2

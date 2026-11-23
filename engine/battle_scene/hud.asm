@@ -3774,14 +3774,14 @@
 
         ; 96/9CA1
 
-      rlUnknown969CA1 ; 96/9CA1
+      rlBattleSceneEndStepDefeatCry ; 96/9CA1
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        ; End step (after the death quote, aBattleSceneEndSteps): when bit 7 of bBattleSceneStrikeFlags is set and Julius does not defend, plays sound $89, $8A or $8B (rlUnknown9EB0F2: 0 or 1 + a gender) panned to the defender.
+        ; End step (after the death quote, aBattleSceneEndSteps): when bit 7 of bBattleSceneStrikeFlags is set and Julius does not defend, plays sound $89, $8A or $8B (rlGetDefeatedUnitVoice: 0 or 1 + a gender) panned to the defender.
 
         phx
         lda bBattleSceneStrikeFlags,b
@@ -3800,7 +3800,7 @@
         lda #$0001
 
         _9CC0
-        jsl rlUnknown9EB0F2
+        jsl rlGetDefeatedUnitVoice
         cmp #$0002
         beq _9CD8
         cmp #$0001
