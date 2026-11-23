@@ -779,6 +779,9 @@
 
         ; 81/93CF
 
+        ; Unused: 5169 zero bytes.
+        .fill 5169, $00
+
     .endsection GetMapPixelScrollDistanceSection
 
 

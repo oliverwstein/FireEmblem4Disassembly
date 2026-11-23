@@ -874,6 +874,9 @@
 
         .structProcInfo "ME", rlProcEventWaitFlag7F4C07Bit10Init, rlProcEventWaitFlag7F4C07Bit10Cycle, aProcEventWaitFlag7F4C07Bit10Code
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection Unsorted828B46Section
 
 
@@ -944,6 +947,9 @@
       procEventWaitBattleSceneEnd ; 82/8BA9
 
         .structProcInfo "ME", rlProcEventWaitBattleSceneEndInit, rlProcEventWaitBattleSceneEndCycle, aProcEventWaitBattleSceneEndCode
+
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
 
     .endsection Unsorted828BA9Section
 
@@ -1019,6 +1025,9 @@
       procEventWaitProcUnknown88E02B ; 82/8BC8
 
         .structProcInfo "ME", rlProcEventWaitProcUnknown88E02BInit, rlProcEventWaitProcUnknown88E02BCycle, aProcEventWaitProcUnknown88E02BCode
+
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
 
     .endsection Unsorted828BC8Section
 
@@ -1232,6 +1241,9 @@
         .databank 0
 
         ; 82/94EC
+
+        ; Unused: 11028 zero bytes.
+        .fill 11028, $00
 
     .endsection Unsorted8294CFSection
 

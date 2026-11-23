@@ -39,17 +39,6 @@
 
   .include "include/fe4.h"
 
-  ; Fill the base ROM in parts to prevent
-  ; pc wrap warnings.
-
-  * := $000000
-
-  .for bank in range($000000, $400000, $8000)
-    * := bank
-    .binary "fe4.sfc", bank, $8000
-  .endfor
-
-  ROM = binary("fe4.sfc")
   .include "engine/core/palettes.asm"
   .include "engine/core/header.asm"
   .include "engine/worldmap/chapter_intro.asm"
@@ -9994,6 +9983,184 @@
 
     ; Compressed streams: generated from gfx/compressed/B48720/B48720.streams by build.sh.
     .include "gfx/compressed/B48720/Layout.asm"
+
+    ; Unused space between blocks that cannot take a fill at their end (graphics,
+    ; text and data placed by address). All zeros.
+
+    * = $0BFFF2
+    .logical $8BFFF2
+
+      .fill 14, $00
+
+    .here
+
+    * = $0C8000
+    .logical $8C8000
+
+      .fill 5120, $00
+
+    .here
+
+    * = $0CDFE0
+    .logical $8CDFE0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CE0E0
+    .logical $8CE0E0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CE1E0
+    .logical $8CE1E0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CE2E0
+    .logical $8CE2E0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CE3E0
+    .logical $8CE3E0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CE4E0
+    .logical $8CE4E0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CE5E0
+    .logical $8CE5E0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CE6E0
+    .logical $8CE6E0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CE7E0
+    .logical $8CE7E0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CE8E0
+    .logical $8CE8E0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CE9E0
+    .logical $8CE9E0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CEAE0
+    .logical $8CEAE0
+
+      .fill 32, $00
+
+    .here
+
+    * = $0CFFC7
+    .logical $8CFFC7
+
+      .fill 57, $00
+
+    .here
+
+    * = $146B27
+    .logical $D46B27
+
+      .fill 5337, $00
+
+    .here
+
+    * = $167F1B
+    .logical $D67F1B
+
+      .fill 229, $00
+
+    .here
+
+    * = $175E80
+    .logical $D75E80
+
+      .fill 384, $00
+
+    .here
+
+    * = $197E00
+    .logical $D97E00
+
+      .fill 512, $00
+
+    .here
+
+    * = $1A7E00
+    .logical $DA7E00
+
+      .fill 512, $00
+
+    .here
+
+    * = $1D6655
+    .logical $DD6655
+
+      .fill 219, $00
+
+    .here
+
+    * = $1E7F93
+    .logical $DE7F93
+
+      .fill 109, $00
+
+    .here
+
+    * = $1F7FF8
+    .logical $DF7FF8
+
+      .fill 8, $00
+
+    .here
+
+    * = $36FFFF
+    .logical $B6FFFF
+
+      .fill 1, $00
+
+    .here
+
+    * = $377BC8
+    .logical $F77BC8
+
+      .fill 56, $00
+
+    .here
 
     * = $377C00
     .logical $F77C00

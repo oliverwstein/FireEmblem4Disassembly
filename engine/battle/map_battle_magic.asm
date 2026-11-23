@@ -158,6 +158,9 @@
         .word <>aMapBattleMagicSpritePaletteFire
         .long g4bppcMapBattleMagicWarpStaffSprites ; BrokenStaffA
 
+        ; Unused: 10 $FF bytes.
+        .fill 10, $FF
+
     .endsection MapBattleMagicSpritesSection
 
 

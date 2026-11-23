@@ -802,6 +802,9 @@
 
         ; 82/E2E6
 
+        ; Unused: 282 zero bytes.
+        .fill 282, $00
+
     .endsection Unsorted82E2ADSection
 
 

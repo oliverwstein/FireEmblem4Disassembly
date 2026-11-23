@@ -559,6 +559,9 @@
 
         ; 80/B99B
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection Unsorted80B81BSection
 
 
@@ -841,6 +844,9 @@
         .databank 0
 
         ; 80/BB43
+
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
 
     .endsection Unsorted80BA52Section
 

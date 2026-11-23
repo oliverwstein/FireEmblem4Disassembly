@@ -82,7 +82,8 @@ def references():
             o = off(int(m.group(3), 16))
             if o is not None:
                 out.append((o, 'halves', m.group(1), f'long pointer in {m.group(2)}'))
-    for n, l in enumerate(open(os.path.join(ROOT, 'include/Undisassembled.h')), 1):
+    und = os.path.join(ROOT, 'include/Undisassembled.h')  # gone since the build is all source
+    for n, l in enumerate(open(und) if os.path.exists(und) else [], 1):
         m = re.search(r'^\s*(\w+)\s*:\?= address\(\$([0-9A-F]{6})\) ; read by (.*)', l)
         if m:
             out.append((off(int(m.group(2), 16)), 'named', f'include/Undisassembled.h:{n}',

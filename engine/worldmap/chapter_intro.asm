@@ -1498,5 +1498,8 @@
 
         ; 91/FAA6
 
+        ; Unused: 7 zero bytes.
+        .fill 7, $00
+
     .endsection Unsorted91FA9ASection
 

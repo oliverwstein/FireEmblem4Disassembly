@@ -124,11 +124,15 @@ def main():
 
     # Weak names for the rest.
     p = 'include/Undisassembled.h'
-    h = open(p, encoding='utf-8').read()
+    if weak and not os.path.exists(p):
+        sys.exit(f'{p} is gone (the build is all source), but these reads are of unbuilt bytes: '
+                 + ', '.join(n for n, _, _ in weak))
+    h = open(p, encoding='utf-8').read() if weak else ''
     add = ''.join(f'    {n:<56} :?= address(${s:06X}) ; read by {", ".join(r)}\n' for n, s, r in weak
                   if re.search(r'^\s+' + n + r'\s', h, re.M) is None)
-    h = h.replace('  .endweak', add + '\n  .endweak', 1)
-    open(p, 'w', encoding='utf-8').write(h)
+    if weak:
+        h = h.replace('  .endweak', add + '\n  .endweak', 1)
+        open(p, 'w', encoding='utf-8').write(h)
 
     # Use the names in built code.
     pat = re.compile(r'(?<![\w$])(@l )?\$([89A-F][0-9A-F]{5})\b(\+\d+)?')

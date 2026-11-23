@@ -5942,6 +5942,9 @@
 
         ; 81/8A42
 
+        ; Unused: 8 zero bytes.
+        .fill 8, $00
+
     .endsection Unsorted8189F3Section
 
 

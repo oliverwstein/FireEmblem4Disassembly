@@ -73,11 +73,9 @@ Each section starts by stating its register widths (`.al`/`.as`, `.xl`/`.xs`). 6
 
 Every routine keeps its original address as a trailing comment, for example `rlGetRandomNumber100 ; 80/A70E`, so it can be found in a debugger. Running a build writes `labels.txt`, a symbol file that debuggers such as Mesen and bsnes-plus can load.
 
-### Base ROM
+### Built entirely from source
 
-`build.asm` first copies the whole original ROM into the output, then assembles each source section over its address range. Anything that is not disassembled yet therefore still comes from the original ROM. `include/Undisassembled.h` lists the routines that disassembled code calls but that are not disassembled yet.
-
-The long-term goal is to build the ROM entirely from source, with graphics and music extracted from your own ROM, as the Pokémon disassemblies do.
+Every byte of the output comes from the source: code, data, the extracted graphics, text and sound in the repository, and explicit `.fill` lines for unused space. The original ROM is only read to compare the result against (`./build.sh`); `./build.sh mod` builds without it. `./build.sh coverage` proves this by building with the original replaced by all-`$00` and all-`$FF` files and checking the output does not change.
 
 ## Contributing
 

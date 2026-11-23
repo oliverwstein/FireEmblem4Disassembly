@@ -17,22 +17,11 @@ Phase 2 is ordered ahead of Phase 3 because shiftability is what makes the disas
 
 ---
 
-## Remaining Phase 1: Close the Final 2.75% (97.25% → 100% Built from Source)
+## Phase 1: Build from Source — DONE (2026-11-23)
 
-Everything reachable via static pointers or the existing Prologue CDL is now built. Removing `.binary "fe4.sfc"` from [build.asm](build.asm) requires covering the unlogged `none` islands:
+Every byte of the output comes from source; the `.binary "fe4.sfc"` overlay and `include/Undisassembled.h` are gone, and `./build.sh mod` builds the identical ROM without `fe4.sfc` present. The `none` pieces were closed statically (decision 2026-11-22: emulator sessions are expensive); the 58 padding runs are explicit `.fill` lines, 25 of them pinned after graphics, text and data blocks.
 
-*Decision (2026-11-22): close this statically. The user plays in Japanese, so emulator sessions are expensive; ask only for short targeted checks, batched into one list.*
-
-0. **Close the `none` pieces without new recordings.** Run `sweep.py` over each piece; disassemble what decodes as code with evidence; write the rest as labelled data (`aUnknownXXXXXX`) noted "unreferenced". Then do item 2 below. This reaches 100% honestly.
-1. **(Optional, later) Expand CDL Coverage in Mesen 2**
-   - Record one comprehensive emulator session into [fe4.cdl](fe4.cdl) covering areas missing from the Prologue log:
-     - Full combat with animations on (physical, bow, magic, staff, special crits, arena, level-ups)
-     - Castle & map facilities (shops, repair, pawn, augury, storage, castle menus, unit promotion)
-     - Chapter transitions, World Map, Generation 1 → 2 transfer, Epilogue/Rankings, Save/Load, Attract Mode, and Debug Menu
-   - Run [tools/cdl.py](tools/cdl.py) and `tools/trace.py --from-log` to disassemble any unreached code across the remaining `none` pieces and uncover callers for the **132** built routines still marked `"Found through fe4.cdl"`.
-2. **Audit Remaining Dead Code / Data & Padding Runs**
-   - Review any remaining `none` pieces not hit by the expanded CDL (dead code or unused data islands between routines).
-   - Convert all padding runs to explicit `.fill` directives and delete the `.binary "fe4.sfc"` overlay and empty [include/Undisassembled.h](include/Undisassembled.h) from [build.asm](build.asm).
+Optional, later: a broader Mesen recording (combat with animations, castles and facilities, chapter transitions, the world map, the generation change, the epilogue, save/load, the debug menu) would find callers for the 125 built routines still marked "Found through fe4.cdl" and confirm what the 187 "nothing reaches this" notes claim.
 
 ---
 

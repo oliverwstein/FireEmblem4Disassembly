@@ -338,6 +338,9 @@
 
         .structProcInfo "TT", rlProcDemoSkipFadeOutInit, rlProcDemoSkipFadeOutCycle1, aProcDemoSkipFadeOutCode
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection ProcScript828865Section
 
 

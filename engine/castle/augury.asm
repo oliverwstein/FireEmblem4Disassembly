@@ -468,6 +468,9 @@
 
         ; 8A/FA0A
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection AuguryScreenSetupSection
 
 

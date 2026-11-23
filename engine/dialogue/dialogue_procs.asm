@@ -520,6 +520,9 @@
 
         .structProcInfo "TT", rlProcDialogueWithBGFromPointerInit, rlProcDialogueWithBGCycle1, aProcDialogueWithBGCode
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection ProcDialogueWithBGFromPointerSection
 
 

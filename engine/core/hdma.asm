@@ -648,6 +648,9 @@
 
         ; 82/C26D
 
+        ; Unused: 7571 zero bytes.
+        .fill 7571, $00
+
     .endsection HDMACodeSection
 
 

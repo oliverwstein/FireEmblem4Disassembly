@@ -1426,6 +1426,9 @@
         .word $0000, $0081
         .byte 0
 
+        ; Unused: 2526 zero bytes.
+        .fill 2526, $00
+
     .endsection Unsorted90EBCASection
 
 

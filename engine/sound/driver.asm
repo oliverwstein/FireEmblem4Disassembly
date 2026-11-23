@@ -2316,6 +2316,9 @@
 
         ; 80/9988
 
+        ; Unused: 376 zero bytes.
+        .fill 376, $00
+
     .endsection Unsorted809933Section
 
 

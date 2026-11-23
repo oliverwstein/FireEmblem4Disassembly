@@ -184,6 +184,9 @@
 
         ; 8A/BE49
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection ShopScreenSetupSection
 
 

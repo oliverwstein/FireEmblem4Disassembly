@@ -2051,6 +2051,9 @@
 
         ; 8A/8F56
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection Unsorted8A8E08Section
 
 

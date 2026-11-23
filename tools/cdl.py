@@ -465,7 +465,8 @@ def main():
     a.data_executed_section()
     a.bulk_read_section()
     a.head_reads_section()
-    a.undisassembled_section()
+    if os.path.exists('include/Undisassembled.h'):  # gone since the build is all source
+        a.undisassembled_section()
     text = '\n'.join(a.out).rstrip('\n') + '\n'
     if args.report:
         # Keep anything written by hand above the marker.

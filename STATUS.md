@@ -8,8 +8,8 @@ The goal is source that is **readable and moddable** (shiftable, organized by ga
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
-- `./build.sh` is byte-identical and the checksums verify (about 3 s; `./build.sh clean` first only when a converter changed). **GAPS.md: 0 `none` pieces**; only 58 padding runs are still copied from the ROM.
-- Routines: 6,505 in `engine/`, 4,602 named, 1,903 `Unknown`. `engine/unsorted/` is gone. **147 pinned blocks** (was 280): every bank whose pieces are all source is merged.
+- `./build.sh` is byte-identical and the checksums verify (about 3 s; `./build.sh clean` first only when a converter changed). **The build is 100% source**: no overlay of the original ROM, no `include/Undisassembled.h`; `./build.sh mod` makes the identical ROM without `fe4.sfc`. GAPS.md is empty.
+- Routines: 6,505 in `engine/`, 4,602 named, 1,903 `Unknown`. `engine/unsorted/` is gone. **172 pinned blocks** (280 before merging; 25 of the 172 are unused space pinned after graphics, text and data blocks): every bank whose pieces are all source is merged.
 - Pad tests pass for `$85`, `$87`, `$89`, `$91`, `$95`, `$9E` (16 bytes) and `$96` (8; it has 8 free bytes). `$8B` and `$A0` end where pinned graphics streams begin, so they cannot grow until the streams move with them. `$87` and `$91` touch the code the game checksums (`--fix-checksums`).
 - Active sprite command `$0E` is `ACTIVE_SPRITE_TABLE_FRAME Duration, Index` (a frame from the table at `$7F4598`); `$9E/EA05`-`EC94` is five frame tables with their scripts, written like `aUnknown9ED900`. `tools/sprite_scripts.py` writes the macro.
 - Every generated file starts with a line naming the tool, its source and the date (`build.sh`'s `stamp` for the external converters).
@@ -26,7 +26,7 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 - **Phase 3 is done when everything in `engine/unsorted/` has been put in a proper place.** Low-level rendering, HDMA, OAM and spell *visual effect* helpers may stay `Unknown` if they are hard; they are low priority. Everything that implements game mechanics must be named and understood.
 - **Sound is the lowest priority.** No SPC700 driver work unless the user asks.
 - **Emulator time costs the user a lot**: the game is in Japanese, which the user doesn't read. Ask only for short, targeted checks (a breakpoint, one screen, one action), and collect them into one list rather than asking piecemeal. The existing .cdl covers the entire prologue chapter. **Before asking, try to answer the question from the code**; ask only what the code cannot settle (which path runs, what a value means on screen), and say in the list what the code already shows.
-- **Phase 1 is closed statically.** Leftover `none` pieces that don't decode as code with evidence become labelled data with an "unreferenced" note, so `.binary "fe4.sfc"` can go without new recordings.
+- **Phase 1 is closed statically** (done 2026-11-23): the build is 100% source; `fe4.sfc` is only read to compare against.
 
 ## Next session, in order
 

@@ -361,6 +361,9 @@
 
         ; 8A/D950
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection Unsorted8AD81BSection
 
 

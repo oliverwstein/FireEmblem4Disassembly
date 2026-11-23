@@ -159,8 +159,7 @@ case ${1:-build} in
   clean) clean ;;
   build) [[ -f $ROM ]] || { echo "Missing $ROM" >&2; exit 1; }
          generate; python3 tools/check_paths.py; assemble "$OUT" log.txt; verify ;;
-  mod)   [[ -f $ROM ]] || { echo "Missing $ROM" >&2; exit 1; }
-         if [[ $# -eq 1 ]]; then
+  mod)   if [[ $# -eq 1 ]]; then
            generate; python3 tools/check_paths.py; assemble "$OUT" log.txt
            python3 tools/checksums.py --update "$OUT"
          elif [[ $# -eq 2 && $2 == "--disable-checks" ]]; then

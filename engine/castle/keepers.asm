@@ -112,6 +112,9 @@
 
         ; 8A/94E0
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection Unsorted8A94B6Section
 
 
@@ -149,6 +152,9 @@
         .databank 0
 
         ; 8A/950C
+
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
 
     .endsection Unsorted8A94E2Section
 

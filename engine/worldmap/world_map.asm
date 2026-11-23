@@ -335,6 +335,9 @@
 
         ; 80/B61C
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection Unsorted80B347Section
 
 

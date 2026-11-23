@@ -5457,6 +5457,9 @@
 
         .structProcInfo "ME", rlProcUnknown828B61Init, rlProcUnknown828B61Cycle, aProcUnknown828B61Code
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection ProcScript828B61Section
 
 

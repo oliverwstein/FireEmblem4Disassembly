@@ -133,6 +133,9 @@
 
         ; 88/8188
 
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
+
     .endsection Unsorted888082Section
 
 
@@ -374,6 +377,9 @@
         .databank 0
 
         ; 88/8218
+
+        ; Unused: 2 zero bytes.
+        .fill 2, $00
 
     .endsection Unsorted8881ECSection
 
