@@ -1913,7 +1913,7 @@
 
         _AD4D
         sta wR0
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         beq _AD5D
         lda #$0380
@@ -2026,7 +2026,7 @@
         lda lR18+1
         and #$01FF
         sta $2182,b
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _AE08
         lda #$0380
@@ -2181,7 +2181,7 @@
         lda lR18+1
         and #$01FF
         sta $2182,b
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _AEFB
         lda #$0380
@@ -2335,7 +2335,7 @@
         lda lR18+1
         and #$01FF
         sta $2182,b
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _AFEC
         lda #$0380
@@ -2469,7 +2469,7 @@
         lda lR18+1
         and #$01FF
         sta $2182,b
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _B103
         lda #$0380
@@ -2604,7 +2604,7 @@
         lda lR18+1
         and #$01FF
         sta $2182,b
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _B1D0
         lda #$0380
@@ -2711,7 +2711,7 @@
         lda lR18+1
         and #$01FF
         sta $2182,b
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _B276
         lda #$0380
@@ -2836,7 +2836,7 @@
         lda lR18+1
         and #$01FF
         sta $2182,b
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _B339
         lda #$0380
@@ -3022,7 +3022,7 @@
         lda lR18+1
         and #$01FF
         sta $2182,b
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _B45D
         lda #$0380
@@ -5048,7 +5048,7 @@
         bit #$0001
         beq _CF23
         ldx #$0000
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _CF0A
         ldy #$E51D
@@ -5072,7 +5072,7 @@
         bit #$0001
         beq _CF56
         ldx #$001C
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$00FF
         bne _CF3D
         ldy #$E89D
@@ -5287,7 +5287,7 @@
         beq _D08A
         lda $7FED6F
         sta wR0
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _D082
         lda $7FED79
@@ -5305,7 +5305,7 @@
         beq _D0B4
         lda $7FED8B
         sta wR0
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _D0AC
         lda $7FED95
@@ -9836,7 +9836,7 @@
         lda $7FE47E,x
         cmp #$8000
         bne _EA31
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         beq _EA79
         lda $7FE479,x

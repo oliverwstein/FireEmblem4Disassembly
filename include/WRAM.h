@@ -847,6 +847,12 @@
 
   .endvirtual
 
+  .virtual $7FE09E
+
+    wBattleSceneFrame .word ? ; $7FE09E ; counted up at the end of rsBattleSceneRunFrame; the title screen counts it too
+
+  .endvirtual
+
   .virtual $7FE189
 
     bBattleSceneHitKind .byte ? ; $7FE189 ; picks the hit sound: 0-2 by the attack, 3 a critical or a heavy blow

@@ -4,15 +4,15 @@ The current state of the project and what the next session should do. Read this 
 
 The goal is source that is **readable and moddable** (shiftable, organized by game system, in the way pokecrystal is), **plus a written account of how the engine works** that a person can read without reading assembly (see "The engine guide" in PLAN.md).
 
-## Current state (2026-11-23, after wave 5 part 2: the title screen)
+## Current state (2026-11-23, after wave 5 part 3: the battle scene)
 
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
 - `./build.sh` is byte-identical and the checksums verify. 97.75% of the ROM is built from source. GAPS.md: 142 `none` pieces (52,160 bytes), 57 padding runs.
-- Routines: 6,258 in `engine/`, 4,418 named, 1,840 `Unknown`; 660 still in `engine/unsorted/` (banks `$84`, `$8B`, `$8C`, `$95`-`$97`; `bank9B.asm` holds only data now). 276 pinned blocks.
-- **Wave 5 part 2 done** (commits `b1860e4`..): game states `$1A`/`$1B` are the **title screen**, not the battle scene or the map battle (Gemini's names are fixed, the event command is now `OPEN_TITLE_SCREEN`). Its code is in `engine/title/`, its page is [docs/reference/title.md](docs/reference/title.md), its timeline macros and sprite struct in `include/TitleScreen.h`, its RAM at `$7FD000` in WRAM.h (scoped to `engine/title/` in `name_ram.py`). Every byte the title uses is built; its visual effects stay `Unknown`. HISTORY.md has the details.
-- New: `WRITE_RAM_*` macros for `rlBattleSceneWriteRAM`'s lists (`include/BattleAnimation.h`); tools `ram_lists.py`, `title_timeline.py`, `label_data.py` (see tools/README.md).
-- Reference pages: `docs/reference/core.md`, `ai.md`, `castle.md`, `demo.md`, `epilogue.md`, `map_battle.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`, `title.md`. `tools/reference.py` output is gitignored; run it locally.
+- Routines: 6,258 in `engine/`, 4,554 named, 1,704 `Unknown`; **44 still in `engine/unsorted/`** (bank `$84` 14, `$8B` 25, `$8C` 5; `bank9B.asm` holds only data). 276 pinned blocks.
+- **Wave 5 part 3 done** (commits `bc435b2`..): banks `$95`-`$97` are all in `engine/battle_scene/` (`scene`, `rounds`, `results`, `combatants`, `loading`, `screen`, `hud`, `effects`, `data`, plus the old `script`, `animations`, `animation_moves`, `backgrounds`, `battle_screen`). Page: [docs/reference/battle_scene.md](docs/reference/battle_scene.md). Named: the frame and init, the rounds and strikes, HP, the intro and end steps (experience, level up, messages, Julius), skill banners, loading, the sequence interpreter and its command handlers. Still `Unknown`: most of `effects.asm`, `screen.asm`, `hud.asm`'s windows and `combatants.asm`'s slot engine (about 560 routines across the battle scene files).
+- New: `include/BattleScene.h` (`structBattleSceneCombatant`, `BattleSceneFlag*`, `BattleSceneRound*`, the latter two in `constant_rules.txt`); the scene's RAM in WRAM.h (`$0ADD`-`$0AE8`, `$0D44`-`$0D69`, `$7FE09E`-`$7FFC59`), scoped to `engine/battle_scene/` and `engine/title/` in `name_ram.py` (`BATTLE_SCENE_FILES`).
+- Reference pages: `docs/reference/core.md`, `ai.md`, `battle_scene.md`, `castle.md`, `demo.md`, `epilogue.md`, `map_battle.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`, `title.md`. `tools/reference.py` output is gitignored; run it locally.
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
 ## Who wrote what
@@ -28,15 +28,17 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Talk to the user before starting.** Wave 5 part 3 is the battle scene (agreed with the user): banks `$95`, `$96` and the rest of `$97`, about 660 routines, `engine/battle_scene/` exists. Order:
-   1. **The outline is game states `$18`/`$19`**: `rlBattleSceneSetup` and `rlBattleSceneStep` (`$95/E5C9`), opened by `rsOpenBattleScene` (`engine/battle_scene/battle_screen.asm`), with `rsRunBattleSceneVBlank`/`MainLoop`. Read them top-down for the order of calls into `$95`/`$96`.
-   2. The title screen uses the battle scene's engines and names them as it found them (see "Depends on" in title.md): `rlBattleSceneWriteRAM` (lists now macros), `rlBattleSceneStartPaletteEffect` (scripts at `$97/A9A8`, `$99/FAC1`.. still `.byte` rows with raw long pointers into `$9B/C16F`..), `rlBattleSceneStartWindowEffect1`/`2` (data at `$97/F64E`, `$97/A7C7`), `rlUnknown95F14D`, `95F741`, `95F7F7`, `95C368`, `96D5DB`, `96D659`, `96D695`, `96CB44`, `96A532`. Decode the palette effect script format into macros (like `ram_lists.py`). Note `aUnit2DataBuffer._ROM.Skills1` and similar names written on `$7FEC1D`.. in bank `$95`: `name_ram.py` took the battle scene's window effect RAM for unit buffer fields; scope or fix them.
-   3. `bank9B.asm` still holds data: the battle scene's effect palettes (`$9B/C16F`-`DC23`), bank `$99` data and `$E0` palettes. File them with the battle scene.
-   4. The rest of `$97`: `rlUnknown978000` plays sound `$90` panned by `wBattleAnimationX`; its tables are read by `rsBattleAnimationGetBodyIndex`.
-2. **Before naming a bank, make it honest source**, as for `$9F` and the title: `code_pointers.py` (now also indexed stores), `ram_lists.py`, raw `.word $XXXX`, `.byte` rows that are scripts or code, routines nothing references. Name the RAM a pointer is stored in first: the two-halves rule only sees `name+1` stores. Fix with `promote_locals.py`, `redisasm_chain.py`, `sprite_scripts.py`, `label_data.py`. Bank `$9E`'s map battle sprite scripts are still `.byte` rows.
+1. **Talk to the user before starting.** Two candidates; let the user choose:
+   - **Empty `engine/unsorted/`** (Phase 3's finish line): bank `$84` (14 routines), `$8B` (25), `$8C` (5), and `bank9B.asm`'s data (the battle scene's effect palettes `$9B/C16F`-`DC23`, bank `$99` data, `$E0` palettes: file them with the battle scene or the title). Small enough for one session together with item 2's first part.
+   - **The battle scene, second pass.** By value:
+     1. The palette effect script format (`rlBattleSceneStartPaletteEffect`; scripts at `$97/A9A8`, `$99/FAC1`.., still `.byte` rows with raw long pointers into `$9B/C16F`..) as macros, like `ram_lists.py`. The title uses it too.
+     2. `hud.asm`: the experience bar and level up windows (`rlUnknown9680C2` and the `$7FED4B`.. variables), the name and weapon windows.
+     3. `combatants.asm`: the slot engine around `rlBattleAnimationQueueAction` (`rlUnknown95C1AB`, `95C51F`, `95DDFB`, the effect slots `$86`/`$C9`), and the slot fields still raw (`$0AF1`/`$0AF2` knockback, `$0B79`.. the effect slots, `$0C25`.. the frame pointers set by `rlBattleSceneSetFramePointers`).
+     4. The rest of `rsBattleSceneRunFrame`'s callees (`rlUnknown96961F` plays sound command `$01D1` when the combatants cross, ...).
+2. **Before naming a bank, make it honest source**, as for `$9F` and the title: `code_pointers.py`, `ram_lists.py`, raw `.word $XXXX`, `.byte` rows that are scripts or code, routines nothing references. In the battle scene, `rsBattleSceneLoadExtraTiles` loads a pointer written `aChapter05MapEvents + 326` (a chance label), and `rsBattleScenePlaceCombatants` holds two dead `.byte` runs.
 3. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.
-4. Open questions are at the end of each reference page. `tools/songs.py` stops at a stale label (`aUnknown8A9D79`); fix it before regenerating `audio/SONGS.md`. `tools/stream_catalog.py` deleted the catalog previews when run (reverted); find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm; move the lines by hand. Check that an `include/` file does not exist before creating one. `tools/rename.py` refuses a new name that appears anywhere, comments included: rename first, then write comments that use the new name. `title_timeline.py --write` assumed the timelines were in `bank97.asm`; they are in `engine/title/title_timelines.asm` now.
-5. Bank `$89` cannot be pad-tested until it is merged. Banks `$85`, `$87`, `$88`, `$9F` and now `$9B` could be pad-tested (`./build.sh pad`).
+4. Open questions are at the end of each reference page. `tools/songs.py` stops at a stale label (`aUnknown8A9D79`); fix it before regenerating `audio/SONGS.md`. `tools/stream_catalog.py` deleted the catalog previews when run (reverted); find out why before rerunning it. New files from `move_sections.py` and `split_section.py` are included at the top of build.asm; move the lines by hand. Check that an `include/` file does not exist before creating one. `tools/rename.py` refuses a new name that appears anywhere, comments included: rename first, then write comments that use the new name. `move_sections.py` stops at a section listed twice in its spec.
+5. Bank `$89` cannot be pad-tested until it is merged. Banks `$85`, `$87`, `$88`, `$9F` and `$9B` could be pad-tested (`./build.sh pad`).
 6. Two unbuilt pieces in bank `$91` decode as unreferenced code: `$91/DF08` and `$91/E006`. Close them as labelled data or code with an "unreferenced" note.
 7. The Jugdral history's texts (`engine/save/jugdral_history.asm`) are still `.byte` rows; the user asked where the text is. Find whether `tools/dialogue.py`'s encoding reads them.
 

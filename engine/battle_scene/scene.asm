@@ -280,7 +280,7 @@
         stz aBattleSceneCombatant2.HPSpeed,b
         stz aBattleSceneCombatant2.HPSpeed,b
         lda #$0000
-        sta $7FE09E
+        sta wBattleSceneFrame
         sta $7FE1B4
         sep #$20
         sta bBattleSceneCameraPan
@@ -567,9 +567,9 @@
 
         _8C32
         php
-        lda $7FE09E
+        lda wBattleSceneFrame
         inc a
-        sta $7FE09E
+        sta wBattleSceneFrame
         plp
         rts
 

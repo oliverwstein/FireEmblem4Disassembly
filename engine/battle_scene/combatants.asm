@@ -6233,7 +6233,7 @@
         _D7A9
         cpx #$0000
         bne _D7BD
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         beq _D7BB
         jml _D851
@@ -6244,7 +6244,7 @@
 
 
         _D7BD
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         bne _D7CA
         jml _D851
@@ -6633,7 +6633,7 @@
         lda bBattleAnimationFacingFlags,b,x
         bit #$0080
         beq _DA07
-        lda $7FE09E
+        lda wBattleSceneFrame
         bit #$0001
         beq _DA07
         ldx wBattleAnimationDefenderOffset,b

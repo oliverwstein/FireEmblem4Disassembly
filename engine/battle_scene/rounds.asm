@@ -1439,7 +1439,7 @@
         .autsiz
         .databank ?
 
-        ; Sound by bBattleSceneHitKind ($91-$94), $95 for no damage, panned to the defender; a critical adds $50. A blow on JuliusChFinal by combatant 1 that ends the battle slows the fade and sets BattleSceneFlagToMapMode3.
+        ; Sound by bBattleSceneHitKind ($91-$94), $95 for no damage, panned to the defender; a critical adds $50. Hit kind 3 by combatant 1 on JuliusChFinal slows the fade, fades the music and sets BattleSceneFlagToMapMode3.
 
         phx
         lda bBattleSceneRoundDamage,b

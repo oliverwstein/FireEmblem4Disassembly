@@ -1290,7 +1290,7 @@
         jsl rlClearTitleSprites
         jsl rlClearTitleVBlankRoutines
         lda #$0000
-        sta $7FE09E
+        sta wBattleSceneFrame
         lda bTitleScreenSkipIntro
         and #$00FF
         bne _DCA7
@@ -1373,9 +1373,9 @@
         lda wTitleScreenFrame
         inc a
         sta wTitleScreenFrame
-        lda $7FE09E
+        lda wBattleSceneFrame
         inc a
-        sta $7FE09E
+        sta wBattleSceneFrame
         rtl
 
         .databank 0

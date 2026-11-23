@@ -19,7 +19,7 @@ The title's RAM is the block at `$7FD000` in [WRAM.h](../../include/WRAM.h) (`bT
 
 Its data in other banks:
 - the sprite definitions, frames and still scripts (`aTitleSpriteDefinitions`, `aTitleSpriteFrames`, `aTitleSpriteStill00`..., bank `$99`), still in `engine/unsorted/bank9B.asm`;
-- the brightness lists and load lists (`aTitleSceneFadeInBrightness`, `aTitleLoadList`, bank `$97`), in `bank97.asm`;
+- the brightness lists and load lists (`aTitleSceneFadeInBrightness`, `aTitleLoadList`, bank `$97`), in `engine/battle_scene/data.asm`;
 - the caption scrolls (`aTitleCaptionScrolls`).
 
 ## How it is reached
@@ -103,4 +103,4 @@ These routines are built, but nothing in the build reaches them. Most are slot i
 
 - What each intro scene shows, and what the captions say (one emulator session; the captions are graphics).
 - `$7FD8B6`: set to 1 by scenes 3 and 3b, cleared by `rlUnknown95F9CE`. While it is 0, the scene 2 sprites follow BG1's scroll (`rsUnknown95FC23`).
-- `$7FE09E` is counted by the title step and read by banks `$95`/`$96`: probably the battle scene's frame counter.
+- `wBattleSceneFrame` (`$7FE09E`) is counted by the title step as well as by `rsBattleSceneRunFrame`; what reads it during the title.
