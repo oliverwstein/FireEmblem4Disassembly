@@ -798,7 +798,7 @@
 
         _956A
         ACTIVE_SPRITE_FRAME 48, aUnknown9F9601
-        .byte $16, $FB ; command $16
+        ACTIVE_SPRITE_JUMP_RELATIVE _956A
 
         ; 9F/9570
       rlUnknown9F9570 ; 9F/9570
@@ -870,7 +870,7 @@
 
         _95C7
         ACTIVE_SPRITE_FRAME 48, aUnknown9F9601
-        .byte $16, $FB ; command $16
+        ACTIVE_SPRITE_JUMP_RELATIVE _95C7
 
         ; 9F/95CD
       rlUnknown9F95CD ; 9F/95CD

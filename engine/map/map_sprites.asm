@@ -241,7 +241,7 @@
         .databank ?
 
         ; Nothing in the disassembled code refers to this. It is a variant of
-        ; rsActiveSpriteCommand0F that backs up one more byte.
+        ; rsActiveSpriteCommandDrawMovingMapSprite that backs up one more byte.
 
         dec y
         dec y

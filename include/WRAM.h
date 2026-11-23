@@ -2569,9 +2569,9 @@
     wMapBattleSavedCameraX .word ?          ; $7F4BF9 ; the camera before the battle
     wMapBattleSavedCameraY .word ?          ; $7F4BFB
                            .word ?          ; $7F4BFD
-    wUnknown7F4BFF .word ?                  ; $7F4BFF ; used by the scripted critical's effect
-    wUnknown7F4C01 .word ?                  ; $7F4C01
-    wUnknown7F4C03 .word ?                  ; $7F4C03
+    wScriptedCritSprite .word ?                  ; $7F4BFF ; used by the scripted critical's effect
+    wScriptedCritPartnerSprite .word ?                  ; $7F4C01
+    wScriptedCritPartner2Sprite .word ?                  ; $7F4C03
     wMapBattleMusicLowered .word ?          ; $7F4C05 ; 1 while the music is lowered for a popup's jingle
     wMapAnimationSignals .word ?            ; $7F4C07 ; signals between the map battle, the map action animations, the cutscenes and the event procs
                                             ; that wait for them: bit 1 ($0002) the animation has ended (rlProcHaltEventCycle waits for it); procMapBattle sets 1 after the round entry $7F00; the cutscenes use $0004-$0010

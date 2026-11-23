@@ -37,6 +37,13 @@ CALL_ARGS = {
     0x9FB4E8: 'jump',  # skips the word when $7ECC0C is 2, else jumps
 }
 # Commands after which the script does not run on.
+# Commands without operands (the map battle's, mostly) and their macros.
+SIMPLE = {0x04: 'ACTIVE_SPRITE_MAP_BATTLE_STRIKE', 0x05: 'ACTIVE_SPRITE_WAIT_STRIKE_TAKEN',
+          0x06: 'ACTIVE_SPRITE_WAIT_STRIKE', 0x07: 'ACTIVE_SPRITE_WAIT_STRIKE_DONE', 0x08: 'ACTIVE_SPRITE_WAIT_ROUND',
+          0x09: 'ACTIVE_SPRITE_ROUND_SCRIPT', 0x0A: 'ACTIVE_SPRITE_AUX_ROUND_SCRIPT', 0x0B: 'ACTIVE_SPRITE_SIDE_SCRIPT',
+          0x0C: 'ACTIVE_SPRITE_SIDE_AUX_SCRIPT', 0x0D: 'ACTIVE_SPRITE_END_ROUND',
+          0x0F: 'ACTIVE_SPRITE_DRAW_MOVING_MAP_SPRITE', 0x1A: 'ACTIVE_SPRITE_WAIT_BOLT_SIGNAL',
+          0x1B: 'ACTIVE_SPRITE_FIRE_BOLT', 0x1C: 'ACTIVE_SPRITE_WAIT_BOLT_DONE'}
 ENDS = {0x01, 0x09, 0x0A, 0x0B, 0x0C, 0x0F, 0x15, 0x16}
 
 
@@ -153,6 +160,18 @@ def render(rom, labels, starts, names=None, stop=None):
             lines.append(f'        ACTIVE_SPRITE_MOVE {signed(b[0])}, {signed(b[1])}')
         elif op == 0x1D:
             lines.append(f'        ACTIVE_SPRITE_SOUND ${b[0]:02X}')
+        elif op in SIMPLE:
+            lines.append(f'        {SIMPLE[op]}')
+        elif op == 0x03:
+            lines.append(f'        ACTIVE_SPRITE_MAP_BATTLE_FRAME {b[0]}')
+        elif op == 0x13:
+            lines.append(f'        ACTIVE_SPRITE_WAIT_WORD {b[0]}')
+        elif op == 0x16:
+            lines.append(f'        ACTIVE_SPRITE_JUMP_RELATIVE {name(a + 1 + signed(b[0]))}')
+        elif op == 0x18:
+            lines.append(f'        ACTIVE_SPRITE_FRAME_RELATIVE {b[0]}, ${word(b, 1):04X}')
+        elif op == 0x1E:
+            lines.append(f'        ACTIVE_SPRITE_SET_MUSIC ${b[0]:02X}')
         else:
             lines.append('        .byte ' + ', '.join(f'${x:02X}' for x in bytes([op]) + b)
                          + f' ; command ${op:02X}')

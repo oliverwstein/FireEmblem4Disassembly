@@ -715,7 +715,15 @@
         .autsiz
         .databank ?
 
-        ; X and Y = the sprite scripts for a round: by whether this side attacks, and the round's hit, miss and critical bits.
+        ; X and Y = the main and aux sprite scripts of a side for a round, offsets into its
+        ; block of sprite data (lR18) for its weapon type. The block starts with the offset
+        ; of its frame table, then two unknown words, then pairs of script offsets (main, aux):
+        ;   +$06/+$08 wait for a round (the side is struck, or a struck side that does not dodge)
+        ;   +$0A/+$0C dodge (the side is struck and the round misses, bit $08)
+        ;   +$0E/+$10 strike
+        ;   +$12/+$14 strike at range (bit $20, not for a diagonal facing): starts and waits
+        ;             for the magic effect (sprite commands $10, $11)
+        ; A = 0 when this side strikes, wR0 = its facing.
 
         and #$0001
         bne _8353
@@ -6433,7 +6441,7 @@
         inc y
         cpy #$01C0
         bne _AA25
-        jsl rlUnknown96D659
+        jsl rlFreeBattleScenePaletteSlots
         stz wR0
         lda #(`aMapBattleSkillPaletteEffect)<<8
         sta lR18+1
@@ -8251,7 +8259,7 @@
 
       aMapBattleSideGraphicsOffsets ; 9E/B4C9
 
-        ; Read by rlUploadMapBattleSideTiles, rlUploadMapBattleSideFrame, rsActiveSpriteCommand03.
+        ; Read by rlUploadMapBattleSideTiles, rlUploadMapBattleSideFrame, rsActiveSpriteCommandMapBattleFrame.
 
         .word $0000, $2000
 
@@ -8283,7 +8291,7 @@
 
       aMapBattleSideFrameVRAM ; 9E/B4D7
 
-        ; Read by rlUploadMapBattleSideFrame, rsActiveSpriteCommand03.
+        ; Read by rlUploadMapBattleSideFrame, rsActiveSpriteCommandMapBattleFrame.
 
         .word $0200, $0280
 
@@ -9913,7 +9921,7 @@
         PROC_JUMP_IF_BITS_UNSET _CCEF, $0004
         PROC_YIELD 1
         _CCFD
-        PROC_CALL rlUnknown9EF1B5
+        PROC_CALL rlMapBattleSignalEventMarker
         _CD02
         PROC_YIELD 1
         PROC_JUMP_IF_BITS_SET _CD02, $0004
@@ -11422,8 +11430,8 @@
 
         lda #$002C
         jsl rlMapBattlePlaySoundAtSprite
-        jsl rlUnknown9EE309
-        jsl rlUnknown9EE35F
+        jsl rlCreateScriptedCritSiblingSprite
+        jsl rlCreateScriptedCritSiblingPartnerSprite
         rtl
 
         .databank 0
@@ -11449,19 +11457,21 @@
       aProcScriptedCritSiblingEffectCode ; 9E/E2FE
 
         PROC_YIELD 32
-        PROC_CALL rlUnknown9EE3A7
+        PROC_CALL rlScriptedCritSiblingMerge
         PROC_YIELD 56
         PROC_END
 
 
         ; 9E/E309
 
-      rlUnknown9EE309 ; 9E/E309
+      rlCreateScriptedCritSiblingSprite ; 9E/E309
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The effect's sprite on the striker's tile ($7F57EE, $7F57F0), sprite palette 6.
 
         phy
         phx
@@ -11484,7 +11494,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         ldx aActiveSpriteSystem.wOffset,b
         txa
-        sta wUnknown7F4BFF
+        sta wScriptedCritSprite
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
@@ -11501,12 +11511,14 @@
 
         ; 9E/E35F
 
-      rlUnknown9EE35F ; 9E/E35F
+      rlCreateScriptedCritSiblingPartnerSprite ; 9E/E35F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The same on the partner's tile ($7E4F79, $7E4F7B).
 
         phy
         phx
@@ -11525,7 +11537,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         ldx aActiveSpriteSystem.wOffset,b
         txa
-        sta wUnknown7F4C01
+        sta wScriptedCritPartnerSprite
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
@@ -11542,18 +11554,20 @@
 
         ; 9E/E3A7
 
-      rlUnknown9EE3A7 ; 9E/E3A7
+      rlScriptedCritSiblingMerge ; 9E/E3A7
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Frees the partner's sprite, switches the striker's to aScriptedCritSiblingMergeScript, sound $2D.
+
         phx
-        lda wUnknown7F4C01
+        lda wScriptedCritPartnerSprite
         tax
         stz aActiveSpriteSystem.aTypeOffset,b,x
-        lda wUnknown7F4BFF
+        lda wScriptedCritSprite
         tax
         lda #<>aScriptedCritSiblingMergeScript
         sta aActiveSpriteSystem.aCodeOffset,b,x
@@ -11583,9 +11597,9 @@
 
         lda #$0029
         jsl rlMapBattlePlaySoundAtSprite
-        jsl rlUnknown9EE417
-        jsl rlUnknown9EE46D
-        jsl rlUnknown9EE568
+        jsl rlCreateScriptedCritLoverSprite
+        jsl rlCreateScriptedCritLoverPartnerSprite
+        jsl rlStartScriptedCritLoverPaletteEffect
         rtl
 
         .databank 0
@@ -11615,25 +11629,27 @@
         PROC_YIELD 1
         PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_WHILE_UNK_TIMER _E3EC
-        PROC_CALL rlUnknown9EE4B5
+        PROC_CALL rlScriptedCritLoverStartFlight
         _E3FC
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EE4C5
+        PROC_CALL rlScriptedCritLoverFly
         PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_IF_BITS_UNSET _E3FC, $0004
-        PROC_CALL rlUnknown9EE53D
+        PROC_CALL rlScriptedCritLoverArrive
         PROC_YIELD 16
         PROC_END
 
 
         ; 9E/E417
 
-      rlUnknown9EE417 ; 9E/E417
+      rlCreateScriptedCritLoverSprite ; 9E/E417
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The effect's sprite on the striker's tile, sprite palette 6.
 
         phy
         phx
@@ -11656,7 +11672,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         ldx aActiveSpriteSystem.wOffset,b
         txa
-        sta wUnknown7F4BFF
+        sta wScriptedCritSprite
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
@@ -11673,12 +11689,14 @@
 
         ; 9E/E46D
 
-      rlUnknown9EE46D ; 9E/E46D
+      rlCreateScriptedCritLoverPartnerSprite ; 9E/E46D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The same on the partner's tile.
 
         phy
         phx
@@ -11697,7 +11715,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         ldx aActiveSpriteSystem.wOffset,b
         txa
-        sta wUnknown7F4C01
+        sta wScriptedCritPartnerSprite
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
@@ -11714,7 +11732,7 @@
 
         ; 9E/E4B5
 
-      rlUnknown9EE4B5 ; 9E/E4B5
+      rlScriptedCritLoverStartFlight ; 9E/E4B5
 
         .al
         .xl
@@ -11725,7 +11743,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown9EE4FC
+        jsl rlSetScriptedCritLoverVelocity
         plx
         rtl
 
@@ -11733,18 +11751,20 @@
 
         ; 9E/E4C5
 
-      rlUnknown9EE4C5 ; 9E/E4C5
+      rlScriptedCritLoverFly ; 9E/E4C5
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Moves the partner's sprite; proc bit $0004 when it reaches the striker's.
+
         phx
-        lda wUnknown7F4C01
+        lda wScriptedCritPartnerSprite
         tax
         jsl rlMoveActiveSpriteByVelocity
-        lda wUnknown7F4BFF
+        lda wScriptedCritSprite
         tax
         lda aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
@@ -11752,7 +11772,7 @@
         sta wR1
         lda #$0001
         sta wR2
-        lda wUnknown7F4C01
+        lda wScriptedCritPartnerSprite
         tax
         jsl rlCheckActiveSpriteNearPoint
         bcc _E4FA
@@ -11770,7 +11790,7 @@
 
         ; 9E/E4FC
 
-      rlUnknown9EE4FC ; 9E/E4FC
+      rlSetScriptedCritLoverVelocity ; 9E/E4FC
 
         .al
         .xl
@@ -11778,13 +11798,13 @@
         .databank ?
 
         phx
-        lda wUnknown7F4C01
+        lda wScriptedCritPartnerSprite
         tax
         lda $7E4F79
         sta wR0
         lda $7E4F7B
         sta wR1
-        jsl rlUnknown9EE514
+        jsl rlSetScriptedCritSpriteVelocity
         plx
         rtl
 
@@ -11792,12 +11812,14 @@
 
         ; 9E/E514
 
-      rlUnknown9EE514 ; 9E/E514
+      rlSetScriptedCritSpriteVelocity ; 9E/E514
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = sprite, wR0/wR1 = its tile: a velocity toward the striker's tile ($7F57EE, $7F57F0), half a tile per frame per tile apart.
 
         lda $7F57EE
         sec
@@ -11825,20 +11847,22 @@
 
         ; 9E/E53D
 
-      rlUnknown9EE53D ; 9E/E53D
+      rlScriptedCritLoverArrive ; 9E/E53D
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Stops the palette effect, loads the end palette, frees the partner's sprite, switches the striker's to aScriptedCritLoverArriveScript, sound $2C.
+
         phx
-        jsl rlUnknown9EE5C8
+        jsl rlFreeFirstPaletteSlot
         jsl rlLoadScriptedCritEndPalette
-        lda wUnknown7F4C01
+        lda wScriptedCritPartnerSprite
         tax
         stz aActiveSpriteSystem.aTypeOffset,b,x
-        lda wUnknown7F4BFF
+        lda wScriptedCritSprite
         tax
         lda #<>aScriptedCritLoverArriveScript
         sta aActiveSpriteSystem.aCodeOffset,b,x
@@ -11853,7 +11877,7 @@
 
         ; 9E/E568
 
-      rlUnknown9EE568 ; 9E/E568
+      rlStartScriptedCritLoverPaletteEffect ; 9E/E568
 
         .al
         .xl
@@ -11862,11 +11886,11 @@
 
         phy
         phx
-        jsl rlUnknown96D659
+        jsl rlFreeBattleScenePaletteSlots
         stz wR0
-        lda #(`aUnknown9EE581)<<8
+        lda #(`aScriptedCritLoverPaletteEffect)<<8
         sta lR18+1
-        lda #<>aUnknown9EE581
+        lda #<>aScriptedCritLoverPaletteEffect
         sta lR18
         jsl rlBattleSceneStartPaletteEffect
         plx
@@ -11877,11 +11901,11 @@
 
         ; 9E/E581
 
-      aUnknown9EE581 ; 9E/E581
+      aScriptedCritLoverPaletteEffect ; 9E/E581
 
-        PALETTE_EFFECT $02, $01, $E4, $0B, aUnknown9EE588
+        PALETTE_EFFECT $02, $01, $E4, $0B, aScriptedCritLoverFlashColors
 
-      aUnknown9EE588 ; 9E/E588
+      aScriptedCritLoverFlashColors ; 9E/E588
 
         .byte $81, $46, $FF, $16, $1E, $0D, $77, $08, $ED
         .byte $04, $89, $08, $ED, $0D, $77, $16, $1E, $26, $BF, $5F, $FF, $3B, $FF, $03, $FF
@@ -11889,12 +11913,14 @@
         .byte $29, $52, $18, $EC, $14, $AA, $0C, $87, $04, $44, $14, $AA, $18, $EC, $29, $52
         .byte $35, $B7, $42, $1C, $4A, $5F, $FE
 
-      rlUnknown9EE5C8 ; 9E/E5C8
+      rlFreeFirstPaletteSlot ; 9E/E5C8
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Frees palette effect slot 0 (aBattleScenePaletteSlots.Type bit 7).
 
         sep #$20
         lda $7FFD9A
@@ -11922,10 +11948,10 @@
 
         lda #$002A
         jsl rlMapBattlePlaySoundAtSprite
-        jsl rlUnknown9EE628
-        jsl rlUnknown9EE67E
-        jsl rlUnknown9EE6C6
-        jsl rlUnknown9EE7DB
+        jsl rlCreateScriptedCritTriangleSprite
+        jsl rlCreateScriptedCritTrianglePartnerSprite
+        jsl rlCreateScriptedCritTrianglePartner2Sprite
+        jsl rlStartScriptedCritTrianglePaletteEffect
         rtl
 
         .databank 0
@@ -11955,20 +11981,20 @@
         PROC_YIELD 1
         PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_WHILE_UNK_TIMER _E5FD
-        PROC_CALL rlUnknown9EE70E
+        PROC_CALL rlScriptedCritTriangleStartFlight
         _E60D
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EE74B
+        PROC_CALL rlScriptedCritTriangleFly
         PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_IF_BITS_UNSET _E60D, $0004
-        PROC_CALL rlUnknown9EE7A8
+        PROC_CALL rlScriptedCritTriangleArrive
         PROC_YIELD 24
         PROC_END
 
 
         ; 9E/E628
 
-      rlUnknown9EE628 ; 9E/E628
+      rlCreateScriptedCritTriangleSprite ; 9E/E628
 
         .al
         .xl
@@ -11996,7 +12022,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         ldx aActiveSpriteSystem.wOffset,b
         txa
-        sta wUnknown7F4BFF
+        sta wScriptedCritSprite
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
@@ -12013,12 +12039,14 @@
 
         ; 9E/E67E
 
-      rlUnknown9EE67E ; 9E/E67E
+      rlCreateScriptedCritTrianglePartnerSprite ; 9E/E67E
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The same on the first partner's tile ($7E4F79, $7E4F7B).
 
         phy
         phx
@@ -12037,7 +12065,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         ldx aActiveSpriteSystem.wOffset,b
         txa
-        sta wUnknown7F4C01
+        sta wScriptedCritPartnerSprite
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
@@ -12054,12 +12082,14 @@
 
         ; 9E/E6C6
 
-      rlUnknown9EE6C6 ; 9E/E6C6
+      rlCreateScriptedCritTrianglePartner2Sprite ; 9E/E6C6
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; The same on the second partner's tile ($7E4F7D, $7E4F7F).
 
         phy
         phx
@@ -12078,7 +12108,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         ldx aActiveSpriteSystem.wOffset,b
         txa
-        sta wUnknown7F4C03
+        sta wScriptedCritPartner2Sprite
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
@@ -12095,7 +12125,7 @@
 
         ; 9E/E70E
 
-      rlUnknown9EE70E ; 9E/E70E
+      rlScriptedCritTriangleStartFlight ; 9E/E70E
 
         .al
         .xl
@@ -12106,7 +12136,7 @@
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB
         sta aProcSystem.aHeaderBitfield,b,x
-        jsl rlUnknown9EE71E
+        jsl rlSetScriptedCritTriangleVelocities
         plx
         rtl
 
@@ -12114,7 +12144,7 @@
 
         ; 9E/E71E
 
-      rlUnknown9EE71E ; 9E/E71E
+      rlSetScriptedCritTriangleVelocities ; 9E/E71E
 
         .al
         .xl
@@ -12122,20 +12152,20 @@
         .databank ?
 
         phx
-        lda wUnknown7F4C01
+        lda wScriptedCritPartnerSprite
         tax
         lda $7E4F79
         sta wR0
         lda $7E4F7B
         sta wR1
-        jsl rlUnknown9EE514
-        lda wUnknown7F4C03
+        jsl rlSetScriptedCritSpriteVelocity
+        lda wScriptedCritPartner2Sprite
         tax
         lda $7E4F7D
         sta wR0
         lda $7E4F7F
         sta wR1
-        jsl rlUnknown9EE514
+        jsl rlSetScriptedCritSpriteVelocity
         plx
         rtl
 
@@ -12143,18 +12173,20 @@
 
         ; 9E/E74B
 
-      rlUnknown9EE74B ; 9E/E74B
+      rlScriptedCritTriangleFly ; 9E/E74B
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Moves both partners' sprites; proc bit $0004 when the second reaches the striker's.
+
         phx
-        lda wUnknown7F4C01
+        lda wScriptedCritPartnerSprite
         tax
         jsl rlMoveActiveSpriteByVelocity
-        lda wUnknown7F4BFF
+        lda wScriptedCritSprite
         tax
         lda aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
@@ -12162,13 +12194,13 @@
         sta wR1
         lda #$0001
         sta wR2
-        lda wUnknown7F4C01
+        lda wScriptedCritPartnerSprite
         tax
         jsl rlCheckActiveSpriteNearPoint
-        lda wUnknown7F4C03
+        lda wScriptedCritPartner2Sprite
         tax
         jsl rlMoveActiveSpriteByVelocity
-        lda wUnknown7F4BFF
+        lda wScriptedCritSprite
         tax
         lda aActiveSpriteSystem.aUnknown001200,b,x
         sta wR0
@@ -12176,7 +12208,7 @@
         sta wR1
         lda #$0001
         sta wR2
-        lda wUnknown7F4C03
+        lda wScriptedCritPartner2Sprite
         tax
         jsl rlCheckActiveSpriteNearPoint
         bcc _E7A6
@@ -12194,7 +12226,7 @@
 
         ; 9E/E7A8
 
-      rlUnknown9EE7A8 ; 9E/E7A8
+      rlScriptedCritTriangleArrive ; 9E/E7A8
 
         .al
         .xl
@@ -12202,15 +12234,15 @@
         .databank ?
 
         phx
-        jsl rlUnknown9EE5C8
+        jsl rlFreeFirstPaletteSlot
         jsl rlLoadScriptedCritEndPalette
-        lda wUnknown7F4C01
+        lda wScriptedCritPartnerSprite
         tax
         stz aActiveSpriteSystem.aTypeOffset,b,x
-        lda wUnknown7F4C03
+        lda wScriptedCritPartner2Sprite
         tax
         stz aActiveSpriteSystem.aTypeOffset,b,x
-        lda wUnknown7F4BFF
+        lda wScriptedCritSprite
         tax
         lda #<>aScriptedCritTriangleArriveScript
         sta aActiveSpriteSystem.aCodeOffset,b,x
@@ -12225,7 +12257,7 @@
 
         ; 9E/E7DB
 
-      rlUnknown9EE7DB ; 9E/E7DB
+      rlStartScriptedCritTrianglePaletteEffect ; 9E/E7DB
 
         .al
         .xl
@@ -12234,7 +12266,7 @@
 
         phy
         phx
-        jsl rlUnknown96D659
+        jsl rlFreeBattleScenePaletteSlots
         stz wR0
         lda #(`aScriptedCritTrianglePaletteEffect)<<8
         sta lR18+1
@@ -12276,10 +12308,10 @@
 
         lda #$002B
         jsl rlMapBattlePlaySoundAtSprite
-        jsl rlUnknown9EE88C
-        jsl rlUnknown9EE8E2
-        jsl rlUnknown9EE92A
-        jsl rlUnknown9EE9A5
+        jsl rlCreateScriptedCritType4Sprite
+        jsl rlCreateScriptedCritType4PartnerSprite
+        jsl rlCreateScriptedCritType4Partner2Sprite
+        jsl rlStartScriptedCritType4PaletteEffect
         rtl
 
         .databank 0
@@ -12309,20 +12341,20 @@
         PROC_YIELD 1
         PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_WHILE_UNK_TIMER _E861
-        PROC_CALL rlUnknown9EE70E
+        PROC_CALL rlScriptedCritTriangleStartFlight
         _E871
         PROC_YIELD 1
-        PROC_CALL rlUnknown9EE74B
+        PROC_CALL rlScriptedCritTriangleFly
         PROC_CALL rlBattleSceneRunPaletteEffects
         PROC_JUMP_IF_BITS_UNSET _E871, $0004
-        PROC_CALL rlUnknown9EE972
+        PROC_CALL rlScriptedCritType4Arrive
         PROC_YIELD 24
         PROC_END
 
 
         ; 9E/E88C
 
-      rlUnknown9EE88C ; 9E/E88C
+      rlCreateScriptedCritType4Sprite ; 9E/E88C
 
         .al
         .xl
@@ -12350,7 +12382,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         ldx aActiveSpriteSystem.wOffset,b
         txa
-        sta wUnknown7F4BFF
+        sta wScriptedCritSprite
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
@@ -12367,7 +12399,7 @@
 
         ; 9E/E8E2
 
-      rlUnknown9EE8E2 ; 9E/E8E2
+      rlCreateScriptedCritType4PartnerSprite ; 9E/E8E2
 
         .al
         .xl
@@ -12391,7 +12423,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         ldx aActiveSpriteSystem.wOffset,b
         txa
-        sta wUnknown7F4C01
+        sta wScriptedCritPartnerSprite
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
@@ -12408,7 +12440,7 @@
 
         ; 9E/E92A
 
-      rlUnknown9EE92A ; 9E/E92A
+      rlCreateScriptedCritType4Partner2Sprite ; 9E/E92A
 
         .al
         .xl
@@ -12432,7 +12464,7 @@
         jsl rlActiveSpriteEngineCreateSpriteLowestSlot
         ldx aActiveSpriteSystem.wOffset,b
         txa
-        sta wUnknown7F4C03
+        sta wScriptedCritPartner2Sprite
         lda #$0000
         sta aActiveSpriteSystem.aUnknown0012C0,b,x
         sta aActiveSpriteSystem.aUnknown001320,b,x
@@ -12449,7 +12481,7 @@
 
         ; 9E/E972
 
-      rlUnknown9EE972 ; 9E/E972
+      rlScriptedCritType4Arrive ; 9E/E972
 
         .al
         .xl
@@ -12457,15 +12489,15 @@
         .databank ?
 
         phx
-        jsl rlUnknown9EE5C8
+        jsl rlFreeFirstPaletteSlot
         jsl rlLoadScriptedCritEndPalette
-        lda wUnknown7F4C01
+        lda wScriptedCritPartnerSprite
         tax
         stz aActiveSpriteSystem.aTypeOffset,b,x
-        lda wUnknown7F4C03
+        lda wScriptedCritPartner2Sprite
         tax
         stz aActiveSpriteSystem.aTypeOffset,b,x
-        lda wUnknown7F4BFF
+        lda wScriptedCritSprite
         tax
         lda #<>aScriptedCritType4ArriveScript
         sta aActiveSpriteSystem.aCodeOffset,b,x
@@ -12480,7 +12512,7 @@
 
         ; 9E/E9A5
 
-      rlUnknown9EE9A5 ; 9E/E9A5
+      rlStartScriptedCritType4PaletteEffect ; 9E/E9A5
 
         .al
         .xl
@@ -12489,7 +12521,7 @@
 
         phy
         phx
-        jsl rlUnknown96D659
+        jsl rlFreeBattleScenePaletteSlots
         stz wR0
         lda #(`aScriptedCritType4PaletteEffect)<<8
         sta lR18+1
@@ -12944,12 +12976,12 @@
         ACTIVE_SPRITE_TABLE_FRAME 4, 6
         ACTIVE_SPRITE_END
 
-      aUnknown9EEC88 .dstruct structActiveSpriteInfo, rlUnknown9EEC94, rlUnknown9EEC94, aUnknown9EEC6C ; 9E/EC88
+      aUnknown9EEC88 .dstruct structActiveSpriteInfo, rlUnknownScriptedCritSpriteNothing, rlUnknownScriptedCritSpriteNothing, aUnknown9EEC6C ; 9E/EC88
 
         ; Unreferenced.
-      aUnknown9EEC8E .dstruct structActiveSpriteInfo, rlUnknown9EEC94, rlUnknown9EEC94, aUnknown9EEC7B ; 9E/EC8E
+      aUnknown9EEC8E .dstruct structActiveSpriteInfo, rlUnknownScriptedCritSpriteNothing, rlUnknownScriptedCritSpriteNothing, aUnknown9EEC7B ; 9E/EC8E
 
-      rlUnknown9EEC94 ; 9E/EC94
+      rlUnknownScriptedCritSpriteNothing ; 9E/EC94
 
         ; The definitions' init and on-cycle routine: does nothing.
 
@@ -12970,12 +13002,14 @@
       .al
       .xl
 
-      rlUnknown9EF1B5 ; 9E/F1B5
+      rlMapBattleSignalEventMarker ; 9E/F1B5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; When the round entry $7F00 was read (wMapAnimationSignals bit 0): signals the waiting event (bit 1) and sets proc bit $0004, which the battle's script waits on.
 
         lda aProcSystem.aHeaderBitfield,b,x
         and #$FFFB

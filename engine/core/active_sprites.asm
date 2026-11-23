@@ -539,32 +539,32 @@
         .word <>rsActiveSpriteCommandFrame
         .word <>rsActiveSpriteCommandEnd
         .word <>rsActiveSpriteCommandJumpWhileCounter
-        .word <>rsActiveSpriteCommand03
-        .word <>rsActiveSpriteCommand04
-        .word <>rsActiveSpriteCommand05
-        .word <>rsActiveSpriteCommand06
-        .word <>rsActiveSpriteCommand07
-        .word <>rsActiveSpriteCommand08
-        .word <>rsActiveSpriteCommand09
-        .word <>rsActiveSpriteCommand0A
-        .word <>rsActiveSpriteCommand0B
-        .word <>rsActiveSpriteCommand0C
-        .word <>rsActiveSpriteCommand0D
+        .word <>rsActiveSpriteCommandMapBattleFrame
+        .word <>rsActiveSpriteCommandMapBattleStrike
+        .word <>rsActiveSpriteCommandWaitStrikeTaken
+        .word <>rsActiveSpriteCommandWaitStrike
+        .word <>rsActiveSpriteCommandWaitStrikeDone
+        .word <>rsActiveSpriteCommandWaitRound
+        .word <>rsActiveSpriteCommandRoundScript
+        .word <>rsActiveSpriteCommandAuxRoundScript
+        .word <>rsActiveSpriteCommandSideScript
+        .word <>rsActiveSpriteCommandSideAuxScript
+        .word <>rsActiveSpriteCommandEndRound
         .word <>rsActiveSpriteCommand0E
-        .word <>rsActiveSpriteCommand0F
+        .word <>rsActiveSpriteCommandDrawMovingMapSprite
         .word <>rsActiveSpriteCommandStartMapMagic
         .word <>rsActiveSpriteCommandWaitMapMagic
         .word <>rsActiveSpriteCommandWaitFrames
-        .word <>rsActiveSpriteCommand13
+        .word <>rsActiveSpriteCommandWaitWord
         .word <>rsActiveSpriteCommandSetOnCycle
         .word <>rsActiveSpriteCommandJump
         .word <>rsActiveSpriteCommandJumpRelative
         .word <>rsActiveSpriteCommandCall
-        .word <>rsActiveSpriteCommand18
+        .word <>rsActiveSpriteCommandFrameRelative
         .word <>rsActiveSpriteCommandMove
-        .word <>rsActiveSpriteCommand1A
-        .word <>rsActiveSpriteCommand1B
-        .word <>rsActiveSpriteCommand1C
+        .word <>rsActiveSpriteCommandWaitBoltSignal
+        .word <>rsActiveSpriteCommandFireBolt
+        .word <>rsActiveSpriteCommandWaitBoltDone
         .word <>rsActiveSpriteCommandSound
         .word <>rsActiveSpriteCommandSetMusic
 
@@ -1018,11 +1018,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand18 ; 81/84DD
+      rsActiveSpriteCommandFrameRelative ; 81/84DD
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $18: like $00, but the frame's offset counts from the sprite's definition (aTypeOffset).
 
         lda $0000,b,y
         and #$00FF
@@ -1085,11 +1087,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand13 ; 81/8513
+      rsActiveSpriteCommandWaitWord ; 81/8513
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $13: like $12, but reads the frame count as a word although it skips only one byte, so the next command's byte is its high byte.
 
         lda $0000,b,y
         sta aActiveSpriteSystem.aFrameTimer,b,x
@@ -1421,11 +1425,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand09 ; 81/8629
+      rsActiveSpriteCommandRoundScript ; 81/8629
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $09: jumps to the side's round script (aMapAction.lAttackerRoundScript, lDefenderRoundScript for aUnknown001320 1).
 
         phb
         phx
@@ -1444,11 +1450,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand0A ; 81/863D
+      rsActiveSpriteCommandAuxRoundScript ; 81/863D
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $0A: jumps to the side's aux round script.
 
         phb
         phx
@@ -1467,11 +1475,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand0F ; 81/8651
+      rsActiveSpriteCommandDrawMovingMapSprite ; 81/8651
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $0F: draws the moving map sprite (rlDrawMovingMapSprite) every frame, staying on this command.
 
         dec y
         tya
@@ -1556,11 +1566,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand03 ; 81/86B1
+      rsActiveSpriteCommandMapBattleFrame ; 81/86B1
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $03 (ACTIVE_SPRITE_MAP_BATTLE_FRAME): uploads frame N of the map battle side's frame tiles (aMapBattleSpriteDMATable by the sprite's aUnknown0012E0, the tall flag; the side in aUnknown0012C0) to its frame VRAM.
 
         phy
         phx
@@ -1627,11 +1639,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand04 ; 81/8722
+      rsActiveSpriteCommandMapBattleStrike ; 81/8722
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $04: the strike lands: sets wMapBattleStrikeSignal and plays the hit sound.
 
         lda #1
         sta aMapAction.wMapBattleStrikeSignal
@@ -1640,11 +1654,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand05 ; 81/872E
+      rsActiveSpriteCommandWaitStrikeTaken ; 81/872E
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $05: waits until wMapBattleStrikeSignal is clear, then sets wMapBattleStrikeDone.
 
         lda aMapAction.wMapBattleStrikeSignal
         beq +
@@ -1664,11 +1680,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand06 ; 81/8746
+      rsActiveSpriteCommandWaitStrike ; 81/8746
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $06: waits until wMapBattleStrikeSignal is set; a main (not aux) battle sprite then clears it.
 
         lda aMapAction.wMapBattleStrikeSignal
         beq +
@@ -1697,11 +1715,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand07 ; 81/8770
+      rsActiveSpriteCommandWaitStrikeDone ; 81/8770
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $07: waits until wMapBattleStrikeDone is set.
 
         lda aMapAction.wMapBattleStrikeDone
         bne +
@@ -1716,11 +1736,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand08 ; 81/877F
+      rsActiveSpriteCommandWaitRound ; 81/877F
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $08: waits until wMapBattleRoundRunning is set.
 
         lda aMapAction.wMapBattleRoundRunning
         bne +
@@ -1735,11 +1757,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand0B ; 81/878E
+      rsActiveSpriteCommandSideScript ; 81/878E
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $0B: jumps to the side's first script (offset +6 of its sprite data).
 
         lda aMapAction.lAttackerSpriteData
         sta $24
@@ -1764,11 +1788,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand0C ; 81/87B5
+      rsActiveSpriteCommandSideAuxScript ; 81/87B5
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $0C: jumps to the side's first aux script (offset +8).
 
         lda aMapAction.lAttackerSpriteData
         sta $24
@@ -1793,11 +1819,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand0D ; 81/87DC
+      rsActiveSpriteCommandEndRound ; 81/87DC
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $0D: rlMapBattleEndRoundScripts.
 
         phy
         phx
@@ -1901,11 +1929,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand1A ; 81/886A
+      rsActiveSpriteCommandWaitBoltSignal ; 81/886A
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $1A: waits until wBallistaBoltSignal is set, then clears it.
 
         lda wBallistaBoltSignal
         beq +
@@ -1925,11 +1955,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand1B ; 81/8882
+      rsActiveSpriteCommandFireBolt ; 81/8882
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $1B: sets wBallistaBoltFire (procMapBattleBallistaBolt fires) and clears wBallistaBoltDone.
 
         lda #1
         sta wBallistaBoltFire
@@ -1939,11 +1971,13 @@
 
         .databank 0
 
-      rsActiveSpriteCommand1C ; 81/8891
+      rsActiveSpriteCommandWaitBoltDone ; 81/8891
 
         .al
         .autsiz
         .databank ?
+
+        ; Command $1C: waits until wBallistaBoltDone, then clears wBallistaBoltFire and sets wMapBattleStrikeDone.
 
         lda wBallistaBoltDone
         beq +
@@ -2082,7 +2116,7 @@
 
       aMapBattleSpriteDMATable ; 9E/B4DF
 
-        ; Read by rsActiveSpriteCommand03, by wSideTallSprite: the offsets of
+        ; Read by rsActiveSpriteCommandMapBattleFrame, by wSideTallSprite: the offsets of
         ; a side's eight frames in its decompressed frame tiles.
 
         .long _Short

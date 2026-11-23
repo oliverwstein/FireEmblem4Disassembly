@@ -1284,7 +1284,7 @@
         jsl rlBattleSceneScriptClearLoading
         jsl rlSetUpTitleIntro
         jsl rlUnknown9BF3F3
-        jsl rlUnknown96D659
+        jsl rlFreeBattleScenePaletteSlots
         jsl rlUnknown95F741
         jsl rlUnknown95F7F7
         jsl rlClearTitleSprites
@@ -1539,7 +1539,7 @@
         rep #$20
         jsl rlResetHDMAEngine
         jsl rlClearTitleSprites
-        jsl rlUnknown96D659
+        jsl rlFreeBattleScenePaletteSlots
         jsl rlResetIRQEngine
         lda #$0000
         sta wBattleSceneLargeUploadSize
@@ -1688,7 +1688,7 @@
         jsl rlStartTitleLoadList
         jsl rlBattleSceneScriptClearLoading
         jsl rlSetUpTitleIntro
-        jsl rlUnknown96D659
+        jsl rlFreeBattleScenePaletteSlots
         jsl rlClearTitleSprites
         jsl rlWaitForVBlankEnd
         jsl rlEnableVBlank
@@ -1782,7 +1782,7 @@
         lda #$001E
         jsl rlPlaySoundEffect
         jsl rlResetHDMAEngine
-        jsl rlUnknown96D659
+        jsl rlFreeBattleScenePaletteSlots
         jsl rlUnknown95F741
         jsl rlUnknown95F7F7
         lda #$0000

@@ -173,7 +173,7 @@
         jsl rlUnknown968DBD
         jsl rlUnknown968E7E
         jsl rlBattleSceneClearScriptRoutine
-        jsl rlUnknown96D659
+        jsl rlFreeBattleScenePaletteSlots
         jsl rlBattleSceneLoadHUD
         jsl rlUnknown96D67B
         jsl rlBattleSceneDimPalettesForType2

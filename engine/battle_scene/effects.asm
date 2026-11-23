@@ -8248,12 +8248,14 @@
       .al
       .xl
 
-      rlUnknown96D659 ; 96/D659
+      rlFreeBattleScenePaletteSlots ; 96/D659
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Frees all ten palette effect slots (type $80) and clears wBattleScenePaletteBrighten.
 
         phx
         ldx #$0000

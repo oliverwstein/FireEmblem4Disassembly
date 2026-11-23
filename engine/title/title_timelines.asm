@@ -194,7 +194,7 @@
           TITLE_TIMELINE_SLOT 0, rlStartTitleSceneFadeIn
           TITLE_TIMELINE_SLOT 1, rlStartTitleIntroScene5Scroll
           TITLE_TIMELINE_CALL 0, rlSetUpTitleIntroScene5
-          TITLE_TIMELINE_CALL 0, rlUnknown96D659
+          TITLE_TIMELINE_CALL 0, rlFreeBattleScenePaletteSlots
           TITLE_TIMELINE_CALL 0, rlUnknown95F335
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
@@ -231,7 +231,7 @@
           TITLE_TIMELINE_SLOT 0, rlStartTitleSceneFadeIn
           TITLE_TIMELINE_SLOT 1, rlStartTitleIntroScene6Scroll
           TITLE_TIMELINE_CALL 0, rlSetUpTitleIntroScene6
-          TITLE_TIMELINE_CALL 0, rlUnknown96D659
+          TITLE_TIMELINE_CALL 0, rlFreeBattleScenePaletteSlots
           TITLE_TIMELINE_CALL 0, rlUnknown95F349
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
@@ -283,7 +283,7 @@
           TITLE_TIMELINE_SLOT 1, rlStartTitleIntroScene7Scroll
           TITLE_TIMELINE_SLOT 4, rlUnknown9BE6AD
           TITLE_TIMELINE_CALL 0, rlSetUpTitleIntroScene7
-          TITLE_TIMELINE_CALL 0, rlUnknown96D659
+          TITLE_TIMELINE_CALL 0, rlFreeBattleScenePaletteSlots
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
@@ -331,7 +331,7 @@
           TITLE_TIMELINE_CALL 2, rlAllowTitleLoad
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $14B4
-          TITLE_TIMELINE_CALL 0, rlUnknown96D659
+          TITLE_TIMELINE_CALL 0, rlFreeBattleScenePaletteSlots
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $14B5
           TITLE_TIMELINE_CALL 0, rlUnknown9BE317
@@ -375,7 +375,7 @@
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $1719
           TITLE_TIMELINE_CALL 0, rlSetUpTitleIntroScene8
-          TITLE_TIMELINE_CALL 0, rlUnknown96D659
+          TITLE_TIMELINE_CALL 0, rlFreeBattleScenePaletteSlots
           TITLE_TIMELINE_CALL 0, rlUnknown95F3D3
         TITLE_TIMELINE_NEXT
         TITLE_TIMELINE_AT $1745
