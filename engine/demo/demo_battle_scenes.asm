@@ -516,7 +516,7 @@
         inc y
         lda [lR18],y
         and #$00FF
-        sta $7E4EC7
+        sta aActionStructUnit1.MaxHP
         inc y
         lda [lR18],y
         and #$00FF
@@ -524,7 +524,7 @@
         inc y
         lda [lR18],y
         and #$00FF
-        sta aChildAverageLevelStats
+        sta aActionStructUnit1.CurrentHP
         inc y
         lda [lR18],y
         and #$007F

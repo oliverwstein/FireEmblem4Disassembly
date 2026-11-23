@@ -317,14 +317,14 @@
 
         phx
         phy
-        lda $0D5E,b
+        lda aBattleSceneCombatant2.Character,b
         cmp #$0000
         beq _8128
         ldx #$0100
         jsl rlGetCharacterNamePointer
         jsr rsUnknown96815A
         jsr rsUnknown968179
-        lda $0D60,b
+        lda aBattleSceneCombatant2.Weapon,b
         ldx #$0000
         cmp #$FFFF
         bne _811E
@@ -338,14 +338,14 @@
         jsr rsUnknown9681B3
 
         _8128
-        lda $0D50,b
+        lda aBattleSceneCombatant1.Character,b
         cmp #$0000
         beq _8157
         ldx #$0300
         jsl rlGetCharacterNamePointer
         jsr rsUnknown96815A
         jsr rsUnknown968196
-        lda $0D52,b
+        lda aBattleSceneCombatant1.Weapon,b
         ldx #$0200
         cmp #$FFFF
         bne _814D
@@ -771,7 +771,7 @@
         .autsiz
         .databank ?
 
-        lda $0D4B,b
+        lda wBattleSceneExperienceGained,b
         beq _830C
         lda #$0000
         jsl rlStartBattleSceneScript
@@ -791,17 +791,17 @@
         .autsiz
         .databank ?
 
-        lda $0D49,b
+        lda wBattleSceneExperience,b
         and #$00FF
         xba
         sta $7FED4B
-        lda $0D4B,b
+        lda wBattleSceneExperienceGained,b
         sta wR0
-        jsl rlUnknown9594E0
+        jsl rlBattleSceneGetHPSpeed
         sta $7FED4E
-        lda $0D49,b
+        lda wBattleSceneExperience,b
         clc
-        adc $0D4B,b
+        adc wBattleSceneExperienceGained,b
         sta $7FED50
         lda #$0191
         sta $7FED56
@@ -1063,7 +1063,7 @@
         lda $7FED4B
         xba
         and #$00FF
-        jsl rlUnknown959576
+        jsl rlBattleSceneDrawNumber
         lda $7FED4C
         and #$00FF
         sta wR0
@@ -1280,7 +1280,7 @@
         .autsiz
         .databank ?
 
-        lda $7E4ECB
+        lda aActionStructUnit1.GainedLevels
         beq _86BA
         lda $7FF5AF
         bit #$0001
@@ -1294,7 +1294,7 @@
         lda wBattleDistance
         cmp #$0003
         bcc _86A2
-        lda $0D52,b
+        lda aBattleSceneCombatant1.Weapon,b
         cmp #$005B
         beq _8699
         cmp #$0061
@@ -1339,13 +1339,13 @@
         .autsiz
         .databank ?
 
-        lda $7FFC59
-        bit #$0400
+        lda wBattleSceneFlags
+        bit #BattleSceneFlagToMapMode3
         beq _86E6
         lda $7FF5AF
         bit #$0001
         beq _86DF
-        lda $7E4ECB
+        lda aActionStructUnit1.GainedLevels
         and #$00FF
         beq _86DF
         lda #$004B
@@ -1371,7 +1371,7 @@
         .autsiz
         .databank ?
 
-        lda $7E4ECB
+        lda aActionStructUnit1.GainedLevels
         beq _86FB
         lda #$00E0
         jsl rlSendSoundCommand
@@ -1467,10 +1467,10 @@
         .autsiz
         .databank ?
 
-        lda $7FFC59
-        bit #$0400
+        lda wBattleSceneFlags
+        bit #BattleSceneFlagToMapMode3
         bne _87AC
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0001
         beq _87A7
@@ -1533,8 +1533,8 @@
         .autsiz
         .databank ?
 
-        lda $7FFC59
-        bit #$0400
+        lda wBattleSceneFlags
+        bit #BattleSceneFlagToMapMode3
         bne _888F
         lda wDeathQuotePointer
         cmp #$0000
@@ -1543,12 +1543,12 @@
         sta $7FE4D6
         lda wDeathQuotePointer+1
         sta $7FE4D7
-        lda $7E4ECF
+        lda aActionStructUnit1.GainedExperience
         bne _8888
-        lda $7E4ED1
+        lda aActionStructUnit1.ObtainedItem
         cmp #$FFFF
         bne _8888
-        lda $7E4ED3
+        lda aActionStructUnit1.ObtainedStealMoney
         bne _8888
         lda aActionStructUnit2.ObtainedStealMoney
         bne _8888
@@ -1578,8 +1578,8 @@
         .autsiz
         .databank ?
 
-        lda $7FFC59
-        bit #$0400
+        lda wBattleSceneFlags
+        bit #BattleSceneFlagToMapMode3
         beq _88B9
         lda wDeathQuotePointer
         cmp #$0000
@@ -2567,7 +2567,7 @@
         and #$00FF
         cmp #$0082
         bne _9072
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0002
         beq _9064
@@ -2748,7 +2748,7 @@
         lda wBattleAnimationX,b,x
         and #$01FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         jsl rlUnknown95A164
         sec
         sbc #$0004
@@ -2955,7 +2955,7 @@
         adc wR0
         pha
         sta wR0
-        jsl rlUnknown9594E0
+        jsl rlBattleSceneGetHPSpeed
         sta $7FED4E
         pla
         and #$00FF
@@ -3005,7 +3005,7 @@
         lda $7FE4B7
         bit #$0080
         bne _9478
-        lda $7FFC56
+        lda bBattleSceneFade
         bit #$0080
         bne _9478
         lda $7FE4CC
@@ -3143,7 +3143,7 @@
         .databank ?
 
         bcc _952B
-        lda $7FFC56
+        lda bBattleSceneFade
         bit #$0080
         bne _9527
         lda $7FE4CC
@@ -3419,7 +3419,7 @@
         .autsiz
         .databank ?
 
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$00FF
         beq _9616
@@ -3524,8 +3524,8 @@
 
         phx
         phy
-        lda $7FFC59
-        bit #$0002
+        lda wBattleSceneFlags
+        bit #BattleSceneFlagBattleType2
         beq _9677
         lda #$0003
         sta wR0
@@ -3536,13 +3536,13 @@
         jsl rlUnknown9697FA
         bcs _9685
         ldx #$0043
-        lda $0D52,b
+        lda aBattleSceneCombatant1.Weapon,b
         bra _968B
 
 
         _9685
         ldx #$0000
-        lda $0D60,b
+        lda aBattleSceneCombatant2.Weapon,b
 
         _968B
         jsl rlUnknown9696AA
@@ -3670,7 +3670,7 @@
         lda #$00FF
         sta wBattleAnimation2X,b
         lda #$0080
-        sta $7FE198
+        sta wBattleSceneCameraX
         rts
 
         .databank 0
@@ -3698,10 +3698,10 @@
         lda #$00FF
         sta wBattleAnimation2X,b
         lda #$0080
-        sta $7FE198
-        lda $7FFC59
-        ora #$0008
-        sta $7FFC59
+        sta wBattleSceneCameraX
+        lda wBattleSceneFlags
+        ora #BattleSceneFlagSolo2
+        sta wBattleSceneFlags
         rts
 
         .databank 0
@@ -3766,7 +3766,7 @@
         sta wBattleAnimationYAnchor,b
         sta wBattleAnimation2YAnchor,b
         lda #$0080
-        sta $7FE198
+        sta wBattleSceneCameraX
         rts
 
         .databank 0
@@ -3856,12 +3856,12 @@
         phy
         cpx #$0000
         bne _982C
-        lda $0D52,b
+        lda aBattleSceneCombatant1.Weapon,b
         bra _982F
 
 
         _982C
-        lda $0D60,b
+        lda aBattleSceneCombatant2.Weapon,b
 
         _982F
         jsl rlUnknown9696AA
@@ -3898,9 +3898,9 @@
         lda #$00
         sta $7FE187
         sta $7FE188
-        lda $0AE0,b
+        lda bBattleSceneRoundState,b
         and #$EF
-        sta $0AE0,b
+        sta bBattleSceneRoundState,b
         rep #$20
         rtl
 
@@ -3916,18 +3916,20 @@
       .al
       .xl
 
-      rlUnknown969861 ; 96/9861
+      rlBattleSceneRestartRounds ; 96/9861
 
         .al
         .xl
         .autsiz
         .databank ?
 
-        lda #$7E00
-        sta $0AE2,b
-        lda #$4F85
-        sta $0AE1,b
-        jsl rlUnknown9582D8
+        ; Points lBattleSceneRoundPointer back at the first round and copies the experience again, for the next arena bout.
+
+        lda #(`aBattleRoundsData._Entry[0])<<8
+        sta lBattleSceneRoundPointer+1,b
+        lda #<>aBattleRoundsData._Entry[0]
+        sta lBattleSceneRoundPointer,b
+        jsl rlBattleSceneCopyExperience
         rtl
 
         .databank 0
@@ -3982,20 +3984,22 @@
       .al
       .xl
 
-      rlUnknown96989E ; 96/989E
+      rlBattleSceneCheckArenaBout ; 96/989E
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Carry in set (rounds over): when the arena asks for another bout (BattleSceneRoundArenaNextBout) starts the break between bouts ($7FE187 = 1); while it runs returns carry clear; at its end (bit 2) restarts the rounds. Carry set when the scene may end.
+
         bcc _98DF
-        lda $0AE0,b
-        bit #$0010
+        lda bBattleSceneRoundState,b
+        bit #BattleSceneRoundArenaNextBout
         beq _98B7
         sep #$20
-        and #$EF
-        sta $0AE0,b
+        and #~BattleSceneRoundArenaNextBout
+        sta bBattleSceneRoundState,b
         lda #$01
         sta $7FE187
         rep #$20
@@ -4009,11 +4013,11 @@
         sep #$20
         and #$FB
         sta $7FE187
-        lda $0AE0,b
+        lda bBattleSceneRoundState,b
         and #$F9
-        sta $0AE0,b
+        sta bBattleSceneRoundState,b
         rep #$20
-        jsl rlUnknown969861
+        jsl rlBattleSceneRestartRounds
 
         _98DB
         clc
@@ -4030,16 +4034,18 @@
 
         ; 96/98E0
 
-      rlUnknown9698E0 ; 96/98E0
+      rlBattleSceneCheckArenaRetreat ; 96/98E0
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Carry set when the player has asked to leave the arena (BattleSceneRoundArenaRetreat).
+
         pha
-        lda $0AE0,b
-        bit #$0080
+        lda bBattleSceneRoundState,b
+        bit #BattleSceneRoundArenaRetreat
         bne _98EC
         clc
         bra _98ED
@@ -4056,15 +4062,17 @@
 
         ; 96/98EF
 
-      rlUnknown9698EF ; 96/98EF
+      rlBattleSceneReadArenaRetreat ; 96/98EF
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; In an arena battle, B (pressed, then released) sets BattleSceneRoundArenaRetreat and plays sound $0A: the player leaves after this bout.
+
         pha
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0001
         bne _9949
@@ -4078,9 +4086,9 @@
         bit #$8000
         beq _9949
         sep #$20
-        lda $0AE0,b
-        ora #$80
-        sta $0AE0,b
+        lda bBattleSceneRoundState,b
+        ora #BattleSceneRoundArenaRetreat
+        sta bBattleSceneRoundState,b
         lda $7FE188
         ora #$02
         sta $7FE188
@@ -4157,8 +4165,8 @@
         .databank ?
 
         phx
-        lda $7FFC59
-        bit #$0002
+        lda wBattleSceneFlags
+        bit #BattleSceneFlagBattleType2
         beq _9A24
         ldx #$0000
         lda #$000A
@@ -4215,8 +4223,8 @@
         .databank ?
 
         phx
-        lda $7FFC59
-        bit #$0002
+        lda wBattleSceneFlags
+        bit #BattleSceneFlagBattleType2
         bne _9A34
         jml _9B9A
 
@@ -4554,7 +4562,7 @@
         .databank ?
 
         phx
-        lda $0AE4,b
+        lda bBattleSceneStrikeFlags,b
         bit #$0080
         beq _9CFF
         jsl rlUnknown96F341
@@ -4593,7 +4601,7 @@
         lda wBattleAnimationX,b,x
         and #$01FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         jsl rlGetSoundPanFromXPixel
         cpx #$0000
         bne _9CF7
@@ -4858,8 +4866,8 @@
         .autsiz
         .databank ?
 
-        lda $7FFC59
-        bit #$0008
+        lda wBattleSceneFlags
+        bit #BattleSceneFlagSolo2
         beq _9EF8
         sep #$20
         lda $7FFC6F
@@ -4978,7 +4986,7 @@
         .autsiz
         .databank ?
 
-        lda $0AE4,b
+        lda bBattleSceneStrikeFlags,b
         bit #$0040
         beq _9F7C
         sep #$20
@@ -5240,8 +5248,8 @@
         .autsiz
         .databank ?
 
-        lda $7FFC59
-        bit #$0400
+        lda wBattleSceneFlags
+        bit #BattleSceneFlagToMapMode3
         beq _A21E
         lda #$004C
         jsl rlStartBattleSceneScript
@@ -5452,7 +5460,7 @@
         _A59E
         lda @l $7FEC1F,x
         sec
-        sbc @l $7FE198
+        sbc @l wBattleSceneCameraX
         sep #$20
         sta $E4DE,b,y
         lda @l aUnit2DataBuffer._ROM.SkillGrowth,x
@@ -5982,7 +5990,7 @@
         clc
         adc #$1000
         sta $7FEC23,x
-        jsl rlUnknown95B050
+        jsl rlBattleSceneGetCombatantGap
         lda wR0
         cmp #$0100
         bcc _A903
@@ -6003,7 +6011,7 @@
         _A8FB
         sec
         sbc #$0080
-        sta $7FE198
+        sta wBattleSceneCameraX
 
         _A903
         lda $7FEC29,x
@@ -6158,7 +6166,7 @@
         xba
         plx
         sta $7FEC23,x
-        jsl rlUnknown95B050
+        jsl rlBattleSceneGetCombatantGap
         lda wR0
         cmp #$0100
         bcc _AA00
@@ -6179,7 +6187,7 @@
         _A9F8
         sec
         sbc #$0080
-        sta $7FE198,x
+        sta wBattleSceneCameraX,x
 
         _AA00
         lda $7FEC29,x
@@ -6208,7 +6216,7 @@
         ldy wBattleAnimationDefenderOffset,b
         lda #$0000
         sta aUnit2DataBuffer._ROM.StrengthGrowth,x
-        lda $7FE198
+        lda wBattleSceneCameraX
         clc
         adc #$0080
         sta $7FEC1F,x
@@ -6305,7 +6313,7 @@
         pla
         lda #$F000
         sta $7FEC23,x
-        jsl rlUnknown95B050
+        jsl rlBattleSceneGetCombatantGap
         lda wR0
         cmp #$0100
         bcc _AAFE
@@ -6326,7 +6334,7 @@
         _AAF6
         sec
         sbc #$0080
-        sta $7FE198,x
+        sta wBattleSceneCameraX,x
 
         _AAFE
         lda $7FEC29,x
@@ -8105,7 +8113,7 @@
         .databank ?
 
         phx
-        lda $0AE8,b
+        lda bBattleSceneAttackerSide,b
         bit #$0080
         bne _B680
         lda #$0000
@@ -8135,7 +8143,7 @@
 
         pha
         pha
-        jsl rlUnknown95B050
+        jsl rlBattleSceneGetCombatantGap
         jsr rsUnknown96B894
         lda wR0
         sta wR1
@@ -8306,7 +8314,7 @@
         _B789
         sec
         sbc #$0080
-        sta $7FE198
+        sta wBattleSceneCameraX
         clc
 
         _B792
@@ -8365,7 +8373,7 @@
         _B7D8
         sec
         sbc #$0080
-        sta $7FE198
+        sta wBattleSceneCameraX
         clc
 
         _B7E1
@@ -8439,7 +8447,7 @@
 
         phx
         sep #$20
-        lda $0AE8,b
+        lda bBattleSceneAttackerSide,b
         bit #$80
         bne _B8A3
         ldx #$0000
@@ -8450,7 +8458,7 @@
         ldx #$000E
 
         _B8A6
-        lda $0D4E,b,x
+        lda aBattleSceneCombatant1.Class,b,x
         sta wR9+1
         rep #$20
         and #$00FF
@@ -9475,7 +9483,7 @@
         phx
         phy
         bcs _CADA
-        lda $0D50,b
+        lda aBattleSceneCombatant1.Character,b
         jsl rlGetCharacterPortraitData
         ldy #$0000
         ldx #$0000
@@ -9856,7 +9864,7 @@
         clc
         adc #$1000
         sta $7FEC23
-        jsl rlUnknown95B050
+        jsl rlBattleSceneGetCombatantGap
         lda wR0
         cmp #$0100
         bcc _CCFF
@@ -9877,7 +9885,7 @@
         _CCF7
         sec
         sbc #$0080
-        sta $7FE198
+        sta wBattleSceneCameraX
 
         _CCFF
         lda $7FEC29
@@ -12529,7 +12537,7 @@
         ldx #$000E
 
         _DC8A
-        lda $0D52,b,x
+        lda aBattleSceneCombatant1.Weapon,b,x
         pha
         ldx #$0000
 
@@ -12656,7 +12664,7 @@
         lda $7FE477
         and #$03FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         sec
         sbc #$0100
         jsl rlUnknown95A164
@@ -12725,7 +12733,7 @@
         lda $7FE4A1
         and #$03FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         sec
         sbc #$0100
         eor #$FFFF
@@ -13351,7 +13359,7 @@
         ldx wBattleAnimationDefenderOffset,b
         lda wBattleAnimationX,b,x
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         clc
         adc #$0100
         clc
@@ -13540,9 +13548,9 @@
         ora #$40
         sta $7FE475,x
         rep #$20
-        lda $7FE197
+        lda bBattleSceneCameraXFraction
         sta $7FE476,x
-        lda $7FE198
+        lda wBattleSceneCameraX
         sta $7FE477,x
         lda #$0000
         sta $7FE479,x
@@ -14360,7 +14368,7 @@
         jsl rlUnknown96E9B8
         lda $7FE477,x
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         sec
         sbc #$0100
         cmp #$00C0
@@ -14992,11 +15000,11 @@
 
         _EAC8
         lda wBattleAnimationX,b,x
-        sta $7FE1A4
+        sta wBattleSceneCheckX
         ldy #$0001
         lda [lR18],y
         and #$00FF
-        jsl rlUnknown95D6EC
+        jsl rlBattleSceneCheckOnScreen
         bcs _EAFC
         lda #1,s
         and #$C000
@@ -15772,7 +15780,7 @@
         lda $7FE4A1
         and #$03FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         sec
         sbc #$0080
         sta wR0
@@ -15920,7 +15928,7 @@
         lda $7FE4A1
         and #$03FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         sec
         sbc #$0100
         sta wR0
@@ -16330,7 +16338,7 @@
         .autsiz
         .databank ?
 
-        lda $0AE4,b
+        lda bBattleSceneStrikeFlags,b
         bit #$0080
         beq _F32A
         jsl rlUnknown96F341
@@ -16352,7 +16360,7 @@
         .autsiz
         .databank ?
 
-        lda $0AE4,b
+        lda bBattleSceneStrikeFlags,b
         bit #$0080
         beq _F340
         jsl rlUnknown96F341
@@ -16377,7 +16385,7 @@
         lda wBattleAnimationAttackerOffset,b
         cmp #$0000
         bne _F354
-        lda $0D5E,b
+        lda aBattleSceneCombatant2.Character,b
         cmp #$01C6
         bne _F354
         sec
@@ -16560,7 +16568,7 @@
         .autsiz
         .databank ?
 
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0002
         bne _F56B
@@ -16581,7 +16589,7 @@
         .autsiz
         .databank ?
 
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$0002
         bne _F57F
@@ -16798,7 +16806,7 @@
         .databank ?
 
         phx
-        lda $7E4ECB
+        lda aActionStructUnit1.GainedLevels
         beq _F695
         ldx #$0000
 
@@ -16828,12 +16836,14 @@
       .al
       .xl
 
-      rlUnknown96F697 ; 96/F697
+      rlBattleSceneShowSkill ; 96/F697
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; A round entry $FE: shows the skill in its high byte (Astra, Luna, Sol, Holy, Darkness or Pavise) by its colors and script.
 
         phy
         inc y
@@ -16841,42 +16851,42 @@
         and #$00FF
         cmp #$0013
         bne _F6A9
-        jsl rlUnknown96F6E0
+        jsl rlBattleSceneShowAstra
         bra _F6DE
 
 
         _F6A9
         cmp #$0014
         bne _F6B4
-        jsl rlUnknown96F6FB
+        jsl rlBattleSceneShowLuna
         bra _F6DE
 
 
         _F6B4
         cmp #$0015
         bne _F6BF
-        jsl rlUnknown96F716
+        jsl rlBattleSceneShowSol
         bra _F6DE
 
 
         _F6BF
         cmp #$0016
         bne _F6CA
-        jsl rlUnknown96F73F
+        jsl rlBattleSceneShowHoly
         bra _F6DE
 
 
         _F6CA
         cmp #$0017
         bne _F6D5
-        jsl rlUnknown96F762
+        jsl rlBattleSceneShowDarkness
         bra _F6DE
 
 
         _F6D5
         cmp #$0002
         bne _F6DE
-        jsl rlUnknown96F785
+        jsl rlBattleSceneShowPavise
 
         _F6DE
         ply
@@ -16886,12 +16896,14 @@
 
         ; 96/F6E0
 
-      rlUnknown96F6E0 ; 96/F6E0
+      rlBattleSceneShowAstra ; 96/F6E0
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the skill's colors (aUnknownE027C3) and starts battle scene script $36.
 
         phx
         ldx #$0000
@@ -16912,12 +16924,14 @@
 
         ; 96/F6FB
 
-      rlUnknown96F6FB ; 96/F6FB
+      rlBattleSceneShowLuna ; 96/F6FB
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the skill's colors (aUnknownE027CD) and starts battle scene script $37.
 
         phx
         ldx #$0000
@@ -16938,12 +16952,14 @@
 
         ; 96/F716
 
-      rlUnknown96F716 ; 96/F716
+      rlBattleSceneShowSol ; 96/F716
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the skill's colors (aUnknownE027D7), starts battle scene script $38 and sets bit 2 of $7FFC5D.
 
         phx
         ldx #$0000
@@ -16969,12 +16985,14 @@
 
         ; 96/F73F
 
-      rlUnknown96F73F ; 96/F73F
+      rlBattleSceneShowHoly ; 96/F73F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the skill's colors (aUnknownE027E1) and starts battle scene script $39; A is kept in $7FFC5F.
 
         phx
         sep #$20
@@ -16998,12 +17016,14 @@
 
         ; 96/F762
 
-      rlUnknown96F762 ; 96/F762
+      rlBattleSceneShowDarkness ; 96/F762
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the skill's colors (aUnknownE027EB) and starts battle scene script $3A; A is kept in $7FFC5F.
 
         phx
         sep #$20
@@ -17027,12 +17047,14 @@
 
         ; 96/F785
 
-      rlUnknown96F785 ; 96/F785
+      rlBattleSceneShowPavise ; 96/F785
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies the skill's colors (aUnknownE027F5) and starts battle scene script $3F; A is kept in $7FFC5F.
 
         phx
         sep #$20
@@ -17071,7 +17093,7 @@
         .autsiz
         .databank ?
 
-        lda $7E4EA9
+        lda wBattleType
         and #$00FF
         cmp #$00FF
         beq _F7BA
@@ -17206,7 +17228,7 @@
         lda $7FFC60
         and #$01FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         sta wR0
         lda $7FFC62
         clc
@@ -17311,7 +17333,7 @@
         adc wR8
         and #$01FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         sta wR0
         lda $7FFC62
         clc
@@ -17481,7 +17503,7 @@
         lda wBattleAnimationX,b,x
         and #$01FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         jsl rlGetSoundPanFromXPixel
         cpx #$0000
         bne _FAD0
@@ -18024,7 +18046,7 @@
 
       aClassDefaultGenders ; 99/847F
 
-        ; Read by rlUnknown9582F7: the gender a unit of this class gets in battle
+        ; Read by rlBattleSceneGetGender: the gender a unit of this class gets in battle
         ; animations when its own is Genderless.
 
         .byte GenderMale   ; Cavalier

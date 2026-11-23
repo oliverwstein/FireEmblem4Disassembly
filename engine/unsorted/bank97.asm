@@ -5,17 +5,19 @@
       .al
       .xl
 
-      rlUnknown978000 ; 97/8000
+      rlBattleScenePlayHolyWeaponSound ; 97/8000
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; X = 0 or $43: plays sound $90 panned to the combatant's place on screen (combatant 1 adds $2000).
+
         lda wBattleAnimationX,b,x
         and #$01FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         jsl rlGetSoundPanFromXPixel
         cpx #$0000
         bne _8018

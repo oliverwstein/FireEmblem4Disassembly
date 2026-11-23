@@ -1,6 +1,6 @@
 ; Battle backgrounds: the scenery behind a battle scene, by terrain, and the
 ; foreground layers drawn over it for some pairs of terrains.
-; rlGetBattleBackgroundPointers and rsUnknown958DDB (bank $95) load them.
+; rlGetBattleBackgroundPointers and rsBattleSceneLoadForeground (bank $95) load them.
 
     .section BattleBackgroundsSection
 
@@ -92,7 +92,7 @@
       aBattleBackgroundTerrainIndices ; 98/A9F0
 
         ; The aBattleBackgrounds entry for each terrain type, then the same
-        ; for chapter 4 (rlUnknown9590B7), which uses the snowy versions.
+        ; for chapter 4 (rlBattleSceneCheckChapter4), which uses the snowy versions.
 
         .byte $08 ; Peak
         .byte $07 ; Thicket
@@ -151,7 +151,7 @@
 
         ; Entries of 12 bytes: compressed 4bpp tiles (to VRAM $4000 or $5000,
         ; by the mode in aBattleForegroundTerrainPairs), two compressed 32x32
-        ; tilemaps and 16 colours. rsUnknown958DDB draws Tilemap2 (to VRAM
+        ; tilemaps and 16 colours. rsBattleSceneLoadForeground draws Tilemap2 (to VRAM
         ; $7800) in palette 2; the code at 95/8F51 draws Tilemap1 (to $7000)
         ; in palette 1.
 
@@ -164,7 +164,7 @@
 
       aBattleForegroundTerrainPairs ; 98/AA6C
 
-        ; Read by rsUnknown95901D: the attacker's terrain, the defender's
+        ; Read by rsBattleSceneGetForeground: the attacker's terrain, the defender's
         ; terrain ($FE matches any; chapter 4 adds 26, as above), then a word:
         ; the low byte is the aBattleForegrounds entry plus 1 (0 for none) and
         ; the high byte a mode. $FF ends the list.

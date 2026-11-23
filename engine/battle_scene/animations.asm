@@ -12,7 +12,7 @@
       aBattleAnimationSheetIndices ; 97/8039
 
         ; For each animation ID plus 1, its aBattleAnimationSheets entry
-        ; (rsUnknown9584D7).
+        ; (rsBattleSceneLoadSheet).
 
         .byte $00, $03, $1F, $04, $1F, $05, $05, $06
         .byte $07, $08, $09, $0A, $0B, $0C, $0D, $0E
@@ -33,7 +33,7 @@
         ; Entries of 5 bytes: compressed 4bpp tiles (the pieces the frames are
         ; built from, decompressed to $7F0000 or $7F6000, one per combatant),
         ; then a patch: an index into the stream table at $97/84B6 whose
-        ; stream rsUnknown9590C6 applies over the first, or $FFFF for none
+        ; stream rsBattleSceneCopyTileList applies over the first, or $FFFF for none
         ; (every entry has $FFFF). Comments: the animation IDs that select the
         ; entry and the classes whose lookup records give those IDs. Sheets
         ; shared by entries are named after the first; entry 0 is a
@@ -345,7 +345,7 @@
       aBattleAnimationExtraIndices ; 97/828B
 
         ; For each third animation ID plus 1, its aBattleAnimationExtras entry
-        ; (rsUnknown958400).
+        ; (rsBattleSceneLoadExtraTiles).
 
         .byte $00, $05, $02, $06, $02, $07, $08, $09
         .byte $0A, $0B, $0C, $0D, $0E, $13, $14, $0F
@@ -577,7 +577,7 @@
       aBattleAnimationPaletteIndices ; 97/84B6
 
         ; For each fourth animation ID plus 1, its aBattleAnimationPalettes
-        ; entry (rsUnknown95858D).
+        ; entry (rsBattleSceneLoadPalette).
 
         .byte $00, $01, $01, $01, $01, $02, $03, $04
         .byte $05, $06, $07, $08, $09, $08, $0A, $0B
@@ -897,7 +897,7 @@
       aBattleAnimationFrameIndices ; 97/874F
 
         ; For each first animation ID plus 1, its aBattleAnimationFrameTables
-        ; entry (rlUnknown958AB7).
+        ; entry (rlBattleSceneSetFramePointers).
 
         .byte $00, $0C, $0D, $0E, $0F, $10, $11, $02
         .byte $03, $02, $02, $02, $02, $02, $02, $12
@@ -1301,7 +1301,7 @@
 
       aBattleCharacterPieceLookup ; 99/8194
 
-        ; Read by rlUnknown95881F for rlUnknown958798: for each class with
+        ; Read by rlBattleSceneGetCharacterPiece for rlBattleSceneLoadCharacterPieces: for each class with
         ; character-specific pieces, the offset of its list ($FFFF for none).
         ; A list gives character and value, then $FFFF and the value for any
         ; other character. A value is (palette << 8) | piece: the piece is an
@@ -1524,7 +1524,7 @@
 
       aBattleWeaponGraphicsIndices ; 99/8725
 
-        ; For each item ID, read by rlUnknown958697: the aBattleWeaponGraphics
+        ; For each item ID, read by rlBattleSceneLoadWeaponGraphics: the aBattleWeaponGraphics
         ; stream (1 KB, copied to VRAM) and the palette: 15 colours from
         ; $E0/0F30, 30 bytes apart, copied to sprite palette colour 1. $FF,
         ; $FF: no weapon graphics.

@@ -816,6 +816,77 @@
 
 
 
+  .virtual $000ADD
+
+    ; The battle scene (include/BattleScene.h). Names scoped to the battle
+    ; scene files in tools/name_ram.py.
+
+    bBattleSceneLetterboxINIDISP .byte ? ; $000ADD ; INIDISP for the top 15 lines ($8F: blank)
+    .byte ?                              ; $000ADE
+    .byte ?                              ; $000ADF
+    bBattleSceneRoundState    .byte ? ; $000AE0 ; BattleSceneRoundMayRun ...
+    lBattleSceneRoundPointer  .long ? ; $000AE1 ; the next entry of aBattleRoundsData
+    bBattleSceneStrikeFlags   .byte ? ; $000AE4 ; $08 miss, $10 struck, $40 critical, $80 waiting
+    .byte ?                           ; $000AE5
+    bBattleSceneRanged        .byte ? ; $000AE6 ; bit 0 is meant to be the round's ranged bit, but the set is never stored
+    bBattleSceneRoundHighByte .byte ? ; $000AE7 ; the high byte of the current round entry
+    bBattleSceneAttackerSide  .byte ? ; $000AE8 ; $80: combatant 2 attacks
+
+  .endvirtual
+
+  .virtual $000D44
+
+    wBattleSceneAttackerTerrain .word ? ; $000D44 ; the initiator's terrain
+    wBattleSceneDefenderTerrain .word ? ; $000D46
+    bBattleSceneDistance        .byte ? ; $000D48
+    wBattleSceneExperience      .word ? ; $000D49 ; aActionStructUnit1's, before the battle
+    wBattleSceneExperienceGained .word ? ; $000D4B
+    bBattleSceneLevel           .byte ? ; $000D4D ; level plus levels gained
+    aBattleSceneCombatant1 .dstruct structBattleSceneCombatant ; $000D4E
+    aBattleSceneCombatant2 .dstruct structBattleSceneCombatant ; $000D5C
+
+  .endvirtual
+
+  .virtual $7FE197
+
+    bBattleSceneCameraXFraction .byte ? ; $7FE197
+    wBattleSceneCameraX         .word ? ; $7FE198 ; BG scroll: a combatant's screen X is its X minus this
+
+  .endvirtual
+
+  .virtual $7FE1A4
+
+    wBattleSceneCheckX   .word ? ; $7FE1A4 ; X tested by rlBattleSceneCheckOnScreen
+    bBattleSceneCameraPan .byte ? ; $7FE1A6 ; signed pixels left to pan
+
+  .endvirtual
+
+  .virtual $7FE33A
+
+    aBattleSceneBrightnessTableBuffer .fill $30 ; $7FE33A ; built by rsBattleSceneBuildBrightnessTable
+    aBattleSceneBrightnessTable       .fill $30 ; $7FE36A ; the INIDISP HDMA table
+
+  .endvirtual
+
+  .virtual $7FE441
+
+    ; Copies within bank $7F done in VBlank (rlBattleSceneQueueCopy): length - 1
+    ; ($FFFF free), source, destination.
+    aBattleSceneCopyQueue .brept 8 ; $7FE441
+      .word ?, ?, ?
+    .endrept
+
+  .endvirtual
+
+  .virtual $7FFC56
+
+    bBattleSceneFade      .byte ? ; $7FFC56 ; low nibble brightness, $40 fading out, $80 fading
+    bBattleSceneFadeDelay .byte ? ; $7FFC57 ; frames per brightness step
+    bBattleSceneFadeTimer .byte ? ; $7FFC58
+    wBattleSceneFlags     .word ? ; $7FFC59 ; BattleSceneFlagMelee ...
+
+  .endvirtual
+
   .virtual $000AE9
     wBattleAnimationAttackerOffset .word ? ; $000AE9 ; $0000 or $0043
     wBattleAnimationDefenderOffset .word ? ; $000AEB ; $0043 or $0000

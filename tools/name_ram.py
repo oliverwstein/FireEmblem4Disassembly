@@ -26,6 +26,10 @@ import argparse, collections, glob, os, re, subprocess, sys, tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from asmlib import ASFLAGS
 
+import glob as _glob
+BATTLE_SCENE_FILES = tuple(sorted(_glob.glob('engine/battle_scene/*.asm') + _glob.glob('engine/title/*.asm')
+                                  + _glob.glob('engine/unsorted/bank9[5-7].asm')))
+
 # (first address, last address, name prefixes, the only files where those names are written)
 SCOPED = [
     # The unit window's variables; bank $89 reuses the area. The debug menu's names there are not scoped.
@@ -62,6 +66,10 @@ SCOPED = [
      ('engine/unsorted/bank95.asm', 'engine/unsorted/bank96.asm', 'engine/unsorted/bank97.asm',
       'engine/battle_scene/animation_moves.asm', 'engine/battle_scene/script.asm',
       'engine/battle_scene/animations.asm')),
+    # The battle scene's variables; the map's text buffer and unit buffers share $7FE000-$7FFFFF.
+    (0x7E0ADD, 0x7E0AE8, ('wBattleScene', 'bBattleScene', 'lBattleScene', 'aBattleScene'), BATTLE_SCENE_FILES),
+    (0x7E0D44, 0x7E0D69, ('wBattleScene', 'bBattleScene', 'lBattleScene', 'aBattleScene'), BATTLE_SCENE_FILES),
+    (0x7FE000, 0x7FFFFF, ('wBattleScene', 'bBattleScene', 'lBattleScene', 'aBattleScene'), BATTLE_SCENE_FILES),
 ]
 
 OPERAND = re.compile(r'^(\s+[a-z]{3} (?:@l )?)\$([0-9A-F]{4}|[0-9A-F]{6})\b((?:,b)?(?:,[xy])?)(\s*)$')

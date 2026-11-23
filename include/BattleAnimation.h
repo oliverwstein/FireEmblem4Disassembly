@@ -102,7 +102,7 @@
 
     ; $F7: clear the combatant's busy bit (bit 2 of $0AF3,x; rsUnknown95BD89).
     ; rlUnknown95BA05 and rlUnknown95BA76 set it when they start a sequence and
-    ; refuse to start another while it is set, and rsUnknown958C52 waits until
+    ; refuse to start another while it is set, and rsBattleSceneCheckRoundsOver waits until
     ; both combatants have it clear. Most sequences end ANIM_CLEAR_BUSY,
     ; ANIM_HOLD.
     ANIM_CLEAR_BUSY .segment Arg=0
@@ -214,7 +214,7 @@
     AnimAnyCharacter = 0
 
     ; Gender is the unit's, or the class default from the table at $99/847F
-    ; when the unit's is Genderless (rlUnknown9582F7). The four IDs: the
+    ; when the unit's is Genderless (rlBattleSceneGetGender). The four IDs: the
     ; frames (aBattleAnimationFrameIndices), the sheet
     ; (aBattleAnimationSheetIndices), the extra tiles
     ; (aBattleAnimationExtraIndices) and the palettes

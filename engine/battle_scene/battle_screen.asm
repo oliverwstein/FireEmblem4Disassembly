@@ -23,7 +23,7 @@
         jsl rlUnknown95C368
         jsl rlUnknown969FD7
         jsl rlUnknown96D5DB
-        jsl rlUnknown95A086
+        jsl rlBattleSceneRunQueuedCopies
         jsl rlUnknown96EB1E
         jsl rlProcessDMAStructArray
         jsl rlDMAPaletteAndOAMBuffer
@@ -87,7 +87,7 @@
         jsl rlResetHDMAEngine
         jsl rlResetIRQEngine
         jsl rlUnknown95B96F
-        jsl rlUnknown958AF0
+        jsl rlBattleSceneClearCombatants
         jsl rlUnknown95A0F7
         lda #$0000
         sta wBattleAnimationAttackerOffset,b
@@ -98,7 +98,7 @@
         sta $0B06,b
         sta $0B49,b
         rep #$20
-        jsl rlUnknown958000
+        jsl rlBattleSceneInit
         lda #(`aUnknown968095)<<8
         sta lR44+1
         lda #<>aUnknown968095

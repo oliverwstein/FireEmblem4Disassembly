@@ -81,12 +81,12 @@
         tya
         and #$0004
         bne _BA82
-        lda $0D44,b
+        lda wBattleSceneAttackerTerrain,b
         bra _BA85
 
 
         _BA82
-        lda $0D46,b
+        lda wBattleSceneDefenderTerrain,b
 
         _BA85
         pha
@@ -273,7 +273,7 @@
         lda wBattleAnimationX,b,x
         and #$01FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         jsl rlGetSoundPanFromXPixel
         ldx wBattleAnimationAttackerOffset,b
         cpx #$0000
@@ -1004,7 +1004,7 @@
         ; Control command $FFF9: rlUnknown96F9BF, then rlUnknown95AB53 if bit 3 of $0AE4 is set.
 
         jsl rlUnknown96F9BF
-        lda $0AE4,b
+        lda bBattleSceneStrikeFlags,b
         bit #$0008
         beq _A3B8
         phx
@@ -1065,8 +1065,8 @@
         ; Control command $FFF8: rlUnknown95B02B, unless bit 6 of $0AE0 is set.
 
         phx
-        lda $0AE0,b
-        bit #$0040
+        lda bBattleSceneRoundState,b
+        bit #BattleSceneRoundMissed
         bne _A3E5
         jsl rlUnknown95B02B
 
@@ -1587,12 +1587,12 @@
         _BA37
         and #$0001
         bne _BA41
-        lda $0D50,b
+        lda aBattleSceneCombatant1.Character,b
         bra _BA44
 
 
         _BA41
-        lda $0D5E,b
+        lda aBattleSceneCombatant2.Character,b
 
         _BA44
         jsl rlGetCharacterPortraitData
@@ -1892,7 +1892,7 @@
         lda wBattleAnimationX,b,x
         and #$01FF
         sec
-        sbc $7FE198
+        sbc wBattleSceneCameraX
         jsl rlGetSoundPanFromXPixel
         ldx wBattleAnimationAttackerOffset,b
         cpx #$0000

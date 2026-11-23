@@ -30,3 +30,5 @@ field     wConversationExitMode,b                   CONVERSATION_EXIT_          
 field     wMapCursorState,b                         MAP_CURSOR_                          enum
 field     wMapReturnFlags,b                         MAP_RETURN_                          bits
 field     wMapActionTargetType,b                    MAP_ACTION_                          enum
+field     wBattleSceneFlags                         BattleSceneFlag                      bits
+field     bBattleSceneRoundState,b                  BattleSceneRound                     bits
