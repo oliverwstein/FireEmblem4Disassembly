@@ -8,13 +8,15 @@
       .al
       .xl
 
-      rlUnknown95E7B3 ; 95/E7B3
+      rlBattleSceneScriptClearMessageWindow ; 95/E7B3
 
         ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Script routine $1F: clears the message window's tilemap ($7E9F88, $280 bytes of tile $1FF) and loads its colors (rlBattleSceneLoadMessageColors).
 
         phx
         ldx #$0000
@@ -26,7 +28,7 @@
         inc x
         cpx #$0280
         bcc _E7BA
-        jsl rlUnknown95E9EF
+        jsl rlBattleSceneLoadMessageColors
         plx
         rtl
 
@@ -34,7 +36,7 @@
 
         ; 95/E7CB
 
-      rlUnknown95E7CB ; 95/E7CB
+      rlBattleSceneScriptStartMessage ; 95/E7CB
 
         ; Found through fe4.cdl.
         .al
@@ -42,12 +44,14 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown95E834
+        ; Script routine $20: sets up the dialogue engine for the message window (rsBattleSceneSetUpMessageDialogue) and starts the text at lBattleSceneDialoguePointer with text sound 1; clears the message delay ($7FE4D9).
+
+        jsr rsBattleSceneSetUpMessageDialogue
         lda lBattleSceneDialoguePointer+1
         sta lR18+1
         lda lBattleSceneDialoguePointer
         sta lR18
-        jsl rlUnknown918102
+        jsl rlDialogueStartTextIfIdle
         lda #$0000
         sta $7FE4D9
         lda #$0001
@@ -58,7 +62,7 @@
 
         ; 95/E7EC
 
-      rlUnknown95E7EC ; 95/E7EC
+      rlBattleSceneScriptStartMessage2 ; 95/E7EC
 
         ; Found through fe4.cdl.
         .al
@@ -66,12 +70,14 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown95E834
+        ; Script routine $21: the same code as rlBattleSceneScriptStartMessage.
+
+        jsr rsBattleSceneSetUpMessageDialogue
         lda lBattleSceneDialoguePointer+1
         sta lR18+1
         lda lBattleSceneDialoguePointer
         sta lR18
-        jsl rlUnknown918102
+        jsl rlDialogueStartTextIfIdle
         lda #$0000
         sta $7FE4D9
         lda #$0001
@@ -90,7 +96,7 @@
       .al
       .xl
 
-      rlUnknown95E80D ; 95/E80D
+      rlBattleSceneScriptClearMessage ; 95/E80D
 
         ; Found by tools/sweep.py.
         .al
@@ -98,7 +104,9 @@
         .autsiz
         .databank ?
 
-        jsr rsUnknown95E834
+        ; Found by tools/sweep.py. Script routine $1C: sets up the message window with other box sizes and runs dialogueBattleSceneClear, silently.
+
+        jsr rsBattleSceneSetUpMessageDialogue
         lda #$A00C
         sta $18D4,b
         lda #$061E
@@ -108,7 +116,7 @@
         sta lR18+1
         lda #<>dialogueBattleSceneClear
         sta lR18
-        jsl rlUnknown918102
+        jsl rlDialogueStartTextIfIdle
         lda #$0000
         sta aDialogue.wTextSound,b
         rtl
@@ -123,12 +131,14 @@
       .al
       .xl
 
-      rsUnknown95E834 ; 95/E834
+      rsBattleSceneSetUpMessageDialogue ; 95/E834
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Resets the dialogue engine, frees HDMA entries 3 and 6, and sets the message window's text buffer ($7E7000), box and tiles.
 
         jsl rlResetDialogueEngine
         lda #$0003
@@ -165,7 +175,7 @@
       .al
       .xl
 
-      rlUnknown95E877 ; 95/E877
+      rlBattleSceneScriptContinueMessage ; 95/E877
 
         ; Found by tools/sweep.py.
         .al
@@ -173,11 +183,13 @@
         .autsiz
         .databank ?
 
+        ; Found by tools/sweep.py. Script routine $23: starts the text at lBattleSceneDialoguePointer without setting the window up again.
+
         lda lBattleSceneDialoguePointer+1
         sta lR18+1
         lda lBattleSceneDialoguePointer
         sta lR18
-        jsl rlUnknown918102
+        jsl rlDialogueStartTextIfIdle
         rtl
 
         .databank 0
@@ -190,7 +202,7 @@
       .al
       .xl
 
-      rlUnknown95E888 ; 95/E888
+      rlBattleSceneScriptRunMessage ; 95/E888
 
         ; Found through fe4.cdl.
         .al
@@ -198,9 +210,11 @@
         .autsiz
         .databank ?
 
+        ; Script routine $1D, every frame: runs the dialogue, uploads the window's tilemap, draws the button arrow and the speed tiles; ends once the delay at $7FE4D9 has run out and the dialogue is idle.
+
         jsl rlRunDialogueCycle
-        jsl rlUnknown95E8B4
-        jsl rlUnknown95EA03
+        jsl rlBattleSceneUploadMessageTilemap
+        jsl rlBattleSceneDrawMessageArrow
         jsl rlUnknown96A21F
         lda $7FE4D9
         beq _E8A5
@@ -224,12 +238,14 @@
 
         ; 95/E8B4
 
-      rlUnknown95E8B4 ; 95/E8B4
+      rlBattleSceneUploadMessageTilemap ; 95/E8B4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Uploads $180 bytes of the message window's tilemap ($7EA008) to VRAM $7640.
 
         lda #$7E00
         sta lR18+1
@@ -244,13 +260,15 @@
 
         ; 95/E8C9
 
-      rlUnknown95E8C9 ; 95/E8C9
+      rlBattleSceneScriptFreeMessageHDMA ; 95/E8C9
 
         ; Found through fe4.cdl.
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Script routine $1E: rlDialogueFreeHDMA.
 
         jsl rlDialogueFreeHDMA
         rtl
@@ -450,12 +468,14 @@
 
         ; 95/E9EF
 
-      rlUnknown95E9EF ; 95/E9EF
+      rlBattleSceneLoadMessageColors ; 95/E9EF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Copies five colors of aUnknownE000C8 to OAM palette 3, colors 10-14.
 
         phx
         ldx #$0000
@@ -474,12 +494,14 @@
 
         ; 95/EA03
 
-      rlUnknown95EA03 ; 95/EA03
+      rlBattleSceneDrawMessageArrow ; 95/EA03
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; While the dialogue waits for a button (bits 14 and 15 of aDialogue.wStatus), draws the arrow sprite ($99/88E2 or $99/88EE) at (216, 192).
 
         lda aDialogue.wStatus,b
         bit #$4000
@@ -532,12 +554,14 @@
       .al
       .xl
 
-      rlUnknown96881F ; 96/881F
+      rlBattleSceneShowBattleQuote ; 96/881F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Intro step: with a battle quote (wBattleQuotePointer) starts script $2D to show it.
 
         lda wBattleQuotePointer
         cmp #$0000
@@ -852,12 +876,14 @@
 
         .databank 0
 
-      rlUnknown96F580 ; 96/F580
+      rlBattleSceneScriptStartBrighten ; 96/F580
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Script routine $30: color math on, then rlBattleSceneRunBrighten every frame.
 
         phx
         sep #$20
@@ -870,21 +896,23 @@
         .al
         lda #$0000
         sta $7FFDF8
-        lda #(`rlUnknown96F5A4)<<8
+        lda #(`rlBattleSceneRunBrighten)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96F5A4
+        lda #<>rlBattleSceneRunBrighten
         sta lBattleSceneScriptRoutine
         plx
         rtl
 
         .databank 0
 
-      rlUnknown96F5A4 ; 96/F5A4
+      rlBattleSceneRunBrighten ; 96/F5A4
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Raises wBattleScenePaletteBrighten by 1 every 4 frames to 31 ($80 frames, counted in $7FFDF8).
 
         phx
         lda $7FFDF8
@@ -917,31 +945,35 @@
 
         .databank 0
 
-      rlUnknown96F5D7 ; 96/F5D7
+      rlBattleSceneScriptStartUnbrighten ; 96/F5D7
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Script routine $31: rlBattleSceneRunUnbrighten every frame.
+
         phx
         lda #$007F
         sta $7FFDF8
-        lda #(`rlUnknown96F5EF)<<8
+        lda #(`rlBattleSceneRunUnbrighten)<<8
         sta lBattleSceneScriptRoutine+1
-        lda #<>rlUnknown96F5EF
+        lda #<>rlBattleSceneRunUnbrighten
         sta lBattleSceneScriptRoutine
         plx
         rtl
 
         .databank 0
 
-      rlUnknown96F5EF ; 96/F5EF
+      rlBattleSceneRunUnbrighten ; 96/F5EF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Takes wBattleScenePaletteBrighten back down to 0 over $80 frames.
 
         phx
         lda $7FFDF8
@@ -973,12 +1005,14 @@
 
         .databank 0
 
-      rlUnknown96F61F ; 96/F61F
+      rlBattleSceneScriptWhiteBackdrop ; 96/F61F
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Script routine $32: makes BG color 0 white and sets the palette swap bit of combatant 1's attributes.
 
         phx
         lda #$7FFF
@@ -995,12 +1029,14 @@
 
         .databank 0
 
-      rlUnknown96F635 ; 96/F635
+      rlBattleSceneScriptRestorePalettes ; 96/F635
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Script routine $33: restores BG palettes 0 and 6 from the copies at $7ECC08 and $7ECC28, and four colors of palette 0 from aUnknownE000B0.
 
         phx
         ldx #$0000
@@ -1364,12 +1400,14 @@
 
         ; 96/F7BF
 
-      rlUnknown96F7BF ; 96/F7BF
+      rlBattleSceneResetSkillState ; 96/F7BF
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears $7FFC5D and sets $7FFC5E and $7FFC5F (the skill kept by rlBattleSceneShowHoly and the others) to $FF.
 
         sep #$20
         lda #$00

@@ -145,7 +145,7 @@
         lda $7FFC5D
         bit #$0001
         bne _A75F
-        lda $7FE187
+        lda bBattleSceneArenaBout
         bit #$0007
         bne _A75F
         clc

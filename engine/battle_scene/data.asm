@@ -238,14 +238,14 @@
         .long rlUnknown9688BA ; $19
         .long rlUnknown9688E4 ; $1A
         .long rlUnknown96890E ; $1B
-        .long rlUnknown95E80D ; $1C
-        .long rlUnknown95E888 ; $1D
-        .long rlUnknown95E8C9 ; $1E
-        .long rlUnknown95E7B3 ; $1F
-        .long rlUnknown95E7CB ; $20
-        .long rlUnknown95E7EC ; $21
+        .long rlBattleSceneScriptClearMessage ; $1C
+        .long rlBattleSceneScriptRunMessage ; $1D
+        .long rlBattleSceneScriptFreeMessageHDMA ; $1E
+        .long rlBattleSceneScriptClearMessageWindow ; $1F
+        .long rlBattleSceneScriptStartMessage ; $20
+        .long rlBattleSceneScriptStartMessage2 ; $21
         .long rlUnknown96CAAD ; $22
-        .long rlUnknown95E877 ; $23
+        .long rlBattleSceneScriptContinueMessage ; $23
         .long rlUnknown96F356 ; $24
         .long rlUnknown96F41A ; $25
         .long rlBattleSceneScriptHideDefender ; $26
@@ -258,10 +258,10 @@
         .long rlUnknown96F543 ; $2D
         .long rlUnknown96F54F ; $2E
         .long rlUnknown96F4A3 ; $2F
-        .long rlUnknown96F580 ; $30
-        .long rlUnknown96F5D7 ; $31
-        .long rlUnknown96F61F ; $32
-        .long rlUnknown96F635 ; $33
+        .long rlBattleSceneScriptStartBrighten ; $30
+        .long rlBattleSceneScriptStartUnbrighten ; $31
+        .long rlBattleSceneScriptWhiteBackdrop ; $32
+        .long rlBattleSceneScriptRestorePalettes ; $33
         .long rlUnknown96F89B ; $34
         .long rlUnknown96FADA ; $35
         .long rlUnknown96FBF9 ; $36
@@ -2325,7 +2325,7 @@
         ; Read by rlBattleSceneRunIntroStep: routines it calls.
 
         .long rlBattleSceneWaitForIntro
-        .long rlUnknown96881F
+        .long rlBattleSceneShowBattleQuote
         .long rlBattleSceneStartFadeIn
 
         ; 99/8440
@@ -2898,7 +2898,7 @@
 
       aUnknownE000C8 ; E0/00C8
 
-        ; Read by rlUnknown95E9EF, rlUnknown968BC2.
+        ; Read by rlBattleSceneLoadMessageColors, rlUnknown968BC2.
 
         .byte $00, $00, $5F, $4B, $78, $32, $F3, $25, $00, $00, $27, $00, $9F, $57, $5F, $13
         .byte $8B, $2D

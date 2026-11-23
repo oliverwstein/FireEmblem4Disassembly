@@ -3176,12 +3176,12 @@
         .autsiz
         .databank ?
 
-        ; Clears $7FE187 and $7FE188 (the break between arena bouts) and BattleSceneRoundArenaNextBout.
+        ; Clears bBattleSceneArenaBout and bBattleSceneArenaInput (the break between arena bouts) and BattleSceneRoundArenaNextBout.
 
         sep #$20
         lda #$00
-        sta $7FE187
-        sta $7FE188
+        sta bBattleSceneArenaBout
+        sta bBattleSceneArenaInput
         lda bBattleSceneRoundState,b
         and #$EF
         sta bBattleSceneRoundState,b

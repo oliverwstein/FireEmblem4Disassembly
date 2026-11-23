@@ -1,0 +1,6 @@
+rsUnknown959C14 rsBattleSceneReleaseHold | Clears BattleSceneRoundHeld when the countdown at $7FED5A reaches 1, or, with no countdown, when B is pressed.
+rlUnknown95A0F7 rlBattleSceneClearQueuedCopies | Empties the eight 6-byte entries at $7FE441 that rlBattleSceneRunQueuedCopies works through.
+rlUnknown95A52D rlBattleSceneForceBlank | Forced blank: $80 in bBufferINIDISP and its copies $7FE4DD and $7FE4D5.
+rlUnknown96952C rlBattleSceneBuildColorHDMATable | Every frame: the HDMA table at aMapWindowTextBuffer that writes the fixed color ($7FE3EE, set by the brightening) for $0F and $70 lines, then ends it (rlBattleSceneEndColorHDMATable).
+rlUnknown96955D rlBattleSceneEndColorHDMATable | Adds $D0 lines of $7FE3F1 and the end byte at the table's end ($7FE3EA).
+rlUnknown969872 rlBattleSceneBuildArenaBout | In the main loop, outside the frame: when bit 0 of bBattleSceneArenaBout asks for the next arena bout, builds its rounds (rlActionStructBuildBattleRounds) and sets bit 2.

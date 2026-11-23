@@ -865,6 +865,9 @@
 
     bBattleSceneRelease1 .byte ? ; $7FE184 ; release signals waiting for combatant 1 (rlBattleAnimationRunSignals)
     bBattleSceneRelease2 .byte ? ; $7FE185 ; the same for combatant 2
+    .byte ?                      ; $7FE186
+    bBattleSceneArenaBout  .byte ? ; $7FE187 ; bit 0 a new arena bout is wanted, 1 its rounds are being built, 2 they are built (rlBattleSceneBuildArenaBout)
+    bBattleSceneArenaInput .byte ? ; $7FE188 ; bit 1: B was pressed this bout (the retreat sound has played)
 
   .endvirtual
 

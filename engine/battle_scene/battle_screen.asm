@@ -88,7 +88,7 @@
         jsl rlResetIRQEngine
         jsl rlBattleAnimationResetSlots
         jsl rlBattleSceneClearCombatants
-        jsl rlUnknown95A0F7
+        jsl rlBattleSceneClearQueuedCopies
         lda #$0000
         sta wBattleAnimationAttackerOffset,b
         lda #$0043
@@ -162,12 +162,12 @@
         .autsiz
         .databank ?
 
-        ; Battle scene main loop: reset check, decompression list, deferred sound upload, rlUnknown969872
+        ; Battle scene main loop: reset check, decompression list, deferred sound upload, rlBattleSceneBuildArenaBout
 
         jsl rlButtonCombinationResetCheck
         jsl rlDecompressByList
         jsl rlRunDeferredSoundUpload
-        jsl rlUnknown969872
+        jsl rlBattleSceneBuildArenaBout
         rts
 
         .databank 0

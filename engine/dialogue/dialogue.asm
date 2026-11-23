@@ -195,11 +195,13 @@
 
         .databank 0
 
-      rlUnknown918102 ; 91/8102
+      rlDialogueStartTextIfIdle ; 91/8102
 
         .al
         .autsiz
         .databank ?
+
+        ; Starts the dialogue at lR18 (rlDialogueStartText) unless the engine is busy (aDialogue.wStatus not 0), then carry set.
 
         lda aDialogue.wStatus,b
         beq +
@@ -208,7 +210,7 @@
           bra _End
 
         +
-        jsl rlUnknown918114
+        jsl rlDialogueStartTextAtLR18
         clc
 
         _End
@@ -216,7 +218,7 @@
 
         .databank 0
 
-      rlUnknown918110 ; 91/8110
+      rlDialogueResetAndStartText ; 91/8110
 
         .al
         .autsiz
@@ -224,7 +226,7 @@
 
         jsl rlResetDialogueEngine
 
-      rlUnknown918114 ; 91/8114
+      rlDialogueStartTextAtLR18 ; 91/8114
 
         .al
         .autsiz

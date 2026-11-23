@@ -1,0 +1,28 @@
+rlUnknown95E7B3 rlBattleSceneScriptClearMessageWindow | Script routine $1F: clears the message window's tilemap ($7E9F88, $280 bytes of tile $1FF) and loads its colors (rlBattleSceneLoadMessageColors).
+rlUnknown95E7CB rlBattleSceneScriptStartMessage | Script routine $20: sets up the dialogue engine for the message window (rsBattleSceneSetUpMessageDialogue) and starts the text at lBattleSceneDialoguePointer with text sound 1; clears the message delay ($7FE4D9).
+rlUnknown95E7EC rlBattleSceneScriptStartMessage2 | Script routine $21: the same code as rlBattleSceneScriptStartMessage.
+rlUnknown95E80D rlBattleSceneScriptClearMessage | Found by tools/sweep.py. Script routine $1C: sets up the message window with other box sizes and runs dialogueBattleSceneClear, silently.
+rsUnknown95E834 rsBattleSceneSetUpMessageDialogue | Resets the dialogue engine, frees HDMA entries 3 and 6, and sets the message window's text buffer ($7E7000), box and tiles.
+rlUnknown95E877 rlBattleSceneScriptContinueMessage | Found by tools/sweep.py. Script routine $23: starts the text at lBattleSceneDialoguePointer without setting the window up again.
+rlUnknown95E888 rlBattleSceneScriptRunMessage | Script routine $1D, every frame: runs the dialogue, uploads the window's tilemap, draws the button arrow and the speed tiles; ends once the delay at $7FE4D9 has run out and the dialogue is idle.
+rlUnknown95E8B4 rlBattleSceneUploadMessageTilemap | Uploads $180 bytes of the message window's tilemap ($7EA008) to VRAM $7640.
+rlUnknown95E8C9 rlBattleSceneScriptFreeMessageHDMA | Script routine $1E: rlDialogueFreeHDMA.
+rlUnknown95E9EF rlBattleSceneLoadMessageColors | Copies five colors of aUnknownE000C8 to OAM palette 3, colors 10-14.
+rlUnknown95EA03 rlBattleSceneDrawMessageArrow | While the dialogue waits for a button (bits 14 and 15 of aDialogue.wStatus), draws the arrow sprite ($99/88E2 or $99/88EE) at (216, 192).
+rlUnknown96881F rlBattleSceneShowBattleQuote | Intro step: with a battle quote (wBattleQuotePointer) starts script $2D to show it.
+rlUnknown96F580 rlBattleSceneScriptStartBrighten | Script routine $30: color math on, then rlBattleSceneRunBrighten every frame.
+rlUnknown96F5A4 rlBattleSceneRunBrighten | Raises wBattleScenePaletteBrighten by 1 every 4 frames to 31 ($80 frames, counted in $7FFDF8).
+rlUnknown96F5D7 rlBattleSceneScriptStartUnbrighten | Script routine $31: rlBattleSceneRunUnbrighten every frame.
+rlUnknown96F5EF rlBattleSceneRunUnbrighten | Takes wBattleScenePaletteBrighten back down to 0 over $80 frames.
+rlUnknown96F61F rlBattleSceneScriptWhiteBackdrop | Script routine $32: makes BG color 0 white and sets the palette swap bit of combatant 1's attributes.
+rlUnknown96F635 rlBattleSceneScriptRestorePalettes | Script routine $33: restores BG palettes 0 and 6 from the copies at $7ECC08 and $7ECC28, and four colors of palette 0 from aUnknownE000B0.
+rlUnknown96F7BF rlBattleSceneResetSkillState | Clears $7FFC5D and sets $7FFC5E and $7FFC5F (the skill kept by rlBattleSceneShowHoly and the others) to $FF.
+rsUnknown96A359 rsBattleSceneControlSignalSelf
+rsUnknown96A36F rsBattleSceneControlSignalOther
+rsUnknown96A385 rsBattleSceneControlApplyStrike
+rsUnknown96A396 rsBattleSceneControlDodgeIfMissed
+rsUnknown96A3C5 rsBattleSceneControlStartHeal
+rsUnknown96A3D8 rsBattleSceneControlStartDrain
+rlUnknown918102 rlDialogueStartTextIfIdle | Starts the dialogue at lR18 (rlDialogueStartText) unless the engine is busy (aDialogue.wStatus not 0), then carry set.
+rlUnknown918110 rlDialogueResetAndStartText
+rlUnknown918114 rlDialogueStartTextAtLR18

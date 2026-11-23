@@ -35,7 +35,7 @@
 
     BattleSceneRoundMayRun        = bits($01) ; the intro is over (rlBattleSceneCheckIntroDone)
     BattleSceneRoundAllRead       = bits($02) ; the last round has been read
-    BattleSceneRoundHeld          = bits($08) ; cleared by a countdown or Start (rsUnknown959C14)
+    BattleSceneRoundHeld          = bits($08) ; cleared by a countdown or Start (rsBattleSceneReleaseHold)
     BattleSceneRoundArenaNextBout = bits($10) ; the arena round list ended with $FEFF: fight again
     BattleSceneRoundMissed        = bits($40) ; the current strike misses
     BattleSceneRoundArenaRetreat  = bits($80) ; B was pressed in the arena (rlBattleSceneReadArenaRetreat)

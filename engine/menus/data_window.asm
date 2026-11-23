@@ -298,7 +298,7 @@
         sta aCurrentTilemapInfo,b
         lda wCurrentChapter,b
         jsl rlBuildChapterTitleString
-        jsl rlUnknown918110
+        jsl rlDialogueResetAndStartText
         jsl rlDialogueFreeHDMA
         lda #$0C00
         sta $18D7,b

@@ -59,7 +59,7 @@
         lda wBattleSceneFlags
         bit #BattleSceneFlagToMapMode3
         beq _E616
-        jsl rlUnknown95A52D
+        jsl rlBattleSceneForceBlank
         lda #$0003
         sta wMainGameMode,b
         lda #<>rsUnknown80B122
@@ -72,7 +72,7 @@
         and #$00FF
         cmp #$0000
         bne _E633
-        jsl rlUnknown95A52D
+        jsl rlBattleSceneForceBlank
         lda #$0002
         sta wMainGameMode,b
         lda #<>rsUnknown80B122
@@ -83,7 +83,7 @@
         _E633
         cmp #$0001
         bne _E642
-        jsl rlUnknown95A52D
+        jsl rlBattleSceneForceBlank
         jsl rlReturnToCastleFromArena
         bra _E68B
 
@@ -91,7 +91,7 @@
         _E642
         cmp #$0002
         bne _E658
-        jsl rlUnknown95A52D
+        jsl rlBattleSceneForceBlank
         lda #CASTLE_SCREEN_RELOAD_MAP
         sta wCastleScreenHandler,b
         lda #<>rsOpenCastleScreen
@@ -102,7 +102,7 @@
         _E658
         cmp #$0003
         bne _E66E
-        jsl rlUnknown95A52D
+        jsl rlBattleSceneForceBlank
         lda #CASTLE_SCREEN_RELOAD_MAP
         sta wCastleScreenHandler,b
         lda #<>rsOpenCastleScreen
@@ -113,13 +113,13 @@
         _E66E
         cmp #$00FF
         bne _E67C
-        jsl rlUnknown95A52D
+        jsl rlBattleSceneForceBlank
         stz wGameStateRoutine1,b
         bra _E69D
 
 
         _E67C
-        jsl rlUnknown95A52D
+        jsl rlBattleSceneForceBlank
         lda #$0002
         sta wMainGameMode,b
         lda #<>rsUnknown80B122
@@ -325,7 +325,7 @@
         jsl rlUnknown96EBC9
         jsl rlBattleSceneResetArenaBreak
         jsl rlBattleSceneClearMagicSwordFlags
-        jsl rlUnknown96F7BF
+        jsl rlBattleSceneResetSkillState
         jsl rlBattleSceneStopHUDShake
         lda #$0202
         sta $7FE1F0
@@ -467,7 +467,7 @@
         jsl rlBattleSceneRunIntroStep
         jsl rlBattleSceneCheckIntroDone
         jsr rsBattleSceneBuildBrightnessTable
-        jsr rsUnknown959C14
+        jsr rsBattleSceneReleaseHold
         jsl rlBattleSceneUpdateFade
         lda $7FFC77
         bit #$0001
@@ -512,7 +512,7 @@
         jsl rlRunBattleSceneScript
         jsl rlUnknown96CB44
         jsl rlBattleSceneScriptUpdateLoading
-        jsl rlUnknown96952C
+        jsl rlBattleSceneBuildColorHDMATable
         jsl rlUnknown96EBE3
         jsr rsBattleSceneUpdateStageScroll
         jsr rsBattleSceneUpdateBG1Scroll
@@ -696,12 +696,14 @@
       .al
       .xl
 
-      rsUnknown959C14 ; 95/9C14
+      rsBattleSceneReleaseHold ; 95/9C14
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Clears BattleSceneRoundHeld when the countdown at $7FED5A reaches 1, or, with no countdown, when B is pressed.
 
         pha
         lda $7FED5A
@@ -847,12 +849,14 @@
       .al
       .xl
 
-      rlUnknown95A0F7 ; 95/A0F7
+      rlBattleSceneClearQueuedCopies ; 95/A0F7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Empties the eight 6-byte entries at $7FE441 that rlBattleSceneRunQueuedCopies works through.
 
         pha
         phx
@@ -982,12 +986,14 @@
 
         ; 95/A52D
 
-      rlUnknown95A52D ; 95/A52D
+      rlBattleSceneForceBlank ; 95/A52D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Forced blank: $80 in bBufferINIDISP and its copies $7FE4DD and $7FE4D5.
 
         sep #$20
         lda #$80
@@ -1444,12 +1450,14 @@
 
         ; 96/952C
 
-      rlUnknown96952C ; 96/952C
+      rlBattleSceneBuildColorHDMATable ; 96/952C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame: the HDMA table at aMapWindowTextBuffer that writes the fixed color ($7FE3EE, set by the brightening) for $0F and $70 lines, then ends it (rlBattleSceneEndColorHDMATable).
 
         phx
         ldx #$0000
@@ -1469,7 +1477,7 @@
         inc x
         txa
         sta $7FE3EA
-        jsl rlUnknown96955D
+        jsl rlBattleSceneEndColorHDMATable
         plx
         rtl
 
@@ -1477,12 +1485,14 @@
 
         ; 96/955D
 
-      rlUnknown96955D ; 96/955D
+      rlBattleSceneEndColorHDMATable ; 96/955D
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Adds $D0 lines of $7FE3F1 and the end byte at the table's end ($7FE3EA).
 
         phx
         lda $7FE3EA
@@ -1538,28 +1548,30 @@
       .al
       .xl
 
-      rlUnknown969872 ; 96/9872
+      rlBattleSceneBuildArenaBout ; 96/9872
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; In the main loop, outside the frame: when bit 0 of bBattleSceneArenaBout asks for the next arena bout, builds its rounds (rlActionStructBuildBattleRounds) and sets bit 2.
+
         pha
-        lda $7FE187
+        lda bBattleSceneArenaBout
         bit #$0001
         beq _989C
         sep #$20
         and #$FE
         ora #$02
-        sta $7FE187
+        sta bBattleSceneArenaBout
         rep #$20
         jsl rlActionStructBuildBattleRounds
         sep #$20
-        lda $7FE187
+        lda bBattleSceneArenaBout
         and #$FD
         ora #$04
-        sta $7FE187
+        sta bBattleSceneArenaBout
         rep #$20
 
         _989C
@@ -1585,7 +1597,7 @@
         .autsiz
         .databank ?
 
-        ; Carry in set (rounds over): when the arena asks for another bout (BattleSceneRoundArenaNextBout) starts the break between bouts ($7FE187 = 1); while it runs returns carry clear; at its end (bit 2) restarts the rounds. Carry set when the scene may end.
+        ; Carry in set (rounds over): when the arena asks for another bout (BattleSceneRoundArenaNextBout) starts the break between bouts (bBattleSceneArenaBout = 1); while it runs returns carry clear; at its end (bit 2) restarts the rounds. Carry set when the scene may end.
 
         bcc _98DF
         lda bBattleSceneRoundState,b
@@ -1595,18 +1607,18 @@
         and #~BattleSceneRoundArenaNextBout
         sta bBattleSceneRoundState,b
         lda #$01
-        sta $7FE187
+        sta bBattleSceneArenaBout
         rep #$20
 
         _98B7
-        lda $7FE187
+        lda bBattleSceneArenaBout
         bit #$0003
         bne _98DB
         bit #$0004
         beq _98DE
         sep #$20
         and #$FB
-        sta $7FE187
+        sta bBattleSceneArenaBout
         lda bBattleSceneRoundState,b
         and #$F9
         sta bBattleSceneRoundState,b
@@ -1673,7 +1685,7 @@
         lda $7FE4DB
         bit #$0001
         bne _9949
-        lda $7FE188
+        lda bBattleSceneArenaInput
         bit #$0002
         bne _9934
         lda wJoy1Input
@@ -1683,9 +1695,9 @@
         lda bBattleSceneRoundState,b
         ora #BattleSceneRoundArenaRetreat
         sta bBattleSceneRoundState,b
-        lda $7FE188
+        lda bBattleSceneArenaInput
         ora #$02
-        sta $7FE188
+        sta bBattleSceneArenaInput
         rep #$20
         lda #$000A
         jsl rlPlaySoundEffect
@@ -1697,9 +1709,9 @@
         bit #$8000
         bne _9949
         sep #$20
-        lda $7FE188
+        lda bBattleSceneArenaInput
         and #$FD
-        sta $7FE188
+        sta bBattleSceneArenaInput
         rep #$20
 
         _9949

@@ -868,42 +868,42 @@
         _A2EF
         cmp #$FFFD
         bne _A2F9
-        jsr rsUnknown96A359
+        jsr rsBattleSceneControlSignalSelf
         bra _A2D0
 
 
         _A2F9
         cmp #$FFFC
         bne _A303
-        jsr rsUnknown96A36F
+        jsr rsBattleSceneControlSignalOther
         bra _A2D0
 
 
         _A303
         cmp #$FFFB
         bne _A30D
-        jsr rsUnknown96A3C5
+        jsr rsBattleSceneControlStartHeal
         bra _A2D0
 
 
         _A30D
         cmp #$FFF8
         bne _A317
-        jsr rsUnknown96A3D8
+        jsr rsBattleSceneControlStartDrain
         bra _A2D0
 
 
         _A317
         cmp #$FFFA
         bne _A321
-        jsr rsUnknown96A385
+        jsr rsBattleSceneControlApplyStrike
         bra _A2D0
 
 
         _A321
         cmp #$FFF9
         bne _A32B
-        jsr rsUnknown96A396
+        jsr rsBattleSceneControlDodgeIfMissed
         bra _A2D0
 
 
@@ -963,7 +963,7 @@
 
         ; 96/A359
 
-      rsUnknown96A359 ; 96/A359
+      rsBattleSceneControlSignalSelf ; 96/A359
 
         .al
         .xl
@@ -986,7 +986,7 @@
 
         ; 96/A36F
 
-      rsUnknown96A36F ; 96/A36F
+      rsBattleSceneControlSignalOther ; 96/A36F
 
         .al
         .xl
@@ -1009,7 +1009,7 @@
 
         ; 96/A385
 
-      rsUnknown96A385 ; 96/A385
+      rsBattleSceneControlApplyStrike ; 96/A385
 
         .al
         .xl
@@ -1029,7 +1029,7 @@
 
         ; 96/A396
 
-      rsUnknown96A396 ; 96/A396
+      rsBattleSceneControlDodgeIfMissed ; 96/A396
 
         .al
         .xl
@@ -1068,7 +1068,7 @@
 
         ; 96/A3C5
 
-      rsUnknown96A3C5 ; 96/A3C5
+      rsBattleSceneControlStartHeal ; 96/A3C5
 
         .al
         .xl
@@ -1090,7 +1090,7 @@
 
         ; 96/A3D8
 
-      rsUnknown96A3D8 ; 96/A3D8
+      rsBattleSceneControlStartDrain ; 96/A3D8
 
         .al
         .xl
