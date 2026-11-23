@@ -27,7 +27,7 @@
     BattleSceneFlagRiver          = bits($0020)
     BattleSceneFlagHolyWeapon2    = bits($0040) ; combatant 2 carries a holy weapon; cleared at its first round
     BattleSceneFlagHolyWeapon1    = bits($0080) ; the same for combatant 1
-    BattleSceneFlagListedWeapon1  = bits($0100) ; combatant 1's weapon is in aUnknown998F02
+    BattleSceneFlagListedWeapon1  = bits($0100) ; combatant 1's weapon is in aUnknown998F02: four of its sounds change (rsBattleAnimationUseListedWeaponSounds)
     BattleSceneFlagListedWeapon2  = bits($0200)
     BattleSceneFlagToMapMode3     = bits($0400) ; on leaving, wMainGameMode 3 (rlBattleSceneStep)
 

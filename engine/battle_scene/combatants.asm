@@ -1,8 +1,12 @@
 ; The combatants on the battle scene's stage (battle animation slots: two
 ; combatants at $0AF3 and $0B36 and two effect slots after them): their
-; sequences and frames, the action and move queues (rlBattleAnimationQueueAction),
-; movement, gravity and jumps, facing and spacing. The move routines are in
-; animation_moves.asm. Much here is still Unknown.
+; sequences and frames (rsBattleAnimationRunScript, rlBattleAnimationDrawSlot),
+; the action and move queues (rlBattleAnimationQueueAction), movement against
+; each other and the stage edges, the camera, gravity and jumps, facing, the
+; knockback, the effect slots' flight (rlBattleAnimationMoveEffectSlot),
+; afterimages and shadows, the release signals between the combatants, and the
+; VBlank upload queue. The move routines are in animation_moves.asm. The effect
+; slots' spawn fields ($0C03-$0C30) are still Unknown.
 
 
     .section Unsorted95B184Section

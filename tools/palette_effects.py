@@ -4,7 +4,7 @@
 usage: tools/palette_effects.py [--write]
 
 rlBattleSceneStartPaletteEffect (bank $96) takes a long pointer in lR18 to one
-entry: the slot (0-9), the type (bits 0-5; rlUnknown96D695 runs the slot by
+entry: the slot (0-9), the type (bits 0-5; rlBattleSceneRunPaletteEffects runs the slot by
 it), the first color in aBGPaletteBuffer and the color count, then by type:
 
   types 0-2, 10, 12   a long pointer (PALETTE_EFFECT)

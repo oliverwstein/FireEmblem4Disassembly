@@ -14,17 +14,17 @@ Per-routine details: [routines/battle_scene.md](routines/battle_scene.md) (gener
 | [scene.asm](../../engine/battle_scene/scene.asm) | The game states, `rlBattleSceneInit`, the frame (`rsBattleSceneRunFrame`), the scene's flags, the fade, the copies queued for VBlank, the intro and end steps, and the arena's bouts. |
 | [rounds.asm](../../engine/battle_scene/rounds.asm) | Reading the rounds and queueing each attacker's action; landing a strike (HP, flash, knockback, hit sound). |
 | [results.asm](../../engine/battle_scene/results.asm) | The end steps: death quote, experience, level up, item, gold and broken weapon messages; the skill banners; Julius's ending. |
-| [combatants.asm](../../engine/battle_scene/combatants.asm) | The animation slots: sequences and their script interpreter, the action and move queues, movement, gravity, jumps, facing. Much is still `Unknown`. |
+| [combatants.asm](../../engine/battle_scene/combatants.asm) | The animation slots: sequences and their script interpreter, drawing and frame tiles, the action and move queues, movement and the camera, gravity, jumps, facing, the knockback, the effect slots, afterimages and shadows; the VBlank upload queue. |
 | [animation_moves.asm](../../engine/battle_scene/animation_moves.asm) | The move routines a move list step runs (`AnimMove*`). |
 | [animations.asm](../../engine/battle_scene/animations.asm) | The animation data by class: sheets, frames, programs, character pieces, weapon graphics, sound effects. |
 | [loading.asm](../../engine/battle_scene/loading.asm) | Loading each combatant's graphics and palette, the background and foreground, and placing the combatants. |
 | [backgrounds.asm](../../engine/battle_scene/backgrounds.asm) | The backgrounds by terrain and the foreground layers. |
 | [script.asm](../../engine/battle_scene/script.asm) | The battle scene script interpreter and its commands. |
 | [screen.asm](../../engine/battle_scene/screen.asm) | IRQ splits, the INIDISP and window HDMA tables, VBlank work. Low-level, mostly `Unknown`. |
-| [hud.asm](../../engine/battle_scene/hud.asm) | HP numbers and bars; the name, stat, experience and level up windows. Much is still `Unknown`. |
-| [effects.asm](../../engine/battle_scene/effects.asm) | Palette, window, HDMA, scroll and mosaic effects, and the sprites drawn for spells. Low-level, mostly `Unknown`. |
+| [hud.asm](../../engine/battle_scene/hud.asm) | The HUD: HP numbers and bars, stats, names and banners; the gauge behind the experience bar and the level up window; battle type 2's colors; the HUD's shake. |
+| [effects.asm](../../engine/battle_scene/effects.asm) | The script's routine commands, the palette effects (named), and the window, HDMA, scroll and mosaic effects and spell sprites (low-level, mostly `Unknown`). |
 | [data.asm](../../engine/battle_scene/data.asm) | Tables in banks `$97`-`$99` and `$E0` read by the code above. |
-| [include/BattleScene.h](../../include/BattleScene.h) | `structBattleSceneCombatant`, the bits of `wBattleSceneFlags` and `bBattleSceneRoundState`, and the palette effect entries (`PALETTE_EFFECT_*`). |
+| [include/BattleScene.h](../../include/BattleScene.h) | `structBattleSceneCombatant`, the bits of `wBattleSceneFlags` and `bBattleSceneRoundState`, the palette effect entries (`PALETTE_EFFECT_*`) and slots, the upload and afterimage structs, the level up gauge rows (`BATTLE_SCENE_GAUGE`, `BATTLE_SCENE_STAT_GAUGE`). |
 | [include/BattleAnimation.h](../../include/BattleAnimation.h) | Sequence commands (`ANIM_CMD_*`), the animation lookup, move programs, `WRITE_RAM_*` lists. |
 
 The scene's RAM is in [WRAM.h](../../include/WRAM.h): the animation slots at `$0AF3` (`bBattleAnimationStateFlags`...), the round state at `$0ADD`-`$0AE8`, the combatants at `$0D44`-`$0D69`, and variables from `$7FE09E` to `$7FFC59`. The map's text buffer and unit buffers share `$7FE000`-`$7FFFFF`, so `tools/name_ram.py` writes the battle scene's names only in `engine/battle_scene/` and `engine/title/`.
@@ -111,17 +111,63 @@ The intro has three steps (`aBattleSceneIntroSteps`): fade in, the opening, and 
 
 **Julius.** A strike of hit kind 3 (round bit `$10`) by combatant 1 on `JuliusChFinal` sets `BattleSceneFlagToMapMode3`, slows the fade and fades the music (`rlBattleScenePlayHitSound`). The death quote is then shown by `rlBattleSceneShowJuliusQuote` instead, and the scene returns to the map in mode 3.
 
+## The HUD
+
+`rlBattleSceneLoadHUD` builds the bottom of the screen once, in `rlBattleSceneInit`'s last steps: the HUD's tiles, the window tilemap (`$7FC800`, VRAM `$D000`) and the HUD tilemap (`$7FD0C0`, VRAM `$D8C0`). Into the HUD tilemap go:
+
+- **the stats**: ten numbers listed in `aBattleSceneHUDStats`, each combatant's `CurrentHP`, `Level`, `BattleAdjustedHit`, `BattleMight` and `BattleDefense` from its action struct (`rsBattleSceneDrawStats`; 255 shows as two dashes, `rlBattleSceneDrawStat`);
+- **HP** and its bar (`rsBattleSceneDrawHP1`/`2`, `rlBattleSceneDrawHPBar`); every frame `rlBattleSceneQueueHPUpload` sends those rows again;
+- **colors by faction**: `rlBattleSceneSetHUDColors` takes each combatant's HUD color (`rlGetFactionBattleHUDColorID`, `aBattleSceneHUDColors`) and `rsBattleSceneLoadBanners` its faction banner (`aBattleBannerTable`);
+- **names**: `rlBattleSceneLoadNames` draws each name and weapon name with the font into 2bpp tiles at `$7EAC88` (8 characters, two tile rows each; combatant 2's right-aligned, combatant 1's left-aligned) and sends them to VRAM `$F800`.
+
+A combatant with no character (0) gets its half blanked (`rlBattleSceneBlankMissingCombatant`). In battle type 2 the HUD's palettes move (`rlBattleSceneRecolorHUDForType2`) and the scene's colors dim (`rlBattleSceneDimPalettesForType2`).
+
+**The gauge.** One set of variables at `$7FED4B` (`wBattleSceneGaugeValue`...) draws a number with an optional bar and counts it toward a target at an 8.8 speed:
+
+- the experience bar: script routine 13 (`rlBattleSceneStartExperienceGauge`) sets it from `wBattleSceneExperience` to that plus `wBattleSceneExperienceGained`; routine 1 plays sound `$0B` and fills it every frame (`rlBattleSceneRunExperienceFill`), wrapping past 100, and plays `$0C` when it stops;
+- the level up window: routine 2 draws the nine gauges of `aBattleSceneLevelUpGauges` (the level and the eight stats); `rlBattleSceneStartStatGauge` then raises one stat by its gain (`aBattleSceneLevelUpStatGauges`) and `rlBattleSceneRunStatGauge` fills it. HP's bar holds 80 points, the other stats' 30.
+
+The gauge draws into the window tilemap and queues the changed rows with `rlBattleSceneQueueUpload`.
+
+**The shake.** A critical (bit `$40` of `bBattleSceneStrikeFlags`) shakes the HUD (`rlBattleSceneStartHUDShake`): `$7FFC73`-`$7FFC76` are the BG2/BG3 scroll that the IRQ above the HUD writes, moved by `aBattleSceneHUDShakeOffsets` until `$8080`.
+
+**Uploads.** `rlBattleSceneQueueUpload` queues up to 16 copies to VRAM (`aBattleSceneUploads`, `structBattleSceneUpload`); `rlBattleSceneRunUploads` sends them in VBlank, at most `$0C00` bytes a frame, the rest the next frame. Bigger copies go through `rlBattleSceneStartLargeUpload`, which feeds the queue a part each frame.
+
 ## Palette effects
 
-Ten slots at `$7FFD9A`, 10 bytes each, change colors of `aBGPaletteBuffer` every frame (`rlUnknown96D695`, by type). `rlBattleSceneStartPaletteEffect` fills one from an entry: slot, type, first color, color count, then by type a long pointer, a byte, both, or nothing (`PALETTE_EFFECT`, `_VALUE`, `_VALUE_DATA`, `_NO_DATA`). Script command 11 takes its entry from `aBattleScenePaletteEffects` (191 offsets in bank `$97`); the title screen and the map battle pass their own. Type 0 plays frames of colors: each frame is an optional `$80 | frames` delay byte and the colors, `$FE` loops, `$FF` ends. The colors are in `data.asm` (bank `$9B`) and bank `$E0`. `tools/palette_effects.py` wrote the 204 entries.
+Ten slots (`aBattleScenePaletteSlots` at `$7FFD9A`, `structBattleScenePaletteSlot`) change colors of `aBGPaletteBuffer` every frame (`rlBattleSceneRunPaletteEffects`, by type). `rlBattleSceneStartPaletteEffect` fills one from an entry: slot, type, first color, color count, then by type a long pointer, a byte, both, or nothing (`PALETTE_EFFECT`, `_VALUE`, `_VALUE_DATA`, `_NO_DATA`). Script command 11 takes its entry from `aBattleScenePaletteEffects` (191 offsets in bank `$97`); the title screen and the map battle pass their own. The colors are in `data.asm` (bank `$9B`) and bank `$E0`. `tools/palette_effects.py` wrote the 204 entries. The types (`aBattleScenePaletteEffectTypes`):
+
+| Type | Does |
+|---|---|
+| 0 | frames of colors: each frame an optional `$80 \| frames` delay byte and the colors; `$FE` loops, `$FF` ends |
+| 1, 2 | scroll the colors down (up) by one and put the next color of the data at the end (start) |
+| 3, 4 | rotate the colors down (up) every Value frames |
+| 5, 6 | fade a step at a time to black (white) |
+| 7 | fade a step at a time toward the colors in the data |
+| 8, 9 | set black (white) |
+| 10 | set the colors in the data |
+| 11 | restore the saved palette at `$7FFE00` |
+| 12 | as 1, the new color brightened by `wBattleScenePaletteBrighten` steps |
+
+A slot that ends with bit 6 of its type set counts down the script's wait (`bBattleSceneScriptWaitCount`).
 
 ## Animation slots
 
-Four slots of `$43` bytes from `$0AF3`: the two combatants (`X` = 0 and `$43`) and two effect slots (`$86`, `$C9`).
+Four slots of `$43` bytes from `$0AF3`: the two combatants (`X` = 0 and `$43`) and their effect slots (`$86` for combatant 1, `$C9` for combatant 2: arrows, thrown weapons, magic).
 
-- **Sequences.** Each slot plays a sequence script (`rsBattleAnimationRunScript`): poses with their frames, and the commands `$E8`-`$FF` in [BattleAnimation.h](../../include/BattleAnimation.h). `rsBattleAnimationReadStep` reads each step word minus 1, so command `$FF` is compared as `$FE`.
-- **Actions.** An action (`rlBattleAnimationQueueAction`) is a byte of the class's move program: a move list or a single sequence. Bits 0-1 of `$0AF5,x` pick its variant (`ANIM_CMD_ED`).
-- **Movement.** The move lists' steps run the move routines in [animation_moves.asm](../../engine/battle_scene/animation_moves.asm).
+- **Sequences.** Each slot plays a sequence script (`rsBattleAnimationRunScript`): poses with their frames, and the commands `$E8`-`$FF` in [BattleAnimation.h](../../include/BattleAnimation.h). `rsBattleAnimationReadStep` reads each step word minus 1, so command `$FF` is compared as `$FE`. A pose's delay is scaled by the slot's 8.8 multiplier (`rsBattleAnimationScaleDelay`).
+- **Drawing.** `rlBattleAnimationDrawSlot` draws the pose at the slot's screen position (mirrored by its H-flip bit) and, on a new pose, queues its frame's tile rows (`rlBattleAnimationLoadFrameTiles`). `rsBattleSceneDrawShadows` draws each combatant's first frame record at its ground position on alternate frames.
+- **Actions and moves.** An action (`rlBattleAnimationQueueAction`) is a byte of the class's move program: a move list or a single sequence. Bits 0-1 of `$0AF5,x` pick its variant (`ANIM_CMD_ED`). Moves wait in `aBattleSceneMoveQueues` (16 per combatant) until the combatant stands ready (`rsBattleAnimationTakeMove1`/`2`); an empty queue sets its bit of `bBattleSceneQueuesIdle`. A missed strike makes the defender dodge (`rlBattleSceneQueueDodge`, action 1).
+- **Movement.** The move lists' steps run the move routines in [animation_moves.asm](../../engine/battle_scene/animation_moves.asm). `rsBattleAnimationMoveRight`/`Left` stop a combatant against the other's body (`rsBattleAnimationCheckBlocked`) or the stage edge, and scroll the camera after it: toward the midpoint of the attacker's and defender's X (`lBattleSceneCameraAttackerX`/`DefenderX`, long pointers), or the attacker's alone. `rsBattleSceneTurnCombatants` turns idle combatants to face each other.
+- **Release signals.** `ANIM_CMD_F4` freezes a combatant's sequence; the other side signals it (`$F3`, or its effect slot ending) through `bBattleSceneRelease1`/`2`, and `rlBattleAnimationRunSignals` moves its script past the `$F4`.
+- **Knockback.** A strike knocks the defender back (`rlBattleSceneSetKnockback`): `bBattleSceneKnockback` holds a strength of `$762` / its class's weight (`aBattleSceneClassWeights`), taken to 3/4 each frame as it pushes the combatant (`rlBattleSceneRunKnockback`), then `$18` frames of sideways shake.
+- **Effect slots.** `rlBattleAnimationSetEffectMotion` picks the motion by the attacker's `AnimStyle` and weapon; each frame `rlBattleAnimationMoveEffectSlot` moves the slot by it: straight flight with gravity and a pose by its slope, a path (`aBattleAnimationEffectPaths`), or a path script with commands `$8080`-`$8085` (`aBattleAnimationEffectPathScripts`). Reaching the defender lands the strike (`rlBattleSceneApplyEffectStrike`); landing or leaving the stage ends the slot (`rlBattleAnimationEndEffectSlot`).
+- **Afterimages.** Sequence command `$EC` 1 starts one of two afterimages (`aBattleSceneAfterimages`): the owner's pose drawn 8 or 12 frames back. `$EC` 3 draws the slot mirrored around the defender on odd frames (`rlBattleAnimationGetMirroredX`).
+- **Sounds.** On a river or in the sea's water, footsteps `$11`-`$19` become splashes `$21`-`$29` (`rsBattleAnimationUseWaterSounds`); with a weapon of `aUnknown998F02` (`BattleSceneFlagListedWeapon1`/`2`), sounds `$47`, `$6D`, `$8C` and `$8E` become the next one (`rsBattleAnimationUseListedWeaponSounds`).
+
+## Script routines
+
+Script commands 4, 5 and 8 take an index into `aBattleSceneScriptRoutines` (72 long pointers in bank `$97`): call once, call every frame until it clears bit 0 of `$7FE4B7`, or set as the routine run every frame (`lBattleSceneScriptRoutine`). Entries 1, 2 and 13 are the experience bar and the level up window above; most others are effects still `Unknown`.
 
 ## Depends on
 
@@ -133,8 +179,8 @@ Four slots of `$43` bytes from `$0AF3`: the two combatants (`X` = 0 and `$43`) a
 
 - **Battle type 2.** What it is: the scene clears the quotes and drops, has no foreground, and uses scripts `$33`/`$35`. It leaves to the castle screen like type 3.
 - **`BattleSceneFlagSolo`** (`aActionStructUnit1.Unknown` = 8, both combatants at the center, action 1): which action sets it.
-- **Unused flags.** Bits `$0100`/`$0200` of `wBattleSceneFlags` (weapons of `aUnknown998F02`) are set, but no reader was found.
 - **`bBattleSceneRanged`.** It is never stored: `rsBattleSceneStartNextRound` loads the ranged bit into A and branches past the store.
-- **A wrong label.** `rsBattleSceneLoadExtraTiles` loads a long pointer written as `aChapter05MapEvents + 326` for extra tiles ID 0. The label is a chance match and the target is probably blank tiles; it needs a proper label.
-- **`rsBattleScenePlaceCombatants`** holds two unreachable `.byte` runs after `bra` (dead code).
-- **Unknown routines.** The visual effects (`effects.asm`, `screen.asm`) and most of the slot engine and HUD are still `Unknown`, among them what palette effect types 1-12 do each frame (`rlUnknown96D695`'s jump table) and the window effect data (`$97/F64E`, `$97/A7C7`).
+- **Extra tiles ID 0** copies `$C0` tiles from `$86E000` (`ANIM_NO_EXTRA_TILES_SOURCE`), event data in the released ROM. Whether that VRAM is ever shown is not known.
+- **Bit 7 of `bBattleSceneStrikeFlags`** is set by a round entry with bit `$10`; the end steps then play scripts `$34`/`$31` and a sound `$89`-`$8B` by gender (`rlUnknown969CA1`). What it means on screen is not settled.
+- **The effect slots' spawn fields** `$0C03`-`$0C30` (`rsUnknown95DCA3`/`95DD4F`, sequence command `$EF`) and the `aUnknown97EA9A` body records are still raw.
+- **Unknown routines.** The visual effects (`effects.asm`, `screen.asm`), the script routines that run them, and the rest of the slot engine (`combatants.asm`, 33) are still `Unknown`, as is the window effect data (`$97/F64E`, `$97/A7C7`).
