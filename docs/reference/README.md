@@ -25,6 +25,7 @@ The generated pages are not committed (they are in `.gitignore`): run `python3 t
 - [epilogue.md](epilogue.md): the epilogue: its parts and steps, the credits, the play record, the ranking screen and its secret code, the character endings.
 - [demo.md](demo.md): the attract mode's opening: its event script, the staff credits, the demo map scenes and their battles.
 - [save.md](save.md): save slots in SRAM, saving and loading, what is written as it happens (losses, timer, ranking), and the save menu screen (title file menu, map save, the Jugdral history, the chapter intro).
+- [title.md](title.md): the title screen (game states `$1A`/`$1B`): its intro, timelines, sprites, captions and the way to the file menu or back to the opening.
 - [map_battle.md](map_battle.md): battles played on the map with the animations off, and the map actions and scripted scenes that use the same sprites.
 
 The other systems get their page as Phase 3 names and sorts them (see [PLAN.md](../../PLAN.md)).
