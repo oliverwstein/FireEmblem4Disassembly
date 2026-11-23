@@ -1,4 +1,5 @@
-; The attract mode's opening (bank $90, after the dialogue): the event script
+; The attract mode's opening (bank $90, after the dialogue, and a few routines of
+; bank $8D for its first and last scenes): the event script
 ; aOpeningEvent and the RUN_ASM routines and tables it uses. rlStartOpeningEvent
 ; (bank $9B, in the map battle screen's loop) starts the script. It shows Annand's
 ; pegasus knights, the staff credits (engine/demo/opening_credits.asm), battle
@@ -7,7 +8,7 @@
 ; first the odd index (rlASMCSetDemoIndexOdd, rlRunDemoBattleSetup), then the
 ; even one below it (rlRunDemoBattleSetupAtIndex). rlRunDemoBattleSetup steps
 ; wDemoIndex down, so each showing of the opening moves on to the next pair. The
-; last scene is Arvis's attack at Belhalla. DEMO_ALLOW_SKIP lets Start end it.
+; last scene is Arvis ordering the final attack (on the final chapter's map). DEMO_ALLOW_SKIP lets Start end it.
 ;
 ; A demo scene: rlASMCClearDemoDeployments, rlASMCLoadDemoMapScene (chapter and
 ; camera), rlASMCPlaceDemoSceneSprites (the units, from aDemoSceneSpriteLists).
@@ -23,16 +24,16 @@
         ; pegasus knights, the staff credits (rlShowOpeningCreditsPage1-8), two
         ; battle scenes, two conversations, a pair of chapter map scenes with
         ; their demo battles (the odd and the even wDemoIndex), and Arvis's final
-        ; attack at Belhalla. Start ends it (DEMO_ALLOW_SKIP).
+        ; attack on the final chapter's map. Start ends it (DEMO_ALLOW_SKIP).
 
         DEMO_ALLOW_SKIP
         RUN_ASM rlASMCClearDemoDeployments
-        RUN_ASM rlUnknown8DA810
+        RUN_ASM rlASMCSetOpeningMapChapter9
         SET_CAMERA_POSITION [0, 7]
         EVENT_3B $80
         PAUSE $0005
         YIELD
-        RUN_ASM rlUnknown8DA880
+        RUN_ASM rlASMCSetUpOpeningSkyScene
         MOVE_TEMPORARY_BY_SCRIPT Annand, [2, 12], 5, $06, aOpeningAnnandMovement, false
         WAIT_UNIT_SPRITE_DECOMPRESSED
         MOVE_TEMPORARY_BY_SCRIPT AnnandSquadPegasusKnight, [22, 14], 4, $06, aOpeningPegasusKnightMovement1, false
@@ -174,7 +175,7 @@
         YIELD
         FADE_OUT_BY_TIMER $04
         YIELD
-        RUN_ASM rlUnknown8DA864
+        RUN_ASM rlASMCSetOpeningMapChapter11
         SET_CAMERA_POSITION [35, 17]
         EVENT_3B $80
         RUN_ASM rlASMCClearDemoDeployments
@@ -1412,3 +1413,470 @@
         .byte 0
 
     .endsection Unsorted90EBCASection
+
+
+    .section Unsorted8DA810Section
+
+      .al
+      .xl
+
+      rlASMCSetOpeningMapChapter9 ; 8D/A810
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; For the opening's first scene: chapter 9's map, wMainGameMode 2, the cursor at (128, 128).
+
+        lda #$0009
+        sta wCurrentChapter,b
+        lda #$0002
+        sta wMainGameMode,b
+        lda #$FFFF
+        sta wMapStateFlags,b
+        lda #$0080
+        sta wCursorXOffset,b
+        sta wCursorYOffset,b
+        rtl
+
+        .databank 0
+
+        ; 8D/A82C
+
+      rlASMCSetOpeningMapChapter2Unused ; 8D/A82C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing reaches this. Like rlASMCSetOpeningMapChapter9 for chapter 2.
+
+        lda #$0002
+        sta wCurrentChapter,b
+        lda #$0002
+        sta wMainGameMode,b
+        lda #$FFFF
+        sta wMapStateFlags,b
+        lda #$0080
+        sta wCursorXOffset,b
+        sta wCursorYOffset,b
+        rtl
+
+        .databank 0
+
+        ; 8D/A848
+
+      rlASMCSetOpeningMapChapter7Unused ; 8D/A848
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing reaches this. Like rlASMCSetOpeningMapChapter9 for chapter 7.
+
+        lda #$0007
+        sta wCurrentChapter,b
+        lda #$0002
+        sta wMainGameMode,b
+        lda #$FFFF
+        sta wMapStateFlags,b
+        lda #$0080
+        sta wCursorXOffset,b
+        sta wCursorYOffset,b
+        rtl
+
+        .databank 0
+
+        ; 8D/A864
+
+      rlASMCSetOpeningMapChapter11 ; 8D/A864
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; For the opening's last scene: the final chapter's map (11), wMainGameMode 2, the cursor at (128, 128).
+
+        lda #$000B
+        sta wCurrentChapter,b
+        lda #$0002
+        sta wMainGameMode,b
+        lda #$FFFF
+        sta wMapStateFlags,b
+        lda #$0080
+        sta wCursorXOffset,b
+        sta wCursorYOffset,b
+        rtl
+
+        .databank 0
+
+        ; 8D/A880
+
+      rlASMCSetUpOpeningSkyScene ; 8D/A880
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; The opening's first scene: loads two sky layers and their graphics, starts procOpeningSkyScroll and sets colour math so the clouds blend over the map.
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlResetHDMAEngine
+        jsl rlInitMapMenus
+        jsl rlDisableMapMenuUploads
+        sep #$20
+        rep #$10
+        ldx #<>gcUnknownD44143
+        stx DecompressionVariables
+        lda #`gcUnknownD44143
+        sta $CA
+        ldx #$7B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7B88, $0800, $80, $A800
+
+        sep #$20
+        rep #$10
+        ldx #<>gcUnknownD43402
+        stx DecompressionVariables
+        lda #`gcUnknownD43402
+        sta $CA
+        ldx #$9388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E9388, $1000, $80, $6000
+
+        sep #$20
+        rep #$10
+        ldx #<>gcUnknownD4486F
+        stx DecompressionVariables
+        lda #`gcUnknownD4486F
+        sta $CA
+        ldx #$8388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $B000
+
+        sep #$20
+        rep #$10
+        ldx #<>gcUnknownD4429B
+        stx DecompressionVariables
+        lda #`gcUnknownD4429B
+        sta $CA
+        ldx #$A388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7EA388, $0800, $80, $8000
+
+        lda #(`procOpeningSkyScroll)<<8
+        sta lR44+1
+        lda #<>procOpeningSkyScroll
+        sta lR44
+        jsl rlProcEngineCreateProc
+        sep #$20
+        lda #$11
+        sta bBufferTM
+        lda #$06
+        sta bBufferTS
+        sta bBufferTSW
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$27
+        sta bBufferCGADSUB
+        rep #$20
+        ldx #$001E
+
+        _A966
+        lda aUnknown8CEBC0,x
+        sta aBGPaletteBuffer.aPalette6,b,x
+        dec x
+        dec x
+        bpl _A966
+        ldx #$001C
+
+        _A974
+        lda aUnknown8CEB00+2,x
+        sta $0102,b,x
+        dec x
+        dec x
+        bpl _A974
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8D/A98C
+
+      rlSetUpOpeningSkySceneUnused ; 8D/A98C
+
+        ; Found by tools/sweep.py: nothing in the build reaches this.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Nothing reaches this. rlASMCSetUpOpeningSkyScene without blanking the screen or resetting HDMA first.
+
+        sep #$20
+        lda #$80
+        sta $2100,b
+        sta bBufferINIDISP
+        rep #$20
+        jsl rlDisableVBlank
+        jsl rlInitMapMenus
+        jsl rlDisableMapMenuUploads
+        sep #$20
+        rep #$10
+        ldx #<>gcUnknownD44143
+        stx DecompressionVariables
+        lda #`gcUnknownD44143
+        sta $CA
+        ldx #$7B88
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E7B88, $0800, $80, $A800
+
+        sep #$20
+        rep #$10
+        ldx #<>gcUnknownD43402
+        stx DecompressionVariables
+        lda #`gcUnknownD43402
+        sta $CA
+        ldx #$9388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7E9388, $1000, $80, $6000
+
+        sep #$20
+        rep #$10
+        ldx #<>gcUnknownD4486F
+        stx DecompressionVariables
+        lda #`gcUnknownD4486F
+        sta $CA
+        ldx #$8388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM aBG3TilemapBuffer, $0800, $80, $B000
+
+        sep #$20
+        rep #$10
+        ldx #<>gcUnknownD4429B
+        stx DecompressionVariables
+        lda #`gcUnknownD4429B
+        sta $CA
+        ldx #$A388
+        stx $CB
+        lda #$7E
+        sta $CD
+        rep #$30
+        jsl rlDecompressor
+        jsl rlDMAByStruct
+
+          .structDMAToVRAM $7EA388, $0800, $80, $8000
+
+        lda #(`procOpeningSkyScroll)<<8
+        sta lR44+1
+        lda #<>procOpeningSkyScroll
+        sta lR44
+        jsl rlProcEngineCreateProc
+        sep #$20
+        lda #$06
+        sta bBufferTM
+        sta bBufferTMW
+        lda #$11
+        sta bBufferTS
+        sta bBufferTSW
+        lda #$02
+        sta bBufferCGWSEL
+        lda #$27
+        sta bBufferCGADSUB
+        rep #$20
+        ldx #$001E
+
+        _AA70
+        lda aUnknown8CEBC0,x
+        sta aBGPaletteBuffer.aPalette6,b,x
+        dec x
+        dec x
+        bpl _AA70
+        ldx #$001C
+
+        _AA7E
+        lda aUnknown8CEB00+2,x
+        sta $0102,b,x
+        dec x
+        dec x
+        bpl _AA7E
+        jsl rlEnableVBlank
+        sep #$20
+        lda #$00
+        sta bBufferINIDISP
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 8D/AA96
+
+    .endsection Unsorted8DA810Section
+
+
+    .section Unsorted8DAA96Section
+
+      .al
+      .xl
+
+      procOpeningSkyScroll ; 8D/AA96
+
+        .structProcInfo "KM", rlProcOpeningSkyScroll, rlProcOpeningSkyScroll._AAA4, aProcOpeningSkyScrollCode
+
+    .endsection Unsorted8DAA96Section
+
+
+    .section Unsorted8DAA9ESection
+
+      .al
+      .xl
+
+      rlProcOpeningSkyScroll ; 8D/AA9E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; Init and cycle of procOpeningSkyScroll: moves the two sky layers with the camera and drifts them slowly; frees itself when the game state routine is 0.
+
+        lda wMapScrollXPixels,b
+        sta aProcSystem.aBody0,b,x
+
+        _AAA4
+        lda wMapScrollXPixels,b
+        cmp aProcSystem.aBody0,b,x
+        beq _AABF
+        sta aProcSystem.aBody0,b,x
+        lda wBufferBG2HOFS
+        clc
+        adc wMapScrollSpeed,b
+        sta wBufferBG2HOFS
+        lda wBufferBG3HOFS
+        clc
+        adc wMapScrollSpeed,b
+        sta wBufferBG3HOFS
+
+        _AABF
+        lda wVBlankEnabledFramecount
+        and #$0001
+        bne _AAD7
+        lda wBufferBG2HOFS
+        inc a
+        sta wBufferBG2HOFS
+        lda wVBlankEnabledFramecount
+        and #$0003
+        bne _AAD7
+        lda wBufferBG3HOFS
+        inc a
+        sta wBufferBG3HOFS
+
+        _AAD7
+        lda wVBlankEnabledFramecount
+        and #$0003
+        bne _AAEF
+        lda wBufferBG2VOFS
+        dec a
+        sta wBufferBG2VOFS
+        lda wVBlankEnabledFramecount
+        and #$0007
+        bne _AAEF
+        lda wBufferBG3VOFS
+        dec a
+        sta wBufferBG3VOFS
+
+        _AAEF
+        lda wGameStateRoutine1,b
+        beq _AAF5
+
+        _AAF4
+        rtl
+
+
+        _AAF5
+        jsl rlProcEngineFreeProc
+        bra _AAF4
+
+        .databank 0
+
+        ; 8D/AAFB
+
+    .endsection Unsorted8DAA9ESection
+
+
+    .section Unsorted8DAAFBSection
+
+      .al
+      .xl
+
+      aProcOpeningSkyScrollCode ; 8D/AAFB
+
+        PROC_HALT
+
+
+        ; 8D/AAFD
+
+    .endsection Unsorted8DAAFBSection
+
+

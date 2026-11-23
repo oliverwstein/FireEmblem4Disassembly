@@ -4709,3 +4709,125 @@
     .endsection Unsorted80F542Section
 
 
+    .section Unsorted8486A0Section
+
+      .al
+      .xl
+
+      rlGetCharacterWinCount ; 84/86A0
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = character (25 on: second generation): its number of wins (aUnitWinCounts).
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        phx
+        phy
+        pha
+        stz wRoutineVariable1,b
+        cmp #$0019
+        bcc _86B5
+        lda #$0018
+        sta wRoutineVariable1,b
+
+        _86B5
+        pla
+        jsl rlSwapToMainDataBank
+        jsl rlGetCharacterDataROMPointer
+        tay
+        lda $0000,b,y
+        and #$00FF
+        cmp #$0001
+        beq _86CF
+        lda $0011,b,y
+        bra _86D2
+
+
+        _86CF
+        lda $0007,b,y
+
+        _86D2
+        and #$00FF
+        dec a
+        clc
+        adc wRoutineVariable1,b
+        asl a
+        tax
+        lda aUnitWinCounts,x
+        ply
+        plx
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 84/86E5
+
+      rlGetCharacterLossCount ; 84/86E5
+
+        ; Found by tools/sweep.py.
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        ; A = character (25 on: second generation): its number of losses (rlGetLossCountByIndex).
+
+        phb
+        php
+        phk
+        plb
+        .databank $84
+        phy
+        pha
+        stz wRoutineVariable1,b
+        cmp #$0019
+        bcc _86F9
+        lda #$0018
+        sta wRoutineVariable1,b
+
+        _86F9
+        pla
+        jsl rlSwapToMainDataBank
+        jsl rlGetCharacterDataROMPointer
+        tay
+        lda $0000,b,y
+        and #$00FF
+        cmp #$0001
+        beq _8713
+        lda $0011,b,y
+        bra _8716
+
+
+        _8713
+        lda $0007,b,y
+
+        _8716
+        and #$00FF
+        dec a
+        clc
+        adc wRoutineVariable1,b
+        jsl rlGetLossCountByIndex
+        ply
+        plp
+        plb
+        .databank ?
+        rtl
+
+        .databank 0
+
+        ; 84/8726
+
+    .endsection Unsorted8486A0Section
+
+

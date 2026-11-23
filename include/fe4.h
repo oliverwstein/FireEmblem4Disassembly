@@ -24,6 +24,7 @@
   .include "Items.h"
   .include "LibraryHelpers.h"
   .include "Map.h"
+  .include "Epilogue.h"
   .include "Menus.h"
   .include "MenuText.h"
   .include "Palettes.h"

@@ -427,7 +427,7 @@
           .structDMAToVRAM gUnknownD97940, $01C0, $80, $AD40
 
         lda #0
-        sta $7F5486
+        sta wEpilogueTimer
 
         sep #$20
         lda #$14

@@ -22,6 +22,7 @@ The generated pages are not committed (they are in `.gitignore`): run `python3 t
 - [menus.md](menus.md): the full-screen menus: the status screen, the revive screen, the options menu.
 - [map_menu.md](map_menu.md): the menus and windows over the chapter map.
 - [map.md](map.md): the chapter map: turns and phases (the map step), the cursor, moving units, the camera and tile streaming, map sprites, the minimap, the unit commands' effects.
+- [epilogue.md](epilogue.md): the epilogue: its parts and steps, the credits, the play record, the ranking screen and its secret code, the character endings.
 - [demo.md](demo.md): the attract mode's opening: its event script, the staff credits, the demo map scenes and their battles.
 - [save.md](save.md): save slots in SRAM, saving and loading, and what is written as it happens (losses, timer, ranking).
 

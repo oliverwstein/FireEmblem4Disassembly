@@ -734,6 +734,19 @@
 
   .endvirtual
 
+  .virtual $0008DA
+
+    wEpiloguePart .word ?       ; $0008DA ; EPILOGUE_PART_*: where rsOpenEpilogueScreen starts
+    wEpilogueCharacter .word ?  ; $0008DC ; the character whose ending scene plays (25-63)
+
+  .endvirtual
+
+  .virtual $000AD3
+
+    wEpilogueRecordCharacter .word ? ; $000AD3 ; the play record's current character (rlASMCRecordNextGeneration1Unit)
+
+  .endvirtual
+
   .virtual $0008DE
 
     aOAMYBandCounters .block ; $0008DE (12 x .byte counters under sep #$20 in rlScanSpriteLineOverflow)
@@ -2117,6 +2130,9 @@
     wEpilogueSavedUnitID1 .word ?   ; $7F547C
     wEpilogueSavedUnitID2 .word ?   ; $7F547E
     wEpilogueSavedUnitID3 .word ?   ; $7F5480
+    .word ?                         ; $7F5482
+    .word ?                         ; $7F5484
+    wEpilogueTimer .word ?          ; $7F5486 ; frames counted by the epilogue's steps (and the secret code's position)
     
   .endvirtual
 

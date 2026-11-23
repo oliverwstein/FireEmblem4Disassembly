@@ -105,9 +105,9 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | $8B/A7CE-$8B/A7F1 | 36 | 0 | `rlUnusedGameState15` / `rlUnitWindowShow` |  |
 | $8B/B882-$8B/B8B5 | 52 | 0 | `rsUnitWindowRenderWeaponRankIcons` / `rsUnitWindowCopyLineHighlightColors` |  |
 | $8C/F09B-$8C/FFFF | 3,941 | 0 | `rlUnknown8CF07F` / `` |  |
-| $8D/A612-$8D/A623 | 18 | 0 | `rlUnknown8DA50F` / `rsUnknown8DA624` |  |
-| $8D/AEC0-$8D/AEC1 | 2 | 0 | `rlUnknown8DAE85` / `rlUnknown8DAEC2` |  |
-| $8D/B539-$8D/B539 | 1 | 0 | `rlUnknown8DB52C` / `rsUnknown8DB53A` |  |
+| $8D/A612-$8D/A623 | 18 | 0 | `rlEpilogueCreditsWaveHDMACycle` / `rsDrawEpilogueCreditsSprite` |  |
+| $8D/AEC0-$8D/AEC1 | 2 | 0 | `rlEpilogueRecordLayerHDMACycle` / `rlSetUpEpilogueRecordTextWindow` |  |
+| $8D/B539-$8D/B539 | 1 | 0 | `rlShowNextEpilogueCharacterEnding` / `rsStartEpilogueCharacterScene` |  |
 | $D0/5639-$D0/5672 | 58 | 0 | `PortraitDataClassCardGreatBallistaPointer` / `gcUnknownD05673` |  |
 | $91/A7EA-$91/A80C | 35 | 0 | `rlUnknown91A7DF` / `rlUnknown91A80D` |  |
 | $91/A8E4-$91/A927 | 68 | 0 | `rsDialogueEventCommand07` / `rlUnknown91A928` |  |

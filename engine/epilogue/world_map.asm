@@ -2995,7 +2995,7 @@
         sbc #5
         sta aDialogue.lActivePointer,b
 
-        lda $0AD3,b
+        lda wEpilogueRecordCharacter,b
         cmp #$556E
         bcs _C938
 
@@ -3040,7 +3040,7 @@
         ; This and the previous asmc call a proc to the Aed cutscene, this one is the
         ; proper one?
 
-        lda $0AD3,b
+        lda wEpilogueRecordCharacter,b
         cmp #$556E
         bcs _End
 

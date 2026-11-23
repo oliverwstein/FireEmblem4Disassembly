@@ -80,5 +80,5 @@
   CONVERSATION_EXIT_COURTYARD       = 0
   CONVERSATION_EXIT_TOWN            = 1
   CONVERSATION_EXIT_MAP             = 3
-  CONVERSATION_EXIT_CALLBACK        = 4 ; fade out, then rlUnknown8DB52C
+  CONVERSATION_EXIT_CALLBACK        = 4 ; fade out, then rlShowNextEpilogueCharacterEnding
   CONVERSATION_EXIT_FADE_OUT        = 5

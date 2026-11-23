@@ -940,7 +940,7 @@
         .autsiz
         .databank ?
 
-        ; Sub-state $02: leaves by wConversationExitMode: 0 the courtyard, 1 the town, 3 the map, 4 a fade then rlUnknown8DB52C, 5 a fade out.
+        ; Sub-state $02: leaves by wConversationExitMode: 0 the courtyard, 1 the town, 3 the map, 4 a fade then rlShowNextEpilogueCharacterEnding, 5 a fade out.
 
         lda wConversationExitMode,b
         cmp #CONVERSATION_EXIT_COURTYARD
@@ -1071,7 +1071,7 @@
         .autsiz
         .databank ?
 
-        ; Sub-state $04: fades out, then rlUnknown8DB52C.
+        ; Sub-state $04: fades out, then rlShowNextEpilogueCharacterEnding.
 
         lda wVBlankEnabledFramecount
         and #$0003
@@ -1090,7 +1090,7 @@
         _DCF2
         .as
         rep #$20
-        jsl rlUnknown8DB52C
+        jsl rlShowNextEpilogueCharacterEnding
         rts
 
         .databank 0

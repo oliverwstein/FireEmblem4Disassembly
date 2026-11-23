@@ -367,7 +367,7 @@
     .autsiz
     .databank ?
 
-    jsl rlUnknown8DA288
+    jsl rlStartEpilogue
     rtl
 
     .databank 0

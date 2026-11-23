@@ -106,7 +106,7 @@
         sta wBufferBG2HOFS
         jsl rlPauseMapSpriteAnimation
         jsl rlPauseMapTileAnimation
-        stz $0AD3,b
+        stz wEpilogueRecordCharacter,b
         lda #(`aFirstGenerationEndingHDMAInfo)<<8
         sta lR44+1
         lda #<>aFirstGenerationEndingHDMAInfo
@@ -178,10 +178,10 @@
 
         ; Fades the palette in, then starts the text dialogueEpilogueMemorial88E9E5.
 
-        lda $0AD3,b
+        lda wEpilogueRecordCharacter,b
         cmp #$0040
         bcs _E116
-        inc $0AD3,b
+        inc wEpilogueRecordCharacter,b
 
         _E116
         lda wVBlankEnabledFramecount
@@ -593,11 +593,11 @@
         sta @l $0008BF
         lda #$48
         sec
-        sbc $0AD3,b
+        sbc wEpilogueRecordCharacter,b
         sta @l $0008C0
         lda bBufferTM
         sta @l $0008C1
-        lda $0AD3,b
+        lda wEpilogueRecordCharacter,b
         sta @l $0008C2
         lda #$04
         sta @l $0008C3
