@@ -1389,12 +1389,14 @@
 
         ; 95/BAE7
 
-      rlUnknown95BAE7 ; 95/BAE7
+      rlBattleAnimationClearSlot ; 95/BAE7
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the slot: clears its state (bBattleAnimationStateFlags), which stops it.
 
         sep #$20
         stz bBattleAnimationStateFlags,b,x
@@ -2198,7 +2200,7 @@
         ldx #$0043
 
         _BEBE
-        jsl rlUnknown95AB53
+        jsl rlBattleSceneQueueDodge
         plx
 
         _BEC3
@@ -7776,15 +7778,17 @@
 
         ; 95/DDFB
 
-      rlUnknown95DDFB ; 95/DDFB
+      rlBattleAnimationEndEffectSlot ; 95/DDFB
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; X = an effect slot ($86 or $C9): stops it and signals the combatant other than its owner (slot $86 belongs to combatant 1, $C9 to combatant 2).
+
         phx
-        jsl rlUnknown95BAE7
+        jsl rlBattleAnimationClearSlot
         txa
         sec
         sbc #$0086
@@ -7855,12 +7859,14 @@
 
         ; 95/DE61
 
-      rlUnknown95DE61 ; 95/DE61
+      rlBattleAnimationMoveEffectSlot ; 95/DE61
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame, X = an effect slot: moves it by bits 0-1 of its bBattleAnimationMotionFlags: 0 and 1 fly straight (rsBattleAnimationFlyEffect), 2 follows a path of aBattleAnimationEffectPaths, 3 a path script of aBattleAnimationEffectPathScripts.
 
         phx
         phy
@@ -7879,7 +7885,7 @@
         lda wR0
         asl a
         tax
-        jsr (aUnknown95DE84,x)
+        jsr (aBattleAnimationEffectMotions,x)
         plp
         plb
         .databank $95
@@ -7901,13 +7907,13 @@
       .al
       .xl
 
-      aUnknown95DE84 ; 95/DE84
+      aBattleAnimationEffectMotions ; 95/DE84
 
-        ; Jump table of rlUnknown95DE61.
-        .word <>rsUnknown95DE8C
-        .word <>rsUnknown95DE8C
-        .word <>rsUnknown95DED5
-        .word <>rsUnknown95DF76
+        ; Jump table of rlBattleAnimationMoveEffectSlot.
+        .word <>rsBattleAnimationFlyEffect
+        .word <>rsBattleAnimationFlyEffect
+        .word <>rsBattleAnimationFollowEffectPath
+        .word <>rsBattleAnimationRunEffectPathScript
 
     .endsection Table95DE84Section
 
@@ -7917,17 +7923,19 @@
       .al
       .xl
 
-      rsUnknown95DE8C ; 95/DE8C
+      rsBattleAnimationFlyEffect ; 95/DE8C
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; Y = the effect slot: moves it by its X speed with the pose for its angle (rsBattleAnimationSetEffectPose); on reaching the defender the strike lands (rlBattleSceneApplyEffectStrike), and off the stage the slot ends.
+
         phx
         phy
         tyx
-        jsr rsUnknown95E372
+        jsr rsBattleAnimationSetEffectPose
         lda wBattleAnimationXSpeed,b,x
         bne _DE9B
         jml _DED2
@@ -7940,16 +7948,16 @@
 
         _DEA1
         sta wR0
-        jsr rsUnknown95E0C5
+        jsr rsBattleAnimationMoveEffectRight
         bit #$0001
         beq _DEB1
         php
-        jsl rlUnknown95AE8B
+        jsl rlBattleSceneApplyEffectStrike
         plp
 
         _DEB1
         bcc _DEB7
-        jsl rlUnknown95DDFB
+        jsl rlBattleAnimationEndEffectSlot
 
         _DEB7
         bra _DED2
@@ -7958,16 +7966,16 @@
         _DEB9
         and #$7FFF
         sta wR0
-        jsr rsUnknown95E146
+        jsr rsBattleAnimationMoveEffectLeft
         bit #$0001
         beq _DECC
         php
-        jsl rlUnknown95AE8B
+        jsl rlBattleSceneApplyEffectStrike
         plp
 
         _DECC
         bcc _DED2
-        jsl rlUnknown95DDFB
+        jsl rlBattleAnimationEndEffectSlot
 
         _DED2
         ply
@@ -7978,12 +7986,14 @@
 
         ; 95/DED5
 
-      rsUnknown95DED5 ; 95/DED5
+      rsBattleAnimationFollowEffectPath ; 95/DED5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Y = the effect slot: takes the next word of its path in aBattleAnimationEffectPaths (at wBattleAnimationSecondaryOffset): the high byte is taken from its Y, the low byte (signed, toward the defender) times lBattleAnimationSecondaryPointer2 moves it in X; $8080 ends the slot.
 
         phx
         phy
@@ -7991,11 +8001,11 @@
         lda wBattleAnimationSecondaryOffset,b,x
         phx
         tax
-        lda aUnknown98AAD4,x
+        lda aBattleAnimationEffectPaths,x
         cmp #$8080
         bne _DEF4
         plx
-        jsl rlUnknown95DDFB
+        jsl rlBattleAnimationEndEffectSlot
         ldx wBattleAnimationAttackerOffset,b
         jsl rlBattleAnimationSignalSelf
         bra _DF73
@@ -8038,11 +8048,11 @@
         jsl rlUnsignedMultiply16By16
         lda wR12
         sta wR0
-        jsr rsUnknown95E0C5
+        jsr rsBattleAnimationMoveEffectRight
         bit #$0001
         beq _DF42
         php
-        jsl rlUnknown95AE8B
+        jsl rlBattleSceneApplyEffectStrike
         plp
 
         _DF42
@@ -8061,11 +8071,11 @@
         jsl rlUnsignedMultiply16By16
         lda wR12
         sta wR0
-        jsr rsUnknown95E146
+        jsr rsBattleAnimationMoveEffectLeft
         bit #$0001
         beq _DF67
         php
-        jsl rlUnknown95AE8B
+        jsl rlBattleSceneApplyEffectStrike
         plp
 
         _DF67
@@ -8094,12 +8104,14 @@
       .al
       .xl
 
-      rsUnknown95DF76 ; 95/DF76
+      rsBattleAnimationRunEffectPathScript ; 95/DF76
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Y = the effect slot: runs its path in aBattleAnimationEffectPathScripts: a word moves it as in rsBattleAnimationFollowEffectPath (in whole pixels); $8080 ends the slot, $8081 waits a frame, $8082 starts script $28, $8083 makes the defender dodge a missed strike, $8084 moves it 48 pixels toward the defender, $8085 lands the strike.
 
         phx
         phy
@@ -8109,7 +8121,7 @@
         lda wBattleAnimationSecondaryOffset,b,x
         phx
         tax
-        lda aUnknown98AB5C,x
+        lda aBattleAnimationEffectPathScripts,x
         cmp #$8081
         bne _DF8C
         plx
@@ -8138,7 +8150,7 @@
         beq _DFBC
         phx
         ldx wBattleAnimationDefenderOffset,b
-        jsl rlUnknown95AB53
+        jsl rlBattleSceneQueueDodge
         plx
 
         _DFBC
@@ -8184,7 +8196,7 @@
         cmp #$8085
         bne _E017
         plx
-        jsl rlUnknown95AE8B
+        jsl rlBattleSceneApplyEffectStrike
         lda wBattleAnimationSecondaryOffset,b,x
         clc
         adc #$0002
@@ -8196,7 +8208,7 @@
         cmp #$8080
         bne _E02A
         plx
-        jsl rlUnknown95DDFB
+        jsl rlBattleAnimationEndEffectSlot
         ldx wBattleAnimationAttackerOffset,b
         jsl rlBattleAnimationSignalSelf
         bra _E089
@@ -8235,7 +8247,7 @@
         bne _E06C
         xba
         sta wR0
-        jsr rsUnknown95E0C5
+        jsr rsBattleAnimationMoveEffectRight
         bit #$0001
         beq _E068
         php
@@ -8253,7 +8265,7 @@
         inc a
         xba
         sta wR0
-        jsr rsUnknown95E146
+        jsr rsBattleAnimationMoveEffectLeft
         bit #$0001
         beq _E07D
         php
@@ -8339,12 +8351,14 @@
       .al
       .xl
 
-      rsUnknown95E0C5 ; 95/E0C5
+      rsBattleAnimationMoveEffectRight ; 95/E0C5
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the effect slot, A = 8.8 pixels: moves it right and scrolls the camera after it (between $C0 and $140). Returns A = 1 once it is past the combatant on the right; carry set when it has left the stage.
 
         phx
         sta wR2
@@ -8426,12 +8440,14 @@
 
         ; 95/E146
 
-      rsUnknown95E146 ; 95/E146
+      rsBattleAnimationMoveEffectLeft ; 95/E146
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; As rsBattleAnimationMoveEffectRight, to the left.
 
         phx
         sta wR2
@@ -8526,12 +8542,14 @@
       .al
       .xl
 
-      rlUnknown95E1C9 ; 95/E1C9
+      rlBattleAnimationApplyEffectGravity ; 95/E1C9
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame, X = an effect slot flying straight: moves its Y by its velocity and slows the velocity by its gravity; on reaching the ground the slot ends.
 
         phx
         phy
@@ -8570,7 +8588,7 @@
         rep #$20
         stz wBattleAnimationYFixed,b,x
         stz wBattleAnimationYVelocity,b,x
-        jsl rlUnknown95DDFB
+        jsl rlBattleAnimationEndEffectSlot
         bra _E229
 
 
@@ -8590,12 +8608,14 @@
 
         ; 95/E22C
 
-      rlUnknown95E22C ; 95/E22C
+      rlBattleAnimationApplyEffectYStep ; 95/E22C
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; Every frame, X = an effect slot flying straight: moves its Y by wBattleAnimationYStep (down, or up with bit 15); on reaching the ground or passing the top the slot ends.
 
         phx
         phy
@@ -8628,7 +8648,7 @@
         sec
         sbc wR0
         bcs _E273
-        jsl rlUnknown95DDFB
+        jsl rlBattleAnimationEndEffectSlot
         bra _E276
 
 
@@ -8646,7 +8666,7 @@
         clc
         adc wR0
         bcc _E28B
-        jsl rlUnknown95DDFB
+        jsl rlBattleAnimationEndEffectSlot
         bra _E28E
 
 
@@ -8868,12 +8888,14 @@
       .al
       .xl
 
-      rsUnknown95E372 ; 95/E372
+      rsBattleAnimationSetEffectPose ; 95/E372
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; X = the effect slot: picks its pose by the slope of its flight (Y velocity over X speed): 0 steeply up, 1 up, 2 level, 3 down, 4 steeply down, added to bBattleAnimationPoseOffset.
 
         phx
         lda wBattleAnimationXSpeed,b,x

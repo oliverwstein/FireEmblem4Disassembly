@@ -163,7 +163,7 @@
       .byte $EF, \Arg
     .endsegment
 
-    ; $EE: rlUnknown96F9BF, and rlUnknown95AB53 for the other combatant if
+    ; $EE: rlUnknown96F9BF, and rlBattleSceneQueueDodge for the other combatant if
     ; bit 3 of $0AE4 is set (rsUnknown95BEA4).
     ANIM_CMD_EE .segment Arg=0
       .byte $EE, \Arg

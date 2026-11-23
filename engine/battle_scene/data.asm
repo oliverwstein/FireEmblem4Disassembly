@@ -1553,9 +1553,9 @@
 
         ; 98/AAD4
 
-      aUnknown98AAD4 ; 98/AAD4
+      aBattleAnimationEffectPaths ; 98/AAD4
 
-        ; Read by rsUnknown95DED5.
+        ; Read by rsBattleAnimationFollowEffectPath.
 
         .word $03F8, $02F8, $01F8, $01F8, $02F8, $00F8, $00F8, $01F8
         .word $01F8, $00F8, $FFF8, $00F8, $00F8, $FFF8, $FFF8, $FEF8
@@ -1569,9 +1569,9 @@
 
         ; 98/AB5C
 
-      aUnknown98AB5C ; 98/AB5C
+      aBattleAnimationEffectPathScripts ; 98/AB5C
 
-        ; Read by rsUnknown95DF76.
+        ; Read by rsBattleAnimationRunEffectPathScript.
 
         .word $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8
         .word $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8, $FCF8

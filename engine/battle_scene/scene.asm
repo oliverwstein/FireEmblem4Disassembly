@@ -496,13 +496,13 @@
         jsl rlBattleAnimationUpdateJump
         jsl rlBattleAnimationUpdateYStep
         ldx #$0086
-        jsl rlUnknown95DE61
-        jsl rlUnknown95E1C9
-        jsl rlUnknown95E22C
+        jsl rlBattleAnimationMoveEffectSlot
+        jsl rlBattleAnimationApplyEffectGravity
+        jsl rlBattleAnimationApplyEffectYStep
         ldx #$00C9
-        jsl rlUnknown95DE61
-        jsl rlUnknown95E1C9
-        jsl rlUnknown95E22C
+        jsl rlBattleAnimationMoveEffectSlot
+        jsl rlBattleAnimationApplyEffectGravity
+        jsl rlBattleAnimationApplyEffectYStep
         jsl rlUnknown95CAD5
 
         _8B85

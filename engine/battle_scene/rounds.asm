@@ -712,16 +712,18 @@
 
         ; 95/AB53
 
-      rlUnknown95AB53 ; 95/AB53
+      rlBattleSceneQueueDodge ; 95/AB53
 
         .al
         .xl
         .autsiz
         .databank ?
 
+        ; X = the defender of a missed strike: queues its action from aBattleSceneDodgeActions by its attack style (action 1 for every style) plus its variant, then sets variant 1.
+
         phx
         jsr rsBattleSceneGetAttackStyle
-        lda aUnknown95AB80,x
+        lda aBattleSceneDodgeActions,x
         and #$00FF
         plx
         pha
@@ -751,9 +753,9 @@
       .al
       .xl
 
-      aUnknown95AB80 ; 95/AB80
+      aBattleSceneDodgeActions ; 95/AB80
 
-        ; Read by rlUnknown95AB53.
+        ; Read by rlBattleSceneQueueDodge.
 
         .byte $01, $01, $01, $01, $01, $01, $01
 
@@ -1369,12 +1371,14 @@
       .al
       .xl
 
-      rlUnknown95AE8B ; 95/AE8B
+      rlBattleSceneApplyEffectStrike ; 95/AE8B
 
         .al
         .xl
         .autsiz
         .databank ?
+
+        ; An effect slot's projectile reaches the defender: the hit kind becomes 2 (unless it is 3), then rlBattleSceneApplyStrike.
 
         sep #$20
         lda bBattleSceneHitKind
@@ -1440,7 +1444,7 @@
         clc
         adc #$0086
         tax
-        jsl rlUnknown95DDFB
+        jsl rlBattleAnimationEndEffectSlot
 
         _AEE6
         lda bBattleSceneAttackerSide,b
