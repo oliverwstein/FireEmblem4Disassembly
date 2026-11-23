@@ -2111,7 +2111,7 @@
         .autsiz
         .databank ?
 
-        ; Command 11: starts palette effect arg from the offset table at $97/A9A8
+        ; Command 11: starts palette effect arg from the offset table aBattleScenePaletteEffects
         ; (rlBattleSceneStartPaletteEffect).
 
         phx
@@ -2129,18 +2129,18 @@
 
         _DB6B
         sta wR0
-        lda #$9700
+        lda #(`aBattleScenePaletteEffects)<<8
         sta lR18+1
         tya
         and #$01FF
         asl a
         clc
-        adc #$A9A8
+        adc #<>aBattleScenePaletteEffects
         sta lR18
         ldy #$0000
         lda [lR18],y
         clc
-        adc #$A9A8
+        adc #<>aBattleScenePaletteEffects
         sta lR18
         jsl rlBattleSceneStartPaletteEffect
         lda #1,s
@@ -3367,768 +3367,769 @@
 
         ; 97/A9A8
 
-      aUnknown97A9A8 ; 97/A9A8
+      aBattleScenePaletteEffects ; 97/A9A8
 
         ; Palette effect offset table (191 entries).
 
-        .word aUnknown97AF21._A9A8_AFC8 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AFD0 - aUnknown97A9A8
-        .word _A9A8_AB26 - aUnknown97A9A8
-        .word _A9A8_AB2D - aUnknown97A9A8
-        .word _A9A8_AB34 - aUnknown97A9A8
-        .word _A9A8_AB3B - aUnknown97A9A8
-        .word _A9A8_AB42 - aUnknown97A9A8
-        .word _A9A8_AB46 - aUnknown97A9A8
-        .word _A9A8_AB4B - aUnknown97A9A8
-        .word _A9A8_AB52 - aUnknown97A9A8
-        .word _A9A8_AB56 - aUnknown97A9A8
-        .word _A9A8_AB5D - aUnknown97A9A8
-        .word _A9A8_AB61 - aUnknown97A9A8
-        .word _A9A8_AB68 - aUnknown97A9A8
-        .word _A9A8_AB6C - aUnknown97A9A8
-        .word _A9A8_AB73 - aUnknown97A9A8
-        .word _A9A8_AB7A - aUnknown97A9A8
-        .word _A9A8_AB81 - aUnknown97A9A8
-        .word _A9A8_AB89 - aUnknown97A9A8
-        .word _A9A8_AB91 - aUnknown97A9A8
-        .word _A9A8_AB99 - aUnknown97A9A8
-        .word _A9A8_AB9D - aUnknown97A9A8
-        .word _A9A8_ABA4 - aUnknown97A9A8
-        .word _A9A8_ABAB - aUnknown97A9A8
-        .word _A9A8_ABB2 - aUnknown97A9A8
-        .word _A9A8_ABB9 - aUnknown97A9A8
-        .word _A9A8_ABC0 - aUnknown97A9A8
-        .word _A9A8_ABC5 - aUnknown97A9A8
-        .word _A9A8_ABCA - aUnknown97A9A8
-        .word _A9A8_ABCF - aUnknown97A9A8
-        .word _A9A8_ABD3 - aUnknown97A9A8
-        .word _A9A8_ABDB - aUnknown97A9A8
-        .word _A9A8_ABE3 - aUnknown97A9A8
-        .word _A9A8_ABEB - aUnknown97A9A8
-        .word _A9A8_ABEF - aUnknown97A9A8
-        .word _A9A8_ABF6 - aUnknown97A9A8
-        .word _A9A8_ABFA - aUnknown97A9A8
-        .word _A9A8_AC01 - aUnknown97A9A8
-        .word _A9A8_AC08 - aUnknown97A9A8
-        .word _A9A8_AC10 - aUnknown97A9A8
-        .word _A9A8_AC15 - aUnknown97A9A8
-        .word _A9A8_AC1C - aUnknown97A9A8
-        .word _A9A8_AC23 - aUnknown97A9A8
-        .word _A9A8_AC2A - aUnknown97A9A8
-        .word _A9A8_AC31 - aUnknown97A9A8
-        .word _A9A8_AC38 - aUnknown97A9A8
-        .word _A9A8_AC3F - aUnknown97A9A8
-        .word _A9A8_AC46 - aUnknown97A9A8
-        .word _A9A8_AC4D - aUnknown97A9A8
-        .word _A9A8_AC54 - aUnknown97A9A8
-        .word _A9A8_AC5B - aUnknown97A9A8
-        .word _A9A8_AC62 - aUnknown97A9A8
-        .word _A9A8_AC69 - aUnknown97A9A8
-        .word _A9A8_AC70 - aUnknown97A9A8
-        .word _A9A8_AC77 - aUnknown97A9A8
-        .word _A9A8_AC7E - aUnknown97A9A8
-        .word _A9A8_AC85 - aUnknown97A9A8
-        .word _A9A8_AC8C - aUnknown97A9A8
-        .word _A9A8_AC93 - aUnknown97A9A8
-        .word _A9A8_AC9A - aUnknown97A9A8
-        .word _A9A8_ACA1 - aUnknown97A9A8
-        .word _A9A8_ACA8 - aUnknown97A9A8
-        .word _A9A8_ACAF - aUnknown97A9A8
-        .word _A9A8_ACB6 - aUnknown97A9A8
-        .word _A9A8_ACBD - aUnknown97A9A8
-        .word _A9A8_ACC4 - aUnknown97A9A8
-        .word _A9A8_ACCB - aUnknown97A9A8
-        .word _A9A8_ACD2 - aUnknown97A9A8
-        .word _A9A8_ACD9 - aUnknown97A9A8
-        .word _A9A8_ACE0 - aUnknown97A9A8
-        .word _A9A8_ACE7 - aUnknown97A9A8
-        .word _A9A8_ACEE - aUnknown97A9A8
-        .word _A9A8_ACF6 - aUnknown97A9A8
-        .word _A9A8_ACFA - aUnknown97A9A8
-        .word _A9A8_AD01 - aUnknown97A9A8
-        .word _A9A8_AD08 - aUnknown97A9A8
-        .word _A9A8_AD0F - aUnknown97A9A8
-        .word _A9A8_AD16 - aUnknown97A9A8
-        .word _A9A8_AD1D - aUnknown97A9A8
-        .word _A9A8_AD24 - aUnknown97A9A8
-        .word _A9A8_AD2B - aUnknown97A9A8
-        .word _A9A8_AD32 - aUnknown97A9A8
-        .word _A9A8_AD39 - aUnknown97A9A8
-        .word _A9A8_AD40 - aUnknown97A9A8
-        .word _A9A8_AD47 - aUnknown97A9A8
-        .word _A9A8_AD4E - aUnknown97A9A8
-        .word _A9A8_AD53 - aUnknown97A9A8
-        .word _A9A8_AD5A - aUnknown97A9A8
-        .word _A9A8_AD61 - aUnknown97A9A8
-        .word _A9A8_AD68 - aUnknown97A9A8
-        .word _A9A8_AD6F - aUnknown97A9A8
-        .word _A9A8_AD76 - aUnknown97A9A8
-        .word _A9A8_AD7D - aUnknown97A9A8
-        .word _A9A8_AD84 - aUnknown97A9A8
-        .word _A9A8_AD8B - aUnknown97A9A8
-        .word _A9A8_AD8F - aUnknown97A9A8
-        .word _A9A8_AD93 - aUnknown97A9A8
-        .word _A9A8_AD97 - aUnknown97A9A8
-        .word _A9A8_AD9E - aUnknown97A9A8
-        .word _A9A8_ADA6 - aUnknown97A9A8
-        .word _A9A8_ADAB - aUnknown97A9A8
-        .word _A9A8_ADAF - aUnknown97A9A8
-        .word _A9A8_ADB6 - aUnknown97A9A8
-        .word _A9A8_ADBD - aUnknown97A9A8
-        .word _A9A8_ADC4 - aUnknown97A9A8
-        .word _A9A8_ADC8 - aUnknown97A9A8
-        .word _A9A8_ADCC - aUnknown97A9A8
-        .word _A9A8_ADD3 - aUnknown97A9A8
-        .word _A9A8_ADDA - aUnknown97A9A8
-        .word _A9A8_ADDE - aUnknown97A9A8
-        .word _A9A8_ADE6 - aUnknown97A9A8
-        .word _A9A8_ADEB - aUnknown97A9A8
-        .word _A9A8_ADEF - aUnknown97A9A8
-        .word _A9A8_ADF7 - aUnknown97A9A8
-        .word _A9A8_ADFC - aUnknown97A9A8
-        .word _A9A8_AE03 - aUnknown97A9A8
-        .word aUnknown97AE0A - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE11 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE15 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE1D - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE22 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE27 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE2B - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE2F - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE37 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE3E - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE45 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE4C - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE54 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE5B - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE5F - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE63 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE6A - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE71 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE78 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE7F - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE86 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE8D - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE94 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE9B - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AE9F - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEA6 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEAD - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEB2 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEBA - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEBF - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEC3 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEC7 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AECF - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AED3 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEDB - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEE0 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEE5 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEE9 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEF1 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AEF9 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AF01 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AF09 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AF11 - aUnknown97A9A8
-        .word aUnknown97AE0A._A9A8_AF19 - aUnknown97A9A8
-        .word aUnknown97AF21 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF26 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF2D - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF32 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF39 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF40 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF47 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF4E - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF55 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF5C - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF63 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF6A - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF71 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF78 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF80 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF85 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF89 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF91 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF96 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF9B - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AF9F - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AFA6 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AFAE - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AFB3 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AFB8 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AFC0 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AFC4 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AFC8 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AFD0 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AFD5 - aUnknown97A9A8
-        .word aUnknown97AF21._A9A8_AFDD - aUnknown97A9A8
+        .word aUnknown97AF21._A9A8_AFC8 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AFD0 - aBattleScenePaletteEffects
+        .word _A9A8_AB26 - aBattleScenePaletteEffects
+        .word _A9A8_AB2D - aBattleScenePaletteEffects
+        .word _A9A8_AB34 - aBattleScenePaletteEffects
+        .word _A9A8_AB3B - aBattleScenePaletteEffects
+        .word _A9A8_AB42 - aBattleScenePaletteEffects
+        .word _A9A8_AB46 - aBattleScenePaletteEffects
+        .word _A9A8_AB4B - aBattleScenePaletteEffects
+        .word _A9A8_AB52 - aBattleScenePaletteEffects
+        .word _A9A8_AB56 - aBattleScenePaletteEffects
+        .word _A9A8_AB5D - aBattleScenePaletteEffects
+        .word _A9A8_AB61 - aBattleScenePaletteEffects
+        .word _A9A8_AB68 - aBattleScenePaletteEffects
+        .word _A9A8_AB6C - aBattleScenePaletteEffects
+        .word _A9A8_AB73 - aBattleScenePaletteEffects
+        .word _A9A8_AB7A - aBattleScenePaletteEffects
+        .word _A9A8_AB81 - aBattleScenePaletteEffects
+        .word _A9A8_AB89 - aBattleScenePaletteEffects
+        .word _A9A8_AB91 - aBattleScenePaletteEffects
+        .word _A9A8_AB99 - aBattleScenePaletteEffects
+        .word _A9A8_AB9D - aBattleScenePaletteEffects
+        .word _A9A8_ABA4 - aBattleScenePaletteEffects
+        .word _A9A8_ABAB - aBattleScenePaletteEffects
+        .word _A9A8_ABB2 - aBattleScenePaletteEffects
+        .word _A9A8_ABB9 - aBattleScenePaletteEffects
+        .word _A9A8_ABC0 - aBattleScenePaletteEffects
+        .word _A9A8_ABC5 - aBattleScenePaletteEffects
+        .word _A9A8_ABCA - aBattleScenePaletteEffects
+        .word _A9A8_ABCF - aBattleScenePaletteEffects
+        .word _A9A8_ABD3 - aBattleScenePaletteEffects
+        .word _A9A8_ABDB - aBattleScenePaletteEffects
+        .word _A9A8_ABE3 - aBattleScenePaletteEffects
+        .word _A9A8_ABEB - aBattleScenePaletteEffects
+        .word _A9A8_ABEF - aBattleScenePaletteEffects
+        .word _A9A8_ABF6 - aBattleScenePaletteEffects
+        .word _A9A8_ABFA - aBattleScenePaletteEffects
+        .word _A9A8_AC01 - aBattleScenePaletteEffects
+        .word _A9A8_AC08 - aBattleScenePaletteEffects
+        .word _A9A8_AC10 - aBattleScenePaletteEffects
+        .word _A9A8_AC15 - aBattleScenePaletteEffects
+        .word _A9A8_AC1C - aBattleScenePaletteEffects
+        .word _A9A8_AC23 - aBattleScenePaletteEffects
+        .word _A9A8_AC2A - aBattleScenePaletteEffects
+        .word _A9A8_AC31 - aBattleScenePaletteEffects
+        .word _A9A8_AC38 - aBattleScenePaletteEffects
+        .word _A9A8_AC3F - aBattleScenePaletteEffects
+        .word _A9A8_AC46 - aBattleScenePaletteEffects
+        .word _A9A8_AC4D - aBattleScenePaletteEffects
+        .word _A9A8_AC54 - aBattleScenePaletteEffects
+        .word _A9A8_AC5B - aBattleScenePaletteEffects
+        .word _A9A8_AC62 - aBattleScenePaletteEffects
+        .word _A9A8_AC69 - aBattleScenePaletteEffects
+        .word _A9A8_AC70 - aBattleScenePaletteEffects
+        .word _A9A8_AC77 - aBattleScenePaletteEffects
+        .word _A9A8_AC7E - aBattleScenePaletteEffects
+        .word _A9A8_AC85 - aBattleScenePaletteEffects
+        .word _A9A8_AC8C - aBattleScenePaletteEffects
+        .word _A9A8_AC93 - aBattleScenePaletteEffects
+        .word _A9A8_AC9A - aBattleScenePaletteEffects
+        .word _A9A8_ACA1 - aBattleScenePaletteEffects
+        .word _A9A8_ACA8 - aBattleScenePaletteEffects
+        .word _A9A8_ACAF - aBattleScenePaletteEffects
+        .word _A9A8_ACB6 - aBattleScenePaletteEffects
+        .word _A9A8_ACBD - aBattleScenePaletteEffects
+        .word _A9A8_ACC4 - aBattleScenePaletteEffects
+        .word _A9A8_ACCB - aBattleScenePaletteEffects
+        .word _A9A8_ACD2 - aBattleScenePaletteEffects
+        .word _A9A8_ACD9 - aBattleScenePaletteEffects
+        .word _A9A8_ACE0 - aBattleScenePaletteEffects
+        .word _A9A8_ACE7 - aBattleScenePaletteEffects
+        .word _A9A8_ACEE - aBattleScenePaletteEffects
+        .word _A9A8_ACF6 - aBattleScenePaletteEffects
+        .word _A9A8_ACFA - aBattleScenePaletteEffects
+        .word _A9A8_AD01 - aBattleScenePaletteEffects
+        .word _A9A8_AD08 - aBattleScenePaletteEffects
+        .word _A9A8_AD0F - aBattleScenePaletteEffects
+        .word _A9A8_AD16 - aBattleScenePaletteEffects
+        .word _A9A8_AD1D - aBattleScenePaletteEffects
+        .word _A9A8_AD24 - aBattleScenePaletteEffects
+        .word _A9A8_AD2B - aBattleScenePaletteEffects
+        .word _A9A8_AD32 - aBattleScenePaletteEffects
+        .word _A9A8_AD39 - aBattleScenePaletteEffects
+        .word _A9A8_AD40 - aBattleScenePaletteEffects
+        .word _A9A8_AD47 - aBattleScenePaletteEffects
+        .word _A9A8_AD4E - aBattleScenePaletteEffects
+        .word _A9A8_AD53 - aBattleScenePaletteEffects
+        .word _A9A8_AD5A - aBattleScenePaletteEffects
+        .word _A9A8_AD61 - aBattleScenePaletteEffects
+        .word _A9A8_AD68 - aBattleScenePaletteEffects
+        .word _A9A8_AD6F - aBattleScenePaletteEffects
+        .word _A9A8_AD76 - aBattleScenePaletteEffects
+        .word _A9A8_AD7D - aBattleScenePaletteEffects
+        .word _A9A8_AD84 - aBattleScenePaletteEffects
+        .word _A9A8_AD8B - aBattleScenePaletteEffects
+        .word _A9A8_AD8F - aBattleScenePaletteEffects
+        .word _A9A8_AD93 - aBattleScenePaletteEffects
+        .word _A9A8_AD97 - aBattleScenePaletteEffects
+        .word _A9A8_AD9E - aBattleScenePaletteEffects
+        .word _A9A8_ADA6 - aBattleScenePaletteEffects
+        .word _A9A8_ADAB - aBattleScenePaletteEffects
+        .word _A9A8_ADAF - aBattleScenePaletteEffects
+        .word _A9A8_ADB6 - aBattleScenePaletteEffects
+        .word _A9A8_ADBD - aBattleScenePaletteEffects
+        .word _A9A8_ADC4 - aBattleScenePaletteEffects
+        .word _A9A8_ADC8 - aBattleScenePaletteEffects
+        .word _A9A8_ADCC - aBattleScenePaletteEffects
+        .word _A9A8_ADD3 - aBattleScenePaletteEffects
+        .word _A9A8_ADDA - aBattleScenePaletteEffects
+        .word _A9A8_ADDE - aBattleScenePaletteEffects
+        .word _A9A8_ADE6 - aBattleScenePaletteEffects
+        .word _A9A8_ADEB - aBattleScenePaletteEffects
+        .word _A9A8_ADEF - aBattleScenePaletteEffects
+        .word _A9A8_ADF7 - aBattleScenePaletteEffects
+        .word _A9A8_ADFC - aBattleScenePaletteEffects
+        .word _A9A8_AE03 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE11 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE15 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE1D - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE22 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE27 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE2B - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE2F - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE37 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE3E - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE45 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE4C - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE54 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE5B - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE5F - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE63 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE6A - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE71 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE78 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE7F - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE86 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE8D - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE94 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE9B - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AE9F - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEA6 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEAD - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEB2 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEBA - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEBF - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEC3 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEC7 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AECF - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AED3 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEDB - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEE0 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEE5 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEE9 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEF1 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AEF9 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AF01 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AF09 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AF11 - aBattleScenePaletteEffects
+        .word aUnknown97AE0A._A9A8_AF19 - aBattleScenePaletteEffects
+        .word aUnknown97AF21 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF26 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF2D - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF32 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF39 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF40 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF47 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF4E - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF55 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF5C - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF63 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF6A - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF71 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF78 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF80 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF85 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF89 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF91 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF96 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF9B - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AF9F - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AFA6 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AFAE - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AFB3 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AFB8 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AFC0 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AFC4 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AFC8 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AFD0 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AFD5 - aBattleScenePaletteEffects
+        .word aUnknown97AF21._A9A8_AFDD - aBattleScenePaletteEffects
 
       _A9A8_AB26 ; 97/AB26
-        .byte $02, $01, $21, $07, $6F, $C1, $9B
+        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BC16F
 
       _A9A8_AB2D ; 97/AB2D
-        .byte $02, $01, $21, $07, $BB, $C1, $9B
+        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BC1BB
 
       _A9A8_AB34 ; 97/AB34
-        .byte $02, $02, $21, $07, $DD, $C1, $9B
+        PALETTE_EFFECT $02, $02, $21, $07, aUnknown9BC1DD
 
       _A9A8_AB3B ; 97/AB3B
-        .byte $02, $02, $21, $07, $FF, $C1, $9B
+        PALETTE_EFFECT $02, $02, $21, $07, aUnknown9BC1FF
 
       _A9A8_AB42 ; 97/AB42
-        .byte $02, $08, $21, $07
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $07
 
       _A9A8_AB46 ; 97/AB46
-        .byte $02, $05, $31, $2F, $01
+        PALETTE_EFFECT_VALUE $02, $05, $31, $2F, $01
 
       _A9A8_AB4B ; 97/AB4B
-        .byte $02, $01, $21, $0F, $41, $C2, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC241
 
       _A9A8_AB52 ; 97/AB52
-        .byte $02, $08, $21, $0F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_AB56 ; 97/AB56
-        .byte $02, $01, $21, $0F, $65, $C2, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC265
 
       _A9A8_AB5D ; 97/AB5D
-        .byte $02, $08, $21, $0F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_AB61 ; 97/AB61
-        .byte $02, $02, $24, $0C, $E7, $C2, $9B
+        PALETTE_EFFECT $02, $02, $24, $0C, aUnknown9BC2E7
 
       _A9A8_AB68 ; 97/AB68
-        .byte $02, $08, $21, $0F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_AB6C ; 97/AB6C
-        .byte $02, $00, $21, $0F, $1B, $C3, $9B
+        PALETTE_EFFECT $02, $00, $21, $0F, aUnknown9BC31B
 
       _A9A8_AB73 ; 97/AB73
-        .byte $02, $01, $21, $0F, $2E, $C4, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC42E
 
       _A9A8_AB7A ; 97/AB7A
-        .byte $02, $00, $21, $0F, $50, $C4, $9B
+        PALETTE_EFFECT $02, $00, $21, $0F, aUnknown9BC450
 
       _A9A8_AB81 ; 97/AB81
-        .byte $03, $07, $31, $2F, $04, $36, $F6, $7F
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $2F, $04, $7FF636
 
       _A9A8_AB89 ; 97/AB89
-        .byte $03, $07, $31, $2F, $00, $62, $FE, $7F
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $2F, $00, $7FFE62
 
       _A9A8_AB91 ; 97/AB91
-        .byte $03, $07, $31, $2F, $01, $36, $F6, $7F
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $2F, $01, $7FF636
 
       _A9A8_AB99 ; 97/AB99
-        .byte $02, $08, $21, $0F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_AB9D ; 97/AB9D
-        .byte $02, $01, $21, $0F, $9F, $C5, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC59F
 
       _A9A8_ABA4 ; 97/ABA4
-        .byte $02, $01, $21, $0F, $01, $C6, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC601
 
       _A9A8_ABAB ; 97/ABAB
-        .byte $02, $01, $21, $0F, $43, $C6, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC643
 
       _A9A8_ABB2 ; 97/ABB2
-        .byte $02, $01, $21, $0F, $A5, $C6, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC6A5
 
       _A9A8_ABB9 ; 97/ABB9
-        .byte $02, $01, $21, $0F, $E8, $C6, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BC6E8
 
       _A9A8_ABC0 ; 97/ABC0
-        .byte $03, $06, $31, $2F, $00
+        PALETTE_EFFECT_VALUE $03, $06, $31, $2F, $00
 
       _A9A8_ABC5 ; 97/ABC5
-        .byte $04, $06, $11, $03, $00
+        PALETTE_EFFECT_VALUE $04, $06, $11, $03, $00
 
       _A9A8_ABCA ; 97/ABCA
-        .byte $05, $06, $00, $01, $00
+        PALETTE_EFFECT_VALUE $05, $06, $00, $01, $00
 
       _A9A8_ABCF ; 97/ABCF
-        .byte $02, $08, $21, $0F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_ABD3 ; 97/ABD3
-        .byte $02, $07, $21, $08, $01, $90, $20, $E0
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $21, $08, $01, aUnknownE02090
 
       _A9A8_ABDB ; 97/ABDB
-        .byte $02, $07, $31, $2F, $01, $36, $F6, $7F
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $31, $2F, $01, $7FF636
 
       _A9A8_ABE3 ; 97/ABE3
-        .byte $02, $07, $31, $2F, $00, $36, $F6, $7F
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $31, $2F, $00, $7FF636
 
       _A9A8_ABEB ; 97/ABEB
-        .byte $02, $09, $31, $2F
+        PALETTE_EFFECT_NO_DATA $02, $09, $31, $2F
 
       _A9A8_ABEF ; 97/ABEF
-        .byte $02, $01, $21, $08, $2A, $C8, $9B
+        PALETTE_EFFECT $02, $01, $21, $08, aUnknown9BC82A
 
       _A9A8_ABF6 ; 97/ABF6
-        .byte $02, $08, $21, $0F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_ABFA ; 97/ABFA
-        .byte $02, $00, $21, $0F, $2C, $C9, $9B
+        PALETTE_EFFECT $02, $00, $21, $0F, aUnknown9BC92C
 
       _A9A8_AC01 ; 97/AC01
-        .byte $02, $0A, $31, $2F, $62, $FE, $7F
+        PALETTE_EFFECT $02, $0A, $31, $2F, $7FFE62
 
       _A9A8_AC08 ; 97/AC08
-        .byte $03, $07, $31, $2F, $00, $36, $F6, $7F
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $2F, $00, $7FF636
 
       _A9A8_AC10 ; 97/AC10
-        .byte $02, $05, $C1, $3F, $03
+        PALETTE_EFFECT_VALUE $02, $05, $C1, $3F, $03
 
       _A9A8_AC15 ; 97/AC15
-        .byte $02, $01, $21, $0F, $6B, $CB, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BCB6B
 
       _A9A8_AC1C ; 97/AC1C
-        .byte $02, $0A, $31, $2F, $36, $F6, $7F
+        PALETTE_EFFECT $02, $0A, $31, $2F, $7FF636
 
       _A9A8_AC23 ; 97/AC23
-        .byte $02, $02, $21, $0A, $AD, $CB, $9B
+        PALETTE_EFFECT $02, $02, $21, $0A, aUnknown9BCBAD
 
       _A9A8_AC2A ; 97/AC2A
-        .byte $03, $02, $2B, $05, $C3, $CB, $9B
+        PALETTE_EFFECT $03, $02, $2B, $05, aUnknown9BCBC3
 
       _A9A8_AC31 ; 97/AC31
-        .byte $04, $02, $1B, $05, $D7, $CB, $9B
+        PALETTE_EFFECT $04, $02, $1B, $05, aUnknown9BCBD7
 
       _A9A8_AC38 ; 97/AC38
-        .byte $05, $02, $11, $0A, $ED, $CB, $9B
+        PALETTE_EFFECT $05, $02, $11, $0A, aUnknown9BCBED
 
       _A9A8_AC3F ; 97/AC3F
-        .byte $02, $01, $21, $0A, $03, $CC, $9B
+        PALETTE_EFFECT $02, $01, $21, $0A, aUnknown9BCC03
 
       _A9A8_AC46 ; 97/AC46
-        .byte $03, $01, $2B, $05, $19, $CC, $9B
+        PALETTE_EFFECT $03, $01, $2B, $05, aUnknown9BCC19
 
       _A9A8_AC4D ; 97/AC4D
-        .byte $04, $01, $1B, $05, $45, $CC, $9B
+        PALETTE_EFFECT $04, $01, $1B, $05, aUnknown9BCC45
 
       _A9A8_AC54 ; 97/AC54
-        .byte $05, $01, $11, $0A, $73, $CC, $9B
+        PALETTE_EFFECT $05, $01, $11, $0A, aUnknown9BCC73
 
       _A9A8_AC5B ; 97/AC5B
-        .byte $02, $02, $21, $0A, $89, $CC, $9B
+        PALETTE_EFFECT $02, $02, $21, $0A, aUnknown9BCC89
 
       _A9A8_AC62 ; 97/AC62
-        .byte $03, $02, $2B, $05, $9F, $CC, $9B
+        PALETTE_EFFECT $03, $02, $2B, $05, aUnknown9BCC9F
 
       _A9A8_AC69 ; 97/AC69
-        .byte $04, $02, $1B, $05, $B3, $CC, $9B
+        PALETTE_EFFECT $04, $02, $1B, $05, aUnknown9BCCB3
 
       _A9A8_AC70 ; 97/AC70
-        .byte $05, $02, $11, $0A, $CF, $CC, $9B
+        PALETTE_EFFECT $05, $02, $11, $0A, aUnknown9BCCCF
 
       _A9A8_AC77 ; 97/AC77
-        .byte $02, $01, $21, $0A, $E5, $CC, $9B
+        PALETTE_EFFECT $02, $01, $21, $0A, aUnknown9BCCE5
 
       _A9A8_AC7E ; 97/AC7E
-        .byte $03, $01, $2B, $05, $0F, $CD, $9B
+        PALETTE_EFFECT $03, $01, $2B, $05, aUnknown9BCD0F
 
       _A9A8_AC85 ; 97/AC85
-        .byte $04, $01, $1B, $05, $2D, $CD, $9B
+        PALETTE_EFFECT $04, $01, $1B, $05, aUnknown9BCD2D
 
       _A9A8_AC8C ; 97/AC8C
-        .byte $05, $01, $11, $0A, $4B, $CD, $9B
+        PALETTE_EFFECT $05, $01, $11, $0A, aUnknown9BCD4B
 
       _A9A8_AC93 ; 97/AC93
-        .byte $02, $01, $21, $0E, $75, $CD, $9B
+        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BCD75
 
       _A9A8_AC9A ; 97/AC9A
-        .byte $03, $01, $2F, $01, $B7, $CD, $9B
+        PALETTE_EFFECT $03, $01, $2F, $01, aUnknown9BCDB7
 
       _A9A8_ACA1 ; 97/ACA1
-        .byte $02, $01, $21, $0E, $F9, $CD, $9B
+        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BCDF9
 
       _A9A8_ACA8 ; 97/ACA8
-        .byte $03, $01, $2F, $01, $3B, $CE, $9B
+        PALETTE_EFFECT $03, $01, $2F, $01, aUnknown9BCE3B
 
       _A9A8_ACAF ; 97/ACAF
-        .byte $02, $01, $21, $0E, $7D, $CE, $9B
+        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BCE7D
 
       _A9A8_ACB6 ; 97/ACB6
-        .byte $03, $01, $2F, $01, $BF, $CE, $9B
+        PALETTE_EFFECT $03, $01, $2F, $01, aUnknown9BCEBF
 
       _A9A8_ACBD ; 97/ACBD
-        .byte $02, $01, $21, $08, $01, $CF, $9B
+        PALETTE_EFFECT $02, $01, $21, $08, aUnknown9BCF01
 
       _A9A8_ACC4 ; 97/ACC4
-        .byte $02, $01, $21, $08, $25, $CF, $9B
+        PALETTE_EFFECT $02, $01, $21, $08, aUnknown9BCF25
 
       _A9A8_ACCB ; 97/ACCB
-        .byte $02, $01, $21, $0E, $26, $CF, $9B
+        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BCF26
 
       _A9A8_ACD2 ; 97/ACD2
-        .byte $02, $01, $21, $0F, $68, $CF, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BCF68
 
       _A9A8_ACD9 ; 97/ACD9
-        .byte $02, $01, $21, $0F, $AA, $CF, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BCFAA
 
       _A9A8_ACE0 ; 97/ACE0
-        .byte $02, $01, $21, $07, $EC, $CF, $9B
+        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BCFEC
 
       _A9A8_ACE7 ; 97/ACE7
-        .byte $03, $01, $2A, $06, $2E, $D0, $9B
+        PALETTE_EFFECT $03, $01, $2A, $06, aUnknown9BD02E
 
       _A9A8_ACEE ; 97/ACEE
-        .byte $03, $07, $C1, $3E, $04, $82, $FF, $7F
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $C1, $3E, $04, $7FFF82
 
       _A9A8_ACF6 ; 97/ACF6
-        .byte $03, $09, $C1, $3E
+        PALETTE_EFFECT_NO_DATA $03, $09, $C1, $3E
 
       _A9A8_ACFA ; 97/ACFA
-        .byte $02, $02, $31, $0F, $2E, $D7, $9B
+        PALETTE_EFFECT $02, $02, $31, $0F, aUnknown9BD72E
 
       _A9A8_AD01 ; 97/AD01
-        .byte $02, $02, $31, $0F, $EC, $D6, $9B
+        PALETTE_EFFECT $02, $02, $31, $0F, aUnknown9BD6EC
 
       _A9A8_AD08 ; 97/AD08
-        .byte $02, $02, $31, $0F, $90, $D7, $9B
+        PALETTE_EFFECT $02, $02, $31, $0F, aUnknown9BD790
 
       _A9A8_AD0F ; 97/AD0F
-        .byte $03, $01, $21, $0F, $1D, $D5, $9B
+        PALETTE_EFFECT $03, $01, $21, $0F, aUnknown9BD51D
 
       _A9A8_AD16 ; 97/AD16
-        .byte $03, $01, $21, $0F, $BC, $D4, $9B
+        PALETTE_EFFECT $03, $01, $21, $0F, aUnknown9BD4BC
 
       _A9A8_AD1D ; 97/AD1D
-        .byte $03, $01, $21, $0F, $E4, $D5, $9B
+        PALETTE_EFFECT $03, $01, $21, $0F, aUnknown9BD5E4
 
       _A9A8_AD24 ; 97/AD24
-        .byte $02, $02, $21, $0F, $C5, $D3, $9B
+        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD3C5
 
       _A9A8_AD2B ; 97/AD2B
-        .byte $02, $02, $21, $0F, $85, $D3, $9B
+        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD385
 
       _A9A8_AD32 ; 97/AD32
-        .byte $02, $02, $21, $0F, $A5, $D3, $9B
+        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD3A5
 
       _A9A8_AD39 ; 97/AD39
-        .byte $02, $01, $21, $0F, $0C, $D8, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD80C
 
       _A9A8_AD40 ; 97/AD40
-        .byte $02, $01, $21, $0F, $F2, $D7, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD7F2
 
       _A9A8_AD47 ; 97/AD47
-        .byte $02, $01, $21, $0F, $26, $D8, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD826
 
       _A9A8_AD4E ; 97/AD4E
-        .byte $04, $08, $31, $2F, $01
+        PALETTE_EFFECT_NO_DATA $04, $08, $31, $2F
+        .byte $01 ; type 8 reads nothing more: this byte is not part of the entry
 
       _A9A8_AD53 ; 97/AD53
-        .byte $02, $01, $21, $0F, $3C, $D0, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD03C
 
       _A9A8_AD5A ; 97/AD5A
-        .byte $03, $01, $31, $0F, $56, $D0, $9B
+        PALETTE_EFFECT $03, $01, $31, $0F, aUnknown9BD056
 
       _A9A8_AD61 ; 97/AD61
-        .byte $02, $01, $21, $0F, $78, $D0, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD078
 
       _A9A8_AD68 ; 97/AD68
-        .byte $03, $01, $31, $0F, $92, $D0, $9B
+        PALETTE_EFFECT $03, $01, $31, $0F, aUnknown9BD092
 
       _A9A8_AD6F ; 97/AD6F
-        .byte $02, $01, $21, $0F, $B4, $D0, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD0B4
 
       _A9A8_AD76 ; 97/AD76
-        .byte $03, $01, $31, $0F, $F8, $D0, $9B
+        PALETTE_EFFECT $03, $01, $31, $0F, aUnknown9BD0F8
 
       _A9A8_AD7D ; 97/AD7D
-        .byte $02, $00, $41, $0F, $58, $D1, $9B
+        PALETTE_EFFECT $02, $00, $41, $0F, aUnknown9BD158
 
       _A9A8_AD84 ; 97/AD84
-        .byte $03, $02, $21, $0F, $24, $D3, $9B
+        PALETTE_EFFECT $03, $02, $21, $0F, aUnknown9BD324
 
       _A9A8_AD8B ; 97/AD8B
-        .byte $02, $08, $21, $1F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $1F
 
       _A9A8_AD8F ; 97/AD8F
-        .byte $02, $08, $31, $1F
+        PALETTE_EFFECT_NO_DATA $02, $08, $31, $1F
 
       _A9A8_AD93 ; 97/AD93
-        .byte $02, $08, $31, $2F
+        PALETTE_EFFECT_NO_DATA $02, $08, $31, $2F
 
       _A9A8_AD97 ; 97/AD97
-        .byte $02, $01, $21, $0E, $64, $D3, $9B
+        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BD364
 
       _A9A8_AD9E ; 97/AD9E
-        .byte $03, $07, $11, $0F, $00, $38, $21, $E0
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $11, $0F, $00, aUnknownE02138
 
       _A9A8_ADA6 ; 97/ADA6
-        .byte $03, $05, $11, $0F, $00
+        PALETTE_EFFECT_VALUE $03, $05, $11, $0F, $00
 
       _A9A8_ADAB ; 97/ADAB
-        .byte $03, $08, $11, $0F
+        PALETTE_EFFECT_NO_DATA $03, $08, $11, $0F
 
       _A9A8_ADAF ; 97/ADAF
-        .byte $03, $02, $41, $0F, $F9, $D3, $9B
+        PALETTE_EFFECT $03, $02, $41, $0F, aUnknown9BD3F9
 
       _A9A8_ADB6 ; 97/ADB6
-        .byte $03, $02, $41, $0F, $65, $D3, $9B
+        PALETTE_EFFECT $03, $02, $41, $0F, aUnknown9BD365
 
       _A9A8_ADBD ; 97/ADBD
-        .byte $03, $02, $41, $0F, $1B, $D4, $9B
+        PALETTE_EFFECT $03, $02, $41, $0F, aUnknown9BD41B
 
       _A9A8_ADC4 ; 97/ADC4
-        .byte $02, $08, $21, $0F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_ADC8 ; 97/ADC8
-        .byte $02, $08, $41, $0F
+        PALETTE_EFFECT_NO_DATA $02, $08, $41, $0F
 
       _A9A8_ADCC ; 97/ADCC
-        .byte $04, $01, $00, $01, $3B, $D4, $9B
+        PALETTE_EFFECT $04, $01, $00, $01, aUnknown9BD43B
 
       _A9A8_ADD3 ; 97/ADD3
-        .byte $03, $00, $31, $2F, $5D, $D4, $9B
+        PALETTE_EFFECT $03, $00, $31, $2F, aUnknown9BD45D
 
       _A9A8_ADDA ; 97/ADDA
-        .byte $02, $08, $31, $0F
+        PALETTE_EFFECT_NO_DATA $02, $08, $31, $0F
 
       _A9A8_ADDE ; 97/ADDE
-        .byte $02, $07, $31, $0F, $03, $99, $22, $E0
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $31, $0F, $03, aUnknownE02299
 
       _A9A8_ADE6 ; 97/ADE6
-        .byte $02, $05, $21, $1F, $03
+        PALETTE_EFFECT_VALUE $02, $05, $21, $1F, $03
 
       _A9A8_ADEB ; 97/ADEB
-        .byte $02, $08, $21, $2F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $2F
 
       _A9A8_ADEF ; 97/ADEF
-        .byte $02, $07, $31, $1F, $02, $1D, $22, $E0
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $31, $1F, $02, aUnknownE0221D
 
       _A9A8_ADF7 ; 97/ADF7
-        .byte $02, $06, $31, $1F, $01
+        PALETTE_EFFECT_VALUE $02, $06, $31, $1F, $01
 
       _A9A8_ADFC ; 97/ADFC
-        .byte $02, $01, $00, $01, $46, $D6, $9B
+        PALETTE_EFFECT $02, $01, $00, $01, aUnknown9BD646
 
       _A9A8_AE03 ; 97/AE03
-        .byte $02, $00, $31, $2F, $4A, $D6, $9B
+        PALETTE_EFFECT $02, $00, $31, $2F, aUnknown9BD64A
 
       aUnknown97AE0A ; 97/AE0A
-        .byte $04, $01, $11, $01, $AA, $D6, $9B
+        PALETTE_EFFECT $04, $01, $11, $01, aUnknown9BD6AA
 
       _A9A8_AE11 ; 97/AE11
-        .byte $03, $08, $21, $3F
+        PALETTE_EFFECT_NO_DATA $03, $08, $21, $3F
 
       _A9A8_AE15 ; 97/AE15
-        .byte $03, $07, $31, $2F, $03, $15, $23, $E0
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $2F, $03, aUnknownE02315
 
       _A9A8_AE1D ; 97/AE1D
-        .byte $03, $05, $31, $2F, $03
+        PALETTE_EFFECT_VALUE $03, $05, $31, $2F, $03
 
       _A9A8_AE22 ; 97/AE22
-        .byte $04, $05, $11, $0F, $03
+        PALETTE_EFFECT_VALUE $04, $05, $11, $0F, $03
 
       _A9A8_AE27 ; 97/AE27
-        .byte $02, $08, $11, $1F
+        PALETTE_EFFECT_NO_DATA $02, $08, $11, $1F
 
       _A9A8_AE2B ; 97/AE2B
-        .byte $02, $08, $21, $2F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $2F
 
       _A9A8_AE2F ; 97/AE2F
-        .byte $03, $07, $31, $1F, $04, $73, $23, $E0
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $1F, $04, aUnknownE02373
 
       _A9A8_AE37 ; 97/AE37
-        .byte $02, $01, $21, $0E, $5C, $D8, $9B
+        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BD85C
 
       _A9A8_AE3E ; 97/AE3E
-        .byte $02, $01, $21, $0E, $76, $D8, $9B
+        PALETTE_EFFECT $02, $01, $21, $0E, aUnknown9BD876
 
       _A9A8_AE45 ; 97/AE45
-        .byte $03, $01, $2F, $01, $AC, $D8, $9B
+        PALETTE_EFFECT $03, $01, $2F, $01, aUnknown9BD8AC
 
       _A9A8_AE4C ; 97/AE4C
-        .byte $04, $07, $31, $1F, $01, $36, $F6, $7F
+        PALETTE_EFFECT_VALUE_DATA $04, $07, $31, $1F, $01, $7FF636
 
       _A9A8_AE54 ; 97/AE54
-        .byte $03, $01, $00, $01, $C4, $D8, $9B
+        PALETTE_EFFECT $03, $01, $00, $01, aUnknown9BD8C4
 
       _A9A8_AE5B ; 97/AE5B
-        .byte $02, $08, $00, $01
+        PALETTE_EFFECT_NO_DATA $02, $08, $00, $01
 
       _A9A8_AE5F ; 97/AE5F
-        .byte $02, $08, $21, $0F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_AE63 ; 97/AE63
-        .byte $02, $02, $21, $0F, $C8, $D8, $9B
+        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD8C8
 
       _A9A8_AE6A ; 97/AE6A
-        .byte $02, $02, $21, $0F, $E2, $D8, $9B
+        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD8E2
 
       _A9A8_AE71 ; 97/AE71
-        .byte $02, $02, $21, $0F, $14, $D9, $9B
+        PALETTE_EFFECT $02, $02, $21, $0F, aUnknown9BD914
 
       _A9A8_AE78 ; 97/AE78
-        .byte $02, $01, $1C, $04, $62, $D9, $9B
+        PALETTE_EFFECT $02, $01, $1C, $04, aUnknown9BD962
 
       _A9A8_AE7F ; 97/AE7F
-        .byte $02, $01, $1C, $04, $78, $D9, $9B
+        PALETTE_EFFECT $02, $01, $1C, $04, aUnknown9BD978
 
       _A9A8_AE86 ; 97/AE86
-        .byte $02, $01, $1C, $04, $8E, $D9, $9B
+        PALETTE_EFFECT $02, $01, $1C, $04, aUnknown9BD98E
 
       _A9A8_AE8D ; 97/AE8D
-        .byte $02, $01, $21, $0F, $9A, $D9, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD99A
 
       _A9A8_AE94 ; 97/AE94
-        .byte $02, $01, $21, $0F, $B4, $D9, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BD9B4
 
       _A9A8_AE9B ; 97/AE9B
-        .byte $02, $08, $1C, $14
+        PALETTE_EFFECT_NO_DATA $02, $08, $1C, $14
 
       _A9A8_AE9F ; 97/AE9F
-        .byte $02, $0C, $21, $07, $EC, $CF, $9B
+        PALETTE_EFFECT $02, $0C, $21, $07, aUnknown9BCFEC
 
       _A9A8_AEA6 ; 97/AEA6
-        .byte $03, $0C, $2A, $06, $2E, $D0, $9B
+        PALETTE_EFFECT $03, $0C, $2A, $06, aUnknown9BD02E
 
       _A9A8_AEAD ; 97/AEAD
-        .byte $04, $06, $28, $02, $04
+        PALETTE_EFFECT_VALUE $04, $06, $28, $02, $04
 
       _A9A8_AEB2 ; 97/AEB2
-        .byte $04, $07, $28, $02, $04, $80, $20, $E0
+        PALETTE_EFFECT_VALUE_DATA $04, $07, $28, $02, $04, aUnknownE02080
 
       _A9A8_AEBA ; 97/AEBA
-        .byte $05, $05, $81, $3E, $04
+        PALETTE_EFFECT_VALUE $05, $05, $81, $3E, $04
 
       _A9A8_AEBF ; 97/AEBF
-        .byte $05, $08, $C1, $3F
+        PALETTE_EFFECT_NO_DATA $05, $08, $C1, $3F
 
       _A9A8_AEC3 ; 97/AEC3
-        .byte $05, $09, $C1, $3F
+        PALETTE_EFFECT_NO_DATA $05, $09, $C1, $3F
 
       _A9A8_AEC7 ; 97/AEC7
-        .byte $05, $07, $C1, $3F, $04, $82, $FF, $7F
+        PALETTE_EFFECT_VALUE_DATA $05, $07, $C1, $3F, $04, $7FFF82
 
       _A9A8_AECF ; 97/AECF
-        .byte $06, $08, $51, $0F
+        PALETTE_EFFECT_NO_DATA $06, $08, $51, $0F
 
       _A9A8_AED3 ; 97/AED3
-        .byte $06, $07, $51, $0F, $04, $A5, $27, $E0
+        PALETTE_EFFECT_VALUE_DATA $06, $07, $51, $0F, $04, aUnknownE027A5
 
       _A9A8_AEDB ; 97/AEDB
-        .byte $06, $06, $51, $0F, $04
+        PALETTE_EFFECT_VALUE $06, $06, $51, $0F, $04
 
       _A9A8_AEE0 ; 97/AEE0
-        .byte $07, $06, $BF, $01, $03
+        PALETTE_EFFECT_VALUE $07, $06, $BF, $01, $03
 
       _A9A8_AEE5 ; 97/AEE5
-        .byte $07, $09, $FF, $01
+        PALETTE_EFFECT_NO_DATA $07, $09, $FF, $01
 
       _A9A8_AEE9 ; 97/AEE9
-        .byte $00, $07, $01, $0F, $08, $02, $FE, $7F
+        PALETTE_EFFECT_VALUE_DATA $00, $07, $01, $0F, $08, $7FFE02
 
       _A9A8_AEF1 ; 97/AEF1
-        .byte $01, $07, $71, $0F, $08, $E2, $FE, $7F
+        PALETTE_EFFECT_VALUE_DATA $01, $07, $71, $0F, $08, $7FFEE2
 
       _A9A8_AEF9 ; 97/AEF9
-        .byte $02, $07, $11, $0F, $08, $22, $FE, $7F
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $11, $0F, $08, $7FFE22
 
       _A9A8_AF01 ; 97/AF01
-        .byte $03, $07, $61, $0F, $08, $C2, $FE, $7F
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $61, $0F, $08, $7FFEC2
 
       _A9A8_AF09 ; 97/AF09
-        .byte $08, $07, $31, $1F, $08, $88, $CB, $7E
+        PALETTE_EFFECT_VALUE_DATA $08, $07, $31, $1F, $08, aWorldMapMarkerPalette
 
       _A9A8_AF11 ; 97/AF11
-        .byte $08, $07, $31, $1F, $0A, $C8, $CB, $7E
+        PALETTE_EFFECT_VALUE_DATA $08, $07, $31, $1F, $0A, $7ECBC8
 
       _A9A8_AF19 ; 97/AF19
-        .byte $08, $07, $31, $1F, $06, $62, $FE, $7F
+        PALETTE_EFFECT_VALUE_DATA $08, $07, $31, $1F, $06, $7FFE62
 
       aUnknown97AF21 ; 97/AF21
-        .byte $09, $03, $FA, $05, $02
+        PALETTE_EFFECT_VALUE $09, $03, $FA, $05, $02
 
       _A9A8_AF26 ; 97/AF26
-        .byte $03, $02, $19, $07, $F2, $D9, $9B
+        PALETTE_EFFECT $03, $02, $19, $07, aUnknown9BD9F2
 
       _A9A8_AF2D ; 97/AF2D
-        .byte $03, $05, $21, $0F, $00
+        PALETTE_EFFECT_VALUE $03, $05, $21, $0F, $00
 
       _A9A8_AF32 ; 97/AF32
-        .byte $02, $01, $21, $07, $02, $DA, $9B
+        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDA02
 
       _A9A8_AF39 ; 97/AF39
-        .byte $02, $01, $21, $07, $52, $DA, $9B
+        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDA52
 
       _A9A8_AF40 ; 97/AF40
-        .byte $02, $01, $21, $07, $74, $DA, $9B
+        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDA74
 
       _A9A8_AF47 ; 97/AF47
-        .byte $02, $01, $21, $07, $96, $DA, $9B
+        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDA96
 
       _A9A8_AF4E ; 97/AF4E
-        .byte $02, $01, $21, $07, $D8, $DA, $9B
+        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDAD8
 
       _A9A8_AF55 ; 97/AF55
-        .byte $02, $01, $21, $07, $08, $DB, $9B
+        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDB08
 
       _A9A8_AF5C ; 97/AF5C
-        .byte $02, $01, $21, $07, $2A, $DB, $9B
+        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDB2A
 
       _A9A8_AF63 ; 97/AF63
-        .byte $02, $01, $21, $07, $4C, $DB, $9B
+        PALETTE_EFFECT $02, $01, $21, $07, aUnknown9BDB4C
 
       _A9A8_AF6A ; 97/AF6A
-        .byte $02, $02, $24, $0C, $8C, $DB, $9B
+        PALETTE_EFFECT $02, $02, $24, $0C, aUnknown9BDB8C
 
       _A9A8_AF71 ; 97/AF71
-        .byte $02, $02, $24, $0C, $B0, $DB, $9B
+        PALETTE_EFFECT $02, $02, $24, $0C, aUnknown9BDBB0
 
       _A9A8_AF78 ; 97/AF78
-        .byte $03, $07, $21, $03, $04, $7A, $20, $E0
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $21, $03, $04, aUnknownE0207A
 
       _A9A8_AF80 ; 97/AF80
-        .byte $03, $05, $21, $03, $01
+        PALETTE_EFFECT_VALUE $03, $05, $21, $03, $01
 
       _A9A8_AF85 ; 97/AF85
-        .byte $03, $08, $21, $0F
+        PALETTE_EFFECT_NO_DATA $03, $08, $21, $0F
 
       _A9A8_AF89 ; 97/AF89
-        .byte $03, $07, $21, $0F, $02, $B7, $22, $E0
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $21, $0F, $02, aUnknownE022B7
 
       _A9A8_AF91 ; 97/AF91
-        .byte $03, $05, $21, $0F, $02
+        PALETTE_EFFECT_VALUE $03, $05, $21, $0F, $02
 
       _A9A8_AF96 ; 97/AF96
-        .byte $02, $05, $00, $01, $01
+        PALETTE_EFFECT_VALUE $02, $05, $00, $01, $01
 
       _A9A8_AF9B ; 97/AF9B
-        .byte $02, $08, $11, $1F
+        PALETTE_EFFECT_NO_DATA $02, $08, $11, $1F
 
       _A9A8_AF9F ; 97/AF9F
-        .byte $02, $01, $21, $0F, $E2, $DB, $9B
+        PALETTE_EFFECT $02, $01, $21, $0F, aUnknown9BDBE2
 
       _A9A8_AFA6 ; 97/AFA6
-        .byte $03, $07, $11, $03, $02, $56, $21, $E0
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $11, $03, $02, aUnknownE02156
 
       _A9A8_AFAE ; 97/AFAE
-        .byte $03, $05, $11, $03, $02
+        PALETTE_EFFECT_VALUE $03, $05, $11, $03, $02
 
       _A9A8_AFB3 ; 97/AFB3
-        .byte $02, $05, $21, $0F, $00
+        PALETTE_EFFECT_VALUE $02, $05, $21, $0F, $00
 
       _A9A8_AFB8 ; 97/AFB8
-        .byte $03, $07, $31, $2F, $04, $36, $F6, $7F
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $2F, $04, $7FF636
 
       _A9A8_AFC0 ; 97/AFC0
-        .byte $02, $08, $21, $0F
+        PALETTE_EFFECT_NO_DATA $02, $08, $21, $0F
 
       _A9A8_AFC4 ; 97/AFC4
-        .byte $02, $08, $11, $1F
+        PALETTE_EFFECT_NO_DATA $02, $08, $11, $1F
 
       _A9A8_AFC8 ; 97/AFC8
-        .byte $02, $07, $11, $1F, $00, $5C, $21, $E0
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $11, $1F, $00, aUnknownE0215C
 
       _A9A8_AFD0 ; 97/AFD0
-        .byte $02, $05, $11, $1F, $00
+        PALETTE_EFFECT_VALUE $02, $05, $11, $1F, $00
 
       _A9A8_AFD5 ; 97/AFD5
-        .byte $02, $07, $11, $1F, $0C, $DD, $E6, $7F
+        PALETTE_EFFECT_VALUE_DATA $02, $07, $11, $1F, $0C, $7FE6DD
 
       _A9A8_AFDD ; 97/AFDD
-        .byte $03, $07, $31, $2F, $08, $36, $F6, $7F
+        PALETTE_EFFECT_VALUE_DATA $03, $07, $31, $2F, $08, $7FF636
 
         ; 97/AFE5
 

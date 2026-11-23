@@ -6333,7 +6333,7 @@
       .xl
 
       aUnknown9EAA5C ; 9E/AA5C
-        .byte $00, $03, $D0, $10, $02
+        PALETTE_EFFECT_VALUE $00, $03, $D0, $10, $02
 
     .endsection Table9EAA5CSection
 

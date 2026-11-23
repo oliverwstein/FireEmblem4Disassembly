@@ -24,7 +24,7 @@ Per-routine details: [routines/battle_scene.md](routines/battle_scene.md) (gener
 | [hud.asm](../../engine/battle_scene/hud.asm) | HP numbers and bars; the name, stat, experience and level up windows. Much is still `Unknown`. |
 | [effects.asm](../../engine/battle_scene/effects.asm) | Palette, window, HDMA, scroll and mosaic effects, and the sprites drawn for spells. Low-level, mostly `Unknown`. |
 | [data.asm](../../engine/battle_scene/data.asm) | Tables in banks `$97`-`$99` and `$E0` read by the code above. |
-| [include/BattleScene.h](../../include/BattleScene.h) | `structBattleSceneCombatant`, and the bits of `wBattleSceneFlags` and `bBattleSceneRoundState`. |
+| [include/BattleScene.h](../../include/BattleScene.h) | `structBattleSceneCombatant`, the bits of `wBattleSceneFlags` and `bBattleSceneRoundState`, and the palette effect entries (`PALETTE_EFFECT_*`). |
 | [include/BattleAnimation.h](../../include/BattleAnimation.h) | Sequence commands (`ANIM_CMD_*`), the animation lookup, move programs, `WRITE_RAM_*` lists. |
 
 The scene's RAM is in [WRAM.h](../../include/WRAM.h): the animation slots at `$0AF3` (`bBattleAnimationStateFlags`...), the round state at `$0ADD`-`$0AE8`, the combatants at `$0D44`-`$0D69`, and variables from `$7FE09E` to `$7FFC59`. The map's text buffer and unit buffers share `$7FE000`-`$7FFFFF`, so `tools/name_ram.py` writes the battle scene's names only in `engine/battle_scene/` and `engine/title/`.
@@ -111,6 +111,10 @@ The intro has three steps (`aBattleSceneIntroSteps`): fade in, the opening, and 
 
 **Julius.** A strike of hit kind 3 (round bit `$10`) by combatant 1 on `JuliusChFinal` sets `BattleSceneFlagToMapMode3`, slows the fade and fades the music (`rlBattleScenePlayHitSound`). The death quote is then shown by `rlBattleSceneShowJuliusQuote` instead, and the scene returns to the map in mode 3.
 
+## Palette effects
+
+Ten slots at `$7FFD9A`, 10 bytes each, change colors of `aBGPaletteBuffer` every frame (`rlUnknown96D695`, by type). `rlBattleSceneStartPaletteEffect` fills one from an entry: slot, type, first color, color count, then by type a long pointer, a byte, both, or nothing (`PALETTE_EFFECT`, `_VALUE`, `_VALUE_DATA`, `_NO_DATA`). Script command 11 takes its entry from `aBattleScenePaletteEffects` (191 offsets in bank `$97`); the title screen and the map battle pass their own. Type 0 plays frames of colors: each frame is an optional `$80 | frames` delay byte and the colors, `$FE` loops, `$FF` ends. The colors are in `data.asm` (bank `$9B`) and bank `$E0`. `tools/palette_effects.py` wrote the 204 entries.
+
 ## Animation slots
 
 Four slots of `$43` bytes from `$0AF3`: the two combatants (`X` = 0 and `$43`) and two effect slots (`$86`, `$C9`).
@@ -133,4 +137,4 @@ Four slots of `$43` bytes from `$0AF3`: the two combatants (`X` = 0 and `$43`) a
 - **`bBattleSceneRanged`.** It is never stored: `rsBattleSceneStartNextRound` loads the ranged bit into A and branches past the store.
 - **A wrong label.** `rsBattleSceneLoadExtraTiles` loads a long pointer written as `aChapter05MapEvents + 326` for extra tiles ID 0. The label is a chance match and the target is probably blank tiles; it needs a proper label.
 - **`rsBattleScenePlaceCombatants`** holds two unreachable `.byte` runs after `bra` (dead code).
-- **Unknown routines.** The visual effects (`effects.asm`, `screen.asm`) and most of the slot engine and HUD are still `Unknown`. So are the palette effect script format (`rlBattleSceneStartPaletteEffect`, scripts at `$97/A9A8` and in bank `$99`) and the window effect data (`$97/F64E`, `$97/A7C7`).
+- **Unknown routines.** The visual effects (`effects.asm`, `screen.asm`) and most of the slot engine and HUD are still `Unknown`, among them what palette effect types 1-12 do each frame (`rlUnknown96D695`'s jump table) and the window effect data (`$97/F64E`, `$97/A7C7`).

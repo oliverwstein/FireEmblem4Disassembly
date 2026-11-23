@@ -9,9 +9,9 @@ The goal is source that is **readable and moddable** (shiftable, organized by ga
 Numbers come from `python3 tools/counts.py`; quote nothing else.
 
 - `./build.sh` is byte-identical and the checksums verify. 97.75% of the ROM is built from source. GAPS.md: 142 `none` pieces (52,160 bytes), 57 padding runs.
-- Routines: 6,258 in `engine/`, 4,554 named, 1,704 `Unknown`; **44 still in `engine/unsorted/`** (bank `$84` 14, `$8B` 25, `$8C` 5; `bank9B.asm` holds only data). 276 pinned blocks.
+- Routines: 6,258 in `engine/`, 4,554 named, 1,704 `Unknown`; **44 still in `engine/unsorted/`** (bank `$84` 14, `$8B` 25, `$8C` 5). 276 pinned blocks.
 - **Wave 5 part 3 done** (commits `bc435b2`..): banks `$95`-`$97` are all in `engine/battle_scene/` (`scene`, `rounds`, `results`, `combatants`, `loading`, `screen`, `hud`, `effects`, `data`, plus the old `script`, `animations`, `animation_moves`, `backgrounds`, `battle_screen`). Page: [docs/reference/battle_scene.md](docs/reference/battle_scene.md). Named: the frame and init, the rounds and strikes, HP, the intro and end steps (experience, level up, messages, Julius), skill banners, loading, the sequence interpreter and its command handlers. Still `Unknown`: most of `effects.asm`, `screen.asm`, `hud.asm`'s windows and `combatants.asm`'s slot engine (about 560 routines across the battle scene files).
-- New: `include/BattleScene.h` (`structBattleSceneCombatant`, `BattleSceneFlag*`, `BattleSceneRound*`, the latter two in `constant_rules.txt`); the scene's RAM in WRAM.h (`$0ADD`-`$0AE8`, `$0D44`-`$0D69`, `$7FE09E`-`$7FFC59`), scoped to `engine/battle_scene/` and `engine/title/` in `name_ram.py` (`BATTLE_SCENE_FILES`).
+- New: `include/BattleScene.h` (`structBattleSceneCombatant`, `BattleSceneFlag*`, `BattleSceneRound*`, the latter two in `constant_rules.txt`; the palette effect entries `PALETTE_EFFECT_*`, all 204 written by the new `tools/palette_effects.py`); `bank9B.asm`'s data filed (battle scene `data.asm`, the new `engine/title/title_data.asm`, the opening logo's palettes in `boot.asm`); the scene's RAM in WRAM.h (`$0ADD`-`$0AE8`, `$0D44`-`$0D69`, `$7FE09E`-`$7FFC59`), scoped to `engine/battle_scene/` and `engine/title/` in `name_ram.py` (`BATTLE_SCENE_FILES`).
 - Reference pages: `docs/reference/core.md`, `ai.md`, `battle_scene.md`, `castle.md`, `demo.md`, `epilogue.md`, `map_battle.md`, `menus.md`, `map_menu.md`, `map.md`, `save.md`, `title.md`. `tools/reference.py` output is gitignored; run it locally.
 - Engine guide: [docs/guide/00-introduction.md](docs/guide/00-introduction.md).
 
@@ -28,12 +28,11 @@ Claude's commits carry a Co-Authored-By line. Gemini wrote `f56d5ee`..`ef5fff9` 
 
 ## Next session, in order
 
-1. **Talk to the user before starting.** Two candidates; let the user choose:
-   - **Empty `engine/unsorted/`** (Phase 3's finish line): bank `$84` (14 routines), `$8B` (25), `$8C` (5), and `bank9B.asm`'s data (the battle scene's effect palettes `$9B/C16F`-`DC23`, bank `$99` data, `$E0` palettes: file them with the battle scene or the title). Small enough for one session together with item 2's first part.
-   - **The battle scene, second pass.** By value:
-     1. The palette effect script format (`rlBattleSceneStartPaletteEffect`; scripts at `$97/A9A8`, `$99/FAC1`.., still `.byte` rows with raw long pointers into `$9B/C16F`..) as macros, like `ram_lists.py`. The title uses it too.
-     2. `hud.asm`: the experience bar and level up windows (`rlUnknown9680C2` and the `$7FED4B`.. variables), the name and weapon windows.
-     3. `combatants.asm`: the slot engine around `rlBattleAnimationQueueAction` (`rlUnknown95C1AB`, `95C51F`, `95DDFB`, the effect slots `$86`/`$C9`), and the slot fields still raw (`$0AF1`/`$0AF2` knockback, `$0B79`.. the effect slots, `$0C25`.. the frame pointers set by `rlBattleSceneSetFramePointers`).
+1. **Talk to the user before starting.** Planned next (agreed with the user): **empty `engine/unsorted/`**, Phase 3's finish line: bank `$84` (14 routines), `$8B` (25) and `$8C` (5). They are leftovers of different systems; find each one's system from its callers and RAM, name, and file it there.
+   After that, the battle scene's second pass, by value:
+     1. `hud.asm`: the experience bar and level up windows (`rlUnknown9680C2` and the `$7FED4B`.. variables), the name and weapon windows.
+     2. `combatants.asm`: the slot engine around `rlBattleAnimationQueueAction` (`rlUnknown95C1AB`, `95C51F`, `95DDFB`, the effect slots `$86`/`$C9`), and the slot fields still raw (`$0AF1`/`$0AF2` knockback, `$0B79`.. the effect slots, `$0C25`.. the frame pointers set by `rlBattleSceneSetFramePointers`).
+     3. The palette effect types 1-12 (`rlUnknown96D695`'s jump table `aUnknown96D6DD`), then the slot RAM at `$7FFD9A` as a struct.
      4. The rest of `rsBattleSceneRunFrame`'s callees (`rlUnknown96961F` plays sound command `$01D1` when the combatants cross, ...).
 2. **Before naming a bank, make it honest source**, as for `$9F` and the title: `code_pointers.py`, `ram_lists.py`, raw `.word $XXXX`, `.byte` rows that are scripts or code, routines nothing references. In the battle scene, `rsBattleSceneLoadExtraTiles` loads a pointer written `aChapter05MapEvents + 326` (a chance label), and `rsBattleScenePlaceCombatants` holds two dead `.byte` runs.
 3. **Run each wave by the checklist below.** Draft `docs/guide/OUTLINE.md` once the core systems have reference pages, and show it to the user.

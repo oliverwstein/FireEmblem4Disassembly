@@ -856,9 +856,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97A9A8._A9A8_AD24)<<8
+        lda #(`aBattleScenePaletteEffects._A9A8_AD24)<<8
         sta lR18+1
-        lda #<>aUnknown97A9A8._A9A8_AD24
+        lda #<>aBattleScenePaletteEffects._A9A8_AD24
         sta lR18
         lda #$0000
         sta wR0
@@ -876,9 +876,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97A9A8._A9A8_AD2B)<<8
+        lda #(`aBattleScenePaletteEffects._A9A8_AD2B)<<8
         sta lR18+1
-        lda #<>aUnknown97A9A8._A9A8_AD2B
+        lda #<>aBattleScenePaletteEffects._A9A8_AD2B
         sta lR18
         lda #$0000
         sta wR0
@@ -896,9 +896,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97A9A8._A9A8_ADAF)<<8
+        lda #(`aBattleScenePaletteEffects._A9A8_ADAF)<<8
         sta lR18+1
-        lda #<>aUnknown97A9A8._A9A8_ADAF
+        lda #<>aBattleScenePaletteEffects._A9A8_ADAF
         sta lR18
         lda #$0000
         sta wR0
@@ -916,9 +916,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97A9A8._A9A8_ADB6)<<8
+        lda #(`aBattleScenePaletteEffects._A9A8_ADB6)<<8
         sta lR18+1
-        lda #<>aUnknown97A9A8._A9A8_ADB6
+        lda #<>aBattleScenePaletteEffects._A9A8_ADB6
         sta lR18
         lda #$0000
         sta wR0
@@ -936,9 +936,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97A9A8._A9A8_AD40)<<8
+        lda #(`aBattleScenePaletteEffects._A9A8_AD40)<<8
         sta lR18+1
-        lda #<>aUnknown97A9A8._A9A8_AD40
+        lda #<>aBattleScenePaletteEffects._A9A8_AD40
         sta lR18
         lda #$0000
         sta wR0
@@ -956,9 +956,9 @@
         .autsiz
         .databank ?
 
-        lda #(`aUnknown97A9A8._A9A8_AD16)<<8
+        lda #(`aBattleScenePaletteEffects._A9A8_AD16)<<8
         sta lR18+1
-        lda #<>aUnknown97A9A8._A9A8_AD16
+        lda #<>aBattleScenePaletteEffects._A9A8_AD16
         sta lR18
         lda #$0000
         sta wR0

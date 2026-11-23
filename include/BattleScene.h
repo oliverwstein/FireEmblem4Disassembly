@@ -39,3 +39,33 @@
     BattleSceneRoundArenaNextBout = bits($10) ; the arena round list ended with $FEFF: fight again
     BattleSceneRoundMissed        = bits($40) ; the current strike misses
     BattleSceneRoundArenaRetreat  = bits($80) ; B was pressed in the arena (rlBattleSceneReadArenaRetreat)
+
+  ; Palette effect entries for rlBattleSceneStartPaletteEffect (script command
+  ; 11 takes them from aBattleScenePaletteEffects; tools/palette_effects.py).
+  ; Slot is one of ten slots ($7FFD9A, 10 bytes each), Type (bits 0-5) picks
+  ; what rlUnknown96D695 does each frame; FirstColor and Count are the colors
+  ; of aBGPaletteBuffer it changes. Type 0 plays Data as frames of Count colors,
+  ; each optionally led by a byte $80 | frames (else the slot's own delay); a
+  ; byte $FE goes back to the start and $FF ends it.
+
+    ; Types 0-2, 10 and 12: a long pointer to the type's data.
+    PALETTE_EFFECT .segment Slot, Type, FirstColor, Count, Data
+      .byte \Slot, \Type, \FirstColor, \Count
+      .long \Data
+    .endsegment
+
+    ; Types 3-6: one byte.
+    PALETTE_EFFECT_VALUE .segment Slot, Type, FirstColor, Count, Value
+      .byte \Slot, \Type, \FirstColor, \Count, \Value
+    .endsegment
+
+    ; Type 7: one byte and a long pointer.
+    PALETTE_EFFECT_VALUE_DATA .segment Slot, Type, FirstColor, Count, Value, Data
+      .byte \Slot, \Type, \FirstColor, \Count, \Value
+      .long \Data
+    .endsegment
+
+    ; Types 8, 9 and 11 (and any type above 12, which stops the slot).
+    PALETTE_EFFECT_NO_DATA .segment Slot, Type, FirstColor, Count
+      .byte \Slot, \Type, \FirstColor, \Count
+    .endsegment

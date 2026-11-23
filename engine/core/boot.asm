@@ -762,3 +762,36 @@
     .endsection Unsorted9BFBC0Section
 
 
+    .section TableE0283FSection
+
+      .al
+      .xl
+
+      aUnknownE0283F ; E0/283F
+
+        ; Read by rlLoadOpeningLogoScreen.
+
+        .word $7FFF, $637C, $6739, $435E, $2F1D, $42B8, $4631, $2A33
+        .word $15D2, $096F, $00EA, $00A7, $0443, $0421, $0400
+
+        ; E0/285D
+
+    .endsection TableE0283FSection
+
+
+    .section DataE0285DSection
+
+      .al
+      .xl
+
+      aUnknownE0285D ; E0/285D
+
+        ; Read by rlLoadOpeningLogoScreen.
+
+        .word $7FFF, $77BD, $6F7B, $6739, $5AD6, $5294, $4A52, $4210
+        .word $39CE, $318C, $294A, $1CE7, $14A5, $0C63, $0421
+
+        ; E0/287B
+
+    .endsection DataE0285DSection
+

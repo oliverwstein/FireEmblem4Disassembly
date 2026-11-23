@@ -208,6 +208,7 @@
   .include "engine/title/title_screen.asm"
   .include "engine/title/title_scenes.asm"
   .include "engine/title/title_timelines.asm"
+  .include "engine/title/title_data.asm"
   .include "engine/map/map_loop.asm"
   .include "engine/core/boot.asm"
   .include "engine/core/anti_tamper.asm"
@@ -215,7 +216,6 @@
   .include "engine/unsorted/bank84.asm"
   .include "engine/unsorted/bank8B.asm"
   .include "engine/unsorted/bank8C.asm"
-  .include "engine/unsorted/bank9B.asm"
   .include "engine/battle/map_magic_effects.asm"
 
   .include "events/ChapterPrologue.asm"
@@ -7512,6 +7512,7 @@
 
       .dsection BattleAnimationFrameData99Section
       .dsection Data99F6C1Section
+      .dsection TitleData99Section
 
       .dsection Data99FFE7Section
 
