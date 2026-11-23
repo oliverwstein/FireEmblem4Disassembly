@@ -9058,10 +9058,6 @@
 
       .dsection Unsorted9EE2BESection
 
-    .here
-
-    * = $1EEC95
-    .logical $9EEC95
 
       .dsection Unsorted9EEC95Section
 

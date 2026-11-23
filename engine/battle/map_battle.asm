@@ -11207,6 +11207,1197 @@
 
         ; 9E/E2E4
 
+      procUnknown9EE2E4 ; 9E/E2E4
+
+        ; Unreferenced: nothing creates this proc.
+
+        .structProcInfo "ON", rlProcUnknown9EE2E4Init, rlProcUnknown9EE2E4Cycle, aProcUnknown9EE2E4Code
+
+      rlProcUnknown9EE2E4Init ; 9E/E2EC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$002C
+        jsl rlUnknown9EB476
+        jsl rlUnknown9EE309
+        jsl rlUnknown9EE35F
+        rtl
+
+        .databank 0
+
+        ; 9E/E2FC
+
+      rlProcUnknown9EE2E4Cycle ; 9E/E2FC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/E2FD
+
+        ; Unreachable: it follows a return.
+        rtl
+
+      aProcUnknown9EE2E4Code ; 9E/E2FE
+
+        PROC_YIELD 32
+        PROC_CALL rlUnknown9EE3A7
+        PROC_YIELD 56
+        PROC_END
+
+
+        ; 9E/E309
+
+      rlUnknown9EE309 ; 9E/E309
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda #(`aUnknown9EEA05)<<8
+        sta $7F4599
+        lda #<>aUnknown9EEA05
+        sta $7F4598
+        lda $7F57EE
+        tax
+        lda $7F57F0
+        tay
+        jsl rlUnknown9E8D25
+        lda #(`aUnknown9EEAC8)<<8
+        sta lR44+1
+        lda #<>aUnknown9EEAC8
+        sta lR44
+        lda #<>aUnknown9EEAC8
+        ldx wR0
+        ldy wR1
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        ldx $10F9,b
+        txa
+        sta $7F4BFF
+        lda #$0000
+        sta $12C0,b,x
+        sta $1320,b,x
+        lda #$0006
+        sta $12A0,b,x
+        lda #$0000
+        sta $1260,b,x
+        sta $1280,b,x
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E35F
+
+      rlUnknown9EE35F ; 9E/E35F
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda $7E4F79
+        tax
+        lda $7E4F7B
+        tay
+        jsl rlUnknown9E8D25
+        lda #(`aUnknown9EEAC8)<<8
+        sta lR44+1
+        lda #<>aUnknown9EEAC8
+        sta lR44
+        lda #<>aUnknown9EEAC8
+        ldx wR0
+        ldy wR1
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        ldx $10F9,b
+        txa
+        sta $7F4C01
+        lda #$0000
+        sta $12C0,b,x
+        sta $1320,b,x
+        lda #$0006
+        sta $12A0,b,x
+        lda #$0000
+        sta $1260,b,x
+        sta $1280,b,x
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E3A7
+
+      rlUnknown9EE3A7 ; 9E/E3A7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F4C01
+        tax
+        stz $1100,b,x
+        lda $7F4BFF
+        tax
+        lda #<>aUnknown9EEAA6
+        sta $11A0,b,x
+        lda #$0001
+        sta $1180,b,x
+        lda #$002D
+        jsl rlUnknown9EB476
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/E3CA
+
+      procUnknown9EE3CA ; 9E/E3CA
+
+        ; Unreferenced: nothing creates this proc.
+
+        .structProcInfo "ON", rlProcUnknown9EE3CAInit, rlProcUnknown9EE3CACycle, aProcUnknown9EE3CACode
+
+      rlProcUnknown9EE3CAInit ; 9E/E3D2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$0029
+        jsl rlUnknown9EB476
+        jsl rlUnknown9EE417
+        jsl rlUnknown9EE46D
+        jsl rlUnknown9EE568
+        rtl
+
+        .databank 0
+
+        ; 9E/E3E6
+
+      rlProcUnknown9EE3CACycle ; 9E/E3E6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/E3E7
+
+        ; Unreachable: it follows a return.
+        rtl
+
+      aProcUnknown9EE3CACode ; 9E/E3E8
+
+        PROC_SET_UNK_TIMER 30
+        _E3EC
+        PROC_YIELD 1
+        PROC_CALL rlUnknown96D695
+        PROC_JUMP_WHILE_UNK_TIMER _E3EC
+        PROC_CALL rlUnknown9EE4B5
+        _E3FC
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9EE4C5
+        PROC_CALL rlUnknown96D695
+        PROC_JUMP_IF_BITS_UNSET _E3FC, $0004
+        PROC_CALL rlUnknown9EE53D
+        PROC_YIELD 16
+        PROC_END
+
+
+        ; 9E/E417
+
+      rlUnknown9EE417 ; 9E/E417
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda #(`aUnknown9EEAD5)<<8
+        sta $7F4599
+        lda #<>aUnknown9EEAD5
+        sta $7F4598
+        lda $7F57EE
+        tax
+        lda $7F57F0
+        tay
+        jsl rlUnknown9E8D25
+        lda #(`aUnknown9EEB3D)<<8
+        sta lR44+1
+        lda #<>aUnknown9EEB3D
+        sta lR44
+        lda #<>aUnknown9EEB3D
+        ldx wR0
+        ldy wR1
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        ldx $10F9,b
+        txa
+        sta $7F4BFF
+        lda #$0000
+        sta $12C0,b,x
+        sta $1320,b,x
+        lda #$0006
+        sta $12A0,b,x
+        lda #$0000
+        sta $1260,b,x
+        sta $1280,b,x
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E46D
+
+      rlUnknown9EE46D ; 9E/E46D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda $7E4F79
+        tax
+        lda $7E4F7B
+        tay
+        jsl rlUnknown9E8D25
+        lda #(`aUnknown9EEB3D)<<8
+        sta lR44+1
+        lda #<>aUnknown9EEB3D
+        sta lR44
+        lda #<>aUnknown9EEB3D
+        ldx wR0
+        ldy wR1
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        ldx $10F9,b
+        txa
+        sta $7F4C01
+        lda #$0000
+        sta $12C0,b,x
+        sta $1320,b,x
+        lda #$0006
+        sta $12A0,b,x
+        lda #$0000
+        sta $1260,b,x
+        sta $1280,b,x
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E4B5
+
+      rlUnknown9EE4B5 ; 9E/E4B5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $0F37,b,x
+        and #$FFFB
+        sta $0F37,b,x
+        jsl rlUnknown9EE4FC
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/E4C5
+
+      rlUnknown9EE4C5 ; 9E/E4C5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F4C01
+        tax
+        jsl rlMoveActiveSpriteByVelocity
+        lda $7F4BFF
+        tax
+        lda $1200,b,x
+        sta wR0
+        lda $1240,b,x
+        sta wR1
+        lda #$0001
+        sta wR2
+        lda $7F4C01
+        tax
+        jsl rlUnknown9EA566
+        bcc _E4FA
+        lda #1,s
+        tax
+        lda $0F37,b,x
+        ora #$0004
+        sta $0F37,b,x
+
+        _E4FA
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/E4FC
+
+      rlUnknown9EE4FC ; 9E/E4FC
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F4C01
+        tax
+        lda $7E4F79
+        sta wR0
+        lda $7E4F7B
+        sta wR1
+        jsl rlUnknown9EE514
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/E514
+
+      rlUnknown9EE514 ; 9E/E514
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda $7F57EE
+        sec
+        sbc wR0
+        and #$00FF
+        xba
+        sta wR0
+        asl a
+        lda wR0
+        ror a
+        sta $13C0,b,x
+        lda $7F57F0
+        sec
+        sbc wR1
+        and #$00FF
+        xba
+        sta wR0
+        asl a
+        lda wR0
+        ror a
+        sta $13E0,b,x
+        rtl
+
+        .databank 0
+
+        ; 9E/E53D
+
+      rlUnknown9EE53D ; 9E/E53D
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown9EE5C8
+        jsl rlUnknown9EE1F7
+        lda $7F4C01
+        tax
+        stz $1100,b,x
+        lda $7F4BFF
+        tax
+        lda #<>aUnknown9EEB2D
+        sta $11A0,b,x
+        lda #$0001
+        sta $1180,b,x
+        lda #$002C
+        jsl rlUnknown9EB476
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/E568
+
+      rlUnknown9EE568 ; 9E/E568
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        jsl rlUnknown96D659
+        stz wR0
+        lda #(`aUnknown9EE581)<<8
+        sta lR18+1
+        lda #<>aUnknown9EE581
+        sta lR18
+        jsl rlBattleSceneStartPaletteEffect
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E581
+
+      aUnknown9EE581 ; 9E/E581
+
+        PALETTE_EFFECT $02, $01, $E4, $0B, aUnknown9EE588
+
+      aUnknown9EE588 ; 9E/E588
+
+        .byte $81, $46, $FF, $16, $1E, $0D, $77, $08, $ED
+        .byte $04, $89, $08, $ED, $0D, $77, $16, $1E, $26, $BF, $5F, $FF, $3B, $FF, $03, $FF
+        .byte $02, $F7, $02, $52, $01, $4A, $01, $4A, $01, $AD, $02, $B5, $3B, $FF, $4A, $5F
+        .byte $29, $52, $18, $EC, $14, $AA, $0C, $87, $04, $44, $14, $AA, $18, $EC, $29, $52
+        .byte $35, $B7, $42, $1C, $4A, $5F, $FE
+
+      rlUnknown9EE5C8 ; 9E/E5C8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        sep #$20
+        lda $7FFD9A
+        ora #$80
+        sta $7FFD9A
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 9E/E5D7
+
+      procUnknown9EE5D7 ; 9E/E5D7
+
+        ; Unreferenced: nothing creates this proc.
+
+        .structProcInfo "ON", rlProcUnknown9EE5D7Init, rlProcUnknown9EE5D7Cycle, aProcUnknown9EE5D7Code
+
+      rlProcUnknown9EE5D7Init ; 9E/E5DF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$002A
+        jsl rlUnknown9EB476
+        jsl rlUnknown9EE628
+        jsl rlUnknown9EE67E
+        jsl rlUnknown9EE6C6
+        jsl rlUnknown9EE7DB
+        rtl
+
+        .databank 0
+
+        ; 9E/E5F7
+
+      rlProcUnknown9EE5D7Cycle ; 9E/E5F7
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/E5F8
+
+        ; Unreachable: it follows a return.
+        rtl
+
+      aProcUnknown9EE5D7Code ; 9E/E5F9
+
+        PROC_SET_UNK_TIMER 30
+        _E5FD
+        PROC_YIELD 1
+        PROC_CALL rlUnknown96D695
+        PROC_JUMP_WHILE_UNK_TIMER _E5FD
+        PROC_CALL rlUnknown9EE70E
+        _E60D
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9EE74B
+        PROC_CALL rlUnknown96D695
+        PROC_JUMP_IF_BITS_UNSET _E60D, $0004
+        PROC_CALL rlUnknown9EE7A8
+        PROC_YIELD 24
+        PROC_END
+
+
+        ; 9E/E628
+
+      rlUnknown9EE628 ; 9E/E628
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda #(`aUnknown9EEBB9)<<8
+        sta $7F4599
+        lda #<>aUnknown9EEBB9
+        sta $7F4598
+        lda $7F57EE
+        tax
+        lda $7F57F0
+        tay
+        jsl rlUnknown9E8D25
+        lda #(`aUnknown9EEC22)<<8
+        sta lR44+1
+        lda #<>aUnknown9EEC22
+        sta lR44
+        lda #<>aUnknown9EEC22
+        ldx wR0
+        ldy wR1
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        ldx $10F9,b
+        txa
+        sta $7F4BFF
+        lda #$0000
+        sta $12C0,b,x
+        sta $1320,b,x
+        lda #$0006
+        sta $12A0,b,x
+        lda #$0000
+        sta $1260,b,x
+        sta $1280,b,x
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E67E
+
+      rlUnknown9EE67E ; 9E/E67E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda $7E4F79
+        tax
+        lda $7E4F7B
+        tay
+        jsl rlUnknown9E8D25
+        lda #(`aUnknown9EEC22)<<8
+        sta lR44+1
+        lda #<>aUnknown9EEC22
+        sta lR44
+        lda #<>aUnknown9EEC22
+        ldx wR0
+        ldy wR1
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        ldx $10F9,b
+        txa
+        sta $7F4C01
+        lda #$0000
+        sta $12C0,b,x
+        sta $1320,b,x
+        lda #$0006
+        sta $12A0,b,x
+        lda #$0000
+        sta $1260,b,x
+        sta $1280,b,x
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E6C6
+
+      rlUnknown9EE6C6 ; 9E/E6C6
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda $7E4F7D
+        tax
+        lda $7E4F7F
+        tay
+        jsl rlUnknown9E8D25
+        lda #(`aUnknown9EEC22)<<8
+        sta lR44+1
+        lda #<>aUnknown9EEC22
+        sta lR44
+        lda #<>aUnknown9EEC22
+        ldx wR0
+        ldy wR1
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        ldx $10F9,b
+        txa
+        sta $7F4C03
+        lda #$0000
+        sta $12C0,b,x
+        sta $1320,b,x
+        lda #$0006
+        sta $12A0,b,x
+        lda #$0000
+        sta $1260,b,x
+        sta $1280,b,x
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E70E
+
+      rlUnknown9EE70E ; 9E/E70E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $0F37,b,x
+        and #$FFFB
+        sta $0F37,b,x
+        jsl rlUnknown9EE71E
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/E71E
+
+      rlUnknown9EE71E ; 9E/E71E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F4C01
+        tax
+        lda $7E4F79
+        sta wR0
+        lda $7E4F7B
+        sta wR1
+        jsl rlUnknown9EE514
+        lda $7F4C03
+        tax
+        lda $7E4F7D
+        sta wR0
+        lda $7E4F7F
+        sta wR1
+        jsl rlUnknown9EE514
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/E74B
+
+      rlUnknown9EE74B ; 9E/E74B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda $7F4C01
+        tax
+        jsl rlMoveActiveSpriteByVelocity
+        lda $7F4BFF
+        tax
+        lda $1200,b,x
+        sta wR0
+        lda $1240,b,x
+        sta wR1
+        lda #$0001
+        sta wR2
+        lda $7F4C01
+        tax
+        jsl rlUnknown9EA566
+        lda $7F4C03
+        tax
+        jsl rlMoveActiveSpriteByVelocity
+        lda $7F4BFF
+        tax
+        lda $1200,b,x
+        sta wR0
+        lda $1240,b,x
+        sta wR1
+        lda #$0001
+        sta wR2
+        lda $7F4C03
+        tax
+        jsl rlUnknown9EA566
+        bcc _E7A6
+        lda #1,s
+        tax
+        lda $0F37,b,x
+        ora #$0004
+        sta $0F37,b,x
+
+        _E7A6
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/E7A8
+
+      rlUnknown9EE7A8 ; 9E/E7A8
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown9EE5C8
+        jsl rlUnknown9EE1F7
+        lda $7F4C01
+        tax
+        stz $1100,b,x
+        lda $7F4C03
+        tax
+        stz $1100,b,x
+        lda $7F4BFF
+        tax
+        lda #<>aUnknown9EEC15
+        sta $11A0,b,x
+        lda #$0001
+        sta $1180,b,x
+        lda #$002C
+        jsl rlUnknown9EB476
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/E7DB
+
+      rlUnknown9EE7DB ; 9E/E7DB
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        jsl rlUnknown96D659
+        stz wR0
+        lda #(`aUnknown9EE7F4)<<8
+        sta lR18+1
+        lda #<>aUnknown9EE7F4
+        sta lR18
+        jsl rlBattleSceneStartPaletteEffect
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E7F4
+
+      aUnknown9EE7F4 ; 9E/E7F4
+
+        PALETTE_EFFECT $02, $01, $E1, $08, aUnknown9EE7FB
+
+      aUnknown9EE7FB ; 9E/E7FB
+
+        .byte $81, $7B, $59, $7B, $9B, $7F, $DE, $67, $9C
+        .byte $4F, $5A, $33, $38, $1A, $F6, $02, $B4, $03, $7A, $1B, $9B, $33, $9C, $4B, $FF
+        .byte $7B, $DF, $67, $7F, $53, $3F, $3A, $DF, $26, $9F, $12, $3F, $26, $9F, $3A, $DF
+        .byte $53, $3F, $7F, $DE, $7B, $59, $72, $6F, $72, $B1, $72, $6F, $6E, $2C, $72, $6F
+        .byte $72, $B1, $76, $F4, $77, $16, $FE
+
+      procUnknown9EE83B ; 9E/E83B
+
+        ; Unreferenced: nothing creates this proc.
+
+        .structProcInfo "ON", rlProcUnknown9EE83BInit, rlProcUnknown9EE83BCycle, aProcUnknown9EE83BCode
+
+      rlProcUnknown9EE83BInit ; 9E/E843
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        lda #$002B
+        jsl rlUnknown9EB476
+        jsl rlUnknown9EE88C
+        jsl rlUnknown9EE8E2
+        jsl rlUnknown9EE92A
+        jsl rlUnknown9EE9A5
+        rtl
+
+        .databank 0
+
+        ; 9E/E85B
+
+      rlProcUnknown9EE83BCycle ; 9E/E85B
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        rtl
+
+        .databank 0
+
+        ; 9E/E85C
+
+        ; Unreachable: it follows a return.
+        rtl
+
+      aProcUnknown9EE83BCode ; 9E/E85D
+
+        PROC_SET_UNK_TIMER 30
+        _E861
+        PROC_YIELD 1
+        PROC_CALL rlUnknown96D695
+        PROC_JUMP_WHILE_UNK_TIMER _E861
+        PROC_CALL rlUnknown9EE70E
+        _E871
+        PROC_YIELD 1
+        PROC_CALL rlUnknown9EE74B
+        PROC_CALL rlUnknown96D695
+        PROC_JUMP_IF_BITS_UNSET _E871, $0004
+        PROC_CALL rlUnknown9EE972
+        PROC_YIELD 24
+        PROC_END
+
+
+        ; 9E/E88C
+
+      rlUnknown9EE88C ; 9E/E88C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda #(`aUnknown9EEB4A)<<8
+        sta $7F4599
+        lda #<>aUnknown9EEB4A
+        sta $7F4598
+        lda $7F57EE
+        tax
+        lda $7F57F0
+        tay
+        jsl rlUnknown9E8D25
+        lda #(`aUnknown9EEBB2)<<8
+        sta lR44+1
+        lda #<>aUnknown9EEBB2
+        sta lR44
+        lda #<>aUnknown9EEBB2
+        ldx wR0
+        ldy wR1
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        ldx $10F9,b
+        txa
+        sta $7F4BFF
+        lda #$0000
+        sta $12C0,b,x
+        sta $1320,b,x
+        lda #$0006
+        sta $12A0,b,x
+        lda #$0000
+        sta $1260,b,x
+        sta $1280,b,x
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E8E2
+
+      rlUnknown9EE8E2 ; 9E/E8E2
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda $7E4F79
+        tax
+        lda $7E4F7B
+        tay
+        jsl rlUnknown9E8D25
+        lda #(`aUnknown9EEBB2)<<8
+        sta lR44+1
+        lda #<>aUnknown9EEBB2
+        sta lR44
+        lda #<>aUnknown9EEBB2
+        ldx wR0
+        ldy wR1
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        ldx $10F9,b
+        txa
+        sta $7F4C01
+        lda #$0000
+        sta $12C0,b,x
+        sta $1320,b,x
+        lda #$0006
+        sta $12A0,b,x
+        lda #$0000
+        sta $1260,b,x
+        sta $1280,b,x
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E92A
+
+      rlUnknown9EE92A ; 9E/E92A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        lda $7E4F7D
+        tax
+        lda $7E4F7F
+        tay
+        jsl rlUnknown9E8D25
+        lda #(`aUnknown9EEBB2)<<8
+        sta lR44+1
+        lda #<>aUnknown9EEBB2
+        sta lR44
+        lda #<>aUnknown9EEBB2
+        ldx wR0
+        ldy wR1
+        jsl rlActiveSpriteEngineCreateSpriteLowestSlot
+        ldx $10F9,b
+        txa
+        sta $7F4C03
+        lda #$0000
+        sta $12C0,b,x
+        sta $1320,b,x
+        lda #$0006
+        sta $12A0,b,x
+        lda #$0000
+        sta $1260,b,x
+        sta $1280,b,x
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E972
+
+      rlUnknown9EE972 ; 9E/E972
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        jsl rlUnknown9EE5C8
+        jsl rlUnknown9EE1F7
+        lda $7F4C01
+        tax
+        stz $1100,b,x
+        lda $7F4C03
+        tax
+        stz $1100,b,x
+        lda $7F4BFF
+        tax
+        lda #<>aUnknown9EEBA5
+        sta $11A0,b,x
+        lda #$0001
+        sta $1180,b,x
+        lda #$002C
+        jsl rlUnknown9EB476
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9E/E9A5
+
+      rlUnknown9EE9A5 ; 9E/E9A5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phy
+        phx
+        jsl rlUnknown96D659
+        stz wR0
+        lda #(`aUnknown9EE9BE)<<8
+        sta lR18+1
+        lda #<>aUnknown9EE9BE
+        sta lR18
+        jsl rlBattleSceneStartPaletteEffect
+        plx
+        ply
+        rtl
+
+        .databank 0
+
+        ; 9E/E9BE
+
+      aUnknown9EE9BE ; 9E/E9BE
+
+        PALETTE_EFFECT $02, $01, $E1, $08, aUnknown9EE9C5
+
+      aUnknown9EE9C5 ; 9E/E9C5
+
+        .byte $81, $35, $B7, $42, $1C, $4A, $5F, $46, $FF
+        .byte $16, $1E, $0D, $77, $08, $ED, $04, $89, $08, $ED, $0D, $77, $16, $1E, $26, $BF
+        .byte $5F, $FF, $3B, $FF, $03, $FF, $02, $F7, $02, $52, $01, $4A, $01, $4A, $01, $AD
+        .byte $02, $B5, $3B, $FF, $4A, $5F, $29, $52, $18, $EC, $0C, $87, $04, $44, $0C, $87
+        .byte $14, $AA, $18, $EC, $29, $52, $FE
+
+      aUnknown9EEA05 ; 9E/EA05
+
+        .byte $6F, $00, $85, $00, $01, $00, $FC, $01, $FC, $40, $20, $01, $00, $FC, $01, $FC
+        .byte $50, $20, $01, $00, $F8, $C3, $F8, $41, $20, $01, $00, $F8, $C3, $F8, $43, $20
+        .byte $01, $00, $F8, $C3, $F8, $45, $20, $02, $00, $F2, $01, $02, $40, $20, $F1, $01
+        .byte $FB, $57, $20, $02, $00, $F1, $01, $F5, $40, $20, $F5, $01, $F0, $47, $20, $02
+        .byte $00, $FA, $01, $EF, $40, $20, $01, $00, $F2, $57, $20, $02, $00, $06, $00, $F7
+        .byte $40, $20, $08, $00, $FD, $47, $20, $02, $00, $06, $00, $05, $40, $20, $FF, $01
+        .byte $08, $57, $20, $02, $00, $F0, $00, $F0, $FF, $20, $F0, $00, $F0, $FF, $20, $04
+        .byte $00, $0B, $00, $12, $00, $19, $00, $20, $00, $27, $00, $33, $00, $3F, $00, $4B
+        .byte $00, $57, $00, $63, $00, $0E, $05, $00, $0E, $05, $01, $0E, $05, $02, $0E, $05
+        .byte $03, $0E, $05, $04, $0E, $FF, $0A, $0E, $FF, $0A, $0E, $FF, $0A, $0E, $FF, $0A
+        .byte $01
+
+      aUnknown9EEAA6 ; 9E/EAA6
+
+        .byte $0E, $04, $00, $0E, $04, $05, $0E, $04, $06, $0E, $04, $07, $0E, $04, $08, $0E
+        .byte $04, $09, $0E, $04, $05, $0E, $04, $06, $0E, $04, $07, $0E, $04, $08, $0E, $04
+        .byte $09, $01
+
+      aUnknown9EEAC8 ; 9E/EAC8
+
+        .byte $D4, $EA, $D4, $EA, $8A, $EA, $D4, $EA, $D4, $EA, $A6, $EA, $6B
+
+      aUnknown9EEAD5 ; 9E/EAD5
+
+        .byte $3C, $00, $4C, $00, $01, $00, $F8, $C3, $F8, $40, $20, $01, $00, $F8, $C3, $F8
+        .byte $42, $20, $01, $00, $F8, $C3, $F8, $44, $20, $01, $00, $FB, $01, $FC, $46, $20
+        .byte $01, $00, $FB, $01, $FC, $56, $20, $01, $00, $F8, $C3, $F8, $47, $20, $01, $00
+        .byte $F8, $C3, $F8, $49, $20, $01, $00, $F8, $C3, $F8, $4B, $20, $04, $00, $0B, $00
+        .byte $12, $00, $19, $00, $20, $00, $27, $00, $2E, $00, $35, $00, $0E, $02, $00, $0E
+        .byte $02, $01, $0E, $02, $02, $15, $21, $EB
+
+      aUnknown9EEB2D ; 9E/EB2D
+
+        .byte $0E, $05, $03, $0E, $03, $04, $0E, $03, $05, $0E, $05, $06, $0E, $05, $07, $01
+
+      aUnknown9EEB3D ; 9E/EB3D
+
+        .byte $49, $EB, $49, $EB, $21, $EB, $49, $EB, $49, $EB, $2D, $EB, $6B
+
+      aUnknown9EEB4A ; 9E/EB4A
+
+        .byte $3C, $00, $4C, $00, $01, $00, $F8, $C3, $F8, $40, $20, $01, $00, $F8, $C3, $F8
+        .byte $42, $20, $01, $00, $F8, $C3, $F8, $44, $20, $01, $00, $F8, $C3, $F8, $46, $20
+        .byte $01, $00, $FC, $01, $FD, $48, $20, $01, $00, $F8, $C3, $F8, $49, $20, $01, $00
+        .byte $F8, $C3, $F8, $4B, $20, $01, $00, $F8, $C3, $F8, $4D, $20, $04, $00, $0B, $00
+        .byte $12, $00, $19, $00, $20, $00, $27, $00, $2E, $00, $35, $00, $0E, $01, $00, $0E
+        .byte $01, $01, $0E, $01, $02, $0E, $01, $03, $15, $96, $EB
+
+      aUnknown9EEBA5 ; 9E/EBA5
+
+        .byte $0E, $05, $04, $0E, $05, $05, $0E, $05, $06, $0E, $05, $07, $01
+
+      aUnknown9EEBB2 ; 9E/EBB2
+
+        .byte $B8, $EB, $B8, $EB, $96, $EB, $6B
+
+      aUnknown9EEBB9 ; 9E/EBB9
+
+        .byte $35, $00, $43, $00, $01, $00, $F8, $C3, $F8, $40, $20, $01, $00, $F8, $C3, $F8
+        .byte $42, $20, $01, $00, $F8, $C3, $F8, $44, $20, $01, $00, $FC, $01, $FD, $46, $20
+        .byte $01, $00, $FC, $01, $FC, $56, $20, $01, $00, $F8, $C3, $F8, $47, $20, $01, $00
+        .byte $F8, $C3, $F8, $49, $20, $04, $00, $0B, $00, $12, $00, $19, $00, $20, $00, $27
+        .byte $00, $2E, $00, $0E, $01, $00, $0E, $01, $01, $0E, $01, $02, $15, $FC, $EB, $0E
+        .byte $03, $03, $0E, $03, $04, $0E, $03, $05, $0E, $03, $06, $01
+
+      aUnknown9EEC15 ; 9E/EC15
+
+        .byte $0E, $04, $03, $0E, $05, $04, $0E, $06, $05, $0E, $03, $06, $01
+
+      aUnknown9EEC22 ; 9E/EC22
+
+        .byte $28, $EC, $28, $EC, $FC, $EB, $6B, $35, $00, $43, $00, $01, $00, $F8, $C3, $F8
+        .byte $48, $20, $01, $00, $F8, $C3, $F8, $44, $20, $01, $00, $F8, $C3, $F8, $46, $20
+        .byte $01, $00, $F8, $C3, $F8, $40, $20, $01, $00, $F8, $C3, $F8, $42, $20, $01, $00
+        .byte $F8, $C3, $F8, $4A, $20, $01, $00, $F8, $C3, $F8, $4C, $20, $04, $00, $0B, $00
+        .byte $12, $00, $19, $00, $20, $00, $27, $00, $2E, $00, $0E, $04, $00, $0E, $04, $01
+        .byte $0E, $04, $00, $0E, $04, $02, $15, $6C, $EC, $0E, $04, $03, $0E, $04, $04, $0E
+        .byte $04, $05, $0E, $04, $06, $01, $94, $EC, $94, $EC, $6C, $EC, $94, $EC, $94, $EC
+        .byte $7B, $EC, $6B
+
     .endsection Unsorted9EE2BESection
 
 

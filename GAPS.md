@@ -7,7 +7,7 @@ first byte), `inside` (built code points into it, not at its start), `log` (read
 `fe4.cdl` only), `none` (no evidence). Addresses are given where the game reads them:
 upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 
-44,685 bytes in 59 runs: 58 runs of padding (42,204 bytes) and 1 pieces (2,481 bytes).
+42,204 bytes in 58 runs: 58 runs of padding (42,204 bytes) and 0 pieces (0 bytes).
 
 | Class | Pieces | Bytes | Read in the log |
 |---|---|---|---|
@@ -15,7 +15,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | `table` | 0 | 0 | 0 |
 | `inside` | 0 | 0 | 0 |
 | `log` | 0 | 0 | 0 |
-| `none` | 1 | 2,481 | 0 |
+| `none` | 0 | 0 | 0 |
 
 ## `code` (0)
 
@@ -37,8 +37,7 @@ upper halves in banks `$80`-`$BF`, lower halves in `$C0`-`$FF`.
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
 
-## `none` (1)
+## `none` (0)
 
 | Piece | Bytes | Log reads | Between | Evidence |
 |---|---|---|---|---|
-| $9E/E2E4-$9E/EC94 | 2,481 | 0 | `rlUnknown9EE2D1` / `rlUnknown9EEC95` |  |
