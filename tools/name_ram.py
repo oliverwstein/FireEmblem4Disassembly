@@ -54,6 +54,9 @@ SCOPED = [
     # The unit menu's slot lists; the AI uses the area for its own variables.
     (0x7E2000, 0x7E202F, ('aUnitMenu',), ('engine/menus/unit_menu.asm', 'engine/menus/item_list.asm',
      'engine/items/staves.asm')),
+    # The title screen's variables; the battle scene reuses the area.
+    (0x7FD000, 0x7FD8BA, ('bTitle', 'wTitle', 'lTitle', 'aTitle'),
+     ('engine/title/title_screen.asm', 'engine/title/title_scenes.asm')),
     # The battle animation combatants' motion; a few other screens reuse the area.
     (0x7E0AF3, 0x7E0B78, ('wBattleAnimation', 'bBattleAnimation', 'lBattleAnimation'),
      ('engine/unsorted/bank95.asm', 'engine/unsorted/bank96.asm', 'engine/unsorted/bank97.asm',

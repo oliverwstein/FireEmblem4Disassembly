@@ -148,7 +148,7 @@ def header_banks(files):
 
 
 BANK_HALF = re.compile(r'^(\s+ld([axy]) #)\$([0-9A-F]{2})00(\s*(?:;.*)?)$')
-BANK_STORE = re.compile(r'^\s+st([axy]) ([\w.]+)\+1((?:,b)?)\s*(?:;.*)?$')
+BANK_STORE = re.compile(r'^\s+st([axy]) ([\w.]+)\+1((?:,b)?(?:,[xy])?)\s*(?:;.*)?$')
 ADDRESS_HALF = re.compile(r'^(\s+ld([axy]) #)(\$[0-9A-F]{4}|<>[\w.]+)(\s*(?:;.*)?)$')
 
 

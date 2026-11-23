@@ -15,8 +15,8 @@
 
         sep #$20
         lda #$00
-        sta $7FD8AB
-        sta $7FD8BA
+        sta bTitleCaption
+        sta bTitleScreenFlags
         lda #$E0
         sta bBufferCOLDATA_3
         sta bBufferCOLDATA_1
@@ -51,7 +51,7 @@
         sta wBufferBG1VOFS
         sep #$20
         lda #$80
-        sta $7FD073
+        sta bTitleCaptionBrightness
         rep #$20
         rtl
 
@@ -656,9 +656,9 @@
         .autsiz
         .databank ?
 
-        lda #$9500
+        lda #(`aUnknown95EDD0)<<8
         sta lR18+1
-        lda #$EDD0
+        lda #<>aUnknown95EDD0
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -690,7 +690,7 @@
         lda #$0000
 
         _EDC2
-        sta $0120,b,x
+        sta aBGPaletteBuffer.aPalette1,b,x
         sta aOAMPaletteBuffer,b,x
         inc x
         inc x
@@ -774,9 +774,9 @@
         .databank ?
 
         phx
-        lda #$9500
+        lda #(`aUnknown95EE58)<<8
         sta lR18+1
-        lda #$EE58
+        lda #<>aUnknown95EE58
         sta lR18
         jsl rlBattleSceneWriteRAM
         lda #$0000
@@ -851,9 +851,9 @@
         .autsiz
         .databank ?
 
-        lda #$9700
+        lda #(`aUnknown97A9A8._A9A8_AD24)<<8
         sta lR18+1
-        lda #$AD24
+        lda #<>aUnknown97A9A8._A9A8_AD24
         sta lR18
         lda #$0000
         sta wR0
@@ -871,9 +871,9 @@
         .autsiz
         .databank ?
 
-        lda #$9700
+        lda #(`aUnknown97A9A8._A9A8_AD2B)<<8
         sta lR18+1
-        lda #$AD2B
+        lda #<>aUnknown97A9A8._A9A8_AD2B
         sta lR18
         lda #$0000
         sta wR0
@@ -891,9 +891,9 @@
         .autsiz
         .databank ?
 
-        lda #$9700
+        lda #(`aUnknown97A9A8._A9A8_ADAF)<<8
         sta lR18+1
-        lda #$ADAF
+        lda #<>aUnknown97A9A8._A9A8_ADAF
         sta lR18
         lda #$0000
         sta wR0
@@ -911,9 +911,9 @@
         .autsiz
         .databank ?
 
-        lda #$9700
+        lda #(`aUnknown97A9A8._A9A8_ADB6)<<8
         sta lR18+1
-        lda #$ADB6
+        lda #<>aUnknown97A9A8._A9A8_ADB6
         sta lR18
         lda #$0000
         sta wR0
@@ -931,9 +931,9 @@
         .autsiz
         .databank ?
 
-        lda #$9700
+        lda #(`aUnknown97A9A8._A9A8_AD40)<<8
         sta lR18+1
-        lda #$AD40
+        lda #<>aUnknown97A9A8._A9A8_AD40
         sta lR18
         lda #$0000
         sta wR0
@@ -951,9 +951,9 @@
         .autsiz
         .databank ?
 
-        lda #$9700
+        lda #(`aUnknown97A9A8._A9A8_AD16)<<8
         sta lR18+1
-        lda #$AD16
+        lda #<>aUnknown97A9A8._A9A8_AD16
         sta lR18
         lda #$0000
         sta wR0
@@ -979,9 +979,9 @@
         .autsiz
         .databank ?
 
-        lda #$9900
+        lda #(`aUnknown99FDC5)<<8
         sta lR18+1
-        lda #$FDC5
+        lda #<>aUnknown99FDC5
         sta lR18
         lda #$0000
         sta wR0
@@ -1010,16 +1010,16 @@
         cpx #$001E
         bcc _F3EE
         plx
-        lda #$9900
+        lda #(`aUnknown99FDCD)<<8
         sta lR18+1
-        lda #$FDCD
+        lda #<>aUnknown99FDCD
         sta lR18
         lda #$0000
         sta wR0
         jsl rlBattleSceneStartPaletteEffect
-        lda #$9500
+        lda #(`aUnknown95F41B)<<8
         sta lR18+1
-        lda #$F41B
+        lda #<>aUnknown95F41B
         sta lR18
         jsl rlBattleSceneWriteRAM
         rtl
@@ -1158,10 +1158,10 @@
         bcc _F499
         plx
         jsl rlUnknown95F4B7
-        lda #$9500
-        sta $7FD008,x
-        lda #$F4B7
-        sta $7FD007,x
+        lda #(`rlUnknown95F4B7)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95F4B7
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -1195,7 +1195,7 @@
         bcc _F4DE
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         jsl rlUnknown95F5B4
 
@@ -1242,10 +1242,10 @@
         bcc _F4FB
         plx
         jsl rlUnknown95F519
-        lda #$9500
-        sta $7FD008,x
-        lda #$F519
-        sta $7FD007,x
+        lda #(`rlUnknown95F519)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95F519
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -1279,7 +1279,7 @@
         bcc _F540
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         jsl rlUnknown95F5B4
 
@@ -1326,10 +1326,10 @@
         bcc _F55D
         plx
         jsl rlUnknown95F57B
-        lda #$9500
-        sta $7FD008,x
-        lda #$F57B
-        sta $7FD007,x
+        lda #(`rlUnknown95F57B)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95F57B
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -1363,7 +1363,7 @@
         bcc _F5A2
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         jsl rlUnknown95F5B4
 
@@ -1393,12 +1393,12 @@
         ldx #$0000
 
         _F5B8
-        lda $7FD08F,x
+        lda aTitleSprites.Flags,x
         bit #$0080
         beq _F5CC
-        lda $7FD09B,x
+        lda aTitleSprites.Attributes,x
         ora #$0400
-        sta $7FD09B,x
+        sta aTitleSprites.Attributes,x
 
         _F5CC
         txa
@@ -1432,10 +1432,10 @@
         lda #$0000
         sta $7FD055
         jsl rlUnknown95F64A
-        lda #$9500
-        sta $7FD008,x
-        lda #$F64A
-        sta $7FD007,x
+        lda #(`rlUnknown95F64A)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95F64A
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -1460,7 +1460,7 @@
         lda $7FD055
         bne _F66F
         lda #$0000
-        sta $1B43,b
+        sta aPaletteFading.wDesiredColor,b
         lda #$0020
         sta aPaletteFading,b
         clc
@@ -1471,7 +1471,7 @@
         bcc _F66F
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
 
         _F66F
@@ -1504,14 +1504,14 @@
         .autsiz
         .databank ?
 
-        lda #$9700
+        lda #(`aUnknown97F65A)<<8
         sta lR18+1
-        lda #$F65A
+        lda #<>aUnknown97F65A
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect1
         lda #$0000
-        sta $7FEC1E
+        sta aUnit2DataBuffer._ROM.StrengthGrowth
         lda #$0080
         sta $7FEC1F
         lda #$7000
@@ -1531,9 +1531,9 @@
         .autsiz
         .databank ?
 
-        lda #$9700
+        lda #(`aUnknown97A7C7._A411_A844)<<8
         sta lR18+1
-        lda #$A844
+        lda #<>aUnknown97A7C7._A411_A844
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect1
@@ -1614,9 +1614,9 @@
         .autsiz
         .databank ?
 
-        lda #$9700
+        lda #(`aUnknown97F666)<<8
         sta lR18+1
-        lda #$F666
+        lda #<>aUnknown97F666
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect2
@@ -1641,9 +1641,9 @@
         .autsiz
         .databank ?
 
-        lda #$9700
+        lda #(`aUnknown97F67F)<<8
         sta lR18+1
-        lda #$F67F
+        lda #<>aUnknown97F67F
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect2
@@ -1660,9 +1660,9 @@
         .autsiz
         .databank ?
 
-        lda #$9700
+        lda #(`aUnknown97F8CB)<<8
         sta lR18+1
-        lda #$F8CB
+        lda #<>aUnknown97F8CB
         sta lR18
         ldx #$0000
         jsl rlBattleSceneStartWindowEffect2
@@ -1688,15 +1688,15 @@
         .databank ?
 
         ldx #$0436
-        lda #$9700
+        lda #(`aUnknown97F9AA)<<8
         sta lR18+1
-        lda #$F9AA
+        lda #<>aUnknown97F9AA
         sta lR18
         jsl rlUnknown95F967
         ldx #$0498
-        lda #$9700
+        lda #(`aUnknown97F9B7)<<8
         sta lR18+1
-        lda #$F9B7
+        lda #<>aUnknown97F9B7
         sta lR18
         jsl rlUnknown95F967
         sep #$20
@@ -1717,15 +1717,15 @@
         .databank ?
 
         ldx #$0372
-        lda #$9700
+        lda #(`aUnknown97F990)<<8
         sta lR18+1
-        lda #$F990
+        lda #<>aUnknown97F990
         sta lR18
         jsl rlUnknown95F967
         ldx #$03D4
-        lda #$9700
+        lda #(`aUnknown97F99D)<<8
         sta lR18+1
-        lda #$F99D
+        lda #<>aUnknown97F99D
         sta lR18
         jsl rlUnknown95F967
         rtl
@@ -1742,15 +1742,15 @@
         .databank ?
 
         ldx #$02AE
-        lda #$9700
+        lda #(`aUnknown97F976)<<8
         sta lR18+1
-        lda #$F976
+        lda #<>aUnknown97F976
         sta lR18
         jsl rlUnknown95F967
         ldx #$0310
-        lda #$9700
+        lda #(`aUnknown97F983)<<8
         sta lR18+1
-        lda #$F983
+        lda #<>aUnknown97F983
         sta lR18
         jsl rlUnknown95F967
         rtl
@@ -1767,15 +1767,15 @@
         .databank ?
 
         ldx #$0188
-        lda #$9700
+        lda #(`aUnknown97F95C)<<8
         sta lR18+1
-        lda #$F95C
+        lda #<>aUnknown97F95C
         sta lR18
         jsl rlUnknown95F967
         ldx #$01EA
-        lda #$9700
+        lda #(`aUnknown97F969)<<8
         sta lR18+1
-        lda #$F969
+        lda #<>aUnknown97F969
         sta lR18
         jsl rlUnknown95F967
         rtl
@@ -1792,15 +1792,15 @@
         .databank ?
 
         ldx #$00C4
-        lda #$9700
+        lda #(`aUnknown97F942)<<8
         sta lR18+1
-        lda #$F942
+        lda #<>aUnknown97F942
         sta lR18
         jsl rlUnknown95F967
         ldx #$0126
-        lda #$9700
+        lda #(`aUnknown97F94F)<<8
         sta lR18+1
-        lda #$F94F
+        lda #<>aUnknown97F94F
         sta lR18
         jsl rlUnknown95F967
         rtl
@@ -1817,15 +1817,15 @@
         .databank ?
 
         ldx #$0000
-        lda #$9700
+        lda #(`aUnknown97F928)<<8
         sta lR18+1
-        lda #$F928
+        lda #<>aUnknown97F928
         sta lR18
         jsl rlUnknown95F967
         ldx #$0062
-        lda #$9700
+        lda #(`aUnknown97F935)<<8
         sta lR18+1
-        lda #$F935
+        lda #<>aUnknown97F935
         sta lR18
         jsl rlUnknown95F967
         rtl
@@ -1842,9 +1842,9 @@
         .databank ?
 
         ldx #$024C
-        lda #$9700
+        lda #(`aUnknown97F9C4)<<8
         sta lR18+1
-        lda #$F9C4
+        lda #<>aUnknown97F9C4
         sta lR18
         jsl rlUnknown95F967
         rtl
@@ -1892,10 +1892,10 @@
         lda #1,s
         tax
         jsl rlUnknown95FB0A
-        lda #$9500
-        sta $7FD008,x
-        lda #$FB0A
-        sta $7FD007,x
+        lda #(`rlUnknown95FB0A)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FB0A
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -1953,7 +1953,7 @@
         tax
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
 
         _FB49
@@ -2049,7 +2049,7 @@
         lda $97F9D1,x
         tax
         lda lR18
-        sta $7FD094,x
+        sta aTitleSprites.Script,x
         lda lR18+1
         sta $7FD095,x
         lda #$0004
@@ -2088,18 +2088,18 @@
         phx
         lda $97F9D1,x
         tax
-        lda $7FD092,x
+        lda aTitleSprites.Y,x
         sec
         sbc wR0
         and #$00FF
-        sta $7FD092,x
+        sta aTitleSprites.Y,x
         cmp #$00E0
         bcc _FC10
         cmp #$00F0
         bcs _FC10
         sep #$20
         lda #$00
-        sta $7FD08F,x
+        sta aTitleSprites.Flags,x
         plx
         tyx
         lda #$03
@@ -2150,7 +2150,7 @@
         clc
         adc wR0
         and #$00FF
-        sta $7FD092,x
+        sta aTitleSprites.Y,x
 
         _FC4F
         plx
@@ -2173,10 +2173,10 @@
         lda #$0000
         sta $7FD04C
         jsl rlUnknown95FC6B
-        lda #$9500
-        sta $7FD008,x
-        lda #$FC6B
-        sta $7FD007,x
+        lda #(`rlUnknown95FC6B)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FC6B
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -2207,7 +2207,7 @@
         rep #$20
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         bra _FCA3
 
@@ -2252,10 +2252,10 @@
         lda #$F48B
         sta $7FD052
         jsl rlUnknown95FD44
-        lda #$9500
-        sta $7FD008,x
-        lda #$FD44
-        sta $7FD007,x
+        lda #(`rlUnknown95FD44)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FD44
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -2277,10 +2277,10 @@
         lda #$F57D
         sta $7FD052
         jsl rlUnknown95FD44
-        lda #$9500
-        sta $7FD008,x
-        lda #$FD44
-        sta $7FD007,x
+        lda #(`rlUnknown95FD44)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FD44
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -2302,10 +2302,10 @@
         lda #$F5C7
         sta $7FD052
         jsl rlUnknown95FD44
-        lda #$9500
-        sta $7FD008,x
-        lda #$FD44
-        sta $7FD007,x
+        lda #(`rlUnknown95FD44)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FD44
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -2334,10 +2334,10 @@
         lda #$F63D
         sta $7FD052
         jsl rlUnknown95FD44
-        lda #$9500
-        sta $7FD008,x
-        lda #$FD44
-        sta $7FD007,x
+        lda #(`rlUnknown95FD44)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FD44
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -2385,7 +2385,7 @@
         _FD7A
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
 
         _FD84
@@ -2409,10 +2409,10 @@
         sta $7FD046
         sta $7FD048
         jsl rlUnknown95FDA6
-        lda #$9500
-        sta $7FD008,x
-        lda #$FDA6
-        sta $7FD007,x
+        lda #(`rlUnknown95FDA6)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FDA6
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -2487,10 +2487,10 @@
         sta $7FD048
         sta $7FD04A
         jsl rlUnknown95FE46
-        lda #$9500
-        sta $7FD008,x
-        lda #$FE46
-        sta $7FD007,x
+        lda #(`rlUnknown95FE46)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FE46
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -2586,10 +2586,10 @@
         lda #$0000
         sta $7FD046
         jsl rlUnknown95FEBC
-        lda #$9500
-        sta $7FD008,x
-        lda #$FEBC
-        sta $7FD007,x
+        lda #(`rlUnknown95FEBC)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FEBC
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -2653,10 +2653,10 @@
         sta $7FD046
         sta $7FD048
         jsl rlUnknown95FEF9
-        lda #$9500
-        sta $7FD008,x
-        lda #$FEF9
-        sta $7FD007,x
+        lda #(`rlUnknown95FEF9)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FEF9
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -2735,10 +2735,10 @@
         lda #$0000
         sta $7FD046
         jsl rlUnknown95FF51
-        lda #$9500
-        sta $7FD008,x
-        lda #$FF51
-        sta $7FD007,x
+        lda #(`rlUnknown95FF51)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FF51
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -2756,7 +2756,6 @@
 
       rlUnknown95FF51 ; 95/FF51
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -2802,10 +2801,10 @@
         lda #$0000
         sta $7FD048
         jsl rlUnknown95FF8A
-        lda #$9500
-        sta $7FD008,x
-        lda #$FF8A
-        sta $7FD007,x
+        lda #(`rlUnknown95FF8A)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown95FF8A
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -2876,7 +2875,7 @@
         ldx wR12
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         plx
         rtl
@@ -3216,10 +3215,10 @@
         lda #$0000
         sta $7FD631
         jsl rlUnknown9BE3B0
-        lda #$9B00
-        sta $7FD008,x
-        lda #$E3B0
-        sta $7FD007,x
+        lda #(`rlUnknown9BE3B0)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BE3B0
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -3282,7 +3281,7 @@
         tax
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
 
         _E409
@@ -3315,7 +3314,7 @@
         bcc _E430
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         lda #$0002
         jsl rlUnknown9BE15F
@@ -3403,7 +3402,7 @@
         clc
         adc wR8
         and #$01FF
-        sta $7FD090,x
+        sta aTitleSprites.X,x
         lda #$0068
         clc
         adc wR9
@@ -3413,7 +3412,7 @@
         lda #$00F0
 
         _E4C5
-        sta $7FD092,x
+        sta aTitleSprites.Y,x
         plx
         inc x
         cpx #$0006
@@ -3450,14 +3449,14 @@
         phy
         lda #$0080
         sec
-        sbc $7FD090
+        sbc aTitleSprites.X
         clc
         adc #$0080
         and #$01FF
         sta $7FD2DC
         lda #$0068
         sec
-        sbc $7FD092
+        sbc aTitleSprites.Y
         clc
         adc #$0068
         sta $7FD2DE
@@ -3551,10 +3550,10 @@
         .databank ?
 
         phx
-        lda #$9B00
-        sta $7FD8A6
-        lda #$E619
-        sta $7FD8A5
+        lda #(`rlUnknown9BE619)<<8
+        sta lTitleVBlankRoutine1+1
+        lda #<>rlUnknown9BE619
+        sta lTitleVBlankRoutine1
         lda #(`aUnknown95E78F)<<8
         sta lR44+1
         lda #<>aUnknown95E78F
@@ -3562,10 +3561,10 @@
         lda #$0004
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #$9B00
-        sta $7FD008,x
-        lda #$E5E4
-        sta $7FD007,x
+        lda #(`rlUnknown9BE5E4)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BE5E4
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -3575,7 +3574,6 @@
 
       rlUnknown9BE5E4 ; 9B/E5E4
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -3585,7 +3583,7 @@
         phy
         lda #$7F00
         sta lR18+1
-        lda $7FD001
+        lda wTitleScreenFrame
         bit #$0001
         beq _E5F9
         lda #$D665
@@ -3621,7 +3619,6 @@
 
       rlUnknown9BE619 ; 9B/E619
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -3629,7 +3626,7 @@
 
         phx
         phy
-        lda $7FD001
+        lda wTitleScreenFrame
         bit #$0001
         bne _E629
         lda #$D665
@@ -3702,7 +3699,7 @@
         lda #$0004
         jsl rlUnknown9BE15F
         lda #$0000
-        sta $7FD8A5
+        sta lTitleVBlankRoutine1
         rtl
 
         .databank 0
@@ -3717,10 +3714,10 @@
         .databank ?
 
         phx
-        lda #$9B00
-        sta $7FD8A6
-        lda #$E714
-        sta $7FD8A5
+        lda #(`rlUnknown9BE714)<<8
+        sta lTitleVBlankRoutine1+1
+        lda #<>rlUnknown9BE714
+        sta lTitleVBlankRoutine1
         lda #(`aUnknown95E78F)<<8
         sta lR44+1
         lda #<>aUnknown95E78F
@@ -3728,10 +3725,10 @@
         lda #$0004
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
-        lda #$9B00
-        sta $7FD008,x
-        lda #$E6DF
-        sta $7FD007,x
+        lda #(`rlUnknown9BE6DF)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BE6DF
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -3740,6 +3737,121 @@
         ; 9B/E6DF
 
     .endsection Unsorted9BE697Section
+
+
+    .section TitleScenes9BE6DFSection
+
+      .al
+      .xl
+
+      rlUnknown9BE6DF ; 9B/E6DF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda #$7F00
+        sta lR18+1
+        lda wTitleScreenFrame
+        bit #$0001
+        beq _E6F4
+        lda #$D665
+        bra _E6F7
+
+
+        _E6F4
+        lda #$D785
+
+        _E6F7
+        sta lR18
+        ldx #$0000
+        ldy #$0000
+
+        _E6FF
+        lda wBufferBG2HOFS
+        clc
+        adc $97FB52,x
+        sta [lR18],y
+        inc y
+        inc y
+        inc x
+        inc x
+        cpx #$0040
+        bcc _E6FF
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/E714
+
+      rlUnknown9BE714 ; 9B/E714
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda wTitleScreenFrame
+        bit #$0001
+        bne _E724
+        lda #$D665
+        bra _E727
+
+
+        _E724
+        lda #$D785
+
+        _E727
+        pha
+        lda #$00A0
+        sta $7FD633
+        lda #1,s
+        sta $7FD634
+        lda #$00A0
+        sta $7FD636
+        lda #1,s
+        sta $7FD637
+        lda #$00A0
+        sta $7FD639
+        lda #1,s
+        sta $7FD63A
+        lda #$00A0
+        sta $7FD63C
+        lda #1,s
+        sta $7FD63D
+        lda #$00A0
+        sta $7FD63F
+        lda #1,s
+        sta $7FD640
+        lda #$00A0
+        sta $7FD642
+        lda #1,s
+        sta $7FD643
+        lda #$009F
+        sta $7FD645
+        lda #1,s
+        sta $7FD646
+        pla
+        sep #$20
+        lda #$00
+        sta $7FD648
+        rep #$20
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/E791
+
+    .endsection TitleScenes9BE6DFSection
 
 
     .section Unsorted9BE791Section
@@ -3759,7 +3871,7 @@
         lda #$0004
         jsl rlUnknown9BE15F
         lda #$0000
-        sta $7FD8A5
+        sta lTitleVBlankRoutine1
         rtl
 
         .databank 0
@@ -3780,10 +3892,10 @@
         sta $7FD059
         lda #$0000
         sta $7FD05B
-        lda #$9B00
-        sta $7FD8A9
-        lda #$E88E
-        sta $7FD8A8
+        lda #(`rlUnknown9BE88E)<<8
+        sta lTitleVBlankRoutine2+1
+        lda #<>rlUnknown9BE88E
+        sta lTitleVBlankRoutine2
         lda #(`aUnknown95E79B)<<8
         sta lR44+1
         lda #<>aUnknown95E79B
@@ -3792,10 +3904,10 @@
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
         jsl rlUnknown9BE7F2
-        lda #$9B00
-        sta $7FD008,x
-        lda #$E7F2
-        sta $7FD007,x
+        lda #(`rlUnknown9BE7F2)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BE7F2
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -3823,7 +3935,7 @@
         lda #$7F00
         sta lR18+1
         sta lR19+1
-        lda $7FD001
+        lda wTitleScreenFrame
         bit #$0001
         beq _E809
         lda #$D6F5
@@ -3873,12 +3985,12 @@
         tax
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         lda #$0005
         jsl rlHDMAEngineFreeEntryByIndex
         lda #$0000
-        sta $7FD8A8
+        sta lTitleVBlankRoutine2
 
         _E876
         lda $7FD057
@@ -3897,6 +4009,60 @@
         ; 9B/E88E
 
     .endsection Unsorted9BE7F2Section
+
+
+    .section TitleScenes9BE88ESection
+
+      .al
+      .xl
+
+      rlUnknown9BE88E ; 9B/E88E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda wTitleScreenFrame
+        bit #$0001
+        bne _E89E
+        lda #$D6F5
+        bra _E8A1
+
+
+        _E89E
+        lda #$D815
+
+        _E8A1
+        pha
+        lda #$00C0
+        sta $7FD64C
+        lda #1,s
+        sta $7FD64D
+        lda #$00C0
+        sta $7FD64F
+        lda #1,s
+        sta $7FD650
+        lda #$00BF
+        sta $7FD652
+        lda #1,s
+        sta $7FD653
+        pla
+        sep #$20
+        lda #$00
+        sta $7FD655
+        rep #$20
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/E8D7
+
+    .endsection TitleScenes9BE88ESection
 
 
     .section Unsorted9BE9AESection
@@ -3919,10 +4085,10 @@
         sta $7FD083
         lda #$FE72
         sta $7FD085
-        lda #$9B00
-        sta $7FD8A9
-        lda #$EA5C
-        sta $7FD8A8
+        lda #(`rlUnknown9BEA5C)<<8
+        sta lTitleVBlankRoutine2+1
+        lda #<>rlUnknown9BEA5C
+        sta lTitleVBlankRoutine2
         lda #(`aUnknown95E7A7)<<8
         sta lR44+1
         lda #<>aUnknown95E7A7
@@ -3931,10 +4097,10 @@
         sta wR40
         jsl rlHDMAEngineCreateEntryByIndex
         jsl rlUnknown9BE9FD
-        lda #$9B00
-        sta $7FD008,x
-        lda #$E9FD
-        sta $7FD007,x
+        lda #(`rlUnknown9BE9FD)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BE9FD
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -3983,12 +4149,12 @@
         tax
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         lda #$0002
         jsl rlHDMAEngineFreeEntryByIndex
         lda #$0000
-        sta $7FD8A8
+        sta lTitleVBlankRoutine2
         bra _EA59
 
 
@@ -4014,6 +4180,51 @@
     .endsection Unsorted9BE9FDSection
 
 
+    .section TitleScenes9BEA5CSection
+
+      .al
+      .xl
+
+      rlUnknown9BEA5C ; 9B/EA5C
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda #$008F
+        sta $7FD076
+        lda $7FD083
+        sta $7FD077
+        lda #$0070
+        sta $7FD079
+        lda #$FE4E
+        sta $7FD07A
+        lda #$0045
+        sta $7FD07C
+        lda #$FE4E
+        sta $7FD07D
+        lda #$009B
+        sta $7FD07F
+        lda $7FD085
+        sta $7FD080
+        sep #$20
+        lda #$00
+        sta $7FD082
+        rep #$20
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/EAA5
+
+    .endsection TitleScenes9BEA5CSection
+
+
     .section Unsorted9BF218Section
 
       .al
@@ -4026,9 +4237,9 @@
         .autsiz
         .databank ?
 
-        lda #$9900
+        lda #(`aUnknown99FDD5)<<8
         sta lR18+1
-        lda #$FDD5
+        lda #<>aUnknown99FDD5
         sta lR18
         lda #$0000
         sta wR0
@@ -4074,10 +4285,10 @@
         sta bBufferCOLDATA_2
         rep #$20
         jsl rlUnknown9BF264
-        lda #$9B00
-        sta $7FD008,x
-        lda #$F264
-        sta $7FD007,x
+        lda #(`rlUnknown9BF264)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF264
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -4107,7 +4318,7 @@
         rep #$20
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         bra _F296
 
@@ -4251,10 +4462,10 @@
         sta $7FD063
         lda #$0020
         sta $7FD061
-        lda #$9B00
-        sta $7FD008,x
-        lda #$F4BF
-        sta $7FD007,x
+        lda #(`rlUnknown9BF4BF)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF4BF
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -4262,6 +4473,98 @@
         ; 9B/F4BF
 
     .endsection Unsorted9BF49ESection
+
+
+    .section TitleScenes9BF4BFSection
+
+      .al
+      .xl
+
+      rlUnknown9BF4BF ; 9B/F4BF
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7FD05F
+        cmp #$0001
+        beq _F4ED
+        bcs _F534
+        ldy #$0000
+        lda $7FD063
+        tax
+
+        _F4D4
+        lda $7F8000,x
+        sta aBGPaletteBuffer.aPalette1,b,y
+        lda $7F80C2,x
+        sta aOAMPaletteBuffer,b,y
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0062
+        bcc _F4D4
+        bra _F534
+
+
+        _F4ED
+        ldy #$0000
+        lda $7FD063
+        tax
+
+        _F4F5
+        lda $7F8062,x
+        sta $0182,b,y
+        lda $7F8124,x
+        sta $0262,b,y
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0060
+        bcc _F4F5
+        lda $7FD063
+        clc
+        adc #$0184
+        sta $7FD063
+        lda $7FD061
+        dec a
+        sta $7FD061
+        bne _F534
+        rep #$20
+        lda #3,s
+        tax
+        sep #$20
+        lda #$00
+        sta aTitleTimelineSlots,x
+        rep #$20
+        bra _F545
+
+
+        _F534
+        lda $7FD05F
+        inc a
+        cmp #$0008
+        bcc _F541
+        lda #$0000
+
+        _F541
+        sta $7FD05F
+
+        _F545
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/F548
+
+    .endsection TitleScenes9BF4BFSection
 
 
     .section Unsorted9BF548Section
@@ -4281,15 +4584,15 @@
         lda #$7FFF
 
         _F54F
-        sta $0120,b,x
+        sta aBGPaletteBuffer.aPalette1,b,x
         sta aOAMPaletteBuffer,b,x
         inc x
         inc x
         cpx #$00C2
         bcc _F54F
-        lda #$9B00
+        lda #(`aUnknown9BF56C)<<8
         sta lR18+1
-        lda #$F56C
+        lda #<>aUnknown9BF56C
         sta lR18
         jsl rlBattleSceneWriteRAM
         plx
@@ -4336,10 +4639,10 @@
         sta $7FD063
         lda #$0020
         sta $7FD061
-        lda #$9B00
-        sta $7FD008,x
-        lda #$F59E
-        sta $7FD007,x
+        lda #(`rlUnknown9BF59E)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF59E
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -4347,6 +4650,123 @@
         ; 9B/F59E
 
     .endsection Unsorted9BF57ASection
+
+
+    .section TitleScenes9BF59ESection
+
+      .al
+      .xl
+
+      rlUnknown9BF59E ; 9B/F59E
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        lda $7FD05F
+        cmp #$0002
+        beq _F5F6
+        cmp #$0001
+        beq _F5D5
+        bcc _F5B4
+        jml _F63D
+
+
+        _F5B4
+        ldy #$0000
+        lda $7FD063
+        tax
+
+        _F5BC
+        lda $7F8000,x
+        sta aBGPaletteBuffer.aPalette1,b,y
+        lda $7F80C2,x
+        sta aOAMPaletteBuffer,b,y
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0042
+        bcc _F5BC
+        bra _F63D
+
+
+        _F5D5
+        ldy #$0000
+        lda $7FD063
+        tax
+
+        _F5DD
+        lda $7F8042,x
+        sta $0162,b,y
+        lda $7F8104,x
+        sta $0242,b,y
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$0042
+        bcc _F5DD
+        bra _F63D
+
+
+        _F5F6
+        ldy #$0000
+        lda $7FD063
+        tax
+
+        _F5FE
+        lda $7F8084,x
+        sta $01A4,b,y
+        lda $7F8146,x
+        sta $0284,b,y
+        inc x
+        inc x
+        inc y
+        inc y
+        cpy #$003E
+        bcc _F5FE
+        lda $7FD063
+        sec
+        sbc #$0184
+        sta $7FD063
+        lda $7FD061
+        dec a
+        sta $7FD061
+        bne _F63D
+        rep #$20
+        lda #3,s
+        tax
+        sep #$20
+        lda #$00
+        sta aTitleTimelineSlots,x
+        rep #$20
+        bra _F64E
+
+
+        _F63D
+        lda $7FD05F
+        inc a
+        cmp #$0008
+        bcc _F64A
+        lda #$0000
+
+        _F64A
+        sta $7FD05F
+
+        _F64E
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/F651
+
+    .endsection TitleScenes9BF59ESection
 
 
     .section Unsorted9BF651Section
@@ -4364,7 +4784,7 @@
 
         sep #$20
         lda #$01
-        sta $7FD075
+        sta bTitleScreenEdgeFade
         rep #$20
         rtl
 
@@ -4402,10 +4822,10 @@
         lda #1,s
         tax
         jsl rlUnknown9BF6B1
-        lda #$9B00
-        sta $7FD008,x
-        lda #$F6B1
-        sta $7FD007,x
+        lda #(`rlUnknown9BF6B1)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF6B1
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -4460,7 +4880,7 @@
         rep #$20
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
 
         _F6D5
@@ -4495,10 +4915,10 @@
         lda #1,s
         tax
         jsl rlUnknown9BF726
-        lda #$9B00
-        sta $7FD008,x
-        lda #$F726
-        sta $7FD007,x
+        lda #(`rlUnknown9BF726)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF726
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -4578,7 +4998,7 @@
         bne _F779
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
 
         _F779
@@ -4616,10 +5036,10 @@
         jsr rsUnknown9BF9E3
         lda #1,s
         tax
-        lda #$9B00
-        sta $7FD008,x
-        lda #$F7A3
-        sta $7FD007,x
+        lda #(`rlUnknown9BF7A3)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF7A3
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -4628,6 +5048,457 @@
         ; 9B/F7A3
 
     .endsection Unsorted9BF77ASection
+
+
+    .section TitleScenes9BF7A3Section
+
+      .al
+      .xl
+
+      rlUnknown9BF7A3 ; 9B/F7A3
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        lda #(`aUnknown9BF7E7)<<8
+        sta lR18+1
+        lda #<>aUnknown9BF7E7
+        sta lR18
+        jsl rlBattleSceneWriteRAM
+        lda #$0000
+        sta wBufferBG2HOFS
+        lda #$0020
+        sta wBufferBG2VOFS
+        ldx #$0000
+
+        _F7BF
+        lda $7F6700,x
+        sta $01A2,b,x
+        lda $7F6720,x
+        sta $01C2,b,x
+        inc x
+        inc x
+        cpx #$001E
+        bcc _F7BF
+        lda #1,s
+        tax
+        lda #(`rlUnknown9BF7F0)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF7F0
+        sta aTitleTimelineSlots.lRoutine,x
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/F7E7
+
+    .endsection TitleScenes9BF7A3Section
+
+
+    .section TitleData9BF7E7Section
+
+      .al
+      .xl
+
+      aUnknown9BF7E7 ; 9B/F7E7
+
+        WRITE_RAM_BYTE bBufferBG2SC, $00
+        WRITE_RAM_MASK_BYTE bBufferBG12NBA, $0F, $20
+        WRITE_RAM_END
+
+    .endsection TitleData9BF7E7Section
+
+
+    .section TitleScenes9BF7F0Section
+
+      .al
+      .xl
+
+      rlUnknown9BF7F0 ; 9B/F7F0
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+
+        _F7F4
+        lda $7E9CA4,x
+        sta $7E8B88,x
+        lda $7E9CA6,x
+        sta $7E8B8A,x
+        lda $7E9CA8,x
+        sta $7E8BC4,x
+        lda $7E9CAA,x
+        sta $7E8BC6,x
+        txa
+        clc
+        adc #$0040
+        tax
+        cpx #$0700
+        bcc _F7F4
+        jsr rsUnknown9BF9E3
+        lda #1,s
+        tax
+        lda #(`rlUnknown9BF835)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF835
+        sta aTitleTimelineSlots.lRoutine,x
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/F835
+
+    .endsection TitleScenes9BF7F0Section
+
+
+    .section TitleScenes9BF835Section
+
+      .al
+      .xl
+
+      rlUnknown9BF835 ; 9B/F835
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        ldx #$0000
+
+        _F839
+        lda $7E9CA0,x
+        sta $7E8B88,x
+        lda $7E9CA2,x
+        sta $7E8B8A,x
+        lda $7E9CA4,x
+        sta $7E8B8C,x
+        lda $7E9CA6,x
+        sta $7E8B8E,x
+        lda $7E9CA8,x
+        sta $7E8BC0,x
+        lda $7E9CAA,x
+        sta $7E8BC2,x
+        lda $7E9CAC,x
+        sta $7E8BC4,x
+        lda $7E9CAE,x
+        sta $7E8BC6,x
+        txa
+        clc
+        adc #$0040
+        tax
+        cpx #$0700
+        bcc _F839
+        jsr rsUnknown9BF9E3
+        lda #1,s
+        tax
+        lda #(`rlUnknown9BF89A)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF89A
+        sta aTitleTimelineSlots.lRoutine,x
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/F89A
+
+    .endsection TitleScenes9BF835Section
+
+
+    .section TitleScenes9BF89ASection
+
+      .al
+      .xl
+
+      rlUnknown9BF89A ; 9B/F89A
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldx #$0000
+
+        _F89F
+        ldy #$0006
+
+        _F8A2
+        lda $7E9C9C,x
+        sta $7E8B88,x
+        lda $7E9CA8,x
+        sta $7E8BBC,x
+        inc x
+        inc x
+        dec y
+        bne _F8A2
+        txa
+        clc
+        adc #$0034
+        tax
+        cpx #$0700
+        bcc _F89F
+        jsr rsUnknown9BF9E3
+        lda #3,s
+        tax
+        lda #(`rlUnknown9BF8D9)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF8D9
+        sta aTitleTimelineSlots.lRoutine,x
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/F8D9
+
+    .endsection TitleScenes9BF89ASection
+
+
+    .section TitleScenes9BF8D9Section
+
+      .al
+      .xl
+
+      rlUnknown9BF8D9 ; 9B/F8D9
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldx #$0000
+
+        _F8DE
+        ldy #$0008
+
+        _F8E1
+        lda $7E9C98,x
+        sta $7E8B88,x
+        lda $7E9CA8,x
+        sta $7E8BB8,x
+        inc x
+        inc x
+        dec y
+        bne _F8E1
+        txa
+        clc
+        adc #$0030
+        tax
+        cpx #$0700
+        bcc _F8DE
+        jsr rsUnknown9BF9E3
+        lda #3,s
+        tax
+        lda #(`rlUnknown9BF918)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF918
+        sta aTitleTimelineSlots.lRoutine,x
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/F918
+
+    .endsection TitleScenes9BF8D9Section
+
+
+    .section TitleScenes9BF918Section
+
+      .al
+      .xl
+
+      rlUnknown9BF918 ; 9B/F918
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldx #$0000
+
+        _F91D
+        ldy #$000A
+
+        _F920
+        lda $7E9C94,x
+        sta $7E8B88,x
+        lda $7E9CA8,x
+        sta $7E8BB4,x
+        inc x
+        inc x
+        dec y
+        bne _F920
+        txa
+        clc
+        adc #$002C
+        tax
+        cpx #$0700
+        bcc _F91D
+        jsr rsUnknown9BF9E3
+        lda #3,s
+        tax
+        lda #(`rlUnknown9BF957)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF957
+        sta aTitleTimelineSlots.lRoutine,x
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/F957
+
+    .endsection TitleScenes9BF918Section
+
+
+    .section TitleScenes9BF957Section
+
+      .al
+      .xl
+
+      rlUnknown9BF957 ; 9B/F957
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldx #$0000
+
+        _F95C
+        ldy #$000C
+
+        _F95F
+        lda $7E9C90,x
+        sta $7E8B88,x
+        lda $7E9CA8,x
+        sta $7E8BB0,x
+        inc x
+        inc x
+        dec y
+        bne _F95F
+        txa
+        clc
+        adc #$0028
+        tax
+        cpx #$0700
+        bcc _F95C
+        jsr rsUnknown9BF9E3
+        lda #3,s
+        tax
+        lda #(`rlUnknown9BF996)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF996
+        sta aTitleTimelineSlots.lRoutine,x
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/F996
+
+    .endsection TitleScenes9BF957Section
+
+
+    .section TitleScenes9BF996Section
+
+      .al
+      .xl
+
+      rlUnknown9BF996 ; 9B/F996
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        phx
+        phy
+        ldx #$0000
+
+        _F99B
+        ldy #$000E
+
+        _F99E
+        lda $7E9C8C,x
+        sta $7E8B88,x
+        lda $7E9CA8,x
+        sta $7E8BAC,x
+        inc x
+        inc x
+        dec y
+        bne _F99E
+        txa
+        clc
+        adc #$0024
+        tax
+        cpx #$0700
+        bcc _F99B
+        jsr rsUnknown9BF9E3
+        lda #3,s
+        tax
+        lda #(`rlUnknown9BF9D5)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF9D5
+        sta aTitleTimelineSlots.lRoutine,x
+        ply
+        plx
+        rtl
+
+        .databank 0
+
+        ; 9B/F9D5
+
+    .endsection TitleScenes9BF996Section
+
+
+    .section TitleScenes9BF9D5Section
+
+      .al
+      .xl
+
+      rlUnknown9BF9D5 ; 9B/F9D5
+
+        .al
+        .xl
+        .autsiz
+        .databank ?
+
+        jsr $9BF9FA
+        sep #$20
+        lda #$00
+        sta aTitleTimelineSlots,x
+        rep #$20
+        rtl
+
+        .databank 0
+
+        ; 9B/F9E3
+
+    .endsection TitleScenes9BF9D5Section
 
 
     .section Unsorted9BF9E3Section
@@ -4676,10 +5547,10 @@
         lda #$0000
         sta $7FD04A
         jsl rlUnknown9BFA2D
-        lda #$9B00
-        sta $7FD008,x
-        lda #$FA2D
-        sta $7FD007,x
+        lda #(`rlUnknown9BFA2D)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BFA2D
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -4710,7 +5581,7 @@
         bne _FA46
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         bra _FA57
 
@@ -4919,9 +5790,9 @@
         .databank ?
 
         sep #$20
-        lda $7FD8BA
+        lda bTitleScreenFlags
         ora #$02
-        sta $7FD8BA
+        sta bTitleScreenFlags
         rep #$20
         rtl
 
@@ -4987,10 +5858,10 @@
         bcc _FAF0
         lda #1,s
         tax
-        lda #$9B00
-        sta $7FD008,x
-        lda #$FB5D
-        sta $7FD007,x
+        lda #(`rlUnknown9BFB5D)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BFB5D
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -5027,7 +5898,6 @@
 
       rlUnknown9BFB5D ; 9B/FB5D
 
-        ; Found through fe4.cdl: it ran, but nothing in the build reaches it yet.
         .al
         .xl
         .autsiz
@@ -5035,7 +5905,7 @@
 
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         rtl
 
@@ -5053,7 +5923,7 @@
 
         sep #$20
         lda #$01
-        sta $7FD8B5
+        sta bTitleScreenDone
         rep #$20
         rtl
 
@@ -5078,7 +5948,7 @@
 
         sep #$20
         lda #$01
-        sta $7FD000
+        sta bTitleScreenPhase
         rep #$20
         rtl
 
@@ -5109,9 +5979,9 @@
         lda #$0001
         sta wMusicID,b
         sep #$20
-        lda $7FD8BA
+        lda bTitleScreenFlags
         and #$F7
-        sta $7FD8BA
+        sta bTitleScreenFlags
         rep #$20
         rtl
 
@@ -5221,9 +6091,9 @@
         .databank ?
 
         sep #$20
-        lda $7FD08F
+        lda aTitleSprites.Flags
         and #$FC
-        sta $7FD08F
+        sta aTitleSprites.Flags
         rep #$20
         ldx #$0062
         lda #$9900

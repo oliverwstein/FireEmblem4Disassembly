@@ -80,7 +80,7 @@
 
         +
         sep #$20
-        sta $7FD8B9
+        sta bTitleScreenSkipIntro
         rep #$20
         sep #$20
         lda #$80
@@ -92,7 +92,7 @@
         bcc _C0E7
         sep #$20
         lda #$01
-        sta $7FD8B9
+        sta bTitleScreenSkipIntro
         rep #$20
 
         _C0E7
@@ -653,11 +653,11 @@
         .databank ?
 
         lda #$0000
-        sta $7FD08B
-        lda #$9700
-        sta $7FD08D
-        lda #$F19B
-        sta $7FD08C
+        sta bTitleLoadRequests
+        lda #(`aUnknown97F19B)<<8
+        sta lTitleLoadListPosition+1
+        lda #<>aUnknown97F19B
+        sta lTitleLoadListPosition
         rtl
 
         .databank 0
@@ -672,11 +672,11 @@
         .databank ?
 
         lda #$0000
-        sta $7FD08B
-        lda #$9700
-        sta $7FD08D
-        lda #$F45A
-        sta $7FD08C
+        sta bTitleLoadRequests
+        lda #(`aUnknown97F45A)<<8
+        sta lTitleLoadListPosition+1
+        lda #<>aUnknown97F45A
+        sta lTitleLoadListPosition
         rtl
 
         .databank 0
@@ -691,12 +691,12 @@
         .databank ?
 
         phy
-        lda $7FD08B
+        lda bTitleLoadRequests
         and #$00FF
         beq _F246
-        lda $7FD08C
+        lda lTitleLoadListPosition
         sta lR18
-        lda $7FD08D
+        lda lTitleLoadListPosition+1
         sta lR18+1
         ldy #$0000
         lda [lR18],y
@@ -713,14 +713,14 @@
         _F204
         jsl rlUnknown95F256
         bcs _F246
-        lda $7FD08C
+        lda lTitleLoadListPosition
         clc
         adc #$000B
-        sta $7FD08C
+        sta lTitleLoadListPosition
         sep #$20
-        lda $7FD08B
+        lda bTitleLoadRequests
         dec a
-        sta $7FD08B
+        sta bTitleLoadRequests
         rep #$20
         bra _F246
 
@@ -732,14 +732,14 @@
         _F227
         jsl rlUnknown95F29B
         bcs _F246
-        lda $7FD08C
+        lda lTitleLoadListPosition
         clc
         adc #$0008
-        sta $7FD08C
+        sta lTitleLoadListPosition
         sep #$20
-        lda $7FD08B
+        lda bTitleLoadRequests
         dec a
-        sta $7FD08B
+        sta bTitleLoadRequests
         rep #$20
 
         _F246
@@ -767,9 +767,9 @@
         .databank ?
 
         sep #$20
-        lda $7FD08B
+        lda bTitleLoadRequests
         inc a
-        sta $7FD08B
+        sta bTitleLoadRequests
         rep #$20
         rtl
 
@@ -976,7 +976,7 @@
         _F883
         sep #$20
         lda #$00
-        sta $7FD08F,x
+        sta aTitleSprites.Flags,x
         rep #$20
         txa
         clc
@@ -1002,7 +1002,7 @@
         ldx #$0000
 
         _F89E
-        lda $7FD08F,x
+        lda aTitleSprites.Flags,x
         bit #$0080
         beq _F8AF
         jsl rlUnknown95F8BC
@@ -1031,18 +1031,18 @@
 
         phx
         phy
-        lda $7FD09A,x
+        lda aTitleSprites.Timer,x
         and #$00FF
         beq _F8D2
         sep #$20
         dec a
-        sta $7FD09A,x
+        sta aTitleSprites.Timer,x
         rep #$20
         bra _F91D
 
 
         _F8D2
-        lda $7FD094,x
+        lda aTitleSprites.Script,x
         sta lR18
         lda $7FD095,x
         sta lR18+1
@@ -1056,10 +1056,10 @@
         and #$00FF
         asl a
         pha
-        lda $7FD094,x
+        lda aTitleSprites.Script,x
         sec
         sbc #1,s
-        sta $7FD094,x
+        sta aTitleSprites.Script,x
         pla
         bra _F8D2
 
@@ -1067,36 +1067,36 @@
         _F901
         sep #$20
         dec a
-        sta $7FD099,x
+        sta aTitleSprites.Frame,x
         inc y
         lda [lR18],y
-        sta $7FD09A,x
+        sta aTitleSprites.Timer,x
         rep #$20
-        lda $7FD094,x
+        lda aTitleSprites.Script,x
         clc
         adc #$0002
-        sta $7FD094,x
+        sta aTitleSprites.Script,x
 
         _F91D
         lda $7FD095,x
         sta lR18+1
-        lda $7FD097,x
+        lda aTitleSprites.Frames,x
         sta lR18
-        lda $7FD099,x
+        lda aTitleSprites.Frame,x
         and #$00FF
         asl a
         tay
         lda [lR18],y
         clc
-        adc $7FD097,x
+        adc aTitleSprites.Frames,x
         tay
-        lda $7FD090,x
+        lda aTitleSprites.X,x
         sta wR0
-        lda $7FD092,x
+        lda aTitleSprites.Y,x
         sta wR1
-        lda $7FD09B,x
+        lda aTitleSprites.Attributes,x
         sta wR5
-        lda $7FD09D,x
+        lda aTitleSprites.TileBase,x
         sta wR4
         sep #$20
         phb
@@ -1129,7 +1129,7 @@
         phy
         ldy #$0000
         lda [lR18],y
-        sta $7FD094,x
+        sta aTitleSprites.Script,x
         inc y
         inc y
         sep #$20
@@ -1137,28 +1137,28 @@
         sta $7FD096,x
         inc y
         lda #$80
-        sta $7FD08F,x
+        sta aTitleSprites.Flags,x
         lda #$00
-        sta $7FD09A,x
+        sta aTitleSprites.Timer,x
         rep #$20
         lda [lR18],y
-        sta $7FD097,x
+        sta aTitleSprites.Frames,x
         inc y
         inc y
         lda [lR18],y
-        sta $7FD090,x
+        sta aTitleSprites.X,x
         inc y
         inc y
         lda [lR18],y
-        sta $7FD092,x
+        sta aTitleSprites.Y,x
         inc y
         inc y
         lda [lR18],y
-        sta $7FD09D,x
+        sta aTitleSprites.TileBase,x
         inc y
         inc y
         lda [lR18],y
-        sta $7FD09B,x
+        sta aTitleSprites.Attributes,x
         ply
         plx
         rtl
@@ -1267,21 +1267,21 @@
         jsl rlUnknown9BEAA5
         lda #$0000
         sta $7FE09E
-        lda $7FD8B9
+        lda bTitleScreenSkipIntro
         and #$00FF
         bne _DCA7
         jsl rlUnknown9BFB7E
         jsl rlStepMusicScript
         lda #$0000
         sep #$20
-        sta $7FD000
+        sta bTitleScreenPhase
         lda #$00
-        sta $7FD8B5
-        sta $7FD075
+        sta bTitleScreenDone
+        sta bTitleScreenEdgeFade
         sta $7FD8B7
-        lda $7FD8BA
+        lda bTitleScreenFlags
         ora #$08
-        sta $7FD8BA
+        sta bTitleScreenFlags
         stz $0CC4,b
         rep #$20
         stz $0CC7,b
@@ -1315,7 +1315,7 @@
         ; Game state routine $1B, every frame: runs one of three map battle phases by $7FD000 (0, 1, other) and counts frames in $7FD001 and $7FE09E.
 
         sep #$20
-        lda $7FD075
+        lda bTitleScreenEdgeFade
         beq _DCC7
         lda #$80
         bra _DCC9
@@ -1327,7 +1327,7 @@
         _DCC9
         sta $2100,b
         rep #$20
-        lda $7FD000
+        lda bTitleScreenPhase
         and #$00FF
         cmp #$0000
         beq _DCE5
@@ -1346,9 +1346,9 @@
         jsl rlTitleScreenRunTitle
 
         _DCEF
-        lda $7FD001
+        lda wTitleScreenFrame
         inc a
-        sta $7FD001
+        sta wTitleScreenFrame
         lda $7FE09E
         inc a
         sta $7FE09E
@@ -1365,18 +1365,18 @@
         .autsiz
         .databank ?
 
-        lda $7FD8BA
+        lda bTitleScreenFlags
         bit #$0004
         bne _DD4C
-        lda $7FD8B9
+        lda bTitleScreenSkipIntro
         and #$00FF
         bne _DD46
-        lda $7FD8BA
+        lda bTitleScreenFlags
         bit #$0001
         beq _DD29
         sep #$20
         and #$FE
-        sta $7FD8BA
+        sta bTitleScreenFlags
         rep #$20
         bra _DD46
 
@@ -1387,9 +1387,9 @@
         lda #$000A
         jsl rlPlaySoundEffect
         sep #$20
-        lda $7FD8BA
+        lda bTitleScreenFlags
         ora #$01
-        sta $7FD8BA
+        sta bTitleScreenFlags
         rep #$20
         bra _DD62
 
@@ -1422,7 +1422,7 @@
         jsl rlUnknown96A532
         jsl rlUnknown95F89A
         jsl rlUnknown9BF179
-        lda $7FD8B5
+        lda bTitleScreenDone
         and #$00FF
         beq _DD99
         jsl rlStartOpeningEvent
@@ -1441,7 +1441,7 @@
         .autsiz
         .databank ?
 
-        lda $7FD8BA
+        lda bTitleScreenFlags
         bit #$0002
         beq _DDAD
         jsl rlTitleScreenIsStartPressed
@@ -1459,7 +1459,7 @@
         jsl rlUnknown96A532
         jsl rlUnknown96CB44
         jsl rlUnknown95F89A
-        lda $7FD8B5
+        lda bTitleScreenDone
         and #$00FF
         beq _DDE2
         jsl rlStartOpeningEvent
@@ -1488,7 +1488,7 @@
         jsl rlUnknown95F14D
         jsl rlUnknown96D695
         jsl rlUnknown95F89A
-        lda $7FD8B5
+        lda bTitleScreenDone
         and #$00FF
         beq _DE11
         stz wGameStateRoutine1,b
@@ -1521,19 +1521,19 @@
         sta $7FE18A
         sep #$20
         sta $7FECF4
-        sta $7FD08B
-        sta $7FD075
+        sta bTitleLoadRequests
+        sta bTitleScreenEdgeFade
         rep #$20
         jsl rlResetTitleTimeline
-        lda #$9700
-        sta $7FD004
-        lda #$F12D
-        sta $7FD003
+        lda #(`aTitleTimeline)<<8
+        sta lTitleTimelinePosition+1
+        lda #<>aTitleTimeline
+        sta lTitleTimelinePosition
         jsl rlUnknown95F1A9
         sep #$20
-        lda $7FD8BA
+        lda bTitleScreenFlags
         ora #$04
-        sta $7FD8BA
+        sta bTitleScreenFlags
         rep #$20
         rtl
 
@@ -1551,7 +1551,7 @@
         jsl rlDisableVBlank
         sep #$20
         lda #$01
-        sta $7FD000
+        sta bTitleScreenPhase
         rep #$20
         jsl rlUnknown95EF54
         jsl rlUnknown95F12A
@@ -1587,7 +1587,7 @@
         lda #$E0
         sta $2132,b
         lda #$00
-        sta $7FD075
+        sta bTitleScreenEdgeFade
         rep #$20
         lda #$0000
         sta aBGPaletteBuffer,b
@@ -1650,15 +1650,15 @@
         jsl rlResetHDMAEngine
         sep #$20
         lda #$00
-        sta $7FD000
+        sta bTitleScreenPhase
         lda #$00
-        sta $7FD8B5
+        sta bTitleScreenDone
         rep #$20
         jsl rlResetTitleTimeline
-        lda #$9700
-        sta $7FD004
-        lda #$EC63
-        sta $7FD003
+        lda #(`aTitleIntroTimeline)<<8
+        sta lTitleTimelinePosition+1
+        lda #<>aTitleIntroTimeline
+        sta lTitleTimelinePosition
         jsl rlUnknown95F1A9
         jsl rlBattleSceneScriptClearLoading
         jsl rlUnknown95EA47
@@ -1672,7 +1672,7 @@
         rep #$20
         sep #$20
         lda #$01
-        sta $7FD075
+        sta bTitleScreenEdgeFade
         rep #$20
         cli
         rtl
@@ -1690,7 +1690,7 @@
 
         sep #$20
         lda #$01
-        sta $7FD8B5
+        sta bTitleScreenDone
         rep #$20
         rtl
 
@@ -1726,15 +1726,15 @@
         jsl rlResetHDMAEngine
         sep #$20
         lda #$00
-        sta $7FD000
+        sta bTitleScreenPhase
         lda #$00
-        sta $7FD8B5
+        sta bTitleScreenDone
         rep #$20
         jsl rlResetTitleTimeline
-        lda #$9700
-        sta $7FD004
-        lda #$EC63
-        sta $7FD003
+        lda #(`aTitleIntroTimeline)<<8
+        sta lTitleTimelinePosition+1
+        lda #<>aTitleIntroTimeline
+        sta lTitleTimelinePosition
         lda #(`aOpeningEvent)<<8
         sta lR18+1
         lda #<>aOpeningEvent
@@ -1763,18 +1763,18 @@
         sta $7FE18A
         sep #$20
         sta $7FECF4
-        sta $7FD08B
-        sta $7FD075
+        sta bTitleLoadRequests
+        sta bTitleScreenEdgeFade
         lda #$02
-        sta $7FD000
+        sta bTitleScreenPhase
         lda #$00
-        sta $7FD8B5
+        sta bTitleScreenDone
         rep #$20
         jsl rlResetTitleTimeline
-        lda #$9700
-        sta $7FD004
-        lda #$F15D
-        sta $7FD003
+        lda #(`aTitleFadeOutTimeline)<<8
+        sta lTitleTimelinePosition+1
+        lda #<>aTitleFadeOutTimeline
+        sta lTitleTimelinePosition
         jsl rlUnknown95F1BF
         ldx #$0000
         lda #(`aUnknown99FEAC)<<8
@@ -1801,16 +1801,16 @@
 
         phx
         lda #$0000
-        sta $7FD001
-        lda #$9700
-        sta $7FD004
-        lda #$EC63
-        sta $7FD003
+        sta wTitleScreenFrame
+        lda #(`aTitleIntroTimeline)<<8
+        sta lTitleTimelinePosition+1
+        lda #<>aTitleIntroTimeline
+        sta lTitleTimelinePosition
         ldx #$0000
 
         _E076
         lda #$0000
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         txa
         clc
         adc #$0004
@@ -1833,13 +1833,13 @@
 
         phx
         phy
-        lda $7FD003
+        lda lTitleTimelinePosition
         sta lR18
-        lda $7FD004
+        lda lTitleTimelinePosition+1
         sta lR18+1
         ldy #$0000
         lda [lR18],y
-        cmp $7FD001
+        cmp wTitleScreenFrame
         beq _E0A5
         bcs _E0F3
 
@@ -1866,17 +1866,17 @@
         jsl rlUnsignedMultiply16By16
         ldx wR12
         sep #$20
-        lda $7FD006,x
+        lda aTitleTimelineSlots.bActive,x
         ora #$01
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         lda [lR18],y
         inc y
-        sta $7FD007,x
+        sta aTitleTimelineSlots.lRoutine,x
         rep #$20
         lda [lR18],y
         inc y
         inc y
-        sta $7FD008,x
+        sta aTitleTimelineSlots.lRoutine+1,x
 
         _E0E7
         bra _E0A7
@@ -1885,8 +1885,8 @@
         _E0E9
         tya
         clc
-        adc $7FD003
-        sta $7FD003
+        adc lTitleTimelinePosition
+        sta lTitleTimelinePosition
 
         _E0F3
         ply
@@ -1957,7 +1957,7 @@
         ldx #$0000
 
         _E12C
-        lda $7FD006,x
+        lda aTitleTimelineSlots.bActive,x
         bit #$0001
         beq _E152
         phb
@@ -1968,10 +1968,10 @@
 
 
         _E13D
-        lda $7FD007,x
+        lda aTitleTimelineSlots.lRoutine,x
         sta lR18
         sep #$20
-        lda $7FD009,x
+        lda aTitleTimelineSlots.lRoutine+2,x
         sta lR18+2
         pha
         plb
@@ -2010,8 +2010,8 @@
         .databank ?
 
         lda #$0000
-        sta $7FD8A5
-        sta $7FD8A8
+        sta lTitleVBlankRoutine1
+        sta lTitleVBlankRoutine2
         rtl
 
         .databank 0
@@ -2037,7 +2037,7 @@
         ldx #$0000
 
         _EAB5
-        lda $7FD8A5,x
+        lda lTitleVBlankRoutine1,x
         cmp #$0000
         beq _EADB
         phb
@@ -2048,10 +2048,10 @@
 
 
         _EAC6
-        lda $7FD8A5,x
+        lda lTitleVBlankRoutine1,x
         sta lR18
         sep #$20
-        lda $7FD8A7,x
+        lda lTitleVBlankRoutine1+2,x
         sta lR18+2
         pha
         plb
@@ -2092,7 +2092,7 @@
         .databank ?
 
         phx
-        lda $7FD08F,x
+        lda aTitleSprites.Flags,x
         bit #$0001
         bne _EAF6
         jml _EC6C
@@ -2107,41 +2107,41 @@
 
         _EB03
         sep #$20
-        lda $7FD0EF,x
+        lda aTitleSprites.TrailPosition,x
         dec a
         and #$0F
-        sta $7FD0EF,x
+        sta aTitleSprites.TrailPosition,x
         rep #$20
         phx
-        lda $7FD090,x
+        lda aTitleSprites.X,x
         pha
-        lda $7FD092,x
+        lda aTitleSprites.Y,x
         pha
-        lda $7FD099,x
+        lda aTitleSprites.Frame,x
         pha
-        lda $7FD0EF,x
+        lda aTitleSprites.TrailPosition,x
         and #$00FF
         clc
         adc #7,s
         tax
         pla
         sep #$20
-        sta $7FD0DF,x
+        sta aTitleSprites.TrailFrame,x
         rep #$20
         lda #5,s
         tax
-        lda $7FD0EF,x
+        lda aTitleSprites.TrailPosition,x
         and #$00FF
         asl a
         clc
         adc #5,s
         tax
         pla
-        sta $7FD0BF,x
+        sta aTitleSprites.TrailY,x
         pla
-        sta $7FD09F,x
+        sta aTitleSprites.TrailX,x
         plx
-        lda $7FD001
+        lda wTitleScreenFrame
         bit #$0001
         beq _EB62
         bit #$0002
@@ -2151,31 +2151,31 @@
 
         _EB62
         phx
-        lda $7FD0EF,x
+        lda aTitleSprites.TrailPosition,x
         clc
-        adc $7FD0F0,x
+        adc aTitleSprites.TrailDelay,x
         dec a
         and #$000F
         clc
         adc #1,s
         tax
-        lda $7FD0DF,x
+        lda aTitleSprites.TrailFrame,x
         and #$00FF
         sta wR9
         lda #1,s
         tax
-        lda $7FD0EF,x
+        lda aTitleSprites.TrailPosition,x
         clc
-        adc $7FD0F0,x
+        adc aTitleSprites.TrailDelay,x
         dec a
         and #$000F
         asl a
         clc
         adc #1,s
         tax
-        lda $7FD09F,x
+        lda aTitleSprites.TrailX,x
         sta wR0
-        lda $7FD0BF,x
+        lda aTitleSprites.TrailY,x
         sta wR1
         plx
         jml _EC33
@@ -2183,34 +2183,34 @@
 
         _EBA3
         phx
-        lda $7FD0F0,x
+        lda aTitleSprites.TrailDelay,x
         asl a
         dec a
         clc
-        adc $7FD0EF,x
+        adc aTitleSprites.TrailPosition,x
         and #$000F
         clc
         adc #1,s
         tax
         sep #$20
-        lda $7FD0DF,x
+        lda aTitleSprites.TrailFrame,x
         sta wR9
         rep #$20
         lda #1,s
         tax
-        lda $7FD0F0,x
+        lda aTitleSprites.TrailDelay,x
         asl a
         dec a
         clc
-        adc $7FD0EF,x
+        adc aTitleSprites.TrailPosition,x
         and #$000F
         asl a
         clc
         adc #1,s
         tax
-        lda $7FD09F,x
+        lda aTitleSprites.TrailX,x
         sta wR0
-        lda $7FD0BF,x
+        lda aTitleSprites.TrailY,x
         sta wR1
         plx
         bra _EC33
@@ -2218,7 +2218,7 @@
 
         _EBE5
         phx
-        lda $7FD0F0,x
+        lda aTitleSprites.TrailDelay,x
         pha
         asl a
         clc
@@ -2227,18 +2227,18 @@
         pla
         dec a
         clc
-        adc $7FD0EF,x
+        adc aTitleSprites.TrailPosition,x
         and #$000F
         clc
         adc #1,s
         tax
         sep #$20
-        lda $7FD0DF,x
+        lda aTitleSprites.TrailFrame,x
         sta wR9
         rep #$20
         lda #1,s
         tax
-        lda $7FD0F0,x
+        lda aTitleSprites.TrailDelay,x
         pha
         asl a
         clc
@@ -2247,22 +2247,22 @@
         pla
         dec a
         clc
-        adc $7FD0EF,x
+        adc aTitleSprites.TrailPosition,x
         and #$000F
         asl a
         clc
         adc #1,s
         tax
-        lda $7FD09F,x
+        lda aTitleSprites.TrailX,x
         sta wR0
-        lda $7FD0BF,x
+        lda aTitleSprites.TrailY,x
         sta wR1
         plx
 
         _EC33
         lda $7FD095,x
         sta lR18+1
-        lda $7FD097,x
+        lda aTitleSprites.Frames,x
         sta lR18
         lda wR9
         and #$00FF
@@ -2270,11 +2270,11 @@
         tay
         lda [lR18],y
         clc
-        adc $7FD097,x
+        adc aTitleSprites.Frames,x
         tay
-        lda $7FD09B,x
+        lda aTitleSprites.Attributes,x
         sta wR5
-        lda $7FD09D,x
+        lda aTitleSprites.TileBase,x
         sta wR4
         sep #$20
         phb
@@ -2307,101 +2307,101 @@
 
         phx
         sep #$20
-        lda $7FD0EF,x
+        lda aTitleSprites.TrailPosition,x
         dec a
         and #$0F
-        sta $7FD0EF,x
+        sta aTitleSprites.TrailPosition,x
         rep #$20
         phx
-        lda $7FD090,x
+        lda aTitleSprites.X,x
         pha
-        lda $7FD092,x
+        lda aTitleSprites.Y,x
         pha
         lda $7FD0FB,x
         pha
-        lda $7FD0EF,x
+        lda aTitleSprites.TrailPosition,x
         and #$00FF
         clc
         adc #7,s
         tax
         pla
         sep #$20
-        sta $7FD0DF,x
+        sta aTitleSprites.TrailFrame,x
         rep #$20
         lda #5,s
         tax
-        lda $7FD0EF,x
+        lda aTitleSprites.TrailPosition,x
         and #$00FF
         asl a
         clc
         adc #5,s
         tax
         pla
-        sta $7FD0BF,x
+        sta aTitleSprites.TrailY,x
         pla
-        sta $7FD09F,x
+        sta aTitleSprites.TrailX,x
         plx
         phx
-        lda $7FD0EF,x
+        lda aTitleSprites.TrailPosition,x
         clc
-        adc $7FD0F0,x
+        adc aTitleSprites.TrailDelay,x
         dec a
         and #$000F
         clc
         adc #1,s
         tax
-        lda $7FD0DF,x
+        lda aTitleSprites.TrailFrame,x
         and #$00FF
         sta wR9
         lda #1,s
         tax
-        lda $7FD0EF,x
+        lda aTitleSprites.TrailPosition,x
         clc
-        adc $7FD0F0,x
+        adc aTitleSprites.TrailDelay,x
         dec a
         and #$000F
         asl a
         clc
         adc #1,s
         tax
-        lda $7FD09F,x
+        lda aTitleSprites.TrailX,x
         sta wR0
-        lda $7FD0BF,x
+        lda aTitleSprites.TrailY,x
         sta wR1
         plx
         jsr rsUnknown9BED9D
-        lda $7FD001
+        lda wTitleScreenFrame
         bit #$0001
         bne _ED4A
         phx
-        lda $7FD0F0,x
+        lda aTitleSprites.TrailDelay,x
         asl a
         dec a
         clc
-        adc $7FD0EF,x
+        adc aTitleSprites.TrailPosition,x
         and #$000F
         clc
         adc #1,s
         tax
         sep #$20
-        lda $7FD0DF,x
+        lda aTitleSprites.TrailFrame,x
         sta wR9
         rep #$20
         lda #1,s
         tax
-        lda $7FD0F0,x
+        lda aTitleSprites.TrailDelay,x
         asl a
         dec a
         clc
-        adc $7FD0EF,x
+        adc aTitleSprites.TrailPosition,x
         and #$000F
         asl a
         clc
         adc #1,s
         tax
-        lda $7FD09F,x
+        lda aTitleSprites.TrailX,x
         sta wR0
-        lda $7FD0BF,x
+        lda aTitleSprites.TrailY,x
         sta wR1
         plx
         jsr rsUnknown9BED9D
@@ -2410,7 +2410,7 @@
 
         _ED4A
         phx
-        lda $7FD0F0,x
+        lda aTitleSprites.TrailDelay,x
         pha
         asl a
         clc
@@ -2419,18 +2419,18 @@
         pla
         dec a
         clc
-        adc $7FD0EF,x
+        adc aTitleSprites.TrailPosition,x
         and #$000F
         clc
         adc #1,s
         tax
         sep #$20
-        lda $7FD0DF,x
+        lda aTitleSprites.TrailFrame,x
         sta wR9
         rep #$20
         lda #1,s
         tax
-        lda $7FD0F0,x
+        lda aTitleSprites.TrailDelay,x
         pha
         asl a
         clc
@@ -2439,15 +2439,15 @@
         pla
         dec a
         clc
-        adc $7FD0EF,x
+        adc aTitleSprites.TrailPosition,x
         and #$000F
         asl a
         clc
         adc #1,s
         tax
-        lda $7FD09F,x
+        lda aTitleSprites.TrailX,x
         sta wR0
-        lda $7FD0BF,x
+        lda aTitleSprites.TrailY,x
         sta wR1
         plx
         jsr rsUnknown9BED9D
@@ -2469,7 +2469,7 @@
 
         lda $7FD095,x
         sta lR18+1
-        lda $7FD097,x
+        lda aTitleSprites.Frames,x
         sta lR18
         lda wR9
         and #$00FF
@@ -2477,7 +2477,7 @@
         tay
         lda [lR18],y
         clc
-        adc $7FD097,x
+        adc aTitleSprites.Frames,x
         tay
         lda $7FD0FD,x
         sta wR5
@@ -2517,13 +2517,13 @@
         .databank ?
 
         sep #$20
-        sta $7FD0F0,x
-        lda $7FD08F,x
+        sta aTitleSprites.TrailDelay,x
+        lda aTitleSprites.Flags,x
         ora #$01
-        sta $7FD08F,x
+        sta aTitleSprites.Flags,x
         rep #$20
-        lda $7FD090,x
-        sta $7FD09F,x
+        lda aTitleSprites.X,x
+        sta aTitleSprites.TrailX,x
         sta $7FD0A1,x
         sta $7FD0A3,x
         sta $7FD0A5,x
@@ -2539,8 +2539,8 @@
         sta $7FD0B9,x
         sta $7FD0BB,x
         sta $7FD0BD,x
-        lda $7FD092,x
-        sta $7FD0BF,x
+        lda aTitleSprites.Y,x
+        sta aTitleSprites.TrailY,x
         sta $7FD0C1,x
         sta $7FD0C3,x
         sta $7FD0C5,x
@@ -2558,12 +2558,12 @@
         sta $7FD0DD,x
         sep #$20
         lda #$00
-        sta $7FD0EF,x
-        lda $7FD099,x
+        sta aTitleSprites.TrailPosition,x
+        lda aTitleSprites.Frame,x
         xba
-        lda $7FD099,x
+        lda aTitleSprites.Frame,x
         rep #$20
-        sta $7FD0DF,x
+        sta aTitleSprites.TrailFrame,x
         sta $7FD0E1,x
         sta $7FD0E3,x
         sta $7FD0E5,x
@@ -2585,9 +2585,9 @@
         .databank ?
 
         sep #$20
-        lda $7FD08F,x
+        lda aTitleSprites.Flags,x
         and #$FE
-        sta $7FD08F,x
+        sta aTitleSprites.Flags,x
         rep #$20
         rtl
 
@@ -2611,7 +2611,7 @@
         .databank ?
 
         sep #$20
-        lda $7FD075
+        lda bTitleScreenEdgeFade
         bne _EEC0
         jml _EF85
 
@@ -2716,7 +2716,7 @@
         lda $4212,b
         bit #$40
         beq _EF64
-        lda $7FD8AD
+        lda aTitleScreenEdgeBrightness
         sta $2100,b
 
         _EF72
@@ -2747,7 +2747,7 @@
         .databank ?
 
         sep #$20
-        lda $7FD075
+        lda bTitleScreenEdgeFade
         bne _EF94
         jml _F09C
 
@@ -2756,7 +2756,7 @@
         lda $4212,b
         bit #$40
         beq _EF94
-        lda $7FD8AD
+        lda aTitleScreenEdgeBrightness
         sta $2100,b
 
         _EFA2
@@ -2868,7 +2868,7 @@
         sta $210B,b
         stz $210E,b
         stz $210E,b
-        lda $7FD8AC
+        lda bTitleCaptionScroll
         sta $210D,b
         stz $210D,b
         stz $2123,b
@@ -2887,7 +2887,7 @@
         lda $4212,b
         bit #$40
         beq _F08E
-        lda $7FD073
+        lda bTitleCaptionBrightness
         sta $2100,b
 
         _F09C
@@ -2910,13 +2910,13 @@
         sta $7FD050
         sep #$20
         lda #$00
-        sta $7FD073
+        sta bTitleCaptionBrightness
         rep #$20
         jsl rlUnknown9BF0C3
-        lda #$9B00
-        sta $7FD008,x
-        lda #$F0C3
-        sta $7FD007,x
+        lda #(`rlUnknown9BF0C3)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF0C3
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -2934,11 +2934,11 @@
         lda $7FD050
         bne _F0EB
         sep #$20
-        lda $7FD073
+        lda bTitleCaptionBrightness
         cmp #$0F
         beq _F0DD
         inc a
-        sta $7FD073
+        sta bTitleCaptionBrightness
         rep #$20
         bra _F0EB
 
@@ -2948,7 +2948,7 @@
         rep #$20
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         bra _F0FC
 
@@ -2982,10 +2982,10 @@
         lda #$0000
         sta $7FD050
         jsl rlUnknown9BF118
-        lda #$9B00
-        sta $7FD008,x
-        lda #$F118
-        sta $7FD007,x
+        lda #(`rlUnknown9BF118)<<8
+        sta aTitleTimelineSlots.lRoutine+1,x
+        lda #<>rlUnknown9BF118
+        sta aTitleTimelineSlots.lRoutine,x
         rtl
 
         .databank 0
@@ -3003,11 +3003,11 @@
         lda $7FD050
         bne _F146
         sep #$20
-        lda $7FD073
+        lda bTitleCaptionBrightness
         cmp #$00
         beq _F132
         dec a
-        sta $7FD073
+        sta bTitleCaptionBrightness
         rep #$20
         bra _F146
 
@@ -3015,11 +3015,11 @@
         _F132
         .as
         lda #$80
-        sta $7FD073
+        sta bTitleCaptionBrightness
         rep #$20
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
         bra _F157
 
@@ -3051,15 +3051,15 @@
         .databank ?
 
         phx
-        lda $7FD8AB
+        lda bTitleCaption
         and #$00FF
         tax
         sep #$20
         lda aUnknown99FFE7,x
-        sta $7FD8AC
-        lda $7FD8AB
+        sta bTitleCaptionScroll
+        lda bTitleCaption
         inc a
-        sta $7FD8AB
+        sta bTitleCaption
         rep #$20
         plx
         rtl
@@ -3087,7 +3087,7 @@
         lda bBufferINIDISP
         bit #$80
         beq _F1A3
-        sta $7FD8AD
+        sta aTitleScreenEdgeBrightness
         sta $7FD8AE
         sta $7FD8AF
         sta $7FD8B0
@@ -3105,7 +3105,7 @@
         lda #$00
 
         _F1A9
-        sta $7FD8AD
+        sta aTitleScreenEdgeBrightness
         dec a
         dec a
         bpl _F1B3
@@ -3237,7 +3237,7 @@
 
         sep #$20
         lda #$00
-        sta $7FD075
+        sta bTitleScreenEdgeFade
         rep #$20
         rtl
 
@@ -3354,9 +3354,9 @@
         lda #1,s
         tax
         lda #$9B00
-        sta $7FD008,x
+        sta aTitleTimelineSlots.lRoutine+1,x
         lda #<>rlUnknown9BF36F
-        sta $7FD007,x
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -3376,9 +3376,9 @@
         lda #$0004
         jsl rlUnknown9BEDD7
         sep #$20
-        lda $7FD08F
+        lda aTitleSprites.Flags
         ora #$02
-        sta $7FD08F
+        sta aTitleSprites.Flags
         lda #$00
         sta $7FD0F1
         rep #$20
@@ -3386,9 +3386,9 @@
         tax
         jsl rlUnknown9BF3A5
         lda #(`rlUnknown9BF3A5)<<8
-        sta $7FD008,x
+        sta aTitleTimelineSlots.lRoutine+1,x
         lda #<>rlUnknown9BF3A5
-        sta $7FD007,x
+        sta aTitleTimelineSlots.lRoutine,x
         plx
         rtl
 
@@ -3414,14 +3414,14 @@
         lda aUnknown99FEAC+157,x
         and #$00FF
         pha
-        lda $7FD090
+        lda aTitleSprites.X
         clc
         adc #3,s
-        sta $7FD090
-        lda $7FD092
+        sta aTitleSprites.X
+        lda aTitleSprites.Y
         clc
         adc #1,s
-        sta $7FD092
+        sta aTitleSprites.Y
         pla
         pla
         lda $7FD05D
@@ -3436,7 +3436,7 @@
         tax
         sep #$20
         lda #$00
-        sta $7FD006,x
+        sta aTitleTimelineSlots.bActive,x
         rep #$20
 
         _F3F1
@@ -3462,7 +3462,7 @@
         .autsiz
         .databank ?
 
-        lda $7FD000
+        lda bTitleScreenPhase
         and #$00FF
         cmp #$0001
         beq _FCB9
@@ -3508,16 +3508,16 @@
 
 
         _FCE4
-        lda $7FD001
+        lda wTitleScreenFrame
         inc a
-        sta $7FD001
+        sta wTitleScreenFrame
         cmp #$0023
         bcc _FD01
         sep #$20
         stz bBufferTS
         rep #$20
         lda #$0000
-        sta $7FD001
+        sta wTitleScreenFrame
         bra _FD43
 
 
@@ -3533,9 +3533,9 @@
 
 
         _FD18
-        lda $7FD001
+        lda wTitleScreenFrame
         inc a
-        sta $7FD001
+        sta wTitleScreenFrame
         cmp #$0028
         bcs _FD43
         bra _FD50
@@ -3563,9 +3563,9 @@
 
         _FD43
         sep #$20
-        lda $7FD000
+        lda bTitleScreenPhase
         inc a
-        sta $7FD000
+        sta bTitleScreenPhase
         rep #$20
 
         _FD50

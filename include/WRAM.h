@@ -2898,3 +2898,90 @@
 
   .endvirtual
 
+
+
+  .virtual $7FD000
+
+    ; The title screen (engine/title/). The battle scene reuses this area, so
+    ; tools/name_ram.py writes these names only in engine/title/.
+
+    bTitleScreenPhase .byte ? ; $7FD000
+      ; 0 the intro, 1 the title waiting for Start, 2 the fade out to the
+      ; file menu (rlTitleScreenStep).
+    wTitleScreenFrame .word ? ; $7FD001
+      ; Frames since the phase's timeline started (rlResetTitleTimeline).
+    lTitleTimelinePosition .long ? ; $7FD003
+      ; The next timeline entry (rsRunTitleTimeline, include/TitleScreen.h).
+    aTitleTimelineSlots .block ; $7FD006
+      ; 16 slots of four bytes, run every frame by rsRunTitleTimelineSlots.
+      bActive  .byte ? ; 1 while the slot runs; the routine clears it to stop
+      lRoutine .long ? ; called with X = the slot's offset, data bank = its bank
+      .fill 15 * 4
+    .bend
+
+  .endvirtual
+
+
+  .virtual $7FD073
+
+    bTitleCaptionBrightness .byte ? ; $7FD073
+      ; Brightness of the caption strip at the bottom of the intro
+      ; (rlUnknown9BEF88), faded by rlUnknown9BF09F and rlUnknown9BF0FE.
+
+  .endvirtual
+
+
+  .virtual $7FD075
+
+    bTitleScreenEdgeFade .byte ? ; $7FD075
+      ; Nonzero: the screen is blanked at the top of the frame and the IRQ
+      ; code (rlUnknown9BEEB4, rlUnknown9BEF88) fades the lines near the top
+      ; and bottom edges in steps (aTitleScreenEdgeBrightness).
+
+  .endvirtual
+
+
+  .virtual $7FD08B
+
+    bTitleLoadRequests .byte ? ; $7FD08B
+      ; Entries of the load list rlUnknown95F1D5 may start; each
+      ; rlUnknown95F248 call allows one more.
+    lTitleLoadListPosition .long ? ; $7FD08C
+      ; The next entry of the load list: type 0 (11 bytes) a decompression,
+      ; type 2 (8 bytes) a copy (rlUnknown95F256, rlUnknown95F29B).
+    aTitleSprites .dstruct structTitleSprite ; $7FD08F
+      .fill 12 * size(structTitleSprite)
+
+  .endvirtual
+
+
+  .virtual $7FD8A5
+
+    lTitleVBlankRoutine1 .long ? ; $7FD8A5
+    lTitleVBlankRoutine2 .long ? ; $7FD8A8
+      ; Called from the title's VBlank (rlUnknown9BEAB1) when not 0, to update
+      ; HDMA tables.
+    bTitleCaption .byte ? ; $7FD8AB
+      ; The next caption (rlUnknown9BF159).
+    bTitleCaptionScroll .byte ? ; $7FD8AC
+      ; BG1 horizontal scroll of the caption strip, from aUnknown99FFE7.
+    aTitleScreenEdgeBrightness .fill 8 ; $7FD8AD
+      ; INIDISP values for the lines near the edges (rlUnknown9BF179).
+    bTitleScreenDone .byte ? ; $7FD8B5
+      ; Set when a timeline ends (rlEndTitleScreen): the title starts the
+      ; opening, or after the fade out goes to the file menu.
+
+  .endvirtual
+
+
+  .virtual $7FD8B9
+
+    bTitleScreenSkipIntro .byte ? ; $7FD8B9
+      ; Set by rsOpenTitleScreenWithoutIntro, or when Start is held as the
+      ; title opens: rlTitleScreenSetup goes straight to the title.
+    bTitleScreenFlags .byte ? ; $7FD8BA
+      ; $01 Start was pressed during the intro (once), $02 Start may end the
+      ; title (rlUnknown9BFAB7), $04 skipping to the title, waiting for the
+      ; decompression and APU uploads to finish, $08 set by rlTitleScreenSetup.
+
+  .endvirtual

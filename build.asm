@@ -7833,6 +7833,13 @@
 
     .here
 
+    * = $1BE6DF
+    .logical $9BE6DF
+
+      .dsection TitleScenes9BE6DFSection
+
+    .here
+
     * = $1BE791
     .logical $9BE791
 
@@ -7847,6 +7854,13 @@
 
     .here
 
+    * = $1BE88E
+    .logical $9BE88E
+
+      .dsection TitleScenes9BE88ESection
+
+    .here
+
     * = $1BE9AE
     .logical $9BE9AE
 
@@ -7858,6 +7872,13 @@
     .logical $9BE9FD
 
       .dsection Unsorted9BE9FDSection
+
+    .here
+
+    * = $1BEA5C
+    .logical $9BEA5C
+
+      .dsection TitleScenes9BEA5CSection
 
     .here
 
@@ -7905,6 +7926,13 @@
 
     .here
 
+    * = $1BF4BF
+    .logical $9BF4BF
+
+      .dsection TitleScenes9BF4BFSection
+
+    .here
+
     * = $1BF548
     .logical $9BF548
 
@@ -7923,6 +7951,13 @@
     .logical $9BF57A
 
       .dsection Unsorted9BF57ASection
+
+    .here
+
+    * = $1BF59E
+    .logical $9BF59E
+
+      .dsection TitleScenes9BF59ESection
 
     .here
 
@@ -7945,6 +7980,76 @@
     .logical $9BF77A
 
       .dsection Unsorted9BF77ASection
+
+    .here
+
+    * = $1BF7A3
+    .logical $9BF7A3
+
+      .dsection TitleScenes9BF7A3Section
+
+    .here
+
+    * = $1BF7E7
+    .logical $9BF7E7
+
+      .dsection TitleData9BF7E7Section
+
+    .here
+
+    * = $1BF7F0
+    .logical $9BF7F0
+
+      .dsection TitleScenes9BF7F0Section
+
+    .here
+
+    * = $1BF835
+    .logical $9BF835
+
+      .dsection TitleScenes9BF835Section
+
+    .here
+
+    * = $1BF89A
+    .logical $9BF89A
+
+      .dsection TitleScenes9BF89ASection
+
+    .here
+
+    * = $1BF8D9
+    .logical $9BF8D9
+
+      .dsection TitleScenes9BF8D9Section
+
+    .here
+
+    * = $1BF918
+    .logical $9BF918
+
+      .dsection TitleScenes9BF918Section
+
+    .here
+
+    * = $1BF957
+    .logical $9BF957
+
+      .dsection TitleScenes9BF957Section
+
+    .here
+
+    * = $1BF996
+    .logical $9BF996
+
+      .dsection TitleScenes9BF996Section
+
+    .here
+
+    * = $1BF9D5
+    .logical $9BF9D5
+
+      .dsection TitleScenes9BF9D5Section
 
     .here
 
